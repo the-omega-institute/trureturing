@@ -65,7 +65,7 @@ abbrev arena : Arena where
       IsCompact (pure C u) ∧ (pure C u).Nonempty ∧
       ∀ p : pure C u, Q p = 0 ∨
         (0 < u (Q p) ∧ O.readout () P p ∈ pure C u ∧
-          Q p = u (Q p) • O.readout () P p)
+          Q p = u (Q p) • ((u (Q p))⁻¹ • Q p))
 
 abbrev sourceScope : Prop := type_of% (@least_confirmation_face_purity.{u})
 
@@ -179,13 +179,11 @@ private theorem line_evaluation (O : Realization signature.{u}) (h : arena.Law O
       norm_num at this⟩
     (fun x y => mul_comm x.down y.down) line_positive line_dual line_confirms line_least
     (fun _ => rfl) (fun _ _ => rfl) (fun x hx => hx) (fun _ _ => rfl)
-  rcases hh.2.2.2 linePoint with hz | ⟨_, _, he⟩
+  rcases hh.2.2.2 linePoint with hz | ⟨_, hout, _⟩
   · have := congrArg ULift.down hz
     change (1 : ℝ) = 0 at this
     norm_num at this
-  · change (ULift.up 1 : Line.{u}) = (1 : ℝ) • O.readout () lineInputs linePoint at he
-    rw [one_smul] at he
-    exact he.symm
+  · exact (Set.ext_iff.mp linePure _).mp hout
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -288,12 +286,12 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Foundation.FaceProjectionPurity
     definition := none
-    coordinates := #[0, 1, 2, 3, 4, 5, 9, 15, 16]
+    coordinates := #[0, 4, 5, 9, 15, 16]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "arg", "body", "arg", "arg", "fn", "arg"]
+        "arg", "arg", "arg", "body", "arg", "arg", "fn", "arg", "arg"]
       stateBinder := 21
       functionOperand := false
       stateOperand := none
