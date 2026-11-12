@@ -1,284 +1,37 @@
-# Linear join retractions and effect transport
+# Real ROG projective joins
 
 ## Abstract
 
-Positive trace-subunital retractions and full proper-effect transport across a real linear join.
+Actual matrix congruence retractions of full real ROG PSD sections, with inherited trace, all supported positive matrices, the entire proper interval and native comparison.
 
-Let A be a finite dimensional real normed vector space with a pointed cone C and a linear unit u. A JoinData record specifies left and right subspaces U and W, their entire overlap S, a topological linear join U sup W = A, and overlap projections that fix S. The side cone is the exact comap of C along the subspace inclusion and the side unit is u restricted along that inclusion. No finite-pure, identity-membership, or selected-effect assumption is part of this interface.
+J is an arbitrary finite index type with decidable equality. E is the original normalized real Euclidean vector space, and H is HermitianMat J R, hence the real symmetric matrices. L is a real subspace of H containing the identity. Its cone is exactly L intersect PSD, its unit is trace, and its entire base consists of the trace-one PSD elements. ROG means that every original positive X is a finite sum of nonzero vv-transpose in L. The projective sets Y and Z are represented by their full inverse images of nonzero vectors: zero is omitted, their union is exactly all nonzero v with vv-transpose in L, their spans are U and W, U+W=E, and their intersection is all nonzero vectors of S=U intersect W.
 
-**Definition 1.1 (The cone on a supported side).**
+For b=false take Y,U, and for b=true take Z,W. sideSpace(b) is the real span of every vv-transpose on that side, and sideCone(b) is the conic hull of those same matrices. rangeContained(X,U) means the entire image of X lies in U. The original trace restricts to each side. There is no assumption that the side identity projector lies in sideSpace.
 
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideCone`
+**Theorem 1.1 (Both original supported sections and their entire effects).**
 
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideCone` (`✓ std3`).
+$$\forall J \in Type,\; [\operatorname{Fintype}\left(J\right)] [\operatorname{DecidableEq}\left(J\right)] \forall L \in \operatorname{Submodule}\left(\mathbb{R}, \operatorname{HermitianMat}\left(J, \mathbb{R}\right)\right),\; \forall Y \in \operatorname{Set}\left(\operatorname{EuclideanSpace}\left(\mathbb{R}, J\right)\right),\; \forall Z \in \operatorname{Set}\left(\operatorname{EuclideanSpace}\left(\mathbb{R}, J\right)\right),\; \forall U \in \operatorname{Submodule}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, J\right)\right),\; \forall W \in \operatorname{Submodule}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, J\right)\right),\; \left(1\in L \land \left(\left(\forall X \in \operatorname{HermitianMat}\left(J, \mathbb{R}\right),\; X\in L \Rightarrow \left(0\le X \Rightarrow \left(\exists m \in Nat,\; \exists v \in \operatorname{Function}\left(\operatorname{Fin}\left(m\right), \operatorname{EuclideanSpace}\left(\mathbb{R}, J\right)\right),\; \left(\forall j \in \operatorname{Fin}\left(m\right),\; \operatorname{apply}\left(v, j\right)\neq 0 \land \operatorname{rankOne}\left(\operatorname{apply}\left(v, j\right)\right)\in L\right) \land X = \operatorname{sum}\left(\operatorname{Fin}\left(m\right), \operatorname{rankOneFamily}\left(v\right)\right)\right)\right)\right) \land \left(\left(\forall v \in \operatorname{EuclideanSpace}\left(\mathbb{R}, J\right),\; v\neq 0 \Rightarrow \left(\operatorname{rankOne}\left(v\right)\in L \Leftrightarrow \left(v\in Y \lor v\in Z\right)\right)\right) \land \left(\left(\forall v \in \operatorname{EuclideanSpace}\left(\mathbb{R}, J\right),\; \left(v\in Y \land v\in Z\right) \Leftrightarrow \left(v\neq 0 \land v\in \operatorname{inter}\left(U, W\right)\right)\right) \land \left(\operatorname{span}\left(\mathbb{R}, Y\right) = U \land \left(\operatorname{span}\left(\mathbb{R}, Z\right) = W \land \left(\operatorname{sup}\left(U, W\right) = \operatorname{top}\left(\operatorname{EuclideanSpace}\left(\mathbb{R}, J\right)\right) \land \left(\operatorname{omitsZero}\left(Y\right) \land \operatorname{omitsZero}\left(Z\right)\right)\right)\right)\right)\right)\right)\right)\right) \Rightarrow \left(\forall b \in Bool,\; \left(\forall X \in \operatorname{HermitianMat}\left(J, \mathbb{R}\right),\; \left(X\in \operatorname{sideCone}\left(b\right) \Leftrightarrow \left(X\in L \land \left(0\le X \land \operatorname{rangeContained}\left(X, \operatorname{sideVectorSpace}\left(b\right)\right)\right)\right)\right) \land \left(X\in \operatorname{sideCone}\left(b\right) \Leftrightarrow \left(X\in \operatorname{sideSpace}\left(b\right) \land 0\le X\right)\right)\right) \land \left(\operatorname{ROG}\left(\operatorname{sideSpace}\left(b\right)\right) \land \left(\operatorname{extremePoints}\left(\mathbb{R}, \operatorname{base}\left(\operatorname{sideSpace}\left(b\right)\right)\right) = \operatorname{pureRanks}\left(\operatorname{sideSpace}\left(b\right)\right) \land \left(\left(\forall p \in \operatorname{pureRanks}\left(\operatorname{sideSpace}\left(b\right)\right),\; p\in \operatorname{pureRanks}\left(L\right)\right) \land \left(\left(\exists R \in \operatorname{LinearMap}\left(\mathbb{R}, L, \operatorname{sideSpace}\left(b\right)\right),\; \left(\forall X \in L,\; \operatorname{apply}\left(R, X\right) = \operatorname{congruence}\left(\operatorname{matrix}\left(b\right), X\right)\right) \land \left(\left(\forall X \in \operatorname{sideSpace}\left(b\right),\; \operatorname{apply}\left(R, X\right) = X\right) \land \left(\left(\forall X \in L,\; 0\le X \Rightarrow \left(\operatorname{apply}\left(R, X\right)\in \operatorname{sideCone}\left(b\right) \land \operatorname{trace}\left(\operatorname{apply}\left(R, X\right)\right)\le \operatorname{trace}\left(X\right)\right)\right) \land \left(\forall g \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{sideSpace}\left(b\right), \mathbb{R}\right),\; \operatorname{proper}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), g\right) \Rightarrow \left(\operatorname{proper}\left(\operatorname{sectionCone}\left(L\right), \operatorname{traceUnit}\left(L\right), \operatorname{compose}\left(g, R\right)\right) \land \operatorname{restrict}\left(\operatorname{compose}\left(g, R\right), \operatorname{sideSpace}\left(b\right)\right) = g\right)\right)\right)\right)\right) \land \left(\left(\forall g \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{sideSpace}\left(b\right), \mathbb{R}\right),\; \operatorname{proper}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), g\right) \Rightarrow \left(\exists f \in \operatorname{LinearMap}\left(\mathbb{R}, L, \mathbb{R}\right),\; \operatorname{proper}\left(\operatorname{sectionCone}\left(L\right), \operatorname{traceUnit}\left(L\right), f\right) \land \operatorname{restrict}\left(f, \operatorname{sideSpace}\left(b\right)\right) = g\right)\right) \land \left(\left(\forall p \in \operatorname{sideSpace}\left(b\right),\; \forall X \in \operatorname{sideSpace}\left(b\right),\; \operatorname{comparison}\left(\operatorname{sectionCone}\left(L\right), \operatorname{traceUnit}\left(L\right), p, X\right) = \operatorname{comparison}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), p, X\right)\right) \land \left(\left(\forall p \in \operatorname{sideSpace}\left(b\right),\; \forall X \in \operatorname{sideSpace}\left(b\right),\; \operatorname{trace}\left(p\right) = 1 \Rightarrow \left(0\le X \Rightarrow \left(\exists g \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{sideSpace}\left(b\right), \mathbb{R}\right),\; \left(\operatorname{proper}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), g\right) \land \operatorname{apply}\left(g, p\right) = 1\right) \land \operatorname{apply}\left(g, X\right) = \operatorname{comparison}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), p, X\right)\right)\right)\right) \land \left(\left(\forall p \in \operatorname{sideSpace}\left(b\right),\; \forall X \in \operatorname{sideSpace}\left(b\right),\; \operatorname{trace}\left(p\right) = 1 \Rightarrow \left(0\le X \Rightarrow \left(\operatorname{comparison}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), p, X\right) = 0 \Leftrightarrow \left(\exists g \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{sideSpace}\left(b\right), \mathbb{R}\right),\; \left(\operatorname{proper}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), g\right) \land \operatorname{apply}\left(g, p\right) = 1\right) \land \operatorname{apply}\left(g, X\right) = 0\right)\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pureRanks}\left(L\right),\; \forall q \in \operatorname{pureRanks}\left(L\right),\; \forall r \in \operatorname{pureRanks}\left(L\right),\; \left(\operatorname{comparison}\left(\operatorname{sectionCone}\left(L\right), \operatorname{traceUnit}\left(L\right), p, q\right) = 0 \land \operatorname{comparison}\left(\operatorname{sectionCone}\left(L\right), \operatorname{traceUnit}\left(L\right), p, r\right) = 0\right) \Rightarrow \operatorname{comparison}\left(\operatorname{sectionCone}\left(L\right), \operatorname{traceUnit}\left(L\right), p, \operatorname{midpoint}\left(q, r\right)\right) = 0\right) \Rightarrow \left(\forall p \in \operatorname{pureRanks}\left(\operatorname{sideSpace}\left(b\right)\right),\; \forall q \in \operatorname{pureRanks}\left(\operatorname{sideSpace}\left(b\right)\right),\; \forall r \in \operatorname{pureRanks}\left(\operatorname{sideSpace}\left(b\right)\right),\; \left(\operatorname{comparison}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), p, q\right) = 0 \land \operatorname{comparison}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), p, r\right) = 0\right) \Rightarrow \operatorname{comparison}\left(\operatorname{sectionCone}\left(\operatorname{sideSpace}\left(b\right)\right), \operatorname{traceUnit}\left(\operatorname{sideSpace}\left(b\right)\right), p, \operatorname{midpoint}\left(q, r\right)\right) = 0\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-sideCone C U contains exactly the vectors of U whose ambient inclusion lies in the original cone C.
-
-**Definition 1.2 (The inherited unit).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideUnit`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideUnit` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.real_join_retractions` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-sideUnit u U is the original linear unit composed with the inclusion of U into A.
+The displayed hypotheses are precisely RealJoin. The conclusion is SideConclusion for it and its exchange. Both sides are the entire supported original PSD cones and real ROG sections. Their normalized pure points equal the extreme points of the full local base and include into the original pure set. The actual linear R maps are restrictions of congruence X maps to T X T-transpose, fix the whole side span, are positive on every original positive X, and decrease its original trace. Every local proper functional g extends as g composed with this R, including its upper bound by the original unit; restriction is onto the whole local interval.
 
-**Definition 1.3 (An entire linear join with overlap projections).**
+For the Y side, T fixes U and restricts on W to Euclidean orthogonal projection onto S. The two prescriptions agree on S and therefore glue. For the Z side exchange U and W. No orthogonality between U and W and no global contraction bound on T is assumed. On each Y generator the vector is fixed; each Z generator is sent into S, where every nonzero projective ray belongs to both sides. Orthogonal projection decreases its squared norm, which is the rank one trace. The same original ROG decomposition proves positivity and the trace bound for every positive matrix. Identity membership ensures that original positives span L, so congruence restricts from all of L into the side span.
 
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData`
+For X=sum_j v(j)v(j)-transpose, each positive summand is below X. The existing PSD kernel order theorem and orthogonal-complement identity place each nonzero v(j) in the range of X. Thus if X is supported on U, every decomposition vector lies in U. A Z vector in U lies in S and hence in Y. This proves the supported-cone identity without assuming that the original decomposition already had side-supported vectors. It also gives the local ROG decomposition.
 
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData` (`✓ std3`).
+comparison(L,p,X) is the infimum of f(X) over every real linear functional f on L with 0<=f(A)<=trace(A) for all PSD A in L and f(p)=1. The complete sets of confirming readings agree locally and globally, so exact comparison holds for every local p and X, including every mixed state. On the original section, identity majorization bounds the norm of every proper functional by card(J). The closed full proper interval is consequently compact in the finite dimensional dual. The confirming subset at trace(p)=1 is nonempty because trace itself confirms p, so the infimum is attained. Restriction supplies the corresponding local minimum, even when the side identity projector is absent.
 
-*Source.* Repository-derived.
+nativeG2(L) quantifies every p,q,r in the whole normalized native rank one set: comparison(p,q)=0 and comparison(p,r)=0 imply comparison(p,(q+r)/2)=0. Each zero is equivalent to one full proper effect confirming p at one and vanishing at the indicated state. The two antecedents may have different effects; minimum attainment gives one common confirming effect for the midpoint conclusion. Local pure inclusion and exact comparison apply original nativeG2 and transport the conclusion back. This uses the original pure and mixed domain and the entire proper interval.
 
-*Commentary.*
-
-JoinData records U, W and their equality S=U intersect W, the whole join U sup W=A, and projections W to S and U to S that are the identity on the overlap. The projection equalities make the two glued retractions independent of decompositions.
-
-**Definition 1.4 (The full original proper-effect interval).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.properEffect`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.properEffect` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-properEffect packages every real linear functional satisfying 0 <= f(x) <= u(x) for every x in the entire original cone.
-
-**Definition 1.5 (A side proper-effect interval).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideProperEffect`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideProperEffect` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-sideProperEffect is the same full proper interval on the exact side cone and inherited side unit.
-
-**Definition 1.6 (Restrict a full original proper effect).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrictEffect`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrictEffect` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-restrictEffect composes an original proper effect with the side inclusion, retaining the full pointwise bounds on every side-cone element.
-
-**Definition 1.7 (The full proper-effect midpoint law).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.G2`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.G2` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-G2 quantifies over every pure reference p and pure q,r. Different full proper confirming effects may witness p perpendicular q and p perpendicular r, while one confirming proper effect must vanish at the midpoint (q+r)/2.
-
-**Definition 1.8 (ROG support certificate for the left side).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.RetractionCertificate`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.RetractionCertificate` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A RetractionCertificate gives a generator set for the original cone, proves every generator is sent by the left retraction back into C, proves the inherited unit does not increase on generators, and lifts every side pure point to an original pure point with the same ambient vector.
-
-**Definition 1.9 (ROG support certificate for the right side).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.RightRetractionCertificate`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.RightRetractionCertificate` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-RightRetractionCertificate supplies the symmetric generator, positivity, subunit and pure-lift data for W.
-
-**Definition 1.10 (The left supported cone as a retraction image).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-supportedConeLeft is the image of the original generating hull under the left retraction.
-
-**Definition 1.11 (The right supported cone as a retraction image).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight`
-
-*Formalization.* `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-supportedConeRight is the symmetric image of the original generating hull under the right retraction.
-
-**Theorem 1.12 (Exact left supported-cone equality).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft_eq_sideCone`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft_eq_sideCone` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The image of the full original generating hull under the left retraction equals the exact ambient cone comapped to U. This is the abstract ROG form of the supported PSD intersection.
-
-**Theorem 1.13 (Exact right supported-cone equality).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight_eq_sideCone`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight_eq_sideCone` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The right retraction image of the full original generating hull equals the exact cone cut down to W.
-
-**Theorem 1.14 (Extend every left proper effect).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_left`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_left` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every proper effect on the complete left side extends by composition with the left retraction to a proper effect on all of C. The proof propagates generator bounds through the conic hull and preserves the inherited unit inequality.
-
-**Theorem 1.15 (Extend every right proper effect).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_right`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_right` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The corresponding composition with the right retraction extends every proper effect on W to the full original interval.
-
-**Theorem 1.16 (Full effect restriction is onto on the left).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjective_left`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjective_left` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Restriction of the entire original proper-effect interval to U is surjective. The extension is the left proper effect composed with the positive retraction and restricts back exactly on U.
-
-**Theorem 1.17 (Full effect restriction is onto on the right).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjective_right`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjective_right` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Restriction of the entire original proper-effect interval to W is likewise surjective, with the right retraction as the extension map.
-
-**Theorem 1.18 (Exact left comparison correspondence).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every left pure reference and every left vector, the infimum over the complete side proper-effect interval equals the original comparison at the ambient vectors. Restriction and retraction extension identify the two confirming-effect value sets exactly.
-
-**Theorem 1.19 (Exact right comparison correspondence).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The same equality of full confirming-effect value sets holds on W for every right pure reference and every right vector.
-
-**Theorem 1.20 (G2 inheritance on the left).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-If the original carrier satisfies G2, the left side satisfies G2 using its complete proper-effect interval. Side witnesses extend to original witnesses, the original common midpoint witness is restricted back, and the pure-lift clauses preserve every pure and mixed quantifier.
-
-**Theorem 1.21 (G2 inheritance on the right).**
-
-Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_right`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_right` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The same argument transports G2 to W with the full right proper-effect interval and the right pure-lift certificate.
+All coordinates use the given normalized real trace carrier. Transport to an earlier arbitrary strictly positive unit requires the separate original unit-preserving cone isomorphism and its full dual transport. The statements here provide mathematical maps and do not assert physical preparation or implementation of those maps. No classification of later real ROG branches and no literature priority is asserted.
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.G2`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.RetractionCertificate`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.RightRetractionCertificate`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_left`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_right`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_right`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.properEffect`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrictEffect`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjective_left`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjective_right`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideCone`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideProperEffect`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.sideUnit`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft_eq_sideCone`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight`
-- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight_eq_sideCone`
-- Dependency: [D5/S3/Quantum/Foundation/WeightedRelationConfirmation](WeightedRelationConfirmation.md)
+- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.real_join_retractions`
+- Dependency: [D5/S3/Quantum/Foundation/CircuitBalancedConfirmation](CircuitBalancedConfirmation.md)
+- Dependency: [D5/S3/Quantum/Foundation/SectionROGFrame](SectionROGFrame.md)
