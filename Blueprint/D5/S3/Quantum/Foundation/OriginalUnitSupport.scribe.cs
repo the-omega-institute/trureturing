@@ -15,7 +15,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             x = F.Id("x"), y = F.Id("y"), z = F.Id("z");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula matrices = Call("Matrix", index, index, field);
-        Formula vectors = Seq(index, To, field);
+        Formula vectors = Seq(index, To, Sp, field);
         Formula linear(Formula target) => Call("LinearMap", real, space, target);
         Formula app(Formula f, Formula a) => Seq(f, Open, a, Close);
         Formula mat(Formula a) => app(rho, a);
@@ -44,7 +44,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             Bracket(Call("FiniteDimensional", real, space)), Sp,
             Bracket(Call("Nontrivial", space)), Sp,
             All("C", Call("PointedCone", real, space),
-                Imp(Eq(Call("span", real, cone), Top),
+                Imp(Eq(Call("span", real, cone), Call("top", Call("Submodule", real, space))),
                     All("u", linear(real),
                         Imp(All("x", space, Imp(Member(x, cone),
                             Imp(Seq(x, Neq, Sp, D(0)), LtF(D(0), app(unit, x))))),
