@@ -170,7 +170,85 @@ An actual vertex has nonempty proper support, so with three coordinates its supp
 
 The identity uses the existing powerset-filter definition of independent configurations, so it partitions all independent subsets, including the empty set. It makes no assertion about maximality or domination, and the finite domain V may be the entire actual vertex set.
 
-The support correspondence, exact cell multiplicities and disjoint family decomposition do not establish log concavity or unimodality of the independence polynomial. Evaluating the family generating functions, identifying the actual independence number and proving uniform coefficient inequalities require further arguments.
+**Definition 1.14 (The actual two-coordinate vertex domain).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.pairDomain`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.pairDomain` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite domain V of actual ring vertices, pairDomain is its subset of vertices whose support has cardinality two.
+
+**Definition 1.15 (The actual domain containing a coordinate).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starDomain`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starDomain` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a coordinate i, starDomain is the subset of V whose supports contain i.
+
+**Definition 1.16 (Removing the singleton cell).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starTailDomain`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starTailDomain` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+starTailDomain removes from starDomain(i) precisely the vertices whose support equals the singleton containing i.
+
+**Theorem 1.17 (The exact native family generating function).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_four_families`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_four_families` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite index type of cardinality three, commutative ring R, nontrivial commutative coordinate rings K(i) without zero divisors, ring equivalence e from R to their product, and finite domain V of actual vertices, the native independence polynomial equals (1+X) to the cardinality of pairDomain, plus the sum over i of the difference between (1+X) to the cardinality of starDomain(i) and (1+X) to the cardinality of starTailDomain(i). The equality is in Polynomial over the integers, so subtraction is integer polynomial subtraction.
+
+The pair family is the full powerset of pairDomain. The star family is the powerset of starDomain with the powerset of starTailDomain removed. The proved disjoint configuration decomposition therefore evaluates using Mathlib's powerset product expansion. The empty configuration occurs once, in the pair family. This is the polynomial defined by the native independent-set sum, without an assumed counting formula.
+
+**Theorem 1.18 (Coefficients count all actual independent subsets).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independent_count_formula`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independent_count_formula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same full hypotheses and for every natural k, the integer cast of the number of native configurations S contained in V with cardinality k is choose(card(pairDomain),k), plus the sum over the three coordinates i of choose(card(starDomain(i)),k) minus choose(card(starTailDomain(i)),k). The differences and sum are taken in the integers, not with truncated natural subtraction.
+
+Each configuration contributes exactly X to the power of its cardinality in the native polynomial. Extracting coefficient k is therefore the cardinality of the filter by cardinality k. Mathlib's coefficient formula for (1+X) to a natural power then gives the displayed binomial expression, including k=0 and ranks above every family size.
+
+**Theorem 1.19 (All six multiplicities in the full ring graph).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_three_coordinates`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_three_coordinates` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let L(0), L(1), L(2) be arbitrary finite nontrivial commutative rings without zero divisors, let R be a finite commutative ring, and specify a ring equivalence from R to their product. Set a=card(L(0))-1, b=card(L(1))-1, c=card(L(2))-1 and y=1+X. On the entire actual vertex domain, the native polynomial is y^(ab+ac+bc) + (y^(a+ab+ac)-y^(ab+ac)) + (y^(b+ab+bc)-y^(ab+bc)) + (y^(c+ac+bc)-y^(ac+bc)).
+
+The proof partitions each actual vertex domain by its nonempty proper support and uses the inverse coordinate-choice bijection to evaluate its fibers. The six supports on three coordinates give pair-domain size ab+ac+bc, and coordinate-i star sizes a+ab+ac, b+ab+bc, c+ac+bc with the corresponding singleton cells removed for the tail domains. This evaluates Rather's Theorem 4.1 formula on actual ring elements. For distinct primes p,q,r the native CRT gives a=p-1, b=q-1, c=r-1, including p=2; no prime upper bound is introduced.
+
+The exact native polynomial and coefficient counts do not establish log concavity or unimodality. Identifying and attaining the actual independence number, proving positivity through that maximum and the zero tail, and proving uniform coefficient inequalities require further arguments.
 
 ## References
 
@@ -181,9 +259,15 @@ The support correspondence, exact cell multiplicities and disjoint family decomp
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.coordinateSupport`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.crt`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.graph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_four_families`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_three_coordinates`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independent_count_formula`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.pairDomain`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.pairFamily`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.prime_support_fiber_card`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starDomain`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starFamily`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.starTailDomain`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.support`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.supportGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.vertexEquiv`
