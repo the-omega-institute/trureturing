@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Continuous real rectangular costs on compact probability spaces satisfy Kantorovich duality. -/
+   digest: Compact probability spaces satisfy real rectangular-cost Kantorovich duality. -/
 
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -24,8 +24,10 @@ Retire this source only when the locally adopted Mathlib pin provides the full e
 arbitrary continuous real rectangular-cost compact probability-space duality theorem.
 -/
 
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import D5.S3.Geometry.ProbabilityTransport.CostCoupling
+module
+
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import D5.S3.Geometry.ProbabilityTransport.CostCoupling
 import Lean
 import Mathlib.Algebra.Order.Module.PositiveLinearMap
 import Mathlib.Algebra.Order.Star.Real
@@ -46,19 +48,20 @@ import Mathlib.Topology.ContinuousMap.CompactlySupported
 import Mathlib.Topology.Order.Compact
 
 
-
-section
-open MeasureTheory
-open scoped BoundedContinuousFunction CompactlySupported ENNReal
-
-namespace CompactKantorovich
-
 /-!
 # Kantorovich duality on compact metric spaces
 
 Strong Kantorovich duality on products of nonempty compact
 metric Borel probability spaces with continuous cost.
 -/
+
+@[expose] public section
+
+section
+open MeasureTheory
+open scoped BoundedContinuousFunction CompactlySupported ENNReal
+
+namespace CompactKantorovich
 
 private abbrev IsCoupling {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
     (μ : ProbabilityMeasure X) (ν : ProbabilityMeasure Y)
@@ -199,6 +202,8 @@ private noncomputable def PhiLM
     intro z
     have h1 : (d + e).1 z.1 = d.1 z.1 + e.1 z.1 := rfl
     have h2 : (d + e).2 z.2 = d.2 z.2 + e.2 z.2 := rfl
+    change (d + e).1 z.1 + (d + e).2 z.2 =
+      (d.1 z.1 + d.2 z.2) + (e.1 z.1 + e.2 z.2)
     simp only [BoundedContinuousFunction.add_apply, h1, h2]
     ring
   map_smul' c d := by
@@ -206,6 +211,7 @@ private noncomputable def PhiLM
     intro z
     have h1 : (c • d).1 z.1 = c • d.1 z.1 := rfl
     have h2 : (c • d).2 z.2 = c • d.2 z.2 := rfl
+    change (c • d).1 z.1 + (c • d).2 z.2 = c • (d.1 z.1 + d.2 z.2)
     simp only [BoundedContinuousFunction.smul_apply, h1, h2, smul_add,
       RingHom.id_apply]
 
@@ -952,7 +958,6 @@ dπ = sup_{φ,ψ} ∫ φ dμ + ∫ ψ dν` over couplings `π` and continuous po
 Source: L. V. Kantorovich, On the Translocation of Masses (1942); English transl. J. Math. Sci. 133
 (2006), 1381-1382, DOI 10.1007/S10958-006-0049-2; modern ref C. Villani, Topics in Optimal
 Transportation (2003).
-
 -/
 theorem kantorovich_duality_compact
     {X Y : Type*}

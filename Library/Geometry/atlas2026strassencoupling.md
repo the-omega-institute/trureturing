@@ -101,14 +101,15 @@ are private. A private abbreviation uses the sole existing
 interfaces. Pinned `BoundedContinuousFunction.mkOfCompact`, finite-measure
 regularity and `Measure.isFiniteMeasure_map` replace duplicate supplier
 constructions. Unused `mkBCF_apply` and `phiPlusPsi_apply` are omitted;
-the latter has no remaining simp-list references. The other retained
+the latter has no remaining simp-list references, and its pointwise evaluation
+is supplied definitionally in the two linearity laws. The other retained
 mathematical proof bodies are unchanged apart from these API adaptations
 and namespace packaging. Lean 4.35.0 and Mathlib revision
 `56a005855ea17e0b0958f73ec801ae140b0a1679` match the supplier; no ATLAS
 Lake dependency is added.
 
 The adapted native source SHA-256 is
-`43744d58c3b1b5caaaa56acd968e93f82a92b0c064d5ee7d6ec1fcabc3d29562`.
+`877f49adc0fd5bc717f2c1ff840d156cca3fa91b6a14967fde5d5a092f537d15`.
 Retire this compact-duality adaptation only when the locally adopted
 Mathlib pin provides the full equivalent arbitrary continuous real
 rectangular-cost compact probability-space theorem. The finite Strassen
