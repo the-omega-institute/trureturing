@@ -1653,4 +1653,487 @@ $\mathcal F_p$ 含 $u$ 且是闭子集，所以非空紧。评价连续，故 (9
 效果集的一致有界性还给 $T_p$ 连续且 Lipschitz；它是非负函数的下包络。
 这些事实只为同域比较提供数学基础，不给实际准备或效果执行。∎
 
+### 9.5 一个纯参照的混态零合并排除所有高次分量
+
+**定理 9.5（全次数有限秩的 zeroGluing—共同 Born 等价）。** 在定义 9.1
+的同一个模型中，假定定理 9.2 的有限条件成立，采用 (9.25) 的共同
+$V,C,K,u,[0,u]$。任选一个完成纯 profile $p_0=\Phi(P_0)$。
+下列三项等价：
+
+$$
+\begin{gathered}
+T_{p_0}(x)=T_{p_0}(y)=0\ \Longrightarrow\
+T_{p_0}((x+y)/2)=0\qquad(x,y\in K);\\
+\text{同一零合并性质对每个纯 }p\in\operatorname {ext}K\text{ 成立};\\
+\exists!\,(E_w)_{w\in\Lambda},\quad E_w\succeq0,\quad\sum_wE_w=I_n,
+\qquad q_w(P)=\operatorname {Tr}(E_wP)\quad(P\in X,w\in\Lambda).
+\end{gathered}
+\tag{9.27}
+$$
+
+此处前两项的 $x,y$ 包含**全部混态**，效果取整个 (9.4) 区间。
+它们等价于 $S=\varnothing$ 或 $S=\{1\}$，不预设 $\mathcal H_1$ 出现，
+不预设二次响应、least confirmer、数值互反、frame-function 律或固定半比较等式。
+
+证明。令 $\mathcal F=V^*\circ\Phi$。定理 9.4 与 (9.9) 已给出精确识别
+
+$$
+\mathcal F=\mathbb R1\oplus\bigoplus_{k\in S}\mathcal H_k,
+\qquad [0,u]\ \longleftrightarrow\
+\{h\in\mathcal F:0\le h(P)\le1\ (P\in X)\}.
+\tag{9.28}
+$$
+
+后一个对应由在纯生成元上的不等式与线性延拓得到，没有额外指定多项式
+系数算子必须 PSD。$L_g$ 的对偶拉回把确认者集合双射到确认者集合，所以
+
+$$
+T_{L_gp}(L_gx)=T_p(x).
+\tag{9.29}
+$$
+
+轨道纯点传递，给出一个参照与全部参照的等价；即使映射尚未证明忠实，
+这个搬运也成立。若 $S=\varnothing$，$K$ 为 singleton，唯一确认者为 $u$，
+$T_p(p)=1$，零集合为空，合并性质真而无非空实例。此时
+$q_w=c_w$、$E_w=c_wI_n$，唯一性由所有秩一投影张成 Hermitian 空间得到。
+下面在非恒定情形排除任何高次分量。
+
+先说明零合并真正给出的效果。固定 $p=p_0$，令
+$D_p=\{x\in K:T_p(x)=0\}$。若 $D_p=\varnothing$，$a=u$ 的零集恰为它。
+否则从 $D_p$ 选有限个点 $x_1,\ldots,x_s$ 张成其线性张成。
+从 $x_1$ 开始依次与下一个 $x_i$ 取中点，零合并保证每一步仍在 $D_p$。
+所得 $z$ 是所有 $x_i$ 的严格正权 dyadic 凸组合。
+由最小值达到，存在 $a\in\mathcal F_p$ 使 $a(z)=0$。
+每个 $a(x_i)\ge0$，故全部为零，线性性进而使 $a$ 消去整个 $D_p$。
+反向若 $a(x)=0$，则 $0\le T_p(x)\le a(x)=0$。所以
+
+$$
+D_p=K\cap\ker a,\qquad a\in[0,u],\quad a(p)=1.
+\tag{9.30}
+$$
+
+这是一张效果暴露的整个零面；没有推出 $a$ 在正锥上小于所有其它确认者。
+下面只使用 (9.30)，不把这个阶段的 $a$ 当作 least confirmer。
+
+接着证明每个 $k\ge2$ 分量的 distinct-ray 切方向零交。
+为此把 (9.15) 的核写成
+$R_k(P,Q)=Z(\operatorname {Tr}(PQ))$，其中 $Z$ 是非零实次数 $k$ 多项式；
+其尺度在这里无关。对固定 $P$，$t=\operatorname {Tr}(PQ)$ 的不变分布为
+
+$$
+\int_XF(\operatorname {Tr}(PQ))\,d\nu(Q)
+=(n-1)\int_0^1F(t)(1-t)^{n-2}\,dt.
+\tag{9.31}
+$$
+
+这由复球面的第一坐标切片积分得到：固定模平方 $t$ 后，其余 $n-1$ 个复
+坐标的球面体积给 $(1-t)^{n-2}$，归一化积分给系数 $n-1$。
+$t^\ell$、$\ell<k$ 属于低次 balanced 多项式空间，所以 $Z$ 对这个正权与所有
+低于 $k$ 次的多项式正交；这也正是 (9.15) 的 Jacobi 多项式。
+若其在 $(0,1)$ 内少于 $k$ 个变号根，把这些根的不同线性因子相乘得到低次
+多项式，与 $Z$ 的乘积在内部有固定非零符号，正权积分不可能为零。
+所以 $Z$ 有恰好 $k$ 个 distinct 内根，全部简单。Rolle 定理及次数给
+$Z'$ 恰有 $k-1$ 个 distinct 根 $r_1,\ldots,r_{k-1}\in(0,1)$。
+
+迹一秩一投影 $P=pp^*$ 的任意非零实切向量写成
+
+$$
+A=pv^*+vp^*,\qquad p^*v=0,\quad v\ne0.
+\tag{9.32}
+$$
+
+$A$ 的两个非零特征值为 $\pm\|v\|$，故秩为二。
+在再生核内积下，评价嵌入在此方向的微分由函数
+
+$$
+Q\longmapsto Z'(\operatorname {Tr}(PQ))\operatorname {Tr}(AQ)
+\tag{9.33}
+$$
+
+表示。令 $Q=zz^*/\rho$、$\rho=z^*z$，乘 $\rho^k$ 后，它变成非零常数乘
+
+$$
+(z^*Az)\prod_{i=1}^{k-1}z^*(P-r_iI)z.
+\tag{9.34}
+$$
+
+每个因子为非零多项式，故乘积非零，微分没有非零核。
+若 $P,Q$ 的两个非零微分向量相等，把实比例吸收到相应 $A,B$ 中，得到
+
+$$
+(z^*Az)\prod_{i=1}^{k-1}z^*(P-r_iI)z
+=(z^*Bz)\prod_{i=1}^{k-1}z^*(Q-r_iI)z.
+\tag{9.35}
+$$
+
+它对所有复 $z$ 成立。写 $z=x+it$、$\bar z=x-it$，这是实坐标多项式恒等式；
+在复系数中作可逆线性变量替换，可视为独立变量 $y,z$ 的恒等式，
+把 $z^*Mz$ 换成 $y^{\mathsf T}Mz$。环 $\mathbb C[y_1,\ldots,y_n,z_1,\ldots,z_n]$
+是唯一分解整环。秩至少二的双线性多项式 $y^{\mathsf T}Mz$ 不可约：
+双齐次次数 $(1,1)$ 迫使非平凡分解是一条 $y$ 线性式乘一条 $z$ 线性式，
+那就只有秩一。这里 $A,B$ 秩二，$P-r_iI,Q-r_iI$ 因 $0<r_i<1$ 而满秩 $n$，
+所以所有显示因子都不可约。
+
+从左边选一个 shifted-projector 因子；$k\ge2$ 保证至少有一个。
+唯一分解迫使它正比于右边的 $B$ 或某个 $Q-r_jI$。
+因 $n\ge3$，秩区别排除 $B$。若
+$P-rI=c(Q-sI)$，则
+
+$$
+P-cQ=(r-cs)I.
+\tag{9.36}
+$$
+
+左边秩至多二，右边非零时秩为 $n$，故 $r=cs$、$P=cQ$；取迹得 $c=1$，
+于是 $P=Q$，矛盾。因子及其重数都已由唯一分解控制，不需要假设两个切矩阵
+本身不成比例；正交的不同射线也没有例外。因此对第 $k$ 评价嵌入 $\phi_k$，
+
+$$
+d\phi_k|_P(T_PX)\cap d\phi_k|_Q(T_QX)=\{0\}\qquad(P\ne Q,k\ge2).
+\tag{9.37}
+$$
+
+同一分解还证明任一非恒定分量的评价忠实性：若 $\phi_k(P)=\phi_k(Q)$，
+则核函数相等。用 $Z$ 本身的 $k$ 个内根齐次化，得到只有
+$P-s_iI$ 与 $Q-s_iI$ 的两组满秩因子。唯一分解与 (9.36) 迫使 $P=Q$。
+这对 $k\ge1$ 都适用；$k=1$ 也就是普通投影嵌入。
+若整个 $\mathcal F$ 含任意一个高次 $\mathcal H_k$，投影到它便是上述评价及
+微分。每个非零切向量的此投影非零，所以完整 $\Phi$ 忠实、浸入，且
+
+$$
+d\Phi_P(T_PX)\cap d\Phi_Q(T_QX)=\{0\}\qquad(P\ne Q).
+\tag{9.38}
+$$
+
+这个证明没有使用 $\mathcal H_1$，故覆盖缺失一次分量及任意有限高次集合。
+
+现在以 (9.38) 和 (9.30) 导出矛盾。假设 $S$ 至少含一个 $k\ge2$。
+令 $m=\dim_{\mathbb R}X=2(n-1)$，固定 $P=P_0$、$p=\Phi(P)$，在定理 9.4
+的不变内积中取
+
+$$
+g_0(Q)=\langle p,\Phi(Q)\rangle\in\mathcal F,
+\qquad
+g_0(P)-g_0(Q)=\tfrac12\|\Phi(P)-\Phi(Q)\|^2.
+\tag{9.39}
+$$
+
+忠实性给 $P$ 是唯一全局最大点，浸入给其 Hessian 为
+$-(d\Phi_P)^*d\Phi_P$，负定。令
+
+$$
+\mathcal D_P:\mathcal F\longrightarrow T_P^*X,\quad
+\mathcal D_Ph=dh(P),\qquad
+L=\ker\mathcal D_P,\quad D=\dim L=\dim\mathcal F-m.
+\tag{9.40}
+$$
+
+浸入保证 $\mathcal D_P$ 满射，且 $g_0,1\in L$、$g_0$ 非恒定。
+存在 $L$ 中零的非空开邻域 $U$，使每个 $g_h=g_0+h$、$h\in U$ 仍以 $P$
+为唯一非退化全局最大点。具体地，在以 $P$ 为中心的凸坐标小球上，缩小球
+使 $g_0$ 的坐标 Hessian 一致负定；足够小的 $C^2$ 扰动保留此界，
+$dh(P)=0$ 保留驻点。在更小球的紧补集上，(9.39) 的严格最大间隙为正，
+足够小的 $C^0$ 扰动保留间隙。有限维范数等价同时满足两个小量条件，得到
+所述 $U$。这里没有选择或微分极小点。
+
+令 $a$ 为 (9.30) 的单一暴露效果，置
+
+$$
+r(Q)=a(\Phi(Q)),\qquad N=\{Q\in X:r(Q)=0\}.
+\tag{9.41}
+$$
+
+有限调和和是射线坐标上的实解析函数，$r(P)=1$，故 $r$ 非零；$X$ 连通，
+$N$ 没有内点，且不含 $P$。对任意 $h\in U$，令
+$m_h=\min_Xg_h$、$M_h=g_h(P)$。紧性使极值达到，负定 Hessian 使
+$M_h>m_h$。函数
+
+$$
+b_h=\frac{g_h-m_h}{M_h-m_h}\in\mathcal F,\qquad 0\le b_h\le1,\qquad b_h(P)=1
+\tag{9.42}
+$$
+
+在整个 $X$ 合法，故由 (9.28) 是**同一个全 proper interval** 的确认者。
+其每个全局极小点 $Q$ 都给 $T_p(\Phi(Q))=0$，于是属于 $N$。
+$X$ 无边界，所以此 $Q$ 满足 $dg_h(Q)=0$。
+特别取 $h=0$ 也说明非恒定情形的 $D_p,N$ 非空。
+
+对任意 $Q\ne P$，导数映射
+
+$$
+L\longrightarrow T_Q^*X,\qquad h\longmapsto dh(Q)
+\tag{9.43}
+$$
+
+满射。否则存在非零 $v\in T_QX$ 消去其像，则
+$d\Phi_Q(v)\in\mathcal F^*$ 消去 $\ker\mathcal D_P$，因此属于
+$\operatorname {im}\mathcal D_P^*=d\Phi_P(T_PX)$。
+浸入保证它非零，与 (9.38) 矛盾。这是将 distinct-ray 切方向结论接到
+全参数扰动的线性代数步骤。
+
+为完整控制 $N$，只需一个可数光滑超曲面覆盖，不必另假设一般位置。
+取 $X\setminus\{P\}$ 的可数实解析坐标图。在 $r(Q)=0$ 的每一点，解析性和
+非恒等零性保证某个有限阶导数非零。选择最小这样的阶数及多重指标 $\alpha$；
+取 $\alpha_i>0$，令 $\beta=\alpha-e_i$。则
+$\partial^\beta r(Q)=0$，而其第 $i$ 个一阶偏导非零。
+所以 $Q$ 落在
+$\{\partial^\beta r=0,\ \nabla\partial^\beta r\ne0\}$ 的一个光滑超曲面上。
+坐标图和多重指标均可数，给 $N$ 的可数 $(m-1)$ 维光滑超曲面覆盖 $H_j$，
+每个都在 $X\setminus\{P\}$ 内；这些面不必全部包含于 $N$。
+
+在 $U\times H_j$ 上用局部余切坐标写出 incidence 集
+
+$$
+\mathcal I_j=\{(h,Q):d(g_0+h)(Q)=0\}.
+\tag{9.44}
+$$
+
+这些是 $m$ 个光滑方程，其对 $h$ 的导数由 (9.43) 满射。
+隐函数定理使非空的 $\mathcal I_j$ 局部为维数
+$D+(m-1)-m=D-1$ 的光滑流形。负的维数意味着空集，没有低维例外。
+所有空间第二可数，故有可数坐标覆盖。
+一个维数 $d<D$ 光滑流形到 $\mathbb R^D$ 的光滑映射，其像有 $D$ 维零测度：
+在每个紧坐标立方上导数有界，映射 Lipschitz；用边长 $\delta$ 的小立方覆盖，
+外体积至多常数乘 $\delta^{D-d}\to0$，再取可数并。
+应用于投影 $(h,Q)\mapsto h$，各 $\mathcal I_j$ 的投影均为 $D$ 维零测集。
+然而 (9.42) 保证每个 $h\in U$ 至少有一个在 $N\subseteq\bigcup_jH_j$ 内的
+全局驻点极小值，迫使非空开集 $U$ 包含在这些零测投影的可数并中，矛盾。
+证明完全不要求极小点唯一、非退化，或能随 $h$ 光滑选择。
+
+所以任何高次分量都被排除。非恒定分支只能为 $S=\{1\}$。
+由 $\mathcal H_0\oplus\mathcal H_1$ 的 Hermitian 二次型表示，每个 $q_w$ 唯一写成
+$\operatorname {Tr}(E_wP)$、$E_w=E_w^*$。所有射线上的非负性给 $E_w\succeq0$，
+归一化给 $\sum_wE_w=I$，因为秩一投影张成全部 Hermitian 空间。
+这证明共同 POVM；零响应对应零算子，标签没有被删除。
+
+反向，若已有共同 POVM 且有非标量成员，同锥矩阵对应与最小确认的详细对象
+见下一个定理：$K$ 对应 $\mathcal D_n$，且
+$T_{\Phi(P)}(\Psi(\rho))=\operatorname {Tr}(P\rho)$。
+因此分别为零的任意两个混态，其平均仍由同一个 $P$ 效果置零，给全体参照的
+零合并。全为标量时已在开头处理。反向没有调用四前缀关系，也没有把
+native VII9 的更强 fixed-half 规律用作正向前件。∎
+
+### 9.6 Born 后的原锥字典与任意混态区分上界
+
+**定理 9.6（两个分支的准确秩与容量）。** 在定理 9.5 的等价条件下，标量分支为
+$E_w=c_wI$、$K$ singleton，$(r_{\rm fut},\operatorname {Cap}K)=(1,1)$。
+非恒定分支在同一个行模型上有实线性序同构
+
+$$
+\begin{aligned}
+\Psi:\operatorname {Herm}_n&\longrightarrow V,\\
+Z&\longmapsto\left(\operatorname {Tr}Z,
+\left(\operatorname {Tr}(E_wK_fZK_f^*)\right)_{f,w}\right),\\
+\Psi(\operatorname {PSD}_n)&=C,\qquad
+\Psi(\mathcal D_n)=K,\qquad u\Psi=\operatorname {Tr},\\
+\mathcal D_n&=\{\rho\succeq0:\operatorname {Tr}\rho=1\},\qquad
+[0,u]\longleftrightarrow\{F=F^*:0\preceq F\preceq I\}.
+\end{aligned}
+\tag{9.45}
+$$
+
+特别地
+
+$$
+r_{\rm fut}=n^2,\qquad \operatorname {Cap}(K)=n,\qquad
+T_{\Phi(P)}(\Psi(\rho))=\operatorname {Tr}(P\rho).
+\tag{9.46}
+$$
+
+证明。序同构部分直接复用 native [VII26.2、VII26.4][VII9C] 的 Born 后论证，
+在此对应为：原 Hermitian 变量 $Z$，原全 future 共轭 $K_fZK_f^*$，共同效果
+$E_w$，星单位为迹，纯行 $\Phi(P)=\Psi(P)$。一般参数 $d$ 取这里的 $n$；
+该论证不再需要任何 native 事件标定。具体地，非标量 $E_w$ 的非零迹零部分
+之共轭轨道张成全部迹零 Hermitian 空间；actual future 密度与有限维闭性给同一
+张成。星坐标补上迹，所以 $\Psi$ 单射。秩一投影张成 Hermitian 空间，使其像
+恰为原 $V$；谱分解使整个密度基及 PSD 锥恰映到原 $K,C$。
+在每个正秩一投影上检验 $0\le e\le u$，迹配对恰给 $0\le F\le I$。
+故这是同一生成锥和**所有** proper effects 的识别，而不是换锥或改用系数 PSD
+菜单。$\dim\operatorname {Herm}_n=n^2$ 给准确行秩。
+
+若 $F$ 确认秩一 $P=pp^*$，则
+$\langle p,(I-F)p\rangle=0$ 和 $I-F\succeq0$ 给 $Fp=p$。
+Hermitian 性消去与 $p^\perp$ 间的块，故 $F=P\oplus F_\perp\succeq P$。
+$P$ 自己是 admissible 效果，因而对任意混态 $\rho$ 的最小值恰为
+$\operatorname {Tr}(P\rho)$。此时才得到 least confirmer、互反与完整 fixed-half
+比较，全部是 Born 分支的后果。
+
+一个正交基的 $n$ 个纯投影与同名投影测量给容量至少 $n$。
+为证明任意混态上界，设一个共同测量以 $F_i$ 区分密度矩阵
+$\rho_1,\ldots,\rho_m$，每个 $\rho_i$ 迹一、非零。
+从 $\operatorname {Tr}(F_i\rho_i)=1$ 和 $I-F_i\succeq0$，可用谱分解的各个正权项
+得到 $F_i$ 在 $\operatorname {supp}\rho_i$ 上为恒等；从
+$\operatorname {Tr}(F_i\rho_j)=0$、$F_i\succeq0$ 得它在
+$\operatorname {supp}\rho_j$ 上为零（$j\ne i$）。因此若
+$v\in\operatorname {supp}\rho_i$、$w\in\operatorname {supp}\rho_j$，
+
+$$
+\langle v,w\rangle=\langle F_iv,w\rangle=\langle v,F_iw\rangle=0.
+\tag{9.47}
+$$
+
+这些非零支持子空间两两正交，故 $m\le n$，包括带正余项的测量。
+这证明 arbitrary mixed-state 容量恰为 $n$，而非只证明纯样本的上界。
+标量分支的共同像是一条射线，其 trace-one 基只有一点，容量一。
+所以在 $n\ge3$ 的非恒定 Born 分支，容量 $n$ 与行秩 $n^2$ 已明确不同。
+有限容量单独只给定理 9.2，不选择 gluing 或 Born；例如 native VII11.2 的
+$q(P)=\operatorname {Tr}(BP)^2$ 与 $1-q$ 保持连续归一及有限秩，却不是 Born，
+所以由定理 9.5 也不满足同域全效应零合并。∎
+
+### 9.7 原八十九维未知响应的条件入口
+
+**推论 9.7（joint R10、UR、全容量与 ready 零合并的原生消费者）。** 固定本卷
+定义 1.1–1.4、8.1 的同一个唯一 $\Omega$、$\mathcal K=V_{12}^{\mathbf1}$、
+原 $89$ 条路径、$26+63$ 分解、唯一 $e_0=R_0v$，以及全部原旧标签
+$\Lambda=\Omega_{10}=\{0,1\}^{10}$。原 $\pi$ 仍删除 $b_9$；$N_w$ 仍为
+$34$ 个秩二、$21$ 个秩一、$969$ 个零投影，所有 $1024$ 标签保留。
+预终端 future 始终取全部 $\mathsf W_{11}$，$K_{af}=K_fK_a$。
+对于未知的实际归一终端律 $p_w(a)$，从一开始采用共同的全标签行
+
+$$
+X_a=\bigl(1,(p_w(af))_{f\in\mathsf W_{11},w\in\Lambda}\bigr),
+\tag{9.48}
+$$
+
+并另供 joint 条件
+
+$$
+\begin{aligned}
+p_w(aj^{10}f)&=p_w(af)
+ &&(a,f\in\mathsf W_{11},\ j=0,\ldots,10,\ w\in\Lambda),\\
+P_{a_k}\to P_e&\ \Longrightarrow\
+\sup_{f\in\mathsf W_{11},w\in\Lambda}|p_w(a_kf)-p_w(f)|\to0
+ &&\text{对每列实际有限字 }(a_k).
+\end{aligned}
+\tag{9.49}
+$$
+
+原 projective 密度按 native III144／VII10 的同一矩阵供应保留。
+由 (9.49) 下降得到的连续 $q_w$ 定义 (9.2)–(9.4) 的模型后，再另供其中一个
+完整像商上的 $\operatorname {Cap}(K_a)<\infty$，以及共同有限 body 的 ready
+$p_0=\Phi(P_e)$ 上的 (9.27) 混态零合并。则全部未知响应有唯一共同 POVM，
+且原实际四前缀满足
+
+$$
+X_\epsilon+X_{9^5}=X_9+X_{9^6}.
+\tag{9.50}
+$$
+
+非恒定条件分支的准确联合行秩为 $7921$，全区间区分容量为 $89$。
+标量分支仍为 $(1,1)$，不被数学定理先行删除。
+
+证明。native VII25.1 的无秩连续下降，按 VII26.4 的联合版本使用，
+在同一个 $\ell^\infty(\{\star\}\sqcup(\mathsf W_{11}\times\Lambda))$ 上给
+$p_w(a)=q_w(P_a)$ 及范数连续的 $\Phi$。其值域最初只需放在实际行空间的
+Banach 闭包。有限标签使各坐标的连续下降组成共同连续归一律，实际概率
+非负及归一化由稠密性延拓到整个 $X$。矩阵 $K_j^{10}=I$ 没有替代
+(9.49) 的统计 R10，逐 future 回返也没有替代它的全未来上确界 UR。
+
+对 $n=89$ 应用定理 9.2，任一上述完整像商的有限容量给有限 $S$ 与有限实际
+联合行秩。定理 9.4 随即识别两个模型的 $K,C,V,[0,u]$ 及实际行完成，
+所以 ready gluing 正好在定理 9.5 所需同域上。它给共同唯一 $E_w$；
+定理 9.6 给 $89^2=7921$、$89$ 或标量分支值。
+此入口不假定独立 finite-rank shortcut，也不使用 §8 的预置 Born summand
+或 additive-body 假设。
+
+**在已经得到 Born 后**，直接消费 native VII17.1 的 (17.4)–(17.6)。
+四个实际前缀 $\epsilon,9^5,9,9^6$ 的射线为
+$P_k=\psi_k\psi_k^*$、$k=0,5,1,6$，其中
+
+$$
+\psi_k=a\widehat e_-+b\zeta^k\widehat e_+,\qquad
+a=\varphi^{-1},\quad b=\sqrt{\varphi^{-1}},\quad a^2+b^2=1,quad
+\zeta=e^{3\pi i/5}.
+\tag{9.51}
+$$
+
+$\widehat e_\pm$ 仍是那个原 $K_9$ 块的正交谱方向；它们不是新 ready 或
+新准备口。$\zeta^5=-1$、$\zeta^6=-\zeta$，所以展开原投影得到
+$P_0+P_5=P_1+P_6$。对每个**同一个**实际 $K_f$ 共轭并与每个同一个 $E_w$
+迹配对，才得到所有 $f,w$ 上的 (9.50)，星坐标为 $2=2$。
+这不是在证明高次排除前借用未知行等式。
+
+(9.50) 正好供应 native VII26.4 的联合无秩入口，所得共同完成、全 proper
+区间和任意混态比较与 (9.45) 是同一对象，故可继续接 VII28.1–28.2。
+VII26.4 的无独立秩 classifier 保持其原范围；本推论只增加容量加零合并这一
+充分供应路线，不重证它，也不声称这条路线逻辑更弱或取得成本更低。
+沿 VII28 消费静态 PRE 包、同源联合接口、中央 CP／仪器及动态结论时，其
+全部原前件仍须共同成立，不能由终端 Born 代付。∎
+
+### 9.8 维数、文献及实际来源的精确边界
+
+**定义 9.8（维数边界与结果出处）。** 本节的容量等价及全次数选择均限定
+$n\ge3$。$n=2$ 时 (9.16) 的 $\alpha=0$，正交射线的归一核为 $(-1)^k$，
+不能由内部 Darboux 界或本节支配收敛证明 (9.18)；本节不主张该维数的
+容量—秩等价。零合并选择本身在二能级确有实质障碍：直接复用 native
+VII11.1，以 Bloch 向量 $r\in S^2$ 的 $q(r)=r_z^2$、$1-q(r)$ 为响应，
+profiles 识别 $r$ 与 $-r$，同一基是实 $3\times3$ 密度矩阵，秩六。
+其全 proper 确认为 $T_{rr^{\mathsf T}}(Y)=\operatorname {Tr}(rr^{\mathsf T}Y)$，
+故对任意混态满足零合并，但非恒定偶函数不是复 qubit 的 Born 效果。
+这同时说明 (9.35) 中满秩与秩二的区别不可删。$n=1$ 则射线域只有一点，
+所有归一响应恒定，只得标量 $(1,1)$；不是非恒定矩阵分支。
+
+本节的 `repo-derived` 承重内容为：两个实际像商上的无限活跃 atom-recovery／
+共同区分与有限容量等价，完成域和不连续全效应的分离，以及零合并的单面暴露、
+任意高次的 distinct-ray 切方向零交与极小值 incidence 矛盾，最后把两者接到
+原联合消费者。以下已知工具只在这些推导内部使用，不作为新增的经典定理：
+
+| 数学来源 | 本节的准确对象及消费 | 不能替代的前件或结论 |
+| --- | --- | --- |
+| [native II78.3、II78–84][II9C] | 实际有限子矩阵秩、dense-ready 评价、有限 balanced 表示及多项式维数；只把一般表示参数改为 $n$ | II 的原载体是 $13$ 维；其数值、七地址和旧 predictive-capacity 用语不能替换 native89 的十一地址区分容量 |
+| [Galley–Masanes, 1610.04859v3, §§2.2–2.3, Results 2–3, (16)][GM9C] | 有限连续 projective-orbit 表示、实型维数及 unrestricted-effects 背景；与 (9.9)、(9.28) 对应 | 原文有限 mixed-state 参数是前件；它没有代证这里的无秩有限容量推有限秩 |
+| [Moretti–Pastorello, 1205.4504v2, Theorem 5、Proposition 9][MP9] | 球面双次数的 $L^2$ 分解、不可约、互不等价与归一 character 投影；只消费相位不变 $(k,k)$ | 不使用其 frame-function／全正交基概率定理；不把 $L^2$ 分解升级为原始级数一致收敛 |
+| [Koornwinder, *The Addition Formula for Jacobi Polynomials and Spherical Harmonics*, §3, (3.2)][K9] | 复环境维数 $q=n$、次数 $k$ 的 projective kernel，除以对角值后为 (9.15)；DOI 10.1137/0125027 | 核公式不自带像商 singleton 效果或容量结论 |
+| [NIST DLMF §18.15(i), 18.15.4_5][D9I]；[§18.6, Table 18.6.1][D9E] | 固定参数、离开端点的 Darboux 渐近；独立使用 Jacobi 对角端点值及参数交换对称式 | 内部估计不能覆盖正交端点，$\alpha=n-2\ge1$ 是此处收敛的条件 |
+| [Masanes–Galley–Müller, 1811.11060v2, Appendix A Lemmas 5、7][MGM9] | 单系统 scalar multiplicity-free／对称幂分解，经 II78 的已给接口使用 | 完整 measurement theorem 另需跨系统 OPF、(7)–(14) 的相容 associative star product 与有限 state estimation；本节没有调用它来支付复合、更新或 acquisition |
+| [native VII9、VII11、VII17、VII25–26、VII28][VII9C] | 保留 stronger fixed-half 路线和二能级控制；复用无秩连续下降、四个实际前缀、Born 后同锥字典及完整条件消费者 | fixed-half、四前缀未知行关系或预置二次律均未用来代付 (9.30)–(9.44) 的正向证明 |
+
+**定义 9.9（原合同的共同适用域与仍缺的供应）。** 推论 9.7 是未知终端响应的
+条件数学入口，完整原量子起源目标仍保留以下不同类型的义务。
+
+首先，有限区分容量是**所声明整个像商、整个 proper interval、同一个共同测量、
+任意完成混态**上的条件。只有原有限读出菜单的容量界，或只有实际纯准备的
+容量界，均不支付它。若要把这个数学原则解释为原生操作原则，还需相应状态、
+全效果及共同测量的实际 realization／completeness 桥；也可把它直接作为新的
+条件模型前件，但不能称已由有限标签、有限 Hilbert 参数、有限精度或 UR 得到。
+零合并又是同一完成 body 的独立供应；有限容量给有限秩与达到的最小值，不给
+零合并。单标签 support、选定菜单测试、纯端点测试或 PSD 系数效果测试都不能
+替代其全混态全效果量词。
+
+其次，共同唯一 $E_w$ 仍未等于指定的原 $N_w$。各标签的原实际事件不变性、
+support、calibration 与 source-adoption 关系必须另行供应。若保留原 support
+而 $N_w=0$，该标签在全部实际字上为零，由下降连续性和稠密性可得 $q_w=0$、
+$E_w=0$；这说明保留 $969$ 个零标签的相容性，不是由归一化或共同 POVM 自动
+推回该 support。标量分支与实际非平凡校准是否相容也由那些原合同决定。
+原 $26$ 维代码、全部 $63$ 维补空间、$J$、$R_0v$、$M_i$、旧 $\pi$ 删除
+$b_9$ 和全部 $1024$ 标签都不因数学表示而更换。
+
+再次，$\mathsf T(af)$ 的十一地址、无中途记录 future 不能取代
+$\mathsf R(a,h)$ 的七地址记录后 future。原 locality、unread invariance、ready
+充分性、可读 history、保留 records、一般可测 archive、正质量分支的条件律及
+实际后继继续使用本卷 §5 和 VII28 的原合同。零质量不定义条件纯态；失败、
+拒绝、停止、alarm 和零结果保持在原 typed 完整结果空间，不作成功后选择。
+将可查询程序档案加入 future 会改变本模型的列域；native II83.2 已说明精确
+程序查询可产生无穷 rank，所以终端 rank 和容量不能无条件转移到该扩展。
+
+最后，所有对象仍在同一个唯一 $\Omega$ 的原 source/process 合同中使用。
+本节从已给复射线、内积与原酉门作用出发，不推导复数域、相干初态或这些门
+的起源；也不自动供应独立 copy／reference、张量联合、CP 仪器、活动 Return、
+物理时钟、Hamiltonian、$\hbar$ 或 units。群闭包、Haar 平均、实线性组合、
+测度重心、多项式变量及全对偶是证明对象，不是额外控制、抹除档案、免费随机源
+或新资源。原有限取得、累计相干误差、失败预算、可靠重复、抽样／置信和真实
+调用时间仍按本卷 5.3 及各消费者原来源计入。几何 rank-three、原 Hilbert
+维数 $89$、行秩 $7921$ 与 physical three-space 是不同量，本节没有将它们识别。
+§§1–8 的端点／保留读和 finite-fiber 加性结果仍各守自己的前件；本节不解决
+8.15 的 exact fine-zero-only 残余，也不把独立几何源中的条件结果充当本节供应。
+
+[II9C]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md#78-原生全未来矩阵与连续射线函数空间
+[VII9C]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md
+[MP9]: https://arxiv.org/html/1205.4504v2
+[GM9C]: https://arxiv.org/html/1610.04859v3
+[MGM9]: https://arxiv.org/html/1811.11060v2
+[K9]: https://staff.fnwi.uva.nl/t.h.koornwinder/art/1973/AdditionJacobiSphHarm.pdf
+[D9I]: https://dlmf.nist.gov/18.15#i
+[D9E]: https://dlmf.nist.gov/18.6#T1
+
 ## 追加锚（本行以下为增补区）
