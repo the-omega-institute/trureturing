@@ -27,7 +27,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The complete conjectural conjunction"), StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The rectangle theorem below does not prove this conjunction: the signed normalization fibres and their counts remain to be established."))),
+                Blocks(Paragraph(Text("FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. X denotes PowerSeries.X over the rationals. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The rectangle theorem below does not prove this conjunction: the signed normalization fibres and their counts remain to be established."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("proper"), DeclarationHandle.Create(Prefix + "Proper"),
                 H("Labelled proper pair-colourings"), StatementSource.FromAuthor(Disp(ProperFormula())),
@@ -87,8 +87,8 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var denominator=Mul(Sub(D(1),Mul(D(6,4),x)),Sub(D(1),Mul(D(1,2,8),x)));
         var gf=Seq(Eq(series,Mul(numerator,Pow(denominator,new Formula.Negate(Num(1))))),Sp,Name("in"),Sp,Call("PowerSeries",V("Rat")));
         var closed=All("n",V("Nat"),Imp(Le(D(2),n),Eq(A(n),Mul(Pow(D(6,4),Sub(n,D(1))),Add(Pow(D(2),n),D(6,0))))));
-        var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Seq(A(n),Colon,Sp,V("Int")),
-            Sub(Mul(D(1,9,2),Seq(A(Sub(n,D(1))),Colon,Sp,V("Int"))),Mul(D(8,1,9,2),Seq(A(Sub(n,D(2))),Colon,Sp,V("Int")))))));
+        var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Par(Seq(A(n),Colon,Sp,V("Int"))),
+            Sub(Mul(D(1,9,2),Par(Seq(A(Sub(n,D(1))),Colon,Sp,V("Int")))),Mul(D(8,1,9,2),Par(Seq(A(Sub(n,D(2))),Colon,Sp,V("Int"))))))));
         return Iff(Call("claim"),And(Eq(A(D(1)),D(2,3,6)),And(gf,And(closed,recurrence))));
     }
 
