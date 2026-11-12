@@ -71,6 +71,9 @@ theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
       (IsPerfectPairing U)).card =
       ∑ b ∈ U.erase a, ((Finset.univ : Finset (Finset (Finset α))).filter
         (IsPerfectPairing ((U.erase a).erase b))).card := by
+  have hsupp (e : Finset α) : pairingSupport {e} = e := by
+    change (({e} : Finset (Finset α)).biUnion fun d => d) = e
+    rw [Finset.biUnion_singleton]
   have hrem (b : α) : U \ {a, b} = (U.erase a).erase b := by
     ext i
     simp only [Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton, Finset.mem_erase]
@@ -96,8 +99,7 @@ theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
       (b : α) (hb : {a, b} ∈ P) :
       IsPerfectPairing ((U.erase a).erase b) (P.erase {a, b}) := by
     have hh := (pairing_remainder hP (Finset.singleton_subset_iff.mpr hb)).2
-    simpa only [pairingSupport, Finset.biUnion_singleton, id_eq, hrem b,
-      Finset.sdiff_singleton_eq_erase] using hh
+    simpa only [hsupp, hrem b, Finset.sdiff_singleton_eq_erase] using hh
   have hInsert (b : α) (hb : b ∈ U.erase a) (Q : Finset (Finset α))
       (hQ : IsPerfectPairing ((U.erase a).erase b) Q) :
       IsPerfectPairing U (insert {a, b} Q) := by
@@ -116,9 +118,9 @@ theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
         subst e
         simp [hab]
       · simp
-      · simpa only [pairingSupport, Finset.biUnion_singleton, id_eq] using hsub
+      · simpa only [hsupp] using hsub
     have hQ' : IsPerfectPairing (U \ pairingSupport {{a, b}}) Q := by
-      simpa only [pairingSupport, Finset.biUnion_singleton, id_eq, hrem b] using hQ
+      simpa only [hsupp, hrem b] using hQ
     simpa only [Finset.singleton_union] using (pairing_join hE hQ').1
   let S := (Finset.univ : Finset (Finset (Finset α))).filter (IsPerfectPairing U)
   let Z := (U.erase a).sigma (fun b =>
