@@ -10,6 +10,7 @@ import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import D5.S3.Quantum.Foundation.FinitePureSimplex
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.Analysis.Convex.Radon
+import Batteries.Tactic.OpenPrivate
 
 /-!
 The full-base and segment-face branches of the arbitrary-pure low-dimensional argument. The
@@ -195,8 +196,10 @@ private theorem small_pure_hull_face
     have he := (mem_extremePoints_iff_forall_segment.mp (f k).property).2
       (f i) (f i).property.1 (f j) (f j).property.1 hk
     rcases he with hi | hj
-    · exact Finset.mem_pair.mpr (Or.inl (hf (Subtype.ext hi)).symm)
-    · exact Finset.mem_pair.mpr (Or.inr (hf (Subtype.ext hj)).symm)
+    · simp only [Finset.mem_insert, Finset.mem_singleton]
+      exact Or.inl (hf (Subtype.ext hi)).symm
+    · simp only [Finset.mem_insert, Finset.mem_singleton]
+      exact Or.inr (hf (Subtype.ext hj)).symm
 
 private theorem small_pure_family_independent
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
@@ -224,7 +227,8 @@ private theorem small_pure_family_independent
       have hsum : I.toFinset.card + Iᶜ.toFinset.card = Fintype.card ι := by
         simpa using Finset.card_add_card_compl I.toFinset
       omega
-    exact hside Iᶜ hIc hzIc (by simpa using hzI)
+    apply hside Iᶜ ?_ hzIc (by simpa using hzI)
+    convert hIc using 1 <;> congr 1 <;> ext i <;> simp
 
 /-- The segment-face branch of VII98.7 starts with the entire arbitrary pure
 set. Radon forces it to be finite and affinely independent in affine dimension
@@ -259,15 +263,17 @@ theorem segment_faces_lowdim_antipodes
   letI : Fintype (pure C u) := Fintype.ofFinite _
   have hcard : Fintype.card (pure C u) ≤ 4 := by
     by_contra hn
-    have hle : Fintype.card (Fin 5) ≤ Fintype.card (pure C u) := by simpa using hn
-    let f := Fintype.embeddingOfCardLE hle
+    have hle : Fintype.card (Fin 5) ≤ Fintype.card (pure C u) := by
+      simp only [Fintype.card_fin]
+      omega
+    obtain ⟨f⟩ := Function.Embedding.nonempty_of_card_le hle
     exact hnofive f f.injective
   have hai : AffineIndependent ℝ (fun p : pure C u => (p : V)) :=
     small_pure_family_independent hseg id Function.injective_id (by omega)
   have hbase : base C u = convexHull ℝ (pure C u) := by
     have hh := closure_convexHull_extremePoints (base_compact hclosed hstrict) (base_convex C u)
     change closure (convexHull ℝ (pure C u)) = base C u at hh
-    rw [(Set.toFinite (pure C u)).isClosed_convexHull.closure_eq] at hh
+    rw [((Set.toFinite (pure C u)).isClosed_convexHull (𝕜 := ℝ)).closure_eq] at hh
     exact hh.symm
   have hS : simplex C u := ⟨hai, hbase⟩
   have hbound : Nat.card (pure C u) ≤
@@ -295,6 +301,8 @@ theorem segment_faces_lowdim_antipodes
       simpa [two_smul] using this.symm
     have : n = 0 := (smul_eq_zero.mp hzero).resolve_left (by norm_num)
     simp [this] at hn
-  exact ⟨e a, he a, by simpa [hvalues, hra]⟩
+  refine ⟨e a, he a, ?_⟩
+  change e a (r : V) = 0
+  simp [hvalues, hra]
 
 end D5.S3.Quantum.Foundation.LowAffineDimensionalBOnly
