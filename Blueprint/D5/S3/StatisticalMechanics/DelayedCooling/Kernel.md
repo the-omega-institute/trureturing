@@ -76,21 +76,9 @@ Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.hasDerivAt_rel
 
 *Commentary.*
 
-The derivative is minus E evaluated one delay earlier, at every strictly positive real time. The terms added at positive step boundaries have power at least two; their derivatives vanish at those boundaries. Reindexing the remaining derivative sum gives exactly the delayed relaxation. The extension is not assumed differentiable at zero.
+The derivative is minus E evaluated one delay earlier, at every strictly positive real time. The terms added at positive step boundaries have power at least two; their derivatives vanish at those boundaries. Reindexing the remaining derivative sum gives exactly the delayed relaxation. The constant past has left derivative zero at the initial quench, whereas the first polynomial segment has right derivative minus one. These two segment formulas show that the two-sided derivative does not exist at zero.
 
-**Theorem 1.7 (The initial derivative jump).**
-
-Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.not_differentiableAt_relaxation_zero`
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.not_differentiableAt_relaxation_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The equilibrium extension has left derivative zero at the initial quench, whereas the first polynomial segment has right derivative minus one. Consequently the two-sided derivative does not exist there.
-
-**Theorem 1.8 (Positivity in the nonoscillatory delay range).**
+**Theorem 1.7 (Positivity in the nonoscillatory delay range).**
 
 Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation_pos`
 
@@ -102,7 +90,7 @@ Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation_pos
 
 For every positive delay at most exp(-1), E is strictly positive at every real time. Multiply E by exp(kappa times t), choosing kappa equal to exp(1). Its rate at zero is positive. If a first nonpositive rate existed, the weighted response would increase strictly up to that time, including its negative-time exponential history. The delayed differential equation and exp(kappa times tau) at most kappa would make the rate strictly positive there as well, a contradiction.
 
-**Theorem 1.9 (Strict cooling after the quench).**
+**Theorem 1.8 (Strict cooling after the quench).**
 
 Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.strictAntiOn_relaxation`
 
@@ -114,7 +102,7 @@ Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.strictAntiOn_r
 
 Positivity of the delayed value makes the derivative strictly negative at all positive times. Continuity joins this strict decrease to the value at zero.
 
-**Theorem 1.10 (Monotonicity with the equilibrium extension).**
+**Theorem 1.9 (Monotonicity with the equilibrium extension).**
 
 Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.antitone_relaxation`
 
@@ -126,7 +114,7 @@ Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.antitone_relax
 
 The constant past and the decreasing nonnegative-time response together give a nonincreasing function on the whole real line.
 
-**Theorem 1.11 (A uniform exponential bound).**
+**Theorem 1.10 (A uniform exponential bound).**
 
 Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation_le_exp_neg`
 
@@ -138,7 +126,7 @@ Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation_le_
 
 At nonnegative times, E is at most exp(-t). The derivative of exp(t) times E is nonpositive because E evaluated one delay earlier is at least its current value. At zero the product equals one.
 
-**Theorem 1.12 (Decay to equilibrium).**
+**Theorem 1.11 (Decay to equilibrium).**
 
 Lean statement: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.tendsto_relaxation_atTop`
 
@@ -155,7 +143,6 @@ The positive response is bounded above by exp(-t), so it tends to zero as time t
 - Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.antitone_relaxation`
 - Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.continuous_relaxation`
 - Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.hasDerivAt_relaxation`
-- Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.not_differentiableAt_relaxation_zero`
 - Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation`
 - Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation_eq_source_sum`
 - Truth anchor: `D5/S3/StatisticalMechanics/DelayedCooling/Kernel.relaxation_initial_segment`
