@@ -110,10 +110,39 @@ theorem forbidden_not_certified (s : Bool × (Fin 3 → Bool)) :
     rw [he] at hh
     exact exclusive_triangle_not_certified (forward_exclusive b) ⟨_, hh⟩
 
-set_option maxRecDepth 4096 in
-set_option maxHeartbeats 1000000 in
+private theorem reflect_reflect (w : Word 3) : reflectWord (reflectWord w) = w := by
+  funext i
+  apply Equiv.ext
+  intro k
+  fin_cases k <;> simp [reflectWord, negOffset]
+
+private theorem forward_ranking_injective (i : Fin 3) :
+    Function.Injective (forwardRanking i) := by
+  intro b c h
+  fin_cases i
+  · have hh := congrArg (fun r : Ranking => r 2) h
+    cases b <;> cases c <;> simp_all [forwardRanking, rankingValues]
+  · have hh := congrArg (fun r : Ranking => r 1) h
+    cases b <;> cases c <;> simp_all [forwardRanking, rankingValues]
+  · have hh := congrArg (fun r : Ranking => r 0) h
+    cases b <;> cases c <;> simp_all [forwardRanking, rankingValues]
+
 private theorem forbidden_injective : Function.Injective forbiddenWord := by
-  decide +kernel
+  rintro ⟨o, b⟩ ⟨p, c⟩ h
+  have ho : o = p := by
+    have hm := congrArg (fun w : Word 3 => w 1 0) h
+    cases o <;> cases p <;> cases hb : b 1 <;> cases hc : c 1 <;>
+      simp_all [forbiddenWord, reflectWord, forwardWord, forwardRanking, rankingValues,
+        negOffset]
+  subst p
+  have hf : forwardWord b = forwardWord c := by
+    cases o
+    · simpa [forbiddenWord] using h
+    · have hh := congrArg reflectWord h
+      simpa only [forbiddenWord, if_true, reflect_reflect] using hh
+  congr 1
+  funext i
+  exact forward_ranking_injective i (congrFun hf i)
 
 /-- The removed objects are distinct ranking profiles, never matching witnesses. -/
 def forbiddenProfiles : Finset (Word 3) := Finset.univ.image forbiddenWord
