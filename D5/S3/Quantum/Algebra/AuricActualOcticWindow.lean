@@ -529,7 +529,7 @@ private theorem invariant_half_rank_weak {K : Type*} [Field K]
     have hright (i : Ω) : Finset.univ.bipartiteBelow
         (fun (g : G) (i : Ω) => i ∈ orbitSet S g) i = C i := rfl
     simpa only [hleft, hright, orbitSet_card, hdeg, Finset.sum_const, Finset.card_univ,
-      nsmul_eq_mul] using hh
+      Nat.nsmul_eq_mul] using hh
   have hdR : (0 : ℝ) < d := by exact_mod_cast hd
   have hcover : ∀ i ∈ (Finset.univ : Finset Ω),
       (1 : ℝ) ≤ ∑ g : G, if i ∈ orbitSet S g then (d : ℝ)⁻¹ else 0 := by
@@ -647,6 +647,10 @@ section ActualGaloisRanks
 variable (K : Type*) [Field K] [Algebra F K]
 variable [FiniteDimensional F D] [Algebra.IsSeparable F D] [FiniteDimensional F K]
 variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
+
+private instance galoisRingInvPair (g : K ≃ₐ[F] K) :
+    RingHomInvPair g.toRingEquiv.toRingHom g.symm.toRingEquiv.toRingHom :=
+  RingHomInvPair.of_ringEquiv g.toRingEquiv
 
 private def galoisCoordinates (g : K ≃ₐ[F] K) :
     ((D →ₐ[F] K) → K) ≃ₛₗ[g.toRingEquiv.toRingHom] ((D →ₐ[F] K) → K) where
@@ -835,9 +839,11 @@ private theorem crossRank_matrix (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Fins
       Pi.single (j : Ω) 1 := by
     ext i
     by_cases hi : i ∈ Sᶜ
-    · simp [coordinateExtend, hi, Pi.single_apply, Subtype.ext_iff]
-    · have hij : i ≠ (j : Ω) := fun h => hi (h ▸ j.property)
-      simp [coordinateExtend, hi, Pi.single_apply, hij]
+    · have his : i ∉ S := Finset.mem_compl.mp hi
+      simp [coordinateExtend, his, Pi.single_apply, Subtype.ext_iff]
+    · have his : i ∈ S := by simpa using hi
+      have hij : i ≠ (j : Ω) := fun h => hi (h ▸ j.property)
+      simp [coordinateExtend, his, Pi.single_apply, hij]
   have hmap : (coordinateExtend S).comp M.mulVecLin =
       (coordinateProject S).comp (n.comp (coordinateExtend Sᶜ)) := by
     apply (Pi.basisFun K ↥(Sᶜ)).ext
@@ -864,8 +870,8 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
   let g := (coordinateProject (K := K) S).domRestrict U
   let j : f.ker →ₗ[K] coordinateKernel U S :=
     { toFun := fun x => ⟨⟨coordinateExtend Sᶜ x, by
-        rw [← hker]
-        exact congrArg Subtype.val x.property⟩, by
+        exact hker ▸ (show coordinateExtend Sᶜ x ∈ n.ker from
+          congrArg Subtype.val x.property)⟩, by
         rw [mem_coordinateKernel]
         intro i hi
         simp [coordinateExtend, hi]⟩
@@ -873,12 +879,12 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
         intro x y
         apply Subtype.ext
         apply Subtype.ext
-        exact map_add (coordinateExtend Sᶜ) x y
+        exact map_add (coordinateExtend (K := K) Sᶜ) (x : ↥(Sᶜ) → K) (y : ↥(Sᶜ) → K)
       map_smul' := by
         intro c x
         apply Subtype.ext
         apply Subtype.ext
-        exact map_smul (coordinateExtend Sᶜ) c x }
+        exact map_smul (coordinateExtend (K := K) Sᶜ) c (x : ↥(Sᶜ) → K) }
   have hj : Function.Injective j := by
     intro x y h
     apply Subtype.ext
@@ -894,7 +900,8 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
   have hr : finrank K (g.comp f).range = crossRank n S := rfl
   have hc : Sᶜ.card + S.card = 8 := by
     simpa [hΩ] using Finset.card_compl_add_card S
-  have hdim : finrank K (↥(Sᶜ) → K) = Sᶜ.card := by simp
+  have hdim : finrank K (↥(Sᶜ) → K) = Sᶜ.card := by
+    rw [Module.finrank_fintype_fun_eq_card, Fintype.card_coe]
   have hu := coordinate_rank_nullity U S
   rw [hU] at hu
   rw [hr, hdim] at hnull
@@ -1021,7 +1028,7 @@ private theorem splitMatrix_rank :
   rw [Matrix.rank, hm, splitOperator_range, splitWindow_finrank, hW]
 
 private theorem galoisCoordinates_single (g : K ≃ₐ[F] K) (τ : D →ₐ[F] K) :
-    galoisCoordinates K g (Pi.single τ 1) = Pi.single (g • τ) 1 := by
+    galoisCoordinates K g (Pi.single τ (1 : K)) = Pi.single (g • τ) (1 : K) := by
   ext σ
   by_cases h : σ = g • τ
   · subst σ
