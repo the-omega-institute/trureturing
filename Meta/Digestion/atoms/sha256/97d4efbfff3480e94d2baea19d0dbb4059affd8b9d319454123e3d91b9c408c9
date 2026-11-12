@@ -1,0 +1,27 @@
+**定义 108.9（共同中心、框架平面与球方向空间）。** 从此节到108.11，
+另假设VII105.9的共同中心条件 $\mathrm G$，即存在同一个 $U$ 使
+$p+2c_p=U$ 对全部 $p\in P$ 成立。置
+
+$$
+\begin{gathered}
+w=U/3\in\operatorname{ri}K,\qquad H=\ker u,\qquad
+\ell_p=\mathbb R(p-w),\\
+\mathfrak T=\{\{p,q,r\}:(p,q,r)\text{ 为原joint框架}\},\\
+L_T=\operatorname{aff}T,\qquad E_T=L_T-w\quad(T\in\mathfrak T),\qquad
+X_p=M_p\cap H.
+\end{gathered}
+\tag{VIII108.18}
+$$
+
+每个框架三点之和为 $U$，故 $E_T$ 是二维线性空间。
+三张joint效应还给准确截面
+
+$$
+K\cap L_T=\operatorname{conv}T.
+\tag{VIII108.19}
+$$
+
+确实，三点由Kronecker读数线性独立；在 $L_T$ 中的仿射系数就是这些原效应读数，
+所以属于 $K$ 的点的三个系数非负。反向包含由凸性成立。
+不同框架若共享两个纯点，VII104.3的唯一第三点使其相同。
+
