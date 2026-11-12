@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:2305eb615641e9d9d64710ea7eee41856fb7ae22bf88a517abd9094a4ed1e0d2
   normalized_sha256: sha256:2305eb615641e9d9d64710ea7eee41856fb7ae22bf88a517abd9094a4ed1e0d2
 cas_ref: sha256:2305eb615641e9d9d64710ea7eee41856fb7ae22bf88a517abd9094a4ed1e0d2
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/AsynchronousTensorMass.fixed_tensor_dual
+    target_statement_id: sha256:de5c579e5fa8436b8769f486fa44a2bf4539ac201984083bc32cd4a3d56c4908
 receipts:
   unresolved_subitems: []
