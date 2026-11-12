@@ -119,8 +119,16 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             Call("IsCompact", Call("image", sigma, massSlice(dimension))), maximizer)), true);
         Formula inverseTrace = All("v", space,
             Eq(Call("trace", mul(inv(sigmaAt(m)), sigmaAt(v))), app(unit, v)));
+        Formula k = F.Id("k");
+        Formula maximumAt(Formula point) => All("x", space, Imp(Member(x, cone),
+            Imp(Eq(app(unit, x), dimension),
+                new Formula.Relation(delta(sigmaAt(x)), FormulaRelationOperator.LessThanOrEqual,
+                    delta(sigmaAt(point))))));
+        Formula uniqueMaximum = All("k", space, Imp(Member(k, cone),
+            Imp(Eq(app(unit, k), dimension), Imp(maximumAt(k), Eq(k, m)))));
         Formula stationarity = Ex("m", space, Chain(Member(m, cone),
-            Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace));
+            Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace,
+            maximum, uniqueMaximum));
         Formula stationarityStatement = nativeInputs(coordinateWitness(
             Chain(compressionLaws, stationarity)), true);
         Formula psi = F.Id("Psi"), matrixX = F.Id("X");
@@ -131,9 +139,50 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             Call("setOf", Seq(matrixX, Mapsto, Sp, Chain(
                 Member(matrixX, Call("range", psi)), Call("PosSemidef", matrixX),
                 Eq(Call("trace", matrixX), D(1))))));
+        Formula e = F.Id("e"), f = F.Id("f"), g = F.Id("g"), j = F.Id("j"),
+            p = F.Id("p"), r = F.Id("r");
+        Formula range = Call("range", psi);
+        Formula rangeDual = Call("LinearMap", real, range, real);
+        Formula dual = Call("dualMap", Call("symm", e));
+        Formula value(Formula a) => Call("val", a);
+        Formula le(Formula a, Formula b) =>
+            new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+        Formula setOf(Formula a, Formula body) => Call("setOf", Seq(a, Mapsto, Sp, body));
+        Formula properOriginal(Formula a) => All("v", space, Imp(Member(v, cone),
+            And(le(D(0), app(a, v)), le(app(a, v), app(unit, v)))));
+        Formula properNormalized(Formula a) => All("X", range,
+            Imp(Call("PosSemidef", value(matrixX)),
+                And(le(D(0), app(a, matrixX)),
+                    le(app(a, matrixX), Call("re", Call("trace", value(matrixX)))))));
+        Formula baseOriginal = massSlice(D(1));
+        Formula baseNormalized = setOf(matrixX, And(Call("PosSemidef", value(matrixX)),
+            Eq(Call("trace", value(matrixX)), D(1))));
+        Formula originalReadings = setOf(r, Ex("f", linear(real), Chain(properOriginal(f),
+            Eq(app(f, p), D(1)), Eq(app(f, x), r))));
+        Formula normalizedReadings = setOf(r, Ex("g", rangeDual, Chain(properNormalized(g),
+            Eq(app(g, app(e, p)), D(1)), Eq(app(g, app(e, x)), r))));
+        Formula originalMinimizers = setOf(f, Chain(properOriginal(f), Eq(app(f, p), D(1)),
+            All("j", linear(real), Imp(properOriginal(j), Imp(Eq(app(j, p), D(1)),
+                le(app(f, x), app(j, x)))))));
+        Formula normalizedMinimizers = setOf(g, Chain(properNormalized(g),
+            Eq(app(g, app(e, p)), D(1)), All("j", rangeDual, Imp(properNormalized(j),
+                Imp(Eq(app(j, app(e, p)), D(1)),
+                    le(app(g, app(e, x)), app(j, app(e, x))))))));
+        Formula transport = Ex("e", Call("LinearEquiv", real, space, range), Chain(
+            All("v", space, Eq(value(app(e, v)), psiAt(v))),
+            Eq(Call("image", e, baseOriginal), baseNormalized),
+            Eq(Call("image", e, Call("extremePoints", baseOriginal, real)),
+                Call("extremePoints", baseNormalized, real)),
+            All("f", linear(real), IffF(properOriginal(f), properNormalized(app(dual, f)))),
+            All("p", space, Eq(Call("image", dual,
+                setOf(f, And(properOriginal(f), Eq(app(f, p), D(1))))),
+                setOf(g, And(properNormalized(g), Eq(app(g, app(e, p)), D(1)))))),
+            All("p", space, All("x", space, Eq(originalReadings, normalizedReadings))),
+            All("p", space, All("x", space,
+                Eq(Call("image", dual, originalMinimizers), normalizedMinimizers)))));
         Formula normalizedWitness = Ex("m", space, Chain(Member(m, cone),
             Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace,
-            Call("IsHermitian", root), Call("IsUnit", root),
+            maximum, uniqueMaximum, Call("IsHermitian", root), Call("IsUnit", root),
             Eq(mul(root, root), inv(sigmaAt(m))),
             All("v", space, Eq(psiAt(v), mul(mul(root, sigmaAt(v)), root))),
             Eq(psiAt(m), D(1)), Call("Injective", psi),
@@ -141,7 +190,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("v", space, Eq(Call("trace", psiAt(v)), app(unit, v))),
             All("v", space, IffF(Member(v, cone), Call("PosSemidef", psiAt(v)))),
             All("v", space, Eq(Call("rank", psiAt(v)), Call("rank", mat(v)))),
-            inverseCongruence, Member(D(1), Call("range", psi)), normalizedBase));
+            inverseCongruence, Member(D(1), Call("range", psi)), normalizedBase, transport));
         Formula normalizationStatement = nativeInputs(And(LtF(D(0), dimension),
             Ex("U", Call("Matrix", index, nIndex, field),
                 Ex("sigma", Call("LinearMap", real, space, nativeMatrices),
@@ -181,15 +230,15 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(Owner + "exists_original_unit_inverse_trace_stationarity"),
                     H("Full original-vector inverse-trace stationarity"),
                     StatementSource.FromAuthor(Disp(stationarityStatement)), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("The determinant maximum admits a two-sided positive-definite neighborhood in every original direction whose unit value is zero. Its real determinant derivative therefore vanishes on the kernel of the original unit. Decomposing an arbitrary original vector into a kernel direction plus its mass multiple, and using the nonzero support dimension, extends the identity to every original vector: trace((sigma(m)) inverse sigma(v)) equals u(v), with the trace taken in the native real or complex support coordinates. This is a stationarity identity for the actual original unit and does not assume a positive definite representative of the dual unit or a normalized section."))),
+                    Blocks(Paragraph(Text("The determinant maximum admits a two-sided positive-definite neighborhood in every original direction whose unit value is zero. Its real determinant derivative therefore vanishes on the kernel of the original unit. Decomposing an arbitrary original vector into a kernel direction plus its mass multiple, and using the nonzero support dimension, extends the identity to every original vector: trace((sigma(m)) inverse sigma(v)) equals u(v), with the trace taken in the native real or complex support coordinates. The same point is the unique global determinant maximum on the entire original mass-n slice. For any second maximum, the same local variation proves the second inverse-trace identity. The trace of the Gram matrix of the difference sandwiched by the two principal inverse square roots is zero: its expansion is the sum of the two cross inverse-traces minus twice the support dimension. The trace-Gram zero criterion and invertibility force equality, including equality of the original vectors by injectivity. No positive definite representative of the dual unit or normalized section is assumed."))),
                     DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("original-unit-normalization"),
                     DeclarationHandle.Create(Owner + "exists_original_unit_normalization"),
                     H("Actual original-unit normalization on the entire original carrier"),
                     StatementSource.FromAuthor(Disp(normalizationStatement)), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its principal inverse square root S defines the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. This statement includes support dimension one without dividing by n minus one."))),
+                    Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its unique determinant maximum and principal inverse square root S define the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. The equivalence e from the original space onto the range of this same Psi carries the entire base and all its extreme points to the positive trace-one base in that range. Its contravariant dual d(f) = f composed with e inverse carries the entire proper interval and each full confirmer set bijectively. For every original p and x, the sets of attainable confirming readings agree exactly, so their lower envelopes agree and d maps all minimizers onto all minimizers. In particular every actual zero confirmer transports in both directions, even when different zero conditions initially have different confirmers. Only elements of the actual image are passed to e inverse. This statement includes support dimension one without dividing by n minus one."))),
                     DescribeRole.Theorem),
-                Paragraph(Text("The complete source normalization-and-transport target remains unresolved. Uniqueness of the determinant maximum, whole pure-point transport, dual effects, confirmations, comparison minima and minimizers, exclusion, all minimal faces, ROG, codimension and annihilator transport, and same-frame complement conclusions still require proofs. The dimension-one support case is included in normalization, but its full singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
+                Paragraph(Text("The complete source normalization-and-transport target remains unresolved. The rank-one description of all pure points under ROG, all minimal faces, ROG, codimension and annihilator congruence, and same-frame complement conclusions still require proofs. The established reading-set and minimizer transport does not yet prove existence of a comparison minimum from the original effect interval. The dimension-one support case is included in normalization, but its full singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
     private static Formula Chain(params Formula[] formulas)
