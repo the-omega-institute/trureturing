@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Partial components of the Mertens range-two proof; the full theorem remains open.
+Padded certificates and concatenation in the exact Mertens range-two proof.
 
 **Definition 1.1 (oldIndex).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.count_padd
 
 *Commentary.*
 
-The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. This interval count inequality does not supply stable cyclic closure or the final same-q probability theorem.
+The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. GrowthTransfer.result consumes this inequality together with CyclicClosure and TriangleCount in the same-base probability estimate.
 
 **Definition 1.7 (partnerFirst).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.buffer_off
 
 *Commentary.*
 
-The actual signed buffer offsets simultaneously fulfill every incoming request, stay between -2 and 2, and allow only central singles. Every distinct buffer neighbor at distance at most two from a single has nonzero displacement. These bounds and isolation facts are consumed in the full padded certificate. The source-cycle matching remains a separate obligation.
+The actual signed buffer offsets simultaneously fulfill every incoming request, stay between -2 and 2, and allow only central singles. Every distinct buffer neighbor at distance at most two from a single has nonzero displacement. These bounds and isolation facts are consumed in the full padded certificate. CyclicClosure uses the same buffer facts for its actual source-cycle matching.
 
 **Theorem 1.15 (closing_coordinate).**
 

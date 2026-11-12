@@ -9,6 +9,10 @@ internal sealed class OpenCertificatesDocument : IScribeDocumentDefinition
         "Components consumed by the exact Mertens range-two probability theorem.",
         H("OpenCertificates"), Blocks(
             Paragraph(Text("Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.")),
+            Describe.Lean(DescribeId.Create("rank-injective"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/OpenCertificates.rank_injective"),
+                H("rank_injective"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a ranking permutation and nonzero integer offsets a and b between -2 and 2, equality of offsetRank implies a=b. The paired-certificate construction uses this injectivity."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("offsetrank"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/OpenCertificates.offsetRank"),
                 H("offsetRank"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
