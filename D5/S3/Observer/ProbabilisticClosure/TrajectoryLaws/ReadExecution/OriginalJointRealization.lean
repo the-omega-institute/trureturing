@@ -20,6 +20,8 @@ open scoped ENNReal BigOperators
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalJointRealization
 open OriginalObserverNormalization ActualRenewalPrefixLaw
 
+variable {C : Type*}
+
 section Product
 variable {I S R : Type*} [MeasurableSpace I] [MeasurableSpace S] [MeasurableSpace R]
     (κ : Measure I) (ρ : Measure R) [IsProbabilityMeasure κ] [IsProbabilityMeasure ρ]
