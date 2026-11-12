@@ -66,8 +66,6 @@ theorem source_bridge : source.{v} ↔ arena.{v}.Law actual.{v} := by
 theorem actual_positive : arena.{v}.Law actual.{v} :=
   source_bridge.mp (@reciprocal_endpoint_exposure.{v})
 
-abbrev pending := Registration arena.{v} source.{v}
-
 #print axioms source_bridge
 #print axioms actual_positive
 
