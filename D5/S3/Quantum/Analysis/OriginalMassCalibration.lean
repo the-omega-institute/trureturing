@@ -63,17 +63,12 @@ private theorem original_Q_spans
     (Set.range fun abc : A × A × A => data.Q abc.1 abc.2.1 abc.2.2)
   have hL : ∀ d c, data.L d c ∈ W := by
     intro d c
-    have hd : d ∈ Submodule.span ℝ
-        (Set.range fun ab : A × A => data.M ab.1 ab.2) := by rw [hspanM]; trivial
-    induction hd using Submodule.span_induction with
-    | mem d hd =>
+    have himage := (Submodule.image_span_subset (data.L.flip c)
+      (Set.range fun ab : A × A => data.M ab.1 ab.2) W).2 (by
+      intro d hd
       obtain ⟨⟨a, b⟩, rfl⟩ := hd
-      exact Submodule.subset_span ⟨(a, b, c), rfl⟩
-    | zero => simp
-    | add x y hx hy hx0 hy0 =>
-      simpa only [map_add, LinearMap.add_apply] using W.add_mem hx0 hy0
-    | smul r x hx hx0 =>
-      simpa only [map_smul, LinearMap.smul_apply] using W.smul_mem r hx0
+      exact Submodule.subset_span ⟨(a, b, c), rfl⟩)
+    exact himage ⟨d, by rw [hspanM]; trivial, rfl⟩
   apply top_le_iff.mp
   rw [← hspanL]
   exact Submodule.span_le.mpr (by rintro z ⟨⟨d, c⟩, rfl⟩; exact hL d c)
@@ -206,33 +201,26 @@ private theorem original_scale_rigidity (uA : Module.Dual ℝ A) (uD : Module.Du
   have hl0 := hlambda.ne'
   have hk0 := hkappa.ne'
   have hp : ∀ z, uD (data.p z) = (lambda / kappa) * uE z := by
-    intro z
-    have hz : z ∈ Submodule.span ℝ
-        (Set.range fun abc : A × A × A => data.Q abc.1 abc.2.1 abc.2.2) := by
-      rw [hspanQ]; trivial
-    induction hz using Submodule.span_induction with
-    | mem z hz =>
-      obtain ⟨⟨a, b, c⟩, rfl⟩ := hz
+    have heq : uD.comp data.p = (lambda / kappa) • uE := by
+      apply LinearMap.ext_on_range hspanQ
+      rintro ⟨a, b, c⟩
+      change uD (data.p (data.Q a b c)) = (lambda / kappa) * uE (data.Q a b c)
       rw [hrecover, map_smul, hmTwo, hmThree, smul_eq_mul]
       field_simp
       <;> ring
-    | zero => simp
-    | add x y hx hy hx0 hy0 => simp only [map_add, hx0, hy0]; ring
-    | smul c x hx hx0 => simp only [map_smul, smul_eq_mul, hx0]; ring
+    intro z
+    exact LinearMap.congr_fun heq z
   have hL : ∀ d c, uE (data.L d c) = (kappa / lambda) * uD d * uA c := by
     intro d c
-    have hd : d ∈ Submodule.span ℝ
-        (Set.range fun ab : A × A => data.M ab.1 ab.2) := by rw [hspanM]; trivial
-    induction hd using Submodule.span_induction with
-    | mem d hd =>
-      obtain ⟨⟨a, b⟩, rfl⟩ := hd
-      change uE (data.Q a b c) = _
+    have heq : uE.comp (data.L.flip c) = ((kappa / lambda) * uA c) • uD := by
+      apply LinearMap.ext_on_range hspanM
+      rintro ⟨a, b⟩
+      change uE (data.Q a b c) = ((kappa / lambda) * uA c) * uD (data.M a b)
       rw [hmThree, hmTwo]
       field_simp
       <;> ring
-    | zero => simp
-    | add x y hx hy hx0 hy0 => simp only [map_add, LinearMap.add_apply, hx0, hy0]; ring
-    | smul r x hx hx0 => simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, hx0]; ring
+    simpa only [LinearMap.comp_apply, LinearMap.flip_apply, LinearMap.smul_apply,
+      smul_eq_mul, mul_right_comm] using LinearMap.congr_fun heq d
   have hpl : ∀ d c, uD (data.p (data.L d c)) = uD d * uA c := by
     intro d c
     rw [hp, hL]
