@@ -309,12 +309,18 @@ example : ∃ kappa : ℝ, 0 < kappa ∧
       ∃ c : ℝ, f = c • u := by
     intro f _
     refine ⟨f 1, ?_⟩
-    ext x
+    apply LinearMap.ext
+    intro x
     have he := f.map_smul x (1 : ℝ)
     simpa [u, smul_eq_mul, mul_comm] using he
   obtain ⟨kappa, hk, _, h3, _, _, _⟩ := data.original_mass_calibration
     C C C u u u hg hg hg hp hp hp
-    (by intro d hd a ha; exact mul_nonneg hd ha)
+    (by
+      intro d hd a ha
+      change 0 ≤ d at hd
+      change 0 ≤ a at ha
+      change 0 ≤ d * a
+      exact mul_nonneg hd ha)
     (by intro z hz; exact hz)
     (by change 0 ≤ (1 : ℝ); norm_num) hM hL
     LinearMap.id (by intro x hx; exact hx) rfl hdual
