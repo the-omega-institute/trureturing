@@ -3,7 +3,7 @@ slug: mathex-2026-mo511715-cutoff-bound
 bibkey: mathex2026mo511715
 doi: null
 url: https://mathoverflow.net/questions/511715/bound-of-series
-triage: wall
+triage: theorem
 motivation_gids:
   - D5/S3/Fourier/MO511715Source.result
 ---
@@ -95,10 +95,11 @@ and `ProblemSlugRef.Create("mathex-2026-mo511715-cutoff-bound")` to the existing
 with no additional resolution members. `proof_shape: bind-only` supplies no
 escape witness; the host's `admission_basis: open-problem-resolution` uses
 CLAUDE §3.2's external-question route. This prerequisite judgment and typed
-annotation do not complete canonical admission. Selected canonical rendering,
-first-freeze/current, utility admission, final independent review, required CI
-and dev delivery remain outstanding, with the selected-consumer capability
-gap owned by [#29078](https://github.com/the-omega-institute/trureturing/issues/29078).
+annotation do not themselves complete publication admission. Canonical
+membership and statement identities belong to the Frozen state writer;
+rendered correspondence belongs to the generated Blueprint. Final independent
+review, required CI, dev merge and first-dev verification are separate
+publication and delivery obligations.
 
 ### Preregistration and bounded literature status
 
@@ -112,8 +113,11 @@ this is a bounded prerequisite judgment. Its
 identifies the unchanged complete conventional event, SHA-256
 `410a367b8a743883dfc12bdc9a4269e77d89dadd5646e3c22023747c16d44c8d`.
 The original deadline `2026-11-12T18:00:00Z`, original 21600-host-second
-account, predictions and prior settlements are unchanged. This dossier does
-not register a narrower replacement event or settle that account.
+account, predictions and prior settlements are unchanged. Its unique
+[terminal settlement](https://github.com/the-omega-institute/trureturing/issues/29180#issuecomment-6833204734)
+is `ENDED-unresolved`. Publication maintenance of the saved proof does not
+register a replacement event, add mathematical execution to that attempt,
+settle its account or retrospectively change its score.
 
 The supplied primary-source snapshot checked 2026-11-11 has zero answers,
 two revisions and one comment requesting motivation. This establishes
@@ -179,11 +183,11 @@ successor question rather than reverse this arbitrary-mask obstruction.
 
 The mathematical sources are `D5/S3/Fourier/MO511715Source.lean` and its
 existing `Reg/D5/S3/Fourier/MO511715Source.lean` mirror. `claim : Prop` and
-`result : Not claim` form the literal designated refutation interface. The
-retained scoped compiled evidence supplied with this unit covers 41 modules,
-1760 declarations, the standard three axioms and four `declared_validated`
-Reg bindings. This content preparation preserves those source/evidence bytes;
-it does not claim a new Lean/report run.
+`result : Not claim` form the literal designated refutation interface.
+The four existing registrations concern `time_integral_ge`,
+`cutoff_finite_support`, `kernel_block_lower` and `phi_dyadic_growth`.
+Their compiled proofs and current source bindings are the audit evidence;
+the prose is not a second record of machine status.
 
 All 39 authored lemmas/theorems have `proof_shape: bind-only` under the
 accepted full-inlining source/form judgment. Each nonterminal helper has a
@@ -193,13 +197,16 @@ The terminal `result` uses the external-open-problem basis with the supported
 source/documentary prerequisites and its typed `Refuted` annotation; compiled
 proofs and Reg bindings do not themselves grant canonical admission.
 
-Canonical selected emission, FileMap and ledger/freeze consumption require
-selection before discovery, the unresolved owner capability in
-[#29078](https://github.com/the-omega-institute/trureturing/issues/29078).
-No generated mirror, freeze, full rendered correspondence, final independent
-review or required-CI admission is asserted here.
+The canonical Blueprint retains the complete time integral, kernel, cutoff
+weights, ordered-pair sum, subtraction and real/complex uniform claim, followed
+by the lower bounds and its negation. The typed `Refuted` claim has only
+`result` as its resolution member. Neither the registration nor its generated
+marker certifies unspecified authorial intent, exhaustive worldwide openness
+or completed dev delivery.
 
 ## Triage
+
+### What the settlement shows
 
 1. **Established in the retained conventional proof:** each dyadic block
    contributes fixed positive mass. The arbitrary legal mask isolates a
@@ -221,20 +228,19 @@ review or required-CI admission is asserted here.
    sufficiency of that structure nor failure for every structured mask is
    proved here. This candidate needs its own hypotheses, literature check
    and preregistration.
-5. **Supported prerequisites and unresolved admission boundary:** source
+5. **Supported prerequisites and publication boundary:** source
    correspondence for the conventional Euclidean real/complex question and
    bounded documentary eligibility are independently supported. The published
    norm/scalar/prefix/$\mathbb R_+$ omissions remain disclosed; unspecified
-   intent and worldwide openness are not certified. Canonical admission,
-   final review and publication remain outstanding.
+   intent and worldwide openness are not certified. Final independent review
+   and required CI determine publication admission; dev merge and first-dev
+   verification determine delivery.
 
 ## ASSUMED-UNVERIFIED
 
 Original authorial intent and absence of a prior settlement beyond the bounded
 readings are unverified and are not premises supplied by the prerequisite
 approval. The typed `Refuted` annotation concerns the complete question under
-its explicit conventional readings. The wall triage records outstanding
-canonical/final admission, not an undecided source/documentary prerequisite
-or a failure of the retained conventional proof. Rendered/current/freeze
-checks and publication remain pending the compatible owner capability and
-later review.
+its explicit conventional readings. The source/documentary prerequisite
+judgment does not certify these two unverified matters. Publication checks
+and review do not change the ended original research settlement.

@@ -191,10 +191,11 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
     private static Formula WeightFormula()
     {
         Formula f = Id("F"), z = Id("z"), e = Id("e"), a = Id("a"), b = Id("b");
-        return All("F", Call("NormedAddCommGroup"), All("z", Fn(E, f), All("e", R,
+        return All("F", Id("Type"), F.Seq(F.OpenBracket, Call("NormedAddCommGroup", f),
+            F.CloseBracket, F.Comma, F.Sp, All("z", Fn(E, f), All("e", R,
             All("a", Z, All("b", Z, Eq(Call("cutoffWeight", z, e, a, b),
                 Mul(Pow(Call("norm", Call("z", Mul(e, Call("embed", Sub(a, b))))), 2),
-                    Pow(Call("norm", Call("z", Mul(e, Call("embed", b)))), 2))))))));
+                    Pow(Call("norm", Call("z", Mul(e, Call("embed", b)))), 2)))))))));
     }
 
     private static Formula PhiFormula()
@@ -204,16 +205,18 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
         Formula sum = F.Seq(F.Sum, F.Underscore,
             F.Grp(F.Seq(F.Open, a, F.Comma, b, F.Close, F.Sp, F.InMacro, F.Sp, Call("Product", Z, Z))),
             F.Sp, Mul(Call("kernel", p, q, n, a, b), Call("cutoffWeight", z, e, a, b)));
-        return All("F", Call("NormedAddCommGroup"), All("z", Fn(E, f), All("p", Fn(Z, Fn(Z, R)),
-            All("e", R, All("q", R, All("n", Z, Eq(Call("phi", z, p, e, q, n), sum)))))));
+        return All("F", Id("Type"), F.Seq(F.OpenBracket, Call("NormedAddCommGroup", f),
+            F.CloseBracket, F.Comma, F.Sp, All("z", Fn(E, f), All("p", Fn(Z, Fn(Z, R)),
+            All("e", R, All("q", R, All("n", Z, Eq(Call("phi", z, p, e, q, n), sum))))))));
     }
 
     private static Formula DeltaFormula()
     {
         Formula f = Id("F"), z = Id("z"), p = Id("p"), e = Id("e"), r = Id("r"), u = Id("u");
-        return All("F", Call("NormedAddCommGroup"), All("z", Fn(E, f), All("p", Fn(Z, Fn(Z, R)),
+        return All("F", Id("Type"), F.Seq(F.OpenBracket, Call("NormedAddCommGroup", f),
+            F.CloseBracket, F.Comma, F.Sp, All("z", Fn(E, f), All("p", Fn(Z, Fn(Z, R)),
             All("e", R, All("r", R, All("u", Z, Eq(Call("delta", z, p, e, r, u),
-                Sub(Call("phi", z, p, e, r, u), Call("phi", z, p, e, r, F.D(0))))))))));
+                Sub(Call("phi", z, p, e, r, u), Call("phi", z, p, e, r, F.D(0)))))))))));
     }
 
     private static Formula Estimate(Formula z)
@@ -253,9 +256,10 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
         Formula f = Id("F"), z = Id("z"), e = Id("e");
         Formula weight = F.Seq(F.Open, Id("a"), F.Comma, Id("b"), F.Close,
             F.Sp, F.Mapsto, F.Sp, Call("cutoffWeight", z, e, Id("a"), Id("b")));
-        return All("F", Call("NormedAddCommGroup"), All("z", Fn(E, f), All("e", R,
+        return All("F", Id("Type"), F.Seq(F.OpenBracket, Call("NormedAddCommGroup", f),
+            F.CloseBracket, F.Comma, F.Sp, All("z", Fn(E, f), All("e", R,
             Imp(And(Call("HasCompactSupport", z), Lt(F.D(0), e)),
-                Call("Finite", Call("support", weight))))));
+                Call("Finite", Call("support", weight)))))));
     }
 
     private static Formula KernelLowerFormula()
@@ -279,6 +283,7 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
             All("J", F.Seq(F.Mathbb, F.Grp(Id("N"))),
                 Le(Mul(Call("blockConstant"), Add(j, F.D(1))),
                     Call("phi", z, Call("selectedMask"), scale, F.D(1), Call("firstUnit")))))));
-        return All("F", Call("RCLike"), All("z", Fn(E, f), Imp(hypotheses, conclusion)));
+        return All("F", Id("Type"), F.Seq(F.OpenBracket, Call("RCLike", f),
+            F.CloseBracket, F.Comma, F.Sp, All("z", Fn(E, f), Imp(hypotheses, conclusion))));
     }
 }
