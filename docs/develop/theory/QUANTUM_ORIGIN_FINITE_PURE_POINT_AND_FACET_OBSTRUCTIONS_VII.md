@@ -1201,3 +1201,310 @@ Alfsen—Shultz，[*State spaces of Jordan algebras*，Acta Mathematica 140，15
 白话说，这个完整候选仍在同一批原准备、测试、过程和未来上，只把几何入口写成两条：任意两个纯点所在的最小面是整球；固定一个纯点后，各自能被排除的任意混态，其混合仍能被排除。第二条把所有零读数拼成同一张原零面。四维中，两张圆盘的方向刚好用满空间，零面覆盖便会要求有限多个点盖住整条圆周，因而两盘不能共存；只剩一盘时，商平面的两条邻边挑出两个外顶点，原边的面性又排除其他顶点，整个形状只能是圆盘与线段的全联结。连同无盘、整球和球棱锥，恰是99.8的四类。反事实也可精确量出：若删掉混态零拼合，三角矩曲线让每一纯对仍有整条原边，两种目标也各自能读零，但它们等量混合后的最低读数却是 $1/10$。这些几何结论恢复的是原全域效应与最小确认；复数、实际复合、操作和时间仍由完整候选中各自的原合同承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 100. 原有限全效应的边四边形、指定投影与facet延拓障碍
+
+### 100.1 整个原载体、两种比较与实际边
+
+**定义 100.1（有限全混态零拼合域）。** 本章的VII97.x—100.x指本卷，VI89.x、VI90.x指[第六卷](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md)，V88.x指[第五卷](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)。取非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的原线性单位 $u$，并使用
+
+$$
+\begin{gathered}
+C^*=\{f\in V^*:f(C)\subseteq\mathbb R_+\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad |P|<\infty,\\
+[0,u]=\{f\in V^*:f\in C^*,\ u-f\in C^*\},\qquad
+F_p=\{f\in[0,u]:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+p\perp x\ \Longleftrightarrow\ T_p(x)=0,\qquad
+D_p=\{x\in K:p\perp x\},\\
+\mathrm{Z0}:\quad
+\forall p\in P\ \forall x,y\in K,\quad
+p\perp x\ \land\ p\perp y\ \Longrightarrow\ p\perp(x+y)/2,\qquad
+m=\dim\operatorname{aff}K=\dim V-1.
+\end{gathered}
+\tag{VII100.1}
+$$
+
+$P$ 是整个原基的全部纯点，$x,y$ 遍历全部原混态，$[0,u]$ 是整个原区间。紧基张成 $V$，故 $[0,u]$ 及非空 $F_p$ 紧，上式最小值达到；零排除等价于存在同一张 $f\in[0,u]$ 在 $p$ 取一、在 $x$ 取零。本章假设这个完整 $\mathrm{Z0}$，不假设 $\mathrm B$、least确认、自对偶、正定配对、正交模律、Jordan乘积、ROG表示或正滤子，也不加入标签归一化或实际装置前提。
+
+$m\ge1$ 时直接复用VII97.2—97.5：$p\mapsto D_p$ 是顶点到facet的双射，$h_p\in[0,u]$ 是零面为 $D_p$ 且 $h_p(p)=1$ 的唯一规范facet效应，且 $h_p$ 只在 $p$ 达到一。记
+
+$$
+T_{pq}:=h_p(q),\qquad
+0\le T_{pq}<1\ (p\ne q),\qquad
+T_{pq}=0\ \Longleftrightarrow\ T_{qp}=0.
+\tag{VII100.2}
+$$
+
+这里 $T_{pq}$ 是已指定的规范facet读数，$T_p(q)$ 则仍是遍历全部原确认效应的下包络；不将二者认同。对面 $F$ 沿用 $F^\#=\bigcap_{r\in\operatorname{ext}F}D_r$、$\varnothing^\#=K$，以及VII97.3的反序对合和 $\dim F+\dim F^\#=m-1$。$\operatorname{span}\varnothing=\{0\}$。本章的实际边是 $K$ 的一维面 $E=[p,q]$，$p,q\in P$ 不同；$m=1$ 时允许 $E=K$。取定这样一条边后置
+
+$$
+a=T_{qp}=h_q(p),\qquad b=T_{pq}=h_p(q),\qquad
+d=1-ab>0,\qquad E^\#=D_p\cap D_q.
+\tag{VII100.3}
+$$
+
+### 100.2 两张facet效应给整个边效应面和严格外部余量
+
+**定理 100.2（实际边的原效应四边形）。** 在定义VII100.1的前件下，对每条实际边 $E=[p,q]$，令
+
+$$
+\begin{gathered}
+Q_E=\{f\in C^*:f|_{E^\#}=0\},\qquad
+\mathcal I_E=\{f\in[0,u]:f|_{E^\#}=0\},\\
+e_E=\frac{(1-a)h_p+(1-b)h_q}{d}.
+\end{gathered}
+\tag{VII100.4}
+$$
+
+则 $Q_E=\mathbb R_+h_p+\mathbb R_+h_q$，且 $\mathcal I_E$ 是整个原 $[0,u]$ 的二维面，准确为
+
+$$
+\begin{aligned}
+\mathcal I_E
+&=\{\alpha h_p+\beta h_q:\alpha,\beta\ge0,
+\ \alpha+a\beta\le1,\ b\alpha+\beta\le1\}\\
+&=\operatorname{conv}\{0,h_p,e_E,h_q\}.
+\end{aligned}
+\tag{VII100.5}
+$$
+
+$e_E$ 是唯一在 $E^\#$ 恒零、在 $p,q$ 都取一的原效应；其整个零面和一面分别为 $E^\#$ 和 $E$。特别是，对每个原顶点 $r\in P\setminus\{p,q\}$，有严格余量
+
+$$
+\Delta_{pqr}:=d-(1-a)T_{pr}-(1-b)T_{qr}
+=d\bigl(1-e_E(r)\bigr)>0.
+\tag{VII100.6}
+$$
+
+若 $m\ge2$，还存在对每个 $s\in\operatorname{ext}E^\#$ 都严格正的系数 $\lambda_s$，使
+
+$$
+u=e_E+\sum_{s\in\operatorname{ext}E^\#}\lambda_sh_s.
+\tag{VII100.7}
+$$
+
+若 $m=1$，则 $E=K$、$E^\#=\varnothing$、$a=b=0$、$e_E=u$，式(VII100.7)的和为空和零，不要求存在任何系数。$m=0$ 没有实际边，因而本定理的边量词为空。
+
+证明。先设 $m\ge2$。VII97.3给 $\dim E^\#=m-2$，所以 $\dim\operatorname{span}E^\#=m-1$，其在 $V^*$ 中的消灭子为二维。$h_p,h_q$ 都消灭这个空间；它们在 $p,q$ 上的评价矩阵为
+
+$$
+\begin{pmatrix}1&b\\a&1\end{pmatrix},\qquad \det=d>0,
+\tag{VII100.8}
+$$
+
+故它们是一组基。不同facets $D_q,D_p$ 互不包含，存在原顶点 $r\in D_q\setminus D_p$ 和 $s\in D_p\setminus D_q$。若 $f=\alpha h_p+\beta h_q\in C^*$，分别在 $r,s$ 评价便给 $\alpha,\beta\ge0$。反向由 $h_p,h_q\in C^*$ 直接成立。因此得到 $Q_E$ 的准确表达。$m=1$ 时 $K=[p,q]$，两张规范facet效应是端点重心坐标，$D_p=\{q\}$、$D_q=\{p\}$，同一矩阵为单位矩阵，且整个 $V^*=\operatorname{span}\{h_p,h_q\}$；上述非负锥表达也成立。
+
+以下对所有 $m\ge1$ 同时论证。对任意 $0\ne f\in Q_E$，令 $M_f=\max_K f>0$。若原顶点 $v$ 达到 $M_f$，则 $f/M_f$ 是原 proper 效应，确认 $v$ 并消灭 $E^\#$，故 $E^\#\subseteq D_v$。反序对合给 $v\in E^{\#\#}=E$。由于 $K$ 是整个有限顶点凸包，$f$ 的极大集也是由其极大顶点生成的面，故
+
+$$
+\operatorname{argmax}_K f\subseteq E,\qquad
+\max_K f=\max\{f(p),f(q)\}.
+\tag{VII100.9}
+$$
+
+这对任意非零 $f\in Q_E$ 只给极大集包含于 $E$，没有声称每个这样的 $f$ 都在整条边恒定。零泛函的零一界直接成立。因此 $\alpha h_p+\beta h_q$ 为proper，当且仅当两系数非负且端点值 $\alpha+a\beta,b\alpha+\beta$ 都不超过一，得到(VII100.5)第一行。
+
+该平面区域在坐标轴上的顶点为 $(0,0),(1,0),(0,1)$；另外两条上界直线的交点为
+
+$$
+(\alpha_*,\beta_*)=
+\left(\frac{1-a}{d},\frac{1-b}{d}\right),\qquad
+\alpha_*,\beta_*>0.
+\tag{VII100.10}
+$$
+
+每条上界在线段轴端的另一约束均严格，交点两坐标为正，故这四点正是全部顶点，按 $0,h_p,e_E,h_q$ 循环排列。$e_E(p)=e_E(q)=1$，由(VII100.9)其一面恰为 $E$；两个严格正系数又使其零面恰为 $D_p\cap D_q=E^\#$。同一可逆矩阵给唯一性，并立即给(VII100.6)。由于所有原效应在 $E^\#$ 非负，若一个严格凸组合在其上恒零，两个分量也都恒零，故 $\mathcal I_E$ 是原区间的面；它含仿射独立的 $0,h_p,h_q$ 且在上述二维消灭子内，维数恰为二。空 $E^\#$ 时它就是整个二维原区间。
+
+为证(VII100.7)，只需标准多面体的facet—对偶极射线对应：VII97.2已列出全部facets，因而 $C^*=\operatorname{cone}\{h_s:s\in P\}$。其有限维分离证明是：这些半空间 $h_s\ge0$ 的交正是 $C$；若某个原正泛函不在这些法向的有限生成闭锥中，分离就给一个在所有 $h_s$ 上非负、在该泛函上为负的向量，与它属于 $C$ 矛盾。这是成熟凸锥对偶步骤，不是额外自对偶前提。
+
+$m\ge2$ 时令 $R=\operatorname{ext}E^\#\ne\varnothing$、$g=u-e_E$、$S_R=\sum_{s\in R}h_s$。$g,S_R$ 都在 $p,q$ 取零；对其他原顶点 $v$，$g(v)>0$。有限性允许取 $\varepsilon>0$，使 $g(v)-\varepsilon S_R(v)\ge0$ 对全部 $v\in P$ 成立，于是 $g-\varepsilon S_R\in C^*$。将它写成上述 $h_s$ 的非负组合。在 $p,q$ 评价为零，迫使每个有非零系数的 $h_s$ 同时消灭 $p,q$，亦即 $s\in D_p\cap D_q=E^\#$，其中用了纯点零排除对称性。因此加回 $\varepsilon S_R$ 后每个 $s\in R$ 的系数都严格正。$m=1$ 时端点重心坐标之和就是 $u$，单独给所述空和分支。证毕。
+
+### 100.3 沿原补面张成的指定分裂及其正性
+
+**定理 100.3（proper质量不代付正投影）。** 在定义VII100.1下，每条实际边都有准确线性直和
+
+$$
+V=\operatorname{span}\{p,q\}\oplus\operatorname{span}E^\#.
+\tag{VII100.11}
+$$
+
+沿这里的原补面张成投到边张成的唯一线性投影为
+
+$$
+\begin{gathered}
+\Pi_E(x)=\xi_p(x)p+\xi_q(x)q,\\
+\xi_p=\frac{h_p-bh_q}{d},\qquad
+\xi_q=\frac{h_q-ah_p}{d},\qquad
+u\circ\Pi_E=\xi_p+\xi_q=e_E\in[0,u].
+\end{gathered}
+\tag{VII100.12}
+$$
+
+下列条件等价：
+
+$$
+\begin{gathered}
+\Pi_E(C)\subseteq C;\qquad
+q\in D_p;\qquad a=b=0;\\
+e_E-h_p\in C^*;\qquad e_E-h_q\in C^*;\qquad
+\mathcal I_E\text{ 是平行四边形}.
+\end{gathered}
+\tag{VII100.13}
+$$
+
+这些条件成立时 $\Pi_E$ 的像锥为 $\operatorname{cone}\{p,q\}$；失败时(VII100.12)的总质量效应仍为proper。若 $m=1$，$\Pi_E=1_V$，这些条件全成立；$m=0$ 无边，不构造 $\Pi_E$。
+
+证明。$p,q$ 线性独立，因为它们不同且 $u(p)=u(q)=1$。若 $\eta p+\theta q$ 属于 $\operatorname{span}E^\#$，分别作用 $h_p,h_q$ 并用(VII100.8)可得 $\eta=\theta=0$。当 $m\ge2$ 时两个子空间维数为 $2,m-1$，和为 $\dim V=m+1$；$m=1$ 时第二个为零，也得到(VII100.11)。两个 $\xi$ 消灭补面张成，在 $p,q$ 上分别给 $(1,0),(0,1)$，所以(VII100.12)确是所指定的投影，满足 $\Pi_E^2=\Pi_E$，其质量式由直接相加得到。
+
+还需核对像锥：
+
+$$
+C\cap\operatorname{span}\{p,q\}=\operatorname{cone}\{p,q\}.
+\tag{VII100.14}
+$$
+
+若 $0\ne z$ 属于左边，则 $u(z)>0$，且 $u-e_E$ 消灭 $p,q$，故 $(u-e_E)(z)=0$。于是 $z/u(z)\in K$ 位于 $e_E$ 的整个一面 $E=[p,q]$，给出右边的非负分解；零向量及反向包含直接成立。因此 $\Pi_E$ 正，当且仅当其两个唯一坐标 $\xi_p,\xi_q$ 都属于 $C^*$。
+
+若 $a=b=0$，两坐标就是 $h_p,h_q$，故正；它又固定 $p,q$，所以像锥恰为(VII100.14)。若 $a>0$，取VII100.2证明中的原顶点 $r\in D_q\setminus D_p$，则
+
+$$
+\xi_q(r)=-\frac{a h_p(r)}d<0,
+\tag{VII100.15}
+$$
+
+故 $\Pi_E(r)\notin C$。由(VII100.2)，$a=0$ 当且仅当 $b=0$，且等价于 $q\in D_p$；这排除了只有一个非零交叉值的分支。
+
+另一方面，
+
+$$
+e_E-h_p=\frac{1-b}{d}(h_q-ah_p),\qquad
+e_E-h_q=\frac{1-a}{d}(h_p-bh_q).
+\tag{VII100.16}
+$$
+
+当 $a>0$ 时，第一式在同一个 $r$ 为负；交换 $p,q$ 得第二式在某个 $s\in D_p\setminus D_q$ 为负。当 $a=b=0$ 时两式分别为 $h_q,h_p$，故得到两项锥序等价。特别是非接触边上的 $e_E\in F_p$ 不支配 $h_p$，不能把规范facet确认当作least确认。
+
+最后，四边形的循环顶点已为 $0,h_p,e_E,h_q$，所以它是平行四边形当且仅当 $e_E=h_p+h_q$。在 $p,q$ 评价这一等式给 $a=b=0$，反向由公式立即成立，完成全部等价。这里的质量proper只给 $0\le u(\Pi_Ex)\le u(x)$（$x\in C$），没有给 $\Pi_Ex\in C$。它因而不产生正滤子、事件更新或可调用量子操作。证毕。
+
+只有在另行加入有限整个纯集的原全称 $\mathrm B$ 时，VII97.4才保证每个不同纯对都是实际边，且每条边就是该对的整个二态球，局部对径为另一端点。按这个已证对应，VI90.10的全部接触准确成为(VII100.13)对每条边成立，亦即这些指定投影全正；VI90.8的整个二态球逐效应延拓仍按它自己的量词消费。本章未从有限 $\mathrm B+\mathrm{Z0}$ 推出所有 $a=b=0$，因而未证明其一般接触或单纯形结论。
+
+### 100.4 每个非接触纯对的一张局部facet尺排除全部延拓
+
+**定理 100.4（指定局部proper效应的全延拓障碍）。** 在定义VII100.1下，任取有序不同原纯对 $p,q\in P$ 满足 $q\notin D_p$；不要求 $[p,q]$ 是边。令
+
+$$
+F=D_p,\qquad M=\max_{x\in F}h_q(x),\qquad
+\ell_{p,q}=\frac{h_q|_F}{M}.
+\tag{VII100.17}
+$$
+
+这里 $[0,1]_{\operatorname{aff}(F)}$ 指 $F$ 上全部实仿射函数中满足 $0\le\ell(x)\le1$ 对每个 $x\in F$ 成立者；零一界只在 $F$ 上要求。则 $0<M<1$，$\ell_{p,q}\in[0,1]_{\operatorname{aff}(F)}$ 是指定的局部proper效应，而
+
+$$
+\nexists f\in[0,u]:\quad f|_F=\ell_{p,q}.
+\tag{VII100.18}
+$$
+
+更准确地，其全部实线性延拓恰为
+
+$$
+f=\frac{h_q}{M}+\mu h_p,\qquad \mu\in\mathbb R,
+\tag{VII100.19}
+$$
+
+而没有任何一个同时满足原 $f\ge0$ 及 $f\le u$。全局仿射延拓到 $K$ 也同样被排除，因为 $\operatorname{aff}K=\{u=1\}$，其仿射函数唯一齐次线性延伸到 $V$。
+
+证明。固定 $k_0\in K$，有 $V=\mathbb Rk_0\oplus\ker u$。$\operatorname{aff}K$ 上的仿射式 $c+L(x-k_0)$ 唯一对应 $V$ 上的线性式 $f(tk_0+w)=tc+L(w)$，所以全局仿射延拓与线性延拓的上述对应保持同一原单位。
+
+不同的 $p,q$ 对应不同facets，所以 $F\not\subseteq D_q$，$h_q$ 在 $F$ 上不恒零，得到 $M>0$。$h_q$ 在整个 $K$ 只在 $q$ 达到一，且 $q\notin F$；由 $F$ 紧知 $M<1$。非负性与最大值定义给局部零一界，并在某个 $F$ 的顶点达到一。
+
+$F$ 为facet，$\dim\operatorname{span}F=m$，故其消灭子是一维且由 $h_p$ 张成。两个延拓的差消灭 $F$，因此(VII100.19)穷尽全部实线性延拓。不同facets又给一个原顶点 $r\in D_q\setminus D_p$。若这样的 $f$ 在整个原锥非负，则
+
+$$
+f(r)=\mu h_p(r)\ge0,\qquad h_p(r)>0,
+\quad\Longrightarrow\quad\mu\ge0.
+\tag{VII100.20}
+$$
+
+但在同一个原纯点 $q$ 上随即有
+
+$$
+f(q)=\frac1M+\mu T_{pq}>1=u(q),
+\tag{VII100.21}
+$$
+
+矛盾。这排除了全部延拓，不只是自然猜测 $h_q/M$ 的失败。$m=0$ 没有不同纯对，$m=1$ 的两个不同纯点互相接触，所以这两支都没有符合前件的非接触对；$p=q$ 从未在本定理量词内。
+
+这是 $F=D_p$ 上的一张局部facet效应障碍。除非另有对应证明 $F$ 是VI90.8所量化的某个整个二态球，否则不能把(VII100.18)认作该球的延拓反例，更不能由它断言一般 $\mathrm B+\mathrm{Z0}$ 已失败。即使 $[p,q]$ 本身是边，这个 $F=D_p$ 也不是自动等于 $[p,q]$。证毕。
+
+### 100.5 同一个有理七边形中的非正分裂和不可延拓尺
+
+**命题 100.5（原载体上的非空障碍实例）。** 使用VII97.6的整个七点 $p_i=(1,v_i)$、原锥 $C$、单位 $u(t,x,y)=t$ 及整个原效应区间。该载体已满足全混态 $\mathrm{Z0}$。对实际边 $E=[p_0,p_1]$，有
+
+$$
+\begin{gathered}
+E^\#=\{p_4\},\qquad
+h_0(t,x,y)=\frac{9t+x}{19},\qquad
+h_1(t,x,y)=\frac{82t+6x+7y}{174},\\
+a=\frac{71}{87},\qquad b=\frac{15}{19},\qquad
+ d=\frac{196}{551},\qquad
+ e_E=\frac{76}{147}h_0+\frac{29}{49}h_1
+     =\frac{22t+2x+y}{42}=u-h_4.
+\end{gathered}
+\tag{VII100.22}
+$$
+
+它在全部原顶点上的读数和严格外部余量为
+
+| 原顶点 | $p_0$ | $p_1$ | $p_2$ | $p_3$ | $p_4$ | $p_5$ | $p_6$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $e_E$ | $1$ | $1$ | $2/3$ | $4/21$ | $0$ | $4/21$ | $13/21$ |
+| $1-e_E$ | $0$ | $0$ | $1/3$ | $17/21$ | $1$ | $17/21$ | $8/21$ |
+
+因此五个外部顶点都有 $\Delta_{p_0p_1r}=(196/551)(1-e_E(r))>0$。然而
+
+$$
+\Pi_E(p_5)=\frac{29}{28}p_0-\frac{71}{84}p_1\notin C,
+\qquad u(\Pi_E(p_5))=\frac4{21}>0.
+\tag{VII100.23}
+$$
+
+同一个有序非接触对 $p=p_0,q=p_1$ 的facet为 $F=D_{p_0}=[p_3,p_4]$，其(VII100.17)效应满足
+
+$$
+M=\frac{28}{87},\qquad
+\ell_{p_0,p_1}(p_3)=1,\quad \ell_{p_0,p_1}(p_4)=0,
+\tag{VII100.24}
+$$
+
+且没有原 proper 延拓。此处 $F$ 的确是 $p_3,p_4$ 的整个最小面，是一维整球；故这一特定facet障碍也给出该整个线段上的局部端点尺不可延拓，但该载体没有全称 $\mathrm B$。
+
+证明。VII97.14—97.15的第 $3,4$ 行分别给 $h_0=s_3/152$、$h_1=s_4/174$，正是(VII100.22)的齐次式。$D_{p_0}=[p_3,p_4]$、$D_{p_1}=[p_4,p_5]$ 给 $E^\#=\{p_4\}$。代入(VII100.4)并合并系数得到 $e_E$，而第 $0$ 行给 $h_4=(20t-2x-y)/42$，所以补效应也符合(VII100.7)。逐个代入VII97.11的七个坐标得到表中全部值，未更换基或归一超平面。$h_0(p_5)=7/19$、$h_1(p_5)=0$，代入(VII100.12)给(VII100.23)。两个坐标中第二个为负，(VII100.14)即排除其属于原锥，尽管总质量为正且由proper效应读出。
+
+这也实际区分了两种比较：$e_E\in F_{p_0}$，从而
+
+$$
+T_{p_0}(p_5)\le\frac4{21}<\frac7{19}=T_{p_0p_5}.
+\tag{VII100.25}
+$$
+
+本式只使用下包络的定义，没有将该上界冒称其精确值。
+
+在 $F$ 的两端，$h_1(p_3)=56/174=28/87$、$h_1(p_4)=0$，所以最大值和局部效应为(VII100.24)。任意全局线性延拓为 $f=(87/28)h_1+\mu h_0$。在同一个 $p_5\in D_{p_1}\setminus D_{p_0}$，非负性迫使 $\mu\ge0$；但 $f(p_1)=87/28+(15/19)\mu>1$，证明全部proper延拓不存在。因为 $[p_3,p_4]$ 是实际边，包含它两端的整个最小面恰是该边；局部 $\ell$ 是它唯一的端点零一仿射尺，故上述球对应在这一实例中明确成立。
+
+另一方面，VII97.6已给 $H(p_0,p_2)=K$，整个七边形不是整欧氏球，故全称 $\mathrm B$ 失败。因此这个实例同时实现本章一般有限 $\mathrm{Z0}$ 域内的严格外部slack、proper总质量、指定分裂非正及局部尺全延拓失败，仍不是VI89.12的 $\mathrm B+\mathrm{Z0}$ 反例。证毕。
+
+### 100.6 数学归属和原消费者的条件边界
+
+**约定 100.6（复用与尚存的桥）。** VII100.2—100.4的边四边形及 $\Delta$ 公式、沿原补面张成的指定投影正性充要条件、以及 $\ell_{p,q}$ 的全部延拓障碍采用 `repo-derived` 归属。它们由VII97.2—97.5的既有完整facet配对、反序对合及规范slack推导；VII100.5直接使用VII97.6的原七边形，不另主张新载体。证明内的有限维支撑／分离、facet法向生成对偶锥、面上极值及二维线性代数是成熟步骤（凸分析来源沿用VII98.6所引 Rockafellar，*Convex Analysis*，§11、§18），不将它们分别计作新定理。
+
+[FinitePureSimplex](../../../Blueprint/D5/S3/Quantum/Foundation/FinitePureSimplex.md)的 `zero_gluing_iff_simplex` 要求整个纯点坐标核维数至多一，`zero_kernel_least_confirmation` 要求该核为零；[WeightedRelationConfirmation](../../../Blueprint/D5/S3/Quantum/Foundation/WeightedRelationConfirmation.md)的加权精确确认值也在完整一关系域内。它们不供应本章任意关系零度的边、投影及facet延拓公式；本章亦不重证这些既有支路。VI90.8—90.10的原全效应限制／接触接口是本章的既有消费者，只有已证的整个面对应才能接入。
+
+Dobbins，*Antiprismless, or: Reducing Combinatorial Equivalence to Projective Equivalence in Realizability Problems for Polytopes*，[arXiv:1307.0071v3 §3 Theorem 3.2、Lemma 3.3、Theorem 3.9](https://arxiv.org/html/1307.0071v3)讨论balanced pair、antiprism和interval polytope的组合实现及存在性边界；这些结果不是(VII100.4)—(VII100.24)在此原锥和原单位上的数值公式或正性、延拓判据。本章只确定每条实际边的上述二维效应面，不主张原 $[0,u]$ 的全部面或全部极端效应分类。该有限来源对应不主张全球原创、文献穷尽或一般开放状态认证。
+
+VI99.7的全实ROG、任意共同支撑维数及余维的 $\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S$ 闭合按其完整ROG表示前件复用；裸有限 $\mathrm{Z0}$ 没有在本章取得该表示。有限 $\mathrm B+\mathrm{Z0}$ 一般域仍须证明每条原边的 $a=b=0$，才能沿VII97.4及VI90.10完成全部接触；VII98.5的临界等号、一般VI89.12和一般有限 $\mathrm B+\mathrm{Z0}$ 的单纯形问题均未由本章解决。指定 $\Pi_E$ 的正性也不是VI90.8所要求的任意整球逐效应延拓的无条件替代。
+
+复型与Born、指定复合、同事件CP和仪器、更新、实际来源及物理时间仍保留VI89.7—89.10及VII98.8—98.9的全部原合同。[原生来源续卷VII](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md)第33—34章的指定 $\mathrm H_8,\mathrm H_3$ 联合供应和第35章的特定候选障碍按既有范围复用；它们不是本章待补缺口。原全字精确细零关系、细Born、实际操作与时间则仍未由这些几何效应供应。以上是明确模型条件内的纸面推导，不声明Lean核验或经验实现。
+
+## 追加锚（本行以下为增补区）
