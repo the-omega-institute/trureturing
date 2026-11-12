@@ -4109,3 +4109,580 @@ FLW 的表投影、编织表示和联合闭像定理均为 literature-attested �
 仪器及更新、真实时间和单位仍未由这些结果建立；完整量子起源目标保持未完成。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 一次实际纠缠有限门替代连续耦合的全一般-$H$桥
+
+### 36.1 二体坐标、产品边界与中间群
+
+令
+
+$$
+ V=\mathbb R e_0\oplus W,
+ \qquad W=\mathbb R^d,
+ \qquad d\ge2,
+$$
+
+并把 $e_0$ 的系数称为质量坐标。若 $A\in O(d)$，写
+
+$$
+ \widehat A(e_0+x)=e_0+Ax.
+$$
+
+令 $H\le SO(d)$ 闭且连通，并在 $S(W)$ 上传递。其独立提升、全旋转提升分别记为
+
+$$
+ \mathcal H=\{\widehat A\otimes\widehat B:A,B\in H\},
+ \qquad
+ \mathcal L_d=\{\widehat A\otimes\widehat B:A,B\in SO(d)\}.
+$$
+
+在
+
+$$
+ V\otimes V=\mathbb Rc\oplus A_1\oplus A_2\oplus D,
+ \quad
+ c=e_0\otimes e_0,
+ \quad
+ A_1=W\otimes e_0,
+ \quad
+ A_2=e_0\otimes W,
+ \quad
+ D=W\otimes W,
+\tag{36.1}
+$$
+
+中，局部球的纯点写成 $p_a=e_0+a$、$\|a\|=1$。假设原规范化紧凸 $K_2$ 满张成，包含所有 $p_a\otimes p_b$，包含全部局部球产品测试；产品测试在 $K_2$ 上非负并忠实层析。这里的“边缘”只表示产品单位测试给出的坐标投影，尚未假设任何变换保持它们。
+
+**定理 36.1（全一般-$H$ 正规化桥）。**
+
+设 $\mathcal H\le G\le\mathcal L_d$，其中 $G$ 闭且连通。若可逆实线性 $g$ 保质量、满足
+
+$$
+ gK_2=K_2,
+ \qquad
+ gGg^{-1}=G,
+\tag{36.2}
+$$
+
+则存在 $R,S\in O(d)$，使得
+
+$$
+ g=\widehat R\otimes\widehat S
+ \quad\text{或}\quad
+ g=(\widehat R\otimes\widehat S)\,\mathsf{SWAP}.
+\tag{36.3}
+$$
+
+特别地，$g$ 保持所有纯产品；(36.3) 中的反射和解析的 SWAP 允许出现在产品保持者中。定理没有假定边缘保持、复 Hilbert 空间、酉结构或 $D$ 的不可约性。
+
+**证明。** 球面传递使 $W$ 成为没有固定向量的不可约实 $H$-模。因此
+
+$$
+ \operatorname{Fix}(G)=\operatorname{Fix}(\mathcal H)=\mathbb Rc.
+$$
+
+由 (36.2)，$g$ 保持这条固定线；质量保持遂给 $g(c)=c$。$A_1,A_2,D$ 都是 $G$-不变的，而 $A_1,A_2$ 分别在 $\mathcal H$ 下为 $W\boxtimes1$ 与 $1\boxtimes W$，故它们是不可约且互不等价的 $G$-模。
+
+先处理 $d=3$ 及 $d\ge5$。实 Schur 引理给
+
+$$
+ \mathbb D_H=\operatorname{End}_H(W)\cong\mathbb R,\ \mathbb C\text{ 或 }\mathbb H.
+$$
+
+在独立积 $H\times H$ 下，相关扇区的实不可约分解相应为
+
+$$
+ D\simeq
+ \begin{cases}
+  D_0,&\mathbb D_H=\mathbb R,\quad \dim D_0=d^2,\\
+  D_+\oplus D_-,&\mathbb D_H=\mathbb C,\quad \dim D_\pm=d^2/2,\\
+  D_1\oplus D_2\oplus D_3\oplus D_4,&\mathbb D_H=\mathbb H,\quad \dim D_i=d^2/4.
+ \end{cases}
+\tag{36.4}
+$$
+
+这是外部实张量积的 Schur 分解：确切地说，$\operatorname{End}_{H\times H}(W\otimes W)\cong \mathbb D_H\otimes_{\mathbb R}\mathbb D_H$；它分别给出一个实简单块、两个复型简单块或四个等价的实块，因而得到 (36.4)，而不是把 $D$ 误称为不可约。因而 $d=3$ 时相关成分维数为 $9>d$，而 $d\ge5$ 时最小维数为 $d^2/4>d$。任何非零 $G$-不可约子模包含一个非零 $\mathcal H$-子模，所以它若落在 $D$ 中，维数也严格大于 $d$。
+
+共轭 $gGg^{-1}=G$ 把 $G$-不可约模送到同维不可约模。$A_1,A_2$ 的维数为 $d$，且它们在 $\mathcal H$ 下的类型不同；(36.4) 排除了 $D$ 的混入。因此 $g$ 保持或交换 $A_1,A_2$，并保持 $D$。在交换情形先复合解析 SWAP，便可写
+
+$$
+ g(c+a+b+z)=c+Ra+Sb+Cz,
+ \quad a\in A_1,\ b\in A_2,\ z\in D.
+\tag{36.5}
+$$
+
+现在说明两个边界块是正交的。局部球测试
+
+$$
+ \epsilon_x(t,u)=\frac{t+x\cdot u}{2},\qquad \|x\|\le1,
+$$
+
+以及它们的产品在 $K_2$ 上非负；对第二方向取一对相反的单位向量并相加，再对第一方向作同样处理，交叉项消去，得到任意规范化态的两个坐标边缘都满足 $\|a\|,\|b\|\le1$。对 $p_a\otimes p_b\in K_2$ 应用 $g$，再对 $g^{-1}$ 应用同一事实，得
+
+$$
+ \|Ra\|\le1,\quad \|R^{-1}a\|\le1,
+ \qquad
+ \|Sb\|\le1,\quad \|S^{-1}b\|\le1
+ \quad(\|a\|=\|b\|=1).
+$$
+
+故 $R,S\in O(d)$。这里是由全产品测试和 $gK_2=K_2$ 推出的坐标结论，不是额外的边缘保持假设。
+
+还需处理低维例外。对 $d=2$，球面传递的连通 $H$ 就是 $SO(2)$，所以 $G=\mathcal L_2$。令
+
+$$
+ z_1=(\widehat{-I},I),\qquad z_2=(I,\widehat{-I}).
+$$
+
+中心的二阶元为 $1,z_1,z_2,z_1z_2$；它们的联合特征空间恰为 $\mathbb Rc,A_1,A_2,D$。共轭保持迹，且
+
+$$
+ \operatorname{tr}(z_1)=\operatorname{tr}(z_2)=1-d^2,
+ \qquad
+ \operatorname{tr}(z_1z_2)=(d-1)^2,
+$$
+
+所以 $g$ 只能交换 $A_1,A_2$，不能把它们或 $D$ 混入别的扇区。
+
+对 $d=4$，球面传递表给出（正交共轭后）$H=SO(4)$、$U(2)$ 或一个四维实 $Sp(1)$ 左/右作用；这些作用都含 $-I$。$z_1,z_2$ 属于 $G$ 的中心。若 $z\in Z(G)$ 且 $z^2=1$，它的每个 $SO(4)$ 投影都与 $H$ 对易；四元数模型中 $Sp(1)$ 左作用的中心化子是右 $Sp(1)$，而 $U(2)$ 的中心化子是标量圆，$SO(4)$ 的中心化子给出同样的结论。它们的二阶元都只有 $\pm I$，故
+
+$$
+ Z(G)[2]=\{1,z_1,z_2,z_1z_2\}.
+$$
+
+迹分别为 $(d+1)^2,1-d^2,1-d^2,(d-1)^2$，共轭遂保持 $\{z_1,z_2\}$，其联合特征空间再次给出 $\mathbb Rc,A_1,A_2,D$（允许交换两个边缘）。这也覆盖四维的四元数型中间群及其对角右 $SU(2)$ 情形，不把中间群误分类为直积。
+
+于是所有维数都得到 (36.5)（或其 SWAP 版本）。对任意单位 $a,b$，$g(p_a\otimes p_b)$ 的两个坐标边缘是 $Ra,Sb$，已知都是纯局部球点。Barnum--Hilgert 的“纯边缘固定条件态”结果证明：正产品、产品单位和忠实产品层析下，纯边缘的联合态必为相应产品；其证明只用正性和凸几何，不用 S 公理或边缘保持假设。故
+
+$$
+ g(p_a\otimes p_b)=p_{Ra}\otimes p_{Sb}.
+$$
+
+展开 (36.5)，得到 $C(a\otimes b)=Ra\otimes Sb$。单位纯向量的简单张量张成 $W\otimes W$，所以 $C=R\otimes S$。撤去可能的 SWAP 即得 (36.3)。证毕。
+
+这里所用的球面传递表示表是 Masanes--Müller--Pérez-García--Augusiak,
+[*Entanglement and the three-dimensionality of the Bloch ball*](https://arxiv.org/abs/1111.4060v4), 技术定理 1--2 及其球面作用表的中间资料；它们不是本定理的正规化结论。纯边缘步骤复用 [Barnum--Hilgert 应用](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)；其条件正好由本节的产品正性、单位与忠实层析给出。全球几何、闭包与有限字供应复用 [Müller--Ududec 附录](../../../Library/QuantumStates/mullerududec2012selfduality.md)；本节没有重证它们。
+
+### 36.2 一次有限纠缠门给出完整实际路径
+
+保留完整实际独立局部 $H$ 控制。另给一个同一全载体上的实际可逆有限门 $g$ 及实际逆 $g^{-1}$，满足 $gK_2=K_2$，并存在一个原纯产品被 $g$ 送到非产品的实际见证。
+
+**推论 36.2（实际有限字的连续非局部路径）。** 令 $\Gamma$ 为由 $\mathcal H$ 与 $g,g^{-1}$ 的实际有限字生成的群，令 $\overline\Gamma$ 为其矩阵闭包。则存在整数 $n$ 与局部 Lie 代数元素 $X\in\operatorname{Lie}(\mathcal H)$，使
+
+$$
+ c_n(t)=g^n\exp(tX)g^{-n}
+ \tag{36.6}
+$$
+
+对每个 $t\in\mathbb R$ 都是同一全载体上的实际有限字，且该完整路径至少有一个 $t$ 使 $c_n(t)\notin\mathcal L_d$。$c_n(-t)=c_n(t)^{-1}$；没有把闭包中的极限宣称为实际门。
+
+**证明。** 反设对每个整数 $n$ 都有 $g^n\mathcal H g^{-n}\subseteq\mathcal L_d$。令 $G_\infty$ 为这些连通子群所生成子群的闭包。有限个连通子群的乘积连通，且这些乘积构成含单位元的递增有向并，故其闭包 $G_\infty$ 闭且连通；它包含 $\mathcal H$、仍在 $\mathcal L_d$ 内，而共轭 $g$ 只把指标 $n$ 移到 $n+1$，所以
+
+$$
+ gG_\infty g^{-1}=G_\infty.
+$$
+
+定理 36.1 应用于 $G_\infty$，迫使 $g$ 保持所有纯产品，与实际纠缠见证矛盾。因此存在整数 $n$ 使 $g^n\mathcal H g^{-n}$ 不包含于 $\mathcal L_d$。该子群连通，所以其 Lie 代数也不包含于 $\operatorname{Lie}(\mathcal L_d)$；取 $X\in\operatorname{Lie}(\mathcal H)$ 使 $\operatorname{Ad}_{g^n}X$ 在该局部 Lie 代数之外。完整实际局部路径 $\exp(tX)$ 与 $g^n,g^{-n}$ 的合法全载体复合给出 (36.6)。其在 $0$ 点的导数不在局部 Lie 代数，故路径离开 $\mathcal L_d$。每个参数仍是有限字；未使用 Trotter、逼近极限或新的连续原语。证毕。
+
+将 (36.6) 与现有紧闭包、连通分类和精确有限生成供应接合，得到 $d=3$、$H=SO(3)$，以及原二体的 $Q_2$ 或一腿反射分支 $T_1Q_2T_1$；这些供应已给出相应的实际有限字。若 $g$ 生成的整体群有不连通余类，本推论只结算该实际连通扇区，不声称整体群等于其单位元分支，也不把未分类余类当作新的量子操作族。SWAP 和局部 $O(d)$ 反射满足 (36.3) 的产品保持形式，因而不满足本推论所需的纠缠见证。
+
+### 36.3 载体、旁观者与原始物理边界
+
+定理 36.1 只处理同一个二体全载体上的锥、实际控制及其产品见证。若原控制接口另行实际供应
+
+$$
+ \iota_{ij}(g)=g_{ij}\otimes I_{\mathrm{spectators}},
+ \qquad
+ \iota_{ij}(g^{-1})=g^{-1}_{ij}\otimes I_{\mathrm{spectators}},
+$$
+
+则 (36.6) 在每个已许可的边上逐字放置，且恒等于旁观者全相关载体；这不凭空增加自由旁观者、寄存器传输或多体门。全寄存器的有限图生成、整锥识别和反射分支的排除仍复用 [Müller--Ududec 供应](../../../Library/QuantumStates/mullerududec2012selfduality.md)；严格丢弃到同一原有序二体仍复用 [signed-coupling 供应](../../../Library/ContinuousObservables/mullerududec2012signedcoupling.md)，不能由本桥改成任意边缘或重新排序的丢弃。
+
+产品正性与纯边缘结果不提供参考正性、完全正性、完整仪器、更新记录、物理时钟或单位。参数 $t$ 是实际门字中的连续控制参数，不自动是物理时间。原唯一 $\Omega$、$89$ 条路径、$26+63$ 分解、$1024$ 标签、ready、$11/7$ 地址、有限字次序、支撑、校准、历史、归档、零／失败／Return、权限、资源和单位边界均未被本节改写；native 全标签细零与 Born 唯一性、其它支撑保持历史律、原始 source adapter 及实际事件复合仍未解决。
+
+VI98 对原局部 $H$ 的拓扑前提作了另一种移除并保留实际连续非局部路径；本节保留完整实际 $H$，两种前提移除的联合等价性未由此建立。Brylinski--Brylinski 的 [quant-ph/0108062v1](https://arxiv.org/abs/quant-ph/0108062v1) 是已具 Hilbert 结构的普适门结果，不能替代本节的 GPT 入口。
+
+## 追加锚（本行以下为增补区）
+
+## 37. 同一原二体中联合恢复局域完整性与连续非局域路径
+
+### 37.1 保留的原对象与一次有限纠缠门
+
+**定义 37.1（联合入口）。** 使用 [VI 定义98.1及定理98.2](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#981-纯点关系数学闭包与整个原球) 的同一原局域数据：非零有限维实 $V$、闭尖生成凸锥 $C$、严格正单位 $u$、整个紧全张成基 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$，以及整个数学效应区间 $\mathcal E=[0,u]_{C^*}$。仍取
+
+$$
+F_r=\{f\in\mathcal E:f(r)=1\},\qquad
+T_r(x)=\inf_{f\in F_r}f(x),\qquad
+T_p(r)+T_q(r)=1\quad(\forall r\in P)
+\tag{37.1}
+$$
+
+中的同一原纯对 $p,q$。原实际群 $H\le\operatorname{Aut}(C,u)$ 在全部原纯点上**精确**传递，不预设闭、紧、连通或完整连续控制。实际部分完整保留 VI98.1：同一凸效应像 $D\subseteq\mathcal E$、原 $0,u$、真正共同可用的种子菜单 $(a_0,b_0)$，满足 $a_0(p)=b_0(q)=1$、$a_0+b_0=u$，以及原标签 $H_*\subseteq H$，满足 $\{hp:h\in H_*\}=P$；每个指定 $a_0\circ h^{-1}$ 都实际可用且属于原 $D$。数学效应不代替实际菜单，稠密轨道不代替精确传递。
+
+只在同一个有序原二体上另保留 $V_2=V\otimes_{\mathbb R}V$、$u_2=u\otimes u$ 和整个紧凸全张成规范集 $K_2\subseteq\{u_2=1\}$。所有原局域准备的产品和所有原局域效应的产品实际可用，产品校准为
+
+$$
+(f\otimes k)(x\otimes y)=f(x)k(y),\qquad
+0\le(f\otimes k)(z)\le1
+\quad(f,k\in\mathcal E,\ z\in K_2).
+\tag{37.2}
+$$
+
+产品测试忠实层析整个原载体；包含所有 $x\otimes y$，$x,y\in K$，不只是某个可分子模型。原独立 $H$ 控制 $h\otimes k$ 对每个 $h,k\in H$ 实际可用，保持整个 $K_2$。供给同载体上一个原实际保质量实线性可逆门 $g$ 及实际逆 $g^{-1}$，满足 $gK_2=K_2$，并有
+
+$$
+g(r\otimes s)\text{ 不是任何局域规范态的产品}
+\quad\text{对某个 }r,s\in P.
+\tag{37.3}
+$$
+
+所有这些原门及其逆的有限顺序复合均合法、保质量并保持整个原 $K_2$。记其实际有限字群为 $\Gamma$。不输入连续非局域路径、额外局域门、辅助或旁观者；也不要求整个实际可逆群等于 $\Gamma$。
+
+### 37.2 数学分支先识别，原控制随后恢复
+
+**定理 37.2（同一原群的联合恢复）。** 定义37.1下，存在一次固定的原局域球校准及其二体张量校准，使
+
+$$
+\begin{gathered}
+d=\dim\ker u=3,\qquad D=\mathcal E,\qquad
+H=\mathrm{SO}(3)\quad\text{为同一个原 }N=1\text{ 群},\\
+\mathscr C=\overline\Gamma,\qquad S=\mathscr C^0=JQ_2J,
+\qquad J(K_2)=\mathcal D(4),\qquad S\subseteq\Gamma,\\
+J=I\text{ 或 }T_1,\qquad
+Q_2=\{\operatorname{Ad}_U:U\in\mathrm{SU}(4)\},\qquad
+\mathcal D(4)=\{A\succeq0:\operatorname{Tr}A=1\}.
+\end{gathered}
+\tag{37.4}
+$$
+
+这里 $\mathscr C$ 是数学矩阵闭包，$S$ 是它的单位分支；$T_1$ 是第一原因子的转置坐标反射，不是预给实际门。另存在 $n\in\mathbb Z$、$X\in\operatorname{Lie}(\widehat H\times\widehat H)$，使
+
+$$
+c_n(t)=g^n\exp(tX)g^{-n}\in\Gamma\quad(\forall t\in\mathbb R),
+\qquad
+c_n(t_0)\notin\mathcal L_3\quad\text{对某个 }t_0,
+\tag{37.5}
+$$
+
+其中 $\mathcal L_d=\widehat{\mathrm{SO}(d)}\times\widehat{\mathrm{SO}(d)}$，帽号表示固定质量坐标。该完整路径由合法原有限字逐参数实现，$c_n(-t)=c_n(t)^{-1}$。不声称 $\Gamma=S$、有限字有效率，或参数是物理连续时间。
+
+证明。先直接消费 VI98.2，只有它的局域前件在此已完整满足：原基成为整个球，$d\ge1$，有唯一中心 $c$、椭球度量和坐标
+
+$$
+V=\mathbb Rc\oplus W,\quad u(tc+w)=t,\quad
+K=\{c+a:\|a\|\le1\},\quad
+P=\{p_a=c+a:\|a\|=1\},\quad H\le\mathrm O(d).
+\tag{37.6}
+$$
+
+同一个原 $H$ 在整个球面上忠实且精确传递，原种子、指定拉回和凸性给 $D=\mathcal E$。此处尚无 $H$ 拓扑结论。其 least 效应为 $e_a(tc+w)=(t+a\cdot w)/2$，故(37.2)给球产品测试及其全域概率界。原实际独立控制没有被数学闭包替换。
+
+先排除 $d=1$，不使用连续路径。两端 $p_+,p_-$ 的四个产品是 $V_2$ 的一组基；四个坐标产品效应读出任意 $z\in K_2$ 在该基下的系数，均非负且和为一。产品包含与凸性因此迫使整个 $K_2$ 就是四顶点经典单纯形。任意保该单纯形的可逆线性门置换顶点，故把每个纯产品送到纯产品，与(37.3)矛盾。因此 $d\ge2$。
+
+令 $L=\overline H\le\mathrm O(d)$、$H_c=L^0$。由 VI98.2 的(98.4)及(37.6)，$L$ 为紧矩阵 Lie 群。$Lp_a=P$，因为 $Hp_a=P$ 而 $L$ 保持整个原球。$L$ 只有有限多个分支，故 $H_c$ 的球面轨道只有有限多个，且各自紧闭；它们也开。球面连通，所以只有一个轨道。于是 $H_c\le\mathrm{SO}(d)$ 闭、连通，连续线性、忠实且球面传递。
+
+对 $K_2$ 复用 [Library §2 的 Analytic compactness lemma](../../../Library/QuantumStates/mullerududec2012selfduality.md#2-analytic-closure-published-classification-and-exact-actual-words) 的对称凸包范数论证，仅取其紧性及保整个原基的结论：$\mathscr C$ 是紧矩阵 Lie 群，保持 $K_2$、质量与全部产品概率。该论证不需要生成元连通；此处不沿用其连通结论。独立原 $H$ 的闭包包含独立 $L$，所以
+
+$$
+\mathcal H_c:=\widehat{H_c}\times\widehat{H_c}\le S,
+\qquad gSg^{-1}=S.
+\tag{37.7}
+$$
+
+第二式因为单位分支是 $\mathscr C$ 的特征子群。这些均为数学不变性，尚未宣称 $H_c$ 或 $S$ 实际可用。
+
+若 $S\subseteq\mathcal L_d$，将定理36.1的 $H,G$ 分别取为 $H_c,S$。两者闭且连通，$\mathcal H_c\le S\le\mathcal L_d$；(37.2)给同一个原 $K_2$ 上所需全部正忠实产品测试，(37.7)给正规化，原 $g$ 保质量及整个 $K_2$。这是36.1的数学正规化应用，不调用36.2的实际完整局域前件。结论迫使 $g$ 为局域正交乘积或其 SWAP 形式，保持所有纯产品，与(37.3)矛盾。因此
+
+$$
+S\not\subseteq\mathcal L_d.
+\tag{37.8}
+$$
+
+现在应用 Masanes--Müller--Pérez-García--Augusiak，1111.4060v4 的技术 [Theorem 1](https://arxiv.org/html/1111.4060v4#Thmthm1) 与 [Theorem 2](https://arxiv.org/html/1111.4060v4#Thmthm2)，只取其复合群为 $S$、局域群为 $H_c$。其 [§IV.1 球面作用表](https://arxiv.org/html/1111.4060v4#S4.SS1) 要求紧连通、连续线性且 almost effective 的球面作用；上面的忠实作用逐项满足，并允许同一次正交换基用于两个原因子。$d=2$ 的作用属于表中的 $\mathrm U(1)=\mathrm{SO}(2)$。对任一固定单位 $a$，准确有
+
+$$
+\mathcal H_c\le S,\qquad
+\tfrac14(\widehat a\otimes\widehat a)\cdot
+S(\widehat a\otimes\widehat a)\subseteq[0,1].
+\tag{37.9}
+$$
+
+概率界来自同一原纯产品、同一原测试和数学不变性；未把数学 $S$ 门放入原程序。Theorem 1 与(37.8)给 $d=3,H_c=\mathrm{SO}(3)$；Theorem 2 的局域选项又被(37.8)排除，故 $S=Q_2$ 或 $T_1Q_2T_1$。只在此之后把原一次校准接上 Pauli 识别；原二体此时先表示为迹一 Hermitian 矩阵。
+
+对整个原 $K_2$ 应用 [Library §3 的 Pair-state lemma before choosing a branch](../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register) 的不变性论证：取相应 $J=I$ 或 $T_1$，则 $J(K_2)$ 受整个 $Q_2$ 数学保持，仍含所有纯产品，且全部产品测试非负。该引理的两个包含只用这些性质：产品轨道和凸性给 $\mathcal D(4)\subseteq J(K_2)$；任意原态的每个向量期望可在此不变集上写成一个产品测试，给反向包含。因此 $J(K_2)=\mathcal D(4)$。这里没有声称轨道的数学门实际可用；全域正性来自(37.2)，对所有原态成立。也没有预设复合纯传递。
+
+再排除**原** $H$ 的反定向元。若原 $h=R\tau\in H$，$R\in\mathrm{SO}(3)$，$\tau$ 为 Pauli 转置反射，则 $\widehat R^{-1}\otimes I$ 属于两种 $S$，因而数学保持 $K_2$。与原 $\widehat h\otimes I$ 复合可知 $T_1$ 必保持 $K_2$。这只是在组合两个保同一集合的矩阵，不把 $R$ 当作已可调用的原单元门。对 Bell 投影 $B$，有
+
+$$
+T_1B=\tfrac12\mathsf{SWAP},\qquad
+\operatorname{spec}(T_1B)=\{\tfrac12,\tfrac12,\tfrac12,-\tfrac12\}.
+\tag{37.10}
+$$
+
+若 $K_2=\mathcal D(4)$，$T_1$ 把 $B$ 送出；若 $K_2=T_1\mathcal D(4)$，它把原 $T_1B$ 送到不在该集合内的 $B$。两种情形均矛盾。因此同一原裸 $H\le\mathrm{SO}(3)$。
+
+此时才对原 $H$ 应用 [Beardon，Theorem 1.1及§2](https://doi.org/10.4153/S0008439526101696)：任意在 $S^2$ 上精确传递的旋转子群就是整个 $\mathrm{SO}(3)$，不需闭性。该文将此事实归于 Montgomery--Zippin，并给直接证明。这里传递属于原 $H$，并非仅属于 $L$，所以结论正是原 $N=1$ 的 $H=\mathrm{SO}(3)$；没有用二体字或辅助代替单元控制。至此全部完整实际局域路径 $\exp(tX)$ 才已恢复。
+
+最后恢复精确实际 $S$。紧 Lie 群的 $S=\mathscr C^0$ 开，故 $\Delta=\Gamma\cap S$ 稠密于 $S$。已恢复的完整原局域 $\mathcal H=\widehat H\times\widehat H$ 是 $\Delta$ 中非平凡连通 Lie 子群，且其每个完整一参数子群都实际可用。两种 $S$ 均有非交换简单 Lie 代数 $\mathfrak{su}(4)$。因此直接将 Library §2 的 *Exact-generation lemma* 取为 $(C,\Gamma,K_0)=(S,\Delta,\mathcal H)$，得到 $\Delta=S$，即 $S\subseteq\Gamma$。该供应以实际共轭方向张成理想，再用反函数定理取得开邻域；并非“稠密所以实际”，也不需要整个 $\Gamma$ 连通。
+
+现在36.2的全部实际前件终于成立：原 $H$ 完整、紧且连通，原 $g,g^{-1}$ 和纯产品到非产品见证均未变。复用 [推论36.2](#362-一次有限纠缠门给出完整实际路径) 就给(37.5)，每个实参数只使用这些原门的有限字。这也完整供应了 VI98.3 所需的二体连续非局域路径，但其更高份资源仍须另付。证毕。
+
+该结论同时删除的是分别输入的原 $H$ 拓扑／完整性和原连续非局域路径；保留的精确纯传递、整个原二体、正忠实产品层析、全部独立原控制与实际有限纠缠门及逆均为承重前件。仅有 $g\notin H\times H$、仅越出连通局域旋转、反射或 SWAP，均不替代(37.3)。36.1在反设中的产品保持结论使用 [Barnum--Hilgert 的纯边缘结果](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)，其条件是正产品、产品单位和忠实层析；这里没有添加 S 公理、边缘保持或复合纯传递。
+
+### 37.3 整体有限字群可以不连通的二体边界
+
+**命题 37.3（一个具体的二体不连通模型）。** 在标准原 qubit 局域数据和 $K_2=\mathcal D(4)$ 上，取原 $H=\mathrm{SO}(3)$、原 $p=P_0,q=P_1$ 及标准种子和拉回标签。令 $T=T_1T_2$ 为整对转置，设
+
+$$
+U=\exp(-i\pi\sigma_z\otimes\sigma_z/4),\qquad
+g=\operatorname{Ad}_U T.
+\tag{37.11}
+$$
+
+只把 $g$ 及其逆作为供给的实际有限门，不把右端两个因子分别作为预给资源。则定义37.1成立，而
+
+$$
+\Gamma=Q_2\ \cup\ Q_2T,\qquad S=Q_2\ne\Gamma.
+\tag{37.12}
+$$
+
+证明。标准局域全效应满足(37.1)，全部产品准备、测试与忠实层析均保留。整对转置和酉共轭都保整个 PSD 迹一集合，所以所供给的 $g,g^{-1}$ 是合法全域二体可逆门。实纯产品 $P_+\otimes P_+$ 被 $T$ 固定；$U|++\rangle$ 的系数矩阵为
+
+$$
+M=\frac{e^{-i\pi/4}}2\begin{pmatrix}1&i\\i&1\end{pmatrix},
+\qquad MM^\dagger=\tfrac12I.
+$$
+
+故两个 Schmidt 系数均为 $1/\sqrt2$，$g$ 给(37.3)。有限字的合法性由整个 $K_2$ 的保持给出。
+
+整对转置满足 $T\operatorname{Ad}_VT=\operatorname{Ad}_{\bar V}$，故 $Q_2\cup Q_2T$ 是含全部原生成元的紧群。$T\notin Q_2$：若转置等于某个酉共轭，该酉须固定每个实向量的秩一投影；先取坐标向量、再取两坐标之和，迫使该酉为标量，不能再反转虚反对称 Hermitian 矩阵。于是该紧群恰有两个不交连通余类。
+
+这里 $\mathscr C\subseteq Q_2\cup Q_2T$，故 $S\subseteq Q_2$。由定理37.2，$\dim S=15=\dim Q_2$；闭子群同维使 $S$ 在连通 $Q_2$ 中开，因而 $S=Q_2$。该定理又给 $S\subseteq\Gamma$，所以 $\operatorname{Ad}_{U^{-1}}g=T\in\Gamma$，取得(37.12)。该例只是这个具体群的计算，没有分类任意整体群的正规化子或分支。
+
+本模型的供给仅限 $N=1,2$。整对转置在该二体内为正，不提供在相关参考或任意旁观者上的正扩张、原三体边放置、END 或指定事件的 Choi 合同。因此它证明二体定理不能声称 $\Gamma=S$，不是完整多份／事件候选的反例。证毕。
+
+### 37.4 原消费者与结论范围
+
+定理37.2的有限字若要进入 [VI98.3--98.5](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#982-同一原有限寄存器及事件合同)，仍须在每个给定原有限寄存器的每条指定**有序**边上实际供应同一个 $g,g^{-1},H$ 的准确放置，恒等于旁观者的全部相关坐标，保持一次固定校准、整个原 $K_N$、产品和忠实层析。只有这些前件齐备，(37.5)才能逐字提升，并消费既有有限图生成供应。二体结论本身没有提供这些放置或任意多体门搬运。
+
+反射分支的选择仍消费 [Library 的 pre-selection END](../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register) 及 [signed-coupling 的严格原二体读回](../../../Library/ContinuousObservables/mullerududec2012signedcoupling.md#6-两条实际耦合边加一次同一原二体丢弃)：在原路径 $12,23$ 上，END 必须在选分支**之前**实际、仿射、保质量、全域，按全部产品校准收缩中腿，输出为保留端点 $1,3$ 对应的**同一个有序原 $K_2$**。不得改为某个抽象边缘、重新排序的输出，或由选分支后所得 SWAP 补付该前件。
+
+指定事件及所有有限实现仅按 [既有事件与实现供应](../../../Library/QuantumStates/mullerududec2012selfduality.md#4-one-exact-reference-per-original-event-and-finite-realizations) 和 VI98.3--98.5 条件性回接：同一事件的来源与准确参考扩张、整个原输出正性、全部实准备关系及零输入、各分支 TNI／确定事件 TP、同一菜单记录与真粗粒化、原实际纯辅助、顺序控制、保留输出指针律、回到同一原目标的 typed 全域丢弃，以及时间、单位、资源和权限合同，均未由本二体定理供给。特别地，数学有限字存在不提供算法效率、物理连续时间、能量标度或 $\hbar$。
+
+原 oneOmega／唯一 $\Omega$、89 paths、$26+63$、1024 labels、ready、11／7 addresses、legal words、support、calibration、history、archive、zero／failure／Return、permissions、resource、time、unit 和 source-adapter 的全部原义务保持原样。native 全标签 fine-zero／Born 唯一性及过程实现仍未解决；本定理不是这些目标的完成结论。VI100的有限方向静态条件是另一入口，不是37.1的额外前件。
+
+本节承重内容是同一原数据上的仓内综合应用（repo-derived）：用36.1在数学单位分支上排除局域性，经已发表的技术分类及既有整二体不变性供应，先排除原反射、恢复原裸 $H$，再消费精确有限字和36.2。VI98持有纯域到整个原球及原菜单恢复；所引 Library 持有紧性、精确生成、整二体、有限图、END及事件供应；1111.4060v4持有技术分类和球面作用表，Beardon持有不需闭性的旋转子群事实。这里不另造这些供应，不声称全局优先权、独立公理最少性、Lean／kernel 验证或完整量子起源。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 特征五的原生坐标输运障碍与精确稳定子的连通分量
+
+**定义 38.1（原矩阵、约化与换位系数）。** 沿用定义29.1和定理33.1的原路径、边界及调用次序，置
+$B_8=\operatorname{span}\{e_{u010}:u\in L_6\}$、$f=e_{000000010}$、$v=e_{101000010}$，并记
+$\Gamma=\langle K_0,\ldots,K_{10}\rangle\le U(89)$、
+$\Gamma_L=\langle K_0|_{B_8},\ldots,K_7|_{B_8}\rangle\le U(B_8)$。
+两者均指精确有限原生字；$K_j^{-1}=K_j^9$ 使逆调用仍可用有限正向字表示。
+这里的 $B_8$ 是字面 $b_8=1$、$b_7=b_9=0$ 的二十一维扇区名称；定理33.1的左因子为九股 $[6,3]$。
+
+复用 [II §103的整权重规范与全十一地址表示](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 和 [V §4.4的自由二次呈现](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md)，取
+
+$$
+\mathcal A=\mathbb Z[\zeta,y],\quad y^2=x=-(\zeta+\zeta^{-1}),\qquad
+\mathcal A/(1+\zeta)=\mathbb F_5[Y]/(Y^2-2)=\mathbb F_{25}.
+\tag{38.1}
+$$
+
+此处 $\Phi_{10}(-1)=5$，$2$ 在 $\mathbb F_5$ 中非平方；约化记横线，故 $\bar\zeta=-1$、$\bar x=2$、$\bar y=Y$。
+令 $w(b)=2+\sum_{k=1}^9b_k$、$D_{bb}=y^{w(b)}$。II(103.4)–(103.11)给出
+$r_{12}:S_{12}\to O(\operatorname{diag}(2^{w(b)}))$。在同一原坐标中定义
+
+$$
+\sigma_{12}(\pi)=\operatorname{sgn}(\pi)\bar D r_{12}(\pi)\bar D^{-1},\qquad
+S_i=\sigma_{12}((i,i+1))=-\bar K_{i-1}\quad(1\le i\le11).
+\tag{38.2}
+$$
+
+由于 $Y\ne0$，该共轭可逆。$S_i$ 在中心位顺序 $0,1$ 的活动块、两邻居恰有一个占据的标量、两邻居均占据的标量分别为
+
+$$
+\begin{pmatrix}2&Y\\Y&3\end{pmatrix},\qquad 1,\qquad -1.
+\tag{38.3}
+$$
+
+活动块对称且平方为 $I$，故 $\sigma_{12}$ 保持普通转置型 $a^{\mathsf T}a$。
+全十一组平方、相邻编织和远交换关系由II(103.9)–(103.11)经同一共轭及符号扭转承接，包括固定端点；前八个生成元在 $B_8$ 上给 $\sigma_9:S_9\to O_{21}(\mathbb F_{25})$。
+每个原生字约化为相应 $\sigma$ 矩阵乘一个符号。这里使用普通转置，不使用有限域 Frobenius 伴随；在II的未搬回坐标中则必须使用其加权型。
+
+原门和逆门的每个矩阵元均在 $\mathcal A$ 中。若在任一上述载体上 $Wf=\lambda e_b$、$\lambda\ne0$，则
+$\lambda=W_{bf}\in\mathcal A$，而 $W^{-1}e_b=\lambda^{-1}f$ 给 $\lambda^{-1}\in\mathcal A$。
+所以 $\lambda$ 是单位，$\bar\lambda\ne0$；精确复坐标输运必给非零标量的约化输运。
+
+**引理 38.2（全部换位系数的有限两态递推）。** 对任一原坐标 $e_b$ 及 $1\le i<j\le12$，置
+
+$$
+C_{ij}=\sigma_{12}((i,j))
+ =S_i\cdots S_{j-2}S_{j-1}S_{j-2}\cdots S_i,\qquad
+m_{ij}(b)=e_b^{\mathsf T}C_{ij}e_b.
+\tag{38.4}
+$$
+
+空乘积按 $I$ 解释。令 $c=j-2$，从
+$(A,B)=(1-b_{i-2},b_{i-2})$ 出发，依次对 $k=i-1,\ldots,j-3$ 作如下 $\mathbb F_5$ 递推，所有右侧的 $b$ 均是原始位：
+
+$$
+(A,B)\longmapsto
+\begin{cases}
+(A+B,0),&k=0\ \text{或}\ b_{k+1}=1,\\
+(4A+B,2A),&k\ne0,\ b_{k+1}=0,\ b_k=0,\\
+(2A,4A),&k\ne0,\ b_{k+1}=0,\ b_k=1.
+\end{cases}
+\tag{38.5}
+$$
+
+第三种情形自动有 $B=0$。在递推终点，有
+
+$$
+\begin{aligned}
+m_{ij}(b)&=A\,d_c(0)+B\,d_c(1),\\
+d_c(l)&=
+\begin{cases}
+4,&l=b_{c+1}=1,\\
+1,&l\ne b_{c+1},\\
+2+b_c,&l=b_{c+1}=0.
+\end{cases}
+\end{aligned}
+\tag{38.6}
+$$
+
+证明。写 $R=S_{j-2}\cdots S_i$，则 $C_{ij}=R^{\mathsf T}S_{j-1}R$；$R$ 按升序只处理中心位 $i-1,\ldots,j-3$ 各一次。
+处理位 $k$ 前，令 $A,B$ 为已有向量按左邻位 $k-1=0,1$ 分组的系数平方和。
+不同分支的已处理位串不同；下一门不再改变这些位，且未处理的位 $k$ 仍固定为原 $b_k$，故不同前驱不能合并，也没有遗漏交叉项。
+若 $k=0$，固定中心 $b_0=0$ 仅受标量 $\pm1$ 作用；若右邻为 $1$，中心也被迫为 $0$，得到第一行。
+活动零位的保持／翻转系数平方为 $4,2$，左邻占据时仅保留标量 $1$，得到第二行。
+原 $b_k=1$ 时，前一步因这个固定右邻而使左邻为零；若这是第一步，则原路径合法性也给 $B=0$。活动一位的翻转／保持系数平方为 $2,4$，得到第三行。
+最后中心 $c$ 尚未处理，支撑中恒为原 $b_c$，所以 $S_{j-1}$ 的非对角项不贡献二次型；(38.3)的三个对角情形正是(38.6)。固定 $c=0,10$ 也只出现其合法标量情形。证毕。
+
+**定理 38.3（左二十一维扇区的全部坐标射线排除）。** 对每个 $W\in\Gamma_L$、$b=u010$、$u\in L_6$ 及 $\lambda\ne0$，
+$Wf=\lambda e_b$ 蕴含 $e_b=f$。
+
+证明。在约化的 $B_8$ 中记 $C_{ij}=\sigma_9((i,j))$，定义次数 $72$ 的齐次多项式
+
+$$
+q(a)=a^{\mathsf T}a,\qquad
+J(a)=\prod_{1\le i<j\le9}
+\bigl(a^{\mathsf T}C_{ij}a-3q(a)\bigr).
+\tag{38.7}
+$$
+
+正交共轭置换全部 $36$ 个换位，故 $J(\sigma_9(\pi)a)=J(a)$；偶数次数也吸收原生字的符号。
+$J(\alpha a)=\alpha^{72}J(a)$，所以零与非零是射线不变量。
+对 $2\le i<j\le8$，半回文所遇的中心与右邻原位均为零。由(38.5)从 $(A_0,B_0)=(1,0)$ 得
+
+$$
+A_{k+1}=4A_k+B_k,\quad B_{k+1}=2A_k,\quad
+A_k+B_k=1,\quad A_k=2-3^k.
+\tag{38.8}
+$$
+
+中心 $j-2$ 的对角为 $2,1$；取 $k=j-i-1$ 即得
+$m_{ij}(f)=2A_k+B_k=3-3^{j-i-1}\ne3$。
+两个端点满足 $S_1f=S_8f=f$，由换位共轭有
+
+$$
+\begin{gathered}
+m_{12}(f)=m_{89}(f)=1,\\
+m_{1j}(f)=m_{2j}(f)\quad(3\le j\le9),\qquad
+m_{i9}(f)=m_{i8}(f)\quad(1\le i\le7).
+\end{gathered}
+\tag{38.9}
+$$
+
+这些等式包括 $(1,9)$，覆盖其余全部端点换位；因 $q(f)=1$，(38.7)的每个因子均非零。
+任一其余坐标 $e_{u010}$ 的 $u$ 必在某个 $k\in\{1,\ldots,6\}$ 占据；左右邻为零，故 $S_{k+1}$ 在该坐标的对角为 $3$。
+其相邻换位因子为零，于是全部另外二十个坐标都有 $J(e_{u010})=0$。
+定义38.1的单位标量桥把假设输运降为 $\bar Wf=\bar\lambda e_b$，与上述非零／零分离矛盾。证毕。
+
+该定理排除了在 $\Gamma_L$ 内先把 $[f]$ 精确送到 $[v]$、再搬回稳定 $[v]$ 的两杯子群的构造；换成同一扇区内其他不同坐标射线也不能供应该前件。
+这不否定含该前件的条件命题，也不排除非坐标目标或近似输运。
+
+**推论 38.4（原全八十九维、全部十一地址的特定输运排除）。** 对每个 $W\in\Gamma$、$\lambda\ne0$，有 $Wf\ne\lambda v$；中间字不必保持 $B_8$。
+
+证明。对 $q(a)\ne0$ 定义完整换位类的归一化谱多项式
+
+$$
+P_a(Z)=\prod_{1\le i<j\le12}
+\left(Z-\frac{a^{\mathsf T}C_{ij}a}{q(a)}\right).
+\tag{38.10}
+$$
+
+同一正交共轭与非零缩放使 $P_a$ 在全部约化原生字及射线上不变。
+对 $f,v$ 都有 $q=1$；(38.5)–(38.6)逐项给以下全部 $66$ 个系数。每行依 $j=i+1,\ldots,12$ 排列，数字均在 $\mathbb F_5$ 中：
+
+| $i$ | $m_{ij}(f)$ | $m_{ij}(v)$ |
+| --- | --- | --- |
+| $1$ | $1,2,0,4,1,2,0,0,3,3,3$ | $4,3,3,3,3,3,3,3,3,3,3$ |
+| $2$ | $2,0,4,1,2,0,0,3,3,3$ | $3,3,3,3,3,3,3,3,3,3$ |
+| $3$ | $2,0,4,1,2,2,3,3,3$ | $4,3,3,3,3,3,3,3,3$ |
+| $4$ | $2,0,4,1,1,3,3,3$ | $3,3,3,3,3,3,3,3$ |
+| $5$ | $2,0,4,4,3,3,3$ | $1,2,0,0,3,3,3$ |
+| $6$ | $2,0,0,3,3,3$ | $2,0,0,3,3,3$ |
+| $7$ | $2,2,3,3,3$ | $2,2,3,3,3$ |
+| $8$ | $1,3,3,3$ | $1,3,3,3$ |
+| $9$ | $3,3,3$ | $3,3,3$ |
+| $10$ | $1,1$ | $1,1$ |
+| $11$ | $1$ | $1$ |
+
+例如 $v$ 的第一行从 $(0,1)$ 出发：处理固定中心 $0$ 得 $(1,0)$，处理占据位 $1$ 得 $(2,4)$；
+随后中心 $2$ 的收缩为 $2+4\cdot4=3$，处理该位因原 $b_3=1$ 回到 $(1,0)$。
+位 $3$ 再给 $(2,4)$，零位更新固定这个二元组，直至位 $7$ 因 $b_8=1$ 重置；末端两步同样给系数 $3$。
+其余行只改变(38.5)的起点，表中列尽所有 $11+10+\cdots+1=66$ 对。按根 $0,1,2,3,4$ 汇总的重数为
+
+$$
+(11,10,12,27,6)\quad\text{与}\quad(4,5,4,51,2).
+\tag{38.11}
+$$
+
+因此 $P_f\ne P_v$，尤其根 $3$ 的重数分别为 $27,51$。
+定义38.1的非零单位桥和全十一地址对应使任何假设的精确复输运导出 $P_f=P_v$，矛盾。证毕。
+该推论只比较 $f,v$；谱相等不供应精确复提升，也不决定其他全载体目标或精确稳定子。
+
+**命题 38.5（保持原连通分量的有限指数核限制）。** 在同一个原 $B_8$ 酉拓扑中，令
+
+$$
+\begin{aligned}
+T&=\{b\in\Gamma_L:bf\in\mathbb C^\times f\},& H&=\overline T,\\
+q_L&:\Gamma_L\longrightarrow O_{21}(\mathbb F_{25}),\quad b\longmapsto\bar b,
+& N&=\ker q_L,\qquad L=\overline{T\cap N}.
+\end{aligned}
+\tag{38.12}
+$$
+
+则 $N$ 在 $\Gamma_L$ 中有限指数，且
+
+$$
+L^0=H^0=:H_0.
+\tag{38.13}
+$$
+
+证明。$q_L$ 的像有限，故 $T\cap N$ 在 $T$ 中有限指数。取有限余类分解 $T=\bigcup_\nu t_\nu(T\cap N)$，
+取闭包即得 $H=\bigcup_\nu t_\nu L$。去重后是有限个闭且互不交的余类，故每个也在 $H$ 中开。
+含单位元的连通分量只能留在 $L$，给 $H^0\subseteq L^0$；反向包含由 $L\subseteq H$ 给出。证毕。
+
+因而对任意原先固定的 $r,s\in B_8$，包括(32.4)中的 $r=e_{010000010}$，矩阵系数 $u(h)=\langle r,hs\rangle$ 的原问题恰保持为
+
+$$
+u|_{H_0}\not\equiv0
+\quad\Longleftrightarrow\quad
+u|_{\overline{T\cap N}^{\,0}}\not\equiv0.
+\tag{38.14}
+$$
+
+(38.13)不把每个 $b\in T\cap N$ 放入 $H_0$；即使 $u(b)\ne0$，仍须独立证明连通分量归属或在某个精确子群闭包的单位分量上证明非零。
+约化不需要、也未在这里延拓为 $H$ 上的连续映射。(38.7)、(38.10)没有确定 $T$、$H_0$ 或(38.14)任一侧的真假。
+要据此处理(32.4)，还须另供同一个实际十一地址前缀的零首因子与两个非零因子，以及其原第二列／未来对应；环境矩阵稠密性只给逼近，不能代付这些精确条件。
+
+本节的原生坐标应用是 repo-derived 推导；整权重约化、Coxeter 表示及其原生对应复用II §103、V §4、VII §§29、33，换位共轭不变量与有限余类闭包是所用成熟方法。
+有限域二次型与多项式不构成物理效应、额外准备、门或连续控制。(38.13)及输运排除不推出 $u\equiv0$、细支撑候选反驳、Born 唯一性或量子公理的物理来源。
+唯一原 $\Omega$、$89$ 路径、原 $26+63$ 代码分解、$1024$ 全标签、唯一 ready、十一／七地址、合法有限时序字、全标签 fine-zero／Born、校准、历史、记录、档案、零／失败／Return、权限、资源、时间、单位及原来源／过程／消费者合同，均仍取定义1.2、29.1和§§32、35、37的原域与原前件；这些义务不由本节不变量供给。
+
+## 追加锚（本行以下为增补区）

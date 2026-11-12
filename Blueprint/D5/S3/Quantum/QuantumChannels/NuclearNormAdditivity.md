@@ -40,7 +40,19 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.traceNorm_e
 
 The actual trace norm is the trace of the positive square root of A transpose times A, as defined by the frozen FiniteTraceDistance module. The theorem constructs a contraction attaining this trace pairing and proves that every contraction gives a pairing at most the trace norm. Its proof diagonalizes the positive square root, applies Cauchy-Schwarz to every eigenvector and uses the polar contraction for attainment. Duality is a conclusion of the proof, not a hypothesis.
 
-**Definition 1.4 (Weighted rank-one expansions).**
+**Theorem 1.4 (Actual rank-one trace pairing).**
+
+Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.dualPairing_outer`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.dualPairing_outer` (`✓ std3`). ∎
+
+*Citation.* E. Kopel (2026). *A sharp norm inequality for entanglement-breaking channels*. DOI: [10.48550/arXiv.2609.27906](https://doi.org/10.48550/arXiv.2609.27906). URL: <https://arxiv.org/abs/2609.27906v1>.
+
+*Commentary.*
+
+The existing proof identifies the trace pairing with the actual real inner product of x and Z y. This unchanged helper is public for the Peled rank-one tail consumer.
+
+**Definition 1.5 (Weighted rank-one expansions).**
 
 Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.weightedOuter`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.weightedOut
 
 For a finite outcome type, weightedOuter is the sum of u times the real outer products x y transpose. The input and output index types are arbitrary finite types and may have different cardinalities.
 
-**Theorem 1.5 (The weighted rank-one nuclear bound).**
+**Theorem 1.6 (The weighted rank-one nuclear bound).**
 
 Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.traceNorm_weightedOuter_le`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.traceNorm_w
 
 With nonnegative weights, the trace norm of the weighted outer-product sum is bounded by the sum of u times the product of the vector lengths. No vector is required to be nonzero for this inequality. This follows from the proved duality theorem and the contraction estimate for each pairing.
 
-**Theorem 1.6 (Kopel's v2 Lemma 4).**
+**Theorem 1.7 (Kopel's v2 Lemma 4).**
 
 Lean statement: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.traceNorm_weightedOuter_eq_iff_normalized_gram`
 
@@ -79,6 +91,7 @@ For nonzero finite real vector families and strictly positive weights, the nucle
 ## References
 
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.dualPairing`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.dualPairing_outer`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.exists_real_rectangular_polar`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.traceNorm_eq_max_dualPairing`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity.traceNorm_weightedOuter_eq_iff_normalized_gram`

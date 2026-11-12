@@ -8,26 +8,26 @@
 
 
 /-
-proof_shape: odd_reduction, distinct_moments, distinct_bound, collision_count_lower,
-  model_fifth, normalized_fifth, result: content.
-proof_shape: walsh_factor: bind-only (consumer: model_character);
-  moment_values: bind-only (consumers: distinct_bound, distinct_fifth_zero, model_fifth, result);
-  model_character: bind-only (consumers: distinct_moments, model_fifth, result);
-  model_positive: bind-only (consumer: result);
-  odd_card: bind-only (consumer: model_fifth);
-  distinct_fifth_zero: bind-only (consumer: result);
-  odd_duplicate: bind-only (consumer: collision_count_lower);
-  ratio_limit: bind-only (consumer: result).
-escape_witness: odd_reduction reduces arbitrary repeated sign products to their odd-coordinate
-  character. The injection in collision_count_lower gives at least N(N-1)(N-2)(N-3) fifth-order
-  tuples with three odd coordinates, and at least N^4/4 for N >= 9. Together with model_fifth
-  this yields the normalized upper bound -3/11, used by result.
+proof_shape: claim, zValue, zWeight, moment, modelFunctional, duplicate,
+  fifthCount, counterData: definitions.
+proof_shape: collision_count_lower, model_fifth, normalized_fifth, result: content.
+proof_shape: distinct_bound: bind-only (consumer: result).
+proof_shape: moment_values: bind-only
+  (consumers: distinct_bound, distinct_fifth_zero, model_fifth, result).
+proof_shape: model_character: bind-only
+  (consumers: model_fifth, result).
+proof_shape: model_positive: bind-only (consumer: result).
+proof_shape: distinct_fifth_zero: bind-only (consumer: result).
+proof_shape: odd_duplicate: bind-only (consumer: collision_count_lower).
+proof_shape: ratio_limit: bind-only (consumer: result).
+escape_witness: The shared odd-coordinate reduction and the injection in
+  collision_count_lower give at least N(N-1)(N-2)(N-3) fifth-order tuples with
+  three odd coordinates, and at least N^4/4 for N >= 9. Together with model_fifth
+  this yields the normalized upper bound -3/11 in normalized_fifth, used by result.
 admission_basis: escape-witness.
 -/
 
-import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticMomentDefs
-import Mathlib.Data.Fintype.CardEmbedding
-import Mathlib.Algebra.BigOperators.Ring.Nat
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.MixtureMomentLemmas
 
 /-! A positive finite probability model for the obstruction in 命题 500.4. -/
 
@@ -38,23 +38,6 @@ namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyR
 
 noncomputable section
 set_option autoImplicit false
-
-/-- One finite algebraic moment model, with all types in universe zero. -/
-structure FifthData where
-  ι : Type
-  [fintype : Fintype ι]
-  [decidableEq : DecidableEq ι]
-  A : Type
-  [commRing : CommRing A]
-  [algebra : Algebra ℝ A]
-  ℓ : A →ₗ[ℝ] ℝ
-  Y : ι → A
-  a : ℝ
-  b : ℝ
-  H : ℝ
-  L : ℝ
-
-attribute [instance] FifthData.fintype FifthData.decidableEq FifthData.commRing FifthData.algebra
 
 /-- The fifth-order implication with bounded lower moments and vanishing top moment. -/
 def claim : Prop :=
@@ -79,49 +62,14 @@ def claim : Prop :=
         (Real.sqrt ((D n).H * (D n).L)) ^ 5) atTop (𝓝 0)
 
 
-private def sign (b : Bool) : ℝ := if b then 1 else -1
-
-private lemma walsh_factor (N : ℕ) (T : Finset (Fin N)) (μ : ℝ) :
-    (∑ ω : Fin N → Bool, (∏ d, (1 + μ * sign (ω d))) *
-      ∏ d ∈ T, sign (ω d)) / (2 : ℝ)^N = μ^T.card := by
-  classical
-  have hprod (ω : Fin N → Bool) :
-      (∏ d, (1 + μ * sign (ω d))) * (∏ d ∈ T, sign (ω d)) =
-        ∏ d, (1 + μ * sign (ω d)) * (if d ∈ T then sign (ω d) else 1) := by
-    rw [Finset.prod_mul_distrib, ← Finset.prod_filter]
-    simp
-  simp_rw [hprod]
-  rw [← Fintype.prod_sum (fun (d : Fin N) (b : Bool) =>
-    (1 + μ * sign b) * (if d ∈ T then sign b else 1))]
-  have hsum (d : Fin N) :
-      (∑ b : Bool, (1 + μ * sign b) * (if d ∈ T then sign b else 1)) =
-        2 * (if d ∈ T then μ else 1) := by
-    by_cases h : d ∈ T <;> simp [sign, h] <;> ring
-  simp_rw [hsum]
-  rw [Finset.prod_mul_distrib]
-  simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin,
-    ← Finset.prod_filter, Finset.filter_mem_eq_inter, Finset.univ_inter,
-    Finset.prod_const]
-  exact mul_div_cancel_left₀ _ (by positivity)
-
 private def zValue : Fin 3 → ℝ := ![-2, 1, 3]
 
 private def zWeight : Fin 3 → ℝ := ![8/22, 13/22, 1/22]
 
 private def moment (j : ℕ) : ℝ := ∑ z : Fin 3, zWeight z * zValue z ^ j
 
-private def modelY (N : ℕ) (d : Fin N) (ω : Fin N → Bool) : ℝ := sign (ω d)
-
-private def modelFunctional (N : ℕ) : ((Fin N → Bool) → ℝ) →ₗ[ℝ] ℝ where
-  toFun F := ∑ z : Fin 3, zWeight z *
-    ((∑ ω : Fin N → Bool, (∏ d, (1 + (zValue z / Real.sqrt N) * sign (ω d))) *
-      F ω) / (2 : ℝ)^N)
-  map_add' F G := by
-    simp [mul_add, Finset.sum_add_distrib, add_div]
-  map_smul' r F := by
-    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
-    simp_rw [mul_left_comm _ r, ← Finset.mul_sum, mul_div_assoc, mul_left_comm _ r]
-    rw [Finset.mul_sum]
+private def modelFunctional (N : ℕ) : ((Fin N → Bool) → ℝ) →ₗ[ℝ] ℝ :=
+  mixtureFunctional N zValue zWeight
 
 private lemma moment_values :
     moment 0 = 1 ∧ moment 1 = 0 ∧ moment 2 = 27/11 ∧
@@ -131,149 +79,38 @@ private lemma moment_values :
 private lemma model_character (N : ℕ) (T : Finset (Fin N)) :
     modelFunctional N (∏ d ∈ T, modelY N d) =
       moment T.card / Real.sqrt N ^ T.card := by
-  classical
-  change (∑ z : Fin 3, zWeight z *
-    ((∑ ω : Fin N → Bool, (∏ d, (1 + (zValue z / Real.sqrt N) * sign (ω d))) *
-      (∏ d ∈ T, modelY N d) ω) / (2 : ℝ)^N)) = _
-  simp only [Finset.prod_apply, modelY]
-  simp_rw [walsh_factor, div_pow, ← mul_div_assoc]
-  rw [← Finset.sum_div]
-  rfl
+  simpa only [modelFunctional, moment] using
+    (mixture_character N zValue zWeight T)
 
 private lemma model_positive (N : ℕ) (hN : 9 ≤ N) (F : (Fin N → Bool) → ℝ) :
     0 ≤ modelFunctional N (F * F) := by
-  have hN' : (9 : ℝ) ≤ N := by exact_mod_cast hN
-  have hs : 3 ≤ Real.sqrt N := (Real.le_sqrt (by norm_num) (by positivity)).2 (by nlinarith)
-  have hspos : 0 < Real.sqrt N := by linarith
-  change 0 ≤ ∑ z : Fin 3, zWeight z *
-    ((∑ ω : Fin N → Bool, (∏ d, (1 + (zValue z / Real.sqrt N) * sign (ω d))) *
-      (F ω * F ω)) / (2 : ℝ)^N)
-  apply Finset.sum_nonneg
-  intro z hz
-  have hp : 0 ≤ zWeight z := by fin_cases z <;> norm_num [zWeight]
-  have hzabs : |zValue z| ≤ 3 := by fin_cases z <;> norm_num [zValue]
-  apply mul_nonneg hp
-  apply div_nonneg _ (by positivity)
-  apply Finset.sum_nonneg
-  intro ω hω
-  apply mul_nonneg _ (mul_self_nonneg _)
-  apply Finset.prod_nonneg
-  intro d hd
-  have ha : |(zValue z / Real.sqrt N) * sign (ω d)| ≤ 1 := by
-    rw [abs_mul, abs_div, abs_of_pos hspos]
-    have hb : |sign (ω d)| = 1 := by cases ω d <;> norm_num [sign]
-    rw [hb, mul_one]
-    exact (div_le_one₀ hspos).2 (hzabs.trans hs)
-  have := (abs_le.mp ha).1
-  linarith
-
-private def oddCoords {N r : ℕ} (x : Fin r → Fin N) : Finset (Fin N) :=
-  Finset.univ.filter (fun d => Odd (Finset.univ.filter (fun i => x i = d)).card)
-
-private lemma odd_reduction {N r : ℕ} (x : Fin r → Fin N) :
-    (∏ i, modelY N (x i)) = ∏ d ∈ oddCoords x, modelY N d := by
-  classical
-  funext ω
-  simp only [Finset.prod_apply, modelY]
-  rw [← Finset.prod_fiberwise' Finset.univ x (fun d => sign (ω d))]
-  simp only [Finset.prod_const]
-  rw [oddCoords, Finset.prod_filter]
-  apply Finset.prod_congr rfl
-  intro d hd
-  have hs : sign (ω d)^2 = 1 := by cases ω d <;> norm_num [sign]
-  rw [pow_eq_pow_mod _ hs]
-  by_cases h : Odd (Finset.univ.filter (fun i => x i = d)).card
-  · simp [h, Nat.odd_iff.mp h]
-  · simp [h, Nat.not_odd_iff.mp h]
-
-private lemma odd_card {N r : ℕ} (x : Fin r → Fin N) :
-    (oddCoords x).card ≤ r ∧ (oddCoords x).card % 2 = r % 2 := by
-  classical
-  have hs : oddCoords x ⊆ Finset.univ.image x := by
-    intro d hd
-    apply (Finset.fiber_card_ne_zero_iff_mem_image Finset.univ x d).mp
-    have ho := (Finset.mem_filter.mp hd).2
-    intro hz
-    rw [hz] at ho
-    exact Nat.not_odd_zero ho
-  constructor
-  · calc
-      _ ≤ (Finset.univ.image x).card := Finset.card_le_card hs
-      _ ≤ r := by simpa using Finset.card_image_le (s := Finset.univ) (f := x)
-  · have hsum : (∑ d : Fin N, (Finset.univ.filter (fun i : Fin r => x i = d)).card) = r := by
-      simpa using Finset.sum_card_fiberwise_eq_card_filter
-        (Finset.univ : Finset (Fin r)) (Finset.univ : Finset (Fin N)) x
-    have hp := Finset.even_sum_iff_even_card_odd
-      (s := (Finset.univ : Finset (Fin N)))
-      (fun d => (Finset.univ.filter (fun i : Fin r => x i = d)).card)
-    rw [hsum] at hp
-    change Even r ↔ Even (oddCoords x).card at hp
-    simp only [Nat.even_iff] at hp
-    omega
-
-private lemma distinct_moments (N r : ℕ) (g : Fin r → Fin N → ℝ) :
-    distinctIndexMoment (modelFunctional N) (modelY N) g =
-      (moment r / Real.sqrt N ^ r) *
-        ∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i) := by
-  classical
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro x hx
-  have hinj := (Finset.mem_filter.mp hx).2
-  have hodd : oddCoords x = Finset.univ.image x := by
-    ext d
-    by_cases hd : d ∈ Finset.univ.image x
-    · obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hd
-      have hf : Finset.univ.filter (fun j => x j = x i) = {i} := by
-        ext j
-        simp [hinj.eq_iff]
-      simp [oddCoords, hf]
-    · have hf : Finset.univ.filter (fun j => x j = d) = ∅ := by
-        apply Finset.filter_eq_empty_iff.mpr
-        intro i hi he
-        exact hd (Finset.mem_image.mpr ⟨i, hi, he⟩)
-      simp [oddCoords, hf, hd]
-  rw [odd_reduction x, model_character, hodd]
-  simp only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin]
-  exact mul_comm _ _
+  apply mixture_positive N zValue zWeight
+  · intro z
+    have hz : |zValue z| ≤ 3 := by fin_cases z <;> norm_num [zValue]
+    have hs : (3 : ℝ) ≤ Real.sqrt N := by
+      apply (Real.le_sqrt (by norm_num) (by positivity)).2
+      exact_mod_cast hN
+    exact hz.trans hs
+  · intro z
+    fin_cases z <;> norm_num [zWeight]
+  · exact_mod_cast (show 0 < N by omega)
 
 private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr5 : r < 5)
     (g : Fin r → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
     |distinctIndexMoment (modelFunctional N) (modelY N) g| ≤
       11 * Real.sqrt N ^ r := by
-  classical
-  have hs : 0 < Real.sqrt N := Real.sqrt_pos.2 (by exact_mod_cast hN)
   have hm : |moment r| ≤ 11 := by
     interval_cases r <;> norm_num [moment_values.2.2.1, moment_values.2.2.2.1,
       moment_values.2.2.2.2.1]
-  have hsum : |∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i)| ≤
-      (N : ℝ)^r := by
-    calc
-      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, |∏ i, g i (x i)| :=
-        Finset.abs_sum_le_sum_abs _ _
-      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, (1 : ℝ) := by
-        apply Finset.sum_le_sum
-        intro x hx
-        rw [Finset.abs_prod]
-        exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun i _ => hg i (x i))
-      _ ≤ ∑ _x : Fin r → Fin N, (1 : ℝ) :=
-        Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
-          (fun _ _ _ => by positivity)
-      _ = _ := by simp
-  rw [distinct_moments, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
   calc
-    _ ≤ (11 / Real.sqrt N ^ r) * (N : ℝ)^r :=
-      mul_le_mul (div_le_div_of_nonneg_right hm (by positivity)) hsum
-        (abs_nonneg _) (by positivity)
-    _ = 11 * Real.sqrt N ^ r := by
-      have he : (N : ℝ)^r = Real.sqrt N ^ r * Real.sqrt N ^ r := by
-        rw [← mul_pow, ← pow_two, Real.sq_sqrt (by positivity)]
-      rw [he]
-      field_simp
+    _ ≤ |moment r| * Real.sqrt N ^ r := by
+      simpa only [modelFunctional, moment] using
+        mixture_distinct_bound N r hN zValue zWeight g hg
+    _ ≤ 11 * Real.sqrt N ^ r := mul_le_mul_of_nonneg_right hm (by positivity)
 
 private lemma distinct_fifth_zero (N : ℕ) (g : Fin 5 → Fin N → ℝ) :
     distinctIndexMoment (modelFunctional N) (modelY N) g = 0 := by
-  rw [distinct_moments, moment_values.2.2.2.2.2]
+  rw [modelFunctional, mixture_distinct_moments, ← moment, moment_values.2.2.2.2.2]
   simp
 
 private def duplicate {N : ℕ} (y : Fin 4 → Fin N) : Fin 5 → Fin N :=
