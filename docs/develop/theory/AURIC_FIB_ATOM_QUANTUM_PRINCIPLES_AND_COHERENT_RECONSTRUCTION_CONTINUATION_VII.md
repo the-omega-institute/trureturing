@@ -4303,3 +4303,174 @@ $$
 VI98 对原局部 $H$ 的拓扑前提作了另一种移除并保留实际连续非局部路径；本节保留完整实际 $H$，两种前提移除的联合等价性未由此建立。Brylinski--Brylinski 的 [quant-ph/0108062v1](https://arxiv.org/abs/quant-ph/0108062v1) 是已具 Hilbert 结构的普适门结果，不能替代本节的 GPT 入口。
 
 ## 追加锚（本行以下为增补区）
+
+## 37. 同一原二体中联合恢复局域完整性与连续非局域路径
+
+### 37.1 保留的原对象与一次有限纠缠门
+
+**定义 37.1（联合入口）。** 使用 [VI 定义98.1及定理98.2](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#981-纯点关系数学闭包与整个原球) 的同一原局域数据：非零有限维实 $V$、闭尖生成凸锥 $C$、严格正单位 $u$、整个紧全张成基 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$，以及整个数学效应区间 $\mathcal E=[0,u]_{C^*}$。仍取
+
+$$
+F_r=\{f\in\mathcal E:f(r)=1\},\qquad
+T_r(x)=\inf_{f\in F_r}f(x),\qquad
+T_p(r)+T_q(r)=1\quad(\forall r\in P)
+\tag{37.1}
+$$
+
+中的同一原纯对 $p,q$。原实际群 $H\le\operatorname{Aut}(C,u)$ 在全部原纯点上**精确**传递，不预设闭、紧、连通或完整连续控制。实际部分完整保留 VI98.1：同一凸效应像 $D\subseteq\mathcal E$、原 $0,u$、真正共同可用的种子菜单 $(a_0,b_0)$，满足 $a_0(p)=b_0(q)=1$、$a_0+b_0=u$，以及原标签 $H_*\subseteq H$，满足 $\{hp:h\in H_*\}=P$；每个指定 $a_0\circ h^{-1}$ 都实际可用且属于原 $D$。数学效应不代替实际菜单，稠密轨道不代替精确传递。
+
+只在同一个有序原二体上另保留 $V_2=V\otimes_{\mathbb R}V$、$u_2=u\otimes u$ 和整个紧凸全张成规范集 $K_2\subseteq\{u_2=1\}$。所有原局域准备的产品和所有原局域效应的产品实际可用，产品校准为
+
+$$
+(f\otimes k)(x\otimes y)=f(x)k(y),\qquad
+0\le(f\otimes k)(z)\le1
+\quad(f,k\in\mathcal E,\ z\in K_2).
+\tag{37.2}
+$$
+
+产品测试忠实层析整个原载体；包含所有 $x\otimes y$，$x,y\in K$，不只是某个可分子模型。原独立 $H$ 控制 $h\otimes k$ 对每个 $h,k\in H$ 实际可用，保持整个 $K_2$。供给同载体上一个原实际保质量实线性可逆门 $g$ 及实际逆 $g^{-1}$，满足 $gK_2=K_2$，并有
+
+$$
+g(r\otimes s)\text{ 不是任何局域规范态的产品}
+\quad\text{对某个 }r,s\in P.
+\tag{37.3}
+$$
+
+所有这些原门及其逆的有限顺序复合均合法、保质量并保持整个原 $K_2$。记其实际有限字群为 $\Gamma$。不输入连续非局域路径、额外局域门、辅助或旁观者；也不要求整个实际可逆群等于 $\Gamma$。
+
+### 37.2 数学分支先识别，原控制随后恢复
+
+**定理 37.2（同一原群的联合恢复）。** 定义37.1下，存在一次固定的原局域球校准及其二体张量校准，使
+
+$$
+\begin{gathered}
+d=\dim\ker u=3,\qquad D=\mathcal E,\qquad
+H=\mathrm{SO}(3)\quad\text{为同一个原 }N=1\text{ 群},\\
+\mathscr C=\overline\Gamma,\qquad S=\mathscr C^0=JQ_2J,
+\qquad J(K_2)=\mathcal D(4),\qquad S\subseteq\Gamma,\\
+J=I\text{ 或 }T_1,\qquad
+Q_2=\{\operatorname{Ad}_U:U\in\mathrm{SU}(4)\},\qquad
+\mathcal D(4)=\{A\succeq0:\operatorname{Tr}A=1\}.
+\end{gathered}
+\tag{37.4}
+$$
+
+这里 $\mathscr C$ 是数学矩阵闭包，$S$ 是它的单位分支；$T_1$ 是第一原因子的转置坐标反射，不是预给实际门。另存在 $n\in\mathbb Z$、$X\in\operatorname{Lie}(\widehat H\times\widehat H)$，使
+
+$$
+c_n(t)=g^n\exp(tX)g^{-n}\in\Gamma\quad(\forall t\in\mathbb R),
+\qquad
+c_n(t_0)\notin\mathcal L_3\quad\text{对某个 }t_0,
+\tag{37.5}
+$$
+
+其中 $\mathcal L_d=\widehat{\mathrm{SO}(d)}\times\widehat{\mathrm{SO}(d)}$，帽号表示固定质量坐标。该完整路径由合法原有限字逐参数实现，$c_n(-t)=c_n(t)^{-1}$。不声称 $\Gamma=S$、有限字有效率，或参数是物理连续时间。
+
+证明。先直接消费 VI98.2，只有它的局域前件在此已完整满足：原基成为整个球，$d\ge1$，有唯一中心 $c$、椭球度量和坐标
+
+$$
+V=\mathbb Rc\oplus W,\quad u(tc+w)=t,\quad
+K=\{c+a:\|a\|\le1\},\quad
+P=\{p_a=c+a:\|a\|=1\},\quad H\le\mathrm O(d).
+\tag{37.6}
+$$
+
+同一个原 $H$ 在整个球面上忠实且精确传递，原种子、指定拉回和凸性给 $D=\mathcal E$。此处尚无 $H$ 拓扑结论。其 least 效应为 $e_a(tc+w)=(t+a\cdot w)/2$，故(37.2)给球产品测试及其全域概率界。原实际独立控制没有被数学闭包替换。
+
+先排除 $d=1$，不使用连续路径。两端 $p_+,p_-$ 的四个产品是 $V_2$ 的一组基；四个坐标产品效应读出任意 $z\in K_2$ 在该基下的系数，均非负且和为一。产品包含与凸性因此迫使整个 $K_2$ 就是四顶点经典单纯形。任意保该单纯形的可逆线性门置换顶点，故把每个纯产品送到纯产品，与(37.3)矛盾。因此 $d\ge2$。
+
+令 $L=\overline H\le\mathrm O(d)$、$H_c=L^0$。由 VI98.2 的(98.4)及(37.6)，$L$ 为紧矩阵 Lie 群。$Lp_a=P$，因为 $Hp_a=P$ 而 $L$ 保持整个原球。$L$ 只有有限多个分支，故 $H_c$ 的球面轨道只有有限多个，且各自紧闭；它们也开。球面连通，所以只有一个轨道。于是 $H_c\le\mathrm{SO}(d)$ 闭、连通，连续线性、忠实且球面传递。
+
+对 $K_2$ 复用 [Library §2 的 Analytic compactness lemma](../../../Library/QuantumStates/mullerududec2012selfduality.md#2-analytic-closure-published-classification-and-exact-actual-words) 的对称凸包范数论证，仅取其紧性及保整个原基的结论：$\mathscr C$ 是紧矩阵 Lie 群，保持 $K_2$、质量与全部产品概率。该论证不需要生成元连通；此处不沿用其连通结论。独立原 $H$ 的闭包包含独立 $L$，所以
+
+$$
+\mathcal H_c:=\widehat{H_c}\times\widehat{H_c}\le S,
+\qquad gSg^{-1}=S.
+\tag{37.7}
+$$
+
+第二式因为单位分支是 $\mathscr C$ 的特征子群。这些均为数学不变性，尚未宣称 $H_c$ 或 $S$ 实际可用。
+
+若 $S\subseteq\mathcal L_d$，将定理36.1的 $H,G$ 分别取为 $H_c,S$。两者闭且连通，$\mathcal H_c\le S\le\mathcal L_d$；(37.2)给同一个原 $K_2$ 上所需全部正忠实产品测试，(37.7)给正规化，原 $g$ 保质量及整个 $K_2$。这是36.1的数学正规化应用，不调用36.2的实际完整局域前件。结论迫使 $g$ 为局域正交乘积或其 SWAP 形式，保持所有纯产品，与(37.3)矛盾。因此
+
+$$
+S\not\subseteq\mathcal L_d.
+\tag{37.8}
+$$
+
+现在应用 Masanes--Müller--Pérez-García--Augusiak，1111.4060v4 的技术 [Theorem 1](https://arxiv.org/html/1111.4060v4#Thmthm1) 与 [Theorem 2](https://arxiv.org/html/1111.4060v4#Thmthm2)，只取其复合群为 $S$、局域群为 $H_c$。其 [§IV.1 球面作用表](https://arxiv.org/html/1111.4060v4#S4.SS1) 要求紧连通、连续线性且 almost effective 的球面作用；上面的忠实作用逐项满足，并允许同一次正交换基用于两个原因子。$d=2$ 的作用属于表中的 $\mathrm U(1)=\mathrm{SO}(2)$。对任一固定单位 $a$，准确有
+
+$$
+\mathcal H_c\le S,\qquad
+\tfrac14(\widehat a\otimes\widehat a)\cdot
+S(\widehat a\otimes\widehat a)\subseteq[0,1].
+\tag{37.9}
+$$
+
+概率界来自同一原纯产品、同一原测试和数学不变性；未把数学 $S$ 门放入原程序。Theorem 1 与(37.8)给 $d=3,H_c=\mathrm{SO}(3)$；Theorem 2 的局域选项又被(37.8)排除，故 $S=Q_2$ 或 $T_1Q_2T_1$。只在此之后把原一次校准接上 Pauli 识别；原二体此时先表示为迹一 Hermitian 矩阵。
+
+对整个原 $K_2$ 应用 [Library §3 的 Pair-state lemma before choosing a branch](../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register) 的不变性论证：取相应 $J=I$ 或 $T_1$，则 $J(K_2)$ 受整个 $Q_2$ 数学保持，仍含所有纯产品，且全部产品测试非负。该引理的两个包含只用这些性质：产品轨道和凸性给 $\mathcal D(4)\subseteq J(K_2)$；任意原态的每个向量期望可在此不变集上写成一个产品测试，给反向包含。因此 $J(K_2)=\mathcal D(4)$。这里没有声称轨道的数学门实际可用；全域正性来自(37.2)，对所有原态成立。也没有预设复合纯传递。
+
+再排除**原** $H$ 的反定向元。若原 $h=R\tau\in H$，$R\in\mathrm{SO}(3)$，$\tau$ 为 Pauli 转置反射，则 $\widehat R^{-1}\otimes I$ 属于两种 $S$，因而数学保持 $K_2$。与原 $\widehat h\otimes I$ 复合可知 $T_1$ 必保持 $K_2$。这只是在组合两个保同一集合的矩阵，不把 $R$ 当作已可调用的原单元门。对 Bell 投影 $B$，有
+
+$$
+T_1B=\tfrac12\mathsf{SWAP},\qquad
+\operatorname{spec}(T_1B)=\{\tfrac12,\tfrac12,\tfrac12,-\tfrac12\}.
+\tag{37.10}
+$$
+
+若 $K_2=\mathcal D(4)$，$T_1$ 把 $B$ 送出；若 $K_2=T_1\mathcal D(4)$，它把原 $T_1B$ 送到不在该集合内的 $B$。两种情形均矛盾。因此同一原裸 $H\le\mathrm{SO}(3)$。
+
+此时才对原 $H$ 应用 [Beardon，Theorem 1.1及§2](https://doi.org/10.4153/S0008439526101696)：任意在 $S^2$ 上精确传递的旋转子群就是整个 $\mathrm{SO}(3)$，不需闭性。该文将此事实归于 Montgomery--Zippin，并给直接证明。这里传递属于原 $H$，并非仅属于 $L$，所以结论正是原 $N=1$ 的 $H=\mathrm{SO}(3)$；没有用二体字或辅助代替单元控制。至此全部完整实际局域路径 $\exp(tX)$ 才已恢复。
+
+最后恢复精确实际 $S$。紧 Lie 群的 $S=\mathscr C^0$ 开，故 $\Delta=\Gamma\cap S$ 稠密于 $S$。已恢复的完整原局域 $\mathcal H=\widehat H\times\widehat H$ 是 $\Delta$ 中非平凡连通 Lie 子群，且其每个完整一参数子群都实际可用。两种 $S$ 均有非交换简单 Lie 代数 $\mathfrak{su}(4)$。因此直接将 Library §2 的 *Exact-generation lemma* 取为 $(C,\Gamma,K_0)=(S,\Delta,\mathcal H)$，得到 $\Delta=S$，即 $S\subseteq\Gamma$。该供应以实际共轭方向张成理想，再用反函数定理取得开邻域；并非“稠密所以实际”，也不需要整个 $\Gamma$ 连通。
+
+现在36.2的全部实际前件终于成立：原 $H$ 完整、紧且连通，原 $g,g^{-1}$ 和纯产品到非产品见证均未变。复用 [推论36.2](#362-一次有限纠缠门给出完整实际路径) 就给(37.5)，每个实参数只使用这些原门的有限字。这也完整供应了 VI98.3 所需的二体连续非局域路径，但其更高份资源仍须另付。证毕。
+
+该结论同时删除的是分别输入的原 $H$ 拓扑／完整性和原连续非局域路径；保留的精确纯传递、整个原二体、正忠实产品层析、全部独立原控制与实际有限纠缠门及逆均为承重前件。仅有 $g\notin H\times H$、仅越出连通局域旋转、反射或 SWAP，均不替代(37.3)。36.1在反设中的产品保持结论使用 [Barnum--Hilgert 的纯边缘结果](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)，其条件是正产品、产品单位和忠实层析；这里没有添加 S 公理、边缘保持或复合纯传递。
+
+### 37.3 整体有限字群可以不连通的二体边界
+
+**命题 37.3（一个具体的二体不连通模型）。** 在标准原 qubit 局域数据和 $K_2=\mathcal D(4)$ 上，取原 $H=\mathrm{SO}(3)$、原 $p=P_0,q=P_1$ 及标准种子和拉回标签。令 $T=T_1T_2$ 为整对转置，设
+
+$$
+U=\exp(-i\pi\sigma_z\otimes\sigma_z/4),\qquad
+g=\operatorname{Ad}_U T.
+\tag{37.11}
+$$
+
+只把 $g$ 及其逆作为供给的实际有限门，不把右端两个因子分别作为预给资源。则定义37.1成立，而
+
+$$
+\Gamma=Q_2\ \cup\ Q_2T,\qquad S=Q_2\ne\Gamma.
+\tag{37.12}
+$$
+
+证明。标准局域全效应满足(37.1)，全部产品准备、测试与忠实层析均保留。整对转置和酉共轭都保整个 PSD 迹一集合，所以所供给的 $g,g^{-1}$ 是合法全域二体可逆门。实纯产品 $P_+\otimes P_+$ 被 $T$ 固定；$U|++\rangle$ 的系数矩阵为
+
+$$
+M=\frac{e^{-i\pi/4}}2\begin{pmatrix}1&i\\i&1\end{pmatrix},
+\qquad MM^\dagger=\tfrac12I.
+$$
+
+故两个 Schmidt 系数均为 $1/\sqrt2$，$g$ 给(37.3)。有限字的合法性由整个 $K_2$ 的保持给出。
+
+整对转置满足 $T\operatorname{Ad}_VT=\operatorname{Ad}_{\bar V}$，故 $Q_2\cup Q_2T$ 是含全部原生成元的紧群。$T\notin Q_2$：若转置等于某个酉共轭，该酉须固定每个实向量的秩一投影；先取坐标向量、再取两坐标之和，迫使该酉为标量，不能再反转虚反对称 Hermitian 矩阵。于是该紧群恰有两个不交连通余类。
+
+这里 $\mathscr C\subseteq Q_2\cup Q_2T$，故 $S\subseteq Q_2$。由定理37.2，$\dim S=15=\dim Q_2$；闭子群同维使 $S$ 在连通 $Q_2$ 中开，因而 $S=Q_2$。该定理又给 $S\subseteq\Gamma$，所以 $\operatorname{Ad}_{U^{-1}}g=T\in\Gamma$，取得(37.12)。该例只是这个具体群的计算，没有分类任意整体群的正规化子或分支。
+
+本模型的供给仅限 $N=1,2$。整对转置在该二体内为正，不提供在相关参考或任意旁观者上的正扩张、原三体边放置、END 或指定事件的 Choi 合同。因此它证明二体定理不能声称 $\Gamma=S$，不是完整多份／事件候选的反例。证毕。
+
+### 37.4 原消费者与结论范围
+
+定理37.2的有限字若要进入 [VI98.3--98.5](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#982-同一原有限寄存器及事件合同)，仍须在每个给定原有限寄存器的每条指定**有序**边上实际供应同一个 $g,g^{-1},H$ 的准确放置，恒等于旁观者的全部相关坐标，保持一次固定校准、整个原 $K_N$、产品和忠实层析。只有这些前件齐备，(37.5)才能逐字提升，并消费既有有限图生成供应。二体结论本身没有提供这些放置或任意多体门搬运。
+
+反射分支的选择仍消费 [Library 的 pre-selection END](../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register) 及 [signed-coupling 的严格原二体读回](../../../Library/ContinuousObservables/mullerududec2012signedcoupling.md#6-两条实际耦合边加一次同一原二体丢弃)：在原路径 $12,23$ 上，END 必须在选分支**之前**实际、仿射、保质量、全域，按全部产品校准收缩中腿，输出为保留端点 $1,3$ 对应的**同一个有序原 $K_2$**。不得改为某个抽象边缘、重新排序的输出，或由选分支后所得 SWAP 补付该前件。
+
+指定事件及所有有限实现仅按 [既有事件与实现供应](../../../Library/QuantumStates/mullerududec2012selfduality.md#4-one-exact-reference-per-original-event-and-finite-realizations) 和 VI98.3--98.5 条件性回接：同一事件的来源与准确参考扩张、整个原输出正性、全部实准备关系及零输入、各分支 TNI／确定事件 TP、同一菜单记录与真粗粒化、原实际纯辅助、顺序控制、保留输出指针律、回到同一原目标的 typed 全域丢弃，以及时间、单位、资源和权限合同，均未由本二体定理供给。特别地，数学有限字存在不提供算法效率、物理连续时间、能量标度或 $\hbar$。
+
+原 oneOmega／唯一 $\Omega$、89 paths、$26+63$、1024 labels、ready、11／7 addresses、legal words、support、calibration、history、archive、zero／failure／Return、permissions、resource、time、unit 和 source-adapter 的全部原义务保持原样。native 全标签 fine-zero／Born 唯一性及过程实现仍未解决；本定理不是这些目标的完成结论。VI100的有限方向静态条件是另一入口，不是37.1的额外前件。
+
+本节承重内容是同一原数据上的仓内综合应用（repo-derived）：用36.1在数学单位分支上排除局域性，经已发表的技术分类及既有整二体不变性供应，先排除原反射、恢复原裸 $H$，再消费精确有限字和36.2。VI98持有纯域到整个原球及原菜单恢复；所引 Library 持有紧性、精确生成、整二体、有限图、END及事件供应；1111.4060v4持有技术分类和球面作用表，Beardon持有不需闭性的旋转子群事实。这里不另造这些供应，不声称全局优先权、独立公理最少性、Lean／kernel 验证或完整量子起源。
+
+## 追加锚（本行以下为增补区）

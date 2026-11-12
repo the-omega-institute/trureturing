@@ -246,6 +246,86 @@ class ReportLifetimeTests(unittest.TestCase):
 
 
 class StreamingTests(unittest.TestCase):
+    def zip64_fixture(self, root, compressed):
+        import gzip
+        values = [b'statement-v1(small)', ('statement-v1(λ😀)' * 2048).encode()]
+        values.append(values[1])  # Distinct spools still deduplicate by exact bytes.
+        spool = root / 'spool'
+        spool.mkdir()
+        declarations, expected = [], []
+        for index, value in enumerate(values):
+            filename = f'{index}.statement' + ('.gz' if compressed else '')
+            (spool / filename).write_bytes(gzip.compress(value, mtime=0) if compressed else value)
+            declaration = dict(axioms=[], include_in_statement=False, kind='opaque',
+                material_file=filename, name=f'x{index}', name_key=f'key{index}')
+            declarations.append(declaration)
+            expected.append({k: v for k, v in declaration.items() if k != 'material_file'} |
+                dict(type_sha256=materials.statement_address(value),
+                     statement_id=materials.declaration_statement_id(
+                         'X.lean', 'opaque', declaration['name_key'], value.decode())))
+        row = dict(module='X', source_path='X.lean', source_sha256='sha256:' + 'a' * 64,
+            imports=[], declarations=declarations)
+        source = root / 'spool.json'
+        source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
+        expected_report = materials.canonical_json(dict(schema=materials.REPORT_SCHEMA,
+            modules=[row | dict(declarations=expected)]))
+        return spool, source, values, expected_report
+
+    def test_compactor_allocates_zip64_from_decoded_size(self):
+        for compressed in [False, True]:
+            with self.subTest(compressed=compressed), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                spool, source, values, expected = self.zip64_fixture(root, compressed)
+                output = root / 'report.json'
+                with patch.object(zipfile, 'ZIP64_LIMIT', 1024), \
+                        patch.object(materials, 'open_material', wraps=materials.open_material) as opened:
+                    materials.compact(source, spool, output)
+                    # Identity + collision comparison + archive write, with no size-only pass.
+                    counts = [sum(call.args[0].name.startswith(f'{index}.')
+                                  for call in opened.call_args_list) for index in range(3)]
+                    self.assertEqual(counts, [2, 3, 2])
+                    self.assertEqual(output.read_bytes(), expected)
+                    archive = publication.member(output, '.materials.zip')
+                    with zipfile.ZipFile(archive) as reader:
+                        self.assertEqual(len(reader.infolist()), 2)
+                        for value in values:
+                            name = 'sha256/' + materials.statement_address(value)[7:]
+                            info = reader.getinfo(name)
+                            self.assertEqual(info.file_size, len(value))
+                            self.assertEqual(info.extract_version, 45 if len(value) > 1024 else 20)
+                            self.assertEqual(reader.read(info), value)
+                    self.assertEqual(publication.validate_rows(output, archive),
+                                     json.loads(expected)['modules'])
+                self.assertEqual(list(spool.iterdir()), [])
+                self.assertEqual(list(root.glob('.lean-materials.*')), [])
+
+    def test_zip64_compaction_mutation_preserves_inputs_and_live_outputs(self):
+        import gzip
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            spool, source, values, _ = self.zip64_fixture(root, True)
+            output = root / 'report.json'
+            archive = publication.member(output, '.materials.zip')
+            output.write_bytes(b'previous report')
+            archive.write_bytes(b'previous archive')
+            original, calls = materials.open_material, {}
+            def change_on_archive(path):
+                calls[path] = calls.get(path, 0) + 1
+                if path.name == '1.statement.gz' and calls[path] == 3:
+                    path.write_bytes(gzip.compress(b'x' * len(values[1]), mtime=0))
+                return original(path)
+            with patch.object(zipfile, 'ZIP64_LIMIT', 1024), \
+                    patch.object(materials, 'open_material', side_effect=change_on_archive):
+                with self.assertRaisesRegex(ValueError, 'statement material changed during compaction'):
+                    materials.compact(source, spool, output)
+            self.assertEqual(output.read_bytes(), b'previous report')
+            self.assertEqual(archive.read_bytes(), b'previous archive')
+            self.assertEqual(sorted(p.name for p in spool.iterdir()),
+                             [f'{index}.statement.gz' for index in range(3)])
+            self.assertEqual(gzip.decompress((spool / '0.statement.gz').read_bytes()), values[0])
+            self.assertEqual(gzip.decompress((spool / '2.statement.gz').read_bytes()), values[2])
+            self.assertEqual(list(root.glob('.lean-materials.*')), [])
+
     def test_compiler_digest_frames_preserve_material_sequence(self):
         payload = bytes(range(256)) * 513
         frames = (b'sha256 0\n' + f'sha256 {len(payload)}\n'.encode() + payload
