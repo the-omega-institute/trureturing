@@ -169,7 +169,6 @@ private theorem service_extend {G : Type u} [AddCommGroup G] [Fintype G]
   rw [heq]
   exact Fin.cons_injective_of_injective hao ho
 
-
 private theorem service_exists {G : Type u} [AddCommGroup G] [Fintype G]
     (m : ℕ) (hm : m < Fintype.card G) (r : Fin m → G) :
     ∃ x : Fin m → G, Function.Injective x ∧
