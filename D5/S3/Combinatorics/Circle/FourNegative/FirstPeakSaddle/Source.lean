@@ -21,7 +21,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private sourceMod base newBase charge chainLength nextBase nextNewBase
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase chainLength)
+open private sourceMod charge nextBase nextNewBase
   chain_values new_base_bounds
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
