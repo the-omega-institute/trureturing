@@ -6,7 +6,31 @@ Quantitative inversion from all subfamily Wick deviations to distinct-index pair
 
 Let D be finite, A a commutative real algebra, ell a real linear functional, Y a centered quadratic family, and f a family of real weights indexed by Fin k. For a label subset U, write V(U) for subsetFamilyMoment, R(U) for subsetDistinctMoment, and W_U(c) for finitePairingPolynomial with edge values c. Thus Delta(U)=R(U)-W_U(R), and the Wick deviation is V(U)-W_U(V). For a partial pairing P, let U(P) be U minus pairingSupport(P), and let T(P) be the product over its edges e of subsetWeightSum(f,e). The result is the repo-derived inequality (501.2) of Theorem 501.3 in FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II. It concerns the finite quadratic model and assumes no positivity or independence.
 
-**Definition 1.1 (Triangular inversion constant).**
+**Theorem 1.1 (Defects vanish in orders at most two).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.subset_pairing_defect_small`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.subset_pairing_defect_small` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a unital real linear functional ell and a centered family Y, every weighted subset U of at most two labels has subsetPairingDefect(ell,Y,f,U)=0. The empty subset has distinct moment and pairing polynomial both equal to one; a singleton has centered moment and no perfect pairing; a two-element subset has its single edge as the unique perfect pairing.
+
+**Theorem 1.2 (The number of uncovered labels).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.pairing_remainder_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.pairing_remainder_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every partial pairing P of a finite label set U, the uncovered set U minus pairingSupport(P) has card(U)-2*card(P) elements, 2*card(P)<=card(U), and every nonempty P leaves strictly fewer labels than U. The proof counts the disjoint union of the two-element edges.
+
+**Definition 1.3 (Triangular inversion constant).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.inversionConstant`
 
@@ -18,7 +42,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefe
 
 For every real C, inversionConstant(C,m), denoted A_m, is defined by strong recursion on the natural order m. It is zero for m<=2. For m>2 it equals 1 plus the sum, over all nonempty partial pairings P of Fin m, of C^(2*card(P))*A_(m-2*card(P)). The entries are nonnegative because every exponent of C is even. Embedding an enumeration of any finite label set U transports its partial pairings bijectively and preserves their sizes, so the same recursion applies directly to the partial pairings of U.
 
-**Definition 1.2 (Largest normalized subfamily Wick deviation).**
+**Definition 1.4 (Largest normalized subfamily Wick deviation).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.wickDeviationSup`
 
@@ -30,7 +54,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefe
 
 For ell, Y, f, a real scale s, and a finite label set U, wickDeviationSup(ell,Y,f,s,U), denoted Omega(U), is the maximum of zero and the values |V(U')-W_(U')(V)|/s^card(U') over U' contained in U with card(U')>=3. Consequently the maximum is zero when there are no such subsets. Under the theorem's positive scale, these are nonnegative normalized deviations. Inclusion of label sets makes Omega monotone.
 
-**Theorem 1.3 (Theorem 501.3: quantitative inversion).**
+**Theorem 1.5 (Theorem 501.3: quantitative inversion).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.pairing_defect_inversion`
 
@@ -46,5 +70,7 @@ For every finite index type D, commutative real algebra A, natural k, real linea
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.inversionConstant`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.pairing_defect_inversion`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.pairing_remainder_card`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.subset_pairing_defect_small`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectInversion.wickDeviationSup`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PairingDefectTransfer](PairingDefectTransfer.md)

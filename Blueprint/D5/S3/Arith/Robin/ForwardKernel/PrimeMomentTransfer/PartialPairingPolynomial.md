@@ -54,7 +54,55 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPair
 
 For an edge weight c valued in the reals, finitePairingPolynomial(U,c) is the sum over all perfect pairings P of U of the product over edges e in P of c(e). The empty product equals one.
 
-**Theorem 1.5 (Expansion over a partial pairing).**
+**Theorem 1.5 (Membership in a pairing support).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.mem_pairingSupport`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.mem_pairingSupport` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A label i belongs to pairingSupport(P) exactly when some edge e in P contains i.
+
+**Theorem 1.6 (Subcollections remain partial pairings).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.partialPairing_subset`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.partialPairing_subset` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If M is a partial pairing of U and P is a subset of M, then P is also a partial pairing of U.
+
+**Theorem 1.7 (The remainder after selecting edges).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairing_remainder`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairing_remainder` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If M is a perfect pairing of U and P is a subset of M, then P is a partial pairing of U and M minus P is a perfect pairing of U minus pairingSupport(P).
+
+**Theorem 1.8 (Joining a partial pairing to its remainder).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairing_join`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairing_join` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If P is a partial pairing of U and Q is a perfect pairing of U minus pairingSupport(P), then P union Q is a perfect pairing of U and P and Q are disjoint as edge sets.
+
+**Theorem 1.9 (Expansion over a partial pairing).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.finitePairingPolynomial_add`
 
@@ -72,5 +120,9 @@ For every finite label type alpha, finite label set U, and real edge weights c,d
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.IsPerfectPairing`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.finitePairingPolynomial`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.finitePairingPolynomial_add`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.mem_pairingSupport`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairingSupport`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairing_join`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.pairing_remainder`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial.partialPairing_subset`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticMomentDefs](QuadraticMomentDefs.md)
