@@ -76,12 +76,14 @@ internal sealed class A289923LeftLimitNonnegativeDocument : IScribeDocumentDefin
     private static Formula LeN(Formula a, Formula b) => Seq(a, Sp, Le, Sp, b);
     private static Formula Conj(params Formula[] clauses) =>
         Seq([.. clauses.SelectMany((clause, index) => index == 0
-            ? new Formula[] { clause } : new Formula[] { Sp, Land, Sp, clause })]);
+            ? new Formula[] { Open, clause, Close }
+            : new Formula[] { Sp, Land, Sp, Open, clause, Close })]);
     private static Formula For(Formula variable, Formula domain, Formula body) =>
         Seq(Forall, Sp, variable, Colon, Sp, domain, Comma, Sp, body);
     private static Formula Ex(Formula variable, Formula domain, Formula body) =>
         Seq(Exists, Sp, variable, Colon, Sp, domain, Comma, Sp, body);
-    private static Formula Imp(Formula a, Formula b) => Seq(a, Sp, Implies, Sp, b);
+    private static Formula Imp(Formula a, Formula b) =>
+        Seq(Open, a, Close, Sp, Implies, Sp, Open, b, Close);
     private static Formula SequenceType() => Seq(Nat(), Sp, To, Sp, Int());
     private static Formula Value(Formula a, Formula n) => new Formula.Apply(a, [n]);
     private static Formula Ratio() => new Formula.Fraction(D(1, 9), D(2, 1));
