@@ -201,23 +201,5 @@ theorem current_leftLeibniz (x y z : State D)
   rw [bc]
   rfl
 
-/-- Representative energy closure follows from the ACTUAL Ward identity,
-without assuming a missing weight theorem or any positivity. -/
-theorem current_zero_energy
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * LatticeSugawaraCurrents.gramComplex D = 1)
-    (hGH : LatticeSugawaraCurrents.gramComplex D * H = 1)
-    (x y : LatticeBRSTCohomologyField.cycles D H)
-    (hx : ghostB D 0 x = 0) (hy : ghostB D 0 y = 0) :
-    LatticeBRSTZeroEnergyReduction.totalL0 D H (descentCurrent D x y) = 0 := by
-  have law := LinearMap.congr_fun (LatticeBRST.total_ward_b D H 0)
-    (descentCurrent D x y)
-  have closed := current_cycle D H hHG hGH x y
-  change LatticeBRST.totalCharge D H (ghostB D 0 (descentCurrent D x y)) +
-      ghostB D 0 (LatticeBRST.totalCharge D H (descentCurrent D x y)) =
-        LatticeBRSTZeroEnergyReduction.totalL0 D H (descentCurrent D x y) at law
-  rw [current_b0 D _ _ hx hy, closed, map_zero, map_zero, add_zero] at law
-  exact law.symm
-
 end
 end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTCurrentIdentities
