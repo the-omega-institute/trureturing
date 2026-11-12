@@ -152,7 +152,7 @@ private theorem ball_face_eq {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ
   exact face_eq_of_interior hface hzint hzF
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_face_eq {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p : V}
+theorem chart_face_eq {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p : V}
     (b : ExclusionChart C u p) {F : Set V} (hconv : Convex ℝ F)
     (hface : IsExtreme ℝ (exclusion C u p) F) (hnon : F.Nontrivial) :
     F = exclusion C u p := by
@@ -234,7 +234,7 @@ private theorem exclusion_exposed {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ
     exact ⟨hx, by linarith [(hf.1 x hx.1).1]⟩
 
 omit [FiniteDimensional ℝ V] in
-private theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
+theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
     Convex ℝ (pairBase C u p q) := by
   intro x hx y hy a b ha hb hab
   refine ⟨base_convex C u hx.1 hy.1 ha hb hab, fun F hp hq => ?_⟩

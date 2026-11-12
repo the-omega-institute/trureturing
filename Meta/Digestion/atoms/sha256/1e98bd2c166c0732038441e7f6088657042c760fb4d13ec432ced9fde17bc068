@@ -1,0 +1,32 @@
+**Proposition 3.1 (Same-budget normal form and stationary initial row).** A compliant machine has a common initialization row $\eta$ and row-stochastic matrices $A,C$ on $\mathcal S$, $|\mathcal S|\le M$. Distinct states $d_0,d_1$ are absorbing under both matrices. Every other state is ready for another paid read. $A$ consumes a zero and $C$ consumes a one. This representation preserves $(T,D)$ and uses the same $\eta,A,C$ under both labels.
+
+At the selected $q$, suppress its index and set
+
+$$
+U_i=\sum_{k\ge1}f_i(k)A^kC,\qquad
+\nu_i=\sum_{b\ge0}\frac{S_i(b)}{\mu_i}\eta A^bC.
+\tag{3.1}
+$$
+
+If $R_j(q)=\sum_{k\ge1}k^jq^k$, then
+
+$$
+\|\nu_0-\nu_1\|_{\rm TV}\le r_H(q):=
+\delta\frac{R_9(q)+R_8(q)}{R_{10}(q)+R_9(q)}
+\le\frac{2\delta}{\mu_0(q)}.
+\tag{3.2}
+$$
+
+Here total variation is one half of the sum of absolute differences.
+
+Proof and correspondence. Compose source-independent initialization and each current-state read/stop choice into a distribution on existing read-ready configurations and emitted labels. Compose the choice after each bit into that bit's transition. All information retained in a choice already belongs to a complete configuration. Identifying terminal configurations with the same label cannot increase their number. Fixing labels on unused future bits preserves the actual paid prefix and output. This is G, Lemma 3.2; it neither retains a random tape nor adds a mutable control coordinate.
+
+For the initial comparison, the unnormalized first-wait weights are
+
+$$
+w_i(b)=\sum_{k\ge\max(1,b)}F_i(k)q^k,\qquad
+W_i=\sum_b w_i(b)=Z_i\mu_i.
+$$
+
+The envelope gives $w_1\ge w_0$ and $0\le W_1-W_0\le\delta(R_9+R_8)$, while $W_0=R_{10}+R_9$. Normalizing $w_1=w_0+(w_1-w_0)$ expresses its law as a mixture with the normalized $w_0$ law, with extra weight at most $(W_1-W_0)/W_0$. Variation contracts under the common map $b\mapsto\eta A^bC$. Finally $R_8\le R_9$ and $\mu_0=(R_{10}+R_9)/R_9$ give (3.2). This is G, Lemma 6.1, and applies equally to arbitrarily retuned matrices. $\square$
+

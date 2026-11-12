@@ -1,0 +1,84 @@
+**Theorem 6.2 (Uniform neighborhood for every finite budget).** Fix the one $H_c$ and one $0<\alpha<1/2$. With $s_H$ as in (2.8), set
+
+$$
+\begin{aligned}
+b&=1-2\alpha,&
+s_\alpha&=\min\{s_H,1,5b/(8\delta)\},\\
+n_M&=M-2,&
+L_M&=\max\{1,\lceil2\delta n_M/b\rceil\}.
+\end{aligned}
+\tag{6.4}
+$$
+
+Simultaneously for every finite integer $M\ge2$, every $0<s<s_\alpha$, every $\mathcal A\in\mathfrak A_M(e^{-s},\alpha)$ and each $i=0,1$,
+
+$$
+\begin{aligned}
+\mathbb E_{i,e^{-s}}^{\mathcal A}T
+&\ge\frac{9!b^2}{4B\delta^2L_M^8}s^{-11}\\
+&\ge
+\frac{9!b^{10}}{4B\delta^2\bigl(b+2\delta(M-2)\bigr)^8}s^{-11}.
+\end{aligned}
+\tag{6.5}
+$$
+
+The endpoint neighborhood is independent of the budget, the machine, transition precision and the way its design varies with $q$.
+
+Proof. For $u\ge0$, $(e^u-1)/(e^u+1)\le u/2$, since its derivative is at most $1/2$ and its value at zero is zero. Also $\log(1+v)\le v$ for $v\ge0$. Hence
+
+$$
+\chi_{M,L_M}
+\le\frac{n_M}{2}\log(1+\delta/(L_M+1))
+\le\frac{n_M\delta}{2(L_M+1)}
+\le b/4.
+\tag{6.6}
+$$
+
+For $n_M=0$ the left side is zero. For $n_M>0$, use $L_M\ge2\delta n_M/b$. The common neighborhood and (3.2) give
+
+$$
+r_H(e^{-s})\le2\delta s/5\le b/4.
+\tag{6.7}
+$$
+
+For every finite $L\ge1$, on that same neighborhood,
+
+$$
+d_L(e^{-s})
+\le\frac{\delta^2L^8}{Z_0(e^{-s})}
+\le\frac{2\delta^2L^8}{9!}s^{10},
+\tag{6.8}
+$$
+
+because $e^{-sk}\le1$ and $\sum_{k=1}^L k^7\le L^8$. This is a finite-cutoff inequality valid even when $sL$ is large; no asymptotic with fixed $L$ is being transferred to a growing cutoff.
+
+Equations (6.1), (6.6) and (6.7) leave $b/2$ for the square-root term. Therefore
+
+$$
+\mathbb E_iT\ge\frac{b^2}{2B(1-e^{-s})d_{L_M}}
+\ge\frac{9!b^2}{4B\delta^2L_M^8}s^{-11},
+\tag{6.9}
+$$
+
+where $1-e^{-s}\le s$ was used. Finally
+
+$$
+L_M\le1+2\delta n_M/b
+=\frac{b+2\delta n_M}{b}
+\tag{6.10}
+$$
+
+holds also at zero and at ceiling discontinuities. Substitution proves (6.5). The selections in (6.4) depend only on the fixed source and risk until the finite cutoff is selected from $M$. All inequalities then apply to any actual machine with that budget. $\square$
+
+For $M=2$ there are only the two emitted labels, and a source-independent initial choice cannot have both risks below $1/2$. Thus the quantified compliant class is empty; no division by $M-2$ is made in (6.4)–(6.10). This corner does not claim a two-state detector.
+
+The published G bound remains valid:
+
+$$
+\mathbb E_iT\ge
+\frac{9!b^{11}}{8B^2(b+2\delta(M-2))^{10}}s^{-11}.
+\tag{6.11}
+$$
+
+On their common neighborhood the ratio of the displayed new coefficient in (6.5) to (6.11) is $2B(b+2\delta(M-2))^2/(b\delta^2)$, growing quadratically with the budget. The mathematical gain is the squared clipping discrepancy in (4.8)–(4.11), rather than a renamed bookkeeping constant or an assumed uniform likelihood bound for raw bits.
+

@@ -21,6 +21,30 @@ internal sealed class ActualElementaryGlobalBudgetGapDocument : IScribeDocumentD
                 + "and n=deleted2tailInteger(m,c)=m/2^r using natural division. "
                 + "The literal library resource objective is denoted by F_t(n).")),
             Describe.Lean(
+                DescribeId.Create("full-tail-objective-price-difference"),
+                DeclarationHandle.Create(Prefix + "objective_price_difference"),
+                H("Transfer the literal objective between two prices"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real mu,s and positive natural m,C, "
+                    + "F_s(C)-F_s(m)=F_mu(C)-F_mu(m)+(s-mu)log(m/C). "
+                    + "The original objective and original integers are retained; neither price "
+                    + "needs to be positive. The full-tail arbitrary-bracket comparison consumes "
+                    + "this identity at the actual greatest feasible optimizer."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("full-tail-reward-deficit-identity"),
+                DeclarationHandle.Create(Prefix + "reward_deficit_identity"),
+                H("The reward and deficit of the same full tail"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural m and real c, ordinary2tailReward(m,c)=c*h2(m,c)-J2(m,c). "
+                    + "The finite interval is the complete original tail, with natural truncated "
+                    + "subtraction. No positivity or occupied-tail assumption is required. "
+                    + "The arbitrary-bracket full-tail comparison uses this identity together "
+                    + "with actual integer deletion and the existing reward bound."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("full-tail-greatest-feasible-global-gap"),
                 DeclarationHandle.Create(Prefix + "greatest_feasible_global_gap"),
                 H("Construct the greatest feasible global optimizer"),

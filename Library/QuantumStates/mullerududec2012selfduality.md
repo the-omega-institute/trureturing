@@ -2996,3 +2996,5 @@ EJA 静态入口却承担同种二元和全有限寄存器控制；那里的指�
 
 
 The signed coupling-network and strict same-carrier pair-discard appendix is continued in [the capacity-split note](../ContinuousObservables/mullerududec2012signedcoupling.md).
+
+The full odd-polygon comparison, finite-mixture witness and sharp extension-budget application is in [the Janotta source note](../FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md#odd-polygons-reciprocal-comparisons-original-faces-and-extension-budgets).

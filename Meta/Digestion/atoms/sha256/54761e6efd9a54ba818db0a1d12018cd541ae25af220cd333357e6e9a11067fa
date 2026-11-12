@@ -1,0 +1,32 @@
+**Proposition 9.1 (A short-gap counterexample to a universal shortcut).** There is a fixed finite raw-bit sensor, using only paid consecutive bits, for which an induced gap-kernel event has source likelihood ratio tending to $1+\delta$, rather than to one. Hence a universal entrywise $1+O(s)$ comparison of every raw-bit-induced gap kernel is false, even for a fixed small sensor. This does not refute Theorem 6.2.
+
+Proof. After an actually read tick, keep a zero count saturated at two and, at the next actually read tick, emit a marker exactly when the count is one. This finite table recognizes $K=1$ while paying all zeros and the closing tick. It may be preceded by one first-tick waiting state. Its two event probabilities are $f_{i,q}(1)$.
+
+Direct addition of the eight coefficients in (2.1) gives
+
+$$
+H_c(1)=1+\delta.
+$$
+
+Consequently
+
+$$
+\frac{f_{1,e^{-s}}(1)}{f_{0,e^{-s}}(1)}
+=(1+\delta)\frac{Z_0(e^{-s})}{Z_1(e^{-s})}
+\longrightarrow1+\delta>1.
+\tag{9.1}
+$$
+
+The denominator ratio tends to one by the fixed-source moment premise. For every fixed finite $C$, a bound by $1+Cs$ therefore fails eventually. But the event itself has probability
+
+$$
+f_{0,e^{-s}}(1)\sim s^{10}/9!,
+\qquad
+f_{1,e^{-s}}(1)\sim(1+\delta)s^{10}/9!.
+\tag{9.2}
+$$
+
+This sensor alone does not satisfy both fixed risks at small $s$: both event probabilities vanish. Its likelihood contrast comes with a rare-event charge. Lemma 4.1 retains that contrast in $e$ and pays its squared contribution, and the finite-path argument prices the actual live epochs. No bound on raw-bit likelihood ratios by $1+O(s)$ appears in that proof. $\square$
+
+A converse for machines that see only U's one geometric mark per completed gap would concern a restricted channel. No assertion that arbitrary raw-bit observers factor through that channel is used here. Similarly a lower bound confined to deterministic counters, likelihood-score registers or product-state designs would not establish Theorem 7.1's quantifiers. The common-channel contraction in Lemma 5.1 is an analytical bound on every actual row, rather than a restriction on what raw histories the observer may use.
+
