@@ -1932,3 +1932,419 @@ CP的数学识别仍需该层级，实际事件、条件更新和物理钟仍需
 [Q109Hierarchy]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
 
 ## 追加锚（本行以下为增补区）
+
+## 110. 原弱球关系的混合边界收缩、纯点ENR与框架和路径
+
+### 110.1 原域、相对边界与球心集合
+
+**定义 110.1（只使用原W的拓扑对象）。** 采用107.1及VII105.1的同一个
+非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的
+原泛函 $u$、整个原基 $K=C\cap\{u=1\}$、全部原纯点
+$P=\operatorname{ext}K$，以及全部原效应 $\mathcal E=[0,u]_{C^*}$。明确地，
+
+$$
+\begin{gathered}
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\\
+p\perp q\ \Longleftrightarrow\
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0,\\
+\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\qquad
+\mathrm{EB}_{\ge1}:\ D_p\simeq_{\rm aff}B^{d_p},\ d_p\ge1\ (p\in P),\\
+\mathrm{Pair}_{\perp}:\quad
+p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\end{gathered}
+\tag{VIII110.1}
+$$
+
+$x$ 在最低读数与零集定义中遍历整个原 $K$，包括全部混态；
+$H(p,q)$ 是原最小面，$B^{d_p}$ 是整个闭欧氏球。
+假设始终只有 $\mathsf W$，不要求球维数相同或全部至少为二。
+记
+
+$$
+\begin{gathered}
+N=\dim V,\qquad S=\partial K,\qquad M=S\setminus P,\\
+U(p)=p+2c_p,\qquad B=\{c_p:p\in P\},\qquad c(p)=c_p,
+\end{gathered}
+\tag{VIII110.2}
+$$
+
+其中 $\partial K$ 指 $\operatorname{aff}K$ 内的相对边界，$c_p$ 是完整 $D_p$ 的球心。
+此处 $B$ 是球心集合，不是单个标准球；$U$ 是向量值函数，不是原泛函 $u$。
+不输入G、全纯互易、共同内积、对称群、纯点光滑性或纯点基数条件。
+
+直接复用VII103.2、104.2—104.7及105.9：全部非空原真面只有纯单点与
+非点暴露极大真面 $D_p$；不同的这些球若相交，交点只能是一个原纯点；
+$p\mapsto D_p$ 双射；$P$ 紧；每个纯点进入原joint三框架；
+$U$ 连续，且在原正交纯对上取相同值。若 $(p,q,r)$ 是这样的框架，则
+
+$$
+p+q+r=U(p)=U(q)=U(r),\qquad H(q,r)=D_p.
+\tag{VIII110.3}
+$$
+
+三张原效应的Kronecker读数使框架三点线性独立，故 $N\ge3$。
+$C$ 生成 $V$ 给 $\operatorname{affdim}K=N-1$，所以 $S$ 的球面维数是 $N-2$。
+VII105.2—105.5的least与数学projectivity、107的全线段刚性及108的切空间结果
+保留其各自陈述；下述收缩不以G或108中的附加覆盖条件为前件。
+
+### 110.2 混合边界的唯一球标签与强形变收缩
+
+**定理 110.2（整个混合边界收缩到全部排除球心）。** 在原 $\mathsf W$ 下，
+每个 $x\in M$ 恰属于一个完整排除球的相对内部。以此定义 $\sigma(x)\in P$，则
+
+$$
+\begin{gathered}
+M=\coprod_{p\in P}\operatorname{ri}D_p,\qquad
+\sigma:M\longrightarrow P\text{ 连续},\qquad
+c:P\overset{\sim}{\longrightarrow}B\text{ 为同胚},\\
+\sigma c=\operatorname{id}_P,\qquad
+H:M\times[0,1]\longrightarrow M,\qquad
+H(x,t)=(1-t)x+t c_{\sigma(x)}.
+\end{gathered}
+\tag{VIII110.4}
+$$
+
+这里 $\coprod$ 只表示集合的不交分解，不宣称其拓扑是离散指标的不交和。
+$H$ 是 $M$ 到 $B$ 的强形变收缩；特别地 $M\simeq P$。
+
+证明。每个边界点都有一个经过它的支撑真面。
+若 $x$ 非纯，该面不能是纯单点，真面穷尽使它等于某张 $D_p$。
+闭欧氏球相对边界上的全部点都是这个球的极点，且面中极点仍为整个 $K$ 的极点，
+所以非纯 $x\in D_p$ 必在 $\operatorname{ri}D_p$。
+反向，$d_p\ge1$ 使每个球内点都位于球中两个不同点的开线段上，故不纯。
+不同 $D_p$ 不能共有非纯点，点球双射遂给唯一标签与所述分解。
+特别地每个 $c_p\in M$，$B\subset M$ 且 $M$ 非空。
+
+标签连续性须在原域证明。整个 $\mathcal E$ 紧，$P,K$ 也紧。
+评价映射连续，故
+
+$$
+\begin{aligned}
+\widetilde Z&=\{(p,x,f)\in P\times K\times\mathcal E:
+                         f(p)=1,\ f(x)=0\},\\
+Z&=\{(p,x)\in P\times K:x\in D_p\}
+\end{aligned}
+\tag{VIII110.5}
+$$
+
+分别是紧集与其紧投影。第二个等式确实成立，因为原 $F_p$ 紧，
+最低读数为零时有一张原效应达到零。因此 $Z$ 是闭关联集，
+这里没有把纯目标零关系或所选效应菜单当作整个关联集。
+
+若 $x_j\to x$ 于 $M$，任何子列的标签 $\sigma(x_j)$ 均有收敛子子列，设极限为 $p$。
+闭关联给 $x\in D_p$，非纯点的唯一标签迫 $p=\sigma(x)$。
+$P$ 紧且可度量，故整列标签收敛到 $\sigma(x)$，即 $\sigma$ 连续。
+由VII105.9，$c_p=(U(p)-p)/2$ 连续。
+若 $c_p=c_q$，这个共同混合点属于两球，唯一性迫 $D_p=D_q$，继而 $p=q$。
+所以连续 $c$ 是紧空间 $P$ 到Hausdorff空间 $B$ 的双射，必为同胚，
+且 $\sigma(c_p)=p$。
+
+$P$ 在 $S$ 中闭，所以 $M$ 在 $S$ 中开。
+公式中的两端都在同一球的相对内部，整条连接线段也在该相对内部。
+因此 $H$ 的每个值都在 $M$；由 $c\sigma$ 连续，$H$ 作为到 $V$ 的映射连续，
+于是作为到子空间 $M$ 的映射也连续。此外
+
+$$
+H(x,0)=x,\qquad H(x,1)=c_{\sigma(x)},\qquad
+H(c_p,t)=c_p.
+\tag{VIII110.6}
+$$
+
+这正是强形变收缩；再用 $B\cong P$ 即得同伦等价。
+证明没有选取随 $p$ 连续变化的球图，也没有要求不同 $d_p$ 相同。证毕。
+
+### 110.3 全部原纯点的局部可缩性、ENR与有限道路分支
+
+**定理 110.3（原P的邻域正则性）。** 在原 $\mathsf W$ 下，$P$ 是紧Euclidean
+neighborhood retract（ENR），且在如下明确意义下局部可缩：对每个 $p\in P$
+及其任意开邻域 $O\subseteq P$，存在开邻域 $A$，$p\in A\subseteq O$，
+使包含映射 $A\hookrightarrow O$ 零伦。$P$ 局部道路连通，
+只有有限多个道路连通分支，它们也恰是连通分支。
+$P$ 可嵌入为某个有限单纯复形的收缩核，故其整数奇异同调群有限生成并在高维为零。
+
+证明。取任意 $z\in\operatorname{ri}K$，在 $\ker u$ 上任选辅助欧氏范数。
+每条从 $z$ 出发的射线与 $K$ 相交于一个非退化有界闭区间，恰有一个边界端点。
+因此
+
+$$
+S\longrightarrow S^{N-2},\qquad
+x\longmapsto\frac{x-z}{\|x-z\|}
+\tag{VIII110.7}
+$$
+
+连续且双射，紧性使它为同胚。故开子空间 $M$ 是拓扑 $(N-2)$ 维流形，
+无需假设凸边界光滑。110.2给连续收缩 $r=c\sigma:M\to B$。
+
+固定 $y\in B$ 和其在 $B$ 中的开邻域 $O_B$。
+在开集 $r^{-1}(O_B)$ 内取以 $y$ 为中心的流形坐标球 $W$。
+坐标线性收缩给 $h:W\times[0,1]\to W$，起于恒等、终于 $y$ 并固定 $y$。
+令 $A_B=W\cap B$，则 $A_B\subseteq O_B$，而
+
+$$
+(a,t)\longmapsto r(h(a,t)),\qquad a\in A_B,
+\tag{VIII110.8}
+$$
+
+在 $O_B$ 内把包含 $A_B\hookrightarrow O_B$ 收缩到 $y$。
+经同胚 $c$ 运输，给出陈述中的 $A\hookrightarrow O$ 零伦。
+这恰是Hatcher《Algebraic Topology》[Theorem A.7，印刷p.525][Q110H]
+使用的弱局部可缩定义；不声称 $A$ 在其自身内可缩。
+
+对 $P$ 的任意开子集 $O$ 及 $p\in O$，上述同伦使 $A$ 的每一点都能在 $O$ 内
+沿道路连到 $p$。因此 $O$ 中 $p$ 所属的道路分支含 $p$ 的一个开邻域。
+对该分支的每一点如此做，说明 $O$ 的每个道路分支均开；
+这些开道路分支构成道路连通邻域基，故 $P$ 局部道路连通。
+特别地 $P$ 自身的道路分支均开，且构成紧 $P$ 的一个开覆盖，故只有有限多个。
+其补集也是开集，故各分支闭；一个连通子集不能横跨这些开闭分支，
+所以道路分支与连通分支相同。
+
+$P\subset V\cong\mathbb R^N$ 紧，且已证明A.7的全部局部假设。
+该定理遂给 $P$ 在这个欧氏嵌入中的一个开邻域到 $P$ 的收缩。
+Hatcher [Corollary A.8，印刷p.527][Q110H]又给有限单纯复形 $L$
+及嵌入 $j:P\hookrightarrow L$、收缩 $\rho:L\to P$，满足 $\rho j=\operatorname{id}_P$。
+于是每个 $H_i(P;\mathbb Z)$ 是 $H_i(L;\mathbb Z)$ 的直和因子，
+故有限生成；$i>\dim L$ 时为零。
+这些成熟拓扑工具是在已构造的原W收缩内应用，不另作纯点正则性假设。证毕。
+
+### 110.4 原纯点的Alexander同调自对偶与Euler限制
+
+**定理 110.4（精确维数移位与偶N约束）。** 在原 $\mathsf W$ 下，对
+$0\le i\le N-3$ 有整数奇异群同构
+
+$$
+\widetilde H_i(P;\mathbb Z)
+ \cong\widetilde H^{\,N-i-3}(P;\mathbb Z),
+\qquad
+H_i(P;\mathbb Z)=0\quad(i\ge N-2).
+\tag{VIII110.9}
+$$
+
+波浪号分别表示约化同调与约化上同调，右侧不是同次数的同调群。
+普通Euler特征在此定义为有限和
+
+$$
+\chi(P)=\sum_{i\ge0}(-1)^i
+             \dim_{\mathbb Q}H_i(P;\mathbb Q).
+\tag{VIII110.10}
+$$
+
+当原向量空间维数 $N$ 为偶数时，必有 $\chi(P)=1$。
+
+证明。$P$ 非空，110.2给 $c_p\in S\setminus P$，所以它是 $S$ 的真子集。
+110.3已给 $P$ 紧且局部可缩，以及 $S\cong S^{N-2}$。
+令 $n=N-2\ge1$。Hatcher [Corollary 3.45，印刷pp.255—256][Q110H]
+对紧、局部可缩、非空的真子集 $P\subset S^n$ 给出
+
+$$
+\widetilde H_i(S\setminus P;\mathbb Z)
+ \cong\widetilde H^{\,n-i-1}(P;\mathbb Z).
+\tag{VIII110.11}
+$$
+
+110.2的同伦等价将左侧换成 $\widetilde H_i(P;\mathbb Z)$，
+而 $n-i-1=N-i-3$，即得所述范围的自对偶。
+这里两侧约化的零次群也包括在内，不能将右端零次群改为普通上同调。
+
+再从非空 $S\setminus P$ 取一点 $a$。
+去点球面 $S\setminus\{a\}\cong\mathbb R^{N-2}$ 使 $P$ 成为其中的紧局部可缩子空间。
+Hatcher [Corollary 3.46，印刷p.256][Q110H]因此直接给
+$H_i(P;\mathbb Z)=0$ 对所有 $i\ge N-2$ 成立。
+这使用的是此实际嵌入和已得局部可缩性，而非预设 $P$ 的流形维数。
+
+由110.3的有限生成性，令
+$b_i=\dim_{\mathbb Q}\widetilde H_i(P;\mathbb Q)$。
+整数通用系数定理及(VIII110.9)给
+
+$$
+b_i=b_{N-3-i}\quad(0\le i\le N-3),\qquad
+\chi(P)-1=\sum_{i=0}^{N-3}(-1)^i b_i.
+\tag{VIII110.12}
+$$
+
+当 $N$ 偶时，$N-3$ 奇，互补指标的符号相反且没有固定指标，
+所以有限和逐对消去，得到 $\chi(P)=1$。
+此计算允许 $P$ 不连通，也没有忽略整数群的挠部分来声称更强的整数同调对称。
+若 $N$ 奇，该配对不强迫同样的Euler数值。证毕。
+
+### 110.5 框架和下降到整个边界及其像的正则性
+
+**定理 110.5（连续边界下降与内部重心紧集）。** 在原 $\mathsf W$ 下，存在唯一
+连续映射 $b:S\to V$，使对每个原纯 $p$ 都有
+
+$$
+\begin{gathered}
+b(x)=U(p)\quad(x\in D_p),\qquad b|_P=U,\qquad b(S)=U(P).
+\end{gathered}
+\tag{VIII110.13}
+$$
+
+$U(P)$ 紧、道路连通且局部连通，且
+
+$$
+U(P)/3\subset\operatorname{ri}K,
+\qquad
+\inf_{p\in P}\operatorname{dist}(U(p)/3,\partial K)>0
+\tag{VIII110.14}
+$$
+
+对任一固定的辅助范数成立。这里的重心随 $p$ 变化，不预设G。
+
+证明。使用(VIII110.5)的紧关联集 $Z$，令
+$\pi:Z\to S$ 为第二坐标投影。
+所有 $D_p$ 都是真面，故像在 $S$ 中。
+非纯边界点由真面穷尽属于某个 $D_p$；纯点 $x$ 进入一组三框架，
+从而也属于框架另一点的完整排除球。因此 $\pi$ 满射。
+
+连续映射 $Z\to V$，$(p,x)\mapsto U(p)$，在 $\pi$ 的每个纤维上常值。
+对混合 $x$，球标签唯一；对纯 $x\in D_p$，原正交边常值性给 $U(p)=U(x)$。
+紧到Hausdorff的连续满射是商映射，故存在唯一连续下降 $b$。
+它在每个 $D_p$ 上的值、在纯点上的限制及整个像均如陈述。
+这些球覆盖 $S$，也给唯一性。
+
+$N\ge3$ 使 $S\cong S^{N-2}$ 道路连通，故 $U(P)=b(S)$ 道路连通；
+它又是紧 $P$ 的连续像，所以紧。
+局部连通性还须使用110.3。置 $Y=U(P)$，连续满射 $U:P\to Y$ 是商映射。
+对任意开 $O\subseteq Y$，$U^{-1}(O)$ 是局部连通空间的开子空间，
+其每个连通分支均在 $P$ 中开。每个这样的分支的连续像连通，
+故落在 $O$ 的某一个连通分支内。
+因此 $O$ 的任意连通分支 $Q$ 的原像 $U^{-1}(Q)$ 是这些开分支的并，
+在 $P$ 中开；商性质给 $Q$ 在 $Y$ 中开。
+所以每个开集的连通分支均开，即 $Y$ 局部连通。
+
+对任意 $p$，选原框架 $(p,q,r)$，于是 $w_p=U(p)/3=(p+q+r)/3\in K$。
+若 $w_p$ 在边界，它所在的支撑真面 $F$ 由正的三个重心系数必同时包含 $p,q,r$。
+故 $D_p=H(q,r)\subseteq F$。$D_p$ 的极大真面性迫 $F=D_p$，
+与 $p\notin D_p$ 矛盾。所以每个 $w_p\in\operatorname{ri}K$。
+连续像 $U(P)/3$ 紧，且与闭集 $\partial K$ 不交，给严格正的统一距离。
+所有重心均为原 $K$ 中的态；没有从它们的内点性推出它们彼此相等。证毕。
+
+### 110.6 G失败必在一条真实连续纯路径上发生
+
+**推论 110.6（非恒定框架和的纯路径及不交球族）。** 在原 $\mathsf W$ 下，
+若G失败，则存在连续 $\gamma:[0,1]\to P$，满足
+$U(\gamma(0))\ne U(\gamma(1))$。
+沿这条路径可选出连续统多个原纯源 $p_s$，使其 $U(p_s)$ 两两不同、
+完整 $D_{p_s}$ 两两不交。
+更一般地，任意 $U(p)\ne U(q)$ 的原纯对均不共处任何真面，且
+
+$$
+(1-t)p+tq\in\operatorname{ri}K\quad(0<t<1).
+\tag{VIII110.15}
+$$
+
+证明。110.3给有限多个道路分支 $P_1,\ldots,P_k$。
+若 $U$ 在每个分支上都常值，$U(P)$ 就是有限集；
+110.5的道路连通性迫它是单点，从而G成立。
+所以G失败时，至少一个 $P_i$ 上有两点的框架和不同。
+道路分支定义给连接这两点的所述 $\gamma$。
+
+选线性泛函 $\ell\in V^*$ 分离这两个框架和。
+连续函数 $g(t)=\ell(U(\gamma(t)))$ 的像含一个非退化闭区间 $I$。
+对每个 $s\in I$ 可具体取
+
+$$
+t_s=\min\{t\in[0,1]:g(t)=s\},\qquad p_s=\gamma(t_s).
+\tag{VIII110.16}
+$$
+
+非空紧原像保证该最小值存在，且 $\ell(U(p_s))=s$，所以不同参数给不同框架和。
+这里不声称 $s\mapsto t_s$ 或 $s\mapsto p_s$ 连续，
+也不要求 $\gamma$ 单射、光滑或可求长。
+
+若 $U(p)\ne U(q)$ 而 $D_p\cap D_q$ 含混合点，110.2的唯一标签给 $p=q$，矛盾。
+若交中有纯点 $a$，则 $a\perp p,q$，边常值性给 $U(p)=U(a)=U(q)$，仍矛盾。
+因而这些框架和不同的完整球两两不交。
+若 $p,q$ 共处一个真面，它不可能是单点，只能是某个 $D_a$，
+又会给 $U(p)=U(a)=U(q)$，矛盾。
+最后，若一条严格弦点 $(1-t)p+tq$ 在边界，经过它的支撑真面由两个正系数
+必同时包含 $p,q$，与前一结论矛盾，故得到(VIII110.15)。
+这给任何潜在G反例的必要结构，没有构造这样的反例。证毕。
+
+### 110.7 谱迹、成熟重构与独立原合同的边界
+
+**开放问题 110.7（尚缺的路径常值与二阶拼合）。** VII106.11在同一原W域给
+
+$$
+\mathrm G\ \Longleftrightarrow\ \tau\text{ 线性}
+\ \Longleftrightarrow\ \mathrm{J1}.
+\tag{VIII110.17}
+$$
+
+因此110.6把可能的G失败定位到一个道路分支中的真正连续纯路径，
+但110.2—110.6没有证明 $U$ 沿这样的路径常值，也没有证明
+$\tau(f+g)=\tau(f)+\tau(g)$ 对全部 $f,g\in V^*$ 成立。
+原 $\mathsf W\Rightarrow\mathrm G$ 仍未在这里证明或反驳。
+即使另得G，VII106.15的 $\mathsf W+\mathrm G\Rightarrow\mathrm{JET2}$
+仍要求跨方向的共同二次形；本章未由ENR、同调对偶或局部连通性取得它。
+也未推出TCov、常球维数、局部平凡球丛、全局兼容内积或完整PL3。
+
+110.2—110.6是原W几何与标准拓扑的 `repo-derived` 连接；
+Hatcher的邻域收缩与Alexander对偶只在各证明所列参数和假设内使用。
+其他成熟重构结果保持其全部条件：
+Alfsen—Shultz [*State spaces of Jordan algebras*, Corollary 7.5及Theorem 7.2的(i)、(iii)][Q110AS]
+要求Hilbert ball property与每个norm-exposed face的projectivity。
+VII105.5已经供应原数学projectivity，但Hilbert ball property量化任意二纯点的面；
+本章的整个排除球与ENR结论不替代这一量词，不能据此直接调用该分类。
+Müller—Ududec [Theorem 1][Q110MU]的bit symmetry、
+Barnum—Hilgert [Theorem 1.1][Q110BH]的spectrality与strong symmetry，
+以及Niestegge [Theorem 3][Q110N]中包括对称transition probability的全部前件，
+均没有因原纯点成为ENR而自动成立。这些成熟结论不是本章新增的重构定理。
+
+107的无G全线段三角形与108的切方向互斥、维数和低维分类直接保留；
+本章不重证这些结论，也不从其必要条件倒推一般厚球分类。
+[全有限层级VII][Q107Hierarchy]102.1、103.1及104.11—104.13的原强分块域、
+具名低二份供应与rank-two $\mathsf{Fusion}_L$ 合同独立保留：
+二维角寄存器成果不因这里的单载体收缩而供应 $L>2$ 的原融合态。
+指定复合、同事件CP、实际仪器与记录、共同来源、历史和原物理钟／单位仍按各自原合同使用。
+已经从明确动态或时钟前提得到的条件定理继续按那些前提成立；
+这里的辅助道路参数既不提供物理速度，也不识别某个原物理时间作用。
+[OTF-001][Q110OTF]的G/M/S/R/C/J/I明确模型按自身条件评价，
+不把无前提宇宙唯一性添作其数学结论的前件。
+
+### 110.8 从边界球心到纯路径的完整几何解释
+
+**命题 110.8（原W正则性与剩余差别的白话表述）。** 只用(VIII110.1)的原全态、
+全效应弱球关系，可以把全部混合边界连续收缩到与全部纯点一一同胚的球心集合；
+由此得到的是原纯点本身的邻域正则性及拓扑限制，而非附加正则性公理。
+
+证明与解释。原状态体的每个真正边界面，要么只有一个纯点，要么是某个纯点背后的
+完整排除球。一个非纯边界点只能在其中一张球的内部；若两张球都收留它，
+就违反既有真面相交规律。于是每个这样的点都有唯一的球标签。
+全效应紧性保证点接近时标签也接近；球心又由连续框架和决定。
+把每个混合边界点沿本球内的直线推向球心，就得到同时连续的收缩，
+无需先把所有球做成等维球丛。不同纯点的球心不同，所以全部球心保留了全部纯点的拓扑。
+
+整个凸边界本来同胚于一个球面，去掉闭纯点集后仍是一个开流形。
+球心集合是它的收缩核，因此在一个指定小区域附近，
+还可找到更小的区域，让它在前一个区域内连续缩成一点。
+这正好足以让原纯点成为欧氏邻域收缩核，并排除无限多个互相分离的道路分支。
+它并不说纯点都是孤立点，也不说每个小邻域本身就是球。
+
+混合边界与纯点具有同一同伦类型；另一方面，它们又互为同一球面中的补集。
+Alexander对偶把这两种关系合起来，迫使纯点的约化同调与互补次数的约化上同调相等。
+当原向量维数为偶数时，相配的约化Betti数在Euler交错和中符号相反，
+所以普通Euler特征只能为一。这里允许整数挠群，也允许纯点不连通。
+
+每个原三框架还有一个三点和。沿一张完整排除球，这个和不能改变，
+所以它可以连续下降到整个凸边界；其全部取值因而形成一个道路连通的紧集，
+三分之一的每个取值都严格落在原状态体内部。
+若不同框架的和真不一样，有限多个纯道路分支中至少一个必须承载这种变化。
+因此不能把潜在失败只藏在彼此不通的纯点块之间：必有一条实际连续的纯路径见证它，
+并能沿路径选出连续统多个框架和不同、背后完整球互不相交的纯点。
+这些点的严格连接弦均穿过整体内部。
+
+最后仍缺的是排除这种路径上的框架和变化。
+连续、局部可缩、有限道路分支和同调自对偶都没有在这里证明该变化为零；
+它们也没有把二阶读数拼成同一个二次形，更没有创造指定复合、事件或物理时钟。
+这正是110.2—110.7的完整结论及其范围。证毕。
+
+[Q110H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology: Theorem A.7, Corollary A.8, pp.525–527; Corollaries 3.45–3.46, pp.255–256."
+[Q110AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140, 155–190: Theorem 7.2 and Corollary 7.5."
+[Q110MU]: https://arxiv.org/pdf/1110.3516v2 "Markus P. Müller and Cozmin Ududec, Structure of reversible computation determines the self-duality of quantum theory, Theorem 1."
+[Q110BH]: https://arxiv.org/pdf/1904.03753v1 "Howard Barnum and Joachim Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces, Theorem 1.1."
+[Q110N]: https://arxiv.org/pdf/2312.13213v2 "Gerd Niestegge, Theorems 2–3: finite capacity and the stated order-unit hypotheses; Theorem 3 additionally requires symmetric transition probability."
+[Q110OTF]: OTF_001_ORTHOGONAL_TIME_FIELD_THEORY.md "OTF-001, sections 2 and 14–15."
+
+## 追加锚（本行以下为增补区）
