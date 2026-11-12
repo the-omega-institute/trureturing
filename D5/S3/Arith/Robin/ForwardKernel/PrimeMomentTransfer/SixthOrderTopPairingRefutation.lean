@@ -19,6 +19,8 @@ admission_basis: escape-witness.
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyRefutation
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticFourthExpansion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectAlgebra
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PerfectPairingCount
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderProductBounds
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderPairingExpansion
 import Mathlib.Data.Fintype.CardEmbedding
 import Mathlib.Algebra.BigOperators.Ring.Nat
@@ -311,6 +313,126 @@ private lemma subset_pair_formula (N : ℕ) (g : Fin 6 → Fin N → ℝ)
   rw [← hp, ← ht]
 
 
+private lemma top_order_bound (N : ℕ) (hN : 6 ≤ N)
+    (g : Fin 6 → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
+    |subsetDistinctMoment (modelFunctional N) (modelY N) g Finset.univ -
+        finitePairingPolynomial Finset.univ
+          (subsetDistinctMoment (modelFunctional N) (modelY N) g)| ≤
+      720 * (N : ℝ)^2 := by
+  classical
+  have hNp : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+  have hN1 : (1 : ℝ) ≤ N := by exact_mod_cast (show 1 ≤ N by omega)
+  have hNs : 0 < Real.sqrt N := Real.sqrt_pos.2 hNp
+  have hNs2 : (Real.sqrt N)^2 = (N : ℝ) := Real.sq_sqrt (by positivity)
+  have hNs6 : (Real.sqrt N)^6 = (N : ℝ)^3 := by
+    calc
+      _ = ((Real.sqrt N)^2)^3 := by ring
+      _ = _ := by rw [hNs2]
+  let A : Fin 6 → ℝ := fun i => ∑ d, g i d
+  let a : Finset (Fin 6) → ℝ := fun e => (1 / (N : ℝ)) * ∏ i ∈ e, A i
+  let R : Finset (Fin 6) → ℝ := subsetDistinctMoment (modelFunctional N) (modelY N) g
+  have hA (i : Fin 6) : |A i| ≤ N := by
+    calc
+      _ ≤ ∑ d : Fin N, |g i d| := Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ _d : Fin N, (1 : ℝ) := Finset.sum_le_sum (fun d _ => hg i d)
+      _ = _ := by simp
+  have ha (e : Finset (Fin 6)) (he : e.card = 2) : |a e| ≤ N := by
+    dsimp only [a]
+    rw [abs_mul, abs_of_nonneg (by positivity : 0 ≤ 1 / (N : ℝ)), Finset.abs_prod]
+    calc
+      _ ≤ (1 / (N : ℝ)) * ∏ _i ∈ e, (N : ℝ) := by
+        apply mul_le_mul_of_nonneg_left _ (by positivity)
+        exact Finset.prod_le_prod₀ (fun i _ => abs_nonneg _) (fun i _ => hA i)
+      _ = _ := by simp only [Finset.prod_const, he]; field_simp [ne_of_gt hNp]
+  have ht (e : Finset (Fin 6)) :
+      |(1 / (N : ℝ)) * ∑ d, ∏ i ∈ e, g i d| ≤ 1 := by
+    rw [abs_mul, abs_of_nonneg (by positivity : 0 ≤ 1 / (N : ℝ))]
+    calc
+      _ ≤ (1 / (N : ℝ)) * ∑ d : Fin N, |∏ i ∈ e, g i d| := by
+        gcongr
+        exact Finset.abs_sum_le_sum_abs _ _
+      _ ≤ (1 / (N : ℝ)) * ∑ _d : Fin N, (1 : ℝ) := by
+        gcongr with d
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun i _ => abs_nonneg _) (fun i _ => hg i d)
+      _ = _ := by simp [ne_of_gt hNp]
+  have hRa (e : Finset (Fin 6)) (he : e.card = 2) : |R e - a e| ≤ 1 := by
+    have heq : R e - a e = -(1 / (N : ℝ) * ∑ d, ∏ i ∈ e, g i d) := by
+      dsimp only [R, a, A]
+      rw [subset_pair_formula N g e he]
+      ring
+    rw [heq, abs_neg]
+    exact ht e
+  have hR (e : Finset (Fin 6)) (he : e.card = 2) : |R e| ≤ 2 * N := by
+    calc
+      _ = |R e - a e + a e| := by congr 1; ring
+      _ ≤ |R e - a e| + |a e| := abs_add_le _ _
+      _ ≤ 1 + N := add_le_add (hRa e he) (ha e he)
+      _ ≤ _ := by linarith
+  have hcount : ((Finset.univ : Finset (Finset (Finset (Fin 6)))).filter
+      (IsPerfectPairing Finset.univ)).card = 15 := by
+    rw [perfectPairingCount]
+    norm_num [Nat.doubleFactorial]
+  have hpoly : |finitePairingPolynomial Finset.univ R -
+      finitePairingPolynomial Finset.univ a| ≤ 180 * (N : ℝ)^2 := by
+    unfold finitePairingPolynomial
+    rw [← Finset.sum_sub_distrib]
+    calc
+      _ ≤ ∑ P : Finset (Finset (Fin 6)) with IsPerfectPairing Finset.univ P,
+          |(∏ e ∈ P, R e) - ∏ e ∈ P, a e| := Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ _P : Finset (Finset (Fin 6)) with IsPerfectPairing Finset.univ _P,
+          12 * (N : ℝ)^2 := by
+        apply Finset.sum_le_sum
+        intro P hP
+        have hp := (Finset.mem_filter.mp hP).2
+        have hc := hp.card
+        have hpc : P.card = 3 := by simp only [Finset.card_univ, Fintype.card_fin] at hc; omega
+        have hb := scalar_prod_diff_bound P hpc R a (2 * N) (by positivity)
+          (fun e he => hR e (hp.1.1 e he))
+          (fun e he => (ha e (hp.1.1 e he)).trans (by linarith))
+          (fun e he => hRa e (hp.1.1 e he))
+        nlinarith [hb]
+      _ = _ := by simp only [Finset.sum_const, nsmul_eq_mul, hcount]; norm_num; ring
+  have harank (e : Finset (Fin 6)) (he : e.card = 2) :
+      a e = ∏ i ∈ e, A i / Real.sqrt N := by
+    dsimp only [a]
+    rw [Finset.prod_div_distrib, Finset.prod_const, he, hNs2]
+    ring
+  have hleading : finitePairingPolynomial Finset.univ a =
+      (15 / Real.sqrt N ^ 6) * ∏ i, A i := by
+    rw [finitePairingPolynomial_rankOne _ a (fun i => A i / Real.sqrt N) harank,
+      hcount, Finset.prod_div_distrib]
+    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin, Nat.cast_ofNat]
+    ring
+  have htop : |R Finset.univ - (15 / Real.sqrt N ^ 6) * ∏ i, A i| ≤
+      540 * (N : ℝ)^2 := by
+    have hi := inj_sum_product_bound N hN g hg
+    have heq : R Finset.univ - (15 / Real.sqrt N ^ 6) * ∏ i, A i =
+        (15 / Real.sqrt N ^ 6) *
+          ((∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) -
+            ∏ i, ∑ d, g i d) := by
+      dsimp only [R, A]
+      rw [subsetDistinct_univ, distinct_moments, moment_values.2.2.2.2.2.2]
+      ring
+    rw [heq, abs_mul, abs_of_nonneg (by positivity : 0 ≤ 15 / Real.sqrt N ^ 6)]
+    calc
+      _ ≤ (15 / Real.sqrt N ^ 6) * (36 * (N : ℝ)^5) := by
+        exact mul_le_mul_of_nonneg_left hi (by positivity)
+      _ = _ := by rw [hNs6]; field_simp [ne_of_gt hNp]; ring
+  change |R Finset.univ - finitePairingPolynomial Finset.univ R| ≤ _
+  rw [← hleading] at htop
+  have heq : R Finset.univ - finitePairingPolynomial Finset.univ R =
+      (R Finset.univ - finitePairingPolynomial Finset.univ a) -
+        (finitePairingPolynomial Finset.univ R - finitePairingPolynomial Finset.univ a) := by ring
+  rw [heq]
+  calc
+    _ ≤ |R Finset.univ - finitePairingPolynomial Finset.univ a| +
+        |finitePairingPolynomial Finset.univ R - finitePairingPolynomial Finset.univ a| := by
+      simpa only [sub_zero, zero_sub, abs_neg] using
+        abs_sub_le (R Finset.univ - finitePairingPolynomial Finset.univ a) 0
+          (finitePairingPolynomial Finset.univ R - finitePairingPolynomial Finset.univ a)
+    _ ≤ _ := by linarith [htop, hpoly]
+
 -- DEVIATION
 
 private lemma model_unit_transfer (N : ℕ) (hN : 4 ≤ N) :
@@ -386,6 +508,30 @@ private lemma model_unit_pair {k : ℕ} (N : ℕ) (hN : 4 ≤ N)
   rw [subset_unit_moment, he, moment_values.2.2.1,
     Real.sq_sqrt (by positivity), hc]
   field_simp [hNz]
+
+private lemma model_four_defect_lower (N : ℕ) (hN : 100 ≤ N)
+    (U : Finset (Fin 6)) (hU : U.card = 4) :
+    (N : ℝ) ^ 2 / 2 ≤ subsetPairingDefect (modelFunctional N) (modelY N)
+      (fun (_ : Fin 6) (_ : Fin N) => (1 : ℝ)) U := by
+  classical
+  have hpoly : finitePairingPolynomial U
+      (subsetDistinctMoment (modelFunctional N) (modelY N)
+        (fun (_ : Fin 6) (_ : Fin N) => (1 : ℝ))) = 3 * ((N : ℝ) - 1)^2 := by
+    rw [finitePairingPolynomial_const U _ ((N : ℝ) - 1)
+      (fun e he => model_unit_pair N (by omega) e he), perfectPairingCount U]
+    norm_num [hU, Nat.doubleFactorial]
+  have hc : (N.descFactorial 4 : ℝ) =
+      (N : ℝ) * (N - 1) * (N - 2) * (N - 3) := by
+    norm_num [Nat.descFactorial_succ, Nat.cast_sub (by omega : 1 ≤ N),
+      Nat.cast_sub (by omega : 2 ≤ N), Nat.cast_sub (by omega : 3 ≤ N)]
+    ring
+  have hs : Real.sqrt N ^ 4 = (N : ℝ)^2 := by
+    calc
+      _ = (Real.sqrt N ^ 2)^2 := by ring
+      _ = _ := by rw [Real.sq_sqrt (by positivity)]
+  rw [subsetPairingDefect, hpoly, subset_unit_moment N U, hU,
+    moment_values.2.2.2.2.1, hs, hc]
+  convert sixth_four_defect_lower (N : ℝ) (by exact_mod_cast hN) using 1 <;> ring
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
