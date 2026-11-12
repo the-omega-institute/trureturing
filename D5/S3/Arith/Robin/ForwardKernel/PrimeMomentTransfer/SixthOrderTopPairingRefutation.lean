@@ -185,5 +185,17 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr6 : r < 
       field_simp
 
 
+private lemma subsetDistinct_univ {N : ℕ} (ℓ : ((Fin N → Bool) → ℝ) →ₗ[ℝ] ℝ)
+    (Y : Fin N → (Fin N → Bool) → ℝ) (g : Fin 6 → Fin N → ℝ) :
+    subsetDistinctMoment ℓ Y g (Finset.univ : Finset (Fin 6)) =
+      distinctIndexMoment ℓ Y g := by
+  classical
+  unfold subsetDistinctMoment
+  congr 1
+  funext j
+  apply congrArg g
+  apply Subtype.ext
+  simp
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
