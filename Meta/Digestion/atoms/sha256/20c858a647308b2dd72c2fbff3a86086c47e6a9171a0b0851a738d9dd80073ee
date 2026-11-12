@@ -1,0 +1,63 @@
+**推论 108.13（三、四维只需W，五维使用G）。** 在同一原全态、全效应域内，
+$\mathsf W$ 迫使 $n\ge3$，且有下列同锥同单位结论：
+
+$$
+\begin{array}{c|c|c}
+\text{原条件}&\dim V&\text{全部原模型的表示}\\ \hline
+\mathsf W&3&\mathbb R_+^3,\quad u=\text{三坐标之和}\\
+\mathsf W&4&\mathbb R\oplus\operatorname{spin}_2,\quad
+                         u=\alpha+2a\\
+\mathsf W+\mathrm G&5&\mathbb R\oplus\operatorname{spin}_3,\quad
+                         u=\alpha+2a
+\end{array}
+\tag{VIII108.28}
+$$
+
+表中spin行均指相应正锥；反向这些同单位模型满足所列条件。
+
+证明。joint三点的三张Kronecker效应使三点线性独立，所以 $n\ge3$。
+若 $n=3$，108.2给 $d_p\le1$，故全部 $d_p=1$；
+直接使用VIII107.2的无G全线段刚性，得到经典三角形，不重证该结果。
+若 $n=4$ 且全部 $d_p=1$，同一定理会给 $n=3$，矛盾。
+所以存在 $d_p\ge2$，而108.2给 $d_p\le2$；
+于是 $M_p=V$，应用108.12得到第二行。这里不需要G。
+
+若 $n=5$ 并有G，同样不能全部 $d_p=1$，故存在 $d_p\ge2$。
+108.2给 $d_p\le3$，108.11又排除 $d_p=2=n-3$，
+于是 $d_p=3$ 且 $M_p=V$。108.12得到第三行。
+这一步确实使用了G；没有把五维结论降为仅W的结论。
+
+为核对反向及全部原效应，统一在
+$J=\mathbb R\oplus\operatorname{spin}_d$、$u(\alpha,a,x)=\alpha+2a$ 中写
+
+$$
+f(\alpha,a,x)=b\alpha+2c a+2y\cdot x,\qquad
+f\in[0,u]\ \Longleftrightarrow\
+0\le b\le1,\quad \|y\|\le\min(c,1-c).
+\tag{VIII108.29}
+$$
+
+正性及补效应正性分别给 $c\ge\|y\|$ 和 $1-c\ge\|y\|$，
+所以这确是整个效应区间。原纯点恰为旗标
+$f_0=(1,0,0)$ 和球点 $s_e=(0,1/2,e/2)$、$\|e\|=1$。
+相应的least确认效应为
+$a_{f_0}(\alpha,a,x)=\alpha$、
+$a_{s_e}(\alpha,a,x)=a+e\cdot x$，
+正性给其准确零面
+
+$$
+D_{f_0}=\{(0,1/2,x):\|x\|\le1/2\},\qquad
+D_{s_e}=[f_0,s_{-e}].
+\tag{VIII108.30}
+$$
+
+这些全部效应和排除集也正是VII103.7的直和模型字典。
+任意两球纯点同处真面 $D_{f_0}$；旗标与任一球纯点同处真边
+$D_{s_{-e}}$，故全Pair成立，特别有 $\mathrm{Pair}_{\perp}$。
+全部排除集为非退化球，且
+$f_0+2c_{f_0}=s_e+2c_{s_e}=(1,1,0)$，故G也成立。
+$d=1$ 给三角形，$d=2,3$ 给其余两行。
+仅在这一原锥构造之后，才可用VII104.7、VII105.8和VII106.10的既有等价链，
+取得这些模型的完整 $S$、PL3、PAIRJET2和JET2；
+没有以这些较强条件反向填补维数论证。证毕。
+
