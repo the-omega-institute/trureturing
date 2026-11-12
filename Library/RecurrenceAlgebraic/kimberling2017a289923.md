@@ -14,6 +14,10 @@ triage: anchor
 
 # OEIS A289923
 
+## Verified locator
+
+Source: https://oeis.org/A289923
+
 The entry's NAME is:
 
 > Limiting sequence of coefficients of 1/([1+r] - [1+2r]x + [1+3r]x^2 - ...), where [ ] = floor and r approaches 19/21 from the left.
