@@ -1,0 +1,56 @@
+### 33.6 原非零零模像的具体恒常核方向与未决 Schur 余量
+
+定理 33.2 给出新的路线排除：对这两条原轴像，$S=sE_{33}$、$s\ne0$ 不可能由任何 (33.1) 的有限合法同时核对取得非零 $F(S)$。因此，原三演员整类分类必须处理这些输入的非核方向及完整残余 Schur 正性；“再寻找对所有非零像都成立的完整核分离”在这些轴像上已被定理否定。这不妨碍别的真实 PB 违反机制，也没有反驳定理 32.3 的三格支撑子类结果。§32.6 对一般缺失坐标情形保留的两条路线，在这里已排除完整核分离这一条。
+
+一个保持 $\mathcal W\ne0$ 的实际原族是
+
+$$
+m=1,\qquad B=0,\qquad D_{\rm env}=0,\qquad
+V=e_1,\qquad S=sE_{33},\quad s\in\mathbb R.
+\tag{33.25}
+$$
+
+它的完整代数是原 $M_4(\mathbb C)$，$\mathcal W=\mathbb C e_1$，并非旧 $W=0$ 分支。对其任一 (33.1) 核对，取原 $y=Jw$，沿 $x_\lambda=\lambda X\oplus0$、$\xi_\lambda=(u,\lambda y)$ 定义同一完整原 $Q_S(\lambda)$，准确按 (32.22) 保留两笔代价及 $-2\phi_{\xi_\lambda}(L)$。式 (32.21)–(32.24) 的推导只用完整核关系，对这些核对仍成立，故
+
+$$
+Q_{sE_{33}}(\lambda)=4\lambda F(sE_{33})+\Gamma_s=\Gamma_s.
+\tag{33.26}
+$$
+
+常数可直接求出。在 $\lambda=0$、$\xi_0=(u,0)$，原完整作用列为
+
+$$
+R_\delta(0)\xi_0=(0,-\delta u_1/2),\qquad
+S_{\delta,S}(0)\xi_0
+=\bigl(\delta s u_3e_3,(1-\delta\iota/2)u_1\bigr).
+\tag{33.27}
+$$
+
+零残量配方 (32.23) 在此给出环境平方；新增演员列与它正交，且
+$\operatorname{Re}((t\xi_0)^*(Su,0))=0$。因此完整常数准确为
+
+$$
+\boxed{\quad
+\Gamma_s=(\alpha_+^{-1}+\alpha_-^{-1})s^2|u_3|^2
++|u_1|^2\sum_{\delta=\pm1}\alpha_\delta^{-1}
+ \left|1+\frac\delta2(\zeta_\delta-\iota)\right|^2
+\ge0.
+\quad}
+\tag{33.28}
+$$
+
+式 (33.26)–(33.28) 只判定这些核方向上的同一带符号代价，不是 (33.25) 的全部 PB 证明。非核探针、任意原环境向量、全部正泛函以及 PB 绝对值的两侧仍须同时满足。
+
+确切地，任何完整实系数消元所得的二次式
+$z^{\mathsf T}Az+2b^{\mathsf T}z+\Gamma$ 对所有 $z$ 非负，要求
+
+$$
+A\succeq0,\qquad b\in\operatorname{ran}A,\qquad
+\Gamma-b^{\mathsf T}A^\dagger b\ge0.
+\tag{33.29}
+$$
+
+核方向先强制 $b\perp\ker A$；即使这一像条件另已完全证明，仍须第三式，因为配方为
+$(z+A^\dagger b)^{\mathsf T}A(z+A^\dagger b)+\Gamma-b^{\mathsf T}A^\dagger b$。
+定理 33.2 不支付其余系数，也没有把某一部分核方向的零读取说成全部像条件。这里未证明任何非零 $s$ 在 (33.25) 上满足全部原 PB，也未给出排除其每个非零 $s$ 的非核严格见证；原“所有非零 $\mathcal W$ 的 PB 单独刚性”保持未决。
+
