@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/HwangKimTwoDimensionalCriterion
    mirror-E: none(waiver:noncomputable-matrix-analysis)
-   anchors: [lit/hwangkim2024nearorder]
+   anchors: [lake/module/D5.S3.Quantum.Matrix.HwangKimNearOrderRefutation]
    utility: none
    digest: The exact determinant and trace criterion for near order in dimension two. -/
 

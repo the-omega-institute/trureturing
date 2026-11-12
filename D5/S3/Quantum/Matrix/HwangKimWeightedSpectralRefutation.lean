@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/HwangKimWeightedSpectralRefutation
    mirror-E: none(waiver:external-counterexample)
-   anchors: [lit/hwangkim2024nearorder, lit/bhatiajainlim2018wasserstein]
+   anchors: [lake/module/D5.S3.Quantum.Matrix.BuresWassersteinTransport]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/HwangKimWeightedSpectralRefutation.claim; result=D5/S3/Quantum/Matrix/HwangKimWeightedSpectralRefutation.result; claim=D5/S3/Quantum/Matrix/HwangKimWeightedSpectralRefutation.claim
    digest: The specified positive weighted matrix means fail entrywise spectral comparison. -/
 
