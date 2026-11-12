@@ -79,7 +79,107 @@ private lemma moment_values :
   norm_num [moment, zWeight, zValue, Fin.sum_univ_succ]
   all_goals field_simp [ne_of_gt (show (0 : ℝ) < Real.sqrt 15 by positivity)]
   all_goals ring_nf
-  all_goals nlinarith [hs, hc]
+  all_goals simp only [show (Real.sqrt (Real.sqrt 15)) ^ 4 =
+      ((Real.sqrt (Real.sqrt 15)) ^ 2) ^ 2 by ring,
+    show (Real.sqrt (Real.sqrt 15)) ^ 6 =
+      ((Real.sqrt (Real.sqrt 15)) ^ 2) ^ 3 by ring, hc, hs]
+  all_goals norm_num
+
+private lemma model_character (N : ℕ) (T : Finset (Fin N)) :
+    modelFunctional N (∏ d ∈ T, modelY N d) =
+      moment T.card / Real.sqrt N ^ T.card := by
+  simpa only [modelFunctional, moment] using
+    (mixture_character N zValue zWeight T)
+
+private lemma model_positive (N : ℕ) (hN : 4 ≤ N) (F : (Fin N → Bool) → ℝ) :
+    0 ≤ modelFunctional N (F * F) := by
+  apply mixture_positive N zValue zWeight
+  · intro z
+    have hc : |Real.sqrt (Real.sqrt 15)| ≤ 2 := by
+      rw [abs_of_nonneg (by positivity)]
+      have hs4 : (Real.sqrt 15 : ℝ) ≤ 4 := by
+        nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num]
+      nlinarith [show (Real.sqrt (Real.sqrt 15))^2 = Real.sqrt 15 by
+        exact Real.sq_sqrt (by positivity)]
+    have hz : |zValue z| ≤ 2 := by fin_cases z <;> simp [zValue, hc]
+    have hs : (2 : ℝ) ≤ Real.sqrt N := by
+      apply (Real.le_sqrt (by norm_num) (by positivity)).2
+      exact_mod_cast hN
+    exact hz.trans hs
+  · intro z
+    fin_cases z
+    · norm_num [zWeight]
+    · norm_num [zWeight]
+    · have hs1 : (1 : ℝ) ≤ Real.sqrt 15 := by
+        nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num,
+          sq_nonneg (Real.sqrt 15 - 1)]
+      have hp : 0 < Real.sqrt 15 := by positivity
+      have hi : 1 / Real.sqrt 15 ≤ (1 : ℝ) := (div_le_one₀ hp).2 hs1
+      dsimp [zWeight]
+      linarith
+  · exact_mod_cast (show 0 < N by omega)
+
+private lemma distinct_moments (N r : ℕ) (g : Fin r → Fin N → ℝ) :
+    distinctIndexMoment (modelFunctional N) (modelY N) g =
+      (moment r / Real.sqrt N ^ r) *
+        ∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i) := by
+  classical
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro x hx
+  have hinj := (Finset.mem_filter.mp hx).2
+  have hodd : oddCoords x = Finset.univ.image x := by
+    ext d
+    by_cases hd : d ∈ Finset.univ.image x
+    · obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hd
+      have hf : Finset.univ.filter (fun j => x j = x i) = {i} := by
+        ext j
+        simp [hinj.eq_iff]
+      simp [oddCoords, hf]
+    · have hf : Finset.univ.filter (fun j => x j = d) = ∅ := by
+        apply Finset.filter_eq_empty_iff.mpr
+        intro i hi he
+        exact hd (Finset.mem_image.mpr ⟨i, hi, he⟩)
+      simp [oddCoords, hf, hd]
+  rw [odd_reduction x, model_character, hodd]
+  simp only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin]
+  exact mul_comm _ _
+
+private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr6 : r < 6)
+    (g : Fin r → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
+    |distinctIndexMoment (modelFunctional N) (modelY N) g| ≤
+      4 * Real.sqrt N ^ r := by
+  classical
+  have hs : 0 < Real.sqrt N := Real.sqrt_pos.2 (by exact_mod_cast hN)
+  have hm : |moment r| ≤ 4 := by
+    interval_cases r <;> norm_num [moment_values.2.2.1, moment_values.2.2.2.1,
+      moment_values.2.2.2.2.1, moment_values.2.2.2.2.2.1]
+    · rw [abs_of_nonneg (by positivity)]
+      nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num]
+  have hsum : |∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i)| ≤
+      (N : ℝ)^r := by
+    calc
+      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, |∏ i, g i (x i)| :=
+        Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, (1 : ℝ) := by
+        apply Finset.sum_le_sum
+        intro x hx
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun i _ => hg i (x i))
+      _ ≤ ∑ _x : Fin r → Fin N, (1 : ℝ) :=
+        Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
+          (fun _ _ _ => by positivity)
+      _ = _ := by simp
+  rw [distinct_moments, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
+  calc
+    _ ≤ (4 / Real.sqrt N ^ r) * (N : ℝ)^r :=
+      mul_le_mul (div_le_div_of_nonneg_right hm (by positivity)) hsum
+        (abs_nonneg _) (by positivity)
+    _ = 4 * Real.sqrt N ^ r := by
+      have he : (N : ℝ)^r = Real.sqrt N ^ r * Real.sqrt N ^ r := by
+        rw [← mul_pow, ← pow_two, Real.sq_sqrt (by positivity)]
+      rw [he]
+      field_simp
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
