@@ -8,6 +8,7 @@
 
 import D5.S3.FiniteGroups.GroupAlgebra.FiniteFieldCyclicDimension
 import Mathlib.FieldTheory.Finite.GaloisField
+import Mathlib.RepresentationTheory.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
