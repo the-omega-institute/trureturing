@@ -41,21 +41,21 @@ private theorem state_matrix_trace {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) (i : Fin k) : (R.stateMatrix i).trace = 1 :=
   (R.state i).2.2
 
-private theorem left_mass {A B : Matrix n n ℂ} {k : ℕ}
+theorem left_mass {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) : A.trace.re = ∑ i, R.p i := by
   conv_lhs => rw [← R.prepares_left]
   change (∑ i, R.p i • R.stateMatrix i).trace.re = _
   simp only [Matrix.trace_sum, Matrix.trace_smul, state_matrix_trace,
     Complex.real_smul, mul_one, Complex.re_sum, Complex.ofReal_re]
 
-private theorem right_mass {A B : Matrix n n ℂ} {k : ℕ}
+theorem right_mass {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) : B.trace.re = ∑ i, R.q i := by
   conv_lhs => rw [← R.prepares_right]
   change (∑ i, R.q i • R.stateMatrix i).trace.re = _
   simp only [Matrix.trace_sum, Matrix.trace_smul, state_matrix_trace,
     Complex.real_smul, mul_one, Complex.re_sum, Complex.ofReal_re]
 
-private theorem maximal_hockey_nonneg {A B : Matrix n n ℂ}
+theorem maximal_hockey_nonneg {A B : Matrix n n ℂ}
     (hA : A.PosSemidef) (hB : B.PosSemidef) {t : ℝ} (ht : 0 ≤ t) :
     0 ≤ maximalHockey A B t := by
   have htB : (t • B).PosSemidef := hB.smul ht
@@ -72,7 +72,7 @@ private theorem maximal_hockey_nonneg {A B : Matrix n n ℂ}
   unfold maximalHockey
   linarith
 
-private theorem hockey_le_trace {A B : Matrix n n ℂ} {k : ℕ}
+theorem hockey_le_trace {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) {t : ℝ} (ht : 0 ≤ t) :
     R.hockey t ≤ A.trace.re := by
   unfold ReverseTest.hockey
@@ -81,7 +81,7 @@ private theorem hockey_le_trace {A B : Matrix n n ℂ} {k : ℕ}
   intro i _
   exact max_le (sub_le_self _ (mul_nonneg ht (R.q_nonneg i))) (R.p_nonneg i)
 
-private theorem hockey_lipschitz {A B : Matrix n n ℂ} {k : ℕ}
+theorem hockey_lipschitz {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) (s t : ℝ) :
     |R.hockey t - R.hockey s| ≤ |t - s| * B.trace.re := by
   have hterm (i : Fin k) :

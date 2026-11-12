@@ -71,10 +71,12 @@ private theorem perspective_component (x s : ℝ) :
 /-- A finite positive component decomposition gives an actual reverse test.
 Zero components prepare an arbitrary coordinate density matrix with zero
 classical weight; no endpoint labels are discarded. -/
-theorem reverse_test_from_components (G : n → Matrix n n ℂ)
+theorem reverse_test_from_components_profile (G : n → Matrix n n ℂ)
     (hG : ∀ i, (G i).PosSemidef) (x : n → ℝ) (hx : ∀ i, 0 ≤ x i ∧ x i ≤ 1) :
     ∃ R : ReverseTest (∑ i, x i • G i) (∑ i, (1 - x i) • G i) (Fintype.card n),
-      R.starCost = ∑ i, (2 * x i - 1) ^ 2 * (G i).trace.re := by
+      R.starCost = ∑ i, (2 * x i - 1) ^ 2 * (G i).trace.re ∧
+      ∀ t : ℝ, R.hockey t =
+        ∑ i, max (x i - t * (1 - x i)) 0 * (G i).trace.re := by
   classical
   let e := (Fintype.equivFin n).symm
   let s : n → ℝ := fun i => (G i).trace.re
@@ -91,9 +93,28 @@ theorem reverse_test_from_components (G : n → Matrix n n ℂ)
       prepares_right := by
         simp only [mul_smul, s, componentState_mass]
         exact e.sum_comp (fun i => (1 - x i) • G i) }
-  refine ⟨R, ?_⟩
-  change (∑ j, starPerspective (x (e j) * s (e j)) ((1 - x (e j)) * s (e j))) = _
-  simp_rw [perspective_component]
-  exact e.sum_comp (fun i => (2 * x i - 1) ^ 2 * (G i).trace.re)
+  refine ⟨R, ?_, ?_⟩
+  · change (∑ j, starPerspective (x (e j) * s (e j)) ((1 - x (e j)) * s (e j))) = _
+    simp_rw [perspective_component]
+    exact e.sum_comp (fun i => (2 * x i - 1) ^ 2 * (G i).trace.re)
+  · intro t
+    change (∑ j, max (x (e j) * s (e j) - t * ((1 - x (e j)) * s (e j))) 0) = _
+    have hterm (i : n) :
+        max (x i * s i - t * ((1 - x i) * s i)) 0 =
+          max (x i - t * (1 - x i)) 0 * s i := by
+      rw [show x i * s i - t * ((1 - x i) * s i) =
+        (x i - t * (1 - x i)) * s i by ring]
+      simpa only [zero_mul] using
+        (max_mul_of_nonneg (x i - t * (1 - x i)) 0 (hs i)).symm
+    simp_rw [hterm]
+    exact e.sum_comp (fun i => max (x i - t * (1 - x i)) 0 * (G i).trace.re)
+
+/-- The cost projection of the same positive-component construction. -/
+theorem reverse_test_from_components (G : n → Matrix n n ℂ)
+    (hG : ∀ i, (G i).PosSemidef) (x : n → ℝ) (hx : ∀ i, 0 ≤ x i ∧ x i ≤ 1) :
+    ∃ R : ReverseTest (∑ i, x i • G i) (∑ i, (1 - x i) • G i) (Fintype.card n),
+      R.starCost = ∑ i, (2 * x i - 1) ^ 2 * (G i).trace.re := by
+  obtain ⟨R, hc, -⟩ := reverse_test_from_components_profile G hG x hx
+  exact ⟨R, hc⟩
 
 end D5.S3.Quantum.Divergence.MaximalHockeyStickComponents

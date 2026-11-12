@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Divergence.MaximalHockeyStickQuadraticBound
 import D5.S3.Quantum.Divergence.MaximalHockeyStickComponents
+import D5.S3.Quantum.Divergence.MaximalHockeyStickOriginalPair
 
 /-! The canonical spectral preparation attains the quadratic reverse-test infimum. -/
 
@@ -27,6 +28,7 @@ open D5.S3.Quantum.Divergence.MaximalHockeyStickReverseTest
 open D5.S3.Quantum.Divergence.MaximalHockeyStickQuadratic
 open D5.S3.Quantum.Divergence.MaximalHockeyStickQuadraticBound
 open D5.S3.Quantum.Divergence.MaximalHockeyStickComponents
+open D5.S3.Quantum.Divergence.MaximalHockeyStickThreshold
 
 namespace D5.S3.Quantum.Divergence.MaximalHockeyStickQuadraticCanonical
 
@@ -35,7 +37,9 @@ variable {n : Type*} [Fintype n] [DecidableEq n]
 private theorem spectral_test (S C : Matrix n n ℂ) (hS : S.PosSemidef)
     (hC : C.PosSemidef) (hC1 : C ≤ 1) :
     ∃ R : ReverseTest (reconstruct S C) (reconstruct S (1 - C)) (Fintype.card n),
-      R.starCost = (S * (((2 : ℝ) • C - 1) * ((2 : ℝ) • C - 1))).trace.re := by
+      R.starCost = (S * (((2 : ℝ) • C - 1) * ((2 : ℝ) • C - 1))).trace.re ∧
+      ∀ t : ℝ, R.hockey t = (reconstruct S C).trace.re -
+        (S * canonicalOverlap C t).trace.re := by
   classical
   let hH := hC.isHermitian
   let e := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) hH.eigenvectorUnitary
@@ -79,7 +83,7 @@ private theorem spectral_test (S C : Matrix n n ℂ) (hS : S.PosSemidef)
       exact sub_nonneg.mpr hC1
     have hs := (cfc_nonneg_iff _ C (by fun_prop) hH.isSelfAdjoint).mp hnonneg
     exact sub_nonneg.mp (hs _ (hH.eigenvalues_mem_spectrum_real i))
-  obtain ⟨R, hcost⟩ := reverse_test_from_components G hG x hx
+  obtain ⟨R, hcost, hprofile⟩ := reverse_test_from_components_profile G hG x hx
   have hleft : ∑ i, x i • G i = reconstruct S C := by
     rw [← cfc_id' ℝ C hH.isSelfAdjoint, hcf]
     simp only [G, reconstruct, Matrix.mul_sum, Matrix.sum_mul,
@@ -113,14 +117,39 @@ private theorem spectral_test (S C : Matrix n n ℂ) (hS : S.PosSemidef)
       q_nonneg := R.q_nonneg
       state := R.state
       prepares_left := R.prepares_left.trans hleft
-      prepares_right := R.prepares_right.trans hright }, ?_⟩
-  exact hcost.trans he.symm
+      prepares_right := R.prepares_right.trans hright }, hcost.trans he.symm, ?_⟩
+  intro t
+  change R.hockey t = _
+  have htrace (f : ℝ → ℝ) : (S * cfc f C).trace.re =
+      ∑ i, f (x i) * (G i).trace.re := by
+    rw [hcf]
+    simp only [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum,
+      Matrix.trace_smul, Complex.re_sum, Complex.real_smul, Complex.mul_re,
+      Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    apply Finset.sum_congr rfl
+    intro i _
+    rw [show (G i).trace = (S * E i).trace from reconstruction_trace S (E i) hS]
+  have hlefttrace : (reconstruct S C).trace.re = ∑ i, x i * (G i).trace.re := by
+    rw [reconstruction_trace S C hS, ← cfc_id' ℝ C hH.isSelfAdjoint]
+    exact htrace (fun z : ℝ => z)
+  rw [hprofile, hlefttrace, canonicalOverlap, htrace, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro i _
+  have hid : max (x i - t * (1 - x i)) 0 = x i - min (x i) (t * (1 - x i)) := by
+    rcases le_total (x i) (t * (1 - x i)) with h | h
+    · rw [min_eq_left h, sub_self, max_eq_right (sub_nonpos.mpr h)]
+    · rw [min_eq_right h, max_eq_left (sub_nonneg.mpr h)]
+  rw [hid]
+  ring
 
 /-- The canonical spectral test attains the actual finite-alphabet infimum
 for the quadratic generator, including zero and singular pairs. -/
-theorem quadratic_reverse_test_attained (A B : Matrix n n ℂ)
+theorem quadratic_reverse_test_attained_profile (A B : Matrix n n ℂ)
     (hA : A.PosSemidef) (hB : B.PosSemidef) :
-    ∃ R : ReverseTest A B (Fintype.card n), R.starCost = quadraticValue A B := by
+    ∃ R : ReverseTest A B (Fintype.card n), R.starCost = quadraticValue A B ∧
+      ∀ t : ℝ, R.hockey t = A.trace.re -
+        ((A + B) * canonicalOverlap
+          (MaximalHockeyStickSupport.normalize (A + B) A) t).trace.re := by
   let S := A + B
   let P := spectralSupport S
   let C := MaximalHockeyStickSupport.normalize S A
@@ -159,7 +188,7 @@ theorem quadratic_reverse_test_attained (A B : Matrix n n ℂ)
     rw [hrecA']
     dsimp only [S]
     abel
-  obtain ⟨R, hcost⟩ := spectral_test S C hS hC (hCP.trans hPle)
+  obtain ⟨R, hcost, hprofile⟩ := spectral_test S C hS hC (hCP.trans hPle)
   have hPC : P * C = C := by
     simp only [C, MaximalHockeyStickSupport.normalize, ← Matrix.mul_assoc, hPK]
   have hCP' : C * P = C := by
@@ -189,8 +218,18 @@ theorem quadratic_reverse_test_attained (A B : Matrix n n ℂ)
       q_nonneg := R.q_nonneg
       state := R.state
       prepares_left := R.prepares_left.trans hrecA'
-      prepares_right := R.prepares_right.trans hrecB }, ?_⟩
-  exact hcost.trans hvalue
+      prepares_right := R.prepares_right.trans hrecB }, hcost.trans hvalue, ?_⟩
+  intro t
+  change R.hockey t = _
+  simpa only [hrecA'] using hprofile t
+
+/-- The quadratic-cost projection of the actual spectral test with its exact
+all-threshold profile. -/
+theorem quadratic_reverse_test_attained (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    ∃ R : ReverseTest A B (Fintype.card n), R.starCost = quadraticValue A B := by
+  obtain ⟨R, hc, -⟩ := quadratic_reverse_test_attained_profile A B hA hB
+  exact ⟨R, hc⟩
 
 /-- Exact formula for the genuine infimum, with no finite-value premise needed
 for this bounded-perspective generator. -/
