@@ -6,6 +6,7 @@
    utility: none
    digest: Native support compression constructs original-unit normalization and transports the entire original geometry. -/
 
+import D5.S3.Quantum.Foundation.SectionROGFrame
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Convex.Cone.Basic
 import Mathlib.Analysis.InnerProductSpace.Symmetric
@@ -690,6 +691,42 @@ theorem exists_original_unit_inverse_trace_stationarity
     (by simpa only [hku, RCLike.ofReal_natCast, Fintype.card_fin] using htr k)
 
 
+
+private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
+    (hA : 0 ≤ A) (hr : A.mat.rank = 1) :
+    ∃ v : EuclideanSpace 𝕜 ι, v ≠ 0 ∧ SectionROGFrame.rankOne v = A := by
+  classical
+  have hp := HermitianMat.zero_le_iff.mp hA
+  have hc : Fintype.card {i // A.H.eigenvalues i ≠ 0} = 1 :=
+    A.H.rank_eq_card_non_zero_eigs.symm.trans hr
+  obtain ⟨i, hi⟩ := Fintype.card_eq_one_iff.mp hc
+  have hzero (j : ι) (hj : j ≠ i.val) : A.H.eigenvalues j = 0 := by
+    by_contra hne
+    exact hj (congrArg Subtype.val (hi ⟨j, hne⟩))
+  have hsum : A = ∑ j, A.H.eigenvalues j •
+      SectionROGFrame.rankOne (A.H.eigenvectorBasis j) := by
+    apply HermitianMat.ext
+    rw [HermitianMat.mat_finset_sum]
+    conv_lhs => rw [A.H.spectral_theorem, Matrix.conjStarAlgAut_apply]
+    ext k l
+    simp [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.vecMulVec_apply,
+      SectionROGFrame.rankOne, Matrix.conjTranspose_apply, mul_assoc,
+      RCLike.real_smul_eq_coe_mul]
+  have heq : A = A.H.eigenvalues i.val •
+      SectionROGFrame.rankOne (A.H.eigenvectorBasis i.val) := by
+    rw [hsum]
+    exact Finset.sum_eq_single i.val (fun j _ hj => by rw [hzero j hj, zero_smul])
+      (by simp)
+  let v : EuclideanSpace 𝕜 ι := Real.sqrt (A.H.eigenvalues i.val) • A.H.eigenvectorBasis i.val
+  have hpos : 0 < A.H.eigenvalues i.val :=
+    lt_of_le_of_ne (hp.eigenvalues_nonneg i.val) (Ne.symm i.property)
+  refine ⟨v, ?_, ?_⟩
+  · exact smul_ne_zero (Real.sqrt_pos.mpr hpos).ne'
+      (A.H.eigenvectorBasis.orthonormal.ne_zero i.val)
+  · change SectionROGFrame.rankOne
+      (Real.sqrt (A.H.eigenvalues i.val) • (A.H.eigenvectorBasis i.val : ι → 𝕜)) = A
+    rw [SectionROGFrame.rankOne_real_smul, Real.mul_self_sqrt hpos.le]
+    exact heq.symm
 
 private theorem matrix_eq_one_of_card_one (A : Matrix ι ι 𝕜)
     (hcard : Fintype.card ι = 1) (htrace : A.trace = 1) : A = 1 := by
