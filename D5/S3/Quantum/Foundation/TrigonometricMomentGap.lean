@@ -12,6 +12,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Analysis.Convex.Caratheodory
 import Mathlib.Topology.Instances.Real.Lemmas
+import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 import Mathlib.Tactic
 
 /-! The entire second trigonometric moment body and its homogeneous cone.
@@ -444,7 +445,10 @@ private theorem compact_hull {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ
             simp [w', z', e.injective.extend_apply]
           · simp [w', z', Function.extend_apply' _ _ _ hj]]
         rw [Finset.sum_extend_zero_of_injective _ e.injective (fun _ => Finset.mem_univ _)]
-        simpa only [Finset.univ_eq_attach, Finset.sum_attach] using hwx
+        calc
+          (∑ i : t, w i • (i : E)) = ∑ y ∈ t, w y • y :=
+            Finset.sum_attach t (fun y => w y • y)
+          _ = x := hwx
   rw [← heq]
   exact hP.image hF
 
@@ -473,10 +477,10 @@ private theorem vanishing_effect (f : Carrier →ₗ[ℝ] ℝ)
   obtain ⟨a, b, rfl⟩ := all_linear_effects f
   have h₀ := hf 0
   have hπ := hf Real.pi
-  have h₊ := hf (Real.pi / 2)
-  have h₋ := hf (-Real.pi / 2)
+  have hplus := hf (Real.pi / 2)
+  have hminus := hf (-Real.pi / 2)
   have h₄ := hf (Real.pi / 4)
-  simp [effect_curve, trigonometric, neg_div] at h₀ hπ h₊ h₋ h₄
+  simp [effect_curve, trigonometric, neg_div] at h₀ hπ hplus hminus h₄
   have ha : a = 0 := by linarith
   have hb₀ : b 0 = 0 := by linarith
   have hb₁ : b 1 = 0 := by linarith
@@ -499,7 +503,7 @@ private theorem body_fullspan : affineSpan ℝ body = ⊤ := by
     · intro _; norm_num
     · norm_num
     · intro i; fin_cases i <;> exact ⟨_, rfl⟩
-    · ext i; fin_cases i <;> norm_num [Fin.sum_univ_succ, momentCurve, neg_div]
+    · ext i; fin_cases i <;> norm_num [Fin.sum_univ_succ, momentCurve, neg_div, Real.cos_two_mul]
   have hs : Submodule.span ℝ body = ⊤ := by
     by_contra h
     obtain ⟨f, hf, hker⟩ := (Submodule.span ℝ body).exists_le_ker_of_lt_top
@@ -509,7 +513,8 @@ private theorem body_fullspan : affineSpan ℝ body = ⊤ := by
       intro θ
       exact hker (Submodule.subset_span (subset_convexHull ℝ _ ⟨θ, rfl⟩))
     apply hf
-    ext w
+    apply LinearMap.ext
+    intro w
     exact LinearMap.congr_fun hz (0, w)
   rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ body hzero), hs]
   rfl
@@ -534,7 +539,7 @@ private theorem cone_closed : IsClosed (cone : Set Carrier) := by
   have htl : Filter.Tendsto (t ∘ φ) Filter.atTop (nhds w.1) := by
     simpa only [Function.comp_def, htval] using
       (continuous_fst.tendsto w).comp (hlim.comp hφ.tendsto_atTop)
-  have ht₀ : 0 ≤ w.1 := le_of_tendsto htl (Filter.Eventually.of_forall (fun n => ht (φ n)))
+  have ht₀ : 0 ≤ w.1 := ge_of_tendsto htl (Filter.Eventually.of_forall (fun n => ht (φ n)))
   refine ⟨w.1, ht₀, z₀, hz₀, ?_⟩
   apply tendsto_nhds_unique (hlim.comp hφ.tendsto_atTop)
   simpa only [Function.comp_def, he] using htl.smul hzl
@@ -625,6 +630,97 @@ private theorem endpoint_exclusions :
     · norm_num [p, hfy]
     · norm_num [y, hfy]
 
+private theorem proper_coefficients {a : ℝ} {b : Coordinates}
+    (hf : proper cone unit (effect a b)) : ∀ i, |b i| ≤ 4 := by
+  have h := (proper_on_curve _).mp hf
+  have hzero := h 0
+  have hpi := h Real.pi
+  have hplus := h (Real.pi / 2)
+  have hminus := h (-Real.pi / 2)
+  have hfour := h (Real.pi / 4)
+  simp [effect_curve, trigonometric, neg_div, Real.cos_two_mul, Real.sin_two_mul] at
+    hzero hpi hplus hminus hfour
+  have ha : -1 ≤ a ∧ a ≤ 1 := by constructor <;> linarith
+  have hb0 : -1 ≤ b 0 ∧ b 0 ≤ 1 := by constructor <;> linarith
+  have hb1 : -1 ≤ b 1 ∧ b 1 ≤ 1 := by constructor <;> linarith
+  have hb2 : -1 ≤ b 2 ∧ b 2 ≤ 1 := by constructor <;> linarith
+  have hr : 0 ≤ Real.sqrt 2 / 2 ∧ Real.sqrt 2 / 2 ≤ 1 := by
+    constructor <;> nlinarith [Real.sqrt_nonneg 2, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  have hprod0 : -1 ≤ b 0 * (Real.sqrt 2 / 2) ∧ b 0 * (Real.sqrt 2 / 2) ≤ 1 := by
+    constructor <;> nlinarith [mul_nonneg (by linarith : 0 ≤ b 0 + 1) hr.1,
+      mul_nonneg (by linarith : 0 ≤ 1 - b 0) hr.1]
+  have hprod1 : -1 ≤ b 1 * (Real.sqrt 2 / 2) ∧ b 1 * (Real.sqrt 2 / 2) ≤ 1 := by
+    constructor <;> nlinarith [mul_nonneg (by linarith : 0 ≤ b 1 + 1) hr.1,
+      mul_nonneg (by linarith : 0 ≤ 1 - b 1) hr.1]
+  intro i
+  fin_cases i <;> apply abs_le.mpr <;> constructor <;> nlinarith
+
+private def variation (θ : ℝ) : ℝ := ∑ i : Fin 4, |momentCurve θ i - momentCurve 0 i|
+
+private theorem uniform_effect_variation {f : Carrier →ₗ[ℝ] ℝ}
+    (hf : proper cone unit f) (θ : ℝ) :
+    |f (curve θ) - f (curve 0)| ≤ 4 * variation θ := by
+  obtain ⟨a, b, rfl⟩ := all_linear_effects f
+  have hb := proper_coefficients hf
+  have he : effect a b (curve θ) - effect a b (curve 0) =
+      ∑ i : Fin 4, b i * (momentCurve θ i - momentCurve 0 i) := by
+    simp [effect, curve, lift, Fin.sum_univ_succ]
+    ring
+  rw [he]
+  calc
+    |∑ i, b i * (momentCurve θ i - momentCurve 0 i)| ≤
+        ∑ i, |b i * (momentCurve θ i - momentCurve 0 i)| :=
+      Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ i, 4 * |momentCurve θ i - momentCurve 0 i| := by
+      apply Finset.sum_le_sum
+      intro i _
+      rw [abs_mul]
+      exact mul_le_mul_of_nonneg_right (hb i) (abs_nonneg _)
+    _ = 4 * variation θ := (Finset.mul_sum _ _ _).symm
+
+private theorem original_A_fails : ¬ allAntipodes cone unit := by
+  have hc : Continuous variation := by
+    unfold variation
+    apply continuous_finsetSum
+    intro i _
+    exact (((continuous_apply i).comp continuous_momentCurve).sub continuous_const).abs
+  obtain ⟨r, hr, hbound⟩ := Metric.continuousAt_iff.mp (hc.continuousAt (x := 0))
+    (1 / 4) (by norm_num)
+  let θ := min (r / 2) (Real.pi / 2)
+  have hθpos : 0 < θ := lt_min (by linarith) (by positivity)
+  have hθr : θ < r := lt_of_le_of_lt (min_le_left _ _) (by linarith)
+  have hθpi : θ ≤ Real.pi := (min_le_right _ _).trans (by linarith [Real.pi_pos])
+  have hv : variation θ < 1 / 4 := by
+    have hh := hbound (by simpa [Real.dist_eq, abs_of_pos hθpos] using hθr)
+    simpa [variation, Real.dist_eq, abs_of_nonneg (Finset.sum_nonneg (fun _ _ => abs_nonneg _))] using hh
+  have hne : curve 0 ≠ curve θ := by
+    intro he
+    have hh := congrArg (fun w : Carrier => w.2 0) he
+    have hcos := Real.cos_lt_cos_of_nonneg_of_le_pi (by norm_num : (0 : ℝ) ≤ 0) hθpi hθpos
+    simp [curve, lift, momentCurve] at hh
+    simp only [Real.cos_zero] at hcos
+    linarith
+  let pp : pure cone unit := ⟨curve 0, by rw [original_pure]; exact ⟨0, rfl⟩⟩
+  let qq : pure cone unit := ⟨curve θ, by rw [original_pure]; exact ⟨θ, rfl⟩⟩
+  let chart := segmentChart 0 θ hne
+  let n : EuclideanSpace ℝ (Fin 1) := WithLp.toLp 2 (fun _ => 1)
+  have hn : ‖n‖ = 1 := by simp [one_axis_norm, n]
+  have hleft : chart.param n = curve 0 := by
+    change AffineMap.lineMap (curve θ) (curve 0) ((1 / 2 : ℝ) * 1 + 1 / 2) = _
+    norm_num
+  have hright : chart.param (-n) = curve θ := by
+    change AffineMap.lineMap (curve θ) (curve 0) ((1 / 2 : ℝ) * (-1) + 1 / 2) = _
+    norm_num
+  intro hA
+  have hh := hA pp qq (fun he => hne (Subtype.ext_iff.mp he)) chart n hn
+    (hleft ▸ pp.property)
+  rw [hleft, hright] at hh
+  obtain ⟨f, hf, hzero⟩ := hh
+  have hu := uniform_effect_variation hf.1 θ
+  rw [hf.2, hzero] at hu
+  norm_num at hu
+  linarith
+
 private theorem zero_gluing_fails : ¬ zeroGluing cone unit := by
   intro h
   have hp : p ∈ pure cone unit := by rw [original_pure]; exact ⟨0, rfl⟩
@@ -648,7 +744,7 @@ theorem attained_full_effect_gap :
       segment ℝ (curve a) (curve b)) ∧
     (∀ a b : ℝ, pairBase cone unit (curve a) (curve b) =
       segment ℝ (curve a) (curve b)) ∧
-    wholePairBalls cone unit ∧
+    wholePairBalls cone unit ∧ ¬ allAntipodes cone unit ∧
     (∀ f : Carrier →ₗ[ℝ] ℝ, ∃ a b, f = effect a b) ∧
     (∀ a b, proper cone unit (effect a b) ↔
       ∀ θ : ℝ, 0 ≤ trigonometric a b θ ∧ trigonometric a b θ ≤ 1) ∧
@@ -662,7 +758,7 @@ theorem attained_full_effect_gap :
     (∃ f, confirms cone unit p f ∧ f y = 0) ∧ ¬ zeroGluing cone unit := by
   refine ⟨original_base.trans states_image, original_pure, compact_body, body_fullspan,
     cone_closed, cone_salient, cone_generating, whole_zero_face,
-    entire_pair_base, original_B, all_linear_effects, ?_,
+    entire_pair_base, original_B, original_A_fails, all_linear_effects, ?_,
     fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_, universal_lower,
     attainer_confirms, attainer_value, ?_, endpoint_exclusions.1,
     endpoint_exclusions.2, zero_gluing_fails⟩
