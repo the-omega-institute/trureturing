@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathTriangleFibre.F`
 
 *Commentary.*
 
-F(L,X,Y)=sqrt((1−X)(1−Y)(1−Z(L,X,Y)²)). Its radicand is nonnegative on the complete triangle.
+F(L,X,Y)=sqrt((1−X)(1−Y)(1−Z(L,X,Y)²)). Its radicand is nonnegative on the complete triangle when L>1 and L²≤2.
 
 **Definition 1.4 (The box cap).**
 
