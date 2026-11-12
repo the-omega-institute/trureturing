@@ -10,6 +10,8 @@ import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
 import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.Convex.Combination
+import Mathlib.Analysis.Convex.Caratheodory
+import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.Tactic
 
 /-! The entire second trigonometric moment body and its homogeneous cone.
@@ -391,6 +393,152 @@ private theorem original_B : wholePairBalls cone unit := by
   rw [← ha, ← hb]
   exact ⟨segmentChart a b hab⟩
 
+private theorem compact_hull {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    [FiniteDimensional ℝ E] {S : Set E} (hc : IsCompact S) (hne : S.Nonempty) :
+    IsCompact (convexHull ℝ S) := by
+  classical
+  obtain ⟨s₀, hs₀⟩ := hne
+  let n := Module.finrank ℝ E + 1
+  let P : Set ((Fin n → ℝ) × (Fin n → E)) :=
+    stdSimplex ℝ (Fin n) ×ˢ Set.pi univ (fun _ => S)
+  let F : (Fin n → ℝ) × (Fin n → E) → E := fun p => ∑ i, p.1 i • p.2 i
+  have hP : IsCompact P := (isCompact_stdSimplex ℝ _).prod
+    (isCompact_univ_pi (fun _ => hc))
+  have hF : Continuous F := by unfold F; fun_prop
+  have heq : F '' P = convexHull ℝ S := by
+    apply Subset.antisymm
+    · rintro _ ⟨p, hp, rfl⟩
+      exact mem_convexHull_of_exists_fintype p.1 p.2 hp.1.1 hp.1.2
+        (fun i => hp.2 i (mem_univ i)) rfl
+    · intro x hx
+      rw [convexHull_eq_union] at hx
+      simp only [mem_iUnion] at hx
+      obtain ⟨t, ht, hi, hx⟩ := hx
+      obtain ⟨w, hw, hw₁, hwx⟩ := Finset.mem_convexHull'.mp hx
+      have hcard : Fintype.card t ≤ Fintype.card (Fin n) := by
+        simpa [n] using hi.card_le_finrank_succ.trans
+          (Nat.add_le_add_right (Submodule.finrank_le _) 1)
+      obtain ⟨e : t ↪ Fin n⟩ := Function.Embedding.nonempty_of_card_le hcard
+      let w' := Function.extend e (fun i : t => w i) 0
+      let z' := Function.extend e (fun i : t => (i : E)) (fun _ => s₀)
+      refine ⟨(w', z'), ⟨⟨?_, ?_⟩, ?_⟩, ?_⟩
+      · intro j
+        by_cases hj : ∃ i, e i = j
+        · obtain ⟨i, rfl⟩ := hj
+          simpa [w', e.injective.extend_apply] using hw i i.property
+        · simp [w', Function.extend_apply' _ _ _ hj]
+      · change (∑ j, Function.extend e (fun i : t => w i) 0 j) = 1
+        rw [Finset.sum_extend_zero_of_injective _ e.injective (fun _ => Finset.mem_univ _)]
+        simpa only [Finset.univ_eq_attach, Finset.sum_attach] using hw₁
+      · intro j _
+        by_cases hj : ∃ i, e i = j
+        · obtain ⟨i, rfl⟩ := hj
+          simpa [z', e.injective.extend_apply] using ht i.property
+        · simpa [z', Function.extend_apply' _ _ _ hj] using hs₀
+      · change (∑ j, w' j • z' j) = x
+        rw [show (fun j => w' j • z' j) =
+            Function.extend e (fun i : t => w i • (i : E)) 0 by
+          funext j
+          by_cases hj : ∃ i, e i = j
+          · obtain ⟨i, rfl⟩ := hj
+            simp [w', z', e.injective.extend_apply]
+          · simp [w', z', Function.extend_apply' _ _ _ hj]]
+        rw [Finset.sum_extend_zero_of_injective _ e.injective (fun _ => Finset.mem_univ _)]
+        simpa only [Finset.univ_eq_attach, Finset.sum_attach] using hwx
+  rw [← heq]
+  exact hP.image hF
+
+private theorem continuous_momentCurve : Continuous momentCurve := by
+  apply continuous_pi
+  intro i
+  fin_cases i <;> simp only [momentCurve, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val] <;> fun_prop
+
+private theorem compact_body : IsCompact body := by
+  have hp : Function.Periodic momentCurve (2 * Real.pi) := by
+    intro θ
+    ext i
+    fin_cases i <;> simp [momentCurve, mul_add, Real.cos_add_two_pi,
+      Real.sin_add_two_pi, show 2 * (2 * Real.pi) = 2 * Real.pi + 2 * Real.pi by ring,
+      ← add_assoc]
+  exact compact_hull (hp.compact_of_continuous (by positivity) continuous_momentCurve)
+    (range_nonempty _)
+
+private theorem compact_states : IsCompact states := by
+  rw [states_image]
+  exact compact_body.image lift.continuous_of_finiteDimensional
+
+private theorem vanishing_effect (f : Carrier →ₗ[ℝ] ℝ)
+    (hf : ∀ θ, f (curve θ) = 0) : f = 0 := by
+  obtain ⟨a, b, rfl⟩ := all_linear_effects f
+  have h₀ := hf 0
+  have hπ := hf Real.pi
+  have h₊ := hf (Real.pi / 2)
+  have h₋ := hf (-Real.pi / 2)
+  have h₄ := hf (Real.pi / 4)
+  simp [effect_curve, trigonometric, neg_div] at h₀ hπ h₊ h₋ h₄
+  have ha : a = 0 := by linarith
+  have hb₀ : b 0 = 0 := by linarith
+  have hb₁ : b 1 = 0 := by linarith
+  have hb₂ : b 2 = 0 := by linarith
+  have hb₃ : b 3 = 0 := by linarith
+  have hb : b = 0 := by ext i; fin_cases i <;> assumption
+  simp [ha, hb, effect]
+
+private theorem span_curve : Submodule.span ℝ (range curve) = ⊤ := by
+  by_contra h
+  obtain ⟨f, hf, hker⟩ := (Submodule.span ℝ (range curve)).exists_le_ker_of_lt_top
+    (lt_top_iff_ne_top.mpr h)
+  exact hf (vanishing_effect f (fun θ => hker (Submodule.subset_span ⟨θ, rfl⟩)))
+
+private theorem body_fullspan : affineSpan ℝ body = ⊤ := by
+  have hzero : (0 : Coordinates) ∈ body := by
+    apply mem_convexHull_of_exists_fintype (fun _ : Fin 4 => (1 / 4 : ℝ))
+      ![momentCurve 0, momentCurve Real.pi, momentCurve (Real.pi / 2),
+        momentCurve (-Real.pi / 2)]
+    · intro _; norm_num
+    · norm_num
+    · intro i; fin_cases i <;> exact ⟨_, rfl⟩
+    · ext i; fin_cases i <;> norm_num [Fin.sum_univ_succ, momentCurve, neg_div]
+  have hs : Submodule.span ℝ body = ⊤ := by
+    by_contra h
+    obtain ⟨f, hf, hker⟩ := (Submodule.span ℝ body).exists_le_ker_of_lt_top
+      (lt_top_iff_ne_top.mpr h)
+    have hz : f.comp (LinearMap.snd ℝ ℝ Coordinates) = 0 := by
+      apply vanishing_effect
+      intro θ
+      exact hker (Submodule.subset_span (subset_convexHull ℝ _ ⟨θ, rfl⟩))
+    apply hf
+    ext w
+    exact LinearMap.congr_fun hz (0, w)
+  rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ body hzero), hs]
+  rfl
+
+private theorem cone_generating : Submodule.span ℝ (cone : Set Carrier) = ⊤ :=
+  top_unique (span_curve ▸ Submodule.span_mono (by
+    rintro _ ⟨θ, rfl⟩; exact states_mem_cone (curve_mem θ)))
+
+private theorem cone_salient : (cone : ConvexCone ℝ Carrier).Salient := by
+  intro w hw hn hneg
+  have h₁ := cone_strict hw hn
+  have h₂ := cone_strict hneg (neg_ne_zero.mpr hn)
+  rw [map_neg] at h₂
+  linarith
+
+private theorem cone_closed : IsClosed (cone : Set Carrier) := by
+  rw [← isSeqClosed_iff_isClosed]
+  intro v w hv hlim
+  choose t ht z hz he using hv
+  have htval (n) : t n = (v n).1 := by rw [he n]; simp [states_unit (hz n)]
+  obtain ⟨z₀, hz₀, φ, hφ, hzl⟩ := compact_states.tendsto_subseq hz
+  have htl : Filter.Tendsto (t ∘ φ) Filter.atTop (nhds w.1) := by
+    simpa only [Function.comp_def, htval] using
+      (continuous_fst.tendsto w).comp (hlim.comp hφ.tendsto_atTop)
+  have ht₀ : 0 ≤ w.1 := le_of_tendsto htl (Filter.Eventually.of_forall (fun n => ht (φ n)))
+  refine ⟨w.1, ht₀, z₀, hz₀, ?_⟩
+  apply tendsto_nhds_unique (hlim.comp hφ.tendsto_atTop)
+  simpa only [Function.comp_def, he] using htl.smul hzl
+
 def p : Carrier := curve 0
 def x : Carrier := (1 / 2 : ℝ) • (curve (Real.pi / 2) + curve (-Real.pi / 2))
 def y : Carrier := curve Real.pi
@@ -493,6 +641,9 @@ The coefficient description is surjective onto all such effects. -/
 theorem attained_full_effect_gap :
     base cone unit = lift '' body ∧
     pure cone unit = range curve ∧
+    IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
+    IsClosed (cone : Set Carrier) ∧ (cone : ConvexCone ℝ Carrier).Salient ∧
+    Submodule.span ℝ (cone : Set Carrier) = ⊤ ∧
     (∀ a b : ℝ, {w ∈ base cone unit | pairSupport a b w = 0} =
       segment ℝ (curve a) (curve b)) ∧
     (∀ a b : ℝ, pairBase cone unit (curve a) (curve b) =
@@ -509,7 +660,8 @@ theorem attained_full_effect_gap :
     comparison cone unit p mixed = 1 / 10 ∧
     (∃ f, confirms cone unit p f ∧ f x = 0) ∧
     (∃ f, confirms cone unit p f ∧ f y = 0) ∧ ¬ zeroGluing cone unit := by
-  refine ⟨original_base.trans states_image, original_pure, whole_zero_face,
+  refine ⟨original_base.trans states_image, original_pure, compact_body, body_fullspan,
+    cone_closed, cone_salient, cone_generating, whole_zero_face,
     entire_pair_base, original_B, all_linear_effects, ?_,
     fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_, universal_lower,
     attainer_confirms, attainer_value, ?_, endpoint_exclusions.1,
