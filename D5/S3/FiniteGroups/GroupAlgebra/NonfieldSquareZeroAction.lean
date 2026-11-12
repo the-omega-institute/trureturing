@@ -183,10 +183,6 @@ private theorem exponent_two (g : E) : g ^ 2 = 1 := by
   funext i
   exact ZModModule.char_nsmul_eq_zero 2 (g.toAdd i)
 
-private theorem elementary_two : IsPGroup 2 E := by
-  intro g
-  exact ⟨1, by simpa using exponent_two g⟩
-
 -- Reindex the norm on the actual subgroup, including its actual inclusion.
 private theorem cyclic_norm (H : Subgroup E) [Fintype H] (h : H)
     (hgen : ∀ x : H, x ∈ Subgroup.zpowers h) (hh : h ≠ 1) (v : V) :
@@ -230,7 +226,8 @@ private theorem cyclic_projective (H : Subgroup E) [IsCyclic H] :
   classical
   apply (PGroupProjectiveNormRing.projective_iff_projective_invariants_and_norm_surjective
     2 1 (by decide) (by simpa using (CharP.cast_eq_zero K 2))
-    (elementary_two.to_subgroup H) (rho.comp H.subtype)).mpr
+    ((FiniteFieldCyclicDimension.elementary_isPGroup 2 4).to_subgroup H)
+    (rho.comp H.subtype)).mpr
   refine ⟨inferInstance, ?_⟩
   intro w
   obtain ⟨h, hgen⟩ := IsCyclic.exists_generator (α := H)
