@@ -30,6 +30,8 @@ internal sealed class PartialPairingPolynomialDocument : IScribeDocumentDefiniti
             Entry("finite-pairing-polynomial", "finitePairingPolynomial", "Perfect pairing polynomial",
                 "For an edge weight c valued in the reals, finitePairingPolynomial(U,c) is the sum over all perfect pairings P of U "
                 + "of the product over edges e in P of c(e). The empty product equals one.", DescribeRole.Definition),
+            Entry("mem-pairing-support", "mem_pairingSupport", "Membership in a pairing support",
+                "A label i belongs to pairingSupport(P) exactly when some edge e in P contains i.", DescribeRole.Theorem),
             Entry("finite-pairing-polynomial-add", "finitePairingPolynomial_add", "Expansion over a partial pairing",
                 "For every finite label type alpha, finite label set U, and real edge weights c,d, "
                 + "finitePairingPolynomial(U,e mapped to c(e)+d(e)) equals the sum over partial pairings P of U of "
