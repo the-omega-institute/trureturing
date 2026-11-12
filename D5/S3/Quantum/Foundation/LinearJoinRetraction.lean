@@ -4,9 +4,11 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: A real linear join supplies both positive trace-subunital retractions, surjective restriction of the full proper-effect intervals, and inheritance of the original G2 midpoint law on each supported side. -/
+   digest: Real rank one generated PSD sections localize to their supported sides and admit matrix congruence retractions along full projective overlaps. -/
 
 import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
+import D5.S3.Quantum.Foundation.SectionROGFrame
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
 import Mathlib.LinearAlgebra.Prod
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 
@@ -91,49 +93,12 @@ private theorem left_kernel_compatibility (J : JoinData (A := A)) :
   change (u : A) + (w : A) = 0
   exact hsum
 
-private theorem right_kernel_compatibility (J : JoinData (A := A)) :
-    LinearMap.ker J.sumMap ≤
-      LinearMap.ker (((Submodule.inclusion J.hSW).comp J.piZ).coprod LinearMap.id) := by
-  intro x hx
-  rcases x with ⟨u, w⟩
-  have hsum : (u : A) + (w : A) = 0 := by
-    change J.sumMap (u, w) = 0 at hx
-    simpa [sumMap, LinearMap.coprod_apply] using hx
-  have huW : (u : A) ∈ J.rightSubspace := by
-    have hwW : (w : A) ∈ J.rightSubspace := w.property
-    rw [eq_neg_of_add_eq_zero_left hsum]
-    exact J.rightSubspace.neg_mem hwW
-  have huS : (u : A) ∈ J.overlapSubspace := by
-    rw [← J.hoverlap]
-    exact ⟨u.property, huW⟩
-  let s : J.overlapSubspace := ⟨(u : A), huS⟩
-  have hsU : J.overlapSubspace.inclusion J.hSU s = u := by
-    apply Subtype.ext
-    rfl
-  have hpi : J.piZ u = s := by
-    rw [← hsU]
-    exact J.piZ_fix s
-  apply Subtype.ext
-  change ((Submodule.inclusion J.hSW) (J.piZ u) : A) + (w : A) = 0
-  rw [hpi]
-  have hsU' : ((J.overlapSubspace.inclusion J.hSU s : J.leftSubspace) : A) =
-      (u : A) := congrArg (fun t : J.leftSubspace => (t : A)) hsU
-  change (u : A) + (w : A) = 0
-  exact hsum
-
 /-- The left retraction (R_Y), obtained by gluing the identity on (U) to
 (pi_S:W	o S). -/
 def leftRetraction (J : JoinData (A := A)) : A →ₗ[ℝ] J.leftSubspace :=
   J.sumMap.liftOfSurjective (sumMap_surjective J)
     ⟨LinearMap.id.coprod ((Submodule.inclusion J.hSU).comp J.piY),
       left_kernel_compatibility J⟩
-
-/-- The right retraction (R_Z), obtained by gluing (pi_S:U	o S) to the
-identity on (W). -/
-def rightRetraction (J : JoinData (A := A)) : A →ₗ[ℝ] J.rightSubspace :=
-  J.sumMap.liftOfSurjective (sumMap_surjective J)
-    ⟨((Submodule.inclusion J.hSW).comp J.piZ).coprod LinearMap.id,
-      right_kernel_compatibility J⟩
 
 theorem leftRetraction_on_left (J : JoinData (A := A)) (x : J.leftSubspace) :
     J.leftRetraction (J.leftSubspace.subtype x) = x := by
@@ -150,422 +115,259 @@ theorem leftRetraction_on_right (J : JoinData (A := A)) (x : J.rightSubspace) :
       (m := (0, x))
   simpa [leftRetraction, sumMap] using h
 
-theorem rightRetraction_on_left (J : JoinData (A := A)) (x : J.leftSubspace) :
-    J.rightRetraction (J.leftSubspace.subtype x) =
-      Submodule.inclusion J.hSW (J.piZ x) := by
-  have h := LinearMap.equivOfSurjective_apply
-    (sumMap_surjective J) (right_kernel_compatibility J)
-      (m := (x, 0))
-  simpa [rightRetraction, sumMap] using h
-
-theorem rightRetraction_on_right (J : JoinData (A := A)) (x : J.rightSubspace) :
-    J.rightRetraction (J.rightSubspace.subtype x) = x := by
-  have h := LinearMap.equivOfSurjective_apply
-    (sumMap_surjective J) (right_kernel_compatibility J)
-      (m := (0, x))
-  simpa [rightRetraction, sumMap] using h
-
 end JoinData
 
-/-! ### Full proper effects and the inherited G2 law -/
 
-def properEffect (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :=
-  {f : A →ₗ[ℝ] ℝ // proper C u f}
+open scoped Matrix RealInnerProductSpace
+open SectionROGFrame
 
-def sideProperEffect (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (U : Submodule ℝ A) :=
-  {f : U →ₗ[ℝ] ℝ // proper (sideCone C U) (sideUnit u U) f}
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
-def restrictEffect (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (U : Submodule ℝ A) :
-    properEffect C u → sideProperEffect C u U := fun f =>
-      ⟨f.1.comp U.subtype, by
-        intro x hx
-        have hcx : (x : A) ∈ C := hx
-        simpa [sideUnit] using f.2 (x : A) hcx⟩
+/-- A projective join written on its full inverse images of nonzero vectors.
+The matrix space L and the vector spaces U,W are different carriers. -/
+structure RealJoin (ι : Type*) [Fintype ι] [DecidableEq ι] where
+  L : Submodule ℝ (HermitianMat ι ℝ)
+  identity_mem : (1 : HermitianMat ι ℝ) ∈ L
+  rog : ROG L
+  Y Z : Set (EuclideanSpace ℝ ι)
+  U W : Submodule ℝ (EuclideanSpace ℝ ι)
+  nonzero_Y : (0 : EuclideanSpace ℝ ι) ∉ Y
+  nonzero_Z : (0 : EuclideanSpace ℝ ι) ∉ Z
+  span_Y : Submodule.span ℝ Y = U
+  span_Z : Submodule.span ℝ Z = W
+  join : U ⊔ W = ⊤
+  rays : ∀ v : EuclideanSpace ℝ ι, v ≠ 0 →
+    (rankOne v ∈ L ↔ v ∈ Y ∨ v ∈ Z)
+  overlap : Y ∩ Z = {v | v ≠ 0 ∧ v ∈ U ⊓ W}
 
-def G2 (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Prop :=
-  ∀ (p q r : pure C u),
-    (∃ f, confirms C u p f ∧ f q = 0) →
-    (∃ f, confirms C u p f ∧ f r = 0) →
-    ∃ f, confirms C u p f ∧ f ((1 / 2 : ℝ) • ((q : A) + r)) = 0
+namespace RealJoin
 
-/-! The final theorem below uses a compact side certificate.  Its fields are
-the exact ROG support facts: every original positive generator lies on one of
-the two sides, the side retraction sends each generator back into the original
-cone, and the inherited unit cannot increase. -/
+variable (J : RealJoin ι)
 
-structure RetractionCertificate (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) where
-  generators : Set A
-  generates : C = PointedCone.hull ℝ generators
-  maps_to_side : ∀ x ∈ generators,
-    J.leftSubspace.subtype (J.leftRetraction x) ∈ C
-  subunit : ∀ x ∈ generators,
-    sideUnit u J.leftSubspace (J.leftRetraction x) ≤ u x
-  pureLift : ∀ p : pure (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace),
-    ∃ q : pure C u,
-    (q : A) = (p : A)
+/-- Exchanging the two projective sides preserves the original matrix section. -/
+def swap : RealJoin ι where
+  L := J.L
+  identity_mem := J.identity_mem
+  rog := J.rog
+  Y := J.Z
+  Z := J.Y
+  U := J.W
+  W := J.U
+  nonzero_Y := J.nonzero_Z
+  nonzero_Z := J.nonzero_Y
+  span_Y := J.span_Z
+  span_Z := J.span_Y
+  join := sup_comm J.U J.W ▸ J.join
+  rays v hv := (J.rays v hv).trans or_comm
+  overlap := by simpa [Set.inter_comm, inf_comm] using J.overlap
 
-private theorem left_positive (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
-    ∀ x ∈ C, J.leftRetraction x ∈ sideCone C J.leftSubspace := by
-  intro x hx
-  rw [H.generates] at hx
-  rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
-  change J.leftSubspace.subtype (J.leftRetraction x) ∈ C
-  rw [← hsum]
-  change J.leftSubspace.subtype
-      (J.leftRetraction (∑ z ∈ c.support, c z • z)) ∈ C
-  rw [map_sum]
-  rw [map_sum]
-  simp only [map_smul]
-  change (∑ z ∈ c.support,
-      c z • J.leftSubspace.subtype (J.leftRetraction z)) ∈ C
-  exact C.sum_mem (fun z hz =>
-    C.smul_mem (hnonneg z) (H.maps_to_side z (hc hz)))
+/-- The original matrix span of all rank one generators on Y. -/
+def space : Submodule ℝ (HermitianMat ι ℝ) :=
+  Submodule.span ℝ (rankOne '' J.Y)
 
-private theorem left_subunit (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
-    ∀ x ∈ C, sideUnit u J.leftSubspace (J.leftRetraction x) ≤ u x := by
-  intro x hx
-  rw [H.generates] at hx
-  rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
-  rw [← hsum]
-  change u (J.leftSubspace.subtype
-      (J.leftRetraction (∑ z ∈ c.support, c z • z))) ≤
-    u (∑ z ∈ c.support, c z • z)
-  repeat rw [map_sum]
-  have hterm : ∀ z, z ∈ c.support →
-      sideUnit u J.leftSubspace (J.leftRetraction z) ≤ u z := fun z hz => H.subunit z (hc hz)
-  have hmul : ∀ z ∈ c.support, c z •
-      sideUnit u J.leftSubspace (J.leftRetraction z) ≤ c z • u z := by
-    intro z hz
-    exact smul_le_smul_of_nonneg_left (hterm z hz) (hnonneg z)
-  apply Finset.sum_le_sum
-  intro z hz
-  simpa [sideUnit, map_smul, smul_eq_mul] using hmul z hz
+/-- The full conic hull of those same generators. -/
+def cone : PointedCone ℝ (HermitianMat ι ℝ) :=
+  PointedCone.hull ℝ (rankOne '' J.Y)
 
-theorem extend_effect_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J)
-    (g : J.leftSubspace →ₗ[ℝ] ℝ)
-    (hg : proper (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) g) :
-    proper C u (g.comp J.leftRetraction) := by
-  intro x hx
-  have hR := left_positive C u J H x hx
-  have hU := hg (J.leftRetraction x) hR
-  exact ⟨hU.1, hU.2.trans (left_subunit C u J H x hx)⟩
+private theorem vector_mem (v : EuclideanSpace ℝ ι) (hv : v ∈ J.Y) : v ∈ J.U := by
+  rw [← J.span_Y]
+  exact Submodule.subset_span hv
 
-theorem restrict_extend_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (g : J.leftSubspace →ₗ[ℝ] ℝ) :
-    (g.comp J.leftRetraction).comp J.leftSubspace.subtype = g := by
-  ext x
-  simp only [LinearMap.coe_comp, Function.comp_apply]
-  rw [J.leftRetraction_on_left]
+private theorem vector_ne (v : EuclideanSpace ℝ ι) (hv : v ∈ J.Y) : v ≠ 0 := by
+  intro hz
+  exact J.nonzero_Y (hz ▸ hv)
 
-theorem restrict_surjective_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
-    Function.Surjective (restrictEffect C u J.leftSubspace) := by
-  intro g
-  refine ⟨⟨g.1.comp J.leftRetraction, extend_effect_left C u J H g.1 g.2⟩, ?_⟩
-  apply Subtype.ext
-  exact restrict_extend_left C u J g.1
 
-theorem comparison_correspondence_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J)
-    (p : pure (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace))
-    (x : J.leftSubspace) :
-    comparison (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) p x =
-      comparison C u (p : A) (x : A) := by
-  have hset :
-      ({r : ℝ | ∃ f : J.leftSubspace →ₗ[ℝ] ℝ,
-          confirms (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) p f ∧
-          f x = r} : Set ℝ) =
-        {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ,
-          confirms C u (p : A) f ∧ f (x : A) = r} := by
-    ext r
-    constructor
-    · rintro ⟨f, hf, hfr⟩
-      refine ⟨f.comp J.leftRetraction, ?_, ?_⟩
-      · refine ⟨extend_effect_left C u J H f hf.1, ?_⟩
-        change f (J.leftRetraction (p : A)) = 1
-        rw [show J.leftRetraction (p : A) = p from J.leftRetraction_on_left p]
-        exact hf.2
-      · change f (J.leftRetraction (x : A)) = r
-        rw [show J.leftRetraction (x : A) = x from J.leftRetraction_on_left x]
-        exact hfr
-    · rintro ⟨f, hf, hfr⟩
-      let fs : sideProperEffect C u J.leftSubspace :=
-        restrictEffect C u J.leftSubspace ⟨f, hf.1⟩
-      refine ⟨fs.1, ?_, ?_⟩
-      · refine ⟨fs.2, ?_⟩
-        simpa [fs, restrictEffect] using hf.2
-      · simpa [fs, restrictEffect] using hfr
-  change sInf ({r : ℝ | ∃ f : J.leftSubspace →ₗ[ℝ] ℝ,
-      confirms (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) p f ∧ f x = r} : Set ℝ) =
-    sInf {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ, confirms C u (p : A) f ∧ f (x : A) = r}
-  rw [hset]
+private theorem space_le : J.space ≤ J.L := by
+  apply Submodule.span_le.mpr
+  rintro _ ⟨v, hv, rfl⟩
+  exact (J.rays v (J.vector_ne v hv)).mpr (Or.inl hv)
 
-theorem inherit_G2_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J)
-    (hG : G2 C u) :
-    G2 (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) := by
-  intro p q r hpq hpr
-  obtain ⟨p0, hp0⟩ := H.pureLift p
-  obtain ⟨q0, hq0⟩ := H.pureLift q
-  obtain ⟨r0, hr0⟩ := H.pureLift r
-  rcases hpq with ⟨f, hf, hfq⟩
-  rcases hpr with ⟨g, hg, hgr⟩
-  have hf' : proper C u (f.comp J.leftRetraction) := extend_effect_left C u J H f hf.1
-  have hg' : proper C u (g.comp J.leftRetraction) := extend_effect_left C u J H g hg.1
-  have hp' : (f.comp J.leftRetraction) (p0 : A) = 1 := by
-    change f (J.leftRetraction (p0 : A)) = 1
-    rw [hp0]
-    rw [show J.leftRetraction (p : A) = p from J.leftRetraction_on_left p]
-    exact hf.2
-  have hp'' : (g.comp J.leftRetraction) (p0 : A) = 1 := by
-    change g (J.leftRetraction (p0 : A)) = 1
-    rw [hp0]
-    rw [show J.leftRetraction (p : A) = p from J.leftRetraction_on_left p]
-    exact hg.2
-  have hq' : (f.comp J.leftRetraction) (q0 : A) = 0 := by
-    change f (J.leftRetraction (q0 : A)) = 0
-    rw [hq0]
-    rw [show J.leftRetraction (q : A) = q from J.leftRetraction_on_left q]
-    exact hfq
-  have hr' : (g.comp J.leftRetraction) (r0 : A) = 0 := by
-    change g (J.leftRetraction (r0 : A)) = 0
-    rw [hr0]
-    rw [show J.leftRetraction (r : A) = r from J.leftRetraction_on_left r]
-    exact hgr
-  obtain ⟨k, hk, hkm⟩ := hG p0 q0 r0 ⟨f.comp J.leftRetraction, ⟨hf', hp'⟩, hq'⟩
-    ⟨g.comp J.leftRetraction, ⟨hg', hp''⟩, hr'⟩
-  let kside : sideProperEffect C u J.leftSubspace :=
-    restrictEffect C u J.leftSubspace ⟨k, hk.1⟩
-  refine ⟨kside.1, ?_, ?_⟩
-  · refine ⟨kside.2, ?_⟩
-    simpa [kside, restrictEffect, hp0, J.leftRetraction_on_left] using hk.2
-  · simpa [kside, restrictEffect, map_smul, map_add, hp0, hq0, hr0,
-      J.leftRetraction_on_left] using hkm
+/-- Orthogonal overlap projections supply the vector gluing data. -/
+def vectorJoin : JoinData (A := EuclideanSpace ℝ ι) where
+  leftSubspace := J.U
+  rightSubspace := J.W
+  overlapSubspace := J.U ⊓ J.W
+  hSU := inf_le_left
+  hSW := inf_le_right
+  hjoin := J.join
+  hoverlap := rfl
+  piY := (J.U ⊓ J.W).orthogonalProjectionOnto.toLinearMap.comp J.W.subtype
+  piZ := (J.U ⊓ J.W).orthogonalProjectionOnto.toLinearMap.comp J.U.subtype
+  piY_fix s := by simpa using (J.U ⊓ J.W).orthogonalProjectionOnto_mem_subspace_eq_self s
+  piZ_fix s := by simpa using (J.U ⊓ J.W).orthogonalProjectionOnto_mem_subspace_eq_self s
 
-/-! The right-hand statements are deliberately separate so that each side
-can carry its own ROG generator certificate.  This is the symmetric half of
-the source lemma, rather than an assumption that one certificate is silently
-reused for both sides. -/
+/-- T fixes U and is orthogonal projection to U intersect W on W. -/
+def vectorMap : EuclideanSpace ℝ ι →ₗ[ℝ] EuclideanSpace ℝ ι :=
+  J.U.subtype.comp J.vectorJoin.leftRetraction
 
-structure RightRetractionCertificate (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) where
-  generators : Set A
-  generates : C = PointedCone.hull ℝ generators
-  maps_to_side : ∀ x ∈ generators,
-    J.rightSubspace.subtype (J.rightRetraction x) ∈ C
-  subunit : ∀ x ∈ generators,
-    sideUnit u J.rightSubspace (J.rightRetraction x) ≤ u x
-  pureLift : ∀ p : pure (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace),
-    ∃ q : pure C u,
-    (q : A) = (p : A)
+private theorem vectorMap_on_Y (v : EuclideanSpace ℝ ι) (hv : v ∈ J.Y) :
+    J.vectorMap v = v := by
+  have h := J.vectorJoin.leftRetraction_on_left ⟨v, J.vector_mem v hv⟩
+  exact congrArg (fun x : J.U => (x : EuclideanSpace ℝ ι)) h
 
-private theorem right_positive (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
-    ∀ x ∈ C, J.rightRetraction x ∈ sideCone C J.rightSubspace := by
-  intro x hx
-  rw [H.generates] at hx
-  rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
-  change J.rightSubspace.subtype (J.rightRetraction x) ∈ C
-  rw [← hsum]
-  change J.rightSubspace.subtype
-      (J.rightRetraction (∑ z ∈ c.support, c z • z)) ∈ C
-  rw [map_sum]
-  rw [map_sum]
-  simp only [map_smul]
-  change (∑ z ∈ c.support,
-      c z • J.rightSubspace.subtype (J.rightRetraction z)) ∈ C
-  exact C.sum_mem (fun z hz =>
-    C.smul_mem (hnonneg z) (H.maps_to_side z (hc hz)))
+private theorem vectorMap_on_W (v : EuclideanSpace ℝ ι) (hv : v ∈ J.W) :
+    J.vectorMap v = (J.U ⊓ J.W).starProjection v := by
+  have h := J.vectorJoin.leftRetraction_on_right ⟨v, hv⟩
+  exact congrArg (fun x : J.U => (x : EuclideanSpace ℝ ι)) h
 
-private theorem right_subunit (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
-    ∀ x ∈ C, sideUnit u J.rightSubspace (J.rightRetraction x) ≤ u x := by
-  intro x hx
-  rw [H.generates] at hx
-  rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
-  rw [← hsum]
-  change u (J.rightSubspace.subtype
-      (J.rightRetraction (∑ z ∈ c.support, c z • z))) ≤
-    u (∑ z ∈ c.support, c z • z)
-  repeat rw [map_sum]
-  have hterm : ∀ z, z ∈ c.support →
-      sideUnit u J.rightSubspace (J.rightRetraction z) ≤ u z :=
-    fun z hz => H.subunit z (hc hz)
-  have hmul : ∀ z ∈ c.support, c z •
-      sideUnit u J.rightSubspace (J.rightRetraction z) ≤ c z • u z := by
-    intro z hz
-    exact smul_le_smul_of_nonneg_left (hterm z hz) (hnonneg z)
-  apply Finset.sum_le_sum
-  intro z hz
-  simpa [sideUnit, map_smul, smul_eq_mul] using hmul z hz
+/-- The actual real matrix T, in the original normalized Euclidean coordinates. -/
+def matrix : Matrix ι ι ℝ := Matrix.toEuclideanLin.symm J.vectorMap
 
-/-! The supported cones are presented in two equivalent ways: as the image of
-the original generating hull under the retraction, and as the exact ambient
-cone cut down to the side subspace.  This is the abstract ROG form of
-`L_Y ∩ PSD(U)` and `L_Z ∩ PSD(W)`. -/
+/-- The ambient congruence X maps to T X T-transpose. -/
+def congruence : HermitianMat ι ℝ →ₗ[ℝ] HermitianMat ι ℝ :=
+  HermitianMat.conjLinear ℝ J.matrix
 
-def supportedConeLeft (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
-    PointedCone ℝ J.leftSubspace :=
-  (PointedCone.hull ℝ H.generators).map J.leftRetraction
+private theorem congruence_rankOne (v : EuclideanSpace ℝ ι) :
+    J.congruence (rankOne v) = rankOne (J.vectorMap v) := by
+  apply HermitianMat.ext
+  change J.matrix * Matrix.vecMulVec (v : ι → ℝ) (star (v : ι → ℝ)) *
+    J.matrix.conjTranspose =
+      Matrix.vecMulVec (J.vectorMap v : ι → ℝ) (star (J.vectorMap v : ι → ℝ))
+  have hv : J.matrix *ᵥ (v : ι → ℝ) = (J.vectorMap v : ι → ℝ) := by
+    have h := congrArg (fun f : EuclideanSpace ℝ ι →ₗ[ℝ] EuclideanSpace ℝ ι => f v)
+      (Matrix.toEuclideanLin.apply_symm_apply J.vectorMap)
+    exact congrArg WithLp.ofLp h
+  rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul]
+  rw [← Matrix.star_mulVec, hv]
 
-def supportedConeRight (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
-    PointedCone ℝ J.rightSubspace :=
-  (PointedCone.hull ℝ H.generators).map J.rightRetraction
+private theorem image_generator (v : EuclideanSpace ℝ ι)
+    (hv : v ≠ 0) (hL : rankOne v ∈ J.L) :
+    J.congruence (rankOne v) ∈ J.cone ∧
+      (J.congruence (rankOne v)).trace ≤ (rankOne v).trace := by
+  rw [J.congruence_rankOne]
+  rcases (J.rays v hv).mp hL with hY | hZ
+  · rw [J.vectorMap_on_Y v hY]
+    exact ⟨PointedCone.subset_hull ⟨v, hY, rfl⟩, le_rfl⟩
+  · have hW : v ∈ J.W := J.swap.vector_mem v hZ
+    rw [J.vectorMap_on_W v hW]
+    refine ⟨?_, ?_⟩
+    · by_cases hz : (J.U ⊓ J.W).starProjection v = 0
+      · simp [hz, rankOne, cone]
+      · apply PointedCone.subset_hull
+        refine ⟨(J.U ⊓ J.W).starProjection v, ?_, rfl⟩
+        exact (show (J.U ⊓ J.W).starProjection v ∈ J.Y ∩ J.Z from by
+          rw [J.overlap]
+          exact ⟨hz, (J.U ⊓ J.W).starProjection_apply_mem v⟩).1
+    · rw [rankOne_trace_norm, rankOne_trace_norm]
+      exact pow_le_pow_left₀ (norm_nonneg _) ((J.U ⊓ J.W).norm_starProjection_apply_le v) 2
 
-theorem supportedConeLeft_eq_sideCone (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
-    supportedConeLeft C u J H = sideCone C J.leftSubspace := by
-  apply SetLike.ext
-  intro y
+/-- Every original positive matrix is mapped into the actual Y cone, and its
+trace decreases, using its same finite original ROG decomposition. -/
+theorem congruence_positive_subunit (X : HermitianMat ι ℝ)
+    (hX : X ∈ J.L) (hpos : 0 ≤ X) :
+    J.congruence X ∈ J.cone ∧ (J.congruence X).trace ≤ X.trace := by
+  obtain ⟨m, v, hv, hsum⟩ := J.rog X hX hpos
+  rw [hsum, map_sum]
+  refine ⟨J.cone.sum_mem (fun i _ => (J.image_generator (v i) (hv i).1 (hv i).2).1), ?_⟩
+  simp only [← HermitianMat.one_inner, inner_sum]
+  exact Finset.sum_le_sum (fun i _ => (J.image_generator (v i) (hv i).1 (hv i).2).2)
+
+
+/-- Symmetric matrices whose entire range is contained in the vector space U. -/
+def supportedSpace (U : Submodule ℝ (EuclideanSpace ℝ ι)) :
+    Submodule ℝ (HermitianMat ι ℝ) where
+  carrier := {X | ∀ v, X.lin v ∈ U}
+  zero_mem' := by simp
+  add_mem' := by
+    intro X Y hX hY v
+    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.add_mulVec] using U.add_mem (hX v) (hY v)
+  smul_mem' := by
+    intro r X hX v
+    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.smul_mulVec] using U.smul_mem r (hX v)
+
+private theorem rankOne_supported (v : EuclideanSpace ℝ ι)
+    {U : Submodule ℝ (EuclideanSpace ℝ ι)} (hv : v ∈ U) :
+    rankOne v ∈ supportedSpace U := by
+  intro x
+  have h := U.smul_mem ((star (v : ι → ℝ)) ⬝ᵥ (x : ι → ℝ)) hv
+  simpa [HermitianMat.lin, rankOne, Matrix.toLpLin_apply,
+    Matrix.vecMulVec_mulVec, op_smul_eq_smul] using h
+
+private theorem space_supported : J.space ≤ supportedSpace J.U := by
+  apply Submodule.span_le.mpr
+  rintro _ ⟨v, hv, rfl⟩
+  exact rankOne_supported v (J.vector_mem v hv)
+
+private theorem rankOne_support_self (v : EuclideanSpace ℝ ι) (hv : v ≠ 0) :
+    v ∈ (rankOne v).support := by
+  have hnorm : ‖v‖ ^ 2 ≠ 0 := pow_ne_zero _ (norm_ne_zero_iff.mpr hv)
+  refine ⟨(‖v‖ ^ 2)⁻¹ • v, ?_⟩
+  change (rankOne v).lin ((‖v‖ ^ 2)⁻¹ • v) = v
+  rw [map_smul]
+  have heval : (rankOne v).lin v = (‖v‖ ^ 2) • v := by
+    apply WithLp.ofLp_injective
+    simp only [HermitianMat.lin, rankOne, Matrix.toLpLin_apply,
+      ContinuousLinearMap.coe_mk, LinearMap.coe_mk, AddHom.coe_mk,
+      WithLp.ofLp_toLp, Matrix.vecMulVec_mulVec, op_smul_eq_smul]
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct,
+      real_inner_self_eq_norm_sq]
+    rfl
+  rw [heval, smul_smul, inv_mul_cancel₀ hnorm, one_smul]
+
+/-- Every nonzero vector in a positive rank one summand belongs to the range
+of its PSD sum. The order relation is obtained from that very decomposition. -/
+private theorem summand_supported {m : ℕ} (v : Fin m → EuclideanSpace ℝ ι)
+    (i : Fin m) (hi : v i ≠ 0) :
+    v i ∈ (∑ j, rankOne (v j)).support := by
+  have hle : rankOne (v i) ≤ ∑ j, rankOne (v j) :=
+    Finset.single_le_sum (fun j _ => rankOne_nonneg (v j)) (Finset.mem_univ i)
+  have hker := HermitianMat.ker_antitone (rankOne_nonneg (v i)) hle
+  have hs : (rankOne (v i)).support ≤ (∑ j, rankOne (v j)).support := by
+    rw [← HermitianMat.ker_orthogonal_eq_support, ← HermitianMat.ker_orthogonal_eq_support]
+    exact Submodule.orthogonal_le hker
+  exact hs (rankOne_support_self (v i) hi)
+
+/-- The actual supported PSD section, and not merely an image cone, is exactly
+Y's conic hull. Every term of a supported original ROG decomposition lies on Y. -/
+theorem supported_cone (X : HermitianMat ι ℝ) :
+    X ∈ J.cone ↔ X ∈ J.L ∧ 0 ≤ X ∧ X.support ≤ J.U := by
   constructor
-  · intro hy
-    rcases PointedCone.mem_map.mp hy with ⟨x, hx, hxy⟩
-    have hC : J.leftRetraction x ∈ sideCone C J.leftSubspace :=
-      left_positive C u J H x (by rw [H.generates]; exact hx)
-    rw [← hxy]
-    exact hC
-  · intro hy
-    have hC : (y : A) ∈ C := hy
-    rw [H.generates] at hC
-    have hmap : J.leftRetraction (J.leftSubspace.subtype y) = y :=
-      J.leftRetraction_on_left y
-    exact PointedCone.mem_map.mpr ⟨J.leftSubspace.subtype y, hC, hmap⟩
+  · intro hX
+    refine ⟨J.space_le (PointedCone.hull_le_span ℝ _ hX), ?_, ?_⟩
+    · have hcone : J.cone ≤ PointedCone.positive ℝ (HermitianMat ι ℝ) := by
+        apply Submodule.span_le.mpr
+        rintro _ ⟨v, hv, rfl⟩
+        exact rankOne_nonneg v
+      exact hcone hX
+    · exact J.space_supported (PointedCone.hull_le_span ℝ _ hX)
+  · rintro ⟨hL, hpos, hsupp⟩
+    obtain ⟨m, v, hv, hsum⟩ := J.rog X hL hpos
+    have hY (i : Fin m) : v i ∈ J.Y := by
+      have hiU : v i ∈ J.U := hsupp (hsum ▸ summand_supported v i (hv i).1)
+      rcases (J.rays (v i) (hv i).1).mp (hv i).2 with hiY | hiZ
+      · exact hiY
+      · have hiS : v i ∈ J.U ⊓ J.W := ⟨hiU, J.swap.vector_mem _ hiZ⟩
+        exact (show v i ∈ J.Y ∩ J.Z from by rw [J.overlap]; exact ⟨(hv i).1, hiS⟩).1
+    rw [hsum]
+    exact J.cone.sum_mem (fun i _ => PointedCone.subset_hull ⟨v i, hY i, rfl⟩)
 
-theorem supportedConeRight_eq_sideCone (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
-    supportedConeRight C u J H = sideCone C J.rightSubspace := by
-  apply SetLike.ext
-  intro y
+/-- The full section on L_Y equals the original supported cone. -/
+theorem section_cone (X : HermitianMat ι ℝ) :
+    X ∈ J.cone ↔ X ∈ J.space ∧ 0 ≤ X := by
   constructor
-  · intro hy
-    rcases PointedCone.mem_map.mp hy with ⟨x, hx, hxy⟩
-    have hC : J.rightRetraction x ∈ sideCone C J.rightSubspace :=
-      right_positive C u J H x (by rw [H.generates]; exact hx)
-    rw [← hxy]
-    exact hC
-  · intro hy
-    have hC : (y : A) ∈ C := hy
-    rw [H.generates] at hC
-    have hmap : J.rightRetraction (J.rightSubspace.subtype y) = y :=
-      J.rightRetraction_on_right y
-    exact PointedCone.mem_map.mpr ⟨J.rightSubspace.subtype y, hC, hmap⟩
+  · intro hX
+    exact ⟨PointedCone.hull_le_span ℝ _ hX, (J.supported_cone X).mp hX |>.2.1⟩
+  · rintro ⟨hX, hpos⟩
+    exact (J.supported_cone X).mpr ⟨J.space_le hX, hpos, J.space_supported hX⟩
 
-theorem extend_effect_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)
-    (g : J.rightSubspace →ₗ[ℝ] ℝ)
-    (hg : proper (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) g) :
-    proper C u (g.comp J.rightRetraction) := by
-  intro x hx
-  have hR := right_positive C u J H x hx
-  have hU := hg (J.rightRetraction x) hR
-  exact ⟨hU.1, hU.2.trans (right_subunit C u J H x hx)⟩
+/-- The actual side remains a real rank one generated PSD section. -/
+theorem side_rog : ROG J.space := by
+  intro X hX hpos
+  obtain ⟨m, v, hv, hsum⟩ := J.rog X (J.space_le hX) hpos
+  refine ⟨m, v, ?_, hsum⟩
+  intro i
+  refine ⟨(hv i).1, ?_⟩
+  have hsupp : (rankOne (v i)).support ≤ J.U := by
+    have hle : rankOne (v i) ≤ X := by
+      rw [hsum]
+      exact Finset.single_le_sum (fun j _ => rankOne_nonneg (v j)) (Finset.mem_univ i)
+    have hker := HermitianMat.ker_antitone (rankOne_nonneg (v i)) hle
+    apply le_trans _ (J.space_supported hX)
+    rw [← HermitianMat.ker_orthogonal_eq_support, ← HermitianMat.ker_orthogonal_eq_support]
+    exact Submodule.orthogonal_le hker
+  exact PointedCone.hull_le_span ℝ _
+    ((J.supported_cone _).mpr ⟨(hv i).2, rankOne_nonneg _, hsupp⟩)
 
-theorem restrict_extend_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (g : J.rightSubspace →ₗ[ℝ] ℝ) :
-    (g.comp J.rightRetraction).comp J.rightSubspace.subtype = g := by
-  ext x
-  simp only [LinearMap.coe_comp, Function.comp_apply]
-  rw [J.rightRetraction_on_right]
-
-theorem restrict_surjective_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
-    Function.Surjective (restrictEffect C u J.rightSubspace) := by
-  intro g
-  refine ⟨⟨g.1.comp J.rightRetraction, extend_effect_right C u J H g.1 g.2⟩, ?_⟩
-  apply Subtype.ext
-  exact restrict_extend_right C u J g.1
-
-theorem comparison_correspondence_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)
-    (p : pure (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace))
-    (x : J.rightSubspace) :
-    comparison (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) p x =
-      comparison C u (p : A) (x : A) := by
-  have hset :
-      ({r : ℝ | ∃ f : J.rightSubspace →ₗ[ℝ] ℝ,
-          confirms (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) p f ∧
-          f x = r} : Set ℝ) =
-        {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ,
-          confirms C u (p : A) f ∧ f (x : A) = r} := by
-    ext r
-    constructor
-    · rintro ⟨f, hf, hfr⟩
-      refine ⟨f.comp J.rightRetraction, ?_, ?_⟩
-      · refine ⟨extend_effect_right C u J H f hf.1, ?_⟩
-        change f (J.rightRetraction (p : A)) = 1
-        rw [show J.rightRetraction (p : A) = p from J.rightRetraction_on_right p]
-        exact hf.2
-      · change f (J.rightRetraction (x : A)) = r
-        rw [show J.rightRetraction (x : A) = x from J.rightRetraction_on_right x]
-        exact hfr
-    · rintro ⟨f, hf, hfr⟩
-      let fs : sideProperEffect C u J.rightSubspace :=
-        restrictEffect C u J.rightSubspace ⟨f, hf.1⟩
-      refine ⟨fs.1, ?_, ?_⟩
-      · refine ⟨fs.2, ?_⟩
-        simpa [fs, restrictEffect] using hf.2
-      · simpa [fs, restrictEffect] using hfr
-  change sInf ({r : ℝ | ∃ f : J.rightSubspace →ₗ[ℝ] ℝ,
-      confirms (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) p f ∧ f x = r} : Set ℝ) =
-    sInf {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ, confirms C u (p : A) f ∧ f (x : A) = r}
-  rw [hset]
-
-theorem inherit_G2_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)
-    (hG : G2 C u) :
-    G2 (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) := by
-  intro p q r hpq hpr
-  obtain ⟨p0, hp0⟩ := H.pureLift p
-  obtain ⟨q0, hq0⟩ := H.pureLift q
-  obtain ⟨r0, hr0⟩ := H.pureLift r
-  rcases hpq with ⟨f, hf, hfq⟩
-  rcases hpr with ⟨g, hg, hgr⟩
-  have hf' : proper C u (f.comp J.rightRetraction) :=
-    extend_effect_right C u J H f hf.1
-  have hg' : proper C u (g.comp J.rightRetraction) :=
-    extend_effect_right C u J H g hg.1
-  have hp' : (f.comp J.rightRetraction) (p0 : A) = 1 := by
-    change f (J.rightRetraction (p0 : A)) = 1
-    rw [hp0]
-    rw [show J.rightRetraction (p : A) = p from J.rightRetraction_on_right p]
-    exact hf.2
-  have hp'' : (g.comp J.rightRetraction) (p0 : A) = 1 := by
-    change g (J.rightRetraction (p0 : A)) = 1
-    rw [hp0]
-    rw [show J.rightRetraction (p : A) = p from J.rightRetraction_on_right p]
-    exact hg.2
-  have hq' : (f.comp J.rightRetraction) (q0 : A) = 0 := by
-    change f (J.rightRetraction (q0 : A)) = 0
-    rw [hq0]
-    rw [show J.rightRetraction (q : A) = q from J.rightRetraction_on_right q]
-    exact hfq
-  have hr' : (g.comp J.rightRetraction) (r0 : A) = 0 := by
-    change g (J.rightRetraction (r0 : A)) = 0
-    rw [hr0]
-    rw [show J.rightRetraction (r : A) = r from J.rightRetraction_on_right r]
-    exact hgr
-  obtain ⟨k, hk, hkm⟩ := hG p0 q0 r0
-    ⟨f.comp J.rightRetraction, ⟨hf', hp'⟩, hq'⟩
-    ⟨g.comp J.rightRetraction, ⟨hg', hp''⟩, hr'⟩
-  let kside : sideProperEffect C u J.rightSubspace :=
-    restrictEffect C u J.rightSubspace ⟨k, hk.1⟩
-  refine ⟨kside.1, ?_, ?_⟩
-  · refine ⟨kside.2, ?_⟩
-    simpa [kside, restrictEffect, hp0, J.rightRetraction_on_right] using hk.2
-  · simpa [kside, restrictEffect, map_smul, map_add, hp0, hq0, hr0,
-      J.rightRetraction_on_right] using hkm
-
+end RealJoin
 end D5.S3.Quantum.Foundation.LinearJoinRetraction
-
-#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.JoinData.leftRetraction
-#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.restrict_surjective_left
-#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.inherit_G2_left
-#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.restrict_surjective_right
-#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.inherit_G2_right
