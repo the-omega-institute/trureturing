@@ -250,7 +250,7 @@ private theorem pairing_weight_abs_le {ι : Type*} [Fintype ι]
             ring
     _ = _ := by simp
 
-private theorem subset_pairing_defect_small
+theorem subset_pairing_defect_small
     {ι A : Type*} [Fintype ι] [CommRing A] [Algebra ℝ A]
     (ℓ : A →ₗ[ℝ] ℝ) (Y : ι → A) (f : α → ι → ℝ)
     (hunit : ℓ 1 = 1) (hcenter : ∀ d, ℓ (Y d) = 0)
@@ -312,7 +312,7 @@ private theorem subset_pairing_defect_small
       simp [h0, h2, hR]
 
 omit [Fintype α] in
-private theorem pairing_remainder_card (U : Finset α) (P : Finset (Finset α))
+theorem pairing_remainder_card (U : Finset α) (P : Finset (Finset α))
     (hP : IsPartialPairing U P) :
     (U \ pairingSupport P).card = U.card - 2 * P.card ∧
       (P.Nonempty → (U \ pairingSupport P).card < U.card) ∧

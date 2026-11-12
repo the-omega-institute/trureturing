@@ -23,6 +23,14 @@ internal sealed class PairingDefectInversionDocument : IScribeDocumentDefinition
                 + "For a partial pairing P, let U(P) be U minus pairingSupport(P), and let T(P) be the product over its edges e "
                 + "of subsetWeightSum(f,e). The result is the repo-derived inequality (501.2) of Theorem 501.3 in "
                 + "FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II. It concerns the finite quadratic model and assumes no positivity or independence.")),
+            Entry("subset-pairing-defect-small", "subset_pairing_defect_small", "Defects vanish in orders at most two",
+                "For a unital real linear functional ell and a centered family Y, every weighted subset U of at most two labels "
+                + "has subsetPairingDefect(ell,Y,f,U)=0. The empty subset has distinct moment and pairing polynomial both equal to one; "
+                + "a singleton has centered moment and no perfect pairing; a two-element subset has its single edge as the unique perfect pairing.", DescribeRole.Theorem),
+            Entry("pairing-remainder-card", "pairing_remainder_card", "The number of uncovered labels",
+                "For every partial pairing P of a finite label set U, the uncovered set U minus pairingSupport(P) has "
+                + "card(U)-2*card(P) elements, 2*card(P)<=card(U), and every nonempty P leaves strictly fewer labels than U. "
+                + "The proof counts the disjoint union of the two-element edges.", DescribeRole.Theorem),
             Entry("inversion-constant", "inversionConstant", "Triangular inversion constant",
                 "For every real C, inversionConstant(C,m), denoted A_m, is defined by strong recursion on the natural order m. "
                 + "It is zero for m<=2. For m>2 it equals 1 plus the sum, over all nonempty partial pairings P of Fin m, "

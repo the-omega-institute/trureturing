@@ -10,10 +10,9 @@ import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Tactic
 
-/-! SOURCE ONLY: UNCOMPILED_UNACCEPTED / RegUNVALIDATED.
-Uses only fixed j before limits. The shrinking-roster exposure patch is
-UNAPPLIED. All references are to the actual gain and actual clamped cutoff.
-No conclusion here is native or official acceptance. -/
+/-! Each layer index is fixed before taking limits. Every root and gain is the
+actual library quantity. These estimates do not supply original record clocks,
+paid-growth certificates, or the full Robin inequality. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -26,11 +25,11 @@ open D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
 open D5.S3.Arith.Robin.PriceRecord.FixedLayerRootAsymptotic
 open D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster
 
-private def d (j : ℕ) (X : ℝ) : ℝ :=
+def d (j : ℕ) (X : ℝ) : ℝ :=
   (j : ℝ) * log (cutoff j (referencePrice X)) - log X
-private def η (j : ℕ) (X : ℝ) : ℝ :=
+def η (j : ℕ) (X : ℝ) : ℝ :=
   log (gain j (cutoff j (referencePrice X)) * cutoff j (referencePrice X) ^ j)
-private def F (L a : ℝ) : ℝ := a + log (1 + a / L)
+def F (L a : ℝ) : ℝ := a + log (1 + a / L)
 
 /-- Uniform elementary gain normalization. There is no fixed-index constant. -/
 theorem normalized_gain_bounds {j : ℕ} (hj : 1 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
@@ -85,7 +84,7 @@ theorem normalized_gain_bounds {j : ℕ} (hj : 1 ≤ j) {u : ℝ} (hu : 2 ≤ u)
   refine ⟨hlo, hhi, haux.trans (hbasic.trans hloglo), ?_⟩
   simpa only [log_one] using log_le_log (mul_pos hg hp) hhi
 
-private theorem actual_root_equation {j : ℕ} (hj : 2 ≤ j) :
+theorem actual_root_equation {j : ℕ} (hj : 2 ≤ j) :
     ∀ᶠ X : ℝ in atTop, 0 < d j X ∧ 2 < cutoff j (referencePrice X) ∧
       F (log X) (d j X) = log (j : ℝ) + η j X := by
   have hjr : (1 : ℝ) < j := by exact_mod_cast (show 1 < j by omega)
@@ -118,12 +117,12 @@ private theorem actual_root_equation {j : ℕ} (hj : 2 ≤ j) :
   dsimp [d, u]
   ring
 
-private theorem scaled_root_error {j : ℕ} (hj : 2 ≤ j) :
-    Tendsto (fun X : ℝ => log X ^ 2 * η j X) atTop (𝓝 0) := by
+theorem scaled_root_error {j : ℕ} (hj : 2 ≤ j) (n : ℕ) :
+    Tendsto (fun X : ℝ => log X ^ n * η j X) atTop (𝓝 0) := by
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
-  have hsmall : Tendsto (fun X : ℝ => log X ^ 2 / cutoff j (referencePrice X))
+  have hsmall : Tendsto (fun X : ℝ => log X ^ n / cutoff j (referencePrice X))
       atTop (𝓝 0) := by
-    have hlog := (isLittleO_log_rpow_rpow_atTop (2 : ℕ)
+    have hlog := (isLittleO_log_rpow_rpow_atTop n
       (inv_pos.mpr hj0)).tendsto_div_nhds_zero
     simp only [rpow_natCast] at hlog
     have hh := hlog.div (root_ratio hj) (rpow_pos_of_pos hj0 _).ne'
@@ -134,10 +133,11 @@ private theorem scaled_root_error {j : ℕ} (hj : 2 ≤ j) :
     dsimp only [Function.comp_def, Pi.div_apply]
     field_simp [hX.ne', hu.ne', (rpow_pos_of_pos hX ((j : ℝ)⁻¹)).ne']
   have hbound : ∀ᶠ X : ℝ in atTop,
-      |log X ^ 2 * η j X| ≤ 2 * (log X ^ 2 / cutoff j (referencePrice X)) := by
-    filter_upwards [(root_atTop hj).eventually_ge_atTop 2] with X hu
+      |log X ^ n * η j X| ≤ 2 * (log X ^ n / cutoff j (referencePrice X)) := by
+    filter_upwards [(root_atTop hj).eventually_ge_atTop 2,
+      eventually_ge_atTop (1 : ℝ)] with X hu hX
     obtain ⟨_, _, hlo, hhi⟩ := normalized_gain_bounds (by omega : 1 ≤ j) hu
-    rw [abs_mul, abs_of_nonneg (sq_nonneg _)]
+    rw [abs_mul, abs_of_nonneg (pow_nonneg (log_nonneg hX) n)]
     have he : |η j X| ≤ 2 / cutoff j (referencePrice X) := by
       dsimp [η]
       rw [abs_of_nonpos hhi]
@@ -145,12 +145,12 @@ private theorem scaled_root_error {j : ℕ} (hj : 2 ≤ j) :
           log (gain j (cutoff j (referencePrice X)) * cutoff j (referencePrice X) ^ j) := by
         simpa only [neg_div] using hlo
       linarith only [hlo']
-    have hh := mul_le_mul_of_nonneg_left he (sq_nonneg (log X))
+    have hh := mul_le_mul_of_nonneg_left he (pow_nonneg (log_nonneg hX) n)
     convert hh using 1 <;> ring
   apply squeeze_zero_norm' hbound
   simpa only [mul_zero] using hsmall.const_mul 2
 
-private theorem F_secant {L a b : ℝ} (hL : 0 < L) (ha : 0 ≤ a) (hb : 0 ≤ b) :
+theorem F_secant {L a b : ℝ} (hL : 0 < L) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     ∃ q : ℝ, 1 ≤ q ∧ q ≤ 1 + 1 / L ∧ F L b - F L a = (b - a) * q := by
   have hder (x : ℝ) (hx : 0 ≤ x) :
       HasDerivAt (F L) (1 + 1 / (L + x)) x := by
@@ -275,8 +275,8 @@ theorem actual_two_four_curvature_tendsto :
     simpa only [add_zero] using tendsto_const_nhds.add
       (tendsto_const_nhds.div_atTop tendsto_log_atTop :
         Tendsto (fun X : ℝ => 1 / log X) atTop (𝓝 0))
-  have herr := (scaled_root_error (by norm_num : 2 ≤ 4)).sub
-    ((scaled_root_error (by norm_num : 2 ≤ 2)).const_mul 2)
+  have herr := (scaled_root_error (by norm_num : 2 ≤ 4) 2).sub
+    ((scaled_root_error (by norm_num : 2 ≤ 2) 2).const_mul 2)
   simp only [mul_zero, sub_zero] at herr
   have hnum := hlograte.add herr
   simp only [add_zero] at hnum

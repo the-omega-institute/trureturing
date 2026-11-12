@@ -3457,3 +3457,84 @@ $$
 **范围。** 外部输入为：Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 定理 1（(15)）与定理 2、(16)；Kuperberg [arXiv:2301.06095] 定理 1.3。Montgomery–Soundararajan 定理 3 与推论 1 在逐位移相关误差假设下给出单一区间的各阶矩与相同共同尺度上的标量 Gaussian 极限；推论 502.7 的标量、单区间情形即该推论，Chan [Int. J. Number Theory 2 (2006)] 的均方弱化见 §499。本节的本仓推导（repo-derived）是：对全部有限阶、区间端点与整个离散有界变差权球一致的奇异级数配对 (502.3)，其中低阶缺陷由定理 500.2 与 §501 的反演一并处理；有界变差权下全部阶数 $\le k$ 的条件 Wick 定理 (502.9)–(502.10)，把定理 498.1 从 $k\le4$、$\beta<1/4$ 推广到一般 $k$、$\beta<1/k$；有界权下的三阶反例 (502.7)；以及有界变差权向量的 Gaussian 极限 (502.11)。$\beta<1/k$ 来自把相关误差对全部位移聚合后与 Gaussian 尺度比较：归一化误差为 $N^{(k\beta-1)/2+\varepsilon}$；奇异级数配对本身没有这一限制。本节不覆盖 $\theta=4/5$，不推出 RH，也不主张文献优先权。
 
 ## 追加锚（本行以下为增补区）
+
+## 503. 仅顶阶条件不足的全阶反例族与五阶门槛
+
+命题 500.4、500.5 是两个孤立阶数。本节对每个 $k\ge5$ 给出正概率反例，并证明 $k=3,4$ 时仅顶阶条件已经充分，因此五阶是首次失败的阶数。机制与 §500 相同：同奇偶的低阶缺陷经部分配对 (500.3) 传到顶阶。
+
+**定义 503.1（有限偏置混合模型及其标量缺陷）。** 设 $\mu=\sum_{z\in Z}p_z\delta_z$ 为实直线上的有限概率分布，$p_z>0$，$m_j=\sum_zp_zz^j$，且 $m_1=0$。记 $Q_0=1$、$Q_r=(2r-1)!!$，令 $\gamma_j(v)=Q_{j/2}v^{j/2}$（$j$ 偶）或 $0$（$j$ 奇），并定义 $d_j=m_j-\gamma_j(m_2)$，于是 $d_0=d_1=d_2=0$。取整数 $N\ge\max_zz^2$ 与实数 $1\le L\le N$。给定 $Z=z$ 后令 $\varepsilon_1,\ldots,\varepsilon_N\in\{\pm1\}$ 条件独立，$\mathbb P(\varepsilon_d=1\mid Z=z)=\frac{1+z/\sqrt N}2$；令 $H=N$、$s=\sqrt{NL}$、$Y_d=\sqrt L\,\varepsilon_d$、$\ell=\mathbb E$。这是定义 500.1 的概率模型，$\ell(Y_d)=0$，$Y_d^2=L$，即 $a=0$、$b=L$。
+
+**引理 503.2（大小界与一致缺陷首项）。** 在定义 503.1 中，两两不同指标满足 $\ell(Y_{d_1}\cdots Y_{d_r})=m_r(L/N)^{r/2}$，故对 $\|g_i\|_\infty\le1$ 有 $|R_r(g_1,\ldots,g_r)|\le|m_r|s^r$。对 $U\subseteq K$、$j=|U|$、$\|f_i\|_\infty\le1$，令 $\alpha_i=\frac1N\sum_df_i(d)$，则
+
+$$
+\Bigl|\frac{\Delta_U}{s^j}-d_j\prod_{i\in U}\alpha_i\Bigr|\le\frac{\beta_j}N,\qquad
+\beta_j=\begin{cases}|m_j|\binom j2,&j\text{ 奇},\\[1mm]|m_{2r}|\binom{2r}2+rQ_rm_2^r,&j=2r,\end{cases}
+\tag{503.1}
+$$
+
+其中 $\beta_0=\beta_1=\beta_2=0$。
+
+**证明。** 第一式由条件独立性得到；互异元组至多 $N^r$ 个，得大小界。非单射元组包含在 $\binom j2$ 个“两坐标相等”的集合之并中，故 $\bigl|\sum_{\text{互异}}\prod f_i(d_i)-\prod_iN\alpha_i\bigr|\le\binom j2N^{j-1}$，从而 $|R_U/s^j-m_j\prod\alpha_i|\le|m_j|\binom j2/N$。奇数 $j$ 时配对多项式为零。$j=2r$ 时 $R_{\{i,i'\}}/s^2=m_2(A_iA_{i'}-T_{ii'})/N^2$（$A_i=N\alpha_i$），它与 $m_2\alpha_i\alpha_{i'}$ 之差至多 $|m_2|/N$；对每个完美配对作乘积望远镜展开，误差至多 $rm_2^r/N$，完美配对共 $Q_r$ 个且首项均为 $m_2^r\prod\alpha_i$。两式相减即得。证毕。
+
+**引理 503.3（部分配对计数与传播极限）。** 含 $p$ 对的 $k$ 元部分配对个数为 $n_{k,p}=\binom k{2p}Q_p$：映射 $P\mapsto(\bigcup P,P)$ 是到“$2p$ 元子集及其完美配对”之对的双射。在定义 503.1 中取 $C=\max\{1,|m_2|,\ldots,|m_{k-1}|\}$。对单位权及任意 $L_N/N\to0$，
+
+$$
+\lim_{N\to\infty}\frac{V_k-\mathcal W_K^V}{s^k}=\mathcal C_k(\mu):=\sum_{p=0}^{\lfloor k/2\rfloor}n_{k,p}\,d_{k-2p}=\mathbb E(Z+G)^k-\gamma_k(1+m_2),
+\tag{503.2}
+$$
+
+其中 $G\sim N(0,1)$ 与 $Z$ 独立。
+
+**证明。** 由引理 503.2，模型满足 (500.2)，常数 $C$ 不依赖权与 $N,L$。由 (500.3)，$bT_{\{i,i'\}}/s^2=T_{ii'}/N$，单位权下等于 $1$；逐项代入 (503.1)，误差为 $O(\mathfrak C_{k,C}(\sqrt{L/N}+N^{-1})+N^{-1})$，按 $|P|=p$ 归类得第一式。第二式：$\mathbb E(Z+G)^k=\sum_j\binom kjm_jQ_{(k-j)/2}$（$k-j$ 偶），而 $\sum_{j\text{ 偶}}\binom kjQ_{(k-j)/2}Q_{j/2}m_2^{j/2}=\mathbb E(G+\sqrt{m_2}G')^k=\gamma_k(1+m_2)$，两式相减并用 $\binom k{2p}Q_p=\binom k{k-2p}Q_p$ 即得。证毕。
+
+**定理 503.4（全部 $k\ge5$ 的三点律反例族）。** 对每个 $k\ge5$，下列三点分布 $\mu_k$ 使定义 503.1 的模型（对充分大的 $N$ 与全部 $1\le L\le N$）满足：对全部 $2\le r<k$ 与全部单位有界权，$|R_r|\le C_ks^r$；奇数 $k$ 时 $R_k\equiv0$；偶数 $k=2m$ 时对全部单位有界权一致地有 $|\Delta_K|\le2m^2Q_m\,s^k/H$；而对单位权及 $L_N/N\to0$，$(V_k-\mathcal W_K^V)/s^k\to c_k\ne0$。
+
+(A) 奇数 $k$：令 $D_k=3^{k+1}-2^{k+1}-5$，
+
+$$
+\mathbb P(Z=-2)=\frac{3^k-3}{D_k},\qquad\mathbb P(Z=1)=\frac{2\cdot3^k-3\cdot2^k}{D_k},\qquad\mathbb P(Z=3)=\frac{2^k-2}{D_k}.
+\tag{503.3}
+$$
+
+(B) 偶数 $k=2m$：令 $t_m=Q_m^{1/(m-1)}$，$\mathbb P(Z=\pm\sqrt{t_m})=\frac1{2t_m}$，$\mathbb P(Z=0)=1-\frac1{t_m}$。
+
+**证明。** (A) 三个分子为正，和为 $D_k$。直接代入得 $m_1=0$ 与 $m_k=0$，故 $R_k\equiv0$；$|Z|\le3$，可取 $C_k=3^{k-1}$。对奇数 $j$，
+
+$$
+m_j=\frac{(2^k-2)(3^j-3)-(3^k-3)(2^j-2)}{D_k}=\frac{(3^k-3)(3^j-3)}{D_k}(q_k-q_j),\qquad q_j=\frac{2^j-2}{3^j-3}.
+$$
+
+由 $(2^j-2)(3^{j+1}-3)-(2^{j+1}-2)(3^j-3)=3^j(2^j-4)+3\cdot2^j>0$，$q_j$ 对 $j\ge2$ 严格递减，故奇数 $3\le j<k$ 时 $m_j<0$。奇数阶 $d_j=m_j$，(503.2) 给出
+
+$$
+c_k=\sum_{\substack{3\le j\le k-2\\j\text{ 奇}}}\binom kjQ_{(k-j)/2}\,m_j<0,
+$$
+
+各项同号且至少含 $j=3$ 项。$k=5$ 时 (503.3) 为 $(8/22,13/22,1/22)$，$c_5=10m_3=-120/11$，即命题 500.4。
+
+(B) $t_m>1$，三个概率为正。奇矩为零，$m_{2r}=t_m^{r-1}$（$r\ge1$），故 $m_2=1$、$m_{2m}=Q_m$、$d_{2m}=0$。由引理 503.2，$\Delta_K$ 的首项因 $d_{2m}=0$ 消失，$\beta_{2m}=Q_m\binom{2m}2+mQ_m=2m^2Q_m$，得顶阶界；低阶可取 $C_k=t_m^{m-2}$。对 $r\ge2$，$t_r$ 是 $3,5,\ldots,2r-1$ 的几何平均，故 $t_r\le2r-1$，从而 $t_r^r=Q_rt_r<(2r+1)Q_r=t_{r+1}^r$，$t_r$ 严格递增。于是 $2\le r<m$ 时 $d_{2r}=t_m^{r-1}-t_r^{r-1}>0$，(503.2) 给出
+
+$$
+c_{2m}=\sum_{r=2}^{m-1}\binom{2m}{2r}Q_{m-r}\bigl(t_m^{r-1}-Q_r\bigr)\ge\binom{2m}4Q_{m-2}(t_m-3)>0.
+$$
+
+$m=3$ 时 $t_3=\sqrt{15}$，$c_6=15(\sqrt{15}-3)$，即命题 500.5。证毕。
+
+**命题 503.5（任意指定低阶单独成为障碍）。** 固定 $k\ge5$、$3\le j<k$、$j\equiv k\pmod2$。存在 $\varepsilon_0>0$，使每个 $0<|\varepsilon|\le\varepsilon_0$ 对应至多 $k+1$ 点的正概率分布，满足 $m_r=\gamma_r(1)+\varepsilon\mathbf 1_{r=j}$（$0\le r\le k$），从而 $d_r=\varepsilon\mathbf 1_{r=j}$，且其模型满足定理 503.4 中相应奇偶的全部条件（奇数 $k$ 时 $m_k=\gamma_k(1)=0$，故 $R_k\equiv0$；偶数 $k$ 时 $d_k=0$，故 $|\Delta_K|=O(s^k/H)$ 对全部单位有界权一致成立），而
+
+$$
+\lim_{N\to\infty}\frac{V_k-\mathcal W_K^V}{s^k}=\binom kj(k-j-1)!!\,\varepsilon\ne0 .
+\tag{503.4}
+$$
+
+**证明。** 令 $n=k+1$，$x_1,\ldots,x_n$ 为首一 Hermite 多项式 $He_n$ 的根，$L_i$ 为相应 Lagrange 基，$w_i=\mathbb EL_i(G)$。$He_n$ 与次数 $<n$ 的多项式在 Gaussian 权下正交；若实变号根少于 $n$ 个，取其线性因子之积 $q$ 得恒号非零的 $He_nq$，矛盾，故根全实且单。$L_i^2-L_i$ 在全部节点为零，被 $He_n$ 整除且商次数 $\le n-2$，故 $w_i=\mathbb EL_i(G)^2>0$；插值给出 $\sum_iw_ix_i^r=\gamma_r(1)$（$0\le r\le k$）。令 $v_i=[x^j]L_i(x)$；比较 $x^r=\sum_ix_i^rL_i(x)$（$r\le k$）中 $x^j$ 的系数得 $\sum_iv_ix_i^r=\mathbf 1_{r=j}$。取 $\varepsilon_0=\min_{v_i\ne0}w_i/(2|v_i|)$，令 $\mathbb P(Z=x_i)=w_i+\varepsilon v_i\ge w_i/2>0$。奇数 $k$ 时 $m_k=0$ 给出 $R_k\equiv0$；偶数 $k$ 时由引理 503.2，顶阶首项因 $d_k=0$ 消失；由 (503.2)，只有 $p=(k-j)/2$ 的项保留，系数 $n_{k,(k-j)/2}=\binom kjQ_{(k-j)/2}$。证毕。
+
+**推论 503.6（三、四阶仅顶阶条件已充分）。** 设一列数据满足定理 500.2 的条件，大小常数 $C$ 固定，$L/H\to0$（不要求正性）。则 $V_3=R_3+o(s^3)$，且 $V_4-\mathcal W_K^V=\Delta_K+o(s^4)$。因此在 (500.2) 与尺度分离下，五阶是仅顶阶条件不能推出本阶 Wick 渐近的最低阶数。
+
+**证明。** 三阶部分配对的未覆盖集大小为 $3,1$，四阶为 $4,2,0$；$|U|\le2$ 时 $\Delta_U=0$。故 (500.3) 中除顶阶外的缺陷项全部消失，余项为 $O(\mathfrak C_{k,C}(\sqrt{L/H}+H^{-1}))s^k$。证毕。
+
+**注记 503.7（与累积量的关系）。** 在本模型的标量极限中，$d_3=\kappa_3$、$d_4=\kappa_4$，但 $d_5=\kappa_5+10\kappa_3\kappa_2$、$d_6=\kappa_6+15\kappa_4\kappa_2+10\kappa_3^2$；因此从五阶起，顶阶条件 $d_k=0$ 已不是 $\kappa_k=0$。部分配对每次去掉两个标签，传播只连接同奇偶的缺陷阶数，这与矩—累积量展开遍历全部集合分割不同。(503.2) 的第二式说明，混合偏置保存了一个随机公共均值 $Z$，重复指标的二元块贡献 Gaussian 部分 $G$。
+
+**范围。** 矩与累积量的集合分割展开及 Gauss–Hermite 求积是标准事实。本节的本仓推导（repo-derived）是：定义 500.1 的二次模型中对全部有界权一致的缺陷首项估计 (503.1) 与传播极限 (503.2)，全部 $k\ge5$ 的显式三点律反例族（定理 503.4，包含命题 500.4、500.5 为 $k=5,6$ 的情形），任意指定低阶的单独障碍（命题 503.5），以及三、四阶的充分性（推论 503.6）。本节不主张文献优先权。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,14 @@
+**命题 90.2（载体完备性与效应的正确类型）。** 定义90.1满足89.1的全部有限维锥基条件。迹内积使每个 $f\in V_G^*$ 有唯一稀疏对称代表 $A_f\in V_G$，$f(X)=\operatorname{tr}(A_fX)$；但在一般 $G$ 上，正性和 proper 性准确要求的是
+
+$$
+\operatorname{tr}(A_fX)\ge0,\qquad
+\operatorname{tr}((I-A_f)X)\ge0\quad(\forall X\in C_G),
+\tag{90.3}
+$$
+
+不能改成 $A_f\ge0$ 和 $I-A_f\ge0$，也不要求存在同一个环境矩阵 $0\le E\le I_n$ 代表这个限制效应。此处没有把 $C_G$ 换成PSD完成锥，亦没有把 $C_G^*$ 认成 $C_G$。
+
+证明。$V_G$ 含 $I_n$，为非零有限维实空间。$C_G$ 是闭凸PSD锥与线性空间的交，闭、凸、尖。对每个 $X\in V_G$，足够小的 $\epsilon>0$ 使 $I_n\pm\epsilon X$ 正定，故 $C_G$ 生成整个 $V_G$。非零PSD矩阵有严格正迹；迹一PSD矩阵的非负特征值之和为一，因而有界，$K_G$ 又闭，故紧且非空。按有限维紧凸分解，$K_G=\operatorname{conv}P_G$，$C_G=\operatorname{cone}P_G$，不要求 $P_G$ 闭。
+
+迹内积在 $V_G$ 上非退化，给所述唯一代表；对偶锥的定义正是(90.3)的第一式，补正性给第二式。若 $0\le E\le I_n$，限制确是 proper；逆向不是定义，90.4将给不能如此表示的原 proper 效应。以上只证明原稀疏PSD锥本身的条件，没有增补状态或缩小效应。证毕。
+
