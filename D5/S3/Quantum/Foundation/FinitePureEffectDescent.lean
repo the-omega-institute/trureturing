@@ -26,9 +26,12 @@ def coordinates (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) [Fintype (pure C
     (pure C u → ℝ) →ₗ[ℝ] A :=
   Fintype.linearCombination ℝ (fun p : pure C u => (p : A))
 
-/-- Convexity of the original mixed-state exclusion set, for every pure reference. -/
+/-- Original midpoint gluing of actual proper-effect exclusions, for all mixed states. -/
 def zeroGluing (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Prop :=
-  ∀ p : pure C u, Convex ℝ {x | x ∈ base C u ∧ comparison C u p x = 0}
+  ∀ (p : pure C u) (x y : A), x ∈ base C u → y ∈ base C u →
+    (∃ f, confirms C u p f ∧ f x = 0) →
+    (∃ f, confirms C u p f ∧ f y = 0) →
+    ∃ f, confirms C u p f ∧ f ((1 / 2 : ℝ) • (x + y)) = 0
 
 private theorem extension_sum {I M : Type*} [Fintype I] [DecidableEq I] [AddCommMonoid M]
     [Module ℝ M] (s : Finset I) (c : s → ℝ) (f : I → M) :

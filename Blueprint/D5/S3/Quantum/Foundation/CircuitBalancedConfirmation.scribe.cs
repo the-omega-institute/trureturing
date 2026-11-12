@@ -67,5 +67,40 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For the same C and u, full S is equivalent to all-reference circuit balance. That balance is equivalent to its conjunction with pure reciprocity, and to reciprocal least confirming effects on the entire cone. These are the four conditions of Quantum Origin V Theorem 77.16, on the unchanged full state and full proper-effect carrier.")),
                     Paragraph(Text("For the converse, take any finite signed relation sum_i c_i q_i=0 on the original pure points. Applying u gives sum_i c_i=0. Write a_i=max(c_i,0) and b_i=max(-c_i,0); their masses and weighted original vectors agree. Add the same reference p with unit weight to both sides, and divide by the positive common mass 1+sum_i a_i. These are two nonnegative normalized pure preparations of exactly the same vector. Full S evaluates them equally. Cancelling the common reference contribution and common mass proves sum_i c_i T_{q_i}(p)=0, including the zero relation. Reindexing finite types by Fin n introduces no new preparation assumption. Conversely, reciprocal least effects attain the original infimum at every positive vector; their linearity and pure reciprocity give full S."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("descends"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.descends"),
+                H("Descent of balanced assignments"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every pure set P spanning A and every scalar assignment balanced on all its finite circuits, there exists an original real linear functional taking those assigned values on every p in P."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pure-mem"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem"),
+                H("Pure points are normalized positive vectors"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Every pure point belongs to the original cone and has original unit value one."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("base-convex"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_convex"),
+                H("Convexity of the normalized base"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The entire normalized base of the original cone and linear unit is convex."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("base-compact"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact"),
+                H("Compactness of the original normalized base"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For a closed original cone and a unit strictly positive at all its nonzero points, the entire normalized base is compact in the finite dimensional topology."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("nonneg-on-cone"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone"),
+                H("From pure nonnegativity to whole-cone nonnegativity"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For the compact original base and a strictly positive unit, every original real linear functional nonnegative on all pure points is nonnegative on the entire original cone."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("cone-bound"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound"),
+                H("From pure bounds to original properness"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For the compact original base and a strictly positive unit, an original real linear functional whose value at every pure point belongs to [0,1] is proper on the entire original cone."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("pure-span"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span"),
+                H("Pure spanning of the original carrier"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For the compact original base, strictly positive unit and generating original cone, all pure points together linearly span the original carrier."))), DescribeRole.Theorem),
             Paragraph(Text("The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remainder equivalence of Theorem 77.19, and the EJA, PRE, reset, H13/C13 and static or operational consumers remain outside this result. The proof needs neither a finite Minkowski theorem nor an assumption supplying pure decompositions. Mathematical effects and mixtures do not supply actual preparation programs, menus, histories, references or operations.")))));
 }

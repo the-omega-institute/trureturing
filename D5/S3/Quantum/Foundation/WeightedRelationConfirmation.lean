@@ -61,7 +61,8 @@ theorem relation_effect {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
         _ = 0 := by
           simp [relationVector,Fintype.sum_sum_type,neg_mul,Finset.sum_neg_distrib,hbalance]
     have hs := e.sum_comp (fun q : pure C u => w q * v (e.symm q))
-    simpa only [Equiv.symm_apply_apply] using hs.symm.trans hh
+    have hs' : (∑ i, w (e i) * v i) = ∑ q, w q * v (e.symm q) := by simpa using hs
+    exact hs'.symm.trans hh
   obtain ⟨f,⟨hf,he⟩,_⟩ := (full_effect_iff C u hclosed hstrict hspan
     (fun q => v (e.symm q))).mpr ⟨fun q => hbound _, hker⟩
   exact ⟨f,hf,fun i => by simpa using he (e i)⟩
@@ -80,6 +81,7 @@ private theorem barycenter_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   · exact C.sum_mem (fun j hj => C.smul_mem (hβ j) (pure_mem (b j)).1)
   · simp [barycenter, map_smul, map_sum, (pure_mem _).2, hmass.ne']
 
+omit [FiniteDimensional ℝ A] in
 private theorem normalized_full_kernel {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     [Fintype (pure C u)] {L R Z : Type*} [Fintype L] [Fintype R] [Fintype Z]
     (e : (L ⊕ (R ⊕ Z)) ≃ pure C u) (α : L → ℝ) (β : R → ℝ)
@@ -93,12 +95,13 @@ private theorem normalized_full_kernel {C : PointedCone ℝ A} {u : A →ₗ[ℝ
   have hr : coordinates C u r = 0 := by
     change (∑ q, r q • (q : A)) = 0
     rw [← e.sum_comp (fun q : pure C u => r q • (q : A))]
-    simpa [r,relationVector,Fintype.sum_sum_type,neg_smul,Finset.sum_neg_distrib,hrelation]
+    simp [r,relationVector,Fintype.sum_sum_type,neg_smul,Finset.sum_neg_distrib,hrelation]
   have hrne : (⟨r,hr⟩ : LinearMap.ker (coordinates C u)) ≠ 0 := by
     intro he
     have hh := congrFun (congrArg Subtype.val he) (e (.inl p))
     exact hp (by simpa [r,relationVector] using hh)
-  have hgenerate := (finrank_eq_one_iff_of_nonzero' (⟨r,hr⟩ : LinearMap.ker (coordinates C u)) hrne).mp hnullity
+  have hgenerate := (finrank_eq_one_iff_of_nonzero'
+    (⟨r,hr⟩ : LinearMap.ker (coordinates C u)) hrne).mp hnullity
   intro w
   constructor
   · intro hw
@@ -111,25 +114,16 @@ private theorem normalized_full_kernel {C : PointedCone ℝ A} {u : A →ₗ[ℝ
     have hh := congrFun (congrArg Subtype.val hk) (e i)
     simpa [r] using hh.symm
   · rintro ⟨k,rfl⟩
-    have hh := congrArg (fun x : A => k • x) hr
-    change (∑ i, (k • relationVector (Z := Z) α β) i • (e i : A)) = 0
-    rw [← e.sum_comp (fun q : pure C u => (k • r) q • (q : A))] at hh
-    simpa [coordinates,Fintype.linearCombination_apply,r,Finset.smul_sum,smul_smul] using hh
+    have hrI : (∑ i, relationVector (Z := Z) α β i • (e i : A)) = 0 := by
+      simp [relationVector,Fintype.sum_sum_type,neg_smul,Finset.sum_neg_distrib,hrelation]
+    change (∑ i, (k * relationVector (Z := Z) α β i) • (e i : A)) = 0
+    simp only [mul_smul,← Finset.smul_sum,hrI,smul_zero]
 
-/-- The exact attained comparison gap holds on the original carrier and full
-proper interval for every nonempty proper partition, with all free vertices retained. -/
-theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
-    [Fintype (pure C u)] {L R Z : Type*} [Fintype L] [Fintype R] [Fintype Z] [DecidableEq R]
+/-- The full source comparison and its three original attaining effects. -/
+def partitionGap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+    {L R Z : Type*} [Fintype R] [DecidableEq R]
     (e : (L ⊕ (R ⊕ Z)) ≃ pure C u) (α : L → ℝ) (β : R → ℝ)
-    (hclosed : IsClosed (C : Set A))
-    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hspan : Submodule.span ℝ (C : Set A) = ⊤)
-    (hnullity : Module.finrank ℝ (LinearMap.ker (coordinates C u)) = 1)
-    (hrelation : (∑ i, α i • (e (.inl i) : A)) = ∑ j, β j • (e (.inr (.inl j)) : A))
-    (hα : ∀ i, 0 < α i) (hβ : ∀ j, 0 < β j)
-    (hαsum : ∑ i, α i = 1) (hβsum : ∑ j, β j = 1)
-    (p : L) (hmin : ∀ j, α p ≤ β j)
-    (J : Finset R) (hJ : J.Nonempty) (hJc : (Finset.univ \ J).Nonempty) :
+    (p : L) (J : Finset R) : Prop :=
     let t := α p
     let b := ∑ j ∈ J, β j
     let x := barycenter (fun j => e (.inr (.inl j))) β J
@@ -142,8 +136,25 @@ theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (∃ f, confirms C u (e (.inl p)) f ∧ f x = 0) ∧
     (∃ f, confirms C u (e (.inl p)) f ∧ f y = 0) ∧
     (∃ f, confirms C u (e (.inl p)) f ∧
-      f ((1 / 2 : ℝ) • (x + y)) = t / (2 * max b (1 - b))) := by
+      f ((1 / 2 : ℝ) • (x + y)) = t / (2 * max b (1 - b)))
+
+/-- The exact attained comparison gap holds on the original carrier and full
+proper interval for every nonempty proper partition, with all free vertices retained. -/
+private theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+    [Fintype (pure C u)] {L R Z : Type*} [Fintype L] [Fintype R] [Fintype Z] [DecidableEq R]
+    (e : (L ⊕ (R ⊕ Z)) ≃ pure C u) (α : L → ℝ) (β : R → ℝ)
+    (hclosed : IsClosed (C : Set A))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hspan : Submodule.span ℝ (C : Set A) = ⊤)
+    (hnullity : Module.finrank ℝ (LinearMap.ker (coordinates C u)) = 1)
+    (hrelation : (∑ i, α i • (e (.inl i) : A)) = ∑ j, β j • (e (.inr (.inl j)) : A))
+    (hα : ∀ i, 0 < α i) (hβ : ∀ j, 0 < β j)
+    (hαsum : ∑ i, α i = 1) (hβsum : ∑ j, β j = 1)
+    (p : L) (hmin : ∀ j, α p ≤ β j)
+    (J : Finset R) (hJ : J.Nonempty) (hJc : (Finset.univ \ J).Nonempty) :
+    partitionGap e α β p J := by
   classical
+  dsimp only [partitionGap]
   have hkernel := normalized_full_kernel e α β hnullity hrelation p (hα p).ne'
   let t := α p
   let b := ∑ j ∈ J, β j
@@ -182,7 +193,10 @@ theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
           simp only [mul_ite, Finset.sum_ite]
           simp only [Finset.filter_mem_eq_inter,Finset.univ_inter]
           rw [← Finset.sum_mul,← Finset.sum_mul]
-          rfl
+          have hcompl : Finset.univ.filter (fun j : R => j ∉ J) = Finset.univ \ J := by
+            ext j
+            simp
+          rw [hcompl]
         change (∑ i, α i * (if i = p then 1 else 0)) =
           ∑ j, β j * (if j ∈ J then a else c)
         rw [hright]
@@ -192,14 +206,22 @@ theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
         simpa [right,table,hj] using he (.inr (.inl j))
       change f ((∑ j ∈ J, β j)⁻¹ • ∑ j ∈ J, β j • (right j : A)) = a
       simp only [map_smul,map_sum,smul_eq_mul]
-      rw [Finset.sum_congr rfl (fun j hj => by rw [hev j hj]),← Finset.sum_mul]
+      have hsval : (∑ j ∈ J, β j * f (right j)) = (∑ j ∈ J, β j) * a := by
+        calc
+          _ = ∑ j ∈ J, β j * a := Finset.sum_congr rfl (fun j hj => by rw [hev j hj])
+          _ = _ := (Finset.sum_mul _ _ _).symm
+      rw [hsval]
       change b⁻¹ * (b*a) = a
       rw [← mul_assoc,inv_mul_cancel₀ hb.ne',one_mul]
     · have hev (j : R) (hj : j ∈ Finset.univ \ J) : f (right j) = c := by
         simpa [right,table,(Finset.mem_sdiff.mp hj).2] using he (.inr (.inl j))
       change f ((∑ j ∈ Finset.univ \ J, β j)⁻¹ • ∑ j ∈ Finset.univ \ J, β j • (right j : A)) = c
       simp only [map_smul,map_sum,smul_eq_mul]
-      rw [Finset.sum_congr rfl (fun j hj => by rw [hev j hj]),← Finset.sum_mul]
+      have hsval : (∑ j ∈ Finset.univ \ J, β j * f (right j)) = (∑ j ∈ Finset.univ \ J, β j) * c := by
+        calc
+          _ = ∑ j ∈ Finset.univ \ J, β j * c := Finset.sum_congr rfl (fun j hj => by rw [hev j hj])
+          _ = _ := (Finset.sum_mul _ _ _).symm
+      rw [hsval]
       change d⁻¹ * (d*c) = c
       rw [← mul_assoc,inv_mul_cancel₀ hd.ne',one_mul]
   obtain ⟨fx,hfx,hfxx,hfxy⟩ := htable 0 (t/d) ⟨le_rfl,zero_le_one⟩
@@ -223,7 +245,7 @@ theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
       have hk := (hkernel (relationVector (Z := Z) α β)).mpr ⟨1,by simp⟩
       have hh := congrArg f hk
       simp [relationVector,Fintype.sum_sum_type,map_sum,map_smul,smul_eq_mul,
-        Finset.sum_neg_distrib,right] at hh
+        Finset.sum_neg_distrib] at hh
       linarith
     have htq : t ≤ s+q := by
       have hi := Finset.single_le_sum (s := Finset.univ) (a := p)
@@ -241,7 +263,9 @@ theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     have hfy : f y = q/d := by simp [y,barycenter,map_smul,map_sum,q,d,div_eq_inv_mul]
     rw [map_smul,map_add,smul_eq_mul,hfx,hfy]
     rw [add_div] at hmass
-    nlinarith
+    have hhalf : t / (2 * max b d) = (1/2:ℝ) * (t / max b d) := by ring
+    rw [hhalf]
+    exact mul_le_mul_of_nonneg_left (hmass.trans (add_le_add hsdiv hqdiv)) (by norm_num)
   have hattain : ∃ f, confirms C u (e (.inl p)) f ∧
       f ((1 / 2 : ℝ) • (x+y)) = t/(2*max b d) := by
     by_cases hbd : b ≤ d
@@ -257,5 +281,58 @@ theorem weighted_partition_gap {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   have hpos : 0 < t/(2*max b d) := div_pos ht (mul_pos (by norm_num) (hb.trans_le (le_max_left _ _)))
   exact ⟨hx,hy,hTx,hTy,by simpa [hdb] using hTm,by simpa [hdb] using hpos,
     ⟨fx,hfx,hfxx⟩,⟨fy,hfy,hfyy⟩,⟨fm,hfm,by simpa [hdb] using hfmval⟩⟩
+
+/-- Exchange the two nonzero coefficient sides while retaining every free vertex. -/
+def exchange {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ} {L R Z : Type*}
+    (e : (L ⊕ (R ⊕ Z)) ≃ pure C u) : (R ⊕ (L ⊕ Z)) ≃ pure C u :=
+  ({ toFun := Sum.elim (fun j => Sum.inr (Sum.inl j))
+        (Sum.elim Sum.inl (fun z => Sum.inr (Sum.inr z)))
+     invFun := Sum.elim (fun i => Sum.inr (Sum.inl i))
+        (Sum.elim Sum.inl (fun z => Sum.inr (Sum.inr z)))
+     left_inv := by intro i; rcases i with i | (i | i) <;> rfl
+     right_inv := by intro i; rcases i with i | (i | i) <;> rfl } :
+     (R ⊕ (L ⊕ Z)) ≃ (L ⊕ (R ⊕ Z))).trans e
+
+/-- A globally minimal positive coefficient can be placed on the left by exchanging
+sides; every nonempty proper right partition then has the attained original gap. -/
+theorem weighted_gap_after_exchange {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+    [Fintype (pure C u)] {L R Z : Type*} [Fintype L] [Fintype R] [Fintype Z]
+    [DecidableEq L] [DecidableEq R]
+    (e : (L ⊕ (R ⊕ Z)) ≃ pure C u) (α : L → ℝ) (β : R → ℝ)
+    (hclosed : IsClosed (C : Set A))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hspan : Submodule.span ℝ (C : Set A) = ⊤)
+    (hnullity : Module.finrank ℝ (LinearMap.ker (coordinates C u)) = 1)
+    (hrelation : (∑ i, α i • (e (.inl i) : A)) = ∑ j, β j • (e (.inr (.inl j)) : A))
+    (hα : ∀ i, 0 < α i) (hβ : ∀ j, 0 < β j)
+    (hαsum : ∑ i, α i = 1) (hβsum : ∑ j, β j = 1) :
+    ∃ p : L ⊕ R, 0 < Sum.elim α β p ∧
+      (∀ q, Sum.elim α β p ≤ Sum.elim α β q) ∧
+      match p with
+      | .inl i => ∀ J : Finset R, J.Nonempty → (Finset.univ \ J).Nonempty →
+          partitionGap e α β i J
+      | .inr j => ∀ J : Finset L, J.Nonempty → (Finset.univ \ J).Nonempty →
+          partitionGap (exchange e) β α j J := by
+  classical
+  have hL : (Finset.univ : Finset L).Nonempty := by
+    by_contra hn
+    have hz : ∑ i, α i = 0 := Finset.sum_eq_zero (fun i hi => (hn ⟨i,hi⟩).elim)
+    linarith
+  obtain ⟨i,hi⟩ := hL
+  obtain ⟨p,_,hp⟩ := Finset.exists_min_image (Finset.univ : Finset (L ⊕ R))
+    (Sum.elim α β) ⟨.inl i,Finset.mem_univ _⟩
+  have hmin : ∀ q, Sum.elim α β p ≤ Sum.elim α β q := fun q => hp q (Finset.mem_univ q)
+  rcases p with p | p
+  · refine ⟨.inl p,hα p,hmin,?_⟩
+    intro J hJ hJc
+    exact weighted_partition_gap e α β hclosed hstrict hspan hnullity hrelation
+      hα hβ hαsum hβsum p (fun j => hmin (.inr j)) J hJ hJc
+  · refine ⟨.inr p,hβ p,hmin,?_⟩
+    intro J hJ hJc
+    have hrel : (∑ j, β j • (exchange e (.inl j) : A)) =
+        ∑ i, α i • (exchange e (.inr (.inl i)) : A) := by
+      simpa [exchange] using hrelation.symm
+    exact weighted_partition_gap (exchange e) β α hclosed hstrict hspan hnullity hrel
+      hβ hα hβsum hαsum p (fun i => hmin (.inl i)) J hJ hJc
 
 end D5.S3.Quantum.Foundation.WeightedRelationConfirmation
