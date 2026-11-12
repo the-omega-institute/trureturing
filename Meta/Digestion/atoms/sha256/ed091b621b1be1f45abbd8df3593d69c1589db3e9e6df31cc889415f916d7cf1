@@ -1,0 +1,58 @@
+**定理 110.4（精确维数移位与偶N约束）。** 在原 $\mathsf W$ 下，对
+$0\le i\le N-3$ 有整数奇异群同构
+
+$$
+\widetilde H_i(P;\mathbb Z)
+ \cong\widetilde H^{\,N-i-3}(P;\mathbb Z),
+\qquad
+H_i(P;\mathbb Z)=0\quad(i\ge N-2).
+\tag{VIII110.9}
+$$
+
+波浪号分别表示约化同调与约化上同调，右侧不是同次数的同调群。
+普通Euler特征在此定义为有限和
+
+$$
+\chi(P)=\sum_{i\ge0}(-1)^i
+             \dim_{\mathbb Q}H_i(P;\mathbb Q).
+\tag{VIII110.10}
+$$
+
+当原向量空间维数 $N$ 为偶数时，必有 $\chi(P)=1$。
+
+证明。$P$ 非空，110.2给 $c_p\in S\setminus P$，所以它是 $S$ 的真子集。
+110.3已给 $P$ 紧且局部可缩，以及 $S\cong S^{N-2}$。
+令 $n=N-2\ge1$。Hatcher [Corollary 3.45，印刷pp.255—256][Q110H]
+对紧、局部可缩、非空的真子集 $P\subset S^n$ 给出
+
+$$
+\widetilde H_i(S\setminus P;\mathbb Z)
+ \cong\widetilde H^{\,n-i-1}(P;\mathbb Z).
+\tag{VIII110.11}
+$$
+
+110.2的同伦等价将左侧换成 $\widetilde H_i(P;\mathbb Z)$，
+而 $n-i-1=N-i-3$，即得所述范围的自对偶。
+这里两侧约化的零次群也包括在内，不能将右端零次群改为普通上同调。
+
+再从非空 $S\setminus P$ 取一点 $a$。
+去点球面 $S\setminus\{a\}\cong\mathbb R^{N-2}$ 使 $P$ 成为其中的紧局部可缩子空间。
+Hatcher [Corollary 3.46，印刷p.256][Q110H]因此直接给
+$H_i(P;\mathbb Z)=0$ 对所有 $i\ge N-2$ 成立。
+这使用的是此实际嵌入和已得局部可缩性，而非预设 $P$ 的流形维数。
+
+由110.3的有限生成性，令
+$b_i=\dim_{\mathbb Q}\widetilde H_i(P;\mathbb Q)$。
+整数通用系数定理及(VIII110.9)给
+
+$$
+b_i=b_{N-3-i}\quad(0\le i\le N-3),\qquad
+\chi(P)-1=\sum_{i=0}^{N-3}(-1)^i b_i.
+\tag{VIII110.12}
+$$
+
+当 $N$ 偶时，$N-3$ 奇，互补指标的符号相反且没有固定指标，
+所以有限和逐对消去，得到 $\chi(P)=1$。
+此计算允许 $P$ 不连通，也没有忽略整数群的挠部分来声称更强的整数同调对称。
+若 $N$ 奇，该配对不强迫同样的Euler数值。证毕。
+

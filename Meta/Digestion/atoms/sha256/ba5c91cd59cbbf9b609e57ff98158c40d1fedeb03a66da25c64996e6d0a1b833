@@ -1,0 +1,81 @@
+**定理 109.8（原纯星及其准确Riesz尺度）。** 保持109.7的厚点 $p$，
+在原直和 $V=\mathbb Rp\oplus\mathbb Rc_p\oplus L_p\oplus N_p$ 上定义
+正定对称双线性型
+
+$$
+\begin{aligned}
+B(\alpha p+\beta c_p+y+z,\alpha'p+\beta'c_p+y'+z')
+ =\alpha\alpha'+\frac{\beta\beta'}2+
+ \frac{g_p(y,y')}2+\frac{G(z,z')}2.
+\end{aligned}
+\tag{VIII109.24}
+$$
+
+定义固定 $p$ 的原纯星和它的凸锥包
+
+$$
+\mathcal S_p=\bigcup_{q\in P\cap D_p}(P\cap D_q),\qquad
+C_{\star}=\operatorname{cone}(\mathcal S_p),
+\tag{VIII109.25}
+$$
+
+其中 $\operatorname{cone}$ 指有限非负线性组合。$\mathcal S_p$ 紧，包含 $p$ 和
+$P\cap D_p$；它的全部点恰有下列球内参数化：
+
+$$
+\begin{gathered}
+s=A p+B_0r(x)+z_s,\qquad x\in S^m,\quad A,B_0\ge0,\quad A+B_0=1,\\
+z_s\in\operatorname{im}P_x,\qquad \|z_s\|_G^2=4AB_0.
+\end{gathered}
+\tag{VIII109.26}
+$$
+
+对每个这样的原纯点，其原least尺在整个 $V$ 上满足
+
+$$
+a_s=B(s,\cdot).
+\tag{VIII109.27}
+$$
+
+证明。原正交关系在紧 $P^2$ 中闭：将其原效应见证放在紧 $\mathcal E$ 中取极限即可。
+因此 $\{(q,s)\in(P\cap D_p)\times P:q\perp s\}$ 紧，
+其第二因子投影正是 $\mathcal S_p$。
+每个邻点 $q$ 都有 $p\in D_q$；对任意 $r\in P\cap D_p$，其对径 $q$ 满足
+$r\in D_q$，故所述包含关系成立。
+
+球 $D_{q(x)}$ 的中心为 $(p+r(x))/2$，其单位直径方向为
+$(p-r(x))/2$，切方向空间是 $\operatorname{im}P_x$。
+该球自己的内积在切空间上已由109.5认同为 $G$。
+把球面点分成直径和切方向，得到 $A+B_0=1$、
+$(A-B_0)^2+\|z_s\|_G^2=1$；这正是(VIII109.26)，且该式的每组参数都给球面原纯点。
+它不是另加的星点或新的纯态定义。
+
+对任意 $v=\alpha p+\beta c_p+y+z$，原尺在 $M_p$ 上的直径公式及
+VIII108.2的共同零方向给
+
+$$
+a_p(v)=\alpha,\qquad
+ a_{r(x)}(v)=\frac{\beta+x\cdot y}{2},\qquad
+ a_p|_{N_p}=a_{r(x)}|_{N_p}=0.
+\tag{VIII109.28}
+$$
+
+特别地 $B(p,\cdot)=a_p$、$B(r(x),\cdot)=a_{r(x)}$ 在全 $V$ 上成立。
+若 $z_s\ne0$，对球 $D_{q(x)}$ 使用同一 $\Lambda_{q(x)}$：
+球面直径效应的限制等式经其线性性延拓为
+
+$$
+a_s=Aa_p+B_0a_{r(x)}+\tfrac12J_{q(x)}(z_s)
+\quad\text{于整个 }V.
+\tag{VIII109.29}
+$$
+
+109.4给 $J_{q(x)}(z_s)|_{M_p}=0$；109.5在
+$N_p=T(q(x)\mid p)\oplus T(r(x)\mid p)$ 上准确给
+$J_{q(x)}(z_s)(z)=G(z_s,z)$。
+所以(VIII109.29)正是由(VIII109.24)计算的 $B(s,\cdot)$。
+这同时核对了 $M_p$ 与整个 $N_p$，没有只在一张球上核对后宣称全空间相等。
+若 $z_s=0$，(VIII109.26)迫 $AB_0=0$，故 $s=p$ 或 $r(x)$，
+已由(VIII109.28)处理。系数确为 $B|_{N_p}=G/2$，与原圆弧尺中的 $J/2$ 一致。
+此步仍未使用全纯互易。证毕。
+
