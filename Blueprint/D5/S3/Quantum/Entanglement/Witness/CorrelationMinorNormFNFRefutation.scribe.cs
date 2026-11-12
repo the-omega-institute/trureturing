@@ -14,6 +14,52 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
         "A separable qubit-ququart state violates the conjectured correlation-minor operator-norm bound without filter normal form.",
         H("A correlation-minor bound fails without filter normal form"),
         Blocks(
+            Paragraph(Text(
+                "Research note by Haobo Ma (Chrono AI, Singapore) and Wenlin Zhang "
+                    + "(National University of Singapore and Chrono AI, Singapore), copyright 2026, CC BY 4.0. "
+                    + "The cited primary works retain their own licenses. Peled, Te’eni, Carmi and Cohen are the primary problem authors; "
+                    + "they are not inferred coauthors of the research note. This formal return makes no novelty endorsement, "
+                    + "authorship-consent, correspondence, publication or submission claim. "
+                    + "The original source intake disclosed exposure to communication framing; inherited repository context is also prior-exposed. "
+                    + "The supplied scientific arguments and planning conclusions are fallible inputs, not independent final review.")),
+            Describe.Lean(DescribeId.Create("noisy-state"), DeclarationHandle.Create(Prefix + "noisyRho"),
+                H("The continuous rational noisy state"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For real t, set a = (1−t)/3 and ρₜ = a Σⱼ₌₀² Pⱼ ⊗ Eⱼⱼ + t I₈/8, "
+                        + "using the same three projectors as the fixed counterexample below. "
+                        + "For 0 ≤ t ≤ 1/200 this is a finite convex mixture of actual local density matrices. "
+                        + "Its noise lower bound gives positive definiteness for t > 0; the endpoint t = 0 remains included."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("alice-basis"), DeclarationHandle.Create(Prefix + "alice"),
+                H("The normalized Alice basis"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The existing complete Hermitian basis (I,Z,X,Y)/√2 is shared by the interval and fixed witness."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("bob-basis"), DeclarationHandle.Create(Prefix + "bob"),
+                H("The normalized Bob flag basis"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The existing four diagonal units followed by the six normalized symmetric and six skew pairs form the complete Bob basis, with trace-product normalization one."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("noisy-correlation"), DeclarationHandle.Create(Prefix + "noisyCoefficients"),
+                H("The exact parameter-dependent correlation matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Put r = (4−t)/12, s = t/4 and a = (1−t)/3. The first four columns are "
+                        + "1/√2 times the rows (r,r,r,s), (a,−3a/5,−3a/5,0), "
+                        + "(0,4a/5,−4a/5,0) and (0,0,0,0); the other twelve columns vanish. "
+                        + "The coefficients are the actual complex state/observable traces, with no extra factor two."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("rational-noisy-family"), DeclarationHandle.Create(Prefix + "rational_noisy_family"),
+                H("The full rational noise interval"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every real 0 ≤ t ≤ 1/200, the theorem asserts actual separability and density, complete normalized bases, "
+                        + "the exact correlation and Bob marginal diag(r,r,r,s), a nonuniform Bob marginal, the PSD noise lower bound, "
+                        + "positive definiteness for positive noise and the strict third-order operator violation. "
+                        + "The nonuniform marginal excludes filter normal form. The selected IZX/012 minor equals "
+                        + "16(4−t)(1−t)²/(1350√2). Its strict comparison with 3/(64√2) reduces to "
+                        + "512(4−t)(1−t)² > 2025. Both positive factors are bounded below over the whole interval, "
+                        + "and the value of this difference at the upper endpoint is 574/15625. This is a uniform real-parameter proof."))),
+                DescribeRole.Theorem),
             Definition("hermitian-basis", "IsHermBasis", "Orthonormal Hermitian bases", HermBasisFormula(),
                 "A family a consists of Hermitian n by n complex matrices, has exactly n squared members, "
                     + "and has trace-product pairing one on equal indices and zero on unequal indices. "
