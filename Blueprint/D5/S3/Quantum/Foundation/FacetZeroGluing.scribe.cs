@@ -8,6 +8,8 @@ internal sealed class FacetZeroGluingDocument : IScribeDocumentDefinition
         "Whole-base facet injection from original mixed-state zero gluing.",
         H("Whole-base facet injection from original mixed-state zero gluing"),
         Blocks(
+                Describe.Lean(DescribeId.Create("exclusion-symmetric"), DeclarationHandle.Create("D5/S3/Quantum/Foundation/FacetZeroGluing.exclusion_symmetric"), H("exclusion symmetric"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any original pure p,q, q belongs to the entire D_p if and only if p belongs to the entire D_q. The original proof uses the same proper effect and its complement u-f. OrthogonalJointCompletion.pair_geometry and complete_pair consume this symmetry."))), DescribeRole.Theorem),
+
             Paragraph(Text("The source is Quantum Origin: Finite Pure Point and Facet Obstructions VII, Theorem 96.2, with the entire original carrier and definitions from VI 89.1 and V 88.1–88.3. This is distinct from VI Chapter 96. The real finite dimensional normed carrier, original cone and strictly positive linear unit determine the entire normalized base, all its extreme points and all original proper effects. Finiteness applies to that complete extreme-point set. No ball, antipodal separation, reciprocal comparison, least effect, selfdual pairing or supplied exposure is assumed.")),
             Describe.Lean(DescribeId.Create("exclusion"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/FacetZeroGluing.exclusion"),
