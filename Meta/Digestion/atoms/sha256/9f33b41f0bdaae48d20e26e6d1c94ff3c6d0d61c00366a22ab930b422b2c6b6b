@@ -1,0 +1,21 @@
+**定义 83.10（固定质量入口与原方向关系）。** 由原单位固定数学映射 $R_A(a)=u_A(a)1_A/n$，令 $m_2(a,b)=u_DM(a,b)$、$m_3(a,b,c)=u_EL(M(a,b),c)$。对全部原正输入，包括零与不等质量，要求
+$$
+\begin{aligned}
+\mathsf E_2:\quad m_2(a,b)&=\tfrac12[m_2(R_Aa,b)+m_2(a,R_Ab)],\\
+\mathsf E_3:\quad m_3(a,b,c)&=\tfrac13[m_3(R_Aa,b,c)+m_3(a,R_Ab,c)+m_3(a,b,R_Ac)],\\
+\mathrm A_0:\quad&u_EL(\omega,1_A/n)=1.
+\end{aligned}\tag{83.19}
+$$
+这不供应实际重置或随机控制；$R_A$、等权与原锚不是额外可调输入。
+只在 (83.8) 恢复精确 PRE 后，才定义原 H13。取 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$ 及其中心投影 $\pi_{ik}$，令 $\alpha_{ik}=F(-,1_k)|_{A_i}$、$\beta_{ik}=F(1_i,-)|_{A_k}$，活跃集 $\mathcal I=\{(i,k):r_i,r_k\ge2\}$。所有伴随使用原规范迹，并令
+$$
+\begin{aligned}
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal I,\ x=\pi_{ik}\rho,\quad
+\alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0\},\\
+T_{\rm raw}(a,c)=L(Ja,c),\quad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+,\qquad
+\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+.
+\end{aligned}\tag{83.20}
+$$
+每个活跃块至少一差有严格负方向，不要求两差都不正或负定；活跃块正质量随之成立。铺回使用未经维数归一化的单位。非活跃块任取正元含零；活跃集空时 $\mathcal H(F)=K_D$。始终检测同一个原总迹一混态的整个原输出，不换态、参考、固定效应或总迹读数。
+

@@ -1,0 +1,12 @@
+**定义 86.3（校准的两种写法）。** 令 $e=1_A/n$，记
+
+$$
+\mathsf C_2:\ \tau_DM(e,e)=1,\qquad
+\mathsf G_1:\ G=1_E,\qquad
+C_{\rm joint}:\ \delta_E+\gamma_E\le2n^3,
+\quad\delta_E=\tau_EG,\quad\gamma_E=\tau_D(p1_E).
+\tag{86.4}
+$$
+
+$\mathsf G_1$ 是整个原单位输出的向量等式，不是一个总质量读数。
+
