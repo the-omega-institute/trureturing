@@ -52,7 +52,19 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeM
 
 For any finite family of bias values and weights, the distinct-index moment of order r is the weighted r-th bias moment divided by (sqrt(N)) to the power r, times the sum of coefficient products over injective index tuples. Both refutations apply this shared identity.
 
-**Theorem 1.5 (Odd-coordinate reduction).**
+**Theorem 1.5 (A bound for every order).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive N and any order r, if every coefficient has absolute value at most one, the distinct-index mixture moment has absolute value at most the absolute r-th scalar bias moment times (sqrt(N)) to the power r. There are at most N to the power r injective assignments, and every coefficient product has absolute value at most one. The weights may be signed.
+
+**Theorem 1.6 (Odd-coordinate reduction).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.odd_reduction`
 
@@ -68,6 +80,7 @@ Repeated sign factors cancel in pairs, leaving exactly the coordinates with odd 
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixtureFunctional`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_character`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_bound`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_moments`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.odd_reduction`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.sign`

@@ -8,6 +8,8 @@
 
 /-
 proof_shape: perfectPairingEquiv: content (private bridge).
+proof_shape: partialPairingCount: content (consumer:
+  TopOrderObstructionFamily.mixture_propagation_limit).
 proof_shape: pairingSupport_card, IsPerfectPairing.card: bind-only
   (consumers: finitePairingPolynomial_const, perfectPairingCount,
     SixthOrderTopPairingRefutation).
@@ -16,6 +18,8 @@ proof_shape: finitePairingPolynomial_rankOne, finitePairingPolynomial_const,
 escape_witness: A perfect pairing is identified with the fixed-point-free
   involution exchanging each edge's endpoints. The bridge reuses the existing
   cycle-type count rather than proving a second counting recursion.
+  partialPairingCount identifies the support fibers with perfect pairings and
+  proves the count choose(U.card, 2*p) * (2*p-1)!! for partial pairings.
 admission_basis: escape-witness.
 -/
 
@@ -245,6 +249,45 @@ theorem perfectPairingCount (U : Finset α) :
     intro P hP hPP
     apply hU
     exact ⟨P.card, by have hh := hPP.card; omega⟩
+
+/-- The support of a partial pairing with `p` edges can be chosen in
+`choose U.card (2*p)` ways, after which its edges form a perfect pairing. -/
+theorem partialPairingCount (U : Finset α) (p : ℕ) :
+    ((Finset.univ : Finset (Finset (Finset α))).filter
+      (fun P => IsPartialPairing U P ∧ P.card = p)).card =
+      U.card.choose (2 * p) * Nat.doubleFactorial (2 * p - 1) := by
+  classical
+  let A := (Finset.univ : Finset (Finset (Finset α))).filter
+    (fun P => IsPartialPairing U P ∧ P.card = p)
+  let B := U.powersetCard (2 * p)
+  have hm : (A : Set (Finset (Finset α))).MapsTo pairingSupport B := by
+    intro P hPA
+    obtain ⟨hP, hp⟩ := (Finset.mem_filter.mp hPA).2
+    have hc := (show IsPerfectPairing (pairingSupport P) P from
+      ⟨⟨hP.1, hP.2.1, fun _ h => h⟩, rfl⟩).card
+    exact Finset.mem_powersetCard.mpr ⟨hP.2.2, by simpa [hp] using hc⟩
+  have hf (S : Finset α) (hS : S ∈ B) :
+      A.filter (fun P => pairingSupport P = S) =
+        (Finset.univ.filter (IsPerfectPairing S) : Finset (Finset (Finset α))) := by
+    obtain ⟨hSU, hSc⟩ := Finset.mem_powersetCard.mp hS
+    ext P
+    simp only [A, Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨⟨hP, _⟩, hs⟩
+      exact ⟨⟨hP.1, hP.2.1, hs.le⟩, hs⟩
+    · intro hP
+      have hp : P.card = p := by have hc := hP.card; omega
+      exact ⟨⟨⟨hP.1.1, hP.1.2.1, hP.1.2.2.trans hSU⟩, hp⟩, hP.2⟩
+  change A.card = _
+  rw [Finset.card_eq_sum_card_fiberwise hm]
+  calc
+    (∑ S ∈ B, (A.filter (fun P => pairingSupport P = S)).card) =
+        ∑ _S ∈ B, Nat.doubleFactorial (2 * p - 1) := by
+      apply Finset.sum_congr rfl
+      intro S hS
+      rw [hf S hS, perfectPairingCount,
+        (Finset.mem_powersetCard.mp hS).2, if_pos (even_two_mul p)]
+    _ = _ := by simp [B]
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
