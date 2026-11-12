@@ -1,0 +1,38 @@
+**Theorem 6.1 (Finite-parameter entropy converse).** For every finite integer $M\ge2$, $0<\alpha<1/2$, $0<q<1$, observer $\mathcal A\in\mathfrak A_M(q,\alpha)$, integer $L\ge1$ and target $i\in\{0,1\}$, put
+
+$$
+b=1-2\alpha,\qquad
+\chi_{M,L}=\frac{G_L^{M-2}-1}{G_L^{M-2}+1}.
+$$
+
+Then
+
+$$
+b\le r_H(q)+\chi_{M,L}
++\sqrt{\frac{d_L(q)B(1-q)\mathbb E_{i,q}^{\mathcal A}T}{2}},
+\tag{6.1}
+$$
+
+and consequently
+
+$$
+\mathbb E_{i,q}^{\mathcal A}T
+\ge\frac{2[b-r_H(q)-\chi_{M,L}]_+^2}
+{B(1-q)d_L(q)}.
+\tag{6.2}
+$$
+
+The same actual machine satisfies the two target-specific conclusions; the auxiliary $V_i$ may differ.
+
+Proof. Let $j=1-i$. Lemma 5.1 and the credited forest theorem give $\|h_{V_i}-h_{U_j}\|_\infty\le\chi_{M,L}$. Opponent almost-sure stopping gives $p_j=\nu_jh_{U_j}$. Decompose the actual probability difference as
+
+$$
+p_i-p_j
+=(p_i-\nu_i h_{V_i})
++\nu_i(h_{V_i}-h_{U_j})
++(\nu_i-\nu_j)h_{U_j}.
+\tag{6.3}
+$$
+
+The three absolute differences are bounded respectively by Lemma 5.2, the forest comparison, and (3.2), since $0\le h_{U_j}\le1$. Both risks in (2.9) imply $p_1-p_0\ge b$. Apply (3.6) to $\mathbb E_iN$ in (5.5) to obtain (6.1). All factors in the denominator of (6.2) are positive: $\delta>0$, $L\ge1$, $q\in(0,1)$ and $Z_0>0$ imply $d_L>0$. When the bracket is positive, square the nonnegative inequality and divide; otherwise (6.2) is the nonnegativity of the paid mean. Both target and opposing compliance conditions remain in the quantified class. $\square$
+

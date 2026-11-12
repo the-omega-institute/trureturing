@@ -1,0 +1,10 @@
+Independently of $\tau$, draw iid positive zero counts $K_1,K_2,\ldots$ with law $f_{i,q}$. Put ones at
+
+$$
+\tau_0=\tau,\qquad
+\tau_n=\tau+\sum_{r=1}^n(K_r+1)\quad(n\ge1),
+\tag{2.6}
+$$
+
+and zeros at every other nonnegative integer position. The actual source is this one uninterrupted stationary history.
+
