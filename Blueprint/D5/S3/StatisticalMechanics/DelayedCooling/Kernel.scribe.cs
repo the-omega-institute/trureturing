@@ -8,7 +8,8 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite-sum quasi-exponential relaxation has a constant equilibrium past, "
-            + "is continuous, and satisfies the delayed differential equation at every positive time.",
+            + "is continuous, satisfies its delay equation, and is positive with exponential decay "
+            + "throughout the nonoscillatory delay range.",
         H("The concrete delayed relaxation"),
         Blocks(
             Paragraph(Text(
@@ -33,6 +34,9 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
                 "For every time at most zero all cutoff terms vanish, and E equals one. "
                     + "This fixes the complete past history rather than only an initial value.",
                 DescribeRole.Theorem),
+            Node("relaxation_initial_segment", "The first polynomial segment",
+                "From zero through one delay, including both endpoints, E is one minus time. "
+                    + "At one delay the newly included quadratic term is zero.", DescribeRole.Theorem),
             Node("continuous_relaxation", "Continuity at every real time",
                 "Each cutoff power is continuous. Local stabilization of the finite sum gives "
                     + "continuity on the whole real line, including zero and all step boundaries.",
@@ -42,8 +46,35 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
                     + "real time. The terms added at positive step boundaries have power at least "
                     + "two; their derivatives vanish at those boundaries. Reindexing the remaining "
                     + "derivative sum gives exactly the delayed relaxation. The extension is not "
-                    + "assumed differentiable at zero. Positivity, decay, and comparison of real "
-                    + "shifts require additional arguments.", DescribeRole.Theorem))));
+                    + "assumed differentiable at zero.", DescribeRole.Theorem),
+            Node("not_differentiableAt_relaxation_zero", "The initial derivative jump",
+                "The equilibrium extension has left derivative zero at the initial quench, "
+                    + "whereas the first polynomial segment has right derivative minus one. "
+                    + "Consequently the two-sided derivative does not exist there.", DescribeRole.Theorem),
+            Node("relaxation_pos", "Positivity in the nonoscillatory delay range",
+                "For every positive delay at most exp(-1), E is strictly positive at every real "
+                    + "time. Multiply E by exp(kappa times t), choosing kappa equal to exp(1). "
+                    + "Its rate at zero is positive. If a first nonpositive rate existed, the "
+                    + "weighted response would increase strictly up to that time, including its "
+                    + "negative-time exponential history. The delayed differential equation and "
+                    + "exp(kappa times tau) at most kappa would make the rate strictly positive "
+                    + "there as well, a contradiction.", DescribeRole.Theorem),
+            Node("strictAntiOn_relaxation", "Strict cooling after the quench",
+                "Positivity of the delayed value makes the derivative strictly negative at all "
+                    + "positive times. Continuity joins this strict decrease to the value at zero.",
+                DescribeRole.Theorem),
+            Node("antitone_relaxation", "Monotonicity with the equilibrium extension",
+                "The constant past and the decreasing nonnegative-time response together give "
+                    + "a nonincreasing function on the whole real line.", DescribeRole.Theorem),
+            Node("relaxation_le_exp_neg", "A uniform exponential bound",
+                "At nonnegative times, E is at most exp(-t). The derivative of exp(t) times E "
+                    + "is nonpositive because E evaluated one delay earlier is at least its "
+                    + "current value. At zero the product equals one.", DescribeRole.Theorem),
+            Node("tendsto_relaxation_atTop", "Decay to equilibrium",
+                "The positive response is bounded above by exp(-t), so it tends to zero as "
+                    + "time tends to positive infinity. These conclusions include the critical "
+                    + "endpoint tau equal to exp(-1); no asymptotic expansion is used.",
+                DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
