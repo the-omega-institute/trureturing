@@ -25,7 +25,7 @@ assumption enters the construction.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -65,10 +65,10 @@ private def levelCoefficients (r : ℕ) (ell : ℤ) :
     · simp
   map_add' f g := by
     funext a
-    simp only [Submodule.coe_add, coeff_add, Pi.add_apply]
+    simp only [Submodule.coe_add, MvPolynomial.coeff_add, Pi.add_apply]
   map_smul' c f := by
     funext a
-    simp only [Submodule.coe_smul, coeff_smul, Pi.smul_apply]
+    simp only [Submodule.coe_smul, coeff_smul, Pi.smul_apply, RingHom.id_apply]
 
 private def levelMonomialBasis (r : ℕ) (ell : ℤ) :
     Module.Basis (LevelIndex r ell) ℂ (levelSpace r ell) :=
@@ -141,7 +141,8 @@ theorem physicalChargeFiber_eq_bot_of_level_neg (hell : 1-chargeEnergy D p < 0) 
     omega
   have hzero : (⟨x,hx⟩ : physicalChargeFiber D H h26 hHG hGH p) = 0 := by
     have h := congrArg E hf
-    simpa only [LinearEquiv.apply_symm_apply, map_zero] using h
+    rw [E.apply_symm_apply, E.map_zero] at h
+    exact h
   exact congrArg Subtype.val hzero
 
 include hp in
@@ -156,7 +157,13 @@ theorem physicalChargeFiber_character :
       else 0 := by
   classical
   by_cases hell : 0 ≤ 1-chargeEnergy D p
-  · rw [if_pos hell, coloured_coefficient (fun _ => 24)]
+  · rw [if_pos hell]
+    have hc : PowerSeries.coeff (1-chargeEnergy D p).toNat
+        (eulerSeries (fun _ => (24 : ℤ))) =
+        (Nat.card (ColouredPartition (fun _ => 24) (1-chargeEnergy D p).toNat) : ℤ) := by
+      simpa only [Nat.cast_ofNat] using
+        coloured_coefficient (fun _ => 24) (1-chargeEnergy D p).toNat
+    rw [hc]
     exact_mod_cast (Module.finrank_eq_nat_card_basis
       (physicalPartitionBasis D H h26 hHG hGH p hp hell))
   · rw [if_neg hell]
