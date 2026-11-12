@@ -16,11 +16,42 @@ open Finset
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
 open _root_.D5.S3.Arith.GoldenLocalThreshold
 open _root_.D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
+open _root_.D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 open _root_.D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 open _root_.D5.S3.Arith.Robin.ActualTwoPriceDefect
 open _root_.D5.S3.Arith.Robin.ActualGlobalBracketing
 open _root_.D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+private theorem cutoff_one : optimalLayerCount (1 : ℝ) 2 = 0 := by
+  have hfirst : goldenLayerMarginal 2 1 < 1 := by
+    rw [golden_layer_marginal_one_eq_log_one_add_inv Nat.prime_two]
+    norm_num only [Nat.cast_ofNat]
+    apply (div_lt_one (Real.log_pos (by norm_num : (1 : ℝ) < 2))).mpr
+    exact Real.log_lt_log (by norm_num) (by norm_num)
+  by_contra hne
+  have hactive := (strict_layer_iff (by norm_num : (0 : ℝ) < 1)
+    Nat.prime_two (by omega : 1 ≤ (1 : ℕ))).mp
+    (by rw [strictInteger_counts (by norm_num : (0 : ℝ) < 1)]; omega)
+  linarith
+
+private theorem volume_dependence : ∃ x y : ℕ, h2 x 1 ≠ h2 y 1 := by
+  refine ⟨1, 2, ?_⟩
+  simp only [h2, cutoff_one, Nat.factorization_one, Finsupp.zero_apply,
+    Nat.sub_zero, Nat.cast_zero, zero_mul, Nat.prime_two.factorization_self,
+    Nat.cast_one, one_mul]
+  exact (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne
+
+private theorem reward_dependence : ∃ x y : ℕ,
+    ordinary2tailReward x 1 ≠ ordinary2tailReward y 1 := by
+  have hleft := _root_.D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap.full_original2tail_reward_telescope
+    (m := 1) (c := 1) (by rw [cutoff_one]; omega)
+  have hright := _root_.D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap.full_original2tail_reward_telescope
+    (m := 2) (c := 1) (by rw [cutoff_one]; omega)
+  refine ⟨1, 2, ?_⟩
+  rw [hleft, hright, cutoff_one]
+  norm_num [Nat.prime_two.factorization_self]
+  exact (Real.log_pos (by norm_num : (1 : ℝ) < 3 / 2)).ne
 
 namespace greatest_feasible_global_gap
 
@@ -89,6 +120,38 @@ theorem source_bridge :
 #print axioms actual_law
 #print axioms source_bridge
 
+theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  obtain ⟨x, y, hxy⟩ := volume_dependence
+  exact ⟨1, x, y, hxy⟩
+
+private def rejected : Realization signature :=
+  realize signature (fun _ c m => h2 m c + 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hbad
+  have h := (hbad (m := 1) (by omega) (c := 1)
+    (by rw [cutoff_one]; omega) 0).2.2.2
+  norm_num [rejected, realize, h2, J2, original2tail, deleted2tailInteger,
+    cutoff_one] at h
+
+def family : Registration arena
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap.full_original2tail_deletion_identity)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+#print axioms family
+
 end full_original2tail_deletion_identity
 
 namespace full_original2tail_reward_telescope
@@ -123,6 +186,36 @@ theorem source_bridge :
 #print axioms actual_law
 #print axioms source_bridge
 
+theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  obtain ⟨x, y, hxy⟩ := reward_dependence
+  exact ⟨1, x, y, hxy⟩
+
+private def rejected : Realization signature :=
+  realize signature (fun _ c m => ordinary2tailReward m c + 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hbad
+  have h := hbad (m := 1) (c := 1) (by rw [cutoff_one]; omega)
+  norm_num [rejected, realize, ordinary2tailReward, original2tail, cutoff_one] at h
+
+def family : Registration arena
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap.full_original2tail_reward_telescope)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+#print axioms family
+
 end full_original2tail_reward_telescope
 
 namespace full_original2tail_reward_bound
@@ -156,6 +249,38 @@ theorem source_bridge :
 
 #print axioms actual_law
 #print axioms source_bridge
+
+theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  obtain ⟨x, y, hxy⟩ := reward_dependence
+  exact ⟨1, x, y, hxy⟩
+
+private def rejected : Realization signature :=
+  realize signature (fun _ c _ => 2 * c * Real.log 2 + 1) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro hbad
+  have h := (hbad (m := 1) (c := 1) (by norm_num)
+    (by rw [cutoff_one]; omega)).2
+  change 2 * 1 * Real.log 2 + 1 < 2 * 1 * Real.log 2 at h
+  linarith
+
+def family : Registration arena
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap.full_original2tail_reward_bound)) where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+#print axioms family
 
 end full_original2tail_reward_bound
 
