@@ -1,0 +1,83 @@
+**命题 96.7（成熟实分类在全效应上的应用）。** 在(96.1)的实域 $c=2$ 下，必有 $n\ge3$，
+且经过正交换基，原空间准确为
+
+$$
+L=\{X\in\operatorname{Sym}_n(\mathbb R):X_{12}=X_{13}=0\}.
+\tag{96.26}
+$$
+
+$n=3$ 时它是完整 $\mathbb R\oplus\operatorname{Sym}_2(\mathbb R)$；
+$n\ge4$ 时原 $\mathrm G_2$ 本身失败，并有全效应最小值恰为 $1/4$ 的原三纯点见证。
+
+证明。分类输入取 Argue–Kılınç-Karzan–Wang，
+*Necessary and sufficient conditions for rank-one generated cones*，
+[arXiv:2007.07433v2 Theorem 4][AKW96]：两个实对称等式约束的PSD截面若ROG，则其法向张成含一个非零PSD矩阵，
+或者两个法向具有共同线性因子，写为 $A=\operatorname{Sym}(az^\mathsf T)$、$B=\operatorname{Sym}(bz^\mathsf T)$，
+其中 $\operatorname{Sym}(Y)=(Y+Y^\mathsf T)/2$。
+这里法向独立且全迹零，第一种可能被排除；第二种给 $a,b\perp z$，且 $z\ne0$、$a,b$ 独立。
+正交地选择 $z$ 的方向为 $e_1$、$\operatorname{span}\{a,b\}$ 为 $\operatorname{span}\{e_2,e_3\}$，
+再对两个等式作可逆实换基，即得(96.26)。故 $n\ge3$。
+这一步在93.2的归一化之后只用正交换基，保持原迹；
+Hildebrand [§6.2 Theorem 6.5][H96] 的抽象同构分类与此相符，但不被用来擅自保任意原 $u$。
+上述分类是成熟输入，以下只是它对原全效应条件的应用。
+
+令
+
+$$
+H_1=e_1^\perp,\qquad H_2=\operatorname{span}\{e_1,e_4,\ldots,e_n\}.
+\tag{96.27}
+$$
+
+秩一约束就是 $w_1w_2=w_1w_3=0$，所以全部原纯点恰为单位向量在 $H_1\cup H_2$ 上的秩一投影。
+这也给整个原锥等于这两个子空间上完整PSD锥的和：对原PSD矩阵取Gram向量 $g_i$，
+$g_1\perp g_2,g_3$；沿 $\mathbb Rg_1$ 及其正交补拆分全部 $g_i$，
+就得到分别支撑在 $H_2,H_1$ 的PSD矩阵。$g_1=0$ 时整个矩阵已支撑在 $H_1$。
+因此以唯一 $E\in L$ 表示原泛函 $f_E(X)=\operatorname{tr}(EX)$ 时，整个原 proper 区间准确为
+
+$$
+f_E\in[0,u]\quad\Longleftrightarrow\quad
+0\preceq E|_{H_1}\preceq I_{H_1},\qquad
+0\preceq E|_{H_2}\preceq I_{H_2}.
+\tag{96.28}
+$$
+
+这里 $E|_{H_i}$ 表示压缩；没有要求 $E$ 在整个环境中为正收缩。
+$n=3$ 时 $H_2=\mathbb Re_1$ 与 $H_1$ 正交，正是完整块，93.2给全部结论。
+
+若 $n\ge4$，取同一原模型中的
+
+$$
+v=\frac{e_1+e_4}{\sqrt2},\qquad
+w_\pm=\frac{e_4\pm e_2}{\sqrt2},\qquad
+p=vv^\mathsf T,\quad q_\pm=w_\pm w_\pm^\mathsf T,
+\tag{96.29}
+$$
+
+并取原泛函
+
+$$
+f_\pm(X)=\tfrac12(X_{11}+X_{22}+X_{44})+X_{14}\mp X_{24}.
+\tag{96.30}
+$$
+
+其代表矩阵在 $H_2$ 上是 $p$，在 $H_1$ 上是 $w_\mp w_\mp^\mathsf T$，其余方向为零。
+故(96.28)验证它们在整个原锥 proper，且 $f_\pm(p)=1$、$f_\pm(q_\pm)=0$。
+另一方面
+
+$$
+m=\frac{q_++q_-}{2}=\tfrac12(E_{44}+E_{22}).
+\tag{96.31}
+$$
+
+任意原 $f_E\in F_p$ 在完整 $H_2$ 上是确认 $v$ 的正收缩，因此该压缩固定 $v$，并大于等于 $p$；
+所以 $f_E(E_{44})\ge1/2$。原正性又给 $f_E(E_{22})\ge0$，故 $f_E(m)\ge1/4$。
+投影限制效应 $h_p$ 达到等号，遂有
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad T_p(m)=\tfrac14.
+\tag{96.32}
+$$
+
+这是第90—91章全效应三点链障碍在正规形中的应用：它排除这一整个实余维二分支的 $\mathrm G_2$，
+并非一个满足 $\mathrm G_2$ 却失败 $\mathrm{Z0}$ 的反例。证毕。
+
