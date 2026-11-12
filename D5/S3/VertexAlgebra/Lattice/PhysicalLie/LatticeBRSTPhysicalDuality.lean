@@ -44,7 +44,8 @@ namespace D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalDuality
 
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration LatticePositiveEnergy
 open LatticeSugawaraCurrents LatticeLightConeCoordinates LatticeLightConeCoordinates.NullFrame
-open LatticeQuartetContraction LatticeSugawaraNullFrame
+open LatticeQuartetContraction
+open LatticeSugawaraNullFrame hiding E Label
 open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalChargeFiber
 open SourceBPZ.OriginalSourcePairing OriginalCurrentMetric SignedOscillatorWick
 open LatticeRelativeBRSTCohomology.Ground (energyTarget)
@@ -96,7 +97,10 @@ private instance levelIndexFinite (t : ℕ) (ell : ℤ) : Finite (LevelIndex t e
   letI := bounded_occupations_finite t ell.toNat
   let enc (a : LevelIndex t ell) : {e : Occ t // wt e ≤ ell.toNat} :=
     ⟨a.val,by have h := a.property;rw [signedWeight_cast] at h;omega⟩
-  exact Finite.of_injective enc (by intro a b h;exact Subtype.ext (congrArg Subtype.val h))
+  exact Finite.of_injective enc (by
+    intro a b h
+    apply Subtype.ext
+    exact congrArg (fun z : {e : Occ t // wt e ≤ ell.toNat} => z.val) h)
 
 private instance levelIndexFintype (t : ℕ) (ell : ℤ) : Fintype (LevelIndex t ell) :=
   Fintype.ofFinite _
@@ -161,8 +165,9 @@ private theorem substitution_preserves (t : ℕ) (ell : ℤ)
     exact (weightedHomogeneousSubmodule ℂ _ _).smul_mem _
       (isWeightedHomogeneous_X ℂ _ (j,x.2))
   induction hP using MvPolynomial.IsWeightedHomogeneous.induction_on with
-  | zero => simpa using isWeightedHomogeneous_zero ℂ
-      (fun y : Fin t × ℕ => (y.2 : ℤ)+1) ell
+  | zero =>
+      simpa using isWeightedHomogeneous_zero ℂ
+        (fun y : Fin t × ℕ => (y.2 : ℤ)+1) ell
   | add P Q hP hQ ihP ihQ => simpa only [map_add] using ihP.add ihQ
   | monomial e c he =>
       rw [substitution,MvPolynomial.aeval_monomial]
