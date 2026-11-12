@@ -165,7 +165,11 @@ private theorem beta_hasDerivAt {j : ℕ} (hj : 1 ≤ j) {x : ℝ} (hx : 2 ≤ x
   convert hG.div (Real.hasDerivAt_log hx0.ne') hl.ne' using 1
   · rfl
   · simp only [Pi.add_apply, Pi.div_apply, zero_mul, one_mul, zero_sub, zero_add]
-    unfold logarithmicSlope beta HigherLayerLogSlope.gain
+    change -logarithmicSlope j x * beta j x / x =
+      (-(powerSumDerivative j x) / powerSum j x ^ 2 /
+        (1 + 1 / powerSum j x) * log x - HigherLayerLogSlope.gain j x * x⁻¹) /
+          log x ^ 2
+    unfold logarithmicSlope beta
     field_simp [hx0.ne', hs.ne', hg.ne', hl.ne',
       (show 1 + 1 / powerSum j x ≠ 0 by positivity)]
     <;> ring
@@ -183,7 +187,7 @@ private theorem priceLip_nonneg (j : ℕ) {a : ℝ} (ha : 2 ≤ a) :
 
 private theorem derivative_bound {j : ℕ} (hj : 1 ≤ j) {a x : ℝ}
     (ha : 2 ≤ a) (hax : a ≤ x) :
-    | -logarithmicSlope j x * beta j x / x | ≤ priceLip j a := by
+    |(-logarithmicSlope j x * beta j x / x)| ≤ priceLip j a := by
   have hx : 2 ≤ x := ha.trans hax
   have ha0 : 0 < a := by linarith
   have hx0 : 0 < x := by linarith
@@ -201,7 +205,7 @@ private theorem derivative_bound {j : ℕ} (hj : 1 ≤ j) {a x : ℝ}
   have hnum : logarithmicSlope j x * beta j x ≤
       ((j : ℝ) + 2) * (1 / (a ^ j * log a)) :=
     mul_le_mul hS hbeta hb.le (by positivity)
-  have habs : | -logarithmicSlope j x * beta j x / x | =
+  have habs : |(-logarithmicSlope j x * beta j x / x)| =
       logarithmicSlope j x * beta j x / x := by
     rw [neg_mul, neg_div, abs_neg, abs_of_nonneg (by positivity)]
   rw [habs]
@@ -359,6 +363,7 @@ theorem uniform_coarse_geometry (j : ℕ) (hj : 2 ≤ j) :
       have heq : 1 / (2 * (j : ℝ)) * log (P x) = (log (P x) / 2) / (j : ℝ) := by ring
       rw [heq] at hl'
       exact (div_lt_iff₀ hj0).mp hl'
+    change 4 * (j : ℝ) * log 2 ≤ log (P x) at hL
     nlinarith
   obtain ⟨T, hT⟩ := eventually_atTop.mp (eventually_comap.mp he)
   refine ⟨max T 4, lt_of_lt_of_le (by norm_num) (le_max_right _ _), ?_⟩
@@ -404,11 +409,11 @@ private theorem two_cost_bound {mu lambda h ej e1 H A M N F G : ℝ}
   have hlow : - (ej + e1 + R) ≤ h - lambda := by
     have hh : (lambda - h) * N ≤ (ej + e1 + R) * N := by
       nlinarith [mul_nonneg he1 hH]
-    have := (mul_le_mul_right (hA.trans_le hAN)).mp hh
+    have := le_of_mul_le_mul_right hh (hA.trans_le hAN)
     linarith
   have hupp : h - lambda ≤ ej + e1 + R := by
     have hh : (h - lambda) * M ≤ (ej + e1 + R) * M := by nlinarith
-    exact (mul_le_mul_right (hA.trans_le hAM)).mp hh
+    exact le_of_mul_le_mul_right hh (hA.trans_le hAM)
   exact abs_le.mpr ⟨hlow, hupp⟩
 
 /-- Substantive finite actual-record restriction.  Its coordinate pools are NOT
@@ -560,7 +565,9 @@ private theorem actual_boundary_price_from_pools (j : ℕ) (hj : 2 ≤ j) :
     intro hd
     have hmem : p ∈ m.primeFactors := (hFU p hp).1.mem_primeFactors hd hm0.ne'
     rw [hsupport] at hmem
-    have hle : (p : ℝ) ≤ P := by exact_mod_cast (Nat.mem_primesLE.mp hmem).1
+    have hle : (p : ℝ) ≤ P := by
+      change (p : ℝ) ≤ (largestPrime m : ℝ)
+      exact_mod_cast (Nat.mem_primesLE.mp hmem).1
     linarith [(hFU p hp).2.1]
   have hHigherPrice (S : Finset ℕ) (hS : ∀ p ∈ S,
       p.Prime ∧ Q - w ≤ (p : ℝ) ∧ (p : ℝ) ≤ Q + w) :
@@ -914,6 +921,7 @@ private theorem separated_scale_limit {α : Type*} {l : Filter α}
     intro he
     apply hv
     simp [he]
+  dsimp only [Pi.div_apply]
   rw [Real.rpow_sub hx]
   field_simp [hv0, (Real.rpow_pos_of_pos hx a).ne', (Real.rpow_pos_of_pos hx b).ne']
   <;> ring
@@ -971,6 +979,7 @@ private theorem higher_width_limit {α : Type*} {l : Filter α}
   apply hh.congr'
   filter_upwards [hQ.eventually_gt_atTop 0] with x hx
   have he : -(1 - bhpExponent) = bhpExponent - 1 := by ring
+  dsimp only [Function.comp_def]
   rw [he, Real.rpow_sub hx, Real.rpow_one]
   ring
 
@@ -1018,6 +1027,7 @@ theorem uniform_higher_geometry (j : ℕ) (hj : 2 ≤ j)
     · subst j
       have hv : V = P := by
         funext x
+        change (layerPrime (m x) 1 : ℝ) = (largestPrime (m x) : ℝ)
         exact_mod_cast layerPrime_one x.2.1
       rw [hv]
       exact (coarse_scale_limits P Q 2 (by norm_num) hQnonneg hP hR).2.2
@@ -1027,9 +1037,10 @@ theorem uniform_higher_geometry (j : ℕ) (hj : 2 ≤ j)
         (fun x => x.2.2.2) (j - 1) hjm hP
       have hscaleV := layer_scale_limit P V (j - 1) hjm
         (fun _ => Nat.cast_nonneg _) hP hRV
+      have hjlt : ((j - 1 : ℕ) : ℝ) < (j : ℝ) := by
+        exact_mod_cast (Nat.sub_lt (by omega : 0 < j) (by norm_num : 0 < 1))
       apply separated_scale_limit P Q V
-        (by simpa only [one_div] using one_div_lt_one_div_of_lt hjm0
-          (show ((j - 1 : ℕ) : ℝ) < j by exact_mod_cast (show j - 1 < j by omega)))
+        (by simpa only [one_div] using one_div_lt_one_div_of_lt hjm0 hjlt)
         (Real.rpow_pos_of_pos hjm0 _).ne' hP hscaleQ hscaleV
   have hwidth := higher_width_limit Q hQ C
   have hcapacity := count_capacity_limit P Q j hj hQnonneg hP hR
@@ -1266,7 +1277,7 @@ private theorem normalized_cost_bound (j : ℕ) (hj : 2 ≤ j)
   have hfirst' : priceLip 1 (P / 2) * v ≤ E * lambda := by
     exact hfirst.trans (mul_le_of_le_one_right (mul_nonneg hE hlam.le) ht1)
   have h8 : 8 * (j : ℝ) / (K : ℝ) ≤ 8 * (j : ℝ) * t := by
-    simpa only [div_eq_mul_inv, one_div] using
+    simpa only [div_eq_mul_inv, one_div, one_mul] using
       mul_le_mul_of_nonneg_left hKinv (show 0 ≤ 8 * (j : ℝ) by positivity)
   have hover : (8 * (j : ℝ) / (K : ℝ)) * (lambda + priceLip 1 (P / 2) * v) ≤
       (8 * (j : ℝ) * (1 + E)) * lambda * t := by
@@ -1361,8 +1372,8 @@ theorem bhp_boundary_price_localization : BHPBoundaryPriceClaim := by
     calc
       _ ≤ priceLip j (Q / 2) * (C * Q ^ bhpExponent) + priceLip 1 (P / 2) * V +
           (8 * (j : ℝ) / (K : ℝ)) * (beta 1 P + priceLip 1 (P / 2) * V) :=
-        add_le_add (add_le_add_left herror _)
-          (mul_le_mul_of_nonneg_left (add_le_add_left herror _) (by positivity))
+        add_le_add (add_le_add_right herror _)
+          (mul_le_mul_of_nonneg_left (add_le_add_right herror _) (by positivity))
       _ ≤ _ := normalized_cost_bound j hj hC hC hP4 hQ4 hpower hlog
   exact hbound.trans hcost
 
