@@ -55,23 +55,15 @@ def commonSupport (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
       ∀ n, ‖n‖ = 1 → b.param n = p → g (b.param (-n)) = 0
 
 omit [FiniteDimensional ℝ V] in
-private theorem affine_extreme_iff {E : Type*} [AddCommGroup E] [Module ℝ E]
+private theorem affine_extreme_preimage {E : Type*} [AddCommGroup E] [Module ℝ E]
     (f : E →ᵃ[ℝ] V) (hf : Function.Injective f) (S : Set E) (x : E) :
-    f x ∈ (f '' S).extremePoints ℝ ↔ x ∈ S.extremePoints ℝ := by
-  constructor
-  · rintro ⟨hx, he⟩
-    refine ⟨(hf.mem_set_image).mp hx, ?_⟩
-    intro a ha b hb hab
-    apply hf
-    exact he ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
-      ((image_openSegment ℝ f a b) ▸ Set.mem_image_of_mem f hab)
-  · rintro ⟨hx, he⟩
-    refine ⟨⟨x, hx, rfl⟩, ?_⟩
-    rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩ hab
-    apply congrArg f
-    apply he ha hb
-    rw [← image_openSegment ℝ f a b] at hab
-    exact hf.mem_set_image.mp hab
+    f x ∈ (f '' S).extremePoints ℝ → x ∈ S.extremePoints ℝ := by
+  rintro ⟨hx, he⟩
+  refine ⟨(hf.mem_set_image).mp hx, ?_⟩
+  intro a ha b hb hab
+  apply hf
+  exact he ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
+    ((image_openSegment ℝ f a b) ▸ Set.mem_image_of_mem f hab)
 
 omit [FiniteDimensional ℝ V] in
 private theorem chart_mem {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
@@ -87,7 +79,7 @@ private theorem chart_pure_norm {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} 
     refine ⟨⟨s, by simpa using hs, rfl⟩, ?_⟩
     intro x hx y hy hxy
     exact hp.2 ((b.whole ▸ hx).1) ((b.whole ▸ hy).1) hxy
-  have hh := (affine_extreme_iff b.param b.injective _ s).mp he
+  have hh := affine_extreme_preimage b.param b.injective _ s he
   rw [StrictConvexSpace.extremePoints_closedBall_eq_sphere] at hh
   simpa using hh
 
@@ -220,7 +212,9 @@ private theorem chart_sphere_pure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ
   have hh : n ∈ (Metric.closedBall 0 1).extremePoints ℝ := by
     rw [StrictConvexSpace.extremePoints_closedBall_eq_sphere]
     simpa using hn
-  have hi := (affine_extreme_iff b.param b.injective _ n).mpr hh
+  have hi := D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.affine_extreme_image
+    (Metric.closedBall (0 : EuclideanSpace ℝ (Fin b.dim)) 1)
+    (convex_closedBall 0 1) b.param (fun _ _ _ _ h => b.injective h) hh
   rw [b.whole] at hi
   exact (pair_extreme C u p q).extremePoints_subset_extremePoints hi
 

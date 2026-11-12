@@ -51,6 +51,22 @@ def base (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
 def pure (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
   (base C u).extremePoints ℝ
 
+omit [FiniteDimensional ℝ A] in
+theorem affine_extreme_image {E F : Type*} [AddCommGroup E] [Module ℝ E]
+    [AddCommGroup F] [Module ℝ F] (S : Set E) (hS : Convex ℝ S)
+    (f : E →ᵃ[ℝ] F) (hf : Set.InjOn f S) {x : E}
+    (hx : x ∈ S.extremePoints ℝ) :
+    f x ∈ (f '' S).extremePoints ℝ := by
+  refine ⟨Set.mem_image_of_mem f hx.1, ?_⟩
+  rintro _ ⟨y, hy, rfl⟩ _ ⟨z, hz, rfl⟩ hseg
+  rw [← image_openSegment ℝ f y z] at hseg
+  obtain ⟨q, hq, heq⟩ := hseg
+  have hqS : q ∈ S :=
+    hS.segment_subset hy hz (openSegment_subset_segment _ _ _ hq)
+  have hqx : q = x := hf hqS hx.1 heq
+  subst q
+  exact congrArg f (hx.2 hy hz hq)
+
 /-- All proper effects on the original cone, with no restricted-effect supplier. -/
 def proper (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (f : A →ₗ[ℝ] ℝ) : Prop :=
   ∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x

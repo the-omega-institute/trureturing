@@ -36,6 +36,11 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 H("All pure points"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The pure set P is exactly the set of extreme points of base(C,u), with extremality over the real scalars. It is not an independently chosen list and need not be finite or consist of exposed points."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("affine-extreme-image"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.affine_extreme_image"),
+                H("Affine images preserve extreme points"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For additive real module carriers E and F, a convex set S, an affine map f that is injective on S, and an extreme point x of S, the image f(x) is an extreme point of the image f '' S. This is the shared generic transport used by both the Bell-polytope supplier and the whole-pair ball consumer."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("proper-interval"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper"),
                 H("The full proper interval"), StatementSource.WithoutFormula(),

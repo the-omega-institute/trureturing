@@ -66,7 +66,19 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure`
 
 The pure set P is exactly the set of extreme points of base(C,u), with extremality over the real scalars. It is not an independently chosen list and need not be finite or consist of exposed points.
 
-**Definition 1.6 (The full proper interval).**
+**Theorem 1.6 (Affine images preserve extreme points).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.affine_extreme_image`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.affine_extreme_image` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For additive real module carriers E and F, a convex set S, an affine map f that is injective on S, and an extreme point x of S, the image f(x) is an extreme point of the image f '' S. This is the shared generic transport used by both the Bell-polytope supplier and the whole-pair ball consumer.
+
+**Definition 1.7 (The full proper interval).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper`
 
 A real linear functional f on A is proper precisely when 0 <= f(x) <= u(x) for every x in the original C. Every such f is available in this mathematical interval.
 
-**Definition 1.7 (All confirming proper effects).**
+**Definition 1.8 (All confirming proper effects).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.confirms`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.confirms`
 
 The predicate confirms(C,u,p,f) requires f to be proper on all of C and f(p)=1. In particular the original u confirms each pure point.
 
-**Definition 1.8 (The original comparison lower envelope).**
+**Definition 1.9 (The original comparison lower envelope).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.comparison`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.comparison
 
 For a pure reference p, the value T_p(x) is the real infimum of f(x) over all original proper effects f confirming p. For each x in C this set of readings is nonempty and bounded below by zero. The theorem proves that its infimum is attained by the constructed effect; it does not assume attainment.
 
-**Definition 1.9 (Actual minimal signed relations).**
+**Definition 1.10 (Actual minimal signed relations).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit`
 
 Given a finite subset s of P, a coefficient function c on s is a circuit when c is nonzero, its weighted sum of the original pure vectors is zero, and any nonzero signed relation w supported inside the support of c has exactly that support. The finite ambient subset may contain unused labels; the actual support is the circuit. Subtype labels are distinct original pure points. No preservation of signs is imposed on competitors.
 
-**Definition 1.10 (Balance on every circuit).**
+**Definition 1.11 (Balance on every circuit).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.balanced`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.balanced`
 
 A scalar assignment v on P is balanced when, for every finite subset s and every circuit c on s, the sum of c(i)v(i) is zero. Applied at reference p, the assignment is v(q)=T_q(p); reciprocity is absent from this definition.
 
-**Definition 1.11 (Every finite pure mixture).**
+**Definition 1.12 (Every finite pure mixture).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixtur
 
 Full S requires, for every pure reference p, every natural n, every list q indexed by Fin n of original pure points and every nonnegative real weight list summing to one, T_p(sum_i w_i q_i)=sum_i w_i T_{q_i}(p). Zero weights, unequal positive weights and repeated labels remain included. An empty normalized weight list is impossible, rather than excluded by a supplier.
 
-**Definition 1.12 (Reciprocal least confirming effects).**
+**Definition 1.13 (Reciprocal least confirming effects).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.reciprocalLeast`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.reciprocal
 
 There is a family of real linear effects e_p on A, one for each original pure p, with e_p proper and confirming p, e_p(x)<=f(x) for every x in the entire original cone and every original proper confirmer f of p, and e_p(q)=e_q(p) for every pair of pure points. Leastness is required on the whole cone, including nonnormalized positive vectors.
 
-**Theorem 1.13 (Constructing reciprocal least confirmation).**
+**Theorem 1.14 (Constructing reciprocal least confirmation).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit_balance_least_confirmation`
 
@@ -166,7 +178,7 @@ The normalized base is closed. On the compact intersection of C with the unit sp
 
 In real coordinates, apply the existing support-contained circuit decomposition to each finite original relation. Balance annihilates every circuit summand, hence every relation, and the existing linear quotient construction descends q maps to T_q(p) to e_p on A. Pure bounds extend through the closed halfspaces, giving 0<=e_p<=u on C and e_p(p)=1. Since the full proper interval includes e_p, T_p(q)<=e_p(q)=T_q(p). Interchanging references supplies the reverse inequality. Pure domination against every confirmer then extends to all of C. Leastness and attainment identify T_p with e_p there, and linearity gives full S.
 
-**Theorem 1.14 (Full comparison is equivalent to circuit balance).**
+**Theorem 1.15 (Full comparison is equivalent to circuit balance).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance`
 
@@ -184,6 +196,7 @@ The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remai
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.affine_extreme_image`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.balanced`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact`
