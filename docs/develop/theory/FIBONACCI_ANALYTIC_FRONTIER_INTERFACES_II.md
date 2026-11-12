@@ -3221,3 +3221,239 @@ $$
 **范围。** 按相等模式展开有限和、集合分割计数与分割格 Möbius 容斥是标准组合事实；循环与集合分割的计数约定参见 [NIST DLMF §26.8](https://dlmf.nist.gov/26.8)，上述证明已直接给出所需容斥系数与恒等式。本节的本仓推导（repo-derived）是适配二次关系和有符号互异指标界的分级 $\delta$、定量的部分配对缺陷传播恒等式，以及揭示顶阶条件不足的两组反例与矩计算；不主张这些标准组合机制的原创性，也不作历史首创主张。它本身不提供任意阶算术相关或奇异级数估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 501. 二次关系下 Wick 渐近与低阶缺陷的等价反演
+
+本节沿用定义 500.1 的记号，并把定理 500.2 的正向传播反过来：在同一组大小界下，全部子组的配对缺陷消失与全部子组的 Wick 渐近完全等价，且两个方向都有显式常数。
+
+**定义 501.1（子组的归一化缺陷与 Wick 偏差）。** 在定理 500.2 的条件下，令 $s=\sqrt{HL}$、$\eta=\sqrt{L/H}+H^{-1}$。对 $U\subseteq K$，令
+
+$$
+\delta(U)=\frac{|\Delta_U|}{s^{|U|}},\qquad
+\omega(U)=\frac{|V_U-\mathcal W_U^V|}{s^{|U|}},\qquad
+\Omega(U)=\max_{\substack{U'\subseteq U\\|U'|\ge3}}\omega(U'),
+$$
+
+其中空最大值记为 $0$。对整数 $m\ge0$、$0\le p\le m/2$，令 $N_{m,p}=\dfrac{m!}{2^pp!(m-2p)!}$，即 $m$ 元集合上恰含 $p$ 个二元组的部分配对个数。再令
+
+$$
+Q_{m,C}=\sum_{p=0}^{\lfloor m/2\rfloor}N_{m,p}C^{2p},\qquad
+A_0=A_1=A_2=0,\qquad
+A_m=1+\sum_{p=1}^{\lfloor m/2\rfloor}N_{m,p}C^{2p}A_{m-2p}\quad(m\ge3),
+$$
+
+并记 $M_{k,C}=\max_{3\le j\le k}\mathfrak C_{j,C}$，其中 $\mathfrak C_{j,C}$ 为定理 500.2 中阶数 $j$ 的误差常数。
+
+**引理 501.2（配对权的大小）。** 在定理 500.2 的条件下，对任意 $U\subseteq K$ 及 $U$ 上大小为 $p$ 的部分配对 $P$，有 $|b|^p|T_P|\le C^{2p}s^{2p}$。
+
+**证明。** 对二元组 $e=\{i,j\}$，$|f_e|\le1$，故 $|T_e|\le|D|\le CH$；又 $|b|\le CL$，所以 $|bT_e|\le C^2HL=C^2s^2$。对 $P$ 的 $p$ 个二元组相乘即得。证毕。
+
+**定理 501.3（定量双向反演）。** 在定理 500.2 的条件下，对每个 $U\subseteq K$，
+
+$$
+\omega(U)\le Q_{|U|,C}\max_{U'\subseteq U}\delta(U')+\mathfrak C_{|U|,C}\,\eta\quad(|U|\ge2),
+\tag{501.1}
+$$
+
+$$
+\delta(U)\le A_{|U|}\bigl(\Omega(U)+M_{k,C}\,\eta\bigr).
+\tag{501.2}
+$$
+
+**证明。** 先说明定理 500.2 可用于每个子组。对 $U\subseteq K$，$|U|\ge2$，把标签集换成 $U$、权重换成 $(f_i)_{i\in U}$。条件 (500.2) 对 $2\le r\le|U|-1$ 与 $U$ 中两两不交的非空子集成立，因为这些子集也是 $K$ 中两两不交的非空子集；其余条件不涉及标签。于是
+
+$$
+V_U-\mathcal W_U^V=\sum_{P\text{ 为 }U\text{ 的部分配对}}b^{|P|}T_P\Delta_{U(P)}+E_U,\qquad
+|E_U|\le\mathfrak C_{|U|,C}\,s^{|U|}\eta,
+\tag{501.3}
+$$
+
+其中 $U(P)=U\setminus\bigcup_{e\in P}e$，$|U(P)|=|U|-2|P|$。
+
+(501.1)：对 (501.3) 取绝对值，用引理 501.2 并除以 $s^{|U|}$，得
+
+$$
+\omega(U)\le\sum_{P}C^{2|P|}\delta(U(P))+\mathfrak C_{|U|,C}\,\eta .
+$$
+
+每个 $\delta(U(P))$ 不超过 $\max_{U'\subseteq U}\delta(U')$，且大小为 $p$ 的部分配对恰有 $N_{|U|,p}$ 个，即得 (501.1)。
+
+(501.2)：对 $|U|$ 作强归纳。$|U|\le2$ 时 $\Delta_U=0$，结论成立。设 $|U|=m\ge3$，且结论对所有更小的子组成立。在 (501.3) 中，空配对 $P=\varnothing$ 的贡献恰为 $\Delta_U$，故
+
+$$
+\Delta_U=\bigl(V_U-\mathcal W_U^V\bigr)-E_U-\sum_{P\ne\varnothing}b^{|P|}T_P\Delta_{U(P)} .
+$$
+
+除以 $s^m$ 并用引理 501.2，
+
+$$
+\delta(U)\le\omega(U)+\mathfrak C_{m,C}\,\eta+\sum_{p=1}^{\lfloor m/2\rfloor}\ \sum_{|P|=p}C^{2p}\delta(U(P)).
+$$
+
+由于 $m\ge3$，$\omega(U)\le\Omega(U)$；又 $\mathfrak C_{m,C}\le M_{k,C}$。对 $P\ne\varnothing$，$U(P)\subsetneq U$，归纳假设给出 $\delta(U(P))\le A_{m-2p}(\Omega(U(P))+M_{k,C}\eta)$，而 $\Omega(U(P))\le\Omega(U)$。合并得
+
+$$
+\delta(U)\le\Bigl(1+\sum_{p=1}^{\lfloor m/2\rfloor}N_{m,p}C^{2p}A_{m-2p}\Bigr)\bigl(\Omega(U)+M_{k,C}\eta\bigr)
+=A_m\bigl(\Omega(U)+M_{k,C}\eta\bigr).
+$$
+
+归纳完成。证毕。
+
+**推论 501.4（逐权重的渐近等价）。** 固定 $k$、$C$ 及一列满足定理 500.2 条件且 $L/H\to0$ 的数据，权重组 $f_1,\ldots,f_k$ 随下标任意选取但始终满足 $|f_i|\le1$。则以下两条等价：
+
+1. 对全部 $U\subseteq K$，$|U|\ge3$，有 $\Delta_U=o\bigl((HL)^{|U|/2}\bigr)$；
+2. 对全部 $U\subseteq K$，$|U|\ge3$，有 $V_U=\mathcal W_U^V+o\bigl((HL)^{|U|/2}\bigr)$。
+
+**证明。** $L\ge1$ 与 $L/H\to0$ 给出 $H\to\infty$，从而 $\eta\to0$。由 (501.1)，条件 1 推出条件 2：$|U'|\le2$ 时 $\delta(U')=0$，其余 $\delta(U')\to0$，而子集只有有限个。由 (501.2)，条件 2 推出条件 1：$\Omega(U)$ 是有限个趋零量的最大值。证毕。
+
+**注记 501.5（与 §500 反例的关系）。** 推论 501.4 说明，在二次关系与 (500.2) 的大小界下，获得全部子组 Wick 渐近所需的算术输入，恰为全部子组的互异指标配对缺陷消失，代数层面不再有其他障碍。命题 500.4、500.5 说明这一条件族不能缩减为只含顶阶的条件。本节不主张族中每一条单独都是必要条件。(501.2) 中出现的低阶缺陷 $\Delta_{U(P)}$ 只作用于原权重的子组，合并权只出现在 $T_e$ 与大小界中，这是反演能够闭合的原因。前几项常数为 $A_3=A_4=1$、$A_5=1+10C^2$、$A_6=1+15C^2$、$A_7=1+21C^2+315C^4$。
+
+**范围。** 部分配对计数与三角递推是标准组合事实。本节的本仓推导（repo-derived）是：在二次关系与有符号互异指标大小界下，对定理 500.2 的逐子组定量反演 (501.2) 及显式递推常数。本节不主张一般 Wick 公式或矩方法的原创性。本节本身不提供任何素数模型的缺陷估计；这类估计仍须由算术输入（Hardy–Littlewood 型相关及奇异级数平均）给出。
+
+## 追加锚（本行以下为增补区）
+
+## 502. 有界变差位置权下全部有限阶的奇异级数配对与条件 Wick 定理
+
+本节把引理 498.3 推广到全部有限阶，并把定理 498.1 推广为全部阶数 $\le k$ 的条件 Wick 定理。低阶缺陷不再逐阶显式记账，改用定理 500.2 与 §501 的定量反演。本节同时说明：单独的有界性不足以保证配对，所需权重类是位置有界变差类。
+
+**定义 502.1（离散位置权与形式奇异级数矩）。** 固定 $M\ge1$、$B\ge0$。对 $H\ge1$，令 $D_H=\{1,\ldots,\lfloor MH\rfloor\}$，对 $f:D_H\to\mathbb R$ 令 $\operatorname{Var}_d(f)=\sum_{1\le d<\lfloor MH\rfloor}|f(d+1)-f(d)|$，并令
+
+$$
+\mathcal F_{H,M,B}=\{f:D_H\to\mathbb R:\ \|f\|_\infty\le1,\ \operatorname{Var}_d(f)\le B\}.
+\tag{502.1}
+$$
+
+权重可随 $H$ 变化；区间示性函数 $\mathbf 1_{d/H\in I}$（$I\subseteq[0,M]$）属于 $B=2$ 的情形。对 $f_1,\ldots,f_k:D_H\to\mathbb R$ 与 $U\subseteq[k]$，沿用 §500 的记号，以 $\ell(Y_{d_1}\cdots Y_{d_r})=\mathfrak S_0(\{d_1,\ldots,d_r\})$（两两不同）作赋值，记
+
+$$
+R_U^{\mathfrak S}=\sum_{\substack{(d_i)_{i\in U}\\d_i\text{ 两两不同}}}\prod_{i\in U}f_i(d_i)\,\mathfrak S_0(\{d_i:i\in U\}),\qquad
+\Delta_U^{\mathfrak S}=R_U^{\mathfrak S}-\mathcal W_U\bigl((R_{\{i,j\}}^{\mathfrak S})\bigr).
+$$
+
+**引理 502.2（乘积的变差）。** 若 $\|f_i\|_\infty\le1$，则 $\operatorname{Var}_d(\prod_{i\in A}f_i)\le\sum_{i\in A}\operatorname{Var}_d(f_i)$。特别地，$f_i\in\mathcal F_{H,M,B}$ 时，$\prod_{i\in A}f_i\in\mathcal F_{H,M,|A|B}$。
+
+**证明。** 对相邻位置作乘积的望远镜展开，每项中其余因子的绝对值至多 $1$，求和即得。证毕。
+
+**引理 502.3（前缀分解）。** 令 $K=\lfloor MH\rfloor$。每个 $f:D_H\to\mathbb R$ 满足
+
+$$
+f=f(K)\mathbf 1_{[1,K]}+\sum_{1\le m<K}\bigl(f(m)-f(m+1)\bigr)\mathbf 1_{[1,m]},
+\tag{502.2}
+$$
+
+系数绝对值之和至多 $\|f\|_\infty+\operatorname{Var}_d(f)$。
+
+**证明。** 在每个 $d\le K$ 处，右边望远镜求和为 $f(d)$。证毕。
+
+$V_U$、$R_U$ 及配对多项式 $\mathcal W_U$ 对每个标签的权都是线性的（每个标签在一个完美配对中恰出现一次），故由引理 502.3，对 $\mathcal F_{H,M,B}$ 的一致估计可归结为对前缀区间权的一致估计，只多出因子 $(1+B)^{|U|}$。
+
+**定理 502.4（全部有限阶的奇异级数配对，对位置有界变差权一致）。** 固定 $k\ge3$、$M\ge1$、$B\ge0$。存在 $\eta_{k,M,B}(H)\to0$，使对全部 $f_1,\ldots,f_k\in\mathcal F_{H,M,B}$ 与 $U\subseteq[k]$、$3\le|U|\le k$，
+
+$$
+|\Delta_U^{\mathfrak S}|\le\eta_{k,M,B}(H)\,(H\log H)^{|U|/2}.
+\tag{502.3}
+$$
+
+此外，一致地
+
+$$
+R_{\{1,2\}}^{\mathfrak S}=-\log H\sum_{d\in D_H}f_1(d)f_2(d)+O_{M,B}(H),
+\tag{502.4}
+$$
+
+且对 $2\le r\le k$ 与 $[k]$ 中两两不交的非空标签块 $B_1,\ldots,B_r$，
+
+$$
+R_r^{\mathfrak S}(f_{B_1},\ldots,f_{B_r})=O_{k,M,B}\bigl((H\log H)^{r/2}\bigr).
+\tag{502.5}
+$$
+
+**证明。** (a) 二阶。引理 498.3(a) 对前缀区间给出 $-\min(m,n)\log H+O_M(H)$；由引理 502.3 得 (502.4)。
+
+(b) 有限筛。取 $Y_0=((M+5)H)^{k+2}$、$Q=\prod_{p\le Y_0}p$、$P=Q/\varphi(Q)\ll_{k,M}\log H$，在模 $Q$ 均匀的 $a$ 上令 $Y_d(a)=P\mathbf 1_{(a+d,Q)=1}-1$。如引理 498.3(b)，$\mathbb EY_d=0$、$Y_d^2=(P-2)Y_d+(P-1)$、$\mathbb E\prod_{d\in\mathcal D}Y_d=\mathfrak S_{0,Q}(\mathcal D)$，且 $|\mathcal D|\le k$、直径 $O_M(H)$ 时 $|\mathfrak S_0(\mathcal D)-\mathfrak S_{0,Q}(\mathcal D)|\ll_{k,M}P^k/Y_0$。对至多 $O_M(H^k)$ 个位移组求和，换回完整奇异级数的误差为 $O(H^kP^k/Y_0)=o(1)$。以下记有限筛的相应量为 $V^Q,R^Q,\Delta^Q$。
+
+(c) 统一的偶矩界。固定偶数 $q\ge k$，令 $X_g=\sum_dg(d)Y_d$、$A_H=\sqrt{H\log H}$。Montgomery–Soundararajan 2004 定理 1（(15)）给出 $V_q(Q;K)=\mu_qV_2(Q;K)^{q/2}+O_q(K^{q/2-1/(7q)}P^{2^q+q/2})$，且 $V_2(Q;K)\ll_MK\log H$。如引理 498.3(c) 区分 $K\ge H^{1/4}$ 与 $K<H^{1/4}$（后者用 $\|X_I\|_q\le KP$），得 $\|X_I\|_{L^q}\le C_{k,M}A_H\sqrt{|I|}+o(A_H)$，关于区间端点一致。由引理 502.3 与 Minkowski，对 $g\in\mathcal F_{H,M,kB}$ 有 $\|X_g\|_{L^q}\ll_{k,M,B}A_H$；Hölder 给出 $|V_r^Q(g_1,\ldots,g_r)|\ll A_H^r$（$r\le k$）。
+
+(d) 区间权的配对。Kuperberg [arXiv:2301.06095] 定理 1.3 对固定 $f_j\in C_c^\infty((0,\infty))$ 与无平方因子模给出 $\mathbb E\prod_{j\le r}X_{f_j}=\sum_\pi\prod\mathbb E[X_{f_i}X_{f_j}]+O_{\mathbf f}(H^{r/2-1/(7r)}P^{2^r+r/2})$。如引理 498.3(c) 以支撑在 $(0,\infty)$ 内的平移光滑化逼近区间示性函数，用 (c) 的 $L^q$ 界、乘积望远镜展开与 Hölder 传递误差，先把端点移到有限 $\delta$-网格，令 $H\to\infty$ 再令 $\delta\downarrow0$，得
+
+$$
+V_U^Q-\mathcal W_U\bigl((V_{\{i,j\}}^Q)\bigr)=o_{k,M}(A_H^{|U|})\qquad(|U|\le k),
+\tag{502.6}
+$$
+
+关于全部区间端点一致；由引理 502.3 与多重线性，对 $\mathcal F_{H,M,B}$ 一致。
+
+(e) 合并权的大小界。对 $r$ 归纳证明：对全部 $g_1,\ldots,g_r\in\mathcal F_{H,M,kB}$，$R_r^Q(g_1,\ldots,g_r)=O(A_H^r)$。$r\le2$ 时由 (a)、(b) 成立。设对所有较小阶成立。有限筛模型满足定义 500.1，取定理 500.2 中的 $(H,L)$ 为 $(H,\log H)$：$|D_H|\le MH$，$|P-2|,|P-1|\ll\log H$，且由归纳假设与引理 502.2，(500.2) 对阶数 $<r$ 成立。定理 500.2 第一式中空配对给出 $R_r^Q$，非空部分配对项由引理 501.2 与归纳假设为 $O(A_H^r)$，误差项为 $O(A_H^r(\sqrt{\log H/H}+H^{-1}))$；再由 (c)，$R_r^Q=O(A_H^r)$。
+
+(f) 反演。由 (e)，有限筛模型对 $\mathcal F_{H,M,B}$ 中的权满足定理 500.2 的全部条件，常数只依赖 $k,M,B$。由 (502.6)，定义 501.1 中的 $\Omega(U)$ 一致趋于零，且 $\eta=\sqrt{\log H/H}+H^{-1}\to0$。由 (501.2)，$\Delta_U^Q=o(A_H^{|U|})$ 一致成立。最后由 (b) 换回 $\mathfrak S$，得 (502.3)；(502.5) 由 (e) 与 (b) 得到。证毕。
+
+**命题 502.5（有界权下三阶缺陷可以不消失）。** 存在满足 $|f_i|\le1$ 的位置权，使形式奇异级数模型（$\ell_s$ 以 $\mathfrak S_0$ 赋值，$a=s-2$、$b=s-1$，$s\in[L,L+\log2]$）满足定理 500.2 在 $k=3$ 时的全部条件，而
+
+$$
+\frac{\Delta_{\{1,2,3\}}^{\mathfrak S}}{(HL)^{3/2}}\longrightarrow-\frac1{32}.
+\tag{502.7}
+$$
+
+因此定理 502.4 中的有界变差条件不能删去。
+
+**证明。** 取 $M=1$、$H$ 为 $3$ 的倍数，$g(d)=\cos(2\pi d/3)$，即 $3\mid d$ 时为 $1$，否则为 $-\frac12$，故 $\sum_{d\le H}g(d)=0$。沿用 (b) 的有限筛，写 $Q=3Q'$、$P'=Q'/\varphi(Q')=\frac23P$，并令 $Y'_d(a)=P'\mathbf 1_{(a+d,Q')=1}-1$。由中国剩余定理，条件于 $a\equiv c\pmod3$ 时 $a\bmod Q'$ 均匀。若 $d\equiv-c\pmod3$，则 $Y_d=-1$；否则 $Y_d=\frac32Y'_d+\frac12$。由 $\sum_{r\not\equiv-c}g(r)=-g(-c)$，
+
+$$
+X_g=\sum_{d\le H}g(d)Y_d=-\frac H2\,g(-c)+E_c,\qquad
+E_c=\frac32\sum_{r\not\equiv-c\ (3)}g(r)\sum_{\substack{d\le H\\d\equiv r\ (3)}}Y'_d .
+\tag{502.8}
+$$
+
+写 $d=3m+r$；因 $3$ 在模 $Q'$ 下可逆，内层和是模 $Q'$ 的有限筛在长度 $H/3$ 的区间上的中心化和，其平移参数在模 $Q'$ 上均匀。由 Montgomery–Soundararajan 2004 定理 1，$\|E_c\|_{L^4}\ll\sqrt{H\log H}$，且 $\mathbb E[E_c\mid c]=0$。于是
+
+$$
+\mathbb E[X_g^3\mid c]=-\frac{H^3}{8}g(-c)^3+O(H^2\log H)+O\bigl((H\log H)^{3/2}\bigr),
+$$
+
+而 $\frac13\sum_{c\bmod3}g(c)^3=\frac14$，故 $V_3^Q(g,g,g)=-H^3/32+o(H^3)$。含重合指标的三元组只有 $O(H^2)$ 个，且 $|Y_d|\le P$，故 $R_3^Q(g,g,g)=-H^3/32+o(H^3)$；由 (b) 的 Euler 尾估计，$R_3^{\mathfrak S}(g,g,g)=-H^3/32+o(H^3)$。
+
+令 $L\le H$、$L/H\to0$，取 $f_1=f_2=f_3=c_Hg$，$c_H=\sqrt{L/H}\le1$。奇数阶配对和为空，故 $\Delta_{\{1,2,3\}}^{\mathfrak S}/(HL)^{3/2}=c_H^3R_3^{\mathfrak S}(g,g,g)/(HL)^{3/2}\to-1/32$。核对 $k=3$ 时的 (500.2)：对不交非空 $B_1,B_2$，$t=|B_1|+|B_2|\ge2$，由 $\mathfrak S\ge0$ 与 Montgomery–Soundararajan 2004 的 (16)，$\sum_{d\ne e\le H}|\mathfrak S_0(\{d,e\})|\le\sum_{d\ne e}(\mathfrak S(\{d,e\})+1)=O(H^2)$，故 $|R_2^{\mathfrak S}(f_{B_1},f_{B_2})|\le c_H^tO(H^2)\le c_H^2O(H^2)=O(HL)$；又 $|D_H|=H$，$|a|,|b|=O(L)$。证毕。
+
+由推论 501.4，这组权在 $k=3$ 上也不满足 Wick 渐近。$g$ 的变差为 $\asymp H$，不属于任何固定的 $\mathcal F_{H,M,B}$。
+
+**定理 502.6（有界变差权的条件 Wick 定理）。** 固定 $k\ge3$、$M\ge1$、$B\ge0$、$0<\alpha<\beta<1/k$，设 $\mathrm{MS}_k(\beta)$。对 $f\in\mathcal F_{H,M,B}$ 令 $S_f(n)=\sum_{d\in D_H}f(d)\Lambda_0(n+d)$，$L=\log N$，$\Gamma_{ij}=\frac1H\sum_{d\in D_H}f_i(d)f_j(d)$。则对每个 $U\subseteq[k]$，
+
+$$
+\frac1{N(HL)^{|U|/2}}\sum_{N<n\le2N}w(n/N)\prod_{i\in U}S_{f_i}(n)
+=\langle w\rangle\,\mathcal W_U\bigl(\kappa_{N,H}\Gamma\bigr)+o(1),
+\tag{502.9}
+$$
+
+余项关于整数 $N^\alpha\le H\le N^\beta$、$f_i\in\mathcal F_{H,M,B}$ 与 $\|w\|_{\mathrm{BV}}\le1$ 一致。
+
+**证明。** 定理 499.1 对区间权给出算术传递 (499.2)；其形式值 $\Phi^{\mathfrak S}$ 与左边都对每个标签的权线性，由引理 502.3，(499.2) 对 $\mathcal F_{H,M,B}$ 成立，常数多出因子 $(1+B)^{|U|}$。归一化后误差为 $O(N^{-1/2+\varepsilon}H^{|U|/2}L^{-|U|/2})$；取 $0<\varepsilon<(1-k\beta)/2$，它对全部 $|U|\le k$ 趋零。
+
+对 $s\in[L,L+\log2]$，形式模型 $\ell_s$ 满足定义 500.1，$a=s-2$、$b=s-1=O(L)$，$|D_H|\le MH$。由 (502.5)，合并权满足 (500.2)，其中 $(H\log H)^{r/2}\le(HL)^{r/2}$；由 (502.3)，$\Delta_U^{\mathfrak S}=o((HL)^{|U|/2})$。由 (501.1)，
+
+$$
+\Phi_U^{\mathfrak S}(s;\mathbf f)=\mathcal W_U\bigl(R_{\{i,j\}}^{\mathfrak S}+(s-1)T_{ij}\bigr)+o\bigl((HL)^{|U|/2}\bigr),
+$$
+
+一致成立。由 (502.4)，$R_{\{i,j\}}^{\mathfrak S}+(s-1)T_{ij}=(s-\log H)H\Gamma_{ij}+O_{M,B}(H)$，除以 $HL$ 后为 $\kappa_{N,H}\Gamma_{ij}+O_{M,B}(L^{-1})$。配对多项式的有限乘积展开把这一误差传为 $o(1)$。对 $x$ 积分即得 (502.9)。证毕。
+
+取区间权 $f_i=\mathbf 1_{d/H\in I_i}$，$\Gamma_{ij}=\sigma(I_i,I_j)+O(H^{-1})$。对实数 $x$ 的连续取样，按 §499 中连续替换的论证（每个单位单元内端点只跨越有界个整数；奇数阶用 $r-1$ 阶偶矩界，偶数阶用 $r$ 阶偶矩界，均由 (502.9) 给出），得
+
+$$
+\frac1N\int_N^{2N}w(x/N)\prod_{i\in U}Z_{N,H}(I_i;x)\,dx=\langle w\rangle\,\mathcal W_U\bigl(\kappa_{N,H}(\sigma(I_i,I_j))\bigr)+o(1),
+\tag{502.10}
+$$
+
+关于 $N^\alpha\le H\le N^\beta$（实数）、$I_i\subseteq[0,M]$ 与 $\|w\|_{\mathrm{BV}}\le1$ 一致。$k=4$ 时这就是 (498.2)–(498.3)。
+
+**推论 502.7（共同尺度上的条件 Gaussian 极限）。** 设对每个 $q\ge1$ 存在 $\beta_q>0$ 使 $\mathrm{MS}_q(\beta_q)$ 成立，且 $H/\log N\to\infty$、$\log H/\log N\to0$。固定 $m$，设 $f_{1,N},\ldots,f_{m,N}\in\mathcal F_{H,M,B}$ 且 $\Gamma_{ij}\to\Gamma^\ast_{ij}$。当 $n$ 在 $(N,2N]$ 的整数上均匀取样时，
+
+$$
+\Bigl(\frac{S_{f_{1,N}}(n)}{\sqrt{H\log N}},\ldots,\frac{S_{f_{m,N}}(n)}{\sqrt{H\log N}}\Bigr)\Longrightarrow\mathcal N_m(0,\Gamma^\ast).
+\tag{502.11}
+$$
+
+**证明。** 固定矩阶 $r$。因 $H=N^{o(1)}$，最终 $H\le N^{\beta'}$，其中 $\beta'<\min(\beta_r,1/r)$；又 $L/H\to0$、$\kappa_{N,H}\to1$。定理 502.6（取 $k=r$、$w=\mathbf 1_{[1,2]}$）的证明在此尺度下给出全部 $r$ 阶混合矩趋于 $\mathcal N_m(0,\Gamma^\ast)$ 的相应矩；定理 499.1 的证明只用到 $MH\le N$ 与把对数幂吸收进 $N^{\varepsilon}$，不用下界 $H\ge N^\alpha$；定理 502.4 只需 $H\to\infty$。故这里只需该证明中的各误差趋零。对固定 $t\in\mathbb R^m$，$\sum_it_if_{i,N}$ 仍属于固定的有界变差类。Gaussian 矩满足 Carleman 条件，矩方法与 Cramér–Wold 定理给出 (502.11)。证毕。
+
+**范围。** 外部输入为：Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] 定理 1（(15)）与定理 2、(16)；Kuperberg [arXiv:2301.06095] 定理 1.3。Montgomery–Soundararajan 定理 3 与推论 1 在逐位移相关误差假设下给出单一区间的各阶矩与相同共同尺度上的标量 Gaussian 极限；推论 502.7 的标量、单区间情形即该推论，Chan [Int. J. Number Theory 2 (2006)] 的均方弱化见 §499。本节的本仓推导（repo-derived）是：对全部有限阶、区间端点与整个离散有界变差权球一致的奇异级数配对 (502.3)，其中低阶缺陷由定理 500.2 与 §501 的反演一并处理；有界变差权下全部阶数 $\le k$ 的条件 Wick 定理 (502.9)–(502.10)，把定理 498.1 从 $k\le4$、$\beta<1/4$ 推广到一般 $k$、$\beta<1/k$；有界权下的三阶反例 (502.7)；以及有界变差权向量的 Gaussian 极限 (502.11)。$\beta<1/k$ 来自把相关误差对全部位移聚合后与 Gaussian 尺度比较：归一化误差为 $N^{(k\beta-1)/2+\varepsilon}$；奇异级数配对本身没有这一限制。本节不覆盖 $\theta=4/5$，不推出 RH，也不主张文献优先权。
+
+## 追加锚（本行以下为增补区）
