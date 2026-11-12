@@ -83,7 +83,7 @@ theorem triangle_geometry (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
   have zle : Z L X Y^2 ≤ 1 := by
     have : (Z L X Y^2-1)*(4*(X*Y)) ≤ 0 := by nlinarith only [zid,zsq]
     have nn : 0 ≤ (1-Z L X Y^2)*(4*(X*Y)) := by nlinarith only [this]
-    have := nonneg_of_mul_nonneg_right nn (by positivity : 0 < 4*(X*Y))
+    have := nonneg_of_mul_nonneg_left nn (by positivity : 0 < 4*(X*Y))
     linarith
   have fsq : (F L X Y)^2=(1-X)*(1-Y)*(1-Z L X Y^2) := by
     unfold F
