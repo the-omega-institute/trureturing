@@ -28,9 +28,25 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Node("instDecidableNormal", "Deciding the row-major conditions", DecidableNormalFormula(), false),
             Node("Legal", "Literal array conditions", LegalFormula(), false),
             Node("a", "The literal filtered count", CountFormula(), false, true),
+            Node("cellOrder", "The lifted row-major order", CellOrderFormula(), false),
+            Node("RowNormal", "Normalization in the lifted order", OrderedPredicateFormula(false), false),
+            Node("Canon", "Canonical labels in the lifted order", OrderedPredicateFormula(true), false),
+            Node("row_major_lt", "The strict row-major comparison", RowMajorLtFormula(), true),
+            Node("normal_iff", "The two normalization expressions agree", NormalIffFormula(), true),
+            Node("used", "Number of labels used", UsedFormula(), false),
+            Node("used_eq_card", "Used labels as a finite image", UsedEqCardFormula(), true),
+            Node("omitted_label", "Two used labels omit a third", OmittedLabelFormula(), true),
             Node("alternating", "Two alternating constant columns", AlternatingFormula(), false),
+            Node("alternating_proper", "Alternation satisfies both directions of the diagonal bonds",
+                AlternatingProperFormula(), true),
+            Node("alternating_used", "Alternation uses exactly two distinct labels",
+                AlternatingUsedFormula(), true),
+            Node("alternating_canon", "Zero-one alternation is canonical",
+                AlternatingCanonFormula(), true),
             Node("two_label_classification", "Classification when one label is omitted",
                 TwoLabelClassificationFormula(), true),
+            Node("canon_two_eq", "The canonical two-label pattern is zero-one alternation",
+                CanonTwoEqFormula(), true),
             Node("counting_bridge", "The canonical-form counting bridge", BridgeFormula(), true),
             Paragraph(Text("The beta-label identifies the pairs {0,5}, {1,4}, {2,3}; "
                 + "the side is an independent Boolean choice. Normalization introduces "
@@ -84,6 +100,92 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
                     + "HardinA233177PairTransfer.L", n), Q("Int")), D(6))))));
     }
 
+    private static Formula Cells(Formula n) => Product(Fin(D(4)), Fin(n));
+    private static Formula OrderLT(Formula n) =>
+        Seq(Parenthesized(Own("cellOrder", n)), Dot, V("toLT"));
+
+    private static Formula CellOrderFormula()
+    {
+        var n = V("n");
+        var lift = Seq(Q("LinearOrder.lift"), Apos);
+        var value = App(lift, Q("finProdFinEquiv"),
+            Call("Equiv.injective", Q("finProdFinEquiv")));
+        return All("n", Q("Nat"), Eq(Typed(Own("cellOrder", n),
+            Call("LinearOrder", Parenthesized(Cells(n)))), Parenthesized(value)));
+    }
+
+    private static Formula OrderedPredicateFormula(bool canonical)
+    {
+        var n = V("n"); var p = V(canonical ? "P" : "A");
+        var name = canonical ? "Canon" : "RowNormal";
+        var target = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical."
+            + (canonical ? "Canonical" : "Normal");
+        var value = canonical ? Call(target, Parenthesized(Cells(n)), OrderLT(n), D(3), p)
+            : Call(target, Parenthesized(Cells(n)), OrderLT(n), p);
+        return All("n", Q("Nat"), All(canonical ? "P" : "A",
+            Arrow(Cells(n), Fin(D(canonical ? (byte)3 : (byte)6))),
+            Eq(Own(name, p), Parenthesized(value))));
+    }
+
+    private static Formula RowMajorLtFormula()
+    {
+        var n = V("n"); var p = V("p"); var q = V("q");
+        Formula Rank(Formula x) => Add(Mul(Val(Call("Prod.fst", x)), n),
+            Val(Call("Prod.snd", x)));
+        return All("n", Q("Nat"), All("p", Cells(n), All("q", Cells(n),
+            IffTo(Call("LT.lt", Parenthesized(Cells(n)), OrderLT(n), p, q),
+                Lt(Rank(p), Rank(q))))));
+    }
+
+    private static Formula NormalIffFormula()
+    {
+        var n = V("n"); var a = V("A");
+        return All("n", Q("Nat"), All("A", Arrow(Cells(n), Fin(D(6))),
+            IffTo(Own("normal", a), Own("RowNormal", a))));
+    }
+
+    private static Formula UsedEqCardFormula()
+    {
+        var n = V("n"); var p = V("P");
+        var image = Call("Finset.image", p, Typed(Q("Finset.univ"),
+            Call("Finset", Parenthesized(Cells(n)))));
+        return All("n", Q("Nat"), All("P", Arrow(Cells(n), Fin(D(3))),
+            Eq(Own("used", p), Call("Finset.card", Parenthesized(image)))));
+    }
+
+    private static Formula OmittedLabelFormula()
+    {
+        var n = V("n"); var p = V("P"); var d = V("d");
+        return All("n", Q("Nat"), All("P", Arrow(Cells(n), Fin(D(3))),
+            All("h", Eq(Own("used", p), D(2)), Ex("d", Fin(D(3)),
+                All("i", Cells(n), Ne(App(p, V("i")), d))))));
+    }
+
+    private static Formula AlternatingProperFormula()
+    {
+        var n = V("n"); var a = V("a"); var b = V("b");
+        var proper = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233177PairTransfer.Proper", Parenthesized(Own("alternating", n, a, b)));
+        return All("n", Q("Nat"), All("a", Fin(D(3)), All("b", Fin(D(3)),
+            All("hab", Ne(a, b), proper))));
+    }
+
+    private static Formula AlternatingUsedFormula()
+    {
+        var n = V("n"); var a = V("a"); var b = V("b");
+        return All("n", Q("Nat"), All("hn", Le(D(2), n),
+            All("a", Fin(D(3)), All("b", Fin(D(3)), All("hab", Ne(a, b),
+                Eq(Own("used", Parenthesized(Own("alternating", n, a, b))), D(2)))))));
+    }
+
+    private static Formula AlternatingCanonFormula()
+    {
+        var n = V("n");
+        return All("n", Q("Nat"), All("hn", Lt(D(0), n),
+            Own("Canon", Parenthesized(Own("alternating", n,
+                Typed(D(0), Fin(D(3))), Typed(D(1), Fin(D(3))))))));
+    }
+
     private static Formula AlternatingFormula()
     {
         var n = V("n"); var a = V("a"); var b = V("b"); var p = V("p");
@@ -110,6 +212,18 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
                 All("d", Fin(D(3)), All("hd", omitted, classification))))));
     }
 
+    private static Formula CanonTwoEqFormula()
+    {
+        var n = V("n"); var p = V("P");
+        var proper = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233177PairTransfer.Proper", p);
+        return All("n", Q("Nat"), All("hn", Le(D(2), n),
+            All("P", Arrow(Cells(n), Fin(D(3))), All("hp", proper,
+                All("hc", Own("Canon", p), All("hu", Eq(Own("used", p), D(2)),
+                    Eq(p, Own("alternating", n, Typed(D(0), Fin(D(3))),
+                        Typed(D(1), Fin(D(3)))))))))));
+    }
+
     private static Formula RecurrenceFormula(Formula? n)
     {
         Formula A(int i) => Typed(Own("a", n is null ? Num(i) : Add(n, Num(i))), Q("Int"));
@@ -118,6 +232,14 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Mul(Num(33554432), A(3))), Mul(Num(1073741824), A(2)));
         var equation = Eq(A(9), rhs);
         return n is null ? equation : All("n", Q("Nat"), equation);
+    }
+
+    private static Formula UsedFormula()
+    {
+        var n = V("n"); var p = V("P");
+        var cells = Product(Fin(D(4)), Fin(n));
+        return All("n", Q("Nat"), All("P", Arrow(cells, Fin(D(3))),
+            Eq(Own("used", p), Call("Nat.card", Parenthesized(Call("Set.range", p))))));
     }
 
     private static Formula NormalCondition(Formula n, Formula a)
@@ -228,6 +350,8 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
+    private static Formula IffTo(Formula a, Formula b) =>
+        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) =>
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) =>

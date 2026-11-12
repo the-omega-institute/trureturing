@@ -1,0 +1,18 @@
+**命题 82.9（固定对称 Bell 测试的简单控制）。** 在 $d=2$ 上取 Pauli 矩阵 $\sigma_y$，$1/4<h<1/2$，令
+$$
+\Phi(X)=\operatorname{Tr}(X)I_2/2-ih[\sigma_y,X]. \tag{82.21}
+$$
+它为正 TP、保单位、混合、标量固定效应的非 CP 映射，但对 $\Omega=|\Omega\rangle\langle\Omega|$、$|\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2$，
+$$
+\mathcal K_{2,1/2}(\Phi)(\Omega)=I_4/4.
+$$
+
+**证明。** Bloch 向量被送到 $2h(e_y\times r)$，其范数至多 $2h\|r\|$，且 $2h<1$。故态球映入内部，映射正；迹与单位直接保持，零迹子空间上幂收敛于零，固定效应只有标量。Choi 的重置部分为 $I_4/2$。令 $f=(\sigma_y\otimes I)|\Omega\rangle$，则 $f\perp\Omega$、$\|f\|=1$；其余部分为 $-2ih(|f\rangle\langle\Omega|-|\Omega\rangle\langle f|)$。因此 Choi 特征值为 $1/2\pm2h,1/2,1/2$，有负值。另一方面 $(\sigma_y\otimes I+I\otimes\sigma_y)|\Omega\rangle=0$，平均对易子项消失，两腿重置均送 $\Omega$ 到 $I_4/4$。这只击破该固定 Bell 测试，不击破定理 82.5 的整个二份锥。证毕。
+
+定理 82.8 的映射以及命题 82.9 可放在已付标准归一元组
+$$
+A=H_d,\quad D=H_{d^2},\quad E=H_{d^3},\quad
+L(d,c)=d\otimes c,\quad p=\operatorname{Tr}_1,\quad\omega=I_{d^2}/d^2.
+$$
+它的 PRE、NB、$\mathrm A_0$ 及全态全效应域直接按第四卷 65.11、66.7 的零方向单位滤波逆向和第 79 章复用。同一个 $p$ 两次实际给 $K(a)=I_d/d\otimes a$、$M(a,b)=a\otimes b$、$Q(a,b,c)=a\otimes b\otimes c$，未独立供应 $M$。两个质量已为乘积迹，故任何上述 TP 映射均满足 79.5；其固定效应条件亦成立。这样得到的是该元组中 **CP 接口** 的反模型，不是整个 $\Omega$ 的反模型，也没有供应一个实际非 CP 程序。82.8 的有限输出全正不使其二份延拓全锥正；82.5 保证仍有未列入目录的负输出方向。标量质量、有限逐输出 PSD 与完整过程合法性因而是不同关系。
+

@@ -1,0 +1,5 @@
+source_id = "auric-c139-parent-sensitive-read-tree-and-gain-recovery-boundary"
+path = "docs/develop/theory/AURIC_C139_PARENT_SENSITIVE_READ_TREE_AND_GAIN_RECOVERY_BOUNDARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

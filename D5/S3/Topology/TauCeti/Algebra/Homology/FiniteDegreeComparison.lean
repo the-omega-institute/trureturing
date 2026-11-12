@@ -14,7 +14,7 @@ Authors: The Tau Ceti contributors
 The natural-number total symmetry instance is adapted from
 TauCetiProject/TauCeti revision 289eb81f25e69d47485b9ab90980e873372581d4,
 TauCeti/Algebra/Homology/ComplexShape/Signs.lean.
-Modifications: private instance in the receiving namespace; only the consumed
+Modifications: instance in the receiving namespace; only the consumed
 symmetry instance is retained. The full Apache-2.0 license is in
 docs/reports/licenses/tauceti-sphere-port-LICENSE.txt.
 -/
@@ -31,7 +31,7 @@ universe v u
 namespace HomologicalComplex₂
 
 /-- The signed interchange of the two natural-number directions. -/
-private instance finiteDegreeTotalSymmetry :
+instance finiteDegreeTotalSymmetry :
     TotalComplexShapeSymmetry (ComplexShape.down ℕ) (ComplexShape.down ℕ)
       (ComplexShape.down ℕ) where
   symm p q := Nat.add_comm q p

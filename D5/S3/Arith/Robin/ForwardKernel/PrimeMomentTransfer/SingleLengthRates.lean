@@ -31,7 +31,7 @@ theorem sampling_uniform (k : ℕ) (α β η : ℝ) (hk : k = 2 ∨ k = 4)
   let t := min (η / 3) 1
   have ht : 0 < t := lt_min (by positivity) zero_lt_one
   filter_upwards [sqrt_rate α t hα ht,
-    cell_rate β (η / 3) k (hα.trans hαβ).le hβ
+    cell_rate β (η / 3) k (hα.trans hαβ).le (by linarith)
       (by rcases hk with rfl | rfl <;> norm_num) (by positivity),
     eventually_ge_atTop (1 : ℝ)] with Y hs he hY v hvα hvβ
   have hv : 1 ≤ v := (Real.one_le_rpow hY hα.le).trans hvα

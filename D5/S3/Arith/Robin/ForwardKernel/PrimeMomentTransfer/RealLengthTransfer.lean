@@ -27,8 +27,8 @@ private theorem p_fourth_main_cancel (N H K : ℝ) (a b : Fin 4 → ℝ)
 
 /-- Cubic mixed moments vanish uniformly for all real lengths in the band. -/
 theorem real_third :
-∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/4 →
-  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL4 SS β → IntervalCorrelations SS → 1 ≤ M →
+∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/3 →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL 3 SS β → IntervalCorrelations SS → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℝ, N^α ≤ H → H ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ a b : Fin 3 → ℝ, admissible M a b →

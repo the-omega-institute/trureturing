@@ -1,0 +1,54 @@
+**定义 20.1（原合同、输入与精确有限参数）。** 本节采用 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 和本卷定义 1.1 的完整原合同。对每个正有理数 $0<e\le1/100$，所有对数均为自然对数，置
+
+$$
+\begin{aligned}
+u&=u_e=e/8,\qquad H_e=\log(18/e),\\
+k&=k_e=\left\lceil2048e^{-2}H_e\right\rceil,\qquad
+\ell=\ell_e=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,\\
+N&=N_e=\max\left\{N_*,
+ \left\lceil\frac{3k+2}{10}\right\rceil,
+ \left\lceil\frac{15\ell+1}{18}\right\rceil\right\},\\
+D&=D_e=\left\lceil\max\{8{,}000{,}000N^2,9k/e\}\right\rceil,\\
+m&=m_e=D-1=2j,\qquad M=M_e=L=L_e=10N,\qquad Q=Q_e=18N+1,\\
+q&=3k.
+\end{aligned}
+\tag{20.1}
+$$
+
+这些是原精度 $e$ 的原整数，不在另一精度重算。公共参数仍为 $d=1/64$、$\tau_0=1$、$r=1/4$、$B_{\rm field}=2$、$G=1$；内部采样步长 $u$ 不替代 $d$。
+
+场遍历全部原允许的 $C^2$、秩二映射 $n:U\to S^2$，其中开集 $U$ 包含两条完整闭 $r$ 轴段，并满足
+
+$$
+\|n_{aa}(t e_a)\|_2\le2\quad(a=x,y,\ |t|\le r),
+\qquad \|n_x(0)\|_2,\|n_y(0)\|_2\le1.
+\tag{20.2}
+$$
+
+场信息只由原独立重置服务 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$ 供应。方向遍历全部 $h\in S^2$，目标仍为
+
+$$
+D_h(n)=\left(
+ \frac{h\cdot[n(0)\times n_x(0)]}{2},
+ \frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+ \frac{h\cdot n_y(0)}2\right).
+\tag{20.3}
+$$
+
+原标记参考 $R=\operatorname{Sym}^m(\mathbb C^2)$ 只准备一次，初态 $\tau_h=|j,h\rangle\langle j,h|$ 与全部其他输入独立，是唯一含未知 $h$ 的输入。设备、控制、解码器及除声明场服务外的准备均不依赖实际 $n,h$；固定 $n$ 后，完整非参考输入律对全部 $h$ 相同。原比较类仍允许任意独立有限混合辅助，包括奇异态，以及记忆、反馈、纠缠和探针回用；不供应混合输入的纯化。以下固定调度只指定该类中的一个见证，不约束其他控制器。
+
+只有前向原生等距 $V$ 和一次规定终端接触 $R$：
+
+$$
+\begin{aligned}
+V&=\Pi_+\otimes|++\rangle_{HE}+\Pi_-\otimes|--\rangle_{HE},\\
+\Pi_+&=\frac{J\cdot\sigma+(j+1)I}{D},\qquad
+\Pi_-=\frac{jI-J\cdot\sigma}{D},\\
+U_{\rm term}&=\exp[-idJ\cdot\sigma/m].
+\end{aligned}
+\tag{20.4}
+$$
+
+其他全部操作在原 $R$ 上为恒等。终端必须使用在 $+d e_x$ 独立重置且此前未经改动的原场令牌；不提供参考旋转、替换、重置、直接读取、未知射线反射、免费逆或受控原生访问。
+

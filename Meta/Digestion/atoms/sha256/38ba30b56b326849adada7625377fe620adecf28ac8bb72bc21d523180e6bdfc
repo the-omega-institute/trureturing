@@ -1,0 +1,44 @@
+**定理 17.2（奇异混合输入的有限酉旋转反例；repo-derived）。** 令 $J=2^j\ge128$，$s=e_J=1/J$，$m=m_J=D_{1/J}-1$ 严格按 (17.1) 取值，$\alpha=32/J$，$N=(J+1)^2$。存在 $P_J=K_J$、维数 $2N$，独立于 $h$ 的奇异混合态 $\sigma_J$ 和独立于 $h$ 的有限酉 $U_J$，使 (17.3) 的同一实际输出满足
+
+$$
+0<\delta_J\le\frac{C_0}{J^2\sqrt{m_J}},\qquad
+\int_{S^2}D_{\rm tr}(\omega_{\rho_{32/J}h},\omega_h)^2\,d\mu(h)
+\ge c\frac{(\log J)^2}{J^6}
+\tag{17.5}
+$$
+
+对全部充分大的二进 $J$ 成立，其中 $c,C_0>0$ 为绝对常数。因此
+
+$$
+\frac{\displaystyle\int_{S^2}D_{\rm tr}(\omega_{\rho_{32/J}h},\omega_h)^2\,d\mu(h)}
+     {(m_J/J^2)\delta_J^2+\delta_J}
+\ge c' (\log J)^2\longrightarrow\infty.
+\tag{17.6}
+$$
+
+特别地，(17.4) 的统一绝对常数不存在。$\sigma_J$ 的秩为 $N$，有 $N$ 个特征值 $1/N$ 及 $N$ 个零特征值；结论不要求输入满秩。以下所有 $c,C$ 均为可随估计改变的正绝对常数，不依赖 $J,m,w,h$。
+
+证明。先给出全部有限矩阵。取
+
+$$
+\begin{aligned}
+W_J&=\{\tfrac12+a/J+i(-\tfrac12+b/J):a,b=0,\ldots,J\},\\
+P_J=K_J&=\mathbb C^{W_J}\otimes\mathbb C^2,\qquad
+\sigma_J=\frac1N\sum_{w\in W_J}|w,0\rangle\langle w,0|,\\
+\zeta_w(z)&=\frac{z-w}{1+\overline w z},\qquad
+f_w(h)=\frac{s^2\overline{\zeta_w(h)}}{s^2+|\zeta_w(h)|^2},\qquad
+A_w=T_m(f_w).
+\end{aligned}
+\tag{17.7}
+$$
+
+在 $\zeta_w=\infty$ 处取连续延拓。令 $\eta=1/\zeta_w$，则该处的表达为 $s^2\eta/(1+s^2|\eta|^2)$，故 $f_w$ 在整个球面实解析，且 $|f_w|\le s/2$。在 $R\otimes\mathbb C^2$ 上置
+
+$$
+H_w=A_w\otimes|1\rangle\langle0|+A_w^\dagger\otimes|0\rangle\langle1|,
+\qquad U_w=e^{iH_w},\qquad U_J=\bigoplus_{w\in W_J}U_w.
+\tag{17.8}
+$$
+
+直和保持实际标签 $w$。$H_w$ 自伴，故 $U_J$ 是 $R\otimes P_J$ 到整个 $R\otimes K_J$ 的有限酉。(17.2) 的保单位完全正性给 $\|A_w\|\le s/2$。这些公式指定每个有限矩阵条目，参数只依赖公开的 $J,m,w$，不依赖实际 $h$；没有 $R\otimes K_J$ 以外的生成系统。
+

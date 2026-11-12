@@ -20,14 +20,14 @@ Legal: proof_shape=bind-only; consumers=instDecidableLegal, a
 instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, result
-cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon
+cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon, row_major_lt, a_sum, L_card
 RowNormal: proof_shape=bind-only; consumers=normal_iff
-Canon: proof_shape=bind-only; consumers=canonical_two_card
+Canon: proof_shape=bind-only; consumers=alternating_canon, canon_two_eq, CanonicalPatterns
 row_major_lt: proof_shape=bind-only; consumers=normal_iff
 normal_iff: proof_shape=bind-only; consumers=legal_iff
 legal_iff: proof_shape=bind-only; consumers=literal_card
 literal_card: proof_shape=bind-only; consumers=a_sum
-used: proof_shape=bind-only; consumers=used_two_or_three, weighted_count
+used: proof_shape=bind-only; consumers=used_eq_card, used_two_or_three, omitted_label, alternating_used, canon_two_eq, canonical_two_card, a_sum, weighted_count
 used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_used
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
@@ -42,7 +42,7 @@ alternating_used: proof_shape=bind-only; consumers=canonical_two_card
 alternating_canon: proof_shape=bind-only; consumers=canonical_two_card
 canon_two_eq: proof_shape=content; consumers=canonical_two_card
   reason: The new two-label classification is used before canonicality fixes labels zero and one.
-CanonicalPatterns: proof_shape=bind-only; consumers=weighted_count
+CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
 canonical_two_card: proof_shape=content; consumers=weighted_count
   reason: Uniqueness of the counted pattern uses the new all-width classification.
 a_sum: proof_shape=bind-only; consumers=weighted_count
@@ -97,22 +97,22 @@ def a (n : ℕ) : ℕ :=
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (Proper L)
 attribute [local irreducible] a L
 
-private abbrev cellOrder (n : ℕ) : LinearOrder (Fin 4 × Fin n) :=
+abbrev cellOrder (n : ℕ) : LinearOrder (Fin 4 × Fin n) :=
   LinearOrder.lift' finProdFinEquiv finProdFinEquiv.injective
 
-private abbrev RowNormal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :=
+abbrev RowNormal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :=
   @HardinA233177Canonical.Normal (Fin 4 × Fin n) (cellOrder n).toLT A
 
-private abbrev Canon {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :=
+abbrev Canon {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :=
   @HardinA233177Canonical.Canonical (Fin 4 × Fin n) (cellOrder n).toLT 3 P
 
-private theorem row_major_lt {n : ℕ} (p q : Fin 4 × Fin n) :
+theorem row_major_lt {n : ℕ} (p q : Fin 4 × Fin n) :
     @LT.lt (Fin 4 × Fin n) (cellOrder n).toLT p q ↔
       p.1.val * n + p.2.val < q.1.val * n + q.2.val := by
   change p.2.val + n * p.1.val < q.2.val + n * q.1.val ↔ _
   simp only [Nat.add_comm, Nat.mul_comm]
 
-private theorem normal_iff {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
+theorem normal_iff {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
     normal A ↔ RowNormal A := by
   simp only [normal, RowNormal, HardinA233177Canonical.Normal, row_major_lt]
 
@@ -138,10 +138,10 @@ private theorem literal_card {n : ℕ} (hn : 0 < n) :
   ext A
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, legal_iff hn]
 
-private noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
+noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
   Nat.card (Set.range P)
 
-private theorem used_eq_card {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
+theorem used_eq_card {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
     used P = (Finset.univ.image P).card := by
   have he : Set.range P = (↑(Finset.univ.image P) : Set (Fin 3)) := by
     ext x
@@ -192,7 +192,7 @@ private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
 def alternating (n : ℕ) (a b : Fin 3) : Fin 4 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
-private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
+theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
     Proper (alternating n a b) := by
   intro j hj r s _
   dsimp [alternating]
@@ -250,7 +250,7 @@ private theorem used_two_or_three {n : ℕ} (hn : 2 ≤ n)
     simpa using Finset.card_le_card (Finset.subset_univ (Finset.univ.image P))
   omega
 
-private theorem omitted_label {n : ℕ} (P : Fin 4 × Fin n → Fin 3)
+theorem omitted_label {n : ℕ} (P : Fin 4 × Fin n → Fin 3)
     (h : used P = 2) : ∃ d, ∀ i, P i ≠ d := by
   classical
   by_contra hn
@@ -259,7 +259,7 @@ private theorem omitted_label {n : ℕ} (P : Fin 4 × Fin n → Fin 3)
   have : used P = 3 := by simp [used, hr]
   omega
 
-private theorem alternating_used {n : ℕ} (hn : 2 ≤ n) (a b : Fin 3) (hab : a ≠ b) :
+theorem alternating_used {n : ℕ} (hn : 2 ≤ n) (a b : Fin 3) (hab : a ≠ b) :
     used (alternating n a b) = 2 := by
   classical
   have hr : Finset.univ.image (alternating n a b) = ({a, b} : Finset (Fin 3)) := by
@@ -276,7 +276,7 @@ private theorem alternating_used {n : ℕ} (hn : 2 ≤ n) (a b : Fin 3) (hab : a
   rw [used_eq_card, hr]
   simp [hab]
 
-private theorem alternating_canon {n : ℕ} (hn : 0 < n) :
+theorem alternating_canon {n : ℕ} (hn : 0 < n) :
     Canon (alternating n 0 1) := by
   intro p b hb
   change b < (if p.2.val % 2 = 0 then (0 : Fin 3) else 1) at hb
@@ -291,7 +291,7 @@ private theorem alternating_canon {n : ℕ} (hn : 0 < n) :
     have hj : 0 < p.2.val := by omega
     omega
 
-private theorem canon_two_eq {n : ℕ} (hn : 2 ≤ n)
+theorem canon_two_eq {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P) (hc : Canon P) (hu : used P = 2) :
     P = alternating n 0 1 := by
   obtain ⟨d, hd⟩ := omitted_label P hu

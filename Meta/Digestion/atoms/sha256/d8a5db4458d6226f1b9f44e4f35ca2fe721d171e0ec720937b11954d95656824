@@ -1,0 +1,9 @@
+**Definition 1.1.** In a nonempty finite ultrametric space $(X,d)$, write
+$S(x,c)=\{y\in X:d(x,y)=c\}$. The center of distances is
+$C(X)=\{c\ge 0:S(x,c)\ne\varnothing\text{ for every }x\in X\}$.
+
+Dovgoshey, Jaiswal, Kainth, Kaur, and Rovenska ask in
+[Problem 5.4 of their preprint on maximal distance centers](https://arxiv.org/pdf/2609.11384v1#page=27) when a finite ultrametric
+can have prescribed pointwise sphere counts at every central radius. The
+following criterion gives all possible orders for any fixed list of radii.
+
