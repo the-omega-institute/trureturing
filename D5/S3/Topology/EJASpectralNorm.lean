@@ -279,7 +279,10 @@ def coeff (c : X) : X →ₗ[ℝ] ℝ where
 private theorem coeff_unit (A : EJAFiniteSpectral.Data X S u) {c : X}
     (hc : S c c = c) (hc0 : c ≠ 0) : coeff c u = 1 := by
   have hi : inner ℝ c u = inner ℝ c c := by
-    rw [← hc, A.inner_assoc, A.symm c u, A.unit_mul, hc]
+    calc
+      inner ℝ c u = inner ℝ (S c c) u := by rw [hc]
+      _ = inner ℝ c (S c u) := A.inner_assoc c c u
+      _ = inner ℝ c c := by rw [A.symm c u, A.unit_mul]
   exact (congrArg (fun t : ℝ => t / inner ℝ c c) hi).trans
     (div_self (real_inner_self_pos.mpr hc0).ne')
 
@@ -287,8 +290,10 @@ private theorem coeff_square_nonneg (A : EJAFiniteSpectral.Data X S u)
     {c : X} (hc : S c c = c) (y : X) : 0 ≤ coeff c (S y y) := by
   have hi : inner ℝ c (S y y) = inner ℝ (S c y) y := by
     rw [real_inner_comm c, A.inner_assoc, A.symm y c, real_inner_comm]
-  exact div_nonneg (hi ▸ inner_mul_self_nonneg_of_idem A.symm A.jordan A.inner_assoc hc y)
-    real_inner_self_nonneg
+  change 0 ≤ inner ℝ c (S y y) / inner ℝ c c
+  apply div_nonneg _ real_inner_self_nonneg
+  rw [hi]
+  exact inner_mul_self_nonneg_of_idem A.symm A.jordan A.inner_assoc hc y
 
 /-- All idempotent evaluations, including zero, so this set is nonempty in the zero algebra. -/
 def values (S : X →ₗ[ℝ] X →ₗ[ℝ] X) (x : X) : Set ℝ :=
@@ -495,7 +500,7 @@ instance spaceNormedSpace (A : EJAFiniteSpectral.Data X S u) : NormedSpace ℝ (
   NormedSpace.ofCore (norm_core A)
 
 instance spaceFinite (A : EJAFiniteSpectral.Data X S u) : FiniteDimensional ℝ (Space A) :=
-  (equiv A).finiteDimensional
+  (equiv A).symm.finiteDimensional
 
 instance spaceComplete (A : EJAFiniteSpectral.Data X S u) : CompleteSpace (Space A) :=
   FiniteDimensional.complete ℝ (Space A)

@@ -18,7 +18,7 @@ internal sealed class JBSquareDefectDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("spectral-defect-sum-identity"),
                 DeclarationHandle.Create("D5/S3/Topology/JBSquareDefect.square_defect_identity"),
                 H("The explicit same-spectrum sum identity"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For the same complete spectrum, target product and unital map, the sum of the quadratic representations at r_i v-Phi(a) applied to Phi(e_i) is exactly the square defect. This is the algebraic identity used by square_defect_of_spectral; no positivity of r_i v-Phi(a) is required."))), DescribeRole.Theorem),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For the same complete spectrum, target product and unital map, the sum of the quadratic representations at r_i v-Phi(a) applied to Phi(e_i) is exactly the square defect. This is the algebraic identity used by square_defect_of_spectral. It requires only the symmetric target product and unit law, with no JB norm assumption and no positivity of r_i v-Phi(a)."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("zero-square-defect-cross"),
                 DeclarationHandle.Create("D5/S3/Topology/JBSquareDefect.zero_defect_cross"),
                 H("Zero defect gives every mixed product"), StatementSource.WithoutFormula(),

@@ -58,7 +58,8 @@ private theorem sum_squares (A : Data Y T v) {ι : Type*}
     exact add_squares A (hf i (by simp)) (ih (fun j hj => hf j (by simp [hj])))
 
 /-- The explicit spectral sum identity for the same map, spectrum and target product. -/
-theorem square_defect_identity (A : Data Y T v) {n : ℕ}
+theorem square_defect_identity (htsymm : ∀ x y, T x y = T y x)
+    (htunit : ∀ x, T v x = x) {n : ℕ}
     (e : Fin n → X) (r : Fin n → ℝ) (Φ : X →ₗ[ℝ] Y)
     (hunit : Φ u = v) (heu : ∑ i, e i = u) {a : X}
     (hea : ∑ i, r i • e i = a)
@@ -75,12 +76,12 @@ theorem square_defect_identity (A : Data Y T v) {n : ℕ}
     simp only [z, ← map_smul, ← map_sum, heaa]
   have hsum : ∑ i, quadratic T (r i • v - b) (z i) =
       Φ (S a a) - T b b := by
-    have hright (x : Y) : T x v = x := (A.symm x v).trans (A.unit_mul x)
+    have hright (x : Y) : T x v = x := (htsymm x v).trans (htunit x)
     have hquad (i : Fin n) : quadratic T (r i • v - b) (z i) =
         (r i * r i) • z i - (2 : ℝ) • (r i • T b (z i)) +
           quadratic T b (z i) := by
       simp only [quadratic, map_sub, map_smul, LinearMap.sub_apply,
-        LinearMap.smul_apply, A.unit_mul, hright]
+        LinearMap.smul_apply, htunit, hright]
       module
     have hcross : ∑ i, r i • T b (z i) = T b b := by
       simpa only [map_sum, map_smul] using congrArg (T b) hrz
@@ -100,7 +101,7 @@ theorem square_defect_of_spectral (A : Data Y T v)
     (hunit : Φ u = v) (hpos : ∀ x, ∃ y, T y y = Φ (S x x)) (a : X) :
     ∃ z, T z z = Φ (S a a) - T (Φ a) (Φ a) := by
   obtain ⟨n, e, r, he, heu, hea, heaa⟩ := hspec a
-  have hsum := square_defect_identity A e r Φ hunit heu hea heaa
+  have hsum := square_defect_identity A.symm A.unit_mul e r Φ hunit heu hea heaa
   rw [← hsum]
   apply sum_squares A
   intro i _
