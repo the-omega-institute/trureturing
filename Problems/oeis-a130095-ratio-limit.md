@@ -45,7 +45,7 @@ A failure of the full eventual epsilon statement, a missing positive divisor, a 
 
 ## Evidence
 
-The settling Lean declaration is `D5.S3.Arith.Divisors.OeisA130095RatioLimit.result`. The explicit targeted governed build verifies the complete event. The canonical typed Scribe mirrors the sequence definition and the full epsilon statement. Independent review, canonical freeze and required checks remain separate from this implementation evidence.
+The settling Lean declaration is `D5.S3.Arith.Divisors.OeisA130095RatioLimit.result`. The explicit targeted governed build verifies the complete event. The axiom closure of the result and its typed Reg evidence is contained in `{propext, Classical.choice, Quot.sound}`. The source-owned Reg mirror reconstructs the complete epsilon telescope and observes both sequence occurrences, with a source-equivalence bridge, whole-family variation, role sensitivity and actual dependence. Its residual continuation is explicitly unknown; no undecidability assertion follows. The canonical typed Scribe mirrors the sequence definition and the full epsilon statement. Independent review, canonical freeze and required checks remain separate from this implementation evidence.
 
 ## Triage
 
