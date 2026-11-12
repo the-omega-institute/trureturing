@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Foundation.ThreeLegChoiCompression
 import Reg.Support.DependentFamily
 
@@ -143,9 +144,8 @@ theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   have hv := (hp i i i).diag_nonneg (i := (a, a, a))
   norm_num [rejected, realize, i, a, D, probe, seed, totalDimension,
     ghz, diagonalVector, Matrix.vecMulVec] at hv
-  have hi : (default : I) = i := Subsingleton.elim _ _
-  simp only [hi, Pi.single_eq_same] at hv
-  norm_num at hv
+  all_goals
+    simp [Pi.single, i] at hv
 
 theorem dependence : ObservationalDependence signature.{u,v} actual := by
   intro role
@@ -172,6 +172,30 @@ def source_registration : Registration arena.{u,v} (type_of% @direct_sum_three_l
     · intro e
       exact nomatch e
   dependence := dependence
+
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@direct_sum_three_leg_detector.{u,v}) (Realization signature.{u,v}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Foundation.ThreeLegChoiCompression.DirectSum.unit
+  realizationName := `Reg.D5.S3.Quantum.Foundation.ThreeLegChoiCompression.DirectSum.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u,v} (fun _ _ lift => lift) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
 
 end DirectSum
 
