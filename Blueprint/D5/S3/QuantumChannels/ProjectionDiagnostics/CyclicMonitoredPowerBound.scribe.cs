@@ -13,12 +13,7 @@ internal sealed class CyclicMonitoredPowerBoundDocument : IScribeDocumentDefinit
             DescribeId.Create("cyclic-monitored-power-contraction"),
             DeclarationHandle.Create("D5/S3/QuantumChannels/ProjectionDiagnostics/CyclicMonitoredPowerBound.cyclic_power_contraction"),
             H("A strict power bound derived from actual cyclicity"),
-            StatementSource.FromAuthor(Disp(Seq(
-                Exists, Sp, F.Id("N"), Ge, D(1), Comma, Quad,
-                Exists, Sp, F.Id("q"), Comma, Sp,
-                D(0), Le, Sp, F.Id("q"), Lt, D(1), Comma, Quad, Sp,
-                new Formula.Norm(Seq(F.Id("T"), Underscore, F.Id("C"),
-                    Caret, F.Id("N"))), Le, Sp, F.Id("q")))),
+            StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
                 "For every finite dimensional complex Hilbert space, every unitary U and every "
@@ -29,9 +24,34 @@ internal sealed class CyclicMonitoredPowerBoundDocument : IScribeDocumentDefinit
                 + "conservative singleton instrument. FiniteDetectionSurvivalLimit.dark_block_contraction "
                 + "then supplies the strict gap; its estimate is reused directly. "
                 + "The chosen N is dim C and q is the norm of T_C^N. "
-                + "This proves the registered contraction witness. It does not assert the infinite "
+                + "The contraction holds on the actual cyclic space. It does not assert the infinite "
                 + "weighted return identity or identify dim C with occupied spectral cardinality. "
                 + "The complete monitored-return endpoint is classical, as in Grunbaum, Velazquez, "
                 + "Werner and Werner, arXiv:1202.3903v3, Theorem 2."))),
             DescribeRole.Theorem))));
+
+    private static Formula Bind(FormulaQuantifier quantifier, string name, Formula type, Formula body) =>
+        new Formula.Bind(quantifier, FormulaIdentifier.Create(name), type, body);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Statement()
+    {
+        Formula e = F.Id("E"), u = F.Id("U"), v = F.Id("v"), n = F.Id("N"), q = F.Id("q");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula estimate = And(Seq(D(0), Le, Sp, q), And(Seq(q, Lt, D(1)),
+            Seq(new Formula.Norm(Seq(Call("cyclicStep", u, v), Caret, n)), Le, Sp, q)));
+        Formula result = Bind(FormulaQuantifier.Exists, "N", Seq(Mathbb, Grp(F.Id("N"))),
+            And(Seq(D(1), Le, Sp, n),
+                Bind(FormulaQuantifier.Exists, "q", Seq(Mathbb, Grp(F.Id("R"))), estimate)));
+        Formula law = new Formula.Logic(Seq(new Formula.Norm(v), Eq, D(1)),
+            FormulaLogicOperator.Implies, result);
+        return Disp(Bind(FormulaQuantifier.ForAll, "E", F.Id("Type"), Seq(
+            OpenBracket, Call("NormedAddCommGroup", e), CloseBracket, Sp,
+            OpenBracket, Call("InnerProductSpace", complex, e), CloseBracket, Sp,
+            OpenBracket, Call("FiniteDimensional", complex, e), CloseBracket, Comma, Quad,
+            Bind(FormulaQuantifier.ForAll, "U", Call("LinearIsometryEquiv", complex, e, e),
+                Bind(FormulaQuantifier.ForAll, "v", e, law)))));
+    }
 }

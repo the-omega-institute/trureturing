@@ -17,3 +17,7 @@ Theorem 2 supplies the literature endpoint for monitored return under a unitary
 evolution. The cyclic no-dark theorem formalized here is a finite dimensional
 structural step toward that endpoint. It does not establish the infinite
 weighted return sum or its equality with the occupied spectral cardinality.
+
+## Verified locator
+
+Theorem 2: https://arxiv.org/abs/1202.3903v3
