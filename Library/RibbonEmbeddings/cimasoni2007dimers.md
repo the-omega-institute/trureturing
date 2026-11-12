@@ -10,7 +10,6 @@ strata_touched:
   - D5/S3/Combinatorics/Graph/PlanarMatching/RotationBoundary
   - D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces
   - D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian
-  - D5/S3/Combinatorics/PerfectMatchings/WeightedPfaffianMatching
 license: citation-only
 triage: anchor
 ---
