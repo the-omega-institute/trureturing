@@ -123,6 +123,30 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace));
         Formula stationarityStatement = nativeInputs(coordinateWitness(
             Chain(compressionLaws, stationarity)), true);
+        Formula psi = F.Id("Psi"), matrixX = F.Id("X");
+        Formula psiAt(Formula a) => app(psi, a);
+        Formula inverseCongruence = All("v", space, Eq(mat(v),
+            mul(mul(inclusion, mul(mul(inv(root), psiAt(v)), inv(root))), adjoint(inclusion))));
+        Formula normalizedBase = Eq(Call("image", psi, massSlice(D(1))),
+            Call("setOf", Seq(matrixX, Mapsto, Sp, Chain(
+                Member(matrixX, Call("range", psi)), Call("PosSemidef", matrixX),
+                Eq(Call("trace", matrixX), D(1))))));
+        Formula normalizedWitness = Ex("m", space, Chain(Member(m, cone),
+            Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace,
+            Call("IsHermitian", root), Call("IsUnit", root),
+            Eq(mul(root, root), inv(sigmaAt(m))),
+            All("v", space, Eq(psiAt(v), mul(mul(root, sigmaAt(v)), root))),
+            Eq(psiAt(m), D(1)), Call("Injective", psi),
+            All("v", space, Call("IsHermitian", psiAt(v))),
+            All("v", space, Eq(Call("trace", psiAt(v)), app(unit, v))),
+            All("v", space, IffF(Member(v, cone), Call("PosSemidef", psiAt(v)))),
+            All("v", space, Eq(Call("rank", psiAt(v)), Call("rank", mat(v)))),
+            inverseCongruence, Member(D(1), Call("range", psi)), normalizedBase));
+        Formula normalizationStatement = nativeInputs(And(LtF(D(0), dimension),
+            Ex("U", Call("Matrix", index, nIndex, field),
+                Ex("sigma", Call("LinearMap", real, space, nativeMatrices),
+                    Ex("Psi", Call("LinearMap", real, space, nativeMatrices),
+                        Chain(compressionLaws, normalizedWitness))))), true);
         return DocumentDefinition.Create(ScribeNode.Create(
             "Native support compression produces an actual original-unit positive determinant maximizer.",
             H("Original unit, native support and determinant maximization"), Blocks(
@@ -159,7 +183,13 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(stationarityStatement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("The determinant maximum admits a two-sided positive-definite neighborhood in every original direction whose unit value is zero. Its real determinant derivative therefore vanishes on the kernel of the original unit. Decomposing an arbitrary original vector into a kernel direction plus its mass multiple, and using the nonzero support dimension, extends the identity to every original vector: trace((sigma(m)) inverse sigma(v)) equals u(v), with the trace taken in the native real or complex support coordinates. This is a stationarity identity for the actual original unit and does not assume a positive definite representative of the dual unit or a normalized section."))),
                     DescribeRole.Theorem),
-                Paragraph(Text("Full original-u normalization remains unresolved here. Uniqueness, the actual trace-preserving Psi and same-h original return, whole-base and pure-point transport, dual effects, confirmations, comparison minima and minimizers, exclusion, all minimal faces, ROG, codimension and annihilator transport, and same-frame complement conclusions still require proofs. The dimension-one support case is included in the producers but its entire singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
+                Describe.Lean(DescribeId.Create("original-unit-normalization"),
+                    DeclarationHandle.Create(Owner + "exists_original_unit_normalization"),
+                    H("Actual original-unit normalization on the entire original carrier"),
+                    StatementSource.FromAuthor(Disp(normalizationStatement)), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its principal inverse square root S defines the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. This statement includes support dimension one without dividing by n minus one."))),
+                    DescribeRole.Theorem),
+                Paragraph(Text("The complete source normalization-and-transport target remains unresolved. Uniqueness of the determinant maximum, whole pure-point transport, dual effects, confirmations, comparison minima and minimizers, exclusion, all minimal faces, ROG, codimension and annihilator transport, and same-frame complement conclusions still require proofs. The dimension-one support case is included in normalization, but its full singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
     private static Formula Chain(params Formula[] formulas)

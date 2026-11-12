@@ -25,8 +25,9 @@ this sum by its original strictly positive unit produces an actual state without
 changing its native real or complex support. Native orthonormal compression
 reconstructs the entire original representation. The given compact original base
 then supplies a positive definite determinant maximum, its affine first variation
-and principal inverse square root. Stationarity and trace normalization remain
-separate obligations. No full-support ambient matrix, trace unit, rank-one
+and principal inverse square root. Full-vector stationarity gives an actual
+trace-preserving congruence whose image contains the identity. No full-support
+ambient matrix, trace unit, rank-one
 generation, or normalized section is assumed.
 -/
 
@@ -604,5 +605,88 @@ theorem exists_original_unit_inverse_trace_stationarity
   have hnk : (n : 𝕜) ≠ 0 := by exact_mod_cast hnR
   field_simp [hnk]
   simp
+
+
+/-- The principal congruence of the actual original-unit maximizer normalizes
+all original vectors, with the identity and entire base in the same image. -/
+theorem exists_original_unit_normalization
+    [FiniteDimensional ℝ V] [Nontrivial V] [TopologicalSpace V]
+    [IsTopologicalAddGroup V] [ContinuousSMul ℝ V] [T2Space V]
+    (C : PointedCone ℝ V) (hgen : Submodule.span ℝ (C : Set V) = ⊤)
+    (u : V →ₗ[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hcompact : IsCompact {x : V | x ∈ C ∧ u x = 1})
+    (ρ : V →ₗ[ℝ] Matrix ι ι 𝕜) (hρ : Function.Injective ρ)
+    (hsection : ∀ x, x ∈ C ↔ (ρ x).PosSemidef) :
+    let n := Module.finrank 𝕜 (commonSupport C ρ)
+    0 < n ∧ ∃ U : Matrix ι (Fin n) 𝕜,
+      ∃ σ Ψ : V →ₗ[ℝ] Matrix (Fin n) (Fin n) 𝕜,
+        Uᴴ * U = 1 ∧ U.toEuclideanLin.range = commonSupport C ρ ∧
+        (∀ x, σ x = Uᴴ * ρ x * U) ∧ (∀ x, ρ x = U * σ x * Uᴴ) ∧
+        Function.Injective σ ∧ (∀ x, (σ x).IsHermitian) ∧
+        (∀ x, x ∈ C ↔ (σ x).PosSemidef) ∧ (∀ x, (σ x).rank = (ρ x).rank) ∧
+        ∃ h : V, h ∈ C ∧ u h = (n : ℝ) ∧ (σ h).PosDef ∧
+          (∀ v : V, ((σ h)⁻¹ * σ v).trace = (u v : 𝕜)) ∧
+          let S := CFC.sqrt (σ h)⁻¹
+          S.IsHermitian ∧ IsUnit S ∧ S * S = (σ h)⁻¹ ∧
+          (∀ v, Ψ v = S * σ v * S) ∧ Ψ h = 1 ∧
+          Function.Injective Ψ ∧ (∀ v, (Ψ v).IsHermitian) ∧
+          (∀ v, (Ψ v).trace = (u v : 𝕜)) ∧
+          (∀ v, v ∈ C ↔ (Ψ v).PosSemidef) ∧
+          (∀ v, (Ψ v).rank = (ρ v).rank) ∧
+          (∀ v, ρ v = U * (S⁻¹ * Ψ v * S⁻¹) * Uᴴ) ∧
+          (1 : Matrix (Fin n) (Fin n) 𝕜) ∈ Ψ.range ∧
+          Ψ '' {v : V | v ∈ C ∧ u v = 1} =
+            {X | X ∈ Ψ.range ∧ X.PosSemidef ∧ X.trace = 1} := by
+  classical
+  dsimp only
+  obtain ⟨hn, U, σ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
+      h, hh, hmass, hhPD, htrace⟩ :=
+    exists_original_unit_inverse_trace_stationarity C hgen u hu hcompact ρ hρ hsection
+  let S := CFC.sqrt (σ h)⁻¹
+  obtain ⟨hSH, hSU, hSS, hroot⟩ := principal_inverse_sqrt_laws (σ h) hhPD
+  have hSd : IsUnit S.det := (Matrix.isUnit_iff_isUnit_det S).mp hSU
+  have hleft : S⁻¹ * S = 1 := Matrix.nonsing_inv_mul S hSd
+  have hright : S * S⁻¹ = 1 := Matrix.mul_nonsing_inv S hSd
+  let Ψ : V →ₗ[ℝ] Matrix _ _ 𝕜 :=
+    { toFun := fun v => S * σ v * S
+      map_add' := by intros; simp [Matrix.mul_add, Matrix.add_mul]
+      map_smul' := by intros; simp [Matrix.mul_smul, Matrix.smul_mul] }
+  have hinv (v : V) : S⁻¹ * Ψ v * S⁻¹ = σ v := by
+    change S⁻¹ * (S * σ v * S) * S⁻¹ = σ v
+    calc
+      _ = (S⁻¹ * S) * σ v * (S * S⁻¹) := by simp only [Matrix.mul_assoc]
+      _ = σ v := by rw [hleft, hright, Matrix.one_mul, Matrix.mul_one]
+  have hΨ : Function.Injective Ψ := by
+    intro v w heq
+    apply hσ
+    rw [← hinv v, ← hinv w, heq]
+  have hΨC (v : V) : v ∈ C ↔ (Ψ v).PosSemidef := by
+    rw [hC v]
+    exact (by simpa only [Matrix.star_eq_conjTranspose, hSH.eq] using
+      (Matrix.IsUnit.posSemidef_star_left_conjugate_iff (x := σ v) hSU)).symm
+  have hΨtrace (v : V) : (Ψ v).trace = (u v : 𝕜) := by
+    calc
+      (Ψ v).trace = (S * S * σ v).trace := Matrix.trace_mul_cycle _ _ _
+      _ = (u v : 𝕜) := by rw [hSS, htrace v]
+  refine ⟨hn, U, σ, Ψ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
+    h, hh, hmass, hhPD, htrace, hSH, hSU, hSS, (fun _ => rfl), hroot,
+    hΨ, ?_, hΨtrace, hΨC, ?_, ?_, ⟨h, hroot⟩, ?_⟩
+  · intro v
+    change (S * σ v * S).IsHermitian
+    simpa only [hSH.eq] using Matrix.isHermitian_conjTranspose_mul_mul S (hHerm v)
+  · intro v
+    change (S * σ v * S).rank = (ρ v).rank
+    rw [Matrix.rank_mul_eq_left_of_isUnit_det S _ hSd,
+      Matrix.rank_mul_eq_right_of_isUnit_det S _ hSd, hrank v]
+  · intro v
+    rw [hinv, hrec v]
+  · ext X
+    constructor
+    · rintro ⟨v, ⟨hv, huv⟩, rfl⟩
+      exact ⟨⟨v, rfl⟩, (hΨC v).mp hv, by rw [hΨtrace v, huv]; simp⟩
+    · rintro ⟨⟨v, rfl⟩, hv, huv⟩
+      refine ⟨v, ⟨(hΨC v).mpr hv, ?_⟩, rfl⟩
+      have hre := congrArg RCLike.re huv
+      simpa only [hΨtrace v, RCLike.ofReal_re, map_one] using hre
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport
