@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5e80eb27f247f3f09a117a2dd0261302715131db6cd34a7ac7a97413f871856a
   normalized_sha256: sha256:5e80eb27f247f3f09a117a2dd0261302715131db6cd34a7ac7a97413f871856a
 cas_ref: sha256:5e80eb27f247f3f09a117a2dd0261302715131db6cd34a7ac7a97413f871856a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FourPathNegativeFloor.negative_floor
+    target_statement_id: sha256:cb7edf955fdaebd65a31726a1b4171c430a40c9d4b42fab77a97506872db4115
 receipts:
   unresolved_subitems: []

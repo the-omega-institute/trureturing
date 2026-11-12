@@ -1,0 +1,19 @@
+**定义 104.1（局部Pair与完整排除尺族）。** 完全采用103.1的同一个非零有限维实 $V$、闭尖生成锥 $C$、严格正原单位 $u$、整个紧基 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$、整个原 $[0,u]_{C^*}$，以及原 $F_p,T_p,D_p,E_p,H(p,q)$。纯点集起初不假定闭。保留103.1的 $\mathrm{EB}_{\ge1}$，将全 $\mathrm{Pair}$ 的量词改为
+
+$$
+\mathrm{Pair}_{\perp}:\quad
+p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\tag{VII104.1}
+$$
+
+这里 $p\perp q$ 仍指存在原 proper 效应在 $p,q$ 取一、零。补效应给 $p\perp q\Longleftrightarrow q\perp p$，且 $p\not\perp p$；没有先给内积正交。定义
+
+$$
+\mathcal A_p=\{a\in F_p:a(x)=0\ (x\in D_p)\}.
+\tag{VII104.2}
+$$
+
+直接复用103.2：仅 $\mathrm{EB}_{\ge1}$ 已使每个 $D_p$ 成为非点紧暴露极大真面，且 $\mathcal A_p\ne\varnothing$；全部非空真面只有纯单点和这些整球。因此任意两个不同非点真面至多交于一点，非空交点必纯，且 $h(K)=3$。每个 $a\in\mathcal A_p$ 的零面恰为整个 $D_p$，因为任何额外零点本身就在 $D_p$ 的原定义中。此时还不称 $a$ 为 least，不假设 $\mathcal A_p$ 单点。
+
+球的对径始终在该整个仿射球内部定义。下文的“逐效应延拓”指每个局部效应分别存在一张原全域 proper 延拓；三结果共同完成则要求同一族原非负效应的和恰为 $u$。两种量词不相同，也均不直接指实际装置。
+
