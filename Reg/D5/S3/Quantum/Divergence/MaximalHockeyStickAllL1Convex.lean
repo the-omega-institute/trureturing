@@ -2,14 +2,16 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Divergence.MaximalHockeyStickAllL1Convex
 
+/-! Source-bound equality audits retain the complete all-L1 source telescopes. -/
+
 namespace Reg.D5.S3.Quantum.Divergence.MaximalHockeyStickAllL1Convex
 
 open Matrix MeasureTheory Set
-open D5.S3.Analytic.Convexity.CurvatureHingeRepresentation
-open D5.S3.Quantum.Divergence.MaximalHockeyStickSpectral
-open D5.S3.Quantum.Divergence.MaximalHockeyStickConvex
-open D5.S3.Quantum.Divergence.MaximalHockeyStickAllL1Convex
-open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Analytic.Convexity.CurvatureHingeRepresentation
+open _root_.D5.S3.Quantum.Divergence.MaximalHockeyStickSpectral
+open _root_.D5.S3.Quantum.Divergence.MaximalHockeyStickConvex
+open _root_.D5.S3.Quantum.Divergence.MaximalHockeyStickAllL1Convex
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped ComplexOrder MatrixOrder
 
 set_option autoImplicit false
@@ -175,4 +177,5 @@ def registration :
 
 end Sufficiency
 
+end
 end Reg.D5.S3.Quantum.Divergence.MaximalHockeyStickAllL1Convex
