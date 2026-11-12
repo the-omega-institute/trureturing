@@ -152,11 +152,11 @@ theorem original_mass_factorization [Nontrivial A] [Nontrivial D] [Nontrivial E]
     hppos _ (hLpos _ (hppos _ (hLpos _ homega _ hsigma.1)) _ hsigma.1)
   have hlNonneg : 0 ≤ lambda := by
     simpa [hmTwo, hsigmaMass] using
-      Dynamics.BaseNormContraction.functional_nonneg_on_cone CD.toConvexCone uD hposD hMpos
+      Dynamics.BaseNormContraction.functional_nonneg_on_cone (CD : ConvexCone ℝ D) uD hposD hMpos
   have hkNonneg : 0 ≤ kappa := by
     have hQpos : data.Q sigma sigma sigma ∈ CE := hLpos _ hMpos _ hsigma.1
     have heNonneg : 0 ≤ uE (data.Q sigma sigma sigma) :=
-      Dynamics.BaseNormContraction.functional_nonneg_on_cone CE.toConvexCone uE hposE hQpos
+      Dynamics.BaseNormContraction.functional_nonneg_on_cone (CE : ConvexCone ℝ E) uE hposE hQpos
     simpa [hmThree, hsigmaMass] using heNonneg
   have huDne : uD ≠ 0 := by
     obtain ⟨⟨d, hd⟩, _⟩ := ProperConeMassBase.entire_base_geometry CD uD hgenD hposD
