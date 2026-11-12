@@ -4054,7 +4054,7 @@ $S_\varepsilon$ 在 $r_0$ 绑定了实际空 header $h$。
 先行 $O$ 历史的 $P_R$ 不是这里 $r_0$ 的调用，也不向这个 $h$ 写字。
 
 Init接着以定义29.2的 Build消费实收 $E(\beta)$，全局 target为 $R$、birth为 alpha。
-该目标是 branch，故 Build先完整执行 Do(P,R)，然后才可能执行 S及子树构造。
+该目标是 branch，故 Build先在当前 cone $p_1=R$ 上完整执行相对调用 $\operatorname{Do}(P,\varepsilon)$，即全局 $P_{p_1\varepsilon}=P_R$，然后才可能执行 S及子树构造。
 原 Navigate／Guard实际到达 alpha-born $r_1$，其 promotion合法；source template完成后，
 $r_0$ 已为 $\langle\beta,\beta\rangle$。
 这次 $P_R$ 唯一的 proper logical ancestor是 $r_0$，所以它正是 $h$ 的第一次 append，side为 $R$。
