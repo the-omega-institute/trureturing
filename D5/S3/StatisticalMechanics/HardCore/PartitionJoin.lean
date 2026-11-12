@@ -9,6 +9,8 @@
 import D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
 import Mathlib.Combinatorics.SimpleGraph.Sum
 
+/-! Exact independent-configuration and partition identities for a graph join. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -29,11 +31,15 @@ def join (G : SimpleGraph α) (H : SimpleGraph β) : SimpleGraph (α ⊕ β) :=
 
 private lemma join_left (G : SimpleGraph α) (H : SimpleGraph β) (u v : α) :
     (join G H).Adj (.inl u) (.inl v) ↔ G.Adj u v := by
-  simp [join, SimpleGraph.compl_adj, G.ne_of_adj]
+  by_cases h : u = v
+  · subst v; simp [join]
+  · simp [join, SimpleGraph.compl_adj, h]
 
 private lemma join_right (G : SimpleGraph α) (H : SimpleGraph β) (u v : β) :
     (join G H).Adj (.inr u) (.inr v) ↔ H.Adj u v := by
-  simp [join, SimpleGraph.compl_adj, H.ne_of_adj]
+  by_cases h : u = v
+  · subst v; simp [join]
+  · simp [join, SimpleGraph.compl_adj, h]
 
 /-- Equality of the complete independent-subset families. The two image families
 intersect precisely at the empty subset. -/
@@ -80,18 +86,20 @@ theorem configurations_join (G : SimpleGraph α) (H : SimpleGraph β)
       · apply mem_powerset.mpr
         simpa using (disjSum_mono (mem_powerset.mp ht) (empty_subset W))
       · intro x hx y hy hn he
-        obtain ⟨x, hx, rfl⟩ := mem_map.mp hx
-        obtain ⟨y, hy, rfl⟩ := mem_map.mp hy
-        exact hi hx hy (by simpa using hn) ((join_left G H x y).mp he)
+        obtain ⟨a, ha, hea⟩ := mem_map.mp hx
+        obtain ⟨b, hb, heb⟩ := mem_map.mp hy
+        subst x; subst y
+        exact hi ha hb (by simpa using hn) ((join_left G H a b).mp he)
     · obtain ⟨ht, hi⟩ := mem_filter.mp hT
       apply mem_filter.mpr
       constructor
       · apply mem_powerset.mpr
         simpa using (disjSum_mono (empty_subset V) (mem_powerset.mp ht))
       · intro x hx y hy hn he
-        obtain ⟨x, hx, rfl⟩ := mem_map.mp hx
-        obtain ⟨y, hy, rfl⟩ := mem_map.mp hy
-        exact hi hx hy (by simpa using hn) ((join_right G H x y).mp he)
+        obtain ⟨a, ha, hea⟩ := mem_map.mp hx
+        obtain ⟨b, hb, heb⟩ := mem_map.mp hy
+        subst x; subst y
+        exact hi ha hb (by simpa using hn) ((join_right G H a b).mp he)
 
 theorem partition_join [CommRing R] (G : SimpleGraph α) (H : SimpleGraph β)
     [DecidableRel G.Adj] [DecidableRel H.Adj] (V : Finset α) (W : Finset β)
@@ -112,7 +120,8 @@ theorem partition_join [CommRing R] (G : SimpleGraph α) (H : SimpleGraph β)
       obtain ⟨T, _, rfl⟩ := mem_image.mp hl
       obtain ⟨U, _, he⟩ := mem_image.mp hr
       have hh := congrArg Finset.toLeft he
-      have hT : T = ∅ := by simpa using hh.symm
+      have hT : T = ∅ := by
+        simpa only [← disjSum_empty, ← empty_disjSum, toLeft_disjSum] using hh.symm
       simp [hT]
     · rintro rfl
       constructor
@@ -126,7 +135,7 @@ theorem partition_join [CommRing R] (G : SimpleGraph α) (H : SimpleGraph β)
     dsimp [M]
     rw [Finset.sum_image (by intro S _ T _ h; exact Finset.map_injective _ h)]
     simp [partition]
-  have h := Finset.sum_union_inter L M (fun S => ∏ _ ∈ S, z)
+  have h := Finset.sum_union_inter (s₁ := L) (s₂ := M) (f := fun S => ∏ _ ∈ S, z)
   rw [hinter, sum_singleton, prod_empty, hL, hM] at h
   rw [partition, configurations_join]
   change (∑ S ∈ L ∪ M, ∏ _ ∈ S, z) = _
