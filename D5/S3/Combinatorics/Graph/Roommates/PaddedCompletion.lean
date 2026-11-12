@@ -331,6 +331,219 @@ theorem padded_buffer_top {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k
       · exact (hv.bounded a).2)
   exact partnerFirst_top _ (hc.2.1 i) hn
 
+
+/-- The old vertices embedded in the actual padded interval. -/
+def oldIndex {m k : ℕ} : Fin m ⊕ Fin k → Fin (m + k + 6)
+  | .inl i => ⟨i.val, by omega⟩
+  | .inr i => ⟨m + 6 + i.val, by omega⟩
+
+def bufferIndex {m k : ℕ} (i : Fin 6) : Fin (m + k + 6) :=
+  ⟨m + i.val, by omega⟩
+
+/-- Preserve all old offsets, and use the concrete completion on the buffer. -/
+def paddedOffset {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i : Fin (m + k + 6)) : ℤ :=
+  if h : i.val < m then chosenOffset w ⟨i.val, h⟩
+  else if h' : i.val < m + 6 then
+    bufferOffset (request (chosenOffset w) (chosenOffset v))
+      (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val) ⟨i.val - m, by omega⟩
+  else chosenOffset v ⟨i.val - (m + 6), by omega⟩
+
+private theorem index_cases {m k : ℕ} (i : Fin (m + k + 6)) :
+    (∃ a : Fin m ⊕ Fin k, i = oldIndex a) ∨ ∃ b : Fin 6, i = bufferIndex b := by
+  by_cases h : i.val < m
+  · exact Or.inl ⟨.inl ⟨i.val, h⟩, rfl⟩
+  · by_cases h' : i.val < m + 6
+    · exact Or.inr ⟨⟨i.val - m, by omega⟩, Fin.ext (by simp [bufferIndex]; omega)⟩
+    · exact Or.inl ⟨.inr ⟨i.val - (m + 6), by omega⟩,
+        Fin.ext (by simp [oldIndex]; omega)⟩
+
+private theorem old_index_position {m k : ℕ} (a : Fin m ⊕ Fin k) :
+    ((oldIndex a).val : ℤ) = oldPosition a := by
+  cases a <;> simp [oldIndex, oldPosition, Nat.cast_add]
+
+private theorem old_index_offset {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (a : Fin m ⊕ Fin k) :
+    paddedOffset w v (oldIndex a) = oldOffset (chosenOffset w) (chosenOffset v) a := by
+  cases a with
+  | inl a => simp [paddedOffset, oldIndex, oldOffset, a.isLt]
+  | inr a => simp [paddedOffset, oldIndex, oldOffset, show ¬m + 6 + a.val < m by omega,
+      show ¬m + 6 + a.val < m + 6 by omega]
+
+private theorem buffer_index_offset {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i : Fin 6) : paddedOffset w v (bufferIndex i) =
+    bufferOffset (request (chosenOffset w) (chosenOffset v))
+      (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val) i := by
+  simp [paddedOffset, bufferIndex, show ¬m + i.val < m by omega,
+    show m + i.val < m + 6 by omega]
+
+private theorem old_index_word {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (a : Fin m ⊕ Fin k) : paddedWord w v (oldIndex a) = oldRanking w.val v.val a := by
+  cases a with
+  | inl a => simp [paddedWord, oldIndex, oldRanking, a.isLt]
+  | inr a => simp [paddedWord, oldIndex, oldRanking, show ¬m + 6 + a.val < m by omega,
+      show ¬m + 6 + a.val < m + 6 by omega]
+
+private theorem buffer_index_word {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i : Fin 6) : paddedWord w v (bufferIndex i) = paddedBuffer w v i := by
+  simp [paddedWord, bufferIndex, show ¬m + i.val < m by omega,
+    show m + i.val < m + 6 by omega]
+
+private theorem request_bounds {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (a : Requester (chosenOffset w) (chosenOffset v)) :
+    -2 ≤ oldOffset (chosenOffset w) (chosenOffset v) a.val ∧
+      oldOffset (chosenOffset w) (chosenOffset v) a.val ≤ 2 ∧
+      oldOffset (chosenOffset w) (chosenOffset v) a.val ≠ 0 := by
+  refine ⟨?_, ?_, a.property.1⟩
+  · cases a.val with
+    | inl a => exact ((chosen_certificate w).bounded a).1
+    | inr a => exact ((chosen_certificate v).bounded a).1
+  · cases a.val with
+    | inl a => exact ((chosen_certificate w).bounded a).2
+    | inr a => exact ((chosen_certificate v).bounded a).2
+
+private theorem padded_buffer_facts {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) :=
+  buffer_offset_completion (request (chosenOffset w) (chosenOffset v))
+    (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val)
+    (request_injective (chosen_certificate w) (chosen_certificate v))
+    (request_boundary (chosen_certificate w) (chosen_certificate v)) (request_bounds w v)
+
+private theorem old_reciprocal {m k : ℕ} {w : Word m} {v : Word k}
+    {d : Fin m → ℤ} {e : Fin k → ℤ} (hw : Certificate w d) (hv : Certificate v e)
+    (a b : Fin m ⊕ Fin k) (ha : oldOffset d e a ≠ 0)
+    (he : oldTarget d e a = oldPosition b) : oldOffset d e b = -oldOffset d e a := by
+  cases a with
+  | inl a =>
+    cases b with
+    | inl b => exact hw.reciprocal a b ha he
+    | inr b => have := hw.bounded a; have := a.isLt
+                simp only [oldTarget, oldPosition, oldOffset] at he; omega
+  | inr a =>
+    cases b with
+    | inl b => have := hv.bounded a; have := b.isLt
+                simp only [oldTarget, oldPosition, oldOffset] at he; omega
+    | inr b =>
+      apply hv.reciprocal a b ha
+      simp only [oldTarget, oldPosition, oldOffset] at he
+      omega
+
+private theorem padded_bounded {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i : Fin (m + k + 6)) : -2 ≤ paddedOffset w v i ∧ paddedOffset w v i ≤ 2 := by
+  rcases index_cases i with ⟨a, rfl⟩ | ⟨b, rfl⟩
+  · rw [old_index_offset]
+    cases a with
+    | inl a => exact (chosen_certificate w).bounded a
+    | inr a => exact (chosen_certificate v).bounded a
+  · rw [buffer_index_offset]
+    exact (padded_buffer_facts w v).2.1 b
+
+private theorem old_to_buffer {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (a : Fin m ⊕ Fin k) (b : Fin 6)
+    (ha : oldOffset (chosenOffset w) (chosenOffset v) a ≠ 0)
+    (he : oldTarget (chosenOffset w) (chosenOffset v) a = (m : ℤ) + b.val) :
+    paddedOffset w v (bufferIndex b) = -oldOffset (chosenOffset w) (chosenOffset v) a := by
+  let ar : Requester (chosenOffset w) (chosenOffset v) := ⟨a, ha, by omega, by omega⟩
+  have hr : request (chosenOffset w) (chosenOffset v) ar = b := by
+    apply Fin.ext
+    have hc := request_coordinate ar
+    omega
+  rw [buffer_index_offset, ← hr]
+  exact (padded_buffer_facts w v).1 ar
+
+/-- A new nonzero assignment always targets an actual vertex of the padded interval. -/
+private theorem buffer_target_internal {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (b : Fin 6) : ∃ j : Fin (m + k + 6),
+      ((bufferIndex (m := m) (k := k) b).val : ℤ) + paddedOffset w v (bufferIndex b) = j.val := by
+  let r := request (chosenOffset w) (chosenOffset v)
+  by_cases h : ∃ a, r a = b
+  · refine ⟨oldIndex (Classical.choose h).val, ?_⟩
+    rw [buffer_index_offset, old_index_position]
+    have hc := request_coordinate (Classical.choose h)
+    have hr := Classical.choose_spec h
+    change r (Classical.choose h) = b at hr
+    change (m : ℤ) + (r (Classical.choose h)).val = _ at hc
+    rw [hr] at hc
+    simp only [bufferOffset, dif_pos h]
+    simp only [bufferIndex, Fin.val_mk, Nat.cast_add, oldTarget] at *
+    omega
+  · refine ⟨bufferIndex (BufferLayout.mate (BufferLayout.flags r) b), ?_⟩
+    rw [buffer_index_offset]
+    simp only [bufferOffset, dif_neg h, bufferIndex, Fin.val_mk, Nat.cast_add]
+    omega
+
+private theorem padded_reciprocal {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i j : Fin (m + k + 6)) (hi : paddedOffset w v i ≠ 0)
+    (he : (i.val : ℤ) + paddedOffset w v i = j.val) :
+    paddedOffset w v j = -paddedOffset w v i := by
+  let r := request (chosenOffset w) (chosenOffset v)
+  let d := fun a : Requester (chosenOffset w) (chosenOffset v) =>
+    oldOffset (chosenOffset w) (chosenOffset v) a.val
+  rcases index_cases i with ⟨a, rfl⟩ | ⟨b, rfl⟩
+  · rw [old_index_offset] at hi he ⊢
+    rw [old_index_position] at he
+    rcases index_cases j with ⟨a', rfl⟩ | ⟨b, rfl⟩
+    · rw [old_index_offset, old_index_position] at *
+      exact old_reciprocal (chosen_certificate w) (chosen_certificate v) a a' hi he
+    · exact old_to_buffer w v a b hi (by simpa [oldTarget, bufferIndex] using he)
+  · rw [buffer_index_offset] at hi he ⊢
+    by_cases h : ∃ a, r a = b
+    · have ht := request_coordinate (Classical.choose h)
+      have hr := Classical.choose_spec h
+      change r (Classical.choose h) = b at hr
+      change (m : ℤ) + (r (Classical.choose h)).val = _ at ht
+      rw [hr] at ht
+      have ho : j = oldIndex (Classical.choose h).val := by
+        apply Fin.ext
+        rw [old_index_position]
+        simp only [bufferOffset, dif_pos h, bufferIndex, Fin.val_mk, Nat.cast_add] at he
+        simp only [oldTarget] at ht
+        omega
+      rw [ho, old_index_offset]
+      simp only [bufferOffset, dif_pos h]
+      omega
+    · let c := BufferLayout.mate (BufferLayout.flags r) b
+      have hl := BufferLayout.buffer_completion (BufferLayout.flags r)
+      have hfree : ¬∃ a, r a = c := by
+        intro ⟨a, ha⟩
+        have hx := hl.2.1 c ((BufferLayout.occupied_iff r
+          (request_boundary (chosen_certificate w) (chosen_certificate v)) c).mpr ⟨a, ha⟩)
+        have hy := hl.1 b
+        change BufferLayout.mate (BufferLayout.flags r) c = b at hy
+        rw [hx] at hy
+        exact h ⟨a, ha.trans hy⟩
+      have hj : j = bufferIndex c := by
+        apply Fin.ext
+        simp only [bufferOffset, dif_neg h, bufferIndex, Fin.val_mk, Nat.cast_add] at he ⊢
+        dsimp [c]
+        omega
+      rw [hj, buffer_index_offset]
+      simp only [bufferOffset, dif_neg h, dif_neg hfree]
+      have hh := hl.1 b
+      change BufferLayout.mate (BufferLayout.flags r) c = b at hh
+      rw [hh]
+      dsimp [c]
+      omega
+
+private theorem padded_target_injective {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i j : Fin (m + k + 6)) (hi : paddedOffset w v i ≠ 0) (hj : paddedOffset w v j ≠ 0)
+    (he : (i.val : ℤ) + paddedOffset w v i = (j.val : ℤ) + paddedOffset w v j) : i = j := by
+  by_cases ht : ∃ t : Fin (m + k + 6), (i.val : ℤ) + paddedOffset w v i = t.val
+  · obtain ⟨t, ht⟩ := ht
+    have hri := padded_reciprocal w v i t hi ht
+    have hrj := padded_reciprocal w v j t hj (he.symm.trans ht)
+    apply Fin.ext
+    omega
+  · rcases index_cases i with ⟨a, rfl⟩ | ⟨b, rfl⟩
+    · rcases index_cases j with ⟨a', rfl⟩ | ⟨b, rfl⟩
+      · have hh := old_target_injective (chosen_certificate w) (chosen_certificate v) a a'
+          (by simpa only [old_index_offset] using hi)
+          (by simpa only [old_index_offset] using hj)
+          (by simpa only [oldTarget, old_index_offset, old_index_position] using he)
+        exact congrArg oldIndex hh
+      · obtain ⟨t, ht'⟩ := buffer_target_internal w v b
+        exact (ht ⟨t, he.trans ht'⟩).elim
+    · exact (ht (buffer_target_internal w v b)).elim
+
 #print axioms old_target_injective
 #print axioms padded_request_completion
 #print axioms old_nonblocking
