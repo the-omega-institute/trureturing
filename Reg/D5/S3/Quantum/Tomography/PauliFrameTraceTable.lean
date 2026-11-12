@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Tomography.PauliFrameTraceTable
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound observations of Pauli frame completeness, tables and Jordan carriers. -/
+
 namespace Reg.D5.S3.Quantum.Tomography.PauliFrameTraceTable
 open LeanInformationAudit
 open _root_.D5.S3.Quantum.Tomography.PauliFrameTraceTable
@@ -298,5 +300,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[] }
 end CompleteFrames
+
+end
 
 end Reg.D5.S3.Quantum.Tomography.PauliFrameTraceTable

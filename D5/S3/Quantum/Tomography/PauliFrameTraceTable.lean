@@ -219,7 +219,7 @@ private lemma word_entry_parity (p q : Pauli) (x y : Fin 2 → Fin 2) :
   cases p <;> cases q <;>
     fin_cases x0 <;> fin_cases x1 <;> fin_cases y0 <;> fin_cases y1 <;>
     norm_num [EvenY, wordOp, tensorOp, Fin.prod_univ_two, pauliMatrix,
-      qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two, h0, h1, k0, k1]
+      qubitX, qubitZ, Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h0, h1, k0, k1]
 
 private lemma real_word_mem (w : RealWord) : wordOp w.1 ∈ realCarrier := by
   refine ⟨word_hermitian w.1, ?_⟩
@@ -361,7 +361,7 @@ private def realCoordinates : realCarrier ≃ₗ[ℝ] (RealWord → ℝ) := by
       funext w
       have heq (u v : RealWord) : u.1 = v.1 ↔ u = v := Subtype.val_injective.eq_iff
       simp [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
-        word_trace_pair, heq, Complex.real_smul]
+        word_trace_pair, heq, Complex.real_smul, show (2 : ℂ) ^ 2 = 4 by norm_num]
     map_add' := by
       intro A B
       funext w
