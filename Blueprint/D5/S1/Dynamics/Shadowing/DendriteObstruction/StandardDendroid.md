@@ -54,23 +54,10 @@ Lean statement: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.n
 
 Every continuous map from AddCircle (1 : Real) to a standard dendroid fails to be injective. Under a hypothetical injection, the two oppositely parameterized semicircles give two embedded arcs with the same endpoints. Carrier uniqueness forces the first semicircle quarter point into the second semicircle, contradicting the actual AddCircle quotient coordinates.
 
-**Theorem 1.5 (The standard structure on a subcontinuum).**
-
-Lean statement: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.subcontinuum`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.subcontinuum` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every compact connected subset of a standard dendroid inherits StandardDendroid on its actual subtype. Arc convexity places the ambient joining arc inside the subset, and continuous interval extension gives an actual subtype-valued embedded arc. Compact connected subtype sets map to ambient subcontinua; the injective subtype inclusion preserves their intersection and reflects preconnectedness. Thus the least continuum hull in the dynamic proof is again a standard dendroid.
-
 ## References
 
 - Truth anchor: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.arc_convex`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.arc_unique`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.no_circle`
 - Truth anchor: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.staticArcHull`
-- Truth anchor: `D5/S1/Dynamics/Shadowing/DendriteObstruction/StandardDendroid.subcontinuum`
 - Dependency: [D5/S1/Dynamics/Shadowing/DendriteObstruction/CompactHistories](CompactHistories.md)

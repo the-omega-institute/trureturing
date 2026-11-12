@@ -25,9 +25,5 @@ internal sealed class DendriteObstructionStandardDendroidDocument : IScribeDocum
         Describe.Lean(DescribeId.Create("no-circle"),
             DeclarationHandle.Create(Owner + "no_circle"),
             H("No embedded circle"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Every continuous map from AddCircle (1 : Real) to a standard dendroid fails to be injective. Under a hypothetical injection, the two oppositely parameterized semicircles give two embedded arcs with the same endpoints. Carrier uniqueness forces the first semicircle quarter point into the second semicircle, contradicting the actual AddCircle quotient coordinates."))), DescribeRole.Theorem),
-        Describe.Lean(DescribeId.Create("subcontinuum"),
-            DeclarationHandle.Create(Owner + "subcontinuum"),
-            H("The standard structure on a subcontinuum"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Every compact connected subset of a standard dendroid inherits StandardDendroid on its actual subtype. Arc convexity places the ambient joining arc inside the subset, and continuous interval extension gives an actual subtype-valued embedded arc. Compact connected subtype sets map to ambient subcontinua; the injective subtype inclusion preserves their intersection and reflects preconnectedness. Thus the least continuum hull in the dynamic proof is again a standard dendroid."))), DescribeRole.Theorem))));
+            Blocks(Paragraph(Text("Every continuous map from AddCircle (1 : Real) to a standard dendroid fails to be injective. Under a hypothetical injection, the two oppositely parameterized semicircles give two embedded arcs with the same endpoints. Carrier uniqueness forces the first semicircle quarter point into the second semicircle, contradicting the actual AddCircle quotient coordinates."))), DescribeRole.Theorem))));
 }

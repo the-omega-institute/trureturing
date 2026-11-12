@@ -139,33 +139,4 @@ theorem StandardDendroid.no_circle (hX : StandardDendroid X)
       (by norm_num : (1 / 4 : ℝ) ∈ Ico 0 (0 + 1))).mp (hi heu)
     linarith [ht.1]
 
-/-- Every compact connected subset inherits the same standard dendroid geometry. -/
-theorem StandardDendroid.subcontinuum (hX : StandardDendroid X) {C : Set X}
-    (hc : IsCompact C) (hcon : IsConnected C) : StandardDendroid C := by
-  constructor
-  · intro p y hpy
-    have hne : (p : X) ≠ (y : X) := fun h => hpy (Subtype.ext h)
-    obtain ⟨A, h0, h1⟩ := hX.arcwise p y hne
-    have hAC : A.carrier ⊆ C := hX.arc_convex A hc hcon (h0 ▸ p.2) (h1 ▸ y.2)
-    let φ : Icc (0 : ℝ) 1 → C := fun u => ⟨A.param u, hAC (mem_image_of_mem _ u.2)⟩
-    have hφ : Continuous φ := A.continuous.domRestrict.subtype_mk _
-    let B : EmbeddedArc C := {
-      param := IccExtend (by norm_num : (0 : ℝ) ≤ 1) φ
-      continuous := hφ.Icc_extend'.continuousOn
-      injective := by
-        intro u hu v hv he
-        simp only [IccExtend_of_mem (by norm_num : (0 : ℝ) ≤ 1) φ hu, IccExtend_of_mem (by norm_num : (0 : ℝ) ≤ 1) φ hv] at he
-        exact A.injective hu hv (congrArg Subtype.val he) }
-    refine ⟨B, ?_, ?_⟩
-    · apply Subtype.ext
-      simpa only [B, IccExtend_left] using h0
-    · apply Subtype.ext
-      simpa only [B, IccExtend_right] using h1
-  · intro P Q hPc hPcon hQc hQcon
-    apply (Topology.IsInducing.subtypeVal.isPreconnected_image).mp
-    rw [image_inter Subtype.val_injective]
-    exact hX.unicoherent _ _ (hPc.image continuous_subtype_val)
-      (hPcon.image _ continuous_subtype_val.continuousOn)
-      (hQc.image continuous_subtype_val) (hQcon.image _ continuous_subtype_val.continuousOn)
-
 end D5.S1.Dynamics.Shadowing.DendriteObstruction
