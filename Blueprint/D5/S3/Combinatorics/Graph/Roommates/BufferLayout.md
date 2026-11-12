@@ -2,9 +2,7 @@
 
 ## Abstract
 
-Components consumed by the exact Mertens range-two probability theorem.
-
-Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.
+Stable partial matchings and the Mertens range-two probability estimate.
 
 **Theorem 1.1 (occupied_iff).**
 
@@ -28,7 +26,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/BufferLayout.occupied`
 
 *Commentary.*
 
-The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs.
+For any finite clique with a distinguished vertex, a matching covers the whole clique when its size is even and the clique without that vertex when its size is odd. The free sites in each three-site half form such a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions.
 
 **Definition 1.3 (mate).**
 
@@ -40,7 +38,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/BufferLayout.mate`
 
 *Commentary.*
 
-The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs.
+For any finite clique with a distinguished vertex, a matching covers the whole clique when its size is even and the clique without that vertex when its size is odd. The free sites in each three-site half form such a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions.
 
 **Theorem 1.4 (buffer_completion).**
 
@@ -52,7 +50,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/BufferLayout.buffer_complet
 
 *Commentary.*
 
-The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs.
+For any finite clique with a distinguished vertex, a matching covers the whole clique when its size is even and the clique without that vertex when its size is odd. The free sites in each three-site half form such a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions.
 
 **Theorem 1.5 (complete_requests).**
 
@@ -64,7 +62,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/BufferLayout.complete_reque
 
 *Commentary.*
 
-The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs.
+For any finite clique with a distinguished vertex, a matching covers the whole clique when its size is even and the clique without that vertex when its size is odd. The free sites in each three-site half form such a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions.
 
 ## References
 

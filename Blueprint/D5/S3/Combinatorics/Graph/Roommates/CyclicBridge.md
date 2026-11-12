@@ -4,8 +4,6 @@
 
 Cyclic cut and rank transport for the exact Mertens range-two proof.
 
-Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.
-
 **Theorem 1.1 (wrap_val).**
 
 $$\forall n \in \mathrm{Nat},\; \forall z \in \mathrm{Int},\; \mathrm{intVal}\left(\mathrm{wrap}\left(n, z\right)\right) = \mathrm{mod}\left(z, n + 5\right)$$

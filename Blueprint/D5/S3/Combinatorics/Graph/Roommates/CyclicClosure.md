@@ -52,7 +52,7 @@ $$\forall m \in \mathrm{Nat},\; \forall w \in \mathrm{Word}\left(m\right),\; \fo
 
 *Commentary.*
 
-Old--old edges use the saved exact rank transport and have no new wrap edge. A matched buffer endpoint ranks its partner first and rejects any proposed improvement. A buffer single is at position 3 or 4 in one-based numbering; all four cyclic neighbors are distinct matched buffer vertices. This also excludes an edge from an old single to a new single. The argument includes m=1 and its extra edge between buffer positions 1 and 6, m=2, and odd m. There is no parity or eventual-length hypothesis.
+Old--old edges use the exact rank transport and have no new wrap edge. A matched buffer endpoint ranks its partner first and rejects any proposed improvement. A buffer single is at position 3 or 4 in one-based numbering; all four cyclic neighbors are distinct matched buffer vertices. This also excludes an edge from an old single to a new single. The argument includes m=1 and its extra edge between buffer positions 1 and 6, m=2, and odd m. There is no parity or eventual-length hypothesis.
 
 **Definition 1.5 (Map on successful profiles).**
 

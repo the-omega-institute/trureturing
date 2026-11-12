@@ -2,9 +2,7 @@
 
 ## Abstract
 
-Components consumed by the exact Mertens range-two probability theorem.
-
-Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.
+Stable partial matchings and the Mertens range-two probability estimate.
 
 **Theorem 1.1 (additive_defect_bounds).**
 

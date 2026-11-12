@@ -38,7 +38,7 @@ $$\forall (s:\operatorname{TriangleIndex}\left(\right)), \neg \exists (d:\operat
 
 *Commentary.*
 
-TriangleIndex abbreviates Bool times (Fin 3 to Bool), and Assignments abbreviates Fin 3 to the integers. The forward case directly applies the saved exclusive_triangle_not_certified theorem. The reverse case transports a hypothetical certificate through reflection and applies the same theorem. No matching witness is enumerated; exterior partners and singles remain allowed.
+TriangleIndex abbreviates Bool times (Fin 3 to Bool), and Assignments abbreviates Fin 3 to the integers. The forward case applies exclusive_triangle_not_certified. The reverse case transports a hypothetical certificate through reflection and applies the same theorem. No matching witness is enumerated; exterior partners and singles remain allowed.
 
 **Definition 1.4 (Removed profiles).**
 
@@ -74,7 +74,7 @@ $$\operatorname{count}\left(3\right) \le 13808$$
 
 *Commentary.*
 
-The map sends each existentially certified word to its underlying ranking word in the complement of the sixteen forbidden profiles. It is injective on words. The whole space has 24 cubed = 13824 elements; complement cardinality gives 13824 minus 16 = 13808. This bind-only numeric reduction is consumed by GrowthTransfer.result to obtain strict exponential growth below 24. It has no standalone first-freeze or external-problem credit. Supplier model credit remains The Formal Conjectures Authors under Apache-2.0; this module imports the saved certificate development without changing the supplier model.
+The map sends each existentially certified word to its underlying ranking word in the complement of the sixteen forbidden profiles. It is injective on words. The whole space has 24 cubed = 13824 elements; complement cardinality gives 13824 minus 16 = 13808. GrowthTransfer.result uses this bound to obtain strict exponential growth below 24. The source model is credited to The Formal Conjectures Authors under Apache-2.0.
 
 ## References
 

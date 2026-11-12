@@ -20,7 +20,7 @@ The conditional transfer isolates three concrete premises: padded concatenation 
 
 For f(m)=log b(m), the existing count lower bound makes every logarithm positive-domain and f nonnegative; the empty word has count one. Existing submultiplicativity gives subadditivity of f. Apply FixedGapGrowth.fixed_gap_log_bounds with gap six to obtain h*m <= f(m) <= h*m+f(6). Exponentiation yields exp(h)^m <= b(m) <= exp(h)^m*b(6). The strict count-at-three premise gives h < log 24. Thus q=exp(h)/24 lies strictly between zero and one, c=exp(h)^(-6) is positive, and C=b(6) is positive. Closure at m=n-1 supplies the lower bound, and cutting at N=n+5 supplies the upper bound, for every n>=2 without a parity split.
 
-The estimate synthesizes the proved count components; global novelty and priority remain unproved. The original statement is Mertens, cond-mat/0509221v2, Conjecture 3, DOI 10.1088/1742-5468/2005/10/P10008, restricted to d=1,r=2. The Apache-2.0 supplier attribution and license remain in SourceModel and docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt. The unfinished escape audit is tracked by issue 29645.
+The original statement is Mertens, cond-mat/0509221v2, Conjecture 3, DOI 10.1088/1742-5468/2005/10/P10008, restricted to d=1,r=2. The Apache-2.0 supplier attribution and license remain in SourceModel and docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt.
 
 **Theorem 1.2 (Unconditional exact source probability).**
 
@@ -40,7 +40,7 @@ $$\begin{gathered}\exists q,c,C:\mathbb{R},0< q<1\land 0< c\land 0< C\land \\\fo
 
 Here p(n) is exactly SourceModel.solutionProbability n, the number of labelled profiles admitting an acceptable stable partial matching divided by 24^(n+5). The N=n+5 ranking permutations are independent and uniform. Fixed points of the involution are singles; every acceptable neighbor is preferred to being single. The event is existential in matchings, so each successful profile is counted once.
 
-There are no count, completion, rate, parity or analytic hypotheses. All n>=2, equivalently all N>=7, share the same positive q<1 and positive constants c,C. The concrete strict input is count 3<=13808<13824=24^3; the sixteen excluded words feed the analytic estimate on its live proof path. The proof applies the transfer above to the actual padded and cyclic injections. Its admissibility candidate is open-problem-resolution for the source's d=1,r=2 specialization, with no separate problem credit for the transfer or finite count helpers. General d,r, complete-graph asymptotics and worldwide priority remain outside this conclusion.
+There are no count, completion, rate, parity or analytic hypotheses. All n>=2, equivalently all N>=7, share the same positive q<1 and positive constants c,C. The concrete strict input is count 3<=13808<13824=24^3; the sixteen excluded words give the strict growth bound. The padded and cyclic injections discharge all three premises of the transfer above. General d,r, complete-graph asymptotics and worldwide priority remain outside this conclusion.
 
 ## References
 
