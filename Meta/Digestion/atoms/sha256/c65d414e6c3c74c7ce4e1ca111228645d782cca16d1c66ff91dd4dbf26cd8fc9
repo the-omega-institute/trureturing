@@ -1,0 +1,59 @@
+**定理 105.5（弱入口已经数学projective）。** 在 $\mathsf W$ 下定义对偶算子及其对偶
+
+$$
+\Pi_p^*:=\Lambda_p\operatorname{res}_p:V^*\to V^*,\qquad
+\Pi_p:V\to V,\qquad R_p(v):=a_p(v)p.
+\tag{VII105.12}
+$$
+
+$\Pi_p,R_p$ 均为正投影，彼此有互补正像与正核，其对偶也如此；并且
+
+$$
+\begin{array}{ll}
+\operatorname{im}_+\Pi_p=\operatorname{cone}D_p,&
+\ker_+\Pi_p=\mathbb R_+p,\\
+\operatorname{im}_+R_p=\mathbb R_+p,&
+\ker_+R_p=\operatorname{cone}D_p,\\
+\operatorname{im}_+\Pi_p^*=Z_p=\ker_+R_p^*,&
+\ker_+\Pi_p^*=\mathbb R_+a_p=\operatorname{im}_+R_p^*.
+\end{array}
+\tag{VII105.13}
+$$
+
+这里 $\operatorname{im}_+L=\operatorname{im}L\cap C$、$\ker_+L=\ker L\cap C$，
+对偶侧换为 $C^*$。每个原锥面都是一个此类数学滤子的正像。
+
+证明。$\operatorname{res}_p\Lambda_p=\mathrm{id}$ 给 $`\Pi_p^*`$ 幂等。
+限制和延拓均正，故它和 $\Pi_p$ 均正。
+对每个 $x\in D_p$、每个 $f\in V^*$，
+$f(\Pi_px)=(\Lambda_p\operatorname{res}_pf)(x)=f(x)$，故 $\Pi_p$ 固定整个 $D_p$。
+而 $`\Pi_p^*a_p=0`$，所以正 $\Pi_pv$ 在 $a_p$ 的零锥面中；由准确零面得
+其正像恰为 $\operatorname{cone}D_p$。此外
+
+$$
+u(\Pi_pv)=(u-a_p)(v),\qquad u(R_pv)=a_p(v)\qquad(v\in C).
+\tag{VII105.14}
+$$
+
+若 $v\in C$ 且 $\Pi_pv=0$，则 $(u-a_p)(v)=0$。
+$a_p$ 唯一确认 $p$，归一后得 $v\in\mathbb R_+p$；反向由延拓在 $p$ 读零成立。
+$R_p$ 的正像、正核和幂等性直接由 $a_p(p)=1$、准确零面得到。
+
+对偶侧 $`\Pi_p^*`$ 固定每个 $Z_p$ 中的函数，正像恰为 $Z_p$；
+$`R_p^*f=f(p)a_p`$，其正核恰为 $Z_p$，其正像恰为 $\mathbb R_+a_p$。
+若正 $f$ 被 $`\Pi_p^*`$ 杀掉，限制再用(VII105.10)得 $f|_{D_p}=0$。
+104.4使非零这样的 $f$ 在 $p$ 取正最大值，归一后属 $\mathcal A_p$；
+105.2遂给 $f\in\mathbb R_+a_p$。反向显然，全部核像条件成立。
+
+(VII105.14)给两个投影均归一不增。按
+[Barnum—Müller—Ududec原文][Q105BMU] Definition 13—14，正、幂等、
+互补正像核、对偶可互补和归一不增，正是数学 filter 的逐项条件。
+所有非平凡真锥面已穷尽为 $\mathbb R_+p$ 与 $\operatorname{cone}D_p$，
+零面、全锥分别用零算子、恒等算子，所以原锥满足该Definition 14的projectivity。
+互补不要求 $\Pi_p+R_p=\mathrm{id}$，这里也未证明这个等式。
+
+这推进104.4—104.5及104.15—104.16中关于全域least和projectivity尚缺的部分：
+它们已经由弱入口取得。尚未取得的是全部纯点的数值互易和滤子无条件保纯。
+特别是 $\Pi_pq$ 对任意原纯 $q$ 是否总为零或纯射线，未由上述核像等式证明。
+因此不能仅凭本定理消费该原文Theorem 16的全部前提，也不声称滤子是实际允许事件。证毕。
+
