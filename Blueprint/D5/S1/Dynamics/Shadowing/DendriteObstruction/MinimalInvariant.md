@@ -46,7 +46,7 @@ Minimize a compact forward-invariant Y among those containing a nondegenerate co
 
 Split K into consecutive closed thirds L,M,R. At every sufficiently late time, each end third has diameter at least delta and therefore meets Q. Parameter order and injectivity on the whole K give an actual arc between those two outside points containing the entire image of M. Static arc convexity places that middle image in Q. The closure Z of the union of all these late middle images is compact and forward invariant, lies in Y intersect Q, and contains the actual nondegenerate continuum f^[T](M). It is a proper subset of Y, contradicting exactly the chosen minimality.
 
-This is a conditional static-to-dynamic theorem. The missing original-scope theorem is that the opening law follows from the standard compact metric dendroid definition. Heath and Nall, Centers of a dendroid, Fundamenta Mathematicae 189, pages 173-183, DOI 10.4064/fm189-2-6, state on page 180 that every dendroid has endpoints in arbitrarily small co-connected open sets. The corresponding Krasinkiewicz-Minc result is an external classical mathematical input, not a Lean axiom or a compiled theorem here. The all-dendroid conclusion and the full one-dimensional GGO classification question are not claimed.
+This module's static-to-dynamic theorem retains its explicit opening premise. AllDendroid separately proves that the opening law follows from the standard compact metric dendroid definition, using ProperExpansion, CoconnectedOpening and TentObstruction, and consumes it to establish the all-dendroid conclusion. Heath and Nall, Centers of a dendroid, Fundamenta Mathematicae 189, pages 173-183, DOI 10.4064/fm189-2-6, state on page 180 that every dendroid has endpoints in arbitrarily small co-connected open sets. The corresponding Krasinkiewicz-Minc result is classical; its static argument is formalized in those separate modules without a new Lean axiom. The full one-dimensional GGO classification question remains outside this class obstruction.
 
 **Theorem 1.4 (Exact strict finite-set conclusion).**
 
@@ -62,7 +62,7 @@ For every self-map of any metric space, failure of FinitelyPositiveExpansive is 
 
 In the forward direction, failure of the cardinal bound at radius epsilon/3 supplies an actual injection from Fin m into a single forward Bowen set. The finite image has cardinal m, and the triangle inequality bounds each image diameter by 2epsilon/3. Conversely an (N+1)-point set with the strict joint diameter bound lies in the radius-epsilon forward Bowen set of any of its points and contradicts cardinal bound N.
 
-**Theorem 1.5 (Original finite-set quantifiers with the static gap explicit).**
+**Theorem 1.5 (Original finite-set quantifiers with the static premise explicit).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/DendriteObstruction/MinimalInvariant.finite_small_orbits_of_standard_dendroid_and_openings`
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S1/Dynamics/Shadowing/DendriteObstruction/MinimalInvariant.f
 
 On every nondegenerate compact metric StandardDendroid satisfying the separately stated SmallCoconnectedOpenings law, every continuous self-map has, for every epsilon>0 and every m>=2, exactly m distinct points with joint iterated image diameter below epsilon for every natural time. The standard carrier supplies StaticArcHull and no_circle; the complete dynamic contradiction and the exact finite-set equivalence give the conclusion.
 
-The sole additional static hypothesis is visible in the compiled theorem. It is not included in StandardDendroid, and this conditional result does not constitute kernel completion of the original all-standard-dendroid target.
+The sole additional static hypothesis is visible in this compiled conditional theorem. It is not included in StandardDendroid. AllDendroid proves that hypothesis separately through ProperExpansion, CoconnectedOpening and TentObstruction, then consumes this theorem to obtain the original all-standard-dendroid finite-set conclusion.
 
 ## References
 
