@@ -2,7 +2,12 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
-/-! Source-bound audit of the literal strip's necessary pair-colour zone data. -/
+/-!
+Source-bound audit of the literal strip's necessary pair-colour zone data.
+The typed evidence compiles; source-telescope reconstruction remains unresolved:
+https://github.com/the-omega-institute/trureturing/issues/29434.
+This mirror does not establish a `declared_validated` audit.
+-/
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
