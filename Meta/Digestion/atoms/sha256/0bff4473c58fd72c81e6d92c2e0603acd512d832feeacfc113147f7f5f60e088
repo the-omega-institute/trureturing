@@ -1,0 +1,70 @@
+### 33.5 纯虚 $\gamma$ 与全部退化对角系数
+
+剩下 $\gamma=\iota y$，$y\in\mathbb R$。不能在此沿用 (33.17)，因为某些对角系数会为零。写
+
+$$
+\begin{gathered}
+P_a=\iota P,\qquad Q_a=\iota Q,\qquad Q_3=\iota R,\\
+P=\frac{(3-a)y+a}{3},\qquad
+Q=\frac{3a+2-2(3a+1)y}{3},\qquad
+R=\frac{11-20y}{3},\\
+z_a=\ell+\iota h,\qquad z_3=n+\iota k,
+\qquad \ell,h,n,k\in\mathbb R.
+\end{gathered}
+\tag{33.20}
+$$
+
+式 (33.12) 的完整四个实条件准确变为
+
+$$
+\begin{aligned}
+P\ell+n&=0,\\
+aQ\ell+3Rn&=0,\\
+(Q+aP)\ell+(R+3)n&=0,\\
+(Q-aP)h+(R-3)k&=0.
+\end{aligned}
+\tag{33.21}
+$$
+
+第三、四式分别来自复等式 $u^*q=p^*Cu$ 的两个实分量；不能只保留某个表中比值。若 $P=0$ 或 $\ell=0$，第一式已给 $n=0$。反设 $n\ne0$ 下，$P\ell\ne0$，前面三式给
+
+$$
+n=-P\ell,\qquad aQ=3RP,\qquad Q=(R+3-a)P,
+\qquad (3-a)(a-R)P=0.
+\tag{33.22}
+$$
+
+因 $3-a>0$，必有 $R=a$、$Q=3P$，从而 $y=(11-3a)/20$。这两种候选的全部关键值为
+
+$$
+\begin{aligned}
+a=1:\quad &y=\frac25,\quad \eta=\frac15,\quad
+P=\frac35,\quad Q=\frac35,\quad R=1,\\
+&A_a=\frac65\iota,\quad A_3=2\iota,\quad B_a=B_3=0;\\[2mm]
+a=2:\quad &y=\frac14,\quad \eta=\frac14,\quad
+P=\frac34,\quad Q=\frac32,\quad R=2,\\
+&A_a=\frac34\iota,\quad A_3=\iota,\quad B_a=B_3=0.
+\end{aligned}
+\tag{33.23}
+$$
+
+两种候选都违反 (33.22) 的 $Q=3P$：差值 $Q-3P$ 分别为 $-6/5$、$-3/4$。亦可直接使用无除法的 (33.13)：$B_a=0$、$A_3\ne0$ 强制 $z_3=0$，再次与 $n\ne0$ 矛盾。这明确处理了零对角插值系数，而非从非零分支取未经证明的极限。
+
+斜率合法性还给同一候选的独立排除。两份逆斜率及恢复值准确为
+
+$$
+\begin{aligned}
+a=1:\quad &\gamma+\eta=(1+2\iota)/5,
+&&\gamma-\eta=(-1+2\iota)/5,\\
+&\zeta_+=\iota+(\gamma+\eta)^{-1}=1-\iota,
+&&\zeta_-=\iota+(\gamma-\eta)^{-1}=-1-\iota;\\[1mm]
+a=2:\quad &\gamma+\eta=(1+\iota)/4,
+&&\gamma-\eta=(-1+\iota)/4,\\
+&\zeta_+=\iota+(\gamma+\eta)^{-1}=2-\iota,
+&&\zeta_-=\iota+(\gamma-\eta)^{-1}=-2-\iota.
+\end{aligned}
+\tag{33.24}
+$$
+
+这里四个被求逆的数均非零，但两种 $\zeta_-$ 都要求 $\alpha_-=-1$，与合法性矛盾。主证明在 (33.23) 已完成，并不依赖将这些候选误当作实际 Hermitian 核对。结合特殊斜率、$w=0$、$v=0$、任意额外支撑与 $x\ne0$ 分支，定理 33.2 得证。全部计算只用 $\iota^2=-1$ 和 $\overline\iota=-\iota$，故无需共轭替换原输入就分别覆盖两个取向。∎
+
