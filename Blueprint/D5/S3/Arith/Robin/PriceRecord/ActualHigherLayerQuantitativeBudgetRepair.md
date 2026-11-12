@@ -4,7 +4,7 @@
 
 Growing higher-layer quantitative budget repair.
 
-The uniform package uses the canonical HigherLayerInsertionRegret.slope_upper, whose log_drop_upper also supplies moving_interval_marginals. The package has no D5 proof consumer; after expanding co-delivered helpers it still reaches the new beta and slope estimates, so it is not classified bind-only merely as a conjunction.
+For each natural j>=2 and real u>=2, the uniform package combines geometric lower and upper bounds for beta_j(u), positive and bounded logarithmic slope, and the exact logarithmic derivative of beta_j. On a moving interval to the right of a root, the same slope estimate controls the beta marginals, with the root excluded.
 
 Single repo-prior-exposed source attempt. The D5 source target has a current scoped Lean build; the retained typed Reg sources compile with standard axiom closure; lawful enrollment, source binding and variation/sensitivity remain incomplete. This does not assert a consensus result or literature novelty. Existing Budget/prefix/fixed arithmetic owners are reused without copying. The consumed existing helpers are exposed with their original mathematical types and proof bodies. Every typed Reg law reproduces its full telescope with a literal readout; enrollment, current source binding and variation/sensitivity evidence remain unvalidated.
 

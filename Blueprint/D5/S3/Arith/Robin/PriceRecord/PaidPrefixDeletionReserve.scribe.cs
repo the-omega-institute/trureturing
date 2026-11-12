@@ -8,7 +8,7 @@ internal sealed class PaidPrefixDeletionReserveDocument : IScribeDocumentDefinit
         "PaidPrefixDeletionReserve",
         H("D5 source compiled; RegUNVALIDATED components"),
         Blocks(
-            Paragraph(Text("The d=1 endpoint specializes the new all-d power construction and has no D5 proof consumer. The live 2/4 repair uses budget_prefix_deletion_reserve_power at d=2; expanding the endpoint reaches that new construction, so short specialization syntax alone is not a bind-only classification.")),
+            Paragraph(Text("For each natural d and constant C>0, sufficiently large X admit a prime cutoff Q and deleted prime set D with cardinality M<=C*(log X)^d, exact interval support, and logarithmic mass bounded by M*log(2*X). The d=1 endpoint gives the linear logarithmic reserve, while the actual two/four application uses the same construction at d=2.")),
             Paragraph(Text("The D5 source target has a current scoped Lean build. Retained Reg sources compile with standard axiom closure; lawful enrollment and source binding remain incomplete; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. These components feed the separate actual two/four paid-prefix repair. The uniform original-price and optional elementary-energy endgoals remain open. Existing owners are imported with visibility-only consumed-helper exposures. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.")),
             Describe.Lean(
                 DescribeId.Create("paidprefixdeletionreserve-budget-prefix-deletion-reserve"),

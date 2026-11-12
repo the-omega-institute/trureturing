@@ -5,7 +5,7 @@ internal sealed class ActualFirstLayerBlockCoercivityDocument : IScribeDocumentD
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "ActualFirstLayerBlockCoercivity", H("Finite first-layer block coercivity"),
         Blocks(
-            Paragraph(Text("Finite theta-mass lower bounds for the complete first-layer arithmetic loss on missing and occupied prime blocks. The whole theorem telescopes below retain the prime-prefix support, endpoint and log-budget conditions. The D5 source target compiles under the scoped Lean check; the escape audit remains RegUNVALIDATED under issue 28966.")),
+            Paragraph(Text("Finite theta-mass lower bounds for the complete first-layer arithmetic loss on missing and occupied prime blocks. The theorem package retains the prime-prefix support together with endpoint and logarithmic-budget conditions.")),
             Describe.Lean(
                 DescribeId.Create("actual-first-block-mem-block"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerBlockCoercivity.mem_block"),
