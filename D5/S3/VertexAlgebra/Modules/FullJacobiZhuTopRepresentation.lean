@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The genuine Zhu quotient acts on Top with a finite joint current decomposition. -//- Delivery scope and attribution: the original 39 authored declarations and 88 native objects are preserved from accepted source SHA256 1a7a596f44ee6882716c5edfcf094904e154ed4652dd04f20a78d3841125420a. proof_shape: content in actual homogeneous-zero stability, the three-support mixed-Jacobi residue transport, full O-space kernel and arbitrary-input star descent, and their genuine unital Q-to-End(Top) construction; helper identities and the two local quotient instances are consumed by that construction and its finite source-projector action. admission_basis: escape-witness. utility: none: this is a symbolic construction for arbitrary original lattice data and an independent-universe arbitrary complex module, including rank zero and zero Top, not a bounded enumeration or certified instance. Source Gram positivity is exactly hD/hPos, and the original source, cocycle, mode and grading definitions are retained. Top uses every homogeneous original source state at every integer degree and all modes at least that degree. The finite source Node/Grid action is ON Top; neither nonzero components nor a faithful action is assumed, and AllAlpha survival keeps its conditional nonzero premise. No equality with the positive-current vacuum, target grading, Top generation, dimension/basis or all-M spectrum is asserted. Original supplier attribution is retained below; no literature-priority claim is made. The four-slot source-bound audit is unfinished for all 25 public theorems under CLAUDE.md 3.9: https://github.com/the-omega-institute/trureturing/issues/29518. The actual source-family registration attempt lacks variation, sensitivity and dependence; no Contract registration, client enrollment or declared_validated status is claimed. The unenrolled sourceScope stub and failed audit attempt are excluded from this canonical tree and preserved as external evidence. The full original VOA/CFT/anomaly/fusion/string/AdS goal remains active and incomplete. -/
+   digest: The genuine Zhu quotient acts on Top with a finite joint current decomposition. -//- Delivery scope and attribution: 35 of the original 39 authored entries are retained, including both local quotient instances. The unconsumed Top-to-positive-current wrapper and finite representative wrapper, together with the newly dead positive-current intersection definition and zeroMode_finite helper, are retired under CLAUDE.md 3.2; their exact formulas, hypotheses and derivations remain mathematical consequences documented in the owning Scribe narrative and verified by transient exact compiled checks. No consumer is added for bookkeeping. proof_shape: content in homogeneous-zero stability and the genuine unital full Q-to-End(Top) construction; the mixed-Jacobi residue transports and computational helpers are bind-only and consumed on their live proof paths. admission_basis: escape-witness. utility: none: symbolic constructions for arbitrary original lattice data and an independent-universe arbitrary complex module, including rank zero and zero Top, rather than bounded enumeration or certified instances. Source Gram positivity is exactly hD/hPos. Top uses every homogeneous original source state at every integer degree and all modes at least that degree. The finite source Node/Grid action is ON Top; AllAlpha survival retains its nonzero premise. No target grading, nonzero/generation/faithfulness/ambient finiteness or equality with the positive-current vacuum is assumed. Original supplier attribution remains below. The source-bound four-slot audit remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29518: the original 25 public-theorem targets now have 22 retained and 3 retired entries. No declared_validated status, client enrollment or Contract registration is claimed. The original full VOA/CFT/anomaly/fusion/string/AdS goal remains active and incomplete. -/
 /-
 Copyright (c) 2026 Fedor K. Popov. All rights reserved.
 Released under the Apache 2.0 license; see the repository root LICENSE.
@@ -73,18 +73,6 @@ theorem currentState_mem_grade (i : Fin D.rank) :
     FullJacobiCurrentTransport.currentState D i ∈ grade D 1 := by
   rw [currentState_eq_actual]
   exact Lattice.ActualZhuGroundCurrent.current_grade D i
-
-/-- Positive current kernels contain Top; only this inclusion is asserted. -/
-def positiveCurrentVacuum (J : FullJacobiLatticeModule D M) : Submodule ℂ M :=
-  ⨅ (i : Fin D.rank) (n : ℤ) (_ : 0 < n), LinearMap.ker (current J i n)
-
-theorem top_le_positiveCurrentVacuum (J : FullJacobiLatticeModule D M) :
-    Top J ≤ positiveCurrentVacuum J := by
-  intro w hw
-  simp only [positiveCurrentVacuum, Submodule.mem_iInf, LinearMap.mem_ker]
-  intro i n hn
-  exact hw 1 n (FullJacobiCurrentTransport.currentState D i)
-    (currentState_mem_grade i) (by omega)
 
 /-- A homogeneous zero mode preserves the genuine top. The source fused
 state has degree k+h-i-1, whereas its module mode is n+h-1-i. Their
@@ -188,23 +176,6 @@ theorem zeroMode_homogeneous (J : FullJacobiLatticeModule D M)
     (carrierEnergyDecomposition D a) w).val = _
   rw [he, DirectSum.toModule_lof]
   rfl
-
-/-- The raw action is precisely the finite sum of ACTUAL homogeneous
-projections. Thus state addition/scaling cannot depend on a chosen support. -/
-theorem zeroMode_finite (J : FullJacobiLatticeModule D M)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (a : Carrier D) (w : Top J) :
-    (zeroMode J hD a w).val = ∑ h ∈ stateEnergies D a,
-      mode J (gradeProjection D h a) (h - 1) w.val := by
-  classical
-  calc
-    _ = (zeroMode J hD (∑ h ∈ stateEnergies D a, gradeProjection D h a) w).val := by
-      rw [sum_gradeProjections]
-    _ = _ := by
-      simp only [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
-      apply Finset.sum_congr rfl
-      intro h hh
-      exact zeroMode_homogeneous J hD h _ (gradeProjection_mem D h a) w
 
 private theorem circle_homogeneous (J : FullJacobiLatticeModule D M)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -361,13 +332,6 @@ theorem representation_mk (J : FullJacobiLatticeModule D M)
     (representation J hD ((Lattice.ActualZhuFinite.zhuO D).mkQ a) w).val =
       mode J a (h - 1) w.val :=
   zeroMode_homogeneous J hD h a ha w
-
-/-- Arbitrary representative computation by the genuine finite source projections. -/
-theorem representation_mk_finite (J : FullJacobiLatticeModule D M)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (a : Carrier D) (w : Top J) :
-    (representation J hD ((Lattice.ActualZhuFinite.zhuO D).mkQ a) w).val =
-      ∑ h ∈ stateEnergies D a, mode J (gradeProjection D h a) (h - 1) w.val :=
-  zeroMode_finite J hD a w
 
 section Spectrum
 

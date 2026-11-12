@@ -8,7 +8,7 @@ D is the original LatticeData, M : Type u has only AddCommGroup and Module Compl
 
 Source grading and the full finite commutator prove homogeneous zero-mode stability of the actual Top. The existing internal direct sum gives a source-linear zeroMode for mixed-energy states. All three supports are transported into the existing residue fullLaw; the circle and star residue lemmas then prove that the literal full O-space is in the kernel and that star multiplication is respected on BOTH arbitrary source arguments, using their finite source grade projections. Vacuum gives the unit. Descent through the existing zhuO.liftQ and existing quotient ring/algebra yields the genuine AlgHom on Q. Restrict it to currentAlgebra and map the EXISTING coordinate/grid source projectors. Their finite sums, current eigenidentities and conditional source survival produce the full stated finite joint decomposition ON Top. No faithful action or nonzero component is needed.
 
-Each exact source signature below is interpreted in its displayed ORIGINAL Lean variable scope; scope commands introduce names and do not add unused parameters. The sealed native statement-v1 telescope, referenced for every authored entry in transfer-manifest.json, fixes precisely which implicit parameters and instances are actually bound. Definitions and records display their actual constructions/fields. No signature is generalized, specialized, renamed or reproved. Imported suppliers are reused as they occur in the accepted source proof; the other prepared roots are not republished here.
+Each exact source signature below is interpreted in its displayed ORIGINAL Lean variable scope; scope commands introduce names and do not add unused parameters. Each retained declaration has its exact inferred native statement-v1 telescope. Four original application entries are preserved below as consequences with their full original scope and derivations, without canonical theorem Describe handles or retained Lean wrappers. Definitions and records display their actual constructions/fields. Every retained signature and proof is unchanged; the retired applications preserve their original formulas and assumptions in this narrative. Imported suppliers are reused as they occur in the accepted source proof; the other prepared roots are not republished here.
 
 Original universe/open directives (names are resolved in the original source module and the namespace shown for each entry):
 
@@ -124,7 +124,7 @@ Original Lean scope:
 
 variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
 
-Exact accepted def:
+Application notation only; no retained Lean declaration:
 
 def positiveCurrentVacuum (J : FullJacobiLatticeModule D M) : Submodule ℂ M :=
 
@@ -132,31 +132,29 @@ def positiveCurrentVacuum (J : FullJacobiLatticeModule D M) : Submodule ℂ M :=
 
 Construction and use: Intersect the actual strictly positive current kernels. This space is only a proved upper bound for Top.
 
-**Theorem 1.3 (top_le_positiveCurrentVacuum).**
-
-Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.top_le_positiveCurrentVacuum`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.top_le_positiveCurrentVacuum` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
+Application consequence: top_le_positiveCurrentVacuum. This is an exact consequence of the retained constructions, not a separately retained theorem. Apply the defining Top condition at integer degree one to each actual grade-one current and every strictly positive integer mode. Only the one-way inclusion follows.
 
 Original namespace: D5.S3.VertexAlgebra.Modules.FullJacobiZhuTopRepresentation
 
-Original Lean scope:
+Original Lean scope: variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
 
-variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
-
-Exact accepted theorem:
+Full original statement and derivation (application exposition):
 
 theorem top_le_positiveCurrentVacuum (J : FullJacobiLatticeModule D M) :
 
-    Top J ≤ positiveCurrentVacuum J
+    Top J ≤ positiveCurrentVacuum J := by
 
-Proof mechanism: Apply the defining Top condition to each grade-one source current at every positive integer n.
+  intro w hw
 
-**Theorem 1.4 (homogeneous_zero_preserves_top).**
+  simp only [positiveCurrentVacuum, Submodule.mem_iInf, LinearMap.mem_ker]
+
+  intro i n hn
+
+  exact hw 1 n (FullJacobiCurrentTransport.currentState D i)
+
+    (currentState_mem_grade i) (by omega)
+
+**Theorem 1.3 (homogeneous_zero_preserves_top).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.homogeneous_zero_preserves_top`
 
@@ -186,7 +184,7 @@ theorem homogeneous_zero_preserves_top (J : FullJacobiLatticeModule D M)
 
 Proof mechanism: Commute an arbitrary high mode b_n past a_(h-1). Actual source grading puts each commutator source product in degree k+h-i-1, while its mode is n+h-1-i, high enough to kill the original Top vector. Finite commutator support permits evaluation termwise.
 
-**Theorem 1.5 (module_fullLaw).**
+**Theorem 1.4 (module_fullLaw).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.module_fullLaw`
 
@@ -234,7 +232,7 @@ def zeroMode (J : FullJacobiLatticeModule D M)
 
 Construction and use: Use homogeneous_zero_preserves_top to define each homogeneous zero mode, then compose DirectSum.toModule with the ACTUAL source carrierEnergyDecomposition. This defines a state-linear action on arbitrary mixed-energy source states.
 
-**Theorem 1.6 (zeroMode_homogeneous).**
+**Theorem 1.5 (zeroMode_homogeneous).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_homogeneous`
 
@@ -262,23 +260,13 @@ theorem zeroMode_homogeneous (J : FullJacobiLatticeModule D M)
 
 Proof mechanism: The actual internal direct-sum decomposition sends a homogeneous source vector to its single graded inclusion, so DirectSum.toModule evaluates its mode h-1, including negative integer degrees.
 
-**Theorem 1.7 (zeroMode_finite).**
-
-Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_finite`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_finite` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
+Application consequence: zeroMode_finite. This is an exact consequence of the retained constructions, not a separately retained theorem. Source linearity and the genuine finite grade-projection expansion give the following formula for arbitrary source a and arbitrary w in Top.
 
 Original namespace: D5.S3.VertexAlgebra.Modules.FullJacobiZhuTopRepresentation
 
-Original Lean scope:
+Original Lean scope: variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
 
-variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
-
-Exact accepted theorem:
+Full original statement and derivation (application exposition):
 
 theorem zeroMode_finite (J : FullJacobiLatticeModule D M)
 
@@ -288,11 +276,27 @@ theorem zeroMode_finite (J : FullJacobiLatticeModule D M)
 
     (zeroMode J hD a w).val = ∑ h ∈ stateEnergies D a,
 
-      mode J (gradeProjection D h a) (h - 1) w.val
+      mode J (gradeProjection D h a) (h - 1) w.val := by
 
-Proof mechanism: Expand the arbitrary source state by its genuine finite grade projections, use state linearity and apply zeroMode_homogeneous to each projection.
+  classical
 
-**Theorem 1.8 (zeroMode_circle).**
+  calc
+
+    _ = (zeroMode J hD (∑ h ∈ stateEnergies D a, gradeProjection D h a) w).val := by
+
+      rw [sum_gradeProjections]
+
+    _ = _ := by
+
+      simp only [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
+
+      apply Finset.sum_congr rfl
+
+      intro h hh
+
+      exact zeroMode_homogeneous J hD h _ (gradeProjection_mem D h a) w
+
+**Theorem 1.6 (zeroMode_circle).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_circle`
 
@@ -320,7 +324,7 @@ theorem zeroMode_circle (J : FullJacobiLatticeModule D M)
 
 Proof mechanism: Decompose only the unrestricted second source argument into its actual finite nonnegative energy pieces. On each piece, actual source grading identifies all zero-mode indices and the imported circle_residue_top applied to module_fullLaw kills the circle sum on Top.
 
-**Theorem 1.9 (zhuO_le_kernel).**
+**Theorem 1.7 (zhuO_le_kernel).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zhuO_le_kernel`
 
@@ -346,7 +350,7 @@ theorem zhuO_le_kernel (J : FullJacobiLatticeModule D M)
 
 Proof mechanism: Apply span_le to EVERY literal original circle generator and use zeroMode_circle. This kills the full actual source O-space, not a finite proxy.
 
-**Theorem 1.10 (zeroMode_star).**
+**Theorem 1.8 (zeroMode_star).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_star`
 
@@ -372,7 +376,7 @@ theorem zeroMode_star (J : FullJacobiLatticeModule D M)
 
 Proof mechanism: Expand BOTH arbitrary source arguments by their actual finite energy projections. The imported star_residue_top with module_fullLaw proves multiplicativity on each homogeneous pair; finite sum multiplication and source linearity reassemble both original arguments.
 
-**Theorem 1.11 (zeroMode_vacuum).**
+**Theorem 1.9 (zeroMode_vacuum).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_vacuum`
 
@@ -442,7 +446,7 @@ def representation (J : FullJacobiLatticeModule D M)
 
 Construction and use: Use the actual zhuO.liftQ with the proved full kernel inclusion. AlgHom.ofLinearMap uses the proved vacuum identity and arbitrary-state star multiplicativity, with the EXISTING Q, quotientProduct, quotientRing and quotientAlgebra.
 
-**Theorem 1.12 (representation_mk).**
+**Theorem 1.10 (representation_mk).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_mk`
 
@@ -472,23 +476,13 @@ theorem representation_mk (J : FullJacobiLatticeModule D M)
 
 Proof mechanism: The quotient lift evaluates the homogeneous representative through zeroMode_homogeneous, retaining the original mode h-1.
 
-**Theorem 1.13 (representation_mk_finite).**
-
-Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_mk_finite`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_mk_finite` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
+Application consequence: representation_mk_finite. This is an exact consequence of the retained constructions, not a separately retained theorem. The defining quotient lift evaluates a representative by zeroMode; the preceding finite source-projection formula therefore gives this full mixed-energy representative computation.
 
 Original namespace: D5.S3.VertexAlgebra.Modules.FullJacobiZhuTopRepresentation
 
-Original Lean scope:
+Original Lean scope: variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
 
-variable {D : LatticeData} {M : Type u} [AddCommGroup M] [Module ℂ M]
-
-Exact accepted theorem:
+Full original statement and derivation (application exposition):
 
 theorem representation_mk_finite (J : FullJacobiLatticeModule D M)
 
@@ -496,9 +490,9 @@ theorem representation_mk_finite (J : FullJacobiLatticeModule D M)
 
     (representation J hD ((Lattice.ActualZhuFinite.zhuO D).mkQ a) w).val =
 
-      ∑ h ∈ stateEnergies D a, mode J (gradeProjection D h a) (h - 1) w.val
+      ∑ h ∈ stateEnergies D a, mode J (gradeProjection D h a) (h - 1) w.val :=
 
-Proof mechanism: The quotient lift evaluates arbitrary mixed-energy representatives through the genuine finite source projections in zeroMode_finite.
+  zeroMode_finite J hD a w
 
 Original local instance (authored inventory entry, not a public theorem):
 
@@ -538,7 +532,7 @@ def currentZero (i : Fin D.rank) : Module.End ℂ (Top J) :=
 
 Construction and use: Restrict the actual source-current zero mode to Top by the already proved grade-one stability; use the explicit positive source Gram hypothesis from hPos.
 
-**Theorem 1.14 (currentZero_apply).**
+**Theorem 1.11 (currentZero_apply).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.currentZero_apply`
 
@@ -566,7 +560,7 @@ theorem currentZero_apply (i : Fin D.rank) (w : Top J) :
 
 Proof mechanism: Unfold the grade-one restriction, whose underlying mode is current J i 0.
 
-**Theorem 1.15 (representation_H).**
+**Theorem 1.12 (representation_H).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_H`
 
@@ -614,7 +608,7 @@ def currentRepresentation : currentAlgebra D →ₐ[ℂ] Module.End ℂ (Top J) 
 
 Construction and use: Restrict the genuine quotient AlgHom along the existing currentAlgebra inclusion.
 
-**Theorem 1.16 (currentRepresentation_generator).**
+**Theorem 1.13 (currentRepresentation_generator).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.currentRepresentation_generator`
 
@@ -662,7 +656,7 @@ def coordinateProjectorAction (i : Fin D.rank) (j : Node D i) : Module.End ℂ (
 
 Construction and use: Apply the genuine currentRepresentation to the EXISTING source coordinate projector.
 
-**Theorem 1.17 (coordinateProjectorAction_sum).**
+**Theorem 1.14 (coordinateProjectorAction_sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.coordinateProjectorAction_sum`
 
@@ -690,7 +684,7 @@ theorem coordinateProjectorAction_sum (i : Fin D.rank) :
 
 Proof mechanism: Apply the unital algebra homomorphism to the source coordinate_sum identity and preserve its finite sum.
 
-**Theorem 1.18 (coordinateProjectorAction_eigen).**
+**Theorem 1.15 (coordinateProjectorAction_eigen).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.coordinateProjectorAction_eigen`
 
@@ -720,7 +714,7 @@ theorem coordinateProjectorAction_eigen (i : Fin D.rank) (j : Node D i) :
 
 Proof mechanism: Map the existing source coordinate_eigen identity through the algebra homomorphism and identify its generator action with currentZero.
 
-**Theorem 1.19 (currentZero_coordinate_resolution).**
+**Theorem 1.16 (currentZero_coordinate_resolution).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.currentZero_coordinate_resolution`
 
@@ -770,7 +764,7 @@ def projectorAction (r : Grid D) : Module.End ℂ (Top J) :=
 
 Construction and use: Apply the genuine currentRepresentation to the EXISTING finite-grid source projector.
 
-**Theorem 1.20 (projectorAction_sum).**
+**Theorem 1.17 (projectorAction_sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.projectorAction_sum`
 
@@ -796,7 +790,7 @@ theorem projectorAction_sum : ∑ r : Grid D, projectorAction J r = 1
 
 Proof mechanism: Map the existing finite source projector_sum through the unital algebra homomorphism.
 
-**Theorem 1.21 (projectorAction_eigen).**
+**Theorem 1.18 (projectorAction_eigen).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.projectorAction_eigen`
 
@@ -826,7 +820,7 @@ theorem projectorAction_eigen (r : Grid D) (i : Fin D.rank) :
 
 Proof mechanism: Map the existing source projector_eigen through the genuine currentRepresentation and use its actual current-generator identification.
 
-**Theorem 1.22 (projectorAction_survives).**
+**Theorem 1.19 (projectorAction_survives).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.projectorAction_survives`
 
@@ -874,7 +868,7 @@ def jointEigenspace (r : Grid D) : Submodule ℂ (Top J) :=
 
 Construction and use: Intersect the actual restricted currentZero ordinary eigenspaces INSIDE Top at the finite source grid weight.
 
-**Theorem 1.23 (projectorAction_mem_joint).**
+**Theorem 1.20 (projectorAction_mem_joint).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.projectorAction_mem_joint`
 
@@ -902,7 +896,7 @@ theorem projectorAction_mem_joint (r : Grid D) (w : Top J) :
 
 Proof mechanism: Evaluate projectorAction_eigen on w and use the ordinary eigenspace membership characterization for each current coordinate.
 
-**Theorem 1.24 (sum_projectorAction).**
+**Theorem 1.21 (sum_projectorAction).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.sum_projectorAction`
 
@@ -928,7 +922,7 @@ theorem sum_projectorAction (w : Top J) : ∑ r : Grid D, projectorAction J r w 
 
 Proof mechanism: Evaluate the finite endomorphism sum equal to one on the arbitrary Top vector.
 
-**Theorem 1.25 (finite_joint_current_decomposition).**
+**Theorem 1.22 (finite_joint_current_decomposition).**
 
 Lean statement: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.finite_joint_current_decomposition`
 
@@ -990,11 +984,8 @@ The exact accepted source SHA256 is 1a7a596f44ee6882716c5edfcf094904e154ed4652dd
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.projectorAction_survives`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_H`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_mk`
-- Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.representation_mk_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.sum_projectorAction`
-- Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.top_le_positiveCurrentVacuum`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_circle`
-- Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_finite`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_homogeneous`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_star`
 - Truth anchor: `D5/S3/VertexAlgebra/Modules/FullJacobiZhuTopRepresentation.zeroMode_vacuum`
