@@ -6,27 +6,26 @@
    utility: none
    digest: Actual arbitrary-field window operators for the octic cut-free theorem. -/
 
-module
 
-public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-public import Mathlib.LinearAlgebra.TensorProduct.Basis
-public import Mathlib.LinearAlgebra.TensorProduct.Quotient
-public import Mathlib.RingTheory.TensorProduct.Basic
-public import Mathlib.RingTheory.Flat.Basic
-public import Mathlib.RingTheory.Flat.Equalizer
-public import Mathlib.FieldTheory.Normal.Basic
-public import Mathlib.FieldTheory.Galois.Basic
-public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-public import Mathlib.LinearAlgebra.Dual.Lemmas
-public import Mathlib.FieldTheory.PrimitiveElement
-public import Mathlib.Algebra.Algebra.Pi
-public import Mathlib.Combinatorics.Enumerative.DoubleCounting
-public import D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion.LabelledResponses
-public import Mathlib.Tactic
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.LinearAlgebra.TensorProduct.Basis
+import Mathlib.LinearAlgebra.TensorProduct.Quotient
+import Mathlib.RingTheory.TensorProduct.Basic
+import Mathlib.RingTheory.Flat.Basic
+import Mathlib.RingTheory.Flat.Equalizer
+import Mathlib.FieldTheory.Normal.Basic
+import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+import Mathlib.LinearAlgebra.Dual.Lemmas
+import Mathlib.FieldTheory.PrimitiveElement
+import Mathlib.Algebra.Algebra.Pi
+import Mathlib.Combinatorics.Enumerative.DoubleCounting
+import D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion.LabelledResponses
+import Mathlib.Tactic
 
 /-! Operators and scalar extension of an arbitrary actual octic window. -/
 
-@[expose] public section
+
 
 set_option autoImplicit false
 noncomputable section
@@ -718,6 +717,146 @@ private theorem actual_strict_row_rank [Normal F K] (W : Submodule F D)
 
 end ActualGaloisRanks
 
+
+
+section NoTripleBlocks
+
+variable {Ω G K : Type*} [Fintype Ω] [DecidableEq Ω] [Group G] [Fintype G]
+variable [MulAction G Ω] [Field K]
+
+private theorem no_tight_triple (U : Submodule K (Ω → K))
+    (hΩ : Fintype.card Ω = 8)
+    (htrans : ∀ x y : Ω, ∃ g : G, g • x = y)
+    (hinv : ∀ (g : G) S, rowRank U (orbitSet S g) = rowRank U S)
+    (hstrict : ∀ S : Finset Ω, 0 < S.card → S.card < 8 →
+      S.card + 1 ≤ 2 * rowRank U S)
+    (C : Finset Ω) (hC : C.card = 3) (hrC : rowRank U C = 2)
+    (hrCc : rowRank U Cᶜ = 3) : False := by
+  classical
+  have hcomp (S : Finset Ω) : Sᶜ.card + S.card = 8 := by
+    simpa [hΩ] using Finset.card_compl_add_card S
+  have hgc (g : G) : (orbitSet C g)ᶜ = orbitSet Cᶜ g := by
+    ext i
+    simp [mem_orbitSet]
+  have hpair (A B : Finset Ω) (hA : A.card = 3) (hB : B.card = 3)
+      (hrA : rowRank U A = 2) (hrB : rowRank U B = 2)
+      (hrBc : rowRank U Bᶜ = 3) : A = B ∨ Disjoint A B := by
+    have hi := Finset.card_le_card (Finset.inter_subset_left : A ∩ B ⊆ A)
+    have hc := Finset.card_union_add_card_inter A B
+    by_cases he : (A ∩ B).card = 3
+    · left
+      have heA : A ∩ B = A := Finset.eq_of_subset_of_card_le
+        Finset.inter_subset_left (by omega)
+      exact Finset.eq_of_subset_of_card_le
+        (heA ▸ Finset.inter_subset_right) (by omega)
+    right
+    have hzero : (A ∩ B).card = 0 := by
+      by_contra hn
+      have hcases : (A ∩ B).card = 1 ∨ (A ∩ B).card = 2 := by omega
+      rcases hcases with h1 | h2
+      · have hd : (A ∩ Bᶜ).card = 2 := by
+          have hh := Finset.card_inter_add_card_sdiff A B
+          simpa only [Finset.sdiff_eq_inter_compl, h1, hA] using hh
+        have hu : (A ∪ Bᶜ).card = 6 := by
+          have hh := Finset.card_union_add_card_inter A Bᶜ
+          have hb := hcomp B
+          omega
+        have hs1 := hstrict (A ∩ Bᶜ) (by omega) (by omega)
+        have hs2 := hstrict (A ∪ Bᶜ) (by omega) (by omega)
+        have hsub := rowRank_submodular U A Bᶜ
+        omega
+      · have hu : (A ∪ B).card = 4 := by omega
+        have hs1 := hstrict (A ∩ B) (by omega) (by omega)
+        have hs2 := hstrict (A ∪ B) (by omega) (by omega)
+        have hsub := rowRank_submodular U A B
+        omega
+    exact Finset.disjoint_iff_inter_eq_empty.mpr (Finset.card_eq_zero.mp hzero)
+  let O := (Finset.univ : Finset G).image (orbitSet C)
+  have horbit : O.biUnion id = Finset.univ := by
+    ext i
+    simp only [Finset.mem_univ, iff_true]
+    obtain ⟨c, hc⟩ := Finset.card_pos.mp (by omega : 0 < C.card)
+    obtain ⟨g, hg⟩ := htrans c i
+    exact Finset.mem_biUnion.mpr ⟨orbitSet C g,
+      Finset.mem_image.mpr ⟨g, Finset.mem_univ _, rfl⟩,
+      Finset.mem_image.mpr ⟨c, hc, hg⟩⟩
+  have hdis : (O : Set (Finset Ω)).PairwiseDisjoint id := by
+    intro A hA B hB hne
+    obtain ⟨g, _, rfl⟩ := Finset.mem_image.mp hA
+    obtain ⟨h, _, rfl⟩ := Finset.mem_image.mp hB
+    exact (hpair _ _ ((orbitSet_card C g).trans hC) ((orbitSet_card C h).trans hC)
+      ((hinv g C).trans hrC) ((hinv h C).trans hrC)
+      (by rw [hgc, hinv]; exact hrCc)).resolve_left hne
+  have hcount := Finset.card_biUnion hdis
+  have hcards : ∀ A ∈ O, A.card = 3 := by
+    intro A hA
+    obtain ⟨g, _, rfl⟩ := Finset.mem_image.mp hA
+    exact (orbitSet_card C g).trans hC
+  rw [horbit, Finset.card_univ, hΩ] at hcount
+  simp only [id_eq, hcards, Finset.sum_const, nsmul_eq_mul] at hcount
+  omega
+
+end NoTripleBlocks
+
+
+section CutRanks
+
+variable {Ω K : Type*} [Fintype Ω] [DecidableEq Ω] [Field K]
+
+private def coordinateExtend (S : Finset Ω) : (S → K) →ₗ[K] (Ω → K) where
+  toFun x i := if h : i ∈ S then x ⟨i, h⟩ else 0
+  map_add' x y := by ext i; by_cases h : i ∈ S <;> simp [h]
+  map_smul' c x := by ext i; by_cases h : i ∈ S <;> simp [h]
+
+private theorem coordinateExtend_injective (S : Finset Ω) :
+    Function.Injective (coordinateExtend (K := K) S) := by
+  intro x y h
+  ext i
+  simpa [coordinateExtend, i.property] using congrFun h i
+
+private def crossRank (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Finset Ω) : ℕ :=
+  finrank K (LinearMap.range ((coordinateProject S).comp (n.comp (coordinateExtend Sᶜ))))
+
+private theorem cross_rank_bound (U : Submodule K (Ω → K))
+    (n : (Ω → K) →ₗ[K] (Ω → K)) (hker : n.ker = U) (hrange : n.range = U)
+    (hΩ : Fintype.card Ω = 8) (hU : finrank K U = 4) (S : Finset Ω) :
+    2 * rowRank U S ≤ S.card + crossRank n S := by
+  let f : (Sᶜ → K) →ₗ[K] U := (n.comp (coordinateExtend Sᶜ)).codRestrict U (by
+    intro x
+    rw [← hrange]
+    exact ⟨coordinateExtend Sᶜ x, rfl⟩)
+  let g := (coordinateProject (K := K) S).domRestrict U
+  let j : f.ker →ₗ[K] coordinateKernel U S :=
+    { toFun := fun x => ⟨⟨coordinateExtend Sᶜ x, by
+        rw [← hker]
+        exact congrArg Subtype.val x.property⟩, by
+        rw [mem_coordinateKernel]
+        intro i hi
+        simp [coordinateExtend, hi]⟩
+      map_add' := by intros; rfl
+      map_smul' := by intros; rfl }
+  have hj : Function.Injective j := by
+    intro x y h
+    apply Subtype.ext
+    apply coordinateExtend_injective Sᶜ
+    exact congrArg (fun z : coordinateKernel U S => (z : Ω → K)) h
+  have hkf := LinearMap.finrank_le_finrank_of_injective hj
+  have hkg : finrank K g.ker = finrank K (coordinateKernel U S) := rfl
+  have hcomp : finrank K (g.comp f).ker ≤ finrank K g.ker + finrank K f.ker := by
+    have H := f.lift_rank_comap_le g.ker
+    simp only [← Submodule.finrank_eq_rank, Cardinal.lift_natCast] at H
+    exact_mod_cast H
+  have hnull := (g.comp f).finrank_range_add_finrank_ker
+  have hr : finrank K (g.comp f).range = crossRank n S := rfl
+  have hc : Sᶜ.card + S.card = 8 := by
+    simpa [hΩ] using Finset.card_compl_add_card S
+  have hdim : finrank K (Sᶜ → K) = Sᶜ.card := by simp
+  have hu := coordinate_rank_nullity U S
+  rw [hU] at hu
+  rw [hr, hdim] at hnull
+  omega
+
+end CutRanks
 
 section ActualSplitOperator
 
