@@ -60,7 +60,8 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("a308815-" + (name == "euler_coeff" ? "euler-coeff" : name)),
+        Describe.Lean(DescribeId.Create("a308815-" + (name switch {
+                "euler_coeff" => "euler-coeff", "cat_ode" => "cat-ode", _ => name })),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -92,6 +93,17 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
                 + "Here a is a308815. The assertion ranges over every natural n ≥ 3; lagged indices "
                 + "use natural subtraction, and the factors n-1 and n-2 outside a308815 use integer subtraction.",
                 DescribeRole.Definition),
+            Node("cat_ode", "The Catalan differential identity",
+                Disp(Equal(Add(
+                    Product(F.Id("X"), Parenthesized(Subtract(Num(1), Multiply(Num(4), F.Id("X")))),
+                        Call("derivative", F.Id("C"))),
+                    Product(Parenthesized(Subtract(Num(1), Multiply(Num(2), F.Id("X")))), F.Id("C"))),
+                    Num(1))),
+                AssessedProvenance.FromRepo(Oeis),
+                "Here C is Mathlib's natural Catalan series mapped coefficientwise to the rationals. "
+                + "Differentiating its quadratic equation and eliminating the quadratic term gives "
+                + "this identity. It is used by certificate and by MatharA157100FiveTermRecurrence.inhomogeneous.",
+                DescribeRole.Theorem),
             Node("euler_coeff", "Coefficients of the Euler derivative",
                 Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("f"),
                     Call("PowerSeries", Seq(Mathbb, Grp(F.Id("Q")))),
