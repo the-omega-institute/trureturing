@@ -1,0 +1,4 @@
+反向，设 $\mathrm{Z0}+\mathrm B+\mathrm A$ 且不止一个纯点。每个 $p$ 至少有一个局部对径，$\mathrm A$ 保证 $D_p\ne\varnothing$；88.3 给同一个 $f_p\in F_p$ 零于整个 $D_p$。$\mathrm A$ 将所有局部对径放入 $D_p$，故取 $g_p=f_p$ 即得 $\mathrm H$，且 $g_p(p)=1>0$；单点取 $u$。最后 $S\Rightarrow\mathrm{Z0}+\mathrm B+\mathrm A$ 直接复用 88.4 的既有逆向桥，不重复分类。
+
+因此在 $\mathrm B$ 下 $\mathrm H$ 与 $\mathrm{Z0}+\mathrm A$ 严格双向等价；共同面的全局存在承担了原两项的共同实现义务。唯一几何主候选为 $\mathrm B+\mathrm H$，不是另立第二套完整候选，也不声称比 $S$ 严格更弱。证毕。
+
