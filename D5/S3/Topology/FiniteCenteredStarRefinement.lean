@@ -7,7 +7,9 @@
    digest: Finite continuous coordinates construct centered open star refinements on compact Hausdorff spaces. -/
 
 import Mathlib.Topology.PartitionOfUnity
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-! Centered finite refinements from partitions of unity on compact Hausdorff spaces. -/
 

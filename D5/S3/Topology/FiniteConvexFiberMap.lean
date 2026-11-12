@@ -56,7 +56,7 @@ theorem exists_continuous_ray_avoiding_fiber_map
       (∀ c : s, φ c x ≠ 0 → a c ∈ T) → A x ∈ T := by
     intro T hT x hx
     simpa only [A, ContinuousMap.coe_mk, finsum_eq_sum_of_fintype] using
-      φ.finsum_smul_mem_convex (mem_univ x) hx hT
+      φ.finsum_smul_mem_convex (g := fun c _ => a c) (mem_univ x) hx hT
   have hcontrol : ∀ x, ∃ j, B x ⊆ N j ∧ A x ∈ N j ∧
       (∀ c : s, φ c x ≠ 0 → (c : X) ∈ V j) := by
     intro x
