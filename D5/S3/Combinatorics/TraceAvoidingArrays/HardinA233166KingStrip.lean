@@ -51,7 +51,7 @@ def claim : Prop :=
   (∀ n : ℕ, 2 ≤ n → a n = 64^(n-1)*(2^n+60)) ∧
   (∀ n : ℕ, 4 ≤ n → (a n : ℤ) = 192*(a (n-1) : ℤ)-8192*(a (n-2) : ℤ))
 
-private def Proper {n : ℕ} (c : Fin n × Fin 6 → Fin 4) : Prop :=
+def Proper {n : ℕ} (c : Fin n × Fin 6 → Fin 4) : Prop :=
   ∀ p q, p ≠ q →
     p.1.val ≤ q.1.val + 1 → q.1.val ≤ p.1.val + 1 →
     p.2.val ≤ q.2.val + 1 → q.2.val ≤ p.2.val + 1 → c p ≠ c q
@@ -242,5 +242,81 @@ theorem pair_rectangle {n : ℕ} (hn : 2 ≤ n)
     (proper_increments (by omega) _ hc).1,
     (proper_increments (by omega) _ hc).2, proper_exhausts hn _ hc,
     legal_seen hn f hf⟩
+
+
+/-- First-column values and first-row offsets with disjoint nonzero increments. -/
+def zones (n : ℕ) : Set ((Fin n → Fin 4) × (Fin 6 → Fin 4)) := fun z =>
+  z.2 0 = 0 ∧
+  (∀ j : Fin 5, z.2 j.castSucc ^^^ z.2 j.succ ≠ 0) ∧
+  (∀ (i : ℕ) (hi : i + 1 < n),
+    z.1 ⟨i,by omega⟩ ^^^ z.1 ⟨i+1,hi⟩ ≠ 0 ∧
+    ∀ j : Fin 5, z.2 j.castSucc ^^^ z.2 j.succ ≠
+      z.1 ⟨i,by omega⟩ ^^^ z.1 ⟨i+1,hi⟩)
+
+private theorem xor_shift : ∀ a b c : Fin 4,
+    (a ^^^ b) ^^^ (a ^^^ c) = b ^^^ c := by decide +kernel
+
+private theorem adjacent_delta {m : ℕ} (u : Fin m → Fin 4) (i r : Fin m)
+    (hir : i.val ≤ r.val + 1) (hri : r.val ≤ i.val + 1) :
+    (i = r ∧ u i ^^^ u r = 0) ∨
+    ∃ (k : ℕ) (hk : k + 1 < m),
+      u i ^^^ u r = u ⟨k,by omega⟩ ^^^ u ⟨k+1,hk⟩ := by
+  by_cases h : i = r
+  · exact Or.inl ⟨h,by simp [h]⟩
+  · right
+    by_cases hil : i.val < r.val
+    · have he : r = ⟨i.val+1,by omega⟩ := Fin.ext (by omega)
+      exact ⟨i.val,by omega,by rw [he]⟩
+    · have he : i = ⟨r.val+1,by omega⟩ := Fin.ext (by omega)
+      exact ⟨r.val,by omega,by rw [he,Fin.xor_comm]⟩
+
+private theorem zones_proper {n : ℕ}
+    (z : (Fin n → Fin 4) × (Fin 6 → Fin 4)) (hz : z ∈ zones n) :
+    Proper (fun p => z.1 p.1 ^^^ z.2 p.2) := by
+  intro p q hp hir hri hjs hsj he
+  have hd := xor_cross _ _ _ _ he
+  rcases adjacent_delta z.1 p.1 q.1 hir hri with ⟨hr,hrz⟩ | ⟨i,hi,he⟩
+  · rcases adjacent_delta z.2 p.2 q.2 hjs hsj with ⟨hs,hsz⟩ | ⟨j,hj,hje⟩
+    · exact hp (Prod.ext hr hs)
+    · have hh := hz.2.1 (⟨j,by omega⟩ : Fin 5)
+      change z.2 ⟨j,by omega⟩ ^^^ z.2 ⟨j+1,hj⟩ ≠ 0 at hh
+      exact hh (hje.symm.trans (hd.symm.trans hrz))
+  · rcases adjacent_delta z.2 p.2 q.2 hjs hsj with ⟨hs,hsz⟩ | ⟨j,hj,hje⟩
+    · exact (hz.2.2 i hi).1 (he.symm.trans (hd.trans hsz))
+    · have hh := (hz.2.2 i hi).2 (⟨j,by omega⟩ : Fin 5)
+      change z.2 ⟨j,by omega⟩ ^^^ z.2 ⟨j+1,hj⟩ ≠
+        z.1 ⟨i,by omega⟩ ^^^ z.1 ⟨i+1,hi⟩ at hh
+      exact hh (hje.symm.trans (hd.symm.trans he))
+
+/-- Every proper pair-colouring is uniquely reconstructed from its zone data. -/
+def zoneEquiv {n : ℕ} (hn : 0 < n) :
+    {c : Fin n × Fin 6 → Fin 4 // Proper c} ≃ {z // z ∈ zones n} where
+  toFun c := ⟨(fun i => c.1 (i,0),
+    fun j => c.1 (⟨0,hn⟩,0) ^^^ c.1 (⟨0,hn⟩,j)),by
+    refine ⟨by simp, ?_, ?_⟩
+    · intro j
+      rw [xor_shift]
+      exact (proper_increments hn c.1 c.2).1 j
+    · intro i hi
+      refine ⟨(proper_increments hn c.1 c.2).2 i hi |>.1, ?_⟩
+      intro j
+      rw [xor_shift]
+      exact (proper_increments hn c.1 c.2).2 i hi |>.2 j⟩
+  invFun z := ⟨fun p => z.1.1 p.1 ^^^ z.1.2 p.2, zones_proper z.1 z.2⟩
+  left_inv c := by
+    apply Subtype.ext
+    funext p
+    have h := proper_rectangle hn c.1 c.2 p.1 p.2
+    simpa only [Fin.xor_assoc (show 4 = 2^2 from rfl)] using h.symm
+  right_inv z := by
+    apply Subtype.ext
+    apply Prod.ext
+    · funext i
+      exact Fin.xor_zero (z.1.1 i) |>.symm.trans (congrArg (fun t => z.1.1 i ^^^ t) z.2.1.symm)
+    · funext j
+      change (z.1.1 ⟨0,hn⟩ ^^^ z.1.2 0) ^^^ (z.1.1 ⟨0,hn⟩ ^^^ z.1.2 j) = z.1.2 j
+      rw [z.2.1,Fin.xor_zero]
+      simpa only [Fin.xor_assoc (show 4 = 2^2 from rfl),Fin.xor_self,Fin.xor_zero]
+        using (xor_shift (z.1.1 ⟨0,hn⟩) 0 (z.1.2 j))
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
