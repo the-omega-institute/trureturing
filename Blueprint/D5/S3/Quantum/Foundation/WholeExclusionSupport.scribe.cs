@@ -14,7 +14,7 @@ internal sealed class WholeExclusionSupportDocument : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessOrEqual, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula In(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
     private static Formula App(Formula f, Formula x) => Call("apply", f, x);
     private static Formula R => Seq(Mathbb, Grp(V("R")));

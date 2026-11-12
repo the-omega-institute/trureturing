@@ -55,12 +55,21 @@ abbrev sourceScope : Prop := type_of% (@whole_exclusion_support.{v})
 
 theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
   constructor
-  · intro h P hc hs hr hu hz
+  · intro h P
+    dsimp only
+    intro hc hs hr hu hz
     exact @h P.V P.add P.space P.finite P.cone P.unit hc hs P.point P.candidate hr hu hz
   · intro h V add space finite C u hc hs r f hr hu hz
     exact h (@Inputs.mk V add space finite C u r f) hc hs hr hu hz
 
 theorem actual_positive : arena.{v}.Law actual.{v} :=
   source_bridge.mp (@whole_exclusion_support.{v})
+
+/-- This observation family cannot supply a failing intervention: every
+linear-map readout satisfies its conditional support law. -/
+theorem every_realization_positive (O : Realization signature.{v}) : arena.{v}.Law O := by
+  intro P
+  dsimp only
+  exact whole_exclusion_support (r := P.point) (h := O.readout () P ())
 
 end Reg.D5.S3.Quantum.Foundation.WholeExclusionSupport
