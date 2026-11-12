@@ -6,7 +6,7 @@ internal sealed class IrrationalIndependenceRootDocument : IScribeDocumentDefini
 {
     private const string Prefix = "D5/S3/StatisticalMechanics/HardCore/IrrationalIndependenceRoot.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/StatisticalMechanics/browncameron2020imaginary");
+        LibraryNoteRef.Create("D5/L/Zeros/browncameron2020imaginary");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite graph with an irrational purely imaginary independence root.",
