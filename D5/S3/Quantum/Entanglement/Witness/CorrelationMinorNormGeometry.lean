@@ -6,9 +6,10 @@
    utility: none
    digest: Actual Hermitian coordinates and ordered full-row correlation compounds. -/
 
-import D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation
+import D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormCore
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
+import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.QuantumChannels.NuclearNormAdditivity
 
 /-! Actual trace-normalized Hermitian coordinates and their correlation geometry. -/

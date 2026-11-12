@@ -89,9 +89,10 @@ private lemma flag_density (D : ℕ) (hD : 4 ≤ D) (j : Fin 4) :
 
 private lemma mixed_density (n : ℕ) (hn : 0 < n) :
     IsDensity ((1/n : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ)) := by
-  haveI : NeZero n := ⟨ne_of_gt hn⟩
-  simpa [Matrix.trace_one] using D5.S3.Quantum.CotfasDVGS.normalization_isDensity
-    (1 : Matrix (Fin n) (Fin n) ℂ) PosSemidef.one (by simp [NeZero.ne n])
+  refine ⟨PosSemidef.one.smul ?_, ?_⟩
+  · simpa using (Complex.zero_le_real.mpr
+      (show (0 : ℝ) ≤ 1 / (n : ℝ) by positivity))
+  · simp [Matrix.trace_smul, Matrix.trace_one, ne_of_gt hn]
 
 /-- Separability uses precisely the finite normalized density decomposition. -/
 theorem omega_separable (D : ℕ) (hD : 4 ≤ D) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
@@ -121,7 +122,7 @@ theorem omega_separable (D : ℕ) (hD : 4 ≤ D) (t : ℝ) (ht0 : 0 ≤ t) (ht1 
 
 
 private lemma alice_hermitian (i : Fin 4) : (alice i).IsHermitian :=
-  (rational_noisy_family 0 (by norm_num) (by norm_num)).2.2.1.1 i
+  alice_basis.1 i
 
 /-- Actual Bob operators whose real Hermitian coordinates are the correlation rows. -/
 def rowSlice (D : ℕ) (hD : 4 ≤ D) (t : ℝ) (i : Fin 4) : Matrix (Fin D) (Fin D) ℂ :=
@@ -384,7 +385,7 @@ theorem omega_full_norms (D : ℕ) (hD : 4 ≤ D) (t : ℝ)
     ∀ p : ℝ, 1 ≤ p → cmnP p 4 (corr (omega D hD t) a b) =
       Real.sqrt (q0 D t * q1 t ^ 3) := by
   have halice : IsHermBasis alice :=
-    (rational_noisy_family 0 (by norm_num) (by norm_num)).2.2.1
+    alice_basis
   have hi := full_order_basisChange_left (omega D hD t) alice a b halice ha
   norm_num only [Nat.reducePow] at hi
   have hd : (corr (omega D hD t) alice b *

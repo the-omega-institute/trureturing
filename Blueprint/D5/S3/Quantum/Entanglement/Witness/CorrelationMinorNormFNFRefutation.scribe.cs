@@ -6,6 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.Witness;
 
 internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumentDefinition
 {
+    private const string CorePrefix = "D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.";
     private const string Prefix = "D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor");
@@ -41,7 +42,7 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                         + "For 0 ≤ t ≤ 1/200 this is a finite convex mixture of actual local density matrices. "
                         + "Its noise lower bound gives positive definiteness for t > 0; the endpoint t = 0 remains included."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("alice-basis"), DeclarationHandle.Create(Prefix + "alice"),
+            Describe.Lean(DescribeId.Create("alice-basis"), DeclarationHandle.Create(CorePrefix + "alice"),
                 H("The normalized Alice basis"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The existing complete Hermitian basis (I,Z,X,Y)/√2 is shared by the interval and fixed witness."))),
                 DescribeRole.Definition),
@@ -70,7 +71,7 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                         + "512(4−t)(1−t)² > 2025. Both positive factors are bounded below over the whole interval, "
                         + "and the value of this difference at the upper endpoint is 574/15625. This is a uniform real-parameter proof."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("finite-p-cmn"), DeclarationHandle.Create(Prefix + "cmnP"),
+            Describe.Lean(DescribeId.Create("finite-p-cmn"), DeclarationHandle.Create(CorePrefix + "cmnP"),
                 H("The actual finite Schatten parameters"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For a real p, cmnP p h C is the existing Partition.rectangularNorm of the increasing real compound after entrywise complexification. This uses the actual CFC row-Gram square root and existing schattenNorm. Every assertion below restricts finite p to p ≥ 1; infinity is the Euclidean operator norm cmnInf."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("selected-row"), DeclarationHandle.Create(Prefix + "selectedRow"),
@@ -79,10 +80,10 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
             Describe.Lean(DescribeId.Create("selected-columns"), DeclarationHandle.Create(Prefix + "selectedCols"),
                 H("The four increasing flag minors"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The column subsets, in order, are {0,1,2}, {0,1,3}, {0,2,3}, {1,2,3}. They are the original four distinct witness selections."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("single-row-operator"), DeclarationHandle.Create(Prefix + "single_row_opnorm"),
+            Describe.Lean(DescribeId.Create("single-row-operator"), DeclarationHandle.Create(CorePrefix + "single_row_opnorm"),
                 H("The existing single-row operator identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The Euclidean operator norm of a finite real matrix supported in one specified row equals the square root of the sum of its squared entries. The existing proof is exposed unchanged and consumed by the general full-order compound correspondence."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("single-row-schatten"), DeclarationHandle.Create(Prefix + "single_row_schatten"),
+            Describe.Lean(DescribeId.Create("single-row-schatten"), DeclarationHandle.Create(CorePrefix + "single_row_schatten"),
                 H("The existing single-row Schatten identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every positive real p, the existing actual rectangular complex Schatten functional of the complexified single-row real matrix equals its Euclidean row length. The unchanged proof is exposed for the general full-order compound consumer, retaining zero entries and empty column types."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("minor-energy"), DeclarationHandle.Create(Prefix + "noisyMinorEnergy"),
@@ -181,7 +182,7 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                     ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create((declaration == "claim" ? Prefix : CorePrefix) + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 

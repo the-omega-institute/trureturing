@@ -28,9 +28,9 @@ For real t, set a = (1−t)/3 and ρₜ = a Σⱼ₌₀² Pⱼ ⊗ Eⱼⱼ + t I
 
 **Definition 1.2 (The normalized Alice basis).**
 
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.alice`
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.alice`
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.alice` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.alice` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -84,9 +84,9 @@ For every real 0 ≤ t ≤ 1/200, the theorem asserts actual separability and de
 
 **Definition 1.6 (The actual finite Schatten parameters).**
 
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.cmnP`
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.cmnP`
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.cmnP` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.cmnP` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -126,9 +126,9 @@ The column subsets, in order, are {0,1,2}, {0,1,3}, {0,2,3}, {1,2,3}. They are t
 
 **Theorem 1.9 (The existing single-row operator identity).**
 
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.single_row_opnorm`
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.single_row_opnorm`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.single_row_opnorm` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.single_row_opnorm` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -140,9 +140,9 @@ The Euclidean operator norm of a finite real matrix supported in one specified r
 
 **Theorem 1.10 (The existing single-row Schatten identity).**
 
-Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.single_row_schatten`
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.single_row_schatten`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.single_row_schatten` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.single_row_schatten` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -202,7 +202,7 @@ At t=1/1000, noisyMinorEnergy is exactly 559341805929555807/50000000000000000000
 
 $$\forall \left(n: \mathbb{N}\right), \left(\forall \left(m: \mathbb{N}\right), \left(\forall \left(a: \left(\operatorname{Fin}\left(m\right)\right) \to \left(\operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation.IsHermBasis}\left(a\right)\right) \Leftrightarrow \left(\left(\forall \left(i: \operatorname{Fin}\left(m\right)\right), \left(\operatorname{Matrix.IsHermitian}\left(a\left(i\right)\right)\right)\right) \land \left(\left(m = \left(n\right)^{2}\right) \land \left(\forall \left(i: \operatorname{Fin}\left(m\right)\right), \left(\forall \left(j: \operatorname{Fin}\left(m\right)\right), \left(\operatorname{Matrix.trace}\left(\left(a\left(i\right)\right) \cdot \left(a\left(j\right)\right)\right) = \operatorname{ite}\left(i = j, \left(1: \mathbb{C}\right), \left(0: \mathbb{C}\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.IsHermBasis` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.IsHermBasis` (`✓ std3`).
 
 *Citation.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
 
@@ -214,7 +214,7 @@ A family a consists of Hermitian n by n complex matrices, has exactly n squared 
 
 $$\forall \left(da: \mathbb{N}\right), \left(\forall \left(db: \mathbb{N}\right), \left(\forall \left(ma: \mathbb{N}\right), \left(\forall \left(mb: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Matrix}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(da\right), \operatorname{Fin}\left(db\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(da\right), \operatorname{Fin}\left(db\right)\right), \mathbb{C}\right)\right), \left(\forall \left(a: \left(\operatorname{Fin}\left(ma\right)\right) \to \left(\operatorname{Matrix}\left(\operatorname{Fin}\left(da\right), \operatorname{Fin}\left(da\right), \mathbb{C}\right)\right)\right), \left(\forall \left(b: \left(\operatorname{Fin}\left(mb\right)\right) \to \left(\operatorname{Matrix}\left(\operatorname{Fin}\left(db\right), \operatorname{Fin}\left(db\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation.corr}\left(\rho, a, b\right): \operatorname{Matrix}\left(\operatorname{Fin}\left(ma\right), \operatorname{Fin}\left(mb\right), \mathbb{R}\right)\right) = \left(\lambda \left(i: \operatorname{Fin}\left(ma\right)\right) \mapsto \left(\left(\lambda \left(j: \operatorname{Fin}\left(mb\right)\right) \mapsto \left(\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(\left(\rho\right) \cdot \left(\operatorname{Matrix.kroneckerMap}\left(\left(\lambda \left(x1: \mathbb{C}\right) \mapsto \left(\left(\lambda \left(x2: \mathbb{C}\right) \mapsto \left(\left(x1\right) \cdot \left(x2\right)\right)\right)\right)\right), a\left(i\right), b\left(j\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.corr` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.corr` (`✓ std3`).
 
 *Citation.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
 
@@ -226,7 +226,7 @@ For a complex matrix ρ on the product of the two local index spaces and local m
 
 $$\forall \left(m: \mathbb{N}\right), \left(\forall \left(n: \mathbb{N}\right), \left(\forall \left(h: \mathbb{N}\right), \left(\forall \left(c: \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right), \mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation.compound}\left(h, c\right): \operatorname{Matrix}\left(\{\left(r: \operatorname{Finset}\left(\operatorname{Fin}\left(m\right)\right)\right) // \operatorname{Finset.card}\left(r\right) = h\}, \{\left(s: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)\right) // \operatorname{Finset.card}\left(s\right) = h\}, \mathbb{R}\right)\right) = \left(\lambda \left(r: \{\left(r: \operatorname{Finset}\left(\operatorname{Fin}\left(m\right)\right)\right) // \operatorname{Finset.card}\left(r\right) = h\}\right) \mapsto \left(\left(\lambda \left(s: \{\left(s: \operatorname{Finset}\left(\operatorname{Fin}\left(n\right)\right)\right) // \operatorname{Finset.card}\left(s\right) = h\}\right) \mapsto \left(\operatorname{Matrix.det}\left(\operatorname{Matrix.submatrix}\left(c, \operatorname{DFunLike.coe}\left(\operatorname{Finset.orderEmbOfFin}\left(\operatorname{Subtype.val}\left(r\right), \operatorname{Subtype.property}\left(r\right)\right)\right), \operatorname{DFunLike.coe}\left(\operatorname{Finset.orderEmbOfFin}\left(\operatorname{Subtype.val}\left(s\right), \operatorname{Subtype.property}\left(s\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.compound` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.compound` (`✓ std3`).
 
 *Citation.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
 
@@ -238,7 +238,7 @@ Rows and columns are indexed by finite subsets of cardinality h. Each entry is t
 
 $$\forall \left(m: \mathbb{N}\right), \left(\forall \left(n: \mathbb{N}\right), \left(\forall \left(h: \mathbb{N}\right), \left(\forall \left(c: \operatorname{Matrix}\left(\operatorname{Fin}\left(m\right), \operatorname{Fin}\left(n\right), \mathbb{R}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation.cmnInf}\left(h, c\right): \mathbb{R}\right) = \left\lVert \operatorname{D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation.compound}\left(h, c\right) \right\rVert\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.cmnInf` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.cmnInf` (`✓ std3`).
 
 *Citation.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
 
@@ -250,7 +250,7 @@ The quantity cmnInf is the Euclidean operator norm of the h-th compound matrix. 
 
 $$\forall \left(da: \mathbb{N}\right), \left(\forall \left(db: \mathbb{N}\right), \left(\forall \left(h: \mathbb{N}\right), \left(\left(\operatorname{D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation.bound}\left(da, db, h\right): \mathbb{R}\right) = \left(\frac{\left(1: \mathbb{R}\right)}{\operatorname{Real.sqrt}\left(\left(\operatorname{Max.max}\left(\left(\operatorname{Nat.cast}\left(da\right): \mathbb{R}\right), \left(\operatorname{Nat.cast}\left(db\right): \mathbb{R}\right)\right)\right) \cdot \left(\operatorname{Min.min}\left(\left(\operatorname{Nat.cast}\left(da\right): \mathbb{R}\right), \left(\operatorname{Nat.cast}\left(db\right): \mathbb{R}\right)\right)\right)\right)}\right) \cdot \left(\left(\left(\frac{\left(\operatorname{Max.max}\left(\left(\operatorname{Nat.cast}\left(da\right): \mathbb{R}\right), \left(\operatorname{Nat.cast}\left(db\right): \mathbb{R}\right)\right)\right) - \left(\left(1: \mathbb{R}\right)\right)}{\left(\operatorname{Max.max}\left(\left(\operatorname{Nat.cast}\left(da\right): \mathbb{R}\right), \left(\operatorname{Nat.cast}\left(db\right): \mathbb{R}\right)\right)\right) \cdot \left(\left(\left(\operatorname{Nat.cast}\left(h\right): \mathbb{R}\right)\right) - \left(\left(1: \mathbb{R}\right)\right)\right)}\right) \cdot \left(\frac{\left(\operatorname{Min.min}\left(\left(\operatorname{Nat.cast}\left(da\right): \mathbb{R}\right), \left(\operatorname{Nat.cast}\left(db\right): \mathbb{R}\right)\right)\right) - \left(\left(1: \mathbb{R}\right)\right)}{\left(\operatorname{Min.min}\left(\left(\operatorname{Nat.cast}\left(da\right): \mathbb{R}\right), \left(\operatorname{Nat.cast}\left(db\right): \mathbb{R}\right)\right)\right) \cdot \left(\left(\left(\operatorname{Nat.cast}\left(h\right): \mathbb{R}\right)\right) - \left(\left(1: \mathbb{R}\right)\right)\right)}\right)\right)^{\frac{\left(\left(\operatorname{Nat.cast}\left(h\right): \mathbb{R}\right)\right) - \left(\left(1: \mathbb{R}\right)\right)}{\left(2: \mathbb{R}\right)}}\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.bound` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.bound` (`✓ std3`).
 
 *Citation.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
 
@@ -298,15 +298,17 @@ At dimensions two and four and order three, the proposed bound is 3/(64√2). It
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.IsHermBasis`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.alice`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.IsHermBasis`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.alice`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.bound`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.cmnInf`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.cmnP`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.compound`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.corr`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.single_row_opnorm`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.single_row_schatten`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.bob`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.bound`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.claim`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.cmnInf`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.cmnP`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.compound`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.corr`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.fixed_compound_energy`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.noisyCoefficients`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.noisyMinorEnergy`
@@ -316,11 +318,5 @@ At dimensions two and four and order three, the proposed bound is 3/(64√2). It
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.selectedCols`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.selectedRow`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.single_row_opnorm`
-- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.single_row_schatten`
 - Dependency: [D5/S3/Quantum/CotfasDVGS](../../CotfasDVGS.md)
-- Dependency: [D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity](../../Dynamics/EntropyProductionCoherenceDeletionIdentity.md)
-- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../../Information/PartialTraceMutualInformation.md)
-- Dependency: [D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation](../../Measurement/StabilizerPovmMaximalEntanglementRefutation.md)
-- Dependency: [D5/S3/Quantum/QuantumChannels/IptPptSquaredEquivalence](../../QuantumChannels/IptPptSquaredEquivalence.md)
-- Dependency: [D5/S3/Quantum/Schatten/Partition](../../Schatten/Partition.md)
+- Dependency: [D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore](CorrelationMinorNormCore.md)

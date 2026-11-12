@@ -30,8 +30,6 @@ open D5.S3.Quantum.QuantumChannels.NuclearNormAdditivity
 
 namespace D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormQubitBound
 
-private lemma alice_basis : IsHermBasis alice :=
-  (rational_noisy_family 0 (by norm_num) (by norm_num)).2.2.1
 
 /-- The determinant-normalizing qubit coordinate scaling. -/
 def qubitScaling : Matrix (Fin 4) (Fin 4) ℝ :=

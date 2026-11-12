@@ -276,6 +276,7 @@ Every actual finite convex combination of local density products is a density. T
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.hermitian_pair_real`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.separable_density`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.square_full_order_norms`
-- Dependency: [D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation](CorrelationMinorNormFNFRefutation.md)
+- Dependency: [D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore](CorrelationMinorNormCore.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../../Information/ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](../../Information/SLDSpectralEnergy.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/NuclearNormAdditivity](../../QuantumChannels/NuclearNormAdditivity.md)
