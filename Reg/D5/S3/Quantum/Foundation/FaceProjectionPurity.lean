@@ -49,7 +49,6 @@ abbrev arena : Arena where
     let B := P.pairing
     let F := P.face
     let Q := P.projection
-    IsClosed (C : Set P.A) →
     (∀ x ∈ C, x ≠ 0 → 0 < u x) →
     (∃ x ∈ C, x ≠ (0 : P.A)) →
     (∀ x y, B x y = B y x) →
@@ -57,7 +56,6 @@ abbrev arena : Arena where
     (∀ x, x ∈ C ↔ ∀ y ∈ C, 0 ≤ B x y) →
     (∀ p : pure C u, confirms C u p (B p)) →
     (∀ (p : pure C u) f, confirms C u p f → ∀ x ∈ C, B p x ≤ f x) →
-    (∀ x, Q (Q x) = Q x) →
     (∀ x y, B (Q x) y = B x (Q y)) →
     (∀ x ∈ C, Q x ∈ F) →
     (∀ x ∈ F, Q x = x) →
@@ -73,11 +71,11 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
   constructor
   · intro h P
     dsimp only
-    intro hclosed hu hne hsym hpos hdual hc hleast hid hadj hface hfix
-    exact @h P.A P.add P.space P.finite P.cone P.unit hclosed hu hne P.pairing
-      hsym hpos hdual hc hleast P.face P.projection hid hadj hface hfix
-  · intro h A add space finite C u hclosed hu hne B hsym hpos hdual hc hleast F Q
-    exact h (@Inputs.mk A add space finite C u B F Q) hclosed hu hne hsym hpos hdual hc hleast
+    intro hu hne hsym hpos hdual hc hleast hadj hface hfix
+    exact @h P.A P.add P.space P.finite P.cone P.unit hu hne P.pairing
+      hsym hpos hdual hc hleast P.face P.projection hadj hface hfix
+  · intro h A add space finite C u hu hne B hsym hpos hdual hc hleast F Q
+    exact h (@Inputs.mk A add space finite C u B F Q) hu hne hsym hpos hdual hc hleast
 
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@least_confirmation_face_purity.{u})
@@ -119,9 +117,6 @@ private def lineInputs : Inputs.{u} where
   pairing := linePairing
   face := ⊤
   projection := LinearMap.id
-
-private theorem line_closed : IsClosed (lineCone.{u} : Set Line) :=
-  isClosed_le continuous_const lineUnit.continuous_of_finiteDimensional
 
 private theorem line_strict : ∀ x ∈ lineCone.{u}, x ≠ 0 → 0 < lineUnit x := by
   intro x hx hx0
@@ -171,14 +166,14 @@ private theorem line_least : ∀ (p : pure lineCone.{u} lineUnit) f,
 
 private theorem line_evaluation (O : Realization signature.{u}) (h : arena.Law O) :
     O.readout () lineInputs linePoint = ULift.up 1 := by
-  have hh := h lineInputs line_closed line_strict
+  have hh := h lineInputs line_strict
     ⟨ULift.up 1, (show (0 : ℝ) ≤ 1 by norm_num), by
       intro hzero
       have := congrArg ULift.down hzero
       change (1 : ℝ) = 0 at this
       norm_num at this⟩
     (fun x y => mul_comm x.down y.down) line_positive line_dual line_confirms line_least
-    (fun _ => rfl) (fun _ _ => rfl) (fun x hx => hx) (fun _ _ => rfl)
+    (fun _ _ => rfl) (fun x hx => hx) (fun _ _ => rfl)
   rcases hh.2.2.2 linePoint with hz | ⟨_, hout, _⟩
   · have := congrArg ULift.down hz
     change (1 : ℝ) = 0 at this
@@ -286,13 +281,13 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Foundation.FaceProjectionPurity
     definition := none
-    coordinates := #[0, 4, 5, 9, 15, 16]
+    coordinates := #[0, 4, 5, 8, 14, 15]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body",
         "arg", "arg", "arg", "body", "arg", "arg", "fn", "arg", "arg"]
-      stateBinder := 21
+      stateBinder := 19
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

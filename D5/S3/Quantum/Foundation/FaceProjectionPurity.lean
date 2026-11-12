@@ -123,7 +123,6 @@ projection to send every original pure point to zero or an original pure ray.
 The entire pure locus is characterized and proved compact and nonempty. -/
 theorem least_confirmation_face_purity
     (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (hclosed : IsClosed (C : Set A))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hne : ∃ x ∈ C, x ≠ (0 : A))
     (B : A →ₗ[ℝ] A →ₗ[ℝ] ℝ)
@@ -133,7 +132,6 @@ theorem least_confirmation_face_purity
     (hc : ∀ p : pure C u, confirms C u p (B p))
     (hleast : ∀ (p : pure C u) f, confirms C u p f → ∀ x ∈ C, B p x ≤ f x)
     (F : PointedCone.Face C) (Q : A →ₗ[ℝ] A)
-    (hid : ∀ x, Q (Q x) = Q x)
     (hadj : ∀ x y, B (Q x) y = B x (Q y))
     (hface : ∀ x ∈ C, Q x ∈ F)
     (hfix : ∀ x ∈ F, Q x = x) :
@@ -142,6 +140,23 @@ theorem least_confirmation_face_purity
       ∀ p : pure C u, Q p = 0 ∨
         (0 < u (Q p) ∧ (u (Q p))⁻¹ • Q p ∈ pure C u ∧
           Q p = u (Q p) • ((u (Q p))⁻¹ • Q p)) := by
+  have hclosed : IsClosed (C : Set A) := by
+    have hset : (C : Set A) = ⋂ y ∈ C, {x | 0 ≤ B x y} := by
+      ext x
+      simp only [Set.mem_iInter, Set.mem_setOf_eq]
+      exact hdual x
+    rw [hset]
+    exact isClosed_biInter fun y _ =>
+      isClosed_le continuous_const (B.flip y).continuous_of_finiteDimensional
+  have hid (x : A) : Q (Q x) = Q x := by
+    apply sub_eq_zero.mp
+    have hzero (y : A) (hy : y ∈ C) : B (Q (Q x) - Q x) y = 0 := by
+      rw [map_sub, LinearMap.sub_apply, hadj (Q x) y, hadj x (Q y), hadj x y,
+        hfix (Q y) (hface y hy), sub_self]
+    have hv : Q (Q x) - Q x ∈ C := (hdual _).mpr fun y hy => (hzero y hy).ge
+    by_contra hv0
+    have hp := hpos (Q (Q x) - Q x) hv0
+    linarith [hzero _ hv]
   have hK := base_compact hclosed hu
   have hlocus := pure_locus B hsym hpos hK hu hc
   have hPcompact : IsCompact (pure C u) := by
