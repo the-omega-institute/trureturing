@@ -54,10 +54,12 @@ abbrev sourceScope : Prop := type_of% (@original_face_polarity.{u})
 
 theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
   constructor
-  · intro h P hc hu hs hB hp
-    obtain ⟨F⟩ := @h P.V P.add P.space P.finite P.nonzero P.cone P.unit hc hu hs hB hp
+  · intro h P
+    dsimp only
+    intro hc hu hs hB hp
+    obtain ⟨F⟩ := @h P.V P.add P.space P.finite P.cone P.unit P.nonzero hc hu hs hB hp
     exact ⟨F, F.pole_val⟩
-  · intro h V add space finite nonzero C u hc hu hs hB hp
+  · intro h V add space finite C u nonzero hc hu hs hB hp
     obtain ⟨F, _⟩ := h (@Inputs.mk V add space finite nonzero C u) hc hu hs hB hp
     exact ⟨F⟩
 
