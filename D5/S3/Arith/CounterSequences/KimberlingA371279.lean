@@ -32,7 +32,7 @@ private theorem firstRetentionAux_filter (seen xs : List ℚ) :
   | cons x xs ih =>
       by_cases hx : x ∈ seen
       · simp [firstRetentionAux, hx, ih]
-      · simp only [firstRetentionAux, if_neg hx, List.filter_cons,
+      · simp only [firstRetentionAux, ite_eq_right hx, List.filter_cons,
           decide_eq_true_eq, hx, not_false_eq_true, ↓reduceIte, List.eraseDups_cons]
         rw [ih]
         congr 2
@@ -51,9 +51,9 @@ private theorem firstRetentionAux_mem_iff (seen xs : List ℚ) (x : ℚ) :
   | nil => simp [firstRetentionAux]
   | cons a xs ih =>
       by_cases ha : a ∈ seen
-      · rw [firstRetentionAux, if_pos ha, ih seen]
+      · rw [firstRetentionAux, ite_eq_left ha, ih seen]
         by_cases hxa : x = a <;> simp [hxa, ha]
-      · rw [firstRetentionAux, if_neg ha]
+      · rw [firstRetentionAux, ite_eq_right ha]
         simp only [List.mem_cons]
         rw [ih (a :: seen)]
         by_cases hxa : x = a <;> simp [hxa, ha]
@@ -69,7 +69,7 @@ private theorem firstRetentionAux_nodup (seen xs : List ℚ) :
   | cons a xs ih =>
       by_cases ha : a ∈ seen
       · simp [firstRetentionAux, ha, ih]
-      · simp only [firstRetentionAux, if_neg ha]
+      · simp only [firstRetentionAux, ite_eq_right ha]
         apply List.nodup_cons.mpr
         refine ⟨?_, ih (a :: seen)⟩
         intro h
@@ -88,7 +88,7 @@ private theorem firstRetention_eq_self {xs : List ℚ} (h : xs.Nodup) :
     | nil => simp [firstRetentionAux]
     | cons a ys ih =>
         intro seen hn hd
-        rw [firstRetentionAux, if_neg (hd a (by simp))]
+        rw [firstRetentionAux, ite_eq_right (hd a (by simp))]
         congr 1
         apply ih (a :: seen) hn.of_cons
         intro z hz
@@ -366,15 +366,17 @@ def flattenedPrefix (n : ℕ) : List ℚ := (List.range n).flatMap block
 
 private theorem prefix_le {m n : ℕ} (h : m ≤ n) : cumulative m <+: cumulative n := by
   induction n, h using Nat.le_induction with
-  | base => exact List.IsPrefix.refl _
+  | base => exact ⟨[], by simp⟩
   | succ n h ih => exact ih.trans (cumulative_prefix n)
 
 private theorem cumulative_length (n : ℕ) : n ≤ (cumulative n).length := by
-  let xs := (List.range n).map (fun j => (1 : ℚ) / (j + 1))
+  let xs : List ℚ := (List.range n).map (fun j : ℕ => (1 : ℚ) / ((j : ℚ) + 1))
   have hn : xs.Nodup := by
-    apply List.Nodup.map _ (List.nodup_range n)
+    apply List.Nodup.map _ (List.nodup_range)
     intro i j hij
-    have he : (i : ℚ) + 1 = (j : ℚ) + 1 := one_div_inj.mp hij
+    have he : (i : ℚ) + 1 = (j : ℚ) + 1 := by
+      have hh := congrArg (fun z : ℚ => z⁻¹) hij
+      simpa [one_div] using hh
     have : (i : ℚ) = (j : ℚ) := by linarith
     exact_mod_cast this
   have hs : xs ⊆ cumulative n := by
@@ -393,7 +395,8 @@ private theorem cumulative_get_stable {m n i : ℕ} (hmn : m ≤ n)
   rw [← he, List.getElem?_append_left hi]
 
 /-- The infinite ordered fraction enumeration, indexed from zero. -/
-def fraction (i : ℕ) : ℚ := (cumulative (i + 1))[i]!
+def fraction (i : ℕ) : ℚ :=
+  (cumulative (i + 1))[i]'((Nat.lt_succ_self i).trans_le (cumulative_length _))
 
 /-- Reduced numerator and positive denominator records of the same fraction enumeration. -/
 def numerator (i : ℕ) : ℤ := (fraction i).num
@@ -408,7 +411,7 @@ private theorem fraction_agrees {n i : ℕ} (hi : i < (cumulative n).length) :
     · exact cumulative_get_stable h hi
     · exact (cumulative_get_stable h hi').symm
   rw [he]
-  simp only [fraction, List.getElem!_pos hi', List.getElem?_eq_getElem hi']
+  simp only [fraction, List.getElem?_eq_getElem hi']
 
 private theorem flattenedPrefix_read (n i : ℕ) (hi : i < (flattenedPrefix n).length) :
     (flattenedPrefix n)[i]? = some (fraction i) := by
@@ -427,10 +430,12 @@ private theorem occurrence_flat (r : ℚ) (position : ℕ × ℕ) (h : Occurs r 
     fraction (flatIndex position) = r := by
   obtain ⟨n, k⟩ := position
   obtain ⟨hn, hk, hkl, he⟩ := h
+  dsimp only [Prod.fst, Prod.snd] at hn hk hkl he
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
   have hprefix : flattenedPrefix (n + 1) = flattenedPrefix n ++ block n := by
     simp [flattenedPrefix, List.range_succ]
-  have hki : k - 1 < (block n).length := by simpa [generation] using (show k - 1 < (generation (n + 1)).length by omega)
+  simp only [generation] at hkl
+  have hki : k - 1 < (block n).length := by omega
   have hlook : (flattenedPrefix (n + 1))[(flattenedPrefix n).length + (k - 1)]? = some r := by
     rw [hprefix, List.getElem?_append_right (by omega)]
     simpa [generation] using he
@@ -440,6 +445,27 @@ private theorem occurrence_flat (r : ℚ) (position : ℕ × ℕ) (h : Occurs r 
   have hf := flattenedPrefix_read (n + 1) _ hlen
   have : fraction ((flattenedPrefix n).length + (k - 1)) = r := Option.some.inj (hf.symm.trans hlook)
   simpa [flatIndex] using this
+
+private theorem fraction_injective : Function.Injective fraction := by
+  intro i j hij
+  let n := max (i + 1) (j + 1)
+  have hi : i < (cumulative n).length :=
+    (Nat.lt_succ_self i).trans_le ((le_max_left _ _).trans (cumulative_length n))
+  have hj : j < (cumulative n).length :=
+    (Nat.lt_succ_self j).trans_le ((le_max_right _ _).trans (cumulative_length n))
+  apply (cumulative_nodup n).eq_of_getElem?_eq hi
+  rw [fraction_agrees hi, fraction_agrees hj, hij]
+
+private theorem fraction_interval (i : ℕ) : 0 < fraction i ∧ fraction i ≤ 1 := by
+  exact cumulative_interval (i + 1) _ (List.getElem_mem ..)
+
+private theorem flatten_ownership (t : ℕ) :
+    ∃! position : ℕ × ℕ, Occurs (fraction t) position ∧ flatIndex position = t := by
+  obtain ⟨position, hp, hu⟩ := exactly_once (fraction t)
+    (fraction_interval t).1 (fraction_interval t).2
+  refine ⟨position, ⟨hp, fraction_injective (occurrence_flat _ _ hp)⟩, ?_⟩
+  intro other ho
+  exact hu other ho.1
 
 /-- Full source event, with finite-prefix, infinite-order and reduced-coordinate bridges. -/
 theorem result :
@@ -451,10 +477,13 @@ theorem result :
     (∀ n i, i < (flattenedPrefix n).length →
       (flattenedPrefix n)[i]? = some (fraction i)) ∧
     (∀ r position, Occurs r position → fraction (flatIndex position) = r) ∧
+    (∀ t, ∃! position : ℕ × ℕ, Occurs (fraction t) position ∧ flatIndex position = t) ∧
+    Function.Injective fraction ∧
     (∀ i, 0 < fraction i ∧ fraction i ≤ 1 ∧
-      0 < denominator i ∧ fraction i = (numerator i : ℚ) / (denominator i : ℚ)) := by
+      0 < denominator i ∧ (numerator i).natAbs.Coprime (denominator i) ∧
+      fraction i = (numerator i : ℚ) / (denominator i : ℚ)) := by
   refine ⟨?_, cumulative_blocks, cumulative_interval, exactly_once, ?_,
-    flattenedPrefix_read, occurrence_flat, ?_⟩
+    flattenedPrefix_read, occurrence_flat, flatten_ownership, fraction_injective, ?_⟩
   · intro n
     exact source_update (cumulative_nodup n)
   · intro t
@@ -464,11 +493,9 @@ theorem result :
     exact lt_of_lt_of_le (by omega) (cumulative_length _)
   · intro i
     have hi : i < (cumulative (i + 1)).length := lt_of_lt_of_le (by omega) (cumulative_length _)
-    have hm : fraction i ∈ cumulative (i + 1) := by
-      exact List.mem_of_getElem? (by simpa [fraction, List.getElem!_pos hi] using
-        (List.getElem?_eq_getElem hi : (cumulative (i + 1))[i]? = _))
+    have hm : fraction i ∈ cumulative (i + 1) := List.getElem_mem ..
     have hin := cumulative_interval (i + 1) _ hm
-    exact ⟨hin.1, hin.2, (fraction i).den_pos, (Rat.num_div_den _).symm⟩
+    exact ⟨hin.1, hin.2, (fraction i).den_pos, (fraction i).reduced, (Rat.num_div_den _).symm⟩
 
 end D5.S3.Arith.CounterSequences.KimberlingA371279
 
