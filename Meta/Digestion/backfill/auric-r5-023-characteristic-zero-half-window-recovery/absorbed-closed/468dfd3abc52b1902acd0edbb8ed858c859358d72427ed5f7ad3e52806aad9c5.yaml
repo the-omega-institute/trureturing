@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:468dfd3abc52b1902acd0edbb8ed858c859358d72427ed5f7ad3e52806aad9c5
   normalized_sha256: sha256:468dfd3abc52b1902acd0edbb8ed858c859358d72427ed5f7ad3e52806aad9c5
 cas_ref: sha256:468dfd3abc52b1902acd0edbb8ed858c859358d72427ed5f7ad3e52806aad9c5
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/AuricSevenRigidity.original_lemma40_3
+    target_statement_id: sha256:39297dbb9435e47bf2db18c9c435f0de326c0cff32a14ab5f55639b510c7184e
 receipts:
   unresolved_subitems: []
