@@ -68,11 +68,14 @@ theorem compressed_skew (hD : (gramReal D).PosDef)
     rw [map_smul, projection_translation_pow D B hD H hHG hGH]
     congr 2
     simp only [compressed, LinearMap.comp_apply, add_comm b a]
+    rfl
   refine ⟨?_, ?_⟩
   · apply hs.1.subset
     intro j hj hz
     apply hj
-    rw [← term j, hz, map_zero]
+    dsimp only
+    rw [← term j]
+    exact congrArg P hz |>.trans (map_zero P)
   · have h := congrArg P hs.2
     rw [map_finsum P hs.1] at h
     change compressed D B 0 zeroSymm zeroEven a b u n v = _ at h
@@ -110,7 +113,7 @@ theorem raw_skew (hD : (gramReal D).PosDef)
       LatticeCosetCanonicalIntertwiner.shift D B b a + ((k-(j : ℤ) : ℤ) : ℚ) by
         rw [shift_symmetric D B a b]; push_cast; ring,
       field_coeff, VertexOperator.coeff_eq_ncoeff, compressedField_modes]
-    congr 1 <;> omega
+    congr 2 <;> omega
   rw [funext term] at h
   refine ⟨h.1, ?_⟩
   have hc := mode_integer D B a b u v (-k-1)
@@ -213,11 +216,15 @@ def turn (hD : (gramReal D).PosDef)
   map_add' u w := by
     apply LinearMap.ext
     intro v
+    change turnValue D B positive H a b (u+w) v =
+      turnValue D B positive H a b u v + turnValue D B positive H a b w v
     simp only [LinearMap.add_apply, turnValue_eq D B hD H hHG hGH,
       map_add, LinearMap.add_apply, smul_add]
   map_smul' z u := by
     apply LinearMap.ext
     intro v
+    change turnValue D B positive H a b (z • u) v =
+      z • turnValue D B positive H a b u v
     simp only [LinearMap.smul_apply, turnValue_eq D B hD H hHG hGH,
       map_smul, LinearMap.smul_apply, RingHom.id_apply]
     exact smul_comm _ _ _
@@ -288,12 +295,16 @@ theorem turn_coeff (hD : (gramReal D).PosDef)
     congr 1
     have hp := exp_phase D B positive a b (k-(j : ℤ))
     push_cast at hp
+    change _ = Complex.exp ((if positive then (1 : ℂ) else -1) *
+      (Real.pi * Complex.I * (((LatticeCosetCanonicalIntertwiner.shift D B a b + (k : ℚ) : ℚ) : ℂ) - (j : ℂ)))) / (j.factorial : ℂ)
     rw [show ((LatticeCosetCanonicalIntertwiner.shift D B a b + (k : ℚ) : ℚ) : ℂ) - (j : ℂ) =
       (LatticeCosetCanonicalIntertwiner.shift D B a b : ℂ) + ((k : ℂ)-(j : ℂ)) by push_cast; ring, hp]
     ring
   · rw [turn_eq D B hD H hHG hGH]
     change (if positive then Omega D B a b else (Omega D B a b)⁻¹) •
       (intertwiner D B a b u).coeff q v = _
+    change (if positive then Omega D B a b else (Omega D B a b)⁻¹) •
+      (field D B a b u).coeff q v = _
     rw [field_coeff_off D B a b u v q hq, smul_zero]
     symm
     apply finsum_eq_zero_of_forall_eq_zero
@@ -306,6 +317,8 @@ theorem turn_coeff (hD : (gramReal D).PosDef)
       rw [shift_symmetric D B a b]
       push_cast
       linarith
+    change _ • (moduleL D (Matrix.mulVec B (a+b)) H (-1) ^ j)
+      ((field D B b a v).coeff (q-(j : ℚ)) u) = 0
     rw [field_coeff_off D B b a v u _ hj, map_zero, smul_zero]
 
 /-- Explicit support witnesses for the literal convolution, not just a
@@ -324,7 +337,9 @@ theorem turn_terms_support (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
   intro k j hj
   apply Finset.mem_range.mpr
   by_contra hn
-  exact hj (by rw [hN k j (by omega), map_zero, smul_zero])
+  apply hj
+  dsimp only
+  rw [hN k j (by omega), map_zero, smul_zero]
 
 theorem turn_terms_finite (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (positive : Bool) (a b : Fin e → ℤ) (u v : Carrier D) (q : ℚ) :
@@ -376,7 +391,8 @@ theorem turn_ground (hD : (gramReal D).PosDef)
     (turn D B hD H hHG hGH positive a b (vacuum D)).coeff (LatticeCosetCanonicalIntertwiner.shift D B a b) (vacuum D) =
       (if positive then Omega D B a b else (Omega D B a b)⁻¹) • vacuum D := by
   rw [turn_eq D B hD H hHG hGH]
-  change _ • (intertwiner D B a b (vacuum D)).coeff _ (vacuum D) = _
+  change (if positive then Omega D B a b else (Omega D B a b)⁻¹) •
+    (intertwiner D B a b (vacuum D)).coeff _ (vacuum D) = _
   rw [ground_coefficient]
 
 /-- Only after full equality and Lawful status, use the original scalar
@@ -392,7 +408,7 @@ theorem scalarEquiv_turn (hD : (gramReal D).PosDef)
         turn_lawful D hD H hHG hGH positive a b⟩ =
       (if positive then Omega D (1 : Matrix _ _ ℤ) a b else
         (Omega D (1 : Matrix _ _ ℤ) a b)⁻¹) := by
-  let z := if positive then Omega D (1 : Matrix _ _ ℤ) a b else
+  let z : ℂ := if positive then Omega D (1 : Matrix _ _ ℤ) a b else
     (Omega D (1 : Matrix _ _ ℤ) a b)⁻¹
   have he : (⟨turn D (1 : Matrix _ _ ℤ) hD H hHG hGH positive a b,
         turn_lawful D hD H hHG hGH positive a b⟩ :

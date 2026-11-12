@@ -13,7 +13,7 @@ set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
 
 noncomputable section
-open scoped BigOperators TensorProduct DirectSum VertexOperator
+open scoped BigOperators TensorProduct DirectSum VertexOperator Matrix
 
 namespace D5.S3.VertexAlgebra.Modules.ActualWeakModuleConformalMonodromy
 
@@ -72,6 +72,7 @@ theorem degree_class (hD : (gramReal D).PosDef) (c : Discriminant D) (a : Label 
     simp only [z, Int.cast_add, Int.cast_natCast]
     ring
   rw [hw, AddCircle.coe_add, qmod_integer, add_zero]
+  rfl
 
 /-- An actual diagonal map on FINITELY SUPPORTED, vector-valued coefficients.
 The multiplicity module is arbitrary; no basis of it is selected. -/
@@ -121,6 +122,7 @@ theorem L0_classified_basis (c : Discriminant D) (a : Label D) (w : Multiplicity
       (inverseGram hD) (inverseGram_left hD) (inverseGram_right hD)
       (dualVector D (representative D c)) (dualVector_duality hD _),
     ← TensorProduct.smul_tmul', map_smul, map_smul]
+  rfl
 
 /-- Coefficients of actual L0 on arbitrary original vectors and multiplicities. -/
 theorem L0_coeff (x : X) (c : Discriminant D) (a : Label D) :
@@ -163,7 +165,7 @@ theorem L0_eigen_iff (e : ℚ) (x : X) :
         {a : Label D | degree c a = e} := by
       ext a
       exact Rat.cast_inj
-    simpa only [he] using h
+    simpa only [he, tensorCoeff] using h
   have hmodel := classification_inverse J hD (omega D (inverseGram hD)) 1 x
   simp only [canonicalModule, directSumModule_mode, tensorModule_mode] at hmodel
   change (classificationEquiv J hD).symm (L0 J hD x) =
@@ -176,7 +178,7 @@ theorem L0_eigen_iff (e : ℚ) (x : X) :
     apply (hs c _).mp
     have h := congrArg (fun y : X => ((classificationEquiv J hD).symm y) c) hx
     rw [hmodel, DirectSum.lmap_apply] at h
-    simpa only [map_smul, DFinsupp.smul_apply] using h
+    simpa only [map_smul, DirectSum.smul_apply] using h
   · intro hx
     apply (classificationEquiv J hD).symm.injective
     rw [hmodel, map_smul]
@@ -191,27 +193,22 @@ private theorem tensorCoeff_single (c : Discriminant D) (a : Label D)
     (tensorCoeff J c).symm (Finsupp.single a w) = carrierBasis D a ⊗ₜ[ℂ] w := by
   apply (tensorCoeff J c).injective
   rw [LinearEquiv.apply_symm_apply]
-  ext b
-  simp [tensorCoeff, D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv,
-    TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
+  letI : DecidableEq (Label D) := Classical.typeDecidableEq _
+  unfold tensorCoeff D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv
+  apply Finsupp.ext
+  intro b
+  rw [TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply, Module.Basis.repr_self]
+  by_cases h : a = b
+  · subst b; simp
+  · simp [Finsupp.single_apply, h, Ne.symm h]
 
 /-- Explicit finite algebraic expansion; no basis of a multiplicity space occurs. -/
 theorem tensor_expansion (c : Discriminant D) (z : Sector J c) :
     z = ∑ a ∈ (tensorCoeff J c z).support,
       carrierBasis D a ⊗ₜ[ℂ] tensorCoeff J c z a := by
   let f := tensorCoeff J c z
-  have hf : (∑ a ∈ f.support, Finsupp.single a (f a)) = f := by
-    ext b
-    change (Finsupp.lapply b : (Label D →₀ Multiplicity J c) →ₗ[ℂ] Multiplicity J c)
-      (∑ a ∈ f.support, Finsupp.single a (f a)) = f b
-    rw [map_sum]
-    change (∑ a ∈ f.support, Finsupp.single a (f a) b) = f b
-    rw [Finset.sum_eq_single b]
-    · simp
-    · intro a ha hab
-      simp [Finsupp.single_apply, hab]
-    · intro hb
-      simp [Finsupp.notMem_support_iff.mp hb]
+  have hf : (∑ a ∈ f.support, Finsupp.single a (f a)) = f := Finsupp.sum_single f
+
   calc
     z = (tensorCoeff J c).symm f := ((tensorCoeff J c).symm_apply_apply z).symm
     _ = (tensorCoeff J c).symm (∑ a ∈ f.support, Finsupp.single a (f a)) := by rw [hf]
@@ -280,7 +277,7 @@ theorem spectralRotation_eq_theta :
     intro c
     apply LinearMap.ext
     intro z
-    simp only [DirectSum.lmap_lof, modelScale, LinearMap.smul_apply,
+    simp only [LinearMap.comp_apply, DirectSum.lmap_lof, modelScale, LinearMap.smul_apply,
       LinearMap.id_apply, sectorRotation_eq J hD]
   apply LinearMap.ext
   intro x

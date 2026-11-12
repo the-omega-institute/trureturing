@@ -48,7 +48,7 @@ theorem thetaScalar_ne_zero (c : Discriminant D) : thetaScalar c ≠ 0 := by
 theorem quadraticClass_zero (hD : (gramReal D).PosDef) :
     quadraticClass D 0 = 0 := by
   have h := (discriminant_quadratic D hD).2.1 (0 : Discriminant D) (0 : ℤ)
-  simpa only [zero_smul, zero_pow (by omega), zero_smul] using h
+  simpa using h
 
 /-- In particular a nonzero representative beta_0 = G n_0 contributes unit phase. -/
 theorem thetaScalar_zero (hD : (gramReal D).PosDef) :
@@ -115,8 +115,10 @@ private theorem modelScale_cancel (s t : Discriminant D → ℂ)
   | zero => simp
   | add x y hx hy => simp only [map_add, hx, hy]
   | of c z =>
-    simp only [DirectSum.lof_eq_of, modelScale, DirectSum.lmap_lof,
+    rw [← DirectSum.lof_eq_of ℂ (Discriminant D) (Sector J) c z]
+    simp only [modelScale, DirectSum.lmap_lof,
       LinearMap.smul_apply, LinearMap.id_apply, map_smul, smul_smul, h c, one_smul]
+    rw [mul_comm, h c, one_smul]
 
 /-- Correct conjugation: E : Model J -> X, hence E . scale . E.symm. -/
 def conjugateScale (hD : (gramReal D).PosDef) (s : Discriminant D → ℂ) : X →ₗ[ℂ] X :=
@@ -246,7 +248,9 @@ theorem classification_product_fiber (e : Discriminant D)
     | add z z' hz hz' =>
       simpa only [map_add, TensorProduct.tmul_add] using congrArg₂ (· + ·) hz hz'
     | of i z =>
-      rw [← DirectSum.lof_eq_of, nu_lof, DirectSum.toModule_lof]
+      change _ = _
+      rw [← DirectSum.lof_eq_of ℂ (Fiber (D := D) e)
+        (fun i => PairMultiplicity A B i.val) i z, nu_lof, DirectSum.toModule_lof]
       rcases i with ⟨⟨c,d⟩,hi⟩
       dsimp at hi
       subst e
@@ -337,6 +341,7 @@ theorem balancing :
     have ht : tag A B c d (thetaScalar c • x) (thetaScalar d • y) v =
         (thetaScalar c * thetaScalar d) • tag A B c d x y v := by
       simp only [map_smul, LinearMap.smul_apply, smul_smul]
+      rw [mul_comm]
     rw [ht, map_smul, map_smul, ActualWeakModuleBraiding.braid_tag, map_smul,
       ActualWeakModuleBraiding.braid_tag]
     simp only [smul_smul]

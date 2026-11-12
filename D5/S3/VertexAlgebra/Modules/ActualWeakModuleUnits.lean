@@ -72,6 +72,7 @@ def eta0 : Multiplicity (I D) 0 := by
   rw [hc]
   have hn : bilinear D (unitCharge D i) n = representative D 0 i := by
     rw [← gram_mulVec_unit, representative_zero D hD]
+    rfl
   simp [shiftedCurrentPolynomial, hn, Finsupp.smul_single]
 
 @[simp] theorem eta0_val : (eta0 hD).val.val =
@@ -83,8 +84,9 @@ def etaCoefficient : Multiplicity (I D) 0 →ₗ[ℂ] ℂ :=
     ((Omega (I D)).subtype.comp (jointWeight (I D) (representative D 0)).subtype)
 
 @[simp] theorem etaCoefficient_eta0 : etaCoefficient hD (eta0 hD) = 1 := by
-  simp [etaCoefficient, coordinate, eta0_val]
+  simp [etaCoefficient, ActualWeakModuleScalarProbes.coordinate, eta0_val]
 
+include hD in
 /-- Wrong classes vanish by the arbitrary-W exhaustion theorem at W=ℂ. -/
 theorem unit_multiplicity_wrong (c : Discriminant D) (hc : c ≠ 0)
     (w : Multiplicity (I D) c) : w = 0 := by
@@ -132,10 +134,14 @@ def unitMultiplicityEquiv : Multiplicity (I D) 0 ≃ₗ[ℂ] ℂ where
   toLinearMap := etaCoefficient hD
   invFun t := t • eta0 hD
   left_inv := etaCoefficient_inverse hD
-  right_inv t := by simp
+  right_inv t := by
+    change etaCoefficient hD (t • eta0 hD) = t
+    rw [map_smul, etaCoefficient_eta0]
+    simp
 
 private theorem zero_shift : shiftedCharge D 0 (zeroCarry D hD) = representative D 0 := by
   simp only [shiftedCharge, zero_add, representative_zero D hD]
+  rfl
 
 /-- Accepted vacuum cyclicity determines the ORIGINAL classification inclusion. -/
 theorem unit_classified (v : Carrier D) :
@@ -143,14 +149,14 @@ theorem unit_classified (v : Carrier D) :
   have he : classified hD (I D) 0 (eta0 hD) = transport D 0 (zeroCarry D hD) := by
     apply modeHom_ext_of_vacuum D (representative D 0)
       (fun a m => mode (I D) a m)
-    · exact classified_modes hD (I D) 0 (eta0 hD)
+    · intro a m x
+      exact classified_modes hD (I D) 0 (eta0 hD) a x m
     · intro a m x
       simpa only [zero_shift hD, sectorModule_mode] using
         transport_all_modes D 0 (zeroCarry D hD) a x m
-    · rw [classified, LinearMap.comp_apply, LinearMap.comp_apply,
-        LinearMap.flip_apply, TensorProduct.mk_apply, classification_normalization,
-        transport_vacuum]
-      rfl
+    · have hh := classification_normalization (I D) hD 0 (eta0 hD)
+      change classified hD (I D) 0 (eta0 hD) (vacuum D) = (eta0 hD).val.val at hh
+      exact hh.trans (by rw [eta0_val, transport_vacuum])
   exact LinearMap.congr_fun he v
 
 /-- All original unit vectors, including the actual (unnormalized) vacuum. -/
@@ -271,7 +277,7 @@ private theorem left_ext {Z : Type v} [AddCommGroup Z] [Module ℂ Z]
         (v ⊗ₜ[ℂ] (eta0 hD ⊗ₜ[ℂ] x)))) : f = g := by
   apply DirectSum.linearMap_ext
   rintro ⟨c,d⟩
-  apply TensorProduct.ext
+  apply TensorProduct.ext'
   intro v w
   induction w using TensorProduct.inductionOn with
   | add w w' hw hw' => simp only [TensorProduct.tmul_add, map_add, hw, hw']
@@ -279,7 +285,7 @@ private theorem left_ext {Z : Type v} [AddCommGroup Z] [Module ℂ Z]
     by_cases hc : c = 0
     · subst c
       rw [← etaCoefficient_inverse hD n]
-      simpa only [← TensorProduct.smul_tmul', TensorProduct.tmul_smul, map_smul]
+      simpa only [← TensorProduct.smul_tmul', TensorProduct.tmul_smul, map_smul, LinearMap.comp_apply]
         using congrArg (fun z : Z => etaCoefficient hD n • z) (he d v x)
     · rw [unit_multiplicity_wrong hD c hc n]
       simp
@@ -292,7 +298,7 @@ private theorem right_ext {Z : Type v} [AddCommGroup Z] [Module ℂ Z]
         (v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)))) : f = g := by
   apply DirectSum.linearMap_ext
   rintro ⟨c,d⟩
-  apply TensorProduct.ext
+  apply TensorProduct.ext'
   intro v w
   induction w using TensorProduct.inductionOn with
   | add w w' hw hw' => simp only [TensorProduct.tmul_add, map_add, hw, hw']
@@ -300,7 +306,7 @@ private theorem right_ext {Z : Type v} [AddCommGroup Z] [Module ℂ Z]
     by_cases hd : d = 0
     · subst d
       rw [← etaCoefficient_inverse hD n]
-      simpa only [TensorProduct.tmul_smul, map_smul]
+      simpa only [TensorProduct.tmul_smul, map_smul, LinearMap.comp_apply]
         using congrArg (fun z : Z => etaCoefficient hD n • z) (he c v x)
     · rw [unit_multiplicity_wrong hD d hd n]
       simp
@@ -309,50 +315,62 @@ private theorem leftUnmodel_leftModel :
     (leftUnmodel hD A).comp (leftModel hD A) = LinearMap.id := by
   apply left_ext hD A
   intro c v x
-  simp only [LinearMap.comp_apply, LinearMap.id_apply, leftModel_elementary,
-    leftUnmodel_elementary]
-  congr 2
-  exact (transportLinearEquiv D _ _).symm_apply_apply v
+  simp only [LinearMap.comp_apply, LinearMap.id_apply, leftModel_elementary hD A,
+    leftUnmodel_elementary hD A]
+  change DirectSum.lof ℂ _ (PairSector (I D) A) (0,c)
+    (transportInverse D (representative D c) (zeroCarry D hD)
+      (transport D (representative D c) (zeroCarry D hD) v) ⊗ₜ[ℂ] (eta0 hD ⊗ₜ[ℂ] x)) = _
+  rw [show transportInverse D (representative D c) (zeroCarry D hD)
+    (transport D (representative D c) (zeroCarry D hD) v) = v from
+      (transportLinearEquiv D (representative D c) (zeroCarry D hD)).symm_apply_apply v]
 
 private theorem rightUnmodel_rightModel :
     (rightUnmodel hD A).comp (rightModel hD A) = LinearMap.id := by
   apply right_ext hD A
   intro c v x
-  simp only [LinearMap.comp_apply, LinearMap.id_apply, rightModel_elementary,
-    map_smul, rightUnmodel_elementary, smul_smul]
+  simp only [LinearMap.comp_apply, LinearMap.id_apply, rightModel_elementary hD A,
+    map_smul, rightUnmodel_elementary hD A, smul_smul]
   rw [mul_inv_cancel₀ (unitCharacter_nonzero D hD c), one_smul]
-  congr 2
-  exact (transportLinearEquiv D _ _).symm_apply_apply v
+  rw [show transportInverse D (representative D c) (zeroCarry D hD)
+    (transport D (representative D c) (zeroCarry D hD) v) = v from
+      (transportLinearEquiv D (representative D c) (zeroCarry D hD)).symm_apply_apply v]
 
 private theorem leftModel_leftUnmodel :
     (leftModel hD A).comp (leftUnmodel hD A) = LinearMap.id := by
   apply DirectSum.linearMap_ext
   intro c
-  apply TensorProduct.ext
+  apply TensorProduct.ext'
   intro v x
-  simp only [LinearMap.comp_apply, LinearMap.id_apply, leftUnmodel_elementary,
-    leftModel_elementary]
-  congr 2
-  exact (transportLinearEquiv D _ _).apply_symm_apply v
+  simp only [LinearMap.comp_apply, LinearMap.id_apply, leftUnmodel_elementary hD A,
+    leftModel_elementary hD A]
+  change elementary A c
+    (transport D (representative D c) (zeroCarry D hD)
+      (transportInverse D (representative D c) (zeroCarry D hD) v)) x = _
+  rw [show transport D (representative D c) (zeroCarry D hD)
+    (transportInverse D (representative D c) (zeroCarry D hD) v) = v from
+      (transportLinearEquiv D (representative D c) (zeroCarry D hD)).apply_symm_apply v]
 
 private theorem rightModel_rightUnmodel :
     (rightModel hD A).comp (rightUnmodel hD A) = LinearMap.id := by
   apply DirectSum.linearMap_ext
   intro c
-  apply TensorProduct.ext
+  apply TensorProduct.ext'
   intro v x
-  simp only [LinearMap.comp_apply, LinearMap.id_apply, rightUnmodel_elementary,
-    map_smul, rightModel_elementary, smul_smul]
+  simp only [LinearMap.comp_apply, LinearMap.id_apply, rightUnmodel_elementary hD A,
+    map_smul, rightModel_elementary hD A, smul_smul]
   rw [inv_mul_cancel₀ (unitCharacter_nonzero D hD c), one_smul]
-  congr 2
-  exact (transportLinearEquiv D _ _).apply_symm_apply v
+  rw [show transport D (representative D c) (zeroCarry D hD)
+    (transportInverse D (representative D c) (zeroCarry D hD) v) = v from
+      (transportLinearEquiv D (representative D c) (zeroCarry D hD)).apply_symm_apply v]
 
 /-- Genuine units, with explicit functions on every original vector. -/
 def leftUnit : P (I D) A ≃ₗ[ℂ] X where
   toLinearMap := (classificationEquiv A hD).toLinearMap.comp (leftModel hD A)
   invFun x := leftUnmodel hD A ((classificationEquiv A hD).symm x)
   left_inv p := by
-    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
+    change leftUnmodel hD A ((classificationEquiv A hD).symm
+      (classificationEquiv A hD (leftModel hD A p))) = p
+    rw [LinearEquiv.symm_apply_apply]
     exact LinearMap.congr_fun (leftUnmodel_leftModel hD A) p
   right_inv x := by
     change classificationEquiv A hD ((leftModel hD A).comp (leftUnmodel hD A)
@@ -363,7 +381,9 @@ def rightUnit : P A (I D) ≃ₗ[ℂ] X where
   toLinearMap := (classificationEquiv A hD).toLinearMap.comp (rightModel hD A)
   invFun x := rightUnmodel hD A ((classificationEquiv A hD).symm x)
   left_inv p := by
-    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
+    change rightUnmodel hD A ((classificationEquiv A hD).symm
+      (classificationEquiv A hD (rightModel hD A p))) = p
+    rw [LinearEquiv.symm_apply_apply]
     exact LinearMap.congr_fun (rightUnmodel_rightModel hD A) p
   right_inv x := by
     change classificationEquiv A hD ((rightModel hD A).comp (rightUnmodel hD A)
@@ -413,11 +433,14 @@ private theorem left_shift (c : Discriminant D) :
     representative D 0 + representative D c =
       shiftedCharge D (representative D c) (zeroCarry D hD) := by
   rw [representative_zero D hD, shiftedCharge]
+  change gramMap D (zeroCarry D hD) + representative D c =
+    representative D c + gramMap D (zeroCarry D hD)
   abel
 private theorem right_shift (c : Discriminant D) :
     representative D c + representative D 0 =
       shiftedCharge D (representative D c) (zeroCarry D hD) := by
   rw [representative_zero D hD, shiftedCharge]
+  rfl
 
 theorem leftUnit_modes (a : Carrier D) (m : ℤ) (p : P (I D) A) :
     leftUnit hD A (mode (targetModule (I D) A) a m p) =
@@ -429,8 +452,10 @@ theorem leftUnit_modes (a : Carrier D) (m : ℤ) (p : P (I D) A) :
     simp only [LinearMap.comp_apply]
     rw [targetModule, directSumModule_mode, DirectSum.lmap_lof,
       tensorModule_mode, TensorProduct.map_tmul, LinearMap.id_apply,
-      sectorModule_mode, leftUnit_elementary, leftUnit_elementary,
-      left_shift, transport_all_modes]
+      sectorModule_mode]
+    change leftUnit hD A _ = mode A a m (leftUnit hD A _)
+    rw [leftUnit_elementary hD A, leftUnit_elementary hD A,
+      left_shift hD, transport_all_modes]
     exact classified_modes hD A c x a _ m
   exact LinearMap.congr_fun he p
 
@@ -444,8 +469,10 @@ theorem rightUnit_modes (a : Carrier D) (m : ℤ) (p : P A (I D)) :
     simp only [LinearMap.comp_apply]
     rw [targetModule, directSumModule_mode, DirectSum.lmap_lof,
       tensorModule_mode, TensorProduct.map_tmul, LinearMap.id_apply,
-      sectorModule_mode, rightUnit_elementary, rightUnit_elementary,
-      right_shift, transport_all_modes, map_smul]
+      sectorModule_mode]
+    change rightUnit hD A _ = mode A a m (rightUnit hD A _)
+    rw [rightUnit_elementary hD A, rightUnit_elementary hD A,
+      right_shift hD, transport_all_modes, map_smul]
     congr 1
     exact classified_modes hD A c x a _ m
   exact LinearMap.congr_fun he p
@@ -493,11 +520,20 @@ private theorem leftUnit_j0 (c : Discriminant D)
     have hbase : leftUnit hD A
         (ActualWeakModuleProductMultiplicity.j (I D) A hD 0 c
           (eta0 hD ⊗ₜ[ℂ] x)).val.val = x.val.val := by
-      simpa only [classified, LinearMap.comp_apply, LinearMap.flip_apply,
-        TensorProduct.mk_apply, classification_normalization] using hh
+      calc
+        _ = leftUnit hD A (classificationEquiv (targetModule (I D) A) hD
+          (DirectSum.lof ℂ _ _ (0+c) (vacuum D ⊗ₜ[ℂ]
+            ActualWeakModuleProductMultiplicity.j (I D) A hD 0 c
+              (eta0 hD ⊗ₜ[ℂ] x)))) :=
+          congrArg (leftUnit hD A)
+            (classification_normalization (targetModule (I D) A) hD (0+c) _).symm
+        _ = classified hD A c x (vacuum D) := hh
+        _ = x.val.val := classification_normalization A hD c x
+
     rw [← etaCoefficient_inverse hD n]
-    simpa [leftContraction, ← TensorProduct.smul_tmul', Submodule.coe_smul,
-      map_smul] using congrArg (fun z : X => etaCoefficient hD n • z) hbase
+    simpa only [← TensorProduct.smul_tmul', map_smul, Submodule.coe_smul,
+      leftContraction, LinearMap.comp_apply, TensorProduct.map_tmul,
+      LinearMap.id_apply, TensorProduct.lid_tmul, LinearEquiv.coe_coe, etaCoefficient_eta0, one_smul] using congrArg (fun z : X => etaCoefficient hD n • z) hbase
 
 private theorem rightUnit_j0 (c : Discriminant D)
     (z : Multiplicity A c ⊗[ℂ] Multiplicity (I D) 0) :
@@ -510,11 +546,23 @@ private theorem rightUnit_j0 (c : Discriminant D)
     have hbase : rightUnit hD A
         (ActualWeakModuleProductMultiplicity.j A (I D) hD c 0
           (x ⊗ₜ[ℂ] eta0 hD)).val.val = unitCharacter D hD c • x.val.val := by
-      simpa only [classified, LinearMap.comp_apply, LinearMap.flip_apply,
-        TensorProduct.mk_apply, classification_normalization] using hh
+      calc
+        _ = rightUnit hD A (classificationEquiv (targetModule A (I D)) hD
+          (DirectSum.lof ℂ _ _ (c+0) (vacuum D ⊗ₜ[ℂ]
+            ActualWeakModuleProductMultiplicity.j A (I D) hD c 0
+              (x ⊗ₜ[ℂ] eta0 hD)))) :=
+          congrArg (rightUnit hD A)
+            (classification_normalization (targetModule A (I D)) hD (c+0) _).symm
+        _ = unitCharacter D hD c • classified hD A c x (vacuum D) := hh
+        _ = unitCharacter D hD c • x.val.val :=
+          congrArg (fun z : X => unitCharacter D hD c • z)
+            (classification_normalization A hD c x)
+
     rw [← etaCoefficient_inverse hD n]
-    simpa [rightContraction, TensorProduct.tmul_smul, Submodule.coe_smul,
-      map_smul, smul_smul, mul_comm] using
+    simpa only [TensorProduct.tmul_smul, map_smul, Submodule.coe_smul,
+      rightContraction, LinearMap.comp_apply, TensorProduct.map_tmul,
+      LinearMap.id_apply, TensorProduct.rid_tmul, LinearEquiv.coe_coe,
+      smul_smul, mul_comm, etaCoefficient_eta0, mul_one, one_mul] using
         congrArg (fun z : X => etaCoefficient hD n • z) hbase
 
 /-- Actual ground readback through the supplier mu, with nu_mu exhausting the
@@ -533,15 +581,16 @@ theorem leftUnit_ground_mu (e : Discriminant D)
     induction z using DirectSum.induction_on with
     | zero => simp
     | add z z' hz hz' =>
-      simp only [map_add, Submodule.coe_add, DFinsupp.add_apply, hz, hz']
+      simp only [map_add, Submodule.coe_add, DirectSum.add_apply, hz, hz']
     | of i z =>
       rcases i with ⟨⟨c,d⟩,hi⟩
       by_cases hc : c = 0
       · subst c
         have hd : d = e := by simpa only [zero_add] using hi
         subst d
-        simpa [ActualWeakModuleProductMultiplicity.nu_lof,
-          ActualWeakModuleProductMultiplicity.jAt, DirectSum.lof_eq_of] using leftUnit_j0 hD A e z
+        rw [← DirectSum.lof_eq_of ℂ, ActualWeakModuleProductMultiplicity.nu_lof,
+          ActualWeakModuleProductMultiplicity.jAt_val]
+        simpa only [ActualWeakModuleProductMultiplicity.j_val, DirectSum.lof_eq_of, DirectSum.of_eq_same] using leftUnit_j0 hD A e z
       · have hz : z = 0 := by
           induction z using TensorProduct.inductionOn with
           | tmul n x => rw [unit_multiplicity_wrong hD c hc n]; simp
@@ -568,15 +617,16 @@ theorem rightUnit_ground_mu (e : Discriminant D)
     induction z using DirectSum.induction_on with
     | zero => simp
     | add z z' hz hz' =>
-      simp only [map_add, Submodule.coe_add, DFinsupp.add_apply, hz, hz', smul_add]
+      simp only [map_add, Submodule.coe_add, DirectSum.add_apply, hz, hz', smul_add]
     | of i z =>
       rcases i with ⟨⟨c,d⟩,hi⟩
       by_cases hd : d = 0
       · subst d
         have hc : c = e := by simpa only [add_zero] using hi
         subst c
-        simpa [ActualWeakModuleProductMultiplicity.nu_lof,
-          ActualWeakModuleProductMultiplicity.jAt, DirectSum.lof_eq_of] using rightUnit_j0 hD A e z
+        rw [← DirectSum.lof_eq_of ℂ, ActualWeakModuleProductMultiplicity.nu_lof,
+          ActualWeakModuleProductMultiplicity.jAt_val]
+        simpa only [ActualWeakModuleProductMultiplicity.j_val, DirectSum.lof_eq_of, DirectSum.of_eq_same] using rightUnit_j0 hD A e z
       · have hz : z = 0 := by
           induction z using TensorProduct.inductionOn with
           | tmul x n => rw [unit_multiplicity_wrong hD d hd n]; simp
@@ -603,6 +653,7 @@ theorem leftUnit_inverse_finite (x : X) :
   change leftUnmodel hD A s = _
   conv_lhs => rw [← hs]
   simp only [map_sum, leftUnmodel, DirectSum.toModule_lof, LinearMap.comp_apply]
+  rfl
 
 theorem rightUnit_inverse_finite (x : X) :
     let s := (classificationEquiv A hD).symm x
@@ -619,6 +670,7 @@ theorem rightUnit_inverse_finite (x : X) :
   conv_lhs => rw [← hs]
   simp only [map_sum, rightUnmodel, DirectSum.toModule_lof, LinearMap.comp_apply,
     LinearMap.smul_apply]
+  rfl
 
 private theorem left_two_leg (c : Discriminant D) (u v : Carrier D) (q : ℚ) :
     transport D (representative D c) (zeroCarry D hD)
@@ -632,7 +684,7 @@ private theorem left_two_leg (c : Discriminant D) (u v : Carrier D) (q : ℚ) :
       (transportInverse D 0 (zeroCarry D hD) u) = u :=
     (transportLinearEquiv D _ _).apply_symm_apply u
   simpa [LatticeCosetCanonicalUnits.C, hi, shiftedCharge, representative_zero D hD,
-    chi, paritySign] using hh.symm
+    chi, paritySign, gramMap] using hh.symm
 
 private theorem right_two_leg (c : Discriminant D) (u v : Carrier D) (q : ℚ) :
     unitCharacter D hD c • transport D (representative D c) (zeroCarry D hD)
@@ -646,7 +698,7 @@ private theorem right_two_leg (c : Discriminant D) (u v : Carrier D) (q : ℚ) :
       (transportInverse D 0 (zeroCarry D hD) v) = v :=
     (transportLinearEquiv D _ _).apply_symm_apply v
   simpa [LatticeCosetCanonicalUnits.C, hi, shiftedCharge, representative_zero D hD,
-    unitCharacter] using hh.symm
+    unitCharacter, gramMap] using hh.symm
 
 /-- The actual raw rational coefficient, with the full unnormalized unit slot. -/
 theorem leftUnit_U_elementary (c : Discriminant D) (u v : Carrier D)
@@ -699,7 +751,7 @@ theorem leftUnit_U_integer (v : Carrier D) (x : X) (k : ℤ) :
     (fun x => leftUnit hD A ((U (I D) A hD v).coeff (k : ℚ) x) = mode A v (-k-1) x)
     (by simp) (fun x y hx hy => by simpa only [map_add, Pi.add_apply, LinearMap.add_apply, hx,hy]) ?_ x
   intro c u n
-  rw [leftUnit_U_elementary, LatticeCosetCanonicalUnits.canonical_zero_left_integer]
+  rw [leftUnit_U_elementary, LatticeCosetCanonicalUnits.canonical_zero_left_integer D hD]
   exact classified_modes hD A c n v u (-k-1)
 
 theorem leftUnit_U_off (v : Carrier D) (x : X) (q : ℚ)
@@ -748,7 +800,7 @@ theorem rightUnit_U_vacuum_nat (x : X) (r : ℕ) :
     (by simp) (fun x y hx hy => by
       simp only [map_add, Pi.add_apply, LinearMap.add_apply, hx, hy, smul_add]) ?_ x
   intro c u n
-  rw [rightUnit_U_elementary, LatticeCosetCanonicalUnits.canonical_right_creation_nat,
+  rw [rightUnit_U_elementary, LatticeCosetCanonicalUnits.canonical_right_creation_nat D hD,
     map_smul, classified_translation_pow]
 
 theorem rightUnit_U_vacuum_support (x : X) (q : ℚ)
@@ -782,10 +834,12 @@ private def rightCoefficient (q : ℚ) (v : Carrier D) : X →ₗ[ℂ] X where
   map_add' x y := by
     change rightUnit hD A (((HahnModule.of ℂ).symm (U A (I D) hD (x+y) v)).coeff q) = _
     simp only [map_add, LinearMap.add_apply, HahnModule.of_symm_add, HahnSeries.coeff_add]
+    rfl
   map_smul' a x := by
     change rightUnit hD A (((HahnModule.of ℂ).symm (U A (I D) hD (a • x) v)).coeff q) = _
     simp only [map_smul, LinearMap.smul_apply, HahnModule.of_symm_smul,
       HahnSeries.coeff_smul, RingHom.id_apply]
+    rfl
 
 private theorem rightCoefficient_elementary (c : Discriminant D) (u v : Carrier D)
     (n : Multiplicity A c) (k : ℤ) (N : ℕ)
@@ -798,7 +852,9 @@ private theorem rightCoefficient_elementary (c : Discriminant D) (u v : Carrier 
     map_sum, reversedCoefficient_apply]
   apply Finset.sum_congr rfl
   intro i hi
-  rw [map_smul, classified_translation_pow, classified_modes]
+  rw [map_smul, classified_translation_pow]
+  exact congrArg (fun z : X => (((-1 : ℂ)^(k-(i : ℤ))) / (i.factorial : ℂ)) •
+    ((translation A hD)^i) z) (classified_modes hD A c n v u ((i : ℤ)-k-1))
 
 /-- A finite classified presentation supplies a bound; addition takes maxima.
     No cutoff over translated/intermediate states is used. -/

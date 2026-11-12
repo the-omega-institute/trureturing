@@ -2,6 +2,7 @@
 import D5.S3.VertexAlgebra.Modules.ActualWeakModuleProductMultiplicity
 
 set_option autoImplicit false
+set_option maxHeartbeats 1600000
 set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
@@ -49,7 +50,8 @@ private theorem vacuum_mem (c : Discriminant D) (w : W c) :
         DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] W d) c
           (Finsupp.single 0
             (shiftedCurrentPolynomial D (representative D c) 1 i 0 m 1) ⊗ₜ[ℂ] w) := by
-    change mode (directSumModule _) _ _ _ = _
+    change (mode (directSumModule (fun d => tensorModule
+      (sectorModule D (representative D d)) (W d))) (currentState D i) m) z = _
     rw [directSumModule_mode, DirectSum.lmap_lof, tensorModule_mode,
       TensorProduct.map_tmul, LinearMap.id_apply]
     rw [sectorModule_mode, currentState_single, action_current_coefficients]
@@ -61,7 +63,8 @@ private theorem vacuum_mem (c : Discriminant D) (w : W c) :
       show (r : ℤ)+1 ≠ 0 by omega]
   · intro i
     rw [hc]
-    simp [shiftedCurrentPolynomial, z, ← TensorProduct.smul_tmul']
+    simp [shiftedCurrentPolynomial, z, LatticeGeneratingFieldLocality.bilinear,
+      ← TensorProduct.smul_tmul', ← Finsupp.smul_single]
 
 /-- No spectrum hypothesis: this is a vector in the actual nested joint weight. -/
 def iota (c : Discriminant D) : W c →ₗ[ℂ] Multiplicity (realization W) c where
@@ -73,7 +76,7 @@ def iota (c : Discriminant D) : W c →ₗ[ℂ] Multiplicity (realization W) c w
     simp only [TensorProduct.tmul_add, map_add, Submodule.coe_add]
   map_smul' a x := by
     apply Subtype.ext; apply Subtype.ext
-    simp only [TensorProduct.tmul_smul, map_smul, Submodule.coe_smul]
+    simp only [TensorProduct.tmul_smul, map_smul, Submodule.coe_smul, RingHom.id_apply]
 
 @[simp] theorem iota_val (c : Discriminant D) (w : W c) :
     (iota W c w).val.val = DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] W d) c
@@ -83,18 +86,18 @@ def iota (c : Discriminant D) : W c →ₗ[ℂ] Multiplicity (realization W) c w
 def kappa (c : Discriminant D) : Multiplicity (realization W) c →ₗ[ℂ] W c where
   toFun z := tensorCoordinates (z.val.val c) (0,0)
   map_add' x y := by
-    simp only [Submodule.coe_add, DFinsupp.add_apply, map_add, Finsupp.add_apply]
+    simp only [Submodule.coe_add, DirectSum.add_apply, map_add, Finsupp.add_apply]
   map_smul' a x := by
-    simp only [Submodule.coe_smul, DFinsupp.smul_apply, map_smul, Finsupp.smul_apply]
+    simp only [Submodule.coe_smul, DirectSum.smul_apply, map_smul, Finsupp.smul_apply, RingHom.id_apply]
 
 @[simp] theorem kappa_iota (c : Discriminant D) (w : W c) :
     kappa W c (iota W c w) = w := by
-  change tensorCoordinates ((DirectSum.component ℂ _ _ c)
-    (DirectSum.lof ℂ _ _ c (Finsupp.single 0 (1 : Oscillator D) ⊗ₜ[ℂ] w))) (0,0) = w
-  rw [DirectSum.component.lof_self]
-  simp [tensorCoordinates_tmul, coordinate]
+  change tensorCoordinates (((iota W c) w).val.val c) (0,0) = w
+  rw [iota_val, DirectSum.lof_apply]
+  simp [tensorCoordinates_tmul, ActualWeakModuleScalarProbes.coordinate]
 
 variable (hD : (gramReal D).PosDef)
+include hD
 
 /-- Class projection first, Gram injectivity second; no rank or nonzero premise. -/
 private theorem representative_weight_iff (c d : Discriminant D) (l : Charge D) :
@@ -132,7 +135,8 @@ theorem realization_reconstruct (c : Discriminant D) (z : Multiplicity (realizat
       (fun l => by simpa using representative_weight_iff hD c c l)
       (weightComponent W c c z)
     change z.val.val c = _ at hs
-    change z.val.val c = (DirectSum.component ℂ _ _ c) (DirectSum.lof ℂ _ _ c _)
+    change z.val.val c = (DirectSum.component ℂ _ (fun d => Carrier D ⊗[ℂ] W d) c)
+      (DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] W d) c _)
     rw [DirectSum.component.lof_self]
     exact hs
   · have hz : z.val.val d = 0 := by
@@ -144,7 +148,7 @@ theorem realization_reconstruct (c : Discriminant D) (z : Multiplicity (realizat
         (weightComponent W c d z) (l,f)
         (Or.inr (fun h => hd ((representative_weight_iff hD c d l).mp h).1))
     rw [hz]
-    simp [DirectSum.lof_eq_of, DFinsupp.single_apply, hd, Ne.symm hd]
+    simp [DirectSum.lof_eq_of, DirectSum.of_eq_of_ne, hd, Ne.symm hd]
 
 def multiplicityEquiv (c : Discriminant D) :
     Multiplicity (realization W) c ≃ₗ[ℂ] W c where
@@ -166,11 +170,16 @@ theorem classification_iota (c : Discriminant D) (w : W c) (v : Carrier D) :
   have he : f = g := by
     apply modeHom_ext_of_vacuum D (representative D c)
       (fun a m => mode (realization W) a m)
-    · exact classified_modes hD (realization W) c (iota W c w)
     · intro a m x
-      change DirectSum.lof ℂ _ _ c (_ ⊗ₜ[ℂ] w) = _
+      exact classified_modes hD (realization W) c (iota W c w) a x m
+    · intro a m x
+      change DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] W d) c
+        ((((action D (representative D c)) a)[[m]]) x ⊗ₜ[ℂ] w) =
+        (mode (realization W) a m)
+          (DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] W d) c (x ⊗ₜ[ℂ] w))
       rw [realization, directSumModule_mode, DirectSum.lmap_lof,
         tensorModule_mode, TensorProduct.map_tmul, LinearMap.id_apply]
+      rfl
     · exact classification_normalization (realization W) hD c (iota W c w)
   exact LinearMap.congr_fun he v
 

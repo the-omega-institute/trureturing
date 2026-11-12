@@ -124,8 +124,15 @@ theorem projection_injection (D : LatticeData) (a : Charge D) (u : Carrier D) :
     intro n p
     change P D a (J D a (Finsupp.single n p)) = Finsupp.single n p
     rw [injection_single, projection_single, polynomialProjection_injection]
-    simp [LatticeCosetCompression.externalCharge, LatticeCosetCompression.oldCharge,
-      LatticeCosetCompression.liftCharge]
+    have he : LatticeCosetCompression.externalCharge D (1 : Matrix _ _ ℤ) 0 zeroSymm zeroEven
+        (LatticeCosetCompression.liftCharge D (1 : Matrix _ _ ℤ) 0 zeroSymm zeroEven a n) = a := by
+      funext i
+      simp [LatticeCosetCompression.externalCharge, LatticeCosetCompression.liftCharge, Fin.addCases]
+    have hn : LatticeCosetCompression.oldCharge D (1 : Matrix _ _ ℤ) 0 zeroSymm zeroEven
+        (LatticeCosetCompression.liftCharge D (1 : Matrix _ _ ℤ) 0 zeroSymm zeroEven a n) = n := by
+      funext i
+      simp [LatticeCosetCompression.oldCharge, LatticeCosetCompression.liftCharge, Fin.addCases]
+    rw [he, if_pos rfl, hn]
   exact congrArg (fun f : Module.End ℂ (Carrier D) => f u) hp
 
 theorem injection_zero_vacuum (D : LatticeData) :
@@ -134,13 +141,13 @@ theorem injection_zero_vacuum (D : LatticeData) :
   congr 1
   funext i
   induction i using Fin.addCases <;>
-    simp [LatticeCosetCompression.liftCharge]
+    simp [LatticeCosetCompression.liftCharge, Fin.addCases]
 
 @[simp] theorem shift_zero_left (D : LatticeData) (b : Charge D) :
-    shift D (1 : Matrix _ _ ℤ) 0 b = 0 := by simp [shift]
+    shift D (1 : Matrix _ _ ℤ) 0 b = 0 := by simp [LatticeCosetCanonicalIntertwiner.shift]
 
 @[simp] theorem shift_zero_right (D : LatticeData) (a : Charge D) :
-    shift D (1 : Matrix _ _ ℤ) a 0 = 0 := by simp [shift]
+    shift D (1 : Matrix _ _ ℤ) a 0 = 0 := by simp [LatticeCosetCanonicalIntertwiner.shift]
 
 private theorem coeff_compressed (D : LatticeData) (a b : Charge D)
     (hs : shift D (1 : Matrix _ _ ℤ) a b = 0)
@@ -190,6 +197,7 @@ private theorem vacuum_mode (D : LatticeData) (b : Charge D)
   change (C D 0 b (vacuum D)).coeff (-tau-1) v = _
   rw [canonical_zero_vacuum_coeff]
   congr 1
+  apply propext
   constructor <;> intro h <;> linarith
 
 private theorem left_family_zero_index (D : LatticeData) (b : Charge D)
@@ -218,6 +226,7 @@ private theorem left_second_term (D : LatticeData) (b : Charge D)
       if tau - 1 - (i : ℚ) = -1 then -((action D b h)[[(i : ℤ)]]) v else 0 := by
   simp only [mixedSecond, Matrix.one_mulVec, zero_add, minus_one_binomial, one_smul]
   rw [show (-1 : ℂ)^(-1 : ℤ) = -1 by norm_num]
+  norm_num only [Int.cast_neg, Int.cast_one, ← sub_eq_add_neg]
   change (-1 : ℂ) • cmode D 0 b (vacuum D) (tau-1-i)
     (((action D b h)[[(i : ℤ)]]) v) = _
   rw [vacuum_mode]
@@ -291,7 +300,7 @@ theorem left_off_supports (D : LatticeData) (b : Charge D)
     rw [left_second_term, if_neg]
     intro hi
     apply ht
-    exact ⟨i, by linarith⟩
+    exact ⟨(i : ℤ), by push_cast; linarith⟩
 
 theorem canonical_zero_left_mode_integer (D : LatticeData)
     (hD : (gramReal D).PosDef) (b : Charge D) (h v : Carrier D) (m : ℤ) :
@@ -376,7 +385,9 @@ theorem canonical_right_creation_negative (D : LatticeData) (a : Charge D)
     (C D a 0 u).coeff q (vacuum D) = 0 := by
   classical
   by_cases hi : q ∈ Set.range (fun k : ℤ => (k : ℚ))
-  · obtain ⟨k,rfl⟩ := hi
+  · obtain ⟨k,hkq⟩ := hi
+    change (k : ℚ) = q at hkq
+    subst q
     have hk : k < 0 := by exact_mod_cast hq
     rw [coeff_compressed D a 0 (shift_zero_right D a), injection_zero_vacuum,
       stateField_creativity (E D) (J D a u) (-k-1) (by omega), map_zero]
@@ -470,11 +481,14 @@ theorem canonical_right_creation_support (D : LatticeData)
     (C D a 0 u).coeff q (vacuum D) = 0 := by
   classical
   by_cases hi : q ∈ Set.range (fun k : ℤ => (k : ℚ))
-  · obtain ⟨k,rfl⟩ := hi
+  · obtain ⟨k,hkq⟩ := hi
+    change (k : ℚ) = q at hkq
+    subst q
     have hk : k < 0 := by
       by_contra hn
       apply hq
       refine ⟨k.toNat, ?_⟩
+      change (k.toNat : ℚ) = (k : ℚ)
       exact_mod_cast Int.toNat_of_nonneg (by omega : 0 ≤ k)
     exact canonical_right_creation_negative D a u _ (by exact_mod_cast hk)
   · exact canonical_right_off D a u _ q hi
@@ -486,11 +500,11 @@ theorem sectorTranslation_covariance (D : LatticeData) (hD : (gramReal D).PosDef
       ((action D a v)[[m]]) (sectorTranslation D hD a u) =
       -(m : ℂ) • ((action D a v)[[m-1]]) u := by
   have hh := target_raw D hD 0 a v u (-m-1)
-  rw [zero_add, canonical_zero_left_integer, canonical_zero_left_integer,
-    canonical_zero_left_integer] at hh
+  rw [zero_add, canonical_zero_left_integer D hD, canonical_zero_left_integer D hD,
+    canonical_zero_left_integer D hD] at hh
   simpa only [show -(-m-1)-1 = m by omega,
     show -(-m-1+1)-1 = m-1 by omega, Int.cast_sub, Int.cast_neg,
-    Int.cast_one, sub_add_cancel] using hh
+    Int.cast_one, sub_add_cancel, neg_neg, neg_add_rev] using hh
 
 /-- A bound for this single original pair exists by actual field truncation. -/
 theorem original_pair_cutoff (D : LatticeData) (a : Charge D) (u v : Carrier D) :
@@ -574,7 +588,7 @@ theorem canonical_right_finite_jacobi_mode (D : LatticeData)
       (-1) (N : ℤ) tau i) = (-1 : ℂ)^N • cmode D a 0 u (tau+N) v := by
     rw [finsum_eq_single _ 0]
     · simp [mixedSecond, integerBinomial, Matrix.one_mulVec, original_vacuum_mode,
-        cmode, zpow_natCast]
+        cmode, zpow_natCast, action_zero_mode, stateField_creation]
     · intro i hi
       by_contra hn
       exact hi (right_jacobi_second_support D a u v N tau hn)
@@ -588,7 +602,8 @@ private theorem sign_reverse (N i : ℕ) (hi : i ≤ N) :
     norm_num
   calc
     _ = ((-1 : ℂ)^(N-i) * (-1 : ℂ)^i) * (-1 : ℂ)^i := by
-      rw [← pow_add, Nat.sub_add_cancel hi]
+      nth_rw 1 [← Nat.sub_add_cancel hi]
+      rw [pow_add]
     _ = _ := by rw [mul_assoc, hsq, mul_one]
 
 /-- Raw finite Jacobi formula before reversing the finite index. -/
@@ -637,7 +652,7 @@ theorem canonical_right_finite_jacobi (D : LatticeData)
   rw [canonical_right_finite_jacobi_reverse D hD a u v k N hN]
   apply Finset.sum_bij (fun i _ => N-i)
   · intro i hi
-    exact Finset.mem_range.mpr (by omega)
+    exact Finset.mem_range.mpr (by have := Finset.mem_range.mp hi; omega)
   · intro i hi j hj hij
     have hi' := Finset.mem_range.mp hi
     have hj' := Finset.mem_range.mp hj
@@ -651,9 +666,8 @@ theorem canonical_right_finite_jacobi (D : LatticeData)
     have he : ((N-i : ℕ) : ℤ) = (N : ℤ)-i := by omega
     have hc : N.choose (N-i) = N.choose i := Nat.choose_symm hi'
     rw [hc, he]
-    congr 2
-    · congr 1 <;> omega
-    · congr 1 <;> omega
+    rw [show -1+(N : ℤ)-(i : ℤ) = (N : ℤ)-(i : ℤ)-1 by omega,
+      show k+(N : ℤ)-(i : ℤ) = k+((N : ℤ)-(i : ℤ)) by omega]
 
 /-- A substantive support consequence of the finite Jacobi consumer. -/
 theorem canonical_right_integer_below_cutoff (D : LatticeData)
@@ -728,10 +742,10 @@ private theorem conjugationKernel_succ (j : ℕ) (k : ℤ) :
     push_cast
     ring
   · by_cases he : k+(j : ℤ) = -1
-    · have hk1 : k+((j+1 : ℕ) : ℤ) = 0 := by omega
+    · have hk1 : k+((j : ℤ)+1) = 0 := by omega
       have hk2 : k+1+(j : ℤ) = 0 := by omega
       simp [conjugationKernel, hk, hk1, hk2, integerBinomial]
-    · have hk1 : ¬ 0 ≤ k+((j+1 : ℕ) : ℤ) := by omega
+    · have hk1 : ¬ 0 ≤ k+((j : ℤ)+1) := by omega
       have hk2 : ¬ 0 ≤ k+1+(j : ℤ) := by omega
       simp [conjugationKernel, hk, hk1, hk2]
 
@@ -791,7 +805,7 @@ theorem pro57_finite_binomial_identity (N : ℕ) (k : ℤ) :
   convert hc using 1
   apply Finset.sum_congr rfl
   intro j hj
-  split_ifs <;> simp
+  split_ifs with h <;> simp_all
 
 /-- The nonempty scalar branch is exactly (-1)^k, with no analytic interpretation. -/
 theorem pro57_finite_binomial_nonempty (N : ℕ) (k : ℤ) (hk : -(N : ℤ) ≤ k) :
@@ -820,7 +834,7 @@ private theorem binomial_falling_step (m : ℤ) (t : ℕ) :
   simp only [Nat.choose_one_right, Ring.choose_one_right, Nat.add_sub_cancel,
     nsmul_eq_mul] at h
   have hc := congrArg (fun z : ℤ => (z : ℂ)) h
-  simpa only [integerBinomial, Int.cast_mul, Int.cast_natCast] using hc.symm
+  simpa only [integerBinomial, Int.cast_mul, Int.cast_natCast, Int.natCast_one] using hc.symm
 
 private theorem factorial_inverse_step (r : ℕ) :
     (r.factorial : ℂ)⁻¹ =
@@ -875,6 +889,7 @@ theorem finite_covariance_divided_power {V : Type*} [AddCommGroup V] [Module ℂ
             ((R+1 : ℕ) : ℂ) := by exact_mod_cast (show R-s+(s+1)=R+1 by omega)
         simp only [f, dividedTerm, map_smul, ← Module.End.mul_apply,
           ← pow_succ', ← he, hp, hm, smul_smul, hf]
+        simp only [← mul_assoc, ← pow_succ', ← he]
         rw [← add_smul]
         congr 1
         linear_combination ((R-s).factorial : ℂ)⁻¹ * hb +
@@ -993,10 +1008,9 @@ theorem canonical_right_general_integer
           simp only [hp, hm, K, if_pos (by omega : 0 ≤ k-(i : ℤ)+(j : ℤ)), d]
           rw [ht]
         _ = _ := by
-          symm
           apply Finset.sum_subset hs
           intro i hi hin
-          have hiR : R < i := by simpa only [Finset.mem_range, not_lt] using hin
+          have hiR : R < i := by have hh := hin; simp only [Finset.mem_range, not_lt] at hh; omega
           simp [K, show ¬ 0 ≤ k-(i : ℤ)+(j : ℤ) by omega]
     · rw [creationCoefficient, if_neg hR, map_zero]
       symm

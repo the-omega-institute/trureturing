@@ -16,6 +16,8 @@ import D5.S3.VertexAlgebra.Modules.ActualWeakModuleUnits
 import D5.S3.VertexAlgebra.Modules.ActualWeakModulePentagon
 import D5.S3.VertexAlgebra.Modules.ActualWeakModuleBraidingField
 
+set_option maxHeartbeats 4000000
+set_option maxRecDepth 4096
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -340,7 +342,7 @@ theorem alpha_unit_left (c d : Discriminant D) (v : Carrier D)
         (jAt (I D) A hD c ⟨(0,c),zero_add c⟩ (eta0 hD ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y) v) =
     normalizedPair (I D) (targetModule A B) hD 0 (c+d)
       (eta0 hD ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y)) v := by
-  simpa only [F_unit_left, one_smul] using
+  simpa only [F_unit_left, one_smul, jAt] using
     alpha_normalized_fibers (I D) A B hD 0 c d c (c+d)
       (zero_add c) rfl v (eta0 hD) x y
 
@@ -363,7 +365,7 @@ theorem alpha_unit_right (c d : Discriminant D) (v : Carrier D)
     (unitCharacter D hD d / unitCharacter D hD (c+d)) •
       normalizedPair A (targetModule B (I D)) hD c d
         (x ⊗ₜ[ℂ] jAt B (I D) hD d ⟨(d,0),add_zero d⟩ (y ⊗ₜ[ℂ] eta0 hD)) v := by
-  simpa only [F_unit_right] using
+  simpa only [F_unit_right, jAt] using
     alpha_normalized_fibers A B (I D) hD c d 0 (c+d) d
       rfl (add_zero d) v x y (eta0 hD)
 
@@ -417,7 +419,7 @@ theorem triangle :
     simp only [normalizedPair_left_fiber A (I D) B hD c 0 c d (add_zero c)] at hh
     rw [← etaCoefficient_inverse hD n]
     simpa only [TensorProduct.tmul_smul, map_smul, ← TensorProduct.smul_tmul',
-      normalizedPair_smul] using
+      normalizedPair_smul (targetModule A (I D)) B hD (c+0) d, map_smul] using
         congrArg (fun z : P A B => etaCoefficient hD n • z) hh
   · rw [unit_multiplicity_wrong hD e he n]
     simp [normalizedPair]
@@ -440,8 +442,8 @@ theorem braiding_unit :
     (tag A (I D) c 0 x (eta0 hD) v)) =
     rightUnit hD A (tag A (I D) c 0 x (eta0 hD) v)
   rw [braid_tag, map_smul]
-  simp only [ActualWeakModuleUniversalField.tag_apply, leftUnit_elementary,
-    rightUnit_elementary]
+  simp only [ActualWeakModuleUniversalField.tag_apply, leftUnit_elementary hD A,
+    rightUnit_elementary hD A]
   rw [phase_unit hD]
   rfl
 
@@ -480,7 +482,9 @@ theorem leftUnit_natural_U (f : ModuleHom A B) (u : Carrier D) (x : X) (q : ℚ)
     g.linearMap ((U (I D) A hD u).coeff q x)) (leftUnit_natural hD f)
   change leftUnit hD B ((productHom hD (ModuleHom.id (I D)) f).linearMap
     ((U (I D) A hD u).coeff q x)) = _ at hh
-  simpa only [productHom_U_coeff, ModuleHom.id, LinearMap.id_apply] using hh
+  simpa only [productHom_U_coeff, ModuleHom.id, LinearMap.id_apply,
+    ModuleHom.comp, LinearMap.comp_apply, ModuleIso.hom, leftUnitIso, rightUnitIso,
+    LinearEquiv.coe_coe] using hh
 
 theorem rightUnit_natural_U (f : ModuleHom A B) (x : X) (u : Carrier D) (q : ℚ) :
     rightUnit hD B ((U B (I D) hD (f.linearMap x)).coeff q u) =
@@ -489,7 +493,9 @@ theorem rightUnit_natural_U (f : ModuleHom A B) (x : X) (u : Carrier D) (q : ℚ
     g.linearMap ((U A (I D) hD x).coeff q u)) (rightUnit_natural hD f)
   change rightUnit hD B ((productHom hD f (ModuleHom.id (I D))).linearMap
     ((U A (I D) hD x).coeff q u)) = _ at hh
-  simpa only [productHom_U_coeff, ModuleHom.id, LinearMap.id_apply] using hh
+  simpa only [productHom_U_coeff, ModuleHom.id, LinearMap.id_apply,
+    ModuleHom.comp, LinearMap.comp_apply, ModuleIso.hom, leftUnitIso, rightUnitIso,
+    LinearEquiv.coe_coe] using hh
 
 theorem unit_equality_U (u v : Carrier D) (q : ℚ) :
     leftUnit hD (I D) ((U (I D) (I D) hD u).coeff q v) =
@@ -509,7 +515,7 @@ theorem triangle_U (s : P A (I D)) (y : Y) (q : ℚ) :
   change (productHom hD (ModuleHom.id A) (leftUnitIso hD B).hom).linearMap
     (alpha A (I D) B hD ((U (targetModule A (I D)) B hD s).coeff q y)) = _ at hh
   simpa only [productHom_U_coeff, ModuleIso.hom, ModuleHom.id,
-    LinearMap.id_apply] using hh
+    LinearMap.id_apply, rightUnitIso, LinearEquiv.coe_coe] using hh
 
 /-- A nested raw coefficient consequence with the literal finite right-unit
     diagram. k and q remain separate; no new coordinate coherence is claimed. -/
@@ -539,7 +545,9 @@ theorem triangle_U_unit_finite (x : X) (u : Carrier D) (y : Y) :
           (∑ i ∈ Finset.range (((N : ℤ)+k+1).toNat),
             (((-1 : ℂ)^(k-(i : ℤ))) / (i.factorial : ℂ)) •
               ((translation A hD)^i) (mode A u ((i : ℤ)-k-1) x))).coeff q y := by
-  obtain ⟨N,hN⟩ := module_pair_cutoff hD A u x
+  have hcut : ∃ N : ℕ, ∀ m : ℤ, (N : ℤ) ≤ m → mode A u m x = 0 :=
+    @ActualWeakModuleUnits.module_pair_cutoff D X _ _ A u x
+  obtain ⟨N,hN⟩ := hcut
   exact ⟨N,hN,fun k q => triangle_U_unit_integer hD x u y k q N hN⟩
 
 theorem braiding_unit_U (x : X) (u : Carrier D) (q : ℚ) :
@@ -558,6 +566,7 @@ theorem braiding_unit_U_finite (x : X) (u : Carrier D) (q : ℚ) :
         (translation A hD ^ j)
           (leftUnit hD A ((U (I D) A hD u).coeff (q-(j : ℚ)) x)) := by
   rw [← braiding_unit_U hD x u q, ActualWeakModuleBraidingField.U_braiding]
+  change (leftUnit hD A).toLinearMap _ = _
   rw [map_finsum (leftUnit hD A).toLinearMap
     (ActualWeakModuleBraidingField.U_braiding_finite A (I D) hD x u q)]
   apply finsum_congr
@@ -567,6 +576,7 @@ theorem braiding_unit_U_finite (x : X) (u : Carrier D) (q : ℚ) :
     ((translation (targetModule (I D) A) hD ^ j)
       ((U (I D) A hD u).coeff (q-(j : ℚ)) x)) = _
   rw [hom_translation_pow hD (leftUnitIso hD A).hom]
+  simp only [ModuleIso.hom, leftUnitIso, LinearEquiv.coe_coe]
 
 /-- Finiteness remains true after the actual left unit is applied termwise. -/
 theorem braiding_unit_U_terms_finite (x : X) (u : Carrier D) (q : ℚ) :
@@ -583,7 +593,8 @@ theorem braiding_unit_U_terms_finite (x : X) (u : Carrier D) (q : ℚ) :
       (translation (targetModule (I D) A) hD ^ j)
         ((U (I D) A hD u).coeff (q-(j : ℚ)) x)) =
     (leftUnitIso hD A).hom.linearMap 0 at he
-  simpa only [map_zero, map_smul, hom_translation_pow hD (leftUnitIso hD A).hom] using he
+  rw [map_smul, hom_translation_pow hD (leftUnitIso hD A).hom, map_zero] at he
+  simpa only [ModuleIso.hom, leftUnitIso, LinearEquiv.coe_coe] using he
 
 end RawCoefficients
 end D5.S3.VertexAlgebra.Modules.ActualWeakModuleUnitCoherence

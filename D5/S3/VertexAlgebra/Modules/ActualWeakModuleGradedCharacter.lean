@@ -8,6 +8,8 @@ import D5.S3.VertexAlgebra.Modules.ActualWeakModuleHom
 import D5.S3.VertexAlgebra.Lattice.LatticeSectorCharacterWeilCovariance
 import Mathlib.LinearAlgebra.StdBasis
 
+set_option maxHeartbeats 4000000
+set_option maxRecDepth 4096
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -66,6 +68,7 @@ private def sectorBasis (c : Discriminant D) (e : ℚ) :
     Module.Basis (GradeLabel c e) ℂ (sectorGrade D (inverseGram hD) c e) :=
   Module.Basis.ofRepr (sectorCoeffEquiv hD c e)
 
+include hD in
 private theorem gradeLabel_finite (c : Discriminant D) (e : ℚ) : Finite (GradeLabel c e) :=
   LatticeDualCosetEnergy.fiber_finite D (dualVector D (representative D c)) hD e
 
@@ -122,6 +125,7 @@ private def supportedGradeEquiv (e : ℚ) :
 private theorem grade_eq_comap (e : ℚ) :
     grade J hD e = (supportedGrade J e).comap (allCoefficients J hD).toLinearMap := by
   ext x
+  change x ∈ (L0 J hD).eigenspace (e : ℂ) ↔ _
   rw [Module.End.mem_eigenspace_iff]
   exact ActualWeakModuleConformalMonodromy.L0_eigen_iff J hD e x
 
@@ -199,7 +203,8 @@ private theorem gradeEquiv_generator (e : ℚ) (c : Discriminant D)
     gradeEquiv J hD e (gradeGenerator J hD e c x w) = Pi.single c (x ⊗ₜ[ℂ] w) := by
   funext d
   apply (sectorTensorCoeff J hD d e).injective
-  ext a
+  apply Finsupp.ext
+  intro a
   rw [gradeEquiv_coeff]
   change tensorCoeff J d (((classificationEquiv J hD).symm
     (classificationEquiv J hD (DirectSum.lof ℂ _ (Sector J) c (x.val ⊗ₜ[ℂ] w)))) d)
@@ -279,7 +284,8 @@ private theorem gradeEquiv_map (f : ModuleHom J J) (e : ℚ) (x : grade J hD e) 
       gradeModelMap J hD f e (gradeEquiv J hD e x) := by
   funext c
   apply (sectorTensorCoeff J hD c e).injective
-  ext a
+  apply Finsupp.ext
+  intro a
   rw [gradeEquiv_coeff]
   change tensorCoeff J c (((classificationEquiv J hD).symm (f.linearMap x.val)) c) a.val =
     sectorTensorCoeff J hD c e

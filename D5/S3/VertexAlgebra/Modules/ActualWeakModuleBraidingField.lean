@@ -54,7 +54,8 @@ theorem canonical_diagram (a b : Charge D) (u v : Carrier D) (q : ℚ) :
     (gram_left hD) (gram_right hD) true a b u v q
   rw [turn_eq D (1 : Matrix _ _ ℤ) hD (inverseGram hD)
     (gram_left hD) (gram_right hD)] at h
-  simpa only [↓reduceIte, one_mul, Matrix.one_mulVec, LinearMap.smul_apply] using h
+  simpa only [↓reduceIte, one_mul, Matrix.one_mulVec, LinearMap.smul_apply, HVertexOperator.coeff_apply_apply,
+    HahnModule.of_symm_smul, HahnSeries.coeff_smul] using h
 
 /-- A concrete bilinear family; the swapped canonical inputs are literal. -/
 def modelTurnFamily (q : ℚ) (j : ℕ) :
@@ -67,7 +68,9 @@ theorem modelTurnFamily_apply (q : ℚ) (j : ℕ) (s : Model A) (t : Model B) :
     modelTurnFamily A B hD q j s t =
       (Complex.exp (Real.pi * Complex.I * ((q : ℂ)-(j : ℂ))) / (j.factorial : ℂ)) •
         (translation (targetModule B A) hD ^ j) ((modelField B A t).coeff (q-(j : ℚ)) s) := by
-  change _ • _ ((modelField B A t).coeff (-(-(q-(j : ℚ))-1)-1) s) = _
+  change (Complex.exp (Real.pi * Complex.I * ((q : ℂ)-(j : ℂ))) / (j.factorial : ℂ)) •
+    (translation (targetModule B A) hD ^ j)
+      ((modelField B A t).coeff (-(-(q-(j : ℚ))-1)-1) s) = _
   rw [show -(-(q-(j : ℚ))-1)-1 = q-(j : ℚ) by ring]
 
 /-- The target translation acts on the original Carrier factor, with the
@@ -92,7 +95,10 @@ theorem modelTurn_elementary_finite (c d : Discriminant D)
   apply hf.subset
   intro j hj hz
   apply hj
-  rw [modelTurn_elementary, hz, map_zero]
+  dsimp only
+  rw [modelTurn_elementary]
+  change tag B A d c y x ((fun j : ℕ => _) j) = 0
+  rw [hz, map_zero]
 
 /-- Every evaluated convolution is finite by the ACTUAL two finite tensor
     presentations. This reuses the pinned source's finite-extension proof. -/
@@ -140,8 +146,8 @@ theorem model_diagram (q : ℚ) (s : Model A) (t : Model B) :
     rw [show -(-q-1)-1 = q by ring]
     exact model_diagram_elementary A B hD c d u v x y q
   have hv := congrArg (fun f : Model A →ₗ[ℂ] Model B →ₗ[ℂ] P B A => f s t) he
-  change braid A B ((modelField A B s).coeff (-(-q-1)-1) t) = _ at hv
-  simpa only [show -(-q-1)-1 = q by ring] using hv
+  change braid A B ((modelField A B s).coeff (-(-q-1)-1) t) = ∑ᶠ j : ℕ, modelTurnFamily A B hD q j s t at hv
+  simpa only [show -(-q-1)-1 = q by ring, sumFamily] using hv
 
 /-- The exact original-U diagram, every rational raw exponent and every
     original pair of input vectors. The named diagram uses Omega, not its inverse. -/
@@ -183,7 +189,8 @@ theorem U_braiding_support (x : X) (y : Y) (q : ℚ) :
   refine ⟨l,k,hl,hk,?_⟩
   have h := presentation_support A B (modelTurnFamily A B hD q) l k
   rw [← hl, ← hk] at h
-  simpa only [modelTurnFamily_apply] using h
+  simpa only [modelTurnFamily_apply, U, HVertexOperator.coeff_apply_apply, LinearMap.comp_apply, LinearMap.coe_mk,
+    AddHom.coe_mk, LinearEquiv.coe_coe] using h
 
 /-- Original U is zero outside the finite union of literal exponent cosets
     of ANY chosen finite classified presentations of its two inputs. -/
@@ -203,6 +210,8 @@ theorem U_off_cosets (x : X) (y : Y) (q : ℚ)
   apply List.sum_eq_zero
   intro z hz
   obtain ⟨f,hf,rfl⟩ := List.mem_map.mp hz
+  change tag A B e.1 f.1 e.2.2 f.2.2
+    ((field D (1 : Matrix _ _ ℤ) (representative D e.1) (representative D f.1) e.2.1).coeff q f.2.1) = 0
   rw [field_coeff_off D (1 : Matrix _ _ ℤ) (representative D e.1)
     (representative D f.1) e.2.1 f.2.1 q (hq e he f hf), map_zero]
 

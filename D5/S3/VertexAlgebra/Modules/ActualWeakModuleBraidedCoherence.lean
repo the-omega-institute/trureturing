@@ -9,6 +9,9 @@ module in application-exposition.txt and transient exact checks.
 import D5.S3.VertexAlgebra.Modules.ActualWeakModuleBraidingField
 import D5.S3.VertexAlgebra.Modules.ActualWeakModulePentagon
 
+set_option maxHeartbeats 4000000
+set_option synthInstance.maxHeartbeats 200000
+set_option maxRecDepth 4096
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -133,8 +136,8 @@ theorem braid_natural
       braid A B ((productHom hD f g).linearMap z))
     (by simp) (fun x y hx hy => by simp only [map_add, hx, hy]) ?_ z
   intro c d x y v
-  simp only [braid_tag, map_smul, tag_apply, productHom_pair,
-    TensorProduct.map_tmul, braid_lof, TensorProduct.comm_tmul]
+  simp only [braid_lof A' B', map_smul, tag_apply, productHom_pair hD,
+    TensorProduct.map_tmul, braid_lof A B, TensorProduct.comm_tmul]
 
 end Binary
 
@@ -351,8 +354,18 @@ private theorem product_inner_braid_left (a b c : Discriminant D)
     (restrict (braidIso A B).hom (a+b)
       (jAt A B hD (a+b) ⟨(a,b), rfl⟩ (x ⊗ₜ[ℂ] y)) ⊗ₜ[ℂ] z) v = _
   rw [hj]
-  simp only [TensorProduct.comm_tmul, TensorProduct.smul_tmul',
-    normalizedPair_smul, add_comm a b, jAt]
+  simp only [TensorProduct.comm_tmul, jAt]
+  have hc (e e' : Discriminant D) (he : e' = e)
+      (f : PairMultiplicity B A (b,a) →ₗ[ℂ] Multiplicity (targetModule B A) e') :
+      normalizedPair (targetModule B A) C hD e c
+        (((he ▸ f) (y ⊗ₜ[ℂ] x)) ⊗ₜ[ℂ] z) v =
+        normalizedPair (targetModule B A) C hD e' c
+          (f (y ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] z) v := by
+    subst e
+    rfl
+  rw [← TensorProduct.smul_tmul', normalizedPair_smul]
+  exact congrArg (fun t => phase (D := D) a b • t)
+    (hc (a+b) (b+a) (add_comm b a) (j B A hD b a))
 
 private theorem product_inner_braid_right (a b c : Discriminant D)
     (x : Multiplicity A a) (y : Multiplicity B b) (z : Multiplicity C c)
@@ -368,8 +381,18 @@ private theorem product_inner_braid_right (a b c : Discriminant D)
     (y ⊗ₜ[ℂ] restrict (braidIso A C).hom (a+c)
       (jAt A C hD (a+c) ⟨(a,c), rfl⟩ (x ⊗ₜ[ℂ] z))) v = _
   rw [hj]
-  simp only [TensorProduct.comm_tmul, TensorProduct.tmul_smul,
-    normalizedPair_smul, add_comm a c, jAt]
+  simp only [TensorProduct.comm_tmul, jAt]
+  have hc (e e' : Discriminant D) (he : e' = e)
+      (f : PairMultiplicity C A (c,a) →ₗ[ℂ] Multiplicity (targetModule C A) e') :
+      normalizedPair B (targetModule C A) hD b e
+        (y ⊗ₜ[ℂ] ((he ▸ f) (z ⊗ₜ[ℂ] x))) v =
+        normalizedPair B (targetModule C A) hD b e'
+          (y ⊗ₜ[ℂ] f (z ⊗ₜ[ℂ] x)) v := by
+    subst e
+    rfl
+  rw [TensorProduct.tmul_smul, normalizedPair_smul]
+  exact congrArg (fun t => phase (D := D) a c • t)
+    (hc (a+c) (c+a) (add_comm c a) (j C A hD c a))
 
 private theorem alpha_forward_generator (a b c : Discriminant D)
     (x : Multiplicity A a) (y : Multiplicity B b) (z : Multiplicity C c)
@@ -502,7 +525,7 @@ theorem moduleMap_hexagon_left :
       (hexagonLeftPathRight A B C hD).linearMap
         (leftGenerator A B C hD a b c x y z v') := by
     rw [hexagon_left_generator, hexagon_left_generator_right, hscalar]
-  simpa only [leftGenerator, v', normalizedPair_transport] using h
+  simpa only [leftGenerator, v', normalizedPair_transport, E_L, ActualWeakModuleAssociator.leftElementary, LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply] using h
 
 /-- Second literal ModuleHom hexagon, with inverse associators in the exact
     directions prescribed by the original statement. -/
@@ -544,7 +567,7 @@ theorem moduleMap_hexagon_right :
       (hexagonRightPathRight A B C hD).linearMap
         (rightGenerator A B C hD a b c x y z v') := by
     rw [hexagon_right_generator, hexagon_right_generator_right, hscalar]
-  simpa only [rightGenerator, v', normalizedPair_transport] using h
+  simpa only [rightGenerator, v', normalizedPair_transport, E_R, ActualWeakModuleAssociator.rightElementary, LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply] using h
 
 end Hexagons
 
