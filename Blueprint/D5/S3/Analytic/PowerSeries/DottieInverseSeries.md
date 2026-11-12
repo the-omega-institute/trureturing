@@ -86,7 +86,13 @@ The exact image of g is [cos(1),1]. Indeed, Real.range_cos identifies the inner 
 
 ## Global contraction and the mutual pair
 
-The chain rule, using Real.hasDerivAt_cos for each cosine, gives a derivative at every real x:$g'(x) = \operatorname{sin}\left(\operatorname{cos}\left(x\right)\right) \operatorname{sin}\left(x\right)$Here the prime denotes the derivative of g at x. The two negative signs from differentiating cosine cancel. For every real x, abs(cos(x))<=1 and abs(sin(x))<=1. On [0,1], sine is nonnegative and increasing, so abs(sin(cos(x)))=sin(abs(cos(x)))<=sin(1). Consequently abs(g'(x))<=sin(1) for every real x. Put K=sin(1); since 0<1<pi/2, 0<K<1. K is a sufficient global bound, with no assertion that it is the least possible bound.
+The chain rule, using Real.hasDerivAt_cos for each cosine, gives a derivative at every real x:
+
+$$
+g'(x) = \operatorname{sin}\left(\operatorname{cos}\left(x\right)\right) \operatorname{sin}\left(x\right)
+$$
+
+Here the prime denotes the derivative of g at x. The two negative signs from differentiating cosine cancel. For every real x, abs(cos(x))<=1 and abs(sin(x))<=1. On [0,1], sine is nonnegative and increasing, so abs(sin(cos(x)))=sin(abs(cos(x)))<=sin(1). Consequently abs(g'(x))<=sin(1) for every real x. Put K=sin(1); since 0<1<pi/2, 0<K<1. K is a sufficient global bound, with no assertion that it is the least possible bound.
 
 The mean-value Lipschitz result lipschitzWith_of_nnnorm_deriv_le applies with domain and codomain the real normed space, function g, and nonnegative constant K. Its differentiability assumption is supplied by the chain rule, and its derivative-norm hypothesis is exactly the preceding all-real bound. It yields abs(g(u)-g(v))<=K*abs(u-v) for all real u,v. Thus g is ContractingWith K on the complete metric space of real numbers. The endpoint equation gives g(theta)=f(f(theta))=theta. ContractingWith.fixedPoint_unique' identifies every fixed point of g with this theta, and ContractingWith.tendsto_iterate_fixedPoint gives g^[n](z) tending to theta as n tends to infinity for every real z. There is no interval assumption on this convergence statement.
 
@@ -106,7 +112,17 @@ The starts theta and -theta must be treated explicitly. Evenness gives f(-theta)
 
 ## Exact local error factors and iteration cost
 
-The fixed-point equation and the acute location determine the local factors exactly. Real.sin_eq_sqrt_one_sub_cos_sq applies with 0<theta<pi/2, and Real.sin_sq_add_cos_sq with cos(theta)=theta gives sin(theta)^2=1-theta^2. Positivity of sine selects the positive square root. The derivatives, including their derivative-existence statements, are therefore$f'(\theta) = -\operatorname{sin}\left(\theta\right) = -\sqrt{1 - \theta^{2}}, -1 < f'(\theta) < 0$$g'(\theta) = \operatorname{sin}\left(\theta\right)^{2} = 1 - \theta^{2}, 0 < g'(\theta) < 1$As above, a prime denotes the derivative at the displayed argument. In particular g'(theta)=(f'(theta))^2. The negative f derivative describes reversal of the local signed error; the positive g derivative describes preservation of its sign.
+The fixed-point equation and the acute location determine the local factors exactly. Real.sin_eq_sqrt_one_sub_cos_sq applies with 0<theta<pi/2, and Real.sin_sq_add_cos_sq with cos(theta)=theta gives sin(theta)^2=1-theta^2. Positivity of sine selects the positive square root. The derivatives, including their derivative-existence statements, are therefore
+
+$$
+f'(\theta) = -\operatorname{sin}\left(\theta\right) = -\sqrt{1 - \theta^{2}}, -1 < f'(\theta) < 0
+$$
+
+$$
+g'(\theta) = \operatorname{sin}\left(\theta\right)^{2} = 1 - \theta^{2}, 0 < g'(\theta) < 1
+$$
+
+As above, a prime denotes the derivative at the displayed argument. In particular g'(theta)=(f'(theta))^2. The negative f derivative describes reversal of the local signed error; the positive g derivative describes preservation of its sign.
 
 These factors are limits of slopes, not identities for errors at a finite distance. For h equal to f or g, define the punctured slope at theta to be (h(x)-h(theta))/(x-theta) for x different from theta. HasDerivAt.tendsto_slope converts each derivative-existence statement into the corresponding limit as real x tends to theta through x different from theta. Since f(theta)=g(theta)=theta, this gives (f(x)-theta)/(x-theta) tending to -sin(theta)=-sqrt(1-theta^2), and (g(x)-theta)/(x-theta) tending to sin(theta)^2=1-theta^2. Both limits are along the full punctured real neighborhood, with no one-sided restriction.
 
