@@ -1,9 +1,9 @@
-/- GID: D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation
+/- GID: D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation
    generality: I
-   mirror-B: D5/B/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation
+   mirror-B: D5/B/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Topology.Instances.Real.Lemmas]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.claim; result=D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result; claim=D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.claim; result=D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result; claim=D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.claim
    digest: The complete eventual three-prefix assertion fails at every index congruent to two modulo three. -/
 
 import D5.S1.Depth.ContinuedFractions.QuadraticImpliesPeriodic
@@ -28,7 +28,7 @@ they organize algebra and modular arithmetic, not new upstream results.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S0.Certificates.Polynomials.KimStolarskyEventualPrefixRefutation
+namespace D5.S1.Depth.ContinuedFractions.KimStolarskyEventualPrefixRefutation
 
 open Filter
 open scoped Topology BigOperators
@@ -177,4 +177,4 @@ theorem result : ¬ claim := by
 
 #print axioms result
 
-end D5.S0.Certificates.Polynomials.KimStolarskyEventualPrefixRefutation
+end D5.S1.Depth.ContinuedFractions.KimStolarskyEventualPrefixRefutation

@@ -22,7 +22,7 @@ internal sealed class KimStolarskyEventualPrefixRefutationDocument : IScribeDocu
             Describe.Lean(
                 DescribeId.Create("eventual-three-prefix-assertion-refuted"),
                 DeclarationHandle.Create(
-                    "D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result"),
+                    "D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result"),
                 H("No common eventual threshold exists"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),

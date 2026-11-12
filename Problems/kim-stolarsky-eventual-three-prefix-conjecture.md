@@ -122,7 +122,7 @@ supply this falsifier.
 The source identity, exact original TeX and journal PDF hashes, locators
 and bounded search readings are in `Library/Certificates/kimstolarsky2026nicomachus.md`.
 The existing scoped compiled evidence identifies the closed theorem
-`D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result`
+`D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result`
 with literal type `Not claim`, where `claim : Prop` is the complete target
 above. Its axiom closure is `Classical.choice`, `Quot.sound`, `propext`.
 This source binding does not assert freezing, canonical projection,

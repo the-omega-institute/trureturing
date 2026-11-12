@@ -7,7 +7,7 @@ doi: 10.5281/zenodo.21678529
 url: https://math.colgate.edu/~integers/aa98/aa98.pdf
 claim: "Remark 3 conjectures, for all sufficiently large positive integers n and m=10^(4n+2), three simultaneous ordinary continued-fraction prefixes for the negatives of real-root branches of L_(m+1,o), R_(m+1,o) and xP_(m,o)-x^2+x^3 tending to -4."
 strata_touched:
-  - D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation
+  - D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation
 license: citation-only
 triage: anchor
 ---
