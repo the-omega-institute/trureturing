@@ -1,0 +1,52 @@
+**定理 102.7（每个 $m\ge4$ 的全锚点最优族）。** 对每个整数 $n\ge3$，在定义102.5中取
+
+$$
+\begin{gathered}
+r=3,\qquad s=n,\qquad m=n+1,\\
+u_0=1-2\varepsilon,\quad u_1=u_2=\varepsilon,
+\qquad v_j=1/n,\qquad 0<2\varepsilon<1/n.
+\end{gathered}
+\tag{VII102.18}
+$$
+
+$A$ 侧记为 $a_0,a_1,a_2$，$B$ 侧为 $b_1,\ldots,b_n$。这个整个原模型满足
+
+$$
+\boxed{\mathrm B+\mathrm G_{n-1},\qquad
+\neg\mathrm G_n,\qquad\neg\mathrm{Z0}.}
+\tag{VII102.19}
+$$
+
+因此对每个仿射维数 $m\ge4$，仅在原 $\mathrm B$ 域内，以VII101.1的全称同类纯目标条件替代 $\mathrm{Z0}$，统一充分元数 $m-1$ 已经逐维最小：$\mathrm B+\mathrm G_{m-2}$ 不足。这里的下界量化全部原锚点，不能由只检查一个轻源代替。
+
+证明。两侧顶点数都至少三，102.5已核对每个不同纯对的整个最小面为真边，所以原全称 $\mathrm B$ 成立。接着分别核对全部三类源。
+
+对重源 $a_0$，有 $u_0+1/n>1$，所以
+
+$$
+E_{a_0}=\{a_1,a_2\}.
+$$
+
+取原赋值 $\alpha_0=1,\alpha_1=\alpha_2=0$、全部 $\beta_j=u_0$，即同时排除全部合格目标。因此这个源满足所有 $\mathrm G_k(a_0)$；其 $d_{a_0}=2$，(VII102.1)也只要求自动成立的 $\mathrm G_1(a_0)$。
+
+对任一轻源 $a_i$、$i=1,2$，有 $\varepsilon+1/n<1$，所以
+
+$$
+E_{a_i}=P\setminus\{a_i\}.
+$$
+
+任取至多 $n-1$ 个合格目标，总有一个 $b_{j_0}$ 未选。令 $\alpha_i=1$、其他 $\alpha_k=0$，$\beta_{j_0}=n\varepsilon$、其他 $\beta_j=0$。由于 $0<n\varepsilon<1/2$，这给原proper确认效应，且共同排除所选全部目标，包括其中可能出现的重顶点。故两个轻源都满足 $\mathrm G_{n-1}(a_i)$。若要求排除全部 $n$ 个 $b_j$，其总关系权重为一，严格大于 $1-\varepsilon$，由(VII102.13)不可能。每个真子集仍可共同排除，所以它们是实际元数 $n$ 的最小不相容组。
+
+对任一对侧源 $b_j$，资格准确为
+
+$$
+E_{b_j}=\{a_1,a_2\}\cup\{b_\ell:\ell\ne j\};
+\qquad a_0\notin E_{b_j}.
+$$
+
+取 $\beta_j=1$、其余 $\beta_\ell=0$，$\alpha_1=\alpha_2=0$、$\alpha_0=1/(n u_0)$。由 $u_0>1-1/n$ 及 $n\ge3$，$0<1/(nu_0)<1$；两侧加权值均为 $1/n$。所以这也是一张原proper确认效应，且同时排除这个源的全部合格目标，给所有 $\mathrm G_k(b_j)$。
+
+至此全部原源都满足 $\mathrm G_{n-1}$，两个轻源失败 $\mathrm G_n$，VII101.2再给 $\neg\mathrm{Z0}$。较短的反向三目标集合 $\{a_0,a_1,a_2\}$ 不能作为 $b_j$ 的合格不相容组，因为其中 $a_0$ 连单独都不合格；仅数回路两侧的顶点数会漏掉这个条件。
+
+轻源还使双秩上界本身达到一般最大值：$d_{a_i}=m$，且 $h_{a_i}=m$。后者可在 $\alpha_i=1$ 的超平面内，给其他 $\alpha_k$ 统一取小的 $\delta\in(0,1)$，再令全部 $\beta_j=\varepsilon+\delta(1-\varepsilon)\in(0,1)$，取得其余所有坐标严格在零一界内部的点。原赋值空间只有一个关系，确认再去掉一维，所以 $\dim\operatorname{aff}F_{a_i}=r+s-2=m$。于是 $b_{a_i}=m-1=n$；任何声称在仅 $\mathrm B$ 域内一律用 $m-2$ 个目标的替换，都被同维的整个原模型否定。四维的最小元数三已由VII101.8—101.10给出；此族把逐维结论延伸到全部 $m\ge4$，并未将原四维结论重新计作新结果。证毕。
+
