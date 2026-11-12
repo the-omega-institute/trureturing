@@ -25,7 +25,7 @@ Mathlib basis functional calculus. No new contraction or transferred Q.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -63,9 +63,11 @@ private theorem positive_b_excitation (k r : ℕ) :
   have h := LinearMap.congr_fun
     (BcGhostFock.ghost_mixed_car ((k : ℤ)+1) (-((r : ℤ)+1))) (ket {1})
   have he : ((k : ℤ)+1) + -((r : ℤ)+1) = 0 ↔ k = r := by omega
-  simpa only [LinearMap.add_apply, Module.End.mul_apply,
-    b_nonnegative_down ((k : ℤ)+1) (by omega), map_zero, add_zero,
-    he, Module.End.one_apply, LinearMap.zero_apply, ite_apply] using h
+  simp only [LinearMap.add_apply, Module.End.mul_apply,
+    b_nonnegative_down ((k : ℤ)+1) (by omega), map_zero, add_zero, he] at h
+  by_cases hkr : k = r
+  · simpa only [if_pos hkr, Module.End.one_apply] using h
+  · simpa only [if_neg hkr, LinearMap.zero_apply] using h
 
 private theorem positive_b_c0 (k : ℕ) :
     BcGhostFock.b ((k : ℤ)+1) (BcGhostFock.c 0 (ket {1})) = 0 := by
@@ -73,7 +75,7 @@ private theorem positive_b_c0 (k : ℕ) :
     (BcGhostFock.ghost_mixed_car ((k : ℤ)+1) 0) (ket {1})
   simpa only [LinearMap.add_apply, Module.End.mul_apply,
     b_nonnegative_down ((k : ℤ)+1) (by omega), map_zero, add_zero,
-    if_neg (by omega : ((k : ℤ)+1)+0 ≠ 0), LinearMap.zero_apply] using h
+    show ((k : ℤ)+1) ≠ 0 by omega, ite_false, LinearMap.zero_apply] using h
 
 private theorem negative_c_down (r : ℕ) :
     BcGhostFock.c (-((r : ℤ)+1)) (ket {1}) =
@@ -82,7 +84,7 @@ private theorem negative_c_down (r : ℕ) :
   rw [hcast, BcGhostQuartetCount.c_negative, create_ket]
   have hsite : 2*(r+1)+3 ≠ 1 := by omega
   have hphase : phase (2*(r+1)+3) {1} = -1 := by
-    simp [phase, lowerCount, show 1 < 2*(r+1)+3 by omega]
+    simp [phase, lowerCount, Finset.filter_singleton, show 1 < 2*(r+1)+3 by omega]
   simp [hsite, hphase, Finset.pair_comm]
 
 private theorem excitation_count (r : ℕ) :
@@ -137,7 +139,7 @@ private theorem R_excitation (p : Charge D) (e : Exponents t)
       (BcGhostFock.c (-((r : ℤ)+1)) (ket {1})))) = _
   simp only [hterm]
   rw [finsum_eq_single _ r (fun k hk => by simp [hk])]
-  simp only [if_pos rfl, smul_smul]
+  simp only [ite_true, smul_smul]
 
 /-- The ACTUAL homotopy produces a pure-down state with one additional plus
 creator. The extra +1 in the invM denominator is the actual single ghost
