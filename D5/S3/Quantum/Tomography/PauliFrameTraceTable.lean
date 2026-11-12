@@ -123,12 +123,7 @@ private lemma proj_recover (A B C : Fin 2 → Pauli) :
         proj A B C (1, 1) = wordOp B ∧
     proj A B C (0, 0) - proj A B C (0, 1) - proj A B C (1, 0) +
         proj A B C (1, 1) = wordOp C := by
-  simp only [proj, eps, Fin.isValue, ↓reduceIte]
-  constructor
-  · module
-  constructor
-  · module
-  constructor <;> module
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> norm_num [proj, eps] <;> module
 
 private lemma recovered_mem (S : Submodule ℝ Op) (A B C : Fin 2 → Pauli)
     (h : ∀ st, proj A B C st ∈ S) :
@@ -144,10 +139,7 @@ private lemma word_two_mul (p q r s : Pauli) :
       (letterPhase p r * letterPhase q s) • wordOp ![letterProduct p r, letterProduct q s] := by
   rw [word_mul]
   congr 1
-  · simp [Fin.prod_univ_two]
-  · congr 1
-    ext i
-    fin_cases i <;> rfl
+  simp [Fin.prod_univ_two]
 
 private lemma word_ii : wordOp ![Pauli.I, Pauli.I] = (1 : Op) := by
   convert (word_one (n := 2)) using 2
@@ -191,7 +183,7 @@ private lemma real_generators (c : Bool) :
         _ (hbasic .Z .X (by decide) (by decide))
     convert h using 1
     simp [jordan, word_two_mul, letterPhase, letterProduct,
-      RCLike.real_smul_eq_coe_smul (K := ℂ), smul_smul, ← add_smul]
+      RCLike.real_smul_eq_coe_smul (K := ℂ), smul_smul, ← add_smul] <;> norm_num
 
 private lemma complex_generators : ∀ p q : Pauli,
     wordOp ![p, q] ∈ generated (frame false) := by
@@ -220,9 +212,12 @@ private abbrev RealWord := {w : Fin 2 → Pauli // EvenY w}
 private lemma word_entry_parity (p q : Pauli) (x y : Fin 2 → Fin 2) :
     (EvenY ![p, q] → (wordOp ![p, q] x y).im = 0) ∧
     (¬ EvenY ![p, q] → (wordOp ![p, q] x y).re = 0) := by
+  generalize h0 : x 0 = x0
+  generalize h1 : x 1 = x1
+  generalize k0 : y 0 = y0
+  generalize k1 : y 1 = y1
   cases p <;> cases q <;>
-    fin_cases h0 : x 0 <;> fin_cases h1 : x 1 <;>
-    fin_cases k0 : y 0 <;> fin_cases k1 : y 1 <;>
+    fin_cases x0 <;> fin_cases x1 <;> fin_cases y0 <;> fin_cases y1 <;>
     norm_num [EvenY, wordOp, tensorOp, Fin.prod_univ_two, pauliMatrix,
       qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two, h0, h1, k0, k1]
 
@@ -250,7 +245,8 @@ private lemma hermitian_expansion (A : Op) (hA : A.IsHermitian) :
     _ = _ := by
       apply Finset.sum_congr rfl
       intro w _
-      rw [real_coefficient A hA w, ← RCLike.real_smul_eq_coe_smul (K := ℂ)]
+      rw [real_coefficient A hA w]
+      exact (RCLike.real_smul_eq_coe_smul (K := ℂ) _ _).symm
 
 private lemma odd_coefficient_zero (A : realCarrier) (w : Fin 2 → Pauli) (hw : ¬ EvenY w) :
     (Matrix.trace (wordOp w * A.1)).re = 0 := by
@@ -294,7 +290,9 @@ private lemma frame_hermitian (c : Bool) (i : Fin 3) (st : Bits) :
     (frame c i st).IsHermitian := by
   have hproj (A B C : Fin 2 → Pauli) : (proj A B C st).IsHermitian := by
     change (proj A B C st)ᴴ = proj A B C st
-    simp [proj, eps, Matrix.conjTranspose_smul, Matrix.conjTranspose_add, word_hermitian]
+    fin_cases st <;>
+      norm_num [proj, eps, Matrix.conjTranspose_smul, Matrix.conjTranspose_add,
+        Matrix.conjTranspose_neg, word_hermitian]
   unfold frame
   split_ifs <;> apply hproj
 
@@ -304,7 +302,10 @@ private lemma real_frame_mem (i : Fin 3) (st : Bits) : frame true i st ∈ realC
   have hproj (A B C : Fin 2 → Pauli) (hA : wordOp A ∈ realCarrier)
       (hB : wordOp B ∈ realCarrier) (hC : wordOp C ∈ realCarrier) :
       proj A B C st ∈ realCarrier := by
-    have hI : (1 : Op) ∈ realCarrier := ⟨Matrix.isHermitian_one, by simp [Matrix.one_apply]⟩
+    have hI : (1 : Op) ∈ realCarrier := ⟨Matrix.isHermitian_one, by
+      intro x y
+      simp only [Matrix.one_apply]
+      split_ifs <;> norm_num⟩
     have eps_real (b : Fin 2) : eps b = ((if b = 0 then 1 else -1 : ℝ) : ℂ) := by
       unfold eps; split_ifs <;> simp
     simp only [proj, eps_real, ← Complex.ofReal_mul, ← Complex.ofReal_one,
@@ -325,7 +326,9 @@ theorem real_generated : generated (frame true) = realCarrier := by
   apply le_antisymm
   · exact generated_le _ _ real_frame_mem real_closed
   · intro A hA
-    rw [real_expansion ⟨A, hA⟩]
+    have he := real_expansion ⟨A, hA⟩
+    change A = _ at he
+    rw [he]
     apply Submodule.sum_mem
     intro w _
     apply Submodule.smul_mem
@@ -336,7 +339,7 @@ theorem real_generated : generated (frame true) = realCarrier := by
 /-- The original complex triple generates the whole common Hermitian carrier. -/
 theorem complex_generated : generated (frame false) = complexCarrier := by
   apply le_antisymm
-  · exact generated_le _ _ frame_hermitian complex_closed
+  · exact generated_le _ _ (frame_hermitian false) complex_closed
   · intro A hA
     rw [hermitian_expansion A hA]
     apply Submodule.sum_mem
@@ -356,8 +359,9 @@ private def realCoordinates : realCarrier ≃ₗ[ℝ] (RealWord → ℝ) := by
     right_inv := by
       intro f
       funext w
+      have heq (u v : RealWord) : u.1 = v.1 ↔ u = v := Subtype.val_injective.eq_iff
       simp [Matrix.mul_sum, Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul,
-        word_trace_pair, ← Subtype.val_inj, Complex.real_smul]
+        word_trace_pair, heq, Complex.real_smul]
     map_add' := by
       intro A B
       funext w
@@ -392,6 +396,7 @@ theorem generated_dimensions :
     decide
   · rw [complex_generated, complexCoordinates.finrank_eq,
       D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition.hermitian_space_finrank]
+    norm_num
 
 
 private lemma word_trace (p : Fin 2 → Pauli) :
@@ -460,7 +465,7 @@ private lemma idempotent_rank_one (A : Op) (hA : A * A = A) (ht : Matrix.trace A
   have hi : IsIdempotentElem A.toLin' := by
     change A.toLin'.comp A.toLin' = A.toLin'
     rw [← Matrix.toLin'_mul, hA]
-  have hr := hi.isProj_range.trace
+  have hr := ((LinearMap.isProj_range_iff_isIdempotentElem A.toLin').mpr hi).trace
   rw [Matrix.trace_toLin'_eq, ht] at hr
   change (1 : ℂ) = (A.rank : ℂ) at hr
   exact_mod_cast hr.symm
@@ -471,7 +476,7 @@ theorem frame_complete (c : Bool) : Complete (frame c) := by
   · intro i st
     have hi : frame c i st * frame c i st = frame c i st := by simp [frame_mul]
     have ht : Matrix.trace (frame c i st) = 1 := by
-      simpa only [hi, if_pos rfl] using trace_table c i i st st
+      simpa [hi] using trace_table c i i st st
     exact ⟨frame_hermitian c i st, hi, idempotent_rank_one _ hi ht⟩
   · intro i st uv h
     simpa only [frame_mul, if_neg h]

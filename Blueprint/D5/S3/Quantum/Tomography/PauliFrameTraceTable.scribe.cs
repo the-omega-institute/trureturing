@@ -10,7 +10,7 @@ internal sealed class PauliFrameTraceTableDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The same labelled Pauli overlap table has generated real Jordan carriers of dimensions ten and sixteen.",
-        H("Pauli frame trace table"),
+        H("Pauli frames and Jordan generation"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("frame"),
@@ -21,7 +21,10 @@ internal sealed class PauliFrameTraceTableDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "The Boolean label selects the real third context G^r or the complex third context G^c. "
                         + "The first two contexts are the fixed E and F Pauli pairs, and each context is indexed "
-                        + "by the two signs in Fin 2 × Fin 2."))),
+                        + "by the two signs in Fin 2 × Fin 2. With s,t in {+1,-1}, their four projectors are "
+                        + "E_st = (I4+s ZI+t IZ+st ZZ)/4, F_st = (I4+s XI+t IX+st XX)/4, "
+                        + "G^r_st = (I4+s XZ+t ZX+st YY)/4, and G^c_st = (I4+s YI+t IY+st YY)/4. "
+                        + "All scalar coefficients of generated carriers are real; the Jordan product is (AB+BA)/2."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("trace-table"),
