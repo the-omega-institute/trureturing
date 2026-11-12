@@ -16,6 +16,8 @@ import D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import Mathlib.Tactic
 
+/-! Actual-record arithmetic: ActualFiveModeStencil. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

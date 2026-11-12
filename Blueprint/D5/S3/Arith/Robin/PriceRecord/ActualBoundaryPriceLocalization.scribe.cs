@@ -5,30 +5,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class ActualBoundaryPriceLocalizationDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual boundary prices from legal prime exchanges on full predecessor records.",
+        "Conditional BHP boundary-price localization.",
         H("Conditional BHP boundary-price localization"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("actualboundarypricelocalization-price-variation"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization.price_variation"),
-                H("Variation of the real layer price"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For j>=1 and a>=2, the difference between beta(j,x) and beta(j,y) for x,y>=a is at most priceLip(j,a)*abs(y-x). The logarithmic derivative estimate is uniform on the whole ray, including its lower endpoint."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actualboundarypricelocalization-uniform-coarse-geometry"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization.uniform_coarse_geometry"),
-                H("Separation on every original record"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For each fixed j>=2 a single positive threshold precedes every m>=2 and every original mu>0 with the full strict predecessor record. With P=largestPrime(m) and Q=layerPrime(m,j), P>=4, Q>=4, Q<=P/8, the second layer is strictly below P/2, and log(Q/2)>=log(P)/(4*j). No optimizer at a replacement price is substituted."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actualboundarypricelocalization-counted-higher-pools"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization.counted_higher_pools"),
-                H("Exact prime cardinalities on both sides"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("A supplied two-sided short-interval count and capacity K+1 give two finite sets of exactly K distinct actual primes near a natural endpoint N. The lower set retains the closed upper endpoint; the upper set excludes N. The extra unit pays for deleting a possible prime endpoint. This result uses the count supplier directly."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actualboundarypricelocalization-uniform-counted-first-pools"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization.uniform_counted_first_pools"),

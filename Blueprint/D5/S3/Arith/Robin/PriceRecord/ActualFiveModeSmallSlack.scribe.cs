@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class ActualFiveModeSmallSlackDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual five-mode predecessors with uniform small slack and complete signed fees.",
+        "Conditional actual five-mode small slack.",
         H("Conditional actual five-mode small slack"),
         Blocks(
             Describe.Lean(

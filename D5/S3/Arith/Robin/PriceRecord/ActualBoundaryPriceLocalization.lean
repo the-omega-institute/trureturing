@@ -12,6 +12,8 @@ mathematical argument. All prime counts, valuations and fees retain their
 original hypotheses; the prescribed full bank and RH remain open. -/
 import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry
 
+/-! Actual-record arithmetic: ActualBoundaryPriceLocalization. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -32,7 +34,15 @@ open D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
   (powerSum powerSumDerivative beta logarithmicSlope powerSum_hasDerivAt
    powerSum_pos gain_pos beta_pos beta_nat beta_le_inv_pow_log)
 
-/-- Full recordhood includes EVERY positive smaller integer, with no support cap. -/
+/-- The short-interval COUNT supplier is genuinely consumed: both higher pools
+are selected here, the upper endpoint prime is removed at a literal cost of one,
+and the old actual-layer lemmas give the exact exponents inside the comparison.
+
+This is an intermediate result.  The scalar capacity, adjacent-cutoff separation,
+small widths and first-prime pools are explicit intermediate premises here.
+None of those is a price-localization hypothesis.  BoundaryPriceLocalization
+follows only in the final BHP-only source assembly below.
+-/
 private theorem actual_boundary_price_from_count_and_first_pools (j : ℕ) (hj : 2 ≤ j) :
     ∃ T : ℝ, 0 < T ∧ ∀ C c X : ℝ, 0 < C → 0 < c → 2 ≤ X →
       (∀ x : ℝ, X ≤ x →

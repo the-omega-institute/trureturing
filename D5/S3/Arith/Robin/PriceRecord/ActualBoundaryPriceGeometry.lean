@@ -17,6 +17,8 @@ import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
+/-! Actual-record arithmetic: ActualBoundaryPriceGeometry. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -680,15 +682,5 @@ theorem counted_higher_pools {N K : ℕ} {C c X : ℝ}
     refine ⟨hh.1, ?_, hh.2.2⟩
     have hne : (p : ℝ) ≠ N := by exact_mod_cast he.1
     exact lt_of_le_of_ne hh.2.1 (Ne.symm hne)
-
-/-- The short-interval COUNT supplier is genuinely consumed: both higher pools
-are selected here, the upper endpoint prime is removed at a literal cost of one,
-and the old actual-layer lemmas give the exact exponents inside the comparison.
-
-This is an intermediate result.  The scalar capacity, adjacent-cutoff separation,
-small widths and first-prime pools are explicit intermediate premises here.
-None of those is a price-localization hypothesis.  BoundaryPriceLocalization
-follows only in the final BHP-only source assembly below.
--/
 
 end D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization

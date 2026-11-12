@@ -3,10 +3,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
 /- Full-telescope actual laws and definitional source bridges.
-Four-slot registration is unfinished: no lawful enrolled-template application,
+Four-slot registration is unfinished: lawful enrolled-template application,
 compiler occurrence/sourceSelection binding, whole-family intervention,
-fixed-coordinate sensitivity or observational-dependence proof is asserted.
-The shared DependentFamily enrollment alone supplies none of those client proofs. -/
+fixed-coordinate sensitivity and observational dependence remain unproved. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -18,6 +17,7 @@ open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 open _root_.D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
+open _root_.D5.S3.Arith.Robin.PriceRecord.ActualFiveModeSmallSlack
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 

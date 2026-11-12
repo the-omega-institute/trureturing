@@ -12,6 +12,8 @@ mathematical argument. All prime counts, valuations and fees retain their
 original hypotheses; the prescribed full bank and RH remain open. -/
 import D5.S3.Arith.Robin.PriceRecord.ActualFiveModeStencil
 
+/-! Actual-record arithmetic: ActualFiveModeInventory. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
