@@ -1,0 +1,52 @@
+**命题 81.4（矩的有限表达与范围）。** 在原 Hilbert–Schmidt 空间上，令
+$$
+\begin{aligned}
+\mathcal R_1(X)&=\int_{\mathscr G_A}gXg^{-1}\,dg,\\
+\mathcal R_2(Y)&=\int_{\mathscr G_A}(g\otimes g)Y(g^{-1}\otimes g^{-1})\,dg.
+\end{aligned}\tag{81.8}
+$$
+它们分别为共轭表示固定子空间的正交投影。对任意 $\Pi_0\in\mathscr P_A$，有 $\mathsf C_A=\mathcal R_1(\Pi_0)$、$\mathsf W_A=\mathcal R_2(\Pi_0\otimes\Pi_0)$，结果不依赖 $\Pi_0$。因此 (81.3) 可由固定有限不变空间的正交投影写成有限收缩；这不选择自然有限框架或供应实际精确读数。
+
+若原简单理想分解为 $A=\bigoplus_\alpha A_\alpha$，$r_\alpha=\operatorname{rank}A_\alpha$、$d_\alpha=\dim A_\alpha$，则
+$$
+\mathsf C_A=\bigoplus_\alpha\mathsf C_\alpha,
+\qquad
+\mathsf C_\alpha=P_{\mathbb R1_\alpha}
++\frac{r_\alpha-1}{d_\alpha-1}P_{A_\alpha^0}\quad(r_\alpha>1),
+\tag{81.9}
+$$
+其中 $A_\alpha^0=\ker\tau_\alpha$。标量因子 $\mathbb R$ 只有单位方向，取 $\mathsf C_\alpha=I$，不写 $0/0$。第二矩在 $A_\alpha\otimes A_\beta$ 上为 $\mathsf W_\alpha$（同因子）或 $\mathsf C_\alpha\otimes\mathsf C_\beta$（异因子）。尤其不能一般地用 $\mathsf C_A\otimes\mathsf C_A$ 代替 $\mathsf W_A$。
+
+两个矩还能收进单个源投影。令 $P_0=|1_A\rangle\langle1_A|/n$、$\mathsf h_A=P_0\otimes P_0$，定义原 Hilbert–Schmidt 子空间与其正交投影
+$$
+\mathscr H_A=\operatorname{span}_{\mathbb R}\{\Pi\otimes\Pi:\Pi\in\mathscr P_A\},\qquad
+\mathsf P_A:\operatorname{End}(A\otimes A)\to\mathscr H_A,\qquad v_A=\mathsf P_A\mathsf h_A.
+\tag{81.8a}
+$$
+对同一个原映射对 $z=(L,p)$ 令 $S_J=J^*J$，并定义
+$$
+\Gamma_z=(\|U\|_2^2+\|G\|_2^2)\mathsf h_A
+-\tfrac12(S_J\otimes P_0+P_0\otimes S_J)-\mathcal T^*\mathcal T.
+\tag{81.8b}
+$$
+则 $v_A\ne0$，$\dim\mathscr H_A=N$，且
+$$
+\mathsf W_A=\frac{v_A}{\|v_A\|_{\rm HS}^2},\qquad
+\boxed{\mathcal Q(z)=\frac{\langle\Gamma_z,v_A\rangle_{\rm HS}}{\|v_A\|_{\rm HS}^2}.}
+\tag{81.8c}
+$$
+因此完整候选的零条件只需一个固定正交投影的收缩；平均张量 $\mathsf W_A$ 自身通常不是幂等投影，不能与 $\mathsf P_A$ 或 $\mathcal R_2$ 混同。
+
+**证明。** Haar 平移及逆元不变性给 $\mathcal R_i^2=\mathcal R_i=\mathcal R_i^*$，像恰为固定子空间；轨道传递性给基点无关性。选该有限固定子空间任一正交基，正交投影就是有限内积和，换基不改变算子。
+因 $\operatorname{Tr}(P_0\Pi)=1$，$\langle\mathsf h_A,\Pi\otimes\Pi\rangle=1$，故 $v_A\ne0$；又 $\mathsf h_A$ 不变，$\mathscr H_A$ 群不变，故 $v_A$ 不变。在 $\mathscr H_A$ 中任一不变向量 $w$ 与全部 $\Pi\otimes\Pi$ 的内积为同一个常数；若该常数零，则 $w$ 与其张成空间正交而为零。因此不变子空间至多一维，非零 $v_A$ 使之恰为 $\mathbb Rv_A$。$\mathcal R_2$ 在这个空间上正是到该直线的正交投影，而 $\langle\Pi\otimes\Pi,v_A\rangle=1$，所以其平均为 $v_A/\|v_A\|^2$。把 (81.7) 写成 $q_z(\Pi)=\langle\Gamma_z,\Pi\otimes\Pi\rangle$ 后积分，得 (81.8c)。$\mathscr H_A$ 的线性函数限制于这个轨道的像，恰为 81.3 的全部二次齐次限制空间；有限维对偶的秩等于原张成空间的维数，故二者维数同为 $N$。
+简单因子中 $\mathsf C1=1$，且自伴，故保持迹零空间。该空间在自同构群下不可约：任一非零不变子空间内取非零迹零元，将其谱框架送到固定框架；有序框架置换使其系数排列张满迹零对角空间，再用完整谱框架传递性得到全部迹零元。于是自伴 $\mathsf C$ 在迹零空间只有一个特征值 $c$；$\operatorname{Tr}\mathsf C=r$ 给 $1+c(d-1)=r$，得 (81.9)。无标签框架为各因子框架的并，乘积 Haar 的推前是不变概率，唯一性给上述直和及异因子公式。重复同型因子的置换不改变该分布。Albert 的 $r=3,d=27$ 给 $c=1/13$；不借用八元数结合矩阵运算。
+对简单 $A$ 且 $d>n>1$，取原迹正交基 $(a_k)$ 并令 $\Xi=\sum_ka_k\otimes a_k$，则
+$$
+\langle\Xi,\mathsf W_A\Xi\rangle=n,
+\qquad
+\langle\Xi,(\mathsf C_A\otimes\mathsf C_A)\Xi\rangle
+=1+\frac{(n-1)^2}{d-1}<n.
+\tag{81.10}
+$$
+前式用 $\Pi^2=\Pi$，后式用 (81.9)，证实同一框架的相关不能拆掉。一般直和也不能仅用总秩与总维数给统一迹零系数：$\mathbb R\oplus H_2(\mathbb C)$ 的两个中央单位均为特征值一方向。证毕。
+

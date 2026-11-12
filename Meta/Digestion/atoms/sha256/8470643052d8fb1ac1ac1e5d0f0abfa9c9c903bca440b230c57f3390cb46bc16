@@ -1,0 +1,69 @@
+**定义 46.2（源对齐标量图）。** 对 $x\ne0$、$|y|>1$ 的非轴接触，固定整体相位，取
+
+$$
+U=(1,r\tau)^{\mathsf T},\qquad
+\tau=v+iw=\sqrt t\,e^{i\theta},\qquad
+t=|\tau|^2>0,\qquad
+u=\frac{U}{\sqrt{1+t}},\qquad g=rh.
+\tag{46.4}
+$$
+
+因此归一演员质量是 $|u_1|^2=1/(1+t)$、$|u_2|^2=t/(1+t)$，
+并不是 $1-t,t$。以下系数正是前卷 (43.2)–(43.3)：
+
+$$
+\begin{gathered}
+\beta_0=3+12t,\qquad Z_0=-3+12t,\\
+\alpha_0=\frac{(x-1)\beta_0}{2y},\qquad
+\chi_0=-\frac{(x+1)\beta_0}{2y},\qquad
+\kappa_0=\frac{Z_0-x\beta_0}{2x},\\
+F(t)=i(1-\ell)(\alpha_0+i\kappa_0)-(2-\ell/2)=f_0+f_1t,\\
+G(t)=i(1-\ell/2)(\chi_0-i\kappa_0)-(4-2\ell)t=g_0+g_1t,\\
+\alpha_1=\frac12\left[\frac{3(x-1)v}{y}+w\right],\qquad
+\chi_1=-\frac12\left[\frac{3(x+1)v}{y}+w\right],\\
+\kappa_1=\frac{-(1+3x)v-yw}{2x},\\
+L_1(\tau)=i(1-\ell)(\alpha_1+i\kappa_1)-\tau,\\
+L_2(\tau)=i(1-\ell/2)(\chi_1-i\kappa_1)-\overline\tau,\\
+E_0=\sqrt2F(t)\overline\tau-G(t),\qquad
+E_1=\sqrt2L_1(\tau)\overline\tau-L_2(\tau),\qquad
+E_g=E_0+gE_1.
+\end{gathered}
+\tag{46.5}
+$$
+
+前卷定理 43.2 给出完整接触与 $E_g=0$ 的必要充分对应。
+其源幅度、不利过滤及比值为
+
+$$
+\begin{gathered}
+\eta=\frac{\sqrt2(F+gL_1)}{\sqrt{1+t}},\qquad
+\zeta=\frac{3(4t-1)-gv}{1+t},\qquad
+y[3(4t-1)-gv]>0,\\
+\mathcal R_g=
+\frac{A|F+gL_1|^2}{(A^2-1)|3(4t-1)-gv|}.
+\end{gathered}
+\tag{46.6}
+$$
+
+在 $g=0$ 定义
+
+$$
+P(x,y,t)=2t|F(t)|^2-|G(t)|^2,\qquad
+\mathcal R_0(x,y,t)=\frac{A|F(t)|^2}{3(A^2-1)|4t-1|}.
+\tag{46.7}
+$$
+
+前卷定理 43.3 保证 $P$ 是非零、次数至多三的实多项式；
+每个正根的 $F,G$ 均非零，唯一来源相位为
+
+$$
+\tau=\overline{\frac{G(t)}{\sqrt2F(t)}}.
+\tag{46.8}
+$$
+
+零阶不利过滤为 $y(4t-1)>0$。偏导 $\partial_t$ 总是固定 $x,y$。
+称 $P=0$ 上的点为正则接触，当且仅当 $\nabla_{x,y,t}P\ne0$；
+称其为真奇点，当且仅当 $P_x=P_y=P_t=0$。
+两者与完整复约束的实秩关系由前卷定理 44.5 给出，
+不能仅由正根的重数判定。
+

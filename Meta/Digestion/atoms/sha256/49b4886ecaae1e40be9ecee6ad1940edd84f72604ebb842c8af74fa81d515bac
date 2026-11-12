@@ -1,0 +1,8 @@
+**文献与结论归属。** [DMW] H. Derksen、V. Makam、M. Walter，*Maximum likelihood estimation for tensor normal models via castling transforms*，[arXiv:2011.03849v1](https://arxiv.org/abs/2011.03849v1)，[v1 原文 Theorem 1.5](https://arxiv.org/html/2011.03849v1) 的第 (4) 项、Definition 2.2、Corollary 2.11 及 §4；正式出版 Forum of Mathematics, Sigma **10**, E50，[DOI](https://doi.org/10.1017/fms.2022.37)。本章的定理编号明确属于 v1，其一般张量稳定性是成熟结果；不把出版版本中其他编号移植到 v1。这里实际需要的 GL 核由 85.6 直接计算，而不是从局部酉稳定子或未核对的项目缩放推断。
+
+[C] Choi (1975)、Jamiołkowski (1972) 的准确原文与 [Watrous，Theorems 2.22、2.26](../../../Library/Quantum/watrous2018theory.md#complete-channel-representations) 按本卷 82.8 的条目使用。带符号 Choi 分解、有限谱论、Moore–Penrose 逆、最小奇异值连续性、非零多项式零集及有限维正定性开放都是成熟工具。第三方稳定子文献不承担原实际菜单、参考、控制或活动接头。
+
+[R] 本卷 79.1—79.15、80.14、81.14、82.1—82.14 及[第四卷 §§65—72](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)给完整原静态桥、质量、方向、同事件关系、矩形 Kraus、两预算和消费者条件；固定来源卷 §23、有限返回卷 §§162、164—165 与原观察第二卷 §§10—19 的上述原域不变。本章的仓内纸面推导是共同锚点下的序反射充要定理、其任意纯探针精确应用、失败时的强反模型、各维显式 GL 核构造及相应扇区／稳定性／满秩目录边界。不主张穷尽文献、历史优先权或全球原创。
+
+完整原 $\Omega$ 的所有准备、事件、过程、参考、副本、实际相关联合、零／不等／次归一质量、原时钟与单位、控制、ready／flags、完整记录、失败、拒绝、停止、销毁、返回、全部仍合法未来，以及旧固定 $S$、全菜单和每个已量化中间切口义务均保留；未定义请求不补零。没有免费准备生成、复制、相干控制或实际彩票。实际 (23.7) 与原 $B_r$ 的 active-ready 连接未由本章供应；自然原探针选择、额外括号与四份以上相容性、完整原来源及更少独立物理公理未由这些纸面定理推出。完整量子起源目标保持 active／incomplete。
+

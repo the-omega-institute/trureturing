@@ -1,0 +1,21 @@
+**命题 81.5（同一个原反例的精确平均）。** 在 (78.16)／80.4 的固定完整转置平均模型中，$0<\lambda<1$ 时
+$$
+\mathcal Q_\lambda=\frac{216}{35}(1-\lambda^2)(6+\lambda^2)
+\ge\frac{24}{5}(1-\lambda^2)(7+2\lambda^2)>0,
+\qquad
+\frac35\mathcal D_\lambda\le\mathcal Q_\lambda\le\mathcal D_\lambda.
+\tag{81.11}
+$$
+实框架的 $q$ 仍为零；原全锥正 $L,p$、同 $p$ 两次、两实张成、全实 $Z$ 与整个原 C13 均保持。此处不将这个正缺陷对象预先赋予 H13 块资格。
+
+**证明。** 原 $A=H_4(\mathbb C)$ 给 $\mathsf C_A=P_{\mathbb R1}+(1/5)P_{A^0}$。$T_\lambda$ 在实对称迹零九维上为恒等，在纯虚反对称六维上乘 $\lambda$；$J(a)=T_\lambda(a)\otimes I_4$，故平均 $q_J=24(1-\lambda^2)/5$。沿用 (80.8) 的 $d_B$ 并记 $s=1-\lambda^2$，有 $\mathbb E d_B=6s/5$、$0\le d_B\le2s$、$q=4d_B(9-d_B)$。
+为算二阶矩，令 Haar $U(4)$ 的列为 $v_i$，$X_i=|v_i^Tv_i|^2$、$R=\sum_iX_i$，则 $d_B=s(4-R)/2$。复单位球面的对称张量恒等式 $\mathbb E(|v\rangle\langle v|)^{\otimes k}=P_{\rm sym}/\binom{4+k-1}{k}$ 由酉不变性、对称幂不可约性及迹一得到。取 $k=2,4$ 得 $\mathbb EX_i=2/5$、$\mathbb EX_i^2=8/35$。不能把不同列当成独立：条件于 $v_i=v$，$v_j$ 均匀位于三维正交补，令 $P=I-vv^*$，同一二阶球面矩给
+$$
+\mathbb E(X_j\mid v)=\frac{2\operatorname{Tr}(PP^T)}{3\cdot4}
+=\frac{2+X_i}{6},\qquad
+\mathbb EX_iX_j=\frac{2\mathbb EX_i+\mathbb EX_i^2}{6}=\frac6{35}.
+$$
+这里的条件平均是同一 Haar 框架的数学积分，不增加实际准备的独立性。于是 $\mathbb ER=8/5$、$\mathbb ER^2=104/35$、$\mathbb Ed_B^2=54s^2/35$，故 $\mathcal Q=36\mathbb Ed_B-4\mathbb Ed_B^2=(216/35)s(7-s)$。另逐点用 $9-d_B\ge7+2\lambda^2$ 得所列下界，(80.6) 给比例式，实框架取值仍按 80.4。这里只对同一完整原模型计算新指标，没有以独立边缘替代原接口。证毕。
+
+有限维也给一个正面的数学存在结论：$\mathsf W_A$ 属于紧轨道 $\{\Pi\otimes\Pi\}$ 的凸包，而该轨道处于 $\mathscr H_A$ 的仿射超平面 $\langle\mathsf h_A,-\rangle=1$。Carathéodory 定理给至多 $N$ 个轨道点和正权，表示同一个 $\mathsf W_A$；与任意 $\Gamma_z$ 收缩便得到对全部原模型同时成立的固定有限正权求积。因此若这种精确求积和精确原读数另已供应，存在数学上的有限零证书。该结论不选取自然节点、不供应物理准备或噪声控制；一般生成框架也不自动满足求积关系。
+

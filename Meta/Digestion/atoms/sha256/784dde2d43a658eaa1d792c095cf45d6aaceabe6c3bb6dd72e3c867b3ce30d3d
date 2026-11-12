@@ -1,0 +1,8 @@
+**命题 79.12（单项删除）。**
+
+| 删除项 | 同一实际参数 | 保留与失败 |
+| --- | --- | --- |
+| 只删 $\mathsf M_2$ | $u_{ij}=\alpha_i,g_{ijk}=1/\alpha_i,\Phi=R$ | $m_3=u_A^{\otimes3}$，$\mathrm A_0=1$，故 $\mathsf M_3$ 成立；$m_2=(\alpha\cdot a)u_A(b)$ 不标准。 |
+| 只删 $\mathsf M_3$ | $u=1,g_{ijk}=\beta_k,\Phi=R$ | $m_2=u_A^{\otimes2}$，$\mathrm A_0=1$；$m_3=u_A(a)u_A(b)(\beta\cdot c)$ 不标准。 |
+| 只删全实固定泛函条件 | 第一行参数，$\Phi=\operatorname{id}$ | 正性、保归一化、两质量恒等式和锚全保留，但双质量不标准。 |
+| 只删 $\mathrm A_0$ | $u=1,g=\kappa\ne1,\Phi=R$ | 两质量恒等式、固定条件全保留；三份绝对尺度仍为 $\kappa$。 |

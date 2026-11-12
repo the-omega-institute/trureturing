@@ -1,0 +1,23 @@
+**定理 82.3（一个固定三份数学探针检测全部扇区）。** 在定义 82.1 的全部有序块上指定迹一正元
+$$
+\Xi_{iii}=\frac{n_i}{n}G_{n_i},\qquad \Xi_{ijk}=0\quad\text{若不全相等}. \tag{82.6}
+$$
+对任意固定的共同块标架、任意允许的 $\alpha$，
+$$
+\boxed{\mathcal K_{3,\alpha}(\Phi)(\Xi)\ge0
+\quad\Longleftrightarrow\quad\Phi\text{ CP}
+\quad\Longleftrightarrow\quad\mathcal K_{3,\alpha}(\Phi)\text{ 在整个三份锥上正}.} \tag{82.7}
+$$
+全部标量、不等维和重复标签扇区均在结论中。
+
+**证明。** 在输出 $iii$，其他种子的标签不可能只改一处便变成 $iii$；故该块恰为 $(n_i/n)\mathcal K_{3,\alpha}(\Phi_{ii})(G_{n_i})$。用 $F_{n_i}$ 压缩，得到 $J(\Phi_{ii})/n$。
+对 $j\ne i$，输出 $jii$ 只能来自种子 $iii$ 的第一腿。令 $V_i|a\rangle=|aa\rangle$，则 $V_i^*V_i=I$，且该块为
+$$
+[\mathcal K_{3,\alpha}(\Phi)(\Xi)]_{jii}
+=\frac{\alpha_1}{n}(I_{n_j}\otimes V_i)J(\Phi_{ji})(I_{n_j}\otimes V_i)^*. \tag{82.8}
+$$
+若 $\alpha_1>0$，以这个等距嵌入压缩就检测所有矩形 $J(\Phi_{ji})$。若第一权重为零，选择某个正权重腿，对 $iji$ 或 $iij$ 作相同论证与因子置换即可。至少一腿权重正。因此左边蕴含每个 $J(\Phi_{ji})\ge0$。
+成熟的矩形 Choi 定理给每个块 CP。有限直和映射 CP 当且仅当全部分量 CP：必要性由中心包含与投影，充分性由任意辅助矩阵放大后逐输出块求正和。于是得到 $\Phi$ CP。反向每个一腿放大 CP，非负权平均也 CP，故在整个三份锥正，特别在 $\Xi$ 正。证毕。
+
+$\Xi$ 是选定共同标架后的一个固定数学正元，独立于待测映射；任何这样的标架选择都适用。它不是自然、唯一或无基底的原物理准备选择器，不抵触 71.7 的自然单点障碍。$V_i$ 重复的是证明中的基标签，**不是**对未知态的复制程序。三份正元和压缩的存在不供应原 GHZ 制备、参考、副本或相干控制。
+

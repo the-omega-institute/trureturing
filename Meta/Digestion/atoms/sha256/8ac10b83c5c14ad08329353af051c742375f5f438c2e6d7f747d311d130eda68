@@ -1,0 +1,11 @@
+**定义 87.6（原效应中点入口 $\mathsf E_{1/2}$）。** 在 (87.1) 的同一原测试像上，明确要求 $\mathcal E_X$ **自身**在有限维 $V_X^*$ 中闭、含 $0,u_X$，并满足
+
+$$
+f,g\in\mathcal E_X\Rightarrow(f+g)/2\in\mathcal E_X,\qquad
+f\in\mathcal E_X\Rightarrow u_X-f\in\mathcal E_X,\qquad
+f\in\mathcal E_X,\ 2f\le u_X\Rightarrow2f\in\mathcal E_X.
+\tag{87.9}
+$$
+
+每个像的存在都要求有**同一个原测试**对全部原准备同时实现相应表。末项是原有界倍增，不是按准备分别选测试。闭性等价于该原测试表像的点态闭性：从 $K_X$ 选一组线性基，基上评价给 $V_X^*$ 的有限坐标，其余评价都是线性组合。这里没有要求原多结果菜单空间有某个拓扑；新增条件仅是原二元效应像闭。
+

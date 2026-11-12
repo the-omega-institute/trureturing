@@ -1,0 +1,13 @@
+**给定二份／三份及读回。** 原两张成、全实 $Z$、(83.8)、C2、整个 $G=1_E$ 与精确 PRE 后原 H13 给共同普通且标准归一坐标，直接复用
+
+$$
+M(a,b)_{ij}=a_i\otimes b_j,\quad
+L(d,c)_{ijk}=d_{ij}\otimes c_k,\quad
+(pz)_{jk}=\sum_i\operatorname{Tr}_iz_{ijk},\quad
+(p_{13}z)_{ik}=\sum_j\operatorname{Tr}_jz_{ijk},\quad
+p_{13}=(I^{\rm raw})^*.
+\tag{87.20}
+$$
+
+它们作用在整个原载体及全部相关／纠缠方向，保标量和异型扇区。另一括号、四份以上共同来源或无限维一致性不是本推论。
+

@@ -1,0 +1,29 @@
+**推论 79.7（原锚、原校准与方向的分工）。** 保留定义 73.10 的原标量锚，令 $n=\tau_A1_A$：
+$$
+\mathrm A_0:\quad u_EL(\omega,1_A/n)=1. \tag{79.15}
+$$
+则在完整 PRE 上、无须 NB/C13，
+$$
+\mathsf{Mass}_{t,s}+\mathrm A_0\quad\Longleftrightarrow\quad C_{\rm joint}. \tag{79.16}
+$$
+在再加入内在 NB 或 H13 之后，才允许同一原数据的同时普通方向，并得到原 $M,L,p$ 全部标准归一化。
+
+**证明。** (79.9) 使锚左边恰为 $\kappa$，故 $\kappa=1$。在前方向正规形中，转置保迹及唯一原 $p$ 公式 (66.17) 给
+$$
+\delta=u_EL(1_D,1_A)=\kappa n^3,\qquad
+\gamma=u_D(p1_E)=n^3/\kappa.
+$$
+所以 (79.12) 中 $C_{\rm joint}:\delta+\gamma\le2n^3$ 当且仅当 $\kappa=1$。反向先用第四卷定理 67.7：完整 PRE 的 $\mathcal B+D_H$ 与 $C_{\rm joint}$ 给 $U=1_D,H1_D=1_E$、原 $p$ TP，故 (79.13) 中 $u=g=I$，再由定理 79.6 得数学见证。这个反向同样不使用 C13。
+随后 NB 沿 71.6、71.8a，或 H13 沿 72.7—72.8，才给原 C13；66.10 消除允许的相对转置位。原 $p$ 再由全实恢复律和 $Q$ 张成唯一给出
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes b_j,&L(d,c)_{ijk}&=d_{ij}\otimes c_k,\\
+(pz)_{jk}&=\sum_i\operatorname{Tr}_i z_{ijk},&
+(p_{13}z)_{ik}&=\sum_j\operatorname{Tr}_jz_{ijk},\quad p_{13}=(I^{\rm raw})^*.
+\end{aligned} \tag{79.17}
+$$
+$(79.17)$ 是指定原二份、三份的结论，不识别独立另一括号或四份以上载体。证毕。
+
+余尺度与锚的必要性是 73.8—73.11 已有结果。变换 $L\mapsto cL,p\mapsto c^{-1}p$ 保持 $pL$、两次同 $p$ 的 $M$，并把 $m_3$ 整体乘 $c$；齐次质量关系不能读出这个尺度。这里复用该障碍，不将它作为新发现。
+同样，方向不能由质量替代：73.14 的实际 $A=H_2,D=H_4,E=H_8$、$L(d,c)=d\otimes c$、$p(z)=(\operatorname{Tr}_1z)^T$ 给 $M(a,b)=a\otimes b^T$。全部 PRE、质量关系和 $\mathrm A_0$ 成立，但原插入是单腿部分转置后插中间单位，Bell 投影有反对称负值 $-1/2$，故 C13/NB 失败。标量迹看不见这个离散错误。
+

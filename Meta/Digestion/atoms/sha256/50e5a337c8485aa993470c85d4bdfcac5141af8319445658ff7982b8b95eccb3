@@ -1,0 +1,18 @@
+**定义 85.11（全扇区探针）。** 取定义 82.1 的原有限代数
+
+$$
+\mathcal A=\bigoplus_{i\in I}M_{n_i},\qquad n_i\ge1,\qquad
+n=\sum_i n_i,\qquad u_A=\sum_i\operatorname{Tr}.
+$$
+
+在每个块上先于待测 $\Phi$ 指定归一化纯向量 $\psi_i$，要求它对全三腿具有共同解码器 $C_i$。这份供给总有数学实例：$n_i=1$ 取唯一的一维单位向量；$n_i=2$ 取第 82 章的 $|G_2\rangle$，其 $C_i=\sqrt2F_2^*$；$n_i\ge3$ 可取定理 85.6 的显式族，或任一满足完整核条件的已指定纯向量。定义迹一数学正元
+
+$$
+(\Xi_\psi)_{iii}=\beta_i|\psi_i\rangle\langle\psi_i|,\qquad
+\beta_i=\frac{n_i}{n}>0,\qquad
+(\Xi_\psi)_{ijk}=0\ \text{若不全相同}.
+\tag{85.22}
+$$
+
+这是跨中心的奇异混态，而不是要求整个三份载体上的纯态。$\beta_i$ 是该测试正元的数学质量，不重标任何原输入质量，也不强迫每个原态的中心质量非零。
+
