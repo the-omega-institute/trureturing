@@ -60,10 +60,6 @@ private def stack {G H : Type*} [AddCommGroup G] [Module ℂ G]
     G →ₗ[ℂ] PiLp 2 (fun _ : S => H) :=
   (WithLp.linearEquiv 2 ℂ (S → H)).symm.toLinearMap.comp (LinearMap.pi A)
 
-private theorem stack_apply {G H : Type*} [AddCommGroup G] [Module ℂ G]
-    [AddCommGroup H] [Module ℂ H] (A : S → G →ₗ[ℂ] H) (z : G) (l : S) :
-    stack A z l = A l z := rfl
-
 private theorem norm_stack_sq {G : Type*} [AddCommGroup G] [Module ℂ G]
     (A : S → G →ₗ[ℂ] E) (z : G) :
     ‖stack A z‖ ^ 2 = ∑ l, ‖A l z‖ ^ 2 := by
@@ -105,13 +101,13 @@ private theorem sandwich_selfAdjoint (V : S → E →L[ℂ] F) (p : S → ℝ)
   apply IsSelfAdjoint.sum
   intro l _
   apply IsSelfAdjoint.smul
-  · exact Complex.isSelfAdjoint_ofReal _
-  · simpa only [mul_def, comp_assoc] using hX.conjugate (V l).adjoint
+  · simp [IsSelfAdjoint]
+  · simpa only [mul_def, comp_assoc] using hX.conj_adjoint (V l)
 
 private theorem sandwich_positive (V : S → E →L[ℂ] F) (p : S → ℝ)
     (hp : ∀ l, 0 ≤ p l) {X : E →L[ℂ] E} (hX : X.IsPositive) :
     (sandwich V p X).IsPositive := by
-  apply isPositive_sum
+  apply isPositive_sum Finset.univ
   intro l _
   exact (hX.conj_adjoint (V l)).smul_of_nonneg (by simpa using hp l)
 
@@ -128,5 +124,233 @@ private theorem decoder_compression (V : S → E →L[ℂ] F) (p : S → ℝ)
       intro l _
       rw [← comp_assoc (C) (V l), hC l, one_comp, comp_assoc, hadj l, comp_one]
     _ = X := by rw [← Finset.sum_smul, ← Complex.ofReal_sum, hsum]; simp
+
+private theorem inner_rankOne (x u : E) :
+    (inner ℂ ((rankOne ℂ x x) u) u).re = ‖inner ℂ x u‖ ^ 2 := by
+  rw [rankOne_apply, inner_smul_left, RCLike.conj_mul, ← Complex.ofReal_pow,
+    Complex.ofReal_re]
+
+private theorem norm_complement_rankOne (x u : E) (hx : ‖x‖ = 1) :
+    ‖u - (rankOne ℂ x x) u‖ ^ 2 = ‖u‖ ^ 2 - ‖inner ℂ x u‖ ^ 2 := by
+  rw [norm_sub_sq (𝕜 := ℂ), inner_re_symm, inner_rankOne,
+    rankOne_apply, norm_smul, hx, mul_one]
+  ring
+
+private def weightedAdjoints (V : S → E →L[ℂ] F) (p : S → ℝ) :
+    S → F →ₗ[ℂ] E := fun l => (Real.sqrt (p l) : ℂ) • (V l).adjoint.toLinearMap
+
+private theorem weighted_norm (V : S → E →L[ℂ] F) (p : S → ℝ)
+    (hp : ∀ l, 0 ≤ p l) (z : F) :
+    ‖stack (weightedAdjoints V p) z‖ ^ 2 = ∑ l, p l * ‖(V l).adjoint z‖ ^ 2 := by
+  rw [norm_stack_sq]
+  apply Finset.sum_congr rfl
+  intro l _
+  simp [weightedAdjoints, norm_smul, mul_pow, Real.sq_sqrt (hp l)]
+
+private theorem weighted_complement_norm (V : S → E →L[ℂ] F) (p : S → ℝ)
+    (hp : ∀ l, 0 ≤ p l) (x : E) (hx : ‖x‖ = 1) (z : F) :
+    ‖stack (fun l => (1 - rankOne ℂ x x).toLinearMap.comp
+        (weightedAdjoints V p l)) z‖ ^ 2 =
+      (∑ l, p l * ‖(V l).adjoint z‖ ^ 2) -
+        ∑ l, p l * ‖inner ℂ x ((V l).adjoint z)‖ ^ 2 := by
+  rw [norm_stack_sq, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro l _
+  change ‖(1 - rankOne ℂ x x) ((Real.sqrt (p l) : ℂ) • (V l).adjoint z)‖ ^ 2 = _
+  rw [map_smul, norm_smul, mul_pow]
+  simp only [Complex.norm_real, Real.norm_eq_abs, sq_abs, Real.sq_sqrt (hp l)]
+  change p l * ‖(V l).adjoint z - (rankOne ℂ x x) ((V l).adjoint z)‖ ^ 2 = _
+  rw [norm_complement_rankOne x _ hx]
+  ring
+
+private theorem sandwich_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
+    (X : E →L[ℂ] E) (z : F) :
+    (inner ℂ (sandwich V p X z) z).re =
+      ∑ l, p l * (inner ℂ (X ((V l).adjoint z)) ((V l).adjoint z)).re := by
+  classical
+  simp only [sandwich, sum_apply, smul_apply, comp_apply, sum_inner, inner_smul_left,
+    map_sum, map_mul, Complex.conj_ofReal, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, zero_mul, sub_zero]
+  apply Finset.sum_congr rfl
+  intro l _
+  rw [← (V l).adjoint_inner_right]
+
+private theorem test_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
+    (x : E) (η : ℝ) (z : F) :
+    (inner ℂ (sandwich V p (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) z) z).re =
+      (∑ l, p l * ‖(V l).adjoint z‖ ^ 2) -
+        (1 + η) * ∑ l, p l * ‖inner ℂ x ((V l).adjoint z)‖ ^ 2 := by
+  rw [sandwich_quadratic, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro l _
+  simp only [sub_apply, one_apply, smul_apply, inner_sub_left, inner_smul_left,
+    map_sub, Complex.conj_ofReal, Complex.mul_re, Complex.ofReal_re,
+    Complex.ofReal_im, zero_mul, sub_zero, inner_self_eq_norm_sq, inner_rankOne]
+  ring
+
+private theorem test_selfAdjoint (x : E) (η : ℝ) :
+    IsSelfAdjoint (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) := by
+  apply IsSelfAdjoint.sub isSelfAdjoint_one
+  exact (show IsSelfAdjoint (((1 + η : ℝ) : ℂ)) by simp [IsSelfAdjoint]).smul
+    ((isSymmetric_rankOne_self x).clm_adjoint_eq)
+
+/-- Rank-one rejection forces a nonzero joint adjoint ray, without coefficient agreement. -/
+private theorem rank_one_ray (V : S → E →L[ℂ] F) (p : S → ℝ)
+    (hp : ∀ l, 0 < p l) (htest : RankOneTests V p) (x : E) (hx : ‖x‖ = 1) :
+    ∃ z : F, (∀ l, (V l).adjoint z = inner ℂ x ((V l).adjoint z) • x) ∧
+      ∃ l, (V l).adjoint z ≠ 0 := by
+  classical
+  let A := stack (weightedAdjoints V p)
+  let B := stack (fun l => (1 - rankOne ℂ x x).toLinearMap.comp
+    (weightedAdjoints V p l))
+  have hn : ¬ B.ker ≤ A.ker := by
+    intro hk
+    obtain ⟨c, hc, hbound⟩ := finite_kernel_bound A B hk
+    have ht := htest x hx c⁻¹ (inv_pos.mpr hc)
+    apply ht
+    refine ⟨(sandwich_selfAdjoint V p (test_selfAdjoint x c⁻¹)).isSymmetric, ?_⟩
+    intro z
+    rw [test_quadratic]
+    have hA := weighted_norm V p (fun l => (hp l).le) z
+    have hB := weighted_complement_norm V p (fun l => (hp l).le) x hx z
+    change ‖A z‖ ^ 2 = _ at hA
+    change ‖B z‖ ^ 2 = _ at hB
+    have hb := hbound z
+    have hi : c⁻¹ * c = 1 := inv_mul_cancel₀ hc.ne'
+    have hmul := mul_le_mul_of_nonneg_left hb (inv_nonneg.mpr hc.le)
+    rw [← mul_assoc, hi, one_mul] at hmul
+    have hnon := mul_nonneg (inv_nonneg.mpr hc.le) (sq_nonneg ‖B z‖)
+    nlinarith [sq_nonneg ‖B z‖]
+  simp only [SetLike.le_def, not_forall, not_imp] at hn
+  obtain ⟨z, hzB, hzA⟩ := hn
+  refine ⟨z, ?_, ?_⟩
+  · intro l
+    have hl := congrArg (fun q : PiLp 2 (fun _ : S => E) => q l)
+      (show B z = 0 from hzB)
+    change (1 - rankOne ℂ x x) ((Real.sqrt (p l) : ℂ) • (V l).adjoint z) = 0 at hl
+    rw [map_smul] at hl
+    have hs : (Real.sqrt (p l) : ℂ) ≠ 0 := by
+      exact_mod_cast (Real.sqrt_pos.mpr (hp l)).ne'
+    have hz := (smul_eq_zero.mp hl).resolve_left hs
+    exact sub_eq_zero.mp hz
+  · by_contra h
+    push_neg at h
+    apply hzA
+    change A z = 0
+    apply WithLp.ext
+    funext l
+    change (Real.sqrt (p l) : ℂ) • (V l).adjoint z = 0
+    rw [h l, smul_zero]
+
+private theorem tests_force_compatibility [Nonempty S]
+    (V : S → E →L[ℂ] F) (p : S → ℝ) (hp : ∀ l, 0 < p l)
+    (e : E) (he : e ≠ 0) (v : F) (hanchor : ∀ l, V l e = v)
+    (htest : RankOneTests V p) : Compatible V := by
+  classical
+  let l₀ : S := Classical.choice inferInstance
+  intro u hu
+  have hrel : ∑ l, V l (u l) = 0 := by
+    simpa [synthesis, LinearMap.sum_apply, LinearMap.comp_apply] using hu
+  have hunit (x : E) (hx : ‖x‖ = 1) (hex : inner ℂ e x ≠ 0) :
+      inner ℂ x (∑ l, u l) = 0 := by
+    obtain ⟨z, hz, l₁, hl₁⟩ := rank_one_ray V p hp htest x hx
+    let c := inner ℂ x ((V l₀).adjoint z)
+    have hcoeff (l : S) : (V l).adjoint z = c • x := by
+      have hi : inner ℂ e ((V l).adjoint z) =
+          inner ℂ e ((V l₀).adjoint z) := by
+        rw [(V l).adjoint_inner_right, (V l₀).adjoint_inner_right, hanchor, hanchor]
+      rw [hz l, hz l₀, inner_smul_right, inner_smul_right] at hi
+      have hc : inner ℂ x ((V l).adjoint z) = c := mul_right_cancel₀ hex hi
+      rw [hz l, hc]
+    have hc : c ≠ 0 := by
+      intro hc
+      exact hl₁ (by rw [hcoeff l₁, hc, zero_smul])
+    have hzsum : star c * inner ℂ x (∑ l, u l) = 0 := by
+      calc
+        _ = ∑ l, inner ℂ ((V l).adjoint z) (u l) := by
+          simp_rw [hcoeff, inner_smul_left]
+          rw [inner_sum, Finset.mul_sum]
+        _ = inner ℂ z (∑ l, V l (u l)) := by
+          simp_rw [ContinuousLinearMap.adjoint_inner_left]
+          rw [inner_sum]
+        _ = 0 := by rw [hrel, inner_zero_right]
+    exact (mul_eq_zero.mp hzsum).resolve_left (star_ne_zero.mpr hc)
+  have hnonorth (x : E) (hex : inner ℂ e x ≠ 0) : inner ℂ x (∑ l, u l) = 0 := by
+    have hx : x ≠ 0 := by rintro rfl; simp at hex
+    have hn : ‖x‖ ≠ 0 := norm_ne_zero_iff.mpr hx
+    let a : ℂ := (‖x‖⁻¹ : ℝ)
+    have ha : a ≠ 0 := by exact_mod_cast inv_ne_zero hn
+    have hnorm : ‖a • x‖ = 1 := by
+      simp [a, norm_smul, abs_of_nonneg (inv_nonneg.mpr (norm_nonneg x)),
+        inv_mul_cancel₀ hn]
+    have hh := hunit (a • x) hnorm (by rw [inner_smul_right]; exact mul_ne_zero ha hex)
+    rw [inner_smul_left] at hh
+    exact (mul_eq_zero.mp hh).resolve_left (map_ne_zero ha)
+  have hall (x : E) : inner ℂ x (∑ l, u l) = 0 := by
+    by_cases hex : inner ℂ e x = 0
+    · have hene : inner ℂ e e ≠ 0 := inner_self_ne_zero.mpr he
+      have hh := hnonorth (x + e) (by simpa [inner_add_right, hex] using hene)
+      rw [inner_add_left, hnonorth e hene, add_zero] at hh
+      exact hh
+    · exact hnonorth x hex
+  have hz : ∑ l, u l = 0 := inner_self_eq_zero.mp (hall (∑ l, u l))
+  simpa [coordinateSum, LinearMap.sum_apply] using hz
+
+private theorem decoder_iff_compatible (V : S → E →L[ℂ] F) :
+    HasDecoder V ↔ Compatible V := by
+  classical
+  constructor
+  · rintro ⟨C, hC⟩ u hu
+    have hr : ∑ l, V l (u l) = 0 := by
+      simpa [synthesis, LinearMap.sum_apply, LinearMap.comp_apply] using hu
+    have hc (l : S) : C (V l (u l)) = u l :=
+      congrArg (fun L : E →L[ℂ] E => L (u l)) (hC l)
+    have hs := congrArg C hr
+    simpa [map_sum, hc, coordinateSum, LinearMap.sum_apply] using hs
+  · intro hk
+    obtain ⟨D, hD⟩ := factor_of_kernel (coordinateSum (E := E) (S := S)) (synthesis V) hk
+    refine ⟨D.toContinuousLinearMap, ?_⟩
+    intro l
+    ext x
+    have h := congrArg (fun L : (S → E) →ₗ[ℂ] E => L (Pi.single l x)) hD
+    simpa [synthesis, coordinateSum, LinearMap.comp_apply, LinearMap.sum_apply,
+      Pi.single_apply] using h
+
+/-- The four original conditions and the exact decoder compression on every operator.
+The common image may be zero and no individual component is assumed injective. -/
+theorem common_anchor_order_reflection [Nonempty S]
+    (V : S → E →L[ℂ] F) (p : S → ℝ) (hp : ∀ l, 0 < p l)
+    (hsum : ∑ l, p l = 1) (e : E) (he : e ≠ 0)
+    (v : F) (hanchor : ∀ l, V l e = v) :
+    (ReflectsPSD V p ↔ RankOneTests V p) ∧
+    (RankOneTests V p ↔ HasDecoder V) ∧
+    (HasDecoder V ↔ Compatible V) ∧
+    (∀ (C : F →L[ℂ] E), (∀ l, C.comp (V l) = 1) →
+      ∀ X : E →L[ℂ] E, C.comp ((sandwich V p X).comp C.adjoint) = X) ∧
+    (∀ X : E →L[ℂ] E, X.IsPositive → (sandwich V p X).IsPositive) := by
+  have h12 : ReflectsPSD V p → RankOneTests V p := by
+    intro hr x hx η hη ht
+    have hi := hr _ (test_selfAdjoint x η) ht
+    have hn := hi.re_inner_nonneg_left x
+    have hxinner : inner ℂ x x = 1 := by rw [inner_self_eq_norm_sq_to_K, hx]; norm_num
+    have happ : (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) x = -(η : ℂ) • x := by
+      simp only [sub_apply, one_apply, smul_apply, rankOne_apply, hxinner, one_smul]
+      module
+    rw [happ, inner_smul_left, hxinner] at hn
+    simp only [map_neg, Complex.conj_ofReal, neg_mul, mul_one, Complex.neg_re,
+      Complex.ofReal_re] at hn
+    linarith
+  have h23 : RankOneTests V p → HasDecoder V := fun ht =>
+    (decoder_iff_compatible V).mpr (tests_force_compatibility V p hp e he v hanchor ht)
+  have h31 : HasDecoder V → ReflectsPSD V p := by
+    rintro ⟨C, hC⟩ X _ hX
+    have hpos := hX.conj_adjoint C
+    rwa [decoder_compression V p hsum C hC X] at hpos
+  exact ⟨⟨h12, fun ht => h31 (h23 ht)⟩,
+    ⟨h23, fun hd => h12 (h31 hd)⟩, decoder_iff_compatible V,
+    (fun C hC X => decoder_compression V p hsum C hC X),
+    fun _ hX => sandwich_positive V p (fun l => (hp l).le) hX⟩
+
+#print axioms common_anchor_order_reflection
 
 end D5.S3.HilbertOperators.CommonAnchorOrderReflection
