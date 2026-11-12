@@ -15,6 +15,8 @@ import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Tactic
 
+/-! The actual Hamiltonian exponential satisfies the centered energy-variance angle bound. -/
+
 set_option backward.isDefEq.respectTransparency false
 attribute [-instance] ContinuousLinearMap.topologicalSpace
 attribute [-instance] ContinuousLinearMap.uniformSpace
@@ -71,13 +73,15 @@ private theorem arccos_of_differential_bound (r d : ℝ → ℝ) (c : ℝ)
       exact (sq_le_sq₀ hleft hright).mp hsq
     let f' := fun s => -(1 / Real.sqrt (1 - (q * r s) ^ 2)) * (q * d s)
     have hder (s : ℝ) : HasDerivAt (fun u => Real.arccos (q * r u)) (f' s) s := by
-      exact (Real.hasDerivAt_arccos (ne_of_gt (abs_lt.mp (hi s)).1)
-        (ne_of_lt (abs_lt.mp (hi s)).2)).comp s ((hd s).const_mul q)
+      have hh := HasDerivAt.comp (h := fun u : ℝ => q * r u) (h₂ := Real.arccos) s
+        (Real.hasDerivAt_arccos (ne_of_gt (abs_lt.mp (hi s)).1)
+          (ne_of_lt (abs_lt.mp (hi s)).2)) ((hd s).const_mul q)
+      exact hh
     have hnorm (s : ℝ) : ‖f' s‖ ≤ c := by
       have hpos : 0 < Real.sqrt (1 - (q * r s) ^ 2) := Real.sqrt_pos.2 (hs s)
       have heq : ‖f' s‖ = q * |d s| / Real.sqrt (1 - (q * r s) ^ 2) := by
         dsimp [f']
-        rw [Real.norm_eq_abs, abs_mul, abs_neg, abs_div, abs_one,
+        rw [abs_mul, abs_neg, abs_div, abs_one,
           abs_of_pos hpos, abs_mul, abs_of_nonneg hq0]
         ring
       rw [heq]
@@ -98,10 +102,12 @@ private theorem arccos_of_differential_bound (r d : ℝ → ℝ) (c : ℝ)
   have hseq := tendsto_natCast_div_add_atTop (1 : ℝ)
   have hl : Tendsto (fun n : ℕ => Real.arccos (((n : ℝ) / (n + 1)) * r t))
       atTop (𝓝 (Real.arccos (r t))) := by
-    simpa using Real.continuous_arccos.continuousAt.tendsto.comp (hseq.mul_const (r t))
+    simpa [Function.comp_def] using
+      Real.continuous_arccos.continuousAt.tendsto.comp (hseq.mul_const (r t))
   have hu : Tendsto (fun n : ℕ => Real.arccos ((n : ℝ) / (n + 1)) + c * |t|)
       atTop (𝓝 (c * |t|)) := by
-    simpa using (Real.continuous_arccos.continuousAt.tendsto.comp hseq).add_const (c * |t|)
+    simpa [Function.comp_def] using
+      (Real.continuous_arccos.continuousAt.tendsto.comp hseq).add_const (c * |t|)
   exact le_of_tendsto_of_tendsto hl hu (Filter.Eventually.of_forall fun n =>
     hq _ (by positivity) ((div_lt_one (by positivity : (0 : ℝ) < n + 1)).2 (by linarith)))
 
@@ -128,7 +134,7 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
   let c : ℝ := ‖A psi - (mu : ℂ) • psi‖ / hbar
   have hc : 0 ≤ c := div_nonneg (norm_nonneg _) hhbar.le
   have hB : IsSelfAdjoint B := by
-    change star (A - (mu : ℂ) • (1 : E →L[ℂ] E)) = _
+    change star (A - (mu : ℂ) • (1 : E →L[ℂ] E)) = A - (mu : ℂ) • 1
     simp only [star_sub, star_smul, hA.star_eq, star_one, Complex.star_def,
       Complex.conj_ofReal]
   have hunit (s : ℝ) : U s ∈ unitary (E →L[ℂ] E) := by
@@ -136,7 +142,7 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
     have hg : G ∈ skewAdjoint (E →L[ℂ] E) :=
       IsSelfAdjoint.smul_mem_skewAdjoint (by
         change star (-Complex.I / (hbar : ℂ)) = -(-Complex.I / (hbar : ℂ))
-        simp [star_div₀, Complex.star_def]) hB
+        simp [star_div₀, neg_div]) hB
     change star (s • G) = -(s • G)
     rw [star_smul, star_trivial, show star G = -G from hg, smul_neg]
   have hv (s : ℝ) : ‖v s‖ = 1 := by
@@ -145,18 +151,17 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
     rw [show w s = U s (G psi) from rfl,
       ContinuousLinearMap.norm_map_of_mem_unitary (hunit s)]
     dsimp [G, B, c]
-    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sub_apply,
-      ContinuousLinearMap.one_apply, norm_smul, norm_div, norm_neg, Complex.norm_I,
+    simp only [smul_apply, sub_apply,
+      one_apply_eq_self, norm_smul, norm_div, norm_neg, Complex.norm_I,
       Complex.norm_real, Real.norm_eq_abs, abs_of_pos hhbar, one_div]
     ring
   have hmu : (mu : ℂ) = inner ℂ psi (A psi) :=
     hA.isSymmetric.coe_re_inner_self_apply psi
   have hhorizontal : inner ℂ psi (G psi) = 0 := by
-    dsimp [G, B]
-    simp only [ContinuousLinearMap.smul_apply, ContinuousLinearMap.sub_apply,
-      ContinuousLinearMap.one_apply, inner_smul_right, inner_sub_right,
-      inner_self_eq_norm_sq_to_K, hpsi, Complex.ofReal_one, one_pow, mul_one]
-    rw [hmu, sub_self, mul_zero]
+    change inner ℂ psi ((-Complex.I / (hbar : ℂ)) •
+      (A psi - (mu : ℂ) • psi)) = 0
+    rw [inner_smul_right, inner_sub_right, inner_smul_right, inner_self_eq_norm_sq_to_K, hpsi]
+    simp [hmu]
   have horth (s : ℝ) : inner ℂ (v s) (w s) = 0 := by
     exact (ContinuousLinearMap.inner_map_map_of_mem_unitary (hunit s) psi (G psi)).trans
       hhorizontal
@@ -167,7 +172,7 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
   let r : ℝ → ℝ := fun s => inner ℝ psi (v s)
   let d : ℝ → ℝ := fun s => inner ℝ psi (w s)
   have hr0 : r 0 = 1 := by
-    simp [r, v, U, real_inner_self_eq_norm_sq, hpsi]
+    simp [r, v, U, hpsi]
   have hr (s : ℝ) : |r s| ≤ 1 := by
     have := abs_real_inner_le_norm psi (v s)
     simpa [r, hpsi, hv s] using this
@@ -193,10 +198,12 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
       dsimp [alpha, beta]
       push_cast
       ring
+    change ((t : ℂ) * (-Complex.I / (hbar : ℂ))) • A -
+      (((t : ℂ) * (-Complex.I / (hbar : ℂ))) * (mu : ℂ)) • (1 : E →L[ℂ] E) = _
     rw [hcoef, sub_eq_add_neg, ← neg_smul, hphasecoef]
   have hcomm : Commute (alpha • A) (beta • (1 : E →L[ℂ] E)) := by
     change (alpha • A) * (beta • 1) = (beta • 1) * (alpha • A)
-    simp [mul_smul_comm, smul_mul_assoc, smul_smul, mul_comm]
+    simp [smul_smul, mul_comm]
   have hephase : NormedSpace.exp (beta • (1 : E →L[ℂ] E)) =
       Complex.exp beta • (1 : E →L[ℂ] E) := by
     simpa only [Algebra.algebraMap_eq_smul_one, Complex.exp_eq_exp_ℂ] using
@@ -219,6 +226,8 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
     _ ≤ c * |t| := hangle
     _ = |t| * ‖A psi - (mu : ℂ) • psi‖ / hbar := by dsimp [c]; ring
 
+#print axioms projected_tangent_bound
+#print axioms arccos_of_differential_bound
 #print axioms hamiltonian_displacement
 
 end D5.S3.QuantumBounds.HamiltonianDisplacement

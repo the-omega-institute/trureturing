@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import D5.S3.QuantumBounds.HamiltonianDisplacement
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
+/-! A dependent-family registration retaining the full Hamiltonian displacement telescope. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.QuantumBounds
@@ -43,8 +45,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let E := EuclideanSpace ℂ (ULift.{u} Unit)
   let psi : E := EuclideanSpace.single ⟨()⟩ 1
-  have hp : ‖psi‖ = 1 := by simp [psi]
-  exact h (E := E) 0 (by simp) psi hp 1 (by norm_num) 0
+  have hp : ‖psi‖ = 1 := by simp [psi, EuclideanSpace.single]
+  exact h (E := E) 0 IsSelfAdjoint.zero psi hp 1 (by norm_num) 0
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -63,7 +65,8 @@ def family : Registration arena.{u} (type_of% (@hamiltonian_displacement.{u})) w
   dependence := dependence
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@hamiltonian_displacement.{u}) (Realization signature) (type_of% (ℝ)) Unit := {
+    (@hamiltonian_displacement.{u}) (Realization signature)
+    (type_of% (ℝ)) Unit := {
   unitName := `D5.S3.QuantumBounds.HamiltonianDisplacement.hamiltonian_displacement.__information_unit
   realizationName := `Reg.D5.S3.QuantumBounds.HamiltonianDisplacement.family
   realizationSource := none
@@ -85,7 +88,8 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
