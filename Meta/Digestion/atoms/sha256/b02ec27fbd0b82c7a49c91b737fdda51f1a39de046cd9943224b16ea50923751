@@ -1,0 +1,32 @@
+**定理 79.5（原参考处的尺度刚性）。** 在完整 PRE 上，(79.3)—(79.5) 迫使 $\lambda=1$，并有全部实 $d,c,z$ 上的关系
+$$
+u_Dp=\kappa^{-1}u_E,\qquad
+u_EL(d,c)=\kappa u_D(d)u_A(c),\qquad
+u_DpL(d,c)=u_D(d)u_A(c). \tag{79.9}
+$$
+这里公式中的 $u_D,u_E$ 是原归一化泛函，没有改变参考、迹或实际映射。
+
+**证明。** 复用第四卷 65.6、66.2、71.2 的前交叉全实恢复律，即 (73.23)；它不需要 NB/C13：
+$$
+pQ(a,b,c)=u_A(a)M(b,c). \tag{79.10}
+$$
+对它取原质量，并代入 (79.8)，得到
+$$
+u_DpQ(a,b,c)=\lambda u_A(a)u_A(b)u_A(c)
+ =\frac\lambda\kappa u_EQ(a,b,c).
+$$
+$Q$ 张满整个 $E$，故 $u_Dp=(\lambda/\kappa)u_E$。另一方面，对于 $d=M(a,b)$，(79.8) 给
+$$
+u_EL(d,c)=\frac\kappa\lambda u_D(d)u_A(c).
+$$
+$M$ 张满整个 $D$，遂对全部 $d,c$ 成立。组合两式即得 $u_DpL(d,c)=u_D(d)u_A(c)$。现在回到原 $\omega$，而不是另选一个参考：
+$$
+\begin{aligned}
+u_DM(a,b)
+ &=u_DpL(pL(\omega,a),b)\\
+ &=u_DpL(\omega,a)u_A(b)
+ =u_D(\omega)u_A(a)u_A(b)=u_A(a)u_A(b).
+\end{aligned} \tag{79.11}
+$$
+两次调用都为 (79.2) 的同一个实际 $p$，且原 $u_D(\omega)=1$。与 (79.8) 比较，取任意两个归一态便得 $\lambda=1$，继而得到 (79.9)。这里没有借逆迹平衡重标原模型，也没有使用密度相同就历史相同。证毕。
+
