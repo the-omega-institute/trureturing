@@ -54,13 +54,13 @@ internal sealed class A289923LeftLimitNonnegativeDocument : IScribeDocumentDefin
             Node("result", "The complete left-limit theorem", ResultFormula(),
                 "There is a limit sequence, every other sequence satisfying the same "
                 + "left-limit property equals it, and every one of its terms is nonnegative.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) =>
+        string prose, DescribeRole role, AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("a289923-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), AssessedProvenance.FromLiterature(Source),
+            StatementSource.FromAuthor(formula), provenance ?? AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
