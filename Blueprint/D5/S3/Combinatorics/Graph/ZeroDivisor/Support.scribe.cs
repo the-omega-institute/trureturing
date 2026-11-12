@@ -74,6 +74,13 @@ internal sealed class SupportDocument : IScribeDocumentDefinition
                     Paragraph(Text("The pair family is the full powerset of pairDomain. The star family is the powerset of starDomain with the powerset of starTailDomain removed. The proved disjoint configuration decomposition therefore evaluates using Mathlib's powerset product expansion. The empty configuration occurs once, in the pair family. This is the polynomial defined by the native independent-set sum, without an assumed counting formula."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("zero-divisor-coefficient-card"),
+                DeclarationHandle.Create(Prefix + "coefficient_card"),
+                H("Every native coefficient is an independent-subset count"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every commutative ring R, finite domain V of its actual zero divisor vertices, and natural rank k, the integer coefficient at k of the native independence polynomial equals the cardinality of the independent configurations on V having exactly k vertices, cast to the integers. No product decomposition or coordinate assumptions are needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("zero-divisor-independent-count-formula"),
                 DeclarationHandle.Create(Prefix + "independent_count_formula"),
                 H("Coefficients count all actual independent subsets"),

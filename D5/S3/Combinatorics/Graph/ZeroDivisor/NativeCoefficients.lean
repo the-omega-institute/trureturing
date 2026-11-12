@@ -207,9 +207,12 @@ theorem coefficients_three_domains
       simpa [Nat.cast_sub (by omega : 2 ≤ v)] using h
     have hCv : (v : ℚ)*(v.choose 3 : ℚ) ≤ (2/3:ℚ)*C^2 := by
       have hvQ : 0 ≤ (v : ℚ) := by positivity
+      have h3' : (v.choose 3 : ℚ) = C*((v : ℚ)-2)/3 := by
+        dsimp [C]
+        linarith [h3]
       have hdiff : (2/3:ℚ)*C^2-(v : ℚ)*(v.choose 3 : ℚ) = (v : ℚ)*C/3 := by
-        dsimp [C] at *
-        nlinarith [h3]
+        rw [h3', hC]
+        ring
       rw [← sub_nonneg]
       rw [hdiff]
       positivity
