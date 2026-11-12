@@ -1,3 +1,23 @@
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization
+   mirror-E: none(waiver:elementary-asymptotic-analysis)
+   anchors: []
+   utility: none
+   digest: Uniform actual boundary-price localization under independent prime-gap and count suppliers. -/
+/- proof_shape: content
+admission_basis: escape-witness
+escape_witness: actual_boundary_price_from_pools derives a two-sided price
+constraint from legal finite exchanges on the original full record. The count
+and geometry estimates construct its actual prime pools.
+Consumed bind-only helpers retain their proof organization; they supply no
+independent content claim. The consumer of priceLip_half_bound and
+first_beta_lower is normalized_cost_bound. The consumer of
+uniform_counted_first_pools is bhp_boundary_price_localization.
+utility: none. The declarations concern unbounded real and integer families,
+not bounded enumeration, a checker, a numerical reduction or a certified instance.
+The analytic suppliers remain independent explicit hypotheses. -/
+
 import D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 import Mathlib.Analysis.Calculus.MeanValue
@@ -14,7 +34,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-namespace D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceCandidate
+namespace D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 
 open Finset Filter Real
 open scoped Topology BigOperators
@@ -1357,4 +1377,4 @@ theorem bhp_boundary_price_localization : BHPBoundaryPriceClaim := by
       _ ≤ _ := normalized_cost_bound j hj hC hC hP4 hQ4 hpower hlog
   exact hbound.trans hcost
 
-end D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceCandidate
+end D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization

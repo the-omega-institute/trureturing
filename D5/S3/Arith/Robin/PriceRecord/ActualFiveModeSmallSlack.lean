@@ -1,4 +1,23 @@
-import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceCandidate
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualFiveModeSmallSlack
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualFiveModeSmallSlack
+   mirror-E: none(waiver:elementary-asymptotic-analysis)
+   anchors: []
+   utility: none
+   digest: Uniform actual five-mode predecessors with small slack and complete auxiliary fees. -/
+/- proof_shape: content
+admission_basis: escape-witness
+escape_witness: finite_five_mode_selection simultaneously realizes all signed
+modes by distinct actual primes with their original valuations and sums both
+fees; actual_finite_predecessor gives the exact integer objective identity.
+The final theorem combines these with the fourth-order stencil and the
+uniform clock on the same full record.
+utility: none. The declarations establish unbounded conditional estimates and
+finite-set identities with arbitrary inputs, not bounded enumeration, a checker,
+a numerical reduction or a certified instance. The constructed test slack is
+not the prescribed full-bank slack, and RH remains open. -/
+
+import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 import D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import Mathlib.Tactic
@@ -14,7 +33,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
-namespace D5.S3.Arith.Robin.PriceRecord.ActualFiveModeSmallSlackCandidate
+namespace D5.S3.Arith.Robin.PriceRecord.ActualFiveModeSmallSlack
 
 open Real Filter Finset
 open scoped Topology BigOperators
@@ -34,7 +53,7 @@ open D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder
 open D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
   (layerPrime valuation_below_layer_prime valuation_above_layer_prime
    signed_exchange_certificate)
-open D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceCandidate
+open D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
   (FullRecord BHPMaximumGap BHPShortIntervalCount bhpExponent priceExponent
    comparisonCount primesIn logMass bhp_boundary_price_localization)
 
@@ -174,7 +193,7 @@ private theorem uniform_boundary_root_log_transfer
           A * (largestPrime m : ℝ) ^ (-priceExponent j) := by
   obtain ⟨A, Ta, hA, hTa, hloc⟩ := bhp_boundary_price_localization hgap hcount j hj
   obtain ⟨Tg, hTg, hgeom⟩ :=
-    ActualBoundaryPriceCandidate.uniform_coarse_geometry j hj
+    ActualBoundaryPriceLocalization.uniform_coarse_geometry j hj
   have hj0 : 0 < (j : ℝ) := by exact_mod_cast (show 0 < j by omega)
   have hgamma : 0 < priceExponent j := by
     dsimp [priceExponent]
@@ -652,7 +671,7 @@ private theorem actual_high_inventory
   obtain ⟨W, c, X, hW, hc, _, hshort⟩ := hcounted
   obtain ⟨A, Ta, hA, hTa, hloc⟩ := bhp_boundary_price_localization hgap hcount j hj
   obtain ⟨Tg, hTg, hgeom⟩ :=
-    ActualBoundaryPriceCandidate.uniform_higher_geometry j hj W c (max X 5) hW hc
+    ActualBoundaryPriceLocalization.uniform_higher_geometry j hj W c (max X 5) hW hc
   refine ⟨A, W, max Ta Tg, hA, hW, lt_of_lt_of_le hTa (le_max_left _ _), ?_⟩
   intro m hm mu hmu hrecord hlarge
   dsimp only
@@ -664,7 +683,7 @@ private theorem actual_high_inventory
   have hQ5 : 5 ≤ Q := (le_max_right X 5).trans hXQ
   have hXQ' : X ≤ Q := (le_max_left X 5).trans hXQ
   obtain ⟨Lo, Hi, hLo, hHi, hLoI, hHiI⟩ :=
-    ActualBoundaryPriceCandidate.counted_higher_pools hshort hXQ' hcap
+    ActualBoundaryPriceLocalization.counted_higher_pools hshort hXQ' hcap
   have hanti := (price_record_prime_structure hm hmu hrecord).1
   have hlo (p : ℕ) (hp : p ∈ Lo) :
       p.Prime ∧ 2 < p ∧ m.factorization p = j ∧
@@ -711,10 +730,10 @@ private theorem actual_first_inventory (hcount : BHPShortIntervalCount) :
             R < (p : ℝ) ∧ (p : ℝ) ≤ R + W * R ^ bhpExponent) := by
   obtain ⟨W, c, X, hW, hc, _, hshort⟩ := hcount
   obtain ⟨Tf, hTf, hfirst⟩ :=
-    ActualBoundaryPriceCandidate.uniform_counted_first_pools 16 (by norm_num)
+    ActualBoundaryPriceLocalization.uniform_counted_first_pools 16 (by norm_num)
       W c X hW hc hshort
   obtain ⟨Tg, hTg, hgeom⟩ :=
-    ActualBoundaryPriceCandidate.uniform_coarse_geometry 2 (by norm_num)
+    ActualBoundaryPriceLocalization.uniform_coarse_geometry 2 (by norm_num)
   refine ⟨W, max 8 (max Tf Tg), hW,
     lt_of_lt_of_le (by norm_num) (le_max_left _ _), ?_⟩
   intro m hm mu hmu hrecord hlarge
@@ -1102,10 +1121,10 @@ private theorem pointwise_boundary_estimates {j : ℕ} (hj : 1 ≤ j)
     exact hmul'.trans hh
   refine ⟨(abs_sub_le (log (p : ℝ)) (log Q) (root / (j : ℝ))).trans
     (by nlinarith), ?_⟩
-  have hLip := ActualBoundaryPriceCandidate.priceLip_half_bound j
+  have hLip := ActualBoundaryPriceLocalization.priceLip_half_bound j
     (by linarith : 1 < R) hQ (by positivity : 0 < 4 * (j : ℝ)) hlog
-  have hbase := ActualBoundaryPriceCandidate.first_beta_lower (by linarith : 2 ≤ R)
-  have hnorm : ActualBoundaryPriceCandidate.priceLip j (Q / 2) *
+  have hbase := ActualBoundaryPriceLocalization.first_beta_lower (by linarith : 2 ≤ R)
+  have hnorm : ActualBoundaryPriceLocalization.priceLip j (Q / 2) *
       (W * Q ^ bhpExponent) ≤ (2 * W * B) * beta 1 R * t := by
     have he : Q ^ bhpExponent = Q ^ (bhpExponent - 1) * Q := by
       calc
@@ -1129,13 +1148,13 @@ private theorem pointwise_boundary_estimates {j : ℕ} (hj : 1 ≤ j)
         mul_le_mul_of_nonneg_right
           (mul_le_mul_of_nonneg_left hbase (mul_nonneg hW hB)) ht
       _ = _ := by ring
-  have hLip0 : 0 ≤ ActualBoundaryPriceCandidate.priceLip j (Q / 2) := by
-    unfold ActualBoundaryPriceCandidate.priceLip
+  have hLip0 : 0 ≤ ActualBoundaryPriceLocalization.priceLip j (Q / 2) := by
+    unfold ActualBoundaryPriceLocalization.priceLip
     have hlogQ : 0 < log (Q / 2) := log_pos (by linarith)
     positivity
   have hdist : |(p : ℝ) - Q| ≤ W * Q ^ bhpExponent :=
     abs_le.mpr ⟨by linarith, by linarith⟩
-  have hvar := (ActualBoundaryPriceCandidate.price_variation hj
+  have hvar := (ActualBoundaryPriceLocalization.price_variation hj
     (by linarith : 2 ≤ Q / 2) (by linarith : Q / 2 ≤ Q) hpQ).trans
       (mul_le_mul_of_nonneg_left hdist hLip0)
   have hprice : |beta j (p : ℝ) - beta 1 R| ≤ (A + 2 * W * B) * beta 1 R * t :=
@@ -1260,7 +1279,7 @@ private theorem uniform_mode_inventory
     have hj : 2 ≤ j := by fin_cases k <;> simp_all [j, modeIndex]
     obtain ⟨Ai, W, Ti, hAi, hW, hTi, hi⟩ := actual_high_inventory hgap hcount j hj
     obtain ⟨H, Tr, hH, hTr, hr⟩ := uniform_boundary_root_log_transfer hgap hcount j hj
-    obtain ⟨Tg, hTg, hg⟩ := ActualBoundaryPriceCandidate.uniform_coarse_geometry j hj
+    obtain ⟨Tg, hTg, hg⟩ := ActualBoundaryPriceLocalization.uniform_coarse_geometry j hj
     let B : ℝ := ((j : ℝ) + 2) * (2 : ℝ) ^ (j + 1) * (4 * (j : ℝ))
     let A : ℝ := 1 + (2 * W + H) + 2 * (Ai + 2 * W * B)
     let T := max Ti (max Tr Tg)
@@ -1334,7 +1353,7 @@ private theorem uniform_five_mode_pools
           (∀ p ∈ Hi k, ModeAtom m k true p ∧ ModeEstimate A (largestPrime m) k p) := by
   classical
   choose a t ha ht hpool using uniform_mode_inventory hgap hcount
-  obtain ⟨Tg, hTg, hg⟩ := ActualBoundaryPriceCandidate.uniform_coarse_geometry 2 (by norm_num)
+  obtain ⟨Tg, hTg, hg⟩ := ActualBoundaryPriceLocalization.uniform_coarse_geometry 2 (by norm_num)
   let A := 1 + ∑ k : Fin 5, a k
   let T := 1 + Tg + ∑ k : Fin 5, t k
   have hsumA : 0 ≤ ∑ k : Fin 5, a k := sum_nonneg (fun k _ => (ha k).le)
@@ -1752,4 +1771,4 @@ theorem bhp_actual_five_mode_small_slack :
       neg_le_abs _
     exact hrecordGain.le.trans (by linarith only [hneg, hgainBound])
 
-end D5.S3.Arith.Robin.PriceRecord.ActualFiveModeSmallSlackCandidate
+end D5.S3.Arith.Robin.PriceRecord.ActualFiveModeSmallSlack
