@@ -11,6 +11,7 @@ import D5.S3.Quantum.Foundation.FinitePureSimplex
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.Analysis.Convex.Radon
 import Batteries.Tactic.OpenPrivate
+import Mathlib.Analysis.Normed.Affine.AddTorsorBases
 
 /-!
 The full-base and segment-face branches of the arbitrary-pure low-dimensional argument. The
@@ -29,7 +30,7 @@ open WholePairBallConfirmation
 open FinitePureSimplex
 open scoped RealInnerProductSpace
 
-open private pair_extreme chart_sphere_pure from
+open private pair_extreme chart_sphere_pure chart_mem from
   D5.S3.Quantum.Foundation.WholePairBallConfirmation
 open private simplex_kernel_zero from
   D5.S3.Quantum.Foundation.FinitePureSimplex
@@ -165,6 +166,79 @@ theorem allAntipodes_of_full_pair_balls
   obtain ⟨_, hwhole⟩ := hB p q hpq
   obtain ⟨f, hf, hz⟩ := ball_chart_antipodal_effect C u hclosed hstrict b hwhole hn
   exact ⟨f, hf, hz⟩
+
+private theorem chart_direction {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    {p q : V} (b : BallChart C u p q) :
+    vectorSpan ℝ (pairBase C u p q) = LinearMap.range b.param.linear := by
+  have hball : vectorSpan ℝ (Metric.closedBall (0 : EuclideanSpace ℝ (Fin b.dim)) 1) = ⊤ := by
+    have hz : (0 : EuclideanSpace ℝ (Fin b.dim)) ∈ Metric.ball 0 1 := by simp
+    have hh : affineSpan ℝ (Metric.closedBall (0 : EuclideanSpace ℝ (Fin b.dim)) 1) = ⊤ :=
+      affineSpan_eq_top_of_nonempty_interior (by
+        rw [(convex_closedBall (0 : EuclideanSpace ℝ (Fin b.dim)) 1).convexHull_eq]
+        exact ⟨0, Metric.ball_subset_interior_closedBall hz⟩)
+    rw [← direction_affineSpan, hh, AffineSubspace.direction_top]
+  rw [← b.whole, ← b.param.map_vectorSpan, hball, Submodule.map_top]
+
+private theorem full_dimensional_chart_base
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    {p q : V} (b : BallChart C u p q)
+    (hdim : Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ b.dim) :
+    pairBase C u p q = base C u := by
+  have hle : vectorSpan ℝ (pairBase C u p q) ≤ vectorSpan ℝ (base C u) :=
+    vectorSpan_mono ℝ (fun _ hx => hx.1)
+  have hrank : Module.finrank ℝ (vectorSpan ℝ (pairBase C u p q)) = b.dim := by
+    rw [chart_direction b, LinearMap.finrank_range_of_inj (chart_linear_injective b)]
+    simp
+  have hdir : vectorSpan ℝ (base C u) = LinearMap.range b.param.linear := by
+    rw [← chart_direction b]
+    exact (Submodule.eq_of_le_of_finrank_eq hle (by
+      have := Submodule.finrank_mono hle
+      omega)).symm
+  apply Set.Subset.antisymm (fun _ hx => hx.1)
+  intro x hx
+  have hc := chart_mem b (s := 0) (by simp)
+  have hxdir : x - b.param 0 ∈ LinearMap.range b.param.linear := by
+    rw [← hdir]
+    exact vsub_mem_vectorSpan ℝ hx hc.1
+  obtain ⟨s, hs⟩ := hxdir
+  have hsx : b.param s = x := by
+    have hh := b.param.linear_apply_vsub s 0
+    simp only [vsub_eq_sub, sub_zero] at hh
+    rw [hs] at hh
+    exact sub_left_injective hh.symm
+  let a : ℝ := (‖s‖ + 1)⁻¹
+  have ha : 0 < a := by dsimp [a]; positivity
+  have hsmall : ‖-a • s‖ ≤ 1 := by
+    simp only [norm_smul, Real.norm_eq_abs, abs_neg, abs_of_pos ha]
+    dsimp [a]
+    rw [inv_mul_le_iff₀ (by positivity : 0 < ‖s‖ + 1)]
+    linarith
+  have hy := chart_mem b hsmall
+  have hzero : (0 : EuclideanSpace ℝ (Fin b.dim)) ∈ openSegment ℝ s (-a • s) := by
+    refine ⟨a / (1 + a), 1 / (1 + a), by positivity, by positivity, ?_, ?_⟩
+    · field_simp
+      ring
+    · have he : a / (1 + a) + (1 / (1 + a)) * (-a) = 0 := by
+        field_simp
+        ring
+      simp only [smul_smul, ← add_smul, he, zero_smul]
+  have hcenter : b.param 0 ∈ openSegment ℝ x (b.param (-a • s)) := by
+    rw [← hsx, ← image_openSegment ℝ b.param]
+    exact Set.mem_image_of_mem b.param hzero
+  exact (pair_extreme C u p q).left_mem_of_mem_openSegment hx hy.1 hc hcenter
+
+/-- The zero- and one-dimensional branches of VII98.7. Every admitted entire
+pair chart already fills the original base; proper effects are still checked
+on the entire original cone. -/
+theorem affine_dimension_at_most_one_antipodes
+    (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hdim : Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 1) :
+    allAntipodes C u := by
+  intro p q hpq b n hn ha
+  exact ball_chart_antipodal_effect C u hclosed hstrict b
+    (full_dimensional_chart_base b (hdim.trans b.dim_pos)) hn
 
 private theorem small_pure_hull_face
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}

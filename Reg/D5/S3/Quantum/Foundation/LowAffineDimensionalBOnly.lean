@@ -118,4 +118,32 @@ theorem segment_actual_positive : segmentArena.{u}.Law actual.{u} :=
     intro V add space finite C u hc hu hs hd hseg
     exact segment_faces_lowdim_antipodes C u hc hu hs hd hseg)
 
+abbrev oneDimensionalScope : Prop :=
+  ∀ {V : Type u} [NormedAddCommGroup V] [NormedSpace ℝ V]
+    [FiniteDimensional ℝ V] (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ),
+    IsClosed (C : Set V) →
+    (∀ x ∈ C, x ≠ 0 → 0 < u x) →
+    Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 1 → allAntipodes C u
+
+abbrev oneDimensionalArena : Arena where
+  signature := signature.{u}
+  Law _ := ∀ P : Inputs.{u},
+    IsClosed (P.cone : Set P.V) →
+    (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
+    Module.finrank ℝ (vectorSpan ℝ (base P.cone P.unit)) ≤ 1 →
+      allAntipodes P.cone P.unit
+
+theorem one_dimensional_source_bridge :
+    oneDimensionalScope.{u} ↔ oneDimensionalArena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P
+    exact @h P.V P.add P.space P.finite P.cone P.unit
+  · intro h V add space finite C u
+    exact @h (@Inputs.mk V add space finite C u)
+
+theorem one_dimensional_actual_positive : oneDimensionalArena.{u}.Law actual.{u} :=
+  one_dimensional_source_bridge.mp (by
+    intro V add space finite C u hc hu hd
+    exact affine_dimension_at_most_one_antipodes C u hc hu hd)
+
 end Reg.D5.S3.Quantum.Foundation.LowAffineDimensionalBOnly
