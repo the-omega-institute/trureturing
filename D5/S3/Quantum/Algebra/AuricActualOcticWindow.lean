@@ -868,8 +868,16 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
         rw [mem_coordinateKernel]
         intro i hi
         simp [coordinateExtend, hi]⟩
-      map_add' := by intros; rfl
-      map_smul' := by intros; rfl }
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        apply Subtype.ext
+        exact map_add (coordinateExtend Sᶜ) x y
+      map_smul' := by
+        intro c x
+        apply Subtype.ext
+        apply Subtype.ext
+        exact map_smul (coordinateExtend Sᶜ) c x }
   have hj : Function.Injective j := by
     intro x y h
     apply Subtype.ext
@@ -950,7 +958,7 @@ private theorem splitOperator_kernel :
   ext x
   change (splitEquiv F D K hK)
     ((actualOperator W hD hW a ha).baseChange K ((splitEquiv F D K hK).symm x)) = 0 ↔ _
-  rw [map_eq_zero_iff (splitEquiv F D K hK).injective]
+  rw [(splitEquiv F D K hK).map_eq_zero_iff]
   change (splitEquiv F D K hK).symm x ∈
     LinearMap.ker ((actualOperator W hD hW a ha).baseChange K) ↔ _
   rw [baseOperator_kernel]
@@ -1049,6 +1057,50 @@ private theorem actual_cut_free (W : Submodule F D)
   have hc : Tᶜ.card + T.card = 8 := by
     simpa [(AlgHom.card_of_splits F D K hK).trans hD] using Finset.card_compl_add_card T
   omega
+
+
+/-- The canonical splitting and all cut-free assertions concern the same actual W and n. -/
+private theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
+    (W : Submodule F D) (hD : finrank F D = 8) (hW : finrank F W = 4)
+    (hE : {c : D | ∀ w ∈ W, c * w ∈ W} = Set.range (algebraMap F D))
+    (a : D) (ha : a ∉ quotientSet W) :
+    ∃ e : K ⊗[F] D ≃ₐ[K] ((D →ₐ[F] K) → K),
+      (∀ (c : K) (d : D) (σ : D →ₐ[F] K), e (c ⊗ₜ[F] d) σ = c * σ d) ∧
+      let U := (W.baseChange K).map e.toLinearMap
+      let n := e.toLinearMap ∘ₗ (actualOperator W hD hW a ha).baseChange K ∘ₗ e.symm.toLinearMap
+      let N := LinearMap.toMatrix' n
+      n.comp n = 0 ∧ n.range = U ∧ n.ker = U ∧ N * N = 0 ∧ N.rank = 4 ∧
+      (∀ (g : K ≃ₐ[F] K) (σ τ : D →ₐ[F] K),
+        N (g.toAlgHom.comp σ) (g.toAlgHom.comp τ) = g (N σ τ)) ∧
+      (∀ S : Finset (D →ₐ[F] K), S.Nonempty → Sᶜ.Nonempty →
+        S.card + 1 ≤ 2 * finrank K (U.map (coordinateProject S))) ∧
+      (∀ S : Finset (D →ₐ[F] K), 2 ≤ S.card → S.card ≤ 6 →
+        2 ≤ (N.submatrix (fun i : S => (i : D →ₐ[F] K))
+          (fun j : Sᶜ => (j : D →ₐ[F] K))).rank ∨
+        2 ≤ (N.submatrix (fun i : Sᶜ => (i : D →ₐ[F] K))
+          (fun j : Sᶜᶜ => (j : D →ₐ[F] K))).rank) := by
+  have hsplit : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits := by
+    intro d
+    have hh := Normal.splits (inferInstance : Normal F K) (algebraMap D K d)
+    rwa [minpoly.algebraMap_eq (algebraMap D K).injective] at hh
+  have hscalar : ScalarIdealizer W := by
+    intro c hc
+    rw [← hE]
+    exact hc
+  refine ⟨splitEquiv F D K hsplit, (fun _ _ _ => rfl), ?_⟩
+  change (splitOperator K hsplit W hD hW a ha).comp (splitOperator K hsplit W hD hW a ha) = 0 ∧
+    (splitOperator K hsplit W hD hW a ha).range = splitWindow K hsplit W ∧
+    (splitOperator K hsplit W hD hW a ha).ker = splitWindow K hsplit W ∧ _
+  refine ⟨splitOperator_square_zero K hsplit W hD hW a ha,
+    splitOperator_range K hsplit W hD hW a ha,
+    splitOperator_kernel K hsplit W hD hW a ha,
+    splitMatrix_square_zero K hsplit W hD hW a ha,
+    splitMatrix_rank K hsplit W hD hW a ha,
+    splitMatrix_covariance K hsplit W hD hW a ha,
+    actual_strict_row_rank K hsplit W hD hW hscalar, ?_⟩
+  intro S h2 h6
+  rw [crossRank_matrix, crossRank_matrix]
+  exact actual_cut_free K hsplit W hD hW hscalar a ha S h2 h6
 
 end ActualCutFree
 
