@@ -243,7 +243,7 @@ theorem opposite_charge_bracket (D : LatticeData)
     have hyh : ⁅y, cartanPhysicalImage D H h26 hHG hGH f⁆ = gamma D f p • y := by
       calc
         _ = -⁅cartanPhysicalImage D H h26 hHG hGH f, y⁆ :=
-          lie_skew y (cartanPhysicalImage D H h26 hHG hGH f)
+          (lie_skew y (cartanPhysicalImage D H h26 hHG hGH f)).symm
         _ = -(gamma D f (-p) • y) := by
           rw [cartan_adjoint D H h26 hHG hGH f (-p) y hy]
         _ = gamma D f p • y := by rw [gamma_neg, neg_smul, neg_neg]
