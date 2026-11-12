@@ -1,0 +1,32 @@
+**定义 97.8（四维实域与低余维域的单一候选）。** 固定89.7、94.5和96.10的同一个原装饰元组
+$\mathcal O$，完整保留共同 $\mathfrak S(\mathcal O)$。
+沿用96.10的 $\mathcal N_{89.7}(\mathcal O)$：它准确指89.7除每个 $X=A,D,E$ 的
+$\mathrm B+\mathrm{Boundary}$ 几何项外的全部原条件，原量词及原对象均保留。
+定义 $\mathcal D_*(\mathcal O)$ 为：每个原 $X=A,D,E$ 具有一个96.1的整个实或复ROG表示，
+原 $u_X$ 任意严格正；各自仅按93.2或94.2归一化，并满足
+
+$$
+\bigl[c_X\le2\bigr]\quad\text{或}\quad
+\bigl[\mathbb F_X=\mathbb R\ \land\ n_X\le4\bigr].
+\tag{97.34}
+$$
+
+这是各原载体的适用域之并，不要求同一载体同时有两种域的秩一表示。
+表示一经选定，$n_X,c_X$ 均在其对应环境中计算；没有要求一般ROG额外具有二正则或线性分支公理。
+定义这一同数据完整包为
+
+$$
+\mathsf R_{\mathrm G_2,*}(\mathcal O)
+:=\mathcal D_*(\mathcal O)\ \land\ \mathcal N_{89.7}(\mathcal O)
+\ \land\ \bigwedge_{X=A,D,E}\mathrm G_2(V_X,C_X,u_X).
+\tag{97.35}
+$$
+
+原非几何条件的指称包含：整个原概率像与整个原测试像；原中点实现、零及全部非负质量缩放；
+同一原过程 $L:D\times A\to E$、同一原读回 $p:E\to D$ 的两次使用及同一 $\omega$；
+两实张成、全实 $Z$、含秩一分支的完整(83.8)、原两尺度条件、C2及整个 $G=1_E$；
+恢复精确PRE以后，同一原资格集合中同一个态的整个输出H13。
+所有原迹、伴随、中心权重、零分支及空活跃集仍按89.7定义。
+这些指称不以列举取代89.7和共同 $\mathfrak S$ 的完整正文，
+也不把矩阵子空间 $L_X$ 与原过程 $L$ 识别。
+
