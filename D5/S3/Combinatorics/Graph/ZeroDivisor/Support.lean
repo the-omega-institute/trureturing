@@ -9,11 +9,14 @@
 import D5.S3.StatisticalMechanics.HardCore.PartitionRelabeling
 import Mathlib.Data.ZMod.QuotientRing
 
+/-! Actual zero-divisor vertices, their support graph, and exact support multiplicities. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
 open scoped BigOperators Classical
+open Function
 
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.Support
 
@@ -27,16 +30,20 @@ def graph (R : Type*) [CommRing R] : SimpleGraph (Vertex R) where
   symm := ⟨by rintro u v ⟨hne, hmul⟩; exact ⟨hne.symm, by simpa [mul_comm] using hmul⟩⟩
   loopless := ⟨by intro u h; exact h.1 rfl⟩
 
-variable {ι R : Type*} [Fintype ι] [DecidableEq ι] [CommRing R]
+variable {ι R : Type*} [Fintype ι] [CommRing R]
 variable {K : ι → Type*} [∀ i, CommRing (K i)]
+
+/-- The finite set of indices with nonzero coordinate value. -/
+def coordinateSupport (x : ∀ i, K i) : Finset ι :=
+  Finset.univ.filter fun i => x i ≠ 0
 
 /-- The nonzero coordinate support under a specified ring equivalence. -/
 def support (e : R ≃+* ∀ i, K i) (x : R) : Finset ι :=
-  Finset.univ.filter fun i => e x i ≠ 0
+  coordinateSupport (e x)
 
 private theorem mem_support (e : R ≃+* ∀ i, K i) (x : R) (i : ι) :
     i ∈ support e x ↔ e x i ≠ 0 := by
-  simp [support]
+  simp [support, coordinateSupport]
 
 private theorem support_nonempty (e : R ≃+* ∀ i, K i) (x : R) :
     (support e x).Nonempty ↔ x ≠ 0 := by
@@ -49,7 +56,7 @@ private theorem support_nonempty (e : R ≃+* ∀ i, K i) (x : R) :
       have hi : i ∉ support e x := by rw [h]; simp
       simpa [mem_support] using hi
     · rintro rfl
-      simp [support]
+      simp [support, coordinateSupport]
   exact not_congr h
 
 variable [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)]
@@ -84,7 +91,7 @@ private theorem vertex_iff (e : R ≃+* ∀ i, K i) (x : R) :
     exact Finset.disjoint_left.mp ((mul_eq_zero_iff e x y).mp hxy)
       (hall.symm ▸ Finset.mem_univ i) hi
   · intro hproper
-    obtain ⟨i, hi⟩ := Finset.exists_notMem_of_ne_univ hproper
+    obtain ⟨i, hi⟩ := not_forall.mp (fun h => hproper (Finset.eq_univ_of_forall h))
     let y : ∀ j, K j := Pi.single i 1
     have hy : e.symm y ≠ 0 := by
       intro hzero
@@ -103,21 +110,20 @@ private theorem vertex_iff (e : R ≃+* ∀ i, K i) (x : R) :
 /-- The coordinate model retains every coordinate value, removing exactly the
 empty and full support fibers. It is not a quotient by support. -/
 abbrev SupportedVertex :=
-  {x : ∀ i, K i // (support (RingEquiv.refl _) x).Nonempty ∧
-    support (RingEquiv.refl _) x ≠ Finset.univ}
+  {x : ∀ i, K i // (coordinateSupport x).Nonempty ∧
+    coordinateSupport x ≠ Finset.univ}
 
 /-- The actual vertex correspondence, including both excluded endpoint fibers. -/
 def vertexEquiv (e : R ≃+* ∀ i, K i) : Vertex R ≃ SupportedVertex (K := K) where
-  toFun x := ⟨e x.1, by
-    simpa [support] using (vertex_iff e x.1).mp x.2⟩
-  invFun x := ⟨e.symm x.1, (vertex_iff e _).mpr (by simpa [support] using x.2)⟩
+  toFun x := ⟨e x.1, (vertex_iff e x.1).mp x.2⟩
+  invFun x := ⟨e.symm x.1, (vertex_iff e _).mpr (by
+    simpa only [support, RingEquiv.apply_symm_apply] using x.2)⟩
   left_inv x := Subtype.ext (e.symm_apply_apply x.1)
   right_inv x := Subtype.ext (e.apply_symm_apply x.1)
 
 /-- Adjacency of coordinate vertices is disjointness of their nonzero supports. -/
 def supportGraph : SimpleGraph (SupportedVertex (K := K)) where
-  Adj u v := u ≠ v ∧ Disjoint (support (RingEquiv.refl _) u.1)
-    (support (RingEquiv.refl _) v.1)
+  Adj u v := u ≠ v ∧ Disjoint (coordinateSupport u.1) (coordinateSupport v.1)
   symm := ⟨by rintro u v ⟨hne, hd⟩; exact ⟨hne.symm, hd.symm⟩⟩
   loopless := ⟨by intro u h; exact h.1 rfl⟩
 
@@ -161,11 +167,11 @@ private def fiberEquiv (e : R ≃+* ∀ i, K i) (S : Finset ι)
   right_inv f := by
     funext i
     apply Subtype.ext
-    simp [dif_pos i.2]
+    simp
 
 /-- Every genuine support cell consists of exactly the independent choices of
 nonzero coordinate values. The equality counts actual ring elements. -/
-theorem support_fiber_card [∀ i, Fintype (K i)]
+private theorem support_fiber_card [∀ i, Fintype (K i)]
     (e : R ≃+* ∀ i, K i) (S : Finset ι)
     (hS : S.Nonempty) (hSu : S ≠ Finset.univ) :
     Nat.card {x : Vertex R // support e x.1 = S} =
@@ -173,14 +179,108 @@ theorem support_fiber_card [∀ i, Fintype (K i)]
   rw [Nat.card_congr (fiberEquiv e S hS hSu), Nat.card_eq_fintype_card,
     Fintype.card_pi]
   simp only [Fintype.card_subtype_compl, Fintype.card_subtype_eq]
-  exact Finset.prod_coe_sort S _
+  exact Finset.prod_coe_sort S (fun i => Fintype.card (K i) - 1)
 
 /-- The native Chinese remainder equivalence for every finite pairwise coprime
 modulus family, directly reusing Mathlib's ring equivalence. -/
-def crt (p : ι → ℕ) (hcop : Pairwise (Nat.Coprime on p)) :
+def crt (p : ι → ℕ) (hcop : Pairwise fun i j => Nat.Coprime (p i) (p j)) :
     ZMod (∏ i, p i) ≃+* ∀ i, ZMod (p i) :=
   ZMod.prodEquivPi p hcop
 
-#print axioms support_fiber_card
+/-- Exact multiplicities of actual nonzero zero divisors for every finite
+pairwise coprime prime family, with no upper bound on the primes. -/
+theorem prime_support_fiber_card (p : ι → ℕ) (hp : ∀ i, Nat.Prime (p i))
+    (hcop : Pairwise fun i j => Nat.Coprime (p i) (p j))
+    (S : Finset ι) (hS : S.Nonempty) (hSu : S ≠ Finset.univ) :
+    Nat.card {x : Vertex (ZMod (∏ i, p i)) // support (crt p hcop) x.1 = S} =
+      ∏ i ∈ S, (p i - 1) := by
+  letI : ∀ i, Fact (p i).Prime := fun i => ⟨hp i⟩
+  letI : ∀ i, NeZero (p i) := fun i => ⟨(hp i).ne_zero⟩
+  letI : ∀ i, Fintype (ZMod (p i)) := fun i => inferInstance
+  letI : ∀ i, Nontrivial (ZMod (p i)) := fun i => inferInstance
+  letI : ∀ i, NoZeroDivisors (ZMod (p i)) := fun i => inferInstance
+  simpa only [ZMod.card] using support_fiber_card (crt p hcop) S hS hSu
+
+/-- Subsets using only the two-coordinate cells. -/
+def pairFamily (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
+    Finset (Finset (Vertex R)) :=
+  V.powerset.filter fun S => ∀ x ∈ S, (support e x.1).card = 2
+
+/-- Subsets meeting the singleton cell at i, with all their supports containing i. -/
+def starFamily (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
+    Finset (Finset (Vertex R)) :=
+  V.powerset.filter fun S =>
+    (∃ x ∈ S, support e x.1 = {i}) ∧ ∀ x ∈ S, i ∈ support e x.1
+
+private theorem independent_four (hι : Fintype.card ι = 3)
+    (e : R ≃+* ∀ i, K i) (S : Finset (Vertex R)) :
+    (graph R).IsIndepSet (S : Set (Vertex R)) ↔
+      (∀ x ∈ S, (support e x.1).card = 2) ∨
+        ∃ i, (∃ x ∈ S, support e x.1 = {i}) ∧ ∀ x ∈ S, i ∈ support e x.1 := by
+  constructor
+  · intro hind
+    by_cases hpairs : ∀ x ∈ S, (support e x.1).card = 2
+    · exact Or.inl hpairs
+    · right
+      push_neg at hpairs
+      obtain ⟨u, hu, hcard⟩ := hpairs
+      have hv := (vertex_iff e u.1).mp u.2
+      have hpos := Finset.card_pos.mpr hv.1
+      have hlt : (support e u.1).card < 3 := by
+        simpa only [hι] using (Finset.card_lt_iff_ne_univ _).mpr hv.2
+      have hone : (support e u.1).card = 1 := by omega
+      obtain ⟨i, hi⟩ := Finset.card_eq_one.mp hone
+      refine ⟨i, ⟨u, hu, hi⟩, ?_⟩
+      intro v hvS
+      by_cases huv : u = v
+      · subst v
+        simp [hi]
+      · by_contra hiv
+        have hd : Disjoint (support e u.1) (support e v.1) := by
+          simpa [hi] using hiv
+        exact hind hu hvS huv ⟨huv, (mul_eq_zero_iff e u.1 v.1).mpr hd⟩
+  · rintro (hpairs | ⟨i, _, hall⟩)
+    · intro u hu v hv _ hadj
+      have hd := (mul_eq_zero_iff e u.1 v.1).mp hadj.2
+      have hle : (support e u.1 ∪ support e v.1).card ≤ 3 := by
+        simpa only [hι] using (support e u.1 ∪ support e v.1).card_le_univ
+      rw [Finset.card_union_of_disjoint hd, hpairs u hu, hpairs v hv] at hle
+      omega
+    · intro u hu v hv _ hadj
+      exact Finset.disjoint_left.mp ((mul_eq_zero_iff e u.1 v.1).mp hadj.2)
+        (hall u hu) (hall v hv)
+
+/-- All actual independent subsets split into four disjoint families when there
+are exactly three domain coordinates. The ambient finite vertex domain is arbitrary. -/
+theorem configurations_four_families (hι : Fintype.card ι = 3)
+    (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
+    D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations (graph R) V =
+      pairFamily e V ∪ Finset.univ.biUnion (starFamily e V) ∧
+    (∀ i, Disjoint (pairFamily e V) (starFamily e V i)) ∧
+    Pairwise (fun i j => Disjoint (starFamily e V i) (starFamily e V j)) := by
+  refine ⟨?_, ?_, ?_⟩
+  · ext S
+    simp only [D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations,
+      pairFamily, starFamily, Finset.mem_union, Finset.mem_biUnion, Finset.mem_univ,
+      true_and, Finset.mem_filter, Finset.mem_powerset]
+    rw [independent_four hι e S]
+    aesop
+  · intro i
+    apply Finset.disjoint_left.mpr
+    intro S hpair hstar
+    have hpairs := (Finset.mem_filter.mp hpair).2
+    obtain ⟨u, hu, hi⟩ := (Finset.mem_filter.mp hstar).2.1
+    have hc := hpairs u hu
+    simp [hi] at hc
+  · intro i j hij
+    apply Finset.disjoint_left.mpr
+    intro S hi hj
+    obtain ⟨u, hu, hui⟩ := (Finset.mem_filter.mp hi).2.1
+    have hju := (Finset.mem_filter.mp hj).2.2 u hu
+    rw [hui] at hju
+    exact hij (Finset.mem_singleton.mp hju).symm
+
+#print axioms prime_support_fiber_card
+#print axioms configurations_four_families
 
 end D5.S3.Combinatorics.Graph.ZeroDivisor.Support
