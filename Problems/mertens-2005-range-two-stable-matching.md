@@ -46,31 +46,47 @@ Unresolved: the complete Lean/Scribe theorem. The partial source modules are
 WIP, not separately admitted results or a solved problem. No conditional
 certificate-completion or cyclic-bridge premise replaces the original target.
 
-Exact remaining obligations are general request completion in the full old/new
-certificate, stability of every translated and cyclic edge, the actual
-concatenation and closure injections on preference profiles, the cyclic source
-model correspondence (including N=5), the 16-profile exclusive-triangle count,
-normalization, and the final uniform same-q bound. The generic Fekete inference
-must be consumed with these proved hypotheses, not supplied as an assumption.
-Faithful Reg evidence and independent pre-freeze audit remain necessary.
+The source-cycle cut is implemented in `CyclicBridge`: actual signed offsets,
+single rank four, and the supplier ranks give an open certificate on the same
+word for every N>=5. Its profile injection gives a_N<=b_N; exact normalization
+gives p_N<=b_N/24^N. `PaddedCompletion` constructs the actual injective boundary
+requests for two separated pieces and for closing one word, then applies the
+six-site involution. Integer targets are never truncated or quotient-counted.
+Old--old stability survives separated placement; the cyclic closure helpers
+preserve original request destinations and exclude old--old wrap edges.
+
+Exact remaining mathematics: complete the assignments and preference word on
+the whole concatenated interval, prove reciprocity and target injectivity for
+all old/new vertices, and prove every new or mixed edge nonblocking. Derive
+the word-pair injection and b_m*b_k<=b_(m+k+6). For closure, produce the actual
+source matching and prove cyclic stability, including the extra buffer--buffer
+wrap edges at m=1, then derive the profile injection b_m<=a_(m+6) for every
+m>=1. The requester/buffer involutions alone do not supply these conclusions.
+The exact triangle count, strict growth bound and final common-q normalization
+remain separate obligations. No pending contributor result is assumed.
+
+The generic Fekete inference must be consumed with proved concatenation and
+closure hypotheses. Faithful Reg bindings and independent pre-freeze audit
+remain necessary; no mathematical component is separately admitted here.
 
 The research line is https://github.com/the-omega-institute/trureturing/issues/29622.
 Its 2026-11-26T15:30:00Z deadline and all prior forecasts and dispositions remain
 unchanged. Threshold0 is unresolved, not a refutation or line termination.
 This work claims neither formal acceptance nor worldwide novelty or priority.
 
-Checked partial scope: the supplier model and its seven ported API lemmas,
-interval certificate restriction, profile-count submultiplicativity, the
-all-parity six-orders lower bound, the open exclusive-triangle obstruction,
-and the two abstract logarithmic Fekete bounds passed direct Lean file checks
-at the project pins. Their printed theorem axiom closures are subsets of
-propext, Classical.choice and Quot.sound. These are partial checks, not a
-normal project build, report, source-model bridge or solution. The generic buffer layout and arbitrary injective request-completion theorem
-also passed these file checks with standard axiom closures. Full translated
-and cyclic stability, source correspondence and the Reg mirror remain open.
+The source and its Scribe definitions remain unfrozen Stage A components.
+Guarded direct Lean checks are distinct from native target builds, scoped
+reports, canonical Markdown emission, inventory acceptance and required CI.
+The canonical native build/report door reports a cold main project layer;
+main is observation-only for this contribution. No main-cache health,
+canonical statement-material production or delivery is claimed.
 
 The faithful registration gap is
 https://github.com/the-omega-institute/trureturing/issues/29645.
-Scribe sources exist, but canonical Markdown emission is unfinished because
-the selected declarations have no produced native statement material. No
-Markdown projection, freeze, declared_validated status or delivery is claimed.
+The source-count comparison has a typed dependent-family mirror with its full
+original telescope and actual cardinality operands. Source-selection and
+native binding evidence are absent; no declared_validated status is claimed.
+Other certificate, completion and source-rank audit targets still need
+faithful mirrors. Canonical Markdown emission is unfinished because native
+statement material is unavailable. No freeze or publication PR is authorized
+before the separately assigned independent pre-freeze audit.

@@ -330,11 +330,47 @@ theorem closing_old_edge_local {m : ℕ} (i j : Fin m)
     Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdvd (by omega)
   omega
 
+private theorem rank_wrap {n : ℕ} (p : SourceModel.Profile n) (i : Fin (n + 5))
+    (a : ℤ) (ha : -2 ≤ a ∧ a ≤ 2) :
+    SourceModel.rank p i (wrap n (i.val + a)) = offsetRank (p i) a := by
+  have hcases : a = 0 ∨ ∃ s, signed s = a := by
+    rcases ha with ⟨hl, hu⟩
+    interval_cases a
+    · exact Or.inr ⟨3, rfl⟩
+    · exact Or.inr ⟨2, rfl⟩
+    · exact Or.inl rfl
+    · exact Or.inr ⟨0, rfl⟩
+    · exact Or.inr ⟨1, rfl⟩
+  rcases hcases with h | ⟨s, rfl⟩
+  · simp [h, wrap_index, SourceModel.rank_self, offsetRank]
+  · rw [wrap_add, wrap_index, wrap_signed, SourceModel.rank_neighbor, signed_rank]
+
+/-- Appending six buffer sites preserves every old--old nonblocking test in the
+literal source cycle, with actual ranks of exterior partners and of singles. -/
+theorem closing_old_nonblocking {m : ℕ} {w : Word m} {d : Fin m → ℤ}
+    (hw : Certificate w d) (p : SourceModel.Profile (m + 1))
+    (hp : ∀ i : Fin m, p ⟨i.val, by omega⟩ = w i) (i j : Fin m)
+    (hij : i.val < j.val)
+    (hadj : (SourceModel.ring (m + 1)).Adj ⟨i.val, by omega⟩ ⟨j.val, by omega⟩) :
+    d i = (j.val : ℤ) - i.val ∨
+      SourceModel.rank p ⟨i.val, by omega⟩ (wrap (m + 1) (i.val + d i)) <
+        SourceModel.rank p ⟨i.val, by omega⟩ ⟨j.val, by omega⟩ ∨
+      SourceModel.rank p ⟨j.val, by omega⟩ (wrap (m + 1) (j.val + d j)) <
+        SourceModel.rank p ⟨j.val, by omega⟩ ⟨i.val, by omega⟩ := by
+  have hdist := closing_old_edge_local i j hadj
+  have hh := hw.nonblocking i j hij (by omega)
+  have hr := local_rank p (⟨i.val, by omega⟩ : Fin (m + 1 + 5)) ⟨j.val, by omega⟩
+    hij (by omega)
+  have hri := rank_wrap p (⟨i.val, by omega⟩ : Fin (m + 1 + 5)) (d i) (hw.bounded i)
+  have hrj := rank_wrap p (⟨j.val, by omega⟩ : Fin (m + 1 + 5)) (d j) (hw.bounded j)
+  simpa only [hri, hrj, hr.1, hr.2.1, hp] using hh
+
 #print axioms cut_certificate
 #print axioms source_count_le_open_count
 #print axioms source_probability_eq
 #print axioms source_probability_le_open_proportion
 #print axioms closing_request_source_target
 #print axioms closing_old_edge_local
+#print axioms closing_old_nonblocking
 
 end D5.S3.Combinatorics.Graph.Roommates.CyclicBridge

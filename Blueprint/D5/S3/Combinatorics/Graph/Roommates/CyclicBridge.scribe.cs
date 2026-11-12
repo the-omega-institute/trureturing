@@ -8,6 +8,10 @@ internal sealed class CyclicBridgeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial components of the Mertens range-two proof; the full theorem remains open.",
         H("CyclicBridge"), Blocks(
+            Describe.Lean(DescribeId.Create("closing-old-nonblocking"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.closing_old_nonblocking"),
+                H("closing_old_nonblocking"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every old--old edge in the literal source cycle has the original certificate nonblocking test, with actual signed-offset ranks for exterior partners and rank four for singles. New--new and mixed edges, and the full closure injection, remain open."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("closing-request-source-target"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.closing_request_source_target"),
                 H("closing_request_source_target"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
