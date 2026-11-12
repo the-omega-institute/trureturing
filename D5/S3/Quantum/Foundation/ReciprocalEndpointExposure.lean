@@ -11,7 +11,16 @@ import Mathlib.Analysis.SpecificLimits.Basic
 
 /-! The entire original proper interval and normalized base are retained.
 The relative-interior construction uses the compact zero-effect section itself;
-it applies also when that section has zero span. -/
+it applies also when that section has zero span.
+
+The public endpoint theorem has proof_shape: content and admission_basis:
+escape-witness. Its live construction combines uniform original zero-effect
+domination with penalized pure maximizers and actual normalized confirming
+effects to contradict a nonsingleton zero fibre. The resulting positive-gap
+estimate is not a specialization of a frozen or pinned endpoint theorem.
+The private relative-interior and maximum-face helpers are consumed directly by
+that proof; their compactness, separation and extreme-point API bindings are
+not counted as independent new mathematical content. -/
 
 noncomputable section
 open Set Filter Topology
@@ -40,12 +49,14 @@ private theorem zero_effect_domination {C : PointedCone ℝ V} {u : V →ₗ[ℝ
     refine ⟨?_, ?_⟩
     · intro x hx
       change 0 ≤ a * f x + b * g x ∧ a * f x + b * g x ≤ u x
-      have hf' := hf.1 x hx
-      have hg' := hg.1 x hx
+      have hf' : 0 ≤ f x ∧ f x ≤ u x := hf.1 x hx
+      have hg' : 0 ≤ g x ∧ g x ≤ u x := hg.1 x hx
       constructor
-      · positivity
+      · exact add_nonneg (mul_nonneg ha hf'.1) (mul_nonneg hb hg'.1)
       · calc
-          a * f x + b * g x ≤ a * u x + b * u x := by gcongr
+          a * f x + b * g x ≤ a * u x + b * u x := by
+            exact add_le_add (mul_le_mul_of_nonneg_left hf'.2 ha)
+              (mul_le_mul_of_nonneg_left hg'.2 hb)
           _ = u x := by rw [← add_mul, hab, one_mul]
     · change a * f p + b * g p = 0
       rw [hf.2, hg.2]; ring
@@ -82,6 +93,7 @@ private theorem zero_effect_domination {C : PointedCone ℝ V} {u : V →ₗ[ℝ
   change 0 ≤ h y - a * g y at hnonneg
   exact (le_inv_mul_iff₀ ha).mpr (by linarith)
 
+omit [FiniteDimensional ℝ V] in
 private theorem pure_maximizer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u)) (p : pure C u) (l : V →L[ℝ] ℝ) :
     ∃ x : pure C u, ∀ y ∈ base C u, l y ≤ l x := by
@@ -115,7 +127,10 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
   obtain ⟨h, hh, hhp, c, hcpos, hdom⟩ := zero_effect_domination hs hg p
   have hlower (y : V) (hy : y ∈ base C u) :
       1 - c * h y ≤ comparison C u p y := by
-    apply le_csInf ⟨u y, u, hunit p hp.2, rfl⟩
+    change 1 - c * h y ≤ sInf {r | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f y = r}
+    have hne : ({r | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f y = r} : Set ℝ).Nonempty :=
+      ⟨u y, u, hunit p hp.2, rfl⟩
+    apply le_csInf hne
     rintro r ⟨f, hf, rfl⟩
     let g := (u - f).toContinuousLinearMap
     have hgproper : proper C u g.toLinearMap := by
@@ -144,7 +159,7 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
       obtain ⟨z, hz, hmaxZ⟩ := hZ.exists_isMaxOn ⟨y, hy, hhy⟩ ell.continuous.continuousOn
       let α := ell z
       have hδ : 0 < α - ell p := by
-        have hh' := hmaxZ (show y ∈ Z from ⟨hy, hhy⟩)
+        have hh' : ell y ≤ ell z := hmaxZ (show y ∈ Z from ⟨hy, hhy⟩)
         dsimp [α]; linarith
       obtain ⟨a, ha, hmin⟩ := hK.exists_isMinOn ⟨p, hp⟩ ell.continuous.continuousOn
       obtain ⟨b, hb, hmax⟩ := hK.exists_isMaxOn ⟨p, hp⟩ ell.continuous.continuousOn
@@ -178,7 +193,7 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
         have hmα : α ≤ m := hxα n
         have hLp : L n p = ell p := by simp [L, hhp]
         have hd : 0 < d := by
-          have hwle := hwmin hp
+          have hwle : L n w ≤ L n p := hwmin hp
           rw [hLp] at hwle
           dsimp [d]; linarith
         let e : V →ₗ[ℝ] ℝ := d⁻¹ • ((L n).toLinearMap - (L n w) • u)
@@ -209,15 +224,15 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
           dsimp [d]
           ring
         have hdA : d ≤ A + t n := by
-          have hmup := hmax (hxK n)
-          have hwlo := hmin hw
-          have hhx := (hh (x n) (hxK n).1).1
-          have hhw := (hh w hw.1).2
+          have hmup : ell (x n) ≤ ell b := hmax (hxK n)
+          have hwlo : ell a ≤ ell w := hmin hw
+          have hhx : 0 ≤ h (x n) := (hh (x n) (hxK n).1).1
+          have hhw : h w ≤ u w := (hh w hw.1).2
           rw [hw.2] at hhw
           dsimp [d, m, L, A]
-          simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply, smul_eq_mul]
+          simp only [sub_apply, smul_apply, smul_eq_mul]
           nlinarith [ht n]
-        have hhn := (hh (x n) (hxK n).1).1
+        have hhn : 0 ≤ h (x n) := (hh (x n) (hxK n).1).1
         have hstep : α - ell p ≤ c * (A + t n) * h (x n) := by
           calc
             α - ell p ≤ d * (1 - e p) := by rw [hepval]; linarith
@@ -232,7 +247,7 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
         have hinv : Tendsto (fun n : ℕ => A / t n) atTop (𝓝 0) := by
           simpa [t, div_eq_mul_inv] using
             (tendsto_const_nhds (x := A)).mul
-              (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ) (1 : ℝ))
+              (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ))
         apply squeeze_zero (fun n => (hh _ (hxK (φ n)).1).1)
           (fun n => hsmall (φ n)) (hinv.comp hφ.tendsto_atTop)
       have hvh : h v = 0 := tendsto_nhds_unique
@@ -241,23 +256,23 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
         apply le_antisymm (hmaxZ ⟨hv, hvh⟩)
         have hn (n : ℕ) : α ≤ ell (x (φ n)) := by
           have hpn := hpen (φ n)
-          have hhn := (hh _ (hxK (φ n)).1).1
+          have hhn : 0 ≤ h (x (φ n)) := (hh _ (hxK (φ n)).1).1
           nlinarith [ht (φ n)]
-        exact le_of_tendsto (ell.continuous.tendsto v |>.comp hvlim) (Eventually.of_forall hn)
+        exact ge_of_tendsto (ell.continuous.tendsto v |>.comp hvlim) (Eventually.of_forall hn)
       have hlim : Tendsto (fun n => c * (A * h (x (φ n)) + ell (x (φ n)) - α))
           atTop (𝓝 0) := by
         convert (tendsto_const_nhds (x := c)).mul
           (((tendsto_const_nhds (x := A)).mul hzeroLim).add
             (ell.continuous.tendsto v |>.comp hvlim) |>.sub_const α) using 1 <;>
           simp [hαv]
-      have hbad : α - ell p ≤ 0 := le_of_tendsto hlim (Eventually.of_forall fun n => hbound (φ n))
+      have hbad : α - ell p ≤ 0 := ge_of_tendsto hlim (Eventually.of_forall fun n => hbound (φ n))
       exact (not_le_of_gt hδ) hbad
     · rintro y rfl
       exact ⟨hp, hhp⟩
   have hcompl : confirms C u p (u - h.toLinearMap) := by
     refine ⟨?_, ?_⟩
     · intro y hy
-      have hh' := hh y hy
+      have hh' : 0 ≤ h y ∧ h y ≤ u y := hh y hy
       change 0 ≤ u y - h y ∧ u y - h y ≤ u y
       constructor <;> linarith
     · simp [hp.2, hhp]
@@ -276,10 +291,16 @@ theorem reciprocal_endpoint_exposure {C : PointedCone ℝ V} {u : V →ₗ[ℝ] 
   ext y
   constructor
   · rintro ⟨hy, he⟩
-    exact ⟨hy, fun z hz => by simpa [he, hz.2] using (hcompl.1 z hz.1).2⟩
+    refine ⟨hy, fun z hz => ?_⟩
+    change (u - h.toLinearMap) z ≤ (u - h.toLinearMap) y
+    rw [he]
+    simpa only [hz.2] using (hcompl.1 z hz.1).2
   · rintro ⟨hy, hmax⟩
     refine ⟨hy, le_antisymm ?_ ?_⟩
     · simpa [hy.2] using (hcompl.1 y hy.1).2
-    · simpa [hcompl.2] using hmax p hp
+    · have hle := hmax p hp
+      change (u - h.toLinearMap) p ≤ (u - h.toLinearMap) y at hle
+      rw [hcompl.2] at hle
+      exact hle
 
 end D5.S3.Quantum.Foundation.ReciprocalEndpointExposure

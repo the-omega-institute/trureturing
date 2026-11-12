@@ -23,8 +23,8 @@ internal sealed class ReciprocalEndpointExposureDocument : IScribeDocumentDefini
         Formula v = V("V"), cone = V("C"), u = V("u"), p = V("p"), x = V("x"), y = V("y"), h = V("h");
         Formula dual = C("LinearMap", R, v), k = C("base", cone, u), pure = C("pure", cone, u);
         Formula complement = new Formula.Binary(u, FormulaBinaryOperator.Subtract, h);
-        Formula zero = new Formula.SetBuilder(y, y, And(In(y, k), Eq(App(h, y), D(0))));
-        Formula one = new Formula.SetBuilder(y, y, And(In(y, k), Eq(App(complement, y), D(1))));
+        Formula zero = new Formula.SetBuilder(y, y, Seq(k, Sp, Land, Sp, Eq(App(h, y), D(0))));
+        Formula one = new Formula.SetBuilder(y, y, Seq(k, Sp, Land, Sp, Eq(App(complement, y), D(1))));
         Formula singleton = new Formula.SetLiteral([p]);
         Formula result = Ex("h", dual, And(C("proper", cone, u, h), And(Eq(zero, singleton),
             And(C("confirms", cone, u, p, complement), And(Eq(one, singleton), C("IsExposed", R, k, singleton))))));
