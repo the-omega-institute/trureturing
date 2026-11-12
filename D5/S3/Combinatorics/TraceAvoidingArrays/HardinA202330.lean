@@ -32,14 +32,14 @@ instance (r : Fin 4 → Bool) : Decidable (horizontal r) := by
   infer_instance
 
 /-- Labeled arrays with open boundaries and the original window comparisons. -/
-def valid {n : ℕ} (a : Fin (n+1) → Fin 4 → Bool) : Prop :=
-  (∀ i, horizontal (a i)) ∧
+def valid {n : ℕ} (a : Fin (n+1) × Fin 4 → Bool) : Prop :=
+  (∀ i, horizontal (fun j => a (i,j))) ∧
   ∀ i : ℕ, ∀ hi : i+2 < n+1, ∀ j : Fin 4,
-    2 * bit (a ⟨i, by omega⟩ j) + bit (a ⟨i+1, by omega⟩ j) ≤
-      2 * bit (a ⟨i+1, by omega⟩ j) + bit (a ⟨i+2, hi⟩ j)
+    2 * bit (a (⟨i, by omega⟩,j)) + bit (a (⟨i+1, by omega⟩,j)) ≤
+      2 * bit (a (⟨i+1, by omega⟩,j)) + bit (a (⟨i+2, hi⟩,j))
 
 noncomputable def count (n : ℕ) : ℕ :=
-  Nat.card {a : Fin (n+1) → Fin 4 → Bool // valid a}
+  Nat.card {a : Fin (n+1) × Fin 4 → Bool // valid a}
 
 /-- OFFSET 1,1: the formal series has zero constant coefficient. -/
 noncomputable def generatingSeries : PowerSeries ℚ :=
@@ -77,7 +77,7 @@ private def T : Matrix (Fin 6 × Fin 6) (Fin 6 × Fin 6) ℤ :=
   fun s t => if t.1 = s.2 ∧ Q s.1 s.2 t.2 then 1 else 0
 
 private theorem decoded_good {n : ℕ} (w : Fin (n+1) → Fin 6) :
-    valid (fun i => row (w i)) ↔ good (fun _ _ => True) Q (List.ofFn w) := by
+    valid (fun p => row (w p.1) p.2) ↔ good (fun _ _ => True) Q (List.ofFn w) := by
   rw [good_iff_local]
   have get (i : ℕ) (hi : i < n+1) :
       (List.ofFn w).getD i default = w ⟨i,hi⟩ := by
@@ -91,18 +91,23 @@ private theorem decoded_good {n : ℕ} (w : Fin (n+1) → Fin 6) :
     simpa only [get i (by omega), get (i+1) (by omega), get (i+2) hi, Q] using h i hi
 
 private noncomputable def arrayEquiv (n : ℕ) :
-    {a : Fin (n+1) → Fin 4 → Bool // valid a} ≃
+    {a : Fin (n+1) × Fin 4 → Bool // valid a} ≃
       {w : Fin (n+1) → Fin 6 // good (fun _ _ => True) Q (List.ofFn w)} where
   toFun a := by
-    let w : Fin (n+1) → Fin 6 := fun i => rowEquiv.symm ⟨a.val i, a.property.1 i⟩
-    have hw (i) : row (w i) = a.val i :=
-      congrArg Subtype.val (rowEquiv.apply_symm_apply ⟨a.val i, a.property.1 i⟩)
-    exact ⟨w, (decoded_good w).mp (by simpa only [hw] using a.property)⟩
-  invFun w := ⟨fun i => row (w.val i), (decoded_good w.val).mpr w.property⟩
+    let w : Fin (n+1) → Fin 6 :=
+      fun i => rowEquiv.symm ⟨fun j => a.val (i,j), a.property.1 i⟩
+    have hw (i) : row (w i) = (fun j => a.val (i,j)) :=
+      congrArg Subtype.val (rowEquiv.apply_symm_apply ⟨fun j => a.val (i,j), a.property.1 i⟩)
+    have ha : (fun p : Fin (n+1) × Fin 4 => row (w p.1) p.2) = a.val := by
+      funext p
+      exact congrFun (hw p.1) p.2
+    exact ⟨w, (decoded_good w).mp (by rw [ha]; exact a.property)⟩
+  invFun w := ⟨fun p => row (w.val p.1) p.2, (decoded_good w.val).mpr w.property⟩
   left_inv a := by
     apply Subtype.ext
-    funext i
-    exact congrArg Subtype.val (rowEquiv.apply_symm_apply ⟨a.val i, a.property.1 i⟩)
+    funext ⟨i,j⟩
+    exact congrFun (congrArg Subtype.val
+      (rowEquiv.apply_symm_apply ⟨fun j => a.val (i,j), a.property.1 i⟩)) j
   right_inv w := by
     apply Subtype.ext
     funext i
@@ -130,7 +135,7 @@ private theorem count_transfer (m : ℕ) :
     · rw [Finset.sum_eq_single b]
       · simp
       · intro y _ hy
-        simp only [Prod.mk.injEq, true_and, true_and, hy, ite_false]
+        simp only [Prod.mk.injEq, true_and, hy, ite_false]
       · simp
     · intro x _ hx
       apply Finset.sum_eq_zero

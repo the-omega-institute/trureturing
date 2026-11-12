@@ -29,7 +29,7 @@ $$\sum_{n\ge1}a_nX^n=
 $$a_n=5a_{n-1}-10a_{n-2}+10a_{n-3}-5a_{n-4}+a_{n-5}
 \quad(n\ge6).$$
 
-## Motivation and source
+## Motivation
 
 R. H. Hardin's OEIS A202330, revision 8, gives the native array count and the
 empirical quartic. Colin Barker's FORMULA block gives the conjectural generating
@@ -38,11 +38,11 @@ CC BY-SA 4.0 license are in `Library/Certificates/hardinbarker2018a202330.md`.
 [Issue #28964](https://github.com/the-omega-institute/trureturing/issues/28964)
 preregisters all three clauses as one event. The source offset is `1,1`.
 
-## Statement echo
+### Statement echo
 
 | Source clause | Lean counterpart |
 | --- | --- |
-| All labeled `(n+1)` by four binary arrays | `count n`, the cardinality of the subtype of `Fin (n+1) -> Fin 4 -> Bool` satisfying `valid` |
+| All labeled `(n+1)` by four binary arrays | `count n`, the cardinality of the subtype of `Fin (n+1) x Fin 4 -> Bool` satisfying `valid` |
 | Ordinary two-bit integer windows in every row | `horizontal` uses `bit : Bool -> Int` before arithmetic, with both starting positions in `Fin 2` |
 | Every column and every in-bounds consecutive row triple | The second conjunct of `valid`, with `i+2<n+1` and every `j : Fin 4` |
 | Quartic for every positive index | First conjunct of `claim` |
@@ -50,10 +50,14 @@ preregisters all three clauses as one event. The source offset is `1,1`.
 | Signed recurrence for all indices at least six | Third conjunct of `claim`, in `Int` |
 | One complete event | The single public theorem `result : claim` |
 
-## Gap and route
+## Gap
 
 The missing mathematical link in programs that evaluate the formulas is the
-native-array cardinality. `rowEquiv` and `arrayEquiv` preserve all coordinates
+native-array cardinality.
+
+## Route
+
+`rowEquiv` and `arrayEquiv` preserve all coordinates
 and identify the native subtype with good ordered row words. The public
 `TransferMatrix.cardMatrix` applies with all 36 ordered pairs, exact singleton
 initial fibres and exact zero-or-one transition fibres.
@@ -89,7 +93,7 @@ recurrence, refutes the conjunction. The mathematical domain includes the
 incomparable rows `0001` and `0010`. Neither a finite sample of heights nor a
 sequence defined from the quartic replaces this domain.
 
-## Evidence boundary
+## Evidence
 
 The designated formal source is
 `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA202330.lean` and its matching
@@ -98,6 +102,17 @@ cardinality transport, polynomial identities, induction and formal power-series
 algebra. Current canonical compilation and independent source fidelity remain
 required before formal delivery is accepted. No freeze or solved-event count
 is asserted by this dossier.
+
+## Triage
+
+The source unit contains the complete native target and a direct Lean proof.
+Its selected Scribe script and candidate whole-sequence audit compile. Current
+canonical Lean/report evidence is unavailable because the shared main cache is
+busy. The source-owner audit remains unfinished under
+[issue #29528](https://github.com/the-omega-institute/trureturing/issues/29528);
+the missing item is current canonical binding evidence, rather than an observed
+template rejection. The dossier does not assert StageA readiness, a freeze,
+a merge or solved-event credit.
 
 ## ASSUMED-UNVERIFIED
 

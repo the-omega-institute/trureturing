@@ -22,7 +22,7 @@ internal sealed class HardinA202330Document : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(DescribeId.Create("hardin-a202330-" + id), DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula), role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula RowType() => Seq(Fin(Num(4)), To, Op("Bool"));
-    private static Formula ArrayType(Formula n) => Seq(Fin(PlusF(n, Num(1))), To, RowType());
+    private static Formula ArrayType(Formula n) => Seq(Parenthesized(Seq(Fin(PlusF(n, Num(1))), Times, Fin(Num(4)))), To, Op("Bool"));
     private static Formula Window(Formula a, Formula b, Formula c) => LeqF(PlusF(Mul(Num(2), Call("bit", a)), Call("bit", b)), PlusF(Mul(Num(2), Call("bit", b)), Call("bit", c)));
     private static Formula HorizontalFormula()
     {
@@ -33,7 +33,7 @@ internal sealed class HardinA202330Document : IScribeDocumentDefinition
     {
         var n = V("n"); var a = V("a"); var i = V("i"); var j = V("j");
         var vertical = All("i", NatF(), Imp(new Formula.Relation(PlusF(i,Num(2)), FormulaRelationOperator.LessThan, PlusF(n,Num(1))), All("j", Fin(Num(4)), Window(App(a,i,j), App(a,PlusF(i,Num(1)),j), App(a,PlusF(i,Num(2)),j)))));
-        return Disp(All("n", NatF(), All("a", ArrayType(n), IffF(Call("valid",a), AndF(All("i", Fin(PlusF(n,Num(1))), Call("horizontal", App(a,i))),vertical)))));
+        return Disp(All("n", NatF(), All("a", ArrayType(n), IffF(Call("valid",a), AndF(All("i", Fin(PlusF(n,Num(1))), Call("horizontal", Fn("j",Fin(Num(4)),App(a,i,j)))),vertical)))));
     }
     private static Formula CountFormula() => Disp(All("n", NatF(), Eq(Call("count",V("n")), App(Qualified("Nat","card"), Seq(OpenBrace,V("a"),Colon,Sp,ArrayType(V("n")),Sp,Mid,Sp,Call("valid",V("a")),CloseBrace)))));
     private static Formula ClaimBody()
