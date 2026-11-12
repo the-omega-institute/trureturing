@@ -1,0 +1,62 @@
+**Proposition 35.2 (finite mesh and uniform mean duration).** The mesh
+has finitely many knots in every bounded interval almost surely. With
+$N=\#\{i\ge0:t_i<S\}$, including $t_0$, one has
+
+$$
+\mathbb EN\le\frac{\mathbb ES+\rho^2}{m\rho^2}.
+\tag{35.3}
+$$
+
+Proof. Uniform continuity of $(W^1,W^2,K)$ and boundedness of $W^1$
+on a fixed compact interval give a positive lower bound on the
+threshold delays for its starting points. Together with the time cap
+this proves nonaccumulation, as in Proposition 16.3.
+
+At a finite stopping time $s$, strong Markov in the joint triple and
+stochastic integration after $s$ give, for a fresh covariance-$2$
+Brownian triple $U$, the conditional normalized cell law
+
+$$
+\begin{aligned}
+\sigma_\rho=\min\{1,\inf\{v>0:
+ |U^1_v|\ge1\ \hbox{or}\ |U^2_v|\ge1\ \hbox{or}\
+ |\rho\!\int_0^vU^1_w\,dU^2_w+\lambda\rho v+\nu U^3_v|\ge1\}\},\\
+\mathcal L((t_{i+1}-t_i)/\rho^2\mid\mathcal F_{t_i})
+ =\mathcal L(\sigma_\rho).
+\end{aligned}
+\tag{35.4}
+$$
+
+The scaling here is central threshold $\rho$, not $\rho^2$.
+The independent central Brownian term therefore retains coefficient
+$\nu$; no clock change of the actual target has occurred.
+
+For $0<v\le[2(1+|\lambda|)]^{-1}$, stop $U^1$ at its first
+absolute level $1$ when estimating the central martingale. Its quadratic
+variation before that stop is at most $2(\rho^2+\nu^2)v
+\le2(1+\nu^2)v$, while $|\lambda|\rho v\le1/2$.
+The reflection and exponential-martingale inequalities used in (18.3)
+therefore give
+
+$$
+\mathbb P(\sigma_\rho\le v)
+ \le8e^{-1/(4v)}+2e^{-1/[16(1+\nu^2)v]}.
+\tag{35.5}
+$$
+
+For the central event before a first-level exit, the stopped martingale
+must reach absolute level $1/2$; this explains the second exponent.
+At $v=16c<1$ this upper bound is at most $q$ in (34.1).
+Consequently $\mathbb E\sigma_\rho\ge16c(1-q)\ge m$,
+uniformly for $0<\rho\le1$.
+
+The event $\{t_i<S\}$ is measurable at the start $t_i$.
+Pathwise the sum of complete mesh durations over these events is the
+first knot at or after $S$, and is at most $S+\rho^2$.
+Tonelli and conditioning at each start, using (35.4), give
+$m\rho^2\mathbb EN\le\mathbb ES+\rho^2$.
+The cells selected by their ends or by later survival are not assigned
+a fresh unconditional law. A continuation beyond $S$ defines only this
+nonnegative duration comparison; the actual policy below never queries
+that continuation. $\square$
+

@@ -1,0 +1,46 @@
+**定义 107.1（完整排除线段的全称量词）。** 采用第七卷103.1、104.1及105.1的同一个
+非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的
+原泛函 $u$、整个紧基 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$，
+以及整个原效应区间 $\mathcal E=[0,u]_{C^*}$。这里
+$C^*=\{f\in V^*:f(c)\ge0\ (c\in C)\}$，$B^d$ 指整个闭欧氏单位球。特别地，
+
+$$
+\begin{gathered}
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\\
+p\perp x\ \Longleftrightarrow\
+\exists f\in F_p:\ f(x)=0,\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{VIII107.1}
+$$
+
+这里 $p\in P$，但 $x$ 遍历全部原 $K$，包括全部混态；
+$F_p$ 的最小化遍历全部原确认效应。$H(p,q)$ 仍是包含 $p,q$ 的整个原最小面。
+保留弱入口
+
+$$
+\begin{aligned}
+\mathsf W&=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\\
+\mathrm{EB}_{\ge1}&:\quad
+ \forall p\in P\ \exists d_p\in\mathbb N,\quad d_p\ge1:
+ D_p\simeq_{\rm aff}B^{d_p},\\
+\mathrm{Pair}_{\perp}&:\quad
+ p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\end{aligned}
+\tag{VIII107.2}
+$$
+
+在此域内定义附加条件
+
+$$
+\mathrm{Seg}_{\rm all}:\quad
+\forall p\in P,\quad D_p\text{ 本身为非退化闭线段}.
+\tag{VIII107.3}
+$$
+
+它要求每一个完整 $D_p$ 的仿射维数为一；只选出其中一条直径、只检查纯目标
+$P\cap D_p$、或只检查部分效应，均不是此条件。不预设 $P$ 有限、可数或闭，
+也不输入全Pair、$S$、$\mathrm G$、$\mathrm{PL}_3$、Jordan或ROG表示、对称群、
+实际菜单、事件或时钟。
+
