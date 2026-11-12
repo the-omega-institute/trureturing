@@ -1999,14 +1999,15 @@ $$
 完整ordinary投影中的原source／maintenance调用数仍为
 $4+2N+2N_{\rm accept}$。
 令 $m=N+1$ 为实际arena cones数，$j=0,\ldots,m-1$，
-$P_j,S_j,D_j$ 是原相应cone的successful P／S及depth和，则
+$P_j,S_j$ 计原cone $p_{j+1}=L^jR$ 内部全部成功P／S，
+$D_j$ 为这些事件的relative-address depths之和，包含Build及rho编辑，则
 
 $$
 \begin{aligned}
 P_{\rm ar}&=1+\sum_{j=0}^{m-1}P_j,&
 S_{\rm ar}&=m+\sum_{j=0}^{m-1}S_j,\\
 D_{\rm ar}&=\frac{m(m-1)}2+
-  \sum_{j=0}^{m-1}\bigl(j(P_j+S_j)+D_j\bigr),&
+  \sum_{j=0}^{m-1}\bigl((j+1)(P_j+S_j)+D_j\bigr),&
 V_{\rm ar}&=1+P_{\rm ar}+2S_{\rm ar}.
 \end{aligned}
 \tag{AS74.5}
@@ -2031,9 +2032,11 @@ $S_{0,N}$ 只属genesis，后续cell／code／receipt按真实birth收费，
 第71节投影保留原source调用，故AS36.4及38的调用式直接适用，
 不把support eval或维护表扫描加作原Build调用。
 
-式(AS74.5)复用AS38及AA22.1在这个同一投影上的原arena计数：
-第 $j$ 个cone根深度为 $j$，各内部P／S顶点再加 $j$，
-cone根深度和为 $m(m-1)/2$，
+式(AS74.5)复用AS28.2、29.1–29.2、38.2及AA20.2、22.1在这个同一投影上的原arena计数：
+scaffold初始P在根，$m$ 次S分别在 $L^j$，深度为 $j$，合计 $m(m-1)/2$。
+第 $j$ 个cone的实际根为 $p_{j+1}=L^jR$，深度为 $j+1$；
+其relative depth为 $d$ 的内部P／S事件在global地址 $L^jRa$、$|a|=d$ 处，深度为 $j+1+d$。
+因此式中 $D_{\rm ar}$ 恰为全部实际global-address depths之和。
 原header数为 $S_{\rm ar}$，routing／side append为 $D_{\rm ar}$，
 $V=1+P+2S$ 给vertex数。
 加上实际原O与另外两个未动根得到式(AS74.6)。
