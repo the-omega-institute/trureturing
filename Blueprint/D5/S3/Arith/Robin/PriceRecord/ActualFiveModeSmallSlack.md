@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Actual five-mode predecessors with uniform small slack and complete signed fees.
+Conditional actual five-mode small slack.
 
 **Theorem 1.1 (Uniform original-record predecessor).**
 
@@ -27,6 +27,4 @@ The constructed eta is test-predecessor slack, not the prescribed original b, de
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualFiveModeSmallSlack.bhp_actual_five_mode_small_slack`
-- Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization](ActualBoundaryPriceLocalization.md)
-- Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualMixedCutoffFourthOrder](ActualMixedCutoffFourthOrder.md)
-- Dependency: [D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder](FullArithmeticCorrectionSecondOrder.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualFiveModeInventory](ActualFiveModeInventory.md)

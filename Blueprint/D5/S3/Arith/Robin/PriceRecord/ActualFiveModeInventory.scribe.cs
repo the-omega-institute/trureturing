@@ -27,7 +27,7 @@ internal sealed class ActualFiveModeInventoryDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFiveModeInventory.actual_finite_predecessor"),
                 H("Exact same-record finite predecessor"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For m>=2 at an original mu>0 full record, disjoint finite donor and recipient prime sets above 2, donors dividing m, and positive log(2)+logMass(D)-logMass(U), there is a positive n<m with exactly that logarithmic deficit. Its 2-adic valuation is lower by exactly one. At arbitrary real lambda the objective difference is exactly topGain(lambda,m)+auxiliaryGain(lambda,m,D,U), and the original record gives the strict upper bound for topGain displayed in Lean. Both fee signs and the highest occupied 2-layer are retained."))),
+                Blocks(Paragraph(Text("For m>=2 at an original mu>0 full record, disjoint finite donor and recipient prime sets above 2, donors dividing m, and positive log(2)+logMass(D)-logMass(U), there is a positive n<m with exactly that logarithmic deficit. Its 2-adic valuation is lower by exactly one. At arbitrary real lambda the objective difference is exactly topGain(lambda,m)+auxiliaryGain(lambda,m,D,U), and the original record gives topGain(lambda,m)<(lambda-mu)*(log(m)-log(n))-auxiliaryGain(lambda,m,D,U). Both fee signs and the highest occupied 2-layer are retained."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actualfivemodeinventory-uniform-actual-clock"),
@@ -48,6 +48,6 @@ internal sealed class ActualFiveModeInventoryDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFiveModeInventory.pointwise_boundary_estimates"),
                 H("Pointwise logarithmic and complete marginal-fee errors"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For j>=1, R,Q>=4, Q<=R<=Q^j, nonnegative W,A,H, the explicit logarithmic scale, radius, relative price and root-error hypotheses give both displayed estimates for every actual prime in the closed interval around Q. One estimate controls its logarithmic mass against root/j; the other controls the full marginal fee against beta(1,R), with the complete j-dependent constant."))),
+                Blocks(Paragraph(Text("For j>=1, R,Q>=4, Q<=R<=Q^j, nonnegative W,A,H, the explicit logarithmic scale, radius, relative price and root-error hypotheses give both estimates for every actual prime p in the closed interval around Q. With e=19/(40*j), abs(log(p)-root/j)<=(2*W+H)*R^(-e), and abs((goldenLayerMarginal(p,j)-beta(1,R))*log(p))<=2*(A+2*W*((j+2)*2^(j+1)*(4*j)))*beta(1,R)*log(R)*R^(-e)."))),
                 DescribeRole.Theorem))));
 }
