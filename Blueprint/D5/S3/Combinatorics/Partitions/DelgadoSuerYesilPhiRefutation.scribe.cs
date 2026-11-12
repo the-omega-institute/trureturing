@@ -12,6 +12,7 @@ internal sealed class DelgadoSuerYesilPhiRefutationDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Pseudo-Frobenius row deletion omits 1 for every proper numerical semigroup, excluding a symmetric numerical set containing 1.",
         H("An obstruction to unrestricted symmetrization surjectivity"), Blocks(
+            Paragraph(Text("The final paragraph of Section 5 asks: ‘A natural question is whether Φ is surjective, that is, whether every symmetric numerical set arises as the symmetrization of some almost symmetric numerical semigroup.’ The terminal theorem refutes this unrestricted assertion. Characterizing the whole image remains a separate problem.")),
             Paragraph(Text("Delgado, Suer and Yesil associate a boundary to a proper numerical set by scanning the natural numbers from zero to its largest gap: membership gives a right step and a gap gives an up step. The gap label of a row is its first-column hook length. Their Theorem 4.2 deletes exactly the original pseudo-Frobenius rows other than the Frobenius row. The inverse correspondence reads the resulting boundary; deleted up steps shift later labels without changing retained row lengths.")),
             Describe.Lean(DescribeId.Create("delgado-phi-carrier"), DeclarationHandle.Create(Prefix + "NumericalSet"),
                 H("All proper numerical sets"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
