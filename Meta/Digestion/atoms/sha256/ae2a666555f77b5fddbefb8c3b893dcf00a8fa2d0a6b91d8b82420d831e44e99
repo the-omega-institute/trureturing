@@ -1,0 +1,2 @@
+Nonnegative summation gives $\sum_{b\ge0}S_{i,q}(b)=\mu_i(q)$ and $\mathbb E_i\tau=\beta_i(q)$: each $k$ contributes at $b=0,\ldots,k$, with total first-moment weight $k(k+1)/2$. Thus the first wait is normalized, including $b=0$, and differs from a complete gap. The first tick still costs one read when $\tau=0$.
+

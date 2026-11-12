@@ -108,7 +108,7 @@ private theorem at_boundary (j : ℕ) : x (E j) = 0 := by
   have h := block_letter j 0 (eta_pos _)
   simpa [eta_cons] using h
 
-private theorem marker_boundary (p : ℕ) : x p = 0 ↔ ∃! j, p = E j := by
+theorem marker_boundary (p : ℕ) : x p = 0 ↔ ∃! j, p = E j := by
   constructor
   · intro hp
     obtain ⟨hj,hk⟩ := blockIndex_spec p

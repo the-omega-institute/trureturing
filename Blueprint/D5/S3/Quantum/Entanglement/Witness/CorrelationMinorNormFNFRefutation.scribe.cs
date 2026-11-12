@@ -6,6 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.Witness;
 
 internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumentDefinition
 {
+    private const string CorePrefix = "D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormCore.";
     private const string Prefix = "D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor");
@@ -14,6 +15,88 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
         "A separable qubit-ququart state violates the conjectured correlation-minor operator-norm bound without filter normal form.",
         H("A correlation-minor bound fails without filter normal form"),
         Blocks(
+            Paragraph(Text(
+                "Research note by Haobo Ma (Chrono AI, Singapore) and Wenlin Zhang "
+                    + "(National University of Singapore and Chrono AI, Singapore), copyright 2026, CC BY 4.0. "
+                    + "The cited primary works retain their own licenses. Peled, Te’eni, Carmi and Cohen are the primary problem authors; "
+                    + "they are not inferred coauthors of the research note. This formal return makes no novelty endorsement, "
+                    + "authorship-consent, correspondence, publication or submission claim. "
+                    + "The original source intake disclosed exposure to communication framing; inherited repository context is also prior-exposed. "
+                    + "The supplied scientific arguments and planning conclusions are fallible inputs, not independent final review.")),
+            Paragraph(Text(
+                "The fixed source conventions are actual positive-semidefinite trace-one complex bipartite matrices and actual finite convex mixtures of local densities. Complete Hermitian bases have trace(A_i A_k)=delta_ik, without an extra factor two. Filter normal form means both actual reduced states are maximally mixed. "
+                    + "Peled et al. Theorem 1 assumes separability, FNF, D<=d cubed and h>1 in the CMN domain, and bounds the p=1 elementary symmetric polynomial by S_h(alpha,beta,...,beta), with d squared variables, alpha=1/sqrt(Dd) and beta=sqrt(((D-1)/D)((d-1)/d))/(d squared-1). "
+                    + "Their Theorem 3 assumes separability and FNF with sqrt(Dd)<=h<=d squared and gives B(D,d,h). Both subsequent paragraphs conjecture removal of FNF. The counterexamples here address those extensions and retain all original hypotheses of the original theorems.")),
+            Paragraph(Text(
+                "Theorems 2 and 4 are conditional constructions from existing paired regular coherent degree-one pure designs of a common size v. Regular means rank-one projectors; coherent means their sum is proportional to identity; degree one means a common distinct-pair trace overlap. At v=d squared the equal-weight product construction has singular values alpha once and beta d squared-1 times. At v=h it has alpha once, beta prime h-1 times and then zero, where beta prime=sqrt(((D-1)/(D(h-1)))((d-1)/(d(h-1)))). Coherence gives FNF. Existence in arbitrary dimensions/cardinalities is not asserted. "
+                    + "The coherent-pair obstruction formalized separately excludes exactly that construction at D>=5; it neither refutes every interpretation of the broad general-p design suggestion nor classifies all maximizers.")),
+            Paragraph(Text(
+                "Printed Appendix D31 omits the square root. D28 supplies s1>=1/sqrt(Dd), D29 nonnegativity and D30 the CCNR total bound. Appendix D.5 invokes numerical simultaneous-saturation observations, assumes D31 saturation forces FNF and assumes no additional active constraints before its Lagrange calculation. The corrected tail proof does not validate those assumptions or establish a general no-FNF extension. "
+                    + "The received full-text source reading covers Sections I-VI, Appendices A-E and references of arXiv v2; it is a disclosed supplier dependency, not a fresh journal-text verification. Operator-Schmidt/SVD identities, pure-state Schmidt rank/entropy, the reported unequal-dimensional CMN-versus-CCNR example and CMN discord/Theorem 5 remain primary context outside this note's claimed new coverage. Numerical plots/examples remain source reports. The arbitrary finite-decomposition proof here does not rely on positivity of altered local factors in Appendix C.1.")),
+            Describe.Lean(DescribeId.Create("noisy-state"), DeclarationHandle.Create(Prefix + "noisyRho"),
+                H("The continuous rational noisy state"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For real t, set a = (1−t)/3 and ρₜ = a Σⱼ₌₀² Pⱼ ⊗ Eⱼⱼ + t I₈/8, "
+                        + "using the same three projectors as the fixed counterexample below. "
+                        + "For 0 ≤ t ≤ 1/200 this is a finite convex mixture of actual local density matrices. "
+                        + "Its noise lower bound gives positive definiteness for t > 0; the endpoint t = 0 remains included."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("alice-basis"), DeclarationHandle.Create(CorePrefix + "alice"),
+                H("The normalized Alice basis"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The existing complete Hermitian basis (I,Z,X,Y)/√2 is shared by the interval and fixed witness."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("bob-basis"), DeclarationHandle.Create(Prefix + "bob"),
+                H("The normalized Bob flag basis"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The existing four diagonal units followed by the six normalized symmetric and six skew pairs form the complete Bob basis, with trace-product normalization one."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("noisy-correlation"), DeclarationHandle.Create(Prefix + "noisyCoefficients"),
+                H("The exact parameter-dependent correlation matrix"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Put r = (4−t)/12, s = t/4 and a = (1−t)/3. The first four columns are "
+                        + "1/√2 times the rows (r,r,r,s), (a,−3a/5,−3a/5,0), "
+                        + "(0,4a/5,−4a/5,0) and (0,0,0,0); the other twelve columns vanish. "
+                        + "The coefficients are the actual complex state/observable traces, with no extra factor two."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("rational-noisy-family"), DeclarationHandle.Create(Prefix + "rational_noisy_family"),
+                H("The full rational noise interval"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every real 0 ≤ t ≤ 1/200, the theorem asserts actual separability and density, complete normalized bases, "
+                        + "the exact correlation and Bob marginal diag(r,r,r,s), a nonuniform Bob marginal, the PSD noise lower bound, "
+                        + "positive definiteness for positive noise and the strict third-order operator violation. "
+                        + "The same theorem retains the actual three local densities and their idempotence, with the original explicit projector matrices. The nonuniform marginal excludes filter normal form. The selected IZX/012 minor equals "
+                        + "16(4−t)(1−t)²/(1350√2). Its strict comparison with 3/(64√2) reduces to "
+                        + "512(4−t)(1−t)² > 2025. Both positive factors are bounded below over the whole interval, "
+                        + "and the value of this difference at the upper endpoint is 574/15625. This is a uniform real-parameter proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-p-cmn"), DeclarationHandle.Create(CorePrefix + "cmnP"),
+                H("The actual finite Schatten parameters"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For a real p, cmnP p h C is the existing Partition.rectangularNorm of the increasing real compound after entrywise complexification. This uses the actual CFC row-Gram square root and existing schattenNorm. Every assertion below restricts finite p to p ≥ 1; infinity is the Euclidean operator norm cmnInf."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("selected-row"), DeclarationHandle.Create(Prefix + "selectedRow"),
+                H("The increasing IZX row"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The row subset is {0,1,2}, in increasing order in the shared Alice basis. This exposes the original witness's row selection for actual reuse."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("selected-columns"), DeclarationHandle.Create(Prefix + "selectedCols"),
+                H("The four increasing flag minors"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The column subsets, in order, are {0,1,2}, {0,1,3}, {0,2,3}, {1,2,3}. They are the original four distinct witness selections."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("single-row-operator"), DeclarationHandle.Create(CorePrefix + "single_row_opnorm"),
+                H("The existing single-row operator identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The Euclidean operator norm of a finite real matrix supported in one specified row equals the square root of the sum of its squared entries. The existing proof is exposed unchanged and consumed by the general full-order compound correspondence."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("single-row-schatten"), DeclarationHandle.Create(CorePrefix + "single_row_schatten"),
+                H("The existing single-row Schatten identity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every positive real p, the existing actual rectangular complex Schatten functional of the complexified single-row real matrix equals its Euclidean row length. The unchanged proof is exposed for the general full-order compound consumer, retaining zero entries and empty column types."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("minor-energy"), DeclarationHandle.Create(Prefix + "noisyMinorEnergy"),
+                H("The exact row energy"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The energy is the sum of the squares of the four selected third minors of the actual noisyCoefficients matrix. The following theorem proves that these are all the possible nonzero entries of the only nonzero row; its square root is therefore the exact norm."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("rational-compound-family"), DeclarationHandle.Create(Prefix + "rational_compound_family"),
+                H("Exact compounds and every Schatten norm on the interval"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every real 0 ≤ t ≤ 1/200, the actual third compound has rank one. Every row other than IZX is zero, and in that row every column other than the four selected flag triples is zero. Put a=(1−t)/3, r=(4−t)/12 and s=t/4. The four entries are (64ra²/25,4sa²/5,−4sa²/5,24sa²/25)/(√2)³, with the stated increasing-order signs. The t=0 endpoint is retained even though the last three entries vanish.")),
+                    Paragraph(Text("For every finite p ≥ 1 and for infinity, the norm is exactly the square root of noisyMinorEnergy t and is strictly greater than 3/(64√2). The proof computes the actual real and complex row Gram matrices, and applies the existing rectangular Schatten power identity and CFC on a one-coordinate diagonal. All zero singular values are retained. The fourth compound is exactly zero, so all its finite p ≥ 1 norms and its infinity norm are zero.")),
+                    Paragraph(Text("This common exceeded number is the third-order operator threshold. It is distinct from Peled Theorem 1's third-order p=1 threshold 1/(16√2)+1/(48√6); no violation of that latter threshold is asserted here. The theorem concerns the no-FNF extension, preserving the original FNF hypothesis."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fixed-compound-energy"), DeclarationHandle.Create(Prefix + "fixed_compound_energy"),
+                H("The exact historical fixed specialization"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("At t=1/1000, noisyMinorEnergy is exactly 559341805929555807/500000000000000000000. The square of every finite p ≥ 1 third-order norm is this same number. Together with the interval theorem's equality for infinity, this strengthens the historical selected-row lower bound to exact norm equality, using the same state, bases, signs and four rational minors. The original result consumes this exact specialization in its contradiction."))), DescribeRole.Theorem),
             Definition("hermitian-basis", "IsHermBasis", "Orthonormal Hermitian bases", HermBasisFormula(),
                 "A family a consists of Hermitian n by n complex matrices, has exactly n squared members, "
                     + "and has trace-product pairing one on equal indices and zero on unequal indices. "
@@ -99,7 +182,7 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                     ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create((declaration == "claim" ? Prefix : CorePrefix) + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 

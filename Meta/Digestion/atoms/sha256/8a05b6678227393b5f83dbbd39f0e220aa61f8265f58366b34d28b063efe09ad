@@ -1,0 +1,118 @@
+**定理 37.2（任意 $T$ 的精确原向量列运输）。** 对每份 (37.1)、每个分别固定的 $\sigma$、每个 $u=(u_2,u_3)^{\mathsf T}\in E$ 满足 $u_2u_3\ne0$，以及每个 Hermitian $X$，置
+
+$$
+\begin{gathered}
+ p=au,\qquad q=aC_Eu,\qquad w=-p z_0,\qquad
+ \xi=(0,u,w),\\
+ \ell=\left(-\frac{\iota q}{u_2},\frac{\iota q}{u_3}\right),\qquad
+ x=\begin{pmatrix}0&\ell&0\\\ell^*&X&0\\0&0&0_m\end{pmatrix}.
+\end{gathered}
+\tag{37.3}
+$$
+
+则 $x=x^*=PxP$，所有条目有限，且同一份原向量、原探针上的完整作用列满足
+
+$$
+\begin{gathered}
+ x\xi=\jmath_E Xu,\qquad t\xi=\jmath_E Tu,\\
+ (h-k_t)\xi=\jmath_E(h_E-k_E)u,\qquad
+ (r+g)\xi=\jmath_E(r_E+g_E)u,\\
+ R_\delta\xi=\jmath_E R_{\delta,E}u,\qquad
+ S_\delta\xi=\jmath_E S_{\delta,E}u,\\
+ \xi^*L\xi=u^*L_Eu,\qquad
+ B_{\phi_\xi}(R_\delta,S_\delta)
+ =B_{\psi_u}(R_{\delta,E},S_{\delta,E}),\qquad
+ \phi_\xi(A)=\xi^*A\xi .
+\end{gathered}
+\tag{37.4}
+$$
+
+对任意指定有限 $\mu>0$，令
+
+$$
+ N_u=\|\xi\|^2=\|u\|^2+|au|^2\|z_0\|^2>0,\qquad
+ \phi_\mu(A)=\frac\mu{N_u}\xi^*A\xi .
+\tag{37.5}
+$$
+
+则 $\phi_\mu$ 是完整原代数上的正复线性泛函，质量恰为 $\mu$；原 PB 的左端及每笔面积分别准确等于二维比较资料相应值的 $\mu/N_u$ 倍。因此任何这样的 $X,u$ 上的严格向量 PB 违反，连同其每笔预算的正性，都运输到同一原输入、同一原环境和指定质量。对固定 $u$，同一 $\xi,\ell,N_u$ 同时适用于全部 Hermitian $X$。
+
+证明。首先逐项核对复数与共轭：$x$ 的下三角是所写上三角的伴随，不要求 $a,u,q$ 为实。$\iota^2=-1$、$\overline\iota=-\iota$，而
+
+$$
+ \ell u=-\iota q+\iota q=0,\qquad
+ \ell C_Eu=-2\iota q+3\iota q=\iota q,\qquad
+ vw=-p,\quad D_{\rm env}w=0 .
+\tag{37.6}
+$$
+
+现在直接作用于完整原向量，按 $e_1,E,\mathrm{env}$ 三块列出
+
+$$
+\begin{array}{c|ccc}
+ &e_1&E&\mathrm{env}\\ \hline
+ x\xi&0&Xu&0\\
+ xc\xi&\iota q&XC_Eu&0\\
+ cx\xi&0&C_EXu&0\\
+ t\xi&au+vw=0&Tu&0\\
+ tc\xi&q&TC_Eu&0\\
+ ct\xi&0&C_ETu&0
+\end{array}
+\tag{37.7}
+$$
+
+这里没有隐去环境输出。$x$ 的环境行恒零；$t\xi$ 的环境行是 $v^*0+D_{\rm env}w=0$，$tc\xi$ 的环境行是 $v^*0=0$，$ct\xi$ 的环境行由原 $c$ 的环境零块给零。$\beta$ 因 $\xi_1=(c\xi)_1=0$ 不参与这些列，但仍是原 $t$ 的条目。
+
+由 (37.7) 取原换位和 Jordan 乘积，得到各自完整的四列
+
+$$
+\begin{array}{c|ccc}
+ &e_1&E&\mathrm{env}\\ \hline
+ h\xi&q/2&h_Eu&0\\
+ k_t\xi&q/2&k_Eu&0\\
+ r\xi&\iota q/2&r_Eu&0\\
+ g\xi&-\iota q/2&g_Eu&0
+\end{array}
+\tag{37.8}
+$$
+
+例如 $h\xi$ 的第一格是 $\iota(-\iota q)/2=q/2$；$g\xi$ 的第一格是 $\iota(-q)/2$，残量在该格的作用为 $s_1\xi_1=0$。所以 $q\ne0$ 时，四个第一轴输出都非零，分别在 $h-k_t$ 和 $r+g$ 中准确抵消；$q=0$ 时这些第一格按同一等式为零。不能先删去四列的第一格再计算。由此才得到 (37.4) 的前六个作用列等式。
+
+为核对全部原乘积，使用自伴算子的标准列恒等式：对于任意原 $U=U^*,Z=Z^*$，
+
+$$
+ \xi^*U^2\xi=\|U\xi\|^2,\qquad
+ \xi^*(U\circ Z)\xi=\operatorname{Re}((U\xi)^*Z\xi).
+\tag{37.9}
+$$
+
+这是 $\xi^*UZ\xi=(U\xi)^*Z\xi$ 与其共轭的半和，不是压缩平方推断。对前六列代入，原左端准确为
+
+$$
+\begin{aligned}
+ \xi^*L\xi
+ &=-2\operatorname{Re}((x\xi)^*(h-k_t)\xi)
+   -2\operatorname{Re}((t\xi)^*(r+g)\xi)\\
+ &=-2\operatorname{Re}((Xu)^*(h_E-k_E)u)
+   -2\operatorname{Re}((Tu)^*(r_E+g_E)u)
+ =u^*L_Eu .
+\end{aligned}
+\tag{37.10}
+$$
+
+两笔原平方和 Jordan 乘积也分别是同一两列的范数及实内积。因此
+
+$$
+\begin{aligned}
+ B_{\phi_\xi}(R_\delta,S_\delta)
+ &=\|R_{\delta,E}u\|^2\|S_{\delta,E}u\|^2
+   -\bigl(\operatorname{Re}((R_{\delta,E}u)^*S_{\delta,E}u)\bigr)^2\\
+ &=B_{\psi_u}(R_{\delta,E},S_{\delta,E}) .
+\end{aligned}
+\tag{37.11}
+$$
+
+此处仍为 PB 的实 Gram 行列式，没有将实部平方改成复内积绝对值平方，也没有断言 $L\xi=\jmath_E L_Eu$ 或全部原算子的乘积交织。最后 $\xi$ 的三个正交块给 (37.5) 的范数；$A\ge0$ 时 $\xi^*A\xi\ge0$，故 $\phi_\mu$ 为正且 $\phi_\mu(I)=\mu$。正缩放 $\mu/N_u$ 使 $L$ 的评价及每笔面积各乘一次该因子，预算本身乘其平方。$\ell,w,N_u$ 不含 $X$，所以整个固定 $u$ 的探针族及其扰动共用它们。所有计算对两种分别固定的 $\sigma$ 成立，原 $\beta,a,T,v,D_{\rm env}$ 无需共轭或改变。∎
+
+定理 37.2 是针对给定 $u$ 的完整向量泛函运输。更换 $u$ 一般会改变补偿行 $\ell$，因此不声称对一份固定原探针建立任意混合正泛函的二维等价。它也没有给出对原 $t,x,h,k_t,r,g$ 共同不变的固定子空间。$a\ne0$ 时 $E$ 对原 $t$ 不约化，(37.8) 显示四个原算子各自的作用列也可离开 $E$；留下的是指定组合在指定原向量上的准确抵消。
+

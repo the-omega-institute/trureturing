@@ -51,6 +51,22 @@ def base (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
 def pure (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
   (base C u).extremePoints ℝ
 
+omit [FiniteDimensional ℝ A] in
+theorem affine_extreme_image {E F : Type*} [AddCommGroup E] [Module ℝ E]
+    [AddCommGroup F] [Module ℝ F] (S : Set E) (hS : Convex ℝ S)
+    (f : E →ᵃ[ℝ] F) (hf : Set.InjOn f S) {x : E}
+    (hx : x ∈ S.extremePoints ℝ) :
+    f x ∈ (f '' S).extremePoints ℝ := by
+  refine ⟨Set.mem_image_of_mem f hx.1, ?_⟩
+  rintro _ ⟨y, hy, rfl⟩ _ ⟨z, hz, rfl⟩ hseg
+  rw [← image_openSegment ℝ f y z] at hseg
+  obtain ⟨q, hq, heq⟩ := hseg
+  have hqS : q ∈ S :=
+    hS.segment_subset hy hz (openSegment_subset_segment _ _ _ hq)
+  have hqx : q = x := hf hqS hx.1 heq
+  subst q
+  exact congrArg f (hx.2 hy hz hq)
+
 /-- All proper effects on the original cone, with no restricted-effect supplier. -/
 def proper (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (f : A →ₗ[ℝ] ℝ) : Prop :=
   ∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x
@@ -123,7 +139,7 @@ private theorem preserves_finite_relations {P : Set A} {v : P → ℝ}
       rw [Finset.sum_comm]
     _ = 0 := Finset.sum_eq_zero (fun j _ => hz j)
 
-private theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
+theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
     (hspan : Submodule.span ℝ P = ⊤) :
     ∃ e : A →ₗ[ℝ] ℝ, ∀ p : P, e p = v p := by
   classical
@@ -146,25 +162,25 @@ private theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
   simpa [Q, V, e] using he
 
 omit [FiniteDimensional ℝ A] in
-private theorem pure_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem pure_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (p : pure C u) : (p : A) ∈ C ∧ u p = 1 :=
   p.property.1
 
 omit [FiniteDimensional ℝ A] in
-private theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
+theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
     Convex ℝ (base C u) := by
   intro x hx y hy a b ha hb hab
   refine ⟨C.add_mem (C.smul_mem ha hx.1) (C.smul_mem hb hy.1), ?_⟩
   simpa only [map_add, map_smul, smul_eq_mul, hx.2, hy.2, mul_one] using hab
 
 omit [FiniteDimensional ℝ A] in
-private theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) {x : A} (hx : x ∈ C) (hne : x ≠ 0) :
     (u x)⁻¹ • x ∈ base C u := by
   refine ⟨C.smul_mem (inv_nonneg.mpr (hu x hx hne).le) hx, ?_⟩
   simp [map_smul, (hu x hx hne).ne']
 
-private theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hclosed : IsClosed (C : Set A))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) : IsCompact (base C u) := by
   have hK : IsClosed (base C u) :=
@@ -199,7 +215,7 @@ private theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   have hh' := (le_div_iff₀ hz0).mp hmz
   exact (le_div_iff₀ hm).mpr (by simpa [mul_comm] using hh')
 
-private theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
+theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hf : ∀ p : pure C u, 0 ≤ f p) : ∀ x ∈ C, 0 ≤ f x := by
@@ -220,7 +236,7 @@ private theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
   have hux := hu x hx hx0
   simpa only [map_smul, smul_eq_mul, mul_nonneg_iff_of_pos_left (inv_pos.mpr hux)] using hh
 
-private theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
+theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hf : ∀ p : pure C u, 0 ≤ f p ∧ f p ≤ 1) : proper C u f := by
@@ -230,7 +246,7 @@ private theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
   · simpa only [LinearMap.sub_apply, sub_nonneg] using hh
   · simpa only [LinearMap.sub_apply, (pure_mem p).2, sub_nonneg] using (hf p).2
 
-private theorem pure_span {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem pure_span {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
@@ -463,7 +479,5 @@ theorem full_mixture_iff_circuit_balance
     rw [he p q, he q p]
     exact hs q p
 
-#print axioms circuit_balance_least_confirmation
-#print axioms full_mixture_iff_circuit_balance
 
 end D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
