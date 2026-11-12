@@ -35,7 +35,11 @@ abbrev arena : Arena where
       ∀ j : Fin 5, c (z,j.castSucc) ^^^ c (z,j.succ) ≠
         c (⟨i,by omega⟩,0) ^^^ c (⟨i+1,hi⟩,0)) ∧
     (∀ k : Fin 4, ∃ p, p.1.val ≤ 1 ∧ c p = k) ∧
-    (∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1)
+    (∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1) ∧
+    ((Finset.univ.filter (fun v : Fin 4 => v ≠ 0 ∧ ∀ j : Fin 5,
+      c (z,j.castSucc) ^^^ c (z,j.succ) ≠ v)).card =
+      if ∀ j : Fin 5, c (z,j.castSucc) ^^^ c (z,j.succ) = c (z,0) ^^^ c (z,1)
+      then 2 else 1)
 
 private def sample : Fin 2 × Fin 6 → Fin 8 := fun p =>
   (![![0,1,0,6,7,2],![3,5,4,2,4,6]] : Fin 2 → Fin 6 → Fin 8) p.1 p.2
