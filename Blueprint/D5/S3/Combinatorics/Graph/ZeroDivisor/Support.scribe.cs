@@ -1,0 +1,44 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.ZeroDivisor;
+
+internal sealed class SupportDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Combinatorics/Graph/ZeroDivisor/Support.";
+
+    private static Describe Definition(string name, string title, string text) => Describe.Lean(
+        DescribeId.Create("zero-divisor-support-" + name), DeclarationHandle.Create(Prefix + name),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(text))), DescribeRole.Definition);
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "A finite product of integral domains represents zero divisors by their nonempty proper coordinate supports. The coordinate values remain part of each vertex, so support multiplicities are exact counts of ring elements.",
+        H("Actual zero divisors and coordinate supports"),
+        Blocks(
+            Definition("Vertex", "Actual ring vertices",
+                "For a commutative ring R, a vertex is an element x of R with x nonzero and a witness y in R such that y is nonzero and xy is zero. The zero element is excluded."),
+            Definition("graph", "The actual zero divisor graph",
+                "The graph is simple and undirected. Its vertices are the actual nonzero zero divisors of R. Two vertices u and v are adjacent exactly when u differs from v and their ring product is zero."),
+            Definition("support", "Nonzero coordinate support",
+                "Let the index type be finite and let e be a ring equivalence from R to the dependent product of commutative rings K(i). The support of x consists of exactly those indices i for which the i-th coordinate of e(x) is nonzero."),
+            Definition("SupportedVertex", "Coordinate vertices with both endpoints removed",
+                "The coordinate model consists of complete tuples x in the product of K(i) whose support is nonempty and is different from the full index set. Every tuple retains its actual coordinate values; tuples with equal supports remain distinct vertices."),
+            Definition("vertexEquiv", "The actual vertex correspondence",
+                "Assume each K(i) is nontrivial and has no zero divisors. The equivalence e restricts to a bijection from actual ring vertices to coordinate vertices with nonempty proper supports. A missing coordinate gives an explicit annihilator: put one in that coordinate and zero elsewhere, then pull this tuple back through e. Conversely a nonzero annihilator has a nonzero coordinate, and the corresponding coordinate of x must vanish."),
+            Definition("supportGraph", "Disjoint supports give the edges",
+                "On the complete coordinate vertices, adjacency means that the vertices differ and their nonzero coordinate supports are disjoint. Equality of support does not identify two coordinate vertices."),
+            Definition("actualSupportIso", "The exact graph isomorphism",
+                "The coordinate bijection preserves and reflects adjacency. In each integral domain K(i), a coordinate product is zero exactly when at least one factor is zero. Thus the product in R vanishes exactly when the two coordinate supports are disjoint. The existing independent-configuration and partition relabeling theorems apply to this graph isomorphism and retain all independent subsets."),
+            Describe.Lean(
+                DescribeId.Create("zero-divisor-support-fiber-card"),
+                DeclarationHandle.Create(Prefix + "support_fiber_card"),
+                H("The exact size of every genuine support cell"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let the index type be finite with decidable equality, R a commutative ring, and each K(i) a finite nontrivial commutative ring with no zero divisors. Let e be any ring equivalence from R to the product of K(i). For every nonempty index subset S different from the full index set, the number of actual vertices x of R whose e-coordinate support is S is the product over i in S of (cardinality of K(i) minus one). The cardinalities and subtraction are natural numbers.")),
+                    Paragraph(Text("The bijection restricts the coordinates of a vertex to S. Its inverse chooses an arbitrary nonzero value at each index in S and sets every remaining coordinate to zero, then applies the inverse of e. Nonemptiness excludes the zero element. Properness constructs a nonzero annihilator in a missing coordinate. These maps are mutual inverses on actual elements, so the product counts neither maximal independent sets nor equivalence classes."))),
+                DescribeRole.Theorem),
+            Definition("crt", "Chinese remainder coordinates",
+                "For a finite pairwise coprime family of natural moduli p(i), Mathlib's ZMod.prodEquivPi gives the ring equivalence from ZMod of their product to the product of ZMod(p(i)). For distinct prime moduli, the coordinate rings are finite fields. With the three primes p, q and r, the singleton support sizes are p-1, q-1 and r-1, and the two-coordinate support sizes are (p-1)(q-1), (p-1)(r-1) and (q-1)(r-1). The prime two is included."),
+            Paragraph(Text("The support correspondence and its multiplicities do not establish log concavity or unimodality of the independence polynomial. Counting independent subsets across the six cells and proving uniform coefficient inequalities require further arguments.")))));
+}
