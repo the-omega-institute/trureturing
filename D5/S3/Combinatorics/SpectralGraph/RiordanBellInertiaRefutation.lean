@@ -90,13 +90,23 @@ private theorem witness_inertia :
     calc
       _ = RHLinalg.posIndex (isHermitian_diagonal d) := by congr 1
       _ = _ := hd.1
-      _ = 3 := by norm_num [d, Fin.card_filter_univ_succ]
+      _ = 3 := by
+        have hf : (Finset.univ.filter fun i => 0 < d i) = {0,2,4} := by
+          ext i
+          fin_cases i <;> norm_num [d]
+        rw [hf]
+        decide
   have hn : RHLinalg.negIndex A_hermitian = 2 := by
     rw [← h.2]
     calc
       _ = RHLinalg.negIndex (isHermitian_diagonal d) := by congr 1
       _ = _ := hd.2
-      _ = 2 := by norm_num [d, Fin.card_filter_univ_succ]
+      _ = 2 := by
+        have hf : (Finset.univ.filter fun i => d i < 0) = {1,3} := by
+          ext i
+          fin_cases i <;> norm_num [d]
+        rw [hf]
+        decide
   simpa only [← adjacency_witness] using And.intro hp hn
 
 /-- The exact negation of the complete universal question, witnessed by n=5
