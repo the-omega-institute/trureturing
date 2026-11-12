@@ -144,19 +144,110 @@ For the same C and u, full S is equivalent to all-reference circuit balance. Tha
 
 For the converse, take any finite signed relation sum_i c_i q_i=0 on the original pure points. Applying u gives sum_i c_i=0. Write a_i=max(c_i,0) and b_i=max(-c_i,0); their masses and weighted original vectors agree. Add the same reference p with unit weight to both sides, and divide by the positive common mass 1+sum_i a_i. These are two nonnegative normalized pure preparations of exactly the same vector. Full S evaluates them equally. Cancelling the common reference contribution and common mass proves sum_i c_i T_{q_i}(p)=0, including the zero relation. Reindexing finite types by Fin n introduces no new preparation assumption. Conversely, reciprocal least effects attain the original infimum at every positive vector; their linearity and pure reciprocity give full S.
 
+**Theorem 1.12 (Descent of balanced assignments).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.descends`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.descends` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every set P spanning A and every scalar assignment balanced on all its finite circuits, there exists an original real linear functional taking those assigned values on every p in P.
+
+**Theorem 1.13 (Pure points are normalized positive vectors).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every pure point belongs to the original cone and has original unit value one.
+
+**Theorem 1.14 (Convexity of the normalized base).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_convex`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_convex` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The entire normalized base of the original cone and linear unit is convex.
+
+**Theorem 1.15 (Compactness of the original normalized base).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a closed original cone and a unit strictly positive at all its nonzero points, the entire normalized base is compact in the finite dimensional topology.
+
+**Theorem 1.16 (From pure nonnegativity to whole-cone nonnegativity).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the compact original base and a strictly positive unit, every original real linear functional nonnegative on all pure points is nonnegative on the entire original cone.
+
+**Theorem 1.17 (From pure bounds to original properness).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the compact original base and a strictly positive unit, an original real linear functional whose value at every pure point belongs to [0,1] is proper on the entire original cone.
+
+**Theorem 1.18 (Pure spanning of the original carrier).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the compact original base, strictly positive unit and generating original cone, all pure points together linearly span the original carrier.
+
 The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remainder equivalence of Theorem 77.19, and the EJA, PRE, reset, H13/C13 and static or operational consumers remain outside this result. The proof needs neither a finite Minkowski theorem nor an assumption supplying pure decompositions. Mathematical effects and mixtures do not supply actual preparation programs, menus, histories, references or operations.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.balanced`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_convex`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit_balance_least_confirmation`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.comparison`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.confirms`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.descends`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.reciprocalLeast`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit](../Entanglement/AbsolutePPT/NonnegativeKernelCircuit.md)
