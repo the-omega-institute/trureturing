@@ -47,7 +47,7 @@ private theorem mass_cap_compact (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
         exact ⟨0, ⟨le_rfl, hR⟩, 0, Set.mem_insert _ _, zero_smul _ _⟩
       have hpos := hu a ha ha0
       refine ⟨u a, ⟨hpos.le, hmass⟩, (u a)⁻¹ • a, Set.mem_insert_of_mem _ ?_, ?_⟩
-      · exact ⟨C.smul_mem (inv_nonneg.mpr hpos.le) ha, by simp [hpos.ne']⟩
+      · exact normalized_mem hu ha ha0
       · simp [smul_smul, hpos.ne']
     · rintro ⟨r, hr, k, hk, rfl⟩
       rcases hk with rfl | hk
