@@ -1,27 +1,24 @@
-/-
-SOURCE ONLY; UNCOMPILED N0 OPEN.
-Intended module: D5.S3.Arith.Robin.PriceRecord.ActualCriticalChainNearbyGlobal.
-Project baseline e5c0aaffd35b1e17544000d3aea1dfed58a3f7f8;
-Lean 4.35.0, mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-
-Ordinary, fallible input: Sections I--III of
-answer-critical-predecessor-chain-common-stock-20261112.txt,
-SHA256 2f645d8859aabb812a8e0220cef5199e616ef9da313fd98edddc2cbfbf863e2b.
-The imported gap candidate has SHA256
-4bcaba8c8661d6d84fec9d7677784dc1aac604c13ec0e01b237d1cec2cdad757.
-The separate parent-minimal-exposure.patch only removes private from the two
-consumed parent helpers; neither statement nor proof is changed. Apply it to
-the parent module when assembling the candidate. Neither input has been compiled
-in this attempt. There is no BHP premise,
-bank-payment conclusion, RH conclusion, or claim of native acceptance.
--/
-
 import D5.S3.Arith.Robin.PriceRecord.ActualMinSecantPredecessorLogGap
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import D5.S3.Arith.Robin.ActualTwoPriceDefect
 import D5.S3.Arith.GoldenResource.GoldenSmallestMissingPrime
 import Mathlib.NumberTheory.Bertrand
 import Mathlib.Tactic
+
+/-!
+The finite descending chain of smallest actual minimum-secant predecessors
+preserves support on the original integer prefix. At its first logarithmic
+budget crossing, the last edge's gap makes the predecessor affordable for every
+prime through its next prime. Layer thresholds and the least finite tie then
+give an actual least global fixed-price optimizer.
+
+The constants are uniform over all positive prices and all original strict
+records. The original bank, prescribed-b payment and RH are not concluded.
+
+Ordinary mathematical input: Sections I--III of
+answer-critical-predecessor-chain-common-stock-20261112.txt,
+SHA256 2f645d8859aabb812a8e0220cef5199e616ef9da313fd98edddc2cbfbf863e2b.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -99,12 +96,12 @@ private def critical (r : ℕ) : ℝ := secant r (predecessor r)
 private theorem predecessor_spec {r : ℕ} (hr : 1 < r) :
     MinSecant r (predecessor r) := by
   classical
-  simpa only [predecessor, dif_pos hr] using Nat.find_spec (exists_min_secant hr)
+  simpa only [predecessor, dite_eq_left hr] using Nat.find_spec (exists_min_secant hr)
 
 private theorem predecessor_smallest {r q : ℕ} (hr : 1 < r)
     (hq : MinSecant r q) : predecessor r ≤ q := by
   classical
-  simpa only [predecessor, dif_pos hr] using Nat.find_min' (exists_min_secant hr) hq
+  simpa only [predecessor, dite_eq_left hr] using Nat.find_min' (exists_min_secant hr) hq
 
 private theorem secant_support {r : ℕ} (hr : 1 < r) {u : ℝ}
     (hrecord : Record u r) :
@@ -127,7 +124,8 @@ private theorem secant_support {r : ℕ} (hr : 1 < r) {u : ℝ}
     simpa only [secant, hell0 r hr0, hell0 q hq, hell0 n hn] using hmin n hn hnr
   have hbase : u < v ∧ goldenResourceObjective v q = goldenResourceObjective v r ∧
       Supports r v r := by
-    simpa only [hell0 r hr0, hell0 (predecessor r) hq] using
+    simpa only [v, q, critical, secant, Supports, hell0 r hr0,
+      hell0 (predecessor r) hq] using
       ActualMinSecantPredecessorLogGap.secant_support hq hqr hrecord hmin0
   obtain ⟨huv, htie, hsupport⟩ := hbase
   have hmax : Supports r v q := by
@@ -245,13 +243,13 @@ private theorem chain_state {m : ℕ} (hm : 0 < m) {mu : ℝ}
       obtain ⟨huv, hnext⟩ := support_step hr1 hrm hsupport
       have hmunu := hprice.trans_lt huv
       have hqrecord := earlier_record hq (hqr.le.trans hrm) hmunu hnext.1
-      simpa only [node, entryPrice, if_pos hr1] using
+      simpa only [node, entryPrice, ite_eq_left hr1] using
         And.intro hq (And.intro (hqr.le.trans hrm)
           (And.intro hqrecord (And.intro hmunu.le hnext)))
     · have hrone : node m i = 1 := by omega
       have hpred : predecessor (node m i) = node m i := by
-        rw [predecessor, dif_neg hr1, hrone]
-      simpa only [node, entryPrice, if_neg hr1, hpred] using
+        rw [predecessor, dite_eq_right hr1, hrone]
+      simpa only [node, entryPrice, ite_eq_right hr1, hpred] using
         And.intro hr (And.intro hrm (And.intro hrec (And.intro hprice hsupport)))
 
 /- The incoming price at every nonterminal node is strictly below its next
@@ -544,11 +542,14 @@ private theorem quantitative_threshold (A B c : ℝ) (hc : 0 < c) :
       simpa only [Real.log_exp] using Real.log_le_log (Real.exp_pos 4) hP4
     have hL0 : 0 < Real.log P := by linarith
     have h4log : Real.log (4 : ℝ) ≤ 3 := by
-      simpa using Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 4)
+      have := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 4)
+      linarith
     have h8log : Real.log (8 : ℝ) ≤ 7 := by
-      simpa using Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 8)
+      have := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 8)
+      linarith
     have h2log : Real.log (2 : ℝ) ≤ 1 := by
-      simpa using Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+      have := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+      linarith
     have h4id : Real.log (4 * P) = Real.log 4 + Real.log P :=
       Real.log_mul (by norm_num) hP0.ne'
     have h8id : Real.log (8 * P) = Real.log 8 + Real.log P :=
