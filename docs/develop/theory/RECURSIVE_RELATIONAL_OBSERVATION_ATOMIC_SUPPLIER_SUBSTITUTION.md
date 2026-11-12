@@ -3965,3 +3965,259 @@ IR的declared compiler-cut current结果与RCA的finite-completion-conditional h
 最简关系结构及space／time／boundary／memory的实际互恢复全目标保持原范围，未完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 45. 现有 J-FAMILY 客户端的当前可见域
+
+**定义 45.1（同一实际启动与精确目标）。** 固定第26–40节的原始安装
+`J-FAMILY-ARENA-1`，采用假设26.2、1.2及 AA20.1 的逐点有限材料、工作空间、完整输入及规定确认条件。
+所有所需 source／record／port／connection 权限当前独占有效，没有竞争写者、撤权、崩溃或中断。
+取定义26.1允许的 $N=0$ 日程：同一次实际 boot、Native 准备 $\xi$、Init及其原返回之后，
+真正供应 finish，并执行原 Park／Handback／Stop／INITIAL consumer／ACK／global halt。
+四个实际根 $O,F,N^*,r_0$、先行 $O$ 七事件、Native seed／code／prior／saved client及全部保留材料均存在；
+未使用的分支也不从该执行或账目中删除。第36.4节供应这条有限完成执行，而非另给一个理想 endpoint。
+
+对该执行的每个有限前缀 $H$，记 $z(H)$ 为其实际出口，$X(H)$ 为定义41.1要求的完整目标：
+完整实际有限历史、raw joint endpoint、当前权限、保留材料和实际费用。
+其中包括全部 Native PC／code／heads／latches／source16／partial STORE、AA parents／children／headers／tapes、
+reserved objects、unfinished append及其真实引用／cursor／subphase／next action，
+各连接的真实 endpoint／空满／当前位／backing／pending sender与receiver，以及已发生的 records／receipts。
+未完成对象不补入未来字段。$X(H)$ 尤其保留 $h.\mathrm{tail}$ 的真实引用值，
+不只保留逻辑树或从 head 可达的词；也不按同构、相同 body或同样终端答案认同来源。
+
+这里的 existing J-FAMILY 没有被赋予 EnableCapture 或 current handler。
+定义41.1是另一个实际构造 support、owner、slot、bank后才 enable 的安装所须满足的规格；
+若 enable 先于 Init，其覆盖域包含下述原 Init interiors。
+本节首先检验现有安装的客户端接口，不把未来 support 当作已安装设施。
+
+**定义 45.2（观察者、记录及保持条件）。** 观察者是现有 serial service client，具有其实际当前 grants、
+已经取得或返回的真实 identity／binding，以及现有 request／reply／End／local ACK／Return 连接。
+其观察记录 $\mathcal O(H)$ 包含这些连接已经公开的完整 traffic和当前可访问状态，
+连同每个已经公开的 Native primitive label、Native row／routine phase／PC、tick及fee pulse、
+receipt、stored fence／counter／version、已经取得的 readout及当前合法的付费 closed-cut readout。
+保留现有接口中所有这些读数；不删除可区分的旧 stamp，不把 readout 变成免费的当前 snapshot。
+
+观察者的当前 grants不改变 AA20.2及定义29.2的调用阶段。
+owner 的额外字段读取仅在自己的 driver已返回、stationary且权限有效时合法；
+保留某个引用不自动给出忙碌期间的独立字段调用。
+此客户端不是 active AA executor，不另有 administrative socket、外部全 actor scheduler记录、
+当前 AA PC、累计 AA field-work invoice、raw allocation probe或独立 serial clock。
+AA17.1的签名及 AA20.2的 reply grammar不供应这些额外观察。
+$X(H)$、全局 primitive序号和完整成本向量是待恢复目标，不作为观察者已有输入。
+
+在 cut $H$ 上的一个观察实验是该客户端依据已有观察选择动作的有限离散过程。
+允许其执行当前合法的 client-local work、已有授权的 Native 观察、真正合法的连接动作和付费旧 cut读数，
+但必须保持该 cut自己的原 AA next action尚未执行，不能推进该 active driver以换取较晚 service entry。
+这是定义41.1的 pending-consumer条件：观察对象是实验开始时的原前缀，
+实验自己的新工作、records与费用仍在各自实际后继中另计。
+在两个实验间比较同一确定性 client、相同本地输入和公开选择。
+若另用随机输入，只在显式固定同一 random tape时作以下逐步比较；不加入 wall-clock、
+scheduler timing、interrupt或其它未声明 side channel。
+
+## 46. 原 Init 中第一条非根增长的真实 tail 切口
+
+**命题 46.1（同一完成执行上的相邻前缀）。** 在定义45.1的一个有限完成执行中，
+有两个相邻实际前缀 $H_-$、$H_+=H_-;e$，其中
+
+$$
+e=\operatorname{write}(h.\mathrm{tail},c),
+$$
+
+是 $r_0$ 上 Init 的首次 $P_R$ 调用在 Maintain 中的真实 AA 字段赋值。
+两 cut均已通过该调用的实际 source guard及 source edit，尚未完成该调用的 reply／End／ACK／Return。
+其字段与阶段满足：
+
+| 实际坐标 | $H_-$ 的出口 | $H_+$ 的出口 |
+| --- | --- | --- |
+| $r_0$ 的逻辑 body | $\langle\beta,\beta\rangle$ | $\langle\beta,\beta\rangle$ |
+| $h.\mathrm{head}$ | 实际引用 $c$ | 同一实际引用 $c$ |
+| $h.\mathrm{tail}$ | null | 实际引用 $c$ |
+| $c.\mathrm{side}$、$c.\mathrm{next}$ | $R$、null | $R$、null |
+| AA pending control | 尚欠这一次 tail write | 这一次 write的真实 successor subphase／next action |
+
+真实 roots、parents、header及cell bindings与当前 grants在 $e$ 前已取得；$e$ 不重新分配或授权，
+不重绑根，不改变 source edge，不发送或接收任何位，也不执行确认。
+两个出口均为 raw Maintain cut，不被当作 Ready或一个已返回调用。
+
+证明。定义27.1先在 $O$ 完成七事件及全回复／维护／返回；$r_0$ 此时仍为其独立实际 alpha根。
+定义28.1–28.2从本次 Native 原准备、四次完整 Lift及真正 Init取得目标字
+
+$$
+E(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle.
+$$
+
+在这个 $r_0$ 先完整调用 $P_\varepsilon$，实际 Return，再完整调用 $S_\varepsilon$及 Return。
+于是 $r_0$ 的 body为 $\langle\beta,\alpha\rangle$。
+owner在 stationary Ready按定义28.2读真实 right field取得 alpha-born $r_1$及其 $R$ 地址／creation关联，
+并由 left field取得继续 beta reserve及路径 $L$。
+$S_\varepsilon$ 在 $r_0$ 绑定了实际空 header $h$。
+这两次编辑都在逻辑根，没有 proper logical ancestor，故没有向 $h$ 追加任何 side。
+先行 $O$ 历史的 $P_R$ 不是这里 $r_0$ 的调用，也不向这个 $h$ 写字。
+
+Init接着以定义29.2的 Build消费实收 $E(\beta)$，全局 target为 $R$、birth为 alpha。
+该目标是 branch，故 Build先在当前 cone $p_1=R$ 上完整执行相对调用 $\operatorname{Do}(P,\varepsilon)$，即全局 $P_{p_1\varepsilon}=P_R$，然后才可能执行 S及子树构造。
+原 Navigate／Guard实际到达 alpha-born $r_1$，其 promotion合法；source template完成后，
+$r_0$ 已为 $\langle\beta,\beta\rangle$。
+这次 $P_R$ 唯一的 proper logical ancestor是 $r_0$，所以它正是 $h$ 的第一次 append，side为 $R$。
+
+AA20.2的 Reserve先供应所需 fresh source／header／tape material；
+Maintain使用其中实际 reserved／allocated cell $c$，初始化 $c.\mathrm{side}=R$、$c.\mathrm{next}=\mathrm{null}$，
+再因 $h$ 原为空而写 $h.\mathrm{head}=c$，最后才写 $h.\mathrm{tail}=c$。
+这正是 AA22.1的 literal append顺序；Maintain不被另称为分配阶段。
+AA20.2明确保留 unfinished append的 references／subphases，故 head已连而tail尚空是原过程的一个 cut。
+头可达词已为单字 $R$，但 tail／control尚未完成。
+这一 transient distinction及 head-word忽略 tail的投影，直接复用
+[Sparse Native Entry Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md)
+定义14.1–14.2、23.2，不另立新的 unfinished-tail恢复结论。
+
+假设26.2及 AA20.3、引理28.4、第36.4节给这条 Init及后续 $N=0$ finish的有限完成。
+在其中截取 tail write前后的两个前缀即得 $H_-$、$H_+$。
+没有删去、交换、重放或改名任何事件，没有从别根或另一次准备借取 cell／grant／后缀。
+$H_-$ 欠的是 $e$ 本身，$H_+$ 欠的是原控制图在 $e$ 后的真实下一动作；
+不为它们猜定数字行号，也不把二者合并成共同 Ready。
+$B_0$ 封存、InitACK、initial carrier及首次 Entry此时尚未来到，不填入其未来值。$\square$
+
+## 47. 完整 Native stamp 下仍相同的客户端记录
+
+**定理 47.1（现有接口上的精确目标不因子化）。** 在定义45.1–45.2的来源、权限、完成及观察条件下，
+命题46.1的两个 attained cuts满足
+
+$$
+\mathcal O(H_-)=\mathcal O(H_+),\qquad X(H_-)\ne X(H_+).
+$$
+
+从二者启动相同确定性 client并保持各自原 AA owed action时，
+每个有限合法观察实验的 transcript及输出亦相同。
+因此仅由这一接口取得的观察及其后处理，不能在这两个原 cut均恢复精确 $X$；
+尤其不能在定义41.1的全部所需 cuts上提供四个各自独立恢复 $X$ 的 space／time／boundary／memory body。
+此结论针对 existing serial service-client的观察 map，不对任意合法增广作不可能断言。
+
+证明。$H_+$ 比 $H_-$ 恰多一次 AA 数据字段赋值 $e$。
+AA与Native是定义1.4、38.1中的不同 primitive系统，$e$ 不是 Native core occurrence。
+故 Native tapes／heads／latches／PC、完整公开 Native labels、receipts／ticks／fee pulses，
+全部既有 fence／counter版本及已取得 closed-cut readout在两侧相同。
+TMC PR57.D1、D3及L2的公开 PC／meter是 Native row／occurrence的观察；
+不能把其中的“每次 occurrence”改成“每个 AA或Native动作”而添出一个全局钟。
+从相同实际 Native tapes／fences开始的合法付费旧 cut readout也读到相同数据，
+其自身后来产生的 Native receipts／费用照常计入两侧实验。
+
+$e$ 没有 request／reply bit、End、local ACK或Return输出。
+两侧先前的 AA traffic、已公开 reference／descriptor／creation关联及当前客户端可访问连接状态相同。
+这包括任何已由真实 sender供应的当前 input bit、occupied latch、backing及pending endpoints；
+它们在两个前缀间按同一实际对象保持，不能由“Maintain不接收新query”推出“所有连接为空”。
+$P_R$ 的源编辑已经发生，但其后 BuildAnswer／Print／End仍未执行，
+不把一份将来的 Growth回复预先加入任一观察记录。
+
+两 cut都在同一 active $r_0$ driver的 Maintain内。
+AA20.2在 Reserve／editing／Maintain不 admit新 input或query；
+定义29.2的 extra owner field-read须待driver返回且stationary。
+因此保留引用与grant均不供应一个当前 $h.\mathrm{tail}$ 读取，
+也不能在此另开 Tag／FetchGrowth／Next或把一个错阶段调用当作 emitted Busy reply。
+定义37.2的 busy／missing-right disabled none、真正执行的 source refusal、BadFrame及OutOfRange仍分开。
+原图的两个不同 AA next rows属于 $X$，不是客户端可读的 AA PC或 availability port。
+
+现在对实验长度归纳。起点的整个客户端可见记录、client-local state、
+其可访问的 Native数据、tokens／grants与连接位均相同。
+若前 $k$ 步的观察相同，同一确定性 client选择同一下一动作。
+client-local计算及已有授权的 Native读取只依赖相同可访问数据；
+连接操作按相同实际 endpoints／空满／当前位／backing前置执行，
+其余合法 Native工作与旧 cut readout也由同一前态给出相同 effects、public labels及返回值。
+故这些动作的合法性和第 $k+1$ 步观察均相同。
+任何首次推进 active $r_0$ driver的尝试，首先须执行该 cut自己的 owed action，
+而这被实验保持条件排除；等driver完成后的owner读取亦不是这个 cut的观察。
+阶段禁用本身不是新增回复。这样归纳得到每个有限 transcript相同，
+观察决定的停机与输出也相同。若使用随机输入，固定同一 tape后论证逐条成立；
+这里不据此宣称任何额外 timing或scheduler可观测性的等价。
+
+另一方面，$h.\mathrm{tail}$ 在 $X(H_-)$ 中为 null，在 $X(H_+)$ 中为同一实际非null引用 $c$；
+实际历史、AA pending control及已发生AA field-work也不同。
+故 $X(H_-)\ne X(H_+)$ 不依赖 fresh-name拼写、逻辑树差别或终端答案差别。
+若某方法只由上述记录构造 body并由该 body恢复 $X$，
+两侧相同记录及相同本地选择给相同 body，decoder遂给相同结果，不能同时等于这两个不同 $X$。
+这是已有的观察纤维／factorization原则在此 attained pair上的直接应用，非另一个通用新定理。
+对四个 body中的每一个分别如此；联合取四个旧接口后处理也不会切开该纤维。$\square$
+
+**定义 47.2（该相邻事件的完整账与权限）。** 沿定义38.1、44.1的同次实际前态计费，记
+
+$$
+\begin{aligned}
+C(H_+)&=C(H_-)+\delta(e,z(H_-)),\\
+P(H_+)&=\max\{P(H_-),S(z(H_+))\}.
+\end{aligned}
+$$
+
+$e$ 的 located AA data-field-assignment次数恰增加一；
+其真实 reference-representation及其它实际 tariff坐标保留在 $\delta$ 中。
+Native occurrence／receipt／tick／fee的增量均为零。
+这不是“整个账单只加一”，也不是两个实际成本向量相等。
+AA事件本身、所有已经产生的AA records／receipts与不同的field-work费用都在 $X$ 中，
+不能因为客户端未取得它们便抹去。
+定理47.1只说该 installed client没有由会计坐标自动获得一个当前可调用 live AA invoice；
+账目存在和它的当前取得是不同关系。
+
+所有 $O,F,N^*,r_0$、其source vertices／parents／headers／tapes、Native准备、mandatory backing、
+当前连接／latches、reserved material／pending cursors和其它定义38.4材料继续按真实 prefix保留。
+同一cell及root binding不是重新取得的复制品；current exclusive grants没有跨 $e$ 改变。
+没有remote dereference、root rebind、loan、rollback或restore来供应这两个cut。
+peak沿该同一history取同时retained材料最大值，不从“无新allocation”推断所有reference位或peak费用不变，
+也不把后续清理解释为退还constructed capacity。
+这些式子给出精确向量关系；不赋予一个未规定的数值总tariff、物理价格或资源优势。
+
+## 48. 来源对应、可区分义务及未决范围
+
+**定义 48.1（所复用的来源与新增对应）。** 第45–48节所引原文固定于
+`1db40b9b076fbd5d454746cc1be7fce51ebec594`；第26–44节已有的各自来源合同按原域使用。
+
+| 原文定位 | 在定理47.1中的用途 |
+| --- | --- |
+| 本卷假设26.2、定义27.1–27.3、28.1–28.3、29.2及引理28.4、定理36.4 | 四个真实根和先行历史、实际Native准备／Init、首个alpha-born cone上的 $P_R$ 以及 $N=0$ 的真实完成后缀 |
+| [AA17.1、20.1–20.3、22.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | 实际引用／当前权限、无独立serial clock的签名、Reserve与Maintain、link-before-tail顺序、phase disabling及有限返回 |
+| [AA21.1、22.3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | semantic service与完整controller chronology分离；会计和额外可访问side information的条件边界 |
+| [Sparse Native Entry Acquisition14.1–14.2、23.1–23.2](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md) | 已有unfinished-tail／content-vs-control区别；owner-local付费evaluator属于其另有权限及调度的安装，不供应本client的busy读口 |
+| [TMC PR57.D1、D3及L2](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)及本卷38.1 | 公开Native row／primitive trace、receipt／tick／fee及付费closed-cut读数；AA／Native分坐标 |
+| 本卷37.2–37.3、38.4、41.1、44.1 | 原标签、full raw target、保留材料、每个cut自己的owed action及完整实际费用 |
+
+unfinished-tail区别、AA literal append、完成性和观察纤维原则均为复用。
+这里的具体对应是：原 J-FAMILY Init真正到达 first-$P_R$ 的相邻tail赋值cut，
+其完整现有 Native public stamps及客户端traffic保持相同，而完整raw目标与AA账不同。
+文献归属为 repo-derived 的条件性普通source-model推导；未作外部文献穷尽或repository-wide新意认证，
+不主张新的通用indistinguishability原理或全球原创性。
+本对应没有新Lean／exact-S编译或axiom-closure核验，也不提供运行时执行见证、physical conformance或whole-run数值测量。
+
+**定义 48.2（后继安装上的适用条件与必要区分）。** 若后继安装要把本见证用于自己的current取得规格，
+须先证明它自己的真实boot／rights／事件到原 $H_-$、$H_+$ 的source-prefix对应，
+且在保留各自原pending action时，所比较观察map仍把这两个对应前缀置于同一纤维。
+新support、logger、meter、scheduler或owner角色的发生及其观察不能被此对应静默删去。
+仅body相等、端口同名、同一计数或可编码性不构成这个桥。
+
+在这种对应确已成立的安装上，若欲精确恢复保留的raw目标，
+就必须由当前合法且真实付费的观察切开这两个不同目标；否则定理47.1的等记录论证仍适用。
+一个真正取得的 current AA field-work count会在此pair上相差一，
+current AA row、$h.\mathrm{tail}$ 或包含该AA步的真实all-actor trace也能区分它们。
+这说明额外观察会改变纤维，不断言上述facility已经安装，不规定必须采用哪一种机制。
+只取得一个区分bit至多破除此pair，不能由此推出完整历史／raw state的充分恢复，
+更不能推出授权、snapshot／restore、原continuation或quantum-event facility。
+
+**定义 48.3（保持原量词的边界）。** 定理47.1给现有接口的一条visibility必要条件，
+与定理43.1对 $\mathcal K$ 的admission障碍承担不同关系。
+不从这两条局部结论推出所有outside-$\mathcal K$增广不可能，
+也不把第36.4节的完整ordinary family、准确mode10或原Stop／INITIAL完成缩成只有 $N=0$。
+$N=0$ 只供应该全域中一个真实反例路径；原完整输入域及其所有cuts仍按定义41.1保留。
+
+完整的正面current构造仍须在自己的原来源上供应真实Native／AA admission、
+当前owner-bound suspension／disclosure、任意有限重复与任意有限深度nested requests，
+包括新增handler interiors，保留全部partial states、rights、records和实际费用；
+四个独立取得且各有source解释的完整表达须恢复同一actual prefix，
+由实际选中的received body接回该cut自己的同一个owed action并恰执行一次，
+缺输入时仍等待它自己的输入，再忠实接回全部原返回及terminal消费者。
+现有serial接口的非因子化不供应其中任何capture／return实现。
+
+定义40.3、44.3保留的既有结果继续按各自来源和域成立：
+RCA15.3的finite-completion-conditional历史handler closure不重列为未解；
+IR的declared compiler-cut current结果不自动覆盖本AA安装；
+GENERAL15.5／18.4、RG13.3的既有cross-entry／inherited original-Q域不缩回单entry。
+其外的changed／new rows、broader mixed interiors及full terminal-task kernel，
+更广内部守卫策略／all-seven direct schedules、generic或physical sources、
+实际无限运行、统一有限hardware／resources、total-resource advantage和global／Pareto最小性仍未由此给出。
+空间、时间、边界、记忆的最简关系结构及实际互恢复全目标保持原范围。
+
+## 追加锚（本行以下为增补区）
