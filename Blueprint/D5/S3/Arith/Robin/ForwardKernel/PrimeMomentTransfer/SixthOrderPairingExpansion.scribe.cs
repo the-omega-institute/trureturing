@@ -40,5 +40,16 @@ internal sealed class SixthOrderPairingExpansionDocument : IScribeDocumentDefini
                     "For real N>=1 and K<=sqrt(N), K*N^3*(sqrt(1/N)+1/N)<=2*N^3. "
                     + "Both K/sqrt(N) and K/N are at most one because sqrt(N)<=N. "
                     + "This bounds the transfer remainder after selecting a sufficiently large model size."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sixth-defect-lower"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/SixthOrderPairingExpansion.sixth_defect_lower"),
+                H("Domination of the cubic comparison scale"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let N>=1, C<=N, |delta6|<=C*N^2, delta4>=N^2/2, and |E|<=2*N^3. "
+                    + "If V=delta6+15*N*delta4+E, then V>=N^3. "
+                    + "The fifteen one-edge terms contribute at least (15/2)*N^3, "
+                    + "while the sixth-order defect and remainder cost at most N^3 and 2*N^3 respectively."))),
                 DescribeRole.Theorem))));
 }

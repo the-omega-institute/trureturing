@@ -12,6 +12,8 @@ proof_shape: partialPairing_six_convolution: bind-only (consumer:
   sixth_four_defect_lower: bind-only (consumer:
   SixthOrderTopPairingRefutation.model_four_defect_lower);
   transfer_error_small: bind-only (consumer:
+  SixthOrderTopPairingRefutation.deviation_lower_bound);
+  sixth_defect_lower: bind-only (consumer:
   SixthOrderTopPairingRefutation.deviation_lower_bound).
 escape_witness: none; this consumed finite-sum reduction organizes the substantive
   sixth-order countermodel proof without providing an independent admission witness.
@@ -126,6 +128,19 @@ theorem transfer_error_small (N K : ℝ) (hN : 1 ≤ N) (hK : K ≤ Real.sqrt N)
     _ ≤ N ^ 3 * (1 + 1) :=
       mul_le_mul_of_nonneg_left (add_le_add h1 h2) (by positivity)
     _ = _ := by ring
+
+/-- Positive one-edge defects dominate the bounded top-order and transfer errors. -/
+theorem sixth_defect_lower (N C δ₆ δ₄ E V : ℝ)
+    (hN : 1 ≤ N) (hC : C ≤ N) (h6 : |δ₆| ≤ C * N ^ 2)
+    (h4 : N ^ 2 / 2 ≤ δ₄) (hE : |E| ≤ 2 * N ^ 3)
+    (hV : V = δ₆ + 15 * N * δ₄ + E) :
+    N ^ 3 ≤ V := by
+  have hn : 0 ≤ N := by linarith
+  have h6lo := (abs_le.mp h6).1
+  have hElo := (abs_le.mp hE).1
+  have hCmul := mul_le_mul_of_nonneg_right hC (sq_nonneg N)
+  have h4mul := mul_le_mul_of_nonneg_left h4 (by positivity : 0 ≤ 15*N)
+  nlinarith [pow_nonneg hn 3]
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

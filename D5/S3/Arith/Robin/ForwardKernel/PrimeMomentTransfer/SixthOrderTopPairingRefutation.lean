@@ -224,6 +224,7 @@ private lemma subset_unit_moment {k : ℕ} (N : ℕ) (U : Finset (Fin k)) :
       distinctIndexMoment (modelFunctional N) (modelY N)
         (fun (_ : Fin U.card) (_ : Fin N) => (1 : ℝ)) := by
     unfold subsetDistinctMoment distinctIndexMoment
+    simp only [Fintype.card_coe]
     apply Finset.sum_congr
     · ext x
       simp
