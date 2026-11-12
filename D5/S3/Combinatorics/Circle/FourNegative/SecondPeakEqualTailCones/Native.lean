@@ -9,7 +9,7 @@ import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones.Source
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones
-open private mask_complement from D5.S3.Combinatorics.Circle.ThreeBitSource
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 
 private def lambda (a b : ℕ) : ℕ := 2^(b-a-1)
 private def epsilon (a b : ℕ) : ℕ := if b=a+1 then 0 else 2^(b-a-2)

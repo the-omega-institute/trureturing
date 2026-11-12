@@ -13,10 +13,11 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTailCones
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size seed sourceMod base newBase charge chainLength chainStart
-  nextBase nextNewBase oldValue newValue actual_values chain_values
-  new_base_bounds chain_signs source_totals
+open private sourceMod charge nextBase nextNewBase chain_values
+  actual_values new_base_bounds chain_signs source_totals
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
+  (size base newBase chainLength chainStart oldValue newValue)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 

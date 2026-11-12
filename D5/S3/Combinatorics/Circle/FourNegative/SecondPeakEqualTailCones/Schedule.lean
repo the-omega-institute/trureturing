@@ -26,12 +26,10 @@ open private Checks
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 open private checks_strip
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Physical
-open private blocksWord
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-open private oldValue newValue base
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (oldValue newValue base)
 open private inserted_perm
   from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
 
