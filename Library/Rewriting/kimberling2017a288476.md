@@ -14,6 +14,10 @@ triage: anchor
 
 # Kimberling's replacement-iterate lengths
 
+## Locator
+
+Declared entry: <https://oeis.org/A288476>.
+
 The exact source is [OEIS A288476](https://oeis.org/A288476/internal),
 COMMENTS and FORMULA, revision 8. Its defining recurrence is
 `a(n)=a(n-1)+4*a(n-2)-2*a(n-3)`, with initial values `2,4,8` at
