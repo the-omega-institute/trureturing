@@ -691,6 +691,18 @@ theorem exists_original_unit_inverse_trace_stationarity
 
 
 
+private theorem matrix_eq_one_of_card_one (A : Matrix ι ι 𝕜)
+    (hcard : Fintype.card ι = 1) (htrace : A.trace = 1) : A = 1 := by
+  classical
+  obtain ⟨hunique⟩ := Fintype.card_eq_one_iff_nonempty_unique.mp hcard
+  letI : Unique ι := hunique
+  ext i j
+  have htr : A.trace = A i i := by simp [Matrix.trace, Subsingleton.elim (default : ι) i]
+  have hij : i = j := Subsingleton.elim _ _
+  subst j
+  simpa only [Matrix.one_apply, ite_true] using htr.symm.trans htrace
+
+set_option maxHeartbeats 1200000 in
 /-- The principal congruence of the actual original-unit maximizer normalizes
 all original vectors, with the identity and entire base in the same image. -/
 theorem exists_original_unit_normalization
@@ -725,6 +737,22 @@ theorem exists_original_unit_normalization
           (1 : Matrix (Fin n) (Fin n) 𝕜) ∈ Ψ.range ∧
           Ψ '' {v : V | v ∈ C ∧ u v = 1} =
             {X | X ∈ Ψ.range ∧ X.PosSemidef ∧ X.trace = 1} ∧
+          (∀ x ∈ C,
+            (∃ (k : ℕ) (y : Fin k → V),
+              (∀ j, y j ∈ C ∧ (ρ (y j)).rank = 1) ∧ ρ x = ∑ j, ρ (y j)) ↔
+            (∃ (k : ℕ) (y : Fin k → V),
+              (∀ j, y j ∈ C ∧ (Ψ (y j)).rank = 1) ∧ Ψ x = ∑ j, Ψ (y j))) ∧
+          ((∃ p : V, {v : V | v ∈ C ∧ u v = 1} = {p}) →
+            (∀ x ∈ C, ∃ (k : ℕ) (y : Fin k → V),
+              (∀ j, y j ∈ C ∧ (ρ (y j)).rank = 1) ∧ ρ x = ∑ j, ρ (y j)) → n = 1) ∧
+          (n = 1 →
+            {v : V | v ∈ C ∧ u v = 1} = {h} ∧
+            ({v : V | v ∈ C ∧ u v = 1}).extremePoints ℝ = {h} ∧
+            {f : V →ₗ[ℝ] ℝ | (∀ v ∈ C, 0 ≤ f v ∧ f v ≤ u v) ∧ f h = 1} = {u} ∧
+            {v : V | (v ∈ C ∧ u v = 1) ∧ ∃ f : V →ₗ[ℝ] ℝ,
+              (∀ w ∈ C, 0 ≤ f w ∧ f w ≤ u w) ∧ f h = 1 ∧ f v = 0} = ∅ ∧
+            {f : V →ₗ[ℝ] ℝ | ∀ v ∈ C, 0 ≤ f v ∧ f v ≤ u v} =
+              {f | ∃ t : ℝ, 0 ≤ t ∧ t ≤ 1 ∧ f = t • u}) ∧
           ∃ e : V ≃ₗ[ℝ] Ψ.range,
             (∀ v, (e v).val = Ψ v) ∧
             let K := {v : V | v ∈ C ∧ u v = 1}
@@ -734,6 +762,12 @@ theorem exists_original_unit_normalization
             let N := fun g : Ψ.range →ₗ[ℝ] ℝ => ∀ X : Ψ.range,
               X.val.PosSemidef → 0 ≤ g X ∧ g X ≤ RCLike.re X.val.trace
             e '' K = Q ∧ e '' K.extremePoints ℝ = Q.extremePoints ℝ ∧
+            (∀ F : Set V, Convex ℝ F ↔ Convex ℝ (e '' F)) ∧
+            (∀ A B : Set V, IsExtreme ℝ A B ↔ IsExtreme ℝ (e '' A) (e '' B)) ∧
+            (∀ A S : Set V,
+              e '' {v | ∀ F : Set V, Convex ℝ F → IsExtreme ℝ A F → S ⊆ F → v ∈ F} =
+              {X | ∀ G : Set Ψ.range, Convex ℝ G → IsExtreme ℝ (e '' A) G →
+                e '' S ⊆ G → X ∈ G}) ∧
             (∀ f, O f ↔ N (d f)) ∧
             (∀ p, d '' {f | O f ∧ f p = 1} = {g | N g ∧ g (e p) = 1}) ∧
             (∀ p x,
@@ -781,7 +815,7 @@ theorem exists_original_unit_normalization
       _ = (u v : 𝕜) := by rw [hSS, htrace v]
   refine ⟨hn, U, σ, Ψ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
     h, hh, hmass, hhPD, htrace, hmax, hunique, hSH, hSU, hSS, (fun _ => rfl), hroot,
-    hΨ, ?_, hΨtrace, hΨC, ?_, ?_, ⟨h, hroot⟩, ?_, ?_⟩
+    hΨ, ?_, hΨtrace, hΨC, ?_, ?_, ⟨h, hroot⟩, ?_, ?_, ?_, ?_, ?_⟩
   · intro v
     change (S * σ v * S).IsHermitian
     simpa only [hSH.eq] using Matrix.isHermitian_conjTranspose_mul_mul S (hHerm v)
@@ -799,6 +833,128 @@ theorem exists_original_unit_normalization
       refine ⟨v, ⟨(hΨC v).mpr hv, ?_⟩, rfl⟩
       have hre := congrArg RCLike.re huv
       simpa [hΨtrace v] using hre
+  · intro x hx
+    have hsum (k : ℕ) (y : Fin k → V) :
+        ρ x = ∑ j, ρ (y j) ↔ Ψ x = ∑ j, Ψ (y j) := by
+      rw [← map_sum, ← map_sum]
+      constructor
+      · intro heq
+        exact congrArg Ψ (hρ heq)
+      · intro heq
+        exact congrArg ρ (hΨ heq)
+    constructor
+    · rintro ⟨k, y, hy, heq⟩
+      exact ⟨k, y, (fun j => ⟨(hy j).1, by rw [show (Ψ (y j)).rank = (ρ (y j)).rank from
+        by change (S * σ (y j) * S).rank = _
+           rw [Matrix.rank_mul_eq_left_of_isUnit_det S _ hSd,
+             Matrix.rank_mul_eq_right_of_isUnit_det S _ hSd, hrank], (hy j).2]⟩),
+        (hsum k y).mp heq⟩
+    · rintro ⟨k, y, hy, heq⟩
+      refine ⟨k, y, ?_, (hsum k y).mpr heq⟩
+      intro j
+      refine ⟨(hy j).1, ?_⟩
+      have hr : (Ψ (y j)).rank = (ρ (y j)).rank := by
+        change (S * σ (y j) * S).rank = _
+        rw [Matrix.rank_mul_eq_left_of_isUnit_det S _ hSd,
+          Matrix.rank_mul_eq_right_of_isUnit_det S _ hSd, hrank]
+      exact hr.symm.trans (hy j).2
+  · rintro ⟨p, hp⟩ hrog
+    let n := Module.finrank 𝕜 (commonSupport C ρ)
+    have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+    have hh0 : h ≠ 0 := by
+      intro hz
+      have : (n : ℝ) = 0 := by simpa only [hz, map_zero] using hmass.symm
+      exact hnR.ne' this
+    have hscale (v : V) (hv : v ∈ C) (hv0 : v ≠ 0) : v = u v • p := by
+      have huv := hu v hv hv0
+      have hw : (u v)⁻¹ • v ∈ {v : V | v ∈ C ∧ u v = 1} :=
+        ⟨C.smul_mem (inv_nonneg.mpr huv.le) hv, by simp [huv.ne']⟩
+      rw [hp, Set.mem_singleton_iff] at hw
+      calc
+        v = u v • ((u v)⁻¹ • v) := by simp [smul_smul, huv.ne']
+        _ = u v • p := by rw [hw]
+    obtain ⟨k, y, hy, heq⟩ := hrog h hh
+    have hk : 0 < k := by
+      by_contra! hk
+      have hk0 : k = 0 := Nat.eq_zero_of_le_zero hk
+      have hzero : ρ h = 0 := by
+        simpa only [hk0, Fin.sum_univ_zero] using heq
+      exact hh0 (hρ (by simpa only [map_zero] using hzero))
+    let j : Fin k := ⟨0, hk⟩
+    have hy0 : y j ≠ 0 := by
+      intro hz
+      have hbad := (hy j).2
+      simpa [hz] using hbad
+    have hyp := hu (y j) (hy j).1 hy0
+    have hscaled : y j = (u (y j) / (n : ℝ)) • h := by
+      rw [hscale (y j) (hy j).1 hy0, hscale h hh hh0, hmass, smul_smul]
+      congr 1
+      change u (y j) = u (y j) / (n : ℝ) * (n : ℝ)
+      field_simp [hnR.ne']
+    have hyPD : (σ (y j)).PosDef := by
+      rw [hscaled, map_smul]
+      exact hhPD.smul (div_pos hyp hnR)
+    have hr := Matrix.rank_of_isUnit (σ (y j)) hyPD.isUnit
+    rw [hrank, (hy j).2, Fintype.card_fin] at hr
+    exact hr.symm
+  · intro hn1
+    have hmass1 : u h = 1 := by simpa only [hn1, Nat.cast_one] using hmass
+    have hsingle (v : V) (hv : u v = 1) : v = h := by
+      apply hΨ
+      change Ψ v = S * σ h * S
+      rw [hroot]
+      exact matrix_eq_one_of_card_one (Ψ v) (by simpa using hn1)
+        (by rw [hΨtrace, hv]; simp)
+    have hbase : {v : V | v ∈ C ∧ u v = 1} = {h} := by
+      ext v
+      constructor
+      · intro hv
+        exact Set.mem_singleton_iff.mpr (hsingle v hv.2)
+      · rintro rfl
+        exact ⟨hh, hmass1⟩
+    have huray (v : V) (hv : v ∈ C) : v = u v • h := by
+      by_cases hz : v = 0
+      · simp [hz]
+      have hp := hu v hv hz
+      have hw : (u v)⁻¹ • v ∈ C ∧ u ((u v)⁻¹ • v) = 1 :=
+        ⟨C.smul_mem (inv_nonneg.mpr hp.le) hv, by simp [hp.ne']⟩
+      have heq := hsingle ((u v)⁻¹ • v) hw.2
+      calc
+        v = u v • ((u v)⁻¹ • v) := by simp [smul_smul, hp.ne']
+        _ = u v • h := by rw [heq]
+    have hu_nonneg (v : V) (hv : v ∈ C) : 0 ≤ u v := by
+      by_cases hz : v = 0
+      · simp [hz]
+      · exact (hu v hv hz).le
+    have heffect (f : V →ₗ[ℝ] ℝ) : f = f h • u := by
+      apply LinearMap.ext_on hgen
+      intro v hv
+      calc
+        f v = f (u v • h) := congrArg f (huray v hv)
+        _ = (f h • u) v := by simp [mul_comm]
+    have hproper_u : ∀ v ∈ C, 0 ≤ u v ∧ u v ≤ u v :=
+      fun v hv => ⟨hu_nonneg v hv, le_rfl⟩
+    refine ⟨hbase, by rw [hbase, extremePoints_singleton], ?_, ?_, ?_⟩
+    · ext f
+      constructor
+      · rintro ⟨hf, hfh⟩
+        exact Set.mem_singleton_iff.mpr (by simpa [hfh] using heffect f)
+      · rintro rfl
+        exact ⟨hproper_u, hmass1⟩
+    · apply Set.eq_empty_iff_forall_notMem.mpr
+      rintro v ⟨hv, f, hf, hfh, hfv⟩
+      have hvh := hsingle v hv.2
+      have heq : f h = 0 := by simpa only [hvh] using hfv
+      exact zero_ne_one (heq.symm.trans hfh)
+    · ext f
+      constructor
+      · intro hf
+        have hbound := hf h hh
+        exact ⟨f h, hbound.1, by simpa only [hmass1] using hbound.2, heffect f⟩
+      · rintro ⟨t, ht0, ht1, rfl⟩ v hv
+        change 0 ≤ t * u v ∧ t * u v ≤ u v
+        exact ⟨mul_nonneg ht0 (hu_nonneg v hv),
+          by simpa using mul_le_mul_of_nonneg_right ht1 (hu_nonneg v hv)⟩
   · let e : V ≃ₗ[ℝ] Ψ.range := LinearEquiv.ofInjective Ψ hΨ
     let K := {v : V | v ∈ C ∧ u v = 1}
     let Q := {X : Ψ.range | X.val.PosSemidef ∧ X.val.trace = 1}
@@ -819,6 +975,49 @@ theorem exists_original_unit_normalization
         exact ⟨hv, by rw [huv]; simp⟩
       · rintro ⟨hv, huv⟩
         exact ⟨hv, by simpa using congrArg RCLike.re huv⟩
+    have hconvex (F : Set V) : Convex ℝ F ↔ Convex ℝ (e '' F) := by
+      constructor
+      · exact fun hF => hF.linear_image e.toLinearMap
+      · intro hF
+        have hp := hF.linear_preimage e.toLinearMap
+        simpa only [e.injective.preimage_image] using hp
+    have hface (A B : Set V) : IsExtreme ℝ A B ↔ IsExtreme ℝ (e '' A) (e '' B) := by
+      constructor
+      · intro hF
+        refine ⟨Set.image_mono hF.subset, ?_⟩
+        rintro X ⟨x, hx, rfl⟩ Y ⟨y, hy, rfl⟩ Z ⟨z, hz, rfl⟩ hseg
+        rw [← image_openSegment ℝ e.toLinearMap.toAffineMap] at hseg
+        have hseg' : z ∈ openSegment ℝ x y := e.injective.mem_set_image.mp hseg
+        exact ⟨x, hF.left_mem_of_mem_openSegment hx hy hz hseg', rfl⟩
+      · intro hF
+        refine ⟨?_, ?_⟩
+        · intro z hz
+          exact e.injective.mem_set_image.mp (hF.subset ⟨z, hz, rfl⟩)
+        · intro x hx y hy z hz hseg
+          have hs : e z ∈ openSegment ℝ (e x) (e y) := by
+            rw [← image_openSegment ℝ e.toLinearMap.toAffineMap]
+            exact ⟨z, hseg, rfl⟩
+          exact e.injective.mem_set_image.mp
+            (hF.left_mem_of_mem_openSegment ⟨x, hx, rfl⟩ ⟨y, hy, rfl⟩ ⟨z, hz, rfl⟩ hs)
+    have hminimal (A S : Set V) :
+        e '' {v | ∀ F : Set V, Convex ℝ F → IsExtreme ℝ A F → S ⊆ F → v ∈ F} =
+          {X | ∀ G : Set Ψ.range, Convex ℝ G → IsExtreme ℝ (e '' A) G →
+            e '' S ⊆ G → X ∈ G} := by
+      ext X
+      constructor
+      · rintro ⟨v, hv, rfl⟩ G hGc hGface hSG
+        have hpre : e '' (e ⁻¹' G) = G := Set.image_preimage_eq G e.surjective
+        have hpreFace : IsExtreme ℝ A (e ⁻¹' G) := (hface A _).mpr (by
+          rw [hpre]
+          exact hGface)
+        exact hv (e ⁻¹' G) (hGc.linear_preimage e.toLinearMap) hpreFace
+          (fun z hz => hSG ⟨z, hz, rfl⟩)
+      · intro hv
+        obtain ⟨v, rfl⟩ := e.surjective X
+        refine ⟨v, ?_, rfl⟩
+        intro F hFc hFface hSF
+        exact e.injective.mem_set_image.mp
+          (hv (e '' F) ((hconvex F).mp hFc) ((hface A F).mp hFface) (Set.image_mono hSF))
     have hproper (f : V →ₗ[ℝ] ℝ) : O f ↔ N (d f) := by
       constructor
       · intro hf X hX
@@ -831,7 +1030,8 @@ theorem exists_original_unit_normalization
         have hp := hf (e v) ((hΨC v).mp hv)
         change 0 ≤ d f (e v) ∧ d f (e v) ≤ RCLike.re (Ψ v).trace at hp
         simpa only [hd, hreal] using hp
-    refine ⟨e, (fun _ => rfl), hbase, ?_, hproper, ?_, ?_, ?_⟩
+    refine ⟨e, (fun _ => rfl), hbase, ?_, hconvex, hface, hminimal,
+      hproper, ?_, ?_, ?_⟩
     · rw [image_extremePoints, hbase]
     · intro p
       ext g

@@ -168,11 +168,29 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             Eq(app(g, app(e, p)), D(1)), All("j", rangeDual, Imp(properNormalized(j),
                 Imp(Eq(app(j, app(e, p)), D(1)),
                     le(app(g, app(e, x)), app(j, app(e, x))))))));
+        Formula aSet = F.Id("A"), bSet = F.Id("B"), fSet = F.Id("F"),
+            gSet = F.Id("G"), sSet = F.Id("S");
+        Formula setSpace = Call("Set", space), setRange = Call("Set", range);
+        Formula subset(Formula a, Formula b) => Call("Subset", a, b);
+        Formula minimalOriginal = setOf(v, All("F", setSpace,
+            Imp(Call("Convex", real, fSet), Imp(Call("IsExtreme", real, aSet, fSet),
+                Imp(subset(sSet, fSet), Member(v, fSet))))));
+        Formula minimalNormalized = setOf(matrixX, All("G", setRange,
+            Imp(Call("Convex", real, gSet),
+                Imp(Call("IsExtreme", real, Call("image", e, aSet), gSet),
+                    Imp(subset(Call("image", e, sSet), gSet), Member(matrixX, gSet))))));
         Formula transport = Ex("e", Call("LinearEquiv", real, space, range), Chain(
             All("v", space, Eq(value(app(e, v)), psiAt(v))),
             Eq(Call("image", e, baseOriginal), baseNormalized),
             Eq(Call("image", e, Call("extremePoints", baseOriginal, real)),
                 Call("extremePoints", baseNormalized, real)),
+            All("F", setSpace, IffF(Call("Convex", real, fSet),
+                Call("Convex", real, Call("image", e, fSet)))),
+            All("A", setSpace, All("B", setSpace,
+                IffF(Call("IsExtreme", real, aSet, bSet),
+                    Call("IsExtreme", real, Call("image", e, aSet), Call("image", e, bSet))))),
+            All("A", setSpace, All("S", setSpace,
+                Eq(Call("image", e, minimalOriginal), minimalNormalized))),
             All("f", linear(real), IffF(properOriginal(f), properNormalized(app(dual, f)))),
             All("p", space, Eq(Call("image", dual,
                 setOf(f, And(properOriginal(f), Eq(app(f, p), D(1))))),
@@ -180,6 +198,26 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("p", space, All("x", space, Eq(originalReadings, normalizedReadings))),
             All("p", space, All("x", space,
                 Eq(Call("image", dual, originalMinimizers), normalizedMinimizers)))));
+        Formula singleton = Call("singleton", m);
+        Formula oneDimensional = Imp(Eq(dimension, D(1)), Chain(
+            Eq(baseOriginal, singleton),
+            Eq(Call("extremePoints", baseOriginal, real), singleton),
+            Eq(setOf(f, And(properOriginal(f), Eq(app(f, m), D(1)))),
+                Call("singleton", unit)),
+            Eq(setOf(v, And(Member(v, baseOriginal), Ex("f", linear(real),
+                Chain(properOriginal(f), Eq(app(f, m), D(1)), Eq(app(f, v), D(0)))))),
+                Call("emptySet")),
+            Eq(setOf(f, properOriginal(f)), setOf(f, Ex("t", real,
+                Chain(le(D(0), t), le(t, D(1)), Eq(f, Call("smul", t, unit))))))));
+        Formula decomp(Formula map, Formula point) => Ex("k", Call("Nat"),
+            Ex("y", Seq(Call("Fin", k), To, Sp, space), Chain(
+                All("j", Call("Fin", k), And(Member(app(y, j), cone),
+                    Eq(Call("rank", app(map, app(y, j))), D(1)))),
+                Eq(app(map, point), Call("sum", Seq(j, Mapsto, Sp, app(map, app(y, j))))))));
+        Formula rogTransport = All("x", space, Imp(Member(x, cone),
+            IffF(decomp(rho, x), decomp(psi, x))));
+        Formula singletonRog = Imp(Ex("p", space, Eq(baseOriginal, Call("singleton", p))),
+            Imp(All("x", space, Imp(Member(x, cone), decomp(rho, x))), Eq(dimension, D(1))));
         Formula normalizedWitness = Ex("m", space, Chain(Member(m, cone),
             Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace,
             maximum, uniqueMaximum, Call("IsHermitian", root), Call("IsUnit", root),
@@ -190,7 +228,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("v", space, Eq(Call("trace", psiAt(v)), app(unit, v))),
             All("v", space, IffF(Member(v, cone), Call("PosSemidef", psiAt(v)))),
             All("v", space, Eq(Call("rank", psiAt(v)), Call("rank", mat(v)))),
-            inverseCongruence, Member(D(1), Call("range", psi)), normalizedBase, transport));
+            inverseCongruence, Member(D(1), Call("range", psi)), normalizedBase, rogTransport, singletonRog, oneDimensional, transport));
         Formula normalizationStatement = nativeInputs(And(LtF(D(0), dimension),
             Ex("U", Call("Matrix", index, nIndex, field),
                 Ex("sigma", Call("LinearMap", real, space, nativeMatrices),
@@ -236,9 +274,9 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     DeclarationHandle.Create(Owner + "exists_original_unit_normalization"),
                     H("Actual original-unit normalization on the entire original carrier"),
                     StatementSource.FromAuthor(Disp(normalizationStatement)), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its unique determinant maximum and principal inverse square root S define the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. The equivalence e from the original space onto the range of this same Psi carries the entire base and all its extreme points to the positive trace-one base in that range. Its contravariant dual d(f) = f composed with e inverse carries the entire proper interval and each full confirmer set bijectively. For every original p and x, the sets of attainable confirming readings agree exactly, so their lower envelopes agree and d maps all minimizers onto all minimizers. In particular every actual zero confirmer transports in both directions, even when different zero conditions initially have different confirmers. Only elements of the actual image are passed to e inverse. This statement includes support dimension one without dividing by n minus one."))),
+                    Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its unique determinant maximum and principal inverse square root S define the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. For each original cone element, finite decompositions into original native rank-one positive matrices correspond under the same Psi, retaining each original summand. Thus the entire ROG property transports in both directions. If the original base is a singleton and the cone is ROG, an actual rank-one summand of the full-support point is a positive multiple of that point. Its compressed matrix is positive definite and has rank n, forcing n = 1. The equivalence e from the original space onto the range of this same Psi carries the entire base and all its extreme points to the positive trace-one base in that range. It preserves convexity and every extreme subset, for arbitrary ambient subsets. It consequently carries the entire intersection of convex extreme subsets containing any prescribed set onto the corresponding intersection. This includes the entire minimal faces of both the original cone and its base. Its contravariant dual d(f) = f composed with e inverse carries the entire proper interval and each full confirmer set bijectively. For every original p and x, the sets of attainable confirming readings agree exactly, so their lower envelopes agree and d maps all minimizers onto all minimizers. In particular every actual zero confirmer transports in both directions, even when different zero conditions initially have different confirmers. Only elements of the actual image are passed to e inverse. When n is one, the original base and its entire extreme-point set are both the singleton containing the same h. Generation and strict positivity show every cone vector is its original mass times h. Thus every original effect is t times u with t in the closed unit interval, the only confirmer of h is u, and its entire exclusion set is empty. No division by n minus one occurs."))),
                     DescribeRole.Theorem),
-                Paragraph(Text("The complete source normalization-and-transport target remains unresolved. The rank-one description of all pure points under ROG, all minimal faces, ROG, codimension and annihilator congruence, and same-frame complement conclusions still require proofs. The established reading-set and minimizer transport does not yet prove existence of a comparison minimum from the original effect interval. The dimension-one support case is included in normalization, but its full singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
+                Paragraph(Text("The complete source normalization-and-transport target remains unresolved. The rank-one description of all pure points under ROG, compressed real/complex codimension, annihilator congruence and same-frame complement conclusions still require proofs. The established reading-set and minimizer transport does not yet prove existence of a comparison minimum from the original effect interval. The dimension-one singleton-base, entire effect interval and empty-exclusion return, and the converse from a singleton ROG base to support dimension one, are included. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
     private static Formula Chain(params Formula[] formulas)
