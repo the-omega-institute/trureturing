@@ -1,0 +1,46 @@
+**定义与定理 104.10（原矩阵截面及锥齐性）。** 对整数 $n\ge2$，取
+
+$$
+\begin{gathered}
+ V_n=\mathbb R\oplus\mathbb R^{n\times2}\oplus\operatorname{Sym}_2(\mathbb R),
+ \qquad \dim V_n=2n+4,\\
+ M(a,R,S)=\begin{pmatrix}aI_n&R\\R^{\mathsf T}&S\end{pmatrix},\\
+ C_n=\{(a,R,S):M(a,R,S)\succeq0\},\qquad
+ u_n(a,R,S)=a+\operatorname{tr}S,\qquad K_n=C_n\cap\{u_n=1\}.
+\end{gathered}
+\tag{VII104.19}
+$$
+
+锥模型本身按 `literature-attested` 归属：[Tunçel—Vandenberghe §5.1，印刷页701][Q104MN]将形如 $\begin{pmatrix}\alpha I_L&U^{\mathsf T}\\U&V\end{pmatrix}$、$U\in\mathbb R^{K\times L}$、$V\in\operatorname{Sym}_K(\mathbb R)$ 的PSD锥称为 matrix norm cone。与(VII104.19)的逐项对应为 $K=2,L=n,\alpha=a,U=R^{\mathsf T},V=S$，所以本章 $C_n$ 在矩阵嵌入下正是该成熟锥。原文的Ishi一般结构参数为 $r=K+1=3$，与104.11在本章证明的归一基面高 $h(K_n)=3$ 一致；此处对应同一个模型，不另主张新锥或新分类。
+
+这是闭尖生成锥及严格正单位的整个有限维紧基，效应仍取整个 $[0,u_n]$。锥内部恰为
+
+$$
+ a>0,\qquad Q_M:=S-R^{\mathsf T}R/a\succ0.
+\tag{VII104.20}
+$$
+
+锥 $C_n$ 齐性；这里指线性锥自同构群在锥内部传递，不要求这些变换保持 $u_n$。
+
+证明。矩阵嵌入单射，PSD锥的闭性和尖性被保留；$M(1,0,I_2)\succ0$ 给该线性子空间内点，所以锥生成 $V_n$。PSD给 $a\ge0,S\succeq0$；若 $u_n=0$，则 $a=0,S=0$，PSD再迫 $R=0$，故单位严格正。单位切片中 $0\le a\le1$、$0\le\operatorname{tr}S\le1$，且每个 $|R_{ij}|^2\le aS_{jj}$，所以切片有界而紧。
+
+当 $a>0$ 时，成熟Schur补消元给 $M\succeq0\Longleftrightarrow Q_M\succeq0$，且正定恰为(VII104.20)。若 $a=0$，则 $R=0$，该点在边界；若 $Q_M$ 有非零核向量 $v$，则 $(-Rv/a,v)$ 是矩阵核向量，其PSD二次型支撑尺在此为零而在 $M(1,0,I_2)$ 严格正，故也在边界。因此(VII104.20)确给全部相对内点。
+
+令 $\lambda>0,T\in\mathbb R^{2\times n},A\in\mathrm{GL}_2(\mathbb R)$，则合同变换
+
+$$
+ L=\begin{pmatrix}\lambda I_n&0\\T&A\end{pmatrix},
+ \qquad M\longmapsto LML^{\mathsf T}
+\tag{VII104.21}
+$$
+
+保持(VII104.19)的线性子空间，顶部块变为 $\lambda^2aI_n$；其逆仍为同形，所以限制后是锥自同构。任意内点 $M(a,R,S)$ 可从 $M(1,0,I_2)$ 得到：取
+
+$$
+ \lambda=\sqrt a,\qquad T=R^{\mathsf T}/\sqrt a,
+ \qquad A=Q_M^{1/2}.
+\tag{VII104.22}
+$$
+
+直接乘法给顶部 $aI_n$、交叉 $R$ 和底部 $R^{\mathsf T}R/a+Q_M=S$，证明传递。Schur补、PSD核面字典和合同变换均为标准方法，本控制的用途在于后面的完整原零集合计算，不将这些方法本身认领为新理论。证毕。
+
