@@ -1,0 +1,85 @@
+**命题 102.6（共同排除的容量条件与全效应比较）。** 在定义102.5的整个原模型中，固定 $p=a_i$，任取 $Q\subseteq P\setminus\{a_i\}$，有精确充要条件
+
+$$
+\exists f\in F_{a_i},\ f|_Q=0
+\quad\Longleftrightarrow\quad
+\sum_{j:b_j\in Q}v_j\le1-u_i.
+\tag{VII102.13}
+$$
+
+因此同侧所有不同纯点都属于 $E_{a_i}$，而
+
+$$
+b_j\in E_{a_i}\quad\Longleftrightarrow\quad u_i+v_j\le1.
+\tag{VII102.14}
+$$
+
+交换两侧，对源 $b_j$ 的条件准确为 $\sum_{i:a_i\in Q}u_i\le1-v_j$；其同侧不同纯点也全部合格。若在合格目标中取最小不相容组，必全部来自对侧，并且其权重和首次超过这个阈值；其中每个单目标仍须先满足(VII102.14)，不能把不合格点塞入较短障碍。
+
+任取原混态的任一非负归一顶点分解
+
+$$
+x=\sum_k\lambda_k a_k+\sum_j\mu_jb_j,
+\qquad\lambda_k,\mu_j\ge0,\quad\sum_k\lambda_k+\sum_j\mu_j=1.
+$$
+
+原全部确认效应的最小值是
+
+$$
+\boxed{\begin{aligned}
+T_{a_i}(x)&=\lambda_i+
+\min\left\{\sum_j\mu_j\gamma_j:
+0\le\gamma_j\le1,\ \sum_jv_j\gamma_j=u_i\right\},\\
+T_{b_j}(x)&=\mu_j+
+\min\left\{\sum_i\lambda_i\delta_i:
+0\le\delta_i\le1,\ \sum_i u_i\delta_i=v_j\right\}.
+\end{aligned}}
+\tag{VII102.15}
+$$
+
+两式均与所用分解无关，最小值均由原proper效应达到。特别地，记 $t_+=\max\{t,0\}$，跨侧纯值准确为
+
+$$
+T_{a_i}(b_j)=\frac{(u_i+v_j-1)_+}{v_j},\qquad
+T_{b_j}(a_i)=\frac{(u_i+v_j-1)_+}{u_i}.
+\tag{VII102.16}
+$$
+
+证明。(VII102.13)的必要性来自 $\alpha_i=1$、选中 $B$ 目标的 $\beta_j=0$，以及
+
+$$
+u_i\le\sum_k u_k\alpha_k=\sum_{b_j\notin Q}v_j\beta_j
+\le1-\sum_{b_j\in Q}v_j.
+$$
+
+反向令 $\alpha_i=1$、其他 $\alpha_k=0$，选中 $B$ 目标取零，未选 $B$ 点统一取 $u_i/(1-\sum_{b_j\in Q}v_j)$。前件保证分母至少为 $u_i>0$，且全部赋值在 $[0,1]$，(VII102.12)给所需原效应。同侧目标不增加任何容量，所以最小不相容组不能含同侧点。取单目标得资格式，另一侧完全同理。
+
+为证(VII102.15)确实遍历原全部效应，任取 $f\in F_{a_i}$，记
+
+$$
+c_f=\sum_k u_k\alpha_k=\sum_j v_j\beta_j\ge u_i>0.
+$$
+
+将它改为顶点赋值
+
+$$
+\widetilde\alpha_i=1,\qquad\widetilde\alpha_k=0\ (k\ne i),
+\qquad\widetilde\beta_j=\frac{u_i}{c_f}\beta_j.
+\tag{VII102.17}
+$$
+
+这些值仍在 $[0,1]$ 且两侧加权值恰为 $u_i$，故给一张原 $\widetilde f\in F_{a_i}$；它在每个原顶点都不大于 $f$，于是于整个原 $K$ 乃至原锥上满足 $\widetilde f\le f$。所以原全部确认效应的最小值可在这个精确截片上取得。截片非空（可取全部 $\gamma_j=u_i$）且紧，目标线性，最小值达到；每个截片点又都由(VII102.12)给原proper效应，从而上下界相合。交换两侧得第二式。
+
+两种归一分解之差由(VII102.11)给
+
+$$
+\lambda'_k=\lambda_k+t u_k,\qquad
+\mu'_j=\mu_j-t v_j.
+$$
+
+对截片中的每一个 $\gamma$，表达式变化恰为 $t u_i-t\sum_jv_j\gamma_j=0$；因此不只最小值不变，截片中的每个候选值都不变。这允许零分解系数，没有另换混态模型。
+
+最后，在源 $a_i$ 下最小化单个 $\gamma_j$，其他坐标最多承担 $1-v_j$ 的加权量，故它至少为 $(u_i+v_j-1)_+/v_j$。若 $u_i\le1-v_j$，取 $\gamma_j=0$、其他坐标统一取 $u_i/(1-v_j)$；否则其他坐标全取一并令 $\gamma_j=(u_i+v_j-1)/v_j$。两支都在原截片中达到下界，另一方向交换两侧即得。
+
+VI92.2及既有WeightedRelationConfirmation已经给分组重心中点的精确值；这里不将该既有值再计作新增。式(VII102.15)把计算写到同一一关系载体上的任意混态，并为下面的全锚点元数计算提供直接接口。证毕。
+

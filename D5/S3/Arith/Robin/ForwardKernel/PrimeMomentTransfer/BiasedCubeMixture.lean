@@ -13,9 +13,13 @@ proof_shape: walsh_factor, mixture_character, mixture_positive, odd_reduction,
 proof_shape: mixture_distinct_moments: bind-only (consumers:
   FifthOrderTopOnlyRefutation.distinct_bound and distinct_fifth_zero;
   SixthOrderTopPairingRefutation.distinct_bound and subset_unit_moment).
-escape_witness: none; these shared mixture identities reuse the finite product,
-  character, and parity arguments consumed by the two refutations.
-admission_basis: consumed-helper reuse.
+proof_shape: mixture_distinct_bound: content (consumers:
+  FifthOrderTopOnlyRefutation.distinct_bound and
+  TopOrderObstructionFamily mixture moment bounds).
+escape_witness: mixture_distinct_bound proves the arbitrary-order estimate for
+  bounded coefficient families, controlling the distinct mixture moment by the
+  absolute scalar moment times the natural square-root scale.
+admission_basis: escape-witness.
 -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticMomentDefs
@@ -181,6 +185,40 @@ lemma mixture_distinct_moments {κ : Type} [Fintype κ]
   rw [odd_reduction x, mixture_character, hodd]
   simp only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin]
   exact mul_comm _ _
+
+/-- Every bounded coefficient family has its distinct mixture moment bounded
+by the absolute scalar moment times the natural square-root scale. -/
+lemma mixture_distinct_bound {κ : Type} [Fintype κ]
+    (N r : ℕ) (hN : 0 < N) (zValue zWeight : κ → ℝ)
+    (g : Fin r → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
+    |distinctIndexMoment (mixtureFunctional N zValue zWeight) (modelY N) g| ≤
+      |∑ z : κ, zWeight z * zValue z ^ r| * Real.sqrt N ^ r := by
+  classical
+  have hs : 0 < Real.sqrt N := Real.sqrt_pos.2 (by exact_mod_cast hN)
+  have hsum : |∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i)| ≤
+      (N : ℝ)^r := by
+    calc
+      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, |∏ i, g i (x i)| :=
+        Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, (1 : ℝ) := by
+        apply Finset.sum_le_sum
+        intro x hx
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun i _ => hg i (x i))
+      _ ≤ ∑ _x : Fin r → Fin N, (1 : ℝ) :=
+        Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
+          (fun _ _ _ => by positivity)
+      _ = _ := by simp
+  rw [mixture_distinct_moments, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
+  calc
+    _ ≤ (|∑ z : κ, zWeight z * zValue z ^ r| / Real.sqrt N ^ r) * (N : ℝ)^r :=
+      mul_le_mul_of_nonneg_left hsum (by positivity)
+    _ = _ := by
+      have he : (N : ℝ)^r = Real.sqrt N ^ r * Real.sqrt N ^ r := by
+        rw [← mul_pow, ← pow_two, Real.sq_sqrt (by positivity)]
+      rw [he]
+      field_simp
+
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

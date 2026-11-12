@@ -1,0 +1,38 @@
+**定理 105.8（原长度候选的完整双向）。** 在105.1的原有限维全效应域中，以下条件等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathsf W+\mathrm{PL}_3\\
+\Longleftrightarrow\quad&\mathrm{EB}_{\ge1}+\mathrm{Pair}\\
+\Longleftrightarrow\quad&S\ \text{且}\ h(K)=3\\
+\Longleftrightarrow\quad&\exists\text{ rank-three有限EJA }J,\ \Phi:J\overset{\sim}{\to}V,\\
+&\hspace{12mm}\Phi(J_+)=C,\qquad u\Phi=\tau_J.
+\end{aligned}}
+\tag{VII105.20}
+$$
+
+在 $\mathsf W$ 内，它们还等价于整个原面格满足覆盖律。
+$\tau_J$ 是本原幂等元取一的规范迹，$\Phi$ 保留同一原锥和同一原归一单位。
+
+证明。105.7给完整 $S$；$h(K)=3$ 已由弱入口得到。
+103.6及104.7逐项给后面三种条件与覆盖律的等价。
+一般谱性、自对偶、正面投影保纯及EJA重构在此直接复用既有完整 $S$ 桥；
+其中Barnum—Müller—Ududec Theorem 16的全纯互易与滤波保纯由该桥供给，
+不能用105.5单独替代。
+
+反向还须核对本章新定义的最大读数长度。由完整 $S$ 的既有桥取得正定配对 $B$，
+使 $B(p,x)=a_p(x)$；每个 $T\in\mathcal T_3$ 的三纯点因而正交归一。
+所以对每个原有符号 $v$，其三读数平方和是这组三维线性张成空间上的
+$B$ 正交投影长度平方，至多为 $B(v,v)$。
+既有桥的有符号框架谱性又给某个完整框架中
+$v=\sum_i\lambda_i p_i$，$\lambda_i\in\mathbb R$；
+原秩三使该框架有三个成员，零系数也保留。在它上面读数恰为 $\lambda_i$，
+故最大值达到 $\sum_i\lambda_i^2=B(v,v)$。
+于是 $Q_3=B(v,v)$，满足全 $V$ 的 $\mathrm{PL}_3$。
+同单位EJA字典中同一公式是 $Q_3(v)=\tau_J((\Phi^{-1}v)^2)$。
+这完成反向，未把 $Q_3$ 另换成一个先给的Jordan长度。证毕。
+
+$\mathrm{PL}_3$ 是候选额外明列的约束，未被定义成恒真式。
+尚未证明 $\mathsf W$ 自动推出它，也未证明它对 $\mathsf W$ 逻辑独立。
+(VII105.20)提供一个条件完整且可检验量词的几何替换，不主张最少独立公理数。
+
