@@ -153,6 +153,6 @@ theorem exists_original_unit_full_support [FiniteDimensional ℝ V] [Nontrivial 
     rwa [(Matrix.isSymmetric_toEuclideanLin_iff.mpr hypos.isHermitian).orthogonal_range]
   have hzrange : z ∈ (ρ y).toEuclideanLin.range := by rwa [hrange]
   exact hz0 (Submodule.disjoint_def.mp
-    (ρ y).toEuclideanLin.range.orthogonal_disjoint hzrange horth)
+    (ρ y).toEuclideanLin.range.orthogonal_disjoint z hzrange horth)
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport
