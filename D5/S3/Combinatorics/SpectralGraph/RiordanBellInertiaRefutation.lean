@@ -93,6 +93,8 @@ private theorem witness_inertia :
       _ = 3 := by
         have hf : (Finset.univ.filter fun i => 0 < d i) = {0,2,4} := by
           ext i
+          simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+            Finset.mem_insert, Finset.mem_singleton]
           fin_cases i <;> norm_num [d]
         rw [hf]
         decide
@@ -104,6 +106,8 @@ private theorem witness_inertia :
       _ = 2 := by
         have hf : (Finset.univ.filter fun i => d i < 0) = {1,3} := by
           ext i
+          simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+            Finset.mem_insert, Finset.mem_singleton]
           fin_cases i <;> norm_num [d]
         rw [hf]
         decide
