@@ -52,7 +52,7 @@ internal sealed class OriginalFacePolarityDocument : IScribeDocumentDefinition
                 Iff(C("subset", f, g), C("subset", Perp(g), Perp(f)))))));
         Formula boundaries = And(All("p", P, All("b", C("ExclusionChart", V("C"), V("u"), p),
             Eq(C("inter", Dp(p), P), C("image", C("param", b), C("sphere", D(0), D(1)))))),
-            C("Injective", C("pureBoundary", L)));
+            All("L", L, All("M", L, Imp(Eq(C("inter", Val(l), P), C("inter", Val(m), P)), Eq(l, m)))));
         Formula intersections = All("L", L, All("M", L, Imp(Ne(l, m),
             Ex("r", P, Eq(C("inter", Val(l), Val(m)), Singleton(Val(r)))))));
         Formula plane = Imp(C("thickExclusionBalls", V("C"), V("u")),
@@ -66,7 +66,7 @@ internal sealed class OriginalFacePolarityDocument : IScribeDocumentDefinition
             H("Original face polarity and the projective plane"), Blocks(
                 Paragraph(Text("Let V be a nonzero finite dimensional real normed vector space. C is the original closed generating pointed convex cone, and the real-linear functional u is strictly positive on C except at zero. K is the entire normalized base, P is the set of all its extreme points, and proper effects are all real-linear f satisfying 0<=f<=u on C. D(p) is the entire original mixed-state exclusion set. Every D(p) is an injective affine image of a whole closed unit ball of positive finite dimension; each entire minimal face of a distinct pure pair is proper. No finiteness or closedness of P, closedness premise on input faces, least effect, numerical reciprocity, common support, projectivity, self-duality, Jordan model or Born rule is assumed.")),
                 Def("Line", "All nonpoint proper original faces", StatementSource.FromAuthor(Disp(Context(
-                    Iff(In(f, L), And(C("Nontrivial", f), Face(f), Ne(f, K)))))),
+                    All("F", Sets, Iff(In(f, L), And(C("Nontrivial", f), Face(f), Ne(f, K))))))),
                     "The line carrier is the subtype of all original convex extreme subsets F of K which contain two different points and differ from K. Point-line incidence is membership of the original point value in F. There is no closedness field. Its representation by the pure boundary F intersect P is proved injective."),
                 Def("zeroComplement", "The guarded zero complement", StatementSource.FromAuthor(Disp(Context(
                     All("F", Sets, All("x", V("V"), Iff(In(x, Perp(f)), And(In(x, K),
