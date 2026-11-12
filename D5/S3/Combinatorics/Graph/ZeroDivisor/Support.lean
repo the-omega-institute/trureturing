@@ -479,6 +479,7 @@ theorem independencePolynomial_three_coordinates
 #print axioms prime_support_fiber_card
 #print axioms configurations_four_families
 
+set_option maxHeartbeats 600000 in
 example (p q r : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hr : Nat.Prime r)
     (hpq : p < q) (hqr : q < r) :
     letI : NeZero (p * q * r) :=
