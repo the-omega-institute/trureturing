@@ -706,17 +706,19 @@ private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
   have hsum : A = ∑ j, A.H.eigenvalues j •
       SectionROGFrame.rankOne (A.H.eigenvectorBasis j) := by
     apply HermitianMat.ext
-    rw [HermitianMat.mat_finset_sum]
-    conv_lhs => rw [A.H.spectral_theorem, Matrix.conjStarAlgAut_apply]
+    simp only [HermitianMat.mat_finset_sum, HermitianMat.mat_smul]
+    conv_lhs => rw [A.H.spectral_theorem, Unitary.conjStarAlgAut_apply]
+    rw [Matrix.mul_diagonal]
     ext k l
-    simp [Matrix.mul_apply, Matrix.mul_diagonal, Matrix.vecMulVec_apply,
-      SectionROGFrame.rankOne, Matrix.conjTranspose_apply, mul_assoc,
-      RCLike.real_smul_eq_coe_mul]
+    simp [Matrix.mul_apply, Matrix.vecMulVec_apply, SectionROGFrame.rankOne,
+      Matrix.conjTranspose_apply, mul_assoc, RCLike.real_smul_eq_coe_mul]
   have heq : A = A.H.eigenvalues i.val •
       SectionROGFrame.rankOne (A.H.eigenvectorBasis i.val) := by
-    rw [hsum]
-    exact Finset.sum_eq_single i.val (fun j _ hj => by rw [hzero j hj, zero_smul])
-      (by simp)
+    calc
+      A = ∑ j, A.H.eigenvalues j •
+          SectionROGFrame.rankOne (A.H.eigenvectorBasis j) := hsum
+      _ = _ := Finset.sum_eq_single i.val
+        (fun j _ hj => by rw [hzero j hj, zero_smul]) (by simp)
   let v : EuclideanSpace 𝕜 ι := Real.sqrt (A.H.eigenvalues i.val) • A.H.eigenvectorBasis i.val
   have hpos : 0 < A.H.eigenvalues i.val :=
     lt_of_le_of_ne (hp.eigenvalues_nonneg i.val) (Ne.symm i.property)
@@ -727,6 +729,136 @@ private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
       (Real.sqrt (A.H.eigenvalues i.val) • (A.H.eigenvectorBasis i.val : ι → 𝕜)) = A
     rw [SectionROGFrame.rankOne_real_smul, Real.mul_self_sqrt hpos.le]
     exact heq.symm
+
+/-- The actual native Hermitian image, its whole pure carrier, and frames
+returned to the original space with the same normalizing point. -/
+def NativeGeometry (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
+    (Ψ : V →ₗ[ℝ] Matrix ι ι 𝕜) (h : V) : Prop :=
+  ∃ H : V →ₗ[ℝ] HermitianMat ι 𝕜,
+    (∀ v, (H v).mat = Ψ v) ∧
+    H '' {v | v ∈ C ∧ u v = 1} = SectionROGFrame.base H.range ∧
+    ((∀ x ∈ C, ∃ (k : ℕ) (y : Fin k → V),
+      (∀ j, y j ∈ C ∧ (Ψ (y j)).rank = 1) ∧ Ψ x = ∑ j, Ψ (y j)) →
+      SectionROGFrame.ROG H.range ∧
+      H '' ({v | v ∈ C ∧ u v = 1}).extremePoints ℝ =
+        SectionROGFrame.pureRanks H.range ∧
+      (∀ p ∈ ({v | v ∈ C ∧ u v = 1}).extremePoints ℝ,
+        H p ≤ 1 ∧ (1 < Fintype.card ι →
+          (((Fintype.card ι : ℝ) - 1)⁻¹ • (h - p) ∈ {v | v ∈ C ∧ u v = 1}) ∧
+          H (((Fintype.card ι : ℝ) - 1)⁻¹ • (h - p)) =
+            ((Fintype.card ι : ℝ) - 1)⁻¹ • (1 - H p))) ∧
+      (∀ p ∈ ({v | v ∈ C ∧ u v = 1}).extremePoints ℝ, ∀ i₀ : ι,
+        ∃ (b : OrthonormalBasis ι 𝕜 (EuclideanSpace 𝕜 ι)) (y : ι → V),
+          y i₀ = p ∧
+          (∀ j, y j ∈ ({v | v ∈ C ∧ u v = 1}).extremePoints ℝ ∧
+            H (y j) = SectionROGFrame.rankOne (b j)) ∧
+          (∑ j, y j) = h))
+
+private theorem native_geometry [Nonempty ι]
+    (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
+    (Ψ : V →ₗ[ℝ] Matrix ι ι 𝕜) (hΨ : Function.Injective Ψ)
+    (hHerm : ∀ v, (Ψ v).IsHermitian)
+    (htrace : ∀ v, (Ψ v).trace = (u v : 𝕜))
+    (hsection : ∀ v, v ∈ C ↔ (Ψ v).PosSemidef)
+    (h : V) (hh : Ψ h = 1) : NativeGeometry C u Ψ h := by
+  classical
+  let H : V →ₗ[ℝ] HermitianMat ι 𝕜 :=
+    { toFun := fun v => ⟨Ψ v, hHerm v⟩
+      map_add' := by intros; apply HermitianMat.ext; exact Ψ.map_add _ _
+      map_smul' := by intros; apply HermitianMat.ext; exact Ψ.map_smul _ _ }
+  have hH : Function.Injective H := fun x y heq => hΨ (congrArg HermitianMat.mat heq)
+  have hHt (v : V) : (H v).trace = u v := by
+    rw [HermitianMat.trace_eq_re_trace]
+    change RCLike.re (Ψ v).trace = u v
+    rw [htrace, RCLike.ofReal_re]
+  have hHC (v : V) : v ∈ C ↔ 0 ≤ H v := by
+    change v ∈ C ↔ 0 ≤ (⟨Ψ v, hHerm v⟩ : HermitianMat ι 𝕜)
+    rw [HermitianMat.zero_le_iff]
+    exact hsection v
+  have hHh : H h = 1 := HermitianMat.ext hh
+  let K := {v : V | v ∈ C ∧ u v = 1}
+  have hbase : H '' K = SectionROGFrame.base H.range := by
+    ext X
+    constructor
+    · rintro ⟨v, ⟨hv, hvu⟩, rfl⟩
+      exact ⟨⟨v, rfl⟩, (hHC v).mp hv, (hHt v).trans hvu⟩
+    · rintro ⟨⟨v, rfl⟩, hv, hvu⟩
+      exact ⟨v, ⟨(hHC v).mpr hv, (hHt v).symm.trans hvu⟩, rfl⟩
+  have htransport : H '' K.extremePoints ℝ = (H '' K).extremePoints ℝ := by
+    ext X
+    constructor
+    · rintro ⟨p, hp, rfl⟩
+      refine ⟨⟨p, hp.1, rfl⟩, ?_⟩
+      rintro _ ⟨a, ha, rfl⟩ _ ⟨b, hb, rfl⟩ ⟨r, s, hr, hs, hrs, heq⟩
+      have heq' : r • a + s • b = p := hH (by simpa using heq)
+      exact congrArg H (hp.2 ha hb ⟨r, s, hr, hs, hrs, heq'⟩)
+    · intro hX
+      obtain ⟨p, hp, rfl⟩ := hX.1
+      refine ⟨p, ⟨hp, ?_⟩, rfl⟩
+      rintro a ha b hb ⟨r, s, hr, hs, hrs, heq⟩
+      apply hH
+      apply hX.2 ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
+      exact ⟨r, s, hr, hs, hrs, by simpa using congrArg H heq⟩
+  refine ⟨H, fun _ => rfl, hbase, ?_⟩
+  intro hrog
+  have hROG : SectionROGFrame.ROG H.range := by
+    rintro _ ⟨x, rfl⟩ hx
+    obtain ⟨k, y, hy, hsum⟩ := hrog x ((hHC x).mpr hx)
+    choose v hv using fun j => psd_rank_one_outer (H (y j))
+      ((hHC (y j)).mp (hy j).1) (hy j).2
+    refine ⟨k, v, fun j => ⟨(hv j).1, ?_⟩, ?_⟩
+    · rw [(hv j).2]
+      exact ⟨y j, rfl⟩
+    · have heq : x = ∑ j, y j := hΨ (by simpa only [map_sum] using hsum)
+      rw [heq, map_sum]
+      exact Finset.sum_congr rfl (fun j _ => (hv j).2.symm)
+  have hpure : H '' K.extremePoints ℝ = SectionROGFrame.pureRanks H.range := by
+    rw [htransport, hbase, SectionROGFrame.whole_pure_carrier H.range hROG]
+  have hframe (p : V) (hp : p ∈ K.extremePoints ℝ) (i₀ : ι) :
+      ∃ (b : OrthonormalBasis ι 𝕜 (EuclideanSpace 𝕜 ι)) (y : ι → V),
+        y i₀ = p ∧ (∀ j, y j ∈ K.extremePoints ℝ ∧
+          H (y j) = SectionROGFrame.rankOne (b j)) ∧ (∑ j, y j) = h := by
+    have hp' : H p ∈ SectionROGFrame.pureRanks H.range := hpure ▸ ⟨p, hp, rfl⟩
+    obtain ⟨v, hv, hveq, hvL⟩ := hp'
+    rw [← hveq] at hvL
+    obtain ⟨b, hb, hbL, _, hsum⟩ :=
+      SectionROGFrame.rog_frame H.range ⟨h, hHh⟩ hROG v hv hvL i₀
+    let e : V ≃ₗ[ℝ] H.range := LinearEquiv.ofInjective H hH
+    let y : ι → V := fun j => e.symm ⟨SectionROGFrame.rankOne (b j), hbL j⟩
+    have hy (j : ι) : H (y j) = SectionROGFrame.rankOne (b j) :=
+      congrArg Subtype.val (e.apply_symm_apply _)
+    have hyP (j : ι) : y j ∈ K.extremePoints ℝ := by
+      apply hH.mem_set_image.mp
+      rw [hpure, hy]
+      exact ⟨b j, b.orthonormal.norm_eq_one j, rfl, hbL j⟩
+    refine ⟨b, y, hH (by rw [hy, hb, hveq]), fun j => ⟨hyP j, hy j⟩, ?_⟩
+    apply hH
+    rw [map_sum]
+    simpa only [hy, hHh] using hsum
+  refine ⟨hROG, hpure, ?_, hframe⟩
+  intro p hp
+  let i₀ : ι := Classical.choice inferInstance
+  obtain ⟨b, y, hy₀, hy, hsum⟩ := hframe p hp i₀
+  have hPsum : (∑ j, SectionROGFrame.rankOne (b j)) = (1 : HermitianMat ι 𝕜) := by
+    have heq := congrArg H hsum
+    simpa only [map_sum, (hy _).2, hHh] using heq
+  have hpI : H p ≤ 1 := by
+    rw [← hy₀, (hy i₀).2, ← hPsum]
+    exact Finset.single_le_sum (fun j _ => SectionROGFrame.rankOne_nonneg (b j))
+      (Finset.mem_univ i₀)
+  refine ⟨hpI, ?_⟩
+  intro hn
+  have hnR : (1 : ℝ) < Fintype.card ι := by exact_mod_cast hn
+  have hmass : u h = (Fintype.card ι : ℝ) := by
+    rw [← hHt, hHh]
+    simp
+  have heq : H (((Fintype.card ι : ℝ) - 1)⁻¹ • (h - p)) =
+      ((Fintype.card ι : ℝ) - 1)⁻¹ • (1 - H p) := by simp [hHh]
+  refine ⟨⟨(hHC _).mpr ?_, ?_⟩, heq⟩
+  · rw [heq]
+    exact smul_nonneg (inv_nonneg.mpr (sub_nonneg.mpr hnR.le)) (sub_nonneg.mpr hpI)
+  · simp only [map_smul, map_sub, hmass, hp.1.2, smul_eq_mul]
+    exact inv_mul_cancel₀ (sub_pos.mpr hnR).ne'
 
 private theorem matrix_eq_one_of_card_one (A : Matrix ι ι 𝕜)
     (hcard : Fintype.card ι = 1) (htrace : A.trace = 1) : A = 1 := by
@@ -812,7 +944,8 @@ theorem exists_original_unit_normalization
               {r : ℝ | ∃ g, N g ∧ g (e p) = 1 ∧ g (e x) = r}) ∧
             (∀ p x,
               d '' {f | O f ∧ f p = 1 ∧ ∀ g, O g → g p = 1 → f x ≤ g x} =
-              {g | N g ∧ g (e p) = 1 ∧ ∀ j, N j → j (e p) = 1 → g (e x) ≤ j (e x)}) := by
+              {g | N g ∧ g (e p) = 1 ∧ ∀ j, N j → j (e p) = 1 → g (e x) ≤ j (e x)}) ∧
+            NativeGeometry C u Ψ h := by
   classical
   dsimp only
   obtain ⟨hn, U, σ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
@@ -850,12 +983,12 @@ theorem exists_original_unit_normalization
     calc
       (S * σ v * S).trace = (S * S * σ v).trace := Matrix.trace_mul_cycle _ _ _
       _ = (u v : 𝕜) := by rw [hSS, htrace v]
-  refine ⟨hn, U, σ, Ψ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
-    h, hh, hmass, hhPD, htrace, hmax, hunique, hSH, hSU, hSS, (fun _ => rfl), hroot,
-    hΨ, ?_, hΨtrace, hΨC, ?_, ?_, ⟨h, hroot⟩, ?_, ?_, ?_, ?_, ?_⟩
-  · intro v
+  have hΨHerm (v : V) : (Ψ v).IsHermitian := by
     change (S * σ v * S).IsHermitian
     simpa only [hSH.eq] using Matrix.isHermitian_conjTranspose_mul_mul S (hHerm v)
+  refine ⟨hn, U, σ, Ψ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
+    h, hh, hmass, hhPD, htrace, hmax, hunique, hSH, hSU, hSS, (fun _ => rfl), hroot,
+    hΨ, hΨHerm, hΨtrace, hΨC, ?_, ?_, ⟨h, hroot⟩, ?_, ?_, ?_, ?_, ?_⟩
   · intro v
     change (S * σ v * S).rank = (ρ v).rank
     rw [Matrix.rank_mul_eq_left_of_isUnit_det S _ hSd,
@@ -1074,7 +1207,7 @@ theorem exists_original_unit_normalization
         change 0 ≤ d f (e v) ∧ d f (e v) ≤ RCLike.re (Ψ v).trace at hp
         simpa only [hd, hreal] using hp
     refine ⟨e, (fun _ => rfl), hbase, ?_, hconvex, hface, hminimal,
-      hproper, ?_, ?_, ?_⟩
+      hproper, ?_, ?_, ?_, ?_⟩
     · rw [image_extremePoints, hbase]
     · intro p
       ext g
@@ -1108,5 +1241,8 @@ theorem exists_original_unit_normalization
         refine ⟨(hproper f).mpr hf, by simpa only [hd] using hfp, ?_⟩
         intro j hj hjp
         simpa only [hd] using hmin (d j) ((hproper j).mp hj) (by simpa only [hd] using hjp)
+
+    · letI : Nonempty (Fin (Module.finrank 𝕜 (commonSupport C ρ))) := ⟨⟨0, hn⟩⟩
+      exact native_geometry C u Ψ hΨ hΨHerm hΨtrace hΨC h hroot
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport
