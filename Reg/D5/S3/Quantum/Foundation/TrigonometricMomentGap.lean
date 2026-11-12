@@ -12,6 +12,7 @@ namespace Reg.D5.S3.Quantum.Foundation.TrigonometricMomentGap
 
 open _root_.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 open _root_.D5.S3.Quantum.Foundation.WeightedRelationConfirmation
+open _root_.D5.S3.Quantum.Foundation.WholePairBallConfirmation
 open _root_.D5.S3.Quantum.Foundation.TrigonometricMomentGap
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -33,6 +34,15 @@ abbrev arena : Arena where
   Law O :=
     base cone unit = lift '' body ∧
     pure cone unit = Set.range curve ∧
+    IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
+    Module.finrank ℝ (vectorSpan ℝ body) = 4 ∧
+    IsClosed (cone : Set Carrier) ∧ (cone : ConvexCone ℝ Carrier).Salient ∧
+    Submodule.span ℝ (cone : Set Carrier) = ⊤ ∧
+    (∀ a b : ℝ, {w ∈ base cone unit | pairSupport a b w = 0} =
+      segment ℝ (curve a) (curve b)) ∧
+    (∀ a b : ℝ, pairBase cone unit (curve a) (curve b) =
+      segment ℝ (curve a) (curve b)) ∧
+    wholePairBalls cone unit ∧ ¬ allAntipodes cone unit ∧
     (∀ f : Carrier →ₗ[ℝ] ℝ, ∃ a b, f = effect a b) ∧
     (∀ a b, proper cone unit (effect a b) ↔
       ∀ θ : ℝ, 0 ≤ trigonometric a b θ ∧ trigonometric a b θ ≤ 1) ∧
@@ -43,8 +53,7 @@ abbrev arena : Arena where
     confirms cone unit p attainer ∧ O.readout () () (attainer, mixed) = 1 / 10 ∧
     comparison cone unit p mixed = 1 / 10 ∧
     (∃ f, confirms cone unit p f ∧ O.readout () () (f, x) = 0) ∧
-    (∃ f, confirms cone unit p f ∧ O.readout () () (f, y) = 0) ∧
-    ¬ zeroGluing cone unit
+    (∃ f, confirms cone unit p f ∧ O.readout () () (f, y) = 0) ∧ ¬ zeroGluing cone unit
 
 abbrev sourceScope : Prop := type_of% attained_full_effect_gap
 

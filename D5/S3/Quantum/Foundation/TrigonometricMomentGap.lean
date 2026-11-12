@@ -480,7 +480,8 @@ private theorem vanishing_effect (f : Carrier →ₗ[ℝ] ℝ)
   have hplus := hf (Real.pi / 2)
   have hminus := hf (-Real.pi / 2)
   have h₄ := hf (Real.pi / 4)
-  simp [effect_curve, trigonometric, neg_div] at h₀ hπ hplus hminus h₄
+  simp [effect_curve, trigonometric, neg_div, show 2 * (Real.pi / 2) = Real.pi by ring,
+    show 2 * (Real.pi / 4) = Real.pi / 2 by ring] at h₀ hπ hplus hminus h₄
   have ha : a = 0 := by linarith
   have hb₀ : b 0 = 0 := by linarith
   have hb₁ : b 1 = 0 := by linarith
@@ -518,6 +519,10 @@ private theorem body_fullspan : affineSpan ℝ body = ⊤ := by
     exact LinearMap.congr_fun hz (0, w)
   rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ body hzero), hs]
   rfl
+
+private theorem affine_dimension : Module.finrank ℝ (vectorSpan ℝ body) = 4 := by
+  rw [vectorSpan_eq_top_of_affineSpan_eq_top ℝ Coordinates Coordinates body_fullspan]
+  simp [Coordinates]
 
 private theorem cone_generating : Submodule.span ℝ (cone : Set Carrier) = ⊤ :=
   top_unique (span_curve ▸ Submodule.span_mono (by
@@ -638,8 +643,8 @@ private theorem proper_coefficients {a : ℝ} {b : Coordinates}
   have hplus := h (Real.pi / 2)
   have hminus := h (-Real.pi / 2)
   have hfour := h (Real.pi / 4)
-  simp [effect_curve, trigonometric, neg_div, Real.cos_two_mul, Real.sin_two_mul] at
-    hzero hpi hplus hminus hfour
+  simp [effect_curve, trigonometric, neg_div, show 2 * (Real.pi / 2) = Real.pi by ring,
+    show 2 * (Real.pi / 4) = Real.pi / 2 by ring] at hzero hpi hplus hminus hfour
   have ha : -1 ≤ a ∧ a ≤ 1 := by constructor <;> linarith
   have hb0 : -1 ≤ b 0 ∧ b 0 ≤ 1 := by constructor <;> linarith
   have hb1 : -1 ≤ b 1 ∧ b 1 ≤ 1 := by constructor <;> linarith
@@ -691,8 +696,10 @@ private theorem original_A_fails : ¬ allAntipodes cone unit := by
   have hθr : θ < r := lt_of_le_of_lt (min_le_left _ _) (by linarith)
   have hθpi : θ ≤ Real.pi := (min_le_right _ _).trans (by linarith [Real.pi_pos])
   have hv : variation θ < 1 / 4 := by
-    have hh := hbound (by simpa [Real.dist_eq, abs_of_pos hθpos] using hθr)
-    simpa [variation, Real.dist_eq, abs_of_nonneg (Finset.sum_nonneg (fun _ _ => abs_nonneg _))] using hh
+    have hh := hbound (x := θ) (by simpa [Real.dist_eq, abs_of_pos hθpos] using hθr)
+    have hv0 : 0 ≤ variation θ := Finset.sum_nonneg (fun _ _ => abs_nonneg _)
+    have hz0 : variation 0 = 0 := by simp [variation]
+    simpa only [Real.dist_eq, hz0, sub_zero, abs_of_nonneg hv0] using hh
   have hne : curve 0 ≠ curve θ := by
     intro he
     have hh := congrArg (fun w : Carrier => w.2 0) he
@@ -714,10 +721,11 @@ private theorem original_A_fails : ¬ allAntipodes cone unit := by
   intro hA
   have hh := hA pp qq (fun he => hne (Subtype.ext_iff.mp he)) chart n hn
     (hleft ▸ pp.property)
-  rw [hleft, hright] at hh
   obtain ⟨f, hf, hzero⟩ := hh
+  have hf0 : f (curve 0) = 1 := (congrArg f hleft).symm.trans hf.2
+  have hfθ : f (curve θ) = 0 := (congrArg f hright).symm.trans hzero
   have hu := uniform_effect_variation hf.1 θ
-  rw [hf.2, hzero] at hu
+  rw [hf0, hfθ] at hu
   norm_num at hu
   linarith
 
@@ -738,6 +746,7 @@ theorem attained_full_effect_gap :
     base cone unit = lift '' body ∧
     pure cone unit = range curve ∧
     IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
+    Module.finrank ℝ (vectorSpan ℝ body) = 4 ∧
     IsClosed (cone : Set Carrier) ∧ (cone : ConvexCone ℝ Carrier).Salient ∧
     Submodule.span ℝ (cone : Set Carrier) = ⊤ ∧
     (∀ a b : ℝ, {w ∈ base cone unit | pairSupport a b w = 0} =
@@ -756,7 +765,7 @@ theorem attained_full_effect_gap :
     comparison cone unit p mixed = 1 / 10 ∧
     (∃ f, confirms cone unit p f ∧ f x = 0) ∧
     (∃ f, confirms cone unit p f ∧ f y = 0) ∧ ¬ zeroGluing cone unit := by
-  refine ⟨original_base.trans states_image, original_pure, compact_body, body_fullspan,
+  refine ⟨original_base.trans states_image, original_pure, compact_body, body_fullspan, affine_dimension,
     cone_closed, cone_salient, cone_generating, whole_zero_face,
     entire_pair_base, original_B, original_A_fails, all_linear_effects, ?_,
     fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_, universal_lower,
