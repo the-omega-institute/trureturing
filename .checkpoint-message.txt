@@ -1,0 +1,1 @@
+Revert unsupported Proposition 76.4 scaffold; retain source-faithful WIP baseline
