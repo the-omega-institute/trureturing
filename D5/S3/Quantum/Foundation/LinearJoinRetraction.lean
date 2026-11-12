@@ -12,6 +12,8 @@ import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Hermitia
 import Mathlib.LinearAlgebra.Prod
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 
+/-! Matrix congruences on full real ROG sections and their complete effect intervals. -/
+
 noncomputable section
 open scoped BigOperators
 
@@ -20,16 +22,8 @@ namespace D5.S3.Quantum.Foundation.LinearJoinRetraction
 open CircuitBalancedConfirmation
 
 variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
-  [FiniteDimensional ℝ A]
 
 /-! ### The two sides of a linear join -/
-
-/-- The cone and unit obtained by restricting the original carrier to a subspace. -/
-def sideCone (C : PointedCone ℝ A) (U : Submodule ℝ A) : PointedCone ℝ U :=
-  C.comap U.subtype
-
-def sideUnit (u : A →ₗ[ℝ] ℝ) (U : Submodule ℝ A) : U →ₗ[ℝ] ℝ :=
-  u.comp U.subtype
 
 /-- A linear join with an explicit overlap projection on each side.  The two
 projections are the abstract form of the orthogonal maps π_S used in (97.7).
@@ -43,9 +37,7 @@ structure JoinData where
   hjoin : leftSubspace ⊔ rightSubspace = ⊤
   hoverlap : leftSubspace ⊓ rightSubspace = overlapSubspace
   piY : rightSubspace →ₗ[ℝ] overlapSubspace
-  piZ : leftSubspace →ₗ[ℝ] overlapSubspace
   piY_fix : ∀ s : overlapSubspace, piY (overlapSubspace.inclusion hSW s) = s
-  piZ_fix : ∀ s : overlapSubspace, piZ (overlapSubspace.inclusion hSU s) = s
 
 namespace JoinData
 
@@ -100,14 +92,14 @@ def leftRetraction (J : JoinData (A := A)) : A →ₗ[ℝ] J.leftSubspace :=
     ⟨LinearMap.id.coprod ((Submodule.inclusion J.hSU).comp J.piY),
       left_kernel_compatibility J⟩
 
-theorem leftRetraction_on_left (J : JoinData (A := A)) (x : J.leftSubspace) :
+private theorem leftRetraction_on_left (J : JoinData (A := A)) (x : J.leftSubspace) :
     J.leftRetraction (J.leftSubspace.subtype x) = x := by
   have h := LinearMap.equivOfSurjective_apply
     (sumMap_surjective J) (left_kernel_compatibility J)
       (m := (x, 0))
   simpa [leftRetraction, sumMap] using h
 
-theorem leftRetraction_on_right (J : JoinData (A := A)) (x : J.rightSubspace) :
+private theorem leftRetraction_on_right (J : JoinData (A := A)) (x : J.rightSubspace) :
     J.leftRetraction (J.rightSubspace.subtype x) =
       Submodule.inclusion J.hSU (J.piY x) := by
   have h := LinearMap.equivOfSurjective_apply
@@ -129,8 +121,10 @@ structure RealJoin (ι : Type*) [Fintype ι] [DecidableEq ι] where
   L : Submodule ℝ (HermitianMat ι ℝ)
   identity_mem : (1 : HermitianMat ι ℝ) ∈ L
   rog : ROG L
-  Y Z : Set (EuclideanSpace ℝ ι)
-  U W : Submodule ℝ (EuclideanSpace ℝ ι)
+  Y : Set (EuclideanSpace ℝ ι)
+  Z : Set (EuclideanSpace ℝ ι)
+  U : Submodule ℝ (EuclideanSpace ℝ ι)
+  W : Submodule ℝ (EuclideanSpace ℝ ι)
   nonzero_Y : (0 : EuclideanSpace ℝ ι) ∉ Y
   nonzero_Z : (0 : EuclideanSpace ℝ ι) ∉ Z
   span_Y : Submodule.span ℝ Y = U
@@ -193,9 +187,7 @@ def vectorJoin : JoinData (A := EuclideanSpace ℝ ι) where
   hjoin := J.join
   hoverlap := rfl
   piY := (J.U ⊓ J.W).orthogonalProjectionOnto.toLinearMap.comp J.W.subtype
-  piZ := (J.U ⊓ J.W).orthogonalProjectionOnto.toLinearMap.comp J.U.subtype
   piY_fix s := by simpa using (J.U ⊓ J.W).orthogonalProjectionOnto_mem_subspace_eq_self s
-  piZ_fix s := by simpa using (J.U ⊓ J.W).orthogonalProjectionOnto_mem_subspace_eq_self s
 
 /-- T fixes U and is orthogonal projection to U intersect W on W. -/
 def vectorMap : EuclideanSpace ℝ ι →ₗ[ℝ] EuclideanSpace ℝ ι :=
@@ -254,7 +246,7 @@ private theorem image_generator (v : EuclideanSpace ℝ ι)
 
 /-- Every original positive matrix is mapped into the actual Y cone, and its
 trace decreases, using its same finite original ROG decomposition. -/
-theorem congruence_positive_subunit (X : HermitianMat ι ℝ)
+private theorem congruence_positive_subunit (X : HermitianMat ι ℝ)
     (hX : X ∈ J.L) (hpos : 0 ≤ X) :
     J.congruence X ∈ J.cone ∧ (J.congruence X).trace ≤ X.trace := by
   obtain ⟨m, v, hv, hsum⟩ := J.rog X hX hpos
@@ -267,19 +259,25 @@ theorem congruence_positive_subunit (X : HermitianMat ι ℝ)
 /-- Symmetric matrices whose entire range is contained in the vector space U. -/
 def supportedSpace (U : Submodule ℝ (EuclideanSpace ℝ ι)) :
     Submodule ℝ (HermitianMat ι ℝ) where
-  carrier := {X | ∀ v, X.lin v ∈ U}
+  carrier := {X | X.support ≤ U}
   zero_mem' := by simp
   add_mem' := by
-    intro X Y hX hY v
-    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.add_mulVec] using U.add_mem (hX v) (hY v)
+    intro X Y hX hY z hz
+    obtain ⟨v, rfl⟩ := hz
+    have hx : X.lin v ∈ U := hX ⟨v, rfl⟩
+    have hy : Y.lin v ∈ U := hY ⟨v, rfl⟩
+    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.add_mulVec] using U.add_mem hx hy
   smul_mem' := by
-    intro r X hX v
-    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.smul_mulVec] using U.smul_mem r (hX v)
+    intro r X hX z hz
+    obtain ⟨v, rfl⟩ := hz
+    have hx : X.lin v ∈ U := hX ⟨v, rfl⟩
+    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.smul_mulVec] using U.smul_mem r hx
 
 private theorem rankOne_supported (v : EuclideanSpace ℝ ι)
     {U : Submodule ℝ (EuclideanSpace ℝ ι)} (hv : v ∈ U) :
     rankOne v ∈ supportedSpace U := by
-  intro x
+  intro z hz
+  obtain ⟨x, rfl⟩ := hz
   have h := U.smul_mem ((star (v : ι → ℝ)) ⬝ᵥ (x : ι → ℝ)) hv
   simpa [HermitianMat.lin, rankOne, Matrix.toLpLin_apply,
     Matrix.vecMulVec_mulVec, op_smul_eq_smul] using h
@@ -320,7 +318,7 @@ private theorem summand_supported {m : ℕ} (v : Fin m → EuclideanSpace ℝ ι
 
 /-- The actual supported PSD section, and not merely an image cone, is exactly
 Y's conic hull. Every term of a supported original ROG decomposition lies on Y. -/
-theorem supported_cone (X : HermitianMat ι ℝ) :
+private theorem supported_cone (X : HermitianMat ι ℝ) :
     X ∈ J.cone ↔ X ∈ J.L ∧ 0 ≤ X ∧ X.support ≤ J.U := by
   constructor
   · intro hX
@@ -334,7 +332,7 @@ theorem supported_cone (X : HermitianMat ι ℝ) :
   · rintro ⟨hL, hpos, hsupp⟩
     obtain ⟨m, v, hv, hsum⟩ := J.rog X hL hpos
     have hY (i : Fin m) : v i ∈ J.Y := by
-      have hiU : v i ∈ J.U := hsupp (hsum ▸ summand_supported v i (hv i).1)
+      have hiU : v i ∈ J.U := hsupp (by rw [hsum]; exact summand_supported v i (hv i).1)
       rcases (J.rays (v i) (hv i).1).mp (hv i).2 with hiY | hiZ
       · exact hiY
       · have hiS : v i ∈ J.U ⊓ J.W := ⟨hiU, J.swap.vector_mem _ hiZ⟩
@@ -343,7 +341,7 @@ theorem supported_cone (X : HermitianMat ι ℝ) :
     exact J.cone.sum_mem (fun i _ => PointedCone.subset_hull ⟨v i, hY i, rfl⟩)
 
 /-- The full section on L_Y equals the original supported cone. -/
-theorem section_cone (X : HermitianMat ι ℝ) :
+private theorem section_cone (X : HermitianMat ι ℝ) :
     X ∈ J.cone ↔ X ∈ J.space ∧ 0 ≤ X := by
   constructor
   · intro hX
@@ -352,7 +350,7 @@ theorem section_cone (X : HermitianMat ι ℝ) :
     exact (J.supported_cone X).mpr ⟨J.space_le hX, hpos, J.space_supported hX⟩
 
 /-- The actual side remains a real rank one generated PSD section. -/
-theorem side_rog : ROG J.space := by
+private theorem side_rog : ROG J.space := by
   intro X hX hpos
   obtain ⟨m, v, hv, hsum⟩ := J.rog X (J.space_le hX) hpos
   refine ⟨m, v, ?_, hsum⟩
@@ -368,6 +366,303 @@ theorem side_rog : ROG J.space := by
     exact Submodule.orthogonal_le hker
   exact PointedCone.hull_le_span ℝ _
     ((J.supported_cone _).mpr ⟨(hv i).2, rankOne_nonneg _, hsupp⟩)
+
+
+private theorem congruence_fixes {X : HermitianMat ι ℝ} (hX : X ∈ J.space) :
+    J.congruence X = X := by
+  refine Submodule.span_induction ?_ ?_ ?_ ?_ hX
+  · rintro _ ⟨v, hv, rfl⟩
+    rw [J.congruence_rankOne, J.vectorMap_on_Y v hv]
+  · exact map_zero _
+  · intro X Y _ _ hx hy
+    rw [map_add, hx, hy]
+  · intro r X _ hx
+    rw [map_smul, hx]
+
+private theorem carrier_image {X : HermitianMat ι ℝ} (hX : X ∈ J.L) :
+    J.congruence X ∈ J.space := by
+  let t : ℝ := ‖-X‖
+  have hbound : -X ≤ t • (1 : HermitianMat ι ℝ) :=
+    HermitianMat.lt_smul_of_norm_lt (le_refl _)
+  have hp : 0 ≤ X + t • (1 : HermitianMat ι ℝ) := by order
+  have hn : 0 ≤ t • (1 : HermitianMat ι ℝ) := smul_nonneg (norm_nonneg _) (by positivity)
+  have htL : t • (1 : HermitianMat ι ℝ) ∈ J.L := J.L.smul_mem t J.identity_mem
+  have hpc := (J.congruence_positive_subunit _ (J.L.add_mem hX htL) hp).1
+  have hnc := (J.congruence_positive_subunit _ htL hn).1
+  have hh := J.space.sub_mem (PointedCone.hull_le_span ℝ _ hpc)
+    (PointedCone.hull_le_span ℝ _ hnc)
+  simpa only [← map_sub, add_sub_cancel_right] using hh
+
+/-- The actual congruence restricted from L to L_Y. -/
+def retraction : J.L →ₗ[ℝ] J.space :=
+  (J.congruence.comp J.L.subtype).codRestrict J.space (fun X => J.carrier_image X.property)
+
+/-- Inclusion of the actual side into the unchanged original matrix section. -/
+def inclusion : J.space →ₗ[ℝ] J.L := Submodule.inclusion J.space_le
+
+private theorem retraction_fixes (X : J.space) : J.retraction (J.inclusion X) = X := by
+  apply Subtype.ext
+  exact J.congruence_fixes X.property
+
+end RealJoin
+
+/-- The entire original positive cone on a specified matrix section. -/
+def sectionCone (L : Submodule ℝ (HermitianMat ι ℝ)) : PointedCone ℝ L :=
+  (PointedCone.positive ℝ (HermitianMat ι ℝ)).comap L.subtype
+
+/-- The same original trace unit restricted to the specified section. -/
+def traceUnit (L : Submodule ℝ (HermitianMat ι ℝ)) : L →ₗ[ℝ] ℝ where
+  toFun X := X.val.trace
+  map_add' X Y := HermitianMat.trace_add _ _
+  map_smul' r X := HermitianMat.trace_smul _ _
+
+namespace RealJoin
+variable (J : RealJoin ι)
+
+/-- Every local proper effect extends along the actual matrix congruence. -/
+private theorem effect_extension (g : J.space →ₗ[ℝ] ℝ)
+    (hg : proper (sectionCone J.space) (traceUnit J.space) g) :
+    proper (sectionCone J.L) (traceUnit J.L) (g.comp J.retraction) ∧
+      (g.comp J.retraction).comp J.inclusion = g := by
+  refine ⟨?_, ?_⟩
+  · intro X hX
+    have hx : 0 ≤ X.val := hX
+    have hR := J.congruence_positive_subunit X.val X.property hx
+    have hgR := hg (J.retraction X) ((J.section_cone _).mp hR.1).2
+    exact ⟨hgR.1, hgR.2.trans hR.2⟩
+  · ext X
+    change g (J.retraction (J.inclusion X)) = g X
+    rw [J.retraction_fixes]
+
+/-- Restriction onto the whole local proper interval is surjective. -/
+private theorem effect_onto (g : J.space →ₗ[ℝ] ℝ)
+    (hg : proper (sectionCone J.space) (traceUnit J.space) g) :
+    ∃ f : J.L →ₗ[ℝ] ℝ, proper (sectionCone J.L) (traceUnit J.L) f ∧
+      f.comp J.inclusion = g :=
+  ⟨g.comp J.retraction, J.effect_extension g hg⟩
+
+
+private theorem restrict_proper (f : J.L →ₗ[ℝ] ℝ)
+    (hf : proper (sectionCone J.L) (traceUnit J.L) f) :
+    proper (sectionCone J.space) (traceUnit J.space) (f.comp J.inclusion) := by
+  intro X hX
+  exact hf (J.inclusion X) hX
+
+/-- The full sets of confirming-effect readings agree for every local reference
+and every local matrix, including all mixed states. In particular their infima agree. -/
+private theorem comparison_exact (p x : J.space) :
+    comparison (sectionCone J.L) (traceUnit J.L) (J.inclusion p) (J.inclusion x) =
+      comparison (sectionCone J.space) (traceUnit J.space) p x := by
+  unfold comparison
+  congr 1
+  ext r
+  constructor
+  · rintro ⟨f, hf, hfx⟩
+    exact ⟨f.comp J.inclusion, ⟨J.restrict_proper f hf.1, hf.2⟩, hfx⟩
+  · rintro ⟨g, hg, hgx⟩
+    refine ⟨g.comp J.retraction, ⟨(J.effect_extension g hg.1).1, ?_⟩, ?_⟩
+    · change g (J.retraction (J.inclusion p)) = 1
+      rw [J.retraction_fixes, hg.2]
+    · change g (J.retraction (J.inclusion x)) = r
+      rw [J.retraction_fixes, hgx]
+
+/-- Every local normalized native rank one pure point is the identical original
+pure point, by inclusion into the original matrix section. -/
+private theorem pure_inclusion (p : J.space) (hp : p.val ∈ pureRanks J.space) :
+    (J.inclusion p).val ∈ pureRanks J.L := by
+  obtain ⟨v, hv, heq, hmem⟩ := hp
+  exact ⟨v, hv, heq, J.space_le hmem⟩
+
+end RealJoin
+
+private theorem proper_norm_bound
+    (L : Submodule ℝ (HermitianMat ι ℝ)) (hI : (1 : HermitianMat ι ℝ) ∈ L)
+    (f : StrongDual ℝ L) (hf : proper (sectionCone L) (traceUnit L) f.toLinearMap) :
+    ‖f‖ ≤ (Fintype.card ι : ℝ) := by
+  let I : L := ⟨1, hI⟩
+  have hIpos : I ∈ sectionCone L := by change 0 ≤ (1 : HermitianMat ι ℝ); positivity
+  have hfI : f I ≤ (Fintype.card ι : ℝ) := by
+    simpa [traceUnit, I] using (hf I hIpos).2
+  apply f.opNorm_le_bound (Nat.cast_nonneg _)
+  intro X
+  let t : ℝ := ‖X.val‖
+  have hup : X.val ≤ t • (1 : HermitianMat ι ℝ) :=
+    HermitianMat.lt_smul_of_norm_lt (le_refl _)
+  have hlo : -X.val ≤ t • (1 : HermitianMat ι ℝ) :=
+    HermitianMat.lt_smul_of_norm_lt (by simp [t])
+  have hplus : t • I + X ∈ sectionCone L := by
+    change 0 ≤ t • (1 : HermitianMat ι ℝ) + X.val
+    order
+  have hminus : t • I - X ∈ sectionCone L := by
+    change 0 ≤ t • (1 : HermitianMat ι ℝ) - X.val
+    exact sub_nonneg.mpr hup
+  have h1 := (hf (t • I + X) hplus).1
+  have h2 := (hf (t • I - X) hminus).1
+  change 0 ≤ f (t • I + X) at h1
+  change 0 ≤ f (t • I - X) at h2
+  simp only [map_add, map_sub, map_smul, smul_eq_mul] at h1 h2
+  have hb := mul_le_mul_of_nonneg_left hfI (norm_nonneg X.val)
+  rw [Real.norm_eq_abs, abs_le]
+  constructor <;> change _ ≤ _ <;> dsimp [t] at * <;> nlinarith
+
+private theorem proper_compact
+    (L : Submodule ℝ (HermitianMat ι ℝ)) (hI : (1 : HermitianMat ι ℝ) ∈ L) :
+    IsCompact {f : StrongDual ℝ L |
+      proper (sectionCone L) (traceUnit L) f.toLinearMap} := by
+  have hclosed : IsClosed {f : StrongDual ℝ L |
+      proper (sectionCone L) (traceUnit L) f.toLinearMap} := by
+    change IsClosed (⋂ X : L, ⋂ (_ : X ∈ sectionCone L),
+      {f : StrongDual ℝ L | 0 ≤ f X ∧ f X ≤ traceUnit L X})
+    apply isClosed_iInter
+    intro X
+    apply isClosed_iInter
+    intro _
+    exact (isClosed_le continuous_const (by fun_prop)).inter
+      (isClosed_le (by fun_prop) continuous_const)
+  apply (isCompact_closedBall (0 : StrongDual ℝ L) (Fintype.card ι)).of_isClosed_subset hclosed
+  intro f hf
+  simpa using proper_norm_bound L hI f hf
+
+/-- On the full original proper interval, the native infimum is a minimum.
+Every comparison-zero statement has one confirming effect with reading zero. -/
+private theorem comparison_attained
+    (L : Submodule ℝ (HermitianMat ι ℝ)) (hI : (1 : HermitianMat ι ℝ) ∈ L)
+    (p x : L) (hp : traceUnit L p = 1) (hx : x ∈ sectionCone L) :
+    ∃ f : L →ₗ[ℝ] ℝ, confirms (sectionCone L) (traceUnit L) p f ∧
+      f x = comparison (sectionCone L) (traceUnit L) p x := by
+  let F : Set (StrongDual ℝ L) := {f | proper (sectionCone L) (traceUnit L) f.toLinearMap ∧ f p = 1}
+  have hcompact : IsCompact F := (proper_compact L hI).inter_right
+    (isClosed_eq (by fun_prop) continuous_const)
+  have hunit : (traceUnit L).toContinuousLinearMap ∈ F := by
+    refine ⟨?_, hp⟩
+    intro X hX
+    exact ⟨HermitianMat.trace_nonneg hX, le_rfl⟩
+  obtain ⟨f, hf, hmin⟩ := hcompact.exists_isMinOn ⟨_, hunit⟩ (show ContinuousOn (fun g : StrongDual ℝ L => g x) F by fun_prop)
+  refine ⟨f.toLinearMap, hf, ?_⟩
+  symm
+  apply IsLeast.csInf_eq
+  refine ⟨⟨f.toLinearMap, hf, rfl⟩, ?_⟩
+  rintro r ⟨g, hg, rfl⟩
+  exact hmin (show g.toContinuousLinearMap ∈ F from hg)
+
+/-- The native zero relation is exactly a proper effect confirming p at one
+and vanishing at x. The zero effect cannot satisfy this test. -/
+private theorem comparison_zero_iff
+    (L : Submodule ℝ (HermitianMat ι ℝ)) (hI : (1 : HermitianMat ι ℝ) ∈ L)
+    (p x : L) (hp : traceUnit L p = 1) (hx : x ∈ sectionCone L) :
+    comparison (sectionCone L) (traceUnit L) p x = 0 ↔
+      ∃ f : L →ₗ[ℝ] ℝ, confirms (sectionCone L) (traceUnit L) p f ∧ f x = 0 := by
+  constructor
+  · intro h
+    obtain ⟨f, hf, hfx⟩ := comparison_attained L hI p x hp hx
+    exact ⟨f, hf, hfx.trans h⟩
+  · rintro ⟨f, hf, hfx⟩
+    apply le_antisymm
+    · apply csInf_le
+      · exact ⟨0, by rintro r ⟨g, hg, rfl⟩; exact (hg.1 x hx).1⟩
+      · exact ⟨f, hf, hfx⟩
+    · apply le_csInf
+      · exact ⟨0, f, hf, hfx⟩
+      · rintro r ⟨g, hg, rfl⟩
+        exact (hg.1 x hx).1
+
+/-- Native G2 uses comparison equal to zero over the entire proper interval.
+The pure carrier is the full original normalized rank one set; ROG identifies
+it with the extreme points of the entire normalized PSD base. -/
+def nativeG2 (L : Submodule ℝ (HermitianMat ι ℝ)) : Prop :=
+  ∀ p q r : L, p.val ∈ pureRanks L → q.val ∈ pureRanks L → r.val ∈ pureRanks L →
+    comparison (sectionCone L) (traceUnit L) p q = 0 →
+    comparison (sectionCone L) (traceUnit L) p r = 0 →
+    comparison (sectionCone L) (traceUnit L) p ((1 / 2 : ℝ) • (q + r)) = 0
+
+namespace RealJoin
+variable (J : RealJoin ι)
+
+private theorem local_attainment (p x : J.space)
+    (hp : traceUnit J.space p = 1) (hx : x ∈ sectionCone J.space) :
+    ∃ g : J.space →ₗ[ℝ] ℝ, confirms (sectionCone J.space) (traceUnit J.space) p g ∧
+      g x = comparison (sectionCone J.space) (traceUnit J.space) p x := by
+  obtain ⟨f, hf, hfx⟩ := comparison_attained J.L J.identity_mem
+    (J.inclusion p) (J.inclusion x) hp hx
+  exact ⟨f.comp J.inclusion, ⟨J.restrict_proper f hf.1, hf.2⟩,
+    hfx.trans (J.comparison_exact p x)⟩
+
+private theorem local_zero_iff (p x : J.space)
+    (hp : traceUnit J.space p = 1) (hx : x ∈ sectionCone J.space) :
+    comparison (sectionCone J.space) (traceUnit J.space) p x = 0 ↔
+      ∃ g : J.space →ₗ[ℝ] ℝ, confirms (sectionCone J.space) (traceUnit J.space) p g ∧
+        g x = 0 := by
+  rw [← J.comparison_exact]
+  rw [comparison_zero_iff J.L J.identity_mem (J.inclusion p) (J.inclusion x) hp hx]
+  constructor
+  · rintro ⟨f, hf, hfx⟩
+    exact ⟨f.comp J.inclusion, ⟨J.restrict_proper f hf.1, hf.2⟩, hfx⟩
+  · rintro ⟨g, hg, hgx⟩
+    refine ⟨g.comp J.retraction, ⟨(J.effect_extension g hg.1).1, ?_⟩, ?_⟩
+    · change g (J.retraction (J.inclusion p)) = 1
+      rw [J.retraction_fixes, hg.2]
+    · change g (J.retraction (J.inclusion x)) = 0
+      rw [J.retraction_fixes, hgx]
+
+/-- The native all-pure midpoint law is inherited by the entire supported side,
+with the original trace and the full proper interval on both carriers. -/
+private theorem native_G2_inherits (hG : nativeG2 J.L) : nativeG2 J.space := by
+  intro p q r hp hq hr hpq hpr
+  have h := hG (J.inclusion p) (J.inclusion q) (J.inclusion r)
+    (J.pure_inclusion p hp) (J.pure_inclusion q hq) (J.pure_inclusion r hr)
+    ((J.comparison_exact p q).trans hpq) ((J.comparison_exact p r).trans hpr)
+  rw [← J.comparison_exact]
+  simpa using h
+
+
+/-- The whole supported-side conclusion, on the unchanged matrix and trace
+carriers. All effects and all pure and mixed matrices are quantified here. -/
+def SideConclusion : Prop :=
+  (∀ X : HermitianMat ι ℝ, X ∈ J.cone ↔ X ∈ J.L ∧ 0 ≤ X ∧ X.support ≤ J.U) ∧
+  (∀ X : HermitianMat ι ℝ, X ∈ J.cone ↔ X ∈ J.space ∧ 0 ≤ X) ∧
+  ROG J.space ∧
+  (SectionROGFrame.base J.space).extremePoints ℝ = pureRanks J.space ∧
+  (∀ p : J.space, p.val ∈ pureRanks J.space →
+    (J.inclusion p).val ∈ pureRanks J.L) ∧
+  (∃ R : J.L →ₗ[ℝ] J.space,
+    (∀ X : J.L, (R X).val = X.val.conj J.matrix) ∧
+    (∀ X : J.space, R (J.inclusion X) = X) ∧
+    (∀ X : J.L, X ∈ sectionCone J.L →
+      R X ∈ sectionCone J.space ∧ traceUnit J.space (R X) ≤ traceUnit J.L X) ∧
+    (∀ g : J.space →ₗ[ℝ] ℝ, proper (sectionCone J.space) (traceUnit J.space) g →
+      proper (sectionCone J.L) (traceUnit J.L) (g.comp R) ∧
+      (g.comp R).comp J.inclusion = g)) ∧
+  (∀ g : J.space →ₗ[ℝ] ℝ, proper (sectionCone J.space) (traceUnit J.space) g →
+    ∃ f : J.L →ₗ[ℝ] ℝ, proper (sectionCone J.L) (traceUnit J.L) f ∧
+      f.comp J.inclusion = g) ∧
+  (∀ p x : J.space,
+    comparison (sectionCone J.L) (traceUnit J.L) (J.inclusion p) (J.inclusion x) =
+      comparison (sectionCone J.space) (traceUnit J.space) p x) ∧
+  (∀ p x : J.space, traceUnit J.space p = 1 → x ∈ sectionCone J.space →
+    ∃ g : J.space →ₗ[ℝ] ℝ, confirms (sectionCone J.space) (traceUnit J.space) p g ∧
+      g x = comparison (sectionCone J.space) (traceUnit J.space) p x) ∧
+  (∀ p x : J.space, traceUnit J.space p = 1 → x ∈ sectionCone J.space →
+    (comparison (sectionCone J.space) (traceUnit J.space) p x = 0 ↔
+      ∃ g : J.space →ₗ[ℝ] ℝ, confirms (sectionCone J.space) (traceUnit J.space) p g ∧
+        g x = 0)) ∧
+  (nativeG2 J.L → nativeG2 J.space)
+
+private theorem side_conclusion : J.SideConclusion := by
+  refine ⟨J.supported_cone, J.section_cone, J.side_rog,
+    whole_pure_carrier J.space J.side_rog, J.pure_inclusion, ?_,
+    J.effect_onto, J.comparison_exact, J.local_attainment, J.local_zero_iff,
+    J.native_G2_inherits⟩
+  refine ⟨J.retraction, fun _ => rfl, J.retraction_fixes, ?_, J.effect_extension⟩
+  intro X hX
+  have h := J.congruence_positive_subunit X.val X.property hX
+  exact ⟨(J.section_cone _).mp h.1 |>.2, h.2⟩
+
+/-- Both supported real ROG sides of the original projective join admit the
+actual congruence retractions, full effect restriction, attained exact comparison
+and the native G2 inheritance, with no additional map or certificate hypotheses. -/
+theorem real_join_retractions (J : RealJoin ι) :
+    J.SideConclusion ∧ J.swap.SideConclusion :=
+  ⟨J.side_conclusion, J.swap.side_conclusion⟩
 
 end RealJoin
 end D5.S3.Quantum.Foundation.LinearJoinRetraction
