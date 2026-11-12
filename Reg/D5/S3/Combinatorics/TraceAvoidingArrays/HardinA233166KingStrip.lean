@@ -104,6 +104,78 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 
+
+namespace FullEvent
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => ℕ → ℕ) (fun _ => ℕ → ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ f => f) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R :=
+    let b := R.readout () () a
+    b 1 = 236 ∧
+    (PowerSeries.mk fun n => (b n : ℚ)) =
+      4*PowerSeries.X*(59-10304*PowerSeries.X+356352*PowerSeries.X^2)*
+        ((1-64*PowerSeries.X)*(1-128*PowerSeries.X))⁻¹ ∧
+    (∀ n : ℕ, 2 ≤ n → b n = 64^(n-1)*(2^n+60)) ∧
+    (∀ n : ℕ, 4 ≤ n → (b n : ℤ) = 192*(b (n-1) : ℤ)-8192*(b (n-2) : ℤ))
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h.1
+  change (0 : ℕ) = 236 at hh
+  norm_num at hh
+
+def family : Registration arena (type_of% @result) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@result,rejected,rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(),(fun _ => 0),(fun _ => 1),?_⟩
+    intro h
+    have hh := congrFun h 0
+    change (0 : ℕ) = 1 at hh
+    exact Nat.zero_ne_one hh
+
+/-- Typed evidence is retained without an invented source-selection coordinate. -/
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@result) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.FullEvent.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip.FullEvent.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence,objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f => f) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+
+end FullEvent
+
 #print axioms audit
 
 end

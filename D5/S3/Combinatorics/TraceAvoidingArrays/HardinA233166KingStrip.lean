@@ -21,6 +21,10 @@ does not count signed lifts or assert the generating-function conjecture.
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
+set_option maxRecDepth 100000
+-- Finite pair-word cardinality conversions require a larger elaboration budget.
+set_option maxHeartbeats 4000000
+
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
   (beta colour_bond_iff)
 
@@ -665,6 +669,7 @@ private theorem legal_word_iff {n : ℕ} (hn : 0 < n) (f : Fin (n*6) → Fin 8) 
       exact ⟨fun h' => pull 1 (h.1 h'),fun h' => pull 2 (h.2.1 h'),
         fun h' => pull 3 (h.2.2 h')⟩
 
+open scoped Classical in
 private theorem literal_signed_count {n : ℕ} (hn : 0 < n) :
     a n = ∑ P : {P : Fin (n*6) → Fin 4 //
       Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P},
@@ -684,10 +689,12 @@ private theorem literal_signed_count {n : ℕ} (hn : 0 < n) :
     rw [← Nat.card_congr E, Nat.card_eq_fintype_card]
     exact (Fintype.card_subtype (fun f => Legal f)).symm
   rw [ha]
-  exact normalized_card8 (⟨0,by omega⟩ : Fin (n*6)) (fun i => show (0 : ℕ) ≤ i.val from Nat.zero_le _) S
+  simpa only [A,Fintype.card_fin] using
+    normalized_card8 (⟨0,by omega⟩ : Fin (n*6))
+      (fun i => show (0 : ℕ) ≤ i.val from Nat.zero_le _) S
 
 /-- The signed fibre and label-permutation factors for the literal count. -/
-theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
+private theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
     24 * a n = 2^(6*n-4) * Nat.card {c : Fin n × Fin 6 → Fin 4 // Proper c} := by
   classical
   let S (P : Fin (n*6) → Fin 4) := Proper (fun p => P (finProdFinEquiv p))
@@ -697,12 +704,15 @@ theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
     exact ⟨finProdFinEquiv p,he⟩
   have hfibre : a n = 2^(6*n-4) * Nat.card {P // S P ∧ Canonical P} := by
     rw [literal_signed_count (by omega : 0 < n)]
-    have hrange (P : {P // S P ∧ Canonical P}) : Set.range P.val = Set.univ :=
-      Set.range_eq_univ.mpr (huse P.val P.property.1)
-    simp only [hrange, Nat.card_univ, Nat.card_eq_fintype_card, Fintype.card_fin,
-      Finset.sum_const, Finset.card_univ, smul_eq_mul]
+    change (∑ P : {P // S P ∧ Canonical P},
+      2^(n*6-Nat.card (Set.range P.val))) = _
+    have hrange (P : {P // S P ∧ Canonical P}) : Nat.card (Set.range P.val) = 4 := by
+      rw [Set.range_eq_univ.mpr (huse P.val P.property.1),Nat.card_univ]
+      exact Nat.card_eq_fintype_card.trans (Fintype.card_fin 4)
+    simp_rw [hrange]
+    simp only [Finset.sum_const,Finset.card_univ,smul_eq_mul,Nat.card_eq_fintype_card]
     have he : n*6-4 = 6*n-4 := by omega
-    rw [he, Nat.mul_comm]
+    rw [he,Nat.mul_comm]
   have hperm := canonical_pattern_card4 S (by
     intro e P
     constructor <;> intro hp p q hne h₁ h₂ h₃ h₄
@@ -802,7 +812,9 @@ private theorem offset_sum (m : ℕ) (hm : 1 ≤ m) :
   let U : Finset (Fin 6 → Fin 4) := Finset.univ.filter offsetOK
   have hsum : (∑ v : {v : Fin 6 → Fin 4 // offsetOK v},
       (offsetChoices v.val).card^m) = ∑ v ∈ U, (offsetChoices v).card^m := by
-    exact (Finset.sum_subtype U (by intro v; simp only [U,Finset.mem_filter,Finset.mem_univ,true_and]) _).symm
+    exact (Finset.sum_subtype (p := offsetOK) U
+      (by intro v; simp only [U,Finset.mem_filter,Finset.mem_univ,true_and])
+      (fun v => (offsetChoices v).card^m)).symm
   rw [hsum]
   have point (v : Fin 6 → Fin 4) (hv : v ∈ U) :
       (offsetChoices v).card^m =
@@ -820,7 +832,7 @@ private theorem offset_sum (m : ℕ) (hm : 1 ≤ m) :
   omega
 
 /-- The exact all-height cardinality of the zone data. -/
-theorem labelled_pair_count (m : ℕ) (hm : 1 ≤ m) :
+private theorem labelled_pair_count (m : ℕ) (hm : 1 ≤ m) :
     Nat.card {c : Fin (m+1) × Fin 6 → Fin 4 // Proper c} =
       4*(3*2^m+90) := by
   classical
@@ -848,7 +860,7 @@ private theorem one_row_certificate : (∑ P : Fin 6 → Fin 4, oneRowWeight P) 
   decide +kernel
 
 /-- The exceptional literal one-row cardinality, including unused colours. -/
-theorem one_row_count : a 1 = 236 := by
+private theorem one_row_count : a 1 = 236 := by
   classical
   rw [literal_signed_count (by omega : 0 < 1)]
   change (∑ P : {P : Fin 6 → Fin 4 //
@@ -861,6 +873,89 @@ theorem one_row_count : a 1 = 236 := by
     Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P)) (by simp)]
   rw [Finset.sum_filter]
   exact one_row_certificate
+
+
+private theorem closed_shift (m : ℕ) : a (m+2) = 64^(m+1)*(2^(m+2)+60) := by
+  have h := literal_pair_count (by omega : 2 ≤ m+2)
+  rw [labelled_pair_count (m+1) (by omega)] at h
+  have hp : 2^(6*(m+2)-4) = 4*64^(m+1) := by
+    rw [show 6*(m+2)-4 = 6*(m+1)+2 by omega,pow_add,pow_mul]
+    norm_num
+    ring
+  rw [hp] at h
+  have h2 : 2^(m+2) = 2^(m+1)*2 := pow_succ 2 (m+1)
+  rw [h2]
+  nlinarith [h]
+
+/-- Barker's closed formula for every natural height at least two. -/
+private theorem closed_count (n : ℕ) (hn : 2 ≤ n) : a n = 64^(n-1)*(2^n+60) := by
+  obtain ⟨m,rfl⟩ : ∃ m, n = m+2 := ⟨n-2,by omega⟩
+  simpa only [show m+2-1 = m+1 by omega] using closed_shift m
+
+private theorem geometric_shift (m : ℕ) :
+    (a (m+2) : ℤ) = 2*128^(m+1)+60*64^(m+1) := by
+  rw [closed_shift]
+  push_cast
+  have hp : (128 : ℤ)^(m+1) = 64^(m+1)*2^(m+1) := by
+    rw [← mul_pow]
+    norm_num
+  rw [hp,pow_succ (2 : ℤ) (m+1)]
+  ring
+
+/-- The literal integer recurrence starts at height four. -/
+private theorem integer_recurrence (n : ℕ) (hn : 4 ≤ n) :
+    (a n : ℤ) = 192*(a (n-1) : ℤ)-8192*(a (n-2) : ℤ) := by
+  obtain ⟨m,rfl⟩ : ∃ m, n = m+4 := ⟨n-4,by omega⟩
+  rw [show m+4-1 = (m+1)+2 by omega,show m+4-2 = m+2 by omega,
+    show m+4 = (m+2)+2 by omega,geometric_shift,geometric_shift,geometric_shift]
+  simp only [pow_succ]
+  ring
+
+private theorem zero_count : a 0 = 0 := by
+  classical
+  simp [a,Legal]
+
+open PowerSeries in
+private theorem series_cross :
+    ((1-64*X)*(1-128*X)) * (PowerSeries.mk fun n => (a n : ℚ)) =
+      4*X*(59-10304*X+356352*X^2) := by
+  let F : PowerSeries ℚ := PowerSeries.mk fun n => (a n : ℚ)
+  have hp : (1-64*X)*(1-128*X)*F =
+      F-192*(F*X^1)+8192*(F*X^2) := by ring
+  have hr : (4*X*(59-10304*X+356352*X^2) : PowerSeries ℚ) =
+      236*X^1-41216*X^2+1425408*X^3 := by ring
+  change (1-64*X)*(1-128*X)*F = _
+  rw [hp,hr]
+  ext n
+  simp only [map_add,map_sub,coeff_ofNat_mul,coeff_mul_X_pow',coeff_X_pow,F,coeff_mk]
+  by_cases hn : 4 ≤ n
+  · simp only [ite_eq_left (show 1 ≤ n by omega),ite_eq_left (show 2 ≤ n by omega),
+      ite_eq_right (show n ≠ 1 by omega),ite_eq_right (show n ≠ 2 by omega),
+      ite_eq_right (show n ≠ 3 by omega)]
+    have hh : (a n : ℚ) = 192*(a (n-1) : ℚ)-8192*(a (n-2) : ℚ) := by
+      exact_mod_cast integer_recurrence n hn
+    linarith
+  · have h2 : a 2 = 4096 := by norm_num [closed_count 2 (by omega)]
+    have h3 : a 3 = 278528 := by norm_num [closed_count 3 (by omega)]
+    interval_cases n <;> norm_num [zero_count,one_row_count,h2,h3]
+
+/-- The complete literal event: exceptional prefix, formal series, formula and recurrence. -/
+theorem result : claim := by
+  refine ⟨one_row_count,?_,closed_count,integer_recurrence⟩
+  have hd : PowerSeries.constantCoeff
+      ((1-64*PowerSeries.X)*(1-128*PowerSeries.X) : PowerSeries ℚ) ≠ 0 := by simp
+  have hi := PowerSeries.mul_inv_cancel
+    ((1-64*PowerSeries.X)*(1-128*PowerSeries.X) : PowerSeries ℚ) hd
+  let D : PowerSeries ℚ := (1-64*PowerSeries.X)*(1-128*PowerSeries.X)
+  let F : PowerSeries ℚ := PowerSeries.mk fun n => (a n : ℚ)
+  have hc : D*F = 4*PowerSeries.X*(59-10304*PowerSeries.X+356352*PowerSeries.X^2) :=
+    series_cross
+  change F = _*D⁻¹
+  calc
+    F = F*1 := (mul_one F).symm
+    _ = F*(D*D⁻¹) := by rw [hi]
+    _ = (D*F)*D⁻¹ := by ring
+    _ = _ := congrArg (fun t : PowerSeries ℚ => t*D⁻¹) hc
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
