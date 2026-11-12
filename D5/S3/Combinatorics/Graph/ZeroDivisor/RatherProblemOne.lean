@@ -49,6 +49,7 @@ theorem rather_problem_one (p q r : ℕ)
   letI : ∀ i, Fintype (ZMod (m i)) := fun i => inferInstance
   letI : ∀ i, Nontrivial (ZMod (m i)) := fun i => inferInstance
   letI : ∀ i, NoZeroDivisors (ZMod (m i)) := fun i => inferInstance
+  have cardm (i : Fin 3) : Fintype.card (ZMod (m i)) = m i := ZMod.card (m i)
   have hcop : Pairwise (fun i j => Nat.Coprime (m i) (m j)) := by
     intro i j hij
     fin_cases i <;> fin_cases j <;> simp [m] at hij ⊢
@@ -74,15 +75,15 @@ theorem rather_problem_one (p q r : ℕ)
   let sQ := fun k => (s k : ℚ)
   have hco := NativeCoefficients.coefficients_three_domains
     ((ZMod.ringEquivCongr hmprod.symm).trans (Support.crt m hcop))
-    (by simpa [ZMod.card, m] using hpq.le)
-    (by simpa [ZMod.card, m] using hqr.le)
-    (by simpa [ZMod.card, m] using hq3)
-    (by simpa [ZMod.card, m] using hr5)
+    (by rw [cardm 0, cardm 1]; simpa [m] using hpq.le)
+    (by rw [cardm 1, cardm 2]; simpa [m] using hqr.le)
+    (by rw [cardm 1]; simpa [m] using hq3)
+    (by rw [cardm 2]; simpa [m] using hr5)
   change 14 ≤ N ∧ G.indepNum = N ∧ _
   have hco' : 14 ≤ N ∧ (∀ k, k ≤ N → 0 < sQ k) ∧
       (∀ k, N < k → sQ k = 0) ∧
       (∀ k, 1 ≤ k → k < N → sQ (k-1)*sQ (k+1) < sQ k^2) := by
-    simpa [ZMod.card, m] using hco
+    simpa only [cardm 0, cardm 1, cardm 2] using hco
   obtain ⟨hN, hposQ, htailQ, hlcQ⟩ := hco'
   have hpos (k : ℕ) (hk : k ≤ N) : 0 < s k := by
     have h := hposQ k hk
@@ -94,7 +95,7 @@ theorem rather_problem_one (p q r : ℕ)
     exact_mod_cast h
   have hcount (k : ℕ) : s k =
       (((configurations G Finset.univ).filter fun S => S.card = k).card : ℤ) := by
-    exact Support.coefficient_card Finset.univ k
+    exact Support.coefficient_card (R := ZMod (p*q*r)) Finset.univ k
   obtain ⟨S, hS⟩ := Finset.card_pos.mp (show 0 <
       ((configurations G Finset.univ).filter fun S => S.card = N).card by
     have h := hpos N le_rfl
@@ -154,6 +155,7 @@ theorem rather_problem_one (p q r : ℕ)
       exact_mod_cast h
     · have h := D5.S3.Combinatorics.RealRootedPermutations.LogConcave.increasing_before_max
         hposR hlcR hjN hmax i (by omega)
+      dsimp only [f] at h
       exact_mod_cast h.le
   have downstep (i : ℕ) (hi : j ≤ i) : s (i+1) ≤ s i := by
     by_cases hiN : i < N
@@ -164,6 +166,7 @@ theorem rather_problem_one (p q r : ℕ)
         exact_mod_cast h
       · have h := D5.S3.Combinatorics.RealRootedPermutations.LogConcave.decreasing_after_max
           hposR hlcR hjN hmax i (by omega) (by omega)
+        dsimp only [f] at h
         exact_mod_cast h.le
     · rw [htail (i+1) (by omega)]
       by_cases he : i = N
