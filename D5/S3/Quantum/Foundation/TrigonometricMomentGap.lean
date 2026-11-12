@@ -11,6 +11,7 @@ import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Analysis.Convex.Caratheodory
+import Mathlib.Analysis.Convex.Exposed
 import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 import Mathlib.Tactic
@@ -212,18 +213,12 @@ private theorem curve_extreme (a : ℝ) : curve a ∈ states.extremePoints ℝ :
     · right
       rw [hl, hp]
       exact lt_of_le_of_ne (Real.cos_le_one _) he
-  refine ⟨curve_mem a, ?_⟩
-  intro w hw z hz hseg
-  by_contra hne
-  have hwlt := (hbound w hw).resolve_left hne
-  have hzle : l z ≤ l (curve a) := by
-    rcases hbound z hz with rfl | hzlt
-    · exact le_rfl
-    · exact hzlt.le
-  obtain ⟨r, s, hr, hs, hrs, he⟩ := hseg
-  have he' := congrArg l he
-  simp only [map_add, map_smul, smul_eq_mul] at he'
-  nlinarith [mul_pos hr (sub_pos.mpr hwlt), mul_nonneg hs.le (sub_nonneg.mpr hzle)]
+  apply exposedPoints_subset_extremePoints
+  refine ⟨curve_mem a, l.toContinuousLinearMap, ?_⟩
+  intro w hw
+  rcases hbound w hw with rfl | hlt
+  · exact ⟨le_rfl, fun _ => rfl⟩
+  · exact ⟨hlt.le, fun hle => False.elim (not_le.mpr hlt hle)⟩
 
 private theorem original_pure : pure cone unit = range curve := by
   rw [CircuitBalancedConfirmation.pure, original_base]
@@ -486,7 +481,7 @@ private theorem vanishing_effect (f : Carrier →ₗ[ℝ] ℝ)
   have hb₀ : b 0 = 0 := by linarith
   have hb₁ : b 1 = 0 := by linarith
   have hb₂ : b 2 = 0 := by linarith
-  have hb₃ : b 3 = 0 := by linarith
+  have hb₃ : b 3 = 0 := by simpa [ha, hb₀, hb₁] using h₄
   have hb : b = 0 := by ext i; fin_cases i <;> assumption
   simp [ha, hb, effect]
 
@@ -521,7 +516,7 @@ private theorem body_fullspan : affineSpan ℝ body = ⊤ := by
   rfl
 
 private theorem affine_dimension : Module.finrank ℝ (vectorSpan ℝ body) = 4 := by
-  rw [vectorSpan_eq_top_of_affineSpan_eq_top ℝ Coordinates Coordinates body_fullspan]
+  rw [AffineSubspace.vectorSpan_eq_top_of_affineSpan_eq_top ℝ Coordinates Coordinates body_fullspan]
   simp [Coordinates]
 
 private theorem cone_generating : Submodule.span ℝ (cone : Set Carrier) = ⊤ :=
@@ -658,7 +653,11 @@ private theorem proper_coefficients {a : ℝ} {b : Coordinates}
     constructor <;> nlinarith [mul_nonneg (by linarith : 0 ≤ b 1 + 1) hr.1,
       mul_nonneg (by linarith : 0 ≤ 1 - b 1) hr.1]
   intro i
-  fin_cases i <;> apply abs_le.mpr <;> constructor <;> nlinarith
+  fin_cases i
+  · change |b 0| ≤ 4; exact abs_le.mpr ⟨by linarith, by linarith⟩
+  · change |b 1| ≤ 4; exact abs_le.mpr ⟨by linarith, by linarith⟩
+  · change |b 2| ≤ 4; exact abs_le.mpr ⟨by linarith, by linarith⟩
+  · change |b 3| ≤ 4; exact abs_le.mpr ⟨by linarith, by linarith⟩
 
 private def variation (θ : ℝ) : ℝ := ∑ i : Fin 4, |momentCurve θ i - momentCurve 0 i|
 
@@ -745,7 +744,7 @@ The coefficient description is surjective onto all such effects. -/
 theorem attained_full_effect_gap :
     base cone unit = lift '' body ∧
     pure cone unit = range curve ∧
-    IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
+    IsCompact (base cone unit) ∧ IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
     Module.finrank ℝ (vectorSpan ℝ body) = 4 ∧
     IsClosed (cone : Set Carrier) ∧ (cone : ConvexCone ℝ Carrier).Salient ∧
     Submodule.span ℝ (cone : Set Carrier) = ⊤ ∧
@@ -760,17 +759,21 @@ theorem attained_full_effect_gap :
     (∀ w ∈ cone, w ≠ 0 → 0 < unit w) ∧
     p ∈ base cone unit ∧ x ∈ base cone unit ∧ y ∈ base cone unit ∧
     mixed ∈ base cone unit ∧ z ∈ base cone unit ∧
+    (0 < angle ∧ angle < Real.pi) ∧ Real.cos angle = -2 / 3 ∧
     (∀ f, confirms cone unit p f → (1 / 10 : ℝ) ≤ f mixed) ∧
     confirms cone unit p attainer ∧ attainer mixed = 1 / 10 ∧
     comparison cone unit p mixed = 1 / 10 ∧
     (∃ f, confirms cone unit p f ∧ f x = 0) ∧
     (∃ f, confirms cone unit p f ∧ f y = 0) ∧ ¬ zeroGluing cone unit := by
-  refine ⟨original_base.trans states_image, original_pure, compact_body, body_fullspan, affine_dimension,
+  refine ⟨original_base.trans states_image, original_pure, ?_, compact_body, body_fullspan, affine_dimension,
     cone_closed, cone_salient, cone_generating, whole_zero_face,
     entire_pair_base, original_B, original_A_fails, all_linear_effects, ?_,
-    fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_, universal_lower,
+    fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_,
+    ⟨Real.arccos_pos.mpr (by norm_num), Real.arccos_lt_pi.mpr (by norm_num)⟩,
+    Real.cos_arccos (by norm_num) (by norm_num), universal_lower,
     attainer_confirms, attainer_value, ?_, endpoint_exclusions.1,
     endpoint_exclusions.2, zero_gluing_fails⟩
+  · rw [original_base]; exact compact_states
   · intro a b
     simpa only [effect_curve] using proper_on_curve (effect a b)
   · rw [original_base]; exact state_members.1

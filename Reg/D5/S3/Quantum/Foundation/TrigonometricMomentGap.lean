@@ -34,7 +34,7 @@ abbrev arena : Arena where
   Law O :=
     base cone unit = lift '' body ∧
     pure cone unit = Set.range curve ∧
-    IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
+    IsCompact (base cone unit) ∧ IsCompact body ∧ affineSpan ℝ body = ⊤ ∧
     Module.finrank ℝ (vectorSpan ℝ body) = 4 ∧
     IsClosed (cone : Set Carrier) ∧ (cone : ConvexCone ℝ Carrier).Salient ∧
     Submodule.span ℝ (cone : Set Carrier) = ⊤ ∧
@@ -49,6 +49,7 @@ abbrev arena : Arena where
     (∀ w ∈ cone, w ≠ 0 → 0 < unit w) ∧
     p ∈ base cone unit ∧ x ∈ base cone unit ∧ y ∈ base cone unit ∧
     mixed ∈ base cone unit ∧ z ∈ base cone unit ∧
+    (0 < angle ∧ angle < Real.pi) ∧ Real.cos angle = -2 / 3 ∧
     (∀ f, confirms cone unit p f → (1 / 10 : ℝ) ≤ O.readout () () (f, mixed)) ∧
     confirms cone unit p attainer ∧ O.readout () () (attainer, mixed) = 1 / 10 ∧
     comparison cone unit p mixed = 1 / 10 ∧
