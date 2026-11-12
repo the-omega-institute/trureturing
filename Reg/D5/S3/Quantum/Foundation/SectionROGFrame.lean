@@ -60,6 +60,23 @@ theorem actual_positive : arena.{u,v}.Law relationActual :=
 end pair_rankOne
 
 
+namespace rankOne_trace_norm
+
+abbrev sourceScope : Prop := type_of% (@rankOne_trace_norm.{u,v})
+
+def arena : Arena where
+  signature := relationSignature.{0}
+  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι]
+    (v : EuclideanSpace 𝕜 ι),
+    O.readout () ⟨ℝ, Eq⟩ (rankOne v).trace (‖v‖ ^ 2)
+
+theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law relationActual := Iff.rfl
+
+theorem actual_positive : arena.{u,v}.Law relationActual :=
+  source_bridge.mp (@rankOne_trace_norm.{u,v})
+
+end rankOne_trace_norm
+
 namespace whole_pure_carrier
 
 abbrev sourceScope : Prop := type_of% (@whole_pure_carrier.{u,v})

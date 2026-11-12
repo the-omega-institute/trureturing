@@ -11,6 +11,7 @@ import D5.S3.Quantum.Foundation.SectionROGFrame
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
 import Mathlib.LinearAlgebra.Prod
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+import Mathlib.Analysis.Normed.Operator.NormedSpace
 
 /-! Matrix congruences on full real ROG sections and their complete effect intervals. -/
 
@@ -157,11 +158,11 @@ def swap : RealJoin ι where
 
 /-- The original matrix span of all rank one generators on Y. -/
 def space : Submodule ℝ (HermitianMat ι ℝ) :=
-  Submodule.span ℝ (rankOne '' J.Y)
+  Submodule.span ℝ ((fun v : EuclideanSpace ℝ ι => rankOne v) '' J.Y)
 
 /-- The full conic hull of those same generators. -/
 def cone : PointedCone ℝ (HermitianMat ι ℝ) :=
-  PointedCone.hull ℝ (rankOne '' J.Y)
+  PointedCone.hull ℝ ((fun v : EuclideanSpace ℝ ι => rankOne v) '' J.Y)
 
 private theorem vector_mem (v : EuclideanSpace ℝ ι) (hv : v ∈ J.Y) : v ∈ J.U := by
   rw [← J.span_Y]
@@ -235,7 +236,12 @@ private theorem image_generator (v : EuclideanSpace ℝ ι)
     rw [J.vectorMap_on_W v hW]
     refine ⟨?_, ?_⟩
     · by_cases hz : (J.U ⊓ J.W).starProjection v = 0
-      · simp [hz, rankOne, cone]
+      · have hzero : rankOne ((J.U ⊓ J.W).starProjection v) = 0 := by
+          rw [hz]
+          apply HermitianMat.ext
+          simp [rankOne]
+        rw [hzero]
+        exact J.cone.zero_mem
       · apply PointedCone.subset_hull
         refine ⟨(J.U ⊓ J.W).starProjection v, ?_, rfl⟩
         exact (show (J.U ⊓ J.W).starProjection v ∈ J.Y ∩ J.Z from by
@@ -253,25 +259,34 @@ private theorem congruence_positive_subunit (X : HermitianMat ι ℝ)
   rw [hsum, map_sum]
   refine ⟨J.cone.sum_mem (fun i _ => (J.image_generator (v i) (hv i).1 (hv i).2).1), ?_⟩
   simp only [← HermitianMat.one_inner, inner_sum]
-  exact Finset.sum_le_sum (fun i _ => (J.image_generator (v i) (hv i).1 (hv i).2).2)
+  exact Finset.sum_le_sum (fun i _ => by
+    simpa only [HermitianMat.one_inner] using
+      (J.image_generator (v i) (hv i).1 (hv i).2).2)
 
 
 /-- Symmetric matrices whose entire range is contained in the vector space U. -/
 def supportedSpace (U : Submodule ℝ (EuclideanSpace ℝ ι)) :
     Submodule ℝ (HermitianMat ι ℝ) where
   carrier := {X | X.support ≤ U}
-  zero_mem' := by simp
+  zero_mem' := by
+    change (0 : HermitianMat ι ℝ).support ≤ U
+    rw [HermitianMat.support, HermitianMat.lin_zero]
+    simp
   add_mem' := by
     intro X Y hX hY z hz
     obtain ⟨v, rfl⟩ := hz
     have hx : X.lin v ∈ U := hX ⟨v, rfl⟩
     have hy : Y.lin v ∈ U := hY ⟨v, rfl⟩
-    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.add_mulVec] using U.add_mem hx hy
+    change (X.mat + Y.mat).toEuclideanLin v ∈ U
+    rw [map_add, LinearMap.add_apply]
+    exact U.add_mem hx hy
   smul_mem' := by
     intro r X hX z hz
     obtain ⟨v, rfl⟩ := hz
     have hx : X.lin v ∈ U := hX ⟨v, rfl⟩
-    simpa [HermitianMat.lin, Matrix.toLpLin_apply, Matrix.smul_mulVec] using U.smul_mem r hx
+    change (r • X.mat).toEuclideanLin v ∈ U
+    rw [map_smul, LinearMap.smul_apply]
+    exact U.smul_mem r hx
 
 private theorem rankOne_supported (v : EuclideanSpace ℝ ι)
     {U : Submodule ℝ (EuclideanSpace ℝ ι)} (hv : v ∈ U) :
@@ -279,8 +294,15 @@ private theorem rankOne_supported (v : EuclideanSpace ℝ ι)
   intro z hz
   obtain ⟨x, rfl⟩ := hz
   have h := U.smul_mem ((star (v : ι → ℝ)) ⬝ᵥ (x : ι → ℝ)) hv
-  simpa [HermitianMat.lin, rankOne, Matrix.toLpLin_apply,
-    Matrix.vecMulVec_mulVec, op_smul_eq_smul] using h
+  have heval : (rankOne v).lin x =
+      ((star (v : ι → ℝ)) ⬝ᵥ (x : ι → ℝ)) • v := by
+    apply WithLp.ofLp_injective
+    change Matrix.vecMulVec (v : ι → ℝ) (star (v : ι → ℝ)) *ᵥ (x : ι → ℝ) = _
+    rw [Matrix.vecMulVec_mulVec, op_smul_eq_smul]
+    rfl
+  change (rankOne v).lin x ∈ U
+  rw [heval]
+  exact h
 
 private theorem space_supported : J.space ≤ supportedSpace J.U := by
   apply Submodule.span_le.mpr
@@ -295,9 +317,8 @@ private theorem rankOne_support_self (v : EuclideanSpace ℝ ι) (hv : v ≠ 0) 
   rw [map_smul]
   have heval : (rankOne v).lin v = (‖v‖ ^ 2) • v := by
     apply WithLp.ofLp_injective
-    simp only [HermitianMat.lin, rankOne, Matrix.toLpLin_apply,
-      ContinuousLinearMap.coe_mk, LinearMap.coe_mk, AddHom.coe_mk,
-      WithLp.ofLp_toLp, Matrix.vecMulVec_mulVec, op_smul_eq_smul]
+    change Matrix.vecMulVec (v : ι → ℝ) (star (v : ι → ℝ)) *ᵥ (v : ι → ℝ) = _
+    rw [Matrix.vecMulVec_mulVec, op_smul_eq_smul]
     rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct,
       real_inner_self_eq_norm_sq]
     rfl
@@ -384,8 +405,10 @@ private theorem carrier_image {X : HermitianMat ι ℝ} (hX : X ∈ J.L) :
   let t : ℝ := ‖-X‖
   have hbound : -X ≤ t • (1 : HermitianMat ι ℝ) :=
     HermitianMat.lt_smul_of_norm_lt (le_refl _)
-  have hp : 0 ≤ X + t • (1 : HermitianMat ι ℝ) := by order
-  have hn : 0 ≤ t • (1 : HermitianMat ι ℝ) := smul_nonneg (norm_nonneg _) (by positivity)
+  have hp : 0 ≤ X + t • (1 : HermitianMat ι ℝ) := by
+    have h := add_le_add_left hbound X
+    simpa only [neg_add_cancel, add_neg_cancel, add_comm] using h
+  have hn : 0 ≤ t • (1 : HermitianMat ι ℝ) := smul_nonneg (norm_nonneg _) zero_le_one
   have htL : t • (1 : HermitianMat ι ℝ) ∈ J.L := J.L.smul_mem t J.identity_mem
   have hpc := (J.congruence_positive_subunit _ (J.L.add_mem hX htL) hp).1
   have hnc := (J.congruence_positive_subunit _ htL hn).1
@@ -413,8 +436,8 @@ def sectionCone (L : Submodule ℝ (HermitianMat ι ℝ)) : PointedCone ℝ L :=
 /-- The same original trace unit restricted to the specified section. -/
 def traceUnit (L : Submodule ℝ (HermitianMat ι ℝ)) : L →ₗ[ℝ] ℝ where
   toFun X := X.val.trace
-  map_add' X Y := HermitianMat.trace_add _ _
-  map_smul' r X := HermitianMat.trace_smul _ _
+  map_add' _ _ := HermitianMat.trace_add _ _
+  map_smul' _ _ := HermitianMat.trace_smul _ _
 
 namespace RealJoin
 variable (J : RealJoin ι)
@@ -475,12 +498,18 @@ private theorem pure_inclusion (p : J.space) (hp : p.val ∈ pureRanks J.space) 
 
 end RealJoin
 
+private noncomputable instance dualNormed (L : Submodule ℝ (HermitianMat ι ℝ)) :
+    NormedAddCommGroup (StrongDual ℝ L) :=
+  @ContinuousLinearMap.toNormedAddCommGroup ℝ ℝ L ℝ
+    inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+    (RingHom.id ℝ) inferInstance
+
 private theorem proper_norm_bound
     (L : Submodule ℝ (HermitianMat ι ℝ)) (hI : (1 : HermitianMat ι ℝ) ∈ L)
     (f : StrongDual ℝ L) (hf : proper (sectionCone L) (traceUnit L) f.toLinearMap) :
     ‖f‖ ≤ (Fintype.card ι : ℝ) := by
   let I : L := ⟨1, hI⟩
-  have hIpos : I ∈ sectionCone L := by change 0 ≤ (1 : HermitianMat ι ℝ); positivity
+  have hIpos : I ∈ sectionCone L := by change 0 ≤ (1 : HermitianMat ι ℝ); exact zero_le_one
   have hfI : f I ≤ (Fintype.card ι : ℝ) := by
     simpa [traceUnit, I] using (hf I hIpos).2
   apply f.opNorm_le_bound (Nat.cast_nonneg _)
@@ -511,14 +540,16 @@ private theorem proper_compact
       proper (sectionCone L) (traceUnit L) f.toLinearMap} := by
   have hclosed : IsClosed {f : StrongDual ℝ L |
       proper (sectionCone L) (traceUnit L) f.toLinearMap} := by
+    simp only [proper, Set.ofPred_forall]
     change IsClosed (⋂ X : L, ⋂ (_ : X ∈ sectionCone L),
       {f : StrongDual ℝ L | 0 ≤ f X ∧ f X ≤ traceUnit L X})
     apply isClosed_iInter
     intro X
     apply isClosed_iInter
     intro _
-    exact (isClosed_le continuous_const (by fun_prop)).inter
-      (isClosed_le (by fun_prop) continuous_const)
+    have heval : Continuous (fun f : StrongDual ℝ L => f X) := by fun_prop
+    exact (isClosed_le continuous_const heval).inter
+      (isClosed_le heval continuous_const)
   apply (isCompact_closedBall (0 : StrongDual ℝ L) (Fintype.card ι)).of_isClosed_subset hclosed
   intro f hf
   simpa using proper_norm_bound L hI f hf
