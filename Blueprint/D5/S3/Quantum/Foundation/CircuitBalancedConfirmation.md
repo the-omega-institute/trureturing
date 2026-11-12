@@ -180,7 +180,19 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_conve
 
 The entire normalized base of the original cone and linear unit is convex.
 
-**Theorem 1.15 (Compactness of the original normalized base).**
+**Theorem 1.15 (Normalization of nonzero positive vectors).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a unit strictly positive on every nonzero cone vector, multiplying any nonzero vector x in the cone by the inverse of u(x) places it in the entire normalized base. The same theorem applies to native face cones by restricting strict positivity along their inclusion.
+
+**Theorem 1.16 (Compactness of the original normalized base).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact`
 
@@ -192,7 +204,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compa
 
 For a closed original cone and a unit strictly positive at all its nonzero points, the entire normalized base is compact in the finite dimensional topology.
 
-**Theorem 1.16 (From pure nonnegativity to whole-cone nonnegativity).**
+**Theorem 1.17 (From pure nonnegativity to whole-cone nonnegativity).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone`
 
@@ -204,7 +216,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_
 
 For the compact original base and a strictly positive unit, every original real linear functional nonnegative on all pure points is nonnegative on the entire original cone.
 
-**Theorem 1.17 (From pure bounds to original properness).**
+**Theorem 1.18 (From pure bounds to original properness).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound`
 
@@ -216,7 +228,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound
 
 For the compact original base and a strictly positive unit, an original real linear functional whose value at every pure point belongs to [0,1] is proper on the entire original cone.
 
-**Theorem 1.18 (Pure spanning of the original carrier).**
+**Theorem 1.19 (Pure spanning of the original carrier).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span`
 
@@ -245,6 +257,7 @@ The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remai
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem`
