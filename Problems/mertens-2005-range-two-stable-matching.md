@@ -62,10 +62,12 @@ The concrete padded word has a full certificate in `padded_certificate`:
 all old/new assignments are reciprocal, all nonzero integer targets are
 injective, and every old, mixed and new edge is nonblocking, including singles.
 The certified word injection proves b_m*b_k<=b_(m+k+6) for all natural m,k,
-without counting certificate witnesses. This has a guarded direct Lean check;
-native target/report and rendered Scribe verification are separate boundaries.
+without counting certificate witnesses. The padded source and its two Reg
+mirror attempts have a successful scoped native Lean report. Its canonical
+Scribe Markdown is emitted and retains the complete construction and scope.
 
-Exact remaining mathematics: for closure, produce the actual source matching and prove cyclic stability, including the extra buffer--buffer
+Exact remaining mathematics: for closure, produce the actual source matching
+and prove cyclic stability, including the extra buffer--buffer
 wrap edges at m=1, then derive the profile injection b_m<=a_(m+6) for every
 m>=1. The requester/buffer involutions alone do not supply these conclusions.
 The exact triangle count, strict growth bound and final common-q normalization
@@ -83,16 +85,20 @@ This work claims neither formal acceptance nor worldwide novelty or priority.
 The source and its Scribe definitions remain unfrozen Stage A components.
 Guarded direct Lean checks are distinct from native target builds, scoped
 reports, canonical Markdown emission, inventory acceptance and required CI.
-The canonical native build/report door reports a cold main project layer;
-main is observation-only for this contribution. No main-cache health,
-canonical statement-material production or delivery is claimed.
+The successful padded scoped report covers its mathematical and Reg targets
+and imports. Full-project verification, inventory acceptance and required CI
+remain separate obligations. Main is observation-only; this contribution
+makes no main-cache health or delivery claim.
 
 The faithful registration gap is
 https://github.com/the-omega-institute/trureturing/issues/29645.
-The source-count comparison has a typed dependent-family mirror with its full
-original telescope and actual cardinality operands. Source-selection and
-native binding evidence are absent; no declared_validated status is claimed.
-Other certificate, completion and source-rank audit targets still need
-faithful mirrors. Canonical Markdown emission is unfinished because native
-statement material is unavailable. No freeze or publication PR is authorized
+The padded certificate and padded count inequality have compiled typed
+dependent-family mirrors retaining their full original telescopes, concrete
+certificate observations and exact cardinality operands. Native reporting
+records both as declared_unresolved with IE-C050, source.selection_missing.
+Source-selection and occurrence bindings remain absent; neither is
+declared_validated. The earlier source-count mirror and other certificate,
+completion and source-rank targets retain their unfinished audit obligations.
+The padded Scribe uses explicit no-formula projection gaps for declarations
+outside the fixed projection corpus. No freeze or publication PR is authorized
 before the separately assigned independent pre-freeze audit.
