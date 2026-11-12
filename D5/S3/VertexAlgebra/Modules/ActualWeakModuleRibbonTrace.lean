@@ -162,7 +162,14 @@ private theorem ribbon_summand (f : ModuleHom A A) (c : Discriminant D)
         (dualIota A c φ)
         (transportInverse D (representative D 0) (carry D hD c (-c))
           (transportInverse D 0 (zeroCarry D hD) v)))) = _
-  rw [ActualWeakModuleBraiding.braid_tag, map_smul, evaluation_pair]
+  rw [ActualWeakModuleBraiding.braid_tag, map_smul]
+  change F hD (-c) c (-c) • ActualWeakModuleBraiding.phase c (-c) •
+    (evaluation A hD).linearMap
+      (DirectSum.lof ℂ _ (PairSector (dualModule A) A) (-c,c)
+        (transportInverse D (representative D 0) (carry D hD c (-c))
+          (transportInverse D 0 (zeroCarry D hD) v) ⊗ₜ[ℂ]
+            (dualIota A c φ ⊗ₜ[ℂ] (thetaScalar c • restrict f c x)))) = _
+  rw [evaluation_pair]
   have hc := LinearMap.congr_fun
     (transportInverse_right D (representative D 0) (carry D hD c (-c)))
       (transportInverse D 0 (zeroCarry D hD) v)

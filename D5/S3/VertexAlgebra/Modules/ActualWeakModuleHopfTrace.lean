@@ -24,6 +24,7 @@ import Mathlib.RingTheory.TensorProduct.Finite
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
 
@@ -76,6 +77,7 @@ variable (hD : (gramReal D).PosDef)
 variable [∀ c : Discriminant D, Module.Finite ℂ (Multiplicity A c)]
 variable [∀ d : Discriminant D, Module.Finite ℂ (Multiplicity B d)]
 
+include hD in
 /-- Finiteness of EVERY ACTUAL product multiplicity, transported through the
 exact mu/nu equivalence, from finite tensor multiplicities on the finite fiber.
 There is no finiteness assertion about the oscillator, Carrier or P. -/
@@ -223,7 +225,12 @@ private theorem hopfEndomorphism_trace (f : ModuleHom A A) (g : ModuleHom B B) :
         phase (pairing D i.val.1 i.val.2) *
           LinearMap.trace ℂ (Multiplicity A i.val.1) (restrict f i.val.1) *
             LinearMap.trace ℂ (Multiplicity B i.val.2) (restrict g i.val.2) := by
-    rw [← LinearMap.trace_conj' (restrict (hopfEndomorphism hD f g) e)
+    letI : AddCommGroup (Multiplicity (targetModule A B) e) :=
+      Module.addCommMonoidToAddCommGroup ℂ (M := Multiplicity (targetModule A B) e)
+    letI : AddCommGroup (FiberSum A B e) :=
+      Module.addCommMonoidToAddCommGroup ℂ (M := FiberSum A B e)
+    rw [← LinearMap.trace_conj' (R := ℂ)
+      (M := Multiplicity (targetModule A B) e) (N := FiberSum A B e) (restrict (hopfEndomorphism hD f g) e)
       (multiplicityEquiv A B hD e), hopfEndomorphism_conjugation]
     unfold fiberHopf
     rw [trace_directSum]
@@ -246,7 +253,10 @@ private theorem hopfEndomorphism_trace (f : ModuleHom A A) (g : ModuleHom B B) :
       phase (pairing D c d) * LinearMap.trace ℂ (Multiplicity A c) (restrict f c) *
         LinearMap.trace ℂ (Multiplicity B d) (restrict g d)
   simp_rw [ht]
-  rw [← Fintype.sum_sigma]
+  rw [← Fintype.sum_sigma' (fun (e : Discriminant D) (i : Fiber (D := D) e) =>
+    phase (pairing D i.val.1 i.val.2) *
+      LinearMap.trace ℂ (Multiplicity A i.val.1) (restrict f i.val.1) *
+        LinearMap.trace ℂ (Multiplicity B i.val.2) (restrict g i.val.2))]
   calc
     _ = ∑ cd : Discriminant D × Discriminant D,
         phase (pairing D cd.1 cd.2) *
@@ -285,10 +295,16 @@ theorem hopfScalar_eq_sum (f : ModuleHom A A) (g : ModuleHom B B) :
       ∑ c ∈ discriminantSupport hD, ∑ d ∈ discriminantSupport hD,
         phase (pairing D c d) * LinearMap.trace ℂ (Multiplicity A c) (restrict f c) *
           LinearMap.trace ℂ (Multiplicity B d) (restrict g d) := by
-  letI : ∀ e : Discriminant D, Module.Finite ℂ (Multiplicity (targetModule A B) e) :=
-    productMultiplicity_finite A B hD
-  change ribbonTrace (targetModule A B) hD (hopfEndomorphism hD f g) = _
-  rw [ribbonTrace_eq_sum, hopfEndomorphism_trace]
+  have hr : restrict (hopfClosure hD f g) 0 (eta0 hD) =
+      (∑ c ∈ discriminantSupport hD, ∑ d ∈ discriminantSupport hD,
+        phase (pairing D c d) * LinearMap.trace ℂ (Multiplicity A c) (restrict f c) *
+          LinearMap.trace ℂ (Multiplicity B d) (restrict g d)) • eta0 hD := by
+    apply Subtype.ext
+    apply Subtype.ext
+    change (hopfClosure hD f g).linearMap (eta0 hD).val.val = _
+    exact LinearMap.congr_fun (hopfClosure_linearMap hD f g) (eta0 hD).val.val
+  unfold hopfScalar
+  rw [hr, map_smul, ActualWeakModuleUnits.etaCoefficient_eta0, smul_eq_mul, mul_one]
 
 end FiniteClosure
 
@@ -316,7 +332,7 @@ private def sectorVacuum (a : Discriminant D) :
   change current (sectorModule D (representative D a)) i 0
     (Finsupp.single 0 (1 : Oscillator D)) = _
   rw [hc]
-  simp [shiftedCurrentPolynomial, Finsupp.smul_single]
+  simp [shiftedCurrentPolynomial, Finsupp.smul_single, bilinear]
 
 private def sectorCoefficient (a : Discriminant D) :
     Multiplicity (sectorModule D (representative D a)) a →ₗ[ℂ] ℂ :=
@@ -324,6 +340,7 @@ private def sectorCoefficient (a : Discriminant D) :
     ((Omega (sectorModule D (representative D a))).subtype.comp
       (jointWeight (sectorModule D (representative D a)) (representative D a)).subtype)
 
+include hD in
 /-- Wrong actual sector multiplicities vanish by the supplied ground
 exhaustion and the exact representative/Gram equation, including rank zero. -/
 private theorem sector_multiplicity_wrong (a c : Discriminant D) (hc : c ≠ a)
@@ -345,6 +362,7 @@ private theorem sector_multiplicity_wrong (a c : Discriminant D) (hc : c ≠ a)
   change tensorCoordinates (w.val.val ⊗ₜ[ℂ] (1 : ℂ)) (l,d) = 0 at hz
   simpa [tensorCoordinates_tmul, coordinate_apply] using hz
 
+include hD in
 /-- The missing dimension-one proof is actual coordinate reconstruction,
 not a dimension hypothesis. Scalar tensor removal uses the existing rid. -/
 private theorem sector_multiplicity_reconstruct (a : Discriminant D)
@@ -371,8 +389,9 @@ private def sectorMultiplicityEquiv (a : Discriminant D) :
     apply Subtype.ext
     exact (sector_multiplicity_reconstruct hD a w).symm
   right_inv t := by
-    simp [sectorCoefficient, sectorVacuum, coordinate, coordinate_apply]
+    simp [sectorCoefficient, sectorVacuum, ActualWeakModuleScalarProbes.coordinate, coordinate_apply]
 
+include hD in
 /-- Actual multiplicity finiteness for each ORIGINAL canonical charge sector. -/
 theorem sectorMultiplicity_finite (a c : Discriminant D) :
     Module.Finite ℂ (Multiplicity (sectorModule D (representative D a)) c) := by
@@ -385,6 +404,7 @@ theorem sectorMultiplicity_finite (a c : Discriminant D) :
         rw [sector_multiplicity_wrong hD a c hc x, sector_multiplicity_wrong hD a c hc y]⟩
     infer_instance
 
+include hD in
 /-- Dimension delta for the actual joint-weight multiplicities, derived
 from ground exhaustion and the original representative sector field. -/
 theorem sectorMultiplicity_finrank (a c : Discriminant D) :
