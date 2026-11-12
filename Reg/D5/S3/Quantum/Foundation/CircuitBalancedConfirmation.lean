@@ -151,5 +151,14 @@ theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@normalized_mem.{u})
 
 end Normalization
+/-- Exact original telescopes of the exposed convex-geometric owners. These
+checks do not supply four-slot variation or source-coordinate evidence. -/
+abbrev compactSourceScope : Prop := type_of% (@base_compact.{u})
+abbrev nonnegativeSourceScope : Prop := type_of% (@nonneg_on_cone.{u})
+abbrev boundSourceScope : Prop := type_of% (@cone_bound.{u})
+
+theorem compact_source_exact : compactSourceScope.{u} := @base_compact.{u}
+theorem nonnegative_source_exact : nonnegativeSourceScope.{u} := @nonneg_on_cone.{u}
+theorem bound_source_exact : boundSourceScope.{u} := @cone_bound.{u}
 
 end Reg.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
