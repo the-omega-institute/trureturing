@@ -292,6 +292,7 @@ def physicalBilinearForm : LinearMap.BilinForm ℂ (physicalImage D H h26 hHG hG
       let r := representative D H h26 hHG hGH
       have hc : cl (r (y + z)) = cl (r y + r z) := by
         rw [representative_class, map_add, representative_class, representative_class]
+        rfl
       calc
         statePairing D (r x : State D) (r (y + z) : State D) =
             statePairing D (r x : State D) ((r y + r z : physicalStates D H) : State D) :=
@@ -302,6 +303,7 @@ def physicalBilinearForm : LinearMap.BilinForm ℂ (physicalImage D H h26 hHG hG
       let r := representative D H h26 hHG hGH
       have hc : cl (r (a • y)) = cl (a • r y) := by
         rw [representative_class, map_smul, representative_class]
+        rfl
       calc
         statePairing D (r x : State D) (r (a • y) : State D) =
             statePairing D (r x : State D) ((a • r y : physicalStates D H) : State D) :=
@@ -314,6 +316,7 @@ def physicalBilinearForm : LinearMap.BilinForm ℂ (physicalImage D H h26 hHG hG
     let r := representative D H h26 hHG hGH
     have hc : cl (r (x + z)) = cl (r x + r z) := by
       rw [representative_class, map_add, representative_class, representative_class]
+      rfl
     change statePairing D (r (x + z) : State D) (r y : State D) =
       statePairing D (r x : State D) (r y : State D) +
         statePairing D (r z : State D) (r y : State D)
@@ -328,6 +331,7 @@ def physicalBilinearForm : LinearMap.BilinForm ℂ (physicalImage D H h26 hHG hG
     let r := representative D H h26 hHG hGH
     have hc : cl (r (a • x)) = cl (a • r x) := by
       rw [representative_class, map_smul, representative_class]
+      rfl
     change statePairing D (r (a • x) : State D) (r y : State D) =
       a • statePairing D (r x : State D) (r y : State D)
     calc

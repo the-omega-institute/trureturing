@@ -27,7 +27,7 @@ Virasoro/Ward formulas, neutral43, and Mathlib tensor algebra.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -59,7 +59,7 @@ private theorem b_nonnegative_down (m : ℤ) (hm : 0 ≤ m) :
     BcGhostFock.b m (ket {1}) = 0 := by
   have hcut : ¬m ≤ -2 := by omega
   have hsite : 2 * (m+1).toNat + 1 ≠ 1 := by omega
-  simp [BcGhostFock.b, hcut, annihilate_ket, hsite]
+  simp [BcGhostFock.b, hcut, not_lt.mpr hm, annihilate_ket, hsite]
 
 private theorem L_positive_down (m : ℤ) (hm : 0 < m) :
     BcGhostVirasoro.L m (ket {1}) = 0 := by
