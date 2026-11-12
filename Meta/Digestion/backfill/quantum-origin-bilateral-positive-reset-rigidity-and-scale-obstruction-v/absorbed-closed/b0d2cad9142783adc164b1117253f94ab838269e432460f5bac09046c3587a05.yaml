@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:b0d2cad9142783adc164b1117253f94ab838269e432460f5bac09046c3587a05
+  normalized_sha256: sha256:b0d2cad9142783adc164b1117253f94ab838269e432460f5bac09046c3587a05
+cas_ref: sha256:b0d2cad9142783adc164b1117253f94ab838269e432460f5bac09046c3587a05
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/PauliFrameTraceTable.complex_generated
+    target_statement_id: sha256:f301e60a4dcde1ebb10b150f9203e398d06e2762c584996068147413e44bc8ea
+  - gid: D5/S3/Quantum/Tomography/PauliFrameTraceTable.frame_complete
+    target_statement_id: sha256:95c335db6de3fb7f1386ff74e9b5b00491c123f1dabac4c9e1e74021cb7538cc
+  - gid: D5/S3/Quantum/Tomography/PauliFrameTraceTable.real_generated
+    target_statement_id: sha256:c608c2b81cfb78df4404dc0b52c354c850011b66207e31cf66c8a8dd9548e24a
+  - gid: D5/S3/Quantum/Tomography/PauliFrameTraceTable.trace_table
+    target_statement_id: sha256:297b8cd50a483bcfdf04d71eaebce254e96a2834f42dbaccc901800f07beb72b
+receipts:
+  unresolved_subitems: []
