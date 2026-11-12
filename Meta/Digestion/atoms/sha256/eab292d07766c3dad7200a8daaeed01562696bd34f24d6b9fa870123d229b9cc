@@ -1,0 +1,42 @@
+**定义 95.6（指定原事件与实现资源）。** 对每个指定的原 typed 事件或未归一分支
+$e:n\to m$，保留其原记录、ready、控制、合法性和全部未来合同；保持包括零和所有实准备关系的
+实线性 Hermitian 输入律。归一仿射行为只有连同齐次质量缩放及这些关系才给该原实线性映射。
+在取得矩阵坐标后，记输入维数 $D_n=2^n$、输出维数 $D_m=2^m$，令 $\phi_e$ 为原映射，
+$\widetilde\phi_e(A+iB)=\phi_e(A)+i\phi_e(B)$ 为其唯一复线性 HP 延伸。
+每个这样的原事件分别供应一个输入维数参考和准确同事件输出
+
+$$
+\begin{gathered}
+|\omega_n\rangle=D_n^{-1/2}\sum_{j=1}^{D_n}|jj\rangle,
+\qquad \Omega_n=|\omega_n\rangle\langle\omega_n|,\\
+J_e=(\operatorname{id}_{D_n}\otimes\widetilde\phi_e)(\Omega_n)\ge0
+\quad\text{于整个原参考／输出锥 }C_{n+m}.
+\end{gathered}
+\tag{95.13}
+$$
+
+参考态实际可准备。其来源识别可由一个原实线性联合上下文 $L_e$ 给出：对所有正乘积输入
+$A\otimes B$，$L_e(A\otimes B)=A\otimes\phi_e(B)$；乘积张成遂强迫整个上下文是同一
+$\operatorname{id}\otimes\phi_e$，包括 $\Omega_n$ 上的准确输出。
+也可直接供应这个同事件输出等式及其原来源识别，不能事后另挑一张正证书矩阵。
+逐原分支各测其整个输出，不能只测总事件、若干读数或产品向量。
+
+独立保留每个确定事件在全部原正输入上的 TP，或各分支的 TNI 预算；
+实际完整仪器还保留同一菜单的记录、真实粗粒化
+$\phi_{\rm total}=\sum_a\phi_a$ 及总 TP。输入质量、输出质量和零分支不删去，
+只在严格正质量时条件化。数学 CP 的全参考正性不增加该原事件的实际可调用参考上下文。
+
+若还要求实际实现所有有限 CPTP 映射和有限仪器，另保留实际纯二元辅助准备、
+导出控制的顺序组合，以及进入同一原保留寄存器、按固定校准为偏迹的 typed 全域丢弃。
+仪器还要计算基指针读出，其未忽略指针前的保留输出分支律准确是
+
+$$
+\tau\longmapsto(I\otimes\langle z|)\tau(I\otimes|z\rangle),
+\tag{95.14}
+$$
+
+并有实际标签／记录、真实粗粒化和正质量条件化。
+指针效应的概率本身不等于这条更新律。以上完整复用
+[Library §4][L95event] *Typed event interface* 与 *Actual realization resources*；
+纯辅助态、丢弃、指针和记录均是实际资源，不由 Choi 证书生成。
+

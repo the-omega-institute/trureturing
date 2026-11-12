@@ -2978,3 +2978,1711 @@ Proposition 9(8) 承担不可约角色投影；该文 Theorem 10 证明中的轨
 
 [FS97]: AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md
 [RET97]: AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md
+
+
+## 追加锚（本行以下为增补区）
+
+## 29. 原生双列类与两个实际字的精确证书
+
+**定义 29.1（同一来源上的双列研究限制）。** 保留定义 1.2 的全部合法路径。记 $L_m$ 为长度 $m$ 的无相邻占据二元词集；$|L_5|=13$、$|L_6|=21$、$|L_7|=34$、$|L_9|=89$。基向量 $e_a$ 的下标只写内部九位 $a=b_1\cdots b_9$；外部位始终是 $b_{-1}b_0=10$、$b_{10}b_{11}b_{12}=010$。明确置
+
+$$
+x=(\sqrt5-1)/2,\qquad y=\sqrt x>0,\qquad
+\zeta=\exp(3\pi i/5).
+\tag{29.1}
+$$
+
+原等距映射 II(100.2) 在这里逐基写成
+$J(e_\beta\otimes|i\rangle)=e_{\beta010i}$，$\beta\in L_5$、$i=0,1$。固定
+
+$$
+\begin{aligned}
+e_0&=J(e_{00100}\otimes|0\rangle)=e_{001000100},\\
+t&=J\left(\frac{e_{00000}+e_{10100}}{\sqrt2}
+                  \otimes(y|0\rangle+x|1\rangle)\right).
+\end{aligned}
+$$
+
+两条五位路径不同且均与 $00100$ 不同，$y^2+x^2=x+x^2=1$，故
+$\|e_0\|=\|t\|=1$、$\langle e_0,t\rangle=0$。这里的 $t$ 是固定数学参考列；它区别于 (17.5) 后的同名标量，不是新增可制备状态。唯一物理 ready 仍是 $e_0$。
+
+以下产品坐标都是原路径空间内的酉坐标，不是新增物理复合资源：
+
+$$
+\begin{array}{c|c|c}
+\text{空间}&\text{逐基坐标映射}&\text{维数}\\ \hline
+A_8=\ker n_8&e_{u0i}\longleftrightarrow e_u\otimes|i\rangle,\ u\in L_7&34\cdot2\\
+B_8=\operatorname{ran}n_8&e_{u010}\longleftrightarrow e_u,\ u\in L_6&21\\
+C_3=\operatorname{ran}n_3&e_{i010u}\longleftrightarrow |i\rangle\otimes e_u,\ u\in L_5&2\cdot13\\
+D_3=\ker n_3&e_{u0v}\longleftrightarrow e_u\otimes e_v,\ u\in L_2,\ v\in L_6&3\cdot21 .
+\end{array}
+$$
+
+于是 $\mathcal K=A_8\oplus B_8=C_3\oplus D_3$，后一个是按 $n_3$ 的切口分解。
+由 II(100.2)，原代码及其补空间则是
+
+$$
+\mathcal C=\operatorname{ran}J=\operatorname{ran}n_7,\qquad
+\mathcal C^\perp=\ker n_7.
+$$
+
+原代码路径恰有 $b_7=1$，合法性迫使 $b_6=b_8=0$。
+$C_3,D_3$ 与 $\mathcal C,\mathcal C^\perp$ 的维数分别同为 $26,63$，但子空间不同；
+例如 $J(e_{00000}\otimes|0\rangle)=e_{000000100}$ 的 $b_3=0$，属于 $\mathcal C\cap D_3$ 而不属于 $C_3$。
+$Q=n_1=\sum_{b_1(\lambda)=1}N_\lambda$ 在这些坐标中作用于首因子；在 $A_8$、$C_3$ 的首因子上均非零且非恒等。原标签仍为
+$\Lambda=\{0,1\}^{10}$，$N_\lambda$ 固定旧十位 $b_{-1},\ldots,b_8$。
+其中 $34$ 个投影秩二、$21$ 个秩一、$969$ 个为零；全部 $1024$ 个标签保留。
+
+本节另行声明一个**模型／研究限制**：存在同一组固定 Hermitian 系数
+$F_\lambda\in\operatorname{Herm}(\mathcal K\otimes\mathcal K)$，使同一个实际普通概率律的终端边缘为
+
+$$
+p_\lambda(a)=q_\lambda(K_ae_0,K_at),\qquad
+q_\lambda(v,w)=\operatorname{Tr}
+  \bigl(F_\lambda(vv^*\otimes ww^*)\bigr),
+\qquad a\in\mathsf W_{11}.
+$$
+
+单位向量时 $vv^*=P_v$。非单位向量上的公式只是此式的双齐次延拓，零向量也取零；下文对子空间分量使用的二次型均指这个延拓，不能把分量分别归一化后相加。该固定系数表示不是旧来源已经声明的性质，也不由振幅维数自动得到。此研究限制不采用假设 1.3 中更强的全细标签终端 Born 前件。对每个实际有限字要求的是同一组条件
+
+$$
+\begin{gathered}
+p_\lambda(a)\ge0,\qquad
+\sum_{\lambda\in\Lambda}p_\lambda(a)=1,\qquad
+\sum_{b_1(\lambda)=1}p_\lambda(a)
+       =\langle K_ae_0,QK_ae_0\rangle,\\
+N_\lambda K_ae_0=0\quad\Longrightarrow\quad p_\lambda(a)=0.
+\end{gathered}
+$$
+
+已知粗事件在这里确切为 $Q=n_1$，不是任意非标量 $E_A$。最后一项只量化原实际字，没有预设所有数学酉的细支撑。$F_\lambda$ 本身不要求全局正半定。
+
+共同律还须保留原 ready、原校准和联合锚，而不是为每个标签分别找一个实现；其中联合锚由本节固定参考列的双列表示自动给出。明确保留
+$p_\lambda(\epsilon)=\|N_\lambda e_0\|^2$ 及当前 ready 回返：
+若 $[K_{a_n}e_0]\to[e_0]$，则
+$\max_\lambda|p_\lambda(a_n)-p_\lambda(\epsilon)|\to0$。
+原代码 $\mathcal C=\operatorname{ran}J$ 的基联合校准写为：对 $\beta\in L_5$、$i=0,1$，沿原校准合同中的实际序列
+$[K_{a_n}e_0]\to[J(e_\beta\otimes|i\rangle)]$，要求
+$p_\lambda(a_n)\to\|N_\lambda J(e_\beta\otimes|i\rangle)\|^2$。
+这保留十三条原系统路径和两个记录值的同菜单校准，不授予它们新的物理准备权限，也不把代码外任意输入的全细 Born 当作校准定义。完整联合四前缀锚为
+
+$$
+p_\lambda(f)+p_\lambda(9^5f)
+ =p_\lambda(9f)+p_\lambda(9^6f)
+\qquad(\lambda\in\Lambda,\ f\in\mathsf W_{11}).
+$$
+
+具体地，取 $r_R=(y,x)^{\mathsf T}$。由 $y^2=x$、$x+x^2=1$，原记录投影为
+
+$$
+P_R=r_Rr_R^*=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix},
+\qquad P_Rr_R=r_R.
+$$
+
+(17.4) 的原门满足 $K_9J=J(I\otimes B)$、
+$B=\zeta[I+(\zeta-1)P_R]$，故此处 $K_9t=\zeta^2t$，
+$P_{K_9^kt}=P_t$。第一列的两个谱方向的本征值为 $\zeta,\zeta^2$，
+相对相位为 $\zeta^k$；$\zeta^5=-1$ 使第 $k$、$k+5$ 项的投影交叉项抵消，因而
+
+$$
+P_{e_0}+P_{K_9^5e_0}=P_{K_9e_0}+P_{K_9^6e_0}.
+$$
+
+将此式张量乘同一个 $P_t$，再以 $K_f\otimes K_f$ 共轭，并与任意固定
+Hermitian $F_\lambda$ 作迹配对，就得到上面的全部逐标签、逐实际 future 联合锚。
+这里使用 $K_{9^kf}=K_fK_9^k$；推导不需要正性、粗 Born、
+$\mathrm H_8$、$\mathrm H_3$ 或全细标签 Born 前件。
+
+当前 ready 回返与该锚不等于全未来一致 ready 回返。双列表示还因 $K_j^{10}=I$ 保留实际逐标签统计十步回返。上述终端条件不能替代 $\mathsf R(a,f)$ 的记录质量、正质量档案条件核、纯后继、原七地址 future 或实际仪器合同。所有条件都须属于同一个原概率空间，真实调用历史、档案、零／失败／拒绝／停止／告警、Return、权限、可靠性、精度、时间、单位及资源边界保持定义 1.2、22.1 的原域。数学闭包、张量坐标和第二参考列不增加复制、混合、参考源、反馈、复位、连续控制或极限门。
+
+(10.5) 的全 $PU(89)$ 矩阵密度与 $e_0\perp t$ 给实际有序正交射线对的稠密性。有限维固定系数使每个 $q_\lambda$ 连续，故对于任意单位正交对 $(v,w)$，以上非负、总和一以及粗 $Q$ 恒等式全部延拓成立。特别地，对于固定标签 $\lambda$，
+
+$$
+v\in\ker(Q-b_1^{\rm opp}I),\quad
+b_1^{\rm opp}=1-b_1(\lambda),\quad v\perp w
+\quad\Longrightarrow\quad q_\lambda(v,w)=0.
+$$
+
+理由是包含 $\lambda$ 的那一粗组总质量为零，各项非负，故逐项为零。这是连续的**粗总和恒等式**的推论；并未把任意细标签的原生零纤维换成全部正交对。固定一列后，另一列在其正交超平面上的二次型因此正半定。
+
+原门在可翻转二点块上为
+
+$$
+B=\zeta\left[I+(\zeta-1)
+ \begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}\right]
+ =\begin{pmatrix}-x&y\zeta^{-1}\\
+                  y\zeta^{-1}&-x\zeta^3\end{pmatrix}.
+\tag{29.2}
+$$
+
+两邻位都为 $1$ 的合法阻塞单点取相位 $\zeta^2$；恰一邻位为 $1$ 取 $\zeta$。
+边界投影确切为 $\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$，所以边界门分别按该位为 $1$ 或 $0$ 乘 $\zeta^2$ 或 $\zeta$。邻位均为零时必须使用完整二点块，包括输入系数为零的另一条路径。
+
+为给出可审计的有限递推，置
+$\mathrm{wt}(a)=2+\sum_{j=1}^9b_j$、$S_{aa}=y^{\mathrm{wt}(a)}$；
+其中 $2$ 正是固定边界的两个占据位 $b_{-1}=b_{11}=1$。
+系数环取
+
+$$
+\mathbb Z[\zeta]=\mathbb Z[Z]/(Z^4-Z^3+Z^2-Z+1),\quad
+x=\zeta^4-\zeta,\quad x^{-1}=1+x,\quad
+\bar\zeta=-\zeta^4.
+$$
+
+每个元素以 $1,\zeta,\zeta^2,\zeta^3$ 的四个整数系数表示。乘法后以
+$Z^4=Z^3-Z^2+Z-1$ 从最高次向下约化；共轭将 $Z$ 替成 $-Z^4$ 再约化。
+在积分坐标 $g=S^{-1}u$ 中，可翻转块的完整更新为
+
+$$
+(g_{a0}',g_{a1}')=
+(-xg_{a0}+x\zeta^{-1}g_{a1},\
+ \zeta^{-1}g_{a0}-x\zeta^3g_{a1}),
+$$
+
+其中 $a0,a1$ 表示除中心位外相同的两条合法路径；所有单点按上述两种相位更新。每次更新遍历全部 $89$ 条路径的互不相交块，保留所有零坐标；在调用序列中从左到右依次更新，$K_{ab}=K_bK_a$。初始非零积分坐标恰为
+
+$$
+\begin{aligned}
+S^{-1}e_0&=x^{-2}e_{001000100},\\
+\sqrt2S^{-1}t
+ &=x^{-1}(e_{000000100}+e_{000000101})
+   +x^{-2}(e_{101000100}+e_{101000101}).
+\end{aligned}
+$$
+
+其余坐标全部为零。扇区平方范数由
+$\|P_Eu\|^2=\sum_{a\in E}x^{\mathrm{wt}(a)}|g_a|^2$ 计算。
+这给出了所有输入、每一步和终端量的有限精确规则，没有舍弃未显示的坐标。
+
+**引理 29.2（21 次调用的精确证书）。** 令
+
+$$
+\begin{aligned}
+r&=[3,4,5,6,7,8,3,4,5,6,7,3,4,5,6,3,4,5,3,4,3],
+\qquad R=K_r,\\
+A&=5-2\zeta+2\zeta^2-5\zeta^3,\qquad
+f=e_{000000010},\qquad h=e_{000000000}.
+\end{aligned}
+$$
+
+则
+
+$$
+\begin{array}{c|c}
+\text{系数或范数}&\text{精确值}\\ \hline
+\langle f,Re_0\rangle&0\\
+\langle h,Re_0\rangle&A\\
+\langle f,Rt\rangle&yA/\sqrt2\\
+\|P_{B_8}Rt\|^2&x^3 .
+\end{array}
+\tag{29.3}
+$$
+
+证明。对 $S^{-1}K_{r_{\le k}}e_0$ 与
+$\sqrt2S^{-1}K_{r_{\le k}}t$ 同时运行定义 29.1 的递推。
+下表每个括号是四个整数系数，列出各个**按调用先后**的 staircase 终点；计算每一行仍须更新全部路径，不能仅递推所列三个标量。
+
+$$
+\begin{array}{c|r|r|r}
+k& (S^{-1}K_{r_{\le k}}e_0)_h&
+    (S^{-1}K_{r_{\le k}}e_0)_f&
+    (\sqrt2S^{-1}K_{r_{\le k}}t)_f\\ \hline
+6 &(3,-1,1,-3)&(1,-1,0,-2)&(3,-1,1,-3)\\
+11&(3,2,3,0)&(2,1,2,0)&(3,2,3,0)\\
+15&(0,3,2,3)&(0,1,1,1)&(0,3,2,3)\\
+18&(-3,3,0,5)&(-1,1,0,1)&(-3,3,0,5)\\
+20&(-2,2,0,3)&(0,0,0,0)&(-2,2,0,3)\\
+21&(-3,1,-1,3)&(0,0,0,0)&(-3,1,-1,3)
+\end{array}
+\tag{29.4}
+$$
+
+终端 $B_8$ 部分 $\sqrt2S^{-1}P_{B_8}Rt$ 的全部非零项为
+
+$$
+\begin{array}{c|c|c}
+a&\mathrm{wt}(a)&\text{四整数系数}\\ \hline
+000000010&3&(-3,1,-1,3)\\
+001000010&4&(-2,1,-1,2)\\
+000001010&4&(-1,0,0,1)\\
+001001010&5&(-1,1,-1,1)\\
+000010010&4&(-2,1,-1,2)\\
+001010010&5&(-1,0,0,1)\\
+100100010&5&(1,-1,0,0).
+\end{array}
+$$
+
+记前三种系数为 $c_1,c_2,c_3$，第四种为 $c_4$，最后一种为 $c_7$。
+直接在同一四整数环中约化得到
+
+$$
+\begin{aligned}
+xc_1&=A,\\
+x^3c_1\bar c_1+2x^4c_2\bar c_2+x^4c_3\bar c_3
+ +x^5(c_4\bar c_4+c_3\bar c_3+c_7\bar c_7)&=2x^3,\\
+A\bar A&=34+21\zeta^2-21\zeta^3=x^8.
+\end{aligned}
+\tag{29.5}
+$$
+
+由于 $S_{hh}=y^2=x$、$S_{ff}=y^3=xy$，(29.4) 与全部七项的加权范数给出 (29.3)，并且
+
+$$
+|\langle h,Re_0\rangle|^2=x^8,\qquad
+|\langle f,Rt\rangle|^2=x^9/2,\qquad
+\|P_{B_8}Rt\|^2=x^3.
+\tag{29.6}
+$$
+
+递推始终使用两种阻塞相位与原有限字；没有调换算子作用次序或假定省略项相消。证毕。
+
+**命题 29.3（一个正扰动的原生支撑障碍）。** 对任意 $\epsilon>0$，系数
+$F_f=P_f\otimes I+\epsilon P_h\otimes P_{B_8}$ 在实际字 $r$ 上给
+
+$$
+q_f(Re_0,Rt)=\epsilon x^{11}>0,\qquad N_fRe_0=0.
+\tag{29.7}
+$$
+
+这里 $f$ 的字面标签为 $1000000001$，$N_f=P_f$。因此这个显示的单标签扰动违反原实际细支撑；这不排除其它 Hermitian 系数规律。
+
+证明。第一项为 $|\langle f,Re_0\rangle|^2=0$，第二项由 (29.6) 为
+$\epsilon x^8x^3$。支撑要求该值为零，故不相容。证毕。
+
+**引理 29.4（28 次调用的混合扇区种子）。** 按调用先后置
+
+$$
+\begin{aligned}
+N&=[4]+[6]^9,\\
+B&=[7,8,9,10,6,7,8,9,5,6,7,8,4,5,6,7],\\
+c&=N+B+[3,7].
+\end{aligned}
+$$
+
+$N$ 有十次、$B$ 有十六次，$c$ 共二十八次。精确地
+$K_Ne_0=K_Be_0=e_0$，且
+
+$$
+\sqrt2S^{-1}P_{B_8}K_BK_Nt
+=(\zeta-1)e_{000101010}
+-\zeta^3(e_{000000010}+e_{000010010}).
+\tag{29.8}
+$$
+
+证明。$N$ 的每次调用在 $e_0$ 上都取单点相位 $\zeta$，十次相乘为一。
+对第二列，$K_6^9$ 在 $K_4t$ 的全部支撑上取 $\zeta^9$；
+故 $s_N=\sqrt2S^{-1}K_Nt$ 的全部六项为
+
+$$
+\begin{aligned}
+s_N={}&(-1+\zeta-\zeta^2+\zeta^3)
+                  (e_{000000100}+e_{000000101})\\
+ &+(\zeta-1)(e_{000100100}+e_{000100101})\\
+ &+(1-\zeta^2+\zeta^3)(e_{101000100}+e_{101000101}).
+\end{aligned}
+$$
+
+按 $B$ 的十六次调用继续完整递推，得到第二列的全部八项：
+
+$$
+\begin{aligned}
+\sqrt2S^{-1}K_BK_Nt={}&
+ (1-\zeta^3)(e_{000000000}+e_{000010000})\\
+ &-\zeta^3(e_{000000010}+e_{000010010})\\
+ &+(-1+\zeta-\zeta^2+\zeta^3)e_{000101000}
+   +(\zeta-1)e_{000101010}\\
+ &+(1-\zeta^2+\zeta^3)(e_{101000100}+e_{101010100}).
+\end{aligned}
+$$
+
+其中 $b_8=1$ 的三项正是 (29.8)。
+为同时列出 $B$ 的第一列中间数据，记
+$d=-1-\zeta^2+\zeta^3=x$、$e=-\zeta^2+\zeta^3=x^{-1}$；
+以下每行是 $S^{-1}K_{B_{\le k}}e_0$ 的全部非零项：
+
+$$
+\begin{array}{c|l}
+k& S^{-1}K_{B_{\le k}}e_0\\ \hline
+4&d e_{001000000}-e_{001000001}+e e_{001000010}
+                    -e_{001000100}+e e_{001000101}\\
+8&d e_{001000000}-e_{001000010}+e e_{001000100}
+                    -e_{001001000}+e e_{001001010}\\
+12&d e_{001000000}-e_{001000100}+e e_{001001000}
+                    -e_{001010000}+e e_{001010100}\\
+16&x^{-2}e_{001000100}.
+\end{array}
+$$
+
+因此两条第一列恒等式包括整体相位，不只是射线等式。
+三项权分别为 $5,3,4$，故
+
+$$
+\begin{aligned}
+2\|P_{B_8}K_BK_Nt\|^2
+ &=|\zeta-1|^2x^5+x^3+x^4\\
+ &=(2+x)x^5+x^3+x^4=x.
+\end{aligned}
+\tag{29.9}
+$$
+
+其中 $|\zeta-1|^2=2+x$，
+$(2+x)x^5+x^3+x^4-x=x(x+1)(x^2+1)(x^2+x-1)=0$。
+末尾地址 $3,7$ 均保持 $b_8$，所以
+$\|P_{B_8}K_ct\|^2=x/2>0$。
+
+第一列在 $c$ 后的全部积分坐标恰为
+
+$$
+S^{-1}K_ce_0
+=-\zeta^3e_{000000000}
+-\zeta^2(e_{001000000}+e_{000000100})
+-\zeta e_{001000100}.
+$$
+
+它也可由 $K_ce_0=K_7K_3e_0$ 直接用两个可翻转块取得。
+这些路径的占据只在 $\{3,7\}$，特别地 $b_8=b_9=0$。因此
+$K_ce_0=u_c\otimes|0\rangle\in A_8$ 是 $34\times2$ 产品向量，而非仅仅属于 $A_8$。此外
+
+$$
+\langle h,K_ce_0\rangle
+=-x\zeta^3=x\zeta^{-2}
+=[\zeta(\zeta-1)xy]^2,\qquad
+|\langle h,K_ce_0\rangle|^2=x^2.
+\tag{29.10}
+$$
+
+证毕。
+
+## 30. 产品扇区的正交零传播与全 $A_8$ 首列
+
+**假设 30.1（两个原字切口的精确闭包条件）。** 令
+$\mathsf W_{\widehat j}=(\{0,\ldots,10\}\setminus\{j\})^{<\infty}$，
+$H_j=\overline{\{[K_a]:a\in\mathsf W_{\widehat j}\}}\subset PU(89)$。
+以定义 29.1 的字面产品坐标，分别要求
+
+$$
+\begin{aligned}
+\mathrm H_8:\quad
+\{[(U_{34}\otimes U_2)\oplus V_{21}]:
+ U_{34}\in SU(34),U_2\in SU(2),V_{21}\in SU(21)\}
+ &\subset H_8,\\
+\mathrm H_3:\quad
+\{[(U_2\otimes U_{13})\oplus(V_3\otimes V_{21})]:
+ U_2\in SU(2),U_{13}\in SU(13),V_3\in SU(3),V_{21}\in SU(21)\}
+ &\subset H_3.
+\end{aligned}
+\tag{30.1}
+$$
+
+方括号只去掉整个 $89$ 维载体的共同相位。要求的是同一个字的联合闭包包含所列**独立**因子，保留两块相对作用；分别投影后的稠密性不足以代付。每个 omission 字在相应切口上保持两扇区：删 $8$ 后，地址 $0,\ldots,7$ 作用左因子，$9,10$ 作用右因子；删 $3$ 后，$0,1,2$ 作用左因子，$4,\ldots,10$ 作用右因子。
+
+这些坐标与局部因子作用直接由原门得到；(30.1) 的联合闭包包含性在这里是明确的矩阵前件，未由 (10.5) 的全群密度单独推出，也不声称已有编号来源证明了它。它的候选 FLW 参数分别是删 $8$ 左侧的 $n=9$ 两扇区、右侧的二维因子，以及删 $3$ 的 $n=4,8$ 两侧；应用该文定理还需同规范的各扇区对应及独立联合像。以下结论只在各自注明的 $\mathrm H_8$、$\mathrm H_3$ 下成立，不把该包含性、$SU(68)$ 或 $SU(63)$ 当作免费控制。连续性只把恒为零的实际 omission 轨道延拓到这些数学闭包。
+
+**引理 30.2（统一的产品扇区内部零传播）。** 设 $E=V\otimes W$，两因子维数至少二，粗效应在 $E$ 上为 $P_V\otimes I_W$，其中 $P_V$ 非零且非恒等。固定一个标签，其 $b_1$ 值已知。设 $q$ 在全部环境正交对上分别具有正半定压缩，并有定义 29.1 的相反粗事件零值。若对所有单位产品对
+
+$$
+\alpha\perp\beta,\qquad |\langle u,w\rangle|^2=x
+\quad\Longrightarrow\quad
+q(\alpha\otimes u,\beta\otimes w)=0,
+\tag{30.2}
+$$
+
+则 $q(v,\eta)=0$ 对所有 $v,\eta\in E$、$v\perp\eta$ 成立。
+
+证明。先固定单位产品第二列 $\eta=\beta\otimes w$。
+对每个 $\alpha\perp\beta$，固定重叠锥
+$\{u:|\langle u,w\rangle|^2=x,\ \|u\|=1\}$ 张成 $W$：
+取 $u=\sqrt x\,w+\sqrt{1-x}\,z$，并将 $z\perp w$ 的相位变换，即可张成 $w$ 和整个 $w^\perp$。第一列在 $\eta^\perp$ 上的正半定性与 (30.2) 因此使压缩核包含
+$\beta^\perp\otimes W$。
+
+记 $V_{\rm opp}$ 为与**该标签** $b_1$ 相反的粗子空间。
+对不与 $V_{\rm opp}$ 正交的 $\beta$，选单位
+$\gamma\in V_{\rm opp}$ 且 $\langle\gamma,\beta\rangle\ne0$。
+每个 $z\perp w$ 均给 $\gamma\otimes z\perp\eta$，粗零值给
+$q(\gamma\otimes z,\eta)=0$。写
+$\gamma=a\beta+\gamma_\perp$，其中 $a\ne0$。
+$\gamma_\perp\otimes z$ 已在同一正半定压缩的核中，遂使
+$\beta\otimes z$ 也在核中。于是核包含
+
+$$
+(\beta^\perp\otimes W)+(\beta\otimes w^\perp)=E\cap\eta^\perp.
+$$
+
+异常的 $\beta\perp V_{\rm opp}$ 用非异常 $\beta_n\to\beta$ 补上：
+对 $v\perp\beta\otimes w$，取
+$v_n=P_{(\beta_n\otimes w)^\perp}v\to v$，由连续性得同一零值。
+故对每个产品第二列，所有正交第一列都为零。
+
+最后，任意 $v\in V\otimes W$ 满足
+
+$$
+\operatorname{span}\{\xi\otimes\eta:
+                  \langle v,\xi\otimes\eta\rangle=0\}=v^\perp.
+\tag{30.3}
+$$
+
+可在 $v$ 的 Schmidt 基中验证：所有非对角基产品已与 $v$ 正交；
+非零 Schmidt 系数 $s_i,s_j$ 的对角差方向由
+$(e_i+e_j)\otimes(s_jf_i-s_if_j)$ 减去非对角项得到；
+零 Schmidt 系数的其余方向本身就是正交产品。
+这些方向恰张成超平面。固定任意第一列 $v$ 后，已知第二列的全部正交产品零值及第二列正半定性遂消去整个 $E\cap v^\perp$。证毕。
+
+**定理 30.3（在 $\mathrm H_8$ 下的全 $A_8$ 首列延拓）。** 在定义 29.1 的共同双列模型和假设 $\mathrm H_8$ 下，对全部 $21$ 个非零原标签满足 $b_8(\lambda)=1$，有
+
+$$
+q_\lambda(v,w)=0
+\qquad(v\in A_8,\ w\in\mathcal K,\ v\perp w).
+\tag{30.4}
+$$
+
+零投影标签本已由实际支撑、连续性与全有序对密度在所有正交对上为零；它们仍保留在共同律中。
+
+证明。先供应 $A_8$ 内部零值。两列起初都在 $A_8$，并且在其 $34\times2$ 坐标中
+
+$$
+e_0=e_{0010001}\otimes|0\rangle,\qquad
+t=\frac{e_{0000001}+e_{1010001}}{\sqrt2}
+                   \otimes(y|0\rangle+x|1\rangle).
+$$
+
+首因子正交，记录因子的重叠平方为 $y^2=x$。
+所有 omission-$8$ 字保持首列在 $A_8$，所以原生支撑对每个上述标签给精确零值。
+$\mathrm H_8$ 的 $SU(34)\otimes SU(2)$ 轨道恰供应 (30.2) 的所有产品对（各列整体相位不影响 $q_\lambda$）。
+$Q|_{A_8}$ 的首因子两个粗子空间均非零，故引理 30.2 给
+
+$$
+q_\lambda(v,w_A)=0
+\qquad(v,w_A\in A_8,\ v\perp w_A).
+\tag{30.5}
+$$
+
+这是从该实际 omission 轨道与粗零值得到的内部结论，没有另付一条未证明的“既有内部零纤维”假设。
+
+再用引理 29.4，写
+$v_0=K_ce_0=u_c\otimes|0\rangle$、
+$K_ct=w_A+w_B$。有 $w_B\ne0$，且 $v_0\perp w_A,w_B$。
+原支撑给 $q_\lambda(v_0,w_A+w_B)=0$，(30.5) 给
+$q_\lambda(v_0,w_A)=0$。固定 $v_0$ 后的正半定二次型在
+$v_0^\perp$ 上具有核性质，因而 $q_\lambda(v_0,w_B)=0$。
+
+在实际 $c$ 后接 omission-$8$ 字，第一列仍在 $A_8$，故同一支撑零值仍成立；
+对每个这样的字，(30.5) 再次分离第二列的 $A_8$ 分量。
+$\mathrm H_8$ 中独立的产品作用及 $SU(21)$ 因子，于是给所有产品
+$v\in A_8$ 与所有 $w_B\in B_8$ 的零值。
+固定 $w_B$ 时，产品首列张成 $A_8$，且整个 $A_8\subset w_B^\perp$，
+第一列正半定性给任意 $v\in A_8$ 的同一结论。
+最后固定 $v$，第二列核同时包含
+$A_8\cap v^\perp$ 和 $B_8$，其和正是 $\mathcal K\cap v^\perp$。
+这证明 (30.4)，不要求 $F_\lambda$ 全局正半定。证毕。
+
+## 31. 原 omission-$3$ 轨道与粗零桥
+
+**定义 31.1（实际切口种子）。** 在 $C_3$ 的左夸比特、右十三维坐标中，置
+$r=y|0\rangle+x|1\rangle$，并写
+
+$$
+\begin{aligned}
+e_0&=|0\rangle\otimes e_{00100},\\
+P_{C_3}t&=\frac1{\sqrt2}|1\rangle
+                 \otimes(ye_{00100}+xe_{00101}),\\
+P_{D_3}t&=\frac1{\sqrt2}
+              J(e_{00000}\otimes r).
+\end{aligned}
+\tag{31.1}
+$$
+
+这是按 $n_3$ 切分原代码内的参考列 $t$；特别地 $P_{D_3}t\in\mathcal C$，不能把该分量解释为原代码补空间分量。
+因此两分量的平方范数各为 $1/2$，尤其 $D_3$ 种子非零。
+后者在 $3\times21$ 坐标中为
+$e_{00}\otimes(ye_{000100}+xe_{000101})/\sqrt2$。
+$C_3$ 两列的左因子正交，归一化右因子重叠平方为 $x$。
+原 omission-$3$ 字保持第一列在 $C_3$，所以对每个
+$b_3(\lambda)=0$ 的标签，实际支撑在该整个字族上为零。
+
+**定理 31.2（在 $\mathrm H_3$ 下的全 $C_3$ 首列延拓）。** 在定义 29.1 的共同双列模型和假设 $\mathrm H_3$ 下，对全部 $39$ 个非零原标签满足 $b_3(\lambda)=0$，有
+
+$$
+q_\lambda(v,w)=0
+\qquad(v\in C_3,\ w\in\mathcal K,\ v\perp w).
+\tag{31.2}
+$$
+
+证明。取任一闭包产品作用后的种子，第二列写作 $w_C+w_D$，第一列 $v\in C_3$ 为产品向量。
+$\mathrm H_3$ 的 $SU(3)$ 因子能独立将 $w_D$ 的左因子变号且不改变 $C_3$：
+在以该单位左因子为第一基向量的基中，取
+$\operatorname{diag}(-1,-1,1)\in SU(3)$ 即可。
+因此 $w_C+w_D$ 与 $w_C-w_D$ 都是同一实际零轨道的闭包点。
+由于 $v\perp w_C,w_D$，第二列正半定性及两式相加给
+
+$$
+q_\lambda(v,w_C)=q_\lambda(v,w_D)=0.
+\tag{31.3}
+$$
+
+这只要求对当前产品种子变号，不声称 $-I_{63}$ 是可独立执行的原门。
+由 (31.1) 的非零 $D_3$ 分量和 $\mathrm H_3$ 的独立四因子作用，
+固定任意产品 $v\in C_3$ 时，$w_D$ 的产品轨道张成 $D_3$；
+第二列正半定性给全部 $D_3$ 零值。再固定任意 $w_D$，
+第一列产品向量张成 $C_3\subset w_D^\perp$，给全部 $C_3$ 首列。
+
+(31.3) 的 $C_3$ 部分以及独立 $SU(2)\otimes SU(13)$ 作用，
+供应引理 30.2 的所有左因子正交、右因子重叠平方 $x$ 的产品零对。
+$Q|_{C_3}=|1\rangle\langle1|\otimes I_{13}$，其两粗子空间非零。
+引理 30.2 遂消去全部 $C_3$ 内部正交对；与全部 $D_3$ 零值合并，
+第二列核性质给 (31.2)。条件只有共同律和明确的 $\mathrm H_3$，
+不另要一个固定细零纤维稠密性前件。证毕。
+
+**命题 31.3（粗相反零桥及环境密度的边界）。** 对固定标签 $\lambda$，
+取 $\alpha_{\rm opp}$ 的 $b_1$ 值确切等于 $1-b_1(\lambda)$。
+在 $C_3$ 坐标中，对所有 $\beta,w,z$ 满足 $z\perp w$，共同律已给
+
+$$
+q_\lambda(\alpha_{\rm opp}\otimes z,\beta\otimes w)=0.
+\tag{31.4}
+$$
+
+证明。两列内积为
+$\langle\alpha_{\rm opp},\beta\rangle\langle z,w\rangle=0$。
+定义 29.1 的环境有序对密度延拓每个连续粗总和恒等式，
+故包含 $\lambda$ 的粗组在该首列上总质量为零。
+各标签非负，便逐项挤压得 (31.4)。对引理 30.2 的一般首因子空间，
+同一证明允许从该标签的整个相反粗子空间选择 $\gamma$。
+
+这里的零值由粗恒等式及正性取得，不依赖“实际字在某个固定细零纤维内稠密”。
+反之，任意 $N_\lambda v=0$ 的细零值只在实际字上已知时，
+环境有序对稠密性本身仍不保证可在保持 $N_\lambda K_ae_0=0$ 的同时逼近指定有序对。
+一般细支撑的这种替换仍须有效的零族、表示定理或其它桥；
+它不能与 (31.4) 的已供应粗零桥混为一项缺口。证毕。
+
+## 32. 正交压缩的十维环境余项与未决候选
+
+**推论 32.1（有交超平面的压缩核）。** 固定秩一标签
+$f=e_{000000010}$。在定义 29.1 的共同律、$\mathrm H_8$、$\mathrm H_3$ 下，置
+
+$$
+S_1=A_8,\quad S_2=C_3,\quad S_3=\operatorname{ran}n_1,\quad
+S=S_1+S_2+S_3,\quad T=S_1\cap S_2\cap S_3.
+\tag{32.1}
+$$
+
+对固定单位第二列 $w$，令 $H_w$ 是第一列 Hermitian 二次型
+$q_f(v,w)=\langle v,H_wv\rangle$ 的代表，令
+$T_w=P_{w^\perp}H_wP_{w^\perp}|_{w^\perp}$。
+它是 $w^\perp$ 上的正半定压缩，并满足
+
+$$
+\begin{gathered}
+\ker T_w\supset S\cap w^\perp,\\
+\dim S=79,\qquad \dim T=10,\qquad
+S^\perp=\operatorname{span}\{e_a:b_8=1,\ b_3=0,\ b_1=0\},
+\quad \dim S^\perp=10,\\
+\operatorname{ran}T_w\subset P_{w^\perp}(S^\perp),\qquad
+\dim P_{w^\perp}(S^\perp)=
+\begin{cases}10,&w\notin S^\perp,\\9,&w\in S^\perp.\end{cases}
+\end{gathered}
+\tag{32.2}
+$$
+
+证明。定理 30.3、31.2 和标签 $f$ 的 $b_1=0$ 粗相反零值，
+分别把 $S_i\cap w^\perp$ 放入同一正半定压缩核。
+路径计数给
+$\dim S_1=68$、$\dim S_2=26$、$\dim S_3=34$，
+两两交维数依次为 $20,26,13$，三交维数为 $10$；
+这些是同一坐标基的子空间，故容斥给 $\dim S=79$。
+补空间的三个固定条件也直接给十条合法路径。
+
+先设 $w\not\perp T$，取 $t_0\in T$ 使 $\langle w,t_0\rangle=1$。
+若 $v=\sum_i v_i\in S\cap w^\perp$、$v_i\in S_i$，令
+
+$$
+v_i'=v_i-\langle w,v_i\rangle t_0.
+$$
+
+则 $v_i'\in S_i\cap w^\perp$，且 $\sum_i v_i'=v$。
+因此 $\sum_i(S_i\cap w^\perp)=S\cap w^\perp$，核结论成立。
+这个等式不能对任意异常 $w$ 无条件宣称。
+
+若 $w\perp T$，固定任意 $v\in S\cap w^\perp$。
+因 $\dim T\ge2$，可取非零 $t_0\in T\cap v^\perp$，
+令 $w_\epsilon=(w+\epsilon t_0)/\|w+\epsilon t_0\|$，$\epsilon>0$。
+则 $v\perp w_\epsilon$ 且 $w_\epsilon\not\perp T$。
+已证部分给 $q_f(v,w_\epsilon)=0$，连续性给 $q_f(v,w)=0$；
+正半定核性质完成异常情形。于是对全部 $w$，均有正确的交超平面核结论。
+
+在 $w^\perp$ 内，
+$(S\cap w^\perp)^\perp=P_{w^\perp}(S^\perp)$。
+正半定压缩的像位于其核的正交补，得到像包含式。
+投影在十维 $S^\perp$ 上的核恰为 $S^\perp\cap\mathbb Cw$，
+故维数为所列的 $10$ 或 $9$。证毕。
+
+这里没有断言 $H_w$ 或原始 $F_f$ 湮灭整个环境 $S$。
+事实上交换算子 $\mathsf{Swap}$ 满足
+$\operatorname{Tr}(\mathsf{Swap}(vv^*\otimes ww^*))=|\langle v,w\rangle|^2$；
+在两个标签系数间加减同一个 $c\,\mathsf{Swap}$ 不改变任何正交双列值，
+却可改变原始系数及未压缩的 $H_w$。
+(32.2) 是正交二次型及其压缩的结论，不能消除这种系数规范自由。
+十维环境余项也没有把原 $89$ 维物理载体缩成十维。
+
+**命题 32.2（剩余候选的精确支撑谓词）。** 令
+$r_0^{\rm new}=e_{010000010}$、$\mu=1001000001$。
+它是 $S^\perp$ 中的原秩一路径，$N_\mu=P_{r_0^{\rm new}}$；
+$f,\mu$ 均有 $b_1=0$。对 $0<\epsilon\le1$，置
+
+$$
+F_f=P_f\otimes I+\epsilon P_{r_0^{\rm new}}\otimes P_{e_0},
+\qquad
+F_\mu=P_{r_0^{\rm new}}\otimes(I-\epsilon P_{e_0}),
+\tag{32.3}
+$$
+
+其余 $1022$ 个标签取 $N_\lambda\otimes I$。
+这些系数全局正半定、总和为 $I\otimes I$，且原 $b_1=1$ 粗和为
+$Q\otimes I$。所以它们对所有单位双列代数上给非负归一值并保留粗 Born。
+这些显示系数还由定义 29.1 自动保留完整联合锚；上述事实尚未给出保留全部原支撑、当前 ready 回返、原代码校准及实际历史的反模型。
+其原生全字细支撑恰余下
+
+$$
+\langle f,K_ae_0\rangle=0
+\quad\Longrightarrow\quad
+\langle r_0^{\rm new},K_ae_0\rangle
+ \langle e_0,K_at\rangle=0
+\qquad(a\in\mathsf W_{11}).
+\tag{32.4}
+$$
+
+证明。$I-\epsilon P_{e_0}\succeq0$，故两项均正半定。
+两标签间加减同一个正张量，且原 donor 正是 $N_\mu$，故总和不变；
+两者在同一 $b_1=0$ 粗组内，另一粗组也不变。
+原 donor 标签的支撑由第一因子 $P_{r_0^{\rm new}}$ 自动保持，
+其余未改标签亦然。只有 $f$ 的新增项须在
+$\langle f,K_ae_0\rangle=0$ 时消失；
+该项为
+$\epsilon|\langle r_0^{\rm new},K_ae_0\rangle|^2
+ |\langle e_0,K_at\rangle|^2$，故等价于 (32.4)。
+这里已得到非负、归一、粗和及自动联合锚；这个全有限字谓词、当前 ready 回返、
+原代码校准、全档案律、记录后未来及其它实际来源合同仍未由上述推导建立。证毕。
+
+本节所得数学是：定义 29.1 的固定参考列使任意固定 Hermitian 系数自动保留完整联合锚；在该明确双列研究类中，两个原有限字具有 (29.3)、
+(29.8)–(29.10) 的精确值；产品正交零传播引理以粗总和零值补齐内部超平面；
+在明确的 $\mathrm H_8$ 下得到全部 $A_8$ 首列延拓，在明确的 $\mathrm H_3$ 下得到全部
+$C_3$ 首列延拓，两条件同时成立时有 (32.2) 的压缩余项。
+联合切口闭包包含性仍是所列矩阵前件，任意细标签原生支撑的全局刚性、
+(32.4) 以及一个保留全部共同律条件的历史依赖反模型均未由这些结果建立。
+$C_3$ 不再另缺粗相反零桥，$A_8$ 内部结论也不依赖未命名的附加零前提。
+
+这里的精确有限递推、源特定零族和条件综合属于 repo-derived 纸面推导；
+全载体矩阵密度复用 (10.5) 及其 [FLW] 供应，正半定核与产品张成是所用有限维线性代数。
+不主张文献优先权、Lean kernel 核验或冻结认证。
+原 $89$ 路径、$26+63$ 维代码／补空间 $\mathcal C\oplus\mathcal C^\perp$、$1024$ 标签、唯一 $\Omega$/ready、十一／七地址及有限调用次序完整保留。
+VII22 的关系下降、VII24–28 的无秩 Born 路线各守原前件；
+复结构与 Born 的物理来源、实际联合复合、仪器与更新、档案及校准、
+真实时间／单位、可靠性、资源、活动返回和原全部中间切口仍是完整量子起源目标的义务。
+完整目标保持未完成，不以单标签诊断、上述条件模型或终端代数替换。
+## 33. 全八十九路径的同规范 Jones 对应与两个字面切口
+
+**定理 33.1（同时路径对应及切口因子）。** 对定义 1.2、29.1 的原全部路径，置
+
+$$
+h_k=\begin{cases}
+2(1-b_{k-1}),&k\text{ 偶},\\
+1+2b_{k-1},&k\text{ 奇},
+\end{cases}
+\qquad 0\le k\le12.
+\tag{33.1}
+$$
+
+将第 $k$ 步上升／下降分别放入 Young 表第一／第二行，得到原路径基到
+$V_{[6,6]}^{(2,5)}$ 全部可容许标准表基的酉映射 $U_{12}$。令
+$q=\exp(2\pi i/5)$、$c=\exp(\pi i/5)$。这个同一映射同时满足
+
+$$
+U_{12}\mathcal P_jU_{12}^{-1}=E_{j+1},\qquad
+U_{12}K_jU_{12}^{-1}
+ =c\,\rho_{[6,6]}^{(2,5)}(\sigma_{j+1}),
+\qquad 0\le j\le10.
+\tag{33.2}
+$$
+
+这里 $E_i$、$\rho$ 是 [FLW] §2 Definitions 1–2、Lemma 2.1 的正表投影和
+Jones 表示，与 II77.2、(77.7)–(77.10) 使用同一规范。
+特别地，每个生成元以及下面各扇区使用同一个 $c$。
+
+若删除地址 $j$，在 $m=j+1$ 处切开高度路径，将后缀**倒序**读为
+$(h_{12},h_{11},\ldots,h_m)$，则原基在固定 $h_m=a$ 上恰为
+长度 $m$ 和 $12-m$、都从 $0$ 到 $a$ 的两条路径的笛卡尔积。
+所需两个切口的全部因子为
+
+| 删除地址 | 切口高度 | 原字面空间 | 左 Jones 形状及维数 | 倒序右 Jones 形状及维数 |
+| --- | --- | --- | --- | --- |
+| $8$ | $h_9=1$ | $A_8=\ker n_8$ | $[5,4]$，$34$ | $[2,1]$，$2$ |
+| $8$ | $h_9=3$ | $B_8=\operatorname{ran}n_8$ | $[6,3]$，$21$ | $[3,0]$，$1$ |
+| $3$ | $h_4=0$ | $C_3=\operatorname{ran}n_3$ | $[2,2]$，$2$ | $[4,4]$，$13$ |
+| $3$ | $h_4=2$ | $D_3=\ker n_3$ | $[3,1]$，$3$ | $[5,3]$，$21$ |
+
+它们与定义 29.1 的 $e_{u0i}$、$e_{u010}$、$e_{i010u}$、$e_{u0v}$
+逐基产品坐标相同，只按各因子的路径／表双射命名基向量。
+左侧地址 $k<j$ 对应 $B_m$ 的 $\sigma_{k+1}$，
+右侧地址 $k>j$ 对应 $B_{12-m}$ 的 $\sigma_{11-k}$。
+右侧是生成元次序反射，不是取逆或复共轭。
+
+证明。固定边界给 $h_0=h_{12}=0$、$h_1=h_{11}=1$。
+相邻占据恰产生不允许的高度差 $3$；其余相邻位恰产生高度差 $1$。
+所以原合法路径与全部 $0\le h_k\le3$、步长 $\pm1$、端点为零的
+十二步路径双射。非负高度保证各前缀为两行 Young 图，最高高度
+$3=5-2$ 恰是 $(2,5)$ 可容许条件；端点为零给形状 $[6,6]$。
+反向从表的行选择恢复高度，再由 (33.1) 恢复每一位，故没有删去路径或增加基向量。
+
+为验证同一基下的算子，复用 FLW §2 的中间公式
+
+$$
+d=(c_i-c_{i+1})-(r_i-r_{i+1}),\qquad
+\alpha_{t,i}=\frac{[d+1]}{\varphi[d]},\qquad
+\beta_{t,i}=\sqrt{\alpha_{t,i}(1-\alpha_{t,i})}\ge0,
+\quad [s]=\frac{\sin(s\pi/5)}{\sin(\pi/5)}.
+\tag{33.3}
+$$
+
+若两步同向，则 $d=-1$、$\alpha=0$。若外侧高度相等为 $a$，
+上后下给 $d=a+1$，下后上给 $d=-a-1$。
+用 $[1]=[4]=1$、$[2]=[3]=\varphi$、$[-s]=-[s]$，
+可把同一正投影写成如下路径矩阵元。令
+$\omega_0=\omega_3=1$、$\omega_1=\omega_2=\varphi$；
+两个基路径除高度 $i$ 外相同，且外侧共同为 $a$ 时，
+
+$$
+(E_i)_{h,h'}=
+ \frac{\sqrt{\omega_{h_i}\omega_{h_i'}}}{\varphi\omega_a};
+\qquad h_{i-1}\ne h_{i+1}\ \Longrightarrow\ E_i e_h=0.
+\tag{33.4}
+$$
+
+其合法局部情形完整地为
+
+| 外侧高度 $a$ | 可取的中间高度 | 对角系数 |
+| --- | --- | --- |
+| $0$ | $1$ | $1$ |
+| $3$ | $2$ | $1$ |
+| $1$ | $2,0$ | $x,x^2$ |
+| $2$ | $1,3$ | $x,x^2$ |
+
+最后两行按中心位 $b_{i-1}=0,1$ 排序，正非对角元均为 $xy$。
+因此它们正是原活动块
+$\left(\begin{smallmatrix}x&xy\\xy&x^2\end{smallmatrix}\right)$；
+两邻位皆为 $1$ 对应前两行的投影 $1$，恰一邻位为 $1$ 对应两步同向的投影 $0$。
+这也包含固定边界：$\mathcal P_0=n_1$、$\mathcal P_{10}=n_9$。
+所有用到的 $[d]$ 非零，交换不可容许时只有相应单点块。
+所以正平方根和所有对角元同时吻合，不需要逐生成元另选相似变换。
+
+FLW Lemma 2.1 给 $\rho(\sigma_i)=qI-(1+q)E_i$。
+由 $\zeta=-q^{-1}$、$cq=\zeta$、$-c=\zeta^2$，
+便有 $c\rho(\sigma_i)=\zeta[I+(\zeta-1)E_i]$，得到 (33.2)。
+这里不使用 II(77.6) 已区分的 FLW §6 印刷融合矩阵。
+
+在切口 $m$，任一前缀与任一倒序后缀只要具有同一端点 $a$ 就可唯一拼回整条路径；
+因此是整个基的产品双射。长度 $s$、终点 $a$ 的表形状为
+$[(s+a)/2,(s-a)/2]$。维数由
+
+$$
+d_0(0)=1,\qquad d_0(a)=0\ (a\ne0),\qquad
+ d_{s+1}(a)=d_s(a-1)+d_s(a+1),\qquad d_s(-1)=d_s(4)=0
+\tag{33.5}
+$$
+
+给出：$d_3(1)=2,d_3(3)=1$，$d_4(0)=2,d_4(2)=3$，
+$d_8(0)=13,d_8(2)=21$，$d_9(1)=34,d_9(3)=21$。
+$h_9=1+2b_8$ 与 $h_4=2(1-b_3)$ 遂给表中四行，且
+$34\cdot2+21\cdot1=2\cdot13+3\cdot21=89$。
+
+每个未删的局部三高度完全在切口一侧。
+倒序后缀中的高度 $12-i$ 对应原高度 $i$；(33.4) 的外侧相等条件、分母和
+正平方根在倒序后完全相同。所以原右侧 $K_k$ 对应
+$c\rho(\sigma_{12-(k+1)})=c\rho(\sigma_{11-k})$。
+映射 $\sigma_s\mapsto\sigma_{12-m-s}$ 保持所有 braid 关系及指数和。
+原调用字仍按 $K_{ab}=K_bK_a$ 读取；若用通常从左乘到右的群字记法表示同一矩阵，
+只须将调用列表倒写，指数和不变。
+这同时证明所有切口因子的作用，没有只靠维数或两特征值识别表示。∎
+
+## 34. 原 omission 联合闭包的供应及正交压缩消费者
+
+**定理 34.1（$\mathrm H_8$ 与 $\mathrm H_3$ 的实际矩阵供应）。**
+定义 1.2、29.1 的原矩阵满足假设 30.1 的两个包含式，均在原整个 $89$ 维载体上成立。
+
+证明。所复用的已知中间定理为 Freedman–Larsen–Wang，
+[*The two-eigenvalue problem and density of Jones representation of braid groups*,
+math/0103200v1 Theorem 0.1](https://arxiv.org/html/math/0103200v1)。
+其陈述在 $r\ge5$、$r\notin\{6,10\}$、$n\ge3$ 时，对同一
+
+$$
+\rho_n^{(2,r)}=\bigoplus_{\lambda\in\Lambda_n^{(2,r)}}\rho_\lambda^{(2,r)}
+\quad\text{给出}\quad
+\overline{\rho_n^{(2,r)}(B_n)}
+ \supset\prod_{\lambda\in\Lambda_n^{(2,r)}}SU(V_\lambda^{(2,r)}).
+\tag{34.1}
+$$
+
+这是全部可容许扇区的**联合**结论，不只是每个投影的稠密性。
+此处 $r=5$，$n=9,3,4,8$ 都满足条件；对应可容许形状正是定理 33.1
+每个相应左右侧列出的两个形状。其行差分别在 $0,1,2,3$ 中，均不超过 $5-2$。
+一维扇区的 $SU(1)$ 取恒等群。
+
+还须消去原门的共同标量。对上述任一 $B_n$，令
+$e:B_n\to\mathbb Z$ 为指数和，$N_n=\ker(e\bmod10)$，并置
+
+$$
+L=\overline{\rho_n^{(2,5)}(B_n)},\qquad
+L_0=\overline{\rho_n^{(2,5)}(N_n)}.
+$$
+
+$N_n$ 是指数至多十的正规子群。有限陪集分解取闭包后，
+$L$ 是至多十个 $L_0$ 闭陪集之并，且 $L_0$ 正规。
+故 $L/L_0$ 是有限 Hausdorff 群，从而离散。
+(34.1) 右边的 $SU$ 产品连通且含恒等，其到该有限商的连续像只能是恒等，
+于是整个产品已包含在 $L_0$ 中。
+
+对 $\beta\in N_n$，所有扇区中的标量恰为同一个
+$c^{e(\beta)}=1$；所以原生对应在这个子群上就是未加标量的联合 Jones 矩阵。
+这一步同时保留两块的相对作用，不能以分别扇区中的射影去相位替代。
+若群字中有逆生成元，以原地址的九次正向调用替换即可：
+$K_k^{-1}=K_k^9$。替换仍在同侧，未引入被删地址，
+且指数和模十不变。因此 $L_0$ 中每个上述目标均为原有限正向 omission 字矩阵的极限。
+右侧的生成元反射保持指数和，故同一论证适用于倒序后缀。
+
+先取 omission-$8$。定理 33.1 将左侧同一个 $B_9$ 的联合两扇区作用
+嵌入 $A_8\oplus B_8$，上述论证给整个载体闭包中的
+
+$$
+ (U_{34}\otimes I_2)\oplus V_{21},
+ \qquad U_{34}\in SU(34),\quad V_{21}\in SU(21).
+\tag{34.2}
+$$
+
+右侧同一个 $B_3$ 的 $[2,1]$ 与 $[3,0]$ 扇区则给
+
+$$
+ (I_{34}\otimes U_2)\oplus I_{21},\qquad U_2\in SU(2).
+\tag{34.3}
+$$
+
+右侧一维 Jones 扇区本来在生成元上为 $q$，原门为 $cq=\zeta$；
+是上述指数和子群使它在 (34.3) 中为 $1$，并非把这块相位丢掉。
+两侧地址集合分离，矩阵在这些产品坐标中交换；
+同一闭包为闭子群，包含 (34.2)、(34.3) 的任意乘积。
+所以包含 $(U_{34}\otimes U_2)\oplus V_{21}$；
+最后只去掉整个载体的共同相位，正是 $\mathrm H_8$。
+
+对 omission-$3$，同一个 $B_4$ 的两个扇区给
+
+$$
+ (U_2\otimes I_{13})\oplus(V_3\otimes I_{21}),
+ \qquad U_2\in SU(2),\quad V_3\in SU(3),
+\tag{34.4}
+$$
+
+同一个 $B_8$ 的两个扇区独立给
+
+$$
+ (I_2\otimes U_{13})\oplus(I_3\otimes V_{21}),
+ \qquad U_{13}\in SU(13),\quad V_{21}\in SU(21).
+\tag{34.5}
+$$
+
+它们的乘积正是 $\mathrm H_3$ 所要求的四个独立因子。
+这里的 $C_3=\operatorname{ran}n_3$ 仍与原代码
+$\mathcal C=\operatorname{ran}n_7$ 不同。
+整个证明只求这些包含式，不需要断言 $SU(68)$、$SU(63)$ 或整个闭包的等式。∎
+
+**推论 34.2（保留共同律全部前件的支撑及十维余项）。**
+采用定义 29.1 的同一双列研究类：原固定 $e_0,t$、全部 $1024$ 个标签、固定
+Hermitian $F_\lambda$，以及全部原有限字上的非负、归一、粗 $Q=n_1$ Born、
+原生细标签零支撑、当前 ready 回返和原代码基联合校准。
+完整联合四前缀锚及统计十步回返仍由该表示按 29.1 给出。
+在这些前件下，不再另付 $\mathrm H_8$、$\mathrm H_3$，有
+
+$$
+\begin{aligned}
+b_8(\lambda)=1, N_\lambda\ne0
+ &\ \Longrightarrow\quad
+ q_\lambda(v,w)=0
+ &&(v\in A_8,\ w\in\mathcal K,\ v\perp w),\\
+b_3(\lambda)=0, N_\lambda\ne0
+ &\ \Longrightarrow\quad
+ q_\lambda(v,w)=0
+ &&(v\in C_3,\ w\in\mathcal K,\ v\perp w).
+\end{aligned}
+\tag{34.6}
+$$
+
+两行分别覆盖原 $21$ 个和 $39$ 个非零标签。
+对 $f=e_{000000010}$，推论 32.1 的同一正半定压缩 $T_w$ 满足
+
+$$
+\begin{gathered}
+\ker T_w\supset S\cap w^\perp,\qquad
+S=A_8+C_3+\operatorname{ran}n_1,\qquad \dim S=79,\\
+\operatorname{ran}T_w\subset P_{w^\perp}(S^\perp),\qquad
+S^\perp=\operatorname{span}\{e_a:b_8=1,b_3=0,b_1=0\},\quad \dim S^\perp=10,\\
+\dim P_{w^\perp}(S^\perp)=10\ (w\notin S^\perp),
+\qquad =9\ (w\in S^\perp).
+\end{gathered}
+\tag{34.7}
+$$
+
+证明。定理 34.1 供应两个联合包含式；依次直接应用定理 30.3、31.2、
+推论 32.1 即得。其正性与粗零桥仍来自同一个共同律，
+其有限种子仍是引理 29.4 和 (31.1)；没有增添全群细支撑前件，
+也没有删除实际全字细支撑或其它原共同条件。
+全部零投影标签仍由原生支撑、连续性及全有序对密度保持为零。
+(34.7) 只约束正交超平面上的压缩；原始 $F_f$ 的 Swap 规范自由仍在。
+没有要求 $F_\lambda$ 全局正半定，也没有取得剩余十维方向的细 Born 刚性。∎
+
+## 35. 特定正系数候选的当前校准与固定未来障碍
+
+**命题 35.1（(32.3) 的一致代码泄漏界）。**
+只取命题 32.2 中这一个候选，$0<\epsilon\le1$；
+简记 $r=r_0^{\rm new}=e_{010000010}$。
+对任意单位 $v,w\in\mathcal K$，其全部标签同时满足
+
+$$
+\max_{\lambda\in\Lambda}
+\left|q_\lambda(v,w)-\langle v,N_\lambda v\rangle\right|
+ =\epsilon|\langle r,v\rangle|^2|\langle e_0,w\rangle|^2
+ \le\epsilon\|P_{\mathcal C^\perp}v\|^2.
+\tag{35.1}
+$$
+
+因而该候选满足定义 29.1 的当前 ready 回返和原代码全部基联合校准，
+且这两个结论对第二列一致成立。它们不以 (32.4) 为前件，亦不证明 (32.4)。
+
+证明。$r$ 的第七位为零，所以 $r\in\ker n_7=\mathcal C^\perp$。
+(32.3) 只在 $f$ 标签增加
+$\epsilon|\langle r,v\rangle|^2|\langle e_0,w\rangle|^2$，
+在同一粗组的 $\mu$ 标签减去同一数，其余标签的偏差为零。
+Cauchy–Schwarz 便给 (35.1)，不需要 $v\perp w$。
+
+$e_0$ 与全部 $J(e_\beta\otimes|i\rangle)$ 均在原代码 $\mathcal C$ 中。
+若实际首列射线趋向其中任一基射线 $[v_*]$，则
+$\|P_{\mathcal C^\perp}K_ae_0\|\to0$。
+Born 值也连续趋向 $\langle v_*,N_\lambda v_*\rangle$，且标签只有固定的 $1024$ 个；
+故 (35.1) 给所需共同校准极限，不论 $K_at$ 如何变化。
+在空字处 $q_\lambda(e_0,t)=\langle e_0,N_\lambda e_0\rangle$，
+所以同一论证也给当前 ready 回返。正性、归一、粗 Born 和联合锚仍由 32.2、29.1 供应。
+这些只结算该终端候选的所列性质，不安装实际档案、记录或仪器律。∎
+
+**定理 35.2（一个固定原预终端未来已破坏全未来 ready 回返）。**
+对同一个 (32.3) 候选和每个 $0<\epsilon\le1$，置
+
+$$
+c=(3,2,7,8),\qquad K_c=K_8K_7K_2K_3.
+\tag{35.2}
+$$
+
+存在原实际有限正向字序列 $a_n\in\mathsf W_{11}$，使
+$[K_{a_n}e_0]\to[e_0]$，但
+
+$$
+\lim_{n\to\infty}|p_f(a_nc)-p_f(c)|
+ \ge\frac{\epsilon x^4(1-x^4)}2>0.
+\tag{35.3}
+$$
+
+所以该候选不满足定义 22.1 全部联合行的 ready 回返；
+甚至逐个固定预终端 future 要求的回返也失败。
+这里 $f$ 是原秩一终端标签，$c$ 是固定的原十一地址预终端 future，
+没有在记录后七地址域内提出相同断言。
+
+证明。先完全计算此四次调用的首列。用只为列出原基而设的记号
+
+$$
+|\ell;s\rangle:=e_{\,0\ell000s0},\qquad
+\ell\in\{01,00,10\},\quad s\in\{10,00,01\}.
+$$
+
+两对位分别为 $b_2b_3$、$b_7b_8$；它们之间三个零是 $b_4b_5b_6$。
+这九个字面基向量全部合法，$e_0=|01;10\rangle$、$r=|10;01\rangle$。
+它不是新增物理张量资源。由原块 (29.2)，左两次 $3,2$ 的三个系数和
+右两次 $7,8$ 的三个系数分别为
+
+$$
+\begin{array}{c|ccc}
+\ell&01&00&10\\ \hline
+L_\ell&-x\zeta^4&-xy\zeta^{-1}&x\zeta^{-2}
+\end{array}
+\qquad
+\begin{array}{c|ccc}
+s&10&00&01\\ \hline
+R_s&-x\zeta^4&-xy\zeta^{-1}&x\zeta^{-2}.
+\end{array}
+$$
+
+例如中心 $3$ 上初始位为 $1$：保持它给 $-x\zeta^3$，
+随后中心 $2$ 被阻塞而乘 $\zeta$，得第一项；
+翻到 $0$ 给 $y\zeta^{-1}$，随后中心 $2$ 的活动块给后两项。
+右侧同理，两侧局部块互不相交。于是完整展开为
+
+$$
+K_ce_0=\sum_{\ell\in\{01,00,10\}}
+           \sum_{s\in\{10,00,01\}}L_\ell R_s|\ell;s\rangle,
+\qquad
+\langle r,K_ce_0\rangle=x^2\zeta^{-4},\quad
+\langle e_0,K_ce_0\rangle=x^2\zeta^8.
+\tag{35.4}
+$$
+
+每一对 $(\ell,s)$ 只有一条调用分支；没有在这九项之外省略非零项。
+每侧系数平方和为 $x^2+x^3+x^2=1$，也与完整酉范数相容。
+特别地，上述两个振幅的模平方均为 $x^4$。
+
+令
+
+$$
+h=K_c^*e_0,\qquad u=P_{e_0^\perp}h,\qquad
+\|u\|^2=1-|\langle e_0,h\rangle|^2=1-x^4>0,\qquad
+w_1=u/\|u\|.
+\tag{35.5}
+$$
+
+另取任意单位 $w_0\perp\operatorname{span}\{e_0,h\}$，
+这是 $89$ 维原空间中的非空选择。两者均与 $e_0$ 正交，而且
+
+$$
+|\langle e_0,K_cw_0\rangle|^2=0,\qquad
+|\langle e_0,K_cw_1\rangle|^2=1-x^4.
+\tag{35.6}
+$$
+
+由于原 $e_0\perp t$，可分别将有序正交对 $(e_0,t)$ 酉地映到
+$(e_0,w_i)$，$i=0,1$。复用 (10.5) 的原全 $PU(89)$ 密度，得到两列
+**实际有限正向字** $a_n^{(i)}$，使
+
+$$
+P_{K_{a_n^{(i)}}e_0}\longrightarrow P_{e_0},\qquad
+P_{K_{a_n^{(i)}}t}\longrightarrow P_{w_i}.
+\tag{35.7}
+$$
+
+这里只逼近两个列投影；其独立整体相位不影响任何双列值。
+没有使用或声称实际字在某个细零纤维中稠密。
+在同一个固定 future $c$ 后，连续的固定系数公式及 (35.4)–(35.6) 给
+
+$$
+\begin{aligned}
+\lim_n p_f(a_n^{(0)}c)&=B_c,\\
+\lim_n p_f(a_n^{(1)}c)&=B_c+\epsilon x^4(1-x^4),\qquad
+B_c=|\langle f,K_ce_0\rangle|^2.
+\end{aligned}
+\tag{35.8}
+$$
+
+这两个极限相差严格正数 $\delta=\epsilon x^4(1-x^4)$。
+对固定的原 $p_f(c)$，至少一个极限与它相差不小于 $\delta/2$；
+选取该 $i$ 的实际字序列便得 (35.3)。
+按定义 22.1，$z_{a_n}$ 的 $(f,c)$ 坐标就是 $p_f(a_nc)$，
+而 $z_\epsilon$ 的该坐标为 $p_f(c)$，所以
+$\|z_{a_n}-z_\epsilon\|_\infty$ 也不能趋零。
+这个结论并未将 $t$ 或 $w_i$ 当作另一个物理准备源；
+(35.7) 用的始终是同一个字在唯一 ready 与固定数学参考列上的两列。∎
+
+**命题 35.3（两个供给的精确适用边界）。**
+定理 34.1 消去 30–32 中显式列出的两个联合闭包前件；
+推论 34.2 仍只在定义 29.1 的完整共同律研究类内成立。
+命题 35.1 与定理 35.2 则对特定 (32.3) 系数给当前 ready／代码校准成立和
+全未来 ready 回返不成立；两者不判定 (32.4)，也不排除其它系数。
+
+证明。前一供给逐路径、逐局部门、逐切口及共同标量接到已知联合密度定理，
+只将恒零的实际 omission 族延拓到相应数学闭包。
+其消费者保留原实际细零条件，不由环境密度把一般细零纤维替换成全群零纤维。
+后一供给使用的是 (32.3) 的显示双列公式及一个固定预终端 future，
+并不要求 (35.7) 的首列满足 $\langle f,K_ae_0\rangle=0$。
+故它没有证明或否定这个精确零条件下的全字蕴涵 (32.4)。
+即使 (32.4) 另行成立，(35.3) 也仍阻止该候选满足全未来 ready 回返；
+这不等于反驳只要求当前 ready 回返的整个 29.1 类。
+
+这里的新增承重内容是同一原八十九路径的联合切口供应、其支撑／压缩消费者，
+以及该正候选在两个原 ready 条件之间的严格分离，属于 repo-derived 纸面推导。
+FLW 的表投影、编织表示和联合闭像定理均为 literature-attested 中间供应，
+不作为本卷新发现，不主张文献优先权或 Lean kernel 核验。
+全部原 $89$ 路径、$1024$ 标签（含零投影）、原 $26+63$ 代码分解、唯一 $\Omega$/ready、
+十一／七地址、有限字次序、校准、历史、档案、记录、零／失败坐标、Return、权限、
+可靠性、精度、资源和时间／单位域均保持原义。
+数学闭包不供应免费物理准备、精确连续门或独立张量资源。
+原生全字细零刚性、其它历史依赖共同律、复结构与 Born 的物理来源、实际联合复合、
+仪器及更新、真实时间和单位仍未由这些结果建立；完整量子起源目标保持未完成。∎
+
+## 追加锚（本行以下为增补区）
+
+## 36. 一次实际纠缠有限门替代连续耦合的全一般-$H$桥
+
+### 36.1 二体坐标、产品边界与中间群
+
+令
+
+$$
+ V=\mathbb R e_0\oplus W,
+ \qquad W=\mathbb R^d,
+ \qquad d\ge2,
+$$
+
+并把 $e_0$ 的系数称为质量坐标。若 $A\in O(d)$，写
+
+$$
+ \widehat A(e_0+x)=e_0+Ax.
+$$
+
+令 $H\le SO(d)$ 闭且连通，并在 $S(W)$ 上传递。其独立提升、全旋转提升分别记为
+
+$$
+ \mathcal H=\{\widehat A\otimes\widehat B:A,B\in H\},
+ \qquad
+ \mathcal L_d=\{\widehat A\otimes\widehat B:A,B\in SO(d)\}.
+$$
+
+在
+
+$$
+ V\otimes V=\mathbb Rc\oplus A_1\oplus A_2\oplus D,
+ \quad
+ c=e_0\otimes e_0,
+ \quad
+ A_1=W\otimes e_0,
+ \quad
+ A_2=e_0\otimes W,
+ \quad
+ D=W\otimes W,
+\tag{36.1}
+$$
+
+中，局部球的纯点写成 $p_a=e_0+a$、$\|a\|=1$。假设原规范化紧凸 $K_2$ 满张成，包含所有 $p_a\otimes p_b$，包含全部局部球产品测试；产品测试在 $K_2$ 上非负并忠实层析。这里的“边缘”只表示产品单位测试给出的坐标投影，尚未假设任何变换保持它们。
+
+**定理 36.1（全一般-$H$ 正规化桥）。**
+
+设 $\mathcal H\le G\le\mathcal L_d$，其中 $G$ 闭且连通。若可逆实线性 $g$ 保质量、满足
+
+$$
+ gK_2=K_2,
+ \qquad
+ gGg^{-1}=G,
+\tag{36.2}
+$$
+
+则存在 $R,S\in O(d)$，使得
+
+$$
+ g=\widehat R\otimes\widehat S
+ \quad\text{或}\quad
+ g=(\widehat R\otimes\widehat S)\,\mathsf{SWAP}.
+\tag{36.3}
+$$
+
+特别地，$g$ 保持所有纯产品；(36.3) 中的反射和解析的 SWAP 允许出现在产品保持者中。定理没有假定边缘保持、复 Hilbert 空间、酉结构或 $D$ 的不可约性。
+
+**证明。** 球面传递使 $W$ 成为没有固定向量的不可约实 $H$-模。因此
+
+$$
+ \operatorname{Fix}(G)=\operatorname{Fix}(\mathcal H)=\mathbb Rc.
+$$
+
+由 (36.2)，$g$ 保持这条固定线；质量保持遂给 $g(c)=c$。$A_1,A_2,D$ 都是 $G$-不变的，而 $A_1,A_2$ 分别在 $\mathcal H$ 下为 $W\boxtimes1$ 与 $1\boxtimes W$，故它们是不可约且互不等价的 $G$-模。
+
+先处理 $d=3$ 及 $d\ge5$。实 Schur 引理给
+
+$$
+ \mathbb D_H=\operatorname{End}_H(W)\cong\mathbb R,\ \mathbb C\text{ 或 }\mathbb H.
+$$
+
+在独立积 $H\times H$ 下，相关扇区的实不可约分解相应为
+
+$$
+ D\simeq
+ \begin{cases}
+  D_0,&\mathbb D_H=\mathbb R,\quad \dim D_0=d^2,\\
+  D_+\oplus D_-,&\mathbb D_H=\mathbb C,\quad \dim D_\pm=d^2/2,\\
+  D_1\oplus D_2\oplus D_3\oplus D_4,&\mathbb D_H=\mathbb H,\quad \dim D_i=d^2/4.
+ \end{cases}
+\tag{36.4}
+$$
+
+这是外部实张量积的 Schur 分解：确切地说，$\operatorname{End}_{H\times H}(W\otimes W)\cong \mathbb D_H\otimes_{\mathbb R}\mathbb D_H$；它分别给出一个实简单块、两个复型简单块或四个等价的实块，因而得到 (36.4)，而不是把 $D$ 误称为不可约。因而 $d=3$ 时相关成分维数为 $9>d$，而 $d\ge5$ 时最小维数为 $d^2/4>d$。任何非零 $G$-不可约子模包含一个非零 $\mathcal H$-子模，所以它若落在 $D$ 中，维数也严格大于 $d$。
+
+共轭 $gGg^{-1}=G$ 把 $G$-不可约模送到同维不可约模。$A_1,A_2$ 的维数为 $d$，且它们在 $\mathcal H$ 下的类型不同；(36.4) 排除了 $D$ 的混入。因此 $g$ 保持或交换 $A_1,A_2$，并保持 $D$。在交换情形先复合解析 SWAP，便可写
+
+$$
+ g(c+a+b+z)=c+Ra+Sb+Cz,
+ \quad a\in A_1,\ b\in A_2,\ z\in D.
+\tag{36.5}
+$$
+
+现在说明两个边界块是正交的。局部球测试
+
+$$
+ \epsilon_x(t,u)=\frac{t+x\cdot u}{2},\qquad \|x\|\le1,
+$$
+
+以及它们的产品在 $K_2$ 上非负；对第二方向取一对相反的单位向量并相加，再对第一方向作同样处理，交叉项消去，得到任意规范化态的两个坐标边缘都满足 $\|a\|,\|b\|\le1$。对 $p_a\otimes p_b\in K_2$ 应用 $g$，再对 $g^{-1}$ 应用同一事实，得
+
+$$
+ \|Ra\|\le1,\quad \|R^{-1}a\|\le1,
+ \qquad
+ \|Sb\|\le1,\quad \|S^{-1}b\|\le1
+ \quad(\|a\|=\|b\|=1).
+$$
+
+故 $R,S\in O(d)$。这里是由全产品测试和 $gK_2=K_2$ 推出的坐标结论，不是额外的边缘保持假设。
+
+还需处理低维例外。对 $d=2$，球面传递的连通 $H$ 就是 $SO(2)$，所以 $G=\mathcal L_2$。令
+
+$$
+ z_1=(\widehat{-I},I),\qquad z_2=(I,\widehat{-I}).
+$$
+
+中心的二阶元为 $1,z_1,z_2,z_1z_2$；它们的联合特征空间恰为 $\mathbb Rc,A_1,A_2,D$。共轭保持迹，且
+
+$$
+ \operatorname{tr}(z_1)=\operatorname{tr}(z_2)=1-d^2,
+ \qquad
+ \operatorname{tr}(z_1z_2)=(d-1)^2,
+$$
+
+所以 $g$ 只能交换 $A_1,A_2$，不能把它们或 $D$ 混入别的扇区。
+
+对 $d=4$，球面传递表给出（正交共轭后）$H=SO(4)$、$U(2)$ 或一个四维实 $Sp(1)$ 左/右作用；这些作用都含 $-I$。$z_1,z_2$ 属于 $G$ 的中心。若 $z\in Z(G)$ 且 $z^2=1$，它的每个 $SO(4)$ 投影都与 $H$ 对易；四元数模型中 $Sp(1)$ 左作用的中心化子是右 $Sp(1)$，而 $U(2)$ 的中心化子是标量圆，$SO(4)$ 的中心化子给出同样的结论。它们的二阶元都只有 $\pm I$，故
+
+$$
+ Z(G)[2]=\{1,z_1,z_2,z_1z_2\}.
+$$
+
+迹分别为 $(d+1)^2,1-d^2,1-d^2,(d-1)^2$，共轭遂保持 $\{z_1,z_2\}$，其联合特征空间再次给出 $\mathbb Rc,A_1,A_2,D$（允许交换两个边缘）。这也覆盖四维的四元数型中间群及其对角右 $SU(2)$ 情形，不把中间群误分类为直积。
+
+于是所有维数都得到 (36.5)（或其 SWAP 版本）。对任意单位 $a,b$，$g(p_a\otimes p_b)$ 的两个坐标边缘是 $Ra,Sb$，已知都是纯局部球点。Barnum--Hilgert 的“纯边缘固定条件态”结果证明：正产品、产品单位和忠实产品层析下，纯边缘的联合态必为相应产品；其证明只用正性和凸几何，不用 S 公理或边缘保持假设。故
+
+$$
+ g(p_a\otimes p_b)=p_{Ra}\otimes p_{Sb}.
+$$
+
+展开 (36.5)，得到 $C(a\otimes b)=Ra\otimes Sb$。单位纯向量的简单张量张成 $W\otimes W$，所以 $C=R\otimes S$。撤去可能的 SWAP 即得 (36.3)。证毕。
+
+这里所用的球面传递表示表是 Masanes--Müller--Pérez-García--Augusiak,
+[*Entanglement and the three-dimensionality of the Bloch ball*](https://arxiv.org/abs/1111.4060v4), 技术定理 1--2 及其球面作用表的中间资料；它们不是本定理的正规化结论。纯边缘步骤复用 [Barnum--Hilgert 应用](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)；其条件正好由本节的产品正性、单位与忠实层析给出。全球几何、闭包与有限字供应复用 [Müller--Ududec 附录](../../../Library/QuantumStates/mullerududec2012selfduality.md)；本节没有重证它们。
+
+### 36.2 一次有限纠缠门给出完整实际路径
+
+保留完整实际独立局部 $H$ 控制。另给一个同一全载体上的实际可逆有限门 $g$ 及实际逆 $g^{-1}$，满足 $gK_2=K_2$，并存在一个原纯产品被 $g$ 送到非产品的实际见证。
+
+**推论 36.2（实际有限字的连续非局部路径）。** 令 $\Gamma$ 为由 $\mathcal H$ 与 $g,g^{-1}$ 的实际有限字生成的群，令 $\overline\Gamma$ 为其矩阵闭包。则存在整数 $n$ 与局部 Lie 代数元素 $X\in\operatorname{Lie}(\mathcal H)$，使
+
+$$
+ c_n(t)=g^n\exp(tX)g^{-n}
+ \tag{36.6}
+$$
+
+对每个 $t\in\mathbb R$ 都是同一全载体上的实际有限字，且该完整路径至少有一个 $t$ 使 $c_n(t)\notin\mathcal L_d$。$c_n(-t)=c_n(t)^{-1}$；没有把闭包中的极限宣称为实际门。
+
+**证明。** 反设对每个整数 $n$ 都有 $g^n\mathcal H g^{-n}\subseteq\mathcal L_d$。令 $G_\infty$ 为这些连通子群所生成子群的闭包。有限个连通子群的乘积连通，且这些乘积构成含单位元的递增有向并，故其闭包 $G_\infty$ 闭且连通；它包含 $\mathcal H$、仍在 $\mathcal L_d$ 内，而共轭 $g$ 只把指标 $n$ 移到 $n+1$，所以
+
+$$
+ gG_\infty g^{-1}=G_\infty.
+$$
+
+定理 36.1 应用于 $G_\infty$，迫使 $g$ 保持所有纯产品，与实际纠缠见证矛盾。因此存在整数 $n$ 使 $g^n\mathcal H g^{-n}$ 不包含于 $\mathcal L_d$。该子群连通，所以其 Lie 代数也不包含于 $\operatorname{Lie}(\mathcal L_d)$；取 $X\in\operatorname{Lie}(\mathcal H)$ 使 $\operatorname{Ad}_{g^n}X$ 在该局部 Lie 代数之外。完整实际局部路径 $\exp(tX)$ 与 $g^n,g^{-n}$ 的合法全载体复合给出 (36.6)。其在 $0$ 点的导数不在局部 Lie 代数，故路径离开 $\mathcal L_d$。每个参数仍是有限字；未使用 Trotter、逼近极限或新的连续原语。证毕。
+
+将 (36.6) 与现有紧闭包、连通分类和精确有限生成供应接合，得到 $d=3$、$H=SO(3)$，以及原二体的 $Q_2$ 或一腿反射分支 $T_1Q_2T_1$；这些供应已给出相应的实际有限字。若 $g$ 生成的整体群有不连通余类，本推论只结算该实际连通扇区，不声称整体群等于其单位元分支，也不把未分类余类当作新的量子操作族。SWAP 和局部 $O(d)$ 反射满足 (36.3) 的产品保持形式，因而不满足本推论所需的纠缠见证。
+
+### 36.3 载体、旁观者与原始物理边界
+
+定理 36.1 只处理同一个二体全载体上的锥、实际控制及其产品见证。若原控制接口另行实际供应
+
+$$
+ \iota_{ij}(g)=g_{ij}\otimes I_{\mathrm{spectators}},
+ \qquad
+ \iota_{ij}(g^{-1})=g^{-1}_{ij}\otimes I_{\mathrm{spectators}},
+$$
+
+则 (36.6) 在每个已许可的边上逐字放置，且恒等于旁观者全相关载体；这不凭空增加自由旁观者、寄存器传输或多体门。全寄存器的有限图生成、整锥识别和反射分支的排除仍复用 [Müller--Ududec 供应](../../../Library/QuantumStates/mullerududec2012selfduality.md)；严格丢弃到同一原有序二体仍复用 [signed-coupling 供应](../../../Library/ContinuousObservables/mullerududec2012signedcoupling.md)，不能由本桥改成任意边缘或重新排序的丢弃。
+
+产品正性与纯边缘结果不提供参考正性、完全正性、完整仪器、更新记录、物理时钟或单位。参数 $t$ 是实际门字中的连续控制参数，不自动是物理时间。原唯一 $\Omega$、$89$ 条路径、$26+63$ 分解、$1024$ 标签、ready、$11/7$ 地址、有限字次序、支撑、校准、历史、归档、零／失败／Return、权限、资源和单位边界均未被本节改写；native 全标签细零与 Born 唯一性、其它支撑保持历史律、原始 source adapter 及实际事件复合仍未解决。
+
+VI98 对原局部 $H$ 的拓扑前提作了另一种移除并保留实际连续非局部路径；本节保留完整实际 $H$，两种前提移除的联合等价性未由此建立。Brylinski--Brylinski 的 [quant-ph/0108062v1](https://arxiv.org/abs/quant-ph/0108062v1) 是已具 Hilbert 结构的普适门结果，不能替代本节的 GPT 入口。
+
+## 追加锚（本行以下为增补区）
+
+## 37. 同一原二体中联合恢复局域完整性与连续非局域路径
+
+### 37.1 保留的原对象与一次有限纠缠门
+
+**定义 37.1（联合入口）。** 使用 [VI 定义98.1及定理98.2](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#981-纯点关系数学闭包与整个原球) 的同一原局域数据：非零有限维实 $V$、闭尖生成凸锥 $C$、严格正单位 $u$、整个紧全张成基 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$，以及整个数学效应区间 $\mathcal E=[0,u]_{C^*}$。仍取
+
+$$
+F_r=\{f\in\mathcal E:f(r)=1\},\qquad
+T_r(x)=\inf_{f\in F_r}f(x),\qquad
+T_p(r)+T_q(r)=1\quad(\forall r\in P)
+\tag{37.1}
+$$
+
+中的同一原纯对 $p,q$。原实际群 $H\le\operatorname{Aut}(C,u)$ 在全部原纯点上**精确**传递，不预设闭、紧、连通或完整连续控制。实际部分完整保留 VI98.1：同一凸效应像 $D\subseteq\mathcal E$、原 $0,u$、真正共同可用的种子菜单 $(a_0,b_0)$，满足 $a_0(p)=b_0(q)=1$、$a_0+b_0=u$，以及原标签 $H_*\subseteq H$，满足 $\{hp:h\in H_*\}=P$；每个指定 $a_0\circ h^{-1}$ 都实际可用且属于原 $D$。数学效应不代替实际菜单，稠密轨道不代替精确传递。
+
+只在同一个有序原二体上另保留 $V_2=V\otimes_{\mathbb R}V$、$u_2=u\otimes u$ 和整个紧凸全张成规范集 $K_2\subseteq\{u_2=1\}$。所有原局域准备的产品和所有原局域效应的产品实际可用，产品校准为
+
+$$
+(f\otimes k)(x\otimes y)=f(x)k(y),\qquad
+0\le(f\otimes k)(z)\le1
+\quad(f,k\in\mathcal E,\ z\in K_2).
+\tag{37.2}
+$$
+
+产品测试忠实层析整个原载体；包含所有 $x\otimes y$，$x,y\in K$，不只是某个可分子模型。原独立 $H$ 控制 $h\otimes k$ 对每个 $h,k\in H$ 实际可用，保持整个 $K_2$。供给同载体上一个原实际保质量实线性可逆门 $g$ 及实际逆 $g^{-1}$，满足 $gK_2=K_2$，并有
+
+$$
+g(r\otimes s)\text{ 不是任何局域规范态的产品}
+\quad\text{对某个 }r,s\in P.
+\tag{37.3}
+$$
+
+所有这些原门及其逆的有限顺序复合均合法、保质量并保持整个原 $K_2$。记其实际有限字群为 $\Gamma$。不输入连续非局域路径、额外局域门、辅助或旁观者；也不要求整个实际可逆群等于 $\Gamma$。
+
+### 37.2 数学分支先识别，原控制随后恢复
+
+**定理 37.2（同一原群的联合恢复）。** 定义37.1下，存在一次固定的原局域球校准及其二体张量校准，使
+
+$$
+\begin{gathered}
+d=\dim\ker u=3,\qquad D=\mathcal E,\qquad
+H=\mathrm{SO}(3)\quad\text{为同一个原 }N=1\text{ 群},\\
+\mathscr C=\overline\Gamma,\qquad S=\mathscr C^0=JQ_2J,
+\qquad J(K_2)=\mathcal D(4),\qquad S\subseteq\Gamma,\\
+J=I\text{ 或 }T_1,\qquad
+Q_2=\{\operatorname{Ad}_U:U\in\mathrm{SU}(4)\},\qquad
+\mathcal D(4)=\{A\succeq0:\operatorname{Tr}A=1\}.
+\end{gathered}
+\tag{37.4}
+$$
+
+这里 $\mathscr C$ 是数学矩阵闭包，$S$ 是它的单位分支；$T_1$ 是第一原因子的转置坐标反射，不是预给实际门。另存在 $n\in\mathbb Z$、$X\in\operatorname{Lie}(\widehat H\times\widehat H)$，使
+
+$$
+c_n(t)=g^n\exp(tX)g^{-n}\in\Gamma\quad(\forall t\in\mathbb R),
+\qquad
+c_n(t_0)\notin\mathcal L_3\quad\text{对某个 }t_0,
+\tag{37.5}
+$$
+
+其中 $\mathcal L_d=\widehat{\mathrm{SO}(d)}\times\widehat{\mathrm{SO}(d)}$，帽号表示固定质量坐标。该完整路径由合法原有限字逐参数实现，$c_n(-t)=c_n(t)^{-1}$。不声称 $\Gamma=S$、有限字有效率，或参数是物理连续时间。
+
+证明。先直接消费 VI98.2，只有它的局域前件在此已完整满足：原基成为整个球，$d\ge1$，有唯一中心 $c$、椭球度量和坐标
+
+$$
+V=\mathbb Rc\oplus W,\quad u(tc+w)=t,\quad
+K=\{c+a:\|a\|\le1\},\quad
+P=\{p_a=c+a:\|a\|=1\},\quad H\le\mathrm O(d).
+\tag{37.6}
+$$
+
+同一个原 $H$ 在整个球面上忠实且精确传递，原种子、指定拉回和凸性给 $D=\mathcal E$。此处尚无 $H$ 拓扑结论。其 least 效应为 $e_a(tc+w)=(t+a\cdot w)/2$，故(37.2)给球产品测试及其全域概率界。原实际独立控制没有被数学闭包替换。
+
+先排除 $d=1$，不使用连续路径。两端 $p_+,p_-$ 的四个产品是 $V_2$ 的一组基；四个坐标产品效应读出任意 $z\in K_2$ 在该基下的系数，均非负且和为一。产品包含与凸性因此迫使整个 $K_2$ 就是四顶点经典单纯形。任意保该单纯形的可逆线性门置换顶点，故把每个纯产品送到纯产品，与(37.3)矛盾。因此 $d\ge2$。
+
+令 $L=\overline H\le\mathrm O(d)$、$H_c=L^0$。由 VI98.2 的(98.4)及(37.6)，$L$ 为紧矩阵 Lie 群。$Lp_a=P$，因为 $Hp_a=P$ 而 $L$ 保持整个原球。$L$ 只有有限多个分支，故 $H_c$ 的球面轨道只有有限多个，且各自紧闭；它们也开。球面连通，所以只有一个轨道。于是 $H_c\le\mathrm{SO}(d)$ 闭、连通，连续线性、忠实且球面传递。
+
+对 $K_2$ 复用 [Library §2 的 Analytic compactness lemma](../../../Library/QuantumStates/mullerududec2012selfduality.md#2-analytic-closure-published-classification-and-exact-actual-words) 的对称凸包范数论证，仅取其紧性及保整个原基的结论：$\mathscr C$ 是紧矩阵 Lie 群，保持 $K_2$、质量与全部产品概率。该论证不需要生成元连通；此处不沿用其连通结论。独立原 $H$ 的闭包包含独立 $L$，所以
+
+$$
+\mathcal H_c:=\widehat{H_c}\times\widehat{H_c}\le S,
+\qquad gSg^{-1}=S.
+\tag{37.7}
+$$
+
+第二式因为单位分支是 $\mathscr C$ 的特征子群。这些均为数学不变性，尚未宣称 $H_c$ 或 $S$ 实际可用。
+
+若 $S\subseteq\mathcal L_d$，将定理36.1的 $H,G$ 分别取为 $H_c,S$。两者闭且连通，$\mathcal H_c\le S\le\mathcal L_d$；(37.2)给同一个原 $K_2$ 上所需全部正忠实产品测试，(37.7)给正规化，原 $g$ 保质量及整个 $K_2$。这是36.1的数学正规化应用，不调用36.2的实际完整局域前件。结论迫使 $g$ 为局域正交乘积或其 SWAP 形式，保持所有纯产品，与(37.3)矛盾。因此
+
+$$
+S\not\subseteq\mathcal L_d.
+\tag{37.8}
+$$
+
+现在应用 Masanes--Müller--Pérez-García--Augusiak，1111.4060v4 的技术 [Theorem 1](https://arxiv.org/html/1111.4060v4#Thmthm1) 与 [Theorem 2](https://arxiv.org/html/1111.4060v4#Thmthm2)，只取其复合群为 $S$、局域群为 $H_c$。其 [§IV.1 球面作用表](https://arxiv.org/html/1111.4060v4#S4.SS1) 要求紧连通、连续线性且 almost effective 的球面作用；上面的忠实作用逐项满足，并允许同一次正交换基用于两个原因子。$d=2$ 的作用属于表中的 $\mathrm U(1)=\mathrm{SO}(2)$。对任一固定单位 $a$，准确有
+
+$$
+\mathcal H_c\le S,\qquad
+\tfrac14(\widehat a\otimes\widehat a)\cdot
+S(\widehat a\otimes\widehat a)\subseteq[0,1].
+\tag{37.9}
+$$
+
+概率界来自同一原纯产品、同一原测试和数学不变性；未把数学 $S$ 门放入原程序。Theorem 1 与(37.8)给 $d=3,H_c=\mathrm{SO}(3)$；Theorem 2 的局域选项又被(37.8)排除，故 $S=Q_2$ 或 $T_1Q_2T_1$。只在此之后把原一次校准接上 Pauli 识别；原二体此时先表示为迹一 Hermitian 矩阵。
+
+对整个原 $K_2$ 应用 [Library §3 的 Pair-state lemma before choosing a branch](../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register) 的不变性论证：取相应 $J=I$ 或 $T_1$，则 $J(K_2)$ 受整个 $Q_2$ 数学保持，仍含所有纯产品，且全部产品测试非负。该引理的两个包含只用这些性质：产品轨道和凸性给 $\mathcal D(4)\subseteq J(K_2)$；任意原态的每个向量期望可在此不变集上写成一个产品测试，给反向包含。因此 $J(K_2)=\mathcal D(4)$。这里没有声称轨道的数学门实际可用；全域正性来自(37.2)，对所有原态成立。也没有预设复合纯传递。
+
+再排除**原** $H$ 的反定向元。若原 $h=R\tau\in H$，$R\in\mathrm{SO}(3)$，$\tau$ 为 Pauli 转置反射，则 $\widehat R^{-1}\otimes I$ 属于两种 $S$，因而数学保持 $K_2$。与原 $\widehat h\otimes I$ 复合可知 $T_1$ 必保持 $K_2$。这只是在组合两个保同一集合的矩阵，不把 $R$ 当作已可调用的原单元门。对 Bell 投影 $B$，有
+
+$$
+T_1B=\tfrac12\mathsf{SWAP},\qquad
+\operatorname{spec}(T_1B)=\{\tfrac12,\tfrac12,\tfrac12,-\tfrac12\}.
+\tag{37.10}
+$$
+
+若 $K_2=\mathcal D(4)$，$T_1$ 把 $B$ 送出；若 $K_2=T_1\mathcal D(4)$，它把原 $T_1B$ 送到不在该集合内的 $B$。两种情形均矛盾。因此同一原裸 $H\le\mathrm{SO}(3)$。
+
+此时才对原 $H$ 应用 [Beardon，Theorem 1.1及§2](https://doi.org/10.4153/S0008439526101696)：任意在 $S^2$ 上精确传递的旋转子群就是整个 $\mathrm{SO}(3)$，不需闭性。该文将此事实归于 Montgomery--Zippin，并给直接证明。这里传递属于原 $H$，并非仅属于 $L$，所以结论正是原 $N=1$ 的 $H=\mathrm{SO}(3)$；没有用二体字或辅助代替单元控制。至此全部完整实际局域路径 $\exp(tX)$ 才已恢复。
+
+最后恢复精确实际 $S$。紧 Lie 群的 $S=\mathscr C^0$ 开，故 $\Delta=\Gamma\cap S$ 稠密于 $S$。已恢复的完整原局域 $\mathcal H=\widehat H\times\widehat H$ 是 $\Delta$ 中非平凡连通 Lie 子群，且其每个完整一参数子群都实际可用。两种 $S$ 均有非交换简单 Lie 代数 $\mathfrak{su}(4)$。因此直接将 Library §2 的 *Exact-generation lemma* 取为 $(C,\Gamma,K_0)=(S,\Delta,\mathcal H)$，得到 $\Delta=S$，即 $S\subseteq\Gamma$。该供应以实际共轭方向张成理想，再用反函数定理取得开邻域；并非“稠密所以实际”，也不需要整个 $\Gamma$ 连通。
+
+现在36.2的全部实际前件终于成立：原 $H$ 完整、紧且连通，原 $g,g^{-1}$ 和纯产品到非产品见证均未变。复用 [推论36.2](#362-一次有限纠缠门给出完整实际路径) 就给(37.5)，每个实参数只使用这些原门的有限字。这也完整供应了 VI98.3 所需的二体连续非局域路径，但其更高份资源仍须另付。证毕。
+
+该结论同时删除的是分别输入的原 $H$ 拓扑／完整性和原连续非局域路径；保留的精确纯传递、整个原二体、正忠实产品层析、全部独立原控制与实际有限纠缠门及逆均为承重前件。仅有 $g\notin H\times H$、仅越出连通局域旋转、反射或 SWAP，均不替代(37.3)。36.1在反设中的产品保持结论使用 [Barnum--Hilgert 的纯边缘结果](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)，其条件是正产品、产品单位和忠实层析；这里没有添加 S 公理、边缘保持或复合纯传递。
+
+### 37.3 整体有限字群可以不连通的二体边界
+
+**命题 37.3（一个具体的二体不连通模型）。** 在标准原 qubit 局域数据和 $K_2=\mathcal D(4)$ 上，取原 $H=\mathrm{SO}(3)$、原 $p=P_0,q=P_1$ 及标准种子和拉回标签。令 $T=T_1T_2$ 为整对转置，设
+
+$$
+U=\exp(-i\pi\sigma_z\otimes\sigma_z/4),\qquad
+g=\operatorname{Ad}_U T.
+\tag{37.11}
+$$
+
+只把 $g$ 及其逆作为供给的实际有限门，不把右端两个因子分别作为预给资源。则定义37.1成立，而
+
+$$
+\Gamma=Q_2\ \cup\ Q_2T,\qquad S=Q_2\ne\Gamma.
+\tag{37.12}
+$$
+
+证明。标准局域全效应满足(37.1)，全部产品准备、测试与忠实层析均保留。整对转置和酉共轭都保整个 PSD 迹一集合，所以所供给的 $g,g^{-1}$ 是合法全域二体可逆门。实纯产品 $P_+\otimes P_+$ 被 $T$ 固定；$U|++\rangle$ 的系数矩阵为
+
+$$
+M=\frac{e^{-i\pi/4}}2\begin{pmatrix}1&i\\i&1\end{pmatrix},
+\qquad MM^\dagger=\tfrac12I.
+$$
+
+故两个 Schmidt 系数均为 $1/\sqrt2$，$g$ 给(37.3)。有限字的合法性由整个 $K_2$ 的保持给出。
+
+整对转置满足 $T\operatorname{Ad}_VT=\operatorname{Ad}_{\bar V}$，故 $Q_2\cup Q_2T$ 是含全部原生成元的紧群。$T\notin Q_2$：若转置等于某个酉共轭，该酉须固定每个实向量的秩一投影；先取坐标向量、再取两坐标之和，迫使该酉为标量，不能再反转虚反对称 Hermitian 矩阵。于是该紧群恰有两个不交连通余类。
+
+这里 $\mathscr C\subseteq Q_2\cup Q_2T$，故 $S\subseteq Q_2$。由定理37.2，$\dim S=15=\dim Q_2$；闭子群同维使 $S$ 在连通 $Q_2$ 中开，因而 $S=Q_2$。该定理又给 $S\subseteq\Gamma$，所以 $\operatorname{Ad}_{U^{-1}}g=T\in\Gamma$，取得(37.12)。该例只是这个具体群的计算，没有分类任意整体群的正规化子或分支。
+
+本模型的供给仅限 $N=1,2$。整对转置在该二体内为正，不提供在相关参考或任意旁观者上的正扩张、原三体边放置、END 或指定事件的 Choi 合同。因此它证明二体定理不能声称 $\Gamma=S$，不是完整多份／事件候选的反例。证毕。
+
+### 37.4 原消费者与结论范围
+
+定理37.2的有限字若要进入 [VI98.3--98.5](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#982-同一原有限寄存器及事件合同)，仍须在每个给定原有限寄存器的每条指定**有序**边上实际供应同一个 $g,g^{-1},H$ 的准确放置，恒等于旁观者的全部相关坐标，保持一次固定校准、整个原 $K_N$、产品和忠实层析。只有这些前件齐备，(37.5)才能逐字提升，并消费既有有限图生成供应。二体结论本身没有提供这些放置或任意多体门搬运。
+
+反射分支的选择仍消费 [Library 的 pre-selection END](../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register) 及 [signed-coupling 的严格原二体读回](../../../Library/ContinuousObservables/mullerududec2012signedcoupling.md#6-两条实际耦合边加一次同一原二体丢弃)：在原路径 $12,23$ 上，END 必须在选分支**之前**实际、仿射、保质量、全域，按全部产品校准收缩中腿，输出为保留端点 $1,3$ 对应的**同一个有序原 $K_2$**。不得改为某个抽象边缘、重新排序的输出，或由选分支后所得 SWAP 补付该前件。
+
+指定事件及所有有限实现仅按 [既有事件与实现供应](../../../Library/QuantumStates/mullerududec2012selfduality.md#4-one-exact-reference-per-original-event-and-finite-realizations) 和 VI98.3--98.5 条件性回接：同一事件的来源与准确参考扩张、整个原输出正性、全部实准备关系及零输入、各分支 TNI／确定事件 TP、同一菜单记录与真粗粒化、原实际纯辅助、顺序控制、保留输出指针律、回到同一原目标的 typed 全域丢弃，以及时间、单位、资源和权限合同，均未由本二体定理供给。特别地，数学有限字存在不提供算法效率、物理连续时间、能量标度或 $\hbar$。
+
+原 oneOmega／唯一 $\Omega$、89 paths、$26+63$、1024 labels、ready、11／7 addresses、legal words、support、calibration、history、archive、zero／failure／Return、permissions、resource、time、unit 和 source-adapter 的全部原义务保持原样。native 全标签 fine-zero／Born 唯一性及过程实现仍未解决；本定理不是这些目标的完成结论。VI100的有限方向静态条件是另一入口，不是37.1的额外前件。
+
+本节承重内容是同一原数据上的仓内综合应用（repo-derived）：用36.1在数学单位分支上排除局域性，经已发表的技术分类及既有整二体不变性供应，先排除原反射、恢复原裸 $H$，再消费精确有限字和36.2。VI98持有纯域到整个原球及原菜单恢复；所引 Library 持有紧性、精确生成、整二体、有限图、END及事件供应；1111.4060v4持有技术分类和球面作用表，Beardon持有不需闭性的旋转子群事实。这里不另造这些供应，不声称全局优先权、独立公理最少性、Lean／kernel 验证或完整量子起源。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 特征五的原生坐标输运障碍与精确稳定子的连通分量
+
+**定义 38.1（原矩阵、约化与换位系数）。** 沿用定义29.1和定理33.1的原路径、边界及调用次序，置
+$B_8=\operatorname{span}\{e_{u010}:u\in L_6\}$、$f=e_{000000010}$、$v=e_{101000010}$，并记
+$\Gamma=\langle K_0,\ldots,K_{10}\rangle\le U(89)$、
+$\Gamma_L=\langle K_0|_{B_8},\ldots,K_7|_{B_8}\rangle\le U(B_8)$。
+两者均指精确有限原生字；$K_j^{-1}=K_j^9$ 使逆调用仍可用有限正向字表示。
+这里的 $B_8$ 是字面 $b_8=1$、$b_7=b_9=0$ 的二十一维扇区名称；定理33.1的左因子为九股 $[6,3]$。
+
+复用 [II §103的整权重规范与全十一地址表示](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md) 和 [V §4.4的自由二次呈现](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md)，取
+
+$$
+\mathcal A=\mathbb Z[\zeta,y],\quad y^2=x=-(\zeta+\zeta^{-1}),\qquad
+\mathcal A/(1+\zeta)=\mathbb F_5[Y]/(Y^2-2)=\mathbb F_{25}.
+\tag{38.1}
+$$
+
+此处 $\Phi_{10}(-1)=5$，$2$ 在 $\mathbb F_5$ 中非平方；约化记横线，故 $\bar\zeta=-1$、$\bar x=2$、$\bar y=Y$。
+令 $w(b)=2+\sum_{k=1}^9b_k$、$D_{bb}=y^{w(b)}$。II(103.4)–(103.11)给出
+$r_{12}:S_{12}\to O(\operatorname{diag}(2^{w(b)}))$。在同一原坐标中定义
+
+$$
+\sigma_{12}(\pi)=\operatorname{sgn}(\pi)\bar D r_{12}(\pi)\bar D^{-1},\qquad
+S_i=\sigma_{12}((i,i+1))=-\bar K_{i-1}\quad(1\le i\le11).
+\tag{38.2}
+$$
+
+由于 $Y\ne0$，该共轭可逆。$S_i$ 在中心位顺序 $0,1$ 的活动块、两邻居恰有一个占据的标量、两邻居均占据的标量分别为
+
+$$
+\begin{pmatrix}2&Y\\Y&3\end{pmatrix},\qquad 1,\qquad -1.
+\tag{38.3}
+$$
+
+活动块对称且平方为 $I$，故 $\sigma_{12}$ 保持普通转置型 $a^{\mathsf T}a$。
+全十一组平方、相邻编织和远交换关系由II(103.9)–(103.11)经同一共轭及符号扭转承接，包括固定端点；前八个生成元在 $B_8$ 上给 $\sigma_9:S_9\to O_{21}(\mathbb F_{25})$。
+每个原生字约化为相应 $\sigma$ 矩阵乘一个符号。这里使用普通转置，不使用有限域 Frobenius 伴随；在II的未搬回坐标中则必须使用其加权型。
+
+原门和逆门的每个矩阵元均在 $\mathcal A$ 中。若在任一上述载体上 $Wf=\lambda e_b$、$\lambda\ne0$，则
+$\lambda=W_{bf}\in\mathcal A$，而 $W^{-1}e_b=\lambda^{-1}f$ 给 $\lambda^{-1}\in\mathcal A$。
+所以 $\lambda$ 是单位，$\bar\lambda\ne0$；精确复坐标输运必给非零标量的约化输运。
+
+**引理 38.2（全部换位系数的有限两态递推）。** 对任一原坐标 $e_b$ 及 $1\le i<j\le12$，置
+
+$$
+C_{ij}=\sigma_{12}((i,j))
+ =S_i\cdots S_{j-2}S_{j-1}S_{j-2}\cdots S_i,\qquad
+m_{ij}(b)=e_b^{\mathsf T}C_{ij}e_b.
+\tag{38.4}
+$$
+
+空乘积按 $I$ 解释。令 $c=j-2$，从
+$(A,B)=(1-b_{i-2},b_{i-2})$ 出发，依次对 $k=i-1,\ldots,j-3$ 作如下 $\mathbb F_5$ 递推，所有右侧的 $b$ 均是原始位：
+
+$$
+(A,B)\longmapsto
+\begin{cases}
+(A+B,0),&k=0\ \text{或}\ b_{k+1}=1,\\
+(4A+B,2A),&k\ne0,\ b_{k+1}=0,\ b_k=0,\\
+(2A,4A),&k\ne0,\ b_{k+1}=0,\ b_k=1.
+\end{cases}
+\tag{38.5}
+$$
+
+第三种情形自动有 $B=0$。在递推终点，有
+
+$$
+\begin{aligned}
+m_{ij}(b)&=A\,d_c(0)+B\,d_c(1),\\
+d_c(l)&=
+\begin{cases}
+4,&l=b_{c+1}=1,\\
+1,&l\ne b_{c+1},\\
+2+b_c,&l=b_{c+1}=0.
+\end{cases}
+\end{aligned}
+\tag{38.6}
+$$
+
+证明。写 $R=S_{j-2}\cdots S_i$，则 $C_{ij}=R^{\mathsf T}S_{j-1}R$；$R$ 按升序只处理中心位 $i-1,\ldots,j-3$ 各一次。
+处理位 $k$ 前，令 $A,B$ 为已有向量按左邻位 $k-1=0,1$ 分组的系数平方和。
+不同分支的已处理位串不同；下一门不再改变这些位，且未处理的位 $k$ 仍固定为原 $b_k$，故不同前驱不能合并，也没有遗漏交叉项。
+若 $k=0$，固定中心 $b_0=0$ 仅受标量 $\pm1$ 作用；若右邻为 $1$，中心也被迫为 $0$，得到第一行。
+活动零位的保持／翻转系数平方为 $4,2$，左邻占据时仅保留标量 $1$，得到第二行。
+原 $b_k=1$ 时，前一步因这个固定右邻而使左邻为零；若这是第一步，则原路径合法性也给 $B=0$。活动一位的翻转／保持系数平方为 $2,4$，得到第三行。
+最后中心 $c$ 尚未处理，支撑中恒为原 $b_c$，所以 $S_{j-1}$ 的非对角项不贡献二次型；(38.3)的三个对角情形正是(38.6)。固定 $c=0,10$ 也只出现其合法标量情形。证毕。
+
+**定理 38.3（左二十一维扇区的全部坐标射线排除）。** 对每个 $W\in\Gamma_L$、$b=u010$、$u\in L_6$ 及 $\lambda\ne0$，
+$Wf=\lambda e_b$ 蕴含 $e_b=f$。
+
+证明。在约化的 $B_8$ 中记 $C_{ij}=\sigma_9((i,j))$，定义次数 $72$ 的齐次多项式
+
+$$
+q(a)=a^{\mathsf T}a,\qquad
+J(a)=\prod_{1\le i<j\le9}
+\bigl(a^{\mathsf T}C_{ij}a-3q(a)\bigr).
+\tag{38.7}
+$$
+
+正交共轭置换全部 $36$ 个换位，故 $J(\sigma_9(\pi)a)=J(a)$；偶数次数也吸收原生字的符号。
+$J(\alpha a)=\alpha^{72}J(a)$，所以零与非零是射线不变量。
+对 $2\le i<j\le8$，半回文所遇的中心与右邻原位均为零。由(38.5)从 $(A_0,B_0)=(1,0)$ 得
+
+$$
+A_{k+1}=4A_k+B_k,\quad B_{k+1}=2A_k,\quad
+A_k+B_k=1,\quad A_k=2-3^k.
+\tag{38.8}
+$$
+
+中心 $j-2$ 的对角为 $2,1$；取 $k=j-i-1$ 即得
+$m_{ij}(f)=2A_k+B_k=3-3^{j-i-1}\ne3$。
+两个端点满足 $S_1f=S_8f=f$，由换位共轭有
+
+$$
+\begin{gathered}
+m_{12}(f)=m_{89}(f)=1,\\
+m_{1j}(f)=m_{2j}(f)\quad(3\le j\le9),\qquad
+m_{i9}(f)=m_{i8}(f)\quad(1\le i\le7).
+\end{gathered}
+\tag{38.9}
+$$
+
+这些等式包括 $(1,9)$，覆盖其余全部端点换位；因 $q(f)=1$，(38.7)的每个因子均非零。
+任一其余坐标 $e_{u010}$ 的 $u$ 必在某个 $k\in\{1,\ldots,6\}$ 占据；左右邻为零，故 $S_{k+1}$ 在该坐标的对角为 $3$。
+其相邻换位因子为零，于是全部另外二十个坐标都有 $J(e_{u010})=0$。
+定义38.1的单位标量桥把假设输运降为 $\bar Wf=\bar\lambda e_b$，与上述非零／零分离矛盾。证毕。
+
+该定理排除了在 $\Gamma_L$ 内先把 $[f]$ 精确送到 $[v]$、再搬回稳定 $[v]$ 的两杯子群的构造；换成同一扇区内其他不同坐标射线也不能供应该前件。
+这不否定含该前件的条件命题，也不排除非坐标目标或近似输运。
+
+**推论 38.4（原全八十九维、全部十一地址的特定输运排除）。** 对每个 $W\in\Gamma$、$\lambda\ne0$，有 $Wf\ne\lambda v$；中间字不必保持 $B_8$。
+
+证明。对 $q(a)\ne0$ 定义完整换位类的归一化谱多项式
+
+$$
+P_a(Z)=\prod_{1\le i<j\le12}
+\left(Z-\frac{a^{\mathsf T}C_{ij}a}{q(a)}\right).
+\tag{38.10}
+$$
+
+同一正交共轭与非零缩放使 $P_a$ 在全部约化原生字及射线上不变。
+对 $f,v$ 都有 $q=1$；(38.5)–(38.6)逐项给以下全部 $66$ 个系数。每行依 $j=i+1,\ldots,12$ 排列，数字均在 $\mathbb F_5$ 中：
+
+| $i$ | $m_{ij}(f)$ | $m_{ij}(v)$ |
+| --- | --- | --- |
+| $1$ | $1,2,0,4,1,2,0,0,3,3,3$ | $4,3,3,3,3,3,3,3,3,3,3$ |
+| $2$ | $2,0,4,1,2,0,0,3,3,3$ | $3,3,3,3,3,3,3,3,3,3$ |
+| $3$ | $2,0,4,1,2,2,3,3,3$ | $4,3,3,3,3,3,3,3,3$ |
+| $4$ | $2,0,4,1,1,3,3,3$ | $3,3,3,3,3,3,3,3$ |
+| $5$ | $2,0,4,4,3,3,3$ | $1,2,0,0,3,3,3$ |
+| $6$ | $2,0,0,3,3,3$ | $2,0,0,3,3,3$ |
+| $7$ | $2,2,3,3,3$ | $2,2,3,3,3$ |
+| $8$ | $1,3,3,3$ | $1,3,3,3$ |
+| $9$ | $3,3,3$ | $3,3,3$ |
+| $10$ | $1,1$ | $1,1$ |
+| $11$ | $1$ | $1$ |
+
+例如 $v$ 的第一行从 $(0,1)$ 出发：处理固定中心 $0$ 得 $(1,0)$，处理占据位 $1$ 得 $(2,4)$；
+随后中心 $2$ 的收缩为 $2+4\cdot4=3$，处理该位因原 $b_3=1$ 回到 $(1,0)$。
+位 $3$ 再给 $(2,4)$，零位更新固定这个二元组，直至位 $7$ 因 $b_8=1$ 重置；末端两步同样给系数 $3$。
+其余行只改变(38.5)的起点，表中列尽所有 $11+10+\cdots+1=66$ 对。按根 $0,1,2,3,4$ 汇总的重数为
+
+$$
+(11,10,12,27,6)\quad\text{与}\quad(4,5,4,51,2).
+\tag{38.11}
+$$
+
+因此 $P_f\ne P_v$，尤其根 $3$ 的重数分别为 $27,51$。
+定义38.1的非零单位桥和全十一地址对应使任何假设的精确复输运导出 $P_f=P_v$，矛盾。证毕。
+该推论只比较 $f,v$；谱相等不供应精确复提升，也不决定其他全载体目标或精确稳定子。
+
+**命题 38.5（保持原连通分量的有限指数核限制）。** 在同一个原 $B_8$ 酉拓扑中，令
+
+$$
+\begin{aligned}
+T&=\{b\in\Gamma_L:bf\in\mathbb C^\times f\},& H&=\overline T,\\
+q_L&:\Gamma_L\longrightarrow O_{21}(\mathbb F_{25}),\quad b\longmapsto\bar b,
+& N&=\ker q_L,\qquad L=\overline{T\cap N}.
+\end{aligned}
+\tag{38.12}
+$$
+
+则 $N$ 在 $\Gamma_L$ 中有限指数，且
+
+$$
+L^0=H^0=:H_0.
+\tag{38.13}
+$$
+
+证明。$q_L$ 的像有限，故 $T\cap N$ 在 $T$ 中有限指数。取有限余类分解 $T=\bigcup_\nu t_\nu(T\cap N)$，
+取闭包即得 $H=\bigcup_\nu t_\nu L$。去重后是有限个闭且互不交的余类，故每个也在 $H$ 中开。
+含单位元的连通分量只能留在 $L$，给 $H^0\subseteq L^0$；反向包含由 $L\subseteq H$ 给出。证毕。
+
+因而对任意原先固定的 $r,s\in B_8$，包括(32.4)中的 $r=e_{010000010}$，矩阵系数 $u(h)=\langle r,hs\rangle$ 的原问题恰保持为
+
+$$
+u|_{H_0}\not\equiv0
+\quad\Longleftrightarrow\quad
+u|_{\overline{T\cap N}^{\,0}}\not\equiv0.
+\tag{38.14}
+$$
+
+(38.13)不把每个 $b\in T\cap N$ 放入 $H_0$；即使 $u(b)\ne0$，仍须独立证明连通分量归属或在某个精确子群闭包的单位分量上证明非零。
+约化不需要、也未在这里延拓为 $H$ 上的连续映射。(38.7)、(38.10)没有确定 $T$、$H_0$ 或(38.14)任一侧的真假。
+要据此处理(32.4)，还须另供同一个实际十一地址前缀的零首因子与两个非零因子，以及其原第二列／未来对应；环境矩阵稠密性只给逼近，不能代付这些精确条件。
+
+本节的原生坐标应用是 repo-derived 推导；整权重约化、Coxeter 表示及其原生对应复用II §103、V §4、VII §§29、33，换位共轭不变量与有限余类闭包是所用成熟方法。
+有限域二次型与多项式不构成物理效应、额外准备、门或连续控制。(38.13)及输运排除不推出 $u\equiv0$、细支撑候选反驳、Born 唯一性或量子公理的物理来源。
+唯一原 $\Omega$、$89$ 路径、原 $26+63$ 代码分解、$1024$ 全标签、唯一 ready、十一／七地址、合法有限时序字、全标签 fine-zero／Born、校准、历史、记录、档案、零／失败／Return、权限、资源、时间、单位及原来源／过程／消费者合同，均仍取定义1.2、29.1和§§32、35、37的原域与原前件；这些义务不由本节不变量供给。
+
+## 追加锚（本行以下为增补区）
