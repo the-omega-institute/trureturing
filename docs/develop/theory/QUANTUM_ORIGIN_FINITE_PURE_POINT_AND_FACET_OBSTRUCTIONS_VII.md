@@ -2394,3 +2394,525 @@ Beck—Jayawant—McAllister，*Lattice-Point Generating Functions for Free Sums
 白话说，先固定一个必须读一的纯状态，只把那些本来就能单独读零的原纯状态列为合格目标，再问能否用同一张原测试让一组选中的目标全读零。一个最小失败组会让删去不同目标后取得的测试形成对角表，所以它既要占据足够多的合格目标方向，也要占据足够多的确认测试方向；这是两种秩。若它恰好占满合格目标的方向，把这些原测试合成的一把尺在全状态空间取最小值，再按真实最小值归一化，就会得到另一个仍合格的原纯点。确认点到这个点的真实线段穿过目标单纯形内部，把所有目标装进同一个原球面；它们却都必须是确认点唯一的对径，于是矛盾，目标方向的上界因此还能减一。最优反例由共享一个内点的三角形和更大单纯形组成：三角形中两个顶点很轻，确认它们时，只需让对面某个尚未被要求读零的顶点承担一点正值，所以删去对面任意一个目标总能成功，全部目标同时出现才暴露冲突。很重的第三个顶点则让反向的短障碍失去资格——对侧源连单独排除它都做不到，不能拿它凑成更短的合格失败组。这样每个原源都通过小一阶的检验，整组却仍失败，证明仅球形二纯面下的通用阶数已经最优。轻源的两种分别可排除状态混合后，最低读数可以精确算成正数；五维七点例是二十四分之一。这个例子同时失去纯数值互易，所以不能用来判断保留互易后的更强候选。完整候选仍在原来的准备、测试、过程和未来上工作，只把几何中的共同零条件精确换成按源计秩的纯目标准则，其他量子结构、操作和来源继续由各自完整合同承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 103. 二纯真面与完整排除球内生的三阶状态几何
+
+### 103.1 原载体、完整排除集与两条几何条件
+
+**定义 103.1（Pair、EB与原面链高）。** 严格沿用[VI89.1][Q103VI]：$V\ne0$ 有限维，$C\subset V$ 为原闭尖生成凸锥，$u\in V^*$ 在 $C\setminus\{0\}$ 上严格正，$K=C\cap\{u=1\}$ 是整个原紧基，$P=\operatorname{ext}K$ 是全部原纯点，效应是整个原区间 $[0,u]_{C^*}$。归一基上的仿射效应与这些线性效应一一对应，不另选测试子菜单。记
+
+$$
+\begin{gathered}
+F_p=\{f\in[0,u]:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\\
+p\perp x\ \Longleftrightarrow\ \exists f\in F_p,\ f(x)=0,
+\qquad D_p=\{x\in K:p\perp x\}=\{x:T_p(x)=0\},\\
+E_p=P\cap D_p,\qquad
+H(p,q)=\text{包含 }p,q\text{ 的整个原最小面}.
+\end{gathered}
+\tag{VII103.1}
+$$
+
+最小面亦为两条原纯射线生成的最小锥面的归一基；不取线段、截面或所选子面代替它。$F_p$ 的紧性和最小值达到见103.2；这里尚未假定 $T_p$ 仿射或是同一张效应。两个条件准确为
+
+$$
+\begin{aligned}
+\mathrm{Pair}:&\quad p,q\in P,\ p\ne q
+                 \ \Longrightarrow\ H(p,q)\ne K,\\
+\mathrm{EB}_{\ge1}:&\quad
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge1:
+                 \ D_p\simeq_{\rm aff} B^{d_p}.
+\end{aligned}
+\tag{VII103.2}
+$$
+
+$B^d$ 指整个闭欧氏单位球；$d=1$ 是线段。$\mathrm{EB}_{\ge1}$ 起初只要求整个原集合 $D_p$ 为这样的仿射球，不预设它是面或暴露面，也不预给各 $d_p$ 相等。定义 $\mathrm{EB}_{\ge2}$ 为同样全称条件中要求 $d_p\ge2$，$\mathrm{EB}_3$ 为要求全部 $d_p=3$。
+
+对非空面使用通常的凸面定义，不先要求闭。原面链高约定为链中面数：
+
+$$
+h(K)=\max\{k:\ \varnothing\ne F_1\subsetneq F_2
+              \subsetneq\cdots\subsetneq F_k=K,
+              \ F_i\text{ 为原面}\}.
+\tag{VII103.3}
+$$
+
+有限维下每次严格包含都增大仿射维数，故此最大值存在；例如单点高一，线段高二。本章输入只有上述载体与两条(VII103.2)，不要求 $P$ 有限或闭，不预付 $\mathrm B$、PSD、Jordan、自对偶、谱性、projectivity、局部效应延拓或可逆群。完整 $S$ 始终取VI89.1的全部内容：每个纯 $p$ 有一个原 $e_p\in F_p$，满足 $g-e_p\in C^*$ 对全部 $g\in F_p$ 成立，并且 $e_p(q)=e_q(p)$ 对全部纯点成立。
+
+### 103.2 从整个排除球到全部原真面
+
+**定理 103.2（完整暴露与真面穷尽）。** 仅用 $\mathrm{EB}_{\ge1}$，每个 $D_p$ 都是非点紧暴露真面，存在一张原 $e_p\in F_p$ 使
+
+$$
+D_p=K\cap\ker e_p.
+\tag{VII103.4}
+$$
+
+这里 $e_p$ 起初只表示这张共同暴露尺，不预先称为 least。每个非空原真面若非单点，就恰为某个整个 $D_p$；其余非空真面都是原纯单点。加上 $\mathrm{Pair}$ 后，每对不同纯点的整个 $H(p,q)$ 恰为某个 $D_r$，故原 $\mathrm B$ 是后果。
+
+证明。由于 $K$ 张成 $V$，可在 $K$ 内选一组线性基。每个 $f\in[0,u]$ 在这些基向量上的读数都在 $[0,1]$，故该闭区间在有限维对偶中有界而紧。$F_p$ 是其中含 $u$ 的闭集，故非空紧；每个 $T_p(x)$ 的最小值达到。集合
+
+$$
+\{(f,x)\in F_p\times K:f(x)=0\}
+$$
+
+紧，投影到 $K$ 就是原 $D_p$，因而 $D_p$ 紧。$p\notin D_p$，因为所有 $f\in F_p$ 都在 $p$ 取一。
+
+取球 $D_p$ 的中心 $c_p$。由 $c_p\in D_p$ 选一次 $e_p\in F_p$，使 $e_p(c_p)=0$。对每个 $x\in D_p$，其关于 $c_p$ 的反射 $x'=2c_p-x$ 仍在整个 $D_p$，所以
+
+$$
+0=e_p(c_p)=\tfrac12(e_p(x)+e_p(x')),
+\qquad e_p(x),e_p(x')\ge0.
+$$
+
+于是 $e_p$ 零于整个 $D_p$；反向，$e_p(x)=0$ 本身就是 $p\perp x$ 的原见证，故得到(VII103.4)。这先证明 $D_p$ 是暴露面，没有先把“球形集合”偷换成“球形面”。非退化性给它至少两个点，$p\notin D_p$ 给它真于 $K$。
+
+任取非空原真面 $F$，即使它未先给闭性，有限维凸几何仍允许取 $x\in\operatorname{ri}F$。此 $x$ 不在 $\operatorname{ri}K$：含一个整体相对内点的面只能是 $K$。在 $x$ 取 $K$ 的一个非恒定相对支撑仿射函数，平移并按其全域最大值归一，得到原仿射 $a$，满足
+
+$$
+0\le a\le1\text{ 于 }K,\qquad a(x)=0,
+\qquad \max_K a=1.
+$$
+
+齐次化将它识别为原 $[0,u]$ 中的线性效应。对 $y\in F$，由 $x\in\operatorname{ri}F$，可使 $x$ 位于 $y$ 与某个 $z\in F$ 的开线段内；非负性迫使 $a(y)=0$。全域最大面是非空紧面，具有一个原纯点 $p$ 达到 $a(p)=1$。因此
+
+$$
+F\subseteq\{a=0\}\cap K\subseteq D_p.
+\tag{VII103.5}
+$$
+
+$F$ 也是球 $D_p$ 的面。严格凸欧氏球（包括线段）的非空真面只有极端单点，所以 $F$ 若非单点必等于整个 $D_p$；若为单点，因其本身是 $K$ 的面，该点属于 $P$。特别地，每个 $D_p$ 都是极大的原真面，不会严格包含于另一真面。上述论证不使用“原真面都已闭或暴露”作为前件。
+
+最后，$p\ne q$ 时 $H(p,q)$ 非点；$\mathrm{Pair}$ 使其为真面，故(VII103.5)给 $H(p,q)=D_r$。反过来，一个 $D_r$ 中任意两个不同纯点的原最小面都等于 $D_r$，因为该最小面是 $D_r$ 的非点面。于是所有这些球确实是整个二纯最小面，包含线段情形；VI89.2的 $\mathrm B$ 已成立。证毕。
+
+### 103.3 原零关系给出的点—球极性
+
+**定理 103.3（交点唯一、双射与面双正交）。** 在 $\mathrm{Pair}+\mathrm{EB}_{\ge1}$ 下，任意两个不同非点原真面恰交于一个原纯点。映射
+
+$$
+p\longmapsto D_p
+\tag{VII103.6}
+$$
+
+是全部原纯点与全部非点原真面之间的双射，且 $p\notin D_p$。对归一面的零补定义
+
+$$
+F^\perp=\bigcap_{q\in P\cap F}D_q,
+\qquad \varnothing^\perp=K,
+\tag{VII103.7}
+$$
+
+则
+
+$$
+\{p\}^\perp=D_p,\qquad (D_p)^\perp=\{p\},
+\qquad K^\perp=\varnothing,
+\qquad F^{\perp\perp}=F.
+\tag{VII103.8}
+$$
+
+这些是原全效应零关系的结论。允许线段时不将它们称为厚射影平面；在额外 $\mathrm{EB}_{\ge2}$ 下，纯点与各球的整个纯边界才构成真正的射影平面，并带无绝对点极性。
+
+证明。先复用V88.1的原零对称：对纯 $p,q$，若一张 $f$ 在 $p$ 取一、在 $q$ 取零，则原补效应 $u-f$ 见证反向。因此
+
+$$
+q\in D_p\quad\Longleftrightarrow\quad p\in D_q.
+\tag{VII103.9}
+$$
+
+这只用了零一读数，并未用非零比较值互易或 least。
+
+设 $L=D_p,M=D_q$ 不同，则 $p\ne q$。103.2给 $H(p,q)=D_r$。$p,q\in D_r$ 与(VII103.9)给 $r\in L\cap M$。这个交是两个球的面；若含不止一个点，就等于整个 $L$ 与整个 $M$，与不同矛盾。因此 $L\cap M=\{r\}$，且该单点作为 $K$ 的面是原纯点。
+
+还须证明不同纯点不会对应同一球，不能由上一段擅自假定。若 $p\ne q$ 而 $D_p=D_q=L$，置 $M=H(p,q)$。因 $p\notin L$，有 $M\ne L$。上一段给 $M\cap L=\{r\}$，其中 $r$ 纯。由 $r\in D_p\cap D_q$ 和零对称，$p,q\in D_r$；故 $M\subseteq D_r$。两者都是非点极大真面，必 $M=D_r$。但 $r\in M$ 遂给 $r\in D_r$，矛盾。单射成立，满射由103.2的真面穷尽给出。
+
+由零对称，$p\in(D_p)^\perp$。若另有纯 $s\in(D_p)^\perp$，则 $P\cap D_p\subseteq D_s$；对球的全部极点取凸包得 $D_p\subseteq D_s$，所以两面相等，单射迫使 $s=p$。任意 $x\in(D_p)^\perp$ 都有有限原纯分解。每个 $D_q$ 都是面，故该分解的每个正权纯点亦在所有 $D_q$ 中；它们只能是 $p$，所以 $x=p$。同样，若 $K^\perp$ 非空，它作为面含一个纯 $s$，却须 $s\in D_s$，不可能。结合103.2的全部面类型，逐项得到(VII103.8)，并有包含反序。没有把混态第一端点的另一种排除关系混入(VII103.7)。
+
+最后，以 $P$ 为点、以 $P\cap D_p$ 为线。两不同点唯一确定其整个最小球面；两不同线唯一相交，刚已证明。$\mathrm{EB}_{\ge2}$ 保证每线至少三个点；又 $p\notin D_p$，故并非全部点共线。明确地，从线上的两点 $a,b$ 和线外点 $c$ 出发，在线 $ab$ 取异于 $a,b$ 的 $d$，再在线 $cd$ 取异于 $c,d$ 的 $e$；唯一交点性质保证 $e$ 不在三角形 $abc$ 的任何边上，故 $a,b,c,e$ 构成非退化四边形。这满足射影平面的关联公理；(VII103.6)、零对称及 $p\notin D_p$ 给无绝对点极性。此处未调用任何 Desargues 性、拓扑平面分类或 Veronese 定理。证毕。
+
+### 103.4 原least、全部数值互易与既有一般桥的直接消费
+
+**定理 103.4（原球几何到完整S及面高三）。** 在同一个原载体上，$\mathrm{Pair}+\mathrm{EB}_{\ge1}$ 推出 $\mathrm A$、完整 $S$ 及 $h(K)=3$。103.2构造的 $e_p$ 就是原全锥序 least，满足
+
+$$
+\begin{gathered}
+T_p=e_p\text{ 于整个 }K,\qquad
+\{x\in K:e_p(x)=0\}=D_p,\qquad
+\{x\in K:e_p(x)=1\}=\{p\},\\
+T_p(q)=T_q(p)\quad(p,q\in P),\\
+T_p\!\left(\sum_i\lambda_iq_i\right)
+ =\sum_i\lambda_iT_{q_i}(p)
+\quad(\lambda_i\ge0,\ \sum_i\lambda_i=1).
+\end{gathered}
+\tag{VII103.10}
+$$
+
+立即消费VI89.4／V88.4、88.10及[Library完整S桥][Q103S]，得到一个有限维 EJA $J$ 和线性双射 $\Phi:J\to V$，使
+
+$$
+\Phi(J_+)=C,\qquad u\Phi=\tau_J,
+\qquad \Phi\{x\in J_+:\tau_Jx=1\}=K.
+\tag{VII103.11}
+$$
+
+$\tau_J$ 是每个本原幂等元取一的规范迹，且 $\operatorname{rank}J=3$。这是原整个锥、原单位、原全部效应和原全部纯点的忠实表示，不是换一个完成体。
+
+证明。固定纯 $p$，取任意过 $p$ 的原二纯球 $F$。它与 $D_p$ 不同，103.3给唯一纯交点 $r$。原 $e_p$ 在 $p$ 取一、在 $r$ 取零，且在整个 $F$ 上 proper。取球图 $\chi:F\to B^d$，记 $n=\chi(p)$。一个球上有零一两端的 proper 仿射函数必沿唯一的一对对径达到两端，所以 $\chi(r)=-n$，并且
+
+$$
+e_p(\chi^{-1}z)=\frac{1+\langle n,z\rangle}{2}.
+\tag{VII103.12}
+$$
+
+为核对这一等号条件及 least，任取原 $g\in F_p$，在整个球上写 $g(\chi^{-1}z)=a+\langle b,z\rangle$。有 $\|b\|\le a$、$a+\|b\|\le1$ 及 $a+\langle b,n\rangle=1$。因此
+
+$$
+\begin{gathered}
+b=\lambda n,\qquad a=1-\lambda,\qquad0\le\lambda\le\tfrac12,\\
+g(\chi^{-1}z)-e_p(\chi^{-1}z)
+=(\tfrac12-\lambda)(1-\langle n,z\rangle)\ge0.
+\end{gathered}
+\tag{VII103.13}
+$$
+
+对 $e_p$ 再用 $e_p(r)=0$，便迫使 $\lambda=1/2$，得到(VII103.12)及对径唯一。这也见证原 $p\perp r$，遍及全部球与其全部纯点即为 $\mathrm A$。
+
+每个不同纯 $q$ 都与 $p$ 共处一个这样的整个球，故(VII103.13)给 $g(q)\ge e_p(q)$；在 $p$ 两者相等。用原 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$，得 $g-e_p\in C^*$。这才证明全锥序 least，故 $T_p=e_p$；此前未从点态下确界中预选 least。在同一个 $H(p,q)$ 对 $e_q$ 使用(VII103.12)，得到
+
+$$
+e_p(q)=\frac{1+\langle\chi(p),\chi(q)\rangle}{2}=e_q(p).
+\tag{VII103.14}
+$$
+
+这包括所有非零比较值，取值并非仅限零一。同点值为一；不同球内的不同纯点内积严格小于一，所以 $e_p$ 唯一确认 $p$，对任意混态用有限纯分解即得唯一确认面的断言。线性和互易给(VII103.10)末式。至此已精确取得VI89.1定义的完整 $S$，没有遗留一般重构前件。
+
+现在直接应用既有桥。其源空间取本章的 $V$，正锥取同一个 $C$，规范泛函取同一个 $u$，效应取整个 $[0,u]$，纯点取全部 $P$，least 和 reciprocal 分别由(VII103.13)、(VII103.14)供给。Library中的正对偶剥离、共同完整框架、忠实自对偶配对、有符号谱性、正面投影、projectivity 与滤波纯性全部按其既有证明复用；最后消费的是 Barnum–Müller–Ududec 的 Theorem 16，非另需强对称的 Theorem 17。本章不重证这些一般步骤，也不以“$D_p$ 暴露”替代其中 projectivity 的完整接口。其同载体归一给(VII103.11)。
+
+面高由分类前的原几何已可读出。103.2说明全部非空真面只有纯单点和极大的整个 $D_p$；取任一球边界纯点 $q\in D_p$，有严格链
+
+$$
+\{q\}\subsetneq D_p\subsetneq K.
+\tag{VII103.15}
+$$
+
+不可能插入其他非空面，故 $h(K)=3$。有限 EJA 的成熟面字典把非零锥面与非零幂等元的支撑对应，包含对应幂等元序，严格包含严格增加秩；完整本原 Jordan 框架的部分和给长度恰为秩的最大非空链。原线性同构保持整个面格，故 $\operatorname{rank}J=h(K)=3$。此处只将既有 EJA 面格字典应用于(VII103.15)，不新增 Jordan 分类。证毕。
+
+(VII103.12)还精确消费VI90.8的全部局部球效应延拓：若 $h(z)=a+\langle b,z\rangle$ 且 $0\le a-\|b\|\le a+\|b\|\le1$，$b\ne0$ 时取 $s=\chi^{-1}(b/\|b\|)$，原延拓为
+
+$$
+\widehat h=(a-\|b\|)u+2\|b\|e_s\in[0,u].
+\tag{VII103.16}
+$$
+
+$b=0$ 时取 $au$。两端系数界保证其全域 proper，(VII103.12)给其限制恰为 $h$。这是既有逐效应延拓的参数对应，不另计为新一般定理，不供应共同正线性扩张或物理操作。
+
+### 103.5 三个原纯点的共同单位尺
+
+**定理 103.5（唯一非负暴露尺与三元finite lift）。** 在上述原域中，非零 $a\in C^*$ 若零于整个 $D_p$，必有
+
+$$
+a=a(p)e_p,\qquad a(p)>0.
+\tag{VII103.17}
+$$
+
+任取 $p\in P$、$q\in E_p$，令 $H(p,q)=D_r$；则 $p,q,r$ 两两原零相关，$r$ 由 $p,q$ 唯一确定，并且
+
+$$
+u=e_p+e_q+e_r,\qquad e_i(j)=\delta_{ij}
+\quad(i,j\in\{p,q,r\}).
+\tag{VII103.18}
+$$
+
+所以每个原纯点都属于一个原三元完备框架。这里给的是本章新几何域的直接三元关系解释，不把既有一般框架完备定理重计为新增。
+
+证明。先证(VII103.17)。令 $M=\max_Ka>0$，在原全域最大面取纯 $s$。$a/M$ 是原 proper 确认效应，故 $D_p\subseteq D_s$。两者都是非点极大真面，必相等；103.3的单射给 $s=p$，所以 $M=a(p)>0$。原 least 给 $b=a/M-e_p\in C^*$。$b$ 同时零于整个 $D_p$ 和 $p$；若 $b\ne0$，其零面是真面，却包含极大真面 $D_p$ 及面外点 $p$，不可能。因此 $b=0$。
+
+因 $q\in D_p$，$p\ne q$。$H(p,q)=D_r$ 和零对称使 $r\in D_p\cap D_q$，故三点两两零相关。$p,q\in D_r$，且 $r\notin D_r$，所以三者不同。由103.3的交点唯一，$r$ 是同时零相关于 $p,q$ 的唯一原纯点。在球 $D_r$ 内，$e_p(p)=1,e_p(q)=0$ 使 $p,q$ 为对径；球公式遂给 $e_p+e_q=1$ 于整个 $D_r$。
+
+在原全空间置 $h=u-e_p-e_q$。它在 $D_r$ 恒零，在 $r$ 取一，且由 $e_p,e_q\ge0$ 有 $h\le u$。尚不能在这一步假定 $h\ge0$。若
+
+$$
+c=\min_Kh<0,
+$$
+
+取原最小面中的纯点 $x$ 达到 $c$，则
+
+$$
+g=\frac{h-cu}{1-c}\in[0,u],\qquad g(r)=1,\quad g(x)=0.
+\tag{VII103.19}
+$$
+
+上界使用 $h\le u$，下界使用原全域最小值 $c$，故这是一张真正原 proper 效应。它见证 $x\in D_r$，但 $h|_{D_r}=0$ 与 $h(x)=c<0$ 矛盾。因此 $h\ge0$。现在 $h$ 非零、零于整个 $D_r$，(VII103.17)给 $h=h(r)e_r=e_r$，得到(VII103.18)。
+
+每个 $D_p$ 是非退化球，故有原纯点 $q\in E_p$ 可选；于是每个 $p$ 都能进入这个三元框架。共同的一族效应 $(e_p,e_q,e_r)$ 非负且和为 $u$，所以这是 joint 完备，绝非分别给三对各找一张测试。也不能再添第四个不同的两两零纯点，因为它须同时在 $D_p,D_q$ 中，唯一交点已是 $r$。所有读数和单位等式都在原 $V,C,u$ 上成立。证毕。
+
+### 103.6 完整反向与任意原unit的归一对应
+
+**定理 103.6（同载体的精确双向）。** 在定义103.1的有限维全效应域内，以下三项等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathrm{Pair}+\mathrm{EB}_{\ge1}\\
+\Longleftrightarrow\quad &S\ \text{且}\ h(K)=3\\
+\Longleftrightarrow\quad &\exists\text{ rank-three有限EJA }J\text{ 及满足(VII103.11)的 }\Phi.
+\end{aligned}}
+\tag{VII103.20}
+$$
+
+这一等价保留原 $C,u,K,P,[0,u]$；不将原 $u$ 默认为某个事先选好的矩阵迹。
+
+证明。第一项到其余两项由103.4。第二项由既有完整 $S$ 桥得到有限 EJA；原面高与成熟幂等元面格对应给秩三，故到第三项。
+
+反向从任意秩三有限 EJA $J$ 出发。记其单位为 $e$，规范迹为 $\tau$，迹配对为 $\langle a,x\rangle=\tau(a\circ x)$，平方锥为 $J_+$。成熟自对偶及谱字典给
+
+$$
+K_J=\{x\in J_+:\tau x=1\},\qquad
+P_J=\{p:p\text{ 为本原幂等元}\},\qquad
+\mathcal E_J=\{x\mapsto\tau(a\circ x):0\le a\le e\}.
+\tag{VII103.21}
+$$
+
+全部原效应恰为此区间；没有缩成一组投影测试。V88.4的逆向及Library完整桥的反向已证明：若 $0\le a\le e$ 在纯 $p$ 取一，则 $a\ge p$。其参数正是这里的规范迹及本原 $p$，所以直接复用，得到
+
+$$
+e_p(x)=\tau(p\circ x),\qquad
+D_p=K_J\cap J_0(p),\qquad
+J_0(p)=\{x:p\circ x=0\}.
+\tag{VII103.22}
+$$
+
+$J_0(p)$ 是单位 $e-p$、秩二的 Peirce-zero EJA，$D_p$ 是它的全部迹一态空间。成熟秩二字典给一个非退化欧氏球：简单秩二因子是 spin factor，非简单秩二为 $\mathbb R\oplus\mathbb R$，其态空间是线段。故 $\mathrm{EB}_{\ge1}$ 成立。两个不同本原幂等元的支撑并 $p\vee q$ 秩二；其整个最小面是该秩二支撑面，真于秩三整个 $J$。所以 $\mathrm{Pair}$ 成立。此处用的是成熟 Jordan 面格／秩二面结果，亦即V88.4及Library二态球部分的同一结论，并未重新证明一般重构。
+
+再明确任意原归一泛函的回接。若先只有一个锥线性同构 $T:J\to V$，则原严格正 $u$ 在迹配对下唯一写为
+
+$$
+u(Tx)=\tau(b\circ x),\qquad b\in\operatorname{int}J_+.
+$$
+
+严格正与自对偶使 $b$ 正可逆，包括每个直和扇区。采用成熟 Jordan 二次表示
+
+$$
+\mathsf P_a=2L_a^2-L_{a^2},\qquad L_a(x)=a\circ x,
+\qquad \Phi=T\mathsf P_{b^{-1/2}}.
+\tag{VII103.23}
+$$
+
+其保正、自伴随及正逆 $\mathsf P_{b^{1/2}}$ 直接复用V75.1及其所引文献；$b$ 的谱函数彼此算子交换，给 $\mathsf P_{b^{-1/2}}b=e$。因此
+
+$$
+u(\Phi x)=\tau\bigl(b\circ\mathsf P_{b^{-1/2}}x\bigr)
+=\tau\bigl((\mathsf P_{b^{-1/2}}b)\circ x\bigr)=\tau x.
+\tag{VII103.24}
+$$
+
+于是 $\Phi$ 满足(VII103.11)，把上述完整字典搬回同一个原单位切片。原纯点写为 $p=\Phi c$，其中 $c$ 本原，而原 least 及所有原效应精确为
+
+$$
+e_p(v)=\tau(c\circ\Phi^{-1}v),\qquad
+f_a(v)=\tau(a\circ\Phi^{-1}v),\quad0\le a\le e.
+\tag{VII103.25}
+$$
+
+面、球、零关系、least 的全锥序及互易随这个同一同构保持。它不改变原 $u$，也没有把未归一的 $Tc$ 误作原纯归一态。最后，秩三面格给 $h(K)=3$，反向全部完成。证毕。
+
+### 103.7 允许线段的全部分支与复三能级选择
+
+**定理 103.7（分类参数是后果，非输入）。** (VII103.20)的全部模型，在忠实同单位坐标中恰为
+
+$$
+J=\mathbb R\oplus\operatorname{spin}_d\quad(d\ge1),
+\qquad\text{或}\qquad
+H_3(\mathbb R),\ H_3(\mathbb C),\ H_3(\mathbb H),\ H_3(\mathbb O).
+\tag{VII103.26}
+$$
+
+这里 $\operatorname{spin}_d=\mathbb R\oplus\mathbb R^d$ 的积为
+
+$$
+(a,x)\circ(b,y)=(ab+x\cdot y,ay+bx),
+\qquad \tau(a,x)=2a,
+\tag{VII103.27}
+$$
+
+其迹一态空间为 $B^d$；$d=1$ 是 split $\mathbb R^2$，所以 $\mathbb R\oplus\operatorname{spin}_1\simeq\mathbb R^3$ 包含经典三角形。非简单分支的态空间是旗标 join $\Delta_0*B^d$，不是另一种简单三能级。
+
+在此域内，全部 $D_p$ 维数至少二当且仅当 $J$ 简单；此时参数恰为
+
+| 简单代数 $J$ | $\operatorname{affdim}K$ | 每个整个 $D_p$ 的球维数 |
+| --- | --- | --- |
+| $H_3(\mathbb R)$ | $5$ | $2$ |
+| $H_3(\mathbb C)$ | $8$ | $3$ |
+| $H_3(\mathbb H)$ | $14$ | $5$ |
+| $H_3(\mathbb O)$ | $26$ | $9$ |
+
+特别地，无须先给总维数、球维同质性或复结构，
+
+$$
+\boxed{\mathrm{Pair}+\mathrm{EB}_3
+\ \Longleftrightarrow\
+\text{同一原完整载体为复三能级迹态／全效应模型}.}
+\tag{VII103.28}
+$$
+
+证明及成熟分类的应用。有限 EJA 分解为简单理想的直和，秩相加。秩三非简单分解只能是 $1+2$ 或 $1+1+1$；秩一因子为 $\mathbb R$，简单秩二因子为 spin factor，split 秩二即 $\mathbb R^2$，所以统一为(VII103.26)首项。简单秩三分类给其余四项。此处使用成熟 Jordan 分类，不将它或其参数表当作新分类：秩二球／spin 对应可定位到 Alfsen—Shultz [1978原文][Q103AS] Lemma 3.10（印刷pp164—165）；秩三实、复、四元、Cayley 四类在该文 Proposition 7.6的证明（印刷p189）明确调用其文献[4] Proposition 8.3，即 Alfsen—Shultz—Størmer 的 *A Gelfand–Neumark theorem for Jordan algebras*。本章沿该精确既有归属使用有限分类，不声称已另读其[4]全文。
+
+具体核对首项，令旗标纯点为 $f$，球纯点为 $a_n$、$\|n\|=1$，相反点记 $a_{-n}$。全部原纯点恰为 $\{f\}\cup\{a_n\}$，球与旗标在 join 的独立中央坐标中。完整迹效应字典给
+
+$$
+D_f=B^d,\qquad D_{a_n}=[f,a_{-n}].
+\tag{VII103.29}
+$$
+
+因为确认 $f$ 的 least 是旗标中央坐标，确认 $a_n$ 的 least 在球上为 $(1+n\cdot z)/2$、在旗标为零；一个非负读数的混合为零恰要求其全部正权组分为零。因此球源的完整排除集恰为所示线段，不是遗漏了一些非纯排除态的局部图。两球纯点生成整个球面，两点为同一球的不同极点；旗标与一个球纯点生成一条 join 边。它们都是整个 $K$ 的真面，故 $\mathrm{Pair}$ 直接成立。$d=1$ 时就是经典三角形。$d\ge2$ 时旗标的排除球维数为 $d$，球源的排除球维数为一，说明输入不宜擅加维数同质性。
+
+所有非简单分支都存在这些线段 $D_{a_n}$，所以被 $\mathrm{EB}_{\ge2}$ 排除；四个简单分支的 Peirce-zero 子代数分别为 $H_2(\mathbb R),H_2(\mathbb C),H_2(\mathbb H),H_2(\mathbb O)$，其迹一态都是维数 $2,3,5,9$ 的球。若标量代数实维数为 $k=1,2,4,8$，则三阶 Hermitian 空间实维数为 $3+3k$，其迹切片仿射维为 $2+3k$；二阶对应空间实维为 $2+k$，其迹切片维为 $1+k$。这给表内全部参数，且每个纯点具有同样 Peirce 类型，球维同质性在简单域内成为后果。
+
+若所有 $D_p$ 都是三球，(VII103.29)先排除非简单分支，再由表唯一选择 $H_3(\mathbb C)$；反向该模型所有 Peirce-zero 态空间确为三球。只要求存在一个三球不够，$\Delta_0*B^3$ 就只有旗标的 $D_f$ 为三球而仍有大量线段。故(VII103.28)准确要求每个完整 $D_p$，而非一张所选 Bloch 图。证毕。
+
+### 103.8 全部效应与Born字典的准确回接
+
+**推论 103.8（三球分支的原完整概率字典）。** 在 $\mathrm{Pair}+\mathrm{EB}_3$ 下，取103.6的同单位 $\Phi:H_3(\mathbb C)\to V$。令 $\rho=\Phi^{-1}x$，则所有原归一态、全部原 proper 效应、原 least 与纯值分别为
+
+$$
+\begin{gathered}
+\rho\succeq0,\quad\operatorname{tr}\rho=1,\qquad
+f_E(x)=\operatorname{tr}(E\rho),\quad0\preceq E\preceq I_3,\\
+p=\Phi(vv^*),\quad v^*v=1,
+\qquad T_p(x)=\operatorname{tr}(vv^*\rho),\\
+q=\Phi(ww^*),\quad w^*w=1,
+\qquad T_p(q)=|v^*w|^2,\\
+D_p=\Phi\{\rho\succeq0:\operatorname{tr}\rho=1,\ \rho v=0\}.
+\end{gathered}
+\tag{VII103.30}
+$$
+
+有限数学效应族为完整测量恰要求 $E_i\succeq0,\sum_iE_i=I_3$。这识别全部原 proper 区间，但不自动供应每族的实际共同菜单。
+
+证明。103.7先选择复三阶类型，(VII103.21)、(VII103.25)直接给完整区间和 least；标准矩阵迹与秩一乘法给模方公式，正性给 $\operatorname{tr}(vv^*\rho)=0\Longleftrightarrow\rho v=0$。这些是既有 Jordan／Born 字典在新几何域上的参数代入，不是另证 Born 起源。原任意 $u$ 已由(VII103.23)—(VII103.25)准确处理，故不额外要求原坐标中的 $u=\operatorname{tr}$。
+
+实分支和四元分支相同地使用成熟 Jordan 迹及其关联矩阵字典；四元迹配对取实值的 Jordan 迹，归一向量的纯比较仍为 $|v^*w|^2$。Albert 分支仅使用本原幂等元 $c$、平方锥与 $\tau(c\circ x)$，不将任意非结合八元向量的 outer product 当作无条件纯态参数。首项旗标 join 也沿(VII103.21)保留整个 $[0,e]$ 与中央质量，不被矩阵表遗漏。
+
+若另有原实／复 unital PSD section 表示，则现有 [SectionROGFrame][Q103ROG] 的 `whole_pure_carrier` 在原 $\mathrm{ROG}(L)$ 下识别全部原纯点；`rog_frame` 另要求原 $I\in L$，给每个归一原秩一点进入同一个完整正交框架。其 `base` 就是全部 $L\cap\mathrm{PSD}\cap\{\operatorname{tr}=1\}$，不是所选纯子集。在本章分类后的实／复三阶全空间，$L=H_3(\mathbb F)$、原生域 $\mathbb F=\mathbb R$ 或 $\mathbb C$，谱分解满足 ROG 且 $I\in L$，因此可直接消费；在已有一般 ROG 表示的交集中，也只按这些原前件消费。对应Blueprint的全截面正泛函PSD提升、完整原效应的共同提升及其正补应用均保留原 unital 条件，不将环境 $E\le I$ 偷加到任意截面。它们与既有ROG框架不作为本章新的普遍重构，也未用于从(VII103.2)取得 $S$；本章无ROG输入的载体首先走103.4的既有一般桥。证毕。
+
+### 103.9 反事实、容量与旗标边界
+
+**命题 103.9（两种原控制及其准确含义）。** $\mathrm{Pair}$ 连同二纯整球不能替代 $\mathrm{EB}_{\ge1}$；完整 $S$ 连同 $\mathrm{Pair}$ 也不能删除排除球中的容量限制。允许线段的域不能称为简单模型或厚射影平面；这些控制不构成两条候选公理的完整独立性证明。
+
+证明。直接复用VII102.5—102.8的整个加权 $3\mid n$ 自由和，$n\ge3$、$u_0=1-2\varepsilon,u_1=u_2=\varepsilon$、$v_j=1/n$、$0<2\varepsilon<1/n$。两侧都至少三个顶点，任意两不同原纯点的整个最小面是真边，所以它满足 $\mathrm{Pair}$ 及 $\mathrm B$。轻源 $a_i$ 的整个排除集却为原 facets 的并
+
+$$
+D_{a_i}=\bigcup_{j=1}^n
+\operatorname{conv}(P\setminus\{a_i,b_j\}).
+\tag{VII103.31}
+$$
+
+VII102.8已经给两点分别读零而其中点最低读数为 $n\varepsilon/[2(n-1)]>0$ 的原全效应计算。因此此并不凸，不能是一个整个仿射球，也不能由一张 least 原效应的零面给出；它失败 $\mathrm{EB}_{\ge1}$ 及 $S$。这里只引用已有的全载体值和面，不另造反例或重复计算。
+
+再取经典四态 $K=\Delta_3$、全部仿射 proper 效应。对顶点 $p_i$，least 是重心坐标 $e_i$，互易为 $e_i(p_j)=\delta_{ij}$，故完整 $S$ 成立；任意二顶点最小面为真边，故 $\mathrm{Pair}$ 成立。但 $D_{p_i}$ 是另外三个顶点张成的整个三角形，既不是线段也不是严格凸二球，所以失败 $\mathrm{EB}_{\ge1}$。其原面链高为四。这说明本章排除球要求不仅约束局部形状，还约束容量，不能把103.6误读为无秩限制的旧 $S$ 包。
+
+相反，103.7的 $\Delta_0*B^d$ 真正满足两条候选，球源背后却是线段，旗标背后才是整个球。$d=1$ 为三角形，每条关联线只有两个纯点；$d\ge2$ 的球源线仍只有两个纯点。因此 $\mathrm{EB}_{\ge1}$ 域没有统一厚度，只有再要求全部 $D_p$ 非线段才成为103.3的射影平面／103.7的四个简单分支。
+
+以上不证明 $\mathrm{EB}_{\ge1}$ 单独能否推出 $\mathrm{Pair}$，不声称两者是最少独立公理，也不以本章特殊域替代一般高维问题。一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 在该排除球域之外仍未由这些控制解决；加权族本身失去 $\mathrm{Z0}$，经典四态本身满足 $\mathrm A$，两者均不能充作该一般问题的反例。证毕。
+
+### 103.10 完整原装饰元组中的rank-three候选
+
+**定义与定理 103.10（所选载体共同域内的完整同数据替换）。** 固定VI89.7—89.10／V88.6—88.8的同一个原装饰元组 $\mathcal O$、原来源域与共同 $\mathfrak S(\mathcal O)$。选定非空 $\mathcal J\subseteq\{A,D,E\}$，只在明确共同域
+
+$$
+\mathcal D_{3,\mathcal J}:\quad
+\text{原包的共同载体／来源域，且 }
+\forall X\in\mathcal J,\ h(K_X)=3
+\tag{VII103.32}
+$$
+
+内比较。令 $\mathsf R_S$ 是该旧完整包中将几何项按VI89.4写成全部 $S_X$ 的同数据形式。用 $\mathcal N(\mathcal O)$ 指它除这些几何项外的全部原合同，逐字按原定义继承而不删量词。定义本章完整候选
+
+$$
+\begin{aligned}
+\mathsf R_{\rm exclusion,3}^{\mathcal J}(\mathcal O):\quad
+&\mathcal N(\mathcal O)\ \land\!
+\bigwedge_{X\notin\mathcal J}S_X\\
+&\land\!\bigwedge_{X\in\mathcal J}
+ (\mathrm{Pair}_X+\mathrm{EB}_{\ge1,X}).
+\end{aligned}
+\tag{VII103.33}
+$$
+
+完整继承 $\mathcal N$ 在这里准确包括下列原内容，均不是排除球的推论。
+
+原准备、测试、过程、参考、读回和装饰数据仍是同一组。原概率像 $K_X=\{k_\sigma\}$ 自身非空、有限仿射维、紧、单位为一；全部原中点在原标签内实现，不先取闭凸完成。原测试像自身闭，含零、单位，闭于中点、补和有界倍增，且同一测试对全部原准备实现同一效应表。正带质量输出保留全部原中点实现图，包括重复标签和每个同中点实现；原加权缩放遍及全部非负质量，含零、次归一和不等质量。其他过程及参考只在自身完整相关联合输入域上下降；边缘或乘积输入不代替全部相关输入，不符合中点下降条件者保留原全实下降合同。
+
+同一个原实双线性 $L:D\times A\to E$、同一个原实线性读回 $p:E\to D$、同一个 $\omega=1_D/\tau_D1_D$ 及VI89.7中 $K,M,J,H,B_1,U,G,Q$ 的原定义全部保留，尤其 $K(a)=pL(\omega,a)$、$M(a,b)=pL(K(a),b)$ 两次使用同一个原 $p$。两实张成与全实 $Z$ 保持
+
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+B_1M(a,b)=\tau_A(a)Jb\quad(a,b\text{ 全实}).
+\tag{VII103.34}
+$$
+
+原全锥正性、原单位／迹／内积／伴随／二次表示、含秩一分支的完整(83.8)、VI(89.13)中 $\Pi_i,\mathsf C_i,\mathsf D_A,\mathcal T$ 的定义及两尺度Hilbert–Schmidt等式、C2与整个 $G=1_E$ 均保留；$F=\mathsf P_{U^{-1/2}}M$ 仍在原正性和张成给 $U>0$ 后定义，不由新几何预设等距。精确 PRE 之后才读原 H13：存在同一个原资格态 $\rho\in\mathcal H(F)$，其整个原输出 $I^{\rm raw}\rho$ 为正。资格仍用VI89.7原 $c_i,n_i,D_{ik},\pi_{ik},\alpha_{ik},\beta_{ik}$，保留每个活跃块上至少一条严格负方向、原未归一单位和迹伴随、全部块共享总迹一、非活跃块零质量和空活跃集；不逐块换态，不由输出反选资格。这些原式的完整定义直接采用VI89.7，不将面高三误作其中任何有类型尺度参数的重定义。
+
+共同 $\mathfrak S$ 逐项保留设备／事件／来源绑定、全部菜单、过程与分支、参考／副本／相关联合、记录／权限／控制／原钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、零与不等质量、实际混合服务、所有合法未来、旧支撑及每个中间切口。VI89.9的复型和Born、指定复合与读回、实际同事件CP、Kraus、实际仪器和更新、Lüders及时间的各自完整消费者合同，以及VI89.10的原生／细化来源接口，均原样按其有类型适用域继承；没有另行假定其结论已由状态球得到。
+
+在共同域(VII103.32)内，有准确双向
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\rm exclusion,3}^{\mathcal J}(\mathcal O)
+&\Longleftrightarrow\mathsf R_S(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII103.35}
+$$
+
+证明。逐所选 $X$ 在其同一原 $V_X,C_X,u_X,K_X,[0,u_X]$ 上应用103.6，得到 $\mathrm{Pair}_X+\mathrm{EB}_{\ge1,X}\Longleftrightarrow S_X+h(K_X)=3$。共同域已明确包含后一个高度约束，故可精确替换，非所选几何项与 $\mathcal N$ 不动。余下等价逐项复用VI89.8／V88.7。反向的同锥同单位线性运输保留原全部效应、零关系、整个最小面和面链高；所以返回的是真正原 $D_p$ 与原 $H(p,q)$，不是在新模型中重选资格或效应。若在不先限制高度的旧共同域中书写，准确等式应为
+
+$$
+\mathsf R_{\rm exclusion,3}^{\mathcal J}
+\ \Longleftrightarrow\
+\mathsf R_S\ \land\!\bigwedge_{X\in\mathcal J}h(K_X)=3,
+\tag{VII103.36}
+$$
+
+不能删去右侧的共同域限制并宣称与无秩限制旧包全域等价。
+
+若再把所选 $\mathrm{EB}_{\ge1,X}$ 换成 $\mathrm{EB}_{3,X}$，则由103.7所得是旧包与“每个所选载体为复三能级”的交集。该静态选择不用由复合去选复数，但也不代付任何原复合或来源合同。尤其当旧消费者另给 $D=A\otimes A$、$E=D\otimes A$ 的完整秩乘法时，若 $A$ 秩三，则 $D,E$ 秩分别为九、二十七；不能再同时要求它们面高三。选 $\mathcal J=\{A,D,E\}$ 与这种合同的交集为空。这里的同数据等价仍正确，但不为这个不相容交集伪造物理源或非空模型。
+
+所有消费者继续按VI89.9的准确接口：同事件实线性提升式、实际各输入块探针及全矩阵核条件才认证CP；若原递归参考已给同事件CP则直接复用，不能重复列作未解。Kraus是CP后的矩阵表示，实际仪器还需完整菜单、分支、接线、记录、同族粗粒化、共同重置输入行一致与未校准旁观者预算；条件态仅在分支质量正时归一。Lüders还需同一分支的锐效应、接受态中性和原输出校准。时间还需原物理时间上的连续齐次可逆自同构群、原钟／单位及实际动态来源。VI89.10中原几何、密度、全部原字和terminal futures、联合菜单／全部有符号关系、原细标签／粗归组、记录后条件未来、source-adoption map及资源合同也保持各自量词。已由原入口导出的后果直接复用；数学凸组合、面极性、三元单位尺和全效应字典不自动取得准备、装置、调用权限或这些过程来源。证毕。
+
+### 103.11 数学归属与保留的母目标
+
+**约定 103.11（连接增量及准确来源）。** 本章承重增量为(VII103.2)在无ROG、无矩阵、无维数预选的同一原全效应载体上到完整 $S$ 与原面高三的连接：完整 $D_p$ 的中心先给一张原共同暴露尺；任意真面的相对内点支撑把它纳入某个整个 $D_p$；二纯真面随后给点—球双射和唯一交点；原球内对径将该同一尺固定为全域 least，并给全部纯值互易。由此才有(VII103.20)、所选共同域内(VII103.35)及每个完整 $D_p$ 为三球的复三能级选择。103.5给该新域的直接三元零关系提升，其框架概念和一般完备性仍是旧桥内容。
+
+凸支撑、严格凸球的面与仿射等号条件是成熟中间工具。零对称、完整 $S$ 的定义及原全效应接口、VI89.4／V88.4、88.10及Library的整个一般有限EJA桥、VI90.8的逐效应延拓、Jordan面高与秩、成熟秩二／三分类、Jordan二次表示归一、Born／全部效应字典、SectionROGFrame及其whole-section提升应用、VII102的加权全效应反事实，都按上文精确前件复用，不重计为新谱性、自对偶、projectivity、一般重构、分类或矩阵概率定理。
+
+Alfsen—Shultz原文 [*State spaces of Jordan algebras*, Acta Math.140 (1978),155—190][Q103AS] 的 Corollary 7.5（印刷p188）要求 Hilbert ball property 与每个 norm-exposed face 的 projectivity；仅有本章103.2的暴露性不能直接代付后者。本章主路不调用这一独立重构准则，因为103.4已经满足并直接消费既有完整 $S$ 桥。该文在本章实际承担的分类引用限于103.7已说明的 Lemma 3.10、Proposition 7.6证明及其明确所引的有限类型归属；不另展开 Veronese 或一般 projectivity 替代路线。二次表示的准确公式、保正、自伴随与逆由V75.1及[Library所列成熟来源][Q103C]继承，适用于所有有限EJA，含Albert；不以结合矩阵计算替代八元分支。
+
+这些连接采用 `repo-derived` 的纸面归属，不作全球原创、文献穷尽、Lean kernel保证、经验实现或整体 $\Omega$ 本体断言。一般高维 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 的域外问题与完整物理来源母目标仍保留；本章关闭的是(VII103.2)所明定有限维域中的全部几何桥，不能因其为受限域而略去已得完整反向，也不能把域外未决写成域内缺口。两条候选的逻辑独立性及最少公理数未在这里证明。
+
+### 103.12 原排除球与三点单位尺的白话
+
+**命题 103.12（关系候选的完整几何解释）。** 在定义103.1的明确载体前提下，两条原关系可以准确说成：任意两个不同的纯状态，总能一起待在整体的一块真正边界面里；对每个纯状态，把所有能被某张确认它的原测试读零的状态全部收集起来，得到的整个集合是一块非退化实心球，线段也允许算球。这些关系在本章域内等价于完整互易least和恰三阶状态几何，含103.7全部分支，并按103.10保留来源与过程合同。
+
+证明与解释。每个纯点背后的排除球，起初不是先给一张最低测试再取零集。先在这块球的中心找一张确认原点、在中心读零的原测试；两侧对称且读数非负，迫使整块球都读零。这才得到一张同时排除整个球的原尺。任何真正的边界面又能被一张支撑尺放进这样的排除球，所以两纯点所在的整个最小边界也只能是一块球。两块不同排除球恰交一个纯点，点与背后的球一一相配。
+
+拿某个纯点作读一端，它背后的排除球与每块经过它的球交于唯一纯点。原尺在这一块球上同时读一和零，便把交点锁定在几何对面；球上其他刻度于是都固定了。任何别的确认尺只能在每块球上更高，全部纯点又生成整个原状态体，所以同一把尺在全域都是最低的。交换两个纯端点，在同一块球里算出的刻度相同，这才得到完整数值互易。
+
+再取两个互相排除的纯点。它们的共同边界球背后有第三个纯点，与两者都互相排除。前两把尺在共同边界上凑成一；若三者的余尺在整体别处变负，按真正的最低读数归一，就会把那个负值点又判进这块读零边界，产生矛盾。因此第三把原尺恰好补足单位：三个纯点用同一组三把尺共同区分，三把尺的总和就是原单位。这里不是分别找三对不同的二元测试来冒充一个三元测量。
+
+原面链只有纯点、整块排除球、整个状态体三层。既有的一般Jordan桥因此直接落在秩三，成熟分类才给实、复、四元和八元四个简单三能级类型，它们背后的球分别为二、三、五、九维，整体态空间分别为五、八、十四、二十六维。若允许线段，还必须保留“一整块球加一个独立旗标点”的join，经典三角形也在其中；所以仅说球不能暗中说成简单量子。若要求每个完整排除球都是三维实心球，才准确选出复三能级以及它的全部密度态、全部零一有界效应和模方纯比较。
+
+这些是同一个原载体上的状态与概率结构，不凭几何自动获得实际复合、CP事件、仪器、更新、钟或来源。完整候选在所选载体面高三的共同域内精确替换旧几何项，其余来源、菜单、参考、过程和未来合同逐项继承；不相容的共同域仍是不相容的，未解的一般域仍未解。由103.2—103.10得上述全部陈述。证毕。
+
+[Q103VI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md
+[Q103S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge
+[Q103AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf
+[Q103C]: ../../../Library/QuantumStates/barnumhilgert2019spectral.md#sector-composites-without-a-connectedness-input
+[Q103ROG]: ../../../Blueprint/D5/S3/Quantum/Foundation/SectionROGFrame.md
+
+## 追加锚（本行以下为增补区）

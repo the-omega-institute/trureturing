@@ -228,7 +228,19 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_conve
 
 The entire normalized base of the original cone and linear unit is convex.
 
-**Theorem 1.19 (Pure spanning of the original carrier).**
+**Theorem 1.19 (Normalization of nonzero positive vectors).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a unit strictly positive on every nonzero cone vector, multiplying any nonzero vector x in the cone by the inverse of u(x) places it in the entire normalized base. The same theorem applies to native face cones by restricting strict positivity along their inclusion.
+
+**Theorem 1.20 (Pure spanning of the original carrier).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span`
 
@@ -258,6 +270,7 @@ The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remai
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem`
