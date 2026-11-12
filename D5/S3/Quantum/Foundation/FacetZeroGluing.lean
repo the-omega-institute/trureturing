@@ -13,6 +13,8 @@ import Mathlib.Data.Finset.Max
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 
+/-! Full mixed-state zero gluing on the original cone, with native whole-base facets. -/
+
 noncomputable section
 
 namespace D5.S3.Quantum.Foundation.FacetZeroGluing
@@ -50,7 +52,7 @@ private theorem finite_zero_test {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     have hfa := (hf.1 a haD.1.1).1
     have hfz := (hf.1 z hz.1.1).1
     have heq : (1 / 2 : ℝ) * (f a + f z) = 0 := by
-      simpa [w, map_smul, map_add] using hfw
+      simpa only [w, map_smul, map_add, smul_eq_mul] using hfw
     have hfa0 : f a = 0 := by linarith
     have hfz0 : f z = 0 := by linarith
     rcases Finset.mem_insert.mp hx with rfl | hx
@@ -97,13 +99,13 @@ private theorem native_facet_support {C : PointedCone ℝ A}
   have hS : S < ⊤ := by
     apply lt_of_le_of_ne le_top
     intro he
-    have hh : Module.finrank ℝ S = Module.finrank ℝ A := by rw [he, Submodule.finrank_top]
+    have hh : Module.finrank ℝ S = Module.finrank ℝ A := by rw [he, finrank_top]
     dsimp [S] at hh
     omega
   obtain ⟨g, hg, hSg⟩ := S.exists_le_ker_of_lt_top hS
   have hker : LinearMap.ker g = S := by
     apply (Submodule.eq_of_le_of_finrank_eq hSg ?_).symm
-    have hh := g.finrank_ker_add_one_of_ne_zero hg
+    have hh := Module.Dual.finrank_ker_add_one_of_ne_zero hg
     dsimp [S]
     omega
   have hx : ∃ x ∈ C, g x ≠ 0 := by
@@ -130,7 +132,10 @@ private theorem native_facet_support {C : PointedCone ℝ A}
     have hzC : z ∈ C := C.add_mem (C.smul_mem (neg_pos.mpr hfy).le hx)
       (C.smul_mem hfx.le hy)
     have hz0 : f z = 0 := by simp [z, map_add, map_smul]; ring
-    have hzF : z ∈ F := face_span_inter F hzC (hfker ▸ hz0)
+    have hzF : z ∈ F := face_span_inter F hzC (by
+      change z ∈ S
+      rw [← hfker]
+      exact hz0)
     have hxF := F.isFaceOf.mem_of_smul_add_mem hx (C.smul_mem hfx.le hy)
       (neg_pos.mpr hfy) hzF
     have hx0 : f x = 0 := by
@@ -141,7 +146,10 @@ private theorem native_facet_support {C : PointedCone ℝ A}
   intro y hy
   constructor
   · intro hy0
-    exact face_span_inter F hy (hfker ▸ hy0)
+    exact face_span_inter F hy (by
+      change y ∈ S
+      rw [← hfker]
+      exact hy0)
   · intro hyF
     exact (show S ≤ LinearMap.ker f by rw [hfker]) (Submodule.subset_span hyF)
 
@@ -202,7 +210,7 @@ private theorem facet_exclusion {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     have hspan : Submodule.span ℝ (F.1 : Set A) = ⊥ :=
       le_antisymm (Submodule.span_le.mpr (fun x hx => by simpa [hn x hx])) bot_le
     have hf := F.2
-    rw [hspan, Module.finrank_bot] at hf
+    rw [hspan, finrank_bot] at hf
     omega
   obtain ⟨x, hx, hx0⟩ := hFne
   have hux := hstrict x (F.1.isFaceOf.le hx) hx0
@@ -226,14 +234,16 @@ private theorem facet_exclusion {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   have hfne : f ≠ 0 := by intro he; simpa [he] using hf.2
   have hfker : LinearMap.ker f = Submodule.span ℝ (F.1 : Set A) := by
     apply (Submodule.eq_of_le_of_finrank_eq hfle ?_).symm
-    have hh := f.finrank_ker_add_one_of_ne_zero hfne
+    have hh := Module.Dual.finrank_ker_add_one_of_ne_zero hfne
     have hd := F.2
     omega
   refine ⟨p, Set.Subset.antisymm ?_ hsub, ?_⟩
   · intro y hy
     have hz := hy
     rw [hfD] at hz
-    exact ⟨face_span_inter F.1 hy.1.1 (hfker ▸ hz.2), hy.1.2⟩
+    exact ⟨face_span_inter F.1 hy.1.1 (by
+      rw [← hfker]
+      exact hz.2), hy.1.2⟩
   · intro hpF
     have hhp := (hzero p (pure_mem p)).mpr hpF
     linarith [hh.2]
@@ -310,10 +320,12 @@ private theorem facet_slice_dimension {C : PointedCone ℝ A} {u : A →ₗ[ℝ]
     have hspan : Submodule.span ℝ (F.1 : Set A) = ⊥ :=
       le_antisymm (Submodule.span_le.mpr (fun x hx => by simpa [hn x hx])) bot_le
     have hf := F.2
-    rw [hspan, Module.finrank_bot] at hf
+    rw [hspan, finrank_bot] at hf
     omega
   have hh := normalized_face_dimension F.1.toPointedCone u
     (fun x hx => hstrict x (F.1.isFaceOf.le hx)) hFne
+  change Module.finrank ℝ (affineSpan ℝ (base F.1.toPointedCone u)).direction + 1 =
+    Module.finrank ℝ (Submodule.span ℝ (F.1 : Set A)) at hh
   have hf := F.2
   omega
 
@@ -325,6 +337,8 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hgen : Submodule.span ℝ (C : Set A) = ⊤)
     (hdim : 2 ≤ Module.finrank ℝ A) (hZ : zeroGluing C u) :
     (∀ F : facets C,
+      Convex ℝ (base F.1.toPointedCone u) ∧
+      IsExtreme ℝ (base C u) (base F.1.toPointedCone u) ∧
       Module.finrank ℝ (affineSpan ℝ (base F.1.toPointedCone u)).direction + 2 =
         Module.finrank ℝ A) ∧
     (∀ F : facets C, ∃ p : pure C u,
@@ -334,8 +348,12 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
       Function.Injective v ∧ Nat.card (facets C) ≤ Nat.card (pure C u) ∧
         ∀ F G, (v G : A) ∈ F.1 ↔ (v F : A) ∈ G.1) := by
   classical
-  refine ⟨facet_slice_dimension hstrict hdim,
-    facet_exclusion hclosed hstrict hgen hdim hZ, ?_⟩
+  refine ⟨?_, facet_exclusion hclosed hstrict hgen hdim hZ, ?_⟩
+  · intro F
+    refine ⟨base_convex F.1.toPointedCone u, ?_, facet_slice_dimension hstrict hdim F⟩
+    refine ⟨fun x hx => ⟨F.1.isFaceOf.le hx.1, hx.2⟩, ?_⟩
+    intro x hx y hy z hz hseg
+    exact ⟨F.1.isFaceOf.isExtreme.left_mem_of_mem_openSegment hx.1 hy.1 hz.1 hseg, hx.2⟩
   intro v hv
   have hinj : Function.Injective v := by
     intro F G he
@@ -345,7 +363,8 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     apply PointedCone.Face.ext
     intro x
     by_cases hx0 : x = 0
-    · simp [hx0]
+    · subst x
+      exact iff_of_true F.1.toPointedCone.zero_mem G.1.toPointedCone.zero_mem
     have hinc (F G : facets C)
         (hb : base F.1.toPointedCone u = base G.1.toPointedCone u)
         (hx : x ∈ F.1) : x ∈ G.1 := by
