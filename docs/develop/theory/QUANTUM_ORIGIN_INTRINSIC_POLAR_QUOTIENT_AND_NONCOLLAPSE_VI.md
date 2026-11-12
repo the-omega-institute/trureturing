@@ -2838,3 +2838,694 @@ Hildebrand §9的复余维二秩事实已在96.5给出所需证明。
 [H96]: https://arxiv.org/html/1409.4781v2
 
 ## 追加锚（本行以下为增补区）
+
+## 97. 实四维全余维的纯零拼合、曲线障碍与最小次数归约
+
+### 97.1 原单位、全效应与实射影分支
+
+**定义 97.1（原ROG数据与线性拼接）。** 保留96.1的整个原 $(V,C,u,K,P,[0,u]_{C^*})$，
+其中 $u$ 在 $C\setminus\{0\}$ 上严格正。实域只经93.2的共同支撑限制及行列式最大点归一化，
+复域只经94.2的对应归一化，使用96.1的同一个保原单位整锥同构 $\Psi$。
+实域运输后的记号为
+
+$$
+L\subseteq\operatorname{Sym}_n(\mathbb R),\qquad
+C=L\cap\operatorname{PSD}_n,\qquad I_n\in L,\qquad
+u=\operatorname{tr}|_L,\qquad c=\dim_{\mathbb R}L^\perp.
+\tag{97.1}
+$$
+
+$n$ 是共同支撑的实维数；复域的 $n$ 则是复共同支撑维数，$c$ 在 $\operatorname{Herm}_n(\mathbb C)$
+这一实空间中计算。两种余维不混用，复秩一也不实化为实秩一。
+全部纯点、任意混态、全部 proper 效应和确认集均随 $\Psi$ 及其对偶双射运输。
+沿用96.1的 $F_p,T_p,\perp,\mathrm G_2$ 及完整 $\mathrm{Z0}$，特别是
+
+$$
+\mathrm G_2:\quad
+\forall p,q,r\in P,\quad
+p\perp q\ \land\ p\perp r\ \Longrightarrow\ p\perp(q+r)/2.
+\tag{97.2}
+$$
+
+这里各个前件可由不同效应实现，后件须由同一原效应同时实现两个零。
+不把 $[0,u]_{C^*}$ 换成环境正收缩的限制族。
+
+在实域令 $\mathcal X$ 为集合
+$\{[v]\in\mathbb{RP}^{n-1}:vv^{\mathsf T}\in L\}$ 的约化实 Zariski 闭包。
+射影簇与其实点集按上下文区分；向量张成均在 $\mathbb R$ 上取。
+称分支顺序 $\mathcal X_1,\ldots,\mathcal X_s$ 为线性拼接，若令
+$U_j=\operatorname{span}\mathcal X_j$、$U_{<j}=\sum_{i<j}U_i$ 后有
+
+$$
+\mathcal X_j\cap\bigcup_{i<j}\mathcal X_i
+=\mathbb P(U_j\cap U_{<j})\qquad(2\le j\le s).
+\tag{97.3}
+$$
+
+零向量空间的射影化为空集。等号要求整个射影交叠属于两侧，不只是若干交点相同。
+这是 Blekherman–Sinn–Velasco，*Do Sums of Squares Dream of Free Resolutions?*，
+[arXiv:1607.03551v2 §3、Theorems 3.1、3.11、3.12][BSV97reg] 所用的线性拼接。
+二正则性指理想的 Castelnuovo–Mumford 正则性至多二；整个射影空间另行处理。
+这些成熟结构结果只作为下列新推导的前置。
+
+### 97.2 线性拼接上整个原效应区间的延拓
+
+**引理 97.2（指定拼接的正回缩与全部效应满射）。** 在(97.1)中，设全部纯射线的实射影集为
+$Y\cup Z$，两侧向量张成为 $U,W$，并有
+
+$$
+U+W=\mathbb R^n,\qquad S=U\cap W,\qquad
+Y\cap Z=\mathbb P(S).
+\tag{97.4}
+$$
+
+对一侧定义
+
+$$
+L_Y=\operatorname{span}_{\mathbb R}\{xx^{\mathsf T}:[x]\in Y\},\qquad
+C_Y=\operatorname{cone}\{xx^{\mathsf T}:[x]\in Y\},\qquad u_Y=u|_{L_Y},
+\tag{97.5}
+$$
+
+另一侧同样定义。则 $C_Y=L_Y\cap\operatorname{PSD}(U)$，它是原锥中支撑于 $U$ 的全部元素；
+两侧各自为实ROG截面。存在固定原 $C_Y$ 的正线性回缩 $R_Y:L\to L_Y$，满足
+
+$$
+u_Y(R_YX)\le u(X)\quad(X\in C),\qquad
+[0,u]_{C^*}\longrightarrow[0,u_Y]_{C_Y^*},\quad f\longmapsto f|_{L_Y}
+\text{ 为满射}.
+\tag{97.6}
+$$
+
+交换两侧亦成立。若原载体满足 $\mathrm G_2$，两侧便各自满足以其全部 proper 效应定义的 $\mathrm G_2$。
+
+证明。由(97.4)，$Z\cap\mathbb P(U)=\mathbb P(S)\subseteq Y$，故
+$(Y\cup Z)\cap\mathbb P(U)=Y$。原PSD矩阵的有限ROG分解中，每个向量都属于该矩阵的像空间：
+若 $X=\sum_kx_kx_k^{\mathsf T}$ 且 $h\in\ker X$，则 $\sum_k(h^{\mathsf T}x_k)^2=0$。
+因此原锥支撑于 $U$ 的元素恰由 $Y$ 中秩一元生成。
+$L_Y\subseteq L$，遂得(97.5)的截面等式；同理处理 $Z$。
+
+在已经由原 $u$ 取得的欧氏内积中，令 $\pi_S:W\to S$ 为正交投影，定义
+
+$$
+T:U+W\to U,\qquad T|_U=I_U,\quad T|_W=\pi_S,\qquad
+R_Y(X)=TXT^{\mathsf T}.
+\tag{97.7}
+$$
+
+两定义在 $S$ 上同为恒等，故 $T$ 良定义。若 $[x]\in Y$，则 $Tx=x$；
+若 $[x]\in Z$，则 $Tx\in S$，其像为零或属于 $Y$ 的秩一生成元。
+故 $R_Y(C)\subseteq C_Y$，且 $R_Y$ 在 $C_Y$ 及其张成 $L_Y$ 上为恒等。
+在 $Y$ 的生成元上 $\|Tx\|^2=\|x\|^2$，在 $Z$ 的生成元上
+$\|Tx\|^2\le\|x\|^2$；对同一ROG分解逐项相加即给(97.6)的单位不等式。
+这里不要求 $T$ 在整个环境向量空间上为收缩。
+
+任取 $f_Y\in[0,u_Y]_{C_Y^*}$，置 $f=f_Y\circ R_Y$。对每个原 $X\in C$，
+
+$$
+0\le f(X)\le u_Y(R_YX)\le u(X),\qquad f|_{L_Y}=f_Y.
+\tag{97.8}
+$$
+
+这同时控制原效应和其补，证明的是整个局部 proper 区间到整个原 proper 区间的延拓。
+局部纯点都是原归一秩一纯点。将局部两个零见证分别延拓，使用原 $\mathrm G_2$，
+再把所得共同确认效应限制回来，便得局部 $\mathrm G_2$。证毕。
+
+**推论 97.3（一般实ROG的不可约分支继承原 $\mathrm G_2$）。** 对任意(97.1)，
+$\mathcal X$ 非退化、约化、全实，且
+
+$$
+\mathcal X(\mathbb R)=\{[v]:vv^{\mathsf T}\in L\},\qquad
+I(\mathcal X)_2=L^\perp.
+\tag{97.9}
+$$
+
+若 $\mathcal X\ne\mathbb P^{n-1}$，它二正则，且有(97.3)的不可约最小次数分支序列。
+原 $\mathrm G_2$ 传到每个分支在自身张成中的完整ROG载体，单位是原 $u$ 的限制，效应是该分支的全部 proper 效应。
+
+证明。$I_n\in L$ 使 $C$ 在 $L$ 中有内部，所以 $\operatorname{span}C=L$。
+ROG因而给
+
+$$
+L=\operatorname{span}_{\mathbb R}\{vv^{\mathsf T}:vv^{\mathsf T}\in L\}.
+\tag{97.10}
+$$
+
+用迹配对将二次型表示为 $q_N(v)=v^{\mathsf T}Nv$。
+它在定义 $\mathcal X$ 的实点集上消失，当且仅当 $N\perp L$，由闭包定义即得(97.9)的理想等式。
+所有这些二次型都在 $\mathcal X$ 上消失，故其实点仍满足原秩一约束；反向包含由闭包定义成立。
+$\mathcal X$ 按构造约化且全实。$I_n$ 的ROG分解中的向量张成整个 $\mathbb R^n$，
+所以 $I(\mathcal X)_1=0$，即非退化。
+
+在 $\mathbb R[\mathcal X]_2$ 中记非负二次型锥为 $\mathcal P_{\mathcal X}$，线性形式平方和锥为
+$\Sigma_{\mathcal X}$。由(97.9)及对平方的非负性，成熟的 Hankel 对偶识别准确给
+
+$$
+\Sigma_{\mathcal X}^*=I(\mathcal X)_2^\perp\cap\operatorname{PSD}_n=C
+=\operatorname{cone}\{vv^{\mathsf T}:[v]\in\mathcal X(\mathbb R)\}
+=\mathcal P_{\mathcal X}^*.
+\tag{97.11}
+$$
+
+最后一个等号也可由紧的实射影点评价集取锥再用有限维双极性得到；迹一截面紧，故此锥闭。
+若 $\mathcal X$ 是整个射影空间，(97.9)给 $L=\operatorname{Sym}_n$。
+否则 [BSV Theorem 3.1][BSV97reg] 的闭、约化、全实及非整个空间前件已满足，故 $\mathcal X$ 二正则；
+其 Theorem 3.11 给(97.3)及各分支在自身张成中的最小次数性质。
+Theorem 3.12 中的“截面穿过正定内部”和“所有极射线秩一”在这里分别由 $I_n\in L$ 和ROG给出，
+其 $L=I(\mathcal X)_2^\perp$ 与(97.9)一致。
+没有在这些定理之外另加稀疏图、坐标单项式或 chordal 前件。
+
+每个不可约分支全实：移去其余有限个分支后所得的非空开子集，其实点仍 Zariski 稠密。
+在(97.3)最后一步，$Y=\bigcup_{i<s}\mathcal X_i(\mathbb R)$ 与
+$Z=\mathcal X_s(\mathbb R)$ 满足97.2的整个交叠条件。
+97.2同时给前缀及最后分支的完整截面、效应延拓和 $\mathrm G_2$ 继承；
+再对前缀递归，便取得每个分支，而不要求中途 $I_{U_j}\in L_j$。
+若须在分支内部使用(96.1)，对其严格正单位 $u|_{L_j}$ 重新应用93.2，双射运输全部局部效应。
+因此不把 $\operatorname{tr}|_{L_j}$ 与一个未经证明属于 $L_j$ 的 $I_{U_j}$ 同时预设。
+整个论证只给(97.3)这些拼接的效应延拓，不断言任意面的效应都可延拓。证毕。
+
+### 97.3 有理正规曲线的全域四重零分裂
+
+**定理 97.4（任意严格正原单位下的曲线障碍）。** 对任意 $d\ge2$，令
+
+$$
+\nu_d(s,t)=(s^d,s^{d-1}t,\ldots,t^d)^{\mathsf T},\qquad
+L_d=\operatorname{span}_{\mathbb R}\{\nu_d(s,t)\nu_d(s,t)^{\mathsf T}:(s,t)\ne0\},\qquad
+C_d=L_d\cap\operatorname{PSD}_{d+1}.
+\tag{97.12}
+$$
+
+对 $C_d\setminus\{0\}$ 上任意严格正原泛函 $u$，取整个原基及其全部 proper 效应。
+则 $\mathrm G_2$ 失败：存在原纯点 $p,q,r$，满足
+
+$$
+T_p(q)=T_p(r)=0,\qquad T_p((q+r)/2)>0.
+\tag{97.13}
+$$
+
+同一结论在任意可逆整体合同表示中成立。
+
+证明。有理正规曲线非退化、全实且次数等于余维加一。
+Blekherman–Smith–Velasco，*Sums of Squares and Varieties of Minimal Degree*，
+[arXiv:1308.0751v1 Theorem 1.1、Example 4.5][BSV97min] 因而适用：其非负二次型都是线性形式平方和。
+对偶识别给 $C_d$ 由曲线的实点评价秩一射线生成，故它确为ROG。
+这里还使用该例中有理正规曲线的二次理想：它由
+$\left(\begin{smallmatrix}x_0&\cdots&x_{d-1}\\x_1&\cdots&x_d\end{smallmatrix}\right)$
+的二阶子式生成。因此 $C_d$ 的全部秩一纯射线恰为(97.12)的参数族，没有额外纯点。
+这只是所引成熟结果在以下障碍证明中的前置。
+
+先保留任意原 $u$。对原泛函 $f\in L_d^*$ 定义二元齐次形式
+
+$$
+F_f(s,t)=f(\nu_d\nu_d^{\mathsf T}),\qquad
+U(s,t)=u(\nu_d\nu_d^{\mathsf T}),\qquad
+p_{[s:t]}=\frac{\nu_d\nu_d^{\mathsf T}}{U(s,t)}.
+\tag{97.14}
+$$
+
+$U$ 在所有非零实向量上严格正。每个次数 $2d$ 的二元单项式都是两个次数 $d$ 单项式的乘积，
+所以环境二次型拉回曲线满射到 $\mathbb R[s,t]_{2d}$；其核恰为 $L_d^\perp$。
+故 $f\mapsto F_f$ 是 $L_d^*$ 与全部次数 $2d$ 二元形式的线性同构，且由ROG有精确字典
+
+$$
+f\in[0,u]_{C_d^*}\ \Longleftrightarrow\ 0\le F_f\le U
+\quad\text{在全部 }\mathbb R^2\text{ 上成立}.
+\tag{97.15}
+$$
+
+确认参数 $\zeta$ 是 $F_f(\zeta)=U(\zeta)$，排除参数 $\eta$ 是 $F_f(\eta)=0$。
+此字典包含整个原效应区间，不把非负性换成环境正收缩。
+
+为取得可排除开弧，现准确使用93.2及96.1的同单位归一化。
+它将嵌入变成 $A\nu_d$，$A$ 为可逆实矩阵，得到 $I_{d+1}\in L$、$u=\operatorname{tr}$。
+(97.14)—(97.15)仍成立，只将 $\nu_d$ 换成 $A\nu_d$；
+特别 $U=\|A\nu_d\|^2$，并非预设原任意单位已是标准迹。
+$\dim L=2d+1$，故 $\dim L^\perp=d(d-1)/2>0$。
+取非零 $N\in L^\perp$。纯向量张成整个环境，故存在原单位纯向量 $v$ 满足 $Nv\ne0$。
+由纯点约束 $v^{\mathsf T}Nv=0$。96.2的同一补框架给
+
+$$
+I_{d+1}=vv^{\mathsf T}+\sum_{j=2}^{d+1}w_jw_j^{\mathsf T},\qquad
+(v,w_2,\ldots,w_{d+1})\text{ 正交归一}.
+\tag{97.16}
+$$
+
+至少一个 $w=w_j$ 满足 $v^{\mathsf T}Nw\ne0$。
+曲线的实参数在 $w$ 附近有连续局部单位提升 $w(\tau)$。
+对充分靠近该参数的 $\tau$，置
+
+$$
+\alpha(\tau)=-\frac{v^{\mathsf T}w(\tau)}{v^{\mathsf T}Nw(\tau)},\qquad
+M(\tau)=I+\alpha(\tau)N,\qquad E(\tau)=M(\tau)vv^{\mathsf T}M(\tau).
+\tag{97.17}
+$$
+
+在 $w$ 处 $\alpha=0$，故缩小邻域后 $M\succ0$。
+又 $v^{\mathsf T}Mv=1$、$v^{\mathsf T}Mw(\tau)=0$。
+因为 $E=M^{1/2}zz^{\mathsf T}M^{1/2}$、$z=M^{1/2}v$ 且 $\|z\|=1$，有 $0\preceq E\preceq M$。
+$M-I\in L^\perp$ 使 $M$ 在原 $L$ 上表示同一个原单位，故
+$f_\tau(X)=\operatorname{tr}(E(\tau)X)$ 是原 proper 效应，确认 $p=vv^{\mathsf T}$
+并排除 $w(\tau)w(\tau)^{\mathsf T}$。于是
+
+$$
+Z_p=\{\eta\in\mathbb{RP}^1:p\perp p_\eta\}
+\tag{97.18}
+$$
+
+含非空开弧。确认集 $F_p$ 紧，$(f,\eta)\mapsto f(p_\eta)$ 连续，
+所以其零集在 $F_p\times\mathbb{RP}^1$ 中紧，投影 $Z_p$ 闭。
+而 $p\not\perp p$，故 $Z_p$ 不是整个射影圆周。
+取 $\operatorname{int}Z_p$ 的一个非空连通分支及其一个端点 $a$。
+则 $a\in\partial Z_p\subset Z_p$，并有不同于 $a$ 的 $a_j\in Z_p$ 趋于 $a$。
+端点确为 $Z_p$ 的边界：若它在 $Z_p$ 内部，该开分支便可越过端点延长。
+
+反设 $\mathrm G_2$ 成立。参数作一个实射影变换，将确认点 $p$ 放到无穷远；
+它与 $a$ 不同，故 $a$ 为有限实参数。次数 $d$ 的完整二元线性系在此变换下仍由可逆矩阵运输，
+(97.15)保持原效应的全部量词。
+以下将齐次形式写为仿射多项式 $F(z)=F(z,1)$、$U(z)=U(z,1)$，
+无穷远的齐次值就是 $z^{2d}$ 的系数，且 $U(\infty)>0$。
+对每个 $j$，$\mathrm G_2$ 给原效应 $F_j$，满足
+
+$$
+0\le F_j\le U,\qquad F_j(\infty)=U(\infty),\qquad
+F_j(a)=F_j(a_j)=0.
+\tag{97.19}
+$$
+
+实非负多项式的每个实零具有偶数重数，故
+
+$$
+F_j(z)=(z-a)^2(z-a_j)^2G_j(z),\qquad
+\deg G_j\le2d-4,\qquad G_j(z)\ge0\quad(z\in\mathbb R).
+\tag{97.20}
+$$
+
+$0\le F_j\le U$ 使 $F_j$ 的系数有界：在固定的 $2d+1$ 个不同有限实参数处，
+取值有界，Vandermonde 逆矩阵遂界定全部系数。
+取收敛子列。除数首一且系数连续趋于 $(z-a)^4$，多项式长除的递推使商系数亦连续收敛。
+故极限给
+
+$$
+F(z)=(z-a)^4G(z),\qquad G\ge0,\qquad
+0\le F\le U,\qquad F(\infty)=U(\infty)>0.
+\tag{97.21}
+$$
+
+对 $\varepsilon>0$ 定义同次数的候选形式，其仿射式为
+
+$$
+F_\varepsilon(z)=\bigl((z-a)^2-\varepsilon^2\bigr)^2G(z).
+\tag{97.22}
+$$
+
+它非负且最高次系数不变，故仍确认无穷远的同一个原 $p$。
+当 $|z-a|\ge\varepsilon/\sqrt2$ 时，
+
+$$
+F_\varepsilon(z)-F(z)
+=\bigl(\varepsilon^4-2\varepsilon^2(z-a)^2\bigr)G(z)\le0.
+\tag{97.23}
+$$
+
+为控制剩余区域，固定 $\delta>0$，令
+$m=\min_{|z-a|\le\delta}U(z)>0$、$B=\max_{|z-a|\le\delta}G(z)\ge0$。
+取所有充分小 $\varepsilon>0$ 使 $\varepsilon<\delta$、$\varepsilon^4B\le m$。
+在 $|z-a|<\varepsilon/\sqrt2$ 中有
+$0\le F_\varepsilon(z)\le\varepsilon^4B\le U(z)$；外部由(97.23)控制，
+无穷远仍取同一个齐次值。因此
+
+$$
+0\le F_\varepsilon\le U\text{ 在整个 }\mathbb{RP}^1\text{ 上成立},\qquad
+F_\varepsilon(a-\varepsilon)=F_\varepsilon(a+\varepsilon)=0.
+\tag{97.24}
+$$
+
+由(97.15)，每个充分小的 $\varepsilon$ 都给一把真正的原全域确认效应。
+所以 $a$ 两侧所有充分近的参数都属于 $Z_p$，加上 $a\in Z_p$，说明 $a$ 是内点，与边界矛盾。
+故 $\mathrm G_2$ 失败，存在其失败三纯点；$F_p$ 的紧性使无共同零时的中点最小值严格正，得(97.13)。
+最后以整锥同构及其对偶运回任意原 $u$ 或任意整体合同表示。
+$d=1$ 则是完整实二阶块，93.2给 $\mathrm G_2$，所以次数下界不能删去。证毕。
+
+### 97.4 任意线性分支拼接的确切四分之一障碍
+
+**定理 97.5（非零交叠与原归一化下的正交完整块）。** 在(97.1)中，若
+$\mathcal X$ 的全部不可约分支都是线性空间 $\mathbb P(U_i)$，按(97.3)排序，
+且某一步交叠非零，则在整个原效应区间中存在原纯点 $p,q_+,q_-$，满足
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad
+T_p\bigl((q_++q_-)/2\bigr)=\frac14.
+\tag{97.25}
+$$
+
+因此在这一不限 $n,c$ 的线性分支族内，$\mathrm G_2$ 当且仅当所有拼接交叠为零；
+成立时原归一化坐标中的 $U_i$ 必彼此正交，并有
+
+$$
+\mathbb R^n=\mathop{\bigoplus}\limits_i^{\perp}U_i,\qquad
+L=\bigoplus_i\operatorname{Sym}(U_i),\qquad
+C=\bigoplus_i\operatorname{PSD}(U_i).
+\tag{97.26}
+$$
+
+证明。取第一次非零交叠的步骤 $j$。此前 $U_{<j}=\bigoplus_{k<j}U_k$ 是代数直和，
+尚不预设这些空间相互正交。令 $S=U_j\cap U_{<j}\ne0$。
+(97.3)给 $\mathbb P(S)\subseteq\bigcup_{k<j}\mathbb P(U_k)$。
+实向量空间不能由有限个真线性子空间覆盖，所以 $S\subseteq U_i$ 对某个 $i<j$ 成立。
+于是 $U_j\cap U_i=S$；$S$ 是 $U_i,U_j$ 的真子空间，
+否则一个不可约分支会包含于另一个，或 $\mathbb P(U_j)$ 会包含于先前分支之并。
+
+用(97.1)的内积选单位向量
+
+$$
+d\in S,\qquad a\in U_i\cap S^\perp,\qquad b\in U_j\cap S^\perp,
+\qquad v=(a+d)/\sqrt2,\quad w_\pm=(d\pm b)/\sqrt2,
+\tag{97.27}
+$$
+
+并置 $p=vv^{\mathsf T}$、$q_\pm=w_\pm w_\pm^{\mathsf T}$。
+这些都是同一个原基中的纯点，只用到了 $a\perp d$、$b\perp d$，不要求 $a\perp b$。
+在完整子锥 $\operatorname{PSD}(U_i)$ 上，取投影到 $v$ 的效应。
+为排除 $q_+$，在 $\operatorname{PSD}(U_j)$ 上取投影到 $(d-b)/\sqrt2$ 的效应；
+为排除 $q_-$，改取投影到 $(d+b)/\sqrt2$ 的效应。
+每次两侧在整个 $S$ 上的二次型都同为
+
+$$
+x\longmapsto\tfrac12\langle d,x\rangle^2\qquad(x\in S).
+\tag{97.28}
+$$
+
+下面核对相容二次型确实定义原效应。先在代数直和 $U_{<j}$ 中，
+对 $U_i$ 使用上述投影，对其余 $U_k$ 使用零，任选不同直和项间的对称交叉块。
+这在每个先前纯分支上均介于零与原迹单位之间。
+再选 $U_{<j}=S\oplus A_0$、$U_j=S\oplus B_0$。
+相容性(97.28)使两个二次型的 $S,S$ 块相同；
+保留各自的 $S,A_0$、$A_0,A_0$ 及 $S,B_0$、$B_0,B_0$ 块，任选 $A_0,B_0$ 交叉块，
+便得 $U_{<j}+U_j$ 上的一个实二次型。
+其原泛函在该前缀的每条纯生成射线上都在 $[0,u]$，ROG因而使它在整个前缀锥上 proper。
+97.2沿其后的拼接逐次延拓它到整个原载体，仍确认 $p$ 并排除指定的 $q_+$ 或 $q_-$。
+这给(97.25)的两个零，而不把拼成的二次型要求为环境正收缩。
+
+反过来，任一原 $g\in F_p$ 在完整 $\operatorname{PSD}(U_i)$ 上的限制由
+$0\preceq E_i\preceq I_{U_i}$ 表示，且 $E_iv=v$，因此 $E_i\succeq vv^{\mathsf T}$。
+故 $g(dd^{\mathsf T})\ge|\langle v,d\rangle|^2=1/2$，又 $g(bb^{\mathsf T})\ge0$。
+利用准确的原矩阵恒等式
+
+$$
+\frac{q_++q_-}{2}=\frac{dd^{\mathsf T}+bb^{\mathsf T}}2
+\tag{97.29}
+$$
+
+可知每个原确认者在该中点上至少取 $1/4$。
+为达到下界，在 $U_i$ 上仍取投影到 $v$，在 $U_j$ 上取 $\tfrac12dd^{\mathsf T}$，
+在其余先前分支上取零。两侧仍满足(97.28)，故同样拼成并延拓为原 proper 效应。
+它在 $dd^{\mathsf T},bb^{\mathsf T}$ 上分别取 $1/2,0$，所以中点恰取 $1/4$。
+这证明(97.25)，包括对全部原确认效应的最小性。
+
+若 $\mathrm G_2$ 成立，每次交叠只能为零，于是 $\mathbb R^n=\bigoplus_iU_i$。
+由原ROG和全部纯分支，$I_n=\sum_iX_i$，其中 $X_i\succeq0$、$\operatorname{ran}X_i\subseteq U_i$。
+将各 $X_i$ 分解为满列秩 $B_iB_i^{\mathsf T}$。有
+
+$$
+n=\operatorname{rank}I_n\le\sum_i\operatorname{rank}X_i
+\le\sum_i\dim U_i=n.
+\tag{97.30}
+$$
+
+故每个列组恰张成 $U_i$，拼成的 $n\times n$ 方阵 $B=(B_1\ \cdots\ B_s)$ 满足
+$BB^{\mathsf T}=I_n$，所以 $B$ 正交，所有 $U_i$ 彼此正交。
+再由(97.10)及每个完整线性分支上的秩一张成得(97.26)。
+反向，完整正交实块中，全部原确认效应支配 $X\mapsto\operatorname{tr}(pX)$；
+93.2给 $T_p(x)=\operatorname{tr}(px)$ 和完整 $\mathrm{Z0}$，故给 $\mathrm G_2$。证毕。
+
+### 97.5 全部实共同支撑四维以内的闭合
+
+**定理 97.6（实 $n\le4$、任意实余维的完整桥）。** 对任意原实ROG载体及任意严格正原 $u$，
+若93.2的共同支撑维数 $n\le4$，则在整个原锥、全部原混态与全部原 proper 效应上，
+
+$$
+\mathrm G_2\ \Longleftrightarrow\ \mathrm{Z0}
+\ \Longleftrightarrow\ S
+\ \Longleftrightarrow\
+L\text{ 在原(97.1)中经正交换基成为完整实对称块直和}.
+\tag{97.31}
+$$
+
+它们同时等价于原归一化 $L$ 的谱正负部分闭合、Jordan闭合及96.3的全部可排除纯对矩阵正交。
+成立时
+
+$$
+[0,u]=\{f_E:E\in L,\ 0\preceq E\preceq I_n\},\qquad
+e_p(X)=\operatorname{tr}(pX),\qquad T_p(x)=\operatorname{tr}(px)
+\quad(p\in P,\ x\in K),
+\tag{97.32}
+$$
+
+并给同一原 $\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$ 及89.4的规范商。
+
+证明。97.3将一般实ROG送入不可约最小次数分支的线性拼接，并把原 $\mathrm G_2$ 传给每个分支。
+这里使用的成熟最小次数分类为 [Blekherman–Smith–Velasco 引言所列目录及 Examples 4.3—4.5][BSV97min]，
+其所引 Eisenbud–Harris，*On Varieties of Minimal Degree (a Centennial Account)*，Theorem 1：
+在代数闭域中，非退化不可约最小次数簇是线性空间、二次超曲面、有理正规卷轴，
+或 Veronese 曲面的锥；曲线情形是有理正规曲线。
+对自身射影张成维数 $m\le3$，这个目录精确缩为
+
+| $m$ | 可能的非线性不可约分支 | 在本证明中的排除 |
+| --- | --- | --- |
+| $0,1$ | 无 | 只余线性空间 |
+| $2$ | 光滑平面二次曲线 | 97.4的 $d=2$，也属余维一桥 |
+| $3$ | 二次曲面，含二次锥面 | 自身矩阵载体的实余维一，使用96.8 |
+| $3$ | 扭曲三次曲线 | 97.4的 $d=3$ |
+
+须先说明这张表对实形式仍穷尽。97.3的每个实不可约分支全实。
+若其复化有不同共轭分支，所有实点只能落在这些分支的交叠这一真闭子集中，与实点稠密矛盾；
+因此它几何整，可应用上述几何分类。
+目录中的低维非线性曲线在复域上光滑、几何亏格零，在实域中又有实点。
+光滑实亏格零曲线有实点时即为 $\mathbb P^1_{\mathbb R}$：以该点为次数一除子，
+Riemann–Roch给其无基点的二维完全线性系和次数一同构。
+原超平面束的次数为 $d=2$ 或 $3$；$\operatorname{Pic}(\mathbb P^1_{\mathbb R})=\mathbb Z$
+使它等于 $\mathcal O(d)$，且非退化嵌入使用全部 $d+1$ 个截面。
+故实射影换基后正是97.4的实参数曲线，不遗漏另一种无实参数的曲线形式。
+
+实二次曲面的所有几何整全实形式也留在同一个余维一分支中。
+准确说，定义二次型可经实合同对角化；在四维向量张成中，其秩为四且符号为 $(3,1)$ 或 $(2,2)$
+（忽略整体负号），或秩为三且非零部分符号为 $(2,1)$，后者为二次锥面。
+定号形式的实点为空或只在顶点空间，不能全实；秩至多二的形式非几何整或非约化。
+三维向量张成的非线性二次曲线同理由秩三不定形式给出。
+不需要二次曲面是分裂曲面，也不把椭圆型实二次曲面漏掉。
+
+现排除所有非线性二次超曲面，论证同时适用于更高维的该族。
+它在自身张成中的二次理想是一维，故局部 $L_j$ 在 $\operatorname{Sym}(U_j)$ 中的实余维为一。
+97.3已给完整局部ROG截面、严格正的原限制单位及全部局部效应；
+对该单位使用93.2再归一化，合同仍保实余维一。
+96.8的已证明方向 $\mathrm G_2\Rightarrow\mathrm{Z0}$ 遂适用，93.2再给完整实块。
+这些完整块的纯射线簇是若干射影线性空间之并；不可约性迫使只有一个，
+于是分支本身是整个射影线性空间，与非线性二次超曲面矛盾。
+曲线分支则直接由97.4排除。
+上述使用的低余维桥是第96章的已述结论，不另假设 Helly 二元性质或未列出的分类前件。
+
+$n\le4$ 使每个 $m=\dim U_j-1\le3$，故表中已耗尽全部非线性分支。
+剩下的线性分支由97.5排除非零交叠，并在原归一化坐标中给完整正交实块。
+反向及其余等价准确复用93.2、96.3：完整块给(97.32)、least性、互反及所有混态零面；
+完整 $\mathrm{Z0}$ 限制纯量词便给 $\mathrm G_2$。
+原 $\mathrm B$ 在实ROG域已由93.2自动得到，89.4随后给 $\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$。
+全部结果沿 $\Psi^{-1}$ 返回同一个原 $(V,C,u)$，包括 $n=1$ 的单点和空排除集。
+
+特别在 $n=4$ 时，96.2的原框架使 $\dim L\ge4$，所以 $0\le c\le6$。
+完整块的大小构成 $4$ 的一个分割，且
+
+$$
+c=10-\sum_i\frac{n_i(n_i+1)}2=\sum_{i<j}n_in_j,\qquad \sum_i n_i=4.
+\tag{97.33}
+$$
+
+故所有实余维的准确表为
+
+| $n=4$ 的 $c$ | 满足 $\mathrm G_2$ 的原归一化 $L$，按正交换基 | 完整 $\mathrm{Z0}$ |
+| --- | --- | --- |
+| $0$ | $\operatorname{Sym}_4(\mathbb R)$ | 成立 |
+| $1$ | 不存在满足 $\mathrm G_2$ 的实ROG载体 | 也不成立 |
+| $2$ | 不存在满足 $\mathrm G_2$ 的实ROG载体 | 也不成立 |
+| $3$ | $\operatorname{Sym}_3(\mathbb R)\oplus\mathbb R$ | 成立 |
+| $4$ | $\operatorname{Sym}_2(\mathbb R)\oplus\operatorname{Sym}_2(\mathbb R)$ | 成立 |
+| $5$ | $\operatorname{Sym}_2(\mathbb R)\oplus\mathbb R\oplus\mathbb R$ | 成立 |
+| $6$ | $\mathbb R^4$，即全部对角矩阵 | 成立 |
+
+表中不存在的是满足这些等价条件的模型，不是否认相应余维的ROG截面存在。
+每个列出的完整块本身都是同一域内的ROG模型并满足全部效应结论；
+同一 $c\ge3$ 的其他实ROG空间若不具表中块形，则 $\mathrm G_2$ 和完整 $\mathrm{Z0}$ 都失败。
+本表在 $\operatorname{Sym}_4(\mathbb R)$ 中计算，不给复环境的余维表。证毕。
+
+### 97.6 一般实域只剩哪些不可约最小次数分支
+
+**定理 97.7（一般实域反例的严格不可约归约）。** 若某个有限维实ROG原载体满足
+$\mathrm G_2$ 而不满足完整 $\mathrm{Z0}$，则它的97.3分支中至少有一个非线性不可约分支，
+该分支的完整ROG载体在原限制单位下仍满足 $\mathrm G_2$ 而不满足 $\mathrm{Z0}$。
+这个分支不是二次超曲面，也不是任何次数的非线性有理正规曲线；
+它的维数至少二，自身向量张成维数至少五。
+因此，证明所有剩余的不可约、非线性、全实最小次数分支均违反全效应 $\mathrm G_2$，
+就足以证明任意有限维实ROG的 $\mathrm G_2\Rightarrow\mathrm{Z0}$。
+
+证明。若所有分支线性，97.5已由 $\mathrm G_2$ 给完整块及 $\mathrm{Z0}$，矛盾。
+选一个非线性分支，97.3把完整 $\mathrm G_2$ 传入。
+若它有 $\mathrm{Z0}$，93.2将其分类为完整实块；不可约性再迫其纯射线簇为线性空间，矛盾。
+故分支本身就是一个较小或相同支撑的真实反例候选。
+97.4排除所有非线性有理正规曲线，97.6证明中的余维一论证在任意维数排除二次超曲面。
+最小次数的不可约曲线只有有理正规曲线，所以剩余分支维数至少二；
+97.6的低射影维数表使其自身向量张成维数至少五。
+反过来，任何这样的剩余分支若确实满足 $\mathrm G_2$，它本身就是原问题的实ROG反例，
+因为非线性不可约性排除 $\mathrm{Z0}$；这给所述归约的两个方向。
+
+按成熟最小次数目录，剩余分支的复化属于更高维有理正规卷轴，或 Veronese 曲面及其锥的类型；
+实形式仍须满足约化、非退化、全实前件，不能只凭复类型直接选定一个分裂实模型。
+这里没有排除这些高维分支，也没有从曲线底或某个面上的障碍推出其整个锥的障碍。
+97.2的效应延拓只依赖整片线性交叠，不适用于任意截面或任意面。
+在多变量情形，两个邻近零点不自动给出可作(97.22)分裂的单变量四重因子；
+同时维持全域 $f\ge0$ 与 $u-f\ge0$ 的替代构造尚未由上述证明提供。
+这个缺口是剩余族的具体数学义务，不是高维反例的存在证明。
+
+结合96.9，任何未被排除的实反例现在必须 $n\ge5,c\ge3$；
+复反例仍只知必须 $n\ge3,c\ge3$，特别复 $n=3,c=3$ 未由本章判定。
+实射影二正则分类不处理 Hermitian 秩一零集，不能经实化把(97.31)搬入复域。
+一般整球载体也不自动具有原补投影、ROG表示或这些分支结构，
+所以一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 仍不由本归约闭合。证毕。
+
+### 97.7 并入原低余维域的同数据完整候选
+
+**定义 97.8（四维实域与低余维域的单一候选）。** 固定89.7、94.5和96.10的同一个原装饰元组
+$\mathcal O$，完整保留共同 $\mathfrak S(\mathcal O)$。
+沿用96.10的 $\mathcal N_{89.7}(\mathcal O)$：它准确指89.7除每个 $X=A,D,E$ 的
+$\mathrm B+\mathrm{Boundary}$ 几何项外的全部原条件，原量词及原对象均保留。
+定义 $\mathcal D_*(\mathcal O)$ 为：每个原 $X=A,D,E$ 具有一个96.1的整个实或复ROG表示，
+原 $u_X$ 任意严格正；各自仅按93.2或94.2归一化，并满足
+
+$$
+\bigl[c_X\le2\bigr]\quad\text{或}\quad
+\bigl[\mathbb F_X=\mathbb R\ \land\ n_X\le4\bigr].
+\tag{97.34}
+$$
+
+这是各原载体的适用域之并，不要求同一载体同时有两种域的秩一表示。
+表示一经选定，$n_X,c_X$ 均在其对应环境中计算；没有要求一般ROG额外具有二正则或线性分支公理。
+定义这一同数据完整包为
+
+$$
+\mathsf R_{\mathrm G_2,*}(\mathcal O)
+:=\mathcal D_*(\mathcal O)\ \land\ \mathcal N_{89.7}(\mathcal O)
+\ \land\ \bigwedge_{X=A,D,E}\mathrm G_2(V_X,C_X,u_X).
+\tag{97.35}
+$$
+
+原非几何条件的指称包含：整个原概率像与整个原测试像；原中点实现、零及全部非负质量缩放；
+同一原过程 $L:D\times A\to E$、同一原读回 $p:E\to D$ 的两次使用及同一 $\omega$；
+两实张成、全实 $Z$、含秩一分支的完整(83.8)、原两尺度条件、C2及整个 $G=1_E$；
+恢复精确PRE以后，同一原资格集合中同一个态的整个输出H13。
+所有原迹、伴随、中心权重、零分支及空活跃集仍按89.7定义。
+这些指称不以列举取代89.7和共同 $\mathfrak S$ 的完整正文，
+也不把矩阵子空间 $L_X$ 与原过程 $L$ 识别。
+
+**推论 97.9（同域等价、逐项量子消费者与剩余目标）。** 对定义97.8的同一个原装饰元组，
+
+$$
+\begin{aligned}
+\mathsf R_{\mathrm G_2,*}(\mathcal O)
+&\Longleftrightarrow\mathcal D_*(\mathcal O)\land\mathsf R_{\rm polar}(\mathcal O)\\
+&\Longleftrightarrow\mathcal D_*(\mathcal O)\land
+[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O),
+\end{aligned}
+\tag{97.36}
+$$
+
+并与89.8所列其余完整包在同一个 $\mathcal D_*$ 域内等价。
+在96.10原来的全复低余维子域 $\mathcal D_{\le2}^{\mathbb C}$ 上，它准确返回
+$\mathsf R_{\mathrm G_2,\le2}$ 及94.5的完整固定补态候选；
+实四维分支不因这项限制等价而被要求具有复秩一表示。
+各个量子消费者只在下表所述并完整引用94.6的原前件下应用。
+
+| 消费结论 | 本候选的几何供应、仍须保留的原前件与边界 |
+| --- | --- |
+| 全部原态、混合、效应和纯比较 | 97.6或96.8给同一原载体的完整实／复块、整个 $[0,u]$ 及全混态 least 尺。任意 $x$ 有数学正交谱混合，$T_p(x)=\operatorname{tr}(p\Theta x)$；实际准备、混合和整菜单仍由89.7的来源合同供应。 |
+| 复型与Born | 完整保留89.9的一般EJA忠实桥及同一原精确两接口66.3，才选择复型；随后全部态和效应给 $\sum_\gamma\operatorname{Tr}(E_\gamma\rho_\gamma)$，同块纯比较为内积模方，异块为零。实块中的迹配对本身不选择复型。 |
+| 指定二份／三份、张量和读回 | 同一原 $L,p,\omega$、同一 $p$ 两次、两实张成、所有实输入上的 $Z$、完整(83.8)、两尺度、C2和整个 $G=1_E$，恢复精确PRE后才消费同资格态的整个H13。这给89.9的指定张量、偏迹和 $p_{13}$，作用于整个相关锥；不供应其他括号或任意高份来源。 |
+| CP、矩形Kraus与原仪器 | 逐事件、逐未归一分支保留原实线性、唯一复HP延拓、同事件联合实线性提升、全实来源律(87.21)、全部复变量上的相容核及实际探针的准确整个输出；或使用已充分供应的递归参考与同事件全锥正性。取得CP以后才用Kraus。仪器另保留原全菜单、记录、旁观者、顺序、共同重置行、两预算、真粗粒化、总TP及分支TNI。 |
+| 既有事件的更新 | 同一CP分支的锐投影效应、全部确定接受态上的逐点中性及原输出校准，才给既有事件的Lüders唯一性。概率和效应相同不能决定后态；零质量分支保留，只有正分支质量才条件化。 |
+| 物理时间 | 原物理时间上的连续、齐次、可逆 $*$ 自同构群、实际逆、钟、单位和动态来源，才允许有限块Hamiltonian解释。单系统零拼合或一个数学谱分解不产生这组时间数据。 |
+
+证明。对(97.34)中的低余维分支，96.8给 $\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S$；
+对实 $n\le4$ 分支，97.6给同样的完整等价。实域的 $\mathrm B$ 由93.2自动成立，
+复域由94.2自动成立；89.4再给 $S\Longleftrightarrow\mathrm B+\mathrm{Boundary}$。
+逐个原 $X$ 对偶运输整个效应区间，替换的正是同一个几何位置，
+全部 $\mathcal N_{89.7}$ 与共同来源数据不变，故89.8给(97.36)。
+在全复低余维子域上，定义(97.35)与(96.38)逐项相同，96.11及94.6给所述固定补态候选等价。
+对实分支不强行使用只在复ROG域定义的94.5，而是直接通过93.2和89.8回接。
+
+表中首行的同数据含义为：若 $\Theta$ 是所取得的保原单位完整块同构，则
+$e_p(X)=\operatorname{tr}((\Theta p)(\Theta X))$，$T_p(x)=e_p(x)$ 对全部原 $x\in K$ 成立。
+实块用转置和实内积平方，复块用伴随和复内积模方；块外比较为零。
+原混态及效应不被换为完成后的扩大载体。
+数学谱分解给原锥内的纯点及其权重，不替代实际制备程序、共同测试菜单或来源。
+
+复型的相容性须在同一载体检查。若某个本来有实ROG表示的原载体还被完整复型前件识别为完整复块，
+93.4的整个二纯面维数障碍迫使该实表示的全部块均为标量：
+非标量实块内的二纯面是二维圆盘，完整复直和中的二纯面只能是一维线段或三维球。
+因此实四维新分支在同时满足全复识别时只贡献经典分支。
+全复 $c=0$ 则容纳任意大小的完整非经典复块，已包含在(97.34)的低余维项中；
+不能由“加入实四维域”推断新的非经典复型结论。
+这保持了94.6的复型选择范围，并避免用实化绕过面维数障碍。
+
+表中指定复合、CP、更新与时间各行准确调用94.6、89.7—89.10的完整原前件。
+例如H13须在恢复精确PRE后的原资格态上检验整个原输出，不能逐块换资格态；
+CP的待认证HP提升之全锥正性不能先由归一化或中点律假定。
+Kraus分解只在CP成立后使用，不由分解制造原环境、实际调用权限或未来。
+原准备、实际混合、测试、菜单、参考、副本、相关联合、记录、质量、控制、ready／flags、
+失败／拒绝／停止／销毁／返回、旧固定支撑、全部中间切口、合法未来及source-adoption，
+仍逐项使用共同 $\mathfrak S(\mathcal O)$。
+97.2的数学回缩与97.4的效应构造不自动成为实际装置。
+
+另外，94.6所引用的 [Library 二元附录][L95bit] §§1—6仍是一套完整的独立充分入口。
+其局部整个 $K,P$、原凸菜单、互反与一对效应的全空间穷尽、实际紧连通控制在整个
+$\ker u$ 单位球面上的正交传递，以及每个有限 $N$ 的原 $K_N\subset V^{\otimes N}$、
+固定乘积校准、实际产品和忠实层析，均按原前件保留。
+还须同一非局域路径的全部实参数及其在每个已给有限连通图上的全载体提升，
+保留旁观者相关坐标和原三点路径；同类型前置END或三角形第三边的同一路径才排除反射分支。
+原附录在这些前件下已经给 $d=3$、整个有限复密度基和精确实际有限字控制。
+本章不从 $\mathrm G_2$ 产生这些控制、全 $N$ 资源或END，也不把指定两三份接口当成它们。
+
+在该独立入口已识别的复寄存器上，一次实际最大纠缠输入与同一原事件、同一记录的准确整个Choi输出，
+再加独立原迹预算，仍给矩形CP、Kraus和TP／TNI。
+实际实现全部有限仪器继续需要实际纯辅助、顺序控制、值域为同一保留类型的校准全域丢弃、
+指针保留输出分支律、记录和真粗粒化，辅助空间还须容纳标签及输入输出尺寸差。
+零标签和零质量不删；构造的一种Lüders实现不确定既有事件的更新。
+这些结论已在原附录的全部资源前件下成立，不因本章的几何边界被改报为未解。
+第95章的一对全域 $T_p+T_q=u$ 与紧纯传递静态入口亦保留自己的前件，
+并不与(97.35)无附加接口地等价。
+
+同样，VII22、24—28的原终端路线仍完整消费94.6列明的原复射影载体、全部原字和terminal futures、
+密度、统计 $\mathrm R_{10}$、full-future uniform ready-return及四前缀全未来行等式，
+已经在其原域中给Born、有限容量和完成PSD；联合菜单及下降／回返仍守各自联合行、
+全标签和全未来前件，细标签识别仍守完整校准。
+它们自己的完成载体不自动等于(97.35)的原 $A,D,E$。
+
+本候选的准确简化，是在同一个(97.34)域内把全部混态零拼合替换为三个原纯点的关系，
+并在实 $n\le4$ 中删除余维限制；没有减少ROG表示、原单位或原来源条件。
+97.7已经精确指出一般实域的剩余非线性分支，复 $n=3,c=3$ 及更高未覆盖域仍不在此桥内。
+将(97.34)完全删去而只保留一般ROG，或再删ROG只保留一般 $\mathrm B$，
+分别仍需证明一般 $\mathrm G_2\Rightarrow\mathrm{Z0}$ 和一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$；
+(97.36)不以部分域的等价代替这两个原目标。
+
+二正则／最小次数目录及平方和识别由所引文献供应，93—94、96章供应原归一化、完整块桥、
+least确认及量子消费者；这里承重的组合是指定拼接的全效应延拓、曲线的四重零分裂、
+非正交线性拼接中的原全域 $1/4$ 障碍及它们的实四维合成。
+这些陈述只在各自列明的数学前提与域内成立。
+
+可以把纯点想成几张平面灯板或一条弯曲灯轨上的灯，效应是一把在整件物体上读数始终介于零和一的尺。
+确认一盏灯后，若两盏各自可压暗的灯总能用同一把尺压暗，曲线暗区的边缘就会出现四重接触；
+这个接触又能裂成左右两零，同时守住整条灯轨上的读数界，暗区因而越过自己的边缘，产生矛盾。
+平面灯板若共用一道铰链，两次换尺虽能分别压暗两盏灯，同一确认尺却必须在它们的中点留下恰好四分之一的读数。
+实共同支撑四维以内的最小次数目录说明，这些弯轨和铰链已穷尽非完整块的障碍，
+所以 $\mathrm G_2$ 只留下彼此正交的完整实矩阵块；高维卷轴和复共同支撑三维的零集仍需要另外的数学桥。证毕。
+
+[BSV97reg]: https://arxiv.org/html/1607.03551v2
+[BSV97min]: https://arxiv.org/html/1308.0751v1
+
+## 追加锚（本行以下为增补区）
