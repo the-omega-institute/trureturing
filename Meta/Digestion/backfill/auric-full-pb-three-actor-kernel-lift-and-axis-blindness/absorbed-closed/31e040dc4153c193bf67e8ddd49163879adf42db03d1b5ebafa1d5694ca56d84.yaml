@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:31e040dc4153c193bf67e8ddd49163879adf42db03d1b5ebafa1d5694ca56d84
   normalized_sha256: sha256:31e040dc4153c193bf67e8ddd49163879adf42db03d1b5ebafa1d5694ca56d84
 cas_ref: sha256:31e040dc4153c193bf67e8ddd49163879adf42db03d1b5ebafa1d5694ca56d84
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PBFixedOutputM4.m4_scalar_pb_diagonal_residual
+    target_statement_id: sha256:2e59a3950658a5b93b90372e4bc413b037c9d37efd7c64202b2bc430b7fe9f63
 receipts:
   unresolved_subitems: []
