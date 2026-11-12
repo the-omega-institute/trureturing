@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Quantum/Foundation/TrigonometricMomentGap
    mirror-E: none(waiver:registration-template-not-established)
-   anchors: [D5/S3/Quantum/Foundation/WeightedRelationConfirmation]
+   anchors: [mathlib/module/Mathlib.Analysis.Convex.Exposed, mathlib/module/Mathlib.Analysis.Convex.Caratheodory]
    utility: none
    digest: Attained full-effect comparison on the original trigonometric moment body. -/
 

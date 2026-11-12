@@ -66,6 +66,7 @@ internal sealed class TrigonometricMomentGapDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeNode.Create(
             "The original second trigonometric moment body has an attained one-tenth comparison gap over its entire proper-effect interval.",
             H("The entire trigonometric moment body and its effects"), Blocks(
+                Paragraph(Text("The model is the universal Caratheodory orbitope C2 of Sanyal, Sottile and Sturmfels, Orbitopes, arXiv:0911.5436v4, section 5.1, Theorem 5.2 and Corollary 5.4. The construction and neighborly face structure are established mathematics. The present theorem implements this same full model and its explicit comparison obstruction; it makes no literature novelty claim.")),
                 Paragraph(Text("Use four real coordinates in the order cos(theta), sin(theta), cos(2 theta), sin(2 theta). The homogeneous carrier is their product with the original mass coordinate. The angle parameter ranges over all real numbers. Repeated periodic labels denote the same actual point; no angle inequality is used as a point-distinctness assumption.")),
                 Def("Coordinates", "Four real coordinates", Eq(X, Seq(C("Fin", D(4)), To, Sp, R)), "Functions on Fin 4 with real values, using indices 0 through 3."),
                 Def("Carrier", "The original homogeneous carrier", Eq(Space, Seq(R, Times, X)), "The first coordinate is mass, and the remaining four coordinates are unnormalized moments."),
