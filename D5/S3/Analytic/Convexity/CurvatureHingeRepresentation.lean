@@ -35,15 +35,15 @@ variable {f : ℝ → ℝ}
 private lemma positive_interior {x : ℝ} (hx : 0 < x) : x ∈ interior (Ioi (0 : ℝ)) := by
   simpa only [interior_Ioi, mem_Ioi] using hx
 
-lemma rightDeriv_monotoneOn (hf : ConvexOn ℝ (Ioi 0) f) :
+private lemma rightDeriv_monotoneOn (hf : ConvexOn ℝ (Ioi 0) f) :
     MonotoneOn (rightDeriv f) (Ioi 0) := by
   change MonotoneOn (fun x => derivWithin f (Ioi x) x) (Ioi 0)
   simpa only [interior_Ioi] using hf.monotoneOn_rightDeriv
 
-lemma continuousOn_positive (hf : ConvexOn ℝ (Ioi 0) f) : ContinuousOn f (Ioi 0) := by
+private lemma continuousOn_positive (hf : ConvexOn ℝ (Ioi 0) f) : ContinuousOn f (Ioi 0) := by
   simpa only [interior_Ioi] using hf.continuousOn_interior
 
-lemma rightDeriv_right_continuous (hf : ConvexOn ℝ (Ioi 0) f) {x : ℝ} (hx : 0 < x) :
+private lemma rightDeriv_right_continuous (hf : ConvexOn ℝ (Ioi 0) f) {x : ℝ} (hx : 0 < x) :
     ContinuousWithinAt (rightDeriv f) (Ici x) x := by
   have hd := hf.hasDerivWithinAt_rightDeriv_of_mem_interior (positive_interior hx)
   have hc : ContinuousAt f x :=
@@ -67,7 +67,7 @@ lemma rightDeriv_right_continuous (hf : ConvexOn ℝ (Ioi 0) f) {x : ℝ} (hx : 
     exact (hf.rightDeriv_le_slope_of_mem_interior
       (positive_interior (hx.trans_le hy)) (hx.trans hxz) hyz).trans_lt hys
 
-lemma integral_rightDeriv (hf : ConvexOn ℝ (Ioi 0) f) {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
+private lemma integral_rightDeriv (hf : ConvexOn ℝ (Ioi 0) f) {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
     (∫ x in a..b, rightDeriv f x) = f b - f a := by
   apply intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le hab
   · exact (continuousOn_positive hf).mono (fun x hx => ha.trans_le hx.1)
@@ -102,7 +102,7 @@ theorem curvature_Ioc (hf : ConvexOn ℝ (Ioi 0) f) (a b : Positive) :
     curvature hf (Ioc a b) = ENNReal.ofReal (rightDeriv f b - rightDeriv f a) :=
   (curvatureDistribution hf).measure_Ioc a b
 
-lemma curvature_real_Ioc (hf : ConvexOn ℝ (Ioi 0) f) {a b : Positive} (hab : a ≤ b) :
+private lemma curvature_real_Ioc (hf : ConvexOn ℝ (Ioi 0) f) {a b : Positive} (hab : a ≤ b) :
     (curvature hf).real (Ioc a b) = rightDeriv f b - rightDeriv f a := by
   rw [measureReal_def, curvature_Ioc, ENNReal.toReal_ofReal]
   exact sub_nonneg.mpr (rightDeriv_monotoneOn hf a.property b.property hab)
@@ -132,14 +132,14 @@ private lemma integral_le_indicator_curvature (hf : ConvexOn ℝ (Ioi 0) f)
 
 /-- Integrating the indicator of the order triangle is the finite curvature potential.
 Only curvature inside `(a,b]` enters the Fubini argument. -/
-lemma curvature_potential_eq_integral (hf : ConvexOn ℝ (Ioi 0) f)
+private lemma curvature_potential_eq_integral (hf : ConvexOn ℝ (Ioi 0) f)
     (a b : Positive) (hab : a ≤ b) :
     (∫ t in Ioc a b, ((b : ℝ) - t) ∂curvature hf) =
       ∫ x in (a : ℝ)..b, rightDeriv f x - rightDeriv f a := by
   let μ := (curvature hf).restrict (Ioc a b)
   let ν := volume.restrict (Ioc (a : ℝ) b)
-  letI : IsFiniteMeasure μ := isFiniteMeasure_restrict.mpr measure_Ioc_lt_top.ne
-  letI : IsFiniteMeasure ν := isFiniteMeasure_restrict.mpr measure_Ioc_lt_top.ne
+  let : IsFiniteMeasure μ := isFiniteMeasure_restrict.mpr measure_Ioc_lt_top.ne
+  let : IsFiniteMeasure ν := isFiniteMeasure_restrict.mpr measure_Ioc_lt_top.ne
   let H : Positive × ℝ → ℝ := fun p => if (p.1 : ℝ) ≤ p.2 then 1 else 0
   have hm : Measurable H := Measurable.ite
     (measurableSet_le (measurable_subtype_coe.comp measurable_fst) measurable_snd)
@@ -176,12 +176,12 @@ theorem scalar_remainder_right (hf : ConvexOn ℝ (Ioi 0) f)
       exact fun x hx => a.property.trans_le hx.1)).intervalIntegrable
   · exact intervalIntegrable_const
 
-lemma lower_potential_integrable (hf : ConvexOn ℝ (Ioi 0) f) (a b : Positive) :
+private lemma lower_potential_integrable (hf : ConvexOn ℝ (Ioi 0) f) (a b : Positive) :
     IntegrableOn (fun t : Positive => (t : ℝ) - a) (Ioc a b) (curvature hf) :=
   (continuous_subtype_val.sub continuous_const).continuousOn.integrableOn_Icc.mono_set
     Ioc_subset_Icc_self
 
-lemma upper_potential_integrable (hf : ConvexOn ℝ (Ioi 0) f) (a b : Positive) :
+private lemma upper_potential_integrable (hf : ConvexOn ℝ (Ioi 0) f) (a b : Positive) :
     IntegrableOn (fun t : Positive => (b : ℝ) - t) (Ioc a b) (curvature hf) :=
   (continuous_const.sub continuous_subtype_val).continuousOn.integrableOn_Icc.mono_set
     Ioc_subset_Icc_self
@@ -207,8 +207,10 @@ private lemma negative_indicator (a s : Positive) :
       (Ioc s a).indicator (fun t : Positive => (t : ℝ) - s) := by
   funext t
   by_cases hta : t ≤ a <;> by_cases hst : s < t
-  · simp [Set.indicator, hta, hst, max_eq_left (sub_nonneg.mpr hst.le)]
-  · simp [Set.indicator, hta, hst, max_eq_right (sub_nonpos.mpr (le_of_not_gt hst))]
+  · have hst' : (s : ℝ) ≤ t := hst.le
+    simp [Set.indicator, hta, hst, max_eq_left (sub_nonneg.mpr hst')]
+  · have hts' : (t : ℝ) ≤ s := le_of_not_gt hst
+    simp [Set.indicator, hta, hst, max_eq_right (sub_nonpos.mpr hts')]
   · simp [Set.indicator, hta, hst]
   · simp [Set.indicator, hta, hst]
 
@@ -217,8 +219,10 @@ private lemma positive_indicator (a s : Positive) :
       (Ioc a s).indicator (fun t : Positive => (s : ℝ) - t) := by
   funext t
   by_cases hat : a < t <;> by_cases hts : t ≤ s
-  · simp [Set.indicator, hat, hts, max_eq_left (sub_nonneg.mpr hts)]
-  · simp [Set.indicator, hat, hts, max_eq_right (sub_nonpos.mpr (le_of_not_ge hts).le)]
+  · have hts' : (t : ℝ) ≤ s := hts
+    simp [Set.indicator, hat, hts, max_eq_left (sub_nonneg.mpr hts')]
+  · have hst' : (s : ℝ) ≤ t := le_of_not_ge hts
+    simp [Set.indicator, hat, hts, max_eq_right (sub_nonpos.mpr hst')]
   · simp [Set.indicator, hat, hts]
   · simp [Set.indicator, hat, hts]
 
@@ -242,9 +246,9 @@ theorem scalar_hinge_representation (hf : ConvexOn ℝ (Ioi 0) f) (a s : Positiv
     integral_indicator measurableSet_Ioc, ← integral_indicator measurableSet_Ioi,
     positive_indicator, integral_indicator measurableSet_Ioc]
   rcases le_total s a with hsa | has
-  · rw [Ioc_eq_empty_of_le hsa, integral_empty, add_zero]
+  · rw [Ioc_eq_empty_of_le hsa, setIntegral_empty, add_zero]
     exact scalar_remainder_left hf s a hsa
-  · rw [Ioc_eq_empty_of_le has, integral_empty, add_zero]
+  · rw [Ioc_eq_empty_of_le has, setIntegral_empty, add_zero]
     exact scalar_remainder_right hf a s has
 
 /-- The normalization used for maximal hockey-stick costs. In particular, an atom at one
@@ -259,15 +263,13 @@ private lemma scaled_negative_hinge (u v t : ℝ) (hv : 0 < v) :
     v * max (t - u / v) 0 = max (t * v - u) 0 := by
   rw [mul_max_of_nonneg _ _ hv.le, mul_zero]
   congr 1
-  field_simp
-  ring
+  field_simp <;> ring
 
 private lemma scaled_positive_hinge (u v t : ℝ) (hv : 0 < v) :
     v * max (u / v - t) 0 = max (u - t * v) 0 := by
   rw [mul_max_of_nonneg _ _ hv.le, mul_zero]
   congr 1
-  field_simp
-  ring
+  field_simp <;> ring
 
 /-- The actual perspective in the open quadrant has the same curvature representation.
 This is the scalar identity that is integrated over an actual test. -/
@@ -291,8 +293,7 @@ theorem perspective_positive (hf : ConvexOn ℝ (Ioi 0) f) {u v : ℝ}
     apply integral_congr_ae
     exact Eventually.of_forall fun t => (scaled_positive_hinge u v t hv).symm
   rw [hn, hp, scalar_hinge_at_one hf (u / v) (div_pos hu hv)]
-  field_simp
-  ring
+  field_simp <;> ring
 
 #print axioms curvature_Ioc
 #print axioms scalar_hinge_at_one
