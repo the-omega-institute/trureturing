@@ -100,9 +100,10 @@ The designated formal source is
 Blueprint Scribe. The proof uses only the existing transfer theorem, finite
 cardinality transport, polynomial identities, induction and formal power-series
 algebra. Canonical compilation and scoped reporting succeed for the D5 source
-and its Reg mirror at these mathematical sources. Verification of the emitted
-Blueprint formulas and the remaining delivery checks are unfinished. No freeze
-or solved-event count is asserted by this dossier.
+and its Reg mirror at these mathematical sources. The emitted Blueprint retains
+the complete three-clause statement. Content admission, independent pre-freeze
+review and the remaining delivery checks are unfinished. No freeze or
+solved-event count is asserted by this dossier.
 
 ## Triage
 
@@ -111,8 +112,9 @@ Its selected Scribe script and candidate whole-sequence audit compile. The
 source-owner audit remains unresolved because source selection and a validation
 certificate are absent. It remains unfinished under
 [issue #29528](https://github.com/the-omega-institute/trureturing/issues/29528)
-and the CLAUDE §3.9 linked-issue exception. Rendering, freeze, required CI,
-integration and delivery remain unfinished; no solved-event credit is asserted.
+and the CLAUDE §3.9 linked-issue exception. Content admission, independent
+pre-freeze review, freeze, required CI, integration and delivery remain
+unfinished; no solved-event credit is asserted.
 
 ## ASSUMED-UNVERIFIED
 
