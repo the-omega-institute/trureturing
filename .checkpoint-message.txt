@@ -1,1 +1,1 @@
-Revert unsupported Proposition 76.4 scaffold; retain source-faithful WIP baseline
+WIP: restore source-faithful Proposition 76.4 closure scaffold before proof repair
