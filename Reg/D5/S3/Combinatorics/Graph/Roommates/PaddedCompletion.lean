@@ -41,8 +41,13 @@ def paddedFamily : Registration paddedArena (type_of% count_padded_supermultipli
     intro h
     have he : false = true := h 0 0
     cases he
-  refine { actual := actual, bridge := bridge, variation := ⟨hp, rejected, hn⟩,
-    sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := actual
+    bridge := bridge
+    variation := ⟨hp, rejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_
+  }
   · constructor
     · intro i
       refine ⟨rejected, ?_, rfl, hn⟩
@@ -100,8 +105,8 @@ abbrev certificateArena : Arena where
   Law R := ∀ {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k),
     R.readout () () ⟨m + k + 6, paddedWord w v, paddedOffset w v⟩ = true
 
-def certificateFamily : Registration certificateArena (type_of% padded_certificate) := by
-  have bridge : (type_of% padded_certificate) ↔ certificateArena.Law certificateActual := by
+def certificateFamily : Registration certificateArena (type_of% (@padded_certificate)) := by
+  have bridge : (type_of% (@padded_certificate)) ↔ certificateArena.Law certificateActual := by
     simp only [certificateArena, certificateActual, realize, decide_eq_true_eq]
   have hp : certificateArena.Law certificateActual := bridge.mp padded_certificate
   have hn : ¬certificateArena.Law certificateRejected := by
@@ -110,8 +115,13 @@ def certificateFamily : Registration certificateArena (type_of% padded_certifica
       constructor <;> intro i <;> exact Fin.elim0 i⟩
     have he : false = true := h z z
     cases he
-  refine { actual := certificateActual, bridge := bridge,
-    variation := ⟨hp, certificateRejected, hn⟩, sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := certificateActual
+    bridge := bridge
+    variation := ⟨hp, certificateRejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_
+  }
   · constructor
     · intro i
       refine ⟨certificateRejected, ?_, rfl, hn⟩
