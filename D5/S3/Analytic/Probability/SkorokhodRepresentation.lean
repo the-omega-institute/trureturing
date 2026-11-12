@@ -26,7 +26,7 @@ import Mathlib.Topology.Algebra.Module.Cardinality
 import Mathlib.Topology.UniformSpace.Uniformizable
 
 section
-open MeasureTheory
+open MeasureTheory MeasureTheory.Measure
 open ProbabilityTheory
 open scoped ENNReal NNReal
 
@@ -65,8 +65,8 @@ private theorem exists_null_singleton_mem_Ioo {ν : Measure ℝ} [SFinite ν]
 private theorem quantile_le_iff_cdf (ν : Measure ℝ) [IsProbabilityMeasure ν]
     {u x : ℝ} (hu : u ∈ Set.Ioo (0 : ℝ) 1) :
     quantile ν u ≤ x ↔ u ≤ ProbabilityTheory.cdf ν x := by
-  rw [quantile_le_iff hu, ProbabilityTheory.cdf_eq_real]
-  rfl
+  simpa only [ProbabilityTheory.cdf_eq_real, Measure.real_def] using
+    (quantile_le_iff (μ := ν) hu (x := x))
 
 private theorem tendsto_quantile_of_continuousAt
     (ν : ℕ → Measure ℝ) (ν₀ : Measure ℝ)
