@@ -14,6 +14,7 @@ import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Topology.Algebra.Module.FiniteDimension
 import Mathlib.Topology.Order.Compact
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
+import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Tactic
@@ -31,6 +32,7 @@ generation, or normalized section is assumed.
 
 noncomputable section
 open scoped Matrix BigOperators ComplexOrder MatrixOrder
+open Filter Topology
 
 namespace D5.S3.Quantum.Foundation.OriginalUnitSupport
 
@@ -394,6 +396,75 @@ private theorem principal_inverse_sqrt_laws (A : Matrix ι ι 𝕜) (hA : A.PosD
     _ = 1 := by rw [Matrix.mul_nonsing_inv S hSinv, Matrix.nonsing_inv_mul S hSinv,
       Matrix.one_mul]
 
+private theorem quadratic_positive_open {κ : Type*} [Fintype κ] [DecidableEq κ] :
+    IsOpen {M : Matrix κ κ 𝕜 | ∀ x : κ → 𝕜, x ≠ 0 →
+      0 < RCLike.re (star x ⬝ᵥ M *ᵥ x)} := by
+  rw [isOpen_iff_mem_nhds]
+  intro M hM
+  have key : ∀ᶠ N in 𝓝 M, ∀ x ∈ Metric.sphere (0 : κ → 𝕜) 1,
+      0 < RCLike.re (star x ⬝ᵥ N *ᵥ x) := by
+    refine (isCompact_sphere (0 : κ → 𝕜) 1).eventually_forall_of_forall_eventually
+      fun y hy => ?_
+    have hcont : Continuous fun z : Matrix κ κ 𝕜 × (κ → 𝕜) =>
+        RCLike.re (star z.2 ⬝ᵥ z.1 *ᵥ z.2) := by fun_prop
+    exact (hcont.tendsto (M, y)).eventually_const_lt
+      (hM y (ne_zero_of_mem_sphere one_ne_zero ⟨y, hy⟩))
+  filter_upwards [key] with N hN x hx
+  have hx0 : 0 < ‖x‖ := norm_pos_iff.2 hx
+  have h := hN (‖x‖⁻¹ • x) (by simp [norm_smul, hx0.ne'])
+  simp only [star_smul, star_trivial, Matrix.mulVec_smul, smul_dotProduct,
+    dotProduct_smul] at h
+  simp only [RCLike.real_smul_eq_coe_smul (K := 𝕜), smul_eq_mul,
+    RCLike.mul_re, RCLike.ofReal_re, RCLike.ofReal_im, zero_mul, sub_zero] at h
+  exact (mul_pos_iff_of_pos_left (inv_pos.mpr hx0)).mp
+    ((mul_pos_iff_of_pos_left (inv_pos.mpr hx0)).mp h)
+
+private theorem posDef_line_eventually {κ : Type*} [Fintype κ] [DecidableEq κ]
+    (A B : Matrix κ κ 𝕜) (hA : A.PosDef) (hB : B.IsHermitian) :
+    ∀ᶠ t : ℝ in 𝓝 0, (A + t • B).PosDef := by
+  let P : ℝ → Matrix κ κ 𝕜 := fun t => A + t • B
+  have hP : Continuous P := by
+    dsimp [P]
+    fun_prop
+  have hQ : ∀ x : κ → 𝕜, x ≠ 0 →
+      0 < RCLike.re (star x ⬝ᵥ A *ᵥ x) := by
+    intro x hx
+    exact hA.re_dotProduct_pos hx
+  have hnear : ∀ᶠ t : ℝ in 𝓝 0, ∀ x : κ → 𝕜, x ≠ 0 →
+      0 < RCLike.re (star x ⬝ᵥ P t *ᵥ x) := by
+    have hopen := quadratic_positive_open (𝕜 := 𝕜) (κ := κ)
+    have hmem : P 0 ∈ {M : Matrix κ κ 𝕜 | ∀ x : κ → 𝕜, x ≠ 0 →
+        0 < RCLike.re (star x ⬝ᵥ M *ᵥ x)} := by
+      simpa [P] using hQ
+    have hset : {t : ℝ | P t ∈ {M : Matrix κ κ 𝕜 | ∀ x : κ → 𝕜, x ≠ 0 →
+        0 < RCLike.re (star x ⬝ᵥ M *ᵥ x)}} ∈ 𝓝 0 :=
+      (hopen.preimage hP).mem_nhds hmem
+    exact hset
+  filter_upwards [hnear] with t ht
+  apply Matrix.PosDef.of_dotProduct_mulVec_pos
+  · exact hA.isHermitian.add (hB.smul (IsSelfAdjoint.all _))
+  · intro x hx
+    exact RCLike.pos_iff.mpr ⟨ht x hx,
+      (hA.isHermitian.add (hB.smul (IsSelfAdjoint.all _))).im_star_dotProduct_mulVec_self x⟩
+
+private theorem trace_mul_hermitian_real {κ : Type*} [Fintype κ] [DecidableEq κ]
+    (A B : Matrix κ κ 𝕜) (hA : A.IsHermitian) (hB : B.IsHermitian) :
+    (A * B).trace = (RCLike.re (A * B).trace : 𝕜) := by
+  have hstar : star (A * B).trace = (A * B).trace := by
+    calc
+      star (A * B).trace = ((A * B)ᴴ).trace :=
+        (Matrix.trace_conjTranspose (A * B)).symm
+      _ = (Bᴴ * Aᴴ).trace := by simp
+      _ = (B * A).trace := by rw [hB.eq, hA.eq]
+      _ = (A * B).trace := Matrix.trace_mul_comm _ _
+  apply RCLike.ext
+  · simp
+  · have him := congrArg RCLike.im hstar
+    have him' : -RCLike.im (A * B).trace = RCLike.im (A * B).trace := by
+      simpa using him
+    have himzero : RCLike.im (A * B).trace = 0 := by linarith
+    simp [himzero]
+
 /-- The given entire compact original base produces a positive definite global
 determinant maximum on the actual original mass-support-dimension slice. -/
 theorem exists_original_unit_determinant_maximum
@@ -454,5 +525,84 @@ theorem exists_original_unit_determinant_maximum
   refine ⟨(fun x hx hux => hmax ⟨hx, hux⟩), ?_, principal_inverse_sqrt_laws (σ m) hmPD⟩
   intro v
   simpa only [map_add, map_smul] using determinant_first_variation (σ m) (σ v) hmPD
+
+/-- The determinant maximizer is stationary in every original direction after
+decomposing along the original mass functional. -/
+theorem exists_original_unit_inverse_trace_stationarity
+    [FiniteDimensional ℝ V] [Nontrivial V] [TopologicalSpace V]
+    [IsTopologicalAddGroup V] [ContinuousSMul ℝ V] [T2Space V]
+    (C : PointedCone ℝ V) (hgen : Submodule.span ℝ (C : Set V) = ⊤)
+    (u : V →ₗ[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hcompact : IsCompact {x : V | x ∈ C ∧ u x = 1})
+    (ρ : V →ₗ[ℝ] Matrix ι ι 𝕜) (hρ : Function.Injective ρ)
+    (hsection : ∀ x, x ∈ C ↔ (ρ x).PosSemidef) :
+    let n := Module.finrank 𝕜 (commonSupport C ρ)
+    0 < n ∧ ∃ U : Matrix ι (Fin n) 𝕜,
+      ∃ σ : V →ₗ[ℝ] Matrix (Fin n) (Fin n) 𝕜,
+        Uᴴ * U = 1 ∧ U.toEuclideanLin.range = commonSupport C ρ ∧
+        (∀ x, σ x = Uᴴ * ρ x * U) ∧ (∀ x, ρ x = U * σ x * Uᴴ) ∧
+        Function.Injective σ ∧ (∀ x, (σ x).IsHermitian) ∧
+        (∀ x, x ∈ C ↔ (σ x).PosSemidef) ∧ (∀ x, (σ x).rank = (ρ x).rank) ∧
+        ∃ m : V, m ∈ C ∧ u m = (n : ℝ) ∧ (σ m).PosDef ∧
+          (∀ v : V, ((σ m)⁻¹ * σ v).trace = (u v : 𝕜)) := by
+  classical
+  dsimp only
+  let n := Module.finrank 𝕜 (commonSupport C ρ)
+  obtain ⟨hn, U, σ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
+      _hcompact_image, m, hm, hmass, hmPD, hmDet, hmax, hderiv, _hroot⟩ :=
+    exists_original_unit_determinant_maximum C hgen u hu hcompact ρ hρ hsection
+  have hmass' : u m = (n : ℝ) := by simpa [n] using hmass
+  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
+  have hker : ∀ v : V, u v = 0 → ((σ m)⁻¹ * σ v).trace = 0 := by
+    intro v huv
+    let f : ℝ → ℝ := fun t => RCLike.re (σ (m + t • v)).det
+    have hlocal : IsLocalMax f 0 := by
+      change ∀ᶠ t : ℝ in 𝓝 0, f t ≤ f 0
+      filter_upwards [posDef_line_eventually (σ m) (σ v) hmPD (hHerm v)] with t ht
+      have hmtC : m + t • v ∈ C := by
+        apply (hC _).mpr
+        simpa only [map_add, map_smul] using ht.posSemidef
+      have hmtu : u (m + t • v) = (n : ℝ) := by
+        simpa only [map_add, map_smul, hmass', huv, add_zero, smul_zero]
+      simpa [f] using hmax _ hmtC hmtu
+    have hz := IsLocalMax.hasDerivAt_eq_zero hlocal (by
+      simpa only [f, map_add, map_smul] using hderiv v)
+    have hprod : RCLike.re (σ m).det *
+        RCLike.re ((σ m)⁻¹ * σ v).trace = 0 := hz
+    have htrre : RCLike.re ((σ m)⁻¹ * σ v).trace = 0 :=
+      (mul_eq_zero.mp hprod).resolve_left (ne_of_gt hmDet)
+    have htrreal := trace_mul_hermitian_real (σ m)⁻¹ (σ v)
+      hmPD.isHermitian.inv (hHerm v)
+    rw [htrreal, htrre]
+    simp
+  have htrace_m : ((σ m)⁻¹ * σ m).trace = (n : 𝕜) := by
+    rw [Matrix.nonsing_inv_mul (σ m)
+      ((Matrix.isUnit_iff_isUnit_det (σ m)).mp hmPD.isUnit)]
+    simp [n]
+  refine ⟨hn, U, σ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank, m, hm, hmass,
+    hmPD, ?_⟩
+  intro v
+  let q : ℝ := u v / (n : ℝ)
+  let w : V := v - q • m
+  have hw : u w = 0 := by
+    dsimp [w, q]
+    simp only [map_sub, map_smul, hmass']
+    simp only [smul_eq_mul]
+    rw [div_eq_mul_inv, mul_assoc, inv_mul_cancel₀ hnR, mul_one, sub_self]
+  have hzero := hker w hw
+  have hσv : σ v = σ w + q • σ m := by
+    dsimp [w]
+    simp only [map_sub, map_smul]
+    abel
+  rw [hσv, Matrix.mul_add, Matrix.mul_smul, Matrix.trace_add, Matrix.trace_smul,
+    hzero, htrace_m]
+  dsimp [q]
+  rw [RCLike.real_smul_eq_coe_smul (K := 𝕜)]
+  simp only [smul_eq_mul]
+  push_cast
+  change (0 : 𝕜) + ((u v : 𝕜) / (n : 𝕜)) * (n : 𝕜) = (u v : 𝕜)
+  have hnk : (n : 𝕜) ≠ 0 := by exact_mod_cast hnR
+  field_simp [hnk]
+  simp
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport

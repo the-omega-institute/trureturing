@@ -117,6 +117,12 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             LtF(D(0), delta(sigmaAt(m))), maximum, variation, rootLaws));
         Formula maximumStatement = nativeInputs(coordinateWitness(Chain(compressionLaws,
             Call("IsCompact", Call("image", sigma, massSlice(dimension))), maximizer)), true);
+        Formula inverseTrace = All("v", space,
+            Eq(Call("trace", mul(inv(sigmaAt(m)), sigmaAt(v))), app(unit, v)));
+        Formula stationarity = Ex("m", space, Chain(Member(m, cone),
+            Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)), inverseTrace));
+        Formula stationarityStatement = nativeInputs(coordinateWitness(
+            Chain(compressionLaws, stationarity)), true);
         return DocumentDefinition.Create(ScribeNode.Create(
             "Native support compression produces an actual original-unit positive determinant maximizer.",
             H("Original unit, native support and determinant maximization"), Blocks(
@@ -147,7 +153,13 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(maximumStatement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("Retain the same compression laws and assume the entire original unit-one base is compact in the finite dimensional Hausdorff real vector topology. The mass-n original slice is exactly n times this base, so its sigma image is compact. Scaling the produced unit-one state by n gives an actual positive definite competitor. Continuity of the real part of the native determinant supplies a global maximum at M = sigma(m). The competitor makes its real determinant strictly positive; the exact PSD section then makes M positive definite. Every original feasible vector participates in the maximum comparison. For every original v, including indefinite represented directions, the real derivative of det sigma(m + t v) at zero is Re(det M) times Re tr(M inverse sigma(v)). This derivative is not asserted to vanish. It directly reuses the pinned polynomial determinant derivative at the identity, restricts scalars to the real line, and factors out M. The principal inverse square root S = CFC.sqrt(M inverse) is Hermitian and invertible, satisfies S squared = M inverse and S M S = I. These are ambient matrix identities and require no square-root or inverse closure of the image section."))),
                     DescribeRole.Theorem),
-                Paragraph(Text("Full original-u normalization remains unresolved here. Two-sided feasible variation and its zero derivative, full-vector inverse-trace stationarity, uniqueness, the actual trace-preserving Psi and same-h original return, whole-base and pure-point transport, dual effects, confirmations, comparison minima and minimizers, exclusion, all minimal faces, ROG, codimension and annihilator transport, and same-frame complement conclusions still require proofs. The dimension-one support case is included in the producers but its entire singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
+                Describe.Lean(DescribeId.Create("original-unit-inverse-trace-stationarity"),
+                    DeclarationHandle.Create(Owner + "exists_original_unit_inverse_trace_stationarity"),
+                    H("Full original-vector inverse-trace stationarity"),
+                    StatementSource.FromAuthor(Disp(stationarityStatement)), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("The determinant maximum admits a two-sided positive-definite neighborhood in every original direction whose unit value is zero. Its real determinant derivative therefore vanishes on the kernel of the original unit. Decomposing an arbitrary original vector into a kernel direction plus its mass multiple, and using the nonzero support dimension, extends the identity to every original vector: trace((sigma(m)) inverse sigma(v)) equals u(v), with the trace taken in the native real or complex support coordinates. This is a stationarity identity for the actual original unit and does not assume a positive definite representative of the dual unit or a normalized section."))),
+                    DescribeRole.Theorem),
+                Paragraph(Text("Full original-u normalization remains unresolved here. Uniqueness, the actual trace-preserving Psi and same-h original return, whole-base and pure-point transport, dual effects, confirmations, comparison minima and minimizers, exclusion, all minimal faces, ROG, codimension and annihilator transport, and same-frame complement conclusions still require proofs. The dimension-one support case is included in the producers but its entire singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
     private static Formula Chain(params Formula[] formulas)
