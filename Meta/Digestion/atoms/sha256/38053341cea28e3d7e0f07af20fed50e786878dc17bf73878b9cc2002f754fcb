@@ -1,0 +1,53 @@
+**命题 117.3（同二元表的实际框架由实三元分开）。** 在 $d=4$ 取通常的 Pauli 矩阵 $X,Y,Z$、标准坐标框架 $E$，以 $X\otimes I_2$ 与 $I_2\otimes X$ 的四个联合秩一本征投影组成 $F$，置
+
+$$
+D_{\mathrm r}=\operatorname{diag}(1,1,1,-1),\quad
+D_{\mathrm c}=\operatorname{diag}(1,\mathrm i,\mathrm i,-1),\quad
+G_k^{\mathrm r}=D_{\mathrm r}F_kD_{\mathrm r}^*,\quad
+G_k^{\mathrm c}=D_{\mathrm c}F_kD_{\mathrm c}^*.
+\tag{IX117.17}
+$$
+
+按第五卷命题76.4的符号标签，两个三元组的全部二元表相同，所有跨框架 $q$ 均为 $1/4$；实际闭包分别有实维数十和十六。其初始实线性张成都有维数十，而实三元已经分开这两个实际闭包。
+
+证明。框架完整性、二元表及闭包是第五卷命题76.4的现成见证，直接复用：对角共轭(IX117.17)分别将 $XI,IX$ 送到 $XZ,ZX$ 与 $YI,IY$，其中省略张量符号。因而它们与该命题的原标签相同。选每套第一个向量
+
+$$
+e=(1,0,0,0)^T,\quad f=(1,1,1,1)^T/2,\quad
+g_{\mathrm r}=(1,1,1,-1)^T/2,\quad
+g_{\mathrm c}=(1,\mathrm i,\mathrm i,-1)^T/2.
+$$
+
+(IX117.9)给
+
+$$
+b(E_1,F_1,G_1^{\mathrm r})=\tfrac18,\qquad
+b(E_1,F_1,G_1^{\mathrm c})=\tfrac{\mathrm i}{8}.
+\tag{IX117.18}
+$$
+
+两者 $j$ 分别为 $1/8$ 和零；对应 $\Delta$ 为零和 $1/64$。此位置属于 $d=4$ 时的十五个候选位置，且全部锚成立，故定理117.2给出同一闭包二择的实三元读法。
+
+初始张成可直接看清。实三元组张成的 Pauli 词为
+
+$$
+II,ZI,IZ,ZZ,XI,IX,XX,XZ,ZX,YY;
+$$
+
+复三元组张成的词为
+
+$$
+II,ZI,IZ,ZZ,XI,IX,XX,YI,IY,YY.
+$$
+
+每列十个词在迹内积下正交，带符号框架和恢复其中每个词，故两边初始维数均为十。复例中令 $E_{++}=(II+ZI+IZ+ZZ)/4$、$F_{++}=(II+XI+IX+XX)/4$，则
+
+$$
+E_{++}\circ F_{++}
+=\frac{II+ZI+IZ+ZZ+XI+IX+XX-YY}{16}
+ +\frac{ZX+XZ}{16}.
+\tag{IX117.19}
+$$
+
+最后一项与复例的整个初始张成正交，且其 Hilbert–Schmidt 范数平方为 $\operatorname{Tr}(((ZX+XZ)/16)^2)=(4+4)/16^2=1/32$。所以初始十维空间并不 Jordan 闭合；闭包十六维不是从十维表面上读出的维数。这两个见证处于同一矩阵环境，不是两个满足原 $C,u,K,P,\mathcal E$ 全部起源前件的模型。证毕。
+
