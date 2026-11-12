@@ -7,7 +7,9 @@
    digest: The original seven-point cone obstructs full proper extension of its facet ruler. -/
 
 import D5.S3.Quantum.Foundation.FinitePureSimplex
+import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import Mathlib.Analysis.Convex.Combination
+import Mathlib.LinearAlgebra.AffineSpace.Restrict
 import Mathlib.Tactic
 
 /-! All effects are real linear maps on the original three-dimensional space.
@@ -405,7 +407,8 @@ private theorem extensions_exhaustive (f : V →ₗ[ℝ] ℝ) :
   · rintro ⟨μ,rfl⟩ z hz
     simp [hz.2]
 
-private theorem no_extension : ¬ extensionClaim := by
+/-- The original facet ruler has no proper real linear extension. -/
+theorem result : ¬ extensionClaim := by
   rintro ⟨f,hf,he⟩
   obtain ⟨μ,rfl⟩ := (extensions_exhaustive f).mp he
   have hp := (hf (p 5) (p_mem 5)).1
@@ -544,17 +547,130 @@ private theorem affine_homogeneous_bridge (g : (Fin 2 → ℝ) →ᵃ[ℝ] ℝ) 
   exact linear_unique_on_base f _ (fun z hz => (hf z hz).trans
     (homogenize_value g z hz.2).symm)
 
+private instance plane_nonempty : Nonempty (affineSpan ℝ K) :=
+  ⟨⟨p 0,mem_affineSpan ℝ (p_base 0)⟩⟩
+
+private def normalizedEmbedding : (Fin 2 → ℝ) →ᵃ[ℝ] V :=
+  (LinearMap.pi ![0,LinearMap.proj 0,LinearMap.proj 1]).toAffineMap +
+    AffineMap.const ℝ (Fin 2 → ℝ) (![1,0,0] : V)
+
+private def planeParam : (Fin 2 → ℝ) →ᵃ[ℝ] (affineSpan ℝ K) :=
+  (normalizedEmbedding.restrict (E := ⊤) (F := affineSpan ℝ K) (by
+    rintro z ⟨x,_,rfl⟩
+    rw [← SetLike.mem_coe,original_affine_span]
+    norm_num [normalizedEmbedding,u,LinearMap.pi_apply,Matrix.vecHead])).comp
+      (AffineSubspace.topEquiv ℝ (Fin 2 → ℝ) (Fin 2 → ℝ)).symm.toAffineMap
+
+private theorem plane_param_inverse (z : affineSpan ℝ K) :
+    planeParam (spatial (z : V)) = z := by
+  apply Subtype.ext
+  have hz : u (z : V) = 1 := by
+    have hh := z.property
+    change (z : V) ∈ (affineSpan ℝ K : Set V) at hh
+    rw [original_affine_span] at hh
+    exact hh
+  change (z : V) 0 = 1 at hz
+  ext k
+  fin_cases k <;> simp [planeParam,normalizedEmbedding,spatial,hz,LinearMap.pi_apply]
+
+private theorem actual_affine_bridge (g : (affineSpan ℝ K) →ᵃ[ℝ] ℝ) :
+    ∃! f : V →ₗ[ℝ] ℝ, ∀ z : affineSpan ℝ K, f z = g z := by
+  refine ⟨homogenize (g.comp planeParam),?_,?_⟩
+  · intro z
+    have hz : u (z : V) = 1 := by
+      have hh := z.property
+      change (z : V) ∈ (affineSpan ℝ K : Set V) at hh
+      rw [original_affine_span] at hh
+      exact hh
+    rw [homogenize_value _ _ hz]
+    change g (planeParam (spatial (z : V))) = g z
+    rw [plane_param_inverse]
+  · intro f hf
+    apply linear_unique_on_base
+    intro z hz
+    rw [homogenize_value _ _ hz.2]
+    exact (hf ⟨z,mem_affineSpan ℝ hz⟩).trans
+      (congrArg g (plane_param_inverse ⟨z,mem_affineSpan ℝ hz⟩)).symm
+
+private theorem no_actual_affine_extension :
+    ¬ ∃ g : (affineSpan ℝ K) →ᵃ[ℝ] ℝ,
+      (∀ z : affineSpan ℝ K, (z : V) ∈ K → 0 ≤ g z ∧ g z ≤ 1) ∧
+      ∀ z : affineSpan ℝ K, (z : V) ∈ facet → g z = ruler z := by
+  rintro ⟨g,hg,he⟩
+  obtain ⟨f,hf,_⟩ := actual_affine_bridge g
+  apply result
+  refine ⟨f,proper_of_vertices _ (fun i => ?_),?_⟩
+  · rw [hf ⟨p i,mem_affineSpan ℝ (p_base i)⟩]
+    exact hg _ (p_base i)
+  · intro z hz
+    rw [hf ⟨z,mem_affineSpan ℝ hz.1⟩]
+    exact he _ hz
+
 private theorem no_affine_extension :
     ¬ ∃ g : (Fin 2 → ℝ) →ᵃ[ℝ] ℝ,
       (∀ z ∈ K, 0 ≤ g (spatial z) ∧ g (spatial z) ≤ 1) ∧
       ∀ z ∈ facet, g (spatial z) = ruler z := by
   rintro ⟨g,hg,he⟩
-  apply no_extension
+  apply result
   refine ⟨homogenize g,proper_of_vertices _ (fun i => ?_),?_⟩
   · simpa only [homogenize_value g _ (unit_p i)] using hg _ (p_base i)
   · intro z hz
     rw [homogenize_value g z hz.1.2]
     exact he z hz
+
+private def localParam : EuclideanSpace ℝ (Fin 1) →ᵃ[ℝ] V :=
+  ((EuclideanSpace.projₗ 0).smulRight (![0,0,4] : V)).toAffineMap +
+    AffineMap.const ℝ (EuclideanSpace ℝ (Fin 1)) (![1,-9,0] : V)
+
+private theorem local_param_apply (s : EuclideanSpace ℝ (Fin 1)) :
+    localParam s = (![1,-9,4*s 0] : V) := by
+  ext k
+  fin_cases k <;> simp [localParam,mul_comm]
+
+private theorem pair_base_agrees (a b : V) :
+    WholePairBallConfirmation.pairBase C u a b =
+      FinitePureSimplex.wholePairBase C u a b := by
+  ext z
+  constructor
+  · rintro ⟨hz,hf⟩
+    exact ⟨hz,fun F hF ha hb => hf ⟨F,hF⟩ ha hb⟩
+  · rintro ⟨hz,hf⟩
+    exact ⟨hz,fun F ha hb => hf F F.isFaceOf ha hb⟩
+
+private def localBallChart : WholePairBallConfirmation.BallChart C u (p 3) (p 4) where
+  dim := 1
+  dim_pos := by norm_num
+  param := localParam
+  injective := by
+    intro s t he
+    have hh := congrArg (fun z => z 2) he
+    rw [local_param_apply,local_param_apply] at hh
+    norm_num at hh
+    apply PiLp.ext
+    intro i
+    fin_cases i
+    simpa using hh
+  whole := by
+    rw [pair_base_agrees,whole_facet_pair,facet_segment]
+    ext z
+    constructor
+    · rintro ⟨s,hs,rfl⟩
+      have hn0 : ‖s 0‖ ≤ ‖s‖ := PiLp.norm_apply_le s 0
+      have hn : |s 0| ≤ 1 := by
+        rw [Real.norm_eq_abs] at hn0
+        exact hn0.trans (by simpa using hs)
+      have hb := abs_le.mp hn
+      refine ⟨(1+s 0)/2,(1-s 0)/2,by linarith,by linarith,by ring,?_⟩
+      rw [local_param_apply]
+      ext k
+      fin_cases k <;> norm_num [p] <;> ring
+    · rintro ⟨a,b,ha,hb,hab,rfl⟩
+      refine ⟨PiLp.single 2 0 (a-b),?_,?_⟩
+      · rw [Metric.mem_closedBall,dist_zero_right,PiLp.norm_single,Real.norm_eq_abs]
+        exact abs_le.mpr ⟨by linarith,by linarith⟩
+      · rw [local_param_apply]
+        ext k
+        fin_cases k <;> norm_num [p,PiLp.single_apply] <;> linarith
 
 private theorem comparison_upper : comparison C u (p 0) (p 5) ≤ (4/21 : ℝ) := by
   have hb : BddBelow {r : ℝ | ∃ f, confirms C u (p 0) f ∧ f (p 5) = r} := by
@@ -564,6 +680,138 @@ private theorem comparison_upper : comparison C u (p 0) (p 5) ≤ (4/21 : ℝ) :
   have he : confirms C u (p 0) edgeEffect :=
     ⟨edge_proper,by norm_num [edgeEffect,p,form_apply]⟩
   exact csInf_le hb ⟨edgeEffect,he,by norm_num [edgeEffect,p,form_apply]⟩
+
+private theorem unit_strict {z : V} (hz : z ∈ C) (hne : z ≠ 0) : 0 < u z := by
+  obtain ⟨w,hw,rfl⟩ := cone_weights hz
+  have hn : 0 ≤ ∑ i, w i := Finset.sum_nonneg (fun i _ => hw i)
+  have hp : 0 < ∑ i, w i := by
+    by_contra hh
+    have hs : ∑ i, w i = 0 := le_antisymm (le_of_not_gt hh) hn
+    have hz := (Finset.sum_eq_zero_iff_of_nonneg (fun i _ => hw i)).mp hs
+    apply hne
+    apply Finset.sum_eq_zero
+    intro i hi
+    simp [hz i hi]
+  simpa [map_sum,map_smul,unit_p] using hp
+
+private theorem cone_salient : (C : ConvexCone ℝ V).Salient := by
+  intro z hz hne hneg
+  have hp := unit_strict hz hne
+  have hn := unit_strict hneg (neg_ne_zero.mpr hne)
+  rw [map_neg] at hn
+  linarith
+
+private theorem cone_generating : Submodule.span ℝ (C : Set V) = ⊤ := by
+  apply top_unique
+  intro z _
+  let a := (19*z 2 - 4*(z 1-10*z 0))/168
+  let b := (-8*(z 1-10*z 0)-4*z 2)/168
+  have he : z = (z 0-a-b) • p 0 + a • p 1 + b • p 4 := by
+    ext k
+    fin_cases k <;> norm_num [a,b,p] <;> ring
+  rw [he]
+  exact Submodule.add_mem _ (Submodule.add_mem _
+    (Submodule.smul_mem _ _ (Submodule.subset_span (p_mem 0)))
+    (Submodule.smul_mem _ _ (Submodule.subset_span (p_mem 1))))
+    (Submodule.smul_mem _ _ (Submodule.subset_span (p_mem 4)))
+
+private theorem cone_closed : IsClosed (C : Set V) := by
+  apply IsSeqClosed.isClosed
+  intro v z hv ht
+  choose w hw he using fun n => cone_weights (hv n)
+  have hmass : ∀ n, ∑ i, w n i = u (v n) := by
+    intro n
+    rw [← he n]
+    simp [map_sum,map_smul,unit_p]
+  have htu := u.continuous_of_finiteDimensional.tendsto z |>.comp ht
+  obtain ⟨M,hM⟩ := (Metric.isBounded_range_of_tendsto (fun n => u (v n)) htu).exists_norm_le
+  have hbox (n : ℕ) : w n ∈ Set.Icc (0 : Fin 7 → ℝ) (fun _ => M) := by
+    refine ⟨hw n,fun i => ?_⟩
+    calc
+      w n i ≤ ∑ j, w n j := Finset.single_le_sum (fun j _ => hw n j) (Finset.mem_univ i)
+      _ = u (v n) := hmass n
+      _ ≤ ‖u (v n)‖ := le_abs_self _
+      _ ≤ M := hM _ ⟨n,rfl⟩
+  obtain ⟨a,ha,φ,hφ,hta⟩ := isCompact_Icc.tendsto_subseq hbox
+  have hc : Continuous (fun a : Fin 7 → ℝ => ∑ i, a i • p i) := by fun_prop
+  have hlim := hc.continuousAt.tendsto.comp hta
+  have hlim' := ht.comp hφ.tendsto_atTop
+  have hea : ∑ i, a i • p i = z := tendsto_nhds_unique hlim (by
+    simpa only [Function.comp_def,he] using hlim')
+  rw [← hea]
+  exact C.sum_mem (fun i _ => C.smul_mem (ha.1 i) (p_mem i))
+
+private theorem nonadjacent_pair_whole :
+    FinitePureSimplex.wholePairBase C u (p 0) (p 2) = K := by
+  apply Set.Subset.antisymm (fun _ hz => hz.1)
+  intro z hz
+  refine ⟨hz,?_⟩
+  intro F hF h0 h2
+  let w : Fin 7 → ℝ := ![759/4760,2901/4760,136/4760,556/4760,
+    136/4760,136/4760,136/4760]
+  have hw : ∀ i, 0 < w i := by intro i; fin_cases i <;> norm_num [w]
+  have he : ∑ i, w i • p i = (1/2 : ℝ) • p 0 + (1/2 : ℝ) • p 2 := by
+    ext k
+    fin_cases k <;> norm_num [w,p,Fin.sum_univ_succ]
+  have hm : ∑ i, w i • p i ∈ F := by
+    rw [he]
+    exact F.add_mem (F.smul_mem (by norm_num) h0) (F.smul_mem (by norm_num) h2)
+  have hall (i : Fin 7) : p i ∈ F :=
+    hF.mem_of_sum_smul_mem p_mem (fun i => (hw i).le) hm i (hw i)
+  obtain ⟨a,ha,rfl⟩ := cone_weights hz.1
+  exact F.sum_mem (fun i _ => F.smul_mem (ha i) (hall i))
+
+private theorem no_center : ¬ ∃ c : V, ∀ z ∈ K, (2 : ℝ) • c - z ∈ K := by
+  rintro ⟨c,hc⟩
+  have h0 := hc (p 0) (p_base 0)
+  have h3 := hc (p 3) (p_base 3)
+  have h4 := hc (p 4) (p_base 4)
+  have ht : c 0 = 1 := by
+    have hh := h0.2
+    norm_num [u,p,Pi.smul_apply,smul_eq_mul,Matrix.vecHead] at hh
+    linarith
+  have hl := (h_proper 0 _ h0.1).1
+  have hu := (h_proper 0 _ h3.1).2
+  norm_num [h,p,u,form_apply,Pi.smul_apply,smul_eq_mul,Matrix.vecHead,
+    Matrix.vecTail,ht] at hl hu
+  have hx : c 1 = (1/2 : ℝ) := by linarith
+  have he3 := self_fiber 0 _ h3 (by
+    norm_num [h,p,form_apply,Pi.smul_apply,smul_eq_mul,Matrix.vecHead,Matrix.vecTail,ht,hx])
+  have he4 := self_fiber 0 _ h4 (by
+    norm_num [h,p,form_apply,Pi.smul_apply,smul_eq_mul,Matrix.vecHead,Matrix.vecTail,ht,hx])
+  have he := congrArg (fun z => z 2) (he3.trans he4.symm)
+  norm_num [p] at he
+  linarith
+
+private theorem no_whole_ball :
+    ¬ Nonempty (WholePairBallConfirmation.BallChart C u (p 0) (p 2)) := by
+  rintro ⟨b⟩
+  apply no_center
+  refine ⟨b.param 0,?_⟩
+  intro z hz
+  have hz' : z ∈ b.param '' Metric.closedBall 0 1 := by
+    rw [b.whole,pair_base_agrees,nonadjacent_pair_whole]
+    exact hz
+  obtain ⟨s,hs,rfl⟩ := hz'
+  have hneg : b.param (-s) ∈ K := by
+    rw [← nonadjacent_pair_whole,← pair_base_agrees,← b.whole]
+    exact ⟨-s,by simpa using hs,rfl⟩
+  have he : (2 : ℝ) • b.param 0 - b.param s = b.param (-s) := by
+    have hn : b.param (-s) = - b.param.linear s + b.param 0 := by
+      rw [congrFun b.param.decomp (-s),map_neg]
+    rw [hn,congrFun b.param.decomp s]
+    module
+  rw [he]
+  exact hneg
+
+private theorem universal_ball_failure : ¬ WholePairBallConfirmation.wholePairBalls C u := by
+  intro hB
+  have hpure (i : Fin 7) : p i ∈ pure C u := by rw [pure_family]; exact ⟨i,rfl⟩
+  apply no_whole_ball
+  apply hB ⟨p 0,hpure 0⟩ ⟨p 2,hpure 2⟩
+  intro he
+  have hh := congrArg (fun q : pure C u => (q : V) 1) he
+  norm_num [p] at hh
 
 /-- A complete original effect obstruction unit: full mixed zero gluing, all
 mixed exclusion faces, the actual local minimal face, all real linear extensions,
@@ -605,10 +853,24 @@ theorem original_effect_obstruction :
     pure C u = Set.range p ∧
     (affineSpan ℝ K : Set V) = {z | u z = 1} ∧
     (∀ (i : Fin 7) (z : V), z ∈ C →
-      (comparison C u (p i) z = 0 ↔ ∃ f, confirms C u (p i) f ∧ f z = 0)) := by
+      (comparison C u (p i) z = 0 ↔ ∃ f, confirms C u (p i) f ∧ f z = 0)) ∧
+    Nonempty (WholePairBallConfirmation.BallChart C u (p 3) (p 4)) ∧
+    IsClosed (C : Set V) ∧
+    (∀ z ∈ C, z ≠ 0 → 0 < u z) ∧
+    (C : ConvexCone ℝ V).Salient ∧
+    Submodule.span ℝ (C : Set V) = ⊤ ∧
+    FinitePureSimplex.wholePairBase C u (p 0) (p 2) = K ∧
+    ¬ Nonempty (WholePairBallConfirmation.BallChart C u (p 0) (p 2)) ∧
+    ¬ WholePairBallConfirmation.wholePairBalls C u ∧
+    (∀ g : (affineSpan ℝ K) →ᵃ[ℝ] ℝ,
+      ∃! f : V →ₗ[ℝ] ℝ, ∀ z : affineSpan ℝ K, f z = g z) ∧
+    (¬ ∃ g : (affineSpan ℝ K) →ᵃ[ℝ] ℝ,
+      (∀ z : affineSpan ℝ K, (z : V) ∈ K → 0 ≤ g z ∧ g z ≤ 1) ∧
+      ∀ z : affineSpan ℝ K, (z : V) ∈ facet → g z = ruler z) ∧
+    ruler (p 3) = 1 ∧ ruler (p 4) = 0 ∧ p 1 ∉ facet ∧ (0 : ℝ) < 4/21 := by
   exact ⟨base_hull,whole_mixed_zero_gluing,entire_exclusion_face,facet_segment,
     whole_facet_pair,edge_is_pair,ruler_local,facet_maximum,extensions_exhaustive,
-    no_extension,edge_proper,projection_mass,p_mem 5,projection_not_positive,
+    result,edge_proper,projection_mass,p_mem 5,projection_not_positive,
     by rw [projection_mass]; norm_num [edgeEffect,p,form_apply],comparison_upper,
     by norm_num [h,p,form_apply],projection_split,
     projection_on_generators.1,projection_on_generators.2.1,projection_on_generators.2.2,
@@ -616,9 +878,12 @@ theorem original_effect_obstruction :
     by intro i; fin_cases i <;> norm_num [edgeEffect,p,form_apply],
     by intro i hi hj; fin_cases i <;> norm_num [edgeEffect,p,form_apply] at *,
     by intro z; constructor <;> norm_num [h,u,edgeEffect,form_apply] <;> ring,
-    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family,original_affine_span,comparison_zero_iff⟩
-
-/-- The original facet ruler has no proper real linear extension. -/
-theorem result : ¬ extensionClaim := original_effect_obstruction.2.2.2.2.2.2.2.2.2.1
+    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,
+    pure_family,original_affine_span,comparison_zero_iff,⟨localBallChart⟩,
+    cone_closed,fun _ hz hne => unit_strict hz hne,cone_salient,cone_generating,
+    nonadjacent_pair_whole,no_whole_ball,universal_ball_failure,
+    actual_affine_bridge,no_actual_affine_extension,
+    by norm_num [ruler,h,p,form_apply],by norm_num [ruler,h,p,form_apply],
+    by rintro ⟨_,hh⟩; norm_num [h,p,form_apply] at hh,by norm_num⟩
 
 end D5.S3.Quantum.Foundation.OriginalHeptagonObstruction
