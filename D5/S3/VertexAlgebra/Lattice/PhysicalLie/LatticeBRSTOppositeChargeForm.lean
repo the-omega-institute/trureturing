@@ -63,13 +63,13 @@ def statePairing (D : LatticeData) : LinearMap.BilinForm ℂ (State D) where
     apply LinearMap.ext
     intro y
     change inserted (conjugation D (x + z)) y = _
-    simp only [map_add, inserted_add_left, LinearMap.add_apply]
+    simp only [map_add, inserted_add_left, LinearMap.add_apply, LinearMap.coe_mk, AddHom.coe_mk]
   map_smul' a x := by
     apply LinearMap.ext
     intro y
     change inserted (conjugation D (a • x)) y = _
     simp only [map_smulₛₗ, inserted_smul_left, starRingEnd_apply, star_star, LinearMap.smul_apply,
-      smul_eq_mul, RingHom.id_apply]
+      smul_eq_mul, RingHom.id_apply, LinearMap.coe_mk, AddHom.coe_mk]
 
 private theorem state_expansion (x : State D) :
     (∑ S ∈ (slices D x).support, (slices D x) S ⊗ₜ[ℂ] ket S) = x := by
@@ -199,7 +199,7 @@ theorem statePairing_relative_coefficients (x y : State D)
     have hs := congrArg (fun u : Carrier D =>
       sourcePairing D u ((slices D y) (relativePartner S)))
       (Finsupp.sum_single ((slices D x) S))
-    simp only [map_sum, LinearMap.sum_apply, sourcePairing_single] at hs
+    simp only [Finsupp.sum, map_sum, LinearMap.sum_apply, sourcePairing_single] at hs
     exact hs.symm
   rw [expand, Finset.mul_sum]
 
@@ -252,10 +252,10 @@ private theorem current_gram (i j : Fin D.rank) :
     simpa only [LatticeAllStateField.vacuum] using current_creation D i
   have hann : neutralMode D i 1 (LatticeActualConformalState.currentState D j) =
       (D.G i j : ℂ) • vacuum D := by
-    change neutralMode D i ((0 : ℤ)+1)
-      (Finsupp.single 0 (MvPolynomial.X (j,0))) = _
-    rw [neutralMode_single, neutralPolynomialMode_positive D i (0 : Charge D) 0]
-    simp [weightedPartial, MvPolynomial.pderiv_X, vacuum, ← Finsupp.smul_single]
+    classical
+    simp [LatticeActualConformalState.currentState, neutralMode,
+      neutralPolynomialMode, weightedPartial, MvPolynomial.pderiv_X,
+      LinearMap.sum_apply, LinearMap.smul_apply, vacuum, ← Finsupp.smul_single]
   rw [← hcreate,
     SourceBPZ.SourcePairingLaws.sourcePairing_neutralMode D i (-1), neg_neg, hann]
   simp [sourcePairing_vacuum]
@@ -272,6 +272,7 @@ theorem statePairing_cartan (e f : Fin D.rank → ℂ) :
   rw [hc e, hc f]
   simp only [map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply,
     smul_eq_mul, cartan_basis_tensor, pairing_down, current_gram, Finset.mul_sum]
+  rw [Finset.sum_comm]
   rw [show -(∑ i : Fin D.rank, ∑ j : Fin D.rank,
       e i * (D.G i j : ℂ) * f j) =
       ∑ i : Fin D.rank, ∑ j : Fin D.rank, -(e i * (D.G i j : ℂ) * f j) by
@@ -280,7 +281,6 @@ theorem statePairing_cartan (e f : Fin D.rank → ℂ) :
   intro i hi
   apply Finset.sum_congr rfl
   intro j hj
-  rw [D.symmetric j i]
   ring
 
 section NeutralDescent
