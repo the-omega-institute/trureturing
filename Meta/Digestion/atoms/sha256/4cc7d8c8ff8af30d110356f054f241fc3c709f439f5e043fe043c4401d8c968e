@@ -1,0 +1,83 @@
+**定理 98.3（B-only横向维数障碍）。** 在定义VII98.1下，若 $\mathrm A(F)$ 失败，则存在同一原球 $F$ 中重新选出的失败对径 $p_*,r_*$、同一对最优原端点 $a,b$、同一张原效应 $e$，以及包含 $a,b$ 的各自最小面 $G_+,G_-$，使
+
+$$
+\begin{gathered}
+p_*-r_*=t_*(a-b),\qquad 0<t_*<1,\qquad
+\gamma(p_*-r_*)=t_*,\qquad e(a)=1,\quad e(b)=0,\\
+a\in\operatorname{ri}G_+,\qquad b\in\operatorname{ri}G_-,\qquad
+L_\pm=\operatorname{lin}(G_\pm-G_\pm),\\
+W_F\oplus L_+\oplus L_-\ \subseteq\ E,\qquad
+\delta\le\dim G_\pm,\qquad
+\dim G_++\dim G_-\le m-d.
+\end{gathered}
+\tag{VII98.8}
+$$
+
+同一 $e$ 在整个 $G_+$ 恒一、在整个 $G_-$ 恒零。特别是
+
+$$
+\mathrm A(F)\text{ 失败}\quad\Longrightarrow\quad m-d\ge2\delta.
+\tag{VII98.9}
+$$
+
+证明。令
+
+$$
+Q=(K-K)\cap W_F,\qquad R=\max_{w\in Q}|w|_F.
+\tag{VII98.10}
+$$
+
+$Q$ 是紧凸集，且含 $F-F=2B_F$。由VI90.9，原失败对径 $p,r$ 有最优(VII98.6)，故 $(p-r)/t\in Q$ 的长度为 $2/t>2$，于是 $R>2$。选一个达到 $R$ 的 $w$。平方欧氏范数严格凸：若 $w$ 是 $Q$ 中两个不同点的严格凸组合，则 $|w|_F^2$ 严格小于它们平方范数的加权和，后者至多为 $R^2$。所以 $w\in\operatorname{ext}Q$。
+
+取非空紧凸纤维及其一个极点
+
+$$
+M_w=\{(x,y)\in K\times K:x-y=w\},\qquad
+(a,b)\in\operatorname{ext}M_w.
+\tag{VII98.11}
+$$
+
+因 $w\in K-K$，有 $\gamma(w)\le1$。若 $\gamma(w)<1$，(VII98.4)的最优实现将给 $w=s(x-y)$、$s<1$；于是 $w/s\in Q$ 且 $|w/s|_F>R$，矛盾。因此 $\gamma(w)=1$，(VII98.11)的这一端点对就是最优实现。定义
+
+$$
+p_*=c+\frac wR,\qquad r_*=c-\frac wR,\qquad
+ t_*=\frac2R.
+\tag{VII98.12}
+$$
+
+这两个点是 $F$ 的纯对径，也是整个 $K$ 的纯点，并且
+$\gamma(p_*-r_*)=2/R=t_*<1$。由(VII98.4)—(VII98.5)取得同一张原 $e$ 饱和同一对 $a,b$。如果最初方向的最优系数为 $t$，还有 $t_*\le t$；这只说明重新选择的方向至少同样失败。VII98.2给所选 $a,b$ 均混且在 $F$ 外。
+
+现在使用有限维凸集的最小面相对内点性质：每一点处于其最小面的相对内部，故对每个 $v_+\in L_+$、$v_-\in L_-$，存在共同的充分小 $\varepsilon>0$，使
+
+$$
+a\pm\varepsilon v_+\in G_+\subseteq K,\qquad
+b\pm\varepsilon v_-\in G_-\subseteq K.
+\tag{VII98.13}
+$$
+
+这是成熟的面与相对内部工具（参见 Rockafellar，*Convex Analysis*，§18）；不要求 $G_\pm$ 暴露或紧。其有限维理由是：在包含给定点的面内，若该点不在相对内部，相对支撑便给一个含该点的更小真面，与最小性矛盾。相对内部正给每个方向所需的双向小扰动。
+
+设 $v_+-v_-\in W_F$。两组同步扰动的差都是 $Q$ 中的点，且
+
+$$
+w=\tfrac12\bigl(w+\varepsilon(v_+-v_-)\bigr)
+  +\tfrac12\bigl(w-\varepsilon(v_+-v_-)\bigr).
+\tag{VII98.14}
+$$
+
+第一层 $w\in\operatorname{ext}Q$ 迫使 $v_+-v_-=0$。此时两组端点仍在同一个 $M_w$；第二层 $(a,b)\in\operatorname{ext}M_w$ 又迫使 $v_+=v_-=0$。所以
+
+$$
+L_+\times L_-\longrightarrow E/W_F,\qquad
+(v_+,v_-)\longmapsto[v_+-v_-]
+\quad\text{是单射}.
+\tag{VII98.15}
+$$
+
+将 $v_-$ 换成 $-v_-$，即得(VII98.8)的直和及维数上界。第一层单独只消去差分移动，仍容许共同平移；第二层在第一层之后才消去共同平移，两层不可互代。这是原 $K\times K$ 上的直接扰动，不借PSD的秩界。
+
+还须得到两端的下界。整个紧凸 $K$ 的有限纯分解（有限维Minkowski定理，亦见 *Convex Analysis* §18）给 $a$ 为有限多个原纯点的正权凸组合，面性质使这些点全部在 $G_+$。因 $a$ 非纯，至少有两个不同的纯点 $s,t$ 出现。于是整个 $H(s,t)\subseteq G_+$，故 $\dim G_+\ge\dim H(s,t)\ge\delta$；$b$ 同理。这一步只用整个 $K$ 的分解，不对可能非闭的 $G_\pm$ 另用紧凸分解。
+
+最后，$K\cap\{e=1\}$ 与 $K\cap\{e=0\}$ 是分别包含 $a,b$ 的暴露面，所以包含它们的最小面 $G_+,G_-$。同一个 $e$ 遂在两面恒一和恒零。所有端点、方向、扰动及效应属于同一实现，证毕。
+
