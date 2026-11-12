@@ -2978,3 +2978,340 @@ Proposition 9(8) 承担不可约角色投影；该文 Theorem 10 证明中的轨
 
 [FS97]: AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md
 [RET97]: AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md
+
+## 追加锚（本行以下为增补区）
+
+## 29. 两个实际字的精确零纤维证书
+
+**定义 29.1（有限代数计算）。** 置
+
+$$
+x^2+x=1,\qquad y^2=x,\qquad \zeta^5=-1,\qquad
+\zeta^4-\zeta^3+\zeta^2-\zeta+1=0,\qquad x=\zeta^4-\zeta .
+\tag{29.1}
+$$
+
+在合法路径基中，每个可翻转的局部二点块的门矩阵是
+
+$$
+B=\zeta\left[I+(\zeta-1)
+\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}\right].
+\tag{29.2}
+$$
+
+冻结其余位后，(29.2) 乘以该二点块的系数列；阻塞单点只乘以
+\(\zeta\)。因此任何有限字的每个系数都由 (29.1)–(29.2) 在有限次加乘中唯一决定，且不需要连续门或额外载体。
+
+**引理 29.2（21 次调用的精确证书）。** 令
+
+$$
+r=(3,4,5,6,7,8,3,4,5,6,7,3,4,5,6,3,4,5,3,4,3),
+\qquad R=K_r,
+$$
+
+并令
+
+$$
+A=5-2\zeta+2\zeta^2-5\zeta^3,\qquad
+f=e_{000000010},\qquad h=e_{000000000}.
+$$
+
+逐块使用 (29.2)，并在相邻的两个 staircase 前缀之间消去公共冻结相位，得到下表。表中每一行都是在环 (29.1) 中的等式：
+
+$$
+\begin{array}{c|c}
+\text{系数或范数}&\text{对 }R\text{ 的约化值}\\ \hline
+\langle f,Re_0\rangle&0\\
+\langle h,Re_0\rangle&5-2\zeta+2\zeta^2-5\zeta^3=A\\
+\langle f,Rt\rangle&y(5-2\zeta+2\zeta^2-5\zeta^3)/\sqrt2=yA/\sqrt2\\
+\|P_{B_8}Rt\|^2&x^3
+\end{array}
+\tag{29.3}
+$$
+
+证明。每一次局部门更新只作用于一对相邻合法路径；在该二点块上把输入列记为 \((u_0,u_1)^T\)，输出列就是
+
+$$
+\zeta
+\begin{pmatrix}
+1+(\zeta-1)x&(\zeta-1)xy\\
+(\zeta-1)xy&1+(\zeta-1)x^2
+\end{pmatrix}
+\binom{u_0}{u_1}.
+\tag{29.4}
+$$
+
+按 $K_{ab}=K_bK_a$ 的算子次序，从右向左分成 $[3,4,3]$、$[5,4,3]$、$[6,5,4,3]$、$[7,6,5,4,3]$、$[8,7,6,5,4,3]$ 五个局部 staircase；在每一层，只有含有该中心位的二点块改变。把 (29.4) 的两个输出重新按下一层的合法路径配对，所有未显示的项均成对出现并由 \(x^2+x-1\) 消去。保留 \(f,h\) 两个行的系数以及 \(B_8\) 块的平方范数，恰得到 (29.3)。这是一个有限的局部块递推，因而表中没有使用全群稠密性或对实际字的极限。
+
+为核对表中最后的代数数值，利用 \(\bar\zeta=-\zeta^4\) 和 (29.1) 展开
+
+$$
+A\bar A=34+21\zeta^2-21\zeta^3=(\zeta^4-\zeta)^8=x^8.
+\tag{29.5}
+$$
+
+故 (29.3) 给出
+
+$$
+|\langle h,Re_0\rangle|^2=x^8,\qquad
+|\langle f,Rt\rangle|^2=x^9/2,\qquad
+\|P_{B_8}Rt\|^2=x^3.
+\tag{29.6}
+$$
+
+证毕。
+
+**命题 29.3（21 次字排除一个显示的正扰动）。** 对任意 \(\epsilon>0\)，令
+
+$$
+F_f=P_f\otimes I+\epsilon P_h\otimes P_{B_8}.
+$$
+
+则该系数在实际字 \(r\) 上的值为
+
+$$
+\operatorname {Tr}\!\left(F_f(P_{Re_0}\otimes P_{Rt})\right)
+=\epsilon |\langle h,Re_0\rangle|^2\|P_{B_8}Rt\|^2
+=\epsilon x^{11}>0,
+\tag{29.7}
+$$
+
+而 \(N_fRe_0=0\) 由 \(\langle f,Re_0\rangle=0\)。因此 (29.7) 违反原实际细支撑条件。这个结论只排除该显示扰动，不能排除固定 Hermitian 系数类中的其它规律。
+
+证明。第一项在 \(r\) 上为 \(|\langle f,Re_0\rangle|^2=0\)；第二项由秩一迹的乘法和 (29.6) 为
+\(\epsilon x^8x^3\)。\(f\) 的原标签投影在第一列上为零，所以原支撑要求总值为零，矛盾。证毕。
+
+**引理 29.4（28 次字的混合扇区零点）。** 令
+
+$$
+\begin{aligned}
+N&=[4]+[6]^9,\\
+B&=[7,8,9,10,6,7,8,9,5,6,7,8,4,5,6,7],\\
+c&=N+B+[3,7].
+\end{aligned}
+$$
+
+在原门的积分规范 \(S_{aa}=y^{\mathrm {wt}(a)}\) 下，\(N\) 与 \(B\) 固定 \(e_0\)，并且
+
+$$
+\sqrt2\,S^{-1}P_{B_8}K_BK_Nt
+=(\zeta^2-\zeta)e_{000101010}
+-\zeta^3(e_{000000010}+e_{000010010}).
+\tag{29.8}
+$$
+
+这三个基路径的权分别为 \(5,3,4\)，所以
+
+$$
+\begin{aligned}
+2\|P_{B_8}K_BK_Nt\|^2
+&=|\zeta^2-\zeta|^2x^5+x^3+x^4\\
+&=(2+x)x^5+x^3+x^4=x,
+\end{aligned}
+\tag{29.9}
+$$
+
+即 \(\|P_{B_8}K_ct\|^2=x/2\)。此外 \(K_ce_0\in A_8\)，且在 \(H_{34}\otimes\mathbb C^2\) 的产品规范中
+
+$$
+\langle h,K_ce_0\rangle=[\zeta(\zeta-1)xy]^2,\qquad
+|\langle h,K_ce_0\rangle|^2=x^2.
+\tag{29.10}
+$$
+
+证明。\(N\)、\(B\) 的固定性给 \(K_Ne_0=K_Be_0=e_0\)；末尾的 \(3,7\) 保持 \(n_8\)，故第一列仍在 \(A_8\)。在 \(B_8\) 块中将 (29.2) 逐层共轭到积分规范，得到 (29.8)。由 (29.1)，\(|\zeta^2-\zeta|^2=2+x\)，而
+
+$$
+(2+x)x^5+x^3+x^4-x=x(x+1)(x^2+1)(x^2+x-1)=0,
+$$
+
+给出 (29.9)。最后一项由同一二点块公式在 \(h\) 行取系数，得到 (29.10)。证毕。
+
+## 30. \(A_8\) 首列的全正交零纤维
+
+**假设 30.1（既有 \(A_8\) 内部零纤维）。** 对每个原标签 \(\lambda\) 满足 \(b_8(\lambda)=1\)，沿用 omission-\(8\) 实际字族及其既有的正性、粗事件和全标签支撑传播结论：
+
+$$
+q_\lambda(v,w)=0
+\quad\text{whenever }v,w\in A_8,\quad \langle v,w\rangle=0.
+\tag{30.1}
+$$
+
+这里 \(q_\lambda(v,w)=\operatorname {Tr}(F_\lambda(P_v\otimes P_w))\)，每个 \(F_\lambda\) 只假设 Hermitian；(30.1) 是对同一 \(\lambda\) 的逐标签结论。
+
+**定理 30.2（实际 omission-\(8\) 零族的混合扇区延拓）。** 在假设 30.1、引理 29.4 以及 omission-\(8\) 闭包
+
+$$
+A_8=(\mathbb C^{34}\otimes\mathbb C^2),\qquad
+B_8=\mathbb C^{21},\qquad
+G_8=(SU(34)\otimes SU(2))\oplus SU(21),
+\tag{30.2}
+$$
+
+下，对每个满足 \(b_8(\lambda)=1\) 的标签有
+
+$$
+q_\lambda(v,w)=0
+\qquad(v\in A_8,\ w\perp v,\ w\in A_8\oplus B_8).
+\tag{30.3}
+$$
+
+证明。写 \(v_0=K_ce_0\in A_8\)，并分解 \(w_0=K_ct=w_A+w_B\)，其中 \(w_A\in A_8\)、\(w_B\in B_8\)。门的酉性和 \(e_0\perp t\) 给 \(v_0\perp w_0\)，因而 \(v_0\perp w_A\)。引理 29.4 的第一列支撑给
+\(q_\lambda(v_0,w_0)=0\)，假设 (30.1) 给 \(q_\lambda(v_0,w_A)=0\)。
+
+对固定的 \(v_0\)，\(w\mapsto q_\lambda(v_0,w)\) 在 \(v_0^\perp\) 上是正半定二次型。正半定二次型若在 \(w_A\) 上为零，则其极化核包含 \(w_A\)；由
+
+$$
+0=q_\lambda(v_0,w_A+w_B),\qquad q_\lambda(v_0,w_A)=0
+$$
+
+遂得 \(q_\lambda(v_0,w_B)=0\)。
+
+现在在 \(c\) 后接任意 omission-\(8\) 字。其第一列仍在 \(A_8\)，支撑仍使同一标签的值为零；在闭包 (30.2) 中，\(G_8\) 分别作用于 \(v_0\) 的 \(A_8\) 产品因子和 \(w_B\) 的 \(B_8\) 因子。实际 omission-\(8\) 字在该闭包中稠密，故连续性把上一步的等式给到
+
+$$
+q_\lambda(v,w_B)=0
+\quad\text{for every product }v\in A_8
+\text{ and every }w_B\in B_8.
+\tag{30.4}
+$$
+
+对固定 \(w_B\)，所有 \(v\in A_8\) 都满足 \(v\perp w_B\)，所以 \(v\mapsto q_\lambda(v,w_B)\) 是 \(A_8\) 上的正半定二次型。产品向量张成 \(A_8\)，而 (30.4) 在全部这些产品向量上为零，故极化给
+
+$$
+q_\lambda(v,w_B)=0\qquad(v\in A_8,\ w_B\in B_8).
+\tag{30.5}
+$$
+
+最后固定任意 \(v\in A_8\)。假设 (30.1) 消去 \(A_8\cap v^\perp\)，式 (30.5) 消去 \(B_8\)；二者直和正是
+\(v^\perp\subset A_8\oplus B_8\)。第二列上的正半定性遂给出 (30.3)。整个论证只使用实际 omission-\(8\) 零字族的闭包和一个实际 28 次零点，没有把 \(F_\lambda\) 当作全局正半定算子，也没有把 \(A_8\) 的闭包替成 \(SU(68)\)。证毕。
+
+## 31. \(C_3\) 延拓的条件形式与缺失的固定纤维桥
+
+**定义 31.1（\(C_3\)、\(D_3\) 与条件零桥）。** 置
+
+$$
+C_3=\mathbb C^2\otimes\mathbb C^{13},\qquad
+D_3=\mathbb C^3\otimes\mathbb C^{21},\qquad
+\mathcal K=C_3\oplus D_3.
+\tag{31.1}
+$$
+
+对 \(b_3(\lambda)=0\) 的标签，omission-\(3\) 闭包在两块上的因子为
+\(SU(2)\otimes SU(13)\) 与 \(SU(3)\otimes SU(21)\)。设 omission-\(3\) 的已知精确零字族已经给出：
+
+1. 对每个产品首列 \(v\in C_3\)，其 \(C_3\) 与 \(D_3\) 第二列分量可由一个独立的 \(D_3\) 符号变换分开；
+2. 对每个产品 \(\eta=\beta\otimes w\in C_3\)，所有产品首列 \(\alpha\otimes u\) 满足 \(\alpha\perp\beta\)、\(|\langle u,w\rangle|^2=x\) 的零值均来自实际字；
+3. 对粗事件相反的第一夸比特向量 \(\alpha_{\rm opp}\)，有如下**固定纤维桥**：
+
+$$
+q_\lambda(\alpha_{\rm opp}\otimes z,\,\beta\otimes w)=0
+\quad\text{whenever }\langle z,w\rangle=0,
+\tag{31.2}
+$$
+
+对所有产品 \(\beta\otimes w\) 和所有 \(z\)。条件 (31.2) 是关于固定首列零纤维的陈述，不是环境有序对密度的推论。
+
+**定理 31.2（在固定纤维桥下的 \(C_3\) 零纤维）。** 在定义 31.1 的三项条件下，对每个 \(b_3(\lambda)=0\) 的标签有
+
+$$
+q_\lambda(v,w)=0
+\qquad(v\in C_3,\ w\perp v,\ w\in C_3\oplus D_3).
+\tag{31.3}
+$$
+
+证明。先取产品首列 \(v\in C_3\)。对 omission-\(3\) 零字的第二列写成 \(w_C+w_D\)，其中
+\(w_C\in C_3\)、\(w_D\in D_3\)。\(D_3\) 的独立符号变换给两个仍为零的正半定值；相加并使用 \(v\perp w_C,w_D\)，得到
+
+$$
+q_\lambda(v,w_C)=q_\lambda(v,w_D)=0.
+\tag{31.4}
+$$
+
+固定 \(v\) 时，\(D_3\) 产品轨道张成 \(D_3\)，故第二列正半定性给
+\(q_\lambda(v,w_D)=0\) 对一切 \(w_D\in D_3\)。固定 \(w_D\) 时，\(C_3\) 产品首列张成 \(C_3\)，第一列正半定性再给同一结论对所有 \(v\in C_3\)。
+
+现在固定产品第二列 \(\eta=\beta\otimes w\in C_3\)。条件 \(\alpha\perp\beta\)、\(|\langle u,w\rangle|^2=x\) 的首列产品向量张成
+\(\beta^\perp\otimes\mathbb C^{13}\)。第一列正半定性遂使
+
+$$
+q_\lambda(\alpha'\otimes u,\eta)=0
+\quad(\alpha'\perp\beta,\ u\in\mathbb C^{13}).
+\tag{31.5}
+$$
+
+取一个粗事件相反的 \(\alpha_{\rm opp}\)，且 \(\langle\alpha_{\rm opp},\beta\rangle\ne0\)。对每个 \(z\perp w\)，(31.2) 与 (31.5) 给
+\(q_\lambda(\beta\otimes z,\eta)=0\)；这里使用的是第一列正半定二次型的核性质，将
+\(\alpha_{\rm opp}\otimes z\) 按 \(\beta\oplus\beta^\perp\) 分解。故对每个产品 \(\eta\)，
+
+$$
+q_\lambda(u,\eta)=0\quad(u\in C_3,\ u\perp\eta).
+\tag{31.6}
+$$
+
+异常的 \(\beta\) 由连续性补上。最后使用产品正交超平面引理：若 \(V,W\) 是维数至少二的复空间，且 \(a,b\in V\otimes W\)，则
+
+$$
+\operatorname {span}\{\xi\otimes\eta:\xi\otimes\eta\perp a\}=a^\perp.
+\tag{31.7}
+$$
+
+事实上，把 \(a,b\) 看成从 \(\overline V\) 到 \(W\) 的矩阵；若 \(b\) 与所有满足
+\(\langle a,\xi\otimes\eta\rangle=0\) 的产品向量正交，则每一行的线性泛函 \(b\) 都在相应的 \(a\) 行的核的湮灭子中，故各行成比例；在非零行之间比较给出同一比例，零行由交换因子补上，于是 \(b=ca\)。因此 (31.7) 成立。由 (31.6)、(31.7) 和第二列正半定性，得到 (31.3) 在 \(C_3\) 内；再由 (31.4) 得到任意 \(D_3\) 泄漏，证毕。
+
+**命题 31.3（当前原生前件未供应 (31.2)）。** 原生条件只把粗 Born 值和细支撑规定在实际有限字的成对列
+\((K_ae_0,K_at)\) 上。环境有序对密度把正半定性延拓到所有正交有序对，但不把一个固定首列的实际零纤维延拓到
+\((\alpha_{\rm opp}\otimes z,\beta\otimes w)\) 的全部 \(z\perp w\)。因此 (31.2) 仍是额外的固定纤维覆盖义务，不能在没有这项桥的情况下作为原生前件的结论使用。
+
+证明。由 (31.2) 所需的值，首列被固定而第二列在一个完整正交超平面中变化。omission-\(3\) 字的实际轨道同时变换两列，并保持它们由同一首字产生的相对不变量；它没有给出固定首列下该超平面的实际字稠密性。连续性只允许从一个已知为零的固定纤维稠密子集取得 (31.2)，而环境有序对密度只保证正性，不能制造这个零子集。故缺少的正是固定首列零纤维的实际覆盖或等价的支撑表示定理。证毕。
+
+## 32. 条件首列剩余空间与未决的另一候选
+
+**推论 32.1（条件压缩零空间）。** 固定目标标签 \(f\)，假设定理 30.2、定理 31.2 以及粗 \(b_1\) 相反事件的第一列零值均成立。则对每个固定第二列，第一列正半定压缩在
+
+$$
+S=A_8+C_3+\operatorname {ran}n_1
+\tag{32.1}
+$$
+
+上为零；在原 \(89\) 维路径空间中
+
+$$
+\dim S=79,\qquad
+S^\perp=\{b_8=1,\ b_3=0,\ b_1=0\},\qquad
+\dim S^\perp=10.
+\tag{32.2}
+$$
+
+这里的 \(S\) 是逐固定第二列的压缩核结论，不是把物理载体替换成十维载体，也不是对 \(F_\lambda\) 作原始系数投影。
+
+证明。定理 30.2 消去 \(A_8\)，定理 31.2 消去 \(C_3\)，粗事件相反零值消去 \(\operatorname {ran}n_1\)。原路径分解的交维数给出 (32.2)；对正半定压缩，三个已消去子空间的和仍在核中。证毕。
+
+**命题 32.2（剩余候选的精确未决谓词）。** 令
+
+$$
+r_0^{\rm new}=e_{010000010},\qquad \mu=1001000001,
+$$
+
+并形式上置
+
+$$
+F_f=P_f\otimes I+\epsilon P_{r_0^{\rm new}}\otimes P_{e_0},\qquad
+F_\mu=P_{r_0^{\rm new}}\otimes(I-\epsilon P_{e_0}),
+\tag{32.3}
+$$
+
+其它标签取 \(N_\lambda\otimes I\)。在这些表达式的全局正性与归一化成立的前提下，原生细支撑对新增项的剩余条件恰为
+
+$$
+\langle f,K_ae_0\rangle=0
+\quad\Longrightarrow\quad
+\langle r_0^{\rm new},K_ae_0\rangle\,\langle e_0,K_at\rangle=0
+\qquad(a\in\mathsf W_{11}).
+\tag{32.4}
+$$
+
+证明。若第一因子在 (32.3) 的 \(f\) 标签上为零，新增贡献是
+\(\epsilon|\langle r_0^{\rm new},K_ae_0\rangle|^2|\langle e_0,K_at\rangle|^2\)；故它逐字为零当且仅当 (32.4) 成立。这个等价式只处理支撑谓词，不替代全标签归一、粗 Born、校准、联合 future 或实际过程条件。当前原生字域没有给出 (32.4)，所以 (32.3) 仍是未决测试，不是反模型。证毕。
+
+本增补只推进原生有限字零纤维：定理 30.2 是由实际 28 次字和 omission-\(8\) 闭包得到的全 \(A_8\) 首列结论；定理 31.2 明确给出 \(C_3\) 结论所需的固定纤维桥及其条件证明，而命题 31.3 保留该桥的原生缺口。VII22 的关系下降、VII24–28 的无秩 Born 路线、原 \(1024\) 标签、\(89\) 维载体、校准、联合锚、仪器、时间和完整一-\(\Omega\) 物理来源条件均保持其原适用范围。
