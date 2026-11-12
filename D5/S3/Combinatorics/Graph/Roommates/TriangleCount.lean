@@ -110,6 +110,8 @@ theorem forbidden_not_certified (s : Bool × (Fin 3 → Bool)) :
     rw [he] at hh
     exact exclusive_triangle_not_certified (forward_exclusive b) ⟨_, hh⟩
 
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 1000000 in
 private theorem forbidden_injective : Function.Injective forbiddenWord := by
   decide +kernel
 
