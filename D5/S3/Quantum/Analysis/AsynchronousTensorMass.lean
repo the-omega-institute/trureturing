@@ -41,7 +41,8 @@ private theorem slot_tprod (Phi : A →ₗ[ℝ] A) (j : ι) (a : ι → A) :
   · subst i; simp
   · simp [hij, Function.update_of_ne hij]
 
-private theorem asynchronous_tprod (Phi : A →ₗ[ℝ] A) (alpha : ι → ℝ) (a : ι → A) :
+/-- On a pure tensor, the asynchronous sum replaces one slot at a time. -/
+theorem asynchronous_tprod (Phi : A →ₗ[ℝ] A) (alpha : ι → ℝ) (a : ι → A) :
     asynchronous Phi alpha (PiTensorProduct.tprod ℝ a) =
       ∑ j, alpha j • PiTensorProduct.tprod ℝ (update a j (Phi (a j))) := by
   simp only [asynchronous, LinearMap.sum_apply, LinearMap.smul_apply, slot_tprod]
@@ -104,5 +105,22 @@ theorem fixed_tensor_dual (C : ProperCone ℝ A) (u : Module.Dual ℝ A)
       PiTensorProduct.lift.tprod, MultilinearMap.compLinearMap_apply,
       MultilinearMap.mkPiAlgebra_apply, smul_eq_mul]
     simp only [hprod, ← Finset.sum_mul, hsum, one_mul]
+
+
+example (Phi : A →ₗ[ℝ] A) (alpha : ι → ℝ) (hsum : ∑ i, alpha i = 1)
+    {v : A} (hv : Phi v = -v) (hvne : v ≠ 0) :
+    asynchronous Phi alpha (PiTensorProduct.tprod ℝ (fun _ : ι => v)) =
+        -PiTensorProduct.tprod ℝ (fun _ : ι => v) ∧
+      PiTensorProduct.tprod ℝ (fun _ : ι => v) ≠ 0 := by
+  constructor
+  · rw [asynchronous_tprod]
+    simp only [hv, MultilinearMap.map_update_neg, Function.update_eq_self,
+      ← Finset.sum_smul, hsum, one_smul]
+  · obtain ⟨f, hf⟩ := Module.Projective.exists_dual_eq_one ℝ hvne
+    have he : tensorMass f (PiTensorProduct.tprod ℝ (fun _ : ι => v)) = 1 := by
+      simp [tensorMass, hf, MultilinearMap.mkPiAlgebra_apply]
+    intro hz
+    rw [hz, map_zero] at he
+    exact zero_ne_one he
 
 end D5.S3.Quantum.AsynchronousTensorMass
