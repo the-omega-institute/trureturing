@@ -15,6 +15,7 @@ internal sealed class SupportDocument : IScribeDocumentDefinition
         "A finite product of integral domains represents zero divisors by their nonempty proper coordinate supports. The coordinate values remain part of each vertex, so support multiplicities are exact counts of ring elements.",
         H("Actual zero divisors and coordinate supports"),
         Blocks(
+            Paragraph(Text("The three-prime support structure and four-family counting argument are due to Bilal Ahmad Rather, Combinatorial and analytic aspects of independence polynomials of zero divisor graphs, arXiv:2606.04789v1, Theorem 4.1, printed pages 18-20 (https://arxiv.org/abs/2606.04789v1, CC BY 4.0). The graph definitions are on pages 1-2. Problem 1 on page 24 asks for log concavity and unimodality; the results here supply the underlying graph and subset classification, and do not settle that problem. The Lean proofs are independently authored.")),
             Definition("Vertex", "Actual ring vertices",
                 "For a commutative ring R, a vertex is an element x of R with x nonzero and a witness y in R such that y is nonzero and xy is zero. The zero element is excluded."),
             Definition("graph", "The actual zero divisor graph",

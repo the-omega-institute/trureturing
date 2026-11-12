@@ -4,12 +4,17 @@
    mirror-E: none(waiver:finite-ring-support-correspondence)
    anchors: [mathlib/module/Mathlib.Data.ZMod.QuotientRing]
    utility: none
-   digest: Actual nonzero zero divisors have exact CRT support fibers. -/
+   digest: Actual zero divisors have exact CRT cells and four disjoint independent-set families. -/
 
 import D5.S3.StatisticalMechanics.HardCore.PartitionRelabeling
 import Mathlib.Data.ZMod.QuotientRing
 
-/-! Actual zero-divisor vertices, their support graph, and exact support multiplicities. -/
+/-! Actual zero-divisor vertices, their support graph, and exact support multiplicities.
+
+The three-prime support classification and four-family argument appear in
+Bilal Ahmad Rather, arXiv:2606.04789v1, Theorem 4.1. The proofs below use
+Mathlib's native CRT and the repository's actual independent configurations.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -222,7 +227,7 @@ private theorem independent_four (hι : Fintype.card ι = 3)
     by_cases hpairs : ∀ x ∈ S, (support e x.1).card = 2
     · exact Or.inl hpairs
     · right
-      push_neg at hpairs
+      push Not at hpairs
       obtain ⟨u, hu, hcard⟩ := hpairs
       have hv := (vertex_iff e u.1).mp u.2
       have hpos := Finset.card_pos.mpr hv.1
@@ -282,5 +287,6 @@ theorem configurations_four_families (hι : Fintype.card ι = 3)
 
 #print axioms prime_support_fiber_card
 #print axioms configurations_four_families
+
 
 end D5.S3.Combinatorics.Graph.ZeroDivisor.Support
