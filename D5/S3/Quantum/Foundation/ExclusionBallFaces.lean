@@ -234,7 +234,7 @@ private theorem exclusion_exposed {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ
     exact ⟨hx, by linarith [(hf.1 x hx.1).1]⟩
 
 omit [FiniteDimensional ℝ V] in
-private theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
+theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
     Convex ℝ (pairBase C u p q) := by
   intro x hx y hy a b ha hb hab
   refine ⟨base_convex C u hx.1 hy.1 ha hb hab, fun F hp hq => ?_⟩
