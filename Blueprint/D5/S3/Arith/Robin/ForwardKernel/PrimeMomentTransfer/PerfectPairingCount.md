@@ -6,7 +6,7 @@ Cardinalities and evaluations of perfect pairings on finite label sets.
 
 Let alpha be a finite type with decidable equality. A perfect pairing of a finite label set U is a finite set P of pairwise disjoint two-element label sets whose union is U. Write p(U) for the number of these perfect pairings. The empty set has one perfect pairing.
 
-**Theorem 1.2 (Number of edges in a perfect pairing).**
+**Theorem 1.1 (Number of edges in a perfect pairing).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.card`
 
@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPair
 
 If P is a perfect pairing of U, then the cardinality of U equals twice the cardinality of P.
 
-**Theorem 1.3 (Rank-one edge evaluation).**
+**Theorem 1.2 (Rank-one edge evaluation).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.finitePairingPolynomial_rankOne`
 
@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPair
 
 Let x be a real weight on labels and let c be a real weight on finite label sets. Assume c(e) is the product of x(i) over labels i in e whenever e has cardinality two. Then finitePairingPolynomial(U,c) equals p(U) times the product of x(i) over all labels i in U. Each perfect pairing partitions U, so each label occurs exactly once in its product.
 
-**Theorem 1.4 (Constant edge evaluation).**
+**Theorem 1.3 (Constant edge evaluation).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.finitePairingPolynomial_const`
 
@@ -42,7 +42,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPair
 
 Let kappa be real and assume c(e) equals kappa whenever e has cardinality two. Then finitePairingPolynomial(U,c) equals p(U) times kappa to the power floor(cardinality(U)/2). Every perfect pairing has exactly cardinality(U)/2 edges; for odd cardinality the sum is empty.
 
-**Theorem 1.6 (Double-factorial count).**
+**Theorem 1.4 (Double-factorial count).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.perfectPairingCount`
 
@@ -61,3 +61,4 @@ If the cardinality of U is even, p(U) equals the double factorial of (cardinalit
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.finitePairingPolynomial_rankOne`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.perfectPairingCount`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PartialPairingPolynomial](PartialPairingPolynomial.md)
+- Dependency: [D5/S3/Zeros/Convolution/PerfectMatchingCount](../../../../Zeros/Convolution/PerfectMatchingCount.md)

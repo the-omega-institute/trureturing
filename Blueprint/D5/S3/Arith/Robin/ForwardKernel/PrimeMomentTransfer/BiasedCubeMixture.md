@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeM
 
 *Commentary.*
 
-A finite nonnegative mixture of product sign measures is represented as a real linear functional.
+A finite weighted mixture of biased cube functionals is a real linear functional. It is positive when the weights are nonnegative, N is positive, and every bias value has absolute value at most sqrt(N).
 
 **Theorem 1.3 (Walsh character formula).**
 
@@ -38,9 +38,21 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeM
 
 *Commentary.*
 
-The value on a Walsh character is the weighted moment of the bias divided by the coordinate square root.
+For a character on T, the value is the weighted bias moment of order |T| divided by (sqrt(N)) to the power |T|.
 
-**Theorem 1.4 (Odd-coordinate reduction).**
+**Theorem 1.4 (Distinct-index mixture moments).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_moments`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_moments` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite family of bias values and weights, the distinct-index moment of order r is the weighted r-th bias moment divided by (sqrt(N)) to the power r, times the sum of coefficient products over injective index tuples. Both refutations apply this shared identity.
+
+**Theorem 1.5 (Odd-coordinate reduction).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.odd_reduction`
 
@@ -56,6 +68,7 @@ Repeated sign factors cancel in pairs, leaving exactly the coordinates with odd 
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixtureFunctional`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_character`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.mixture_distinct_moments`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.odd_reduction`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture.sign`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticMomentDefs](QuadraticMomentDefs.md)

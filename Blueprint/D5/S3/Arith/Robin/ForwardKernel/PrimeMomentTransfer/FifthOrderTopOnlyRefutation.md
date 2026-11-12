@@ -54,4 +54,3 @@ The biased-cube mixture construction is shared with the sixth-order refutation. 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.claim`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.result`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture](BiasedCubeMixture.md)
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticMomentDefs](QuadraticMomentDefs.md)
