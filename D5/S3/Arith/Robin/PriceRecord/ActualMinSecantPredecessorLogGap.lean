@@ -39,7 +39,7 @@ private theorem log_gap_pos {m q : ℕ} (hq : 0 < q) (hqm : q < m) :
   exact (one_lt_div (by exact_mod_cast hq : (0 : ℝ) < q)).mpr
     (by exact_mod_cast hqm)
 
-private theorem secant_support {m q : ℕ} (hq : 0 < q) (hqm : q < m)
+theorem secant_support {m q : ℕ} (hq : 0 < q) (hqm : q < m)
     {mu : ℝ}
     (hrecord : ∀ n : ℕ, 0 < n → n < m →
       goldenResourceObjective mu n < goldenResourceObjective mu m)
@@ -87,7 +87,7 @@ private theorem secant_support {m q : ℕ} (hq : 0 < q) (hqm : q < m)
 
 /- This is a non-strict maximum lemma: deletion is an actual positive integer
 predecessor, and equality of a marginal with nu is permitted. -/
-private theorem occupied_top_price {m p : ℕ} (hm : 0 < m) (hp : p.Prime)
+theorem occupied_top_price {m p : ℕ} (hm : 0 < m) (hp : p.Prime)
     {nu : ℝ}
     (hmax : ∀ r : ℕ, 0 < r → r ≤ m →
       goldenResourceObjective nu r ≤ goldenResourceObjective nu m)
