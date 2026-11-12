@@ -1,0 +1,4 @@
+**范围更正 87.11。** [L87] 的 *Descent of the supplied original processes* 中，原句 “Thus rational mixtures alone, or equality of normalized conditional output probabilities, is insufficient; the omitted masses affect linearity.” 的第一项不能强读为：在原完整凸像、重复标签下降、对**所有原实现**保持带质量有理混合且输出正的完整前件下，有理规律仍不足恢复实下降。引理 87.4 证明该强读法不成立，甚至只取其中的中点已经足够。原附录本来就有正输出，本章没有靠新加正性消除这项张力。
+
+该句关于归一条件态、遗漏质量的第二项，以及仅有有理实现域、只查所选算法、遗漏重复标签或没有正则性的弱读法仍有效，分别由上表控制。本章对强读法作明确限定／更正，不改动原已发表文字，不把原完整全实桥倒称缺失；新增应用是证明其已有正性在完整原像和全部实现语义下足以供应那座桥。
+

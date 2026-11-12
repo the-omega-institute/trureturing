@@ -1,0 +1,96 @@
+**定理 113.6（不连通只能为原旗标）。** 在W下，若有厚球且 $P$ 不连通，
+则恰有两个纯分量：一个单点 $P_h=\{p_0\}$，另一个为薄分量 $P_l$。
+并且
+
+$$
+d_{p_0}=N,
+\qquad
+(C,u)\cong
+\bigl((\mathbb R\oplus\operatorname{spin}_{N})_+,
+            (\alpha,a,x)\mapsto\alpha+2a\bigr).
+\tag{VIII113.18}
+$$
+
+每个原joint的三个球维数，按置换恰为 $(N,1,1)$。
+
+证明。置 $\mathcal A_h=\pi_1^{-1}(P_h)$。
+113.5使它为 $\mathcal A$ 的一个完整连通分量。
+$\pi_2(\mathcal A_h)$ 和 $\pi_3(\mathcal A_h)$ 各落在一个纯分量内；
+置换 $(23)$ 保持整个 $\mathcal A_h$，故这两个分量相同，记作 $P_l$。
+
+若 $P_l=P_h$，则 $(12)$ 也将 $\mathcal A_h$ 映到自身：
+其像是首坐标在 $P_h$ 上的一个完整连通分量，而这样的分量只有 $\mathcal A_h$。
+因此有首坐标或第二坐标在 $P_h$ 的joint都属于 $\mathcal A_h$。
+在(VIII113.14)中，两端的 $P_h$ 和中间的 $\mathcal A_h$ 遂组成一个非空开闭部分。
+$P$ 不连通使这部分为真子集，违背 $S^N$ 连通。
+所以 $P_l\ne P_h$，且 $P_l$ 是一个薄分量。
+
+令 $U=(12)\mathcal A_h$。它是 $\mathcal A$ 在 $P_l$ 上的一整个连通分量，
+故是113.5所给分裂二点覆盖的一张层，$\pi_1|_U:U\to P_l$ 为同胚。
+每个 $q\in P_l$ 因而有唯一 $U$ 中三元组
+
+$$
+(q,p(q),r(q)),\qquad p(q)\in P_h,\quad r(q)\in P_l.
+\tag{VIII113.19}
+$$
+
+$p(q)$ 连续。置换 $(23)$ 将它变为 $(q,r(q),p(q))$；
+由于厚、薄分量不同，这两个三元组不同，恰好耗尽首坐标为 $q$ 的二点纤维。
+所以 $q$ 只有一个厚邻点 $p(q)$，另一邻点仍在 $P_l$，
+不存在遗漏的第三种joint类型。
+首坐标在 $P_h$ 的joint本就在 $\mathcal A_h$，另两坐标全在 $P_l$。
+由实际坐标置换，$P_h\cup P_l$ 对所有框架关联闭合。
+若还有别的纯分量，双映射柱又分成与 $P_h\cup P_l$ 相关和不相关的两个非空开闭部分，
+仍违背 $S^N$ 连通。因此 $\kappa=2$。
+
+在这两个实际开闭分量上定义
+
+$$
+h:P\to P_h,\qquad h|_{P_h}=\operatorname{id},\qquad h(q)=p(q)\ (q\in P_l).
+\tag{VIII113.20}
+$$
+
+它连续。每个joint都由一个厚点及两个以它为唯一厚邻的薄点组成，故
+$h\pi_1=h\pi_2$，实际上三个复合相同。
+$h\pi_1$ 在 $\mathcal A\times[0,1]$ 上不依赖 $t$，并在两个端点各按所需纤维取常值。
+它遂沿实际双映射柱下降为连续映射
+
+$$
+R:S^N\cong S\longrightarrow P_h,\qquad
+R|_{P_h}=\operatorname{id}_{P_h}.
+\tag{VIII113.21}
+$$
+
+最后一个限制取原纯端点 $P\subset S$，所以这确实是同一原边界到其原有子空间的回缩。
+
+$P_h$ 是紧连通ENR及模二 $r$ 维同调流形，
+$r=N-d$、$d\ge2$，其中 $d$ 为厚分量上的恒定球维数。
+模二定向层自动为常层。
+若 $r>0$，Bridson—Vogtmann §4.1所引的成熟Poincaré对偶，
+经113.2的比较给
+
+$$
+H^r(P_h;\mathbb F_2)\cong H_0(P_h;\mathbb F_2)=\mathbb F_2.
+\tag{VIII113.22}
+$$
+
+紧性在这里将紧支撑上同调变为普通上同调。
+但 $0<r<N$，故 $H^r(S^N;\mathbb F_2)=0$。
+包含 $i:P_h\hookrightarrow S$ 与 $Ri=\operatorname{id}$ 使
+$i^*R^*=\operatorname{id}$，迫使非零的(VIII113.22)注入零群，矛盾。
+因此 $r=0$。
+
+还不能凭“零维同调流形”直接改称离散拓扑流形。
+用110.3的局部道路连通性，若 $p\in P_h$ 非孤立，
+取其道路连通开邻域 $O$，则 $O\setminus\{p\}\ne\varnothing$。
+$H_0(O\setminus\{p\};\mathbb F_2)\to H_0(O;\mathbb F_2)$ 满射，
+故 $H_0(O,O\setminus\{p\};\mathbb F_2)=0$。
+局部切除使它等于 $p$ 的局部零次群，违背 $r=0$ 时该群为 $\mathbb F_2$。
+所以每点孤立，连通的 $P_h$ 只能是一点 $p_0$。
+
+(VIII113.6)遂给 $d_{p_0}=N$，108.2给
+$\dim M_{p_0}=d_{p_0}+2=n$，所以 $M_{p_0}=V$。
+现在直接消费108.12的原同锥、同单位旗标分解及其规范迹尺度，得到(VIII113.18)。
+不重新证明该成熟接口；其原排除面字典见(VIII108.30)。
+所有joint恰为旗标及球面上的一对对径，维数为 $(N,1,1)$。证毕。
+

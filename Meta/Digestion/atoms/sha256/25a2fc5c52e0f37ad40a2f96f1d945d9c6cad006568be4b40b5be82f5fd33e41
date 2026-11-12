@@ -1,0 +1,10 @@
+**定义 40.1（非标量低交维）。** 对四维窗口 $W\le_F D$，只在非标量标签
+$$
+r\in D^\times\setminus F^\times
+$$
+上称 $d_W(r)$ 为非标量交维。这个排除不可省略：每个 $c\in F^\times$ 都满足 $cW=W$ 及 $d_W(c)=4$。称 $W$ 为低交维窗口，若
+$$
+d_W(r)\le2\qquad(r\in D^\times\setminus F^\times).
+\tag{40.1}
+$$
+

@@ -32,7 +32,7 @@ The entry in row p and column q, indexed from zero, is (q - p) M^(k)_(p+q); with
 
 $$\forall n \in \mathbb{N},\; \forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2 \cdot n\right), \operatorname{Fin}\left(2 \cdot n\right), \mathbb{Z}\right),\; \operatorname{pfaffian}\left(A\right) = \sum_{sigma \in \{sigma \in \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(2 \cdot n\right)\right) \mid (\forall i \in \operatorname{Fin}\left(n\right),\; \operatorname{sigma}\left(2 \cdot i\right) < \operatorname{sigma}\left(2 \cdot i + 1\right)) \land (\forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; (i < j) \Rightarrow (\operatorname{sigma}\left(2 \cdot i\right) < \operatorname{sigma}\left(2 \cdot j\right)))\}} \operatorname{sign}\left(sigma\right) \cdot \prod_{i \in \operatorname{Fin}\left(n\right)} A\left(\operatorname{sigma}\left(2 \cdot i\right), \operatorname{sigma}\left(2 \cdot i + 1\right)\right)$$
 
-*Formalization.* `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.pfaffian` (`✓ std3`).
+*Formalization.* `D5/S0/Certificates/Combinatorics/NormalizedPfaffian.pfaffian` (`✓ std3`).
 
 *Citation.* Masao Ishikawa, Christoph Koutschan (2012). *Zeilberger's Holonomic Ansatz for Pfaffians*. DOI: [10.48550/arXiv.1201.5253](https://doi.org/10.48550/arXiv.1201.5253). URL: <https://arxiv.org/abs/1201.5253v2>.
 
@@ -84,9 +84,10 @@ The column M^(2)_1, ..., M^(2)_5 is 0, 1, 2, 5, 12, so the upper entries of the 
 
 ## References
 
+- Truth anchor: `D5/S0/Certificates/Combinatorics/NormalizedPfaffian.pfaffian`
 - Truth anchor: `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.claim`
 - Truth anchor: `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.motzkinTriangle`
-- Truth anchor: `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.pfaffian`
 - Truth anchor: `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.pfaffianMatrix`
 - Truth anchor: `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.printedValue`
 - Truth anchor: `D5/S0/Certificates/IshikawaKoutschanMotzkinPfaffianRefutation.result`
+- Dependency: [D5/S0/Certificates/Combinatorics/NormalizedPfaffian](Combinatorics/NormalizedPfaffian.md)

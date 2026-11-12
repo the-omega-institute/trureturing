@@ -20,33 +20,13 @@ Direct frozen dependencies: none (pinned Mathlib only).
 
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
 import Mathlib.Data.Complex.Basic
+import D5.S0.Certificates.Combinatorics.NormalizedPfaffian
 
 open scoped BigOperators Polynomial
 namespace D5.S0.Certificates.Combinatorics.DeformedJucysMurphyNoncommutation
 
-/-- A partner map: its two-element orbits are precisely unordered pair partitions.
-The paper's labels 1,...,2k are shifted down by one. -/
-abbrev P (k : ℕ) := {p : Fin (2 * k) → Fin (2 * k) //
-  Function.Involutive p ∧ ∀ x, p x ≠ x}
 private instance instDecidableEqP (k) : DecidableEq (P k) :=
   inferInstanceAs (DecidableEq (Subtype _))
-
-/-- The partner map of (1 2 | 3 4 | ...). -/
-private def ep (k : ℕ) (x : Fin (2 * k)) : Fin (2 * k) :=
-  ⟨if x.val % 2 = 0 then x.val + 1 else x.val - 1, by
-    have := x.isLt
-    split <;> omega⟩
-
-def e (k : ℕ) : P k := ⟨ep k, by
-  constructor
-  · intro x
-    apply Fin.ext
-    simp only [ep]
-    split <;> split <;> omega
-  · intro x h
-    have hh := congrArg Fin.val h
-    simp only [ep] at hh
-    split at hh <;> omega⟩
 
 /-- Relabelling by a transposition is conjugation of the partner map. -/
 def act {k} (a c : Fin (2 * k)) (p : P k) : P k :=

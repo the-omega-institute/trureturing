@@ -51,8 +51,9 @@ Direct frozen dependencies (declaration statement_id; WF, WP, WPL below):
 
 List.ofFn (wordFactor w n i), the type α → List ℤ and List.flatMap
 are used directly, preserving the registered expressions without forwarding definitions.
-The sole public theorem proves the registered universal-input finite-morphism
+The result theorem proves the registered universal-input finite-morphism
 obstruction, including empty codewords with unbounded cumulative boundaries.
+The public morphic_block interval supplier does not require UniversalInput.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/23244
 The utility is none: every theorem is universally quantified; no finite checker,
 bounded enumeration, numeric reduction or ordinary certified instance is delivered.
@@ -158,7 +159,7 @@ private theorem morphic_letter (w : ℕ → α) (φ : α → List ℤ)
     rw [listFactor_getElem y (φ (w i)).length (b i) j h₂]
     exact hy i j h₂
 
-private theorem morphic_block (w : ℕ → α) (φ : α → List ℤ)
+theorem morphic_block (w : ℕ → α) (φ : α → List ℤ)
     (y : ℕ → ℤ) (b : ℕ → ℕ) (hmono : Monotone b)
     (hstep : ∀ i, b (i + 1) = b i + (φ (w i)).length)
     (hy : ∀ (i j : ℕ) (h : j < (φ (w i)).length),
