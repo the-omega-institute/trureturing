@@ -1,0 +1,68 @@
+**定理 83.4（完整原零集）。** 在同一完整原基底中，
+$$
+\boxed{\mathcal Q_\times=0\quad\Longleftrightarrow\quad\mathcal D_{\rm old}=0
+\quad\Longleftrightarrow\quad \bigl(D_J\ \&\ D_H\bigr).}\tag{83.6}
+$$
+$\mathcal D_{\rm old}$ 指 (80.2)，并写 $q_{\rm old}(B)=h_z(B,B)$；$D_J,D_H$ 保持原全部正交正元对的量词，特别是整个纠缠锥上的第二层量词。
+
+**证明。** 先明确逐点分解与正表的行列关系。对任意完整原框架 $B,C$，令
+$$
+\begin{aligned}
+q_J(B)&=\|U\|_2^2-\sum_{e\in B}\|Je\|_2^2,\\
+x_{ef}&=H_{\rm s}F(e,f),\qquad
+ g_z(B,C)=\|G\|_2^2-\sum_{e\in B,f\in C}\|x_{ef}\|_2^2,\\
+a(B)&=\|G\|_2^2-\sum_{e\in B}\|H_{\rm s}F(e,1_A)\|_2^2,\\
+b(C)&=\|G\|_2^2-\sum_{f\in C}\|H_{\rm s}F(1_A,f)\|_2^2,\qquad
+h_z(B,C)=q_J(B)+g_z(B,C).
+\end{aligned}
+$$
+所有 $x_{ef}$ 属于原 $E_+$；行和为 $\sum_f x_{ef}=H_{\rm s}F(e,1_A)$，列和为 $\sum_e x_{ef}=H_{\rm s}F(1_A,f)$，总和为 $G$，故 $a(B),b(C)$ 分别就是此表的行、列缺陷，且与另一槽的框架无关。另因 $(Je)_{e\in B}$ 是 $U$ 的正分解，有 $q_J(B)\ge0$。
+
+以下只在这里完整展开一次所需的有限正表恒等式。对自对偶锥内任意有限表 $x_{ij}$，令
+$$
+v=\sum_{i,j}x_{ij},\qquad r_i=\sum_jx_{ij},\qquad c_j=\sum_ix_{ij},
+$$
+并置
+$$
+\delta=\|v\|^2-\sum_{i,j}\|x_{ij}\|^2,\quad
+\delta_{\rm row}=\|v\|^2-\sum_i\|r_i\|^2,\quad
+\delta_{\rm col}=\|v\|^2-\sum_j\|c_j\|^2.
+$$
+按有序指标逐项展开，得到
+$$
+\begin{aligned}
+\delta&=\sum_{(i,j)\ne(k,\ell)}\langle x_{ij},x_{k\ell}\rangle,\\
+\delta_{\rm row}&=\sum_{i\ne k}\sum_{j,\ell}\langle x_{ij},x_{k\ell}\rangle,\qquad
+\delta_{\rm col}=\sum_{j\ne\ell}\sum_{i,k}\langle x_{ij},x_{k\ell}\rangle,\\
+\delta-\delta_{\rm row}&=\sum_i\sum_{j\ne\ell}\langle x_{ij},x_{i\ell}\rangle,\qquad
+\delta-\delta_{\rm col}=\sum_j\sum_{i\ne k}\langle x_{ij},x_{kj}\rangle,\\
+\delta_{\rm row}+\delta_{\rm col}-\delta
+&=\sum_{i\ne k,\ j\ne\ell}\langle x_{ij},x_{k\ell}\rangle.
+\end{aligned}
+$$
+每项内积因自对偶性非负，故
+$$
+0\le\delta_{\rm row},\delta_{\rm col}\le\delta\le
+\delta_{\rm row}+\delta_{\rm col},\qquad
+0\le a(B),b(C)\le g_z(B,C)\le a(B)+b(C).
+\tag{83.6a}
+$$
+后一组不等式是把同一展开用于上述 $x_{ef}$。再分别在两槽取同一框架，得到 $a(B)\le g_z(B,B)$、$b(C)\le g_z(C,C)$，从而
+$$
+\begin{aligned}
+h_z(B,C)&\le q_J(B)+a(B)+b(C)\\
+&\le q_J(B)+g_z(B,B)+g_z(C,C)\\
+&\le h_z(B,B)+h_z(C,C).
+\end{aligned}
+\tag{83.6b}
+$$
+这保留同一原 $F$、同一个 $p$ 两次、原纠缠锥上的全部正输入及两槽先后，不需要产品框架分类。
+
+现在 $h_z$ 是完整投影对上的连续非负函数。若其积分零而某点严格正，连续性在某非空乘积开邻域给正下界，全支撑使积分严格正，矛盾。所以 $\mathcal Q_\times=0$ 迫使所有 $B,C$ 上 $h_z(B,C)=0$。取 $C=B$ 即有 $q_{\rm old}(B)=0$，故 $\mathcal D_{\rm old}=0$；对角线即使测度为零也无妨，因为取对角线发生在已经得到处处零之后。
+反向，若 $\mathcal D_{\rm old}=0$，即非负函数 $q_{\rm old}$ 的最大值为零，则所有 $h_z(B,B)=0$，(83.6b) 给 $0\le h_z(B,C)\le0$，积分即给 $\mathcal Q_\times=0$。最后按 80.3 的原顺序，先 $D_J$、再第一接口、最后整个原 $D_+$ 上的 $D_H$，恢复同一完整 PRE，得到
+$$
+\mathcal Q_\times=0\quad\Longleftrightarrow\quad\mathcal D_{\rm old}=0
+\quad\Longleftrightarrow\quad\bigl(D_J\ \&\ D_H\bigr).
+$$
+这里 $D_J,D_H$ 始终是原全量词谓词，未将它们定义成数值缺陷。证毕。
+

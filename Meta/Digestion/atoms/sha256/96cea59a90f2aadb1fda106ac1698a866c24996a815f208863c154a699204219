@@ -1,0 +1,13 @@
+**推论 88.5（共同零面及控制）。** 在 (88.3) 任一侧的完整前件下，$D_p$ 是最小效应的零面；对任意有限 $x_i\in K$、$\lambda_i\ge0$、$\sum_i\lambda_i=1$，
+
+$$
+p\perp\sum_i\lambda_ix_i\ \Longleftrightarrow\
+p\perp x_i\text{ 对每个 }\lambda_i>0,\qquad
+D_p\cap H(p,q)=\{\text{该球中 }p\text{ 的对径}\}\quad(q\ne p).
+\tag{88.8}
+$$
+
+证明。第一个断言由 $e_p\ge0$ 及线性给出，零权不受约束；第二个由 (88.6) 及单位球的等号条件给出。因此若有 $p\perp x,p\perp y$ 而不能排除中点，便直接违反 $S$，不必先假定 $\mathrm B$ 或 $\mathrm A$。反之，删去 $\mathrm A$ 时，球内的 $b_p$ 并未自带全局扩张，本证明的 $f_p(r)=0$ 步失去依据；这是依赖说明，不冒充 $\mathrm B$ 不蕴含 $\mathrm A$ 的独立性反例。[VII 命题 14.1][VII87] 已有 $B^3\times B^3$ 的“某个三维面仍不足”控制，此处只引用，不重复计算，也不声称它满足本章的 $\mathrm B,\mathrm A$。
+
+同一完整 $S$ 桥还给全部面的零极性与 projectivity。具体地，在所导出的配对 $\langle\ ,\ \rangle$ 中，对锥面 $F$ 定义 $F^\perp=C\cap(\operatorname{span}F)^\perp$；原零关系在纯第一端点上恰为此正交。Library 的面单位和正交投影结论给 $(F^\perp)^\perp=F$、包含反序及正规范面滤子，包括零面和整锥。它们是已得 $S$ 的结论，不是 (88.3) 的隐藏前提；数学滤子不自动成为可调用装置。证毕。
+

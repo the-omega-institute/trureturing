@@ -1,0 +1,11 @@
+**命题 86.4（既有校准桥的单位短写）。** 在完整 PRE 上，
+
+$$
+\mathsf C_2+\mathsf G_1\quad\Longleftrightarrow\quad C_{\rm joint}.
+\tag{86.5}
+$$
+
+**证明。** 84.10 由原逆迹关系 $\tau_D(U^{-1})=m=n^2$ 给 $\mathsf C_2\Longleftrightarrow U=1_D$。在全实 $Z$ 取 $a=b=1_A$，得 $B_1U=nU$。因 $B_1=pH$、$H1_D=1_E$，所以 $p1_E=n1_D$。前 C13 接口 66.2 已给 $\tau_E1_E=n^3$，于是 $\delta_E=\gamma_E=n^3$，得联合校准。反向直接用 67.7：联合校准给同一个原 $U=1_D,G=1_E$，再由 84.10 给 C2。证毕。
+
+这是第 84 章校准的既有结果应用：在完整 PRE+C2 上，可用 $\mathsf G_1$ 替换固定 E3 与原锚的合取，而不改 $L,p,\omega$。固定 $R_A$ 本来已无自由选择；向量等式包含多项约束，不据此计为更少独立物理前提或新增数学结构。
+

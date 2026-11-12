@@ -1,0 +1,14 @@
+**定义 85.1（带共同锚点的局部作用）。** 取有限复 Hilbert 空间 $\mathsf E,\mathsf F$、有限非空指标集 $S$、严格正权 $p_\ell$ 且 $\sum_{\ell\in S}p_\ell=1$。给复线性 $V_\ell:\mathsf E\to\mathsf F$，以及同一个非零 $e\in\mathsf E$，满足 $V_\ell e=v$ 与 $\ell$ 无关。定义
+
+$$
+\begin{aligned}
+T(X)&=\sum_{\ell\in S}p_\ell V_\ell XV_\ell^*,\qquad X\in\operatorname{Herm}(\mathsf E),\\
+\mathbb V:\bigoplus_{\ell\in S}\mathsf E&\longrightarrow\mathsf F,
+&\mathbb V((x_\ell))&=\sum_\ell V_\ell x_\ell,\\
+\Sigma:\bigoplus_{\ell\in S}\mathsf E&\longrightarrow\mathsf E,
+&\Sigma((x_\ell))&=\sum_\ell x_\ell.
+\end{aligned}\tag{85.1}
+$$
+
+序反射指对每个 Hermitian $X$，$T(X)\ge0$ 蕴含 $X\ge0$；$T$ 本来就保持 PSD。共同解码器是复线性 $C:\mathsf F\to\mathsf E$，满足每个 $CV_\ell=I_{\mathsf E}$。它是数学读出，不假定为实际可执行的滤器、通道或复制程序。
+

@@ -1,0 +1,45 @@
+**定理 80.5（没有源字典前件的共同原映射修复）。** 固定非零有限 EJA 三元组 $A,D,E$ 及其全部原态、效应、比较桥和迹坐标。给定 $R_0,\zeta,\alpha,\beta>0$、$\alpha\le\beta$，令 $\mathscr K$ 为满足整个 $\mathrm{PRE}_0^{\rm mix}$ 及以下原接口界的全部 $z=(L,p)$：
+$$
+\begin{gathered}
+\|\widetilde L\|,\|p\|\le R_0,\qquad
+\widetilde M\widetilde M^*\succeq\zeta^2 I_D,\qquad
+\widetilde L\widetilde L^*\succeq\zeta^2 I_E,\\
+\alpha1_D\le U\le\beta1_D,\qquad
+\alpha1_E\le G\le\beta1_E.
+\end{gathered} \tag{80.9}
+$$
+波浪号为原实线性化，算子范数与伴随使用原迹 Hilbert 张量坐标。没有框架输入、Jordan 字配方或源字典行下界。此类紧，其精确零集
+$$
+\mathscr Z=\{z\in\mathscr K:\mathcal D(z)=0\}
+=\mathscr K\cap\{\text{原 PRE 模型}\} \tag{80.10}
+$$
+有如下穷尽情形。$\mathscr K$ 空则结论无对象；$\mathscr K$ 非空而 $\mathscr Z$ 空，则 $\min_{\mathscr K}\mathcal D>0$。若 $\mathscr Z$ 非空，则有有限模量 $\eta_{\mathscr K}$，满足 $\eta_{\mathscr K}(0)=0$、$\eta_{\mathscr K}(t)\to0$，使每个 $z\in\mathscr K$ 均有同类中的精确原模型 $z_0=(L_0,p_0)\in\mathscr Z$，且
+$$
+\left(\|\widetilde L-\widetilde L_0\|_{\rm HS}^2+\|p-p_0\|_{\rm HS}^2\right)^{1/2}
+\le\eta_{\mathscr K}(\mathcal D(z)). \tag{80.11}
+$$
+$z_0$ 使用同一个 $p_0$ 连续两次、同一原 $\omega$、全部原锥和全部实 $Z$；并非分别修复两个派生映射后假定它们相容。令 $r_J,r_H$ 分别为谱范数至多一的全部正交正元对上的两层残差最大值。若 $n=\operatorname{rank}A,m=\operatorname{rank}D$，则
+$$
+r_J\le\mathcal D/2,\qquad
+r_H\le2R_0nm\,\eta_{\mathscr K}(\mathcal D). \tag{80.12}
+$$
+这里不主张显式幂率或可计算的修复算法。
+
+**证明。** 原映射空间有限维，范数界给有界性。全锥正性和全实 $Z$ 闭；两条行下界保持原实张成，谱下界保持 $U,G$ 内点和 $F$ 连续。其余比较几何已经固定，所以 $\mathscr K$ 闭且紧。由 80.3，$\mathcal D$ 连续，零点恰为同一原 PRE，而不是换载体或换边缘的模型。紧集上的正连续函数取得严格正最小值，给空零集时的间隙。
+若零集非空，它是紧集。使用 (80.11) 左端定义原映射对的距离，最近零点存在。定义
+$$
+\eta_{\mathscr K}(t)=\sup\bigl(\{\operatorname{dist}(z,\mathscr Z):z\in\mathscr K,\ \mathcal D(z)\le t\}\cup\{0\}\bigr). \tag{80.13}
+$$
+它有限且零点处为零。若 $t_j\downarrow0$ 而距离上确界不趋零，取与零集保持固定正距离的近似极值点并抽紧子列；其极限同属 $\mathscr K$，连续性给 $\mathcal D=0$，却仍与零集保持正距离，矛盾。该紧性论证是成熟有限维工具；实质应用在于其零集已识别为保留同一原定义关系的完整 PRE 对。
+第一界由 (80.4)。对最近的 $z_0$，$H_0=L_0(-,1_A)$ 精确保零。$\|1_A\|_2=\sqrt n$ 给
+$$
+\|H_{\mathrm s}\|,\|H_0\|\le R_0\sqrt n,\qquad
+\|H_{\mathrm s}-H_0\|\le\sqrt n\|\widetilde L-\widetilde L_0\|_{\rm HS}.
+$$
+若 $d,d'\in D_+$ 正交、谱范数至多一，则二者迹二范数至多 $\sqrt m$。从 $\langle H_0d,H_0d'\rangle=0$ 展开差，按两个因子的范数估计，得
+$$
+0\le\langle H_{\mathrm s}d,H_{\mathrm s}d'\rangle
+\le2R_0nm\|\widetilde L-\widetilde L_0\|_{\rm HS}.
+$$
+取全域最大值并用 (80.11)，得第二界。证毕。
+

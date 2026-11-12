@@ -1,0 +1,5 @@
+source_id = "ultrametric-center-sphere-counts"
+path = "docs/develop/theory/ULTRAMETRIC_CENTER_SPHERE_COUNTS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

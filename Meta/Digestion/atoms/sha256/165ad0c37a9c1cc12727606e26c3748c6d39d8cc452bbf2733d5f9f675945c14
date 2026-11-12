@@ -1,0 +1,58 @@
+**约定 46.1（原域与来源）。** 接触域及有限参数原问题取自
+[前卷 §§37–45](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION_II.md)。固定
+
+$$
+\begin{gathered}
+C=\operatorname{diag}(1,2),\qquad
+T_A=\operatorname{diag}(1,-2),\qquad
+J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+a_r=(1/\sqrt2,r)^{\mathsf T},\qquad r\in\{+1,-1\},\qquad
+H_h=2C+hJ_A,\qquad B_h=H_h+C.
+\end{gathered}
+\tag{46.1}
+$$
+
+有限环境仍为前卷 (38.1)、(39.2) 的完整 $M_5(\mathbb C)$ 实际输入，
+满足 $M_0=C^2$、$M_1=C$、$M_{2,r}=I_2+\lambda^2a_ra_r^*$。
+探针遍取每个有限 $X=X^*$ 的 $X\oplus0_3$，正复线性泛函遍取完整
+$M_5(\mathbb C)$，包括环境块和混合块；两笔原预算的下标为 $d=\pm1$。
+两个来源共享同一 $h,k,\lambda$ 和 $\rho=k/\lambda^2$。
+接触代数中的参数取实 $|h|<1$；有限原 PB 后果另保留约定 49.3 的参数交。
+
+先取取向 $i$，写 $\ell=x+iy$、$A=|y|>1$、
+$\epsilon=-\operatorname{sgn}y$。完整增广接触由
+
+$$
+\begin{gathered}
+\|u\|=1,\qquad
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,\qquad u^*q=p^*Cu,\\
+a_{\rm act}=i(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+iB_hCu,\\
+a_{\rm act}-H_hu+\ell C^2u/2=\eta a_r
+\end{gathered}
+\tag{46.2}
+$$
+
+定义，包括两个演员轴。前三个图等式合计四个实条件。置
+
+$$
+\begin{gathered}
+\zeta=\operatorname{Re}((a_{\rm act}-ip)^*T_Au),\qquad
+J_k=\frac{2A}{A^2-1}|\eta|^2+4\epsilon k\zeta,\\
+\mathscr R=\frac{A|\eta|^2}{2(A^2-1)|\zeta|},\qquad
+K_r(h)=\inf_{\epsilon\zeta<0}\mathscr R.
+\end{gathered}
+\tag{46.3}
+$$
+
+比值仅在 $\zeta\ne0$ 上使用；不利条件为 $y\zeta>0$。
+另一取向 $-i$ 始终由前卷 (39.32) 的同源共轭双射运输：
+$x$ 及相对于取向的虚坐标 $y$ 保持，来源 $r$ 不变。
+共同完整 P2 条件仍精确为前卷 (39.7)，不以某个向量测试代替。
+
+以下模型特定不等式和局部推导的数学归属为 `repo-derived`。
+轴分类、联合紧性、有界实际达到及完整接触等价分别引用前卷定理
+39.4、41.4、42.1、43.2；三次根及源奇恒等式引用定理 43.3–43.4。
+异常切片与完整正则判据引用前卷
+定理 44.2–44.5。不对这些前置结论另作新颖性归属。
+

@@ -43,7 +43,9 @@ internal sealed class IshikawaKoutschanMotzkinPfaffianRefutationDocument : IScri
         string declaration, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
-            DescribeId.Create("ik-pfaffian-" + id), DeclarationHandle.Create(Prefix + declaration),
+            DescribeId.Create("ik-pfaffian-" + id), DeclarationHandle.Create(declaration == "pfaffian"
+                ? "D5/S0/Certificates/Combinatorics/NormalizedPfaffian.pfaffian"
+                : Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, resolution);
 

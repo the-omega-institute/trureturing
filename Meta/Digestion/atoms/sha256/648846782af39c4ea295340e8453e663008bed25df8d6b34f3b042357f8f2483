@@ -1,0 +1,53 @@
+**命题 84.23（只在精确第一接口上的稳定性）。** 定义原非负残差
+$$
+\epsilon=\tau_DU-m=m\,[m_2(e,e)-1]
+=\sum_j\frac{(\lambda_j-1)^2}{\lambda_j}\ge0.
+\tag{84.24}
+$$
+对原实 Hilbert 张量空间上的质量差泛函
+$$
+\ell_2(a\otimes c)=m_2(a,c)-\tau_A(a)\tau_A(c)
+$$
+有精确范数恒等式及充分界
+$$
+\|\ell_2\|_{(A\otimes_2A)^*}=\|U-1_D\|_2,\qquad
+\|\ell_2\|^2=\sum_j(\lambda_j-1)^2\le b\epsilon.
+\tag{84.25}
+$$
+可取简单常数 $b=m+\epsilon$；也可取不显含维数的充分常数
+$$
+b=b(\epsilon)=\frac{2+\epsilon+\sqrt{\epsilon^2+4\epsilon}}2\ge1.
+\tag{84.26}
+$$
+因此对全部实输入，
+$$
+|m_2(a,c)-\tau_A(a)\tau_A(c)|
+\le\sqrt{b\epsilon}\,\|a\|_2\|c\|_2.
+\tag{84.27}
+$$
+这里 $A\otimes_2A$ 仅是原迹内积的实 Hilbert 张量空间；$b$ 是 (84.25) 的常数，没有附加张量正锥或物理独立性。
+
+**证明。** (84.24) 就是 (84.14)。$\ell_2$ 的 Riesz 向量是 $\widetilde F^*(U-1_D)$；满迹等距使其范数恰为 $\|U-1_D\|_2$，给 (84.25) 的等号。每个 $\lambda_j\le\sum_k\lambda_k=m+\epsilon$，从而
+$$
+\sum_j(\lambda_j-1)^2
+=\sum_j\lambda_j\frac{(\lambda_j-1)^2}{\lambda_j}
+\le(m+\epsilon)\epsilon.
+$$
+对另一充分常数，(84.24) 中每项非负，故逐项有
+$$
+\lambda_j+\lambda_j^{-1}-2\le\epsilon.
+$$
+乘以正 $\lambda_j$，得到 $\lambda_j^2-(2+\epsilon)\lambda_j+1\le0$。两根为 $b(\epsilon)$ 与 $b(\epsilon)^{-1}$，因而
+$$
+b(\epsilon)^{-1}\le\lambda_j\le b(\epsilon).
+$$
+把同一个上界代入前述逐项加权和，就得 $\|U-1_D\|_2^2\le b(\epsilon)\epsilon$；$\epsilon=0$ 也直接成立。最后对任意实简单张量使用 Cauchy–Schwarz，且 $\|a\otimes c\|_2=\|a\|_2\|c\|_2$，得到 (84.27)。证毕。
+
+另对原正 $a,c$，$F(a,c)\ge0$，(84.13) 与上述谱区间还直接给
+$$
+b(\epsilon)^{-1}\tau_A(a)\tau_A(c)
+\le m_2(a,c)\le b(\epsilon)\tau_A(a)\tau_A(c).
+\tag{84.28}
+$$
+原归一态满足 $\|a\|_2\le\tau_Aa=1$，故 (84.27) 在全部归一态对上一致成立。上述均为充分界，不宣称 sharp。$b(\epsilon)$ 对未归一总残差 $\epsilon$ 不显含维数；若读数记为 $\delta=m_2(e,e)-1$，则必须代入 $\epsilon=m\delta$，不能称为仅依赖 $\delta$ 的维数无关界。这里没有将近似第一接口、带噪 PRE、原映射对距离、E2 的近似不变性或带噪 H13 纳入结论。
+

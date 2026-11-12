@@ -1,0 +1,9 @@
+**定义 83.2（只由原源确定的权）。** 写原中心简单理想分解 $A=\bigoplus_iA_i$，单位为 $1_i$，规范迹为 $\tau_i$，秩、实维数为 $r_i,d_i$。令 $n=\tau_A1_A=\sum_i r_i$，并在原迹 Hilbert 空间中定义
+$$
+P_i a_i=\frac{\tau_i(a_i)}{r_i}1_i,\qquad P_i^0=I_{A_i}-P_i,\qquad
+\mathsf C_i=\begin{cases}I_{A_i},&r_i=1,\\ P_i+\dfrac{r_i-1}{d_i-1}P_i^0,&r_i>1,\end{cases}
+\qquad \mathsf C_A=\bigoplus_i\mathsf C_i,\quad \mathsf D_A=\mathsf C_A^{1/2}.
+\tag{83.3}
+$$
+秩一简单因子为 $\mathbb R$，没有迹零项，不出现 $0/0$。在 $r_i>1$ 的因子上，$\mathsf D_i=P_i+\sqrt{(r_i-1)/(d_i-1)}P_i^0$。因此 $\mathsf C_A>0$；定义没有任意基框架、字典或未指定投影。因子重排不改变算子，且每个中央单位都是特征值一方向。
+

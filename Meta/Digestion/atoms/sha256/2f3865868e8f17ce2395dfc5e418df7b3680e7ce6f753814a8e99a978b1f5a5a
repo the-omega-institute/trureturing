@@ -1,0 +1,26 @@
+**定义 84.32（原方向资格及整个输出）。** 只有精确 PRE 恢复后，才沿 66.3 的前 C13 分类读取中心简单因子 $A_i$、单位 $c_i$、秩 $n_i$ 及内在块 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$、中心投影 $\pi_{ik}$。原映射类型明确为
+$$
+\begin{aligned}
+\alpha_{ik}:A_i\to D_{ik},&\quad a\mapsto F(a,c_k),&\alpha_{ik}^*:D_{ik}\to A_i,\\
+\beta_{ik}:A_k\to D_{ik},&\quad c\mapsto F(c_i,c),&\beta_{ik}^*:D_{ik}\to A_k.
+\end{aligned}
+$$
+所有伴随用原规范迹；所以 $\alpha_{ik}\alpha_{ik}^*x$ 与 $\beta_{ik}\beta_{ik}^*x$ 均在 $D_{ik}$。令活跃集 $\mathcal I=\{(i,k):n_i,n_k\ge2\}$，严格保留定义 72.3／(72.8)：
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal I,\ x=\pi_{ik}\rho,\quad
+\alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0\}.
+\tag{84.33}
+$$
+至少一差有严格负方向即可，不要求负定、两差都违例、纯性或固定 Schmidt 谱。铺回使用未经维数归一化的单位。活跃块正质量由违例推出；非活跃块任意正元含零，只受同一个原总迹一约束；$\mathcal I=\varnothing$ 时 $\mathcal H(F)=K_D$。
+
+在这一精确阶段，$\widetilde M$ 已可逆，定义
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\qquad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}:D\to E,
+$$
+$$
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+,
+\qquad\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+.
+\tag{84.34}
+$$
+检测的是同一个合格原总迹一混态的整个原输出；不运输到另一个态，不以输出反选资格，不以总迹或固定效应替代全输出正性。命题 72.7 给资格非空，定理 72.8 给每个合格原态的逐成员等价。因此“存在成员通过”“全部成员通过”与 C13 在完整 PRE 上同义，包括空活跃集边界。这里复用原局部可逆滤波、NPT 与中间插未归一单位的证明，不把任意序自同构误作局部滤波。伴随 $p_{13}=(I^{\rm raw})^*$ 的类型为 $E\to D$，与 $I^{\rm raw}:D\to E$ 区分；未经校准时不自动赋予它保迹性。
+
