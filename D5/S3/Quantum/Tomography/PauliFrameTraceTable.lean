@@ -12,6 +12,8 @@ proof_shape: trace_table: content; escape_witness: the explicit finite Pauli tra
 proof_shape: complex_frame_nonreal_witness: content; escape_witness: the explicit nonzero
   imaginary matrix entry of the complex frame; admission_basis: escape-witness.
 Direct frozen dependency: D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.word_trace_pair.
+Escape audit unfinished for both public theorems; linked issue:
+https://github.com/the-omega-institute/trureturing/issues/29460
 The full Jordan-closure dimension claims from the source atom remain open.
 -/
 
