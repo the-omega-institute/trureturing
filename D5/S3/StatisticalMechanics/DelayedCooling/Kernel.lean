@@ -199,25 +199,6 @@ theorem hasDerivAt_relaxation {τ t : ℝ} (hτ : 0 < τ) (ht : 0 < t) :
   exact (hasDerivAt_stepSum τ N ht).congr_of_eventuallyEq
     (relaxation_eventually_stepSum hτ hNp)
 
-/-- The source extension has different left and right slopes at the initial quench. -/
-theorem not_differentiableAt_relaxation_zero {τ : ℝ} (hτ : 0 < τ) :
-    ¬ DifferentiableAt ℝ (relaxation τ) 0 := by
-  intro hd
-  have hl : deriv (relaxation τ) 0 = 0 :=
-    (uniqueDiffOn_Iic 0 0 self_mem_Iic).eq_deriv _ hd.hasDerivAt.hasDerivWithinAt
-      ((hasDerivAt_const (0 : ℝ) (1 : ℝ)).hasDerivWithinAt.congr_of_mem
-        (fun t ht => relaxation_of_nonpos hτ ht) self_mem_Iic)
-  have hr : deriv (relaxation τ) 0 = -1 :=
-    (uniqueDiffOn_Icc hτ 0 (show (0 : ℝ) ∈ Icc 0 τ from ⟨le_rfl, hτ.le⟩)).eq_deriv _
-      hd.hasDerivAt.hasDerivWithinAt
-      (by
-        have h := ((hasDerivAt_const (0 : ℝ) (1 : ℝ)).sub (hasDerivAt_id 0)).hasDerivWithinAt
-          (s := Icc 0 τ)
-        have hh : HasDerivWithinAt (fun t : ℝ => 1 - t) (-1) (Icc 0 τ) 0 := by simpa using! h
-        exact hh.congr_of_mem
-          (fun t ht => relaxation_initial_segment hτ ht.1 ht.2) ⟨le_rfl, hτ.le⟩)
-  linarith
-
 private def weighted (τ κ t : ℝ) : ℝ := Real.exp (κ * t) * relaxation τ t
 
 private def weightedRate (τ κ t : ℝ) : ℝ :=

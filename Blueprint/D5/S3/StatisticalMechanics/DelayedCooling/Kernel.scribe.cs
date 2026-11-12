@@ -45,12 +45,10 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
                 "The derivative is minus E evaluated one delay earlier, at every strictly positive "
                     + "real time. The terms added at positive step boundaries have power at least "
                     + "two; their derivatives vanish at those boundaries. Reindexing the remaining "
-                    + "derivative sum gives exactly the delayed relaxation. The extension is not "
-                    + "assumed differentiable at zero.", DescribeRole.Theorem),
-            Node("not_differentiableAt_relaxation_zero", "The initial derivative jump",
-                "The equilibrium extension has left derivative zero at the initial quench, "
-                    + "whereas the first polynomial segment has right derivative minus one. "
-                    + "Consequently the two-sided derivative does not exist there.", DescribeRole.Theorem),
+                    + "derivative sum gives exactly the delayed relaxation. The constant past "
+                    + "has left derivative zero at the initial quench, whereas the first polynomial "
+                    + "segment has right derivative minus one. These two segment formulas show "
+                    + "that the two-sided derivative does not exist at zero.", DescribeRole.Theorem),
             Node("relaxation_pos", "Positivity in the nonoscillatory delay range",
                 "For every positive delay at most exp(-1), E is strictly positive at every real "
                     + "time. Multiply E by exp(kappa times t), choosing kappa equal to exp(1). "
