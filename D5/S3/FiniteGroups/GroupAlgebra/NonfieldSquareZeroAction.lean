@@ -368,4 +368,3 @@ theorem field_translation_universality_fails : ¬ field_translation_universality
   exact no_field_model T c hinter
 
 end D5.S3.FiniteGroups.GroupAlgebra.NonfieldSquareZeroAction
-
