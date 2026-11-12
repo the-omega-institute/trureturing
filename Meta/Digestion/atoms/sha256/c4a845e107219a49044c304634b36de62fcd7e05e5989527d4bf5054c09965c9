@@ -1,0 +1,78 @@
+**命题 100.4（不足两个横向方向的尖锐反例）。** 对每个 $d\ge3$，令 $m=d-2\ge1$，在
+$V=\mathbb R\oplus(\mathbb R^m\oplus\mathbb R^2)$ 上取
+
+$$
+\begin{gathered}
+u(t,v,x,y)=t,\quad N(v,x,y)=\sqrt{\|v\|_2^2+\max(x^2,y^2)},\quad
+C=\{(t,v,x,y):t\ge N(v,x,y)\},\\
+K=\{(1,r):N(r)\le1\},\qquad
+N^*(\beta,\gamma,\delta)=\sqrt{\|\beta\|_2^2+(|\gamma|+|\delta|)^2}.
+\end{gathered}
+\tag{100.8}
+$$
+
+这是闭尖生成锥、严格正单位及整个原基。使用整个 proper 区间：
+$f=\alpha t+\beta\cdot v+\gamma x+\delta y$ 属于 $\mathcal E$ 当且仅当
+$N^*(\beta,\gamma,\delta)\le\min(\alpha,1-\alpha)$。
+全部纯方向恰为
+
+$$
+r=(v,a\varepsilon,a\eta),\quad \|v\|_2\le1,\quad
+a=\sqrt{1-\|v\|_2^2},\quad \varepsilon,\eta\in\{-1,1\},
+\tag{100.9}
+$$
+
+在 $a=0$ 时识别重复标签。其全部归一支撑集为
+
+$$
+J(r)=
+\begin{cases}
+\{(v,a\theta\varepsilon,a(1-\theta)\eta):0\le\theta\le1\},&a>0,\\
+\{(v,0,0)\},&a=0.
+\end{cases}
+\tag{100.10}
+$$
+
+整个 $F_{(1,r)}$ 由(100.2)的 $\rho\in[0,1/2]$ 公式给出，仍含 $u$。
+对全部纯 $r$ 及 $s=(w,b\varepsilon',b\eta')$，有
+
+$$
+T_{(1,r)}(1,s)=\frac{1+v\cdot w+ab\min(\varepsilon\varepsilon',\eta\eta')}2.
+\tag{100.11}
+$$
+
+因而全纯 $\mathrm R$ 成立，互补对方向恰张成 $\mathbb R^m\oplus\{0,0\}$，秩正好 $d-2$。
+该原基不是椭球。特别 $m=1$ 给同时满足全纯 R 和一对 E2 的完整三维反例；
+故在 $d\ge3$ 中把定理100.3的秩界减为 $d-2$ 不成立。
+
+证明。对偶范数由先在 $\ell_\infty^2$ 方块上取极值、再在两分量欧氏球上取极值得到。
+内点不极端；若 $N(r)=1$、$a>0$ 且某个尾坐标未饱和，可只改变该坐标，故也不极端。
+对(100.9)中 $a>0$ 的点，范数一泛函 $(v,a\varepsilon/2,a\eta/2)$ 唯一暴露它：
+欧氏 Cauchy--Schwarz 的等号先钉住 $v,a$，两个正尾权再钉住两个符号坐标。
+$a=0$ 时 $(v,0,0)$ 同样唯一暴露该点。因此所列纯点穷尽，并非只选取了一个纯轨道。
+对偶范数不等式的同一等号条件给(100.10)，再对 $\theta$ 取最低值得(100.11)，
+包括 $a=0$ 或 $b=0$。该式对 $r,s$ 对称，验证的是全部纯点上的 R。
+只有 $a=0$ 时 $J(r)$ 单点；每个单位 $v\in\mathbb R^m$ 给纯对 $(v,0,0),(-v,0,0)$，
+其 E2 对全部纯目标成立。引理100.2又排除了任何其它 E2 方向，故最大方向秩准确为 $m$。
+边界含非平凡线段 $\{(0_m,1,y):-1\le y\le1\}$，所以不是严格凸椭球。
+
+共同最低和准备分解的缺陷可在同一原载体逐项算出。取
+$r=(0_m,1,1)$、$s=(0_m,1,-1)$、$z=(e_1,0,0)$，令 $p=(1,r)$。
+两个目标 $(1,s),(1,-s)$ 的分别最低值均为零。
+在 $J(r)$ 中 $j_\theta(s)=2\theta-1$；第一零值必须 $\rho=1/2,\theta=0$，
+第二零值必须 $\rho=1/2,\theta=1$。同一个确认效应的两读数之和始终至少为一，故不能共达。
+与此同时原中心 $c=(1,0)$ 有
+
+$$
+\begin{gathered}
+c=\tfrac12(1,s)+\tfrac12(1,-s)=\tfrac12(1,z)+\tfrac12(1,-z),\qquad T_p(c)=\tfrac12,\\
+\tfrac12T_{(1,s)}(p)+\tfrac12T_{(1,-s)}(p)=0,\qquad
+\tfrac12T_{(1,z)}(p)+\tfrac12T_{(1,-z)}(p)=\tfrac12.
+\end{gathered}
+\tag{100.12}
+$$
+
+同一混态的两种纯准备分解给不同的最低比较加权和，故数值互反没有带来准备分解相容。
+形式上取 $m=0$ 得二维方块：它满足 R，却没有光滑纯方向或 E2 对，不反驳二维一对定理；
+一维则是线段。整个族只反驳静态充分性，不是定义98.3完整有限寄存器资源包的模型或反例。证毕。
+
