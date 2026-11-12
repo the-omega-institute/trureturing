@@ -8,7 +8,7 @@ internal sealed class OeisA130095RatioLimitDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Divisors/OeisA130095RatioLimit.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/adamson2007a130095");
+        LibraryNoteRef.Create("D5/L/Asymptotics/adamson2007a130095");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete successive-term ratio limit in OEIS A130095.",
