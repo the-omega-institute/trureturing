@@ -219,7 +219,8 @@ private def planeInputs : Inputs.{u} where
   projection := LinearMap.id
 
 private theorem planeLeft : ULift.up (1, 0) ∈ pure planeCone.{u} planeUnit := by
-  refine ⟨⟨show (0 : ℝ × ℝ) ≤ (1, 0) by constructor <;> norm_num, rfl⟩, ?_⟩
+  refine ⟨⟨show (0 : ℝ × ℝ) ≤ (1, 0) by constructor <;> norm_num,
+    by change (1 + 0 : ℝ) = 1; norm_num⟩, ?_⟩
   intro y hy z hz hseg
   change (0 ≤ y.down.1 ∧ 0 ≤ y.down.2) ∧ y.down.1 + y.down.2 = 1 at hy
   change (0 ≤ z.down.1 ∧ 0 ≤ z.down.2) ∧ z.down.1 + z.down.2 = 1 at hz
@@ -231,7 +232,8 @@ private theorem planeLeft : ULift.up (1, 0) ∈ pure planeCone.{u} planeUnit := 
   exact Prod.ext (by linarith [hy.2]) hy2
 
 private theorem planeRight : ULift.up (0, 1) ∈ pure planeCone.{u} planeUnit := by
-  refine ⟨⟨show (0 : ℝ × ℝ) ≤ (0, 1) by constructor <;> norm_num, rfl⟩, ?_⟩
+  refine ⟨⟨show (0 : ℝ × ℝ) ≤ (0, 1) by constructor <;> norm_num,
+    by change (0 + 1 : ℝ) = 1; norm_num⟩, ?_⟩
   intro y hy z hz hseg
   change (0 ≤ y.down.1 ∧ 0 ≤ y.down.2) ∧ y.down.1 + y.down.2 = 1 at hy
   change (0 ≤ z.down.1 ∧ 0 ≤ z.down.2) ∧ z.down.1 + z.down.2 = 1 at hz
@@ -264,8 +266,45 @@ def family : Registration arena.{u} (type_of% @least_confirmation_face_purity.{u
       exact nomatch e
   dependence := dependence
 
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@least_confirmation_face_purity.{u}) (Realization signature.{u}) Unit Unit where
+  unitName := `Reg.D5.S3.Quantum.Foundation.FaceProjectionPurity.unit
+  realizationName := `Reg.D5.S3.Quantum.Foundation.FaceProjectionPurity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature
+    (fun _ P x => (P.unit (P.projection x))⁻¹ • P.projection x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Foundation.FaceProjectionPurity
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4, 5, 9, 15, 16]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "body", "arg", "arg", "fn", "arg"]
+      stateBinder := 21
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 #print axioms source_bridge
 #print axioms actual_positive
 #print axioms family
+#print axioms registration
 
 end Reg.D5.S3.Quantum.Foundation.FaceProjectionPurity
