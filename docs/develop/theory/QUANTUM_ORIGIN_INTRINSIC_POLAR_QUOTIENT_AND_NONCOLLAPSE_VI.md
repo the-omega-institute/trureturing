@@ -1656,3 +1656,519 @@ $f(s)=1-\beta+\beta n_p\cdot s$、$0\le\beta\le1/2$ 的形式；其零点若存�
 白话说，先把整间屋子的刻度一起调好，让每个纯方向像一束细灯光，补态像铺满其余方向的一层光幕。只需检查：一把认得这束灯的正尺若能把另一束纯灯读成零，是否仍能把那束灯与固定光幕的各半混合读成零。若两束灯实际有重叠，这次混合就会填满全屋，任何认灯而处处非负的尺都不可能再读零。这个小检验因此锁住真正的正交关系；三条坐标边接成三角形时，相位必须相容，边只有一条实方向的整块可以统一调成实色，一条边容许两个独立相位就会把整块带成复色。这里已经把同一复ROG屋子里的检验压短了；一般球形世界为何自带这间矩阵屋子、这层补光幕，以及实际设备、事件和时钟如何按原合同接入，仍各有需要支付的关系。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 95. 一对内在穷尽比较到整个原球及有限寄存器候选的新入口
+
+### 95.1 原全效应下确界与独立静态输入
+
+**定义 95.1（内在一对入口）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$，以及在
+$C\setminus\{0\}$ 上严格正的线性归一泛函 $u$。使用整个紧基 $K=C\cap\{u=1\}$、全部
+$P=\operatorname{ext}K$，而非选定纯态轨道或一个正子模型。记 $W=\ker u$。数学效应域固定为
+
+$$
+\mathcal E=[0,u]_{C^*},\qquad
+F_r=\{f\in\mathcal E:f(r)=1\},\qquad
+T_r(x)=\inf_{f\in F_r}f(x)\quad(r\in P,\ x\in K).
+\tag{95.1}
+$$
+
+这里的序始终是整个原 $C$ 的对偶锥序。$\mathcal E$ 不先被认作实际菜单。
+独立几何输入是一群实际保 $C,u$ 的线性可逆变换 $H$，它作为矩阵群紧且在全部 $P$ 上传递，
+以及两个原纯点 $p,q$ 满足
+
+$$
+T_p(x)+T_q(x)=1\qquad(\forall x\in K).
+\tag{95.2}
+$$
+
+有限寄存器应用还要求这个同一实际 $H$ 连通；静态结论本身不需连通。没有预选 $e_r$ 族，
+不预付比较互反、全局最小确认、PC、PD、Jordan 结构、整个 $W$ 的球面或指定度量。
+下面证明中任选的辅助范数以及 Haar 平均构造的内积都是数学工具，不是额外控制资源。
+(95.2) 的第二端遍历原基的所有混态，不能只检查 $p,q$ 或纯点表。
+
+**定理 95.2（内在一对关系使整个原基成为球）。** 在定义95.1下，$p\ne q$，
+$d=\dim W\ge1$，每个 $r\in P$ 的 $T_r$ 都是一个线性 proper 效应在 $K$ 上的限制。
+记其唯一延伸为 $e_r$。它在整个原锥序中最小，且有唯一的纯补点 $r^\perp$，满足
+
+$$
+\begin{gathered}
+e_r\le f\quad(f\in F_r),\qquad
+\{x\in K:e_r(x)=1\}=\{r\},\qquad e_{r^\perp}=u-e_r,\\
+K=\{c+w:w\in W,\ s_0(w,w)\le1\},\qquad
+P=\{c+w:s_0(w,w)=1\}.
+\end{gathered}
+\tag{95.3}
+$$
+
+$c$ 是原基的唯一中心，$s_0$ 是 $W$ 上由这个椭球确定的正定内积；同一 $H$ 保持它并
+在整个单位球面上传递。用 $tc+w\mapsto(t,x)$、$s_0(w,w)=\|x\|^2$ 校准后，准确地有
+
+$$
+\begin{gathered}
+u(t,x)=t,\qquad C=\{(t,x):t\ge\|x\|\},\qquad
+r_v=(1,v),\quad \|v\|=1,\\
+T_{r_v}(1,x)=e_{r_v}(1,x)=\frac{1+v\cdot x}{2},\qquad
+r_v^\perp=r_{-v},\qquad
+T_r(s)=T_s(r)\quad(r,s\in P).
+\end{gathered}
+\tag{95.4}
+$$
+
+因此 $S$、有限正对偶生成及规范比较配对都是结论。若 $H$ 连通，则 $d\ge2$。
+
+证明。先只用原有限维紧凸几何。$F_r$ 非空，因为包含 $u$。选择一组来自 $K$ 的 $V$ 基，
+在这些点的效应值都介于零一，便使 $\mathcal E$ 在 $V^*$ 中有界；它又闭，故紧。
+$F_r$ 是其闭子集，所以(95.1)的下确界逐点达到，且 $T_r(r)=1$、$0\le T_r\le1$。
+有限维紧凸分解给 $K=\operatorname{conv}P$、$C=\operatorname{cone}P$、$\operatorname{span}P=V$，
+均指有限组合；此处未要求 $P$ 闭或其点暴露。
+
+第一步，从一对下确界取得共同效应。对 $x,y\in K$、$0\le a\le1$，每个 $f\in F_r$ 都给
+
+$$
+f(ax+(1-a)y)\ge aT_r(x)+(1-a)T_r(y),
+$$
+
+取下确界即得 $T_r$ 凹。对 $r=p$ 用此式，再以 $T_p=1-T_q$ 和 $T_q$ 的凹性得到反向不等式，
+故 $T_p,T_q$ 均仿射。$\operatorname{aff}K=\{u=1\}$，仿射函数在其仿射包上的唯一延伸与
+齐次化给原 $V$ 上线性 $e_p,e_q\in\mathcal E$。它们确认各自端点，且对任意 $f\in F_p$，
+$e_p(x)=T_p(x)\le f(x)$ 对所有 $x\in K$ 成立，缩放便给 $e_p\le f$ 于整个 $C$。
+对 $q$ 同理；(95.2)及 $K$ 张成 $V$ 给 $e_p+e_q=u$。在 $p$ 处 $T_p(p)=1$，所以
+$T_q(p)=0$；若 $p=q$ 则有 $2=1$，矛盾。这也排除了单点基。
+反向，若这两个纯点已有全 proper 区间中的最小确认且两效应之和为 $u$，它们逐点实现下确界，
+立即给(95.2)。所以这个全域等式实质上恰好打包了这一对的最小确认与互补，不是一个独立公理计数。
+
+第二步，把最小性传遍全部原纯点。对 $h\in H$，$f\mapsto f\circ h^{-1}$ 双射
+$\mathcal E$，并把 $F_r$ 双射到 $F_{hr}$，因此直接从下确界有
+
+$$
+T_{hr}(x)=T_r(h^{-1}x).
+\tag{95.5}
+$$
+
+纯态传递使每个 $r=hp$ 都有最小确认 $e_r=e_p\circ h^{-1}$；若用另一 $h$，得到的仍是
+同一个内在下确界，故无选取歧义。同时 $hq$ 是纯点，其最小确认为
+$e_q\circ h^{-1}=u-e_r$。这里先只得到至少一个纯补点，没有假设选定比较族等变或互反。
+
+第三步，建立唯一饱和。任选 $o\in\operatorname{aff}K$ 和该仿射空间平行方向上的一个欧氏内积。
+紧性给最远点 $z\in K$，令 $R=\max_{x\in K}\|x-o\|>0$。对所有 $x\in K$，
+
+$$
+\ell(x)=\langle z-o,x-o\rangle\le R\|x-o\|\le R^2=\ell(z).
+\tag{95.6}
+$$
+
+等号要求 $x-o=z-o$，故 $z$ 是 $\ell$ 的唯一最大点，因而是暴露纯点。
+由于 $K$ 非单点且张满其仿射包，$m=\min_K\ell<R^2$。
+$f_z=(\ell-m)/(R^2-m)$ 在 $K$ 上的齐次线性延伸属于 $F_z$，且一值面恰为 $\{z\}$。
+已有最小性给 $0\le e_z\le f_z\le u$，所以 $e_z(x)=1$ 只能在 $x=z$。
+利用(95.5)和传递性，所有 $e_r$ 的一值面都恰为 $\{r\}$。
+特别地，若 $u-e_r=e_s=e_t$，在 $s$ 处评价并用 $e_t$ 的唯一饱和可知 $s=t$；纯补点因而唯一。
+
+第四步，排除任何非纯边界点。任取 $y\in\operatorname{rbd}K$。相对支撑超平面定理给
+原 $\operatorname{aff}K$ 上非恒定的仿射 $g\ge0$，使 $g(y)=0$。
+除以 $\max_K g>0$ 并齐次延伸，得到 $f\in\mathcal E$、$\min_Kf=0$、$\max_Kf=1$。
+最大值面有纯点 $r$，故 $f\in F_r$，并有 $0\le e_r\le f$。
+在整个零面 $Z=\{x\in K:f(x)=0\}$ 上，$e_r=0$，因此 $e_{r^\perp}=u-e_r=1$。
+第三步的唯一饱和使 $Z\subseteq\{r^\perp\}$。$y\in Z$，所以 $y=r^\perp$ 是纯点。
+这证明了每个边界点都纯；尤其每个非空支撑零面为单点，而不是预设严格凸性。
+
+第五步，从等半径纯轨道取得整个原球。用归一 Haar 测度取
+$c=\int_H hp\,dh\in K$，则 $c$ 被 $H$ 固定。
+它在 $\operatorname{ri}K$：否则有非零非恒定支撑高度 $g\ge0$、$g(c)=0$；
+连续非负函数 $h\mapsto g(hp)$ 的 Haar 积分为零，Haar 测度在非空开集上为正，
+故该函数恒零。$Hp=P$ 和 $K=\operatorname{conv}P$ 迫使 $g$ 在 $K$ 上恒零，矛盾。
+在 $W$ 上 Haar 平均任意正定内积得到 $H$ 不变内积 $s$。
+$H$ 固定 $c$ 且在纯点上传递，故所有 $r-c$ 的 $s$ 范数同为某个 $\rho>0$。
+由有限凸分解，$K-c$ 包含在闭半径 $\rho$ 球中。
+
+对每个 $s$ 单位方向 $v\in W$，$c\in\operatorname{ri}K$、紧性和凸性保证射线
+$c+tv$ 与 $K$ 的交恰为 $0\le t\le t_v$，其中 $0<t_v<\infty$，末点在相对边界。
+第四步使该末点纯，故 $t_v=\rho$。于是每个方向的整个半径段都在原 $K$ 中，
+得到反向包含，原基恰为整个球。置 $s_0=s/\rho^2$ 得(95.3)；球面点恰为极点，
+$H$ 遂在整个 $s_0$ 球面上传递。这个 Haar 积分只构造数学中心和度量，未要求实际无限混合。
+有界凸体的对称中心唯一，否则两个中心反射合成非零平移；同一个椭球的单位球唯一决定其范数，
+极化恒等式再唯一决定 $s_0$，所以结论不依赖辅助内积。
+
+最后，在已推出的整球上计算规范尺。任一 $f(t,x)=\alpha t+b\cdot x$ 为 proper，恰当且仅当
+$\|b\|\le\alpha$ 且 $\alpha+\|b\|\le1$。
+若它确认 $r_v$，等号
+$1=\alpha+b\cdot v\le\alpha+\|b\|\le1$ 迫使
+$b=\lambda v$、$\alpha=1-\lambda$、$0\le\lambda\le1/2$。
+因此在全部 $\|x\|\le1$ 上取下确界，得到(95.4)，并给纯端点互反及唯一对径补点。
+这是[Library 原球计算][L95static]中 *1. Intrinsic control geometry, comparisons and the static PD alternative*
+的参数对应，此处没有在取得球之前使用它。
+取 $B((t,x),(z,y))=(tz+x\cdot y)/2$、$L_Bv=B(v,-)$，该处的有限 PD 推论直接给
+
+$$
+L_Br=e_r,\qquad L_B(C)=C^*,\qquad
+B>0,\qquad L_B^{-1}u=2c,\qquad B(2c,2c)=2.
+\tag{95.7}
+$$
+
+纯点张成 $V$ 给配对唯一性。若 $H$ 连通，它在 $W$ 上的作用属于 $\mathrm{SO}(d)$；
+$d=1$ 时连通群不能交换 $S^0$ 的两点，故在此应用中 $d\ge2$。
+上述静态证明未使用 connectedness、Jordan 分类或整个球面可控作为前提。证毕。
+
+### 95.2 实际一对、所需控制轨道与整个单元菜单
+
+**定理 95.3（由一个真实种子菜单取得全部单元效应）。** 在定义95.1外，保留原凸实际效应像
+$D\subseteq\mathcal E$、$0,u\in D$，以及一个真正共同可用的原二结果菜单 $(a,b)$，满足
+
+$$
+a(p)=b(q)=1,\qquad a+b=u.
+\tag{95.8}
+$$
+
+只要求对一个覆盖全部纯点的集合 $H_*\subseteq H$，每个 $h\in H_*$ 的原效应
+$a\circ h^{-1}$ 实际可用且属于 $D$，其中 $\{hp:h\in H_*\}=P$。
+则 $a=e_p,b=e_q$，每个 $e_r$ 都在原 $D$ 中，且 $D=\mathcal E$。
+这不要求 $D$ 对全部控制的全部前合成封闭。
+
+证明。由95.2的最小性，$a-e_p,b-e_q\in C^*$，其和由(95.8)和(95.2)为零。
+两个非负泛函和为零使两者在 $C$ 上均为零，再由生成性得 $a=e_p,b=e_q$。
+于是(95.5)把每个所需实际前合成识别成 $e_{hp}$，覆盖条件给全部 $e_r\in D$。
+对任一原 proper $f(t,x)=\alpha t+b\cdot x$，令 $s=\|b\|$；$s>0$ 时取 $v=b/s$，
+$s=0$ 时任取一个单位 $v$。95.2的球计算给
+
+$$
+f=2s\,e_{r_v}+(\alpha-s)u+(1-\alpha-s)0,
+\qquad 2s,\alpha-s,1-\alpha-s\ge0,
+\qquad 2s+(\alpha-s)+(1-\alpha-s)=1.
+\tag{95.9}
+$$
+
+这是原种子轨道、$0/u$ 和一次三项有限凸组合，不用菜单闭包、极限或独立有界加法。
+原 $D$ 凸便给 $f\in D$。相同球坐标下，正泛函的有限 PD 表达为
+$f=(\alpha+s)e_{r_v}+(\alpha-s)e_{r_{-v}}$、$\alpha\ge s$；这是(95.7)所复用推论的
+精确有限表示，零泛函可取空和。
+这里“局部秩二”指共同完美区分的纯态数至多为二：任何确认 $r$ 并排除另一个纯点的 proper 效应
+都支配 $e_r$，而(95.4)使 $e_r$ 只能在唯一对径点取零，故不存在三个纯点的共同完美区分。
+原种子菜单又实际区分 $p,q$，所以实际容量也恰为二；未在此处假设 Jordan 秩。证毕。
+
+(95.8) 是实际共同菜单输入；仅有两张数学 proper 效应的和等于 $u$ 不供应这个菜单。
+(95.9) 得到的是单个效应的实际可用性，不把任意一列和为 $u$ 的效应变成共同测量，
+也不创造分支更新、仪器、记录或保留输出的读出。后面所有联合测量仍有自己的资源合同。
+
+### 95.3 与旧强球面入口的同数据对应
+
+**命题 95.4（规范比较上的入口等价与装饰替换）。** 本命题的新旧入口等价只在同一实际 $H$ 紧且连通的共同域上陈述；
+95.2—95.3的静态定理仍允许断开的 $H$。令旧入口准确指
+[Library 的二元寄存器附录][L95bit] *1. Intrinsic control geometry, comparisons and the static PD alternative*
+中的强球面入口：同一原 $V,C,u,K,P,D,H$ 上，全部选定 $e_r\in D$ proper、自确认、纯互反，
+有全域穷尽对，另给一个使同一 $H$ 正交且在整个 $W$ 单位球面上传递的正定度量。
+在上述共同连通域内，比较装饰识别为 $e_r:=T_r$，并保留95.3的同一实际种子及所需轨道资源时，
+该完整旧静态入口与95.1—95.3相互恢复；连接下面的原寄存器和过程资源后，仍是同一有限寄存器候选。
+
+证明。新入口由95.2取得旧入口的整个球面作用、规范自确认和互反，由95.3取得实际 $e_r\in D$；
+(95.2)给同一对的全域穷尽。反向直接应用旧入口的 *Theorem (original ball before the pairing)*
+及 *Corollary (finite PD, full original menu and genuine leastness)*：它们识别旧原选定 $e_r$
+为整个 proper 区间的最小确认，故 $e_r=T_r$。旧穷尽遂是(95.2)，旧整球面作用蕴含纯态传递。
+两边都保留相同的实际 $H$、种子、所需轨道及下游资源，度量仅作可忘却、可恢复的数学见证。
+在原 $V,C,u$ 的保单位序同构 $J$ 下，效应按 $f\mapsto f\circ J^{-1}$ 运输，
+所以 $T'_{Jr}(Jx)=T_r(x)$；原态、纯点、效应、控制和事件合同按同一映射对应。
+
+若旧数据只是一套任意选定的确认装饰 $\varepsilon=(\varepsilon_r)$，没有证明其最小性，
+所用映射必须明写为
+
+$$
+\mathsf F(\mathcal O,\varepsilon)=\mathcal O,\qquad
+\mathsf R(\mathcal O)=(\mathcal O,(T_r)_{r\in P}),\qquad
+\mathsf R\mathsf F(\mathcal O,\varepsilon)=(\mathcal O,T).
+\tag{95.10}
+$$
+
+这里 $\mathcal O$ 保留原载体、实际效应／菜单、控制及所有过程资源；$\mathsf F$ 只忘掉选定比较。
+$\mathsf R$ 只在满足本章或完整旧入口、从而规范效应已证明实际可用的域上定义。
+它不删除旧实际测试，也不改变该测试的更新与记录；只是把作为比较尺的指定换成 $T$。
+除非 $\varepsilon=T$，这个复合不是原装饰元组的恒等。
+完整旧强球面包恰由其已有定理证明 $\varepsilon=T$，所以在那个域内可说同数据恢复；
+任意自确认装饰不能据此取得同装饰双向蕴涵，见 Library 的 [*Scope tests*][L95scope]。
+证明并未把一个较弱旧条件偷换为上述完整强球面包。证毕。
+
+### 95.4 同一个有限寄存器候选的全部剩余输入
+
+**定义 95.5（原寄存器、耦合与预选择 END）。** 从现在起保留95.1的同一实际紧连通 $H$，
+以及95.3的实际效应资源。令 $V_N=V^{\otimes_{\mathbb R}N}$、$u_N=u^{\otimes N}$。
+对每个给定有限 $N\ge1$，独立保留原紧凸且全张成的归一基
+$K_N\subset\{u_N=1\}$，$K_1=K$、$C_N=\operatorname{cone}K_N$，
+忠实局域／乘积层析、实际乘积准备和实际乘积测试，
+以及一次固定的单元校准 $F$，所有份数用同一 $F^{\otimes N}$。
+在95.4坐标中，纯乘积测试的原概率为
+
+$$
+2^{-N}(\widehat a_1\otimes\cdots\otimes\widehat a_N)\cdot\omega,
+\qquad \widehat a=(1,a),\quad\|a\|=1,
+\tag{95.11}
+$$
+
+并在每个实际可逆作用后仍介于零一。$G_N$ 只表示原实际归一线性可逆群，
+不假定整个 $G_N$ 闭或连通。独立局域 $H$ 在所有其他坐标上为恒等。
+二份原载体上有一条对每个实 $t$ 都实际可用的完整路径
+$g(t)=\exp(tX)$，其某个 $g(t_0)$ 越出整个
+$\mathrm{SO}(d)\times\mathrm{SO}(d)$，而非仅越出选定 $H\times H$。
+对每个有限 $N\ge2$ 给一个连通操作图；同一完整路径在每条边都实际放置为
+
+$$
+\iota_{ij}(g(t))=g(t)_{ij}\otimes I_{\rm spectators}\qquad(t\in\mathbb R).
+\tag{95.12}
+$$
+
+端点顺序与固定校准相容。旁观者恒等覆盖整个原载体及所有相关坐标，不能只固定一个旁观者准备。
+不假设任意 $G_2$ 或已经合成的多体作用能被运到别的载体。
+
+三份图包含路径 $1-2-3$。在选择二体控制扇区之前，另有实际仿射、保质量、全域的
+$\mathrm{END}:K_3\to K_2$，保留端点 $1,3$，输出就是同一个有序原二份类型。
+在固定乘积校准中，它在所有原乘积准备上的值为中腿收缩；乘积张成使其齐次线性延伸唯一。
+只有写下单位泛函或形式偏迹不供应这个实际域、范围和输出类型。
+这些条件准确是 [Library §2][L95control] *Original composite data* 与 [§3 *Pre-selection END interface*][L95end]，
+不从单系统球或全单元效应推导出来。
+
+**定义 95.6（指定原事件与实现资源）。** 对每个指定的原 typed 事件或未归一分支
+$e:n\to m$，保留其原记录、ready、控制、合法性和全部未来合同；保持包括零和所有实准备关系的
+实线性 Hermitian 输入律。归一仿射行为只有连同齐次质量缩放及这些关系才给该原实线性映射。
+在取得矩阵坐标后，记输入维数 $D_n=2^n$、输出维数 $D_m=2^m$，令 $\phi_e$ 为原映射，
+$\widetilde\phi_e(A+iB)=\phi_e(A)+i\phi_e(B)$ 为其唯一复线性 HP 延伸。
+每个这样的原事件分别供应一个输入维数参考和准确同事件输出
+
+$$
+\begin{gathered}
+|\omega_n\rangle=D_n^{-1/2}\sum_{j=1}^{D_n}|jj\rangle,
+\qquad \Omega_n=|\omega_n\rangle\langle\omega_n|,\\
+J_e=(\operatorname{id}_{D_n}\otimes\widetilde\phi_e)(\Omega_n)\ge0
+\quad\text{于整个原参考／输出锥 }C_{n+m}.
+\end{gathered}
+\tag{95.13}
+$$
+
+参考态实际可准备。其来源识别可由一个原实线性联合上下文 $L_e$ 给出：对所有正乘积输入
+$A\otimes B$，$L_e(A\otimes B)=A\otimes\phi_e(B)$；乘积张成遂强迫整个上下文是同一
+$\operatorname{id}\otimes\phi_e$，包括 $\Omega_n$ 上的准确输出。
+也可直接供应这个同事件输出等式及其原来源识别，不能事后另挑一张正证书矩阵。
+逐原分支各测其整个输出，不能只测总事件、若干读数或产品向量。
+
+独立保留每个确定事件在全部原正输入上的 TP，或各分支的 TNI 预算；
+实际完整仪器还保留同一菜单的记录、真实粗粒化
+$\phi_{\rm total}=\sum_a\phi_a$ 及总 TP。输入质量、输出质量和零分支不删去，
+只在严格正质量时条件化。数学 CP 的全参考正性不增加该原事件的实际可调用参考上下文。
+
+若还要求实际实现所有有限 CPTP 映射和有限仪器，另保留实际纯二元辅助准备、
+导出控制的顺序组合，以及进入同一原保留寄存器、按固定校准为偏迹的 typed 全域丢弃。
+仪器还要计算基指针读出，其未忽略指针前的保留输出分支律准确是
+
+$$
+\tau\longmapsto(I\otimes\langle z|)\tau(I\otimes|z\rangle),
+\tag{95.14}
+$$
+
+并有实际标签／记录、真实粗粒化和正质量条件化。
+指针效应的概率本身不等于这条更新律。以上完整复用
+[Library §4][L95event] *Typed event interface* 与 *Actual realization resources*；
+纯辅助态、丢弃、指针和记录均是实际资源，不由 Choi 证书生成。
+
+### 95.5 完整条件应用、几何与量子公理对应
+
+**定理 95.7（唯一有限寄存器候选的新静态入口）。** 在95.1、95.3、95.5的全部原输入下，
+95.5中的同一个 $d$ 必为三；一次固定 Pauli 校准后，对每个给定有限寄存器有
+
+$$
+\begin{gathered}
+V_N\simeq\operatorname{Herm}(2^N,\mathbb C),\qquad
+K_N=\mathcal D(2^N),\qquad C_N=\operatorname{Herm}_+(2^N,\mathbb C),\\
+Q_N=\{\operatorname{Ad}_U:U\in\mathrm{SU}(2^N)\}
+\cong\mathrm{PSU}(2^N)\ \subseteq G_N.
+\end{gathered}
+\tag{95.15}
+$$
+
+$Q_N$ 的每个作用由实际原语的有限字精确实现，不把极限操作宣告为实际。
+每个已有实际仿射效应按唯一矩阵 $E$ 表示，$0\le E\le I$、概率为 $\operatorname{Tr}(E\rho)$；
+原单元有全部这样的效应，全部有限联合 POVM 的实际实现还消费95.6的实现资源。
+每个满足95.6同事件参考条件的指定映射／分支为 CP，其原预算分别给 CPTP／CP-TNI；
+实际完整菜单的分支和给量子仪器。若同时保留95.6全部实现资源，则这些原寄存器间每个有限
+CPTP 映射和每个有限 CP 仪器都有实际的映射及结果标签层面的实现。
+
+证明。先由95.2—95.3取得 Library 二元附录 §1 所需的整个原球、全部原规范比较效应和
+同一实际紧连通整球面传递 $H$。不是对 $K_N$ 作新定义：95.5逐项给该附录 §2 的
+原紧凸全张成基、忠实乘积层析、实际产品和固定校准，(95.11)给其原概率界，
+(95.12)给其全实路径及整个旁观者恒等放置。以下逐段应用该处已经证明的接口，
+保留其前件和结论域，不重证群分类、有限控制、END 或仪器构造。
+
+先令 $\Gamma_2$ 为局域 $H$ 和全部 $g(t)$ 的实际有限字子群，
+$C_2^{\rm an}=\overline{\Gamma_2}$ 仅为数学矩阵闭包。
+Library §2 的 *Analytic compactness lemma* 用原紧凸全张成 $K_2$ 的对称凸包范数，
+给紧连通矩阵 Lie 群 $C_2^{\rm an}$，保原 $K_2$、归一和产品概率；此时闭包仍未被宣布实际。
+其技术分类直接使用 Masanes–Müller–Pérez-García–Augusiak，
+[arXiv:1111.4060v4](https://arxiv.org/abs/1111.4060v4)，PDF 第10页 Theorems 1–2及
+§IV A 第16—18页的球面作用表。95.2给 $H$ 的忠实正交整球面作用，连通性给其 $\mathrm{SO}(d)$
+范围；固定单位 $a$ 的测试给分类所需
+
+$$
+\widehat H\times\widehat H\le C_2^{\rm an},\qquad
+\tfrac14(\widehat a\otimes\widehat a)\cdot
+C_2^{\rm an}(\widehat a\otimes\widehat a)\subseteq[0,1].
+\tag{95.16}
+$$
+
+原非局域路径越出整个局域旋转群，排除 Theorem 1 的非 $\mathrm{SO}(3)$ 情形及
+Theorem 2 的局域选项。故 $d=3,H=\mathrm{SO}(3)$，且
+
+$$
+C_2^{\rm an}=Q_2\quad\text{或}\quad T_1Q_2T_1=:H_2.
+\tag{95.17}
+$$
+
+固定 Pauli 识别把单元 $(1,a)$ 送到 $(I+a\cdot\sigma)/2$。明确地，取
+
+$$
+\begin{gathered}
+\sigma_0=I_2,\quad
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\\
+\rho(\omega)=2^{-N}\sum_{\mu_1,\ldots,\mu_N=0}^3
+\omega_{\mu_1\ldots\mu_N}\,
+\sigma_{\mu_1}\otimes\cdots\otimes\sigma_{\mu_N}.
+\end{gathered}
+$$
+
+这是同一 $F^{\otimes N}$ 后的一次固定识别；在两个集合包含证明之前，每个原态仅被识别为
+迹一 Hermitian 矩阵，尚未预付 PSD。
+此处 $Q/H$ 指普通和部分转置的控制扇区，不是实／复／四元数三种数域。
+在同一 Pauli 坐标中 $T_i$ 只转置第 $i$ 因子、反射其 $y$ 分量；它是解析坐标变换，未被当作物理门。
+
+应用同 §2 的 *Exact-generation lemma*：两种闭包的 Lie 代数均为简单非交换
+$\mathfrak{su}(4)$，实际子群含完整非平凡局域连通 Lie 子群。
+该引理的共轭张成空间是全 Lie 代数的理想；从实际共轭方向取基，反函数定理给实际有限字中的
+开单位邻域，连通性遂使 $\Gamma_2=C_2^{\rm an}$。
+因此(95.17)的整群现在才成为实际有限控制。这里复用引理的全部 subgroup、完整实参数、简单性条件，
+没有用“稠密即精确”的错误替代；该引理的两环面控制已在 Library §2 给出。
+每条给定边可嵌入同一有限字，因为每个原语都满足(95.12)，无需假设任意二体群可搬运。
+
+在选择扇区之前，Library §3 的 *Pair-state lemma before choosing a branch* 已给原整个
+$K_2=\mathcal D(4)$ 或 $T_1\mathcal D(4)$。
+95.5的 END 正好匹配该处预选择接口，因而可应用 *Theorem (END excludes the reflected branch)*。
+其依赖顺序是：若为 $H$，路径上的实际有限 $H_{12},H_{23}$ 字给
+$T_2Q_3T_2$，其中有普通 $Q_{13}$，从原乘积态可制备普通端点 Bell 与中腿纯态的乘积。
+END 的同一原 $K_2$ 范围会含普通 Bell，而此前已得 $K_2=T_1\mathcal D(4)$；
+$T_1(\mathrm{Bell})=\mathrm{SWAP}/2$ 的负特征值 $-1/2$ 排除它，矛盾。
+这只核对原定理在本章数据上的消费次序，END 并非由选出 $Q$ 以后的 SWAP 或酉扩张构造倒推。
+原三角形接口是 Library §3 的替代充分条件；本章已经选 END，不再把第三条原边列为额外原语。
+
+选择 $Q$ 后，每个原有限连通图应用同 §3 的 *Finite graph generation on one carrier*，
+得实际有限字 $Q_N\subseteq G_N$。随后 *All finite original states and controls* 给两个包含，
+其使用条件在这里均保持：原纯乘积态的 $Q_N$ 轨道覆盖全部秩一投影，有限谱混合与原凸性给
+$\mathcal D(2^N)\subseteq K_N$；原全张成层析已把每个原态表示为迹一 Hermitian 矩阵，
+若有负特征值，实际 $Q_N$ 将其特征向量送到原乘积读出方向，(95.11)会读到该负值，故
+$K_N\subseteq\mathcal D(2^N)$。这两个包含针对整个原 $K_N$，不是只描述一个被生成的正子模型。
+$N=1$ 由 $d=3$ 的整球结论给出，锥按正质量齐次化，取得(95.15)。
+没有分类整个 $G_N$ 的离散部分或未供应参考接口的原不可逆事件。
+
+接着对每个指定原事件应用 Library §4 的 *Theorem (rectangular CP and exact budgets)*。
+(95.13)的参考维数恰为输入维数，输出锥由(95.15)已是整个原 PSD 锥，
+原实线性乘积扩张合同识别的仍是同一个 $\widetilde\phi_e$。
+Watrous，[Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22、
+Theorem 2.26与 Corollary 2.27，分别在印刷页82—83、87—89，给矩形 CP、Kraus和预算的成熟接口。
+按本章归一 Choi 和因子次序，其结果准确为
+
+$$
+\begin{gathered}
+\widetilde\phi_e(X)=\sum_\alpha A_{e\alpha}X A_{e\alpha}^{\dagger},\qquad
+A_{e\alpha}:\mathbb C^{D_n}\to\mathbb C^{D_m},\qquad
+E_e=\sum_\alpha A_{e\alpha}^{\dagger}A_{e\alpha},\\
+\operatorname{Tr}\phi_e(X)=\operatorname{Tr}(E_eX),\qquad
+\operatorname{Tr}_{\rm out}J_e=E_e^{\mathsf T}/D_n,\\
+\mathrm{TP}\Longleftrightarrow E_e=I_{D_n},\qquad
+\mathrm{TNI}\Longleftrightarrow0\le E_e\le I_{D_n}.
+\end{gathered}
+\tag{95.18}
+$$
+
+每个非零分支应用该接口；零映射直接 CP。原完整菜单的真和与总 TP 给
+$\sum_a E_a=I$ 及总 CP，不再需要总 Choi 探针。
+同一已有联合上下文的参考预算为 $I_R\otimes E_a$；这是原预算的数学后果，
+不制造其它参考上下文。$p_a=\operatorname{Tr}\phi_a(\rho)>0$ 时条件态为
+$\phi_a(\rho)/p_a$，$p_a=0$ 时正输出为零且原零记录／权限保留。
+
+最后，若支付95.6的实现资源，直接应用同 §4 的 *Theorem (all finite register channels and instruments)*。
+为明确矩形尺寸与实际空间的对应，对通道 Kraus 数 $r$ 选有限 $k$ 满足
+$2^k\ge r$、$m+k\ge n$，置 $q=m+k-n\ge0$；对有限仪器使用
+$R=\sum_a\max(1,r_a)$ 并取 $2^k\ge R$，其余条件相同。
+这是同一原定理的参数替换：等距映射占据 $m+k=n+q$ 个二元单元，
+补齐 $q$ 个实际纯辅助单元后，原实际 $Q_{m+k}$ 实现其酉延伸，最后按 typed 合同丢弃或读取 $k$ 个指针单元。
+每个命名零分支占一个零 Kraus 编码，所有未用编码亦补零；(95.14)和真实归组准确还原各原指定 CP 分支。
+先加未归一输出，后在正质量处条件化，空辅助串／环境串采用原定理的恒等约定。
+若输入或输出指数为零，标量质量载体遵循 Library 的 $d=1$、$b=1$ 分支，
+不要求新物理类型；非平凡标量结果仍可用有限二元指针实现。
+这里原二维幂尺寸的补齐条件不能删成仅有 Kraus 秩下界。
+
+任意原仿射 proper 效应在完整 Hermitian 载体上由唯一 $0\le E\le I$ 表示，给所述 Born 公式；
+有限 POVM 可在同一实现定理中取 $A_a=\sqrt{E_a}$，于是全部有限联合 POVM 连同一种 Lüders 实现可用。
+这是可实现的选择，不是对原既有事件更新的唯一性结论，也不增设锐中性前提。
+一个构造的酉扩张与原事件有相同矩阵映射，并不把其原上下文、历史或合法未来识别为同一。
+完整应用因而保留了原资源，且每一步只消费已取得的上游结论。证毕。
+
+**命题 95.8（几何、标准公理与候选范围）。** 95.7给的是 Library 同一有限同种二元寄存器候选的
+一个新静态入口，与89.14的一般 EJA 原装饰元组不构成无附加接口的等价。
+其量子公理对应与准确条件如下。
+
+| 标准有限量子结构 | 本章中的独立输入、推得结构与保留边界 |
+| --- | --- |
+| 复 Hilbert 寄存器、态和混合 | 95.1的一对内在全域关系加原纯态传递先给整个 Lorentz 球；95.5的实际产品、忠实层析、全实非局域路径和同载体放置，再加预选择同类型 END，选出 $d=3$ 及每个 $\mathbb C^{2^N}$ 的整个密度基。 |
+| 张量复合与纠缠 | 原 $V^{\otimes N}$、固定乘积校准、实际产品准备／测试是输入；有限图控制和两个原集合包含给完整复 PSD 张量锥，纯几何为 $\mathbb{CP}^{2^N-1}$，$N>1$ 的整体不再是 Bloch 球。 |
+| 效应、Born 与测量 | 95.3以实际种子轨道和有限三项混合给全单元效应；Born 是已识别矩阵效应的迹配对。全部有限共同 POVM 要95.6的完整实现资源，单个效应不供应共同菜单。纯比较为 $|\langle\psi,\varphi\rangle|^2$，其端点互换不依赖顺序。 |
+| 可逆控制 | 数学闭包仅用于技术分类；简单 Lie 代数中的共轭理想／反函数定理接口给精确实际有限字 $Q_N\subseteq G_N$。整个原 $G_N$、所有不连续操作和其余事件未被这个包含分类。 |
+| 通道、分支及仪器 | 指定原事件的实线性、准确同事件产品扩张、一次输入维数纠缠参考的整个输出正性，以及原 TP／TNI／总和预算，给矩形 CP 与有限 Kraus。全部仪器的实际构造另消费辅助态、顺序、typed 丢弃、保留输出指针律、标签和真粗粒化。 |
+| 更新和时间 | 同一 POVM 不决定既有更新；Lüders 是资源下的一种实现。完整实参数控制不是物理钟；若另给物理时间上的连续齐次可逆动力学及时间／能量单位，才可读作 Hamiltonian 演化，并保留加标量自由度。 |
+
+证明与范围。静态95.2允许断开的实际群：经典二点单纯形的两个坐标效应实现(95.2)，
+交换两点的群紧且纯传递，故得到 $d=1$ 的整区间；它不满足95.5保留的连通局域控制。
+因此静态结论没有把 classical bit 排除，而完整应用从连通性和耦合分类得到复 qubit。
+对该有限寄存器复候选，最小投影确认、实际局域旋转及任意一对正交纯点满足新入口；
+所需实际种子、轨道与所有下游资源须在同一实现中保留，不能仅凭矩阵形式宣称已经拥有它们。
+
+89.14仍保留89.7的原 $A,D,E$、完整一般 EJA 桥、同一 $L,p,\omega$（同一 $p$ 使用两次）、
+两实张成、全实 $Z$、完整(83.8)、原两尺度及 H13 的同资格态整个输出。
+那一路线允许有限复 Hermitian 直和、经典和不等块，并只对原指定两／三份来源付出接口。
+95.7则从局部秩二整球出发，支付同种单元、每个有限 $N$ 的原乘积层析和精确控制放置、
+非局域实参数路径及同类型 END；没有用 FH1／一般 EJA 入口或尺度／H13 选择方向。
+89.14不供应这些全 $N$ 的控制和秩二接口，95.7也不替任意89.14元组制造这些接口或分类所有 EJA。
+这说明资源路线的区别，不是第二个竞争的完整有限寄存器候选，也不是把所有原装饰类合成一个等价类。
+
+对任意 $d\ge1$ 的 Lorentz 球，(95.4)给(95.2)，静态结论并不选三维；
+少了原复合、层析、非局域控制和 END，表中下游结论不能由该等式单独取得。
+(95.2)仍是全域下确界条件，不是两个读数的有限实验认证，也没有取得最少独立物理公理数。
+有限字存在不提供算法、长度界、参数精度或效率；每个有限图分别成立不供应无限系统的兼容极限。
+非二维幂的其他物理类型须实际编码／解码与通用性桥；时钟、能量、$\hbar$、Hamiltonian 来源、
+时空和经验对应都超出这里的静态及有限资源结论。
+
+把整个原状态物体放在桌上，一盏纯灯的比较是“所有必定确认它的合法尺，在目标态上能低到哪里”。
+这个下确界原本可能每次换尺。若恰有两盏纯灯的最低读数对每个原混态都正好补成一，
+两个凹下包络就只能都是直尺；原纯态传递把这对直尺带到每盏灯旁，却还没有预付一个圆球。
+最远点先给一把只在一个纯点到顶的尺，最小性和控制把这种唯一到顶传播给所有灯。
+任一外壳支撑面若还藏着多个点，其上某把最小尺全为零，补尺便同时在多个点到顶，矛盾。
+所以外壳每点都纯。围绕不动平均中心，所有纯灯半径相同；每条射线的外壳末点因而都在同一半径，
+整个原物体才成为实心球。真正共同的种子菜单将原按钮识别成规范尺，所需控制轨道加三项有限混合
+覆盖全部单元效应；这个过程没有组装所有联合仪器。
+
+接成寄存器以后，产品读数和非局域作用负责选球的维数；三点路径上实际丢掉中腿而回到原二份类型，
+负责检验两体方向能否一致。精确有限控制随后在每个原有限图上传开，两个包含才把全部原态认作量子态。
+最后仍逐事件保留原记录、预算和一个准确纠缠参考上的整个输出，才能用 Choi 接口取得 CP；
+实际造仪器还要辅助空间、丢弃和保留输出的指针。交换比较的两个端点只交换一个数的参数，
+没有断言两次物理仪器交换执行次序后有相同后态。
+
+本章新增承重组合的归属为 `repo-derived`：从原内在一对全域关系，经最小确认、暴露点与支撑零面、
+纯传递的等半径轨道到整个原球，以及实际种子轨道的同数据应用。有限维凸分解、仿射延伸、
+支撑超平面、Haar 平均、欧氏等号条件和极化恒等式均是成熟中间工具。
+群分类的主文献和矩形 Choi 的主文献已附在各消费步骤；精确有限字、END、全原寄存器两个包含及
+仪器实现的证明仍由所引 Library §§2—4 持有，未取得本章新证明或新分类名义。
+以上是明示模型输入下的普通数学定理、证明和条件应用；有限来源阅读不支持全球原创、历史优先权、
+物理起源或 Lean／kernel 核验主张。证毕。
+
+[L95bit]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#appendix-an-exhaustive-binary-comparison-and-a-single-coupling-path
+[L95static]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#1-intrinsic-control-geometry-comparisons-and-the-static-pd-alternative
+[L95control]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#2-analytic-closure-published-classification-and-exact-actual-words
+[L95end]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#3-endpoint-discard-the-triangle-alternative-and-every-original-register
+[L95event]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#4-one-exact-reference-per-original-event-and-finite-realizations
+[L95scope]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#scope-tests
+
+## 追加锚（本行以下为增补区）
