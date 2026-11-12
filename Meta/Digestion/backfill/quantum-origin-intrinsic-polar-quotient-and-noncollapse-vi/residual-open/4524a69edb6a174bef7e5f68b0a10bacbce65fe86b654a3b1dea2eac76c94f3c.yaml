@@ -2,8 +2,6 @@ fingerprints:
   raw_sha256: sha256:4524a69edb6a174bef7e5f68b0a10bacbce65fe86b654a3b1dea2eac76c94f3c
   normalized_sha256: sha256:4524a69edb6a174bef7e5f68b0a10bacbce65fe86b654a3b1dea2eac76c94f3c
 cas_ref: sha256:4524a69edb6a174bef7e5f68b0a10bacbce65fe86b654a3b1dea2eac76c94f3c
-coverage_gids:
-  - gid: D5/S3/Quantum/Foundation/SectionROGFrame.rog_frame
-    target_statement_id: sha256:a3696975ecf58c1afcf5b7da5101c1123d59406dd28d7a063a06bfad57244c8e
+coverage_gids: []
 receipts:
   unresolved_subitems: []
