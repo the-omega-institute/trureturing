@@ -8,19 +8,19 @@
 
 
 /-
-proof_shape: odd_reduction, distinct_moments, distinct_bound, collision_count_lower,
+proof_shape: distinct_moments, distinct_bound, collision_count_lower,
   model_fifth, normalized_fifth, result: content.
-proof_shape: walsh_factor: bind-only (consumer: model_character);
-  moment_values: bind-only (consumers: distinct_bound, distinct_fifth_zero, model_fifth, result);
-  model_character: bind-only (consumers: distinct_moments, model_fifth, result);
-  model_positive: bind-only (consumer: result);
-  odd_card: bind-only (consumer: model_fifth);
-  distinct_fifth_zero: bind-only (consumer: result);
-  odd_duplicate: bind-only (consumer: collision_count_lower);
-  ratio_limit: bind-only (consumer: result).
-escape_witness: odd_reduction reduces arbitrary repeated sign products to their odd-coordinate
-  character. The injection in collision_count_lower gives at least N(N-1)(N-2)(N-3) fifth-order
-  tuples with three odd coordinates, and at least N^4/4 for N >= 9. Together with model_fifth
+proof_shape: moment_values: bind-only
+  (consumers: distinct_bound, distinct_fifth_zero, model_fifth, result).
+proof_shape: model_character: bind-only
+  (consumers: distinct_moments, model_fifth, result).
+proof_shape: model_positive: bind-only (consumer: result).
+proof_shape: distinct_fifth_zero: bind-only (consumer: result).
+proof_shape: odd_duplicate: bind-only (consumer: collision_count_lower).
+proof_shape: ratio_limit: bind-only (consumer: result).
+escape_witness: The shared odd-coordinate reduction and the injection in
+  collision_count_lower give at least N(N-1)(N-2)(N-3) fifth-order tuples with
+  three odd coordinates, and at least N^4/4 for N >= 9. Together with model_fifth
   this yields the normalized upper bound -3/11, used by result.
 admission_basis: escape-witness.
 -/

@@ -7,26 +7,298 @@
    digest: A positive biased-cube mixture refutes sixth-order top pairing transfer. -/
 
 /-
-proof_shape: model_moments, lower_orders, top_order_bound, deviation_lower_bound, result: content.
-proof_shape: model_character, model_positive, odd_card, ratio_limit: bind-only (consumers: model_moments, lower_orders, top_order_bound, deviation_lower_bound, result);
-  shared mixture and parity declarations: bind-only (consumers: this module and FifthOrderTopOnlyRefutation).
-escape_witness: The uniform top-order estimate keeps the sixth-order distinct defect at order N^2,
-  while the four disjoint collision families force the full sixth moment above its fifteen-pairing
-  comparison by a positive cubic-order amount.
+proof_shape: scalar_prod_diff_bound: bind-only (consumers: top_order_bound).
+proof_shape: inj_sum_product_bound: bind-only (consumers: top_order_bound).
+proof_shape: partialPairing_six_convolution: bind-only (consumers: model_unit_transfer).
+proof_shape: sixth_four_defect_lower: bind-only (consumers: model_four_defect_lower).
+proof_shape: transfer_error_small: bind-only (consumers: deviation_lower_bound).
+proof_shape: sixth_defect_lower: bind-only (consumers: deviation_lower_bound).
+proof_shape: moment_values: bind-only (consumers: distinct_bound, subset_unit_moment,
+  distinct_pair_formula, result).
+proof_shape: model_character: bind-only (consumers: distinct_moments, result).
+proof_shape: model_positive: bind-only (consumers: result).
+proof_shape: distinct_moments: content.
+proof_shape: distinct_bound: content.
+proof_shape: subsetDistinct_univ: bind-only (consumers: top_order_bound).
+proof_shape: subset_unit_moment: content.
+proof_shape: distinct_pair_formula: content.
+proof_shape: subset_pair_formula: bind-only (consumers: top_order_bound).
+proof_shape: top_order_bound: content.
+proof_shape: model_unit_transfer: bind-only (consumers: deviation_lower_bound).
+proof_shape: model_unit_pair: bind-only (consumers: model_four_defect_lower).
+proof_shape: model_four_defect_lower: bind-only (consumers: deviation_lower_bound).
+proof_shape: deviation_lower_bound: content.
+proof_shape: sixth_ratio_limit: bind-only (consumers: result).
+proof_shape: result: content.
+escape_witness: Uniform rank-one cancellation bounds the six-label distinct pairing
+  defect by 720 N^2. The positive four-label defect propagated through the fifteen
+  one-edge partial pairings forces the full sixth pairing defect above N^3. The
+  positive mixture has L/H tending to zero and supplies the counterexample in result.
 admission_basis: escape-witness.
 -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyRefutation
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticFourthExpansion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectAlgebra
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectInversion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PerfectPairingCount
-import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderProductBounds
-import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderPairingExpansion
 import Mathlib.Data.Fintype.CardEmbedding
 import Mathlib.Algebra.BigOperators.Ring.Nat
 
+/-! A positive finite mixture separating top distinct and full pairing defects. -/
+
 open scoped BigOperators Topology
 open Filter
+
+namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
+noncomputable section
+set_option autoImplicit false
+
+/-- Perturbing each factor of a product of three bounded scalars by at most one costs
+at most three times the square of the common bound. -/
+theorem scalar_prod_diff_bound {α : Type*} [DecidableEq α]
+    (s : Finset α) (hs : s.card = 3) (f g : α → ℝ) (B : ℝ) (hB : 0 ≤ B)
+    (hf : ∀ i ∈ s, |f i| ≤ B) (hg : ∀ i ∈ s, |g i| ≤ B)
+    (hd : ∀ i ∈ s, |f i - g i| ≤ 1) :
+    |(∏ i ∈ s, f i) - ∏ i ∈ s, g i| ≤ 3 * B ^ 2 := by
+  obtain ⟨a, b, c, hab, hac, hbc, rfl⟩ := Finset.card_eq_three.mp hs
+  have hm (x y : α) (hx : x ∈ ({a, b, c} : Finset α))
+      (hy : y ∈ ({a, b, c} : Finset α)) (F G : α → ℝ)
+      (hF : ∀ i ∈ ({a, b, c} : Finset α), |F i| ≤ B)
+      (hG : ∀ i ∈ ({a, b, c} : Finset α), |G i| ≤ B) :
+      |F x| * |G y| ≤ B ^ 2 := by
+    nlinarith [mul_le_mul (hF x hx) (hG y hy) (abs_nonneg (G y)) hB]
+  have ha : |(f a - g a) * f b * f c| ≤ B ^ 2 := by
+    rw [abs_mul, abs_mul]
+    calc
+      _ ≤ 1 * |f b| * |f c| := by gcongr; exact hd a (by simp)
+      _ ≤ B ^ 2 := by simpa using hm b c (by simp) (by simp) f f hf hf
+  have hb : |g a * (f b - g b) * f c| ≤ B ^ 2 := by
+    rw [abs_mul, abs_mul]
+    calc
+      _ ≤ |g a| * 1 * |f c| := by gcongr; exact hd b (by simp)
+      _ ≤ B ^ 2 := by simpa using hm a c (by simp) (by simp) g f hg hf
+  have hc : |g a * g b * (f c - g c)| ≤ B ^ 2 := by
+    rw [abs_mul, abs_mul]
+    calc
+      _ ≤ |g a| * |g b| * 1 := by gcongr; exact hd c (by simp)
+      _ ≤ B ^ 2 := by simpa using hm a b (by simp) (by simp) g g hg hg
+  simp only [Finset.prod_insert (show a ∉ ({b, c} : Finset α) by simp [hab, hac]),
+    Finset.prod_insert (show b ∉ ({c} : Finset α) by simp [hbc]), Finset.prod_singleton]
+  have he : f a * (f b * f c) - g a * (g b * g c) =
+      (f a - g a) * f b * f c + g a * (f b - g b) * f c +
+        g a * g b * (f c - g c) := by ring
+  rw [he]
+  calc
+    _ ≤ |(f a - g a) * f b * f c + g a * (f b - g b) * f c| +
+        |g a * g b * (f c - g c)| := abs_add_le _ _
+    _ ≤ (|(f a - g a) * f b * f c| + |g a * (f b - g b) * f c|) +
+        |g a * g b * (f c - g c)| := by gcongr; exact abs_add_le _ _
+    _ ≤ 3 * B ^ 2 := by linarith
+
+/-- Removing noninjective assignments from a sixth-order product sum changes it by at
+most thirty-six times the fifth power of the number of available labels. -/
+theorem inj_sum_product_bound (N : ℕ) (hN : 6 ≤ N)
+    (g : Fin 6 → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
+    |(∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) -
+        ∏ i, ∑ d, g i d| ≤ 36 * (N : ℝ)^5 := by
+  classical
+  let all : Finset (Fin 6 → Fin N) := Finset.univ
+  let good : Finset (Fin 6 → Fin N) := all.filter Function.Injective
+  let bad : Finset (Fin 6 → Fin N) := all.filter (fun x => ¬Function.Injective x)
+  have hsplit :
+      (∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) +
+        ∑ x : Fin 6 → Fin N with ¬Function.Injective x, ∏ i, g i (x i) =
+        ∑ x : Fin 6 → Fin N, ∏ i, g i (x i) := by
+    exact Finset.sum_filter_add_sum_filter_not _ Function.Injective _
+  have hall : (∑ x : Fin 6 → Fin N, ∏ i, g i (x i)) = ∏ i, ∑ d, g i d := by
+    rw [← Fintype.prod_sum]
+  have hcardbad : (bad.card : ℝ) ≤ 36 * (N : ℝ)^5 := by
+    have hcardgood : good.card = N.descFactorial 6 := by
+      let e : {x : Fin 6 → Fin N // Function.Injective x} ≃ (Fin 6 ↪ Fin N) :=
+        { toFun := fun x => ⟨x.1, x.2⟩
+          invFun := fun x => ⟨x, x.injective⟩
+          left_inv := by intro x; rfl
+          right_inv := by intro x; rfl }
+      have he := Fintype.card_congr e
+      rw [Fintype.card_embedding_eq] at he
+      simpa only [good, all, Fintype.card_subtype, Fintype.card_fin] using he
+    have hcardall : all.card = N ^ 6 := by simp [all, Fintype.card_fun]
+    have hdisj : Disjoint good bad := by
+      apply Finset.disjoint_left.mpr
+      intro x hxg hxb
+      exact (Finset.mem_filter.mp hxb).2 (Finset.mem_filter.mp hxg).2
+    have hunion : good ∪ bad = all := by
+      ext x
+      simp only [good, bad, all, Finset.mem_union, Finset.mem_filter, Finset.mem_univ,
+        true_and]
+      tauto
+    have hc : good.card + bad.card = all.card := by
+      rw [← Finset.card_union_of_disjoint hdisj, hunion]
+    rw [hcardall, hcardgood] at hc
+    have hcast : (N.descFactorial 6 : ℝ) + (bad.card : ℝ) = (N : ℝ)^6 := by
+      exact_mod_cast hc
+    have hNreal : (6 : ℝ) ≤ N := by exact_mod_cast hN
+    have hlowerNat := Nat.pow_sub_le_descFactorial N 6
+    rw [show N + 1 - 6 = N - 5 by omega] at hlowerNat
+    have hlower : ((N : ℝ) - 5)^6 ≤ (N.descFactorial 6 : ℝ) := by
+      have hcastLower : ((N - 5 : ℕ) : ℝ)^6 ≤ (N.descFactorial 6 : ℝ) := by
+        exact_mod_cast hlowerNat
+      simpa only [Nat.cast_sub (by omega : 5 ≤ N), Nat.cast_ofNat] using hcastLower
+    have hp : |(N : ℝ)^6 - ((N : ℝ) - 5)^6| ≤ 30 * (N : ℝ)^5 := by
+      have h := abs_pow_sub_pow_le (a := (N : ℝ)) (b := (N : ℝ) - 5) (n := 6)
+      have hm : max |(N : ℝ)| |(N : ℝ) - 5| = (N : ℝ) := by
+        rw [abs_of_nonneg (by positivity), abs_of_nonneg (by linarith), max_eq_left]
+        linarith
+      rw [hm, show (N : ℝ) - ((N : ℝ) - 5) = 5 by ring] at h
+      norm_num at h ⊢
+      nlinarith [h]
+    have hle := (le_abs_self ((N : ℝ)^6 - ((N : ℝ) - 5)^6)).trans hp
+    nlinarith [show (0 : ℝ) ≤ (N : ℝ)^5 by positivity]
+  have hbad :
+      |∑ x : Fin 6 → Fin N with ¬Function.Injective x, ∏ i, g i (x i)| ≤
+        36 * (N : ℝ)^5 := by
+    calc
+      _ ≤ ∑ x : Fin 6 → Fin N with ¬Function.Injective x, |∏ i, g i (x i)| :=
+        Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ x : Fin 6 → Fin N with ¬Function.Injective x, (1 : ℝ) := by
+        apply Finset.sum_le_sum
+        intro x hx
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun i _ => hg i (x i))
+      _ = (bad.card : ℝ) := by simp [bad, all]
+      _ ≤ _ := hcardbad
+  have he : (∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) -
+      ∏ i, ∑ d, g i d =
+      -(∑ x : Fin 6 → Fin N with ¬Function.Injective x, ∏ i, g i (x i)) := by
+    rw [← hall]
+    linarith
+  rw [he, abs_neg]
+  exact hbad
+
+end
+end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
+
+namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
+
+noncomputable section
+set_option autoImplicit false
+attribute [local instance] Classical.propDecidable
+
+variable {α : Type*} [Fintype α] [DecidableEq α]
+
+/-- When defects vanish in orders at most two, a convolution on at most six labels
+contains only its empty and single-edge contributions. -/
+theorem partialPairing_six_convolution (U : Finset α) (hU : U.card ≤ 6)
+    (N : ℝ) (δ : Finset α → ℝ)
+    (hsmall : ∀ V ⊆ U, V.card ≤ 2 → δ V = 0) :
+    (∑ P : Finset (Finset α) with IsPartialPairing U P,
+      N ^ P.card * δ (U \ pairingSupport P)) =
+      δ U + N * ∑ e ∈ U.powersetCard 2, δ (U \ e) := by
+  let S : Finset (Finset (Finset α)) := Finset.univ.filter (IsPartialPairing U)
+  let S₁ := S.filter (fun P => P.card = 1)
+  have hmem (P : Finset (Finset α)) : P ∈ S ↔ IsPartialPairing U P := by
+    simp [S]
+  have hmem₁ (P : Finset (Finset α)) : P ∈ S₁ ↔ IsPartialPairing U P ∧ P.card = 1 := by
+    simp [S₁, S]
+  have hsingleton (e : Finset α) : {e} ∈ S₁ ↔ e ∈ U.powersetCard 2 := by
+    simp [hmem₁, IsPartialPairing, pairingSupport, Finset.mem_powersetCard, and_comm]
+  have h0 : (∅ : Finset (Finset α)) ∈ S := by
+    simp [S, IsPartialPairing, pairingSupport]
+  have h01 : (∅ : Finset (Finset α)) ∉ S₁ := by simp [hmem₁]
+  have hsub : insert ∅ S₁ ⊆ S := by
+    intro P hP
+    rcases Finset.mem_insert.mp hP with rfl | hP
+    · exact h0
+    · exact (Finset.mem_filter.mp hP).1
+  have hreduced : (∑ P ∈ S, N ^ P.card * δ (U \ pairingSupport P)) =
+      ∑ P ∈ insert ∅ S₁, N ^ P.card * δ (U \ pairingSupport P) := by
+    symm
+    apply Finset.sum_subset hsub
+    intro P hP hnot
+    have hP' := (hmem P).1 hP
+    have hcard : 2 ≤ P.card := by
+      have hne : P ≠ ∅ := fun he => hnot (Finset.mem_insert.mpr (Or.inl he))
+      have hneq : P.card ≠ 1 := fun hc => hnot
+        (Finset.mem_insert.mpr (Or.inr ((hmem₁ P).2 ⟨hP', hc⟩)))
+      have hp := Finset.card_pos.mpr (Finset.nonempty_iff_ne_empty.mpr hne)
+      omega
+    rw [hsmall (U \ pairingSupport P) Finset.sdiff_subset
+      (by rw [(pairing_remainder_card U P hP').1]; omega), mul_zero]
+  have hsingle : (∑ e ∈ U.powersetCard 2, N * δ (U \ e)) =
+      ∑ P ∈ S₁, N ^ P.card * δ (U \ pairingSupport P) := by
+    apply Finset.sum_nbij' (fun e => {e}) pairingSupport
+    · intro e he
+      exact (hsingleton e).2 he
+    · intro P hP
+      obtain ⟨e, rfl⟩ := Finset.card_eq_one.mp ((hmem₁ P).1 hP).2
+      simpa [pairingSupport] using (hsingleton e).1 hP
+    · intro e he
+      simp [pairingSupport]
+    · intro P hP
+      obtain ⟨e, rfl⟩ := Finset.card_eq_one.mp ((hmem₁ P).1 hP).2
+      simp [pairingSupport]
+    · intro e he
+      simp [pairingSupport]
+  change (∑ P ∈ S, N ^ P.card * δ (U \ pairingSupport P)) = _
+  rw [hreduced, Finset.sum_insert h01, ← hsingle, ← Finset.mul_sum]
+  simp [pairingSupport]
+
+/-- A quantitative lower bound for the four-label defect of the sixth-order model. -/
+theorem sixth_four_defect_lower (N : ℝ) (hN : 100 ≤ N) :
+    N ^ 2 / 2 ≤ Real.sqrt 15 * (N * (N - 1) * (N - 2) * (N - 3)) / N ^ 2 -
+      3 * (N - 1) ^ 2 := by
+  have hpos : 0 < N := by linarith
+  have hslo : (15 : ℝ) / 4 ≤ Real.sqrt 15 := by
+    have hs : 0 ≤ Real.sqrt 15 := by positivity
+    nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num]
+  have hshi : Real.sqrt 15 ≤ (4 : ℝ) := by
+    have hs : 0 ≤ Real.sqrt 15 := by positivity
+    nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num]
+  have hp : N ^ 4 - 6 * N ^ 3 ≤ N * (N - 1) * (N - 2) * (N - 3) := by
+    nlinarith [sq_nonneg N]
+  rw [le_sub_iff_add_le, le_div_iff₀ (sq_pos_of_pos hpos)]
+  have hprod := mul_le_mul_of_nonneg_left hp (show 0 ≤ Real.sqrt 15 by positivity)
+  have hlarge : (0 : ℝ) ≤ N ^ 4 - 6 * N ^ 3 := by
+    nlinarith [show 0 ≤ N^3 * (N - 6) by exact mul_nonneg (pow_nonneg hpos.le 3) (by linarith)]
+  have hlo := mul_le_mul_of_nonneg_right hslo hlarge
+  have hnp : 0 ≤ N^3 * (N - 100) := mul_nonneg (pow_nonneg hpos.le 3) (by linarith)
+  have hnp₂ : 0 ≤ N^2 * (N - 100) := mul_nonneg (sq_nonneg N) (by linarith)
+  nlinarith [hprod, hlo, hnp, hnp₂, sq_nonneg N]
+
+/-- The transfer error is at most twice the cubic scale once its coefficient is below the square root. -/
+theorem transfer_error_small (N K : ℝ) (hN : 1 ≤ N) (hK : K ≤ Real.sqrt N) :
+    K * N ^ 3 * (Real.sqrt (1 / N) + 1 / N) ≤ 2 * N ^ 3 := by
+  have hpos : 0 < N := by linarith
+  have hspos : 0 < Real.sqrt N := Real.sqrt_pos.2 hpos
+  have hsN : Real.sqrt N ≤ N := by
+    exact (Real.sqrt_le_left hpos.le).2 (by nlinarith)
+  have hKN : K ≤ N := hK.trans hsN
+  have h1 : K / Real.sqrt N ≤ 1 := (div_le_one₀ hspos).2 hK
+  have h2 : K / N ≤ 1 := (div_le_one₀ hpos).2 hKN
+  calc
+    _ = N ^ 3 * (K / Real.sqrt N + K / N) := by
+      rw [Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 1), Real.sqrt_one]
+      ring
+    _ ≤ N ^ 3 * (1 + 1) :=
+      mul_le_mul_of_nonneg_left (add_le_add h1 h2) (by positivity)
+    _ = _ := by ring
+
+/-- Positive one-edge defects dominate the bounded top-order and transfer errors. -/
+theorem sixth_defect_lower (N C δ₆ δ₄ E V : ℝ)
+    (hN : 1 ≤ N) (hC : C ≤ N) (h6 : |δ₆| ≤ C * N ^ 2)
+    (h4 : N ^ 2 / 2 ≤ δ₄) (hE : |E| ≤ 2 * N ^ 3)
+    (hV : V = δ₆ + 15 * N * δ₄ + E) :
+    N ^ 3 ≤ V := by
+  have hn : 0 ≤ N := by linarith
+  have h6lo := (abs_le.mp h6).1
+  have hElo := (abs_le.mp hE).1
+  have hCmul := mul_le_mul_of_nonneg_right hC (sq_nonneg N)
+  have h4mul := mul_le_mul_of_nonneg_left h4 (by positivity : 0 ≤ 15*N)
+  nlinarith [pow_nonneg hn 3]
+
+end
+end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
 
 namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
 
