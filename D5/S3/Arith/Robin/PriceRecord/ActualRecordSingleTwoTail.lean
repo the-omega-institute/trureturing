@@ -154,7 +154,7 @@ private theorem record_clock_price_limits {α : Type*} {l : Filter α}
       (hTpos x).ne', hMx.ne', hgpos.ne'] <;> ring
   have hsmall : Tendsto (fun u : ℝ => log u ^ 2 / u ^ (19 / 640 : ℝ))
       atTop (𝓝 0) := by
-    simpa only [rpow_natCast] using
+    simpa only [rpow_two] using
       (_root_.isLittleO_log_rpow_rpow_atTop 2
         (by norm_num : (0 : ℝ) < 19 / 640)).tendsto_div_nhds_zero
   have herror : Tendsto (fun x => M x ^ 2 * P x ^ (-(19 / 640 : ℝ)))
