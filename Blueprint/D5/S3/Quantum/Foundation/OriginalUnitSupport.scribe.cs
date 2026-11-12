@@ -197,7 +197,8 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                 setOf(g, And(properNormalized(g), Eq(app(g, app(e, p)), D(1)))))),
             All("p", space, All("x", space, Eq(originalReadings, normalizedReadings))),
             All("p", space, All("x", space,
-                Eq(Call("image", dual, originalMinimizers), normalizedMinimizers)))));
+                Eq(Call("image", dual, originalMinimizers), normalizedMinimizers))),
+            Call("NativeGeometry", cone, unit, psi, m)));
         Formula singleton = Call("singleton", m);
         Formula oneDimensional = Imp(Eq(dimension, D(1)), Chain(
             Eq(baseOriginal, singleton),
@@ -229,6 +230,37 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("v", space, IffF(Member(v, cone), Call("PosSemidef", psiAt(v)))),
             All("v", space, Eq(Call("rank", psiAt(v)), Call("rank", mat(v)))),
             inverseCongruence, Member(D(1), Call("range", psi)), normalizedBase, rogTransport, singletonRog, oneDimensional, transport));
+        Formula nativeGeometry(Formula ni, Formula map)
+        {
+            Formula hm = Call("HermitianMat", ni, field), hmap = F.Id("H"),
+                hx = F.Id("X"), hb = F.Id("b"), hy = F.Id("y"), hi = F.Id("i0"),
+                hj = F.Id("j"), card = Call("card", ni);
+            Formula hrange = Call("range", hmap), hpure = Call("extremePoints", baseOriginal, real);
+            Formula rankOne(Formula q) => Call("rankOne", q);
+            Formula complement = Call("smul", inv(Call("sub", card, D(1))), Call("sub", m, p));
+            Formula nativeBase = setOf(hx, Chain(Member(hx, hrange), le(D(0), hx),
+                Eq(Call("trace", hx), D(1))));
+            Formula rankDecomposition = All("x", space, Imp(Member(x, cone), decomp(map, x)));
+            Formula frames = All("p", space, Imp(Member(p, hpure), All("i0", ni,
+                Ex("b", Call("OrthonormalBasis", ni, field, Call("EuclideanSpace", field, ni)),
+                    Ex("y", Seq(ni, To, Sp, space), Chain(Eq(app(hy, hi), p),
+                        All("j", ni, And(Member(app(hy, hj), hpure),
+                            Eq(app(hmap, app(hy, hj)), rankOne(app(hb, hj))))),
+                        Eq(Call("sum", hy), m)))))));
+            return Ex("H", Call("LinearMap", real, space, hm), Chain(
+                All("v", space, Eq(Call("mat", app(hmap, v)), app(map, v))),
+                Eq(Call("image", hmap, baseOriginal), nativeBase),
+                Imp(rankDecomposition, Chain(Call("ROG", hrange),
+                    Eq(Call("image", hmap, hpure), Call("pureRanks", hrange)),
+                    All("p", space, Imp(Member(p, hpure), And(le(app(hmap, p), D(1)),
+                        Imp(LtF(D(1), card), And(Member(complement, baseOriginal),
+                            Eq(app(hmap, complement), Call("smul", inv(Call("sub", card, D(1))),
+                                Call("sub", D(1), app(hmap, p))))))))), frames))));
+        }
+        Formula genericPsi = Call("LinearMap", real, space, matrices);
+        Formula nativeGeometryStatement = parameters(All("C", Call("PointedCone", real, space),
+            All("u", linear(real), All("Psi", genericPsi, All("m", space,
+                IffF(Call("NativeGeometry", cone, unit, psi, m), nativeGeometry(index, psi)))))));
         Formula normalizationStatement = nativeInputs(And(LtF(D(0), dimension),
             Ex("U", Call("Matrix", index, nIndex, field),
                 Ex("sigma", Call("LinearMap", real, space, nativeMatrices),
@@ -270,6 +302,12 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(stationarityStatement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("The determinant maximum admits a two-sided positive-definite neighborhood in every original direction whose unit value is zero. Its real determinant derivative therefore vanishes on the kernel of the original unit. Decomposing an arbitrary original vector into a kernel direction plus its mass multiple, and using the nonzero support dimension, extends the identity to every original vector: trace((sigma(m)) inverse sigma(v)) equals u(v), with the trace taken in the native real or complex support coordinates. The same point is the unique global determinant maximum on the entire original mass-n slice. For any second maximum, the same local variation proves the second inverse-trace identity. The trace of the Gram matrix of the difference sandwiched by the two principal inverse square roots is zero: its expansion is the sum of the two cross inverse-traces minus twice the support dimension. The trace-Gram zero criterion and invertibility force equality, including equality of the original vectors by injectivity. No positive definite representative of the dual unit or normalized section is assumed."))),
                     DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("native-original-geometry"),
+                    DeclarationHandle.Create(Owner + "NativeGeometry"),
+                    H("The actual native image, whole pure carrier and original frames"),
+                    StatementSource.FromAuthor(Disp(nativeGeometryStatement)), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("H lifts the actual Psi into Hermitian matrices, with no change of map or original carrier. Its full positive trace-one base is the image of the entire original base. The finite native matrix-rank-one decomposition property is equivalent to the original rho property by the normalization theorem. Under that property, this actual Hermitian image is ROG and its full pure carrier is the image of all original extreme points. Every original pure point extends at any prescribed index to a native orthonormal frame. The original states corresponding to all frame entries are pure, include the prescribed original point, and sum to the same h. Every such pure matrix is bounded by the identity. When the native dimension exceeds one, the original vector (h-p)/(n-1) belongs to the original base and H carries it to (I-H(p))/(n-1). The complement branch makes no assertion with a zero denominator."))),
+                    DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("original-unit-normalization"),
                     DeclarationHandle.Create(Owner + "exists_original_unit_normalization"),
                     H("Actual original-unit normalization on the entire original carrier"),
@@ -277,7 +315,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its unique determinant maximum and principal inverse square root S define the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. For each original cone element, finite decompositions into original native rank-one positive matrices correspond under the same Psi, retaining each original summand. Thus the entire ROG property transports in both directions. If the original base is a singleton and the cone is ROG, an actual rank-one summand of the full-support point is a positive multiple of that point. Its compressed matrix is positive definite and has rank n, forcing n = 1. The equivalence e from the original space onto the range of this same Psi carries the entire base and all its extreme points to the positive trace-one base in that range. It preserves convexity and every extreme subset, for arbitrary ambient subsets. It consequently carries the entire intersection of convex extreme subsets containing any prescribed set onto the corresponding intersection. This includes the entire minimal faces of both the original cone and its base. Its contravariant dual d(f) = f composed with e inverse carries the entire proper interval and each full confirmer set bijectively. For every original p and x, the sets of attainable confirming readings agree exactly, so their lower envelopes agree and d maps all minimizers onto all minimizers. In particular every actual zero confirmer transports in both directions, even when different zero conditions initially have different confirmers. Only elements of the actual image are passed to e inverse. When n is one, the original base and its entire extreme-point set are both the singleton containing the same h. Generation and strict positivity show every cone vector is its original mass times h. Thus every original effect is t times u with t in the closed unit interval, the only confirmer of h is u, and its entire exclusion set is empty. No division by n minus one occurs."))),
                     DescribeRole.Theorem),
                 Paragraph(Text("For a concrete native real or complex application, take V = R, C = the nonnegative ray, u(x) = 2x and rho(x) = diag(x, 0). This representation is faithful and its entire PSD section is exactly C. The original base is the compact singleton {1/2}. The ambient matrix rho(1) is singular and its trace is one, whereas u(1) is two. Thus neither ambient full support nor an original trace unit is present. The native common support nevertheless has dimension one. The construction has h = 1/2 and Psi(x) = [2x] in the one-dimensional support, as its trace identity determines its only entry. It returns the entire original base and pure carrier {1/2}, confirmer {u}, empty exclusion set, and every proper effect t u for 0 <= t <= 1. The same native argument applies over R and C without replacing complex rank by real rank.")),
-                Paragraph(Text("The rank-one description of all pure points under ROG, compressed real/complex codimension, annihilator congruence and same-frame complement conclusions still require proofs. The established reading-set and minimizer transport does not yet prove existence of a comparison minimum from the original effect interval. The dimension-one singleton-base, entire effect interval and empty-exclusion return, and the converse from a singleton ROG base to support dimension one, are included. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
+                Paragraph(Text("The actual Hermitian image and native matrix-rank-one bridge reuse SectionROGFrame.whole_pure_carrier and rog_frame. They return all original pure points, native frames summing to the same original h, and the same-h original complement for n greater than one. Compressed real/complex codimension and annihilator congruence still require proofs. The established reading-set and minimizer transport does not yet prove existence of a comparison minimum from the original effect interval. The dimension-one singleton-base, entire effect interval and empty-exclusion return, and the converse from a singleton ROG base to support dimension one, are included. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
     private static Formula Chain(params Formula[] formulas)

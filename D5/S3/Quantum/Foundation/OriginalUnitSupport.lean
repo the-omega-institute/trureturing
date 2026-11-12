@@ -708,10 +708,10 @@ private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
     apply HermitianMat.ext
     simp only [HermitianMat.mat_finset_sum, HermitianMat.mat_smul]
     conv_lhs => rw [A.H.spectral_theorem, Unitary.conjStarAlgAut_apply]
-    rw [Matrix.mul_diagonal]
     ext k l
-    simp [Matrix.mul_apply, Matrix.vecMulVec_apply, SectionROGFrame.rankOne,
-      Matrix.conjTranspose_apply, mul_assoc, RCLike.real_smul_eq_coe_mul]
+    simp [Matrix.mul_apply, Matrix.diagonal_apply, Matrix.vecMulVec_apply,
+      SectionROGFrame.rankOne, Matrix.conjTranspose_apply, Matrix.star_apply,
+      mul_comm, mul_left_comm, mul_assoc, RCLike.real_smul_eq_coe_mul]
   have heq : A = A.H.eigenvalues i.val •
       SectionROGFrame.rankOne (A.H.eigenvectorBasis i.val) := by
     calc
@@ -763,7 +763,7 @@ private theorem native_geometry [Nonempty ι]
     (h : V) (hh : Ψ h = 1) : NativeGeometry C u Ψ h := by
   classical
   let H : V →ₗ[ℝ] HermitianMat ι 𝕜 :=
-    { toFun := fun v => ⟨Ψ v, hHerm v⟩
+    { toFun := fun v => ⟨Ψ v, (hHerm v).isSelfAdjoint⟩
       map_add' := by intros; apply HermitianMat.ext; exact Ψ.map_add _ _
       map_smul' := by intros; apply HermitianMat.ext; exact Ψ.map_smul _ _ }
   have hH : Function.Injective H := fun x y heq => hΨ (congrArg HermitianMat.mat heq)
@@ -772,9 +772,11 @@ private theorem native_geometry [Nonempty ι]
     change RCLike.re (Ψ v).trace = u v
     rw [htrace, RCLike.ofReal_re]
   have hHC (v : V) : v ∈ C ↔ 0 ≤ H v := by
-    change v ∈ C ↔ 0 ≤ (⟨Ψ v, hHerm v⟩ : HermitianMat ι 𝕜)
-    rw [HermitianMat.zero_le_iff]
-    exact hsection v
+    constructor
+    · intro hv
+      exact HermitianMat.zero_le_iff.mpr ((hsection v).mp hv)
+    · intro hv
+      exact (hsection v).mpr (HermitianMat.zero_le_iff.mp hv)
   have hHh : H h = 1 := HermitianMat.ext hh
   let K := {v : V | v ∈ C ∧ u v = 1}
   have hbase : H '' K = SectionROGFrame.base H.range := by
@@ -859,6 +861,108 @@ private theorem native_geometry [Nonempty ι]
     exact smul_nonneg (inv_nonneg.mpr (sub_nonneg.mpr hnR.le)) (sub_nonneg.mpr hpI)
   · simp only [map_smul, map_sub, hmass, hp.1.2, smul_eq_mul]
     exact inv_mul_cancel₀ (sub_pos.mpr hnR).ne'
+
+/-- The full original dual interval and each confirmer set, represented faithfully
+in the space of all real pointwise readings, together with attained comparisons. -/
+def OriginalEffectGeometry (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
+  let O := fun f : V →ₗ[ℝ] ℝ => ∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x
+  let coeFn := fun f : V →ₗ[ℝ] ℝ => (f : V → ℝ)
+  IsCompact (coeFn '' {f | O f}) ∧
+    ∀ p : V, u p = 1 →
+      IsCompact (coeFn '' {f | O f ∧ f p = 1}) ∧
+      (coeFn '' {f | O f ∧ f p = 1}).Nonempty ∧
+      ∀ x : V, ∃ f : V →ₗ[ℝ] ℝ, O f ∧ f p = 1 ∧
+        (∀ g, O g → g p = 1 → f x ≤ g x) ∧
+        f x = sInf {r : ℝ | ∃ g, O g ∧ g p = 1 ∧ g x = r} ∧
+        (x ∈ C → (f x = 0 ↔ ∃ g, O g ∧ g p = 1 ∧ g x = 0))
+
+private theorem original_effect_geometry [Nontrivial V]
+    (C : PointedCone ℝ V) (hgen : Submodule.span ℝ (C : Set V) = ⊤)
+    (u : V →ₗ[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) :
+    OriginalEffectGeometry C u := by
+  classical
+  let O := fun f : V →ₗ[ℝ] ℝ => ∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x
+  let coeFn := fun f : V →ₗ[ℝ] ℝ => (f : V → ℝ)
+  let E : Set (V → ℝ) := coeFn '' {f | O f}
+  have hnonneg (x : V) (hx : x ∈ C) : 0 ≤ u x := by
+    by_cases hz : x = 0
+    · simp [hz]
+    · exact (hu x hx hz).le
+  have huO : O u := fun x hx => ⟨hnonneg x hx, le_rfl⟩
+  have hclosed : IsClosed E := by
+    have heq : E = {f : V → ℝ |
+        (∀ x y, f (x + y) = f x + f y) ∧
+        (∀ (r : ℝ) x, f (r • x) = r • f x) ∧
+        (∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x)} := by
+      ext f
+      constructor
+      · rintro ⟨g, hg, rfl⟩
+        exact ⟨g.map_add, g.map_smul, hg⟩
+      · rintro ⟨hadd, hsmul, hO⟩
+        let g : V →ₗ[ℝ] ℝ := { toFun := f, map_add' := hadd, map_smul' := hsmul }
+        exact ⟨g, hO, rfl⟩
+    rw [heq]
+    simp only [Set.setOf_and, Set.setOf_forall]
+    refine (isClosed_iInter fun x => isClosed_iInter fun y =>
+      isClosed_eq (continuous_apply (x + y))
+        ((continuous_apply x).add (continuous_apply y))).inter ?_
+    refine (isClosed_iInter fun r => isClosed_iInter fun x =>
+      isClosed_eq (continuous_apply (r • x)) ((continuous_apply x).const_smul r)).inter ?_
+    exact isClosed_iInter fun x => isClosed_iInter fun _ =>
+      (isClosed_le continuous_const (continuous_apply x)).inter
+        (isClosed_le (continuous_apply x) continuous_const)
+  have hd : ∀ x : V, ∃ a ∈ C, ∃ b ∈ C, a - b = x := by
+    have hrep : (C : ConvexCone ℝ V).IsReproducing :=
+      ConvexCone.IsReproducing.of_span_eq_top hgen
+    intro x
+    have hx : x ∈ (C : Set V) - (C : Set V) := by rw [hrep]; trivial
+    exact Set.mem_sub.mp hx
+  choose a ha b hb hab using hd
+  let B : Set (V → ℝ) := Set.pi Set.univ (fun x => Set.Icc (-u (b x)) (u (a x)))
+  have hB : IsCompact B := isCompact_univ_pi fun _ => isCompact_Icc
+  have hsub : E ⊆ B := by
+    rintro _ ⟨f, hf, rfl⟩ x _
+    have heq : f x = f (a x) - f (b x) := by rw [← hab x, map_sub]
+    have hfa := hf (a x) (ha x)
+    have hfb := hf (b x) (hb x)
+    change -u (b x) ≤ f x ∧ f x ≤ u (a x)
+    rw [heq]
+    constructor <;> linarith
+  have hE : IsCompact E := hB.of_isClosed_subset hclosed hsub
+  refine ⟨hE, ?_⟩
+  intro p hp
+  have hconf : coeFn '' {f | O f ∧ f p = 1} = E ∩ {g : V → ℝ | g p = 1} := by
+    ext g
+    constructor
+    · rintro ⟨f, ⟨hf, hfp⟩, rfl⟩
+      exact ⟨⟨f, hf, rfl⟩, hfp⟩
+    · rintro ⟨⟨f, hf, rfl⟩, hfp⟩
+      exact ⟨f, ⟨hf, hfp⟩, rfl⟩
+  have hcompact : IsCompact (coeFn '' {f | O f ∧ f p = 1}) := by
+    rw [hconf]
+    exact hE.inter_right (isClosed_eq (continuous_apply p) continuous_const)
+  have hne : (coeFn '' {f | O f ∧ f p = 1}).Nonempty :=
+    ⟨coeFn u, u, ⟨huO, hp⟩, rfl⟩
+  refine ⟨hcompact, hne, ?_⟩
+  intro x
+  obtain ⟨g, ⟨f, ⟨hf, hfp⟩, rfl⟩, hmin⟩ :=
+    hcompact.exists_isMinOn hne (continuous_apply x).continuousOn
+  have hleast (j : V →ₗ[ℝ] ℝ) (hj : O j) (hjp : j p = 1) : f x ≤ j x :=
+    hmin ⟨j, ⟨hj, hjp⟩, rfl⟩
+  let R : Set ℝ := {r | ∃ j, O j ∧ j p = 1 ∧ j x = r}
+  have hfR : f x ∈ R := ⟨f, hf, hfp, rfl⟩
+  have hlower : ∀ r ∈ R, f x ≤ r := by
+    rintro r ⟨j, hj, hjp, rfl⟩
+    exact hleast j hj hjp
+  have hinf : f x = sInf R := le_antisymm
+    (le_csInf ⟨f x, hfR⟩ hlower) (csInf_le ⟨f x, hlower⟩ hfR)
+  refine ⟨f, hf, hfp, hleast, hinf, ?_⟩
+  intro hx
+  constructor
+  · intro hz
+    exact ⟨f, hf, hfp, hz⟩
+  · rintro ⟨j, hj, hjp, hjx⟩
+    exact le_antisymm (hjx ▸ hleast j hj hjp) (hf x hx).1
 
 private theorem matrix_eq_one_of_card_one (A : Matrix ι ι 𝕜)
     (hcard : Fintype.card ι = 1) (htrace : A.trace = 1) : A = 1 := by
@@ -945,7 +1049,7 @@ theorem exists_original_unit_normalization
             (∀ p x,
               d '' {f | O f ∧ f p = 1 ∧ ∀ g, O g → g p = 1 → f x ≤ g x} =
               {g | N g ∧ g (e p) = 1 ∧ ∀ j, N j → j (e p) = 1 → g (e x) ≤ j (e x)}) ∧
-            NativeGeometry C u Ψ h := by
+            NativeGeometry C u Ψ h ∧ OriginalEffectGeometry C u := by
   classical
   dsimp only
   obtain ⟨hn, U, σ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
@@ -1207,7 +1311,7 @@ theorem exists_original_unit_normalization
         change 0 ≤ d f (e v) ∧ d f (e v) ≤ RCLike.re (Ψ v).trace at hp
         simpa only [hd, hreal] using hp
     refine ⟨e, (fun _ => rfl), hbase, ?_, hconvex, hface, hminimal,
-      hproper, ?_, ?_, ?_, ?_⟩
+      hproper, ?_, ?_, ?_, ?_, ?_⟩
     · rw [image_extremePoints, hbase]
     · intro p
       ext g
@@ -1244,5 +1348,7 @@ theorem exists_original_unit_normalization
 
     · letI : Nonempty (Fin (Module.finrank 𝕜 (commonSupport C ρ))) := ⟨⟨0, hn⟩⟩
       exact native_geometry C u Ψ hΨ hΨHerm hΨtrace hΨC h hroot
+
+    · exact original_effect_geometry C hgen u hu
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport
