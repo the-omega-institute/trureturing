@@ -199,7 +199,7 @@ def supportEffect {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
   ((Classical.choose (hH p)) p)⁻¹ • Classical.choose (hH p)
 
 omit [FiniteDimensional ℝ V] in
-private theorem pair_extreme (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
+theorem pair_extreme (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
     IsExtreme ℝ (base C u) (pairBase C u p q) := by
   refine ⟨fun _ hx => hx.1, ?_⟩
   intro x hx y hy z hz hseg

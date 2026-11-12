@@ -4,19 +4,7 @@
 
 The top distinct-index fifth moment alone does not imply fifth-moment transfer.
 
-**Definition 1.1 (Finite algebraic moment data).**
-
-Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.FifthData`
-
-*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.FifthData` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A datum consists of a finite decidable index type, a commutative real algebra, a real linear functional, an indexed algebra family, and four real parameters a,b,H,L. Both underlying types are in universe zero; positivity is a hypothesis of the implication below.
-
-**Definition 1.2 (The proposed fifth-moment implication).**
+**Definition 1.1 (The proposed fifth-moment implication).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.claim`
 
@@ -28,7 +16,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderT
 
 For every fixed real C at least one and every sequence of finite algebraic moment data, assume ell(1)=1, ell(y times y) is nonnegative for every algebra element y, ell(Y_d)=0, Y_d squared equals a times Y_d plus b times one, one at most L at most H, absolute values of a and b at most C L, and index cardinality at most C H. At each order r from two through four, every real coefficient family bounded in absolute value by one has distinct-index moment at most C times sqrt(H L) to the r in absolute value. Every bounded coefficient family of order five has distinct-index moment zero. The asserted implication says that L/H tending to zero forces the full fifth moment with all coefficients one, divided by sqrt(H L) to the fifth, to tend to zero.
 
-**Theorem 1.3 (Refutation by a positive probability model).**
+**Theorem 1.2 (Refutation by a positive probability model).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.result`
 
@@ -50,7 +38,6 @@ The biased-cube mixture construction is shared with the sixth-order refutation. 
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.FifthData`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.claim`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.result`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture](BiasedCubeMixture.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/MixtureMomentLemmas](MixtureMomentLemmas.md)

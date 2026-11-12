@@ -101,32 +101,54 @@ theorem fixed_eq_mass_smul (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
   simpa only [hcMass] using hc.symm
 
 
-variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+/-
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The Tau Ceti contributors
 
-private theorem continuous_multilinear
-    (F : MultilinearMap ℝ (fun _ : ι => A) ℝ) : Continuous F := by
+Source: https://github.com/TauCetiProject/TauCeti/blob/66f3330c1cbabafd0f5b3ea4a646c43e23105ee2/TauCeti/Topology/Algebra/Module/FiniteDimension.lean
+Original declaration: MultilinearMap.continuous_of_finiteDimensional.
+Full license: docs/reports/licenses/TauCeti-LICENSE.txt.
+The declaration has private visibility in this owning namespace; its complete
+statement and proof are preserved. Attribution and pin correspondence:
+docs/reports/licenses/multilinear-continuity-third-party.md.
+Retire this transplant when this repository's own lake-manifest.json mathlib rev
+supplies an equivalent declaration, replacing both uses by direct application.
+-/
+section MultilinearContinuity
+
+variable {𝕜 ι : Type*} {M : ι → Type*} {N : Type*} [NontriviallyNormedField 𝕜] [CompleteSpace 𝕜]
+  [Finite ι] [∀ i, AddCommGroup (M i)] [∀ i, Module 𝕜 (M i)] [∀ i, TopologicalSpace (M i)]
+  [∀ i, IsTopologicalAddGroup (M i)] [∀ i, ContinuousSMul 𝕜 (M i)] [∀ i, T2Space (M i)]
+  [∀ i, FiniteDimensional 𝕜 (M i)] [AddCommMonoid N] [Module 𝕜 N] [TopologicalSpace N]
+  [ContinuousAdd N] [ContinuousSMul 𝕜 N]
+
+/-- A multilinear map on finitely many finite-dimensional Hausdorff topological vector spaces
+over a complete nontrivially normed field is continuous when its codomain is an additive
+commutative monoid with continuous addition and scalar multiplication. No bound is required. -/
+private theorem continuous_of_finiteDimensional (f : MultilinearMap 𝕜 M N) : Continuous f := by
   classical
-  let b := Module.finBasis ℝ A
-  have hexp (a : ι → A) : F a =
-      ∑ v : ι → Fin (Module.finrank ℝ A),
-        (∏ i, b.repr (a i) (v i)) * F (fun i => b (v i)) := by
-    calc
-      F a = F (fun i => ∑ j, b.repr (a i) j • b j) := by
-        congr 1
-        funext i
-        exact (b.sum_repr (a i)).symm
-      _ = _ := by rw [F.map_sum]; simp only [F.map_smul_univ, smul_eq_mul]
-  have hcoord (i : ι) (j : Fin (Module.finrank ℝ A)) :
-      Continuous (fun a : ι → A => b.repr (a i) j) :=
-    (b.coord j).continuous_of_finiteDimensional.comp (continuous_apply i)
-  have hcont : Continuous (fun a : ι → A =>
-      ∑ v : ι → Fin (Module.finrank ℝ A),
-        (∏ i, b.repr (a i) (v i)) * F (fun i => b (v i))) := by
-    apply continuous_finsetSum
-    intro v _
-    apply Continuous.mul _ continuous_const
-    exact continuous_finsetProd _ (fun i _ => hcoord i (v i))
-  exact hcont.congr (fun a => (hexp a).symm)
+  cases nonempty_fintype ι
+  set b : ∀ i, Module.Basis (Fin (Module.finrank 𝕜 (M i))) 𝕜 (M i) :=
+    fun i ↦ Module.finBasis 𝕜 (M i) with hb
+  have key : ⇑f = fun m : ∀ i, M i ↦ ∑ r : ∀ i, Fin (Module.finrank 𝕜 (M i)),
+      (∏ i, (b i).repr (m i) (r i)) • f fun i ↦ b i (r i) := by
+    funext m
+    have hm : f m = f fun i ↦ ∑ j, (b i).repr (m i) j • b i j := by
+      congr 1 with i
+      exact ((b i).sum_repr (m i)).symm
+    rw [hm, f.map_sum]
+    exact Finset.sum_congr rfl fun r _ ↦ f.map_smul_univ _ _
+  rw [key]
+  refine continuous_finsetSum _ fun r _ ↦ Continuous.smul ?_ continuous_const
+  refine continuous_finsetProd _ fun i _ ↦ ?_
+  exact (((b i).coord (r i)).continuous_of_finiteDimensional.comp
+    (continuous_apply i)).congr fun m ↦ Module.Basis.coord_apply _ _ _
+
+
+end MultilinearContinuity
+
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 private theorem weighted_max_eq (alpha : ι → ℝ) (hpos : ∀ i, 0 < alpha i)
     (hsum : ∑ i, alpha i = 1) (v : ι → ℝ) (M : ℝ)
@@ -238,7 +260,7 @@ private theorem constant_on_normalized_cube (Phi : A →ₗ[ℝ] A) (u : Module.
   let cube := Set.pi Set.univ (fun _ : ι => K)
   have hc : IsCompact cube := isCompact_univ_pi (fun _ => hK)
   have hn : cube.Nonempty := ⟨fun _ => sigma, fun _ _ => hsigma⟩
-  obtain ⟨b, hb, hmax⟩ := hc.exists_isMaxOn hn (continuous_multilinear F).continuousOn
+  obtain ⟨b, hb, hmax⟩ := hc.exists_isMaxOn hn (continuous_of_finiteDimensional F).continuousOn
   have hm := maximum_at_fixed_tuple Phi u hmass hdual hK hconv hinv hnorm hsigma hfixed
     alpha hpos hsum F harmonic hb hmax
   have hneg : ∀ a ∈ cube,
@@ -246,7 +268,7 @@ private theorem constant_on_normalized_cube (Phi : A →ₗ[ℝ] A) (u : Module.
     intro a ha
     simpa only [MultilinearMap.neg_apply, mul_neg, Finset.sum_neg_distrib] using
       congrArg Neg.neg (harmonic a ha)
-  obtain ⟨c, hc', hmin⟩ := hc.exists_isMaxOn hn (continuous_multilinear F).neg.continuousOn
+  obtain ⟨c, hc', hmin⟩ := hc.exists_isMaxOn hn (continuous_of_finiteDimensional F).neg.continuousOn
   have hnmin := maximum_at_fixed_tuple Phi u hmass hdual hK hconv hinv hnorm hsigma hfixed
     alpha hpos hsum (-F) hneg hc' hmin
   intro a ha
