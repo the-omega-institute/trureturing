@@ -14,12 +14,11 @@ internal sealed class CyclicMonitoredContractionDocument : IScribeDocumentDefini
             DeclarationHandle.Create("D5/S3/QuantumChannels/ProjectionDiagnostics/CyclicMonitoredContraction.cyclic_future_kernel_eq_bot"),
             H("The actual cyclic restriction has zero future kernel"),
             StatementSource.FromAuthor(Disp(Seq(
-                F.Id("C"), Eq, F.Id("span"), Grp(F.Id("U"), Caret, F.Id("n"), F.Id("v")),
-                Comma, Quad,
-                F.Id("K"), Eq, F.Id("intersection"), Underscore, F.Id("n"),
-                F.Id("ker"), Grp(Seq(F.Id("B"), Underscore, F.Id("C")),
-                    Seq(F.Id("T"), Underscore, F.Id("C")), Caret, F.Id("n")),
-                Eq, Grp(D(0))))),
+                Forall, Sp, F.Id("x"), Sp, InMacro, Sp, F.Id("C"), Comma, Sp,
+                Open, Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")),
+                Comma, Sp, F.Id("B"), Underscore, F.Id("C"), Sp,
+                F.Id("T"), Underscore, F.Id("C"), Caret, F.Id("n"), Sp,
+                F.Id("x"), Eq, D(0), Close, Implies, Sp, F.Id("x"), Eq, D(0)))),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
                 "For every finite dimensional complex Hilbert space, every unitary U, and every "

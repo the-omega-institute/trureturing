@@ -16,9 +16,9 @@ internal sealed class CyclicMonitoredPowerBoundDocument : IScribeDocumentDefinit
             StatementSource.FromAuthor(Disp(Seq(
                 Exists, Sp, F.Id("N"), Ge, D(1), Comma, Quad,
                 Exists, Sp, F.Id("q"), Comma, Sp,
-                D(0), Le, F.Id("q"), Lt, D(1), Comma, Quad,
-                F.Id("norm"), Grp(Seq(F.Id("T"), Underscore, F.Id("C")),
-                    Caret, F.Id("N")), Le, F.Id("q")))),
+                D(0), Le, Sp, F.Id("q"), Lt, D(1), Comma, Quad, Sp,
+                new Formula.Norm(Seq(F.Id("T"), Underscore, F.Id("C"),
+                    Caret, F.Id("N"))), Le, Sp, F.Id("q")))),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
                 "For every finite dimensional complex Hilbert space, every unitary U and every "
