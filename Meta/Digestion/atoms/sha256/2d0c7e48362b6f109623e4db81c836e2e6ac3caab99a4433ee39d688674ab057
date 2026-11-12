@@ -1,0 +1,58 @@
+**定理 101.5（$\mathrm B$ 下少一个纯目标）。** 在定义101.1、$\mathrm B$ 及 $m\ge2$ 下，每个最小不相容纯目标组的元数至多 $m-1$，并且
+
+$$
+\boxed{\mathrm G_{m-1}\quad\Longleftrightarrow\quad\mathrm{Z0}.}
+\tag{VII101.10}
+$$
+
+证明。任意有限最小不相容组都适用101.3证明中从(VII101.8)开始的论证，故只需排除 $k=m$。设有这样的组，沿用其原 $p,q_i,f_i,a_i$。此时 $p,q_1,\ldots,q_m$ 是原 $\operatorname{aff}K$ 的仿射基。定义
+
+$$
+\begin{gathered}
+F=(f_1,\ldots,f_m),\qquad
+F(p)=\boldsymbol 1,\qquad F(q_i)=a_i e_i,\\
+S_0=\sum_{i=1}^{m}\frac1{a_i}>1,\qquad
+L(y)=\sum_{i=1}^{m}\frac{y_i}{a_i},\qquad
+h=\frac{L\circ F-1}{S_0-1}.
+\end{gathered}
+\tag{VII101.11}
+$$
+
+这里 $S_0$ 只是正数，区别于完整最小确认条件 $S$。像点 $a_i e_i$ 仿射独立并张成超平面 $L=1$，而 $L(\boldsymbol1)=S_0\ne1$，所以这些像点连同 $\boldsymbol1$ 也是仿射基。因此 $F:\operatorname{aff}K\to\mathbb R^m$ 是仿射同构，不是丢失信息的投影。每个 $f_i$ 在整个原 $K$ 上属于 $[0,1]$，故
+
+$$
+F(K)\subseteq[0,1]^m,\qquad
+h(p)=1,\qquad h(q_i)=0,\qquad h\le1\text{ 于整个 }K.
+\tag{VII101.12}
+$$
+
+最后一项来自 $L(F(x))\le S_0$。若再有 $h\ge0$ 于整个 $K$，它就是一张原proper确认效应并共同排除所有 $q_i$，违反不相容性。因此失败只能发生在下界：$\min_Kh<0$。这个仿射最小值的紧暴露面有一个极点，它也是原 $K$ 的极点，故可取原纯 $r$ 满足 $h(r)<0$。特别是 $r\ne p$。
+
+置 $v=F(r)$、$t=L(v)<1$。由(VII101.12)，$v_i\ge0$。在同一条原线段上取
+
+$$
+\theta=\frac{S_0-1}{S_0-t}\in(0,1),\qquad
+z=(1-\theta)p+\theta r.
+\tag{VII101.13}
+$$
+
+于是 $L(F(z))=1$，且每个坐标 $F(z)_i=(1-\theta)+\theta v_i>0$。令 $\gamma_i=F(z)_i/a_i$，便有 $\gamma_i>0$、$\sum_i\gamma_i=1$，以及
+
+$$
+F(z)=\sum_i\gamma_iF(q_i).
+$$
+
+现在才用 $F$ 的可逆性，得到原空间中的真实等式
+
+$$
+z=\sum_i\gamma_iq_i
+\in (p,r)\cap\operatorname{ri}\operatorname{conv}\{q_1,\ldots,q_m\}.
+\tag{VII101.14}
+$$
+
+这不是把两个商像相等当成两个原点相等。原最小面 $H(p,r)$ 含 $z$，面的性质及全部 $\gamma_i>0$ 使它含每个 $q_i$。它又含 $p$，而这些点张成 $\operatorname{aff}K$，故该面含有 $K$ 的相对内点，只能等于 $K$。$p,r$ 是不同原纯点，所以 $\mathrm B$ 使整个原 $K$ 为一个仿射欧氏球。
+
+在这个整球中，固定 $p$ 的对径唯一。任意原proper效应若在 $p$ 取一、在另一纯点取零，该纯点必为此对径：在单位球坐标写成 $a+b\cdot x$，proper界给 $\|b\|\le a\le1-\|b\|$，同时取一和零迫使 $a=\|b\|=1/2$，两个取等方向相反。对每个 $q_j$，因为 $m\ge2$，可选 $i\ne j$，由 $f_i(p)=1$、$f_i(q_j)=0$ 得 $q_j$ 是同一个 $p$ 的唯一对径。于是至少两个不同的 $q_j$ 被迫相等，矛盾。这覆盖 $m=2$，没有遗漏同点或退化球分支。
+
+故 $k=m$ 不可能。若 $\mathrm G_{m-1}$ 成立而 $\mathrm{Z0}$ 失败，101.3的实际不相容组就给矛盾；反向由101.2。定理只给通用充分元数上界，未声称它在所有较高维数都最优。证毕。
+
