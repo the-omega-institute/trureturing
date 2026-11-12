@@ -158,7 +158,7 @@ def waitLaw (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (i : Bool) : PMF ℕ :=
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalRenewalLaws
 
-namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalJointRealization
+namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalRenewalLaws
 open Classical ProbabilityTheory Function OriginalObserverNormalization ActualRenewalPrefixLaw
 
 variable {C : Type*}
@@ -318,4 +318,4 @@ theorem finite_execution_law (source : ℕ → Bool) (n : ℕ) :
 
 end Stochastic
 
-end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalJointRealization
+end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalRenewalLaws

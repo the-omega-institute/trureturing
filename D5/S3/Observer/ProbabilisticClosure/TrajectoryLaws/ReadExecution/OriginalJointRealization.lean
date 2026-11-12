@@ -18,7 +18,7 @@ open Classical MeasureTheory ProbabilityTheory Function
 open scoped ENNReal BigOperators
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalJointRealization
-open OriginalObserverNormalization ActualRenewalPrefixLaw
+open OriginalObserverNormalization ActualRenewalPrefixLaw OriginalRenewalLaws
 
 variable {C : Type*}
 
@@ -114,6 +114,7 @@ private theorem product_primitive (initial : I → S) (h : Measurable initial)
 end Product
 
 namespace Stochastic
+open OriginalRenewalLaws.Stochastic
 variable (O : Stochastic C)
     [Fintype C] [MeasurableSpace C] [MeasurableSingletonClass C]
 
