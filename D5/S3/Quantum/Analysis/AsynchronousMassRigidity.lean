@@ -6,7 +6,10 @@
    utility: none
    digest: Strictly positive asynchronous invariance forces multilinear mass factorization. -/
 
-/- proof_shape: exists_fixed_mem: bind-only; consumers: maximum_at_fixed_tuple,
+/- proof_shape: entire_base_geometry: bind-only; consumers: AsynchronousTensorMass.fixed_tensor_dual,
+   OriginalMassCalibration.OriginalData.original_mass_factorization, original_mass_calibration.
+   Geometry directly reuses CircuitBalancedConfirmation; not an escape witness.
+   proof_shape: exists_fixed_mem: bind-only; consumers: maximum_at_fixed_tuple,
    multilinear_mass_factorization.
    proof_shape: fixed_eq_mass_smul: bind-only; consumer: maximum_at_fixed_tuple.
    proof_shape: eq_zero_of_spanning_cube: bind-only; consumer: multilinear_mass_factorization;
@@ -18,6 +21,7 @@
 
 import Mathlib
 import D5.S3.Geometry.FixedPoint.MarkovKakutani
+import D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 
 /-! # Asynchronous maximum principle for multilinear masses -/
 
@@ -28,6 +32,29 @@ open scoped BigOperators
 
 variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
   [FiniteDimensional ℝ A]
+/-- The original normalized base geometry, assembled from the frozen circuit owner.
+This consumed combination supplies no new geometric content. -/
+theorem entire_base_geometry [Nontrivial A] (C : ProperCone ℝ A) (u : Module.Dual ℝ A)
+    (hgen : Submodule.span ℝ (C : Set A) = ⊤)
+    (hpos : ∀ x ∈ C, x ≠ 0 → 0 < u x) :
+    (Foundation.CircuitBalancedConfirmation.base C.toPointedCone u).Nonempty ∧
+      IsCompact (Foundation.CircuitBalancedConfirmation.base C.toPointedCone u) ∧
+      Convex ℝ (Foundation.CircuitBalancedConfirmation.base C.toPointedCone u) ∧
+      Submodule.span ℝ (Foundation.CircuitBalancedConfirmation.base C.toPointedCone u) = ⊤ := by
+  have hcompact := Foundation.CircuitBalancedConfirmation.base_compact C.isClosed hpos
+  have hpure := Foundation.CircuitBalancedConfirmation.pure_span hcompact hpos hgen
+  have hspan : Submodule.span ℝ
+      (Foundation.CircuitBalancedConfirmation.base C.toPointedCone u) = ⊤ := by
+    apply top_unique
+    rw [← hpure]
+    exact Submodule.span_mono (fun _ hx => hx.1)
+  have hne : (Foundation.CircuitBalancedConfirmation.base C.toPointedCone u).Nonempty := by
+    by_contra hempty
+    rw [Set.not_nonempty_iff_eq_empty.mp hempty, Submodule.span_empty] at hspan
+    exact bot_ne_top hspan
+  exact ⟨hne, hcompact,
+    Foundation.CircuitBalancedConfirmation.base_convex C.toPointedCone u, hspan⟩
+
 /-- The frozen Markov–Kakutani theorem, applied to a singleton family, supplies a fixed
 point in each nonempty compact convex invariant set. This consumed adapter is bind-only. -/
 theorem exists_fixed_mem (Phi : A →ₗ[ℝ] A) {B : Set A}

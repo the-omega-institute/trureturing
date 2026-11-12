@@ -7,7 +7,6 @@
    digest: Entire fixed dual of an asynchronous algebraic tensor sum on proper-cone data. -/
 
 import D5.S3.Quantum.Analysis.AsynchronousMassRigidity
-import D5.S3.Quantum.Analysis.ProperConeMassBase
 
 /-! # Fixed mass functionals on the purely algebraic tensor carrier -/
 
@@ -61,8 +60,8 @@ theorem fixed_tensor_dual (C : ProperCone ℝ A) (u : Module.Dual ℝ A)
     g.comp (asynchronous Phi alpha) = g ↔ ∃ c : ℝ, g = c • tensorMass (ι := ι) u := by
   classical
   obtain ⟨hne, hcompact, hconv, hspan⟩ :=
-    ProperConeMassBase.entire_base_geometry C u hgen hpos
-  let K := ProperConeMassBase.base C u
+    AsynchronousMassRigidity.entire_base_geometry C u hgen hpos
+  let K := Foundation.CircuitBalancedConfirmation.base C.toPointedCone u
   have huPhi (x : A) : u (Phi x) = u x := congrArg (fun f : Module.Dual ℝ A => f x) hmass
   have hinv : MapsTo Phi K K := by
     intro x hx

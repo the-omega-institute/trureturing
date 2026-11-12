@@ -7,7 +7,6 @@
    digest: Original readout used twice fixes the first mass scale and the remaining calibration. -/
 
 import D5.S3.Quantum.Analysis.AsynchronousMassRigidity
-import D5.S3.Quantum.Analysis.ProperConeMassBase
 import D5.S3.Quantum.Dynamics.BaseNormContraction
 
 /-! # The same original readout and the two actual mass tensors -/
@@ -103,8 +102,8 @@ theorem original_mass_factorization [Nontrivial A] [Nontrivial D] [Nontrivial E]
       (∀ a b c, uE (data.Q a b c) = kappa * uA a * uA b * uA c) := by
   classical
   obtain ⟨hne, hcompact, hconv, hspan⟩ :=
-    ProperConeMassBase.entire_base_geometry CA uA hgenA hposA
-  let K := ProperConeMassBase.base CA uA
+    AsynchronousMassRigidity.entire_base_geometry CA uA hgenA hposA
+  let K := Foundation.CircuitBalancedConfirmation.base CA.toPointedCone uA
   have hinv : MapsTo Phi K K := by
     intro a ha
     exact ⟨hPhiPos a ha.1, (congrArg (fun f : Module.Dual ℝ A => f a) hPhiMass).trans ha.2⟩
@@ -154,11 +153,11 @@ theorem original_mass_factorization [Nontrivial A] [Nontrivial D] [Nontrivial E]
       Dynamics.BaseNormContraction.functional_nonneg_on_cone (CE : ConvexCone ℝ E) uE hposE hQpos
     simpa [hmThree, hsigmaMass] using heNonneg
   have huDne : uD ≠ 0 := by
-    obtain ⟨⟨d, hd⟩, _⟩ := ProperConeMassBase.entire_base_geometry CD uD hgenD hposD
+    obtain ⟨⟨d, hd⟩, _⟩ := AsynchronousMassRigidity.entire_base_geometry CD uD hgenD hposD
     intro hz
     simpa [hz] using hd.2
   have huEne : uE ≠ 0 := by
-    obtain ⟨⟨z, hz⟩, _⟩ := ProperConeMassBase.entire_base_geometry CE uE hgenE hposE
+    obtain ⟨⟨z, hz⟩, _⟩ := AsynchronousMassRigidity.entire_base_geometry CE uE hgenE hposE
     intro hzero
     simpa [hzero] using hz.2
   have hlNe : lambda ≠ 0 := by
@@ -274,7 +273,7 @@ theorem original_mass_calibration [Nontrivial A] [Nontrivial D] [Nontrivial E]
     CA CD CE uA uD uE hgenA hgenD hgenE hposA hposD hposE hLpos hppos homega
     hspanM hspanL Phi hPhiPos hPhiMass hdual t s ht ht1 hs hs1 hTwo hThree
   obtain ⟨⟨sigma, hsigma⟩, _⟩ :=
-    ProperConeMassBase.entire_base_geometry CA uA hgenA hposA
+    AsynchronousMassRigidity.entire_base_geometry CA uA hgenA hposA
   obtain ⟨hscale, hp, hL, hpl⟩ := data.original_scale_rigidity uA uD uE
     homegaMass sigma hsigma.2 lambda kappa hl hk hmTwo hmThree hspanM
     (data.original_Q_spans hspanM hspanL) hrecover
