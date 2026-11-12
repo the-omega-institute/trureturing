@@ -54,14 +54,18 @@ internal sealed class A289923LeftLimitNonnegativeDocument : IScribeDocumentDefin
             Node("result", "The complete left-limit theorem", ResultFormula(),
                 "There is a limit sequence, every other sequence satisfying the same "
                 + "left-limit property equals it, and every one of its terms is nonnegative.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a289923-left-limit-nonnegativity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance? provenance = null) =>
+        string prose, DescribeRole role, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a289923-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance ?? AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Int() => Seq(Mathbb, Grp(F.Id("Z")));
