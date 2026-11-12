@@ -301,7 +301,12 @@ theorem closing_request_source_target {m : ℕ} {w : Word m} {d : Fin m → ℤ}
       ((m : ℤ) + (PaddedCompletion.closingRequest d hw.bounded i).val)
     have he : (m : ℤ) + (PaddedCompletion.closingRequest d hw.bounded i).val =
         i.val.val + d i.val + ((m : ℤ) + 1 + 5) := by omega
-    rw [he, Int.add_emod, Int.emod_self, add_zero, Int.emod_emod] at hr
+    have hmod : ((m : ℤ) + (PaddedCompletion.closingRequest d hw.bounded i).val) %
+        ((m : ℤ) + 1 + 5) = (i.val.val + d i.val) % ((m : ℤ) + 1 + 5) := by
+      rw [he]
+      simp only [Int.add_emod, Int.emod_self, add_zero, Int.emod_emod]
+    simp only [Nat.cast_add, Nat.cast_one] at hl hr
+    rw [hmod] at hr
     omega
   · simp only [hn, ite_false] at hc
     congr 1
@@ -316,11 +321,12 @@ theorem closing_old_edge_local {m : ℕ} (i j : Fin m)
   have he : wrap (m + 1) (i.val + signed s) = (⟨j.val, by omega⟩ : Fin (m + 1 + 5)) := by
     rw [wrap_add, wrap_signed]
     have hi : wrap (m + 1) i.val = (⟨i.val, by omega⟩ : Fin (m + 1 + 5)) :=
-      wrap_index _
+      wrap_index (⟨i.val, by omega⟩ : Fin (m + 1 + 5))
     rw [hi]
     exact hs.symm
   have heval := congrArg (fun x : Fin (m + 1 + 5) => (x.val : ℤ)) he
   rw [wrap_val] at heval
+  simp only [Nat.cast_add, Nat.cast_one] at heval
   have hmod : Int.ModEq (m + 1 + 5 : ℤ) (i.val + signed s) (j.val : ℤ) := by
     simpa only [Int.ModEq, Int.emod_eq_of_lt (by omega : (0 : ℤ) ≤ j.val)
       (by omega : (j.val : ℤ) < m + 1 + 5)] using heval
@@ -360,7 +366,7 @@ theorem closing_old_nonblocking {m : ℕ} {w : Word m} {d : Fin m → ℤ}
   have hdist := closing_old_edge_local i j hadj
   have hh := hw.nonblocking i j hij (by omega)
   have hr := local_rank p (⟨i.val, by omega⟩ : Fin (m + 1 + 5)) ⟨j.val, by omega⟩
-    hij (by omega)
+    hij (by change j.val ≤ i.val + 2; omega)
   have hri := rank_wrap p (⟨i.val, by omega⟩ : Fin (m + 1 + 5)) (d i) (hw.bounded i)
   have hrj := rank_wrap p (⟨j.val, by omega⟩ : Fin (m + 1 + 5)) (d j) (hw.bounded j)
   simpa only [hri, hrj, hr.1, hr.2.1, hp] using hh

@@ -8,6 +8,14 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial components of the Mertens range-two proof; the full theorem remains open.",
         H("PaddedCompletion"), Blocks(
+            Describe.Lean(DescribeId.Create("bufferoffset"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.bufferOffset"),
+                H("bufferOffset"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("At an occupied site reverse the actual old request. At every unoccupied site use the existing six-site mate, with displacement zero only for a single."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("buffer-offset-completion"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.buffer_offset_completion"),
+                H("buffer_offset_completion"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual signed buffer offsets simultaneously fulfill every incoming request, stay between -2 and 2, and allow only central singles. Every distinct buffer neighbor at distance at most two from a single has nonzero displacement. A full joined certificate, its ranking word and the complete cyclic matching are still required."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("closing-coordinate"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_coordinate"),
                 H("closing_coordinate"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),

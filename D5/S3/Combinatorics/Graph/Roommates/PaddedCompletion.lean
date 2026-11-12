@@ -209,8 +209,68 @@ theorem closing_request_completion {m : ℕ} {w : Word m} {d : Fin m → ℤ}
   exact ⟨closing_injective hw,
     BufferLayout.complete_requests _ (closing_injective hw) (closing_boundary hw)⟩
 
+/-- Signed buffer assignments reverse actual old requests; free sites use the layout. -/
+def bufferOffset {α : Type} (r : α → Fin 6) (d : α → ℤ) (i : Fin 6) : ℤ :=
+  if h : ∃ a, r a = i then -d (Classical.choose h)
+  else (BufferLayout.mate (BufferLayout.flags r) i).val - (i.val : ℤ)
+
+/-- This assignment simultaneously fulfills all incoming requests, stays in range,
+and isolates every buffer single from any other buffer single. -/
+theorem buffer_offset_completion {α : Type} (r : α → Fin 6) (d : α → ℤ)
+    (hr : Function.Injective r) (hc : ∀ a, r a ≠ 2 ∧ r a ≠ 3)
+    (hd : ∀ a, -2 ≤ d a ∧ d a ≤ 2 ∧ d a ≠ 0) :
+    (∀ a, bufferOffset r d (r a) = -d a) ∧
+    (∀ i, -2 ≤ bufferOffset r d i ∧ bufferOffset r d i ≤ 2) ∧
+    (∀ i, bufferOffset r d i = 0 → i = 2 ∨ i = 3) ∧
+    (∀ i j, bufferOffset r d i = 0 → i ≠ j →
+      i.val ≤ j.val + 2 → j.val ≤ i.val + 2 → bufferOffset r d j ≠ 0) := by
+  have hl := BufferLayout.buffer_completion (BufferLayout.flags r)
+  have ho := BufferLayout.occupied_iff r hc
+  have hreq (i : Fin 6) (h : ∃ a, r a = i) :
+      bufferOffset r d i = -d (Classical.choose h) := by
+    simp only [bufferOffset, dif_pos h]
+  have hfree (i : Fin 6) (h : ¬∃ a, r a = i) :
+      bufferOffset r d i = (BufferLayout.mate (BufferLayout.flags r) i).val - (i.val : ℤ) := by
+    simp only [bufferOffset, dif_neg h]
+  have hzero (i : Fin 6) (hi : bufferOffset r d i = 0) :
+      BufferLayout.occupied (BufferLayout.flags r) i = false ∧
+        BufferLayout.mate (BufferLayout.flags r) i = i := by
+    by_cases he : ∃ a, r a = i
+    · rw [hreq i he] at hi
+      have hb := hd (Classical.choose he)
+      omega
+    · constructor
+      · cases hh : BufferLayout.occupied (BufferLayout.flags r) i
+        · rfl
+        · exact (he ((ho i).mp hh)).elim
+      · apply Fin.ext
+        rw [hfree i he] at hi
+        omega
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro a
+    have he : ∃ b, r b = r a := ⟨a, rfl⟩
+    rw [hreq (r a) he, hr (Classical.choose_spec he)]
+  · intro i
+    by_cases he : ∃ a, r a = i
+    · rw [hreq i he]
+      have hb := hd (Classical.choose he)
+      omega
+    · rw [hfree i he]
+      have hb := hl.2.2.2.1 i
+      omega
+  · intro i hi
+    exact hl.2.2.2.2.1 i (hzero i hi).1 (hzero i hi).2
+  · intro i j hi hij h₁ h₂ hj
+    have hzi := hzero i hi
+    have hzj := hzero j hj
+    rcases hl.2.2.2.2.2 i j hzi.1 hzi.2 hij h₁ h₂ with he | he
+    · rw [hzj.1] at he
+      cases he
+    · exact he hzj.2
+
 #print axioms old_target_injective
 #print axioms padded_request_completion
 #print axioms old_nonblocking
 #print axioms closing_request_completion
+#print axioms buffer_offset_completion
 end D5.S3.Combinatorics.Graph.Roommates.PaddedCompletion
