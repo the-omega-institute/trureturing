@@ -12,6 +12,7 @@ set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 
 noncomputable section
 open scoped BigOperators TensorProduct DirectSum VertexOperator
@@ -115,12 +116,14 @@ private def supportedGradeEquiv (e : ℚ) :
       {a : Label D | degree c a = e}).apply_symm_apply (z c)
   map_add' x y := by
     funext c
-    exact map_add (Finsupp.supportedEquivFinsupp
-      {a : Label D | degree c a = e}) ⟨x.val c, x.property c⟩ ⟨y.val c, y.property c⟩
+    apply Finsupp.ext
+    intro a
+    rfl
   map_smul' s x := by
     funext c
-    exact map_smul (Finsupp.supportedEquivFinsupp
-      {a : Label D | degree c a = e}) s ⟨x.val c, x.property c⟩
+    apply Finsupp.ext
+    intro a
+    rfl
 
 private theorem grade_eq_comap (e : ℚ) :
     grade J hD e = (supportedGrade J e).comap (allCoefficients J hD).toLinearMap := by
@@ -212,15 +215,21 @@ private theorem gradeEquiv_generator (e : ℚ) (c : Discriminant D)
   rw [LinearEquiv.symm_apply_apply]
   by_cases h : c = d
   · subst d
-    simp only [DirectSum.lof_eq_of, DirectSum.of_eq_same, Pi.single_eq_same]
-    change (TensorProduct.equivFinsuppOfBasisLeft (carrierBasis D)
-      (x.val ⊗ₜ[ℂ] w)) a.val =
-      (TensorProduct.equivFinsuppOfBasisLeft (sectorBasis hD c e) (x ⊗ₜ[ℂ] w)) a
-    simp only [TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
-    change carrierCoeffEquiv D x.val a.val • w = sectorCoeffEquiv hD c e x a • w
-    rw [sectorCoeffEquiv_apply]
-  · rw [DirectSum.lof_eq_of, DirectSum.of_eq_of_ne c d _ (Ne.symm h)]
-    simp [Pi.single_eq_of_ne (Ne.symm h)]
+    rw [DirectSum.lof_eq_of ℂ, DirectSum.of_eq_same, Pi.single_eq_same]
+    have hL : tensorCoeff J c (x.val ⊗ₜ[ℂ] w) a.val =
+        carrierCoeffEquiv D x.val a.val • w := by
+      unfold tensorCoeff D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv
+      letI : DecidableEq (Label D) := Classical.decEq _
+      exact TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply (carrierBasis D) x.val w a.val
+    have hR : sectorTensorCoeff J hD c e (x ⊗ₜ[ℂ] w) a =
+        sectorCoeffEquiv hD c e x a • w := by
+      unfold sectorTensorCoeff
+      exact TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply (sectorBasis hD c e) x w a
+    rw [hL, hR, sectorCoeffEquiv_apply]
+  · rw [DirectSum.lof_eq_of ℂ, DirectSum.of_eq_of_ne c d _ (Ne.symm h),
+      Pi.single_eq_of_ne (Ne.symm h), (tensorCoeff J d).map_zero,
+      (sectorTensorCoeff J hD d e).map_zero]
+    rfl
 
 /-- Generator readback of the inverse, preserving the original representative. -/
 theorem gradeEquiv_symm_single_tmul (e : ℚ) (c : Discriminant D)
@@ -338,12 +347,18 @@ private theorem gradeModelMap_trace (f : ModuleHom J J) (e : ℚ) :
       Matrix.blockDiagonal' (fun c => LinearMap.toMatrix (b c) (b c)
         (TensorProduct.map LinearMap.id (restrict f c))) := by
     ext ⟨c, i⟩ ⟨d, j⟩
+    rw [LinearMap.toMatrix_apply']
+    change (Pi.basis b).repr (gradeModelMap J hD f e (B ⟨d,j⟩)) ⟨c,i⟩ = _
+    rw [Pi.basis_repr]
+    change (b c).repr
+      ((TensorProduct.map LinearMap.id (restrict f c)) (B ⟨d,j⟩ c)) i = _
+    rw [show B ⟨d,j⟩ = Pi.single d (b d j) from Pi.basis_apply b ⟨d,j⟩]
     by_cases h : c = d
     · subst d
-      simp [B, LinearMap.toMatrix_apply', Pi.basis_apply, Pi.basis_repr,
-        gradeModelMap, LinearMap.piMap, Matrix.blockDiagonal'_apply_eq]
-    · simp [B, LinearMap.toMatrix_apply', Pi.basis_apply, Pi.basis_repr,
-        gradeModelMap, LinearMap.piMap, Matrix.blockDiagonal'_apply_ne, h, Ne.symm h]
+      rw [Pi.single_eq_same, Matrix.blockDiagonal'_apply_eq, LinearMap.toMatrix_apply']
+    · rw [Pi.single_eq_of_ne h, LinearMap.map_zero, (b c).repr.map_zero, Finsupp.zero_apply,
+        Matrix.blockDiagonal'_apply_ne _ _ _ h]
+
   rw [LinearMap.trace_eq_matrix_trace ℂ B, hm, Matrix.trace_blockDiagonal']
   apply Finset.sum_congr rfl
   intro c hc

@@ -5,6 +5,7 @@ import Mathlib.LinearAlgebra.Coevaluation
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
 
@@ -103,7 +104,9 @@ theorem dualModule_mode (c : Discriminant D) (v : Carrier D)
 /-- The neg_neg transport needed at the (c,-c) cup and (-c,c) cap. -/
 def dualIota (c : Discriminant D) :
     Module.Dual ℂ (Multiplicity A c) →ₗ[ℂ] Multiplicity (dualModule A) (-c) := by
-  simpa only [neg_neg] using iota (DualMultiplicity A) (-c)
+  exact (iota (DualMultiplicity A) (-c)).comp
+    (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d))
+      (neg_neg c).symm).toLinearMap
 
 variable (hD : (gramReal D).PosDef)
 
@@ -115,11 +118,11 @@ private def capBlock (i : Fiber (D := D) 0) :
     calc
       s = -r + (r+s) := by abel
       _ = -r := by rw [hi, add_zero]
-  subst s
   exact unitCharacter D hD r •
     ((LinearMap.toSpanSingleton ℂ (Multiplicity (I D) 0) (eta0 hD)).comp
-      ((TensorProduct.contractLeft ℂ (Multiplicity A (-r))).comp
-        (TensorProduct.map (kappa (DualMultiplicity A) r) LinearMap.id)))
+      ((_root_.contractLeft ℂ (Multiplicity A (-r))).comp
+        (TensorProduct.map (kappa (DualMultiplicity A) r)
+          (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d) hs).toLinearMap)))
 
 def evaluationFamily : Families (targetModule (dualModule A) A) (I D) := fun e => by
   by_cases he : e = 0
@@ -131,20 +134,42 @@ def evaluationFamily : Families (targetModule (dualModule A) A) (I D) := fun e =
 def evaluation : ModuleHom (targetModule (dualModule A) A) (I D) :=
   extend hD (evaluationFamily A hD)
 
+set_option maxHeartbeats 8000000 in
+set_option diagnostics true in
 theorem evaluation_jAt (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity A c))
     (x : Multiplicity A c) :
     restrict (evaluation A hD) 0
       (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
         (dualIota A c φ ⊗ₜ[ℂ] x)) =
       (unitCharacter D hD (-c) * φ x) • eta0 hD := by
-  rw [evaluation, restrict_extend]
-  simp [evaluationFamily, mu_jAt, DirectSum.toModule_lof, capBlock,
-    dualIota, DualMultiplicity, kappa_iota, LinearMap.toSpanSingleton_apply, smul_smul]
+  have hcast (a b : Discriminant D) (h : a = b)
+      (ψ : Module.Dual ℂ (Multiplicity A a)) (y : Multiplicity A a) :
+      (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d)) h ψ)
+        (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d) h y) = ψ y := by
+    subst b
+    rfl
+  let z := jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+    (dualIota A c φ ⊗ₜ[ℂ] x)
+  have hr := LinearMap.congr_fun
+    (congrFun (restrict_extend hD (evaluationFamily A hD)) 0) z
+  refine hr.trans ?_
+  simp only [evaluationFamily, dif_pos rfl, LinearMap.comp_apply]
+  dsimp only [z]
+  rw [mu_jAt, DirectSum.toModule_lof]
+  change unitCharacter D hD (-c) •
+    (((kappa (DualMultiplicity A) (-c)
+      (iota (DualMultiplicity A) (-c)
+        (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d))
+          (neg_neg c).symm φ)))
+        (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d)
+          (neg_neg c).symm x)) • eta0 hD) = _
+  rw [kappa_iota, hcast, smul_smul]
 
 theorem evaluation_wrong (e : Discriminant D) (he : e ≠ 0)
     (z : Multiplicity (targetModule (dualModule A) A) e) :
     restrict (evaluation A hD) e z = 0 := by
-  rw [evaluation, restrict_extend]
+  unfold evaluation
+  erw [restrict_extend hD (evaluationFamily A hD)]
   simp [evaluationFamily, he]
 
 /-- Full raw-pair readback; the transport from beta_-c+beta_c is not suppressed. -/
@@ -156,22 +181,40 @@ theorem evaluation_pair (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity
       (unitCharacter D hD (-c) * φ x) •
         transport D 0 (zeroCarry D hD)
           (transport D (representative D 0) (carry D hD (-c) c) v) := by
-  have hj := classification_j (dualModule A) A hD (-c) c
+  have hread (e : Discriminant D) (i : Fiber (D := D) e)
+      (w : PairMultiplicity (dualModule A) A i.val) (t : Carrier D) :
+      classificationEquiv (targetModule (dualModule A) A) hD
+        (DirectSum.lof ℂ _ _ e (t ⊗ₜ[ℂ] jAt (dualModule A) A hD e i w)) =
+      DirectSum.lof ℂ _ (PairSector (dualModule A) A) i.val
+        (transportInverse D (representative D e) (carry D hD i.val.1 i.val.2) t ⊗ₜ[ℂ] w) := by
+    rcases i with ⟨⟨a,b⟩,hi⟩
+    subst e
+    exact classification_j (dualModule A) A hD a b w t
+  have hj := hread 0 ⟨(-c,c),neg_add_cancel c⟩
     (dualIota A c φ ⊗ₜ[ℂ] x)
     (transport D (representative D 0) (carry D hD (-c) c) v)
-  simp only [neg_add_cancel] at hj
-  rw [(transportLinearEquiv D _ _).symm_apply_apply] at hj
-  rw [← hj]
-  change (evaluation A hD).linearMap
-    (classified hD (targetModule (dualModule A) A) 0
-      (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
-        (dualIota A c φ ⊗ₜ[ℂ] x)) _) = _
-  rw [classified_natural, evaluation_jAt]
-  simp only [classified, TensorProduct.tmul_smul, map_smul,
-    LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply]
-  change _ = (unitCharacter D hD (-c) * φ x) • _
-  rw [← unit_classified]
-  rfl
+  have hi : transportInverse D (representative D 0) (carry D hD (-c) c)
+      (transport D (representative D 0) (carry D hD (-c) c) v) = v :=
+    (transportLinearEquiv D _ _).symm_apply_apply v
+  have hj' := hj.trans (congrArg
+    (fun q : Carrier D => DirectSum.lof ℂ _ (PairSector (dualModule A) A) (-c,c)
+      (q ⊗ₜ[ℂ] (dualIota A c φ ⊗ₜ[ℂ] x))) hi)
+  calc
+    _ = (evaluation A hD).linearMap
+        (classified hD (targetModule (dualModule A) A) 0
+          (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+            (dualIota A c φ ⊗ₜ[ℂ] x))
+          (transport D (representative D 0) (carry D hD (-c) c) v)) :=
+      congrArg (evaluation A hD).linearMap hj'.symm
+    _ = _ := by
+      rw [classified_natural, evaluation_jAt]
+      change classificationEquiv (I D) hD
+        (DirectSum.lof ℂ _ _ 0
+          (transport D (representative D 0) (carry D hD (-c) c) v ⊗ₜ[ℂ]
+            ((unitCharacter D hD (-c) * φ x) • eta0 hD))) = _
+      rw [TensorProduct.tmul_smul, map_smul, map_smul]
+      exact congrArg (fun q : Carrier D => (unitCharacter D hD (-c) * φ x) • q)
+        (unit_classified hD _)
 
 theorem evaluation_single (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity A c))
     (x : Multiplicity A c) (l : Charge D) (p : Oscillator D) :
@@ -192,12 +235,20 @@ theorem evaluation_pair_wrong (c d : Discriminant D) (hc : c+d ≠ 0)
       (DirectSum.lof ℂ _ (PairSector (dualModule A) A) (c,d) (v ⊗ₜ[ℂ] w)) = 0 := by
   have hj := classification_j (dualModule A) A hD c d w
     (transport D (representative D (c+d)) (carry D hD c d) v)
-  rw [(transportLinearEquiv D _ _).symm_apply_apply] at hj
-  rw [← hj]
-  change (evaluation A hD).linearMap
-    (classified hD (targetModule (dualModule A) A) (c+d) (j (dualModule A) A hD c d w) _) = 0
-  rw [classified_natural, evaluation_wrong A hD (c+d) hc]
-  simp [classified]
+  have hi : transportInverse D (representative D (c+d)) (carry D hD c d)
+      (transport D (representative D (c+d)) (carry D hD c d) v) = v :=
+    (transportLinearEquiv D _ _).symm_apply_apply v
+  have hj' := hj.trans (congrArg
+    (fun q : Carrier D => DirectSum.lof ℂ _ (PairSector (dualModule A) A) (c,d)
+      (q ⊗ₜ[ℂ] w)) hi)
+  calc
+    _ = (evaluation A hD).linearMap
+        (classified hD (targetModule (dualModule A) A) (c+d) (j (dualModule A) A hD c d w)
+          (transport D (representative D (c+d)) (carry D hD c d) v)) :=
+      congrArg (evaluation A hD).linearMap hj'.symm
+    _ = 0 := by
+      rw [classified_natural, evaluation_wrong A hD (c+d) hc]
+      simp [classified]
 
 /-- A finite sum over the complete original discriminant, derived from hD. -/
 def discriminantSupport : Finset (Discriminant D) := by
@@ -235,7 +286,7 @@ def cupVector : Multiplicity (targetModule A (dualModule A)) 0 :=
 theorem cupVector_expansion :
     cupVector A hD = ∑ c ∈ discriminantSupport hD, F hD (-c) c (-c) •
       jAt A (dualModule A) hD 0 ⟨(c,-c),add_neg_cancel c⟩ (cupTensor A c) := by
-  simp only [cupVector, map_sum, map_smul, nu_lof]
+  simp only [cupVector, map_sum, map_smul, nu_lof A (dualModule A) hD]
 
 def coevaluationFamily : Families (I D) (targetModule A (dualModule A)) := fun e => by
   by_cases he : e = 0
@@ -248,7 +299,8 @@ def coevaluation : ModuleHom (I D) (targetModule A (dualModule A)) :=
 
 theorem coevaluation_eta0 :
     restrict (coevaluation A hD) 0 (eta0 hD) = cupVector A hD := by
-  rw [coevaluation, restrict_extend]
+  unfold coevaluation
+  erw [restrict_extend hD (coevaluationFamily A hD)]
   simp [coevaluationFamily, etaCoefficient_eta0]
 
 /-- Every original unit vector, with BOTH inverse transports still literal. -/
@@ -260,17 +312,30 @@ theorem coevaluation_carrier (v : Carrier D) :
             (transportInverse D 0 (zeroCarry D hD) v) ⊗ₜ[ℂ] cupTensor A c) := by
   have hv : v = classified hD (I D) 0 (eta0 hD)
       (transportInverse D 0 (zeroCarry D hD) v) := by
-    rw [unit_classified, (transportLinearEquiv D _ _).apply_symm_apply]
+    rw [unit_classified]
+    exact ((transportLinearEquiv D 0 (zeroCarry D hD)).apply_symm_apply v).symm
   conv_lhs => rw [hv]
   rw [classified_natural, coevaluation_eta0, cupVector_expansion]
-  simp only [classified, TensorProduct.tmul_sum, TensorProduct.tmul_smul,
-    map_sum, map_smul, LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply]
+  change classificationEquiv (targetModule A (dualModule A)) hD
+    (DirectSum.lof ℂ _ _ 0
+      (transportInverse D 0 (zeroCarry D hD) v ⊗ₜ[ℂ]
+        (∑ c ∈ discriminantSupport hD, F hD (-c) c (-c) •
+          jAt A (dualModule A) hD 0 ⟨(c,-c),add_neg_cancel c⟩ (cupTensor A c)))) = _
+  simp only [TensorProduct.tmul_sum, TensorProduct.tmul_smul, map_sum, map_smul]
+
   apply Finset.sum_congr rfl
   intro c hc
   congr 1
-  simpa only [add_neg_cancel] using
-    classification_j A (dualModule A) hD c (-c) (cupTensor A c)
-      (transportInverse D 0 (zeroCarry D hD) v)
+  have hread (e : Discriminant D) (he : c + -c = e) (t : Carrier D) :
+      classificationEquiv (targetModule A (dualModule A)) hD
+        (DirectSum.lof ℂ _ _ e
+          (t ⊗ₜ[ℂ] jAt A (dualModule A) hD e ⟨(c,-c),he⟩ (cupTensor A c))) =
+      DirectSum.lof ℂ _ (PairSector A (dualModule A)) (c,-c)
+        (transportInverse D (representative D e) (carry D hD c (-c)) t ⊗ₜ[ℂ]
+          cupTensor A c) := by
+    subst e
+    exact classification_j A (dualModule A) hD c (-c) (cupTensor A c) t
+  exact hread 0 (add_neg_cancel c) _
 
 /-- Original single-charge coefficients, including both reciprocal epsilon factors. -/
 theorem coevaluation_single (l : Charge D) (p : Oscillator D) :
@@ -308,16 +373,37 @@ theorem dualHom_restrict (f : ModuleHom A B) (c : Discriminant D)
     kappa (DualMultiplicity A) c
       (restrict (dualHom hD f) c (iota (DualMultiplicity B) c φ)) =
       φ.comp (restrict f (-c)) := by
-  rw [dualHom, restrict_extend]
-  simp only [LinearMap.comp_apply, kappa_iota]
-  rfl
+  unfold dualHom
+  erw [restrict_extend hD]
+  change kappa (DualMultiplicity A) c
+    (iota (DualMultiplicity A) c
+      ((kappa (DualMultiplicity B) c (iota (DualMultiplicity B) c φ)).comp
+        (restrict f (-c)))) = _
+  rw [kappa_iota, kappa_iota]
 
 theorem dualHom_dualIota (f : ModuleHom A B) (c : Discriminant D)
     (φ : Module.Dual ℂ (Multiplicity B c)) :
     restrict (dualHom hD f) (-c) (dualIota B c φ) =
       dualIota A c (φ.comp (restrict f c)) := by
-  rw [dualHom, restrict_extend]
-  simpa only [dualIota, neg_neg, LinearMap.comp_apply, kappa_iota]
+  have hcast (a b : Discriminant D) (h : a = b)
+      (ψ : Module.Dual ℂ (Multiplicity B a)) :
+      (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity B d)) h ψ).comp
+          (restrict f b) =
+        LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d)) h
+          (ψ.comp (restrict f a)) := by
+    subst b
+    rfl
+  unfold dualHom
+  erw [restrict_extend hD]
+  change iota (DualMultiplicity A) (-c)
+    ((kappa (DualMultiplicity B) (-c)
+      (iota (DualMultiplicity B) (-c)
+        (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity B d))
+          (neg_neg c).symm φ))).comp (restrict f (- -c))) =
+      iota (DualMultiplicity A) (-c)
+        (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d))
+          (neg_neg c).symm (φ.comp (restrict f c)))
+  rw [kappa_iota, hcast]
 
 /-- All-carrier transpose readback, not just a statement about sector labels. -/
 theorem dualHom_carrier (f : ModuleHom A B) (c : Discriminant D)
@@ -326,9 +412,16 @@ theorem dualHom_carrier (f : ModuleHom A B) (c : Discriminant D)
       (DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] DualMultiplicity B d) c (v ⊗ₜ[ℂ] φ)) =
       DirectSum.lof ℂ _ (fun d => Carrier D ⊗[ℂ] DualMultiplicity A d) c
         (v ⊗ₜ[ℂ] φ.comp (restrict f (-c))) := by
-  rw [← classification_iota (DualMultiplicity B) hD c φ v, classified_natural]
-  rw [dualHom, restrict_extend]
-  simp only [LinearMap.comp_apply, kappa_iota]
+  rw [← classification_iota (DualMultiplicity B) hD c φ v]
+  change (dualHom hD f).linearMap (classified hD (dualModule B) c (iota (DualMultiplicity B) c φ) v) = _
+  rw [classified_natural]
+  unfold dualHom
+  erw [restrict_extend hD]
+  change classified hD (dualModule A) c
+    (iota (DualMultiplicity A) c
+      ((kappa (DualMultiplicity B) c (iota (DualMultiplicity B) c φ)).comp
+        (restrict f (-c)))) v = _
+  rw [kappa_iota]
   exact classification_iota (DualMultiplicity A) hD c _ v
 
 end Transpose
