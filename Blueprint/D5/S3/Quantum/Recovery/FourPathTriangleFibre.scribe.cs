@@ -30,7 +30,7 @@ internal sealed class FourPathTriangleFibreDocument : IScribeDocumentDefinition
                 H("The original nonnegative fibre radical"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("F(L,X,Y)=sqrt((1−X)(1−Y)(1−Z(L,X,Y)²)). Its radicand is nonnegative on the complete triangle."))),
+                Blocks(Paragraph(Text("F(L,X,Y)=sqrt((1−X)(1−Y)(1−Z(L,X,Y)²)). Its radicand is nonnegative on the complete triangle when L>1 and L²≤2."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("four-path-triangle-fibre-b"),
