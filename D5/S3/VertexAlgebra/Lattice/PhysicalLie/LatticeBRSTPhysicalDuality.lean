@@ -267,7 +267,7 @@ private theorem transverse_right_inverse (H : Matrix (Fin D.rank) (Fin D.rank) �
     Fintype.sum_sum_type,Fintype.sum_unique,hbTrans,hbPlus,hbMinus,K_plus,K_minus,zero_mul,zero_add,
     Matrix.one_apply,transverse,Sum.inr.injEq,ite_true] at h
   simpa only [Matrix.mul_apply,transverseGram,transverseInverse,
-    Matrix.one_apply] using h
+    Matrix.one_apply,transverse] using h
 
 private theorem transverse_left_inverse (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D = 1) :
@@ -294,7 +294,7 @@ private theorem transverse_left_inverse (H : Matrix (Fin D.rank) (Fin D.rank) �
     Fintype.sum_sum_type,Fintype.sum_unique,hbTrans,hbPlus,hbMinus,plus_K,minus_K,zero_mul,mul_zero,zero_add,
     add_zero,Matrix.one_apply,transverse,Sum.inr.injEq,ite_true] at h
   simpa only [Matrix.mul_apply,transverseGram,transverseInverse,
-    Matrix.one_apply] using h
+    Matrix.one_apply,transverse] using h
 
 private def covariance (k : ℕ) : Matrix (Fin t) (Fin t) ℂ :=
   (-((k : ℂ)+1)) • transverseGram F B
@@ -602,9 +602,11 @@ def nonzeroChargeDualInverse :
   (leftCoordinates D H h26 hHG hGH p hp).toLinearMap.comp
     ((levelInverse (chosenFrame D H h26 hHG p hp)
       (chosenFrame D H h26 hHG p hp).transverseBasis H (1-chargeEnergy D p)).comp
-      { toFun := fun lam => lam.comp (rightCoordinates D H h26 hHG hGH p hp).toLinearMap
-        map_add' := by intros;ext f;rfl
-        map_smul' := by intros;ext f;rfl })
+      ({ toFun := fun lam => lam.comp (rightCoordinates D H h26 hHG hGH p hp).toLinearMap
+         map_add' := by intros;ext f;rfl
+         map_smul' := by intros;ext f;rfl } :
+        Module.Dual ℂ (physicalChargeFiber D H h26 hHG hGH (-p)) →ₗ[ℂ]
+          Module.Dual ℂ (levelSpace (D.rank-2) (1-chargeEnergy D p))))
 
 private theorem physical_forward_inverse
     (lam : Module.Dual ℂ (physicalChargeFiber D H h26 hHG hGH (-p))) :
