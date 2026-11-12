@@ -98,7 +98,8 @@ private theorem pairing_partner_unique {U : Finset α} {P : Finset (Finset α)}
     (hc : c ≠ a ∧ {a.val, c.val} ∈ P) : b = c := by
   have he : ({a.val, b.val} : Finset α) = {a.val, c.val} := by
     by_contra hn
-    exact Finset.disjoint_left.mp (hP.1.2.1 hb.2 hc.2 hn) (by simp) (by simp)
+    exact Finset.disjoint_left.mp (hP.1.2.1 hb.2 hc.2 hn)
+      (show a.val ∈ ({a.val, b.val} : Finset α) by simp) (by simp)
   apply Subtype.ext
   have hm : b.val ∈ ({a.val, c.val} : Finset α) := he ▸ (by simp)
   rcases Finset.mem_insert.mp hm with h | h

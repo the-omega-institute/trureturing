@@ -38,11 +38,8 @@ admission_basis: escape-witness.
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyRefutation
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticFourthExpansion
-import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectAlgebra
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectInversion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PerfectPairingCount
-import Mathlib.Data.Fintype.CardEmbedding
-import Mathlib.Algebra.BigOperators.Ring.Nat
 
 /-! A positive finite mixture separating top distinct and full pairing defects. -/
 
@@ -55,7 +52,7 @@ set_option autoImplicit false
 
 /-- Perturbing each factor of a product of three bounded scalars by at most one costs
 at most three times the square of the common bound. -/
-theorem scalar_prod_diff_bound {α : Type*} [DecidableEq α]
+private theorem scalar_prod_diff_bound {α : Type*} [DecidableEq α]
     (s : Finset α) (hs : s.card = 3) (f g : α → ℝ) (B : ℝ) (hB : 0 ≤ B)
     (hf : ∀ i ∈ s, |f i| ≤ B) (hg : ∀ i ∈ s, |g i| ≤ B)
     (hd : ∀ i ∈ s, |f i - g i| ≤ 1) :
@@ -97,7 +94,7 @@ theorem scalar_prod_diff_bound {α : Type*} [DecidableEq α]
 
 /-- Removing noninjective assignments from a sixth-order product sum changes it by at
 most thirty-six times the fifth power of the number of available labels. -/
-theorem inj_sum_product_bound (N : ℕ) (hN : 6 ≤ N)
+private theorem inj_sum_product_bound (N : ℕ) (hN : 6 ≤ N)
     (g : Fin 6 → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
     |(∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) -
         ∏ i, ∑ d, g i d| ≤ 36 * (N : ℝ)^5 := by
@@ -188,7 +185,7 @@ variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- When defects vanish in orders at most two, a convolution on at most six labels
 contains only its empty and single-edge contributions. -/
-theorem partialPairing_six_convolution (U : Finset α) (hU : U.card ≤ 6)
+private theorem partialPairing_six_convolution (U : Finset α) (hU : U.card ≤ 6)
     (N : ℝ) (δ : Finset α → ℝ)
     (hsmall : ∀ V ⊆ U, V.card ≤ 2 → δ V = 0) :
     (∑ P : Finset (Finset α) with IsPartialPairing U P,
@@ -244,7 +241,7 @@ theorem partialPairing_six_convolution (U : Finset α) (hU : U.card ≤ 6)
   simp [pairingSupport]
 
 /-- A quantitative lower bound for the four-label defect of the sixth-order model. -/
-theorem sixth_four_defect_lower (N : ℝ) (hN : 100 ≤ N) :
+private theorem sixth_four_defect_lower (N : ℝ) (hN : 100 ≤ N) :
     N ^ 2 / 2 ≤ Real.sqrt 15 * (N * (N - 1) * (N - 2) * (N - 3)) / N ^ 2 -
       3 * (N - 1) ^ 2 := by
   have hpos : 0 < N := by linarith
@@ -266,7 +263,7 @@ theorem sixth_four_defect_lower (N : ℝ) (hN : 100 ≤ N) :
   nlinarith [hprod, hlo, hnp, hnp₂, sq_nonneg N]
 
 /-- The transfer error is at most twice the cubic scale once its coefficient is below the square root. -/
-theorem transfer_error_small (N K : ℝ) (hN : 1 ≤ N) (hK : K ≤ Real.sqrt N) :
+private theorem transfer_error_small (N K : ℝ) (hN : 1 ≤ N) (hK : K ≤ Real.sqrt N) :
     K * N ^ 3 * (Real.sqrt (1 / N) + 1 / N) ≤ 2 * N ^ 3 := by
   have hpos : 0 < N := by linarith
   have hspos : 0 < Real.sqrt N := Real.sqrt_pos.2 hpos
@@ -284,7 +281,7 @@ theorem transfer_error_small (N K : ℝ) (hN : 1 ≤ N) (hK : K ≤ Real.sqrt N)
     _ = _ := by ring
 
 /-- Positive one-edge defects dominate the bounded top-order and transfer errors. -/
-theorem sixth_defect_lower (N C δ₆ δ₄ E V : ℝ)
+private theorem sixth_defect_lower (N C δ₆ δ₄ E V : ℝ)
     (hN : 1 ≤ N) (hC : C ≤ N) (h6 : |δ₆| ≤ C * N ^ 2)
     (h4 : N ^ 2 / 2 ≤ δ₄) (hE : |E| ≤ 2 * N ^ 3)
     (hV : V = δ₆ + 15 * N * δ₄ + E) :
@@ -493,25 +490,13 @@ private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
       (∑ x : Fin 2 → Fin N with Function.Injective x, ∏ i, ![f, h] i (x i)) =
         ∑ d, ∑ e with d ≠ e, f d * h e := by
     simpa [Fin.prod_univ_two] using (sum_two (fun d e => f d * h e))
-  have hsplit (d : Fin N) :
-      (∑ e : Fin N with d ≠ e, f d * h e) + f d * h d =
-        ∑ e : Fin N, f d * h e := by
-    have ht := Finset.sum_filter_add_sum_filter_not
-      (Finset.univ : Finset (Fin N)) (fun e => d ≠ e) (fun e => f d * h e)
-    have hd : Finset.univ.filter (fun e : Fin N => ¬d ≠ e) = {d} := by
-      ext e
-      simp [eq_comm]
-    rw [hd, Finset.sum_singleton] at ht
-    exact ht
-  have htotal : (∑ d, ∑ e with d ≠ e, f d * h e) + (∑ d, f d * h d) =
-      (∑ d, f d) * (∑ e, h e) := by
-    rw [← Finset.sum_add_distrib]
-    simp_rw [hsplit, ← Finset.mul_sum]
-    rw [Finset.sum_mul]
+  have hoff : (∑ d, ∑ e with d ≠ e, f d * h e) =
+      (∑ d, f d) * (∑ e, h e) - ∑ d, f d * h d := by
+    simpa [Finset.sum_filter, Fintype.sum_mul_sum] using
+      (FiolArbitraryTreePair.sum_off_diagonal (fun d e => f d * h e))
   rw [modelFunctional, mixture_distinct_moments, ← moment, hsum, moment_values.2.2.1]
   rw [Real.sq_sqrt (show (0 : ℝ) ≤ N by positivity)]
-  congr 1
-  linarith
+  rw [hoff]
 
 private lemma subset_pair_formula (N : ℕ) (g : Fin 6 → Fin N → ℝ)
     (e : Finset (Fin 6)) (he : e.card = 2) :

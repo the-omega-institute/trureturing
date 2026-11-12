@@ -41,7 +41,7 @@ theorem mem_pairingSupport (i : α) (P : Finset (Finset α)) :
   simp [pairingSupport]
 
 omit [Fintype α] in
-theorem partialPairing_subset {U : Finset α} {P M : Finset (Finset α)}
+private theorem partialPairing_subset {U : Finset α} {P M : Finset (Finset α)}
     (hM : IsPartialPairing U M) (hPM : P ⊆ M) : IsPartialPairing U P := by
   refine ⟨fun e he => hM.1 e (hPM he), hM.2.1.mono hPM, ?_⟩
   intro i hi
@@ -49,7 +49,7 @@ theorem partialPairing_subset {U : Finset α} {P M : Finset (Finset α)}
   exact hM.2.2 ((mem_pairingSupport i M).2 ⟨e, hPM he, hie⟩)
 
 omit [Fintype α] in
-theorem pairing_remainder {U : Finset α} {M P : Finset (Finset α)}
+private theorem pairing_remainder {U : Finset α} {M P : Finset (Finset α)}
     (hM : IsPerfectPairing U M) (hPM : P ⊆ M) :
     IsPartialPairing U P ∧ IsPerfectPairing (U \ pairingSupport P) (M \ P) := by
   have hP := partialPairing_subset hM.1 hPM
@@ -73,7 +73,7 @@ theorem pairing_remainder {U : Finset α} {M P : Finset (Finset α)}
       ((mem_pairingSupport i P).2 ⟨e, heP, hie⟩)⟩, hie⟩
 
 omit [Fintype α] in
-theorem pairing_join {U : Finset α} {P Q : Finset (Finset α)}
+private theorem pairing_join {U : Finset α} {P Q : Finset (Finset α)}
     (hP : IsPartialPairing U P) (hQ : IsPerfectPairing (U \ pairingSupport P) Q) :
     IsPerfectPairing U (P ∪ Q) ∧ Disjoint P Q := by
   have hcross : ∀ e ∈ P, ∀ d ∈ Q, Disjoint e d := by
