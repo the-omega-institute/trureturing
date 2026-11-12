@@ -48,12 +48,13 @@ internal sealed class MixedExclusionGeometryDocument : IScribeDocumentDefinition
         All("hc",C("IsClosed",Cone),All("hs",Strict,
         All("hg",Eq(C("span",R,Cone),C("top")),All("hB",C("exclusionBalls",Cone,Unit),body))))))));
     private static Formula Context(Formula body) => Parameters(All("hW",C("weakPair",Cone,Unit),body));
+    private static Formula HypothesisContext(Formula body) => Parameters(Imp(C("weakPair",Cone,Unit),body));
 
     public DocumentDefinition Create()
     {
         Formula x=V("x"), p=V("p"), t=V("t");
         Formula section=App(Section,p), tau=Map("reflection");
-        Formula theorem=Context(And(
+        Formula theorem=HypothesisContext(And(
             C("subset",P,S),Eq(M,C("difference",S,P)),
             All("x",M,All("p",P,Iff(Eq(App(Sigma,x),p),In(Val(x),C("intrinsicInterior",R,Dp(p)))))),
             C("Continuous",tau),C("Involutive",tau),
@@ -91,7 +92,7 @@ internal sealed class MixedExclusionGeometryDocument : IScribeDocumentDefinition
                 Describe.Lean(DescribeId.Create("deleted-fiber-pair"),DeclarationHandle.Create(Owner+"deletedFiberPairHomotopy"),
                     H("The actual homotopy of deleted-fiber pairs"),StatementSource.FromAuthor(Disp(pairHomotopy)),
                     AssessedProvenance.FromRepo(),Blocks(
-                        Paragraph(Text("For each original p, deletedFiberPair has literally the ambient space intrinsicFrontier of K minus P, with the subspace obtained by deleting D_p; deletedPointPair is (P, P minus {p}). The proved equality with mixedExcluded induces the pair isomorphism used by both maps and by the homotopy, so original boundary coverage lies on their live construction path. Since M meets D_p exactly in its intrinsic interior, this removes the complete mixed fiber. pairLabelMap is induced by the actual continuous label; pairCenterMap is induced by the actual center section. The affine contraction induces a TopPair homotopy from the identity of deletedFiberPair to pairLabelMap followed by pairCenterMap. The pair condition is proved at every time from actual fiber preservation, using the existing TopPair.ofSubsetHomotopy constructor and transport through that proved pair isomorphism.")),
+                        Paragraph(Text("For each original p, deletedFiberPair has literally the ambient space intrinsicFrontier of K minus P, with the subspace obtained by deleting D_p; deletedPointPair is (P, P minus {p}). The proved equality with mixedExcluded identifies the corresponding pairs; both maps and the homotopy are transported through this identification. Since M meets D_p exactly in its intrinsic interior, this removes the complete mixed fiber. pairLabelMap is induced by the actual continuous label; pairCenterMap is induced by the actual center section. The affine contraction induces a TopPair homotopy from the identity of deletedFiberPair to pairLabelMap followed by pairCenterMap. The pair condition is proved at every time from actual fiber preservation, using the existing TopPair.ofSubsetHomotopy constructor and transport through that proved pair isomorphism.")),
                         Paragraph(Text("These are geometric statements about the original full state and effect domain. They supply no local homology computation, Smith fixed-set dimension, ENR-to-local-homology comparison, Alexander duality or constancy of ball dimension. They require none of those conclusions as premises."))),DescribeRole.Definition))));
     }
 }
