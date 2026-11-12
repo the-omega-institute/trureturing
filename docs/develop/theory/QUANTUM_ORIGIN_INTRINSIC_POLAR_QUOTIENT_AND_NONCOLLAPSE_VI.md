@@ -663,3 +663,316 @@ $$
 数学归属为 `repo-derived`：90.4的全效应精确零／四分之一控制、90.5的同族局部对径控制及90.6的任意有限图等价，是这里的纸面关系推导及其同数据应用。ROG极射线、弦图ROG判据及PSD最小面公式归 Hildebrand 所引成熟结果；90.3只将它们用于整个二态面。基范数／序单位极性及其分解式归90.9所引成熟文献，90.8—90.10是这些工具对原 $\mathrm A$ 缺口的准确诊断；旧Jordan／完整 $S$ 桥、89章全部完整包与消费者、Library二元寄存器及VII各入口均为既有结果复用。有限来源阅读不支持全球原创或历史优先权结论。以上为明确模型前提下的定义、条件定理与纸面证明；不声称Lean kernel核验、经验实现或整个母目标完成，也不以尚未推出宇宙本体作为否定该条件模型的理由。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 91. 实复团生成锥的整球性与全效应重叠障碍
+
+### 91.1 团生成与稀疏截面是两个原锥
+
+**定义 91.1（实复团生成载体）。** 取 $\mathbb F\in\{\mathbb R,\mathbb C\}$、顶点集为 $\{1,\ldots,n\}$ 的任意有限简单图 $G$，$n\ge1$。$\operatorname{Herm}_n(\mathbb F)$ 始终视为实向量空间，实域时即对称矩阵空间，$\dagger$ 表示相应伴随。定义
+
+$$
+\begin{gathered}
+V_{G,\mathbb F}=\{X\in\operatorname{Herm}_n(\mathbb F):
+X_{ij}=0\text{ 若 }i\ne j,\ \{i,j\}\notin E(G)\},\\
+C^{\rm cl}_{G,\mathbb F}
+=\operatorname{cone}\{vv^\dagger:v\in\mathbb F^n\setminus\{0\},\quad
+\operatorname{supp}v\text{ 为 }G\text{ 的团}\},\qquad
+u(X)=\operatorname{tr}X,\\
+K^{\rm cl}_{G,\mathbb F}=C^{\rm cl}_{G,\mathbb F}\cap\{u=1\},\qquad
+P^{\rm cl}_{G,\mathbb F}=\operatorname{ext}K^{\rm cl}_{G,\mathbb F},\\
+C^{\cap}_{G,\mathbb F}
+=V_{G,\mathbb F}\cap\operatorname{PSD}_n(\mathbb F),\qquad
+C^{\rm cl}_{G,\mathbb F}\subseteq C^{\cap}_{G,\mathbb F}.
+\end{gathered}
+\tag{91.1}
+$$
+
+团包括单顶点，$\operatorname{cone}$ 只用有限非负组合。本章的原状态锥是 $C^{\rm cl}$；第90章的原锥是实域的 $C^\cap$。等价地，$C^{\rm cl}$ 是各团所支撑的完整PSD锥之和，因为每个团内PSD矩阵可在该团内谱分解。实域的两锥在弦图上相等，非弦图上不相等：稀疏秩一矩阵的向量支撑必为团，故两锥相等恰为90.3所引用的实ROG弦图判据。下述两域证明均直接使用 $C^{\rm cl}$，不在非弦图上用 $C^\cap$ 替代它，也不预设复域的截面分解。
+
+所有 $F_p,T_p,D_p,\perp$、$\mathrm B,\mathrm A,S$ 均取这个同一原载体的整个基、全部纯点与整个 proper 区间；$\mathrm{Z0}$ 对全部原混态量化，$\mathrm{Z0}_{\rm pure}$ 准确取(90.2)的三个原纯点条件。图关系 $\sim_G$ 沿用(90.1)，含反身关系。
+
+### 91.2 全称整球、精确四分之一与关系闭合
+
+**定理 91.2（团重叠的全域判据）。** 定义91.1满足89.1的全部载体条件，且对每个图、两种域都自动满足 $\mathrm B$。准确的全部纯点和全部 proper 效应为
+
+$$
+\begin{gathered}
+P^{\rm cl}_{G,\mathbb F}
+=\{p_v=vv^\dagger:\|v\|=1,\ \operatorname{supp}v\text{ 为团}\},\\
+[0,u]=\{f_E:X\mapsto\operatorname{tr}(EX):
+E\in V_{G,\mathbb F},\quad
+0\le E[Q]\le I_Q\text{ 对每个团 }Q\}.
+\end{gathered}
+\tag{91.2}
+$$
+
+其中 $E[Q]$ 为主子矩阵；不要求整个环境 $0\le E\le I_n$。对任意不同纯点 $p_v,p_w$，令 $T=\operatorname{span}_{\mathbb F}\{v,w\}$。其整个最小面准确为
+
+$$
+H(p_v,p_w)=
+\begin{cases}
+\{X\ge0:\operatorname{ran}X\subseteq T,\ \operatorname{tr}X=1\},
+&\operatorname{supp}v\cup\operatorname{supp}w\text{ 为团},\\
+[p_v,p_w],&\operatorname{supp}v\cup\operatorname{supp}w\text{ 不为团}.
+\end{cases}
+\tag{91.3}
+$$
+
+第一支在实域为 $B^2$、复域为 $B^3$，第二支为 $B^1$。在这一整个原载体上，
+
+$$
+\boxed{\mathrm{Z0}\ \Longleftrightarrow\ \mathrm{Z0}_{\rm pure}
+\ \Longleftrightarrow\ \mathrm A
+\ \Longleftrightarrow\ S
+\ \Longleftrightarrow\ (\sim_G\text{ 传递})
+\ \Longleftrightarrow\ (G\text{ 的每个连通分量完全}).}
+\tag{91.4}
+$$
+
+若图有诱导链 $a-b-c$，则(90.6)中的实向量在两域均给原纯点；仍在本章整个原效应区间上有精确值
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad
+T_p((q_++q_-)/2)=\tfrac14.
+\tag{91.5}
+$$
+
+同一诱导链的(90.10)还给 $H(p_0,r_0)=[p_0,r_0]$ 而 $p_0\not\perp r_0$。因此每个非完全连通分量都在本章自动成立的 $\mathrm B$ 下同时违反 $\mathrm A$ 与 $\mathrm{Z0}$。
+
+证明。先核对整个原载体。全部单位团支撑向量的投影组成有限个紧集之并 $\mathcal P$；其凸包紧，每个锥生成元按迹归一后属于 $\mathcal P$，故 $K^{\rm cl}=\operatorname{conv}\mathcal P$。从迹一紧基的锥表示可知 $C^{\rm cl}$ 闭：若 $t_kx_k$ 收敛，$t_k=\operatorname{tr}(t_kx_k)$ 收敛，$x_k$ 可取收敛子列；$t_k\to0$ 时极限为零。它包含在PSD锥中，故尖，且迹在其非零元上严格正。
+
+对角矩阵单位已在锥中；每条边上的 $e_i+e_j$ 投影和对角矩阵的实线性组合给该边实对称方向。在复域，$e_i+\mathrm i e_j$ 的投影再给该边虚Hermitian方向，故锥生成整个 $V_{G,\mathbb F}$，没有删除虚坐标。每个 $p_v\in\mathcal P$ 都在整个环境密度基中极端，故在本章基中也极端；反向，有限凸组合表示说明 $\operatorname{conv}\mathcal P$ 的任一极点必须属于 $\mathcal P$。这证明全部纯点公式。
+
+实迹内积在 $V_{G,\mathbb F}$ 上非退化，故每个实线性效应有唯一 $E\in V_{G,\mathbb F}$ 表示。对每个团 $Q$ 的所有向量 $v$ 测试 $f_E(vv^\dagger)=v^\dagger E[Q]v$，正性等价于 $E[Q]\ge0$；补正性等价于 $I_Q-E[Q]\ge0$。反向由全部生成元即可检验锥正性。这证明(91.2)确为全区间，包括允许的复虚系数，而非环境效应的一个子菜单。
+
+接着证明(91.3)是整个最小面。令 $\Pi_{T^\perp}$ 为环境正交投影。函数 $X\mapsto\operatorname{tr}(\Pi_{T^\perp}X)$ 在原锥上非负，其在原基上的零面 $F_T$ 恰由像空间包含在 $T$ 中的原归一PSD矩阵组成。若这样的 $X$ 分解为团支撑秩一正项，则每项向量 $z$ 必在 $T$ 中：非负数 $\|\Pi_{T^\perp}z\|^2$ 的和为零。不同 $p_v,p_w$ 使 $v,w$ 在相应域上线性独立。
+
+若支撑并集为团，$T$ 中任一向量均有团支撑，所以该零面就是 $T$ 上完整PSD锥的迹一基，且 $(p_v+p_w)/2$ 在其相对内部。若并集不是团，可取不相邻的 $a,b$ 属于该并集；由于 $v,w$ 自身各有团支撑，交换名字后必有
+
+$$
+a\in\operatorname{supp}v\setminus\operatorname{supp}w,\qquad
+b\in\operatorname{supp}w\setminus\operatorname{supp}v.
+\tag{91.6}
+$$
+
+任一 $\alpha v+\beta w$ 若 $\alpha\beta\ne0$，其 $a,b$ 坐标分别为 $\alpha v_a,\beta w_b$，都不为零，故不可能有团支撑。该像空间零面中可用的秩一生成射线只有 $p_v,p_w$，所以整个零面恰为线段，而中点也在其相对内部。两支都因包含该中点为相对内点而是整个最小面，不只是一个包含二点的球形切片。在 $T$ 的正交归一基中，对完整二阶PSD基，实坐标 $(X_{11}-X_{22},2X_{12})$ 给 $B^2$；复坐标 $(X_{11}-X_{22},2\operatorname{Re}X_{12},2\operatorname{Im}X_{12})$ 给 $B^3$。这是标准二阶PSD球表示在整个原面的应用，证明了全称 $\mathrm B$。
+
+现在把90.4的计算用于改变后的原锥，先核对其全效应类型。在整个 $V_{G,\mathbb F}$ 上取
+
+$$
+f_\pm(X)=\tfrac12(X_{aa}+X_{bb}+X_{cc})
++\operatorname{Re}X_{ab}\mp\operatorname{Re}X_{bc}.
+\tag{91.7}
+$$
+
+由于 $X_{ac}=0$，(90.8)的两个二次型等式在复域将转置改为伴随后仍逐项成立。因此 $f_\pm$ 与 $u-f_\pm$ 对整个 $C^\cap_{G,\mathbb F}$ 非负，尤其对本章整个 $C^{\rm cl}_{G,\mathbb F}$ 非负。也可直接用(91.2)：一个团不能同时含 $a,c$，其 $E_\pm[Q]$ 只可能有 $ab$ 或 $bc$ 的二阶秩一投影块、剩余的 $1/2$ 对角元及零对角元，均为正收缩。两个前件于是由原 full proper 效应达到，且原团支撑保证 $p,q_\pm$ 都是本章纯点。
+
+对于下界，任意本章 $f\in F_p$ 限制到完整 $ab$ 二阶PSD子锥，仍是 Hermitian 正收缩 $A$。确认使 $Av=v$，从而 $A\ge vv^\dagger$，故 $f(e_be_b^\dagger)\ge1/2$；另有 $f(e_ce_c^\dagger)\ge0$。因此所有原确认者在 $m=(q_++q_-)/2$ 的值至少为 $1/4$。环境投影的限制 $X\mapsto\operatorname{tr}(pX)$ 在本章全基上 proper，确认 $p$ 且在 $m$ 达到 $1/4$。这证明(91.5)的精确最小值，未以原来较小的效应区间代替本章全区间。
+
+同样，(90.10)的 $p_0,r_0$ 支撑并集不是团，所以(91.3)给整个最小面为线段。若原 $f$ 确认 $p_0$ 并排除 $r_0$，它在 $ab$ 块上的正收缩必须使同一个 $f(e_be_b^\dagger)\ge3/4$，在 $bc$ 块上的正收缩必须使该值 $\le1/4$，矛盾。这正是90.5的共享对角量计算；对复Hermitian正收缩，确认向量的正交补仍是一维复空间，所得上下界相同。
+
+由(91.5)，$\mathrm{Z0}_{\rm pure}$ 排除每条诱导 $P_3$；由上述对径控制，$\mathrm A$ 也排除每条诱导 $P_3$。最短路论证如90.6给没有诱导 $P_3$ 当且仅当每个连通分量完全，也等价于 $\sim_G$ 传递。$\mathrm{Z0}\Rightarrow\mathrm{Z0}_{\rm pure}$ 直接来自量词。
+
+若分量 $I_j$ 都完全，原锥本身便为 $\bigoplus_j\operatorname{PSD}_{|I_j|}(\mathbb F)$，全 proper 区间为各块正收缩。对任一原纯 $p$，$e_p(X)=\operatorname{tr}(pX)$ 确认 $p$。任何确认者在其所在块固定 $p$ 的单位向量，故在该块支配 $p$，其余块非负；所以 $e_p$ 是整个锥序的 least 元。迹互反给完整 $S$，而且
+
+$$
+T_p(x)=\operatorname{tr}(px)\quad(\forall x\in K^{\rm cl}),\qquad
+D_p=K^{\rm cl}\cap\ker e_p.
+\tag{91.8}
+$$
+
+后一零面凸，给对全部纯态和混态的 $\mathrm{Z0}$。同块整二阶球的任意纯点与其球对径为正交秩一投影，异块线段的两端也被 $e_p$ 区分，故有完整 $\mathrm A$。任意原载体中的 $S\Rightarrow\mathrm{Z0}$ 已由90.6的 least 零集论证给出，因而闭合(91.4)。$n=1$ 时基为单点，$e_p=u$、$D_p=\varnothing$，所有球与对径条件空真；孤立顶点各为一维块，断开分量间保留整条 $B^1$。这些分支不需要额外连通假设。由自动成立的 $\mathrm B$ 及89.4，(91.4)还等价于原 $\mathrm H,\mathrm{Boundary},\mathrm Q$。证毕。
+
+### 91.3 同一完整候选中的条件替换
+
+**推论 91.3（团生成表示域内的完整同数据替换）。** 完整保留89.7的同一个 $\mathcal O$、共同 $\mathfrak S(\mathcal O)$ 与全部非几何条件。若每个原 $X=A,D,E$ 已有实线性双射
+
+$$
+\iota_X:V_X\longrightarrow V_{G_X,\mathbb F_X},\qquad
+\iota_X(C_X)=C^{\rm cl}_{G_X,\mathbb F_X},\qquad
+\operatorname{tr}\circ\iota_X=u_X,\qquad
+\mathbb F_X\in\{\mathbb R,\mathbb C\},
+\tag{91.9}
+$$
+
+则把该原 $X$ 上的 $\mathrm B+\mathrm{Boundary}$ 换为 $\mathrm{Z0}$、$\mathrm{Z0}_{\rm pure}$ 或 $\sim_{G_X}$ 传递，三种写法均与同一完整 $\mathsf R_{\rm polar}(\mathcal O)$ 等价。矩阵表示(91.9)是这个受控模型域的前件，不是由一般 $\mathrm B$ 或 $\mathrm{Z0}$ 推出的结论。
+
+证明。双射及其逆运输整个基、全部极点、整个最小面；对偶拉回双射运输整个 proper 区间和所有确认／排除关系。因此91.2逐个原 $X$ 将三种条件换成同载体完整 $S$，89.4再将其换成 $\mathrm B+\mathrm{Boundary}$，89.8给原完整等价包。无需另造状态、补入效应或重复已有一般EJA分类。
+
+逐消费者仍准确使用89.9及90.12的表：复型与Born保留一般EJA忠实桥及原精确两接口66.3；指定二份／三份保留同一原 $L,p,\omega$、同一 $p$ 两次、两实张成、全实 $Z$、含秩一分支的完整(83.8)、C2、整个 $G=1_E$，以及精确PRE后同一个原资格态的整个输出H13。即使某个原 $\mathbb F_X$ 已选为复数，也没有由单系统团关系给出这些指定张量或读回接口。CP、Kraus、仪器、两预算、Lüders与时间仍逐项使用89.9的同事件全实关系、实际探针或充分递归参考、原菜单／记录／粗粒化、中性校准和实际连续时间群；来源与全部合法未来继续使用89.7及89.10的共同原合同和 source-adoption。VII22、24—28及Library二元寄存器路线只在89.10、90.12所列原域内复用。
+
+几何上，每个允许团是一块完整的实或复矩阵片；任意两盏纯灯所在的整最小面已是圆球或线段，所以局部圆度在这里没有缺口。真正的冲突是两片共用中间坐标，却缺少把首尾一起纳入的团：同一把全局尺在共享坐标上只能有一个高度。分别压暗两盏灯可以换尺，压暗它们的平均则至少留下四分之一；另一对局部线段端点甚至要求共享高度同时不小于四分之三且不大于四分之一。零拼合排除这种重叠，迫使每个连通部分闭合成完整矩阵块。这个结论只在已付出的整个团生成表示上成立，一般89.12仍缺少从任意整球载体到此种障碍的证明。证毕。
+
+## 92. 单一加权准备关系的全载体零拼合障碍
+
+### 92.1 全部纯点的关系空间与完整效应
+
+**定义 92.1（有限纯点的关系零度）。** 在89.1的原载体上再设 $P$ 有限，定义满射
+
+$$
+\Phi:\mathbb R^P\longrightarrow V,\qquad
+\Phi((c_z)_{z\in P})=\sum_{z\in P}c_zz,\qquad
+\nu=\dim\ker\Phi=|P|-\dim V.
+\tag{92.1}
+$$
+
+因为全部 $u(z)=1$，核中每个向量的系数和为零，故这是同一归一超平面中的仿射关系空间。$\nu=1$ 时将唯一非零关系归一为
+
+$$
+\sum_{i=1}^r\alpha_i a_i=\sum_{j=1}^s\beta_j b_j,\qquad
+\alpha_i,\beta_j>0,\qquad
+\sum_i\alpha_i=\sum_j\beta_j=1,
+\tag{92.2}
+$$
+
+并写 $P=\{a_i\}_{i=1}^r\sqcup\{b_j\}_{j=1}^s\sqcup\{c_k\}_{k=1}^{\ell}$；$c_k$ 为关系系数为零的原顶点，$\ell$ 可为零。两侧各至少有两个顶点，否则一个原极点会成为其他点的凸组合。77.4及89.6的等权条带对应 $r=s=q$、$\alpha_i=\beta_j=1/q$、$\ell=0$，其原等权结果保持原范围。这是标准单维Gale／Radon关系的线性代数表示，参见 Á. G. Horváth、Z. Lángi，*Maximum volume polytopes inscribed in the unit sphere*，[arXiv:1402.6496v3 §3](https://arxiv.org/html/1402.6496v3#S3) 的核空间与Gale变换定义；下述论证不使用其最大体积、球面或非退化极值假设，也不要求 $\ell=0$。
+
+### 92.2 任意正权下的可达混态缺口
+
+**定理 92.2（全载体一关系定理）。** 在定义92.1上，若 $\nu\le1$，则
+
+$$
+\boxed{\mathrm{Z0}\quad\Longleftrightarrow\quad K\text{ 是单纯形}.}
+\tag{92.3}
+$$
+
+不假定 $\mathrm B$ 或 $\mathrm A$。在 $\nu=1$ 的任意正权关系(92.2)中，交换两侧并重编号，可使
+
+$$
+t=\alpha_1=\min\{\alpha_1,\ldots,\alpha_r,\beta_1,\ldots,\beta_s\}>0,
+\qquad p=a_1.
+\tag{92.4}
+$$
+
+对任意非空真子集 $J\subset\{1,\ldots,s\}$，令
+
+$$
+b=\sum_{j\in J}\beta_j,\qquad
+x=\frac1b\sum_{j\in J}\beta_jb_j,\qquad
+y=\frac1{1-b}\sum_{j\notin J}\beta_jb_j.
+\tag{92.5}
+$$
+
+则 $x,y$ 是整个原基中的态，且全原效应给出达到的精确值
+
+$$
+T_p(x)=T_p(y)=0,\qquad
+T_p\bigl((x+y)/2\bigr)=\frac{t}{2\max\{b,1-b\}}>0.
+\tag{92.6}
+$$
+
+允许其中一个态纯、另一个混；当某组含多个顶点时，不把它换成纯态量词。任意零系数顶点 $c_k$ 不改变这些结论。特别地，若有限纯点载体满足 $\mathrm B+\mathrm{Z0}$ 而违反 $\mathrm A$，则必要有
+
+$$
+|P|-\dim V\ge2.
+\tag{92.7}
+$$
+
+证明。$\nu=0$ 时，全部纯点是 $V$ 的一组线性基，因而归一基 $K=\operatorname{conv}P$ 为单纯形。其每个纯 $p$ 的重心坐标效应 $e_p$ 属于全 proper 区间，任何确认者在所有其他顶点上非负，故全锥序支配 $e_p$。因此 $D_p$ 正是对面单纯形，给 $\mathrm{Z0}$；单点时 $D_p=\varnothing$。反向任一单纯形的顶点在这个归一嵌入中线性独立，亦有 $\nu=0$。
+
+设 $\nu=1$。先把整个原效应区间写全。任意顶点赋值 $A_i,B_j,Z_k$ 下降为 $V$ 上实线性泛函的充要条件是它消灭整个 $\ker\Phi$，故全 proper 赋值恰为
+
+$$
+0\le A_i,B_j,Z_k\le1,\qquad
+\sum_i\alpha_iA_i=\sum_j\beta_jB_j.
+\tag{92.8}
+$$
+
+充分性还使用 $C=\operatorname{cone}P$：所有顶点值与补值非负就保证在整个原锥上非负。这里列的是全部 $P$ 及其全部关系，故无额外延拓问题；零系数顶点的 $Z_k$ 可独立取遍 $[0,1]$。
+
+按(92.4)选择 $p$。两组均非空且每个 $\beta_j\ge t$，所以 $b,1-b\ge t$。令两张效应都取 $A_1=1$、其余 $A_i=0$、全部 $Z_k=0$，列值分别取
+
+$$
+\begin{array}{c|cc}
+&j\in J&j\notin J\\ \hline
+f_x(b_j)&0&t/(1-b)\\
+f_y(b_j)&t/b&0
+\end{array}
+\tag{92.9}
+$$
+
+所有值都在 $[0,1]$，两张表的列侧加权和均为 $t$，与行侧相同。由(92.8)，这是在全部原顶点及整个原锥上定义的两张 proper 效应，确认 $p$，分别排除 $x,y$，故两个零最小值达到。
+
+任取原 $f\in F_p$，记
+
+$$
+s_J=\sum_{j\in J}\beta_j f(b_j),\qquad
+s_{J^c}=\sum_{j\notin J}\beta_j f(b_j).
+\tag{92.10}
+$$
+
+两数非负，关系与确认给 $s_J+s_{J^c}=\sum_i\alpha_i f(a_i)\ge t$。于是
+
+$$
+f\bigl((x+y)/2\bigr)
+=\frac{s_J}{2b}+\frac{s_{J^c}}{2(1-b)}
+\ge\frac{s_J+s_{J^c}}{2\max\{b,1-b\}}
+\ge\frac{t}{2\max\{b,1-b\}}.
+\tag{92.11}
+$$
+
+若 $b\ge1-b$，(92.9)的 $f_y$ 把全部列质量 $t$ 放在 $J$，达到下界；若 $b\le1-b$，$f_x$ 达到下界，相等分支两者均达到。这证明(92.6)并直接违反原混态 $\mathrm{Z0}$，不依赖球性、纯比较互反或共同零面引理。$c_k$ 的取值既不进入关系也不进入目标态，因而可自由选择；上面取零给出完整可行见证，没有将这些顶点从原基中删除。
+
+最后，若 $\nu\le1$ 而有 $\mathrm{Z0}$，刚证结论使原 $K$ 是单纯形。单纯形任意不同纯对的整个最小面为端点线段，两个端点由重心坐标效应全域区分，所以 $\mathrm A$ 成立；这推出(92.7)。该必要界只涉及纯点有限的整个原载体，不用于无限纯点集。证毕。
+
+### 92.3 同时失去对径区分与零拼合的六点控制
+
+**命题 92.3（实五维中的加权六点控制）。** 令
+
+$$
+\begin{gathered}
+V=\mathbb R^6/\mathbb R(8,1,1,-8,-1,-1),\qquad
+a_i=[e_i],\quad b_j=[e_{3+j}]\quad(1\le i,j\le3),\\
+C=\operatorname{cone}\{a_1,a_2,a_3,b_1,b_2,b_3\},\qquad
+u([z])=\sum_{k=1}^6z_k,\qquad K=C\cap\{u=1\}.
+\end{gathered}
+\tag{92.12}
+$$
+
+使用整个原 $K$、全部纯点与全 proper 区间。它满足89.1，$\dim V=5$，全部纯点恰为这六点，唯一归一关系为
+
+$$
+\tfrac45a_1+\tfrac1{10}a_2+\tfrac1{10}a_3
+=\tfrac45b_1+\tfrac1{10}b_2+\tfrac1{10}b_3.
+\tag{92.13}
+$$
+
+每个不同纯对的整个最小面都是端点线段，因此全称 $\mathrm B$ 成立；但 $\mathrm A$ 与 $\mathrm{Z0}$ 都失败，准确有
+
+$$
+\begin{gathered}
+H(a_1,b_1)=[a_1,b_1],\qquad T_{a_1}(b_1)=\tfrac34>0,\\
+p=a_2,\quad x=b_1,\quad y=(b_2+b_3)/2:\qquad
+T_p(x)=T_p(y)=0,\qquad T_p((x+y)/2)=\tfrac1{16}.
+\end{gathered}
+\tag{92.14}
+$$
+
+证明。关系向量的坐标和为零，所以 $u$ 良定义。商中六点张成 $V$；有限生成锥闭。非零非负组合有严格正总系数，其 $u$ 值正，且不可能是带正负号的关系向量，故 $u$ 严格正；这也使锥尖。单位值为一的原基恰为六点凸包，紧且非空。唯一关系有三个正系数及三个负系数。若某个所列点是其余点的凸组合，将产生一个只有一个正坐标的非零核向量；该核的任一非零元在每个符号侧都有三个非零坐标，矛盾。所列点因此全是不同极点，有限凸包再无其他极点。
+
+为同时核对所有整个二点面，证明(92.2)中 $r,s\ge3$ 时的一般面证书，并允许任意 $c_k$。任选两个不同原顶点，将它们的效应值设为零；未选中的 $a_i$ 的总关系权记为 $A_0$，未选中的 $b_j$ 的总关系权记为 $B_0$。因为每侧至少三个点且只选两个，$A_0,B_0>0$。在未选 $a_i$ 上统一取值 $B_0/(A_0+B_0)$，在未选 $b_j$ 上统一取值 $A_0/(A_0+B_0)$，未选 $c_k$ 取一。两侧加权和均为 $A_0B_0/(A_0+B_0)$，所以(92.8)给全域 proper 效应；它恰在所选两个顶点取零，其他顶点严格正。其零面恰为所选端点线段，故该线段就是整个最小面。这个标准Gale面证书在此仅用于核对全称 $\mathrm B$，不作为新的多面体分类；它尤其适用于(92.13)。
+
+任一确认 $a_1$ 的原效应由关系满足
+
+$$
+\tfrac45\le\sum_i\alpha_i f(a_i)
+=\tfrac45 f(b_1)+\tfrac1{10}f(b_2)+\tfrac1{10}f(b_3)
+\le\tfrac45f(b_1)+\tfrac15.
+\tag{92.15}
+$$
+
+所以 $f(b_1)\ge3/4$。赋值 $(f(a_1),f(a_2),f(a_3))=(1,0,0)$、$(f(b_1),f(b_2),f(b_3))=(3/4,1,1)$ 满足完整(92.8)，达到此界。这证明 $a_1$ 与 $b_1$ 虽是其整个最小线段的对径，仍不可全域区分。
+
+对于第二行，取 $t=1/10$、$J=\{1\}$、$b=4/5$，92.2给精确中点值 $(1/10)/(2\cdot4/5)=1/16$。两张排除效应的行值均为 $(0,1,0)$，列值分别为 $(0,1/2,1/2)$、$(1/8,0,0)$，直接满足(92.13)并分别排除 $x,y$；后一张达到中点 $1/16$。这在同一个实五维原载体上同时核对了 $\mathrm B$、$\neg\mathrm A$ 及 $\neg\mathrm{Z0}$，所以不是 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 的反模型。证毕。
+
+### 92.4 单关系排除的几何意义及完整候选边界
+
+**推论 92.4（有限单关系表示域内的同数据结算）。** 完整保留89.7的原 $\mathcal O$ 和全部非几何条件。若每个原 $X=A,D,E$ 都有有限纯点集且关系零度 $\nu_X\le1$，则将其 $\mathrm B+\mathrm{Boundary}$ 换为同一原载体的 $\mathrm{Z0}$ 仍是完整同数据等价；但此表示域中每个满足候选的单系统必为单纯形。一般89.12仍未解决，特别是有限纯点且 $\nu\ge2$、或纯点无限的原载体。
+
+证明。若有原 $\mathrm{Z0}$，92.2给同一基为单纯形，其重心坐标效应给完整 $S$，89.4给 $\mathrm B+\mathrm{Boundary}$。反向由89.4取得 $S$，再用90.6的 least 零面论证得到 $\mathrm{Z0}$。于是89.8和89.9仍在全部原前件下应用；实际来源与终端路线保持89.7及89.10的原域。这一限制域只得到经典单纯形几何；不由此构造非经典复块、指定复合、CP、仪器或时间，也不解除91.3列明的任何原消费者条件。
+
+几何上，把所有纯点看成支点，proper 效应是给每个支点赋零到一的高度。一条准备关系要求左右两边的加权平均高度完全相同。选权重最小的左支点必须点亮，可以分别把右边一组的混态、其余一组的混态压成零，因为两次允许换尺；但两组混态的中点给右边每个支点都分配正质量，若它仍为零，就会通过同一关系逼已点亮的左支点也变零。(92.11)把这个矛盾量化成精确且达到的正高度；不等权和不参加关系的自由顶点都未破坏它。六点例中每一对支点之间又确实是一整条最小线段，说明这种全局高度冲突能与全部局部球性共存。
+
+关系表示、PSD像空间面与二阶球表示均是成熟中间工具；91.2的全效应团重叠推导、92.2的加权混态最小值及它们的同数据应用只使用相应条目明列的前件。尤其(92.8)之所以充分，是因为关系取自整个 $P$；若只在更大载体中抽出一个单关系子配置，其他原纯点和其他关系可能禁止这些效应赋值，没有获得全域延拓之前不能应用92.2。两条受控路线都未证明一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$：前者已付团生成表示，后者已付全载体有限关系零度界。原 $\mathrm B+\mathrm{Boundary}$ 候选及89.7—89.10的全部完整前件保持原范围。证毕。
+
+## 追加锚（本行以下为增补区）
