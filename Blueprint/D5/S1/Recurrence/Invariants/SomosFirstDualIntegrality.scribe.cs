@@ -81,12 +81,13 @@ internal sealed class SomosFirstDualIntegralityDocument : IScribeDocumentDefinit
             InjectiveCast()))))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        DescribeRole role, string prose, bool fromSource = false) => Describe.Lean(
+        DescribeRole role, string prose, bool fromSource = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("first-dual-somos-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             fromSource ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The first dual Somos-4 orbit has integer shadows exactly at p=1, for each integer initial tuple.",
@@ -120,7 +121,10 @@ internal sealed class SomosFirstDualIntegralityDocument : IScribeDocumentDefinit
                 + "shadow coefficients are integers if and only if p=1. The displayed conjunction also gives "
                 + "the unique real-dual realization, the same shadow equivalence there, and injectivity "
                 + "of the coefficientwise embedding. The p=1 sufficient direction is published prior work. "
-                + "The formal proof uses the following elementary divisibility route."),
+                + "The formal proof uses the following elementary divisibility route.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ovsienko-tabachnikov-first-dual-somos-integrality"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("For eight consecutive integer duals A,B,C,D,E,F,G,H, reduce modulo E. "
                 + "Coprimality of the real parts of B,C,D with that of E makes B,C,D units by a "
                 + "lifted Bezout identity. The four exchange equations make F,G,H units as well. "
