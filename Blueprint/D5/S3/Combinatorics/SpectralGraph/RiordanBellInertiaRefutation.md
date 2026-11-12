@@ -34,6 +34,10 @@ $$\neg (\forall n \in \operatorname{Nat},\; 1 \le n \Rightarrow \left(\forall g 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/RiordanBellInertiaRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cheon-riordan-bell-inertia-611` (refuted) by `D5/S3/Combinatorics/SpectralGraph/RiordanBellInertiaRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cheon-riordan-bell-inertia-611","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/RiordanBellInertiaRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gi-Sang Cheon, Ji-Hwan Jung, Sergey Kitaev and Seyed Ahmad Mojallal (2018). *Riordan graphs II: Spectral properties*. DOI: [10.1016/j.laa.2019.04.011](https://doi.org/10.1016/j.laa.2019.04.011). URL: <https://arxiv.org/abs/1801.07021v1>.
