@@ -1,3 +1,11 @@
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualCriticalChainNearbyGlobal
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualCriticalChainNearbyGlobal
+   mirror-E: none(waiver:unbounded-arithmetic-theorem-no-numerical-experiment)
+   anchors: []
+   utility: none
+   digest: Nearby least global optimizers from original-prefix critical chains. -/
+
 import D5.S3.Arith.Robin.PriceRecord.ActualMinSecantPredecessorLogGap
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import D5.S3.Arith.Robin.ActualTwoPriceDefect
@@ -18,6 +26,26 @@ records. The original bank, prescribed-b payment and RH are not concluded.
 Ordinary mathematical input: Sections I--III of
 answer-critical-predecessor-chain-common-stock-20261112.txt,
 SHA256 2f645d8859aabb812a8e0220cef5199e616ef9da313fd98edddc2cbfbf863e2b.
+-/
+
+/-
+proof_shape: actual_record_nearby_least_global_optimizer = content.
+admission_basis: escape-witness.
+escape_witness: support_step extends each new least supporting predecessor to
+the ORIGINAL prefix, chain_state maintains that invariant along the terminating
+chain, and first_crossing constructs its first logarithmic budget crossing.
+The actual last-edge estimate and node_prime_bound make every prime through the
+next prime affordable. budget_to_least_global derives layer thresholds, excludes
+occupied zero layers by leastness, and identifies this SAME integer with the
+existing strictInteger to obtain leastness over ALL positive integers.
+The construction consumes ActualMinSecantPredecessorLogGap's uniform bound,
+the existing full-record mass limit, and the existing global layer criterion.
+The constants precede all records and all original positive prices. This is an
+unbounded arithmetic existence theorem, not finite enumeration or a packaged
+instance. The ordinary source is fallible and sits in the mature support geometry
+of Erdos--Nicolas (1975); no historical novelty or six-exponentials supplier is
+asserted. No relation identifying the original denominator h with log(m/r) is
+proved. The full original bank, every fee, Robin/5040 and RH remain open.
 -/
 
 set_option autoImplicit false

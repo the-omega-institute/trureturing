@@ -1,3 +1,11 @@
+/- GID: D5/S3/Arith/Robin/PriceRecord/ActualMinSecantPredecessorLogGap
+   generality: I
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/ActualMinSecantPredecessorLogGap
+   mirror-E: none(waiver:unbounded-arithmetic-theorem-no-numerical-experiment)
+   anchors: []
+   utility: none
+   digest: Uniform logarithmic gaps for all actual minimum-secant predecessors. -/
+
 import D5.S3.Arith.Robin.PriceRecord.PrimePowerEnvelope
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import Mathlib.NumberTheory.Harmonic.Bounds
@@ -10,6 +18,29 @@ The finite proof splits at `log P` and includes `q = 1`.
 Ordinary mathematical input: Sections I.1--I.2 of
 answer-active-facet-bank-integer-geometry-20261112.txt,
 SHA256 318699a0206675aaa3bea64288947d252d17c344df6b4a25b905caf78c5ee8ca.
+-/
+
+/-
+proof_shape: secant_support = bind-only; consumed by finite_log_gap and by
+ActualCriticalChainNearbyGlobal.secant_support on the original-prefix chain.
+proof_shape: occupied_top_price = bind-only; consumed by affordable_excess and
+ActualCriticalChainNearbyGlobal.occupied_price.
+proof_shape: actual_min_secant_predecessor_eventual_log_gap = content.
+admission_basis: escape-witness.
+escape_witness: finite_log_gap constructs the excess-prime set, proves each
+actual affordable insertion removes exactly one layer at the supporting price,
+injects its primes into their occupied valuation indices, and bounds their total
+logarithmic mass by log(4P^2) times the harmonic sum through floor(log(4P^2)/log 2).
+This live estimate and harmonic_bound_uniform supply the endpoint; neither a
+fixed-height enumeration nor a finite-instance certificate is delivered.
+The objective, prime-power envelope and exact layer delta are reused from the
+imported arithmetic modules. The two public helpers organize this proof and its
+nearby-optimizer consumer; they assert no separate new mathematical content.
+The ordinary inputs are fallible source arguments, in the mature support geometry
+of Erdos--Nicolas, Repartition des nombres superabondants (1975), pp. 69--71.
+No novelty or six-exponentials supplier is asserted. The logarithmic ratio here
+is not identified with the original bank's denominator h. The bank, every fee,
+Robin/5040 and RH remain open.
 -/
 
 set_option autoImplicit false
@@ -25,9 +56,8 @@ open D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 open D5.S3.Arith.Robin.PriceRecord.PrimePowerEnvelope
 open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 
-/- Every helper below is private and consumed by the main theorem. No library
-exposure patch is needed. `goldenResourceObjective 0 n` is exactly ell(n),
-by golden_resource_sigma_identity for n >= 1. -/
+/- Private helpers and the two public consumed helpers feed the endpoint.
+`goldenResourceObjective 0 n` is exactly ell(n) for n >= 1. -/
 
 private theorem price_change (t : ℝ) (n : ℕ) :
     goldenResourceObjective t n = goldenResourceObjective 0 n - t * Real.log n := by
