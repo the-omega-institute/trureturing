@@ -84,6 +84,8 @@ private lemma moment_values :
     show (Real.sqrt (Real.sqrt 15)) ^ 6 =
       ((Real.sqrt (Real.sqrt 15)) ^ 2) ^ 3 by ring, hc, hs]
   all_goals norm_num
+  all_goals nlinarith [show (Real.sqrt 15)^3 = 15 * Real.sqrt 15 by
+    rw [show (Real.sqrt 15)^3 = (Real.sqrt 15)^2 * Real.sqrt 15 by ring, hs]]
 
 private lemma model_character (N : ℕ) (T : Finset (Fin N)) :
     modelFunctional N (∏ d ∈ T, modelY N d) =
@@ -111,8 +113,9 @@ private lemma model_positive (N : ℕ) (hN : 4 ≤ N) (F : (Fin N → Bool) → 
     · norm_num [zWeight]
     · norm_num [zWeight]
     · have hs1 : (1 : ℝ) ≤ Real.sqrt 15 := by
+        have hsp : (0 : ℝ) ≤ Real.sqrt 15 := by positivity
         nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num,
-          sq_nonneg (Real.sqrt 15 - 1)]
+          hsp, sq_nonneg (Real.sqrt 15 - 1)]
       have hp : 0 < Real.sqrt 15 := by positivity
       have hi : 1 / Real.sqrt 15 ≤ (1 : ℝ) := (div_le_one₀ hp).2 hs1
       dsimp [zWeight]
@@ -181,7 +184,7 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr6 : r < 
       rw [he]
       field_simp
 
-private lemma subsetDistinct_univ (ℓ : ((Fin N → Bool) → ℝ) →ₗ[ℝ] ℝ)
+private lemma subsetDistinct_univ {N : ℕ} (ℓ : ((Fin N → Bool) → ℝ) →ₗ[ℝ] ℝ)
     (Y : Fin N → (Fin N → Bool) → ℝ) (g : Fin 6 → Fin N → ℝ) :
     subsetDistinctMoment ℓ Y g (Finset.univ : Finset (Fin 6)) =
       distinctIndexMoment ℓ Y g := by
@@ -189,6 +192,8 @@ private lemma subsetDistinct_univ (ℓ : ((Fin N → Bool) → ℝ) →ₗ[ℝ] 
   unfold subsetDistinctMoment
   congr 1
   funext j
+  apply congrArg g
+  apply Subtype.ext
   simp
 
 private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
@@ -196,14 +201,124 @@ private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
       (1 / (N : ℝ)) *
         ((∑ d, f d) * (∑ d, h d) - ∑ d, f d * h d) := by
   classical
-  rw [distinct_moments]
-  simp only [moment_values.2.2.1, Finset.prod_univ_two]
-  rw [← Finset.sum_filter_add_sum_filter_not _ Function.Injective]
+  have hsum :
+      (∑ x : Fin 2 → Fin N with Function.Injective x, ∏ i, ![f, h] i (x i)) =
+        ∑ d, ∑ e with d ≠ e, f d * h e := by
+    simpa [Finset.prod_univ_two] using
+      (sum_two (fun d e => f d * h e))
+  rw [distinct_moments, hsum]
+  simp only [moment_values.2.2.1, Real.sq_sqrt (by positivity)]
+  rw [← Finset.sum_filter_add_sum_filter_not (Finset.univ : Finset (Fin N))
+    (fun e => e ≠ _)]
   simp only [Finset.sum_filter, Finset.mem_univ, true_and]
-  simp only [Function.Injective, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [← Finset.sum_mul, ← Finset.mul_sum]
-  simp only [Finset.sum_sub_distrib]
   ring
+
+private lemma subset_pair_formula (N : ℕ) (g : Fin 6 → Fin N → ℝ)
+    (e : Finset (Fin 6)) (he : e.card = 2) :
+    subsetDistinctMoment (modelFunctional N) (modelY N) g e =
+      (1 / (N : ℝ)) *
+        ((∏ i ∈ e, ∑ d, g i d) - ∑ d, ∏ i ∈ e, g i d) := by
+  classical
+  let q : Fin 2 → Fin N → ℝ := fun j => g ((Fintype.equivFin e).symm j).val
+  have hR : subsetDistinctMoment (modelFunctional N) (modelY N) g e =
+      distinctIndexMoment (modelFunctional N) (modelY N) q := by
+    unfold subsetDistinctMoment
+    congr 1
+    funext j
+    rfl
+  rw [hR]
+  have hq : q = ![q 0, q 1] := by funext j; fin_cases j <;> rfl
+  rw [hq, distinct_pair_formula]
+  have hp : (∏ i ∈ e, ∑ d, g i d) =
+      (∑ d, q 0 d) * (∑ d, q 1 d) := by
+    simp only [q]
+    rw [← Finset.prod_attach e]
+    have hprod : (∏ i : e, ∑ d, g i i.val d) =
+        (∑ d, q 0 d) * (∑ d, q 1 d) := by
+      rw [← Fin.prod_univ_two]
+      apply Fintype.prod_equiv (Fintype.equivFin e)
+      intro i
+      simp [q]
+    simpa only [Finset.attach_eq_univ] using hprod
+  have ht : (∑ d, ∏ i ∈ e, g i d) = ∑ d, q 0 d * q 1 d := by
+    apply Finset.sum_congr rfl
+    intro d hd
+    rw [← Finset.prod_attach e]
+    have hprod : (∏ i : e, g i.val d) = q 0 d * q 1 d := by
+      rw [← Fin.prod_univ_two]
+      apply Fintype.prod_equiv (Fintype.equivFin e)
+      intro i
+      simp [q]
+    simpa only [Finset.attach_eq_univ] using hprod
+  rw [← hp, ← ht]
+
+private lemma injective_count (N : ℕ) :
+    Fintype.card {x : Fin 6 → Fin N // Function.Injective x} = N.descFactorial 6 := by
+  let e : {x : Fin 6 → Fin N // Function.Injective x} ≃ (Fin 6 ↪ Fin N) :=
+    { toFun := fun x => ⟨x.1, x.2⟩
+      invFun := fun x => ⟨x, x.injective⟩
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl }
+  rw [Fintype.card_congr e, Fintype.card_embedding_eq]
+  rfl
+
+private lemma inj_sum_product_bound (N : ℕ) (hN : 1 ≤ N)
+    (g : Fin 6 → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
+    |(∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) -
+        ∏ i, ∑ d, g i d| ≤ 36 * (N : ℝ)^5 := by
+  classical
+  let all : Finset (Fin 6 → Fin N) := Finset.univ
+  let good : Finset (Fin 6 → Fin N) := all.filter Function.Injective
+  let bad : Finset (Fin 6 → Fin N) := all.filter (fun x => ¬Function.Injective x)
+  have hsplit :
+      (∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) +
+        ∑ x : Fin 6 → Fin N with ¬Function.Injective x, ∏ i, g i (x i) =
+        ∑ x : Fin 6 → Fin N, ∏ i, g i (x i) := by
+    rw [← Finset.sum_filter_add_sum_filter_not _ Function.Injective]
+  have hall : (∑ x : Fin 6 → Fin N, ∏ i, g i (x i)) = ∏ i, ∑ d, g i d := by
+    rw [← Fintype.prod_sum]
+  have hcardbad : (bad.card : ℝ) ≤ 36 * (N : ℝ)^5 := by
+    have hcardgood : good.card = N.descFactorial 6 := by
+      simpa only [good, all, Fintype.card_subtype] using injective_count N
+    have hcardall : all.card = N ^ 6 := by simp [all, Fintype.card_fun]
+    have hdisj : Disjoint good bad := by
+      apply Finset.disjoint_left.mpr
+      intro x hxg hxb
+      exact (Finset.mem_filter.mp hxb).2 (Finset.mem_filter.mp hxg).2
+    have hunion : good ∪ bad = all := by
+      ext x
+      simp only [good, bad, all, Finset.mem_union, Finset.mem_filter, Finset.mem_univ,
+        true_and]
+      tauto
+    have hc : good.card + bad.card = all.card := by
+      rw [← Finset.card_union_of_disjoint hdisj, hunion]
+    rw [hcardall, hcardgood] at hc
+    have hcastNat : bad.card = N ^ 6 - N.descFactorial 6 := by omega
+    have hcast : (bad.card : ℝ) = (N : ℝ)^6 - (N.descFactorial 6 : ℝ) := by
+      exact_mod_cast hcastNat
+    rw [hcast]
+    norm_num [Nat.descFactorial_succ, Nat.cast_sub (by omega : 1 ≤ N),
+      Nat.cast_sub (by omega : 2 ≤ N), Nat.cast_sub (by omega : 3 ≤ N),
+      Nat.cast_sub (by omega : 4 ≤ N), Nat.cast_sub (by omega : 5 ≤ N)] at *
+    have hN' : (1 : ℝ) ≤ N := by exact_mod_cast hN
+    have hpow : (0 : ℝ) ≤ (N : ℝ)^5 := by positivity
+    nlinarith [hN', hpow]
+  have hbad :
+      |∑ x : Fin 6 → Fin N with ¬Function.Injective x, ∏ i, g i (x i)| ≤
+        36 * (N : ℝ)^5 := by
+    calc
+      _ ≤ ∑ x : Fin 6 → Fin N with ¬Function.Injective x, |∏ i, g i (x i)| :=
+        Finset.abs_sum_le_sum_abs _ _
+      _ ≤ ∑ _x : Fin 6 → Fin N with ¬Function.Injective x, (1 : ℝ) := by
+        apply Finset.sum_le_sum
+        intro x hx
+        rw [Finset.abs_prod]
+        exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun i _ => hg i (x i))
+      _ = (bad.card : ℝ) := by simp [bad, all]
+      _ ≤ _ := hcardbad
+  rw [← hall, ← hsplit]
+  linarith
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
