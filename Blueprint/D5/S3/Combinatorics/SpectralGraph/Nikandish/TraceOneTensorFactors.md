@@ -8,9 +8,9 @@ Source: repeated-pair-modular, supplied PR9 revision 6d491f77b35dec808fc777b6993
 
 **Theorem 1.1 (Every root has its trace-one complementary root).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.complement_root`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.complement_root`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.complement_root` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.complement_root` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ All characteristics, including two and repeated roots, are retained.
 
 **Theorem 1.2 (Every root product descends under tensor splitting).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.root_product_in_range`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.root_product_in_range`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.root_product_in_range` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.root_product_in_range` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ The proof uses the full tensor eigenvector and characteristic polynomial.
 
 **Theorem 1.3 (Full finite trace-one tensor equivalence).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.tensor_splits_iff`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.tensor_splits_iff`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.tensor_splits_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.tensor_splits_iff` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,7 +44,7 @@ Every finite family of actual two-dimensional matrices over every field is retai
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.complement_root`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.root_product_in_range`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors.tensor_splits_iff`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting](TraceOneTensorSplitting.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.complement_root`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.root_product_in_range`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors.tensor_splits_iff`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting](TraceOneTensorSplitting.md)

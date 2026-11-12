@@ -6,9 +6,9 @@ Received complete three-prime statements; actual objects and original domains re
 
 **Theorem 1.1 (index_identity).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.index_identity`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.index_identity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.index_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.index_identity` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ The exact all-index polynomial divisor identity j⁴M-(j+1)³(j+2)=d times the d
 
 **Theorem 1.2 (index_divisor).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.index_divisor`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.index_divisor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.index_divisor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.index_divisor` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ Every exact factor pair at any integer index has d dividing (j+1)³(j+2).
 
 **Theorem 1.3 (first_indices).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.first_indices`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.first_indices`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.first_indices` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.first_indices` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ The first three positive indices are exhausted by the exact constants 24,108,320
 
 **Theorem 1.4 (first_index_root).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.first_index_root`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.first_index_root`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.first_index_root` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.first_index_root` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ Every one of those eight complete arithmetic cases has a real cubic root in its 
 
 **Theorem 1.5 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,11 +66,11 @@ For every three distinct primes and every positive integer repeated exponent a a
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.first_index_root`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.first_indices`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.index_divisor`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.index_identity`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion.result`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCubicIntervals](SixSupportRepeatedCubicIntervals.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs](SixSupportRepeatedFactorPairs.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.first_index_root`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.first_indices`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.index_divisor`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.index_identity`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion.result`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCubicIntervals](SixSupportRepeatedCubicIntervals.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs](SixSupportRepeatedFactorPairs.md)

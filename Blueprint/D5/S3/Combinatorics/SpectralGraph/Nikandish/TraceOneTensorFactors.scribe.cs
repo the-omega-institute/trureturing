@@ -4,7 +4,7 @@ internal sealed class TraceOneTensorFactorsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
     private static DocumentBlock Item(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors." + name),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -14,5 +14,5 @@ internal sealed class TraceOneTensorFactorsDocument : IScribeDocumentDefinition
             Item("complement-root", "complement_root", "Every root has its trace-one complementary root", "All characteristics, including two and repeated roots, are retained."),
             Item("root-product-in-range", "root_product_in_range", "Every root product descends under tensor splitting", "The proof uses the full tensor eigenvector and characteristic polynomial."),
             Item("tensor-splits-iff", "tensor_splits_iff", "Full finite trace-one tensor equivalence", "Every finite family of actual two-dimensional matrices over every field is retained. No semisimplicity or nonzero-determinant premise is added. The necessity proof fixes nonzero roots only in the other factors; the selected factor may have a zero or repeated root.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting"))]));
 }

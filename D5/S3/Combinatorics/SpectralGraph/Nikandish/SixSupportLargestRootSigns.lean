@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportLargestRootSigns
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLargestRootSigns
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportLargestRootSigns
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact signs and complete upper half-line exclusion for the largest quotient root. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Tactic
 
 /-! These are exact identities in the received three-prime classification.

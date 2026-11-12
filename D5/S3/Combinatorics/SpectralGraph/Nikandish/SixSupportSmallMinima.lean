@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportSmallMinima
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSmallMinima
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportSmallMinima
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Complete distinct unit and minimum-two branches of the actual three-prime graph. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportUniformTail
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportUniformTail
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 

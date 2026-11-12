@@ -8,9 +8,9 @@ Source: repeated-pair-modular, supplied PR9 revision 6d491f77b35dec808fc777b6993
 
 **Theorem 1.1 (Products of actual nonzero factor eigenvectors).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.tensor_eigenpair`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.tensor_eigenpair`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.tensor_eigenpair` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.tensor_eigenpair` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ All tensor coordinates occur and the resulting eigenvector is proved nonzero.
 
 **Theorem 1.2 (Trace-one two-dimensional triangularization).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.triangular_conjugacy`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.triangular_conjugacy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.triangular_conjugacy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.triangular_conjugacy` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ Repeated roots and zero roots are allowed over every field.
 
 **Theorem 1.3 (All split factors give a split tensor characteristic polynomial).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.splits_of_factors`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.splits_of_factors`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.splits_of_factors` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.splits_of_factors` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,7 +44,7 @@ The finite tensor of invertible triangularizations and a linear extension of the
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.splits_of_factors`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.tensor_eigenpair`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting.triangular_conjugacy`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/RepeatedPairIntegralPolynomial](RepeatedPairIntegralPolynomial.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.splits_of_factors`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.tensor_eigenpair`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting.triangular_conjugacy`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairIntegralPolynomial](RepeatedPairIntegralPolynomial.md)

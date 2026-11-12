@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootUnits
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootUnits
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootUnits
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Actual supplied Nikandish tower and finite-root objects, pending current canonical admission. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteRootGeometry
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteRootGeometry
 
 /-! This uses the actual ring, places and embedding
 constructed in FiniteDRootGeometry01; it assumes none of the target geometry.

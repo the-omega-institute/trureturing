@@ -6,7 +6,7 @@ internal sealed class CodeCentralizersDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/CodeCentralizers.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
+        "D5/L/FiniteGroups/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Centralizers and the normal core of a total perfect subgroup code.",

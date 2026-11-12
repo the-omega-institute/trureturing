@@ -6,9 +6,9 @@ Received complete three-prime statements; actual objects and original domains re
 
 **Definition 1.1 (discriminant).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.discriminant`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.discriminant`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.discriminant` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.discriminant` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ The exact natural-number antisymmetric discriminant (a+1)²b²+2a(3a+1)b+a².
 
 **Definition 1.2 (root).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.root`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.root`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.root` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.root` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ Both complementary roots, distinguished by a Boolean sign, with the exact square
 
 **Theorem 1.3 (roots).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.roots`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.roots`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.roots` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.roots` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ Both displayed roots satisfy the exact complementary quadratic for every natural
 
 **Theorem 1.4 (roots_irrational).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.roots_irrational`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.roots_irrational`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.roots_irrational` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.roots_irrational` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ A nonsquare natural discriminant makes both complementary roots irrational, with
 
 **Theorem 1.5 (actual_quadratic_eigenvalue).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.actual_quadratic_eigenvalue`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.actual_quadratic_eigenvalue`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.actual_quadratic_eigenvalue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.actual_quadratic_eigenvalue` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,9 +66,9 @@ Every nonzero complementary quadratic root gives actual graph eigenvalue V-e, fo
 
 **Theorem 1.6 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -78,9 +78,9 @@ The entire nonsquare branch supplies both irrational actual eigenvalues and disp
 
 **Theorem 1.7 (two_unit_nonsquare).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.two_unit_nonsquare`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.two_unit_nonsquare`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.two_unit_nonsquare` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.two_unit_nonsquare` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -90,9 +90,9 @@ For every positive third exponent, the a=1 discriminant lies strictly between co
 
 **Theorem 1.8 (two_unit_actual).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.two_unit_actual`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.two_unit_actual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.two_unit_actual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.two_unit_actual` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -102,13 +102,13 @@ All positive (1,1,b) ideal graphs are nonintegral. The explicit quadratic roots 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.actual_quadratic_eigenvalue`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.discriminant`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.root`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.roots`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.roots_irrational`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.two_unit_actual`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic.two_unit_nonsquare`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedBlocks](SixSupportRepeatedBlocks.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.actual_quadratic_eigenvalue`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.discriminant`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.root`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.roots`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.roots_irrational`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.two_unit_actual`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic.two_unit_nonsquare`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedBlocks](SixSupportRepeatedBlocks.md)

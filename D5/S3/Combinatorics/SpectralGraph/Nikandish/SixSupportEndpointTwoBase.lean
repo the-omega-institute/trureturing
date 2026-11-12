@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoBase
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoBase
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoBase.endpoint_one_for_actual_integral; instance=D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoBase.result
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase.endpoint_one_for_actual_integral; instance=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase.result
    digest: Complete8658 endpoint-two base with exact minimum absolute endpoint8208. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Tactic
 
 /-! Exact original8≤a≤39, a<b<2a-2, b<c≤floor((9a-33)/4).

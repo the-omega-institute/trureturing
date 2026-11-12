@@ -6,9 +6,9 @@ Exact polynomial identities for the actual six-support quotient.
 
 **Theorem 1.1 (Zero factor).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.charpoly_zero_factor`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial.charpoly_zero_factor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.charpoly_zero_factor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial.charpoly_zero_factor` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ Over every commutative coefficient ring, the characteristic polynomial of the li
 
 **Theorem 1.2 (Division-free determinant).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.determinant_formula`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial.determinant_formula`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.determinant_formula` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial.determinant_formula` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,7 +30,7 @@ For all parameters and every commutative ring, the actual six-by-six determinant
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.charpoly_zero_factor`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.determinant_formula`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianLowRoot](SixSupportLaplacianLowRoot.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportQuadraticTower](SixSupportQuadraticTower.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial.charpoly_zero_factor`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial.determinant_formula`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportQuadraticTower](SixSupportQuadraticTower.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianLowRoot](../SixSupportLaplacianLowRoot.md)

@@ -4,7 +4,7 @@ internal sealed class SixSupportFiniteRootUnitsDocument : IScribeDocumentDefinit
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
     private static DocumentBlock Item(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootUnits." + name),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootUnits." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -15,5 +15,5 @@ internal sealed class SixSupportFiniteRootUnitsDocument : IScribeDocumentDefinit
             Item("unit", "localF_unit", "The actual f has a local unit representative", "The local numerator and denominator are units at every actual D root; the local representative maps to the same supplied f in H."),
             Item("same-field", "localF_intoH", "The local representative maps to the actual f", "The map is the fixed actual localization embedding into H, with its prescribed algebra structure."),
             Item("valuation", "valuation_f", "Every actual finite D place gives valuation one", "Multiplicative normalized valuation of f is1, equivalently additive order zero.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootGeometry"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootGeometry"))]));
 }

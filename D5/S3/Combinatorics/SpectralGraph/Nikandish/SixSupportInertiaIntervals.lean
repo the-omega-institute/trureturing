@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact interval consumers of the full six-support inertia formula. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportInertia
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportInertia
 
 /-! Source: complete low-spectrum and mixed-inertia sections, revision
 b93becea662a746badeadba42fdc3d3eb3db9382, blobs

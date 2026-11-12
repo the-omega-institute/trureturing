@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)

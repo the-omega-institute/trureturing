@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportLargestRoot
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLargestRoot
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportLargestRoot
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: The full largest-root unit interval, consumed by actual ideal graphs. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportLargestRootSigns
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportLargestRootSigns
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Data.Finset.Max

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCubicIntervals
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCubicIntervals
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCubicIntervals
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Full repeated cubic unit intervals and the unbounded fourth-index tail. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedBlocks
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedBlocks
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 

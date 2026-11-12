@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoMaximum
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoMaximum
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoMaximum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Full real maximum-exponent bound for the endpoint-two surface. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportSharpMiddle
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportSharpMiddle
 import Mathlib.Tactic
 
 /-! The original supplied 88 positive coefficients, from the complete

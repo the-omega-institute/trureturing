@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportUniformTail
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: The complete real uniform cutoff and actual ideal-graph nonintegrality. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointSmallGaps
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointSmallGaps
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 

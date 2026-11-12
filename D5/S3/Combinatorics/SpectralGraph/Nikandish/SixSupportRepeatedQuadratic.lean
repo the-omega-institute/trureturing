@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Full nonsquare repeated-exponent obstruction and all two-unit exponents. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedBlocks
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedBlocks
 import Mathlib.NumberTheory.Real.Irrational
 import Mathlib.Tactic
 

@@ -8,9 +8,9 @@ Sources: complete PR9 S.ep1gap notes/endpoint-one-growing-gap.md and S.ep2gap no
 
 **Definition 1.1 (Exact original rounded integer bracket).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.lowerOne`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.lowerOne`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.lowerOne` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.lowerOne` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ The full integer formula2a^2+(2d-3)a-d^2-ceil(3d/2)+1 uses integer(3d+1)/2; both
 
 **Theorem 1.2 (Entire endpoint-one unbounded gap family).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.one_bracket`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.one_bracket`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.one_bracket` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.one_bracket` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ For every integerd>=1 and a>=2d^2+20 there is a unique simple exponent root abov
 
 **Theorem 1.3 (Entire real endpoint-two unbounded gap family).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.two_bracket`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.two_bracket`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.two_bracket` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.two_bracket` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,9 +44,9 @@ For every reald>=5 and a>=2d^2+20, the unique simple root in c>b lies strictly i
 
 **Theorem 1.4 (Full endpoint-one integer exclusion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.one_integer_nonzero`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.one_integer_nonzero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.one_integer_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.one_integer_nonzero` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -56,9 +56,9 @@ Every integerd>=1,a>=2d^2+20,c>a+d is excluded from h_C(1)=0 by the entire unit 
 
 **Theorem 1.5 (Full endpoint-two integer exclusion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.two_integer_nonzero`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.two_integer_nonzero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.two_integer_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.two_integer_nonzero` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -68,9 +68,9 @@ Every integerd>=5,a>=2d^2+20,c>a+d is excluded from h_C(2)=0. This says nothing 
 
 **Definition 1.6 (Complete fixed-real-gap expansion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.fixedGapApproximation`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.fixedGapApproximation`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.fixedGapApproximation` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.fixedGapApproximation` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -80,9 +80,9 @@ For each fixed real d>=1 the full expression is2a^2+(2d-3)a-(d+2)(2d-1)/2+d^2/(2
 
 **Theorem 1.7 (Actual root expansion with proved remainder).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.fixed_gap_expansion`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.fixed_gap_expansion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.fixed_gap_expansion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.fixed_gap_expansion` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -92,9 +92,9 @@ For every real d>=1 there exists C(d)>0 such that, for every real a>=2d^2+20, th
 
 **Theorem 1.8 (The complete parity-free written graph family).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -104,12 +104,12 @@ At arbitrary three distinct primes, every actual ideal graph with integer expone
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.fixedGapApproximation`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.fixed_gap_expansion`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.lowerOne`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.one_bracket`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.one_integer_nonzero`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.two_bracket`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap.two_integer_nonzero`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointGeometry](SixSupportEndpointGeometry.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.fixedGapApproximation`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.fixed_gap_expansion`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.lowerOne`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.one_bracket`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.one_integer_nonzero`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.two_bracket`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap.two_integer_nonzero`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointGeometry](SixSupportEndpointGeometry.md)

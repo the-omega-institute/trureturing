@@ -6,9 +6,9 @@ Full six-cell transport to the actual ideal-intersection graph.
 
 **Theorem 1.1 (Actual eigenvalue transport).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift.actual_eigenvalue`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift.actual_eigenvalue`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift.actual_eigenvalue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift.actual_eigenvalue` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ For every injective triple of primes, positive integer exponent triple and nonze
 
 **Theorem 1.2 (Full low-root consumer).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,7 +30,7 @@ For every ordered positive exponent triple on three distinct primes, the actual 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift.actual_eigenvalue`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift.result`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions](IdealIntersectionObstructions.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianLowRoot](SixSupportLaplacianLowRoot.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift.actual_eigenvalue`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift.result`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions](../IdealIntersectionObstructions.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianLowRoot](../SixSupportLaplacianLowRoot.md)

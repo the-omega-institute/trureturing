@@ -8,9 +8,9 @@ Let k be a characteristic-zero field and let K=k(b). The quadratic field H=K(sqr
 
 **Theorem 1.1 (All actual places and actual roots correspond).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.rootToPlace_bijective`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.rootToPlace_bijective`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.rootToPlace_bijective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.rootToPlace_bijective` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ The actual prime-spectrum fiber over the base D-root ideals is in bijection with
 
 **Theorem 1.2 (Exactly eight geometric finite D places).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.actual_place_count`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.actual_place_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.actual_place_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.actual_place_count` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ For every algebraically closed characteristic-zero field, the full actual fiber 
 
 **Theorem 1.3 (Every actual place has the complete source data).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.every_place_data`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.every_place_data`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.every_place_data` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.every_place_data` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,7 +44,7 @@ The theorem produces the root and actual prime equality, DVR, uniformizer, e2, r
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.actual_place_count`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.every_place_data`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount.rootToPlace_bijective`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootUnits](SixSupportFiniteRootUnits.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.actual_place_count`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.every_place_data`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount.rootToPlace_bijective`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootUnits](SixSupportFiniteRootUnits.md)

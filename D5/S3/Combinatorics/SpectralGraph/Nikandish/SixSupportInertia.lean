@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportInertia
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertia
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportInertia
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact mixed-sign inertia of the full six-support Schur operator. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import D5.S3.Weil.Pick.InvertibleHermitianInertiaPullback
 import Mathlib.Tactic
 

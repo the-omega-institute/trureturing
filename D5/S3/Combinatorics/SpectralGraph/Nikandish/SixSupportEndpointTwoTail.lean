@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTail
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTail
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTail
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Full real endpoint-two tail and its actual ideal-graph application. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointTwoTailSigns
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointTwoTailSigns
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 

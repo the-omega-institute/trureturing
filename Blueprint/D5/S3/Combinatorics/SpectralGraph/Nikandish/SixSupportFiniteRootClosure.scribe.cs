@@ -4,7 +4,7 @@ internal sealed class SixSupportFiniteRootClosureDocument : IScribeDocumentDefin
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
     private static DocumentBlock Item(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure." + name),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -16,5 +16,5 @@ internal sealed class SixSupportFiniteRootClosureDocument : IScribeDocumentDefin
             Item("count", "actual_closure_place_count", "Exactly eight actual normalization places", "The full normalization fiber has eight points over every algebraically closed characteristic-zero field."),
             Item("valuation", "closure_valuation_delta", "Actual normalized base valuation", "The library normalized valuation on the same H at the actual closure localization has the exact base-parameter value exp(-2)."),
             Item("data", "every_closure_place_data", "Complete data for every actual normalization place", "Every actual point has the exact prime, DVR/local uniformizer, ramification index2, residue degree1, local representative of the same f, and normalized y/base/f values. The fiber consists of all finite places above roots of D.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount"))]));
 }

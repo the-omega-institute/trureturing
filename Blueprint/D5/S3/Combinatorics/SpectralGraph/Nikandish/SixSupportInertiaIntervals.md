@@ -6,9 +6,9 @@ Complete received source inertia and actual quotient/ideal-graph consumers; orig
 
 **Theorem 1.1 (diagonal_order).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.diagonal_order`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.diagonal_order`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.diagonal_order` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.diagonal_order` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ All three source Schur diagonals are ordered for every ordered positive real tri
 
 **Theorem 1.2 (upper_criterion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.upper_criterion`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.upper_criterion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.upper_criterion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.upper_criterion` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ The original strict upper-inertia inequality gives exactly two positive actual q
 
 **Theorem 1.3 (lower_criterion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.lower_criterion`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.lower_criterion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.lower_criterion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.lower_criterion` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ The original strict lower-inertia inequality excludes positive actual quotient r
 
 **Theorem 1.4 (root_above_lower).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.root_above_lower`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.root_above_lower`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.root_above_lower` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.root_above_lower` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ Every actual positive characteristic root is strictly above the lower endpoint; 
 
 **Theorem 1.5 (unit_interval_count).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.unit_interval_count`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.unit_interval_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.unit_interval_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.unit_interval_count` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,9 +66,9 @@ Both original strict inequalities give exactly two actual quotient roots in(m-1,
 
 **Theorem 1.6 (unit_interval_actual).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.unit_interval_actual`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.unit_interval_actual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.unit_interval_actual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.unit_interval_actual` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -78,9 +78,9 @@ For every three distinct primes and all original positive integer parameter trip
 
 **Theorem 1.7 (balanced_interval).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.balanced_interval`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.balanced_interval`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.balanced_interval` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.balanced_interval` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -90,9 +90,9 @@ For every ordered real4<=a<=b<=c satisfying(a-2)(s-2)>2bc, an actual nonzero quo
 
 **Theorem 1.8 (balanced_actual).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.balanced_actual`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.balanced_actual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.balanced_actual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.balanced_actual` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -102,9 +102,9 @@ The full balanced criterion is consumed by every actual three-prime ideal graph 
 
 **Theorem 1.9 (span_criterion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_criterion`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_criterion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_criterion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_criterion` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -114,9 +114,9 @@ For every real minimum a and nonnegative span rho and every0<=d<=rho, the sharp 
 
 **Theorem 1.10 (linear_span_implies).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.linear_span_implies`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.linear_span_implies`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.linear_span_implies` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.linear_span_implies` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -126,9 +126,9 @@ The older a>=3rho+8 condition implies the sharp sufficient threshold for every n
 
 **Theorem 1.11 (span_minimizer).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_minimizer`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_minimizer`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_minimizer` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_minimizer` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -138,9 +138,9 @@ At fixed minimum and span the diagonal criterion is minimized at b=c=a+rho; no s
 
 **Theorem 1.12 (sharp_span_iff).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.sharp_span_iff`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.sharp_span_iff`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.sharp_span_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.sharp_span_iff` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -150,9 +150,9 @@ The strict diagonal criterion at its minimum is equivalent to the displayed shar
 
 **Theorem 1.13 (span_interval).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_interval`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_interval`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_interval` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_interval` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -162,9 +162,9 @@ The complete sharp span threshold gives an actual nonzero six-cell eigenvector w
 
 **Theorem 1.14 (span_actual).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_actual`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_actual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_actual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_actual` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -174,19 +174,19 @@ The sharp span theorem is applied to every actual three-prime ideal graph on the
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.balanced_actual`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.balanced_interval`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.diagonal_order`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.linear_span_implies`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.lower_criterion`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.root_above_lower`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.sharp_span_iff`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_actual`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_criterion`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_interval`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.span_minimizer`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.unit_interval_actual`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.unit_interval_count`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals.upper_criterion`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportInertia](SixSupportInertia.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.balanced_actual`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.balanced_interval`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.diagonal_order`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.linear_span_implies`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.lower_criterion`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.root_above_lower`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.sharp_span_iff`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_actual`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_criterion`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_interval`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.span_minimizer`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.unit_interval_actual`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.unit_interval_count`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals.upper_criterion`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertia](SixSupportInertia.md)

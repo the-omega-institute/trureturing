@@ -6,7 +6,7 @@ internal sealed class NormalTransversalDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/NormalTransversal.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
+        "D5/L/FiniteGroups/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Normal left transversals obtained from both total perfect subgroup code cases.",

@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Full alternating tensor restrictions of arbitrary squarefree support operators. -/
-import D5.S3.Combinatorics.SpectralGraph.RepeatedPairSupport
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.RepeatedPairSupport
 
 /-! Source: squarefree.tex, PR3 b93becea662a746badeadba42fdc3d3eb3db9382,
 blob 2cd18d52cd3f4581d624bb94006480340756a5c3. Every paired coordinate

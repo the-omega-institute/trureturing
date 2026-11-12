@@ -8,9 +8,9 @@ Sources: complete selected PR9 S.minimum8 and S.min8csv, notes/minimum-eight.md 
 
 **Theorem 1.1 (All108 fixed-middle rows exclude every unbounded last exponent).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.fixed_middle_nonzero`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.fixed_middle_nonzero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.fixed_middle_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.fixed_middle_nonzero` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ Every integer11<=b<=118 and c>b has h_C(1) nonzero. The complete source table su
 
 **Theorem 1.2 (Complete minimum-eight endpoint-one exclusion).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.endpoint_one_nonzero`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.endpoint_one_nonzero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.endpoint_one_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.endpoint_one_nonzero` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ Every fully distinct integer8<b<c is covered by the written gaps1/2, all108 fini
 
 **Theorem 1.3 (The complete distinct minimum-eight actual graph theorem).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.distinct_actual`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.distinct_actual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.distinct_actual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.distinct_actual` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,9 +44,9 @@ Every actual ideal-intersection graph on arbitrary three distinct primes with ex
 
 **Theorem 1.4 (The entire minimum-eight dependency reduction).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -56,10 +56,10 @@ All ordered integer8<=b<=c, including both kinds of repetition, give a nonintegr
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.distinct_actual`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.endpoint_one_nonzero`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.fixed_middle_nonzero`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight.result`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointGeometry](SixSupportEndpointGeometry.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTail](SixSupportEndpointTwoTail.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion](SixSupportRepeatedCompletion.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.distinct_actual`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.endpoint_one_nonzero`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.fixed_middle_nonzero`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight.result`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointGeometry](SixSupportEndpointGeometry.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTail](SixSupportEndpointTwoTail.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion](SixSupportRepeatedCompletion.md)

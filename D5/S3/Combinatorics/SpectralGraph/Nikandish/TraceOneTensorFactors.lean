@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorFactors
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/TraceOneTensorFactors
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Necessity of factor splitting for every finite trace-one tensor over a field. -/
-import D5.S3.Combinatorics.SpectralGraph.TraceOneTensorSplitting
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.TraceOneTensorSplitting
 
 /-! Source: repeated-pair-modular, PR9 6d491f77b35dec808fc777b69939c56cdae5dc02.
 The argument fixes nonzero roots only in the other factors. The chosen

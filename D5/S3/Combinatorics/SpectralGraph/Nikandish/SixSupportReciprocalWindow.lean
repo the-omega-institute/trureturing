@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Strict reciprocal divisor window for the complete endpoint-one spectrum. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportMiddleSpectrum
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportMiddleSpectrum
 
 /-! Source: the revised endpoint-one-divisor-window corollary in PR3,
 revision b93becea662a746badeadba42fdc3d3eb3db9382, original endpoint

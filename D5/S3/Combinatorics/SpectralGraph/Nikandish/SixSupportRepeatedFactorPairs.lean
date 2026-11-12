@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact complete square-discriminant factor pairs and congruence, with actual consumers. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedQuadratic
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedQuadratic
 import Mathlib.Algebra.Group.Int.Even
 import Mathlib.Algebra.Ring.Int.Parity
 import Mathlib.Tactic

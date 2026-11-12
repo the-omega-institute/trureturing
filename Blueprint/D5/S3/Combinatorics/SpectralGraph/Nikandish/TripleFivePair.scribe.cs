@@ -4,7 +4,7 @@ internal sealed class TripleFivePairDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
     private static DocumentBlock Item(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/TripleFivePair." + name),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -16,5 +16,5 @@ internal sealed class TripleFivePairDocument : IScribeDocumentDefinition
             Item("factor", "diagonal_factor", "The complete exceptional quartic factorization", "At the sole remaining candidate the quartic factors as (x-11) times the original cubic, with all coefficients retained."),
             Item("cubic", "diagonal_eigenpair", "The genuine exceptional cubic eigenpair", "The full tensor has a nonzero eigenpair in (3,4). This supplies the source witness at the surviving fifth tail, rather than treating the necessary candidate as integral."),
             Item("actual", "actual_nonintegral", "Every positive free triple-five tail", "The actual graph is nonintegral for every positive c, including c<5 and c=5, uniformly in all four distinct prime coordinates. The historical source control/reproduction and general Q3 boundaries remain unchanged.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/PairTailSpectrum"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailSpectrum"))]));
 }

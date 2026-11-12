@@ -6,9 +6,9 @@ Exact received three-prime spectral statements with actual ideal-graph consumers
 
 **Theorem 1.1 (At most two distinct positive cubic roots).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.no_three_positive`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.no_three_positive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.no_three_positive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.no_three_positive` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ Every real cubic with positive leading and constant coefficients has at most two
 
 **Definition 1.2 (cubic).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.cubic`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.cubic`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.cubic` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.cubic` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ The complete source cubic h_C(1), as a polynomial in c, with all coefficients in
 
 **Theorem 1.3 (endpoint_identity).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.endpoint_identity`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.endpoint_identity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.endpoint_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.endpoint_identity` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ The cubic is exactly the characteristic quotient at one for every real a,b,c.
 
 **Definition 1.4 (lower).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.lower`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.lower`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.lower` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.lower` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ The original two lower endpoints L1=2a^2-a-2 and L2=2a^2+a-6, indexed by precise
 
 **Theorem 1.5 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,9 +66,9 @@ For every real a>=2 and either gap d=1 or2, the complete cubic has exactly one r
 
 **Theorem 1.6 (integer_nonzero).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.integer_nonzero`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.integer_nonzero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.integer_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.integer_nonzero` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -78,11 +78,11 @@ For every integer a>=2 and c>a+d, either original gap d=1 or2 has h_C(1) nonzero
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.cubic`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.endpoint_identity`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.integer_nonzero`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.lower`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.no_three_positive`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps.result`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportClassificationAlgebra](SixSupportClassificationAlgebra.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.cubic`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.endpoint_identity`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.integer_nonzero`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.lower`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.no_three_positive`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps.result`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportClassificationAlgebra](SixSupportClassificationAlgebra.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)

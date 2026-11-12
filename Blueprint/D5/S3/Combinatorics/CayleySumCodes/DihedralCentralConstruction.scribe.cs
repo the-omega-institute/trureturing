@@ -6,7 +6,7 @@ internal sealed class DihedralCentralConstructionDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/DihedralCentralConstruction.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
+        "D5/L/FiniteGroups/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "DihedralCentralConstruction in the actual loopless sum graphs.",

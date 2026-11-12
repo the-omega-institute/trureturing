@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Exact odd and even alternating restrictions for every squarefree prime count. -/
-import D5.S3.Combinatorics.SpectralGraph.SquarefreeAlternatingSupport
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SquarefreeAlternatingSupport
 import D5.S3.Combinatorics.SpectralGraph.PairedIdealIntersectionObstructions
 import Mathlib.NumberTheory.Real.Irrational
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs

@@ -11,7 +11,7 @@ internal sealed class CentralizingInvolutionTranslationDocument : IScribeDocumen
             DeclarationHandle.Create("D5/S3/Combinatorics/CayleySumCodes/CentralizingInvolutionTranslation.result"),
             H("Preserving the open-neighbor code"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
-                "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes")),
+                "D5/L/FiniteGroups/manikandishzhang2026sumcodes")),
             Blocks(
                 Paragraph(Text(
                     "For a normal connection subset Y of a group G, a code subset C, and b with "

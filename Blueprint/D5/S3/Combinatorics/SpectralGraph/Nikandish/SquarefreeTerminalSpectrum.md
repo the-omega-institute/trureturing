@@ -8,9 +8,9 @@ Source: PR3 b93becea662a746badeadba42fdc3d3eb3db9382, paper/sections/squarefree.
 
 **Theorem 1.1 (Both irrational odd-count eigenvalues).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.odd_spectrum`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.odd_spectrum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.odd_spectrum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.odd_spectrum` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ For every odd prime count at least3, the two signs give both original explicit i
 
 **Theorem 1.2 (Entire even residual spectral window).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.even_window`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.even_window`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.even_window` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.even_window` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ For all real a>=2 and s squared equal1, every eigenvalue of the original symmetr
 
 **Theorem 1.3 (All even squarefree prime counts).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.even_spectrum`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.even_spectrum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.even_spectrum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.even_spectrum` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,8 +44,8 @@ For every even count at least4 and every distinct-prime assignment, the complete
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.even_spectrum`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.even_window`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeTerminalSpectrum.odd_spectrum`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionObstructions](PairedIdealIntersectionObstructions.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport](SquarefreeAlternatingSupport.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.even_spectrum`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.even_window`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeTerminalSpectrum.odd_spectrum`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport](SquarefreeAlternatingSupport.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionObstructions](../PairedIdealIntersectionObstructions.md)

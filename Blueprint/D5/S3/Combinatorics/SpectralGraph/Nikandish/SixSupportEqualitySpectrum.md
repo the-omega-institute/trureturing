@@ -6,9 +6,9 @@ Full received real equality-spectrum proposition, retaining its revised domain a
 
 **Definition 1.1 (residual).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.residual`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.residual`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.residual` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.residual` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ Exact monic division of the original actual six-cell quintic by its equality roo
 
 **Theorem 1.2 (factorization).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.factorization`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.factorization`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.factorization` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.factorization` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ For every real a,b, c=b(b+2)-a makes b an exact quintic root and the original po
 
 **Theorem 1.3 (derivative_negative).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.derivative_negative`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.derivative_negative`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.derivative_negative` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.derivative_negative` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ For every real 2<=a<=b, the original quintic derivative at b is strictly negativ
 
 **Theorem 1.4 (roots_relation).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.roots_relation`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.roots_relation`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.roots_relation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.roots_relation` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ The complete actual quotient characteristic multiset is zero plus b plus the res
 
 **Theorem 1.5 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,9 +66,9 @@ The complete revised source proposition, without h_C(1)=0: for all real2<=a<=b a
 
 **Theorem 1.6 (endpoint_one).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.endpoint_one`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.endpoint_one`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.endpoint_one` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.endpoint_one` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -78,10 +78,10 @@ On the same complete real equality domain, adding h_C(1)=0 forces the low positi
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.derivative_negative`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.endpoint_one`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.factorization`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.residual`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum.roots_relation`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointOneSpectrum](SixSupportEndpointOneSpectrum.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.derivative_negative`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.endpoint_one`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.factorization`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.residual`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum.roots_relation`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneSpectrum](SixSupportEndpointOneSpectrum.md)

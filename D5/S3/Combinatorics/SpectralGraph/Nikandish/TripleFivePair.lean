@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/TripleFivePair
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/TripleFivePair
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Complete twenty-nine-offset arithmetic and actual triple-five nonintegrality. -/
-import D5.S3.Combinatorics.SpectralGraph.PairTailSpectrum
-import D5.S3.Combinatorics.SpectralGraph.PairFourEndpoints
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.PairTailSpectrum
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.PairFourEndpoints
 
 /-! Source: four-prime-tail-reduction, PR9 revision
 6d491f77b35dec808fc777b69939c56cdae5dc02. All twenty-nine

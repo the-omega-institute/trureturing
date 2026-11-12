@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/ZeroConstantPair
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/ZeroConstantPair
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/ZeroConstantPair
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Complete zero-constant repeated-pair family, with its integral denominator obstruction. -/
 import D5.S3.Combinatorics.SpectralGraph.PairedIdealIntersectionLift
-import D5.S3.Combinatorics.SpectralGraph.PairedTensorMinimum
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.PairedTensorMinimum
 import D5.S3.Combinatorics.SpectralGraph.PairedIdealIntersectionDeterminants
 
 /-! Source: four-prime-zero-constant, PR9 revision

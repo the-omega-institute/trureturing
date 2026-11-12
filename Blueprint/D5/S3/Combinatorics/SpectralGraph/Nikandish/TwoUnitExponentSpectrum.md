@@ -8,9 +8,9 @@ Source: PR3 b93becea662a746badeadba42fdc3d3eb3db9382, paper/sections/pqrk.tex, b
 
 **Theorem 1.1 (Both irrational eigenvalues for every positive third exponent).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TwoUnitExponentSpectrum.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TwoUnitExponentSpectrum.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TwoUnitExponentSpectrum.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TwoUnitExponentSpectrum.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,5 +20,5 @@ For every positive integer k, both signs in (6k+1 plus or minus sqrt((2k+2)^2-3)
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TwoUnitExponentSpectrum.result`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/RepeatedPairSupport](RepeatedPairSupport.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TwoUnitExponentSpectrum.result`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairSupport](RepeatedPairSupport.md)

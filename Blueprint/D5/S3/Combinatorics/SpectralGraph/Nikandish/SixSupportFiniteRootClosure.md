@@ -8,9 +8,9 @@ Let k be a characteristic-zero field and let K=k(b). The quadratic field H=K(sqr
 
 **Theorem 1.1 (Unique actual integral-closure prime).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.closure_unique_prime_above`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.closure_unique_prime_above`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.closure_unique_prime_above` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.closure_unique_prime_above` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ Every prime of the actual integral closure over the original base root is the co
 
 **Theorem 1.2 (Exact root to normalization-place bijection).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.rootToClosurePlace_bijective`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.rootToClosurePlace_bijective`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.rootToClosurePlace_bijective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.rootToClosurePlace_bijective` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ All actual prime-spectrum places of the integral closure over the D roots are in
 
 **Theorem 1.3 (Exactly eight actual normalization places).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.actual_closure_place_count`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.actual_closure_place_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.actual_closure_place_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.actual_closure_place_count` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,9 +44,9 @@ The full normalization fiber has eight points over every algebraically closed ch
 
 **Theorem 1.4 (Actual normalized base valuation).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.closure_valuation_delta`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.closure_valuation_delta`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.closure_valuation_delta` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.closure_valuation_delta` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -56,9 +56,9 @@ The library normalized valuation on the same H at the actual closure localizatio
 
 **Theorem 1.5 (Complete data for every actual normalization place).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.every_closure_place_data`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.every_closure_place_data`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.every_closure_place_data` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.every_closure_place_data` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -68,9 +68,9 @@ Every actual point has the exact prime, DVR/local uniformizer, ramification inde
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.actual_closure_place_count`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.closure_unique_prime_above`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.closure_valuation_delta`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.every_closure_place_data`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure.rootToClosurePlace_bijective`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount](SixSupportFiniteRootCount.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.actual_closure_place_count`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.closure_unique_prime_above`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.closure_valuation_delta`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.every_closure_place_data`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure.rootToClosurePlace_bijective`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount](SixSupportFiniteRootCount.md)

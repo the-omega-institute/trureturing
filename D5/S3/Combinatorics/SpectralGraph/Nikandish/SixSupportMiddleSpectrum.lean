@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The exact three middle-exponent regimes of the actual endpoint-one spectrum. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointOneSpectrum
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointOneSpectrum
 
 /-! Source: endpoint-one-middle-root and endpoint-one-root-hierarchy notes,
 revision 6d491f77b35dec808fc777b69939c56cdae5dc02, original blobs

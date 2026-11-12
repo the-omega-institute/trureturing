@@ -8,9 +8,9 @@ Source: PR3 b93becea662a746badeadba42fdc3d3eb3db9382, paper/sections/squarefree.
 
 **Theorem 1.1 (Full diagonal pair action).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.E_action`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.E_action`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.E_action` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.E_action` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ Every alternating pair contributes determinant2 to the full E action, for arbitr
 
 **Theorem 1.2 (Full disjoint-support pair action).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.F_action`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.F_action`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.F_action` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.F_action` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ Every alternating pair contributes determinant-1 to the entire disjoint-support 
 
 **Theorem 1.3 (Scalar transport).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_smul`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_smul`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_smul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_smul` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,9 +44,9 @@ Scalar multiplication commutes with every recursively paired lift; this helper i
 
 **Theorem 1.4 (Additive transport).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_add`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_add`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_add` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_add` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -56,9 +56,9 @@ Addition commutes with every recursively paired lift; the actual reduced-operato
 
 **Theorem 1.5 (All nonzero vectors survive).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_nonzero`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_nonzero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_nonzero` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -68,9 +68,9 @@ For every number of alternating pairs and every nonzero real vector on the full 
 
 **Theorem 1.6 (All diagonal factors).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.E_lift`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.E_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.E_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.E_lift` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -80,9 +80,9 @@ For every pair count r, the full E action is2^r times the lift of the residual E
 
 **Theorem 1.7 (All disjoint-support factors).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.F_lift`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.F_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.F_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.F_lift` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -92,9 +92,9 @@ For every pair count r, the full F action is(-1)^r times the lift of the residua
 
 **Theorem 1.8 (Full repeated-pair restriction).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.K_lift`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.K_lift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.K_lift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.K_lift` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -104,9 +104,9 @@ The two actual operator summands reduce with their exact2^(r+1) and(-1)^r coeffi
 
 **Theorem 1.9 (Full invariant-subspace identity).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.reduced_intertwining`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.reduced_intertwining`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.reduced_intertwining` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.reduced_intertwining` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -116,9 +116,9 @@ For every residual vector, applying the entire repeated-pair operator to its lif
 
 **Theorem 1.10 (Actual squarefree graph lift).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.actual_eigenvalue`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.actual_eigenvalue`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.actual_eigenvalue` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.actual_eigenvalue` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -128,14 +128,14 @@ Every nonzero eigenpair of the complete residual operator lifts to a genuine Lap
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.E_action`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.E_lift`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.F_action`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.F_lift`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.K_lift`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.actual_eigenvalue`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_add`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_nonzero`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.lift_smul`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SquarefreeAlternatingSupport.reduced_intertwining`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/RepeatedPairSupport](RepeatedPairSupport.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.E_action`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.E_lift`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.F_action`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.F_lift`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.K_lift`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.actual_eigenvalue`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_add`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_nonzero`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.lift_smul`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SquarefreeAlternatingSupport.reduced_intertwining`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairSupport](RepeatedPairSupport.md)

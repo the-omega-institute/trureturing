@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteEndpointBase
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteEndpointBase
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteEndpointBase
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact finite endpoint domains and their actual ideal-graph consumer. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Tactic
 
 /-! This finite endpoint route consumes the full already-proved uniform low-root

@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/TwoUnitExponentSpectrum
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/TwoUnitExponentSpectrum
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/TwoUnitExponentSpectrum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Both explicit irrational ideal-graph eigenvalues with two unit exponents. -/
-import D5.S3.Combinatorics.SpectralGraph.RepeatedPairSupport
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.RepeatedPairSupport
 import Mathlib.NumberTheory.Real.Irrational
 
 /-! Source: PR3 b93becea662a746badeadba42fdc3d3eb3db9382,

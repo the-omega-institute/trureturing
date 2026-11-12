@@ -1,13 +1,13 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMinimumEight
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportMinimumEight
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Complete minimum-eight dependency reduction through 108 unbounded exponent brackets. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointGeometry
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointTwoTail
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedCompletion
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointGeometry
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointTwoTail
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedCompletion
 
 /-! Source S.minimum8 and every row of S.min8csv at PR9. The full 108-row
 certificate concerns a fixed middle exponent and every unbounded c>b.

@@ -6,9 +6,9 @@ Exact received three-prime spectral statements with actual ideal-graph consumers
 
 **Theorem 1.1 (first_positive).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.first_positive`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.first_positive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.first_positive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.first_positive` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ Outside b<2a-2, the exact positive expansion proves h_C(2)>0 for every ordered r
 
 **Theorem 1.2 (second_positive).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.second_positive`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.second_positive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.second_positive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.second_positive` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ The original84-term remainder identity, retaining both nonnegative square terms,
 
 **Theorem 1.3 (fifth_difference_positive).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.fifth_difference_positive`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.fifth_difference_positive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.fifth_difference_positive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.fifth_difference_positive` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ The source44-coefficient expansion proves 4h_C(2)-h_C(5)>0 for arbitrary three r
 
 **Theorem 1.4 (fourth_difference_positive).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.fourth_difference_positive`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.fourth_difference_positive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.fourth_difference_positive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.fourth_difference_positive` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ The source112-coefficient identity proves h_C(4)-3h_C(2)>0 on the complete real 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.fifth_difference_positive`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.first_positive`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.fourth_difference_positive`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns.second_positive`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportClassificationAlgebra](SixSupportClassificationAlgebra.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.fifth_difference_positive`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.first_positive`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.fourth_difference_positive`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns.second_positive`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportClassificationAlgebra](SixSupportClassificationAlgebra.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)

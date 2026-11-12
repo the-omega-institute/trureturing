@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportSharpMiddle
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSharpMiddle
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportSharpMiddle
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The original sharp real endpoint-two middle cutoff and its unique equality case. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Tactic
 
 /-! The complete PR3 sharp-alpha statement. Its boundary equality is retained;

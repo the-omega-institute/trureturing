@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Full real small-gap endpoint-one root brackets and integer exclusion. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 

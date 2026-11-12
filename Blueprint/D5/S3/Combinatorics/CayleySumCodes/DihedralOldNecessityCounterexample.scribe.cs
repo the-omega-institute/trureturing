@@ -10,7 +10,7 @@ internal sealed class DihedralOldNecessityCounterexampleDocument : IScribeDocume
             DeclarationHandle.Create("D5/S3/Combinatorics/CayleySumCodes/DihedralOldNecessityCounterexample.result"),
             H("The source counterexample"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
-                "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes")),
+                "D5/L/FiniteGroups/manikandishzhang2026sumcodes")),
             Blocks(Paragraph(Text("The source Example2.3(2) uses the actual DihedralGroup4 of order8, H=G and the normal connection set {1,a squared}. Center and square set are exactly those two elements; the loopless sum graph is a perfect matching. Both possible normal transversals of G in itself consist of squares. This is the full second source counterexample to the old necessity, with no claim against its surviving sufficient direction."))), DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Combinatorics/CayleySumCodes/TotalPerfectCriterion")),

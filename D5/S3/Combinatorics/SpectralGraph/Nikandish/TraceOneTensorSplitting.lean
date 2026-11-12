@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/TraceOneTensorSplitting
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/TraceOneTensorSplitting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Full finite tensors of trace-one two-dimensional operators and field splitting. -/
-import D5.S3.Combinatorics.SpectralGraph.RepeatedPairIntegralPolynomial
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.RepeatedPairIntegralPolynomial
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.Order.Extension.Linear
 

@@ -6,9 +6,9 @@ The full endpoint-one reciprocal window and its necessary integer-spectrum test.
 
 **Theorem 1.1 (Three separated positive roots).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.three_reciprocals`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.three_reciprocals`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.three_reciprocals` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.three_reciprocals` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ For every positive threshold s and all three real roots strictly above it, their
 
 **Theorem 1.2 (The full minimum-four endpoint-one window).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ For every ordered real 4<=a<=b<=c on h(1)=0, the actual residual quartic factors
 
 **Theorem 1.3 (Necessary integer-spectrum candidates).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.integer_candidates`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.integer_candidates`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.integer_candidates` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.integer_candidates` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,8 +42,8 @@ For every ordered integer minimum-four endpoint-one triple, if all real residual
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.integer_candidates`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow.three_reciprocals`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointOneArithmetic](SixSupportEndpointOneArithmetic.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum](SixSupportMiddleSpectrum.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.integer_candidates`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow.three_reciprocals`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic](SixSupportEndpointOneArithmetic.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum](SixSupportMiddleSpectrum.md)

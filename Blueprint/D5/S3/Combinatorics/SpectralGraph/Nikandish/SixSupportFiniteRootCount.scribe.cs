@@ -4,7 +4,7 @@ internal sealed class SixSupportFiniteRootCountDocument : IScribeDocumentDefinit
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
     private static DocumentBlock Item(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount." + name),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -14,5 +14,5 @@ internal sealed class SixSupportFiniteRootCountDocument : IScribeDocumentDefinit
             Item("bijection", "rootToPlace_bijective", "All actual places and actual roots correspond", "The actual prime-spectrum fiber over the base D-root ideals is in bijection with all D roots. The bijection covers the entire fiber."),
             Item("count", "actual_place_count", "Exactly eight geometric finite D places", "For every algebraically closed characteristic-zero field, the full actual fiber has cardinality8. The statement includes the algebraic closure of the rationals."),
             Item("place-data", "every_place_data", "Every actual place has the complete source data", "The theorem produces the root and actual prime equality, DVR, uniformizer, e2, residue1, local f unit and all normalized valuations for every member of the fiber.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootUnits"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootUnits"))]));
 }

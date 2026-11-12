@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/ThreePrimeLaplacianClassification
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/ThreePrimeLaplacianClassification
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/ThreePrimeLaplacianClassification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,18 +6,18 @@
    utility: none
    digest: Every three-prime ideal-intersection graph has a nonintegral Laplacian spectrum. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedCompletion
-import D5.S3.Combinatorics.SpectralGraph.SixSupportSmallMinima
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteMinimum3
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteMinimum4
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteMinimum5
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteMinimum6
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteMinimum7
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointTwoBase
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointTwoTail
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointOneBound
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointSmallGaps
-import D5.S3.Combinatorics.SpectralGraph.SixSupportLargestRoot
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedCompletion
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportSmallMinima
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteMinimum3
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteMinimum4
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteMinimum5
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteMinimum6
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteMinimum7
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointTwoBase
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointTwoTail
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointOneBound
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointSmallGaps
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportLargestRoot
 import Mathlib.Tactic
 
 /-! The original complete source classification. All finite predicates are

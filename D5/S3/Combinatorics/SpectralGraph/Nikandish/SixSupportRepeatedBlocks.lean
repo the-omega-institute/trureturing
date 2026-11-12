@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedBlocks
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedBlocks
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportRepeatedBlocks
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: The full repeated-exponent invariant operators and actual graph consumers. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Tactic
 
 /-! The original symmetric four-cell and antisymmetric two-cell operators,

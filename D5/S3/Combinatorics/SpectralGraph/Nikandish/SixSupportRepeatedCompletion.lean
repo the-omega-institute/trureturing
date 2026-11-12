@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedCompletion
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportRepeatedCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,8 +6,8 @@
    utility: none
    digest: Complete unbounded repeated-exponent classification on actual ideal graphs. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedFactorPairs
-import D5.S3.Combinatorics.SpectralGraph.SixSupportRepeatedCubicIntervals
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedFactorPairs
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportRepeatedCubicIntervals
 import Mathlib.Tactic
 
 /-! Reza Nikandish's boundary family and the supplied subsequent complete

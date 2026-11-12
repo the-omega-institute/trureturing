@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootGeometry
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootGeometry
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootGeometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Actual supplied Nikandish tower and finite-root objects, pending current canonical admission. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianPolynomial
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportLaplacianPolynomial
 import Mathlib.RingTheory.DedekindDomain.IntegralClosure
 import Mathlib.RingTheory.DiscreteValuationRing.TFAE
 import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing

@@ -6,9 +6,9 @@ Received complete three-prime statements; actual objects and original domains re
 
 **Definition 1.1 (factorM).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factorM`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factorM`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factorM` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factorM` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ The exact source integer product a³(2a+1).
 
 **Definition 1.2 (factorA).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factorA`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factorA`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factorA` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factorA` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ The exact source integer sum (a+1)²b+a(3a+1).
 
 **Definition 1.3 (boundary).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.boundary`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.boundary`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.boundary` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.boundary` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ Nikandish’s original boundary (a-1)(2a-1).
 
 **Theorem 1.4 (discriminant_identity).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.discriminant_identity`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.discriminant_identity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.discriminant_identity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.discriminant_identity` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ The full polynomial identity A²-(a+1)²D=4M, without an exponent cutoff.
 
 **Theorem 1.5 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,9 +66,9 @@ For every positive natural a,b, square discriminant is equivalent to positive or
 
 **Theorem 1.6 (strong_product).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.strong_product`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.strong_product`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.strong_product` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.strong_product` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -78,9 +78,9 @@ Every admissible factor pair satisfies (d-1)(e-1)=(a+1)²(boundary-b).
 
 **Theorem 1.7 (factor_congruences).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factor_congruences`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factor_congruences`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factor_congruences` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factor_congruences` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -90,9 +90,9 @@ Both factors are one modulo a+1. The proof derives the parity constraint even wh
 
 **Theorem 1.8 (quadratic_bound).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.quadratic_bound`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.quadratic_bound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.quadratic_bound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.quadratic_bound` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -102,9 +102,9 @@ For every positive a,b, a square discriminant forces b at most Nikandish’s bou
 
 **Theorem 1.9 (actual_above_quadratic_bound).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.actual_above_quadratic_bound`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.actual_above_quadratic_bound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.actual_above_quadratic_bound` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.actual_above_quadratic_bound` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -114,14 +114,14 @@ The entire unbounded region above that boundary gives actual ideal-graph noninte
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.actual_above_quadratic_bound`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.boundary`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.discriminant_identity`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factorA`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factorM`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.factor_congruences`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.quadratic_bound`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedFactorPairs.strong_product`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportRepeatedQuadratic](SixSupportRepeatedQuadratic.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.actual_above_quadratic_bound`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.boundary`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.discriminant_identity`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factorA`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factorM`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.factor_congruences`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.quadratic_bound`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedFactorPairs.strong_product`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportRepeatedQuadratic](SixSupportRepeatedQuadratic.md)

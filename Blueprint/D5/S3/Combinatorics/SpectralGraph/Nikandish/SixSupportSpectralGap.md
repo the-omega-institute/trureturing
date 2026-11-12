@@ -6,9 +6,9 @@ Complete received real spectral separation on the actual six-support operator.
 
 **Definition 1.1 (below).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.below`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.below`
 
-*Formalization.* `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.below` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.below` (`✓ std3`).
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ The complete actual quotient characteristic multiset, counted with algebraic mul
 
 **Theorem 1.2 (shifted_roots).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.shifted_roots`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.shifted_roots`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.shifted_roots` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.shifted_roots` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ Exact negative and zero inertia of the full shifted symmetric representative equ
 
 **Theorem 1.3 (pair_sum_count).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.pair_sum_count`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.pair_sum_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.pair_sum_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.pair_sum_count` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ For every ordered positive real triple, at least three actual quotient eigenvalu
 
 **Theorem 1.4 (total_sum_count).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.total_sum_count`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.total_sum_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.total_sum_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.total_sum_count` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ For all ordered real2<=a<=b<=c, exactly three actual quotient roots lie strictly
 
 **Theorem 1.5 (upper_pair_sum_count).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.upper_pair_sum_count`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.upper_pair_sum_count`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.upper_pair_sum_count` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.upper_pair_sum_count` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -66,9 +66,9 @@ For the same complete real domain, exactly three actual quotient roots lie below
 
 **Theorem 1.6 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -78,11 +78,11 @@ The complete global pair-sum and total-sum separation, with root multiplicities 
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.below`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.pair_sum_count`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.shifted_roots`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.total_sum_count`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap.upper_pair_sum_count`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportInertiaIntervals](SixSupportInertiaIntervals.md)
-- Dependency: [D5/S3/Weil/ZetaLinear/FullRankInertiaPullback](../../Weil/ZetaLinear/FullRankInertiaPullback.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.below`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.pair_sum_count`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.shifted_roots`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.total_sum_count`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap.upper_pair_sum_count`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportInertiaIntervals](SixSupportInertiaIntervals.md)
+- Dependency: [D5/S3/Weil/ZetaLinear/FullRankInertiaPullback](../../../Weil/ZetaLinear/FullRankInertiaPullback.md)

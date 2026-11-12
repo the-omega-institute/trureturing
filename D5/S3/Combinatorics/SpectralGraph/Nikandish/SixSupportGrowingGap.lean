@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportGrowingGap
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportGrowingGap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Entire unbounded-gap endpoint exclusions and their certificate-free actual graph family. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointGeometry
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointGeometry
 
 /-! Sources: complete S.ep1gap and S.ep2gap. The original written d>=5
 spectral family uses both entire endpoint exclusions without a finite base.

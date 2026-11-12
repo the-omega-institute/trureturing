@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteMinimum7
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum7
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteMinimum7
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteMinimum7.actual_application; instance=D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteMinimum7.result
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum7.actual_application; instance=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum7.result
    digest: Complete 15051-pair minimum-7 endpoint certificate and actual ideal-graph application. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteEndpointBase
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteEndpointBase
 
 /-! Complete original integer domain, not a sampled or bounded substitute for
 an infinite classification. The uniform cutoff handles the remaining tail. -/

@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportLaplacianPolynomial
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Actual supplied Nikandish tower and finite-root objects, pending current canonical admission. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportQuadraticTower
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportQuadraticTower
 import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianLowRoot
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs

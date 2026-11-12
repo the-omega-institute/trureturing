@@ -6,9 +6,9 @@ Exact received three-prime spectral statements with actual ideal-graph consumers
 
 **Theorem 1.1 (zero_negative).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.zero_negative`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.zero_negative`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.zero_negative` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.zero_negative` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ The actual characteristic quotient is strictly negative at zero for every positi
 
 **Theorem 1.2 (one_positive).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.one_positive`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.one_positive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.one_positive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.one_positive` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,9 +30,9 @@ For all ordered real 2<=a<=b<=c with c>=4a^2-2a, h_C(1) is strictly positive. Th
 
 **Theorem 1.3 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -42,9 +42,9 @@ The complete real uniform tail has a quotient root in (0,1), with no upper bound
 
 **Theorem 1.4 (actual_nonintegral).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.actual_nonintegral`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.actual_nonintegral`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.actual_nonintegral` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.actual_nonintegral` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -54,9 +54,9 @@ Every positive integer triple in that full tail, for every three distinct primes
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.actual_nonintegral`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.one_positive`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.result`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportUniformTail.zero_negative`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointSmallGaps](SixSupportEndpointSmallGaps.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.actual_nonintegral`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.one_positive`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.result`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportUniformTail.zero_negative`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointSmallGaps](SixSupportEndpointSmallGaps.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportIdealIntersectionLift](SixSupportIdealIntersectionLift.md)

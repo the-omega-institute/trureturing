@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootCount
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootCount
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Actual supplied Nikandish tower and finite-root objects, pending current canonical admission. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteRootUnits
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteRootUnits
 
 /-! The counted objects are actual prime ideals in
 an actual integral closure of k[b] inside the accepted H, not roots relabelled as

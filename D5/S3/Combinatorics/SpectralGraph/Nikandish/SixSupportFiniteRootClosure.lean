@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteRootClosure
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteRootClosure
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Actual supplied Nikandish tower and finite-root objects, pending current canonical admission. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportFiniteRootCount
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportFiniteRootCount
 
 /-! This identifies the concrete root primes and
 localizations with primes and localizations of Lean's canonical integralClosure.

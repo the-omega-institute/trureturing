@@ -6,7 +6,7 @@ internal sealed class SubgroupCodeRestrictionDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/SubgroupCodeRestriction.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
+        "D5/L/FiniteGroups/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Perfect and total perfect subgroup codes in the actual induced sum graph.",

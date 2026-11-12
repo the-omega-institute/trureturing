@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEqualitySpectrum
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEqualitySpectrum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Full real equality-curve spectral order without an endpoint-one premise. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportEndpointOneSpectrum
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportEndpointOneSpectrum
 
 /-! Source: the revised endpoint-one-equality-spectrum proposition, manuscript
 revision b93becea662a746badeadba42fdc3d3eb3db9382, original endpoint spectrum

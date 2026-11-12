@@ -1,11 +1,11 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportSpectralGap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Full real pair-sum and total-sum gaps for the actual six-cell spectrum. -/
-import D5.S3.Combinatorics.SpectralGraph.SixSupportInertiaIntervals
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportInertiaIntervals
 import D5.S3.Weil.ZetaLinear.FullRankInertiaPullback
 import Mathlib.Tactic
 

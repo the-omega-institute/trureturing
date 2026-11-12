@@ -6,7 +6,7 @@ internal sealed class NormalSubgroupCriterionDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/NormalSubgroupCriterion.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
+        "D5/L/FiniteGroups/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The corrected existential criterion for normal subgroup total perfect codes.",

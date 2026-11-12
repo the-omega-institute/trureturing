@@ -1,4 +1,4 @@
-/- GID: D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns
+/- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoTailSigns
    generality: G
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoTailSigns
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
@@ -6,7 +6,7 @@
    utility: none
    digest: Exact full endpoint-two rectangle and tail sign identities. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportClassificationAlgebra
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.SixSupportClassificationAlgebra
 import Mathlib.Tactic
 
 /-! The manuscript's complete positive84/44/112 coefficient identities.

@@ -11,7 +11,7 @@ internal sealed class TotalCodeParityDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Combinatorics/CayleySumCodes/TotalCodeParity.result"),
             H("Degree one on the code"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
-                "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes")),
+                "D5/L/FiniteGroups/manikandishzhang2026sumcodes")),
             Blocks(Paragraph(Text(
                 "In any simple graph on a finite group, a total perfect code C has exactly "
                 + "one neighbor at every vertex of the induced graph on C. Its components "

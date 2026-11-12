@@ -8,9 +8,9 @@ Sources: the complete large-tail, quadratic-tail-reduction, harmonic-tail and un
 
 **Theorem 1.1 (The entire fixed-pair quadratic identity).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.quadratic`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.quadratic`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.quadratic` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.quadratic` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -20,9 +20,9 @@ The three exact coefficient formulas hold for every integer offset and algebraic
 
 **Theorem 1.2 (All twenty-nine original offsets).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.integer_candidate`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.integer_candidate`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.integer_candidate` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.integer_candidate` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -32,9 +32,9 @@ Seven complete nonsquare brackets, the factored fifth row, the entire positive c
 
 **Theorem 1.3 (The complete exceptional quartic factorization).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.diagonal_factor`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.diagonal_factor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.diagonal_factor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.diagonal_factor` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -44,9 +44,9 @@ At the sole remaining candidate the quartic factors as (x-11) times the original
 
 **Theorem 1.4 (The genuine exceptional cubic eigenpair).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.diagonal_eigenpair`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.diagonal_eigenpair`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.diagonal_eigenpair` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.diagonal_eigenpair` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -56,9 +56,9 @@ The full tensor has a nonzero eigenpair in (3,4). This supplies the source witne
 
 **Theorem 1.5 (Every positive free triple-five tail).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.actual_nonintegral`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.actual_nonintegral`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.actual_nonintegral` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.actual_nonintegral` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -68,10 +68,10 @@ The actual graph is nonintegral for every positive c, including c<5 and c=5, uni
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.actual_nonintegral`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.diagonal_eigenpair`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.diagonal_factor`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.integer_candidate`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/TripleFivePair.quadratic`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairFourEndpoints](PairFourEndpoints.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairTailSpectrum](PairTailSpectrum.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.actual_nonintegral`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.diagonal_eigenpair`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.diagonal_factor`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.integer_candidate`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/TripleFivePair.quadratic`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourEndpoints](PairFourEndpoints.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailSpectrum](PairTailSpectrum.md)

@@ -6,9 +6,9 @@ Complete received real endpoint-one regimes with all original integer-point boun
 
 **Theorem 1.1 (factor_roots).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum.factor_roots`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum.factor_roots`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum.factor_roots` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum.factor_roots` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -18,9 +18,9 @@ The complete actual endpoint-one residual splits into four real linear factors, 
 
 **Theorem 1.2 (result).**
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum.result`
+Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum.result` (`✓ std3`). ∎
 
 *Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
 
@@ -30,6 +30,6 @@ For every ordered real a>2+sqrt(3) on h_C(1)=0, sign(c+a-b(b+2)) equals the sign
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum.factor_roots`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum.result`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointOneSpectrum](SixSupportEndpointOneSpectrum.md)
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum.factor_roots`
+- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum.result`
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneSpectrum](SixSupportEndpointOneSpectrum.md)

@@ -4,7 +4,7 @@ internal sealed class SixSupportReciprocalWindowDocument : IScribeDocumentDefini
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
     private static DocumentBlock Item(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportReciprocalWindow." + name),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportReciprocalWindow." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -17,6 +17,6 @@ internal sealed class SixSupportReciprocalWindowDocument : IScribeDocumentDefini
                 "For every ordered real 4<=a<=b<=c on h(1)=0, the actual residual quartic factors into one root mu in (a,min(c,a+b)) and three roots above s=a+b+c. With its exact coefficients N and D and R=2/s+1/(A-min(c,a+b)-2s), the proof establishes D-NR>0 before inversion and N/D<mu<N/(D-NR). No integral splitting, selected exponent family or supplied root oracle is assumed."),
             Item("integer-candidates", "integer_candidates", "Necessary integer-spectrum candidates",
                 "For every ordered integer minimum-four endpoint-one triple, if all real residual roots are integers, there is a positive divisor d of N with F(d)=0 in the strict intersection of both spectral and reciprocal windows. All three other integer roots are at least s+1, and their full factorization is retained. A surviving divisor is not a sufficient integer-spectrum test and does not bound the unbounded exponent domain. The real b=2a width-limit and all reported control-candidate/congruence data remain separate source obligations; this theorem does not certify those calculations.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportMiddleSpectrum")),
-         DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/SixSupportEndpointOneArithmetic"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportMiddleSpectrum")),
+         DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic"))]));
 }
