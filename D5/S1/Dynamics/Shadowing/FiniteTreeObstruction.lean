@@ -95,7 +95,7 @@ theorem amplification_contradiction
  realization; this theorem does not take that premise as a field of a tree. -/
 theorem not_finitelyPositiveExpansive_of_amplification
     (hfam : ∀ (ε : ℝ), 0 < ε → ∀ N : ℕ, 1 ≤ N →
-      ∃ w : AmplificationWitness f (univ : Set X) ε N) :
+      Nonempty (AmplificationWitness f (univ : Set X) ε N)) :
     ¬FinitelyPositiveExpansive f := by
   rintro ⟨ε, hε, N, hN, hB⟩
   obtain ⟨w⟩ := hfam ε hε N hN
