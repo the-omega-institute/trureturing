@@ -316,6 +316,8 @@ theorem finite_execution_law (source : ℕ → Bool) (n : ℕ) :
       ih, Measure.map_id]
     exact O.extend_law (O.executionLaw source n) (source n)
 
+attribute [local simp] advance.eq_1 develop.eq_1 develop.eq_2 develop.eq_def
+
 end Stochastic
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalRenewalLaws
