@@ -640,4 +640,80 @@ private theorem invariant_half_rank_strict {K : Type*} [Field K]
 
 end TightRankRigidity
 
+section ActualGaloisRanks
+
+variable (K : Type*) [Field K] [Algebra F K]
+variable [FiniteDimensional F D] [Algebra.IsSeparable F D] [FiniteDimensional F K]
+variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
+
+private def galoisCoordinates (g : K ≃ₐ[F] K) :
+    ((D →ₐ[F] K) → K) ≃ₛₗ[g.toRingEquiv] ((D →ₐ[F] K) → K) where
+  toFun x σ := g (x (g⁻¹ • σ))
+  invFun x σ := g.symm (x (g • σ))
+  left_inv x := by ext σ; simp
+  right_inv x := by ext σ; simp
+  map_add' x y := by ext σ; simp
+  map_smul' c x := by ext σ; simp
+
+private theorem coordinates_split (g : K ≃ₐ[F] K) (z : K ⊗[F] D) :
+    galoisCoordinates K g (splitEquiv F D K hK z) =
+      splitEquiv F D K hK (galoisTensor K g z) := by
+  ext τ
+  have hh := split_galois_covariance K g z (g⁻¹ • τ)
+  simpa only [smul_inv_smul] using hh.symm
+
+private theorem coordinates_window (W : Submodule F D) (g : K ≃ₐ[F] K)
+    {x : (D →ₐ[F] K) → K} (hx : x ∈ splitWindow K hK W) :
+    galoisCoordinates K g x ∈ splitWindow K hK W := by
+  obtain ⟨z, hz, rfl⟩ := hx
+  rw [coordinates_split]
+  exact (splitWindow_mem_iff K hK W _).mpr (galoisTensor_window K W g hz)
+
+private theorem coordinates_project (g : K ≃ₐ[F] K) (S : Finset (D →ₐ[F] K))
+    (x : (D →ₐ[F] K) → K) :
+    galoisCoordinates K g (coordinateProject S x) =
+      coordinateProject (orbitSet S g) (galoisCoordinates K g x) := by
+  ext σ
+  by_cases h : g⁻¹ • σ ∈ S <;> simp [galoisCoordinates, coordinateProject, mem_orbitSet, h]
+
+private theorem projected_galois_map (W : Submodule F D) (g : K ≃ₐ[F] K)
+    (S : Finset (D →ₐ[F] K)) :
+    (projected (splitWindow K hK W) S).map (galoisCoordinates K g).toLinearMap =
+      projected (splitWindow K hK W) (orbitSet S g) := by
+  let U := splitWindow K hK W
+  apply le_antisymm
+  · rintro _ ⟨_, ⟨x, hx, rfl⟩, rfl⟩
+    exact ⟨galoisCoordinates K g x, coordinates_window K hK W g hx,
+      (coordinates_project K g S x).symm⟩
+  · rintro _ ⟨x, hx, rfl⟩
+    let y := galoisCoordinates K g⁻¹ x
+    have hy : y ∈ U := coordinates_window K hK W g⁻¹ hx
+    refine ⟨coordinateProject S y, ⟨y, hy, rfl⟩, ?_⟩
+    rw [coordinates_project]
+    congr 1
+    ext σ
+    simp [y, galoisCoordinates]
+
+private theorem actual_row_rank_galois (W : Submodule F D) (g : K ≃ₐ[F] K)
+    (S : Finset (D →ₐ[F] K)) :
+    rowRank (splitWindow K hK W) (orbitSet S g) = rowRank (splitWindow K hK W) S := by
+  let e := (galoisCoordinates K g).ofSubmodules _ _ (projected_galois_map K hK W g S)
+  have hr := rank_eq_of_equiv_equiv (g : K → K) e.toAddEquiv g.bijective
+    (fun r x => e.map_smulₛₗ r x)
+  exact (congrArg Cardinal.toNat hr).symm
+
+private theorem actual_strict_row_rank [Normal F K] (W : Submodule F D)
+    (hD : finrank F D = 8) (hW : finrank F W = 4) (hE : ScalarIdealizer W)
+    (S : Finset (D →ₐ[F] K)) (hs : S.Nonempty) (ht : Sᶜ.Nonempty) :
+    S.card + 1 ≤ 2 * rowRank (splitWindow K hK W) S := by
+  apply invariant_half_rank_strict (splitWindow K hK W)
+    ((AlgHom.card_of_splits F D K hK).trans hD)
+    ((splitWindow_finrank K hK W).trans hW)
+    (embeddings_transitive K) (actual_row_rank_galois K hK W)
+    _ S hs ht
+  intro T hT hTc
+  simpa only [hW] using actual_row_rank_connected K hK W hE T hT hTc
+
+end ActualGaloisRanks
+
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
