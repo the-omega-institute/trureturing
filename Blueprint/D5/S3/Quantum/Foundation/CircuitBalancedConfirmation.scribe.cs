@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Foundation;
 
@@ -9,6 +11,21 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
         H("Circuit balance and least confirmation"),
         Blocks(
             Paragraph(Text("Let A be a finite dimensional real normed vector space, C a closed cone containing zero and closed under addition and nonnegative scaling, with real span all of A. The original linear unit u is strictly positive at every nonzero point of C. Strict positivity also excludes nonzero lines in C. The chosen compatible norm gives the usual finite dimensional topology on this same A; its numerical values enter no comparison or effect definition. All effects act on the original A. No pure-generation equality, finite pure-decomposition supplier, relation preservation, reciprocity or least confirmation is a premise. The theorem includes the zero carrier as well as every original nonzero carrier.")),
+            GeometryFact("base_compact", "Compactness of the entire base", Geo(
+                Imp(Call("IsClosed", Id("C")), Imp(Strict(), Call("IsCompact", Base())))),
+                "Closedness and strict positivity make the entire normalized base compact, including the empty base. A positive minimum of the unit on the cone's unit-sphere section bounds the norm of normalized points."),
+            GeometryFact("nonneg_on_cone", "Extend pure nonnegativity to the entire cone", Geo(
+                All("f", Dual(), Imp(Call("IsCompact", Base()), Imp(Strict(),
+                    Imp(All("p", Pure(), Le(D(0), Call("apply", Id("f"), Id("p")))),
+                        All("x", Id("A"), Imp(Member(Id("x"), Id("C")),
+                            Le(D(0), Call("apply", Id("f"), Id("x")))))))))),
+                "For every original linear functional f, nonnegativity on all extreme points extends first to their closed convex hull, the entire compact base, and then by positive rescaling to every cone vector. The zero vector is handled directly."),
+            GeometryFact("cone_bound", "Extend pure bounds to the full proper interval", Geo(
+                All("f", Dual(), Imp(Call("IsCompact", Base()), Imp(Strict(),
+                    Imp(All("p", Pure(), And(Le(D(0), Call("apply", Id("f"), Id("p"))),
+                        Le(Call("apply", Id("f"), Id("p")), D(1)))),
+                        Call("proper", Id("C"), Id("u"), Id("f"))))))),
+                "Bounds between zero and one at every global pure point imply 0<=f<=u on the entire original cone. Apply pure nonnegativity extension to f and to u-f. No finite pure-decomposition premise is required."),
             Describe.Lean(DescribeId.Create("normalized-base"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base"),
                 H("The entire normalized base"), StatementSource.WithoutFormula(),
@@ -19,6 +36,11 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 H("All pure points"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The pure set P is exactly the set of extreme points of base(C,u), with extremality over the real scalars. It is not an independently chosen list and need not be finite or consist of exposed points."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("affine-extreme-image"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.affine_extreme_image"),
+                H("Affine images preserve extreme points"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For additive real module carriers E and F, a convex set S, an affine map f that is injective on S, and an extreme point x of S, the image f(x) is an extreme point of the image f '' S. This is the shared generic transport used by both the Bell-polytope supplier and the whole-pair ball consumer."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("proper-interval"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper"),
                 H("The full proper interval"), StatementSource.WithoutFormula(),
@@ -82,25 +104,36 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 H("Convexity of the normalized base"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The entire normalized base of the original cone and linear unit is convex."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("base-compact"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact"),
-                H("Compactness of the original normalized base"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For a closed original cone and a unit strictly positive at all its nonzero points, the entire normalized base is compact in the finite dimensional topology."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("nonneg-on-cone"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone"),
-                H("From pure nonnegativity to whole-cone nonnegativity"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For the compact original base and a strictly positive unit, every original real linear functional nonnegative on all pure points is nonnegative on the entire original cone."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("cone-bound"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound"),
-                H("From pure bounds to original properness"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For the compact original base and a strictly positive unit, an original real linear functional whose value at every pure point belongs to [0,1] is proper on the entire original cone."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pure-span"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span"),
                 H("Pure spanning of the original carrier"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For the compact original base, strictly positive unit and generating original cone, all pure points together linearly span the original carrier."))), DescribeRole.Theorem),
             Paragraph(Text("The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remainder equivalence of Theorem 77.19, and the EJA, PRE, reset, H13/C13 and static or operational consumers remain outside this result. The proof needs neither a finite Minkowski theorem nor an assumption supplying pure decompositions. Mathematical effects and mixtures do not supply actual preparation programs, menus, histories, references or operations.")))));
+    private static Formula Id(string s) => F.Id(s);
+    private static Formula Call(string s, params Formula[] xs) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(s), [.. xs]);
+    private static Formula All(string s, Formula t, Formula b) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(s), t, b);
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Le(Formula a, Formula b) => Seq(a, Leq, Sp, b);
+    private static Formula Member(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
+    private static Formula Real() => Seq(Mathbb, Grp(Id("R")));
+    private static Formula Dual() => Call("LinearMap", Real(), Id("A"), Real());
+    private static Formula Base() => Call("base", Id("C"), Id("u"));
+    private static Formula Pure() => Call("pure", Id("C"), Id("u"));
+    private static Formula Strict() => All("x", Id("A"), Imp(Member(Id("x"), Id("C")),
+        Imp(Seq(Id("x"), Neq, Sp, D(0)), Seq(D(0), Lt, Sp, Call("apply", Id("u"), Id("x"))))));
+    private static Formula Geo(Formula b) => All("A", Id("Type"), Seq(
+        OpenBracket, Call("NormedAddCommGroup", Id("A")), CloseBracket, Sp,
+        OpenBracket, Call("NormedSpace", Real(), Id("A")), CloseBracket, Sp,
+        OpenBracket, Call("FiniteDimensional", Real(), Id("A")), CloseBracket, Sp,
+        All("C", Call("PointedCone", Real(), Id("A")), All("u", Dual(), b))));
+    private static DocumentBlock GeometryFact(string name, string title, Formula f, string text) =>
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-')),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation." + name), H(title),
+            StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
+
 }
