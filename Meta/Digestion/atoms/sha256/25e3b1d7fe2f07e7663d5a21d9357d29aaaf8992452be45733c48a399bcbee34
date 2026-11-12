@@ -1,0 +1,38 @@
+**定理 86.8（缩放余等距与准确伴随）。** 在上述完整域上，令
+
+$$
+\eta=H:D\to E,\qquad\iota=p^*:D\to E.
+$$
+
+它们都是正、保单位、单射的 Jordan 同态，$H^*,p:E\to D$ 正且保迹，并满足
+
+$$
+\begin{gathered}
+H^*Q(a,b,c)=\tau_A(c)M(a,b),\qquad
+\iota M(b,c)=Q(1_A,b,c),\\
+H^*H=pp^*=nI_D,\qquad H^*1_E=p1_E=n1_D,\qquad
+H1_D=p^*1_D=1_E,\\
+\tau_EH=n\tau_D,\qquad\tau_Ep^*=n\tau_D,\qquad
+\alpha^*\alpha=\beta^*\beta=nI_A,\\
+pH=\alpha\beta^*,\qquad H^*p^*=\beta\alpha^*,\qquad
+\eta\beta=\iota\alpha.
+\end{gathered}
+\tag{86.10}
+$$
+
+两份嵌入的继承正锥恰为 $\eta(D)\cap E_+=\eta(D_+)$、$\iota(D)\cap E_+=\iota(D_+)$。$H,p^*$ 的原迹倍率为 $n$；$n>1$ 时它们不保迹。
+
+**证明。** $\eta$ 是 66.2 已给的保单位 Jordan 嵌入。对 $H^*$ 用 (86.9) 与全部 $M(x,y)$ 配对，对 $p^*M(b,c)$ 用原 $pQ$ 与全部 $Q(x,y,z)$ 配对，分别得到前两式；满实张成使结果在整个载体上唯一。令 $c=1_A$ 得 $H^*H=nI_D$，对第二式作用同一个 $p$ 得 $pp^*M(b,c)=nM(b,c)$，再用 $M$ 张成。
+
+由乘积单位与迹等距，$\tau_EQ(a,b,c)=\tau_A(a)\tau_A(b)\tau_A(c)$、$\tau_DM(a,b)=\tau_A(a)\tau_A(b)$。因此原 $pQ$ 在完整张成上给 $\tau_Dp=\tau_E$。自对偶性使 $H^*,p^*$ 正；$p$ 保迹给 $p^*1_D=1_E$，$H$ 保单位给 $H^*$ 保迹。将单位代入前两式又得 $H^*1_E=p1_E=n1_D$，从而取得两个迹倍率。$\alpha,\beta$ 的缩放等距式同样由 (86.9) 给出。
+
+为核实 $p^*$ 的 Jordan 性，任取 $D$ 中幂等元 $f$。正性与保单位给 $0\le\iota f\le1_E$；缩放等距及迹倍率给
+
+$$
+\tau_E((\iota f)^2)=n\tau_D(f^2)=n\tau_Df=\tau_E(\iota f).
+$$
+
+在完整本原谱表中，每个特征值 $0\le\lambda\le1$，而 $\sum\lambda(1-\lambda)=0$，故各特征值为零或一。正交幂等元的像由配对恒等式保持正交；谱分解遂给 $\iota(d^2)=(\iota d)^2$，实极化给 Jordan 乘积保持。$pp^*=nI_D$ 给单射。此论证允许全部有限直和及秩一因子。
+
+最后，$\beta^*M(a,b)=\tau_A(a)b$，而 $pHM(a,b)=pQ(a,b,1_A)=\tau_A(a)\alpha(b)$，故 $pH=\alpha\beta^*$；取伴随得下一式。$\iota\alpha(a)=Q(1_A,a,1_A)=H\beta(a)$ 给末式。正左逆 $H^*/n$、$p/n$ 使两个像的继承锥恰为所述原锥像。证毕。
+
