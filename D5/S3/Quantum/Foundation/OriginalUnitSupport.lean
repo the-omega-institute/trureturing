@@ -82,7 +82,9 @@ theorem exists_original_unit_full_support [FiniteDimensional ℝ V] [Nontrivial 
     (hpos : ∀ x ∈ C, (ρ x).PosSemidef) :
     ∃ y : V, y ∈ C ∧ u y = 1 ∧
       (∀ z : ι → 𝕜, (ρ y) *ᵥ z = 0 ↔ ∀ x : V, (ρ x) *ᵥ z = 0) ∧
-      (ρ y).toEuclideanLin.range = commonSupport C ρ := by
+      (ρ y).toEuclideanLin.range = commonSupport C ρ ∧
+      (∀ z : EuclideanSpace 𝕜 ι, z ∈ commonSupport C ρ → z ≠ 0 →
+        0 < RCLike.re (star (z : ι → 𝕜) ⬝ᵥ ((ρ y) *ᵥ (z : ι → 𝕜)))) := by
   classical
   obtain ⟨s, hs, _, hspan, _⟩ :=
     Submodule.exists_finset_span_eq_linearIndepOn ℝ (C : Set V)
@@ -99,8 +101,10 @@ theorem exists_original_unit_full_support [FiniteDimensional ℝ V] [Nontrivial 
     rw [map_zero]
     apply Matrix.ext
     intro i j
-    have hh := (hkernel (Pi.single j 1)).mp (by simp [ha0]) x
-    simpa using congrFun hh i
+    have hh := (hkernel (Pi.single j 1)).mp (by
+      rw [ha0, map_zero]
+      exact Matrix.zero_mulVec _) x
+    simpa [Matrix.col] using congrFun hh i
   have hua : 0 < u a := hu a ha ha0
   let y : V := (u a)⁻¹ • a
   have hy : y ∈ C := C.smul_mem (inv_nonneg.mpr hua.le) ha
@@ -110,14 +114,13 @@ theorem exists_original_unit_full_support [FiniteDimensional ℝ V] [Nontrivial 
     intro z
     rw [← hkernel z]
     simp [y, Matrix.smul_mulVec, hua.ne']
-  refine ⟨y, hy, hyu, hykernel, ?_⟩
   have heq : (ρ y).toEuclideanLin.rangeᗮ = (commonSupport C ρ)ᗮ := by
     rw [(Matrix.isSymmetric_toEuclideanLin_iff.mpr hypos.isHermitian).orthogonal_range]
     rw [commonSupport, ← Submodule.iInf_orthogonal]
     simp_rw [(Matrix.isSymmetric_toEuclideanLin_iff.mpr (hpos _ (Subtype.property _)).isHermitian).orthogonal_range]
     ext z
     simp only [Submodule.mem_iInf, LinearMap.mem_ker]
-    change (ρ y) *ᵥ (z : ι → 𝕜) = 0 ↔ ∀ x : C, (ρ x.val) *ᵥ (z : ι → 𝕜) = 0
+    simp only [Matrix.toEuclideanLin, Matrix.toLpLin_apply, WithLp.toLp_eq_zero]
     constructor
     · intro hz x
       exact (hykernel _).mp hz x.val
@@ -132,6 +135,24 @@ theorem exists_original_unit_full_support [FiniteDimensional ℝ V] [Nontrivial 
         exact hz ⟨x, hx⟩
       exact hle (by rw [hgen]; trivial)
   have hh := congrArg (fun S : Submodule 𝕜 (EuclideanSpace 𝕜 ι) => Sᗮ) heq
-  simpa only [Submodule.orthogonal_orthogonal] using hh
+  have hrange : (ρ y).toEuclideanLin.range = commonSupport C ρ := by
+    simpa only [Submodule.orthogonal_orthogonal] using hh
+  refine ⟨y, hy, hyu, hykernel, hrange, ?_⟩
+  intro z hz hz0
+  by_contra! hnot
+  have hzero : RCLike.re (star (z : ι → 𝕜) ⬝ᵥ ((ρ y) *ᵥ (z : ι → 𝕜))) = 0 :=
+    le_antisymm hnot (hypos.re_dotProduct_nonneg _)
+  have hquad : star (z : ι → 𝕜) ⬝ᵥ ((ρ y) *ᵥ (z : ι → 𝕜)) = 0 := by
+    apply RCLike.ext
+    · simpa using hzero
+    · simpa using hypos.isHermitian.im_star_dotProduct_mulVec_self (z : ι → 𝕜)
+  have hker : z ∈ (ρ y).toEuclideanLin.ker := by
+    simpa only [LinearMap.mem_ker, Matrix.toEuclideanLin, Matrix.toLpLin_apply,
+      WithLp.toLp_eq_zero] using hypos.dotProduct_mulVec_zero_iff.mp hquad
+  have horth : z ∈ (ρ y).toEuclideanLin.rangeᗮ := by
+    rwa [(Matrix.isSymmetric_toEuclideanLin_iff.mpr hypos.isHermitian).orthogonal_range]
+  have hzrange : z ∈ (ρ y).toEuclideanLin.range := by rwa [hrange]
+  exact hz0 (Submodule.disjoint_def.mp
+    (ρ y).toEuclideanLin.range.orthogonal_disjoint hzrange horth)
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport
