@@ -8,6 +8,7 @@
 import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret
+import D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair
 
 /-! Finite one-sided localization without exact probe valuations. -/
 set_option autoImplicit false
@@ -524,5 +525,67 @@ theorem counted_displaced_cutoff_log_localization {m j K : ℕ}
   rw [← hrhodef, ← htdef]
   apply abs_le.mpr
   constructor <;> nlinarith [mul_pos hC ht]
+
+/-- Product and logarithmic bounds at the literal first-layer price. All
+constants are uniform in the natural layer index. -/
+theorem literal_root_geometry {j : ℕ} {P rho : ℝ} (hj : 2 ≤ j)
+    (hP : 4 ≤ log P) (hP0 : 0 < P) (hrho : 2 ≤ rho)
+    (hroot : beta j rho = beta 1 P)
+    (hlog : log (2 * log P / log 2) ≤ log P / 4) :
+    P * log P / 2 ≤ rho ^ j * log rho ∧
+      rho ^ j * log rho ≤ 2 * P * log P ∧
+      log P - log 2 ≤ (j : ℝ) * log rho ∧
+      (j : ℝ) * log rho ≤ 5 * log P / 4 := by
+  have hP2 : 2 ≤ P := by
+    by_contra! h
+    have hh := log_le_log hP0 h.le
+    have h2 := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hr0 : 0 < rho := by linarith
+  have hx : 0 < log P := by linarith
+  have hy : 0 < log rho := log_pos (by linarith)
+  have hjr : (2 : ℝ) ≤ j := by exact_mod_cast hj
+  have hb := ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope hj hrho
+  have hfirst := first_beta_lower hP2
+  have hfirstup := beta_le_inv_pow_log hP2 (by norm_num : 1 ≤ 1)
+  rw [pow_one] at hfirstup
+  rw [hroot] at hb
+  have hprod : 0 < rho ^ j * log rho := mul_pos (pow_pos hr0 j) hy
+  have hPx : 0 < P * log P := mul_pos hP0 hx
+  have hlo : P * log P / 2 ≤ rho ^ j * log rho := by
+    have hh := (one_div_le_one_div (by positivity : 0 < 2 * rho ^ j * log rho)
+      hPx).mp (hb.1.trans hfirstup)
+    linarith
+  have hhi : rho ^ j * log rho ≤ 2 * P * log P := by
+    have hh := hfirst.trans (mul_le_mul_of_nonneg_left hb.2.1 (by norm_num : (0 : ℝ) ≤ 2))
+    have he : 2 * (1 / (rho ^ j * log rho)) = 1 / (rho ^ j * log rho / 2) := by ring
+    rw [he] at hh
+    have hh' := (one_div_le_one_div hPx (by positivity : 0 < rho ^ j * log rho / 2)).mp hh
+    linarith
+  have hll := log_le_log (div_pos hPx (by norm_num)) hlo
+  have hlu := log_le_log hprod hhi
+  rw [log_div hPx.ne' (by norm_num : (2 : ℝ) ≠ 0), log_mul hP0.ne' hx.ne',
+    log_mul (pow_pos hr0 j).ne' hy.ne', log_pow] at hll
+  rw [log_mul (pow_pos hr0 j).ne' hy.ne', log_pow,
+    log_mul (by positivity : (2 * P : ℝ) ≠ 0) hx.ne',
+    log_mul (by norm_num : (2 : ℝ) ≠ 0) hP0.ne'] at hlu
+  have h2 : log 2 ≤ 1 := by
+    have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hyx : log rho ≤ log P := by
+    by_contra! h
+    have hh := log_le_log hx h.le
+    have hm := mul_le_mul_of_nonneg_right hjr hy.le
+    linarith
+  have hlow : log P - log 2 ≤ (j : ℝ) * log rho := by
+    have hh := log_le_log hy hyx
+    linarith
+  have hlog2 : 0 < log 2 := log_pos (by norm_num)
+  have hlogy := log_le_log hlog2 (log_le_log (by norm_num : (0 : ℝ) < 2) hrho)
+  have hid : log (2 * log P / log 2) = log 2 + log (log P) - log (log 2) := by
+    rw [log_div (by positivity : (2 * log P : ℝ) ≠ 0) hlog2.ne',
+      log_mul (by norm_num : (2 : ℝ) ≠ 0) hx.ne']
+  rw [hid] at hlog
+  exact ⟨hlo, hhi, hlow, by linarith⟩
 
 end D5.S3.Arith.Robin.PriceRecord.ActualMovingBoundaryLocalization
