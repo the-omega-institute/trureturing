@@ -63,7 +63,7 @@ internal sealed class TribonacciFourBonacciDocument : IScribeDocumentDefinition
                 H("All shifts exclude every positive repair"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Scale/mazhang2026backwardzero")),
-                Blocks(Paragraph(Text("For the actual native tribonacci or printed fourBonacci sequence, every prime p, nonnegative shift s and positive multiplier c, the positive-index integer sequence c*pPart(p,a(n+s)) is not Dold in the BackwardZero sense. The historical proof constructs the integer companion correspondence and applies the scalar backward-zero theorem. This positive-seed result does not classify normalized impulse block samples or revive the withdrawn vector mismatch. Registration for this new endpoint is unfinished under issue 29392; the previous result registration is preserved."))),
+                Blocks(Paragraph(Text("For the actual native tribonacci or printed fourBonacci sequence, every prime p, nonnegative shift s and positive multiplier c, the positive-index integer sequence c*pPart(p,a(n+s)) is not Dold in the BackwardZero sense. The historical proof constructs the integer companion correspondence and applies the scalar backward-zero theorem. This positive-seed result does not classify normalized impulse block samples or revive the withdrawn vector mismatch."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("tribonacci-four-bonacci-local-dold-result"),

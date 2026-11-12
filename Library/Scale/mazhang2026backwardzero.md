@@ -22,3 +22,7 @@ The full historical Lean proof bodies are retained in BackwardZero and KBonacciS
 The positive-seed k-bonacci result assumes a bilateral integer recurrence, positive seeds and an adjacent seed doubling; the special seeds 1,...,1,2 require order at least three. These domains are separate from the normalized impulse block domain. The printed Tribonacci and four-Bonacci application uses the actual native sequences, not an arbitrary normalized block.
 
 The revised comparison note explicitly withdraws the 9 November unbounded-affine classification, vector unit-mismatch lemma and resulting positive-shift claims. None is restored here. The scalar criterion's sufficiency direction and general repair-bound obligation remain part of the complete return; restoring the historical mismatch necessity does not discharge them.
+
+## Locator
+
+The repository intake is https://github.com/the-omega-institute/trureturing/issues/29392; it is not a publication URL or a DOI. The communicated 23 October 2026 note is identified by SHA256 `92ba89c81c80bda8949a5799b0320ce0d93170a77a7148720e4bfaf8725fc0d6`, and the readable 28 October backward-zero proof by SHA256 `7fdf8b5627376893de9acff44e5396beab635ee251259347aa55ad34c6cf5875`. The retained scope is the scalar unit-mismatch and backward-zero statements under the precise hypotheses described above, together with their positive-seed k-bonacci applications; no withdrawn vector or unbounded-affine assertion is included.

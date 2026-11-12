@@ -4,7 +4,7 @@
 
 Exact zero and half-residue repairs
 
-The periodic integer samples are actual functions of the index. The baseline and spike transforms are proved by Mobius inversion; exact divisor classification identifies the least positive Dold multiplier, while explicit finite permutations supply all positive-time fixed counts. The complete local-block-to-affine-sample valuation bridge is still required. The scalar unit-mismatch necessity follows the earlier Ma-Zhang method; the exact multipliers and signed orbit conclusions follow the supplied revised manuscript. The general scalar sufficiency/repair bound outside these residue families remains open. Registration is unfinished under issue 29392.
+The periodic integer samples are actual functions of the index. The baseline and spike transforms are proved by Mobius inversion; exact divisor classification identifies the least positive Dold multiplier, while explicit finite permutations supply all positive-time fixed counts. The complete local-block-to-affine-sample valuation bridge is still required. The scalar unit-mismatch necessity follows the earlier Ma-Zhang method; the exact multipliers and signed orbit conclusions follow the supplied revised manuscript. The general scalar sufficiency/repair bound outside these residue families remains open.
 
 **Theorem 1.1 (zero_transform).**
 

@@ -26,9 +26,6 @@ noncomputable def impulse (E : LinearRecurrence ℤ) : ℕ → ℤ :=
 noncomputable def observation (E : LinearRecurrence ℤ) : Algebra E →ₗ[ℤ] ℤ :=
   (Polynomial.lcoeff ℤ (E.order-1)).comp (AdjoinRoot.modByMonicHom E.charPoly_monic)
 
-private theorem degree (E : LinearRecurrence ℤ) : E.charPoly.natDegree = E.order :=
-  Polynomial.natDegree_eq_of_degree_eq_some (E.charPoly_degree_eq_order)
-
 private theorem observation_initial (E : LinearRecurrence ℤ) (hk : 0 < E.order)
     (i : Fin E.order) :
     observation E ((AdjoinRoot.root E.charPoly)^i.val) =

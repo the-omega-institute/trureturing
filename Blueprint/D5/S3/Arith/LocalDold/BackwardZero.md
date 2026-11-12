@@ -4,7 +4,7 @@
 
 Scalar and backward-zero local-Dold obstructions
 
-The historical supplied full proof bodies are reused. Matrix denominator clearing and scalar mismatch feed the general obstruction, which is consumed by the bilateral k-bonacci family and the literal printed sequences. Normalized impulse blocks are a distinct domain. Registration is unfinished under issue 29392; no declared_validated status is claimed.
+The historical supplied full proof bodies are reused. Matrix denominator clearing and scalar mismatch feed the general obstruction, which is consumed by the bilateral k-bonacci family and the literal printed sequences. Normalized impulse blocks are a distinct domain.
 
 Prime-power criterion application (manuscript Lemma 2.1): for every integer sequence u, the full positive-index divisibilities n divides mobiusSum(u,n) are equivalent to p^(s+1) dividing u(m*p^(s+1))-u(m*p^s), for every prime p, s>=0 and positive m coprime to p. A transient exact check reuses the existing Witt ledger's divisor_ghost_gauss, gauss_exponential_integral and integral_input_ledger plus Mobius inversion. The all-m Gauss condition is equivalent to the coprime-m form by extracting the full p power from m. No duplicate scalar theorem is delivered. This criterion does not establish the separate actual block valuation input.
 

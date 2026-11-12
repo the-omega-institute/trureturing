@@ -4,7 +4,7 @@
 
 Positive-seed k-bonacci shifts
 
-These historical proof bodies apply the Ma-Zhang backward-zero mechanism, deriving the negative zero from the recurrence. The order-three and order-four scalar seeds motivate the result. The all-order normalized impulse block theorem remains a separate obligation. Registration remains unfinished under issue 29392.
+These historical proof bodies apply the Ma-Zhang backward-zero mechanism, deriving the negative zero from the recurrence. The order-three and order-four scalar seeds motivate the result. The all-order normalized impulse block theorem remains a separate obligation.
 
 **Theorem 1.1 (adjacent_doubling_no_repair).**
 
