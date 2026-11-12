@@ -15,6 +15,9 @@ The private single-idempotent Peirce and inner-product lemmas are adapted from
 EuclideanJordan/Bridge.lean, EuclideanJordan/Peirce.lean and EuclideanJordan/Order.lean in ehrlich-b/euclidean-jordan,
 immutable revision a83407e4dbf73c77c31a2291c02f20b37a5ebbaf.
 Only dependencies used by the spectral norm construction are retained.
+Retirement: when this repository's pinned Mathlib contains equivalent single-idempotent
+positivity and coefficient-recovery results under the same EJA laws, replace this port
+with direct applications of those results.
 -/
 
 module
