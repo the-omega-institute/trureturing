@@ -27,6 +27,10 @@ def oldOffset {m k : ℕ} (d : Fin m → ℤ) (e : Fin k → ℤ) : Fin m ⊕ Fi
 def oldTarget {m k : ℕ} (d : Fin m → ℤ) (e : Fin k → ℤ) (i : Fin m ⊕ Fin k) : ℤ :=
   oldPosition i + oldOffset d e i
 
+def oldRanking {m k : ℕ} (w : Word m) (v : Word k) : Fin m ⊕ Fin k → Ranking
+  | .inl i => w i
+  | .inr j => v j
+
 /-- Two separated certified pieces cannot collide, even at exterior integer targets. -/
 theorem old_target_injective {m k : ℕ} {w : Word m} {v : Word k}
     {d : Fin m → ℤ} {e : Fin k → ℤ} (hw : Certificate w d) (hv : Certificate v e)
@@ -110,6 +114,103 @@ theorem padded_request_completion {m k : ℕ} {w : Word m} {v : Word k}
   exact ⟨old_target_injective hw hv,
     BufferLayout.complete_requests (request d e) (request_injective hw hv) (request_boundary hw hv)⟩
 
+/-- All old--old nonblocking tests survive the actual six-gap placement.
+The separation itself rules out an edge between different old pieces. -/
+theorem old_nonblocking {m k : ℕ} {w : Word m} {v : Word k}
+    {d : Fin m → ℤ} {e : Fin k → ℤ} (hw : Certificate w d) (hv : Certificate v e)
+    (i j : Fin m ⊕ Fin k) (hij : oldPosition i < oldPosition j)
+    (hdist : oldPosition j ≤ oldPosition i + 2) :
+    oldOffset d e i = oldPosition j - oldPosition i ∨
+      offsetRank (oldRanking w v i) (oldOffset d e i) <
+        offsetRank (oldRanking w v i) (oldPosition j - oldPosition i) ∨
+      offsetRank (oldRanking w v j) (oldOffset d e j) <
+        offsetRank (oldRanking w v j) (oldPosition i - oldPosition j) := by
+  cases i with
+  | inl i =>
+    cases j with
+    | inl j =>
+      exact hw.nonblocking i j (by simpa [oldPosition] using hij)
+        (by simp only [oldPosition] at hdist; omega)
+    | inr j =>
+      simp only [oldPosition] at hdist
+      have := i.isLt
+      omega
+  | inr i =>
+    cases j with
+    | inl j =>
+      simp only [oldPosition] at hij
+      have := j.isLt
+      omega
+    | inr j =>
+      have hh := hv.nonblocking i j (by simp only [oldPosition] at hij; omega)
+        (by simp only [oldPosition] at hdist; omega)
+      simpa only [oldPosition, oldOffset, oldRanking, add_sub_add_left_eq_sub] using hh
+
+/-- Exterior requests of one certified word when a six-site buffer closes its cycle. -/
+def ClosingRequester {m : ℕ} (d : Fin m → ℤ) :=
+  {i : Fin m // d i ≠ 0 ∧ ((i.val : ℤ) + d i < 0 ∨ (m : ℤ) ≤ i.val + d i)}
+
+def closingRequest {m : ℕ} (d : Fin m → ℤ) (hd : ∀ i, -2 ≤ d i ∧ d i ≤ 2)
+    (i : ClosingRequester d) : Fin 6 :=
+  if h : (i.val.val : ℤ) + d i.val < 0 then
+    ⟨((i.val.val : ℤ) + d i.val + 6).toNat, by have := hd i.val; omega⟩
+  else ⟨((i.val.val : ℤ) + d i.val - m).toNat, by
+    have := hd i.val; have := i.property; have := i.val.isLt; omega⟩
+
+private theorem closing_coordinate {m : ℕ} {d : Fin m → ℤ}
+    (hd : ∀ i, -2 ≤ d i ∧ d i ≤ 2) (i : ClosingRequester d) :
+    if (i.val.val : ℤ) + d i.val < 0 then
+      (closingRequest d hd i).val = (i.val.val : ℤ) + d i.val + 6
+    else (closingRequest d hd i).val = (i.val.val : ℤ) + d i.val - m := by
+  have hb := hd i.val
+  have hp := i.property
+  have hi := i.val.isLt
+  by_cases h : (i.val.val : ℤ) + d i.val < 0 <;>
+    simp only [closingRequest, h, dite_true, dite_false, ite_true, ite_false] <;> omega
+
+private theorem closing_injective {m : ℕ} {w : Word m} {d : Fin m → ℤ}
+    (hw : Certificate w d) : Function.Injective (closingRequest d hw.bounded) := by
+  intro i j he
+  have hi := closing_coordinate hw.bounded i
+  have hj := closing_coordinate hw.bounded j
+  have hib := hw.bounded i.val
+  have hjb := hw.bounded j.val
+  have hip := i.property
+  have hjp := j.property
+  have hil := i.val.isLt
+  have hjl := j.val.isLt
+  have hev := congrArg (fun x : Fin 6 => (x.val : ℤ)) he
+  apply Subtype.ext
+  apply hw.target_injective i.val j.val hip.1 hjp.1
+  split_ifs at hi hj <;> omega
+
+private theorem closing_boundary {m : ℕ} {w : Word m} {d : Fin m → ℤ}
+    (hw : Certificate w d) (i : ClosingRequester d) :
+    closingRequest d hw.bounded i ≠ 2 ∧ closingRequest d hw.bounded i ≠ 3 := by
+  have hi := closing_coordinate hw.bounded i
+  have hb := hw.bounded i.val
+  have hp := i.property
+  have hil := i.val.isLt
+  split_ifs at hi <;>
+    constructor <;> intro h <;> have he := congrArg (fun x : Fin 6 => (x.val : ℤ)) h <;>
+    norm_num at he <;> omega
+
+/-- Closing requests are realized for every word length, without a parity condition.
+In particular the four distinct exterior targets at m=1 remain distinct in the buffer.
+The statement supplies the requester/buffer involution, not yet cyclic stability. -/
+theorem closing_request_completion {m : ℕ} {w : Word m} {d : Fin m → ℤ}
+    (hw : Certificate w d) :
+    Function.Injective (closingRequest d hw.bounded) ∧
+    Function.Involutive (BufferLayout.partner (closingRequest d hw.bounded)) ∧
+    (∀ i, BufferLayout.partner (closingRequest d hw.bounded) (.inl i) =
+      .inr (closingRequest d hw.bounded i)) ∧
+    (∀ i, BufferLayout.partner (closingRequest d hw.bounded) (.inr i) = .inr i →
+      i = 2 ∨ i = 3) := by
+  exact ⟨closing_injective hw,
+    BufferLayout.complete_requests _ (closing_injective hw) (closing_boundary hw)⟩
+
 #print axioms old_target_injective
 #print axioms padded_request_completion
+#print axioms old_nonblocking
+#print axioms closing_request_completion
 end D5.S3.Combinatorics.Graph.Roommates.PaddedCompletion
