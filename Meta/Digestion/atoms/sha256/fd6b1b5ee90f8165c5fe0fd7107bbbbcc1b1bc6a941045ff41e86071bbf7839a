@@ -1,0 +1,32 @@
+### 74.2 定理 74.7 的平方缺陷与支撑中间步骤
+
+以下两步只作为定理 74.7 的证明工具，复用一般 EJA 的成熟结构事实，不单列为新增定理。
+
+**证明中间步骤（一般 EJA 的平方缺陷）。** 若 $\Phi:X\to Y$ 全锥正且保单位，则 $\Delta(a)=\Phi(a^2)-(\Phi a)^2\ge0$。若 $\Delta(a)=0$，则 $\Phi(a\circ x)=\Phi a\circ\Phi x$ 对全部实 $x\in X$ 成立。
+**证明。** 在完整谱框架中写 $a=\sum_i\lambda_i e_i$，令 $z_i=\Phi e_i\ge0$、$b=\Phi a$。二次表示的定义直接给
+$$
+P_{\lambda1-b}=\lambda^2\mathrm{id}-2\lambda\ell_b+P_b,\qquad
+\Phi(a^2)-b^2=\sum_iP_{\lambda_i1-b}z_i\ge0. \tag{74.5}
+$$
+等式由 $\sum_i z_i=1$、$\sum_i\lambda_i z_i=b$、$P_b1=b^2$ 得到。每一项正，是因为一般 EJA 的 $P_v$ 对任意实 $v$ 都保锥；这里绝不要求 $\lambda_i1-b\ge0$。此成熟二次表示事实及下用的谱、Peirce 支撑事实沿 65.4 的一般 EJA 范围复用，不经矩阵表示或复 Schwarz 不等式。
+当 $\Delta(a)=0$ 时，对任意实 $t$，
+$$
+0\le\Delta(a+tx)=2t\,[\Phi(a\circ x)-\Phi a\circ\Phi x]+t^2\Delta(x). \tag{74.6}
+$$
+分别取两侧符号的 $t$，除以 $|t|$ 并趋于零；闭尖锥迫使一次系数为零。特别地，若 $e$ 与 $\Phi e$ 均幂等，则 $\Delta(e)=0$，得到该幂等元的乘法交织。∎
+
+**证明中间步骤（有限张成框架工具）。** 设非零有限 EJA 间的实线性 $T:X\to Y$ 全锥正，$h=T1_X>0$。固定完整本原框架族，其并实张成 $X$。则每个指定框架内不同成员的像正交，当且仅当 $T$ 保持全部正元对的正交；等价地，$\varphi=P_{h^{-1/2}}T$ 为保单位 Jordan 同态且 $[\ell_h,\ell_{\varphi x}]=0$ 对全部 $x\in X$ 成立。
+**证明。** 在任一指定框架 $(e_i)$ 内，$x_i=Te_i\ge0$ 的支撑 $q_i$ 两两正交；$\sum_i x_i=h>0$ 给 $\sum_iq_i=1_Y$。相对于每个 $q_i$，$h$ 无 Peirce 半空间分量，其 $Y_1(q_i)$ 分量恰为 $x_i$。角内谱演算遂给
+$$
+\varphi e_i=P_{h^{-1/2}}x_i=q_i,\qquad [\ell_h,\ell_{q_i}]=0. \tag{74.7}
+$$
+允许 $x_i=0,q_i=0$，逆仅施于全局 $h$；不对零像求逆。二次表示及此处的逆全锥正，所以 $\varphi$ 正且保单位。本节平方缺陷步骤 给 $\varphi(e_i\circ x)=\varphi e_i\circ\varphi x$；框架并集张成使之随第一变量线性延拓，故 $\varphi$ 保全部 Jordan 乘积。同一张成将 (74.7) 的交换子延拓到全部 $\varphi x$。
+反之，若有上述同态及交换性，$T=P_{\sqrt h}\varphi$。令 $z=\varphi y$，将 $[\ell_h,\ell_z]=0$ 作用于 $h$，得 $\ell_h^2z=\ell_{h^2}z$，所以 $P_hz=h^2\circ z$。利用二次表示自伴随、$P_{\sqrt h}^2=P_h$ 及迹的结合性，
+$$
+\langle Tx,Ty\rangle_Y=\langle\varphi x,P_h\varphi y\rangle_Y
+=\langle\varphi x\circ\varphi y,h^2\rangle_Y
+=\langle\varphi(x\circ y),h^2\rangle_Y. \tag{74.8}
+$$
+于是 $x,y\ge0,x\perp y$ 给像配对为零；全域正交保持当然包含指定框架情形。权重交换在此不可省，任意正可逆滤波本身不保持零配对。∎
+不从 $h>0$ 推断单射：例如 $T:\mathbb R^2\to\mathbb R,(a,b)\mapsto a$ 消去一个本原元。若一般工具中 $h\ge0$ 奇异，由 $-c1\le x\le c1$ 得 $-ch\le Tx\le ch$，全像在 $Y_1(\operatorname{supp}h)$ 内；在该角用相对单位作同一证明即可。$h=0$ 时 $T=0$。本章实际应用的 $U,G$ 则如下独立证明为内点。
+

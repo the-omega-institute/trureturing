@@ -1,0 +1,34 @@
+**定理 73.11（同一实际数据上的精确校准替换）。** 在完整 PRE+NB 上，四项正重置补全加 $\mathrm A_0$ 与原联合校准 $C_{\rm joint}$ 逐模型等价。记
+
+$$
+R=n^3,\qquad\delta=\tau_E L(1_D,1_A),\qquad
+\gamma=\tau_D(p1_E),\qquad
+C_{\rm joint}:\ \delta+\gamma\le2R.
+\tag{73.27}
+$$
+
+有
+
+$$
+\boxed{\quad C_{\rm joint}
+\quad\Longleftrightarrow\quad
+\bigl[\mathrm{RC}_M^B\land\mathrm{RC}_M^C
+\land\mathrm{RC}_L^B\land\mathrm{RC}_L^C\bigr]\land\mathrm A_0 .\quad}
+\tag{73.28}
+$$
+
+每个 RC 指定义 73.2 在该实际位置的数学存在量词，允许任意预定合法输出、重置态及正份额。
+
+**证明。** 从右侧出发，73.8 给 $u=I,g=\kappa I$ 及原 $p=\kappa^{-1}\operatorname{Tr}_1$，故
+
+$$
+a_0=\kappa,\qquad (\delta,\gamma)=(\kappa R,R/\kappa).
+\tag{73.29}
+$$
+
+$\mathrm A_0$ 迫使 $\kappa=1$，从而满足 $C_{\rm joint}$；在这条分类族内，$\kappa+\kappa^{-1}\ge2$ 的等号也说明 $C_{\rm joint}$ 恰好选择 $\kappa=1$。
+
+反向不预设补全。完整 PRE 包含定理 67.7 所需的 $\mathcal B+D_H$，故原 $C_{\rm joint}$ 直接给原 $U=1_D,H1_D=1_E$、原 $p$ TP。NB 独立给 C13 后，66.10 允许同时普通方向，65.10 的实际参数因而是 $u=I,g=I$。四个指定重置的延拓都由 (73.19) 构造为整个原联合锥上的正 TP 映射，再加恒等失败分支；$a_0=1$ 直接成立。所有原 $A,D,E,L,p,\omega$ 和内部定义保持不变，没有以缩放后的辅助模型替换实际模型。$\square$
+
+73.28 的新内容不是重命名一条已经成立的校准：在不输入 $C_{\rm joint}$ 的方向，73.6–73.8 从正补全本身严格排除了全部矩阵滤波自由度；73.9 则证明剩下的一维尺度恰好不能再由同类关系检测，73.26 才补足它。与旧校准的比较是同数据等价，不是独立公理数量、量词数量或资源成本降低的结论。
+

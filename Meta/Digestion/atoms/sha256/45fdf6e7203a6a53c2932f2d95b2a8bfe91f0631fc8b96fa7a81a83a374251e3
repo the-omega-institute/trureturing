@@ -1,0 +1,27 @@
+**定理 77.5（所有准备的最小读数）。** 任一准备
+
+$$
+x=\sum_i\alpha_ir_i+\sum_j\beta_jc_j,\qquad
+\alpha_i,\beta_j\ge0,\quad \sum_i\alpha_i+\sum_j\beta_j=1
+$$
+
+在全效应区间下恰有
+
+$$
+\boxed{\quad T_{r_i}(x)=\alpha_i+\min_j\beta_j,\qquad
+T_{c_j}(x)=\beta_j+\min_i\alpha_i.\quad}
+\tag{77.7}
+$$
+
+所有纯态之间的比较为 $\delta$ 表。
+
+**证明。** 确认 $r_i$ 的效应有 $a_i=1$，(77.5) 给 $\sum_jb_j=\sum_ka_k\ge1$。因此
+
+$$
+f(x)=\sum_k\alpha_ka_k+\sum_j\beta_jb_j
+ \ge\alpha_i+(\min_j\beta_j)\sum_jb_j
+ \ge\alpha_i+\min_j\beta_j.
+$$
+
+在最小 $\beta_j$ 的位置取 $e_{ij}$，其读数恰为右侧，故达到。列情形对称。若两套系数表示同一 $x$，唯一关系使它们相差 $\alpha'_i=\alpha_i+t,\beta'_j=\beta_j-t$，故 $\alpha'_i+\min_j\beta'_j=\alpha_i+\min_j\beta_j$；列式亦然。因此公式是 $x$ 的函数，不依赖选定表示。代入任一顶点即得同点一、异点零。∎
+

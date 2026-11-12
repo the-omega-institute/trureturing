@@ -1,4 +1,7 @@
 domains:
+  Aliabadi:
+    stratum: S3
+    definition: Cyclic subgroup constructions and right-quotient realizations in finite groups.
   Analytic:
     stratum: S3
     definition: Mellin-transform analysis reconstructing completed zeta from theta-kernel tails.
