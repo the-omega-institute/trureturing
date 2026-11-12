@@ -6,9 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
 internal sealed class FixedGapGrowthDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Components consumed by the exact Mertens range-two probability theorem.",
+        "Stable partial matchings and the Mertens range-two probability estimate.",
         H("FixedGapGrowth"), Blocks(
-            Paragraph(Text("Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.")),
             Describe.Lean(DescribeId.Create("additive-defect-bounds"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/FixedGapGrowth.additive_defect_bounds"),
                 H("additive_defect_bounds"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

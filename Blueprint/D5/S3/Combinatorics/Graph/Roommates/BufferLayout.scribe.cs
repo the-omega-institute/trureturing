@@ -6,9 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
 internal sealed class BufferLayoutDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Components consumed by the exact Mertens range-two probability theorem.",
+        "Stable partial matchings and the Mertens range-two probability estimate.",
         H("BufferLayout"), Blocks(
-            Paragraph(Text("Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.")),
             Describe.Lean(DescribeId.Create("occupied-iff"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/BufferLayout.occupied_iff"),
                 H("occupied_iff"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -16,17 +15,17 @@ internal sealed class BufferLayoutDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("occupied"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/BufferLayout.occupied"),
                 H("occupied"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The free sites in each three-site half form a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("mate"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/BufferLayout.mate"),
                 H("mate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs."))), DescribeRole.Definition),
+                Blocks(Paragraph(Text("The free sites in each three-site half form a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("buffer-completion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/BufferLayout.buffer_completion"),
                 H("buffer_completion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The free sites in each three-site half form a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("complete-requests"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/BufferLayout.complete_requests"),
                 H("complete_requests"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The deterministic layout covers every subset of the four boundary sites of a six-vertex buffer. Reserved sites stand for old requesters. The generic request-completion theorem handles any injective family of old requests avoiding the two central sites, produces an actual involution, and allows only central new singles. PaddedCompletion and CyclicClosure combine this local involution with the separate stability and global injectivity proofs."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The free sites in each three-site half form a clique containing its central vertex. Mathlib's finite-clique matching theorem pairs either the whole free clique or its center-deleted subset, according to parity. The two centers are paired when both are left single. The resulting involution fixes reserved sites, uses edges of length at most two, and leaves at most one central single. PaddedCompletion and CyclicClosure use these properties for their stable matching constructions."))), DescribeRole.Theorem))));
 }

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Roommates/TriangleCount
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Roommates/OpenCertificates.exclusive_triangle_not_certified]
+   anchors: [mathlib/module/Mathlib.Data.Fintype.Card]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/Roommates/TriangleCount.count_three_bound; premises=D5/S3/Combinatorics/Graph/Roommates/OpenCertificates.exclusive_triangle_not_certified
    digest: Sixteen exclusive directed triangle ranking words are removed from the profile count. -/
 

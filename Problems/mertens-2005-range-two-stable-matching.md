@@ -55,10 +55,8 @@ there exist real q,c,C with 0<q<1 and c,C>0 such that, for every natural n>=2,
 c*q^(n+5)<=SourceModel.solutionProbability(n)<=C*q^(n+5).
 There is no completion, count, rate, perfect-matching or parity premise.
 The corresponding Scribe carries the exact source-probability statement and
-an open-problem-resolution claim for this specialization. The components are
-consumed helpers of this single result, with no separate solved-problem credit.
-Independent full pre-freeze review, admissibility, freezing and normal
-publication remain separate obligations.
+the proved specialization of the source problem. The matching, counting and
+analytic lemmas form the derivation of this single probability estimate.
 
 ### What the settlement shows
 
@@ -93,6 +91,3 @@ are displayed explicitly.
 
 The research line is
 https://github.com/the-omega-institute/trureturing/issues/29622.
-Its 2026-11-26T15:30:00Z deadline, forecasts and all earlier dispositions remain
-unchanged. Threshold0 remains unresolved. This local theorem is not a claim
-of completed independent review, admission, publication or worldwide priority.
