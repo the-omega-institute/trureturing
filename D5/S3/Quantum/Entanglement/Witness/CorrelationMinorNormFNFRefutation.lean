@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
+import D5.S3.Quantum.Schatten.Partition
+import D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity
 import D5.S3.Quantum.CotfasDVGS
 import D5.S3.Quantum.Measurement.StabilizerPovmMaximalEntanglementRefutation
 
@@ -19,7 +21,7 @@ set_option linter.style.longLine false
 
 noncomputable section
 open Matrix
-open scoped BigOperators ComplexOrder Kronecker Matrix.Norms.L2Operator
+open scoped BigOperators ComplexOrder Kronecker MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation (partialTraceLeft partialTraceRight)
@@ -49,6 +51,13 @@ def compound {m n : ℕ} (h : ℕ) (c : Matrix (Fin m) (Fin n) ℝ) :
 def cmnInf {m n : ℕ} (h : ℕ) (c : Matrix (Fin m) (Fin n) ℝ) : ℝ := by
   classical
   exact ‖compound h c‖
+
+/-- The finite-p norm uses the existing actual rectangular complex Schatten functional.
+The increasing real compound is complexified entrywise; infinity remains `cmnInf`. -/
+def cmnP {m n : ℕ} (p : ℝ) (h : ℕ) (c : Matrix (Fin m) (Fin n) ℝ) : ℝ := by
+  classical
+  exact D5.S3.Quantum.Schatten.Partition.rectangularNorm
+    ((compound h c).map Complex.ofReal) p
 
 /-- The right hand side of Theorem 3, with real exponent `(h-1)/2`. -/
 def bound (da db h : ℕ) : ℝ :=
@@ -103,10 +112,10 @@ def noisyCoefficients (t : ℝ) : Matrix (Fin 4) (Fin 16) ℝ := fun i j =>
 
 private def coefficients : Matrix (Fin 4) (Fin 16) ℝ := noisyCoefficients (1 / 1000)
 
-private def selectedRow : {r : Finset (Fin 4) // r.card = 3} :=
+def selectedRow : {r : Finset (Fin 4) // r.card = 3} :=
   ⟨{0, 1, 2}, by decide⟩
 
-private def selectedCols (k : Fin 4) : {s : Finset (Fin 16) // s.card = 3} :=
+def selectedCols (k : Fin 4) : {s : Finset (Fin 16) // s.card = 3} :=
   ⟨![{0, 1, 2}, {0, 1, 3}, {0, 2, 3}, {1, 2, 3}] k, by fin_cases k <;> decide⟩
 
 private lemma projectors_density (j : Fin 3) : IsDensity (projectors j) := by
@@ -562,6 +571,264 @@ private lemma noisy_violation (t : ℝ) (_ht0 : 0 ≤ t) (ht1 : t ≤ 1 / 200) :
   have hb : 0 ≤ 3 / (64 * Real.sqrt 2) := by positivity
   nlinarith
 
+private lemma noisy_last_row_zero (t : ℝ) (j : Fin 16) :
+    noisyCoefficients t 3 j = 0 := by
+  fin_cases j <;> simp [noisyCoefficients]
+
+private lemma noisy_compound_other_row (t : ℝ)
+    (r : {r : Finset (Fin 4) // r.card = 3}) (hr : r ≠ selectedRow)
+    (s : {s : Finset (Fin 16) // s.card = 3}) :
+    compound 3 (noisyCoefficients t) r s = 0 := by
+  have hmem : (3 : Fin 4) ∈ r.val := by
+    by_contra hn
+    have hsub : r.val ⊆ selectedRow.val := by
+      intro x hx
+      fin_cases x <;> simp_all [selectedRow]
+    have heq : r.val = selectedRow.val := Finset.eq_of_subset_of_card_le hsub
+      (by rw [r.property]; decide)
+    exact hr (Subtype.ext heq)
+  have hi : (3 : Fin 4) ∈ Set.range (r.val.orderEmbOfFin r.property) := by
+    rw [Finset.range_orderEmbOfFin]
+    exact hmem
+  obtain ⟨i, hi⟩ := hi
+  apply Matrix.det_eq_zero_of_row_eq_zero i
+  intro j
+  change noisyCoefficients t (r.val.orderEmbOfFin r.property i)
+    (s.val.orderEmbOfFin s.property j) = 0
+  rw [hi]
+  exact noisy_last_row_zero t _
+
+private lemma noisy_compound_four_zero (t : ℝ) : compound 4 (noisyCoefficients t) = 0 := by
+  ext r s
+  have heq : r.val = Finset.univ := Finset.eq_univ_of_card r.val (by simpa using r.property)
+  have hi : (3 : Fin 4) ∈ Set.range (r.val.orderEmbOfFin r.property) := by
+    rw [Finset.range_orderEmbOfFin, heq]
+    exact Finset.mem_univ _
+  obtain ⟨i, hi⟩ := hi
+  apply Matrix.det_eq_zero_of_row_eq_zero i
+  intro j
+  change noisyCoefficients t (r.val.orderEmbOfFin r.property i)
+    (s.val.orderEmbOfFin s.property j) = 0
+  rw [hi]
+  exact noisy_last_row_zero t _
+
+private lemma noisy_compound_outer (t : ℝ) :
+    compound 3 (noisyCoefficients t) = Matrix.vecMulVec
+      (Pi.single selectedRow (1 : ℝ))
+      (fun s => compound 3 (noisyCoefficients t) selectedRow s) := by
+  ext r s
+  by_cases hr : r = selectedRow
+  · subst r
+    change _ = (Pi.single selectedRow (1 : ℝ) : {r : Finset (Fin 4) // r.card = 3} → ℝ) selectedRow * _
+    rw [Pi.single_eq_same, one_mul]
+  · simp [Matrix.vecMulVec, Pi.single_apply, hr, noisy_compound_other_row t r hr s]
+
+private lemma noisy_compound_other_col (t : ℝ)
+    (s : {s : Finset (Fin 16) // s.card = 3})
+    (hs : ∀ k, s ≠ selectedCols k) :
+    compound 3 (noisyCoefficients t) selectedRow s = 0 := by
+  by_cases hsub : s.val ⊆ ({0, 1, 2, 3} : Finset (Fin 16))
+  · have hm : s.val ∈ ({0, 1, 2, 3} : Finset (Fin 16)).powersetCard 3 :=
+      Finset.mem_powersetCard.mpr ⟨hsub, s.property⟩
+    have he : ({0, 1, 2, 3} : Finset (Fin 16)).powersetCard 3 =
+        {(selectedCols 0).val, (selectedCols 1).val, (selectedCols 2).val,
+          (selectedCols 3).val} := by decide
+    rw [he] at hm
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hm
+    rcases hm with h | h | h | h
+    · exact False.elim (hs 0 (Subtype.ext h))
+    · exact False.elim (hs 1 (Subtype.ext h))
+    · exact False.elim (hs 2 (Subtype.ext h))
+    · exact False.elim (hs 3 (Subtype.ext h))
+  · obtain ⟨x, hx, hout⟩ := Finset.not_subset.mp hsub
+    have hx4 : ¬ x.val < 4 := by
+      fin_cases x <;> simp_all
+    have hi : x ∈ Set.range (s.val.orderEmbOfFin s.property) := by
+      rw [Finset.range_orderEmbOfFin]
+      exact hx
+    obtain ⟨j, hj⟩ := hi
+    apply Matrix.det_eq_zero_of_column_eq_zero j
+    intro i
+    simp [compound, Matrix.submatrix_apply, hj, noisyCoefficients, hx4]
+
+private lemma noisy_row_energy (t : ℝ) :
+    (∑ s, compound 3 (noisyCoefficients t) selectedRow s ^ 2) =
+      ∑ k : Fin 4, compound 3 (noisyCoefficients t) selectedRow (selectedCols k) ^ 2 := by
+  classical
+  symm
+  apply Fintype.sum_of_injective selectedCols selectedCols_injective
+  · intro s hs
+    rw [noisy_compound_other_col t s]
+    · simp
+    · intro k hk
+      exact hs ⟨k, hk.symm⟩
+  · intro i; rfl
+
+private lemma single_row_gram {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n] (r : m) (v : n → ℝ) :
+    (Matrix.vecMulVec (Pi.single r (1 : ℝ)) v) *
+      (Matrix.vecMulVec (Pi.single r (1 : ℝ)) v)ᴴ =
+      Matrix.diagonal (Pi.single r (∑ j, v j ^ 2) : m → ℝ) := by
+  ext i k
+  by_cases hi : i = r <;> by_cases hk : k = r <;>
+    simp_all [Matrix.mul_apply, Matrix.vecMulVec, Matrix.conjTranspose_apply,
+      Pi.single_apply, Matrix.diagonal_apply, pow_two]
+  all_goals aesop
+
+private lemma single_row_opnorm {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n] (r : m) (v : n → ℝ) :
+    ‖Matrix.vecMulVec (Pi.single r (1 : ℝ)) v‖ = Real.sqrt (∑ j, v j ^ 2) := by
+  have h := Matrix.l2_opNorm_conjTranspose_mul_self
+    (Matrix.vecMulVec (Pi.single r (1 : ℝ)) v)ᴴ
+  rw [Matrix.conjTranspose_conjTranspose, single_row_gram,
+    Matrix.l2_opNorm_diagonal, Pi.norm_single, Matrix.l2_opNorm_conjTranspose,
+    Real.norm_eq_abs, abs_of_nonneg (Finset.sum_nonneg (fun _ _ => sq_nonneg _))] at h
+  apply (sq_eq_sq₀ (norm_nonneg _) (Real.sqrt_nonneg _)).mp
+  rw [Real.sq_sqrt (Finset.sum_nonneg (fun _ _ => sq_nonneg _)), pow_two]
+  exact h.symm
+
+private lemma single_row_complex_gram {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n] (r : m) (v : n → ℝ) :
+    ((Matrix.vecMulVec (Pi.single r (1 : ℝ)) v).map Complex.ofReal) *
+      ((Matrix.vecMulVec (Pi.single r (1 : ℝ)) v).map Complex.ofReal)ᴴ =
+      Matrix.diagonal (fun i => (((Pi.single r (∑ j, v j ^ 2) : m → ℝ) i) : ℂ)) := by
+  ext i k
+  by_cases hi : i = r <;> by_cases hk : k = r <;>
+    simp_all [Matrix.mul_apply, Matrix.vecMulVec, Matrix.conjTranspose_apply,
+      Pi.single_apply, Matrix.diagonal_apply, pow_two, ← map_sum]
+  all_goals aesop
+
+private lemma single_row_schatten {m n : Type*} [Fintype m] [Fintype n]
+    [DecidableEq m] [DecidableEq n] (r : m) (v : n → ℝ) (p : ℝ) (hp : 0 < p) :
+    D5.S3.Quantum.Schatten.Partition.rectangularNorm
+      ((Matrix.vecMulVec (Pi.single r (1 : ℝ)) v).map Complex.ofReal) p =
+        Real.sqrt (∑ j, v j ^ 2) := by
+  classical
+  let E : ℝ := ∑ j, v j ^ 2
+  have hE : 0 ≤ E := Finset.sum_nonneg (fun _ _ => sq_nonneg _)
+  have hdiag : (Matrix.diagonal (fun i => (((Pi.single r E : m → ℝ) i) : ℂ))).PosSemidef :=
+    Matrix.PosSemidef.diagonal (by
+      intro i
+      change (0 : ℂ) ≤ (((Pi.single r E : m → ℝ) i) : ℂ)
+      apply Complex.zero_le_real.mpr
+      by_cases hi : i = r <;> simp [Pi.single_apply, hi, hE])
+  apply (Real.rpow_left_inj
+    (schattenNorm_nonneg _ _) (Real.sqrt_nonneg _) hp.ne').mp
+  change D5.S3.Quantum.Schatten.Partition.rectangularNorm
+    ((Matrix.vecMulVec (Pi.single r (1 : ℝ)) v).map Complex.ofReal) p ^ p = _
+  rw [D5.S3.Quantum.Schatten.Partition.rectangularNorm_rpow _ hp,
+    single_row_complex_gram]
+  unfold D5.S3.Quantum.Hiai.InverseMeanVariational.tracePower
+  rw [CFC.rpow_eq_cfc_real hdiag.nonneg,
+    D5.S3.Quantum.Dynamics.EntropyProductionCoherenceDeletionIdentity.cfc_diagonal,
+    Matrix.trace_diagonal]
+  try simp only [← Complex.ofReal_sum, Complex.ofReal_re]
+  have hz : (0 : ℝ) ^ (p / 2) = 0 := Real.zero_rpow (by linarith)
+  have he : (∑ i : m, (Pi.single r E : m → ℝ) i ^ (p / 2)) = E ^ (p / 2) := by
+    simp [Pi.single_apply, hz]
+  rw [he, Real.sqrt_eq_rpow, ← Real.rpow_mul hE]
+  congr 1
+  ring
+
+/-- The squared Euclidean length of the four increasing IZX minors. -/
+def noisyMinorEnergy (t : ℝ) : ℝ :=
+  ∑ k : Fin 4, (compound 3 (noisyCoefficients t) selectedRow (selectedCols k)) ^ 2
+
+private lemma noisy_compound_rank (t : ℝ) (ht : t ≤ 1 / 200) :
+    (compound 3 (noisyCoefficients t)).rank = 1 := by
+  classical
+  let C := compound 3 (noisyCoefficients t)
+  have hupper : C.rank ≤ 1 := by
+    rw [show C = _ from noisy_compound_outer t]
+    exact Matrix.rank_vecMulVec_le _ _
+  have hm : C selectedRow (selectedCols 0) ≠ 0 := by
+    change compound 3 (noisyCoefficients t) selectedRow (selectedCols 0) ≠ 0
+    rw [minor_value]
+    norm_num only [Fin.isValue, Matrix.cons_val_zero]
+    have h1 : 0 < 1 - t := by linarith
+    have h4 : 0 < 4 - t := by linarith
+    exact ne_of_gt (by positivity)
+  have hd : (C.submatrix (fun _ : Fin 1 => selectedRow)
+      (fun _ : Fin 1 => selectedCols 0)).det ≠ 0 := by
+    simpa only [Matrix.det_fin_one, Matrix.submatrix_apply] using hm
+  have hlow := Matrix.rank_submatrix_le C (fun _ : Fin 1 => selectedRow)
+    (fun _ : Fin 1 => selectedCols 0)
+  rw [Matrix.rank_of_det_ne_zero hd] at hlow
+  have : 1 ≤ C.rank := by simpa using hlow
+  exact Nat.le_antisymm hupper this
+
+/-- Exact third- and fourth-order compounds, including their actual finite-p and
+infinity norms, over the entire closed rational noise interval. -/
+theorem rational_compound_family (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1 / 200) :
+    (compound 3 (corr (noisyRho t) alice bob)).rank = 1 ∧
+    (∀ r, r ≠ selectedRow → ∀ s, compound 3 (corr (noisyRho t) alice bob) r s = 0) ∧
+    (∀ s, s ∉ Set.range selectedCols →
+      compound 3 (corr (noisyRho t) alice bob) selectedRow s = 0) ∧
+    (∀ k : Fin 4, compound 3 (corr (noisyRho t) alice bob) selectedRow (selectedCols k) =
+      (![64 * ((4-t)/12) * ((1-t)/3)^2 / 25,
+        4 * (t/4) * ((1-t)/3)^2 / 5,
+        -4 * (t/4) * ((1-t)/3)^2 / 5,
+        24 * (t/4) * ((1-t)/3)^2 / 25] : Fin 4 → ℝ) k / Real.sqrt 2 ^ 3) ∧
+    cmnInf 3 (corr (noisyRho t) alice bob) = Real.sqrt (noisyMinorEnergy t) ∧
+    (∀ p : ℝ, 1 ≤ p → cmnP p 3 (corr (noisyRho t) alice bob) =
+      Real.sqrt (noisyMinorEnergy t)) ∧
+    (∀ p : ℝ, 1 ≤ p → bound 2 4 3 < cmnP p 3 (corr (noisyRho t) alice bob)) ∧
+    compound 4 (corr (noisyRho t) alice bob) = 0 ∧
+    cmnInf 4 (corr (noisyRho t) alice bob) = 0 ∧
+    (∀ p : ℝ, 1 ≤ p → cmnP p 4 (corr (noisyRho t) alice bob) = 0) := by
+  classical
+  have hi : cmnInf 3 (corr (noisyRho t) alice bob) = Real.sqrt (noisyMinorEnergy t) := by
+    rw [correlation_eq]
+    unfold cmnInf
+    rw [noisy_compound_outer, single_row_opnorm, noisy_row_energy]
+    rfl
+  have hp (p : ℝ) (hp : 1 ≤ p) : cmnP p 3 (corr (noisyRho t) alice bob) =
+      Real.sqrt (noisyMinorEnergy t) := by
+    rw [correlation_eq]
+    unfold cmnP
+    rw [noisy_compound_outer, single_row_schatten _ _ p (by linarith), noisy_row_energy]
+    rfl
+  refine ⟨?_, ?_, ?_, ?_, hi, hp, ?_, ?_, ?_, ?_⟩
+  · rw [correlation_eq]; exact noisy_compound_rank t ht1
+  · intro r hr s
+    rw [correlation_eq]; exact noisy_compound_other_row t r hr s
+  · intro s hs
+    rw [correlation_eq]
+    apply noisy_compound_other_col
+    intro k hk
+    exact hs ⟨k, hk.symm⟩
+  · intro k
+    rw [correlation_eq]; exact minor_value t k
+  · intro p hpp
+    rw [hp p hpp, ← hi]
+    exact noisy_violation t ht0 ht1
+  · rw [correlation_eq]; exact noisy_compound_four_zero t
+  · simp [correlation_eq, cmnInf, noisy_compound_four_zero]
+  · intro p hpp
+    let r : {r : Finset (Fin 4) // r.card = 4} := ⟨Finset.univ, by decide⟩
+    have hz := single_row_schatten r
+      (fun _ : {s : Finset (Fin 16) // s.card = 4} => (0 : ℝ)) p (by linarith)
+    have hzmap : (Matrix.vecMulVec (Pi.single r (1 : ℝ))
+        (fun _ : {s : Finset (Fin 16) // s.card = 4} => (0 : ℝ))).map Complex.ofReal = 0 := by
+      ext i j
+      simp [Matrix.vecMulVec]
+    rw [hzmap] at hz
+    simpa [cmnP, correlation_eq, noisy_compound_four_zero] using hz
+
+/-- The exact fixed specialization, strengthening the historical operator lower
+bound to equality without changing the original witness. -/
+theorem fixed_compound_energy :
+    noisyMinorEnergy (1 / 1000) = 559341805929555807 / 500000000000000000000 ∧
+    (∀ p : ℝ, 1 ≤ p → cmnP p 3 (corr (noisyRho (1 / 1000)) alice bob) ^ 2 =
+      559341805929555807 / 500000000000000000000) := by
+  have he : noisyMinorEnergy (1 / 1000) =
+      559341805929555807 / 500000000000000000000 := minor_energy
+  refine ⟨he, ?_⟩
+  intro p hp
+  rw [(rational_compound_family (1 / 1000) (by norm_num) (by norm_num)).2.2.2.2.2.1 p hp,
+    Real.sq_sqrt, he]
+  exact Finset.sum_nonneg (fun _ _ => sq_nonneg _)
+
 /-- The separable qubit-ququart example refutes the conjecture without FNF. -/
 theorem result : ¬ claim := by
   intro hc
@@ -571,7 +838,14 @@ theorem result : ¬ claim := by
   have hn : 0 ≤ cmnInf 3 (corr rho alice bob) := by unfold cmnInf; positivity
   have hb : 0 ≤ 3 / (64 * Real.sqrt 2) := by positivity
   have hsq := (sq_le_sq₀ hn hb).mpr hu
-  linarith [witness_lower, numerical_gap]
+  have hv := fixed_compound_energy.2 1 (by norm_num)
+  have hf := rational_compound_family (1 / 1000) (by norm_num) (by norm_num)
+  have hnorm : cmnP 1 3 (corr (noisyRho (1 / 1000)) alice bob) =
+      cmnInf 3 (corr (noisyRho (1 / 1000)) alice bob) :=
+    (hf.2.2.2.2.2.1 1 (by norm_num)).trans hf.2.2.2.2.1.symm
+  rw [hnorm] at hv
+  change cmnInf 3 (corr rho alice bob) ^ 2 = _ at hv
+  linarith [numerical_gap]
 
 /-- Every member of the full closed noise interval is an actual separable density,
 with its exact normalized correlation, Bob marginal, strict operator violation,
