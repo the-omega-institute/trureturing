@@ -83,7 +83,8 @@ theorem rather_problem_one (p q r : ℕ)
   have hco' : 14 ≤ N ∧ (∀ k, k ≤ N → 0 < sQ k) ∧
       (∀ k, N < k → sQ k = 0) ∧
       (∀ k, 1 ≤ k → k < N → sQ (k-1)*sQ (k+1) < sQ k^2) := by
-    simpa only [cardm 0, cardm 1, cardm 2] using hco
+    simp only [cardm 0, cardm 1, cardm 2] at hco
+    convert (preTransparency := .reducible) hco <;> congr 1 <;> ext x <;> simp
   obtain ⟨hN, hposQ, htailQ, hlcQ⟩ := hco'
   have hpos (k : ℕ) (hk : k ≤ N) : 0 < s k := by
     have h := hposQ k hk
