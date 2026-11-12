@@ -553,3 +553,667 @@ $$
 [FLW]: https://arxiv.org/html/math/0103200v1
 
 ## 追加锚（本行以下为增补区）
+
+
+## 8. 有限扰动的实际载体、全未来效应与校准排除
+
+### 8.1 原实际载体与完整未来加性类
+
+**定义 8.1（原始合同、两种程序和完整未来行）。** 固定同一个唯一 $\Omega$、原生
+$89$ 维复载体 $\mathcal K=V_{12}^{\mathbf 1}$、$26+63$ 的代码／补空间分解、唯一
+ready $e_0$、全部 $1024$ 个旧 $\pi$-fiber 标签、原十一地址前操作与原七地址后操作。
+原有限时序字按实际调用先后相乘；$K_{af}=K_fK_a$。原 support、calibration、
+历史、records、archives、zero、failure、Return、实际 event permissions、source／
+process、资源、时间和 units 合同均按其原字面保留。本节只研究指定终端边缘的
+加性数学类，不增加 preparation、measurement、control、port、copy 或 resource。
+
+令
+
+$$
+\mathsf W_{11}=\{0,\ldots,10\}^{<\infty},\qquad
+\mathsf W_7=\{0,\ldots,6\}^{<\infty},\qquad
+\Lambda=\{0,1\}^{10},\qquad \chi_a=K_ae_0 .
+$$
+
+$P_a=\chi_a\chi_a^*/\|\chi_a\|^2$ 是原纯矩阵点。$N_w$ 是原旧标签
+$w\in\Lambda$ 的投影，$\sum_wN_w=I$；其中 $34$ 个秩二、$21$ 个秩一、
+$969$ 个为零，零标签始终保留。记
+
+$$
+\begin{aligned}
+\mathcal D_{89}&=\{\rho\succeq0:\operatorname {Tr}\rho=1\},\qquad
+I_{\rm fut}=\{\star\}\sqcup(\mathsf W_{11}\times\Lambda),\\
+Q(X)&=\left(\operatorname {Tr}X,
+ \left(\operatorname {Tr}(N_wK_fXK_f^*)\right)_{f\in\mathsf W_{11},\,w\in\Lambda}\right)
+ \in\ell^\infty(I_{\rm fut},\mathbb R),\quad X\in\operatorname {Herm}_{89}.
+\end{aligned}
+\tag{8.1}
+$$
+
+这里 $Q$ 从一开始就包含全部原十一地址预终端未来，不是只有当前 $1024$ 个
+标签的测量。当前 Born 边缘只是 $Q(X)_{\epsilon,w}$；$\star$ 是归一化坐标。
+在行空间上使用包含全部未来坐标的上确界范数。$Q$ 的数学域不表示这些矩阵
+均可实际制备。
+
+取原 finite reduction 的一个非空 reachable component $R$，记 ready 类为
+$r_*$。原字在 $R$ 上的有限像生成置换群 $G$，在 $R$ 上传递，且
+$r_a=g_ar_*$、$g_{af}=g_fg_a$。给定任意归一化当前噪声
+
+$$
+ m:R\longrightarrow\Delta_{1024},\qquad
+ m(r)=(m_w(r))_w,\qquad m_w(r)\ge0,\quad\sum_wm_w(r)=1 .
+\tag{8.2}
+$$
+
+不对 $m$ 加等变、单射或仿射独立条件。在 $0<\eta<1$ 时加性终端类为
+
+$$
+ p_w(a)=(1-\eta)\operatorname {Tr}(N_wP_a)+\eta m_w(r_a).
+\tag{8.3}
+$$
+
+对每个 $f\in\mathsf W_{11}$，同一实际程序 $\mathsf T(af)$ 的读数为
+
+$$
+ p_{f,w}(a):=p_w(af)
+ =(1-\eta)\operatorname {Tr}(N_wK_fP_aK_f^*)+\eta m_w(g_fr_a).
+\tag{8.3a}
+$$
+
+另一个原程序 $\mathsf R(a,h)$ 仍是执行 $a$、读取并保留 $b_9$、再执行
+与该结果无关的原 $h\in\mathsf W_7$，最后用旧终端。它保留原 $M_i$ 分支、
+记录和全部原合同；(8.3a) 不给出或替换这个带中途记录的联合律。同一个
+$h\in\mathsf W_7$ 在 $\mathsf T(ah)$ 中没有中途记录，两个程序不能等同。
+特别是原七地址 $K_h$ 和 $N_w$ 都与 $M_i$ 对易，故只保留七地址的共轭效应
+看不见两个 record sectors 之间的相干项；本节不把它们当作 (8.1) 的替代。
+十一地址在本节只用于原已合法的预终端域，不增加记录后控制。
+
+第二项只依赖原 finite reduction，不是新的 source。若另要求原 fine-zero
+support 合同，还须对每个实际 $a,w$ 要求
+$\operatorname {Tr}(N_wP_a)=0\Rightarrow m_w(r_a)=0$；归一化不自动供应它。
+其余 source/process、记录及失败合同也不由这个终端类自动推出。
+
+**假设 8.2（实际作用与有限纤维）。** 原十一地址 projective action 的闭包为
+$PU(89)$。为同时保留原作用与原 finite reduction，令
+
+$$
+\Gamma=\langle([K_j],g_j):0\le j\le10\rangle\ \le PU(89)\times G,
+\qquad H=\ker(\Gamma\longrightarrow G),\qquad
+\mathcal F_r=\{P_a:r_a=r\}.
+$$
+
+第二投影满射，故 $H$ 有限指数。这里使用两种作用的共同群像，不要求 finite
+reduction 能从 projective matrix 的标量相位商单独读出。原实际字仍只有有限
+正向十一地址；群、闭包和 $H$ 只用于证明，未取得连续物理控制。
+
+定义完整噪声列及其凸包
+
+$$
+\begin{aligned}
+t_r&=\left(1,(m_w(g_fr))_{f\in\mathsf W_{11},\,w\in\Lambda}\right),\\
+T_0&=\{t_r:r\in R\},\qquad T=\operatorname {conv}T_0,\qquad
+q=|T_0|,\qquad \bar t=q^{-1}\sum_{t\in T_0}t,\\
+W_T&=\operatorname {span}_{\mathbb R}(T-\bar t).
+\end{aligned}
+\tag{8.4}
+$$
+
+只有完整列相同才在 $T_0$ 中去重。当前 $m(r)=m(s)$ 不表示 $t_r=t_s$；
+当前值之间的仿射关系也不表示完整列有该关系。由于 $G$ 有限且每个 $g\in G$
+都有原有限字代表，$t_r$ 等价于有限列 $(1,(m_w(gr))_{g,w})$。这只是同一行的
+无损有限坐标表示，不是另选一组 profiles。
+
+在与 $Q$ 完全相同的坐标域中置
+
+$$
+\Phi(\rho,t)=(1-\eta)Q(\rho)+\eta t,\qquad
+K=\Phi(\mathcal D_{89}\times T),\qquad
+V=\operatorname {span}_{\mathbb R}K,\qquad u(z)=z(\star).
+\tag{8.5}
+$$
+
+实际完整行为 $z_a=(1,(p_{f,w}(a))_{f,w})=\Phi(P_a,t_{r_a})$。
+$K$ 是这些指定终端行的数学完成基，不是另一个 source，也不是包含
+$\mathsf R$ 联合律的替代 state space。对所有 $z\in V$，每个固定 $f$ 都满足
+$\sum_wz(f,w)=u(z)$。
+
+### 8.2 密集纤维和实际 body 的精确识别
+
+**命题 8.3（有限指数核和密集纤维）。** 在假设 8.2 下，$H$ 的第一投影在
+$PU(89)$ 中稠密，原正向有限字中 $g_h=1_G$ 的那些字的 projective image
+也稠密。因此对每个 $r\in R$，$\overline{\mathcal F_r}=\mathbb {CP}^{88}$。
+
+**证明。** 设 $L$ 为 $H$ 的第一投影的闭包。$\Gamma$ 的有限余类分解在第一
+投影及闭包后给出 $PU(89)$ 是有限个 $L$ 余类之并。因此闭子群 $L$ 有限指数，
+从而开；$PU(89)$ 连通，故 $L=PU(89)$。
+
+还须回到实际正向字。令 $S$ 为 $([K_a],g_a)$ 的正向字幺半群。紧群中每个
+元素 $b$ 的逆属于其非负幂的闭包：有限阶时直接取幂；无限阶时由紧性取正幂
+趋于单位，再将指数减一得到趋于 $b^{-1}$ 的非负幂。因此 $\overline S$
+包含每个生成元的逆，$\overline S=\overline\Gamma$。对 $h\in H$，可用
+实际正向字逼近这个 pair；由于第二因子 $G$ 离散，逼近字的有限像最终恰为
+$1_G$。结合第一段，实际 kernel 字的 projective image 稠密。
+
+取一个到达 $r$ 的实际 $a_r$，在其后接上述 kernel 字，仍落在 $r$，而
+$P_{a_rh}=K_hP_{a_r}K_h^*$ 的闭包为全部秩一投影。这证明每个实际 fiber
+稠密，而没有把闭包元素或逆的极限变成物理按钮。∎
+
+**命题 8.4（统一全未来的实际行闭包）。** 在 (8.1) 的全未来上确界范数下，
+
+$$
+\overline{\{z_a:a\in\mathsf W_{11}\}}
+ =\{\Phi(P,t):P\text{ rank one},\ t\in T_0\},
+\tag{8.6}
+$$
+
+且
+
+$$
+\overline{\operatorname {conv}\{z_a:a\in\mathsf W_{11}\}}
+ =\Phi(\mathcal D_{89}\times T)=K.
+\tag{8.7}
+$$
+
+$K$ 紧，$V$ 有限维且恰为实际行的实线性张成。
+
+**证明。** 对任意 Hermitian $X$，$\|Q(X)\|_\infty\le\|X\|_1$，因为
+$0\le N_w\le I$ 且每个 $K_f$ 酉；归一化坐标也满足同一界。所以固定一个
+$r$ 时，$P\mapsto\Phi(P,t_r)$ 在所有未来上一致连续。命题 8.3 给出 (8.6)
+的正向包含；反向包含由有限个 $r$ 和秩一投影域的紧性给出。
+
+$Q(\operatorname {Herm}_{89})+\operatorname {span}T_0$ 有限维，故全未来坐标
+虽无限，所有行已在同一个有限维闭子空间内。$\mathcal D_{89}\times T$ 紧，
+$\Phi$ 连续，故 $K$ 紧。若 $\rho=\sum_i\mu_iP_i$ 是谱分解、
+$t=\sum_j\lambda_jt_{r_j}$，则
+$\Phi(\rho,t)=\sum_{i,j}\mu_i\lambda_j\Phi(P_i,t_{r_j})$。
+每项都在 (8.6) 的实际行闭包内，得 (8.7)；反向由 $K$ 闭凸。有限维中实际行
+张成的线性空间闭，遂等于 $V$。这些凸组合都是数学完成，不取得物理混合资源。∎
+
+**命题 8.5（完整行的无 confounding 与未来闭合）。** 令
+$H_0=\{X\in\operatorname {Herm}_{89}:\operatorname {Tr}X=0\}$。则
+$Q|_{H_0}$ 单射，且
+
+$$
+Q(H_0)\cap W_T=\{0\}.
+\tag{8.8}
+$$
+
+对任意密度矩阵 $\rho,\rho'$，有
+
+$$
+\sup_{f\in\mathsf W_{11},\,w\in\Lambda}
+ \left|\operatorname {Tr}\!\left(N_wK_f(\rho-\rho')K_f^*\right)\right|
+ \le\|\rho-\rho'\|_1.
+\tag{8.9}
+$$
+
+$\Phi$ 在 $\mathcal D_{89}\times T$ 上仿射单射，全部实际未来评价均为同一
+有限维 $V$ 上的连续线性函数。
+
+**证明。** 对实际有限字 $h$ 定义行移位
+$(S_hz)(\star)=z(\star)$、$(S_hz)(f,w)=z(hf,w)$。实际次序给
+
+$$
+S_hQ(X)=Q(K_hXK_h^*),\qquad S_ht_r=t_{g_hr}.
+$$
+
+当 $g_h=1_G$ 时，$S_h$ 逐点固定 $T_0$，因而逐点固定 $W_T$。若
+$Q(X)\in W_T$、$X\in H_0$，则这些实际 kernel 字满足
+$Q(K_hXK_h^*)=Q(X)$。取空未来和一个原 rank-one $N_{w_0}$，命题 8.3 的
+kernel 密度及连续性给
+
+$$
+\operatorname {Tr}(N_{w_0}UXU^*)=\operatorname {Tr}(N_{w_0}X)
+\qquad(U\in PU(89)).
+$$
+
+所有秩一投影都是 $U^*N_{w_0}U$，故 $X$ 的每个单位向量二次型值相同，
+$X$ 为标量；迹零迫使 $X=0$。这同时证明 (8.8) 和 $Q|_{H_0}$ 的单射性
+（零行也属于 $W_T$）。含迹坐标的 $Q$ 在全部 Hermitian 空间上也单射。
+若 $\Phi(\rho,t)=\Phi(\rho',t')$，差分属于 (8.8) 的交，故两因子均相同。
+
+同一迹范数界给 (8.9)，并给
+$\|\Phi(\rho,t)-\Phi(\rho',t')\|_\infty
+\le(1-\eta)\|\rho-\rho'\|_1+\eta\|t-t'\|_\infty$。
+每个 $S_h$ 将 $K$ 送到 $K$，因而将 $V$ 送到 $V$；所有未来坐标都是这个
+完整行的评价。命题 8.4 的闭包因此是统一全未来闭包，不只是逐坐标或当前菜单
+的闭包。这里没有对记录后七地址载体作单射性断言。∎
+
+### 8.3 精确 rank、纯点和完整 profiles 的退化
+
+**定义 8.6（同一完整 profile 的 rank）。** 定义有限矩阵
+
+$$
+\mathsf B:\mathbb R^{R}\longrightarrow
+ \mathbb R\times\mathbb R^{G\times\Lambda},\qquad
+\mathsf B(c)=\left(\sum_rc_r,
+ \left(\sum_rc_rm_w(gr)\right)_{g,w}\right),\qquad
+ d_T=\operatorname {rank}\mathsf B-1 .
+\tag{8.10}
+$$
+
+有限列到 (8.4) 的完整行由 $(g_f,w)$ 重复坐标嵌入给出；每个 $g$ 有实际字
+代表，所以该嵌入单射。因而 $d_T=\dim W_T=\dim\operatorname {aff}T$。
+重复完整 profile 恰给重复列，所有仿射关系由下文 (8.14) 给出。
+当前 $m(r)$ 的重复或依赖不在这里被误删。完整列的重复和仿射依赖均允许，
+不把 $d_T$ 默认成 $|R|-1$ 或 $q-1$。
+
+**定理 8.7（实际 body 的 rank 和纯点）。** 在 $0<\eta<1$ 下，
+
+$$
+\dim_{\mathbb R}\operatorname {aff}K=7920+d_T,
+\qquad \dim_{\mathbb R}V=7921+d_T.
+\tag{8.11}
+$$
+
+$K$ 的纯点恰为
+
+$$
+\Phi(P,v),\qquad P^2=P=P^*,\quad\operatorname {rank}P=1,\quad v\in T_0.
+\tag{8.12}
+$$
+
+所有 distinct 完整 profiles 都是 exposed 顶点。$q=1$ 时 $d_T=0$；$q>1$ 时
+
+$$
+1\le d_T\le q-1,
+\tag{8.13}
+$$
+
+不要求 $d_T=q-1$，重复的 $r$ 也不必删除。
+
+**证明。** 先核对完整 profiles 的作用。若 $k\in G$，在有限坐标中
+$t_{kr}(g,w)=t_r(gk,w)$，即右平移只是置换 $G\times\Lambda$ 坐标。因此
+$t_r=t_s$ 蕴涵 $t_{kr}=t_{ks}$，完整列的每个线性或仿射关系也被平移保留。
+这给出 distinct $T_0$ 上的传递作用，没有要求当前映射 $m$ 等变。
+
+在有限坐标上取通常 Euclidean 内积。此作用保持 $\bar t$ 和
+$\|t-\bar t\|$。对固定 $v\in T_0$，泛函
+$t\mapsto\langle v-\bar t,t-\bar t\rangle$ 在 $T_0$ 中的唯一最大点是 $v$：
+等范数和 Cauchy--Schwarz 的等号条件排除其它 distinct 点。故每个 $v$ exposed。
+$q=1$ 时结论直接成立。
+
+$\dim H_0=89^2-1=7920$，而命题 8.5 给
+
+$$
+\operatorname {aff}K-\operatorname {aff}K
+ =(1-\eta)Q(H_0)\oplus\eta W_T.
+$$
+
+由定义 8.6 得仿射维数，再因 $u=1$ 于 $K$、$u=0$ 于差空间，增加一维得到
+(8.11)。仿射单射 $\Phi$ 将 Cartesian product 的极点恰送到极点。
+$\mathcal D_{89}$ 的极点是秩一投影，$T$ 的极点刚证明恰为 $T_0$，故得
+(8.12)。若一因子不极端，其非平凡凸分解经单射给出非平凡分解；若两因子均
+极端，每个正权分解项的两个因子都相同。这也直接证明纯点刻画的两个方向。
+最后，矩阵 $\mathsf B$ 的列关系恰为
+
+$$
+\sum_rc_r=0,\qquad \sum_rc_rm_w(gr)=0\quad(\forall g\in G,w\in\Lambda).
+\tag{8.14}
+$$
+
+因此 $d_T$ 计入全部依赖，(8.13) 包含所有退化情形。∎
+
+### 8.4 整个 proper effect interval 和最小确认
+
+**命题 8.8（全 effects 的唯一 gauge）。** $C=\operatorname {cone}K$ 是
+$V$ 中的闭、尖、生成锥，$u$ 在 $C\setminus\{0\}$ 上严格正。$K$ 上每个
+仿射函数都唯一线性延拓到 $V$，并有唯一表达
+
+$$
+F(\Phi(\rho,t))=c+\operatorname {Tr}(A\rho)+\ell(t-\bar t),
+\qquad \operatorname {Tr}A=0,
+\tag{8.15}
+$$
+
+其中 $A$ 为 Hermitian，$\ell\in W_T^*$。令
+
+$$
+\ell_-:=\min_{t\in T}\ell(t-\bar t),\qquad
+\ell_+:=\max_{t\in T}\ell(t-\bar t).
+$$
+
+则 $F$ 属于整个数学 proper interval $[0,u]$，即在全部 $K$ 上 $0\le F\le1$，
+当且仅当
+
+$$
+ c+\lambda_{\min}(A)+\ell_-\ge0,\qquad
+ c+\lambda_{\max}(A)+\ell_+\le1 .
+\tag{8.16}
+$$
+
+**证明。** $K$ 紧且 $u=1$。若 $s_nk_n$ 收敛（$s_n\ge0,k_n\in K$），则
+$s_n=u(s_nk_n)$ 也收敛；$s_n\to0$ 时有界 $k_n$ 给零极限，否则由紧性
+给仍在 $C$ 的极限。这证明闭性；
+$u$ 的严格正性给尖性，$V=\operatorname {span}K$ 给生成性。归一化超平面
+不经过原点且张成 $V$，故仿射函数恰有上述线性延拓。
+
+(8.8) 的直和给出 (8.15)；$\operatorname {Tr}A=0$ 将标量部分吸收到 $c$，
+两因子的满仿射张成给唯一性。独立改变 $\rho,t$ 时，最小值恰为
+$c+\lambda_{\min}(A)+\ell_-$，最大值恰为
+$c+\lambda_{\max}(A)+\ell_+$；在谱极向量和 profile 顶点上可以同时达到。
+故 (8.16) 没有遗漏任何 proper effect，也没有引入物理测试菜单。∎
+
+对纯点 $p=\Phi(P,v)$，定义
+
+$$
+\mathcal F_p=\{F\in[0,u]:F(p)=1\},\qquad
+T_p(x)=\min_{F\in\mathcal F_p}F(x),
+\tag{8.17}
+$$
+
+以及
+
+$$
+\kappa_v(t)=\min\{k(t):k\text{ affine},\ 0\le k\le1\text{ on }T,\ k(v)=1\}.
+\tag{8.18}
+$$
+
+这些最小值均达到。事实上 proper 仿射函数在一个有限仿射基上的值有界，
+所以全 proper interval 是有限维闭有界集；确认条件给其非空闭子集。
+同一论证适用于 $T$。
+
+**定理 8.9（完整混态域的最小确认和比较）。** 对任意
+$\rho\in\mathcal D_{89}$、$t\in T$，
+
+$$
+T_{\Phi(P,v)}(\Phi(\rho,t))
+ =\min\{\operatorname {Tr}(P\rho),\ \kappa_v(t)\}.
+\tag{8.19}
+$$
+
+特别是对任意纯 $s=\Phi(Q,s_T)$，
+$T_p(s)=\min\{\operatorname {Tr}(PQ),\kappa_v(s_T)\}$；对反向比较，
+$T_s(p)=\min\{\operatorname {Tr}(PQ),\kappa_{s_T}(v)\}$。
+任意有限混合 $\sum_i\lambda_i\Phi(\rho_i,t_i)$ 的比较值也由 (8.19) 取得，
+其两个输入恰为 $\sum_i\lambda_i\rho_i$ 和 $\sum_i\lambda_it_i$。
+重复 profiles、全部仿射依赖、混态 $\rho$ 和混合 $t$ 都在这些量词内。
+
+**证明。** 量子-only confirmer $q_P(\rho)=\operatorname {Tr}(P\rho)$ 和达到
+(8.18) 的 profile-only confirmer 都在整个 (8.16) 区间内，故右端为上界。
+反向取任意 $F\in\mathcal F_p$，令
+$a(\rho)=F(\Phi(\rho,v))$、$b(t)=F(\Phi(P,t))$。Cartesian affine identity 为
+
+$$
+F(\Phi(\rho,t))=a(\rho)+b(t)-1.
+\tag{8.20}
+$$
+
+置 $\alpha=\min a$、$\beta=\min b$，则 $0\le\alpha,\beta\le1$，
+$\alpha+\beta\ge1$，且 $a(P)=b(v)=1$。代表 $a$ 的 Hermitian 矩阵在 $P$
+上有本征值一，其余谱至少为 $\alpha$，所以
+
+$$
+ a(\rho)\ge\alpha+(1-\alpha)\operatorname {Tr}(P\rho),\qquad
+ b(t)\ge\beta+(1-\beta)\kappa_v(t).
+\tag{8.21}
+$$
+
+第二式在 $\beta<1$ 时由 $(b-\beta)/(1-\beta)$ 是 proper confirmer 得到；
+$\beta=1$ 时 $b=1$，同式仍成立。令 $x=\operatorname {Tr}(P\rho)$、
+$y=\kappa_v(t)$。若 $x\le y$，代入 (8.20) 得
+$F(\Phi(\rho,t))-x\ge(\alpha+\beta-1)(1-x)\ge0$；若 $y\le x$，交换两项
+得到相同的 $y$ 下界。故所有确认者都不小于右端，component confirmers
+达到它。纯点、反向和有限混合的各式由同一公式直接代入，没有假定 profile
+转移数互反，也没有把任意混态余项缩为纯态。∎
+
+### 8.5 混态零 gluing、完整比较和 sharp midpoint
+
+**定义 8.10（混态 zeroGluing）。** 对具有全 proper interval 的完成基 $K$，
+称其满足 zeroGluing，若对每个纯参照 $p$ 和任意两个混态点 $x,y\in K$，
+
+$$
+\begin{gathered}
+\bigl(\exists F_x\in\mathcal F_p:F_x(x)=0\bigr)\ \land
+\bigl(\exists F_y\in\mathcal F_p:F_y(y)=0\bigr)\\
+\Longrightarrow\quad
+\exists F\in\mathcal F_p:\ F(x)=F(y)=0.
+\end{gathered}
+$$
+
+前件称为 separately excludable。由非负性及最小值达到性，结论等价于
+$T_p((x+y)/2)=0$；前件等价于 $T_p(x)=T_p(y)=0$。
+归纳后同一性质适用于任意有限个分别可排除的混态点。这是数学 effect 性质，
+不是 source 新增的物理操作。
+
+**命题 8.11（精确分类与普遍 sharp bound）。** 对 $0<\eta<1$ 的本加性类，
+
+$$
+\mathrm {zeroGluing}\quad\Longleftrightarrow\quad
+T\text{ 是 singleton}\quad\Longleftrightarrow\quad m\text{ 在 }R\text{ 上恒定}.
+\tag{8.22}
+$$
+
+对每个纯 $p$ 和任意混态 $x,y\in K$，只要 $T_p(x)=T_p(y)=0$，均有
+$T_p((x+y)/2)\le1/2$。若 $T$ 非 singleton，则对每个纯 $p=\Phi(P,v)$，
+此上界在一对纯点上达到，所以也是全部上述混态对的最大值。
+
+此外，原完整 fixed-half comparison
+
+$$
+T_p\!\left(\frac{s+x}{2}\right)=\frac{T_s(p)+T_p(x)}2
+\quad(p,s\text{ pure},\ x\in K)
+$$
+
+在本类中成立当且仅当 $T$ 是 singleton。
+
+**证明。** 先证明普遍上界，它不需要乘积结构。若分别可排除，取
+$F_x\in\mathcal F_p$、$F_x(x)=0$，则
+$T_p((x+y)/2)\le F_x(y)/2\le1/2$。这量化任意混态 $x,y$，不声称每一对
+都达到该值；若有共同零确认者，其中点值就是零。
+
+若 $T$ 是 singleton，(8.19) 为 $T_p(\Phi(\rho,t))=\operatorname {Tr}(P\rho)$。
+分别为零的任意混态点都由同一个 $q_P$ 置零，故 zeroGluing 成立；迹配对的
+对称性和线性也给出完整 fixed-half comparison。
+
+若 $T$ 非 singleton，命题 8.7 的 exposed 泛函在 $v$ 上唯一最大；减去其在
+$T$ 上的最小值并归一化，得到 proper profile confirmer $h$，满足
+$h(v)=1,h(s_T)=0$，其中 $s_T\in T_0$ 是一个最小顶点。取秩一 $Q\perp P$，置
+
+$$
+ x=\Phi(Q,v),\quad y=\Phi(P,s_T),\quad z=\Phi(Q,s_T).
+\tag{8.23}
+$$
+
+这四个角属于同一个实际完成基，且 $x+y=p+z$。$q_P(x)=0$，$h(y)=0$，
+所以 $x,y$ 分别可排除。对任意 $F\in\mathcal F_p$，只在此矩形上使用
+$F(x)+F(y)=1+F(z)\ge1$，得到中点下界 $1/2$。
+$q_P$ 在该中点上等于 $1/2$，故
+
+$$
+T_p\!\left(\frac{x+y}{2}\right)=\frac12.
+\tag{8.24}
+$$
+
+这与普遍上界合在一起证明最大值和达到性，并否定 zeroGluing。
+$1-h$ 确认 $y$ 且在 $p$ 上为零，故 $T_y(p)=0$。将纯 $s=y$ 和纯余项 $x$
+代入完整 fixed-half comparison，其右端为零而左端为 $1/2$，故该比较也失败。
+最后，$m$ 恒定显然给 singleton 完整列；反向若全部 $t_r$ 相同，取空未来
+坐标便得全部 $m(r)$ 相同。∎
+
+### 8.6 current-ready 与全未来 ready-return
+
+**定义 8.12（两种 ready-return）。** 令 $a_*=\epsilon$ 是原 unique ready
+空字，$P_*=P_{a_*}$。CR 和 UF 都量化每一列实际有限字 $(a_n)$：
+
+$$
+P_{a_n}\to P_*\quad\Longrightarrow\quad
+p(a_n)\longrightarrow p(a_*)\qquad\text{(CR: current terminal only)},
+\tag{8.25}
+$$
+
+以及
+
+$$
+P_{a_n}\to P_*\quad\Longrightarrow\quad
+\sup_{f\in\mathsf W_{11}}\|p_f(a_n)-p_f(a_*)\|_\infty\longrightarrow0
+\qquad\text{(UF)}.
+\tag{8.26}
+$$
+
+其中 $p_f$ 是原预终端 $\mathsf T(af)$ 的全部旧标签向量，未来按十一地址、
+原时序量化。$\mathsf R(a,h)$ 的记录后七地址域保持独立；UF 不授予它任何
+额外 future。两种条件都不要求任意数学 $\rho$ 可实际制备。
+
+**定理 8.13（当前 ready、全未来和 singleton 完整 profiles）。** 在
+$0<\eta<1$ 和假设 8.2 下，
+
+$$
+\mathrm {CR}\quad\Longleftrightarrow\quad\mathrm {UF}
+\quad\Longleftrightarrow\quad |T_0|=1
+\quad\Longleftrightarrow\quad m\text{ 恒定}.
+\tag{8.27}
+$$
+
+**证明。** 固定任意 $r\in R$，由命题 8.3 可取同一 fiber 的实际
+$a_n^{(r)}$，使 $P_{a_n^{(r)}}\to P_*$。若 CR 成立，(8.3) 的 Born 项趋于
+ready Born 项，噪声项恒为 $m(r)$，而极限必须等于 ready 的当前行。
+$\eta>0$ 给 $m(r)=m(r_*)$。所有 $r$ 都成立，故 $m$ 恒定。
+
+若 $m$ 恒定，每个原十一地址 future 的噪声项都相消，(8.9) 给
+
+$$
+\sup_{f\in\mathsf W_{11},\,w\in\Lambda}|p_{f,w}(a)-p_{f,w}(b)|
+ \le(1-\eta)\|P_a-P_b\|_1.
+\tag{8.28}
+$$
+
+故有 UF；取空 future 得 CR。singleton 完整列与 $m$ 恒定的等价已在
+命题 8.11 的空未来论证中给出。∎
+
+**推论 8.14（继承 CR 的原 actual-sequence calibration 排除）。** 在定理
+8.13 的条件下，另保留 CR（或等价地直接假定 $m(r)\equiv c$），再保留原
+ready 精确 label calibration 及原 actual code-sequence calibration，则
+$0<\eta<1$ 的本类没有同时满足这些 contracts 的成员。ready 校准强制
+
+$$
+ c=\delta_{1000100010},
+\tag{8.29}
+$$
+
+而原合同中趋于 $J(e_{10100}\otimes|0\rangle)=e_{101000100}$ 的实际校准
+序列强制
+
+$$
+ c=\delta_{1010100010}.
+\tag{8.30}
+$$
+
+两个旧标签不同；无需 exact coordinate reachability，也不假定 full-terminal
+Born theorem。对 $\eta=1$ 的常量分支，同一矛盾仍成立。
+
+**证明。** CR 由定理 8.13 供应常量 $c$。原 ready 为 $e_{001000100}$，其
+旧标签是 $1000100010$。在 (8.3) 中，ready Born 边缘和原精确校准边缘都为
+这个 delta，故 $\eta>0$ 给 (8.29)。沿原合同的上述实际校准序列，Born 边缘
+由矩阵连续性趋于第二个 delta，而实际边缘由校准合同趋于同一个第二 delta；
+噪声仍为同一 $c$，故得到 (8.30)。这使用的是原实际序列合同，不是从稠密性
+推断所有极限都已取得校准。
+
+可选的另一充分前件是：同一实际粗响应有共同连续延拓，并在原合同指定的
+$Q_A=\sum_{b_1(w)=1}N_w$ 零、一 anchors 上分别取零、一。实际射线稠密使
+共同连续延拓唯一；常量分支的延拓为
+$(1-\eta)\operatorname {Tr}(Q_A P)+\eta c_A$，其中
+$c_A=\sum_{b_1(w)=1}c_w$，故这两个 anchors 分别迫使 $c_A=0,c_A=1$。
+这些是另行保留的共同 anchor 合同，不是任意 off-orbit 赋值，也不是本节
+新增的实际校准许可。∎
+
+### 8.7 fine-zero-only 的剩余问题与两个端点
+
+**命题 8.15（常量分支只保留 fine-zero 的精确残余）。** 在 $\eta>0$ 和
+$m(r)\equiv c$ 下（内点类可由 CR 取得此条件），若不采用推论 8.14 的序列
+校准而只加原 fine-zero support contract，则该 contract 等价于
+
+$$
+\operatorname {supp}(c)\subseteq
+ \bigcap_{a\in\mathsf W_{11}}\{w:N_wK_ae_0\ne0\}.
+\tag{8.31}
+$$
+
+空字给 $c=\delta_{1000100010}$。排除此唯一候选仍须建立一个实际合法有限字
+$a$ 满足
+
+$$
+N_{1000100010}K_ae_0=0.
+\tag{8.32}
+$$
+
+本节没有建立 (8.32)；稠密性只给近似，不能代替 exact zero。故省略序列校准
+和上述可选 anchors 时，这个 fine-zero-only 问题保持 open。不假定常量分支
+的一般 support-only response residual 也没有被本节分类。
+
+**证明。** 若某实际 $a,w$ 的 Born 项为零且 $c_w>0$，则 (8.3) 给
+$p_w(a)>0$，违反 fine-zero。反向，(8.31) 恰保证每个实际 Born 零标签的
+$c_w$ 为零，故加性行也为零。空字只有 ready 标签非零，所以归一化给唯一
+候选 delta；该候选违反 (8.31) 当且仅当存在 (8.32)。∎
+
+**定理 8.16（两个 eta endpoints）。** 保持 (8.1)、(8.4) 的同一完整未来域，
+将 (8.5) 限制到端点，则：
+
+1. $\eta=0$ 时，$K=Q(\mathcal D_{89})$，$m$ 完全不可见，
+$\dim\operatorname {aff}K=7920$、$\dim V=7921$。纯点恰为 $Q(P)$；整个
+proper interval 为 $F(Q(\rho))=\operatorname {Tr}(E\rho)$、$0\le E\le I$。
+$T_{Q(P)}(Q(\rho))=\operatorname {Tr}(P\rho)$，zeroGluing 和完整比较均成立，
+CR、UF 自动成立，不限制 $m$。
+
+2. $\eta=1$ 时，$K=T$，$\dim\operatorname {aff}K=d_T$、$\dim V=d_T+1$，
+纯点恰为 $T_0$，全 proper interval 是 $T$ 上全部 $[0,1]$ 值仿射函数，
+最小确认为 $\kappa_v(t)$。CR、UF 和 $m$ 恒定仍等价，但几何上没有 quantum
+factor。若完整 profile body 是 simplex，则可在非恒定 $m$ 下满足
+zeroGluing 和完整比较。普遍中点上界 $1/2$ 对该端点仍成立；非单点时必有
+quantum rectangle 达到 $1/2$ 的内点结论不延伸到此端点。
+
+**证明。** 命题 8.5 已证明完整 $Q$ 在 Hermitian 空间单射；故第一端点确为
+全部密度基的线性像，而不是当前对角测量的商。迹配对给全 effects；若
+$0\le E\le I$ 且 $\operatorname {Tr}(EP)=1$，则 $EP=P$，两块间项为零，
+因而 $E\succeq P$，$E=P$ 达到最小确认。其余量子结论和全未来回返的
+迹范数界随之成立。
+
+第二端点只剩同一完整列的有限凸包；定义 8.6 和命题 8.7 给维数和顶点。
+定理 8.13 的 CR 固定-fiber 论证只需 $\eta>0$，恒定 profile 的 UF 则在这里
+差值直接为零，故该等价仍成立。若 $T$ 为 simplex，顶点 $v$ 的重心坐标
+$\lambda_v(t)$ 是最小 proper confirmer：其它顶点上的值均非负，故任何确认者
+逐点不小于 $\lambda_v$。同一个 $\lambda_v$ 能合并全部零，顶点之间的比较为
+Kronecker delta，仿射性给全部混态的完整比较。命题 8.11 的一般上界只用
+properness，仍适用，但该 simplex 的所有分别可排除对都有中点值零。
+两个端点分别 annihilate 另一个因子，所以 (8.11) 的内点直和 rank 不可沿用。∎
+
+### 8.8 来源 credit、适用边界与原量子起源目标
+
+**定义 8.17（结果身份和复用边界）。** 本节的实际增量是 `repo-derived`
+的完整有限-fiber additive-body synthesis：命题 8.3 的实际密集纤维、
+命题 8.4–8.5 的统一全未来载体及无 confounding、定理 8.7 的 $7921+d_T$
+rank、命题 8.8 和定理 8.9 的 entire proper interval 与完整混态比较式、
+命题 8.11 的 zeroGluing 分类及 universal sharp $1/2$，以及定理 8.13 和
+推论 8.14 的 current-ready／full-future／actual-sequence calibration map。
+它不把下列成熟结果重报为本节原创：
+
+| 来源 | 本节的精确消费 | 未消费的桥 |
+| --- | --- | --- |
+| 本卷 §§1–7 与 native III150、VII §§9、10、13 | 原 $\Omega$、$89$ 维矩阵、原标签、ready、有限字、十一地址预终端全 future、完整 proper comparison 与最小 confirmation 记号 | 七地址记录后接口及其 source/process 合同不由终端 body 替换 |
+| Freedman--Larsen--Wang, [math/0103200v1, Theorem 0.1][FLW8] 及原 native 矩阵应用 | 原 $r=5,n=12$ Jones 作用的 projective 密度；有限指数和紧群闭包为证明内标准工具 | 不供应 physical preparation、native control acquisition 或 arbitrary-state cloning |
+| Müller--Ududec, [*The structure of reversible computation determines the self-duality of quantum theory*][MU8]；Barnum--Müller--Ududec, [1403.4147v4, Theorem 16][BMU8] | finite-dimensional cone/effect language 与既有 least-confirmation/projectivity 桥的文献背景；本节乘积计算直接在声明的矩阵类内进行 | 不由这些引文把 AURIC source 变成 unrestricted Born/Hilbert uniqueness |
+| dev105 的 least-confirmation/projectivity 结果 | 作为既有条件 supply 复用其适用范围 | $W\to G$ 与 $W+G\to$ global PL3 未供应 |
+| dev103 的 $S2+$ one common-basis coherent fork | 作为更大 hierarchy 链的条件入口保留 | 不取得 native preparations，也不证明 rank89 是 rank3 或 physical three-space |
+
+**定理 8.18（边界声明）。** 本节的 Born summand、native complex density、
+原作用和有限 reduction 都是类的前件。因而本节不证明 unrestricted Born/Hilbert
+uniqueness，不推导 complex amplitudes、native gates、Hilbert/density structure
+或 Born term 的量子起源，也不声称 source acquisition、physical controls、完整
+仪器、joint archives、reference/copy acquisition、Hamiltonian、$\hbar$、units、
+全 source/process adoption 或 general response laws。rank89 仍是原载体维数；
+它不等于 abstract rank3，也不等于 physical three-space。
+
+若把本节接回更大的 quantum-origin 目标，仍须另行满足实际 event saturation、
+同源 instruments and records、joint archives/histories、reference/copy、related
+resource compatibility、zero/failure/Return、conditional future processes、
+physical clock 以及所有原 control permissions。数学 factors、effects、corners、
+closures 和 positive maps 不能供应这些 permissions。非加性、history-dependent、
+任意 support-preserving response laws 也未被本节分类；fine-zero-only 的精确问题
+正是命题 8.15 所留的 open 边界。上述定理及证明是纸面数学，不是 Lean kernel
+核验或物理实现；整个原量子起源目标仍未完成。∎
+
+[FLW8]: https://arxiv.org/html/math/0103200v1
+[MU8]: ../../../Library/QuantumStates/mullerududec2012selfduality.md
+[BMU8]: https://arxiv.org/html/1403.4147v4
+
+## 追加锚（本行以下为增补区）
