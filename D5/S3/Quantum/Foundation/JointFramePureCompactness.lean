@@ -4,11 +4,10 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: Joint original three-outcome frames and point-exclusion incidence force closed pure points. -/
+   digest: Joint original frames and point-exclusion incidence force closed pure points. -/
 
 import D5.S3.Quantum.Foundation.FacetZeroGluing
 import Mathlib.Analysis.Convex.Exposed
-import Mathlib.Topology.Sequences
 
 /-! All states, effects and exclusions refer to the same entire original cone base.
 The joint-frame and incidence hypotheses are explicit; no ball or local-pair
@@ -36,7 +35,7 @@ def jointFrame (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
 /-- Every original pure point belongs to an original pure joint frame. No
 continuity or uniqueness of a choice of completing frame is required. -/
 def pureJointCompletion (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
-  ∀ p : pure C u, ∃ s e, (∀ i, s i ∈ pure C u) ∧ s 0 = p ∧ jointFrame C u s e
+  ∀ p : pure C u, ∃ s e, (∀ i, s i ∈ pure C u) ∧ s 0 = (p : V) ∧ jointFrame C u s e
 
 /-- Distinct original exclusion sets meet in at most one state, and a pure
 point is determined by its entire exclusion set. -/
@@ -52,22 +51,28 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
   obtain ⟨s, hs, _, hspan, hind⟩ :=
     Submodule.exists_finset_span_eq_linearIndepOn ℝ (C : Set V)
   let b : Module.Basis s ℝ V := Module.Basis.mk hind.linearIndependent (by
-    simpa [hspan, hgen])
+    simp [hspan, hgen])
   let M : ℝ := ∑ i : s, ‖u (b i)‖
   have hM : 0 ≤ M := Finset.sum_nonneg (fun _ _ => norm_nonneg _)
   apply Metric.isCompact_iff_isClosed_bounded.mpr
   constructor
   · change IsClosed {f : V →L[ℝ] ℝ | ∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x}
-    simp only [Set.setOf_forall]
-    exact isClosed_iInter fun x => isClosed_iInter fun _ =>
-      (isClosed_le continuous_const (by fun_prop)).inter
-        (isClosed_le (by fun_prop) continuous_const)
+    simp only [Set.ofPred_forall]
+    apply isClosed_iInter
+    intro x
+    apply isClosed_iInter
+    intro _
+    change IsClosed ({f : V →L[ℝ] ℝ | 0 ≤ f x} ∩ {f | f x ≤ u x})
+    exact (isClosed_le continuous_const (by fun_prop)).inter
+      (isClosed_le (by fun_prop) continuous_const)
   · apply isBounded_iff_forall_norm_le.mpr
     refine ⟨Fintype.card s • ‖b.equivFunL.toContinuousLinearMap‖ * M, ?_⟩
     intro f hf
     apply b.opNorm_le hM
     intro i
-    have hbi : b i ∈ C := hs i.property
+    have hbi : b i ∈ C := by
+      change (i : V) ∈ C
+      exact hs i.property
     have hb := hf (b i) hbi
     calc
       ‖f (b i)‖ = f (b i) := Real.norm_of_nonneg hb.1
@@ -78,6 +83,7 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
 /-- A proper confirmer with two distinct, simultaneously excluded states
 cannot have a mixed one-face under point-exclusion incidence. -/
+omit [FiniteDimensional ℝ V] in
 private theorem two_zero_confirming_face {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u)) (hI : pointBallIncidence C u)
     {x y z : V} (hx : x ∈ base C u) (hy : y ∈ base C u) (hz : z ∈ base C u)
@@ -148,7 +154,7 @@ theorem pure_closed_of_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[�
   let T : Set ((Fin 3 → V) × (Fin 3 → V →L[ℝ] ℝ)) :=
     {w | jointFrame C u w.1 w.2}
   have hK := base_compact hclosed hstrict
-  have hE := effects_compact hgen
+  have hE := effects_compact (u := u) hgen
   have hT : IsCompact T := by
     have hc := (isCompact_univ_pi (fun _ : Fin 3 => hK)).prod
       (isCompact_univ_pi (fun _ : Fin 3 => hE))
@@ -157,7 +163,7 @@ theorem pure_closed_of_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[�
           ∀ i j, w.2 i (w.1 j) = if i = j then 1 else 0} := by
       apply IsClosed.inter
       · exact isClosed_eq (by fun_prop) continuous_const
-      · simp only [Set.setOf_forall]
+      · simp only [Set.ofPred_forall]
         exact isClosed_iInter fun i => isClosed_iInter fun j =>
           isClosed_eq (by fun_prop) continuous_const
     convert hc.inter_right hr using 1
@@ -185,6 +191,6 @@ theorem pure_compact_of_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[�
     IsCompact (pure C u) :=
   (base_compact hclosed hstrict).of_isClosed_subset
     (pure_closed_of_joint_completion hclosed hstrict hgen hJ hI)
-    Set.extremePoints_subset
+    (fun _ hp => hp.1)
 
 end D5.S3.Quantum.Foundation.JointFramePureCompactness
