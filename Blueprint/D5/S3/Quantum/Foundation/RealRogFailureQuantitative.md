@@ -22,7 +22,7 @@ The compactness step identifies the entire mass cap {a in C : u(a)<=R} with [0,R
 
 This proves the primal portion used in (93.12) and (93.23), on the whole original carrier and without trace normalization, ROG or a zero-gluing assumption. It does not produce a dual functional, prove base-norm polarity or the failed-pair bound 0<baseNorm(p-r)<2, or establish saturation by a common proper effect. Those obligations cannot be inferred from attainment alone. The cone base-norm definition is reused from BaseNormContraction; finite-dimensional continuity and compact minimization are pinned Mathlib inputs. The mass-cap and global-minimum argument implements the source's compactness proof in 90.9; no literature-priority claim is made.
 
-The base-norm definition and nonnegativity of the original unit on the cone are reused directly from BaseNormContraction. The base is exactly CircuitBalancedConfirmation.base. Finite-dimensional continuity, compact scalar-set multiplication, compact minimization and IsLeast.csInf_eq are pinned Mathlib inputs. The mass-cap parametrization and global-minimum argument implement the compactness proof in 90.9; no literature-priority claim is made.
+The base-norm definition and nonnegativity of the original unit on the cone are reused directly from BaseNormContraction. The base and the normalized nonzero cone-point membership theorem are reused directly from CircuitBalancedConfirmation.base and CircuitBalancedConfirmation.normalized_mem. Finite-dimensional continuity, compact scalar-set multiplication, compact minimization and IsLeast.csInf_eq are pinned Mathlib inputs. The mass-cap parametrization and global-minimum argument implement the compactness proof in 90.9; no literature-priority claim is made.
 
 ## References
 
