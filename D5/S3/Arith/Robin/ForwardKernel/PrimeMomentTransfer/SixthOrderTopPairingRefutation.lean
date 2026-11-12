@@ -533,5 +533,52 @@ private lemma model_four_defect_lower (N : ℕ) (hN : 100 ≤ N)
     moment_values.2.2.2.2.1, hs, hc]
   convert sixth_four_defect_lower (N : ℝ) (by exact_mod_cast hN) using 1 <;> ring
 
+private lemma deviation_lower_bound (N : ℕ) (hN : 1000 ≤ N)
+    (hK : pairingDefectConstant 6 4 ≤ Real.sqrt N) :
+    Real.sqrt N ^ 6 ≤
+      subsetFamilyMoment (modelFunctional N) (modelY N)
+          (fun (_ : Fin 6) _ => (1 : ℝ)) Finset.univ -
+        finitePairingPolynomial Finset.univ
+          (subsetFamilyMoment (modelFunctional N) (modelY N)
+            (fun (_ : Fin 6) _ => (1 : ℝ))) := by
+  classical
+  obtain ⟨E, hid, hEb⟩ := model_unit_transfer N (by omega)
+  have hs : Real.sqrt N ^ 6 = (N : ℝ)^3 := by
+    calc
+      _ = (Real.sqrt N ^ 2)^3 := by ring
+      _ = _ := by rw [Real.sq_sqrt (by positivity)]
+  have hEs : |E| ≤ 2 * (N : ℝ)^3 := by
+    rw [hs] at hEb
+    exact hEb.trans (transfer_error_small N (pairingDefectConstant 6 4)
+      (by exact_mod_cast (show 1 ≤ N by omega)) hK)
+  let Δ := subsetPairingDefect (modelFunctional N) (modelY N)
+    (fun (_ : Fin 6) (_ : Fin N) => (1 : ℝ))
+  let S := ∑ e ∈ (Finset.univ : Finset (Fin 6)).powersetCard 2, Δ (Finset.univ \ e)
+  have hsum : 15 * (N : ℝ)^2 / 2 ≤ S := by
+    calc
+      _ = ∑ _e ∈ (Finset.univ : Finset (Fin 6)).powersetCard 2, (N : ℝ)^2 / 2 := by
+        norm_num [Finset.card_powersetCard, Nat.choose] <;> ring
+      _ ≤ S := by
+        apply Finset.sum_le_sum
+        intro e he
+        apply model_four_defect_lower N (by omega)
+        have he' := Finset.mem_powersetCard.mp he
+        rw [Finset.card_sdiff_of_subset he'.1]
+        simp [he'.2]
+  have h6 : |Δ Finset.univ| ≤ 720 * (N : ℝ)^2 := by
+    simpa only [Δ, subsetPairingDefect] using
+      top_order_bound N (by omega) (fun (_ : Fin 6) (_ : Fin N) => (1 : ℝ)) (by simp)
+  have hv := sixth_defect_lower (N : ℝ) 720 (Δ Finset.univ) (S / 15) E
+    (subsetFamilyMoment (modelFunctional N) (modelY N)
+        (fun (_ : Fin 6) _ => (1 : ℝ)) Finset.univ -
+      finitePairingPolynomial Finset.univ
+        (subsetFamilyMoment (modelFunctional N) (modelY N)
+          (fun (_ : Fin 6) _ => (1 : ℝ))))
+    (by exact_mod_cast (show 1 ≤ N by omega))
+    (by exact_mod_cast (show 720 ≤ N by omega)) h6
+    (by apply (le_div_iff₀ (by norm_num : (0 : ℝ) < 15)).2; nlinarith)
+    hEs (by dsimp only [Δ, S] at *; linarith [hid])
+  simpa only [hs] using hv
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
