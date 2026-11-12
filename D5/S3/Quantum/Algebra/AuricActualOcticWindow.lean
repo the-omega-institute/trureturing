@@ -121,11 +121,13 @@ private theorem splitHom_surjective [FiniteDimensional F D] :
   let f := (splitHom F D K).toLinearMap
   by_contra hn
   have hr : LinearMap.range f < ⊤ := lt_top_iff_ne_top.mpr (by
-    simpa only [LinearMap.range_eq_top] using hn)
+    intro he
+    exact hn (LinearMap.range_eq_top.mp he))
   obtain ⟨φ, hφ, hvan⟩ := Submodule.exists_dual_map_eq_bot_of_lt_top hr inferInstance
   have hzero (z : K ⊗[F] D) : φ (f z) = 0 := by
     have hz : φ (f z) ∈ (LinearMap.range f).map φ := ⟨f z, ⟨z, rfl⟩, rfl⟩
-    simpa [hvan] using hz
+    rw [hvan] at hz
+    exact hz
   have hrel : ∑ σ : D →ₐ[F] K,
       φ (Pi.single σ 1) • σ.toLinearMap = 0 := by
     ext d
@@ -134,7 +136,11 @@ private theorem splitHom_surjective [FiniteDimensional F D] :
       ext τ
       simp [Pi.single_apply]
     have hh := hzero (1 ⊗ₜ[F] d)
-    change φ (fun σ : D →ₐ[F] K => σ d) = 0 at hh
+    have heval : f (1 ⊗ₜ[F] d) = (fun σ : D →ₐ[F] K => σ d) := by
+      ext σ
+      change 1 * σ d = σ d
+      exact one_mul _
+    rw [heval] at hh
     rw [heq, map_sum] at hh
     simpa [mul_comm] using hh
   have hc : ∀ σ : D →ₐ[F] K, φ (Pi.single σ 1) = 0 :=
@@ -154,5 +160,75 @@ private def splitEquiv [FiniteDimensional F D] [Algebra.IsSeparable F D]
     splitHom_surjective F D K⟩
 
 end Splitting
+
+section IdealizerDescent
+
+variable (K : Type*) [Field K] [Algebra F K]
+variable {ι : Type*} [Fintype ι] (b : Basis ι F K)
+
+private def tensorCoeff (i : ι) : K ⊗[F] D →ₗ[F] D :=
+  (TensorProduct.lid F D).toLinearMap ∘ₗ
+    TensorProduct.map (b.coord i) (LinearMap.id : D →ₗ[F] D)
+
+private theorem tensorCoeff_tmul (i : ι) (c : K) (d : D) :
+    tensorCoeff K b i (c ⊗ₜ[F] d) = b.repr c i • d := by
+  simp [tensorCoeff]
+
+private theorem tensor_reconstruct (z : K ⊗[F] D) :
+    ∑ i, b i ⊗ₜ[F] tensorCoeff K b i z = z := by
+  induction z using TensorProduct.inductionOn with
+  | tmul c d =>
+      simp_rw [tensorCoeff_tmul, TensorProduct.tmul_smul, ← TensorProduct.smul_tmul']
+      rw [← TensorProduct.sum_tmul, b.sum_repr]
+  | add x y hx hy =>
+      simp_rw [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+      rw [hx, hy]
+
+private theorem tensorCoeff_mem (W : Submodule F D) (i : ι)
+    {z : K ⊗[F] D} (hz : z ∈ W.baseChange K) : tensorCoeff K b i z ∈ W := by
+  obtain ⟨v, rfl⟩ := hz
+  induction v using TensorProduct.inductionOn with
+  | tmul c w =>
+      simpa only [LinearMap.baseChange_tmul, tensorCoeff_tmul] using
+        W.smul_mem (b.repr c i) w.property
+  | add x y hx hy =>
+      simpa only [map_add] using W.add_mem hx hy
+
+private theorem tensorCoeff_mul_original (i : ι) (z : K ⊗[F] D) (w : D) :
+    tensorCoeff K b i (z * (1 ⊗ₜ[F] w)) = tensorCoeff K b i z * w := by
+  induction z using TensorProduct.inductionOn with
+  | tmul c d =>
+      simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, tensorCoeff_tmul,
+        smul_mul_assoc]
+  | add x y hx hy => simp only [add_mul, map_add, hx, hy]
+
+/-- The hypothesis is exactly the idealizer of the original actual window. -/
+def ScalarIdealizer (W : Submodule F D) : Prop :=
+  ∀ c : D, (∀ w ∈ W, c * w ∈ W) → c ∈ Set.range (algebraMap F D)
+
+private theorem tensor_stabilizer_coefficients (W : Submodule F D)
+    (hW : ScalarIdealizer W) (z : K ⊗[F] D)
+    (hz : ∀ w ∈ W, z * (1 ⊗ₜ[F] w) ∈ W.baseChange K) :
+    ∀ i, tensorCoeff K b i z ∈ Set.range (algebraMap F D) := by
+  intro i
+  apply hW
+  intro w hw
+  rw [← tensorCoeff_mul_original]
+  exact tensorCoeff_mem K b W i (hz w hw)
+
+private theorem split_stabilizer_constant [FiniteDimensional F D]
+    (W : Submodule F D) (hW : ScalarIdealizer W) (z : K ⊗[F] D)
+    (hz : ∀ w ∈ W, z * (1 ⊗ₜ[F] w) ∈ W.baseChange K) :
+    ∀ σ τ : D →ₐ[F] K, splitHom F D K z σ = splitHom F D K z τ := by
+  intro σ τ
+  have hc := tensor_stabilizer_coefficients K b W hW z hz
+  rw [← tensor_reconstruct K b z]
+  simp only [map_sum, Finset.sum_apply]
+  apply Finset.sum_congr rfl
+  intro i _
+  obtain ⟨c, he⟩ := hc i
+  rw [splitHom_tmul, splitHom_tmul, ← he, σ.commutes, τ.commutes]
+
+end IdealizerDescent
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
