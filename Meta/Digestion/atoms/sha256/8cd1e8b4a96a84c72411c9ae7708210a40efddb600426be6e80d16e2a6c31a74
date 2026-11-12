@@ -1,0 +1,22 @@
+**定义 79.2（局部见证与两条质量关系）。** 给一份实线性映射 $\Phi:A\to A$，要求
+$$
+\Phi(C_A)\subseteq C_A,\qquad u_A\Phi=u_A,\qquad
+\{f\in A^*:f\Phi=f\}=\mathbb R u_A. \tag{79.3}
+$$
+最后一式遍及全部实线性泛函，不是有限检测表、仅已执行效应或逐扇区分别固定的条件。在复矩阵忠实坐标中它才写成 $\operatorname{Fix}(\Phi^*)=\mathbb R1_A$。不要求 CP、混合、忠实稳态、重置份额或实际程序供应。
+固定 $0<t<1$、$0<s<1$。对原实际质量
+$$
+m_2(a,b)=u_D M(a,b),\qquad m_3(a,b,c)=u_EQ(a,b,c) \tag{79.4}
+$$
+只要求
+$$
+\begin{aligned}
+\mathsf M_2:\quad m_2(a,b)
+ &=t\,m_2(\Phi a,b)+(1-t)m_2(a,\Phi b),\\
+\mathsf M_3:\quad m_3(a,b,c)
+ &=st\,m_3(\Phi a,b,c)+s(1-t)m_3(a,\Phi b,c)
+ +(1-s)m_3(a,b,\Phi c).
+\end{aligned} \tag{79.5}
+$$
+量词遍及所有原正 $a,b,c$，包括零与不等质量。以下记 $\mathsf{Mass}_{t,s}$ 为存在满足 (79.3)—(79.5) 的数学见证 $\Phi$。
+
