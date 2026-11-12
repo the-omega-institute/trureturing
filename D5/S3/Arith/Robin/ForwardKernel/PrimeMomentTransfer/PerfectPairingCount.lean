@@ -49,5 +49,20 @@ theorem finitePairingPolynomial_rankOne (U : Finset α) (c : Finset α → ℝ)
   rw [Finset.sum_congr rfl (fun P hP => hprod P (Finset.mem_filter.mp hP).2)]
   simp
 
+/-- Constant edge weights contribute one power per edge of a perfect pairing. -/
+theorem finitePairingPolynomial_const (U : Finset α) (c : Finset α → ℝ)
+    (κ : ℝ) (hc : ∀ e, e.card = 2 → c e = κ) :
+    finitePairingPolynomial U c =
+      (((Finset.univ : Finset (Finset (Finset α))).filter
+        (IsPerfectPairing U)).card : ℝ) * κ ^ (U.card / 2) := by
+  unfold finitePairingPolynomial
+  have hprod (P : Finset (Finset α)) (hP : IsPerfectPairing U P) :
+      (∏ e ∈ P, c e) = κ ^ (U.card / 2) := by
+    rw [Finset.prod_congr rfl (fun e he => hc e (hP.1.1 e he))]
+    have hcard : P.card = U.card / 2 := by rw [hP.card]; omega
+    simp [hcard]
+  rw [Finset.sum_congr rfl (fun P hP => hprod P (Finset.mem_filter.mp hP).2)]
+  simp
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

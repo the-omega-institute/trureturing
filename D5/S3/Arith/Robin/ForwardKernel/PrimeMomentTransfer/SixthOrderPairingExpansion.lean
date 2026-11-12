@@ -10,7 +10,9 @@
 proof_shape: partialPairing_six_convolution: bind-only (consumer:
   SixthOrderTopPairingRefutation.model_unit_transfer);
   sixth_four_defect_lower: bind-only (consumer:
-  SixthOrderTopPairingRefutation.model_four_defect_lower).
+  SixthOrderTopPairingRefutation.model_four_defect_lower);
+  transfer_error_small: bind-only (consumer:
+  SixthOrderTopPairingRefutation.deviation_lower_bound).
 escape_witness: none; this consumed finite-sum reduction organizes the substantive
   sixth-order countermodel proof without providing an independent admission witness.
 admission_basis: consumed-helper.
@@ -106,6 +108,24 @@ theorem sixth_four_defect_lower (N : ℝ) (hN : 100 ≤ N) :
   have hnp : 0 ≤ N^3 * (N - 100) := mul_nonneg (pow_nonneg hpos.le 3) (by linarith)
   have hnp₂ : 0 ≤ N^2 * (N - 100) := mul_nonneg (sq_nonneg N) (by linarith)
   nlinarith [hprod, hlo, hnp, hnp₂, sq_nonneg N]
+
+/-- The transfer error is at most twice the cubic scale once its coefficient is below the square root. -/
+theorem transfer_error_small (N K : ℝ) (hN : 1 ≤ N) (hK : K ≤ Real.sqrt N) :
+    K * N ^ 3 * (Real.sqrt (1 / N) + 1 / N) ≤ 2 * N ^ 3 := by
+  have hpos : 0 < N := by linarith
+  have hspos : 0 < Real.sqrt N := Real.sqrt_pos.2 hpos
+  have hsN : Real.sqrt N ≤ N := by
+    exact (Real.sqrt_le_left hpos.le).2 (by nlinarith)
+  have hKN : K ≤ N := hK.trans hsN
+  have h1 : K / Real.sqrt N ≤ 1 := (div_le_one₀ hspos).2 hK
+  have h2 : K / N ≤ 1 := (div_le_one₀ hpos).2 hKN
+  calc
+    _ = N ^ 3 * (K / Real.sqrt N + K / N) := by
+      rw [Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 1), Real.sqrt_one]
+      ring
+    _ ≤ N ^ 3 * (1 + 1) :=
+      mul_le_mul_of_nonneg_left (add_le_add h1 h2) (by positivity)
+    _ = _ := by ring
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

@@ -122,7 +122,7 @@ theorem inj_sum_product_bound (N : ℕ) (hN : 6 ≤ N)
     calc
       _ ≤ ∑ x : Fin 6 → Fin N with ¬Function.Injective x, |∏ i, g i (x i)| :=
         Finset.abs_sum_le_sum_abs _ _
-      _ ≤ ∑ _x : Fin 6 → Fin N with ¬Function.Injective x, (1 : ℝ) := by
+      _ ≤ ∑ x : Fin 6 → Fin N with ¬Function.Injective x, (1 : ℝ) := by
         apply Finset.sum_le_sum
         intro x hx
         rw [Finset.abs_prod]
