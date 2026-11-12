@@ -39,7 +39,9 @@ theorem same_q_probability_of_counts
   have hc0 : count 0 = 1 := by
     have hu : count 0 ≤ 1 := by
       calc
-        count 0 ≤ Fintype.card (Word 0) := Fintype.card_subtype_le _
+        count 0 ≤ Fintype.card (Word 0) :=
+          Fintype.card_le_of_injective (fun w : CertifiedWord 0 => w.val)
+            (fun _ _ h => Subtype.ext h)
         _ = 1 := by simp [Word]
     have hl := hcposN 0
     omega
@@ -87,29 +89,25 @@ theorem same_q_probability_of_counts
     div_pos hepos (by norm_num), (div_lt_one (by norm_num)).mpr helt,
     one_div_pos.mpr (pow_pos hepos 6), hcpos 6, ?_⟩
   intro n hn
-  simp only [CyclicBridge.source_probability_eq]
-  have hclose' : count (n - 1) ≤
-      Fintype.card {p : SourceModel.Profile n // SourceModel.HasStableMatching p} := by
-    have he : n - 1 + 1 = n := by omega
-    simpa only [he] using hclose (n - 1) (by omega)
-  have hpows : Real.exp h ^ (n + 5) = Real.exp h ^ (n - 1) * Real.exp h ^ 6 := by
-    rw [← pow_add, show n - 1 + 6 = n + 5 by omega]
-  have hlower : (1 / Real.exp h ^ 6) * (Real.exp h / 24) ^ (n + 5) =
-      Real.exp h ^ (n - 1) / (24 : ℝ) ^ (n + 5) := by
+  obtain ⟨m, rfl⟩ : ∃ m : ℕ, n = m + 1 := ⟨n - 1, by omega⟩
+  have hclose' := hclose m (by omega)
+  have hpows : Real.exp h ^ (m + 1 + 5) = Real.exp h ^ m * Real.exp h ^ 6 := by
+    rw [← pow_add, show m + 6 = m + 1 + 5 by omega]
+  have hlower : (1 / Real.exp h ^ 6) * (Real.exp h / 24) ^ (m + 1 + 5) =
+      Real.exp h ^ m / (24 : ℝ) ^ (m + 1 + 5) := by
     rw [div_pow, hpows]
     field_simp [ne_of_gt hepos]
   constructor
-  · rw [hlower]
+  · rw [hlower, CyclicBridge.source_probability_eq]
     apply div_le_div_of_nonneg_right _ (by positivity)
-    exact (hgrowth (n - 1)).1.trans (by exact_mod_cast hclose')
+    exact (hgrowth m).1.trans (by exact_mod_cast hclose')
   · calc
-      (Fintype.card {p : SourceModel.Profile n // SourceModel.HasStableMatching p} : ℝ) /
-          (24 : ℝ) ^ (n + 5) ≤ (count (n + 5) : ℝ) / (24 : ℝ) ^ (n + 5) :=
-        div_le_div_of_nonneg_right
-          (by exact_mod_cast CyclicBridge.source_count_le_open_count n) (by positivity)
-      _ ≤ (Real.exp h ^ (n + 5) * count 6) / (24 : ℝ) ^ (n + 5) :=
-        div_le_div_of_nonneg_right (hgrowth (n + 5)).2 (by positivity)
-      _ = (count 6 : ℝ) * (Real.exp h / 24) ^ (n + 5) := by rw [div_pow]; ring
+      SourceModel.solutionProbability (m + 1) ≤
+          (count (m + 1 + 5) : ℝ) / (24 : ℝ) ^ (m + 1 + 5) :=
+        CyclicBridge.source_probability_le_open_proportion (m + 1)
+      _ ≤ (Real.exp h ^ (m + 1 + 5) * count 6) / (24 : ℝ) ^ (m + 1 + 5) :=
+        div_le_div_of_nonneg_right (hgrowth (m + 1 + 5)).2 (by positivity)
+      _ = (count 6 : ℝ) * (Real.exp h / 24) ^ (m + 1 + 5) := by rw [div_pow]; ring
 
 #print axioms same_q_probability_of_counts
 

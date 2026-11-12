@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
 internal sealed class CyclicClosureDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Six-site cyclic closure for certified ranking words; the original same-q theorem remains separate.",
+        "Six-site cyclic closure for the exact Mertens range-two proof.",
         H("Cyclic closure"), Blocks(
             Paragraph(Text("A word w of length m has a signed assignment d and Certificate(w,d). The source cycle has m+6 labelled sites, hence supplier parameter n=m+1. Assignment(m) means Fin(m) to the integers. SuccessfulProfile(n) is the subtype of SourceModel.Profile(n) admitting an acceptable stable partial matching. The matching keeps every interior old pair and old single, fulfills each actual exterior request, and uses the existing six-site buffer involution for free sites. The profile retains all first m rankings and places every nonzero buffer partner first.")),
             Describe.Lean(DescribeId.Create("matching"),
@@ -37,7 +37,7 @@ internal sealed class CyclicClosureDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("count-le-successful-profile-count"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicClosure.count_le_successful_profile_count"),
                 H("The lower cyclic count comparison"), StatementSource.FromAuthor(CountFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Write b(m) for the number of certified ranking words, and a(n) for the number of successful labelled source profiles with supplier parameter n and n+5 sites. The injection proves b(m) <= a(m+1), equivalently b(m) <= a_(m+6) when the subscript records sites. This is one missing bridge of the exact d=1,r=2 problem, not a conclusion about general Conjecture 3 or the full same-q probability theorem."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("Write b(m) for the number of certified ranking words, and a(n) for the number of successful labelled source profiles with supplier parameter n and n+5 sites. The injection proves b(m) <= a(m+1), equivalently b(m) <= a_(m+6) when the subscript records sites. GrowthTransfer.result consumes this bridge for the exact d=1,r=2 probability theorem. General Conjecture 3 remains outside this scope."))), DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) => args.Length == 0
         ? new Formula.NamedConstant(FormulaIdentifier.Create(name))

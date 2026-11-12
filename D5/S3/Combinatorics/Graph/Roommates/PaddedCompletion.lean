@@ -571,7 +571,7 @@ private theorem padded_target_injective {m k : ℕ} (w : CertifiedWord m) (v : C
     omega
   · rcases index_cases i with ⟨a, rfl⟩ | ⟨b, rfl⟩
     · rcases index_cases j with ⟨a', rfl⟩ | ⟨b, rfl⟩
-      · have hh := old_target_injective (chosen_certificate w) (chosen_certificate v) a a'
+      · have hh := (padded_request_completion (chosen_certificate w) (chosen_certificate v)).1 a a'
           (by simpa only [old_index_offset] using hi)
           (by simpa only [old_index_offset] using hj)
           (by simpa only [oldTarget, old_index_offset, old_index_position] using he)

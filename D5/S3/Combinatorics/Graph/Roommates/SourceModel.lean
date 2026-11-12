@@ -15,7 +15,7 @@ import Mathlib.Tactic
 /-
 Copyright 2026 The Formal Conjectures Authors.
 Licensed under the Apache License, Version 2.0. See the retained full license at
-  docs/reports/licenses/formal-conjectures-mertens-Apache-2.0.txt
+  docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt
 This is a minimal consumed compatibility port, not a new mathematical result.
 Supplier: bocowgill/formal-conjectures, dc0fa7334537d8733edceaba09fd88163eeb7cef,
 FormalConjectures/Arxiv/0509221/LocalStableMatchings.lean and

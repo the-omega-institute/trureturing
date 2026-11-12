@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
 internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Partial components of the Mertens range-two proof; the full theorem remains open.",
+        "Padded certificates and concatenation in the exact Mertens range-two proof.",
         H("PaddedCompletion"), Blocks(
             Describe.Lean(DescribeId.Create("oldindex"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.oldIndex"),
@@ -31,7 +31,7 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("count-padded-supermultiplicative"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.count_padded_supermultiplicative"),
                 H("count_padded_supermultiplicative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. This interval count inequality does not supply stable cyclic closure or the final same-q probability theorem."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. GrowthTransfer.result consumes this inequality together with CyclicClosure and TriangleCount in the same-base probability estimate."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("partnerfirst"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.partnerFirst"),
                 H("partnerFirst"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

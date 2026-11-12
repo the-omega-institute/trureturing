@@ -88,7 +88,7 @@ reports, canonical Markdown emission, inventory acceptance and required CI.
 The successful padded scoped report covers its mathematical and Reg targets
 and imports. The padded Markdown is tracked. Current inventory rejects five
 other Stage A Markdown projections absent from tracked files and the inherited
-`docs/reports/licenses/formal-conjectures-mertens-Apache-2.0.txt` path under the
+`docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt` path under the
 existing reports policy. Its license bytes and supplier attribution are
 preserved. Full-project verification, inventory acceptance and required CI
 remain separate obligations. Main is observation-only; this contribution

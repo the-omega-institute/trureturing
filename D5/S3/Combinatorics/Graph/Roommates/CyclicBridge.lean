@@ -223,20 +223,22 @@ theorem cut_certificate {n : ℕ} (p : SourceModel.Profile n)
         have hne₁ : offsetRank (p i) (d i) ≠ offsetRank (p i) ((j.val : ℤ) - i.val) := by
           intro heq
           by_cases hz : d i = 0
-          · have := (p i 0).isLt
-            have := (p i 1).isLt
-            have hdiff : (j.val : ℤ) - i.val = 1 ∨ (j.val : ℤ) - i.val = 2 := by omega
-            rcases hdiff with hh | hh <;> simp [hz, offsetRank, hh] at heq <;> omega
+          · obtain ⟨s, hs⟩ := hl.2.2
+            have hlt := SourceModel.rank_neighbor_lt_self p i s
+            rw [← hs, hl.1, SourceModel.rank_self] at hlt
+            simp only [hz, offsetRank, ↓reduceIte] at heq
+            omega
           · have he := rank_injective (p i) (hd i).1 (by omega) hz (by omega) heq
             apply hmatch
             rw [← (hd i).2.2.1, he, wrap_local]
         have hne₂ : offsetRank (p j) (d j) ≠ offsetRank (p j) ((i.val : ℤ) - j.val) := by
           intro heq
           by_cases hz : d j = 0
-          · have := (p j 2).isLt
-            have := (p j 3).isLt
-            have hdiff : (i.val : ℤ) - j.val = -1 ∨ (i.val : ℤ) - j.val = -2 := by omega
-            rcases hdiff with hh | hh <;> simp [hz, offsetRank, hh] at heq <;> omega
+          · obtain ⟨s, hs⟩ := (SourceModel.ring n).symm hl.2.2
+            have hlt := SourceModel.rank_neighbor_lt_self p j s
+            rw [← hs, hl.2.1, SourceModel.rank_self] at hlt
+            simp only [hz, offsetRank, ↓reduceIte] at heq
+            omega
           · have he := rank_injective (p j) (hd j).1 (by omega) hz (by omega) heq
             have hm : μ.val j = i := by rw [← (hd j).2.2.1, he, wrap_local]
             apply hmatch
