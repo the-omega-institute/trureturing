@@ -23,9 +23,10 @@ namespace D5.S1.Dynamics.Shadowing.DendriteObstruction
 
 variable {X : Type*} [MetricSpace X]
 
+/-- A component of a compact metric subspace is compact in the ambient space. -/
 theorem compact_component {F : Set X} (hF : IsCompact F) {c : X} (hc : c ∈ F) :
     IsCompact (connectedComponentIn F c) := by
-  letI : CompactSpace F := isCompact_iff_compactSpace.mp hF
+  let : CompactSpace F := isCompact_iff_compactSpace.mp hF
   rw [connectedComponentIn_eq_image hc]
   exact isClosed_connectedComponent.isCompact.image continuous_subtype_val
 
@@ -34,7 +35,7 @@ private theorem component_separation {F : Set X} (hF : IsCompact F)
     ∃ A B : Set X, IsClosed A ∧ IsClosed B ∧ A ∪ B = F ∧ Disjoint A B ∧
       connectedComponentIn F c ⊆ A ∧ e ∈ B := by
   classical
-  letI : CompactSpace F := isCompact_iff_compactSpace.mp hF
+  let : CompactSpace F := isCompact_iff_compactSpace.mp hF
   have hn : (⟨e, he⟩ : F) ∉ connectedComponent (⟨c, hc⟩ : F) := by
     intro h
     apply hne
@@ -50,10 +51,11 @@ private theorem component_separation {F : Set X} (hF : IsCompact F)
     continuous_subtype_val).isClosed
   refine ⟨A, B, hAc, hBc, ?_, ?_, ?_, ⟨⟨e, he⟩, hS, rfl⟩⟩
   · change Subtype.val '' (S : Set F) ∪ Subtype.val '' (S : Set F)ᶜ = F
-    rw [← image_union, union_compl_self, image_univ, Subtype.range_coe_subtype, setOf_mem_eq]
+    rw [← image_union, union_compl_self, image_univ, Subtype.range_coe_subtype, ofPred_mem_eq]
   · exact Set.disjoint_image_of_injective Subtype.val_injective disjoint_compl_right
   · rw [connectedComponentIn_eq_image hc]
-    exact image_mono (isPreconnected_connectedComponent.subset_isClopen S.2.1 ⟨⟨c, hc⟩, mem_connectedComponent, S.2.2⟩)
+    exact image_mono (isPreconnected_connectedComponent.subset_isClopen S.2.1
+      ⟨⟨c, hc⟩, mem_connectedComponent, S.2.2⟩)
 
 private theorem fold_successor [CompactSpace X] {C : Set X}
     (hC : IsConnected C)

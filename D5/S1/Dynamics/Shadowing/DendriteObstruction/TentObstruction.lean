@@ -17,8 +17,10 @@ open Set Function
 
 namespace D5.S1.Dynamics.Shadowing.DendriteObstruction
 
+/-- The two-branch tent map on the real line. -/
 def continuumTent (t : ℝ) : ℝ := min (2 * t) (2 - 2 * t)
 
+/-- The two affine inverse branches on the closed unit interval. -/
 theorem continuumTent_half {t : ℝ} (ht : t ∈ Icc (0 : ℝ) 1) :
     continuumTent (t / 2) = t ∧ continuumTent (1 - t / 2) = t := by
   dsimp [continuumTent]
@@ -51,7 +53,7 @@ private theorem tent_dyadic (m j : ℕ) (hj : j ≤ 2 ^ m) :
         exact ih j hhalf
       · let k := 2 ^ (m + 1) - j
         have hk : k ≤ 2 ^ m := by dsimp [k]; rw [pow_succ] at *; omega
-        have heven : 2 ^ (m + 1) % 2 = 0 := by simp [pow_succ, Nat.mul_mod]
+        have heven : 2 ^ (m + 1) % 2 = 0 := by simp [pow_succ]
         have hmod : k % 2 = j % 2 := by dsimp [k]; omega
         have hrange : (k : ℝ) / 2 ^ m ∈ Icc (0 : ℝ) 1 := by
           constructor
@@ -143,7 +145,7 @@ theorem no_unbounded_tent_lifts {h : ℝ → ℝ} (hh : ContinuousOn h (Icc (0 :
       δ ≤ s ⟨j + 1, by omega⟩ - s ⟨j, by omega⟩ := by
     by_contra hbad
     have hlt : dist (s ⟨j, by omega⟩) (s ⟨j + 1, by omega⟩) < δ := by
-      rw [Real.dist_eq, abs_of_nonpos (le_of_lt (sub_neg.mpr (hsmono (by simpa)) ))]
+      rw [Real.dist_eq, abs_of_nonpos (le_of_lt (sub_neg.mpr (hsmono (by simp)) ))]
       linarith
     have hout := huc _ (hs ⟨j, by omega⟩) _ (hs ⟨j + 1, by omega⟩) hlt
     rw [hval, hval, Real.dist_eq] at hout

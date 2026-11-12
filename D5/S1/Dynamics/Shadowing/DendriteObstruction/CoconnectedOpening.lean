@@ -74,6 +74,7 @@ private theorem opening_chain
   intro n
   exact (hnext n (s n)).2
 
+omit [CompactSpace X] in
 private theorem chain_union_absorbs {C : ℕ → Set X}
     (hstep : ∀ n, C n ⊆ interior (C (n + 1)))
     {S : Set X} (hS : IsCompact S) (hsub : S ⊆ ⋃ n, C n) :
@@ -90,6 +91,7 @@ private theorem chain_union_absorbs {C : ℕ → Set X}
       interior_mono (hmono (le_max_right _ _))⟩)
   exact ⟨N, hN.trans interior_subset⟩
 
+omit [CompactSpace X] in
 private theorem first_closed_hit {α : ℝ → X}
     (hα : ContinuousOn α (Icc (0 : ℝ) 1)) {K : Set X} (hK : IsClosed K)
     (h0 : α 0 ∉ K) (h1 : α 1 ∈ K) :
@@ -107,6 +109,7 @@ private theorem first_closed_hit {α : ℝ → X}
   have := hmin (show t ∈ S from ⟨⟨ht.1, ht.2.le.trans hτ.1.2⟩, htk⟩)
   exact (not_le_of_gt ht.2) this
 
+omit [CompactSpace X] in
 private theorem terminal_segment_avoids {α : ℝ → X}
     (hα : ContinuousOn α (Icc (0 : ℝ) 1)) {τ : ℝ} (hτ : τ ∈ Ioc (0 : ℝ) 1)
     {V : Set X} (he : α τ ∉ closure V) :
@@ -117,14 +120,142 @@ private theorem terminal_segment_avoids {α : ℝ → X}
   obtain ⟨δ, hδ, hball⟩ := Metric.mem_nhdsWithin_iff.mp hmem
   let t₀ := max 0 (τ - δ / 2)
   have ht₀ : t₀ ∈ Ico (0 : ℝ) τ := ⟨le_max_left _ _,
-    max_lt hτ.1 (by dsimp [t₀]; linarith)⟩
+    max_lt hτ.1 (by linarith)⟩
   refine ⟨t₀, ht₀, ?_⟩
   intro t ht hv
   have hd : dist t τ < δ := by
     rw [Real.dist_eq, abs_of_nonpos (sub_nonpos.mpr ht.2)]
-    have := le_max_right (0 : ℝ) (τ - δ / 2)
-    dsimp [t₀] at ht
+    have htbound : τ - δ / 2 ≤ t := (le_max_right (0 : ℝ) (τ - δ / 2)).trans ht.1
     linarith
   exact hball ⟨hd, ht₀.1.trans ht.1, ht.2.trans hτ.2⟩ (subset_closure hv)
+
+/-- In a nondegenerate compact path-connected metric space there are arbitrarily
+small nonempty open sets whose complements are nonempty subcontinua. -/
+theorem compact_path_small_opening
+    (paths : ∀ c y : X, ∃ α : ℝ → X, ContinuousOn α (Icc (0 : ℝ) 1) ∧
+      α 0 = c ∧ α 1 = y)
+    (hnt : (univ : Set X).Nontrivial) {η : ℝ} (hη : 0 < η) :
+    ∃ Q : Set X, IsCompact Q ∧ IsConnected Q ∧ Q ≠ univ ∧ Metric.diam Qᶜ < η := by
+  classical
+  obtain ⟨r, _, q, _, hrq⟩ := hnt
+  have hr : ({r} : Set X) ≠ univ := by
+    intro h
+    have : q ∈ ({r} : Set X) := by rw [h]; trivial
+    exact hrq this.symm
+  obtain ⟨S, hScover⟩ := isCompact_univ.elim_finite_subcover
+    (fun x : X => Metric.ball x (η / 8)) (fun _ => Metric.isOpen_ball)
+    (fun x _ => mem_iUnion.mpr ⟨x, Metric.mem_ball_self (by positivity)⟩)
+  have hSn : S.Nonempty := by
+    obtain ⟨x, hx, _⟩ := mem_iUnion₂.mp (hScover (mem_univ r))
+    exact ⟨x, hx⟩
+  let I := {x // x ∈ S}
+  let : Nonempty I := by obtain ⟨x, hx⟩ := hSn; exact ⟨⟨x, hx⟩⟩
+  let k := Fintype.card I
+  have hk : 0 < k := Fintype.card_pos
+  let enum := (Fintype.equivFin I).symm
+  let V : I → Set X := fun i => Metric.ball i.1 (η / 8)
+  let H : ℕ → Set X := fun n => V (enum ⟨n % k, Nat.mod_lt n hk⟩)
+  have hrepeat (i : I) (N : ℕ) : ∃ n ≥ N, H n = V i := by
+    let j := Fintype.equivFin I i
+    let n := (N + 1) * k + j.1
+    have hn : N ≤ n := by dsimp [n]; nlinarith
+    refine ⟨n, hn, ?_⟩
+    have hmod : n % k = j.1 := by
+      simp [n, Nat.add_mod]
+      exact Nat.mod_eq_of_lt (show j.1 < k from j.2)
+    change V (enum ⟨n % k, Nat.mod_lt n hk⟩) = V i
+    have hfin : (⟨n % k, Nat.mod_lt n hk⟩ : Fin k) = j := Fin.ext hmod
+    rw [hfin]
+    exact congrArg V ((Fintype.equivFin I).symm_apply_apply i)
+  obtain ⟨C, W, hC0, hC, hstep, hW⟩ := opening_chain paths r hr H
+    (fun _ => Metric.isOpen_ball)
+  have hmono : Monotone C := monotone_nat_of_le_succ
+    (fun n => (hstep n).trans interior_subset)
+  let G := ⋃ n, C n
+  have hGopen : IsOpen G := by
+    have heq : G = ⋃ n, interior (C n) := by
+      apply Subset.antisymm
+      · intro x hx
+        obtain ⟨n, hn⟩ := mem_iUnion.mp hx
+        exact mem_iUnion.mpr ⟨n + 1, hstep n hn⟩
+      · exact iUnion_mono (fun _ => interior_subset)
+    rw [heq]
+    exact isOpen_iUnion (fun _ => isOpen_interior)
+  have hGp : G ≠ univ := by
+    intro heq
+    obtain ⟨N, hN⟩ := chain_union_absorbs hstep isCompact_univ
+      (show (univ : Set X) ⊆ ⋃ n, C n from by rw [← heq])
+    exact (hC N).2.2.1 (eq_univ_of_univ_subset hN)
+  let K := Gᶜ
+  have hKc : IsClosed K := hGopen.isClosed_compl
+  obtain ⟨x, hx⟩ := Set.nonempty_compl.mpr hGp
+  have hrG : r ∈ G := mem_iUnion.mpr ⟨0, hC0.symm ▸ (show r ∈ ({r} : Set X) from rfl)⟩
+  obtain ⟨α, hα, hα0, hα1⟩ := paths r x
+  obtain ⟨τ, hτ, hτK, hbefore⟩ := first_closed_hit hα hKc
+    (by simpa [hα0, K] using hrG) (by simpa [hα1, K] using hx)
+  let e := α τ
+  have hV (i : I) (hi : (V i ∩ K).Nonempty) : e ∈ closure (V i) := by
+    by_contra hbad
+    obtain ⟨t₀, ht₀, htail⟩ := terminal_segment_avoids hα hτ hbad
+    have hprefix : α '' Icc (0 : ℝ) t₀ ⊆ G := by
+      rintro z ⟨t, ht, rfl⟩
+      exact not_not.mp (hbefore t ⟨ht.1, ht.2.trans_lt ht₀.2⟩)
+    have hpcompact : IsCompact (α '' Icc (0 : ℝ) t₀) :=
+      isCompact_Icc.image_of_continuousOn
+        (hα.mono (Icc_subset_Icc le_rfl (ht₀.2.le.trans hτ.2)))
+    obtain ⟨N, hN⟩ := chain_union_absorbs hstep hpcompact hprefix
+    obtain ⟨n, hn, hni⟩ := hrepeat i N
+    have hWsub : W n ⊆ V i := by
+      rcases (hW n).2.2.2 with h | h
+      · exact hni ▸ h
+      · obtain ⟨z, hzV, hzK⟩ := hi
+        have hzG : z ∈ G := mem_iUnion.mpr ⟨n + 1, h (hni.symm ▸ hzV)⟩
+        exact False.elim (hzK hzG)
+    have hpathsub : α '' Icc (0 : ℝ) τ ⊆ (W n)ᶜ := by
+      rintro z ⟨t, ht, rfl⟩ hw
+      by_cases htpre : t ≤ t₀
+      · have htc : α t ∈ C n := hmono hn (hN (mem_image_of_mem _ ⟨ht.1, htpre⟩))
+        have htcomp : α t ∈ connectedComponentIn (W n)ᶜ r := by
+          rw [← (hW n).2.2.1]
+          exact interior_subset (hstep n htc)
+        exact (connectedComponentIn_subset (W n)ᶜ r htcomp) hw
+      · exact htail t ⟨(not_le.mp htpre).le, ht.2⟩ (hWsub hw)
+    have hprecon : IsPreconnected (α '' Icc (0 : ℝ) τ) :=
+      isPreconnected_Icc.image α (hα.mono (Icc_subset_Icc le_rfl hτ.2))
+    have hrpath : r ∈ α '' Icc (0 : ℝ) τ :=
+      ⟨0, ⟨le_rfl, hτ.1.le⟩, hα0⟩
+    have hsub := hprecon.subset_connectedComponentIn hrpath hpathsub
+    have heC : e ∈ C (n + 1) := by
+      rw [(hW n).2.2.1]
+      exact hsub (mem_image_of_mem _ ⟨hτ.1.le, le_rfl⟩)
+    exact hτK (mem_iUnion.mpr ⟨n + 1, heC⟩)
+  have hKball : K ⊆ Metric.ball e (η / 3) := by
+    intro z hz
+    obtain ⟨c, hc, hzc⟩ := mem_iUnion₂.mp (hScover (mem_univ z))
+    let i : I := ⟨c, hc⟩
+    have hecl := hV i ⟨z, hzc, hz⟩
+    have hedist : dist e c ≤ η / 8 :=
+      Metric.mem_closedBall.mp (Metric.closure_ball_subset_closedBall hecl)
+    have hzdist : dist z c < η / 8 := Metric.mem_ball.mp hzc
+    have := dist_triangle_right z e c
+    rw [Metric.mem_ball]
+    linarith
+  have hFsub : (Metric.ball e (η / 3))ᶜ ⊆ G := by
+    intro z hz
+    by_contra hzg
+    exact hz (hKball hzg)
+  obtain ⟨N, hN⟩ := chain_union_absorbs hstep
+    Metric.isOpen_ball.isClosed_compl.isCompact hFsub
+  have hsmall : (C N)ᶜ ⊆ Metric.ball e (η / 3) := by
+    intro z hz
+    by_contra hzb
+    exact hz (hN hzb)
+  refine ⟨C N, (hC N).1, (hC N).2.1, (hC N).2.2.1, ?_⟩
+  apply lt_of_le_of_lt (Metric.diam_le_of_forall_dist_le (by positivity : 0 ≤ 2 * (η / 3)) ?_)
+    (by linarith : 2 * (η / 3) < η)
+  intro a ha b hb
+  have ha' := Metric.mem_ball.mp (hsmall ha)
+  have hb' := Metric.mem_ball.mp (hsmall hb)
+  exact (dist_triangle_right a b e).trans (by linarith)
 
 end D5.S1.Dynamics.Shadowing.DendriteObstruction
