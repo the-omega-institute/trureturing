@@ -310,20 +310,21 @@ private theorem mem_coordinateKernel (U : Submodule K (Ω → K)) (S : Finset Ω
 
 private theorem coordinate_rank_nullity (U : Submodule K (Ω → K)) (S : Finset Ω) :
     rowRank U S + finrank K (coordinateKernel U S) = finrank K U := by
-  simpa only [rowRank, projected, coordinateKernel, LinearMap.range_domRestrict] using
-    LinearMap.finrank_range_add_finrank_ker ((coordinateProject S).domRestrict U)
+  have hn := LinearMap.finrank_range_add_finrank_ker ((coordinateProject S).domRestrict U)
+  rw [LinearMap.range_domRestrict] at hn
+  exact hn
 
 private theorem rowRank_empty (U : Submodule K (Ω → K)) : rowRank U ∅ = 0 := by
   have he : (coordinateProject (∅ : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K)) = 0 := by
     ext x i
     simp [coordinateProject]
-  simp [rowRank, projected, he]
+  rw [rowRank, projected, he, Submodule.map_zero, finrank_bot]
 
 private theorem rowRank_univ (U : Submodule K (Ω → K)) : rowRank U Finset.univ = finrank K U := by
   have he : (coordinateProject (Finset.univ : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K)) = .id := by
     ext x i
     simp [coordinateProject]
-  simp [rowRank, projected, he]
+  rw [rowRank, projected, he, Submodule.map_id]
 
 private theorem rowRank_mono (U : Submodule K (Ω → K)) {S T : Finset Ω} (h : S ⊆ T) :
     rowRank U S ≤ rowRank U T := by
@@ -445,6 +446,7 @@ private theorem embeddings_transitive [Normal F K] (σ τ : D →ₐ[F] K) :
   let g := e.liftNormal K
   refine ⟨g, ?_⟩
   ext d
+  change g (σ d) = τ d
   have h := e.liftNormal_commutes K (σ.equivFieldRange d)
   simpa [g, e] using h
 
@@ -455,7 +457,9 @@ private theorem split_galois_covariance (g : K ≃ₐ[F] K) (z : K ⊗[F] D)
     (σ : D →ₐ[F] K) :
     splitHom F D K (galoisTensor K g z) (g • σ) = g (splitHom F D K z σ) := by
   induction z using TensorProduct.inductionOn with
-  | tmul c d => simp [galoisTensor, splitHom_tmul, embeddingAction]
+  | tmul c d =>
+      change g c * g (σ d) = g (c * σ d)
+      exact (map_mul g c (σ d)).symm
   | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
 
 private theorem galoisTensor_window (W : Submodule F D) (g : K ≃ₐ[F] K)
@@ -468,5 +472,73 @@ private theorem galoisTensor_window (W : Submodule F D) (g : K ≃ₐ[F] K)
   | add x y hx hy => simpa only [map_add] using (W.baseChange K).add_mem hx hy
 
 end GaloisLabels
+
+section TightRankRigidity
+
+variable {Ω G : Type*} [Fintype Ω] [DecidableEq Ω] [Group G] [Fintype G] [MulAction G Ω]
+
+private def orbitSet (S : Finset Ω) (g : G) : Finset Ω := S.image (g • ·)
+
+private theorem orbitSet_card (S : Finset Ω) (g : G) : (orbitSet S g).card = S.card :=
+  Finset.card_image_of_injective _ (MulAction.injective g)
+
+/-- Equality rigidity for a nonnegative invariant submodular defect. -/
+private theorem tight_complement (f : Finset Ω → ℤ)
+    (hzero : f ∅ = 0) (hnonneg : ∀ S, 0 ≤ f S)
+    (hsub : ∀ S T, f (S ∪ T) + f (S ∩ T) ≤ f S + f T)
+    (htrans : ∀ x y : Ω, ∃ g : G, g • x = y)
+    (hinv : ∀ (g : G) S, f (orbitSet S g) = f S)
+    (S : Finset Ω) (hS : S.Nonempty) (htight : f S = 0) : f Sᶜ = 0 := by
+  classical
+  have hunion {A B : Finset Ω} (hA : f A = 0) (hB : f B = 0) : f (A ∪ B) = 0 := by
+    have hh := hsub A B
+    have h1 := hnonneg (A ∪ B)
+    have h2 := hnonneg (A ∩ B)
+    omega
+  have hinter {A B : Finset Ω} (hA : f A = 0) (hB : f B = 0) : f (A ∩ B) = 0 := by
+    have hh := hsub A B
+    have h1 := hnonneg (A ∪ B)
+    have h2 := hnonneg (A ∩ B)
+    omega
+  let Bset := (Finset.univ : Finset Ω).powerset.filter (fun B => B.Nonempty ∧ f B = 0)
+  have hSset : S ∈ Bset := by simp [Bset, hS, htight]
+  obtain ⟨B, hBset, hmin⟩ := Bset.exists_min_image Finset.card ⟨S, hSset⟩
+  have hB := (Finset.mem_filter.mp hBset).2
+  obtain ⟨b, hb⟩ := hB.1
+  let A : Finset G := Finset.univ.filter (fun g => orbitSet B g ⊆ Sᶜ)
+  have he : A.biUnion (orbitSet B) = Sᶜ := by
+    ext x
+    constructor
+    · intro hx
+      obtain ⟨g, hg, hxg⟩ := Finset.mem_biUnion.mp hx
+      exact (Finset.mem_filter.mp hg).2 hxg
+    · intro hx
+      obtain ⟨g, hg⟩ := htrans b x
+      have hxg : x ∈ orbitSet B g := Finset.mem_image.mpr ⟨b, hb, hg⟩
+      have hsubset : orbitSet B g ⊆ Sᶜ := by
+        intro y hy
+        apply Finset.mem_compl.mpr
+        intro hys
+        have hi : (orbitSet B g ∩ S).Nonempty := ⟨y, Finset.mem_inter.mpr ⟨hy, hys⟩⟩
+        have hti : f (orbitSet B g ∩ S) = 0 := hinter ((hinv g B).trans hB.2) htight
+        have himem : orbitSet B g ∩ S ∈ Bset := by simp [Bset, hi, hti]
+        have hcard := hmin _ himem
+        have hie : orbitSet B g ∩ S = orbitSet B g :=
+          Finset.eq_of_subset_of_card_le Finset.inter_subset_left (by
+            simpa only [orbitSet_card] using hcard)
+        have hxs : x ∈ S := (Finset.mem_inter.mp (hie.symm ▸ hxg)).2
+        exact (Finset.mem_compl.mp hx) hxs
+      exact Finset.mem_biUnion.mpr ⟨g, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hsubset⟩, hxg⟩
+  have hall : ∀ T : Finset G, f (T.biUnion (orbitSet B)) = 0 := by
+    intro T
+    induction T using Finset.induction_on with
+    | empty => simpa using hzero
+    | @insert g T hg ih =>
+        rw [Finset.biUnion_insert]
+        exact hunion ((hinv g B).trans hB.2) ih
+  rw [← he]
+  exact hall A
+
+end TightRankRigidity
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
