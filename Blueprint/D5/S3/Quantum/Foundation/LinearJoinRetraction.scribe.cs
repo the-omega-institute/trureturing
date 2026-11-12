@@ -94,6 +94,16 @@ internal sealed class LinearJoinRetractionDocument : IScribeDocumentDefinition
                 H("Full effect restriction is onto on the right"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("Restriction of the entire original proper-effect interval to W is likewise surjective, with the right retraction as the extension map."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("left-comparison"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left"),
+                H("Exact left comparison correspondence"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every left pure reference and every left vector, the infimum over the complete side proper-effect interval equals the original comparison at the ambient vectors. Restriction and retraction extension identify the two confirming-effect value sets exactly."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("right-comparison"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right"),
+                H("Exact right comparison correspondence"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The same equality of full confirming-effect value sets holds on W for every right pure reference and every right vector."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("left-g2-inheritance"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left"),
                 H("G2 inheritance on the left"), StatementSource.WithoutFormula(),

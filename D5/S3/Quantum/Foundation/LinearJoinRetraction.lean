@@ -270,6 +270,41 @@ theorem restrict_surjective_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   apply Subtype.ext
   exact restrict_extend_left C u J g.1
 
+theorem comparison_correspondence_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RetractionCertificate C u J)
+    (p : pure (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace))
+    (x : J.leftSubspace) :
+    comparison (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) p x =
+      comparison C u (p : A) (x : A) := by
+  have hset :
+      ({r : ℝ | ∃ f : J.leftSubspace →ₗ[ℝ] ℝ,
+          confirms (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) p f ∧
+          f x = r} : Set ℝ) =
+        {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ,
+          confirms C u (p : A) f ∧ f (x : A) = r} := by
+    ext r
+    constructor
+    · rintro ⟨f, hf, hfr⟩
+      refine ⟨f.comp J.leftRetraction, ?_, ?_⟩
+      · refine ⟨extend_effect_left C u J H f hf.1, ?_⟩
+        change f (J.leftRetraction (p : A)) = 1
+        rw [show J.leftRetraction (p : A) = p from J.leftRetraction_on_left p]
+        exact hf.2
+      · change f (J.leftRetraction (x : A)) = r
+        rw [show J.leftRetraction (x : A) = x from J.leftRetraction_on_left x]
+        exact hfr
+    · rintro ⟨f, hf, hfr⟩
+      let fs : sideProperEffect C u J.leftSubspace :=
+        restrictEffect C u J.leftSubspace ⟨f, hf.1⟩
+      refine ⟨fs.1, ?_, ?_⟩
+      · refine ⟨fs.2, ?_⟩
+        simpa [fs, restrictEffect] using hf.2
+      · simpa [fs, restrictEffect] using hfr
+  change sInf ({r : ℝ | ∃ f : J.leftSubspace →ₗ[ℝ] ℝ,
+      confirms (sideCone C J.leftSubspace) (sideUnit u J.leftSubspace) p f ∧ f x = r} : Set ℝ) =
+    sInf {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ, confirms C u (p : A) f ∧ f (x : A) = r}
+  rw [hset]
+
 theorem inherit_G2_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (J : JoinData (A := A)) (H : RetractionCertificate C u J)
     (hG : G2 C u) :
@@ -446,6 +481,41 @@ theorem restrict_surjective_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ
   refine ⟨⟨g.1.comp J.rightRetraction, extend_effect_right C u J H g.1 g.2⟩, ?_⟩
   apply Subtype.ext
   exact restrict_extend_right C u J g.1
+
+theorem comparison_correspondence_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)
+    (p : pure (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace))
+    (x : J.rightSubspace) :
+    comparison (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) p x =
+      comparison C u (p : A) (x : A) := by
+  have hset :
+      ({r : ℝ | ∃ f : J.rightSubspace →ₗ[ℝ] ℝ,
+          confirms (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) p f ∧
+          f x = r} : Set ℝ) =
+        {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ,
+          confirms C u (p : A) f ∧ f (x : A) = r} := by
+    ext r
+    constructor
+    · rintro ⟨f, hf, hfr⟩
+      refine ⟨f.comp J.rightRetraction, ?_, ?_⟩
+      · refine ⟨extend_effect_right C u J H f hf.1, ?_⟩
+        change f (J.rightRetraction (p : A)) = 1
+        rw [show J.rightRetraction (p : A) = p from J.rightRetraction_on_right p]
+        exact hf.2
+      · change f (J.rightRetraction (x : A)) = r
+        rw [show J.rightRetraction (x : A) = x from J.rightRetraction_on_right x]
+        exact hfr
+    · rintro ⟨f, hf, hfr⟩
+      let fs : sideProperEffect C u J.rightSubspace :=
+        restrictEffect C u J.rightSubspace ⟨f, hf.1⟩
+      refine ⟨fs.1, ?_, ?_⟩
+      · refine ⟨fs.2, ?_⟩
+        simpa [fs, restrictEffect] using hf.2
+      · simpa [fs, restrictEffect] using hfr
+  change sInf ({r : ℝ | ∃ f : J.rightSubspace →ₗ[ℝ] ℝ,
+      confirms (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) p f ∧ f x = r} : Set ℝ) =
+    sInf {r : ℝ | ∃ f : A →ₗ[ℝ] ℝ, confirms C u (p : A) f ∧ f (x : A) = r}
+  rw [hset]
 
 theorem inherit_G2_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)

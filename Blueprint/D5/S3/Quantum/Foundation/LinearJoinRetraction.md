@@ -210,7 +210,31 @@ Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.restrict_surjecti
 
 Restriction of the entire original proper-effect interval to W is likewise surjective, with the right retraction as the extension map.
 
-**Theorem 1.18 (G2 inheritance on the left).**
+**Theorem 1.18 (Exact left comparison correspondence).**
+
+Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every left pure reference and every left vector, the infimum over the complete side proper-effect interval equals the original comparison at the ambient vectors. Restriction and retraction extension identify the two confirming-effect value sets exactly.
+
+**Theorem 1.19 (Exact right comparison correspondence).**
+
+Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The same equality of full confirming-effect value sets holds on W for every right pure reference and every right vector.
+
+**Theorem 1.20 (G2 inheritance on the left).**
 
 Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left`
 
@@ -222,7 +246,7 @@ Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left`
 
 If the original carrier satisfies G2, the left side satisfies G2 using its complete proper-effect interval. Side witnesses extend to original witnesses, the original common midpoint witness is restricted back, and the pure-lift clauses preserve every pure and mixed quantifier.
 
-**Theorem 1.19 (G2 inheritance on the right).**
+**Theorem 1.21 (G2 inheritance on the right).**
 
 Lean statement: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_right`
 
@@ -240,6 +264,8 @@ The same argument transports G2 to W with the full right proper-effect interval 
 - Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData`
 - Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.RetractionCertificate`
 - Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.RightRetractionCertificate`
+- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_left`
+- Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.comparison_correspondence_right`
 - Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_left`
 - Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_right`
 - Truth anchor: `D5/S3/Quantum/Foundation/LinearJoinRetraction.inherit_G2_left`
