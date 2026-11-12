@@ -32,9 +32,15 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
       ext f
       simp [proper]
     rw [he]
-    exact isClosed_iInter fun x => isClosed_iInter fun _ =>
-      (isClosed_le continuous_const (by fun_prop)).inter
-        (isClosed_le (by fun_prop) continuous_const)
+    apply isClosed_iInter
+    intro x
+    apply isClosed_iInter
+    intro _
+    have hlo : IsClosed {f : V →L[ℝ] ℝ | (0 : ℝ) ≤ f x} :=
+      isClosed_le continuous_const (by fun_prop)
+    have hhi : IsClosed {f : V →L[ℝ] ℝ | f x ≤ u x} :=
+      isClosed_le (by fun_prop) continuous_const
+    exact hlo.inter hhi
   have hspan := pure_span (base_compact hc hs) hs hg
   let b := Module.Basis.ofSpan hspan.ge
   let := FiniteDimensional.fintypeBasisIndex b
@@ -49,7 +55,8 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     have hi := hf (b i) hp.1.1
     change 0 ≤ f (b i) ∧ f (b i) ≤ u (b i) at hi
     rw [Real.norm_eq_abs, abs_of_nonneg hi.1]
-    simpa [hp.1.2] using hi.2
+    have hui : u (b i) = 1 := hp.1.2
+    exact hi.2.trans_eq hui
   simpa using hle
 
 private theorem exclusion_injective [Nontrivial V]
