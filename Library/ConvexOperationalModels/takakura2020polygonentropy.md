@@ -23,7 +23,7 @@ evaluations on p. 6 show that each vertex is perfectly distinguishable
 from any state on the entire opposite edge, including mixed edge states.
 
 The exact full-confirmation minimum and its reverse zero-set inclusion
-are derived in [the self-duality note](mullerududec2012selfduality.md#odd-polygons-reciprocal-comparisons-original-faces-and-extension-budgets).
+are derived in [the Janotta source note](janottagogolinbarrettbrunner2011polygon.md#odd-polygons-reciprocal-comparisons-original-faces-and-extension-budgets).
 That application uses only this local state/effect model; it does not
 assume semipermeable membranes, thermodynamic processes or the existence
 of an entropy of mixing, and does not invoke the paper's entropy conclusion.
