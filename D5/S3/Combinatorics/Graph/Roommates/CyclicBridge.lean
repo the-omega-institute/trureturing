@@ -1,0 +1,245 @@
+/- GID: D5/S3/Combinatorics/Graph/Roommates/CyclicBridge
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Graph/Roommates/CyclicBridge
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Data.Int.ModEq]
+   utility: none
+   digest: Literal cyclic ranks and stable partial matchings give integer-target open certificates. -/
+
+import D5.S3.Combinatorics.Graph.Roommates.SourceModel
+import D5.S3.Combinatorics.Graph.Roommates.OpenCertificates
+import Mathlib.Data.Int.ModEq
+
+set_option autoImplicit false
+noncomputable section
+open scoped Classical
+namespace D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
+open OpenCertificates
+
+/-- The supplier's four labels, in their original order. -/
+def signed : Fin 4 → ℤ := ![1, 2, -1, -2]
+
+/-- Reduction of an integer coordinate to the literal source cycle. -/
+def wrap (n : ℕ) (z : ℤ) : Fin (n + 5) :=
+  ⟨(z % (n + 5)).toNat, by
+    have h := Int.emod_nonneg z (show (n : ℤ) + 5 ≠ 0 by omega)
+    have h' := Int.emod_lt_of_pos z (show (0 : ℤ) < n + 5 by omega)
+    omega⟩
+
+private theorem wrap_val (n : ℕ) (z : ℤ) :
+    ((wrap n z).val : ℤ) = z % (n + 5) := by
+  simp only [wrap]
+  exact Int.toNat_of_nonneg (Int.emod_nonneg _ (by omega))
+
+private theorem wrap_index {n : ℕ} (i : Fin (n + 5)) : wrap n i.val = i := by
+  apply Fin.ext
+  have h := wrap_val n i.val
+  rw [Int.emod_eq_of_lt (by omega) (by omega)] at h
+  exact_mod_cast h
+
+private theorem wrap_add (n : ℕ) (a b : ℤ) :
+    wrap n (a + b) = wrap n a + wrap n b := by
+  apply Fin.ext
+  have ha := wrap_val n a
+  have hb := wrap_val n b
+  have hab := wrap_val n (a + b)
+  have hsum := wrap_val n ((wrap n a).val + (wrap n b).val)
+  rw [Int.add_emod, ← ha, ← hb] at hab
+  change (wrap n (a + b)).val = ((wrap n a).val + (wrap n b).val) % (n + 5)
+  exact_mod_cast hab
+
+private theorem wrap_signed (n : ℕ) (s : Fin 4) : wrap n (signed s) = SourceModel.offset n s := by
+  apply Fin.ext
+  have h := wrap_val n (signed s)
+  fin_cases s <;> simp only [signed, SourceModel.offset, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val, Matrix.head_cons, Matrix.tail_cons] at h ⊢
+  all_goals omega
+
+private theorem wrap_reverse {n : ℕ} (i j : Fin (n + 5)) (a b : ℤ)
+    (ha : -2 ≤ a ∧ a ≤ 2) (hb : -2 ≤ b ∧ b ≤ 2)
+    (hij : wrap n (i.val + a) = j) (hji : wrap n (j.val + b) = i) : b = -a := by
+  have hi := congrArg (fun x : Fin (n + 5) => (x.val : ℤ)) hij
+  have hj := congrArg (fun x : Fin (n + 5) => (x.val : ℤ)) hji
+  rw [wrap_val] at hi hj
+  have he : ((a + b) % (n + 5)) = 0 := by
+    have h := congrArg (fun x : Fin (n + 5) => wrap n (x.val + b)) hij
+    simp only [wrap_add, wrap_index] at h
+    have ht : wrap n (i.val + (a + b)) = i := by
+      simpa only [add_assoc] using h.trans hji
+    have hmod := congrArg (fun x : Fin (n + 5) => (x.val : ℤ)) ht
+    rw [wrap_val] at hmod
+    have heq : Int.ModEq (n + 5) (i.val + (a + b)) (i.val : ℤ) := by
+      simpa only [Int.ModEq, Int.emod_eq_of_lt (by omega : (0 : ℤ) ≤ i.val)
+        (by omega : (i.val : ℤ) < n + 5)] using hmod
+    simpa using Int.ModEq.add_left_cancel' (i.val : ℤ) heq
+  have hdiv : (n + 5 : ℤ) ∣ a + b := Int.dvd_of_emod_eq_zero he
+  have hz : a + b = 0 := Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdiv (by omega)
+  omega
+
+private theorem signed_bounds (s : Fin 4) : -2 ≤ signed s ∧ signed s ≤ 2 ∧ signed s ≠ 0 := by
+  fin_cases s <;> norm_num [signed]
+
+private theorem signed_rank (r : Ranking) (s : Fin 4) :
+    offsetRank r (signed s) = (r s).val := by
+  fin_cases s <;> simp [signed, offsetRank]
+
+/-- Cut assignments retain signed offsets even when their integer target is exterior. -/
+def displacement {n : ℕ} (μ : SourceModel.Matching (Fin (n + 5)))
+    (ha : SourceModel.IsAcceptable (SourceModel.ring n) μ) (i : Fin (n + 5)) : ℤ :=
+  if h : μ.val i = i then 0 else signed (Classical.choose ((ha i).resolve_left h))
+
+private theorem displacement_spec {n : ℕ} (p : SourceModel.Profile n)
+    (μ : SourceModel.Matching (Fin (n + 5)))
+    (ha : SourceModel.IsAcceptable (SourceModel.ring n) μ) (i : Fin (n + 5)) :
+    (-2 ≤ displacement μ ha i ∧ displacement μ ha i ≤ 2) ∧
+    (displacement μ ha i = 0 ↔ μ.val i = i) ∧
+    wrap n (i.val + displacement μ ha i) = μ.val i ∧
+    offsetRank (p i) (displacement μ ha i) = SourceModel.rank p i (μ.val i) := by
+  classical
+  by_cases h : μ.val i = i
+  · simp [displacement, h, offsetRank, wrap_index, SourceModel.rank_self]
+  · let hex := (ha i).resolve_left h
+    have hs : μ.val i = i + SourceModel.offset n (Classical.choose hex) :=
+      Classical.choose_spec hex
+    have hb := signed_bounds (Classical.choose hex)
+    simp only [displacement, dif_neg h]
+    refine ⟨⟨hb.1, hb.2.1⟩, ?_, ?_, ?_⟩
+    · simp [hb.2.2, h]
+    · rw [wrap_add, wrap_index, wrap_signed, hs]
+    · rw [signed_rank, hs, SourceModel.rank_neighbor]
+
+private theorem wrap_local {n : ℕ} (i j : Fin (n + 5)) :
+    wrap n (i.val + ((j.val : ℤ) - i.val)) = j := by
+  simpa only [add_sub_cancel] using wrap_index j
+
+private theorem local_rank {n : ℕ} (p : SourceModel.Profile n)
+    (i j : Fin (n + 5)) (hij : i.val < j.val) (hd : j.val ≤ i.val + 2) :
+    SourceModel.rank p i j = offsetRank (p i) ((j.val : ℤ) - i.val) ∧
+    SourceModel.rank p j i = offsetRank (p j) ((i.val : ℤ) - j.val) ∧
+    (SourceModel.ring n).Adj i j := by
+  have hdiff : (j.val : ℤ) - i.val = 1 ∨ (j.val : ℤ) - i.val = 2 := by omega
+  rcases hdiff with h | h
+  · have he : j = i + SourceModel.offset n 0 := by
+      rw [← wrap_signed, ← wrap_index i, ← wrap_add]
+      simpa [signed, h] using (wrap_local i j).symm
+    have hr : i = j + SourceModel.offset n 2 := by
+      rw [← wrap_signed, ← wrap_index j, ← wrap_add]
+      have hh := wrap_local j i
+      have : (i.val : ℤ) - j.val = -1 := by omega
+      simpa [signed, this] using hh.symm
+    refine ⟨?_, ?_, ⟨0, he⟩⟩
+    · have hh := SourceModel.rank_neighbor p i 0
+      rw [← he] at hh
+      simpa [offsetRank, h] using hh
+    · have hh := SourceModel.rank_neighbor p j 2
+      rw [← hr] at hh
+      simpa [offsetRank, show (i.val : ℤ) - j.val = -1 by omega] using hh
+  · have he : j = i + SourceModel.offset n 1 := by
+      rw [← wrap_signed, ← wrap_index i, ← wrap_add]
+      simpa [signed, h] using (wrap_local i j).symm
+    have hr : i = j + SourceModel.offset n 3 := by
+      rw [← wrap_signed, ← wrap_index j, ← wrap_add]
+      have hh := wrap_local j i
+      have : (i.val : ℤ) - j.val = -2 := by omega
+      simpa [signed, this] using hh.symm
+    refine ⟨?_, ?_, ⟨1, he⟩⟩
+    · have hh := SourceModel.rank_neighbor p i 1
+      rw [← he] at hh
+      simpa [offsetRank, h] using hh
+    · have hh := SourceModel.rank_neighbor p j 3
+      rw [← hr] at hh
+      simpa [offsetRank, show (i.val : ℤ) - j.val = -2 by omega] using hh
+
+/-- Cutting a stable source matching keeps its genuine ranks and all integer requests.
+No pairing witness is counted by this theorem. -/
+theorem cut_certificate {n : ℕ} (p : SourceModel.Profile n)
+    (μ : SourceModel.Matching (Fin (n + 5)))
+    (hs : SourceModel.IsStable (SourceModel.ring n) (SourceModel.rank p) μ) :
+    Certificate p (displacement μ hs.1) := by
+  let d := displacement μ hs.1
+  have hd := displacement_spec p μ hs.1
+  constructor
+  · intro i
+    exact (hd i).1
+  · intro i j hdi he
+    have hm : μ.val i = j := by
+      rw [← (hd i).2.2.1, he, wrap_index]
+    have hr : μ.val j = i := by rw [← hm]; exact μ.property i
+    exact wrap_reverse i j (d i) (d j) (hd i).1 (hd j).1
+      (by simpa [d, hm] using (hd i).2.2.1)
+      (by simpa [d, hr] using (hd j).2.2.1)
+  · intro i j _ _ he
+    apply μ.val.injective
+    rw [← (hd i).2.2.1, ← (hd j).2.2.1, he]
+  · intro i j hij hdist
+    have hl := local_rank p i j hij hdist
+    by_cases hmatch : μ.val i = j
+    · left
+      have hji : μ.val j = i := by rw [← hmatch]; exact μ.property i
+      have hr := wrap_reverse i j (d i) ((i.val : ℤ) - j.val) (hd i).1
+        (by omega) (by simpa [d, hmatch] using (hd i).2.2.1) (wrap_local j i)
+      dsimp [d] at hr ⊢
+      omega
+    · have hn := hs.2 i j
+      have hless : offsetRank (p i) (d i) < offsetRank (p i) ((j.val : ℤ) - i.val) ∨
+          offsetRank (p j) (d j) < offsetRank (p j) ((i.val : ℤ) - j.val) := by
+        have hne₁ : offsetRank (p i) (d i) ≠ offsetRank (p i) ((j.val : ℤ) - i.val) := by
+          intro heq
+          by_cases hz : d i = 0
+          · have := (p i 0).isLt
+            have := (p i 1).isLt
+            have hdiff : (j.val : ℤ) - i.val = 1 ∨ (j.val : ℤ) - i.val = 2 := by omega
+            rcases hdiff with hh | hh <;> simp [hz, offsetRank, hh] at heq <;> omega
+          · have he := rank_injective (p i) (hd i).1 (by omega) hz (by omega) heq
+            apply hmatch
+            rw [← (hd i).2.2.1, he, wrap_local]
+        have hne₂ : offsetRank (p j) (d j) ≠ offsetRank (p j) ((i.val : ℤ) - j.val) := by
+          intro heq
+          by_cases hz : d j = 0
+          · have := (p j 2).isLt
+            have := (p j 3).isLt
+            have hdiff : (i.val : ℤ) - j.val = -1 ∨ (i.val : ℤ) - j.val = -2 := by omega
+            rcases hdiff with hh | hh <;> simp [hz, offsetRank, hh] at heq <;> omega
+          · have he := rank_injective (p j) (hd j).1 (by omega) hz (by omega) heq
+            have hm : μ.val j = i := by rw [← (hd j).2.2.1, he, wrap_local]
+            apply hmatch
+            rw [← hm]
+            exact μ.property j
+        have hno : ¬ (offsetRank (p i) ((j.val : ℤ) - i.val) < offsetRank (p i) (d i) ∧
+            offsetRank (p j) ((i.val : ℤ) - j.val) < offsetRank (p j) (d j)) := by
+          rintro ⟨hi, hj⟩
+          apply hn
+          refine ⟨hl.2.2, hmatch, ?_, ?_⟩
+          · simpa only [← hl.1, (hd i).2.2.2] using hi
+          · simpa only [← hl.2.1, (hd j).2.2.2] using hj
+        omega
+      exact Or.inr hless
+
+/-- The cut map is the identity on ranking words, so it is injective on profiles. -/
+def cut {n : ℕ} (p : {p : SourceModel.Profile n // SourceModel.HasStableMatching p}) :
+    CertifiedWord (n + 5) := by
+  refine ⟨p.val, ?_⟩
+  obtain ⟨μ, hs⟩ := p.property
+  exact ⟨displacement μ hs.1, cut_certificate p.val μ hs⟩
+
+/-- Every successful labelled cyclic profile is a certified open word, including N=5. -/
+theorem source_count_le_open_count (n : ℕ) :
+    Fintype.card {p : SourceModel.Profile n // SourceModel.HasStableMatching p} ≤ count (n + 5) := by
+  apply Fintype.card_le_of_injective (@cut n)
+  intro p q h
+  exact Subtype.ext (congrArg Subtype.val h)
+
+/-- Exact independent-uniform normalization, with profiles counted once. -/
+theorem source_probability_eq (n : ℕ) :
+    SourceModel.solutionProbability n =
+      (Fintype.card {p : SourceModel.Profile n // SourceModel.HasStableMatching p} : ℝ) /
+        (24 : ℝ) ^ (n + 5) := by
+  unfold SourceModel.solutionProbability
+  rw [SourceModel.card_profile]
+  norm_cast
+
+#print axioms cut_certificate
+#print axioms source_count_le_open_count
+#print axioms source_probability_eq
+
+end D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
