@@ -13,6 +13,7 @@ public import Mathlib.LinearAlgebra.TensorProduct.Basis
 public import Mathlib.LinearAlgebra.TensorProduct.Quotient
 public import Mathlib.RingTheory.TensorProduct.Basic
 public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Equalizer
 public import Mathlib.FieldTheory.Normal.Basic
 public import Mathlib.FieldTheory.Galois.Basic
 public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
@@ -487,7 +488,8 @@ private theorem orbitSet_card (S : Finset Ω) (g : G) : (orbitSet S g).card = S.
 private theorem mem_orbitSet (S : Finset Ω) (g : G) (i : Ω) :
     i ∈ orbitSet S g ↔ g⁻¹ • i ∈ S := by
   constructor
-  · rintro ⟨j, hj, rfl⟩
+  · intro hi
+    obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hi
     simpa using hj
   · intro hi
     exact Finset.mem_image.mpr ⟨g⁻¹ • i, hi, by simp⟩
@@ -527,7 +529,7 @@ private theorem invariant_half_rank_weak {K : Type*} [Field K]
     have hright (i : Ω) : Finset.univ.bipartiteBelow
         (fun (g : G) (i : Ω) => i ∈ orbitSet S g) i = C i := rfl
     simpa only [hleft, hright, orbitSet_card, hdeg, Finset.sum_const, Finset.card_univ,
-      smul_eq_mul] using hh
+      nsmul_eq_mul] using hh
   have hdR : (0 : ℝ) < d := by exact_mod_cast hd
   have hcover : ∀ i ∈ (Finset.univ : Finset Ω),
       (1 : ℝ) ≤ ∑ g : G, if i ∈ orbitSet S g then (d : ℝ)⁻¹ else 0 := by
@@ -715,5 +717,75 @@ private theorem actual_strict_row_rank [Normal F K] (W : Submodule F D)
   simpa only [hW] using actual_row_rank_connected K hK W hE T hT hTc
 
 end ActualGaloisRanks
+
+
+section ActualSplitOperator
+
+variable (K : Type*) [Field K] [Algebra F K]
+variable [FiniteDimensional F D] [Algebra.IsSeparable F D]
+variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
+variable (W : Submodule F D) (hD : finrank F D = 8) (hW : finrank F W = 4)
+variable (a : D) (ha : a ∉ quotientSet W)
+
+private def splitOperator : ((D →ₐ[F] K) → K) →ₗ[K] ((D →ₐ[F] K) → K) :=
+  (splitEquiv F D K hK).toLinearMap ∘ₗ (actualOperator W hD hW a ha).baseChange K ∘ₗ
+    (splitEquiv F D K hK).symm.toLinearMap
+
+private theorem baseOperator_kernel :
+    LinearMap.ker ((actualOperator W hD hW a ha).baseChange K) = W.baseChange K := by
+  change LinearMap.ker (TensorProduct.AlgebraTensorModule.lTensor K K
+    (actualOperator W hD hW a ha)) = _
+  rw [Module.Flat.ker_lTensor_eq, actualOperator_kernel]
+  rfl
+
+private theorem baseOperator_range :
+    LinearMap.range ((actualOperator W hD hW a ha).baseChange K) = W.baseChange K := by
+  ext z
+  have hh := congrArg (fun p : Submodule F (K ⊗[F] D) => z ∈ p)
+    (LinearMap.lTensor_range K (g := actualOperator W hD hW a ha))
+  simpa only [actualOperator_range, LinearMap.mem_range, LinearMap.baseChange_eq_lTensor]
+    using hh
+
+private theorem splitOperator_kernel :
+    LinearMap.ker (splitOperator K hK W hD hW a ha) = splitWindow K hK W := by
+  ext x
+  change (splitEquiv F D K hK)
+    ((actualOperator W hD hW a ha).baseChange K ((splitEquiv F D K hK).symm x)) = 0 ↔ _
+  rw [map_eq_zero_iff (splitEquiv F D K hK).injective]
+  change (splitEquiv F D K hK).symm x ∈
+    LinearMap.ker ((actualOperator W hD hW a ha).baseChange K) ↔ _
+  rw [baseOperator_kernel]
+  exact (splitWindow_mem_iff K hK W _).symm
+
+private theorem splitOperator_range :
+    LinearMap.range (splitOperator K hK W hD hW a ha) = splitWindow K hK W := by
+  rw [splitOperator, LinearMap.range_comp, LinearMap.range_comp,
+    LinearEquiv.range, Submodule.map_top, baseOperator_range]
+  rfl
+
+private theorem splitOperator_square_zero :
+    (splitOperator K hK W hD hW a ha).comp (splitOperator K hK W hD hW a ha) = 0 := by
+  ext x
+  apply (LinearMap.mem_ker).mp
+  rw [splitOperator_kernel, ← splitOperator_range K hK W hD hW a ha]
+  exact ⟨x, rfl⟩
+
+private theorem baseOperator_galois (g : K ≃ₐ[F] K) (z : K ⊗[F] D) :
+    (actualOperator W hD hW a ha).baseChange K (galoisTensor K g z) =
+      galoisTensor K g ((actualOperator W hD hW a ha).baseChange K z) := by
+  induction z using TensorProduct.inductionOn with
+  | tmul c d => rfl
+  | add x y hx hy => simp only [map_add, hx, hy]
+
+private theorem splitOperator_covariance (g : K ≃ₐ[F] K)
+    (x : (D →ₐ[F] K) → K) :
+    splitOperator K hK W hD hW a ha (galoisCoordinates K g x) =
+      galoisCoordinates K g (splitOperator K hK W hD hW a ha x) := by
+  obtain ⟨z, rfl⟩ := (splitEquiv F D K hK).surjective x
+  simp only [coordinates_split, splitOperator, LinearMap.comp_apply,
+    AlgEquiv.toLinearMap_apply, AlgEquiv.symm_apply_apply]
+  rw [baseOperator_galois]
+
+end ActualSplitOperator
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
