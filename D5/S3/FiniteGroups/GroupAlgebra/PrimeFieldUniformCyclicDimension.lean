@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PrimeFieldUniformCyclicDimension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.GroupTheory.GroupAction.Quotient,
-     mathlib/module/Mathlib.FieldTheory.Finiteness]
+   anchors: [mathlib/module/Mathlib.GroupTheory.GroupAction.Quotient, mathlib/module/Mathlib.FieldTheory.Finiteness]
    utility: none
    digest: Actual cyclic projectivity over the prime field forces finrank at least r*p for C_p^r. -/
 

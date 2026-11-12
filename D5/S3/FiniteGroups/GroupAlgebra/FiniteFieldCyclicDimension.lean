@@ -2,9 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/FiniteFieldCyclicDimension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Algebra.Algebra.ZMod,
-     mathlib/module/Mathlib.LinearAlgebra.Dimension.Free,
-     mathlib/module/Mathlib.Algebra.Order.Floor.Div]
+   anchors: [mathlib/module/Mathlib.Algebra.Algebra.ZMod, mathlib/module/Mathlib.LinearAlgebra.Dimension.Free, mathlib/module/Mathlib.Algebra.Order.Floor.Div]
    utility: none
    digest: Actual cyclic projectivity over finite fields forces the ceiling dimension bound. -/
 
