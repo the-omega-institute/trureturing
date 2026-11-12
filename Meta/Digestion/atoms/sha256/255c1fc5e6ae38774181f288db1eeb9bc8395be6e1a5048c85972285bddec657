@@ -1,0 +1,87 @@
+### 40.3 任意复 $B_{23}$ 的实比例边界族
+
+现在证明定理 40.2。固定 $s\ne0,e\ne0$。二次方程
+
+$$
+F(p):=3p^2+4sp+s^2-7e^2=0
+\tag{40.10}
+$$
+
+有两个不同实根
+$p=(-2s\pm\sqrt{s^2+21e^2})/3$。至少一个满足 $p^2\ne9e^2$：否则两个不同根只能是 $3e,-3e$，其和为零，与根和 $-4s/3\ne0$ 矛盾。固定任一这样的根，置
+
+$$
+\begin{gathered}
+D_p=p^2-9e^2\ne0,\qquad
+\beta_\delta=\frac{e+\delta(3p+s)}{p-3\delta e}\in\mathbb R,\\
+\alpha=\frac{\beta_++\beta_-}{2}
+ =\frac{e(10p+3s)}{D_p},\qquad
+\lambda=\frac{\beta_+-\beta_-}{2}
+ =\frac{3e^2+3p^2+sp}{D_p} .
+\end{gathered}
+\tag{40.11}
+$$
+
+这些实数满足
+
+$$
+\alpha^2-\lambda(\lambda-2)=-\frac{F(p)}{D_p}=0,
+\qquad \alpha\ne0 .
+\tag{40.12}
+$$
+
+第一式可由 $\alpha^2-\lambda^2=\beta_+\beta_-$ 直接计算。若 $\alpha=0$，则 $10p+3s=0$，将 $s=-10p/3$ 代入 $F(p)=0$ 得 $7p^2/9-7e^2=0$，与 $D_p\ne0$ 矛盾。因此下列除法全部合法。
+
+令 $b=|z|$，当 $b>0$ 时取 $\theta=z/b$，当 $b=0$ 时取 $\theta=1$；始终有 $|\theta|=1,z=b\theta$。定义
+
+$$
+\begin{gathered}
+r_0=\frac{5b}{\alpha},\qquad
+Q_0=b\left(\frac{2\lambda-4}{\alpha}+\iota\right),\qquad
+P_0=r_0+Q_0=b\left(\frac{1+2\lambda}{\alpha}+\iota\right),\\
+H_0=-2b+\frac{\iota(2-\lambda)b}{\alpha},\qquad
+F_0=\frac{5\lambda b}{\alpha}+2\iota b,\\
+u_\rho=(\rho\theta,1)^{\mathsf T},\qquad
+X_\rho=\begin{pmatrix}r_0/\rho&\theta Q_0\\
+\overline{\theta Q_0}&p\end{pmatrix},\qquad \rho>0 .
+\end{gathered}
+\tag{40.13}
+$$
+
+每个有限 $\rho>0$ 都给有限 Hermitian $X_\rho$ 和两个坐标非零的 $u_\rho$。没有旋转原基或改变 $T$；$\theta$ 只是同一原探针与向量的系数。直接计算有
+
+$$
+\begin{aligned}
+X_\rho u_\rho&=(\theta P_0,p+\rho\overline{Q_0})^{\mathsf T},\\
+Tu_\rho&=(\theta(b+b_0\rho),e+b\rho)^{\mathsf T},\\
+K(C_E,X_\rho)u_\rho
+ &=(-\iota\theta Q_0/2,\iota\rho\overline{Q_0}/2)^{\mathsf T},\\
+(C_E\circ T)u_\rho
+ &=\left(\theta(5b/2+2b_0\rho),3e+5b\rho/2\right)^{\mathsf T},\\
+(C_E\circ X_\rho)u_\rho
+ &=\left(\theta(2r_0+5Q_0/2),3p+5\rho\overline{Q_0}/2\right)^{\mathsf T},\\
+(K(C_E,T)+sP_3)u_\rho
+ &=(-\iota b\theta/2,s+\iota b\rho/2)^{\mathsf T} .
+\end{aligned}
+\tag{40.14}
+$$
+
+(40.12) 恰好支付两条实比例相容式
+
+$$
+\alpha P_0+\lambda H_0=b,\qquad
+\lambda P_0+\alpha H_0=F_0,
+\qquad
+b+\delta F_0=\beta_\delta(P_0+\delta H_0).
+\tag{40.15}
+$$
+
+例如第一式的虚系数是
+$b(\alpha+\lambda(2-\lambda)/\alpha)=0$，第二式的实系数是
+$b(\lambda+2\lambda^2-2\alpha^2)/\alpha=5\lambda b/\alpha$，虚系数是 $2b$。最后一式使用 $\beta_\delta=\alpha+\delta\lambda$。第三坐标的比例另由 (40.11) 给出
+
+$$
+e+\delta(3p+s)=\beta_\delta(p-3\delta e).
+\tag{40.16}
+$$
+

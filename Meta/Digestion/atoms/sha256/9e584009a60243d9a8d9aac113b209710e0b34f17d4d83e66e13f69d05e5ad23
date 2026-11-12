@@ -1,0 +1,37 @@
+**定义 41.1（不预置支撑的原固定输出）。** 在同一原基内取
+
+$$
+\begin{gathered}
+\mathcal H=\mathbb C^3\oplus\mathbb C,\quad A=M_4(\mathbb C),\quad
+C=\operatorname{diag}(1,2,3),\quad c=C\oplus0,\\
+P=I_3\oplus0,\quad Q=I_4-P,\quad J=P-Q,\\
+q=(q_1,q_2,0)^{\mathsf T},\quad q_1q_2\ne0,\qquad
+ t=\begin{pmatrix}0&q\\q^*&0\end{pmatrix},\\
+\sigma\in\{1,-1\}\text{ 分别固定},\quad\iota=\sigma i,\quad
+K(a,b)=\iota[a,b]/2,\quad a\circ b=(ab+ba)/2.
+\end{gathered}
+\tag{41.1}
+$$
+
+原 $c,t,q$ 全程固定，$q^*$ 是 $1\times3$ 行，未对原复相位作可实施旋转。初始输出 $g=g^*\in A$ 任意；此时不假设 $PgP=g$，也不预置任何环境对角元。对每个原演员探针 $x=x^*=PxP$，定义
+
+$$
+\begin{gathered}
+h=K(c,x),\quad r=c\circ x,\quad k_t=c\circ t,\\
+R_\delta=x+\delta(h-k_t),\quad S_\delta=t+\delta(r+g),\quad\delta=\pm1,\\
+L=-2x\circ(h-k_t)-2t\circ(r+g),\\
+B_\phi(U,Z)=\phi(U^2)\phi(Z^2)-\phi(U\circ Z)^2,\quad
+\mathcal A_\delta(\phi)=\sqrt{B_\phi(R_\delta,S_\delta)}.
+\end{gathered}
+\tag{41.2}
+$$
+
+“全称原 PB”准确指对全部这样的 $x$ 和完整 $A$ 上的全部正复线性泛函成立
+
+$$
+|\phi(L)|\le\mathcal A_+(\phi)+\mathcal A_-(\phi).
+\tag{41.3}
+$$
+
+这包括混合、非忠实泛函及零预算；不只检验纯态或忠实态。预算是未中心化的实 Gram 面积，不是复 Gram 行列式。每份不等式的两笔预算使用同一个 $x,t,g,\phi$。以下构造的全部严格违反都可归一到任意预先指定的有限正质量 $\phi(I_4)=\mu>0$。若只检验质量零，正泛函 Schwarz 给 $|\phi(a)|^2\le\phi(I_4)\phi(a^*a)=0$，只有零泛函，不能识别输出。
+
