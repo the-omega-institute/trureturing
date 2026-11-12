@@ -102,7 +102,7 @@ repository-origin result's Scribe claim.
   Its application to the source remains at the left limit at 19/21 and on
   the domain $0<r<1$. No uniform neighborhood in all indices is asserted.
 - **Open:** extensions to other rational endpoints, a right-hand limit,
-  strict positivity, optimal bounds and asymptotic growth are not established
+  optimal bounds and asymptotic growth are not established
   by the delivered theorem. A single fixed approximation is not certified
   for all degrees.
 

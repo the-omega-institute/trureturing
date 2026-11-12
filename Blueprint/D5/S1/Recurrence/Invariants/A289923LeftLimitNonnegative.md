@@ -52,6 +52,10 @@ $$\exists a: \mathbb{N} \to \mathbb{Z}, (\operatorname{IsLeftLimit}\left(a\right
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/A289923LeftLimitNonnegative.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a289923-left-limit-nonnegativity` (proved) by `D5/S1/Recurrence/Invariants/A289923LeftLimitNonnegative.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a289923-left-limit-nonnegativity","declaration_gid":"D5/S1/Recurrence/Invariants/A289923LeftLimitNonnegative.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Clark Kimberling; Colin Barker (2017). *OEIS A289923: limiting inverse coefficients at 19/21 from the left*. URL: <https://oeis.org/A289923>.
