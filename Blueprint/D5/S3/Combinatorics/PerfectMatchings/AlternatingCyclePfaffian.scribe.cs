@@ -56,7 +56,7 @@ internal sealed class AlternatingCyclePfaffianDocument : IScribeDocumentDefiniti
                     Paragraph(Text("The coefficient uniformity is supplied by actual alternating-cycle transport and induction on disagreement edges. Consequently the graph, cycle, complement matching, listing and weight factors all belong to the same actual realization. The signed identity permits negative and zero weights, shared matching edges, disconnected graphs and coefficient rings of characteristic two.")),
                     Paragraph(Text("For nonnegative real weights, each edge-once matching product is nonnegative, so Z = partitionFunction(w) is nonnegative. Apply the displayed identity at R = Real. The integer value of orientationUnit is one or minus one, hence its real absolute value is one. Multiplicativity of absolute value and abs(Z) = Z give abs(Pf(A(e,epsilon,w))) = Z. This consequence uses precisely the additional hypothesis that every actual edge weight is nonnegative; the signed identity requires no such hypothesis.")),
                     Paragraph(Text("When V is empty, the standard sum has one empty pairing and the actual graph has one empty matching, so both values are one. With no perfect matching, every pairing contribution vanishes and the partition sum is empty, so both values are zero. These cases are included in the formula. This conditional algebraic theorem does not construct planar orientations or geometric embeddings, prove the determinant-square identity, introduce square roots, or establish algorithmic complexity or hardness results."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem)
         )));
 
     private static Formula Call(string name, params Formula[] args) =>

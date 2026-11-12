@@ -10,7 +10,6 @@ open _root_.D5.S3.Combinatorics.PerfectMatchings.CallanA002067Hafnian
 open _root_.D5.S3.Combinatorics.PerfectMatchings.CanonicalPairListing
 open _root_.D5.S3.Combinatorics.PerfectMatchings.AlternatingCyclePfaffian
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Reg.Support.PfaffianAlternatingCycle
 open Reg.Support.PfaffianSourceReadouts LeanInformationAudit
 
 noncomputable section

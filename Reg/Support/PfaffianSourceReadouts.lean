@@ -1,4 +1,5 @@
 import Reg.Support.UniverseSingleReadout
+import D5.S3.Combinatorics.PerfectMatchings.AlternatingCyclePfaffian
 
 namespace Reg.Support.PfaffianSourceReadouts
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -41,9 +42,7 @@ theorem unitDependence : ObservationalDependence unitSignature unitActual :=
 end
 end Reg.Support.PfaffianSourceReadouts
 
-import D5.S3.Combinatorics.PerfectMatchings.AlternatingCyclePfaffian
-
-namespace Reg.Support.PfaffianAlternatingCycle
+namespace Reg.D5.S3.Combinatorics.PerfectMatchings.AlternatingCyclePfaffian
 open _root_.D5.S0.Certificates.Combinatorics.DeformedJucysMurphyNoncommutation
 open _root_.D5.S3.Combinatorics.PerfectMatchings.CallanA002067Hafnian
 open _root_.D5.S3.Combinatorics.PerfectMatchings.CanonicalPairListing
@@ -529,4 +528,4 @@ theorem transportBad : ¬ Transport.arena.{u}.Law unitRejected := by
 
 
 end
-end Reg.Support.PfaffianAlternatingCycle
+end Reg.D5.S3.Combinatorics.PerfectMatchings.AlternatingCyclePfaffian

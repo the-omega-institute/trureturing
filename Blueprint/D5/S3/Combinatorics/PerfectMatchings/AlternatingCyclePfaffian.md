@@ -70,10 +70,31 @@ For two actual perfect matchings, their spanning symmetric difference has degree
 
 Flipping removes the chosen cycle from the disagreement graph. Its edge set strictly decreases, so induction on the finite number of disagreement edges ends at the second matching. Shared matching edges are outside the disagreement graph throughout. The proof includes disconnected graphs and the case M = N. It requires neither an embedding nor existence of a perfect matching as an extra hypothesis; the statement quantifies over any two that exist.
 
+**Theorem 1.5 (One unit for all weights and coefficient rings).**
+
+$$\forall V \in \operatorname{Type}\left(\right),\; [\operatorname{Fintype}\left(V\right)] \forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall n \in \mathbb{N},\; \forall R \in \operatorname{Type}\left(\right),\; [\operatorname{CommRing}\left(R\right)] \forall e \in \operatorname{Equiv}\left(V, \operatorname{Fin}\left(2 \cdot n\right)\right),\; \forall epsilon \in \operatorname{Function}\left(\operatorname{Dart}\left(G\right), \operatorname{ZMod}\left(2\right)\right),\; \forall w \in \operatorname{Function}\left(\operatorname{edgeSet}\left(G\right), R\right),\; \operatorname{Reverses}\left(epsilon\right) \Rightarrow \left(\operatorname{NiceOdd}\left(epsilon\right) \Rightarrow \operatorname{pfaffian}\left(\operatorname{orientedMatrix}\left(e, epsilon, w\right)\right) = \operatorname{IntCast}\left(\operatorname{IntegerValue}\left(\operatorname{orientationUnit}\left(e, epsilon\right)\right)\right) \cdot \operatorname{partitionFunction}\left(w\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian.weighted_pfaffian_identity` (`✓ std3`). ∎
+
+*Citation.* David Cimasoni, Nicolai Reshetikhin (2007). *Dimers on surface graphs and spin structures. I*. DOI: [10.1007/s00220-007-0302-7](https://doi.org/10.1007/s00220-007-0302-7). URL: <https://arxiv.org/html/math-ph/0608070v2>.
+
+*Commentary.*
+
+Use listingEquiv to reindex the independently defined standard sum by the supplied partner maps. A partner map is supported precisely when all its paired vertices are joined by actual G-edges. The supplied complete-graph pairingGraph is pulled back along e with this support proof, giving an actual perfect matching; matchingPairing is its inverse. This reuses the original mate and inverse chain and introduces no second pairing or Pfaffian core.
+
+An unsupported pairing has a zero matrix factor, so its contribution is zero without a nonzero-weight premise. For an actual matching, the canonical pair slots biject with its actual undirected edge subtype. Injectivity follows from distinct permutation slots, and surjectivity follows from uniqueness of the matching partner. Thus its matrix product equals the cast of matchingTau times matchingWeight, with each actual undirected edge counted once. Summing and using the common coefficient proves the displayed formula over an arbitrary CommRing. No division is used.
+
+The coefficient uniformity is supplied by actual alternating-cycle transport and induction on disagreement edges. Consequently the graph, cycle, complement matching, listing and weight factors all belong to the same actual realization. The signed identity permits negative and zero weights, shared matching edges, disconnected graphs and coefficient rings of characteristic two.
+
+For nonnegative real weights, each edge-once matching product is nonnegative, so Z = partitionFunction(w) is nonnegative. Apply the displayed identity at R = Real. The integer value of orientationUnit is one or minus one, hence its real absolute value is one. Multiplicativity of absolute value and abs(Z) = Z give abs(Pf(A(e,epsilon,w))) = Z. This consequence uses precisely the additional hypothesis that every actual edge weight is nonnegative; the signed identity requires no such hypothesis.
+
+When V is empty, the standard sum has one empty pairing and the actual graph has one empty matching, so both values are one. With no perfect matching, every pairing contribution vanishes and the partition sum is empty, so both values are zero. These cases are included in the formula. This conditional algebraic theorem does not construct planar orientations or geometric embeddings, prove the determinant-square identity, introduce square roots, or establish algorithmic complexity or hardness results.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian.alternating_cycle_flip`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian.alternating_cycle_transport`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian.matchingEquiv`
 - Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian.niceOdd_matching_tau_eq`
+- Truth anchor: `D5/S3/Combinatorics/PerfectMatchings/AlternatingCyclePfaffian.weighted_pfaffian_identity`
 - Dependency: [D5/S0/Certificates/Combinatorics/NormalizedPfaffian](../../../S0/Certificates/Combinatorics/NormalizedPfaffian.md)
