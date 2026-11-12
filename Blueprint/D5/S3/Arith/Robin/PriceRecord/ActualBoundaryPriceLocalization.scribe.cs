@@ -20,7 +20,7 @@ internal sealed class ActualBoundaryPriceLocalizationDocument : IScribeDocumentD
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization.uniform_coarse_geometry"),
                 H("Separation on every original record"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For each fixed j>=2 a single positive threshold precedes every m>=2 and every original mu>0 with the full strict predecessor record. With P=largestPrime(m) and Q=layerPrime(m,j), the layer is above 4, below P/8, the second layer is below P/2, and log(Q/2)>=log(P)/(4*j). No optimizer at a replacement price is substituted."))),
+                Blocks(Paragraph(Text("For each fixed j>=2 a single positive threshold precedes every m>=2 and every original mu>0 with the full strict predecessor record. With P=largestPrime(m) and Q=layerPrime(m,j), P>=4, Q>=4, Q<=P/8, the second layer is strictly below P/2, and log(Q/2)>=log(P)/(4*j). No optimizer at a replacement price is substituted."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actualboundarypricelocalization-counted-higher-pools"),
