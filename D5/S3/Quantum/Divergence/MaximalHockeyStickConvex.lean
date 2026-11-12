@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Divergence.MaximalHockeyStickQuadraticEquality
 import D5.S3.Analytic.Convexity.CurvaturePerspectiveEndpoints
+import D5.S3.Quantum.Divergence.MaximalHockeyStickOperational
 
 /-! Arbitrary traces and the full closed perspective, including infinite endpoints. -/
 
@@ -28,6 +29,7 @@ open D5.S3.Quantum.Divergence.MaximalHockeyStickQuadraticCanonical
 open D5.S3.Quantum.Divergence.MaximalHockeyStickQuadraticEquality
 open D5.S3.Quantum.Divergence.MaximalHockeyStickApproximate
 open D5.S3.Quantum.Divergence.MaximalHockeyStickReverseTest
+open D5.S3.Quantum.Divergence.MaximalHockeyStickOperational
 
 namespace D5.S3.Quantum.Divergence.MaximalHockeyStickConvex
 
@@ -65,6 +67,26 @@ def maximalValue (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
 def hockeyValue (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
   (affineMass f A B : EReal) +
     (∫⁻ t, ENNReal.ofReal (maximalKernel A B t) ∂curvature hf : ℝ≥0∞)
+
+/-- Each branch of the integrated kernel is the infimum of the original
+classical profile over all actual finite reverse tests. -/
+theorem maximal_kernel_eq_operational (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) (t : Positive) :
+    maximalKernel A B t = if t ≤ one then operationalNegativeHockey A B t
+      else operationalHockey A B t := by
+  unfold maximalKernel
+  rw [operational_negative_hockey_eq A B hA hB t t.2,
+    operational_hockey_eq A B hA hB t t.2]
+
+/-- The integrated value is exactly the curvature integral of the actual
+finite operational infima, with its original affine mass and endpoint scope. -/
+theorem hockey_value_eq_operational (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    hockeyValue hf A B = (affineMass f A B : EReal) +
+      (∫⁻ t, ENNReal.ofReal (if t ≤ one then operationalNegativeHockey A B t
+        else operationalHockey A B t) ∂curvature hf : ℝ≥0∞) := by
+  unfold hockeyValue
+  simp_rw [maximal_kernel_eq_operational A B hA hB]
 
 private theorem hinge_measurable (u v : ℝ) : Measurable (hinge u v) := by
   exact Measurable.ite measurableSet_Iic
@@ -178,14 +200,28 @@ private theorem hockey_le_test (hf : ConvexOn ℝ (Ioi 0) f)
     {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k)
     (hA : A.PosSemidef) (hB : B.PosSemidef) :
     hockeyValue hf A B ≤ finiteCost hf R := by
-  rw [hockeyValue, finite_cost_decomposition]
+  rw [hockey_value_eq_operational hf A B hA hB, finite_cost_decomposition]
   apply add_le_add le_rfl
   apply EReal.coe_ennreal_le_coe_ennreal_iff.mpr
   apply lintegral_mono
   intro t
   apply ENNReal.ofReal_le_ofReal
-  rw [kernel_gap]
-  exact le_add_of_nonneg_right ((actual_gap_profile_data R hA hB).1 t).1
+  unfold testKernel hinge
+  split_ifs with ht
+  · change operationalNegativeHockey A B t ≤ negativeHockey R t
+    unfold operationalNegativeHockey
+    apply csInf_le
+    · refine ⟨0, ?_⟩
+      rintro z ⟨j, T, rfl⟩
+      exact Finset.sum_nonneg (fun i _ => le_max_right _ _)
+    · exact ⟨k, R, rfl⟩
+  · change operationalHockey A B t ≤ R.hockey t
+    unfold operationalHockey
+    apply csInf_le
+    · refine ⟨0, ?_⟩
+      rintro z ⟨j, T, rfl⟩
+      exact Finset.sum_nonneg (fun i _ => le_max_right _ _)
+    · exact ⟨k, R, rfl⟩
 
 private theorem hockey_le_maximal (hf : ConvexOn ℝ (Ioi 0) f)
     (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
