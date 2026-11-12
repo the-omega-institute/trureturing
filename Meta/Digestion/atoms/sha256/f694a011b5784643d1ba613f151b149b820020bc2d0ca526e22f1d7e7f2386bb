@@ -1,0 +1,24 @@
+**定义 90.1（同一稀疏实矩阵载体）。** 令 $G$ 为顶点集 $\{1,\ldots,n\}$ 上任意有限简单图，$n\ge1$，置
+
+$$
+\begin{gathered}
+V_G=\{X\in\operatorname{Sym}_n(\mathbb R):X_{ij}=0\text{ 若 }i\ne j,\ \{i,j\}\notin E(G)\},\\
+C_G=V_G\cap\operatorname{PSD}_n(\mathbb R),\qquad
+u_G(X)=\operatorname{tr}X,\qquad
+K_G=C_G\cap\{u_G=1\},\qquad P_G=\operatorname{ext}K_G,\\
+i\sim_G j\quad\Longleftrightarrow\quad i=j\text{ 或 }\{i,j\}\in E(G).
+\end{gathered}
+\tag{90.1}
+$$
+
+始终取整个 $V_G,C_G,K_G,P_G$ 和整个 $[0,u_G]_{C_G^*}$，按89.1、88.1定义 $F_p,T_p,p\perp x,D_p$；$\mathrm{Z0},\mathrm B,\mathrm A,\mathrm H,S,\mathrm{Boundary},\mathrm Q$ 均保留88—89章的原义。另记仅限制两个被排除端点为纯点的条件
+
+$$
+\mathrm{Z0}_{\rm pure}:\quad
+\forall p,q,r\in P_G,\qquad
+[p\perp q\ \land\ p\perp r]\ \Longrightarrow\ p\perp(q+r)/2.
+\tag{90.2}
+$$
+
+它仍用原全效应中的见证和原 $K_G$ 的中点；两个前件可用不同效应，后件须有一个同时确认 $p$、排除该中点的原效应。不要求不同的 $q,r$，也不删其余纯点或混态。
+
