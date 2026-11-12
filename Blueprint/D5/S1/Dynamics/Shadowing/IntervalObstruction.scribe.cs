@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
 internal sealed class IntervalObstructionDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef IntervalSource =
-        LibraryNoteRef.Create("D5/L/Dynamics/gangloff2023various");
+        LibraryNoteRef.Create("D5/L/Topology/gangloff2023various");
     private const string Owner = "D5/S1/Dynamics/Shadowing/IntervalObstruction.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
