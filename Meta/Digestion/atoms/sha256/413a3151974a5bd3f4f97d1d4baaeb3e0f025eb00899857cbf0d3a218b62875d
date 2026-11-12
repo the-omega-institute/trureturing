@@ -1,0 +1,57 @@
+**定理 98.5（同数据完整候选）。** 令 $\mathcal O$ 包含98.1、98.3的全部原对象、菜单、标签、
+原 $H$、各份数载体和指定事件／资源。记 $\mathsf{New}_{98}(\mathcal O)$ 为这套完整输入，
+$\mathsf{Old}_{95}(\mathcal O)$ 为95.1、95.3、95.5—95.6的完整输入，保留相同对象，
+只把纯域等式改为全 $K$ 等式并要求原 $H$ 紧且连通。则
+
+$$
+\mathsf{New}_{98}(\mathcal O)\ \Longleftrightarrow\ \mathsf{Old}_{95}(\mathcal O).
+\tag{98.11}
+$$
+
+在此域内，95.7的全部有限寄存器、指定事件和仪器实现结论原样成立：
+
+$$
+\begin{gathered}
+d=3,\quad H=\mathrm{SO}(3),\quad D=\mathcal E,\\
+V_N\simeq\operatorname{Herm}(2^N,\mathbb C),\quad
+K_N=\mathcal D(2^N),\quad C_N=\operatorname{Herm}_+(2^N,\mathbb C),\\
+Q_N\cong\mathrm{PSU}(2^N)\subseteq G_N\quad\text{由原语有限字精确实现}.
+\end{gathered}
+\tag{98.12}
+$$
+
+每个原仿射 proper 效应有唯一矩阵 $0\le E\le I$，原概率为 $\operatorname{Tr}(E\rho)$。
+满足原同事件参考条件的指定映射／分支分别为 CPTP／CP-TNI；完整原菜单给量子仪器。
+全部有限 CPTP 映射和有限 CP 仪器在保留的实现资源下有映射与结果标签层面的实际实现。
+
+证明。98.2恢复95.1的全原混态关系及原实际种子／效应资源，98.4恢复95.5曾输入的**同一个**原紧连通 $H$。
+定义98.3没有删除其它任何原前件；到这一步才应用95.7。
+其 END 消费的是已由两个包含取得的同一个原二份几何，以及原三点路径上的有限边字。
+若为 $H$ 扇区，Library §3 *END excludes the reflected branch* 在 $T_2$ 坐标下用两边生成 $Q_3$，
+制备普通端点 Bell 与中腿纯态的乘积；原 END 将其送到同一原 $K_2$ 外的普通 Bell，排除该扇区。
+所用 END 是预先保留的全域同类型事件，不从随后生成的 SWAP、通用控制或酉扩张倒推。
+选择 $Q$ 后，Library §3 *Finite graph generation on one carrier* 与 *All finite original states and controls*
+逐原有限图给 $Q_N$，并以秩一轨道／有限谱混合及原负概率排除分别给原 $K_N$ 的两个包含。
+$N=1$ 用98.2、98.4，不用二体实现替换原 $H$。
+
+每个指定 $e:n\to m$ 的输入参考维数仍是 $2^n$，原整个输出锥由(98.12)已为 PSD；
+原产品张成和同事件来源合同识别的仍是同一个 $\widetilde\phi_e$。
+故95.7所用 Library §4 *rectangular CP and exact budgets* 的参数准确为 $d=2^n,b=2^m$，
+给(95.18)的 Kraus、$E_e$、参考偏迹及独立 TP／TNI 预算；零映射直接处理。
+其成熟数学接口是 Watrous，[Theorem 2.22、Theorem 2.26、Corollary 2.27][W98]，印刷页82—83、87—89，
+本章归一 Choi 乘以输入维数并交换参考／输出次序即对应其约定。
+保留原分支的记录、质量与真和后，逐分支 CP 给总 CP，正质量处才除以概率；零分支不消失。
+
+全部实际实现准确复用95.7及 Library §4 *all finite register channels and instruments*。
+通道取 $2^k\ge r$，仪器取 $2^k\ge\sum_a\max(1,r_a)$，两者都另取 $m+k\ge n$，
+于是 $q=m+k-n\ge0$ 个实际纯辅助和 $k$ 个环境／指针单元在同一总寄存器中完成矩形等距扩张。
+命名零分支保留零 Kraus 编码，未用编码补零；空串遵循原恒等约定。
+原 typed 丢弃和忽略指针前的(95.14)分支律、实际记录及真粗粒化给准确未归一分支；最后只在正质量条件化。
+这些是原实现定理的参数对应，不由单个效应、Choi 正证书或映射相同而生成实际资源。
+
+这也证明(98.11)的正向；反向由旧全域等式限制到纯点，其它资源和原 $H$ 完全不变。
+两边的 $e_r=T_r$、中心和度量是可恢复的数学数据；没有替换原控制群、原 $D$、菜单或事件。
+这里只给原单元 $D=\mathcal E$；对联合寄存器，原已有实际效应的表示与全有限 POVM 的资源实现各有上述依据，
+不把原 $D_N$ 重定义为生成菜单，也不声称原 $D_N=[0,u_N]$。
+同一矩阵映射的构造不识别原设备、事件、历史或合法未来。证毕。
+

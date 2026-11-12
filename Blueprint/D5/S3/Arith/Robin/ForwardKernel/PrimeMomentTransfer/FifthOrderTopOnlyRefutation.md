@@ -46,9 +46,11 @@ In a product of five coordinate signs, even multiplicities cancel. The number of
 
 This positive probability model gives the fifth-order obstruction in Proposition 500.4 of FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II. The construction and its mathematical interpretation are repository-derived.
 
+The biased-cube mixture construction is shared with the sixth-order refutation. The fifth-order example uses an asymmetric mixing law; the sixth-order example uses a symmetric law and isolates the missing fourth-order pairing defect.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.FifthData`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.claim`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FifthOrderTopOnlyRefutation.result`
-- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/QuadraticMomentDefs](QuadraticMomentDefs.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BiasedCubeMixture](BiasedCubeMixture.md)
