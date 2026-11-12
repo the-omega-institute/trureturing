@@ -30,5 +30,15 @@ internal sealed class SixthOrderPairingExpansionDocument : IScribeDocumentDefini
                     "For every real N>=100, sqrt(15)*N*(N-1)*(N-2)*(N-3)/N^2-3*(N-1)^2 is at least N^2/2. "
                     + "The falling product is at least N^4-6*N^3 and sqrt(15)>=15/4. "
                     + "This explicit inequality converts the four-label defect of the biased-cube model into a uniform positive quadratic contribution."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("transfer-error-small"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/SixthOrderPairingExpansion.transfer_error_small"),
+                H("Cubic-scale transfer error bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For real N>=1 and K<=sqrt(N), K*N^3*(sqrt(1/N)+1/N)<=2*N^3. "
+                    + "Both K/sqrt(N) and K/N are at most one because sqrt(N)<=N. "
+                    + "This bounds the transfer remainder after selecting a sufficiently large model size."))),
                 DescribeRole.Theorem))));
 }

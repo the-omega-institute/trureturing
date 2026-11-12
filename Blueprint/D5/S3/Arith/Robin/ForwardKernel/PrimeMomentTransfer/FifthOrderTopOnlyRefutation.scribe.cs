@@ -64,6 +64,10 @@ internal sealed class FifthOrderTopOnlyRefutationDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "This positive probability model gives the fifth-order obstruction in Proposition 500.4 "
                         + "of FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II. The construction and its "
-                        + "mathematical interpretation are repository-derived."))),
+                        + "mathematical interpretation are repository-derived.")),
+                    Paragraph(Text(
+                        "The biased-cube mixture construction is shared with the sixth-order refutation. "
+                        + "The fifth-order example uses an asymmetric mixing law; the sixth-order example "
+                        + "uses a symmetric law and isolates the missing fourth-order pairing defect."))),
                 DescribeRole.Theorem))));
 }

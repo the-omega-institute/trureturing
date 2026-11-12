@@ -204,5 +204,34 @@ private lemma subsetDistinct_univ {N : ℕ} (ℓ : ((Fin N → Bool) → ℝ) �
   · intro x hx
     rfl
 
+private lemma subset_unit_moment {k : ℕ} (N : ℕ) (U : Finset (Fin k)) :
+    subsetDistinctMoment (modelFunctional N) (modelY N)
+      (fun (_ : Fin k) (_ : Fin N) => (1 : ℝ)) U =
+      (moment U.card / Real.sqrt N ^ U.card) * (N.descFactorial U.card : ℝ) := by
+  classical
+  have hc : (Finset.univ.filter (Function.Injective : (Fin U.card → Fin N) → Prop)).card =
+      N.descFactorial U.card := by
+    let e : {x : Fin U.card → Fin N // Function.Injective x} ≃ (Fin U.card ↪ Fin N) :=
+      { toFun := fun x => ⟨x.1, x.2⟩
+        invFun := fun x => ⟨x, x.injective⟩
+        left_inv := by intro x; rfl
+        right_inv := by intro x; rfl }
+    have he := Fintype.card_congr e
+    rw [Fintype.card_embedding_eq] at he
+    simpa only [Fintype.card_subtype, Fintype.card_fin] using he
+  have hR : subsetDistinctMoment (modelFunctional N) (modelY N)
+      (fun (_ : Fin k) (_ : Fin N) => (1 : ℝ)) U =
+      distinctIndexMoment (modelFunctional N) (modelY N)
+        (fun (_ : Fin U.card) (_ : Fin N) => (1 : ℝ)) := by
+    unfold subsetDistinctMoment distinctIndexMoment
+    apply Finset.sum_congr
+    · ext x
+      simp
+    · intro x hx
+      rfl
+  rw [hR, distinct_moments]
+  simp only [Finset.prod_const_one, Finset.sum_const,
+    nsmul_eq_mul, mul_one, hc]
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
