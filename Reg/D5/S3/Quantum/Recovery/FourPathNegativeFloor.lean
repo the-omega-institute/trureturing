@@ -73,6 +73,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.FourPathNegativeFloor
+    definition := none
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","body","body","arg"]

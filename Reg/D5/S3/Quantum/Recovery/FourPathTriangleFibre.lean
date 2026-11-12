@@ -73,6 +73,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.FourPathTriangleFibre
+    definition := none
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","body","body","arg","arg","arg","arg","arg","arg","arg","fn","arg","fn","arg","arg","fn","arg"]
@@ -128,6 +129,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.FourPathTriangleFibre
+    definition := none
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","body","body","fn","arg","arg","fn","arg","arg"]
@@ -189,6 +191,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.FourPathTriangleFibre
+    definition := none
     coordinates := #[0,1]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","body","arg","arg","fn","arg","arg","arg","fn","arg","arg"]

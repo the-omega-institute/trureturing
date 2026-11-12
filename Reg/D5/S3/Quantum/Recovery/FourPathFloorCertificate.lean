@@ -61,6 +61,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.Recovery.FourPathFloorCertificate
+    definition := none
     coordinates := #[]
     readouts := #[{
       path := #["body","fn","arg"]
