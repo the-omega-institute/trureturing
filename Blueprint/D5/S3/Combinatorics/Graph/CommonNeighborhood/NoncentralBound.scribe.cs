@@ -32,12 +32,11 @@ internal sealed class NoncentralBoundDocument : IScribeDocumentDefinition
                         + "the common-neighborhood energy of commutingGraph(G) is at most the displayed complete-graph benchmark. "
                         + "The cardinality is explicitly cast into the reals before subtracting one or two. "
                         + "No AC, quotient, order, regularity, genus or connectivity hypothesis is present.")),
-                    Paragraph(Text("The existing generic graphEnergy(g,commonNeighbour), commonNeighbourMatrix, "
-                        + "source_matrix_isHermitian and graphSpectrum in SubgroupGenerating.CyclicExtensionRefutation are reused. "
-                        + "Their arbitrary finite simple graph parameter is instantiated by commutingGraph(G); the SGB graph "
-                        + "and its source-specific theorems are unchanged. C has diagonal zero and off-diagonal common-neighbor "
-                        + "cardinalities. graphSpectrum records every real Hermitian eigenvalue with multiplicity and graphEnergy "
-                        + "sums their absolute values with zero centering in this matrix kind.")),
+                    Paragraph(Text("For a finite simple graph g, commonNeighbourMatrix(g) has diagonal zero and "
+                        + "off-diagonal common-neighbor cardinalities. The real symmetric matrix has a complete real "
+                        + "eigenvalue multiset, graphSpectrum(g,commonNeighbour), with algebraic multiplicity. "
+                        + "Its energy graphEnergy(g,commonNeighbour) sums the absolute values of this multiset, "
+                        + "with zero centering. Here g is commutingGraph(G).")),
                     Paragraph(Text("Write A for adjacency, D for the degree diagonal, N for the group order, z for the center "
                         + "order and n=N-z. Entrywise counting gives C=A squared minus D. The general energy bound "
                         + "is twice the sum of degrees. In an orthogonal eigenbasis of C, the absolute difference of the two "
@@ -52,7 +51,9 @@ internal sealed class NoncentralBoundDocument : IScribeDocumentDefinition
                     Paragraph(Text("The complete-graph benchmark applies for n at least two. A noncentral centralizer "
                         + "contains the center and x, so the same index bound gives n at least z+2. "
                         + "The center contains the identity, whence z is at least one and n is at least three."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nath2021-commuting-cn-conjecture2"), ResolutionKind.Proved)))));
 
     private static Formula Call(string name, params Formula[] args)
     {
