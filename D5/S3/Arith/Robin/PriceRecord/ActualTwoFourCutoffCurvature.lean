@@ -10,10 +10,9 @@ import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Calculus.Deriv.Slope
 import Mathlib.Tactic
 
-/-! SOURCE ONLY: UNCOMPILED_UNACCEPTED / RegUNVALIDATED.
-Uses only fixed j before limits. The shrinking-roster exposure patch is
-UNAPPLIED. All references are to the actual gain and actual clamped cutoff.
-No conclusion here is native or official acceptance. -/
+/-! Each layer index is fixed before taking limits. Every root and gain is the
+actual library quantity. These estimates do not supply original record clocks,
+paid-growth certificates, or the full Robin inequality. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section

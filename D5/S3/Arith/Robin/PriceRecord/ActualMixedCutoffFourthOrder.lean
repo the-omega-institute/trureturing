@@ -11,7 +11,10 @@ import Mathlib.Topology.Algebra.Polynomial
 import Mathlib.Algebra.Polynomial.Div
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 
-/-! Actual-root fourth-order analysis and a conditional paid-growth sign restriction. -/
+/-! Actual-root fourth-order analysis and a conditional paid-growth sign restriction.
+The logarithm remainder is bounded by twice the fifth power of its argument.
+External paid-growth assumptions supply the ranges; no clock or fee producer
+is inferred from the eventual integer determinant restriction. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section

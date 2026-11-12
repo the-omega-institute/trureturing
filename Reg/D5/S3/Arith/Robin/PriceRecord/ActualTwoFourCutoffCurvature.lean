@@ -5,13 +5,12 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-/- SOURCE ONLY. RegUNVALIDATED / UNCOMPILED_UNACCEPTED.
-These are full-telescope typed ATTEMPTS, not registrations or validation.
-Actual arithmetic realization, actual_law and definitional source_bridge are
-provided. Compiled occurrence/sourceSelection binding, lawful enrollment,
-rejected lawful families, whole-family intervention and realizability,
-anchor/other-readout-fixed sensitivity, actual observational dependence and
-axiom closure are UNKNOWN. No .unknown object closes a source proof gap. -/
+/- These are full-telescope typed law and source-equivalence attempts.
+Actual arithmetic realizations, actual laws and definitional source bridges
+are provided. Four-slot registration remains unfinished: lawful enrolled-template
+application, compiler occurrence/sourceSelection binding, whole-family intervention
+and realizability, fixed-anchor sensitivity and actual observational dependence
+are absent. No continuation .unknown fills any missing preceding obligation. -/
 namespace Reg.D5.S3.Arith.Robin.PriceRecord.ActualTwoFourCutoffCurvature.CurvatureConsumed
 open Real Filter Finset
 open scoped Topology
