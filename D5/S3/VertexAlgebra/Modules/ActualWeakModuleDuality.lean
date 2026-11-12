@@ -124,6 +124,58 @@ private def capBlock (i : Fiber (D := D) 0) :
         (TensorProduct.map (kappa (DualMultiplicity A) r)
           (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d) hs).toLinearMap)))
 
+/-- Evaluate the original cap at an arbitrary fibre before specializing its indices. -/
+private theorem capBlock_tmul (i : Fiber (D := D) 0)
+    (h : i.val.2 = -i.val.1)
+    (ψ : Multiplicity (dualModule A) i.val.1) (x : Multiplicity A i.val.2) :
+    capBlock A hD i (ψ ⊗ₜ[ℂ] x) =
+      (unitCharacter D hD i.val.1 *
+        (kappa (DualMultiplicity A) i.val.1 ψ)
+          (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d) h x)) • eta0 hD := by
+  rcases i with ⟨⟨r,s⟩,hi⟩
+  dsimp only [capBlock, PairMultiplicity, dualModule]
+  simp only [LinearMap.smul_apply, LinearMap.comp_apply, TensorProduct.map_tmul,
+    _root_.contractLeft_apply, LinearMap.toSpanSingleton_apply, LinearEquiv.coe_coe,
+    smul_smul]
+
+/-- Transport both values along one index equality before applying the original functional. -/
+private theorem raw_cast_pair (a b : Discriminant D) (h : a = b)
+    (φ : Module.Dual ℂ (Multiplicity A a)) (x : Multiplicity A a) :
+    (cast (congrArg (fun d => Module.Dual ℂ (Multiplicity A d)) h) φ).toAddHom.toFun
+      (cast (congrArg (fun d => (Multiplicity A d : Type u)) h) x) = φ.toAddHom.toFun x := by
+  cases h
+  rfl
+
+/-- Algebraic evaluation after one common transport, before negative-index specialization. -/
+private theorem cap_scalar_cast (r s : Discriminant D) (h : s = -r)
+    (φ : Module.Dual ℂ (Multiplicity A s)) (x : Multiplicity A s) :
+    (kappa (DualMultiplicity A) r
+      (iota (DualMultiplicity A) r
+        (cast (congrArg (fun d => Module.Dual ℂ (Multiplicity A d)) h) φ))).toAddHom.toFun
+      (cast (congrArg (fun d => (Multiplicity A d : Type u)) h) x) = φ.toAddHom.toFun x := by
+  calc
+    _ = (cast (congrArg (fun d => Module.Dual ℂ (Multiplicity A d)) h) φ).toAddHom.toFun
+        (cast (congrArg (fun d => (Multiplicity A d : Type u)) h) x) := by
+
+      exact congrArg (α := DualMultiplicity A r) (β := ℂ)
+        (fun ψ => ψ.toAddHom.toFun
+          (cast (congrArg (fun d => (Multiplicity A d : Type u)) h) x))
+        (kappa_iota (DualMultiplicity A) r
+          (cast (congrArg (fun d => Module.Dual ℂ (Multiplicity A d)) h) φ))
+    _ = φ.toAddHom.toFun x := by
+
+      exact raw_cast_pair A s (-r) h φ x
+
+/-- Specialize the arbitrary-fibre cap by composing the exact transport equalities. -/
+private theorem capBlock_dualIota (c : Discriminant D)
+    (φ : Module.Dual ℂ (Multiplicity A c)) (x : Multiplicity A c) :
+    capBlock A hD ⟨(-c,c),neg_add_cancel c⟩ (dualIota A c φ ⊗ₜ[ℂ] x) =
+      (unitCharacter D hD (-c) * φ x) • eta0 hD := by
+  exact (capBlock_tmul A hD ⟨(-c,c),neg_add_cancel c⟩ (neg_neg c).symm
+    (dualIota A c φ) x).trans
+      (congrArg (fun t : ℂ => (unitCharacter D hD (-c) * t) • eta0 hD)
+        (cap_scalar_cast A (-c) c (neg_neg c).symm φ x))
+
 def evaluationFamily : Families (targetModule (dualModule A) A) (I D) := fun e => by
   by_cases he : e = 0
   · subst e
@@ -141,12 +193,6 @@ theorem evaluation_jAt (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity 
       (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
         (dualIota A c φ ⊗ₜ[ℂ] x)) =
       (unitCharacter D hD (-c) * φ x) • eta0 hD := by
-  have hcast (a b : Discriminant D) (h : a = b)
-      (ψ : Module.Dual ℂ (Multiplicity A a)) (y : Multiplicity A a) :
-      (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d)) h ψ)
-        (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d) h y) = ψ y := by
-    subst b
-    rfl
   let z := jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
     (dualIota A c φ ⊗ₜ[ℂ] x)
   have hf : evaluationFamily A hD 0 =
@@ -163,23 +209,7 @@ theorem evaluation_jAt (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity 
       (dualIota A c φ ⊗ₜ[ℂ] x))).trans ?_
   refine (DirectSum.toModule_lof ℂ (φ := capBlock A hD)
     ⟨(-c,c),neg_add_cancel c⟩ (dualIota A c φ ⊗ₜ[ℂ] x)).trans ?_
-  change unitCharacter D hD (-c) •
-    (((kappa (DualMultiplicity A) (-c)
-      (iota (DualMultiplicity A) (-c)
-        (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d))
-          (neg_neg c).symm φ)))
-        (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d)
-          (neg_neg c).symm x)) • eta0 hD) = _
-  have hk := congrArg
-    (fun ψ : Module.Dual ℂ (Multiplicity A (- -c)) =>
-      ψ (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d)
-        (neg_neg c).symm x))
-    (kappa_iota (DualMultiplicity A) (-c)
-      (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d))
-        (neg_neg c).symm φ))
-  exact (congrArg (fun t : ℂ => unitCharacter D hD (-c) • (t • eta0 hD))
-    (hk.trans (hcast c (- -c) (neg_neg c).symm φ x))).trans
-      (smul_smul (unitCharacter D hD (-c)) (φ x) (eta0 hD))
+  exact capBlock_dualIota A hD c φ x
 
 theorem evaluation_wrong (e : Discriminant D) (he : e ≠ 0)
     (z : Multiplicity (targetModule (dualModule A) A) e) :
@@ -442,3 +472,4 @@ theorem dualHom_carrier (f : ModuleHom A B) (c : Discriminant D)
 
 end Transpose
 end D5.S3.VertexAlgebra.Modules.ActualWeakModuleDuality
+
