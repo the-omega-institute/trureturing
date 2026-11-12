@@ -19,6 +19,8 @@ public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.FieldTheory.PrimitiveElement
 public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion.LabelledResponses
 public import Mathlib.Tactic
 
 /-! Operators and scalar extension of an arbitrary actual octic window. -/
@@ -482,6 +484,75 @@ private def orbitSet (S : Finset Ω) (g : G) : Finset Ω := S.image (g • ·)
 private theorem orbitSet_card (S : Finset Ω) (g : G) : (orbitSet S g).card = S.card :=
   Finset.card_image_of_injective _ (MulAction.injective g)
 
+private theorem mem_orbitSet (S : Finset Ω) (g : G) (i : Ω) :
+    i ∈ orbitSet S g ↔ g⁻¹ • i ∈ S := by
+  constructor
+  · rintro ⟨j, hj, rfl⟩
+    simpa using hj
+  · intro hi
+    exact Finset.mem_image.mpr ⟨g⁻¹ • i, hi, by simp⟩
+
+private theorem invariant_half_rank_weak {K : Type*} [Field K]
+    (U : Submodule K (Ω → K)) (hΩ : Fintype.card Ω = 8) (hU : finrank K U = 4)
+    (htrans : ∀ x y : Ω, ∃ g : G, g • x = y)
+    (hinv : ∀ (g : G) S, rowRank U (orbitSet S g) = rowRank U S)
+    (S : Finset Ω) : S.card ≤ 2 * rowRank U S := by
+  classical
+  by_cases hS : S.Nonempty
+  swap
+  · have : S = ∅ := Finset.not_nonempty_iff_eq_empty.mp hS
+    simp [this, rowRank_empty]
+  obtain ⟨s, hs⟩ := hS
+  let C : Ω → Finset G := fun i => Finset.univ.filter (fun g => i ∈ orbitSet S g)
+  let d := (C s).card
+  have hdeg : ∀ i, (C i).card = d := by
+    intro i
+    obtain ⟨h, hh⟩ := htrans s i
+    symm
+    apply Finset.card_equiv (Equiv.mulLeft h)
+    intro g
+    simp only [C, Finset.mem_filter, Finset.mem_univ, true_and, mem_orbitSet,
+      Equiv.mulLeft_apply, ← hh, mul_inv_rev, mul_smul, inv_smul_smul]
+  have hd : 0 < d := by
+    apply Finset.card_pos.mpr
+    refine ⟨1, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩⟩
+    simpa [orbitSet] using hs
+  have hdouble : Fintype.card G * S.card = Fintype.card Ω * d := by
+    have hh := Finset.sum_card_bipartiteAbove_eq_sum_card_bipartiteBelow
+      (fun (g : G) (i : Ω) => i ∈ orbitSet S g) Finset.univ Finset.univ
+    have hleft (g : G) : Finset.univ.bipartiteAbove
+        (fun (g : G) (i : Ω) => i ∈ orbitSet S g) g = orbitSet S g := by
+      ext i
+      simp [Finset.bipartiteAbove]
+    have hright (i : Ω) : Finset.univ.bipartiteBelow
+        (fun (g : G) (i : Ω) => i ∈ orbitSet S g) i = C i := rfl
+    simpa only [hleft, hright, orbitSet_card, hdeg, Finset.sum_const, Finset.card_univ,
+      smul_eq_mul] using hh
+  have hdR : (0 : ℝ) < d := by exact_mod_cast hd
+  have hcover : ∀ i ∈ (Finset.univ : Finset Ω),
+      (1 : ℝ) ≤ ∑ g : G, if i ∈ orbitSet S g then (d : ℝ)⁻¹ else 0 := by
+    intro i _
+    rw [← Finset.sum_filter]
+    change 1 ≤ ∑ _ ∈ C i, (d : ℝ)⁻¹
+    simp only [Finset.sum_const, nsmul_eq_mul, hdeg]
+    rw [mul_inv_cancel₀ hdR.ne']
+  have hbound :=
+    D5.S3.Observer.Separation.FixedSkeletonWeightedInclusion.LabelledResponses.fractional_submodular_cover
+      (fun T => (rowRank U T : ℝ)) (by simp only [rowRank_empty, Nat.cast_zero])
+      (fun A B h => by exact_mod_cast rowRank_mono U h)
+      (fun A B => by exact_mod_cast rowRank_submodular U A B)
+      Finset.univ (orbitSet S) (fun _ => Finset.subset_univ _)
+      (fun _ => (d : ℝ)⁻¹) (fun _ => le_of_lt (inv_pos.mpr hdR)) hcover
+  have hb : (4 : ℝ) ≤ (Fintype.card G : ℝ) * (rowRank U S : ℝ) / d := by
+    simpa only [rowRank_univ, hU, hinv, Finset.sum_const, Finset.card_univ,
+      nsmul_eq_mul, div_eq_mul_inv, Nat.cast_ofNat, mul_assoc, mul_comm, mul_left_comm] using hbound
+  have hb' := (le_div_iff₀ hdR).mp hb
+  have hdc : (Fintype.card G : ℝ) * S.card = 8 * (d : ℝ) := by
+    exact_mod_cast (hdouble.trans (by rw [hΩ]))
+  have hG : (0 : ℝ) < Fintype.card G := by exact_mod_cast Fintype.card_pos
+  have hh : (S.card : ℝ) ≤ 2 * rowRank U S := by nlinarith
+  exact_mod_cast hh
+
 /-- Equality rigidity for a nonnegative invariant submodular defect. -/
 private theorem tight_complement (f : Finset Ω → ℤ)
     (hzero : f ∅ = 0) (hnonneg : ∀ S, 0 ≤ f S)
@@ -538,6 +609,34 @@ private theorem tight_complement (f : Finset Ω → ℤ)
         exact hunion ((hinv g B).trans hB.2) ih
   rw [← he]
   exact hall A
+
+private theorem invariant_half_rank_strict {K : Type*} [Field K]
+    (U : Submodule K (Ω → K)) (hΩ : Fintype.card Ω = 8) (hU : finrank K U = 4)
+    (htrans : ∀ x y : Ω, ∃ g : G, g • x = y)
+    (hinv : ∀ (g : G) S, rowRank U (orbitSet S g) = rowRank U S)
+    (hconn : ∀ S : Finset Ω, S.Nonempty → Sᶜ.Nonempty →
+      4 < rowRank U S + rowRank U Sᶜ)
+    (S : Finset Ω) (hs : S.Nonempty) (ht : Sᶜ.Nonempty) :
+    S.card + 1 ≤ 2 * rowRank U S := by
+  let f : Finset Ω → ℤ := fun T => 2 * (rowRank U T : ℤ) - T.card
+  have hw (T : Finset Ω) := invariant_half_rank_weak U hΩ hU htrans hinv T
+  have hn (T : Finset Ω) : 0 ≤ f T := by dsimp [f]; omega
+  have hf0 : f ∅ = 0 := by simp [f, rowRank_empty]
+  have hsub (A B : Finset Ω) : f (A ∪ B) + f (A ∩ B) ≤ f A + f B := by
+    have hr := rowRank_submodular U A B
+    have hc := Finset.card_union_add_card_inter A B
+    dsimp [f]
+    omega
+  have hfi (g : G) (T : Finset Ω) : f (orbitSet T g) = f T := by
+    simp only [f, hinv, orbitSet_card]
+  by_contra hbad
+  have he : f S = 0 := by dsimp [f]; have hh := hw S; omega
+  have hec := tight_complement f hf0 hn hsub htrans hfi S hs he
+  have hcard : S.card + Sᶜ.card = 8 := by
+    simpa [hΩ] using Finset.card_add_card_compl S
+  have hc := hconn S hs ht
+  dsimp [f] at he hec
+  omega
 
 end TightRankRigidity
 
