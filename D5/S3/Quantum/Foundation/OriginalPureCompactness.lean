@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Foundation.OrthogonalJointCompletion
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 
+/-! Compactness from the entire original effect interval and joint completion. -/
+
 noncomputable section
 open Set
 
@@ -25,22 +27,29 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hg : Submodule.span ℝ (C : Set V) = ⊤) :
     IsCompact {f : V →L[ℝ] ℝ | proper C u f.toLinearMap} := by
   have hcl : IsClosed {f : V →L[ℝ] ℝ | proper C u f.toLinearMap} := by
-    unfold proper
-    exact isClosed_setOf_forall fun x => isClosed_setOf_forall fun _ =>
+    have he : {f : V →L[ℝ] ℝ | proper C u f.toLinearMap} =
+        ⋂ (x : V) (_ : x ∈ C), {f : V →L[ℝ] ℝ | 0 ≤ f x ∧ f x ≤ u x} := by
+      ext f
+      simp [proper]
+    rw [he]
+    exact isClosed_iInter fun x => isClosed_iInter fun _ =>
       (isClosed_le continuous_const (ContinuousLinearMap.continuous_apply x)).inter
         (isClosed_le (ContinuousLinearMap.continuous_apply x) continuous_const)
   have hspan := pure_span (base_compact hc hs) hs hg
   let b := Module.Basis.ofSpan hspan.ge
-  letI := FiniteDimensional.fintypeBasisIndex b
-  apply Metric.isCompact_iff_isClosed_bounded.mpr
-  refine ⟨hcl, isBounded_iff_forall_norm_le.mpr ⟨_, ?_⟩⟩
+  let := FiniteDimensional.fintypeBasisIndex b
+  obtain ⟨M, _, hbound⟩ := b.exists_opNorm_le (F := ℝ)
+  refine Metric.isCompact_iff_isClosed_bounded.mpr
+    ⟨hcl, isBounded_iff_forall_norm_le.mpr ⟨M, ?_⟩⟩
   intro f hf
-  apply b.opNorm_le (show (0 : ℝ) ≤ 1 by norm_num)
-  intro i
-  have hp := Module.Basis.ofSpan_subset hspan.ge (mem_range_self i)
-  have hi := hf (b i) hp.1.1
-  rw [Real.norm_eq_abs, abs_of_nonneg hi.1]
-  simpa [hp.1.2] using hi.2
+  have hle : ‖f‖ ≤ M * 1 := by
+    apply hbound (show (0 : ℝ) ≤ 1 by norm_num)
+    intro i
+    have hp := Module.Basis.ofSpan_subset hspan.ge (mem_range_self i)
+    have hi := hf (b i) hp.1.1
+    rw [Real.norm_eq_abs, abs_of_nonneg hi.1]
+    simpa [hp.1.2] using hi.2
+  simpa using hle
 
 private theorem exclusion_injective [Nontrivial V]
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
@@ -48,6 +57,7 @@ private theorem exclusion_injective [Nontrivial V]
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hW : weakPair C u) : Function.Injective (fun p : pure C u => exclusion C u p) := by
   intro p q he
+  change exclusion C u p = exclusion C u q at he
   have hj := whole_joint_completion hc hs hg hB hW
   obtain ⟨r, s, hprs⟩ := hj.2.1 p
   obtain ⟨t, ht, _⟩ := hj.1 r s hprs.2.2.2.2.1
@@ -145,7 +155,8 @@ private theorem separated_zeros_force_pure [Nontrivial V]
       intro he
       have hnt : n = -n := chart.injective (congrArg Subtype.val he)
       have hn0 : n = 0 := by
-        have : (2 : ℝ) • n = 0 := by rw [two_smul, hnt, neg_add_cancel]
+        have hsum : n + n = 0 := (congrArg (fun v => n + v) hnt).trans (add_neg_cancel n)
+        have : (2 : ℝ) • n = 0 := by simpa only [two_smul] using hsum
         exact (smul_eq_zero.mp this).resolve_left (by norm_num)
       simpa [hn0] using hn
     have hyz : y ≠ z := by intro he; rw [he, hbz] at hby; norm_num at hby
