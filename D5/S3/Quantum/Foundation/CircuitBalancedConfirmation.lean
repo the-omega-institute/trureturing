@@ -51,6 +51,22 @@ def base (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
 def pure (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
   (base C u).extremePoints ℝ
 
+omit [FiniteDimensional ℝ A] in
+theorem affine_extreme_image {E F : Type*} [AddCommGroup E] [Module ℝ E]
+    [AddCommGroup F] [Module ℝ F] (S : Set E) (hS : Convex ℝ S)
+    (f : E →ᵃ[ℝ] F) (hf : Set.InjOn f S) {x : E}
+    (hx : x ∈ S.extremePoints ℝ) :
+    f x ∈ (f '' S).extremePoints ℝ := by
+  refine ⟨Set.mem_image_of_mem f hx.1, ?_⟩
+  rintro _ ⟨y, hy, rfl⟩ _ ⟨z, hz, rfl⟩ hseg
+  rw [← image_openSegment ℝ f y z] at hseg
+  obtain ⟨q, hq, heq⟩ := hseg
+  have hqS : q ∈ S :=
+    hS.segment_subset hy hz (openSegment_subset_segment _ _ _ hq)
+  have hqx : q = x := hf hqS hx.1 heq
+  subst q
+  exact congrArg f (hx.2 hy hz hq)
+
 /-- All proper effects on the original cone, with no restricted-effect supplier. -/
 def proper (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (f : A →ₗ[ℝ] ℝ) : Prop :=
   ∀ x ∈ C, 0 ≤ f x ∧ f x ≤ u x
@@ -158,7 +174,7 @@ theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
   simpa only [map_add, map_smul, smul_eq_mul, hx.2, hy.2, mul_one] using hab
 
 omit [FiniteDimensional ℝ A] in
-private theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) {x : A} (hx : x ∈ C) (hne : x ≠ 0) :
     (u x)⁻¹ • x ∈ base C u := by
   refine ⟨C.smul_mem (inv_nonneg.mpr (hu x hx hne).le) hx, ?_⟩
@@ -463,7 +479,5 @@ theorem full_mixture_iff_circuit_balance
     rw [he p q, he q p]
     exact hs q p
 
-#print axioms circuit_balance_least_confirmation
-#print axioms full_mixture_iff_circuit_balance
 
 end D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
