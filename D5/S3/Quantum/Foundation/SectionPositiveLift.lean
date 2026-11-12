@@ -20,7 +20,7 @@ outside bridge; no such normalization, classification, PRE or full Z0 is proved 
 -/
 
 noncomputable section
-open scoped Matrix ComplexOrder RealInnerProductSpace
+open scoped Matrix ComplexOrder InnerProductSpace RealInnerProductSpace
 
 namespace D5.S3.Quantum.Foundation.SectionPositiveLift
 
@@ -33,9 +33,20 @@ def rankOne (v : ι → 𝕜) : HermitianMat ι 𝕜 :=
 /-- The entire PSD section of the specified original real linear subspace. -/
 def cone (L : Submodule ℝ (HermitianMat ι 𝕜)) : PointedCone ℝ L where
   carrier := {X | 0 ≤ (X : HermitianMat ι 𝕜)}
-  zero_mem' := le_rfl
-  add_mem' := fun hx hy => add_nonneg hx hy
-  smul_mem' := fun r X hX => smul_nonneg r.property hX
+  zero_mem' := by change (0 : HermitianMat ι 𝕜) ≤ 0; exact le_rfl
+  add_mem' := by
+    intro X Y hX hY
+    change 0 ≤ (X : HermitianMat ι 𝕜) at hX
+    change 0 ≤ (Y : HermitianMat ι 𝕜) at hY
+    change 0 ≤ (X : HermitianMat ι 𝕜) + (Y : HermitianMat ι 𝕜)
+    exact add_nonneg hX hY
+  smul_mem' := by
+    intro r X hX
+    change 0 ≤ (r : ℝ) • (X : HermitianMat ι 𝕜)
+    exact smul_nonneg r.property hX
+
+private lemma mem_cone (L : Submodule ℝ (HermitianMat ι 𝕜)) (X : L) :
+    X ∈ cone L ↔ 0 ≤ (X : HermitianMat ι 𝕜) := Iff.rfl
 
 /-- The original trace unit restricted to the entire real subspace. -/
 def unit (L : Submodule ℝ (HermitianMat ι 𝕜)) : L →ₗ[ℝ] ℝ :=
@@ -45,27 +56,32 @@ def unit (L : Submodule ℝ (HermitianMat ι 𝕜)) : L →ₗ[ℝ] ℝ :=
 
 /-- Properness on every original positive element. -/
 def Proper {L : Submodule ℝ (HermitianMat ι 𝕜)} (f : L →ₗ[ℝ] ℝ) : Prop :=
-  ∀ X : L, 0 ≤ (X : HermitianMat ι 𝕜) → 0 ≤ f X ∧ f X ≤ unit L X
+  ∀ X ∈ cone L, 0 ≤ f X ∧ f X ≤ unit L X
 
 /-- All same-unit PSD lifts, with orthogonality for the real trace pairing. -/
 def lifts (L : Submodule ℝ (HermitianMat ι 𝕜)) : Set (HermitianMat ι 𝕜) :=
   {M | 0 ≤ M ∧ M - 1 ∈ Lᗮ}
 
-private lemma rankOne_nonneg (v : ι → 𝕜) : 0 ≤ rankOne v :=
+/-- The native outer product is positive semidefinite. -/
+lemma rankOne_nonneg (v : ι → 𝕜) : 0 ≤ rankOne v :=
   HermitianMat.zero_le_iff.mpr (Matrix.posSemidef_vecMulVec_self_star v)
 
-private lemma pair_rankOne (A : HermitianMat ι 𝕜) (v : ι → 𝕜) :
+/-- Trace pairing against a native outer product is its quadratic reading. -/
+lemma pair_rankOne (A : HermitianMat ι 𝕜) (v : ι → 𝕜) :
     (⟪A, rankOne v⟫_ℝ : 𝕜) = star v ⬝ᵥ (A.mat *ᵥ v) := by
-  rw [HermitianMat.inner_eq_trace_mul]
+  rw [HermitianMat.inner_eq_trace_rc]
   change (A.mat * Matrix.vecMulVec v (star v)).trace = _
   rw [Matrix.mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_comm]
 
 private lemma rankOne_trace (v : ι → 𝕜) (hv : star v ⬝ᵥ v = 1) :
     (rankOne v).trace = 1 := by
-  apply RCLike.ofReal_injective
-  rw [HermitianMat.trace_eq_trace_rc]
-  change (Matrix.vecMulVec v (star v)).trace = (1 : 𝕜)
-  simpa [Matrix.trace_vecMulVec, dotProduct_comm] using hv
+  apply RCLike.ofReal_injective (K := 𝕜)
+  calc
+    ((rankOne v).trace : 𝕜) = (rankOne v).mat.trace := HermitianMat.trace_eq_trace_rc _
+    _ = (1 : 𝕜) := by
+      change (Matrix.vecMulVec v (star v)).trace = 1
+      rw [Matrix.trace_vecMulVec, dotProduct_comm, hv]
+    _ = ((1 : ℝ) : 𝕜) := by simp
 
 private lemma ambient_majorization (Y : HermitianMat ι 𝕜) :
     ∃ t : ℝ, 0 ≤ t ∧ 0 ≤ Y + t • 1 := by
@@ -76,7 +92,7 @@ private lemma ambient_majorization (Y : HermitianMat ι 𝕜) :
     intro i
     exact (le_abs_self _).trans (Finset.single_le_sum
       (fun j _ => abs_nonneg ((-Y).H.eigenvalues j)) (Finset.mem_univ i))
-  exact ⟨t, ht, (neg_le_iff_add_nonneg).mp hb⟩
+  exact ⟨t, ht, by simpa [add_comm] using add_le_add_left hb Y⟩
 
 /-- Every positive functional on the whole section has an ambient PSD representative.
 The extension tests every ambient rank one matrix, including those outside L. -/
@@ -84,9 +100,9 @@ theorem positive_functional_psd_lift
     (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L)
     (f : L →ₗ[ℝ] ℝ) (hf : ∀ X : L, 0 ≤ (X : HermitianMat ι 𝕜) → 0 ≤ f X) :
     ∃ E : HermitianMat ι 𝕜, 0 ≤ E ∧ ∀ X : L, f X = ⟪E, (X : HermitianMat ι 𝕜)⟫_ℝ := by
-  let partial : HermitianMat ι 𝕜 →ₗ.[ℝ] ℝ := ⟨L, f⟩
+  let pmap : HermitianMat ι 𝕜 →ₗ.[ℝ] ℝ := ⟨L, f⟩
   obtain ⟨g, hg, hpos⟩ := riesz_extension
-    (PointedCone.positive ℝ (HermitianMat ι 𝕜)) partial hf (by
+    (PointedCone.positive ℝ (HermitianMat ι 𝕜)) pmap hf (by
       intro Y
       obtain ⟨t, ht, hY⟩ := ambient_majorization Y
       exact ⟨⟨t • 1, L.smul_mem t hI⟩, by simpa [add_comm] using hY⟩)
@@ -101,20 +117,21 @@ theorem positive_functional_psd_lift
   rw [← pair_rankOne E v]
   have h := hpos (rankOne v) (rankOne_nonneg v)
   rw [← hE] at h
-  simpa only [RCLike.nonneg_iff, RCLike.ofReal_re, RCLike.ofReal_im, and_true] using h
+  exact RCLike.ofReal_nonneg.mpr h
 
 private lemma sandwich_rankOne (M : HermitianMat ι 𝕜) (v : ι → 𝕜)
     (hv : star v ⬝ᵥ (M.mat *ᵥ v) = 1) :
     (rankOne v).mat * M.mat * (rankOne v).mat = (rankOne v).mat := by
   change Matrix.vecMulVec v (star v) * M.mat * Matrix.vecMulVec v (star v) = _
   rw [Matrix.vecMulVec_mul, Matrix.vecMulVec_mul_vecMulVec, ← Matrix.dotProduct_mulVec, hv]
-  simp
+  change Matrix.vecMulVec v (1 • star v) = Matrix.vecMulVec v (star v)
+  rw [one_smul]
 
 /-- Singular-safe rank one deflation. The upper bound is M itself. -/
 theorem rank_one_deflation (M : HermitianMat ι 𝕜) (hM : 0 ≤ M)
     (v : ι → 𝕜) (hv : star v ⬝ᵥ (M.mat *ᵥ v) = 1) :
     0 ≤ (rankOne v).conj M.mat ∧ 0 ≤ M - (rankOne v).conj M.mat := by
-  refine ⟨HermitianMat.conj_nonneg (rankOne_nonneg v), ?_⟩
+  refine ⟨HermitianMat.conj_nonneg M.mat (rankOne_nonneg v), ?_⟩
   apply HermitianMat.zero_le_iff.mpr
   let Q := 1 - (rankOne v).mat * M.mat
   have hQ : Q.conjTranspose * M.mat * Q =
@@ -149,8 +166,9 @@ private lemma mem_lifts_iff (L : Submodule ℝ (HermitianMat ι 𝕜))
 private lemma conj_rankOne (M : HermitianMat ι 𝕜) (v : ι → 𝕜) :
     (rankOne v).conj M.mat = rankOne (M.mat *ᵥ v) := by
   apply HermitianMat.ext
-  simp [HermitianMat.conj_apply_mat, rankOne, Matrix.mul_vecMulVec,
-    Matrix.vecMulVec_mul, Matrix.star_mulVec, M.H.eq]
+  change M.mat * Matrix.vecMulVec v (star v) * M.mat.conjTranspose =
+    Matrix.vecMulVec (M.mat *ᵥ v) (star (M.mat *ᵥ v))
+  rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.star_mulVec]
 
 private lemma deflated_reading (M : HermitianMat ι 𝕜) (v w : ι → 𝕜) :
     (⟪(rankOne v).conj M.mat, rankOne w⟫_ℝ : 𝕜) =
@@ -158,7 +176,7 @@ private lemma deflated_reading (M : HermitianMat ι 𝕜) (v w : ι → 𝕜) :
   rw [pair_rankOne, conj_rankOne]
   change star w ⬝ᵥ (Matrix.vecMulVec (M.mat *ᵥ v) (star (M.mat *ᵥ v)) *ᵥ w) = _
   rw [Matrix.vecMulVec_mulVec]
-  simp only [dotProduct_smul, MulOpposite.op_smul_eq_smul, smul_eq_mul]
+  simp only [dotProduct_smul, op_smul_eq_smul, smul_eq_mul]
   rw [Matrix.star_mulVec, M.H.eq, ← Matrix.dotProduct_mulVec]
   ring
 
@@ -169,15 +187,15 @@ theorem common_original_effect_lift
     (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L)
     (v : ι → 𝕜) (hv : star v ⬝ᵥ v = 1) (hp : rankOne v ∈ L)
     (m : ℕ) (w : Fin m → (ι → 𝕜))
-    (hw : ∀ j, star (w j) ⬝ᵥ w j = 1) (hq : ∀ j, rankOne (w j) ∈ L) :
+    (hq : ∀ j, rankOne (w j) ∈ L) :
     (∃ f : L →ₗ[ℝ] ℝ, Proper f ∧ f ⟨rankOne v, hp⟩ = 1 ∧
       ∀ j, f ⟨rankOne (w j), hq j⟩ = 0) ↔
     ∃ M ∈ lifts L, ∀ j, star v ⬝ᵥ (M.mat *ᵥ w j) = 0 := by
   constructor
   · rintro ⟨f, hf, hfp, hfq⟩
-    obtain ⟨E, hE, he⟩ := positive_functional_psd_lift L hI f (fun X hX => (hf X hX).1)
+    obtain ⟨E, hE, he⟩ := positive_functional_psd_lift L hI f (fun X hX => (hf X ((mem_cone L X).mpr hX)).1)
     obtain ⟨F, hF, hFf⟩ := positive_functional_psd_lift L hI (unit L - f)
-      (fun X hX => sub_nonneg.mpr (hf X hX).2)
+      (fun X hX => sub_nonneg.mpr (hf X ((mem_cone L X).mpr hX)).2)
     have hFp : ⟪F, rankOne v⟫_ℝ = 0 := by
       rw [← hFf ⟨rankOne v, hp⟩]
       simp [unit, hfp, rankOne_trace v hv]
@@ -206,6 +224,7 @@ theorem common_original_effect_lift
     let f : L →ₗ[ℝ] ℝ := (HermitianMat.innerₗ E).comp L.subtype
     refine ⟨f, ?_, ?_, ?_⟩
     · intro X hX
+      have hX := (mem_cone L X).mp hX
       refine ⟨HermitianMat.inner_ge_zero hE hX, ?_⟩
       have hc := HermitianMat.inner_ge_zero hComp hX
       rw [inner_sub_left, hMu X] at hc
@@ -213,6 +232,7 @@ theorem common_original_effect_lift
     · change ⟪E, rankOne v⟫_ℝ = 1
       apply RCLike.ofReal_injective (K := 𝕜)
       rw [deflated_reading, hMv, mul_one]
+      simp
     · intro j
       change ⟪E, rankOne (w j)⟫_ℝ = 0
       apply RCLike.ofReal_injective (K := 𝕜)
@@ -241,8 +261,9 @@ theorem lift_geometry
     intro M hM N hN a b ha hb hab
     refine ⟨add_nonneg (smul_nonneg ha hM.1) (smul_nonneg hb hN.1), ?_⟩
     have heq : a • M + b • N - 1 = a • (M - 1) + b • (N - 1) := by
-      rw [smul_sub, smul_sub, ← add_smul, hab, one_smul]
-      abel
+      calc
+        a • M + b • N - 1 = a • M + b • N - (a + b) • 1 := by rw [hab, one_smul]
+        _ = a • (M - 1) + b • (N - 1) := by module
     rw [heq]
     exact Lᗮ.add_mem (Lᗮ.smul_mem a hM.2) (Lᗮ.smul_mem b hN.2)
   have hle : affineSpan ℝ (lifts L) ≤ AffineSubspace.mk' 1 Lᗮ :=
@@ -259,8 +280,11 @@ theorem lift_geometry
         have hs := smul_nonneg ha.le hh
         have heq : a • (N + t • 1 + 1) = 1 + a • N := by
           simp only [smul_add, smul_smul]
-          have hat : a * t + a = 1 := by dsimp [a]; field_simp; ring
-          rw [add_comm (a • N), add_assoc, ← add_smul, hat, one_smul]
+          have hat : a * t + a = 1 := by dsimp [a]; field_simp
+          calc
+            a • N + (a * t) • 1 + a • 1 = a • N + (a * t + a) • 1 := by
+              rw [add_smul]; abel
+            _ = 1 + a • N := by rw [hat, one_smul, add_comm]
         rwa [heq] at hs
       have hmem : 1 + a • N ∈ lifts L :=
         ⟨hpos, by simpa using Lᗮ.smul_mem a hN⟩
