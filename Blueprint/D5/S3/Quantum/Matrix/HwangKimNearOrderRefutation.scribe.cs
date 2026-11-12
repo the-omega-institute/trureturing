@@ -67,8 +67,8 @@ internal sealed class HwangKimNearOrderRefutationDocument : IScribeDocumentDefin
         Paragraph(Text(
             "Complete revision2 source: Counterexamples beyond Bhatia–Jain–Lim (2018): "
             + "Hwang–Kim's near-order question and its entrywise companion, Haobo Ma and Wenlin Zhang, "
-            + "9 November 2026, CC BY 4.0. The whole TeX and provenance are retained through issue "
-            + "#29594 and its complete-outcome plan. Haobo Ma: ChronoAI Pte Ltd, Singapore only. "
+            + "9 November 2026, CC BY 4.0. The complete revision2 TeX note contains these companion outcomes. "
+            + "Haobo Ma: ChronoAI Pte Ltd, Singapore only. "
             + "Wenlin Zhang: National University of Singapore and ChronoAI Pte Ltd, Singapore. "
             + "The manuscript's historical Lean reference is commit 6974dba01daa1a25cc74b87a86c191e95fe2c681; "
             + "a source handoff or new formal package is not a new scientific discovery, publication or priority claim. "

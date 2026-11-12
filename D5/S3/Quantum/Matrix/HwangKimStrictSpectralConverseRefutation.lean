@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/HwangKimStrictSpectralConverseRefutation
    mirror-E: none(waiver:external-counterexample)
-   anchors: [D5/S3/Quantum/Matrix/HwangKimNearOrderRefutation]
+   anchors: [lit/hwangkim2024nearorder]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Matrix/HwangKimStrictSpectralConverseRefutation.claim; result=D5/S3/Quantum/Matrix/HwangKimStrictSpectralConverseRefutation.result; claim=D5/S3/Quantum/Matrix/HwangKimStrictSpectralConverseRefutation.claim
    digest: Strict ordered spectral domination of actual matrix means does not imply near order. -/
 

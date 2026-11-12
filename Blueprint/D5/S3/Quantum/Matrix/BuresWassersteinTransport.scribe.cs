@@ -29,13 +29,13 @@ internal sealed class BuresWassersteinTransportDocument : IScribeDocumentDefinit
                 + "difference. Equality forces every gap to vanish; positivity of the weights and "
                 + "normalization ensure there is an input, and one invertible transport gives X=W. "
                 + "The epsilon predicate is the actual global argmin predicate over positive definite "
-                + "matrices, not a transport-defined substitute for the mean. A checked exact application for arbitrary finite strictly positive diagonal data identifies the actual barycenter as diag((Σⱼwⱼ√aⱼₖ)²) and the actual logarithmic mean as diag(exp(Σⱼwⱼlog aⱼₖ)). Reusing scalar weighted AM–GM and its equality theorem also proves their Loewner comparison and equality iff all input coordinates coincide. This is transient application evidence, not a separately retained bind-only API; the full arbitrary commuting family and near-order theorem remain open.")),
+                + "matrices, not a transport-defined substitute for the mean. A checked exact application for arbitrary finite strictly positive diagonal data identifies the actual barycenter as diag((Σⱼwⱼ√aⱼₖ)²) and the actual logarithmic mean as diag(exp(Σⱼwⱼlog aⱼₖ)). Reusing scalar weighted AM–GM and its equality theorem also proves their Loewner comparison and equality iff all input coordinates coincide. These diagonal consequences apply the existing results; the full arbitrary commuting family and near-order theorem remain open.")),
                 Paragraph(Text(
                 "The established mathematical characterization is due to Bhatia–Jain–Lim, "
                 + "On the Bures–Wasserstein Distance Between Positive Definite Matrices, "
                 + "arXiv:1712.01504v1, Theorem 8 and equations (62)–(63), together with the "
                 + "positive Riccati characterization (9). The elementary dual proof also appears "
-                + "as Lemma 2 of the Ma–Zhang revision2 note, retained at issue #29594 (CC BY 4.0). "
+                + "as Lemma 2 of the Ma–Zhang revision2 note (CC BY 4.0). "
                 + "Haobo Ma: ChronoAI, Singapore. Wenlin Zhang: NUS and ChronoAI, Singapore. "
                 + "The finite formal interface is a research-to-formal return, not a new scientific "
                 + "optimality characterization. It does not establish the note's other seven groups. "

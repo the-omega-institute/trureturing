@@ -36,7 +36,7 @@ internal sealed class HwangKimStrictSpectralConverseRefutationDocument : IScribe
                 + "failure of near order. Thus the new strict-spectrum premise is proved for "
                 + "actual means; neither an assumed premise nor a surrogate mean is used. "
                 + "The original universal near-order refutation is reused, not a new discovery. "
-                + "Source: Ma–Zhang revision2 Theorem 1 and Corollary (reverse), issue #29594, "
+                + "Source: Ma–Zhang revision2 Theorem 1 and Corollary (reverse), "
                 + "CC BY 4.0. Haobo Ma: ChronoAI, Singapore. Wenlin Zhang: NUS and ChronoAI, "
                 + "Singapore. This does not prove the second weighted witness, the arbitrary-size "
                 + "families, or the full classification of reverse implications. BJL's actual "

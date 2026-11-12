@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/BuresWassersteinTransport
    mirror-E: none(waiver:noncomputable-matrix-analysis)
-   anchors: [D5/S3/Quantum/Matrix/HwangKimNearOrderRefutation]
+   anchors: [lit/bhatiajainlim2018wasserstein]
    utility: none
    digest: Finite transport certificates identify the unique actual Bures–Wasserstein minimizer. -/
 

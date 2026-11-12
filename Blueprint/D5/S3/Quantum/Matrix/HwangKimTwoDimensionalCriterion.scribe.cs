@@ -29,8 +29,8 @@ internal sealed class HwangKimTwoDimensionalCriterionDocument : IScribeDocumentD
                 + "The determinant condition cannot be omitted. This is a criterion for arbitrary "
                 + "positive L,W in dimension two with det L=1; it is not restricted to either witness.")),
                 Paragraph(Text(
-                "Source: the Ma–Zhang revision2 note, equation (criterion), full source retained "
-                + "at issue #29594, CC BY 4.0. Haobo Ma: ChronoAI, Singapore. Wenlin Zhang: "
+                "Source: the Ma–Zhang revision2 note, equation (criterion), "
+                + "CC BY 4.0. Haobo Ma: ChronoAI, Singapore. Wenlin Zhang: "
                 + "NUS and ChronoAI, Singapore. The original Hwang–Kim question is the final "
                 + "unnumbered display of arXiv:2407.07438v1 §6 p.17; equation (6.21) is a "
                 + "different proved comparison. This formalization is not a priority claim. "
