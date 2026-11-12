@@ -44,7 +44,6 @@ internal sealed class CyclicClosureDocument : IScribeDocumentDefinition
         : new Formula.Apply(new Formula.NamedConstant(FormulaIdentifier.Create(name)), [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
-    private static Formula Implies(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Telescope(Formula body) => All("m", Call("Nat"), All("w", Call("Word", F.Id("m")),
         All("d", Call("Assignment", F.Id("m")), All("h", Call("Certificate", F.Id("w"), F.Id("d")), body))));

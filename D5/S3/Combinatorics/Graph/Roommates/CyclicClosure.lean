@@ -43,18 +43,19 @@ private theorem joinPartner_involutive (hw : Certificate w d) :
     Function.Involutive (joinPartner hw) := by
   let r := closingRequest d hw.bounded
   have hc := closing_request_completion hw
+  simp only [r] at *
   intro x
   cases x with
   | inl i =>
     by_cases h : exterior d i
     · have he : ∃ a : ClosingRequester d, r a = r ⟨i,h⟩ := ⟨⟨i,h⟩,rfl⟩
       have hh : Classical.choose he = (⟨i,h⟩ : ClosingRequester d) := hc.1 (Classical.choose_spec he)
-      simp only [joinPartner, dif_pos h, BufferLayout.partner, dif_pos he, hh]
+      simp only [joinPartner, dite_eq_left h, BufferLayout.partner, dite_eq_left he, hh]
     · let j := inside d i h
       have hj := inside_coord i h
       have hdj : d j = -d i := by
         by_cases hz : d i = 0
-        · have he : j = i := Fin.ext (by dsimp [j] at hj; omega)
+        · have he : j = i := Fin.ext (by change (j.val : ℤ) = i.val + d i at hj; omega)
           simpa [he, hz]
         · exact hw.reciprocal i j hz hj.symm
       have hn : ¬exterior d j := by
@@ -65,24 +66,25 @@ private theorem joinPartner_involutive (hw : Certificate w d) :
         apply Fin.ext
         have ht := inside_coord j hn
         omega
-      simp only [joinPartner, dif_neg h, dif_neg hn, he]
+      change joinPartner hw (.inl j) = .inl i
+      simp only [joinPartner, dite_eq_right hn, he]
   | inr b =>
     by_cases h : ∃ a : ClosingRequester d, r a = b
     · let a := Classical.choose h
       have ha : r a = b := Classical.choose_spec h
       have he := a.property
-      simp only [joinPartner, BufferLayout.partner, dif_pos h, dif_pos he]
+      simp only [joinPartner, BufferLayout.partner, dite_eq_left h, dite_eq_left he]
       exact congrArg Sum.inr ha
     · have hfree : ¬∃ a : ClosingRequester d,
           r a = BufferLayout.mate (BufferLayout.flags r) b := by
         intro ⟨a,ha⟩
         have he := hc.2.1 (.inr b)
-        simp only [BufferLayout.partner, dif_neg h, dif_pos (show ∃ a', r a' =
+        simp only [BufferLayout.partner, dite_eq_right h, dite_eq_left (show ∃ a', r a' =
           BufferLayout.mate (BufferLayout.flags r) b from ⟨a,ha⟩)] at he
         cases he
       have he := hc.2.1 (.inr b)
-      simp only [BufferLayout.partner, dif_neg h, dif_neg hfree, Sum.inr.injEq] at he
-      simpa only [joinPartner, BufferLayout.partner, dif_neg h, dif_neg hfree] using congrArg Sum.inr he
+      simp only [BufferLayout.partner, dite_eq_right h, dite_eq_right hfree, Sum.inr.injEq] at he
+      simpa only [joinPartner, BufferLayout.partner, dite_eq_right h, dite_eq_right hfree] using congrArg Sum.inr he
 
 /-- The full cycle partner map, retaining old interior pairs and fulfilling all requests. -/
 def matching (hw : Certificate w d) : SourceModel.Matching (Fin (m + 1 + 5)) := by
@@ -92,12 +94,15 @@ def matching (hw : Certificate w d) : SourceModel.Matching (Fin (m + 1 + 5)) := 
   let g := fun i => e (f (e.symm i))
   have hg : Function.Involutive g := by
     intro i
-    simp only [g, Equiv.symm_apply_apply, hf, Equiv.apply_symm_apply]
-  exact ⟨Equiv.ofInvolutive g hg, hg⟩
+    dsimp [g]
+    rw [e.symm_apply_apply]
+    change e (joinPartner hw (joinPartner hw (e.symm i))) = i
+    rw [hf, e.apply_symm_apply]
+  exact ⟨⟨g, g, hg, hg⟩, hg⟩
 
 private theorem matching_apply_sum (hw : Certificate w d) (x : Fin m ⊕ Fin 6) :
-    (matching hw).val (finSumFinEquiv x) = finSumFinEquiv (joinPartner hw x) := by
-  simp [matching, Equiv.ofInvolutive]
+    (matching hw).val ((@finSumFinEquiv m 6) x) = (@finSumFinEquiv m 6) (joinPartner hw x) := by
+  simp [matching]
 
 private theorem matching_old (hw : Certificate w d) (i : Fin m) :
     (matching hw).val (Fin.castAdd 6 i) = wrap (m + 1) (i.val + d i) := by
@@ -105,10 +110,11 @@ private theorem matching_old (hw : Certificate w d) (i : Fin m) :
   simp only [finSumFinEquiv_apply_left] at he
   rw [he]
   by_cases h : exterior d i
-  · simp only [joinPartner, dif_pos h, finSumFinEquiv_apply_right]
-    exact (closing_request_source_target hw ⟨i,h⟩).symm.trans
-      (wrap_index (Fin.natAdd m (closingRequest d hw.bounded ⟨i,h⟩))) |>.symm
-  · simp only [joinPartner, dif_neg h, finSumFinEquiv_apply_left]
+  · simp only [joinPartner, dite_eq_left h, finSumFinEquiv_apply_right]
+    have ht := closing_request_source_target hw ⟨i,h⟩
+    have hh := @wrap_index (m+1) ((@Fin.natAdd 6 m) (closingRequest d hw.bounded ⟨i,h⟩))
+    exact (ht.trans hh).symm
+  · simp only [joinPartner, dite_eq_right h, finSumFinEquiv_apply_left]
     have hc := inside_coord i h
     have hh := wrap_index (Fin.castAdd 6 (inside d i h))
     rw [show ((Fin.castAdd 6 (inside d i h)).val : ℤ) = i.val + d i from hc] at hh
@@ -143,7 +149,7 @@ private theorem buffer_facts (hw : Certificate w d) :
     (fun a => ⟨(hw.bounded a.val).1, (hw.bounded a.val).2, a.property.1⟩)
 
 private theorem matching_buffer (hw : Certificate w d) (b : Fin 6) :
-    (matching hw).val (Fin.natAdd m b) = wrap (m+1) ((m : ℤ)+b.val+bufferD hw b) := by
+    (matching hw).val ((@Fin.natAdd 6 m) b) = wrap (m+1) ((m : ℤ)+b.val+bufferD hw b) := by
   let r := closingRequest d hw.bounded
   have he := matching_apply_sum hw (.inr b)
   simp only [finSumFinEquiv_apply_right] at he
@@ -152,18 +158,20 @@ private theorem matching_buffer (hw : Certificate w d) (b : Fin 6) :
   · let a := Classical.choose h
     have ha : r a = b := Classical.choose_spec h
     have hd : bufferD hw b = -d a.val := by rw [←ha]; exact (buffer_facts hw).1 a
-    simp only [joinPartner, BufferLayout.partner, dif_pos h, finSumFinEquiv_apply_left]
-    have ht : wrap (m+1) (a.val.val + d a.val) = Fin.natAdd m b := by
+    simp only [r] at h ha
+    simp only [joinPartner, BufferLayout.partner, dite_eq_left h, finSumFinEquiv_apply_left]
+    have ht : wrap (m+1) (a.val.val + d a.val) = (@Fin.natAdd 6 m) b := by
       rw [closing_request_source_target hw a]
-      simpa [r, ha] using (wrap_index (Fin.natAdd m b))
-    have hr := wrap_return (Fin.castAdd 6 a.val) (Fin.natAdd m b) (d a.val) ht
+      simpa [r, ha] using (@wrap_index (m+1) ((@Fin.natAdd 6 m) b))
+    have hr := wrap_return (Fin.castAdd 6 a.val) ((@Fin.natAdd 6 m) b) (d a.val) ht
     simpa only [Fin.val_natAdd, Nat.cast_add, hd, sub_eq_add_neg] using hr.symm
-  · simp only [joinPartner, BufferLayout.partner, dif_neg h, finSumFinEquiv_apply_right]
+  · simp only [r] at h
+    simp only [joinPartner, BufferLayout.partner, dite_eq_right h, finSumFinEquiv_apply_right]
     have hd : bufferD hw b = (BufferLayout.mate (BufferLayout.flags r) b).val - (b.val : ℤ) := by
-      simp only [bufferD, bufferOffset, dif_neg h]
+      simp only [bufferD, bufferOffset, dite_eq_right h, r]
     rw [hd, show (m : ℤ)+b.val+((BufferLayout.mate (BufferLayout.flags r) b).val-b.val) =
       (m : ℤ)+(BufferLayout.mate (BufferLayout.flags r) b).val by omega]
-    exact (wrap_index (Fin.natAdd m (BufferLayout.mate (BufferLayout.flags r) b))).symm
+    exact (@wrap_index (m+1) ((@Fin.natAdd 6 m) (BufferLayout.mate (BufferLayout.flags r) b))).symm
 
 /-- Six added rankings preserve every old ranking literally. -/
 def profile (hw : Certificate w d) : SourceModel.Profile (m+1) :=
@@ -174,18 +182,18 @@ private theorem profile_old (hw : Certificate w d) (i : Fin m) :
     profile hw (Fin.castAdd 6 i) = w i := by simp [profile, i.isLt]
 
 private theorem profile_buffer (hw : Certificate w d) (b : Fin 6) :
-    profile hw (Fin.natAdd m b) = partnerFirst (bufferD hw b) := by
+    profile hw ((@Fin.natAdd 6 m) b) = partnerFirst (bufferD hw b) := by
   simp [profile, show ¬m+b.val<m by omega]
 
 private theorem matching_buffer_rank (hw : Certificate w d) (b : Fin 6) :
-    SourceModel.rank (profile hw) (Fin.natAdd m b) ((matching hw).val (Fin.natAdd m b)) =
+    SourceModel.rank (profile hw) ((@Fin.natAdd 6 m) b) ((matching hw).val ((@Fin.natAdd 6 m) b)) =
       offsetRank (partnerFirst (bufferD hw b)) (bufferD hw b) := by
   rw [matching_buffer]
-  have hr := rank_wrap (profile hw) (Fin.natAdd m b) (bufferD hw b) ((buffer_facts hw).2.1 b)
+  have hr := rank_wrap (profile hw) ((@Fin.natAdd 6 m) b) (bufferD hw b) ((buffer_facts hw).2.1 b)
   simpa [profile_buffer, Fin.val_natAdd, Nat.cast_add] using hr
 
 private theorem buffer_top (hw : Certificate w d) (b : Fin 6) (hz : bufferD hw b ≠ 0) :
-    SourceModel.rank (profile hw) (Fin.natAdd m b) ((matching hw).val (Fin.natAdd m b)) = 0 := by
+    SourceModel.rank (profile hw) ((@Fin.natAdd 6 m) b) ((matching hw).val ((@Fin.natAdd 6 m) b)) = 0 := by
   rw [matching_buffer_rank]
   have hb := (buffer_facts hw).2.1 b
   generalize bufferD hw b = a at *
@@ -213,7 +221,7 @@ private theorem acceptable_offset {n : ℕ} (i : Fin (n+5)) (a : ℤ)
 theorem acceptable (hw : Certificate w d) :
     SourceModel.IsAcceptable (SourceModel.ring (m+1)) (matching hw) := by
   intro i
-  obtain ⟨x,rfl⟩ := finSumFinEquiv.surjective i
+  obtain ⟨x,rfl⟩ := (@finSumFinEquiv m 6).surjective i
   cases x with
   | inl j =>
     simp only [finSumFinEquiv_apply_left]
@@ -222,12 +230,12 @@ theorem acceptable (hw : Certificate w d) :
   | inr b =>
     simp only [finSumFinEquiv_apply_right]
     rw [matching_buffer]
-    exact acceptable_offset (Fin.natAdd m b) (bufferD hw b) ((buffer_facts hw).2.1 b)
+    exact acceptable_offset ((@Fin.natAdd 6 m) b) (bufferD hw b) ((buffer_facts hw).2.1 b)
 
 private theorem central_neighbor (hw : Certificate w d) (b : Fin 6)
     (hz : bufferD hw b = 0) (j : Fin (m+1+5))
-    (hadj : (SourceModel.ring (m+1)).Adj (Fin.natAdd m b) j) :
-    ∃ c : Fin 6, j = Fin.natAdd m c ∧ b ≠ c ∧
+    (hadj : (SourceModel.ring (m+1)).Adj ((@Fin.natAdd 6 m) b) j) :
+    ∃ c : Fin 6, j = (@Fin.natAdd 6 m) c ∧ b ≠ c ∧
       b.val ≤ c.val+2 ∧ c.val ≤ b.val+2 := by
   obtain ⟨s,hs⟩ := hadj
   have hc := (buffer_facts hw).2.2.1 b hz
@@ -235,11 +243,14 @@ private theorem central_neighbor (hw : Certificate w d) (b : Fin 6)
   have hsb := signed_bounds s
   have he : wrap (m+1) ((m : ℤ)+b.val+signed s) = j := by
     rw [wrap_add, wrap_signed]
-    simpa only [Fin.val_natAdd, Nat.cast_add, wrap_index] using hs.symm
+    have hx := @wrap_index (m+1) ((@Fin.natAdd 6 m) b)
+    change wrap (m+1) ((m : ℤ)+b.val) = (@Fin.natAdd 6 m) b at hx
+    rw [hx]
+    exact hs.symm
   have hv := congrArg (fun x : Fin (m+1+5) => (x.val : ℤ)) he
   rw [wrap_val, Int.emod_eq_of_lt (by omega) (by omega)] at hv
   let c : Fin 6 := ⟨j.val-m,by omega⟩
-  refine ⟨c, Fin.ext (by dsimp [c]; simp only [Fin.val_natAdd]; omega), ?_, ?_, ?_⟩
+  refine ⟨c, Fin.ext (by dsimp [c]; omega), ?_, ?_, ?_⟩
   · intro h
     have hh := congrArg (fun x : Fin 6 => (x.val : ℤ)) h
     dsimp [c] at hh
@@ -249,7 +260,7 @@ private theorem central_neighbor (hw : Certificate w d) (b : Fin 6)
 
 private theorem no_buffer_blocker (hw : Certificate w d) (b : Fin 6) (j : Fin (m+1+5)) :
     ¬SourceModel.IsBlockingPair (SourceModel.ring (m+1)) (SourceModel.rank (profile hw))
-      (matching hw) (Fin.natAdd m b) j := by
+      (matching hw) ((@Fin.natAdd 6 m) b) j := by
   rintro ⟨hadj,_,hb,hj⟩
   by_cases hz : bufferD hw b = 0
   · obtain ⟨c,rfl,hbc,h₁,h₂⟩ := central_neighbor hw b hz j hadj
@@ -263,7 +274,7 @@ private theorem no_old_blocker (hw : Certificate w d) (i j : Fin m) :
     ¬SourceModel.IsBlockingPair (SourceModel.ring (m+1)) (SourceModel.rank (profile hw))
       (matching hw) (Fin.castAdd 6 i) (Fin.castAdd 6 j) := by
   rintro ⟨hadj,hn,hi,hj⟩
-  have hne : i ≠ j := by intro h; subst j; exact (SourceModel.ring (m+1)).irrefl _ hadj
+  have hne : i ≠ j := by intro h; subst j; exact (SourceModel.ring (m+1)).irrefl hadj
   have hcase (i j : Fin m) (hlt : i.val<j.val)
       (hadj : (SourceModel.ring (m+1)).Adj (Fin.castAdd 6 i) (Fin.castAdd 6 j)) :
       (matching hw).val (Fin.castAdd 6 i) = Fin.castAdd 6 j ∨
@@ -275,9 +286,11 @@ private theorem no_old_blocker (hw : Certificate w d) (i j : Fin m) :
     rcases hh with he | he | he
     · left
       rw [matching_old, he]
-      simpa only [add_sub_cancel] using (wrap_index (Fin.castAdd 6 j))
-    · right;left; simpa only [matching_old] using he
-    · right;right; simpa only [matching_old] using he
+      simpa only [add_sub_cancel, Fin.val_castAdd] using (wrap_index (Fin.castAdd 6 j))
+    · right;left; rw [matching_old]
+      simpa only [Fin.castAdd, Fin.castLE] using he
+    · right;right; rw [matching_old]
+      simpa only [Fin.castAdd, Fin.castLE] using he
   rcases lt_or_gt_of_ne (show i.val ≠ j.val from fun h => hne (Fin.ext h)) with hlt | hlt
   · rcases hcase i j hlt hadj with he | he | he <;> omega
   · have hn' : (matching hw).val (Fin.castAdd 6 j) ≠ Fin.castAdd 6 i := by
@@ -294,8 +307,8 @@ theorem stable (hw : Certificate w d) :
     SourceModel.IsStable (SourceModel.ring (m+1)) (SourceModel.rank (profile hw)) (matching hw) := by
   refine ⟨acceptable hw, ?_⟩
   intro i j
-  obtain ⟨x,rfl⟩ := finSumFinEquiv.surjective i
-  obtain ⟨y,rfl⟩ := finSumFinEquiv.surjective j
+  obtain ⟨x,rfl⟩ := (@finSumFinEquiv m 6).surjective i
+  obtain ⟨y,rfl⟩ := (@finSumFinEquiv m 6).surjective j
   cases x with
   | inl i =>
     cases y with
@@ -306,7 +319,7 @@ theorem stable (hw : Certificate w d) :
       refine ⟨ha.symm, ?_, hj, hi⟩
       intro he
       apply hn
-      have hh := (matching hw).property (Fin.natAdd m b)
+      have hh := (matching hw).property ((@Fin.natAdd 6 m) b)
       rw [he] at hh
       exact hh
   | inr b => exact no_buffer_blocker hw b _
