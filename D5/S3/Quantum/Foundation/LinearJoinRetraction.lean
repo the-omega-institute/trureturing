@@ -4,10 +4,7 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: A real linear join supplies both positive trace-subunital retractions,
-   surjective restriction of the full proper-effect intervals, and inheritance
-   of the original G2 midpoint law on each supported side.
--/
+   digest: A real linear join supplies both positive trace-subunital retractions, surjective restriction of the full proper-effect intervals, and inheritance of the original G2 midpoint law on each supported side. -/
 
 import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
 import Mathlib.LinearAlgebra.Prod
@@ -371,6 +368,59 @@ private theorem right_subunit (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   apply Finset.sum_le_sum
   intro z hz
   simpa [sideUnit, map_smul, smul_eq_mul] using hmul z hz
+
+/-! The supported cones are presented in two equivalent ways: as the image of
+the original generating hull under the retraction, and as the exact ambient
+cone cut down to the side subspace.  This is the abstract ROG form of
+`L_Y ∩ PSD(U)` and `L_Z ∩ PSD(W)`. -/
+
+def supportedConeLeft (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
+    PointedCone ℝ J.leftSubspace :=
+  (PointedCone.hull ℝ H.generators).map J.leftRetraction
+
+def supportedConeRight (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
+    PointedCone ℝ J.rightSubspace :=
+  (PointedCone.hull ℝ H.generators).map J.rightRetraction
+
+theorem supportedConeLeft_eq_sideCone (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
+    supportedConeLeft C u J H = sideCone C J.leftSubspace := by
+  apply SetLike.ext
+  intro y
+  constructor
+  · intro hy
+    rcases PointedCone.mem_map.mp hy with ⟨x, hx, hxy⟩
+    have hC : J.leftRetraction x ∈ sideCone C J.leftSubspace :=
+      left_positive C u J H x (by rw [H.generates]; exact hx)
+    rw [← hxy]
+    exact hC
+  · intro hy
+    have hC : (y : A) ∈ C := hy
+    rw [H.generates] at hC
+    have hmap : J.leftRetraction (J.leftSubspace.subtype y) = y :=
+      J.leftRetraction_on_left y
+    exact PointedCone.mem_map.mpr ⟨J.leftSubspace.subtype y, hC, hmap⟩
+
+theorem supportedConeRight_eq_sideCone (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
+    supportedConeRight C u J H = sideCone C J.rightSubspace := by
+  apply SetLike.ext
+  intro y
+  constructor
+  · intro hy
+    rcases PointedCone.mem_map.mp hy with ⟨x, hx, hxy⟩
+    have hC : J.rightRetraction x ∈ sideCone C J.rightSubspace :=
+      right_positive C u J H x (by rw [H.generates]; exact hx)
+    rw [← hxy]
+    exact hC
+  · intro hy
+    have hC : (y : A) ∈ C := hy
+    rw [H.generates] at hC
+    have hmap : J.rightRetraction (J.rightSubspace.subtype y) = y :=
+      J.rightRetraction_on_right y
+    exact PointedCone.mem_map.mpr ⟨J.rightSubspace.subtype y, hC, hmap⟩
 
 theorem extend_effect_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)

@@ -24,26 +24,6 @@ internal sealed class LinearJoinRetractionDocument : IScribeDocumentDefinition
                 H("An entire linear join with overlap projections"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("JoinData records U, W and their equality S=U intersect W, the whole join U sup W=A, and projections W to S and U to S that are the identity on the overlap. The projection equalities make the two glued retractions independent of decompositions."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("left-retraction"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData.leftRetraction"),
-                H("The left positive retraction"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("leftRetraction is the unique linear map A to U that is identity on U and sends W through its specified projection to S. Its construction is by the quotient lift of the surjective sum map U product W to A."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("right-retraction"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData.rightRetraction"),
-                H("The right positive retraction"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("rightRetraction is the symmetric linear map A to W that sends U through its overlap projection and is identity on W."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("left-restriction-laws"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData.leftRetraction_on_left"),
-                H("Left retraction on both join summands"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("On U the left retraction is the identity, and on W it is the inclusion of the prescribed projection to S."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("right-restriction-laws"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.JoinData.rightRetraction_on_right"),
-                H("Right retraction on both join summands"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("On W the right retraction is the identity, and on U it is the inclusion of the prescribed projection to S."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("proper-effect-interval"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.properEffect"),
                 H("The full original proper-effect interval"), StatementSource.WithoutFormula(),
@@ -74,6 +54,26 @@ internal sealed class LinearJoinRetractionDocument : IScribeDocumentDefinition
                 H("ROG support certificate for the right side"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("RightRetractionCertificate supplies the symmetric generator, positivity, subunit and pure-lift data for W."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("left-supported-cone"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft"),
+                H("The left supported cone as a retraction image"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("supportedConeLeft is the image of the original generating hull under the left retraction."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("right-supported-cone"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight"),
+                H("The right supported cone as a retraction image"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("supportedConeRight is the symmetric image of the original generating hull under the right retraction."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("left-supported-cone-equality"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeLeft_eq_sideCone"),
+                H("Exact left supported-cone equality"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The image of the full original generating hull under the left retraction equals the exact ambient cone comapped to U. This is the abstract ROG form of the supported PSD intersection."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("right-supported-cone-equality"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.supportedConeRight_eq_sideCone"),
+                H("Exact right supported-cone equality"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The right retraction image of the full original generating hull equals the exact cone cut down to W."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("left-extension"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/LinearJoinRetraction.extend_effect_left"),
                 H("Extend every left proper effect"), StatementSource.WithoutFormula(),
