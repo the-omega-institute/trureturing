@@ -32,7 +32,7 @@ The full string-theory objective remains ACTIVE INCOMPLETE.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -80,7 +80,7 @@ private theorem unit_bilinear (D : LatticeData) (i : Fin D.rank) (p : Charge D) 
         · simp only [unitCharge, if_neg hki, zero_mul, Finset.sum_const_zero]
       _ = _ := by simp
   rw [h]
-  push_cast
+  push_cast <;> rfl
 
 private theorem gamma_expansion (D : LatticeData)
     (f : Fin D.rank → ℂ) (p : Charge D) :
