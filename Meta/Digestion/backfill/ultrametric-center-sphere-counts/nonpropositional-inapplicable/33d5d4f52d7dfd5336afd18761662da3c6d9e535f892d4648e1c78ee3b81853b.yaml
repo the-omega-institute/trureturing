@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:33d5d4f52d7dfd5336afd18761662da3c6d9e535f892d4648e1c78ee3b81853b
+  normalized_sha256: sha256:33d5d4f52d7dfd5336afd18761662da3c6d9e535f892d4648e1c78ee3b81853b
+cas_ref: sha256:33d5d4f52d7dfd5336afd18761662da3c6d9e535f892d4648e1c78ee3b81853b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading only; it states no mathematical proposition.
+    previous_atom_id: null
+    next_atom_id: d8a5db4458d6226f1b9f44e4f35ca2fe721d171e0ec720937b11954d95656824
