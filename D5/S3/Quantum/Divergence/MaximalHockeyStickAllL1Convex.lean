@@ -17,7 +17,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Matrix MeasureTheory Set
-open scoped ComplexOrder MatrixOrder
+open scoped ComplexOrder MatrixOrder ENNReal
 open D5.S3.Analytic.Convexity.CurvatureHingeRepresentation
 open D5.S3.Quantum.Divergence.MaximalHockeyStickSpectral
 open D5.S3.Quantum.Divergence.MaximalHockeyStickConvex
@@ -79,14 +79,14 @@ negative infimum on (0,1] and positive infimum on (1,infinity), integrated again
 the actual curvature. The full atom at one is in the negative branch. -/
 def originalHockeyValue (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
   (affineMass f A B : EReal) +
-    (∫⁻ t : Positive, ENNReal.ofReal
+    (∫⁻ (t : Positive), ENNReal.ofReal
       (if (t : ℝ) ≤ 1 then operationalL1NegativeHockey.{u} A B t
         else operationalL1Hockey.{u} A B t) ∂curvature hf : ℝ≥0∞)
 
 /-- The same actual operational curvature value over all s-finite L1 sources. -/
 def sFiniteHockeyValue (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
   (affineMass f A B : EReal) +
-    (∫⁻ t : Positive, ENNReal.ofReal
+    (∫⁻ (t : Positive), ENNReal.ofReal
       (if (t : ℝ) ≤ 1 then sFiniteOperationalNegativeHockey.{u} A B t
         else sFiniteOperationalHockey.{u} A B t) ∂curvature hf : ℝ≥0∞)
 
@@ -105,23 +105,21 @@ theorem hockeyValue_eq_original_operational (hf : ConvexOn ℝ (Ioi 0) f)
     hockeyValue hf A B = originalHockeyValue.{u} hf A B ∧
       hockeyValue hf A B = sFiniteHockeyValue.{u} hf A B := by
   have hp (t : Positive) := operationalL1_hockey_eq.{u} A B hA hB t t.2
-  have hσ : (fun t : Positive => maximalKernel A B t) =
-      (fun t : Positive => if (t : ℝ) ≤ 1 then operationalL1NegativeHockey.{u} A B t
+  have hσ (t : Positive) : maximalKernel A B t =
+      (if (t : ℝ) ≤ 1 then operationalL1NegativeHockey.{u} A B t
         else operationalL1Hockey.{u} A B t) := by
-    funext t
     rw [(hp t).1, (hp t).2.1]
     rfl
-  have hs : (fun t : Positive => maximalKernel A B t) =
-      (fun t : Positive => if (t : ℝ) ≤ 1 then sFiniteOperationalNegativeHockey.{u} A B t
+  have hs (t : Positive) : maximalKernel A B t =
+      (if (t : ℝ) ≤ 1 then sFiniteOperationalNegativeHockey.{u} A B t
         else sFiniteOperationalHockey.{u} A B t) := by
-    funext t
     rw [(hp t).2.2.1, (hp t).2.2.2]
     rfl
   constructor
   · unfold hockeyValue originalHockeyValue
-    rw [hσ]
+    simp_rw [hσ]
   · unfold hockeyValue sFiniteHockeyValue
-    rw [hs]
+    simp_rw [hs]
 
 /-- Common-interior commutation gives the actual all-L1 operational equality
 for every convex generator, retaining infinite endpoints and extended values. -/
@@ -181,6 +179,9 @@ theorem original_eq_iff_commute (hf : ConvexOn ℝ (Ioi 0) f)
   rw [originalL1Value_eq_allL1Value] at hc ⊢
   exact (allL1_operational_eq_iff_commute hf A B hA hB c hc).1
 
+#print axioms hockeyValue_eq_original_operational
+#print axioms original_eq_iff_commute
+#print axioms commute_implies_original_eq
 #print axioms allL1Value_eq_maximalValue
 #print axioms commute_implies_integrated_eq
 #print axioms integrated_eq_iff_commute

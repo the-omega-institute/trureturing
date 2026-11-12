@@ -1037,7 +1037,8 @@ theorem finite_hockey_realization (R : L1ReverseTest A B μ) (t : ℝ) (ht : 0 <
       rw [he]; abel
     have htBX : t • B - X = action s hs := by
       change _ = action (fun a => t * R.q a - h a) hs
-      rw [hsub, hsmul, hq]
+      rw [hsub (fun a => t * R.q a) h (R.q_integrable.const_mul t) hh,
+        hsmul R.q R.q_integrable, hq]
     let G : Fin 3 → Matrix n n ℂ := ![X, A - X, t • B - X]
     have hG : ∀ i, (G i).PosSemidef := by
       intro i
@@ -1308,6 +1309,10 @@ theorem sigma_finite_source_infimum_eq {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi
   rw [← source_class_infimum_eq.{u} hf A B]
   exact sInf_le_sInf hall
 
+#print axioms L1ReverseTest.finite_hockey_realization
+#print axioms positive_L1_finite_hockey_realization
+#print axioms operationalL1_hockey_eq
+#print axioms sigma_finite_source_infimum_eq
 #print axioms PositiveTracePreservingL1Map.norm_bound
 #print axioms finite_source_density
 #print axioms finite_source_representation
