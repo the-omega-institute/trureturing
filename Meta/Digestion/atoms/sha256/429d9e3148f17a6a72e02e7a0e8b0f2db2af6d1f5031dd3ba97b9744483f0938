@@ -1,0 +1,45 @@
+**定理 96.2（全效应facet注入）。** 在定义96.1及 $m\ge1$ 下，单独 $\mathrm{Z0}$ 已使每个facet $F$ 都有一个原纯点 $p_F$，满足
+
+$$
+D_{p_F}=F,\qquad p_F\notin F.
+\tag{96.2}
+$$
+
+任意逐facet作出的这种选择都是单射 $F\mapsto p_F$，因此
+
+$$
+f\le n.
+\tag{96.3}
+$$
+
+所选顶点与facet还满足对称的交叉入射律
+
+$$
+p_G\in F\quad\Longleftrightarrow\quad p_F\in G
+\qquad(F,G\in\mathcal A(K)).
+\tag{96.4}
+$$
+
+这里不预设 $\mathrm B$、自对偶配对或顶点到facet的满射。
+
+证明。固定整个facet $F$。多面体的支撑表示给实仿射函数 $\ell_F$，在整个 $K$ 上非负，且零集恰为 $F$。它非恒定，故 $M_F=\max_K\ell_F>0$；线性优化在某个原顶点 $p_F\in P$ 达到这个最大值。把 $\ell_F/M_F$ 从归一超平面齐次延伸到 $V$，记作 $h_F$。具体地，任选 $x_0\in K$，用 $V=\mathbb Rx_0\oplus\ker u$ 将其仿射表达唯一线性延伸。由于每个非零 $c\in C$ 均为 $u(c)k$、$k\in K$，整个基上的零一界给
+
+$$
+0\le h_F\le u\text{ 于整个 }C,\qquad
+h_F(p_F)=1,\qquad K\cap\ker h_F=F.
+\tag{96.5}
+$$
+
+所以这是一张原全效应，$F\subseteq D_{p_F}$，并没有留下从子配置向整个载体延拓的义务。88.3由全称混态 $\mathrm{Z0}$ 给 $D_{p_F}$ 为暴露面；它是非空真面，因为 $p_F\notin D_{p_F}$。facet是极大真面，故 $F\subseteq D_{p_F}\subsetneq K$ 迫使 $D_{p_F}=F$。若两个facet选到同一个纯点，它们都等于该点的 $D_p$，故相等，得到单射及(96.3)。
+
+最后，两个纯端点的原零排除对称，因为同一proper效应的补交换零和一。因此
+
+$$
+p_G\in F=D_{p_F}
+\ \Longleftrightarrow\ p_F\perp p_G
+\ \Longleftrightarrow\ p_G\perp p_F
+\ \Longleftrightarrow\ p_F\in D_{p_G}=G.
+$$
+
+这证明(96.4)，并未把该有限非入射匹配提升为整个面格的极性。证毕。
+
