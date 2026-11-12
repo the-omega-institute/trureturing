@@ -60,7 +60,7 @@ private theorem clique_partner {α : Type} (G : SimpleGraph α) (s : Set α)
     intro hxu
     have ha' := ha x (hverts.symm ▸ hxu)
     rw [hfix] at ha'
-    exact G.irrefl x (M.adj_sub ha')
+    exact G.irrefl (M.adj_sub ha')
   · intro x hx
     have hm : x ∈ M.verts := by
       by_contra hn
@@ -84,11 +84,11 @@ private theorem two_clique_partner {α : Type} (G : SimpleGraph α) (s t : Set �
   have hdst : ∀ x, x ∈ s → x ∉ t := fun x hx hy => Set.disjoint_left.mp hdis hx hy
   have hmemf (x : α) : f x ∈ s ↔ x ∈ s := by
     constructor
-    · intro h; by_contra hn; simpa only [hfo x hn] using h
+    · intro h; by_contra hn; exact hn (by simpa only [hfo x hn] using h)
     · intro h; by_contra hn; have := hfo (f x) hn; rw [hfi x] at this; exact hn (this ▸ h)
   have hmemg (x : α) : g x ∈ t ↔ x ∈ t := by
     constructor
-    · intro h; by_contra hn; simpa only [hgo x hn] using h
+    · intro h; by_contra hn; exact hn (by simpa only [hgo x hn] using h)
     · intro h; by_contra hn; have := hgo (g x) hn; rw [hgi x] at this; exact hn (this ▸ h)
   let k : α → α := fun x => if x ∈ s then f x else g x
   have hki : Function.Involutive k := by
@@ -111,7 +111,7 @@ private theorem two_clique_partner {α : Type} (G : SimpleGraph α) (s t : Set �
     by_cases hxs : x ∈ s
     · exact Or.inl (hfc x hxs (by simpa only [k, if_pos hxs] using he))
     · exact Or.inr (hgc x (hx.resolve_left hxs) (by simpa only [k, if_neg hxs] using he))
-  have hne : c ≠ d := fun h => hdst c hc (h ▸ hd)
+  have hne : c ≠ d := fun h => hdst c hc (h.symm ▸ hd)
   by_cases hp : k c = c ∧ k d = d
   · let q : α → α := fun x => if x = c then d else if x = d then c else k x
     have hqoff (x : α) (hxc : x ≠ c) (hxd : x ≠ d) : k x ≠ c ∧ k x ≠ d := by
@@ -134,8 +134,8 @@ private theorem two_clique_partner {α : Type} (G : SimpleGraph α) (s t : Set �
       exact ⟨hxc, hxd, by simpa only [q, if_neg hxc, if_neg hxd] using he⟩
     refine ⟨q, hqi, ?_, ?_, ?_, ?_⟩
     · intro x hx
-      have hxc : x ≠ c := fun h => hx (Or.inl (h ▸ hc))
-      have hxd : x ≠ d := fun h => hx (Or.inr (h ▸ hd))
+      have hxc : x ≠ c := fun h => hx (Or.inl (h.symm ▸ hc))
+      have hxd : x ≠ d := fun h => hx (Or.inr (h.symm ▸ hd))
       simpa only [q, if_neg hxc, if_neg hxd] using hko x hx
     · intro x hx
       by_cases hxc : x = c
@@ -159,8 +159,8 @@ private theorem two_clique_partner {α : Type} (G : SimpleGraph α) (s t : Set �
 
 private def bufferGraph : SimpleGraph (Fin 6) where
   Adj i j := i ≠ j ∧ i.val ≤ j.val + 2 ∧ j.val ≤ i.val + 2
-  symm := by intro i j h; exact ⟨h.1.symm, h.2.2, h.2.1⟩
-  loopless := by intro i h; exact h.1 rfl
+  symm := ⟨by intro i j h; exact ⟨h.1.symm, h.2.2, h.2.1⟩⟩
+  loopless := ⟨by intro i h; exact h.1 rfl⟩
 
 private def leftFree (b : Fin 4 → Bool) : Set (Fin 6) :=
   {i | i.val ≤ 2 ∧ occupied b i = false}

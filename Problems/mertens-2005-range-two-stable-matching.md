@@ -32,8 +32,11 @@ exclude every internal blocking edge. Restriction and word splitting give
 b(m+k)<=b(m)b(k). Putting prescribed partners first gives 6^m<=b(m), including
 odd lengths with a final exterior request.
 
-Six inserted vertices fulfill boundary requests, pair the remaining free sites
-at distance at most two, and leave at most one central single. Matched buffer
+Six inserted vertices fulfill boundary requests. The free vertices in each
+three-site half form a clique containing its central vertex. A matching covers
+either the whole clique or the clique with its center removed, according to
+parity; if both centers remain single, their edge joins them. Thus the remaining
+free sites are paired at distance at most two with at most one central single. Matched buffer
 vertices put their partners first; every neighbor of a buffer single is
 matched. The actual word injections give b(m)b(k)<=b(m+k+6) and
 b(m)<=A(m+1). The latter is a source cycle with m+6 sites, including m=1, m=2,

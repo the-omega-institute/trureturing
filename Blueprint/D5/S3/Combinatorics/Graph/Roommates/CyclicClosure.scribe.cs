@@ -25,7 +25,7 @@ internal sealed class CyclicClosureDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("stable"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicClosure.stable"),
                 H("No cyclic blocking edge"), StatementSource.FromAuthor(StableFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Old--old edges use the saved exact rank transport and have no new wrap edge. A matched buffer endpoint ranks its partner first and rejects any proposed improvement. A buffer single is at position 3 or 4 in one-based numbering; all four cyclic neighbors are distinct matched buffer vertices. This also excludes an edge from an old single to a new single. The argument includes m=1 and its extra edge between buffer positions 1 and 6, m=2, and odd m. There is no parity or eventual-length hypothesis."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("Old--old edges use the exact rank transport and have no new wrap edge. A matched buffer endpoint ranks its partner first and rejects any proposed improvement. A buffer single is at position 3 or 4 in one-based numbering; all four cyclic neighbors are distinct matched buffer vertices. This also excludes an edge from an old single to a new single. The argument includes m=1 and its extra edge between buffer positions 1 and 6, m=2, and odd m. There is no parity or eventual-length hypothesis."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("close"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicClosure.close"),
                 H("Map on successful profiles"), StatementSource.FromAuthor(CloseFormula()), AssessedProvenance.FromRepo(),
