@@ -20,7 +20,7 @@ L and W are positive definite complex 2×2 matrices and det L=1. Write d=√Re(d
 
 The actual positive transport C=L⁻¹#W satisfies CLC=W. The original HwangKimNearOrderRefutation proof supplies det C=d and the two Cayley–Hamilton trace identities through a shared private helper. Positivity proves tr(LC)>0. The new sufficient direction uses the positive eigenvalues c₁,c₂ of C: c₁c₂≥1 and c₁+c₂≤1+c₁c₂ force both to be at least one. The determinant condition cannot be omitted. This is a criterion for arbitrary positive L,W in dimension two with det L=1; it is not restricted to either witness.
 
-Source: the Ma–Zhang revision2 note, equation (criterion), full source retained at issue #29594, CC BY 4.0. Haobo Ma: ChronoAI, Singapore. Wenlin Zhang: NUS and ChronoAI, Singapore. The original Hwang–Kim question is the final unnumbered display of arXiv:2407.07438v1 §6 p.17; equation (6.21) is a different proved comparison. This formalization is not a priority claim. Bhatia–Jain–Lim weak log-majorization and their norm/weak-majorization Conjecture 1 are not refuted by this criterion.
+Source: the Ma–Zhang revision2 note, equation (criterion), CC BY 4.0. Haobo Ma: ChronoAI, Singapore. Wenlin Zhang: NUS and ChronoAI, Singapore. The original Hwang–Kim question is the final unnumbered display of arXiv:2407.07438v1 §6 p.17; equation (6.21) is a different proved comparison. This formalization is not a priority claim. Bhatia–Jain–Lim weak log-majorization and their norm/weak-majorization Conjecture 1 are not refuted by this criterion.
 
 ## References
 
