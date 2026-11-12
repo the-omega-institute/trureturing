@@ -187,7 +187,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 + "The autonomous finite-dimensional specialization has constant Delta. "
                 + "The cited Library note records the full source attribution and its precise applicability. "
                 + "This derivation is reuse of classical literature and upstream results, "
-                    + "with no claim of research novelty or additional frozen dynamics theorem.")),
+                + "with no claim of research novelty or additional frozen dynamics theorem.")),
             Paragraph(Text(
                 "For the record-time application, use psi=a and t=tau with tau>=0. "
                 + "A positive resource parameter energy with Delta<=energy gives "
