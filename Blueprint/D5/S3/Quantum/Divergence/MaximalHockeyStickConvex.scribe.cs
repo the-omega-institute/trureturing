@@ -7,6 +7,8 @@ internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyitomamichel2026hockeystick");
+    private static readonly LibraryNoteRef Matsumoto =
+        LibraryNoteRef.Create("D5/L/Divergence/matsumoto2018newquantumfdivergence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "General convex maximal hockey equality for actual finite reverse tests and arbitrary singular matrix pairs.",
@@ -22,7 +24,7 @@ internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefiniti
             Node("maximalKernel", "The actual optimized overlap kernel",
                 "Write O(t) for the supremum of Re Tr(X) over the actual positive overlaps 0 <= X <= A and X <= t B. For t <= 1 the kernel is t Tr(B)-O(t); for t > 1 it is Tr(A)-O(t). Both branches are nonnegative. maximal_kernel_eq_operational proves that these are exactly the original finite operational infima in the two orientations. The optimization is over the actual singular matrix pair.", false),
             Node("maximal_kernel_eq_operational", "Each branch is an actual finite operational infimum",
-                "For every finite PSD A,B and positive threshold t, maximalKernel is operationalNegativeHockey A B t when t<=1 and operationalHockey A B t when t>1. Each operational quantity is independently defined as the infimum of the original sum of classical positive or negative parts over all k and actual ReverseTest A B k. Operational proves both SDP formulas with a single three-component attaining test, including empty dimension. hockey_value_eq_operational consumes this branchwise identification.", true),
+                "For every finite PSD A,B and positive threshold t, maximalKernel is operationalNegativeHockey A B t when t<=1 and operationalHockey A B t when t>1. Each operational quantity is independently defined as the infimum of the original sum of classical positive or negative parts over all k and actual ReverseTest A B k. Operational proves both SDP formulas with one attaining test, using three labels in nonempty dimension and zero labels in empty dimension. hockey_value_eq_operational consumes this branchwise identification.", true),
             Node("hockey_value_eq_operational", "The integrated original operational profiles",
                 "For arbitrary real f convex on Ioi 0 and every finite PSD A,B, hockeyValue equals its original finite affineMass plus the nonnegative extended curvature integral of the actual finite operational negative infimum on (0,1] and positive infimum on (1,infinity). The same actual curvature and all infinite endpoint conventions are retained. The existing hockey_le_test proof consumes this identity and bounds each operational infimum by the profile of the given actual test; both final general-convex equality directions therefore use the operational representation. No interchange of infimum and integral is asserted.", true),
             Node("finiteCost", "The full closed-perspective finite cost",
@@ -39,8 +41,8 @@ internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefiniti
         )));
 
     private static DocumentBlock Node(string name, string heading, string prose, bool theorem) =>
-        Describe.Lean(DescribeId.Create("maximal-hockey-convex-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("maximal-hockey-convex-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))),
+            AssessedProvenance.FromRepo(Source, Matsumoto), Blocks(Paragraph(Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 }

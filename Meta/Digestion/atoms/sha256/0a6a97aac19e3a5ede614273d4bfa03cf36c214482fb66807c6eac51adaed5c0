@@ -1,0 +1,39 @@
+**推论 111.9（存在一组可辨后的复型选择）。** 在W与 $\mathrm{TFD}_{3,\exists}$ 下，
+若仍保留全部原纯点上的条件
+
+$$
+\forall p\in P,\qquad D_p\simeq_{\rm aff}B^3,
+\tag{VIII111.32}
+$$
+
+则有同原锥同原单位的 $H_3(\mathbb C)$ 表示，$\dim_{\mathbb R}V=9$ 是后果。
+同一个实线性双射 $\Phi:H_3(\mathbb C)\to V$ 给整个静态字典
+
+$$
+\begin{gathered}
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi A)=\operatorname{tr}A,\qquad U=\Phi(I_3),\\
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v^*v=1\},\\
+\mathcal E=\{f_E:f_E(\Phi A)=\operatorname{tr}(EA),\quad0\preceq E\preceq I_3\},\\
+a_{\Phi(vv^*)}(\Phi\rho)=\operatorname{tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(qq^*))=|v^*q|^2\quad(q^*q=1),\\
+B(\Phi A,\Phi A')=\operatorname{tr}(AA'),\qquad
+\sum_j f_{E_j}=u\ \Longleftrightarrow\ \sum_jE_j=I_3.
+\end{gathered}
+\tag{VIII111.33}
+$$
+
+全部有限数学测量还要求各 $E_j\succeq0$；原纯几何为 $\mathbb{CP}^2$。
+这里没有先另给九维，也没有删掉原混态或原效应。
+只要求存在一张完整 $B^3$ 不能代替(VIII111.32)。
+
+证明。111.5先给全部框架TRI2，随后直接复用109.11—109.12的成熟EJA分类与完整字典。
+它们在同一个 $V,C,u,K,P,\mathcal E$ 上给复型、九维及Born迹配对。
+共同 $B$ 与矩阵迹配对的认同由111.5中原纯尺的唯一配对给出。
+109.11已给精确反例：同单位 $\mathbb R\oplus\operatorname{spin}_3$ 满足W、G和TRI2，
+所以也满足本章存在式关系，却只有旗标的整个排除面为三球；
+其球纯点的整个排除面为线段，实维数为五，非复三能级。
+因此不能把全称三球量词缩成一张窗口。
+这些数学测量是否属于实际可调用菜单仍按原过程合同决定。证毕。
+

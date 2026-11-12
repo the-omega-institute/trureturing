@@ -1,0 +1,16 @@
+**定义 113.8（局部尺寸校准候选）。** 在113.1的同一个原域定义
+
+$$
+\boxed{\begin{gathered}
+\mathrm{Pair}_{\perp},\\
+\forall p\in P\ \exists d_p\in\mathbb N,\ d_p\ge2:\
+ \{x\in K:\min_{f\in[0,u],\ f(p)=1}f(x)=0\}
+       \simeq_{\rm aff}B^{d_p},\\
+\exists p_0\in P:\ D_{p_0}\simeq_{\rm aff}B^3.
+\end{gathered}}
+\tag{VIII113.25}
+$$
+
+第二行要求所有完整排除球都有厚度，第三行只校准其中一张的维数。
+不输入“所有球同维”、纯点连通、复射线、酉作用、九维、共同中心或Born公式。
+
