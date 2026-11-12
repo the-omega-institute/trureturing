@@ -264,11 +264,16 @@ private theorem adjacent_delta {m : ℕ} (u : Fin m → Fin 4) (i r : Fin m)
   by_cases h : i = r
   · exact Or.inl ⟨h,by simp [h]⟩
   · right
+    have hval : i.val ≠ r.val := fun he => h (Fin.ext he)
     by_cases hil : i.val < r.val
-    · have he : r = ⟨i.val+1,by omega⟩ := Fin.ext (by omega)
-      exact ⟨i.val,by omega,by rw [he]⟩
-    · have he : i = ⟨r.val+1,by omega⟩ := Fin.ext (by omega)
-      exact ⟨r.val,by omega,by rw [he,Fin.xor_comm]⟩
+    · have hk : i.val + 1 < m := by omega
+      have he : r = ⟨i.val+1,hk⟩ := Fin.ext (by dsimp; omega)
+      refine ⟨i.val,hk,?_⟩
+      exact congrArg (fun t => u i ^^^ u t) he
+    · have hk : r.val + 1 < m := by omega
+      have he : i = ⟨r.val+1,hk⟩ := Fin.ext (by dsimp; omega)
+      refine ⟨r.val,hk,?_⟩
+      exact (congrArg (fun t => u t ^^^ u r) he).trans (Fin.xor_comm _ _)
 
 private theorem zones_proper {n : ℕ}
     (z : (Fin n → Fin 4) × (Fin 6 → Fin 4)) (hz : z ∈ zones n) :
@@ -312,11 +317,12 @@ def zoneEquiv {n : ℕ} (hn : 0 < n) :
     apply Subtype.ext
     apply Prod.ext
     · funext i
-      exact Fin.xor_zero (z.1.1 i) |>.symm.trans (congrArg (fun t => z.1.1 i ^^^ t) z.2.1.symm)
+      change z.1.1 i ^^^ z.1.2 0 = z.1.1 i
+      rw [z.2.1,Fin.xor_zero]
     · funext j
       change (z.1.1 ⟨0,hn⟩ ^^^ z.1.2 0) ^^^ (z.1.1 ⟨0,hn⟩ ^^^ z.1.2 j) = z.1.2 j
       rw [z.2.1,Fin.xor_zero]
-      simpa only [Fin.xor_assoc (show 4 = 2^2 from rfl),Fin.xor_self,Fin.xor_zero]
-        using (xor_shift (z.1.1 ⟨0,hn⟩) 0 (z.1.2 j))
+      rw [← Fin.xor_assoc (show 4 = 2^2 from rfl),Fin.xor_self,
+        Fin.xor_comm,Fin.xor_zero]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip

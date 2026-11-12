@@ -29,6 +29,18 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The rectangle theorem below does not prove this conjunction: the signed normalization fibres and their counts remain to be established."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("proper"), DeclarationHandle.Create(Prefix + "Proper"),
+                H("Labelled proper pair-colourings"), StatementSource.FromAuthor(Disp(ProperFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The four labels name the complementary pairs. Proper means different labels at every distinct neighbouring cell pair, with both coordinate differences at most one. No normalization or surjectivity is included in this auxiliary class."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("zones"), DeclarationHandle.Create(Prefix + "zones"),
+                H("First-column values and first-row offsets"), StatementSource.FromAuthor(Disp(ZonesFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("A zone datum z is the pair (u,v) of first-column values and first-row offsets. The offset v(0) is zero. Adjacent increments of each word are nonzero, and each horizontal increment differs from every vertical increment. Bounded natural indices denote their corresponding Fin indices; their proof arguments do not affect values."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("equivalence"), DeclarationHandle.Create(Prefix + "zoneEquiv"),
+                H("A bijection for every positive height"), StatementSource.FromAuthor(Disp(EquivalenceFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The forward map records u(i)=c(i,0) and v(j)=c(0,0) xor c(0,j). The inverse sends (u,v) to c(i,j)=u(i) xor v(j). The displayed equations describe the underlying functions of the subtype maps; proofs of membership are omitted. The rectangle identity proves the first composite is the identity. The zero offset proves the second. For the converse adjacency proof, equal rows or equal columns use the nonzero increments, and both diagonal directions use the disjointness of horizontal and vertical increments. This bijection includes height one; the later all-four-colours and literal-prefix saturation conclusions require height at least two."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("rectangle"), DeclarationHandle.Create(Prefix + "pair_rectangle"),
                 H("Necessary zone data for every literal strip"), StatementSource.FromAuthor(Disp(RectangleFormula())),
                 AssessedProvenance.FromRepo(Source),
@@ -94,6 +106,47 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         return All("n",V("Nat"),Imp(Le(D(2),n),All("f",Arrow(Product(Call("Fin",n),Fin(6)),Fin(8)),
             Imp(Call("Legal",f),And(reconstruction,And(horizontal,And(vertical,And(exhaustive,seen))))))));
     }
+
+    private static Formula ProperFormula()
+    {
+        var n=V("n"); var c=V("c"); var p=V("p"); var q=V("q");
+        var cells=Product(Call("Fin",n),Fin(6));
+        Formula Co(Formula r,string name) => Val(Call(name,r));
+        var near=And(Ne(p,q),And(Le(Co(p,"Prod.fst"),Add(Co(q,"Prod.fst"),D(1))),And(
+            Le(Co(q,"Prod.fst"),Add(Co(p,"Prod.fst"),D(1))),And(
+            Le(Co(p,"Prod.snd"),Add(Co(q,"Prod.snd"),D(1))),Le(Co(q,"Prod.snd"),Add(Co(p,"Prod.snd"),D(1)))))));
+        return All("n",V("Nat"),All("c",Arrow(cells,Fin(4)),Iff(Call("Proper",c),
+            All("p",cells,All("q",cells,Imp(near,Ne(App(c,p),App(c,q))))))));
+    }
+
+    private static Formula ZonesFormula()
+    {
+        var n=V("n"); var z=V("z"); var i=V("i"); var j=V("j");
+        var u=Call("Prod.fst",z); var v=Call("Prod.snd",z);
+        Formula H(Formula t) => Call("xor",App(v,Call("Fin.castSucc",t)),App(v,Call("Fin.succ",t)));
+        Formula T(Formula r) => Call("xor",App(u,r),App(u,Add(r,D(1))));
+        var pred=And(Eq(App(v,D(0)),D(0)),And(All("j",Fin(5),Ne(H(j),D(0))),
+            All("i",V("Nat"),Imp(Lt(Add(i,D(1)),n),And(Ne(T(i),D(0)),All("j",Fin(5),Ne(H(j),T(i))))))));
+        return All("n",V("Nat"),All("z",Product(Arrow(Call("Fin",n),Fin(4)),Arrow(Fin(6),Fin(4))),
+            Iff(Member(z,Call("zones",n)),pred)));
+    }
+
+    private static Formula EquivalenceFormula()
+    {
+        var n=V("n"); var hn=V("h"); var c=V("c"); var z=V("z"); var i=V("i"); var j=V("j"); var p=V("p");
+        var cells=Product(Call("Fin",n),Fin(6)); var equiv=Call("zoneEquiv",hn);
+        Formula C(Formula r,Formula t) => App(c,Pair(r,t));
+        var u=Seq(LambdaLower,Sp,i,Colon,Sp,Call("Fin",n),Sp,Mapsto,Sp,C(i,D(0)));
+        var v=Seq(LambdaLower,Sp,j,Colon,Sp,Fin(6),Sp,Mapsto,Sp,Call("xor",C(D(0),D(0)),C(D(0),j)));
+        var forward=All("c",Arrow(cells,Fin(4)),Imp(Call("Proper",c),Eq(App(equiv,Call("Subtype.mk",c)),Pair(u,v))));
+        var result=Seq(LambdaLower,Sp,p,Colon,Sp,cells,Sp,Mapsto,Sp,
+            Call("xor",App(Call("Prod.fst",z),Call("Prod.fst",p)),App(Call("Prod.snd",z),Call("Prod.snd",p))));
+        var backward=All("z",Product(Arrow(Call("Fin",n),Fin(4)),Arrow(Fin(6),Fin(4))),
+            Imp(Member(z,Call("zones",n)),Eq(App(Call("Equiv.symm",equiv),Call("Subtype.mk",z)),result)));
+        return All("n",V("Nat"),All("h",Lt(D(0),n),And(forward,backward)));
+    }
+
+    private static Formula Member(Formula a, Formula b) => Seq(a,Sp,InMacro,Sp,b);
 
     private static Formula Iff(Formula a, Formula b) => Seq(Par(a),Sp,Leftrightarrow,Sp,Par(b));
     private static Formula Le(Formula a, Formula b) => Seq(a,Sp,Leq,Sp,b);
