@@ -5,7 +5,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Convexity;
 
 internal sealed class CurvaturePerspectiveEndpointsDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Analytic/Convexity/CurvatureHingeRepresentation.";
+    // A declaration handle selects its physical source module, then its name suffix.
+    // The Lean namespace is CurvatureHingeRepresentation.
+    private const string Prefix = "D5/S3/Analytic/Convexity/CurvaturePerspectiveEndpoints.";
     private static Formula Fn => Arrow(Real(), Real());
     private static Formula Convex => Call("ConvexOn", Real(), Call("Ioi", D(0)), Id("f"));
     private static Formula Mu => Call("curvature", Id("h"));
@@ -18,7 +20,7 @@ internal sealed class CurvaturePerspectiveEndpointsDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Extended convex endpoints and the closed perspective are obtained from actual positive Stieltjes curvature, including infinite costs.",
         H("Extended endpoints, axes and cost integration"), Blocks(
-            Paragraph(Text("Assume only that f is real valued and convex on the strictly positive ray. The curvature measure is the actual right-derivative Stieltjes measure constructed in CurvatureHingeRepresentation. Integrals denoted LIntegral are extended nonnegative Lebesgue integrals. Finite real terms and nonnegative extended terms are embedded in EReal. No subtraction of infinite values occurs. The base one in each curvature domain is the positive subtype element one.")),
+            Paragraph(Text("Assume only that f is real valued and convex on the strictly positive ray. The curvature measure is the actual right-derivative Stieltjes measure constructed in CurvatureHingeRepresentation. The endpoint declarations retain that Lean namespace but are owned by the CurvaturePerspectiveEndpoints source module; each Describe handle selects that module and the declaration suffix. Integrals denoted LIntegral are extended nonnegative Lebesgue integrals. Finite real terms and nonnegative extended terms are embedded in EReal. No subtraction of infinite values occurs. The base one in each curvature domain is the positive subtype element one.")),
             Node("zeroEndpoint", Eqn(Zero, Add(Sub(Call("f", D(1)), Slope),
                 LI(Call("Iic", D(1)), Call("ENNReal.ofReal", Id("t")), Mu))),
                 "The zero endpoint is a finite affine constant plus the possibly infinite first curvature moment over (0,1]. It is never minus infinity.", false),

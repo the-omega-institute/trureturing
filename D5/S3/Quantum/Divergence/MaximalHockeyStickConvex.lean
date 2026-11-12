@@ -18,7 +18,7 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 open Filter Matrix MeasureTheory Set
-open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator Topology
+open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator Topology ENNReal
 open D5.S3.Analytic.Convexity.CurvatureHingeRepresentation
 open D5.S3.Quantum.Divergence.MaximalHockeyStickOverlap
 open D5.S3.Quantum.Divergence.MaximalHockeyStickSupport
@@ -79,10 +79,6 @@ private theorem test_kernel_measurable {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) : Measurable (testKernel R) :=
   Finset.measurable_sum _ (fun i _ => hinge_measurable (R.p i) (R.q i))
 
-private theorem test_kernel_nonneg {A B : Matrix n n ℂ} {k : ℕ}
-    (R : ReverseTest A B k) (t : Positive) : 0 ≤ testKernel R t :=
-  Finset.sum_nonneg (fun i _ => hinge_nonneg (R.p i) (R.q i) t)
-
 private theorem test_kernel_eq {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) (t : Positive) :
     testKernel R t = if t ≤ one then R.hockey t - A.trace.re + (t : ℝ) * B.trace.re
@@ -93,7 +89,6 @@ private theorem test_kernel_eq {A B : Matrix n n ℂ} {k : ℕ}
       ← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro i _
-    dsimp only [ReverseTest.hockey]
     have h : max ((t : ℝ) * R.q i - R.p i) 0 =
         max (R.p i - (t : ℝ) * R.q i) 0 - R.p i + (t : ℝ) * R.q i := by
       rcases le_total (R.p i) ((t : ℝ) * R.q i) with h | h
@@ -119,7 +114,8 @@ private theorem maximal_kernel_nonneg (A B : Matrix n n ℂ)
   · obtain ⟨X, hX, he⟩ := overlap_attained A ((t : ℝ) • B) hA (hB.smul t.2.le)
     have htr := (Complex.nonneg_iff.mp (Matrix.le_iff.mp hX.2.2).trace_nonneg).1
     rw [Matrix.trace_sub, Complex.sub_re, Matrix.trace_smul, Complex.real_smul] at htr
-    simpa only [← he] using htr
+    simpa only [← he, smul_eq_mul, Complex.mul_re, Complex.ofReal_re,
+      Complex.ofReal_im, zero_mul, sub_zero] using htr
   · exact maximal_hockey_nonneg hA hB t.2.le
 
 private theorem maximal_kernel_measurable (A B : Matrix n n ℂ)
@@ -128,21 +124,21 @@ private theorem maximal_kernel_measurable (A B : Matrix n n ℂ)
   convert (test_kernel_measurable R).sub
     (actual_gap_profile_data R hA hB).2.continuous.measurable using 1
   funext t
+  change maximalKernel A B t = testKernel R t - gap R t
   rw [kernel_gap]
   ring
 
 private theorem remainder_eq_hinge (hf : ConvexOn ℝ (Ioi 0) f) (u v : ℝ) :
     curvatureRemainder hf u v = ∫⁻ t, ENNReal.ofReal (hinge u v t) ∂curvature hf := by
+  change (∫⁻ t in Iic one, ENNReal.ofReal ((t : ℝ) * v - u) ∂curvature hf) +
+      (∫⁻ t in Ioi one, ENNReal.ofReal (u - (t : ℝ) * v) ∂curvature hf) = _
   symm
-  convert lintegral_piecewise (μ := curvature hf) measurableSet_Iic.nullMeasurableSet
-    (fun t : Positive => ENNReal.ofReal ((t : ℝ) * v - u))
-    (fun t : Positive => ENNReal.ofReal (u - (t : ℝ) * v)) using 1
-  · congr 1
+  have he : (fun t => ENNReal.ofReal (hinge u v t)) =
+      (Iic one).piecewise (fun t : Positive => ENNReal.ofReal ((t : ℝ) * v - u))
+        (fun t : Positive => ENNReal.ofReal (u - (t : ℝ) * v)) := by
     funext t
-    simp only [hinge, Set.piecewise, mem_Iic, ENNReal.ofReal_max, ENNReal.ofReal_zero,
-      max_eq_left (zero_le _)]
-    split_ifs <;> rfl
-  · simp only [curvatureRemainder, compl_Iic]
+    by_cases ht : t ≤ one <;> simp [hinge, Set.piecewise, ht]
+  rw [he, lintegral_piecewise (s := Iic one) measurableSet_Iic.nullMeasurableSet, compl_Iic]
 
 private theorem finite_cost_decomposition (hf : ConvexOn ℝ (Ioi 0) f)
     {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k) :
@@ -182,8 +178,8 @@ private theorem hockey_le_test (hf : ConvexOn ℝ (Ioi 0) f)
     {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k)
     (hA : A.PosSemidef) (hB : B.PosSemidef) :
     hockeyValue hf A B ≤ finiteCost hf R := by
-  rw [finite_cost_decomposition]
-  apply add_le_add_left
+  rw [hockeyValue, finite_cost_decomposition]
+  apply add_le_add le_rfl
   apply EReal.coe_ennreal_le_coe_ennreal_iff.mpr
   apply lintegral_mono
   intro t
@@ -215,7 +211,7 @@ private theorem finite_cost_gap (hf : ConvexOn ℝ (Ioi 0) f)
     (hA : A.PosSemidef) (hB : B.PosSemidef) (hfin : finiteCost hf R ≠ ⊤) :
     Integrable (gap R) (curvature hf) ∧
       finiteCost hf R = hockeyValue hf A B +
-        ((∫ t, gap R t ∂curvature hf : ℝ) : EReal) := by
+        ((∫ t : PositiveThreshold, gap R t ∂curvature hf : ℝ) : EReal) := by
   have hsplit := test_integral_split hf R hA hB
   have htest : (∫⁻ t, ENNReal.ofReal (testKernel R t) ∂curvature hf) ≠ ⊤ := by
     intro h
@@ -229,10 +225,12 @@ private theorem finite_cost_gap (hf : ConvexOn ℝ (Ioi 0) f)
     ⟨(actual_gap_profile_data R hA hB).2.continuous.aestronglyMeasurable,
       (hasFiniteIntegral_iff_ofReal hn).2 (lt_top_iff_ne_top.mpr hgap)⟩
   refine ⟨hi, ?_⟩
-  rw [finite_cost_decomposition, hsplit, EReal.coe_ennreal_add, ← add_assoc]
+  rw [finite_cost_decomposition, hsplit, EReal.coe_ennreal_add, ← add_assoc, hockeyValue]
   congr 1
-  rw [← ofReal_integral_eq_lintegral_ofReal hi hn, EReal.coe_ennreal_ofReal,
-    max_eq_left (integral_nonneg_of_ae hn)]
+  change ((∫⁻ t : PositiveThreshold, ENNReal.ofReal (gap R t) ∂curvature hf : ℝ≥0∞) : EReal) =
+    ((∫ t : PositiveThreshold, gap R t ∂curvature hf : ℝ) : EReal)
+  rw [← ofReal_integral_eq_lintegral_ofReal hi hn, EReal.coe_ennreal_ofReal]
+  exact congrArg (fun z : ℝ => (z : EReal)) (max_eq_left (integral_nonneg_of_ae hn))
 
 /-- The common-interior condition gives equality for every real convex
 function as an equality of extended values, without endpoint or value finiteness. -/
@@ -278,7 +276,7 @@ private theorem approximate_finite_tests (hf : ConvexOn ℝ (Ioi 0) f)
 /-- Full-support curvature and a real finite actual infimum classify equality
 by the original common-interior commutator for every finite PSD pair. -/
 theorem integrated_eq_iff_commute (hf : ConvexOn ℝ (Ioi 0) f)
-    [IsOpenPosMeasure (curvature hf)]
+    [(curvature hf).IsOpenPosMeasure]
     (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
     (c : ℝ) (hc : maximalValue hf A B = (c : EReal)) :
     let S := A + B
@@ -294,14 +292,18 @@ theorem integrated_eq_iff_commute (hf : ConvexOn ℝ (Ioi 0) f)
       ne_top_of_lt (htests j)
     have hg (j : ℕ) := finite_cost_gap hf (tests j).2 hA hB (hcost j)
     have hH : hockeyValue hf A B = (c : EReal) := he.symm.trans hc
+    letI : IsLocallyFiniteMeasure (curvature hf : Measure PositiveThreshold) :=
+      curvature_locallyFinite hf
     apply vanishing_curvature_gaps_imply_commute A B hA hB (curvature hf) tests
       (fun j => (hg j).1)
-    apply squeeze_zero
+    apply squeeze_zero (g := fun j : ℕ => 1 / ((j : ℝ) + 1))
     · intro j
       exact integral_nonneg (fun t => ((actual_gap_profile_data (tests j).2 hA hB).1 t).1)
     · intro j
       have h := htests j
       rw [(hg j).2, hH, ← EReal.coe_add, EReal.coe_lt_coe_iff] at h
+      change c + (∫ t : PositiveThreshold, gap (tests j).2 t ∂curvature hf) <
+        c + 1 / ((j : ℝ) + 1) at h
       linarith
     · exact tendsto_one_div_add_atTop_nhds_zero_nat
   · exact commute_implies_integrated_eq hf A B hA hB

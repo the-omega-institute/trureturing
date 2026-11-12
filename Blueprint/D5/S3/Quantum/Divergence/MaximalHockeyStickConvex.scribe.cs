@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Divergence;
 internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Divergence/gheondeagudderjonas2005infimum");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "General convex maximal hockey equality for actual finite reverse tests and arbitrary singular matrix pairs.",
@@ -29,12 +31,12 @@ internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefiniti
                 "For every finite PSD pair, let S=A+B, C=normalize(S,A), and P=interiorProjection(C). If PSP commutes with PCP, then maximalValue hf A B equals hockeyValue hf A B for every real f convex on the positive ray. No full-support or finite-value hypothesis is needed in this direction. The actual canonical spectral test supplied by quadratic_reverse_test_attained_profile has exactly maximalKernel at every positive threshold. Its actual closed-perspective cost integrates that profile, and the defining infimum is sandwiched between this cost and the hockey lower bound. This proves the converse with infinite endpoint values, rather than assuming canonical optimality for general f.", true),
             Node("integrated_eq_iff_commute", "The finite-value full-support classification",
                 "For every finite type n, every pair A,B of PSD complex n by n matrices, every real f convex on Ioi 0 whose constructed curvature is positive on every nonempty open set, and every real c satisfying maximalValue hf A B = c, equality maximalValue hf A B = hockeyValue hf A B is equivalent to (PSP)(PCP)=(PCP)(PSP), with S=A+B, C=normalize(S,A), P=interiorProjection(C). Local finiteness is supplied by the constructed curvature. The statement includes zero and singular pairs and the empty matrix type. Finite-cost approximate tests have integrable nonnegative gaps; their costs split as hockeyValue plus the real gap integral. Equality and the 1/(j+1) bounds force those integrals to zero, and vanishing_curvature_gaps_imply_commute supplies the original-pair commutator. No general-f attainment theorem is used. Operator-convex generators satisfying the same curvature and finite-value hypotheses are included by this scalar-convex theorem. Necessity from equality of two infinite values is not asserted.", true),
-            Paragraph(Text("Attribution: the source equality question is Hiai, Mosonyi and Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, final equality question. Hiai's canonical spectral reverse-test construction and operator-convex optimality are antecedents, rather than new claims. Gheondea, Gudder and Jonas, On the infimum of quantum effects (2005), DOI 10.1063/1.1904704, is a localization antecedent for separating common-support overlap geometry from endpoint pieces. The present proof consumes the repository's actual finite spectral and quadratic results and its scalar Stieltjes construction. No Bayer-Teichmann cubature or general-convex attainment result is consumed. The full-support approximate-test integration is a repository derivation; worldwide priority is unresolved."))
+            Paragraph(Text("Attribution: the source equality question is Hiai, Mosonyi and Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, final equality question. Hiai's canonical spectral reverse-test construction and operator-convex optimality are antecedents, rather than new claims. The GGJ2005 result documented by the Library attribution is a localization antecedent for separating common-support overlap geometry from endpoint pieces. The present proof consumes the repository's actual finite spectral and quadratic results and its scalar Stieltjes construction. No Bayer-Teichmann cubature or general-convex attainment result is consumed. The full-support approximate-test integration is a repository derivation; worldwide priority is unresolved."))
         )));
 
     private static DocumentBlock Node(string name, string heading, string prose, bool theorem) =>
         Describe.Lean(DescribeId.Create("maximal-hockey-convex-" + name.Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 }
