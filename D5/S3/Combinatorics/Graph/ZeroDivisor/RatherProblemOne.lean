@@ -74,15 +74,15 @@ theorem rather_problem_one (p q r : ℕ)
   let sQ := fun k => (s k : ℚ)
   have hco := NativeCoefficients.coefficients_three_domains
     ((ZMod.ringEquivCongr hmprod.symm).trans (Support.crt m hcop))
-    (by simpa only [ZMod.card] using hpq.le)
-    (by simpa only [ZMod.card] using hqr.le)
-    (by simpa only [ZMod.card] using hq3)
-    (by simpa only [ZMod.card] using hr5)
+    (by simpa [ZMod.card, m] using hpq.le)
+    (by simpa [ZMod.card, m] using hqr.le)
+    (by simpa [ZMod.card, m] using hq3)
+    (by simpa [ZMod.card, m] using hr5)
   change 14 ≤ N ∧ G.indepNum = N ∧ _
   have hco' : 14 ≤ N ∧ (∀ k, k ≤ N → 0 < sQ k) ∧
       (∀ k, N < k → sQ k = 0) ∧
       (∀ k, 1 ≤ k → k < N → sQ (k-1)*sQ (k+1) < sQ k^2) := by
-    simpa only [ZMod.card] using hco
+    simpa [ZMod.card, m] using hco
   obtain ⟨hN, hposQ, htailQ, hlcQ⟩ := hco'
   have hpos (k : ℕ) (hk : k ≤ N) : 0 < s k := by
     have h := hposQ k hk
