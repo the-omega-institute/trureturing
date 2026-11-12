@@ -279,9 +279,38 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
     have hinverse (z : X) :
         (rightUnitIso hD A).inv.linearMap z = (rightUnit hD A).symm z := by
       rfl
-    dsimp only [openPartialTrace, ModuleHom.comp, LinearMap.comp_apply]
-    rw [hforward, hinverse]
-    rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
+    have hcompose
+        {M₀ : Type _} {M₁ : Type _} {M₂ : Type _}
+        {M₃ : Type _} {M₄ : Type _} {M₅ : Type _}
+        [AddCommGroup M₀] [Module ℂ M₀] [AddCommGroup M₁] [Module ℂ M₁]
+        [AddCommGroup M₂] [Module ℂ M₂] [AddCommGroup M₃] [Module ℂ M₃]
+        [AddCommGroup M₄] [Module ℂ M₄] [AddCommGroup M₅] [Module ℂ M₅]
+        {J₀ : FullJacobiLatticeModule D M₀} {J₁ : FullJacobiLatticeModule D M₁}
+        {J₂ : FullJacobiLatticeModule D M₂} {J₃ : FullJacobiLatticeModule D M₃}
+        {J₄ : FullJacobiLatticeModule D M₄} {J₅ : FullJacobiLatticeModule D M₅}
+        (f₀ : ModuleHom J₀ J₁) (f₁ : ModuleHom J₁ J₂) (f₂ : ModuleHom J₂ J₃)
+        (f₃ : ModuleHom J₃ J₄) (f₄ : ModuleHom J₄ J₅) (z : M₀) :
+        (f₄.comp (f₃.comp (f₂.comp (f₁.comp f₀)))).linearMap z =
+          f₄.linearMap (f₃.linearMap (f₂.linearMap (f₁.linearMap (f₀.linearMap z)))) := by
+      rfl
+    have hcomposition := hcompose (rightUnitIso hD A).inv
+      (productHom hD (ModuleHom.id A) (coevaluation B hD)) (openMonodromy A B hD)
+      (productHom hD (ModuleHom.id A) (ribbonCap B hD)) (rightUnitIso hD A).hom
+      (classified hD A a x v)
+    refine hcomposition.trans ?_
+    refine (hforward
+      ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+        ((openMonodromy A B hD).linearMap
+          ((productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
+            ((rightUnitIso hD A).inv.linearMap (classified hD A a x v)))))).trans ?_
+    have hbegin := congrArg
+      (fun z : P A (I D) => rightUnit hD A
+        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+          ((openMonodromy A B hD).linearMap
+            ((productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap z))))
+      ((hinverse (classified hD A a x v)).trans
+        (rightUnit_inverse_elementary (hD := hD) (A := A) a v x))
+    refine hbegin.trans ?_
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
