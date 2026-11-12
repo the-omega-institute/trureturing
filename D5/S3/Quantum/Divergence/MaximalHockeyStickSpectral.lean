@@ -48,7 +48,8 @@ private theorem separating_threshold {a b : ℝ}
     exact div_neg_of_neg_of_pos (sub_neg.mpr hba) hd
 
 private theorem diagonal_cuts_iff (d : n → ℝ) (W : Matrix n n ℂ)
-    (hW : W.IsHermitian) (hd : ∀ i, 0 < d i ∧ d i < 1) :
+    (hW : W.IsHermitian)
+    (hd : ∀ i j, W i j ≠ 0 → (0 < d i ∧ d i < 1) ∧ (0 < d j ∧ d j < 1)) :
     (∀ t : ℝ, 0 < t →
       diagonal (fun i => (max (d i - t * (1 - d i)) 0 : ℝ) : n → ℂ) * W *
         diagonal (fun i => (max (t * (1 - d i) - d i) 0 : ℝ) : n → ℂ) = 0) ↔
@@ -58,14 +59,16 @@ private theorem diagonal_cuts_iff (d : n → ℝ) (W : Matrix n n ℂ)
       diagonal (fun i => (max (d i - t * (1 - d i)) 0 : ℝ) : n → ℂ) * W *
         diagonal (fun i => (max (t * (1 - d i) - d i) 0 : ℝ) : n → ℂ) = 0)
       (i j : n) (hji : d j < d i) : W i j = 0 := by
-    obtain ⟨t, ht, hi, hj⟩ := separating_threshold (hd j).1 hji (hd i).2
+    by_contra hn
+    obtain ⟨hdi, hdj⟩ := hd i j hn
+    obtain ⟨t, ht, hi, hj⟩ := separating_threshold hdj.1 hji hdi.2
     have he := congrArg (fun M : Matrix n n ℂ => M i j) (h t ht)
     simp only [Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.zero_apply] at he
     rw [max_eq_left (le_of_lt hi), max_eq_left (by linarith : 0 ≤ t * (1 - d j) - d j)] at he
     have hi' : (↑(d i - t * (1 - d i)) : ℂ) ≠ 0 := by exact_mod_cast ne_of_gt hi
     have hj' : (↑(t * (1 - d j) - d j) : ℂ) ≠ 0 := by
       exact_mod_cast ne_of_gt (show 0 < t * (1 - d j) - d j by linarith)
-    exact (mul_eq_zero.mp ((mul_eq_zero.mp he).resolve_right hj')).resolve_left hi'
+    exact hn ((mul_eq_zero.mp ((mul_eq_zero.mp he).resolve_right hj')).resolve_left hi')
   constructor
   · intro h
     ext i j
@@ -105,13 +108,15 @@ private theorem diagonal_cuts_iff (d : n → ℝ) (W : Matrix n n ℂ)
       rw [(mul_eq_zero.mp hz).resolve_left hn]
       simp
 
-/-- For a Hermitian strict contraction, every positive threshold separates its
-positive and negative spectral residuals in the weight precisely when the
-weight commutes with the contraction. Repeated eigenvalues and the empty
-matrix carrier are included. -/
+/-- If a Hermitian weight is supported on the interior spectrum of a Hermitian
+matrix, its threshold cross terms vanish precisely when it commutes with that
+matrix. Repeated eigenvalues and the empty matrix carrier are included. -/
 theorem all_thresholds_iff_commute (D W : Matrix n n ℂ)
     (hD : D.IsHermitian) (hW : W.IsHermitian)
-    (hd : ∀ i, 0 < hD.eigenvalues i ∧ hD.eigenvalues i < 1) :
+    (hd : ∀ i j,
+      ((Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) hD.eigenvectorUnitary).symm W) i j ≠ 0 →
+        (0 < hD.eigenvalues i ∧ hD.eigenvalues i < 1) ∧
+        (0 < hD.eigenvalues j ∧ hD.eigenvalues j < 1)) :
     (∀ t : ℝ, 0 < t → thresholdPositive D t * W * thresholdNegative D t = 0) ↔
       W * D = D * W := by
   classical
@@ -154,5 +159,46 @@ theorem all_thresholds_iff_commute (D W : Matrix n n ℂ)
   · rw [← hspec] at h
     have hm := congrArg e.symm h
     simpa only [map_mul, e.symm_apply_apply, V] using hm
+
+/-- The actual spectral projection onto eigenvalues strictly between zero and one. -/
+def interiorProjection (C : Matrix n n ℂ) : Matrix n n ℂ :=
+  cfc (fun x : ℝ => if 0 < x ∧ x < 1 then 1 else 0) C
+
+/-- Ambient form of the common-corner spectral criterion. No invertibility of
+`C` or `1-C`, no simple-spectrum hypothesis, and no nonzero-corner hypothesis
+are imposed. Only the compressed weight `P W P` enters the criterion. -/
+theorem all_common_thresholds_iff_commute (C W : Matrix n n ℂ)
+    (hC : C.IsHermitian) (hW : W.IsHermitian) :
+    let P := interiorProjection C
+    (∀ t : ℝ, 0 < t →
+      thresholdPositive C t * (P * W * P) * thresholdNegative C t = 0) ↔
+      (P * W * P) * C = C * (P * W * P) := by
+  classical
+  dsimp only
+  let e := Unitary.conjStarAlgAut ℂ (Matrix n n ℂ) hC.eigenvectorUnitary
+  let F : Matrix n n ℂ := diagonal (fun i =>
+    ((if 0 < hC.eigenvalues i ∧ hC.eigenvalues i < 1 then 1 else 0 : ℝ) : ℂ))
+  have hP : (interiorProjection C).IsHermitian := cfc_predicate _ C
+  have hT : (interiorProjection C * W * interiorProjection C).IsHermitian := by
+    change (interiorProjection C * W * interiorProjection C)ᴴ = _
+    simp only [Matrix.conjTranspose_mul, hP.eq, hW.eq, Matrix.mul_assoc]
+  apply all_thresholds_iff_commute C _ hC hT
+  have hF : e.symm (interiorProjection C) = F := by
+    have he : interiorProjection C = e F := by
+      rw [interiorProjection, hC.cfc_eq]
+      rfl
+    rw [he, e.symm_apply_apply]
+  intro i j hij
+  change (e.symm (interiorProjection C * W * interiorProjection C)) i j ≠ 0 at hij
+  simp only [map_mul, hF, Matrix.diagonal_mul, Matrix.mul_diagonal] at hij
+  by_cases hi : 0 < hC.eigenvalues i ∧ hC.eigenvalues i < 1
+  · by_cases hj : 0 < hC.eigenvalues j ∧ hC.eigenvalues j < 1
+    · exact ⟨hi, hj⟩
+    · exfalso
+      exact hij (by simp only [F, Matrix.diagonal_mul, Matrix.mul_diagonal, if_neg hj,
+        Complex.ofReal_zero, mul_zero])
+  · exfalso
+    exact hij (by simp only [F, Matrix.diagonal_mul, Matrix.mul_diagonal, if_neg hi,
+      Complex.ofReal_zero, zero_mul])
 
 end D5.S3.Quantum.Divergence.MaximalHockeyStickSpectral
