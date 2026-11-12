@@ -8,7 +8,7 @@ internal sealed class KimberlingA371279Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/CounterSequences/KimberlingA371279.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/kimberling2024a371279a371280");
+        LibraryNoteRef.Create("D5/L/Computability/kimberling2024a371279a371280");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every rational in (0,1] occurs exactly once in Kimberling's ordered fraction enumeration.",
@@ -61,8 +61,8 @@ internal sealed class KimberlingA371279Document : IScribeDocumentDefinition
                 + "and den(i)=denominator(i)=(T(i)).den. The arrays A371279 and A371280 are these two "
                 + "coordinate records of the same T; neither coordinate is claimed individually injective. "
                 + "This does not validate published finite array digits or execute Mathematica. "
-                + "The denominator-induction candidate came from a GPT Pro search and was checked ordinarily "
-                + "before this formalization; no independent-discovery or research-difficulty claim is made.",
+                + "The denominator-induction route is attributed to the supplied GPT Pro search candidate; "
+                + "no independent-discovery or research-difficulty claim is made.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
@@ -136,7 +136,7 @@ internal sealed class KimberlingA371279Document : IScribeDocumentDefinition
     {
         var n=F.Id("n"); var k=F.Id("k");
         return Disp(For(n,Nat(),For(k,Nat(),Eqn(Call("flatIndex",Seq(Open,n,Comma,k,Close)),
-            Add(Len(Flat(Sub(n,D(1)))),Sub(k,D(1)))))));
+            Add(Len(Flat(Sub(n,D(1)))),Seq(Open,Sub(k,D(1)),Close))))));
     }
     private static Formula UpdateFormula()
     {
