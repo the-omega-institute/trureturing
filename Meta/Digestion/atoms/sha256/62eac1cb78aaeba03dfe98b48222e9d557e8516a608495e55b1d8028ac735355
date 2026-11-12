@@ -1,0 +1,58 @@
+**Theorem 7.2 (separation in an original wrapped output).** Fix any
+$t\in(0,T]$ and $\lambda$ with $\lambda t/r\notin2\pi\mathbb Z$.
+The killed laws with parameters $0$ and $\lambda$ are different, even
+though their full first-level Brownian laws, base paths $(K,\alpha)$
+and lifetimes agree under the displayed coupling. This difference is
+visible in the original middle-reference $02$ coherence pair, without
+unwrapping a phase or observing an added central variable.
+
+Proof. Write its two real components as a complex number, including
+the arbitrary fixed preparation rotation $\delta_{02}^0$:
+
+$$
+Y(K,\beta)=2\sqrt{ZK}\,e^{i(\delta_{02}^0+\beta)},
+\qquad Y(\dagger)=0.
+\tag{7.3}
+$$
+
+This is N, (10.25), with its positive displayed output angle and the
+underlying negative amplitude convention unchanged. Conditional on the
+entire height path, the integral in (7.1) is centered Gaussian because
+$W^2$ is independent of $W^1$. Its conditional variance is
+$2\int_0^t(1/2-K_s/r)^2ds$. Thus
+
+$$
+\begin{aligned}
+\mathbb E Y(q_t^{\lambda,\dagger})
+&=e^{-i\lambda t/r}e^{i(\delta_{02}^0+\beta_0)}C_t,\\
+C_t&=\mathbb E\left[
+ \mathbf1_{\{\tau>t\}}2\sqrt{ZK_t}
+ \exp\left\{-\int_0^t(1/2-K_s/r)^2ds\right\}\right]>0.
+\end{aligned}
+\tag{7.4}
+$$
+
+The inequality follows because a Brownian motion started inside an
+interval has positive probability to stay inside for any finite time,
+and the integrand on survival is strictly positive and bounded. One
+elementary justification of that survival fact is to choose
+$J=[k-e,k+e]\Subset I$. Uniformly over starting points in $J$, the
+probability to end a sufficiently short block inside $J$ is at least
+$1/4$, by the Gaussian transition law. If $d$ is the distance from $J$
+to the complement of $I$, the reflection bound makes the probability
+to exit $I$ during a block of length $h$ at most
+$4\exp(-d^2/(4h))$. Choose $N$ so large that $h=t/N$ makes this
+bound less than $1/8$. Surviving a block and returning to $J$ then
+has conditional probability at least $1/8$. The Markov property
+gives a survival probability at least $(1/8)^N>0$.
+
+Multiplication of the nonzero complex number in (7.4) by
+$e^{-i\lambda t/r}\ne1$ changes at least one of its two real
+components. Those are bounded continuous observables on $E$, so the
+killed wrapped laws differ. Corollary 6.2 and the absence of a lifetime
+atom at $t$ also imply convergence of these finite-stage expectations.
+Consequently sufficiently fine finite-stage actual command laws are
+already separated by this observable. Equality of base laws in this
+argument is a conclusion about the coupled limits; it does not assert
+identical finite-stage $b$ excursions. $\square$
+
