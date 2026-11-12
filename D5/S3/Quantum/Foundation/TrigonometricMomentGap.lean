@@ -7,6 +7,7 @@
    digest: Attained full-effect comparison on the original trigonometric moment body. -/
 
 import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
+import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Tactic
@@ -22,6 +23,7 @@ open scoped BigOperators
 namespace D5.S3.Quantum.Foundation.TrigonometricMomentGap
 
 open CircuitBalancedConfirmation WeightedRelationConfirmation
+open WholePairBallConfirmation
 
 abbrev Coordinates := Fin 4 → ℝ
 abbrev Carrier := ℝ × Coordinates
@@ -226,6 +228,169 @@ private theorem original_pure : pure cone unit = range curve := by
   rintro _ ⟨a, rfl⟩
   exact curve_extreme a
 
+def pairSupport (a b : ℝ) : Carrier →ₗ[ℝ] ℝ :=
+  effect (1 + Real.cos (a - b) / 2)
+    ![-Real.cos a - Real.cos b, -Real.sin a - Real.sin b,
+      Real.cos (a + b) / 2, Real.sin (a + b) / 2]
+
+private theorem pair_support_formula (a b θ : ℝ) :
+    pairSupport a b (curve θ) = (1 - Real.cos (θ - a)) * (1 - Real.cos (θ - b)) := by
+  rw [pairSupport, effect_curve]
+  simp only [trigonometric, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val, Matrix.head_cons, Real.cos_sub, Real.cos_add, Real.sin_add,
+    Real.cos_two_mul, Real.sin_two_mul]
+  linear_combination -(Real.sin a * Real.sin b) * Real.sin_sq_add_cos_sq θ
+
+private theorem pair_support_nonnegative (a b : ℝ) :
+    ∀ w ∈ cone, 0 ≤ pairSupport a b w := by
+  have hh : ∀ w ∈ states, 0 ≤ pairSupport a b w := by
+    apply convexHull_min
+    · rintro _ ⟨θ, rfl⟩
+      change 0 ≤ pairSupport a b (curve θ)
+      rw [pair_support_formula]
+      exact mul_nonneg (sub_nonneg.mpr (Real.cos_le_one _))
+        (sub_nonneg.mpr (Real.cos_le_one _))
+    · exact (convex_Ici (0 : ℝ)).is_linear_preimage (pairSupport a b).isLinear
+  rintro _ ⟨t, ht, w, hw, rfl⟩
+  simpa only [map_smul, smul_eq_mul] using mul_nonneg ht (hh w hw)
+
+private theorem zero_hull_face {S Z : Set Carrier} (g : Carrier →ₗ[ℝ] ℝ)
+    (hZ : Convex ℝ Z) (hz : ∀ w ∈ Z, g w = 0)
+    (hS : ∀ w ∈ S, w ∈ Z ∨ 0 < g w) :
+    ∀ w ∈ convexHull ℝ S, g w = 0 → w ∈ Z := by
+  have hh : convexHull ℝ S ⊆ {w | w ∈ Z ∨ 0 < g w} := by
+    apply convexHull_min hS
+    intro w hw z hz' a b ha hb hab
+    by_cases ha0 : a = 0
+    · have hb1 : b = 1 := by linarith
+      simpa [ha0, hb1] using hz'
+    by_cases hb0 : b = 0
+    · have ha1 : a = 1 := by linarith
+      simpa [hb0, ha1] using hw
+    have ha' : 0 < a := lt_of_le_of_ne ha (Ne.symm ha0)
+    have hb' : 0 < b := lt_of_le_of_ne hb (Ne.symm hb0)
+    rcases hw with hw | hw <;> rcases hz' with hz' | hz'
+    · exact Or.inl (hZ hw hz' ha hb hab)
+    · right
+      simp only [map_add, map_smul, smul_eq_mul, hz w hw, mul_zero, zero_add]
+      exact mul_pos hb' hz'
+    · right
+      simp only [map_add, map_smul, smul_eq_mul, hz z hz', mul_zero, add_zero]
+      exact mul_pos ha' hw
+    · right
+      simp only [map_add, map_smul, smul_eq_mul]
+      exact add_pos (mul_pos ha' hw) (mul_pos hb' hz')
+  intro w hw hgw
+  exact (hh hw).resolve_right (by rw [hgw]; exact lt_irrefl _)
+
+private theorem whole_zero_face (a b : ℝ) :
+    {w ∈ base cone unit | pairSupport a b w = 0} = segment ℝ (curve a) (curve b) := by
+  have hza : pairSupport a b (curve a) = 0 := by simp [pair_support_formula]
+  have hzb : pairSupport a b (curve b) = 0 := by simp [pair_support_formula]
+  have hseg : ∀ w ∈ segment ℝ (curve a) (curve b), pairSupport a b w = 0 := by
+    rintro _ ⟨r, s, hr, hs, hrs, rfl⟩
+    simp [map_add, map_smul, hza, hzb]
+  ext w
+  constructor
+  · rintro ⟨hw, hzero⟩
+    rw [original_base] at hw
+    apply zero_hull_face (pairSupport a b) (convex_segment _ _) hseg _ w hw hzero
+    rintro _ ⟨θ, rfl⟩
+    by_cases h : pairSupport a b (curve θ) = 0
+    · rw [pair_support_formula] at h
+      rcases mul_eq_zero.mp h with ha | hb
+      · left
+        rw [curve_eq_of_cos_sub (by linarith : Real.cos (θ - a) = 1)]
+        exact left_mem_segment ℝ _ _
+      · left
+        rw [curve_eq_of_cos_sub (by linarith : Real.cos (θ - b) = 1)]
+        exact right_mem_segment ℝ _ _
+    · exact Or.inr (lt_of_le_of_ne
+        (pair_support_nonnegative a b _ (states_mem_cone (curve_mem θ))) (Ne.symm h))
+  · intro hw
+    refine ⟨?_, hseg w hw⟩
+    rw [original_base]
+    exact (convex_convexHull ℝ (range curve)).segment_subset (curve_mem a) (curve_mem b) hw
+
+private theorem entire_pair_base (a b : ℝ) :
+    pairBase cone unit (curve a) (curve b) = segment ℝ (curve a) (curve b) := by
+  let g := pairSupport a b
+  let F : cone.Face := {
+    toSubmodule := cone ⊓ PointedCone.ofSubmodule (LinearMap.ker g)
+    isFaceOf := {
+      le := inf_le_left
+      mem_of_smul_add_mem := by
+        intro v w r hv hw hr hvw
+        refine ⟨hv, ?_⟩
+        have he : r * g v + g w = 0 := by
+          have he' : g (r • v + w) = 0 := hvw.2
+          simpa only [map_add, map_smul, smul_eq_mul] using he'
+        have hv0 := pair_support_nonnegative a b v hv
+        have hw0 := pair_support_nonnegative a b w hw
+        change g v = 0
+        nlinarith } }
+  have ha : curve a ∈ F := ⟨states_mem_cone (curve_mem a), by simp [g, pair_support_formula]⟩
+  have hb : curve b ∈ F := ⟨states_mem_cone (curve_mem b), by simp [g, pair_support_formula]⟩
+  ext w
+  constructor
+  · intro hw
+    rw [← whole_zero_face]
+    exact ⟨hw.1, (hw.2 F ha hb).2⟩
+  · intro hw
+    refine ⟨?_, fun G hGa hGb => ?_⟩
+    · rw [original_base]
+      exact (convex_convexHull ℝ (range curve)).segment_subset (curve_mem a) (curve_mem b) hw
+    · exact (G.toPointedCone.convex).segment_subset hGa hGb hw
+
+private theorem one_axis_norm (v : EuclideanSpace ℝ (Fin 1)) : ‖v‖ = |v 0| := by
+  rw [EuclideanSpace.norm_eq]
+  simp [Real.sqrt_sq_eq_abs]
+
+private def segmentChart (a b : ℝ) (hab : curve a ≠ curve b) :
+    BallChart cone unit (curve a) (curve b) where
+  dim := 1
+  dim_pos := by decide
+  param := (AffineMap.lineMap (curve b) (curve a)).comp
+    ((1 / 2 : ℝ) • (PiLp.projₗ (𝕜 := ℝ) 2 (fun _ : Fin 1 => ℝ) 0).toAffineMap +
+      AffineMap.const ℝ (EuclideanSpace ℝ (Fin 1)) (1 / 2 : ℝ))
+  injective := by
+    intro v w he
+    have hh := AffineMap.lineMap_injective ℝ (Ne.symm hab) he
+    apply PiLp.ext
+    intro i
+    have hi : i = 0 := Subsingleton.elim _ _
+    subst i
+    change (1 / 2 : ℝ) * v 0 + 1 / 2 = (1 / 2 : ℝ) * w 0 + 1 / 2 at hh
+    linarith
+  whole := by
+    rw [entire_pair_base, segment_symm, segment_eq_image_lineMap]
+    ext w
+    constructor
+    · rintro ⟨v, hv, rfl⟩
+      refine ⟨(1 / 2 : ℝ) * v 0 + 1 / 2, ?_, rfl⟩
+      have hv' : |v 0| ≤ 1 := by simpa [one_axis_norm] using hv
+      constructor <;> linarith [(abs_le.mp hv').1, (abs_le.mp hv').2]
+    · rintro ⟨t, ht, rfl⟩
+      refine ⟨WithLp.toLp 2 (fun _ : Fin 1 => 2 * t - 1), ?_, ?_⟩
+      · simp only [Metric.mem_closedBall, dist_zero_right, one_axis_norm]
+        change |2 * t - 1| ≤ 1
+        exact abs_le.mpr ⟨by linarith [ht.1], by linarith [ht.2]⟩
+      · change AffineMap.lineMap (curve b) (curve a) ((1 / 2 : ℝ) * (2 * t - 1) + 1 / 2) = _
+        congr 1
+        ring
+
+private theorem original_B : wholePairBalls cone unit := by
+  intro p q hpq
+  have hp : (p : Carrier) ∈ range curve := by rw [← original_pure]; exact p.property
+  have hq : (q : Carrier) ∈ range curve := by rw [← original_pure]; exact q.property
+  obtain ⟨a, ha⟩ := hp
+  obtain ⟨b, hb⟩ := hq
+  have hab : curve a ≠ curve b := by
+    intro he
+    exact hpq (Subtype.ext (ha.symm.trans (he.trans hb)))
+  rw [← ha, ← hb]
+  exact ⟨segmentChart a b hab⟩
+
 def p : Carrier := curve 0
 def x : Carrier := (1 / 2 : ℝ) • (curve (Real.pi / 2) + curve (-Real.pi / 2))
 def y : Carrier := curve Real.pi
@@ -328,6 +493,11 @@ The coefficient description is surjective onto all such effects. -/
 theorem attained_full_effect_gap :
     base cone unit = lift '' body ∧
     pure cone unit = range curve ∧
+    (∀ a b : ℝ, {w ∈ base cone unit | pairSupport a b w = 0} =
+      segment ℝ (curve a) (curve b)) ∧
+    (∀ a b : ℝ, pairBase cone unit (curve a) (curve b) =
+      segment ℝ (curve a) (curve b)) ∧
+    wholePairBalls cone unit ∧
     (∀ f : Carrier →ₗ[ℝ] ℝ, ∃ a b, f = effect a b) ∧
     (∀ a b, proper cone unit (effect a b) ↔
       ∀ θ : ℝ, 0 ≤ trigonometric a b θ ∧ trigonometric a b θ ≤ 1) ∧
@@ -339,7 +509,8 @@ theorem attained_full_effect_gap :
     comparison cone unit p mixed = 1 / 10 ∧
     (∃ f, confirms cone unit p f ∧ f x = 0) ∧
     (∃ f, confirms cone unit p f ∧ f y = 0) ∧ ¬ zeroGluing cone unit := by
-  refine ⟨original_base.trans states_image, original_pure, all_linear_effects, ?_,
+  refine ⟨original_base.trans states_image, original_pure, whole_zero_face,
+    entire_pair_base, original_B, all_linear_effects, ?_,
     fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_, universal_lower,
     attainer_confirms, attainer_value, ?_, endpoint_exclusions.1,
     endpoint_exclusions.2, zero_gluing_fails⟩
