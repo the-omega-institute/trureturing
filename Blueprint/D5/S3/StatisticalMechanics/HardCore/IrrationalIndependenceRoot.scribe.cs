@@ -118,5 +118,8 @@ internal sealed class IrrationalIndependenceRootDocument : IScribeDocumentDefini
                         + "claim and no claim that every irrational purely imaginary number is an independence root. "
                         + "The source's separate restriction on square roots of rationals greater than one does not "
                         + "exclude b^2=1/2."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("brown-cameron-2020-irrational-imaginary-independence-root"),
+                    ResolutionKind.Proved)))));
 }
