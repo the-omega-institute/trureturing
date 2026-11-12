@@ -12,6 +12,7 @@ weak-module realization, retaining its section, carries, inverse transports,
 unitCharacter, and all original field/mode/Jacobi data. This is a gluing
 ingredient, not surgery invariance or a completed TQFT/CFT/string/AdS theory.
 -/
+import D5.S3.VertexAlgebra.Modules.ActualWeakModuleDualitySnakes
 import D5.S3.VertexAlgebra.Modules.ActualWeakModuleHopfTrace
 import D5.S3.VertexAlgebra.Modules.ActualWeakModuleUnitCoherence
 
@@ -133,10 +134,8 @@ private theorem openMonodromy_normalized (a c : Discriminant D)
       rfl (add_neg_cancel c) v x y z
   have hinverse : alphaInverse A B (dualModule B) hD r =
       (F hD a c (-c))⁻¹ • l := by
-    apply (associatorEquiv A B (dualModule B) hD).injective
-    change alpha A B (dualModule B) hD (alphaInverse A B (dualModule B) hD r) =
-      alpha A B (dualModule B) hD ((F hD a c (-c))⁻¹ • l)
-    rw [alpha_alphaInverse, map_smul, halpha, smul_smul, inv_mul_cancel₀ hf, one_smul]
+    exact ActualWeakModuleDuality.alphaInverse_normalized_fibers
+      A B (dualModule B) hD a c (-c) (a+c) 0 rfl (add_neg_cancel c) v x y z
   have hmiddle :
       (productHom hD (doubleForward A B) (ModuleHom.id (dualModule B))).linearMap l =
         phase (pairing D a c) • l := by
@@ -144,18 +143,24 @@ private theorem openMonodromy_normalized (a c : Discriminant D)
     rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity]
     have hj := doubleForward_jAt A B hD (a+c)
       (⟨(a,c),rfl⟩ : Fiber (D := D) (a+c)) (x ⊗ₜ[ℂ] y)
-    change restrict (doubleForward A B) (a+c) (j A B hD a c (x ⊗ₜ[ℂ] y)) = _ at hj
+    dsimp only [jAt] at hj
     rw [hj, ← TensorProduct.smul_tmul', normalizedPair_smul]
-  change alpha A B (dualModule B) hD
-    ((productHom hD (doubleForward A B) (ModuleHom.id (dualModule B))).linearMap
-      (alphaInverse A B (dualModule B) hD r)) = phase (pairing D a c) • r
-  rw [hinverse, map_smul, hmiddle, map_smul, map_smul, halpha]
-  simp only [smul_smul]
-  calc
-    _ = ((F hD a c (-c))⁻¹ * F hD a c (-c) * phase (pairing D a c)) • r := by
-      congr 1
-      ring
-    _ = _ := by rw [inv_mul_cancel₀ hf, one_mul]
+  have hcalc {L R : Type (max u v)} [AddCommGroup L] [Module ℂ L]
+      [AddCommGroup R] [Module ℂ R]
+      (f : L →ₗ[ℂ] R) (g : R →ₗ[ℂ] L) (m : L →ₗ[ℂ] L)
+      (l : L) (r : R) (a q : ℂ) (ha : a ≠ 0)
+      (h1 : g r = a⁻¹ • l) (h2 : m l = q • l) (h3 : f l = a • r) :
+      f (m (g r)) = q • r := by
+    rw [h1, map_smul, h2, map_smul, map_smul, h3]
+    simp only [smul_smul]
+    apply congrArg (fun z : ℂ => z • r)
+    calc
+      _ = (a⁻¹ * a) * q := by ring
+      _ = q := by rw [inv_mul_cancel₀ ha, one_mul]
+  exact hcalc (alpha A B (dualModule B) hD)
+    (alphaInverse A B (dualModule B) hD)
+    (productHom hD (doubleForward A B) (ModuleHom.id (dualModule B))).linearMap
+    l r (F hD a c (-c)) (phase (pairing D a c)) hf hinverse hmiddle halpha
 
 /-- The existing ribbon calculation is consumed at the ACTUAL unit ground,
 which is T_zeroCarry([0]1), not the literal original vacuum. -/
@@ -191,7 +196,7 @@ private theorem ribbonCap_jAt (c : Discriminant D) (y : Multiplicity B c)
     rw [jAt_val]
     simpa only [ribbonCap, ModuleHom.comp, ModuleIso.hom, LinearMap.comp_apply,
       ground, add_neg_cancel, ModuleHom.id, LinearMap.comp_id,
-      LinearMap.id_apply] using h
+      LinearMap.id_apply, braidIso, ActualWeakModuleBraiding.braidEquiv] using h
   have hh := congrArg (fun q => (F hD (-c) c (-c))⁻¹ • q) hw
   simpa only [smul_smul, inv_mul_cancel₀ hf, one_smul] using hh
 
@@ -208,16 +213,35 @@ private theorem open_summand (a c : Discriminant D)
         LatticeChargedQuotientScalar.unitCharacter D hD a) • classified hD A a x v := by
   have hf : F hD (-c) c (-c) ≠ 0 :=
     LatticeChargedQuotientScalar.associator_nonzero D hD (-c) c (-c)
-  rw [openMonodromy_normalized, map_smul, map_smul, normalizedPair_input,
-    TensorProduct.map_tmul, restrict_identity, ribbonCap_jAt,
-    TensorProduct.tmul_smul, normalizedPair_smul, map_smul, rightUnit_normalized]
+  let L := (rightUnit hD A).toLinearMap.comp
+    (productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+  let J : Multiplicity (I D) 0 →ₗ[ℂ] X :=
+    (rightUnit hD A).toLinearMap.comp
+      ((DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)).comp
+        ((TensorProduct.mk ℂ (Carrier D) (PairMultiplicity A (I D) (a,0))
+          (transportInverse D (representative D (a+0)) (LatticeChargedQuotientScalar.carry D hD a 0) v)).comp
+            (TensorProduct.mk ℂ (Multiplicity A a) (Multiplicity (I D) 0) x)))
+  have hm := congrArg L.toAddHom.toFun
+    (openMonodromy_normalized A B hD a c x y (dualIota B c φ) v)
+  have hp := congrArg (rightUnit hD A).toAddHom.toFun
+    (normalizedPair_input hD (ModuleHom.id A) (ribbonCap B hD) a 0
+      (x ⊗ₜ[ℂ] jAt B (dualModule B) hD 0 ⟨(c,-c),add_neg_cancel c⟩
+        (y ⊗ₜ[ℂ] dualIota B c φ)) v)
+  simp only [TensorProduct.map_tmul, restrict_identity] at hp
+  have hc := (hp.trans (congrArg J.toAddHom.toFun (ribbonCap_jAt B hD c y φ))).trans
+    (J.map_smul ((F hD (-c) c (-c))⁻¹ * φ y) (eta0 hD))
+  have hu := hc.trans (congrArg
+    (fun z : X => ((F hD (-c) c (-c))⁻¹ * φ y) • z)
+    (rightUnit_normalized (A := A) (hD := hD) a v x))
+  have htotal := (hm.trans (L.map_smul (phase (pairing D a c)) _)).trans
+    (congrArg (fun z : X => phase (pairing D a c) • z) hu)
+  refine (congrArg (fun z : X => F hD (-c) c (-c) • z) htotal).trans ?_
   simp only [smul_smul]
+  apply congrArg (fun z : ℂ => z • classified hD A a x v)
   calc
-    _ = (F hD (-c) c (-c) * (F hD (-c) c (-c))⁻¹ *
+    _ = (F hD (-c) c (-c) * (F hD (-c) c (-c))⁻¹) *
         (phase (pairing D a c) * φ y *
-          LatticeChargedQuotientScalar.unitCharacter D hD a)) • classified hD A a x v := by
-      congr 1
-      ring
+          LatticeChargedQuotientScalar.unitCharacter D hD a) := by ring
     _ = _ := by rw [mul_inv_cancel₀ hf, one_mul]
 
 variable [∀ c : Discriminant D, Module.Finite ℂ (Multiplicity B c)]
@@ -234,19 +258,23 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
   classical
   let γ := LatticeChargedQuotientScalar.unitCharacter D hD a
   have hγ : γ ≠ 0 := LatticeChargedQuotientScalar.unitCharacter_nonzero D hD a
+  let input : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ]
+      P A (targetModule B (dualModule B)) :=
+    (DirectSum.lof ℂ _ (PairSector A (targetModule B (dualModule B))) (a,0)).comp
+      ((TensorProduct.mk ℂ (Carrier D)
+          (PairMultiplicity A (targetModule B (dualModule B)) (a,0))
+        (transportInverse D (representative D (a+0))
+          (LatticeChargedQuotientScalar.carry D hD a 0) v)).comp
+        (TensorProduct.mk ℂ (Multiplicity A a)
+          (Multiplicity (targetModule B (dualModule B)) 0) x))
   let q : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ] X :=
-    { toFun z := rightUnit hD A
-        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
-          ((openMonodromy A B hD).linearMap
-            (normalizedPair A (targetModule B (dualModule B)) hD a 0 (x ⊗ₜ[ℂ] z) v)))
-      map_add' z z' := by
-        simp only [normalizedPair, TensorProduct.tmul_add, map_add,
-          LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply]
-      map_smul' k z := by
-        simp only [normalizedPair, TensorProduct.tmul_smul, map_smul,
-          LinearMap.comp_apply, LinearMap.flip_apply, TensorProduct.mk_apply, RingHom.id_apply] }
+    (rightUnit hD A).toLinearMap.comp
+      ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
+        ((openMonodromy A B hD).linearMap.comp input))
   have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
       γ⁻¹ • q (cupVector B hD) := by
+    dsimp only [openPartialTrace, ModuleHom.comp, ModuleIso.hom, ModuleIso.inv,
+      rightUnitIso, LinearMap.comp_apply]
     change rightUnit hD A
       ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
         ((openMonodromy A B hD).linearMap

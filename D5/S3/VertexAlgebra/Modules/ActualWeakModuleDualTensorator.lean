@@ -8,6 +8,10 @@ import Mathlib.LinearAlgebra.Dual.Lemmas
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxHeartbeats 4000000
+set_option maxRecDepth 4096
+set_option synthInstance.maxHeartbeats 400000
 
 noncomputable section
 open scoped BigOperators TensorProduct DirectSum VertexOperator
@@ -60,9 +64,13 @@ theorem k_cap_coefficient (c d : Discriminant D) :
       unitCharacter D hD (-c) * unitCharacter D hD (-d) *
         F hD (-d) (-c) (c+d) / F hD (-c) c d := by
   unfold k
-  field_simp [unitCharacter_nonzero D hD (-(c+d)),
-    LatticeChargedQuotientScalar.associator_nonzero D hD (-c) c d]
-  <;> ring
+  calc
+    _ = ((unitCharacter D hD (-c) * unitCharacter D hD (-d) /
+        unitCharacter D hD (-(c+d))) * unitCharacter D hD (-(c+d))) *
+        (F hD (-d) (-c) (c+d) / F hD (-c) c d) := by ring
+    _ = _ := by
+      rw [div_mul_cancel₀ _ (unitCharacter_nonzero D hD (-(c+d)))]
+      ring
 
 theorem k_zero_left (c : Discriminant D) : k hD 0 c = unitCharacter D hD (-c) := by
   simp only [k, neg_zero, zero_add, LatticeChargedQuotientScalar.unitCharacter_zero,
@@ -117,29 +125,43 @@ theorem k_associativity (c d e : Discriminant D) :
   have hF := F_reverse_defect hD c d e
   have hne := LatticeChargedQuotientScalar.associator_nonzero D hD
   have hu := unitCharacter_nonzero D hD
+  have halgebra (l a b c d r e f g h : ℂ)
+      (hb : b ≠ 0) (hd : d ≠ 0) (hf : f ≠ 0) (hh : h ≠ 0)
+      (H : l*a*c*f*h = r*e*g*b*d) :
+      l * (a/b) * (c/d) = r * (e/f) * (g/h) := by
+    field_simp [hb, hd, hf, hh]
+    linear_combination H
   have hf :
       F hD c d e * (F hD (-e) (-d) (d+e) / F hD (-d) d e) *
         (F hD (-(d+e)) (-c) (c+(d+e)) / F hD (-c) c (d+e)) =
       F hD (-e) (-d) (-c) * (F hD (-d) (-c) (c+d) / F hD (-c) c d) *
         (F hD (-e) (-(c+d)) (c+(d+e)) / F hD (-(c+d)) (c+d) e) := by
-    field_simp [hne (-d) d e, hne (-c) c (d+e), hne (-c) c d,
-      hne (-(c+d)) (c+d) e]
-    linear_combination hF
+    exact halgebra _ _ _ _ _ _ _ _ _ _
+      (hne (-d) d e) (hne (-c) c (d+e)) (hne (-c) c d)
+      (hne (-(c+d)) (c+d) e) hF
+  have hfactorL (a b c d t f g h : ℂ) (hd : d ≠ 0) (ht : t ≠ 0) :
+      f * ((b*c/d)*g) * ((a*d/t)*h) = (a*b*c/t) * (f*g*h) := by
+    field_simp [hd, ht]
+    <;> ring
+  have hfactorR (a b c d t f g h : ℂ) (hd : d ≠ 0) (ht : t ≠ 0) :
+      f * ((a*b/d)*g) * ((d*c/t)*h) = (a*b*c/t) * (f*g*h) := by
+    field_simp [hd, ht]
+    <;> ring
   let U := unitCharacter D hD (-c) * unitCharacter D hD (-d) *
     unitCharacter D hD (-e) / unitCharacter D hD (-(c+(d+e)))
   calc
     _ = U * (F hD c d e * (F hD (-e) (-d) (d+e) / F hD (-d) d e) *
         (F hD (-(d+e)) (-c) (c+(d+e)) / F hD (-c) c (d+e))) := by
       unfold k U
-      field_simp [hu (-(d+e)), hu (-(c+(d+e))), hne (-d) d e,
-        hne (-c) c (d+e)] <;> ring
+      exact hfactorL _ _ _ _ _ _ _ _
+        (hu (-(d+e))) (hu (-(c+(d+e))))
     _ = U * (F hD (-e) (-d) (-c) * (F hD (-d) (-c) (c+d) / F hD (-c) c d) *
         (F hD (-e) (-(c+d)) (c+(d+e)) / F hD (-(c+d)) (c+d) e)) := by rw [hf]
     _ = _ := by
       unfold k U
       rw [add_assoc c d e]
-      field_simp [hu (-(c+d)), hu (-(c+(d+e))), hne (-c) c d,
-        hne (-(c+d)) (c+d) e] <;> ring
+      exact (hfactorR _ _ _ _ _ _ _ _
+        (hu (-(c+d))) (hu (-(c+(d+e))))).symm
 
 end Scalar
 
@@ -222,11 +244,17 @@ theorem Xi_jAt_wrong (s : Discriminant D) (i j : Fiber (D := D) s)
   change reversePairing w ((DirectSum.component ℂ _ _ i)
     (mu A B hD s (jAt A B hD s j z))) = 0
   rw [mu_jAt]
-  simp [DirectSum.component.of, DirectSum.lof_eq_of, hij, Ne.symm hij]
+  change reversePairing w ((DirectSum.of (fun q : Fiber (D := D) s =>
+    PairMultiplicity A B q.val) j z) i) = 0
+  rw [DirectSum.of_eq_of_ne _ _ _ (Ne.symm hij), map_zero]
 
 /-- Source (r,t) in B* then A* reads precisely (-t,-r) in A then B. -/
 def reverseFiber (s : Discriminant D) (i : Fiber (D := D) s) : Fiber (D := D) (-s) :=
-  ⟨(-i.val.2,-i.val.1), by rw [← i.property]; abel⟩
+  ⟨(-i.val.2,-i.val.1), by
+    change -i.val.2 + -i.val.1 = -s
+    calc
+      _ = -(i.val.1 + i.val.2) := by abel
+      _ = -s := congrArg Neg.neg i.property⟩
 
 /-- Actual kappa maps remove the two dual realizations before pairing. -/
 def readFunctional (s : Discriminant D) (i : Fiber (D := D) s) :
@@ -260,7 +288,7 @@ theorem dualTensorFamily_jAt (s : Discriminant D) (i : Fiber (D := D) s)
       k hD (-i.val.2) (-i.val.1) •
         iota (DualMultiplicity (targetModule A B)) s (readFunctional A B hD s i w) := by
   simp only [dualTensorFamily, LinearMap.comp_apply, mu_jAt, DirectSum.toModule_lof,
-    dualTensorBlock, LinearMap.smul_apply, LinearMap.comp_apply]
+    dualTensorBlock, LinearMap.smul_apply, LinearMap.comp_apply] <;> rfl
 
 /-- Raw carrier readback, with the actual source carry and target representative.
 No normalization of beta_(r+t), and no finite-dimensional hypothesis. -/
@@ -276,13 +304,26 @@ theorem dualTensorHom_pair (r t : Discriminant D) (v : Carrier D)
   change classificationEquiv (dualModule (targetModule A B)) hD
     (familyMap (dualTensorFamily A B hD)
       ((classificationEquiv (targetModule (dualModule B) (dualModule A)) hD).symm _)) = _
-  rw [classification_inverse_pair]
+  refine (congrArg
+    (fun z : Model (targetModule (dualModule B) (dualModule A)) =>
+      classificationEquiv (dualModule (targetModule A B)) hD
+        (familyMap (dualTensorFamily A B hD) z))
+    (classification_inverse_pair (dualModule B) (dualModule A) hD r t v w)).trans ?_
   simp only [familyMap, DirectSum.lmap_lof, TensorProduct.map_tmul, LinearMap.id_apply]
+  let L : Multiplicity (dualModule (targetModule A B)) (r+t) →ₗ[ℂ]
+      DualCarrier (targetModule A B) :=
+    (classificationEquiv (dualModule (targetModule A B)) hD).toLinearMap.comp
+      ((DirectSum.lof ℂ _
+        (fun s => Carrier D ⊗[ℂ] Multiplicity (dualModule (targetModule A B)) s) (r+t)).comp
+          (TensorProduct.mk ℂ (Carrier D)
+            (Multiplicity (dualModule (targetModule A B)) (r+t))
+            (transport D (representative D (r+t)) (carry D hD r t) v)))
   have hj := dualTensorFamily_jAt A B hD (r+t) ⟨(r,t),rfl⟩ w
-  change dualTensorFamily A B hD (r+t) (j (dualModule B) (dualModule A) hD r t w) = _ at hj
-  rw [hj, TensorProduct.tmul_smul, map_smul, map_smul]
-  congr 1
-  exact classification_iota (DualMultiplicity (targetModule A B)) hD (r+t) _ _
+  dsimp only [jAt] at hj
+  exact (congrArg L.toAddHom.toFun hj).trans
+    ((L.map_smul (k hD (-t) (-r)) _).trans
+      (congrArg (fun z => k hD (-t) (-r) • z)
+        (classification_iota (DualMultiplicity (targetModule A B)) hD (r+t) _ _)))
 
 /-- The single-charge formula exposes the epsilon for carry(r,t).
 For r=-d,t=-c this is literally carry(-d,-c). -/
@@ -306,8 +347,16 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         ⟨(-d,-c),by abel⟩ (dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ)) =
       k hD c d • dualIota (targetModule A B) (c+d)
         (Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)) := by
-  rw [dualTensorHom, restrict_extend, dualTensorFamily_jAt]
-  simp [readFunctional, Xi, fiberRead, reverseFiber, dualIota, DualMultiplicity,
+  let i : Fiber (D := D) (-(c+d)) := ⟨(-d,-c),by abel⟩
+  let w := dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ
+  let z := jAt (dualModule B) (dualModule A) hD (-(c+d)) i w
+  have hr := congrFun (restrict_extend hD (dualTensorFamily A B hD)) (-(c+d))
+  have he := congrArg (fun g :
+      Multiplicity (targetModule (dualModule B) (dualModule A)) (-(c+d)) →ₗ[ℂ]
+        Multiplicity (dualModule (targetModule A B)) (-(c+d)) => g z) hr
+  refine he.trans ?_
+  refine (dualTensorFamily_jAt A B hD (-(c+d)) i w).trans ?_
+  simp [i, w, readFunctional, Xi, fiberRead, reverseFiber, dualIota, DualMultiplicity,
     kappa_iota, neg_neg]
 
 /-- The actual five-arrow cap composite; the associator direction is explicit. -/
@@ -351,7 +400,11 @@ private theorem evaluation_normalized {Z : Type u'} [AddCommGroup Z] [Module ℂ
       (transportInverse D (representative D (-c+c)) (carry D hD (-c) c) v ⊗ₜ[ℂ]
         (dualIota C c φ ⊗ₜ[ℂ] x))) = _
   rw [evaluation_pair]
-  simp only [neg_add_cancel, (transportLinearEquiv D _ _).apply_symm_apply]
+  simp only [neg_add_cancel]
+  have hcancel := congrArg (fun f : Carrier D →ₗ[ℂ] Carrier D => f v)
+    (transportInverse_right D (representative D 0) (carry D hD (-c) c))
+  simp only [LinearMap.comp_apply, LinearMap.id_apply] at hcancel
+  rw [hcancel]
 
 /-- The five ACTUAL arrows on matching four-factor generators. This computes
 the coefficient before comparing it with k; v is an arbitrary carrier vector. -/
@@ -365,16 +418,20 @@ theorem nestedEvaluation_matching (c d : Discriminant D) (v : Carrier D)
           (dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ) ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y)) v) =
       (unitCharacter D hD (-(c+d)) * k hD c d * φ x * ψ y) •
         transport D 0 (zeroCarry D hD) v := by
-  change (evaluation B hD).linearMap
-    ((productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap
+  dsimp only [nestedEvaluation, ModuleHom.comp, ModuleIso.hom,
+    LinearMap.comp_apply, associatorIso]
+  let L := (evaluation B hD).linearMap.comp
+    ((productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap.comp
       ((productHom hD (ModuleHom.id (dualModule B))
-        (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap
-        ((productHom hD (ModuleHom.id (dualModule B))
-          (associatorIso (dualModule A) A B hD).inv).linearMap
-          (alpha (dualModule B) (dualModule A) (targetModule A B) hD _)))) = _
-  rw [alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
-    (-d) (-c) (c+d) (-(c+d)) d (by abel) (by abel)]
-  simp only [map_smul]
+        (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap.comp
+        (productHom hD (ModuleHom.id (dualModule B))
+          (associatorIso (dualModule A) A B hD).inv).linearMap))
+  have hα := alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
+    (-d) (-c) (c+d) (-(c+d)) d (by abel) (by abel)
+      v (dualIota B d ψ) (dualIota A c φ) (j A B hD c d (x ⊗ₜ[ℂ] y))
+  have h := congrArg L.toAddHom.toFun hα
+  refine (h.trans (L.map_smul _ _)).trans ?_
+  dsimp only [L, LinearMap.comp_apply]
   rw [normalizedPair_input, TensorProduct.map_tmul]
   simp only [restrict_identity]
   rw [restrict_inverse_cap_associator, TensorProduct.tmul_smul, normalizedPair_smul]
@@ -414,8 +471,7 @@ theorem tensorEvaluation_matching (c d : Discriminant D) (v : Carrier D)
   rw [← TensorProduct.smul_tmul', normalizedPair_smul, map_smul,
     evaluation_normalized, nestedEvaluation_matching]
   have hx := Xi_jAt A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ) (x ⊗ₜ[ℂ] y)
-  change Xi A B hD (c+d) ⟨(c,d),rfl⟩ (ψ ⊗ₜ[ℂ] φ)
-    (j A B hD c d (x ⊗ₜ[ℂ] y)) = _ at hx
+  dsimp only [jAt] at hx
   rw [hx, reversePairing_tmul, smul_smul]
   congr 1
   ring
@@ -544,16 +600,20 @@ theorem nestedEvaluation_wrong_A (c d a b : Discriminant D) (ha : a ≠ c)
     apply ha
     have hh := congrArg (fun z => c+z) h
     simpa only [← add_assoc, add_neg_cancel, zero_add, add_zero] using hh
-  change (evaluation B hD).linearMap
-    ((productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap
+  dsimp only [nestedEvaluation, ModuleHom.comp, ModuleIso.hom,
+    LinearMap.comp_apply, associatorIso]
+  let L := (evaluation B hD).linearMap.comp
+    ((productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap.comp
       ((productHom hD (ModuleHom.id (dualModule B))
-        (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap
-        ((productHom hD (ModuleHom.id (dualModule B))
-          (associatorIso (dualModule A) A B hD).inv).linearMap
-          (alpha (dualModule B) (dualModule A) (targetModule A B) hD _)))) = 0
-  rw [alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
-    (-d) (-c) (a+b) (-(c+d)) (-c+(a+b)) (by abel) rfl]
-  simp only [map_smul]
+        (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap.comp
+        (productHom hD (ModuleHom.id (dualModule B))
+          (associatorIso (dualModule A) A B hD).inv).linearMap))
+  have hα := alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
+    (-d) (-c) (a+b) (-(c+d)) (-c+(a+b)) (by abel) rfl
+      v (dualIota B d ψ) (dualIota A c φ) (j A B hD a b (x ⊗ₜ[ℂ] y))
+  have h := congrArg L.toAddHom.toFun hα
+  refine (h.trans (L.map_smul _ _)).trans ?_
+  dsimp only [L, LinearMap.comp_apply]
   rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity,
     inverse_cap_associator_all, TensorProduct.tmul_smul, normalizedPair_smul]
   simp only [map_smul]
@@ -576,16 +636,20 @@ theorem nestedEvaluation_wrong_B (c d b : Discriminant D) (hb : b ≠ d)
     apply hb
     have hh := congrArg (fun z => d+z) h
     simpa only [← add_assoc, add_neg_cancel, zero_add, add_zero] using hh
-  change (evaluation B hD).linearMap
-    ((productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap
+  dsimp only [nestedEvaluation, ModuleHom.comp, ModuleIso.hom,
+    LinearMap.comp_apply, associatorIso]
+  let L := (evaluation B hD).linearMap.comp
+    ((productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap.comp
       ((productHom hD (ModuleHom.id (dualModule B))
-        (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap
-        ((productHom hD (ModuleHom.id (dualModule B))
-          (associatorIso (dualModule A) A B hD).inv).linearMap
-          (alpha (dualModule B) (dualModule A) (targetModule A B) hD _)))) = 0
-  rw [alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
-    (-d) (-c) (c+b) (-(c+d)) b (by abel) (by abel)]
-  simp only [map_smul]
+        (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap.comp
+        (productHom hD (ModuleHom.id (dualModule B))
+          (associatorIso (dualModule A) A B hD).inv).linearMap))
+  have hα := alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
+    (-d) (-c) (c+b) (-(c+d)) b (by abel) (by abel)
+      v (dualIota B d ψ) (dualIota A c φ) (j A B hD c b (x ⊗ₜ[ℂ] y))
+  have h := congrArg L.toAddHom.toFun hα
+  refine (h.trans (L.map_smul _ _)).trans ?_
+  dsimp only [L, LinearMap.comp_apply]
   rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity,
     restrict_inverse_cap_associator, TensorProduct.tmul_smul, normalizedPair_smul]
   simp only [map_smul]
@@ -1150,7 +1214,7 @@ private theorem Xi_associator (c d e : Discriminant D)
         ActualWeakModuleScalarProbes.tensorCoordinates_tmul,
         ActualWeakModuleScalarProbes.coordinate, reversePairing_tmul,
         LatticeChargedTransport.epsilon_nonzero, ha, hb, hf] <;>
-        (try split_ifs) <;> simp_all [mul_comm, mul_left_comm, mul_assoc] <;> ring
+        (try split_ifs) <;> simp_all [mul_comm, mul_left_comm, mul_assoc] <;> (try field_simp [hu]) <;> ring
 
 /-- Restriction comparison on EVERY reversed pure triple. Both sides are the
 actual composites from the full coherence statement. -/
