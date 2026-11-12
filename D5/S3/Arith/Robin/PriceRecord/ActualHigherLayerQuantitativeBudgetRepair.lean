@@ -9,14 +9,6 @@ import D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerBudgetRepair
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Tactic
-
-/-! UNCOMPILED_UNACCEPTED; RegUNVALIDATED.
-Full source proof candidate, not native acceptance. The completed fixed-J owner
-and Budget/prefix sources are imported, never forked. The accompanying patch only
-exposes three actually consumed finite helpers. The growing-J analytic supplier
-has a full by-body in eventual_growing_roster, with no target/window/PNT premise in either
-final theorem. All bodies and imports remain subject to native diagnostics.
-The existing real beta and literal arithmetic marginal retain their definitions. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -35,7 +27,6 @@ open D5.S3.Arith.Robin.PriceRecord.ActualRecordHigherLayerResidual
 open D5.S3.Arith.Robin.PriceRecord.ActualRecordAllLogBudgetRemainder
 open D5.S3.Arith.Robin.PriceRecord.ActualFirstLayerPrefixCancellation
 open D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
-
 private theorem reciprocal_log_bounds {s : ℝ} (hs : 0 < s) :
     1 / (s + 1) < log (1 + 1 / s) ∧ log (1 + 1 / s) < 1 / s := by
   have hx : 0 < 1 / s := one_div_pos.mpr hs
@@ -50,7 +41,6 @@ private theorem reciprocal_log_bounds {s : ℝ} (hs : 0 < s) :
   · have h := log_lt_sub_one_of_pos
       (show 0 < 1 + 1 / s by linarith) (show 1 + 1 / s ≠ 1 by linarith)
     linarith
-
 private theorem sum_add_one_le_twice {u : ℝ} (hu : 2 ≤ u) (j : ℕ) :
     powerSum j u + 1 ≤ 2 * u ^ j := by
   have hg := powerSum_geometric j u
@@ -63,7 +53,6 @@ private theorem sum_add_one_le_twice {u : ℝ} (hu : 2 ≤ u) (j : ℕ) :
   have hh : 0 ≤ 2 * u ^ j - (powerSum j u + 1) := by
     exact nonneg_of_mul_nonneg_right (he.symm ▸ hn) hd
   linarith
-
 private theorem beta_uniform_bounds {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 1 ≤ j) :
     1 / (2 * u ^ j * log u) ≤ beta j u ∧
       beta j u ≤ 1 / (u ^ j * log u) := by
@@ -76,7 +65,6 @@ private theorem beta_uniform_bounds {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 1 �
   have hh := div_le_div_of_nonneg_right (hr.trans hlow) hl.le
   refine ⟨?_, beta_le_inv_pow_log hu hj⟩
   simpa only [beta, gain, div_div] using hh
-
 /-- Uniform in the full natural index and the full real half-line. -/
 theorem uniform_beta_and_slope {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
     1 / (2 * u ^ j * log u) ≤ beta j u ∧
@@ -87,7 +75,6 @@ theorem uniform_beta_and_slope {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u)
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
   exact ⟨hb.1, hb.2, (div_pos hj0 (by norm_num)).trans_le (logarithmicSlope_ge hu hj),
     HigherLayerInsertionRegret.slope_upper hu hj, log_beta_hasDerivAt hu (by omega)⟩
-
 /-- Strict adjacent separation. It includes j=2 and u=2. -/
 theorem adjacent_layer_strict {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
     u * beta j u < beta (j - 1) u := by
@@ -218,7 +205,6 @@ theorem uniform_root_geometry {j : ℕ} (hj : 3 ≤ j) {X M ρ : ℝ}
     have hm := mul_lt_mul_of_pos_left hbad hj0
     nlinarith
   exact ⟨hlow, hupp, hloglo, hloghi, hlower, hupper, hJylo, hJyhi⟩
-
 /-- Exact floor arithmetic. Threshold selection is performed later in eventual_growing_roster. No fixed finite set of layer indices is used. -/
 theorem growing_layer_floor_bounds {L M : ℝ} (hL : 0 < L) (hM : 1 ≤ M)
     (hlarge : 6 ≤ L / M) :
@@ -238,7 +224,6 @@ theorem growing_layer_floor_bounds {L M : ℝ} (hL : 0 < L) (hM : 1 ≤ M)
     apply (div_le_iff₀ hM0).mpr
     simpa only [mul_one] using mul_le_mul_of_nonneg_left hM hL.le
   exact ⟨hj, hhalf, hfloor, hfloor.trans hlast⟩
-
 private theorem sqrt_le_pnt_model {c : ℝ} (hc : 0 < c) :
     ∀ᶠ t : ℝ in atTop, sqrt t ≤ t * exp (-c * log t ^ (1 / 10 : ℝ)) := by
   have hlim : Tendsto (fun t : ℝ => c * log t ^ (-(9 / 10 : ℝ))) atTop (𝓝 0) := by
@@ -348,7 +333,6 @@ theorem root_pnt_suppression {c1 A0 L y : ℝ} (hc : 0 < c1)
     rw [exp_neg, hpow]
     simp [one_div]
   exact hexp.trans_eq heq
-
 private theorem endpoint_theta_mass {c A L ρ : ℝ} {j : ℕ}
     (hc : 0 < c) (hA : 0 ≤ A) (hL : 0 < L) (hρ : 2 ≤ ρ)
     (hj : 3 ≤ j) (hjL : (j : ℝ) ≤ L) (hAL : 6 * A ≤ L ^ 4)
@@ -428,7 +412,6 @@ private theorem endpoint_theta_mass {c A L ρ : ℝ} {j : ℕ}
         linarith only [hh, hl]
       _ = Chebyshev.theta b - Chebyshev.theta ρ := by ring
   exact hneed
-
 private theorem prime_interval_sum {ρ b : ℝ} (hρ : 0 ≤ ρ) (hρb : ρ ≤ b) :
     let S := Nat.primesLE ⌊b⌋₊ \ Nat.primesLE ⌊ρ⌋₊
     Chebyshev.theta b - Chebyshev.theta ρ = ∑ p ∈ S, log p ∧
@@ -659,7 +642,6 @@ theorem growing_layer_cost_conversion {X A0 : ℝ} (hX : 1 < X)
   rw [mul_pow] at hprod ⊢
   have hh := mul_le_mul_of_nonneg_left hprod (show 0 ≤ 6 * X by positivity)
   nlinarith
-
 private theorem root_exists_for_index {X : ℝ} (hX : 1 < X) (hL : 4 ≤ log X)
     {j : ℕ} (hj : 3 ≤ j) (hjL : (j : ℝ) ≤ log X) :
     ∃ ρ : ℝ, 2 < ρ ∧ beta j ρ = referencePrice X := by
@@ -690,7 +672,6 @@ private theorem root_exists_for_index {X : ℝ} (hX : 1 < X) (hL : 4 ≤ log X)
     have hne : 2 ≠ ρ := by intro he; rw [← he] at hroot; linarith
     exact lt_of_le_of_ne hρ.1 hne
   exact ⟨ρ, hρgt, hroot⟩
-
 private theorem tenth_scale_large {A0 l : ℝ} (hA : 1 ≤ A0) (hl : 2 ≤ l) :
     2 ≤ (A0 * l) ^ 10 ∧ 6 * l ≤ (A0 * l) ^ 10 / 2 := by
   have hl0 : 0 ≤ l := by linarith
@@ -702,7 +683,6 @@ private theorem tenth_scale_large {A0 l : ℝ} (hA : 1 ≤ A0) (hl : 2 ≤ l) :
   rw [he] at hm
   norm_num at hm
   constructor <;> nlinarith
-
 set_option maxHeartbeats 4000000 in
 private theorem eventual_growing_roster : ∃ A0 : ℝ, 1 ≤ A0 ∧
     ∀ᶠ X : ℝ in atTop, 14 ≤ X ∧ 0 < log (log X) ∧
@@ -1017,18 +997,4 @@ theorem actual_record_quantitative_repaired_prefix_residual :
     let x : S := ⟨(n, price), hn, hprice, hrecord⟩
     have hx := hB (log (n : ℝ)) ((le_max_left _ _).trans hlarge) x rfl
     simpa only [X, m, μ] using hx
-
-#print axioms uniform_beta_and_slope
-#print axioms adjacent_layer_strict
-#print axioms moving_interval_marginals
-#print axioms uniform_root_geometry
-#print axioms growing_layer_floor_bounds
-#print axioms quantitative_theta_error
-#print axioms root_pnt_suppression
-#print axioms quantitative_moving_prime_roster
-#print axioms finite_roster_quantitative_repair
-#print axioms original_price_exact_slack
-#print axioms growing_layer_cost_conversion
-#print axioms actual_higher_layer_quantitative_budget_repair
-#print axioms actual_record_quantitative_repaired_prefix_residual
 end D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair
