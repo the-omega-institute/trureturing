@@ -104,15 +104,12 @@ internal sealed class CoonsAdjacentGrowthRefutationDocument : IScribeDocumentDef
                 + "universal strict inequality at ell=4,k=5, an admissible pair. "
                 + "The two exact exponents for k=5 and k+1=6 are both one half, "
                 + "contradicting strictness. The conclusion concerns the entire original "
-                + "universal event and uses the same radix on both sides.", DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("coons-strict-adjacent-multiplicity-growth"),
-                    ResolutionKind.Refuted)))));
+                + "universal event and uses the same radix on both sides.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
+        string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("coons-adjacent-growth-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), role, resolution);
+            Blocks(Paragraph(Text(prose))), role);
 }
