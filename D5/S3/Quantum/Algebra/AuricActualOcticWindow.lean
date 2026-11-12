@@ -856,6 +856,31 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
   rw [hr, hdim] at hnull
   omega
 
+
+private theorem cut_free_of_actual_ranks {G : Type*} [Group G] [Fintype G] [MulAction G Ω]
+    (U : Submodule K (Ω → K)) (n : (Ω → K) →ₗ[K] (Ω → K))
+    (hker : n.ker = U) (hrange : n.range = U)
+    (hΩ : Fintype.card Ω = 8) (hU : finrank K U = 4)
+    (htrans : ∀ x y : Ω, ∃ g : G, g • x = y)
+    (hinv : ∀ (g : G) S, rowRank U (orbitSet S g) = rowRank U S)
+    (hstrict : ∀ S : Finset Ω, 0 < S.card → S.card < 8 →
+      S.card + 1 ≤ 2 * rowRank U S)
+    (S : Finset Ω) (hS2 : 2 ≤ S.card) (hS6 : S.card ≤ 6) :
+    2 ≤ crossRank n S ∨ 2 ≤ crossRank n Sᶜ := by
+  by_contra hbad
+  push_neg at hbad
+  have hb1 := cross_rank_bound U n hker hrange hΩ hU S
+  have hb2 := cross_rank_bound U n hker hrange hΩ hU Sᶜ
+  have hc : Sᶜ.card + S.card = 8 := by
+    simpa [hΩ] using Finset.card_compl_add_card S
+  have hs1 := hstrict S (by omega) (by omega)
+  have hs2 := hstrict Sᶜ (by omega) (by omega)
+  have hcases : (S.card = 3 ∧ rowRank U S = 2 ∧ rowRank U Sᶜ = 3) ∨
+      (Sᶜ.card = 3 ∧ rowRank U Sᶜ = 2 ∧ rowRank U S = 3) := by omega
+  rcases hcases with ⟨h1, h2, h3⟩ | ⟨h1, h2, h3⟩
+  · exact no_tight_triple U hΩ htrans hinv hstrict S h1 h2 h3
+  · exact no_tight_triple U hΩ htrans hinv hstrict Sᶜ h1 h2 (by simpa using h3)
+
 end CutRanks
 
 section ActualSplitOperator
@@ -926,5 +951,33 @@ private theorem splitOperator_covariance (g : K ≃ₐ[F] K)
   rw [baseOperator_galois]
 
 end ActualSplitOperator
+
+
+section ActualCutFree
+
+variable (K : Type*) [Field K] [Algebra F K]
+variable [FiniteDimensional F D] [CharZero F] [FiniteDimensional F K] [Normal F K]
+variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
+
+private theorem actual_cut_free (W : Submodule F D)
+    (hD : finrank F D = 8) (hW : finrank F W = 4) (hE : ScalarIdealizer W)
+    (a : D) (ha : a ∉ quotientSet W) (S : Finset (D →ₐ[F] K))
+    (hS2 : 2 ≤ S.card) (hS6 : S.card ≤ 6) :
+    2 ≤ crossRank (splitOperator K hK W hD hW a ha) S ∨
+    2 ≤ crossRank (splitOperator K hK W hD hW a ha) Sᶜ := by
+  apply cut_free_of_actual_ranks (splitWindow K hK W) _
+    (splitOperator_kernel K hK W hD hW a ha)
+    (splitOperator_range K hK W hD hW a ha)
+    ((AlgHom.card_of_splits F D K hK).trans hD)
+    ((splitWindow_finrank K hK W).trans hW)
+    (embeddings_transitive K) (actual_row_rank_galois K hK W) _ S hS2 hS6
+  intro T hT hT8
+  apply actual_strict_row_rank K hK W hD hW hE T (Finset.card_pos.mp hT)
+  apply Finset.card_pos.mp
+  have hc : Tᶜ.card + T.card = 8 := by
+    simpa [(AlgHom.card_of_splits F D K hK).trans hD] using Finset.card_compl_add_card T
+  omega
+
+end ActualCutFree
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
