@@ -1,3 +1,0 @@
-WIP: recover complete circle theorem and fix interval attribution
-
-Freeze, focused F1 readback, and publication remain pending.
