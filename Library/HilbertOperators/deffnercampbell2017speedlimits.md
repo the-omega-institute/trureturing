@@ -7,7 +7,7 @@ doi: 10.1088/1751-8121/aa86c6
 url: https://arxiv.org/abs/1705.08023v2
 claim: "For unitary pure-state evolution, the overlap angle is bounded by the time integral of the energy standard deviation divided by hbar; a time-independent self-adjoint Hamiltonian has constant centered fluctuation."
 strata_touched:
-  - D5/S3/QuantumBounds/HamiltonianDisplacement
+  - D5/S3/QuantumBounds/FubiniStudyRecordTime
 license: citation-only; source distributed under the arXiv non-exclusive distribution license
 triage: anchor
 ---
@@ -45,7 +45,7 @@ The square root is the energy standard deviation, rather than its square.
 Equation (23) identifies the pure-state specialization of the angle in
 the integrated bound. The review attributes this result to the classical
 Mandelstam–Tamm line of work; it supplies no originality claim for the
-repository theorem.
+repository application.
 
 ## Exact autonomous finite-dimensional specialization
 
@@ -68,7 +68,7 @@ the exponential is the normed-algebra exponential of the given operator.
 Self-adjointness and normalization identify
 $\Delta^2=\langle\psi,A^2\psi\rangle-\mu^2$; the right-hand side is real.
 For the autonomous evolution this fluctuation is constant. The exact
-repository statement is
+autonomous application is
 
 $$
 \forall t\in\mathbb R,\qquad
@@ -78,7 +78,7 @@ $$
 $$
 
 The review states its integrated inequality for a nonnegative duration.
-The repository theorem retains every real time: negative time corresponds
+The application retains every real time: negative time corresponds
 to reversing the Hamiltonian, with the same centered fluctuation. Its
 inequality does not divide by $\Delta$, so $\Delta=0$ and $t=0$ are included.
 Overlaps of modulus zero and one are also included; the proof regularizes
@@ -93,4 +93,7 @@ The selected result controls the orbit of the actual exponential of a
 bounded self-adjoint endomorphism. It does not assert an open-system,
 unbounded-operator, measurement-protocol, or universal clock-tick bound.
 The review's broader mixed-state and driven results are literature context;
-they are not claims of this Lean declaration.
+they are not established by the frozen geometric and conditional record
+theorems. This note supports the application exposition in the existing
+Fubini–Study record-time Blueprint; it does not identify a separate frozen
+Hamiltonian dynamics declaration.

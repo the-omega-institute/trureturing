@@ -66,6 +66,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                         + "including patchwise Stokes, transition winding and the 4 pi "
                         + "ambiguity of solid angle."))),
                 DescribeRole.Theorem),
+            AutonomousHamiltonianApplication(),
             Describe.Lean(
                 DescribeId.Create("orthogonal-records-require-contact-time-under-speed-bounds"),
                 DeclarationHandle.Create(Module + "record_time_lower_bound"),
@@ -103,6 +104,150 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                         + "The sum budget represents sequential, nonoverlapping contacts; it is "
                         + "an explicit assumption, not a conclusion about arbitrary parallel devices."))),
                 DescribeRole.Theorem))));
+
+    private static DocumentBlock AutonomousHamiltonianApplication() => new DocumentBlock.Section(
+        H("Application: autonomous Hamiltonian displacement"),
+        Blocks(
+            Paragraph(Text(
+                "The following is a classical application of the pinned operator and calculus "
+                + "library. It is separate from the frozen triangle, record-time and record-count "
+                + "statements: those statements assume endpoint displacement bounds and do not "
+                + "prove Hamiltonian dynamics. The Mandelstam–Tamm application below adds no "
+                + "new Lean declaration or theorem claim to that module.")),
+            Paragraph(Text(
+                "Let E be an arbitrary finite-dimensional complex inner product space, with its "
+                + "normed additive group structure, A a continuous complex-linear endomorphism "
+                + "satisfying IsSelfAdjoint A, psi a unit vector, and hbar a strictly positive real. "
+                + "The inner product is conjugate-linear in its first slot and linear in its second; "
+                + "real scalars in vector and operator products are embedded into the complex numbers. "
+                + "Define mu=Re inner(psi,A psi), Delta=norm(A psi-mu psi), and "
+                + "psi_t=exp((-i t/hbar) A)psi, using the normed-algebra exponential of A. "
+                + "The full application telescope and bound are:")),
+            new DocumentBlock.DisplayFormula(AutonomousBound()),
+            Paragraph(Text(
+                "Thus the displacement is arccos of the overlap modulus in radians, with no factor "
+                + "of two. Self-adjointness makes inner(psi,A psi) real and identifies Delta squared "
+                + "with Re inner(psi,A squared psi)-mu squared. In physical units A, mu and Delta "
+                + "have units of energy, t of time, and hbar of energy times time; the exponential "
+                + "argument and abs(t) Delta/hbar are dimensionless. Assigning these units does "
+                + "not establish a physical realization of E, A or psi.")),
+            Paragraph(Text(
+                "Center the same operator in the same initial state: B=A-mu I, G=(-i/hbar)B, "
+                + "U(s)=exp(sG), v(s)=U(s)psi and w(s)=U(s)(G psi). Finite dimension supplies "
+                + "completeness. IsSelfAdjoint.smul_mem_skewAdjoint and "
+                + "NormedSpace.exp_mem_unitary_of_mem_skewAdjoint make U(s) unitary for every "
+                + "real s. ContinuousLinearMap.norm_map_of_mem_unitary gives norm(v(s))=1 and "
+                + "norm(w(s))=c, where c=Delta/hbar. The identity "
+                + "IsSymmetric.coe_re_inner_self_apply supplies the real expectation; centering "
+                + "gives inner(psi,G psi)=0. ContinuousLinearMap.inner_map_map_of_mem_unitary "
+                + "therefore gives inner(v(s),w(s))=0. The exponential derivative "
+                + "hasDerivAt_exp_smul_const, composed with continuous-linear evaluation at psi, "
+                + "gives v'(s)=w(s). This is the horizontal constant-speed orbit, obtained from "
+                + "the actual exponential rather than a speed hypothesis.")),
+            Paragraph(Text(
+                "Regard E as a real inner product space and set r(s)=Re inner(psi,v(s)). "
+                + "Then r(0)=1, abs(r(s))<=1 and r'(s)=Re inner(psi,w(s)), using "
+                + "HasDerivAt.inner. The real orthogonal projection psi-r(s)v(s) has squared "
+                + "norm 1-r(s) squared by norm_sub_sq_real. Its inner product with w(s) is "
+                + "r'(s), because v(s) and w(s) are orthogonal. The Cauchy–Schwarz inequality "
+                + "abs_real_inner_le_norm consequently gives "
+                + "abs(r'(s))<=c sqrt(1-r(s) squared). No division by r or by its derivative "
+                + "is involved.")),
+            Paragraph(Text(
+                "For 0<=q<1, use f_q(s)=arccos(q r(s)). Since abs(q r(s))<1, "
+                + "Real.hasDerivAt_arccos applies with positive denominator "
+                + "sqrt(1-q squared r(s) squared). The inequality "
+                + "q sqrt(1-r(s) squared)<=sqrt(1-q squared r(s) squared) bounds "
+                + "abs(f_q'(s)) by c. Apply "
+                + "Convex.norm_image_sub_le_of_norm_hasDerivWithin_le on the whole real line "
+                + "between 0 and t to obtain arccos(q r(t))<=arccos(q)+c abs(t). "
+                + "Now choose q_n=n/(n+1), for natural n. "
+                + "tendsto_natCast_div_add_atTop gives q_n tending to one; "
+                + "Real.continuous_arccos and le_of_tendsto_of_tendsto yield "
+                + "arccos(r(t))<=c abs(t). This regularization retains the endpoints r=1 and "
+                + "r=-1, where differentiating arccos directly would be invalid.")),
+            Paragraph(Text(
+                "The scalar identity commutes with A. NormedSpace.exp_add_of_commute and "
+                + "NormedSpace.algebraMap_exp_comm give "
+                + "v(t)=exp(i t mu/hbar) exp((-i t/hbar) A)psi. "
+                + "Complex.norm_exp_I_mul_ofReal gives norm(exp(i t mu/hbar))=1, so this "
+                + "phase preserves the overlap modulus. Complex.re_le_norm and "
+                + "Real.arccos_le_arccos then give "
+                + "arccos(norm(inner(psi,psi_t)))<=arccos(r(t))<=abs(t) Delta/hbar. "
+                + "The proof works for every real t, including negative and zero time. "
+                + "It never divides by Delta or by the overlap modulus: zero variance and "
+                + "overlaps of modulus zero or one are included. At Delta=0 it forces zero "
+                + "ray displacement at every time; at t=0 the initial overlap is one.")),
+            Paragraph(Text(
+                "Classical attribution: Deffner and Campbell, Quantum speed limits: from "
+                + "Heisenberg's uncertainty principle to optimal quantum control, "
+                + "arXiv:1705.08023v2, Section 2.5, equation (23) and equations (28)–(33), "
+                + "DOI 10.1088/1751-8121/aa86c6. Equation (23) fixes the overlap-angle convention; "
+                + "equation (28) centers the Hamiltonian, and equations (29)–(33) give the "
+                + "energy-standard-deviation speed and integrated duration bound. "
+                + "The autonomous finite-dimensional specialization has constant Delta. "
+                + "The source and its precise applicability are recorded in "),
+                Ref("D5/L/HilbertOperators/deffnercampbell2017speedlimits"),
+                Text(". This derivation is reuse of classical literature and upstream results, "
+                    + "with no claim of research novelty or additional frozen dynamics theorem.")),
+            Paragraph(Text(
+                "For the record-time application, use psi=a and t=tau with tau>=0. "
+                + "A positive resource parameter energy with Delta<=energy gives "
+                + "fsAngle(a,psi_tau)<=tau Delta/hbar<=energy tau/hbar, exactly the "
+                + "displacement premise of record_time_lower_bound. Both endpoints must share "
+                + "the same initial preparation a: for j=0,1, choose a self-adjoint A_j, set "
+                + "mu_j=Re inner(a,A_j a), Delta_j=norm(A_j a-mu_j a), and "
+                + "m_j=exp((-i tau/hbar) A_j)a with Delta_j<=energy. Unitarity supplies each "
+                + "endpoint's unit norm; their mutual orthogonality is an additional hypothesis. "
+                + "The symbol E in the displayed record-time formula denotes this positive "
+                + "energy parameter, not the vector-space carrier E in the application telescope.")),
+            Paragraph(Text(
+                "For multiple records the same construction is needed separately for each "
+                + "record's common initial preparation and each of its two Hamiltonians, with "
+                + "the shared positive energy and hbar bounds. The independent assumption "
+                + "sum(tau_i)<=T represents sequential, nonoverlapping contact durations; the "
+                + "Hamiltonian calculation does not supply that budget. Identifying the "
+                + "mathematical states and Hamiltonians with a physical recorder remains a "
+                + "realization requirement. No conclusion about open systems, arbitrary "
+                + "feedback or measurement protocols, unbounded operators, physical ontology "
+                + "or a universal minimal clock tick follows."))));
+
+    private static Formula AutonomousBound()
+    {
+        Formula e = F.Id("E");
+        Formula a = F.Id("A");
+        Formula psi = F.Id("psi");
+        Formula hbar = F.Id("hbar");
+        Formula t = F.Id("t");
+        Formula real = Call("Real");
+        Formula complex = Call("Complex");
+        Formula mu = Call("Re", Call("inner", complex, psi, Call("apply", a, psi)));
+        Formula delta = Call("norm", Call("subtract", Call("apply", a, psi),
+            Call("scale", Call("ofReal", mu), psi)));
+        Formula coefficient = Call("divide", Call("multiply", Call("negative", Call("I")),
+            Call("ofReal", t)), Call("ofReal", hbar));
+        Formula evolved = Call("apply", Call("exp", Call("scale", coefficient, a)), psi);
+        Formula conclusion = Rel(Call("arccos", Call("norm", Call("inner", complex, psi, evolved))),
+            Le, Call("divide", Call("multiply", Call("abs", t), delta), hbar));
+        Formula assumptions = Rel(Rel(Call("IsSelfAdjoint", a), Land,
+            Rel(Call("norm", psi), Eq, D(1))), Land, Rel(D(0), Lt, hbar));
+        Formula body = Rel(assumptions, Implies, conclusion);
+        body = All("t", real, body);
+        body = All("hbar", real, body);
+        body = All("psi", e, body);
+        body = All("A", Call("ContinuousLinearMap", complex, e, e), body);
+        return Disp(All("E", Call("Type"), Seq(
+            OpenBracket, Call("NormedAddCommGroup", e), CloseBracket, Sp,
+            OpenBracket, Call("InnerProductSpace", complex, e), CloseBracket, Sp,
+            OpenBracket, Call("FiniteDimensional", complex, e), CloseBracket, Sp, body)));
+    }
+
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Open, Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body, Close);
+    private static Formula Rel(Formula left, Formula relation, Formula right) =>
+        Seq(Open, left, Sp, relation, Sp, right, Close);
 
     private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Sp, Vert);
 
