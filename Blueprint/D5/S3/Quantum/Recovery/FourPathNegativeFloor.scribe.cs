@@ -49,7 +49,7 @@ internal sealed class FourPathNegativeFloorDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For every real q,X,Y, R(q,X,Y)=sqrt(s²X+h²Y+sh(L(q)²−X−Y)). The order of X and Y is the negative row of Definition 57.1."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("four-path-negative-floor-c"),
+                DescribeId.Create("four-path-negative-floor-c-radical"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathNegativeFloor.C"),
                 H("The fixed negative-row C radical"),
                 StatementSource.WithoutFormula(),
