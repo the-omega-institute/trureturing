@@ -14,7 +14,7 @@ $$\forall V, C, u, x,\\{}\operatorname{AddCommGroup}\left(V\right) \land \operat
 
 *Commentary.*
 
-For any additive commutative group V with a real module structure, any real convex cone C and any real-linear functional u strictly positive on every nonzero element of C, u is nonnegative at every element of C, including zero. No norm, dimension, closedness or generating hypothesis is used. This is the original consumed lemma: cone_decomposition_costs_bddBelow uses it in the base-norm proof, and OriginalMassCalibration.original_mass_factorization applies it to both actual mass tensors. Public visibility adds no mathematical content.
+For any additive commutative group V with a real module structure, any real convex cone C and any real-linear functional u strictly positive on every nonzero element of C, u is nonnegative at every element of C, including zero. No norm, dimension, closedness or generating hypothesis is used. In cone_decomposition_costs_bddBelow, this nonnegativity bounds every cone-decomposition cost below by zero. In OriginalMassCalibration.original_mass_factorization, applying the same result to CD and CE gives nonnegative values for both actual mass tensors.
 
 **Theorem 1.2 (Positive normalized dynamics are base-norm contractions).**
 

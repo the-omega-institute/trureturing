@@ -4,7 +4,7 @@
 
 Positive asynchronous invariance forces every real multilinear mass to factor.
 
-At a global maximum on K to the power I, strict positivity of the scalar weights forces every updated scalar term to equal that maximum. For each slot, its maximizing section is a nonempty compact convex invariant subset of K. The frozen Markov–Kakutani theorem supplies a fixed point in that section, and the full real fixed dual identifies it with the same mass-one fixed vector sigma. The singleton-family adapter and the fixed-dual rank-nullity helper are consumed bind-only declarations owned here; the invariant maximizing-section and slot-replacement argument supplies the substantive escape content. The consumed spanning-cube helper is not used as an escape witness. Replacing finitely many slots by sigma preserves the maximum. Apply the argument to minus F to obtain the same minimum. The normalized cube is therefore constant. The consumed spanning-cube helper directly applies pinned Mathlib MultilinearMap.ext_of_span_eq_top to the subtype of K, extending this equality to every real tuple. It supplies no escape content. This applies to periodic maps and boundary sigma. It asserts neither convergence of Phi iterates nor convergence of asynchronous iterates, rates, physical copies, or a tensor cone.
+At a global maximum on K to the power I, strict positivity of the scalar weights forces every updated scalar term to equal that maximum. For each slot, its maximizing section is a nonempty compact convex invariant subset of K. The Markov–Kakutani theorem supplies a fixed point in that section, and the full real fixed dual identifies it with the same mass-one fixed vector sigma. Replacing finitely many slots by sigma preserves the maximum. Apply the argument to minus F to obtain the same minimum. The normalized cube is therefore constant. Since K spans the real carrier, pinned Mathlib MultilinearMap.ext_of_span_eq_top applied to the subtype of K extends this equality to every real tuple. This applies to periodic maps and boundary sigma. It asserts neither convergence of Phi iterates nor convergence of asynchronous iterates, rates, physical copies, or a tensor cone.
 
 **Theorem 1.1 (Fixed points inside invariant compact convex sets).**
 
@@ -16,7 +16,7 @@ $$\forall vA \in \operatorname{Universe}\left(\right),\; \forall A \in \operator
 
 *Commentary.*
 
-Phi is any real linear endomorphism of a finite-dimensional real normed space. Each nonempty compact convex invariant B contains a fixed point. This bind-only adapter directly applies the frozen D5.S3.Geometry.FixedPoint.MarkovKakutani.exists_common_fixed_point to the constant Unit family of the continuous affine map induced by Phi. Finite dimensionality supplies continuity; invariance is unchanged and commutation is reflexive. Its live consumers are maximum_at_fixed_tuple and multilinear_mass_factorization. It supplies no new escape content or mixing premise.
+Phi is any real linear endomorphism of a finite-dimensional real normed space. Each nonempty compact convex invariant B contains a fixed point. Apply D5.S3.Geometry.FixedPoint.MarkovKakutani.exists_common_fixed_point to the constant Unit family of the continuous affine map induced by Phi. Finite dimensionality supplies continuity; invariance is unchanged and commutation is reflexive. No mixing premise is needed.
 
 **Theorem 1.2 (Every fixed vector has its original scalar mass).**
 
@@ -28,7 +28,7 @@ $$\forall vA \in \operatorname{Universe}\left(\right),\; \forall A \in \operator
 
 *Commentary.*
 
-This bind-only rank-nullity helper is consumed by maximum_at_fixed_tuple and supplies no escape witness. The condition on f ranges over every real linear functional. Rank-nullity and the unchanged rank of the dual map bound the real fixed space by one dimension. A fixed sigma of mass one spans it, and applying the original u determines the scalar. Sigma may be on the cone boundary; this statement needs no cone or interior hypothesis.
+The original mass u is preserved by Phi, and every real linear functional fixed by precomposition with Phi is a scalar multiple of u. Apply rank-nullity to Phi minus the identity and to its real dual; equality of their ranks bounds the real fixed space by one dimension. A fixed sigma of mass one spans it, and applying the original u determines the scalar: every fixed x equals u(x) times sigma. Sigma may be on the cone boundary; this statement needs no cone or interior hypothesis.
 
 **Theorem 1.3 (Factorization on all real inputs).**
 
