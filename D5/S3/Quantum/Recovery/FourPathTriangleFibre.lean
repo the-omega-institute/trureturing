@@ -72,7 +72,10 @@ private theorem geometry (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     unfold Z
     exact div_mul_cancel₀ _ (by positivity)
   have zid : (Z L X Y)^2*(4*(X*Y))=(L^2-X-Y)^2 := by
-    nlinarith only [congrArg (fun t : ℝ => t^2) zi,root2]
+    calc
+      _ = (Z L X Y*(2*Real.sqrt (X*Y)))^2 := by
+        nlinarith only [congrArg (fun t : ℝ => 4*(Z L X Y)^2*t) root2]
+      _ = _ := by rw [zi]
   have zle : Z L X Y^2 ≤ 1 := by
     have : (Z L X Y^2-1)*(4*(X*Y)) ≤ 0 := by nlinarith only [zid,zsq]
     exact le_of_sub_nonpos ((mul_nonpos_iff_of_pos_right (by positivity : 0 < 4*(X*Y))).mp this)
@@ -125,6 +128,34 @@ private lemma chord_fibre (U b d r f w : ℝ) (hU : 0 < U)
     apply nonneg_of_mul_nonneg_right _ hU
     nlinarith only [identity,nn]
   linarith
+
+/-- A circular relaxation of the original coupled fibre. The high-half cap is
+the smaller of the two geometric caps, and the low-half cap is the central width. -/
+theorem closed_triangle_ball (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
+    (h : Triangle L X Y) :
+    (Y-X)^2+(2*F L X Y)^2 ≤ T (L^2) (X+Y) := by
+  obtain ⟨Xp,Yp,up,tru,tB,tD,zle,fi⟩ := geometry L X Y hL hL2 h
+  let u := X+Y
+  let a := L^2
+  let r := (Y-X)^2
+  let f := (2*F L X Y)^2
+  have hf : f*(u^2-r)=(B u-r)*(D a u-r) := by
+    dsimp [f,u,r,a]
+    nlinarith only [fi]
+  change r+f ≤ T a u
+  by_cases hu1 : u ≤ 1
+  · rw [T,if_pos hu1]
+    exact low_fibre a u r f up hu1 (sq_nonneg _) tru hf
+  · have bcap : B u ≤ u^2 := by unfold B; nlinarith
+    have dcap : D a u ≤ u^2 := by unfold D; nlinarith [sq_nonneg (u-a)]
+    have fB : f ≤ B u-r := by
+      apply (mul_le_mul_iff_left₀ (sub_pos.mpr tru)).mp
+      nlinarith only [hf,mul_nonneg (sub_nonneg.mpr tB) (sub_nonneg.mpr dcap)]
+    have fD : f ≤ D a u-r := by
+      apply (mul_le_mul_iff_left₀ (sub_pos.mpr tru)).mp
+      nlinarith only [hf,mul_nonneg (sub_nonneg.mpr tD) (sub_nonneg.mpr bcap)]
+    rw [T,if_neg hu1]
+    exact le_min (by linarith) (by linarith)
 
 /-- A closed fibre inequality for the actual radical, without division by a
 possibly vanishing fibre width. -/
