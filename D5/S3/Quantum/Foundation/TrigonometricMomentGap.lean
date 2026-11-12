@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
 import D5.S3.Quantum.Foundation.WholePairBallConfirmation
+import D5.S3.Quantum.Entanglement.SymmetricBellPolytopeSupport
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Analysis.Convex.Caratheodory
@@ -158,33 +159,6 @@ private theorem all_linear_effects (f : Carrier →ₗ[ℝ] ℝ) :
       simp only [map_smul, smul_eq_mul]
     _ = _ := by simp [effect, mul_comm]
 
-private theorem unique_support_hull {S : Set Carrier} {v : Carrier}
-    (l : Carrier →ₗ[ℝ] ℝ) (h : ∀ w ∈ S, w = v ∨ l w < l v) :
-    ∀ w ∈ convexHull ℝ S, w = v ∨ l w < l v := by
-  apply convexHull_min h
-  intro w hw z hz a b ha hb hab
-  by_cases ha0 : a = 0
-  · have hb1 : b = 1 := by linarith
-    simpa [ha0, hb1] using hz
-  by_cases hb0 : b = 0
-  · have ha1 : a = 1 := by linarith
-    simpa [hb0, ha1] using hw
-  have ha' : 0 < a := lt_of_le_of_ne ha (Ne.symm ha0)
-  have hb' : 0 < b := lt_of_le_of_ne hb (Ne.symm hb0)
-  have he : a * l v + b * l v = l v := by rw [← add_mul, hab, one_mul]
-  rcases hw with rfl | hw <;> rcases hz with rfl | hz
-  · left
-    rw [← add_smul, hab, one_smul]
-  · right
-    simp only [map_add, map_smul, smul_eq_mul]
-    nlinarith [mul_pos hb' (sub_pos.mpr hz)]
-  · right
-    simp only [map_add, map_smul, smul_eq_mul]
-    nlinarith [mul_pos ha' (sub_pos.mpr hw)]
-  · right
-    simp only [map_add, map_smul, smul_eq_mul]
-    nlinarith [mul_pos ha' (sub_pos.mpr hw), mul_pos hb' (sub_pos.mpr hz)]
-
 private theorem curve_eq_of_cos_sub {a θ : ℝ} (h : Real.cos (θ - a) = 1) :
     curve θ = curve a := by
   have he : Real.cos θ * Real.cos a + Real.sin θ * Real.sin a = 1 := by
@@ -205,20 +179,20 @@ private theorem curve_extreme (a : ℝ) : curve a ∈ states.extremePoints ℝ :
     simp [l, effect_curve, trigonometric, Real.cos_sub]
     ring
   have hp : l (curve a) = 1 := by simp [hl]
-  have hbound : ∀ w ∈ states, w = curve a ∨ l w < l (curve a) := by
-    apply unique_support_hull l
+  have hsupport : IsExposed ℝ states {curve a} := by
+    change IsExposed ℝ (convexHull ℝ (range curve)) {curve a}
+    apply D5.S3.Quantum.Entanglement.SymmetricBellPolytopeSupport.exposed_hull_of_unique_max
+      (range curve) l.toContinuousLinearMap (curve a) ⟨a, rfl⟩
     rintro _ ⟨θ, rfl⟩
-    by_cases he : Real.cos (θ - a) = 1
-    · exact Or.inl (curve_eq_of_cos_sub he)
-    · right
+    constructor
+    · change l (curve θ) ≤ l (curve a)
       rw [hl, hp]
-      exact lt_of_le_of_ne (Real.cos_le_one _) he
-  apply exposedPoints_subset_extremePoints
-  refine ⟨curve_mem a, l.toContinuousLinearMap, ?_⟩
-  intro w hw
-  rcases hbound w hw with rfl | hlt
-  · exact ⟨le_rfl, fun _ => rfl⟩
-  · exact ⟨hlt.le, fun hle => False.elim (not_le.mpr hlt hle)⟩
+      exact Real.cos_le_one _
+    · intro he
+      change l (curve θ) = l (curve a) at he
+      rw [hl, hp] at he
+      exact curve_eq_of_cos_sub he
+  exact hsupport.isExtreme.mem_extremePoints
 
 private theorem original_pure : pure cone unit = range curve := by
   rw [CircuitBalancedConfirmation.pure, original_base]
