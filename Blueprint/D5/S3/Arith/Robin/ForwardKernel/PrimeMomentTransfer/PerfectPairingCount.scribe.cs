@@ -13,7 +13,7 @@ internal sealed class PerfectPairingCountDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Cardinalities and evaluations of perfect pairings on finite label sets.",
+        "Cardinalities and evaluations of perfect and partial pairings on finite label sets.",
         H("Perfect pairing count"),
         Blocks(
             Paragraph(Text(
@@ -37,5 +37,11 @@ internal sealed class PerfectPairingCountDocument : IScribeDocumentDefinition
                 + "where natural subtraction gives zero in the empty case. If the cardinality is odd, p(U) equals zero. "
                 + "A perfect pairing corresponds bijectively to the fixed-point-free involution on U that exchanges the endpoints of each edge. The inverse sends an involution sigma to its set of two-cycles {x,sigma(x)}. The even formula applies the existing cycle-type count card_fixedPointFreeInvolution and simplifies its factorial quotient by the even double-factorial identity. "
                 + "The odd case follows because every perfect pairing covers twice its number of edges. "
-                + "In particular, a four-element label set has three perfect pairings and a six-element label set has fifteen."))));
+                + "In particular, a four-element label set has three perfect pairings and a six-element label set has fifteen."),
+            Entry("partial-pairing-count", "partialPairingCount", "Counting partial pairings",
+                "For every finite label set U and natural p, the number of partial pairings of U with p edges "
+                + "equals choose(cardinality(U),2p) times (2p-1)!!. The empty pairing is included. "
+                + "The support of such a pairing has cardinality 2p, and its edges form a perfect pairing of the support. "
+                + "Conversely, a perfect pairing of a 2p-element subset of U is a partial pairing of U with p edges. "
+                + "Summing the perfect-pairing count over all possible supports gives the formula."))));
 }

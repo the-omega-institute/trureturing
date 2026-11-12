@@ -327,7 +327,7 @@ private theorem facet_slice_dimension {C : PointedCone ℝ A} {u : A →ₗ[ℝ]
   omega
 
 omit [FiniteDimensional ℝ A] in
-private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x) {S : Set A}
     (hconv : Convex ℝ S) (hext : IsExtreme ℝ (base C u) S) :
     ∃ F : PointedCone.Face C, base F.toPointedCone u = S := by
