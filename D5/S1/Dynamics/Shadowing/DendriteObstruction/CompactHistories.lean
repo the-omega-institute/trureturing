@@ -8,12 +8,13 @@
 
 import D5.S1.Dynamics.Shadowing.DendriteObstruction.ShortLoops
 import D5.S1.Dynamics.Shadowing.IntervalObstruction.Basic
-import Mathlib.Topology.Sets.VietorisTopology
+import D5.S1.Dynamics.Shadowing.DendriteObstruction.ArcGeometry
 
 /-! Actual compact histories retain complete terminal fibres and every prefix time. -/
 
 open Set Function Filter
 open scoped Topology
+open TopologicalSpace
 
 namespace D5.S1.Dynamics.Shadowing.DendriteObstruction
 
@@ -336,6 +337,234 @@ theorem exists_iterate_injective_arc [CompactSpace X] {f : X → X}
   obtain ⟨B, P, Q, hPc, hQc, hPQ, hsub, hP, hQ, hs⟩ :=
     compact_double_cover hf hε hB hull no_circle H.terminal q hn
   have hd := hmax (2 * r) (extend_double_history hf H q B P Q hPc hQc hPQ hsub hP hQ hs)
+  omega
+
+private theorem arc_in_continuum (hull : StaticArcHull X) {C : Set X}
+    (hc : IsCompact C) (hcon : IsConnected C) (hnt : C.Nontrivial) :
+    ∃ A : EmbeddedArc X, A.carrier ⊆ C := by
+  obtain ⟨x, hx, y, hy, hxy⟩ := hnt
+  obtain ⟨A, _, _, hA⟩ := hull x y hxy
+  exact ⟨A, hA C hc hcon hx hy⟩
+
+private theorem continuum_image_infinite [CompactSpace X] {f : X → X} {ε : ℝ} {N : ℕ}
+    (hε : 0 < ε) (hB : ForwardBowenBound f univ ε N) (hull : StaticArcHull X)
+    {C : Set X} (hc : IsCompact C) (hcon : IsConnected C) (hnt : C.Nontrivial) (n : ℕ) :
+    (f^[n] '' C).Infinite := by
+  obtain ⟨A, hAC⟩ := arc_in_continuum hull hc hcon hnt
+  exact (IntervalObstruction.infinite_iterate_image (mapsTo_univ f univ)
+    (IntervalObstruction.finite_fibres isCompact_univ hB hε) (subset_univ _) A.infinite n).mono
+      (image_mono hAC)
+
+private theorem nontrivial_of_diam_pos {C : Set X} (hp : 0 < Metric.diam C) : C.Nontrivial := by
+  apply Set.not_subsingleton_iff.mp
+  intro h
+  rw [Metric.diam_subsingleton h] at hp
+  exact lt_irrefl _ hp
+
+private theorem continuum_expands [CompactSpace X] {f : X → X} (hf : Continuous f)
+    {ε : ℝ} {N : ℕ} (hε : 0 < ε) (hB : ForwardBowenBound f univ ε N)
+    (hull : StaticArcHull X) {C : Set X} (hc : IsCompact C)
+    (hcon : IsConnected C) (hnt : C.Nontrivial) (M : ℕ) :
+    ∃ n ≥ M, ε ≤ Metric.diam (f^[n] '' C) := by
+  obtain ⟨A, hAC⟩ := arc_in_continuum hull hc hcon hnt
+  obtain ⟨n, hn, x, hx, y, hy, hxy⟩ := IntervalObstruction.arbitrarily_late_separation
+    hB (mapsTo_univ f univ) hε (IntervalObstruction.finite_fibres isCompact_univ hB hε)
+    (subset_univ _) A.infinite M
+  exact ⟨n, hn, hxy.trans (Metric.dist_le_diam_of_mem (hc.image (hf.iterate n)).isBounded
+    (mem_image_of_mem _ (hAC hx)) (mem_image_of_mem _ (hAC hy)))⟩
+
+private theorem uniform_continuum_persistence [CompactSpace X] {f : X → X}
+    (hf : Continuous f) {ε : ℝ} {N : ℕ} (hε : 0 < ε)
+    (hB : ForwardBowenBound f univ ε N) (hull : StaticArcHull X) {a : ℝ}
+    (ha : 0 < a) (haε : a < ε) :
+    ∃ δ > 0, ∀ C : Set X, IsCompact C → IsConnected C → a ≤ Metric.diam C →
+      ∀ n : ℕ, δ ≤ Metric.diam (f^[n] '' C) := by
+  classical
+  let S : Set (NonemptyCompacts X) :=
+    {K | IsConnected (K : Set X) ∧ a ≤ Metric.diam (K : Set X)}
+  have hSc : IsCompact S := compact_continua_ge a
+  have hdc (j : ℕ) : Continuous (fun K : NonemptyCompacts X => Metric.diam (f^[j] '' (K : Set X))) :=
+    continuous_compact_diam.comp (hf.iterate j).nonemptyCompacts_map
+  let U : ℕ → Set (NonemptyCompacts X) :=
+    fun j => {K | a < Metric.diam (f^[j + 1] '' (K : Set X))}
+  obtain ⟨F, hF⟩ := hSc.elim_finite_subcover U (fun j => isOpen_lt continuous_const (hdc (j + 1))) (by
+    intro K hK
+    obtain ⟨n, hn, hlarge⟩ := continuum_expands hf hε hB hull K.isCompact hK.1
+      (nontrivial_of_diam_pos (ha.trans_le hK.2)) 1
+    apply mem_iUnion.mpr
+    refine ⟨n - 1, ?_⟩
+    change a < Metric.diam (f^[n - 1 + 1] '' (K : Set X))
+    rw [Nat.sub_add_cancel hn]
+    exact haε.trans_le hlarge)
+  let T := F.sup (fun j => j + 1) + 1
+  have hexpand : ∀ K ∈ S, ∃ j, 0 < j ∧ j ≤ T ∧
+      a < Metric.diam (f^[j] '' (K : Set X)) := by
+    intro K hK
+    obtain ⟨j, hj, hlarge⟩ := mem_iUnion₂.mp (hF hK)
+    exact ⟨j + 1, by omega, (Finset.le_sup (f := fun j => j + 1) hj).trans (Nat.le_succ _), hlarge⟩
+  have scales : ∀ p : ℕ, ∃ δ > 0, ∀ K ∈ S, ∀ j < p,
+      δ ≤ Metric.diam (f^[j] '' (K : Set X)) := by
+    intro p
+    induction p with
+    | zero => exact ⟨1, zero_lt_one, by simp⟩
+    | succ p ih =>
+      obtain ⟨δ, hδ, hd⟩ := ih
+      obtain ⟨γ, hγ, hg⟩ := hSc.exists_forall_le' (hdc p).continuousOn (a := 0) (by
+        intro K hK
+        exact Metric.diam_pos
+          (continuum_image_infinite hε hB hull K.isCompact hK.1
+            (nontrivial_of_diam_pos (ha.trans_le hK.2)) p).nontrivial
+          (K.isCompact.image (hf.iterate p)).isBounded)
+      refine ⟨min δ γ, lt_min hδ hγ, ?_⟩
+      intro K hK j hj
+      rcases Nat.lt_succ_iff_lt_or_eq.mp hj with hj | rfl
+      · exact (min_le_left _ _).trans (hd K hK j hj)
+      · exact (min_le_right _ _).trans (hg K hK)
+  obtain ⟨δ, hδ, hd⟩ := scales (T + 1)
+  refine ⟨δ, hδ, ?_⟩
+  intro C hc hcon hlarge n
+  let G := (Finset.range (n + 1)).filter (fun t => a ≤ Metric.diam (f^[t] '' C))
+  have h0 : 0 ∈ G := by simp [G, hlarge]
+  obtain ⟨t, ht, hmax⟩ := G.exists_max_image id ⟨0, h0⟩
+  have htn : t ≤ n := by have := (Finset.mem_filter.mp ht).1; simpa using this
+  have htl : a ≤ Metric.diam (f^[t] '' C) := (Finset.mem_filter.mp ht).2
+  let D : NonemptyCompacts X := ⟨⟨f^[t] '' C, hc.image (hf.iterate t)⟩,
+    hcon.nonempty.image _⟩
+  have hDS : D ∈ S := ⟨hcon.image _ (hf.iterate t).continuousOn, htl⟩
+  have hgap : n - t < T := by
+    by_contra! hgap
+    obtain ⟨j, hj, hjT, hDj⟩ := hexpand D hDS
+    have htj : t + j ∈ G := by
+      apply Finset.mem_filter.mpr
+      constructor
+      · apply Finset.mem_range.mpr; omega
+      · change a ≤ Metric.diam (f^[t + j] '' C)
+        rw [Nat.add_comm t j, Function.iterate_add, image_comp]
+        exact hDj.le
+    have := hmax (t + j) htj
+    dsimp at this
+    omega
+  have hbound := hd D hDS (n - t) (by omega)
+  change δ ≤ Metric.diam (f^[n - t] '' (f^[t] '' C)) at hbound
+  simpa only [image_image, ← Function.iterate_add_apply, Nat.sub_add_cancel htn] using hbound
+
+private theorem eventual_arc_persistence [CompactSpace X] {f : X → X}
+    (hf : Continuous f) (hfin : FinitelyPositiveExpansive f) (hull : StaticArcHull X) :
+    ∃ δ > 0, ∀ A : EmbeddedArc X, ∃ T : ℕ, ∀ n ≥ T,
+      δ ≤ Metric.diam (f^[n] '' A.carrier) := by
+  obtain ⟨ε, hε, N, _, hB⟩ := hfin
+  obtain ⟨δ, hδ, hd⟩ := uniform_continuum_persistence hf hε hB hull
+    (a := ε / 4) (by positivity) (by linarith)
+  refine ⟨δ, hδ, ?_⟩
+  intro A
+  obtain ⟨T, _, x, hx, y, hy, hxy⟩ := IntervalObstruction.arbitrarily_late_separation hB
+    (mapsTo_univ f univ) hε (IntervalObstruction.finite_fibres isCompact_univ hB hε)
+    (subset_univ _) A.infinite 0
+  have hlarge : ε / 4 ≤ Metric.diam (f^[T] '' A.carrier) := by
+    have hh := hxy.trans (Metric.dist_le_diam_of_mem (A.compact.image (hf.iterate T)).isBounded
+      (mem_image_of_mem _ hx) (mem_image_of_mem _ hy))
+    linarith
+  refine ⟨T, fun n hn => ?_⟩
+  have hb := hd _ (A.compact.image (hf.iterate T))
+    (A.connected.image _ (hf.iterate T).continuousOn) hlarge (n - T)
+  simpa only [image_image, ← Function.iterate_add_apply, Nat.sub_add_cancel hn] using hb
+
+/-- A static bound on disjoint large embedded subarcs of any one embedded arc. -/
+def UniformArcPacking (X : Type*) [MetricSpace X] : Prop :=
+  ∀ δ : ℝ, 0 < δ → ∃ M : ℕ, ∀ A : EmbeddedArc X, ∀ m : ℕ,
+    ∀ J : Fin m → EmbeddedArc X,
+      (∀ i, (J i).carrier ⊆ A.carrier) →
+      Pairwise (fun i j => Disjoint (J i).carrier (J j).carrier) →
+      (∀ i, δ ≤ Metric.diam (J i).carrier) → m ≤ M
+
+private theorem disjoint_subarcs (A : EmbeddedArc X) (m : ℕ) :
+    ∃ J : Fin m → EmbeddedArc X,
+      (∀ i, (J i).carrier ⊆ A.carrier) ∧
+      Pairwise (fun i j => Disjoint (J i).carrier (J j).carrier) := by
+  let l : Fin m → ℝ := fun i => (i : ℝ) / m
+  let r : Fin m → ℝ := fun i => ((i : ℝ) + 1 / 2) / m
+  have hm (i : Fin m) : (0 : ℝ) < m := by exact_mod_cast (Nat.zero_lt_of_lt i.isLt)
+  have hi (i : Fin m) : (i : ℝ) + 1 ≤ m := by exact_mod_cast (Nat.succ_le_of_lt i.isLt)
+  have hl (i : Fin m) : l i ∈ Icc (0 : ℝ) 1 := by
+    constructor
+    · exact div_nonneg (Nat.cast_nonneg _) (hm i).le
+    · exact (div_le_one (hm i)).mpr (by linarith [hi i])
+  have hr (i : Fin m) : r i ∈ Icc (0 : ℝ) 1 := by
+    constructor
+    · exact div_nonneg (by positivity) (hm i).le
+    · exact (div_le_one (hm i)).mpr (by linarith [hi i])
+  have hlr (i : Fin m) : l i < r i := by
+    apply (div_lt_div_iff_of_pos_right (hm i)).mpr
+    linarith
+  let J : Fin m → EmbeddedArc X := fun i => A.subarc (hl i) (hr i) (hlr i)
+  refine ⟨J, fun i => A.subarc_subset _ _ _, ?_⟩
+  intro i j hij
+  apply Set.disjoint_left.mpr
+  intro x hxi hxj
+  rw [show (J i).carrier = A.param '' Icc (l i) (r i) from A.subarc_carrier _ _ _] at hxi
+  rw [show (J j).carrier = A.param '' Icc (l j) (r j) from A.subarc_carrier _ _ _] at hxj
+  obtain ⟨s, hs, hsx⟩ := hxi
+  obtain ⟨t, ht, htx⟩ := hxj
+  have hst : s = t := A.injective ⟨(hl i).1.trans hs.1, hs.2.trans (hr i).2⟩
+    ⟨(hl j).1.trans ht.1, ht.2.trans (hr j).2⟩ (hsx.trans htx.symm)
+  have hsep (u v : Fin m) (huv : u.val < v.val) : r u < l v := by
+    change ((u : ℝ) + 1 / 2) / m < (v : ℝ) / m
+    apply (div_lt_div_iff_of_pos_right (hm u)).mpr
+    have : (u : ℝ) + 1 ≤ v := by exact_mod_cast (Nat.succ_le_of_lt huv)
+    linarith
+  rcases lt_or_gt_of_ne (Fin.val_injective.ne hij) with hij' | hji'
+  · have := hsep i j hij'; linarith [hs.2, ht.1]
+  · have := hsep j i hji'; linarith [ht.2, hs.1]
+
+private def map_arc (A : EmbeddedArc X) (g : X → X) (hg : Continuous g)
+    (hi : InjOn g A.carrier) : EmbeddedArc X where
+  param u := g (A.param u)
+  continuous := hg.comp_continuousOn A.continuous
+  injective := by
+    intro u hu v hv he
+    exact A.injective hu hv (hi (mem_image_of_mem _ hu) (mem_image_of_mem _ hv) he)
+
+private theorem map_arc_carrier (A : EmbeddedArc X) (g : X → X) (hg : Continuous g)
+    (hi : InjOn g A.carrier) : (map_arc A g hg hi).carrier = g '' A.carrier :=
+  (image_image g A.param (Icc 0 1)).symm
+
+/-- Under the explicit static arc-hull, no-circle and uniform arc-packing
+hypotheses, every continuous self-map fails finite positive expansivity. -/
+theorem not_finitelyPositiveExpansive_of_static_arc_packing [CompactSpace X]
+    {f : X → X} (hf : Continuous f) (hull : StaticArcHull X)
+    (no_circle : ∀ g : AddCircle (1 : ℝ) → X, Continuous g → ¬ Injective g)
+    (packing : UniformArcPacking X) (A : EmbeddedArc X) :
+    ¬ FinitelyPositiveExpansive f := by
+  classical
+  intro hfin
+  obtain ⟨K, hK⟩ := exists_iterate_injective_arc hf hfin hull no_circle A
+  obtain ⟨δ, hδ, hpersist⟩ := eventual_arc_persistence hf hfin hull
+  obtain ⟨M, hM⟩ := packing δ hδ
+  obtain ⟨J, hJK, hdisj⟩ := disjoint_subarcs K (M + 1)
+  choose T hT using (fun i : Fin (M + 1) => hpersist (J i))
+  let n := Finset.univ.sup T
+  let B := map_arc K (f^[n]) (hf.iterate n) (hK n)
+  let I : Fin (M + 1) → EmbeddedArc X :=
+    fun i => map_arc (J i) (f^[n]) (hf.iterate n) ((hK n).mono (hJK i))
+  have hBK : B.carrier = f^[n] '' K.carrier := map_arc_carrier _ _ _ _
+  have hIJ (i : Fin (M + 1)) : (I i).carrier = f^[n] '' (J i).carrier :=
+    map_arc_carrier _ _ _ _
+  have hIB : ∀ i, (I i).carrier ⊆ B.carrier := by
+    intro i; rw [hIJ, hBK]; exact image_mono (hJK i)
+  have hId : Pairwise (fun i j => Disjoint (I i).carrier (I j).carrier) := by
+    intro i j hij
+    apply Set.disjoint_left.mpr
+    intro x hxi hxj
+    rw [hIJ] at hxi hxj
+    obtain ⟨u, hu, heux⟩ := hxi
+    obtain ⟨v, hv, hevx⟩ := hxj
+    have huv := hK n (hJK i hu) (hJK j hv) (heux.trans hevx.symm)
+    exact Set.disjoint_left.mp (hdisj hij) hu (huv ▸ hv)
+  have hIl : ∀ i, δ ≤ Metric.diam (I i).carrier := by
+    intro i
+    rw [hIJ]
+    exact hT i n (Finset.le_sup (Finset.mem_univ i))
+  have := hM B (M + 1) I hIB hId hIl
   omega
 
 end D5.S1.Dynamics.Shadowing.DendriteObstruction
