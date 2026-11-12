@@ -26,9 +26,32 @@ The GHZ dyad is positive and has trace one. The Gram matrix of readout is diagon
 
 Each individual leg has the form of the Choi matrix embedded by its repeated-label isometry, divided by the cardinality of d. The three embedding ranges intersect only on diagonal strings. The adjoint of readout is a left inverse of each embedding, which proves the compression. Positive output at this GHZ dyad gives positive Choi matrix by compression and positive rescaling. The existing rectangular Choi criterion then gives all-amplification complete positivity of the supplied matrix map.
 
-This is the single-block readout of Quantum Origin V Lemma 82.2, together with its forward single-block CP consequence. The finite direct-sum fixed probe, every rectangular transition, endpoint selection of a positive leg, canonical CP of the whole direct-sum map, and positivity on the entire ordered three-copy cone in Theorem 82.3 require additional arguments. The common frame and repeated basis labels are mathematical data. No physical GHZ preparation, copying operation, callable leg, event realization, PRE bridge or full Omega assertion follows.
+**Theorem 1.2 (One fixed probe detects every rectangular sector).**
+
+Lean statement: `D5/S3/Quantum/Foundation/ThreeLegChoiCompression.direct_sum_three_leg_detector`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/ThreeLegChoiCompression.direct_sum_three_leg_detector` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* John Watrous (2018). *The Theory of Quantum Information*. DOI: [10.1017/9781316848142](https://doi.org/10.1017/9781316848142).
+
+*Commentary.*
+
+Let the original algebra be an arbitrary finite nonempty direct sum of full complex matrix algebras on finite nonempty coordinate types. The supplied complex-linear map may send each input block into every output block. The theorem imposes no Hermiticity, positivity, trace preservation, unitality or sector preservation premise. The stronger complex-linear statement includes the Hermiticity-preserving maps in Quantum Origin V Theorem 82.3.
+
+The fixed probe is the sum of the normalized GHZ projectors in the iii sectors, weighted by the dimension of block i divided by the sum of all block dimensions. Every other ordered seed is zero. It is positive and its ordinary total trace over every ordered sector is one. Its definition depends on the common frames and dimensions, independently of the supplied map and weights.
+
+For every nonnegative real weight triple of sum one, the weighted same-map lift sends this probe to a positive element if and only if the original map, transported by the matrix coordinates, is a canonical CompletelyPositiveMap. This is also equivalent to positivity of that actual lift on the entire ordered three-copy cone. Every block is an unrestricted positive semidefinite matrix; no separability condition is used. All scalar blocks, unequal block dimensions, repeated labels, rectangular transitions and endpoint weights are retained.
+
+The diagonal iii output is the weighted single-block GHZ lift. Its readout compresses to the diagonal component Choi matrix divided by the total dimension. For a transition from i to a distinct j, any position with positive weight isolates the corresponding rectangular Choi matrix in the sector having j in that position and i in both spectators. The repeated-label rectangular embedding is proved isometric, and the other two positions are explicitly permuted into the same output-first coordinates. Compression and positive rescaling recover every rectangular Choi matrix.
+
+The existing rectangular Choi theorem supplies component CP. The amplification bridge is proved for the original map: applying it entrywise to an arbitrary auxiliary matrix over the direct sum gives, in each output block, the sum of the amplified rectangular components. A star algebra equivalence flattens every central component of a canonical C-star auxiliary matrix. This proves equivalence with a canonical CompletelyPositiveMap whose linear map is precisely the transported original map. Conversely each actual leg is positive on all ordered sector matrices, and their nonnegative weighted sum preserves the whole cone.
+
+The common frame and repeated basis labels are mathematical data. These mathematical readout results supply no physical GHZ preparation, copying operation, callable leg, event realization, PRE bridge or full Omega assertion. The later original-event and all-real intertwining contracts in Quantum Origin V remain separate obligations.
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Foundation/ThreeLegChoiCompression.direct_sum_three_leg_detector`
 - Truth anchor: `D5/S3/Quantum/Foundation/ThreeLegChoiCompression.three_leg_choi_detector`
 - Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](FiniteKrausRepresentation.md)

@@ -361,28 +361,21 @@ private theorem component_reconstruction (Phi : BlockAlgebra D →ₗ[ℂ] Block
   conv_lhs => rw [← h]
   simp [component]
 
-private theorem kron_id_entry {a b T : Type*}
+private theorem kron_id_entry {a b : Type*} {k : ℕ}
     [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
-    [Fintype T] [DecidableEq T] (f : MatrixMap a b ℂ)
-    (X : Matrix (a × T) (a × T) ℂ) (p q : b × T) :
-    (f.kron (LinearMap.id : MatrixMap T T ℂ)) X p q =
+    (f : MatrixMap a b ℂ)
+    (X : Matrix (a × Fin k) (a × Fin k) ℂ) (p q : b × Fin k) :
+    (f.kron (LinearMap.id : MatrixMap (Fin k) (Fin k) ℂ)) X p q =
       f (fun r s => X (r, p.2) (s, q.2)) p.1 q.1 := by
-  have hexp (M : Matrix a a ℂ) :
-      f M = ∑ r, ∑ s, M r s • f (Matrix.single r s 1) := by
-    have h : M = ∑ r, ∑ s, M r s • Matrix.single r s 1 := by
-      ext r s
-      simp [Matrix.single, Matrix.sum_apply, ite_and]
-    conv_lhs => rw [h]
-    simp only [map_sum, map_smul]
-  rw [MatrixMap.kron_def]
-  have h := congrFun (congrFun (hexp (fun r s => X (r, p.2) (s, q.2))) p.1) q.1
-  simpa [Matrix.single, Matrix.sum_apply, ite_and, mul_comm] using h.symm
+  let Y : CStarMatrix (Fin k) (Fin k) (CStarMatrix a a ℂ) :=
+    CStarMatrix.ofMatrix fun r s => CStarMatrix.ofMatrix fun i j => X (i, r) (j, s)
+  exact (congrArg (fun M : CStarMatrix (b × Fin k) (b × Fin k) ℂ => M p q)
+    (FiniteKrausChannel.flatten_intertwines f k Y)).symm
 
 private theorem amplification_components (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D)
-    {T : Type*} [Fintype T] [DecidableEq T]
-    (X : Matrix T T (BlockAlgebra D)) (j : I) :
+    {k : ℕ} (X : Matrix (Fin k) (Fin k) (BlockAlgebra D)) (j : I) :
     matrixBlock D (X.map Phi) j =
-      ∑ i, ((component D Phi j i).kron (LinearMap.id : MatrixMap T T ℂ))
+      ∑ i, ((component D Phi j i).kron (LinearMap.id : MatrixMap (Fin k) (Fin k) ℂ))
         (matrixBlock D X i) := by
   ext p q
   simp only [Matrix.sum_apply, kron_id_entry, matrixBlock, Matrix.map_apply]

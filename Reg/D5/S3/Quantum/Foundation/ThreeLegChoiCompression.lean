@@ -145,7 +145,8 @@ theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   norm_num [rejected, realize, i, a, D, probe, seed, totalDimension,
     ghz, diagonalVector, Matrix.vecMulVec] at hv
   all_goals
-    simp [Pi.single, i] at hv
+    have hlabel : (default : I) = ⟨0⟩ := Subsingleton.elim _ _
+    norm_num [Pi.single, Function.update, i, hlabel] at hv
 
 theorem dependence : ObservationalDependence signature.{u,v} actual := by
   intro role
@@ -177,7 +178,8 @@ def source_registration : Registration arena.{u,v} (type_of% @direct_sum_three_l
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@direct_sum_three_leg_detector.{u,v}) (Realization signature.{u,v}) Unit Unit where
   unitName := `Reg.D5.S3.Quantum.Foundation.ThreeLegChoiCompression.DirectSum.unit
-  realizationName := `Reg.D5.S3.Quantum.Foundation.ThreeLegChoiCompression.DirectSum.family
+  realizationName :=
+    `Reg.D5.S3.Quantum.Foundation.ThreeLegChoiCompression.DirectSum.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
