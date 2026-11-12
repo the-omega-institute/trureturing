@@ -8,8 +8,10 @@
 
 
 /-
-proof_shape: distinct_bound, collision_count_lower,
-  model_fifth, normalized_fifth, result: content.
+proof_shape: claim, zValue, zWeight, moment, modelFunctional, duplicate,
+  fifthCount, counterData: definitions.
+proof_shape: collision_count_lower, model_fifth, normalized_fifth, result: content.
+proof_shape: distinct_bound: bind-only (consumer: result).
 proof_shape: moment_values: bind-only
   (consumers: distinct_bound, distinct_fifth_zero, model_fifth, result).
 proof_shape: model_character: bind-only
@@ -21,11 +23,11 @@ proof_shape: ratio_limit: bind-only (consumer: result).
 escape_witness: The shared odd-coordinate reduction and the injection in
   collision_count_lower give at least N(N-1)(N-2)(N-3) fifth-order tuples with
   three odd coordinates, and at least N^4/4 for N >= 9. Together with model_fifth
-  this yields the normalized upper bound -3/11, used by result.
+  this yields the normalized upper bound -3/11 in normalized_fifth, used by result.
 admission_basis: escape-witness.
 -/
 
-import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.BiasedCubeMixture
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.MixtureMomentLemmas
 
 /-! A positive finite probability model for the obstruction in 命题 500.4. -/
 
@@ -36,23 +38,6 @@ namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyR
 
 noncomputable section
 set_option autoImplicit false
-
-/-- One finite algebraic moment model, with all types in universe zero. -/
-structure FifthData where
-  ι : Type
-  [fintype : Fintype ι]
-  [decidableEq : DecidableEq ι]
-  A : Type
-  [commRing : CommRing A]
-  [algebra : Algebra ℝ A]
-  ℓ : A →ₗ[ℝ] ℝ
-  Y : ι → A
-  a : ℝ
-  b : ℝ
-  H : ℝ
-  L : ℝ
-
-attribute [instance] FifthData.fintype FifthData.decidableEq FifthData.commRing FifthData.algebra
 
 /-- The fifth-order implication with bounded lower moments and vanishing top moment. -/
 def claim : Prop :=
@@ -114,35 +99,14 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr5 : r < 
     (g : Fin r → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
     |distinctIndexMoment (modelFunctional N) (modelY N) g| ≤
       11 * Real.sqrt N ^ r := by
-  classical
-  have hs : 0 < Real.sqrt N := Real.sqrt_pos.2 (by exact_mod_cast hN)
   have hm : |moment r| ≤ 11 := by
     interval_cases r <;> norm_num [moment_values.2.2.1, moment_values.2.2.2.1,
       moment_values.2.2.2.2.1]
-  have hsum : |∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i)| ≤
-      (N : ℝ)^r := by
-    calc
-      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, |∏ i, g i (x i)| :=
-        Finset.abs_sum_le_sum_abs _ _
-      _ ≤ ∑ x : Fin r → Fin N with Function.Injective x, (1 : ℝ) := by
-        apply Finset.sum_le_sum
-        intro x hx
-        rw [Finset.abs_prod]
-        exact Finset.prod_le_one₀ (fun _ _ => abs_nonneg _) (fun i _ => hg i (x i))
-      _ ≤ ∑ _x : Fin r → Fin N, (1 : ℝ) :=
-        Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
-          (fun _ _ _ => by positivity)
-      _ = _ := by simp
-  rw [modelFunctional, mixture_distinct_moments, ← moment, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
   calc
-    _ ≤ (11 / Real.sqrt N ^ r) * (N : ℝ)^r :=
-      mul_le_mul (div_le_div_of_nonneg_right hm (by positivity)) hsum
-        (abs_nonneg _) (by positivity)
-    _ = 11 * Real.sqrt N ^ r := by
-      have he : (N : ℝ)^r = Real.sqrt N ^ r * Real.sqrt N ^ r := by
-        rw [← mul_pow, ← pow_two, Real.sq_sqrt (by positivity)]
-      rw [he]
-      field_simp
+    _ ≤ |moment r| * Real.sqrt N ^ r := by
+      simpa only [modelFunctional, moment] using
+        mixture_distinct_bound N r hN zValue zWeight g hg
+    _ ≤ 11 * Real.sqrt N ^ r := mul_le_mul_of_nonneg_right hm (by positivity)
 
 private lemma distinct_fifth_zero (N : ℕ) (g : Fin 5 → Fin N → ℝ) :
     distinctIndexMoment (modelFunctional N) (modelY N) g = 0 := by
