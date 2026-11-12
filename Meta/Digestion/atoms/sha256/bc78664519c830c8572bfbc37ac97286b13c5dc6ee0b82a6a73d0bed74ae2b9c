@@ -1,0 +1,17 @@
+**推论 102.4（双秩有限纯目标准则）。** 在同一原有限维载体上，
+
+$$
+\boxed{\mathrm B\quad\Longrightarrow\quad
+\forall p\in P:\quad
+\bigl[\mathrm{Z0}(p)\Longleftrightarrow\mathrm G_{b_p}(p)\bigr].}
+\tag{VII102.9}
+$$
+
+因此在 $\mathrm B$ 下，原全部混态 $\mathrm{Z0}$ 等价于 $\forall p\in P,\ \mathrm G_{b_p}(p)$。$b_p$ 是从原资格域与原确认面得到的充分检验上界，不声称每个特定 $K,p$ 的实际最小充分元数都等于 $b_p$。
+
+证明。$\mathrm{Z0}(p)$ 到全部有限纯目标共同排除，直接逐源复用VII101.2。若反向失败，102.2给实际最小不相容组，102.3使其元数 $k\ge2$ 且 $k\le\min\{h_p,d_p-1\}\le b_p$，违反 $\mathrm G_{b_p}(p)$。
+
+低秩分支也由此完整包含。$E_p=\varnothing$ 时，VII101.6的非负纯分解表明 $D_p=\varnothing$，两条件均为空真。$h_p\le1$ 或 $d_p\le2$ 时不可能有(VII102.4)的最小组，故 $\mathrm{Z0}(p)$ 自动成立，$b_p=1$，没有增加假设。$m=0$ 时 $K$ 为单点、$F_p=\{u\}$、$h_p=d_p=0$；$m=1$ 时 $K$ 为线段，端点的原重心坐标确认给 $D_p$ 为另一端点，$d_p=h_p=1$。两者均落在 $b_p=1$ 分支。特别地 $m=2$ 的 $\mathrm B$ 域也自动有 $\mathrm{Z0}$。
+
+对 $m\ge2$，$b_p\le m-1$，所以VII101.5的全称 $\mathrm G_{m-1}$ 仍是统一充分条件；(VII102.9)允许每个源按自己实际的两种秩降低检验数。它不把仅一个固定源满足条件写成全部源满足条件。证毕。
+
