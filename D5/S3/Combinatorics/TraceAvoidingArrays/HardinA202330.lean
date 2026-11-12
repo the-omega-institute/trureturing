@@ -115,16 +115,28 @@ private theorem count_transfer (m : ℕ) :
   rw [count, hc]
   apply cardMatrix (fun _ _ => True) Q (fun a b => (a,b)) T 1
   · intro a b _ s
+    classical
     rcases s with ⟨d,c⟩
-    simp only [T, Prod.mk.injEq, true_and]
-    rw [show (∑ r : Fin 6, if Q a b r ∧ b = d ∧ r = c then (1 : ℤ) else 0) =
-      (if b = d ∧ Q a b c then 1 else 0) by
-        simp only [and_assoc, and_left_comm, and_comm, Finset.sum_ite_eq', Finset.mem_univ, ite_true]]
-    by_cases h : d = b <;> simp_all
+    rw [Finset.sum_eq_single c]
+    · simp [T, Prod.mk.injEq, and_comm, eq_comm]
+    · intro r _ hrc
+      have he : (b,r) ≠ (d,c) := fun h => hrc (Prod.mk.inj h).2
+      simp only [he, and_false, ite_false]
+    · simp
   · intro s
+    classical
     rcases s with ⟨a,b⟩
-    simp only [Prod.mk.injEq, true_and]
-    simp only [ite_and, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    rw [Finset.sum_eq_single a]
+    · rw [Finset.sum_eq_single b]
+      · simp
+      · intro y _ hy
+        simp only [Prod.mk.injEq, true_and, eq_self_iff_true, true_and, hy, ite_false]
+      · simp
+    · intro x _ hx
+      apply Finset.sum_eq_zero
+      intro y _
+      simp only [Prod.mk.injEq, true_and, hx, false_and, ite_false]
+    · simp
 
 private def V (m : ℤ) : Fin 6 × Fin 6 → ℤ :=
   fun s => if s = (0,0) then m^4+12*m^3+41*m^2+54*m+48
@@ -169,12 +181,14 @@ private theorem quartic (n : ℕ) (hn : 1 ≤ n) :
   rcases n with _ | n
   · norm_num [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_succ]
   rcases n with _ | k
-  · simp only [pow_one, dotProduct, Matrix.mulVec, Fintype.sum_prod_type, Fin.sum_univ_succ]
-    norm_num [T, Q, row, bit, Fin.forall_fin_succ]
+  · change 12 * dotProduct (1 : Fin 6 × Fin 6 → ℤ) ((T^1).mulVec 1) = 984
+    decide
   have h := congrArg (fun w : Fin 6 × Fin 6 → ℤ => ∑ s, w s) (vector_power k)
   simp only [Pi.smul_apply, smul_eq_mul, ← Finset.mul_sum, vector_sum] at h
   simp only [dotProduct, Pi.one_apply, one_mul]
-  convert h using 1 <;> push_cast <;> ring
+  convert h using 1
+  push_cast
+  ring
 
 private theorem recurrence (n : ℕ) (hn : 6 ≤ n) :
     (count n : ℤ) = 5*(count (n-1) : ℤ)-10*(count (n-2) : ℤ)+
