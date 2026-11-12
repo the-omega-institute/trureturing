@@ -12,7 +12,7 @@ The resulting actual q has enough multiplicative budget for every prime through 
 
 The conclusion simultaneously retains 1<r<m, t>mu, log(8P)<=log(m/r), and log(m/r)<=C log(P) log(log(P)), with C,T before every original m and mu. It supplies a nearby optimizer, not the original bank or its paid exchanges. The original denominator h is not identified with log(m/r). Full modes 2,3,4,5,6,8,9,12 in both directions, the removed-2 tail J2/h2, prescribed b/delta, every fee and Robin/5040/RH remain open.
 
-The original source argument is fallible; Erdos--Nicolas (1975), pp. 69--71, supplies mature support-geometry context, with no novelty claim and no formal six-exponentials supplier. The Reg mirror retains the complete theorem telescope and a compiled source-law equivalence. Four-slot compiler/source binding, dependent realization, intervention, variation, sensitivity and observational dependence remain unfinished under issue 29429.
+The original source argument is fallible; Erdos--Nicolas (1975), pp. 69--71, supplies mature support-geometry context, with no novelty claim and no formal six-exponentials supplier.
 
 **Theorem 1.1 (Uniform nearby least global optimizer).**
 

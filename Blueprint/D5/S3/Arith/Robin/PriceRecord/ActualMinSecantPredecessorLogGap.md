@@ -12,8 +12,6 @@ The original-record prime-power envelope bounds j log(p) by B=log(4P^2), and j b
 
 The ordinary source arguments are fallible inputs. Their support geometry is part of the mature superabundant and colossally-abundant support geometry of Erdos--Nicolas, Repartition des nombres superabondants (1975), pp. 69--71. No novelty or formal six-exponentials supplier is claimed. These logarithmic ratios are not identified with the original denominator h. The full bank, prescribed b/delta, every fee, Robin/5040 and RH remain open.
 
-The retained Reg mirror checks full-source laws and definitional equivalence for all three public targets. Compiler occurrence/source binding, dependent realization, intervention, variation, sensitivity and observational dependence are unfinished under issue 29429; these are not declared_validated four-slot registrations.
-
 **Theorem 1.1 (Supporting price on the full original prefix).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualMinSecantPredecessorLogGap.secant_support`
