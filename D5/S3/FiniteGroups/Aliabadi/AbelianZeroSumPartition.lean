@@ -4,16 +4,19 @@
    mirror-E: none(waiver:pure-finite-abelian-theorem)
    anchors: []
    utility: none
-   digest: Finite abelian EGZ extraction and exact zero-sum partitions retain the original labels. -/
+   digest: Finite abelian EGZ extraction and exact labeled zero-sum partitions. -/
 
 import D5.S3.FiniteGroups.GordonFullSet
 import Mathlib.Combinatorics.Additive.ErdosGinzburgZiv
 import Mathlib.Tactic
 
+/-! The finite abelian EGZ theorem and its exact partition consequence,
+with the cyclic case supplied by Mathlib and the presentation by Gordon. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open scoped BigOperators Classical
+open scoped BigOperators
 open Finset
 
 universe u v w
@@ -43,7 +46,7 @@ private theorem zero_sum_batches {A : Type u} [AddCommGroup A] {I : Type v}
       omega
     obtain ⟨t, hts, htcard, htsum⟩ := extract s htwo
     have hrem : (s \ t).card = s.card - n := by
-      rw [card_sdiff hts, htcard]
+      rw [card_sdiff_of_subset hts, htcard]
     have hbudget : (k + 1) * n - 1 ≤ (s \ t).card := by
       rw [hrem]
       rw [Nat.succ_mul] at hs
@@ -78,21 +81,24 @@ private theorem product_extraction {A : Type u} {B : Type w}
   have hbudget : ((2 * Nat.card B - 1) + 1) * Nat.card A - 1 ≤ s.card := by
     have he : 2 * Nat.card B - 1 + 1 = 2 * Nat.card B := by omega
     rw [he]
-    nlinarith
+    have hp : 2 * Nat.card B * Nat.card A = 2 * (Nat.card A * Nat.card B) := by ring
+    rwa [hp]
   obtain ⟨F, hFcard, hFdisj, hF⟩ := zero_sum_batches (Nat.card A) hn
     (fun i => (a i).1) (fun t ht => hA _ t ht) (2 * Nat.card B - 1) s hbudget
   obtain ⟨C, hCF, hCcard, hCsum⟩ := hB
     (fun t : Finset I => ∑ i ∈ t, (a i).2) F (by omega)
-  have hCdisj := hFdisj.mono hCF
+  have hCdisj : (C : Set (Finset I)).PairwiseDisjoint id := hFdisj.mono hCF
   refine ⟨C.biUnion id, biUnion_subset.mpr (fun t ht => (hF t (hCF ht)).1), ?_, ?_⟩
-  · rw [card_biUnion hCdisj, sum_const_nat (fun t ht => (hF t (hCF ht)).2.1), hCcard]
+  · rw [card_biUnion (t := id) hCdisj]
+    change (∑ t ∈ C, t.card) = Nat.card A * Nat.card B
+    rw [sum_const_nat (fun t ht => (hF t (hCF ht)).2.1), hCcard]
     exact Nat.mul_comm _ _
   · apply Prod.ext
     · simp only [Prod.fst_sum, Prod.fst_zero]
-      rw [sum_biUnion hCdisj]
+      rw [sum_biUnion (t := id) hCdisj]
       exact sum_eq_zero (fun t ht => (hF t (hCF ht)).2.2)
     · simp only [Prod.snd_sum, Prod.snd_zero]
-      rw [sum_biUnion hCdisj]
+      rw [sum_biUnion (t := id) hCdisj]
       exact hCsum
 
 private theorem chain_extraction (cs : List Gordon.CyclicFactor) :
@@ -106,11 +112,13 @@ private theorem chain_extraction (cs : List Gordon.CyclicFactor) :
     exact ⟨t, hts, by simpa [Gordon.Chain, Nat.card_eq_fintype_card] using ht,
       Subsingleton.elim _ _⟩
   | cons c cs ih =>
-    apply product_extraction (B := Gordon.Chain cs) ?_ ih
+    have hcyclic : HasEGZ.{0,v} (ZMod c.modulus) := by
+      intro I a s hs
+      have hc : Nat.card (ZMod c.modulus) = c.modulus := by
+        rw [Nat.card_eq_fintype_card, ZMod.card]
+      simpa only [hc] using ZMod.erdos_ginzburg_ziv a (by simpa only [hc] using hs)
     intro I a s hs
-    have hc : Nat.card (ZMod c.modulus) = c.modulus := by
-      rw [Nat.card_eq_fintype_card, ZMod.card]
-    simpa only [hc] using ZMod.erdos_ginzburg_ziv a (by simpa only [hc] using hs)
+    exact product_extraction hcyclic ih a s hs
 
 /-- Among at least `2 |G| - 1` labeled entries in a finite abelian group,
 there are `|G|` original labels whose values sum to zero. Values may repeat. -/
@@ -119,13 +127,14 @@ theorem exists_zero_sum_card {G : Type u} [AddCommGroup G] [Finite G]
     (hs : 2 * Nat.card G - 1 ≤ s.card) :
     ∃ t ⊆ s, t.card = Nat.card G ∧ ∑ i ∈ t, a i = 0 := by
   classical
-  letI := Fintype.ofFinite G
+  let _ := Fintype.ofFinite G
   obtain ⟨cs, ⟨e⟩⟩ := Gordon.finite_abelian_presentation G
   have hc := Nat.card_congr e.toEquiv
   obtain ⟨t, hts, htcard, htsum⟩ := chain_extraction cs (fun i => e (a i)) s (by omega)
   refine ⟨t, hts, htcard.trans hc.symm, e.injective ?_⟩
   simpa only [map_sum, map_zero] using htsum
 
+open Classical in
 /-- A zero-sum support of size `m |G|` splits into exactly `m` disjoint
 zero-sum blocks of size `|G|`, indexed by `Fin m`, in the same label type. -/
 theorem exists_zero_sum_partition {G : Type u} [AddCommGroup G] [Finite G]
@@ -147,16 +156,17 @@ theorem exists_zero_sum_partition {G : Type u} [AddCommGroup G] [Finite G]
     · subst m
       refine ⟨fun _ => s, by simp, ?_, by simp, ?_, fun _ => hsum⟩
       · intro j k hjk
-        exact (hjk (Subsingleton.elim _ _)).elim
+        exact (hjk (Fin.ext (by omega))).elim
       · intro j
         simpa using hcard
     · have hlarge : 2 * Nat.card G - 1 ≤ s.card := by
-        rw [hcard, Nat.succ_mul]
+        have he : (m + 1) * Nat.card G = m * Nat.card G + Nat.card G := by ring
+        rw [hcard, he]
         have hle := Nat.mul_le_mul_right (Nat.card G) (show 1 ≤ m by omega)
         omega
       obtain ⟨t, hts, htcard, htsum⟩ := exists_zero_sum_card a s hlarge
       have hremcard : (s \ t).card = m * Nat.card G := by
-        rw [card_sdiff hts, htcard, hcard, Nat.succ_mul]
+        rw [card_sdiff_of_subset hts, htcard, hcard, Nat.succ_mul]
         omega
       have hremsum : ∑ i ∈ s \ t, a i = 0 := by
         have he := sum_sdiff hts (f := a)

@@ -3,10 +3,12 @@ import D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition
 import Reg.Support.UniverseSingleReadout
 import Mathlib.Algebra.Group.ULift
 
+/-! Source-bound zero-sum observations for exact labeled extraction and partitions. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition
-open scoped BigOperators Classical
+open scoped BigOperators
 
 noncomputable section
 universe u v
@@ -50,7 +52,8 @@ private theorem bridge :
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   obtain ⟨t, _, _, hf⟩ := h (ULift.{u} PUnit) (ULift.{v} PUnit)
-    (fun _ => 0) {⟨PUnit.unit⟩} (by simp [Nat.card_eq_fintype_card])
+    (fun _ => 0) {⟨PUnit.unit⟩} (by
+      rw [Nat.card_of_subsingleton (0 : ULift.{u} PUnit), Finset.card_singleton])
   exact hf
 
 private theorem dependence : ObservationalDependence signature.{u,v} actual := by
@@ -69,7 +72,8 @@ def family : Registration arena.{u,v} (type_of% (@exists_zero_sum_card.{u,v})) w
   sensitivity := Reg.Support.UniverseSingleReadout.sensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+noncomputable def registration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_zero_sum_card.{u,v}) (Realization signature.{u,v}) Unit Unit where
   unitName := `D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition.exists_zero_sum_card.__information_unit
   realizationName := `Reg.D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition.Extraction.family
@@ -103,7 +107,7 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end Extraction
 
-structure PartitionData extends LabelData.{u,v} where
+structure PartitionData extends LabelData.{u, v} where
   m : ℕ
 
 namespace Partition
@@ -118,6 +122,7 @@ def actual : Realization signature.{u,v} := realize signature
 def rejected : Realization signature.{u,v} := realize signature
   (fun _ _ _ => False) (fun e => nomatch e)
 
+open Classical in
 abbrev arena : Arena where
   signature := signature.{u,v}
   Law r := ∀ (G : Type u) [gg : AddCommGroup G] [fg : Finite G]
@@ -139,7 +144,8 @@ private theorem bridge :
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
   obtain ⟨B, _, _, _, _, hf⟩ := h (ULift.{u} PUnit) (ULift.{v} PUnit)
-    (fun _ => 0) {⟨PUnit.unit⟩} 1 (by simp [Nat.card_eq_fintype_card]) (by simp)
+    (fun _ => 0) {⟨PUnit.unit⟩} 1 (by
+      rw [Nat.card_of_subsingleton (0 : ULift.{u} PUnit), Finset.card_singleton]) (by simp)
   exact hf
 
 private theorem dependence : ObservationalDependence signature.{u,v} actual := by
@@ -160,7 +166,8 @@ def family : Registration arena.{u,v} (type_of% (@exists_zero_sum_partition.{u,v
   sensitivity := Reg.Support.UniverseSingleReadout.sensitivity _ _ _ rejected_law
   dependence := dependence
 
-noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+noncomputable def registration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_zero_sum_partition.{u,v}) (Realization signature.{u,v}) Unit Unit where
   unitName := `D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition.exists_zero_sum_partition.__information_unit
   realizationName := `Reg.D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition.Partition.family
@@ -183,7 +190,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0,1,2,3,4,6]
     readouts := #[{
-      path := #["body","body","body","body","body","body","body","body","body","arg","body","arg","arg","arg","arg"]
+      path := #["body","body","body","body","body","body","body","body","body",
+        "arg","body","arg","arg","arg","arg"]
       stateBinder := 9
       functionOperand := false
       stateOperand := none
