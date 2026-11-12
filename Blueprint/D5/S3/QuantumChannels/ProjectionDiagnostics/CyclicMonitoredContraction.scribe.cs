@@ -17,7 +17,8 @@ internal sealed class CyclicMonitoredContractionDocument : IScribeDocumentDefini
                 F.Id("C"), Eq, F.Id("span"), Grp(F.Id("U"), Caret, F.Id("n"), F.Id("v")),
                 Comma, Quad,
                 F.Id("K"), Eq, F.Id("intersection"), Underscore, F.Id("n"),
-                F.Id("ker"), Grp(F.Id("B_C"), F.Id("T_C"), Caret, F.Id("n")),
+                F.Id("ker"), Grp(Seq(F.Id("B"), Underscore, F.Id("C")),
+                    Seq(F.Id("T"), Underscore, F.Id("C")), Caret, F.Id("n")),
                 Eq, Grp(D(0))))),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(

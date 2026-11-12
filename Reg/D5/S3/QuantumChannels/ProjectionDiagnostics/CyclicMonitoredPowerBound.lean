@@ -1,6 +1,8 @@
 import D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredPowerBound
 import Reg.D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredContraction
 
+/-! A dependent-family audit attempt for the complete strict-power statement. -/
+
 open _root_.D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredContraction
 open _root_.D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredPowerBound
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -37,15 +39,19 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  let E := ULift.{u} ℂ
+  let E := EuclideanSpace ℂ (ULift.{u} Unit)
   let U : E ≃ₗᵢ[ℂ] E := LinearIsometryEquiv.refl ℂ E
-  let v : E := ULift.up 1
-  have hv : ‖v‖ = 1 := by change ‖(1 : ℂ)‖ = 1; simp
+  let v : E := WithLp.toLp 2 (fun _ => (1 : ℂ))
+  have hv : ‖v‖ = 1 := by
+    change ‖(WithLp.toLp 2 (fun _ : ULift.{u} Unit => (1 : ℂ)) :
+      EuclideanSpace ℂ (ULift.{u} Unit))‖ = 1
+    rw [EuclideanSpace.norm_eq]
+    simp
   have hvmem : v ∈ cyclicSpace U v := Submodule.subset_span ⟨0, rfl⟩
   have hvne : (⟨v, hvmem⟩ : cyclicSpace U v) ≠ 0 := by
     intro hz
-    have hc := congrArg (fun z : cyclicSpace U v => (z : E).down) hz
-    exact one_ne_zero hc
+    have hc := congrArg (fun z : cyclicSpace U v => (z : E) (ULift.up ())) hz
+    simpa [v] using hc
   letI : Nontrivial (cyclicSpace U v) := ⟨⟨_, _, hvne⟩⟩
   obtain ⟨N, _, q, _, hq, hb⟩ := h U v hv
   have hone : (1 : ℝ) ≤ q := by simpa [rejected, realize] using hb
@@ -53,11 +59,12 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  let E := ULift.{u} ℂ
+  let E := EuclideanSpace ℂ (ULift.{u} Unit)
   let p : Scope.{u} := ⟨E⟩
   refine ⟨p, (0, 1), (1, 1), ?_⟩
   intro he
-  have hc := congrArg (fun T : E →L[ℂ] E => (T (ULift.up 1)).down) he
+  have hc := congrArg (fun T : E →L[ℂ] E =>
+    (T (WithLp.toLp 2 (fun _ => (1 : ℂ)))) (ULift.up ())) he
   simpa [actual, realize] using hc
 
 def family : Registration arena.{u} (type_of% (@cyclic_power_contraction.{u})) where

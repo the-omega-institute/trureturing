@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/1202.3903v3
 claim: "Theorem 2 identifies finite expected monitored return time with the number of occupied spectral points."
 strata_touched:
   - D5/S3/QuantumChannels/ProjectionDiagnostics/CyclicMonitoredContraction
+  - D5/S3/QuantumChannels/ProjectionDiagnostics/CyclicMonitoredPowerBound
 license: citation-only
 triage: anchor
 ---
