@@ -1,0 +1,42 @@
+**定理 97.3（零关系生成的反序对合）。** 在定理VII97.2的前件下，对每个 $F\in\mathcal L(K)$ 定义
+
+$$
+F^\#=\bigcap_{p\in\operatorname{ext}F}D_p,
+\qquad \bigcap\varnothing=K.
+\tag{VII97.4}
+$$
+
+则 $F^\#\in\mathcal L(K)$，且对全部面 $F,G$ 有
+
+$$
+\begin{gathered}
+F\subseteq G\ \Longrightarrow\ G^\#\subseteq F^\#,
+\qquad F^{\#\#}=F,\qquad
+\varnothing^\#=K,\quad K^\#=\varnothing,\quad \{p\}^\#=D_p,\\
+F\cap F^\#=\varnothing,\qquad F\vee F^\#=K,\\
+(F\vee G)^\#=F^\#\cap G^\#,
+\qquad (F\cap G)^\#=F^\#\vee G^\#,\\
+\dim F+\dim F^\#=m-1.
+\end{gathered}
+\tag{VII97.5}
+$$
+
+这些性质是原有限面格的组合正交补性质，不包含线性映射 $V\to V^*$、正定内积或数值互反性的存在断言。
+
+证明。facets的交是面，且 $\operatorname{ext}F=P\cap F$，所以( VII97.4 )定义了面并反转包含。若 $p\in\operatorname{ext}F$、$r\in\operatorname{ext}F^\#$，则 $r\in D_p$；排除对称性给 $p\in D_r$。遍历这些 $r$ 再取凸包，得到 $F\subseteq F^{\#\#}$。
+
+反向，设原顶点 $q\notin F$。面为facets的交，故有一个包含 $F$ 而不含 $q$ 的facet $G$。VII97.2将它唯一写成 $G=D_r$。每个 $p\in\operatorname{ext}F$ 都在 $D_r$ 中，故 $r\in D_p$，即 $r\in F^\#$。原顶点 $r$ 也就是这个面的顶点，因此
+
+$$
+F^{\#\#}\subseteq D_r=G,\qquad q\notin F^{\#\#}.
+\tag{VII97.6}
+$$
+
+面由顶点决定，故 $F^{\#\#}=F$。空面和整个基的端点情形可直接核对：空交集是 $K$；若 $K^\#$ 非空，它作为面必有某个原顶点 $p$，却因 $K^\#\subseteq D_p$ 得 $p\in D_p$，矛盾。所以 $K^\#=\varnothing$。
+
+若 $F\cap F^\#$ 非空，取该交面的一个顶点 $p$。它是 $F$ 的顶点，又属于 $F^\#\subseteq D_p$，再次矛盾。反序双射将最小上界送到最大下界，给两个De Morgan恒等式，再由 $(F\cap F^\#)^\#=K$ 得 $F\vee F^\#=K$。最后，有限多面体面格的秩是 $\rho(F)=\dim F+1$，最大秩为 $m+1$；反转一条经过 $F$ 的完整面旗给 $\rho(F)+\rho(F^\#)=m+1$，即维数公式。
+
+若 $m=0$，整个基是单点 $K=\{p\}$，唯一确认效应为 $u$，故 $D_p=\varnothing$。此时( VII97.4 )仅交换 $\varnothing$ 与 $K$，( VII97.5 )仍成立，但不在这个分支计facet或主张 $f=n$。
+
+从V88.3、VII96.2及纯点排除对称性到上述完整配对与面格的推导采用 `repo-derived` 归属。面与facets的交表示、面旗的秩以及反序双射的De Morgan律是其中的标准多面体与格论步骤。证毕。
+

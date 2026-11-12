@@ -16,6 +16,8 @@ internal sealed class NuclearNormAdditivityDocument : IScribeDocumentDefinition
                 "The pairing is the real linear trace of the composite of the adjoint of Z with the Euclidean linear map associated with A. The norm on Z is the operator norm induced by the Euclidean norms.", DescribeRole.Definition),
             Entry("nuclear-duality", "traceNorm_eq_max_dualPairing", "The trace norm is attained by a contraction",
                 "The actual trace norm is the trace of the positive square root of A transpose times A, as defined by the frozen FiniteTraceDistance module. The theorem constructs a contraction attaining this trace pairing and proves that every contraction gives a pairing at most the trace norm. Its proof diagonalizes the positive square root, applies Cauchy-Schwarz to every eigenvector and uses the polar contraction for attainment. Duality is a conclusion of the proof, not a hypothesis.", DescribeRole.Theorem),
+            Entry("dual-outer", "dualPairing_outer", "Actual rank-one trace pairing",
+                "The existing proof identifies the trace pairing with the actual real inner product of x and Z y. This unchanged helper is public for the Peled rank-one tail consumer.", DescribeRole.Theorem),
             Entry("weighted-outer", "weightedOuter", "Weighted rank-one expansions",
                 "For a finite outcome type, weightedOuter is the sum of u times the real outer products x y transpose. The input and output index types are arbitrary finite types and may have different cardinalities.", DescribeRole.Definition),
             Entry("nuclear-bound", "traceNorm_weightedOuter_le", "The weighted rank-one nuclear bound",

@@ -35,7 +35,7 @@ def V (X : ℝ) : ℝ := NV X / d 2 X
 def A (X : ℝ) : ℝ := (theta X - 1) * U X - V X
 def kappa : ℝ := 3 * log 2 * log 3 * log (3 / 2 : ℝ)
 
-private def P (s : ℝ) : Polynomial ℝ :=
+def P (s : ℝ) : Polynomial ℝ :=
   Polynomial.C s - Polynomial.C s * Polynomial.X +
     Polynomial.C (s + s ^ 2 / 2) * Polynomial.X ^ 2 -
     Polynomial.C (s + 3 * s ^ 2 / 2 + s ^ 3 / 3) * Polynomial.X ^ 3 +
@@ -142,7 +142,7 @@ private theorem residual_limit (s : ℝ) :
 
 /-- The approximation is transferred to each fixed actual root; the gain error
 is retained after multiplication by the fourth power of the logarithm. -/
-private theorem actual_quartic_error {j : ℕ} (hj : 2 ≤ j) :
+theorem actual_quartic_error {j : ℕ} (hj : 2 ≤ j) :
     Tendsto (fun X : ℝ => log X ^ 4 *
       (d j X - (P (log j)).eval (1 / log X))) atTop (𝓝 0) := by
   have hs : 0 < log (j : ℝ) := log_pos (by exact_mod_cast (show 1 < j by omega))
@@ -332,7 +332,7 @@ theorem actual_mixed_curvature_lower : ∀ᶠ X : ℝ in atTop,
 
 #print axioms actual_mixed_curvature_tendsto
 #print axioms actual_mixed_curvature_lower
-private theorem paid_range_rate {barL range : ℝ → ℝ} {rho lambda : ℝ}
+theorem paid_range_rate {barL range : ℝ → ℝ} {rho lambda : ℝ}
     (hrho : 0 < rho) (hlambda : 0 < lambda)
     (hclose : Tendsto (fun X => barL X - log X) atTop (𝓝 0))
     (hpaid : ∀ᶠ X : ℝ in atTop,

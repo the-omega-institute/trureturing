@@ -1,0 +1,98 @@
+**定理 98.2（纯域穷尽的全域恢复与原球）。** 定义98.1下，(98.2)等价于(95.2)的全部原混态等式。
+每个 $F_r$ 是非空紧效应面，(98.1)逐点达到。存在唯一原中心 $c$ 和椭球度量 $s_0$，使整个原基、
+原纯集和内在效应满足(95.3)—(95.7)，并且原 $D=\mathcal E$。
+这里 $d=\dim W\ge1$；同一原 $H$ 忠实且传递地作用于整个 $S^{d-1}$，但本定理不先给 $H$ 拓扑性质。
+
+证明。从 $K$ 选出 $V$ 的一组基，效应在每个基点的值均在 $[0,1]$，故闭集 $\mathcal E$ 有界而紧。
+$F_r$ 包含 $u$；若一个非平凡凸组合在 $r$ 处为一，其两项均须为一，所以 $F_r$ 也是闭面。
+连续评价在其上取得最小值，且 $T_r(r)=1$、$0\le T_r\le1$。
+有限维紧凸分解给每个 $x\in K$ 的有限纯分解 $x=\sum_i\lambda_i r_i$，
+$\lambda_i\ge0$、$\sum_i\lambda_i=1$；可取项数至多 $\dim V$。不要求 $P$ 预先闭或每点暴露。
+
+在 $r=p$ 处，(98.2)给 $T_q(p)=0$，并排除 $p=q$。
+取达到此零的 $f\in F_q$，则 $f(p)=0$，所以 $u-f\in F_p$。
+两个下包络是凹函数：对任意有限凸组合，线性效应逐项支配各自的下确界，取下确界即可。
+因此对上述任意原 $x$，
+
+$$
+1=\sum_i\lambda_i\bigl(T_p(r_i)+T_q(r_i)\bigr)
+\le T_p(x)+T_q(x)\le (u-f)(x)+f(x)=1.
+\tag{98.3}
+$$
+
+这就是全域等式；反向只需限制到 $P$。其中 $f,u-f$ 只是数学见证，尚未认作实际共同菜单。
+两凹函数之和恒定，使每个函数又凸，故 $T_p,T_q$ 仿射。
+$\operatorname{aff}K=\{u=1\}$，仿射延伸及齐次化唯一给 $e_p,e_q\in\mathcal E$；
+$K$ 张成 $V$ 给 $e_p+e_q=u$。在 $K$ 上 $e_p\le f'$ 对所有 $f'\in F_p$ 成立，
+按正质量缩放即在整个 $C$ 上成立；对 $q$ 同理。
+
+为构造数学平均，先令 $B_K=\operatorname{conv}(K\cup(-K))$。
+它是有内点的紧对称凸体，其 gauge 为 $V$ 上范数。所有原保 $C,u$ 自同构均为此范数的等距映射。
+有限维范数等价给这些矩阵的一致界；保持范数的矩阵极限仍单射，因而可逆。
+若自同构 $A_j\to A$，闭性给 $AK\subseteq K$；逆矩阵连续性同样给 $A^{-1}K\subseteq K$。
+所以
+
+$$
+\mathcal A=\operatorname{Aut}(C,u)\text{ 是紧矩阵群},\qquad
+L=\overline H^{\,\mathcal A}\le\mathcal A
+\tag{98.4}
+$$
+
+是紧矩阵 Lie 群。任一自同构保持全部极点，故 $Lp\subseteq P$；由 $Hp=P$ 又有 $Lp=P$。
+闭包及其 Haar 测度只作数学工具，不增加实际极限、随机化或菜单。
+
+现在只用原 $H$ 运输最小确认。原自同构双射全部效应及确认面，故
+
+$$
+T_{hr}(x)=T_r(h^{-1}x),\qquad
+e_{hp}=e_p\circ h^{-1},\qquad e_{hq}=u-e_{hp}\quad(h\in H).
+\tag{98.5}
+$$
+
+于是每个原纯点都有同一内在下确界的线性最小确认和一个纯补点，无选取歧义。
+95.2证明中取得唯一饱和及边界纯性的步骤完全不使用 $H$ 紧性；具体地，任选辅助欧氏范数和原仿射点 $o$，
+原 $K$ 的最远点 $z$ 由 $\langle z-o,x-o\rangle$ 唯一暴露，因为 Cauchy–Schwarz 的两个等号迫使 $x=z$。
+将此高度的最小值归零、最大值归一，得到仅在 $z$ 取一的 $f_z\in F_z$。
+$e_z\le f_z$ 使 $e_z$ 仅在 $z$ 取一，(98.5)和原 $H$ 传递把唯一饱和传播给每个 $e_r$。
+若 $e_s=e_t=u-e_r$，在 $s$ 处评价即得 $s=t$，纯补点 $r^\perp$ 因而唯一。
+任意 $y\in\operatorname{rbd}K$ 有非恒定支撑高度 $0\le f\le u$、$f(y)=0$、$\max_K f=1$。
+最大值面有纯点 $r$，所以 $e_r\le f$；在整个零面上 $e_r=0$、$e_{r^\perp}=1$。
+唯一饱和使这个零面仅为 $\{r^\perp\}$，特别是 $y$ 纯。
+
+只在 $L$ 上取 Haar 平均：$c=\int_L \ell p\,d\ell$，并将 $W$ 上任意正定内积平均成 $L$ 不变的 $s$。
+$c$ 是 $L$ 不动点且在 $\operatorname{ri}K$：若它有非恒定非负零支撑高度 $g$，
+连续非负函数 $g(\ell p)$ 的积分为零，Haar 测度的满支撑迫使它恒零；$Lp=P$ 和有限纯分解遂使 $g|_K=0$，矛盾。
+原 $H\subseteq L$ 固定 $c$，且 $Hp=P$，故全部纯点离 $c$ 的 $s$ 半径为同一 $\rho>0$。
+有限纯分解给 $K-c\subseteq\rho\operatorname{Ball}_s$。
+每条从 $c$ 出发的射线在紧凸 $K$ 中有正的有限终点，此终点在边界，因而纯，半径必为 $\rho$。
+每条半径段都在原 $K$，得到反向包含。取 $s_0=s/\rho^2$ 即得整个原球。
+有界凸体中心的唯一性及极化恒等式给 $c,s_0$ 唯一性。
+
+在坐标 $tc+w\mapsto(t,x)$、$s_0(w,w)=\|x\|^2$ 中，原锥及全部效应的计算是
+
+$$
+\begin{gathered}
+C=\{(t,x):t\ge\|x\|\},\quad K=\{(1,x):\|x\|\le1\},\quad P=\{r_v=(1,v):\|v\|=1\},\\
+f(t,x)=\alpha t+b\cdot x\in\mathcal E
+\ \Longleftrightarrow\ \|b\|\le\alpha,\ \alpha+\|b\|\le1,\\
+f\in F_{r_v}\ \Longleftrightarrow\
+f(t,x)=(1-\lambda)t+\lambda v\cdot x,\quad 0\le\lambda\le\tfrac12,\\
+T_{r_v}(1,x)=e_{r_v}(1,x)=\frac{1+v\cdot x}{2},\qquad r_v^\perp=r_{-v}.
+\end{gathered}
+\tag{98.6}
+$$
+
+故纯比较互反，(95.7)的正定自对偶配对和有限 PD 按原球计算恢复。
+原 $H$ 的作用属于 $\mathrm O(d)$ 且忠实：它固定 $c$，而 $V=\mathbb Rc\oplus W$。
+这里没有把95.2依赖紧 $H$ 的 Haar 步骤当作已适用；上面的平均全部属于 $L$。
+最后95.3的证明只用已得最小性、球形和原实际资源：
+$a_0-e_p,b_0-e_q$ 非负且和为零，故 $a_0=e_p,b_0=e_q$。
+原所需拉回标签遂给每个 $e_r\in D$。对 $s=\|b\|$、$v=b/s$（$s=0$ 时任取单位方向），
+
+$$
+f=2s\,e_{r_v}+(\alpha-s)u+(1-\alpha-s)0
+\tag{98.7}
+$$
+
+是原 $D$ 中的三项有限凸组合，因而 $D=\mathcal E$。整个证明没有把数学补效应或闭包操作当作实际资源。证毕。
+
