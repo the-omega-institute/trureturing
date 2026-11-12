@@ -4,7 +4,7 @@
    mirror-E: none(waiver:general-asymptotic-analysis)
    anchors: []
    utility: none
-   digest: Greatest feasible global optimizer and exact full original two-layer deletion and budget restrictions. -/
+   digest: Greatest feasible optimizer and full original two-layer budgets. -/
 
 import D5.S3.Arith.Robin.ActualGlobalBracketing
 import D5.S3.Arith.GoldenResource.GoldenResourceSupremum
@@ -12,22 +12,12 @@ import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 import Mathlib.Analysis.SpecialFunctions.Log.Monotone
 import Mathlib.Tactic
 
-/-
-SOURCE PREPARATION ONLY: UNCOMPILED N0 OPEN.
-
-The integer C below is constructed from the finite set of actual global
-optimizers in [1,m]. Neither its existence nor its optimality is an endpoint
-assumption. The proof inserts EACH omitted weak layer, with no bound on the
-number of equality primes. All objectives are the literal project objective.
-
-The c-canonical convention is exactly optimalLayerCount c 2, equivalently
-(strictInteger c).factorization 2 at positive c. Equality layers are excluded
-from that strict prefix and included in the full original tail with zero loss.
-The occupied bad layer k may be anywhere in the original valuation interval.
-
-The original bank modes 2,3,4,5,6,8,9,12, both directions, prescribed b/delta,
-all fees, full payment, Robin/5040 and RH remain OPEN. No Six Exponentials or
-tie-cardinality supplier is imported or assumed. No native check is claimed.
+/-!
+The greatest feasible global optimizer is constructed inside the literal bracket.
+Every omitted equality prime is retained. The strict canonical cutoff excludes
+its equality layers, which remain in the full original tail with zero loss.
+The occupied bad layer may occur anywhere in the original valuation interval.
+The budget theorem keeps the explicit own-clock price comparison.
 -/
 
 set_option autoImplicit false
@@ -319,7 +309,10 @@ theorem full_original2tail_deletion_identity {m : ℕ} (hm : 1 ≤ m) {c : ℝ}
       (c - t) * h2 m c - J2 m c := by
   obtain ⟨hn, hfac, hmul, hdelta⟩ := delete_prime_power_tail hm Nat.prime_two ha t
   refine ⟨hn, hfac, hmul, ?_⟩
+  change goldenResourceObjective t m -
+    goldenResourceObjective t (m / 2 ^ (m.factorization 2 - optimalLayerCount c 2)) = _
   rw [hdelta]
+  norm_num only [Nat.cast_ofNat]
   change (∑ j ∈ original2tail m c, (goldenLayerMarginal 2 j - t) * Real.log 2) =
     (c - t) * h2 m c - J2 m c
   have hterm : (∑ j ∈ original2tail m c, (goldenLayerMarginal 2 j - t) * Real.log 2) =
@@ -451,9 +444,9 @@ theorem full_original2tail_reward_telescope {m : ℕ} {c : ℝ}
   have hlocal : ordinary2tailReward m c =
       goldenPrimeLocalObjective 0 2 (m.factorization 2) -
         goldenPrimeLocalObjective 0 2 (optimalLayerCount c 2) := by
-    simpa only [ordinary2tailReward, original2tail, sub_zero] using ht.symm
+    simpa only [ordinary2tailReward, original2tail, sub_zero, Nat.cast_ofNat] using ht.symm
   rw [hlocal]
-  simp only [goldenPrimeLocalObjective, zero_mul, sub_zero]
+  simp only [goldenPrimeLocalObjective, zero_mul, sub_zero, Nat.cast_ofNat]
   have hv := two_geometric_numerator_pos (m.factorization 2)
   have hc := two_geometric_numerator_pos (optimalLayerCount c 2)
   calc
@@ -519,6 +512,7 @@ theorem full_original2tail_reward_bound {m : ℕ} {c : ℝ} (hc : 0 < c)
   rw [Real.log_pow] at hsecond
   have hnext : goldenLayerMarginal 2 (a + 1) * Real.log 2 = Real.log R := by
     unfold goldenLayerMarginal
+    norm_num only [Nat.cast_ofNat]
     rw [div_mul_cancel₀ _ (Real.log_pos (by norm_num : (1 : ℝ) < 2)).ne']
     congr 1
     dsimp only [R, x]
@@ -633,7 +627,7 @@ theorem full_original2tail_forbidden_budget {m k : ℕ} (hm : 1 ≤ m)
     have hmul : s * h2 m (ownPrice m) <
         s * (Real.log ((m : ℝ) / C) + 2 * Real.log 2) := by
       nlinarith only [hstrong, hreward_s, hU, hmuy]
-    exact (mul_lt_mul_left hs).mp hmul
+    exact lt_of_mul_lt_mul_left hmul hs.le
   have hpower : (2 : ℝ) ^ (m.factorization 2 - optimalLayerCount (ownPrice m) 2) <
       4 * Real.log (m : ℝ) := by
     have hT0 : 0 < Real.log (m : ℝ) := by linarith
@@ -671,11 +665,10 @@ theorem full_original2tail_forbidden_budget {m k : ℕ} (hm : 1 ≤ m)
     tail_length_bound := hlength
     tail_power_bound := hpower }⟩
 
-/- These commands are for the owning tree's LATER native run. They have not
-been executed in this source-preparation packet. -/
 #print axioms greatest_feasible_global_gap
 #print axioms full_original2tail_deletion_identity
 #print axioms full_original2tail_reward_telescope
+#print axioms full_original2tail_reward_bound
 #print axioms full_original2tail_forbidden_budget
 
 end D5.S3.Arith.Robin.PriceRecord.ActualElementaryGlobalBudgetGap
