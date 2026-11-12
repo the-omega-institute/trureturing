@@ -227,7 +227,7 @@ private theorem output_core (w : List (Fin 7)) (j : ℕ)
   simp only [List.nil_append, List.append_nil, List.length_nil, Nat.add_zero] at he
   apply he.mpr
   refine ⟨j, ⟨by simp, h, Or.inl rfl, ?_⟩, ?_⟩
-  · exact List.nil_prefix _
+  · exact List.nil_prefix
   · intro k hk
     exact output_control.1.injective (by simpa using hk.1.symm)
 
@@ -270,6 +270,8 @@ theorem output_uniform_recurrence (A n : ℕ) :
     exact (output_control.1.monotone (by omega : k ≤ t+1+B)).trans
       (output_control.2 (t+1) B).2
   have het := (output_control.2 t 1).2
+  have hstart : q < RichWordOutputDecoder.E k :=
+    hq.trans_le (output_control.1.monotone hk)
   refine ⟨RichWordOutputDecoder.E k+d, by omega,
     by omega, ?_⟩
   have hfull' := output_core w k (by simpa only [RichWordTypeIOccurrence.Occ,
@@ -363,7 +365,7 @@ theorem output_no_tail : ¬ Complexity.EventuallyPeriodicWord RichWordOutputDeco
       have he := congrArg (fun w : List (Fin 4) => w[r]?) hw
       rw [List.getElem?_eq_getElem (by rw [factor_len]; exact hrn),
         List.getElem?_eq_getElem hrn] at he
-      exact Option.some.inj he |>.trans' (factor_get _ _ _ _ hrn).symm
+      exact (factor_get _ _ _ _ hrn).symm.trans (Option.some.inj he)
   have hd := RichWordOutputDecoder.marked_core_recovery _ _ htranslated
   have hletter : word (T t) = word (s+t) := by
     simpa [RichWordTypeIOccurrence.Occ, factor] using hd
