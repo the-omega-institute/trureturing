@@ -4109,3 +4109,195 @@ FLW 的表投影、编织表示和联合闭像定理均为 literature-attested �
 仪器及更新、真实时间和单位仍未由这些结果建立；完整量子起源目标保持未完成。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 36. 一次实际纠缠有限门替代连续耦合的全一般-$H$桥
+
+### 36.1 二体坐标、产品边界与中间群
+
+令
+
+$$
+ V=\mathbb R e_0\oplus W,
+ \qquad W=\mathbb R^d,
+ \qquad d\ge2,
+$$
+
+并把 $e_0$ 的系数称为质量坐标。若 $A\in O(d)$，写
+
+$$
+ \widehat A(e_0+x)=e_0+Ax.
+$$
+
+令 $H\le SO(d)$ 闭且连通，并在 $S(W)$ 上传递。其独立提升、全旋转提升分别记为
+
+$$
+ \mathcal H=\{\widehat A\otimes\widehat B:A,B\in H\},
+ \qquad
+ \mathcal L_d=\{\widehat A\otimes\widehat B:A,B\in SO(d)\}.
+$$
+
+在
+
+$$
+ V\otimes V=\mathbb Rc\oplus A_1\oplus A_2\oplus D,
+ \quad
+ c=e_0\otimes e_0,
+ \quad
+ A_1=W\otimes e_0,
+ \quad
+ A_2=e_0\otimes W,
+ \quad
+ D=W\otimes W,
+\tag{36.1}
+$$
+
+中，局部球的纯点写成 $p_a=e_0+a$、$\|a\|=1$。假设原规范化紧凸 $K_2$ 满张成，包含所有 $p_a\otimes p_b$，包含全部局部球产品测试；产品测试在 $K_2$ 上非负并忠实层析。这里的“边缘”只表示产品单位测试给出的坐标投影，尚未假设任何变换保持它们。
+
+**定理 36.1（全一般-$H$ 正规化桥）。**
+
+设 $\mathcal H\le G\le\mathcal L_d$，其中 $G$ 闭且连通。若可逆实线性 $g$ 保质量、满足
+
+$$
+ gK_2=K_2,
+ \qquad
+ gGg^{-1}=G,
+\tag{36.2}
+$$
+
+则存在 $R,S\in O(d)$，使得
+
+$$
+ g=\widehat R\otimes\widehat S
+ \quad\text{或}\quad
+ g=(\widehat R\otimes\widehat S)\,\mathsf{SWAP}.
+\tag{36.3}
+$$
+
+特别地，$g$ 保持所有纯产品；(36.3) 中的反射和解析的 SWAP 允许出现在产品保持者中。定理没有假定边缘保持、复 Hilbert 空间、酉结构或 $D$ 的不可约性。
+
+**证明。** 球面传递使 $W$ 成为没有固定向量的不可约实 $H$-模。因此
+
+$$
+ \operatorname{Fix}(G)=\operatorname{Fix}(\mathcal H)=\mathbb Rc.
+$$
+
+由 (36.2)，$g$ 保持这条固定线；质量保持遂给 $g(c)=c$。$A_1,A_2,D$ 都是 $G$-不变的，而 $A_1,A_2$ 分别在 $\mathcal H$ 下为 $W\boxtimes1$ 与 $1\boxtimes W$，故它们是不可约且互不等价的 $G$-模。
+
+先处理 $d=3$ 及 $d\ge5$。实 Schur 引理给
+
+$$
+ \mathbb D_H=\operatorname{End}_H(W)\cong\mathbb R,\ \mathbb C\text{ 或 }\mathbb H.
+$$
+
+在独立积 $H\times H$ 下，相关扇区的实不可约分解相应为
+
+$$
+ D\simeq
+ \begin{cases}
+  D_0,&\mathbb D_H=\mathbb R,\quad \dim D_0=d^2,\\
+  D_+\oplus D_-,&\mathbb D_H=\mathbb C,\quad \dim D_\pm=d^2/2,\\
+  D_1\oplus D_2\oplus D_3\oplus D_4,&\mathbb D_H=\mathbb H,\quad \dim D_i=d^2/4.
+ \end{cases}
+\tag{36.4}
+$$
+
+这是外部实张量积的 Schur 分解：确切地说，$\operatorname{End}_{H\times H}(W\otimes W)\cong \mathbb D_H\otimes_{\mathbb R}\mathbb D_H$；它分别给出一个实简单块、两个复型简单块或四个等价的实块，因而得到 (36.4)，而不是把 $D$ 误称为不可约。因而 $d=3$ 时相关成分维数为 $9>d$，而 $d\ge5$ 时最小维数为 $d^2/4>d$。任何非零 $G$-不可约子模包含一个非零 $\mathcal H$-子模，所以它若落在 $D$ 中，维数也严格大于 $d$。
+
+共轭 $gGg^{-1}=G$ 把 $G$-不可约模送到同维不可约模。$A_1,A_2$ 的维数为 $d$，且它们在 $\mathcal H$ 下的类型不同；(36.4) 排除了 $D$ 的混入。因此 $g$ 保持或交换 $A_1,A_2$，并保持 $D$。在交换情形先复合解析 SWAP，便可写
+
+$$
+ g(c+a+b+z)=c+Ra+Sb+Cz,
+ \quad a\in A_1,\ b\in A_2,\ z\in D.
+\tag{36.5}
+$$
+
+现在说明两个边界块是正交的。局部球测试
+
+$$
+ \epsilon_x(t,u)=\frac{t+x\cdot u}{2},\qquad \|x\|\le1,
+$$
+
+以及它们的产品在 $K_2$ 上非负；对第二方向取一对相反的单位向量并相加，再对第一方向作同样处理，交叉项消去，得到任意规范化态的两个坐标边缘都满足 $\|a\|,\|b\|\le1$。对 $p_a\otimes p_b\in K_2$ 应用 $g$，再对 $g^{-1}$ 应用同一事实，得
+
+$$
+ \|Ra\|\le1,\quad \|R^{-1}a\|\le1,
+ \qquad
+ \|Sb\|\le1,\quad \|S^{-1}b\|\le1
+ \quad(\|a\|=\|b\|=1).
+$$
+
+故 $R,S\in O(d)$。这里是由全产品测试和 $gK_2=K_2$ 推出的坐标结论，不是额外的边缘保持假设。
+
+还需处理低维例外。对 $d=2$，球面传递的连通 $H$ 就是 $SO(2)$，所以 $G=\mathcal L_2$。令
+
+$$
+ z_1=(\widehat{-I},I),\qquad z_2=(I,\widehat{-I}).
+$$
+
+中心的二阶元为 $1,z_1,z_2,z_1z_2$；它们的联合特征空间恰为 $\mathbb Rc,A_1,A_2,D$。共轭保持迹，且
+
+$$
+ \operatorname{tr}(z_1)=\operatorname{tr}(z_2)=1-d^2,
+ \qquad
+ \operatorname{tr}(z_1z_2)=(d-1)^2,
+$$
+
+所以 $g$ 只能交换 $A_1,A_2$，不能把它们或 $D$ 混入别的扇区。
+
+对 $d=4$，球面传递表给出（正交共轭后）$H=SO(4)$、$U(2)$ 或一个四维实 $Sp(1)$ 左/右作用；这些作用都含 $-I$。$z_1,z_2$ 属于 $G$ 的中心。若 $z\in Z(G)$ 且 $z^2=1$，它的每个 $SO(4)$ 投影都与 $H$ 对易；四元数模型中 $Sp(1)$ 左作用的中心化子是右 $Sp(1)$，而 $U(2)$ 的中心化子是标量圆，$SO(4)$ 的中心化子给出同样的结论。它们的二阶元都只有 $\pm I$，故
+
+$$
+ Z(G)[2]=\{1,z_1,z_2,z_1z_2\}.
+$$
+
+迹分别为 $1,1-d^2,1-d^2,(d-1)^2$，共轭遂保持 $\{z_1,z_2\}$，其联合特征空间再次给出 $\mathbb Rc,A_1,A_2,D$（允许交换两个边缘）。这也覆盖四维的四元数型中间群及其对角右 $SU(2)$ 情形，不把中间群误分类为直积。
+
+于是所有维数都得到 (36.5)（或其 SWAP 版本）。对任意单位 $a,b$，$g(p_a\otimes p_b)$ 的两个坐标边缘是 $Ra,Sb$，已知都是纯局部球点。Barnum--Hilgert 的“纯边缘固定条件态”结果证明：正产品、产品单位和忠实产品层析下，纯边缘的联合态必为相应产品；其证明只用正性和凸几何，不用 S 公理或边缘保持假设。故
+
+$$
+ g(p_a\otimes p_b)=p_{Ra}\otimes p_{Sb}.
+$$
+
+展开 (36.5)，得到 $C(a\otimes b)=Ra\otimes Sb$。单位纯向量的简单张量张成 $W\otimes W$，所以 $C=R\otimes S$。撤去可能的 SWAP 即得 (36.3)。证毕。
+
+这里所用的球面传递表示表是 Masanes--Müller--Pérez-García--Augusiak,
+[*Entanglement and the three-dimensionality of the Bloch ball*](https://arxiv.org/abs/1111.4060v4), 技术定理 1--2 及其球面作用表的中间资料；它们不是本定理的正规化结论。纯边缘步骤复用 [Barnum--Hilgert 应用](../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)；其条件正好由本节的产品正性、单位与忠实层析给出。全球几何、闭包与有限字供应复用 [Müller--Ududec 附录](../../Library/QuantumStates/mullerududec2012selfduality.md)；本节没有重证它们。
+
+### 36.2 一次有限纠缠门给出完整实际路径
+
+保留完整实际独立局部 $H$ 控制。另给一个同一全载体上的实际可逆有限门 $g$ 及实际逆 $g^{-1}$，满足 $gK_2=K_2$，并存在一个原纯产品被 $g$ 送到非产品的实际见证。
+
+**推论 36.2（实际有限字的连续非局部路径）。** 令 $\Gamma$ 为由 $\mathcal H$ 与 $g,g^{-1}$ 的实际有限字生成的群，令 $\overline\Gamma$ 为其矩阵闭包。则存在整数 $n$ 与局部 Lie 代数元素 $X\in\operatorname{Lie}(\mathcal H)$，使
+
+$$
+ c_n(t)=g^n\exp(tX)g^{-n}
+ \tag{36.6}
+$$
+
+对每个 $t\in\mathbb R$ 都是同一全载体上的实际有限字，且该完整路径至少有一个 $t$ 使 $c_n(t)\notin\mathcal L_d$。$c_n(-t)=c_n(t)^{-1}$；没有把闭包中的极限宣称为实际门。
+
+**证明。** 反设对每个整数 $n$ 都有 $g^n\mathcal H g^{-n}\subseteq\mathcal L_d$。令 $G_\infty$ 为这些连通子群所生成子群的闭包。有限个连通子群的乘积连通，且这些乘积构成含单位元的递增有向并，故其闭包 $G_\infty$ 闭且连通；它包含 $\mathcal H$、仍在 $\mathcal L_d$ 内，而共轭 $g$ 只把指标 $n$ 移到 $n+1$，所以
+
+$$
+ gG_\infty g^{-1}=G_\infty.
+$$
+
+定理 36.1 应用于 $G_\infty$，迫使 $g$ 保持所有纯产品，与实际纠缠见证矛盾。因此存在整数 $n$ 使 $g^n\mathcal H g^{-n}$ 不包含于 $\mathcal L_d$。该子群连通，所以其 Lie 代数也不包含于 $\operatorname{Lie}(\mathcal L_d)$；取 $X\in\operatorname{Lie}(\mathcal H)$ 使 $\operatorname{Ad}_{g^n}X$ 在该局部 Lie 代数之外。完整实际局部路径 $\exp(tX)$ 与 $g^n,g^{-n}$ 的合法全载体复合给出 (36.6)。其在 $0$ 点的导数不在局部 Lie 代数，故路径离开 $\mathcal L_d$。每个参数仍是有限字；未使用 Trotter、逼近极限或新的连续原语。证毕。
+
+将 (36.6) 与现有紧闭包、连通分类和精确有限生成供应接合，得到 $d=3$、$H=SO(3)$，以及原二体的 $Q_2$ 或一腿反射分支 $T_1Q_2T_1$；这些供应已给出相应的实际有限字。若 $g$ 生成的整体群有不连通余类，本推论只结算该实际连通扇区，不声称整体群等于其单位元分支，也不把未分类余类当作新的量子操作族。SWAP 和局部 $O(d)$ 反射满足 (36.3) 的产品保持形式，因而不满足本推论所需的纠缠见证。
+
+### 36.3 载体、旁观者与原始物理边界
+
+定理 36.1 只处理同一个二体全载体上的锥、实际控制及其产品见证。若原控制接口另行实际供应
+
+$$
+ \iota_{ij}(g)=g_{ij}\otimes I_{\mathrm{spectators}},
+ \qquad
+ \iota_{ij}(g^{-1})=g^{-1}_{ij}\otimes I_{\mathrm{spectators}},
+$$
+
+则 (36.6) 在每个已许可的边上逐字放置，且恒等于旁观者全相关载体；这不凭空增加自由旁观者、寄存器传输或多体门。全寄存器的有限图生成、整锥识别和反射分支的排除仍复用 [Müller--Ududec 供应](../../Library/QuantumStates/mullerududec2012selfduality.md)；严格丢弃到同一原有序二体仍复用 [signed-coupling 供应](../../Library/ContinuousObservables/mullerududec2012signedcoupling.md)，不能由本桥改成任意边缘或重新排序的丢弃。
+
+产品正性与纯边缘结果不提供参考正性、完全正性、完整仪器、更新记录、物理时钟或单位。参数 $t$ 是实际门字中的连续控制参数，不自动是物理时间。原唯一 $\Omega$、$89$ 条路径、$26+63$ 分解、$1024$ 标签、ready、$11/7$ 地址、有限字次序、支撑、校准、历史、归档、零／失败／Return、权限、资源和单位边界均未被本节改写；native 全标签细零与 Born 唯一性、其它支撑保持历史律、原始 source adapter 及实际事件复合仍未解决。
+
+VI98 对原局部 $H$ 的拓扑前提作了另一种移除并保留实际连续非局部路径；本节保留完整实际 $H$，两种前提移除的联合等价性未由此建立。Brylinski--Brylinski 的 [quant-ph/0108062v1](https://arxiv.org/abs/quant-ph/0108062v1) 是已具 Hilbert 结构的普适门结果，不能替代本节的 GPT 入口。
