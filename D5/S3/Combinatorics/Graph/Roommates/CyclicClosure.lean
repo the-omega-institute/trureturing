@@ -41,14 +41,12 @@ private def joinPartner (hw : Certificate w d) : Fin m ⊕ Fin 6 → Fin m ⊕ F
 
 private theorem joinPartner_involutive (hw : Certificate w d) :
     Function.Involutive (joinPartner hw) := by
-  let r := closingRequest d hw.bounded
   have hc := closing_request_completion hw
-  simp only [r] at *
   intro x
   cases x with
   | inl i =>
     by_cases h : exterior d i
-    · have he : ∃ a : ClosingRequester d, r a = r ⟨i,h⟩ := ⟨⟨i,h⟩,rfl⟩
+    · have he : ∃ a : ClosingRequester d, (closingRequest d hw.bounded) a = (closingRequest d hw.bounded) ⟨i,h⟩ := ⟨⟨i,h⟩,rfl⟩
       have hh : Classical.choose he = (⟨i,h⟩ : ClosingRequester d) := hc.1 (Classical.choose_spec he)
       simp only [joinPartner, dite_eq_left h, BufferLayout.partner, dite_eq_left he, hh]
     · let j := inside d i h
@@ -56,7 +54,7 @@ private theorem joinPartner_involutive (hw : Certificate w d) :
       have hdj : d j = -d i := by
         by_cases hz : d i = 0
         · have he : j = i := Fin.ext (by change (j.val : ℤ) = i.val + d i at hj; omega)
-          simpa [he, hz]
+          simp [he, hz]
         · exact hw.reciprocal i j hz hj.symm
       have hn : ¬exterior d j := by
         have hi := i.isLt
@@ -66,21 +64,21 @@ private theorem joinPartner_involutive (hw : Certificate w d) :
         apply Fin.ext
         have ht := inside_coord j hn
         omega
+      simp only [joinPartner, dite_eq_right h]
       change joinPartner hw (.inl j) = .inl i
       simp only [joinPartner, dite_eq_right hn, he]
   | inr b =>
-    by_cases h : ∃ a : ClosingRequester d, r a = b
-    · let a := Classical.choose h
-      have ha : r a = b := Classical.choose_spec h
-      have he := a.property
+    by_cases h : ∃ a : ClosingRequester d, (closingRequest d hw.bounded) a = b
+    · have ha : (closingRequest d hw.bounded) (Classical.choose h) = b := Classical.choose_spec h
+      have he : exterior d (Classical.choose h).val := (Classical.choose h).property
       simp only [joinPartner, BufferLayout.partner, dite_eq_left h, dite_eq_left he]
       exact congrArg Sum.inr ha
     · have hfree : ¬∃ a : ClosingRequester d,
-          r a = BufferLayout.mate (BufferLayout.flags r) b := by
+          (closingRequest d hw.bounded) a = BufferLayout.mate (BufferLayout.flags (closingRequest d hw.bounded)) b := by
         intro ⟨a,ha⟩
         have he := hc.2.1 (.inr b)
-        simp only [BufferLayout.partner, dite_eq_right h, dite_eq_left (show ∃ a', r a' =
-          BufferLayout.mate (BufferLayout.flags r) b from ⟨a,ha⟩)] at he
+        simp only [BufferLayout.partner, dite_eq_right h, dite_eq_left (show ∃ a', (closingRequest d hw.bounded) a' =
+          BufferLayout.mate (BufferLayout.flags (closingRequest d hw.bounded)) b from ⟨a,ha⟩)] at he
         cases he
       have he := hc.2.1 (.inr b)
       simp only [BufferLayout.partner, dite_eq_right h, dite_eq_right hfree, Sum.inr.injEq] at he

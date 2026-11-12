@@ -61,10 +61,16 @@ preserve original request destinations and exclude old--old wrap edges.
 Exact remaining mathematics: complete the assignments and preference word on
 the whole concatenated interval, prove reciprocity and target injectivity for
 all old/new vertices, and prove every new or mixed edge nonblocking. Upgrade the proved word
-injection to certified output and derive b_m*b_k<=b_(m+k+6). For closure, produce the actual
-source matching and prove cyclic stability, including the extra buffer--buffer
-wrap edges at m=1, then derive the profile injection b_m<=a_(m+6) for every
-m>=1. The requester/buffer involutions alone do not supply these conclusions.
+injection to certified output and derive b_m*b_k<=b_(m+k+6). `CyclicClosure` constructs the actual source matching and profile on m+6 sites,
+proves acceptability and cyclic stability, and gives the injection
+b_m<=a_(m+6) for every natural m, including m=1, m=2 and both parities.
+The first m ranking coordinates recover the input word; certificate and
+matching witnesses are not counted. A matched buffer endpoint rejects every
+strict improvement. A buffer single is central and has only matched buffer
+neighbors, so the m=1 extra buffer wrap edges and edges from old singles are
+covered. The matching, stability, recovery and cardinality statements have
+cache-guarded direct Lean checks with only the standard three axioms. Native
+build/report, Scribe projection and Reg binding acceptance remain separate.
 The exact triangle count, strict growth bound and final common-q normalization
 remain separate obligations. No pending contributor result is assumed.
 
@@ -80,7 +86,7 @@ This work claims neither formal acceptance nor worldwide novelty or priority.
 The source and its Scribe definitions remain unfrozen Stage A components.
 Guarded direct Lean checks are distinct from native target builds, scoped
 reports, canonical Markdown emission, inventory acceptance and required CI.
-The canonical native build/report door reports a cold main project layer;
+The native scoped report reports a busy main cache during preparation;
 main is observation-only for this contribution. No main-cache health,
 canonical statement-material production or delivery is claimed.
 
@@ -89,7 +95,9 @@ https://github.com/the-omega-institute/trureturing/issues/29645.
 The source-count comparison has a typed dependent-family mirror with its full
 original telescope and actual cardinality operands. Source-selection and
 native binding evidence are absent; no declared_validated status is claimed.
-Other certificate, completion and source-rank audit targets still need
-faithful mirrors. Canonical Markdown emission is unfinished because native
+The closure-count comparison also has a typed dependent-family mirror
+retaining its complete length quantifier and actual cardinality operands.
+Its native bindings remain absent. Other certificate, completion, stability,
+recovery and source-rank audit targets still need faithful mirrors. Canonical Markdown emission is unfinished because native
 statement material is unavailable. No freeze or publication PR is authorized
 before the separately assigned independent pre-freeze audit.
