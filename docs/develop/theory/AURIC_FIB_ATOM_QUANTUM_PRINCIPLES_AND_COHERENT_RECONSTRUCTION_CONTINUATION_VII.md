@@ -4250,7 +4250,7 @@ $$
  Z(G)[2]=\{1,z_1,z_2,z_1z_2\}.
 $$
 
-迹分别为 $1,1-d^2,1-d^2,(d-1)^2$，共轭遂保持 $\{z_1,z_2\}$，其联合特征空间再次给出 $\mathbb Rc,A_1,A_2,D$（允许交换两个边缘）。这也覆盖四维的四元数型中间群及其对角右 $SU(2)$ 情形，不把中间群误分类为直积。
+迹分别为 $(d+1)^2,1-d^2,1-d^2,(d-1)^2$，共轭遂保持 $\{z_1,z_2\}$，其联合特征空间再次给出 $\mathbb Rc,A_1,A_2,D$（允许交换两个边缘）。这也覆盖四维的四元数型中间群及其对角右 $SU(2)$ 情形，不把中间群误分类为直积。
 
 于是所有维数都得到 (36.5)（或其 SWAP 版本）。对任意单位 $a,b$，$g(p_a\otimes p_b)$ 的两个坐标边缘是 $Ra,Sb$，已知都是纯局部球点。Barnum--Hilgert 的“纯边缘固定条件态”结果证明：正产品、产品单位和忠实产品层析下，纯边缘的联合态必为相应产品；其证明只用正性和凸几何，不用 S 公理或边缘保持假设。故
 
@@ -4261,7 +4261,7 @@ $$
 展开 (36.5)，得到 $C(a\otimes b)=Ra\otimes Sb$。单位纯向量的简单张量张成 $W\otimes W$，所以 $C=R\otimes S$。撤去可能的 SWAP 即得 (36.3)。证毕。
 
 这里所用的球面传递表示表是 Masanes--Müller--Pérez-García--Augusiak,
-[*Entanglement and the three-dimensionality of the Bloch ball*](https://arxiv.org/abs/1111.4060v4), 技术定理 1--2 及其球面作用表的中间资料；它们不是本定理的正规化结论。纯边缘步骤复用 [Barnum--Hilgert 应用](../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)；其条件正好由本节的产品正性、单位与忠实层析给出。全球几何、闭包与有限字供应复用 [Müller--Ududec 附录](../../Library/QuantumStates/mullerududec2012selfduality.md)；本节没有重证它们。
+[*Entanglement and the three-dimensionality of the Bloch ball*](https://arxiv.org/abs/1111.4060v4), 技术定理 1--2 及其球面作用表的中间资料；它们不是本定理的正规化结论。纯边缘步骤复用 [Barnum--Hilgert 应用](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)；其条件正好由本节的产品正性、单位与忠实层析给出。全球几何、闭包与有限字供应复用 [Müller--Ududec 附录](../../../Library/QuantumStates/mullerududec2012selfduality.md)；本节没有重证它们。
 
 ### 36.2 一次有限纠缠门给出完整实际路径
 
@@ -4296,8 +4296,10 @@ $$
  \iota_{ij}(g^{-1})=g^{-1}_{ij}\otimes I_{\mathrm{spectators}},
 $$
 
-则 (36.6) 在每个已许可的边上逐字放置，且恒等于旁观者全相关载体；这不凭空增加自由旁观者、寄存器传输或多体门。全寄存器的有限图生成、整锥识别和反射分支的排除仍复用 [Müller--Ududec 供应](../../Library/QuantumStates/mullerududec2012selfduality.md)；严格丢弃到同一原有序二体仍复用 [signed-coupling 供应](../../Library/ContinuousObservables/mullerududec2012signedcoupling.md)，不能由本桥改成任意边缘或重新排序的丢弃。
+则 (36.6) 在每个已许可的边上逐字放置，且恒等于旁观者全相关载体；这不凭空增加自由旁观者、寄存器传输或多体门。全寄存器的有限图生成、整锥识别和反射分支的排除仍复用 [Müller--Ududec 供应](../../../Library/QuantumStates/mullerududec2012selfduality.md)；严格丢弃到同一原有序二体仍复用 [signed-coupling 供应](../../../Library/ContinuousObservables/mullerududec2012signedcoupling.md)，不能由本桥改成任意边缘或重新排序的丢弃。
 
 产品正性与纯边缘结果不提供参考正性、完全正性、完整仪器、更新记录、物理时钟或单位。参数 $t$ 是实际门字中的连续控制参数，不自动是物理时间。原唯一 $\Omega$、$89$ 条路径、$26+63$ 分解、$1024$ 标签、ready、$11/7$ 地址、有限字次序、支撑、校准、历史、归档、零／失败／Return、权限、资源和单位边界均未被本节改写；native 全标签细零与 Born 唯一性、其它支撑保持历史律、原始 source adapter 及实际事件复合仍未解决。
 
 VI98 对原局部 $H$ 的拓扑前提作了另一种移除并保留实际连续非局部路径；本节保留完整实际 $H$，两种前提移除的联合等价性未由此建立。Brylinski--Brylinski 的 [quant-ph/0108062v1](https://arxiv.org/abs/quant-ph/0108062v1) 是已具 Hilbert 结构的普适门结果，不能替代本节的 GPT 入口。
+
+## 追加锚（本行以下为增补区）
