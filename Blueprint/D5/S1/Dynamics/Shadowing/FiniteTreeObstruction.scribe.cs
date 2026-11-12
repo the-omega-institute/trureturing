@@ -29,6 +29,5 @@ internal sealed class FiniteTreeObstructionDocument : IScribeDocumentDefinition
                 "for every positive eta and every finite N, then its continuous selfmap cannot be " +
                 "finitely positively expansive. The finite-tree realization, finite test arcs, " +
                 "terminal covering component, regular-target crossing, and fold construction remain " +
-                "separate obligations and are intentionally not assumed by this endpoint."))))));
-}
+                "separate obligations and are intentionally not assumed by this endpoint.")))))));
 }
