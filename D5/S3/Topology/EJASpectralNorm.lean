@@ -12,7 +12,7 @@ Released under Apache 2.0 license; see docs/reports/third-party/euclidean-jordan
 Authors: Bryan Ehrlich
 
 The private single-idempotent Peirce and inner-product lemmas are adapted from
-EuclideanJordan/Peirce.lean and EuclideanJordan/Order.lean in ehrlich-b/euclidean-jordan,
+EuclideanJordan/Bridge.lean, EuclideanJordan/Peirce.lean and EuclideanJordan/Order.lean in ehrlich-b/euclidean-jordan,
 immutable revision a83407e4dbf73c77c31a2291c02f20b37a5ebbaf.
 Only dependencies used by the spectral norm construction are retained.
 -/
@@ -21,9 +21,9 @@ module
 
 public import D5.S3.Topology.EJAFiniteSpectral
 public import D5.S3.Topology.JBAlgebra
-public import Mathlib.Analysis.InnerProductSpace.LinearMap
-public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Algebra.QuadraticDiscriminant
+
+/-! The spectral norm is derived from all normalized idempotent functionals. -/
 
 @[expose] public section
 noncomputable section
@@ -48,27 +48,11 @@ section Linearisation
 
 variable {J : Type*} [NonUnitalNonAssocCommRing J] [IsCommJordan J]
 
-/-- **Twice the linearised Jordan identity.** Polarising `⁅L_x, L_{x²}⁆ = 0` at `x = a + b`
-and at `x = a − b` and subtracting isolates the half that the symmetrised Mathlib version
-(`two_nsmul_lie_lmul_lmul_add_eq_lie_lmul_lmul_add`) leaves fused.
-
-Stated with the factor `2` carried rather than cancelled, so that this lemma needs no
-torsion hypothesis and holds over any `NonUnitalNonAssocCommRing`. -/
+/-- The repeated-variable specialization of Mathlib's polarized Jordan identity. -/
 private theorem two_lin1_raw (a b : J) :
     (2 : ℕ) • ⁅L b, L (a * a)⁆ + (4 : ℕ) • ⁅L a, L (a * b)⁆ = 0 := by
-  -- Mathlib's `LieRing.ofAssociativeRing` is only a `local instance` of its own file, so a ring's
-  -- commutator carries `Ring.instBracket` but no `LieRing`, and `lie_add`/`add_lie`/`lie_sub`/
-  -- `sub_lie` cannot fire on `AddMonoid.End J`.  Reinstating it here is what makes the `simp only`
-  -- below distribute the bracket over the polarised sums.
-  let _ : LieRing (AddMonoid.End J) := LieRing.ofAssociativeRing
-  have hs := (commute_lmul_lmul_sq (a + b)).lie_eq
-  have hd := (commute_lmul_lmul_sq (a - b)).lie_eq
-  have ha := (commute_lmul_lmul_sq a).lie_eq
-  have hb := (commute_lmul_lmul_sq b).lie_eq
-  simp only [add_mul, mul_add, sub_mul, mul_sub, map_add, map_sub, lie_add, add_lie,
-    lie_sub, sub_lie, mul_comm b a] at hs hd
-  rw [ha, hb] at hs hd
-  have h := sub_eq_zero_of_eq (hs.trans hd.symm)
+  have h := two_nsmul_lie_lmul_lmul_add_add_eq_zero a a b
+  rw [mul_comm b a] at h
   rw [← h]
   abel
 
@@ -93,8 +77,6 @@ private def mulL (c : J) : J →ₗ[ℝ] J where
   toFun y := c * y
   map_add' := mul_add c
   map_smul' r y := mul_smul_comm' r c y
-
-@[simp] private theorem mulL_apply (c y : J) : mulL c y = c * y := rfl
 
 /-- The Peirce projection onto the `1`-eigenspace of `L_c`: the Lagrange interpolant
 `2L² − L`, which is `1` at `1` and `0` at `0` and `1/2`. -/
@@ -142,9 +124,8 @@ omit [IsScalarTower ℝ J J] in
 
   `2·L_c³ − 3·L_c² + L_c = 0`,   i.e.   `L_c (L_c − 1) (2L_c − 1) = 0`.
 
-Everything else in this file is a consequence. The proof is `two_lin1_apply` at
-`a := c`, `b := y`, argument `:= c`, and nothing more: the hypotheses are the Jordan
-identity and `c ∘ c = c`. -/
+The repeated-variable polarized identity at `a := c`, `b := y`, applied to `c`,
+gives this polynomial from the Jordan law and `c ∘ c = c`. -/
 private theorem peirce_poly {c : J} (hc : c * c = c) (y : J) :
     (2 : ℕ) • (c * (c * (c * y))) + c * y = (3 : ℕ) • (c * (c * y)) := by
   have h := two_lin1_apply c y c
@@ -184,7 +165,7 @@ private theorem mul_peirceHalf {c : J} (hc : c * c = c) (y : J) :
 end Peirce
 
 variable {J : Type*} [NormedAddCommGroup J] [InnerProductSpace ℝ J]
-private def ringOfBilinear (m : J →ₗ[ℝ] J →ₗ[ℝ] J)
+@[instance_reducible] private def ringOfBilinear (m : J →ₗ[ℝ] J →ₗ[ℝ] J)
     (hcomm : ∀ x y, m x y = m y x) : NonUnitalNonAssocCommRing J :=
   { (inferInstance : AddCommGroup J) with
     mul := fun x y => m x y
@@ -202,9 +183,9 @@ private theorem inner_mul_self_nonneg_of_idem
     (hassoc : ∀ x y z : J, inner ℝ (m x y) z = inner ℝ y (m x z))
     {c : J} (hc : m c c = c) (y : J) :
     0 ≤ inner ℝ (m c y) y := by
-  letI : NonUnitalNonAssocCommRing J := ringOfBilinear m hcomm
-  letI : IsCommJordan J := ⟨hjordan⟩
-  letI : IsScalarTower ℝ J J := ⟨fun r x y => smul_bilinear m r x y⟩
+  let : NonUnitalNonAssocCommRing J := ringOfBilinear m hcomm
+  let : IsCommJordan J := ⟨hjordan⟩
+  let : IsScalarTower ℝ J J := ⟨fun r x y => smul_bilinear m r x y⟩
   have hc' : c * c = c := hc
   have hsa : ∀ u v : J, inner ℝ (c * u) v = inner ℝ u (c * v) := fun u v => hassoc c u v
   have hsa1 : ∀ u v : J, inner ℝ (peirceOne c u) v = inner ℝ u (peirceOne c v) := by
@@ -222,7 +203,7 @@ private theorem inner_mul_self_nonneg_of_idem
   have hidh : peirceHalf c (peirceHalf c y) = peirceHalf c y :=
     peirceHalf_of_eigen_half (mul_peirceHalf hc' y)
   have hsplit : (m c y : J) = peirceOne c y + (2 : ℝ)⁻¹ • peirceHalf c y := by
-    show c * y = _
+    change c * y = _
     simp only [peirceOne_apply, peirceHalf_apply]
     module
   have key1 : inner ℝ (peirceOne c y) (peirceOne c y) = inner ℝ (peirceOne c y) y := by
@@ -234,15 +215,7 @@ private theorem inner_mul_self_nonneg_of_idem
   rw [hsplit, inner_add_left, real_inner_smul_left]
   linarith
 
-/-- **A sum of squares has nonnegative spectral coefficients.**
-
-Pairing against `q k` reads the coefficient off — the idempotents are pairwise orthogonal for
-the inner product because `hassoc` turns `⟪q k, q i⟫` into `⟪q k, q k ∘ q i⟫` — while pairing
-against the sum-of-squares presentation is nonnegative term by term, each term being
-`⟪L_{q k} f j, f j⟫`.
-
-This is the fact that both `isArchimedean_ofBilinear` and `isSoS_iff_exists_sq` reduce to, and
-it is the only content in this file that the order axioms themselves do not supply. -/
+/-- Inner associativity reads a spectral coefficient against its nonzero idempotent. -/
 private theorem inner_left_coeff
     (hassoc : ∀ x y z : J, inner ℝ (m x y) z = inner ℝ y (m x z))
     {n : ℕ} {q : Fin n → J} {lam : Fin n → ℝ}
@@ -265,13 +238,14 @@ private theorem inner_left_coeff
 
 
 variable {X : Type*} [NormedAddCommGroup X] [InnerProductSpace ℝ X]
-  [FiniteDimensional ℝ X] {x : X} {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X}
+  {x : X} {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X}
 
 /-- The normalized inner functional; the zero idempotent gives the zero functional. -/
 def coeff (c : X) : X →ₗ[ℝ] ℝ where
   toFun x := inner ℝ c x / inner ℝ c c
   map_add' x y := by simp only [inner_add_right, add_div]
-  map_smul' r x := by simp only [real_inner_smul_right, mul_div_assoc, RingHom.id_apply]
+  map_smul' r x := by
+    simp only [real_inner_smul_right, mul_div_assoc, RingHom.id_apply, smul_eq_mul]
 
 @[simp] private theorem coeff_zero (x : X) : coeff (0 : X) x = 0 := by
   simp [coeff]
@@ -289,7 +263,11 @@ private theorem coeff_unit (A : EJAFiniteSpectral.Data X S u) {c : X}
 private theorem coeff_square_nonneg (A : EJAFiniteSpectral.Data X S u)
     {c : X} (hc : S c c = c) (y : X) : 0 ≤ coeff c (S y y) := by
   have hi : inner ℝ c (S y y) = inner ℝ (S c y) y := by
-    rw [real_inner_comm c, A.inner_assoc, A.symm y c, real_inner_comm]
+    calc
+      inner ℝ c (S y y) = inner ℝ (S y y) c := real_inner_comm (S y y) c
+      _ = inner ℝ y (S y c) := A.inner_assoc y y c
+      _ = inner ℝ y (S c y) := by rw [A.symm y c]
+      _ = inner ℝ (S c y) y := real_inner_comm (S c y) y
   change 0 ≤ inner ℝ c (S y y) / inner ℝ c c
   apply div_nonneg _ real_inner_self_nonneg
   rw [hi]
@@ -332,6 +310,8 @@ private theorem coeff_bound (A : EJAFiniteSpectral.Data X S u)
       · exact mul_le_mul_of_nonneg_right (hr i hi) (hw i)
     _ = R := by rw [← Finset.mul_sum, hsum, mul_one]
 
+variable [FiniteDimensional ℝ X]
+
 private theorem values_bdd (A : EJAFiniteSpectral.Data X S u) (x : X) :
     BddAbove (values S x) := by
   obtain ⟨n, e, r, he, _, heu, hex, _, _⟩ := EJAFiniteSpectral.finite_spectral_resolution A x
@@ -348,12 +328,14 @@ private theorem norm_nonneg' (A : EJAFiniteSpectral.Data X S u) (x : X) :
     0 ≤ spectralNorm S x := by
   simpa using coeff_le_norm A (c := 0) (by simp) x
 
+omit [FiniteDimensional ℝ X] in
 private theorem norm_le (x : X) {R : ℝ}
     (h : ∀ c, S c c = c → |coeff c x| ≤ R) : spectralNorm S x ≤ R := by
   apply csSup_le (values_nonempty x)
   rintro t ⟨c, hc, rfl⟩
   exact h c hc
 
+omit [FiniteDimensional ℝ X] in
 private theorem norm_le_of_spectral (A : EJAFiniteSpectral.Data X S u)
     {n : ℕ} {e : Fin n → X} {r : Fin n → ℝ}
     (he : ∀ i, S (e i) (e i) = e i) (heu : ∑ i, e i = u)
@@ -473,7 +455,7 @@ private theorem norm_product (A : EJAFiniteSpectral.Data X S u) (x y : X) :
   nlinarith [sq_abs (coeff c (S x y))]
 
 /-- An explicit type copy, so the given Hilbert norm on X is never replaced. -/
-def Space (A : EJAFiniteSpectral.Data X S u) := X
+def Space (_A : EJAFiniteSpectral.Data X S u) := X
 
 instance spaceAdd (A : EJAFiniteSpectral.Data X S u) : AddCommGroup (Space A) :=
   inferInstanceAs (AddCommGroup X)
@@ -487,11 +469,26 @@ def equiv (A : EJAFiniteSpectral.Data X S u) : Space A ≃ₗ[ℝ] X := LinearEq
 instance spaceNorm (A : EJAFiniteSpectral.Data X S u) : Norm (Space A) :=
   ⟨fun x => spectralNorm S (equiv A x)⟩
 
-private theorem norm_core (A : EJAFiniteSpectral.Data X S u) : NormedSpace.Core ℝ (Space A) where
-  norm_nonneg := norm_nonneg' A
-  norm_smul := by intro t x; exact (norm_smul' A t x).trans (by rw [Real.norm_eq_abs])
-  norm_triangle := norm_triangle' A
-  norm_eq_zero_iff := norm_definite A
+/-- The norm core on the type copy, proved from the original EJA laws. -/
+theorem norm_core (A : EJAFiniteSpectral.Data X S u) : NormedSpace.Core ℝ (Space A) where
+  norm_nonneg := by
+    intro x
+    change 0 ≤ spectralNorm S (equiv A x)
+    exact norm_nonneg' A (equiv A x)
+  norm_smul := by
+    intro t x
+    change spectralNorm S (t • equiv A x) = ‖t‖ * spectralNorm S (equiv A x)
+    rw [Real.norm_eq_abs]
+    exact norm_smul' A t (equiv A x)
+  norm_triangle := by
+    intro x y
+    change spectralNorm S (equiv A x + equiv A y) ≤
+      spectralNorm S (equiv A x) + spectralNorm S (equiv A y)
+    exact norm_triangle' A (equiv A x) (equiv A y)
+  norm_eq_zero_iff := by
+    intro x
+    change spectralNorm S (equiv A x) = 0 ↔ equiv A x = 0
+    exact norm_definite A (equiv A x)
 
 instance spaceNormedAddCommGroup (A : EJAFiniteSpectral.Data X S u) :
     NormedAddCommGroup (Space A) := NormedAddCommGroup.ofCore (norm_core A)
@@ -515,9 +512,20 @@ theorem jb_data (A : EJAFiniteSpectral.Data X S u) :
   symm := A.symm
   unit_mul := A.unit_mul
   jordan := A.jordan
-  product_norm := norm_product A
-  square_norm := norm_square A
-  square_mono := norm_square_mono A
+  product_norm := by
+    intro x y
+    change spectralNorm S (S (equiv A x) (equiv A y)) ≤
+      spectralNorm S (equiv A x) * spectralNorm S (equiv A y)
+    exact norm_product A (equiv A x) (equiv A y)
+  square_norm := by
+    intro x
+    change spectralNorm S (S (equiv A x) (equiv A x)) = spectralNorm S (equiv A x) ^ 2
+    exact norm_square A (equiv A x)
+  square_mono := by
+    intro x y
+    change spectralNorm S (S (equiv A x) (equiv A x)) ≤
+      spectralNorm S (S (equiv A x) (equiv A x) + S (equiv A y) (equiv A y))
+    exact norm_square_mono A (equiv A x) (equiv A y)
 
 #print axioms jb_data
 

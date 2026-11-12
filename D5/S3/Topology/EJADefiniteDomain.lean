@@ -11,6 +11,8 @@ module
 public import D5.S3.Topology.EJASpectralNorm
 public import D5.S3.Topology.JBSquareDefect
 
+/-! The complete zero-square-defect domain and Jordan-generating propagation. -/
+
 @[expose] public section
 noncomputable section
 set_option autoImplicit false
@@ -38,10 +40,10 @@ def mixedDomain (S : X →ₗ[ℝ] X →ₗ[ℝ] X) (T : Y →ₗ[ℝ] Y →ₗ[
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb x
-    simp only [map_add, LinearMap.add_apply, ha, hb]
+    simp only [map_add, LinearMap.add_apply, ha x, hb x]
   smul_mem' := by
     intro t a ha x
-    simp only [map_smul, LinearMap.smul_apply, ha]
+    simp only [map_smul, LinearMap.smul_apply, ha x]
 
 /-- Quadratic representations preserve actual squares on the original EJA carrier.
 The JB norm is constructed on a type copy and is not an extra hypothesis on Y. -/

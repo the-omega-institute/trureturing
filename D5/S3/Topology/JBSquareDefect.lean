@@ -57,6 +57,7 @@ private theorem sum_squares (A : Data Y T v) {ι : Type*}
     rw [Finset.sum_insert hi]
     exact add_squares A (hf i (by simp)) (ih (fun j hj => hf j (by simp [hj])))
 
+omit [CompleteSpace Y] in
 /-- The explicit spectral sum identity for the same map, spectrum and target product. -/
 theorem square_defect_identity (htsymm : ∀ x y, T x y = T y x)
     (htunit : ∀ x, T v x = x) {n : ℕ}
