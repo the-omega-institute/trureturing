@@ -253,7 +253,7 @@ private theorem splitWindow_mem_iff (W : Submodule F D) (z : K ⊗[F] D) :
 
 private theorem splitWindow_finrank (W : Submodule F D) :
     finrank K (splitWindow K hK W) = finrank F W := by
-  rw [splitWindow, Submodule.finrank_map_eq]
+  rw [splitWindow, LinearEquiv.finrank_map_eq]
   rw [← (Submodule.toBaseChange.toLinearEquiv K W).finrank_eq, Module.finrank_baseChange]
 
 private theorem actual_split_diagonal_stabilizer [FiniteDimensional F K]
@@ -266,13 +266,101 @@ private theorem actual_split_diagonal_stabilizer [FiniteDimensional F K]
   have hz : ∀ w ∈ W, z * (1 ⊗ₜ[F] w) ∈ W.baseChange K := by
     intro w hw
     apply (splitWindow_mem_iff K hK W _).mp
-    rw [map_mul, LinearEquiv.coe_coe, AlgEquiv.apply_symm_apply]
+    rw [map_mul]
+    change e (e.symm c) * e (1 ⊗ₜ[F] w) ∈ splitWindow K hK W
+    rw [AlgEquiv.apply_symm_apply]
     apply hc
     exact (splitWindow_mem_iff K hK W _).mpr (W.tmul_mem_baseChange_of_mem 1 hw)
   have hh := split_stabilizer_constant K (Module.finBasis F K) W hW z hz
   intro σ τ
-  simpa only [z, e, ← AlgEquiv.toAlgHom_eq_coe, AlgEquiv.apply_symm_apply] using hh σ τ
+  specialize hh σ τ
+  change e (e.symm c) σ = e (e.symm c) τ at hh
+  simpa only [AlgEquiv.apply_symm_apply] using hh
 
 end ActualSplitWindow
+
+section CoordinateRanks
+
+variable {K Ω : Type*} [Field K] [Fintype Ω] [DecidableEq Ω]
+
+private def coordinateProject (S : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K) where
+  toFun x i := if i ∈ S then x i else 0
+  map_add' x y := by ext i; by_cases h : i ∈ S <;> simp [h]
+  map_smul' c x := by ext i; by_cases h : i ∈ S <;> simp [h]
+
+private def projected (U : Submodule K (Ω → K)) (S : Finset Ω) :
+    Submodule K (Ω → K) := U.map (coordinateProject S)
+
+private def rowRank (U : Submodule K (Ω → K)) (S : Finset Ω) : ℕ :=
+  finrank K (projected U S)
+
+private theorem project_add_complement (S : Finset Ω) (x : Ω → K) :
+    coordinateProject S x + coordinateProject Sᶜ x = x := by
+  ext i
+  by_cases h : i ∈ S <;> simp [coordinateProject, h]
+
+private theorem projected_disjoint (U : Submodule K (Ω → K)) (S : Finset Ω) :
+    Disjoint (projected U S) (projected U Sᶜ) := by
+  rw [disjoint_iff]
+  apply le_antisymm _ bot_le
+  rintro x ⟨⟨v, hv, rfl⟩, w, hw, he⟩
+  change coordinateProject S v = 0
+  ext i
+  have hi := congrFun he i
+  by_cases hs : i ∈ S <;> simp_all [coordinateProject]
+
+private theorem window_le_projected_sup (U : Submodule K (Ω → K)) (S : Finset Ω) :
+    U ≤ projected U S ⊔ projected U Sᶜ := by
+  intro x hx
+  rw [← project_add_complement S x]
+  exact Submodule.add_mem_sup ⟨x, hx, rfl⟩ ⟨x, hx, rfl⟩
+
+private theorem projection_stable_of_rank_equality (U : Submodule K (Ω → K))
+    (S : Finset Ω) (h : rowRank U S + rowRank U Sᶜ = finrank K U) :
+    ∀ x ∈ U, coordinateProject S x ∈ U := by
+  have hd := Submodule.finrank_sup_add_finrank_inf_eq (projected U S) (projected U Sᶜ)
+  rw [(projected_disjoint U S).eq_bot, finrank_bot, add_zero] at hd
+  have he : U = projected U S ⊔ projected U Sᶜ :=
+    Submodule.eq_of_le_of_finrank_eq (window_le_projected_sup U S)
+      (by simpa only [rowRank, h] using hd.symm)
+  intro x hx
+  rw [he]
+  exact le_sup_left (show coordinateProject S x ∈ projected U S from ⟨x, hx, rfl⟩)
+
+end CoordinateRanks
+
+section ActualConnectivity
+
+variable (K : Type*) [Field K] [Algebra F K]
+variable [FiniteDimensional F D] [Algebra.IsSeparable F D] [FiniteDimensional F K]
+variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
+
+private theorem actual_row_rank_connected (W : Submodule F D) (hW : ScalarIdealizer W)
+    (S : Finset (D →ₐ[F] K)) (hs : S.Nonempty) (ht : Sᶜ.Nonempty) :
+    finrank F W < rowRank (splitWindow K hK W) S + rowRank (splitWindow K hK W) Sᶜ := by
+  classical
+  let U := splitWindow K hK W
+  have hle := Submodule.finrank_mono (window_le_projected_sup U S)
+  have hd := Submodule.finrank_sup_add_finrank_inf_eq (projected U S) (projected U Sᶜ)
+  rw [(projected_disjoint U S).eq_bot, finrank_bot, add_zero] at hd
+  have hU : finrank K U = finrank F W := splitWindow_finrank K hK W
+  by_contra hn
+  have he : rowRank U S + rowRank U Sᶜ = finrank K U := by
+    change finrank K (projected U S) + finrank K (projected U Sᶜ) ≤ finrank F W at hn
+    dsimp only [rowRank]
+    omega
+  let c : (D →ₐ[F] K) → K := fun σ => if σ ∈ S then 1 else 0
+  have hc : ∀ x ∈ U, c * x ∈ U := by
+    intro x hx
+    have hx' := projection_stable_of_rank_equality U S he x hx
+    convert hx' using 1
+    ext σ
+    by_cases h : σ ∈ S <;> simp [c, coordinateProject, h]
+  obtain ⟨σ, hσ⟩ := hs
+  obtain ⟨τ, hτ⟩ := ht
+  have hh := actual_split_diagonal_stabilizer K hK W hW c hc σ τ
+  simpa [c, hσ, Finset.mem_compl.mp hτ] using hh
+
+end ActualConnectivity
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
