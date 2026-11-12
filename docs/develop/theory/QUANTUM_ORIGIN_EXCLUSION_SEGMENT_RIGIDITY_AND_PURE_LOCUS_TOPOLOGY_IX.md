@@ -2132,3 +2132,355 @@ $$
 [Q116AFP]: https://arxiv.org/pdf/1303.1146v3 "C. Allday, M. Franz, V. Puppe, Equivariant Poincaré–Alexander–Lefschetz duality and the Cohen–Macaulay property；§2.1允许环面秩零，Lemma 3.1 p13、Theorem 3.4 pp15—17、Proposition 3.11(1) p19；取有理系数、可定向ENR同调流形及闭原二球。"
 
 ## 追加锚（本行以下为增补区）
+
+## 117. 完整框架的锚片压缩、实三元识别与实际 Jordan 闭包
+
+**约定 117.0（原域与有限接口）。** 原量子起源问题始终取116.1的整个原锥 $C$、单位 $u$、紧基 $K$、全部纯点 $P$ 与全效应 $\mathcal E=[0,u]_{C^*}$。116.17在 EB3 加每个完整排除球至少一条由同一原全域效应读成一、零的直径这一前提下，给出同一原锥、同一原单位的 $H_3(\mathbb C)$ 表示。本章研究已经有共同复矩阵实现的有限框架接口；这个实现及其矩阵乘法是前提，不能用于反推原 EB 到 Jordan 的未证桥。选出的框架也不替代整个原域。
+
+### 117.1 同一实现中的二元与三元数据
+
+**定义 117.1（实际框架、闭包与锚）。** 令 $d\ge2$，在同一个 $A=\operatorname{Herm}_d(\mathbb C)$ 中取三套有标签的完整秩一投影框架
+
+$$
+E=(E_i)_{i=1}^d,\qquad F=(F_j)_{j=1}^d,\qquad G=(G_k)_{k=1}^d.
+$$
+
+每套的不同成员正交、每个成员迹一，且每套之和都是同一个 $I_d$。内积约定为 $\langle v,w\rangle=v^*w$，第一变量共轭线性。定义
+
+$$
+\begin{aligned}
+X\circ Y&=\tfrac12(XY+YX),&
+q(P,Q)&=\operatorname{Tr}(PQ),\\
+b(P,Q,R)&=\operatorname{Tr}(PQR),&
+j(P,Q,R)&=\operatorname{Re}b(P,Q,R)
+             =\operatorname{Tr}((P\circ Q)R).
+\end{aligned}
+\tag{IX117.1}
+$$
+
+这里的 $P,Q,R$ 是所取实际投影，不是从若干互不相干的实现拼出的表。置
+
+$$
+\begin{aligned}
+S&=\operatorname{span}_{\mathbb R}\{E_i,F_j,G_k\},\\
+J&=\bigcap\{L\subseteq A:L\text{ 是实线性子空间，含全部 }E_i,F_j,G_k,
+                    \ L\circ L\subseteq L\}.
+\end{aligned}
+\tag{IX117.2}
+$$
+
+$J$ 是实际最小实 Jordan 闭包；$S$ 只是初始线性张成。以下充分锚条件允许其余跨框架配对为零：
+
+$$
+\begin{gathered}
+q(E_i,F_1)>0,\quad q(E_i,G_1)>0\quad(1\le i\le d),\\
+q(F_j,G_1)>0\quad(1\le j\le d),\qquad
+q(F_1,G_k)>0\quad(1\le k\le d).
+\end{gathered}
+\tag{IX117.3}
+$$
+
+定义两张复锚片及其重合列
+
+$$
+M_{ij}=b(E_i,F_j,G_1),\qquad N_{ik}=b(E_i,F_1,G_k),\qquad M_{i1}=N_{i1}.
+\tag{IX117.4}
+$$
+
+对每个三元位置定义实残量
+
+$$
+\Delta_{ijk}=q(E_i,F_j)q(F_j,G_k)q(G_k,E_i)-j(E_i,F_j,G_k)^2.
+\tag{IX117.5}
+$$
+
+### 117.2 完备性压缩与实、复闭包二择
+
+**定理 117.2（压缩锚片识别实际闭包）。** 在定义117.1及全部锚条件(IX117.3)下，令
+
+$$
+\begin{aligned}
+\Omega={}&\{(i,j,1):1\le i,j<d\}\\
+&\mathbin{\cup}\{(i,1,k):1\le i<d,\ 2\le k<d\},\\
+\Gamma_\Omega&=\sum_{(i,j,k)\in\Omega}\Delta_{ijk}.
+\end{aligned}
+\tag{IX117.6}
+$$
+
+两部分不相交，且
+
+$$
+|\Omega|=(d-1)^2+(d-1)(d-2)=(d-1)(2d-3).
+\tag{IX117.7}
+$$
+
+有如下精确结论。
+
+（一）全部二元表与 $\Omega$ 上的复数 $b$ 恢复两张完整锚片，进而确定全部有标签框架到共同酉共轭。两张未压缩锚片共有 $2d^2-d$ 个不同三元位置。
+
+（二）只用全部二元表与 $\Omega$ 上的实数 $j$ 即可计算 $\Gamma_\Omega\ge0$，并且
+
+$$
+\begin{aligned}
+\Gamma_\Omega=0
+&\ \Longleftrightarrow\ \sum_{i,j,k=1}^d\Delta_{ijk}=0\\
+&\ \Longleftrightarrow\ \text{存在共同酉矩阵使全部 }E_i,F_j,G_k\text{ 都为实矩阵}\\
+&\ \Longleftrightarrow\ J=U\operatorname{Sym}_d(\mathbb R)U^*
+                      \text{ 对某个酉矩阵 }U,\\
+\Gamma_\Omega>0
+&\ \Longleftrightarrow\ J=\operatorname{Herm}_d(\mathbb C).
+\end{aligned}
+\tag{IX117.8}
+$$
+
+两种闭包的实维数分别为 $d(d+1)/2$ 和 $d^2$。因此 $\Omega$ 中任意一个严格不等式 $\Delta_{ijk}>0$ 就认证这里的复闭包。位置数(IX117.7)只是一个充分输入上界，不主张最少、独立参数数或实验次数。
+
+证明。先写 $P=pp^*,Q=qq^*,R=rr^*$，其中三个向量均为单位向量。直接相乘给
+
+$$
+b(P,Q,R)=\langle p,q\rangle\langle q,r\rangle\langle r,p\rangle,
+\qquad |b(P,Q,R)|^2=q(P,Q)q(Q,R)q(R,P).
+\tag{IX117.9}
+$$
+
+故每个 $\Delta_{ijk}=(\operatorname{Im}b(E_i,F_j,G_k))^2\ge0$。该因子化是通常的三点 Bargmann 恒等式，不作为新的不变量分类。
+
+首先利用完整框架之和等于单位。令
+
+$$
+a_i=q(E_i,G_1),\quad c_j=q(F_j,G_1),\quad
+t_i=q(E_i,F_1),\quad h_k=\sqrt{q(F_1,G_k)}>0.
+$$
+
+迹的线性性和循环性给同一实际实现上的全部和约束
+
+$$
+\begin{array}{ll}
+\displaystyle\sum_jM_{ij}=a_i,&\displaystyle\sum_iM_{ij}=c_j,\\[2pt]
+\displaystyle\sum_kN_{ik}=t_i,&\displaystyle\sum_iN_{ik}=h_k^2.
+\end{array}
+\tag{IX117.10}
+$$
+
+这四类和均为已知实数；各片的行和总数、列和总数均为一。给出 $i,j<d$ 的 $M_{ij}$ 后，依次恢复
+
+$$
+\begin{aligned}
+M_{id}&=a_i-\sum_{j<d}M_{ij}&&(i<d),\\
+M_{dj}&=c_j-\sum_{i<d}M_{ij}&&(j<d),\\
+M_{dd}&=c_d-\sum_{i<d}M_{id}.
+\end{aligned}
+\tag{IX117.11}
+$$
+
+最后一行的行和自动为 $a_d$，因为总行和等于总列和。再用 $N_{i1}=M_{i1}$，已知 $i<d,2\le k<d$ 的 $N_{ik}$ 即可恢复
+
+$$
+\begin{aligned}
+N_{id}&=t_i-\sum_{k<d}N_{ik}&&(i<d),\\
+N_{dk}&=h_k^2-\sum_{i<d}N_{ik}&&(k<d),\\
+N_{dd}&=h_d^2-\sum_{i<d}N_{id}.
+\end{aligned}
+\tag{IX117.12}
+$$
+
+当 $k=1$ 时，该式与已经得到的 $N_{d1}=M_{d1}$ 一致；最后一行同样由总和一致补齐。$d=2$ 时第二个候选集合为空，恢复公式仍成立。这证明了复数锚片的压缩。特别地，若候选位置上的 $b$ 都实，所有补回条目也都实。
+
+接着给直接坐标恢复，以支付相位与零边的义务。先用共同酉变换使 $E_i=e_ie_i^*$ 为标准坐标框架。第一组锚允许再用对角酉变换及向量相位，使 $F_1=f_1f_1^*$ 且
+
+$$
+(f_1)_i=r_i=\sqrt{t_i}>0.
+$$
+
+对每个 $G_k=g_kg_k^*$ 选择代表向量相位，使 $\langle f_1,g_k\rangle=h_k>0$；然后对每个 $F_j=f_jf_j^*$ 选择相位，使
+$\langle f_j,g_1\rangle=w_j=\sqrt{c_j}>0$。当 $j=1$ 时两条件相容，$w_1=h_1$。由(IX117.9)，
+
+$$
+N_{ik}=r_ih_k\overline{(g_k)_i},\qquad
+M_{ij}=(f_j)_iw_j\overline{(g_1)_i}.
+\tag{IX117.13}
+$$
+
+所以
+
+$$
+(g_k)_i=\frac{\overline{N_{ik}}}{r_ih_k},\qquad
+(f_j)_i=\frac{M_{ij}}{w_j\overline{(g_1)_i}}.
+\tag{IX117.14}
+$$
+
+所有分母均非零：$r_i,h_k,w_j$ 由锚为正，且 $|(g_1)_i|^2=a_i>0$。公式先恢复全部 $g_k$，再恢复全部 $f_j$。两组实际框架若有相同二元表及相同候选复数，把它们都变到此规范就得到相同投影，故原框架由一个共同酉变换联系。这是有限框架相位重构的直接应用；一般循环不变量重构已有 Chien–Waldron 的 Theorem 3.2，三套以上互补正交基的完整三元版本见其 Theorem 4.7 [Q117CW]。这里不用图的模二循环生成来代替复相位计算。该文内积第一变量线性，因此其同序三元积是(IX117.9)的复共轭。
+
+若 $\Gamma_\Omega=0$，非负项逐项为零，候选 $b$ 全实；(IX117.11)—(IX117.12)使两片全实。(IX117.14)先使全部 $g_k$ 实，再使全部 $f_j$ 实。反向，若全部框架经共同酉变换为实，则每个有序迹积实，全部 $\Delta$ 为零。于是候选残量、完整 $d^3$ 残量与共同实表示具有同一个零集。
+
+最后必须识别闭包而非只识别向量相位。以下复用第五卷命题76.4的秩一角提取与虚边传播方法 [Q117V]。在上述 $f_1=(r_i)$ 的规范中，以 $B_{ij}=e_ie_j^*$ 记矩阵单位，并置
+
+$$
+R_{ij}=B_{ij}+B_{ji},\qquad A_{ij}=\mathrm i(B_{ij}-B_{ji})\quad(i\ne j).
+$$
+
+对任意 $X\in J$ 和 $i\ne j$，
+
+$$
+4E_i\circ(E_j\circ X)=X_{ij}B_{ij}+\overline{X_{ij}}B_{ji}.
+\tag{IX117.15}
+$$
+
+取 $X=F_1$ 即得 $r_ir_jR_{ij}\in J$；连同全部 $E_i$，这些元张成 $\operatorname{Sym}_d(\mathbb R)$。若全部生成投影实，实对称矩阵在 $\circ$ 下闭合，因此 $J$ 恰等于这个实对称空间。
+
+若某个生成投影 $X$ 有 $\operatorname{Im}X_{ij}=\beta\ne0$，(IX117.15)减去 $(\operatorname{Re}X_{ij})R_{ij}$ 并除以 $\beta$ 就得到 $A_{ij}\in J$。不同指标上的矩阵单位乘法给
+
+$$
+2A_{ij}\circ R_{jk}=A_{ik},\qquad
+2R_{ij}\circ A_{ik}=A_{jk}\quad(i,j,k\text{ 两两不同}).
+\tag{IX117.16}
+$$
+
+从一条虚边出发，第一式先得到以其一个端点为中心的全部虚边，第二式再得到其余端点之间的全部虚边。$d=2$ 时原来一条虚边已足够。全部 $E_i$ 以及 $i<j$ 的 $R_{ij},A_{ij}$ 是 $A$ 的实基，故此时 $J=A$。因而在本规范中闭包只有上述两种可能；若 $\Gamma_\Omega>0$，框架不可能全实，必落入第二种。反向，$J=A$ 不可能同时有维数较小的共同实闭包。两个维数按对角元、实边、虚边直接计数，得到(IX117.8)。证毕。
+
+实数 $q,j$ 的结论只识别这里的闭包类型，不供应每个非零虚部的符号。共同复共轭保持 $q,j,\Gamma_\Omega$，却将 $b$ 变为 $\overline b$；定理（一）所用的带符号复数数据比定理（二）的输入更多。甚至在 $d=2$，把 [Q117B] 的已有 Bloch 公式 $j=(1+r\cdot s+s\cdot t+t\cdot r)/4$ 与 $q(P,Q)=(1+r\cdot s)/2$ 直接相配，已给
+
+$$
+2j(P,Q,R)=q(P,Q)+q(Q,R)+q(R,P)-1,
+$$
+
+所以该维数下的候选实三元可由二元表算出。这也表明(IX117.7)没有最小性含义。
+
+### 117.3 二元盲点与初始线性张成的泄漏
+
+**命题 117.3（同二元表的实际框架由实三元分开）。** 在 $d=4$ 取通常的 Pauli 矩阵 $X,Y,Z$、标准坐标框架 $E$，以 $X\otimes I_2$ 与 $I_2\otimes X$ 的四个联合秩一本征投影组成 $F$，置
+
+$$
+D_{\mathrm r}=\operatorname{diag}(1,1,1,-1),\quad
+D_{\mathrm c}=\operatorname{diag}(1,\mathrm i,\mathrm i,-1),\quad
+G_k^{\mathrm r}=D_{\mathrm r}F_kD_{\mathrm r}^*,\quad
+G_k^{\mathrm c}=D_{\mathrm c}F_kD_{\mathrm c}^*.
+\tag{IX117.17}
+$$
+
+按第五卷命题76.4的符号标签，两个三元组的全部二元表相同，所有跨框架 $q$ 均为 $1/4$；实际闭包分别有实维数十和十六。其初始实线性张成都有维数十，而实三元已经分开这两个实际闭包。
+
+证明。框架完整性、二元表及闭包是第五卷命题76.4的现成见证，直接复用：对角共轭(IX117.17)分别将 $XI,IX$ 送到 $XZ,ZX$ 与 $YI,IY$，其中省略张量符号。因而它们与该命题的原标签相同。选每套第一个向量
+
+$$
+e=(1,0,0,0)^T,\quad f=(1,1,1,1)^T/2,\quad
+g_{\mathrm r}=(1,1,1,-1)^T/2,\quad
+g_{\mathrm c}=(1,\mathrm i,\mathrm i,-1)^T/2.
+$$
+
+(IX117.9)给
+
+$$
+b(E_1,F_1,G_1^{\mathrm r})=\tfrac18,\qquad
+b(E_1,F_1,G_1^{\mathrm c})=\tfrac{\mathrm i}{8}.
+\tag{IX117.18}
+$$
+
+两者 $j$ 分别为 $1/8$ 和零；对应 $\Delta$ 为零和 $1/64$。此位置属于 $d=4$ 时的十五个候选位置，且全部锚成立，故定理117.2给出同一闭包二择的实三元读法。
+
+初始张成可直接看清。实三元组张成的 Pauli 词为
+
+$$
+II,ZI,IZ,ZZ,XI,IX,XX,XZ,ZX,YY;
+$$
+
+复三元组张成的词为
+
+$$
+II,ZI,IZ,ZZ,XI,IX,XX,YI,IY,YY.
+$$
+
+每列十个词在迹内积下正交，带符号框架和恢复其中每个词，故两边初始维数均为十。复例中令 $E_{++}=(II+ZI+IZ+ZZ)/4$、$F_{++}=(II+XI+IX+XX)/4$，则
+
+$$
+E_{++}\circ F_{++}
+=\frac{II+ZI+IZ+ZZ+XI+IX+XX-YY}{16}
+ +\frac{ZX+XZ}{16}.
+\tag{IX117.19}
+$$
+
+最后一项与复例的整个初始张成正交，且其 Hilbert–Schmidt 范数平方为 $\operatorname{Tr}(((ZX+XZ)/16)^2)=(4+4)/16^2=1/32$。所以初始十维空间并不 Jordan 闭合；闭包十六维不是从十维表面上读出的维数。这两个见证处于同一矩阵环境，不是两个满足原 $C,u,K,P,\mathcal E$ 全部起源前件的模型。证毕。
+
+### 117.4 无第三桥时，完整复三元表仍不足
+
+**命题 117.4（同全部二元、三元表而闭包十、十六维）。** 在 $\mathbb C^4$ 中取标准框架 $E$，令 $G=E$，并以以下酉矩阵的列投影定义完整框架 $F(z)$：
+
+$$
+U(z)=\frac12
+\begin{pmatrix}
+1&1&1&1\\
+1&z&-1&-z\\
+1&-1&1&-1\\
+1&-z&-1&z
+\end{pmatrix},\qquad |z|=1.
+\tag{IX117.20}
+$$
+
+三套有标签框架 $(E,F(1),E)$ 与 $(E,F(\mathrm i),E)$ 的全部二元表，以及任意三个标签的全部有序复数迹积，完全相同；其实际最小实 Jordan 闭包分别为 $\operatorname{Sym}_4(\mathbb R)$ 和 $\operatorname{Herm}_4(\mathbb C)$。
+
+证明。去掉共同因子 $1/2$ 后，每列范数平方为四。六个不同列对的内积分别化为
+
+$$
+\begin{gathered}
+1+z-1-z,\quad1-1+1-1,\quad1-z-1+z,\\
+1-\overline z-1+\overline z,\quad2-2|z|^2,\quad1+z-1-z,
+\end{gathered}
+$$
+
+故全部为零，$U(z)$ 酉，所有框架实际完整。每列每个坐标模长均为 $1/2$，故 $q(E_i,F_j(z))=1/4$，同框架配对为 Kronecker delta，$q(E_i,G_k)=\delta_{ik}$。二元表与 $z$ 无关。
+
+任意三个标签的投影实际只来自 $E,F(z)$ 两套正交框架。三者中至少两个来自同一套，把它们循环移到相邻位置：若不同，则乘积为零；若相同，则由幂等性把迹积化为一个二元配对。三者全同也是一。因此全部有序复三元都只取零、$1/4$ 或一，取值由标签确定，与 $z$ 无关。
+
+但两边 $F_1$ 都是常实向量 $(1,1,1,1)^T/2$ 的投影，故(IX117.15)已使 $E,F_1$ 生成全部实对称矩阵。$z=1$ 时其余生成元都实，闭包恰为实对称空间。$z=\mathrm i$ 时 $F_2$ 的 $(1,2)$ 元为 $-\mathrm i/4$；提取此角后，(IX117.16)给全部虚边，闭包为全部复 Hermitian 矩阵。维数为十、十六。
+
+所遗漏的关系已经在四阶环上显现：
+
+$$
+\operatorname{Tr}(E_1F_1E_2F_2)=z/16.
+\tag{IX117.21}
+$$
+
+因为 $(F_1)_{12}=1/4$、$(F_2)_{21}=z/4$。这里缺失的正是 $q(E_i,G_1)>0$ 的整列锚，实际值为 $\delta_{i1}$。将同一框架再命名为第三套，不能供应穿过这些零边的桥。一般有限向量族的三元不充分及较长环信息已有 [Q117CW] Example 2.5、Theorem 3.2 的先例；此处把障碍落实为完整正交框架及实际闭包维数的不同。它也只是同一矩阵环境内的有限见证。证毕。
+
+### 117.5 原目标、关系几何与操作接口
+
+**约定 117.5（静态表示和取得三元数的不同前提）。** 定理117.2的前提已经有 $\mathbb C^d$、秩一投影、同一矩阵乘法及三套实际完整框架。其结论是这个有限族的实三元读数足以选择实际生成的实、复闭包，不能把这些前提当成由原二元排除关系已经推出的东西。特别地，$d=3$ 时六个候选位置的结论不是比116.17更弱的全局起源入口。
+
+在116.17的完整前提下，原量子静态接口仍由同一个保锥保单位的 $\Phi:H_3(\mathbb C)\to V$ 给出：
+
+| 原静态对象 | 同一原表示中的对应 |
+| --- | --- |
+| 全部纯点、混态及凸混合 | $p_z=\Phi(zz^*/(z^*z))$；$K=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1\}$；保持全部凸组合 |
+| 全效应和 Born 评价 | 所有 $0\preceq A\preceq I_3$ 对应 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$ |
+| 正交共同完成及谱分解 | 原正交纯对有唯一第三纯点；完整框架与 $\rho=\sum_i\lambda_iP_i$ 的谱分解按116.17—116.18取得 |
+| 全部有限数学测量 | $f_a\ge0,\sum_af_a=u$ 恰对应 $A_a\succeq0,\sum_aA_a=I_3$ |
+| 有限框架乘法读数 | 若已经取得实际 $j$，则 $j(P,Q,R)=\operatorname{Tr}((P\circ Q)R)$；满足锚条件时应用117.2 |
+
+前四行直接使用116.17—116.18，末行使用本章明示的矩阵实现和额外三元数据。框架完备性支付(IX117.10)的和约束，却不供应在原域取得这些三元数据的操作。
+
+例如，若另给秩一 Lüders 更新与相应 Born 规则，从纯态 $P$ 依次通过 $Q,R$ 的两次成功概率是 $q(P,Q)q(Q,R)$，并不是 $j(P,Q,R)$：第一次成功后归一状态是 $Q$，故条件概率为 $q(Q,R)$。若另给三份产品准备 $P\otimes Q\otimes R$、控制系统、相干受控循环置换及校准相位参考，循环干涉可在 Born 读回下取得 $\operatorname{Re}b$；虚部的符号还依赖循环方向和参考相位。这个已知取得合同见 [Q117B] 的关系三元应用。产品来源、相干控制、相位参考和 Born 读回都是额外操作前提，不从知道 $q$ 的表推出。
+
+同样，全部实际复合和过程继续保留VIII113.11的共同来源域、所有有限份载体和张量锥及单位、全部相关联合输入、纠缠准备、分块相容性、全旁观者正性及 CP/Kraus 提升、逐输入预算、同族仪器、记录与粗粒化、正质量条件归一、Lüders 校准，以及原钟、连续动态来源、单位和 $\hbar$。数学上的有限 POVM 不等于可调用的实际仪器，静态闭包也不供应物理时间或复合合同。
+
+原全域尚未支付的问题仍包括
+
+$$
+\mathrm{EB3}\ \stackrel{?}{\Longrightarrow}\ \forall p\ W(D_p)=1,
+\qquad
+\mathrm{EB}_{\ge2}+\bigl(\forall p\ W(D_p)=1\bigr)
+\ \stackrel{?}{\Longrightarrow}\ \mathrm{Pair}_{\perp}
+\quad\text{（球维数可变）},
+\tag{IX117.22}
+$$
+
+以及116.22列出的其他原入口。由原关系内生地产生共同 Jordan 实现、可取得的三元关系及其全域相容性，仍不能用本章的有限矩阵前提代付。
+
+本章承重综合是：在(IX117.3)这些非零锚下，把已知的相位恢复与秩一角传播接起来，再用实际完整框架的行列和，得到(IX117.7)—(IX117.8)的有限实三元闭包判据；其数学归属为 `repo-derived` 的有限综合，不主张一般 Bargmann 分类、矩阵单位方法或工具原创。较少候选、锚条件的必要性及一般零边网络的充分判据均未由此确立。
+
+[Q117V]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md "第五卷命题76.4：同二元表的Pauli框架、秩一角提取、虚边传播及十、十六维实际Jordan闭包。"
+[Q117CW]: https://arxiv.org/pdf/1312.5393v1 "Tuan Chien and Shayne Waldron, A characterisation of projective unitary equivalence of finite frames；arXiv:1312.5393v1，所引PDF正文版本May 31, 2021；Example 2.5、Theorem 3.2及其证明、Theorem 4.7。"
+[Q117B]: ../../../Blueprint/D5/S3/Quantum/Information/GroupInvariantPsi/C129QubitBargmann.md "Qubit Bargmann关系三元应用：Bloch恒等式、循环方向和产品准备／受控循环／相位参考／Born读回的取得合同。"
+
+直观地说，二元表记录两点之间联系多强，三元环还检查这些联系绕一圈能否共同拼合。完整框架像一套恰好覆盖全空间的坐标：每行、每列的总量已经固定，所以末行末列不用重新给，两个锚片的重合部分也只需给一次。满足上述非零锚条件时，保留下来的少量环若全没有虚残量，所有原框架就能一起落在实坐标里，反复做 Jordan 乘法也只得到实对称空间；只要一个候选环留下虚残量，实边便把它传播到全部虚边，闭包扩成整个复 Hermitian 空间。若第三框架只是重复第一套，三角环会看漏只能沿四边环发现的区别；即使所有三元数都知道，也仍可能把十维和十六维闭包混在一起。这明确补上了有限矩阵分支的一个信息缺口，原来从全部排除球本身生出共同量子结构、再给出实际复合与动力学的完整目标仍保留其各自条件。
+
+## 追加锚（本行以下为增补区）
