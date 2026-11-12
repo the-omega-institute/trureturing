@@ -1,25 +1,14 @@
-/-
-SOURCE-ONLY ENDPOINT CANDIDATE. ALL PROOF TERMS ARE UNCOMPILED.
-No Lean, Lake, build, cache, native report or judge was run by this worker.
-Repository source pin: 5050ad28e6969902fd54f029ea8910b3e2e33f64.
-Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679; Lean 4.35.0.
-
-The imported ActualBoundaryPriceCandidate is the immutable external packet
-with SHA256 1dcc300f6aeea29626c4cea41bba95d2ff1c23f25a2d7219b5f9a12c08951342.
-Its two BHP clauses remain explicit UNVERIFIED analytic assumptions.
-
-The exact BHP-only uniform endpoint has proposed concrete source terms below.
-G1--G5 are assembled into the SAME actual five-mode finite construction.
-This is source completion only: parser, elaborator, kernel, accepted axioms,
-exact compiled telescope, admission and formal delivery all remain N0 OPEN.
-The test slack below is never the original prescribed bank slack or delta.
-The original RH/full-bank W-payment problem remains OPEN.
--/
-
 import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceCandidate
 import D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import Mathlib.Tactic
+
+/-! Actual five-mode test predecessors from two independent BHP suppliers.
+
+All five signed modes use distinct actual primes, their original valuations,
+and complete insertion/deletion fees. Constants are uniform over full records
+at arbitrary positive prices. The two BHP suppliers remain unverified hypotheses.
+The resulting test slack does not establish prescribed bank payment or RH. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -37,7 +26,7 @@ open D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
   (beta gain beta_pos beta_nat log_beta_drop)
 open D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
   (cutoff cutoff_spec cutoff_antitone)
-open D5.S3.Arith.Robin.PriceRecord.FixedLayerRootAsymptotic (root_atTop)
+open D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster (root_atTop)
 open D5.S3.Arith.Robin.PriceRecord.ActualTwoFourCutoffCurvature
   (d normalized_gain_bounds)
 open D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder
@@ -70,8 +59,8 @@ private theorem reference_price_sandwich {X : ℝ} (hX : 2 ≤ X) :
   · rw [he]
     exact mul_le_mul_of_nonneg_right (by simpa using hlo) hr.le
   · rw [he]
-    simpa only [one_mul] using
-      mul_le_mul_of_nonneg_right (by simpa using hhi) hr.le
+    have hhi' : gain 1 X * X ≤ 1 := by simpa only [pow_one] using hhi
+    simpa only [one_mul] using mul_le_mul_of_nonneg_right hhi' hr.le
 
 private theorem reference_log_price_ratio {X : ℝ} (hX : 2 ≤ X) :
     0 ≤ log (referencePrice X / beta 1 X) ∧
@@ -85,7 +74,7 @@ private theorem reference_log_price_ratio {X : ℝ} (hX : 2 ≤ X) :
     linarith
   have hq : referencePrice X / beta 1 X ≤ 1 / (1 - 1 / X) := by
     apply (div_le_div_iff₀ hb ht).mpr
-    simpa only [one_mul] using hlo
+    simpa only [one_mul, mul_comm] using hlo
   have hsmall : 1 / (1 - 1 / X) - 1 ≤ 2 / X := by
     have he : 1 / (1 - 1 / X) - 1 = 1 / (X - 1) := by
       field_simp [hX0.ne', (by linarith : X - 1 ≠ 0)]
@@ -129,7 +118,8 @@ private theorem clamped_log_price_transfer {j : ℕ} (hj : 2 ≤ j)
   rw [he]
   refine ⟨mul_nonneg hj0 hlogs, ?_⟩
   have hh := (reference_log_price_ratio hX).2
-  linarith
+  simp only [div_eq_mul_inv] at hdrop hh ⊢
+  nlinarith only [hdrop, hh]
 
 private theorem relative_price_log_distance {j : ℕ} (hj : 2 ≤ j)
     {u v lambda e : ℝ} (hu : 2 ≤ u) (hv : 2 ≤ v)
@@ -240,18 +230,17 @@ private theorem actual_price_quartic_error {j : ℕ} (hj : 2 ≤ j) :
       (actualOffset j X - (P (log j)).eval (1 / log X))) atTop (𝓝 0) := by
   have hsmall : Tendsto (fun X : ℝ => log X ^ 4 / X) atTop (𝓝 0) := by
     simpa only [rpow_natCast, rpow_one] using
-      (_root_.isLittleO_log_rpow_rpow_atTop 4 (by norm_num : (0 : ℝ) < 1)).
-        tendsto_div_nhds_zero
+      (_root_.isLittleO_log_rpow_rpow_atTop (4 : ℕ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
   have ht : Tendsto (fun X : ℝ => log X ^ 4 * (actualOffset j X - d j X))
       atTop (𝓝 0) := by
-    apply squeeze_zero_norm' (g := fun X : ℝ => 6 * (log X ^ 4 / X)) ?_
+    apply squeeze_zero_norm' (a := fun X : ℝ => 6 * (log X ^ 4 / X)) ?_
       (by simpa only [mul_zero] using hsmall.const_mul 6)
     filter_upwards [eventually_ge_atTop (2 : ℝ),
       (root_atTop hj).eventually_gt_atTop 2] with X hX hr
     obtain ⟨h0, h1⟩ := clamped_log_price_transfer hj hX hr
-    rw [abs_mul, abs_of_nonneg (pow_nonneg (log_nonneg (by linarith)) 4),
+    rw [Real.norm_eq_abs, abs_mul, abs_of_nonneg (pow_nonneg (log_nonneg (show 1 ≤ X by linarith)) 4),
       abs_of_nonneg h0]
-    have hh := mul_le_mul_of_nonneg_left h1 (pow_nonneg (log_nonneg (by linarith)) 4)
+    have hh := mul_le_mul_of_nonneg_left h1 (pow_nonneg (log_nonneg (show 1 ≤ X by linarith)) 4)
     convert hh using 1 <;> ring
   have hh := ht.add (actual_quartic_error hj)
   simp only [add_zero] at hh
@@ -345,12 +334,12 @@ private theorem polynomial_stencil_limits (a : ℝ) :
   have h1 : Tendsto (fun X : ℝ => a - (a + a ^ 2 / 2) * (1 / log X) +
       (a + 3 * a ^ 2 / 2 + a ^ 3 / 3) * (1 / log X) ^ 2 -
       (a + 3 * a ^ 2 + 11 * a ^ 3 / 6 + a ^ 4 / 4) * (1 / log X) ^ 3)
-      atTop (𝓝 a) := by simpa using h1c.continuousAt.tendsto.comp hz
+      atTop (𝓝 a) := by simpa [Function.comp_def] using h1c.continuousAt.tendsto.comp hz
   have h2 : Tendsto (fun X : ℝ => a ^ 2 - (3 * a ^ 2 + 2 * a ^ 3) * (1 / log X) +
       (6 * a ^ 2 + 11 * a ^ 3 + 7 * a ^ 4 / 2) * (1 / log X) ^ 2)
-      atTop (𝓝 (a ^ 2)) := by simpa using h2c.continuousAt.tendsto.comp hz
+      atTop (𝓝 (a ^ 2)) := by simpa [Function.comp_def] using h2c.continuousAt.tendsto.comp hz
   have h3 : Tendsto (fun X : ℝ => 2 * a ^ 3 - (11 * a ^ 3 + 9 * a ^ 4) * (1 / log X))
-      atTop (𝓝 (2 * a ^ 3)) := by simpa using h3c.continuousAt.tendsto.comp hz
+      atTop (𝓝 (2 * a ^ 3)) := by simpa [Function.comp_def] using h3c.continuousAt.tendsto.comp hz
   refine ⟨?_, ?_, ?_, ?_⟩
   · apply h1.congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ)] with X hX
@@ -626,8 +615,8 @@ private theorem actual_root_greedy_stencil : ∃ B T : ℝ, 0 < B ∧ 0 < T ∧
     fin_cases k <;> simp only [stencilCoefficients, Matrix.cons_val_zero,
       Matrix.cons_val_succ] <;> push_cast <;> rw [abs_le] <;>
       constructor <;> dsimp [B'] <;>
-      nlinarith [Nat.cast_nonneg (R := ℝ) q2, Nat.cast_nonneg (R := ℝ) q3,
-        Nat.cast_nonneg (R := ℝ) q4]
+      nlinarith [Nat.cast_nonneg (α := ℝ) q2, Nat.cast_nonneg (α := ℝ) q3,
+        Nat.cast_nonneg (α := ℝ) q4]
   have hm : (∑ k : Fin 5, (stencilCoefficients q2 q3 q4 k : ℝ) * rootMasses X k) =
       mesh1 X + q2 * mesh2 X + q3 * mesh3 X + q4 * mesh4 X := by
     rw [rootMasses, stencil_mass_identity]
@@ -659,7 +648,8 @@ private theorem actual_high_inventory
             Q - W * Q ^ bhpExponent ≤ (p : ℝ) ∧ (p : ℝ) ≤ Q) ∧
           (∀ p ∈ Hi, p.Prime ∧ 2 < p ∧ m.factorization p = j - 1 ∧
             Q < (p : ℝ) ∧ (p : ℝ) ≤ Q + W * Q ^ bhpExponent) := by
-  obtain ⟨W, c, X, hW, hc, _, hshort⟩ := hcount
+  have hcounted := hcount
+  obtain ⟨W, c, X, hW, hc, _, hshort⟩ := hcounted
   obtain ⟨A, Ta, hA, hTa, hloc⟩ := bhp_boundary_price_localization hgap hcount j hj
   obtain ⟨Tg, hTg, hgeom⟩ :=
     ActualBoundaryPriceCandidate.uniform_higher_geometry j hj W c (max X 5) hW hc
@@ -761,7 +751,9 @@ private theorem actual_first_inventory (hcount : BHPShortIntervalCount) :
     have hpnot : p ∉ m.primeFactors := by
       rw [hsupport]
       intro hp'
-      have hpR : (p : ℝ) ≤ R := by exact_mod_cast (Nat.mem_primesLE.mp hp').1
+      have hpR : (p : ℝ) ≤ R := by
+        change (p : ℝ) ≤ (largestPrime m : ℝ)
+        exact_mod_cast (Nat.mem_primesLE.mp hp').1
       exact hpRlo.not_ge hpR
     have hval : m.factorization p = 0 := by
       simpa only [← Nat.support_factorization, Finsupp.mem_support_iff, not_not] using hpnot
@@ -777,7 +769,8 @@ private theorem actual_first_inventory (hcount : BHPShortIntervalCount) :
 private theorem two_dvd_actual_record {m : ℕ} (hm : 2 ≤ m)
     {mu : ℝ} (hmu : 0 < mu) (hrecord : FullRecord m mu) : 2 ∣ m := by
   have hs := (price_record_prime_structure hm hmu hrecord).2
-  obtain ⟨p, hp⟩ := Nat.nonempty_primeFactors.mpr (by omega)
+  have hex : m.primeFactors.Nonempty := Nat.nonempty_primeFactors.mpr (by omega)
+  obtain ⟨p, hp⟩ := hex
   have hpprime := Nat.prime_of_mem_primeFactors hp
   have hpP : p ≤ largestPrime m := (Nat.mem_primesLE.mp (hs ▸ hp)).1
   have hP : 2 ≤ largestPrime m := hpprime.two_le.trans hpP
@@ -842,6 +835,7 @@ private theorem actual_finite_predecessor {m : ℕ} (hm : 2 ≤ m)
   have hmassS : logMass S = log 2 + logMass D := by
     dsimp [S, logMass]
     rw [sum_insert h2D]
+    norm_num
   let d0 : ℕ := ∏ p ∈ S, p
   let u0 : ℕ := ∏ p ∈ U, p
   have hdpos : 0 < d0 := Finset.prod_pos (fun p hp => (hS p hp).pos)
@@ -936,7 +930,8 @@ private theorem uniform_actual_clock : ∃ T : ℝ, 0 < T ∧
     m mu hm hmu hrec hR
   have hr : Tendsto (fun x => log (m x : ℝ) / R x) l (𝓝 1) := hmass.2.2.1
   have hlogr : Tendsto (fun x => log (log (m x : ℝ) / R x)) l (𝓝 0) := by
-    simpa only [log_one] using (Real.continuousAt_log one_ne_zero).tendsto.comp hr
+    simpa only [log_one, Function.comp_def] using
+      (Real.continuousAt_log one_ne_zero).tendsto.comp hr
   have hz : Tendsto (fun x => log (log (m x : ℝ) / R x) / L x) l (𝓝 0) :=
     hlogr.div_atTop hL
   have hratio : Tendsto (fun x => M x / L x) l (𝓝 1) := by
@@ -978,8 +973,7 @@ private theorem eventual_mass_error_absorption (K : ℝ) (hK : 0 ≤ K) :
   have hsmall : Tendsto (fun X : ℝ => log X ^ 5 / X ^ (19 / 640 : ℝ))
       atTop (𝓝 0) := by
     simpa only [rpow_natCast] using
-      (_root_.isLittleO_log_rpow_rpow_atTop 5 (by norm_num : (0 : ℝ) < 19 / 640)).
-        tendsto_div_nhds_zero
+      (_root_.isLittleO_log_rpow_rpow_atTop (5 : ℕ) (by norm_num : (0 : ℝ) < 19 / 640)).tendsto_div_nhds_zero
   have hp : ∀ᶠ X : ℝ in atTop, 0 < mesh4 X := by
     filter_upwards [eventually_gt_atTop (1 : ℝ),
       hmesh.eventually (eventually_gt_nhds hc)] with X hX hmeshX
@@ -1027,7 +1021,10 @@ private theorem interval_log_distance {Q w x : ℝ} (hQ : 4 ≤ Q)
   have habs : |x - Q| ≤ w := abs_le.mpr ⟨by linarith, by linarith⟩
   have hh : |log x - log Q| ≤ (2 / Q) * |x - Q| := by
     simpa only [Real.norm_eq_abs] using hv
-  exact hh.trans (by nlinarith [mul_le_mul_of_nonneg_left habs (by positivity : 0 ≤ 2 / Q)])
+  calc
+    _ ≤ (2 / Q) * |x - Q| := hh
+    _ ≤ (2 / Q) * w := mul_le_mul_of_nonneg_left habs (by positivity)
+    _ = _ := by ring
 
 private theorem width_power_transfer {j : ℕ} (hj : 1 ≤ j)
     {R Q : ℝ} (hR : 1 ≤ R) (hQ : 0 < Q) (hRQ : R ≤ Q ^ j) :
@@ -1085,13 +1082,19 @@ private theorem pointwise_boundary_estimates {j : ℕ} (hj : 1 ≤ j)
       _ = W * Q ^ (bhpExponent - 1) := by rw [← he]; ring
       _ ≤ _ := mul_le_mul_of_nonneg_left hpow hW
   have hlogdist : |log (p : ℝ) - log Q| ≤ 2 * W * t := by
-    exact (interval_log_distance hQ hw hwidth hlo hhi).trans (by nlinarith)
+    calc
+      _ ≤ 2 * (W * Q ^ bhpExponent) / Q := interval_log_distance hQ hw hwidth hlo hhi
+      _ = 2 * (W * Q ^ bhpExponent / Q) := by ring
+      _ ≤ 2 * (W * t) := mul_le_mul_of_nonneg_left hwidthRatio (by norm_num)
+      _ = _ := by ring
   have hroot' : |log Q - root / (j : ℝ)| ≤ H * t := by
     have he : (j : ℝ) * (log Q - root / (j : ℝ)) = (j : ℝ) * log Q - root := by
       field_simp [hj0.ne'] <;> ring
     have hh : (j : ℝ) * |log Q - root / (j : ℝ)| ≤ H * t := by
-      rw [← abs_of_pos hj0, ← abs_mul, he]
-      exact hroot
+      calc
+        _ = |(j : ℝ) * (log Q - root / (j : ℝ))| := by
+          rw [abs_mul, abs_of_pos hj0]
+        _ ≤ H * t := by rw [he]; exact hroot
     have hmul := mul_le_mul_of_nonneg_right hj1
       (abs_nonneg (log Q - root / (j : ℝ)))
     have hmul' : |log Q - root / (j : ℝ)| ≤
@@ -1208,11 +1211,12 @@ private theorem uniform_mode_inventory
       have hh := log_le_log (by norm_num : (0 : ℝ) < 4) hR4
       have he : log (4 : ℝ) = 2 * log 2 := by
         rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; norm_num
-      rw [he, log_div (by linarith : R ≠ 0) (by norm_num : (2 : ℝ) ≠ 0)] at *
-      linarith
+      rw [he] at hh
+      rw [log_div (by linarith : R ≠ 0) (by norm_num : (2 : ℝ) ≠ 0)]
+      linarith [log_pos (by norm_num : (1 : ℝ) < 2)]
     have hpoint := pointwise_boundary_estimates (j := 1) (root := log R) (by norm_num)
       hR4 hR4 (le_refl R) (by simp) hW.le (le_refl (0 : ℝ)) (le_refl (0 : ℝ))
-      hlog hw (by simp) (by simp)
+      (by simpa only [Nat.cast_one] using hlog) hw (by simp) (by simp)
     have pack (p : ℕ) (hp : p.Prime) (hp2 : 2 < p)
         (hv : m.factorization p + (if false then 1 else 0) = 1)
         (hl : R - W * R ^ bhpExponent ≤ (p : ℝ))
@@ -1228,7 +1232,7 @@ private theorem uniform_mode_inventory
         norm_num at hh ⊢
         constructor
         · exact hh.1.trans (mul_le_mul_of_nonneg_right (by dsimp [A]; nlinarith) ht)
-        · have hconst : 192 * W ≤ A := by dsimp [A]; nlinarith
+        · have hconst : 2 * (2 * W * 48) ≤ A := by dsimp [A]; nlinarith
           exact hh.2.trans (mul_le_mul_of_nonneg_right
             (mul_le_mul_of_nonneg_right
               (mul_le_mul_of_nonneg_right hconst hlambda) hL) ht)
@@ -1248,7 +1252,7 @@ private theorem uniform_mode_inventory
       norm_num at hh ⊢
       constructor
       · exact hh.1.trans (mul_le_mul_of_nonneg_right (by dsimp [A]; nlinarith) ht)
-      · have hconst : 192 * W ≤ A := by dsimp [A]; nlinarith
+      · have hconst : 2 * (2 * W * 48) ≤ A := by dsimp [A]; nlinarith
         exact hh.2.trans (mul_le_mul_of_nonneg_right
           (mul_le_mul_of_nonneg_right
             (mul_le_mul_of_nonneg_right hconst hlambda) hL) ht)
@@ -1306,11 +1310,16 @@ private theorem uniform_mode_inventory
     · intro p hp
       obtain ⟨hpP, hp2, hv, hl, hu⟩ := hlo p hp
       exact pack p hpP hp2 false (by simpa using hv) hl
-        (hu.trans (by have : 0 ≤ W * Q ^ bhpExponent := by positivity; linarith))
+        (hu.trans (by
+          change Q ≤ Q + W * Q ^ bhpExponent
+          exact le_add_of_nonneg_right (by positivity)))
     · intro p hp
       obtain ⟨hpP, hp2, hv, hl, hu⟩ := hhi p hp
       exact pack p hpP hp2 true (by change m.factorization p + 1 = j; omega)
-        (by have : 0 ≤ W * Q ^ bhpExponent := by positivity; linarith) hu
+        (by
+          change Q - W * Q ^ bhpExponent ≤ (p : ℝ)
+          have hln : Q < (p : ℝ) := hl
+          linarith [show 0 ≤ W * Q ^ bhpExponent by positivity]) hu
 
 private theorem uniform_five_mode_pools
     (hgap : BHPMaximumGap) (hcount : BHPShortIntervalCount) :
@@ -1388,7 +1397,7 @@ private theorem uniform_selection_capacity (B : ℝ) :
     exact ((div_lt_one hp).mp hbound).le
   filter_upwards [Filter.eventually_all.mpr hone] with R hR k z hz
   have habs : ((z.natAbs : ℕ) : ℝ) = |(z : ℝ)| := by
-    exact_mod_cast Int.natCast_natAbs z
+    rw [Nat.cast_natAbs, Int.cast_abs]
   have hcard : ((modeIndex k * z.natAbs : ℕ) : ℝ) ≤
       (comparisonCount (countIndex k) R : ℝ) := by
     calc
@@ -1407,9 +1416,13 @@ private theorem mode_atoms_separate {m : ℕ} {R : ℝ} (hR : R = largestPrime m
   obtain ⟨_, _, hvl, hl0, hl1⟩ := hq
   have hscale : 3 * (layerPrime m 2 : ℝ) / 2 < (largestPrime m : ℝ) / 2 := by
     rw [← hR]; linarith
-  fin_cases k <;> fin_cases l <;> cases up <;> cases vp <;>
-    norm_num [modeIndex] at hvk hvl hkl hk0 hk1 hl0 hl1 <;>
-    first | omega | linarith
+  generalize hval : m.factorization p = a at hvk hvl
+  fin_cases k <;> fin_cases l <;> cases up <;> cases vp
+  all_goals try exact (hkl rfl).elim
+  all_goals norm_num [modeIndex] at hvk hvl
+  all_goals first
+    | omega
+    | (norm_num at hk0 hk1 hl0 hl1 <;> linarith)
 
 private theorem finite_sum_point_error (S : Finset ℕ) (f : ℕ → ℝ)
     (a E : ℝ) (h : ∀ p ∈ S, |f p - a| ≤ E) :
@@ -1492,7 +1505,7 @@ private theorem finite_five_mode_selection {m : ℕ} (hm : 2 ≤ m)
       (∑ p ∈ I.biUnion S, f p) = ∑ k ∈ I, ∑ p ∈ S k, f p := by
     exact sum_biUnion (fun k _ l _ hkl => hpair hkl)
   have habs (k : Fin 5) : (((v k).natAbs : ℕ) : ℝ) = |(v k : ℝ)| := by
-    exact_mod_cast Int.natCast_natAbs (v k)
+    rw [Nat.cast_natAbs, Int.cast_abs]
   have hcard (k : Fin 5) : ((S k).card : ℝ) = (modeIndex k : ℝ) * |(v k : ℝ)| := by
     rw [hSc, Nat.cast_mul, habs]
   have hR0 : 0 < R := by linarith
@@ -1520,7 +1533,7 @@ private theorem finite_five_mode_selection {m : ℕ} (hm : 2 ≤ m)
   have hmassId : logMass U - logMass D = ∑ k : Fin 5, signedMass k := by
     dsimp [logMass, D, U]
     rw [hsumUnion, hsumUnion]
-    simp only [positiveModes, negativeModes, sum_filter, signedMass]
+    simp only [positiveModes, negativeModes, sum_filter, signedMass, logMass]
     rw [← sum_sub_distrib]
     apply sum_congr rfl
     intro k _
@@ -1552,7 +1565,8 @@ private theorem finite_five_mode_selection {m : ℕ} (hm : 2 ≤ m)
       · have hkR : 0 ≤ (v k : ℝ) := by exact_mod_cast hk
         simp [signedMass, hk, abs_of_nonneg hkR]
       · have hkR : (v k : ℝ) < 0 := by exact_mod_cast (show v k < 0 by omega)
-        rw [signedMass, if_neg hk, abs_of_neg hkR]
+        dsimp only [signedMass]
+        rw [if_neg hk, abs_of_neg hkR]
         convert abs_neg (logMass (S k) + (v k : ℝ) * rootMasses R k) using 1 <;> congr 1 <;> ring
     rw [hsign]
     exact hpoint.trans (by
@@ -1628,11 +1642,8 @@ private theorem clock_rescaling {L M : ℝ} (hL : 0 < L) (hM : 0 < M)
   apply (div_le_div_iff₀ (pow_pos hL 4) (pow_pos hM 4)).mpr
   nlinarith only [hfour]
 
-/-- Source proposal for the exact original all-record endpoint.
-
-The two literal BHP suppliers are UNVERIFIED assumptions. All proof terms,
-including the imported boundary packet and every private leaf, are UNCOMPILED.
-The slack is for this actual test predecessor; RH and full-bank W remain OPEN. -/
+/-- Uniform actual test-predecessor slack under two independent BHP hypotheses.
+The slack is for this predecessor; prescribed bank payment and RH remain open. -/
 theorem bhp_actual_five_mode_small_slack :
     BHPMaximumGap → BHPShortIntervalCount →
       ∃ C T : ℝ, 0 < C ∧ 0 < T ∧

@@ -1,31 +1,14 @@
-/-
-UNCOMPILED RESEARCH SOURCE. No Lean/Lake/build command has been run on this file.
-N0 native parser/elaborator/kernel and accepted-axiom checks remain OPEN.
-Base: 72017a80c3b3ba1e443d7e5dc8baa62851506fe9
-Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679
-
-Apply the unchanged exposure-72017.patch before importing this candidate.
-It only removes `private` from two existing fixed-layer scale lemmas.
-
-One proposed proof path closes the full source telescope M1--M4: direct count
-first pools with radius C*P^(21/40), original actual high-layer geometry and
-signed comparisons, then the original cost normalization with A=C. Only the
-cost expression is enlarged to radius 2*C*K*(2P)^(21/40); no pool or width
-assumption for that enlarged radius is introduced. The maximum-gap premise
-is retained unused in the exact original final endpoint. Both analytic BHP
-suppliers remain UNVERIFIED; source completion is not formal completion.
-
-The same arbitrary positive-mu full record and ALL strict positive predecessors
-are retained, with fixed j>=2 before constants and threshold. This packet is
-for the NEXT substantive native step after current denominator delivery, not
-independent admission/publication of helpers or a formal/RH/official success.
--/
-
 import D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 import Mathlib.Analysis.Calculus.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
+
+/-! Actual boundary-price localization from independent BHP suppliers.
+
+The count route uses actual first-prime pools and higher-layer geometry for
+full records at arbitrary positive prices. The maximum-gap and two-sided
+short-interval count suppliers remain explicit unverified hypotheses. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -87,8 +70,7 @@ def BoundaryPriceLocalization : Prop :=
         C * beta 1 (largestPrime m : ℝ) *
           (largestPrime m : ℝ) ^ (-priceExponent j)
 
-/-- The exact goal proposition; its source-level proof is at the end of this file.
-Native verification of that proof and its new dependencies is still OPEN. -/
+/-- Boundary-price localization under the two independent analytic suppliers. -/
 def BHPBoundaryPriceClaim : Prop :=
   BHPMaximumGap → BHPShortIntervalCount → BoundaryPriceLocalization
 
@@ -1305,9 +1287,7 @@ private theorem normalized_cost_bound (j : ℕ) (hj : 2 ≤ j)
 /-- M4: the full original endpoint, using only the count supplier in its proof.
 The maximum-gap premise remains in `BHPBoundaryPriceClaim` with its exact
 original meaning. j is fixed before the uniform constant and threshold;
-mu remains the original arbitrary positive record price throughout.
-
-UNCOMPILED: proposed Lean proof terms, with N0 native verification OPEN. -/
+mu remains the original arbitrary positive record price throughout. -/
 theorem bhp_boundary_price_localization : BHPBoundaryPriceClaim := by
   intro _hmaximum hcounted
   obtain ⟨C, c, Xc, hC, hc, hXc, hcount⟩ := hcounted
