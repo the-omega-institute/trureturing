@@ -53,18 +53,18 @@ internal sealed class WholePairBallConfirmationDocument : IScribeDocumentDefinit
         Formula p = V("p"), q = V("q"), x = V("x"), y = V("y"), b = V("b"), n = V("n"), g = V("g");
         Formula zeros = All("p", P, All("x", Space, Imp(In(x, K), Iff(Excluded(p, x), Eq(E(p, x), D(0))))));
         Formula finite = All("p", P, All("n", N,
-            All("x", Seq(C("Fin", n), To, Space), All("w", Seq(C("Fin", n), To, R),
+            All("x", Seq(C("Fin", n), To, Sp, Space), All("w", Seq(C("Fin", n), To, Sp, R),
                 Imp(All("i", C("Fin", n), In(App(x, V("i")), K)),
                     Imp(All("i", C("Fin", n), Le(D(0), App(V("w"), V("i")))),
                         Imp(Eq(C("sum", V("w")), D(1)),
                             Iff(Excluded(p, C("weightedSum", V("w"), x)),
-                                All("i", C("Fin", n), Imp(Lt(D(0), App(V("w"), V("i"))),
-                                    Excluded(p, App(x, V("i"))))))))))));
+                                All("i", C("Fin", n), Imp(Less(D(0), App(V("w"), V("i"))),
+                                    Excluded(p, App(x, V("i")))))))))))));
         Formula consequences = And(C("reciprocalLeast", Cone, Unit),
             And(C("fullMixture", Cone, Unit), And(zeros,
                 And(C("zeroMidpoint", Cone, Unit), And(C("allAntipodes", Cone, Unit), finite)))));
         Formula result = Context(Imp(C("IsClosed", Cone), Imp(Strict,
-            Imp(Eq(C("span", R, Cone), Top), Imp(C("wholePairBalls", Cone, Unit),
+            Imp(Eq(C("span", R, Cone), C("top")), Imp(C("wholePairBalls", Cone, Unit),
                 All("h", C("commonSupport", Cone, Unit), consequences))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Entire minimal-face balls and one common positive support per pure point construct reciprocal least confirming effects on the original cone.",
@@ -80,7 +80,7 @@ internal sealed class WholePairBallConfirmationDocument : IScribeDocumentDefinit
                 Def("commonSupport", "One global positive support for all local antipodes", Context(
                     Iff(C("commonSupport", Cone, Unit), All("p", P, Ex("g", Dual,
                         And(All("x", Space, Imp(In(x, Cone), Le(D(0), App(g, x)))),
-                            And(Lt(D(0), App(g, p)), All("q", P, Imp(Ne(p, q),
+                            And(Less(D(0), App(g, p)), All("q", P, Imp(Ne(p, q),
                                 All("b", Chart(p, q), All("n", Domain(b), Imp(Eq(Norm(n), D(1)),
                                     Imp(Eq(Phi(b, n), p), Eq(App(g, Phi(b, Negate(n))), D(0)))))))))))))),
                     "The same real-linear g for p is nonnegative on the entire original cone, is strictly positive at p, and vanishes at p's antipode in every admissible chart for every distinct pure q. Quantification over all admissible charts avoids dependence on a chosen coordinate system. No upper bound by u is supplied. In a singleton base the pair quantifier is empty."),
