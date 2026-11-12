@@ -732,7 +732,8 @@ private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j) (hP 
   calc
     _ ≤ (2 * P ^ priceExponent j) * (2 * (log P / (j : ℝ))) := mul_le_mul hceil hhi (by positivity) (by positivity)
     _ = 4 * (log P / (j : ℝ)) * exp ((19 / 40 : ℝ) * (log P / j)) := by rw [hform]; ring
-    _ ≤ c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := hscaled _ ≤ _ := mul_le_mul_of_nonneg_left hrpow hc.le
+    _ ≤ c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := hscaled
+    _ ≤ _ := mul_le_mul_of_nonneg_left hrpow hc.le
 
 private theorem first_count_capacity {j : ℕ} {P c : ℝ} (hj : 2 ≤ j) (hP : 1 < P) (hc : 0 < c)
     (hcap : 3 * log P * exp (-(23 / 80 : ℝ) * log P) ≤ c) : (comparisonCount j P : ℝ) + 1 ≤ c * P ^ bhpExponent / log P := by
