@@ -266,6 +266,51 @@ private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
   congr 1
   linarith
 
+private lemma subset_pair_formula (N : ℕ) (g : Fin 6 → Fin N → ℝ)
+    (e : Finset (Fin 6)) (he : e.card = 2) :
+    subsetDistinctMoment (modelFunctional N) (modelY N) g e =
+      (1 / (N : ℝ)) *
+        ((∏ i ∈ e, ∑ d, g i d) - ∑ d, ∏ i ∈ e, g i d) := by
+  classical
+  let v : e ≃ Fin 2 := Fintype.equivOfCardEq (by simpa using he)
+  let q : Fin 2 → Fin N → ℝ := fun j => g (v.symm j).val
+  have hR : subsetDistinctMoment (modelFunctional N) (modelY N) g e =
+      distinctIndexMoment (modelFunctional N) (modelY N) q := by
+    unfold subsetDistinctMoment
+    rw [← retained_assignment_reindex (modelFunctional N) (modelY N) e g]
+    convert assignment_moment_reindex (modelFunctional N) (modelY N) v
+      (fun i => g i.val) using 1
+    unfold distinctIndexMoment
+    apply Finset.sum_congr
+    · ext x
+      simp
+    · intro x hx
+      rfl
+  rw [hR]
+  have hq : q = ![q 0, q 1] := by funext j; fin_cases j <;> rfl
+  rw [hq, distinct_pair_formula]
+  have hp : (∏ i ∈ e, ∑ d, g i d) =
+      (∑ d, q 0 d) * (∑ d, q 1 d) := by
+    simp only [q]
+    rw [← Finset.prod_attach e]
+    have hprod : (∏ i : e, ∑ d, g i.val d) =
+        ∏ j : Fin 2, ∑ d, q j d := by
+      apply Fintype.prod_equiv v
+      intro i
+      simp [q]
+    simpa only [Finset.attach_eq_univ, Fin.prod_univ_two] using hprod
+  have ht : (∑ d, ∏ i ∈ e, g i d) = ∑ d, q 0 d * q 1 d := by
+    apply Finset.sum_congr rfl
+    intro d hd
+    rw [← Finset.prod_attach e]
+    have hprod : (∏ i : e, g i.val d) = ∏ j : Fin 2, q j d := by
+      apply Fintype.prod_equiv v
+      intro i
+      simp [q]
+    simpa only [Finset.attach_eq_univ, Fin.prod_univ_two] using hprod
+  rw [← hp, ← ht]
+
+
 -- DEVIATION
 
 private lemma model_unit_transfer (N : ℕ) (hN : 4 ≤ N) :
@@ -329,6 +374,18 @@ private lemma model_unit_transfer (N : ℕ) (hN : 4 ≤ N) :
   refine ⟨E, ?_, ?_⟩
   · simpa only [subsetFamilyMoment, quadraticFamilyMoment] using hE
   · simpa only [mul_one] using hb
+
+private lemma model_unit_pair {k : ℕ} (N : ℕ) (hN : 4 ≤ N)
+    (e : Finset (Fin k)) (he : e.card = 2) :
+    subsetDistinctMoment (modelFunctional N) (modelY N)
+      (fun (_ : Fin k) (_ : Fin N) => (1 : ℝ)) e = (N : ℝ) - 1 := by
+  have hNz : (N : ℝ) ≠ 0 := by exact_mod_cast (show N ≠ 0 by omega)
+  have hc : (N.descFactorial 2 : ℝ) = (N : ℝ) * (N - 1) := by
+    norm_num [Nat.descFactorial_succ, Nat.cast_sub (by omega : 1 ≤ N)]
+    ring
+  rw [subset_unit_moment, he, moment_values.2.2.1,
+    Real.sq_sqrt (by positivity), hc]
+  field_simp [hNz]
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
