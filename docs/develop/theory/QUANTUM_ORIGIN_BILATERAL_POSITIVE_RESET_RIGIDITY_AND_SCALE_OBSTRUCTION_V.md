@@ -3910,3 +3910,452 @@ GHZ 是把“同一个矩阵”藏在三个相同标签的特殊铺法。新的�
 完整原 $\Omega$ 的所有准备、事件、过程、参考、副本、实际相关联合、零／不等／次归一质量、原时钟与单位、控制、ready／flags、完整记录、失败、拒绝、停止、销毁、返回、全部仍合法未来，以及旧固定 $S$、全菜单和每个已量化中间切口义务均保留；未定义请求不补零。没有免费准备生成、复制、相干控制或实际彩票。实际 (23.7) 与原 $B_r$ 的 active-ready 连接未由本章供应；自然原探针选择、额外括号与四份以上相容性、完整原来源及更少独立物理公理未由这些纸面定理推出。完整量子起源目标保持 active／incomplete。
 
 ## 追加锚（本行以下为增补区）
+
+## 86. 同原读回的重叠 Jordan 几何与交叉方向的观察纤维
+
+本章第 65—72 章指第四卷，第 73—85 章指本卷。先保留第 83 章的固定对半纯—混比较、完整一般有限 EJA 条件桥及原二阶零关系，再在同一原模型上读取两个重叠的双份像。它们的迹正交投影在 C13 之前已经交换，交集恰是中间一份；然而这份未标记几何不能确定原端点接合是否为正。承重应用是精确重叠公式及其观察纤维障碍，单位校准的短写、一般条件期望工具和既有转置元组均按原结果复用。
+
+### 86.1 全部原对象、固定对半入口与精确 PRE
+
+**定义 86.1（同一原基底）。** 对每个 $X=A,D,E$，保留非零有限维实空间、闭尖生成锥 $C_X$、在非零正元上严格正的原 $u_X$、整个紧态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部 proper 效应 $[0,u_X]$ 与纯态集 $P_X=\operatorname{ext}K_X$。只对纯第一端点定义比较，要求全部纯 $\xi,\eta$ 与全部原混态 $x\in K_X$ 满足
+
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\frac{\eta+x}{2}\right)
+=\frac{T^X_\eta(\xi)+T^X_\xi(x)}2.
+\tag{86.1}
+$$
+
+这里直接复用 [S] 的固定对半同载体定理，恢复每个有限纯态族、任意实概率权的完整比较律 $S$，以及纯端加任意混态、全部 $t\in[0,1]$ 的比较律。随后使用原一般有限 EJA 忠实条件桥：正对偶生成、共同完整框架、忠实态效应对应、面投影、项目性与滤波纯性的全部义务保留。该桥不是仅由 bit symmetry、自对偶或纯端互反直接取得的外文定理。入口允许非同型直和、秩一和 Albert；复型留作后果。
+
+忠实坐标保持原整个态基、效应区间、单位及比较配对，写作 $C_X=X_+$、$u_X=\tau_X$、$\langle x,y\rangle_X=\tau_X(x\circ y)$，每个简单理想的每个本原幂等元迹一。令 $\mathsf P_x=2\ell_x^2-\ell_{x^2}$ 为 Jordan 二次表示，$\ell_xy=x\circ y$。唯一供应的映射及原参考仍是
+
+$$
+L:D\times A\to E,\quad p:E\to D,\quad
+L(D_+,A_+)\subseteq E_+,\quad p(E_+)\subseteq D_+,\quad
+n=\tau_A1_A,\quad m=\tau_D1_D,\quad\omega=1_D/m.
+$$
+
+$L$ 实双线性，$p$ 实线性，正性遍及整个原联合锥，包括纠缠输入。所有内部映射由同一个 $p$ 两次派生：
+
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H(d)&=L(d,1_A),&B_1&=pH:D\to D,&Q(a,b,c)&=L(M(a,b),c),\\
+U&=M(1_A,1_A),&G&=H1_D.
+\end{aligned}
+\tag{86.2}
+$$
+
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$，以及全部实 $a,b\in A$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$。实张成不等于联合正锥由正乘积生成。这些正性、张成和原定义在零关系之前已给 $U,G>0$，因而能定义 $F=\mathsf P_{U^{-1/2}}M$；此时不预称其等距。上述就是原 $\mathrm{PRE}_0^{1/2}$，不独立供应 $M$、另一参考或物理重置。
+
+**定义 86.2（原二阶零关系）。** 对原 $A=\bigoplus_iA_i$ 的简单理想，记单位、规范迹、秩、实维数为 $1_i,\tau_i,r_i,d_i$，置
+
+$$
+\Pi_i a_i=\frac{\tau_i(a_i)}{r_i}1_i,\qquad
+\mathsf C_i=\begin{cases}I_{A_i},&r_i=1,\\
+\Pi_i+\dfrac{r_i-1}{d_i-1}(I_{A_i}-\Pi_i),&r_i>1,
+\end{cases}\qquad
+\mathsf C_A=\bigoplus_i\mathsf C_i,\quad\mathsf D_A=\mathsf C_A^{1/2}.
+$$
+
+秩一理想没有迹零项。令 $\mathcal T=H\widetilde F:A\otimes_{\mathbb R}A\to E$，保留原 (83.8)，即
+
+$$
+\|J\mathsf D_A\|_{\rm HS}^2+
+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2
+=\|U\|_2^2+\|G\|_2^2.
+\tag{86.3}
+$$
+
+这里 Hilbert–Schmidt 范数使用原迹内积。定理 83.4 在同一原基底上使它恰好等价于
+
+$$
+\begin{aligned}
+D_J:&\quad a,b\in A_+,\ \langle a,b\rangle_A=0
+\Longrightarrow\langle Ja,Jb\rangle_D=0,\\
+D_H:&\quad d,d'\in D_+,\ \langle d,d'\rangle_D=0
+\Longrightarrow\langle Hd,Hd'\rangle_E=0.
+\end{aligned}
+$$
+
+第二行遍及整个原 $D_+$。以下 PRE 严格指 72.1 的完整 $S$、上述全部原数据及 $D_J,D_H,Z$；因此 $\mathrm{PRE}_0^{1/2}+(86.3)$ 与 PRE 同数据等价。两个几何积分变量不增加实际独立性，范数等式也不把原态锥换成球。
+
+### 86.2 原单位输出的短校准与分阶段方向关系
+
+**定义 86.3（校准的两种写法）。** 令 $e=1_A/n$，记
+
+$$
+\mathsf C_2:\ \tau_DM(e,e)=1,\qquad
+\mathsf G_1:\ G=1_E,\qquad
+C_{\rm joint}:\ \delta_E+\gamma_E\le2n^3,
+\quad\delta_E=\tau_EG,\quad\gamma_E=\tau_D(p1_E).
+\tag{86.4}
+$$
+
+$\mathsf G_1$ 是整个原单位输出的向量等式，不是一个总质量读数。
+
+**命题 86.4（既有校准桥的单位短写）。** 在完整 PRE 上，
+
+$$
+\mathsf C_2+\mathsf G_1\quad\Longleftrightarrow\quad C_{\rm joint}.
+\tag{86.5}
+$$
+
+**证明。** 84.10 由原逆迹关系 $\tau_D(U^{-1})=m=n^2$ 给 $\mathsf C_2\Longleftrightarrow U=1_D$。在全实 $Z$ 取 $a=b=1_A$，得 $B_1U=nU$。因 $B_1=pH$、$H1_D=1_E$，所以 $p1_E=n1_D$。前 C13 接口 66.2 已给 $\tau_E1_E=n^3$，于是 $\delta_E=\gamma_E=n^3$，得联合校准。反向直接用 67.7：联合校准给同一个原 $U=1_D,G=1_E$，再由 84.10 给 C2。证毕。
+
+这是第 84 章校准的既有结果应用：在完整 PRE+C2 上，可用 $\mathsf G_1$ 替换固定 E3 与原锚的合取，而不改 $L,p,\omega$。固定 $R_A$ 本来已无自由选择；向量等式包含多项约束，不据此计为更少独立物理前提或新增数学结构。
+
+**定义 86.5（精确 PRE 后的原 H13）。** 只有 (86.3) 恢复精确 PRE 后，才由 66.3 读取原中心因子 $A_i$、单位 $c_i$、秩 $n_i$ 及 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$、中心投影 $\pi_{ik}$。定义
+
+$$
+\alpha_{ik}:A_i\to D_{ik},\quad a\mapsto F(a,c_k),\qquad
+\beta_{ik}:A_k\to D_{ik},\quad b\mapsto F(c_i,b),\qquad
+\mathcal I=\{(i,k):n_i,n_k\ge2\}.
+$$
+
+伴随全用原规范迹，严格保留 72.3 的资格：
+
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal I,\ x=\pi_{ik}\rho,\quad
+\alpha_{ik}\alpha_{ik}^*x-x\not\succeq0
+\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0\}.
+\tag{86.6}
+$$
+
+$\not\succeq0$ 表示有严格负方向，不要求负定、两差都违例或纯性。铺回使用未归一化单位；活跃块严格正质量由资格推出，非活跃块任取正元含零，只受同一个原总迹一约束。$\mathcal I=\varnothing$ 时取 $\mathcal H(F)=K_D$。资格只读第一接口、原序和迹，不由输出反选。
+
+此后 $\widetilde M$ 已可逆，才定义
+
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\qquad
+I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}:D\to E,
+\qquad\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+,
+$$
+$$
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\quad I^{\rm raw}\rho\in E_+.
+\tag{86.7}
+$$
+
+它检测同一个合格原混态的整个原输出，保留全部中心块，不换态、换 $p$、换参考或只看总迹。72.7 给资格非空，72.8 给每个合格原态的全输出正性与 C13 等价，包括空活跃集。
+
+**定理 86.6（完整同原数据候选）。** 在定义 86.1 的同一原模型类中，
+
+$$
+\boxed{\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf C_2+\mathsf G_1+\mathrm H13
+\quad\Longleftrightarrow\quad\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.}
+\tag{86.8}
+$$
+
+**证明。** 固定对半同载体定理和完整一般 EJA 条件桥先恢复完整比较；83.4 在相同 $L,p,\omega$ 上以 (83.8) 恢复 PRE。86.4 再给联合校准，最后才用 72.7—72.8 的原逐成员结论给 C13。反向 PRE 给 (86.1)、(83.8)，67.7 与 84.10 给 C2、$\mathsf G_1$，C13 与原非空资格给 H13。两方向恒等地保留全部原载体、锥、迹、单位、态、效应、参考及映射。证毕。
+
+### 86.3 C13 之前的两个原 Jordan 边缘
+
+**约定 86.7（完整校准 PRE）。** 本节至 86.7 的一般几何只假定 PRE+$C_{\rm joint}$，不借 C13。由 66.2、67.7，$U=G=1$，$M=F,L=N$，它们的实线性化及 $\widetilde Q:A^{\otimes_{\mathbb R}3}\to E$ 都是满迹等距同构。具体地，对全部实输入，
+
+$$
+\begin{aligned}
+\langle M(a,b),M(x,y)\rangle_D&=\langle a,x\rangle_A\langle b,y\rangle_A,\\
+\langle Q(a,b,c),Q(x,y,z)\rangle_E
+&=\langle a,x\rangle_A\langle b,y\rangle_A\langle c,z\rangle_A,\\
+pQ(a,b,c)&=\tau_A(a)M(b,c),\qquad
+M(1_A,1_A)=1_D,\quad Q(1_A,1_A,1_A)=1_E.
+\end{aligned}
+\tag{86.9}
+$$
+
+这些是既有全实接口；等距线性化的逆不被赋予全联合锥正性。记 $\alpha(a)=M(a,1_A)$、$\beta(a)=M(1_A,a)$；66.2 已给它们是算子交换的保单位 Jordan 嵌入，且 $M(a,b)=\alpha(a)\circ\beta(b)$。
+
+**定理 86.8（缩放余等距与准确伴随）。** 在上述完整域上，令
+
+$$
+\eta=H:D\to E,\qquad\iota=p^*:D\to E.
+$$
+
+它们都是正、保单位、单射的 Jordan 同态，$H^*,p:E\to D$ 正且保迹，并满足
+
+$$
+\begin{gathered}
+H^*Q(a,b,c)=\tau_A(c)M(a,b),\qquad
+\iota M(b,c)=Q(1_A,b,c),\\
+H^*H=pp^*=nI_D,\qquad H^*1_E=p1_E=n1_D,\qquad
+H1_D=p^*1_D=1_E,\\
+\tau_EH=n\tau_D,\qquad\tau_Ep^*=n\tau_D,\qquad
+\alpha^*\alpha=\beta^*\beta=nI_A,\\
+pH=\alpha\beta^*,\qquad H^*p^*=\beta\alpha^*,\qquad
+\eta\beta=\iota\alpha.
+\end{gathered}
+\tag{86.10}
+$$
+
+两份嵌入的继承正锥恰为 $\eta(D)\cap E_+=\eta(D_+)$、$\iota(D)\cap E_+=\iota(D_+)$。$H,p^*$ 的原迹倍率为 $n$；$n>1$ 时它们不保迹。
+
+**证明。** $\eta$ 是 66.2 已给的保单位 Jordan 嵌入。对 $H^*$ 用 (86.9) 与全部 $M(x,y)$ 配对，对 $p^*M(b,c)$ 用原 $pQ$ 与全部 $Q(x,y,z)$ 配对，分别得到前两式；满实张成使结果在整个载体上唯一。令 $c=1_A$ 得 $H^*H=nI_D$，对第二式作用同一个 $p$ 得 $pp^*M(b,c)=nM(b,c)$，再用 $M$ 张成。
+
+由乘积单位与迹等距，$\tau_EQ(a,b,c)=\tau_A(a)\tau_A(b)\tau_A(c)$、$\tau_DM(a,b)=\tau_A(a)\tau_A(b)$。因此原 $pQ$ 在完整张成上给 $\tau_Dp=\tau_E$。自对偶性使 $H^*,p^*$ 正；$p$ 保迹给 $p^*1_D=1_E$，$H$ 保单位给 $H^*$ 保迹。将单位代入前两式又得 $H^*1_E=p1_E=n1_D$，从而取得两个迹倍率。$\alpha,\beta$ 的缩放等距式同样由 (86.9) 给出。
+
+为核实 $p^*$ 的 Jordan 性，任取 $D$ 中幂等元 $f$。正性与保单位给 $0\le\iota f\le1_E$；缩放等距及迹倍率给
+
+$$
+\tau_E((\iota f)^2)=n\tau_D(f^2)=n\tau_Df=\tau_E(\iota f).
+$$
+
+在完整本原谱表中，每个特征值 $0\le\lambda\le1$，而 $\sum\lambda(1-\lambda)=0$，故各特征值为零或一。正交幂等元的像由配对恒等式保持正交；谱分解遂给 $\iota(d^2)=(\iota d)^2$，实极化给 Jordan 乘积保持。$pp^*=nI_D$ 给单射。此论证允许全部有限直和及秩一因子。
+
+最后，$\beta^*M(a,b)=\tau_A(a)b$，而 $pHM(a,b)=pQ(a,b,1_A)=\tau_A(a)\alpha(b)$，故 $pH=\alpha\beta^*$；取伴随得下一式。$\iota\alpha(a)=Q(1_A,a,1_A)=H\beta(a)$ 给末式。正左逆 $H^*/n$、$p/n$ 使两个像的继承锥恰为所述原锥像。证毕。
+
+### 86.4 精确交叠、交换投影与 Jordan 条件期望
+
+**定义 86.9（原双份投影与中间嵌入）。** 定义 $E\to E$ 的算子及 $A\to E$ 的映射
+
+$$
+P_{12}=\frac{HH^*}{n},\qquad P_{23}=\frac{p^*p}{n},\qquad
+\kappa(a)=Q(1_A,a,1_A)=\eta\beta(a)=\iota\alpha(a),\qquad
+P_2=\frac{\kappa\kappa^*}{n^2}.
+\tag{86.11}
+$$
+
+本章 $P_{12},P_{23}$ 是投影，不是因子交换。记 $B_{12}=\eta(D)$、$B_{23}=\iota(D)$。
+
+**定理 86.10（同原重叠几何）。** $P_{12},P_{23}$ 是正、保单位、保迹的迹正交投影，范围分别为保单位 Jordan 子代数 $B_{12},B_{23}$。它们在整个原 $E$ 上满足
+
+$$
+P_{12}P_{23}=P_{23}P_{12}=P_2,\qquad
+B_{12}\cap B_{23}=\kappa(A),\qquad
+\kappa^*\kappa=n^2I_A.
+\tag{86.12}
+$$
+
+中间交集的正锥及原迹为
+
+$$
+\kappa(A)\cap E_+=\kappa(A_+),\qquad
+\tau_E\kappa=n^2\tau_A.
+\tag{86.13}
+$$
+
+对任一 $B\in\{B_{12},B_{23},\kappa(A)\}$ 及对应投影 $P$，还有准确的 Jordan 条件期望性质
+
+$$
+P(b\circ x)=b\circ P(x)\qquad(b\in B,\ x\in E).
+\tag{86.14}
+$$
+
+**证明。** 86.8 直接给自伴、幂等、正性与范围；$P_{12}1_E=P_{23}1_E=1_E$，自伴性再给保迹。在完整原 $Q$ 张成上，准确作用为
+
+$$
+\begin{aligned}
+P_{12}Q(a,b,c)&=\frac{\tau_A(c)}nQ(a,b,1_A),\\
+P_{23}Q(a,b,c)&=\frac{\tau_A(a)}nQ(1_A,b,c),\\
+P_{12}P_{23}Q(a,b,c)&=P_{23}P_{12}Q(a,b,c)
+=\frac{\tau_A(a)\tau_A(c)}{n^2}Q(1_A,b,1_A),\\
+\kappa^*Q(a,b,c)&=\tau_A(a)\tau_A(c)b.
+\end{aligned}
+\tag{86.15}
+$$
+
+末式和 (86.9) 给 $\kappa^*\kappa=n^2I_A$，也将两种复合识别为 $P_2$。这些等式经实张成延拓到全部原 $E$，包含纠缠方向。交换正交投影之积投到两范围交集；(86.15) 的像恰为 $\kappa(A)$，得交集式。$\kappa=H\beta$ 为正保单位 Jordan 嵌入，其正左逆 $\kappa^*/n^2$ 给准确继承锥；迹等距给 (86.13)。因此 $P_2$ 也正、保单位、保迹。
+
+对 (86.14)，取 $c\in B$。因 $B$ 为 Jordan 子代数、$P$ 为迹正交投影，迹内积的结合性给
+
+$$
+\langle P(b\circ x),c\rangle_E
+=\langle x,b\circ c\rangle_E
+=\langle Px,b\circ c\rangle_E
+=\langle b\circ Px,c\rangle_E.
+$$
+
+所比较的两元都在 $B$，故相等。证毕。
+
+所有分母只用总秩 $n>0$，不除以 $n-1$；非同型直和、重复中心标签、每个秩一端点和秩一中间块均保留。$n=1$ 时三个载体均为 $\mathbb R$，所有这些投影为恒等。全经典直和也服从相同公式，方向资格为空活跃集。投影交换并不要求两范围的元素逐元交换；单个 qubit 的交集中已有不交换的中腿矩阵。一般迹条件期望与交换方块机制属于成熟理论 [E]；本定理只从原同 $p$ 接口导出其准确 Jordan 版本。
+
+### 86.5 一份直和控制：Jordan 范围与 CP 的边界
+
+**命题 86.11（指定表示中的转置图）。** 存在完整校准 PRE，在其 66.13 的指定复矩阵直和表示中，$P_{23}$ 正而不完全正，且 $B_{23}$ 的复线性张成不构成结合子代数。
+
+**证明。** 取 $A=H_2\oplus H_2$，中心标签为 $0,1$，全部原锥、迹、态、效应不删，$n=4$、$D=\bigoplus_{i,j}H_4$、$E=\bigoplus_{i,j,k}H_8$。在 66.7 的原逆向中取所有 $u_{ij}=g_{ijk}=I_2$，仅 $\varepsilon_{10}=1$，其余 $\varepsilon_{ij}=0$，并令 $\delta_{ijk}=\varepsilon_{ij}\oplus\varepsilon_{jk}$。只供应
+
+$$
+L(d,c)_{ijk}=d_{ij}\otimes c_k^{T^{\delta_{ijk}}},\qquad
+(pz)_{jk}=\sum_iT_4^{\varepsilon_{ij}}(\operatorname{Tr}_i z_{ijk}),
+\qquad\omega=1_D/16.
+\tag{86.16}
+$$
+
+这里 $T_4$ 是整个保留 $4\times4$ 块的转置。逆迹平衡为 $\sum_{i,j}2\operatorname{Tr}I_2=16=n^2$，方向条件正是 (66.20)。为保留两次同 $p$，记 $\widehat M(a,b)_{ij}=a_i\otimes b_j^{T^{\varepsilon_{ij}}}$、$(sd)_j=\sum_i(\operatorname{Tr}_id_{ij})^{T^{\varepsilon_{ij}}}$。直接代入得
+
+$$
+pL(d,c)=\widehat M(sd,c),\quad
+s\widehat M(a,b)=\tau_A(a)b,\quad s\omega=1_A/4,
+\quad K(a)=\widehat M(1_A/4,a),\quad M(a,b)=\widehat M(a,b).
+$$
+
+末式来自第二次使用原 $p$。66.7 因而给完整 PRE，包括全锥正性、两实张成、全实 $Z$ 与两个全量词零关系。$U=1_D,G=1_E,p1_E=4\,1_D$，故 C2、$\mathsf G_1$ 成立，两联合迹均为 $64$。这只消费既有分类与逆向，不增加一般方向分类。
+
+由原迹伴随，
+
+$$
+(p^*d)_{ijk}=I_2\otimes T_4^{\varepsilon_{ij}}d_{jk},\qquad
+(P_{23}z)_{hjk}=\frac14I_2\otimes
+\sum_iT_4^{\varepsilon_{hj}\oplus\varepsilon_{ij}}
+(\operatorname{Tr}_iz_{ijk}).
+\tag{86.17}
+$$
+
+只在源块 $000$ 放 $q_0\otimes x$，其中 $q_0$ 为首腿迹一秩一投影，$x\in H_4$，其余块为零。输出块 $100$ 为 $I_2\otimes x^T/4$；在其首腿任一单位向量上压缩，得到恰好的映射 $T_4/4$。源包含、取中心输出块和该压缩均 CP。若 $P_{23}$ CP，则 $T_4/4$ CP；但在 $\mathbb C^2\otimes\mathbb C^4$ 的前两维 Bell 投影上，其二倍放大在反对称方向给 $-1/8$。故 $P_{23}$ 不 CP。
+
+再只在源 $D_{00}$ 取复矩阵 $x$，$p^*$ 的复延拓在输出 $000,100$ 给 $(I_2\otimes x,I_2\otimes x^T)$，别块为零。这是 Jordan 转置图。取 $x=E_{12},y=E_{21}\in M_4$，两图像的结合乘积为 $(I_2\otimes E_{11},I_2\otimes E_{22})$；它不在该范围，因为首块迫使源为 $E_{11}$，次块却应为 $I_2\otimes E_{11}$。其他源中心块不能改变这两个输出块。故整个范围的复线性张成不封闭于结合乘法。证毕。
+
+这份指定表示中的控制说明，86.10 的结论确是 Jordan 条件期望；保留原表示时，不能自动升级为结合代数条件期望或 CP 映射。它不判定所有可能 Jordan 坐标下的最优表示，也不供应物理过程。
+
+### 86.6 相同未标记几何、不同 C13 的实际元组
+
+**定义 86.12（本章保留的观察）。** 对完整校准 PRE，令 $\mathcal O$ 保留同一原 $A,D,E$、锥、迹、单位、全态全效应、$\omega,L,J,H$，以及 $P_{12},P_{23}$、其范围、继承 Jordan 乘积、继承锥、限制迹和中间交集。它忘却 $p^*$ 对每个原 $D$ 元素的逐点标记，亦不保存 $M$ 的逐点源识别。观察纤维是 $\mathcal O(z)=\mathcal O(z')$ 的原模型集合。
+
+**命题 86.13（一个字面相同的几何纤维）。** 在完全相同的
+
+$$
+A=H_2,\quad D=H_4,\quad E=H_8,\quad
+\omega=I_4/4,\qquad L(d,c)=d\otimes c
+$$
+
+及全 PSD 锥、规范迹、全态全效应上，令 $s\in\{0,1\}$、$p_s=T_4^s\operatorname{Tr}_1$。两个原元组均为完整校准 PRE，且 $\mathcal O(z_0)=\mathcal O(z_1)$；C13、H13 只在 $s=0$ 成立。$s=1$ 是 66.11 的既有实际元组。
+
+**证明：从每个元组的同一个 $p_s$ 两次重算。** 对全部实输入，
+
+$$
+\begin{aligned}
+p_sL(d,c)&=(\operatorname{Tr}_1d)^{T^s}\otimes c^{T^s},\\
+K_s(a)&=I_2/2\otimes a^{T^s},&
+M_s(a,b)&=a\otimes b^{T^s},\\
+Q_s(a,b,c)&=a\otimes b^{T^s}\otimes c,&
+J_s(a)&=a\otimes I_2,&H_s(d)&=d\otimes I_2,\\
+B_{1,s}d&=(\operatorname{Tr}_1d)^{T^s}\otimes I_2,&
+B_{1,s}M_s(a,b)&=\operatorname{Tr}(a)b\otimes I_2.
+\end{aligned}
+\tag{86.18}
+$$
+
+偏迹与整块转置全锥正保迹；$L$ 对所有纠缠 $d\ge0$ 及 $c\ge0$ 正。可逆转置及 Hermitian 简单张量实基给两条满实张成。$\langle J_sa,J_sb\rangle=2\operatorname{Tr}(ab)$、$\langle H_sd,H_sd'\rangle=2\operatorname{Tr}(dd')$ 给完整 $D_J,D_H$，第二式包含全部纠缠 $d,d'$；末式给全实 $Z$。在三个完整矩阵载体上，纯投影 $q$ 被 $0\le f\le I$ 确认时有 $f\ge q$，而 $f=q$ 取到最小值，所以 $T_q(x)=\operatorname{Tr}(qx)$，完整 $S$ 及固定对半入口成立。$U=I_4,G=I_8$，C2、$\mathsf G_1$ 及联合校准均成立，(83.8) 也成立。这验证的是两个完整原元组，不仅是产品输入表。
+
+**证明：全部投影几何相同。** 原迹伴随为 $H_s^*z=\operatorname{Tr}_3z$、$p_s^*d=I_2\otimes d^{T^s}$，因此整个原 $E$ 上均有
+
+$$
+P_{12}z=\frac12(\operatorname{Tr}_3z)\otimes I_2,\qquad
+P_{23}z=\frac12I_2\otimes\operatorname{Tr}_1z,\qquad
+P_2z=\frac14I_2\otimes\operatorname{Tr}_{1,3}z\otimes I_2.
+\tag{86.19}
+$$
+
+两范围恰为 $H_4\otimes I_2$、$I_2\otimes H_4$，交集为 $I_2\otimes H_2\otimes I_2$。继承 Jordan 乘积、正锥、单位、限制迹逐字相同；交集元 $I_2\otimes b\otimes I_2$ 的原迹为 $4\operatorname{Tr}b$。失去的标记可直接看见：$\kappa_s(b)=I_2\otimes b^{T^s}\otimes I_2$ 的像相同，逐点源对应不同。$L,J,H$ 也相同，故确有同一 $\mathcal O$。
+
+**证明：同一个原混态的整个输出。** 两个 $T_{\rm raw}(a,c)=a\otimes I_2\otimes c$ 相同，但必须各自撤去实际 $M_s$ 的第二腿转置。因此
+
+$$
+I_s^{\rm raw}x=\operatorname{ins}_2[(\operatorname{id}\otimes T_2^s)x].
+\tag{86.20}
+$$
+
+$s=0$ 时插入在整个锥上正；$s=1$ 时 Bell 投影的端点部分转置为 $\mathrm{Swap}/2$，插中间 $I_2$ 后仍有 $-1/2$ 方向。为保留同一合格原混态，取
+
+$$
+q=|\Phi\rangle\langle\Phi|,\qquad
+|\Phi\rangle=(|00\rangle+|11\rangle)/\sqrt2,\qquad
+\rho=q/2+I_4/8.
+\tag{86.21}
+$$
+
+$\rho$ 原迹一、全秩，两边缘均为 $I_2/2$。两元组的 $\alpha\alpha^*\rho$、$\beta\beta^*\rho$ 都是 $I_4/2$，转置在伴随铺回中抵消。两个资格差在 $|\Phi\rangle$ 上均为 $-1/8$，故同一个 $\rho$ 属于两份原 $\mathcal H(F_s)$。$I_0^{\rm raw}\rho$ 正；$I_1^{\rm raw}\rho$ 的端点矩阵为 $\mathrm{Swap}/4+I_4/8$，在反对称方向及任意中间单位向量上为 $-1/8$。两整个输出的总迹仍同为二。
+
+H13 的存在量词失败不能仅由这一个失败成员推出；这里使用 72.8：既然坏元组 C13 失败，每个原合格成员的整个输出都失败。好元组则由 C13 及非空资格得到 H13。证毕。
+
+**定理 86.14（未标记观察的不可识别性）。** 在完整校准 PRE 类上，不存在仅依赖 $\mathcal O$ 的函数，能对每个原元组正确判定 C13，或等价地判定原 H13。
+
+**证明。** 86.13 的两个元组位于同一观察纤维，而正确答案不同；任何该观察的函数在两点值相同，矛盾。对 $\mathcal O$ 再取谱、维数、夹角、质量或任意后处理，仍在该纤维上恒定，不能恢复已忘却的区别。证毕。
+
+### 86.7 原有序接合标记与不能删除的条件
+
+**命题 86.15（保留原标记可准确重建交叉插入）。** 在完整校准 PRE 中，若保留源标记 $\alpha,\beta:A\to D$ 与 $\eta,\iota:D\to E$，令 $\ell=\eta\alpha$、$r=\iota\beta$。唯一满足
+
+$$
+S\,M(a,c)=\ell(a)\circ r(c)\qquad(a,c\in A)
+\tag{86.22}
+$$
+
+的实线性 $S:D\to E$ 恰为原 $I^{\rm raw}$。
+
+**证明。** (86.10) 给 $r(c)=Q(1_A,1_A,c)=L(1_D,c)$、$\ell(a)=HJa$。66.2 的第二接口在校准后就是 $L$，其两份 Jordan 嵌入算子交换，故 $\ell(a)\circ r(c)=L(Ja,c)=T_{\rm raw}(a,c)$。满可逆 $\widetilde M$ 给唯一性及 $S=\widetilde T_{\rm raw}\widetilde M^{-1}$。证毕。
+
+这里保留的是原 $D$ 锥上的逐点接合，不是另加全局物理方向。用第四卷 70.1—70.3 的原有序正规形，仍准确为
+
+$$
+\chi_{ijk}=\delta_{ijk}\oplus\varepsilon_{ik},\qquad
+\mathrm{C13}\Longleftrightarrow
+\chi_{ijk}=0\quad(n_i,n_k\ge2,\ \text{每个 }j),
+\tag{86.23}
+$$
+
+包括标量中间 $n_j=1$；端点有标量腿时无额外约束。三个标签均活跃时，已有 $\chi_{ijk}=\varepsilon_{ij}\oplus\varepsilon_{jk}\oplus\varepsilon_{ik}$ 余循环缺陷。86.13 的两点是 $\varepsilon=s,\delta=0$，故 $\chi=s$，而投影仍相同。任何充分读数至少须区分这两个点；原标记与原 H13 已提供充分关系。$\eta\beta=\iota\alpha$ 在两个点都成立，单保中间重叠等式仍不够。这里没有断言所有表示中的全局最小标记集。
+
+**反事实 86.16（原入口、尺度与方向各有自己的作用）。** 只复用 84.39 的经典实际逆向族 (84.40)，以及 83.9、86.13 的原元组：
+
+| 删除或弱化 | 完整原实际控制与结果 |
+| --- | --- |
+| 从短校准删 C2 | 在 $A=\mathbb R^2$ 的原逆向族取 $u_{ij}=\alpha_i$、$\alpha=(2,2/3)$、$g_{ijk}=1$。逆迹和为四，$G=1_E$、PRE 与 C13 均成立，但 $\tau_DM(e,e)=4/3$。 |
+| 把 $G=1_E$ 换成总迹或原标量锚 | 同一族取 $u=1$、$g_{ijk}=\beta_k$、$\beta=(1/2,3/2)$。C2、$\tau_EG=8$、$\tau_EL(\omega,e)=1$ 均成立，$G$ 却不是单位。 |
+| 由两单位输出反推精确 PRE | 83.9 的 $0<\lambda<1$ 转置平均实际元组有 $U=G=1$、全锥正性、两实张成、全实 $Z,D_H$ 及 C13，但 $D_J$ 失败、原二阶缺陷严格正。此时不提前定义分阶段 H13。 |
+| 用交换投影替换原 H13 | 86.13 的坏元组满足完整精确 PRE、全部尺度和定理 86.10 的全部几何等式，但整个原方向测试失败。 |
+
+经典两例的同 $p$ 两次恢复、全态全效应及所有保留条件由 84.39／79.10 的原逆向保证；空活跃集的 H13 自动成立。它们消费既有删除控制，不另报新反模型或新尺度分类。
+
+### 86.8 新旧量子公理的准确映射及原消费者
+
+**推论 86.17（同数据消费者）。** (86.8) 恢复原 PRE+$C_{\rm joint}$+C13，因此按各自原附加条件回接量子结论；86.10 的几何不能单独代付下表任何来源条件。
+
+| 旧量子表述 | 当前原关系及准确结论 |
+| --- | --- |
+| 复态空间、全效应与 Born | 固定对半纯—混律先经完整 $S$ 与一般 EJA 忠实桥，精确原两个二元接口再由 66.3 选出有限复 Hermitian 直和。态为 $\rho_i\ge0,\sum_i\operatorname{Tr}\rho_i=1$，全效应 $0\le f_i\le I_i$，概率 $\sum_i\operatorname{Tr}(f_i\rho_i)$；单块纯比较为模方，不同中心块比较为零。 |
+| 原二份、三份张量及偏迹 | C2、$G=1_E$ 校准同一原尺度；原 H13 随后给 C13，由 66.10 得共同普通方向。只识别给定的原二份、三份，不识别独立另一括号及四份以上。 |
+| 指定实际事件的 CP | 在已供应 85.15 的同事件、同载体、全部实输入提升律、原记录和来源合同上，复用 85.12、85.16 的共同锚点／相容核探针证书。原事件、提升及探针制备各须其实际来源。 |
+| Kraus 与实际仪器 | 已取得的逐块 CP 给矩形 Kraus；原实际分支、输入输出类型、同事件参考、旁观者、全菜单、两预算、真实记录与同族粗粒化合同继续保留。完整菜单总 TP 才有每输入块的 Kraus 等号预算。其他类型过程仍走其原 typed／递归参考入口。 |
+| 条件态及 Lüders | 分支概率是原未归一输出质量，仅严格正质量可归一化；零分支的标签、记录和未来照旧。Lüders 还要同一 CP 分支的锐投影效应与全部确定接受态逐点中性。 |
+| Hamiltonian | 另需原物理时间上的连续、齐次、可逆 $*$ 自同构群、实际逆及钟／单位合同；有限块才得到 $\dot\rho_i=-i[H_i,\rho_i]/\hbar$，$H_i$ 保留加标量自由度。 |
+
+**证明与范围。** 86.6 与 81.8 使同一原静态数据也满足 85.14；因此直接消费 85.17，不重做分类、Choi/Kraus、更新或动力学证明。在其共同普通且标准归一坐标中，原对象恰为
+
+$$
+M(a,b)_{ij}=a_i\otimes b_j,\quad
+L(d,c)_{ijk}=d_{ij}\otimes c_k,\quad
+(pz)_{jk}=\sum_i\operatorname{Tr}_iz_{ijk},\quad
+(p_{13}z)_{ik}=\sum_j\operatorname{Tr}_jz_{ijk},\qquad
+p_{13}=(I^{\rm raw})^*:E\to D.
+\tag{86.24}
+$$
+
+对另已供应定义 85.15 的实际同载体事件 $e$ 及每个实际分支，保留原精确全实律 (85.30)，连同记录、ready、参考、副本、控制、时钟与未来合同。另供 85.11 的探针，其每个输入扇区种子有正权，并满足已固定活跃腿的完整相容核条件；85.12、85.16 才给 $P_{E,e}(\Xi_\psi)\ge0\Longleftrightarrow\Phi_e\text{ CP}\Longleftrightarrow P_{E,e}\text{ 全锥正}$。这里允许零腿权、不等维及标量转移，原输入本身仍允许零和不等中心质量。数学探针存在不供应制备，平均提升不供应每条单腿的独立实际调用。若同一事件已由 82.5 的完整递归律和原 $P_{D,e}$ 全锥正取得 CP，此处只复用该结果。证毕。
+
+所有原准备、事件、过程、参考、副本、实际相关联合、零／次归一／不等质量、原时钟与单位、控制、权限、ready／flags、完整记录、失败、拒绝、停止、销毁、返回及全部合法未来，以及旧固定支撑、全菜单和每个已量化中间切口义务均保持。85.11 所列既有原源进展各按其准确域保留；数学重叠、CP 探针或矩阵相等均不构造固定来源卷 (23.7) 的原接受接头或有限返回卷 164.1 的原 active-ready 接头。无限维一致性、另一括号、四份以上共同来源、自然探针选择、实际装置与经验对应仍须各自桥梁。
+
+### 86.9 完整中文解释与数学来源
+
+**完整白话。** 先把所有原状态与所有原测试留在同一个系统里。比较仍问“一个测试确定接受某个纯参照时，最少会误接受另一状态多少”。只固定对半的入口，也必须让另一半遍及所有原混态；已有定理才允许恢复任意混合权重和完整 Jordan 几何。原准备和同一个读回连续使用两次、两次结果张满载体、两个全域零重叠条件以及全实读回律仍然承担结构，不能用两个单位输出把这些条件补出来。
+
+校准的短写很直接。第一层单位对质量为一，连同已经保留的倒数权总和，迫使每个第一层倍率都为一；第二层要求整个单位输出就是原单位。把全实读回律放到两个单位上，同一个读回的单位值也随之固定，两条旧联合迹刚好相等。这里写短的是校准表达式，向量等式并没有变成一个简单标量，更没有自动减少独立物理前提。
+
+真正的重叠几何是在方向检查之前已经成立的。把原双份铺到前两个位置，或用原读回的迹伴随铺到后两个位置，就得到两个原双份像。两份铺法各把原迹放大总秩倍；配上反向读回并除以这个倍率，才得到保迹正交投影。无论先投到前一块再投到后一块，还是倒过来，最后都只剩同一个中间像。共同部分的倍率是总秩的平方，继承的正锥也恰好是原单份正锥的像。这不是只对产品态成立的图画：全实张成把公式固定在整个原三份载体上。
+
+但“影像在哪里”还没有说清“原对象怎样被送进影像”。普通读回和保留块整转置后的读回，可以给完全相同的两个投影、范围、交集、正锥和迹；整转置改变了逐点源对应，却没有改变投影。重新接两端时，这个区别成为单腿部分转置。同一个原全秩混态在两个模型都满足原资格，普通接法给正输出，错误接法给严格负方向，连输出总迹都相同。因此只处理原来那张未标记几何图，无论再算多少谱、夹角或质量，都找不回已被合并的方向区别。
+
+有限直和还提醒我们，正的 Jordan 投影未必是指定复矩阵表示中的完全正操作。一个原源块可以普通地读进一个中心块、转置地读进另一个中心块，范围仍保持平方和 Jordan 乘积，却不保持结合乘法；投影的某个实际块压缩直接露出转置。于是不能从“正、保迹、投影交换”直接宣布得到一个物理量子通道。
+
+应保留的关系正是原逐点接合：原双份中哪个元素对应前端，哪个对应后端，两端相乘后又怎样回接同一个原双份锥。第 70 章的有序方向差已经准确描述它，原 H13 用同一个合格原混态的整个输出检测它；不能用投影交换替掉。恢复这些条件后，态、Born、原张量和偏迹回到原量子表达。实际事件的相容探针、仪器预算、正质量条件化、中性更新和物理连续时间仍各消费自己的来源合同。这里得到的是原模型内的关系简化与信息缺口定位，完整量子起源目标的其余条件继续保留。
+
+**原文来源与结论归属。** [S] [固定对半及完整一般 EJA 条件桥](../../../Library/QuantumStates/mullerududec2012selfduality.md)，其 *Complete conditional candidate and its scope* 与 *Appendix: a fixed-half pure–mixed entrance to S* 的同载体定理按本章明列的全部原态、全效应及混态余项使用；一般分类接口为 H. Barnum、M. P. Müller、C. Ududec，*Higher-order interference and single-system postulates characterizing quantum theory*，[arXiv:1403.4147v4, Theorem 16](https://arxiv.org/html/1403.4147v4#Thmtheorem16)，保留有限维、项目性、对称转移概率及滤波纯性条件，不挪用其 Theorem 17 的额外对称性。
+
+[E] H. Umegaki，*Conditional expectation in an operator algebra*，Tohoku Mathematical Journal (2) **6** (1954), 177–181，[原文](https://www.jstage.jst.go.jp/article/tmj1949/6/2-3/6_2-3_177/_pdf)，Theorem 1、p.178 的迹配对式 (1) 与模性质；R. Nicoara，*A finiteness result for commuting squares of matrix algebras*，[arXiv:math/0404301v1, Definition 2.1](https://arxiv.org/pdf/math/0404301v1)，以忠实归一迹和有限维 von Neumann 子代数定义交换方块，其条件期望复合为底部交集的期望。它们的结合代数前件不由本章预先假设；式 (86.14) 由原迹配对直接证明所需 Jordan 性质。正交投影、谱分解、极化及观察纤维上的因子分解判据均为成熟工具。
+
+[R] [第四卷](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)65.3、66.2—66.11、67.7、70.1—70.3、72.3／72.7—72.8，及本卷 79、83—85，固定原文取 [e89e225089c41f14090d9e8d36b5046967044d32](https://github.com/the-omega-institute/trureturing/tree/e89e225089c41f14090d9e8d36b5046967044d32)。原满迹等距接口、校准、前 C13 方向分类、逆向、坏 qubit 元组、逐合格原混态检测和共同锚点 CP 消费者分别归于上述原结果。Choi、Jamiołkowski 与矩形 Kraus 的原文按 82.8／85.11 引用，不把它们当作本章新增工具。
+
+本章的纸面推导集中于同原 $H,p^*$ 的完整重叠公式、它们在原观察纤维中丢失交叉方向的严格消费，以及一个指定直和表示的 Jordan／结合／CP 边界。单位校准重述、成熟期望理论、原反模型及旧余循环分类不另计新内容；不主张文献穷尽、全球原创、全局最小标记、独立物理公理最少或物理可得性。所有结论均保留所列完整原模型与附加来源条件。
+
+## 追加锚（本行以下为增补区）
