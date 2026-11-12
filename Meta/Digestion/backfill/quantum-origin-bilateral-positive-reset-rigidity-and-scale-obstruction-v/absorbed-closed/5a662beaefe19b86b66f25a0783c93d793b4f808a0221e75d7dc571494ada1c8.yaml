@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5a662beaefe19b86b66f25a0783c93d793b4f808a0221e75d7dc571494ada1c8
   normalized_sha256: sha256:5a662beaefe19b86b66f25a0783c93d793b4f808a0221e75d7dc571494ada1c8
 cas_ref: sha256:5a662beaefe19b86b66f25a0783c93d793b4f808a0221e75d7dc571494ada1c8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.whole_pair_ball_confirmation
+    target_statement_id: sha256:ecd9c852e367dfa3ea9ec32b4b6f1d8583144a2ee013814062c81ae52d38fce2
 receipts:
   unresolved_subitems: []
