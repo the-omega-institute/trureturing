@@ -4,7 +4,9 @@ bibkey: ekene2026accumulatedpsd
 doi: null
 url: https://mathoverflow.net/revisions/509794/2
 triage: theorem
-motivation_gids: []
+motivation_gids:
+  - D5/S3/QuadraticForms/AccumulatedSparseRefutation.result
+  - D5/S3/HilbertOperators/Approximation/AccumulatedSupportRefutation.result
 ---
 
 # Accumulated sparse approximation errors
