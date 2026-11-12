@@ -75,7 +75,7 @@ internal sealed class HistorySolutionDocument : IScribeDocumentDefinition
                         + "constant bath supplies the remaining finite intervals. The "
                         + "method-of-steps theorem constructs an integrated sample. Its "
                         + "Appendix representation agrees pointwise with the given sample, "
-                        + "which therefore is that integrated solution. The forward "
+                        + "which therefore is that integrated solution. The integrated-to-Appendix "
                         + "direction uses the derived bath integrability and the actual "
                         + "kernel representation. Thus neither direction assumes sample "
                         + "regularity or an unproved solution field."))), DescribeRole.Theorem),

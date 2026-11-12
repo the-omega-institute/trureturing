@@ -179,7 +179,7 @@ private theorem approximation_continuous {τ a q : ℝ} {b : ℝ → ℝ}
           ((ih.comp (continuous_id.sub continuous_const)).intervalIntegrable a t))
         (fun t ht => approximation_equation τ a q b n ht)
 
-private theorem approximation_stable {τ a q : ℝ} (_hτ : 0 < τ) (b : ℝ → ℝ) :
+private theorem approximation_stable {τ a q : ℝ} (b : ℝ → ℝ) :
     ∀ n m : ℕ, n ≤ m → ∀ t : ℝ, t ≤ a + n * τ →
       approximation τ a q b m t = approximation τ a q b n t := by
   intro n
@@ -222,8 +222,8 @@ theorem exists_unique_integrated_solution {τ a q : ℝ} (hτ : 0 < τ) (b : ℝ
       T t = approximation τ a q b n t := by
     dsimp [T]
     rcases le_total n (N t) with h | h
-    · exact approximation_stable hτ b n (N t) h t ht
-    · exact (approximation_stable hτ b (N t) n h t (hN t)).symm
+    · exact approximation_stable b n (N t) h t ht
+    · exact (approximation_stable b (N t) n h t (hN t)).symm
   have hT : IntegratedSolution τ a q b T := by
     constructor
     · intro t ht
