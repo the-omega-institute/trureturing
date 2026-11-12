@@ -367,7 +367,7 @@ theorem independencePolynomial_four_families (hι : Fintype.card ι = 3)
   · intro i _ j _ hij
     exact hstars hij
 
-private theorem coefficient_card (V : Finset (Vertex R)) (k : ℕ) :
+theorem coefficient_card (V : Finset (Vertex R)) (k : ℕ) :
     (independencePolynomial (graph R) V).coeff k =
       (((configurations (graph R) V).filter fun S => S.card = k).card : ℤ) := by
   simp [independencePolynomial, partition, Polynomial.coeff_X_pow, eq_comm]
