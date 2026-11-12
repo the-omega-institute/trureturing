@@ -24,7 +24,7 @@ internal sealed class SectionROGFrameDocument : IScribeDocumentDefinition
             Entry("all-native-pure-ranks", "pureRanks", "All normalized native rank one points",
                 "pureRanks(L) consists of every X for which there exists a native Euclidean vector v with norm one, vv*=X and X in L. No proper subconfiguration is selected.", DescribeRole.Definition),
             Entry("native-rank-one-real-scaling", "rankOne_real_smul", "Real scaling of native outer products",
-                "For every native vector v and real scalar r, rankOne(r v) equals (r r) rankOne(v). The original declaration is public for the same-Psi rank-one reconstruction consumer in OriginalUnitSupport; this is an existing algebraic identity.", DescribeRole.Theorem),
+                "For every native vector v and real scalar r, rankOne(r v) equals (r r) rankOne(v). The original declaration is public for the same-Psi rank-one reconstruction consumer in OriginalUnitNormalization; this is an existing algebraic identity.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rank-one-trace-norm"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_trace_norm"),
                 H("Rank one trace is squared native vector norm"),
