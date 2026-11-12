@@ -6,7 +6,7 @@ The positive fixed point two at modulus sqrt two defeats the full proposed exten
 
 **Definition 1.1 (The source's natural floor map).**
 
-$$\forall alpha \in \mathbb{R},\; \forall k \in \mathbb{N},\; \operatorname{nativeBeatty}\left(alpha, k\right) = \left\lflooralpha \cdot k\right\rfloor_{\mathbb{N}}$$
+$$\forall \alpha\in \mathbb{R}, \forall k \in \mathbb{N},\; \operatorname{nativeBeatty}\left(\alpha, k\right) = \lfloor \alpha \cdot k \rfloor_{\mathbb{N}}$$
 
 *Formalization.* `D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.nativeBeatty` (`✓ std3`).
 
@@ -18,7 +18,7 @@ nativeBeatty(alpha,k) is Mathlib's natural floor of the real product alpha k. Fo
 
 **Definition 1.2 (The native iterated range).**
 
-$$\forall alpha \in \mathbb{R},\; \forall n \in \mathbb{N},\; \forall x \in \mathbb{N},\; (\operatorname{nativeRange}\left(alpha, n, x\right)) \Leftrightarrow (\exists k \in \mathbb{N},\; (1 \le k) \land (\left((\operatorname{nativeBeatty}\left(alpha\right))^{[n]}\right)\left(k\right) = x))$$
+$$\forall \alpha\in \mathbb{R}, \forall n \in \mathbb{N},\; \forall x \in \mathbb{N},\; (\operatorname{nativeRange}\left(\alpha, n, x\right)) \Leftrightarrow (\exists k \in \mathbb{N},\; (1 \le k) \land (\left((\operatorname{nativeBeatty}\left(\alpha\right))^{[n]}\right)\left(k\right) = x))$$
 
 *Formalization.* `D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.nativeRange` (`✓ std3`).
 
@@ -29,12 +29,12 @@ $$\forall alpha \in \mathbb{R},\; \forall n \in \mathbb{N},\; \forall x \in \mat
 The superscript [n] denotes Function.iterate, the actual n-fold composition, including each intermediate floor. It is not floor(alpha^n k). The preimage k is a positive natural. For alpha>1 and k>=1, k<=alpha k, hence k<=floor(alpha k). Induction keeps every intermediate value positive, so this is exactly the source's natural floor-map composition on positive naturals.
 
 $$
-\operatorname{frac}\left(t\right) = t - \left\lfloort\right\rfloor
+\operatorname{frac}\left(t\right) = t - \lfloor t \rfloor
 $$
 
 **Definition 1.3 (Every strict source condition).**
 
-$$\forall alpha \in \mathbb{R},\; \forall n \in \mathbb{N},\; \forall x \in \mathbb{N},\; (\operatorname{fractionalTest}\left(alpha, n, x\right)) \Leftrightarrow (((1 - \frac{1}{alpha} < \operatorname{frac}\left(\frac{x}{alpha}\right)) \land (\operatorname{frac}\left(\frac{x}{alpha}\right) < 1)) \land (\forall i \in \mathbb{N},\; (2 \le i) \Rightarrow ((i \le n) \Rightarrow ((1 - \frac{2}{alpha} < \operatorname{frac}\left(\frac{x}{alpha^{i}}\right) - \frac{\operatorname{frac}\left(\frac{x}{alpha^{i - 1}}\right)}{alpha}) \land (\operatorname{frac}\left(\frac{x}{alpha^{i}}\right) - \frac{\operatorname{frac}\left(\frac{x}{alpha^{i - 1}}\right)}{alpha} < 1 - \frac{1}{alpha})))))$$
+$$\forall \alpha\in \mathbb{R}, \forall n \in \mathbb{N},\; \forall x \in \mathbb{N},\; (\operatorname{fractionalTest}\left(\alpha, n, x\right)) \Leftrightarrow (((1 - \frac{1}{\alpha} < \operatorname{frac}\left(\frac{x}{\alpha}\right)) \land (\operatorname{frac}\left(\frac{x}{\alpha}\right) < 1)) \land (\forall i \in \mathbb{N},\; (2 \le i) \Rightarrow ((i \le n) \Rightarrow ((1 - \frac{2}{\alpha} < \operatorname{frac}\left(\frac{x}{\alpha^{i}}\right) - \frac{\operatorname{frac}\left(\frac{x}{\alpha^{i - 1}}\right)}{\alpha}) \land (\operatorname{frac}\left(\frac{x}{\alpha^{i}}\right) - \frac{\operatorname{frac}\left(\frac{x}{\alpha^{i - 1}}\right)}{\alpha} < 1 - \frac{1}{\alpha})))))$$
 
 *Formalization.* `D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.fractionalTest` (`✓ std3`).
 
@@ -46,7 +46,7 @@ The function frac is Int.fract: t minus its integer floor. Every division is rea
 
 **Definition 1.4 (The full positive-natural extension).**
 
-$$(claim) \Leftrightarrow (\forall alpha \in \mathbb{R},\; (\operatorname{Irrational}\left(alpha\right)) \Rightarrow ((1 < alpha) \Rightarrow ((alpha < \frac{3 + \sqrt{5}}{2}) \Rightarrow (\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall x \in \mathbb{N},\; (1 \le x) \Rightarrow ((\operatorname{nativeRange}\left(alpha, n, x\right)) \Leftrightarrow (\operatorname{fractionalTest}\left(alpha, n, x\right))))))))$$
+$$(claim) \Leftrightarrow (\forall \alpha\in \mathbb{R}, (\operatorname{Irrational}\left(\alpha\right)) \Rightarrow ((1 < \alpha) \Rightarrow ((\alpha < \frac{3 + \sqrt{5}}{2}) \Rightarrow (\forall n \in \mathbb{N},\; (1 \le n) \Rightarrow (\forall x \in \mathbb{N},\; (1 \le x) \Rightarrow ((\operatorname{nativeRange}\left(\alpha, n, x\right)) \Leftrightarrow (\operatorname{fractionalTest}\left(\alpha, n, x\right))))))))$$
 
 *Formalization.* `D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.claim` (`✓ std3`).
 
