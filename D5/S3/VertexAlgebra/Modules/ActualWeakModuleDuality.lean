@@ -135,7 +135,6 @@ def evaluation : ModuleHom (targetModule (dualModule A) A) (I D) :=
   extend hD (evaluationFamily A hD)
 
 set_option maxHeartbeats 8000000 in
-set_option diagnostics true in
 theorem evaluation_jAt (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity A c))
     (x : Multiplicity A c) :
     restrict (evaluation A hD) 0
@@ -150,12 +149,20 @@ theorem evaluation_jAt (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity 
     rfl
   let z := jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
     (dualIota A c φ ⊗ₜ[ℂ] x)
+  have hf : evaluationFamily A hD 0 =
+      (DirectSum.toModule ℂ _ _ (capBlock A hD)).comp
+        (mu (dualModule A) A hD 0) := by
+    simp only [evaluationFamily, dite_true]
   have hr := LinearMap.congr_fun
     (congrFun (restrict_extend hD (evaluationFamily A hD)) 0) z
-  refine hr.trans ?_
-  simp only [evaluationFamily, dif_pos rfl, LinearMap.comp_apply]
-  dsimp only [z]
-  rw [mu_jAt, DirectSum.toModule_lof]
+  refine hr.trans ((LinearMap.congr_fun hf z).trans ?_)
+  change (DirectSum.toModule ℂ _ _ (capBlock A hD))
+    (mu (dualModule A) A hD 0 z) = _
+  refine (congrArg (DirectSum.toModule ℂ _ _ (capBlock A hD))
+    (mu_jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+      (dualIota A c φ ⊗ₜ[ℂ] x))).trans ?_
+  refine (DirectSum.toModule_lof ℂ (φ := capBlock A hD)
+    ⟨(-c,c),neg_add_cancel c⟩ (dualIota A c φ ⊗ₜ[ℂ] x)).trans ?_
   change unitCharacter D hD (-c) •
     (((kappa (DualMultiplicity A) (-c)
       (iota (DualMultiplicity A) (-c)
@@ -163,7 +170,16 @@ theorem evaluation_jAt (c : Discriminant D) (φ : Module.Dual ℂ (Multiplicity 
           (neg_neg c).symm φ)))
         (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d)
           (neg_neg c).symm x)) • eta0 hD) = _
-  rw [kappa_iota, hcast, smul_smul]
+  have hk := congrArg
+    (fun ψ : Module.Dual ℂ (Multiplicity A (- -c)) =>
+      ψ (LinearEquiv.cast (R := ℂ) (M := fun d => Multiplicity A d)
+        (neg_neg c).symm x))
+    (kappa_iota (DualMultiplicity A) (-c)
+      (LinearEquiv.cast (R := ℂ) (M := fun d => Module.Dual ℂ (Multiplicity A d))
+        (neg_neg c).symm φ))
+  exact (congrArg (fun t : ℂ => unitCharacter D hD (-c) • (t • eta0 hD))
+    (hk.trans (hcast c (- -c) (neg_neg c).symm φ x))).trans
+      (smul_smul (unitCharacter D hD (-c)) (φ x) (eta0 hD))
 
 theorem evaluation_wrong (e : Discriminant D) (he : e ≠ 0)
     (z : Multiplicity (targetModule (dualModule A) A) e) :
