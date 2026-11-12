@@ -7,8 +7,8 @@ internal sealed class VolterraDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/StatisticalMechanics/DelayedCooling/Volterra.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The finite-Lebesgue integrated delay equation determines its raw sample pointwise "
-            + "and implies sample regularity and separate bath integrability.",
+        "The finite-Lebesgue integrated delay equation has a unique raw sample for every "
+            + "locally integrable bath and implies regularity and separate bath integrability.",
         H("The raw integrated cooling equation"),
         Blocks(
             Paragraph(Text(
@@ -37,11 +37,22 @@ internal sealed class VolterraDocument : IScribeDocumentDefinition
                     + "interval lies in the already equal past. This identifies actual sample "
                     + "values, including quench endpoints; it is stronger than AE equality.",
                 DescribeRole.Theorem),
+            Node("exists_unique_integrated_solution", "Existence by finite method of steps",
+                "For every positive delay and every raw bath integrable on each finite "
+                    + "interval after a, exactly one integrated sample exists. Start with "
+                    + "the constant function q, and repeatedly integrate the bath minus "
+                    + "the preceding approximation shifted by tau, retaining q before a. "
+                    + "Every approximation is continuous. The m-th approximation agrees "
+                    + "with the n-th one through a+n*tau whenever m is at least n. "
+                    + "Choose at time t the approximation numbered floor((t-a)/tau)+1. "
+                    + "Stabilization makes this a single raw solution with the required "
+                    + "integrable forcing on every finite interval. No convergence "
+                    + "hypothesis, small delay bound or assumed solution is used.", DescribeRole.Theorem),
             Paragraph(Text(
                 "These statements cover the finite-Lebesgue integrated interpretation of "
-                    + "the source equation. They do not prove existence for an arbitrary bath, "
-                    + "the converse from an unspecified classical or quench solution convention, "
-                    + "or inclusion of all proper-Riemann source integrals. They impose no "
+                    + "the source equation. They do not identify every unspecified classical "
+                    + "or quench solution convention with this integrated interpretation. "
+                    + "Proper-Riemann inclusion remains a separate obligation. They impose no "
                     + "common preparation duration on a pair of samples. Monotone cooling, "
                     + "a strict unique crossover and the globally optimized balanced synchronous "
                     + "comparison remain obligations of the original whole event.")))));

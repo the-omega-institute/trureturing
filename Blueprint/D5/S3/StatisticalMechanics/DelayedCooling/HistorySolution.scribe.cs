@@ -19,6 +19,17 @@ internal sealed class HistorySolutionDocument : IScribeDocumentDefinition
                     + "the finite-Lebesgue integrated DDE. Its raw bath is q strictly before a "
                     + "and c strictly after zero. Values at the two endpoints are unrestricted.")),
             Describe.Lean(
+                DescribeId.Create("delay-history-appendix-solution"),
+                DeclarationHandle.Create(Prefix + "AppendixSolution"),
+                H("The finite-Lebesgue Appendix input"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The sample has its pointwise constant past, satisfies Appendix (5) "
+                        + "at every t at least a, and the weighted preparation integral "
+                        + "at time zero is Lebesgue integrable. Separate bath integrability "
+                        + "and sample regularity are not fields of this definition."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("delay-history-raw-solution-bridge"),
                 DeclarationHandle.Create(Prefix + "raw_history_solution_bridge"),
                 H("Appendix (5) and the complete equilibrium tail"),
@@ -49,11 +60,27 @@ internal sealed class HistorySolutionDocument : IScribeDocumentDefinition
                             + "Each sample can use its own a and q. No common preparation "
                             + "length, step-function restriction or convolution hypothesis "
                             + "is introduced."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("delay-history-appendix-equivalence"),
+                DeclarationHandle.Create(Prefix + "appendix5_iff_integrated"),
+                H("Appendix (5) is equivalent to the integrated DDE"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For the stated delay range and equilibrium and final-bath conditions, "
+                        + "a raw sample satisfies the finite-Lebesgue Appendix definition "
+                        + "if and only if it satisfies the integrated DDE. To recover "
+                        + "integrability of the bath on the preparation interval, multiply "
+                        + "the defined weighted integrand at time zero by the continuous "
+                        + "reciprocal of the positive concrete kernel, then add c. The final "
+                        + "constant bath supplies the remaining finite intervals. The "
+                        + "method-of-steps theorem constructs an integrated sample. Its "
+                        + "Appendix representation agrees pointwise with the given sample, "
+                        + "which therefore is that integrated solution. The forward "
+                        + "direction uses the derived bath integrability and the actual "
+                        + "kernel representation. Thus neither direction assumes sample "
+                        + "regularity or an unproved solution field."))), DescribeRole.Theorem),
             Paragraph(Text(
-                "The theorem identifies any supplied finite-Lebesgue integrated solution. "
-                    + "It does not construct a solution for every bath or prove the reverse "
-                    + "implication from the displayed convolution to the integrated DDE. "
-                    + "The source does not fix an integral convention. Proper-Riemann and "
+                "The source does not fix an integral convention. Proper-Riemann and "
                     + "all-source inclusion remain unproved obligations, as do the precise "
                     + "ordinary-time/quench converse, complete event admissibility and the "
                     + "actual globally optimized balanced synchronous comparator. This is "

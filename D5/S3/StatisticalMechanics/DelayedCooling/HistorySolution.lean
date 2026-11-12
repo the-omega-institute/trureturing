@@ -34,6 +34,16 @@ open scoped Topology
 
 noncomputable section
 
+/-- The finite-Lebesgue interpretation of the source Appendix (5). The integral
+at zero is required to be defined. The theorem derives the remaining finite
+integrability and the bath's own integrability from this weighted integral. -/
+structure AppendixSolution (τ a q c : ℝ) (b T : ℝ → ℝ) : Prop where
+  past : ∀ t ≤ a, T t = q
+  preparation_integrable :
+    IntervalIntegrable (fun s => (b s - c) * responseKernel τ (-s)) volume a 0
+  equation : ∀ t, a ≤ t → T t = c + (q - c) * relaxation τ (t - a) +
+    ∫ s in a..min 0 t, (b s - c) * responseKernel τ (t - s)
+
 private theorem relaxation_lipschitz {τ : ℝ} (hτ : 0 < τ)
     (hsmall : τ ≤ Real.exp (-1)) : LipschitzWith 1 (relaxation τ) := by
   have hp : LipschitzOnWith 1 (relaxation τ) (Ioi 0) := by
@@ -303,7 +313,8 @@ theorem raw_history_solution_bridge {τ a q c : ℝ} {b T : ℝ → ℝ}
   have hk : Continuous (fun s => responseKernel τ (t - s)) :=
     (continuous_relaxation hτ).comp ((continuous_const.sub continuous_id).sub continuous_const)
   have hfin : IntervalIntegrable (fun s => (b s - c) * responseKernel τ (t - s)) volume a 0 :=
-    (((integrated_solution_bridge hτ hT).2.2.1 0 ha).sub intervalIntegrable_const).mul_continuousOn hk.continuousOn
+    (((integrated_solution_bridge hτ hT).2.2.1 0 ha).sub
+      intervalIntegrable_const).mul_continuousOn hk.continuousOn
   have hreflect : (fun u => (b (-u) - c) * responseKernel τ (t - -u)) = f := by
     funext u
     dsimp [f]
@@ -346,6 +357,59 @@ theorem raw_history_solution_bridge {τ a q c : ℝ} {b T : ℝ → ℝ}
   change T t = c + ∫ u in Ioi 0, f u
   rw [hsum]
   linarith
+
+/-- For raw baths with their own finite equilibrium past and final constant
+bath, the finite-Lebesgue Appendix formula is equivalent to the integrated
+DDE. In the reverse direction, bath integrability is recovered from the
+defined weighted integral, and existence is supplied by finite method of
+steps. No convolution or optimizer is an input field. -/
+theorem appendix5_iff_integrated {τ a q c : ℝ} {b T : ℝ → ℝ}
+    (hτ : 0 < τ) (hsmall : τ ≤ Real.exp (-1)) (ha : a ≤ 0)
+    (hpast : ∀ s, s < a → b s = q) (hpost : ∀ s, 0 < s → b s = c) :
+    AppendixSolution τ a q c b T ↔ IntegratedSolution τ a q b T := by
+  constructor
+  · intro hA
+    have hk : Continuous (fun s => responseKernel τ (-s)) :=
+      (continuous_relaxation hτ).comp (continuous_neg.sub continuous_const)
+    have hn (s : ℝ) : responseKernel τ (-s) ≠ 0 :=
+      (relaxation_pos hτ hsmall (-s - τ)).ne'
+    have hprep : IntervalIntegrable b volume a 0 := by
+      have hi := hA.preparation_integrable.mul_continuousOn
+        (hk.inv₀ (fun s => hn s)).continuousOn
+      have hd : IntervalIntegrable (fun s => b s - c) volume a 0 := by
+        apply hi.congr
+        intro s _
+        dsimp
+        field_simp [hn s]
+      simpa only [sub_add_cancel] using hd.add
+        (intervalIntegrable_const (c := c))
+    have hb : ∀ t, a ≤ t → IntervalIntegrable b volume a t := by
+      intro t ht
+      by_cases ht0 : t ≤ 0
+      · exact hprep.mono_set (by
+          rw [uIcc_of_le ht, uIcc_of_le ha]
+          exact Icc_subset_Icc le_rfl ht0)
+      · have h0t : 0 ≤ t := (lt_of_not_ge ht0).le
+        have hi : IntervalIntegrable b volume 0 t := by
+          apply (intervalIntegrable_const (c := c)).congr
+          rw [uIoc_of_le h0t]
+          intro s hs
+          exact (hpost s hs.1).symm
+        exact hprep.trans hi
+    obtain ⟨S, hS, _⟩ := exists_unique_integrated_solution hτ b hb
+    have hrep := (raw_history_solution_bridge hτ hsmall hS ha hpast hpost).1
+    have heq : T = S := by
+      funext t
+      by_cases ht : t ≤ a
+      · rw [hA.past t ht, hS.past t ht]
+      · rw [hA.equation t (lt_of_not_ge ht).le, hrep t (lt_of_not_ge ht).le]
+    exact heq ▸ hS
+  · intro hT
+    have hb := (integrated_solution_bridge hτ hT).2.2.1
+    have hk : Continuous (fun s => responseKernel τ (-s)) :=
+      (continuous_relaxation hτ).comp (continuous_neg.sub continuous_const)
+    exact ⟨hT.past, ((hb 0 ha).sub intervalIntegrable_const).mul_continuousOn hk.continuousOn,
+      (raw_history_solution_bridge hτ hsmall hT ha hpast hpost).1⟩
 
 end
 
