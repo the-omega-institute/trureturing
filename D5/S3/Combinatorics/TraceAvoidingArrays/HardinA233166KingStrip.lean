@@ -665,15 +665,17 @@ private theorem legal_word_iff {n : ℕ} (hn : 0 < n) (f : Fin (n*6) → Fin 8) 
       exact ⟨fun h' => pull 1 (h.1 h'),fun h' => pull 2 (h.2.1 h'),
         fun h' => pull 3 (h.2.2 h')⟩
 
-/-- The signed fibre and label-permutation factors for the literal count. -/
-theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
-    24 * a n = 2^(6*n-4) * Nat.card {c : Fin n × Fin 6 → Fin 4 // Proper c} := by
+private theorem literal_signed_count {n : ℕ} (hn : 0 < n) :
+    a n = ∑ P : {P : Fin (n*6) → Fin 4 //
+      Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P},
+      2 ^ (n*6 - Nat.card (Set.range P.val)) := by
   classical
   let S (P : Fin (n*6) → Fin 4) := Proper (fun p => P (finProdFinEquiv p))
   let A := {f : Fin (n*6) → Fin 8 // S (beta ∘ f) ∧ f ⟨0,by omega⟩ = 0 ∧ Normal8 f}
   let E : {f : Fin n × Fin 6 → Fin 8 // Legal f} ≃ A := {
     toFun := fun g => ⟨fun t => g.val (finProdFinEquiv.symm t),
-      (legal_word_iff (n := n) (by omega) _).mp (by simpa only [Equiv.symm_apply_apply] using g.property)⟩
+      (legal_word_iff (n := n) hn (fun t => g.val (finProdFinEquiv.symm t))).mp
+        (by simpa only [Equiv.symm_apply_apply] using g.property)⟩
     invFun := fun f => ⟨fun p => f.val (finProdFinEquiv p),
       (legal_word_iff (n := n) (by omega) _).mpr f.property⟩
     left_inv := fun f => Subtype.ext (by funext p; simp only [Equiv.symm_apply_apply])
@@ -681,20 +683,26 @@ theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
   have ha : a n = Nat.card A := by
     rw [← Nat.card_congr E, Nat.card_eq_fintype_card]
     exact (Fintype.card_subtype (fun f => Legal f)).symm
+  rw [ha]
+  exact normalized_card8 (⟨0,by omega⟩ : Fin (n*6)) (fun i => show (0 : ℕ) ≤ i.val from Nat.zero_le _) S
+
+/-- The signed fibre and label-permutation factors for the literal count. -/
+theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
+    24 * a n = 2^(6*n-4) * Nat.card {c : Fin n × Fin 6 → Fin 4 // Proper c} := by
+  classical
+  let S (P : Fin (n*6) → Fin 4) := Proper (fun p => P (finProdFinEquiv p))
   have huse : ∀ P, S P → Function.Surjective P := by
     intro P hp k
     obtain ⟨p,_,he⟩ := proper_exhausts hn _ hp k
     exact ⟨finProdFinEquiv p,he⟩
-  have hs := normalized_card8 (⟨0,by omega⟩ : Fin (n*6)) (fun i => Fin.zero_le i) S
   have hfibre : a n = 2^(6*n-4) * Nat.card {P // S P ∧ Canonical P} := by
-    rw [ha]
-    change Nat.card {f : Fin (n*6) → Fin 8 // S (beta ∘ f) ∧ f ⟨0,by omega⟩ = 0 ∧ Normal8 f} = _
-    rw [hs]
+    rw [literal_signed_count (by omega : 0 < n)]
     have hrange (P : {P // S P ∧ Canonical P}) : Set.range P.val = Set.univ :=
       Set.range_eq_univ.mpr (huse P.val P.property.1)
-    simp only [hrange, Nat.card_eq_fintype_card, Fintype.card_fin, Fintype.card_set_univ,
+    simp only [hrange, Nat.card_univ, Nat.card_eq_fintype_card, Fintype.card_fin,
       Finset.sum_const, Finset.card_univ, smul_eq_mul]
-    rw [Nat.mul_comm n 6, Nat.mul_comm]
+    have he : n*6-4 = 6*n-4 := by omega
+    rw [he, Nat.mul_comm]
   have hperm := canonical_pattern_card4 S (by
     intro e P
     constructor <;> intro hp p q hne h₁ h₂ h₃ h₄
@@ -745,6 +753,10 @@ private def offsetOK (v : Fin 6 → Fin 4) : Prop :=
 private def offsetChoices (v : Fin 6 → Fin 4) : Finset (Fin 4) :=
   choices (fun j => v j.castSucc ^^^ v j.succ)
 
+private instance (v : Fin 6 → Fin 4) : Decidable (offsetOK v) := by
+  unfold offsetOK
+  infer_instance
+
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
 private theorem offset_certificate :
@@ -757,4 +769,98 @@ private theorem offset_certificate :
       offsetOK v ∧ (offsetChoices v).card = 2)).card = 3) := by
   decide +kernel
 
+private theorem zones_iff (m : ℕ) (u : Fin (m+1) → Fin 4) (v : Fin 6 → Fin 4) :
+    (u,v) ∈ zones (m+1) ↔ offsetOK v ∧ ∀ i : Fin m,
+      u i.castSucc ^^^ u i.succ ∈ offsetChoices v := by
+  constructor
+  · intro hz
+    refine ⟨⟨hz.1,hz.2.1⟩,?_⟩
+    intro i
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,
+      (hz.2.2 i.val (by have := i.isLt; omega)).1,
+      (hz.2.2 i.val (by have := i.isLt; omega)).2⟩
+  · rintro ⟨hv,hu⟩
+    refine ⟨hv.1,hv.2,?_⟩
+    intro i hi
+    exact (Finset.mem_filter.mp (hu (⟨i,by omega⟩ : Fin m))).2
+
+private noncomputable def zoneWordEquiv (m : ℕ) :
+    {z // z ∈ zones (m+1)} ≃
+      Σ v : {v : Fin 6 → Fin 4 // offsetOK v},
+        {u : Fin (m+1) → Fin 4 // ∀ i : Fin m,
+          u i.castSucc ^^^ u i.succ ∈ offsetChoices v.val} where
+  toFun z := ⟨⟨z.val.2,((zones_iff m _ _).mp z.property).1⟩,
+    ⟨z.val.1,((zones_iff m _ _).mp z.property).2⟩⟩
+  invFun p := ⟨(p.2.val,p.1.val),(zones_iff m _ _).mpr ⟨p.1.property,p.2.property⟩⟩
+  left_inv z := by cases z; rfl
+  right_inv p := by rcases p with ⟨⟨v,hv⟩,⟨u,hu⟩⟩; rfl
+
+private theorem offset_sum (m : ℕ) (hm : 1 ≤ m) :
+    (∑ v : {v : Fin 6 → Fin 4 // offsetOK v}, (offsetChoices v.val).card^m) =
+      3*2^m+90 := by
+  classical
+  let U : Finset (Fin 6 → Fin 4) := Finset.univ.filter offsetOK
+  have hsum : (∑ v : {v : Fin 6 → Fin 4 // offsetOK v},
+      (offsetChoices v.val).card^m) = ∑ v ∈ U, (offsetChoices v).card^m := by
+    exact (Finset.sum_subtype U (by intro v; simp only [U,Finset.mem_filter,Finset.mem_univ,true_and]) _).symm
+  rw [hsum]
+  have point (v : Fin 6 → Fin 4) (hv : v ∈ U) :
+      (offsetChoices v).card^m =
+        (if (offsetChoices v).card = 1 then 1 else 0) +
+        (if (offsetChoices v).card = 2 then 2^m else 0) := by
+    have hb := offset_certificate.1 v (Finset.mem_filter.mp hv).2
+    interval_cases h : (offsetChoices v).card <;> simp [h,show m ≠ 0 by omega]
+  rw [Finset.sum_congr rfl point,Finset.sum_add_distrib]
+  rw [← Finset.sum_filter,← Finset.sum_filter]
+  have h1 : (U.filter (fun v => (offsetChoices v).card = 1)).card = 90 := by
+    simpa only [U,Finset.filter_filter] using offset_certificate.2.2.1
+  have h2 : (U.filter (fun v => (offsetChoices v).card = 2)).card = 3 := by
+    simpa only [U,Finset.filter_filter] using offset_certificate.2.2.2
+  simp only [Finset.sum_const,smul_eq_mul,h1,h2]
+  omega
+
+/-- The exact all-height cardinality of the zone data. -/
+theorem labelled_pair_count (m : ℕ) (hm : 1 ≤ m) :
+    Nat.card {c : Fin (m+1) × Fin 6 → Fin 4 // Proper c} =
+      4*(3*2^m+90) := by
+  classical
+  rw [Nat.card_congr (zoneEquiv (by omega)),Nat.card_congr (zoneWordEquiv m),
+    Nat.card_sigma]
+  simp_rw [xor_walk_count]
+  rw [← Finset.mul_sum,offset_sum m hm]
+
+
+private instance {n : ℕ} (P : Fin n × Fin 6 → Fin 4) : Decidable (Proper P) := by
+  unfold Proper
+  infer_instance
+
+private instance (P : Fin 6 → Fin 4) : Decidable (Canonical P) := by
+  unfold Canonical
+  infer_instance
+
+private def oneRowWeight (P : Fin 6 → Fin 4) : ℕ :=
+  if Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P
+    then 2 ^ (6 - (Finset.univ.image P).card) else 0
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 0 in
+private theorem one_row_certificate : (∑ P : Fin 6 → Fin 4, oneRowWeight P) = 236 := by
+  decide +kernel
+
+/-- The exceptional literal one-row cardinality, including unused colours. -/
+theorem one_row_count : a 1 = 236 := by
+  classical
+  rw [literal_signed_count (by omega : 0 < 1)]
+  change (∑ P : {P : Fin 6 → Fin 4 //
+    Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P},
+      2 ^ (6 - Nat.card (Set.range P.val))) = 236
+  have hr (P : Fin 6 → Fin 4) : Nat.card (Set.range P) = (Finset.univ.image P).card := by
+    exact Nat.subtype_card (Finset.univ.image P) (by intro b; simp)
+  simp_rw [hr]
+  rw [← Finset.sum_subtype (Finset.univ.filter (fun P : Fin 6 → Fin 4 =>
+    Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P)) (by simp)]
+  rw [Finset.sum_filter]
+  exact one_row_certificate
+
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
+
