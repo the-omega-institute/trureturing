@@ -1,0 +1,51 @@
+**定理 110.3（原P的邻域正则性）。** 在原 $\mathsf W$ 下，$P$ 是紧Euclidean
+neighborhood retract（ENR），且在如下明确意义下局部可缩：对每个 $p\in P$
+及其任意开邻域 $O\subseteq P$，存在开邻域 $A$，$p\in A\subseteq O$，
+使包含映射 $A\hookrightarrow O$ 零伦。$P$ 局部道路连通，
+只有有限多个道路连通分支，它们也恰是连通分支。
+$P$ 可嵌入为某个有限单纯复形的收缩核，故其整数奇异同调群有限生成并在高维为零。
+
+证明。取任意 $z\in\operatorname{ri}K$，在 $\ker u$ 上任选辅助欧氏范数。
+每条从 $z$ 出发的射线与 $K$ 相交于一个非退化有界闭区间，恰有一个边界端点。
+因此
+
+$$
+S\longrightarrow S^{N-2},\qquad
+x\longmapsto\frac{x-z}{\|x-z\|}
+\tag{VIII110.7}
+$$
+
+连续且双射，紧性使它为同胚。故开子空间 $M$ 是拓扑 $(N-2)$ 维流形，
+无需假设凸边界光滑。110.2给连续收缩 $r=c\sigma:M\to B$。
+
+固定 $y\in B$ 和其在 $B$ 中的开邻域 $O_B$。
+在开集 $r^{-1}(O_B)$ 内取以 $y$ 为中心的流形坐标球 $W$。
+坐标线性收缩给 $h:W\times[0,1]\to W$，起于恒等、终于 $y$ 并固定 $y$。
+令 $A_B=W\cap B$，则 $A_B\subseteq O_B$，而
+
+$$
+(a,t)\longmapsto r(h(a,t)),\qquad a\in A_B,
+\tag{VIII110.8}
+$$
+
+在 $O_B$ 内把包含 $A_B\hookrightarrow O_B$ 收缩到 $y$。
+经同胚 $c$ 运输，给出陈述中的 $A\hookrightarrow O$ 零伦。
+这恰是Hatcher《Algebraic Topology》[Theorem A.7，印刷p.525][Q110H]
+使用的弱局部可缩定义；不声称 $A$ 在其自身内可缩。
+
+对 $P$ 的任意开子集 $O$ 及 $p\in O$，上述同伦使 $A$ 的每一点都能在 $O$ 内
+沿道路连到 $p$。因此 $O$ 中 $p$ 所属的道路分支含 $p$ 的一个开邻域。
+对该分支的每一点如此做，说明 $O$ 的每个道路分支均开；
+这些开道路分支构成道路连通邻域基，故 $P$ 局部道路连通。
+特别地 $P$ 自身的道路分支均开，且构成紧 $P$ 的一个开覆盖，故只有有限多个。
+其补集也是开集，故各分支闭；一个连通子集不能横跨这些开闭分支，
+所以道路分支与连通分支相同。
+
+$P\subset V\cong\mathbb R^N$ 紧，且已证明A.7的全部局部假设。
+该定理遂给 $P$ 在这个欧氏嵌入中的一个开邻域到 $P$ 的收缩。
+Hatcher [Corollary A.8，印刷p.527][Q110H]又给有限单纯复形 $L$
+及嵌入 $j:P\hookrightarrow L$、收缩 $\rho:L\to P$，满足 $\rho j=\operatorname{id}_P$。
+于是每个 $H_i(P;\mathbb Z)$ 是 $H_i(L;\mathbb Z)$ 的直和因子，
+故有限生成；$i>\dim L$ 时为零。
+这些成熟拓扑工具是在已构造的原W收缩内应用，不另作纯点正则性假设。证毕。
+
