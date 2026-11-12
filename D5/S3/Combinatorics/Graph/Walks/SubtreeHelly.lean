@@ -6,6 +6,7 @@
    utility: none
    digest: Finite-family Helly property for connected induced subgraphs of a tree. -/
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 
 /-
 Copyright (c) 2022 Kyle Miller. All rights reserved.
