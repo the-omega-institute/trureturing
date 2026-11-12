@@ -123,10 +123,6 @@ internal sealed class AuricSevenRigidityDocument : IScribeDocumentDefinition
     private static Formula Member(Formula a, Formula b) => Seq(a, Sp, InMacro, Sp, b);
     private static Formula Subset(Formula a, Formula b) => Seq(a, Sp, Subseteq, Sp, b);
 
-    private static Formula Span(Formula field, Formula set) => Call("Submodule.span", field, set);
-    private static Formula Map(Formula field, Formula map, Formula submodule) => Call("Submodule.map", map, submodule);
-    private static Formula MulLeft(Formula field, Formula a) => Call("LinearMap.mulLeft", field, a);
-    private static Formula Set3(Formula a, Formula b, Formula c) => Seq(OpenBrace, a, Comma, Sp, b, Comma, Sp, c, CloseBrace);
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Qualified(name), [.. args]);
     private static Formula Qualified(string name)
     {
@@ -149,8 +145,5 @@ internal sealed class AuricSevenRigidityDocument : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Neq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Mul(Formula a, Formula b) => Seq(a, Sp, Cdot, Sp, b);
-    private static Formula Div(Formula a, Formula b) => Seq(a, Sp, Slash, Sp, b);
-    private static Formula Neg(Formula a) => Seq(Minus, a);
     private static Formula Zero() => D(0);
 }

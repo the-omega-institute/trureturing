@@ -32,7 +32,7 @@ namespace D5.S3.Factorization.Galois.AuricSevenRigidity
 open Module Submodule
 
 set_option maxRecDepth 4000
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 200000
 
 variable {F D : Type*} [Field F] [Field D] [Algebra F D]
 
@@ -52,8 +52,8 @@ def LowIntersection (U : Submodule F D) : Prop :=
 private noncomputable def mulEquiv (a : D) (ha : a ≠ 0) : D ≃ₗ[F] D where
   toLinearMap := LinearMap.mulLeft F a
   invFun x := a⁻¹ * x
-  left_inv x := by simp [← mul_assoc, ha]
-  right_inv x := by simp [← mul_assoc, ha]
+  left_inv x := by simp [ha]
+  right_inv x := by simp [ha]
 
 private lemma translate_finrank (a : D) (ha : a ≠ 0) (W : Submodule F D) :
     finrank F (translate a W) = finrank F W :=
@@ -71,7 +71,7 @@ private lemma translate_translate (a b : D) (W : Submodule F D) :
   simp only [translate, ← Submodule.map_comp]
   congr 1
   ext x
-  simp [mul_assoc]
+  simp
 
 private lemma translate_one (W : Submodule F D) : translate 1 W = W := by
   ext x
@@ -91,7 +91,7 @@ private lemma ratio_not_base {p q : D} (hp : p ≠ 0)
     (h : LinearIndependent F ![q, p]) : q / p ∉ Set.range (algebraMap F D) := by
   rintro ⟨c, hc⟩
   apply (linearIndependent_fin2.mp h).2 c
-  simp only [Fin.isValue, Matrix.cons_val_one, Matrix.cons_val_zero, Matrix.head_cons] 
+  simp only [Fin.isValue, Matrix.cons_val_one, Matrix.cons_val_zero]
   rw [Algebra.smul_def]
   rw [hc]
   exact div_mul_cancel₀ q hp
@@ -330,7 +330,7 @@ private lemma dual_nonzero_pair {E : Type*} [AddCommGroup E] [Module F E]
     · simpa using (hell 1 (Set.mem_univ _)).trans_ne one_ne_zero
   · have hdep : ∃ c : F, c • z = s := by
       by_contra hn
-      push_neg at hn
+      push Not at hn
       exact h (linearIndependent_fin2.mpr ⟨hz, by simpa using hn⟩)
     obtain ⟨c, hc⟩ := hdep
     obtain ⟨ell, hell⟩ := Module.Projective.exists_dual_eq_one F hz
@@ -358,7 +358,7 @@ private lemma projection_finrank [FiniteDimensional F D]
     change finrank F f.range = 2
     omega
   intro hn
-  letI : Module.Free F f.range := Module.Free.of_divisionRing (K := F) (V := f.range)
+  haveI : Module.Free F f.range := Module.Free.of_divisionRing (K := F) (V := f.range)
   obtain ⟨z, hgen⟩ := (finrank_le_one_iff (K := F) (V := f.range)).mp hn
   have hs : s ≠ 0 := (linearIndependent_fin2.mp hst).1
   have hzgen : ∃ z₀ : U, z₀ ≠ 0 ∧ ∀ x ∈ f.range, ∃ a : F, a • z₀ = x := by
@@ -375,7 +375,7 @@ private lemma projection_finrank [FiniteDimensional F D]
       obtain ⟨a, ha⟩ := hgen ⟨x, hx⟩
       exact ⟨a, congrArg Subtype.val ha⟩
   obtain ⟨z₀, hz₀, hzgen⟩ := hzgen
-  obtain ⟨ell, hells, hellz⟩ := dual_nonzero_pair s z₀ hs hz₀
+  obtain ⟨ell, hells, hellz⟩ := dual_nonzero_pair (F := F) (E := U) s z₀ hs hz₀
   obtain ⟨x, hx0, hxR, hxell⟩ := hplane ell
   have hxrange : x 2 ∈ f.range := ⟨⟨x, hxR⟩, rfl⟩
   obtain ⟨c, hc⟩ := hzgen _ hxrange
@@ -474,7 +474,7 @@ private lemma relation_rigidity [FiniteDimensional F D] [CharZero F]
     thirdProjection U s t w
   let P : Submodule F U := f.range
   have hP : finrank F P = 2 := projection_finrank U hlow s t w hst hR hplane
-  letI : Module.Free F P := Module.Free.of_divisionRing (K := F) (V := P)
+  haveI : Module.Free F P := Module.Free.of_divisionRing (K := F) (V := P)
   let bP : Basis (Fin 2) F P := Module.finBasisOfFinrankEq F P hP
   let z : U := bP 0
   let z' : U := bP 1
@@ -502,25 +502,27 @@ private lemma relation_rigidity [FiniteDimensional F D] [CharZero F]
     let q : P := ⟨X 2, ⟨⟨X, hXR⟩, rfl⟩⟩
     have hq : (q : U) = bP.repr q 0 • z + bP.repr q 1 • z' := by
       have hq := congrArg (fun q : P ↦ (q : U)) (bP.sum_repr q)
-      simpa [Fin.sum_univ_two, z, z'] using hq.symm
+      simpa only [Submodule.coe_sum, Submodule.coe_smul, Fin.sum_univ_two,
+        Submodule.coe_add, Submodule.coe_smul, z, z'] using hq.symm
     have hc1 : bP.repr q 1 = 0 := by
       have h := congrArg ell hq
-      simp only [map_add, map_smul, hz, hz', smul_zero, smul_eq_mul,
-        mul_one, zero_add] at h
+      simp only [map_add, map_smul, hz, hz', smul_eq_mul,
+        mul_one, mul_zero, zero_add] at h
       exact h.symm.trans (hXell 2)
     let c := bP.repr q 0
     have hX2 : X 2 = c • z := by simpa [hc1, c, q] using hq
     let Y : Fin 3 → U := X - c • B.val
+    have hBR : relationMap U ![(s : D), (t : D), w] B.val = 0 := B.property
     have hYR : relationMap U ![(s : D), (t : D), w] Y = 0 := by
-      simp only [Y, map_sub, map_smul, hXR, B.property, smul_zero, sub_zero]
+      simp only [Y, map_sub, map_smul, hXR, hBR, smul_zero, sub_zero]
     have hY2 : Y 2 = 0 := by simp [Y, hX2, hB2]
     obtain ⟨a, ha⟩ := zero_third_relation U hlow s t w hst Y hYR hY2
     have hX : X = a • ![t, -s, 0] + c • B.val := by
       rw [← ha]
-      exact sub_add_cancel X (c • B.val)
+      exact (sub_add_cancel X (c • B.val)).symm
     have hac : a ≠ 0 ∨ c ≠ 0 := by
       by_contra hn
-      push_neg at hn
+      push Not at hn
       exact hX0 (by simpa [hn.1, hn.2] using hX)
     have he0 : a * ell t + c * ell (B.val 0) = 0 := by
       have h := hXell 0
@@ -561,7 +563,7 @@ theorem shared_plane_third_vector [CharZero F]
     (hU : finrank F U = 3) (hlow : LowIntersection U)
     (hQ : quotientSet U ⊆ quotientSet V) (bV : Basis (Fin 3) F V)
     (hs : (bV 0 : D) ∈ U) (ht : (bV 1 : D) ∈ U) : (bV 2 : D) ∈ U := by
-  letI : FiniteDimensional F D := Module.finite_of_finrank_pos (by omega)
+  haveI : FiniteDimensional F D := Module.finite_of_finrank_pos (by omega)
   let s : U := ⟨bV 0, hs⟩
   let t : U := ⟨bV 1, ht⟩
   let w : D := bV 2
@@ -614,7 +616,7 @@ theorem original_lemma40_3 [CharZero F]
     (hlow : LowIntersection U) (hQ : quotientSet U ⊆ quotientSet V) :
     ∃ γ : D, γ ≠ 0 ∧ V = translate γ U := by
   classical
-  letI : FiniteDimensional F D := Module.finite_of_finrank_pos (by omega)
+  haveI : FiniteDimensional F D := Module.finite_of_finrank_pos (by omega)
   let bU : Basis (Fin 3) F U := Module.finBasisOfFinrankEq F U hU
   let s : U := bU 0
   let t : U := bU 1
@@ -666,7 +668,7 @@ theorem original_lemma40_3 [CharZero F]
     rw [quotientSet_translate _ (inv_ne_zero hγ)]
     exact hQ
   have hthird : (bW 2 : D) ∈ U := shared_plane_third_vector hD U W hU hlow hQW bW
-    (by simpa [hbW, sW] using s.property) (by simpa [hbW, tW] using t.property)
+    (by simp [hbW, sW]) (by simp [hbW, tW])
   have hWU : W ≤ U := by
     intro v hv
     have hrepr := congrArg (fun v : W ↦ (v : D)) (bW.sum_repr ⟨v, hv⟩)
@@ -677,8 +679,8 @@ theorem original_lemma40_3 [CharZero F]
     intro i _
     apply U.smul_mem
     fin_cases i
-    · simpa [hbW, sW] using s.property
-    · simpa [hbW, tW] using t.property
+    · simp [hbW, sW]
+    · simp [hbW, tW]
     · exact hthird
   have hWeq : W = U := Submodule.eq_of_le_of_finrank_le hWU (by rw [hW, hU])
   refine ⟨γ, hγ, ?_⟩
