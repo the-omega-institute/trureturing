@@ -683,7 +683,10 @@ theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ}
       exp (-(19 / 40 : ℝ) * log r) ≤
           exp (1 + (-(19 / 40 : ℝ) * log P / j)) := by
         apply exp_le_exp.mpr
-        linarith
+        calc
+          -(19 / 40 : ℝ) * log r ≤ -(19 / 40 : ℝ) * (log P / j - 2) :=
+            mul_le_mul_of_nonpos_left hl (by norm_num)
+          _ ≤ 1 + (-(19 / 40 : ℝ) * log P / j) := by ring_nf; norm_num
       _ = exp 1 * exp (-(19 / 40 : ℝ) * log P / j) := exp_add _ _
       _ ≤ 4 * exp (-(19 / 40 : ℝ) * log P / j) :=
         mul_le_mul_of_nonneg_right (by linarith [exp_one_lt_d9]) (exp_pos _).le
@@ -753,5 +756,381 @@ theorem moving_window_exp_small {delta a : ℝ} (hdelta : 0 < delta) (ha : 0 < a
     x ^ k * exp (-a * x / u) ≤ x ^ k * (x ^ (k + 1))⁻¹ :=
       mul_le_mul_of_nonneg_left he (pow_nonneg hx.2.1.le _)
     _ = 1 / x := by rw [pow_succ]; field_simp
+
+private theorem first_price_error_bound {P C : ℝ}
+    (hP0 : 0 < P) (hP : 4 ≤ log P) (hC : 0 < C) :
+    priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤
+      (48 * C * P ^ (-priceExponent 1)) * beta 1 P := by
+  have h2 : log 2 ≤ 1 := by
+    have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hP4 : 4 ≤ P := by
+    have hh := log_le_self hP0.le
+    linarith
+  have hx : 0 < log P := by linarith
+  have hlog : log P / 2 ≤ log (P / 2) := by
+    rw [log_div hP0.ne' (by norm_num : (2 : ℝ) ≠ 0)]
+    linarith
+  have hlip := priceLip_half_bound 1 (by linarith : 1 < P) hP4
+    (by norm_num : (0 : ℝ) < 2) hlog
+  norm_num at hlip
+  have hb := first_beta_lower (by linarith : 2 ≤ P)
+  have hid : P ^ bhpExponent = P * P ^ (-priceExponent 1) := by
+    calc
+      _ = P ^ ((1 : ℝ) + -priceExponent 1) := by norm_num [bhpExponent, priceExponent]
+      _ = P ^ (1 : ℝ) * P ^ (-priceExponent 1) := rpow_add hP0 _ _
+      _ = _ := by rw [rpow_one]
+  calc
+    _ ≤ (24 / (P ^ 2 * log P)) * (C * P ^ bhpExponent) :=
+      mul_le_mul_of_nonneg_right hlip (by positivity)
+    _ = 24 * C * P ^ (-priceExponent 1) * (1 / (P * log P)) := by
+      rw [hid]
+      field_simp
+      <;> ring
+    _ ≤ 24 * C * P ^ (-priceExponent 1) * (2 * beta 1 P) :=
+      mul_le_mul_of_nonneg_left hb (by positivity)
+    _ = _ := by ring
+
+private theorem exchange_error_margin {j : ℕ} {P C : ℝ} (hj : 2 ≤ j)
+    (hP : 1 ≤ P) (hC : 0 < C) :
+    48 * C * P ^ (-priceExponent 1) +
+        8 * (j : ℝ) / (comparisonCount j P : ℝ) ≤
+      (j : ℝ) / 6 * ((1024 * (1 + C)) * P ^ (-priceExponent j)) := by
+  have hP0 : 0 < P := by linarith
+  have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
+  have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
+  have ht : 0 < P ^ (-priceExponent j) := rpow_pos_of_pos hP0 _
+  have hg : 0 < P ^ priceExponent j := rpow_pos_of_pos hP0 _
+  have hKlow : P ^ priceExponent j ≤ (comparisonCount j P : ℝ) := Nat.le_ceil _
+  have hK0 : (0 : ℝ) < comparisonCount j P := hg.trans_le hKlow
+  have hinv : 1 / (comparisonCount j P : ℝ) ≤ P ^ (-priceExponent j) := by
+    rw [rpow_neg hP0.le, one_div]
+    exact inv_anti₀ hg hKlow
+  have hgamma : -priceExponent 1 ≤ -priceExponent j := by
+    unfold priceExponent
+    norm_num
+    apply (div_le_iff₀ (by positivity : (0 : ℝ) < 40 * j)).mpr
+    nlinarith
+  have ht1 : P ^ (-priceExponent 1) ≤ P ^ (-priceExponent j) :=
+    rpow_le_rpow_of_exponent_le hP hgamma
+  have he := mul_le_mul_of_nonneg_left ht1 (show 0 ≤ 48 * C by positivity)
+  have hq := mul_le_mul_of_nonneg_left hinv (show 0 ≤ 8 * (j : ℝ) by positivity)
+  have hCjt := mul_le_mul_of_nonneg_right hj2 (mul_nonneg hC.le ht.le)
+  have hjt : 0 ≤ (j : ℝ) * P ^ (-priceExponent j) := by positivity
+  simp only [mul_one_div] at hq
+  nlinarith
+
+private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j)
+    (hP : 1 < P) (hr : 0 < r) (hc : 0 < c)
+    (hz : 4 ≤ log P / (j : ℝ))
+    (hlo : log P / (j : ℝ) - 2 ≤ log r)
+    (hhi : log r ≤ 2 * (log P / (j : ℝ)))
+    (hcap : 4 * (log P / (j : ℝ)) * exp (-(log P / (j : ℝ)) / 20) ≤
+      c * exp (-(21 / 20 : ℝ))) :
+    (comparisonCount j P : ℝ) ≤ c * r ^ bhpExponent / log r := by
+  have hP0 : 0 < P := by linarith
+  have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
+  have hx : 0 < log P := log_pos hP
+  have hlr : 0 < log r := by linarith
+  have hg : 0 < priceExponent j := by unfold priceExponent; positivity
+  have hpow1 : 1 ≤ P ^ priceExponent j := one_le_rpow hP.le hg.le
+  have hceil : (comparisonCount j P : ℝ) ≤ 2 * P ^ priceExponent j := by
+    have hh := Nat.ceil_lt_add_one (rpow_nonneg hP0.le (priceExponent j))
+    change (comparisonCount j P : ℝ) < _ at hh
+    linarith
+  have hform : P ^ priceExponent j = exp ((19 / 40 : ℝ) * (log P / j)) := by
+    rw [rpow_def_of_pos hP0]; congr 1; unfold priceExponent; ring
+  have hscaled := mul_le_mul_of_nonneg_right hcap
+    (exp_pos ((21 / 40 : ℝ) * (log P / j))).le
+  have hleft : 4 * (log P / (j : ℝ)) * exp (-(log P / (j : ℝ)) / 20) *
+      exp ((21 / 40 : ℝ) * (log P / j)) =
+      4 * (log P / (j : ℝ)) * exp ((19 / 40 : ℝ) * (log P / j)) := by
+    rw [mul_assoc, ← exp_add]; congr 2; ring
+  have hright : c * exp (-(21 / 20 : ℝ)) * exp ((21 / 40 : ℝ) * (log P / j)) =
+      c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := by
+    rw [mul_assoc, ← exp_add]; congr 2; ring
+  rw [hleft, hright] at hscaled
+  have hrpow : exp ((21 / 40 : ℝ) * (log P / j - 2)) ≤ r ^ bhpExponent := by
+    rw [rpow_def_of_pos hr]
+    apply exp_le_exp.mpr
+    norm_num [bhpExponent]
+    <;> linarith
+  apply (le_div_iff₀ hlr).mpr
+  calc
+    _ ≤ (2 * P ^ priceExponent j) * (2 * (log P / (j : ℝ))) :=
+      mul_le_mul hceil hhi (by positivity) (by positivity)
+    _ = 4 * (log P / (j : ℝ)) * exp ((19 / 40 : ℝ) * (log P / j)) := by rw [hform]; ring
+    _ ≤ c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := hscaled
+    _ ≤ _ := mul_le_mul_of_nonneg_left hrpow hc.le
+
+private theorem first_count_capacity {j : ℕ} {P c : ℝ} (hj : 2 ≤ j)
+    (hP : 1 < P) (hc : 0 < c)
+    (hcap : 3 * log P * exp (-(23 / 80 : ℝ) * log P) ≤ c) :
+    (comparisonCount j P : ℝ) + 1 ≤ c * P ^ bhpExponent / log P := by
+  have hP0 : 0 < P := by linarith
+  have hx : 0 < log P := log_pos hP
+  have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
+  have hg : 0 < priceExponent j := by unfold priceExponent; positivity
+  have hpow1 : 1 ≤ P ^ priceExponent j := one_le_rpow hP.le hg.le
+  have hceil := Nat.ceil_lt_add_one (rpow_nonneg hP0.le (priceExponent j))
+  change (comparisonCount j P : ℝ) < _ at hceil
+  have hgamma : priceExponent j ≤ 19 / 80 := by
+    unfold priceExponent
+    apply (div_le_div_iff₀ (by positivity : (0 : ℝ) < 40 * j) (by norm_num)).mpr
+    nlinarith
+  have hpow : P ^ priceExponent j ≤ exp ((19 / 80 : ℝ) * log P) := by
+    rw [rpow_def_of_pos hP0]
+    exact exp_le_exp.mpr (by nlinarith)
+  have hK : (comparisonCount j P : ℝ) + 1 ≤ 3 * exp ((19 / 80 : ℝ) * log P) := by
+    linarith
+  have hscaled := mul_le_mul_of_nonneg_right hcap
+    (rpow_pos_of_pos hP0 bhpExponent).le
+  have hid : 3 * log P * exp (-(23 / 80 : ℝ) * log P) * P ^ bhpExponent =
+      (3 * exp ((19 / 80 : ℝ) * log P)) * log P := by
+    rw [rpow_def_of_pos hP0, mul_assoc, ← exp_add]
+    have hh : -(23 / 80 : ℝ) * log P + log P * bhpExponent =
+        (19 / 80 : ℝ) * log P := by norm_num [bhpExponent]; <;> ring
+    rw [hh]; ring
+  rw [hid] at hscaled
+  apply (le_div_iff₀ hx).mpr
+  exact (mul_le_mul_of_nonneg_right hK hx.le).trans hscaled
+
+set_option maxHeartbeats 800000 in
+-- The simultaneous threshold keeps all finite exchange conditions in one telescope.
+/-- One threshold before the original record, its original price and the
+moving index. Only the real-center count supplier is used; the independently
+typed maximum-gap premise is retained. -/
+theorem bhp_uniform_moving_boundary_localization
+    (_hgap : BHPMaximumGap) (hcount : BHPShortIntervalCount) :
+    ∃ B : ℝ, 0 < B ∧ ∀ delta : ℝ, 0 < delta →
+      ∃ T : ℝ, 0 < T ∧ ∀ m : ℕ, 2 ≤ m →
+        ∀ mu : ℝ, 0 < mu → FullRecord m mu →
+          T ≤ (largestPrime m : ℝ) →
+          ∀ j : ℕ, 2 ≤ j →
+            (j : ℝ) ≤ delta * log (largestPrime m : ℝ) /
+              (log (log (largestPrime m : ℝ))) ^ 2 + 1 →
+            2 < cutoff j (beta 1 (largestPrime m : ℝ)) ∧
+              0 < layerPrime m j ∧
+              |log (layerPrime m j : ℝ) -
+                log (cutoff j (beta 1 (largestPrime m : ℝ)))| ≤
+                B * (largestPrime m : ℝ) ^ (-priceExponent j) := by
+  obtain ⟨C, c, X, hC, hc, hX, hcount⟩ := hcount
+  let H : ℝ := 1024 * (1 + C)
+  have hH : 0 < H := by dsimp [H]; positivity
+  refine ⟨H + 16 * C, by positivity, ?_⟩
+  intro delta hdelta
+  have hprobeLim : Tendsto (fun z : ℝ => 4 * z * exp (-z / 20)) atTop (𝓝 0) := by
+    convert (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 (1 / 20)
+      (by norm_num)).const_mul 4 using 1 <;> simp [rpow_one]; <;> congr 2 <;> ring
+  obtain ⟨S0, hS0⟩ := eventually_atTop.mp
+    (hprobeLim.eventually_le_const (by positivity : 0 < c * exp (-(21 / 20 : ℝ))))
+  let S : ℝ := max 8 (max (log X + 2) S0)
+  have hfirstLim : Tendsto (fun x : ℝ => 3 * x * exp (-(23 / 80 : ℝ) * x))
+      atTop (𝓝 0) := by
+    simpa [rpow_one, mul_assoc] using
+      (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 (23 / 80) (by norm_num)).const_mul 3
+  have hratio : Tendsto (fun x : ℝ => log x / x) atTop (𝓝 0) :=
+    isLittleO_log_id_atTop.tendsto_div_nhds_zero
+  have hevent : ∀ᶠ x : ℝ in atTop,
+      16 ≤ x ∧ H ≤ x ∧ X ≤ x ∧
+      log (2 * x / log 2) ≤ x / 4 ∧
+      3 * x * exp (-(23 / 80 : ℝ) * x) ≤ c ∧ S ≤ log x ∧
+      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 →
+        log x ≤ x / u ∧ x * exp (-(19 / 40 : ℝ) * x / u) ≤ 1 / x := by
+    filter_upwards [eventually_ge_atTop (16 : ℝ), eventually_ge_atTop H,
+      eventually_ge_atTop X, eventually_ge_atTop (8 * |log (2 / log 2)|),
+      hratio.eventually_le_const (by norm_num : (0 : ℝ) < 1 / 8),
+      hfirstLim.eventually_le_const hc,
+      tendsto_log_atTop.eventually_ge_atTop S,
+      moving_window_log_scale hdelta (by norm_num : (0 : ℝ) < 1),
+      moving_window_exp_small hdelta (by norm_num : (0 : ℝ) < 19 / 40) 1]
+      with x hx16 hxH hxX hconst hrat hfirst hS hscale hexp
+    have hx0 : 0 < x := by linarith
+    have hl2 : 0 < log 2 := log_pos (by norm_num)
+    have hid : log (2 * x / log 2) = log (2 / log 2) + log x := by
+      rw [← log_mul (by positivity : (2 / log 2 : ℝ) ≠ 0) hx0.ne']
+      congr 1; ring
+    have hrat' := (div_le_iff₀ hx0).mp hrat
+    have hlog : log (2 * x / log 2) ≤ x / 4 := by
+      rw [hid]
+      linarith [le_abs_self (log (2 / log 2))]
+    refine ⟨hx16, hxH, hxX, hlog, hfirst, hS, ?_⟩
+    intro u hu hule
+    exact ⟨by simpa only [one_mul] using hscale.2.2 u hu hule,
+      by simpa only [pow_one] using hexp.2 u hu hule⟩
+  obtain ⟨T, hT⟩ := eventually_atTop.mp
+    ((tendsto_log_atTop.eventually hevent).and (eventually_gt_atTop (1 : ℝ)))
+  refine ⟨max T 1, by positivity, ?_⟩
+  intro m hm mu hmu hrecord hlarge j hj hindex
+  let P : ℝ := largestPrime m
+  let x : ℝ := log P
+  let t : ℝ := P ^ (-priceExponent j)
+  let rho : ℝ := cutoff j (beta 1 P)
+  let rm : ℝ := rho * exp (-(H * t))
+  let rp : ℝ := rho * exp (H * t)
+  let K : ℕ := comparisonCount j P
+  let e : ℝ := 48 * C * P ^ (-priceExponent 1)
+  let q : ℝ := 8 * (j : ℝ) / (K : ℝ)
+  let Z : ℝ := x / (4 * (j : ℝ))
+  have hraw := hT P ((le_max_left T 1).trans hlarge)
+  have hP1 : 1 < P := hraw.2
+  have hP0 : 0 < P := by linarith
+  rcases hraw.1 with ⟨hx16, hxH, hxX, hlog, hfirst, hS, hwindow⟩
+  change 16 ≤ x at hx16
+  change H ≤ x at hxH
+  change X ≤ x at hxX
+  have hx0 : 0 < x := by linarith
+  have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
+  have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
+  have ht : 0 < t := rpow_pos_of_pos hP0 _
+  have hHt0 : 0 < H * t := mul_pos hH ht
+  have hw := hwindow (j : ℝ) hj0 hindex
+  have hz8 : 8 ≤ x / (j : ℝ) := (le_max_left _ _).trans (hS.trans hw.1)
+  have hzS0 : S0 ≤ x / (j : ℝ) :=
+    (le_trans (le_max_right _ _) (le_max_right _ _)).trans (hS.trans hw.1)
+  have hzX : log X + 2 ≤ x / (j : ℝ) :=
+    (le_trans (le_max_left _ _) (le_max_right _ _)).trans (hS.trans hw.1)
+  have hjx : (j : ℝ) ≤ x / 4 := by
+    have hh := (le_div_iff₀ hj0).mp hz8
+    linarith
+  have hjx1 : (j : ℝ) ≤ x := by linarith
+  have htform : t = exp (-(19 / 40 : ℝ) * x / j) := by
+    dsimp [t, x]
+    rw [rpow_def_of_pos hP0]
+    congr 1; unfold priceExponent; ring
+  have hxt : x * t ≤ 1 / x := by rw [htform]; exact hw.2
+  have hjt : (j : ℝ) * t ≤ 1 / x :=
+    (mul_le_mul_of_nonneg_right hjx1 ht.le).trans hxt
+  have hHjt : H * ((j : ℝ) * t) ≤ 1 := by
+    have hh := mul_le_mul_of_nonneg_left hjt hH.le
+    have hdiv : H * (1 / x) ≤ 1 := by
+      rw [mul_one_div]; exact (div_le_one hx0).mpr hxH
+    exact hh.trans hdiv
+  have hHt : H * t ≤ 1 := by
+    have hh := mul_le_mul_of_nonneg_right (show (1 : ℝ) ≤ j by linarith) hHt0.le
+    nlinarith only [hHjt, hh]
+  have hCt : C * t ≤ 1 / 1024 := by
+    dsimp only [H] at hHt
+    nlinarith only [hHt, ht.le]
+  have ht1 : P ^ (-priceExponent 1) ≤ t := by
+    apply rpow_le_rpow_of_exponent_le hP1.le
+    have hh : priceExponent j ≤ priceExponent 1 := by
+      unfold priceExponent
+      norm_num
+      apply (div_le_iff₀ (by positivity : (0 : ℝ) < 40 * j)).mpr
+      nlinarith
+    linarith
+  have he : 0 ≤ e := by dsimp [e]; positivity
+  have he1 : e ≤ 1 := by
+    have hh := mul_le_mul_of_nonneg_left ht1 (show 0 ≤ 48 * C by positivity)
+    dsimp only [e]
+    nlinarith only [hh, hCt]
+  have hshort : 4 * C * t ≤ 1 / 2 := by nlinarith only [hCt]
+  have hP4 : 4 ≤ P := by
+    have hh := log_le_self hP0.le
+    change x ≤ P at hh
+    linarith
+  have hactive : beta 1 P < beta j 2 := literal_cutoff_active hj hP0 (by linarith) hjx
+  have hs := cutoff_spec hj (beta_pos (by linarith : 2 ≤ P) (by norm_num : 1 ≤ 1))
+  have hrho : 2 < rho := hs.2.2.2.mp hactive
+  have hroot : beta j rho = beta 1 P := hs.2.2.1 hrho
+  have hrho0 : 0 < rho := by linarith
+  have hrm0 : 0 < rm := mul_pos hrho0 (exp_pos _)
+  have hrp0 : 0 < rp := mul_pos hrho0 (exp_pos _)
+  have hgeo := literal_displaced_probe_geometry hj hP0 (by linarith : 4 ≤ log P)
+    hrho.le hroot hlog hH hHt
+  change x / (j : ℝ) - 2 ≤ log rm ∧ x / (j : ℝ) - 1 ≤ log rp ∧
+    log rp ≤ 5 * x / (4 * (j : ℝ)) + 1 ∧
+    rm ^ bhpExponent / rm ≤ 4 * t ∧ rp ^ bhpExponent / rp ≤ 4 * t at hgeo
+  have hmrp : rm ≤ rp := by
+    dsimp only [rm, rp]
+    exact mul_le_mul_of_nonneg_left (exp_le_exp.mpr (by linarith : -(H * t) ≤ H * t)) hrho0.le
+  have hupp : log rp ≤ 2 * (x / (j : ℝ)) := by
+    have hid : 5 * x / (4 * (j : ℝ)) = (5 / 4 : ℝ) * (x / j) := by ring
+    rw [hid] at hgeo
+    linarith only [hgeo.2.2.1, hz8]
+  have hupm : log rm ≤ 2 * (x / (j : ℝ)) :=
+    (log_le_log hrm0 hmrp).trans hupp
+  have hcapz := hS0 (x / (j : ℝ)) hzS0
+  have hcapM := probe_count_capacity hj hP1 hrm0 hc (by linarith : 4 ≤ log P / (j : ℝ))
+    hgeo.1 hupm hcapz
+  have hcapR := probe_count_capacity hj hP1 hrp0 hc (by linarith : 4 ≤ log P / (j : ℝ))
+    (by linarith [hgeo.2.1] : log P / (j : ℝ) - 2 ≤ log rp) hupp hcapz
+  have hX0 : 0 < X := by linarith
+  have hXm : X ≤ rm := (log_le_log_iff hX0 hrm0).mp (by linarith [hgeo.1])
+  have hXp : X ≤ rp := hXm.trans hmrp
+  have hXP : X ≤ P := hxX.trans (log_le_self hP0.le)
+  have hwm : C * rm ^ bhpExponent / rm ≤ 4 * C * t := by
+    have hh := mul_le_mul_of_nonneg_left hgeo.2.2.2.1 hC.le
+    convert hh using 1 <;> ring
+  have hwp : C * rp ^ bhpExponent / rp ≤ 4 * C * t := by
+    have hh := mul_le_mul_of_nonneg_left hgeo.2.2.2.2 hC.le
+    convert hh using 1 <;> ring
+  have hhalfM : C * rm ^ bhpExponent ≤ rm / 2 := by
+    have hh := (div_le_iff₀ hrm0).mp (hwm.trans hshort)
+    linarith
+  have hhalfP : C * rp ^ bhpExponent ≤ rp / 2 := by
+    have hh := (div_le_iff₀ hrp0).mp (hwp.trans hshort)
+    linarith
+  have hlog4 : log 4 ≤ 3 := by
+    have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 4)
+    linarith
+  have hrm4 : 4 ≤ rm := (log_le_log_iff (by norm_num : (0 : ℝ) < 4) hrm0).mp
+    (by linarith [hgeo.1])
+  have hrm : 2 ≤ rm - C * rm ^ bhpExponent := by linarith
+  have hidwidth : P ^ bhpExponent = P * P ^ (-priceExponent 1) := by
+    calc
+      _ = P ^ ((1 : ℝ) + -priceExponent 1) := by norm_num [bhpExponent, priceExponent]
+      _ = P ^ (1 : ℝ) * P ^ (-priceExponent 1) := rpow_add hP0 _ _
+      _ = _ := by rw [rpow_one]
+  have hwidth : C * P ^ bhpExponent ≤ P / 2 := by
+    have hh := mul_le_mul_of_nonneg_left ht1 hC.le
+    have hh' := mul_le_mul_of_nonneg_left (hh.trans hCt) hP0.le
+    rw [hidwidth]
+    nlinarith only [hh', hP0.le]
+  have hrpP : rp ≤ P / 4 := by
+    have hphi : log rp ≤ 5 * x / 8 + 1 := by
+      have hd := div_le_div_of_nonneg_left (show 0 ≤ 5 * x by positivity)
+        (by norm_num : (0 : ℝ) < 8) (show (8 : ℝ) ≤ 4 * j by linarith)
+      linarith [hgeo.2.2.1]
+    apply (log_le_log_iff hrp0 (by positivity : 0 < P / 4)).mp
+    rw [log_div hP0.ne' (by norm_num : (4 : ℝ) ≠ 0)]
+    change log rp ≤ x - log 4
+    linarith
+  have hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent := by
+    nlinarith only [hhalfP, hrpP, hwidth, hP0]
+  have hZ : 0 < Z := by dsimp [Z]; positivity
+  have hlog2 : log 2 ≤ 1 := by
+    have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hZM : Z ≤ log (rm - C * rm ^ bhpExponent) := by
+    have hhalf : rm / 2 ≤ rm - C * rm ^ bhpExponent := by linarith
+    have hh := log_le_log (by positivity : 0 < rm / 2) hhalf
+    rw [log_div hrm0.ne' (by norm_num : (2 : ℝ) ≠ 0)] at hh
+    have hid : Z = (x / (j : ℝ)) / 4 := by dsimp [Z]; ring
+    rw [hid]
+    linarith only [hh, hgeo.1, hz8, hlog2]
+  have hZP : Z ≤ log rp := by
+    have hid : Z = (x / (j : ℝ)) / 4 := by dsimp [Z]; ring
+    rw [hid]
+    linarith only [hgeo.2.1, hz8]
+  have hKlow : P ^ priceExponent j ≤ (K : ℝ) := Nat.le_ceil _
+  have hKpos : (0 : ℝ) < K := (rpow_pos_of_pos hP0 _).trans_le hKlow
+  have hK : 1 ≤ K := by
+    have hh : 0 < K := by exact_mod_cast hKpos
+    omega
+  have hq : 0 ≤ q := by dsimp [q]; positivity
+  have hbudget : 2 * log P ≤ q * ((K : ℝ) * Z) := by
+    have hid : q * ((K : ℝ) * Z) = 2 * x := by
+      dsimp [q, Z]
+      field_simp
+      <;> ring
+    rw [hid]
+  have hsmall : (j : ℝ) / 3 * (H * t) ≤ 1 := by nlinarith only [hHjt]
+  exact counted_displaced_cutoff_log_localization hm hmu hrecord hj hK rfl hP4
+    hC hX hH rfl rfl hactive rfl rfl hcount hXP hXm hXp
+    (first_count_capacity hj hP1 hc hfirst) hcapM hcapR hwidth hrm hprefix
+    he he1 hq (first_price_error_bound hP0 (by linarith) hC) hZ hZM hZP hbudget
+    (exchange_error_margin hj hP1.le hC) hsmall hwm hwp hshort
 
 end D5.S3.Arith.Robin.PriceRecord.ActualMovingBoundaryLocalization
