@@ -1,0 +1,15 @@
+**命题 90.9（全域排除与带质量捷径）。** 在89.1的原载体上，对任意 $p,r\in K$，以下等价：
+
+$$
+\begin{gathered}
+\exists f\in[0,u]:f(p)=1,\ f(r)=0;\\
+\|p-r\|_C=2;\\
+\nexists\ t\in(0,1),\ x,y\in K:\quad p+t y=r+t x.
+\end{gathered}
+\tag{90.16}
+$$
+
+因此在 $\mathrm B$ 下，$\mathrm A$ 恰说每个局部对径对在这个原基范数中仍相距二，亦即这些局部对径对全部没有(90.16)的带质量捷径。
+
+证明。这里只使用成熟基范数／序单位极性；其标准形式见 L. Lami、C. Palazuelos、A. Winter，*Ultimate data hiding in quantum mechanics and beyond*，[arXiv:1703.03392v2 §II.1 Definition 2、Lemma 3](https://arxiv.org/html/1703.03392v2#S2.SS1)。为核对原质量与量词，给出所需自含论证。
+
