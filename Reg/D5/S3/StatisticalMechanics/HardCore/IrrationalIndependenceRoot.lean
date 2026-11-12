@@ -118,4 +118,108 @@ def resultRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _,
 #print axioms family
 #print axioms resultRegistration
 
+abbrev polynomialSignature : Signature where
+  Params := Unit
+  State _ := Polynomial ℤ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def factor : Polynomial ℤ :=
+  (1 + 2 * Polynomial.X ^ 2) * (1 + 128 * Polynomial.X + 128 * Polynomial.X ^ 2)
+
+def polynomialActual : Realization polynomialSignature :=
+  realize polynomialSignature (fun _ _ p => decide (p = factor)) (fun e => nomatch e)
+
+def polynomialRejected : Realization polynomialSignature :=
+  realize polynomialSignature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev polynomialArena : Arena where
+  signature := polynomialSignature
+  Law R :=
+    R.readout () () (independencePolynomial
+      _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.graph Finset.univ) = true ∧
+    (independencePolynomial
+      _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.graph Finset.univ).natDegree = 4 ∧
+    (∀ k : ℕ, ((configurations
+      _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.graph Finset.univ).filter
+        (fun S => S.card = k)).card =
+      if k = 0 then 1 else if k = 1 then 128 else if k = 2 then 130
+      else if k = 3 then 256 else if k = 4 then 256 else 0)
+
+private theorem polynomial_bridge :
+    (type_of% _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.native_polynomial) ↔
+      polynomialArena.Law polynomialActual := by
+  change (_ = factor ∧ _) ↔ (decide (_ = factor) = true ∧ _)
+  simp only [decide_eq_true_eq]
+
+private theorem polynomial_rejected_law : ¬ polynomialArena.Law polynomialRejected := by
+  intro h
+  exact Bool.false_ne_true h.1
+
+private theorem polynomial_dependence : ObservationalDependence polynomialSignature polynomialActual := by
+  intro i
+  refine ⟨(), factor, 0, ?_⟩
+  have hf : (0 : Polynomial ℤ) ≠ factor := by
+    intro h
+    have hh := congrArg (fun p : Polynomial ℤ => p.coeff 0) h
+    norm_num [factor, Polynomial.coeff_one, Polynomial.coeff_X] at hh
+  simp [polynomialActual, realize, hf]
+
+def polynomialFamily : Registration polynomialArena
+    (type_of% _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.native_polynomial) where
+  actual := polynomialActual
+  bridge := polynomial_bridge
+  variation := ⟨polynomial_bridge.mp
+    _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.native_polynomial,
+    polynomialRejected, polynomial_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨polynomialRejected, ?_, rfl, polynomial_rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro i
+      exact nomatch i
+  dependence := polynomial_dependence
+
+def polynomialRegistration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    _root_.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.native_polynomial
+    (Realization polynomialSignature) Unit Unit where
+  unitName := `Reg.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.polynomialUnit
+  realizationName := `Reg.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot.polynomialFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨polynomialArena⟩
+  objectArena := .source ⟨polynomialArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source polynomialArena ⟨polynomialFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize polynomialSignature polynomialActual.readout polynomialActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms polynomialFamily
+#print axioms polynomialRegistration
+
 end Reg.D5.S3.StatisticalMechanics.HardCore.IrrationalIndependenceRoot
