@@ -335,7 +335,7 @@ theorem coefficients_three_domains
     change t*(x*B (k-1)*(z*B (k+1))) < t*(y*B k)^2
     have hmul := mul_le_mul_of_nonneg_right hbin (mul_nonneg (by linarith : 0 ≤ x) (by linarith : 0 ≤ z))
     have hstrict := mul_lt_mul_of_pos_right hscalar (sq_pos_of_pos (hB k (by omega)))
-    nlinarith [hmul, hstrict]
+    nlinarith only [hmul, hstrict]
   exact (mul_lt_mul_iff_right₀ ht).mp hscaled
 
 end D5.S3.Combinatorics.Graph.ZeroDivisor.NativeCoefficients

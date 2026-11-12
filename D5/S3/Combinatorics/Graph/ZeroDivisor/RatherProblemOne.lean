@@ -85,9 +85,13 @@ theorem rather_problem_one (p q r : ℕ)
     simpa only [ZMod.card] using hco
   obtain ⟨hN, hposQ, htailQ, hlcQ⟩ := hco'
   have hpos (k : ℕ) (hk : k ≤ N) : 0 < s k := by
-    exact_mod_cast hposQ k hk
+    have h := hposQ k hk
+    dsimp only [sQ] at h
+    exact_mod_cast h
   have htail (k : ℕ) (hk : N < k) : s k = 0 := by
-    exact_mod_cast htailQ k hk
+    have h := htailQ k hk
+    dsimp only [sQ] at h
+    exact_mod_cast h
   have hcount (k : ℕ) : s k =
       (((configurations G Finset.univ).filter fun S => S.card = k).card : ℤ) := by
     exact Support.coefficient_card Finset.univ k
@@ -121,26 +125,32 @@ theorem rather_problem_one (p q r : ℕ)
   have hlc (k : ℕ) (hk : 1 ≤ k) : s (k-1)*s (k+1) ≤ s k^2 := by
     by_cases hkN : k < N
     · have h : s (k-1)*s (k+1) < s k^2 := by
-        exact_mod_cast hlcQ k hk hkN
+        have h := hlcQ k hk hkN
+        dsimp only [sQ] at h
+        exact_mod_cast h
       exact h.le
     · rw [htail (k+1) (by omega), mul_zero]
       exact sq_nonneg _
   let f := fun k => (s k : ℝ)
   have hposR (k : ℕ) (hk : k ≤ N) : 0 < f k := by
+    dsimp only [f]
     exact_mod_cast hpos k hk
   have hlcR (k : ℕ) (hk : k+2 ≤ N) : f k*f (k+2) < f (k+1)^2 := by
     have h := hlcQ (k+1) (by omega) (by omega)
     norm_num only [Nat.add_sub_cancel] at h
+    dsimp only [f]
+    dsimp only [sQ] at h
     exact_mod_cast h
   obtain ⟨j, hj, hmax'⟩ := Finset.exists_max_image (Finset.range (N+1)) f
     (Finset.nonempty_range_iff.mpr (by omega))
-  have hjN : j ≤ N := by simpa only [Finset.mem_range] using hj
+  have hjN : j ≤ N := by have := Finset.mem_range.mp hj; omega
   have hmax (i : ℕ) (hi : i ≤ N) : f i ≤ f j :=
     hmax' i (Finset.mem_range.mpr (by omega))
   have upstep (i : ℕ) (hi : i+1 ≤ j) : s i ≤ s (i+1) := by
     by_cases he : i+1 = j
     · have h := hmax i (by omega)
       rw [← he] at h
+      dsimp only [f] at h
       exact_mod_cast h
     · have h := D5.S3.Combinatorics.RealRootedPermutations.LogConcave.increasing_before_max
         hposR hlcR hjN hmax i (by omega)
@@ -150,6 +160,7 @@ theorem rather_problem_one (p q r : ℕ)
     · by_cases he : i = j
       · subst i
         have h := hmax (j+1) (by omega)
+        dsimp only [f] at h
         exact_mod_cast h
       · have h := D5.S3.Combinatorics.RealRootedPermutations.LogConcave.decreasing_after_max
           hposR hlcR hjN hmax i (by omega) (by omega)
