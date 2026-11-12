@@ -95,12 +95,14 @@ private theorem weighted_boundary_limit {α : Type*} {l : Filter α}
     simp only [zero_add] at hh'
     apply hh'.congr'
     filter_upwards [hX.eventually_gt_atTop 0] with t ht
-    field_simp [ht.ne'] <;> ring
+    field_simp [ht.ne']
+    ring
   have hR : Tendsto R l (𝓝 1) := by
     have hh := hratio.mul hHX
     norm_num only [Nat.cast_ofNat, mul_inv_cancel₀ (by norm_num : (2 : ℝ) ≠ 0)] at hh
-    convert hh using 1 <;> dsimp [R, H, X] <;> congr 1
+    convert hh using 1
     funext t
+    dsimp [R, H, X]
     ring
   have hRerr : Tendsto (fun t => X t * (R t - 1)) l (𝓝 0) :=
     record_logarithmic_balance_limit m mu hm hmu hrecord 2 (by omega) hP
@@ -117,7 +119,8 @@ private theorem weighted_boundary_limit {α : Type*} {l : Filter α}
     (A t * R t) = X t * (beta 2 (Q t) / beta 1 (P t) - 1)
   dsimp [A, B, R, X, H, beta]
   field_simp [hg, (by linarith : P t ≠ 0), (by linarith : Q t ≠ 0),
-    hlogP, (log_pos hq).ne'] <;> ring
+    hlogP, (log_pos hq).ne']
+  ring
 
 private theorem window_fee {P Q : ℝ} {p : ℕ}
     (hP : 2 ≤ P) (hQ : 4 ≤ Q) (hQP : P ≤ Q ^ 2)
@@ -154,9 +157,10 @@ private theorem window_fee {P Q : ℝ} {p : ℕ}
     calc
       _ ≤ (256 / (Q ^ 3 * log P)) * (Q / log Q ^ 3) := by
         apply mul_le_mul_of_nonneg_right _ (by positivity)
-        convert hLip using 1 <;> ring
+        convert hLip using 1
+        ring
       _ = 256 * (1 / (Q ^ 2 * log P)) / log Q ^ 3 := by
-        field_simp [hQ0.ne', hH.ne', hX.ne'] <;> ring
+        field_simp [hQ0.ne', hH.ne', hX.ne']
       _ ≤ 256 * (1 / (P * log P)) / log Q ^ 3 := by
         apply div_le_div_of_nonneg_right _ (by positivity)
         exact mul_le_mul_of_nonneg_left
@@ -166,13 +170,14 @@ private theorem window_fee {P Q : ℝ} {p : ℕ}
         have hh := div_le_div_of_nonneg_right
           (mul_le_mul_of_nonneg_left hbase (by norm_num : (0 : ℝ) ≤ 256))
           (by positivity : 0 ≤ log Q ^ 3)
-        convert hh using 1 <;> ring
+        convert hh using 1
+        ring
   have hcenter : |beta 2 Q - beta 1 P| =
       beta 1 P * |beta 2 Q / beta 1 P - 1| := by
     calc
       _ = |beta 1 P * (beta 2 Q / beta 1 P - 1)| := by
         congr 1
-        field_simp [hlam.ne'] <;> ring
+        field_simp [hlam.ne']
       _ = _ := by rw [abs_mul, abs_of_pos hlam]
   have hfee := (abs_sub_le (beta 2 (p : ℝ)) (beta 2 Q) (beta 1 P)).trans
     (add_le_add (hvar.trans hnorm) le_rfl)
@@ -259,7 +264,7 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
     simpa using hlogr.neg.add (hE.const_mul 2)
   have huppersep : Tendsto (fun t => (Q t * (1 + 1 / H t ^ 3)) / P t)
       l (𝓝 0) := by
-    have hh := hsep.mul (tendsto_const_nhds.add hd)
+    have hh := hsep.mul ((tendsto_const_nhds (x := (1 : ℝ))).add hd)
     simp only [zero_mul] at hh
     convert hh using 1
     funext t
@@ -340,7 +345,7 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
       linarith only [hlogs.2]
     have hmul : 0 < X t * (-log (r t) - 2 / H t ^ 3) := by
       have hh := mul_le_mul_of_nonneg_left hrle hXp.le
-      simp only [div_eq_mul_inv, one_mul] at hXd' ⊢
+      simp only [div_eq_mul_inv] at hXd' ⊢
       nlinarith only [hh, hsecond', hXd', hb]
     exact (pos_of_mul_pos_right hmul hXp.le).trans_le hlower
   have heta_upper : eta ≤ -log (r t) := by
