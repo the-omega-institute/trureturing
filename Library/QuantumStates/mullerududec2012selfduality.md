@@ -2349,438 +2349,578 @@ certificate or worldwide novelty conclusion is asserted.
 
 ## Appendix: an exhaustive binary comparison and a single coupling path
 
-This is a conditional paper application to finite registers of identical binary units.
-It reuses the preceding positive-form bridge and published group classifications;
-the weaker static entrance and the sparse operational composition are proved below.
-It is neither Lean/kernel verification nor a minimum-axiom or worldwide novelty claim.
-Endpoint reciprocity means exchanging the two arguments of a comparison, not exchanging
-the execution order of measurements. All state sets, cones and probability orders below
-are the original ones, rather than a reconstructed submodel selected from them.
+This is a conditional PAPER application to finite registers of identical binary units,
+using ordered convex geometry, compact Lie classification and rectangular Choi theory.
+All cones, states, selected effects, typed events and records are the original objects.
+Endpoint reciprocity exchanges comparison arguments, not measurement execution order.
+The conclusions are not Lean/kernel verification, device validation, a physical origin,
+global novelty, efficient synthesis or a minimum independent physical axiom count.
 
-### 1. Exhaustion, the original ball and the original single-unit menu
+### 1. Intrinsic control geometry, comparisons and the static PD alternative
 
-Keep the preceding nonzero finite-dimensional $(V,C,u)$, entire compact $K$, all
-$P=\operatorname{ext}K$, and original dual cone $C^*$. Select positive $e_p$ with
-$e_p(p)=1$, $e_p(q)=e_q(p)$ and finite positive-dual generation
-$C^*=\operatorname{cone}\{e_p:p\in P\}$. The original effect menu $D$ is convex,
-contains $0,u,e_p$ and lies in $[0,u]$. Neither menu leastness nor complement closure,
-O, spectrality, a preferred frame, or a Jordan algebra is assumed. Reuse
-[the minimum lemma](#3-a-minimum-lemma-for-signed-directions) to obtain
+**Original local data.** Let $V\ne0$ be finite-dimensional real, $C$ closed, convex,
+pointed and generating, and $u$ strictly positive on $C\setminus\{0\}$. Keep the
+entire compact base $K=C\cap\{u=1\}$ and all $P=\operatorname{ext}K$; thus
+$\operatorname{aff}K=\{u=1\}$ and $\operatorname{span}P=V$. The original convex
+menu $D\subseteq[0,u]$ contains $0,u$ and a selected linear effect $e_p$ for every
+$p\in P$, with $e_p(p)=1$ and $e_p(q)=e_q(p)$. Require one exhaustive pure pair:
+$e_{p_0}+e_{q_0}=u$ on **all** $V$, not just a chosen list of readings.
 
-$$
-Lp=e_p,\quad B(x,y)=(Lx)(y),\quad L(C)=C^*,\quad B>0,
-\quad B(p,p)=1,\quad h=L^{-1}u,\quad r=B(h,h)=u(h).
-$$
+Before defining any comparison form, supply an actual compact connected matrix group
+$H$ of normalization-preserving linear cone automorphisms. On the **whole**
+$W=\ker u$ there is a positive-definite metric $s$ for which $H$ is orthogonal
+and transitive on the entire unit sphere. This is stronger than transitivity on
+pure states. No continuity or equivariance of the selection $p\mapsto e_p$ is assumed.
+The primitive continuous controls below include their complete actual one-parameter
+paths for every real parameter, with actual composition and inverses.
 
-Write $Q(x)=B(x,x)$ and $\|x\|=\sqrt{Q(x)}$. The additional **binary exhaustion**
-condition is the existence of pure $p,q$ with $e_p+e_q=u$ as functionals on all $V$.
-An equality only on a selected list of readings is insufficient.
-
-**Lemma (bounds before exhaustion).** Every $e_p$ has $e_p(x)\le1$ on $K$, with
-equality exactly at $x=p$. In particular the upper bound need not be an independent
-premise of the positive-form bridge, and $h-p\in C$ for every pure $p$.
-
-**Proof.** Cauchy–Schwarz gives $0\le B(p,q)\le1$ for pure $p,q$. Equality at the
-upper end implies $\|p-q\|^2=2-2B(p,q)=0$, hence $p=q$. Express any $x\in K$ as
-a finite convex sum $\sum_i\alpha_iq_i$. Then $e_p(x)=\sum_i\alpha_iB(p,q_i)\le1$;
-equality forces every positive-weight $q_i=p$. Thus $u-e_p\in C^*$, and applying
-$L^{-1}$ gives $h-p\in C$. This proof uses neither exhaustion nor O. ∎
-
-**Proposition (weaker rank-two entrance).** Binary exhaustion is equivalent to $r=2$.
-Under either condition, put $c=h/2$ and $W=\ker u=h^\perp$. Then
+**Theorem (original ball before the pairing).** These data imply that the whole
+original base is an ellipsoidal ball. In calibrated coordinates $(t,x)$,
 
 $$
-K=\{c+w:w\in W,\ \|w\|^2\le1/2\},\qquad
-C=\{tc+w:t\ge0,\ w\in W,\ \sqrt2\|w\|\le t\}.
+u(t,x)=t,\quad C=\{(t,x):t\ge\|x\|\},\quad K=\{(1,x):\|x\|\le1\},
+\qquad p_v=(1,v),\quad e_{p_v}(t,x)=\frac{t+v\cdot x}{2}\quad(\|v\|=1).
 $$
 
-All boundary points of this original ball are pure. Its dimension
-$d=\dim V-1$ is not selected by the static premises.
+**Proof.** Haar-average an orbit in $K$ to obtain an $H$-fixed $c\in K$.
+This analytic construction uses compactness and convexity, not an actual infinite
+mixing program. Exhaustion and self-confirmation imply $p_0\ne q_0$ (otherwise
+$2=1$ at that point). Therefore $R=\max_{x\in K}\|x-c\|_s>0$. An attaining
+point has its entire radius-$R$ sphere in $K-c$ by the assumed action on $W$.
+Its convex hull is the full ball; maximality of $R$ gives the reverse inclusion.
+Use $tc+w\mapsto(t,w/R)$ and the metric $s$ to obtain the displayed cone.
 
-**Proof.** Exhaustion gives $h=p+q$. Evaluation at $p$ gives $B(p,q)=0$ and hence
-$r=Q(p+q)=2$. Conversely assume $r=2$. For pure $p$, the lemma gives $h-p\in C$,
-and $u(h-p)=1$, $Q(h-p)=2-2+1=1$. For every finite pure decomposition of $x\in K$,
+Write $e_{p_v}(t,x)=a_vt+b_v\cdot x$. Properness is exactly
+$\|b_v\|\le a_v$, $a_v+\|b_v\|\le1$. Self-confirmation makes
+$1=a_v+b_v\cdot v\le a_v+\|b_v\|\le1$, so equality gives
+$b_v=\lambda_vv$, $a_v=1-\lambda_v$, $0\le\lambda_v\le1/2$.
+Reciprocity now reads $(\lambda_v-\lambda_w)(1-v\cdot w)=0$.
+Distinct unit vectors have $v\cdot w<1$, hence there is one common $\lambda$.
+The constant part of exhaustion gives $2(1-\lambda)=1$, and its vector part
+then makes the exhaustive pair antipodal. Thus $\lambda=1/2$, proving the
+formula for every **original selected** effect, without a selection symmetry axiom. ∎
 
-$$
-Q(x)=1-\frac12\sum_{i,j}\alpha_i\alpha_j\|p_i-p_j\|^2\le1.
-$$
+**Corollary (finite PD, full original menu and genuine leastness).** Every
+$f\in C^*$ is a finite nonnegative sum of selected $e_p$, $D=[0,u]$, and each
+$e_p$ is least among all proper effects confirming $p$ in the original order.
 
-Equality forces all positive-weight pure points to coincide. Therefore $h-p$ is
-pure: otherwise a nontrivial pure decomposition would make its square strictly less
-than one. This proves the converse exhaustion $e_p+e_{h-p}=u$ and central symmetry
-$h-K=K$ by convex decomposition. Notice that no spectral expansion was used.
-
-Let $M=K-c\subset W$. Self-duality of $C$, tested against all normalized $c+v$,
-says $w\in M$ exactly when $1/2+B(w,v)\ge0$ for every $v\in M$. Central symmetry
-converts this to $B(w,v)\le1/2$ for every $v\in M$. Thus $N=\sqrt2M$ equals its
-Euclidean polar $N^\circ=\{z:B(z,n)\le1\ (n\in N)\}$. Taking $z=n$ gives
-$N\subseteq\{z:\|z\|\le1\}$. Reversing this inclusion under polarity gives
-$\{z:\|z\|\le1\}\subseteq N^\circ=N$. This proves the ball and, by coning, the
-displayed original cone. Strict convexity identifies all its boundary points as
-pure. The exhaustive pair is distinct, so $d\ge1$. ∎
-
-**Proposition (full original single-unit menu and genuine leastness).** On this ball
-$D=[0,u]$, and $e_p$ is the least element, in the original $C^*$ order, among
-all $f\in[0,u]$ with $f(p)=1$.
-
-**Proof.** Write $f=Lx$, $x=ac+v$, $v\in W$, and $b=\sqrt2\|v\|$.
-The two inequalities $x,h-x\in C$ are exactly
-$0\le b\le\min(a,2-a)$. If $b>0$, $p=c+v/b$ is pure and
+**Proof.** For $f(t,x)=at+b\cdot x$ put $r_b=\|b\|$; positivity is $a\ge r_b$.
+If $r_b>0$ set $v=b/r_b$; otherwise choose any unit $v$. Then
 
 $$
-f=\frac{a-b}{2}u+b e_p+\left(1-\frac{a+b}{2}\right)0.
+f=(a+r_b)e_{p_v}+(a-r_b)e_{p_{-v}}.
 $$
 
-The coefficients are nonnegative and sum to one. Convexity of the original $D$
-therefore puts every $f\in[0,u]$ in $D$; for $b=0$ use $f=(a/2)u$.
-No closure, limiting menu argument or bounded doubling is needed. Now fix a pure
-$p=c+s/\sqrt2$ with $\|s\|=1$. The equality
-$1=f(p)=a/2+B(v,s)/\sqrt2\le(a+b)/2\le1$ forces, when $b>0$,
-$a+b=2$ and $v=(b/\sqrt2)s$. Hence
-$f=(1-b)u+b e_p$, $0\le b\le1$. The case $b=0$ gives $f=u$ as well. Consequently
-$f-e_p=(1-b)(u-e_p)\in C^*$. This is a least confirmer on the whole original cone,
-not merely a minimal member of a selected menu. ∎
+This is finite PD, with zero coefficients omitted and the empty sum for zero.
+For a proper $f$, $r_b\le\min(a,1-a)$, and
+$f=2r_b e_{p_v}+(a-r_b)u+(1-a-r_b)0$ is a convex combination in the original
+$D$. No closure or independent menu assembly is used. Any proper confirmer of
+$p_v$ has $f=(1-\mu)t+\mu v\cdot x$, $0\le\mu\le1/2$, by the same equality
+argument. Thus $f-e_{p_v}=(1/2-\mu)(t-v\cdot x)\in C^*$, proving leastness
+on the full original cone, rather than mere minimality in a restricted menu. ∎
 
-In Bloch coordinates $\widehat a=(1,a)$, $a=\sqrt2(x-c)\in W$, the unit ball is
-the entire single-unit state set and
-$e_{\widehat b}(\widehat a)=(1+b\cdot a)/2$ for $\|b\|=1$.
-Every $d\ge1$ satisfies these static conditions: take the Lorentz cone
-$t\ge\|a\|$, $u(t,a)=t$, $B((t,a),(s,b))=(ts+a\cdot b)/2$ and the full menu.
-Its pure rays generate its self-dual cone, so PD holds and $h=(2,0)$, $r=2$.
-The interval $d=1$ is the classical bit. The interaction result below explicitly
-uses $d\ge2$. Neither three-dimensional space nor a spacetime dimension follows
-from this static geometry. Full **single-unit effects** do not assert the joint
-availability of every tuple of effects as an actual measurement or instrument.
+The comparison form is now a consequence:
+$B((t,x),(z,y))=(tz+x\cdot y)/2$, $Lp=B(p,-)=e_p$,
+$L(C)=C^*$, $h=L^{-1}u=(2,0)=2c$, $B(h,h)=u(h)=2$.
+It is unique because $P$ spans $V$, positive definite, and preserved by $H$.
+Indeed $H$ fixes $c$ and acts orthogonally on $W$; $B|_W$ is a positive scalar
+multiple of $s$. Connectedness puts the faithful local action in $\mathrm{SO}(d)$,
+$d=\dim W$. Any normalized cone automorphism fixes the unique ball center and
+is orthogonal in these coordinates, so $e_{gp}=e_p\circ g^{-1}$ also follows.
+The selected effect saturates only at its own pure point. Dimension zero is
+excluded by exhaustion, and a connected orthogonal group cannot be transitive
+on $S^0$ in dimension one. Thus this connected-control entrance has $d\ge2$.
 
-### 2. Actual two-body classification and the two state-set inclusions
+**Independent static PD theorem.** Without any $H$, instead assume the preceding
+reciprocal positive self-confirmers, finite PD $C^*=\operatorname{cone}\{e_p\}$,
+convex original $D\subseteq[0,u]$ containing $0,u,e_p$, and exhaustion.
+The earlier [minimum lemma](#3-a-minimum-lemma-for-signed-directions) gives the
+unique positive-definite $B$, $Lp=e_p$, $L(C)=C^*$ and $B(p,p)=1$.
+The upper bound on each $e_p$ can itself be derived before using exhaustion:
+Cauchy–Schwarz gives $0\le B(p,q)\le1$, with equality only for $p=q$;
+a finite pure convex decomposition gives $e_p(x)\le1$, with equality only at
+$x=p$. In particular $h-p\in C$ for $h=L^{-1}u$.
 
-Use one fixed local Bloch calibration $F$. For the original pair, assume faithful
-local tomography on $V_2=V\otimes_{\mathbb R}V$, a compact convex normalized $K_2$
-with full linear span $V_2$, and actual preparations $\widehat a\otimes\widehat b$
-and product tests. In these coordinates a pure product test has probability
-$\frac14(\widehat x\otimes\widehat y)\cdot\omega$; after every actual reversible
-operation this remains in $[0,1]$. These are assumptions about actual joint
-preparations and readings, beyond the one-body convex geometry.
+Put $r=B(h,h)=u(h)$. Exhaustion is equivalent to $r=2$. Forward, $h=p+q$
+and evaluation at $p$ gives $B(p,q)=0$. Conversely, if $r=2$, then $h-p\in K$
+and $B(h-p,h-p)=1$. For any pure decomposition $x=\sum_i\alpha_ip_i$,
 
-Let $H\subseteq\mathrm{SO}(d)$ be closed, connected and sphere-transitive,
-$d\ge2$. Its independent local actions $\widehat H\otimes\widehat H$ are actual.
-Actual normalized reversible maps form a closed real linear group $G_2$ preserving
-$K_2$. Suppose a closed connected subgroup $C_2\subseteq G_2$ contains the local
-controls and an element outside the **entire** product rotation group
-$\{\widehat A\otimes\widehat B:A,B\in\mathrm{SO}(d)\}$.
-Being outside a smaller chosen $H\otimes H$ alone would not suffice.
+$$
+B(x,x)=1-\frac12\sum_{i,j}\alpha_i\alpha_j\|p_i-p_j\|_B^2\le1.
+$$
 
-**Compactness.** For any such original $K_N$ spanning $V_N$,
-$\operatorname{conv}(K_N\cup-K_N)$ is a compact symmetric convex body with
-nonempty interior. Its Minkowski functional is a norm preserved by every
-automorphism of $K_N$. The corresponding linear isometry group is compact:
-its maps and inverses are uniformly bounded in any auxiliary norm; every limit
-is invertible and remains an isometry. Closed $G_N$ and its closed subgroups
-are therefore compact. No transitivity on composite pure states is needed.
+Equality forces all positive-weight pure points to coincide, so $h-p$ is pure
+and gives exhaustion. With $c=h/2$, $W=\ker u=h^\perp$ and $M=K-c$,
+central symmetry and self-duality say
+$w\in M\Longleftrightarrow B(w,v)\le1/2$ for all $v\in M$.
+Hence $N=\sqrt2M$ equals its Euclidean polar. Taking $v=w$ gives
+$N\subseteq\operatorname{Ball}_B$; reversing inclusion under polarity gives
+$\operatorname{Ball}_B\subseteq N^\circ=N$. Therefore
 
-The exact published classification used is Masanes, Müller, Pérez-García and
-Augusiak, *Entanglement and the three-dimensionality of the Bloch ball*,
+$$
+K=\{c+w:w\in W,\ \|w\|_B^2\le1/2\},\qquad
+C=\{tc+w:t\ge\sqrt2\|w\|_B\}.
+$$
+
+In its Bloch coordinates the original selected effects have exactly the formula
+above, so the finite convex-menu and leastness proof applies. This retains the
+static result without importing strong control. Every Lorentz ball dimension
+$d\ge1$ satisfies this static theorem; $d=1$ is the classical interval.
+
+**Package correspondence.** On the same original local data and same actual $H$,
+the static PD entrance **plus** actual $B$-orthogonal whole-sphere-transitive $H$
+implies the intrinsic entrance with $s=B|_W$. Conversely the intrinsic entrance
+derives that PD core, its unique $B$, and the same $H$ properties. Adjoining or
+forgetting these derived data therefore gives the same full static/control models.
+This does not delete PD from the independent static theorem or derive a ball from
+endpoint reciprocity alone: the intrinsic $H$ already bears the sphere geometry.
+Müller–Ududec's bit symmetry concerns ordered distinguishable pairs; it is not
+mere symmetry of a table. Barnum–Hilgert's Jordan classification additionally
+requires spectrality and strong symmetry on all fixed-size ordered frames.
+Neither mature theorem is used to bypass the explicit hypotheses here.
+
+### 2. Analytic closure, published classification and exact actual words
+
+**Original composite data.** For every finite $N\ge1$ keep the whole compact
+convex normalized $K_N$ of full span in $V_N=V^{\otimes_{\mathbb R}N}$,
+faithful local/product tomography, actual product preparations and product tests,
+and one fixed local calibration $F$ used as $F^{\otimes N}$. A pure product test
+has probability $2^{-N}(\widehat a_1\otimes\cdots\otimes\widehat a_N)\cdot\omega$,
+$\widehat a=(1,a)$, $\|a\|=1$. Its probability after any actual reversible map
+is in $[0,1]$. These actual joint relations are additional to the local ball.
+Let $G_N$ be the group of actual normalized linear reversible maps of $K_N$;
+**no closedness or connectedness of the entire $G_N$ is assumed**.
+
+Independent local $H$ controls act with identity on all other coordinates.
+At $N=2$ supply one actual $g(t)=\exp(tX)$ for **every** real $t$, with some
+$g(t_0)$ outside the entire $\mathrm{SO}(d)\times\mathrm{SO}(d)$ local rotation
+group, not merely outside the selected $H\times H$. For every $N\ge2$ the
+same full-carrier path is actual on edges of a supplied connected graph; at
+$N=3$ specify the path $1-2-3$. Each placement is exactly
+$\iota_{ij}(g(t))=g(t)_{ij}\otimes I_{\rm spectators}$ with fixed endpoint
+ordering in the common calibration. It fixes **every** spectator coordinate,
+including correlations, not just one prepared spectator. There is no premise
+transporting arbitrary $G_2$ or any intermediate multibody map to another carrier.
+
+**Analytic compactness lemma.** Let $\Gamma_2$ be the subgroup of finite words
+in local $H$ and $g(t)$, and $C_2=\overline{\Gamma_2}$ as a matrix closure.
+Then $C_2$ is a compact connected matrix Lie group preserving the original
+$K_2$ and its probabilities. At this stage it is not declared actual.
+
+**Proof.** $B_N=\operatorname{conv}(K_N\cup(-K_N))$ is a compact symmetric
+convex body with interior, by full span. Its gauge is a norm and every actual
+reversible map is an isometry. This norm's linear isometry group is compact:
+norm equivalence bounds the matrices, and a matrix limit still preserves the
+norm, hence is injective and invertible in finite dimension. Thus $C_2$ is a
+compact matrix group. If $w_k\to c$, closedness of $K_2$ gives $cK_2\subseteq K_2$;
+continuity of inverses gives the reverse inclusion. Normalization and product
+probability bounds extend by continuity. The generating sets are connected and
+contain identity; their finite products and union are connected, as is their
+closure. The closed-subgroup theorem supplies the finite-dimensional Lie structure.
+Only mathematical closure is used, with original compactness/full span retained. ∎
+
+Apply Masanes–Müller–Pérez-García–Augusiak,
+*Entanglement and the three-dimensionality of the Bloch ball*,
 J. Math. Phys. **55**, 122203 (2014),
-[arXiv:1111.4060v4](https://arxiv.org/abs/1111.4060v4), **Theorems 1 and 2**,
-PDF p. 10 (journal p. 122203-5). Table IV A lists the compact connected
-sphere-transitive local groups, up to orthogonal coordinates. Theorem 1 says
-that for every listed $H\ne\mathrm{SO}(3)$, a connected group containing the
-local actions and satisfying the single-orbit probability bound is contained
-in the entire local rotation group. Theorem 2, for $d=3$ and local
-$\mathrm{SO}(3)$, lists exactly the local group, the adjoint $\mathrm{SU}(4)$
-group and its partial-transpose conjugate. These technical theorems, rather
-than the paper's stronger global pure-state-transitivity axiomatization, are
-the results applied here.
-
-Indeed, for any unit $a$ the actual input, operation and product test give
-$\frac14(\widehat a\otimes\widehat a)\cdot c(\widehat a\otimes\widehat a)\in[0,1]$
-for **every** $c\in C_2$. This is precisely the theorem's orbit
-condition (8); independent transitive local controls also give (9). Theorem 1
-and the stated nonlocal element force $d=3$, $H=\mathrm{SO}(3)$; Theorem 2 then gives
+[arXiv:1111.4060v4](https://arxiv.org/abs/1111.4060v4), technical **Theorems 1–2**,
+PDF p. 10; §IV A, pp. 16–18 gives the sphere-action table up to orthogonal
+coordinates. For a fixed unit $a$, our analytic group satisfies exactly
 
 $$
-C_2=Q_2\quad\hbox{or}\quad C_2=T_1Q_2T_1=:H_2,
-\qquad Q_2=\{\operatorname{Ad}_U:U\in\mathrm{SU}(4)\}.
+\widehat H\times\widehat H\le C_2,\qquad
+\tfrac14(\widehat a\otimes\widehat a)\cdot C_2(\widehat a\otimes\widehat a)
+\subseteq[0,1].
 $$
 
-Here append to $F$, once, the Pauli identification
-$\widehat a\mapsto(I+a\cdot\sigma)/2$. On all tensor powers use exactly this
-identification, with $\sigma_0=I$:
+Theorem 1 puts every such connected group in the entire local rotation group
+unless $H=\mathrm{SO}(3)$; the supplied nonlocal element excludes that option.
+Theorem 2 then excludes the local group and gives $d=3$, $H=\mathrm{SO}(3)$ and
 
 $$
-\rho=2^{-N}\sum_{\boldsymbol\mu}r_{\boldsymbol\mu}
-\sigma_{\mu_1}\otimes\cdots\otimes\sigma_{\mu_N}.
+C_2=Q_2\quad\text{or}\quad C_2=T_1Q_2T_1=:H_2,\qquad
+Q_N=\{\operatorname{Ad}_U:U\in\mathrm{SU}(2^N)\}\cong\mathrm{PSU}(2^N).
 $$
 
-Before the state-set proof, $\rho$ is only Hermitian with trace one; positivity
-is not part of this coordinate definition. $T_i$ is matrix transposition on
-factor $i$, a local Bloch reflection $\sigma_y\mapsto-\sigma_y$.
-It is an analytic coordinate map, not an assumed physical transpose gate.
+These are technical matrix-group theorems; no definition of $K_2$ as a pure
+orbit and no composite pure transitivity is imported. Append the Pauli
+identification to $F$ once: $\widehat a\mapsto(I+a\cdot\sigma)/2$ and
+$\rho=2^{-N}\sum_{\boldsymbol\mu}r_{\boldsymbol\mu}\sigma_{\mu_1}\otimes\cdots\otimes\sigma_{\mu_N}$, $\sigma_0=I$.
+Before proving positivity, this represents each original state only as a trace-one
+Hermitian matrix. $T_i$ transposes factor $i$, reflecting its $y$ coordinate;
+it is an analytic map, not a physical transpose gate.
 
-**Original pair states.** Choose $S=I$ in the $Q_2$ case and $S=T_1$ in the
-$H_2$ case. In $S(K_2)$ the full $Q_2$ acts, pure product preparations remain
-available, and product tests retain the trace pairing (transpose both state
-and effect coordinates). The orbit of $P_{00}=|00\rangle\langle00|$ under
-$Q_2$ is all rank-one projectors. Invariance and convexity give
-$\mathcal D(4)\subseteq S(K_2)$, where
-$\mathcal D(m)=\{\rho\ge0:\operatorname{Tr}\rho=1\}$.
-Conversely take any $\rho\in S(K_2)$ and unit vector $\psi$. Choose $U$ with
-$U^\dagger|00\rangle=\psi$. The actual rotated product readout gives
-$\langle\psi|\rho|\psi\rangle=\operatorname{Tr}(P_{00}U\rho U^\dagger)\ge0$.
-Thus $S(K_2)\subseteq\mathcal D(4)$. Both inclusions concern the whole original
-state set. This does not identify every actual operation, irreversible map,
-joint measurement or disconnected part of $G_2$.
+**Exact-generation lemma.** If $C$ is a connected finite-dimensional Lie group
+with nonabelian simple Lie algebra $\mathfrak c$, a dense **subgroup** $\Gamma$
+containing a nontrivial connected Lie subgroup $K_0$ with all its complete
+one-parameter subgroups equals $C$ by finite words.
 
-### 3. One path, an actual triangle and connected graphs
+**Proof.** For $\mathfrak k_0\ne0$ set
+$E=\operatorname{span}_{\mathbb R}\{\operatorname{Ad}_\gamma Z:\gamma\in\Gamma,Z\in\mathfrak k_0\}$.
+Conjugation by any $\delta\in\Gamma$ permutes the spanning set, so
+$\operatorname{Ad}_\delta E=E$. A finite-dimensional subspace is closed;
+density, continuity and inverses give $\operatorname{Ad}_cE=E$ for all $c\in C$.
+Differentiating yields $[\mathfrak c,E]\subseteq E$. This nonzero ideal is all
+$\mathfrak c$. Select a basis $Y_j=\operatorname{Ad}_{\gamma_j}Z_j$ from the
+spanning set itself. For all real $t$,
+$\exp(tY_j)=\gamma_j\exp(tZ_j)\gamma_j^{-1}\in\Gamma$.
+The smooth map $f(t_1,\ldots,t_m)=\prod_j\exp(t_jY_j)$ has derivative
+$df_0(t)=\sum_jt_jY_j$, an isomorphism. The inverse function theorem puts an
+open identity neighborhood inside $\Gamma$. A subgroup containing one is open;
+a connected group has no proper open subgroup. Thus $\Gamma=C$. Every element
+used is a finite word with actual real parameters; no limit is made actual. ∎
 
-The subgroup needed in §2 is obtained, rather than independently supplied, by
-the following operational premises. For every finite $N$, keep a compact convex
-original $K_N$ of full span in $V_N=V^{\otimes N}$, faithful product tomography
-in the same $F^{\otimes N}$, all individual product preparations/tests and a
-closed normalized actual reversible group $G_N$. Independent local $H$ controls
-act with identity on every other factor. **The whole $G_N$ need not be connected.**
+Both two-body alternatives are faithful adjoint groups with simple Lie algebra
+$\mathfrak{su}(4)$; $\Gamma_2$ contains a complete local $\mathrm{SO}(3)$.
+Hence $\Gamma_2=C_2$ is now actual. On each supplied edge the same finite word
+embeds exactly, since each primitive is identity on every spectator. This gives
+all actual $Q_{ij}$ or all actual $H_{ij}=T_iQ_{ij}T_i=T_jQ_{ij}T_j$ uniformly.
+The equality uses full pair transpose, which sends $\operatorname{Ad}_U$ to
+$\operatorname{Ad}_{\bar U}$. Endpoint ordering does not change these full groups.
 
-At $N=2$, supply just one actual one-parameter path $g(t)=\exp(tX)$, for every
-real $t$, with some $g(t_0)$ outside the entire local rotation group. At $N=3$
-the **same path** is actually available on each of the three triangle edges.
-For every other $N\ge2$ it is available on each edge of some connected graph
-on the $N$ sites. Each placement is the exact real linear map
-$\iota_{ij}(g(t))=g(t)_{ij}\otimes I_{\rm spectators}$ in the fixed calibration,
-up to the indicated factor ordering. It must fix **all** spectator coordinates,
-including correlations, rather than work only for one chosen spectator state.
-Use one fixed ordering of the endpoints for each placement. Reversing it causes
-no ambiguity in the resulting full edge group below.
+Simplicity and the subgroup condition matter. An irrational one-parameter
+subgroup is dense and proper in a two-torus. Even a closed complete
+$\mathrm{SU}(2)$ factor inside
+$\mathrm{SU}(2)\times\langle e^{i\alpha}\rangle$ does not generate the missing
+$\mathrm U(1)$ values. Arbitrary dense sets do not supply inverses or conjugates;
+finite discrete gates may give only countably many words. We work in PSU,
+without a determinant $\mathrm U(1)$ factor. Compare Brylinski–Brylinski,
+[quant-ph/0108062v1](https://arxiv.org/abs/quant-ph/0108062v1), Theorems 1.3–1.4,
+Lemma 4.1 and §9: its exact-universality theorem assumes all one-qudit gates
+and an imprimitive quantum gate; its compact-group lemma assumes closed connected
+generating subgroups. Neither licenses a generic GPT gate or arbitrary dense
+subgroup argument. Exact existence here gives no synthesis algorithm or efficiency.
 
-There is no independent premise transporting all of $G_2$, supplying all pairs
-for every $N$, or transporting an intermediate multibody operation to a larger
-register. These stronger transport laws are sufficient alternatives, but are
-not inputs to this candidate. The all-finite-$N$ graph condition is itself a
-quantified physical compatibility condition; finite observations do not establish it.
+### 3. Endpoint discard, the triangle alternative and every original register
 
-**Generated-sector lemma.** Define $C_2$ to be the closure of the group generated
-by the independent local controls and $\{g(t):t\in\mathbb R\}$. Then $C_2$ is an
-actual compact connected subgroup of $G_2$, and every supplied edge of every
-$N$ actually carries the entire embedded $C_2$ with identity on all spectators.
+**Pair-state lemma before choosing a branch.** Let $\mathcal D(m)$ denote all
+$m\times m$ density matrices. The original $K_2$ is $\mathcal D(4)$ in the
+$Q_2$ case and $T_1\mathcal D(4)$ in the $H_2$ case.
 
-**Proof.** Closedness of $G_2$ puts this closure in $G_2$, and compactness was
-proved in §2. The local group and path are connected sets containing identity;
-finite products and inverses generate a connected subgroup, and its closure
-is connected. Its nonlocal element is $g(t_0)$, so §2 applies. For a fixed edge,
-$\iota_{ij}$ is a continuous group homomorphism on the two-site linear maps.
-Every finite word in local controls and $g(t)$ embeds as the same actual word,
-using the supplied edge path and independent local controls. For any $c\in C_2$
-choose such words $w_k\to c$. Then $\iota_{ij}(w_k)\to\iota_{ij}(c)$, and
-closedness of the original $G_N$ makes the limit actual. This is precisely
-where the whole edge group is derived from the single path. ∎
+**Proof.** Set $S=I$ or $T_1$ respectively. In $S(K_2)$ the full $Q_2$ acts;
+products and product tests remain products under the analytic coordinate change.
+The orbit of actual $P_{00}$ is every rank-one projector. Invariance and finite
+spectral convex mixtures give $\mathcal D(4)\subseteq S(K_2)$.
+For $A\in S(K_2)$, if $\psi$ is any unit vector, choose a control with
+$U^\dagger|00\rangle=\psi$ up to phase. Its original product readout is
+$\langle\psi|A|\psi\rangle\ge0$, so $A\ge0$ and the reverse inclusion holds.
+These are inclusions for the whole original set, not a chosen positive submodel. ∎
 
-Write $Q_{ij}$ for the embedded adjoint $\mathrm{SU}(4)$ group and
-$H_{ij}=T_iQ_{ij}T_i=T_jQ_{ij}T_j$. The last equality holds because total
-transposition on the pair normalizes $Q_{ij}$, sending $\operatorname{Ad}_U$
-to $\operatorname{Ad}_{\bar U}$. Consequently the two-body classification gives
-uniformly $Q_{ij}$ on every supplied edge, or uniformly $H_{ij}$, in the one
-original calibration; it does not license unrelated choices of pair coordinates.
-
-**Control-generation lemma on one fixed carrier.** Full $Q_{ij}$ on the edges
-of a connected graph, together with closedness, gives
-$Q_N=\operatorname{Ad}_{\mathrm{SU}(2^N)}\subseteq G_N$.
-
-**Proof.** Each edge group contains the adjoint of SWAP, since multiplying
-SWAP by $e^{i\pi/4}$ makes determinant one without changing its adjoint.
-Edge transpositions of a connected graph generate all permutations: along a
-path, successive adjacent swaps carry either chosen endpoint to the other,
-and conjugation gives every transposition. Conjugating an edge $Q_{ij}$ by
-these actual permutations gives every pair group **inside this same $N$**.
+**Finite graph generation on one carrier.** If a fixed finite connected graph
+carries full actual $Q_{ij}$, its finite-word subgroup is exactly $Q_N$.
+Each edge contains SWAP conjugation (multiply SWAP by $e^{i\pi/4}$ for an
+$\mathrm{SU}(4)$ representative). Edge transpositions generate all vertex
+permutations, so conjugation gives every pair group **within this same $N$**.
 Their Lie algebras contain $i$ times every Pauli string of weights one and two.
-Inductively a string on $k$ sites is a nonzero scalar commutator of a string
-on $k-1$ sites and one of weight two: overlap them at one site, choose distinct
-Pauli axes there whose product is the desired third axis, and give the second
-string its desired Pauli on the new site. All other factors commute. Hence
-all nonidentity Pauli strings occur, spanning $\mathfrak{su}(2^N)$. The actual
-closed subgroup generated by the pair groups contains the exponentials of
-this Lie algebra and therefore $Q_N$. Phases disappear in the adjoint.
-No operation on a smaller multibody carrier has been transported. ∎
+A desired weight-$k$ string is a nonzero scalar commutator of a weight-$(k-1)$
+string and a weight-two string: overlap at one site with distinct axes giving
+the desired third axis, and put the desired Pauli at the new site. All other
+factors commute. Induction supplies every nonidentity Pauli string, spanning
+$\mathfrak{su}(2^N)$. The subgroup's mathematical closure is therefore $Q_N$.
+The exact-generation lemma, using its complete local subgroup and simple PSU
+Lie algebra, makes every target a finite actual word. No whole-$G_N$ closure
+or smaller-carrier multibody transport was used.
 
-**Triangle exclusion.** The uniform $H_2$ possibility is inconsistent with the
-actual three-edge placements on the original $N=3$ carrier.
+**Pre-selection END interface.** On the original path $1-2-3$ require an actual
+affine mass-preserving full-domain map $\mathrm{END}:K_3\to K_2$ into the
+**same ordered original pair type**, retaining endpoints $1,3$. In the fixed
+$F^{\otimes3}$ and $F^{\otimes2}$ calibrations its homogeneous linear extension
+is the middle contraction, hence $\operatorname{Tr}_2$ after Pauli identification.
+For an already actual affine full-domain map, calibration on all product
+preparations suffices: they span the original carrier and determine the extension.
+This is a typed range/availability premise, not formal marginalization of numbers.
 
-**Proof.** In the analytic coordinates obtained by $T_1$ on that carrier, the
-three actual edge groups become $Q_{12},Q_{13},H_{23}$. Local controls remain
-local rotations, product preparations/tests remain product ones, and $P_{000}$
-is fixed. By the control-generation lemma the first two edges give all $Q_3$;
-in particular they give $Q_{23}$. Since $T_1$ is a spectator for $Q_{23}$,
-this same $Q_{23}$ is actual also in the original coordinates.
-But actual $H_{23}$ can send the original product input on sites $2,3$ to
+**Theorem (END excludes the reflected branch).** Suppose the common edge group
+were $H_2$. The pair-state lemma has already proved $K_2=T_1\mathcal D(4)$.
+On $K_3$, analytic conjugation by $T_2$ turns both actual $H_{12},H_{23}$ into
+$Q_{12},Q_{23}$. Finite graph generation gives $T_2Q_3T_2$ as actual finite
+words in the original frame. In particular ordinary $Q_{13}$ is actual since
+it commutes with $T_2$. From actual $P_{000}$ prepare ordinary
+$|\Phi^+\rangle\langle\Phi^+|_{13}\otimes P_{0,2}$, with
+$|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$.
+END would send this to ordinary Bell in the same original $K_2$.
+But $T_1|\Phi^+\rangle\langle\Phi^+|=\operatorname{SWAP}/2$ has eigenvalues
+$1/2,1/2,1/2,-1/2$, so Bell is outside $T_1\mathcal D(4)$, a contradiction.
+Every preparation/control is finite and actual; only the transpose coordinates
+are analytic. No ordinary $Q_2$ or subsequent SWAP was assumed to supply END. ∎
 
-$$
-W=T_2|\Phi^+\rangle\langle\Phi^+|=\tfrac12\operatorname{SWAP},
-\qquad |\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2.
-$$
+**Triangle sufficient alternative.** Instead of pre-selection END, supply the
+same path also on edge $13$ of the original three-site triangle. If all three
+edges were $H$, analytic $T_1$ changes them to $Q_{12},Q_{13},H_{23}$.
+The first two give $Q_3$ by finite generation, hence ordinary actual $Q_{23}$
+also in the original frame. Actual $H_{23}$ sends $P_{00}$ to
+$W=T_2|\Phi^+\rangle\langle\Phi^+|=\operatorname{SWAP}/2$.
+With spectator $P_0$, an actual $Q_{23}$ sends its negative singlet eigenvector
+to $|00\rangle$, giving an original product outcome probability $-1/2$.
+Thus the triangle also selects $Q_2$, without any discard premise.
+This is the finite-word version of the negative-probability mechanism in
+de la Torre–Masanes–Short–Müller,
+[arXiv:1110.5482v1](https://arxiv.org/abs/1110.5482v1), Theorems 1–2, pp. 2–3.
+Their theory-level extension/relabeling assumptions are not silently imported:
+their fixed-spectator conclusion alone would not give our whole-carrier lifts.
+No general signed-graph or odd-cycle classification is asserted.
 
-Indeed choose $U|00\rangle=|\Phi^+\rangle$ in $T_2\operatorname{Ad}_UT_2$;
-the initial product is fixed by $T_2$. This gives the actual three-unit state
-$P_0\otimes W$. The singlet $|\psi^-\rangle$ is an eigenvector of $W$ with
-eigenvalue $-1/2$. An actual $Q_{23}$ maps that eigenvector to $|00\rangle$,
-so an actual product readout on the same carrier has probability $-1/2$.
-This contradicts its probability bound. The transpose was used only to analyze
-available groups, and the final preparation, word and readout are all original.
-Thus $C_2=Q_2$ in the fixed calibration. ∎
+**Resource comparison.** Over the common product/path/connected-graph baseline,
+END trades the third primitive edge for a full-domain same-type discard.
+Triangle supplies no actual discard event by itself; path plus END supplies
+ordinary $Q_3$ and hence later triangle controls. If both complete candidates
+also retain the same realization/discard resources of §4, each recovers the
+other's needed branch-selection controls and discard; this is a correspondence
+of sufficient full packages, not an unconditional strict weakening.
+An original universal same-type subset-discard law already implies END, as does
+an actual tensorable local discard with coherent endpoint output typing.
+An endpoint-preserving complete middle test with genuine ignored-record
+coarse-graining and the calibrated endpoint probabilities also implies it by
+tomography. Suffix discard plus an **independently supplied** ordinary wire
+SWAP is sufficient. Suffix discard plus a SWAP derived only after selecting $Q$
+cannot justify that earlier selection; the §4 dilation box is not a retroactive
+source of END. A unit functional or positive written partial trace supplies
+neither the actual event nor its required same-$K_2$ range.
 
-**Finite-register conclusion.** For each $N$, the supplied connected graph now
-has full actual $Q_{ij}$ edge groups; the lemma gives $Q_N\subseteq G_N$.
-Exactly as in §2, the orbit of $P_{0\cdots0}$ and convexity give
-$\mathcal D(2^N)\subseteq F^{\otimes N}(K_N)$, and nonnegative product readouts
-after all $Q_N$ give the reverse inclusion. Thus the original $N$-unit states
-and their conic hull are precisely complex density matrices and
-$\operatorname{Herm}_+(2^N)$, with tensor products in the one common calibration.
-We assert unitary **containment**, not equality of the entire actual $G_N$.
+**All finite original states and controls.** With either selection interface,
+each supplied graph now carries actual $Q_{ij}$, so $Q_N\subseteq G_N$ by
+finite words. The orbit of original $P_{0\cdots0}$ is every rank-one projector;
+finite spectral mixtures and original convexity give $\mathcal D(2^N)\subseteq K_N$.
+If the trace-one Hermitian representative of an original state had eigenvalue
+$\lambda<0$, an actual $Q_N$ sends its eigenvector to $|0\cdots0\rangle$;
+the actual product readout would equal $\lambda$, a contradiction. Hence
+$K_N\subseteq\mathcal D(2^N)$ and its cone is exactly $\operatorname{Herm}_+(2^N)$.
+For $N=1$ use $H=\mathrm{SO}(3)$. $N=0$ may denote scalar mass bookkeeping;
+no physical extra system type is required. Only the generated sector is classified,
+never the entire $G_N$, its disconnected part, or its irreversible operations.
 
-This argument composes the two-body classification with the three-copy
-negative-probability mechanism in de la Torre, Masanes, Short and Müller,
-*Deriving quantum theory from its local structure and reversibility*,
-Phys. Rev. Lett. **109**, 090403 (2012),
-[arXiv:1110.5482](https://arxiv.org/abs/1110.5482), Theorems 1–2 and proof, pp. 2–3.
-It is **not** a direct application of their Theorem 2 with a hypothesis deleted:
-the paragraph before that theorem assumes transport of any allowed multibody
-transformation to any placement with arbitrary added spectators. Their Theorem 1
-only supplies a pair action for a fixed spectator state, which does not imply
-our exact spectator-identity law. The present path-to-edge limit argument is
-the explicit replacement. No general signed-graph classification is needed.
+### 4. One exact reference per original event and finite realizations
 
-### 4. Processes, references and finite measurements have separate premises
+**Typed event interface.** On the established original cones fix each specified
+deterministic event or unnormalized branch $e:n\to m$, its full original record,
+ready/control/legality and future contracts. Retain real-linear dependence on
+Hermitian inputs, including zero and all real preparation relations. Equivalently,
+affine normalized behavior with homogeneous mass scaling and those relations gives
+this extension on the spanning cone. Write $d=2^n$, $b=2^m$ and $\phi_e$ for
+the map. Its unique complex-linear HP extension is
+$\widetilde\phi_e(A+iB)=\phi_e(A)+i\phi_e(B)$, $A,B$ Hermitian.
+The original deterministic trace equality or branch trace budget is a separate
+premise, on every original positive input, not inferred from a normalized probe.
 
-The preceding state/control result alone does not declare every positive map,
-effect tuple or state update actual. On the established register carriers,
-the mathematical dual effect interval is $0\le E\le I$, and its pairing is
-$\Pr(E\mid\rho)=\operatorname{Tr}(E\rho)$. This identifies the Born pairing for
-actual affine outcome probabilities. Full availability of joint measurements
-uses the resources specified below, not the single-unit convex-menu argument.
-
-For an actual process $\Phi$ between register cones, retain affine dependence
-on normalized states, positive homogeneous mass scaling, the zero input/output
-rule, and respect for real preparation relations. These give a unique real
-linear Hermitian map on their spans. To conclude CP require that the **same**
-process has an actual positive extension to every original reference register,
-agreeing on products with $\Phi\otimes\operatorname{id}$, and with that equality
-on the full carrier by faithful tomography. This is a process reference-stability
-assumption; the single-path transport law does not supply it for unrelated maps.
-
-For completeness, take a reference of input dimension $m=2^N$ and
-$|\Omega\rangle=\sum_{j=1}^m|j j\rangle$. Reference positivity gives
-$J_\Phi=(\Phi\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)\ge0$.
-Its spectral decomposition, vectorizing each eigenvector as a matrix $A_k$,
-gives $\Phi(X)=\sum_kA_kXA_k^\dagger$ by comparison on matrix units.
-Conversely this formula is positive after tensoring any identity, proving CP.
-Deterministic mass preservation is exactly $\sum_kA_k^\dagger A_k=I$, hence TP;
-a branch probability budget $\operatorname{Tr}\Phi(X)\le\operatorname{Tr}X$
-on $X\ge0$ gives $\sum_kA_k^\dagger A_k\le I$, hence trace nonincrease.
-This is the finite Choi/Kraus mechanism already used by
-[the original process consumer](#6-quantum-correspondence-geometry-and-remaining-conditions).
-
-If a reversible same-register process and its actual inverse both satisfy
-reference stability and deterministic normalization, both are CPTP and the
-process is unitary. To see this, write their Kraus families $A_i,B_j$.
-The identity channel has rank-one Choi matrix, so every $B_jA_i$ is a scalar
-multiple of $I$. At least one is nonzero; that $B_j$ is invertible and all
-$A_i$ are proportional to one invertible matrix. Combining proportional
-Kraus operators leaves a single $A$ with $A^\dagger A=I$, which in equal
-finite dimensions is unitary. This uses reference positivity of the inverse,
-not merely invertibility of a positive linear map.
-
-For the converse realization of **all** register CPTP maps, additionally supply
-actual pure register ancillas, sequencing of available unitaries and actual
-discard. The Kraus isometry $V\psi=\sum_kA_k\psi\otimes|k\rangle$ obeys
-$V^\dagger V=I$. Pad the finite environment into a binary register, add enough
-pure work units for the input/output sizes, and complete the isometry on its
-input subspace to a unitary. That unitary is available by $Q_M\subseteq G_M$ on
-the larger register; discarding its environment realizes the specified map.
-Every step is on an actual original carrier with its stated resources. Dense
-or efficient finite gate synthesis, a physical clock and a selected Hamiltonian
-are not conclusions of this existence argument.
-
-For instruments, separately retain actual branches $\Phi_j$, their records,
-branchwise reference-stable extensions, each original probability budget and
-$\sum_j\Phi_j$ TP for a complete menu. Then
-$p_j=\operatorname{Tr}\Phi_j(\rho)$ is the original branch mass,
-$\rho_j=\Phi_j(\rho)/p_j$ only when $p_j>0$; a zero-mass positive output is zero,
-and its record is retained without an invented conditional state.
-Actual sequencing, randomization, pointer readout, classical records,
-coarse-graining and permitted conditioning are additional closure resources.
-
-Under those resources every finite CP instrument is realizable: for Kraus
-$A_{j\alpha}$ of its branches, the isometry
-$V\psi=\sum_{j,\alpha}A_{j\alpha}\psi\otimes|j,\alpha\rangle$ is normalized.
-Implement it by a padded register unitary, read the environment in its actual
-computational pointer basis, group the outcomes by $j$, and discard the
-unrecorded index. This yields exactly each branch, including zero branches.
-For any finite POVM $E_j\ge0$, $\sum_jE_j=I$, choose
-$A_j=\sqrt{E_j}$ to obtain an implementation and its Born probabilities.
-Thus all finite joint effects and POVMs become available with **these readout
-resources**. An effect does not determine its instrument. A Lüders instrument
-is an available choice by this construction; identifying a supplied instrument
-with Lüders still needs its own update contract, such as the original sharp
-neutrality requirement, rather than reciprocity alone.
-
-### 5. Separation, tomography and update countermodels
-
-**Interaction cannot be replaced by single-unit geometry.** On the same
-two-qubit Hermitian carrier consider the normalized separable set
-$\mathrm{Sep}=\operatorname{conv}\{P_a\otimes P_b\}$ and the block-positive set
+Supply **one exact same-event reference output** at input reference dimension $d$:
 
 $$
-\mathrm{BP}=\{W=W^\dagger:\operatorname{Tr}W=1,
-\ \langle ab|W|ab\rangle\ge0\text{ for all unit }a,b\}.
+\Omega_d=|\omega_d\rangle\langle\omega_d|,\quad
+|\omega_d\rangle=d^{-1/2}\sum_{i=1}^d|ii\rangle,\qquad
+J_e=(\operatorname{id}_d\otimes\widetilde\phi_e)(\Omega_d)\ge0.
 $$
 
-Both have the full single-qubit balls, actual product preparations/tests,
-faithful product tomography and full span. Choose only independent local
-$\mathrm{SO}(3)$ controls as actual reversible operations in each. Both sets
-are compact: for BP, every product rank-one reading lies between zero and one
-because its product-basis completion sums to trace one; a finite spanning
-family of these tests bounds all matrix coordinates. BP is closed; Sep is the
-convex hull of a compact product set. Local conjugations preserve both sets.
-They have different original joint cones. The $W=\operatorname{SWAP}/2$ above
-has $\langle ab|W|ab\rangle=|\langle a|b\rangle|^2/2\ge0$ but singlet
-eigenvalue $-1/2$, so $W\in\mathrm{BP}\setminus\mathrm{Sep}$.
-Also $|\Phi^+\rangle\langle\Phi^+|$ is quantum but not separable: partial
-transposition preserves positivity of every separable state and sends this
-projector to $W$. Thus the same local comparison ball and product statistics
-do not determine a joint cone without the actual interaction hypotheses.
+Positivity is in the **whole original** reference/output cone, now identified
+with $C_{n+m}=\operatorname{Herm}_+(db)$. $\Omega_d$ is actually preparable.
+The output must belong to that exact original event and record. A sufficient
+identification contract is one supplied real-linear joint context $L_e$ agreeing
+with $A\otimes\phi_e(B)$ on every positive product input $A\otimes B$.
+Products span the full Hermitian carrier, so $L_e=\operatorname{id}\otimes\phi_e$
+there, in particular at $\Omega_d$. A spanning product family also suffices.
+One may supply that exact output identity directly with its provenance; choosing
+a positive certificate matrix afterward does not identify the original event.
+A correct actual positive full-domain context already implies this probe premise.
 
-**Local tomography cannot be replaced by an entangling path.** A real qubit
-has state space $\operatorname{Sym}_+(2,\mathbb R)$ of trace one, a disk with
-local coordinates $I,\sigma_x,\sigma_z$. Two real qubits have the ten-dimensional
-unnormalized carrier $\operatorname{Sym}(4,\mathbb R)$, exceeding the nine
-local tensor coordinates. Continuous real orthogonal conjugations include
-an entangling rotation from $|00\rangle$ to $|\Phi^+\rangle$ in their plane.
-Yet the distinct real density matrices
+**Theorem (rectangular CP and exact budgets).** This single whole output implies
+$\widetilde\phi_e$ CP. In a finite Kraus representation
+$\widetilde\phi_e(X)=\sum_\alpha A_\alpha X A_\alpha^\dagger$,
+$A_\alpha:\mathbb C^d\to\mathbb C^b$, set $E_e=\sum_\alpha A_\alpha^\dagger A_\alpha$.
+Then, exactly,
 
 $$
-\rho_\pm=(I\otimes I\pm\sigma_y\otimes\sigma_y)/4
+\operatorname{Tr}\phi_e(X)=\operatorname{Tr}(E_eX),\qquad
+\operatorname{Tr}_{\rm out}J_e=E_e^{\mathsf T}/d,\qquad
+\mathrm{TP}\Longleftrightarrow E_e=I_d,\quad
+\mathrm{TNI}\Longleftrightarrow0\le E_e\le I_d.
 $$
 
-have identical real local product statistics: $\sigma_y$ is trace-orthogonal
-to every real symmetric $2\times2$ matrix. Their eigenvalues are $0,1/2$,
-so both are positive. The hidden $\sigma_y\otimes\sigma_y$ coordinate is real
-and symmetric but not locally tomographic. This model fails a specific
-premise of §2, not the full conditional conclusion.
+**Proof.** This is the rectangular Choi theorem: $dJ_e$ is its ordinary
+unnormalized Choi operator, up to factor ordering. Its PSD spectral factors
+vectorize to the rectangular Kraus matrices; comparison on matrix units recovers
+the same complex-linear map. The trace identities follow by cyclicity; testing
+all positive $X$ gives the displayed exact budget equivalences. Conversely a
+Kraus formula is positive after tensoring every finite identity. Use Watrous,
+*The Theory of Quantum Information*, author-hosted
+[Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf), Theorem 2.22,
+pp. 82–83; Theorem 2.26 and Corollary 2.27, pp. 87–89, for arbitrary finite
+input/output dimensions. The zero map is CP directly with all Kraus matrices zero. ∎
 
-**Positive processes and equal effects leave different gaps.** Transposition
-$T$ is positive and TP on one qubit, but its action on one half of the actual
-Bell state yields $W$ with eigenvalue $-1/2$. Thus process reference stability
-has substantive content even after the local state ball is quantum. For a
-rank-one $P$, the branches $\rho\mapsto P\rho P$ and
-$\rho\mapsto\operatorname{Tr}(P\rho)I/2$ have the same effect $P$ and admit
-complete TP measure-and-prepare or Lüders instruments, yet a repeated $P$
-test succeeds with conditional probabilities one and $1/2$ respectively.
-Finally $P_z=|0\rangle\langle0|$, $P_x=|+\rangle\langle+|$ have reciprocal
-overlap $1/2$. Starting at $P_z$, two Lüders yes outcomes have probability
-$1/2$ in the order $z,x$ and $1/4$ in the order $x,z$. Endpoint reciprocity
-therefore does not imply commuting execution or a unique update rule.
+For $d=1$, the probe is scalar $1$ and CP means the prepared output is PSD;
+TP gives trace one, TNI trace at most one. For $b=1$, CP is the positive
+functional $X\mapsto\operatorname{Tr}(EX)$; TP gives $E=I$, TNI $0\le E\le I$.
+For $d=b=1$, deterministic multiplication is by $1$ and branch factors lie
+in $[0,1]$, summing to one in a complete menu. These include zero branches.
 
-### 6. Exact premise comparison and the complete finite-register candidate
+Certify each original unnormalized branch separately. Retain its original mass
+$p_a=\operatorname{Tr}\phi_a(\rho)$, the actual complete menu/records and genuine
+coarse-graining identity $\phi_{\rm total}=\sum_a\phi_a$ with total TP.
+Branchwise CP then implies total CP; an extra total Choi probe is redundant.
+For a supplied joint context the same trace operator $I_R\otimes E_a$ gives
+the reference trace budget too; this mathematical fact creates no new context.
+At positive $p_a$ the conditional state is $\phi_a(\rho)/p_a$; at zero mass
+the positive output is zero, while its record, failure and future permissions remain.
+The mathematical all-reference CP conclusion does not make the **original event**
+callable at every reference, or manufacture its histories and records there.
 
-The current broader-system entrance is
-[Chapter 84, Theorem 84.35 and (84.37)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#84-原双单位质量指定迹平面的唯一接触点与完整候选):
+If a same-register reversible event and its inverse both satisfy these event
+and deterministic probe premises, both are CPTP and the map is unitary.
+Indeed Kraus families $A_i,B_j$ for them give $B_jA_i$ proportional to $I$
+because the identity channel has rank-one Choi matrix. Some product is nonzero,
+so its $B_j$ is invertible and all $A_i$ are proportional to one matrix.
+Combining them leaves $A^\dagger A=I$, a unitary in equal finite dimension.
+This does not classify all $G_N$: probe eligibility of arbitrary inverses was
+not assumed in the state/control theorem.
+
+**Actual realization resources.** In addition supply actual pure binary ancillas,
+sequencing of derived controls, and the relevant typed full-domain discards into
+the same retained original registers, with calibrated partial-trace action.
+For instruments supply computational pointer readout with **retained-output law**
+$\tau\mapsto(I\otimes\langle z|)\tau(I\otimes|z\rangle)$ for each pointer label
+before ignoring that pointer, actual records, genuine coarse-graining and
+permitted conditioning only at positive mass. Probabilities of pointer effects
+alone do not establish this branch law. These resources are independent of
+CP certification of pre-existing events; randomization is used only when its
+actual source/record law is supplied.
+
+**Theorem (all finite register channels and instruments).** With those resources,
+every CPTP $n\to m$ map and every finite CP instrument has an actual map-level
+realization, including unequal input/output sizes and named zero branches.
+
+**Proof.** For a channel take $r$ Kraus matrices. Choose $k\ge0$ with
+$2^k\ge r$ and $m+k\ge n$, set $q=m+k-n\ge0$, and pad to $2^k$ Kraus
+labels with zeros. The isometry
+$V\psi=\sum_\alpha A_\alpha\psi\otimes|\alpha\rangle$ has $V^\dagger V=I$.
+Identify its input with $\mathbb C^{2^n}\otimes|0^q\rangle$ in the same
+$2^{m+k}$-dimensional total space. Complete orthonormal bases to extend $V$
+to a unitary there. A scalar phase gives an SU representative without changing
+the channel. Prepare $q$ actual pure ancillas, apply the derived actual
+$Q_{m+k}$ control and discard the $k$ environment units. This realizes the
+map even when $n>m$; padding only for Kraus rank would not suffice then.
+
+For an instrument $\{\Gamma_a\}$ use Kraus $A_{a\alpha}$ and
+$R=\sum_a\max(1,r_a)$. Choose $2^k\ge R$, $m+k\ge n$, and the same $q$.
+Reserve a codeword even for every named zero branch, with zero Kraus matrix;
+pad all unused codewords by zero too. Since
+$\sum_{a,\alpha}A_{a\alpha}^\dagger A_{a\alpha}=I$, the same construction
+gives an isometry and actual unitary. The retained-output pointer law yields
+the fine branch $A_{a\alpha}\rho A_{a\alpha}^\dagger$; actual coarse-graining
+over $\alpha$ yields exactly $\Gamma_a$. Unused zero codewords stay in the
+fine menu and may be assigned to coarse labels without changing any map.
+Add unnormalized branches before conditioning, and never normalize a zero one.
+Empty ancilla/environment strings mean no added wire/discard; the scalar identity
+needs no gate. Scalar outcome laws can use a padded binary pointer as above. ∎
+
+For a finite POVM $E_a\ge0$, $\sum_aE_a=I$, choose $A_a=\sqrt{E_a}$ in
+this realization. Born probabilities and all finite joint POVMs are then
+available with these resources. This constructs a Lüders choice, not a unique
+update for an existing event. The same-event/full-real-law, budgets, zero/record
+and update boundaries agree with [volume V](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md),
+Definition 85.15, Theorem 85.16 and Corollaries 85.17, 87.12. Its three-leg
+same-carrier theorem is not silently extended to rectangular types; Watrous
+supplies that mathematical extension. A constructed dilation sharing a matrix
+map need not be the earlier original event in its contexts or legal futures.
+
+### 5. Countermodels locating the individual gaps
+
+**Pure transitivity is weaker than whole-$W$ control.** On $V=\operatorname{Herm}_4$,
+let $u=\operatorname{Tr}$, $K=\{0\le\rho\le I/2:\operatorname{Tr}\rho=1\}$,
+$C=\{X\ge0:2X\le(\operatorname{Tr}X)I\}$. This is a closed pointed generating
+cone with compact full-span base ($I/4$ is a relative interior point).
+Its pure points are exactly $p_P=P/2$ for rank-two projectors: any spectrum
+with interior entries has two that can be oppositely perturbed; endpoint spectra
+have two $1/2$ entries. Conversely positivity and the cap force any convex
+decomposition of $P/2$ to agree on its range and vanish on its kernel.
+The proper selected $e_{p_P}(X)=\operatorname{Tr}(PX)$ self-confirm, are reciprocal,
+and complementary projectors exhaust $u$. Take
+$D=\operatorname{conv}(\{0,u\}\cup\{e_{p_P}\})$.
+Actual $H=\operatorname{Ad}\mathrm{SU}(4)$ is compact connected, Hilbert–Schmidt
+orthogonal and transitive on all pure points. Yet the segment between
+$\operatorname{diag}(1/2,1/2,0,0)$ and $\operatorname{diag}(1/2,0,1/2,0)$
+lies in the boundary, excluding an ellipsoidal ball and whole-sphere transitivity
+for any metric. For rank-one $A$, $f_A(X)=\operatorname{Tr}((I-2A)X)$ is
+proper on this $C$, but its representing matrix has a negative eigenvalue;
+no nonnegative sum of the PSD confirmer matrices $P$ equals it. Thus finite
+PD fails, although reciprocal descent gives $B(X,Y)=2\operatorname{Tr}(XY)>0$.
+Minimal product composites with discards and local controls do not supply the
+required nonlocal path: this exposes only the weaker-$H$ static gap, not a
+countermodel satisfying the complete nonlocal/discard package.
+
+**Path and contiguous discard do not imply END.** Let $S_N$ transpose odd
+sites, $K_N=S_N\mathcal D(2^N)$, $G_N=S_NQ_NS_N$. Products, tomography,
+local rotations and a fixed complete $H$ path on every adjacent edge hold.
+Explicitly use real $U(t)=\exp(-it\sigma_y\otimes\sigma_x)$ and
+$g(t)=T_1\operatorname{Ad}_{U(t)}T_1=T_2\operatorname{Ad}_{U(t)}T_2$;
+realness gives the equality, and $t=\pi/4$ creates partial-transposed Bell.
+Contiguous retained intervals land in the original corresponding type: their
+shifted parity pattern is the standard pattern or its complement, and full
+transpose preserves $\mathcal D$. But $K_3=T_2\mathcal D(8)$ and
+$K_2=T_1\mathcal D(4)$. The state Bell$_{13}\otimes P_{0,2}$ belongs to $K_3$;
+ordinary $\operatorname{Tr}_2$ sends it to Bell, outside that same original $K_2$.
+It fails exactly END's full-domain **range target**, not the written contraction
+or a contiguous marginal. Arbitrary subset discards/rewiring are not supplied.
+
+**Local geometry does not fix the joint cone.** On the two-qubit carrier,
+$\mathrm{Sep}=\operatorname{conv}\{P_a\otimes P_b\}$ and
+$\mathrm{BP}=\{W=W^\dagger:\operatorname{Tr}W=1,\langle ab|W|ab\rangle\ge0\}$
+both have the local balls, actual products/tests, full span and tomography,
+with only independent locals actual. Both are compact: BP readings are bounded
+by one using product-basis completion, and finitely many spanning readings bound
+all coordinates; Sep is a compact convex hull. $\operatorname{SWAP}/2$ is BP
+but has a negative singlet eigenvalue; Bell is quantum but not separable since
+its partial transpose is this matrix. Neither model supplies the nonlocal path.
+For proper $H=\mathrm U(2)\subset\mathrm{SO}(4)$, a larger local rotation can
+leave $H\times H$ while staying inside all local rotations; separable ball
+composites allow this. Thus the nonlocality threshold must be the entire local group.
+
+**An entangling path does not imply tomography.** A real qubit is a disk in
+$\operatorname{Sym}(2,\mathbb R)$; two real qubits have unnormalized dimension
+ten, exceeding the nine product coordinates. Real orthogonal rotations can
+entangle $|00\rangle$ with Bell, yet
+$\rho_\pm=(I\otimes I\pm\sigma_y\otimes\sigma_y)/4$ are distinct positive
+states (eigenvalues $0,1/2$) with identical real product statistics. The missing
+coordinate is real symmetric but invisible to all local real symmetric effects.
+
+**Joint probes, branches and updates are different requirements.** Transpose is
+positive TP, but its normalized Choi output is SWAP$/d$, negative on antisymmetric
+vectors; all product-vector expectations remain nonnegative. Total CP also does
+not certify branches: for qubits $\Gamma_0(X)=X^{\mathsf T}/2$ and
+$\Gamma_1(X)=\sigma_yX\sigma_y/2$ are positive TNI, their sum is
+$\operatorname{Tr}(X)I/2$ CPTP, but $\Gamma_0$ is not CP. This is an algebraic
+counterexample, not an asserted actual reference-compatible original instrument.
+For rank-one $P$, $P\rho P$ and $\operatorname{Tr}(P\rho)I/2$ have effect $P$
+but repeated-$P$ success one and $1/2$. Starting at $P_z$, reciprocal overlap
+$\operatorname{Tr}(P_zP_x)=1/2$ gives Lüders yes-yes probability $1/2$ for
+order $z,x$ and $1/4$ for $x,z$. Effects imply neither unique updates nor
+commuting execution. A menu with quantum states/unitaries/destructive tests can
+omit retained-output discard; an event can have only its stipulated context or
+a distinct permission tag despite map equality. CP cannot fill these actual gaps.
+
+### 6. Complete candidate, dependency comparison and geometric meaning
+
+**Complete conditional candidate.** Original local data and intrinsic $H$ of §1,
+all original compact full-span product/tomographic registers and complete
+spectator-identity path placements of §2, and pre-selection END of §3 imply
+$d=3$, $K_N=\mathcal D(2^N)$ and actual finite-word $Q_N\subseteq G_N$ for
+every given finite connected register. Born probabilities are the trace pairing
+of actual affine effects. Full single-unit effects and leastness are derived;
+all finite joint measurements require §4's resources. Each specified original
+typed map/branch satisfying its exact one-reference identity and whole-output
+positivity is CP, with its retained budget giving TP/TNI. Actual complete branch
+sums are instruments. With §4's ancillas, controls, typed discards, sequencing,
+retained-output pointer law, records and coarse-graining, every finite channel
+and instrument between these registers is realizable at map and outcome-label level.
+The proofs are §§1–4 in that order; no later conclusion supplies an earlier premise.
+
+| Common-baseline comparison | Inputs retained or traded | Result/dependency |
+| --- | --- | --- |
+| Static PD-only theorem | Reciprocal positive core, PD, exhaustion, convex $D$; no $H$ | All-dimensional ball, full local effects, leastness. |
+| Full static/control versus intrinsic control | Same local objects and actual $H$; replace PD plus $B$-sphere action by intrinsic whole-$W$ sphere action | Equivalent full local packages; PD becomes redundant. |
+| Closed-group versus exact-word route | Keep original compact/full-span $K_N$, complete controls and exact lifts | Delete actual $G_N$ closedness; classify analytic $C_2$, then prove finite actuality. |
+| Triangle versus path plus END | Trade third pre-selection edge for actual same-$K_2$ endpoint discard | Both sufficient; full common discard resources can make END redundant. |
+| Every-reference versus single Choi input | Keep exact original event, HP map, budgets and one faithful output | Compress mathematical CP tests; arbitrary actual event contexts are not derived. |
+| Complete instrument menu | Branch probes, records, genuine coarse sum, total TP | Total CP follows; no separate total probe. |
+| Realization resources | Actual ancillas, finite control, typed discard, pointer branches and records | Extensional realization; no identification of devices or histories by map equality. |
+
+The broader entrance is [Chapter 84, Theorem 84.35 and (84.37)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#84-原双单位质量指定迹平面的唯一接触点与完整候选):
 
 $$
 \mathrm{PRE}_0^{1/2}+(83.8)+\mathsf C_2+
@@ -2788,70 +2928,68 @@ $$
 \Longleftrightarrow\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.
 $$
 
-The register route is a restricted alternative, not an equivalence with that
-chapter's whole class of arbitrary finite EJA original models.
+That theorem retains whole $A,D,E$, full effects, FH1 with arbitrary original
+mixed remainder, the complete general finite EJA/spectral/face/filter bridge,
+whole-cone-positive insertion $L$, the same readback $p$ twice and same $\omega$,
+two real spans and explicit zero relation (83.8). The original unit-pair C2,
+fixed three-copy E3 and anchor A0 set the two/three-copy scales. H13 then tests
+the same qualified state's **whole** output and selects the common direction.
+Its finite complex Hermitian direct sums allow classical and unequal blocks;
+its pure geometry is $\bigsqcup_i\mathbb{CP}^{n_i-1}$. Its specified original
+two/three-copy tensors and readbacks do not identify another independently given
+bracketing or four-plus-copy source. Corollary 84.44 retains the actual event,
+record, reference, budget, update and clock contracts; none is deleted here.
 
-| Interface or conclusion | This binary-register route | Current Chapter 84 scope |
-| --- | --- | --- |
-| Original carrier and static entrance | Whole $C,K,P,C^*$; positive self-confirmation, reciprocity, finite PD, convex original $D$ and one exhaustive pure pair. Positive form, saturation, ball, single-unit full effects and leastness are consequences. | Whole carriers $A,D,E$, full effects, FH1 with an arbitrary original mixed remainder; complete $S$ and the general finite EJA bridge, including its face/filter obligations. |
-| System types | Identical binary units and their finite registers; no direct-sum or arbitrary-type classification. | General finite EJA entrance allows classical, unequal complex blocks, other simple types including Albert before classification; the conclusion is finite complex Hermitian direct sums. |
-| Composite geometry and direction | Actual faithful product tomography, full-span compact $K_N$, local $H$ controls, one nonlocal continuous path and its exact spectator-identity placements; triangle rules out the reflected branch. | Original whole-cone-positive insertion $L$, the same readback $p$ twice, the same $\omega$, two real spans, $Z$ and (83.8); after exact PRE, H13 tests the same qualified original state's entire output and gives C13. |
-| Scale constraints | Product preparation/test calibration and normalization are supplied on each original register. | Original unit-pair $\mathsf C_2$, fixed $\mathsf E_3(R_A;1/2,2/3)$ and anchor $\mathrm A_0$ fix the original two/three-copy scales; masses alone do not fix direction. |
-| Copy range and operations | Same path on the actual three-edge $N=3$ triangle and some connected graph for every other finite $N$; closed actual $G_N$ gives the whole edge groups and $Q_N\subseteq G_N$. Entire $G_N$ connectedness and arbitrary multibody transport are unnecessary. | Specified original two/three-copy tensors and readbacks; no identification of an independently supplied other bracketing or four-plus-copy common source. This is not an all-copy transport theorem. |
-| States, effects, Born rule | Original $K_N=\mathcal D(2^N)$ and positive cone are proved by double inclusion; trace pairing for effects. All finite joint POVMs need the explicit ancilla/readout resources. | Original full effects and exact PRE give full density matrices/effects and trace pairing on the classified direct sums, at the chapter's stated interfaces. |
-| Processes and instruments | Same-process reference stability yields CP; deterministic mass gives TP. Pure ancillas, unitary sequencing and discard realize all CPTP maps; branch stability, pointer readout, records, budgets and coarse-graining realize finite instruments. | 84.44 retains actual events, branch/record and product-extension contracts, sufficient actual references, joint positivity, both budgets and menu TP; its fixed three-copy same-event certificate also needs its exact lifting law. |
-| Updates and physical dynamics | Lüders is a realization choice, with identification requiring an update contract. No Hamiltonian, clock, energy unit, efficient synthesis or encoding of another system type is selected. | Sharp neutrality is retained for Lüders; Hamiltonian consumers require the supplied continuous time-homogeneous reversible group and physical clock/units. |
+This binary route uses neither FH1/general-EJA entrance nor (83.8), insertion/
+readback scale equations or H13. It pays with identical binary types, strong
+actual whole-sphere local control, genuine nonlocal interaction, full product
+tomography and all-finite-register exact lift compatibility, plus its stated
+discard interface. Chapter 84 does not supply those all-$N$ controls; conversely
+this route does not classify its arbitrary EJA models. These are resource trades,
+not fewer physical assumptions by counting boxes. No general-EJA boundary/polar
+route is substituted for this finite binary construction.
 
-Thus this restricted route deletes the static assumed-full-effect/leastness,
-FH1-with-arbitrary-mixed-remainder and general-EJA/spectral/filter entrance,
-and does not use (83.8), the original insertion/readback scale equations or
-H13. It pays for that change with a binary type restriction and explicit actual
-local-control, interaction, tomographic and all-finite-copy compatibility
-conditions. Those are not fewer physical assumptions merely because they can
-be written in one sentence. Conversely Chapter 84 does not already supply the
-all-$N$ path placements required here. Its own countermodels 84.39–84.42 and
-consumer conditions 84.44 retain their scope; no clause is removed from that
-theorem by this alternative representation route.
+Geometrically, actual $H$ first rounds the entire base about its unique center;
+reciprocity and exhaustion then pin the original tests to hemisphere effects.
+Equivalently the independent PD route makes the centered body self-polar.
+Pair interaction and joint positivity select the three-dimensional Bloch ball;
+END tests whether the orientation along a path agrees with the same retained pair.
+Connected finite graphs spread exact unitary control on each original carrier.
+For $N\ge1$ pure geometry is $\mathbb{CP}^{2^N-1}$, not a Bloch ball for $N>1$.
+The counts $d=3$ and three path sites do not count spacetime dimensions.
 
-**Complete conditional candidate.** For finite registers of identical binary
-units, the reciprocal positive PD core, one exhaustive pure pair and a convex
-original menu, together with the actual joint spaces, local $H$, closed groups
-and single-path triangle/connected-graph law of §3, imply $d=3$, the original
-complex qubit tensor state cones, Born probabilities and available full unitary
-control on each finite register. With the additional same-process/branch
-reference, mass, ancilla, discard, sequencing, readout and record resources of
-§4, the corresponding processes and finite measurements have the CPTP/CP
-instrument structure and every finite such register instrument is realizable.
-Other system types need an actual encoding/universality bridge; infinite
-register consistency and empirical identification are additional questions.
-This candidate composes existing mechanisms with the displayed static and
-path-generation arguments; it does not prove a physical origin of quantum theory.
+Other system types require an actual encoding/decoding and universality bridge;
+infinite-system consistency is additional. A primitive control parameter is not
+a physical clock. A Hamiltonian requires a supplied continuous time-homogeneous
+reversible dynamics and time/energy units, retaining scalar Hamiltonian freedom.
+Neither spacetime, $\hbar$, those physical units nor efficient exact synthesis
+is selected by this conditional finite theorem.
 
-Geometrically, the normalization vector $h$ supplies the center. Exhaustion
-puts every pure point opposite another pure point; self-duality then equates
-the centered body with its own polar, forcing a round ball. Actual pair motion
-and product-readout positivity select its three-dimensional Bloch geometry.
-The same coupling used around an actual triangle tests whether one global
-orientation can support all pair relations; the reflected option predicts a
-negative original probability. Connected graphs then propagate unitary control
-inside each given register. The value $d=3$ counts local Bloch coordinates;
-$N=3$ counts units in this consistency test, not dimensions of spacetime.
+白话说，把整块原准备集合留在桌上，不能只挑出好看的纯态。现在先给一只真正能在
+整个差分空间球面上转到任意方向的控制手：把离平均中心最远的点转一圈，整颗外球
+都已经在原集合里，凸性填满内部，于是原集合就是球。这份强控制承担了球形，不能
+说交换比较端点本身造出了球。每个纯准备的原测试必须合法、自认成功；互易把所有
+测试的斜率绑成一个数，真正穷尽全域的一对再把它固定为二分之一。所以任意正读数
+只需两个原球面测试作有限非负叠加，原凸菜单已经有全部单元效应，真正的最小确认
+也随之出现。另一条老路仍成立：先给 PD，再用正定自对偶和穷尽对取得球；它不必有
+这只控制手，因而也不负责选三维。只有纯态之间能互相转动，还可能是带平边的封顶
+四维矩阵态集，不能偷换成整个差分球面都能转到。
 
-白话说，先把一个二元单元的全部原准备和原读数次序保留下来。每个纯准备都有一个
-自认成功率为一的正测试，交换两个比较端点不改读数；再要求任意原正泛函都能由
-这些测试有限次非负叠加。沿用已有正定桥后，只添一个真正穷尽全部原态的纯对，
-就能找到球心和对径点，用原锥自对偶把整个原态集钉成球；原凸菜单随之包含全部
-单元效应，最小确认也成为结论，不必先给谱分解或一般 Jordan 结构。可是静态球
-本身仍有任意维数。额外的内容在真实复合关系：局域可连续转动，局域联合读数
-完整区分原联合态，并有一条实际可逆耦合路径。这些条件才把单元选成三维 Bloch
-球。还必须让同一条路径在三个原单元的三条边上、以及每个有限寄存器某个连通图
-的边上，严格保持全部旁观者坐标不变。原操作群的闭性让路径和局域控制的极限也
-实际可用，从而得到整条边的控制；三角形排掉会产生负概率的转置方向。这里没有
-把中间造出的多体操作搬到别处，也没有要求整个原操作群连通。连通图内的交换和
-控制足以得到每个原寄存器的全部密度态与可用酉控制。与第 84 章相比，这条路舍去
-的是本范围内的全效应、leastness 和一般 EJA 静态入口，却缩到同种二元单元，并
-明确增加实际耦合、层析及全有限拷贝相容性；第 84 章自身的指定两份、三份接口
-不能冒称已经有这些全拷贝搬运。过程还须同一个过程对真实参考保持正性，仪器还须
-分支、记录、概率预算、纯辅助单元、丢弃和实际读出。单元菜单的凸性不能凭空给出
-全部联合测量。端点互易也不使先测甲再测乙等于先测乙再测甲，更不唯一指定更新、
-物理时钟或 Hamiltonian；这里的三维是单元 Bloch 维数，不是在选择时空维数。
+把单元接成寄存器后，还要真实产品准备、真实联合读数和完整层析，并让同一条完整
+耦合路径在每条给定边上保持所有旁观者坐标不动。先取数学闭包只是为了读群分类，
+没有把无限极限当成机器按钮；局域连续控制的共轭方向张满简单 Lie 代数，反函数
+定理才把一小块真实有限操作铺成整个连通群。两种方向暂时都能通过两体检查。沿着
+三点路径，中间转置坐标下的两条边已经能造普通端点 Bell；若真能丢掉中腿、回到
+同一个原二元类型，错误方向就把一个不属于该类型的 Bell 送了进去。另一种办法是
+保留原三角形，用第三条边直接读出负概率；少一条边而多一个删除接口，是资源交换，
+不是无条件少了一条公理。以后才合成的 SWAP 不能倒过来给前面的删除补手续。
+
+最后，态空间与控制都量子化了，也不能宣布每个原事件在所有上下文中已经合法。
+逐个保留原事件、未归一分支、预算和记录，只在一个足够大的纠缠参考上检验它的
+准确整个输出，Choi 定理就给数学完全正性；这不是只看一个读数，也不是事后挑一张
+正矩阵。总通道合格不代表每条分支合格，分支合格且真实合并保迹却不用再测一次总
+通道。要实际造出全部有限仪器，仍须纯辅助单元、足够补齐输入输出维数的空间、真实
+丢弃、保留输出的指针分支律和记录；零标签照留，零概率不能除。相同效应不指定
+相同更新，相同矩阵通道也不抹掉设备的历史和权限。与第 84 章相比，这里舍去一般
+EJA 静态入口却承担同种二元和全有限寄存器控制；那里的指定两三份不能冒充这里的
+全拷贝合同。Bloch 三维、物理时钟、能量单位和时空仍是各自不同的问题。
