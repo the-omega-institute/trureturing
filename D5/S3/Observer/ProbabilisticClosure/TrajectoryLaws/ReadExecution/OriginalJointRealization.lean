@@ -207,7 +207,7 @@ private theorem joint_execution_cylinder (w f : PMF ℕ) (n : ℕ)
       ∫⁻ g, (if g ∈ D then
         (O.executionLaw (ActualRenewalStopping.sourceBit g.1 g.2) n).toMeasure B else 0)
         ∂(w.toMeasure.prod (Measure.infinitePi fun _ : ℕ => f.toMeasure)) := by
-  have hm := O.parameterized_develop_measurable
+  have hm := (parameterized_develop_measurable O)
     (fun g : ℕ × (ℕ → ℕ) => ActualRenewalStopping.sourceBit g.1 g.2)
     source_bit_measurable n
   have hE : MeasurableSet {ω : (ℕ × (ℕ → ℕ)) × (O.Outcome × (ℕ → O.Innovation)) |
@@ -223,7 +223,7 @@ private theorem joint_execution_cylinder (w f : PMF ℕ) (n : ℕ)
         O.develop (ActualRenewalStopping.sourceBit g.1 g.2) p.1 n (fun j => p.2 j.val)) :=
       hm.comp (measurable_const.prodMk measurable_id)
     have hL := congrArg (fun μ : Measure (Fin (n + 1) → O.Outcome) => μ B)
-      (O.infinite_execution_law (ActualRenewalStopping.sourceBit g.1 g.2) n)
+      ((infinite_execution_law O) (ActualRenewalStopping.sourceBit g.1 g.2) n)
     rw [Measure.map_apply hmg hB] at hL
     exact hL
   · simp only [hg, ↓reduceIte, Set.preimage_ofPred_eq, false_and,
@@ -241,16 +241,16 @@ private theorem stopped_cylinder_law (u : ℕ) (K : ℕ → ℕ) (n : ℕ) (d : 
         (O.machine.execute p.1 (ActualRenewalStopping.sourceBit u K) p.2 n).action.output =
           some d} =
       (O.executionLaw (ActualRenewalStopping.sourceBit u K) n).toMeasure
-        (O.emissionCylinder n d) := by
+        ((emissionCylinder O) n d) := by
   have he : {p : O.Outcome × (ℕ → O.Innovation) |
       O.machine.stopIndex p.1 (ActualRenewalStopping.sourceBit u K) p.2 = some n ∧
         (O.machine.execute p.1 (ActualRenewalStopping.sourceBit u K) p.2 n).action.output =
           some d} =
       (fun p => O.develop (ActualRenewalStopping.sourceBit u K) p.1 n
-        (fun j => p.2 j.val)) ⁻¹' O.emissionCylinder n d := by
+        (fun j => p.2 j.val)) ⁻¹' (emissionCylinder O) n d := by
     ext p
     simp only [Set.mem_ofPred_eq, Set.mem_preimage, emissionCylinder,
-      O.develop_actions, O.machine.stop_spec, Fin.val_last, Fin.val_castSucc]
+      (develop_actions O), O.machine.stop_spec, Fin.val_last, Fin.val_castSucc]
     constructor
     · rintro ⟨⟨_, hpre⟩, hd⟩
       exact ⟨hd, fun j => hpre j.val j.isLt⟩
@@ -266,7 +266,7 @@ private theorem stopped_cylinder_law (u : ℕ) (K : ℕ → ℕ) (n : ℕ) (d : 
         (p.1, fun j : Fin n => p.2 j.val)) := by fun_prop
     exact (measurable_of_countable (fun p =>
       O.develop (ActualRenewalStopping.sourceBit u K) p.1 n p.2)).comp hf)
-    (Set.to_countable _).measurableSet, O.infinite_execution_law]
+    (Set.to_countable _).measurableSet, (infinite_execution_law O)]
 
 private theorem stopped_receipt_law (u : ℕ) (K : ℕ → ℕ) (n : ℕ) (d : Bool) :
     (O.seedLaw.prod (Measure.infinitePi fun _ : ℕ => O.innovationLaw))
@@ -274,7 +274,7 @@ private theorem stopped_receipt_law (u : ℕ) (K : ℕ → ℕ) (n : ℕ) (d : B
         O.machine.result p.1 (ActualRenewalStopping.sourceBit u K) p.2 =
           some ((List.range n).map (ActualRenewalStopping.sourceBit u K), d)} =
       (O.executionLaw (ActualRenewalStopping.sourceBit u K) n).toMeasure
-        (O.emissionCylinder n d) := by
+        ((emissionCylinder O) n d) := by
   have hr (p : O.Outcome × (ℕ → O.Innovation))
       (ht : O.machine.stopIndex p.1 (ActualRenewalStopping.sourceBit u K) p.2 = some n) :
       O.machine.result p.1 (ActualRenewalStopping.sourceBit u K) p.2 =
@@ -303,7 +303,7 @@ private theorem stopped_receipt_law (u : ℕ) (K : ℕ → ℕ) (n : ℕ) (d : B
     · rintro ⟨ht, hd⟩
       exact ⟨ht, by rw [hr p ht, hd]; rfl⟩
   rw [he]
-  exact O.stopped_cylinder_law u K n d
+  exact (stopped_cylinder_law O) u K n d
 
 end Stochastic
 
@@ -315,7 +315,7 @@ abbrev Space := (ℕ × (ℕ → ℕ)) × (O.Outcome × (ℕ → O.Innovation))
 
 /-- One source coordinate and one source-independent observer realization.
     The same seed and innovation measures are used for both true labels. -/
-def law (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (i : Bool) : Measure O.Space :=
+def law (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (i : Bool) : Measure (Space O) :=
   productLaw O.seedLaw O.innovationLaw
     (OriginalRenewalLaws.waitLaw q hq hq1 i) (OriginalRenewalLaws.gapLaw q hq hq1 i)
 
@@ -336,7 +336,7 @@ structure Realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (M : ℕ)
         (O.executionLaw source n).toMeasure
   joint : ∀ i n (D : Set (ℕ × (ℕ → ℕ))) (_ : MeasurableSet D)
       (B : Set (Fin (n + 1) → O.Outcome)) (_ : MeasurableSet B),
-    O.law q hq hq1 i
+    (law O) q hq hq1 i
       {ω | ω.1 ∈ D ∧ O.develop (ActualRenewalStopping.sourceBit ω.1.1 ω.1.2)
         ω.2.1 n (fun j => ω.2.2 j.val) ∈ B} =
       ∫⁻ g, (if g ∈ D then
@@ -352,14 +352,14 @@ structure Realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (M : ℕ)
         O.machine.result p.1 (ActualRenewalStopping.sourceBit u K) p.2 =
           some ((List.range n).map (ActualRenewalStopping.sourceBit u K), d)} =
       (O.executionLaw (ActualRenewalStopping.sourceBit u K) n).toMeasure
-        (O.emissionCylinder n d)
-  primitive : ∀ i, Primitive (O.law q hq hq1 i)
+        ((emissionCylinder O) n d)
+  primitive : ∀ i, Primitive ((law O) q hq hq1 i)
     (fun ω => O.machine.boundary (O.machine.initial ω.2.1))
     (fun ω => ω.1.1) (fun ω => ω.1.2) (fun ω => ω.2.2) η.toMeasure
     (OriginalRenewalLaws.waitLaw q hq hq1 i) (OriginalRenewalLaws.gapLaw q hq hq1 i)
     O.innovationLaw
   source_cylinders : ∀ i n (a : ℕ × (Fin n → ℕ)) (x : Fin (n + 1) → O.machine.Boundary),
-    O.law q hq hq1 i
+    (law O) q hq hq1 i
       (ActualRenewalHistoryLaw.observedHistory O.machine.labels O.machine.normalizedUpdate
         (fun ω => O.machine.boundary (O.machine.initial ω.2.1))
         (fun ω => ω.1.1) (fun ω => ω.1.2) (fun ω => ω.2.2) n ⁻¹' {(a, x)}) =
@@ -368,7 +368,7 @@ structure Realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (M : ℕ)
         ∏ j : Fin n, (OriginalRenewalLaws.gapLaw q hq hq1 i (a.2 j) *
           ((zeroRow A (a.2 j) (x j.castSucc)).bind B) (x j.succ))
   state_prefix : ∀ i l (x : Fin l → O.machine.Boundary),
-    O.law q hq hq1 i {ω | ∀ j : Fin l,
+    (law O) q hq hq1 i {ω | ∀ j : Fin l,
       ActualRenewalStopping.epoch O.machine.labels O.machine.normalizedUpdate
         (O.machine.boundary (O.machine.initial ω.2.1)) ω.2.2 ω.1.1 ω.1.2 j.val = x j} =
       ActualRenewalHistoryLaw.prefixMass
@@ -378,13 +378,13 @@ structure Realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (M : ℕ)
           (zeroRow A k s).bind B) l x
   ordinary_past : ∀ i n (H : Set (Fin (n + 1) → O.machine.Boundary))
       (_ : MeasurableSet H) (T : Set O.machine.Boundary) (_ : MeasurableSet T),
-    O.law q hq hq1 i
+    (law O) q hq hq1 i
       ({ω | ActualRenewalHistoryLaw.epochHistory O.machine.labels O.machine.normalizedUpdate
         (fun ω => O.machine.boundary (O.machine.initial ω.2.1))
         (fun ω => ω.1.1) (fun ω => ω.1.2) (fun ω => ω.2.2) n ω ∈ H} ∩
       {ω | ActualRenewalStopping.epoch O.machine.labels O.machine.normalizedUpdate
         (O.machine.boundary (O.machine.initial ω.2.1)) ω.2.2 ω.1.1 ω.1.2 (n + 1) ∈ T}) =
-    ∑' s, O.law q hq hq1 i
+    ∑' s, (law O) q hq hq1 i
       ({ω | ActualRenewalHistoryLaw.epochHistory O.machine.labels O.machine.normalizedUpdate
         (fun ω => O.machine.boundary (O.machine.initial ω.2.1))
         (fun ω => ω.1.1) (fun ω => ω.1.2) (fun ω => ω.2.2) n ω ∈ H} ∩
@@ -415,11 +415,11 @@ structure Realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1) (M : ℕ)
 theorem original_realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
     (M : ℕ) (hM : Fintype.card C ≤ M) :
     ∃ (η : PMF O.machine.Boundary) (A B : O.machine.Boundary → PMF O.machine.Boundary),
-      O.Realization q hq hq1 M η A B := by
+      (Realization O) q hq hq1 M η A B := by
   obtain ⟨η, A, B, hη, _, heff, hrow, habs, hbudget, hstop⟩ :=
     O.machine.stopping_normalization O.seedLaw O.innovationLaw
       (measurable_of_countable _) (fun _ _ => measurable_of_countable _) M hM
-  have hp (i : Bool) : Primitive (O.law q hq hq1 i)
+  have hp (i : Bool) : Primitive ((law O) q hq hq1 i)
       (fun ω => O.machine.boundary (O.machine.initial ω.2.1))
       (fun ω => ω.1.1) (fun ω => ω.1.2) (fun ω => ω.2.2) η.toMeasure
       (OriginalRenewalLaws.waitLaw q hq hq1 i) (OriginalRenewalLaws.gapLaw q hq hq1 i)
@@ -428,26 +428,26 @@ theorem original_realization (q : ℝ) (hq : 0 < q) (hq1 : q < 1)
     exact product_primitive O.seedLaw O.innovationLaw
       (fun seed => O.machine.boundary (O.machine.initial seed)) (measurable_of_countable _)
       _ _
-  have hI : Measurable (fun ω : O.Space =>
+  have hI : Measurable (fun ω : (Space O) =>
       O.machine.boundary (O.machine.initial ω.2.1)) :=
     (measurable_of_countable (fun seed => O.machine.boundary (O.machine.initial seed))).comp
       (measurable_fst.comp measurable_snd)
-  have hτ : Measurable (fun ω : O.Space => ω.1.1) := measurable_fst.comp measurable_fst
-  have hK (j : ℕ) : Measurable (fun ω : O.Space => ω.1.2 j) := by fun_prop
-  have hξ (j : ℕ) : Measurable (fun ω : O.Space => ω.2.2 j) := by fun_prop
-  refine ⟨η, A, B, ⟨hη, hrow, habs, hbudget, O.infinite_execution_law,
-    (fun i => O.joint_execution_cylinder _ _), O.develop_actions, O.stopped_receipt_law, hp, ?_, ?_, ?_, hstop⟩⟩
+  have hτ : Measurable (fun ω : (Space O) => ω.1.1) := measurable_fst.comp measurable_fst
+  have hK (j : ℕ) : Measurable (fun ω : (Space O) => ω.1.2 j) := by fun_prop
+  have hξ (j : ℕ) : Measurable (fun ω : (Space O) => ω.2.2 j) := by fun_prop
+  refine ⟨η, A, B, ⟨hη, hrow, habs, hbudget, (infinite_execution_law O),
+    (fun i => (joint_execution_cylinder O) _ _), (develop_actions O), (stopped_receipt_law O), hp, ?_, ?_, ?_, hstop⟩⟩
   · intro i n a x
     exact ActualRenewalHistoryLaw.actual_source_cylinders O.machine.labels
-      O.machine.normalizedUpdate (O.law q hq hq1 i) _ _ _ _ η _ _ O.innovationLaw
+      O.machine.normalizedUpdate ((law O) q hq hq1 i) _ _ _ _ η _ _ O.innovationLaw
       A B heff hrow hI hτ hK hξ (hp i) n a x
   · intro i l x
     exact ActualRenewalHistoryLaw.actual_state_prefix O.machine.labels
-      O.machine.normalizedUpdate (O.law q hq hq1 i) _ _ _ _ η _ _ O.innovationLaw
+      O.machine.normalizedUpdate ((law O) q hq hq1 i) _ _ _ _ η _ _ O.innovationLaw
       A B heff hrow hI hτ hK hξ (hp i) l x
   · intro i n H hH T hT
     exact ActualRenewalHistoryLaw.actual_ordinary_past O.machine.labels
-      O.machine.normalizedUpdate (O.law q hq hq1 i) _ _ _ _ η _ _ O.innovationLaw
+      O.machine.normalizedUpdate ((law O) q hq hq1 i) _ _ _ _ η _ _ O.innovationLaw
       A B heff hrow hI hτ hK hξ (hp i) n H hH T hT
 
 end Stochastic
