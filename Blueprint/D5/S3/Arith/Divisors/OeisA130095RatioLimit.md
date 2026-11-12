@@ -36,8 +36,6 @@ The source comment states: “Conjecture: a(n)/a(n-1) tends to phi^2.” Here ph
 
 Split a(n) as F(2n-1)+R(n), where R sums the proper divisors. A positive proper divisor d satisfies 2d<=n. The telescoping Fibonacci sum bounds R(n) by F(n). The doubling identity gives F(n)^2<=F(2n-1), so R(n)/F(2n-1)<=1/F(n), which tends to zero. Two instances of Mathlib's adjacent Fibonacci ratio theorem give F(2n-1)/F(2n-3) tending to phi^2. Multiplying by the quotient of the two relative correction factors proves the displayed full limit. The proof establishes a(n)>0 for every n>=1 and discharges every denominator obligation used in the transfer.
 
-This delivery uses the external named open-problem-resolution route preregistered in issue 29484. The proof steps are classified bind-only under the repository rule; no separate new general theorem or priority claim is asserted. Independent review and canonical freeze remain separate requirements. The source note records the bounded literature qualification.
-
 ## References
 
 - Truth anchor: `D5/S3/Arith/Divisors/OeisA130095RatioLimit.a`

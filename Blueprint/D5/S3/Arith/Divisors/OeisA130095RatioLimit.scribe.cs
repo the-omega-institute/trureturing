@@ -52,13 +52,7 @@ internal sealed class OeisA130095RatioLimitDocument : IScribeDocumentDefinition
                         + "F(2n-1)/F(2n-3) tending to phi^2. Multiplying by the quotient of "
                         + "the two relative correction factors proves the displayed full limit. "
                         + "The proof establishes a(n)>0 for every n>=1 and discharges every "
-                        + "denominator obligation used in the transfer.")),
-                    Paragraph(Text(
-                        "This delivery uses the external named open-problem-resolution route "
-                        + "preregistered in issue 29484. The proof steps are classified bind-only "
-                        + "under the repository rule; no separate new general theorem or priority "
-                        + "claim is asserted. Independent review and canonical freeze remain separate "
-                        + "requirements. The source note records the bounded literature qualification."))),
+                        + "denominator obligation used in the transfer."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a130095-ratio-limit"), ResolutionKind.Proved))
