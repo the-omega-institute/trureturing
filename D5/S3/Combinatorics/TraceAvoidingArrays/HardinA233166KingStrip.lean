@@ -197,10 +197,10 @@ private theorem proper_exhausts {n : ℕ} (hn : 2 ≤ n)
     (hpair (1,0) (1,1) (by decide))
   intro k
   rcases hfull k with h | h | h | h
-  · exact ⟨(⟨0,by omega⟩,0),by decide,h.symm⟩
-  · exact ⟨(⟨0,by omega⟩,1),by decide,h.symm⟩
-  · exact ⟨(⟨1,by omega⟩,0),by decide,h.symm⟩
-  · exact ⟨(⟨1,by omega⟩,1),by decide,h.symm⟩
+  · exact ⟨(⟨0,by omega⟩,0),by simp,h.symm⟩
+  · exact ⟨(⟨0,by omega⟩,1),by simp,h.symm⟩
+  · exact ⟨(⟨1,by omega⟩,0),by simp,h.symm⟩
+  · exact ⟨(⟨1,by omega⟩,1),by simp,h.symm⟩
 
 private theorem legal_seen {n : ℕ} (hn : 2 ≤ n)
     (f : Fin n × Fin 6 → Fin 8) (hf : Legal f) :

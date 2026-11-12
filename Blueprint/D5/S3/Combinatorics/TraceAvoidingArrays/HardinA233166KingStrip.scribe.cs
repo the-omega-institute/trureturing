@@ -95,7 +95,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
             Imp(Call("Legal",f),And(reconstruction,And(horizontal,And(vertical,And(exhaustive,seen))))))));
     }
 
-    private static Formula Iff(Formula a, Formula b) => Seq(Par(a),Sp,Longleftrightarrow,Sp,Par(b));
+    private static Formula Iff(Formula a, Formula b) => Seq(Par(a),Sp,Leftrightarrow,Sp,Par(b));
     private static Formula Le(Formula a, Formula b) => Seq(a,Sp,Leq,Sp,b);
     private static Formula V(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part, i) =>
