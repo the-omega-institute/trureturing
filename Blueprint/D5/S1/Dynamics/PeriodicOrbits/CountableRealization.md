@@ -6,6 +6,8 @@ Actual countable cycles realize all positive indices simultaneously.
 
 This construction extends the existing finite divisor-table supplier to a single all-length carrier. It supplies the cycle-realization step required by the complete Jaidee manuscript, but the actual block valuation/transform identification, bounded half-residue arithmetic and formal zeta Euler identities need their own proofs. See the complete scope and attribution in `D5/L/Scale/jaidee2026blockdold`. The fixed_card registration is declared_validated in its current scoped report. Every other newly authored audit target remains unfinished under issue 29392; that status does not cover the other theorems.
 
+Exact formal zeta application: HannaDiagonalGhostPowerIntegrality.euler_series_exponential applied with the integer Euler exponents b(n)=c(n+1), and fixed_card, identifies the existing coefficientwise Euler series with exp(sum over n>0 of fixedCard(rotation c,n)*X^n/n). This uses the actual fixed counts of this single countable permutation. It is an all-coefficient formal identity, with no analytic convergence assertion. The existing generalized-binomial Euler factors are indexed by n+1; the shift is essential. The exact application was checked transiently instead of adding a duplicate named theorem. Signed and finite-support specializations reuse the same identity once their actual ghost equality is supplied. Connecting these exponents to the manuscript's actual unbounded block parts remains open.
+
 **Theorem 1.1 (countable_and_locally_finite).**
 
 Lean statement: `D5/S1/Dynamics/PeriodicOrbits/CountableRealization.countable_and_locally_finite`
