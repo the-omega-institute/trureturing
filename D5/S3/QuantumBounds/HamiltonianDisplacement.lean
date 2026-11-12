@@ -53,14 +53,12 @@ private theorem arccos_of_differential_bound (r d : ℝ → ℝ) (c : ℝ)
       rw [abs_mul, abs_of_nonneg hq0]
       exact (mul_le_mul_of_nonneg_left (hr s) hq0).trans_lt (by simpa using hq1)
     have hs (s : ℝ) : 0 < 1 - (q * r s) ^ 2 := by
-      have := abs_lt.mp (hi s)
-      nlinarith
+      exact sub_pos.mpr ((sq_lt_one_iff_abs_lt_one _).mpr (hi s))
     have hroot (s : ℝ) : q * Real.sqrt (1 - (r s) ^ 2) ≤
         Real.sqrt (1 - (q * r s) ^ 2) := by
       have hrs : 0 ≤ 1 - (r s) ^ 2 := by
-        have := abs_le.mp (hr s)
-        nlinarith
-      have hq2 : q ^ 2 ≤ 1 := by nlinarith
+        exact sub_nonneg.mpr ((sq_le_one_iff_abs_le_one _).mpr (hr s))
+      have hq2 : q ^ 2 ≤ 1 := (sq_le_one_iff₀ hq0).mpr hq1.le
       have ha := Real.sq_sqrt hrs
       have hb' := Real.sq_sqrt (hs s).le
       have hleft : 0 ≤ q * Real.sqrt (1 - (r s) ^ 2) :=
@@ -70,7 +68,7 @@ private theorem arccos_of_differential_bound (r d : ℝ → ℝ) (c : ℝ)
           (Real.sqrt (1 - (q * r s) ^ 2)) ^ 2 := by
         rw [mul_pow, ha, hb']
         nlinarith
-      nlinarith
+      exact (sq_le_sq₀ hleft hright).mp hsq
     let f' := fun s => -(1 / Real.sqrt (1 - (q * r s) ^ 2)) * (q * d s)
     have hder (s : ℝ) : HasDerivAt (fun u => Real.arccos (q * r u)) (f' s) s := by
       exact (Real.hasDerivAt_arccos (ne_of_gt (abs_lt.mp (hi s)).1)
@@ -185,10 +183,17 @@ theorem hamiltonian_displacement {E : Type*} [NormedAddCommGroup E]
   let alpha : ℂ := -Complex.I * (t : ℂ) / (hbar : ℂ)
   let beta : ℂ := Complex.I * ((t * mu / hbar : ℝ) : ℂ)
   have hsplit : t • G = alpha • A + beta • (1 : E →L[ℂ] E) := by
-    dsimp [G, B, alpha, beta]
-    simp only [smul_sub, smul_smul, RCLike.real_smul_eq_coe_smul (K := ℂ)]
-    simp only [Complex.ofReal_div, Complex.ofReal_mul]
-    module
+    change t • ((-Complex.I / (hbar : ℂ)) •
+      (A - (mu : ℂ) • (1 : E →L[ℂ] E))) = _
+    rw [RCLike.real_smul_eq_coe_smul (K := ℂ), smul_smul, smul_sub, smul_smul]
+    have hcoef : (t : ℂ) * (-Complex.I / (hbar : ℂ)) = alpha := by
+      dsimp [alpha]
+      ring
+    have hphasecoef : -(alpha * (mu : ℂ)) = beta := by
+      dsimp [alpha, beta]
+      push_cast
+      ring
+    rw [hcoef, sub_eq_add_neg, ← neg_smul, hphasecoef]
   have hcomm : Commute (alpha • A) (beta • (1 : E →L[ℂ] E)) := by
     change (alpha • A) * (beta • 1) = (beta • 1) * (alpha • A)
     simp [mul_smul_comm, smul_mul_assoc, smul_smul, mul_comm]
