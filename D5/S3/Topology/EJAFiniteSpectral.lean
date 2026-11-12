@@ -158,7 +158,7 @@ private theorem jpow_mul_jpow (x : J) (m n : ℕ) : jpow x m * jpow x n = jpow x
 end Albert
 
 class IsFormallyReal (J : Type*) [Mul J] [AddCommMonoid J] : Prop where
-  
+
   eq_zero_of_sum_mul_self : ∀ {ι : Type} (s : Finset ι) (f : ι → J),
     ∑ i ∈ s, f i * f i = 0 → ∀ i ∈ s, f i = 0
 
@@ -221,9 +221,9 @@ section Family
 variable {J : Type*} [NonUnitalNonAssocCommRing J]
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 private structure IsOrthIdemFamily (p : ι → J) : Prop where
-  
+
   idem : ∀ i, p i * p i = p i
-  
+
   orth : ∀ i j, i ≠ j → p i * p j = 0
 
 namespace IsOrthIdemFamily
