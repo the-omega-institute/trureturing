@@ -9,6 +9,8 @@
 import D5.S3.Combinatorics.Graph.ZeroDivisor.Support
 import D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature
 
+/-! Exact support and coefficient inequalities on the actual three-domain graph. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped Classical
@@ -16,8 +18,8 @@ open D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
 
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.NativeCoefficients
 
-/-- Native coefficients for three ordered finite domains, including the smallest field. -/
 set_option maxHeartbeats 1800000 in
+/-- Native coefficients for three ordered finite domains, including the smallest field. -/
 theorem coefficients_three_domains
     {R : Type*} [CommRing R] [Fintype R]
     {L : Fin 3 → Type*} [∀ i, CommRing (L i)] [∀ i, NoZeroDivisors (L i)]
@@ -58,7 +60,7 @@ theorem coefficients_three_domains
   have hbc : b ≤ c := Nat.sub_le_sub_right h12 1
   have hA : 14 ≤ A := by
     dsimp [A]
-    nlinarith [Nat.mul_le_mul ha hb, Nat.mul_le_mul ha hc, Nat.mul_le_mul hb hc]
+    nlinarith only [Nat.mul_le_mul ha hb, Nat.mul_le_mul ha hc, Nat.mul_le_mul hb hc]
   have hN : 14 ≤ N := hA.trans (le_max_left _ _)
   have hU01 : U0 ≤ U1 := by
     have := Nat.mul_le_mul_left c hab
@@ -139,13 +141,14 @@ theorem coefficients_three_domains
       constructor
       · rintro ⟨_, hS⟩
         obtain ⟨x, rfl⟩ := Finset.card_eq_one.mp hS
-        exact ⟨x, trivial, rfl⟩
-      · rintro ⟨x, _, rfl⟩
+        exact ⟨x, rfl⟩
+      · rintro ⟨x, rfl⟩
         simp [SimpleGraph.isIndepSet_iff]
     have hcount := Support.coefficient_card (R := R) Finset.univ 1
     rw [hsets, Finset.card_image_of_injective _ (by
       intro x y hxy
       simpa only [Finset.singleton_inj] using hxy), Finset.card_univ] at hcount
+    dsimp [s, P]
     exact_mod_cast hcount.symm
   have countcard : Fintype.card (Support.Vertex R) = v := by
     exact_mod_cast count1.trans hs1
@@ -160,7 +163,9 @@ theorem coefficients_three_domains
     have hcount := Support.coefficient_card (R := R) Finset.univ 3
     have hcountQ : s 3 =
         (((configurations (Support.graph R) Finset.univ).filter
-          fun S => S.card = 3).card : ℚ) := by exact_mod_cast hcount
+          fun S => S.card = 3).card : ℚ) := by
+      dsimp [s, P]
+      exact_mod_cast hcount
     rw [hcountQ]
     exact_mod_cast hcard
   have density : 11*(E : ℚ) ≤ (v : ℚ)*((v : ℚ)-1) := by
@@ -172,15 +177,15 @@ theorem coefficients_three_domains
     have hz : 0 ≤ z := by positivity
     have hxx : 0 ≤ x^2-x := by
       have h : (a-1) ≤ (a-1)*(a-1) := Nat.le_mul_self _
-      have h' : x ≤ x*x := by exact_mod_cast h
+      have h' : x ≤ x*x := by dsimp [x]; exact_mod_cast h
       nlinarith
     have hyy : 0 ≤ y^2-y := by
       have h : (b-2) ≤ (b-2)*(b-2) := Nat.le_mul_self _
-      have h' : y ≤ y*y := by exact_mod_cast h
+      have h' : y ≤ y*y := by dsimp [y]; exact_mod_cast h
       nlinarith
     have hax : (a : ℚ) = x+1 := by dsimp [x]; rw [Nat.cast_sub ha]; ring
-    have hby : (b : ℚ) = y+2 := by dsimp [y]; rw [Nat.cast_sub hb]; norm_num; ring
-    have hcz : (c : ℚ) = z+4 := by dsimp [z]; rw [Nat.cast_sub hc]; norm_num; ring
+    have hby : (b : ℚ) = y+2 := by dsimp [y]; rw [Nat.cast_sub hb]; norm_num
+    have hcz : (c : ℚ) = z+4 := by dsimp [z]; rw [Nat.cast_sub hc]; norm_num
     have hid : (v : ℚ)*((v : ℚ)-1)-11*(E : ℚ) =
         2+49*(x^2-x)+6*x+36*y^2+59*y+16*z^2+65*z+
         14*(x^2-x)*y+12*x*(y^2-y)+8*x*y+20*x*z+45*y*z+
@@ -200,7 +205,7 @@ theorem coefficients_three_domains
     nlinarith
   have low2 : s 1*s 3 < s 2^2 := by
     let C : ℚ := (v.choose 2 : ℕ)
-    have hC : C = (v : ℚ)*((v : ℚ)-1)/2 := Nat.cast_choose_two v
+    have hC : C = (v : ℚ)*((v : ℚ)-1)/2 := Nat.cast_choose_two ℚ v
     have hCpos : 0 < C := by dsimp [C]; exact_mod_cast Nat.choose_pos (by omega : 2 ≤ v)
     have h3 : (v.choose 3 : ℚ)*3 = (v.choose 2 : ℚ)*((v : ℚ)-2) := by
       have h := congrArg (fun n : ℕ => (n : ℚ)) (Nat.choose_succ_right_eq v 2)
@@ -226,6 +231,8 @@ theorem coefficients_three_domains
     nlinarith [sq_pos_of_pos hCpos]
   refine ⟨hN, pos, tail, ?_⟩
   intro k hk hkN
+  change k < N at hkN
+  change s (k-1)*s (k+1) < s k^2
   by_cases hk1 : k = 1
   · subst k
     simpa using low1
@@ -235,7 +242,7 @@ theorem coefficients_three_domains
   have hk3 : 3 ≤ k := by omega
   let B := fun j => (N.choose j : ℚ)
   let f := fun j => s j / B j
-  let D := fun m => (m.choose (k-1) : ℚ)/B (k-1) -
+  let D := fun (m : ℕ) => (m.choose (k-1) : ℚ)/B (k-1) -
     2*((m.choose k : ℚ)/B k)+(m.choose (k+1) : ℚ)/B (k+1)
   have hB (j : ℕ) (hj : j ≤ N) : 0 < B j := by
     dsimp [B]
@@ -264,7 +271,9 @@ theorem coefficients_three_domains
     rw [hs (k-1), hs k, hs (k+1)]
     dsimp [D]
     ring
-  have hthird : 3*(1/(3*((k : ℚ)+1))) = 1/((k : ℚ)+1) := by ring
+  have hthird : 3*(1/(3*((k : ℚ)+1))) = 1/((k : ℚ)+1) := by
+    field_simp
+    <;> ring
   have curv : f (k-1)-2*f k+f (k+1) ≤ 1/((k : ℚ)+1) := by
     rw [hdecomp]
     have h0 := hDnon T0 (hT0A.trans hAN)
@@ -301,6 +310,7 @@ theorem coefficients_three_domains
     have hid : 4*t^3*y^2-(k : ℚ)*(2*t*y+1)^2 =
         4*t^2*(y^2-y)+4*t*(y-1)+3*(k : ℚ)+4 := by dsimp [t]; ring
     rw [hid]
+    have hy1 : 0 ≤ y-1 := by linarith only [hy]
     positivity
   have hscalar : (k : ℚ)*x*z < t*y^2 := by
     have hm : 0 < 4*t^2*(t*y^2-(k : ℚ)*x*z) := by nlinarith [hfourk, hslack]
