@@ -41,3 +41,5 @@ The classification of groups whose identity-fixing bijections are always automor
 ## References
 
 - Truth anchor: `D5/S3/FiniteGroups/RegularRepresentation/RegularNormalizerSaturation.diagonalNormalizer_eq_partitionAut_iff`
+- Dependency: [D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms](../Partitions/UniformPartitionAutomorphisms.md)
+- Dependency: [D5/S3/FiniteGroups/RegularRepresentation/DiagonalRegularNormalizer](DiagonalRegularNormalizer.md)
