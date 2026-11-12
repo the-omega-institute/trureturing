@@ -6,7 +6,7 @@ internal sealed class TotalPerfectCriterionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/TotalPerfectCriterion.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/manikandishzhang2026sumcodes");
+        LibraryNoteRef.Create("D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact fixed-connection-set two-case criterion for total perfect subgroup codes.",

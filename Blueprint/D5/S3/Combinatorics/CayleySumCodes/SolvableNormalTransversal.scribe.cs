@@ -6,7 +6,7 @@ internal sealed class SolvableNormalTransversalDocument : IScribeDocumentDefinit
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/SolvableNormalTransversal.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/manikandishzhang2026sumcodes");
+        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Normal transversals and finite solvable groups.",

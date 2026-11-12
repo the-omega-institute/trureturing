@@ -6,7 +6,7 @@ internal sealed class AffineExhaustivenessCounterexampleDocument : IScribeDocume
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/AffineExhaustivenessCounterexample.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/manikandishzhang2026sumcodes");
+        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "AffineExhaustivenessCounterexample in the actual loopless sum graphs.",

@@ -48,5 +48,5 @@ internal sealed class RootTwoTailCurveDocument : IScribeDocumentDefinition
             Item("quartic-separable", "quartic_separable", "Quartic separable", "The exact complete telescope and conclusion are supplied by the current compiled statement below. The original domain and all limits in this document apply."),
             Item("quartic-squarefree", "quartic_squarefree", "Quartic squarefree", "The exact complete telescope and conclusion are supplied by the current compiled statement below. The original domain and all limits in this document apply."),
             Item("quartic-geometrically-separable", "quartic_geometrically_separable", "Quartic geometrically separable", "The exact complete telescope and conclusion are supplied by the current compiled statement below. The original domain and all limits in this document apply.")),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/PairLowArithmetic"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Combinatorics/SpectralGraph/Nikandish/PairLowArithmetic"))]));
 }

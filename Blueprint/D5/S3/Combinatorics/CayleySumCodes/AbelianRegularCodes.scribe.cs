@@ -6,7 +6,7 @@ internal sealed class AbelianRegularCodesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create(
-        "D5/L/GraphInvariants/manikandishzhang2026sumcodes");
+        "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes");
     private static DocumentBlock Item(string id, string declaration, string title,
         string text, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
         DeclarationHandle.Create(Prefix + declaration), H(title),

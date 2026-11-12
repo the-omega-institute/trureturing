@@ -478,4 +478,4 @@ The exact complete telescope and conclusion are supplied by the current compiled
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/ArithmeticCurves/RootTwoTailCurve.three_negative_large_tails`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/ArithmeticCurves/RootTwoTailCurve.three_nonzero`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/ArithmeticCurves/RootTwoTailCurve.to_from`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairLowArithmetic](../PairLowArithmetic.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairLowArithmetic](../PairLowArithmetic.md)

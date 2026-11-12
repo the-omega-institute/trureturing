@@ -6,7 +6,7 @@
    utility: none
    digest: Full positive-tail root-two curve, exact quartic recovery and finite fibers -/
 
-import D5.S3.Combinatorics.SpectralGraph.PairLowArithmetic
+import D5.S3.Combinatorics.SpectralGraph.Nikandish.PairLowArithmetic
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.FieldTheory.Separable
 import Mathlib.Data.Int.Interval

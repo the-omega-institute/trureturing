@@ -11,7 +11,7 @@ internal sealed class ConjugacyIndexSumDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Combinatorics/CayleySumCodes/ConjugacyIndexSum.result"),
             H("The extra reciprocal-index term"), StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
-                "D5/L/GraphInvariants/manikandishzhang2026sumcodes")),
+                "D5/L/GraphInvariants/Nikandish/manikandishzhang2026sumcodes")),
             Blocks(Paragraph(Text(
                 "For every finite group, normal subgroup H and actual total-code "
                 + "connection set Y, choose any complete disjoint family of its "
