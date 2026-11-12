@@ -32,18 +32,6 @@ set_option autoImplicit false
 namespace D5.S3.Topology.EJASpectralNorm
 open scoped BigOperators
 local notation "L" => AddMonoid.End.mulLeft
-private theorem L_apply {J : Type*} [NonUnitalNonAssocSemiring J] (a w : J) :
-    (AddMonoid.End.mulLeft a) w = a * w := rfl
-
-private theorem End_add_apply {J : Type*} [NonUnitalNonAssocCommRing J]
-    (f g : AddMonoid.End J) (w : J) : (f + g) w = f w + g w := rfl
-
-private theorem End_mul_apply {J : Type*} [NonUnitalNonAssocCommRing J]
-    (f g : AddMonoid.End J) (w : J) : (f * g) w = f (g w) := rfl
-
-private theorem End_neg_apply {J : Type*} [NonUnitalNonAssocCommRing J]
-    (f : AddMonoid.End J) (w : J) : (-f) w = -(f w) := rfl
-
 section Linearisation
 
 variable {J : Type*} [NonUnitalNonAssocCommRing J] [IsCommJordan J]
@@ -61,22 +49,18 @@ private theorem two_lin1_apply (a b w : J) :
     (2 : ℕ) • (b * (a * a * w) - a * a * (b * w))
       + (4 : ℕ) • (a * (a * b * w) - a * b * (a * w)) = 0 := by
   have h := congrArg (fun f : AddMonoid.End J => f w) (two_lin1_raw a b)
-  simpa [Ring.lie_def, sub_eq_add_neg, L_apply, End_add_apply, End_mul_apply,
-    End_neg_apply] using h
+  simpa [Ring.lie_def, sub_eq_add_neg] using h
 
 end Linearisation
 
 section Projections
 variable {J : Type*} [NonUnitalNonAssocCommRing J] [Module ℝ J] [IsScalarTower ℝ J J]
 
-private theorem mul_smul_comm' (r : ℝ) (a b : J) : a * (r • b) = r • (a * b) := by
-  rw [mul_comm, smul_mul_assoc, mul_comm]
-
 /-- The Jordan multiplication operator `L_c : y ↦ c ∘ y`, as an `ℝ`-linear map. -/
 private def mulL (c : J) : J →ₗ[ℝ] J where
   toFun y := c * y
   map_add' := mul_add c
-  map_smul' r y := mul_smul_comm' r c y
+  map_smul' r y := D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm' r c y
 
 /-- The Peirce projection onto the `1`-eigenspace of `L_c`: the Lagrange interpolant
 `2L² − L`, which is `1` at `1` and `0` at `0` and `1/2`. -/
@@ -86,24 +70,14 @@ private def peirceOne (c : J) : J →ₗ[ℝ] J := (2 : ℝ) • (mulL c ∘ₗ 
 `4L − 4L²`. -/
 private def peirceHalf (c : J) : J →ₗ[ℝ] J := (4 : ℝ) • mulL c - (4 : ℝ) • (mulL c ∘ₗ mulL c)
 
-
-@[simp] private theorem peirceOne_apply (c y : J) :
-    peirceOne c y = (2 : ℝ) • (c * (c * y)) - c * y := rfl
-
-@[simp] private theorem peirceHalf_apply (c y : J) :
-    peirceHalf c y = (4 : ℝ) • (c * y) - (4 : ℝ) • (c * (c * y)) := rfl
-
-
 private theorem peirceOne_of_eigen {c y : J} (h : c * y = y) : peirceOne c y = y := by
-  simp only [peirceOne_apply, h]
+  simp only [peirceOne, mulL, h]
   module
-
 
 private theorem peirceHalf_of_eigen_half {c y : J} (h : c * y = (2 : ℝ)⁻¹ • y) :
     peirceHalf c y = y := by
-  simp only [peirceHalf_apply, h, mul_smul_comm']
+  simp only [peirceHalf, mulL, h, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm']
   module
-
 
 end Projections
 
@@ -152,15 +126,14 @@ private theorem peirce_cube {c : J} (hc : c * c = c) (y : J) :
 /-- The image of `peirceOne c` lies in the `1`-eigenspace of `L_c`. -/
 private theorem mul_peirceOne {c : J} (hc : c * c = c) (y : J) :
     c * peirceOne c y = peirceOne c y := by
-  simp only [peirceOne_apply, mul_sub, mul_smul_comm', peirce_cube hc y]
+  simp only [peirceOne, mulL, mul_sub, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm', peirce_cube hc y]
   module
 
 /-- The image of `peirceHalf c` lies in the `1/2`-eigenspace of `L_c`. -/
 private theorem mul_peirceHalf {c : J} (hc : c * c = c) (y : J) :
     c * peirceHalf c y = (2 : ℝ)⁻¹ • peirceHalf c y := by
-  simp only [peirceHalf_apply, mul_sub, mul_smul_comm', peirce_cube hc y]
+  simp only [peirceHalf, mulL, mul_sub, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm', peirce_cube hc y]
   module
-
 
 end Peirce
 
@@ -190,12 +163,12 @@ private theorem inner_mul_self_nonneg_of_idem
   have hsa : ∀ u v : J, inner ℝ (c * u) v = inner ℝ u (c * v) := fun u v => hassoc c u v
   have hsa1 : ∀ u v : J, inner ℝ (peirceOne c u) v = inner ℝ u (peirceOne c v) := by
     intro u v
-    simp only [peirceOne_apply, inner_sub_left, inner_sub_right, real_inner_smul_left,
+    simp only [peirceOne, mulL, inner_sub_left, inner_sub_right, real_inner_smul_left,
       real_inner_smul_right]
     rw [hsa (c * u) v, hsa u (c * v), hsa u v]
   have hsah : ∀ u v : J, inner ℝ (peirceHalf c u) v = inner ℝ u (peirceHalf c v) := by
     intro u v
-    simp only [peirceHalf_apply, inner_sub_left, inner_sub_right, real_inner_smul_left,
+    simp only [peirceHalf, mulL, inner_sub_left, inner_sub_right, real_inner_smul_left,
       real_inner_smul_right]
     rw [hsa (c * u) v, hsa u (c * v), hsa u v]
   have hid1 : peirceOne c (peirceOne c y) = peirceOne c y :=
@@ -204,7 +177,7 @@ private theorem inner_mul_self_nonneg_of_idem
     peirceHalf_of_eigen_half (mul_peirceHalf hc' y)
   have hsplit : (m c y : J) = peirceOne c y + (2 : ℝ)⁻¹ • peirceHalf c y := by
     change c * y = _
-    simp only [peirceOne_apply, peirceHalf_apply]
+    simp only [peirceOne, peirceHalf, mulL]
     module
   have key1 : inner ℝ (peirceOne c y) (peirceOne c y) = inner ℝ (peirceOne c y) y := by
     rw [hsa1 y (peirceOne c y), hid1, real_inner_comm]
@@ -234,8 +207,6 @@ private theorem inner_left_coeff
     rw [real_inner_smul_right, horthinner i hi, mul_zero]
   · intro h
     exact absurd (Finset.mem_univ k) h
-
-
 
 variable {X : Type*} [NormedAddCommGroup X] [InnerProductSpace ℝ X]
   {x : X} {S : X →ₗ[ℝ] X →ₗ[ℝ] X} {u : X}
@@ -396,7 +367,6 @@ private theorem norm_definite (A : EJAFiniteSpectral.Data X S u) (x : X) :
       intro c _
       simp
     · exact norm_nonneg' A 0
-
 
 private theorem norm_square (A : EJAFiniteSpectral.Data X S u) (x : X) :
     spectralNorm S (S x x) = spectralNorm S x ^ 2 := by

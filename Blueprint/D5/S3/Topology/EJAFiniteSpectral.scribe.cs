@@ -8,6 +8,12 @@ internal sealed class EJAFiniteSpectralDocument : IScribeDocumentDefinition
         "Every element of a general finite real Euclidean Jordan algebra has a complete finite spectral resolution on its original carrier, using its given positive definite associative inner product and no JB norm assumption.",
         H("Finite spectra in a general real Euclidean Jordan algebra"),
         Blocks(
+            Describe.Lean(DescribeId.Create("scalar-compatibility"),
+                DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.mul_smul_comm'"),
+                H("Scalar compatibility of the commutative product"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The original scalar lemma is public at its spectral supplier. EJASpectralNorm directly uses it to construct the linear multiplication operator and in the Peirce calculations. Its statement and proof are unchanged; public visibility supplies reuse and no new mathematical content. The owner Reg mirror reconstructs its full commutative-ring, real-module and scalar-tower telescope with actual multiplication and scalar-action readouts. Whole-family variation, sensitivity, observational dependence and source-coordinate bindings remain unfinished under issue #29408; no declared_validated registration is asserted."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("formal-reality"),
                 DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.IsFormallyReal"),
                 H("The auxiliary formal-reality predicate"), StatementSource.WithoutFormula(),

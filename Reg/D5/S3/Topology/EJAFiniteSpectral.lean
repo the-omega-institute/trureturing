@@ -62,4 +62,48 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@finite_spectral_resolution.{u})
 
+namespace ScalarCompatibility
+
+structure Inputs where
+  X : Type u
+  [ring : NonUnitalNonAssocCommRing X]
+  [scalar : Module ℝ X]
+  [tower : IsScalarTower ℝ X X]
+
+attribute [instance] Inputs.ring Inputs.scalar Inputs.tower
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := P.X × P.X × ℝ
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := P.X
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun role _ z => if role then z.2.2 • z.1 else z.1 * z.2.1)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ (P : Inputs.{u}) (r : ℝ) (a b : P.X),
+    R.readout false P (a, R.readout true P (b, b, r), r) =
+      R.readout true P (R.readout false P (a, b, r), b, r)
+
+abbrev sourceScope : Prop := type_of% (@mul_smul_comm'.{u})
+
+theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P r a b
+    exact h r a b
+  · intro h X ring scalar tower r a b
+    exact h (@Inputs.mk X ring scalar tower) r a b
+
+theorem actual_positive : arena.{u}.Law actual.{u} :=
+  source_bridge.mp (@mul_smul_comm'.{u})
+
+end ScalarCompatibility
+
 end Reg.D5.S3.Topology.EJAFiniteSpectral

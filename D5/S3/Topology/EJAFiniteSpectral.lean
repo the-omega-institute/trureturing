@@ -243,7 +243,7 @@ end Family
 
 section Scalar
 variable {J : Type*} [NonUnitalNonAssocCommRing J] [Module ℝ J] [IsScalarTower ℝ J J]
-private theorem mul_smul_comm' (r : ℝ) (a b : J) : a * (r • b) = r • (a * b) := by
+theorem mul_smul_comm' (r : ℝ) (a b : J) : a * (r • b) = r • (a * b) := by
   rw [mul_comm, smul_mul_assoc, mul_comm]
 end Scalar
 
