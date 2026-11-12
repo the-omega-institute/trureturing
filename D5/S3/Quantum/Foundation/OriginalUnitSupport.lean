@@ -6,9 +6,6 @@
    utility: none
    digest: Native support compression produces an actual original-unit determinant maximizer and full-vector stationarity. -/
 
-import D5.S3.Quantum.Foundation.SectionROGFrame
-import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
-import Mathlib.Data.Sym.Card
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Convex.Cone.Basic
 import Mathlib.Analysis.InnerProductSpace.Symmetric
@@ -20,8 +17,6 @@ import Mathlib.Analysis.Calculus.Deriv.Polynomial
 import Mathlib.Analysis.Calculus.LocalExtr.Basic
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.Convex.Extreme
-import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.Tactic
 
 /-!
@@ -687,8 +682,5 @@ theorem exists_original_unit_inverse_trace_stationarity
     (by simpa only [hmass, RCLike.ofReal_natCast, Fintype.card_fin] using hktr m)
     (by simpa only [hku, RCLike.ofReal_natCast, Fintype.card_fin] using htr k)
 
-
-
-omit [DecidableEq ι] in
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport

@@ -28,8 +28,6 @@ internal sealed class OriginalUnitNormalizationDocument : IScribeDocumentDefinit
                 Bracket(Call("DecidableEq", index)), Sp,
                 Bracket(Call("AddCommGroup", space)), Sp,
                 Bracket(Call("Module", real, space)), Sp, body))));
-        Formula objects(Formula body) => All("C", Call("PointedCone", real, space),
-            All("rho", linear(matrices), body));
         Formula kernel = All("z", vectors, IffF(Eq(action(y), D(0)),
             All("x", space, Eq(action(x), D(0)))));
         Formula nativeVector = Call("ofLp", z);

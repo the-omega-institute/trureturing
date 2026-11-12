@@ -7,6 +7,11 @@
    digest: The actual original-unit principal congruence transports the entire original geometry. -/
 
 import D5.S3.Quantum.Foundation.OriginalUnitSupport
+import D5.S3.Quantum.Foundation.SectionROGFrame
+import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
+import Mathlib.Data.Sym.Card
+import Mathlib.Analysis.Convex.Extreme
+import Mathlib.LinearAlgebra.Dual.Defs
 
 /-!
 The same native determinant maximizer and principal inverse square root give a
@@ -24,6 +29,7 @@ namespace D5.S3.Quantum.Foundation.OriginalUnitNormalization
 variable {𝕜 ι V : Type*} [RCLike 𝕜] [Fintype ι] [DecidableEq ι]
   [AddCommGroup V] [Module ℝ V]
 
+omit [DecidableEq ι] in
 private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
     (hA : 0 ≤ A) (hr : A.mat.rank = 1) :
     ∃ v : EuclideanSpace 𝕜 ι, v ≠ 0 ∧ SectionROGFrame.rankOne v = A := by

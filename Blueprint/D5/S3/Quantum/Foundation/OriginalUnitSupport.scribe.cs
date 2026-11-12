@@ -181,7 +181,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     H("Shared principal inverse square root laws"),
                     StatementSource.FromAuthor(Disp(sqrtLawsStatement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("This consumed helper directly reuses the pinned functional calculus and invertible matrix identities. Its unchanged proof supplies the determinant maximum, inverse cross-trace uniqueness and the normalization in OriginalUnitNormalization. It is bind-only proof organization, with no independent escape or novelty claim."))),
-                    DescribeRole.Theorem)))));
+                    DescribeRole.Theorem))));
     }
 
     private static Formula Chain(params Formula[] formulas)
