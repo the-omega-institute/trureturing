@@ -6,7 +6,7 @@ Uniform moving-index actual boundary localization.
 
 FullRecord ranges over every positive integer below the same original m, at its arbitrary original positive mu. The comparison price is literally beta(1,largestPrime(m)). No recordhood at that price, own clock, global optimizer, nonnegative epsilon or unsigned fee is assumed.
 
-The real-center short-interval count supplier gives a constant B before delta and one threshold T before m, mu and every j in 2<=j<=delta*log(P)/(log(log(P)))^2+1. With its width C, take H=1024*(1+C) and B=H+16*C. The conclusion is active literal cutoff, positive actual layerPrime and logarithmic error at most B*P^(-priceExponent j). The separately typed maximum-gap premise is retained and unused. This result is conditional on the stated analytic suppliers. Typed Reg actual laws, exact source bridges and observational dependence are partial audit evidence; lawful source-bound four-slot registration and whole-family law sensitivity remain unfinished under issue 29429.
+The real-center short-interval count supplier gives a constant B before delta and one threshold T before m, mu and every j in 2<=j<=delta*log(P)/(log(log(P)))^2+1. With its width C, take H=1024*(1+C) and B=H+16*C. The conclusion is active literal cutoff, positive actual layerPrime and logarithmic error at most B*P^(-priceExponent j). The separately typed maximum-gap premise is retained and unused. This result is conditional on the stated analytic suppliers.
 
 **Theorem 1.1 (displaced_root_boundary_squeeze).**
 
