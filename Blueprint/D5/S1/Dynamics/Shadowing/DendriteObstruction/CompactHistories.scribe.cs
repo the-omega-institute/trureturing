@@ -9,6 +9,12 @@ internal sealed class DendriteObstructionCompactHistoriesDocument : IScribeDocum
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Compact histories, maximal fibre multiplicity and the static arc-packing obstruction.",
         H("DendriteObstruction - Compact histories"), Blocks(
+        Describe.Lean(DescribeId.Create("exists-iterate-injective-arc-invariant"),
+            DeclarationHandle.Create(Owner + "exists_iterate_injective_arc_invariant"),
+            H("Injective iterate arc inside an invariant set"), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(
+                Paragraph(Text("Under the same compact metric, static arc-hull and no-circle assumptions, let Y be any forward-invariant subset containing an actual embedded nondegenerate arc A. A finitely positively expansive continuous self-map has an embedded nondegenerate arc K contained in Y on which every natural iterate is injective. Y need not be connected or compact.")),
+                Paragraph(Text("The attained maximum ranges over actual histories whose complete source is contained in Y. The initial small subarc remains in A. The existing doubling construction returns its actual restricted source together with source inclusion, so doubling preserves this constraint. Exact terminal surjectivity and forward invariance place the terminal arc in Y. This reuses the compact double cover and full-prefix extension proofs."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("exists-iterate-injective-arc"),
             DeclarationHandle.Create(Owner + "exists_iterate_injective_arc"),
             H("An embedded arc with all iterates injective"), StatementSource.WithoutFormula(),

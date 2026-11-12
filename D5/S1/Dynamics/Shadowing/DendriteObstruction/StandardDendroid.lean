@@ -8,6 +8,8 @@
 
 import D5.S1.Dynamics.Shadowing.DendriteObstruction.CompactHistories
 
+/-! Arc convexity from the standard static dendroid hypotheses. -/
+
 open Set Function
 open scoped Topology
 open TopologicalSpace
@@ -24,7 +26,7 @@ theorem between_subset (A : EmbeddedArc X) {C : Set X} (hC : IsPreconnected C)
     (hb : b ∈ Icc (0 : ℝ) 1) (hpa : A.param a ∈ C) (hpb : A.param b ∈ C) :
     A.param '' Icc a b ⊆ C := by
   let φ : Icc (0 : ℝ) 1 → X := fun u => A.param u
-  have hφ : Continuous φ := A.continuous.continuous_restrict
+  have hφ : Continuous φ := continuousOn_iff_continuous_domRestrict.mp A.continuous
   have hi : Injective φ := fun u v h => Subtype.ext (A.injective u.2 v.2 h)
   have hr : C ⊆ range φ := by
     rintro x hx
@@ -92,5 +94,78 @@ theorem StandardDendroid.arc_unique (hX : StandardDendroid X) (A B : EmbeddedArc
   · exact hX.arc_convex B A.compact A.connected
       (h0.symm ▸ mem_image_of_mem _ (by norm_num))
       (h1.symm ▸ mem_image_of_mem _ (by norm_num))
+
+/-- An embedded circle would give two distinct arcs with the same endpoints. -/
+theorem StandardDendroid.no_circle (hX : StandardDendroid X)
+    (g : AddCircle (1 : ℝ) → X) (hg : Continuous g) : ¬ Injective g := by
+  intro hi
+  let φ : ℝ → X := fun t => g (t : AddCircle (1 : ℝ))
+  have hφ : Continuous φ := hg.comp (AddCircle.continuous_mk' 1)
+  let A : EmbeddedArc X := {
+    param := fun u => φ (u / 2)
+    continuous := (hφ.comp (continuous_id.div_const 2)).continuousOn
+    injective := by
+      intro u hu v hv he
+      have huv := (AddCircle.coe_eq_coe_iff_of_mem_Ico (p := (1 : ℝ)) (a := (0 : ℝ))
+        (show u / 2 ∈ Ico 0 (0 + 1) from ⟨by linarith [hu.1], by linarith [hu.2]⟩)
+        (show v / 2 ∈ Ico 0 (0 + 1) from ⟨by linarith [hv.1], by linarith [hv.2]⟩)).mp (hi he)
+      linarith }
+  let B : EmbeddedArc X := {
+    param := fun u => φ (1 - u / 2)
+    continuous := (hφ.comp (continuous_const.sub (continuous_id.div_const 2))).continuousOn
+    injective := by
+      intro u hu v hv he
+      have huv := (AddCircle.coe_eq_coe_iff_of_mem_Ioc (p := (1 : ℝ)) (a := (0 : ℝ))
+        (show 1 - u / 2 ∈ Ioc 0 (0 + 1) from ⟨by linarith [hu.2], by linarith [hu.1]⟩)
+        (show 1 - v / 2 ∈ Ioc 0 (0 + 1) from ⟨by linarith [hv.2], by linarith [hv.1]⟩)).mp (hi he)
+      linarith }
+  have h10 : φ 1 = φ 0 := congrArg g (AddCircle.coe_period 1)
+  have heq : A.carrier = B.carrier := hX.arc_unique A B
+    (by simpa [A, B] using h10.symm) (by norm_num [A, B])
+  have hmid : φ (1 / 4) ∈ B.carrier := by
+    rw [← heq]
+    exact ⟨1 / 2, by norm_num, by norm_num [A]⟩
+  obtain ⟨u, hu, heu⟩ := hmid
+  have ht : 1 - u / 2 ∈ Icc (1 / 2 : ℝ) 1 := ⟨by linarith [hu.2], by linarith [hu.1]⟩
+  by_cases h1 : 1 - u / 2 = 1
+  · have he : φ 0 = φ (1 / 4) := by simpa only [B, h1, h10] using heu
+    have hh := (AddCircle.coe_eq_coe_iff_of_mem_Ico (p := (1 : ℝ)) (a := (0 : ℝ))
+      (by norm_num : (0 : ℝ) ∈ Ico 0 (0 + 1))
+      (by norm_num : (1 / 4 : ℝ) ∈ Ico 0 (0 + 1))).mp (hi he)
+    norm_num at hh
+  · have hh := (AddCircle.coe_eq_coe_iff_of_mem_Ico (p := (1 : ℝ)) (a := (0 : ℝ))
+      (show 1 - u / 2 ∈ Ico 0 (0 + 1) from
+        ⟨by linarith [ht.1], by simpa using lt_of_le_of_ne ht.2 h1⟩)
+      (by norm_num : (1 / 4 : ℝ) ∈ Ico 0 (0 + 1))).mp (hi heu)
+    linarith [ht.1]
+
+/-- Every compact connected subset inherits the same standard dendroid geometry. -/
+theorem StandardDendroid.subcontinuum (hX : StandardDendroid X) {C : Set X}
+    (hc : IsCompact C) (hcon : IsConnected C) : StandardDendroid C := by
+  constructor
+  · intro p y hpy
+    have hne : (p : X) ≠ (y : X) := fun h => hpy (Subtype.ext h)
+    obtain ⟨A, h0, h1⟩ := hX.arcwise p y hne
+    have hAC : A.carrier ⊆ C := hX.arc_convex A hc hcon (h0 ▸ p.2) (h1 ▸ y.2)
+    let φ : Icc (0 : ℝ) 1 → C := fun u => ⟨A.param u, hAC (mem_image_of_mem _ u.2)⟩
+    have hφ : Continuous φ := A.continuous.domRestrict.subtype_mk _
+    let B : EmbeddedArc C := {
+      param := IccExtend (by norm_num : (0 : ℝ) ≤ 1) φ
+      continuous := hφ.Icc_extend'.continuousOn
+      injective := by
+        intro u hu v hv he
+        simp only [IccExtend_of_mem φ hu, IccExtend_of_mem φ hv] at he
+        exact A.injective hu hv (congrArg Subtype.val he) }
+    refine ⟨B, ?_, ?_⟩
+    · apply Subtype.ext
+      simpa only [B, IccExtend_left] using h0
+    · apply Subtype.ext
+      simpa only [B, IccExtend_right] using h1
+  · intro P Q hPc hPcon hQc hQcon
+    apply IsInducing.subtypeVal.isPreconnected_image.mp
+    rw [image_inter Subtype.val_injective]
+    exact hX.unicoherent _ _ (hPc.image continuous_subtype_val)
+      (hPcon.image _ continuous_subtype_val.continuousOn)
+      (hQc.image continuous_subtype_val) (hQcon.image _ continuous_subtype_val.continuousOn)
 
 end D5.S1.Dynamics.Shadowing.DendriteObstruction
