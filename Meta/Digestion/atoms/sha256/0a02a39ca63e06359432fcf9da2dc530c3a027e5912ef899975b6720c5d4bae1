@@ -1,0 +1,66 @@
+**引理 96.2（共同正提升）。** 在(96.1)的任意实余维 $c$ 下，令
+
+$$
+\mathcal M=(I_n+L^\perp)\cap\mathcal H_{n,+}(\mathbb F),\qquad
+\mathcal M_{pq}=\{M\in\mathcal M:v^*Mw=0\},
+\quad p=vv^*,\ q=ww^*\in P.
+\tag{96.3}
+$$
+
+$\mathcal M$ 非空紧凸，仿射维数为 $c$，且 $\operatorname{tr}M=n$。
+对任意有限列 $q_j=w_jw_j^*\in P$，有精确等价
+
+$$
+\begin{aligned}
+&\exists f\in[0,u]:\ f(p)=1,\ f(q_j)=0\quad(\forall j)\\
+&\qquad\Longleftrightarrow\quad
+\exists M\in\mathcal M:\ v^*Mw_j=0\quad(\forall j).
+\end{aligned}
+\tag{96.4}
+$$
+
+每个 $p$ 还能扩为同一原锥中的完整正交秩一框架
+
+$$
+I_n=p+r_2+\cdots+r_n,\qquad
+r_j=z_jz_j^*\in P,\qquad
+(v,z_2,\ldots,z_n)\text{ 是 }\mathbb F^n\text{ 的正交单位基}.
+\tag{96.5}
+$$
+
+证明。先证明任意原正泛函均有环境PSD提升，而不假定它有环境正收缩代表。
+设 $\pi_L$ 为迹内积正交投影。锥 $\pi_L(\mathcal H_{n,+})$ 闭：若 $\pi_L(E_i)$ 收敛且 $E_i\succeq0$，
+因 $I_n\in L$，$\operatorname{tr}E_i=\langle I_n,\pi_L(E_i)\rangle$ 有界，PSD矩阵的范数遂有界，
+取收敛子列即得PSD极限及所需投影。这个闭凸锥在 $L$ 中的对偶恰为
+$L\cap\mathcal H_{n,+}=C$；有限维双极性定理给 $C^*=\pi_L(\mathcal H_{n,+})$，其中以迹配对识别 $L^*$。
+所以给定原 proper $f$，可分别提升 $f$ 和 $u-f$ 为 $E,F\succeq0$，满足
+
+$$
+f(X)=\operatorname{tr}(EX),\quad
+(u-f)(X)=\operatorname{tr}(FX)\quad(X\in L),\qquad
+M=E+F\in\mathcal M.
+\tag{96.6}
+$$
+
+若 $f(p)=1$，则 $v^*Fv=0$，故 $Fv=0$；若 $f(q_j)=0$，则 $Ew_j=0$。
+于是 $v^*Mw_j=0$，得到(96.4)正向。
+反向，对满足右侧的 $M$，由 $p\in L$ 得 $v^*Mv=1$。取
+
+$$
+E=Mvv^*M,\qquad
+M-E=M^{1/2}\bigl(I_n-M^{1/2}vv^*M^{1/2}\bigr)M^{1/2}\succeq0.
+\tag{96.7}
+$$
+
+括号为单位向量 $M^{1/2}v$ 的正交补投影，故即使 $M$ 奇异也成立。
+在 $L$ 上限制 $E$，其补由 $M-E$ 提升，得到整个原区间内的 $f_E$，并有
+$f_E(p)=1$、$f_E(q_j)=|v^*Mw_j|^2=0$。这里的序界是 $0\preceq E\preceq M$，
+并未擅自换成 $E\preceq I_n$。
+
+因 $I_n\in L$，每个 $N\in L^\perp$ 迹为零，故 $M\in\mathcal M$ 的迹为 $n$。
+闭性、PSD和固定迹给紧性；$I_n$ 的小邻域在 $I_n+L^\perp$ 内正定，给仿射维数 $c$。
+对(96.5)，$I_n-p$ 是原锥内的正交投影。其ROG分解的每个向量均在该投影像中；
+任选非零项并归一为 $r_2$，则 $I_n-p-r_2$ 仍是 $L$ 中的正交投影。
+重复，每次剩余秩减一，得到整个框架。$n=1$ 时框架只有 $p=I_1$。
+此递推不要求Jordan闭合。证毕。
+

@@ -1,0 +1,90 @@
+**定理 97.5（非零交叠与原归一化下的正交完整块）。** 在(97.1)中，若
+$\mathcal X$ 的全部不可约分支都是线性空间 $\mathbb P(U_i)$，按(97.3)排序，
+且某一步交叠非零，则在整个原效应区间中存在原纯点 $p,q_+,q_-$，满足
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad
+T_p\bigl((q_++q_-)/2\bigr)=\frac14.
+\tag{97.25}
+$$
+
+因此在这一不限 $n,c$ 的线性分支族内，$\mathrm G_2$ 当且仅当所有拼接交叠为零；
+成立时原归一化坐标中的 $U_i$ 必彼此正交，并有
+
+$$
+\mathbb R^n=\mathop{\bigoplus}\limits_i^{\perp}U_i,\qquad
+L=\bigoplus_i\operatorname{Sym}(U_i),\qquad
+C=\bigoplus_i\operatorname{PSD}(U_i).
+\tag{97.26}
+$$
+
+证明。取第一次非零交叠的步骤 $j$。此前 $U_{<j}=\bigoplus_{k<j}U_k$ 是代数直和，
+尚不预设这些空间相互正交。令 $S=U_j\cap U_{<j}\ne0$。
+(97.3)给 $\mathbb P(S)\subseteq\bigcup_{k<j}\mathbb P(U_k)$。
+实向量空间不能由有限个真线性子空间覆盖，所以 $S\subseteq U_i$ 对某个 $i<j$ 成立。
+于是 $U_j\cap U_i=S$；$S$ 是 $U_i,U_j$ 的真子空间，
+否则一个不可约分支会包含于另一个，或 $\mathbb P(U_j)$ 会包含于先前分支之并。
+
+用(97.1)的内积选单位向量
+
+$$
+d\in S,\qquad a\in U_i\cap S^\perp,\qquad b\in U_j\cap S^\perp,
+\qquad v=(a+d)/\sqrt2,\quad w_\pm=(d\pm b)/\sqrt2,
+\tag{97.27}
+$$
+
+并置 $p=vv^{\mathsf T}$、$q_\pm=w_\pm w_\pm^{\mathsf T}$。
+这些都是同一个原基中的纯点，只用到了 $a\perp d$、$b\perp d$，不要求 $a\perp b$。
+在完整子锥 $\operatorname{PSD}(U_i)$ 上，取投影到 $v$ 的效应。
+为排除 $q_+$，在 $\operatorname{PSD}(U_j)$ 上取投影到 $(d-b)/\sqrt2$ 的效应；
+为排除 $q_-$，改取投影到 $(d+b)/\sqrt2$ 的效应。
+每次两侧在整个 $S$ 上的二次型都同为
+
+$$
+x\longmapsto\tfrac12\langle d,x\rangle^2\qquad(x\in S).
+\tag{97.28}
+$$
+
+下面核对相容二次型确实定义原效应。先在代数直和 $U_{<j}$ 中，
+对 $U_i$ 使用上述投影，对其余 $U_k$ 使用零，任选不同直和项间的对称交叉块。
+这在每个先前纯分支上均介于零与原迹单位之间。
+再选 $U_{<j}=S\oplus A_0$、$U_j=S\oplus B_0$。
+相容性(97.28)使两个二次型的 $S,S$ 块相同；
+保留各自的 $S,A_0$、$A_0,A_0$ 及 $S,B_0$、$B_0,B_0$ 块，任选 $A_0,B_0$ 交叉块，
+便得 $U_{<j}+U_j$ 上的一个实二次型。
+其原泛函在该前缀的每条纯生成射线上都在 $[0,u]$，ROG因而使它在整个前缀锥上 proper。
+97.2沿其后的拼接逐次延拓它到整个原载体，仍确认 $p$ 并排除指定的 $q_+$ 或 $q_-$。
+这给(97.25)的两个零，而不把拼成的二次型要求为环境正收缩。
+
+反过来，任一原 $g\in F_p$ 在完整 $\operatorname{PSD}(U_i)$ 上的限制由
+$0\preceq E_i\preceq I_{U_i}$ 表示，且 $E_iv=v$，因此 $E_i\succeq vv^{\mathsf T}$。
+故 $g(dd^{\mathsf T})\ge|\langle v,d\rangle|^2=1/2$，又 $g(bb^{\mathsf T})\ge0$。
+利用准确的原矩阵恒等式
+
+$$
+\frac{q_++q_-}{2}=\frac{dd^{\mathsf T}+bb^{\mathsf T}}2
+\tag{97.29}
+$$
+
+可知每个原确认者在该中点上至少取 $1/4$。
+为达到下界，在 $U_i$ 上仍取投影到 $v$，在 $U_j$ 上取 $\tfrac12dd^{\mathsf T}$，
+在其余先前分支上取零。两侧仍满足(97.28)，故同样拼成并延拓为原 proper 效应。
+它在 $dd^{\mathsf T},bb^{\mathsf T}$ 上分别取 $1/2,0$，所以中点恰取 $1/4$。
+这证明(97.25)，包括对全部原确认效应的最小性。
+
+若 $\mathrm G_2$ 成立，每次交叠只能为零，于是 $\mathbb R^n=\bigoplus_iU_i$。
+由原ROG和全部纯分支，$I_n=\sum_iX_i$，其中 $X_i\succeq0$、$\operatorname{ran}X_i\subseteq U_i$。
+将各 $X_i$ 分解为满列秩 $B_iB_i^{\mathsf T}$。有
+
+$$
+n=\operatorname{rank}I_n\le\sum_i\operatorname{rank}X_i
+\le\sum_i\dim U_i=n.
+\tag{97.30}
+$$
+
+故每个列组恰张成 $U_i$，拼成的 $n\times n$ 方阵 $B=(B_1\ \cdots\ B_s)$ 满足
+$BB^{\mathsf T}=I_n$，所以 $B$ 正交，所有 $U_i$ 彼此正交。
+再由(97.10)及每个完整线性分支上的秩一张成得(97.26)。
+反向，完整正交实块中，全部原确认效应支配 $X\mapsto\operatorname{tr}(pX)$；
+93.2给 $T_p(x)=\operatorname{tr}(px)$ 和完整 $\mathrm{Z0}$，故给 $\mathrm G_2$。证毕。
+
