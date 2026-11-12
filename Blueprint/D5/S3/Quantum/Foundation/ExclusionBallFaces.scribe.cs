@@ -18,7 +18,6 @@ internal sealed class ExclusionBallFacesDocument : IScribeDocumentDefinition
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula Ne(Formula a, Formula b) => Seq(a, Neq, Sp, b);
     private static Formula In(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
-    private static Formula Le(Formula a, Formula b) => Seq(a, Leq, Sp, b);
     private static Formula Lt(Formula a, Formula b) => Seq(a, F.Lt, Sp, b);
     private static Formula R => Seq(Mathbb, Grp(V("R")));
     private static Formula Space => V("V");
