@@ -83,6 +83,17 @@ The bounded source and literature checks did not locate a subsequent
 solution, with broad search engine and API limitations disclosed. This is
 not a global novelty guarantee.
 
+Brandsma, van Hartskamp and van Mill, *On colorings of topological groups*,
+Topology Proceedings 22 (1997), 25–41, Example 2.3
+(https://staff.fnwi.uva.nl/j.vanmill/papers/papers1997/colorings.pdf),
+give a conditional predecessor under $\diamondsuit$: a first-countable
+countably compact Ostaszewski space with a fixed-point-free involution
+admitting no finite open coloring. Such a space is sequentially compact,
+so Feldman–Wilce Corollary 4(a) supplies its bounded clique property.
+Its closed involution graph therefore gives an older conditional
+separation. The inspected sources do not establish an earlier ZFC
+deleted-square solution.
+
 ## Triage
 
 Tier 1 published end-of-paper question. The public `result` is the exact
@@ -92,6 +103,8 @@ deleted-square construction and the full-pattern Ramsey obstruction.
 The other declarations are used on its live proof path. The countable-power
 criterion is an attributed known theorem, implemented independently rather
 than copied from the unlicensed author repository.
+The original question preregistration is
+https://github.com/the-omega-institute/trureturing/issues/29397.
 
 ## ASSUMED-UNVERIFIED
 
@@ -110,6 +123,6 @@ attempted polymorphic Contract records encounter
 The missing evidence is native validated template/source-selection binding
 for all four public theorems. This unfinished audit is disclosed under the
 linked-issue exception at
-https://github.com/the-omega-institute/trureturing/issues/29397;
+https://github.com/the-omega-institute/trureturing/issues/29413;
 the issue is not audit validation or mathematical proof. No judge change or
 weakening of a theorem is used to obtain a different audit status.

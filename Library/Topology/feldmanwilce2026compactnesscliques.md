@@ -165,6 +165,18 @@ allowed. The author repository at the inspected commit also marks
 locate a solution; broad search engine and API limitations prevent a claim
 of exhaustive literature exclusion.
 
+A conditional predecessor is H. Brandsma, M. van Hartskamp and J. van Mill,
+*On colorings of topological groups*, Topology Proceedings 22 (1997),
+25–41, Example 2.3:
+https://staff.fnwi.uva.nl/j.vanmill/papers/papers1997/colorings.pdf.
+Under $\diamondsuit$, their Ostaszewski space is first-countable and
+countably compact and has a fixed-point-free involution with no finite
+open coloring. First-countable countable compactness implies sequential
+compactness; Feldman–Wilce Corollary 4(a) therefore gives the bounded
+clique property. The involution graph is a whole-product closed
+orthogonality, so this yields an older conditional separation. The
+inspected sources do not establish an earlier ZFC deleted-square solution.
+
 `DeletedSquareChromatic.result` supplies the concrete Hausdorff space
 $X=\{(p,q)\in\operatorname{Ultrafilter}(\mathbb N)^2:p\ne q\}$ with the
 induced product topology. It has the bounded clique property for every
