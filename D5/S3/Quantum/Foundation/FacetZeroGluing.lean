@@ -215,10 +215,8 @@ private theorem facet_exclusion {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     rw [hspan, finrank_bot] at hf
     omega
   obtain ⟨x, hx, hx0⟩ := hFne
-  have hux := hstrict x (F.1.isFaceOf.le hx) hx0
   have hnorm : (u x)⁻¹ • x ∈ base F.1.toPointedCone u :=
-    ⟨F.1.toPointedCone.smul_mem (inv_nonneg.mpr hux.le) hx,
-      by simp [map_smul, hux.ne']⟩
+    normalized_mem (fun y hy => hstrict y (F.1.isFaceOf.le hy)) hx hx0
   obtain ⟨f, hf, hfD⟩ := zero_gluing_common_effect hZ p ⟨_, hsub hnorm⟩
   have hvanish : ∀ y ∈ F.1, f y = 0 := by
     intro y hy
@@ -226,8 +224,7 @@ private theorem facet_exclusion {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     · simp [hy0]
     have huy := hstrict y (F.1.isFaceOf.le hy) hy0
     have hyN : (u y)⁻¹ • y ∈ base F.1.toPointedCone u :=
-      ⟨F.1.toPointedCone.smul_mem (inv_nonneg.mpr huy.le) hy,
-        by simp [map_smul, huy.ne']⟩
+      normalized_mem (fun z hz => hstrict z (F.1.isFaceOf.le hz)) hy hy0
     have hz := hsub hyN
     rw [hfD] at hz
     simpa [map_smul, huy.ne'] using hz.2
@@ -270,10 +267,8 @@ private theorem normalized_face_dimension (D : PointedCone ℝ A) (u : A →ₗ[
     Module.finrank ℝ (affineSpan ℝ (base D u)).direction + 1 =
       Module.finrank ℝ (Submodule.span ℝ (D : Set A)) := by
   obtain ⟨x, hx, hx0⟩ := hne
-  have hux := hstrict x hx hx0
   let q := (u x)⁻¹ • x
-  have hq : q ∈ base D u :=
-    ⟨D.smul_mem (inv_nonneg.mpr hux.le) hx, by simp [q, map_smul, hux.ne']⟩
+  have hq : q ∈ base D u := normalized_mem hstrict hx hx0
   let T := vectorSpan ℝ (base D u)
   have hTu : T ≤ LinearMap.ker u := by
     apply Submodule.span_le.mpr
@@ -297,8 +292,7 @@ private theorem normalized_face_dimension (D : PointedCone ℝ A) (u : A →ₗ[
       · simp [hy0]
       have huy := hstrict y hy hy0
       let z := (u y)⁻¹ • y
-      have hz : z ∈ base D u :=
-        ⟨D.smul_mem (inv_nonneg.mpr huy.le) hy, by simp [z, map_smul, huy.ne']⟩
+      have hz : z ∈ base D u := normalized_mem hstrict hy hy0
       have hzT : z - q ∈ T := vsub_mem_vectorSpan ℝ hz hq
       have hzS : z ∈ T ⊔ Submodule.span ℝ {q} := by
         have hh := (T ⊔ Submodule.span ℝ {q}).add_mem
@@ -387,12 +381,10 @@ private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     have hux := hstrict x hx hx0
     have huy := hstrict y hy hy0
     have hsum : 0 < u (x + y) := by simpa only [map_add] using add_pos hux huy
-    have hnK {z : A} (hz : z ∈ C) (huz : 0 < u z) :
-        (u z)⁻¹ • z ∈ base C u :=
-      ⟨C.smul_mem (inv_nonneg.mpr huz.le) hz, by simp [map_smul, huz.ne']⟩
     have hnD : (u (x + y))⁻¹ • (x + y) ∈ base D u :=
-      ⟨D.smul_mem (inv_nonneg.mpr hsum.le) hxy, by
-        rw [map_smul, smul_eq_mul, inv_mul_cancel₀ hsum.ne']⟩
+      normalized_mem (fun z hz => hstrict z (hle hz)) hxy (by
+        intro he
+        simpa [he] using hsum)
     rw [hbase] at hnD
     have hseg : (u (x + y))⁻¹ • (x + y) ∈
         openSegment ℝ ((u x)⁻¹ • x) ((u y)⁻¹ • y) := by
@@ -403,7 +395,8 @@ private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
         rw [mul_right_comm (u x), mul_inv_cancel₀ hux.ne',
           mul_right_comm (u y), mul_inv_cancel₀ huy.ne']
         simp only [one_mul, smul_add]
-    have hnS := hext.left_mem_of_mem_openSegment (hnK hx hux) (hnK hy huy) hnD hseg
+    have hnS := hext.left_mem_of_mem_openSegment
+      (normalized_mem hstrict hx hx0) (normalized_mem hstrict hy hy0) hnD hseg
     apply hmem.mpr
     exact Or.inr ⟨u x, hux, (u x)⁻¹ • x, hnS, by simp [smul_smul, hux.ne']⟩
   exact ⟨⟨D, hface⟩, hbase⟩
@@ -524,8 +517,7 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
           (hx : x ∈ F.1) : x ∈ G.1 := by
         have hux := hstrict x (F.1.isFaceOf.le hx) hx0
         have hn : (u x)⁻¹ • x ∈ base F.1.toPointedCone u :=
-          ⟨F.1.toPointedCone.smul_mem (inv_nonneg.mpr hux.le) hx,
-            by simp [map_smul, hux.ne']⟩
+          normalized_mem (fun y hy => hstrict y (F.1.isFaceOf.le hy)) hx hx0
         rw [hb] at hn
         have hm := G.1.toPointedCone.smul_mem hux.le hn.1
         simpa [smul_smul, hux.ne'] using hm
