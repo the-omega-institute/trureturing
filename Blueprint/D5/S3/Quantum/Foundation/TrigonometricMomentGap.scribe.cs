@@ -30,7 +30,8 @@ internal sealed class TrigonometricMomentGapDocument : IScribeDocumentDefinition
     private static Formula K => C("base", C("cone"), C("unit"));
     private static Formula Proper(Formula f) => C("proper", C("cone"), C("unit"), f);
     private static Formula Conf(Formula f) => C("confirms", C("cone"), C("unit"), C("p"), f);
-    private static Formula Num(int n) => D([.. n.ToString().Select(c => (byte)(c - '0'))]);
+    private static Formula Num(int n) =>
+        D([.. n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0'))]);
     private static Formula Q(int a, int b) => Seq(Frac, Grp(Num(a)), Grp(Num(b)));
     private static Formula Half(Formula a, Formula b) => Seq(Q(1, 2), Cdot, Open, a, Plus, b, Close);
     private static Formula Excludes(Formula x) => Ex("f", Dual, And(Conf(V("f")), Eq(App(V("f"), x), D(0))));
