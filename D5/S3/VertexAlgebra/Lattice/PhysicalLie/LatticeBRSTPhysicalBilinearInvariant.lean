@@ -31,7 +31,7 @@ uses Mathlib linearity. No literature novelty is asserted.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -71,7 +71,7 @@ private theorem descentCurrent_down (v : Carrier D) :
   have hb : BcGhostFock.b (-1) (ket {1}) = CountableOccupationFock.vacuum := by
     norm_num [BcGhostFock.b, CountableOccupationFock.annihilate_ket,
       CountableOccupationFock.phase, CountableOccupationFock.lowerCount,
-      CountableOccupationFock.vacuum]
+      CountableOccupationFock.vacuum, Finset.filter_singleton]
   have hs : ghostB D (-1) (v ⊗ₜ[ℂ] ket {1}) =
       v ⊗ₜ[ℂ] CountableOccupationFock.vacuum := by
     change v ⊗ₜ[ℂ] BcGhostFock.b (-1) (ket {1}) = _
@@ -132,6 +132,7 @@ private theorem statePairing_current_primary
             ((slices D z) T ⊗ₜ[ℂ] ket T) := by
       conv_lhs => rw [← state_expansion x, ← state_expansion z]
       simp only [map_sum, LinearMap.sum_apply]
+      rw [Finset.sum_comm]
     _ = ∑ S ∈ (slices D x).support, ∑ T ∈ (slices D z).support,
           -statePairing D ((slices D x) S ⊗ₜ[ℂ] ket S)
             (A ((slices D z) T ⊗ₜ[ℂ] ket T)) := by
@@ -143,6 +144,7 @@ private theorem statePairing_current_primary
     _ = -statePairing D x (A z) := by
       conv_rhs => rw [← state_expansion x, ← state_expansion z]
       simp only [map_sum, LinearMap.sum_apply, Finset.sum_neg_distrib]
+      rw [Finset.sum_comm]
 
 /-- Ordinary unsigned invariance of the ACTUAL constructed bilinear form
 on ALL elements of the literal original global physical Lie image. The two
@@ -197,7 +199,7 @@ theorem physicalBilinearForm_invariant
   calc
     physicalBilinearForm D H h26 hHG hGH (⁅x, y⁆) z =
         -physicalBilinearForm D H h26 hHG hGH (⁅y, x⁆) z := by
-      rw [lie_skew x y, map_neg, LinearMap.neg_apply]
+      rw [← lie_skew x y, map_neg, LinearMap.neg_apply]
     _ = physicalBilinearForm D H h26 hHG hGH x (⁅y, z⁆) := by
       rw [hskew, neg_neg]
 

@@ -23,7 +23,7 @@ The bilinear current argument below uses no Hermitian positivity argument.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -154,12 +154,12 @@ def oppositePairing (p : Charge D) :
 private theorem charge_energy_neg (p : Charge D) :
     chargeEnergy D (-p) = chargeEnergy D p := by
   unfold chargeEnergy
-  rw [bilinear_neg_neg]
+  rw [bilinear_neg_left, bilinear_neg_right, neg_neg]
 
 private def oppositeEnergyEquiv {t : ℕ} (p : Charge D) :
     energyTarget D t p ≃ₗ[ℂ] energyTarget D t (-p) where
-  toFun f := ⟨f.val,by simpa only [charge_energy_neg] using f.property⟩
-  invFun f := ⟨f.val,by simpa only [charge_energy_neg] using f.property⟩
+  toFun f := ⟨f.val,by simpa only [energyTarget, charge_energy_neg] using f.property⟩
+  invFun f := ⟨f.val,by simpa only [energyTarget, charge_energy_neg] using f.property⟩
   left_inv _ := rfl
   right_inv _ := rfl
   map_add' _ _ := rfl
