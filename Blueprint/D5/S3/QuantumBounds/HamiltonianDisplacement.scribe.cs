@@ -41,14 +41,15 @@ internal sealed class HamiltonianDisplacementDocument : IScribeDocumentDefinitio
         Formula coefficient = Call("divide", Call("multiply", Call("negative", Call("I")),
             Call("ofReal", t)), Call("ofReal", hbar));
         Formula evolved = Call("apply", Call("exp", Call("scale", coefficient, a)), psi);
-        return Disp(All("E", Call("Type"),
-            Seq(Instances(e, complex), Sp,
-                All("A", Call("ContinuousLinearMap", complex, e, e),
-                    All("psi", e, All("hbar", real, All("t", real,
-                        Rel(Conj(Call("IsSelfAdjoint", a),
-                            Rel(Call("norm", psi), Eq, D(1)), Rel(D(0), Lt, hbar)),
-                            Implies, Rel(Call("fsAngle", psi, evolved), Le,
-                                Call("divide", Call("multiply", Call("abs", t), delta), hbar)))))))));
+        Formula conclusion = Rel(Call("fsAngle", psi, evolved), Le,
+            Call("divide", Call("multiply", Call("abs", t), delta), hbar));
+        Formula body = Rel(Conj(Call("IsSelfAdjoint", a),
+            Rel(Call("norm", psi), Eq, D(1)), Rel(D(0), Lt, hbar)), Implies, conclusion);
+        body = All("t", real, body);
+        body = All("hbar", real, body);
+        body = All("psi", e, body);
+        body = All("A", Call("ContinuousLinearMap", complex, e, e), body);
+        return Disp(All("E", Call("Type"), Seq(Instances(e, complex), Sp, body)));
     }
 
     private static Formula Instances(Formula e, Formula complex) => Seq(
