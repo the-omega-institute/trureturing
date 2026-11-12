@@ -100,6 +100,10 @@ $$(\forall n: \mathbb{N}, \operatorname{C}\left(n + 1\right) = \operatorname{era
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/CounterSequences/KimberlingA371279.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a371279-a371280-rational-enumeration` (proved) by `D5/S3/Arith/CounterSequences/KimberlingA371279.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a371279-a371280-rational-enumeration","declaration_gid":"D5/S3/Arith/CounterSequences/KimberlingA371279.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Clark Kimberling; Peter J. C. Moses (2024). *OEIS A371279 and A371280: a first-retention enumeration of positive rationals at most one*. URL: <https://oeis.org/A371279>.

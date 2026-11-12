@@ -63,14 +63,16 @@ internal sealed class KimberlingA371279Document : IScribeDocumentDefinition
                 + "This does not validate published finite array digits or execute Mathematica. "
                 + "The denominator-induction route is attributed to the supplied GPT Pro search candidate; "
                 + "no independent-discovery or research-difficulty claim is made.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a371279-a371280-rational-enumeration"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("kimberling-" + name.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula),
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
