@@ -12,9 +12,9 @@ Source-specific four-slot Reg audits for the public theorems remain unfinished: 
 
 **Theorem 1.1 (Number covariance for every original ghost field).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.ghost_number_field`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.ghost_number_field`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.ghost_number_field` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.ghost_number_field` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ For any a in the original bc occupation Fock space and integer n, ghostNumber * 
 
 **Theorem 1.2 (Full-state covariance at every integer tensor mode).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_mode`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_mode`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_mode` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_mode` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ For every D : LatticeData, x,y : State D and integer n, N(mu_n(x,y)) = mu_n(Nx,y
 
 **Theorem 1.3 (The original lowering law on actual tensor states).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_b_apply`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_b_apply`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_b_apply` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_b_apply` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ For every D, integer m and x : State D, N(B_m x) = B_m(Nx) - B_m x. This directl
 
 **Theorem 1.4 (The unsigned current has integer degree minus one).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.current_number`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.current_number`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.current_number` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.current_number` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -60,9 +60,9 @@ For every D, x,y : State D and p,q : Int, if Nx = (p : Complex) times x and Ny =
 
 **Theorem 1.5 (Ghost number one implies actual odd parity).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_one_parity`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_one_parity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_one_parity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_one_parity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -76,12 +76,12 @@ Direct mathematical suppliers: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomolog
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.current_number`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.ghost_number_field`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_b_apply`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_mode`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance.number_one_parity`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](LatticeBRSTCohomologyBVSecondOrder.md)
-- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyGhostGrading](LatticeBRSTCohomologyGhostGrading.md)
-- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](LatticeBRSTCohomologyBVSecondOrder.md)
-- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyGhostGrading](LatticeBRSTCohomologyGhostGrading.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.current_number`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.ghost_number_field`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_b_apply`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_mode`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance.number_one_parity`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](../LatticeBRSTCohomologyBVSecondOrder.md)
+- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyGhostGrading](../LatticeBRSTCohomologyGhostGrading.md)
+- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](../LatticeBRSTCohomologyBVSecondOrder.md)
+- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyGhostGrading](../LatticeBRSTCohomologyGhostGrading.md)

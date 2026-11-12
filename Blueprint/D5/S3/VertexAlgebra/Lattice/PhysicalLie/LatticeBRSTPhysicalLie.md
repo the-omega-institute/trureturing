@@ -12,9 +12,9 @@ Source-specific four-slot Reg audits for the public theorems remain unfinished: 
 
 **Theorem 1.1 (Integer degree of the existing quotient current).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_grade`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_grade`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_grade` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_grade` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ Under the full critical telescope, for a,b : C and p,q : Int with a in grade p a
 
 **Theorem 1.2 (Skew symmetry of the literal unsigned current).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_skew`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_skew`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_skew` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_skew` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ Under the full critical telescope, for arbitrary a,b : C with pi(a) = -a and pi(
 
 **Theorem 1.3 (Full vector Leibniz on odd quotient classes).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_leftLeibniz`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_leftLeibniz`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_leftLeibniz` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_leftLeibniz` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ Under the full critical telescope, if a,b : C satisfy pi(a) = -a and pi(b) = -b,
 
 **Definition 1.4 (The native ghost-one eigenspace).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.DegreeOne`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.DegreeOne`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.DegreeOne` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.DegreeOne` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -60,9 +60,9 @@ Under the full critical telescope, DegreeOne D H h26 hHG hGH abbreviates grade D
 
 **Definition 1.5 (A literal LieRing on native ghost-one cohomology).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.degreeOneLieRing`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.degreeOneLieRing`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.degreeOneLieRing` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.degreeOneLieRing` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -72,9 +72,9 @@ Under the full critical telescope, DegreeOne carries a LieRing with bracket give
 
 **Definition 1.6 (Complex Lie algebra on the native degree-one subtype).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.degreeOneLieAlgebra`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.degreeOneLieAlgebra`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.degreeOneLieAlgebra` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.degreeOneLieAlgebra` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -84,9 +84,9 @@ Under the full critical telescope, the preceding LieRing on DegreeOne carries Li
 
 **Theorem 1.7 (Cyclic vector Jacobi in the original global quotient).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_jacobi`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_jacobi`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_jacobi` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_jacobi` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -96,9 +96,9 @@ Under the full critical telescope, for a,b,c : C with all three classes in grade
 
 **Definition 1.8 (The literal simultaneous physical equations).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalStates`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalStates`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalStates` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalStates` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -108,9 +108,9 @@ For D : LatticeData and arbitrary H : Matrix (Fin D.rank) (Fin D.rank) Complex, 
 
 **Theorem 1.9 (Physical representatives close before quotienting).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalStates_current`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalStates_current`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalStates_current` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalStates_current` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -120,9 +120,9 @@ For D and H with hHG : H * gramComplex D = 1 and hGH : gramComplex D * H = 1, an
 
 **Definition 1.10 (The actual class map from physical representatives).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalClass`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalClass`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalClass` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalClass` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -132,9 +132,9 @@ Under the full critical telescope, physicalClass is the linear map physicalState
 
 **Definition 1.11 (The actual range inside global cohomology).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImage`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImage`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImage` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImage` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -144,9 +144,9 @@ Under the full critical telescope, physicalImage D H h26 hHG hGH is exactly Line
 
 **Theorem 1.12 (Restriction of the already descended current to the actual range).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImage_closed`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImage_closed`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImage_closed` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImage_closed` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -156,9 +156,9 @@ Under the full critical telescope, for a,b : C with a and b in physicalImage, J(
 
 **Definition 1.13 (A literal LieRing on physicalImage itself).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImageLieRing`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImageLieRing`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImageLieRing` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImageLieRing` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -168,9 +168,9 @@ Under the full critical telescope, physicalImage itself carries a LieRing whose 
 
 **Definition 1.14 (Complex Lie algebra on the actual physical image).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImageLieAlgebra`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImageLieAlgebra`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImageLieAlgebra` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImageLieAlgebra` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -180,9 +180,9 @@ Under the full critical telescope, the preceding LieRing on physicalImage carrie
 
 **Definition 1.15 (The same image as a Lie subalgebra of ghost-one cohomology).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalLieSubalgebra`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalLieSubalgebra`
 
-*Formalization.* `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalLieSubalgebra` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalLieSubalgebra` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -196,27 +196,27 @@ The global-image consequence also uses exactly D,H,h26,hHG,hGH above: mapping (p
 
 The original lattice, ghost, Bakalov-Kac, Scott Carnahan, Kalle Kytola and Mathlib attributions in the reused suppliers remain in force. The construction establishes BV-defect skew symmetry, vector Leibniz/Jacobi and literal LieRing/LieAlgebra structures on the stated actual image. It does not assert nontriviality of that image, a positive physical pairing, positivity in neutral or all-charge sectors, a rank-26 no-ghost theorem, complete string theory, a physical spacetime construction, an AdS/CFT correspondence or literature novelty.
 
-Direct mathematical suppliers: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities`; `D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance`; `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder`
+Direct mathematical suppliers: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities`; `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance`; `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder`
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.DegreeOne`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_grade`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_jacobi`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_leftLeibniz`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.current_skew`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.degreeOneLieAlgebra`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.degreeOneLieRing`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalClass`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImage`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImageLieAlgebra`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImageLieRing`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalImage_closed`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalLieSubalgebra`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalStates`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie.physicalStates_current`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities](LatticeBRSTCurrentIdentities.md)
-- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance](LatticeMatterGhostNumberCovariance.md)
-- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](LatticeBRSTCohomologyBVSecondOrder.md)
-- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities](LatticeBRSTCurrentIdentities.md)
-- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance](LatticeMatterGhostNumberCovariance.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.DegreeOne`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_grade`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_jacobi`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_leftLeibniz`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.current_skew`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.degreeOneLieAlgebra`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.degreeOneLieRing`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalClass`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImage`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImageLieAlgebra`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImageLieRing`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalImage_closed`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalLieSubalgebra`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalStates`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie.physicalStates_current`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities](LatticeBRSTCurrentIdentities.md)
+- Dependency: [D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance](LatticeMatterGhostNumberCovariance.md)
+- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](../LatticeBRSTCohomologyBVSecondOrder.md)
+- Narrative reference: [D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities](LatticeBRSTCurrentIdentities.md)
+- Narrative reference: [D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance](LatticeMatterGhostNumberCovariance.md)

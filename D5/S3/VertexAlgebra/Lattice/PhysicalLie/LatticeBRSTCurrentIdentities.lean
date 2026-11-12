@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities
+/- GID: D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities
    mirror-E: none(waiver:original-current-identities)
    anchors: []
    utility: none
@@ -22,7 +22,7 @@ set_option backward.isDefEq.respectTransparency false
 
 open scoped BigOperators TensorProduct VertexOperator
 
-namespace D5.S3.VertexAlgebra.LatticeBRSTCurrentIdentities
+namespace D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTCurrentIdentities
 
 open LatticeGeneratingFieldLocality (LatticeData)
 open LatticeMatterGhostCoupling (State ghostB)
@@ -220,4 +220,4 @@ theorem current_zero_energy
   exact law.symm
 
 end
-end D5.S3.VertexAlgebra.LatticeBRSTCurrentIdentities
+end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTCurrentIdentities

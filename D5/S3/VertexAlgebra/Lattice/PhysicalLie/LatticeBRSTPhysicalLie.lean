@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie
+/- GID: D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeBRSTPhysicalLie
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTPhysicalLie
    mirror-E: none(waiver:original-global-physical-lie)
    anchors: []
    utility: none
@@ -18,8 +18,8 @@ zero-mode calculation proves Jacobi, and actual CAR closes each literal
 relative representative before the unrestricted global quotient is taken.
 -/
 
-import D5.S3.VertexAlgebra.Lattice.LatticeMatterGhostNumberCovariance
-import D5.S3.VertexAlgebra.Lattice.LatticeBRSTCurrentIdentities
+import D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeMatterGhostNumberCovariance
+import D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTCurrentIdentities
 import Mathlib.Algebra.Lie.Subalgebra
 
 set_option autoImplicit false
@@ -27,7 +27,7 @@ set_option backward.isDefEq.respectTransparency true
 
 open scoped BigOperators TensorProduct VertexOperator
 
-namespace D5.S3.VertexAlgebra.LatticeBRSTPhysicalLie
+namespace D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalLie
 
 open LatticeGeneratingFieldLocality (LatticeData)
 open LatticeMatterGhostCoupling (State ghostB)
@@ -308,4 +308,4 @@ def physicalLieSubalgebra : LieSubalgebra ℂ (DegreeOne D H h26 hHG hGH) where
     exact physicalImage_closed D H h26 hHG hGH a b ha hb
 
 end
-end D5.S3.VertexAlgebra.LatticeBRSTPhysicalLie
+end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalLie

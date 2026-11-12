@@ -12,9 +12,9 @@ Source-specific four-slot Reg audits for the public theorems remain unfinished: 
 
 **Theorem 1.1 (The original antighost CAR on the tensor carrier).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_car`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_car`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_car` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_car` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -24,9 +24,9 @@ For every D : LatticeData, integers m,n and x : State D, B_m(B_n x) + B_n(B_m x)
 
 **Theorem 1.2 (The literal same-mode antighost square vanishes).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_square`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_square`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_square` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_square` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -36,9 +36,9 @@ For every D, integer m and original state x, B_m(B_m x) = 0. The same-mode CAR g
 
 **Theorem 1.3 (Relative antighost closure of the actual current).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_b0`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_b0`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_b0` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_b0` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -48,9 +48,9 @@ For every D and x,y : State D satisfying B_0 x = 0 and B_0 y = 0, B_0 K(x,y) = 0
 
 **Theorem 1.4 (Energy covariance from the actual Ward identity).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_L0`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_L0`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_L0` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_L0` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -60,9 +60,9 @@ For D : LatticeData, H : Matrix (Fin D.rank) (Fin D.rank) Complex, hHG : H * gra
 
 **Theorem 1.5 (The original antighost acts on every integer mode).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_minus_one_mode`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_minus_one_mode`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_minus_one_mode` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_minus_one_mode` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -72,9 +72,9 @@ For every D, original states x,y and integer n, B_(-1)(mu_n(x,y)) = mu_n(B_(-1)x
 
 **Theorem 1.6 (The even zero-mode commutator as a vector identity).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.even_zero_mode`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.even_zero_mode`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.even_zero_mode` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.even_zero_mode` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -84,9 +84,9 @@ For every D, states u,v,w and integer n, if Pu = u and Pv = v, then mu_0(u,mu_n(
 
 **Theorem 1.7 (Exact unsigned current Leibniz before quotienting).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_leftLeibniz`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_leftLeibniz`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_leftLeibniz` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_leftLeibniz` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -96,9 +96,9 @@ For every D and x,y,z : State D with Px = -x and Py = -y, K(x,K(y,z)) = K(K(x,y)
 
 **Theorem 1.8 (Zero energy of relative closed representatives).**
 
-Lean statement: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_zero_energy`
+Lean statement: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_zero_energy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_zero_energy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_zero_energy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -112,13 +112,13 @@ Direct mathematical suppliers: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomolog
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_car`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_minus_one_mode`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.b_square`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_L0`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_b0`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_leftLeibniz`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.current_zero_energy`
-- Truth anchor: `D5/S3/VertexAlgebra/Lattice/LatticeBRSTCurrentIdentities.even_zero_mode`
-- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](LatticeBRSTCohomologyBVSecondOrder.md)
-- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](LatticeBRSTCohomologyBVSecondOrder.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_car`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_minus_one_mode`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.b_square`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_L0`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_b0`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_leftLeibniz`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.current_zero_energy`
+- Truth anchor: `D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTCurrentIdentities.even_zero_mode`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](../LatticeBRSTCohomologyBVSecondOrder.md)
+- Narrative reference: [D5/S3/VertexAlgebra/Lattice/LatticeBRSTCohomologyBVSecondOrder](../LatticeBRSTCohomologyBVSecondOrder.md)

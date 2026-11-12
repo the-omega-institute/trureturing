@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance
+/- GID: D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/Lattice/LatticeMatterGhostNumberCovariance
+   mirror-B: D5/B/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeMatterGhostNumberCovariance
    mirror-E: none(waiver:original-number-covariance)
    anchors: []
    utility: none
@@ -23,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 
 open scoped BigOperators TensorProduct VertexOperator
 
-namespace D5.S3.VertexAlgebra.LatticeMatterGhostNumberCovariance
+namespace D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeMatterGhostNumberCovariance
 
 open D5.S3.Quantum.Fermionic
 open CountableOccupationFock (Fock ket)
@@ -271,4 +271,4 @@ theorem number_one_parity (D : LatticeData) (x : State D)
   rw [map_smul, pb, charge_one_sign i.2 ci, neg_one_smul, smul_neg]
 
 end
-end D5.S3.VertexAlgebra.LatticeMatterGhostNumberCovariance
+end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeMatterGhostNumberCovariance
