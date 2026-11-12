@@ -48,6 +48,7 @@ private theorem weighted_gain_error {α : Type*} {l : Filter α}
     (by simpa using hsmall.neg) tendsto_const_nhds
   · filter_upwards [hX, hu.eventually_ge_atTop 2] with t hXt hut
     have hh := mul_le_mul_of_nonneg_left (normalized_gain_bounds hj hut).1 hXt
+    simp only [div_eq_mul_inv, one_mul] at hh ⊢
     nlinarith only [hh]
   · filter_upwards [hX, hu.eventually_ge_atTop 2] with t hXt hut
     have hh := mul_le_mul_of_nonneg_left (normalized_gain_bounds hj hut).2.1 hXt
@@ -94,7 +95,7 @@ private theorem weighted_boundary_limit {α : Type*} {l : Filter α}
     simp only [zero_add] at hh'
     apply hh'.congr'
     filter_upwards [hX.eventually_gt_atTop 0] with t ht
-    field_simp [ht.ne']
+    field_simp [ht.ne'] <;> ring
   have hR : Tendsto R l (𝓝 1) := by
     have hh := hratio.mul hHX
     norm_num only [Nat.cast_ofNat, mul_inv_cancel₀ (by norm_num : (2 : ℝ) ≠ 0)] at hh
@@ -106,16 +107,17 @@ private theorem weighted_boundary_limit {α : Type*} {l : Filter α}
   have hnum := (hBerr.sub hAerr).sub (hA.mul hRerr)
   have hden := hA.mul hR
   have hlim := hnum.div hden (by norm_num : (1 : ℝ) * 1 ≠ 0)
-  simp only [sub_zero, mul_zero, zero_sub, one_mul, zero_div] at hlim
+  simp only [sub_zero, mul_zero, one_mul, zero_div] at hlim
   apply hlim.congr'
   filter_upwards [hP.eventually_gt_atTop 1, hQ.eventually_gt_atTop 1] with t hp hq
   have hg : gain 1 (P t) ≠ 0 :=
     (HigherLayerLogSlope.gain_pos (by linarith) (by omega)).ne'
+  have hlogP : log (P t) ≠ 0 := (log_pos (show 1 < P t from hp)).ne'
   change (X t * (B t - 1) - X t * (A t - 1) - A t * (X t * (R t - 1))) /
     (A t * R t) = X t * (beta 2 (Q t) / beta 1 (P t) - 1)
   dsimp [A, B, R, X, H, beta]
   field_simp [hg, (by linarith : P t ≠ 0), (by linarith : Q t ≠ 0),
-    (log_pos hp).ne', (log_pos hq).ne'] <;> ring
+    hlogP, (log_pos hq).ne'] <;> ring
 
 private theorem window_fee {P Q : ℝ} {p : ℕ}
     (hP : 2 ≤ P) (hQ : 4 ≤ Q) (hQP : P ≤ Q ^ 2)
@@ -140,6 +142,7 @@ private theorem window_fee {P Q : ℝ} {p : ℕ}
     positivity
   have hdist : |(p : ℝ) - Q| ≤ Q / log Q ^ 3 := by
     rw [abs_of_pos (sub_pos.mpr hp)]
+    simp only [div_eq_mul_inv, one_mul] at hpup ⊢
     nlinarith only [hpup]
   have hvar := (price_variation (by omega : 1 ≤ (2 : ℕ))
     (by linarith : 2 ≤ Q / 2) (by linarith : Q / 2 ≤ Q)
@@ -166,9 +169,11 @@ private theorem window_fee {P Q : ℝ} {p : ℕ}
         convert hh using 1 <;> ring
   have hcenter : |beta 2 Q - beta 1 P| =
       beta 1 P * |beta 2 Q / beta 1 P - 1| := by
-    rw [← abs_of_pos hlam, ← abs_mul]
-    congr 1
-    field_simp [hlam.ne']
+    calc
+      _ = |beta 1 P * (beta 2 Q / beta 1 P - 1)| := by
+        congr 1
+        field_simp [hlam.ne'] <;> ring
+      _ = _ := by rw [abs_mul, abs_of_pos hlam]
   have hfee := (abs_sub_le (beta 2 (p : ℝ)) (beta 2 Q) (beta 1 P)).trans
     (add_le_add (hvar.trans hnorm) le_rfl)
   have hplog : 0 ≤ log (p : ℝ) := log_nonneg (by linarith)
@@ -202,7 +207,7 @@ private theorem window_log_mass {Q : ℝ} (hQ : 1 < Q) {U : Finset ℕ}
       rw [log_mul hQ0.ne' hdelta.ne'] at hb
       have he := log_le_sub_one_of_pos hdelta
       linarith
-    simpa [logMass, hcard, mul_add, mul_div_assoc] using hh
+    simpa [logMass, hcard, mul_add, div_eq_mul_inv] using hh
 
 private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
     (m : α → ℕ) (mu : α → ℝ) (hm : ∀ t, 2 ≤ m t)
@@ -234,6 +239,7 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
     simp only [mul_zero] at hh
     apply hh.congr'
     filter_upwards [hH.eventually_gt_atTop 0] with t ht
+    dsimp only [Function.comp_def]
     field_simp [ht.ne'] <;> ring
   have hr : Tendsto r l (𝓝 1) := by
     have hh := hratio.div_const 2
@@ -267,9 +273,9 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
   obtain ⟨Tw, _hTw, hwindows⟩ := shrinking_prime_windows 1 zero_lt_one
   filter_upwards [hP.eventually_gt_atTop 4, hQ.eventually_ge_atTop (max Tw 4),
     hH.eventually_ge_atTop 2,
-    hratio.eventually_gt_const (by norm_num : (1 : ℝ) < 2),
+    hratio.eventually (eventually_gt_nhds (by norm_num : (1 : ℝ) < 2)),
     huppersep.eventually_lt_const (by norm_num : (0 : ℝ) < 1),
-    hhalflog.eventually_gt_const (by norm_num : (1 / 8 : ℝ) < 1 / 2),
+    hhalflog.eventually (eventually_gt_nhds (by norm_num : (1 / 8 : ℝ) < 1 / 2)),
     hsecond.eventually_lt_const (show (0 : ℝ) < log 2 / 2 by positivity),
     hXd.eventually_lt_const (show (0 : ℝ) < log 2 / 8 by positivity),
     hsmall.eventually_lt_const (show (0 : ℝ) < log 2 / 4 by positivity)]
@@ -305,11 +311,12 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
     have hsupport := (price_record_prime_structure (hm t) (hmu t) (hrecord t)).2
     have hmem : p ∈ (m t).primeFactors := by
       rw [hsupport]
-      exact Nat.mem_primesLE.mpr ⟨by exact_mod_cast hbelow, hprime⟩
+      exact Nat.mem_primesLE.mpr ⟨by dsimp only [P] at hbelow; exact_mod_cast hbelow, hprime⟩
     have hlo := (hprime.dvd_iff_one_le_factorization (by have := hm t; omega)).mp
       (Nat.dvd_of_mem_primeFactors hmem)
     have hhi := valuation_above_layer_prime (by have := hm t; omega : 0 < m t)
-      (by omega : 1 ≤ (2 : ℕ)) hprime (by exact_mod_cast habove)
+      (by omega : 1 ≤ (2 : ℕ)) hprime
+      (by dsimp only [Q] at habove; exact_mod_cast habove)
     omega
   have hPprime := largestPrime_prime (hm t)
   have hPval : (m t).factorization (largestPrime (m t)) = 1 := hval _ hPprime le_rfl hQP
@@ -321,7 +328,8 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
     dsimp [r, H, X]
     rw [log_div (pow_ne_zero 2 hQ0.ne') (mul_ne_zero (by norm_num) hP0.ne'),
       log_pow, log_mul (by norm_num : (2 : ℝ) ≠ 0) hP0.ne']
-    norm_num
+    norm_num only [Nat.cast_ofNat]
+    ring
   have hrpos : 0 < r t := div_pos (pow_pos hQ0 2) (by positivity)
   have hrle := log_le_sub_one_of_pos hrpos
   let eta := log 2 + X t - logMass U
@@ -332,8 +340,9 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
       linarith only [hlogs.2]
     have hmul : 0 < X t * (-log (r t) - 2 / H t ^ 3) := by
       have hh := mul_le_mul_of_nonneg_left hrle hXp.le
+      simp only [div_eq_mul_inv, one_mul] at hXd' ⊢
       nlinarith only [hh, hsecond', hXd', hb]
-    exact (pos_of_mul_pos_left hmul hXp.le).trans_le hlower
+    exact (pos_of_mul_pos_right hmul hXp.le).trans_le hlower
   have heta_upper : eta ≤ -log (r t) := by
     dsimp only [eta]
     rw [hrlog]
@@ -343,7 +352,7 @@ private theorem eventual_top_layer_floor {α : Type*} {l : Filter α}
     intro p hd
     have heq : p = largestPrime (m t) := mem_singleton.mp hd
     subst p
-    refine ⟨hPprime, by exact_mod_cast (show (2 : ℝ) < P t by linarith), ?_⟩
+    refine ⟨hPprime, by exact_mod_cast (show (2 : ℝ) < largestPrime (m t) by linarith), ?_⟩
     exact (hPprime.dvd_iff_one_le_factorization (by have := hm t; omega)).mpr
       (by omega)
   have hUp : ∀ p ∈ U, p.Prime ∧ 2 < p := by
@@ -431,8 +440,8 @@ private theorem uniform_prime_threshold :
   have hval : optimalLayerCount (ownPrice n) 2 + 2 ≤ n.factorization 2 := by omega
   have hhalf := ActualRecordSingleTwoTail.two_layer_halving
     (j := optimalLayerCount (ownPrice n) 2 + 1) (by omega)
-  have hmono := ActualRecordSingleTwoTail.marginal_antitone (by omega)
-    hval
+  have hmono := ActualRecordSingleTwoTail.marginal_antitone
+    (i := optimalLayerCount (ownPrice n) 2 + 2) (j := n.factorization 2) (by omega) hval
   have hlam : 0 < beta 1 (largestPrime n : ℝ) := beta_pos hP2 (by omega)
   simp only [Nat.add_assoc, Nat.reduceAdd] at hhalf
   linarith only [hnext, hhalf, hmono, htop, hcprice, hlam]

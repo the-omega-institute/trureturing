@@ -51,6 +51,16 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   change Nat.factorization 1 2 ≠ Nat.factorization 2 2
   norm_num [Nat.Prime.factorization_self Nat.prime_two]
 
+private theorem variation_requires_unbounded_records (h : Variation arena actual) :
+    ∀ M : ℕ, ∃ m : ℕ, M ≤ m ∧ ∃ mu : ℝ, 0 < mu ∧ FullRecord m mu := by
+  intro M
+  by_contra hnone
+  obtain ⟨_hlaw, bad, hbad⟩ := h
+  apply hbad
+  refine ⟨M, ?_⟩
+  intro m hm mu hmu hrecord
+  exact (hnone ⟨m, hm, mu, hmu, hrecord⟩).elim
+
 end eventual_actual_record_single_two_tail
 
 end Reg.D5.S3.Arith.Robin.PriceRecord.ActualRecordElementarySingleTwoTail
