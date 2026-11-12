@@ -146,7 +146,7 @@ while both strict predecessors use the original positive mu. No equality of
 actual exponents or adjacent-layer geometry is assumed. -/
 theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q W : ℝ}
     (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
-    (hLambda : lambda = beta 1 (largestPrime m : ℝ))
+    (_hLambda : lambda = beta 1 (largestPrime m : ℝ))
     (hrho : 2 ≤ rho) (hroot : beta j rho = lambda)
     (hrm : 2 ≤ rm) (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
     (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
@@ -412,5 +412,117 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
   · exact hsepM
   · exact hsepP
   · exact hsmallP
+
+private theorem window_log_bounds {r w : ℝ} (hr : 0 < r)
+    (hw : 0 ≤ w) (hhalf : w ≤ r / 2) :
+    log r - 2 * (w / r) ≤ log (r - w) ∧
+      log (r + w) ≤ log r + 2 * (w / r) := by
+  have hminus : 0 < r - w := by linarith
+  have hplus : 0 < r + w := by linarith
+  constructor
+  · have hh := log_le_sub_one_of_pos (div_pos hr hminus)
+    rw [log_div hr.ne' hminus.ne'] at hh
+    have hbound : r / (r - w) - 1 ≤ 2 * (w / r) := by
+      apply (sub_le_iff_le_add).mpr
+      apply (div_le_iff₀ hminus).mpr
+      field_simp [hr.ne']
+      nlinarith [mul_nonneg hw (show 0 ≤ r - 2 * w by linarith)]
+    linarith
+  · have hh := log_le_sub_one_of_pos (div_pos hplus hr)
+    rw [log_div hplus.ne' hr.ne'] at hh
+    have hid : (r + w) / r - 1 = w / r := by field_simp; ring
+    rw [hid] at hh
+    have hn : 0 ≤ w / r := div_nonneg hw hr.le
+    linarith
+
+set_option maxHeartbeats 800000 in
+-- The full finite supplier telescope and its three-center construction require extra elaboration steps.
+/-- Literal-cutoff logarithmic localization from explicit finite count and
+smallness conditions. This is the finite core, not a growing-index eventual
+threshold assertion. The error constant has no layer-index factor. -/
+theorem counted_displaced_cutoff_log_localization {m j K : ℕ}
+    {mu C c X P rho rm rp e q Z H t : ℝ}
+    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
+    (hK : 1 ≤ K) (hPdef : P = (largestPrime m : ℝ)) (hP : 4 ≤ P)
+    (hC : 0 < C) (hX : 2 ≤ X) (hH : 0 < H)
+    (htdef : t = P ^ (-priceExponent j))
+    (hrhodef : rho = cutoff j (beta 1 P)) (hactive : beta 1 P < beta j 2)
+    (hrmdef : rm = rho * exp (-(H * t))) (hrpdef : rp = rho * exp (H * t))
+    (hcount : ∀ x : ℝ, X ≤ x →
+      c * x ^ bhpExponent / log x ≤
+        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧
+      c * x ^ bhpExponent / log x ≤
+        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ))
+    (hXP : X ≤ P) (hXm : X ≤ rm) (hXp : X ≤ rp)
+    (hcapP : (K : ℝ) + 1 ≤ c * P ^ bhpExponent / log P)
+    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
+    (hcapR : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp)
+    (hwidth : C * P ^ bhpExponent ≤ P / 2)
+    (hrm : 2 ≤ rm - C * rm ^ bhpExponent)
+    (hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent)
+    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
+    (hprice : priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ e * beta 1 P)
+    (hZ : 0 < Z) (hZM : Z ≤ log (rm - C * rm ^ bhpExponent))
+    (hZP : Z ≤ log rp) (hbudget : 2 * log P ≤ q * ((K : ℝ) * Z))
+    (hseparate : e + q ≤ (j : ℝ) / 6 * (H * t))
+    (hsmall : (j : ℝ) / 3 * (H * t) ≤ 1)
+    (hwm : C * rm ^ bhpExponent / rm ≤ 4 * C * t)
+    (hwp : C * rp ^ bhpExponent / rp ≤ 4 * C * t)
+    (hshort : 4 * C * t ≤ 1 / 2) :
+    2 < cutoff j (beta 1 P) ∧ 0 < layerPrime m j ∧
+      |log (layerPrime m j : ℝ) - log (cutoff j (beta 1 P))| ≤
+        (H + 16 * C) * P ^ (-priceExponent j) := by
+  have hP0 : 0 < P := by linarith
+  have ht : 0 < t := htdef ▸ rpow_pos_of_pos hP0 _
+  have hht : 0 < H * t := mul_pos hH ht
+  have hlam := beta_pos (by linarith : 2 ≤ P) (by norm_num : 1 ≤ 1)
+  have hs := cutoff_spec hj hlam
+  have hcut := hs.2.2.2.mp hactive
+  have hrho : 2 < rho := hrhodef ▸ hcut
+  have hroot : beta j rho = beta 1 P := hrhodef ▸ hs.2.2.1 hcut
+  have hrho0 : 0 < rho := by linarith
+  have hrm0 : 0 < rm := hrmdef ▸ mul_pos hrho0 (exp_pos _)
+  have hrp0 : 0 < rp := hrpdef ▸ mul_pos hrho0 (exp_pos _)
+  have hlogM : log rm = log rho - H * t := by
+    rw [hrmdef, log_mul hrho0.ne' (exp_pos _).ne', log_exp]
+    ring
+  have hlogP : log rp = log rho + H * t := by
+    rw [hrpdef, log_mul hrho0.ne' (exp_pos _).ne', log_exp]
+  have hmrho : rm ≤ rho := (log_le_log_iff hrm0 hrho0).mp (by linarith)
+  have hrhop : rho ≤ rp := (log_le_log_iff hrho0 hrp0).mp (by linarith)
+  have hlogRatioM : log (rho / rm) = H * t := by
+    rw [log_div hrho0.ne' hrm0.ne', hlogM]
+    ring
+  have hlogRatioP : log (rp / rho) = H * t := by
+    rw [log_div hrp0.ne' hrho0.ne', hlogP]
+    ring
+  have hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm) := by
+    rw [hlogRatioM]
+    have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+    nlinarith
+  have hbracket := counted_displaced_root_boundary_squeeze hm hmu hrecord hj hK
+    hPdef hP hC hX hcount hXP hXm hXp hcapP hcapM hcapR hwidth hrho.le hroot
+    hrm hmrho hrhop hprefix he he1 hq hprice hZ hZM hZP hbudget hsepM
+    (by rwa [hlogRatioP]) (by rwa [hlogRatioP])
+  have hwm0 : 0 ≤ C * rm ^ bhpExponent :=
+    mul_nonneg hC.le (rpow_pos_of_pos hrm0 _).le
+  have hwp0 : 0 ≤ C * rp ^ bhpExponent :=
+    mul_nonneg hC.le (rpow_pos_of_pos hrp0 _).le
+  have hhalfM : C * rm ^ bhpExponent ≤ rm / 2 := by
+    have hh := (div_le_iff₀ hrm0).mp (hwm.trans hshort)
+    linarith
+  have hhalfP : C * rp ^ bhpExponent ≤ rp / 2 := by
+    have hh := (div_le_iff₀ hrp0).mp (hwp.trans hshort)
+    linarith
+  have hwinM := (window_log_bounds hrm0 hwm0 hhalfM).1
+  have hwinP := (window_log_bounds hrp0 hwp0 hhalfP).2
+  have hQ2 : 2 ≤ (layerPrime m j : ℝ) := hrm.trans hbracket.1
+  have hQ0 : (0 : ℝ) < layerPrime m j := by linarith
+  have hlogLo := log_le_log (by linarith : 0 < rm - C * rm ^ bhpExponent) hbracket.1
+  have hlogHi := log_le_log hQ0 hbracket.2.le
+  refine ⟨hcut, by exact_mod_cast hQ0, ?_⟩
+  rw [← hrhodef, ← htdef]
+  apply abs_le.mpr
+  constructor <;> nlinarith [mul_pos hC ht]
 
 end D5.S3.Arith.Robin.PriceRecord.ActualMovingBoundaryLocalization
