@@ -69,13 +69,13 @@ internal sealed class AbelianZeroSumPartitionDocument : IScribeDocumentDefinitio
     private static Formula Subset(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.SubsetOf, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula Arrow(Formula a, Formula b) => Seq(a, To, b);
+    private static Formula Arrow(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula G => F.Id("G");
     private static Formula I => F.Id("I");
     private static Formula A => F.Id("a");
     private static Formula S => F.Id("s");
-    private static Formula Order => Call("Nat.card", G);
+    private static Formula Order => Call("NatCard", G);
     private static Formula Card(Formula s) => Call("card", s);
     private static Formula Sum(Formula s) => Call("sum", s, A);
     private static Formula Base(Formula body) =>
