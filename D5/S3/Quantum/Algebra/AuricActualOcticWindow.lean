@@ -1140,7 +1140,7 @@ theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
   intro S h2 h6
   have hh := actual_cut_free K hsplit W hD hW hscalar a ha S h2 h6
   rw [← crossRank_matrix, ← crossRank_matrix] at hh
-  simpa only [Finset.compl_compl] using hh
+  simpa only [compl_compl] using hh
 
 end ActualCutFree
 
