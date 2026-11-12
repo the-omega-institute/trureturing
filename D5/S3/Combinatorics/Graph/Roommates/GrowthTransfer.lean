@@ -1,13 +1,15 @@
 /- GID: D5/S3/Combinatorics/Graph/Roommates/GrowthTransfer
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Roommates/GrowthTransfer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Subadditive]
    utility: none
-   digest: Explicit count obligations imply uniform same-base bounds for the literal source probability. -/
+   digest: Uniform same-base exponential bounds for the literal range-two source probability. -/
 
 import D5.S3.Combinatorics.Graph.Roommates.FixedGapGrowth
 import D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
+import D5.S3.Combinatorics.Graph.Roommates.CyclicClosure
+import D5.S3.Combinatorics.Graph.Roommates.TriangleCount
 
 set_option autoImplicit false
 noncomputable section
@@ -110,5 +112,22 @@ theorem same_q_probability_of_counts
       _ = (count 6 : ℝ) * (Real.exp h / 24) ^ (n + 5) := by rw [div_pow]; ring
 
 #print axioms same_q_probability_of_counts
+
+/-- The exact d=1, r=2 specialization of Mertens's probability conjecture.
+There are no combinatorial or analytic premises. The source parameter is
+N=n+5; all N≥7, including both parities, satisfy the bounds for the same q.
+The probability counts labelled ranking profiles admitting a stable partial
+matching, with singles permitted, once per profile. -/
+theorem result :
+    ∃ q c C : ℝ, 0 < q ∧ q < 1 ∧ 0 < c ∧ 0 < C ∧
+      ∀ n : ℕ, 2 ≤ n →
+        c * q ^ (n + 5) ≤ SourceModel.solutionProbability n ∧
+        SourceModel.solutionProbability n ≤ C * q ^ (n + 5) := by
+  apply same_q_probability_of_counts
+  · exact fun m k _ _ => PaddedCompletion.count_padded_supermultiplicative m k
+  · exact fun m _ => CyclicClosure.count_le_successful_profile_count m
+  · exact lt_of_le_of_lt TriangleCount.count_three_bound (by norm_num)
+
+#print axioms result
 
 end D5.S3.Combinatorics.Graph.Roommates.GrowthTransfer
