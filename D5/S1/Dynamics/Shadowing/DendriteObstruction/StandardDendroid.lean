@@ -154,7 +154,7 @@ theorem StandardDendroid.subcontinuum (hX : StandardDendroid X) {C : Set X}
       continuous := hφ.Icc_extend'.continuousOn
       injective := by
         intro u hu v hv he
-        simp only [IccExtend_of_mem φ hu, IccExtend_of_mem φ hv] at he
+        simp only [IccExtend_of_mem (by norm_num : (0 : ℝ) ≤ 1) φ hu, IccExtend_of_mem (by norm_num : (0 : ℝ) ≤ 1) φ hv] at he
         exact A.injective hu hv (congrArg Subtype.val he) }
     refine ⟨B, ?_, ?_⟩
     · apply Subtype.ext
@@ -162,7 +162,7 @@ theorem StandardDendroid.subcontinuum (hX : StandardDendroid X) {C : Set X}
     · apply Subtype.ext
       simpa only [B, IccExtend_right] using h1
   · intro P Q hPc hPcon hQc hQcon
-    apply IsInducing.subtypeVal.isPreconnected_image.mp
+    apply (Topology.IsInducing.subtypeVal.isPreconnected_image).mp
     rw [image_inter Subtype.val_injective]
     exact hX.unicoherent _ _ (hPc.image continuous_subtype_val)
       (hPcon.image _ continuous_subtype_val.continuousOn)
