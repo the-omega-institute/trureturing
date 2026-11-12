@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
 
@@ -8,12 +9,16 @@ internal sealed class EJAFiniteSpectralDocument : IScribeDocumentDefinition
         "Every element of a general finite real Euclidean Jordan algebra has a complete finite spectral resolution on its original carrier, using its given positive definite associative inner product and no JB norm assumption.",
         H("Finite spectra in a general real Euclidean Jordan algebra"),
         Blocks(
-            Describe.Lean(DescribeId.Create("scalar-compatibility"),
-                DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.mul_smul_comm'"),
-                H("Scalar compatibility of the commutative product"), StatementSource.WithoutFormula(),
+            Describe.Remark(DescribeId.Create("scalar-compatibility"),
+                H("Scalar compatibility of the commutative product"),
+                F.Disp(F.Seq(
+                    F.Id("a"), F.Sp, F.Circ, F.Sp, F.Open,
+                    F.Id("r"), F.Sp, F.Cdot, F.Sp, F.Id("b"), F.Close,
+                    F.Sp, F.Eq, F.Sp, F.Open,
+                    F.Id("r"), F.Sp, F.Cdot, F.Sp, F.Open,
+                    F.Id("a"), F.Sp, F.Circ, F.Sp, F.Id("b"), F.Close, F.Close)),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("Commutativity and the real scalar-tower law give a ∘ (r • b) = r • (a ∘ b). This makes multiplication by a fixed element real linear and supplies the scalar compatibility used in polynomial evaluation and the spectral-norm Peirce projections. The statement needs no Jordan identity, unit, finite dimensionality or norm."))),
-                DescribeRole.Theorem),
+                    Paragraph(Text("The existing public Lean theorem `mul_smul_comm'` proves this identity for real scalars and the original commutative product. This makes multiplication by a fixed element real linear and supplies the scalar compatibility used in polynomial evaluation and the spectral-norm Peirce projections. The theorem itself remains the exact Lean supplier; this remark records its equation without assigning the apostrophe-bearing local name a noncanonical declaration GID.")))),
             Describe.Lean(DescribeId.Create("formal-reality"),
                 DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.IsFormallyReal"),
                 H("The auxiliary formal-reality predicate"), StatementSource.WithoutFormula(),

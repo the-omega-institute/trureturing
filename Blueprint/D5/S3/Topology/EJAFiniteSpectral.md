@@ -4,7 +4,19 @@
 
 Every element of a general finite real Euclidean Jordan algebra has a complete finite spectral resolution on its original carrier, using its given positive definite associative inner product and no JB norm assumption.
 
-**Definition 1.1 (The auxiliary formal-reality predicate).**
+**Remark 1.1 (Scalar compatibility of the commutative product).**
+
+$$
+a \circ (r \cdot b) = (r \cdot (a \circ b))
+$$
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing public Lean theorem `mul_smul_comm'` proves this identity for real scalars and the original commutative product. This makes multiplication by a fixed element real linear and supplies the scalar compatibility used in polynomial evaluation and the spectral-norm Peirce projections. The theorem itself remains the exact Lean supplier; this remark records its equation without assigning the apostrophe-bearing local name a noncanonical declaration GID.
+
+**Definition 1.2 (The auxiliary formal-reality predicate).**
 
 Lean statement: `D5/S3/Topology/EJAFiniteSpectral.IsFormallyReal`
 
@@ -16,7 +28,7 @@ Lean statement: `D5/S3/Topology/EJAFiniteSpectral.IsFormallyReal`
 
 Formal reality means that a vanishing finite sum of Jordan squares has every underlying element zero. This auxiliary property is derived from the given positive definite associative inner product and unit inside the spectral proof. It is not a premise of the public EJA spectral theorem.
 
-**Definition 1.2 (The original Euclidean Jordan data).**
+**Definition 1.3 (The original Euclidean Jordan data).**
 
 Lean statement: `D5/S3/Topology/EJAFiniteSpectral.Data`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Topology/EJAFiniteSpectral.Data`
 
 The original real inner-product space X carries a specified real bilinear product S and a unit u. Data requires symmetry, the unit law, the ordinary Jordan identity and associativity of the given positive definite inner product. Finite dimensionality is a separate theorem hypothesis. No spectral data, six-law JB norm, cone selfduality, primitive frame, simplicity, matrix representation, specialness or classification is assumed. Nonisomorphic direct sums and the Albert case are within this interface whenever they carry these genuine laws.
 
-**Theorem 1.3 (Complete spectral resolution on X).**
+**Theorem 1.4 (Complete spectral resolution on X).**
 
 Lean statement: `D5/S3/Topology/EJAFiniteSpectral.finite_spectral_resolution`
 
