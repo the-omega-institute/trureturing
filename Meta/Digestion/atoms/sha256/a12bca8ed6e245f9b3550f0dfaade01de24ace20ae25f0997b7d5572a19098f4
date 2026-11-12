@@ -1,0 +1,16 @@
+**推论 99.4（标准实 scroll 在全原单位下违反 $\mathrm G_2$）。** 令
+
+$$
+B(t)y=\bigl(y_1(1,t,\ldots,t^{a_1}),\ldots,
+ y_k(1,t,\ldots,t^{a_k})\bigr),\qquad a_i\ge0.
+\tag{99.6}
+$$
+
+若 $k\ge2$ 且 $\sum_i a_i\ge2$，则由这些 ruling 生成的标准实 scroll（包括零次数顶点块）在任意严格正原单位、整个原锥及全部原 proper 效应下违反 $\mathrm G_2$。$k=1$ 的情形正是97.4处理的有理正规曲线。
+
+证明。若某个 $a_i\ge2$，其二次关系
+$x_{i,0}x_{i,2}-x_{i,1}^2$ 给出 $N\in L^\perp$，并且
+$B(t)^{\mathsf T}NB_0=(t^2/2)E_{ii}$；这不可能是可逆 $A_H(t)$ 的标量倍。若所有 $a_i\le1$，则至少有两个指标 $i\ne j$ 满足 $a_i=a_j=1$；关系
+$x_{i,0}x_{j,1}-x_{i,1}x_{j,0}$ 给出
+$B(t)^{\mathsf T}NB_0=(t/2)(E_{ji}-E_{ij})$，其对角线为零而 $A_H(t)$ 的对角线在小 $t$ 时严格为正，仍非比例。定理99.3给出共同正缺口和 $\mathrm G_2$ 失败。证毕。
+
