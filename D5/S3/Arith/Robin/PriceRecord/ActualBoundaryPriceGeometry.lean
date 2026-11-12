@@ -7,6 +7,7 @@
    digest: Actual prime exchange geometry and local price estimates. -/
 /- proof_shape: content
 admission_basis: escape-witness
+escape_witness: actual_boundary_price_from_pools: legal original-record exchanges constrain the two actual layer prices.
 utility: none. These are unbounded conditional estimates, asymptotic laws and
 finite-set identities for arbitrary inputs, not bounded enumeration, a checker,
 a numerical reduction or a certified instance. Auxiliary bind-only statements

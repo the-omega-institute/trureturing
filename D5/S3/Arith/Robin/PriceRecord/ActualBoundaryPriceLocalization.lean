@@ -7,6 +7,7 @@
    digest: Uniform BHP boundary-price localization on full original records. -/
 /- proof_shape: content
 admission_basis: escape-witness
+escape_witness: normalized_cost_bound and uniform_higher_geometry: the counted pools give the uniform power-saving price bound.
 utility: none. The actual-record construction is an unbounded conditional
 mathematical argument. All prime counts, valuations and fees retain their
 original hypotheses; the prescribed full bank and RH remain open. -/

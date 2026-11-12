@@ -7,6 +7,7 @@
    digest: Actual-cutoff dyadic stencil and uniform greedy coefficients. -/
 /- proof_shape: content
 admission_basis: escape-witness
+escape_witness: actual_root_greedy_stencil: one signed integer vector satisfies all coefficient, mesh and deficit constraints simultaneously.
 utility: none. These are unbounded conditional estimates, asymptotic laws and
 finite-set identities for arbitrary inputs, not bounded enumeration, a checker,
 a numerical reduction or a certified instance. Auxiliary bind-only statements

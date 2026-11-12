@@ -7,6 +7,7 @@
    digest: Actual prime inventories, finite predecessors and uniform clock. -/
 /- proof_shape: content
 admission_basis: escape-witness
+escape_witness: actual_finite_predecessor: one actual integer has the exact logarithmic deficit, 2-valuation change and complete objective identity.
 utility: none. The actual-record construction is an unbounded conditional
 mathematical argument. All prime counts, valuations and fees retain their
 original hypotheses; the prescribed full bank and RH remain open. -/
