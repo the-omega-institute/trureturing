@@ -338,7 +338,7 @@ Lean statement: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dy
 
 *Commentary.*
 
-Compose the actual-word rank equivalence with the existing monoDyckEquiv on its exact nondecreasing inversion-sequence domain. The result is an equivalence with actual Mathlib Dyck words of semilength n, including n=0.
+Compose the actual-word rank equivalence with the existing monoDyckEquiv on its exact nondecreasing inversion-sequence domain. The result is an equivalence with actual Mathlib Dyck words of semilength n, including n=0. Its inverse reads counts of preceding downsteps using the existing eastCounts and reconstructs the actual ordinary word by inverse ranks; both inverse laws are carried by the equivalence.
 
 **Theorem 1.25 (dyckEquiv forward).**
 
@@ -354,21 +354,7 @@ Lean statement: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dy
 
 The forward Dyck list is exactly the existing dyckSteps encoding of the proved rank-complement code.
 
-**Theorem 1.26 (dyckEquiv inverse).**
-
-Lean statement: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dyckEquiv_inverse`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dyckEquiv_inverse` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Haobo Ma and Wenlin Zhang (2026). *Ten Wilf classes, two pair equivalences and a Catalan bijection for ascent sequences (revision 3)*. URL: <https://github.com/the-omega-institute/trureturing/issues/29483#issuecomment-6832487181>.
-
-*Commentary.*
-
-The inverse reads counts of preceding downsteps using the existing eastCounts and reconstructs the actual ordinary word by inverse ranks.
-
-**Theorem 1.27 (card catalan avoiders).**
+**Theorem 1.26 (card catalan avoiders).**
 
 Lean statement: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.card_catalan_avoiders`
 
@@ -390,7 +376,6 @@ For every n including zero, the actual ordinary words avoiding literal 10-1 and 
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.catalanMonoEquiv`
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dyckEquiv`
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dyckEquiv_forward`
-- Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.dyckEquiv_inverse`
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.eastCode`
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.eastCode_append`
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank.eastCode_length`

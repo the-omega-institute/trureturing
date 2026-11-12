@@ -386,14 +386,6 @@ theorem dyckEquiv_forward (n : ℕ) (w : avoiders n {.p101, .p201}) :
   exact (Classical.choose_spec
     (D5.S3.Combinatorics.InversionSeq.InversionSeq152Dyck.monoDyckEquiv n)).1 _
 
-theorem dyckEquiv_inverse (n : ℕ) (p : {p : DyckWord // p.semilength = n}) :
-    ((dyckEquiv n).symm p).val = fromEastCode
-      (D5.S3.Combinatorics.InversionSeq.InversionSeq152Dyck.eastCounts 0 p.val.toList) := by
-  have hh := (Classical.choose_spec
-    (D5.S3.Combinatorics.InversionSeq.InversionSeq152Dyck.monoDyckEquiv n)).2.1 p
-  change fromEastCode _ = _
-  rw [hh]
-
 /-- All lengths, including the empty word, have the actual Catalan cardinality. -/
 theorem card_catalan_avoiders (n : ℕ) :
     (avoiders n {.p101, .p201}).ncard = catalan n := by

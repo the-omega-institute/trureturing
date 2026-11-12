@@ -58,11 +58,9 @@ internal sealed class OrdinaryAscentCatalanRankDocument : IScribeDocumentDefinit
             Node("catalanMonoEquiv", "catalanMonoEquiv", "catalanMonoEquiv",
                 "Actual ordinary 10-1,20-1 avoiders of length n are equivalent to nondecreasing inversion sequences of length n. Both inverses and all carrier predicates are proved; this intermediate class is not assumed to equal the avoiding words.", DescribeRole.Definition),
             Node("dyckEquiv", "dyckEquiv", "dyckEquiv",
-                "Compose the actual-word rank equivalence with the existing monoDyckEquiv on its exact nondecreasing inversion-sequence domain. The result is an equivalence with actual Mathlib Dyck words of semilength n, including n=0.", DescribeRole.Definition),
+                "Compose the actual-word rank equivalence with the existing monoDyckEquiv on its exact nondecreasing inversion-sequence domain. The result is an equivalence with actual Mathlib Dyck words of semilength n, including n=0. Its inverse reads counts of preceding downsteps using the existing eastCounts and reconstructs the actual ordinary word by inverse ranks; both inverse laws are carried by the equivalence.", DescribeRole.Definition),
             Node("dyckEquiv-forward", "dyckEquiv forward", "dyckEquiv_forward",
                 "The forward Dyck list is exactly the existing dyckSteps encoding of the proved rank-complement code.", DescribeRole.Theorem),
-            Node("dyckEquiv-inverse", "dyckEquiv inverse", "dyckEquiv_inverse",
-                "The inverse reads counts of preceding downsteps using the existing eastCounts and reconstructs the actual ordinary word by inverse ranks.", DescribeRole.Theorem),
             Node("card-catalan-avoiders", "card catalan avoiders", "card_catalan_avoiders",
                 "For every n including zero, the actual ordinary words avoiding literal 10-1 and 20-1 have cardinality catalan n. This uses the constructed equivalence and the existing Mathlib Catalan cardinality.", DescribeRole.Theorem)),
         []));
