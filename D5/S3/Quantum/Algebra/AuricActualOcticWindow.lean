@@ -178,7 +178,7 @@ private theorem tensor_reconstruct (z : K ⊗[F] D) :
     ∑ i, b i ⊗ₜ[F] tensorCoeff K b i z = z := by
   induction z using TensorProduct.inductionOn with
   | tmul c d =>
-      simp_rw [tensorCoeff_tmul, TensorProduct.tmul_smul, ← TensorProduct.smul_tmul']
+      simp_rw [tensorCoeff_tmul, ← TensorProduct.smul_tmul]
       rw [← TensorProduct.sum_tmul, b.sum_repr]
   | add x y hx hy =>
       simp_rw [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
@@ -189,7 +189,7 @@ private theorem tensorCoeff_mem (W : Submodule F D) (i : ι)
   obtain ⟨v, rfl⟩ := hz
   induction v using TensorProduct.inductionOn with
   | tmul c w =>
-      simpa only [LinearMap.baseChange_tmul, tensorCoeff_tmul] using
+      simpa only [LinearMap.baseChange_tmul, tensorCoeff_tmul, Submodule.subtype_apply] using
         W.smul_mem (b.repr c i) w.property
   | add x y hx hy =>
       simpa only [map_add] using W.add_mem hx hy
@@ -216,6 +216,7 @@ private theorem tensor_stabilizer_coefficients (W : Submodule F D)
   rw [← tensorCoeff_mul_original]
   exact tensorCoeff_mem K b W i (hz w hw)
 
+include b in
 private theorem split_stabilizer_constant [FiniteDimensional F D]
     (W : Submodule F D) (hW : ScalarIdealizer W) (z : K ⊗[F] D)
     (hz : ∀ w ∈ W, z * (1 ⊗ₜ[F] w) ∈ W.baseChange K) :
@@ -230,5 +231,48 @@ private theorem split_stabilizer_constant [FiniteDimensional F D]
   rw [splitHom_tmul, splitHom_tmul, ← he, σ.commutes, τ.commutes]
 
 end IdealizerDescent
+
+section ActualSplitWindow
+
+variable (K : Type*) [Field K] [Algebra F K]
+variable [FiniteDimensional F D] [Algebra.IsSeparable F D]
+variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
+
+/-- The image of K tensor W under the canonical evaluation splitting. -/
+private def splitWindow (W : Submodule F D) : Submodule K ((D →ₐ[F] K) → K) :=
+  (W.baseChange K).map (splitEquiv F D K hK).toLinearMap
+
+private theorem splitWindow_mem_iff (W : Submodule F D) (z : K ⊗[F] D) :
+    splitEquiv F D K hK z ∈ splitWindow K hK W ↔ z ∈ W.baseChange K := by
+  constructor
+  · rintro ⟨v, hv, he⟩
+    have : v = z := (splitEquiv F D K hK).injective he
+    exact this ▸ hv
+  · intro hz
+    exact ⟨z, hz, rfl⟩
+
+private theorem splitWindow_finrank (W : Submodule F D) :
+    finrank K (splitWindow K hK W) = finrank F W := by
+  rw [splitWindow, Submodule.finrank_map_eq]
+  rw [← (Submodule.toBaseChange.toLinearEquiv K W).finrank_eq, Module.finrank_baseChange]
+
+private theorem actual_split_diagonal_stabilizer [FiniteDimensional F K]
+    (W : Submodule F D) (hW : ScalarIdealizer W)
+    (c : (D →ₐ[F] K) → K)
+    (hc : ∀ x ∈ splitWindow K hK W, c * x ∈ splitWindow K hK W) :
+    ∀ σ τ, c σ = c τ := by
+  let e := splitEquiv F D K hK
+  let z := e.symm c
+  have hz : ∀ w ∈ W, z * (1 ⊗ₜ[F] w) ∈ W.baseChange K := by
+    intro w hw
+    apply (splitWindow_mem_iff K hK W _).mp
+    rw [map_mul, LinearEquiv.coe_coe, AlgEquiv.apply_symm_apply]
+    apply hc
+    exact (splitWindow_mem_iff K hK W _).mpr (W.tmul_mem_baseChange_of_mem 1 hw)
+  have hh := split_stabilizer_constant K (Module.finBasis F K) W hW z hz
+  intro σ τ
+  simpa only [z, e, ← AlgEquiv.toAlgHom_eq_coe, AlgEquiv.apply_symm_apply] using hh σ τ
+
+end ActualSplitWindow
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
