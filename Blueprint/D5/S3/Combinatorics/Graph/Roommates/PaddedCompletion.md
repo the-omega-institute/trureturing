@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.count_padd
 
 *Commentary.*
 
-The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. GrowthTransfer.result consumes this inequality together with CyclicClosure and TriangleCount in the same-base probability estimate.
+The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. GrowthTransfer.result consumes this inequality together with the cyclic closure and exclusive-triangle count in the same-base probability estimate.
 
 **Definition 1.7 (partnerFirst).**
 
@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_re
 
 *Commentary.*
 
-For every length, actual closing requests are injective and avoid central sites. The existing sixteen layouts fulfill all requests with a genuine involution and only central new singles. CyclicClosure supplies full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles.
+For every length, actual closing requests are injective and avoid central sites. The finite-clique construction fulfill all requests with a genuine involution and only central new singles. CyclicClosure supplies full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles.
 
 **Definition 1.21 (oldPosition).**
 
@@ -326,7 +326,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.padded_req
 
 *Commentary.*
 
-The actual gap requests are injective and avoid the two central buffer sites. Apply the existing sixteen-layout construction to obtain a genuine involution on requesters plus buffer, with only central new singles. The full padded certificate additionally proves reciprocity on every old/new pair, injectivity of every integer target and all nonblocking tests.
+The actual gap requests are injective and avoid the two central buffer sites. Apply the finite-clique construction to obtain a genuine involution on requesters plus buffer, with only central new singles. The full padded certificate additionally proves reciprocity on every old/new pair, injectivity of every integer target and all nonblocking tests.
 
 ## References
 
