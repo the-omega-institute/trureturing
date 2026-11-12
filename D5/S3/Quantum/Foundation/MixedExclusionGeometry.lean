@@ -308,7 +308,7 @@ private theorem contraction_mem (x : mixedExcluded C u) (t : Set.Icc (0 : ℝ) 1
   rw [hmap] at hm
   exact ⟨⟨hm.2,p,hm.1⟩,hm.1⟩
 
-/-- Straight motion within the actual original exclusion, without choosing continuous ball charts. -/
+/-- Straight motion in the original exclusion, without continuous choices of ball charts. -/
 def contraction (z : Set.Icc (0 : ℝ) 1 × mixedExcluded C u) : mixedExcluded C u :=
   ⟨AffineMap.lineMap (z.2 : V) (center hB (label z.2)) (z.1 : ℝ),
     (contraction_mem hc hs hg hB z.2 z.1).1⟩
@@ -449,7 +449,7 @@ def contractionHomotopy : (ContinuousMap.id (mixedExcluded C u)).Homotopy
   map_one_left x := by apply Subtype.ext; simp [contraction,centerRetraction,centerSection]
 
 /-- The genuine pair obtained by deleting one complete mixed exclusion fiber. -/
-def deletedFiberPair (p : pure C u) : TopPair :=
+private def incidencePair (p : pure C u) : TopPair :=
   TopPair.ofSubset (X := TopCat.of (mixedExcluded C u))
     {x | (x : V) ∉ exclusion C u p}
 
@@ -460,13 +460,13 @@ def deletedPointPair (p : pure C u) : TopPair :=
 open CategoryTheory
 
 /-- The unique original labels give a continuous map of the deleted pairs. -/
-def pairLabelMap (p : pure C u) : deletedFiberPair p ⟶ deletedPointPair p :=
+private def incidenceLabelMap (p : pure C u) : incidencePair p ⟶ deletedPointPair p :=
   TopPair.ofSubsetMap (TopCat.ofHom ⟨label,label_continuous hc hs hg hB hW⟩) (by
     intro x hx he
     exact hx ((label_iff hc hs hg hB hW x p).mp he))
 
 /-- The actual center section gives a map back to the deleted mixed-boundary pair. -/
-def pairCenterMap (p : pure C u) : deletedPointPair p ⟶ deletedFiberPair p :=
+private def incidenceCenterMap (p : pure C u) : deletedPointPair p ⟶ incidencePair p :=
   TopPair.ofSubsetMap (TopCat.ofHom
     ⟨centerSection hc hs hg hB,center_continuous hc hs hg hB hW⟩) (by
       intro q hq hm
@@ -474,9 +474,9 @@ def pairCenterMap (p : pure C u) : deletedPointPair p ⟶ deletedFiberPair p :=
         ((label_iff hc hs hg hB hW _ p).mpr hm)))
 
 /-- The center contraction joins the identity to the composite of the actual pair maps. -/
-def deletedFiberPairHomotopy (p : pure C u) :
-    TopPair.Homotopy (𝟙 (deletedFiberPair p))
-      (pairLabelMap hc hs hg hB hW p ≫ pairCenterMap hc hs hg hB hW p) := by
+private def incidencePairHomotopy (p : pure C u) :
+    TopPair.Homotopy (𝟙 (incidencePair p))
+      (incidenceLabelMap hc hs hg hB hW p ≫ incidenceCenterMap hc hs hg hB hW p) := by
   have H := TopPair.ofSubsetHomotopy
     (X := TopCat.of (mixedExcluded C u)) (Y := TopCat.of (mixedExcluded C u))
     (B := {x | (x : V) ∉ exclusion C u p})
@@ -489,5 +489,35 @@ def deletedFiberPairHomotopy (p : pure C u) :
         original_mixed_exclusion_contraction hc hs hg hB hW
       exact hx ((hpres p t x).mp hm))
   convert H using 1 <;> rfl
+
+
+/-- Delete one full exclusion from the literal nonpure intrinsic boundary of the original base. -/
+def deletedFiberPair (p : pure C u) : TopPair :=
+  TopPair.ofSubset (X := TopCat.of ↥(intrinsicFrontier ℝ (base C u) \ pure C u))
+    {x | (x : V) ∉ exclusion C u p}
+
+private def boundaryPairIso (p : pure C u) : deletedFiberPair p ≅ incidencePair p :=
+  TopPair.ofSubsetIso (Homeomorph.setCongr (mixed_boundary hc hs hg hB).symm)
+    (by intro x; rfl)
+
+/-- The incidence-derived label on every actual nonpure relative-boundary point. -/
+def pairLabelMap (p : pure C u) : deletedFiberPair p ⟶ deletedPointPair p :=
+  (boundaryPairIso hc hs hg hB p).hom ≫ incidenceLabelMap hc hs hg hB hW p
+
+/-- The actual centers as a map back to the literal mixed-boundary pair. -/
+def pairCenterMap (p : pure C u) : deletedPointPair p ⟶ deletedFiberPair p :=
+  incidenceCenterMap hc hs hg hB hW p ≫ (boundaryPairIso hc hs hg hB p).inv
+
+/-- The actual center contraction on the original boundary with a complete fiber deleted. -/
+def deletedFiberPairHomotopy (p : pure C u) :
+    TopPair.Homotopy (𝟙 (deletedFiberPair p))
+      (pairLabelMap hc hs hg hB hW p ≫ pairCenterMap hc hs hg hB hW p) := by
+  let e := boundaryPairIso hc hs hg hB p
+  have H := (TopPair.Homotopy.refl e.inv).comp
+    ((incidencePairHomotopy hc hs hg hB hW p).comp (TopPair.Homotopy.refl e.hom))
+  change TopPair.Homotopy (𝟙 _)
+    ((e.hom ≫ incidenceLabelMap hc hs hg hB hW p) ≫
+      (incidenceCenterMap hc hs hg hB hW p ≫ e.inv))
+  simpa only [Category.assoc, Category.comp_id, Iso.hom_inv_id] using H
 
 end D5.S3.Quantum.Foundation.MixedExclusionGeometry
