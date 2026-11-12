@@ -1,0 +1,15 @@
+**定义 74.8（$\mathrm{PRE}_{\rm fin}+\mathrm H13$）。** $\mathrm{PRE}_{\rm fin}$ 是全部 $\mathrm{PRE}_0$ 加一个定义 74.5 的族及两层关系。恢复 PRE 后，沿 66.2—66.3 取 $A_i$ 的中心单位 $c_i$、秩 $n_i$，原块 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$ 及中心投影 $\pi_{ik}$。原规范迹伴随给
+$$
+\alpha_{ik}(a)=F(a,c_k),\quad\beta_{ik}(b)=F(c_i,b),\quad\mathcal Q=\{(i,k):n_i,n_k\ge2\},\quad
+R_i(x)=\alpha_{ik}\alpha_{ik}^*x-x,\quad R_k(x)=\beta_{ik}\beta_{ik}^*x-x.
+$$
+完整保留 72.3 的关系与 72.17 的原态条件：
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal Q,\ R_i(\pi_{ik}\rho)\not\succeq0\ \text{或}\ R_k(\pi_{ik}\rho)\not\succeq0\}, \tag{74.15}
+$$
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\quad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+. \tag{74.16}
+$$
+$\widetilde M$ 的逆只在第一接口建立后使用。资格只读第一接口、中心限制、原序与原伴随，不读插入或输出；$\not\succeq0$ 指不在正锥中。$R_i,R_k$ 分别标记左右槽，即使 $i=k$ 仍是两种边缘扩张。非活跃块任意正且可为零，无活跃块时为整个 $K_D$；不加活跃块纯性、固定谱、质量下界或先按块条件化，块非零及正质量由严格违例推出。边缘铺回使用单位，不能改成单位除以维数。测试始终是同一原 $\rho$ 的完整输出，不能换成 $C_D^{-1}\rho$ 或仅看选定输出面。
+

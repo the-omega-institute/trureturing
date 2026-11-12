@@ -1,0 +1,13 @@
+**定义 46.1（保持原标签的归纳条件）。** 固定特征零域 $F$ 及其代数闭包 $K$。对实际有限扩张 $B/F$，始终按同一个原嵌入集合 $\Omega_B=\operatorname{Hom}_F(B,K)$ 识别 $B\otimes_F K=K^{\Omega_B}$。原标量等价只指 $U'=\gamma U$，其中 $\gamma\in B^\times$；完整函数仍为 $d_U(r)=\dim_F(U\cap rU)$，其自变量是逐字相同的原 $r\in B^\times$。若延至零，单独规定 $d_U(0)=0$。
+
+称分裂空间 $C\le K^I$ 满足条件 $\mathcal P$，若
+
+$$
+\operatorname{pr}_i C=K,\qquad C\cap Ke_i=0\quad(i\in I),
+\qquad
+\operatorname{Stab}_{(K^\times)^I}(C)=\{tI:t\in K^\times\}.
+\tag{46.1}
+$$
+
+三项分别是满坐标投影、无坐标轴及仅有公共标量的对角稳定子。这里的对角作用保持每一个坐标标签，不容许置换。称 $m$ 维平面 $L\le K^J$ 均匀，若其 $|J|$ 行 $m$ 列帧的全部 $m$ 阶行子式非零；下文的均匀性假设只施于三维叶平面和初始中心，不作为后续中心的归纳假设。
+

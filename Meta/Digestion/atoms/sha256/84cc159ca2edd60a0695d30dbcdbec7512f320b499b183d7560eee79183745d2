@@ -1,0 +1,9 @@
+### 74.9 完整中文候选与几何图像
+
+在三个非零有限实际系统中，保留全部状态、全部效应与完整随机纯制备比较律，只沿既有条件桥取得规范迹 Jordan 几何。供应整个双份正锥上的原正接合和整个三份正锥上的同一个正读回，以原参考连续调用它两次；保留两条实张成及所有实方向的 $Z$。选择有限多套完整局部本原框架，使它们共同覆盖全部实方向：第一层要求每套框架经原第一切片后仍互不混淆；恢复第一接口后，用同一族的全部两两产品形成双份框架，第二层要求它们经原第二切片后仍互不混淆。这精确恢复原来的两条全锥零关系。随后在每个两端非标量有序块，要求原联合态的至少一种边缘铺回盖不住原块；保留混态、任意谱和全部原归一化，要求一个这样的原态经实际逆准备所定义的原插入后完整为正。所得恰是原 PRE+C13 的实际模型类，原 $\omega,p$ 与所有正权重都在。
+几何上，每套框架像一组把空间分开的面单位。正交正像先占据互不重叠的支撑面；单位输出是内点，保证这些面合起来铺满目标单位。除去面内厚度后，它们成为幂等元；平方缺陷沿正负两向的扰动不能留下线性偏差，因而锁定与这些方向的全部 Jordan 交叉乘积。框架共同张成后，剩余方向也随之锁定。两层框架并未把纠缠浮雕变成产品平板的概率混合，而是利用全锥正性排除映射扭坏剩余零关系的自由。最后 H13 仍在每个活跃端点寻找边缘铺不开的纹理，用同一个原态抓住坏相对翻转。真正缩短的是 DJ、DH 的零比较列表；全态效应、正性、实张成、$Z$、见证成本和完整原态输出判据仍在，不主张公理最少、全球新颖或完整物理量子起源。
+
+**数学引文及复用范围。** [1] [固定 dev db6fde5df77，Atlas IV §§65—72](https://github.com/the-omega-institute/trureturing/blob/db6fde5df77b82e4c869ee075d04f786708f5e18/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：65.1、66.1、72.1 的完整忠实入口；65.3 不含 DH/C13 的第一接口；65.4 的一般 EJA 谱、Peirce 与二次表示工具；65.6、66.2、72.2 的真实恢复接口；66.3—66.10 的复载体、有序方向及 C13 后同时定向；65.9—65.12 的完整原权重及逆向；69 的固定 CP 族、双预算与弱共同重置补全；72.3、72.7—72.8、72.14、72.16—72.18 的原混态资格、非空性、逐成员等价及边界。
+[2] [同版本 Library，Complete conditional candidate and its scope](https://github.com/the-omega-institute/trureturing/blob/db6fde5df77b82e4c869ee075d04f786708f5e18/Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)：完整 $S$ 的仓内条件纸面桥及逆向；其 Barnum–Müller–Ududec Theorem 16 的前件按该桥供应，单独的纯端点互反或正对偶结论不代替它。
+[3] [dev 77c459c3513，同读回与并行重置校准 §1.3](https://github.com/the-omega-institute/trureturing/blob/77c459c351371a4d05cc4f2f148d1b8b883b5967/docs/develop/theory/QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)：仅作 (74.22) 的可选同数据联合校准，沿其完整 PRE、预固定重置、全空间 TP 及实际同读回范围使用，不添加为有限零关系判据前提。
+

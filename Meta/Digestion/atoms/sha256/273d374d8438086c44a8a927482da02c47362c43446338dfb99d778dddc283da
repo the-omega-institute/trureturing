@@ -1,0 +1,255 @@
+**定理 44.2（单交换条件下的完整原支持与交维纤维）。** 在定义 44.1 的同一原 $F,D$ 中，设 $W$ 为满足 $\mathrm H$ 的 $m$-平面。则对每个非零 $F$-子空间 $Y\le_F D$，不预设其维数，有
+
+$$
+\boxed{\quad
+Q_Y=Q_W
+\ \Longleftrightarrow\
+\bigl[\ \forall r\in D^\times,\ d_Y(r)=d_W(r)\ \bigr]
+\ \Longleftrightarrow\
+\bigl[\ Y=\gamma W\ \text{或}\ Y=\gamma W^\perp,\
+             \gamma\in D^\times\ \bigr].
+\quad}
+\tag{44.4}
+$$
+
+支持相等因而强制 $\dim_FY=m$。其纤维至多有两个原非零标量轨道，允许重合。此外，$W$ 的原商行列式绝对不可约，原 $Q_W$ 在它的超曲面中 Zariski 稠密，闭包维数为 $2m-1$，且 $Q_W\ne D$。存在原 $r_0\in D^\times$ 满足 $d_W(r_0)=1$。
+
+证明。（一）原行列式与单交换系数。固定原 $D$ 的一个 $F$-基。对任意 $m$-平面 $U$，令 $B_U^F$ 为其包含矩阵，$M_q$ 为原乘法算子，并置
+
+$$
+\Delta_U(q)=\det[\,B_U^F\mid M_qB_U^F\,].
+\tag{44.5}
+$$
+
+这是原 $2m$ 个坐标上的齐次 $m$ 次多项式，暂允许它恒为零。对每个原 $q\in D$，包括零，都有
+
+$$
+\Delta_U(q)=0\quad\Longleftrightarrow\quad q\in Q_U.
+\tag{44.6}
+$$
+
+左边等价于存在不全为零的 $a,b\in U$ 满足 $a+qb=0$；因包含映射单射，必有 $b\ne0$，故 $q=-a/b$。反向由商表示给出。这里实际使用了原 $D$ 为域。
+
+在同一分裂坐标中，$\Delta_U$ 只差非零常数便成为
+
+$$
+P_U(q)=\det[\,B_U\mid\operatorname{diag}(q)B_U\,].
+$$
+
+按右侧 $m$ 列作 Laplace 展开，$q_I=\prod_{\sigma\in I}q_\sigma$ 的系数为带固定符号的互补 Plücker 积 $p_I(U)p_{I^c}(U)$。这是 (41.6) 的同一行列式展开。对 (44.3) 记分裂变量为 $(x_1,\ldots,x_m,y_1,\ldots,y_m)$，$D_x=\operatorname{diag}(x_i)$、$D_y=\operatorname{diag}(y_j)$，消去左下块得到
+
+$$
+\begin{aligned}
+P_W(x,y)&=\det(D_yA-AD_x)=\det(A)\,g_A(x,y),\\
+g_A(x,y)&=\det(D_y-AD_xA^{-1}).
+\end{aligned}
+\tag{44.7}
+$$
+
+$g_A$ 齐次且对每个变量次数至多一。其下列系数均非零：
+
+$$
+[y_1\cdots y_m]g_A=1,\qquad
+\left[x_i\prod_{\ell\ne j}y_\ell\right]g_A
+=-a_{ji}(A^{-1})_{ij}\ne0.
+\tag{44.8}
+$$
+
+这些系数已足以证明绝对不可约。若在任意扩域中 $g_A=fg$ 非平凡分解，因乘积齐次，可取 $f,g$ 齐次；逐变量次数相加又使每个变量只属于其中一个因子。令 $S$ 为属于 $f$ 的变量集，则每个支撑单项式的 $S$-次数均为 $\deg f$。比较 (44.8) 中的 $y_1\cdots y_m$ 与将 $y_j$ 换成 $x_i$ 的单项式，得到
+
+$$
+\boldsymbol1_{\{x_i\in S\}}=\boldsymbol1_{\{y_j\in S\}}
+\qquad\text{对所有 }i,j.
+$$
+
+于是所有变量都在同一因子中，另一因子为常数，矛盾。因此 $g_A$、$P_W$ 及原坐标中的 $\Delta_W$ 都绝对不可约。无限域上非零多项式有原坐标非零值，故 (44.6) 还给出 $Q_W\ne D$。
+
+（二）分裂秩见证与实际原域返回。置 $V=W_K$，取
+
+$$
+u_0=\begin{pmatrix}e_1\\ Ae_1\end{pmatrix}\in V,
+\qquad v_0\in V\cap(K^\times)^{2m},\qquad
+q_0=(u_{0,\sigma}/v_{0,\sigma})_\sigma.
+\tag{44.9}
+$$
+
+$v_0$ 存在，因为各坐标在 $V$ 上均非零，有限个真坐标超平面不能覆盖无限域上的 $V$。$u_0$ 的后 $m$ 个坐标均非零，前 $m$ 个坐标仅第一个非零。
+
+若 $b\in V$ 且 $a=\operatorname{diag}(q_0)b\in V$，则 $a$ 的前块第 $2,\ldots,m$ 个坐标为零，由前块投影同构可知 $a=\lambda u_0$。后块中 $q_0$ 的坐标均非零，故 $b$ 的后块与 $\lambda v_0$ 相同；后块投影也是同构，所以 $b=\lambda v_0$。反向显然成立。因而
+
+$$
+\{b\in V:\operatorname{diag}(q_0)b\in V\}=Kv_0,\qquad
+\operatorname{rank}[\,B_W\mid\operatorname{diag}(q_0)B_W\,]=2m-1.
+\tag{44.10}
+$$
+
+这里 $q_0$ 有零分裂坐标，绝非原 $D^\times$ 元素的嵌入像；它只证明一个原系数秩条件不是恒等零。
+
+具体地，取原点对参数 $(u,v)\in W\times W$，在范数 $N_{D/F}(v)\ne0$ 的开集 $\mathcal X$ 上，$\rho(u,v)=uv^{-1}$ 是原 $F$ 上的正则映射。原矩阵
+
+$$
+\mathcal M(u,v)=[\,B_W^F\mid M_{uv^{-1}}B_W^F\,]
+\tag{44.11}
+$$
+
+的条目是原 $F$ 系数有理函数，分母为 $N_{D/F}(v)$ 的幂。对原坐标矩阵扩底并换成分裂坐标后，(44.10) 说明它的某个 $(2m-1)$ 阶子式不是零有理函数。清除范数分母，得到非零 $h\in F[W\times W]$。由于 $F$ 无限，可取原 $u,v\in W$ 使
+
+$$
+h(u,v)N_{D/F}(v)\ne0.
+\tag{44.12}
+$$
+
+对这个实际点对，$r_0=u/v\in D$，(44.11) 的秩至少为 $2m-1$；由 (44.6) 其行列式为零，故秩恰为 $2m-1$。$r_0$ 不为零，因为零标签处 (44.11) 的秩只有 $m$。原 $r_0$ 可逆，两组列各有秩 $m$，所以
+
+$$
+d_W(r_0)=2m-\operatorname{rank}\mathcal M(u,v)=1.
+\tag{44.13}
+$$
+
+这一步返回的是原 $F$ 参数及原 $W$ 元素，并未将 (44.9) 的零坐标向量当作域元素。按 §26 的乘子域结论，$W\cap r_0W$ 对 $E_W$ 线性，故 (44.13) 也给出 $E_W=F$。
+
+（三）原支持稠密、竞争维数及方程相等。沿用 (43.15) 的商映射微分，在 (44.12) 的原点对处有
+
+$$
+d\rho_{(u,v)}(h,k)=v^{-1}(h-r_0k),\qquad
+\operatorname{rank}d\rho_{(u,v)}=\dim_F(W+r_0W)=2m-1.
+\tag{44.14}
+$$
+
+特征零下的像维数判据使几何像闭包维数至少为 $2m-1$。另一方面，像包含于绝对不可约超曲面 $V(\Delta_W)$，后者维数恰为 $2m-1$，故闭包就是该超曲面。
+
+还须核对原点的稠密性。$\mathcal X$ 是原 $F$ 仿射空间中的非空开集，其原 $F$ 点在代数闭包上仍 Zariski 稠密：在无限子域上，任意扩域系数的非零多项式都不能在全部原坐标上消失，逐变量归纳即可；再乘开集的非零范数多项式可得开集版本。因此任何在 $\rho(\mathcal X(F))=Q_W$ 上消失的多项式，其拉回在整个 $\mathcal X$ 上消失。由此，在任一含 $K$ 的代数闭包中，
+
+$$
+\overline{Q_W}^{\,\mathrm{Zar}}=V(\Delta_W),\qquad
+\dim\overline{Q_W}^{\,\mathrm{Zar}}=2m-1.
+\tag{44.15}
+$$
+
+这里用固定原坐标理解左边，换成分裂坐标则得到同一等式的可逆线性像。
+
+设 $Q_Y=Q_W$，记 $r=\dim_FY$。若 $r<m$，在商映射的分母各非零基坐标片上，可将分子、分母同时缩放，使该坐标为一；每片至多有 $2r-1$ 个参数。因此
+
+$$
+\dim\overline{Q_Y}^{\,\mathrm{Zar}}\le2r-1<2m-1,
+$$
+
+与 (44.15) 矛盾。若 $r>m$，则对每个原 $q\in D^\times$，
+
+$$
+\dim_F(Y\cap qY)\ge2r-2m>0,
+$$
+
+于是 $Q_Y=D$，也与 $Q_W\ne D$ 矛盾。因此 $r=m$，可使用 (44.5)。
+
+$\Delta_Y$ 非零，否则 (44.6) 给出 $Q_Y=D$。它在稠密的 $Q_W$ 上消失，由绝对不可约性及零点定理，$\Delta_W\mid\Delta_Y$。二者次数同为 $m$，所以
+
+$$
+\Delta_Y=c\Delta_W,\qquad c\in F^\times.
+\tag{44.16}
+$$
+
+常数属于 $F$，可比较任一非零原系数得到。分裂后便有 $P_Y\propto P_W$。$y_1\cdots y_m$ 的系数是带符号的 $p_Ep_{E^c}$，在 $W$ 上非零，故在 $Y$ 上也非零。于是同一 $E,E^c$ 也都是 $Y_K$ 的行基，可以写
+
+$$
+Y_K=\operatorname{colspan}\begin{pmatrix}I_m\\ A'\end{pmatrix},
+\qquad A'\in\operatorname{GL}_m(K).
+$$
+
+将两边的 $y_1\cdots y_m$ 系数归一化为一，(44.7)、(44.16) 给出
+
+$$
+g_{A'}(x,y)=g_A(x,y).
+\tag{44.17}
+$$
+
+（四）常数矩阵的全部主子式与既有重建定理。对 $I,J\subseteq\{1,\ldots,m\}$、$|I|=|J|=k$，用 Cauchy–Binet 展开 (44.7) 得
+
+$$
+[x_Iy_{J^c}]g_A
+=(-1)^k\det A[J,I]\det A^{-1}[I,J].
+\tag{44.18}
+$$
+
+令
+
+$$
+C_A=\begin{pmatrix}0&A^{-1}\\ A&0\end{pmatrix}.
+\tag{44.19}
+$$
+
+其第一块取 $I$、第二块取 $J$ 的主子式，在 $|I|\ne|J|$ 时为零，在 $|I|=|J|=k$ 时恰为 (44.18)。这是交换两组 $k$ 列后所得两个方块行列式的乘积。因此 (44.17) 等价于 $C_A,C_{A'}$ 的全部带原坐标标签的对应主子式相等。
+
+条件 $\mathrm H$ 使 $C_A$ 的有向非零条目图包含两块之间所有双向边，故 $C_A$ 不可约。还须排除切口。取其任一指标子集 $X$，满足 $2\le|X|\le2m-2$，并以 $I,J$ 表示它在两块中的部分。按两块排列行列后，
+
+$$
+\operatorname{rank}C_A[X,X^c]
+=\operatorname{rank}A^{-1}[I,J^c]
+ +\operatorname{rank}A[J,I^c].
+\tag{44.20}
+$$
+
+若 $I,J,I^c,J^c$ 都非空，则由条目非零，两项各至少为一。否则 $X$ 或 $X^c$ 完全位于一个坐标块中，(44.20) 中相应部分是可逆矩阵 $A$ 或 $A^{-1}$ 的一组完整行或完整列，其秩等于该侧指标数，至少为二。因此每个这样的 $X$ 都满足 $\operatorname{rank}C_A[X,X^c]\ge2$，尤其不存在双向跨块秩都至多一的切口。
+
+现在消费经典主子式重建：一个不可约且无切口的矩阵，由全部对应主子式确定至可逆对角共轭或转置后的可逆对角共轭。精确引用是 Al Ahmadieh，[*The Fiber of the principal minor map*，arXiv:2309.00806v2，Theorem 4.1 的无切口充分方向](https://arxiv.org/html/2309.00806v2)，该方向归于 Loewy，*Principal minors and diagonal similarity of matrices*，Linear Algebra and its Applications 78，23–64，Theorem 1；同一充分条件见 Chatterjee–Ghosh–Gurjar–Raj，[*Characterizing and Testing Principal Minor Equivalence of Matrices*，arXiv:2410.01961v1，Lemma 2.8(2)](https://arxiv.org/html/2410.01961v1)。这里的 diagonal equivalence 包含转置分支。
+
+该已知定理应用于 (44.19)，给出可逆对角 $R,S$，使
+
+$$
+A'=SAR^{-1}\quad\text{或}\quad A'=SA^{-\mathsf T}R^{-1}.
+\tag{44.21}
+$$
+
+第一支给出 $Y_K=\operatorname{diag}(R,S)W_K$。分裂迹配对为标准点积，且
+
+$$
+(W^\perp)_K
+=\operatorname{colspan}\begin{pmatrix}I_m\\-A^{-\mathsf T}\end{pmatrix},
+$$
+
+故第二支给出 $Y_K=\operatorname{diag}(R,-S)(W^\perp)_K$。所有指标保持同一嵌入标签，没有坐标置换。
+
+（五）原乘数与完整交维。直接复用 (43.24) 的有限线性核扩底桥。对原 $U=W$ 或 $W^\perp$，置
+
+$$
+\begin{aligned}
+T(U,Y)&=\ker\bigl(D\longrightarrow\operatorname{Hom}_F(U,D/Y)\bigr),\\
+c&\longmapsto(z\longmapsto cz+Y).
+\end{aligned}
+$$
+
+则
+
+$$
+T(U,Y)\otimes_FK
+=\{c\in D\otimes_FK:cU_K\subseteq Y_K\}.
+\tag{44.22}
+$$
+
+上一段相应的分裂对角向量使右边非零，故原 $T(U,Y)$ 非零。取原 $0\ne\gamma\in T(U,Y)$；原 $D$ 为域使 $\gamma$ 可逆，$\gamma U\subseteq Y$ 及两边维数同为 $m$ 给出 $Y=\gamma U$。下降的是“存在非零乘数”这个线性核条件，不是断言选中的分裂对角向量逐项来自同一个原域元素。
+
+反向使用 §34 的 (34.7)、引理 40.2 的半维迹对偶恒等式。对任意原 $r\in D^\times$，
+
+$$
+\begin{aligned}
+d_W(r)
+&=2m-\dim_F(W+rW)\\
+&=\dim_F(W^\perp\cap r^{-1}W^\perp)
+=\dim_F(rW^\perp\cap W^\perp)
+=d_{W^\perp}(r).
+\end{aligned}
+\tag{44.23}
+$$
+
+第三项的等维来自乘以原 $r$。整体乘以原 $\gamma\ne0$ 也保持每个标签的交维。故 (44.4) 的第三项推出第二项；第二项由
+
+$$
+Q_U=\{0\}\cup\{r\in D^\times:d_U(r)>0\}
+$$
+
+推出第一项，完成全部等价。$\square$
+
+本定理的来源边界。互补 Plücker 积到 (44.18) 的对应是行列式恒等式，(44.19) 的重建是上述经典主子式定理的直接应用，均不作为新的矩阵重建结论。八点情形中互补括号积给出 Gale 对偶商的精确先例，已由 §43 对应到 Howard–Millson–Snowden–Vakil，[*The geometry of eight points in projective space: Representation theory, Lie theory, dualities*，arXiv:1103.5255v1，§8、Propositions 8.1–8.2](https://arxiv.org/html/1103.5255v1)；该先例的范围是八点配置及其不变量商。
+
+这里的仓内综合推导（repo-derived）是把单交换系数的不可约性、实际原商稠密性、竞争维数排除与既有线性核下降接到常数矩阵重建，得到 (44.4) 的一般次数、同一原域、全部竞争子空间结论。它不以统一行拟阵为前件，也不把这些指定文献未陈述的组合解释为全球首次性。$\mathrm H$ 是本定理的充分条件；本条不分类其外的全部半维窗口。
+

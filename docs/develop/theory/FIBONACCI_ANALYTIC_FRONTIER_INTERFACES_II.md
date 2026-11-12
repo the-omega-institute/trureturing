@@ -3221,3 +3221,93 @@ $$
 **范围。** 按相等模式展开有限和、集合分割计数与分割格 Möbius 容斥是标准组合事实；循环与集合分割的计数约定参见 [NIST DLMF §26.8](https://dlmf.nist.gov/26.8)，上述证明已直接给出所需容斥系数与恒等式。本节的本仓推导（repo-derived）是适配二次关系和有符号互异指标界的分级 $\delta$、定量的部分配对缺陷传播恒等式，以及揭示顶阶条件不足的两组反例与矩计算；不主张这些标准组合机制的原创性，也不作历史首创主张。它本身不提供任意阶算术相关或奇异级数估计。
 
 ## 追加锚（本行以下为增补区）
+
+## 501. 二次关系下 Wick 渐近与低阶缺陷的等价反演
+
+本节沿用定义 500.1 的记号，并把定理 500.2 的正向传播反过来：在同一组大小界下，全部子组的配对缺陷消失与全部子组的 Wick 渐近完全等价，且两个方向都有显式常数。
+
+**定义 501.1（子组的归一化缺陷与 Wick 偏差）。** 在定理 500.2 的条件下，令 $s=\sqrt{HL}$、$\eta=\sqrt{L/H}+H^{-1}$。对 $U\subseteq K$，令
+
+$$
+\delta(U)=\frac{|\Delta_U|}{s^{|U|}},\qquad
+\omega(U)=\frac{|V_U-\mathcal W_U^V|}{s^{|U|}},\qquad
+\Omega(U)=\max_{\substack{U'\subseteq U\\|U'|\ge3}}\omega(U'),
+$$
+
+其中空最大值记为 $0$。对整数 $m\ge0$、$0\le p\le m/2$，令 $N_{m,p}=\dfrac{m!}{2^pp!(m-2p)!}$，即 $m$ 元集合上恰含 $p$ 个二元组的部分配对个数。再令
+
+$$
+Q_{m,C}=\sum_{p=0}^{\lfloor m/2\rfloor}N_{m,p}C^{2p},\qquad
+A_0=A_1=A_2=0,\qquad
+A_m=1+\sum_{p=1}^{\lfloor m/2\rfloor}N_{m,p}C^{2p}A_{m-2p}\quad(m\ge3),
+$$
+
+并记 $M_{k,C}=\max_{3\le j\le k}\mathfrak C_{j,C}$，其中 $\mathfrak C_{j,C}$ 为定理 500.2 中阶数 $j$ 的误差常数。
+
+**引理 501.2（配对权的大小）。** 在定理 500.2 的条件下，对任意 $U\subseteq K$ 及 $U$ 上大小为 $p$ 的部分配对 $P$，有 $|b|^p|T_P|\le C^{2p}s^{2p}$。
+
+**证明。** 对二元组 $e=\{i,j\}$，$|f_e|\le1$，故 $|T_e|\le|D|\le CH$；又 $|b|\le CL$，所以 $|bT_e|\le C^2HL=C^2s^2$。对 $P$ 的 $p$ 个二元组相乘即得。证毕。
+
+**定理 501.3（定量双向反演）。** 在定理 500.2 的条件下，对每个 $U\subseteq K$，
+
+$$
+\omega(U)\le Q_{|U|,C}\max_{U'\subseteq U}\delta(U')+\mathfrak C_{|U|,C}\,\eta\quad(|U|\ge2),
+\tag{501.1}
+$$
+
+$$
+\delta(U)\le A_{|U|}\bigl(\Omega(U)+M_{k,C}\,\eta\bigr).
+\tag{501.2}
+$$
+
+**证明。** 先说明定理 500.2 可用于每个子组。对 $U\subseteq K$，$|U|\ge2$，把标签集换成 $U$、权重换成 $(f_i)_{i\in U}$。条件 (500.2) 对 $2\le r\le|U|-1$ 与 $U$ 中两两不交的非空子集成立，因为这些子集也是 $K$ 中两两不交的非空子集；其余条件不涉及标签。于是
+
+$$
+V_U-\mathcal W_U^V=\sum_{P\text{ 为 }U\text{ 的部分配对}}b^{|P|}T_P\Delta_{U(P)}+E_U,\qquad
+|E_U|\le\mathfrak C_{|U|,C}\,s^{|U|}\eta,
+\tag{501.3}
+$$
+
+其中 $U(P)=U\setminus\bigcup_{e\in P}e$，$|U(P)|=|U|-2|P|$。
+
+(501.1)：对 (501.3) 取绝对值，用引理 501.2 并除以 $s^{|U|}$，得
+
+$$
+\omega(U)\le\sum_{P}C^{2|P|}\delta(U(P))+\mathfrak C_{|U|,C}\,\eta .
+$$
+
+每个 $\delta(U(P))$ 不超过 $\max_{U'\subseteq U}\delta(U')$，且大小为 $p$ 的部分配对恰有 $N_{|U|,p}$ 个，即得 (501.1)。
+
+(501.2)：对 $|U|$ 作强归纳。$|U|\le2$ 时 $\Delta_U=0$，结论成立。设 $|U|=m\ge3$，且结论对所有更小的子组成立。在 (501.3) 中，空配对 $P=\varnothing$ 的贡献恰为 $\Delta_U$，故
+
+$$
+\Delta_U=\bigl(V_U-\mathcal W_U^V\bigr)-E_U-\sum_{P\ne\varnothing}b^{|P|}T_P\Delta_{U(P)} .
+$$
+
+除以 $s^m$ 并用引理 501.2，
+
+$$
+\delta(U)\le\omega(U)+\mathfrak C_{m,C}\,\eta+\sum_{p=1}^{\lfloor m/2\rfloor}\ \sum_{|P|=p}C^{2p}\delta(U(P)).
+$$
+
+由于 $m\ge3$，$\omega(U)\le\Omega(U)$；又 $\mathfrak C_{m,C}\le M_{k,C}$。对 $P\ne\varnothing$，$U(P)\subsetneq U$，归纳假设给出 $\delta(U(P))\le A_{m-2p}(\Omega(U(P))+M_{k,C}\eta)$，而 $\Omega(U(P))\le\Omega(U)$。合并得
+
+$$
+\delta(U)\le\Bigl(1+\sum_{p=1}^{\lfloor m/2\rfloor}N_{m,p}C^{2p}A_{m-2p}\Bigr)\bigl(\Omega(U)+M_{k,C}\eta\bigr)
+=A_m\bigl(\Omega(U)+M_{k,C}\eta\bigr).
+$$
+
+归纳完成。证毕。
+
+**推论 501.4（逐权重的渐近等价）。** 固定 $k$、$C$ 及一列满足定理 500.2 条件且 $L/H\to0$ 的数据，权重组 $f_1,\ldots,f_k$ 随下标任意选取但始终满足 $|f_i|\le1$。则以下两条等价：
+
+1. 对全部 $U\subseteq K$，$|U|\ge3$，有 $\Delta_U=o\bigl((HL)^{|U|/2}\bigr)$；
+2. 对全部 $U\subseteq K$，$|U|\ge3$，有 $V_U=\mathcal W_U^V+o\bigl((HL)^{|U|/2}\bigr)$。
+
+**证明。** $L\ge1$ 与 $L/H\to0$ 给出 $H\to\infty$，从而 $\eta\to0$。由 (501.1)，条件 1 推出条件 2：$|U'|\le2$ 时 $\delta(U')=0$，其余 $\delta(U')\to0$，而子集只有有限个。由 (501.2)，条件 2 推出条件 1：$\Omega(U)$ 是有限个趋零量的最大值。证毕。
+
+**注记 501.5（与 §500 反例的关系）。** 推论 501.4 说明，在二次关系与 (500.2) 的大小界下，获得全部子组 Wick 渐近所需的算术输入，恰为全部子组的互异指标配对缺陷消失，代数层面不再有其他障碍。命题 500.4、500.5 说明这一条件族不能缩减为只含顶阶的条件。本节不主张族中每一条单独都是必要条件。(501.2) 中出现的低阶缺陷 $\Delta_{U(P)}$ 只作用于原权重的子组，合并权只出现在 $T_e$ 与大小界中，这是反演能够闭合的原因。前几项常数为 $A_3=A_4=1$、$A_5=1+10C^2$、$A_6=1+15C^2$、$A_7=1+21C^2+315C^4$。
+
+**范围。** 部分配对计数与三角递推是标准组合事实。本节的本仓推导（repo-derived）是：在二次关系与有符号互异指标大小界下，对定理 500.2 的逐子组定量反演 (501.2) 及显式递推常数。本节不主张一般 Wick 公式或矩方法的原创性。本节本身不提供任何素数模型的缺陷估计；这类估计仍须由算术输入（Hardy–Littlewood 型相关及奇异级数平均）给出。
+
+## 追加锚（本行以下为增补区）

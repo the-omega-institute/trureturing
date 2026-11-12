@@ -1,0 +1,35 @@
+**命题 77.4（唯一关系、全部极点与全部效应）。** 这 $2q$ 点均为 exposed 纯态，唯一线性关系生成元为
+
+$$
+\sum_i r_i=\sum_j c_j,\qquad
+\dim A_q=2q-1,\qquad \dim\operatorname{aff}K_q=2q-2.
+\tag{77.4}
+$$
+
+一个线性效应由 $a_i=f(r_i),b_j=f(c_j)$ 唯一决定，其为 proper 的充要条件恰是
+
+$$
+0\le a_i,b_j\le1,\qquad \sum_i a_i=\sum_j b_j.
+\tag{77.5}
+$$
+
+特别地 $e_{ij}(x)=q x_{ij}$ 都是全锥上的 proper 效应。
+
+**证明。** 行总量泛函在 $r_i$ 的值为一，在其他行态为零，在每个列态为 $1/q<1$，故唯一最大于 $r_i$；列总量对称地暴露 $c_j$。有限凸包没有其他极点。若 $\sum_i s_ir_i+\sum_jt_jc_j=0$，逐坐标给 $s_i+t_j=0$，故全部 $s_i$ 是同一个 $t$，全部 $t_j=-t$。这证明唯一关系及维数。赋值能下降为 $A_q$ 上的线性泛函，当且仅当它保持这一关系；锥由上述顶点生成，$f\ge0$ 与 $u-f\ge0$ 恰可在全部生成元上检验，故得到整个区间 (77.5)，并非只允许坐标效应。$e_{ij}$ 的行值只在 $i$ 为一，列值只在 $j$ 为一，满足 (77.5)。∎
+
+用原坐标 Euclidean 内积，公共中心 $x_*=\sum_i r_i/q=\sum_jc_j/q$ 的每格是 $1/q^2$。直接内积给
+
+$$
+\begin{aligned}
+\langle r_i,r_k\rangle&=\delta_{ik}/q,&
+\langle c_j,c_\ell\rangle&=\delta_{j\ell}/q,&
+\langle r_i,c_j\rangle&=1/q^2,\\
+\langle r_i-x_*,r_k-x_*\rangle&=\delta_{ik}/q-1/q^2,&
+\langle c_j-x_*,c_\ell-x_*\rangle&=\delta_{j\ell}/q-1/q^2,&
+\langle r_i-x_*,c_j-x_*\rangle&=0.
+\end{aligned}
+\tag{77.6}
+$$
+
+所以减去中心后，行、列分别是两个正则 $(q-1)$-单纯形，各自中心为零，所在 $(q-1)$ 维空间互相正交；$K_q-x_*$ 是它们的 free sum，即直接和空间中两者并集的凸包。这一几何已有文献，准确归属见 77.12；这里的内积只解释条带坐标，不预置量子自对偶或比较配对。
+
