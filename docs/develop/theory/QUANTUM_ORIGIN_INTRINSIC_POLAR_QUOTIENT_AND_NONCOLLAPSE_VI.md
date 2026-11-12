@@ -3889,3 +3889,604 @@ $t=\pi/4$ 将 $|++\rangle$ 送到 Schmidt 秩二的纯态，故越出全部局�
 [W98]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 99. 全实ROG的全维全余维闭合与同数据候选
+
+### 99.1 任意原单位的紧 Gram 纤维与全效应字典
+
+**定义 99.1（同一完整实ROG载体）。** 保留97.1的原 $(V,C,u,K,P,[0,u]_{C^*})$，但不再限制共同支撑维数 $n$ 或余维 $c=\dim L^\perp$。取矩阵环境的共同支撑 $E\simeq\mathbb R^n$ 及整体实线性同构
+
+$$
+\iota:V\longrightarrow L\subseteq\operatorname{Sym}(E),\qquad
+\iota(C)=L\cap\operatorname{PSD}(E).
+$$
+
+以下以 $C,u,K,P$ 简记 $\iota(C),u\circ\iota^{-1},\iota(K),\iota(P)$，效应按同一对偶运输，每次整体换坐标时同时更新 $\iota$；原状态空间 $V$ 与秩一向量所在的环境 $E$ 不混同。$L^\perp$ 在 $\operatorname{Sym}(E)$ 的迹内积中取，Gram字典中的矩阵 $H,M,A,B,N,I_E$ 均作用于 $E$，纯方向 $v,w\in E$ 满足 $vv^{\mathsf T},ww^{\mathsf T}\in L$。令 $u$ 在 $C\setminus\{0\}$ 上严格正。未作93.2的同载体归一化时，不同时假定 $I_E\in L$ 与 $u=\operatorname{tr}|_L$；先按93.2的行列式最大点运输同一个原数据，再在归一化坐标中使用 $I_E\in L$、$u=\operatorname{tr}|_L$。沿用96.1、97.1的全部原纯点、混态、proper 效应、$F_p$、$T_p$ 和 $\mathrm G_2$；矩阵纯点 $p_v$ 对应的原状态始终是 $\iota^{-1}(p_v)$。
+
+**引理 99.2（原单位的紧 Gram 纤维）。** 存在 $H\succ0$ 使 $u(X)=\operatorname{tr}(HX)$ ($X\in L$)。令
+
+$$
+\mathcal M_u=\{M\succeq0:M-H\in L^\perp\}.
+\tag{99.1}
+$$
+
+则 $\mathcal M_u$ 是非空紧凸集；对每个 $N\in L^\perp$，充分小的 $\eta$ 使 $H\pm\eta N\in\mathcal M_u$。对任意原纯方向 $v$，置
+
+$$
+h(v)=v^{\mathsf T}Hv,\qquad p_v=\frac{vv^{\mathsf T}}{h(v)}.
+$$
+
+给定有限原纯方向 $w_1,\ldots,w_s$，有精确等价
+
+$$
+\begin{aligned}
+&\exists f\in[0,u]_{C^*}: f(p_v)=1,\ f(p_{w_j})=0\ (1\le j\le s)\\
+&\quad\Longleftrightarrow\quad
+\exists M\in\mathcal M_u:\ v^{\mathsf T}Mw_j=0\ (1\le j\le s).
+\end{aligned}
+\tag{99.2}
+$$
+
+若 $f\in[0,u]_{C^*}$ 且 $f(p_v)=1$，任取 $A\succeq0$ 表示 $f$、$B\succeq0$ 表示 $u-f$，令 $M=A+B$，则 $M\in\mathcal M_u$ 且
+
+$$
+A\succeq\frac{(Mv)(Mv)^{\mathsf T}}{h(v)}.
+\tag{99.3}
+$$
+
+证明。共同支撑 $E$ 由原ROG锥中的纯方向张成；选有限个张成 $E$ 的纯向量 $v_i$，则 $X_0=\sum_i v_iv_i^{\mathsf T}\in C$ 且 $X_0\succ0$。先将96.2的PSD投影闭性论证运输到这些坐标：若 $A_i\succeq0$ 且其迹正交投影 $\pi_L(A_i)$ 收敛，则
+
+$$
+\lambda_{\min}(X_0)\operatorname{tr}A_i
+\le\operatorname{tr}(A_iX_0)
+=\langle\pi_L(A_i),X_0\rangle
+$$
+
+一致有界。故 $A_i$ 有PSD收敛子列，$\pi_L(\operatorname{PSD}(E))$ 闭；其在 $L$ 中的对偶为 $C$，双极性给出每个原正泛函都有环境PSD代表。严格正性及 $C\cap\{\operatorname{tr}X=1\}$ 的紧性给
+$\varepsilon\in(0,\min\{u(X):X\in C,\operatorname{tr}X=1\})$。令 $A_\varepsilon\succeq0$ 表示正泛函 $u-\varepsilon\operatorname{tr}|_L$，则
+
+$$
+H=A_\varepsilon+\varepsilon I_E\succ0,\qquad
+\operatorname{tr}(HX)=u(X)\quad(X\in L).
+$$
+
+这不要求 $I_E\in L$，也不令任意原单位的交叉块消失。每个 $M\in\mathcal M_u$ 满足 $\operatorname{tr}(MX_0)=u(X_0)$；同一正定下界给 $\operatorname{tr}M$ 的统一上界，闭性给出紧性，$H\in\mathcal M_u$ 给非空。固定 $N\in L^\perp$ 后，小的正负扰动 $H\pm\eta N$ 保持正定。
+
+若左边成立，$f(p_v)=1$ 使 $v^{\mathsf T}Bv=0$，从而 $Bv=0$、$Av=Mv$；Cauchy--Schwarz 给出(99.3)，而 $f(p_{w_j})=0$ 给出 $Aw_j=0$，故 $v^{\mathsf T}Mw_j=0$。反之给定 $M$，令
+
+$$
+A_v(M)=\frac{(Mv)(Mv)^{\mathsf T}}{h(v)}.
+$$
+
+由 $v^{\mathsf T}Mv=h(v)$ 及半正定 Cauchy--Schwarz，$0\preceq A_v(M)\preceq M$。它在 $L$ 上定义原 proper 效应，确认 $p_v$，并在所给 $w_j$ 上为零。证毕。
+
+### 99.2 邻近 ruling 的双端点障碍
+
+**定理 99.3（全原效应的 Gram 双端点）。** 设 $B(t):\mathbb R^k\to E$ 是在 $0$ 的一个邻域连续的线性单射族，且 $B(t)y$ ($y\ne0$) 均为原纯方向。令 $B_0=B(0)$，并置
+
+$$
+A_M(t)=B(t)^{\mathsf T}MB_0,\qquad G_0=B_0^{\mathsf T}HB_0\succ0.
+\tag{99.4}
+$$
+
+存在 $\delta>0$，使所有 $|t|<\delta$、$M\in\mathcal M_u$ 和 $y\in\mathbb R^k$ 均满足
+$y^{\mathsf T}A_M(t)y\ge\tfrac12\lambda_{\min}(G_0)\|y\|^2$，且 $A_H(t)$ 可逆。固定任意 $N\in L^\perp$，再取满足 $0<|t|<\delta$ 且 $A_N(t):=B(t)^{\mathsf T}NB_0$ 不是 $A_H(t)$ 标量倍的 $t$。则存在原纯点 $p,q_+,q_-$ 使
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad
+T_p\!\left(\frac{q_++q_-}{2}\right)
+\ge
+\frac{\mu^2(\beta-\alpha)^2}{2h(B_0y)(D_-+D_+)}>0,
+\tag{99.5}
+$$
+
+其中 $y$ 可取使 $A_H(t)y$ 与 $B(t)^{\mathsf T}NB_0y$ 线性无关的向量，
+$Q_y=\{A_M(t)y:M\in\mathcal M_u\}$，
+$a=y$，$b$ 任取使 $r(z)=b^{\mathsf T}z/(a^{\mathsf T}z)$ 非恒定，
+$\alpha=\min_{Q_y}r<\beta=\max_{Q_y}r$，
+$w_-=b-\alpha a$，$w_+=b-\beta a$，
+$D_\pm=h(B(t)w_\pm)$，且
+$\mu=\min_{M\in\mathcal M_u}y^{\mathsf T}A_M(t)y>0$。
+
+证明。对每个 $N\in L^\perp$，由 $B_0y$ 为纯方向及极化有 $B_0^{\mathsf T}NB_0=0$，故所有 $M\in\mathcal M_u$ 满足 $A_M(0)=G_0$。紧性及 $B(t)$ 的连续性给出一个 $\delta>0$，使
+$\sup_{M\in\mathcal M_u}\|A_M(t)-G_0\|<\lambda_{\min}(G_0)/2$ 对所有 $|t|<\delta$ 成立。这同时给出所述全 $M$、全 $y$ 下界和 $A_H(t)$ 可逆性。以下固定满足定理条件的同一个 $t$。若每个 $y$ 的 $A_H(t)y$ 与 $A_N(t)y$ 都共线，则 $A_H(t)^{-1}A_N(t)$ 将每个向量送入其自身直线，故为标量算子；因此可选上述 $y$。由 $H\pm\eta N\in\mathcal M_u$，$Q_y$ 含非共线向量，故可选使比值 $r$ 非恒定的 $b$。$Q_y$ 紧凸且落在 $\{z:y^{\mathsf T}z>0\}$，其比值 $r$ 的两个端点给出
+$Q_y\cap w_-^\perp\ne\varnothing$、$Q_y\cap w_+^\perp\ne\varnothing$，而共同交点将迫使 $(\beta-\alpha)y^{\mathsf T}z=0$，不可能。
+
+令 $v=B_0y$、$p=p_v$、$q_\pm=p_{B(t)w_\pm}$。引理99.2给两个分别确认 $p$ 的效应，故前两式成立。对任意 $f\in F_p$，用(99.3)并写 $s_M=y^{\mathsf T}A_M(t)y$，得到
+
+$$
+ f\!\left(\frac{q_-+q_+}{2}\right)
+\ge\frac1{2h(v)}\left(\frac{s_M^2(r_M-\alpha)^2}{D_-}+\frac{s_M^2(r_M-\beta)^2}{D_+}\right),
+$$
+
+其中 $r_M=b^{\mathsf T}A_M(t)y/s_M$。加权平方完成给
+$\min_r((r-\alpha)^2/D_-+(r-\beta)^2/D_+)=(\beta-\alpha)^2/(D_-+D_+)$，从而(99.5)。证毕。
+
+### 99.3 全部实 scroll 的障碍
+
+**推论 99.4（标准实 scroll 在全原单位下违反 $\mathrm G_2$）。** 令
+
+$$
+B(t)y=\bigl(y_1(1,t,\ldots,t^{a_1}),\ldots,
+ y_k(1,t,\ldots,t^{a_k})\bigr),\qquad a_i\ge0.
+\tag{99.6}
+$$
+
+若 $k\ge2$ 且 $\sum_i a_i\ge2$，则由这些 ruling 生成的标准实 scroll（包括零次数顶点块）在任意严格正原单位、整个原锥及全部原 proper 效应下违反 $\mathrm G_2$。$k=1$ 的情形正是97.4处理的有理正规曲线。
+
+证明。若某个 $a_i\ge2$，其二次关系
+$x_{i,0}x_{i,2}-x_{i,1}^2$ 给出 $N\in L^\perp$，并且
+$B(t)^{\mathsf T}NB_0=(t^2/2)E_{ii}$；这不可能是可逆 $A_H(t)$ 的标量倍。若所有 $a_i\le1$，则至少有两个指标 $i\ne j$ 满足 $a_i=a_j=1$；关系
+$x_{i,0}x_{j,1}-x_{i,1}x_{j,0}$ 给出
+$B(t)^{\mathsf T}NB_0=(t/2)(E_{ji}-E_{ij})$，其对角线为零而 $A_H(t)$ 的对角线在小 $t$ 时严格为正，仍非比例。定理99.3给出共同正缺口和 $\mathrm G_2$ 失败。证毕。
+
+### 99.4 Veronese 面及任意顶点维数的精确中点障碍
+
+**定理 99.5（全实 Veronese 锥的精确缺口）。** 设纯射线由
+
+$$
+ v(x,z)=(\nu_2(x),z),\qquad
+\nu_2(x)=(x_0^2,x_0x_1,x_0x_2,x_1^2,x_1x_2,x_2^2),
+$$
+
+其中 $x\in\mathbb R^3$、$z\in\mathbb R^r$，$r\ge0$；$x=0$ 的顶点纯射线全部保留。对任意严格正原单位，令其在秩一生成元上的四次式为
+
+$$
+U(x,z)=z^{\mathsf T}Dz+2z^{\mathsf T}Q(x)+U_0(x),\qquad D\succ0.
+$$
+
+置 $z'=z+D^{-1}Q(x)$、$W(x)=U_0(x)-Q(x)^{\mathsf T}D^{-1}Q(x)$。则 $W(x)>0$ ($x\ne0$)，并存在原纯点 $p,q,r$ 使
+
+$$
+T_p(q)=T_p(r)=0,\qquad
+T_p\!\left(\frac{q+r}{2}\right)=\frac{m}{2(a+b)}>0,
+\tag{99.7}
+$$
+
+其中
+$m=\min_{\|x\|=1}W(x)$，选取 $e_0$ 达到最小值、单位向量 $e_1\perp e_0$，
+$a=W(e_1)$、$b=W(e_0+e_1)$，并取
+
+$$
+ p=\frac{\Xi(e_0,0)}m,\qquad q=\frac{\Xi(e_1,0)}a,\qquad r=\frac{\Xi(e_0+e_1,0)}b,\qquad
+\Xi(x,z')=v(x,z')v(x,z')^{\mathsf T}.
+$$
+
+证明。$Q(x)$ 是 $\nu_2(x)$ 坐标的线性函数，故 $z'=z+D^{-1}Q(x)$ 是环境空间上的可逆实线性 shear。以它的整体合同及对偶运输同一原锥、原单位和全效应；上述 $v(x,z')$、$\Xi$ 及以下 $U=z'^{\mathsf T}Dz'+W(x)$ 均在运输后的坐标中取。严格正性给 $W>0$，且 $W(x)\ge m\|x\|^4$。在参数空间旋转后 $W(e_0)=m$、$\partial_{x_1}W(e_0)=0$。
+
+对 $0\le c\le1$，线性式平方
+
+$$
+F_c(x,z')=m(x_0^2-cx_1^2)^2
+$$
+满足
+$0\le F_c\le m(x_0^2+x_1^2)^2\le m\|x\|^4\le W\le U$。
+它来自环境线性效应，故由ROG延拓为原 proper 效应并确认 $p$。$F_0$ 排除 $q$，$F_1$ 排除 $r$，所以前两式成立。
+
+任取 $f\in F_p$，限制到 $z'=0,x_2=0$ 为二元非负四次式 $\Phi$。则 $0\le\Phi\le W$、$\Phi(1,0)=m$，而 $W-\Phi$ 在 $(1,0)$ 取零，故 $\Phi$ 的 $x_0^4$ 系数为 $m$、$x_0^3x_1$ 系数为零。二元非负四次式是二次式的实平方和，写
+
+$$
+\Phi=\|\alpha x_0^2+\beta x_0x_1+\gamma x_1^2\|^2.
+$$
+于是 $\|\alpha\|^2=m$、$\alpha\cdot\beta=0$，从而
+
+$$
+\frac{\Phi(0,1)}a+\frac{\Phi(1,1)}b
+=\frac{\|\gamma\|^2}a+\frac{\|\gamma+\alpha+\beta\|^2}b
+\ge\frac{\|\alpha+\beta\|^2}{a+b}
+=\frac{m+\|\beta\|^2}{a+b}
+\ge\frac m{a+b}.
+\tag{99.8}
+$$
+故每个确认效应在 $(q+r)/2$ 上至少为 $m/[2(a+b)]$。取 $c_*=a/(a+b)$；$F_{c_*}$ 仍是全域 proper 效应，并在该中点达到此值，得到(99.7)。证毕。
+
+### 99.5 实形式下降与最小次数分支的穷尽
+
+**定理 99.6（障碍对全部全实最小次数分支的适用）。** 设 $X$ 是97.3所得的非退化、约化、全实不可约实最小次数分支。其最大线性锥顶是实线性空间；非线性分支剥离锥顶所得的非空光滑基底仍全实。若基底为次数至少三的 scroll，则其 ruling 参数曲线和 ruling 丛均在 $\mathbb R$ 上下降，且经实坐标成为(99.6)；若基底为 Veronese 面，则其嵌入经实坐标成为定理99.5的 $\nu_2$。二次超曲面仍由96.8的余维一桥，曲线仍由97.4排除。
+
+证明。全实不可约性使 $X$ 几何整：若复化有不同共轭分支，实点落入其真闭交叠，与稠密性矛盾。最大锥顶指那些与 $X$ 的每点相连的直线都包含在 $X$ 内的顶点之集；这是内在的线性子空间，并非任意极大包含线性空间。它受共轭保持，故下降为实子空间 $E_{\rm vert}\subset E$。线性分支无须障碍；以下设 $X$ 非线性。取实补 $E_{\rm base}$，令 $Y=X\cap\mathbb P(E_{\rm base})$；由最小次数分类，$Y$ 光滑且无锥顶。去顶点后的实线性投影满射到 $Y$，实点的Zariski稠密性经这个占优投影保留，故 $Y$ 全实并有实光滑点。
+
+先在复域考察次数至少三的光滑 scroll $Y$，令其维数为 $k$，ruling 映射为 $\pi:Y_{\mathbb C}\to\mathbb P^1_{\mathbb C}$。若 $k\ge3$，任何包含在 $Y_{\mathbb C}$ 内的线性 $\mathbb P^{k-1}$ 都映到一点：到 $\mathbb P^1$ 的非常值态射将由两份同正次数且无公共零点的齐次式给出，但在维数至少二的射影空间中这两式必有公共零点。因此该线性空间恰为一个 fiber。若 $k=2$，写复 scroll 为 $\mathbb P(\mathcal O(a)\oplus\mathcal O(b))$ 的商直线约定，其中 $1\le a\le b$、$a+b\ge3$。一条非fiber直线 $\ell$ 到基底的次数 $d\ge1$ 会给出满射
+
+$$
+\mathcal O_{\ell}(ad)\oplus\mathcal O_{\ell}(bd)
+\longrightarrow\mathcal O_{\ell}(1).
+$$
+
+非零分量要求 $ad\le1$，故 $a=d=1$、$b\ge2$；第二分量为零，第一分量为标量同构，所得直线只能是唯一的最小 directrix。它是孤立直线，不能另成覆盖族。故两种维数下，fiber 均为唯一覆盖线性 $\mathbb P^{k-1}$ 族，且每点有唯一所属 fiber。
+
+这个唯一族及其 incidence 受共轭保持，下降为光滑实 genus-zero 参数曲线 $B$。任取 $Y$ 的一个实光滑点，其唯一 fiber 受共轭固定，便给出 $B$ 的实点。以该点作次数一除子，Riemann--Roch的完整线性系给 $B\simeq\mathbb P^1_{\mathbb R}$。族的实态射 $B\to\operatorname{Gr}(k,E_{\rm base})$ 拉回实普适子丛 $\mathcal S\subset E_{\rm base}\otimes\mathcal O_B$；以向量直线为约定的 $\mathbb P(\mathcal S)$ 到 $Y$ 的 incidence 复化后为 scroll 的同构，故本身是实同构。[Hazewinkel--Martin，Theorem 4.1][HM99] 对任意域成立，给
+
+$$
+\mathcal S\simeq\bigoplus_{i=1}^k\mathcal O(-a_i),\qquad
+\mathcal S^*\simeq\bigoplus_{i=1}^k\mathcal O(a_i).
+$$
+
+因 $\mathcal S^*$ 由环境线性式生成，有 $a_i\ge0$；无锥顶的光滑基底在此次数范围实际有 $a_i\ge1$。经典分类中的完整嵌入使限制映射
+$E_{\rm base}^*\to H^0(B,\mathcal S^*)$ 复化后为同构，故为实同构；选取各 $\mathcal O(a_i)$ 的完整实单项式基，正得(99.6)。加回 $E_{\rm vert}$ 等于加入 $\dim E_{\rm vert}$ 个零次数块，仍是同一环境上的实线性坐标变换。$k=1$ 的光滑基底有实点而为 $\mathbb P^1_{\mathbb R}$，其完整 $\mathcal O(d)$ 嵌入由97.6的实曲线下降论证给出；无顶点时使用97.4，加回非零顶点则为加入零次数块的(99.6)，使用99.4。
+
+Veronese 基底的复化为 $\mathbb P^2_{\mathbb C}$，其实结构写成 $\tau([z])=[A\bar z]$，$A\in\operatorname{GL}_3(\mathbb C)$。由 $\tau^2=1$ 有 $A\bar A=cI_3$；两侧共轭及以 $A$ 作相似变换分别给 $\bar A A=\bar cI_3$ 和 $\bar A A=cI_3$，故 $c\in\mathbb R$。行列式给 $c^3=|\det A|^2>0$，所以 $c>0$；以 $A/\sqrt c$ 代换后 $A\bar A=I_3$。反线性对合 $Jz=A\bar z$ 的固定空间 $F$ 满足
+$z=(z+Jz)/2+i(z-Jz)/(2i)\in F+iF$ 且 $F\cap iF=0$，故 $\dim_{\mathbb R}F=3$。选取 $F$ 的实基将该实结构变成标准共轭，得到基底与 $\mathbb P^2_{\mathbb R}$ 的实同构。
+
+原超平面束复化为 $\mathcal O(2)$。在上述实同构下，它的共轭提升与 $\mathcal O(2)$ 的标准提升只差一个标量 $\lambda$，且 $\lambda\bar\lambda=1$；写 $\lambda=\mu/\bar\mu$ 并重标截面，就使两种提升一致。因此其完整实截面正是六维实二次式空间。原环境线性式到该截面空间的限制在复化后为完整 Veronese 嵌入的同构，故亦为实同构；实截面基给出的环境实线性同构遂将嵌入变为标准 $\nu_2$。加回实锥顶后得到99.5的全部顶点维数，并以整体合同和对偶运输同一原数据。所用非退化、全实、二正则及线性拼接输入是 [Blekherman--Sinn--Velasco，Theorems 3.1, 3.11, 3.12][BSV99reg]；最小次数目录及二次超曲面、scroll、Veronese 分类按 [Blekherman--Smith--Velasco，Theorem 1.1 与 §4][BSV99min] 所引 Eisenbud--Harris，Theorem 1 使用。证毕。
+
+### 99.6 全实域的全维全余维闭合
+
+**定理 99.7（任意有限实 $n,c$ 的完整桥）。** 在定义99.1的同一完整原实ROG载体上，不限制 $n$ 或 $c$。先作93.2的同载体归一化；在该坐标中 $I_n\in L$、$u=\operatorname{tr}|_L$，并有
+
+$$
+\boxed{
+\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S
+\Longleftrightarrow
+L=\bigoplus_i\operatorname{Sym}(U_i),
+}
+\tag{99.9}
+$$
+
+其中 $\mathbb R^n=\bigoplus_i^{\perp}U_i$。未归一化坐标中的结论由93.2的同一个对偶运输返回原 $u$，不把任意原单位同时写成迹和单位矩阵。当上述等价条件成立时，归一化坐标中整个原 proper 效应、全部原混态与所有确认值满足
+
+$$
+[0,u]=\{f_J:J\in L,\ 0\preceq J\preceq I_E\},\qquad
+T_p(x)=\operatorname{tr}(px).
+\tag{99.10}
+$$
+
+其中 $f_J(X)=\operatorname{tr}(JX)$。证明。97.3把 $\mathrm G_2$ 传给全实最小次数分支。最小次数分类的非线性分支只有二次超曲面、非线性有理正规曲线、scroll 和 Veronese 锥及其线性锥；二次超曲面由局部余维一的96.8桥排除，曲线由97.4排除，scroll 由99.4排除，Veronese 及任意顶点由99.5排除，实形式的下降由99.6保证没有未覆盖的非分裂形式。因此在 $\mathrm G_2$ 下每个分支均为线性空间。97.5的全效应四分之一障碍排除所有非零交叠，且原归一化的 $I_E\in L$ 与秩一生成给出这些线性空间的彼此正交完整直和及(99.10)。93.2给出完整 $\mathrm{Z0}$、$S$、least 性及反向蕴含 $\mathrm{Z0}\Rightarrow\mathrm G_2$。所有断言沿原锥与对偶的同构返回原 $(V,C,u)$。证毕。
+
+### 99.7 同一装饰元组上的完整候选及消费者边界
+
+**定义 99.8（全实域与准确复域的同数据候选）。** 固定89.7、94.5、96.10、97.8的同一完整装饰元组 $\mathcal O$、共同来源合同 $\mathfrak S(\mathcal O)$ 及全部非几何条件。令 $\mathcal D_{99}(\mathcal O)$ 表示：每个原 $X=A,D,E$ 有一个同一原锥、同一严格正原单位、全部纯点和全部混态的完整 ROG 表示，并按
+
+$$
+\Gamma_X=
+\begin{cases}
+\mathrm G_{2,X},&\mathbb F_X=\mathbb R,\\
+\mathrm G_{2,X},&\mathbb F_X=\mathbb C, c_X\le2,\\
+\mathrm{FC}_X\ (\text{等价地完整 }\mathrm{Z0}_X),&\mathbb F_X=\mathbb C, c_X\ge3
+\end{cases}
+\tag{99.11}
+$$
+
+取准确的几何条件。定义
+
+$$
+\mathsf R_{99}(\mathcal O)
+:=\mathcal D_{99}(\mathcal O)\land\mathcal N_{89.7}(\mathcal O)
+\land\bigwedge_{X=A,D,E}\Gamma_X.
+\tag{99.12}
+$$
+
+则在这些各自准确的实／复 ROG 域内
+
+$$
+\mathsf R_{99}(\mathcal O)
+\Longleftrightarrow
+\mathcal D_{99}(\mathcal O)\land\mathsf R_{\rm polar}(\mathcal O)
+\Longleftrightarrow
+\mathcal D_{99}(\mathcal O)\land[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\tag{99.13}
+$$
+
+证明。实分支使用99.7，复 $c\le2$ 使用96.8，复 $c\ge3$ 使用94.2的固定补态与完整零拼合；三者均在同一个原单位、整个原锥和整个 proper 效应区间上工作。再逐载体应用89.4的 $S\Longleftrightarrow\mathrm B+\mathrm{Boundary}$，89.8给出同数据等价。该运输不改变原态、效应、过程、读回、来源或未来。证毕。
+
+在(99.13)中，全部消费者仍逐项保留以下边界：
+
+| 消费者 | 数学供应与不可省略的原前件 |
+| --- | --- |
+| 全部态、混态、效应、least 与纯比较 | 99.7给实完整块及全效应 least；复域按96.8或94.2给相应完整结构。实际准备、混合、测试和整菜单仍由89.7的来源合同供应。 |
+| 复型与 Born | 只有89.9的一般 EJA 忠实桥及66.3的同一原精确两接口才选择复型并得到 $\sum_\gamma\operatorname{Tr}(E_\gamma\rho_\gamma)$；实迹配对本身不选择复型。非标量实块与完整复 Hermitian 识别的交集仍只有标量块，不能以实化替代复秩一。 |
+| 指定二份、三份、张量与读回 | 保留同一 $L,p,\omega$、同一读回两次、两实张成、全实 $Z$、完整(83.8)、两尺度、C2、整个 $G=1_E$，并在精确 PRE 后消费同一资格态的整个 H13；不产生其他份数或其他来源。 |
+| CP、矩形 Kraus 与仪器 | 保留逐事件逐未归一分支的实线性、同事件 HP 延拓、全实来源律(87.21)、全复变量相容核及实际探针的准确整个输出，或原递归参考与同事件全锥正性；CP 成立后才可用 Kraus。菜单、记录、旁观者、顺序、重置、预算、真粗粒化、TP/TNI 和零质量分支均按原合同。 |
+| 既有事件更新 | 只有同一 CP 分支的锐投影效应、全部确定接受态上的逐点中性及原输出校准，才给该事件的 Lüders 唯一性；相同概率和效应不决定后态，零质量分支保留。 |
+| 物理时间 | 仍需原物理时间上的连续、齐次、可逆 $*$-自同构群、实际逆、钟、单位和动态来源；有限矩阵块或谱分解本身不产生物理时间。 |
+| 实际来源与有限提升 | 原准备、实际混合、参考、副本、相关联合、记录、ready/flags、失败/拒绝/停止/销毁/返回、全部中间切口、合法未来、source-adoption，以及指定二元关系和三元有限提升的共同事件条件均逐项保留；数学效应不替代装置或资源证明。 |
+
+全复 $c\le2$ 的 G2 行与全实任意 $n,c$ 的 G2 行不合并为一个复结论；复 $c\ge3$ 的本候选仍使用 FC/Z0。因而一般复 ROG 的 G2、尤其 $n=3,c=3$，仍是开放域；一般整球载体或一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 也未由此闭合。
+
+可以把原载体想成一块由所有纯方向铺成、由同一上界刻度控制的灯板。相邻 ruling 像两片只在铰链处相接的板：同一确认灯的 Gram 列若发生非比例摆动，就有两个端点，分别能把两盏灯压到零，却在中点留下统一的正缺口。Veronese 面的接触更紧：完成平方先吸收锥顶交叉项，再在单位最小点固定一阶接触；两把平方尺各自能压暗端点，而共同确认必须在中点留下恰好 $m/[2(a+b)]$。曲线、二次超曲面和线性拼接的既有障碍补齐其余实最小次数分支，于是满足 $\mathrm G_2$ 的全实 ROG 只剩正交完整实矩阵块。复高余维仍由固定补态路线承担，复型、指定复合、同事件 CP、更新、时间以及真实来源继续需要各自的原合同。
+
+[BSV99reg]: https://arxiv.org/html/1607.03551v2
+[BSV99min]: https://arxiv.org/html/1308.0751v1
+[HM99]: https://doi.org/10.1016/0022-4049(82)90037-8
+
+## 追加锚（本行以下为增补区）
+
+## 100. 全纯互反下有限互补方向的余维一刚性
+
+### 100.1 同一全效应载体、中心与共同最低
+
+**定义 100.1（有限参考方向入口）。** 使用定义98.1的同一个非零有限维实 $V$、闭尖生成凸锥 $C$、
+严格正原单位 $u$、整个 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$、$W=\ker u$，
+以及整个原 $\mathcal E=[0,u]_{C^*}$、$F_p$、$T_p$；本定义的静态部分不输入群 $H$。
+记 $d=\dim W$，要求
+
+$$
+\begin{aligned}
+\mathrm R &: T_p(r)=T_r(p) &&(p,r\in P),\\
+\mathrm{E2}_i &: T_{p_i}(r)+T_{q_i}(r)=1 &&(r\in P,\ 1\le i\le k),\qquad k\ge1.
+\end{aligned}
+\tag{100.1}
+$$
+
+各 $p_i,q_i$ 均为原纯点。置 $c=(p_1+q_1)/2$ 及
+$S=\operatorname{span}\{(p_i-q_i)/2:1\le i\le k\}\subseteq W$。
+有限方向条件是 $\operatorname{codim}_W S\le1$。重复或反向的纯对允许出现，但不提高秩。
+有限性只指参考对的数量；$\mathrm R$ 仍遍历所有原纯对，每个 $\mathrm{E2}_i$ 仍遍历全部原纯目标，
+不是有限次标量读数。序、确认面和下包络始终在同一个原载体上计算。
+
+**引理 100.2（无群的中心及确认面的精确形式）。** 只假定(100.1)，暂不要求方向秩。
+则所有 $(p_i+q_i)/2$ 都是原 $K$ 的同一唯一对称中心 $c$，$d\ge1$。
+令 $B=K-c\subset W$，则 $B=-B$ 是一个范数 $N$ 的整个单位球。
+以 $N^*$ 表示对偶范数，并把 $j\in W^*$ 延伸为 $j(c)=0$，有
+
+$$
+\begin{gathered}
+C=\{tc+w:t\ge N(w)\},\qquad
+\mathcal E=\{\alpha u+b:N^*(b)\le\min(\alpha,1-\alpha)\},\\
+J(r)=\{j\in W^*:N^*(j)=1,\ j(r)=1\}\quad(r\in\operatorname{ext}B),\\
+F_{c+r}=\{(1-\rho)u+\rho j:0\le\rho\le\tfrac12,\ j\in J(r)\},\\
+T_{c+r}(c+w)=\frac{1+\min_{j\in J(r)}j(w)}2\quad(w\in B).
+\end{gathered}
+\tag{100.2}
+$$
+
+特别地 $u\in F_{c+r}$；单点条件只用于归一支撑集 $J(r)$，绝不用于整个 $F_{c+r}$。
+称 $r$ 光滑是指 $J(r)$ 为单点。对每个纯方向 $r$，以下条件等价：$r$ 光滑；
+$F_{c+r}$ 在整个原锥序中有 least 元；对每个 $s\in\operatorname{ext}B$，存在同一个
+$f\in F_{c+r}$ 同时达到目标 $c+s,c-s$ 的两个最低值。最后一项中的 $f$ 可依赖 $s$。
+在此背景下，$\mathrm{E2}$ 纯对恰为 $c\pm r$，其中 $r$ 是光滑纯方向。
+
+证明。定理98.2（位于§98.1）证明开头、构造群闭包之前的论证不使用 $H$：
+原 $F_p$ 非空紧、评价取得最低值，且纯域 E2 提升到全部 $K$，给该对互补的线性 least 确认。
+这里只复用这一部分，不借用该定理随后依赖传递性的整球结论。
+取任意非恒定仿射高度，将其在 $K$ 上的最小、最大值归一为零、一，得原效应 $f$。
+最大值面有原纯点 $r$，故由 $\mathrm R$ 和 $\mathrm{E2}_i$，
+
+$$
+f(p_i)+f(q_i)\ge T_r(p_i)+T_r(q_i)=T_{p_i}(r)+T_{q_i}(r)=1.
+$$
+
+对 $u-f$ 的纯最大点同样应用此式，给反向不等式。因此 $f((p_i+q_i)/2)=1/2$。
+还原任意线性高度 $\ell$ 后，$\ell(p_i+q_i)=\max_K\ell+\min_K\ell$；
+支撑函数遂给 $K-(p_i+q_i)/2=-(K-(p_i+q_i)/2)$。
+两个不同中心的反射复合是非零平移，不可能保持有界 $K$，故中心相同。
+$K$ 全维于 $\{u=1\}$，所以 $0\in\operatorname{int}_W B$，其 gauge 是范数。
+E2 在自身纯点取值排除 $p_i=q_i$，也排除 $d=0$。
+
+对 $f(tc+w)=\alpha t+b(w)$，在对称球上取上下界即得(100.2)的全效应式。
+若 $f(c+r)=1$，则 $b(r)=1-\alpha\le N^*(b)\le1-\alpha$，因而
+$\rho=1-\alpha=N^*(b)\in[0,1/2]$；$\rho>0$ 时 $j=b/\rho\in J(r)$，
+$\rho=0$ 时 $f=u$。支撑超平面给非空紧 $J(r)$。
+对 $w\in B$，$\min_J j(w)\le1$，故在 $\rho=1/2$ 取得下包络，得到最后一式。
+
+若 $J(r)=\{j_r\}$，则 $e_{c+r}=(u+j_r)/2$，且每个确认效应满足
+$f-e_{c+r}=(1/2-\rho)(u-j_r)\in C^*$，所以它为 least。
+反之若 $e$ 为 least，对所有 $j\in J(r)$ 有 $e\le(u+j)/2$。
+全确认面公式给 $e(c)\ge1/2$，上述支配给 $e(c)\le1/2$。
+每个正差 $(u+j)/2-e$ 在内点 $c\in\operatorname{int}C$ 消失，故恒零；$J(r)$ 为单点。
+
+固定 $s\in B$，令 $m_s=\min_Jj(s)$、$M_s=\max_Jj(s)$。
+两个分别最低值之和是 $1-(M_s-m_s)/2$；同一个确认效应的两读数之和却为
+$2(1-\rho)\ge1$。所以共达最低当且仅当 $M_s=m_s$；此时 $(u+j)/2$ 对任意 $j\in J(r)$ 都共达。
+要求它对所有纯 $s$ 成立便使所有 $j$ 在张成 $W$ 的 $\operatorname{ext}B$ 上相等，即为单点 $J(r)$。
+各 E2 对已有互补 least，且中心已知，故是光滑对径对；反向由 $J(-r)=-J(r)$ 和(100.2)立即给全 $K$ 的 E2。
+光滑是某个原纯点处归一支撑泛函唯一，不等同于某个泛函只暴露该点。
+共同最低仅是数学上同一效应的存在，不供应实际共同菜单、顺序仪器或联合操作。证毕。
+
+### 100.2 余维一方向强迫整个原椭球
+
+**定理 100.3（有限互补方向刚性及反向）。** 定义100.1的全部静态条件，包括
+$\operatorname{codim}_W S\le1$，推出唯一正定对称双线性型 $s_0$，使
+
+$$
+K=\{c+w:s_0(w,w)\le1\},\qquad
+P=\{c+r:s_0(r,r)=1\},\qquad
+T_{c+r}(c+w)=\frac{1+s_0(r,w)}2.
+\tag{100.3}
+$$
+
+这是同一个原 $K$ 的整体等式；原 $C$ 是相应 Lorentz 锥，每个原纯点都有原全锥 least 确认。
+不输入 $H$、全局光滑、严格凸、正定比较型、PD 或谱性。
+反向，对同一原载体上的任意非退化椭球 $K$，$d\ge1$ 时 $\mathrm R$ 成立，每个对径纯对满足 E2，
+并可选择满足定义100.1的非空有限对族。因此该静态入口与原整个基为非退化椭球等价。
+$d\ge2$ 时 $d-1$ 个独立互补方向足够；$d=2$ 只需一对，$d=3$ 需两个独立方向。
+$d=1$ 的中心体本来就是非退化线段，取一对端点；$d=0$ 被非空 E2 排除。
+
+证明。在引理100.2的同一 $B,N,J$ 中，对任意光滑纯方向 $s$ 写 $J(s)=\{j_s\}$。
+由 $J(-s)=\{-j_s\}$，将 $\mathrm R$ 分别用于 $(c+r,c+s)$ 和 $(c+r,c-s)$，得到
+
+$$
+\min_{j\in J(r)}j(s)=j_s(r)=\max_{j\in J(r)}j(s).
+\tag{100.4}
+$$
+
+两个对径目标都必须使用；单个下包络等式不提供右端最大值。
+所以每个 $j\in J(r)$ 在全部已给光滑参考方向 $s_i=(p_i-q_i)/2$ 上取相同值。
+若这些方向张成 $W$，便已有光滑纯方向基。
+若其秩为 $d-1$，从张成 $W$ 的 $\operatorname{ext}B$ 中取 $r\notin S$；
+所有 $j\in J(r)$ 在 $S$ 上相等，又在 $r$ 上都取一，因此在 $W=S\oplus\mathbb Rr$ 上相等。
+这使 $r$ 光滑，也得到光滑纯方向基 $s_1,\ldots,s_d$。
+$d=1$ 直接使用线段端点的唯一归一支撑泛函。
+
+定义线性 $A:W\to W^*$，令 $As_i=j_{s_i}$。
+$\mathrm R$ 在基向量上的等式给 $j_{s_i}(s_j)=j_{s_j}(s_i)$，故
+$(Ax)(y)=(Ay)(x)$ 对全部 $x,y$ 成立。
+对任意纯 $r$ 及 $j\in J(r)$，(100.4)给
+$j(s_i)=j_{s_i}(r)=(Ar)(s_i)$，所以
+
+$$
+J(r)=\{Ar\}\qquad(r\in\operatorname{ext}B).
+\tag{100.5}
+$$
+
+此时只已知 $A$ 对称，尚未把它当作正定或可逆。
+取任意非零 $\ell\in W^*$，令 $M=N^*(\ell)=\max_B\ell>0$。
+最大值面是非空紧面，其中的极点 $r$ 也是 $B$ 的极点；不要求 $\ell$ 唯一暴露 $r$。
+于是 $\ell/M\in J(r)$，(100.5)给 $\ell=MAr$。
+这证明 $A$ 满射，有限等维性遂给可逆，并且
+
+$$
+\ell(A^{-1}\ell)=\ell(Mr)=M^2>0.
+\tag{100.6}
+$$
+
+对 $x\ne0$ 取 $\ell=Ax$，即得 $(Ax)(x)>0$，无须先借谱分解或有限 PD。
+更进一步，由 $Ax=MAr$ 的可逆性得到关键的 $x=Mr$；因为 $N(r)=1$，
+
+$$
+N(x)^2=M^2=(Ax)(x)\qquad(x\in W),
+\tag{100.7}
+$$
+
+其中 $x=0$ 直接成立。令 $s_0(x,y)=(Ax)(y)$，(100.7)证明整个范数球就是(100.3)，
+而非仅证明全部纯点落在某个二次曲面上。范数恒等式和极化给 $s_0$ 唯一性。
+全效应、least 和比较公式由(100.2)得到；反向也由同一公式在椭球坐标中直接验证。
+在 $d\ge2$ 中取 $d-1$ 个独立单位方向及其对径点即可；$d=1$ 取两个端点。
+球上正定自对偶配对
+$\beta(tc+w,t'c+w')=(tt'+s_0(w,w'))/2$ 与有限 PD，复用(95.7)、(98.6)及
+[Library 的整球计算][L100ball]，是所得几何的后果，不另列为新前提或新结果。证毕。
+
+### 100.3 全效应悬挂体的三维反例与秩阈值
+
+**命题 100.4（不足两个横向方向的尖锐反例）。** 对每个 $d\ge3$，令 $m=d-2\ge1$，在
+$V=\mathbb R\oplus(\mathbb R^m\oplus\mathbb R^2)$ 上取
+
+$$
+\begin{gathered}
+u(t,v,x,y)=t,\quad N(v,x,y)=\sqrt{\|v\|_2^2+\max(x^2,y^2)},\quad
+C=\{(t,v,x,y):t\ge N(v,x,y)\},\\
+K=\{(1,r):N(r)\le1\},\qquad
+N^*(\beta,\gamma,\delta)=\sqrt{\|\beta\|_2^2+(|\gamma|+|\delta|)^2}.
+\end{gathered}
+\tag{100.8}
+$$
+
+这是闭尖生成锥、严格正单位及整个原基。使用整个 proper 区间：
+$f=\alpha t+\beta\cdot v+\gamma x+\delta y$ 属于 $\mathcal E$ 当且仅当
+$N^*(\beta,\gamma,\delta)\le\min(\alpha,1-\alpha)$。
+全部纯方向恰为
+
+$$
+r=(v,a\varepsilon,a\eta),\quad \|v\|_2\le1,\quad
+a=\sqrt{1-\|v\|_2^2},\quad \varepsilon,\eta\in\{-1,1\},
+\tag{100.9}
+$$
+
+在 $a=0$ 时识别重复标签。其全部归一支撑集为
+
+$$
+J(r)=
+\begin{cases}
+\{(v,a\theta\varepsilon,a(1-\theta)\eta):0\le\theta\le1\},&a>0,\\
+\{(v,0,0)\},&a=0.
+\end{cases}
+\tag{100.10}
+$$
+
+整个 $F_{(1,r)}$ 由(100.2)的 $\rho\in[0,1/2]$ 公式给出，仍含 $u$。
+对全部纯 $r$ 及 $s=(w,b\varepsilon',b\eta')$，有
+
+$$
+T_{(1,r)}(1,s)=\frac{1+v\cdot w+ab\min(\varepsilon\varepsilon',\eta\eta')}2.
+\tag{100.11}
+$$
+
+因而全纯 $\mathrm R$ 成立，互补对方向恰张成 $\mathbb R^m\oplus\{0,0\}$，秩正好 $d-2$。
+该原基不是椭球。特别 $m=1$ 给同时满足全纯 R 和一对 E2 的完整三维反例；
+故在 $d\ge3$ 中把定理100.3的秩界减为 $d-2$ 不成立。
+
+证明。对偶范数由先在 $\ell_\infty^2$ 方块上取极值、再在两分量欧氏球上取极值得到。
+内点不极端；若 $N(r)=1$、$a>0$ 且某个尾坐标未饱和，可只改变该坐标，故也不极端。
+对(100.9)中 $a>0$ 的点，范数一泛函 $(v,a\varepsilon/2,a\eta/2)$ 唯一暴露它：
+欧氏 Cauchy--Schwarz 的等号先钉住 $v,a$，两个正尾权再钉住两个符号坐标。
+$a=0$ 时 $(v,0,0)$ 同样唯一暴露该点。因此所列纯点穷尽，并非只选取了一个纯轨道。
+对偶范数不等式的同一等号条件给(100.10)，再对 $\theta$ 取最低值得(100.11)，
+包括 $a=0$ 或 $b=0$。该式对 $r,s$ 对称，验证的是全部纯点上的 R。
+只有 $a=0$ 时 $J(r)$ 单点；每个单位 $v\in\mathbb R^m$ 给纯对 $(v,0,0),(-v,0,0)$，
+其 E2 对全部纯目标成立。引理100.2又排除了任何其它 E2 方向，故最大方向秩准确为 $m$。
+边界含非平凡线段 $\{(0_m,1,y):-1\le y\le1\}$，所以不是严格凸椭球。
+
+共同最低和准备分解的缺陷可在同一原载体逐项算出。取
+$r=(0_m,1,1)$、$s=(0_m,1,-1)$、$z=(e_1,0,0)$，令 $p=(1,r)$。
+两个目标 $(1,s),(1,-s)$ 的分别最低值均为零。
+在 $J(r)$ 中 $j_\theta(s)=2\theta-1$；第一零值必须 $\rho=1/2,\theta=0$，
+第二零值必须 $\rho=1/2,\theta=1$。同一个确认效应的两读数之和始终至少为一，故不能共达。
+与此同时原中心 $c=(1,0)$ 有
+
+$$
+\begin{gathered}
+c=\tfrac12(1,s)+\tfrac12(1,-s)=\tfrac12(1,z)+\tfrac12(1,-z),\qquad T_p(c)=\tfrac12,\\
+\tfrac12T_{(1,s)}(p)+\tfrac12T_{(1,-s)}(p)=0,\qquad
+\tfrac12T_{(1,z)}(p)+\tfrac12T_{(1,-z)}(p)=\tfrac12.
+\end{gathered}
+\tag{100.12}
+$$
+
+同一混态的两种纯准备分解给不同的最低比较加权和，故数值互反没有带来准备分解相容。
+形式上取 $m=0$ 得二维方块：它满足 R，却没有光滑纯方向或 E2 对，不反驳二维一对定理；
+一维则是线段。整个族只反驳静态充分性，不是定义98.3完整有限寄存器资源包的模型或反例。证毕。
+
+### 100.4 同一原有限量子候选及来源边界
+
+**定义 100.5（保留全部实际资源的有限方向候选）。** 在定理98.5的同一原装饰数据 $\mathcal O$ 上，
+以定义100.1的全纯 R、非空 E2 对族及余维至多一方向条件作为静态入口；原 $p,q$ 取第一对。
+其余逐项保留定义98.1的实际部分：同一个原 $H\le\operatorname{Aut}(C,u)$，
+同一原凸 $D\subseteq\mathcal E$、$0,u$、真正共同可用的种子菜单 $(a_0,b_0)$，
+$a_0(p_1)=b_0(q_1)=1$、$a_0+b_0=u$，以及原 $H_*\subseteq H$ 的实际拉回标签和 $H_*p_1=P$。
+这个覆盖已经蕴含原 $H$ 的纯传递，不另把重复写出传递性算作一项简化。
+完整保留定义98.3（位于§98.2）及其引用的定义95.5—95.6的全部量词、对象和准确合同；
+对95.5首句关于原 $H$ 拓扑的处理严格沿用98.3，既不额外输入也不提前宣告紧连通性。
+
+具体仍有每个原有限 $V_N,K_N,C_N$、忠实局域／产品层析、实际产品准备与测试、同一固定 $F^{\otimes N}$，
+所有实际可逆作用后的完整产品概率界；同一原局域 $H$、原逆与顺序复合、实际非局域全实路径，
+各给定有限连通图上的精确有序边放置及整个载体旁观者恒等；预选择、实际、保质量、全域、
+输出为同一有序原 $K_2$ 的 END。逐指定原事件和未归一分支仍有全部实准备关系、零分支、
+同事件参考／来源识别、整个原参考输出正性、独立 TP／TNI 预算、原菜单记录和真粗粒化。
+全部有限实现仍保留实际纯辅助、顺序控制、typed 丢弃、忽略指针前的(95.14)保留输出分支律，
+以及实际标签、质量／零约定、空串和尺寸补齐。本段列举不替代所引定义的全称合同。
+
+**命题 100.6（完整候选的准确回接与静态压缩范围）。** 定义100.5推出98.5及95.7的全部有限寄存器、
+指定事件和仪器条件结论，包括同一原 $H=\mathrm{SO}(3)$、$d=3$、$D=\mathcal E$、
+原 $K_N=\mathcal D(2^N)$、Born 配对及带原预算／记录的 CP 事件与有限实现。
+反向，98.5的完整包可在原球内选择有限 E2 对族，得到100.5；忘掉这些数学参考对回到同一完整包。
+这给静态检验形式的有限参考方向压缩，不给完整包独立前提数的减少或完整模型类的严格扩大。
+
+证明。100.3先给同一个原球；第一对的纯域 E2 和由 $H_*p_1=P$ 已得的精确纯传递，
+连同原种子／拉回／凸性，准确满足定义98.1。由定理98.2及其复用的95.3原菜单论证给 $D=\mathcal E$。
+随后严格按98.4、98.5，在同一原群与原复合资源上恢复 $H=\mathrm{SO}(3)$，由 END 选同一普通复扇区，
+再消费95.7的原有限寄存器和逐事件／仪器合同；不重证这些已覆盖的结果。
+反向用98.2的原球与(98.6)，保留原 $p,q$ 为第一对，再补足独立对径方向，全部实际对象保持不变。
+原完整包中，$H_*p_1=P$ 的覆盖本来已将一对 E2 运输到全部纯点，因此有限方向入口未被证明删除了独立完整前提。
+它也不把全纯共同 least 或引理100.2的对径两目标共达最低当作 R 加单对 E2 的免费后果；
+该额外共达条件在已得中心背景下恰等价全纯支撑唯一／共同 least，100.4给出缺口。
+若改用 $\dim\operatorname{aff}F_p+1$ 的 Helly 检验阈值，它也只改变检验形式，不改变此独立性边界。
+这里的“共同 least”是每个参考纯点各有一个对所有目标通用的 least 确认，不是一把尺同时确认全部纯点。
+
+几何对应仍为：单元整个 Bloch 球及全效应提供原概率；原产品层析、固定校准、实际完整耦合和 END
+提供有限复 Hilbert 张量结构；逐事件同来源的整个参考输出正性和独立预算提供 CP／TP／TNI；
+共同菜单、指针更新、辅助与丢弃才提供仪器实现。数学 $\operatorname{Aut}(C,u)$ 或所得度量不增加实际控制。
+原更新唯一性、物理时间／钟和能量单位仍各需98.6所述条件；无限体系、效率及物理起源不由本命题解决。
+
+用白话描画，保留整块原物体及所有合法尺，方形横截面配圆化纵向的三维物体已能使所有纯点两两比较互反，
+且有互补两极，却在角上需要两把不同的尺分别压低两个相反目标，连同一中心的不同准备也不能相容。
+候选要求这些互补方向在中心空间中只剩至多一维未覆盖；三维要两个独立方向，便迫使整块物体为欧氏球。
+要得到完整有限量子寄存器，还完整支付原真实菜单、标签、同一控制群、产品层析和校准、全实耦合、
+旁观者、END、逐事件参考与预算记录、辅助、指针更新及丢弃。交换比较的两个端点仍只交换数值参数，
+不交换物理测量的执行顺序。
+
+本章的仓内新增综合是全效应下包络 R 的有限互补方向补足、直接支撑对偶的正定及整球完成，
+并以同一个悬挂体族给三维缺口与 $d-2$ 秩边界。
+[Niestegge，arXiv:2208.07135v1，§§4—7、Theorem 7.1][N100norm] 已有全局光滑且严格凸范数模型的
+对称转移概率到 Hilbert 几何；该结果不直接供应这里尚缺的全局假设。
+[arXiv:2312.13213v2，Axioms 1—2、性质 $(*)$ 及 Theorem 3][N100transition]
+与 [Library 的 reciprocal least-confirmation bridge][L100least] 持有成熟的全局 least／自对偶／谱性路线。
+它们不是本章重新命名的新结果；有限凸分解、支撑面与对偶范数是中间工具。
+上述有限方向综合的来源归属为 repo-derived；这些指定仓内与原始文献的比较不构成穷尽文献检索或全局优先权证明。
+第99章另需完整实 ROG 表示及其 G2 条件，不覆盖本章任意范数球，亦未用于本证明。证毕。
+
+[L100ball]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#appendix-an-exhaustive-binary-comparison-and-a-single-coupling-path
+[L100least]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge
+[N100norm]: https://arxiv.org/html/2208.07135v1
+[N100transition]: https://arxiv.org/html/2312.13213v2
+
+## 追加锚（本行以下为增补区）
