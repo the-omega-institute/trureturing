@@ -86,15 +86,15 @@ private theorem request_injective {m k : ℕ} {w : Word m} {v : Word k}
 private theorem request_boundary {m k : ℕ} {w : Word m} {v : Word k}
     {d : Fin m → ℤ} {e : Fin k → ℤ} (hw : Certificate w d) (hv : Certificate v e)
     (i : Requester d e) : request d e i ≠ 2 ∧ request d e i ≠ 3 := by
-  have hr := request_coordinate i
-  have hp := i.property
   rcases i with ⟨i | i, hp⟩
-  · have hb := hw.bounded i
+  · have hr := request_coordinate (⟨.inl i, hp⟩ : Requester d e)
+    have hb := hw.bounded i
     have hlt := i.isLt
-    simp only [oldTarget, oldPosition, oldOffset] at hr
+    change (m : ℤ) + (request d e ⟨.inl i, hp⟩).val = (i.val : ℤ) + d i at hr
     constructor <;> intro h <;> have hh := congrArg Fin.val h <;> norm_num at hh <;> omega
-  · have hb := hv.bounded i
-    simp only [oldTarget, oldPosition, oldOffset] at hr
+  · have hr := request_coordinate (⟨.inr i, hp⟩ : Requester d e)
+    have hb := hv.bounded i
+    change (m : ℤ) + (request d e ⟨.inr i, hp⟩).val = (m : ℤ) + 6 + i.val + e i at hr
     constructor <;> intro h <;> have hh := congrArg Fin.val h <;> norm_num at hh <;> omega
 
 /-- The completion for the actual requests of two certified pieces is an involution.

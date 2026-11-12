@@ -50,10 +50,37 @@ private theorem wrap_add (n : ℕ) (a b : ℤ) :
 
 private theorem wrap_signed (n : ℕ) (s : Fin 4) : wrap n (signed s) = SourceModel.offset n s := by
   apply Fin.ext
-  have h := wrap_val n (signed s)
-  fin_cases s <;> simp only [signed, SourceModel.offset, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.cons_val, Matrix.head_cons, Matrix.tail_cons] at h ⊢
-  all_goals omega
+  fin_cases s
+  · change (wrap n 1).val = 1
+    have h := wrap_val n 1
+    rw [Int.emod_eq_of_lt (by omega) (by omega)] at h
+    omega
+  · change (wrap n 2).val = 2
+    have h := wrap_val n 2
+    rw [Int.emod_eq_of_lt (by omega) (by omega)] at h
+    omega
+  · change (wrap n (-1)).val = n + 4
+    have h := wrap_val n (-1)
+    have he : (-1 : ℤ) % (n + 5) = (n : ℤ) + 4 := by
+      have hh : ((n : ℤ) + 4) % (n + 5) = (n : ℤ) + 4 :=
+        Int.emod_eq_of_lt (by omega) (by omega)
+      have hmod : (-1 + ((n : ℤ) + 5)) % (n + 5) = (-1 : ℤ) % (n + 5) := by
+        simp only [Int.add_emod, Int.emod_self, add_zero, Int.emod_emod]
+      rw [show (-1 : ℤ) + (n + 5) = n + 4 by omega, hh] at hmod
+      exact hmod.symm
+    rw [he] at h
+    omega
+  · change (wrap n (-2)).val = n + 3
+    have h := wrap_val n (-2)
+    have he : (-2 : ℤ) % (n + 5) = (n : ℤ) + 3 := by
+      have hh : ((n : ℤ) + 3) % (n + 5) = (n : ℤ) + 3 :=
+        Int.emod_eq_of_lt (by omega) (by omega)
+      have hmod : (-2 + ((n : ℤ) + 5)) % (n + 5) = (-2 : ℤ) % (n + 5) := by
+        simp only [Int.add_emod, Int.emod_self, add_zero, Int.emod_emod]
+      rw [show (-2 : ℤ) + (n + 5) = n + 3 by omega, hh] at hmod
+      exact hmod.symm
+    rw [he] at h
+    omega
 
 private theorem wrap_reverse {n : ℕ} (i j : Fin (n + 5)) (a b : ℤ)
     (ha : -2 ≤ a ∧ a ≤ 2) (hb : -2 ≤ b ∧ b ≤ 2)
@@ -64,14 +91,17 @@ private theorem wrap_reverse {n : ℕ} (i j : Fin (n + 5)) (a b : ℤ)
   have he : ((a + b) % (n + 5)) = 0 := by
     have h := congrArg (fun x : Fin (n + 5) => wrap n (x.val + b)) hij
     simp only [wrap_add, wrap_index] at h
+    have hji' : j + wrap n b = i := by simpa only [wrap_add, wrap_index] using hji
     have ht : wrap n (i.val + (a + b)) = i := by
-      simpa only [add_assoc] using h.trans hji
+      simpa only [wrap_add, wrap_index, add_assoc] using h.trans hji'
     have hmod := congrArg (fun x : Fin (n + 5) => (x.val : ℤ)) ht
     rw [wrap_val] at hmod
     have heq : Int.ModEq (n + 5) (i.val + (a + b)) (i.val : ℤ) := by
       simpa only [Int.ModEq, Int.emod_eq_of_lt (by omega : (0 : ℤ) ≤ i.val)
         (by omega : (i.val : ℤ) < n + 5)] using hmod
-    simpa using Int.ModEq.add_left_cancel' (i.val : ℤ) heq
+    have heq' : Int.ModEq (n + 5) (i.val + (a + b)) ((i.val : ℤ) + 0) := by simpa using heq
+    have hh := Int.ModEq.add_left_cancel' (i.val : ℤ) heq'
+    simpa only [Int.ModEq, Int.zero_emod] using hh
   have hdiv : (n + 5 : ℤ) ∣ a + b := Int.dvd_of_emod_eq_zero he
   have hz : a + b = 0 := Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdiv (by omega)
   omega
@@ -105,8 +135,14 @@ private theorem displacement_spec {n : ℕ} (p : SourceModel.Profile n)
     simp only [displacement, dif_neg h]
     refine ⟨⟨hb.1, hb.2.1⟩, ?_, ?_, ?_⟩
     · simp [hb.2.2, h]
-    · rw [wrap_add, wrap_index, wrap_signed, hs]
-    · rw [signed_rank, hs, SourceModel.rank_neighbor]
+    · calc
+        wrap n (i.val + signed (Classical.choose hex)) =
+            i + SourceModel.offset n (Classical.choose hex) := by
+              rw [wrap_add, wrap_index, wrap_signed]
+        _ = μ.val i := hs.symm
+    · exact (signed_rank (p i) (Classical.choose hex)).trans
+        ((SourceModel.rank_neighbor p i (Classical.choose hex)).symm.trans
+          (congrArg (SourceModel.rank p i) hs.symm))
 
 private theorem wrap_local {n : ℕ} (i j : Fin (n + 5)) :
     wrap n (i.val + ((j.val : ℤ) - i.val)) = j := by
@@ -210,8 +246,10 @@ theorem cut_certificate {n : ℕ} (p : SourceModel.Profile n)
           rintro ⟨hi, hj⟩
           apply hn
           refine ⟨hl.2.2, hmatch, ?_, ?_⟩
-          · simpa only [← hl.1, (hd i).2.2.2] using hi
-          · simpa only [← hl.2.1, (hd j).2.2.2] using hj
+          · have hri : offsetRank (p i) (d i) = SourceModel.rank p i (μ.val i) := (hd i).2.2.2
+            simpa only [← hl.1, hri] using hi
+          · have hrj : offsetRank (p j) (d j) = SourceModel.rank p j (μ.val j) := (hd j).2.2.2
+            simpa only [← hl.2.1, hrj] using hj
         omega
       exact Or.inr hless
 
@@ -227,7 +265,8 @@ theorem source_count_le_open_count (n : ℕ) :
     Fintype.card {p : SourceModel.Profile n // SourceModel.HasStableMatching p} ≤ count (n + 5) := by
   apply Fintype.card_le_of_injective (@cut n)
   intro p q h
-  exact Subtype.ext (congrArg Subtype.val h)
+  apply Subtype.ext
+  exact congrArg (fun r : CertifiedWord (n + 5) => r.val) h
 
 /-- Exact independent-uniform normalization, with profiles counted once. -/
 theorem source_probability_eq (n : ℕ) :
@@ -238,8 +277,17 @@ theorem source_probability_eq (n : ℕ) :
   rw [SourceModel.card_profile]
   norm_cast
 
+/-- The literal source probability is bounded by the certified-word proportion.
+This is only the cut side of the required cyclic sandwich. -/
+theorem source_probability_le_open_proportion (n : ℕ) :
+    SourceModel.solutionProbability n ≤ (count (n + 5) : ℝ) / (24 : ℝ) ^ (n + 5) := by
+  rw [source_probability_eq]
+  exact div_le_div_of_nonneg_right (by exact_mod_cast source_count_le_open_count n)
+    (by positivity)
+
 #print axioms cut_certificate
 #print axioms source_count_le_open_count
 #print axioms source_probability_eq
+#print axioms source_probability_le_open_proportion
 
 end D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
