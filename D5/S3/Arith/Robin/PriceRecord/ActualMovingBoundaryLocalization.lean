@@ -588,4 +588,170 @@ theorem literal_root_geometry {j : ℕ} {P rho : ℝ} (hj : 2 ≤ j)
   rw [hid] at hlog
   exact ⟨hlo, hhi, hlow, by linarith⟩
 
+/-- Uniform activation at the literal beta(1,P), with no reference-price
+substitution. The index restriction is a scalar consequence of the window. -/
+theorem literal_cutoff_active {j : ℕ} {P : ℝ} (hj : 2 ≤ j)
+    (hP0 : 0 < P) (hP : 4 ≤ log P) (hjx : (j : ℝ) ≤ log P / 4) :
+    beta 1 P < beta j 2 := by
+  have h2 : 0 < log 2 := log_pos (by norm_num)
+  have h21 : log 2 ≤ 1 := by
+    have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hlog2 : log (log 2) ≤ 0 := by
+    simpa using log_le_log h2 h21
+  have hden : 0 < 2 * (2 : ℝ) ^ j * log 2 := by positivity
+  have hlogden : log (2 * (2 : ℝ) ^ j * log 2) < log P := by
+    rw [log_mul (by positivity : (2 * (2 : ℝ) ^ j) ≠ 0) h2.ne',
+      log_mul (by norm_num : (2 : ℝ) ≠ 0) (by positivity : (2 : ℝ) ^ j ≠ 0), log_pow]
+    have hh := mul_le_mul_of_nonneg_left h21 (Nat.cast_nonneg j : (0 : ℝ) ≤ j)
+    linarith
+  have hdP : 2 * (2 : ℝ) ^ j * log 2 < P := (log_lt_log_iff hden hP0).mp hlogden
+  have hP2 : 2 ≤ P := by
+    by_contra! h
+    have hh := log_le_log hP0 h.le
+    linarith
+  have hPprod : P ≤ P * log P := by nlinarith
+  have hi := one_div_lt_one_div_of_lt hden (hdP.trans_le hPprod)
+  have hb := ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope hj
+    (by norm_num : (2 : ℝ) ≤ 2)
+  have hf := beta_le_inv_pow_log hP2 (by norm_num : 1 ≤ 1)
+  rw [pow_one] at hf
+  exact (hf.trans_lt hi).trans_le hb.1
+
+/-- Displaced roots retain the uniform logarithmic scale and BHP relative
+width. The estimate uses the literal root product, not a higher-layer
+Lipschitz constant. -/
+theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ}
+    (hj : 2 ≤ j) (hP0 : 0 < P) (hP : 4 ≤ log P) (hrho : 2 ≤ rho)
+    (hroot : beta j rho = beta 1 P)
+    (hlog : log (2 * log P / log 2) ≤ log P / 4)
+    (hH : 0 < H) (hsmall : H * P ^ (-priceExponent j) ≤ 1) :
+    let t := P ^ (-priceExponent j)
+    let rm := rho * exp (-(H * t))
+    let rp := rho * exp (H * t)
+    log P / (j : ℝ) - 2 ≤ log rm ∧
+      log P / (j : ℝ) - 1 ≤ log rp ∧
+      log rp ≤ 5 * log P / (4 * (j : ℝ)) + 1 ∧
+      rm ^ bhpExponent / rm ≤ 4 * t ∧
+      rp ^ bhpExponent / rp ≤ 4 * t := by
+  dsimp only
+  have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
+  have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
+  have hr0 : 0 < rho := by linarith
+  have ht : 0 < P ^ (-priceExponent j) := rpow_pos_of_pos hP0 _
+  have hh0 : 0 ≤ H * P ^ (-priceExponent j) := (mul_pos hH ht).le
+  have hgeo := literal_root_geometry hj hP hP0 hrho hroot hlog
+  have h2 : log 2 ≤ 1 := by
+    have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+    linarith
+  have hlo : log P / (j : ℝ) - 1 ≤ log rho := by
+    apply (sub_le_iff_le_add).mpr
+    apply (div_le_iff₀ hj0).mpr
+    nlinarith [hgeo.2.2.1]
+  have hhi : log rho ≤ 5 * log P / (4 * (j : ℝ)) := by
+    apply (le_div_iff₀ (by positivity : 0 < 4 * (j : ℝ))).mpr
+    nlinarith [hgeo.2.2.2]
+  have hrm0 : 0 < rho * exp (-(H * P ^ (-priceExponent j))) := by positivity
+  have hrp0 : 0 < rho * exp (H * P ^ (-priceExponent j)) := by positivity
+  have hlogm : log (rho * exp (-(H * P ^ (-priceExponent j)))) =
+      log rho - H * P ^ (-priceExponent j) := by
+    rw [log_mul hr0.ne' (exp_pos _).ne', log_exp]; ring
+  have hlogp : log (rho * exp (H * P ^ (-priceExponent j))) =
+      log rho + H * P ^ (-priceExponent j) := by
+    rw [log_mul hr0.ne' (exp_pos _).ne', log_exp]
+  have hmlo : log P / (j : ℝ) - 2 ≤
+      log (rho * exp (-(H * P ^ (-priceExponent j)))) := by rw [hlogm]; linarith
+  have hplo : log P / (j : ℝ) - 1 ≤
+      log (rho * exp (H * P ^ (-priceExponent j))) := by rw [hlogp]; linarith
+  have hphi : log (rho * exp (H * P ^ (-priceExponent j))) ≤
+      5 * log P / (4 * (j : ℝ)) + 1 := by rw [hlogp]; linarith
+  have htform : P ^ (-priceExponent j) = exp (-(19 / 40 : ℝ) * log P / j) := by
+    rw [rpow_def_of_pos hP0]
+    congr 1
+    unfold priceExponent
+    ring
+  have hwidth : ∀ r : ℝ, 0 < r → log P / (j : ℝ) - 2 ≤ log r →
+      r ^ bhpExponent / r ≤ 4 * P ^ (-priceExponent j) := by
+    intro r hr hl
+    have hid : r ^ bhpExponent / r = exp (-(19 / 40 : ℝ) * log r) := by
+      rw [rpow_def_of_pos hr, ← exp_log hr, ← exp_sub]
+      congr 1
+      norm_num [bhpExponent]
+      <;> ring
+    rw [hid, htform]
+    calc
+      exp (-(19 / 40 : ℝ) * log r) ≤
+          exp (1 + (-(19 / 40 : ℝ) * log P / j)) := by
+        apply exp_le_exp.mpr
+        linarith
+      _ = exp 1 * exp (-(19 / 40 : ℝ) * log P / j) := exp_add _ _
+      _ ≤ 4 * exp (-(19 / 40 : ℝ) * log P / j) :=
+        mul_le_mul_of_nonneg_right (by linarith [exp_one_lt_d9]) (exp_pos _).le
+  exact ⟨hmlo, hplo, hphi, hwidth _ hrm0 hmlo, hwidth _ hrp0 (by linarith)⟩
+
+open Filter Asymptotics
+open scoped Topology
+
+/-- A simultaneous lower bound on x/u throughout the growing window. The
+threshold precedes every real u in the window, rather than each fixed index. -/
+theorem moving_window_log_scale {delta A : ℝ} (hdelta : 0 < delta) (hA : 0 < A) :
+    ∀ᶠ x : ℝ in atTop, 1 ≤ log x ∧ 0 < x ∧
+      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 →
+        A * log x ≤ x / u := by
+  have hratio : Tendsto (fun x : ℝ => log x / x) atTop (𝓝 0) :=
+    isLittleO_log_id_atTop.tendsto_div_nhds_zero
+  have hlim : Tendsto (fun x : ℝ => A * (delta / log x + log x / x))
+      atTop (𝓝 0) := by
+    convert ((tendsto_const_nhds.div_atTop tendsto_log_atTop).add hratio).const_mul A using 1
+    simp
+  filter_upwards [hlim.eventually_lt_const (by norm_num : (0 : ℝ) < 1),
+    tendsto_log_atTop.eventually_ge_atTop 1, eventually_gt_atTop (0 : ℝ)]
+    with x hsmall hx hx0
+  refine ⟨hx, hx0, ?_⟩
+  intro u hu hule
+  have hl : 0 < log x := by linarith
+  have hid : (delta * x / (log x) ^ 2 + 1) * log x / x =
+      delta / log x + log x / x := by
+    field_simp
+    <;> ring
+  rw [← hid] at hsmall
+  have hfull : A * (delta * x / (log x) ^ 2 + 1) * log x ≤ x := by
+    have hh : A * ((delta * x / (log x) ^ 2 + 1) * log x / x) =
+        (A * (delta * x / (log x) ^ 2 + 1) * log x) / x := by ring
+    rw [hh] at hsmall
+    simpa only [one_mul] using ((div_lt_iff₀ hx0).mp hsmall).le
+  apply (le_div_iff₀ hu).mpr
+  have hh := mul_le_mul_of_nonneg_left hule (mul_nonneg hA.le hl.le)
+  nlinarith
+
+/-- Every fixed polynomial is dominated uniformly on the whole moving
+window. This is not a collection of fixed-index asymptotic limits. -/
+theorem moving_window_exp_small {delta a : ℝ} (hdelta : 0 < delta) (ha : 0 < a)
+    (k : ℕ) :
+    ∀ᶠ x : ℝ in atTop, 1 ≤ x ∧
+      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 →
+        x ^ k * exp (-a * x / u) ≤ 1 / x := by
+  have hA : 0 < ((k : ℝ) + 1) / a := by positivity
+  filter_upwards [moving_window_log_scale hdelta hA,
+    eventually_ge_atTop (1 : ℝ)] with x hx hx1
+  refine ⟨hx1, ?_⟩
+  intro u hu hule
+  have hz := hx.2.2 u hu hule
+  have hh := mul_le_mul_of_nonneg_left hz ha.le
+  have hid : a * (((k : ℝ) + 1) / a * log x) = ((k : ℝ) + 1) * log x := by
+    field_simp
+  rw [hid] at hh
+  have he : exp (-a * x / u) ≤ exp (-((k : ℝ) + 1) * log x) := by
+    apply exp_le_exp.mpr
+    calc
+      -a * x / u = -(a * (x / u)) := by ring
+      _ ≤ -((k : ℝ) + 1) * log x := by linarith only [hh]
+  have heq : exp (-((k : ℝ) + 1) * log x) = (x ^ (k + 1))⁻¹ := by
+    rw [neg_mul, exp_neg, ← Nat.cast_add_one, exp_nat_mul, exp_log hx.2.1]
+  rw [heq] at he
+  calc
+    x ^ k * exp (-a * x / u) ≤ x ^ k * (x ^ (k + 1))⁻¹ :=
+      mul_le_mul_of_nonneg_left he (pow_nonneg hx.2.1.le _)
+    _ = 1 / x := by rw [pow_succ]; field_simp
+
 end D5.S3.Arith.Robin.PriceRecord.ActualMovingBoundaryLocalization
