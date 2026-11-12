@@ -83,5 +83,97 @@ def source_registration : Registration arena.{u} (type_of% @three_leg_choi_detec
       exact nomatch e
   dependence := dependence
 
+
+namespace DirectSum
+set_option backward.isDefEq.respectTransparency false
+universe v
+
+abbrev signature : Signature where
+  Params := Σ I : Type u, I → Type v
+  State p := TripleBlocks p.2 → TripleBlocks p.2
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := TripleBlocks p.2 → TripleBlocks p.2
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ lift => lift) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ Z => -Z) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ {I : Type u} [Fintype I] [DecidableEq I]
+    (D : I → Type v) [∀ i, Fintype (D i)] [∀ i, DecidableEq (D i)]
+    [Nonempty I] [∀ i, Nonempty (D i)]
+    (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D)
+    (alpha : Fin 3 → ℝ) (_ : ∀ l, 0 ≤ alpha l) (_ : ∑ l, alpha l = 1),
+    TriplePositive D (probe D) ∧
+    (∑ i, ∑ j, ∑ k, Matrix.trace (probe D i j k)) = 1 ∧
+    (TriplePositive D (r.readout () ⟨I, D⟩ (blockAveraged D alpha Phi) (probe D)) ↔
+      ∃ f : CompletelyPositiveMap (CStarBlocks D) (CStarBlocks D),
+        f.toLinearMap = canonicalLinear D Phi) ∧
+    ((∃ f : CompletelyPositiveMap (CStarBlocks D) (CStarBlocks D),
+        f.toLinearMap = canonicalLinear D Phi) ↔
+      ∀ Z : TripleBlocks D, TriplePositive D Z →
+        TriplePositive D (r.readout () ⟨I, D⟩ (blockAveraged D alpha Phi) Z))
+
+set_option maxRecDepth 4096 in
+theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
+  intro h
+  let I := ULift.{u} (Fin 1)
+  let D : I → Type v := fun _ => ULift.{v} (Fin 1)
+  let Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D := LinearMap.id
+  let alpha : Fin 3 → ℝ := ![1, 0, 0]
+  have ha : ∀ l, 0 ≤ alpha l := by intro l; fin_cases l <;> norm_num [alpha]
+  have hs : ∑ l, alpha l = 1 := by norm_num [alpha, Fin.sum_univ_succ]
+  have hbad := h D Phi alpha ha hs
+  have hid : ∃ f : CompletelyPositiveMap (CStarBlocks D) (CStarBlocks D),
+      f.toLinearMap = canonicalLinear D Phi := by
+    refine ⟨{toLinearMap := LinearMap.id, map_cstarMatrix_nonneg' := ?_}, ?_⟩
+    · intro k M hM
+      simpa using hM
+    · rfl
+  have hp := hbad.2.2.1.mpr hid
+  let i : I := ⟨0⟩
+  let a : D i := ⟨0⟩
+  have hv := (hp i i i).diag_nonneg (i := (a, a, a))
+  norm_num [rejected, realize, i, a, D, probe, seed, totalDimension,
+    ghz, diagonalVector, Matrix.vecMulVec] at hv
+  have hi : (default : I) = i := Subsingleton.elim _ _
+  simp only [hi, Pi.single_eq_same] at hv
+  norm_num at hv
+
+theorem dependence : ObservationalDependence signature.{u,v} actual := by
+  intro role
+  let I := ULift.{u} (Fin 1)
+  let D : I → Type v := fun _ => ULift.{v} (Fin 1)
+  let p : signature.{u,v}.Params := ⟨I, D⟩
+  let oneLift : signature.{u,v}.State p := fun _ _ _ _ => 1
+  refine ⟨p, 0, oneLift, ?_⟩
+  intro h
+  let i : I := ⟨0⟩
+  let a : D i := ⟨0⟩
+  have hv := congrArg (fun L => L 0 i i i (a, a, a) (a, a, a)) h
+  change (0 : ℂ) = 1 at hv
+  exact zero_ne_one hv
+
+def source_registration : Registration arena.{u,v} (type_of% @direct_sum_three_leg_detector.{u,v}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@direct_sum_three_leg_detector, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+end DirectSum
+
 end
 end Reg.D5.S3.Quantum.Foundation.ThreeLegChoiCompression

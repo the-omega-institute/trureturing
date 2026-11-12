@@ -331,6 +331,8 @@ theorem three_leg_choi_detector [Nonempty d] (Phi : MatrixMap d d ℂ)
 
 section DirectSum
 
+set_option backward.isDefEq.respectTransparency false
+
 variable {I : Type*} [Fintype I] [DecidableEq I]
 variable (D : I → Type*) [∀ i, Fintype (D i)] [∀ i, DecidableEq (D i)]
 
@@ -355,7 +357,7 @@ def AmplificationPositive (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D) : Pr
 
 private theorem component_reconstruction (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D)
     (X : BlockAlgebra D) (j : I) : Phi X j = ∑ i, component D Phi j i (X i) := by
-  have h := LinearMap.sum_single_apply X
+  have h := LinearMap.sum_single_apply (fun i => Matrix (D i) (D i) ℂ) X
   conv_lhs => rw [← h]
   simp [component]
 
@@ -372,8 +374,9 @@ private theorem kron_id_entry {a b T : Type*}
       simp [Matrix.single, Matrix.sum_apply, ite_and]
     conv_lhs => rw [h]
     simp only [map_sum, map_smul]
-  rw [hexp, MatrixMap.kron_def]
-  simp [Matrix.single, Matrix.sum_apply, ite_and, mul_comm]
+  rw [MatrixMap.kron_def]
+  have h := congrFun (congrFun (hexp (fun r s => X (r, p.2) (s, q.2))) p.1) q.1
+  simpa [Matrix.single, Matrix.sum_apply, ite_and, mul_comm] using h.symm
 
 private theorem amplification_components (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D)
     {T : Type*} [Fintype T] [DecidableEq T]
@@ -383,7 +386,8 @@ private theorem amplification_components (Phi : BlockAlgebra D →ₗ[ℂ] Block
         (matrixBlock D X i) := by
   ext p q
   simp only [Matrix.sum_apply, kron_id_entry, matrixBlock, Matrix.map_apply]
-  exact congrFun (congrFun (component_reconstruction D Phi (X p.2 q.2) j) p.1) q.1
+  simpa only [Matrix.sum_apply] using
+    congrFun (congrFun (component_reconstruction D Phi (X p.2 q.2) j) p.1) q.1
 
 private theorem amplification_iff_components
     (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D) :
@@ -396,10 +400,16 @@ private theorem amplification_iff_components
       intro t
       by_cases ht : t = i
       · subst t
-        simpa [matrixBlock, X] using hM
+        have heq : matrixBlock D X i = M := by
+          ext p q
+          dsimp only [matrixBlock, X]
+          rw [Pi.single_eq_same]
+        rwa [heq]
       · have hz : matrixBlock D X t = 0 := by
           ext p q
-          simp [matrixBlock, X, Pi.single_eq_of_ne ht]
+          dsimp only [matrixBlock, X]
+          rw [Pi.single_eq_of_ne ht]
+          rfl
         rw [hz]
         exact Matrix.PosSemidef.zero
     have hj := h k X hX j
@@ -420,8 +430,17 @@ abbrev CStarBlocks := ∀ i, CStarMatrix (D i) (D i) ℂ
 def canonicalLinear (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D) :
     CStarBlocks D →ₗ[ℂ] CStarBlocks D where
   toFun X i := CStarMatrix.ofMatrix (Phi (fun j => CStarMatrix.ofMatrix.symm (X j)) i)
-  map_add' _ _ := by ext i a b; simp
-  map_smul' _ _ := by ext i a b; simp
+  map_add' X Y := by
+    change (fun i => CStarMatrix.ofMatrix (Phi
+      ((fun j => CStarMatrix.ofMatrix.symm (X j)) +
+        (fun j => CStarMatrix.ofMatrix.symm (Y j))) i)) = _
+    rw [map_add]
+    rfl
+  map_smul' c X := by
+    change (fun i => CStarMatrix.ofMatrix (Phi
+      (c • (fun j => CStarMatrix.ofMatrix.symm (X j))) i)) = _
+    rw [map_smul]
+    rfl
 
 /-- All auxiliary matrices over a finite direct sum, with all central components retained. -/
 def flattenBlocks (k : ℕ) :
@@ -437,12 +456,19 @@ def flattenBlocks (k : ℕ) :
   map_star' _ := rfl
   map_mul' X Y := by
     ext i p q
-    change (∑ t : Fin k, (CStarMatrix.ofMatrix.symm (X p.2 t i) *
-      CStarMatrix.ofMatrix.symm (Y t q.2 i))) p.1 q.1 =
+    change (∑ t : Fin k, X p.2 t * Y t q.2) i p.1 q.1 =
       ∑ z : D i × Fin k, X p.2 z.2 i p.1 z.1 * Y z.2 q.2 i z.1 q.1
-    simp only [Matrix.sum_apply, Matrix.mul_apply, CStarMatrix.ofMatrix_symm_apply,
+    simp only [Finset.sum_apply, Pi.mul_apply, CStarMatrix.mul_apply,
       Fintype.sum_prod_type]
+    change ((CStarMatrix.ofMatrixₗ (R := ℂ) (A := ℂ) (m := D i) (n := D i)).symm
+      (∑ t : Fin k, X p.2 t i * Y t q.2 i)) p.1 q.1 = _
+    rw [map_sum]
+    change (∑ t : Fin k, CStarMatrix.ofMatrix.symm (X p.2 t i) *
+      CStarMatrix.ofMatrix.symm (Y t q.2 i)) p.1 q.1 = _
+    simp only [Matrix.sum_apply, Matrix.mul_apply]
     exact Finset.sum_comm
+
+set_option maxHeartbeats 1200000 in
 
 private theorem amplification_iff_canonical
     (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D) :
@@ -464,8 +490,10 @@ private theorem amplification_iff_canonical
       exact map_nonneg (flattenBlocks D k).symm hf
   constructor
   · intro h
-    refine ⟨{ toLinearMap := canonicalLinear D Phi,
-      map_cstarMatrix_nonneg' := ?_ }, rfl⟩
+    refine ⟨{
+      toLinearMap := canonicalLinear D Phi
+      map_cstarMatrix_nonneg' := ?_
+    }, rfl⟩
     intro k X hX
     apply (hcone k _).mpr
     exact h k _ ((hcone k X).mp hX)
@@ -474,8 +502,14 @@ private theorem amplification_iff_canonical
       CStarMatrix.ofMatrix fun r s i => CStarMatrix.ofMatrix (X r s i)
     have hY : 0 ≤ Y := (hcone k Y).mpr hX
     have hout := (hcone k _).mp (f.map_cstarMatrix_nonneg Y hY)
-    rw [hf] at hout
-    exact hout
+    have heq (x : CStarBlocks D) : f x = canonicalLinear D Phi x :=
+      DFunLike.congr_fun hf x
+    have hm : (fun r s i => CStarMatrix.ofMatrix.symm (Y.map (⇑f) r s i)) = X.map Phi := by
+      funext r s i a b
+      rw [CStarMatrix.map_apply, heq]
+      rfl
+    rwa [hm] at hout
+
 
 
 /-- Every ordered three-copy sector, with the full PSD cone in that sector. -/
@@ -540,8 +574,7 @@ private theorem seed_positive (i : I) : TriplePositive D (seed D i) := by
 
 private theorem probe_positive : TriplePositive D (probe D) := by
   intro j k l
-  change (∑ i, ((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) •
-    seed D i j k l).PosSemidef
+  simp only [probe, Finset.sum_apply, Pi.smul_apply]
   exact Matrix.posSemidef_sum _ (fun i _ => (seed_positive D i j k l).smul (by positivity))
 
 private theorem totalDimension_positive [Nonempty I] [∀ i, Nonempty (D i)] :
@@ -585,12 +618,16 @@ private theorem blockAveraged_positive
 
 private theorem probe_diagonal (i : I) :
     probe D i i i = ((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) • ghz := by
-  simp [probe, seed, Finset.sum_apply, Pi.smul_apply]
+  simp only [probe, Finset.sum_apply, Pi.smul_apply]
+  rw [Finset.sum_eq_single i]
+  · simp [seed]
+  · intro j _ hji
+    simp [seed, Pi.single_apply, hji, Ne.symm hji]
+  · simp
 
 private theorem probe_other (i j k : I) (h : ¬ (i = j ∧ j = k)) :
     probe D i j k = 0 := by
-  change (∑ a, ((Fintype.card (D a) : ℂ) / (totalDimension D : ℂ)) •
-    seed D a i j k) = 0
+  simp only [probe, Finset.sum_apply, Pi.smul_apply]
   apply Finset.sum_eq_zero
   intro a _
   by_cases hi : i = a
@@ -627,9 +664,11 @@ private theorem probe_swap12 : swapFirstSecond D (probe D) = probe D := by
   funext i j k
   by_cases h : i = j ∧ j = k
   · rcases h with ⟨rfl, rfl⟩
-    simp only [swapFirstSecond, probe_diagonal, Matrix.submatrix_smul]
-    congr 1
-    exact ghz_exchange (d := D k) 1
+    change (probe D i i i).submatrix (exchange 1) (exchange 1) = probe D i i i
+    rw [probe_diagonal]
+    exact congrArg (fun M : Matrix (Triple (D i)) (Triple (D i)) ℂ =>
+      ((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) • M)
+      (ghz_exchange (d := D i) 1)
   · have h' : ¬ (j = i ∧ i = k) := by aesop
     simp [swapFirstSecond, probe_other D i j k h, probe_other D j i k h']
 
@@ -637,9 +676,11 @@ private theorem probe_swap13 : swapFirstThird D (probe D) = probe D := by
   funext i j k
   by_cases h : i = j ∧ j = k
   · rcases h with ⟨rfl, rfl⟩
-    simp only [swapFirstThird, probe_diagonal, Matrix.submatrix_smul]
-    congr 1
-    exact ghz_exchange (d := D k) 2
+    change (probe D i i i).submatrix (exchange 2) (exchange 2) = probe D i i i
+    rw [probe_diagonal]
+    exact congrArg (fun M : Matrix (Triple (D i)) (Triple (D i)) ℂ =>
+      ((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) • M)
+      (ghz_exchange (d := D i) 2)
   · have h' : ¬ (k = j ∧ j = i) := by aesop
     simp [swapFirstThird, probe_other D i j k h, probe_other D k j i h']
 
@@ -668,18 +709,25 @@ def rectangularEmbedding {a b : Type*} [DecidableEq a] [DecidableEq b] :
 
 private theorem rectangularEmbedding_isometry {a b : Type*}
     [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b] :
-    (rectangularEmbedding (a := a) (b := b))ᴴ * rectangularEmbedding = 1 := by
+    (rectangularEmbedding (a := a) (b := b))ᴴ *
+      rectangularEmbedding (a := a) (b := b) = 1 := by
   ext p q
   change (∑ x : b × (a × a), star (if x = (p.1, p.2, p.2) then (1 : ℂ) else 0) *
     (if x = (q.1, q.2, q.2) then 1 else 0)) = _
-  simp [apply_ite (starRingEnd ℂ), Matrix.one_apply, Prod.mk.injEq, ite_and]
+  have hinj : Function.Injective (fun p : b × a => (p.1, p.2, p.2)) := by
+    intro p q h
+    apply Prod.ext
+    · exact congrArg (fun x : b × (a × a) => x.1) h
+    · exact congrArg (fun x : b × (a × a) => x.2.1) h
+  simp [apply_ite (starRingEnd ℂ), Matrix.one_apply, hinj.eq_iff, eq_comm]
 
 private theorem rectangular_ghz {a b : Type*}
     [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
     (Phi : MatrixMap a b ℂ) :
     (Phi.kron (LinearMap.id : MatrixMap (a × a) (a × a) ℂ)) ghz =
       (Fintype.card a : ℂ)⁻¹ •
-        (rectangularEmbedding * Phi.choi_matrix * rectangularEmbeddingᴴ) := by
+        (rectangularEmbedding (a := a) (b := b) * Phi.choi_matrix *
+          (rectangularEmbedding (a := a) (b := b))ᴴ) := by
   ext ⟨c, d, e⟩ ⟨f, g, h⟩
   by_cases hde : d = e <;> by_cases hgh : g = h <;>
     simp [hde, hgh, eq_comm, apply_ite (starRingEnd ℂ), mul_comm,
@@ -692,27 +740,32 @@ private theorem probe_diagonal_output (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlg
     blockAveraged D alpha Phi (probe D) i i i =
       ((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) •
         averaged alpha (component D Phi i i) ghz := by
-  simp only [blockAveraged, averaged, Fin.sum_univ_succ, Finset.sum_apply, Pi.smul_apply,
-    LinearMap.add_apply, LinearMap.smul_apply]
-  simp only [blockLeg, leg, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, probe_swap12, probe_swap13, first_probe_same,
-    swapFirstSecond, swapFirstThird, Matrix.submatrix_smul]
-  change _ = _
-  module
+  have hleg (l : Fin 3) : blockLeg D l Phi (probe D) i i i =
+      ((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) •
+        leg l (component D Phi i i) ghz := by
+    fin_cases l <;>
+      simp [blockLeg, leg, probe_swap12, probe_swap13, first_probe_same,
+        swapFirstSecond, swapFirstThird, MatrixMap.submatrix_apply,
+        ghz_exchange, Matrix.submatrix_smul] <;> rfl
+  change (∑ l, (alpha l : ℂ) • blockLeg D l Phi (probe D) i i i) = _
+  simp only [averaged, LinearMap.sum_apply, LinearMap.smul_apply, hleg, Finset.smul_sum]
+  apply Finset.sum_congr rfl
+  intro l _
+  exact smul_comm _ _ _
 
 private theorem probe_offsector [∀ i, Nonempty (D i)] (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D)
     (alpha : Fin 3 → ℝ) (j i : I) (hji : j ≠ i) :
     blockAveraged D alpha Phi (probe D) j i i =
       ((alpha 0 : ℂ) / (totalDimension D : ℂ)) •
-        (rectangularEmbedding * (component D Phi j i).choi_matrix *
-          rectangularEmbeddingᴴ) := by
+        (rectangularEmbedding (a := D i) (b := D j) * (component D Phi j i).choi_matrix *
+          (rectangularEmbedding (a := D i) (b := D j))ᴴ) := by
   have hn : (Fintype.card (D i) : ℂ) ≠ 0 := by
     exact_mod_cast Fintype.card_ne_zero
-  simp only [blockAveraged, Fin.sum_univ_succ, Finset.sum_apply, Pi.smul_apply,
+  simp only [blockAveraged, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero, Finset.sum_apply, Pi.smul_apply,
     blockLeg, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two, probe_swap12, probe_swap13, swapFirstSecond, swapFirstThird,
+    Matrix.cons_val_two, Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons, probe_swap12, probe_swap13, swapFirstSecond, swapFirstThird,
     first_probe_different D Phi i j i hji,
-    first_probe_different D Phi i i j hji.symm, Matrix.submatrix_zero,
+    first_probe_different D Phi i i j hji.symm, Matrix.submatrix_zero, Pi.zero_apply,
     smul_zero, add_zero, zero_add, first_probe_same, rectangular_ghz, smul_smul]
   congr 1
   field_simp
@@ -740,38 +793,41 @@ private theorem probe_all_offsectors [∀ i, Nonempty (D i)]
     (alpha : Fin 3 → ℝ) (l : Fin 3) (j i : I) (hji : j ≠ i) :
     offsectorOutput D (blockAveraged D alpha Phi (probe D)) l j i =
       ((alpha l : ℂ) / (totalDimension D : ℂ)) •
-        (rectangularEmbedding * (component D Phi j i).choi_matrix *
-          rectangularEmbeddingᴴ) := by
+        (rectangularEmbedding (a := D i) (b := D j) * (component D Phi j i).choi_matrix *
+          (rectangularEmbedding (a := D i) (b := D j))ᴴ) := by
   have hn : (Fintype.card (D i) : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
   fin_cases l
   · exact probe_offsector D Phi alpha j i hji
-  · simp only [offsectorOutput, blockAveraged, Fin.sum_univ_succ,
+  · simp only [offsectorOutput, blockAveraged, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero,
       Finset.sum_apply, Pi.smul_apply, blockLeg, Fin.isValue,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons,
       probe_swap12, probe_swap13, swapFirstSecond, swapFirstThird,
       first_probe_different D Phi i j i hji,
       first_probe_different D Phi i i j hji.symm,
-      Matrix.submatrix_zero, smul_zero, add_zero, zero_add,
+      Matrix.submatrix_zero, Pi.zero_apply, smul_zero, add_zero, zero_add,
       first_probe_same, Matrix.submatrix_smul, Matrix.submatrix_submatrix]
     change (alpha 1 : ℂ) • (((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) •
       (((component D Phi j i).kron LinearMap.id) ghz)) = _
     rw [rectangular_ghz, smul_smul, smul_smul]
     congr 1
     field_simp
-  · simp only [offsectorOutput, blockAveraged, Fin.sum_univ_succ,
+    rfl
+  · simp only [offsectorOutput, blockAveraged, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero,
       Finset.sum_apply, Pi.smul_apply, blockLeg, Fin.isValue,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_succ, Matrix.head_cons, Matrix.tail_cons,
       probe_swap12, probe_swap13, swapFirstSecond, swapFirstThird,
       first_probe_different D Phi i i j hji.symm,
       first_probe_different D Phi i j i hji,
-      Matrix.submatrix_zero, smul_zero, add_zero, zero_add,
+      Matrix.submatrix_zero, Pi.zero_apply, smul_zero, add_zero, zero_add,
       first_probe_same, Matrix.submatrix_smul, Matrix.submatrix_submatrix]
     change (alpha 2 : ℂ) • (((Fintype.card (D i) : ℂ) / (totalDimension D : ℂ)) •
       (((component D Phi j i).kron LinearMap.id) ghz)) = _
     rw [rectangular_ghz, smul_smul, smul_smul]
     congr 1
     field_simp
-
+    rfl
 private theorem probe_detects_components [Nonempty I] [∀ i, Nonempty (D i)]
     (Phi : BlockAlgebra D →ₗ[ℂ] BlockAlgebra D)
     (alpha : Fin 3 → ℝ) (ha : ∀ l, 0 ≤ alpha l) (hsum : ∑ l, alpha l = 1)
@@ -804,11 +860,11 @@ private theorem probe_detects_components [Nonempty I] [∀ i, Nonempty (D i)]
     simpa only [smul_smul, mul_inv_cancel₀ hn, one_smul] using hout
   · have ho := offsectorOutput_positive D _ hprobe l j i
     rw [probe_all_offsectors D Phi alpha l j i hji] at ho
-    have hc := ho.conjTranspose_mul_mul_same rectangularEmbedding
+    have hc := ho.conjTranspose_mul_mul_same (rectangularEmbedding (a := D i) (b := D j))
     have heq : (rectangularEmbedding (a := D i) (b := D j))ᴴ *
         (((alpha l : ℂ) / (totalDimension D : ℂ)) •
-          (rectangularEmbedding * (component D Phi j i).choi_matrix *
-            rectangularEmbeddingᴴ)) * rectangularEmbedding =
+          (rectangularEmbedding (a := D i) (b := D j) * (component D Phi j i).choi_matrix *
+            (rectangularEmbedding (a := D i) (b := D j))ᴴ)) * rectangularEmbedding (a := D i) (b := D j) =
         ((alpha l : ℂ) / (totalDimension D : ℂ)) • (component D Phi j i).choi_matrix := by
       rw [Matrix.mul_smul, Matrix.smul_mul]
       congr 1
