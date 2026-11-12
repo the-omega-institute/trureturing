@@ -1,0 +1,25 @@
+**定理 108.4（切方向落入同一剩余空间）。** 仅在 $\mathsf W$ 下，
+
+$$
+T(q\mid p)\subseteq N_p,\qquad d_q-1\le n-d_p-2
+\quad(q\in P\cap D_p).
+\tag{VIII108.6}
+$$
+
+证明。零向量无须处理。对非零 $z\in T(q\mid p)$ 置
+$h=\|z\|_q^{-1}>0$。球内正交性使
+
+$$
+\gamma_q(t)=c_q+\cos t\,(p-c_q)+h\sin t\,z
+ =\frac{1+\cos t}{2}p+\frac{1-\cos t}{2}r+h\sin t\,z
+\tag{VIII108.7}
+$$
+
+对全部实 $t$ 都是原纯点，且 $\gamma_q(0)=p$。
+任取 $s\in P\cap D_p$，有 $a_s(p)=0$，而原效应正性给
+$a_s(\gamma_q(t))\ge0$。这是在 $t=0$ 达到最小值的可微实函数，
+正负参数的导数均须一致为零。因此 $h a_s(z)=0$。
+又有 $a_p(z)=0$，定理108.2的共同零方向刻画给 $z\in N_p$。
+取维数即得不等式。光滑性只用于一张已给球内的这条圆，
+没有输入实际运动或全纯点集的可微性。证毕。
+
