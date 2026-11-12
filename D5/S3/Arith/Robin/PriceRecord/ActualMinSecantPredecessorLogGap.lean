@@ -1,19 +1,16 @@
-/-
-SOURCE ONLY: candidate for baseline e5c0aaffd35b1e17544000d3aea1dfed58a3f7f8.
-Lean 4.35.0 / mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679.
-UNCOMPILED, N0 OPEN. No kernel acceptance is claimed.
-
-Ordinary mathematical input: Sections I.1--I.2 only of
-answer-active-facet-bank-integer-geometry-20261112.txt,
-SHA256 318699a0206675aaa3bea64288947d252d17c344df6b4a25b905caf78c5ee8ca.
-The finite proof uses the equivalent split h < log P / log P <= h, avoiding
-an extra gcd sum. It never changes the given minimizer. In particular q=1
-is included. There is no BHP, target-gap, price-localization or payment premise.
--/
-
 import D5.S3.Arith.Robin.PriceRecord.PrimePowerEnvelope
 import D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 import Mathlib.NumberTheory.Harmonic.Bounds
+
+/-!
+Every actual minimum-secant predecessor of an arbitrary positive-price strict
+record has eventual logarithmic gap at most `32 * log P * log (log P)`.
+The finite proof splits at `log P` and includes `q = 1`.
+
+Ordinary mathematical input: Sections I.1--I.2 of
+answer-active-facet-bank-integer-geometry-20261112.txt,
+SHA256 318699a0206675aaa3bea64288947d252d17c344df6b4a25b905caf78c5ee8ca.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -149,7 +146,7 @@ private theorem marginal_geom {p j : ℕ} (hp : p.Prime) (hj : 1 ≤ j) :
   rw [geom_sum_eq (ne_of_gt hp1)]
   simp only [inv_pow, pow_succ]
   field_simp [hp0.ne', hpjne, sub_ne_zero.mpr hpj.ne', sub_ne_zero.mpr hp1.ne']
-  <;> ring
+  ring
 
 private theorem marginal_prime_strictAnti {p r j : ℕ} (hp : p.Prime)
     (hr : r.Prime) (hpr : p < r) (hj : 1 ≤ j) :
@@ -225,7 +222,9 @@ private theorem finite_log_gap {m q : ℕ} (hm : 2 ≤ m) (hq : 0 < q)
   obtain ⟨r, hr, hrd⟩ := Nat.exists_prime_and_dvd (by omega : m ≠ 1)
   have hrP : r ≤ largestPrime m :=
     Finset.le_sup (f := id) (Nat.mem_primeFactors.mpr ⟨hr, hrd, hm0.ne'⟩)
-  have hP2 : (2 : ℝ) ≤ P := by exact_mod_cast hr.two_le.trans hrP
+  have hP2 : (2 : ℝ) ≤ P := by
+    dsimp [P]
+    exact_mod_cast hr.two_le.trans hrP
   have hP0 : 0 < P := by linarith
   have hB : 0 ≤ B := Real.log_nonneg (by nlinarith [sq_nonneg (P - 1)])
   have hlog2 : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
@@ -249,6 +248,7 @@ private theorem finite_log_gap {m q : ℕ} (hm : 2 ≤ m) (hq : 0 < q)
         goldenLayerMarginal p (m.factorization p) = nu := by
     have hpp := Nat.prime_of_mem_primeFactors (hSm p hp)
     have hpP : (p : ℝ) ≤ P := by
+      change (p : ℝ) ≤ (m.primeFactors.sup id : ℕ)
       exact_mod_cast (Finset.le_sup (f := id) (hSm p hp))
     have hlogp : Real.log (p : ℝ) ≤ Real.log ((m : ℝ) / q) :=
       (Real.log_le_log (by exact_mod_cast hpp.pos) hpP).trans hlarge
@@ -272,7 +272,8 @@ private theorem finite_log_gap {m q : ℕ} (hm : 2 ≤ m) (hq : 0 < q)
         intro p hp
         by_cases he : q.factorization p < m.factorization p
         · have ha := (hex p (mem_filter.mpr ⟨hp, he⟩)).1
-          simp only [if_pos he, ha, Nat.cast_add, Nat.cast_one]
+          rw [if_pos he]
+          simp only [ha, Nat.cast_add, Nat.cast_one]
           nlinarith
         · have hle : (m.factorization p : ℝ) ≤ q.factorization p := by
             exact_mod_cast (le_of_not_gt he)
@@ -288,6 +289,7 @@ private theorem finite_log_gap {m q : ℕ} (hm : 2 ≤ m) (hq : 0 < q)
     have hpow := price_record_prime_power_envelope hm hmu.le hrecord p hpp
       (Nat.dvd_of_mem_primeFactors (hSm p hp))
     have hpowR : (p : ℝ) ^ m.factorization p < 4 * P ^ 2 := by
+      dsimp [P]
       exact_mod_cast hpow
     have hlog := Real.log_lt_log (pow_pos (by exact_mod_cast hpp.pos) _) hpowR
     rw [Real.log_pow] at hlog
@@ -328,7 +330,7 @@ private theorem finite_log_gap {m q : ℕ} (hm : 2 ≤ m) (hq : 0 < q)
       _ ≤ ∑ p ∈ S, B / (m.factorization p : ℝ) :=
         sum_le_sum (fun p hp => (hbound p hp).2.2)
       _ = ∑ j ∈ S.image (fun p => m.factorization p), B / (j : ℝ) :=
-        (sum_image hinj).symm
+        (sum_image (f := fun j : ℕ => B / (j : ℝ)) hinj).symm
       _ ≤ ∑ j ∈ Icc 1 N, B / (j : ℝ) :=
         sum_le_sum_of_subset_of_nonneg himage (fun j _ _ =>
           div_nonneg hB (Nat.cast_nonneg j))
@@ -368,6 +370,7 @@ private theorem harmonic_bound_uniform {P : ℝ} (hP : Real.exp 4 ≤ P) :
   have hB : B = 2 * Real.log 2 + 2 * L := by
     dsimp [B, L]
     rw [Real.log_mul (by norm_num) (pow_ne_zero _ hP0.ne'), Real.log_pow, hlog4]
+    norm_num
   have hB0 : 0 ≤ B := by linarith
   have hBupper : B ≤ 4 * L := by linarith
   have hy : 1 ≤ B / Real.log 2 := by
@@ -385,11 +388,12 @@ private theorem harmonic_bound_uniform {P : ℝ} (hP : Real.exp 4 ≤ P) :
   have hH : (harmonic ⌊B / Real.log 2⌋₊ : ℝ) ≤ 5 * Real.log L := by
     calc
       _ ≤ 1 + Real.log (B / Real.log 2) := harmonic_floor_le_one_add_log _ hy
-      _ ≤ 1 + Real.log (8 * L) := add_le_add_left
+      _ ≤ 1 + Real.log (8 * L) := add_le_add le_rfl
         (Real.log_le_log (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) hy)
-          hyupper) 1
+          hyupper)
       _ = 1 + 3 * Real.log 2 + Real.log L := by
         rw [Real.log_mul (by norm_num) (by linarith : L ≠ 0), hlog8]
+        ring
       _ ≤ 5 * Real.log L := by linarith
   have hprod : B * (harmonic ⌊B / Real.log 2⌋₊ : ℝ) ≤
       (4 * L) * (5 * Real.log L) :=
@@ -411,8 +415,7 @@ private theorem harmonic_bound_uniform {P : ℝ} (hP : Real.exp 4 ≤ P) :
 price/full strict record, and every actual minimum-secant predecessor. The
 minimizer premise is precisely attainment of the minimum of all actual ratios
 on {1,...,m-1}; no selected inventory, unique minimizer or gap premise occurs.
-The logarithmic numerators are literally log(sigma(n)/n).
-UNCOMPILED candidate: formal status N0 OPEN. -/
+The logarithmic numerators are literally log(sigma(n)/n). -/
 theorem actual_min_secant_predecessor_eventual_log_gap :
     ∃ C T : ℝ, 0 < C ∧ 0 < T ∧
       ∀ m : ℕ, 2 ≤ m → ∀ mu : ℝ, 0 < mu →
