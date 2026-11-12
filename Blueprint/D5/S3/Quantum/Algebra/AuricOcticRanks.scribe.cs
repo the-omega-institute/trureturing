@@ -63,7 +63,7 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
         Logic(Leq(D(2), Call("crossRank", n, S)), FormulaLogicOperator.Or,
             Leq(D(2), Call("crossRank", n, C(S))))));
     private static DocumentBlock.Describe Dsc(string name, string title, Formula formula, string explanation) =>
-        Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Owner + name),
+        Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Owner + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
 
@@ -134,7 +134,8 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
                 + "indicated row and column subtypes. These symbolic dimension and orbit arguments are "
                 + "not a finite certified instance or enumeration. The source is the rank and cut argument "
                 + "of general section 43.2, together with the strict-rank mechanism of section 26. "
-                + "No mathematical novelty is claimed. Four-slot registration remains unfinished under "
+                + "No mathematical novelty is claimed. The source-owner Reg mirror supplies exact telescope "
+                + "equivalences for all seven public theorems. Four-slot registration remains unfinished under "
                 + "https://github.com/the-omega-institute/trureturing/issues/29718; no declared_validated "
                 + "status is asserted.")), projected, containment, equality, orbit, strict, matrix, cut)));
     }

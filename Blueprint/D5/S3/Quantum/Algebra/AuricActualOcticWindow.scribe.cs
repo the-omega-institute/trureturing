@@ -132,8 +132,10 @@ internal sealed class AuricActualOcticWindowDocument : IScribeDocumentDefinition
                         + "window. There is no general-position, uniformity, connectivity or certificate premise, "
                         + "and no normalization requiring one to lie in W. No mathematical novelty is claimed.")),
                     Paragraph(Text(
-                        "Four-slot source registration remains unfinished; its concrete reconstruction and "
-                        + "variation obligations are recorded in https://github.com/the-omega-institute/trureturing/issues/29718. "
+                        "The source-owner Reg mirror proves an exact full-telescope equivalence with the "
+                        + "original inverse-obstruction operator as readout. Four-slot registration still requires "
+                        + "whole-family variation, sensitivity, observational dependence and raw source binding, "
+                        + "as recorded in https://github.com/the-omega-institute/trureturing/issues/29718. "
                         + "No declared_validated registration status is asserted."))),
                 DescribeRole.Theorem))));
 }
