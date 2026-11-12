@@ -1,0 +1,8 @@
+**（二）权重交换域的 Jordan 闭包。** 对任意实 $h\in Y$，取完整本原谱细化 $h=\sum_i\lambda_ic_i$，写同时 Peirce 分解 $y=\sum_i y_{ii}+\sum_{i<j}y_{ij}$。直接作用于 $c_i$ 得
+$$
+[\ell_h,\ell_y]c_i=\frac14\sum_{j\ne i}(\lambda_j-\lambda_i)y_{ij},\qquad
+\mathcal C_h:=\{y:[\ell_h,\ell_y]=0\}
+=\bigoplus_{\lambda\in\operatorname{spec}h}Y_1(e_\lambda),\quad
+e_\lambda=\sum_{\lambda_i=\lambda}c_i. \tag{75.14}
+$$
+第一式及 Peirce 空间直和强迫不同谱值之间的分量消失。反向，右侧的 $y$ 对每个 $e_\lambda$ 都在 $Y_1(e_\lambda)\oplus Y_0(e_\lambda)$ 中；Peirce 规则使 $\ell_y$ 保持该幂等元的 $1,1/2,0$ 空间，故与 $\ell_{e_\lambda}$、进而与 $\ell_h$ 交换。各 $Y_1(e_\lambda)$ 闭乘积，异块乘积为零，单位和为一，故 $\mathcal C_h$ 是 Jordan 子代数。这些 Peirce-one 代数是交换子子代数的块，并非一般都为整个 $Y$ 的理想。重谱必须合块；标量 $h$ 给整个 $Y$。直和中的零 Peirce 空间与 Albert 的非结合 Peirce 空间均在论证内。

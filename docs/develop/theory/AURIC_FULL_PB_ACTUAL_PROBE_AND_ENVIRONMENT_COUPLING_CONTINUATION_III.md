@@ -2543,3 +2543,1991 @@ Jiří Lebl，*Basic Analysis I & II*，
 前卷的根分支与包络结论在这里按其已有陈述调用。
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 实际低代价分离与完整响应的严格内部权重
+
+**定义 57.1（同一实际接触的两笔标量代价）。** 沿用 (46.5)–(46.8)
+及定理 56.3 的整个零阶极小集 $\mathcal M_0$，置
+
+$$
+\begin{gathered}
+\Omega=\{(x,y,s):0<x<1,\ y>1,\ s>0\},\qquad d=1-x,\\
+s=\kappa_0+3=\frac{6d(t-1/4)}x,\qquad
+t=\frac14+\frac{xs}{6d},\qquad
+c_{\rm cost}=\frac{yd}{2xs(y^2-1)},\\
+a=s+\frac{4-x}{2},\qquad
+b=\left(s-\frac52\right)y-\frac{d(3d+xs)}y,\qquad
+W=a^2+b^2,\\
+F=-a+ib,\qquad
+G=-\frac{2-\ell}{4}
+ \left[8+\frac{2s(5x-3)}{3d}
+       +\frac{2i(x+1)(3d+xs)}{dy}\right],\qquad \ell=x+iy,\\
+U=c_{\rm cost}W,\qquad
+V=\frac{c_{\rm cost}|G|^2}{2t},\qquad
+\widehat P=2tW-|G|^2=\frac{2t}{c_{\rm cost}}(U-V).
+\end{gathered}
+\tag{57.1}
+$$
+
+这里 $c_{\rm cost}$ 是正实标量，与原矩阵 $C=\operatorname{diag}(1,2)$
+不同；$U,V$ 也不表示原演员列或可见列。
+这些式子由原 $\kappa_0,F,G,\mathcal R_0$ 代入得到：
+$\widehat P(x,y,s)=P(x,y,t(x,s))$，$U=\mathcal R_0(x,y,t(x,s))$，
+而 $V$ 是 (52.5) 所用第二种代价在接触面外的同一代数表达式。
+$U=V$ 恰为实际零阶接触条件；面外的两笔代价不另作来源实现。
+记坐标映射为 $\iota(x,y,t)=(x,y,6d(t-1/4)/x)$。
+它将整个 $\mathcal M_0$ 连续地送入 $\Omega$；下文在
+$\mathcal M_0$ 上使用新坐标函数时均指沿 $\iota$ 拉回。
+偏导 $\partial_x,\partial_s$ 在新坐标中分别固定 $y,s$ 和 $x,y$；
+原 $P_t,\nu=\partial_t\mathcal R_0$ 始终固定原 $x,y$。
+
+**定理 57.2（实际低代价层的严格分离及全域极小极大式）。**
+令 $K_0=K_+(0)=K_-(0)$。在整个 $\Omega$ 中有
+
+$$
+\begin{gathered}
+U\le K_0\quad\Longrightarrow\quad
+H:=8+\frac{2s(5x-3)}{3d}>0\quad\hbox{且}\quad V_s<0,\\
+U=K_0\quad\Longrightarrow\quad V\ge K_0,\qquad
+U<K_0\quad\Longrightarrow\quad V>K_0,\\
+\min_{\Omega}\max(U,V)=K_0,\qquad
+\operatorname*{argmin}_{\Omega}\max(U,V)
+=\{U=V=K_0\}=\iota(\mathcal M_0).
+\end{gathered}
+\tag{57.2}
+$$
+
+最后一个等式包括全部全局极小接触，不选择某个根或局部分支。
+
+**证明。** 先固定 $y,s$。由 (57.1)，
+
+$$
+\begin{gathered}
+m:=b_x=\frac{(2x-1)s+6d}{y},\qquad a_x=-\frac12,\qquad
+\frac{(c_{\rm cost})_x}{c_{\rm cost}}=-\frac1{xd},\\
+U_x=-\frac{c_{\rm cost}}{xd}N_{\rm cost},\\
+N_{\rm cost}=W+xd\,a-2xd\,b m
+=a^2-(xdm)^2+(b-xdm)^2+xd\,a>0.
+\end{gathered}
+\tag{57.3}
+$$
+
+严格性只需 $xd\le1/4$、$|2x-1|<1$、$d<1$、$y>1$ 所给的
+$|xdm|<s/4+3/2<a$。所以 $U_x<0$。
+当 $x\downarrow0$，$W\ge a^2$ 保持正下界而 $c_{\rm cost}\to\infty$；
+当 $x\uparrow1$，$W$ 有限而 $c_{\rm cost}\to0$。
+故对每个 $K>0$，同一条射线上恰有一个点 $x=X(K,y,s)$ 使 $U=K$。
+
+每个 $\widehat P=0$ 的点都有 $t>1/4$，并由 (46.8) 及前卷定理 43.2
+重构原来源的完整不利接触，其原代价为 $U$。
+因此 $x>X(K_0,y,s)$ 上不可能有 $\widehat P=0$，否则产生代价低于 $K_0$
+的实际接触。另一方面，固定同一 $y,s$ 令 $x\uparrow1$，直接由 (57.1) 得
+
+$$
+d^2(2tW)\longrightarrow0,\qquad
+dG\longrightarrow-(1-iy)s\left(\frac13+\frac{i}{y}\right)\ne0.
+\tag{57.4}
+$$
+
+所以 $\widehat P$ 在该射线的右端为负；连续性与无零点性使它在
+$x>X(K_0,y,s)$ 上处处为负。在 $x=X(K_0,y,s)$ 上于是
+$\widehat P\le0$，由 (57.1) 得 $V\ge K_0$。
+这里的 $x$ 导数和右端极限均固定 $y,s$，没有用固定 $t$ 导数替代。
+
+现在证明低代价层的实际括号严格正。若 $H\le0$，则
+$12d+s(5x-3)\le0$，即 $(5s-12)d\ge2s$。
+因 $d<1$，必有
+
+$$
+s>4,\qquad \frac d x\ge\frac{2s}{3(s-4)}.
+\tag{57.5}
+$$
+
+置 $p=s-5/2>0$、$h_{\rm aux}=d(3d+xs)$。
+由 $h_{\rm aux}\le3+s/4$ 和 $a\ge s+3/2$，得到
+
+$$
+\begin{aligned}
+a^2-2p h_{\rm aux}
+&\ge \frac{s^2}{2}-\frac{7s}{4}+\frac{69}{4}
+=16+\frac{(2s-5)(s-1)}4>16,\\
+W&=a^2+p^2y^2-2p h_{\rm aux}+\frac{h_{\rm aux}^2}{y^2}
+>16+p^2y^2\ge8py,\\
+U&>\frac{4dp}{xs}
+\ge\frac{8(s-5/2)}{3(s-4)}>\frac83.
+\end{aligned}
+\tag{57.6}
+$$
+
+第二行的非严格不等式是 $(py-4)^2\ge0$；第三行还使用
+$y^2/(y^2-1)>1$。前卷定理 41.4 给 $K_0\le85/72<8/3$，
+故 $U\le K_0$ 时 $H\le0$ 不可能，且排除覆盖整个该子水平集。
+
+为得到第二代价的方向，固定 $x,y$，置
+
+$$
+\begin{gathered}
+\chi=\frac1{4t-1}=\frac{3d}{2xs},\qquad
+A=8\chi+5-\frac3x=\chi H,\qquad
+j=\frac{3(x+1)}y,\\
+\gamma=\frac{y[(2-x)^2+y^2]}{24(y^2-1)}>0,\qquad
+V=\gamma\frac{A^2+j^2(1+2\chi)^2}{1+\chi}.
+\end{gathered}
+\tag{57.7}
+$$
+
+复用 (56.18) 的微分平方因式，或直接对末式微分，有
+
+$$
+\frac{(1+\chi)^2}{\gamma}V_\chi
+=A\left(11+\frac3x+8\chi\right)
+ +j^2(1+2\chi)(3+2\chi)>0\qquad(U\le K_0).
+\tag{57.8}
+$$
+
+这里 $A=\chi H>0$，且 $\chi_s=-\chi/s<0$，所以 $V_s<0$。
+使用的是面外也成立的微分因式；(56.17)、(56.19) 将其认作价格导数的
+步骤仍只在它们原定的 $N=N_q=0$ 条件下适用。
+
+任取 $U(x,y,s_0)<K_0$。固定此 $x,y$ 增加 $s$ 时，
+$U\ge yd\,s/[2x(y^2-1)]\to\infty$。
+所以存在第一个 $s_*>s_0$ 使 $U(x,y,s_*)=K_0$，在
+$[s_0,s_*)$ 内始终 $U<K_0$；这里不假设 $U$ 关于 $s$ 全域单调。
+沿这段区间 $V_s<0$，且已证的边界不等式给
+
+$$
+V(x,y,s_0)>V(x,y,s_*)\ge K_0.
+\tag{57.9}
+$$
+
+于是 $U<K_0$、$U=K_0$、$U>K_0$ 三种情形给
+$\max(U,V)\ge K_0$，等号恰在 $U=V=K_0$ 成立。
+等号点由实际重构属于 $\iota(\mathcal M_0)$；反之，定理 56.3 的每个
+全局极小接触都在 $\Omega$ 内并满足 $U=V=K_0$。
+该集合非空，故下确界确实取到。这是同一实际模型的全域分离证明，
+没有交换极小与极大，也没有使用凸对偶充分性。∎
+
+**定理 57.3（整个极小集的严格内部权重与原完整响应）。**
+在整个 $\mathcal M_0$ 上，令
+
+$$
+\begin{gathered}
+\mu=\frac{\nu}{P_t},\qquad
+\theta=\frac{2t\mu}{c_{\rm cost}},\qquad
+Q=Q_{\rm orig}=2\operatorname{Re}(\overline G E_1),\\
+Z_0=3(4t-1),\qquad v=\operatorname{Re}\tau,\\
+\mathcal S=c_{\rm cost}
+ \left[2\operatorname{Re}(\overline F L_1)+\frac{Wv}{Z_0}\right],\qquad
+\mathcal D=\mathcal S-\mu Q,\\
+e_F=\frac{\mathcal S}{K_0},\qquad
+e_G=e_F-\frac{Q}{2tW},\qquad
+\Phi=\frac{\mathcal D}{K_0}.
+\end{gathered}
+\tag{57.10}
+$$
+
+$L_1,E_1$ 使用 (46.5) 的原定义，$\tau$ 使用 (46.8) 的唯一实际相位；
+$\mathcal S,\mathcal D$ 正是前卷 (43.13)、(43.15) 的直接与完整响应。
+本节 $\theta$ 表示响应权重，不表示 (46.4) 的相位角。
+则每一点均满足
+
+$$
+\begin{gathered}
+B:=\widehat P_x<0,\qquad \mu>0,\qquad \nu>0,\qquad
+U_s>0>V_s,\\
+\theta=\frac{U_s}{U_s-V_s}\in(0,1),\qquad
+\Phi=(1-\theta)e_F+\theta e_G.
+\end{gathered}
+\tag{57.11}
+$$
+
+存在只在该整个极小集上断言的共同内部余量
+
+$$
+\delta=\min_{\mathcal M_0}\min(\theta,1-\theta)>0.
+\tag{57.12}
+$$
+
+因而在同一个 $\mathcal M_0$ 上置
+
+$$
+\begin{gathered}
+l_\delta=\min(e_F,e_G)+\delta|e_F-e_G|,\qquad
+u_\delta=\max(e_F,e_G)-\delta|e_F-e_G|,\\
+l_\delta\le\Phi\le u_\delta,\\
+\min_{\mathcal M_0}l_\delta+\max_{\mathcal M_0}l_\delta
+\le\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi
+\le\min_{\mathcal M_0}u_\delta+\max_{\mathcal M_0}u_\delta.
+\end{gathered}
+\tag{57.13}
+$$
+
+这些极值均取到；$Q=0$ 的点有 $e_F=e_G$，允许点值上下界相等。
+
+**证明。** 定理 56.3 给每个全局极小接触 $P_t>0$，从而
+
+$$
+\widehat P_s=P_t\frac{x}{6d}>0.
+\tag{57.14}
+$$
+
+可将局部约束写成 $s=s(x,y)$；局部最小值的一阶必要条件给
+$\nabla U=\mu\nabla\widehat P$。具体地，将沿该图的两个代价导数置零，
+得 $U_x=U_s\widehat P_x/\widehat P_s$、
+$U_y=U_s\widehat P_y/\widehat P_s$，所以乘子为
+
+$$
+\mu=\frac{U_s}{\widehat P_s}
+=\frac{\nu\,x/(6d)}{P_t\,x/(6d)}=\frac\nu{P_t}.
+\tag{57.15}
+$$
+
+这里局部图只使用通常隐函数定理，未要求极小点孤立或二阶充分性。
+在基点固定 $y,s$，(57.3) 给 $U_x<0$；向右稍移即 $U<K_0$，
+前述无零点论证给 $\widehat P<0$。
+基点 $\widehat P=0$，故其右导数 $B\le0$。
+但 $U_x=\mu B<0$ 使 $B\ne0$，所以 $B<0$、$\mu>0$。
+再由 (57.14)–(57.15)，得到 $U_s>0$ 及 $\nu=\mu P_t>0$。
+这些符号属于简单的全局极小点；定理 56.2 的 $\nu<0$ 属于不同的
+奇异驻点系统 $P=P_y=P_t=0$，两者没有共同适用点。
+
+在接触面上，对 (57.1) 微分时 $U-V=0$ 消去因子导数，故
+
+$$
+\nabla\widehat P=\frac{2t}{c_{\rm cost}}(\nabla U-\nabla V),\qquad
+U_s=\theta(U_s-V_s).
+\tag{57.16}
+$$
+
+定理 57.2 给 $V_s<0$，结合 $U_s>0$ 即得 (57.11) 的严格内部权重。
+它在整个非空紧集 $\mathcal M_0$ 上连续，所以 (57.12) 成立；
+这个统一余量不向整个 $\Omega$ 外推。
+
+最后直接消费原完整响应，使用 $K_0=c_{\rm cost}W$，有
+
+$$
+(1-\theta)e_F+\theta e_G
+=\frac{\mathcal S}{K_0}-\frac{\theta Q}{2tW}
+=\frac{\mathcal S-\mu Q}{K_0}
+=\Phi.
+\tag{57.17}
+$$
+
+因此所用 $Q$ 是原固定 $t$ 方程的强制根运动项，没有引入非零 $g$ 的
+新极小极大图，也没有以自由斜率 $\nu$ 代替完整响应。
+对每一点，$\delta\le\theta\le1-\delta$ 和两实数凸组合的初等不等式
+给 (57.13) 的点值界；分别取最小值、最大值再相加便得极值和界。
+$\mathcal S,Q,t,W,\theta$ 连续且分母非零，所以全部极值存在。
+这里保留所有点变权重与归一化因子；正性本身不允许从极值和中约去
+非恒定分母。凸组合代数仅为完整响应的消费者，不另提供符号判定。∎
+
+**约定 57.4（原来源实现、配对系数与适用边界）。**
+定理 57.2 的每个等号点按旧的实际重构恢复
+
+$$
+\begin{gathered}
+\tau=\overline{\frac{G}{\sqrt2F}},\qquad |\tau|^2=t>\frac14,\qquad
+u_r=\frac{(1,r\tau)^{\mathsf T}}{\sqrt{1+t}},\\
+\mathbf d_{\rm src}=(F,rG/\overline\tau)^{\mathsf T}
+=\sqrt2F\,a_r,\qquad a_r=(1/\sqrt2,r)^{\mathsf T}.
+\end{gathered}
+\tag{57.18}
+$$
+
+因 $a>0$，$F\ne0$；接触方程又给 $G\ne0$。
+前卷定理 43.2 同时恢复两个来源坐标及 (56.29) 的四个实图条件，
+由 $X=[p_{\rm vis}\ q_{\rm vis}][u_r\ Cu_r]^{-1}$ 得有限 Hermitian 探针。
+另一取向只按前卷 (39.32) 同源运输，保持 $r$ 及适配坐标；
+来源反射改变 $h$ 符号，仍不提供同一正 $h$ 的来源次序。
+
+将定理 56.3 已有的完整包络写成当前归一化形式，置
+
+$$
+S_{\rm pair}=\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi,
+\qquad
+K_+(h)-K_-(h)=hK_0S_{\rm pair}+o(h),\qquad h\downarrow0.
+\tag{57.19}
+$$
+
+$S_{\rm pair}$ 的符号及是否为零仍未确定，(57.13) 两端的符号也未确定。
+若它非零，(57.19) 才对充分小的正 $h$ 给同号的严格阈值次序；
+若它为零，一阶响应不足，需要整个值函数的高阶及分支切换分析。
+这里没有取得分离两阈值的同一正 $k$，也没有求出 $K_0$ 的精确值或证明
+极小点唯一。实际奇异极小点的排除、移动 $(x,y)$ 的局部约束控制及完整值比较
+各有不同作用：前者已由 §56 支付简单性，中者在 (57.15) 中给全极小集乘子，
+而 (57.19) 的全极小集极值和符号仍是完整比较的缺口。
+
+零阶全域式 (57.2) 不断言非零 $g=rh$ 的极小极大恒等式或有限参数 PB。
+原有限问题仍取两个固定 $a_r$、同一对正 $h,k$，保持 (56.32) 的全部参数交，
+并选同一个充分大有限 $\lambda$ 满足
+
+$$
+\rho=\frac{k}{\lambda^2},\qquad
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{57.20}
+$$
+
+前卷定理 41.5 的严格阈值桥梁才将各来源的 $k<K_r(h)$ 或 $k>K_r(h)$
+送回最终原 PB 成功或严格失败；共同完整 P2、两笔预算及两个取向均保留。
+其中探针遍取所有有限 Hermitian $X$ 的 $X\oplus0_3$，
+正复线性泛函遍取整个 $M_5(\mathbb C)$，包括环境和混合块。
+有限个来源及取向的截止取共同最大值；阈值等号处的有限阶段符号仍未决定。
+一个来源的分支上界不替代另一来源的全域下界。
+
+实际括号的低代价排除 (57.5)–(57.6)、面外残量的定向、第二代价的严格单调性，
+及其全域极小极大与完整响应消费者属于本模型的 `repo-derived` 推导，
+不作全球原创性主张。坐标表达复用 (46.5)–(46.8)、定理 47.2 与 (52.5)，
+微分平方因式复用 (56.18)，全极小集、简单性及完整包络复用定义 53.1、
+定理 56.3 和前卷定理 43.5、44.6。
+局部图所用的一般隐函数定理见 Jiří Lebl，*Basic Analysis I & II*，
+[§8.5.1，Theorem 8.5.6](https://www.jirka.org/ra/html/sec_svinvfuncthm.html#thm_implicit)；
+有限维紧性、局部一阶必要条件及凸组合不等式只作为上述实际推导的中间工具。
+
+## 追加锚（本行以下为增补区）
+
+## 58. 固定实际来源的两价格半定表示与全部极小矩恢复
+
+**定义 58.1（源对齐的五约束矩纤维）。** 保持约定 46.1 的
+$a_r=(1/\sqrt2,r)^{\mathsf T}$、$C,H_h,T_A$ 及原有限环境。
+先取取向 $i$，令 $g=rh$，并将共同价格域定义为
+
+$$
+\mathcal B=[1/100,1]\times[103/100,600],\qquad
+\ell=x+iy,\qquad c_y=\frac{y}{2(y^2-1)}.
+\tag{58.1}
+$$
+
+将 $\mathbb H_3$ 视为三阶复 Hermitian 矩阵的实向量空间，内积取
+$\langle H,Y\rangle_{\mathbb R}=\operatorname{Re}\operatorname{tr}(HY)$。
+对 $Y\in\mathbb H_3$，记
+
+$$
+\begin{gathered}
+a=Y_{11},\qquad b=Y_{22},\qquad w=Y_{21},\qquad e=Y_{33},\\
+\beta=3a+12b+3g\operatorname{Re}w,\qquad
+Z=-3a+12b-g\operatorname{Re}w,\qquad j=g\operatorname{Im}w,\\
+\alpha=\frac{(x-1)\beta/y+j}{2},\qquad
+\chi=-\frac{(x+1)\beta/y+j}{2},\qquad
+\kappa=\frac{Z-x\beta-yj}{2x},\\
+M_1=\sqrt2\left[i(1-\ell)(\alpha+i\kappa)
+                    -(2-\ell/2)a-gw\right],\\
+M_2=i(1-\ell/2)(\chi-i\kappa)-(4-2\ell)b-g\overline w,\\
+R_1=Y_{31}-M_1,\qquad R_2=Y_{32}-M_2,\\
+\mathcal A_{\ell,g}(Y)
+ =(Z,\operatorname{Re}R_1,\operatorname{Im}R_1,
+       \operatorname{Re}R_2,\operatorname{Im}R_2),\qquad
+b_0=(1,0,0,0,0),\\
+C_y=c_yE_{33},\qquad
+v(\ell,g)=\inf\{\langle C_y,Y\rangle_{\mathbb R}:
+                  Y\succeq0,\ \mathcal A_{\ell,g}(Y)=b_0\}.
+\end{gathered}
+\tag{58.2}
+$$
+
+$M_1,M_2,R_1,R_2$ 均是 $Y$ 的实线性函数。
+实迹伴随 $\mathcal A_{\ell,g}^*:\mathbb R^5\to\mathbb H_3$ 由
+
+$$
+\langle\mathcal A_{\ell,g}^*d,Y\rangle_{\mathbb R}
+       =d\cdot\mathcal A_{\ell,g}(Y),\qquad
+d=(d_0,d_1,d_2,d_3,d_4)
+\tag{58.3}
+$$
+
+定义。$a,b$ 是矩质量，不是来源变量。若可行 $Y=zz^*$，三个坐标的含义是
+未归一演员的第一坐标、源对齐的第二坐标及源幅度；相应实际数据为
+
+$$
+n_a=(|z_1|^2+|z_2|^2)^{1/2},\qquad
+u=\frac{(z_1,rz_2)^{\mathsf T}}{n_a},\qquad
+\eta=\frac{z_3}{n_a}.
+\tag{58.4}
+$$
+
+特别地，优化 $Y$ 不改变任一固定 $a_r$。
+以下 $\mathcal M_0$ 仍是定义 53.1 的整个零阶全局极小集，
+$K_0$ 仍取 (57.2)，$\Pi=\pi(\mathcal M_0)$ 为其整个价格投影。
+
+**定理 58.2（原严格阈值的精确半定桥梁与统一混合质量间隙）。**
+存在共同 $h_1>0$，使对每个 $0\le h<h_1$、$r\in\{+1,-1\}$，
+原阈值有达到的表示
+
+$$
+K_r(h)=\min_{\ell\in\mathcal B}v(\ell,rh).
+\tag{58.5}
+$$
+
+每个联合全局最优对 $(\ell,Y)$ 都满足
+$Y=zz^*$、$z_1z_2z_3\ne0$，并按 (58.4) 恢复该固定来源的实际
+非轴全局极小接触。这个对应在来源对齐及整体相位商下是双射；
+两个演员列由同一个有限 Hermitian $X$ 实现。
+另一取向按前卷 (39.32) 同源运输，具有同一表示和共同参数半径。
+
+存在 $\Pi$ 在 $\operatorname{int}\mathcal B$ 内的邻域 $\mathcal N$、
+$\gamma>0$，缩小同一个 $h_1$ 后，对每个 $\ell\in\mathcal N$ 及
+$|g|<h_1$，该纤维都有唯一最优矩 $z(\ell,g)z(\ell,g)^*$。
+局部可取 $z$ 光滑，整体矩与相位选择无关。
+令 $P_z=zz^*/\|z\|^2$，则该纤维的每个可行矩均满足
+
+$$
+c_yY_{33}-v(\ell,g)
+ \ge\gamma\operatorname{tr}((I_3-P_z)Y).
+\tag{58.6}
+$$
+
+这个统一间隙覆盖整个 $\Pi$ 的邻域；不要求整个 $\mathcal M_0$ 唯一。
+对 $\mathcal B\setminus\mathcal N$ 的价格，不断言纤维最优矩秩一或唯一。
+
+每个价格的对偶值都达到，且
+
+$$
+v(\ell,g)=\max_{d\in\mathbb R^5}
+ \{d_0:C_y-\mathcal A_{\ell,g}^*d\succeq0\}.
+\tag{58.7}
+$$
+
+因此对同一小正 $h$，任意实数 $L$ 的全域下界有精确证书判据
+
+$$
+\begin{aligned}
+K_r(h)\ge L\quad\Longleftrightarrow\quad
+&\text{对每个 }\ell\in\mathcal B\text{，存在 }d(\ell)\in\mathbb R^5,\\
+&d_0(\ell)\ge L,\qquad
+ C_y-\mathcal A_{\ell,rh}^*d(\ell)\succeq0.
+\end{aligned}
+\tag{58.8}
+$$
+
+相反来源在一个价格处的任一可行 $Y$ 若满足 $c_yY_{33}<L$，
+便给 $K_{-r}(h)<L$。这个上界矩允许混合；其实际接触由联合全局优化
+后的恢复取得，不将该混合矩自身解释为实际探针。
+有限原 PB 的后果只按前卷定理 41.5 的严格阈值和共同完整 P2 条件使用。
+
+**证明。** 先说明矩约束与原两列的确切关系，再证明松弛没有新增最优点。
+
+（一）原来源等式及逆向重构。
+在原有限式 (37.7) 中，两列从开始就共用 $X$ 和完整向量。
+前卷 (37.10)–(37.13) 对这同一个环境作正交最小范数消元，精确给出
+$\mathcal D_\lambda^{\rm orig}
+ =\mathcal D_\lambda^{\rm red}+s_\alpha\|e_0\|^2$，
+并允许在同一实际来源上取 $e_0=0$。
+阈值所用的完整接触仍是 (46.2)–(46.3)，包括四个实 Hermitian 图条件。
+
+对任一价格在 $\mathcal B$ 的实际非轴不利接触，$\zeta>0$。
+取 $z=(u_1,ru_2,\eta)^{\mathsf T}/\sqrt\zeta$。
+前卷 (43.5) 的齐次四图条件给出 (58.2) 的
+$\alpha,\chi,\kappa$，并且 $Z=1$。
+为核对两个来源坐标，暂用未归一演员
+$U=(z_1,rz_2)^{\mathsf T}$、可见列 $P,Q$，令
+$D=A_{\rm act}-H_hU+\ell C^2U/2$。
+把前卷 (43.5)–(43.6) 分别乘 $\overline z_1$ 和
+$r\overline z_2$，直接得到
+
+$$
+\begin{aligned}
+\overline z_1D_1
+ &=i(1-\ell)(\alpha+i\kappa)-(2-\ell/2)a-gw
+   =M_1/\sqrt2,\\
+r\overline z_2D_2
+ &=i(1-\ell/2)(\chi-i\kappa)-(4-2\ell)b-g\overline w
+   =M_2.
+\end{aligned}
+\tag{58.9}
+$$
+
+由于需求是 $D=z_3a_r$，这恰给
+$Y_{31}=M_1$、$Y_{32}=M_2$，第一来源坐标的项为 $-gw$，
+第二来源坐标的项为 $-g\overline w$。
+目标值也精确为
+
+$$
+c_yY_{33}=\frac{y|\eta|^2}{2(y^2-1)\zeta}
+             =\mathscr R.
+\tag{58.10}
+$$
+
+反过来，设可行秩一矩满足 $z_1z_2\ne0$。置
+
+$$
+\begin{gathered}
+U=(z_1,rz_2)^{\mathsf T},\qquad
+P=\left(\frac{\alpha+i\kappa}{\overline z_1},
+         \frac{r(\chi-i\kappa)}{\overline z_2}\right)^{\mathsf T},\\
+Q=(\ell I_2+2C^{-1})P+iB_hCU,\qquad
+A_{\rm act}=i(I_2-\ell C^{-1})P.
+\end{gathered}
+\tag{58.11}
+$$
+
+前卷 (43.5) 的必要充分性恢复全部四个实图条件；(58.9) 可除回两个
+非零坐标，给 $D=z_3a_r$。将 $U,P,Q,A_{\rm act}$ 同除以 $n_a$，
+便得 (58.4) 的完整接触，且 $\zeta=1/n_a^2>0$。
+若记归一可见列为 $p,q$，则
+
+$$
+X=[p\ q][u\ Cu]^{-1}=X^*.
+\tag{58.12}
+$$
+
+这里 $[u\ Cu]$ 可逆；四实图条件恰说
+$[u\ Cu]^*[p\ q]$ 为 Hermitian，因而保证同一个有限 $X$ 同时实现
+$p=Xu$ 和 $q=XCu$。接触到矩及矩到接触互逆，唯一的不定性是整体相位。
+这一步本身不保证一般可行矩秩一；以下只在证明应有秩一性之后使用逆构造。
+
+（二）整个闭价格矩形的零阶等号分类。
+令 $g=0$。先取 $x<1$。若 $a=0$，半正定性使
+$w=Y_{31}=0$，但 $Z=1$ 给 $b=1/12$，从而
+$0=M_1=\sqrt2f_1b$。前卷 (43.10) 的
+$\operatorname{Re}f_1=6(x-1)/x\ne0$ 排除这种情形。
+故 $a>0$，可置 $t=b/a$、$D_t=12t-3$，有
+$aD_t=1$、$t>1/4$。为区别矩目标与旧标量，写
+
+$$
+m(t)=\sqrt2F(t),\qquad n(t)=G(t),\qquad
+M_1=am(t),\quad M_2=an(t),\qquad
+U=\frac{c_y|m(t)|^2}{D_t},\quad
+V=\frac{c_y|n(t)|^2}{tD_t}.
+\tag{58.13}
+$$
+
+这正是 (57.1) 在 $s=6(1-x)(t-1/4)/x$ 下的两笔代价，
+不是另选的极小极大模型。两个主子式给
+$ae\ge|M_1|^2$、$be\ge|M_2|^2$，因而
+$c_ye\ge\max(U,V)\ge K_0$。
+定理 57.2 的全部等号分类说明，$c_ye=K_0$ 必须且只能发生在
+整个 $\mathcal M_0$ 上，且 $U=V=K_0$。
+此时 $e>0$，两个主子式同时饱和。
+任一 Gram 分解中，第一、第二个向量都与第三个非零向量共线，
+所以整个 $Y$ 秩一。反向由 (57.18) 的相位给出等号矩，
+也可显式取
+
+$$
+z=\sqrt a(1,\tau,m(t))^{\mathsf T},\qquad
+\overline\tau=\frac{n(t)}{m(t)},\qquad a=D_t^{-1}.
+\tag{58.14}
+$$
+
+还须处理 $x=1$，不能将其从闭矩形略去。
+若 $a>0$，仍有 $t>1/4$；置 $u_*=1/(4t-1)>0$、
+$\Gamma=y(1+y^2)/[24(y^2-1)]$。
+将 (57.7) 固定 $t$ 连续取到 $x=1$，第二个主子式给
+
+$$
+\begin{aligned}
+c_ye&\ge\Gamma\frac{(2+8u_*)^2+(6/y)^2(1+2u_*)^2}{1+u_*},\\
+\frac{(2+8u_*)^2+(6/y)^2(1+2u_*)^2}{1+u_*}
+ &-\left[4+(6/y)^2\right]\\
+ &=\frac{u_*[28+64u_*+(6/y)^2(3+4u_*)]}{1+u_*}>0.
+\end{aligned}
+\tag{58.15}
+$$
+
+若 $a=0$，则 $b=1/12$，同一主子式直接给
+$c_ye\ge\Gamma[4+(6/y)^2]$。
+这个后者确是固定来源的实际增广第二轴接触值：在 $h=0,r=+1$ 取
+
+$$
+u=(0,1)^{\mathsf T},\qquad p_2=-12/y,\qquad
+\eta=-8+i(2y-6/y),\qquad
+i(1-\ell)p_1=\eta/\sqrt2,
+\tag{58.16}
+$$
+
+再依 (46.2) 定 $q,a_{\rm act}$。第二需求坐标是 $\eta$，
+第一需求坐标是 $\eta/\sqrt2$；$p_2$ 实且 $q_2=2p_2$，
+故前卷 (37.15) 的增广轴图条件成立。直接有 $\zeta=12$，以及
+
+$$
+\frac{c_y|\eta|^2}{12}
+ =\frac{y[64+(2y-6/y)^2]}{24(y^2-1)}
+ =\Gamma[4+(6/y)^2].
+\tag{58.17}
+$$
+
+另一零阶来源按源对齐取得相同值。
+这里只需要固定来源的增广轴接触；不要求这些轴上列本身存在有限 $X$。
+定理 56.3 排除整个全局极小集中的所有轴，故这个达到的增广轴值
+严格大于 $K_0$。于是 $x=1$ 也没有值不超过 $K_0$ 的可行矩。
+结合前一段，整个 $\mathcal B$ 上值不超过 $K_0$ 的零阶可行矩，
+恰是 (58.14) 给出的全部零阶极小接触矩。
+
+（三）实际零阶驻定性给出的余秩一对偶余量。
+固定任意 $(\ell,t_0)\in\mathcal M_0$，取定理 57.3 的实际权重
+$\theta$，并定义行向量及余量
+
+$$
+\begin{gathered}
+j_1=m(t_0),\qquad j_2=n(t_0)/t_0,\\
+\mathsf L_1=(-j_1,0,1),\qquad \mathsf L_2=(0,-j_2,1),\\
+S_0=c_y\left[(1-\theta)\mathsf L_1^*\mathsf L_1
+                         +\theta\mathsf L_2^*\mathsf L_2\right].
+\end{gathered}
+\tag{58.18}
+$$
+
+这些行不同于 (46.5) 的源扰动函数 $L_1,L_2$。
+为直接核对余量的仿射系数，固定 $\ell$，考察关于 $t$ 的仿射函数
+
+$$
+\begin{aligned}
+H(t)={}&c_y\big[(1-\theta)
+ (2\operatorname{Re}(\overline{j_1}m(t))-|j_1|^2)\\
+ &\hspace{17mm}+\theta
+ (2\operatorname{Re}(\overline{j_2}n(t))-t|j_2|^2)\big]
+       -K_0(12t-3).
+\end{aligned}
+\tag{58.19}
+$$
+
+在 $t_0$，两个括号分别等于 $|m(t_0)|^2$ 和 $|n(t_0)|^2/t_0$，
+它们的导数分别等于 $|m(t)|^2$ 和 $|n(t)|^2/t$ 在 $t_0$ 的导数。
+$U=V=K_0$ 因而给 $H(t_0)=0$。
+固定实际价格时 $s_t=6(1-x)/x>0$；(57.16) 的实际权重满足
+
+$$
+(1-\theta)U_t+\theta V_t=0.
+\tag{58.20}
+$$
+
+对 (58.13) 求导可见，(58.20) 正是 $H'(t_0)=0$。
+仿射函数遂恒为零。将此恒等式乘 $a$，由齐次性比较 $a,b$ 的系数，
+得到对全部 $Y\in\mathbb H_3$ 成立的恒等式
+
+$$
+\begin{aligned}
+&c_y\big[(1-\theta)
+ (2\operatorname{Re}(\overline{j_1}M_1)-|j_1|^2a)
+ +\theta(2\operatorname{Re}(\overline{j_2}M_2)-|j_2|^2b)\big]
+ =K_0Z,\\
+&\langle C_y-S_0,Y\rangle_{\mathbb R}
+ =K_0Z+2c_y\big[(1-\theta)\operatorname{Re}(\overline{j_1}R_1)
+                    +\theta\operatorname{Re}(\overline{j_2}R_2)\big].
+\end{aligned}
+\tag{58.21}
+$$
+
+这里 $M_i,R_i,Z$ 取 $g=0$；该式不仅在可行面上成立。
+因此若取
+
+$$
+d^{(0)}=\big(K_0,
+ 2c_y(1-\theta)\operatorname{Re}j_1,
+ 2c_y(1-\theta)\operatorname{Im}j_1,
+ 2c_y\theta\operatorname{Re}j_2,
+ 2c_y\theta\operatorname{Im}j_2\big),
+\quad S_0=C_y-\mathcal A_{\ell,0}^*d^{(0)}.
+\tag{58.22}
+$$
+
+在可行矩上，$c_ye-K_0=\langle S_0,Y\rangle_{\mathbb R}$。
+定理 57.3 给 $0<\theta<1$，前卷定理 43.3 给 $j_1j_2\ne0$。
+两个行向量独立，故 $S_0\succeq0$ 且秩为二。
+其核恰是 (58.14) 的实际接触直线：
+$z_3=j_1z_1=j_2z_2$。
+所以 $S_0$ 在这条线的正交补上严格正定。
+此处用的是整个实际极小集上的 $t$ 驻定性及其实际 $\theta$，
+没有用任意混合权重替代。
+
+（四）五维 Jacobian 与非零参数的统一纤维间隙。
+在 $z_1\ne0$ 的秩一矩流形上商去整体相位，写
+
+$$
+z=\sqrt a(1,\tau,b_{\rm src})^{\mathsf T},\qquad
+\tau=\sqrt t\,e^{i\varphi},\qquad
+D_g=12t-3-g\operatorname{Re}\tau,\qquad
+m_g=\sqrt2(F+gL_1),\quad n_g=G+gL_2.
+\tag{58.23}
+$$
+
+这里 $L_i$ 正是 (46.5) 的原函数。
+五约束残量依次为 $Z-1,\operatorname{Re}R_1,\operatorname{Im}R_1,
+\operatorname{Re}R_2,\operatorname{Im}R_2$，其中
+
+$$
+R_1=a(b_{\rm src}-m_g),\qquad
+R_2=a(b_{\rm src}\overline\tau-n_g),\qquad
+Z-1=aD_g-1.
+\tag{58.24}
+$$
+
+先用第一复残量解 $b_{\rm src}=m_g$，第二复残量便是
+$aE_g=a(m_g\overline\tau-n_g)$，最后用 $aD_g=1$ 解 $a$。
+为明确原五实约束的 Jacobian，输入坐标固定为
+$(\operatorname{Re}b_{\rm src},\operatorname{Im}b_{\rm src},t,\varphi,a)$。
+在零阶可行点，对残量微分，作行操作
+$dR_2\mapsto dR_2-\overline\tau\,dR_1$，其后移归一化行到末行。
+该复行操作的实行列式为一，后一个排列有四次交换。
+前两行对 $b_{\rm src}$ 的块是 $aI_2$，中间两行对 $(t,\varphi)$
+的块是 $aD_{(t,\varphi)}(\operatorname{Re}E_0,\operatorname{Im}E_0)$，
+最后一行对 $a$ 的系数是 $D_t$。
+前卷 (43.14) 也可由
+
+$$
+\partial_\varphi E_0=-iG,\qquad
+\partial_tE_0=\sqrt2(F'+F/(2t))\overline\tau-G',\qquad
+\operatorname{Im}(\overline{\partial_tE_0}\,\partial_\varphi E_0)
+ =-P_t/2
+\tag{58.25}
+$$
+
+逐项核对。因此原坐标次序下精确有
+
+$$
+\det D(\mathcal A_{\ell,0}(zz^*)-b_0)
+       =-\frac{a^4(12t-3)P_t}{2}\ne0.
+\tag{58.26}
+$$
+
+非零性用定理 56.3 的 $P_t>0$ 和 $t>1/4$。
+实隐函数定理于是给每个基点附近随 $(\ell,g)$ 光滑的可行
+$z(\ell,g)z(\ell,g)^*$。缩小邻域，$z_1z_2z_3,D_g,P_t$ 保持非零；
+特别地 $D_g>0$，逆构造保持不利过滤。
+
+还须在同一分支上延续对偶余量。秩一切向量写成
+$\delta z\,z^*+z\,\delta z^*$，其唯一相位核是 $\mathbb R iz$。
+实迹配对为
+
+$$
+\langle\mathcal A_{\ell,g}^*d,
+               \delta z\,z^*+z\,\delta z^*\rangle_{\mathbb R}
+ =2\operatorname{Re}(\delta z^*\mathcal A_{\ell,g}^*d\,z).
+\tag{58.27}
+$$
+
+(58.26) 说明约束在五维实秩一切空间上的微分是同构。
+其对偶同构可具体写为
+
+$$
+\mathbb R^5\longrightarrow
+ \{v\in\mathbb C^3:\operatorname{Im}(z^*v)=0\},\qquad
+d\longmapsto\mathcal A_{\ell,g}^*d\,z.
+\tag{58.28}
+$$
+
+该值域是相位方向 $iz$ 的实正交补；Hermitian 性使映射确实落入其中。
+又 $C_yz$ 也在其中，所以存在唯一光滑乘子 $d(\ell,g)$ 使
+
+$$
+S_g=C_y-\mathcal A_{\ell,g}^*d(\ell,g),\qquad S_gz=0.
+\tag{58.29}
+$$
+
+在基点，这个乘子恰是 (58.22)。另外两个特征值在基点严格正，
+连续性使它们在充分小邻域内保持共同正下界；核中已有 $z$，
+故没有额外负特征值，并且
+$S_g\succeq\gamma(I_3-P_z)$。
+将 (58.29) 与可行秩一矩配对，得
+$d_0=c_y|z_3|^2$；与任一同纤维可行 $Y$ 配对，得
+
+$$
+c_yY_{33}-c_y|z_3|^2
+ =\langle S_g,Y\rangle_{\mathbb R}
+ \ge\gamma\operatorname{tr}((I_3-P_z)Y).
+\tag{58.30}
+$$
+
+故该秩一矩是整个纤维的最优矩。若取等号且代价最优，则
+$Y$ 的像落在 $\mathbb Cz$ 中，因 $Z=1$ 固定尺度，只能有 $Y=zz^*$。
+
+零阶 $\mathcal M_0$ 非空且紧，定理 53.2 给它在整个 $\Pi$ 上的
+连续单值根图；这里没有挑选一个全局分支。
+以有限个上述邻域覆盖它，再将价格邻域收紧并取共同参数半径，
+得到 $\mathcal N$ 及共同 $\gamma>0$。
+每个局部证书都证明整个纤维最优矩唯一，故相交邻域上的矩必相同，
+不需要预设它们的相位规范一致。
+紧性也使 $z_1,z_2,z_3,D_g$ 及所用分母在这些收紧邻域中统一离零。
+这证明 (58.6)，尚未将矩形之外或其他纤维强行纳入局部秩一结论。
+
+（五）全矩形的低代价排逃与联合达到性。
+对任一固定有限 $Q$，证明当 $|g|$ 充分小时，
+$\ell\in\mathcal B$、$Y\succeq0$、$\mathcal A_{\ell,g}(Y)=b_0$、
+$c_yY_{33}\le Q$ 的矩共同有界。
+$\mathcal B$ 紧且 $\min_{\mathcal B}c_y>0$，所以 $e$ 已有共同上界。
+若不存在共同的小参数半径及质量上界，可取
+$g_n\to0$、$T_n=a_n+b_n\to\infty$ 的这种序列。
+将矩除以 $T_n$，前两对角元及非对角元有界，第三对角元趋于零；
+主子式又使整条第三行趋于零。
+取价格及归一矩的收敛子列，记前两质量为 $A,B'$。
+归一化等式 $Z/T_n=1/T_n$ 给
+
+$$
+A+B'=1,\qquad -3A+12B'=0,
+\qquad A>0,\quad B'/A=1/4.
+\tag{58.31}
+$$
+
+由于 $|w_n|/T_n\le1/2$，所有 $g_nw_n/T_n$ 项趋于零。
+第一复约束的极限却要求
+
+$$
+0=\sqrt2(f_0A+f_1B')=\sqrt2A F(1/4),\qquad
+\operatorname{Re}F(1/4)=\frac{x-4}{2}\ne0
+       \quad(1/100\le x\le1),
+\tag{58.32}
+$$
+
+与 (46.9) 矛盾。故 $a+b$ 一致有界，其他矩元再由主子式有界。
+这证明的是联合矩子水平集的有界性，未将实际接触紧性直接用于松弛矩。
+
+由前卷定理 41.4、定理 56.3 的实际达到性、阈值连续性及全部极小点
+聚集结论，所有充分小参数的实际极小点价格都在
+$\operatorname{int}\mathcal B$，并给矩问题的可行上界 $K_r(h)\to K_0$。
+取例如固定 $Q>K_0+1$，再缩小半径，使这些上界小于 $Q$。
+上一段给相应闭矩子水平集共同有界；价格闭且所有系数连续，
+故此集紧，联合目标在其中达到最小值。
+
+现沿任意 $g_n\to0$ 取联合全局最优对。
+上界趋于 $K_0$，排逃结论给收敛子列；其极限是零阶可行矩，
+代价不超过 $K_0$。（二）的全矩形等号分类使其必来自
+整个 $\mathcal M_0$。因此，若任意小参数仍有联合最优价格不在
+$\mathcal N$，取这种序列便与极限价格在 $\Pi\subset\mathcal N$ 矛盾。
+所有小参数的联合最优矩遂进入（四）的证书邻域，必为非轴秩一矩。
+（一）使其恢复原实际接触，其值不小于 $K_r(h)$；
+而实际极小点已给相反不等式，于是 (58.5) 成立。
+每个实际极小点的矩也达到该值，故得到所述全部最优点双向对应。
+这个论证控制全部联合最优点，未把任意固定价格的纤维最优点
+等同于原全局极小点。
+
+（六）每个价格的达到对偶及比较消费者。
+固定任意 $\ell\in\mathcal B$ 和实 $g$，取
+
+$$
+a=1,\qquad b=1/3,\qquad w=0,\qquad
+Y=\begin{pmatrix}
+1&0&\overline{M_1}\\
+0&1/3&\overline{M_2}\\
+M_1&M_2&e
+\end{pmatrix},\qquad e>|M_1|^2+3|M_2|^2.
+\tag{58.33}
+$$
+
+这里 $M_1,M_2$ 由这三个上部读数决定，不含 $e$。
+有 $Z=-3+12/3=1$，Schur 补严格正，所以 $Y\succ0$ 且五约束成立。
+因此每个纤维都有显式严格可行点，原始值有限且非负。
+有限维自对偶锥的 Slater 定理给零对偶间隙及对偶最优值达到，
+其拉格朗日函数为
+$d\cdot b_0+\langle C_y-\mathcal A_{\ell,g}^*d,Y\rangle_{\mathbb R}$，
+从而恰得 (58.7)。这里将复 Hermitian 空间作为实内积空间，
+所用锥正是这个空间的正半定自对偶锥。
+这项标准强对偶只用于固定纤维；原阈值的秩一及全局等价已经分别由
+（二）至（五）支付。
+
+(58.5) 与每个价格的达到对偶直接给 (58.8)：若 $K_r(h)\ge L$，
+则每个 $v(\ell,rh)\ge L$，取各自达到的乘子；反向对每个价格用弱对偶。
+乘子允许随价格、来源和参数改变，不要求同一乘子适用于全矩形。
+任一相反来源可行矩给
+$K_{-r}(h)\le v(\ell,-rh)\le c_yY_{33}$，
+所以严格上界不要求该矩自身秩一。联合优化后（五）才给相反来源的
+实际最优接触。
+
+还可把同一乘子的源变号障碍写成精确的二阶 Schur 条件。
+固定 $\ell,d$，$g$ 在 $\mathcal A_{\ell,g}$ 中只乘
+$\operatorname{Re}w,\operatorname{Im}w$。
+因而 $S(g)=C_y-\mathcal A_{\ell,g}^*d$ 的 $(3,3)$ 元恒为 $c_y>0$，
+其第三行、第三列及对角元都与 $g$ 无关；只有 $(1,2)$ 元及其伴随改变。
+写成块矩阵并消去正标量 $c_y$，便有
+
+$$
+S(g)=\begin{pmatrix}T(g)&q\\q^*&c_y\end{pmatrix},\qquad
+T(g)-qq^*/c_y
+ =\begin{pmatrix}A_1&B_1+gB_2\\
+                   \overline{B_1+gB_2}&A_2\end{pmatrix},
+\tag{58.34}
+$$
+
+其中 $A_1,A_2$ 为不依赖 $g$ 的实数，$B_1,B_2$ 为不依赖 $g$ 的复数。
+于是从 $-h$ 到 $+h$，同一乘子的 Schur 行列式变化精确为
+
+$$
+-|B_1+hB_2|^2+|B_1-hB_2|^2
+       =-4h\operatorname{Re}(\overline{B_1}B_2).
+\tag{58.35}
+$$
+
+若该实部不正，则任何在 $-h$ 可行的此乘子在 $+h$ 也可行；
+若实部不负，则反向转移成立。这只用二阶 Hermitian 正半定的
+对角元及行列式判据，允许对角元为零。
+尚无全价格证书族满足任一统一符号的证明，故此转移式不决定来源次序。
+
+（七）同一环境、两笔预算及原有限参数。
+对任一恢复的实际最优接触，$\eta\ne0$。
+在取向 $i$、$y>1$ 下取
+$\epsilon=-1$、$\nu=0$、$\alpha_+=y+1$、$\alpha_-=y-1$、
+$\beta_\tau=\tau x$，$\tau=\pm1$。
+为避免同矩 $Y$ 混淆，将原环境列记为 $\xi_{\rm env}$。
+在该来源自己的前卷 (37.2) 环境中，令
+
+$$
+\begin{gathered}
+m_r=\|a_r\|^2=3/2,\qquad
+R_{\lambda,r}=(I_2+\lambda^2a_ra_r^*)^{-1},\qquad
+t_{\rm req}=\eta a_r,\\
+e_\lambda=G_{\lambda,r}R_{\lambda,r}t_{\rm req},\qquad
+\xi_{\rm env}=(D_{\lambda,r}^{\rm env})^{-1}
+ (e_\lambda-\ell FCu/2-Fu),\qquad
+\xi=(u,\xi_{\rm env}).
+\end{gathered}
+\tag{58.36}
+$$
+
+这是前卷 (37.13) 的同源列，$e_0=0$，两个预算共用这一列。
+接触使前卷 (37.9) 的演员残量为
+$\mathsf P+\tau\mathsf Q=\tau\rho T_Au$。
+因此对每个有限 $\lambda$ 都有精确恒等式
+
+$$
+\lambda^2\mathcal D_\lambda^{\rm orig}
+ =s_\alpha\frac{k^2\|T_Au\|^2}{\lambda^2}
+   +s_\alpha|\eta|^2\frac{\lambda^2m_r}{1+\lambda^2m_r}
+   +4\epsilon k\zeta,
+\qquad s_\alpha=\frac{2y}{y^2-1}.
+\tag{58.37}
+$$
+
+其极限正是原 $J_k$；$k>K_r(h)$ 时恢复的最优接触给 $J_k<0$。
+同一有限向量的环境末坐标满足
+
+$$
+(e_\lambda)_3=\frac{\lambda\eta m_r}{1+\lambda^2m_r}\ne0,
+\qquad
+B_{\phi_\xi}(R_\tau,S_\tau)
+ \ge\frac{\|C^2u\|^2|(e_\lambda)_3|^2}{4}>0
+ \quad(\tau=\pm1).
+\tag{58.38}
+$$
+
+第二式正是前卷 (37.43)–(37.44) 的环境 Gram 下界：
+$R_\tau\xi$ 的环境块为 $-\tau FCu/2$，而
+$(S_\tau-z_\tau R_\tau)\xi$ 的环境块为 $e_\lambda$，
+其中 $z_\tau=i+\tau\ell$ 是前卷 (37.8) 的变分参数。
+前者末坐标为零、首块非零，后者末坐标非零。
+加入演员块并从复 Gram 换到实 Gram 不减小该下界。
+故严格失败由同一有限 $X$、同一完整正泛函和两笔严格正预算承担。
+将 $\phi_\xi$ 乘 $\mu/\|\xi\|^2$，可取任意指定有限质量 $\mu>0$。
+
+全域成功仍调用前卷定理 41.5，而不从一个接触或一个纤维推出。
+它遍取所有有限 Hermitian $X$ 的 $X\oplus0_3$，以及整个
+$M_5(\mathbb C)$ 的全部正复线性泛函，包括混合块和环境块；
+前卷 §37.6 的正密度谱和提升保留这些量词。
+另一取向只用前卷 (39.32) 的同源运输，保持来源 $r$。
+两个来源的有限环境各自固定为前卷 (37.2)，但使用同一正 $h,k$。
+参数必须同时满足原来的交集，例如
+
+$$
+\begin{gathered}
+0<h<\min(h_1,h_{\rm coer},h_{\rm pos},h_x,h_0,\bar h,h_s),
+\qquad h\le10^{-3},\qquad k>0,\\
+\rho=k/\lambda^2,\qquad
+h^2\lambda^4>3k^2(\lambda^2+3/2),
+\end{gathered}
+\tag{58.39}
+$$
+
+并选择同一个充分大有限 $\lambda$。
+最后一条是前卷 (39.7)、(41.19) 的完整原 P2 严格内点条件，
+不是某一个向量的 P2 检验。
+对两个来源、两个取向及 P2 的有限截止取最大值，即保留共同 $\lambda$。
+$0<k<K_r(h)$ 给最终全部原 PB 成功，$k>K_r(h)$ 给最终严格失败；
+$k=K_r(h)$ 的有限代价不由本证明定号。
+
+（八）全极小集一阶比较的确切剩余条件。
+用 (57.19) 的原完整响应 $\Phi$，仍有
+
+$$
+S_{\rm pair}=\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi,
+\qquad K_+(h)-K_-(h)=hK_0S_{\rm pair}+o(h).
+\tag{58.40}
+$$
+
+由本定理可将 $S_{\rm pair}>0$ 等价地表述为如下证书与见证条件：
+存在 $b_*\in\mathbb R$、$\delta>0$，使对每个充分小正 $h$，
+$+h$ 来源在每个价格都有满足
+$d_0\ge L_h=K_0+(b_*+\delta)h$ 的 (58.8) 型证书，
+同时 $-h$ 来源在至少一个价格有可行矩满足
+$c_yY_{33}\le K_0+b_*h$。
+这个条件给 $K_+(h)-K_-(h)\ge\delta h$，故
+$K_0S_{\rm pair}\ge\delta$。
+反之，若 $S_{\rm pair}>0$，(56.24) 给
+$-M_D<m_D$；在这两个真实斜率之间选择
+$-M_D<b_*<b_*+\delta<m_D$，
+便由两条单侧展开及 (58.5)、(58.7) 取得该证书与见证条件。
+交换来源给严格负号的对应判据。
+这里的 $\mathcal D=\mathcal S-\mu Q$ 和 $\Phi=\mathcal D/K_0$
+包含原强制根运动；没有改成两个最小值之和，也没有平均点变权重。
+
+尚未建立上述统一线性间隔，也未证明 $S_{\rm pair}=0$。
+尚未确定 (58.35) 的实部是否具有统一符号，全价格下证书仍是必要的实际缺口。
+若 $S_{\rm pair}=0$，仍需高阶值函数及分支切换分析。
+本定理没有选出分离两来源阈值的共同正 $k$，
+也不以阈值接触达到性断言有限 PB 变分达到或物理取得。∎
+
+本定理的五约束源对应、实际双平方余量、统一混合质量间隙及全矩形
+排逃恢复是相对于原固定来源模型的推导，不作全球优先权主张。
+零阶极小极大、严格内部权重、全极小集简单性和包络分别复用
+定理 57.2–57.3、56.3，来源重构及有限 PB/P2 桥梁复用前卷
+定理 43.2、41.5 与 (37.10)–(37.13)、(37.43)–(37.44)。
+固定纤维的 Slater 强对偶和达到性使用 Boyd–Vandenberghe，
+*Convex Optimization*，
+[pp. 226–227、265–266](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)
+的有限维锥规划形式。余秩一余量和连续乘子的稳定性框架见
+Cifuentes–Agarwal–Parrilo–Thomas，*On the local stability of semidefinite relaxations*，
+[Proposition 3.5、Theorem 4.2](https://arxiv.org/html/1710.04287v4)。
+这些一般工具不替代 (58.21)、(58.26) 及 (58.31)–(58.32)
+对本题复相位商、移动五约束及全价格排逃的证明。
+局部所用的实隐函数定理沿用 §57 的 Lebl 引文；
+特征值连续性、主子式及有限维紧性只作证明中的标准工具。
+
+## 追加锚（本行以下为增补区）
+
+## 59. 整个零阶极小集的价格排除与完整响应的显式权重界
+
+**定义 59.1（原坐标别名与响应端点）。** 固定约定 46.1 的两个来源
+$a_r=(1/\sqrt2,r)^{\mathsf T}$、$r=\pm1$，以及原矩阵
+$C=\operatorname{diag}(1,2)$、$T_A=\operatorname{diag}(1,-2)$、
+$H_h=2C+hJ_A$。有限环境始终取前卷 (37.2) 在
+$\mathbb C^2\oplus(\mathbb C^2\oplus\mathbb C)$ 上的同源环境，
+其原三矩仍为 $M_0=C^2$、$M_1=C$、$M_{2,r}=I_2+\lambda^2a_ra_r^*$。
+取向 $i$ 中仅用原参数 $g=rh$；另一取向按前卷 (39.32) 同源运输。
+
+$\mathcal M_0$ 表示定义 53.1、定理 56.3 的整个实际零阶全局极小集，
+在 (57.1) 的坐标映射 $\iota$ 下使用 $(x,y,s)$。
+本节在该集合上写的极值均遍取其全部成员。
+沿用原 $U,V,F,G,c_{\rm cost},K_0$，在 $\Omega$ 上仅置别名
+
+$$
+\begin{gathered}
+d=1-x,\qquad e=2-x,\qquad Y=y^2,\qquad
+c=\frac{4-x}{2},\qquad p=s-\frac52,\\
+T=3d+xs,\qquad h_{\rm aux}=dT,\qquad D=3d+2xs,\\
+L=4-s+\left(\frac{5s}{3}-4\right)x,\qquad n=(x+1)T,\\
+a=s+c,\qquad b=py-\frac{h_{\rm aux}}y,\qquad W=a^2+b^2,\qquad
+F=-a+ib,\qquad t=\frac14+\frac{xs}{6d}.
+\end{gathered}
+\tag{59.1}
+$$
+
+这里 $c$ 为标量，$D$ 不表示完整响应 $\mathcal D$，$p$ 不表示可见列。
+所有 $x,d,s,y,Y-1,T,D,xD$ 均严格正，且 $W\ge a^2>0$。
+在 $\mathcal M_0$ 上，保持 (46.5)、(46.8)、(57.10) 的原函数，写
+
+$$
+\begin{gathered}
+\tau=\overline{\frac{G}{\sqrt2F}},\qquad
+v=\operatorname{Re}\tau,\qquad Z_0=3(4t-1),\qquad
+E_1=\sqrt2L_1\overline\tau-L_2,\\
+Q=2\operatorname{Re}(\overline G E_1),\qquad
+\mathcal S=c_{\rm cost}
+ \left[2\operatorname{Re}(\overline F L_1)+\frac{Wv}{Z_0}\right],\\
+e_F=\frac{\mathcal S}{K_0},\qquad
+R=\frac{Q}{2tW},\qquad e_G=e_F-R,\qquad
+\Phi=\frac{\mathcal D}{K_0},\\
+\varepsilon(x,y)=\frac1{65+128y/[3(x+1)]},\qquad
+L_\varepsilon=\min(e_G,e_F-\varepsilon R),\qquad
+H_\varepsilon=\max(e_G,e_F-\varepsilon R).
+\end{gathered}
+\tag{59.2}
+$$
+
+这些是原完整响应的端点；$\mathcal D=\mathcal S-(\nu/P_t)Q$
+仍包含原固定 $t$ 接触方程的强制根运动。
+接触式 $2tW=|G|^2$ 给 $F,G\ne0$、$|\tau|^2=t>1/4$，
+故 $Z_0,tW,K_0$ 等分母均非零。允许 $Q=0$，不对其符号作假设。
+
+**定理 59.2（全极小集排除、单值价格图及显式完整响应界）。**
+对定义 59.1 的整个 $\mathcal M_0$，每一点均满足
+
+$$
+s>\frac72,\qquad
+ y^2>\frac{7+\sqrt{57}}4>\frac72,\qquad
+\operatorname{Im}F>0.
+\tag{59.3}
+$$
+
+对每个固定 $0<x<1,s>0$，原函数 $y\mapsto U(x,y,s)$、
+$y\mapsto V(x,y,s)$ 在 $y>1$ 上均有严格正的二阶导数；
+$y\mapsto\max(U,V)$ 有唯一全局极小点。因此投影
+
+$$
+\iota(\mathcal M_0)\longrightarrow\mathbb R^2,\qquad
+(x,y,s)\longmapsto(x,s)
+\tag{59.4}
+$$
+
+为到其像的同胚，整个零阶极小集在该像上是连续单值 $y$ 图。
+这不判定像的连通性、有限性或原联合极小点的唯一性。
+
+原权重 $\theta=U_s/(U_s-V_s)$ 在整个该集合上满足
+
+$$
+\begin{gathered}
+\frac1{25665}<\varepsilon(x,y)<\theta<1,\\
+L_\varepsilon\le\Phi\le H_\varepsilon,\qquad
+(e_F-\Phi)R\ge\varepsilon R^2.
+\end{gathered}
+\tag{59.5}
+$$
+
+当 $Q\ne0$ 时，$\Phi$ 严格位于两个端点之间，乘积不等式也严格；
+当 $Q=0$ 时，$\Phi=e_F=e_G=L_\varepsilon=H_\varepsilon$。
+乘积不等式表示下权重侧的限制，双端点结论同时使用原有的 $\theta<1$。
+这些连续端点给原来的极值和
+
+$$
+\begin{gathered}
+S_{\rm pair}=\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi,\\
+\min_{\mathcal M_0}L_\varepsilon+\max_{\mathcal M_0}L_\varepsilon
+\le S_{\rm pair}\le
+\min_{\mathcal M_0}H_\varepsilon+\max_{\mathcal M_0}H_\varepsilon.
+\end{gathered}
+\tag{59.6}
+$$
+
+若同时使用 (57.13)，可取交界
+
+$$
+\begin{gathered}
+L_\cap=\max(L_\varepsilon,l_\delta),\qquad
+H_\cap=\min(H_\varepsilon,u_\delta),\qquad
+L_\cap\le\Phi\le H_\cap,\\
+\min_{\mathcal M_0}L_\cap+\max_{\mathcal M_0}L_\cap
+\le S_{\rm pair}\le
+\min_{\mathcal M_0}H_\cap+\max_{\mathcal M_0}H_\cap.
+\end{gathered}
+\tag{59.7}
+$$
+
+定性内部余量已由 (57.12) 给出；(59.5) 定量收紧的是 $e_F$ 一侧。
+这里不主张它统一支配含未知 $\delta$ 的旧双侧包络。
+(59.3) 仅是实际全局极小点的必要限制，受限区域内的驻点不因这些限制
+而成为 $\mathcal M_0$ 的成员。
+
+上述结论属于整个零阶极小集。非零参数的阈值表示仍只在定理 58.2
+的共同小 $h$ 区间内成立，并只对联合全局最优矩恢复实际全局极小接触；
+任意可行矩不因此具有该恢复性质。有限原 PB 的后果仍要求同一对正
+$h,k$、(58.39) 的全部小参数交、完整原 P2 及同一个充分大有限 $\lambda$，
+并经前卷定理 41.5 的严格阈值桥梁使用。
+
+**证明。** 全程使用 (57.1) 的两个原代价；以下坐标恒等式、微分和
+通常凸性、紧性事实均在同一模型特定推导中使用。
+
+（一）整个实际极小集的完整驻定性。
+定理 57.2 给
+
+$$
+\iota(\mathcal M_0)=\{U=V=K_0\}
+=\operatorname*{argmin}_{\Omega}\max(U,V).
+$$
+
+定理 57.3 及 (57.14)–(57.16) 在它的每一点给
+
+$$
+\nabla U=\theta(\nabla U-\nabla V),\qquad
+(1-\theta)\nabla U+\theta\nabla V=0,\qquad
+0<\theta<1,\qquad U_s>0>V_s.
+\tag{59.8}
+$$
+
+梯度在全部三个坐标 $(x,y,s)$ 中取，$x$ 偏导固定 $y,s$；
+原固定 $x,y$ 的 $t$ 偏导仍保持原义。
+由 (57.3) 的 $U_x<0$，有
+$V_x=-(1-\theta)U_x/\theta>0$。
+同时 $U=K_0$ 允许应用定理 57.2，故原括号
+$H=8+2s(5x-3)/(3d)>0$。以下只在实际极小点处使用此 $H$ 正性。
+
+（二）排除整个 $0<s\le7/2$ 价格层。
+写 $J=2(x+1)T/(dy)$。从 $dH=2L$、$dJ=2n/y$ 及
+$2t=D/(6d)$，原第二代价恰为
+
+$$
+V=\frac{3y}{4s(Y-1)}(Y+e^2)
+ \left[\frac{L^2}{xD}+\frac{n^2}{YxD}\right].
+\tag{59.9}
+$$
+
+固定 $y,s$，令 $f_L=L^2/(xD)$、$f_n=n^2/(xD)$。
+若 $0<s\le7/2$，则
+
+$$
+L=(4-s)(1-x)+\frac{2s}{3}x>0.
+$$
+
+对上述有理式求导并合并分子，得到
+
+$$
+\begin{aligned}
+(f_L)_x&=\frac{LE_L}{(xD)^2},&
+E_L&=3(s-4)(1-x)+2s(2s-7)x,\\
+(f_n)_x&=\frac{nE_n}{(xD)^2},&
+E_n&=2(2s-3)(s-3)x^3+9(s-3)x^2+(18-9s)x-9\\
+&&&=-9(1-x)^3-9(1+s)x(1-x)^2\\
+&&&\hspace{6mm}-9(2+s)x^2(1-x)+2s(2s-9)x^3.
+\end{aligned}
+\tag{59.10}
+$$
+
+$E_L$ 的两个端点系数均非正，第一项严格负，因为 $s<4$、$x<1$；
+所以即使 $s=7/2$ 也有 $E_L<0$。
+$E_n$ 的四项分解在本价格层内均严格负，故 $E_n<0$。
+由 $L,n,xD>0$，得 $(f_L)_x<0,(f_n)_x<0$。
+又 $(Y+e^2)_x=-2e<0$、$f_L+f_n/Y>0$，(59.9) 给该整个层上的 $V_x<0$，
+对每个 $y>1$ 均成立。这与（一）对实际极小点强制的 $V_x>0$ 矛盾，
+故整个 $\mathcal M_0$ 均有 $s>7/2$。
+
+（三）原价格纤维的正曲率及 $y$ 排除。
+固定任意 $x,s$，令 $k_U=d/(2xs)>0$、$k_V=3/(4xsD)>0$。
+(57.1)、(59.9) 给
+
+$$
+\begin{gathered}
+U=k_U\frac{A_Uy^3+B_Uy+C_U/y}{Y-1},\qquad
+V=k_V\frac{A_Vy^3+B_Vy+C_V/y}{Y-1},\\
+A_U=p^2,\quad B_U=a^2-2p h_{\rm aux},\quad C_U=h_{\rm aux}^2,\\
+A_V=L^2,\quad B_V=e^2L^2+n^2,\quad C_V=e^2n^2.
+\end{gathered}
+\tag{59.11}
+$$
+
+两组 $A$ 非负，两组 $C$ 严格正，且 $B_V>A_V/2$。
+为核对 $B_U$，若 $p<0$，则 $B_U=a^2+2|p|h_{\rm aux}>0$。
+若 $p\ge0$，置 $q_0=(9-x)/2$、$m_0=3d^2+(5/2)xd$，则
+
+$$
+\begin{gathered}
+a=p+q_0,\qquad h_{\rm aux}=m_0+xd\,p,\\
+B_U=(1-2xd)p^2+2p(q_0-m_0)+q_0^2,\qquad
+q_0-m_0=\frac{3+6x-x^2}{2}>0.
+\end{gathered}
+\tag{59.12}
+$$
+
+由于 $xd\le1/4$，有 $B_U>0$，且在 $p>0$ 时 $B_U>A_U/2$。
+这一步不预设交叉系数的符号。
+
+为在同一证明中检验曲率，置
+$f_1(y)=y/(y^2-1)$、$f_2(y)=1/[y(y^2-1)]$。
+有
+
+$$
+\begin{gathered}
+\frac{y^3}{y^2-1}=y+f_1(y),\qquad
+f_1(y)=\frac12\left(\frac1{y-1}+\frac1{y+1}\right),\qquad
+f_2(y)=f_1(y)-\frac1y,\\
+f_1''(y)=\frac1{(y-1)^3}+\frac1{(y+1)^3}>0,\qquad
+f_2''(y)=\frac{2(6Y^2-3Y+1)}{y^3(Y-1)^3}>0.
+\end{gathered}
+\tag{59.13}
+$$
+
+最后一个分子在 $Y>1$ 上正。
+(59.11) 中每一代价因而是正倍数的
+$Ay+(A+B)f_1+Cf_2$，其中 $A\ge0,B>0,C>0$，故
+$U_{yy}>0,V_{yy}>0$ 在整个 $\Omega$ 成立。
+这里使用通常的一元二阶导数凸性准则，见 NIST DLMF
+[§1.4(viii)，(1.4.38) 后的判据](https://dlmf.nist.gov/1.4#viii)。
+严格正二阶导数使一阶导数严格递增；在任意两个不同端点间用中值定理
+比较两段割线斜率，即得严格凸性，无须引入联合凸性假设。
+
+现固定一个任意实际极小点，把它的实际 $\theta$ 作为常数，
+对 $(1-\theta)U+\theta V$ 取 $y$ 导数。
+它仍有 (59.11) 的三项形式，系数为
+
+$$
+\begin{gathered}
+A=(1-\theta)k_UA_U+\theta k_VA_V,\\
+B=(1-\theta)k_UB_U+\theta k_VB_V,\qquad
+C_1=(1-\theta)k_UC_U+\theta k_VC_V.
+\end{gathered}
+$$
+
+（二）给 $p>1$，故 $A>0$、$B>A/2$、$C_1>0$。
+(59.8) 的 $y$ 分量乘正数 $Y(Y-1)^2$ 后正是
+
+$$
+AY^2(Y-3)-BY(Y+1)-C_1(3Y-1)=0.
+\tag{59.14}
+$$
+
+于是 $AY^2(Y-3)>(A/2)Y(Y+1)$，除以正数 $AY$ 得
+$2Y^2-7Y-1>0$。因 $Y>1$，这等价于
+$Y>(7+\sqrt{57})/4>7/2$。
+没有对随点变化的 $\theta$ 求导，也没有除以 $p$ 或 $L$；
+$A$ 严格正的使用只发生在（二）之后。
+
+（四）整个极小集的纤维图。
+固定 $x,s$，若 $y_1\ne y_2$、$0<q<1$，分别对严格凸的 $U,V$ 使用
+严格凸不等式，并将各自两个端点值用对应的 $\max(U,V)$ 控制，便得
+
+$$
+\begin{aligned}
+&\max(U,V)(x,(1-q)y_1+qy_2,s)\\
+&\quad<(1-q)\max(U,V)(x,y_1,s)+q\max(U,V)(x,y_2,s).
+\end{aligned}
+$$
+
+因此这个最大值严格凸。
+当 $y\downarrow1$，$W\ge a^2>0$ 使 $U\to\infty$。
+当 $y\to\infty$，若 $p\ne0$，则 $A_U=p^2>0$ 使 $U\to\infty$；
+若 $p=0$，则 $s=5/2$、$L=3/2+x/6>0$，所以 $A_V>0$、$V\to\infty$。
+连续性和两端发散使最大值在区间内部取到极小值，严格凸性使之唯一。
+故每个实际联合全局极小点都必须使用其 $(x,s)$ 纤维的这个唯一 $y$；
+否则在同一纤维换成更低点即与 (57.2) 矛盾。(59.4) 因而单射。
+
+定义 53.1、定理 56.3 给整个 $\mathcal M_0$ 紧；
+$\iota$ 及其逆 $t=1/4+xs/(6d)$ 在此均连续。
+投影是从紧集到 Hausdorff 平面的连续单射，故为到其像的同胚。
+所用的标准紧到 Hausdorff 结论见 Munkres，*Topology*，第二版，
+§26，Theorem 26.6；在此亦可直接看出：任一闭子集仍紧，其投影紧而闭，
+所以投影的逆连续。这只说明整个实际极小集的图性质，不把一个包含它的
+驻点区域认作它本身，也不给孤立性、有限性、连通性或联合唯一性。
+
+（五）第一原代价的定量弹性。
+在任意实际极小点置
+
+$$
+\alpha=y-\frac{xd}{y}>0,\qquad
+\beta=\frac52y+\frac{3d^2}{y}>0.
+$$
+
+$\alpha>0$ 来自 $Y>7/2$、$xd\le1/4$。
+此时 $b=s\alpha-\beta$，原第一代价精确为
+
+$$
+U=\frac{yd}{2x(Y-1)}
+ \frac{(s+c)^2+(s\alpha-\beta)^2}{s}.
+\tag{59.15}
+$$
+
+由 $Y>7/2$ 可得 $\beta/\alpha<47/14$。
+确实，乘正分母后该不等式是
+
+$$
+12Y>42d^2+47xd=42-37x-5x^2,
+$$
+
+左边严格大于 $42$，右边严格小于 $42$。
+又 $0<c<2<47/14$、$s>7/2=49/14$，故
+$0<b<s\alpha$，特别地 $\operatorname{Im}F=b>0$。
+固定 $x,y$ 对 (59.15) 求导，得
+
+$$
+E_U:=\frac{sU_s}{U}
+=\frac{(1+\alpha^2)s^2-(c^2+\beta^2)}{W}.
+\tag{59.16}
+$$
+
+$c<(47/49)s$、$\beta<(47/49)s\alpha$，所以分子严格大于
+$(192/2401)(1+\alpha^2)s^2$。
+另一方面，$c<2$、$s>7/2$ 给 $s+c<11s/7$，从而
+
+$$
+\begin{gathered}
+W<\left(\frac{121}{49}+\alpha^2\right)s^2
+\le\frac{121}{49}(1+\alpha^2)s^2,\\
+E_U>\frac{192}{5929}>\frac1{32}.
+\end{gathered}
+\tag{59.17}
+$$
+
+这些估计覆盖所有实际极小点，不选择根或局部分支。
+
+（六）第二原代价的弹性及显式权重。
+复用 (57.7)，置
+
+$$
+\begin{gathered}
+\chi=\frac{3d}{2xs}>0,\qquad
+A_\chi=8\chi+5-\frac3x=\chi H>0,\qquad
+j=\frac{3(x+1)}y>0,\\
+B_\chi=1+2\chi,\qquad N=A_\chi^2+j^2B_\chi^2,\qquad
+\gamma=\frac{y[(2-x)^2+y^2]}{24(y^2-1)}>0,\qquad
+V=\gamma\frac{N}{1+\chi}.
+\end{gathered}
+\tag{59.18}
+$$
+
+这里 $A_\chi>0$ 只由（一）的实际低值结论取得，不向高代价点外推。
+在固定 $x,y$ 时 $s\chi_s=-\chi$，故
+
+$$
+E_V:=-\frac{sV_s}{V}
+=\frac{\chi(16A_\chi+4j^2B_\chi)}N-\frac{\chi}{1+\chi}>0.
+\tag{59.19}
+$$
+
+末尾正性使用原来的 $V_s<0$。
+由平方 $(A_\chi-jB_\chi)^2\ge0$ 和 $A_\chi^2\ge0$，有
+$N\ge2A_\chi jB_\chi$、$N\ge j^2B_\chi^2$。
+第一式也是 NIST DLMF [§1.7(iii)，(1.7.7)](https://dlmf.nist.gov/1.7.E7)
+的两正数算术—几何平均不等式在此的直接使用。
+因此
+
+$$
+E_V<\frac{8\chi}{jB_\chi}+\frac{4\chi}{B_\chi}
+<\frac4j+2,
+\tag{59.20}
+$$
+
+其中第一步舍去严格负项，第二步用
+$\chi/(1+2\chi)<1/2$。所有除数均严格正。
+在接触面 $U=V=K_0$ 上，由 (59.17)、(59.20) 得
+
+$$
+\theta=\frac{E_U}{E_U+E_V}
+>\frac1{65+128/j}
+=\frac1{65+128y/[3(x+1)]}=\varepsilon(x,y).
+\tag{59.21}
+$$
+
+局部显式式不需 $y$ 的统一上界。
+为取得共同有理常数，再用定义 58.1、定理 58.2 所保留的整个实际价格
+投影 $\Pi\subset\mathcal B$，故 $y\le600$；因 $x+1>1$，有
+
+$$
+\varepsilon(x,y)>
+\frac1{65+128\cdot600/3}=\frac1{25665}.
+$$
+
+上权重 $\theta<1$ 仍用 (57.11)，没有由下界取代它。
+
+（七）原完整响应的定量界。
+(57.17) 及定义 59.1 给原来的恒等式
+
+$$
+\Phi=e_F-\theta R,\qquad e_G=e_F-R.
+\tag{59.22}
+$$
+
+$\varepsilon<\theta<1$ 因而逐点给
+
+$$
+\begin{cases}
+e_G<\Phi<e_F-\varepsilon R,&R>0,\\
+e_F-\varepsilon R<\Phi<e_G,&R<0,\\
+\Phi=e_F=e_G,&R=0.
+\end{cases}
+\tag{59.23}
+$$
+
+这证明 (59.5) 的双端点界。又
+$(e_F-\Phi)R=\theta R^2$，得到乘积界及其严格条件；
+该乘积关系自身只限制下权重，(59.23) 的另一端仍需 $\theta<1$。
+没有删去非恒定分母、平均点变权重，或抑制 $Q$ 项。
+
+$\mathcal M_0$ 非空且紧，原响应和所有端点连续，所用分母均非零，
+因此各极值取到。对点值界分别取最小值、最大值再相加即得 (59.6)；
+与 (57.13) 取交后同样得到 (59.7)。这是同一完整响应上的序关系推论，
+仍是一个最小值与一个最大值之和。
+(57.12) 已给定性统一内部余量；显式 $\varepsilon$ 给的是原
+$e_F$ 到 $e_G$ 间隙中根运动必须占据的正比例，
+没有建立 $\varepsilon$ 与未知 $\delta$ 的统一大小关系。
+
+（八）原来源对应及严格有限比较的边界。
+任意上述实际极小点仍满足 $P=2tW-|G|^2=0$。
+由原相位恢复
+
+$$
+\begin{gathered}
+u_r=\frac{(1,r\tau)^{\mathsf T}}{\sqrt{1+t}},\qquad
+\eta=\frac{\sqrt2F}{\sqrt{1+t}},\qquad
+\mathbf d_{\rm src}=(F,rG/\overline\tau)^{\mathsf T}
+=\sqrt2F\,a_r,\\
+u_r^*p_{\rm vis}\in\mathbb R,\qquad
+(Cu_r)^*q_{\rm vis}\in\mathbb R,\qquad
+u_r^*q_{\rm vis}=p_{\rm vis}^*Cu_r,\qquad
+X=[p_{\rm vis}\ q_{\rm vis}][u_r\ Cu_r]^{-1}=X^*.
+\end{gathered}
+\tag{59.24}
+$$
+
+前卷定理 43.2 给两个来源坐标及这些四个实 Hermitian 图条件；
+$u_r$ 两坐标非零，所以同一个有限 $X$ 同时实现原两列。
+两笔原预算的下标记为 $j_b=\pm1$，在此取
+$\epsilon_{\rm budget}=-1$、$\alpha_{j_b}=y+j_b>0$、
+$\beta_{j_b}=j_bx$。另一取向仅按前卷 (39.32) 共轭运输，保留 $r$
+及取向适配的 $x,y$；不作相反来源或另一 $h$ 的替换。
+
+有限问题仍遍取每个有限 Hermitian $X$ 的 $X\oplus0_3$，
+以及完整 $M_5(\mathbb C)$ 上每个正复线性泛函，包含混合块和环境块，
+保留两笔预算、两个来源和两个取向。原环境不因零阶定位而改变，
+也不加入 CP、EJA、独立乘积或受限泛函假设。
+若要把阈值用于有限 PB，须保持同一对正 $h,k$ 及
+
+$$
+\begin{gathered}
+0<h<\min(h_1,h_{\rm coer},h_{\rm pos},h_x,h_0,\bar h,h_s),\qquad
+h\le10^{-3},\qquad k>0,\\
+\rho=\frac{k}{\lambda^2},\qquad
+h^2\lambda^4>3k^2(\lambda^2+3/2),
+\end{gathered}
+\tag{59.25}
+$$
+
+并选一个共同的充分大有限 $\lambda$；有限个来源、取向及完整 P2
+的截止取最大值。前卷定理 41.5 只以严格的 $k<K_r(h)$ 或
+$k>K_r(h)$ 分别给最终全部原 PB 成功或严格失败，阈值等号的有限符号
+不由这里决定。定理 58.2 的精确半定阈值式只在上述共同小参数范围
+使用，并在联合全局最优处恢复实际接触；它不是任意有限 $\lambda$
+原 PB 或任意可行矩的直接精确表示。
+
+由 (57.19) 仍有
+
+$$
+K_+(h)-K_-(h)=hK_0S_{\rm pair}+o(h),\qquad h\downarrow0.
+\tag{59.26}
+$$
+
+(59.6)、(59.7) 端点和的符号尚未确定，$S_{\rm pair}$ 的符号及
+是否为零也尚未确定；尚无同一正 $h$ 的严格阈值次序或共同分离正 $k$。
+若 $S_{\rm pair}=0$，一阶式仍不决定阈值次序。
+剩余区域内的全部驻点分量、$Q$ 的符号、切向二阶必要条件能否进一步
+排除响应危险点，以及有限 PB 变分达到性，均不由本定理推出。
+
+本定理的整个价格层排除、$y$ 系数比较及其定量弹性到原完整响应的
+推导为本固定来源模型的 `repo-derived` 结果，不作全球优先权主张。
+整个极小集、低值分离、简单性、内部权重和原包络分别复用定义 53.1、
+定理 56.3、57.2–57.3；有界价格投影复用定理 58.2。
+坐标和微分恒等式、一元严格凸性、紧到 Hausdorff 的同胚判据、
+算术—几何平均不等式及端点序运算只承担上述证明中的中间步骤。∎
+
+## 追加锚（本行以下为增补区）
+
+## 60. 原接触的有理价格截断、全极小集定位与完整响应证书输入
+
+**定义 60.1（原代价的多项式分子）。** 保持定义 59.1 的来源、取向、
+原域 $\Omega$ 及整个 $\mathcal M_0$，使用 (59.1) 的别名，令
+
+$$
+\begin{gathered}
+Y=y^2,\qquad y=\sqrt Y>1,\qquad B=pY-h_{\rm aux},\\
+A=a^2Y+B^2
+ =p^2Y^2+(a^2-2p h_{\rm aux})Y+h_{\rm aux}^2,\\
+A_V=(Y+e^2)(L^2Y+n^2),\qquad
+\mathscr C=2dDA-3A_V=c_2Y^2+c_1Y+c_0,\\
+c_2=2dDp^2-3L^2,\\
+c_1=2dD(a^2-2p h_{\rm aux})-3(e^2L^2+n^2),\\
+c_0=T^2[2d^3D-3e^2(x+1)^2].
+\end{gathered}
+\tag{60.1}
+$$
+
+$\mathscr C$ 是标量多项式，与原矩阵 $C=\operatorname{diag}(1,2)$
+不同。直接代入 (57.1)，有同一原模型的恒等式
+
+$$
+\begin{gathered}
+W=\frac AY,\quad |G|^2=\frac{A_V}{4d^2Y},\quad
+t=\frac{D}{12d},\quad Z_0=\frac{2xs}{d},\quad
+\widehat P=\frac{\mathscr C}{12d^2Y},\\
+U=\frac{dA}{2xs\sqrt Y(Y-1)},\qquad
+V=\frac{3A_V}{4xsD\sqrt Y(Y-1)},\qquad
+U-V=\frac{\mathscr C}{4xsD\sqrt Y(Y-1)}.
+\end{gathered}
+\tag{60.2}
+$$
+
+所有显示的分母在 $\Omega$ 上严格正，$A>0$。
+$\mathscr C=0$ 仍经 (46.8)、(59.24) 恢复同一来源的实际不利接触。
+以下偏导均在独立坐标 $(x,Y,s)$ 中取；$s$ 偏导固定原 $x,y$。
+
+**定理 60.2（精确接触上界、同时定位及负常数系数）。** 令
+$\bar\kappa=102481/100000$、$q=41/40$。原全局最小代价满足
+
+$$
+K_0<\bar\kappa<q.
+\tag{60.3}
+$$
+
+整个原 $\mathcal M_0$ 的每一点同时满足
+
+$$
+\frac{532}{2541}<x<\frac{97}{100},\qquad
+\frac{7+\sqrt{57}}4<Y<\frac{203401}{400},\qquad
+\frac72<s<40.
+\tag{60.4}
+$$
+
+更一般地，在原 $\Omega$ 中，只要
+$s\ge7/2$、$y>19/10$、$U\le q$，便有
+
+$$
+c_0<-\frac{1639}{608}T^2<0.
+\tag{60.5}
+$$
+
+**证明。** 首先构造精确的原接触。固定 $x=107/128$、$s=93/16$，则
+
+$$
+\begin{gathered}
+A=\frac{2809}{256}Y^2+
+ \frac{102473001}{2097152}Y+
+ \frac{52963959321}{68719476736},\qquad
+\frac{d}{2xs}=\frac{56}{3317},\\
+f(Y)=3241313302478848Y^2-48348158620565504Y
+ -117023359257401103
+ =\frac{4503599627370496}{15}\mathscr C.
+\end{gathered}
+\tag{60.6}
+$$
+
+置 $y_-=412741/100000$、$y_+=206371/50000$。精确代入给
+
+$$
+f(y_-^2)=-\frac{161623464836548873661997247}{95367431640625}<0,
+\qquad
+f(y_+^2)=\frac{327151284213047079586102433}{95367431640625}>0.
+\tag{60.7}
+$$
+
+首项正、常数项负，故 $f$ 恰有一个正根 $Y_*$，且
+$y_-<y_*:=\sqrt{Y_*}<y_+$。这给 $\Omega$ 中的实际原接触，
+无须把它认作全局极小点。将 (60.6) 的三个正系数记为 $A_u,B_u,C_u$，
+则其原代价是
+
+$$
+U=\frac{56}{3317}\left[
+A_uy+(A_u+B_u)\frac{y}{y^2-1}
+ +C_u\frac1{y(y^2-1)}\right].
+$$
+
+后两函数在 $y>1$ 严格递减，其导数分别是
+$-(y^2+1)/(y^2-1)^2$、$-(3y^2-1)/[y^2(y^2-1)^2]$。因此
+
+$$
+\begin{aligned}
+K_0\le U(x,y_*,s)
+&<\frac{56}{3317}\left[A_uy_+
+ +(A_u+B_u)\frac{y_-}{y_-^2-1}
+ +\frac{C_u}{y_-(y_-^2-1)}\right]\\
+&=\frac{26329373852596502107792882153}
+ {25691996474755518423859200000}<\bar\kappa.
+\end{aligned}
+\tag{60.8}
+$$
+
+最后一差恰为
+$41054697700728162264599/25691996474755518423859200000>0$。
+这里只使用实际接触提供全局代价上界。
+
+对其余结论，先复用 (59.3)、(59.12)，不另证整个极小集的正则性、
+内部权重或固定 $(x,s)$ 的 $y$ 唯一性。若 $s\ge7/2$，则 $p\ge1$，
+$a^2-2p h_{\rm aux}>0$，而 $p/s\ge2/7$。由 (60.2) 得
+
+$$
+U>\frac{dp^2y}{2xs}
+ \ge\frac{2dsy}{49x}\ge\frac{dy}{7x}.
+\tag{60.9}
+$$
+
+在 $\mathcal M_0$ 上，(59.3) 给
+$Y>(7+\sqrt{57})/4>29/8>(19/10)^2$。于是
+$q>U>19d/(70x)$，解得 $x>532/2541>1/5$。
+
+为排除大 $y$ 和大 $x$，使用原第二代价 (59.18)，置
+
+$$
+m=5-\frac3x,\qquad j=\frac{3(x+1)}y,\qquad
+\chi=\frac{3d}{2xs},\qquad
+\gamma=\frac{y(Y+e^2)}{24(Y-1)}.
+$$
+
+若 $x>3/5$，则 $0<m<2$，并且
+
+$$
+\begin{gathered}
+(m+8\chi)^2-m^2(1+\chi)
+ =\chi(16m-m^2+64\chi)>0,\\
+(1+2\chi)^2-(1+\chi)=3\chi+4\chi^2>0,\\
+V=\gamma\frac{(m+8\chi)^2+j^2(1+2\chi)^2}{1+\chi}
+ >\gamma(m^2+j^2)>\frac{m^2y}{24}.
+\end{gathered}
+\tag{60.10}
+$$
+
+这是有限 $s$ 的原代价下界。若 $x\le22/29$，(60.9) 给 $U>y/22$；
+若 $x\ge22/29$，则 $m\ge23/22$，故
+$V>529y/11616>y/22$，其中系数差为 $1/11616$。
+因此 $\max(U,V)>y/22$，在整个 $\mathcal M_0$ 上得到
+$y<22q=451/20$。
+
+再展开 (60.10) 中的 $\gamma(m^2+j^2)$。由 $e>1$、
+$y/(Y-1)>1/y$，并使用 (59.20) 所引用的两数算术—几何平均不等式，得
+
+$$
+V>\frac1{24}\left[m^2y+
+ \frac{2m^2+9(x+1)^2}{y}\right]
+ \ge\frac{m\sqrt{2m^2+9(x+1)^2}}{12}.
+\tag{60.11}
+$$
+
+若 $x\ge97/100$，则 $m\ge185/97$、$x+1\ge197/100$。精确差
+
+$$
+\left(\frac{185}{97}\right)^2
+\left[2\left(\frac{185}{97}\right)^2
+ +9\left(\frac{197}{100}\right)^2\right]-144q^2
+=\frac{15740699761}{7082342480}>0
+$$
+
+与 $V=K_0<q$ 矛盾，故 $x<97/100$。
+若 $s\ge40$，函数 $(s-5/2)^2/s$ 在 $s>5/2$ 严格递增，
+其在 $40$ 的值为 $1125/32$。由 $x<97/100$、$y>19/10$ 及 (60.9)，
+
+$$
+U>\frac{57}{1940}\frac{1125}{32}
+=q+\frac{493}{62080}>q,
+$$
+
+再次矛盾。这证明 (60.4) 的全部同时限制。
+
+最后只假设 (60.5) 的较大区域。由 (60.9) 及 $U\le q$，有
+$sy<49qx/(2d)$。利用 $xd\le1/4$、$d<1$ 和 $y>19/10$，得
+
+$$
+2d^3D=6d^4+4xsd^3
+ <6+\frac{98q x^2d^2}{y}
+ <6+\frac{2009}{608}.
+$$
+
+而 $e(x+1)=2+xd>2$，故
+$3e^2(x+1)^2>12$。代回 (60.1) 即为 (60.5)。
+这些精确排除及系数界是本固定来源模型的 `repo-derived` 推导；
+一元介值、微分、代数运算及上述算术—几何平均不等式只作证明中的
+已有数学原则使用，不承担文献优先权主张。∎
+
+**定理 60.3（保留全部极小分量的驻定与完整响应输入）。** 使用
+(60.1) 的原分子，定义
+
+$$
+\begin{gathered}
+N_x=xdA_x-A,\qquad N_s=sA_s-A,\qquad
+N_Y=2Y(Y-1)A_Y-(3Y-1)A,\\
+E_x=s\mathscr C_sN_x-xdN_s\mathscr C_x,\qquad
+E_Y=s\mathscr C_sN_Y-2Y(Y-1)N_s\mathscr C_Y,\\
+\rho=\frac{d^2A^2}{4x^2s^2Y(Y-1)^2}=U^2,\qquad
+\Theta=\frac{2dDN_s}{s\mathscr C_s}.
+\end{gathered}
+\tag{60.12}
+$$
+
+令 $\mathcal T$ 为坐标 $(x,Y,s)$ 中满足下列全部条件的集合：
+
+$$
+\begin{gathered}
+\frac{532}{2541}<x<\frac{97}{100},\quad
+\frac72<s<40,\quad 1<Y<\frac{203401}{400},\quad
+2Y^2-7Y-1>0,\\
+\mathscr C=E_x=E_Y=0,\qquad
+\mathscr C_s>0,\quad N_s>0,\quad 2dDN_s<s\mathscr C_s,\\
+L>0,\quad B>0,\qquad
+d^2A^2<4\bar\kappa^2x^2s^2Y(Y-1)^2.
+\end{gathered}
+\tag{60.13}
+$$
+
+则 $\mathcal T$ 全由原实际接触组成，且精确地
+
+$$
+\min_{\mathcal T}\rho=K_0^2,\qquad
+\mathcal M_0=\{z\in\mathcal T:\rho(z)=K_0^2\},
+\tag{60.14}
+$$
+
+其中右侧经 $y=\sqrt Y$、$t=D/(12d)$ 及原相位恢复来识别。
+不要求驻点或极小点孤立、有限、连通或唯一。
+
+为给出同一输入上的完整响应，置下列实多项式：
+
+$$
+\begin{gathered}
+g_R=-(eL+n),\qquad g_I=YL-en,\\
+v_0=-aYg_R+Bg_I,\qquad w_0=Y(ag_I+Bg_R),\\
+k_1=3xd^2+(1+3x)Y,\qquad
+k_2=(1+3x)Y-3xe(x+1),\\
+f_R=(1-3x)v_0+w_0,\qquad
+f_I=-k_1v_0-[x(1+x)+Y]w_0,\\
+g_1=-2[(6x+1)v_0+w_0],\qquad
+g_2=k_2v_0+[x(x+2)+Y]w_0,\\
+J_F=2s(-aYf_R+Bf_I)+dAv_0,\\
+J_G=3s(Yg_1g_R+g_2g_I)+dDAv_0,\\
+H=(s\mathscr C_s-2dDN_s)J_F+2dN_sJ_G,\qquad
+J=4xd s^2A^2\mathscr C_s,\qquad \Psi=H/J.
+\end{gathered}
+\tag{60.15}
+$$
+
+在整个 $\mathcal T$ 上 $J>0$。在其最低价格层，即整个原
+$\mathcal M_0$ 上，精确地有
+
+$$
+\Theta=\theta,\qquad \Psi=\sqrt2\Phi,\qquad
+S_{\rm pair}=\frac{\min_{\rho=K_0^2}\Psi+
+                         \max_{\rho=K_0^2}\Psi}{\sqrt2}.
+\tag{60.16}
+$$
+
+最低层以外的 $\Psi$ 是下述局部代价归一化辅助函数，不将它认作
+原 $K_0$ 归一化的 $\Phi$。各极值保留 (60.15) 中全部随点变化的分母。
+
+**证明。** 由 (60.2) 直接求导，
+
+$$
+\frac{U_x}{U}=\frac{N_x}{xdA},\qquad
+\frac{U_s}{U}=\frac{N_s}{sA},\qquad
+\frac{U_Y}{U}=\frac{N_Y}{2Y(Y-1)A}.
+\tag{60.17}
+$$
+
+定理 53.2、56.3、57.3 已对整个 $\mathcal M_0$ 给出简单性及
+$U_s>0>V_s$、$0<\theta<1$。在接触面上，原固定 $x,y$ 的导数为
+
+$$
+P_t=\frac{\mathscr C_s}{2dxY}>0,\qquad
+\theta=\frac{U_s}{U_s-V_s}=\frac{2dDN_s}{s\mathscr C_s}.
+\tag{60.18}
+$$
+
+这里用 $s_t=6d/x$，没有用固定 $s$ 的 $x$ 导数代替固定 $t$ 的导数；
+后者在接触面上精确为
+$P_x|_t=[\mathscr C_x-s\mathscr C_s/(xd)]/(12d^2Y)$。
+由 (59.8) 和接触恒等式，得到
+
+$$
+\nabla U=\frac{U_s}{\mathscr C_s}\nabla\mathscr C.
+\tag{60.19}
+$$
+
+其 $x,Y$ 分量恰为 $E_x=E_Y=0$。
+(59.3)、(59.8)、(59.24) 及定理 60.2 供给 (60.13) 的其余所有严格条件，
+所以整个 $\mathcal M_0$ 均被保留。
+反之每个 $\mathcal T$ 点满足原域中的 $\widehat P=0$，故由
+(46.8)、(59.24) 是原接触，代价 $U\ge K_0$。
+既有非空 $\mathcal M_0\subset\mathcal T$，最低值取到且等价于
+(60.14)，不需把驻定性当作极小性的充分条件。
+在 $\mathcal T$ 的每一点，$E_x=E_Y=0$、$\mathscr C_s>0$ 又反推出
+(60.19)，故沿其中任意分段 $C^1$ 路径，$U$ 恒定。
+
+负常数系数 (60.5) 可在此完整输入中消去接触首项退化。
+置 $z=1/Y>0$，则
+
+$$
+f_z(z)=z^2\mathscr C(x,1/z,s)=c_0z^2+c_1z+c_2,
+\qquad c_0<0.
+\tag{60.20}
+$$
+
+$E_x,E_Y$ 关于 $Y$ 的次数至多分别为 $4,5$。
+以 $z^4E_x(x,1/z,s)$、$z^5E_Y(x,1/z,s)$ 对 $f_z$ 作多项式伪除法，
+余式分别记为 $a_xz+b_x$、$a_Yz+b_Y$；系数在 $\mathbb Q[x,s]$ 中。
+伪除法恒等式中的乘子是非零 $c_0$ 的幂，故在 (60.13) 的全部过滤条件
+及 $z=1/Y$ 下，三个原方程等价于
+
+$$
+f_z=0,\qquad a_xz+b_x=0,\qquad a_Yz+b_Y=0.
+\tag{60.21}
+$$
+
+当 $a_x\ne0$，精确代入 $z=-b_x/a_x$，得到
+
+$$
+a_xb_Y-a_Yb_x=0,\qquad
+c_0b_x^2-c_1a_xb_x+c_2a_x^2=0.
+\tag{60.22}
+$$
+
+当 $a_x=0,a_Y\ne0$，必须 $b_x=0$，改用 $z=-b_Y/a_Y$ 及对应二次式。
+当 $a_x=a_Y=0$，必须 $b_x=b_Y=0$，保留 $f_z=0$ 的全部满足过滤条件的根。
+若一行首系数为零而常数非零，该行没有根。所有代入均保留原不等式及
+非零分母条件。这些分支穷尽 (60.21)，不除以 $c_2$、$\mathscr C_Y$
+或判别式；$c_2=0$、重根和两行余式全零的整片纤维均在内。
+正 $z$ 过滤排除倒数变换引入的 $z=0$，不丢失任何原 $Y>1$。
+
+对响应，(60.2)、(46.8) 先给同一来源的相位恒等式
+
+$$
+F=-a+iB/y,\quad G=(g_R+ig_I/y)/(2d),\quad
+\sqrt2v=\frac{v_0}{2dA},\quad
+\sqrt2y w=\frac{w_0}{2dA}.
+\tag{60.23}
+$$
+
+将 (46.5) 的原 $\alpha_1,\chi_1,\kappa_1$ 代入，可得
+
+$$
+\sqrt2L_1=\frac{f_R+if_I/y}{4xdA},\qquad
+\sqrt2L_2=\frac{g_1+ig_2/y}{8xdA}.
+\tag{60.24}
+$$
+
+在接触面上 $G=\sqrt2F\overline\tau$、$|\tau|^2=t$，故原来的
+$E_1,Q$ 满足
+
+$$
+Q=4t\operatorname{Re}(\overline F L_1)
+       -2\operatorname{Re}(\overline G L_2).
+\tag{60.25}
+$$
+
+在 $\mathcal T$ 上定义局部代价归一化端点
+
+$$
+\begin{gathered}
+e_F^{\rm loc}=\frac{2\operatorname{Re}(\overline F L_1)}W+\frac v{Z_0},\qquad
+e_G^{\rm loc}=\frac{2\operatorname{Re}(\overline G L_2)}{|G|^2}+\frac v{Z_0},\\
+e_G^{\rm loc}=e_F^{\rm loc}-\frac{Q}{2tW},\qquad
+\sqrt2e_F^{\rm loc}=\frac{J_F}{4xd sA^2},\qquad
+\sqrt2e_G^{\rm loc}=\frac{J_G}{4xd sDA^2}.
+\end{gathered}
+\tag{60.26}
+$$
+
+于是 (60.15) 在整个 $\mathcal T$ 上精确等于
+$\sqrt2[(1-\Theta)e_F^{\rm loc}+\Theta e_G^{\rm loc}]$。
+仅在最低层使用 $U=c_{\rm cost}W=K_0$，这两个端点才识别为原
+$e_F,e_G$，而 (60.18) 识别实际 $\theta$。因此 (57.11) 给 (60.16)。
+强制根运动也可直接核对：固定原 $x,y$ 对接触方程的一阶扰动求导，
+其显式扰动项是 $Q$，故 $P_t t_g+Q=0$、$t_g=-Q/P_t$。
+这正是原 $\mathcal D=\mathcal S-(\nu/P_t)Q$ 的修正项。
+$Q=0$ 时同样保留该点，此时两个端点相等；以上任何一步均未除以 $Q$。
+
+由此，剩余的精确最低值与响应条件可以同时写为：求实数
+$\kappa_*,\ell$ 及 $z_*\in\mathcal T$，满足
+
+$$
+\begin{gathered}
+\rho(z_*)=\kappa_*,\qquad
+\forall z\in\mathcal T:\ \rho(z)\ge\kappa_*,\\
+\forall z\in\mathcal T:\
+ \rho(z)=\kappa_*\Longrightarrow\Psi(z)\ge\ell,\qquad
+\Psi(z_*)>-\ell.
+\end{gathered}
+\tag{60.27}
+$$
+
+若这些条件成立，(60.14) 给 $\kappa_*=K_0^2$，而
+$\min\Psi+\max\Psi\ge\ell+\Psi(z_*)>0$，故 $S_{\rm pair}>0$。
+反之，若 $S_{\rm pair}>0$，原 $\mathcal M_0$ 的非空紧性及响应连续性
+允许取 $\kappa_*=K_0^2$、$\ell=\min\Psi$ 及最大值点 $z_*$，得到 (60.27)。
+$\ell$ 允许为负；任意局部或可行接触只有在最低价格已被认证时才可充当
+$z_*$。负号目标相应反向，零号目标须确定两极值之和为零。
+所有有理函数分母在 $\mathcal T$ 上为正，故这些条件清除正分母后仍是
+精确实代数符号条件，且保留每个最低价格分量。
+
+这里仅在本模型具体输入中复用实闭域量词消去和 Positivstellensatz。
+Lombardi–Perrucci–Roy，
+[*An elementary recursive bound for effective Positivstellensatz and Hilbert 17-th problem*](https://arxiv.org/html/1404.2338v3)，
+Definition 1.2.4、Theorem 1.2.9 分别给符号条件的
+$S+N+Z=0$ 不相容证书及其与不可实现性的等价；Theorem 1.4.2 的有效度数界
+以实符号集合为空为前提。这些已有原则本身不提供 (60.27) 所需的
+任何本模型空集证书或最低值见证。
+
+(60.27) 的具体最低值和响应不等式仍为待证条件；以上不确定
+$S_{\rm pair}$ 的符号或是否为零，不给共同分离正 $k$。
+原两个来源 $a_r$ 及两个取向始终经 (59.24) 的同源相位与共轭运输保留；
+有限 PB 仍使用 (59.25) 的同一对正 $h,k$、完整 P2、每个有限 Hermitian
+探针及完整 $M_5(\mathbb C)$ 上每个正复线性泛函。
+若将来得到非零符号，只能再经 (59.26) 及原严格阈值桥梁使用；
+阈值等号的有限 PB 符号、有限 PB 变分达到性及物理实现性不由此推出。
+这里的驻定与响应恒等式是对既有原公式的复用，
+定理 60.2 的定量截断与负系数才承担新的模型特定限制。∎
+
+## 追加锚（本行以下为增补区）
