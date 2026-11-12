@@ -6,9 +6,19 @@
    utility: none
    digest: Finite mixtures of biased Boolean cubes have explicit Walsh characters and parity reductions. -/
 
+/-
+proof_shape: walsh_factor, mixture_character, mixture_positive, odd_reduction,
+  odd_card: bind-only (consumers: FifthOrderTopOnlyRefutation,
+  SixthOrderTopPairingRefutation, and mixture_distinct_moments).
+proof_shape: mixture_distinct_moments: bind-only (consumers:
+  FifthOrderTopOnlyRefutation.distinct_bound and distinct_fifth_zero;
+  SixthOrderTopPairingRefutation.distinct_bound and subset_unit_moment).
+escape_witness: none; these shared mixture identities reuse the finite product,
+  character, and parity arguments consumed by the two refutations.
+admission_basis: consumed-helper reuse.
+-/
+
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticMomentDefs
-import Mathlib.Data.Fintype.CardEmbedding
-import Mathlib.Algebra.BigOperators.Ring.Nat
 
 /-! A finite mixture of biased Boolean cubes and its parity bookkeeping. -/
 
@@ -22,7 +32,7 @@ set_option autoImplicit false
 
 def sign (b : Bool) : ℝ := if b then 1 else -1
 
-lemma walsh_factor (N : ℕ) (T : Finset (Fin N)) (μ : ℝ) :
+private lemma walsh_factor (N : ℕ) (T : Finset (Fin N)) (μ : ℝ) :
     (∑ ω : Fin N → Bool, (∏ d, (1 + μ * sign (ω d))) *
       ∏ d ∈ T, sign (ω d)) / (2 : ℝ)^N = μ^T.card := by
   classical
@@ -142,6 +152,35 @@ lemma odd_card {N r : ℕ} (x : Fin r → Fin N) :
     change Even r ↔ Even (oddCoords x).card at hp
     simp only [Nat.even_iff] at hp
     omega
+
+/-- Distinct-index moments of any finite bias mixture factor into its scalar moment
+and the injective coefficient sum. -/
+lemma mixture_distinct_moments {κ : Type} [Fintype κ]
+    (N : ℕ) (zValue zWeight : κ → ℝ) (r : ℕ) (g : Fin r → Fin N → ℝ) :
+    distinctIndexMoment (mixtureFunctional N zValue zWeight) (modelY N) g =
+      ((∑ z : κ, zWeight z * zValue z ^ r) / Real.sqrt N ^ r) *
+        ∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i) := by
+  classical
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro x hx
+  have hinj := (Finset.mem_filter.mp hx).2
+  have hodd : oddCoords x = Finset.univ.image x := by
+    ext d
+    by_cases hd : d ∈ Finset.univ.image x
+    · obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hd
+      have hf : Finset.univ.filter (fun j => x j = x i) = {i} := by
+        ext j
+        simp [hinj.eq_iff]
+      simp [oddCoords, hf]
+    · have hf : Finset.univ.filter (fun j => x j = d) = ∅ := by
+        apply Finset.filter_eq_empty_iff.mpr
+        intro i hi he
+        exact hd (Finset.mem_image.mpr ⟨i, hi, he⟩)
+      simp [oddCoords, hf, hd]
+  rw [odd_reduction x, mixture_character, hodd]
+  simp only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin]
+  exact mul_comm _ _
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

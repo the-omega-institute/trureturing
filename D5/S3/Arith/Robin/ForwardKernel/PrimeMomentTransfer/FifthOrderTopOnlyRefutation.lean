@@ -8,12 +8,12 @@
 
 
 /-
-proof_shape: distinct_moments, distinct_bound, collision_count_lower,
+proof_shape: distinct_bound, collision_count_lower,
   model_fifth, normalized_fifth, result: content.
 proof_shape: moment_values: bind-only
   (consumers: distinct_bound, distinct_fifth_zero, model_fifth, result).
 proof_shape: model_character: bind-only
-  (consumers: distinct_moments, model_fifth, result).
+  (consumers: model_fifth, result).
 proof_shape: model_positive: bind-only (consumer: result).
 proof_shape: distinct_fifth_zero: bind-only (consumer: result).
 proof_shape: odd_duplicate: bind-only (consumer: collision_count_lower).
@@ -25,10 +25,7 @@ escape_witness: The shared odd-coordinate reduction and the injection in
 admission_basis: escape-witness.
 -/
 
-import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticMomentDefs
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.BiasedCubeMixture
-import Mathlib.Data.Fintype.CardEmbedding
-import Mathlib.Algebra.BigOperators.Ring.Nat
 
 /-! A positive finite probability model for the obstruction in 命题 500.4. -/
 
@@ -113,32 +110,6 @@ private lemma model_positive (N : ℕ) (hN : 9 ≤ N) (F : (Fin N → Bool) → 
     fin_cases z <;> norm_num [zWeight]
   · exact_mod_cast (show 0 < N by omega)
 
-private lemma distinct_moments (N r : ℕ) (g : Fin r → Fin N → ℝ) :
-    distinctIndexMoment (modelFunctional N) (modelY N) g =
-      (moment r / Real.sqrt N ^ r) *
-        ∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i) := by
-  classical
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro x hx
-  have hinj := (Finset.mem_filter.mp hx).2
-  have hodd : oddCoords x = Finset.univ.image x := by
-    ext d
-    by_cases hd : d ∈ Finset.univ.image x
-    · obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hd
-      have hf : Finset.univ.filter (fun j => x j = x i) = {i} := by
-        ext j
-        simp [hinj.eq_iff]
-      simp [oddCoords, hf]
-    · have hf : Finset.univ.filter (fun j => x j = d) = ∅ := by
-        apply Finset.filter_eq_empty_iff.mpr
-        intro i hi he
-        exact hd (Finset.mem_image.mpr ⟨i, hi, he⟩)
-      simp [oddCoords, hf, hd]
-  rw [odd_reduction x, model_character, hodd]
-  simp only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin]
-  exact mul_comm _ _
-
 private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr5 : r < 5)
     (g : Fin r → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
     |distinctIndexMoment (modelFunctional N) (modelY N) g| ≤
@@ -162,7 +133,7 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr5 : r < 
         Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
           (fun _ _ _ => by positivity)
       _ = _ := by simp
-  rw [distinct_moments, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
+  rw [modelFunctional, mixture_distinct_moments, ← moment, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
   calc
     _ ≤ (11 / Real.sqrt N ^ r) * (N : ℝ)^r :=
       mul_le_mul (div_le_div_of_nonneg_right hm (by positivity)) hsum
@@ -175,7 +146,7 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr5 : r < 
 
 private lemma distinct_fifth_zero (N : ℕ) (g : Fin 5 → Fin N → ℝ) :
     distinctIndexMoment (modelFunctional N) (modelY N) g = 0 := by
-  rw [distinct_moments, moment_values.2.2.2.2.2]
+  rw [modelFunctional, mixture_distinct_moments, ← moment, moment_values.2.2.2.2.2]
   simp
 
 private def duplicate {N : ℕ} (y : Fin 4 → Fin N) : Fin 5 → Fin N :=

@@ -7,21 +7,20 @@
    digest: Counting and evaluating perfect pairings of finite label sets. -/
 
 /-
-proof_shape: perfectPairingCount_rec, perfectPairingCount: content.
-proof_shape: pairingSupport_card: bind-only (consumer: IsPerfectPairing.card);
-  IsPerfectPairing.card: bind-only (consumers: finitePairingPolynomial_const,
-    perfectPairingCount);
-  finitePairingPolynomial_rankOne, finitePairingPolynomial_const: bind-only
-    (consumers: SixthOrderTopPairingRefutation).
-escape_witness: The partner-removal bijection yields a recursion for the cardinality of
-  perfect pairings. Induction then computes it for every even label cardinality; the support
-  cardinality excludes odd cardinalities. These facts supply the exact pairing coefficients
-  in the sixth-order refutation rather than assuming or enumerating them.
+proof_shape: perfectPairingEquiv: content (private bridge).
+proof_shape: pairingSupport_card, IsPerfectPairing.card: bind-only
+  (consumers: finitePairingPolynomial_const, perfectPairingCount,
+    SixthOrderTopPairingRefutation).
+proof_shape: finitePairingPolynomial_rankOne, finitePairingPolynomial_const,
+  perfectPairingCount: bind-only (consumer: SixthOrderTopPairingRefutation).
+escape_witness: A perfect pairing is identified with the fixed-point-free
+  involution exchanging each edge's endpoints. The bridge reuses the existing
+  cycle-type count rather than proving a second counting recursion.
 admission_basis: escape-witness.
 -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PartialPairingPolynomial
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
+import D5.S3.Zeros.Convolution.PerfectMatchingCount
 
 /-! Cardinality and evaluations of finite perfect pairings. -/
 
@@ -33,7 +32,7 @@ attribute [local instance] Classical.propDecidable
 variable {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- Disjoint two-element edges cover exactly twice their number of labels. -/
-theorem pairingSupport_card {U : Finset α} {P : Finset (Finset α)}
+private theorem pairingSupport_card {U : Finset α} {P : Finset (Finset α)}
     (hP : IsPartialPairing U P) : (pairingSupport P).card = 2 * P.card := by
   change (P.biUnion fun e => e).card = 2 * P.card
   rw [Finset.card_biUnion hP.2.1]
@@ -78,122 +77,141 @@ theorem finitePairingPolynomial_const (U : Finset α) (c : Finset α → ℝ)
   rw [Finset.sum_congr rfl (fun P hP => hprod P (Finset.mem_filter.mp hP).2)]
   simp
 
-/-- Remove the pair containing a fixed label: its partner and the residual pairing
-parametrize perfect pairings without multiplicity. -/
-theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
-    ((Finset.univ : Finset (Finset (Finset α))).filter
-      (IsPerfectPairing U)).card =
-      ∑ b ∈ U.erase a, ((Finset.univ : Finset (Finset (Finset α))).filter
-        (IsPerfectPairing ((U.erase a).erase b))).card := by
-  have hsupp (e : Finset α) : pairingSupport {e} = e := by
-    change (({e} : Finset (Finset α)).biUnion fun d => d) = e
-    rw [Finset.singleton_biUnion]
-  have hrem (b : α) : U \ {a, b} = (U.erase a).erase b := by
-    ext i
-    simp only [Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton, Finset.mem_erase]
-    tauto
-  have partner (P : Finset (Finset α)) (hP : IsPerfectPairing U P) :
-      ∃ b, b ∈ U.erase a ∧ {a, b} ∈ P := by
-    obtain ⟨e, he, hae⟩ := (mem_pairingSupport a P).mp (by rw [hP.2]; exact ha)
-    obtain ⟨x, y, hxy, rfl⟩ := Finset.card_eq_two.mp (hP.1.1 e he)
-    rcases (show a = x ∨ a = y by simpa using hae) with hax | hay
-    · subst x
-      refine ⟨y, Finset.mem_erase.mpr ⟨hxy.symm, ?_⟩, he⟩
-      exact hP.1.2.2 ((mem_pairingSupport y P).2 ⟨{a, y}, he, by simp⟩)
-    · subst y
-      refine ⟨x, Finset.mem_erase.mpr ⟨hxy, ?_⟩, ?_⟩
-      · exact hP.1.2.2 ((mem_pairingSupport x P).2 ⟨{x, a}, he, by simp⟩)
-      · simpa only [Finset.pair_comm] using he
-  let pick (P : Finset (Finset α)) (hP : IsPerfectPairing U P) : α :=
-    Classical.choose (partner P hP)
-  have hpick (P : Finset (Finset α)) (hP : IsPerfectPairing U P) :
-      pick P hP ∈ U.erase a ∧ {a, pick P hP} ∈ P :=
-    Classical.choose_spec (partner P hP)
-  have hErase (P : Finset (Finset α)) (hP : IsPerfectPairing U P)
-      (b : α) (hb : {a, b} ∈ P) :
-      IsPerfectPairing ((U.erase a).erase b) (P.erase {a, b}) := by
-    have hh := (pairing_remainder hP (Finset.singleton_subset_iff.mpr hb)).2
-    simpa only [hsupp, hrem b, Finset.sdiff_singleton_eq_erase] using hh
-  have hInsert (b : α) (hb : b ∈ U.erase a) (Q : Finset (Finset α))
-      (hQ : IsPerfectPairing ((U.erase a).erase b) Q) :
-      IsPerfectPairing U (insert {a, b} Q) := by
-    have hab : a ≠ b := (Finset.mem_erase.mp hb).1.symm
-    have hsub : ({a, b} : Finset α) ⊆ U := by
-      intro i hi
-      rcases Finset.mem_insert.mp hi with rfl | hi
-      · exact ha
-      · have hiq : i = b := Finset.mem_singleton.mp hi
-        subst i
-        exact (Finset.mem_erase.mp hb).2
-    have hE : IsPartialPairing U {{a, b}} := by
-      refine ⟨?_, ?_, ?_⟩
-      · intro e he
-        have heq : e = {a, b} := Finset.mem_singleton.mp he
-        subst e
-        simp [hab]
-      · simp
-      · simpa only [hsupp] using hsub
-    have hQ' : IsPerfectPairing (U \ pairingSupport {{a, b}}) Q := by
-      simpa only [hsupp, hrem b] using hQ
-    simpa only [Finset.singleton_union] using (pairing_join hE hQ').1
-  let S := (Finset.univ : Finset (Finset (Finset α))).filter (IsPerfectPairing U)
-  let Z := (U.erase a).sigma (fun b =>
-    (Finset.univ : Finset (Finset (Finset α))).filter
-      (IsPerfectPairing ((U.erase a).erase b)))
-  have hmem (P : Finset (Finset α)) (hP : P ∈ S) : IsPerfectPairing U P :=
-    (Finset.mem_filter.mp hP).2
-  let f (P : Finset (Finset α)) (hP : P ∈ S) :
-      Sigma (fun _ : α => Finset (Finset α)) :=
-    ⟨pick P (hmem P hP), P.erase {a, pick P (hmem P hP)}⟩
-  have hbij : S.card = Z.card := by
-    apply Finset.card_bij f
-    · intro P hP
-      apply Finset.mem_sigma.mpr
-      exact ⟨(hpick P (hmem P hP)).1, Finset.mem_filter.mpr
-        ⟨Finset.mem_univ _, hErase P (hmem P hP) _ (hpick P (hmem P hP)).2⟩⟩
-    · intro P hP Q hQ heq
-      have hb := congrArg Sigma.fst heq
-      have hEq := congrArg
-        (fun z : Sigma (fun _ : α => Finset (Finset α)) => z.2) heq
-      change pick P (hmem P hP) = pick Q (hmem Q hQ) at hb
-      change P.erase {a, pick P (hmem P hP)} =
-        Q.erase {a, pick Q (hmem Q hQ)} at hEq
-      rw [hb] at hEq
-      calc
-        P = insert {a, pick P (hmem P hP)} (P.erase {a, pick P (hmem P hP)}) :=
-          (Finset.insert_erase (hpick P (hmem P hP)).2).symm
-        _ = insert {a, pick Q (hmem Q hQ)} (Q.erase {a, pick Q (hmem Q hQ)}) := by
-          rw [hb, hEq]
-        _ = Q := Finset.insert_erase (hpick Q (hmem Q hQ)).2
-    · rintro ⟨b, Q⟩ hz
-      obtain ⟨hb, hQ⟩ := Finset.mem_sigma.mp hz
-      have hQ' := (Finset.mem_filter.mp hQ).2
-      let P := insert {a, b} Q
-      have hP : IsPerfectPairing U P := hInsert b hb Q hQ'
-      have hPS : P ∈ S := Finset.mem_filter.mpr ⟨Finset.mem_univ _, hP⟩
-      refine ⟨P, hPS, ?_⟩
-      have hbp : pick P hP = b := by
-        have hp := hpick P hP
-        have he : ({a, pick P hP} : Finset α) = {a, b} := by
-          by_contra hn
-          exact Finset.disjoint_left.mp
-            (hP.1.2.1 hp.2 (by simp [P]) hn)
-            (show a ∈ ({a, pick P hP} : Finset α) by simp) (by simp)
-        have hm : pick P hP ∈ ({a, b} : Finset α) :=
-          he ▸ (by simp : pick P hP ∈ ({a, pick P hP} : Finset α))
-        have hh : pick P hP = a ∨ pick P hP = b := by simpa using hm
-        exact hh.resolve_left (Finset.mem_erase.mp hp.1).1
-      have heQ : ({a, b} : Finset α) ∉ Q := by
-        intro he
-        have hh := hQ'.1.2.2 ((mem_pairingSupport a Q).2 ⟨{a, b}, he, by simp⟩)
-        simp at hh
-      change (⟨pick P hP, P.erase {a, pick P hP}⟩ :
-        Sigma (fun _ : α => Finset (Finset α))) = ⟨b, Q⟩
-      rw [hbp]
-      simp [P, heQ]
-  change S.card = _
-  rw [hbij]
-  exact Finset.card_sigma _ _
+private theorem pairing_partner_exists (U : Finset α) (P : Finset (Finset α))
+    (hP : IsPerfectPairing U P) (a : U) :
+    ∃ b : U, b ≠ a ∧ {a.val, b.val} ∈ P := by
+  obtain ⟨e, he, hae⟩ := (mem_pairingSupport a.val P).mp (hP.2.symm ▸ a.property)
+  obtain ⟨x, y, hxy, rfl⟩ := Finset.card_eq_two.mp (hP.1.1 e he)
+  have hx : x ∈ U := hP.1.2.2 ((mem_pairingSupport x P).2 ⟨{x, y}, he, by simp⟩)
+  have hy : y ∈ U := hP.1.2.2 ((mem_pairingSupport y P).2 ⟨{x, y}, he, by simp⟩)
+  rcases (show a.val = x ∨ a.val = y by simpa using hae) with ha | ha
+  · refine ⟨⟨y, hy⟩, ?_, ?_⟩
+    · intro h; exact hxy (ha.symm.trans (congrArg Subtype.val h).symm)
+    · simpa [ha] using he
+  · refine ⟨⟨x, hx⟩, ?_, ?_⟩
+    · intro h; exact hxy ((congrArg Subtype.val h).trans ha)
+    · simpa [ha, Finset.pair_comm] using he
+
+private theorem pairing_partner_unique {U : Finset α} {P : Finset (Finset α)}
+    (hP : IsPerfectPairing U P) {a b c : U}
+    (hb : b ≠ a ∧ {a.val, b.val} ∈ P)
+    (hc : c ≠ a ∧ {a.val, c.val} ∈ P) : b = c := by
+  have he : ({a.val, b.val} : Finset α) = {a.val, c.val} := by
+    by_contra hn
+    exact Finset.disjoint_left.mp (hP.1.2.1 hb.2 hc.2 hn) (by simp) (by simp)
+  apply Subtype.ext
+  have hm : b.val ∈ ({a.val, c.val} : Finset α) := he ▸ (by simp)
+  rcases Finset.mem_insert.mp hm with h | h
+  · exact False.elim (hb.1 (Subtype.ext h))
+  · exact Finset.mem_singleton.mp h
+
+private def pairingPartner (U : Finset α) (P : Finset (Finset α))
+    (hP : IsPerfectPairing U P) (a : U) : U :=
+  Classical.choose (pairing_partner_exists U P hP a)
+
+private theorem pairingPartner_spec (U : Finset α) (P : Finset (Finset α))
+    (hP : IsPerfectPairing U P) (a : U) :
+    pairingPartner U P hP a ≠ a ∧ {a.val, (pairingPartner U P hP a).val} ∈ P :=
+  Classical.choose_spec (pairing_partner_exists U P hP a)
+
+private def pairingInvolution (U : Finset α) (P : Finset (Finset α))
+    (hP : IsPerfectPairing U P) :
+    D5.S3.Zeros.Convolution.PerfectMatchingCount.FixedPointFreeInvolution U := by
+  let f := pairingPartner U P hP
+  have hf (a : U) : f (f a) = a := by
+    apply pairing_partner_unique hP (pairingPartner_spec U P hP (f a))
+    exact ⟨(pairingPartner_spec U P hP a).1.symm,
+      by simpa only [Finset.pair_comm] using (pairingPartner_spec U P hP a).2⟩
+  exact ⟨⟨f, f, hf, hf⟩, hf, fun a => (pairingPartner_spec U P hP a).1⟩
+
+private def involutionPairing (U : Finset α)
+    (p : D5.S3.Zeros.Convolution.PerfectMatchingCount.FixedPointFreeInvolution U) :
+    Finset (Finset α) := Finset.univ.image fun a : U => {a.val, (p.val a).val}
+
+private theorem involutionPairing_valid (U : Finset α)
+    (p : D5.S3.Zeros.Convolution.PerfectMatchingCount.FixedPointFreeInvolution U) :
+    IsPerfectPairing U (involutionPairing U p) := by
+  have hne (a : U) : a.val ≠ (p.val a).val := by
+    intro h; exact p.property.2 a (Subtype.ext h.symm)
+  have hed (a b : U) (h : a.val = b.val ∨ a.val = (p.val b).val ∨
+      (p.val a).val = b.val ∨ (p.val a).val = (p.val b).val) :
+      ({a.val, (p.val a).val} : Finset α) = {b.val, (p.val b).val} := by
+    rcases h with h | h | h | h
+    · have hab : a = b := Subtype.ext h
+      rw [hab]
+    · have hab : a = p.val b := Subtype.ext h
+      simp [hab, p.property.1 b, Finset.pair_comm]
+    · have hab : b = p.val a := Subtype.ext h.symm
+      simp [hab, p.property.1 a, Finset.pair_comm]
+    · have hab := p.val.injective (Subtype.ext h)
+      rw [hab]
+  have hs : pairingSupport (involutionPairing U p) = U := by
+    ext a
+    simp only [mem_pairingSupport, involutionPairing, Finset.mem_image,
+      Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨e, ⟨x, rfl⟩, ha⟩
+      rcases (show a = x.val ∨ a = (p.val x).val by simpa using ha) with rfl | rfl
+      · exact x.property
+      · exact (p.val x).property
+    · intro ha
+      exact ⟨{a, (p.val ⟨a, ha⟩).val}, ⟨⟨a, ha⟩, rfl⟩, by simp⟩
+  refine ⟨⟨?_, ?_, hs.le⟩, hs⟩
+  · intro e he
+    obtain ⟨a, _, rfl⟩ := Finset.mem_image.mp he
+    simp [hne a]
+  · intro e he d hd hED
+    obtain ⟨a, _, rfl⟩ := Finset.mem_image.mp he
+    obtain ⟨b, _, rfl⟩ := Finset.mem_image.mp hd
+    apply Finset.disjoint_left.mpr
+    intro x hx hy
+    apply hED
+    apply hed a b
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hx hy
+    rcases hx with rfl | rfl <;> rcases hy with h | h
+    · exact Or.inl h
+    · exact Or.inr (Or.inl h)
+    · exact Or.inr (Or.inr (Or.inl h))
+    · exact Or.inr (Or.inr (Or.inr h))
+
+/-- A perfect pairing is equivalently the fixed-point-free involution exchanging
+its two endpoints in every edge. -/
+private def perfectPairingEquiv (U : Finset α) :
+    {P : Finset (Finset α) // IsPerfectPairing U P} ≃
+      D5.S3.Zeros.Convolution.PerfectMatchingCount.FixedPointFreeInvolution U where
+  toFun P := pairingInvolution U P.val P.property
+  invFun p := ⟨involutionPairing U p, involutionPairing_valid U p⟩
+  left_inv P := by
+    apply Subtype.ext
+    apply Finset.ext
+    intro e
+    constructor
+    · intro he
+      obtain ⟨a, _, rfl⟩ := Finset.mem_image.mp he
+      exact (pairingPartner_spec U P.val P.property a).2
+    · intro he
+      obtain ⟨x, y, hxy, heq⟩ := Finset.card_eq_two.mp (P.property.1.1 e he)
+      have hx : x ∈ U := P.property.1.2.2 ((mem_pairingSupport x P.val).2
+        ⟨e, he, by rw [heq]; simp⟩)
+      have hy : y ∈ U := P.property.1.2.2 ((mem_pairingSupport y P.val).2
+        ⟨e, he, by rw [heq]; simp⟩)
+      have hp : pairingPartner U P.val P.property ⟨x, hx⟩ = ⟨y, hy⟩ := by
+        apply pairing_partner_unique P.property (pairingPartner_spec U P.val P.property ⟨x, hx⟩)
+        exact ⟨fun h => hxy (congrArg Subtype.val h).symm, heq ▸ he⟩
+      apply Finset.mem_image.mpr
+      refine ⟨⟨x, hx⟩, Finset.mem_univ _, ?_⟩
+      change {x, (pairingPartner U P.val P.property ⟨x, hx⟩).val} = e
+      rw [hp]
+      exact heq.symm
+  right_inv p := by
+    apply Subtype.ext
+    apply Equiv.ext
+    intro a
+    change pairingPartner U (involutionPairing U p) (involutionPairing_valid U p) a = p.val a
+    apply pairing_partner_unique (involutionPairing_valid U p)
+      (pairingPartner_spec U _ (involutionPairing_valid U p) a)
+    refine ⟨p.property.2 a, ?_⟩
+    exact Finset.mem_image.mpr ⟨a, Finset.mem_univ _, rfl⟩
 
 /-- A set of even cardinality has the usual odd double-factorial number of perfect
 pairings; a set of odd cardinality has none. -/
@@ -201,56 +219,25 @@ theorem perfectPairingCount (U : Finset α) :
     ((Finset.univ : Finset (Finset (Finset α))).filter
       (IsPerfectPairing U)).card =
       if Even U.card then Nat.doubleFactorial (U.card - 1) else 0 := by
-  have heven : ∀ m : ℕ, ∀ V : Finset α, V.card = 2 * m →
-      ((Finset.univ : Finset (Finset (Finset α))).filter
-        (IsPerfectPairing V)).card = Nat.doubleFactorial (2 * m - 1) := by
-    intro m
-    induction m with
-    | zero =>
-      intro V hV
-      have hV0 : V = ∅ := Finset.card_eq_zero.mp (by simpa using hV)
-      subst V
-      have hs : ((Finset.univ : Finset (Finset (Finset α))).filter
-          (IsPerfectPairing ∅)) = {∅} := by
-        ext P
-        simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
-        constructor
-        · intro hP
-          apply Finset.card_eq_zero.mp
-          have hh := hP.card
-          simp only [Finset.card_empty] at hh
-          omega
-        · rintro rfl
-          simp [IsPerfectPairing, IsPartialPairing, pairingSupport]
-      rw [hs]
-      norm_num [Nat.doubleFactorial]
-    | succ m ih =>
-      intro V hV
-      obtain ⟨a, ha⟩ := Finset.card_pos.mp (by omega : 0 < V.card)
-      rw [perfectPairingCount_rec V a ha]
-      have hterms : ∀ b ∈ V.erase a,
-          ((Finset.univ : Finset (Finset (Finset α))).filter
-            (IsPerfectPairing ((V.erase a).erase b))).card =
-            Nat.doubleFactorial (2 * m - 1) := by
-        intro b hb
-        apply ih
-        rw [Finset.card_erase_of_mem hb, Finset.card_erase_of_mem ha, hV]
-        omega
-      calc
-        _ = (V.erase a).card * Nat.doubleFactorial (2 * m - 1) :=
-          Finset.sum_const_nat hterms
-        _ = (2 * m + 1) * Nat.doubleFactorial (2 * m - 1) := by
-          rw [Finset.card_erase_of_mem ha, hV]
-          congr 1
-        _ = Nat.doubleFactorial (2 * (m + 1) - 1) := by
-          rw [show 2 * (m + 1) - 1 = 2 * m + 1 by omega,
-            Nat.doubleFactorial_add_one]
   by_cases hU : Even U.card
   · rw [if_pos hU]
     obtain ⟨m, hm⟩ := hU
     have hcard : U.card = 2 * m := by omega
-    rw [hcard]
-    exact heven m U hcard
+    have hc : Fintype.card U = 2 * m := by simpa using hcard
+    have he := Fintype.card_congr (perfectPairingEquiv U)
+    rw [Fintype.card_subtype] at he
+    rw [he, D5.S3.Zeros.Convolution.PerfectMatchingCount.card_fixedPointFreeInvolution m hc,
+      hcard]
+    apply Nat.div_eq_of_eq_mul_right (by positivity)
+    cases m with
+    | zero => norm_num [Nat.doubleFactorial]
+    | succ m =>
+      rw [show 2 * (m + 1) - 1 = 2 * m + 1 by omega]
+      rw [show 2 * (m + 1) = (2 * m + 1) + 1 by omega,
+        Nat.factorial_eq_mul_doubleFactorial,
+        show 2 * m + 1 + 1 = 2 * (m + 1) by omega,
+        Nat.doubleFactorial_two_mul]
+      ring
   · rw [if_neg hU]
     apply Finset.card_eq_zero.mpr
     apply Finset.filter_eq_empty_iff.mpr

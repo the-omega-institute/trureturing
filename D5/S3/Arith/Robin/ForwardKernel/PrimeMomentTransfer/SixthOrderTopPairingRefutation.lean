@@ -15,9 +15,8 @@ proof_shape: transfer_error_small: bind-only (consumers: deviation_lower_bound).
 proof_shape: sixth_defect_lower: bind-only (consumers: deviation_lower_bound).
 proof_shape: moment_values: bind-only (consumers: distinct_bound, subset_unit_moment,
   distinct_pair_formula, result).
-proof_shape: model_character: bind-only (consumers: distinct_moments, result).
+proof_shape: model_character: bind-only (consumers: result).
 proof_shape: model_positive: bind-only (consumers: result).
-proof_shape: distinct_moments: content.
 proof_shape: distinct_bound: content.
 proof_shape: subsetDistinct_univ: bind-only (consumers: top_order_bound).
 proof_shape: subset_unit_moment: content.
@@ -399,32 +398,6 @@ private lemma model_positive (N : ℕ) (hN : 4 ≤ N) (F : (Fin N → Bool) → 
       linarith
   · exact_mod_cast (show 0 < N by omega)
 
-private lemma distinct_moments (N r : ℕ) (g : Fin r → Fin N → ℝ) :
-    distinctIndexMoment (modelFunctional N) (modelY N) g =
-      (moment r / Real.sqrt N ^ r) *
-        ∑ x : Fin r → Fin N with Function.Injective x, ∏ i, g i (x i) := by
-  classical
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro x hx
-  have hinj := (Finset.mem_filter.mp hx).2
-  have hodd : oddCoords x = Finset.univ.image x := by
-    ext d
-    by_cases hd : d ∈ Finset.univ.image x
-    · obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hd
-      have hf : Finset.univ.filter (fun j => x j = x i) = {i} := by
-        ext j
-        simp [hinj.eq_iff]
-      simp [oddCoords, hf]
-    · have hf : Finset.univ.filter (fun j => x j = d) = ∅ := by
-        apply Finset.filter_eq_empty_iff.mpr
-        intro i hi he
-        exact hd (Finset.mem_image.mpr ⟨i, hi, he⟩)
-      simp [oddCoords, hf, hd]
-  rw [odd_reduction x, model_character, hodd]
-  simp only [Finset.card_image_of_injective _ hinj, Finset.card_univ, Fintype.card_fin]
-  exact mul_comm _ _
-
 private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr6 : r < 6)
     (g : Fin r → Fin N → ℝ) (hg : ∀ i d, |g i d| ≤ 1) :
     |distinctIndexMoment (modelFunctional N) (modelY N) g| ≤
@@ -450,7 +423,7 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr6 : r < 
         Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)
           (fun _ _ _ => by positivity)
       _ = _ := by simp
-  rw [distinct_moments, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
+  rw [modelFunctional, mixture_distinct_moments, ← moment, abs_mul, abs_div, abs_of_pos (pow_pos hs r)]
   calc
     _ ≤ (4 / Real.sqrt N ^ r) * (N : ℝ)^r :=
       mul_le_mul (div_le_div_of_nonneg_right hm (by positivity)) hsum
@@ -507,7 +480,7 @@ private lemma subset_unit_moment {k : ℕ} (N : ℕ) (U : Finset (Fin k)) :
       simp
     · intro x hx
       rfl
-  rw [hR, distinct_moments]
+  rw [hR, modelFunctional, mixture_distinct_moments, ← moment]
   simp only [Finset.prod_const_one, Finset.sum_const,
     nsmul_eq_mul, mul_one, hc, Fintype.card_coe]
 
@@ -535,7 +508,7 @@ private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
     rw [← Finset.sum_add_distrib]
     simp_rw [hsplit, ← Finset.mul_sum]
     rw [Finset.sum_mul]
-  rw [distinct_moments, hsum, moment_values.2.2.1]
+  rw [modelFunctional, mixture_distinct_moments, ← moment, hsum, moment_values.2.2.1]
   rw [Real.sq_sqrt (show (0 : ℝ) ≤ N by positivity)]
   congr 1
   linarith
@@ -684,7 +657,7 @@ private lemma top_order_bound (N : ℕ) (hN : 6 ≤ N)
           ((∑ x : Fin 6 → Fin N with Function.Injective x, ∏ i, g i (x i)) -
             ∏ i, ∑ d, g i d) := by
       dsimp only [R, A]
-      rw [subsetDistinct_univ, distinct_moments, moment_values.2.2.2.2.2.2]
+      rw [subsetDistinct_univ, modelFunctional, mixture_distinct_moments, ← moment, moment_values.2.2.2.2.2.2]
       ring
     rw [heq, abs_mul, abs_of_nonneg (by positivity : 0 ≤ 15 / Real.sqrt N ^ 6)]
     calc
