@@ -10,6 +10,8 @@ import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.LinearAlgebra.Isomorphisms
 import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Module
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -98,7 +100,7 @@ private theorem finite_kernel_bound {G H K : Type*}
 private theorem sandwich_selfAdjoint (V : S → E →L[ℂ] F) (p : S → ℝ)
     {X : E →L[ℂ] E} (hX : IsSelfAdjoint X) : IsSelfAdjoint (sandwich V p X) := by
   classical
-  apply IsSelfAdjoint.sum
+  apply isSelfAdjoint_sum Finset.univ
   intro l _
   apply IsSelfAdjoint.smul
   · simp [IsSelfAdjoint]
@@ -117,13 +119,14 @@ private theorem decoder_compression (V : S → E →L[ℂ] F) (p : S → ℝ)
   classical
   have hadj (l : S) : (V l).adjoint.comp C.adjoint = 1 := by
     rw [← adjoint_comp, hC l, adjoint_one]
-  calc
-    _ = ∑ l, (p l : ℂ) • X := by
-      simp only [sandwich, sum_comp, comp_sum, smul_comp, comp_smul, comp_assoc]
-      apply Finset.sum_congr rfl
-      intro l _
-      rw [← comp_assoc (C) (V l), hC l, one_comp, comp_assoc, hadj l, comp_one]
-    _ = X := by rw [← Finset.sum_smul, ← Complex.ofReal_sum, hsum]; simp
+  have hc (l : S) (y : E) : C (V l y) = y :=
+    congrArg (fun L : E →L[ℂ] E => L y) (hC l)
+  have ha (l : S) (y : E) : (V l).adjoint (C.adjoint y) = y :=
+    congrArg (fun L : E →L[ℂ] E => L y) (hadj l)
+  ext z
+  simp only [sandwich, sum_apply, smul_apply, comp_apply, map_sum, map_smul, hc, ha]
+  rw [← Finset.sum_smul, ← Complex.ofReal_sum, hsum]
+  simp
 
 private theorem inner_rankOne (x u : E) :
     (inner ℂ ((rankOne ℂ x x) u) u).re = ‖inner ℂ x u‖ ^ 2 := by
@@ -190,7 +193,7 @@ private theorem test_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
 
 private theorem test_selfAdjoint (x : E) (η : ℝ) :
     IsSelfAdjoint (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) := by
-  apply IsSelfAdjoint.sub isSelfAdjoint_one
+  apply IsSelfAdjoint.sub (IsSelfAdjoint.one _)
   exact (show IsSelfAdjoint (((1 + η : ℝ) : ℂ)) by simp [IsSelfAdjoint]).smul
     ((isSymmetric_rankOne_self x).clm_adjoint_eq)
 
@@ -237,7 +240,7 @@ private theorem rank_one_ray (V : S → E →L[ℂ] F) (p : S → ℝ)
     push_neg at h
     apply hzA
     change A z = 0
-    apply WithLp.ext
+    apply (WithLp.ext_iff 2).mpr
     funext l
     change (Real.sqrt (p l) : ℂ) • (V l).adjoint z = 0
     rw [h l, smul_zero]
@@ -285,7 +288,7 @@ private theorem tests_force_compatibility [Nonempty S]
         inv_mul_cancel₀ hn]
     have hh := hunit (a • x) hnorm (by rw [inner_smul_right]; exact mul_ne_zero ha hex)
     rw [inner_smul_left] at hh
-    exact (mul_eq_zero.mp hh).resolve_left (map_ne_zero ha)
+    exact (mul_eq_zero.mp hh).resolve_left (by simpa using ha)
   have hall (x : E) : inner ℂ x (∑ l, u l) = 0 := by
     by_cases hex : inner ℂ e x = 0
     · have hene : inner ℂ e e ≠ 0 := inner_self_ne_zero.mpr he
