@@ -255,7 +255,8 @@ private theorem current_gram (i j : Fin D.rank) :
     classical
     simp [LatticeActualConformalState.currentState, neutralMode,
       neutralPolynomialMode, weightedPartial, MvPolynomial.pderiv_X,
-      LinearMap.sum_apply, LinearMap.smul_apply, vacuum, ← Finsupp.smul_single]
+      LinearMap.sum_apply, LinearMap.smul_apply, LatticeAllStateField.vacuum,
+      Pi.single_apply, Prod.mk.injEq, ← Finsupp.smul_single]
   rw [← hcreate,
     SourceBPZ.SourcePairingLaws.sourcePairing_neutralMode D i (-1), neg_neg, hann]
   simp [sourcePairing_vacuum]
