@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/group_theory/index]
    utility: none
-   digest: The actual odd-prime jet label stabilizer has order dividing the weighted semilinear ambient order.
--/
+   digest: The actual odd-prime jet label stabilizer has order dividing the weighted semilinear ambient order. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetGroup
 
 /-! The label stabilizer contributes a genuine finite-field divisor constraint
