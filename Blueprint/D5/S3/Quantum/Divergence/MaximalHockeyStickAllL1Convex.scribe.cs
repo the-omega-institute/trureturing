@@ -1,0 +1,31 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Divergence;
+
+internal sealed class MaximalHockeyStickAllL1ConvexDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Quantum/Divergence/MaximalHockeyStickAllL1Convex.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Equality between the actual all-L1 maximal convex value and the integrated PSD-overlap hockey value is classified by the original common-interior commutator.",
+        H("The actual all-L1 equality classifier"),
+        Blocks(
+            Paragraph(Text("Let n be any finite type and let A,B be positive semidefinite complex n by n matrices. Their traces are arbitrary. Singular matrices, the zero pair and the empty matrix type are included. Let f be real valued and convex on the strictly positive ray. The scalar convention uses the actual right derivative at one and its Stieltjes curvature, with the full atom at one in the negative branch. The closed perspective is q f(p/q) in the positive quadrant, uses the proved extended endpoint limits on the axes, and is zero at the origin even when an endpoint is infinite.")),
+            Node("allL1Value", "The actual all-source infimum",
+                "For any source universe u, allL1Value hf A B is the EReal infimum of MaximalHockeyStickL1ReverseTest.allL1Costs hf A B. This set ranges over every measurable space X in Type u, every s-finite measure mu, and every positive complex-linear trace-preserving map from the entire complex L1(mu) space to the matrix algebra. The two nonnegative integrable inputs prepare exactly A and B. Measurable representatives do not restrict these L1 inputs, by allL1Costs_of_positive_L1. Continuity of preparation follows from positivity and trace preservation. The cost is the actual unnormalized closed-perspective integral: its finite affine support plus a nonnegative extended curvature remainder. Neither attainment nor a finite source alphabet is part of this definition.", false),
+            Node("allL1Value_eq_maximalValue", "Identification with the actual finite maximal value",
+                "For every real convex f and every matrix pair, allL1Value hf A B equals MaximalHockeyStickConvex.maximalValue hf A B as an extended value. The latter is the infimum of the same closed-perspective sums over every actual finite ReverseTest and every alphabet size. The proof applies source_class_infimum_eq directly: finite tests embed by counting measure, while each individual finite-cost all-L1 test has an exact finite atomization preserving both prepared matrices and this one specified cost. Tests of infinite cost introduce no additional lower-bound constraint. This identifies infima without assuming an optimizer and without asserting simultaneous atomization of every generator or the full threshold profile.", true),
+            Node("commute_implies_integrated_eq", "Convex sufficiency with extended values",
+                "Set S=A+B, C=MaximalHockeyStickSupport.normalize S A, and P=interiorProjection C. If (PSP)(PCP)=(PCP)(PSP), then allL1Value hf A B equals MaximalHockeyStickConvex.hockeyValue hf A B for every real f convex on the positive ray. No full-support curvature or finite-value assumption is imposed. Infinite scalar endpoints and infinite resulting values are retained. Source-class identification transfers the finite sufficiency theorem, whose canonical spectral reverse test realizes every maximal threshold profile under this commutator condition.", true),
+            Node("integrated_eq_iff_commute", "The original common-interior criterion for actual all-L1 equality",
+                "Assume that the actual constructed curvature of f is positive on every nonempty open subset of the positive ray, and that allL1Value hf A B equals some real c embedded in EReal. Then allL1Value hf A B = hockeyValue hf A B if and only if (PSP)(PCP)=(PCP)(PSP), with S=A+B, C=normalize S A, and P=interiorProjection C. The finite-value premise concerns the actual all-L1 infimum itself. Source-class identification supplies precisely the finite infimum premise of MaximalHockeyStickConvex.integrated_eq_iff_commute. That reused criterion uses finite-cost approximate tests, integrable nonnegative curvature gaps and the original-pair commutator theorem; it assumes no optimal test. Sufficiency is the preceding unconditional extended-value result. Necessity from equality of infinite values is not asserted.", true),
+            Paragraph(Text("Here hockeyValue is exactly the existing PSD-overlap expression. Write O(t) for the supremum of Re Tr(X) over 0 <= X <= A and X <= t B. Its kernel is t Tr(B)-O(t) for 0<t<=1 and Tr(A)-O(t) for t>1. hockeyValue is f(1) Tr(B)+f'_+(1)(Tr(A)-Tr(B)) plus the nonnegative curvature integral of that kernel. No separate identification of an operational all-L1 hockey infimum with O(t) is asserted here, and no arbitrary von Neumann algebra result is asserted.")),
+            Paragraph(Text("Attribution: Hiai, Mosonyi and Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, supply the source equality question. Hiai's canonical spectral reverse tests and operator-convex antecedents are reused through the finite criterion. The exact one-cost finite-moment reduction in the actual L1 source bridge follows the Bayer-Teichmann proof of Tchakaloff's theorem, implemented by MeasurableFiniteMoments.finite_moments, together with the repository's positive-history Radon-Nikodym density theorem. The finite full-support equality criterion, source-class bridge and scalar Stieltjes representation are reused at their exact scopes. This all-L1 integration does not claim a new cubature theorem, general-convex attainment, or worldwide priority."))
+        )));
+
+    private static DocumentBlock Node(string name, string heading, string prose, bool theorem) =>
+        Describe.Lean(DescribeId.Create("maximal-hockey-all-l1-convex-" + name.Replace("_", "-")),
+            DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
+            theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+}
