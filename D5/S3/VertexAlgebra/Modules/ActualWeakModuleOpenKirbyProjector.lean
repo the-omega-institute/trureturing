@@ -17,7 +17,7 @@ import D5.S3.VertexAlgebra.Modules.ActualWeakModuleHopfTrace
 import D5.S3.VertexAlgebra.Modules.ActualWeakModuleUnitCoherence
 
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
 
@@ -273,14 +273,15 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         ((openMonodromy A B hD).linearMap.comp input))
   have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
       γ⁻¹ • q (cupVector B hD) := by
-    dsimp only [openPartialTrace, ModuleHom.comp, ModuleIso.hom, ModuleIso.inv,
-      rightUnitIso, LinearMap.comp_apply]
-    change rightUnit hD A
-      ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
-        ((openMonodromy A B hD).linearMap
-          ((productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
-            ((rightUnit hD A).symm (classified hD A a x v))))) = _
-    rw [rightUnit_inverse_elementary]
+    have hforward (z : P A (I D)) :
+        (rightUnitIso hD A).hom.linearMap z = rightUnit hD A z := by
+      rfl
+    have hinverse (z : X) :
+        (rightUnitIso hD A).inv.linearMap z = (rightUnit hD A).symm z := by
+      rfl
+    dsimp only [openPartialTrace, ModuleHom.comp, LinearMap.comp_apply]
+    rw [hforward, hinverse]
+    rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
