@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPair
 
 *Commentary.*
 
-If P is a perfect pairing of U, then the cardinality of U equals twice the cardinality of P.
+The Lean declaration IsPerfectPairing.card states that if P is a perfect pairing of U, then the cardinality of U equals twice the cardinality of P.
 
 **Theorem 1.2 (Rank-one edge evaluation).**
 

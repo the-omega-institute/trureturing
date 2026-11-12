@@ -6,6 +6,13 @@
    utility: none
    digest: Fourth moments under a quadratic relation expand by index multiplicity. -/
 
+/-
+proof_shape: sum_two: bind-only (consumer: SixthOrderTopPairingRefutation).
+escape_witness: none; this delivery changes visibility only, with no new proof
+  content. The existing two-index sum identity is reused across modules.
+admission_basis: consumed-helper reuse.
+-/
+
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.IndexEqualityPatterns
 import D5.S3.Combinatorics.Graph.SupportForestMoments.SupportAndEdgeWordReflection
 import D5.S3.Zeros.LeeYang.TreePairStability

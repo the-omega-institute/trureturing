@@ -7,7 +7,8 @@ internal sealed class PerfectPairingCountDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/PerfectPairingCount.";
 
     private static DocumentBlock Entry(string id, string name, string title, string text) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+        Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
 
@@ -19,8 +20,9 @@ internal sealed class PerfectPairingCountDocument : IScribeDocumentDefinition
                 "Let alpha be a finite type with decidable equality. A perfect pairing of a finite label set U "
                 + "is a finite set P of pairwise disjoint two-element label sets whose union is U. "
                 + "Write p(U) for the number of these perfect pairings. The empty set has one perfect pairing.")),
-            Entry("perfect-pairing-card", "card", "Number of edges in a perfect pairing",
-                "If P is a perfect pairing of U, then the cardinality of U equals twice the cardinality of P."),
+            Entry("perfect-pairing-card", "IsPerfectPairing.card", "Number of edges in a perfect pairing",
+                "The Lean declaration IsPerfectPairing.card states that if P is a perfect pairing of U, "
+                + "then the cardinality of U equals twice the cardinality of P."),
             Entry("pairing-polynomial-rank-one", "finitePairingPolynomial_rankOne", "Rank-one edge evaluation",
                 "Let x be a real weight on labels and let c be a real weight on finite label sets. "
                 + "Assume c(e) is the product of x(i) over labels i in e whenever e has cardinality two. "
