@@ -193,8 +193,9 @@ private theorem noMinus_induction {t : ℕ}
 private theorem rename_noMinus {t : ℕ} (f : MvPolynomial (Fin t × ℕ) ℂ) :
     rename transverseVariable f ∈ noMinusPolynomials t := by
   induction f using MvPolynomial.induction_on with
-  | C a => simpa only [rename_C, C_eq_smul_one] using
-      (noMinusPolynomials t).smul_mem a (one_noMinus t)
+  | C a =>
+      rw [rename_C, C_eq_smul_one]
+      exact (noMinusPolynomials t).smul_mem a (one_noMinus t)
   | add f g hf hg => simpa only [map_add] using (noMinusPolynomials t).add_mem hf hg
   | mul_X f x hf =>
       simpa only [map_mul, rename_X, mul_comm] using
@@ -525,7 +526,9 @@ theorem physicalLift_pure_down (f : energyTarget D t beta) :
   have hpower (r : ℕ) (hr : 0 < r) :
       (((-A) ^ r) u.val : State D) ∈ downCorrections F B beta := by
     have hsign : (-A) ^ r = ((-1 : ℂ) ^ r) • A ^ r := by
-      simpa only [neg_smul, one_smul] using smul_pow (-1 : ℂ) A r
+      have hs := smul_pow (-1 : ℂ) A r
+      rw [neg_one_smul ℂ A] at hs
+      exact hs
     rw [hsign]
     change ((-1 : ℂ) ^ r) • ((A ^ r) u.val : State D) ∈ _
     rw [sector_correction_power_coe F B H hHG hGH beta level]
