@@ -65,6 +65,14 @@ internal sealed class FourPathTriangleFibreDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("T(a,u)=W(a,u) when u≤1, and min(B(u),D(a,u)) when u>1. The low-half value relaxes the sharper tangent cap by using kappa≥1."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("four-path-triangle-fibre-triangle-geometry"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathTriangleFibre.triangle_geometry"),
+                H("The exact original radical identity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real L,X,Y with L>1, L²≤2 and (X,Y) in the complete attained triangle, X>0, Y>0 and u=X+Y>0. Put t=Y−X and a=L². Then t²<u², t²≤B(u), t²≤D(a,u), Z(L,X,Y)²≤1, and 4F(L,X,Y)²(u²−t²)=(B(u)−t²)(D(a,u)−t²)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("four-path-triangle-fibre-closed-triangle-ball"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathTriangleFibre.closed_triangle_ball"),
                 H("A circular relaxation on the complete triangle"),

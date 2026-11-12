@@ -9,6 +9,9 @@
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic
 
+/-! The trace radical and the coupled support geometry on the closed attained triangle. -/
+set_option linter.style.setOption false
+
 noncomputable section
 namespace D5.S3.Quantum.Recovery.FourPathTriangleFibre
 set_option autoImplicit false
@@ -34,7 +37,8 @@ def W (a u : ℝ) : ℝ := B u*D a u/u^2
 /-- A slightly relaxed low-half tangent, and the exact high-half chord cap. -/
 def T (a u : ℝ) : ℝ := if u ≤ 1 then W a u else min (B u) (D a u)
 
-private theorem geometry (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
+/-- Positivity, both geometric caps, and the exact original radical identity. -/
+theorem triangle_geometry (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     (h : Triangle L X Y) :
     0 < X ∧ 0 < Y ∧ 0 < X+Y ∧
     (Y-X)^2 < (X+Y)^2 ∧
@@ -78,7 +82,9 @@ private theorem geometry (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
       _ = _ := by rw [zi]
   have zle : Z L X Y^2 ≤ 1 := by
     have : (Z L X Y^2-1)*(4*(X*Y)) ≤ 0 := by nlinarith only [zid,zsq]
-    exact le_of_sub_nonpos ((mul_nonpos_iff_of_pos_right (by positivity : 0 < 4*(X*Y))).mp this)
+    have nn : 0 ≤ (1-Z L X Y^2)*(4*(X*Y)) := by nlinarith only [this]
+    have := nonneg_of_mul_nonneg_right nn (by positivity : 0 < 4*(X*Y))
+    linarith
   have fsq : (F L X Y)^2=(1-X)*(1-Y)*(1-Z L X Y^2) := by
     unfold F
     exact Real.sq_sqrt (mul_nonneg (mul_nonneg (by linarith) (by linarith)) (by linarith))
@@ -134,7 +140,7 @@ the smaller of the two geometric caps, and the low-half cap is the central width
 theorem closed_triangle_ball (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     (h : Triangle L X Y) :
     (Y-X)^2+(2*F L X Y)^2 ≤ T (L^2) (X+Y) := by
-  obtain ⟨Xp,Yp,up,tru,tB,tD,zle,fi⟩ := geometry L X Y hL hL2 h
+  obtain ⟨Xp,Yp,up,tru,tB,tD,zle,fi⟩ := triangle_geometry L X Y hL hL2 h
   let u := X+Y
   let a := L^2
   let r := (Y-X)^2
@@ -144,7 +150,7 @@ theorem closed_triangle_ball (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     nlinarith only [fi]
   change r+f ≤ T a u
   by_cases hu1 : u ≤ 1
-  · rw [T,if_pos hu1]
+  · rw [T,ite_eq_left hu1]
     exact low_fibre a u r f up hu1 (sq_nonneg _) tru hf
   · have bcap : B u ≤ u^2 := by unfold B; nlinarith
     have dcap : D a u ≤ u^2 := by unfold D; nlinarith [sq_nonneg (u-a)]
@@ -154,7 +160,7 @@ theorem closed_triangle_ball (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     have fD : f ≤ D a u-r := by
       apply (mul_le_mul_iff_left₀ (sub_pos.mpr tru)).mp
       nlinarith only [hf,mul_nonneg (sub_nonneg.mpr tD) (sub_nonneg.mpr bcap)]
-    rw [T,if_neg hu1]
+    rw [T,ite_eq_right hu1]
     exact le_min (by linarith) (by linarith)
 
 /-- A closed fibre inequality for the actual radical, without division by a
@@ -166,7 +172,7 @@ theorem closed_triangle_fibre (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     0 ≤ T a u ∧ 0 ≤ W a u ∧
       W a u*(Y-X)^2+T a u*(2*F L X Y)^2 ≤ T a u*W a u := by
   dsimp only
-  obtain ⟨Xp,Yp,up,tru,tB,tD,zle,fi⟩ := geometry L X Y hL hL2 h
+  obtain ⟨Xp,Yp,up,tru,tB,tD,zle,fi⟩ := triangle_geometry L X Y hL hL2 h
   let u := X+Y
   let a := L^2
   let r := (Y-X)^2
@@ -182,12 +188,12 @@ theorem closed_triangle_fibre (L X Y : ℝ) (hL : 1 < L) (hL2 : L^2 ≤ 2)
     nlinarith only [fi]
   change 0 ≤ T a u ∧ 0 ≤ W a u ∧ W a u*r+T a u*f ≤ T a u*W a u
   by_cases hu1 : u ≤ 1
-  · rw [T,if_pos hu1]
+  · rw [T,ite_eq_left hu1]
     have low := low_fibre a u r f up hu1 (sq_nonneg _) tru fidentity
     exact ⟨wn,wn,by nlinarith only [mul_le_mul_of_nonneg_left low wn]⟩
   · have bcap : B u ≤ u^2 := by unfold B; nlinarith
     have dcap : D a u ≤ u^2 := by unfold D; nlinarith [sq_nonneg (u-a)]
-    rw [T,if_neg hu1]
+    rw [T,ite_eq_right hu1]
     refine ⟨le_min bn dn,wn,?_⟩
     rcases le_total (B u) (D a u) with hbd | hdb
     · rw [min_eq_left hbd]
