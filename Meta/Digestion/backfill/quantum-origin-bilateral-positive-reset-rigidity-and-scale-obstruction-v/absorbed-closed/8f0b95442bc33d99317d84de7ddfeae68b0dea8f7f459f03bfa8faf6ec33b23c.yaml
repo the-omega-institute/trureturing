@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8f0b95442bc33d99317d84de7ddfeae68b0dea8f7f459f03bfa8faf6ec33b23c
   normalized_sha256: sha256:8f0b95442bc33d99317d84de7ddfeae68b0dea8f7f459f03bfa8faf6ec33b23c
 cas_ref: sha256:8f0b95442bc33d99317d84de7ddfeae68b0dea8f7f459f03bfa8faf6ec33b23c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/PauliFrameTraceTable.trace_table
+    target_statement_id: sha256:297b8cd50a483bcfdf04d71eaebce254e96a2834f42dbaccc901800f07beb72b
 receipts:
   unresolved_subitems: []
