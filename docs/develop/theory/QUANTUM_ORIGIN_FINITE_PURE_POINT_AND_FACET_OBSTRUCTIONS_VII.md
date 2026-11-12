@@ -4273,3 +4273,656 @@ Minkowski定义及容量界沿105.12的Matsumoto—Kimura归属。
 [Q105H]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
 
 ## 追加锚（本行以下为增补区）
+
+## 106. 两张原纯效应的局部二阶切形与内生三次几何
+
+### 106.1 原效应域与未预付的结构
+
+**定义 106.1（同一弱入口上的效应谱）。** 始终采用105.1的原 $V,C,u,K,P$、
+整个 $[0,u]_{C^*}$、全部原 joint 框架 $\mathcal T_3$，并假设
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$。写 $A=V^*$、$A_+=C^*$。
+104.3—104.7及105.2—105.6已供应：紧纯点集、紧非空三框架集、每个纯点的框架完成、
+正交对唯一第三点、唯一原尺 $a_p$、整个原锥序 least、准确零面 $D_p$、唯一最大点 $p$，
+以及 $A$ 中每个有符号效应的同框架谱展开
+
+$$
+f=\sum_{i=1}^3\mu_i a_{p_i},\qquad
+\sum_i a_{p_i}=u,\qquad a_{p_i}(p_j)=\delta_{ij}.
+\tag{VII106.1}
+$$
+
+这里只称 $f\in A$ 为有符号效应；它不必是 proper 效应。
+本章先不假定 $p_1+p_2+p_3$ 与框架无关，不假定状态谱、$\mathrm G$、内积或全纯互易。
+球允许线段，$D_p$ 的维数起初可以随 $p$ 改变。所有最大、最小面都在整个原 $K$ 中取，
+所有正性都在整个原锥序中取，不改纯点资格或效应菜单。
+
+### 106.2 不用共同中心的效应谱唯一性
+
+**定理 106.2（谱多重集与分组效应和唯一）。** 在 $\mathsf W$ 下，(VII106.1)的
+三个谱值组成的多重集只由原 $f$ 决定。对每个不同谱值 $\lambda$，
+$\sum_{\mu_i=\lambda}a_{p_i}$ 也唯一；不宣称重谱组内部的直径或框架唯一。
+
+证明。对任意 $x\in K$，$w_i=a_{p_i}(x)\ge0$ 且 $\sum_iw_i=1$，故
+
+$$
+\min_Kf=\min_i\mu_i=:m,\qquad \max_Kf=\max_i\mu_i=:M.
+\tag{VII106.2}
+$$
+
+两端都在相应 $p_i$ 达到。若最大值单重，达到 $M$ 必须有对应的 $a_{p_i}(x)=1$；
+104.4的唯一确认点使最大面恰为 $\{p_i\}$。最小值单重时同理。
+若 $f$ 非标量且最大值二重，唯一最小谱点为 $p$，同一框架给
+
+$$
+f=M u+(m-M)a_p.
+\tag{VII106.3}
+$$
+
+于是最小面是 $\{p\}$，最大面恰为整个非点球 $D_p$。最小值二重时两面交换。
+三个值全相同则 $f=\lambda u$；反过来对框架点求值使标量效应的每个系数都等于 $\lambda$。
+
+因此原 $f$ 的极大、极小面是单点还是非点球，已固定两端的重数；
+另一分解不能把单重换成双重，不能把三异值换成二加一型。
+三异值时，唯一极端纯点 $p_{\max},p_{\min}$ 在所有分解中相同。
+它们原正交，104.3的唯一第三点固定 $p_{\mathrm{mid}}$；中间值就是
+$f(p_{\mathrm{mid}})$。三个 $a_{p_i}$ 均因105.2而固定。
+二加一型时，单重极值点 $p$、$m,M$ 均固定，单重组为 $a_p$，重数组为 $u-a_p$。
+标量型只有一组，其和为 $u$。这些推理只用效应之和为 $u$，未使用状态框架和。证毕。
+
+### 106.3 原序单位界与连续性
+
+**定理 106.3（排序谱的原域连续性）。** 定义原序单位范数
+
+$$
+\|f\|_u:=\inf\{r\ge0:-ru\le f\le ru\}=\max_{x\in K}|f(x)|.
+\tag{VII106.4}
+$$
+
+排序谱 $\mu_1(f)\le\mu_2(f)\le\mu_3(f)$ 连续，并满足
+$\max_i|\mu_i(f)|=\|f\|_u$。本定理未推出谱和线性或谱平方和二次。
+
+证明。严格正原单位和紧基给上述范数等式；(VII106.2)给谱界与等号。
+若 $f_n\to f$，各排序谱有统一界。为每项选一个按谱值排序的原 joint 框架。
+由105.6，任意子列都能取谱与整个框架共同收敛的子子列。
+joint等式是闭条件，极限仍为原 $\mathcal T_3$ 的成员；线性组合的极限是 $f$。
+106.2使极限排序谱恰为 $f$ 的排序谱，故整序列收敛。
+此证法允许重数碰撞，既不选择连续特征向量，也不使用105.10的状态谱结论。证毕。
+
+### 106.4 内生谱乘积与跨效应的精确移位
+
+**定义与定理 106.4（四个原谱函数）。** 在整个 $A$ 上内生定义
+
+$$
+\begin{aligned}
+N(f)&=\mu_1\mu_2\mu_3,&\tau(f)&=\mu_1+\mu_2+\mu_3,\\
+\sigma_2(f)&=\mu_1\mu_2+\mu_1\mu_3+\mu_2\mu_3,&
+Q(f)&=\mu_1^2+\mu_2^2+\mu_3^2.
+\end{aligned}
+\tag{VII106.5}
+$$
+
+它们连续，分别实齐次三、一、二、二次；这里“齐次”尚不宣称多项式性。
+对任意 $f\in A$、$s,t\in\mathbb R$，$f+tu$ 的谱是 $\{\mu_i(f)+t\}$，
+$sf$ 的谱是 $\{s\mu_i(f)\}$。负 $s$ 使排序倒转，不影响多重集。
+因此，令 $e=u/2$，有全域准确恒等式
+
+$$
+\begin{aligned}
+N(tu+f)&=t^3+t^2\tau(f)+t\sigma_2(f)+N(f),\\
+N(e+h)&=\tfrac18+\tfrac14\tau(h)+\tfrac12\sigma_2(h)+N(h),\\
+Q(f+tu)&=Q(f)+2t\tau(f)+3t^2,\qquad Q=\tau^2-2\sigma_2.
+\end{aligned}
+\tag{VII106.6}
+$$
+
+证明。把 $tu=t\sum_i a_{p_i}$ 加到 $f$ 自己的同一框架分解，或把其系数乘以 $s$，
+就得到另一个合法原谱；106.2直接识别其多重集。不需要另一效应先有同一个状态框架和。
+乘开三个数给(VII106.6)，106.3给连续性与统一界
+
+$$
+|\tau(f)|\le3\|f\|_u,\quad |\sigma_2(f)|\le3\|f\|_u^2,
+\quad |N(f)|\le\|f\|_u^3,\quad
+\|f\|_u^2\le Q(f)\le3\|f\|_u^2.
+\tag{VII106.7}
+$$
+
+特别地 $Q(f)=0$ 当且仅当 $f=0$。证毕。
+
+### 106.5 主候选只量化两张纯尺的平面
+
+**定义 106.5（PAIRJET2及比较条件）。** 对每对不同原纯点 $p,q$，令
+$L_{pq}=\operatorname{span}_{\mathbb R}\{a_p,a_q\}\subset A$。主条件是
+
+$$
+\begin{aligned}
+\mathrm{PAIRJET2}:\quad\forall p\ne q\in P,\quad\exists\ell_{pq},H_{pq},r_{pq}:\\
+N(e+h)=\tfrac18+\ell_{pq}(h)+\tfrac12 H_{pq}(h,h)+r_{pq}(h),\\
+h\in L_{pq},\qquad
+\ell_{pq}\in L_{pq}^*,\quad H_{pq}\text{ 对称双线性},\qquad
+\lim_{\substack{h\to0\text{ in }L_{pq}\\h\ne0}}
+\frac{r_{pq}(h)}{\|h\|_u^2}=0.
+\end{aligned}
+\tag{VII106.8}
+$$
+
+各平面可以各用自己的系数与余项，不要求跨纯对统一，也不另加全局一阶条件。
+这是每个平面内统一的二阶 Peano 展开，非仅逐直线的方向展开。
+$\|h\|_u<1/2$ 时 $0<e+h<u$，所以所需邻域完全位于原 proper 效应区间内部。
+若 $a_p,a_q$ 线性相关，取它们的全域最大值并用唯一最大点即得 $p=q$，故所述确为二维平面。
+
+比较条件 $\mathrm{JET2}$ 是(VII106.8)在整个 $A$ 上用一个共享线性 $\ell$、
+一个共享对称双线性 $H$ 及统一 $o(\|h\|_u^2)$；$\mathrm{J1}$ 是 $N$ 在 $e$ 处
+Fréchet可微。$\mathrm{H2}$ 指 $Q$ 为二次型；由(VII106.7)它必正定。
+$\mathrm{CUB3}$ 指存在对称三线性型 $\mathcal C$ 使 $N(f)=\mathcal C(f,f,f)$ 于全部 $A$。
+原 $\mathrm{PL}_3$ 仍是105.1在状态空间 $V$ 上的全有符号长度律，不与 $Q$ 混名。
+候选是 $\mathsf W+\mathrm{PAIRJET2}$，不把任何比较条件预先列为其附加假设。
+
+### 106.6 一个对平面的切形迫出该纯对互易
+
+**定理 106.6（局部接触的二元提升）。** 在 $\mathsf W+\mathrm{PAIRJET2}$ 下，
+对每对不同原纯点有 $a_p(q)=a_q(p)$，从而得到完整 $S$。
+
+证明。固定 $L=L_{pq}$。对每个固定 $f\in L$ 令 $h=tf$，比较(VII106.6)与
+(VII106.8)，先除以 $t$ 取极限，再减去一次项除以 $t^2$，得到
+
+$$
+\tau|_L=4\ell_{pq},\qquad \sigma_2(f)=H_{pq}(f,f)\quad(f\in L).
+\tag{VII106.9}
+$$
+
+这里 $N(tf)=t^3N(f)$，余项对固定方向除以 $t^2$ 趋零。
+于是 $Q|_L$ 是正定二次型 $D_{pq}$ 的对角值，其中
+
+$$
+D_{pq}(f,g)=\tau(f)\tau(g)-2H_{pq}(f,g)\qquad(f,g\in L).
+\tag{VII106.10}
+$$
+
+无需先证明这些局部型能全局拼合。对任意原纯 $s$、任意 $f\in A$，用 $f$ 自己的
+谱框架和 $w_i=a_{p_i}(s)$，平方的凸性给
+
+$$
+f(s)^2=\left(\sum_iw_i\mu_i\right)^2
+\le\sum_iw_i\mu_i^2\le\sum_i\mu_i^2=Q(f).
+\tag{VII106.11}
+$$
+
+含 $s$ 的框架给 $a_s$ 的谱 $(1,0,0)$，106.2保证 $Q(a_s)=1$。
+因此对全部实 $t$，在同一个 $L$ 中有
+
+$$
+\begin{aligned}
+0&\le Q(a_p+t a_q)-(1+t a_q(p))^2\\
+ &=2t\{D_{pq}(a_p,a_q)-a_q(p)\}
+   +t^2\{Q(a_q)-a_q(p)^2\}.
+\end{aligned}
+\tag{VII106.12}
+$$
+
+两种符号的充分小 $t$ 迫一次项为零，故 $D_{pq}(a_p,a_q)=a_q(p)$。
+在 $a_q+t a_p$ 处同样得到 $D_{pq}(a_q,a_p)=a_p(q)$。
+同一平面型的对称性给互易；$p=q$ 时两边均为一。
+105.3早已给全原锥序least，故现在具备完整 $S$ 的全部输入。
+不需要共同中心、双随机矩阵、全局 $\mathrm{J1}$ 或任意跨平面余项控制。证毕。
+
+### 106.7 全局二阶切形与谱平方和
+
+**定理 106.7（JET2与H2的准确系数）。** 在 $\mathsf W$ 内，
+$\mathrm{JET2}\Longleftrightarrow\mathrm{H2}$。
+若 $Q(f)=D(f,f)$，$D$ 为其极化正定内积，则展开系数唯一为
+
+$$
+\tau(f)=D(f,u),\qquad
+\ell(f)=\tfrac14\tau(f),\qquad
+H(f,g)=\tfrac12\{\tau(f)\tau(g)-D(f,g)\}.
+\tag{VII106.13}
+$$
+
+证明。JET2的逐方向系数比较与106.6相同，在全部 $A$ 上给
+$\tau=4\ell$、$\sigma_2(f)=H(f,f)$。
+于是 $Q=\tau^2-2\sigma_2$ 为二次型，(VII106.7)给正定性。
+反向，H2与(VII106.6)的平方平移式比较给 $D(f,u)=\tau(f)$、$D(u,u)=3$，
+所以 $\tau$ 自动线性，$\sigma_2=(\tau^2-Q)/2$ 自动二次。
+代入半单位精确式即得(VII106.13)，余项恰为 $N(h)=O(\|h\|_u^3)$，
+确为全空间统一 $o(\|h\|_u^2)$。未预付 $H$ 自身正定；正定的是 $D$。证毕。
+
+### 106.8 原态和原效应的共同长度作为后果
+
+**定理 106.8（同锥Riesz识别与原PL3）。** 在 $\mathsf W+\mathrm{H2}$ 下，
+存在唯一由 $Q$ 确定的线性同构 $\mathcal R:A\to V$，满足
+
+$$
+g(\mathcal Rf)=D(f,g),\quad \mathcal R a_p=p,\quad
+\mathcal R(C^*)=C,\quad U:=\mathcal R u=p+2c_p.
+\tag{VII106.14}
+$$
+
+令 $B(v,z)=D(\mathcal R^{-1}v,\mathcal R^{-1}z)$，则
+$B(p,v)=a_p(v)$，$Q_3(v)=B(v,v)$，从而原 $\mathrm{PL}_3$ 成立。
+
+证明。(VII106.11)在全部 $A$ 上成立，且 $Q(a_p)=a_p(p)^2=1$。
+沿 $a_p+tg$ 用非负二次差的一次项为零，得 $D(a_p,g)=g(p)$。
+有限维正定性给Riesz同构，刚得的等式给 $\mathcal R a_p=p$。
+105.3的正效应谱使 $\mathcal R(C^*)\subseteq C$；原紧基由全部纯点凸生成，
+每个纯射线又是 $\mathcal R(\mathbb R_+a_p)$，故反向包含也成立。
+
+对任一框架，线性性给 $U=\sum_i p_i$；含 $p$ 的框架另两点是 $D_p$ 的对径，
+故 $U=p+2c_p$。并有 $u(U)=3$，对非零正 $f$ 有
+$f(U)=D(f,u)=\tau(f)>0$，所以 $U\in\operatorname{int}C$、$U/3\in\operatorname{ri}K$。
+这取得共同中心 $\mathrm G$，未将它当成接触证明的前提。
+
+每组框架的 $a_i$ 对 $D$ 正交归一，因为 $D(a_i,a_j)=a_j(p_i)=\delta_{ij}$。
+对 $v=\mathcal Rf$，其三读数平方和 $\sum_iD(a_i,f)^2\le D(f,f)$，
+这是有限维正交投影不等式；在 $f$ 自己的谱框架上等号达到。
+于是最大值 $Q_3(\mathcal Rf)=D(f,f)$，所述配对及PL3全部成立。
+此外 $B(v,\mathcal Rf)=f(v)$，$B$ 下的 $C$ 自对偶；原态效应配对未被另换。证毕。
+
+### 106.9 三次律的反向与成熟Jordan桥
+
+**定理 106.9（原谱乘积的全局三次性）。** 在 $\mathsf W$ 内，
+$\mathrm{CUB3}\Longleftrightarrow\mathrm{H2}$，并等价于同原锥同原单位的秩三有限EJA表示。
+
+证明。若 $N(f)=\mathcal C(f,f,f)$，比较(VII106.6)中 $N(tu+f)$ 的系数，得
+
+$$
+\tau(f)=3\mathcal C(u,u,f),\qquad
+\sigma_2(f)=3\mathcal C(u,f,f).
+\tag{VII106.15}
+$$
+
+所以 $Q=\tau^2-2\sigma_2$ 为正定二次型。
+H2由106.8给原PL3，105.8直接供应同单位秩三EJA及完整 $S$。
+这里复用的是[完整S桥][Q103S]和103.6、105.8；一般谱性、自对偶、面滤波保纯及
+最后的Jordan重构均按该桥的全部前件使用，不能用105.5的数学projectivity单独顶替。
+
+反向，设 $\Phi:J\to V$ 保原锥并满足 $u\Phi=\operatorname{tr}_J$，$\operatorname{rank}J=3$。
+用成熟迹配对把 $f\Phi$ 唯一表示为 $x\mapsto\operatorname{tr}_J(\widehat f\circ x)$。
+$f\mapsto\widehat f$ 线性，$\widehat u=1_J$；原 $a_p$ 恰对应本原幂等元。
+Jordan谱定理给一个原合法三框架谱，106.2使其三系数就是本章的效应谱，故
+
+$$
+Q(f)=\operatorname{tr}_J(\widehat f^2),\qquad
+N(f)=\frac{\operatorname{tr}_J(\widehat f)^3
+ -3\operatorname{tr}_J(\widehat f)\operatorname{tr}_J(\widehat f^2)
+ +2\operatorname{tr}_J(\widehat f^3)}{6}.
+\tag{VII106.16}
+$$
+
+第二式是三数Newton恒等式：展开立方，平方交叉项抵消，只剩六倍三数乘积。
+Jordan乘法双线性且幂结合，右侧为齐次三次多项式，包含秩三直和分支。
+因而得到原 $N$ 的CUB3，而非另定义一个不相干的行列式。证毕。
+
+### 106.10 二元候选的完整等价
+
+**定理 106.10（同一W域中的完整闭合）。** 在本章原有限维全效应域及 $\mathsf W$ 下，
+
+$$
+\boxed{\begin{aligned}
+\mathrm{PAIRJET2}&\Longleftrightarrow\mathrm{JET2}
+\Longleftrightarrow\mathrm{H2}\Longleftrightarrow\mathrm{CUB3}
+\Longleftrightarrow\mathrm{PL}_3\\
+&\Longleftrightarrow\mathrm{Pair}
+\Longleftrightarrow\mathcal L(K)\text{ 满足覆盖律}
+\Longleftrightarrow S\\
+&\Longleftrightarrow\exists\text{ rank-three有限EJA }J,\quad\Phi:J\overset{\sim}{\longrightarrow}V,\\
+\Phi(J_+)=C,\quad u\Phi=\operatorname{tr}_J.
+\end{aligned}}
+\tag{VII106.17}
+$$
+
+证明。PAIRJET2由106.6给完整 $S$；104.7、105.8在同一W域内给Pair、覆盖、PL3及EJA。
+106.9给H2与CUB3，106.7给JET2；全空间JET2限制到每个 $L_{pq}$ 就是PAIRJET2。
+这些箭头闭成双向，且各步保留同一原全部纯点、同一原效应区间和同一归一单位。
+W早已给 $h(K)=3$，故在此不用重复为 $S$ 添加秩假设；移出W域时须恢复这个限制。
+各平面的 $\ell_{pq},H_{pq}$ 最后必为(VII106.13)的限制，余项可共同取 $N(h)$；
+这种全局拼合是结论，不是定义106.5的输入。证毕。
+
+### 106.11 一阶层准确等于共同中心
+
+**定理 106.11（J1、线性谱迹和G）。** 在 $\mathsf W$ 下，
+
+$$
+\mathrm{J1}\Longleftrightarrow\tau\text{ 线性}
+\Longleftrightarrow\mathrm G.
+\tag{VII106.18}
+$$
+
+其中 $\mathrm G$ 的常向量记 $U$，则 $\tau(f)=f(U)$、$dN_e(f)=f(U)/4$。
+
+证明。半单位精确式与(VII106.7)给 $N(e+h)=1/8+\tau(h)/4+O(\|h\|_u^2)$。
+Fréchet导数若存在，沿 $h=tf$ 比较使它等于 $\tau(f)/4$，故 $\tau$ 线性。
+反向该统一二阶界直接给Fréchet可微。
+
+若 $\tau$ 线性，有限维对偶性给唯一 $U\in V$ 使 $f(U)=\tau(f)$。
+$u(U)=3$、$a_q(U)=1$，所以对每个 $p,q\in P$ 有
+$a_q(U-p)=1-a_q(p)\ge0$。105.3的正对偶谱生成整个 $C^*$，
+闭锥双极性遂给 $U-p\in C$，而非只在某个选定测试菜单中非负。
+令 $y_p=(U-p)/2$，有 $u(y_p)=1$、$a_p(y_p)=0$，故 $y_p\in D_p$。
+每个 $q\in P\cap D_p$ 由零对称满足 $a_q(p)=0$，于是 $a_q(y_p)=1/2$。
+104.4的球内直径公式遍及全部球面方向，迫 $y_p=c_p$，在线段两方向也成立。
+所以 $p+2c_p=U$，得到G。
+
+反向，G与105.9给每个框架 $\sum_i p_i=U$。
+在 $f$ 自己的效应谱框架上评价，$f(U)=\sum_i f(p_i)=\sum_i\mu_i=\tau(f)$。
+故 $\tau$ 线性，完成双向。这里不由G单独推出二阶条件。证毕。
+
+### 106.12 原正锥是三次双曲分支
+
+**定理 106.12（单位标记的内生三次锥几何）。** 在106.10的等价条件下，
+$N$ 是以原 $u$ 为双曲方向的三次型，$N(u)=1$，并且
+
+$$
+N(tu-f)=\prod_{i=1}^3(t-\mu_i(f)),\qquad
+C^*=\{f:\mu_i(f)\ge0\ (i=1,2,3)\}=\overline{\Gamma_u(N)}.
+\tag{VII106.19}
+$$
+
+$\Gamma_u(N)$ 是 $\{N>0\}$ 中包含 $u$ 的连通分支，恰为 $\operatorname{int}C^*$。
+每个纯效应都是 $N=0$ 的临界点；每两个纯效应之间的整条线段都留在三次零边界上。
+
+证明。106.4的移位缩放式给全部实根，满足双曲多项式的定义。
+正谱组合给 $\mu_i\ge0\Rightarrow f\in C^*$，反向对原谱点求值。
+全谱严格正恰为 $f\ge\varepsilon u$ 对某 $\varepsilon>0$，即 $\operatorname{int}C^*$。
+这个集合凸且含 $u$；在 $N>0$ 内沿连续路径没有谱值能跨零，
+所以含 $u$ 的分支不能离开它，得到准确分支及闭包。
+这里没有把 $C^*$ 误写成 $\{N\ge0\}$；例如谱 $(-1,-1,1)$ 有正乘积却非正。
+
+对纯 $a=a_p$，$N(a)=0$，而 $N\ge0$ 于 $C^*$。
+任意 $g\in C^*$ 使 $a+tg\in C^*$ 对 $t\ge0$ 成立，故 $dN_a(g)\ge0$。
+同框架移位给 $N(a+tu)=t^2(1+t)$，所以 $dN_a(u)=0$。
+线性泛函 $dN_a$ 非负于 $C^*$，又在其内点 $u$ 为零，必为零泛函。
+三次极化给 $N(a+b)=N(a)+dN_a(b)+dN_b(a)+N(b)=0$。
+同式用于任意非负倍数，故所有纯效应弦都在正锥的零边界。
+这还给一条独立的CUB3到全Pair的短桥：$a_p+a_q$ 正且最小谱为零，
+在对应原谱点 $r$ 上两项各读零，故 $r\in D_p\cap D_q$，104.7给全Pair。
+此段已在CUB3之后使用多项式导数，不在PAIRJET2证明之前预用。证毕。
+
+### 106.13 从同一个N与u恢复可观测量乘法
+
+**定理 106.13（既有Jordan结构的内生恢复）。** 在106.10的等价条件下，
+原效应空间上的Jordan乘法由 $(N,u)$ 唯一确定。此结论是取得完整 $S$ 后的恢复，
+不把任意双曲三次型都称为Jordan行列式。
+
+证明。106.9的同单位迹坐标先给 $A$ 一个秩三EJA乘法。
+其迹为 $\tau$，$Q(f)=\operatorname{tr}(f^2)$；极化后 $D(f,g)=\operatorname{tr}(f\circ g)$。
+所以这与106.8取得的原配对是同一个型，不是额外选择。
+由 $N(tu+f)$ 的系数先恢复 $\tau,\sigma_2$，再以 $Q=\tau^2-2\sigma_2$ 恢复 $D$。
+定义唯一的二次映射 $f^\#$ 及对称双线性 $s$ 为
+
+$$
+D(f^\#,g)=dN_f(g),\qquad
+s(f,g)=\sigma_2(f+g)-\sigma_2(f)-\sigma_2(g)
+       =\tau(f)\tau(g)-D(f,g).
+\tag{VII106.20}
+$$
+
+在已取得的EJA中，成熟迹型关联性给
+$\operatorname{tr}((f\circ g)\circ h)=\operatorname{tr}(f\circ(g\circ h))$。
+故 $d\operatorname{tr}(f^2)[g]=2D(f,g)$、
+$d\operatorname{tr}(f^3)[g]=3D(f^2,g)$；后式由幂结合及迹关联性逐项求导。
+对(VII106.16)求导得到
+
+$$
+f^\#=f^2-\tau(f)f+\sigma_2(f)u.
+\tag{VII106.21}
+$$
+
+因而极化原平方，精确恢复
+
+$$
+f\circ g=\tfrac12\bigl((f+g)^\#-f^\#-g^\#
+ +\tau(f)g+\tau(g)f-s(f,g)u\bigr).
+\tag{VII106.22}
+$$
+
+右侧全由 $(N,u)$ 决定，故任何保这两者的另一同单位Jordan实现都给同一乘法。
+在原谱框架中平方为 $\sum_i\mu_i^2a_{p_i}$，所以平方锥仍是 $C^*$；
+正谱逐项开平方给反向包含。这里Newton恒等式、迹关联性和Jordan谱定理均为成熟中间工具，
+未另调用未经前件核对的三次范数识别定理。证毕。
+
+### 106.14 可选的二纯滤子缺陷诊断
+
+**定理 106.14（Lorentz缺陷准确测量同一个缺口）。** 仅在 $\mathsf W$ 下，
+用105.5的原数学投影 $\Pi_p$，定义
+
+$$
+m_p(v)=(u-a_p)(v),\quad z_p(v)=\Pi_pv-m_p(v)c_p,\quad
+\Delta_p(v)=m_p(v)^2-\|z_p(v)\|_p^2.
+\tag{VII106.23}
+$$
+
+$\|\cdot\|_p$ 以 $D_p-c_p$ 为单位球；$z_p(v)\in\operatorname{lin}(D_p-c_p)$。
+$\Delta_p$ 为二次型且在 $C$ 上非负。对不同原纯 $p,q$，
+
+$$
+\Delta_p(q)=0\Longleftrightarrow D_p\cap D_q\ne\varnothing
+\Longleftrightarrow H(p,q)\ne K.
+\tag{VII106.24}
+$$
+
+证明。$\Pi_p$ 正且 $u\Pi_p=u-a_p$，正像恰为 $\operatorname{cone}D_p$，
+故在 $C$ 上 $m_p\ge\|z_p\|_p$。原正像生成其线性张成，给全部 $v$ 的所述坐标。
+当 $q\ne p$ 纯时，唯一最大点给 $m_p(q)>0$，故 $\Pi_pq\ne0$。
+任取 $r\in P\cap D_p$，零对称给 $a_r(p)=0$；105.4的限制双射使
+$\Pi_p^*a_r=a_r$，所以 $a_r(\Pi_pq)=a_r(q)$。
+若 $\Delta_p(q)=0$，归一像 $s=\Pi_pq/m_p(q)$ 在球面，取它在 $D_p$ 的对径 $r$。
+球内直径公式给 $a_r(\Pi_pq)=0$，遂 $a_r(q)=0$；零对称又给 $a_q(r)=0$，
+所以 $r\in D_p\cap D_q$。
+反向，非空交必含纯 $r$，此时 $a_r(q)=0$，因此 $a_r(s)=0$。
+球上该尺的零集只有对径点，故 $s$ 在球面，$\Delta_p(q)=0$。
+最后的等价直接用104.7。正缺陷恰对应内部二纯弦；这是同域条件反事实诊断，
+没有给出一个实际满足W的正缺陷例。数学滤子正性只给非负，不自动给纯输入时等号。证毕。
+
+### 106.15 尚未自动取得的一致切形
+
+**开放问题 106.15（弱球关系的原二阶拼合）。** 下列蕴含没有在这里证明，
+也没有满足整个W而推翻它们的同域反例：
+
+$$
+\mathsf W\Rightarrow\mathrm{J1},\qquad
+\mathsf W+\mathrm G\Rightarrow\mathrm{JET2},\qquad
+\mathsf W\Rightarrow\mathrm{PAIRJET2}\ (\Longleftrightarrow\mathrm{JET2/CUB3}).
+\tag{VII106.25}
+$$
+
+准确缺口是 $\tau$ 的可加性，以及取得它后 $\sigma_2$ 的跨方向二次一致性。
+由实齐次与连续性，前者等于所有 $\tau(f+g)-\tau(f)-\tau(g)=0$；
+后者等于所有 $\sigma_2(f+g)+\sigma_2(f-g)-2\sigma_2(f)-2\sigma_2(g)=0$。
+这里用成熟连续平行四边形极化判据，不由齐次性单独推双线性。
+对每个固定 $f$，$t\mapsto N(e+tf)$ 在W下本已是精确三次式；
+缺的是不同方向能否共用线性、二次系数。PAIRJET2只预付每个纯对平面各自的一致性，
+106.6才把它提升为全局一致性。
+J1失败等于共同中心失败；JET2失败等于H2、PL3、全Pair及完整S失败，均限同一W域。
+这些是等价定理的反面，不宣称已发现W反例、逻辑独立性、最少公理数或全球原创。
+“更局部”指附加条件的取值位置和二纯量词；在W域它与全局三次律逻辑等价。
+本条的未决是尚未证明或反驳，不主张形式不可判定性。
+
+### 106.16 同一原装饰元组上的完整替换
+
+**定理 106.16（保留全部消费者的二纯切形包）。** 固定103.10、105.15的同一个
+$\mathcal O$、共同来源域、非空 $\mathcal J\subseteq\{A,D,E\}$ 及
+$\mathcal D_{3,\mathcal J}$，定义
+
+$$
+\mathsf R_{\rm pairjet,3}^{\mathcal J}(\mathcal O):=
+\mathcal N(\mathcal O)\land\!\bigwedge_{X\notin\mathcal J}S_X
+\land\!\bigwedge_{X\in\mathcal J}(\mathsf W_X+\mathrm{PAIRJET2}_X).
+\tag{VII106.26}
+$$
+
+本节 $A,D,E$ 是旧包的载体标签，其中 $A$ 不指106.1的效应空间。
+每个 $N_X,L_{pq,X},e_X$ 均由该原载体定义。在此共同域内，
+
+$$
+\begin{aligned}
+\mathsf R_{\rm pairjet,3}^{\mathcal J}
+&\Longleftrightarrow\mathsf R_{\rm readout,3}^{\mathcal J}
+\Longleftrightarrow\mathsf R_{\rm exclusion,3}^{\mathcal J}
+\Longleftrightarrow\mathsf R_S\Longleftrightarrow\mathsf R_{\rm polar}\\
+&\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}
+\Longleftrightarrow\mathsf R_{\rm mid}\Longleftrightarrow\mathsf R_{86}^{\rm ev}
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}.
+\end{aligned}
+\tag{VII106.27}
+$$
+
+证明。逐所选 $X$ 用106.10替换105.15中的PL3，其余直接消费(VII105.33)。
+在不先限定高度的旧域，准确右侧仍需 $\bigwedge_{X\in\mathcal J}h(K_X)=3$。
+$\mathcal N$ 和未选 $S_X$ 保持原定义的全部量词，具体包括原概率像自身紧及全部原中点实现、
+原测试的整个效应表及闭性、零／单位／中点／补／有界倍增、重复标签和每种同中点实现、
+全部非负质量缩放及零／次归一／不等质量、各过程与参考自己的全部相关联合输入域。
+不能先换闭凸完成体、纯子集、测试子菜单或仅乘积输入。
+
+同一个原 $L,p,\omega,K,M$、两次同一读回 $p$、两实张成、全实 $Z$、完整(83.8)、
+原单位／迹／伴随／内积／二次表示、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$ 均保留；
+精确PRE之后仍使用同一原资格态的整个H13输出，保留活跃块严格负方向、共享总迹一、
+非活跃零质量、空活跃集及原资格参数，不逐块换态、不由输出反选资格。
+共同来源合同仍包括设备／事件／来源绑定、全部菜单与分支、参考／副本／相关联合、
+记录／权限／控制／原钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、
+实际混合、全部合法未来、旧support与每个中间切口。
+VI89.9—89.10的原生／细化消费者、全部原字和terminal futures、联合有符号关系、
+细标签粗归组、记录后条件未来、source-adoption与资源合同均按原式继承。
+
+同事件CP继续消费原完整提升、实际探针及相容核；已有充分递归参考的结论直接复用。
+Kraus、TP/TNI、实际仪器各守原同族预算、接线、记录、粗粒化及共同输入校准；
+条件态只在正质量分支归一。Lüders仍需同一分支的锐效应、接受态中性和输出校准；
+物理时间仍需原钟、连续齐次可逆群及实际动态来源。
+本章数学滤子、内积和三次型均不反向制造这些合同。
+若原复合使 $A,D=A\otimes A,E=D\otimes A$ 的秩为 $3,9,27$，
+不能同时把三者选入本章秩三入口；全选的共同域交集仍为空，不删来源以制造非空。证毕。
+
+### 106.17 全排除三球后的旧静态量子公理
+
+**推论 106.17（原全态、全效应及Born）。** 在106.10的等价条件下，
+再要求全部完整 $D_p\simeq B^3$，恰选同单位 $H_3(\mathbb C)$，原纯几何为 $\mathbb{CP}^2$。
+存在同锥同单位的 $\Phi$，使
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+[0,u]=\{f_E:f_E(\Phi\rho)=\operatorname{tr}(E\rho),\ 0\preceq E\preceq I_3\},\\
+p=\Phi(vv^*),\quad \|v\|=1,\qquad
+a_p(\Phi\rho)=\operatorname{tr}(vv^*\rho),\qquad
+a_p(\Phi(ww^*))=|v^*w|^2,\quad \|w\|=1,\\
+N(f_E)=\det E,\quad \tau(f_E)=\operatorname{tr}E,\quad
+Q(f_E)=\operatorname{tr}(E^2),\qquad w_{\rm centre}=\Phi(I_3)/3.
+\end{gathered}
+\tag{VII106.28}
+$$
+
+证明。106.10供应105.16的全部前件，直接复用其成熟分类与Born字典。
+秩三还允许经典、$\mathbb R\oplus\operatorname{spin}_d$、实／复／四元数／八元数简单分支；
+直和分支存在排除线段，简单分支的排除球维数为 $2,3,5,9$，故必须量化全部排除球。
+复型选择后，原纯点恰为复直线的秩一投影，给 $\mathbb{CP}^2$；
+106.2识别矩阵三谱，给最后一行。有限数学测量为 $E_i\succeq0,\sum_iE_i=I_3$。
+这推导同一原静态态／效应／概率公理，不将数学测量等同实际菜单。证毕。
+
+### 106.18 与全有限层级的两个条件入口
+
+**命题 106.18（S1供应与低二份共同叉口）。** 在[全有限复C星层级VII][Q105H]
+定义102.1的原域中，$\mathsf W_1+\mathrm{PAIRJET2}_1$ 供应原 $S_1$ 与秩三。
+在完整全有限强分块域及相应具名供应下，102章的 $S_3$ 路线和103章的
+$S_2+\mathsf F$ 路线均可接入；单体切形不自动供应它们的其余前件。
+
+证明。106.6的原least与全部纯值互易给任意有限原纯准备
+$T_p(\sum_\ell t_\ell q_\ell)=\sum_\ell t_\ell T_{q_\ell}(p)$，恰为层级文 $S_1$。
+层级域还要求全部 $W_N=V^{\otimes_{\mathbb R}N}$、每个实际分块的最小／最大锥夹逼、
+指定正置换、规范重括号、同一原乘积配对与单位，并量化全部原极点及全效应。
+这些是站立输入，不能从一个载体的三次型取得。
+
+第一条路线保留102.1、102.3、102.4的B1—B3及102.11的全部前件：
+原 $S_3$ 或等价全部三份电路平衡，先给低三份Jordan、实际复合、共同产品方向，
+再到全部有限标准锥。单体只供应其一份 $S_1$，没有供应该路线的两、三份比较。
+这是102路线的条件，不把 $S_3$ 写成所有全层级路线必需的前件。
+
+第二条路线直接复用103.9：在同一102.1原全有限域，保留103.1三项具名纸面供应——
+低二份 $q=1,2$ 的 $S$ 到Jordan、实际 $(W_1,W_1,W_2)$ 自复合的复块选择、
+每个原二份扇区的实际两因子产品正规形——则
+
+$$
+S_2+\mathsf F\quad\Longleftrightarrow\quad
+\exists\vartheta:V\to(\!\bigoplus_i M_{n_i}(\mathbb C)\!)_{\rm h},\quad
+\vartheta^{\otimes N}(C_N)=\bigoplus_{s\in I^N}\operatorname{Herm}_+(\mathcal H_s)
+\quad(\forall N\ge1),
+\tag{VII106.29}
+$$
+
+其中 $I$ 非空有限、$n_i\ge1$，$\vartheta$ 是固定实线性同构，原 $u$ 对应各块迹之和，
+$\mathcal H_s=\bigotimes_t\mathbb C^{n_{s_t}}$；原产品、配对、置换与重括号同时保持。
+$S_2$ 量化全部原二份纯准备；102.3的纯旁观下降给 $S_2\Rightarrow S_1$，不反向上升。
+$\mathsf F$ 要求某个共同局部Jordan迹坐标、各块共同向量基（含相位）使
+
+$$
+\Delta=\bigoplus_i\left|\sum_{a=1}^{n_i}aaa\right\rangle
+                       \left\langle\sum_{b=1}^{n_i}bbb\right|\in C_3,
+\qquad u_3(\Delta)=R=\sum_i n_i.
+\tag{VII106.30}
+$$
+
+每块只支撑 $(i,i,i)$ 扇区。它指定一个原锥元素，$\Delta/R$ 归一，
+未预付整 $C_3$ 标准、原纯性或物理制备菜单；103.3给被动坐标不变性，
+无需高阶主动局域酉假设。$\mathsf F$ 也不由本章 $N$ 或局部二阶切形自动生成。
+
+其实际供应顺序是：103.4由 $\Delta$ 切出原Bell杯帽，先取得自身Choi／全原旁观正判据；
+103.5在真实秩二角用映射复合统一二份转置掩码；103.6此后才给普通矩形一体合同的
+全部原旁观正性；103.7用这些已正映射供应两个指定三腿资源；103.8以标准二份及这两个
+资源的削弱尾部接口给全部原有限锥。该链未将三份Jordan或 $S_3$ 预用为前件。
+反向标准全层级含 $\Delta$，且迹least给全部 $S_N$，所以(VII106.29)为条件等价，
+不只是相容性，也不将具名纸面桥整链归给某一成熟论文。
+
+取得全层级后，103.10给全部原态／效应与 $\sum_s\operatorname{tr}(E_s\rho_s)$、
+矩形跨扇区CP/Kraus及逐输入TP/TNI预算。103.11的相干基复制与Schur合拢是数学原旁观正映射；
+$\sum_a c_a|aa\rangle$ 不等于未知态的 $|\psi\rangle\otimes|\psi\rangle$，故非普遍克隆。
+103.12及102.14继续保留实际事件饱和、仪器、Lüders、物理钟／Hamiltonian／$\hbar$ 的独立合同。
+若106.17选出 $M_3$ 单体，二、三份秩仍为九、二十七，不能将本章秩三W入口直接加给它们。
+本章静态结论未消除 $S_2,\mathsf F$ 或全层级供应义务。证毕。
+
+### 106.19 对应范围、归属与完整直观解释
+
+**命题 106.19（新候选到旧公理的逐项对应）。** 本章得到的旧公理及其条件对应为：
+
+| 原目标 | 准确供应与边界 |
+| --- | --- |
+| 同一原最低确认与全部纯比较 | W先给全域least；PAIRJET2的对平面二次接触给全部数值互易，即完整S。 |
+| 共同中心、自对偶与可观测量Jordan谱 | 106.7—106.10给原共同内积及同单位秩三EJA；106.13由同一N、u恢复乘法。 |
+| 复三能级全态／全效应／Born | 再加全部完整排除球为三球，应用106.17；不先预选复数或仅选一张三球。 |
+| 全有限标准复C星张量幂 | 原102.1全域加102路线的S3/B1—B3，或103路线的S2、F及三项具名低二份供应；由106.18准确接回。 |
+| 实际菜单、CP事件、仪器、Lüders及物理时间 | 106.16保留所有来源／过程消费者；全层级数学CP另按层级文103.10，实际事件及时间另按该文103.12／102.14。 |
+
+证明。各行分别是106.6、106.7—106.13、106.17、106.18及106.16的同原域应用。
+共同域、额外条件和所有过程来源均保留，因此既不把单体结论弱化为只兼容旧静态公理，
+也不从单体静态结论冒领全部复合与动态公理。证毕。
+
+**约定 106.20（数学来源与证据边界）。** 效应极值面固定重数、无G谱唯一与连续性、
+内生N的精确移位、纯效应对平面的非负二次接触、J1与G的连接及它们的同数据组合，
+均按 `repo-derived` 纸面综合归属。103—105的已述桥直接复用，不重复计为新重构。
+凸支撑、紧性、平方凸性、连续极化、Riesz对偶、三数Newton恒等式和三次极化为成熟中间工具。
+Jordan迹配对、谱定理、幂结合及有限分类按103.6—103.8所列成熟来源复用；
+完整S桥沿[原Library接口][Q103S]，其数学filter与最终识别的前件区分沿[BMU][Q105BMU]。
+106.12直接核对双曲多项式及其单位分支的定义；不额外援引一般三次锥识别Jordan的断言。
+全有限接口精确复用[层级VII][Q105H]的102与103章，保留各具名条件纸面桥。
+本章只给纸面证明及成熟结果的应用，不主张Lean内核核验、文献穷尽、最少公理数或经验实现。
+
+**命题 106.21（每两张纯尺的小弯曲如何拼成量子几何）。** 本章可以完整解释为下面的图景。
+仍然拿原来的整块状态物体、全部纯点和全部原尺来研究。一张原尺放进同一个真正三结果框架，
+会在三种基准纯态上得到三个谱读数；这是同一张尺的三个刻度，不是一次实验三个概率的总和。
+弱球关系已让三数及其重数不随分解改变：极值若只落一点就是单重，若落整块排除球就是双重；
+三异值时，两端固定后，原正交对的唯一第三点把中间刻度也固定了。
+因此三数的乘积先已是原关系确定的一个函数，无须先有共同中心或内积。
+
+证明与解释。只在所有状态都读一半的原效应附近，要求每两张纯尺所在平面的小弯曲各自一致：
+每个平面自己能用一个线性斜率和一个对称二次项描述，不先要求不同平面共用系数。
+精确的三数乘积公式随即使该平面的三数平方和成为一把二次长度尺。
+任何原纯点的读数平方都不超过它，而自己的确认尺在该点恰好接触。
+非负差在接触处不能沿正负两个方向有非零一次斜率，这就锁住两张尺的交叉项；
+交换两尺，对称的同一个二次项迫使双方读数相同。
+所有纯对都互易，加上早已得到的最低确认尺，便接回完整S及同单位秩三Jordan几何。
+共同中心、共同长度和全局三次曲面这时才成为后果，各平面的小弯曲也被锁到同一规则。
+
+全部排除球再为三维时，才选出复三能级和纯态的复射影平面，原全态、全效应、迹概率及
+纯比较模方全部由同一字典给出。若要全部有限复合，可沿原三份比较路线，或在全有限强分块域
+和低二份具名供应下沿全部二份比较加一个共同基三腿资源路线；单体没有自动提供二份比较或该资源。
+数学滤子和基复制也没有自动提供实际装置。弱球关系自己会不会迫使这些局部弯曲一致，
+仍未证明或反驳；所有来源、动态、复合和物理钟合同继续按原适用范围承担。证毕。
+
+## 追加锚（本行以下为增补区）
