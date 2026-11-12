@@ -2916,3 +2916,1360 @@ Alfsen—Shultz原文 [*State spaces of Jordan algebras*, Acta Math.140 (1978),1
 [Q103ROG]: ../../../Blueprint/D5/S3/Quantum/Foundation/SectionROGFrame.md
 
 ## 追加锚（本行以下为增补区）
+
+## 104. 正交三角形的局部提升、纯点紧性与厚球面控制
+
+### 104.1 原全效应域与只量化正交对的入口
+
+**定义 104.1（局部Pair与完整排除尺族）。** 完全采用103.1的同一个非零有限维实 $V$、闭尖生成锥 $C$、严格正原单位 $u$、整个紧基 $K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$、整个原 $[0,u]_{C^*}$，以及原 $F_p,T_p,D_p,E_p,H(p,q)$。纯点集起初不假定闭。保留103.1的 $\mathrm{EB}_{\ge1}$，将全 $\mathrm{Pair}$ 的量词改为
+
+$$
+\mathrm{Pair}_{\perp}:\quad
+p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\tag{VII104.1}
+$$
+
+这里 $p\perp q$ 仍指存在原 proper 效应在 $p,q$ 取一、零。补效应给 $p\perp q\Longleftrightarrow q\perp p$，且 $p\not\perp p$；没有先给内积正交。定义
+
+$$
+\mathcal A_p=\{a\in F_p:a(x)=0\ (x\in D_p)\}.
+\tag{VII104.2}
+$$
+
+直接复用103.2：仅 $\mathrm{EB}_{\ge1}$ 已使每个 $D_p$ 成为非点紧暴露极大真面，且 $\mathcal A_p\ne\varnothing$；全部非空真面只有纯单点和这些整球。因此任意两个不同非点真面至多交于一点，非空交点必纯，且 $h(K)=3$。每个 $a\in\mathcal A_p$ 的零面恰为整个 $D_p$，因为任何额外零点本身就在 $D_p$ 的原定义中。此时还不称 $a$ 为 least，不假设 $\mathcal A_p$ 单点。
+
+球的对径始终在该整个仿射球内部定义。下文的“逐效应延拓”指每个局部效应分别存在一张原全域 proper 延拓；三结果共同完成则要求同一族原非负效应的和恰为 $u$。两种量词不相同，也均不直接指实际装置。
+
+### 104.2 局部Pair恰好恢复每张已有球的全部对径
+
+**定理 104.2（正交对、球对径与逐效应延拓）。** 在 $\mathrm{EB}_{\ge1}$ 下，下列三项等价：$\mathrm{Pair}_{\perp}$；每个 $D_p$ 中任意纯 $q$ 的球内对径 $r$ 均满足 $q\perp r$；每张 $D_p$ 的全部 $[0,1]$ 值仿射效应都有原 $[0,u]$ 中的延拓。这里每个 $D_p$ 本身确为原二纯最小面，但未断言任意二纯点都共处这样的球。
+
+证明。设 $\mathrm{Pair}_{\perp}$ 成立，取 $q\in P\cap D_p$。103.2使 $H(p,q)=D_r$，其中 $r$ 为原纯点。零对称给 $r\in D_p\cap D_q$。任取 $a_q\in\mathcal A_q$；它在球 $D_p$ 上于 $q,r$ 取一、零。球上 proper 仿射函数同时达到两端，便迫使二者为对径。这是103.4中球支持等号条件的直接应用，亦适用于线段。特别地 $q\perp r$。
+
+反之，设全部所述对径均原零。对 $p\perp q$，在 $D_p$ 内取 $q$ 的对径 $r$。有 $r\in D_p$ 及 $r\in D_q$，零对称给 $p,q\in D_r$。所以 $H(p,q)\subseteq D_r\ne K$，即得(VII104.1)。
+
+任一球 $F=D_p$ 有至少两个不同极点，它们都是原纯点，二者生成的原最小面是 $F$ 的非点面，故只能等于整个 $F$。因此可在这些已有球上直接使用[VI90.8][Q103VI]的逐效应论证，而不预付全 $\mathrm B$。明确地，在球图中写
+
+$$
+ h(z)=\alpha+v\cdot z,\qquad
+ s=\|v\|\le\min(\alpha,1-\alpha).
+\tag{VII104.3}
+$$
+
+$s>0$ 时沿方向 $v/s$ 的直径效应为 $b(z)=(1+(v/s)\cdot z)/2$。原对径零见证的限制必恰为 $b$，而
+
+$$
+ h=(\alpha-s)1+2s b+(1-\alpha-s)0
+\tag{VII104.4}
+$$
+
+给 proper 延拓；$s=0$ 时取 $\alpha u$。反向延拓每个直径效应即给原对径零见证。这里复用的是VI90.8的效应分解，不另计为新归一化或新扩张定理。证毕。
+
+### 104.3 原正交对的唯一第三点和共同三结果
+
+**定理 104.3（受限前件下的joint三元提升）。** 在 $\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 下，每个 $p\perp q$ 都有唯一第三纯点 $r$，满足
+
+$$
+ D_p\cap D_q=\{r\},\qquad H(p,q)=D_r.
+\tag{VII104.5}
+$$
+
+三点两两原零。任意指定 $a_p\in\mathcal A_p,a_q\in\mathcal A_q$ 都能在原全空间共同完成：
+
+$$
+ a_r:=u-a_p-a_q\in\mathcal A_r,\qquad
+ a_i(j)=\delta_{ij},\qquad a_p+a_q+a_r=u.
+\tag{VII104.6}
+$$
+
+每个纯点都属于这样的三元框架；不存在四个不同的两两原零纯点。因而原数学效应的最大共同可区分纯点数恰为三。
+
+证明。$H(p,q)=D_r$ 已由104.2的前半证明得到，且 $r\in D_p\cap D_q$。因 $q\in D_p$ 而 $q\notin D_q$，两面不同，交只能为该纯单点。这也给 $r$ 的唯一性。$p,q$ 在球 $D_r$ 上为对径；$a_p,a_q$ 分别取一、零两端，故二者在整个 $D_r$ 上相加为一。
+
+置 $h=u-a_p-a_q$。有 $h|_{D_r}=0$、$h(r)=1$、$h\le u$。这里尚未知道 $h\ge0$；精确复用103.5的全域最小值归一论证。若 $c=\min_Kh<0$，在最小面选纯 $x$ 达到它，则
+
+$$
+ g=\frac{h-cu}{1-c}\in[0,u],\qquad g(r)=1,\quad g(x)=0.
+\tag{VII104.7}
+$$
+
+原定义使 $x\in D_r$，与 $h(x)<0=h|_{D_r}$ 矛盾。所以 $h\ge0$，并且 $h\in\mathcal A_r$，得到(VII104.6)。新增处是该已有论证只需正交对的真面前件，未重证或重计103.5的归一化方法；此时也未把 $h$ 认作某个预选唯一 $a_r$。
+
+每个非退化 $D_p$ 有纯点 $q$，从而每个 $p$ 都可如此完成。第四个两两原零纯点必须属于 $D_p\cap D_q=\{r\}$，所以不能不同于 $r$。任何共同可区分纯族必两两原零，而(VII104.6)确给一个三元完备效应族，容量断言遂成立。它不宣称每个混态已有正交谱分解，也不从数学效应族制造实际共同菜单。证毕。
+
+### 104.4 点球双射、唯一确认与已有球上的least
+
+**定理 104.4（局部极性和比较的准确范围）。** 在同一弱入口下，$p\mapsto D_p$ 已是全部原纯点与全部非点真面之间的双射。每个 $a_p\in\mathcal A_p$ 都唯一确认 $p$，所以每个原纯点暴露。任意非零 $b\in C^*$ 若零于 $D_p$，则其全域最大值唯一在 $p$ 达到，且 $b/b(p)\in\mathcal A_p$。
+
+对每个已有真球 $F$ 和 $p\in P\cap F$，任取球图 $\chi:F\to B^d$，有
+
+$$
+ T_p(\chi^{-1}z)=a_p(\chi^{-1}z)
+ =\frac{1+\chi(p)\cdot z}{2},
+ \qquad a_p|_F\le g|_F\quad(g\in F_p).
+\tag{VII104.8}
+$$
+
+若纯 $p,q$ 共处某个真面，则 $T_p(q)=T_q(p)$。这些结论尚不包括全域 least、$\mathcal A_p$ 的无条件唯一性或不共真面的纯点之间的非零数值互易。
+
+证明。满射已由103.2给出。若 $D_p=D_q=L$，在 $L$ 取纯 $r$。零对称使 $p,q\in D_r$，且 $D_r\ne L$，因为 $r\in L$、$r\notin D_r$。104.2使 $p,q$ 各自在 $D_r$ 内的对径均属于 $D_p=D_q=L$。不同真球的交至多一点，故这两个对径相同；对径映射为对合，遂有 $p=q$，单射成立。
+
+若 $a_p(q)=1$ 且 $q$ 纯，则 $a_p$ 见证 $D_p\subseteq D_q$。极大性与单射迫使 $q=p$。任意一值混态作有限纯分解，其每个正权纯点也取一，故整个一值面为 $\{p\}$。原非负效应 $u-a_p$ 的零面因此为 $\{p\}$，给暴露性。
+
+对 $b$，令 $M=\max_Kb>0$，在最大面取纯 $s$。$b/M\in F_s$，于是 $D_p\subseteq D_s$，极大性和单射给 $s=p$。归一后属于 $\mathcal A_p$，前段的唯一确认又使其最大面仅为 $p$。此论证没有证明所有这样的 $b$ 成一条射线。
+
+最后写 $F=D_s$。由 $p\in D_s$ 和104.2，$p$ 的 $F$ 内对径 $r$ 属于 $D_p$；$a_p$ 在这两个端点取一、零。103.4的同一球计算给(VII104.8)。具体地，任意 $g\in F_p$ 的限制必为 $1-\lambda+\lambda\chi(p)\cdot z$，$0\le\lambda\le1/2$，所以
+
+$$
+ (g-a_p)(\chi^{-1}z)
+ =(1/2-\lambda)(1-\chi(p)\cdot z)\ge0.
+\tag{VII104.9}
+$$
+
+原 $a_p$ 本身参加 $F_p$ 的最小化，故在整个 $F$ 上 $T_p=a_p$。交换球内的两个纯点，用内积对称得到互易。若某个 $g\in F_p$ 未在全域满足 $g\ge a_p$，负差可在一个原纯 $q$ 处检出；(VII104.9)迫使这个 $q$ 不与 $p$ 共处任何真面。这准确定位了局部比较尚未覆盖的范围。证毕。
+
+**推论 104.5（带原补预算的逐效应延拓）。** 固定任意 $a_p\in\mathcal A_p$。对 $D_p$ 的每个 proper 仿射效应 $h$，存在原线性 $\widehat h$ 满足
+
+$$
+ 0\le\widehat h\le u-a_p,\qquad
+ \widehat h|_{D_p}=h,\qquad\widehat h(p)=0.
+\tag{VII104.10}
+$$
+
+证明。采用(VII104.3)。$s>0$ 时取球纯点 $q=\chi^{-1}(v/s)$，任取 $a_q\in\mathcal A_q$。104.3给 $a_q\le u-a_p$，104.4给 $a_q|_{D_p}=(1+(v/s)\cdot z)/2$。故可取
+
+$$
+ \widehat h=(\alpha-s)(u-a_p)+2s a_q.
+\tag{VII104.11}
+$$
+
+两个系数非负，系数和 $\alpha+s\le1$；限制和在 $p$ 的读数均如所需。$s=0$ 时取 $\alpha(u-a_p)$。这仍是 $\forall h\ \exists\widehat h$，未提供一个对所有 $h$ 共同线性、正且保单位的选择，更未提供互补正投影及其对偶核像条件，故不能改称 projectivity。证毕。
+
+### 104.5 三结果完成还强制全部原纯点闭
+
+**定理 104.6（无需先假设的纯点紧性）。** $\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 推出 $P$ 在原 $K$ 中闭，从而 $P$ 紧。
+
+证明。设原纯序列 $p_j\to x\in K$。对每个 $p_j$，按104.3选同一原三元框架 $(p_j,q_j,r_j)$ 及其效应 $(a_j,b_j,c_j)$，满足(VII104.6)。原 $K$ 与整个 $[0,u]$ 紧，有限乘积中可取一个共同子列使
+
+$$
+ q_j\to y,\quad r_j\to z,\quad
+ (a_j,b_j,c_j)\to(a,b,c)\in[0,u]^3.
+\tag{VII104.12}
+$$
+
+此处不预设 $y,z$ 纯。连续评价和原单位等式给
+
+$$
+ a+b+c=u,\qquad a(x)=1,\quad a(y)=a(z)=0,
+ \quad b(y)=1,\quad b(z)=0.
+\tag{VII104.13}
+$$
+
+特别地 $y\ne z$。作 $x$ 的任意有限原纯分解 $x=\sum_i\lambda_i s_i$，其中 $\lambda_i>0$、$\sum_i\lambda_i=1$。原 proper 效应 $a$ 在 $x$ 取一，迫使所有 $a(s_i)=1$。同一个 $a$ 因而见证
+
+$$
+ y,z\in D_{s_i}\qquad\text{对每个 }i.
+\tag{VII104.14}
+$$
+
+两个不同的非点真面至多交于一点，故含同样两个不同点 $y,z$ 的这些 $D_{s_i}$ 全部相同。104.4的点球单射遂迫所有 $s_i$ 相同，故 $x$ 本身纯。有限维中序列闭即闭，结合原 $K$ 紧即得结论。证明只用了已得joint完成、全效应紧性和点球单射，未用全 $\mathrm{Pair}$ 或完整 $S$。它增添了一个真实的受限后果，但本身不证明任意两排除球必相交。证毕。
+
+### 104.6 已有正交模格与尚缺的覆盖律
+
+**定理 104.7（精确的剩余关联缺口）。** 在本章弱入口下，含空面与 $K$ 的整个原面格 $\mathcal L(K)$ 已为完整正交模格。对非空面定义
+
+$$
+ F^\perp=\bigcap_{q\in P\cap F}D_q,
+ \qquad\varnothing^\perp=K.
+\tag{VII104.15}
+$$
+
+则 $\{p\}^\perp=D_p$、$D_p^\perp=\{p\}$、$K^\perp=\varnothing$。在此同一域内，下列条件准确等价：
+
+$$
+\begin{aligned}
+&\forall p,q\in P,\ p\ne q:\ D_p\cap D_q\ne\varnothing\\
+&\quad\Longleftrightarrow\ \mathrm{Pair}\\
+&\quad\Longleftrightarrow\ \mathcal L(K)\text{ 满足覆盖律}\\
+&\quad\Longleftrightarrow\ S\\
+&\quad\Longleftrightarrow\ \text{同原锥、同原单位的rank-three有限EJA表示}.
+\end{aligned}
+\tag{VII104.16}
+$$
+
+覆盖律指：对面 $F$ 及不在其中的纯点 $q$，$F\vee\{q\}$ 与 $F$ 之间没有严格中间面。完整 $S$ 仍含原全锥序 least 和全部纯数值互易，不用唯一确认或局部 least 替代。
+
+证明。103.2和104.4已给全部面类型及点球双射。全部面闭，任意交是面，面族的任意 join 可取包含其并的所有面的交，故格完整。零对称先给 $p\in D_p^\perp$。若纯 $s\in D_p^\perp$，则 $P\cap D_p\subseteq D_s$；球的极点凸生成整球，故 $D_p\subseteq D_s$，极大性和单射给 $s=p$。任意混点的有限纯分解留在定义(VII104.15)的每张面中，故也只能为 $p$。同理，若 $K^\perp$ 非空，其中的纯点 $s$ 将满足 $s\in D_s$，矛盾。
+
+逐一检查面类型，便得反序对合 $F^{\perp\perp}=F$，以及 $F\wedge F^\perp=\varnothing$、$F\vee F^\perp=K$。正交模律唯一非平凡的真包含是 $\{q\}\subsetneq D_p$。此时 $p\perp q$，104.3使 $D_p\cap D_q=\{r\}$，104.2使 $q,r$ 为 $D_p$ 的对径，故
+
+$$
+ D_p=\{q\}\vee\{r\}
+     =\{q\}\vee(D_p\wedge\{q\}^\perp).
+\tag{VII104.17}
+$$
+
+其余包含为空面、相等或顶面情形，正交模恒等式直接成立。
+
+若 $D_p\cap D_q$ 非空，交中有纯 $r$，零对称给 $p,q\in D_r$，所以 $H(p,q)\ne K$。反向若全 $\mathrm{Pair}$ 成立，103.2使 $H(p,q)=D_r$，于是 $r\in D_p\cap D_q$。这证明(VII104.16)首个等价。
+
+若存在 $H(p,q)=K$，选一个含 $p$ 的非点真面 $L$；这样的 $L$ 可由 $s\in P\cap D_p$ 和零对称取 $L=D_s$。严格链 $\{p\}\subsetneq L\subsetneq\{p\}\vee\{q\}=K$ 违反覆盖律。若全 $\mathrm{Pair}$ 成立，则两个不同原子的join是非点极大真面，它与任一所含原子间不能插入面；非点极大面加面外原子得到 $K$，同样不能插入面。空面加原子的情形也成立，穷尽全部情况。这证明覆盖律等价。
+
+余下等价直接复用103.4—103.6及[Library完整S桥][Q103S]，参数逐字取本章原 $V,C,u,K,P,[0,u]$。本章已由EB得到 $h(K)=3$，故完整 $S$ 的既有一般EJA桥恰落在秩三；同单位反向也恰为103.6。这里不重新证明正对偶剥离、谱性、自对偶、projectivity、滤波纯性或分类，更不在取得 $S$ 以前借用这些结论。证毕。
+
+**开放问题 104.8（弱入口是否自动覆盖）。** 在同一原有限维全效应域中，$\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 是否强制(VII104.16)的首项，仍为 open。既未证明这一蕴含，也未给出满足它全部前件而失败覆盖的同域反例。缺失纯对的准确形状是
+
+$$
+ H(p,q)=K
+ \ \Longleftrightarrow\ \frac{p+q}{2}\in\operatorname{ri}K
+ \ \Longleftrightarrow\ D_p\cap D_q=\varnothing.
+\tag{VII104.18}
+$$
+
+中点等价的证明如下：边界中点有一张非零非负支撑尺读零，非负性迫使两个端点都在其原零真面；反向真面不含整体相对内点。最后一个等价已由104.7证明。若空交发生，对任意 $a_p\in\mathcal A_p,a_q\in\mathcal A_q$，紧性和准确零面给 $\min_{D_q}a_p>0$、$\min_{D_p}a_q>0$。局部三角形和纯点紧性尚未排除这种内部纯弦。
+
+仅有正交模律也不能在逻辑上替代覆盖律：两个三原子Boolean格在零、顶元处作水平和，其中非平凡的可比元素都在同一Boolean块，正交模恒等式按块成立；每条正交边也都在一个三元块中。但跨块两原子的join为顶元，其间可插入第一块的二原子join，故不满足覆盖律。这是抽象格的区别，不是满足本章凸域的反例；它不结算开放问题104.8。
+
+### 104.7 有限原纯点分支完全闭合
+
+**定理 104.9（有限纯点只能为经典三角形）。** 在本章弱入口下，若全部原 $P$ 有限，则 $K$ 是经典三角形，因而(VII104.16)全部成立。
+
+证明。令 $m=\operatorname{affdim}K$。有限纯点使 $K$ 为多面体；若 $m\ge3$，一个facet至少二维，却按103.2须为有有限极点的非退化球。维数至少二的欧氏球有无限极点，矛盾。$m=0,1$ 时纯点的整个排除集不可能为非点球，故 $m=2$，$K$ 为凸多边形。取104.3的一组三元框架 $p,q,r$。三对的原最小面都是非点真面，在二维多边形中只能是边，所以 $[p,q],[q,r],[r,p]$ 都是多边形边。多边形边界图是一个循环，含三循环便只有这三个顶点。因此 $K=\operatorname{conv}\{p,q,r\}$。其 least 是三重心坐标，纯比较为 $\delta_{ij}$，直接复用经典全效应字典即可。有限分支闭合不推出一般无限紧纯点分支闭合。证毕。
+
+### 104.8 齐性、面高三和厚球真面的控制载体
+
+**定义与定理 104.10（原矩阵截面及锥齐性）。** 对整数 $n\ge2$，取
+
+$$
+\begin{gathered}
+ V_n=\mathbb R\oplus\mathbb R^{n\times2}\oplus\operatorname{Sym}_2(\mathbb R),
+ \qquad \dim V_n=2n+4,\\
+ M(a,R,S)=\begin{pmatrix}aI_n&R\\R^{\mathsf T}&S\end{pmatrix},\\
+ C_n=\{(a,R,S):M(a,R,S)\succeq0\},\qquad
+ u_n(a,R,S)=a+\operatorname{tr}S,\qquad K_n=C_n\cap\{u_n=1\}.
+\end{gathered}
+\tag{VII104.19}
+$$
+
+锥模型本身按 `literature-attested` 归属：[Tunçel—Vandenberghe §5.1，印刷页701][Q104MN]将形如 $\begin{pmatrix}\alpha I_L&U^{\mathsf T}\\U&V\end{pmatrix}$、$U\in\mathbb R^{K\times L}$、$V\in\operatorname{Sym}_K(\mathbb R)$ 的PSD锥称为 matrix norm cone。与(VII104.19)的逐项对应为 $K=2,L=n,\alpha=a,U=R^{\mathsf T},V=S$，所以本章 $C_n$ 在矩阵嵌入下正是该成熟锥。原文的Ishi一般结构参数为 $r=K+1=3$，与104.11在本章证明的归一基面高 $h(K_n)=3$ 一致；此处对应同一个模型，不另主张新锥或新分类。
+
+这是闭尖生成锥及严格正单位的整个有限维紧基，效应仍取整个 $[0,u_n]$。锥内部恰为
+
+$$
+ a>0,\qquad Q_M:=S-R^{\mathsf T}R/a\succ0.
+\tag{VII104.20}
+$$
+
+锥 $C_n$ 齐性；这里指线性锥自同构群在锥内部传递，不要求这些变换保持 $u_n$。
+
+证明。矩阵嵌入单射，PSD锥的闭性和尖性被保留；$M(1,0,I_2)\succ0$ 给该线性子空间内点，所以锥生成 $V_n$。PSD给 $a\ge0,S\succeq0$；若 $u_n=0$，则 $a=0,S=0$，PSD再迫 $R=0$，故单位严格正。单位切片中 $0\le a\le1$、$0\le\operatorname{tr}S\le1$，且每个 $|R_{ij}|^2\le aS_{jj}$，所以切片有界而紧。
+
+当 $a>0$ 时，成熟Schur补消元给 $M\succeq0\Longleftrightarrow Q_M\succeq0$，且正定恰为(VII104.20)。若 $a=0$，则 $R=0$，该点在边界；若 $Q_M$ 有非零核向量 $v$，则 $(-Rv/a,v)$ 是矩阵核向量，其PSD二次型支撑尺在此为零而在 $M(1,0,I_2)$ 严格正，故也在边界。因此(VII104.20)确给全部相对内点。
+
+令 $\lambda>0,T\in\mathbb R^{2\times n},A\in\mathrm{GL}_2(\mathbb R)$，则合同变换
+
+$$
+ L=\begin{pmatrix}\lambda I_n&0\\T&A\end{pmatrix},
+ \qquad M\longmapsto LML^{\mathsf T}
+\tag{VII104.21}
+$$
+
+保持(VII104.19)的线性子空间，顶部块变为 $\lambda^2aI_n$；其逆仍为同形，所以限制后是锥自同构。任意内点 $M(a,R,S)$ 可从 $M(1,0,I_2)$ 得到：取
+
+$$
+ \lambda=\sqrt a,\qquad T=R^{\mathsf T}/\sqrt a,
+ \qquad A=Q_M^{1/2}.
+\tag{VII104.22}
+$$
+
+直接乘法给顶部 $aI_n$、交叉 $R$ 和底部 $R^{\mathsf T}R/a+Q_M=S$，证明传递。Schur补、PSD核面字典和合同变换均为标准方法，本控制的用途在于后面的完整原零集合计算，不将这些方法本身认领为新理论。证毕。
+
+### 104.9 所有纯射线与所有原真面
+
+**定理 104.11（整个面分类与厚度）。** (VII104.19)中全部极端射线准确由下列非零向量生成
+
+$$
+ p_X=(1,X,X^{\mathsf T}X)\quad(X\in\mathbb R^{n\times2}),
+ \qquad (0,0,ww^{\mathsf T})\quad(0\ne w\in\mathbb R^2).
+\tag{VII104.23}
+$$
+
+原纯点是它们各自除以 $u_n$ 后的全部点。全部非零、非射线的真锥面的归一基准确为 $B^2$ 或 $B^{n+1}$：前一类来自
+
+$$
+ \mathcal F_0=\{(0,0,S):S\succeq0\},
+\tag{VII104.24}
+$$
+
+后一类来自非零核向量 $(t,v)\in\mathbb R^n\oplus\mathbb R^2$、$v\ne0$ 的面
+
+$$
+ \mathcal F_{t,v}=\{(a,R,S)\in C_n:Rv=-at,\ Sv=-R^{\mathsf T}t\}.
+\tag{VII104.25}
+$$
+
+所以 $h(K_n)=3$；$n=2$ 时非点真面只有厚 $B^2,B^3$，没有线段面。
+
+证明。先说明为何以下分类穷尽所有面，而不只列出候选点。对任意 $M\in C_n$，其整个最小锥面是
+
+$$
+ \operatorname{face}_{C_n}(M)
+ =\{N\in C_n:\ker M\subseteq\ker N\}.
+\tag{VII104.26}
+$$
+
+右侧由PSD非负尺 $N\mapsto\operatorname{tr}(P_{\ker M}N)$ 暴露；零读数等价于每个核向量都被 $N$ 消灭。反向若 $N$ 满足核包含，在 $W=\operatorname{range}M$ 上 $M$ 正定，而 $N$ 支撑在同一个 $W$，故对足够小 $\varepsilon>0$，$M-\varepsilon N\succeq0$。差仍在原线性子空间，因而属于 $C_n$；任何包含 $M$ 的锥面由 $M=(M-\varepsilon N)+\varepsilon N$ 都须包含 $N$。这证明(VII104.26)。任一非零面取其相对内点，其最小面就是原面，故逐个分类 $M$ 的核已分类全部面，包括起初未要求闭的面。
+
+若 $a=0$，PSD的二阶主子式迫 $R=0$。$S$ 秩一时(VII104.26)给对应的射线；$S$ 秩二时给整个 $\mathcal F_0$。其归一切片是实二阶密度矩阵，坐标 $(S_{11}-S_{22},2S_{12})$ 恰给整个 $B^2$。
+
+若 $a>0$，写 $X=R/a$。Schur消元使核为
+
+$$
+ \ker M=\{(-Xv,v):v\in\ker Q_M\}.
+\tag{VII104.27}
+$$
+
+$Q_M=0$ 时，对一个原 $N=(b,Y,Z)$ 施加这全部核关系，依次得到 $Y=bX,Z=bX^{\mathsf T}X$。所以最小面恰为 $\mathbb R_+p_X$，包括任意秩的 $X$，没有只保留环境秩一射线。$Q_M$ 秩二时是整体内点，最小面为整个锥。$Q_M$ 秩一时其核由某个 $(t,v)$、$v\ne0$ 张成，最小面正是(VII104.25)。
+
+把 $v$ 连同 $t$ 同比例缩放，再用底部正交坐标把 $v$ 化为 $e_2$，不会改变单位。面内全部矩阵可且只能写为
+
+$$
+ R=(x,-at),\qquad
+ S=\begin{pmatrix}b&-x\cdot t\\-x\cdot t&a\|t\|^2\end{pmatrix}.
+\tag{VII104.28}
+$$
+
+对向量 $(z,\beta,\gamma)$ 的二次型变为
+$a\|z-\gamma t\|^2+2\beta x\cdot(z-\gamma t)+b\beta^2$。
+因此面锥精确等价于
+
+$$
+ a,b\ge0,\qquad ab\ge\|x\|^2,
+ \qquad u_n=d_ta+b,\quad d_t=1+\|t\|^2.
+\tag{VII104.29}
+$$
+
+在单位切片上，显式仿射坐标
+
+$$
+ z_0=d_ta-b,\qquad z'=2\sqrt{d_t}\,x
+\tag{VII104.30}
+$$
+
+给 $z_0^2+\|z'\|^2\le1$；逆为 $a=(1+z_0)/(2d_t)$、$b=(1-z_0)/2$、$x=z'/(2\sqrt{d_t})$，所以是整个 $B^{n+1}$。任意 $(t,v)$ 都可取此锥的相对内点，故这些面确实出现。
+
+上述各秩情形穷尽所有非零 $M$。归一基 $K_n$ 的非点真面均为严格凸球，球的非空真面只有纯单点，故面链恰有三层。$n=2$ 的球维数分别为二和三，遂得最后断言。对照 $n=1$ 时同一线性空间恰为整个 $\operatorname{Sym}_3$，锥为实三阶PSD；此时 $X$ 只有一行，不能有秩二。增加一行后允许 $X=I_2$，其原极端射线在环境矩阵中秩二；这是下面控制的代数区别，不是新物理结论。证毕。
+
+### 104.10 一张原纯点处的全部正零尺和全部确认效应
+
+**定理 104.12（完整原确认面的参数化）。** 只取 $n=2$，记 $u=u_2$、$p=p_{I_2}/3$。所有在 $p$ 为零的原正线性泛函恰为
+
+$$
+ g_B(a,R,S)=\operatorname{tr}(BS)-2\operatorname{tr}(BR)
+             +a\operatorname{tr}B,\qquad B\succeq0.
+\tag{VII104.31}
+$$
+
+所有原 $f\in F_p$ 恰为 $f_B=u-g_B$，参数准确满足
+
+$$
+ 0\preceq B\prec I_2,\qquad
+ \operatorname{tr}\bigl(B(I_2-B)^{-1}\bigr)\le1.
+\tag{VII104.32}
+$$
+
+等价地，以
+
+$$
+ Q=B(I_2-B)^{-1}\succeq0,\quad\operatorname{tr}Q\le1,
+ \qquad B=Q(I_2+Q)^{-1}
+\tag{VII104.33}
+$$
+
+参数化整个确认面，包含 $Q=0$ 所给 $f=u$。
+
+证明。任意原线性泛函唯一写为
+
+$$
+ g=\alpha a+2\operatorname{tr}(M^{\mathsf T}R)+\operatorname{tr}(BS),
+ \quad M\in\mathbb R^{2\times2},\quad B\in\operatorname{Sym}_2.
+\tag{VII104.34}
+$$
+
+若 $g\ge0$，在全部 $a=0$ 的原边界态上检验给 $B\succeq0$。在全部原射线 $p_Y$ 上有
+$\alpha+2\operatorname{tr}(M^{\mathsf T}Y)+\operatorname{tr}(BY^{\mathsf T}Y)\ge0$。
+若又 $g(p)=0$，此二次多项式在 $Y=I_2$ 达到零的全局最小值。其梯度给 $M=-B$，值本身给 $\alpha=\operatorname{tr}B$，得到(VII104.31)。反向对 $a>0$ 写 $Y=R/a$、$Z=S-R^{\mathsf T}R/a\succeq0$，则
+
+$$
+ g_B=a\operatorname{tr}\bigl(B(Y-I_2)^{\mathsf T}(Y-I_2)\bigr)
+          +\operatorname{tr}(BZ)\ge0.
+\tag{VII104.35}
+$$
+
+$a=0$ 时 $R=0$，只余 $\operatorname{tr}(BS)\ge0$。所以已穷尽所有原正零尺，不借环境PSD效应子菜单。
+
+$f\in F_p$ 当且仅当 $g=u-f\ge0$、$g(p)=0$ 及 $f\ge0$；故已知 $f=u-g_B$。在 $a=0$ 上 $f\ge0$ 强制 $I_2-B\succeq0$。若 $Bv=v$、$\|v\|=1$，取 $Y=-t vv^{\mathsf T}$，在 $p_Y$ 上的二次项沿此方向为零，线性项为 $-2t$，大 $t$ 时 $f<0$。所以必须 $B\prec I_2$。
+
+此时对所有原 $a>0$ 点完成平方，得到
+
+$$
+\begin{aligned}
+ f_B(a,R,S)={}&a(1-\operatorname{tr}Q)\\
+ &+a\operatorname{tr}\bigl((I_2-B)(Y+Q)^{\mathsf T}(Y+Q)\bigr)\\
+ &+\operatorname{tr}\bigl((I_2-B)Z\bigr).
+\end{aligned}
+\tag{VII104.36}
+$$
+
+取 $Y=-Q,Z=0$ 表明非负性必要地要求 $\operatorname{tr}Q\le1$；该条件又使右侧全部非负，且在 $a=0$ 时 $f_B=\operatorname{tr}((I_2-B)S)\ge0$。这证明(VII104.32)充分必要，反变换给(VII104.33)。由于原 $g_B\ge0$，$f_B\le u$ 也已自动满足，参数化确为整个 $F_p$。证毕。
+
+### 104.11 整个排除集合是曲面圆盘，混合缺口恰为六分之一
+
+**定理 104.13（全效应零集合与精确下包络）。** 在104.12的整个原载体中，
+
+$$
+ D_p=\left\{\frac{p_{-Q}}{1+\operatorname{tr}(Q^2)}:
+                Q\in\operatorname{Sym}_2,\ Q\succeq0,\operatorname{tr}Q=1\right\}.
+\tag{VII104.37}
+$$
+
+它全部由原纯点组成，与闭圆盘同胚，却非凸，因而不是仿射面球。取
+
+$$
+ Q_1=\operatorname{diag}(1,0),\quad Q_2=\operatorname{diag}(0,1),
+ \quad q_i=p_{-Q_i}/2,
+ \quad m=(q_1+q_2)/2=(1/2,-I_2/4,I_2/4),
+\tag{VII104.38}
+$$
+
+则 $q_i\in D_p$，但 $m\in\operatorname{ri}K_2$，并且
+
+$$
+ T_p(q_1)=T_p(q_2)=0,\qquad T_p(m)=\frac16.
+\tag{VII104.39}
+$$
+
+证明。$a=0$ 的非零点有 $S\succeq0,S\ne0$，而 $I_2-B\succ0$，所以每个原 $f_B$ 在其上严格正。$a>0$ 时(VII104.36)的三项非负；第一项为零须 $\operatorname{tr}Q=1$，正定权重下第二、三项同时为零恰须 $Y=-Q,Z=0$。所以 $f_B$ 有归一零点当且仅当 $\operatorname{tr}Q=1$，且零面只含 $p_{-Q}/(1+\operatorname{tr}Q^2)$。遍历104.12的全部参数即得(VII104.37)，没有遗漏非纯排除态。
+
+实对称PSD的迹一 $Q$ 构成 $B^2$。上述映射连续且单射，逆在像上为 $Q=-R/a$；参数域紧，故为同胚。其像虽是一张曲面圆盘，却不能据此叫作仿射球，因为下面的混合明确离开它。
+
+$Q_i$ 对应 $B_i=Q_i/2$，所给原确认效应明确为
+
+$$
+ f_1=\tfrac12a+\tfrac12S_{11}+S_{22}+R_{11},\qquad
+ f_2=\tfrac12a+S_{11}+\tfrac12S_{22}+R_{22}.
+\tag{VII104.40}
+$$
+
+104.12已证明它们 proper；亦可看其补分别为 $\tfrac12(a+S_{11}-2R_{11})$、$\tfrac12(a+S_{22}-2R_{22})$，都是PSD二次型的非负读数。直接代入有 $f_i(p)=1,f_i(q_i)=0$。而 $m$ 的Schur补为
+
+$$
+ I_2/4-(-I_2/4)^{\mathsf T}(-I_2/4)/(1/2)=I_2/8\succ0,
+\tag{VII104.41}
+$$
+
+所以 $m$ 是整个原 $K_2$ 的相对内点，$D_p$ 非凸。更精确地，全部原确认效应在此读数为
+
+$$
+ f_B(m)=1-\frac54\operatorname{tr}B.
+\tag{VII104.42}
+$$
+
+若 $Q$ 的两个特征值为 $\eta_1,\eta_2\ge0$，约束为 $\eta_1+\eta_2\le1$，则
+
+$$
+ \operatorname{tr}B=\frac{\eta_1}{1+\eta_1}+\frac{\eta_2}{1+\eta_2}
+ \le\frac23.
+\tag{VII104.43}
+$$
+
+这是递增严格凹函数 $t/(1+t)$ 的两变量界，最大值恰在 $\eta_1=\eta_2=1/2$ 达到；可直接取 $Q=I_2/2,B=I_2/3$。所以(VII104.42)的最小值是 $1-5/6=1/6$。两端点已有零见证且效应非负，得到(VII104.39)。因此同一 $T_p$ 不仿射；若原全锥序 least 存在，下包络就等于该线性效应，与(VII104.39)矛盾，所以该纯点没有这样的 least。这是整个原效应区间的零拼合失败，不是一个选定有限菜单的失败。证毕。
+
+### 104.12 控制反驳的条件及其不反驳的候选
+
+**命题 104.14（厚球加齐性不能代付排除集拼合）。** $K_2$ 具有齐性锥、面高三和全部厚球非点真面，但既不满足 $\mathrm{EB}_{\ge1}$，也不满足 $\mathrm{Pair}_{\perp}$；其全部原纯点集不闭。因而它只反驳以“所有非点真面都是厚球，即使再加锥齐性”替换完整排除集条件的推理，不是开放问题104.8的同域反例。
+
+证明。厚球、面高和齐性已由104.10—104.11给出，$D_p$ 非凸由104.13给出，故EB失败。又 $p\perp q_1$，但 $p_{I_2}$ 和 $p_Y$、$Y=\operatorname{diag}(-1,0)$ 的核分别为 $\{(-I_2v,v)\}$ 和 $\{(-Yv,v)\}$。其交为零，因为
+
+$$
+ (I_2-Y)v=\operatorname{diag}(2,1)v=0\ \Longrightarrow\ v=0.
+\tag{VII104.44}
+$$
+
+PSD矩阵之和的核是各核之交，所以归一态 $p,q_1$ 的中点矩阵正定，属于整个 $K_2$ 的相对内部。因此 $H(p,q_1)=K_2$，连正交对的Pair也失败。
+
+最后，对实 $t\to+\infty$，全部原纯点中有
+
+$$
+ \frac{p_{tI_2}}{1+2t^2}\longrightarrow (0,0,I_2/2).
+\tag{VII104.45}
+$$
+
+极限是 $\mathcal F_0$ 的混态，等于 $(0,0,Q_1)$ 与 $(0,0,Q_2)$ 两个不同原纯点的平均，故纯点集不闭。这与104.6相容：该模型失败其弱入口，而非推翻弱入口所强制的纯点紧性。上述齐性是锥内点齐性，不额外宣称保原单位的纯态传递或实际可逆服务。证毕。
+
+### 104.13 保持原装饰元组的完整弱候选
+
+**定义与定理 104.15（量词削减候选及已知单向）。** 固定103.10的同一 $\mathcal O$、原来源与过程域、非空 $\mathcal J\subseteq\{A,D,E\}$，并只在其共同 $\mathcal D_{3,\mathcal J}$ 中比较。$\mathcal N(\mathcal O)$ 逐字取103.10的全部非几何原合同，未选载体仍保留完整 $S_X$。定义
+
+$$
+\begin{aligned}
+ \mathsf R_{\perp,3}^{\mathcal J}(\mathcal O):\quad
+ &\mathcal N(\mathcal O)\ \land\!\bigwedge_{X\notin\mathcal J}S_X\\
+ &\land\!\bigwedge_{X\in\mathcal J}
+       (\mathrm{EB}_{\ge1,X}+\mathrm{Pair}_{\perp,X}).
+\end{aligned}
+\tag{VII104.46}
+$$
+
+所选载体仍是原概率像自身的整个有限维紧基和全部原效应，不取完成体、不选纯子集或效应子菜单。其 $h(K_X)=3$ 已由EB推出，与共同域一致。现有结论准确为
+
+$$
+ \mathsf R_{\rm exclusion,3}^{\mathcal J}
+ \ \Longrightarrow\ \mathsf R_{\perp,3}^{\mathcal J}.
+\tag{VII104.47}
+$$
+
+若每个所选 $X$ 的 $P_X$ 有限，或另已证明每个所选载体任意两排除球相交，则反向成立，并沿103.10返回全部既有完整包。一般反向仍为开放问题104.8；这只是一项量词更弱的完整候选，未证明其模型类严格扩大，也未证明它与完整量子包等价。
+
+证明。全Pair蕴含正交对Pair，非几何合同与未选项逐字相同，所以(VII104.47)成立。附加有限性时104.9给全Pair，附加相交性时104.7给全Pair；逐载体恢复103.10的旧候选后直接用(VII103.35)，没有更换任何原标签或来源。一般反向正好需要104.7的覆盖缺口，当前局部三元提升不能填补它。
+
+准确的条件消费可列为
+
+| 同一原载体上的条件 | 已供应的状态／概率结论 | 仍须原合同供应的内容 |
+| --- | --- | --- |
+| EB加正交Pair | joint三结果、点球双射、纯点紧、局部least互易、正交模面格 | 覆盖律及全域least互易尚为open；不据此声称一般Jordan或完整QM |
+| 再补覆盖律 | 同单位rank-three EJA及整个原全效应字典 | 实际来源、过程与其余消费者仍用103.10 |
+| 上一行再要求全部 $D_p$ 维数至少二 | 103.7的四个简单三阶类型，排除直和旗标分支 | 此厚度条件没有单独选择复数 |
+| 覆盖律加全部 $D_p\simeq B^3$ | 同载体 $H_3(\mathbb C)$、全部密度态／效应与103.8的Born字典 | 复合、指定事件CP、仪器、更新、时间与来源仍各守原合同 |
+
+表中后面三行全部直接消费103.6—103.8：原 $\Phi$ 满足 $\Phi(J_+)=C,u\Phi=\tau_J$，不是预先把 $u$ 换为矩阵迹。复三阶分支的概率准确为 $f_E(x)=\operatorname{tr}(E\Phi^{-1}x)$、$0\preceq E\preceq I_3$，纯比较为 $|v^*w|^2$；此处只作原字典回接，不重计Born或分类证明。$\mathrm{EB}_{\ge2}$ 只有在覆盖闭合后才按既有分类排除直和，不在弱入口下预称所有模型简单。
+
+$\mathcal N$ 的引用保留103.10列出的全部量词：原准备／测试／过程／参考／读回与装饰；原像自身紧及全部中点实现、全部非负质量、零和不等质量、完整相关联合域；同一个 $L$、同一个 $p$ 两次和同一 $\omega$；两实张成、全实 $Z$、完整(83.8)、VI(89.13)的两尺度等式、C2、整个 $G=1_E$；精确PRE后的同一资格态、活跃块严格负方向、共享总迹一、非活跃零质量和整个H13输出。共同来源合同、菜单／分支、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、合法未来、旧支撑与每个中间切口亦按原定义保留。
+
+VI89.9—89.10的每个原生／细化消费者继续使用其全部原字及terminal futures、联合有符号关系、标签归组、记录后条件未来、source-adoption和资源合同。同事件CP按VI89.9的完整原提升、实际探针及相容核条件认证；若已由充分递归参考取得，则直接复用。Kraus、实际仪器、TP／TNI、Lüders和物理时间各按既有前件消费，不能从抽象效应反向制造装置，也不把已得后果重新列成未付条件。
+
+若原复合合同使 $A,D=A\otimes A,E=D\otimes A$ 的秩为 $3,9,27$，仍不能同时对三者加要求秩三的EB入口；选择全部三者时交集为空。新Pair量词不解除此冲突，也不将rank-three几何强加于所有寄存器。证毕。
+
+### 104.14 参考端点路线、来源归属与完整白话
+
+**命题 104.16（新旧关系的量词边界和数学归属）。** [VI101][Q103VI]的有限参考端点定理不能直接代付104.8的覆盖缺口。该路线每个参考端点仍对全部原纯目标满足互反，并保留对全部原纯目标的互补和；本章只有共真面纯点之间的(VII104.8)，且无整体中心对称输入。若要转用VI101，必须另证其全部原前件及载体对应，不能从“参考端点有限”删掉全目标量词。
+
+证明。VI(101.1)要求每个 $p_i,q_i$ 的 $T_{p_i}(r),T_{q_i}(r)$ 对全部 $r\in P$ 满足 $\mathrm E2_i,\mathrm R_{i,+},\mathrm R_{i,-}$，再由支持约束积分得到整椭球。本章未覆盖的纯对正是(VII104.18)的内部弦，因而104.4不能向其提供这些全目标读数；joint三角形仅给其自身三点及已有真球上的读数，未给所有原纯目标上的互补和。因此本章给出的逐球公式尚不构成该定理的完整前提映射。这说明现有推理的接口边界，不宣称两种额外条件永远不能共同研究。
+
+本章的承重增量按 `repo-derived` 归属：原Pair前件收缩到正交对后的局部结构、无需预设的纯点紧性，以及(VII104.19)原全效应模型中完整 $D_p$、确认面和 $1/6$ 缺口的计算。103.2的面穷尽、103.5的最小值归一、VI90.8的局部效应凸分解、103章的一般 $S$／同单位反向／成熟分类与Born字典均为直接复用。matrix norm cone本身及其齐性为成熟结果[Q104MN]，Schur补、PSD面核字典、有限维凸分解、球支持等号条件和齐性合同均为标准中间工具。104.10—104.11的坐标与面结构仅为后续消费准备，不另计新锥或新分类；在这一成熟控制模型上的 `repo-derived` 增量只计104.12—104.14的完整原 proper 确认面、整个 $D_p$、$1/6$ 缺口及其与弱候选的关系。
+
+一般重构的来源仍为[Library完整S接口][Q103S]及其中明确归属的Niestegge proper-effect剥离、Barnum—Müller—Ududec Theorem 16；厚球及分类的成熟归属沿用[Alfsen—Shultz原文][Q103AS]和103.7。唯一确认不等于 proper least，暴露面或正交模面格也不等于该Theorem 16要求的projectivity；这些条件在本章只有补覆盖后沿既有桥共同取得。上述新综合不主张世界首创、文献穷尽、经验实现、内核形式核验或完整物理公理最少性。
+
+完整白话是：仍只看原来的整块状态物体、全部纯状态和所有合法零一尺。对每个纯点，把能被某张确认它的尺排除的状态全收齐，要求这整个集合是一块实心球；再只要求本来就能互相排除的两个纯点一起留在一块真正边界面。这个较弱入口已能把这样的两点补成一个三角形，三把原尺同时非负，总和恰为原单位。点和背后的排除球也已经一一相配，每把整球零尺只会确定接受自己的那个纯点；在任何已有共同边界球里，最低刻度和交换两端的读数都固定了。
+
+这些共同三把尺还阻止纯点序列掉到混态：若纯点逼近某点，就连同另外两点及三把尺一起取极限。极限里仍有两个可区分的零点，迫使极限点的每个纯分解组分背后都有同一块排除球；点球一一对应使这些组分只能相同。所以纯点集确已闭且紧。但尚缺的一步仍是：会不会有两个纯点的连线中点已经钻进整体内部，使它们没有共同边界球、背后的两块排除球完全错开？正交三角形只在已有关联处工作，正交模关系也只组织这些关联，尚未证明这种错开不能发生。有限纯点时已经排除，状态体只能是经典三角形；一般无限紧纯点时仍为open。
+
+厚球控制说明为何“每块真边界都圆”不够。这里所有非点真面都是真实的二维或三维实心球，锥内部甚至可以通过线性保正变换彼此搬运；但同一个纯点可用两把不同原尺分别排除两个纯端点，却不能用任何确认尺排除二者的平均。平均已经在整体内部，最低读数严格为六分之一。完整排除集合因而是一张弯曲圆盘，连凸集都不是。这个模型没有满足新候选的全部前件，所以不能说候选已被反驳；它准确排除的是只数厚球、再加齐性就替代整个排除集合拼合的捷径。
+
+若在同一原域补上任意两排除球相交，已有桥便立即给完整三阶Jordan状态与全效应；若再要求每个完整排除球都是三维，才准确得到复三能级的密度矩阵和Born模方字典。实际准备、共同菜单、过程、复合、CP、仪器、更新、物理钟及来源仍由原合同承担。量词收缩是一项完整候选的改写提案，已证后果与未证逆向如上分开；它不是已经完成的更简洁完备物理公理。上述解释逐项由104.2—104.15及本命题的量词核对给出。证毕。
+
+[Q104MN]: https://doi.org/10.1017/S0962492922000113 "Levent Tunçel and Lieven Vandenberghe, Linear optimization over homogeneous matrix cones, Acta Numerica 32 (2023), 675–747, §5.1, p. 701. Matrix norm cone."
+
+## 追加锚（本行以下为增补区）
+
+## 105. 原三结果最大读数长度、全域极化与共同排除球中心
+
+### 105.1 同一原域及两种全局几何约束
+
+**定义 105.1（弱入口与原三结果框架）。** 采用103.1、104.1的同一个非零有限维实
+$V$、闭尖生成锥 $C$、严格正原泛函 $u$、整个紧基 $K=C\cap\{u=1\}$、
+全部 $P=\operatorname{ext}K$ 和整个原效应区间 $[0,u]_{C^*}$。
+明确地，原确认、最低读数及完整排除集是
+
+$$
+F_p=\{f\in[0,u]:f(p)=1\},\qquad T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\qquad
+\mathcal A_p=\{a\in F_p:a|_{D_p}=0\}.
+$$
+
+$F_p$ 非空紧，故所写最小值达到。$p\perp q$ 指 $T_p(q)=0$；
+$H(p,q)$ 是包含两点的整个原最小面。全Pair要求所有不同纯点的 $H(p,q)\ne K$，
+$\mathrm{Pair}_{\perp}$ 只要求原正交纯对如此。$E_p=P\cap D_p$ 保持原义，
+下文不用它表示延拓算子。完整 $S$ 指每个 $F_p$ 在整个 $C^*$ 序中有 least 效应，
+且这些效应在全部原纯点之间数值互易；不以局部least或仅零关系对称替代。记
+
+$$
+\mathsf W:=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}.
+\tag{VII105.1}
+$$
+
+$\mathrm{EB}_{\ge1}$ 要求每个完整 $D_p$ 是某个 $B^{d_p}$ 的仿射像，$d_p\ge1$；
+其唯一仿射球心记 $c_p$。零关系仍由原 proper 效应定义，未先给内积。
+以下直接复用104.2—104.7：全部非空真面只有纯单点和整个 $D_p$，
+$p\mapsto D_p$ 双射，$P$ 紧，正交纯对有唯一第三点，且任意指定的两张
+整球零尺都可共同完成三结果；已有球上的原读数为直径读数。
+特别地 $h(K)=3$。这些是 $\mathsf W$ 的既有后果，不另作前提。
+
+定义全部有序原 joint 三结果框架为
+
+$$
+\begin{aligned}
+\mathcal T_3:=\{&(p_1,p_2,p_3;a_1,a_2,a_3)\in P^3\times[0,u]^3:\\
+ &a_1+a_2+a_3=u,\qquad a_i(p_j)=\delta_{ij}\}.
+\end{aligned}
+\tag{VII105.2}
+$$
+
+所有效应在同一个原 $V$ 上，和为同一个原 $u$。
+这个定义量化全部数学框架，不只量化某个实际菜单中的框架。
+待证明其紧、非空及分离性后，定义原最大读数长度和平方
+
+$$
+\nu(v):=\max_{T\in\mathcal T_3}
+       \left(\sum_{i=1}^3a_i(v)^2\right)^{1/2},\qquad Q_3(v):=\nu(v)^2.
+\tag{VII105.3}
+$$
+
+本章完整候选所明列的二元长度约束是
+
+$$
+\mathrm{PL}_3:\quad
+\forall v,z\in V,\quad
+Q_3(v+z)+Q_3(v-z)=2Q_3(v)+2Q_3(z).
+\tag{VII105.4}
+$$
+
+量词包括全部有符号向量及任意实尺度，不能缩成 $K$、某个球或纯点上的量词。
+另一个较弱研究条件是共同重心等式
+
+$$
+\mathrm G:\quad
+p+2c_p=q+2c_q\quad(p,q\in P).
+\tag{VII105.5}
+$$
+
+常值写成 $U=3w$；这里 $U\in V$ 是向量，$u\in V^*$ 是原归一泛函。
+$U$ 也不代指103.10原过程合同中的同名字母。
+本章将证明 $\mathsf W+\mathrm{PL}_3$ 的完整等价，及 $\mathrm G$ 的准确较弱后果；
+不预先把两种约束认作同一条件。
+
+### 105.2 三个循环完成约束使整球零尺唯一
+
+**定理 105.2（弱入口下的唯一整球零尺）。** 仅在 $\mathsf W$ 下，
+每个 $\mathcal A_p$ 已为单点，记为 $\{a_p\}$。
+每个原 joint 三结果框架的效应必分别等于对应的 $a_{p_i}$。
+
+证明。$\mathcal A_p$ 是紧区间 $[0,u]$ 中的非空闭集。
+固定104.3的一组三点框架 $(p,q,r)$ 和任意 $x\in V$，定义宽度
+
+$$
+d_p(x):=\max_{a\in\mathcal A_p}a(x)-\min_{a\in\mathcal A_p}a(x)\ge0.
+$$
+
+104.3的任意两尺完成给 $u-\mathcal A_p-\mathcal A_q\subseteq\mathcal A_r$。
+独立选两族在 $x$ 上的最大、最小值，得到
+
+$$
+d_r\ge d_p+d_q,\qquad d_p\ge d_q+d_r,\qquad d_q\ge d_r+d_p.
+\tag{VII105.6}
+$$
+
+三式针对同一组三点，相加迫三个非负宽度全零。
+$x$ 任意，所以各族内部的线性泛函相等。每个纯点都能进入三点框架，结论遍及 $P$。
+
+再取定义105.1的任意 $T$。$a_i$ 的零面包含另外两个不同纯点，因而是非点真面，
+按面穷尽等于某个整个 $D_s$。由于 $a_i(p_i)=1$，有 $D_s\subseteq D_{p_i}$；
+极大性使二者相等。故 $a_i\in\mathcal A_{p_i}$，即 $a_i=a_{p_i}$。
+反过来104.3已给任意正交纯对的这些唯一尺共同完成。
+全过程没有共同中心、全Pair或非零读数互易的输入。证毕。
+
+### 105.3 整个确认面的正规形与原锥序least
+
+**定理 105.3（全域确认面和对偶谱展开）。** 在 $\mathsf W$ 下，任意 $g\in F_p$
+都有一个原框架 $(p,q,r)$，其中 $q,r$ 为整个 $D_p$ 的对径，使
+
+$$
+g=a_p+\alpha a_q+\beta a_r,\qquad 0\le\alpha,\beta\le1.
+\tag{VII105.7}
+$$
+
+反之，这样的每个式子均在 $F_p$。因此 $a_p$ 是整个 $C^*$ 序中的 least 确认效应，
+$T_p=a_p$ 于整个原 $K$。每个 $f\in C^*$ 都有一个三结果框架内的非负效应展开；
+每个 $f\in V^*$ 都有一个这样的有符号展开。
+
+证明。在球图 $\chi:D_p\to B^d$ 上写
+$g(\chi^{-1}z)=\gamma+b\cdot z$，令 $s=\|b\|$。
+$s>0$ 时取 $q,r$ 对应 $b/s,-b/s$；$s=0$ 时任选直径。
+记 $n=\chi(q)$；104.4给 $a_q,a_r$ 在该球上的限制为 $(1+n\cdot z)/2,(1-n\cdot z)/2$。
+令 $\alpha=\gamma+s,\beta=\gamma-s$。原 proper 性给二者均在 $[0,1]$。
+置 $k=g-\alpha a_q-\beta a_r$，则
+
+$$
+k(p)=1,\qquad k|_{D_p}=0,\qquad k\le g\le u.
+$$
+
+尚须在原全域证 $k\ge0$。若 $m=\min_Kk<0$，在达到点 $x$ 取
+
+$$
+h=\frac{k-mu}{1-m}\in[0,u],\qquad h(p)=1,\quad h(x)=0.
+\tag{VII105.8}
+$$
+
+下界用全域最小值，上界用 $k\le u$。原定义遂使 $x\in D_p$，
+与 $k(x)=m<0=k|_{D_p}$ 矛盾。因此 $k\in\mathcal A_p$，105.2给 $k=a_p$。
+这证明正规形；反向由 $a_p+a_q+a_r=u$ 及系数界直接成立。
+于是 $g-a_p=\alpha a_q+\beta a_r\in C^*$，确是全原锥序least，
+不只是球上的比较，也不只是点态下包络。
+
+对非零 $f\in C^*$，$M=\max_Kf>0$ 的达到面含一个原纯点 $p$。
+$f/M\in F_p$，应用正规形即得
+
+$$
+f=M a_p+M\alpha a_q+M\beta a_r.
+\tag{VII105.9}
+$$
+
+零效应取零系数。对任意 $f\in V^*$，由 $K$ 紧选足够大的 $t$，使 $f+tu\in C^*$；
+对其使用(VII105.9)，再在同一个框架用 $u=a_p+a_q+a_r$ 减回 $tu$。
+因而 $\{a_p:p\in P\}$ 线性张成整个 $V^*$。
+这给后面范数分离性所需的原对偶信息，未使用状态谱性或自对偶。证毕。
+
+### 105.4 整球正函数的唯一共同线性延拓
+
+**定理 105.4（正锥限制双射）。** 在 $\mathsf W$ 下，记
+
+$$
+Z_p:=\{f\in C^*:f(p)=0\},\qquad
+\operatorname{Aff}(D_p)_+:=\{h\in\operatorname{Aff}(D_p):h\ge0\}.
+$$
+
+记 $\operatorname{res}_pf=f|_{D_p}$ 为整个 $V^*$ 到 $\operatorname{Aff}(D_p)$ 的线性限制。
+其在正锥上的限制 $\operatorname{res}_p:Z_p\to\operatorname{Aff}(D_p)_+$ 是双射。
+其逆唯一延伸为正线性映射
+
+$$
+\Lambda_p:\operatorname{Aff}(D_p)\longrightarrow V^*,\qquad
+\operatorname{res}_p\Lambda_p=\mathrm{id},\quad
+(\Lambda_ph)(p)=0,\quad \Lambda_p1=u-a_p.
+\tag{VII105.10}
+$$
+
+所以 $0\le h\le1$ 时 $0\le\Lambda_ph\le u-a_p$；这是一张共同正线性延拓，
+不再只是逐个局部效应存在延拓的量词。
+
+证明。对 $f\in Z_p$ 使用105.3的正对偶展开。每个正系数项 $a_q$ 都满足 $a_q(p)=0$，
+故由零对称 $q\in D_p$。不能有三个正系数，否则三把框架尺都在 $p$ 读零而总和读一。
+若有两个正系数，其两纯点在 $D_p$ 内原正交；104.4的直径公式使二者为球内对径。
+若仅有一项，以该点在 $D_p$ 内的对径补零系数。因此
+
+$$
+f=\lambda a_q+\mu a_r,\qquad \lambda,\mu\ge0,
+\quad q,r\text{ 为 }D_p\text{ 的对径}.
+\tag{VII105.11}
+$$
+
+限制到球图是 $(\lambda+\mu)/2+(\lambda-\mu)n\cdot z/2$。
+非恒定时，最大、最小值及最大端点唯一确定两项，交换两端不改原函数。
+恒定时 $\lambda=\mu$，原函数为 $\lambda(a_q+a_r)=\lambda(u-a_p)$，也与直径无关。
+所以限制在整个正锥 $Z_p$ 上单射。
+
+反向，任意 $h(z)=\gamma+b\cdot z\ge0$ 都满足 $\gamma\ge\|b\|$。
+沿 $b$ 的直径取 $\lambda=\gamma+\|b\|,\mu=\gamma-\|b\|$，
+用(VII105.11)构造正延拓；$b=0$ 时取 $\gamma(u-a_p)$。
+故限制满射。唯一性使正函数的逆保持加法和非负标量倍。
+非负仿射锥生成整个 $\operatorname{Aff}(D_p)$，将一般函数写成两正函数之差，
+所得线性延伸与分解无关：两种分解相加后的正延拓由单射性相等。
+限制和在 $p$ 的零值随之保持。常数一的唯一延拓是 $u-a_p$，
+正性再应用于 $h$ 与 $1-h$ 即给所述预算。证毕。
+
+### 105.5 数学面滤子的全部正像与正核
+
+**定理 105.5（弱入口已经数学projective）。** 在 $\mathsf W$ 下定义对偶算子及其对偶
+
+$$
+\Pi_p^*:=\Lambda_p\operatorname{res}_p:V^*\to V^*,\qquad
+\Pi_p:V\to V,\qquad R_p(v):=a_p(v)p.
+\tag{VII105.12}
+$$
+
+$\Pi_p,R_p$ 均为正投影，彼此有互补正像与正核，其对偶也如此；并且
+
+$$
+\begin{array}{ll}
+\operatorname{im}_+\Pi_p=\operatorname{cone}D_p,&
+\ker_+\Pi_p=\mathbb R_+p,\\
+\operatorname{im}_+R_p=\mathbb R_+p,&
+\ker_+R_p=\operatorname{cone}D_p,\\
+\operatorname{im}_+\Pi_p^*=Z_p=\ker_+R_p^*,&
+\ker_+\Pi_p^*=\mathbb R_+a_p=\operatorname{im}_+R_p^*.
+\end{array}
+\tag{VII105.13}
+$$
+
+这里 $\operatorname{im}_+L=\operatorname{im}L\cap C$、$\ker_+L=\ker L\cap C$，
+对偶侧换为 $C^*$。每个原锥面都是一个此类数学滤子的正像。
+
+证明。$\operatorname{res}_p\Lambda_p=\mathrm{id}$ 给 $`\Pi_p^*`$ 幂等。
+限制和延拓均正，故它和 $\Pi_p$ 均正。
+对每个 $x\in D_p$、每个 $f\in V^*$，
+$f(\Pi_px)=(\Lambda_p\operatorname{res}_pf)(x)=f(x)$，故 $\Pi_p$ 固定整个 $D_p$。
+而 $`\Pi_p^*a_p=0`$，所以正 $\Pi_pv$ 在 $a_p$ 的零锥面中；由准确零面得
+其正像恰为 $\operatorname{cone}D_p$。此外
+
+$$
+u(\Pi_pv)=(u-a_p)(v),\qquad u(R_pv)=a_p(v)\qquad(v\in C).
+\tag{VII105.14}
+$$
+
+若 $v\in C$ 且 $\Pi_pv=0$，则 $(u-a_p)(v)=0$。
+$a_p$ 唯一确认 $p$，归一后得 $v\in\mathbb R_+p$；反向由延拓在 $p$ 读零成立。
+$R_p$ 的正像、正核和幂等性直接由 $a_p(p)=1$、准确零面得到。
+
+对偶侧 $`\Pi_p^*`$ 固定每个 $Z_p$ 中的函数，正像恰为 $Z_p$；
+$`R_p^*f=f(p)a_p`$，其正核恰为 $Z_p$，其正像恰为 $\mathbb R_+a_p$。
+若正 $f$ 被 $`\Pi_p^*`$ 杀掉，限制再用(VII105.10)得 $f|_{D_p}=0$。
+104.4使非零这样的 $f$ 在 $p$ 取正最大值，归一后属 $\mathcal A_p$；
+105.2遂给 $f\in\mathbb R_+a_p$。反向显然，全部核像条件成立。
+
+(VII105.14)给两个投影均归一不增。按
+[Barnum—Müller—Ududec原文][Q105BMU] Definition 13—14，正、幂等、
+互补正像核、对偶可互补和归一不增，正是数学 filter 的逐项条件。
+所有非平凡真锥面已穷尽为 $\mathbb R_+p$ 与 $\operatorname{cone}D_p$，
+零面、全锥分别用零算子、恒等算子，所以原锥满足该Definition 14的projectivity。
+互补不要求 $\Pi_p+R_p=\mathrm{id}$，这里也未证明这个等式。
+
+这推进104.4—104.5及104.15—104.16中关于全域least和projectivity尚缺的部分：
+它们已经由弱入口取得。尚未取得的是全部纯点的数值互易和滤子无条件保纯。
+特别是 $\Pi_pq$ 对任意原纯 $q$ 是否总为零或纯射线，未由上述核像等式证明。
+因此不能仅凭本定理消费该原文Theorem 16的全部前提，也不声称滤子是实际允许事件。证毕。
+
+### 105.6 原最大三读数确为全空间范数
+
+**定理 105.6（紧框架、分离性和纯点单位长度）。** 在 $\mathsf W$ 下，
+$\mathcal T_3$ 非空且紧，每个原纯点进入其中一组框架。
+(VII105.3)的最大值有限且达到，$\nu$ 是原 $V$ 上的范数，并且
+
+$$
+\nu(p)=1\quad(p\in P),\qquad \nu(x)\le1\quad(x\in K).
+\tag{VII105.15}
+$$
+
+证明。104.3给每个纯点的joint完成，105.2识别各框架的效应。
+104.6给 $P$ 紧，原整个 $[0,u]$ 也紧；有限乘积中的单位等式和全部评价等式是闭条件，
+故 $\mathcal T_3$ 是紧非空集。原评价连续，所以每个 $v$ 的最大值有限且达到。
+它是线性读数映射的欧氏长度之最大值，故绝对齐次且满足三角不等式。
+若 $\nu(v)=0$，每个纯点所参与框架中的 $a_p(v)$ 都为零；
+105.3的对偶谱展开使所有 $f\in V^*$ 都在 $v$ 读零，故 $v=0$。
+因此它是原空间上的有限范数，不是商空间上的半范数。
+
+对任意 $x\in K$，每个框架读数非负且和一，故平方和至多一。
+对纯 $p$，选含它的框架，读数为一个一和两个零，达到一。
+这些事实未假设 $\mathrm G$、全Pair、状态谱分解或内积。证毕。
+
+### 105.7 长度律在纯点处极化为同一把原尺
+
+**定理 105.7（全有符号平行四边形律给全纯互易）。** 在 $\mathsf W+\mathrm{PL}_3$ 下，
+存在正定对称双线性型 $B$，满足
+
+$$
+Q_3(v)=B(v,v),\qquad B(p,x)=a_p(x)\quad(p\in P,\ x\in V).
+\tag{VII105.16}
+$$
+
+特别地 $a_p(q)=a_q(p)$ 对全部原纯点成立，结合105.3即为完整 $S$。
+
+证明。先使用成熟Jordan—von Neumann极化原理，其此处所需步骤如下。
+令
+
+$$
+B(v,z):=\frac{Q_3(v+z)-Q_3(v-z)}4.
+\tag{VII105.17}
+$$
+
+范数平方连续、偶且二次齐次。平行四边形律给
+$B(v+t,z)+B(v-t,z)=2B(v,z)$；交换 $v,t$ 并用第一变量奇性，又给两项之差
+$2B(t,z)$。相加得第一变量可加，有理齐次经连续性成为实齐次。
+偶性给 $B$ 对称，故另一变量也线性；二次齐次给 $B(v,v)=Q_3(v)$。
+105.6的分离性使此型正定。这是成熟极化步骤，不计为新的内积刻画。
+
+固定任意 $T=(p_i;a_i)\in\mathcal T_3$。原最大值的定义在全部 $V$ 上给
+
+$$
+D_T(v):=B(v,v)-\sum_i a_i(v)^2\ge0,
+\qquad D_T(p_j)=1-1=0.
+\tag{VII105.18}
+$$
+
+对任意实 $t$ 和任意有符号 $x\in V$，双线性与线性给
+
+$$
+D_T(p_j+tx)
+=2t\bigl(B(p_j,x)-a_j(x)\bigr)+t^2D_T(x)\ge0.
+\tag{VII105.19}
+$$
+
+若一次项系数非零，取反号且充分小的 $t$ 就违反非负性，故该系数必零。
+于是 $B(p_j,x)=a_j(x)$ 对任意 $x$ 成立。
+每个原纯点都属于一组框架，且 $a_j=a_{p_j}$，得到(VII105.16)。
+交换纯点，$a_p(q)=B(p,q)=B(q,p)=a_q(p)$，不遗漏不共真面的纯对。
+加上全原锥序least，已具备[Library完整S桥][Q103S]的全部输入。证毕。
+
+这里承重的是同一原三读数最大值在整个空间上给出的非负二次差。
+仅在球内成立的一元平方公式、或仅在纯点上读出单位长度，都不能替代(VII105.19)的
+任意实方向与两种符号，也不能单凭“极化”二字预付双线性。
+
+### 105.8 原域完整等价及准确反向
+
+**定理 105.8（原长度候选的完整双向）。** 在105.1的原有限维全效应域中，以下条件等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathsf W+\mathrm{PL}_3\\
+\Longleftrightarrow\quad&\mathrm{EB}_{\ge1}+\mathrm{Pair}\\
+\Longleftrightarrow\quad&S\ \text{且}\ h(K)=3\\
+\Longleftrightarrow\quad&\exists\text{ rank-three有限EJA }J,\ \Phi:J\overset{\sim}{\to}V,\\
+&\hspace{12mm}\Phi(J_+)=C,\qquad u\Phi=\tau_J.
+\end{aligned}}
+\tag{VII105.20}
+$$
+
+在 $\mathsf W$ 内，它们还等价于整个原面格满足覆盖律。
+$\tau_J$ 是本原幂等元取一的规范迹，$\Phi$ 保留同一原锥和同一原归一单位。
+
+证明。105.7给完整 $S$；$h(K)=3$ 已由弱入口得到。
+103.6及104.7逐项给后面三种条件与覆盖律的等价。
+一般谱性、自对偶、正面投影保纯及EJA重构在此直接复用既有完整 $S$ 桥；
+其中Barnum—Müller—Ududec Theorem 16的全纯互易与滤波保纯由该桥供给，
+不能用105.5单独替代。
+
+反向还须核对本章新定义的最大读数长度。由完整 $S$ 的既有桥取得正定配对 $B$，
+使 $B(p,x)=a_p(x)$；每个 $T\in\mathcal T_3$ 的三纯点因而正交归一。
+所以对每个原有符号 $v$，其三读数平方和是这组三维线性张成空间上的
+$B$ 正交投影长度平方，至多为 $B(v,v)$。
+既有桥的有符号框架谱性又给某个完整框架中
+$v=\sum_i\lambda_i p_i$，$\lambda_i\in\mathbb R$；
+原秩三使该框架有三个成员，零系数也保留。在它上面读数恰为 $\lambda_i$，
+故最大值达到 $\sum_i\lambda_i^2=B(v,v)$。
+于是 $Q_3=B(v,v)$，满足全 $V$ 的 $\mathrm{PL}_3$。
+同单位EJA字典中同一公式是 $Q_3(v)=\tau_J((\Phi^{-1}v)^2)$。
+这完成反向，未把 $Q_3$ 另换成一个先给的Jordan长度。证毕。
+
+$\mathrm{PL}_3$ 是候选额外明列的约束，未被定义成恒真式。
+尚未证明 $\mathsf W$ 自动推出它，也未证明它对 $\mathsf W$ 逻辑独立。
+(VII105.20)提供一个条件完整且可检验量词的几何替换，不主张最少独立公理数。
+
+### 105.9 共同球心的较弱入口与连续框架和
+
+**定理 105.9（共同重心条件的准确地位）。** 仅 $\mathrm{EB}_{\ge1}+\mathrm G$
+就推出 $\mathrm{Pair}_{\perp}$，并使 $w=U/3\in\operatorname{ri}K$。
+在 $\mathsf W$ 下，$U(p):=p+2c_p$ 连续，沿每条原正交边常值；
+$\mathrm G$ 等价于它在整个 $P$ 上常值。全Pair推出 $\mathrm G$。
+
+证明。先只用EB和G。任取纯 $p$，$w=(p+2c_p)/3\in K$。
+若非零 $f\in C^*$ 在 $w$ 读零，G对全部纯 $p$ 给
+$0=f(p)+2f(c_p)$，两项非负，故全部 $f(p)=0$。
+原纯点生成原锥，迫 $f=0$，矛盾。因此 $w$ 在相对内部，$U\in\operatorname{int}C$。
+
+取 $q\in E_p$，其 $D_p$ 内对径为 $r=2c_p-q=U-p-q$，仍是原纯点。
+任取 $b_q\in\mathcal A_q$；G在 $q$ 处给 $b_q(U)=1$。
+零对称给 $b_q(p)=0$，故 $b_q(r)=1-0-1=0$，即 $q\perp r$。
+所有已有排除球的对径都原正交，104.2遂给 $\mathrm{Pair}_{\perp}$。
+所以这里不必重复输入该条件。
+
+现只假设 $\mathsf W$。每组框架的任意两点是第三点排除球的对径，故
+
+$$
+p+q+r=U(p)=U(q)=U(r).
+\tag{VII105.21}
+$$
+
+原正交关系在紧 $P^2$ 中闭：对收敛的正交点对，原见证效应在紧 $[0,u]$ 中
+取收敛子列，极限仍读一、零。若 $p_n\to p$，逐项完成框架 $(p_n,q_n,r_n)$。
+$P$ 紧使任意子列有共同收敛子子列；闭正交使极限 $(p,q,r)$ 仍为框架，
+所以所有 $U(p_n)$ 的聚点均为 $p+q+r=U(p)$。
+这些和处于紧集 $K+K+K$，故整序列收敛，$U$ 连续。
+其常值性恰是G，沿边常值由(VII105.21)给出。
+若全Pair成立，对不同 $p,q$，104.7给某纯 $s\in D_p\cap D_q$，
+于是 $U(p)=U(s)=U(q)$，G成立。连续性自身不推出常值。证毕。
+
+### 105.10 共同中心给每态和每向量的三谱
+
+**定理 105.10（同框架谱存在与原序的三特征值）。** 在 $\mathrm{EB}_{\ge1}+\mathrm G$ 下，
+全部框架均满足 $p_1+p_2+p_3=U$。每个 $x\in K$ 是某个原joint三框架的凸组合；
+每个 $v\in V$ 是某个这样的框架的有符号实线性组合。
+若 $v=\sum_i\lambda_i p_i$，其排序三系数由原序唯一确定：
+
+$$
+\begin{aligned}
+\lambda_{\min}(v)&=\sup\{t\in\mathbb R:v-tU\in C\},\\
+\lambda_{\max}(v)&=\inf\{t\in\mathbb R:tU-v\in C\},\\
+\lambda_{\mathrm{mid}}(v)&=u(v)-\lambda_{\min}(v)-\lambda_{\max}(v).
+\end{aligned}
+\tag{VII105.22}
+$$
+
+这些谱值包括重数，连续且不依赖框架；并未由此得到全纯互易。
+
+证明。105.9先给弱入口，框架和由(VII105.21)及G等于 $U$。
+$x=w$ 时用任一框架的均匀组合。$x\ne w$ 时沿 $w$ 经 $x$ 延长至边界 $y$，
+写 $x=(1-t)w+ty$，$0<t\le1$。
+每个边界点都在某个 $D_p$：非纯边界点由真面穷尽给出；纯边界点 $y$ 则取
+$q\in E_y$，零对称使 $y\in D_q$。
+在该整个球内沿通过 $y$ 的直径写 $y=\theta q+(1-\theta)r$；
+球心时任选直径，$0\le\theta\le1$。三点 $(p,q,r)$ 是原joint框架，故
+
+$$
+x=\frac{1-t}{3}p+
+ \left(\frac{1-t}{3}+t\theta\right)q+
+ \left(\frac{1-t}{3}+t(1-\theta)\right)r.
+\tag{VII105.23}
+$$
+
+三个系数非负且和一；内点时 $t<1$，三者全正。
+对任意有符号 $v$，$U\in\operatorname{int}C$ 使充分大的 $s$ 满足 $v+sU\in C\setminus\{0\}$。
+归一后使用上述同框架正分解，再由同框架之和等于 $U$ 减回 $sU$，得到有符号分解。
+
+在一个这样的分解中，$a_{p_i}(v)=\lambda_i$，$a_{p_i}(U)=1$。
+因此 $v-tU\in C$ 当且仅当全部 $\lambda_i-t\ge0$：
+充分性用正组合，必要性用这同一组三把非负原尺。上界情形同理。
+原 $u(v)=\sum_i\lambda_i$，三阶仅剩一个中间值，得到(VII105.22)。
+序单位 $U$ 的范数中，若 $-\varepsilon U\le v-v'\le\varepsilon U$，
+最大、最小谱值各变化至多 $\varepsilon$；原 $u$ 连续，故中间值亦连续。
+这里谱存在是状态的框架分解，不是已含投影接口的另一种“强谱性”，
+也不自行供应Barnum—Hilgert分类所需的强对称。证毕。
+
+### 105.11 共同中心下的原最大长度及局部二次公式
+
+**定理 105.11（全读数最大值等于三谱平方和）。** 在 $\mathrm{EB}_{\ge1}+\mathrm G$ 下，
+105.1的原函数准确满足
+
+$$
+Q_3(v)=\lambda_{\min}(v)^2+\lambda_{\mathrm{mid}}(v)^2+\lambda_{\max}(v)^2.
+\tag{VII105.24}
+$$
+
+对 $L_p=\operatorname{lin}(D_p-c_p)$，取以 $D_p-c_p$ 为单位球的欧氏范数
+$\|\cdot\|_p$。在 $\operatorname{span}(\{p\}\cup D_p)$ 内有
+
+$$
+Q_3(\alpha p+\beta c_p+z)
+ =\alpha^2+\frac{\beta^2+\|z\|_p^2}{2},\qquad z\in L_p.
+\tag{VII105.25}
+$$
+
+这些局部二次公式尚不能推出全 $V$ 的 $\mathrm{PL}_3$。
+
+证明。在 $v=\sum_j\lambda_jq_j$ 的谱框架和任意读数框架 $(p_i;a_i)$ 之间，令
+$M_{ij}=a_i(q_j)$。它非负，列和为 $u(q_j)=1$，行和为
+$a_i(\sum_jq_j)=a_i(U)=1$，故双随机。逐行Jensen及列和给
+
+$$
+\sum_i a_i(v)^2=\sum_i\left(\sum_jM_{ij}\lambda_j\right)^2
+ \le\sum_{i,j}M_{ij}\lambda_j^2=\sum_j\lambda_j^2.
+\tag{VII105.26}
+$$
+
+此估计允许 $\lambda_j$ 有任意符号。在 $v$ 自己的谱框架上达到等号，得到(VII105.24)。
+没有将两个分别达到的最优框架当成同一框架。
+
+令 $\rho=\|z\|_p$。$\rho>0$ 时取 $q=c_p+z/\rho,r=c_p-z/\rho$；
+$\rho=0$ 时任选对径。则
+$\alpha p+\beta c_p+z=\alpha p+(\beta+\rho)q/2+(\beta-\rho)r/2$
+是一个原框架内的有符号谱，平方求和即(VII105.25)。
+表示的唯一性来自 $a_p(p)=1,a_p|_{\operatorname{span}D_p}=0$ 及 $u(z)=0$。
+每个向量在某个这样的子空间中有谱，不代表任意两个向量都在同一个这样的子空间中。
+所以不能据逐球公式拼接一个未经证明的全局双线性型或Jordan乘法。证毕。
+
+在这个较弱入口内，$\mathrm{PL}_3$、全Pair、覆盖律及完整 $S$ 仍由105.8准确等价。
+尚未证明 $\mathrm G\Rightarrow\mathrm{PL}_3$；也未给满足整个原域和EB加G却失败它的反例。
+谱存在及谱唯一性不能替代所缺的跨框架互易。
+完整长度候选由105.8—105.9推出G；这里未证明G的模型类严格更大。
+
+### 105.12 临界Minkowski不对称度与全部排除球的共同重心
+
+**定理 105.12（弱入口内的极小不对称度二）。** 对 $z\in\operatorname{aff}K$、$s\ge1$ 定义
+
+$$
+\kappa_{z,s}(x)=\frac{(s+1)z-x}{s},\qquad
+Z_s(K)=\{z:\kappa_{z,s}(K)\subseteq K\},\qquad
+s(K)=\inf\{s\ge1:Z_s(K)\ne\varnothing\}.
+\tag{VII105.27}
+$$
+
+这是标准Minkowski不对称度，因为包含条件恰为 $-(K-z)\subseteq s(K-z)$，
+不是它的倒数。在 $\mathsf W$ 下，$s(K)\ge2$，并且
+
+$$
+\mathrm G\quad\Longleftrightarrow\quad Z_2(K)\ne\varnothing
+\quad\Longleftrightarrow\quad s(K)=2.
+\tag{VII105.28}
+$$
+
+成立时 $Z_2(K)=\{w\}$，中心唯一且在 $\operatorname{ri}K$。
+
+证明中先给所需标准凸几何步骤，以明确下确界的达到性。
+若 $z\in Z_s(K)$，对任意 $x\in K$ 置 $y=\kappa_{z,s}(x)\in K$，
+则 $z=(x+sy)/(s+1)\in K$。若 $z$ 在相对边界，取非恒定非负支撑仿射函数
+$h$，使 $h(z)=0$，并选 $h(x)>0$；则 $h(y)=-h(x)/s<0$，矛盾。
+因此任何有限可行中心都在相对内部。
+在一个内点 $z_0$ 周围取半径 $r>0$ 的相对闭球包含于 $K$，又以半径 $M\ge r$ 包含 $K$，
+则 $s=M/r$ 可行，所以下确界有限。
+取可行 $s_n\to s(K)$ 和中心 $z_n\in K$，紧性给共同子列 $z_n\to z$。
+对每个固定 $x\in K$，$\kappa_{z_n,s_n}(x)$ 收敛到 $\kappa_{z,s(K)}(x)$；
+原 $K$ 闭，故此极限仍在 $K$。同一中心子列对全部 $x$ 有效，证明下确界达到。
+
+对任意一组原三结果框架，若 $z\in Z_s(K)$，则
+$a_i(\kappa_{z,s}(p_i))\ge0$ 给 $(s+1)a_i(z)\ge1$。
+三式相加得 $s+1\ge3$，故 $s(K)\ge2$。
+这是成熟共同可区分容量下界在本章三结果上的应用，未将分别可区分当作joint。
+
+若G成立，$\kappa_{w,2}(p)=(3w-p)/2=c_p\in K$ 对全部原纯点成立。
+$K=\operatorname{conv}P$ 与仿射性遂给 $w\in Z_2(K)$，结合下界得 $s(K)=2$。
+反向设 $z\in Z_2(K)$。对每个三结果框架，上述三条不等式均须等号，
+所以每个纯点的唯一尺都有 $a_p(z)=1/3$。
+置 $y_p=(3z-p)/2\in K$，则 $a_p(y_p)=0$，故 $y_p\in D_p$。
+对每个 $q\in E_p$，零对称给 $a_q(p)=0$，于是 $a_q(y_p)=1/2$。
+在 $D_p$ 的球图中，104.4给
+
+$$
+\frac{1+\chi(q)\cdot\chi(y_p)}2=\frac12\qquad(q\in E_p).
+\tag{VII105.29}
+$$
+
+$\chi(q)$ 遍历整个单位球面，故 $\chi(y_p)=0$，即 $y_p=c_p$，线段情形也成立。
+因此对全部 $p$ 都有 $p+2c_p=3z$，得到G。
+两个参数二中心均须等于同一个 $(p+2c_p)/3$，所以唯一。
+若只给 $s(K)=2$，先用前面的达到性取得中心，再用此反向，不能省去达到步骤。证毕。
+
+标准定义、达到性、容量界及信息不对称恒等式的成熟归属是
+Matsumoto—Kimura [原始版本][Q105MK] §III(14)—(19)、Theorem 1(28)、Theorem 4(44)。
+本文的 $s(K)$ 对应该文 $m$；该文(19)中支配常数为 $m+1$。
+本定理新增的连接是：整排除球及原joint刻度使每个参数二临界中心恰是所有
+$(p+2c_p)/3$ 的共同值。这里不消费信息存储值，也不把数学测量等同于实际装置。
+逆向仍在 $\mathsf W$ 内；仅 $\mathrm{EB}_{\ge1}+s(K)=2$ 能否删除
+$\mathrm{Pair}_{\perp}$ 并回得上述结构，尚未证明。
+
+### 105.13 正补映射的静态含义与尚未闭合的蕴含
+
+**推论 105.13（共同中心的正线性补映射）。** 在 $\mathsf W+\mathrm G$ 下，
+
+$$
+\mathsf H_w(v):=\frac{3u(v)w-v}{2}
+\tag{VII105.30}
+$$
+
+是原 $V$ 上正且保原归一泛函的线性映射，$u\mathsf H_w=u$。
+它可逆，但逆不保正；这些事实不把它变成实际允许过程。
+
+证明。非零 $v\in C$ 写成 $u(v)x$，$x\in K$，105.12给
+$\mathsf H_w(v)=u(v)\kappa_{w,2}(x)\in C$，保单位直接由 $u(w)=1$ 得到。
+在 $V=\mathbb Rw\oplus\ker u$ 上，它分别乘以 $1,-1/2$，故
+$\mathsf H_w^{-1}(v)=3u(v)w-2v$。
+由 $a_p(w)=1/3$，有 $a_p(\mathsf H_w^{-1}p)=1-2=-1$，
+所以逆不保正，更不是锥自同构。此构造没有复合锥或实际菜单输入，故不声称CP或可实施性。证毕。
+
+**开放问题 105.14（弱入口的具体剩余长度桥）。** 以下蕴含均未在这里证明，也没有给同域反例：
+
+$$
+\mathsf W\ \Longrightarrow\ \mathrm G,
+\qquad \mathsf W+\mathrm G\ \Longrightarrow\ \mathrm{PL}_3,
+\qquad \mathsf W\ \Longrightarrow\ \mathrm{PL}_3.
+\tag{VII105.31}
+$$
+
+最后一项准确承接104.8；105.8已把它等价改写为原全三读数范数的全局长度律。
+第一项是共同中心的取得问题；即使取得，第二项仍需跨框架二元证明。
+在G下，内部二纯弦的同一缺口还可读作
+$\lambda_{\min}(p+q)>0$；由(VII105.22)，这恰等价于 $(p+q)/2\in\operatorname{ri}K$。
+任意两纯点有某种凸分解，不能推出其正交谱至多两项非零。
+105.2—105.5已经消除了唯一尺、全域least和数学projectivity的旧缺口，
+不再将它们列为待证；仍缺全纯互易及无条件滤波保纯。
+这里“未证”不表示形式不可判定性，也不表示已证否定。
+
+### 105.14 同一原装饰元组上的完整替代包
+
+**定理 105.15（原三读数长度包的准确替换）。** 固定103.10、104.15的同一个
+$\mathcal O$、同一共同来源域及非空 $\mathcal J\subseteq\{A,D,E\}$，
+只在同一个 $\mathcal D_{3,\mathcal J}$ 中比较。保留全部 $\mathcal N(\mathcal O)$
+和未选几何项，定义
+
+$$
+\begin{aligned}
+\mathsf R_{\mathrm{readout},3}^{\mathcal J}(\mathcal O):\quad
+&\mathcal N(\mathcal O)\ \land\!\bigwedge_{X\notin\mathcal J}S_X\\
+&\land\!\bigwedge_{X\in\mathcal J}
+ (\mathrm{EB}_{\ge1,X}+\mathrm{Pair}_{\perp,X}+\mathrm{PL}_{3,X}).
+\end{aligned}
+\tag{VII105.32}
+$$
+
+每个 $\mathrm{PL}_{3,X}$ 用该原载体全部 $\mathcal T_{3,X}$ 定义，不换效应菜单。
+在上述共同域内，
+
+$$
+\begin{aligned}
+\mathsf R_{\mathrm{readout},3}^{\mathcal J}
+&\Longleftrightarrow\mathsf R_{\rm exclusion,3}^{\mathcal J}
+\Longleftrightarrow\mathsf R_S
+\Longleftrightarrow\mathsf R_{\rm polar}
+\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}\\
+&\Longleftrightarrow\mathsf R_{\rm mid}
+\Longleftrightarrow\mathsf R_{86}^{\rm ev}
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}.
+\end{aligned}
+\tag{VII105.33}
+$$
+
+证明。逐所选原 $X$ 应用105.8，将长度项准确替换为 $S_X+h(K_X)=3$。
+共同域已含高度约束；未选项和 $\mathcal N$ 不动，再直接使用103.10的(VII103.35)。
+在未限制高度的旧域中，准确右侧应为 $\mathsf R_S\land\bigwedge_{X\in\mathcal J}h(K_X)=3$，
+不能删除该共同域限定。
+
+这里完整保留的 $\mathcal N$ 仍包括原准备／测试／过程／参考／读回与装饰，
+原概率像自身紧及全部原中点实现，原测试的整个效应表，重复标签、零和不等质量、
+全部非负质量缩放与整个相关联合输入域。两次读回仍用同一个原 $p$，
+$L,K,M,\omega$、两实张成、全实 $Z$、完整(83.8)、VI(89.13)的两尺度等式、
+C2、整个 $G=1_E$ 及精确PRE后同一资格态与整个H13输出，均采用103.10的原式。
+活跃块严格负方向、共享总迹一、非活跃零质量与空活跃集均保留，不能逐块换态。
+
+共同来源合同仍量化设备、事件、来源绑定、菜单、分支、参考副本、相关联合、
+记录、权限、控制、原钟、单位、ready／flags、失败、拒绝、停止、销毁、返回、
+实际混合、全部合法未来、旧support及每个中间切口。
+VI89.9—89.10的全部原生／细化消费者仍保留原字与terminal futures、联合有符号关系、
+细标签粗归组、记录后条件未来、source-adoption与资源合同。
+同事件CP仍按原完整提升、实际探针及相容核条件认证；已有充分递归参考的结论直接复用。
+Kraus、TP／TNI和实际仪器各守原同族预算、接线、记录及共同输入校准；
+Lüders仍需同一分支的锐效应、接受态中性与输出校准；
+物理时间仍需原钟、连续齐次可逆群及实际动态来源。
+这些均不由105.5的数学滤子或105.13的正映射反向制造。
+
+若原复合合同使 $A,D=A\otimes A,E=D\otimes A$ 秩分别为 $3,9,27$，
+不能同时对三者施加本章秩三入口；$\mathcal J=\{A,D,E\}$ 与该合同的交集仍为空。
+同数据替换不解除这个不相容性，也不删来源以换取非空。证毕。
+
+### 105.15 全排除三球的复型选择与完整Born对应
+
+**推论 105.16（同锥同单位的复三能级字典）。** 在105.8等价条件中，
+再要求每个完整 $D_p\simeq B^3$，恰好选出同单位的 $H_3(\mathbb C)$。
+存在 $\Phi:H_3(\mathbb C)\to V$，满足 $\Phi(\mathrm{PSD}_3)=C$、$u\Phi=\operatorname{tr}$，并有
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+[0,u]=\{f_E:f_E(\Phi\rho)=\operatorname{tr}(E\rho),\ 0\preceq E\preceq I_3\},\\
+p=\Phi(vv^*),\quad v^*v=1,\qquad
+T_p(\Phi\rho)=a_p(\Phi\rho)=\operatorname{tr}(vv^*\rho),\\
+q=\Phi(\eta\eta^*),\quad \eta^*\eta=1,\qquad T_p(q)=|v^*\eta|^2.
+\end{gathered}
+\tag{VII105.34}
+$$
+
+证明及成熟结果的应用。105.8先给原rank-three EJA；直接复用103.7的成熟有限分类：
+非简单分支是 $\mathbb R\oplus\operatorname{spin}_d$，含经典三角形，
+简单分支是 $H_3(\mathbb R),H_3(\mathbb C),H_3(\mathbb H),H_3(\mathbb O)$。
+前者存在整排除线段，后四者的完整排除球维数分别为 $2,3,5,9$。
+所以“每个完整排除球三维”恰选复分支；只给一张三球不够，
+$\Delta_0*B^3$ 的旗标背后虽是三球，其他纯点背后仍是线段。
+全部球至少二维仅排除直和，也不单独选择复数。
+
+103.6处理任意原 $u$ 的同单位归一，103.8给整个态锥、全部效应区间和Born字典，
+直接代入即(VII105.34)。
+共同中心在这些矩阵坐标中是 $\Phi(I_3)/3$。
+有限数学测量对应 $E_i\succeq0,\sum_iE_i=I_3$，仍不自动是实际菜单。
+分类、迹配对与纯模方是成熟结果的应用，不另计新分类或新Born证明。
+复合、CP、仪器、更新、Lüders、实际来源及物理钟继续使用105.15保留的合同。证毕。
+
+### 105.16 与全有限C星层级的准确接口
+
+**命题 105.17（单载体入口和三份比较入口的区别）。** 在相邻
+[三份比较与全有限复C星层级VII][Q105H]的定义102.1模型域内，
+若本章105.8条件用于同一个原 $W_1=V,C_1,u_1$，它供应完整 $S_1$ 和该载体秩三。
+本章未由此证明原 $S_3$，因而不能直接宣告该文定理102.11的全有限层级结论。
+
+证明。这里 $S_1$ 的比较仍是同一原全效应下包络；本章已得
+$T_p=a_p$ 及 $a_p(q)=a_q(p)$，所以对任何有限原纯准备
+$T_p(\sum_\ell t_\ell q_\ell)=\sum_\ell t_\ell T_{q_\ell}(p)$，恰为该文的 $S_1$。
+反之需要的层级域本身还含全部有限 $W_N=V^{\otimes_{\mathbb R}N}$、
+每个实际分块的最小／最大锥夹逼、全部指定正置换、同一实张量坐标、原乘积配对和归一。
+本章的单锥结论没有给这些全部数据，也没有给原全部三份纯态上的比较等式。
+
+该文命题102.3用纯旁观者证明 $S_{a+1}\Rightarrow S_a$，
+特别是 $S_3$ 下降到 $S_2,S_1$；它没有证明 $S_1$ 上升到 $S_3$。
+约定102.4的B1—B3供应分别使用低三份完整比较、实际复合及共同产品方向；
+不能仅因B1在一份已得就消费其余两份供应。
+只有另取得同一强分块层级的 $S_3$ 或等价三份电路平衡入口，
+才按该文定理102.11直接得到固定坐标下的全部有限
+
+$$
+C_N\simeq\bigoplus_{s\in I^N}\operatorname{Herm}_+(\mathcal H_s),\qquad
+A=\bigoplus_{i\in I}M_{n_i}(\mathbb C)
+\tag{VII105.35}
+$$
+
+及全部原态、效应、置换与重括号的共同对应。
+若一份另已选本章复三能级，则该全层级选择中的一份块为 $M_3(\mathbb C)$，
+两、三份秩为九、二十七；不能将秩三EB入口直接强加于三副本来替代 $S_3$。
+
+取得全层级后，该文命题102.13才把原旁观正映射、自身Choi正性、
+各矩形跨扇区分量CP与Kraus表达对应，TP／TNI还逐输入块满足质量预算。
+定义102.14的实际事件饱和是额外菜单选择，不是该数学CP结论的自动后果；
+没有饱和选择，就不能宣称所有数学分支和全部数学仪器都实际存在。
+这是直接复用相邻结果的准确前件映射，不重写其全有限证明。证毕。
+
+### 105.17 数学归属、边界与完整白话
+
+**约定 105.18（本章连接的归属）。** 105.2—105.5的循环宽度唯一性、
+全域确认面正规形、正限制双射及互补核像，105.6—105.8的原三读数范数与纯点处
+非负二次差极化桥，105.9—105.12的共同中心、三阶原序谱与临界中心连接，
+均按 `repo-derived` 纸面综合归属，不主张全球原创或文献检索穷尽。
+103—104的整球几何、面穷尽、任意两尺完成、纯点紧性和覆盖等价直接复用。
+
+成熟极化原理归于Jordan—von Neumann，本文所用加法与连续性步骤已在105.7展开。
+一般least-confirmation谱剥离和完整 $S$ 重构按[既有Library桥][Q103S]复用，
+其Niestegge接口为 *Quantum transition probability* [arXiv:2312.13213v2][Q105N]；
+数学filter定义及最终重构分别对应[BMU原文][Q105BMU] Definition 14、Theorem 16，
+二者前提不混用。状态框架谱性不自动含强对称；
+[Barnum—Hilgert原文][Q105BH] Definitions 3.4—3.5、Theorem 1.1的强对称前件仍须保留。
+成熟Jordan分类与同单位Born对应沿103.6—103.8的精确引用，
+Minkowski定义及容量界沿105.12的Matsumoto—Kimura归属。
+凸支撑、有限维紧性、球上仿射等号条件和双随机收缩均为标准中间工具。
+本章不把纸面推导称为内核形式核验，也不把静态数学对应称为经验实现。
+
+**命题 105.19（三把原尺如何连回完整量子候选）。** 上述结果可完整解释如下。
+仍从原来的整块状态物体、全部纯状态和所有零一有界的原尺出发。
+每个纯点背后的整个排除集合是一块实心球，线段也算；弱入口只要求本来可互相排除的
+两个纯点一起留在真正边界。这已经给每个纯点一个共同三角形和三把总和为一的原尺。
+三把尺不能各自随意变宽：第三族至少容纳前两族宽度之和，另外两次循环也一样，
+三个非负宽度只能全零。所以每个纯点背后的整球零尺唯一。
+
+证明与解释。任何别的确认尺限制到背后的球，都能沿一条直径分成两张非负尺；
+减掉它们后，剩下的尺在原纯点读一、整球读零。若它在整体别处为负，
+用真正的全域最低值归一，就会把那个负值点也判进这块读零球，矛盾。
+所以剩下的恰是唯一原尺，别的确认尺在整个原物体上都不低于它。
+这同时给共同的正线性球效应延拓与数学滤子，仍没有制造一台实际装置。
+
+现在把所有原三结果框架都拿来读同一个向量，每组得到三个实数，
+取它们欧氏长度的最大值。这个最大长度在原整个向量空间上确是范数，每个纯点长度为一。
+再明列一个全局二方向要求：任意两个有符号向量，和与差的长度平方相加，
+等于两者各自长度平方之和的两倍。这就是平行四边形律。
+它先给同一个内积；任一组三把尺的平方和都不超过这个内积长度，
+却在自己的三个纯点恰好相等。沿任意实方向微移，非负差不能出现一次斜率，
+于是每把原尺都被锁定为与对应纯点作同一个内积。
+交换任意两个纯点便得到全部数值互易，连原先不知是否共边界的纯对也包括在内。
+结合已经证明的全域最低尺，旧的完整Jordan桥立即适用，准确回到同原锥、同原单位的秩三几何。
+
+若每个完整排除球又都是三维实心球，成熟分类才唯一选出复三能级，
+全部态和全部效应分别就是密度矩阵与零到单位之间的矩阵，读数是迹，纯比较是模方。
+其余来源、实际菜单、复合、CP、仪器、更新和物理钟仍按原合同供给。
+单系统秩三不会自动变成三副本比较；全有限复C星层级仍需其原三份入口。
+
+还有一个更弱而直观的图景：每个纯点和背后球心按一比二平均，都落在同一个中心。
+它准确等于整块物体绕一个唯一中心反向缩成一半后仍放得回去，
+一半还是原三结果容量允许的临界比例。这个中心使每个状态都在某个共同三角形里，
+并使三个谱数值唯一；但每个状态各有自己的三角形，不等于任意两个方向共用同一三角形。
+所以这个中心图景尚未证明全局平行四边形律。
+弱入口自身是否已经迫出该长度律，也仍未证明；本章的完整结论是补上它之后的准确等价，
+不是宣告弱入口已自动完成全部量子公理。以上解释分别由105.2—105.17的原域推导给出。证毕。
+
+[Q105BMU]: https://arxiv.org/html/1403.4147v4 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Definition 13—14, Theorem 16."
+[Q105N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability, Theorems 2—3."
+[Q105BH]: https://arxiv.org/html/1904.03753v1 "Howard Barnum and Joachim Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces, Definitions 3.4—3.5, Theorem 1.1."
+[Q105MK]: https://arxiv.org/pdf/1802.01162v3 "Keiji Matsumoto and Gen Kimura, Information-induced asymmetry of state space in view of general probabilistic theories, §III(14)—(19), Theorem 1(28), Theorem 4(44)."
+[Q105H]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+
+## 追加锚（本行以下为增补区）

@@ -9,6 +9,20 @@ internal sealed class LogarithmicLayerRigidityDocument : IScribeDocumentDefiniti
         H("Logarithmic Layer Rigidity for Actual Predecessor Records"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("logarithmiclayerrigidity-record-ratio-limit"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.record_ratio_limit"),
+                H("The full-record layer ratio on an arbitrary filter"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any index type and filter, m>=2, positive original prices and the full strict predecessor record at each index, P=largestPrime(m) tending to infinity implies layerPrime(m,j)^j/P tends to j for every fixed j>=2. The uniform coarse and higher-layer geometry use this same-integer ratio."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("logarithmiclayerrigidity-coarse-scale-limits"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.coarse_scale_limits"),
+                H("Scale separation from a layer-power ratio"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("On any filter, a nonnegative Q and P tending to infinity with Q^j/P tending to j for j>=2 imply Q tends to infinity, log(Q)/log(P) tends to 1/j and Q/P tends to zero. The original-record geometry uses all three conclusions before choosing actual prime pools."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("theta-error-eight-logarithmic-pnt"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/Robin/PriceRecord/LogarithmicLayerRigidity.theta_error_eight"),

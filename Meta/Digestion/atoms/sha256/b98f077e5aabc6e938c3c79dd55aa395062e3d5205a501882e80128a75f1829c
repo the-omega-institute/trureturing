@@ -1,0 +1,58 @@
+**定理 99.5（全实 Veronese 锥的精确缺口）。** 设纯射线由
+
+$$
+ v(x,z)=(\nu_2(x),z),\qquad
+\nu_2(x)=(x_0^2,x_0x_1,x_0x_2,x_1^2,x_1x_2,x_2^2),
+$$
+
+其中 $x\in\mathbb R^3$、$z\in\mathbb R^r$，$r\ge0$；$x=0$ 的顶点纯射线全部保留。对任意严格正原单位，令其在秩一生成元上的四次式为
+
+$$
+U(x,z)=z^{\mathsf T}Dz+2z^{\mathsf T}Q(x)+U_0(x),\qquad D\succ0.
+$$
+
+置 $z'=z+D^{-1}Q(x)$、$W(x)=U_0(x)-Q(x)^{\mathsf T}D^{-1}Q(x)$。则 $W(x)>0$ ($x\ne0$)，并存在原纯点 $p,q,r$ 使
+
+$$
+T_p(q)=T_p(r)=0,\qquad
+T_p\!\left(\frac{q+r}{2}\right)=\frac{m}{2(a+b)}>0,
+\tag{99.7}
+$$
+
+其中
+$m=\min_{\|x\|=1}W(x)$，选取 $e_0$ 达到最小值、单位向量 $e_1\perp e_0$，
+$a=W(e_1)$、$b=W(e_0+e_1)$，并取
+
+$$
+ p=\frac{\Xi(e_0,0)}m,\qquad q=\frac{\Xi(e_1,0)}a,\qquad r=\frac{\Xi(e_0+e_1,0)}b,\qquad
+\Xi(x,z')=v(x,z')v(x,z')^{\mathsf T}.
+$$
+
+证明。$Q(x)$ 是 $\nu_2(x)$ 坐标的线性函数，故 $z'=z+D^{-1}Q(x)$ 是环境空间上的可逆实线性 shear。以它的整体合同及对偶运输同一原锥、原单位和全效应；上述 $v(x,z')$、$\Xi$ 及以下 $U=z'^{\mathsf T}Dz'+W(x)$ 均在运输后的坐标中取。严格正性给 $W>0$，且 $W(x)\ge m\|x\|^4$。在参数空间旋转后 $W(e_0)=m$、$\partial_{x_1}W(e_0)=0$。
+
+对 $0\le c\le1$，线性式平方
+
+$$
+F_c(x,z')=m(x_0^2-cx_1^2)^2
+$$
+满足
+$0\le F_c\le m(x_0^2+x_1^2)^2\le m\|x\|^4\le W\le U$。
+它来自环境线性效应，故由ROG延拓为原 proper 效应并确认 $p$。$F_0$ 排除 $q$，$F_1$ 排除 $r$，所以前两式成立。
+
+任取 $f\in F_p$，限制到 $z'=0,x_2=0$ 为二元非负四次式 $\Phi$。则 $0\le\Phi\le W$、$\Phi(1,0)=m$，而 $W-\Phi$ 在 $(1,0)$ 取零，故 $\Phi$ 的 $x_0^4$ 系数为 $m$、$x_0^3x_1$ 系数为零。二元非负四次式是二次式的实平方和，写
+
+$$
+\Phi=\|\alpha x_0^2+\beta x_0x_1+\gamma x_1^2\|^2.
+$$
+于是 $\|\alpha\|^2=m$、$\alpha\cdot\beta=0$，从而
+
+$$
+\frac{\Phi(0,1)}a+\frac{\Phi(1,1)}b
+=\frac{\|\gamma\|^2}a+\frac{\|\gamma+\alpha+\beta\|^2}b
+\ge\frac{\|\alpha+\beta\|^2}{a+b}
+=\frac{m+\|\beta\|^2}{a+b}
+\ge\frac m{a+b}.
+\tag{99.8}
+$$
+故每个确认效应在 $(q+r)/2$ 上至少为 $m/[2(a+b)]$。取 $c_*=a/(a+b)$；$F_{c_*}$ 仍是全域 proper 效应，并在该中点达到此值，得到(99.7)。证毕。
+

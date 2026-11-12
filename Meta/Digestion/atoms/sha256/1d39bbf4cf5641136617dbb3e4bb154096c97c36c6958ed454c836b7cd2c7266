@@ -1,0 +1,25 @@
+**定理 102.2（双秩障碍界）。** 固定 $p$。若 $\mathrm{Z0}(p)$ 失败，则有一个实际最小不相容组 $Q=\{q_1,\ldots,q_k\}\subseteq E_p$ 及原效应 $f_i$，满足
+
+$$
+\begin{gathered}
+k\ge2,\qquad f_i\in F_p,\qquad
+f_i(q_j)=a_i\delta_{ij},\qquad 0<a_i\le1,\\
+p,q_1,\ldots,q_k\text{ 仿射独立},\qquad
+k\le\min\{d_p,h_p\}.
+\end{gathered}
+\tag{VII102.3}
+$$
+
+同样的界适用于任意已经给定的有限最小不相容组，不以事先选定的混态反例为限。
+
+证明。VII101.2的有限纯分解与共同零等价可逐 $p$ 使用；VII101.3从实际失败的有限组删到最小，给这里的 $q_i,f_i,a_i$ 及 $p,q_1,\ldots,q_k$ 的仿射独立。这些是既有结论的直接复用。所有这些点都在 $L_p$，故 $k\le d_p$。
+
+还须核对确认面这一侧，而不能只援引目标空间维数。设
+
+$$
+\sum_{i=1}^k t_i(f_i-u)=0,\qquad
+T=\sum_i t_i,\qquad S_0=\sum_i\frac1{a_i}>1.
+$$
+
+在每个 $q_j$ 评价给 $t_ja_j-T=0$，因而 $t_j=T/a_j$。求和得 $T=TS_0$；由 $S_0>1$，$T=0$，再得全部 $t_j=0$。于是 $f_i-u$ 线性独立，$u,f_1,\ldots,f_k$ 是 $F_p$ 中的 $k+1$ 个仿射独立点，故 $k\le h_p$。这使用原确认效应的实际对角读数，不以抽象Helly数替代此秩计算。证毕。
+
