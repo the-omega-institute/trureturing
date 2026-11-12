@@ -67,7 +67,7 @@ internal sealed class KimberlingA371279Document : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role) => Describe.Lean(
-            DescribeId.Create("kimberling-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+            DescribeId.Create("kimberling-" + name.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula),
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), role);
@@ -147,18 +147,18 @@ internal sealed class KimberlingA371279Document : IScribeDocumentDefinition
     private static Formula ResultFormula()
     {
         var n=F.Id("n"); var i=F.Id("i"); var j=F.Id("j"); var r=F.Id("r"); var p=F.Id("p"); var t=F.Id("t");
-        return Disp(Conj(
-            For(n,Nat(),Eqn(C(Add(n,D(1))),Call("eraseDups",Cat(C(n),Call("pairList",C(n)))))),
-            For(n,Nat(),Eqn(C(n),Flat(Add(n,D(1))))),
-            For(n,Nat(),For(r,Rat(),Imp(Seq(r,Sp,InMacro,Sp,C(n)),Interval(r)))),
-            For(r,Rat(),Imp(Interval(r),Unique(p,Pairs(),Call("Occurs",r,p)))),
-            For(t,Nat(),Ex(n,Nat(),LtN(t,Len(Flat(n)))))),
-            For(n,Nat(),For(i,Nat(),Imp(LtN(i,Len(Flat(n))),Eqn(Lookup(Flat(n),i),Some(T(i))))))),
-            For(r,Rat(),For(p,Pairs(),Imp(Call("Occurs",r,p),Eqn(T(Call("flatIndex",p)),r)))),
-            For(t,Nat(),Unique(p,Pairs(),Conj(Call("Occurs",T(t),p),Eqn(Call("flatIndex",p),t))))),
-            For(i,Nat(),For(j,Nat(),Imp(Eqn(T(i),T(j)),Eqn(i,j))))),
-            For(i,Nat(),Conj(Interval(T(i)),LtN(D(0),Call("den",i)),
-                Call("Coprime",Call("natAbs",Call("num",i)),Call("den",i)),
-                Eqn(T(i),new Formula.Fraction(Call("num",i),Call("den",i))))))));
+        var update = For(n, Nat(), Eqn(C(Add(n,D(1))), Call("eraseDups", Cat(C(n), Call("pairList", C(n))))));
+        var finite = For(n, Nat(), Eqn(C(n), Flat(Add(n,D(1)))));
+        var invariant = For(n, Nat(), For(r, Rat(), Imp(Seq(r,Sp,InMacro,Sp,C(n)), Interval(r))));
+        var complete = For(r, Rat(), Imp(Interval(r), Unique(p, Pairs(), Call("Occurs",r,p))));
+        var unbounded = For(t, Nat(), Ex(n, Nat(), LtN(t, Len(Flat(n)))));
+        var reading = For(n, Nat(), For(i, Nat(), Imp(LtN(i, Len(Flat(n))), Eqn(Lookup(Flat(n),i), Some(T(i))))));
+        var positions = For(r, Rat(), For(p, Pairs(), Imp(Call("Occurs",r,p), Eqn(T(Call("flatIndex",p)),r))));
+        var owners = For(t, Nat(), Unique(p, Pairs(), Conj(Call("Occurs",T(t),p), Eqn(Call("flatIndex",p),t))));
+        var injective = For(i, Nat(), For(j, Nat(), Imp(Eqn(T(i),T(j)), Eqn(i,j))));
+        var coordinates = For(i, Nat(), Conj(Interval(T(i)), LtN(D(0),Call("den",i)),
+            Call("Coprime",Call("natAbs",Call("num",i)),Call("den",i)),
+            Eqn(T(i),new Formula.Fraction(Call("num",i),Call("den",i)))));
+        return Disp(Conj(update, finite, invariant, complete, unbounded, reading, positions, owners, injective, coordinates));
     }
 }
