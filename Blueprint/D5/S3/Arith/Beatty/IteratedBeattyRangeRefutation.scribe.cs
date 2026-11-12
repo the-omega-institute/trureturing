@@ -95,7 +95,8 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
         FormulaQuantifier.Exists, [new(FormulaIdentifier.Create(name), domain)], body);
 
     private static Formula StepFormula() => Disp(For("alpha", Real(), For("k", Nat(),
-        Equal(Call("nativeBeatty", A, F.Id("k")), new Formula.Floor(Mul(A, F.Id("k")))))));
+        Equal(Call("nativeBeatty", A, F.Id("k")),
+            new Formula.Subscript(new Formula.Floor(Mul(A, F.Id("k"))), Nat())))));
 
     private static Formula RangeFormula()
     {
