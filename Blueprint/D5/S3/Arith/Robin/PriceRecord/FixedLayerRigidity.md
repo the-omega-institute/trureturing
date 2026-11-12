@@ -14,6 +14,18 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.price_record_f
 
 *Commentary.*
 
+**Theorem 1.2 (Exact objective change for a legal finite exchange).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.objective_exchange_delta`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.objective_exchange_delta` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary real lambda, positive m, disjoint finite prime sets D,U and every donor dividing m, set d=product(D), u=product(U), n=(m/d)*u. The exact objective difference is the sum of inserted marginals at the original valuation plus one, minus the removed marginals at the original valuation, plus lambda*(log(d)-log(u)). This identity retains donor valuation excess and includes both fee signs; it supplies the actual five-mode predecessor calculation.
+
 Fix a natural number j>=2 and a real epsilon>0. There is a real T>0, depending only on j and epsilon, such that every natural m>=2 and every real lambda>0 satisfying the full predecessor record for every positive natural n<m, F_lambda(n)<F_lambda(m), obey that the ratio P_j^j/P tends to j uniformly: once T<=P, where P=largestPrime(m), the absolute difference between P_j^j/P and j is less than epsilon. Here F_lambda(n)=log(sigma(n)/n)-lambda*log(n) on the stated positive-natural domain.
 
 The fixed-layer quantity P_j is the maximum of 1 and the supremum of the prime factors p of m whose valuation in m is at least j. Thus P_j=1 when that set is empty. The threshold is uniform over all positive prices and all actual predecessor records in the record class. No colossal-abundance or global optimizer premise, price-localization premise, occupied next-layer cutoff, or uniform-in-j error rate is assumed.
@@ -32,6 +44,7 @@ Fixed-layer rigidity alone does not prove a full Euler-tail asymptotic, signed p
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.objective_exchange_delta`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.price_record_fixed_layer_rigidity`
 - Dependency: [D5/S3/Arith/ExponentExchange/PriceRecordPrimeBlockTail](../../ExponentExchange/PriceRecordPrimeBlockTail.md)
 - Dependency: [D5/S3/Arith/GoldenLayerMarginalDecay](../../GoldenLayerMarginalDecay.md)
