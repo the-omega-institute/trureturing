@@ -1,0 +1,108 @@
+**Lemma 4.1 (Clipping in both target directions).** Fix any $0<q<1$ and any integer $L\ge1$. Let $P=f_{0,q}$, use $r(k)$ from (2.3), and take expectations below under $P$. Define
+
+$$
+\begin{aligned}
+G_L&=1+\frac{\delta}{L+1},&
+v(k)&=\min\{r(k),G_L\},&
+e(k)&=r(k)-v(k),\\
+m&=\mathbb E_P r=Z_1/Z_0,&
+c_L&=\mathbb E_P v,&
+z_L&=\mathbb E_P(r/v).
+\end{aligned}
+\tag{4.1}
+$$
+
+The two laws
+
+$$
+g_1(k)=\frac{P(k)v(k)}{c_L},\qquad
+g_0(k)=\frac{P(k)r(k)/v(k)}{z_L}
+\tag{4.2}
+$$
+
+are positive and normalized. In the target index $i$, each is comparable to the opposite actual law:
+
+$$
+G_L^{-1}f_{1-i,q}(k)\le g_i(k)\le G_Lf_{1-i,q}(k)
+\quad(i=0,1;\ k\ge1).
+\tag{4.3}
+$$
+
+Moreover, with the positive finite quantity
+
+$$
+d_L(q)=\frac{\delta^2}{Z_0(q)}
+\sum_{k=1}^L k^7q^k,
+\tag{4.4}
+$$
+
+the needed directed entropies obey
+
+$$
+D(f_{1,q}\Vert g_1)\le d_L(q),\qquad
+D(f_{0,q}\Vert g_0)\le d_L(q)/2\le d_L(q).
+\tag{4.5}
+$$
+
+These statements hold for every finite $L$ at every interior $q$. There is no condition on $sL$.
+
+Proof. The envelope gives $1\le v\le G_L$ and $r\le B$. Thus $1\le c_L\le m\le B$ and $1\le z_L\le B$. All normalizers are finite and positive, and summing (4.2) gives one. For $k>L$, $r(k)\le1+\delta/k\le G_L$, so
+
+$$
+e(k)=0\ (k>L),\qquad
+0\le e(k)\le\delta/k\ (1\le k\le L).
+\tag{4.6}
+$$
+
+For target one, $g_1/P=v/c_L$ lies in $[G_L^{-1},G_L]$. For target zero, since $f_1=Pr/m$,
+
+$$
+\frac{g_0(k)}{f_1(k)}
+=\frac{1/v(k)}{\mathbb E_{f_1}(1/v)}.
+\tag{4.7}
+$$
+
+The numerator and denominator in (4.7) both lie in $[G_L^{-1},1]$. This proves (4.3) in both directions, including every normalization factor.
+
+We prove the two entropy estimates separately. The elementary inequality $\log u\le u-1$ yields $D(p\Vert g)\le\chi^2(p\Vert g)$ for normalized positive laws: its upper sum is $\sum p^2/g-1=\chi^2(p\Vert g)$. Write $a_L=\mathbb E_P e$, so $m=c_L+a_L$. Expanding $r=v+e$ gives the exact identity
+
+$$
+\begin{aligned}
+\chi^2(f_1\Vert g_1)
+&=\frac{c_L}{m^2}\mathbb E_P(r^2/v)-1\\
+&=\frac{c_L\mathbb E_P(e^2/v)-a_L^2}{m^2}\\
+&\le\mathbb E_P e^2.
+\end{aligned}
+\tag{4.8}
+$$
+
+For the last inequality use $v\ge1$, discard the nonpositive term, and use $c_L/m^2\le1$, which follows from $1\le c_L\le m$. Thus $D(f_1\Vert g_1)\le\mathbb E_Pe^2$.
+
+For the other target put $x=e/v\ge0$. Then $r/v=1+x$, $z_L=1+\mathbb E_Px$, and
+
+$$
+D(P\Vert g_0)
+=\log(1+\mathbb E_Px)-\mathbb E_P\log(1+x).
+\tag{4.9}
+$$
+
+For all $x\ge0$, $\log(1+x)\ge x-x^2/2$; the difference has derivative $x^2/(1+x)\ge0$ and vanishes at zero. Combining this with $\log(1+y)\le y$ gives
+
+$$
+D(P\Vert g_0)\le\frac12\mathbb E_Px^2
+\le\frac12\mathbb E_Pe^2.
+\tag{4.10}
+$$
+
+Finally (4.6) and $P(k)=k^9q^k/Z_0$ imply
+
+$$
+\mathbb E_Pe^2\le
+\frac{\delta^2}{Z_0}\sum_{k=1}^L k^7q^k=d_L.
+\tag{4.11}
+$$
+
+This proves (4.5) using the two actual target-to-comparison entropy directions. No symmetric KL inequality is assumed. $\square$
+
+The laws $g_i$ are analytical comparisons. They are neither operational sources nor a filtering rule imposed on the competitor. In particular an arbitrary observer still reads all actual raw bits and may stop inside any gap.
+
