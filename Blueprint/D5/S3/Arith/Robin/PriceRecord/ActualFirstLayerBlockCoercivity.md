@@ -4,7 +4,7 @@
 
 ActualFirstLayerBlockCoercivity
 
-Finite theta-mass lower bounds for the complete first-layer arithmetic loss on missing and occupied prime blocks. The whole theorem telescopes below retain the prime-prefix support, endpoint and log-budget conditions. The D5 source target compiles under the scoped Lean check; the escape audit remains RegUNVALIDATED under issue 28966.
+Finite theta-mass lower bounds for the complete first-layer arithmetic loss on missing and occupied prime blocks. The theorem package retains the prime-prefix support together with endpoint and logarithmic-budget conditions.
 
 **Theorem 1.1 (mem_block).**
 

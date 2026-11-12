@@ -1917,3 +1917,941 @@ without establishing fewer independent physical assumptions, least axioms,
 lower experimental cost or a physical quantum origin.
 
 可以把一个准备看成它面对所有原测试时给出的整张概率表，但原装置、菜单和记录仍然各自保留。只有这些原表本身允许实概率混合、形成有限维紧集合，才能从它们构造出这里的向量空间与带质量的正锥；取闭包不能替我们造出新准备。测试是否齐全还要另问：一个已有测试在所有原准备上的成功率都不超过一半时，是否有同一个原测试把这些数同时加倍？结合原混合与补测试，这恰好表达全效应可用性。四面体的两个菜单说明，纯参照对全部混态的最小确认数完全相同，仍能漏掉一个有界和。接回当前的完整候选 81.14 时，仍保留同一个读回用两次、原参考、两张成、全实零关系与全方向正性；但不必再搜索最坏框架，而把原几何固定的一个源投影与同一原映射导出的量作收缩。已有定理保证它为零恰好等于每套完整框架都零重叠，所以 80.14 的精确对应仍然保留。两条总质量关系现在采用由原单位固定的同一个数学见证，不另选局部变化；再用原锚校准倍率，最后才检查同一原混态的方向条件及其整个原输出。原过程还必须在保留输出质量的情况下尊重混合与等价关系，来源、参考、全菜单、时钟等义务也都保留。比较两端交换后数值相同，不等于两次仪器交换执行次序后状态相同。这使同一模型类的入口更简洁，不据此声称独立物理假设更少，也没有凭概率表生成仪器、来源、时钟或完整的物理量子起源。
+
+
+## Appendix: reciprocal restricted menus and finite polyhedral geometry
+
+This conditional paper application separates a positive-definiteness bridge
+from two finite polyhedral consequences. It uses the same original carrier
+as the [full-effect bridge](#reciprocal-least-confirmation-and-the-spectrality-bridge),
+but permits a restricted menu of effects. The earlier full-effect conclusions
+retain their premises. The additional minimum argument and geometric
+compositions below are paper derivations, without Lean kernel certification,
+a physical realization or a global novelty claim.
+
+### 1. Original carrier, restricted menu and premise map
+
+Let $V\ne\{0\}$ be a real vector space of finite dimension $n$. Let $C\subset V$
+be a closed convex pointed generating cone and let $u\in V^*$ be strictly
+positive on $C\setminus\{0\}$. Use the **entire** compact normalized base and
+**all** its pure points:
+
+$$
+K=\{x\in C:u(x)=1\},\qquad P=\operatorname{ext}K,
+\qquad C^*=\{f\in V^*:f(c)\ge0\ (c\in C)\}.
+$$
+
+Finite-dimensional compact convex decomposition gives
+$K=\operatorname{conv}P$, $C=\operatorname{cone}P$ and $\operatorname{span}P=V$.
+Here every conic decomposition is a **finite** nonnegative sum, even when
+$P$ is infinite. No orthogonality or spectral decomposition is implicit.
+The order of effects is always the original dual-cone order:
+$f\le g$ means $g-f\in C^*$.
+
+A restricted menu is a convex set $D\subseteq[0,u]$ containing $0,u$.
+Compactness and separation of $K$ may be retained as properties of the
+original menu; the arguments below do not require them. Select, for every
+$p\in P$, an effect $e_p\in D$ satisfying $e_p(p)=1$. The common core is
+positivity of these effects, this self-reading, pure reciprocity and the
+following positive-dual generation condition:
+
+$$
+e_p(q)=e_q(p)\quad(p,q\in P),\qquad
+\mathrm{PD}:\quad C^*=\operatorname{cone}\{e_p:p\in P\}.
+$$
+
+PD means that **each** original positive functional is a finite nonnegative
+sum of the $e_p$; it is a separate hypothesis on the restricted menu. It
+neither defines positive definiteness nor replaces $D$ by $[0,u]$.
+For the geometric branches, distinguish these additional conditions:
+
+- **Complement closure:** $d\in D\Longrightarrow u-d\in D$.
+- **Menu leastness:** $e_p\le d$ for every $d\in D$ with $d(p)=1$.
+  This is a least element among all confirming effects in $D$, not just
+  a minimal element, and its inequality holds on the entire original $C$.
+- **O:** for every finite pairwise orthogonal pure family $S$,
+  $\sum_{p\in S}e_p\in D$, where orthogonality means $e_p(q)=0$ for distinct
+  $p,q\in S$. Reciprocity makes this relation symmetric.
+- **Unique saturation:** $e_p(x)=1$ for $x\in K$ if and only if $x=p$.
+
+The actual premise dependencies are:
+
+| Conclusion | Inputs beyond the original carrier |
+| --- | --- |
+| Symmetric cone isomorphism and positive definiteness | Positive $e_p$, self-reading one, reciprocity, PD; the upper bound $e_p\le u$ is not needed for this bridge. |
+| Every orthogonal pure family extends to a complete frame | The same core, $D\subseteq[0,u]$ and O. |
+| Three-dimensional polyhedral cone is simplicial | The core, $D\subseteq[0,u]$, complement closure, menu leastness and polyhedrality; no O or unique saturation. |
+| Polyhedral $r\le3$ forces $n=r$; polyhedral $n\le4$ is simplicial | The core, $D\subseteq[0,u]$, O, unique saturation and polyhedrality. Complement closure and menu leastness can be retained but are not used in this proof. |
+
+Convexity, compactness and separation of $D$ do not enter these deductions
+once the displayed effects and conditions are given. All rows keep the
+whole original $C,K,P,C^*$; none concerns a selected subset of pure states.
+
+### 2. Descent of the pairing and strict positivity on the cone
+
+**Proposition.** The common core defines a unique linear isomorphism
+$L:V\to V^*$ with $Lp=e_p$ and $L(C)=C^*$. Its bilinear form
+$B(x,y)=(Lx)(y)$ is symmetric and nondegenerate, is nonnegative on
+$C\times C$, and satisfies $B(c,c)>0$ for every nonzero $c\in C$.
+
+**Proof.** If $\sum_i a_i p_i=0$ with real coefficients, then for every
+$q\in P$ reciprocity gives
+
+$$
+\left(\sum_i a_i e_{p_i}\right)(q)
+=\sum_i a_i e_q(p_i)=0.
+$$
+
+Since $P$ spans $V$, this functional is zero. Thus the pure assignment
+respects every original real linear relation and descends to $L$.
+Its image contains $C^*$ by PD; this dual cone spans $V^*$ because $C$
+is pointed. Consequently $L$ is surjective and, in equal finite dimensions,
+invertible. Pure generation and PD give the exact equality $L(C)=C^*$.
+Reciprocity extends bilinearly to symmetry; invertibility gives
+nondegeneracy. Positivity of $e_p$ and positive generation give
+$B(C,C)\ge0$, while $B(p,p)=1$.
+
+For $0\ne c=\sum_{i=1}^m\alpha_i p_i\in C$, combine repeated points and
+remove zero coefficients. At least one coefficient remains positive and
+all cross terms are nonnegative, so
+
+$$
+B(c,c)=\sum_i\alpha_i^2+
+2\sum_{i<j}\alpha_i\alpha_jB(p_i,p_j)
+\ \ge\ \sum_i\alpha_i^2>0.
+$$
+
+This is an arbitrary finite positive decomposition, not a frame. ∎
+
+### 3. A minimum lemma for signed directions
+
+**Lemma.** On the original nonzero finite-dimensional carrier, suppose $B$
+is a symmetric nondegenerate real bilinear form, $Lx=B(x,\cdot)$ satisfies
+$L(C)=C^*$, and $Q(c)=B(c,c)>0$ for **every** $0\ne c\in C$.
+Then $B$ is positive definite on all of $V$.
+
+**Proof.** Strict positivity of $u$ on the compact intersection of $C$
+with any auxiliary unit sphere gives a positive uniform lower bound there.
+Thus $u\in\operatorname{int}C^*$. Since the invertible $L$ maps $C$ onto
+$C^*$, put
+
+$$
+h=L^{-1}u\in\operatorname{int}C,\qquad
+B(h,y)=u(y),\qquad r=B(h,h)=u(h)>0.
+$$
+
+The continuous $Q$ attains its minimum $a$ on compact $K$, at some $x_0$.
+Every point of $K$ is a nonzero cone vector, so **$a>0$**.
+For $y\in K$ the segment from $x_0$ to $y$ stays in $K$.
+Its one-sided derivative at the minimum gives
+$B(x_0,y)\ge B(x_0,x_0)=a$. Normalize any nonzero $c\in C$ by $u(c)$:
+
+$$
+B(x_0,c)\ge a\,u(c)=B(ah,c).
+$$
+
+It follows that $L(x_0-ah)\in C^*$, hence $x_0-ah\in C$ by the exact
+cone isomorphism. Because $a>0$ and $h\in\operatorname{int}C$, this forces
+$x_0\in\operatorname{int}C$.
+
+For each signed direction $v\in\ker u$, both $x_0+tv$ and $x_0-tv$ lie
+in $K$ for sufficiently small $|t|$. Expanding the quadratic at its minimum
+therefore gives $B(x_0,v)=0$ and $B(v,v)\ge0$. Since $u(x_0)=1$ and
+$B(x_0,x_0)=a$, the functional annihilating $\ker u$ is exactly
+$Lx_0=a u$. Thus $x_0=ah$ and $a=1/r$. Every $z\in V$ has the decomposition
+
+$$
+z=\frac{u(z)}r h+v,\qquad v\in\ker u,\qquad
+B(z,z)=\frac{u(z)^2}r+B(v,v)\ge0.
+$$
+
+Finally, if $B(z,z)=0$, nonnegativity of
+$B(z+tw,z+tw)=2tB(z,w)+t^2B(w,w)$ for every real $t$ forces
+$B(z,w)=0$ for all $w$. Nondegeneracy then gives $z=0$. ∎
+
+Cone nonnegativity alone does not suffice for this lemma. For example,
+on $C=\mathbb R_+^2$ with $u(x)=x_1+x_2$, the symmetric invertible form
+$B(x,y)=x_1y_2+x_2y_1$ maps $C$ onto $C^*$ and has $Q(c)\ge0$ on $C$,
+but has null extreme rays and $Q(1,-1)=-2$. Its minimum on $K$ is zero,
+so the interior step fails. This example does not satisfy pure self-reading
+one and is not a counterexample to the proposition.
+
+**Corollary.** The common reciprocal PD core makes $B$ positive definite
+and self-dualizes the original cone:
+
+$$
+C=\{x\in V:B(x,c)\ge0\text{ for every }c\in C\}.
+$$
+
+Apply the proposition's strict cone positivity to the lemma; the last
+equality is $L^{-1}(C^*)=C$. This argument uses neither spectrality,
+an orthogonal $V$-basis, O, frame completion, full effects, menu leastness
+nor unique saturation. It does not assert signed frame spectrality.
+
+### 4. The paired residual and the three-dimensional polygon
+
+**Theorem.** If $n=3$ and $C$ is polyhedral, the common core together with
+$D\subseteq[0,u]$, complement closure and menu leastness forces $C$ to be
+simplicial. Equivalently, the entire polygon $K$ is a triangle.
+
+**Proof.** Reuse $L,B,h=L^{-1}u$ from §2. The following proof uses only
+nonnegativity on $C\times C$ and pure self-reading one; it does not use
+§3's positive definiteness. Whenever distinct $p,q\in P$ have
+$B(p,q)=0$, reciprocity gives $e_q(p)=0$. Complement closure puts
+$u-e_q$ in $D$, and this effect confirms $p$. Menu leastness therefore gives
+
+$$
+e_p\le u-e_q,\qquad
+h-p-q\in C,\qquad
+B(p,h-p-q)=B(q,h-p-q)=0.
+$$
+
+The cone membership uses $L(C)=C^*$; the two zeros use
+$B(p,h)=B(q,h)=1$. This is the paired residual, derived without O.
+
+Fix $p\in P$. The cone isomorphism sends its extreme ray to the extreme
+dual ray generated by $e_p$. In a full three-dimensional polyhedral cone,
+that dual ray exposes a two-dimensional facet
+
+$$
+F_p=C\cap\ker e_p=\operatorname{cone}(q,s)
+$$
+
+for two distinct normalized pure points $q,s$. In particular $p\notin F_p$
+and $B(p,q)=B(p,s)=0$. Nonnegativity gives $B(q,s)\ge0$.
+Suppose it is strictly positive. The paired residual
+$h-p-q\in F_p$ has a positive expansion $\alpha q+\beta s$, so
+
+$$
+0=B(q,h-p-q)=\alpha+\beta B(q,s)
+$$
+
+forces $\alpha=\beta=0$ and $h=p+q$. Likewise,
+$h-p-s=\gamma q+\delta s\in F_p$ and
+$0=\gamma B(s,q)+\delta$ force $h=p+s$. This contradicts $q\ne s$.
+Consequently $B(q,s)=0$.
+
+Now $p,q,s$ are pairwise orthogonal with self-readings one. Evaluating any
+linear relation on them proves linear independence, so they form a basis
+of $V$. For $x\in C$, write $x=ap+bq+cs$ in this basis; its coefficients
+are $a=B(p,x)$, $b=B(q,x)$ and $c=B(s,x)$, all nonnegative. Therefore
+$C=\operatorname{cone}(p,q,s)$ and $K=\operatorname{conv}(p,q,s)$. ∎
+
+The orthogonal basis and positive definiteness are consequences here,
+not starting assumptions. Neither unique saturation nor O, nor the
+availability of every proper effect, enters the argument. Polyhedrality
+is essential to the two-ray facet step.
+
+### 5. Frame completion with PD and O
+
+For the second geometric branch retain O; unique saturation will be used
+only in §6. This is the restricted-menu counterpart of
+[the existing common-frame interface](#positive-dual-generation-and-one-common-complete-frame).
+Under full effects the earlier proof derived PD and bounded orthogonal
+sums from full leastness. Here PD and O are supplied separately: arbitrary
+positive functionals cannot be rescaled into a restricted $D$ for peeling.
+
+**Proposition.** Every finite orthogonal pure family $S$ extends to a
+complete frame $A\supseteq S$ satisfying
+
+$$
+\sum_{p\in A}p=h,\qquad \sum_{p\in A}e_p=u.
+$$
+
+All maximal orthogonal pure families are complete, with the same integer
+length $r=B(h,h)=u(h)$, where $1\le r\le n$.
+
+**Proof.** O and $D\subseteq[0,u]$ give
+$u-\sum_{p\in S}e_p\in C^*$, hence $v=h-\sum_{p\in S}p\in C$.
+For each $p\in S$, $B(p,v)=1-1=0$. If $v\ne0$, take a finite positive
+decomposition $v=\sum_j\alpha_jq_j$ into pure points with $\alpha_j>0$.
+Every term $B(p,q_j)$ is nonnegative, and their weighted sum is zero;
+thus every $q_j$ is orthogonal to every member of $S$. It is a new point,
+since an old member has self-reading one. Adjoin one such $q_j$.
+O makes the enlarged family's residual positive again.
+
+Orthogonal pure families are linearly independent by evaluating on their
+members, so this extension stops after at most $n$ members. A nonzero
+terminal residual would permit one further extension; hence it is zero.
+Applying $L$ gives the effect sum. For a complete frame of length $k$,
+$B(h,h)=\sum_{p,q\in A}B(p,q)=k$ and $u(h)=k$. Starting from any pure
+point proves $r\ge1$. A maximal family cannot have a nonzero residual,
+so it is complete and has length $r$. ∎
+
+This proof does not use menu leastness, complement closure or unique
+saturation, nor §3's positive definiteness. O supplies a bounded sum in
+$D$; physical availability as one original joint test still requires the
+original menu's separate realization contract.
+
+### 6. Polyhedral facets, ranks one to three and dimension four
+
+Retain the core, $D\subseteq[0,u]$, O and unique saturation, and assume
+$C$ is polyhedral. Write $r$ for the integer from §5. Here $n=\dim V$ is
+the cone dimension and $\dim K=n-1$; it is not a Hilbert-space dimension.
+
+**Facet correspondence.** For $n\ge2$, $L$ bijects all extreme primal
+rays with all extreme dual rays. A dual extreme ray of a full-dimensional
+pointed polyhedral cone exposes a facet. Thus
+
+$$
+F_p=C\cap\ker e_p,\qquad Q_p=K\cap\ker e_p
+$$
+
+have dimensions $n-1$ and $n-2$, respectively, and **every** facet of $K$
+is some $Q_p$. Its vertices are exactly the pure points with $B(p,q)=0$.
+This is the ordinary polyhedral ray–facet duality, using the original
+$C^*$; no positive-dual generation is assumed for an individual face.
+
+**No central symmetry for $n\ge3$.** On $K$, the minimum face of $e_p$
+is $Q_p$ at value zero, and its maximum face is $\{p\}$ at value one,
+by unique saturation. If $K$ were centrally symmetric about $c$, the
+reflection $x\mapsto2c-x$ would carry each affine functional's minimum
+face to its maximum face. It preserves affine dimension, contradicting
+$\dim Q_p=n-2\ge1$ and $\dim\{p\}=0$.
+
+**Ranks one and two.** If $r=1$, completing any singleton $\{p\}$ adds
+nothing, so $p=h$ for every pure $p$. Pure generation gives $n=1$.
+If $r=2$, then $n\ge2$. Fix $p$. Any pure $q\in F_p$ completes the pair
+to a length-two frame, so $p+q=h$. There is exactly one such $q$;
+pure generation of this polyhedral facet makes $F_p$ a single ray.
+Since $\dim F_p=n-1$, it follows that $n=2$.
+
+**Rank three.** Suppose $r=3$. For fixed $p$ and any vertex $q$ of $Q_p$,
+frame completion of $\{p,q\}$ gives exactly one further pure point $t$,
+with
+
+$$
+p+q+t=h,\qquad t=h-p-q\in Q_p.
+$$
+
+Consequently $q\mapsto h-p-q$ maps the vertices of $Q_p$ to themselves
+and is an involution. Its affine extension preserves their convex hull,
+so each facet $Q_p$ is centrally symmetric about $(h-p)/2$.
+If $n\ge4$, apply the following classical result to $K$ with the explicit
+parameter correspondence $d=\dim K=n-1\ge3$: its facets are precisely
+all the $Q_p$, of dimension $d-1=n-2$, and all are centrally symmetric.
+The result makes $K$ centrally symmetric, contradicting the preceding
+paragraph. Thus $n\le3$, and $3=r\le n$ gives $n=3$.
+
+The literature input is **Lemma 1**, printed p. 1208, with proof on
+pp. 1208–1209, in G. C. Shephard, *Polytopes with Centrally Symmetric
+Faces*, Canadian Journal of Mathematics **19** (1967), 1206–1213:
+if every facet of a $d$-polytope, $d\ge3$, is centrally symmetric,
+the polytope is centrally symmetric. See
+[DOI 10.4153/CJM-1967-109-3](https://doi.org/10.4153/CJM-1967-109-3)
+and the [official Cambridge PDF](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00055176).
+Shephard recalls the classical result and supplies a general proof;
+this application does not claim the lemma as new or invoke his other
+theorems without their hypotheses. It is affine polytope geometry and
+requires no positive-definite form as an input.
+
+**The full-rank case.** Whenever $r=n$, choose a complete frame
+$p_1,\ldots,p_n$. The identities $B(p_i,p_j)=\delta_{ij}$ make it a basis
+of $V$. Every $x\in C$ has coefficients $B(p_i,x)\ge0$, so
+$C=\operatorname{cone}(p_1,\ldots,p_n)$ and $K$ is an $(n-1)$-simplex.
+This step does not require polyhedrality or unique saturation once the
+complete length-$n$ frame is given.
+
+**Theorem.** Under the retained polyhedral assumptions of this section,
+$r\le3$ implies $n=r$ and simpliciality. For $n\le4$, the cone is always
+simplicial: the cases $r\le3$ were just settled, and the only remaining
+case is $n=r=4$, settled by the full-rank argument. Hence any nonsimplicial
+polyhedral example under these assumptions would have to lie in
+
+$$
+n\ge5,\qquad 4\le r<n.
+$$
+
+The arguments in this appendix supply no existence or nonexistence result
+for the displayed region. This is their coverage boundary; it does not
+assert that the entire region is unresolved in other research.
+The three-dimensional theorem in §4 has a different premise set: its
+paired residual replaces O and unique saturation by complement closure
+and menu leastness. Neither proof silently transfers the other's inputs.
+
+### 7. Return to the full candidate and the applicability boundary
+
+The minimum lemma supplies positive definiteness on the restricted menu's
+original vector space. It does not promote that menu to full effects,
+produce an orthogonal positive decomposition of every vector, prove PD
+for faces, or make face filters positive or pure. No Jordan structure,
+classification or complete quantum reconstruction follows from the new
+bridge or the finite polyhedral exclusions alone. In particular the
+nonpolyhedral real-qubit cone has $n=3$, and the nonpolyhedral complex-qubit
+cone has $n=4$; neither is excluded by these polyhedral theorems. No
+classification of general nonpolyhedral models is supplied here.
+
+For full effects, reuse the earlier
+[least-confirmation/spectrality bridge](#reciprocal-least-confirmation-and-the-spectrality-bridge),
+[complete conditional EJA candidate](#complete-conditional-candidate-and-its-scope)
+and [fixed-half pure–mixed entrance](#appendix-a-fixed-half-puremixed-entrance-to-s).
+There PD and frame completeness have their original full-effect proofs;
+those are stronger interfaces than the restricted-menu core. The present
+argument removes the need to pass through signed spectrality **to prove
+positive definiteness**, without deleting the other obligations of the
+full classification route.
+
+The complete quantum interface used here is
+[Chapter 84, Theorem 84.35, equation (84.37)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#84-原双单位质量指定迹平面的唯一接触点与完整候选).
+Its same-data candidate is retained exactly:
+
+$$
+\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf C_2+
+\mathsf E_3(R_A;1/2,2/3)+\mathrm A_0+\mathrm H13
+\quad\Longleftrightarrow\quad
+\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.
+$$
+
+Here $\mathrm{PRE}_0^{1/2}$ includes full effects on each original carrier,
+FH1 with an arbitrary original mixed remainder and the full general EJA
+bridge. Equation (83.8) is the original explicit second-order zero
+relation; $\mathsf C_2$ is $m_2(e,e)=1$ with
+$e=1_A/n_A$ and $n_A=\tau_A1_A$. This $n_A$ is the chapter's trace rank,
+not this appendix's $\dim V$. The fixed mathematical witness is
+$R_A(a)=\tau_A(a)1_A/n_A$; its E3, the original scalar anchor and H13
+on the same qualified state's entire original output all remain.
+H13 is read only after exact PRE is restored. The geometric map $L:V\to V^*$
+here is distinct from the chapter's supplied bilinear insertion
+$L:D\times A\to E$; the letter $D$ there names a copy space, not this
+appendix's effect menu. The correspondence keeps the same original
+carriers, maps, reference and units. Chapter 84's unit-pair scalar
+replacement is reused, not rederived or replaced by the older Chapter 81
+entrance.
+
+Under **all** these original premises, reuse
+[84.44's consumers](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#8443-全部消费者与简化的准确范围)
+for density states, full effects and Born probabilities, specified two-
+and three-copy tensors and readbacks. The same actual events, branches,
+records, product-extension laws, sufficient actual reference, whole-joint-
+cone positivity, both original probability budgets and complete-menu TP
+remain required for the original CP/Kraus and instrument conclusions.
+Updates still require their sharp-neutrality contract; probabilities are
+original output masses, with conditioning only at strictly positive mass
+and zero-branch records retained. Sequential composition, coarse-graining,
+preparation/source, controls, flags, stopping and future permissions keep
+their original contracts. Hamiltonian conclusions retain the supplied
+continuous time-homogeneous reversible group, physical clock and units.
+Comparing two endpoints in exchanged order is not exchanging the execution
+order of instruments. The static pairing creates no operations, menus,
+reference systems, clocks or higher-copy compatibility.
+
+Geometrically, the new minimum argument finds an interior normalization
+point before looking in signed directions. The three-dimensional argument
+uses the two edges of an exposed cone facet and paired positive residuals;
+the rank-three argument instead reflects each facet through its frame
+complement and then consumes Shephard's classical lemma. These are the
+additional paper compositions recorded here. The earlier full-effect
+bridges, frame machinery and Chapter 84 classification/consumer interfaces
+are reused at their stated scopes; no least-axiom count, experimental
+certificate or worldwide novelty conclusion is asserted.
+
+白话说，把所有原准备组成的整个凸集合连同质量一起保留，每个纯准备都选一个自认成功率为一的正测试；交换两个纯准备的比较端点，读数相同。再额外要求：原锥上任意正读数都能由这些测试作有限次非负叠加。后一项是 PD 的真正输入，并不是已经假设了欧氏内积，也不是说每个有界测试都在原菜单中。纯点的自读数和正交叉读数先保证每个非零正向量的平方严格为正；紧规范基上的最小点随后被推到内部，于是正负两个方向都能检验，配对才在整个空间上正定。这一步不再需要谱分解、O 或完整框架。三维多面时，另外保留补测试和菜单内真正的最小确认，便能把每个零读数面的两条边拼成三角形，不必再加 O 或唯一饱和。四维及秩至三的另一条证明则确实保留 O 来补全框架，保留唯一饱和来排除整体中心对称，再借用成熟的多面体引理。这里没有把这两套前件混在一起，也没有把曲面的 qubit 锥排除。若要接回第 84 章的完整量子候选，仍须原来的全态全效应、含任意原混态余项的固定对半关系、一般 EJA 桥、同一原读回和参考、二阶零关系、单位对质量、三质量、原锚及整个原输出的方向条件；实际事件、菜单、记录、来源和时钟也不能由比较数凭空产生。从本附录的比较几何接回完整量子结论，仍需这些更强的结构与操作输入，不能靠给现有正定配对换一个量子名称来补齐。上述高维参数区域超出本附录论证的覆盖范围；这不表示该区域在其他研究中全部未决。
+
+## Appendix: an exhaustive binary comparison and a single coupling path
+
+This is a conditional paper application to finite registers of identical binary units.
+It reuses the preceding positive-form bridge and published group classifications;
+the weaker static entrance and the sparse operational composition are proved below.
+It is neither Lean/kernel verification nor a minimum-axiom or worldwide novelty claim.
+Endpoint reciprocity means exchanging the two arguments of a comparison, not exchanging
+the execution order of measurements. All state sets, cones and probability orders below
+are the original ones, rather than a reconstructed submodel selected from them.
+
+### 1. Exhaustion, the original ball and the original single-unit menu
+
+Keep the preceding nonzero finite-dimensional $(V,C,u)$, entire compact $K$, all
+$P=\operatorname{ext}K$, and original dual cone $C^*$. Select positive $e_p$ with
+$e_p(p)=1$, $e_p(q)=e_q(p)$ and finite positive-dual generation
+$C^*=\operatorname{cone}\{e_p:p\in P\}$. The original effect menu $D$ is convex,
+contains $0,u,e_p$ and lies in $[0,u]$. Neither menu leastness nor complement closure,
+O, spectrality, a preferred frame, or a Jordan algebra is assumed. Reuse
+[the minimum lemma](#3-a-minimum-lemma-for-signed-directions) to obtain
+
+$$
+Lp=e_p,\quad B(x,y)=(Lx)(y),\quad L(C)=C^*,\quad B>0,
+\quad B(p,p)=1,\quad h=L^{-1}u,\quad r=B(h,h)=u(h).
+$$
+
+Write $Q(x)=B(x,x)$ and $\|x\|=\sqrt{Q(x)}$. The additional **binary exhaustion**
+condition is the existence of pure $p,q$ with $e_p+e_q=u$ as functionals on all $V$.
+An equality only on a selected list of readings is insufficient.
+
+**Lemma (bounds before exhaustion).** Every $e_p$ has $e_p(x)\le1$ on $K$, with
+equality exactly at $x=p$. In particular the upper bound need not be an independent
+premise of the positive-form bridge, and $h-p\in C$ for every pure $p$.
+
+**Proof.** Cauchy–Schwarz gives $0\le B(p,q)\le1$ for pure $p,q$. Equality at the
+upper end implies $\|p-q\|^2=2-2B(p,q)=0$, hence $p=q$. Express any $x\in K$ as
+a finite convex sum $\sum_i\alpha_iq_i$. Then $e_p(x)=\sum_i\alpha_iB(p,q_i)\le1$;
+equality forces every positive-weight $q_i=p$. Thus $u-e_p\in C^*$, and applying
+$L^{-1}$ gives $h-p\in C$. This proof uses neither exhaustion nor O. ∎
+
+**Proposition (weaker rank-two entrance).** Binary exhaustion is equivalent to $r=2$.
+Under either condition, put $c=h/2$ and $W=\ker u=h^\perp$. Then
+
+$$
+K=\{c+w:w\in W,\ \|w\|^2\le1/2\},\qquad
+C=\{tc+w:t\ge0,\ w\in W,\ \sqrt2\|w\|\le t\}.
+$$
+
+All boundary points of this original ball are pure. Its dimension
+$d=\dim V-1$ is not selected by the static premises.
+
+**Proof.** Exhaustion gives $h=p+q$. Evaluation at $p$ gives $B(p,q)=0$ and hence
+$r=Q(p+q)=2$. Conversely assume $r=2$. For pure $p$, the lemma gives $h-p\in C$,
+and $u(h-p)=1$, $Q(h-p)=2-2+1=1$. For every finite pure decomposition of $x\in K$,
+
+$$
+Q(x)=1-\frac12\sum_{i,j}\alpha_i\alpha_j\|p_i-p_j\|^2\le1.
+$$
+
+Equality forces all positive-weight pure points to coincide. Therefore $h-p$ is
+pure: otherwise a nontrivial pure decomposition would make its square strictly less
+than one. This proves the converse exhaustion $e_p+e_{h-p}=u$ and central symmetry
+$h-K=K$ by convex decomposition. Notice that no spectral expansion was used.
+
+Let $M=K-c\subset W$. Self-duality of $C$, tested against all normalized $c+v$,
+says $w\in M$ exactly when $1/2+B(w,v)\ge0$ for every $v\in M$. Central symmetry
+converts this to $B(w,v)\le1/2$ for every $v\in M$. Thus $N=\sqrt2M$ equals its
+Euclidean polar $N^\circ=\{z:B(z,n)\le1\ (n\in N)\}$. Taking $z=n$ gives
+$N\subseteq\{z:\|z\|\le1\}$. Reversing this inclusion under polarity gives
+$\{z:\|z\|\le1\}\subseteq N^\circ=N$. This proves the ball and, by coning, the
+displayed original cone. Strict convexity identifies all its boundary points as
+pure. The exhaustive pair is distinct, so $d\ge1$. ∎
+
+**Proposition (full original single-unit menu and genuine leastness).** On this ball
+$D=[0,u]$, and $e_p$ is the least element, in the original $C^*$ order, among
+all $f\in[0,u]$ with $f(p)=1$.
+
+**Proof.** Write $f=Lx$, $x=ac+v$, $v\in W$, and $b=\sqrt2\|v\|$.
+The two inequalities $x,h-x\in C$ are exactly
+$0\le b\le\min(a,2-a)$. If $b>0$, $p=c+v/b$ is pure and
+
+$$
+f=\frac{a-b}{2}u+b e_p+\left(1-\frac{a+b}{2}\right)0.
+$$
+
+The coefficients are nonnegative and sum to one. Convexity of the original $D$
+therefore puts every $f\in[0,u]$ in $D$; for $b=0$ use $f=(a/2)u$.
+No closure, limiting menu argument or bounded doubling is needed. Now fix a pure
+$p=c+s/\sqrt2$ with $\|s\|=1$. The equality
+$1=f(p)=a/2+B(v,s)/\sqrt2\le(a+b)/2\le1$ forces, when $b>0$,
+$a+b=2$ and $v=(b/\sqrt2)s$. Hence
+$f=(1-b)u+b e_p$, $0\le b\le1$. The case $b=0$ gives $f=u$ as well. Consequently
+$f-e_p=(1-b)(u-e_p)\in C^*$. This is a least confirmer on the whole original cone,
+not merely a minimal member of a selected menu. ∎
+
+In Bloch coordinates $\widehat a=(1,a)$, $a=\sqrt2(x-c)\in W$, the unit ball is
+the entire single-unit state set and
+$e_{\widehat b}(\widehat a)=(1+b\cdot a)/2$ for $\|b\|=1$.
+Every $d\ge1$ satisfies these static conditions: take the Lorentz cone
+$t\ge\|a\|$, $u(t,a)=t$, $B((t,a),(s,b))=(ts+a\cdot b)/2$ and the full menu.
+Its pure rays generate its self-dual cone, so PD holds and $h=(2,0)$, $r=2$.
+The interval $d=1$ is the classical bit. The interaction result below explicitly
+uses $d\ge2$. Neither three-dimensional space nor a spacetime dimension follows
+from this static geometry. Full **single-unit effects** do not assert the joint
+availability of every tuple of effects as an actual measurement or instrument.
+
+### 2. Actual two-body classification and the two state-set inclusions
+
+Use one fixed local Bloch calibration $F$. For the original pair, assume faithful
+local tomography on $V_2=V\otimes_{\mathbb R}V$, a compact convex normalized $K_2$
+with full linear span $V_2$, and actual preparations $\widehat a\otimes\widehat b$
+and product tests. In these coordinates a pure product test has probability
+$\frac14(\widehat x\otimes\widehat y)\cdot\omega$; after every actual reversible
+operation this remains in $[0,1]$. These are assumptions about actual joint
+preparations and readings, beyond the one-body convex geometry.
+
+Let $H\subseteq\mathrm{SO}(d)$ be closed, connected and sphere-transitive,
+$d\ge2$. Its independent local actions $\widehat H\otimes\widehat H$ are actual.
+Actual normalized reversible maps form a closed real linear group $G_2$ preserving
+$K_2$. Suppose a closed connected subgroup $C_2\subseteq G_2$ contains the local
+controls and an element outside the **entire** product rotation group
+$\{\widehat A\otimes\widehat B:A,B\in\mathrm{SO}(d)\}$.
+Being outside a smaller chosen $H\otimes H$ alone would not suffice.
+
+**Compactness.** For any such original $K_N$ spanning $V_N$,
+$\operatorname{conv}(K_N\cup-K_N)$ is a compact symmetric convex body with
+nonempty interior. Its Minkowski functional is a norm preserved by every
+automorphism of $K_N$. The corresponding linear isometry group is compact:
+its maps and inverses are uniformly bounded in any auxiliary norm; every limit
+is invertible and remains an isometry. Closed $G_N$ and its closed subgroups
+are therefore compact. No transitivity on composite pure states is needed.
+
+The exact published classification used is Masanes, Müller, Pérez-García and
+Augusiak, *Entanglement and the three-dimensionality of the Bloch ball*,
+J. Math. Phys. **55**, 122203 (2014),
+[arXiv:1111.4060v4](https://arxiv.org/abs/1111.4060v4), **Theorems 1 and 2**,
+PDF p. 10 (journal p. 122203-5). Table IV A lists the compact connected
+sphere-transitive local groups, up to orthogonal coordinates. Theorem 1 says
+that for every listed $H\ne\mathrm{SO}(3)$, a connected group containing the
+local actions and satisfying the single-orbit probability bound is contained
+in the entire local rotation group. Theorem 2, for $d=3$ and local
+$\mathrm{SO}(3)$, lists exactly the local group, the adjoint $\mathrm{SU}(4)$
+group and its partial-transpose conjugate. These technical theorems, rather
+than the paper's stronger global pure-state-transitivity axiomatization, are
+the results applied here.
+
+Indeed, for any unit $a$ the actual input, operation and product test give
+$\frac14(\widehat a\otimes\widehat a)\cdot c(\widehat a\otimes\widehat a)\in[0,1]$
+for **every** $c\in C_2$. This is precisely the theorem's orbit
+condition (8); independent transitive local controls also give (9). Theorem 1
+and the stated nonlocal element force $d=3$, $H=\mathrm{SO}(3)$; Theorem 2 then gives
+
+$$
+C_2=Q_2\quad\hbox{or}\quad C_2=T_1Q_2T_1=:H_2,
+\qquad Q_2=\{\operatorname{Ad}_U:U\in\mathrm{SU}(4)\}.
+$$
+
+Here append to $F$, once, the Pauli identification
+$\widehat a\mapsto(I+a\cdot\sigma)/2$. On all tensor powers use exactly this
+identification, with $\sigma_0=I$:
+
+$$
+\rho=2^{-N}\sum_{\boldsymbol\mu}r_{\boldsymbol\mu}
+\sigma_{\mu_1}\otimes\cdots\otimes\sigma_{\mu_N}.
+$$
+
+Before the state-set proof, $\rho$ is only Hermitian with trace one; positivity
+is not part of this coordinate definition. $T_i$ is matrix transposition on
+factor $i$, a local Bloch reflection $\sigma_y\mapsto-\sigma_y$.
+It is an analytic coordinate map, not an assumed physical transpose gate.
+
+**Original pair states.** Choose $S=I$ in the $Q_2$ case and $S=T_1$ in the
+$H_2$ case. In $S(K_2)$ the full $Q_2$ acts, pure product preparations remain
+available, and product tests retain the trace pairing (transpose both state
+and effect coordinates). The orbit of $P_{00}=|00\rangle\langle00|$ under
+$Q_2$ is all rank-one projectors. Invariance and convexity give
+$\mathcal D(4)\subseteq S(K_2)$, where
+$\mathcal D(m)=\{\rho\ge0:\operatorname{Tr}\rho=1\}$.
+Conversely take any $\rho\in S(K_2)$ and unit vector $\psi$. Choose $U$ with
+$U^\dagger|00\rangle=\psi$. The actual rotated product readout gives
+$\langle\psi|\rho|\psi\rangle=\operatorname{Tr}(P_{00}U\rho U^\dagger)\ge0$.
+Thus $S(K_2)\subseteq\mathcal D(4)$. Both inclusions concern the whole original
+state set. This does not identify every actual operation, irreversible map,
+joint measurement or disconnected part of $G_2$.
+
+### 3. One path, an actual triangle and connected graphs
+
+The subgroup needed in §2 is obtained, rather than independently supplied, by
+the following operational premises. For every finite $N$, keep a compact convex
+original $K_N$ of full span in $V_N=V^{\otimes N}$, faithful product tomography
+in the same $F^{\otimes N}$, all individual product preparations/tests and a
+closed normalized actual reversible group $G_N$. Independent local $H$ controls
+act with identity on every other factor. **The whole $G_N$ need not be connected.**
+
+At $N=2$, supply just one actual one-parameter path $g(t)=\exp(tX)$, for every
+real $t$, with some $g(t_0)$ outside the entire local rotation group. At $N=3$
+the **same path** is actually available on each of the three triangle edges.
+For every other $N\ge2$ it is available on each edge of some connected graph
+on the $N$ sites. Each placement is the exact real linear map
+$\iota_{ij}(g(t))=g(t)_{ij}\otimes I_{\rm spectators}$ in the fixed calibration,
+up to the indicated factor ordering. It must fix **all** spectator coordinates,
+including correlations, rather than work only for one chosen spectator state.
+Use one fixed ordering of the endpoints for each placement. Reversing it causes
+no ambiguity in the resulting full edge group below.
+
+There is no independent premise transporting all of $G_2$, supplying all pairs
+for every $N$, or transporting an intermediate multibody operation to a larger
+register. These stronger transport laws are sufficient alternatives, but are
+not inputs to this candidate. The all-finite-$N$ graph condition is itself a
+quantified physical compatibility condition; finite observations do not establish it.
+
+**Generated-sector lemma.** Define $C_2$ to be the closure of the group generated
+by the independent local controls and $\{g(t):t\in\mathbb R\}$. Then $C_2$ is an
+actual compact connected subgroup of $G_2$, and every supplied edge of every
+$N$ actually carries the entire embedded $C_2$ with identity on all spectators.
+
+**Proof.** Closedness of $G_2$ puts this closure in $G_2$, and compactness was
+proved in §2. The local group and path are connected sets containing identity;
+finite products and inverses generate a connected subgroup, and its closure
+is connected. Its nonlocal element is $g(t_0)$, so §2 applies. For a fixed edge,
+$\iota_{ij}$ is a continuous group homomorphism on the two-site linear maps.
+Every finite word in local controls and $g(t)$ embeds as the same actual word,
+using the supplied edge path and independent local controls. For any $c\in C_2$
+choose such words $w_k\to c$. Then $\iota_{ij}(w_k)\to\iota_{ij}(c)$, and
+closedness of the original $G_N$ makes the limit actual. This is precisely
+where the whole edge group is derived from the single path. ∎
+
+Write $Q_{ij}$ for the embedded adjoint $\mathrm{SU}(4)$ group and
+$H_{ij}=T_iQ_{ij}T_i=T_jQ_{ij}T_j$. The last equality holds because total
+transposition on the pair normalizes $Q_{ij}$, sending $\operatorname{Ad}_U$
+to $\operatorname{Ad}_{\bar U}$. Consequently the two-body classification gives
+uniformly $Q_{ij}$ on every supplied edge, or uniformly $H_{ij}$, in the one
+original calibration; it does not license unrelated choices of pair coordinates.
+
+**Control-generation lemma on one fixed carrier.** Full $Q_{ij}$ on the edges
+of a connected graph, together with closedness, gives
+$Q_N=\operatorname{Ad}_{\mathrm{SU}(2^N)}\subseteq G_N$.
+
+**Proof.** Each edge group contains the adjoint of SWAP, since multiplying
+SWAP by $e^{i\pi/4}$ makes determinant one without changing its adjoint.
+Edge transpositions of a connected graph generate all permutations: along a
+path, successive adjacent swaps carry either chosen endpoint to the other,
+and conjugation gives every transposition. Conjugating an edge $Q_{ij}$ by
+these actual permutations gives every pair group **inside this same $N$**.
+Their Lie algebras contain $i$ times every Pauli string of weights one and two.
+Inductively a string on $k$ sites is a nonzero scalar commutator of a string
+on $k-1$ sites and one of weight two: overlap them at one site, choose distinct
+Pauli axes there whose product is the desired third axis, and give the second
+string its desired Pauli on the new site. All other factors commute. Hence
+all nonidentity Pauli strings occur, spanning $\mathfrak{su}(2^N)$. The actual
+closed subgroup generated by the pair groups contains the exponentials of
+this Lie algebra and therefore $Q_N$. Phases disappear in the adjoint.
+No operation on a smaller multibody carrier has been transported. ∎
+
+**Triangle exclusion.** The uniform $H_2$ possibility is inconsistent with the
+actual three-edge placements on the original $N=3$ carrier.
+
+**Proof.** In the analytic coordinates obtained by $T_1$ on that carrier, the
+three actual edge groups become $Q_{12},Q_{13},H_{23}$. Local controls remain
+local rotations, product preparations/tests remain product ones, and $P_{000}$
+is fixed. By the control-generation lemma the first two edges give all $Q_3$;
+in particular they give $Q_{23}$. Since $T_1$ is a spectator for $Q_{23}$,
+this same $Q_{23}$ is actual also in the original coordinates.
+But actual $H_{23}$ can send the original product input on sites $2,3$ to
+
+$$
+W=T_2|\Phi^+\rangle\langle\Phi^+|=\tfrac12\operatorname{SWAP},
+\qquad |\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2.
+$$
+
+Indeed choose $U|00\rangle=|\Phi^+\rangle$ in $T_2\operatorname{Ad}_UT_2$;
+the initial product is fixed by $T_2$. This gives the actual three-unit state
+$P_0\otimes W$. The singlet $|\psi^-\rangle$ is an eigenvector of $W$ with
+eigenvalue $-1/2$. An actual $Q_{23}$ maps that eigenvector to $|00\rangle$,
+so an actual product readout on the same carrier has probability $-1/2$.
+This contradicts its probability bound. The transpose was used only to analyze
+available groups, and the final preparation, word and readout are all original.
+Thus $C_2=Q_2$ in the fixed calibration. ∎
+
+**Finite-register conclusion.** For each $N$, the supplied connected graph now
+has full actual $Q_{ij}$ edge groups; the lemma gives $Q_N\subseteq G_N$.
+Exactly as in §2, the orbit of $P_{0\cdots0}$ and convexity give
+$\mathcal D(2^N)\subseteq F^{\otimes N}(K_N)$, and nonnegative product readouts
+after all $Q_N$ give the reverse inclusion. Thus the original $N$-unit states
+and their conic hull are precisely complex density matrices and
+$\operatorname{Herm}_+(2^N)$, with tensor products in the one common calibration.
+We assert unitary **containment**, not equality of the entire actual $G_N$.
+
+This argument composes the two-body classification with the three-copy
+negative-probability mechanism in de la Torre, Masanes, Short and Müller,
+*Deriving quantum theory from its local structure and reversibility*,
+Phys. Rev. Lett. **109**, 090403 (2012),
+[arXiv:1110.5482](https://arxiv.org/abs/1110.5482), Theorems 1–2 and proof, pp. 2–3.
+It is **not** a direct application of their Theorem 2 with a hypothesis deleted:
+the paragraph before that theorem assumes transport of any allowed multibody
+transformation to any placement with arbitrary added spectators. Their Theorem 1
+only supplies a pair action for a fixed spectator state, which does not imply
+our exact spectator-identity law. The present path-to-edge limit argument is
+the explicit replacement. No general signed-graph classification is needed.
+
+### 4. Processes, references and finite measurements have separate premises
+
+The preceding state/control result alone does not declare every positive map,
+effect tuple or state update actual. On the established register carriers,
+the mathematical dual effect interval is $0\le E\le I$, and its pairing is
+$\Pr(E\mid\rho)=\operatorname{Tr}(E\rho)$. This identifies the Born pairing for
+actual affine outcome probabilities. Full availability of joint measurements
+uses the resources specified below, not the single-unit convex-menu argument.
+
+For an actual process $\Phi$ between register cones, retain affine dependence
+on normalized states, positive homogeneous mass scaling, the zero input/output
+rule, and respect for real preparation relations. These give a unique real
+linear Hermitian map on their spans. To conclude CP require that the **same**
+process has an actual positive extension to every original reference register,
+agreeing on products with $\Phi\otimes\operatorname{id}$, and with that equality
+on the full carrier by faithful tomography. This is a process reference-stability
+assumption; the single-path transport law does not supply it for unrelated maps.
+
+For completeness, take a reference of input dimension $m=2^N$ and
+$|\Omega\rangle=\sum_{j=1}^m|j j\rangle$. Reference positivity gives
+$J_\Phi=(\Phi\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)\ge0$.
+Its spectral decomposition, vectorizing each eigenvector as a matrix $A_k$,
+gives $\Phi(X)=\sum_kA_kXA_k^\dagger$ by comparison on matrix units.
+Conversely this formula is positive after tensoring any identity, proving CP.
+Deterministic mass preservation is exactly $\sum_kA_k^\dagger A_k=I$, hence TP;
+a branch probability budget $\operatorname{Tr}\Phi(X)\le\operatorname{Tr}X$
+on $X\ge0$ gives $\sum_kA_k^\dagger A_k\le I$, hence trace nonincrease.
+This is the finite Choi/Kraus mechanism already used by
+[the original process consumer](#6-quantum-correspondence-geometry-and-remaining-conditions).
+
+If a reversible same-register process and its actual inverse both satisfy
+reference stability and deterministic normalization, both are CPTP and the
+process is unitary. To see this, write their Kraus families $A_i,B_j$.
+The identity channel has rank-one Choi matrix, so every $B_jA_i$ is a scalar
+multiple of $I$. At least one is nonzero; that $B_j$ is invertible and all
+$A_i$ are proportional to one invertible matrix. Combining proportional
+Kraus operators leaves a single $A$ with $A^\dagger A=I$, which in equal
+finite dimensions is unitary. This uses reference positivity of the inverse,
+not merely invertibility of a positive linear map.
+
+For the converse realization of **all** register CPTP maps, additionally supply
+actual pure register ancillas, sequencing of available unitaries and actual
+discard. The Kraus isometry $V\psi=\sum_kA_k\psi\otimes|k\rangle$ obeys
+$V^\dagger V=I$. Pad the finite environment into a binary register, add enough
+pure work units for the input/output sizes, and complete the isometry on its
+input subspace to a unitary. That unitary is available by $Q_M\subseteq G_M$ on
+the larger register; discarding its environment realizes the specified map.
+Every step is on an actual original carrier with its stated resources. Dense
+or efficient finite gate synthesis, a physical clock and a selected Hamiltonian
+are not conclusions of this existence argument.
+
+For instruments, separately retain actual branches $\Phi_j$, their records,
+branchwise reference-stable extensions, each original probability budget and
+$\sum_j\Phi_j$ TP for a complete menu. Then
+$p_j=\operatorname{Tr}\Phi_j(\rho)$ is the original branch mass,
+$\rho_j=\Phi_j(\rho)/p_j$ only when $p_j>0$; a zero-mass positive output is zero,
+and its record is retained without an invented conditional state.
+Actual sequencing, randomization, pointer readout, classical records,
+coarse-graining and permitted conditioning are additional closure resources.
+
+Under those resources every finite CP instrument is realizable: for Kraus
+$A_{j\alpha}$ of its branches, the isometry
+$V\psi=\sum_{j,\alpha}A_{j\alpha}\psi\otimes|j,\alpha\rangle$ is normalized.
+Implement it by a padded register unitary, read the environment in its actual
+computational pointer basis, group the outcomes by $j$, and discard the
+unrecorded index. This yields exactly each branch, including zero branches.
+For any finite POVM $E_j\ge0$, $\sum_jE_j=I$, choose
+$A_j=\sqrt{E_j}$ to obtain an implementation and its Born probabilities.
+Thus all finite joint effects and POVMs become available with **these readout
+resources**. An effect does not determine its instrument. A Lüders instrument
+is an available choice by this construction; identifying a supplied instrument
+with Lüders still needs its own update contract, such as the original sharp
+neutrality requirement, rather than reciprocity alone.
+
+### 5. Separation, tomography and update countermodels
+
+**Interaction cannot be replaced by single-unit geometry.** On the same
+two-qubit Hermitian carrier consider the normalized separable set
+$\mathrm{Sep}=\operatorname{conv}\{P_a\otimes P_b\}$ and the block-positive set
+
+$$
+\mathrm{BP}=\{W=W^\dagger:\operatorname{Tr}W=1,
+\ \langle ab|W|ab\rangle\ge0\text{ for all unit }a,b\}.
+$$
+
+Both have the full single-qubit balls, actual product preparations/tests,
+faithful product tomography and full span. Choose only independent local
+$\mathrm{SO}(3)$ controls as actual reversible operations in each. Both sets
+are compact: for BP, every product rank-one reading lies between zero and one
+because its product-basis completion sums to trace one; a finite spanning
+family of these tests bounds all matrix coordinates. BP is closed; Sep is the
+convex hull of a compact product set. Local conjugations preserve both sets.
+They have different original joint cones. The $W=\operatorname{SWAP}/2$ above
+has $\langle ab|W|ab\rangle=|\langle a|b\rangle|^2/2\ge0$ but singlet
+eigenvalue $-1/2$, so $W\in\mathrm{BP}\setminus\mathrm{Sep}$.
+Also $|\Phi^+\rangle\langle\Phi^+|$ is quantum but not separable: partial
+transposition preserves positivity of every separable state and sends this
+projector to $W$. Thus the same local comparison ball and product statistics
+do not determine a joint cone without the actual interaction hypotheses.
+
+**Local tomography cannot be replaced by an entangling path.** A real qubit
+has state space $\operatorname{Sym}_+(2,\mathbb R)$ of trace one, a disk with
+local coordinates $I,\sigma_x,\sigma_z$. Two real qubits have the ten-dimensional
+unnormalized carrier $\operatorname{Sym}(4,\mathbb R)$, exceeding the nine
+local tensor coordinates. Continuous real orthogonal conjugations include
+an entangling rotation from $|00\rangle$ to $|\Phi^+\rangle$ in their plane.
+Yet the distinct real density matrices
+
+$$
+\rho_\pm=(I\otimes I\pm\sigma_y\otimes\sigma_y)/4
+$$
+
+have identical real local product statistics: $\sigma_y$ is trace-orthogonal
+to every real symmetric $2\times2$ matrix. Their eigenvalues are $0,1/2$,
+so both are positive. The hidden $\sigma_y\otimes\sigma_y$ coordinate is real
+and symmetric but not locally tomographic. This model fails a specific
+premise of §2, not the full conditional conclusion.
+
+**Positive processes and equal effects leave different gaps.** Transposition
+$T$ is positive and TP on one qubit, but its action on one half of the actual
+Bell state yields $W$ with eigenvalue $-1/2$. Thus process reference stability
+has substantive content even after the local state ball is quantum. For a
+rank-one $P$, the branches $\rho\mapsto P\rho P$ and
+$\rho\mapsto\operatorname{Tr}(P\rho)I/2$ have the same effect $P$ and admit
+complete TP measure-and-prepare or Lüders instruments, yet a repeated $P$
+test succeeds with conditional probabilities one and $1/2$ respectively.
+Finally $P_z=|0\rangle\langle0|$, $P_x=|+\rangle\langle+|$ have reciprocal
+overlap $1/2$. Starting at $P_z$, two Lüders yes outcomes have probability
+$1/2$ in the order $z,x$ and $1/4$ in the order $x,z$. Endpoint reciprocity
+therefore does not imply commuting execution or a unique update rule.
+
+### 6. Exact premise comparison and the complete finite-register candidate
+
+The current broader-system entrance is
+[Chapter 84, Theorem 84.35 and (84.37)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#84-原双单位质量指定迹平面的唯一接触点与完整候选):
+
+$$
+\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf C_2+
+\mathsf E_3(R_A;1/2,2/3)+\mathrm A_0+\mathrm H13
+\Longleftrightarrow\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.
+$$
+
+The register route is a restricted alternative, not an equivalence with that
+chapter's whole class of arbitrary finite EJA original models.
+
+| Interface or conclusion | This binary-register route | Current Chapter 84 scope |
+| --- | --- | --- |
+| Original carrier and static entrance | Whole $C,K,P,C^*$; positive self-confirmation, reciprocity, finite PD, convex original $D$ and one exhaustive pure pair. Positive form, saturation, ball, single-unit full effects and leastness are consequences. | Whole carriers $A,D,E$, full effects, FH1 with an arbitrary original mixed remainder; complete $S$ and the general finite EJA bridge, including its face/filter obligations. |
+| System types | Identical binary units and their finite registers; no direct-sum or arbitrary-type classification. | General finite EJA entrance allows classical, unequal complex blocks, other simple types including Albert before classification; the conclusion is finite complex Hermitian direct sums. |
+| Composite geometry and direction | Actual faithful product tomography, full-span compact $K_N$, local $H$ controls, one nonlocal continuous path and its exact spectator-identity placements; triangle rules out the reflected branch. | Original whole-cone-positive insertion $L$, the same readback $p$ twice, the same $\omega$, two real spans, $Z$ and (83.8); after exact PRE, H13 tests the same qualified original state's entire output and gives C13. |
+| Scale constraints | Product preparation/test calibration and normalization are supplied on each original register. | Original unit-pair $\mathsf C_2$, fixed $\mathsf E_3(R_A;1/2,2/3)$ and anchor $\mathrm A_0$ fix the original two/three-copy scales; masses alone do not fix direction. |
+| Copy range and operations | Same path on the actual three-edge $N=3$ triangle and some connected graph for every other finite $N$; closed actual $G_N$ gives the whole edge groups and $Q_N\subseteq G_N$. Entire $G_N$ connectedness and arbitrary multibody transport are unnecessary. | Specified original two/three-copy tensors and readbacks; no identification of an independently supplied other bracketing or four-plus-copy common source. This is not an all-copy transport theorem. |
+| States, effects, Born rule | Original $K_N=\mathcal D(2^N)$ and positive cone are proved by double inclusion; trace pairing for effects. All finite joint POVMs need the explicit ancilla/readout resources. | Original full effects and exact PRE give full density matrices/effects and trace pairing on the classified direct sums, at the chapter's stated interfaces. |
+| Processes and instruments | Same-process reference stability yields CP; deterministic mass gives TP. Pure ancillas, unitary sequencing and discard realize all CPTP maps; branch stability, pointer readout, records, budgets and coarse-graining realize finite instruments. | 84.44 retains actual events, branch/record and product-extension contracts, sufficient actual references, joint positivity, both budgets and menu TP; its fixed three-copy same-event certificate also needs its exact lifting law. |
+| Updates and physical dynamics | Lüders is a realization choice, with identification requiring an update contract. No Hamiltonian, clock, energy unit, efficient synthesis or encoding of another system type is selected. | Sharp neutrality is retained for Lüders; Hamiltonian consumers require the supplied continuous time-homogeneous reversible group and physical clock/units. |
+
+Thus this restricted route deletes the static assumed-full-effect/leastness,
+FH1-with-arbitrary-mixed-remainder and general-EJA/spectral/filter entrance,
+and does not use (83.8), the original insertion/readback scale equations or
+H13. It pays for that change with a binary type restriction and explicit actual
+local-control, interaction, tomographic and all-finite-copy compatibility
+conditions. Those are not fewer physical assumptions merely because they can
+be written in one sentence. Conversely Chapter 84 does not already supply the
+all-$N$ path placements required here. Its own countermodels 84.39–84.42 and
+consumer conditions 84.44 retain their scope; no clause is removed from that
+theorem by this alternative representation route.
+
+**Complete conditional candidate.** For finite registers of identical binary
+units, the reciprocal positive PD core, one exhaustive pure pair and a convex
+original menu, together with the actual joint spaces, local $H$, closed groups
+and single-path triangle/connected-graph law of §3, imply $d=3$, the original
+complex qubit tensor state cones, Born probabilities and available full unitary
+control on each finite register. With the additional same-process/branch
+reference, mass, ancilla, discard, sequencing, readout and record resources of
+§4, the corresponding processes and finite measurements have the CPTP/CP
+instrument structure and every finite such register instrument is realizable.
+Other system types need an actual encoding/universality bridge; infinite
+register consistency and empirical identification are additional questions.
+This candidate composes existing mechanisms with the displayed static and
+path-generation arguments; it does not prove a physical origin of quantum theory.
+
+Geometrically, the normalization vector $h$ supplies the center. Exhaustion
+puts every pure point opposite another pure point; self-duality then equates
+the centered body with its own polar, forcing a round ball. Actual pair motion
+and product-readout positivity select its three-dimensional Bloch geometry.
+The same coupling used around an actual triangle tests whether one global
+orientation can support all pair relations; the reflected option predicts a
+negative original probability. Connected graphs then propagate unitary control
+inside each given register. The value $d=3$ counts local Bloch coordinates;
+$N=3$ counts units in this consistency test, not dimensions of spacetime.
+
+白话说，先把一个二元单元的全部原准备和原读数次序保留下来。每个纯准备都有一个
+自认成功率为一的正测试，交换两个比较端点不改读数；再要求任意原正泛函都能由
+这些测试有限次非负叠加。沿用已有正定桥后，只添一个真正穷尽全部原态的纯对，
+就能找到球心和对径点，用原锥自对偶把整个原态集钉成球；原凸菜单随之包含全部
+单元效应，最小确认也成为结论，不必先给谱分解或一般 Jordan 结构。可是静态球
+本身仍有任意维数。额外的内容在真实复合关系：局域可连续转动，局域联合读数
+完整区分原联合态，并有一条实际可逆耦合路径。这些条件才把单元选成三维 Bloch
+球。还必须让同一条路径在三个原单元的三条边上、以及每个有限寄存器某个连通图
+的边上，严格保持全部旁观者坐标不变。原操作群的闭性让路径和局域控制的极限也
+实际可用，从而得到整条边的控制；三角形排掉会产生负概率的转置方向。这里没有
+把中间造出的多体操作搬到别处，也没有要求整个原操作群连通。连通图内的交换和
+控制足以得到每个原寄存器的全部密度态与可用酉控制。与第 84 章相比，这条路舍去
+的是本范围内的全效应、leastness 和一般 EJA 静态入口，却缩到同种二元单元，并
+明确增加实际耦合、层析及全有限拷贝相容性；第 84 章自身的指定两份、三份接口
+不能冒称已经有这些全拷贝搬运。过程还须同一个过程对真实参考保持正性，仪器还须
+分支、记录、概率预算、纯辅助单元、丢弃和实际读出。单元菜单的凸性不能凭空给出
+全部联合测量。端点互易也不使先测甲再测乙等于先测乙再测甲，更不唯一指定更新、
+物理时钟或 Hamiltonian；这里的三维是单元 Bloch 维数，不是在选择时空维数。
