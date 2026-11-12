@@ -268,9 +268,74 @@ theorem buffer_offset_completion {α : Type} (r : α → Fin 6) (d : α → ℤ)
       cases he
     · exact he hzj.2
 
+/-- Deterministic strict ranking with the prescribed nonzero partner first. -/
+def partnerFirst (a : ℤ) : Ranking :=
+  Equiv.swap 0 (if a = 1 then 0 else if a = 2 then 1 else if a = -1 then 2 else 3)
+
+private theorem partnerFirst_top (a : ℤ) (ha : -2 ≤ a ∧ a ≤ 2) (hz : a ≠ 0) :
+    offsetRank (partnerFirst a) a = 0 := by
+  rcases ha with ⟨hl, hu⟩
+  interval_cases a <;> norm_num [partnerFirst, offsetRank] at *
+
+/-- Choose a certificate once per input word, rather than counting its witnesses. -/
+def chosenOffset {m : ℕ} (w : CertifiedWord m) : Fin m → ℤ := Classical.choose w.property
+
+private theorem chosen_certificate {m : ℕ} (w : CertifiedWord m) :
+    Certificate w.val (chosenOffset w) := Classical.choose_spec w.property
+
+/-- The actual buffer rankings determined by the two input words and their chosen certificates. -/
+def paddedBuffer {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) : Word 6 :=
+  fun i => partnerFirst (bufferOffset (request (chosenOffset w) (chosenOffset v))
+    (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val) i)
+
+/-- The ranking word retains both input words literally, with exactly six new sites. -/
+def paddedWord {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) : Word (m + k + 6) :=
+  fun i => if h : i.val < m then w.val ⟨i.val, h⟩
+    else if h' : i.val < m + 6 then paddedBuffer w v ⟨i.val - m, by omega⟩
+    else v.val ⟨i.val - (m + 6), by omega⟩
+
+/-- Recovery is on preference words, independently of which certificate was chosen. -/
+theorem padded_word_injective (m k : ℕ) :
+    Function.Injective (fun p : CertifiedWord m × CertifiedWord k => paddedWord p.1 p.2) := by
+  intro p q h
+  apply Prod.ext
+  · apply Subtype.ext
+    funext i
+    have he := congrFun h (⟨i.val, by omega⟩ : Fin (m + k + 6))
+    simpa only [paddedWord, dif_pos i.isLt] using he
+  · apply Subtype.ext
+    funext i
+    have he := congrFun h (⟨m + 6 + i.val, by omega⟩ : Fin (m + k + 6))
+    simpa only [paddedWord, dif_neg (by omega : ¬m + 6 + i.val < m),
+      dif_neg (by omega : ¬m + 6 + i.val < m + 6), Nat.add_sub_cancel_left] using he
+
+/-- Every assigned buffer partner is first-ranked in the concrete padded word. -/
+theorem padded_buffer_top {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) (i : Fin 6)
+    (hn : bufferOffset (request (chosenOffset w) (chosenOffset v))
+      (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val) i ≠ 0) :
+    offsetRank (paddedBuffer w v i)
+      (bufferOffset (request (chosenOffset w) (chosenOffset v))
+        (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val) i) = 0 := by
+  have hw := chosen_certificate w
+  have hv := chosen_certificate v
+  have hc := buffer_offset_completion (request (chosenOffset w) (chosenOffset v))
+    (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val)
+    (request_injective hw hv) (request_boundary hw hv) (by
+      intro a
+      refine ⟨?_, ?_, a.property.1⟩
+      rcases a.val with a | a
+      · exact (hw.bounded a).1
+      · exact (hv.bounded a).1
+      rcases a.val with a | a
+      · exact (hw.bounded a).2
+      · exact (hv.bounded a).2)
+  exact partnerFirst_top _ (hc.2.1 i) hn
+
 #print axioms old_target_injective
 #print axioms padded_request_completion
 #print axioms old_nonblocking
 #print axioms closing_request_completion
 #print axioms buffer_offset_completion
+#print axioms padded_word_injective
+#print axioms padded_buffer_top
 end D5.S3.Combinatorics.Graph.Roommates.PaddedCompletion
