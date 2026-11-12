@@ -1917,3 +1917,432 @@ without establishing fewer independent physical assumptions, least axioms,
 lower experimental cost or a physical quantum origin.
 
 可以把一个准备看成它面对所有原测试时给出的整张概率表，但原装置、菜单和记录仍然各自保留。只有这些原表本身允许实概率混合、形成有限维紧集合，才能从它们构造出这里的向量空间与带质量的正锥；取闭包不能替我们造出新准备。测试是否齐全还要另问：一个已有测试在所有原准备上的成功率都不超过一半时，是否有同一个原测试把这些数同时加倍？结合原混合与补测试，这恰好表达全效应可用性。四面体的两个菜单说明，纯参照对全部混态的最小确认数完全相同，仍能漏掉一个有界和。接回当前的完整候选 81.14 时，仍保留同一个读回用两次、原参考、两张成、全实零关系与全方向正性；但不必再搜索最坏框架，而把原几何固定的一个源投影与同一原映射导出的量作收缩。已有定理保证它为零恰好等于每套完整框架都零重叠，所以 80.14 的精确对应仍然保留。两条总质量关系现在采用由原单位固定的同一个数学见证，不另选局部变化；再用原锚校准倍率，最后才检查同一原混态的方向条件及其整个原输出。原过程还必须在保留输出质量的情况下尊重混合与等价关系，来源、参考、全菜单、时钟等义务也都保留。比较两端交换后数值相同，不等于两次仪器交换执行次序后状态相同。这使同一模型类的入口更简洁，不据此声称独立物理假设更少，也没有凭概率表生成仪器、来源、时钟或完整的物理量子起源。
+
+
+## Appendix: reciprocal restricted menus and finite polyhedral geometry
+
+This conditional paper application separates a positive-definiteness bridge
+from two finite polyhedral consequences. It uses the same original carrier
+as the [full-effect bridge](#reciprocal-least-confirmation-and-the-spectrality-bridge),
+but permits a restricted menu of effects. The earlier full-effect conclusions
+retain their premises. The additional minimum argument and geometric
+compositions below are paper derivations, without Lean kernel certification,
+a physical realization or a global novelty claim.
+
+### 1. Original carrier, restricted menu and premise map
+
+Let $V\ne\{0\}$ be a real vector space of finite dimension $n$. Let $C\subset V$
+be a closed convex pointed generating cone and let $u\in V^*$ be strictly
+positive on $C\setminus\{0\}$. Use the **entire** compact normalized base and
+**all** its pure points:
+
+$$
+K=\{x\in C:u(x)=1\},\qquad P=\operatorname{ext}K,
+\qquad C^*=\{f\in V^*:f(c)\ge0\ (c\in C)\}.
+$$
+
+Finite-dimensional compact convex decomposition gives
+$K=\operatorname{conv}P$, $C=\operatorname{cone}P$ and $\operatorname{span}P=V$.
+Here every conic decomposition is a **finite** nonnegative sum, even when
+$P$ is infinite. No orthogonality or spectral decomposition is implicit.
+The order of effects is always the original dual-cone order:
+$f\le g$ means $g-f\in C^*$.
+
+A restricted menu is a convex set $D\subseteq[0,u]$ containing $0,u$.
+Compactness and separation of $K$ may be retained as properties of the
+original menu; the arguments below do not require them. Select, for every
+$p\in P$, an effect $e_p\in D$ satisfying $e_p(p)=1$. The common core is
+positivity of these effects, this self-reading, pure reciprocity and the
+following positive-dual generation condition:
+
+$$
+e_p(q)=e_q(p)\quad(p,q\in P),\qquad
+\mathrm{PD}:\quad C^*=\operatorname{cone}\{e_p:p\in P\}.
+$$
+
+PD means that **each** original positive functional is a finite nonnegative
+sum of the $e_p$; it is a separate hypothesis on the restricted menu. It
+neither defines positive definiteness nor replaces $D$ by $[0,u]$.
+For the geometric branches, distinguish these additional conditions:
+
+- **Complement closure:** $d\in D\Longrightarrow u-d\in D$.
+- **Menu leastness:** $e_p\le d$ for every $d\in D$ with $d(p)=1$.
+  This is a least element among all confirming effects in $D$, not just
+  a minimal element, and its inequality holds on the entire original $C$.
+- **O:** for every finite pairwise orthogonal pure family $S$,
+  $\sum_{p\in S}e_p\in D$, where orthogonality means $e_p(q)=0$ for distinct
+  $p,q\in S$. Reciprocity makes this relation symmetric.
+- **Unique saturation:** $e_p(x)=1$ for $x\in K$ if and only if $x=p$.
+
+The actual premise dependencies are:
+
+| Conclusion | Inputs beyond the original carrier |
+| --- | --- |
+| Symmetric cone isomorphism and positive definiteness | Positive $e_p$, self-reading one, reciprocity, PD; the upper bound $e_p\le u$ is not needed for this bridge. |
+| Every orthogonal pure family extends to a complete frame | The same core, $D\subseteq[0,u]$ and O. |
+| Three-dimensional polyhedral cone is simplicial | The core, $D\subseteq[0,u]$, complement closure, menu leastness and polyhedrality; no O or unique saturation. |
+| Polyhedral $r\le3$ forces $n=r$; polyhedral $n\le4$ is simplicial | The core, $D\subseteq[0,u]$, O, unique saturation and polyhedrality. Complement closure and menu leastness can be retained but are not used in this proof. |
+
+Convexity, compactness and separation of $D$ do not enter these deductions
+once the displayed effects and conditions are given. All rows keep the
+whole original $C,K,P,C^*$; none concerns a selected subset of pure states.
+
+### 2. Descent of the pairing and strict positivity on the cone
+
+**Proposition.** The common core defines a unique linear isomorphism
+$L:V\to V^*$ with $Lp=e_p$ and $L(C)=C^*$. Its bilinear form
+$B(x,y)=(Lx)(y)$ is symmetric and nondegenerate, is nonnegative on
+$C\times C$, and satisfies $B(c,c)>0$ for every nonzero $c\in C$.
+
+**Proof.** If $\sum_i a_i p_i=0$ with real coefficients, then for every
+$q\in P$ reciprocity gives
+
+$$
+\left(\sum_i a_i e_{p_i}\right)(q)
+=\sum_i a_i e_q(p_i)=0.
+$$
+
+Since $P$ spans $V$, this functional is zero. Thus the pure assignment
+respects every original real linear relation and descends to $L$.
+Its image contains $C^*$ by PD; this dual cone spans $V^*$ because $C$
+is pointed. Consequently $L$ is surjective and, in equal finite dimensions,
+invertible. Pure generation and PD give the exact equality $L(C)=C^*$.
+Reciprocity extends bilinearly to symmetry; invertibility gives
+nondegeneracy. Positivity of $e_p$ and positive generation give
+$B(C,C)\ge0$, while $B(p,p)=1$.
+
+For $0\ne c=\sum_{i=1}^m\alpha_i p_i\in C$, combine repeated points and
+remove zero coefficients. At least one coefficient remains positive and
+all cross terms are nonnegative, so
+
+$$
+B(c,c)=\sum_i\alpha_i^2+
+2\sum_{i<j}\alpha_i\alpha_jB(p_i,p_j)
+\ \ge\ \sum_i\alpha_i^2>0.
+$$
+
+This is an arbitrary finite positive decomposition, not a frame. ∎
+
+### 3. A minimum lemma for signed directions
+
+**Lemma.** On the original nonzero finite-dimensional carrier, suppose $B$
+is a symmetric nondegenerate real bilinear form, $Lx=B(x,\cdot)$ satisfies
+$L(C)=C^*$, and $Q(c)=B(c,c)>0$ for **every** $0\ne c\in C$.
+Then $B$ is positive definite on all of $V$.
+
+**Proof.** Strict positivity of $u$ on the compact intersection of $C$
+with any auxiliary unit sphere gives a positive uniform lower bound there.
+Thus $u\in\operatorname{int}C^*$. Since the invertible $L$ maps $C$ onto
+$C^*$, put
+
+$$
+h=L^{-1}u\in\operatorname{int}C,\qquad
+B(h,y)=u(y),\qquad r=B(h,h)=u(h)>0.
+$$
+
+The continuous $Q$ attains its minimum $a$ on compact $K$, at some $x_0$.
+Every point of $K$ is a nonzero cone vector, so **$a>0$**.
+For $y\in K$ the segment from $x_0$ to $y$ stays in $K$.
+Its one-sided derivative at the minimum gives
+$B(x_0,y)\ge B(x_0,x_0)=a$. Normalize any nonzero $c\in C$ by $u(c)$:
+
+$$
+B(x_0,c)\ge a\,u(c)=B(ah,c).
+$$
+
+It follows that $L(x_0-ah)\in C^*$, hence $x_0-ah\in C$ by the exact
+cone isomorphism. Because $a>0$ and $h\in\operatorname{int}C$, this forces
+$x_0\in\operatorname{int}C$.
+
+For each signed direction $v\in\ker u$, both $x_0+tv$ and $x_0-tv$ lie
+in $K$ for sufficiently small $|t|$. Expanding the quadratic at its minimum
+therefore gives $B(x_0,v)=0$ and $B(v,v)\ge0$. Since $u(x_0)=1$ and
+$B(x_0,x_0)=a$, the functional annihilating $\ker u$ is exactly
+$Lx_0=a u$. Thus $x_0=ah$ and $a=1/r$. Every $z\in V$ has the decomposition
+
+$$
+z=\frac{u(z)}r h+v,\qquad v\in\ker u,\qquad
+B(z,z)=\frac{u(z)^2}r+B(v,v)\ge0.
+$$
+
+Finally, if $B(z,z)=0$, nonnegativity of
+$B(z+tw,z+tw)=2tB(z,w)+t^2B(w,w)$ for every real $t$ forces
+$B(z,w)=0$ for all $w$. Nondegeneracy then gives $z=0$. ∎
+
+Cone nonnegativity alone does not suffice for this lemma. For example,
+on $C=\mathbb R_+^2$ with $u(x)=x_1+x_2$, the symmetric invertible form
+$B(x,y)=x_1y_2+x_2y_1$ maps $C$ onto $C^*$ and has $Q(c)\ge0$ on $C$,
+but has null extreme rays and $Q(1,-1)=-2$. Its minimum on $K$ is zero,
+so the interior step fails. This example does not satisfy pure self-reading
+one and is not a counterexample to the proposition.
+
+**Corollary.** The common reciprocal PD core makes $B$ positive definite
+and self-dualizes the original cone:
+
+$$
+C=\{x\in V:B(x,c)\ge0\text{ for every }c\in C\}.
+$$
+
+Apply the proposition's strict cone positivity to the lemma; the last
+equality is $L^{-1}(C^*)=C$. This argument uses neither spectrality,
+an orthogonal $V$-basis, O, frame completion, full effects, menu leastness
+nor unique saturation. It does not assert signed frame spectrality.
+
+### 4. The paired residual and the three-dimensional polygon
+
+**Theorem.** If $n=3$ and $C$ is polyhedral, the common core together with
+$D\subseteq[0,u]$, complement closure and menu leastness forces $C$ to be
+simplicial. Equivalently, the entire polygon $K$ is a triangle.
+
+**Proof.** Reuse $L,B,h=L^{-1}u$ from §2. The following proof uses only
+nonnegativity on $C\times C$ and pure self-reading one; it does not use
+§3's positive definiteness. Whenever distinct $p,q\in P$ have
+$B(p,q)=0$, reciprocity gives $e_q(p)=0$. Complement closure puts
+$u-e_q$ in $D$, and this effect confirms $p$. Menu leastness therefore gives
+
+$$
+e_p\le u-e_q,\qquad
+h-p-q\in C,\qquad
+B(p,h-p-q)=B(q,h-p-q)=0.
+$$
+
+The cone membership uses $L(C)=C^*$; the two zeros use
+$B(p,h)=B(q,h)=1$. This is the paired residual, derived without O.
+
+Fix $p\in P$. The cone isomorphism sends its extreme ray to the extreme
+dual ray generated by $e_p$. In a full three-dimensional polyhedral cone,
+that dual ray exposes a two-dimensional facet
+
+$$
+F_p=C\cap\ker e_p=\operatorname{cone}(q,s)
+$$
+
+for two distinct normalized pure points $q,s$. In particular $p\notin F_p$
+and $B(p,q)=B(p,s)=0$. Nonnegativity gives $B(q,s)\ge0$.
+Suppose it is strictly positive. The paired residual
+$h-p-q\in F_p$ has a positive expansion $\alpha q+\beta s$, so
+
+$$
+0=B(q,h-p-q)=\alpha+\beta B(q,s)
+$$
+
+forces $\alpha=\beta=0$ and $h=p+q$. Likewise,
+$h-p-s=\gamma q+\delta s\in F_p$ and
+$0=\gamma B(s,q)+\delta$ force $h=p+s$. This contradicts $q\ne s$.
+Consequently $B(q,s)=0$.
+
+Now $p,q,s$ are pairwise orthogonal with self-readings one. Evaluating any
+linear relation on them proves linear independence, so they form a basis
+of $V$. For $x\in C$, write $x=ap+bq+cs$ in this basis; its coefficients
+are $a=B(p,x)$, $b=B(q,x)$ and $c=B(s,x)$, all nonnegative. Therefore
+$C=\operatorname{cone}(p,q,s)$ and $K=\operatorname{conv}(p,q,s)$. ∎
+
+The orthogonal basis and positive definiteness are consequences here,
+not starting assumptions. Neither unique saturation nor O, nor the
+availability of every proper effect, enters the argument. Polyhedrality
+is essential to the two-ray facet step.
+
+### 5. Frame completion with PD and O
+
+For the second geometric branch retain O; unique saturation will be used
+only in §6. This is the restricted-menu counterpart of
+[the existing common-frame interface](#positive-dual-generation-and-one-common-complete-frame).
+Under full effects the earlier proof derived PD and bounded orthogonal
+sums from full leastness. Here PD and O are supplied separately: arbitrary
+positive functionals cannot be rescaled into a restricted $D$ for peeling.
+
+**Proposition.** Every finite orthogonal pure family $S$ extends to a
+complete frame $A\supseteq S$ satisfying
+
+$$
+\sum_{p\in A}p=h,\qquad \sum_{p\in A}e_p=u.
+$$
+
+All maximal orthogonal pure families are complete, with the same integer
+length $r=B(h,h)=u(h)$, where $1\le r\le n$.
+
+**Proof.** O and $D\subseteq[0,u]$ give
+$u-\sum_{p\in S}e_p\in C^*$, hence $v=h-\sum_{p\in S}p\in C$.
+For each $p\in S$, $B(p,v)=1-1=0$. If $v\ne0$, take a finite positive
+decomposition $v=\sum_j\alpha_jq_j$ into pure points with $\alpha_j>0$.
+Every term $B(p,q_j)$ is nonnegative, and their weighted sum is zero;
+thus every $q_j$ is orthogonal to every member of $S$. It is a new point,
+since an old member has self-reading one. Adjoin one such $q_j$.
+O makes the enlarged family's residual positive again.
+
+Orthogonal pure families are linearly independent by evaluating on their
+members, so this extension stops after at most $n$ members. A nonzero
+terminal residual would permit one further extension; hence it is zero.
+Applying $L$ gives the effect sum. For a complete frame of length $k$,
+$B(h,h)=\sum_{p,q\in A}B(p,q)=k$ and $u(h)=k$. Starting from any pure
+point proves $r\ge1$. A maximal family cannot have a nonzero residual,
+so it is complete and has length $r$. ∎
+
+This proof does not use menu leastness, complement closure or unique
+saturation, nor §3's positive definiteness. O supplies a bounded sum in
+$D$; physical availability as one original joint test still requires the
+original menu's separate realization contract.
+
+### 6. Polyhedral facets, ranks one to three and dimension four
+
+Retain the core, $D\subseteq[0,u]$, O and unique saturation, and assume
+$C$ is polyhedral. Write $r$ for the integer from §5. Here $n=\dim V$ is
+the cone dimension and $\dim K=n-1$; it is not a Hilbert-space dimension.
+
+**Facet correspondence.** For $n\ge2$, $L$ bijects all extreme primal
+rays with all extreme dual rays. A dual extreme ray of a full-dimensional
+pointed polyhedral cone exposes a facet. Thus
+
+$$
+F_p=C\cap\ker e_p,\qquad Q_p=K\cap\ker e_p
+$$
+
+have dimensions $n-1$ and $n-2$, respectively, and **every** facet of $K$
+is some $Q_p$. Its vertices are exactly the pure points with $B(p,q)=0$.
+This is the ordinary polyhedral ray–facet duality, using the original
+$C^*$; no positive-dual generation is assumed for an individual face.
+
+**No central symmetry for $n\ge3$.** On $K$, the minimum face of $e_p$
+is $Q_p$ at value zero, and its maximum face is $\{p\}$ at value one,
+by unique saturation. If $K$ were centrally symmetric about $c$, the
+reflection $x\mapsto2c-x$ would carry each affine functional's minimum
+face to its maximum face. It preserves affine dimension, contradicting
+$\dim Q_p=n-2\ge1$ and $\dim\{p\}=0$.
+
+**Ranks one and two.** If $r=1$, completing any singleton $\{p\}$ adds
+nothing, so $p=h$ for every pure $p$. Pure generation gives $n=1$.
+If $r=2$, then $n\ge2$. Fix $p$. Any pure $q\in F_p$ completes the pair
+to a length-two frame, so $p+q=h$. There is exactly one such $q$;
+pure generation of this polyhedral facet makes $F_p$ a single ray.
+Since $\dim F_p=n-1$, it follows that $n=2$.
+
+**Rank three.** Suppose $r=3$. For fixed $p$ and any vertex $q$ of $Q_p$,
+frame completion of $\{p,q\}$ gives exactly one further pure point $t$,
+with
+
+$$
+p+q+t=h,\qquad t=h-p-q\in Q_p.
+$$
+
+Consequently $q\mapsto h-p-q$ maps the vertices of $Q_p$ to themselves
+and is an involution. Its affine extension preserves their convex hull,
+so each facet $Q_p$ is centrally symmetric about $(h-p)/2$.
+If $n\ge4$, apply the following classical result to $K$ with the explicit
+parameter correspondence $d=\dim K=n-1\ge3$: its facets are precisely
+all the $Q_p$, of dimension $d-1=n-2$, and all are centrally symmetric.
+The result makes $K$ centrally symmetric, contradicting the preceding
+paragraph. Thus $n\le3$, and $3=r\le n$ gives $n=3$.
+
+The literature input is **Lemma 1**, printed p. 1208, with proof on
+pp. 1208–1209, in G. C. Shephard, *Polytopes with Centrally Symmetric
+Faces*, Canadian Journal of Mathematics **19** (1967), 1206–1213:
+if every facet of a $d$-polytope, $d\ge3$, is centrally symmetric,
+the polytope is centrally symmetric. See
+[DOI 10.4153/CJM-1967-109-3](https://doi.org/10.4153/CJM-1967-109-3)
+and the [official Cambridge PDF](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0008414X00055176).
+Shephard recalls the classical result and supplies a general proof;
+this application does not claim the lemma as new or invoke his other
+theorems without their hypotheses. It is affine polytope geometry and
+requires no positive-definite form as an input.
+
+**The full-rank case.** Whenever $r=n$, choose a complete frame
+$p_1,\ldots,p_n$. The identities $B(p_i,p_j)=\delta_{ij}$ make it a basis
+of $V$. Every $x\in C$ has coefficients $B(p_i,x)\ge0$, so
+$C=\operatorname{cone}(p_1,\ldots,p_n)$ and $K$ is an $(n-1)$-simplex.
+This step does not require polyhedrality or unique saturation once the
+complete length-$n$ frame is given.
+
+**Theorem.** Under the retained polyhedral assumptions of this section,
+$r\le3$ implies $n=r$ and simpliciality. For $n\le4$, the cone is always
+simplicial: the cases $r\le3$ were just settled, and the only remaining
+case is $n=r=4$, settled by the full-rank argument. Hence any nonsimplicial
+polyhedral example under these assumptions would have to lie in
+
+$$
+n\ge5,\qquad 4\le r<n.
+$$
+
+The arguments in this appendix supply no existence or nonexistence result
+for the displayed region. This is their coverage boundary; it does not
+assert that the entire region is unresolved in other research.
+The three-dimensional theorem in §4 has a different premise set: its
+paired residual replaces O and unique saturation by complement closure
+and menu leastness. Neither proof silently transfers the other's inputs.
+
+### 7. Return to the full candidate and the applicability boundary
+
+The minimum lemma supplies positive definiteness on the restricted menu's
+original vector space. It does not promote that menu to full effects,
+produce an orthogonal positive decomposition of every vector, prove PD
+for faces, or make face filters positive or pure. No Jordan structure,
+classification or complete quantum reconstruction follows from the new
+bridge or the finite polyhedral exclusions alone. In particular the
+nonpolyhedral real-qubit cone has $n=3$, and the nonpolyhedral complex-qubit
+cone has $n=4$; neither is excluded by these polyhedral theorems. No
+classification of general nonpolyhedral models is supplied here.
+
+For full effects, reuse the earlier
+[least-confirmation/spectrality bridge](#reciprocal-least-confirmation-and-the-spectrality-bridge),
+[complete conditional EJA candidate](#complete-conditional-candidate-and-its-scope)
+and [fixed-half pure–mixed entrance](#appendix-a-fixed-half-puremixed-entrance-to-s).
+There PD and frame completeness have their original full-effect proofs;
+those are stronger interfaces than the restricted-menu core. The present
+argument removes the need to pass through signed spectrality **to prove
+positive definiteness**, without deleting the other obligations of the
+full classification route.
+
+The complete quantum interface used here is
+[Chapter 84, Theorem 84.35, equation (84.37)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#84-原双单位质量指定迹平面的唯一接触点与完整候选).
+Its same-data candidate is retained exactly:
+
+$$
+\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf C_2+
+\mathsf E_3(R_A;1/2,2/3)+\mathrm A_0+\mathrm H13
+\quad\Longleftrightarrow\quad
+\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.
+$$
+
+Here $\mathrm{PRE}_0^{1/2}$ includes full effects on each original carrier,
+FH1 with an arbitrary original mixed remainder and the full general EJA
+bridge. Equation (83.8) is the original explicit second-order zero
+relation; $\mathsf C_2$ is $m_2(e,e)=1$ with
+$e=1_A/n_A$ and $n_A=\tau_A1_A$. This $n_A$ is the chapter's trace rank,
+not this appendix's $\dim V$. The fixed mathematical witness is
+$R_A(a)=\tau_A(a)1_A/n_A$; its E3, the original scalar anchor and H13
+on the same qualified state's entire original output all remain.
+H13 is read only after exact PRE is restored. The geometric map $L:V\to V^*$
+here is distinct from the chapter's supplied bilinear insertion
+$L:D\times A\to E$; the letter $D$ there names a copy space, not this
+appendix's effect menu. The correspondence keeps the same original
+carriers, maps, reference and units. Chapter 84's unit-pair scalar
+replacement is reused, not rederived or replaced by the older Chapter 81
+entrance.
+
+Under **all** these original premises, reuse
+[84.44's consumers](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#8443-全部消费者与简化的准确范围)
+for density states, full effects and Born probabilities, specified two-
+and three-copy tensors and readbacks. The same actual events, branches,
+records, product-extension laws, sufficient actual reference, whole-joint-
+cone positivity, both original probability budgets and complete-menu TP
+remain required for the original CP/Kraus and instrument conclusions.
+Updates still require their sharp-neutrality contract; probabilities are
+original output masses, with conditioning only at strictly positive mass
+and zero-branch records retained. Sequential composition, coarse-graining,
+preparation/source, controls, flags, stopping and future permissions keep
+their original contracts. Hamiltonian conclusions retain the supplied
+continuous time-homogeneous reversible group, physical clock and units.
+Comparing two endpoints in exchanged order is not exchanging the execution
+order of instruments. The static pairing creates no operations, menus,
+reference systems, clocks or higher-copy compatibility.
+
+Geometrically, the new minimum argument finds an interior normalization
+point before looking in signed directions. The three-dimensional argument
+uses the two edges of an exposed cone facet and paired positive residuals;
+the rank-three argument instead reflects each facet through its frame
+complement and then consumes Shephard's classical lemma. These are the
+additional paper compositions recorded here. The earlier full-effect
+bridges, frame machinery and Chapter 84 classification/consumer interfaces
+are reused at their stated scopes; no least-axiom count, experimental
+certificate or worldwide novelty conclusion is asserted.
+
+白话说，把所有原准备组成的整个凸集合连同质量一起保留，每个纯准备都选一个自认成功率为一的正测试；交换两个纯准备的比较端点，读数相同。再额外要求：原锥上任意正读数都能由这些测试作有限次非负叠加。后一项是 PD 的真正输入，并不是已经假设了欧氏内积，也不是说每个有界测试都在原菜单中。纯点的自读数和正交叉读数先保证每个非零正向量的平方严格为正；紧规范基上的最小点随后被推到内部，于是正负两个方向都能检验，配对才在整个空间上正定。这一步不再需要谱分解、O 或完整框架。三维多面时，另外保留补测试和菜单内真正的最小确认，便能把每个零读数面的两条边拼成三角形，不必再加 O 或唯一饱和。四维及秩至三的另一条证明则确实保留 O 来补全框架，保留唯一饱和来排除整体中心对称，再借用成熟的多面体引理。这里没有把这两套前件混在一起，也没有把曲面的 qubit 锥排除。若要接回第 84 章的完整量子候选，仍须原来的全态全效应、含任意原混态余项的固定对半关系、一般 EJA 桥、同一原读回和参考、二阶零关系、单位对质量、三质量、原锚及整个原输出的方向条件；实际事件、菜单、记录、来源和时钟也不能由比较数凭空产生。从本附录的比较几何接回完整量子结论，仍需这些更强的结构与操作输入，不能靠给现有正定配对换一个量子名称来补齐。上述高维参数区域超出本附录论证的覆盖范围；这不表示该区域在其他研究中全部未决。
