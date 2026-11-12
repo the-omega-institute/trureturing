@@ -299,23 +299,26 @@ def starDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
 def starTailDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
     Finset (Vertex R) := (starDomain e V i).filter fun x => support e x.1 ≠ {i}
 
+omit [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)] in
 private theorem pair_family_powerset (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
     pairFamily e V = (pairDomain e V).powerset := by
   ext S
-  simp only [pairFamily, pairDomain, Finset.mem_filter, Finset.mem_powerset]
+  simp only [pairFamily, pairDomain, Finset.mem_filter, Finset.mem_powerset,
+    Finset.subset_iff, Finset.mem_filter]
   constructor
   · rintro ⟨hV, hpair⟩ x hx
     exact ⟨hV hx, hpair x hx⟩
   · intro h
     exact ⟨fun x hx => (h hx).1, fun x hx => (h hx).2⟩
 
+omit [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)] in
 private theorem star_family_sdiff (e : R ≃+* ∀ i, K i)
     (V : Finset (Vertex R)) (i : ι) :
     starFamily e V i = (starDomain e V i).powerset \
       (starTailDomain e V i).powerset := by
   ext S
   simp only [starFamily, starDomain, starTailDomain, Finset.mem_filter,
-    Finset.mem_sdiff, Finset.mem_powerset]
+    Finset.mem_sdiff, Finset.mem_powerset, Finset.subset_iff, Finset.mem_filter]
   constructor
   · rintro ⟨hV, ⟨u, hu, hui⟩, hall⟩
     refine ⟨fun x hx => ⟨hV hx, hall x hx⟩, ?_⟩
@@ -334,6 +337,7 @@ private theorem powerset_polynomial {α : Type*} (V : Finset α) :
   simpa only [Finset.prod_const] using
     (Finset.prod_one_add (f := fun _ : α => (Polynomial.X : Polynomial ℤ)) V).symm
 
+omit [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)] in
 private theorem star_polynomial (e : R ≃+* ∀ i, K i)
     (V : Finset (Vertex R)) (i : ι) :
     (∑ S ∈ starFamily e V i, (Polynomial.X : Polynomial ℤ) ^ S.card) =
@@ -353,7 +357,7 @@ theorem independencePolynomial_four_families (hι : Fintype.card ι = 3)
           (1 + Polynomial.X) ^ (starTailDomain e V i).card) := by
   obtain ⟨hfamily, hpair, hstars⟩ := configurations_four_families hι e V
   have hd : Disjoint (pairFamily e V) (Finset.univ.biUnion (starFamily e V)) := by
-    exact Finset.disjoint_biUnion_right.mpr (fun i _ => hpair i)
+    exact (Finset.disjoint_biUnion_right _ _ _).mpr (fun i _ => hpair i)
   unfold independencePolynomial partition
   simp only [Finset.prod_const]
   rw [hfamily, Finset.sum_union hd, Finset.sum_biUnion]
@@ -424,13 +428,25 @@ theorem independencePolynomial_three_coordinates
       {∅, {0}, {1}, {2}, {0,1}, {0,2}, {1,2}, {0,1,2}} := by decide
   have hfin : (Finset.univ : Finset (Fin 3)) = {0,1,2} := by decide
   have hpair := support_filter_card e (fun S => S.card = 2)
-  have hstar (i : Fin 3) := support_filter_card e (fun S => i ∈ S)
-  have htail (i : Fin 3) := support_filter_card e (fun S => i ∈ S ∧ S ≠ {i})
-  simp only [hU, hfin] at hpair hstar htail
-  norm_num at hpair hstar htail
-  rw [independencePolynomial_four_families (by decide) e]
-  simp only [pairDomain, starDomain, starTailDomain, Finset.filter_filter]
-  simp only [hpair, hstar, htail, Fin.sum_univ_three]
+  have hs0 := support_filter_card e (fun S => (0 : Fin 3) ∈ S)
+  have hs1 := support_filter_card e (fun S => (1 : Fin 3) ∈ S)
+  have hs2 := support_filter_card e (fun S => (2 : Fin 3) ∈ S)
+  have ht0 := support_filter_card e (fun S => (0 : Fin 3) ∈ S ∧ S ≠ {0})
+  have ht1 := support_filter_card e (fun S => (1 : Fin 3) ∈ S ∧ S ≠ {1})
+  have ht2 := support_filter_card e (fun S => (2 : Fin 3) ∈ S ∧ S ≠ {2})
+  simp only [hU, hfin, Finset.sum_filter] at hpair hs0 hs1 hs2 ht0 ht1 ht2
+  simp (disch := decide) only [Finset.sum_insert, Finset.sum_singleton] at hpair hs0 hs1 hs2 ht0 ht1 ht2
+  simp +decide [Finset.prod_insert] at hpair hs0 hs1 hs2 ht0 ht1 ht2
+  have hp' : (pairDomain e Finset.univ).card =
+      (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
+      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) +
+      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+    unfold pairDomain
+    omega
+  rw [independencePolynomial_four_families (by decide) e, hp']
+  simp only [Fin.sum_univ_three, starDomain, starTailDomain, Finset.filter_filter]
+  simp_all only [hs0, hs1, hs2, ht0, ht1, ht2]
+  simp only [pow_add]
   ring
 
 #print axioms independencePolynomial_three_coordinates
