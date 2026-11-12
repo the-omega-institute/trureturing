@@ -184,23 +184,52 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end TraceTable
 
 namespace Dimensions
-abbrev signature := equalitySignature ℕ
-def actual : Realization signature := equalityActual ℕ
-def rejected : Realization signature := equalityBad ℕ
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Bool
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
+def rejected (i : Bool) : Realization signature :=
+  realize signature (fun j _ x y => if j = i then False else x = y) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () (Module.finrank ℝ (generated (frame true))) 10 ∧
-    R.readout () () (Module.finrank ℝ (generated (frame false))) 16
+  Law R := R.readout false () (Module.finrank ℝ (generated (frame true))) 10 ∧
+    R.readout true () (Module.finrank ℝ (generated (frame false))) 16
 
-private theorem rejected_law : ¬ arena.Law rejected := fun h => h.1
+private theorem rejected_law (i : Bool) : ¬ arena.Law (rejected i) := by
+  intro h
+  cases i
+  · exact h.1
+  · exact h.2
 
 def family : Registration arena (type_of% (@generated_dimensions)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@generated_dimensions, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
-  dependence := equality_dependence (0 : ℕ) 1 (by decide)
+  variation := ⟨@generated_dimensions, rejected false, rejected_law false⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected i, ?_, ?_, rejected_law i⟩
+      · intro j hj
+        funext p x y
+        simp [rejected, actual, realize, hj]
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    have he : (1 : ℕ) = 0 := Eq.mp (congrFun h 0) rfl
+    norm_num at he
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@generated_dimensions) (Realization signature) Unit Unit := {
