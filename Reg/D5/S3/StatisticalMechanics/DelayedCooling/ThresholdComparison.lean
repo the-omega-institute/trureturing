@@ -44,7 +44,7 @@ def comparisonFamily : Registration comparisonArena (type_of% (@threshold_compar
       simpa using hm.1
     have hg : synchronousDifference (Real.exp (-1)) 0 0 ≤
         ∫ a in Ioi 0, responseKernel (Real.exp (-1)) a * 1 := by
-      simpa [synchronousDifference, relaxation_of_nonpos hτ le_rfl, hm.2]
+      norm_num [synchronousDifference, relaxation_of_nonpos hτ le_rfl, hm.2]
     have hc := h hτ le_rfl (t := 0) (w := 0) le_rfl le_rfl (fun _ => 1)
       hi (by simpa using hi) (fun _ _ => by norm_num) hg
     norm_num [rejected, realize, hm.2] at hc
@@ -73,8 +73,9 @@ def comparisonRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@threshold_comparison)
     (type_of% (realize signature (fun _ _ τ => synchronousDifference τ) (fun e => nomatch e)))
     Type Unit where
-  unitName :=
-    `D5.S3.StatisticalMechanics.DelayedCooling.ThresholdComparison.threshold_comparison.__information_unit
+  unitName := .str
+    `D5.S3.StatisticalMechanics.DelayedCooling.ThresholdComparison.threshold_comparison
+    "__information_unit"
   realizationName :=
     `Reg.D5.S3.StatisticalMechanics.DelayedCooling.ThresholdComparison.comparisonFamily
   realizationSource := none

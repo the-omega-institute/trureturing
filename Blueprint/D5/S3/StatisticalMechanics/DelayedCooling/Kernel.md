@@ -4,7 +4,7 @@
 
 The finite-sum quasi-exponential relaxation has a constant equilibrium past, is continuous, satisfies its delay equation, and is positive with exponential decay throughout the nonoscillatory delay range.
 
-Fix a positive real delay tau. Time and temperature are real. The relaxation E is the normalized response to a single quench from an equilibrated state. The finite sum below is the quasi-exponential in Eq. (6) of Santos, The role of preparation protocols in the Mpemba effect under time-delayed Newton cooling, arXiv:2611.12328v1. These statements concern the scalar delay equation; they do not assert optimality of any preparation protocol.
+Fix a positive real delay tau. Time and temperature are real. The relaxation E is the normalized response to a single quench from an equilibrated state. The finite-sum construction is the quasi-exponential in Eq. (6) of Santos, The role of preparation protocols in the Mpemba effect under time-delayed Newton cooling, arXiv:2611.12328v1. These statements concern the scalar delay equation; they do not assert optimality of any preparation protocol.
 
 **Definition 1.1 (The cutoff-power construction).**
 
