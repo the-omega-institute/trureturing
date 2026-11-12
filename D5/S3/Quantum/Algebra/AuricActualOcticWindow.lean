@@ -512,15 +512,16 @@ private theorem invariant_half_rank_weak {K : Type*} [Field K]
     symm
     apply Finset.card_equiv (Equiv.mulLeft h)
     intro g
-    simp only [C, Finset.mem_filter, Finset.mem_univ, true_and, mem_orbitSet,
-      Equiv.mulLeft_apply, ← hh, mul_inv_rev, mul_smul, inv_smul_smul]
+    change g ∈ C s ↔ h * g ∈ C i
+    simp only [C, Finset.mem_filter, Finset.mem_univ, true_and, mem_orbitSet]
+    rw [← hh, mul_inv_rev, mul_smul, inv_smul_smul]
   have hd : 0 < d := by
     apply Finset.card_pos.mpr
     refine ⟨1, Finset.mem_filter.mpr ⟨Finset.mem_univ _, ?_⟩⟩
     simpa [orbitSet] using hs
   have hdouble : Fintype.card G * S.card = Fintype.card Ω * d := by
     have hh := Finset.sum_card_bipartiteAbove_eq_sum_card_bipartiteBelow
-      (fun (g : G) (i : Ω) => i ∈ orbitSet S g) Finset.univ Finset.univ
+      (s := Finset.univ) (t := Finset.univ) (fun (g : G) (i : Ω) => i ∈ orbitSet S g)
     have hleft (g : G) : Finset.univ.bipartiteAbove
         (fun (g : G) (i : Ω) => i ∈ orbitSet S g) g = orbitSet S g := by
       ext i
@@ -621,7 +622,7 @@ private theorem invariant_half_rank_strict {K : Type*} [Field K]
     S.card + 1 ≤ 2 * rowRank U S := by
   let f : Finset Ω → ℤ := fun T => 2 * (rowRank U T : ℤ) - T.card
   have hw (T : Finset Ω) := invariant_half_rank_weak U hΩ hU htrans hinv T
-  have hn (T : Finset Ω) : 0 ≤ f T := by dsimp [f]; omega
+  have hn (T : Finset Ω) : 0 ≤ f T := by dsimp [f]; have hh := hw T; omega
   have hf0 : f ∅ = 0 := by simp [f, rowRank_empty]
   have hsub (A B : Finset Ω) : f (A ∪ B) + f (A ∩ B) ≤ f A + f B := by
     have hr := rowRank_submodular U A B
@@ -648,7 +649,7 @@ variable [FiniteDimensional F D] [Algebra.IsSeparable F D] [FiniteDimensional F 
 variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
 
 private def galoisCoordinates (g : K ≃ₐ[F] K) :
-    ((D →ₐ[F] K) → K) ≃ₛₗ[g.toRingEquiv] ((D →ₐ[F] K) → K) where
+    ((D →ₐ[F] K) → K) ≃ₛₗ[g.toRingEquiv.toRingHom] ((D →ₐ[F] K) → K) where
   toFun x σ := g (x (g⁻¹ • σ))
   invFun x σ := g.symm (x (g • σ))
   left_inv x := by ext σ; simp
@@ -774,7 +775,7 @@ private theorem no_tight_triple (U : Submodule K (Ω → K))
         omega
     exact Finset.disjoint_iff_inter_eq_empty.mpr (Finset.card_eq_zero.mp hzero)
   let O := (Finset.univ : Finset G).image (orbitSet C)
-  have horbit : O.biUnion id = Finset.univ := by
+  have horbit : O.biUnion _root_.id = Finset.univ := by
     ext i
     simp only [Finset.mem_univ, iff_true]
     obtain ⟨c, hc⟩ := Finset.card_pos.mp (by omega : 0 < C.card)
@@ -782,7 +783,7 @@ private theorem no_tight_triple (U : Submodule K (Ω → K))
     exact Finset.mem_biUnion.mpr ⟨orbitSet C g,
       Finset.mem_image.mpr ⟨g, Finset.mem_univ _, rfl⟩,
       Finset.mem_image.mpr ⟨c, hc, hg⟩⟩
-  have hdis : (O : Set (Finset Ω)).PairwiseDisjoint id := by
+  have hdis : (O : Set (Finset Ω)).PairwiseDisjoint _root_.id := by
     intro A hA B hB hne
     obtain ⟨g, _, rfl⟩ := Finset.mem_image.mp hA
     obtain ⟨h, _, rfl⟩ := Finset.mem_image.mp hB
@@ -827,10 +828,10 @@ private def crossRank (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Finset Ω) : �
 
 private theorem crossRank_matrix (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Finset Ω) :
     ((LinearMap.toMatrix' n).submatrix (fun i : S => (i : Ω))
-      (fun j : Sᶜ => (j : Ω))).rank = crossRank n S := by
+      (fun j : ↥(Sᶜ) => (j : Ω))).rank = crossRank n S := by
   let M := (LinearMap.toMatrix' n).submatrix (fun i : S => (i : Ω))
-    (fun j : Sᶜ => (j : Ω))
-  have hext (j : Sᶜ) : coordinateExtend (K := K) Sᶜ (Pi.single j 1) =
+    (fun j : ↥(Sᶜ) => (j : Ω))
+  have hext (j : ↥(Sᶜ)) : coordinateExtend (K := K) Sᶜ (Pi.single j 1) =
       Pi.single (j : Ω) 1 := by
     ext i
     by_cases hi : i ∈ Sᶜ
@@ -839,7 +840,7 @@ private theorem crossRank_matrix (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Fins
       simp [coordinateExtend, hi, Pi.single_apply, hij]
   have hmap : (coordinateExtend S).comp M.mulVecLin =
       (coordinateProject S).comp (n.comp (coordinateExtend Sᶜ)) := by
-    apply (Pi.basisFun K Sᶜ).ext
+    apply (Pi.basisFun K ↥(Sᶜ)).ext
     intro j
     ext i
     simp only [Pi.basisFun_apply, LinearMap.comp_apply, Matrix.mulVecLin_apply,
@@ -856,7 +857,7 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
     (n : (Ω → K) →ₗ[K] (Ω → K)) (hker : n.ker = U) (hrange : n.range = U)
     (hΩ : Fintype.card Ω = 8) (hU : finrank K U = 4) (S : Finset Ω) :
     2 * rowRank U S ≤ S.card + crossRank n S := by
-  let f : (Sᶜ → K) →ₗ[K] U := (n.comp (coordinateExtend Sᶜ)).codRestrict U (by
+  let f : (↥(Sᶜ) → K) →ₗ[K] U := (n.comp (coordinateExtend Sᶜ)).codRestrict U (by
     intro x
     rw [← hrange]
     exact ⟨coordinateExtend Sᶜ x, rfl⟩)
@@ -893,7 +894,7 @@ private theorem cross_rank_bound (U : Submodule K (Ω → K))
   have hr : finrank K (g.comp f).range = crossRank n S := rfl
   have hc : Sᶜ.card + S.card = 8 := by
     simpa [hΩ] using Finset.card_compl_add_card S
-  have hdim : finrank K (Sᶜ → K) = Sᶜ.card := by simp
+  have hdim : finrank K (↥(Sᶜ) → K) = Sᶜ.card := by simp
   have hu := coordinate_rank_nullity U S
   rw [hU] at hu
   rw [hr, hdim] at hnull
@@ -950,19 +951,27 @@ private theorem baseOperator_range :
   ext z
   have hh := congrArg (fun p : Submodule F (K ⊗[F] D) => z ∈ p)
     (LinearMap.lTensor_range K (g := actualOperator W hD hW a ha))
-  simpa only [actualOperator_range, LinearMap.mem_range, LinearMap.baseChange_eq_lTensor]
-    using hh
+  rw [actualOperator_range] at hh
+  exact Iff.of_eq hh
 
 private theorem splitOperator_kernel :
     LinearMap.ker (splitOperator K hK W hD hW a ha) = splitWindow K hK W := by
   ext x
   change (splitEquiv F D K hK)
     ((actualOperator W hD hW a ha).baseChange K ((splitEquiv F D K hK).symm x)) = 0 ↔ _
-  rw [(splitEquiv F D K hK).map_eq_zero_iff]
+  have he (y : K ⊗[F] D) : splitEquiv F D K hK y = 0 ↔ y = 0 := by
+    constructor
+    · intro hy
+      apply (splitEquiv F D K hK).injective
+      simpa only [map_zero] using hy
+    · rintro rfl
+      exact map_zero _
+  rw [he]
   change (splitEquiv F D K hK).symm x ∈
     LinearMap.ker ((actualOperator W hD hW a ha).baseChange K) ↔ _
   rw [baseOperator_kernel]
-  exact (splitWindow_mem_iff K hK W _).symm
+  simpa only [AlgEquiv.apply_symm_apply] using
+    (splitWindow_mem_iff K hK W ((splitEquiv F D K hK).symm x)).symm
 
 private theorem splitOperator_range :
     LinearMap.range (splitOperator K hK W hD hW a ha) = splitWindow K hK W := by
@@ -972,7 +981,9 @@ private theorem splitOperator_range :
 
 private theorem splitOperator_square_zero :
     (splitOperator K hK W hD hW a ha).comp (splitOperator K hK W hD hW a ha) = 0 := by
-  ext x
+  apply LinearMap.ext
+  intro x
+  change splitOperator K hK W hD hW a ha (splitOperator K hK W hD hW a ha x) = 0
   apply (LinearMap.mem_ker).mp
   rw [splitOperator_kernel, ← splitOperator_range K hK W hD hW a ha]
   exact ⟨x, rfl⟩
@@ -1076,9 +1087,9 @@ private theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
         S.card + 1 ≤ 2 * finrank K (U.map (coordinateProject S))) ∧
       (∀ S : Finset (D →ₐ[F] K), 2 ≤ S.card → S.card ≤ 6 →
         2 ≤ (N.submatrix (fun i : S => (i : D →ₐ[F] K))
-          (fun j : Sᶜ => (j : D →ₐ[F] K))).rank ∨
-        2 ≤ (N.submatrix (fun i : Sᶜ => (i : D →ₐ[F] K))
-          (fun j : Sᶜᶜ => (j : D →ₐ[F] K))).rank) := by
+          (fun j : ↥(Sᶜ) => (j : D →ₐ[F] K))).rank ∨
+        2 ≤ (N.submatrix (fun i : ↥(Sᶜ) => (i : D →ₐ[F] K))
+          (fun j : ↥(Sᶜᶜ) => (j : D →ₐ[F] K))).rank) := by
   have hsplit : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits := by
     intro d
     have hh := Normal.splits (inferInstance : Normal F K) (algebraMap D K d)
