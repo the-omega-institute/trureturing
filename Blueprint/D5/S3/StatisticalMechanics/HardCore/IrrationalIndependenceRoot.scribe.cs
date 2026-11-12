@@ -12,7 +12,8 @@ internal sealed class IrrationalIndependenceRootDocument : IScribeDocumentDefini
         Blocks(
             Paragraph(Text(
                 "Brown and Cameron, A note on purely imaginary independence roots, "
-                + "arXiv:2001.08881v2, Question 2 on printed page 11, ask whether a graph can have "
+                + "arXiv:2001.08881v2, DOI 10.1016/j.disc.2020.112113, "
+                + "Question 2 on printed page 11, ask whether a graph can have "
                 + "an independence root bi with irrational real b. The polynomial counts every independent "
                 + "vertex subset by cardinality, with the empty subset contributing one. "
                 + "There is no prescribed graph order, connectivity, independence number, or lower bound on the modulus.")),
@@ -35,7 +36,10 @@ internal sealed class IrrationalIndependenceRootDocument : IScribeDocumentDefini
                     + "giving (1+4X)^4. Each isolated pair contributes 2X+X^2 beyond the empty subset; "
                     + "the forty-four-clique contributes 44X. Thus the actual independent-subset sum is "
                     + "(1+4X)^4+34(2X+X^2)+44X = 1+128X+130X^2+256X^3+256X^4 "
-                    + "= (1+2X^2)(1+128X+128X^2)."))),
+                    + "= (1+2X^2)(1+128X+128X^2). The degree is exactly four. For every "
+                    + "natural k, the number of independent k-subsets is 1, 128, 130, 256, 256 "
+                    + "for k=0,1,2,3,4 respectively, and zero for every k greater than four. "
+                    + "These counts are cardinalities of filtered actual configuration families."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("hc-irrational-root-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Existence with irrational imaginary part"),

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/HardCore/IrrationalIndependenceRoot
    mirror-E: none(waiver:exact-symbolic-independent-subset-counting)
-   anchors: [arxiv/2001.08881v2]
+   anchors: []
    utility: none
    digest: An actual finite graph has an irrational purely imaginary independence root. -/
 
@@ -127,13 +127,46 @@ private lemma partition_graph {R : Type} [CommRing R] (z : R) :
   norm_num only [card_univ, Fintype.card_fin, Nat.cast_ofNat]
   ring
 
-/-- This is the integer polynomial obtained by summing over all actual independent
-subsets, rather than by assigning a proposed coefficient list. -/
+private lemma coefficient_count {α : Type} [DecidableEq α]
+    (G : SimpleGraph α) [DecidableRel G.Adj] (V : Finset α) (k : ℕ) :
+    (independencePolynomial G V).coeff k =
+      (((configurations G V).filter (fun S => S.card = k)).card : ℤ) := by
+  simp [independencePolynomial, partition, Finset.prod_const,
+    Polynomial.coeff_X_pow, eq_comm]
+
+/-- The integer polynomial, its actual degree, and all independent-subset counts,
+including the empty subset and the entire zero tail. -/
 theorem native_polynomial :
     independencePolynomial graph univ =
-      (1 + 2 * X ^ 2) * (1 + 128 * X + 128 * X ^ 2) := by
-  rw [independencePolynomial, partition_graph]
-  ring
+      (1 + 2 * X ^ 2) * (1 + 128 * X + 128 * X ^ 2) ∧
+    (independencePolynomial graph univ).natDegree = 4 ∧
+    (∀ k : ℕ, ((configurations graph univ).filter (fun S => S.card = k)).card =
+      if k = 0 then 1 else if k = 1 then 128 else if k = 2 then 130
+      else if k = 3 then 256 else if k = 4 then 256 else 0) := by
+  have hp : independencePolynomial graph univ =
+      1 + 128 * X + 130 * X ^ 2 + 256 * X ^ 3 + 256 * X ^ 4 :=
+    partition_graph (X : Polynomial ℤ)
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hp]
+    ring
+  · rw [hp]
+    compute_degree <;> norm_num
+  · intro k
+    have hc := coefficient_count graph univ k
+    rw [hp] at hc
+    generalize hN : ((configurations graph univ).filter (fun S => S.card = k)).card = N at hc ⊢
+    by_cases h0 : k = 0
+    · subst k; norm_num [Polynomial.coeff_one, Polynomial.coeff_X] at hc ⊢; exact_mod_cast hc.symm
+    by_cases h1 : k = 1
+    · subst k; norm_num [Polynomial.coeff_one, Polynomial.coeff_X] at hc ⊢; exact_mod_cast hc.symm
+    by_cases h2 : k = 2
+    · subst k; norm_num [Polynomial.coeff_one, Polynomial.coeff_X] at hc ⊢; exact_mod_cast hc.symm
+    by_cases h3 : k = 3
+    · subst k; norm_num [Polynomial.coeff_one, Polynomial.coeff_X] at hc ⊢; exact_mod_cast hc.symm
+    by_cases h4 : k = 4
+    · subst k; norm_num [Polynomial.coeff_one, Polynomial.coeff_X] at hc ⊢; exact_mod_cast hc.symm
+    simp [coeff_one, coeff_X, coeff_X_pow, h0, h1, Ne.symm h1, h2, h3, h4] at hc ⊢
+    exact_mod_cast hc.symm
 
 private lemma vertex_card : Fintype.card Vertex = 128 := by
   have hc (n : ℕ) : Fintype.card (Copies (Fin 2) n) = 2 * n := by
@@ -168,7 +201,7 @@ theorem result : ∃ (n : ℕ) (G : SimpleGraph (Fin n)) (b : ℝ),
         (independencePolynomial G univ) = 0 := by
   classical
   refine ⟨128, finGraph, (Real.sqrt 2)⁻¹, irrational_sqrt_two.inv, ?_⟩
-  rw [fin_polynomial, native_polynomial]
+  rw [fin_polynomial, native_polynomial.1]
   have hs : ((Real.sqrt 2 : ℝ) : ℂ) ^ 2 = 2 := by
     norm_cast
     exact Real.sq_sqrt (by norm_num)
