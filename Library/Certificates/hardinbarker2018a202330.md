@@ -14,7 +14,7 @@ triage: anchor
 
 # OEIS A202330
 
-## Source and license
+## Verified locator
 
 The OEIS Foundation Inc., [A202330](https://oeis.org/A202330), revision 8,
 2018-05-27 14:42:35, NAME, FORMULA and OFFSET fields, unpaginated.

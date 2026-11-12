@@ -99,20 +99,20 @@ The designated formal source is
 `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA202330.lean` and its matching
 Blueprint Scribe. The proof uses only the existing transfer theorem, finite
 cardinality transport, polynomial identities, induction and formal power-series
-algebra. Current canonical compilation and independent source fidelity remain
-required before formal delivery is accepted. No freeze or solved-event count
-is asserted by this dossier.
+algebra. Canonical compilation and scoped reporting succeed for the D5 source
+and its Reg mirror at these mathematical sources. Verification of the emitted
+Blueprint formulas and the remaining delivery checks are unfinished. No freeze
+or solved-event count is asserted by this dossier.
 
 ## Triage
 
 The source unit contains the complete native target and a direct Lean proof.
-Its selected Scribe script and candidate whole-sequence audit compile. Current
-canonical Lean/report evidence is unavailable because the shared main cache is
-busy. The source-owner audit remains unfinished under
-[issue #29528](https://github.com/the-omega-institute/trureturing/issues/29528);
-the missing item is current canonical binding evidence, rather than an observed
-template rejection. The dossier does not assert StageA readiness, a freeze,
-a merge or solved-event credit.
+Its selected Scribe script and candidate whole-sequence audit compile. The
+source-owner audit remains unresolved because source selection and a validation
+certificate are absent. It remains unfinished under
+[issue #29528](https://github.com/the-omega-institute/trureturing/issues/29528)
+and the CLAUDE §3.9 linked-issue exception. Rendering, freeze, required CI,
+integration and delivery remain unfinished; no solved-event credit is asserted.
 
 ## ASSUMED-UNVERIFIED
 
