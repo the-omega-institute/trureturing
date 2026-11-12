@@ -33,7 +33,7 @@ internal sealed class TrigonometricMomentGapDocument : IScribeDocumentDefinition
     private static Formula Num(int n) =>
         D([.. n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0'))]);
     private static Formula Q(int a, int b) => Seq(Frac, Grp(Num(a)), Grp(Num(b)));
-    private static Formula Half(Formula a, Formula b) => Seq(Q(1, 2), Cdot, Open, a, Plus, b, Close);
+    private static Formula Half(Formula a, Formula b) => Seq(Q(1, 2), Cdot, Sp, Open, a, Plus, b, Close);
     private static Formula Excludes(Formula x) => Ex("f", Dual, And(Conf(V("f")), Eq(App(V("f"), x), D(0))));
 
     public DocumentDefinition Create()
@@ -73,7 +73,7 @@ internal sealed class TrigonometricMomentGapDocument : IScribeDocumentDefinition
                 Def("Carrier", "The original homogeneous carrier", Eq(Space, Seq(R, Times, X)), "The first coordinate is mass, and the remaining four coordinates are unnormalized moments."),
                 Def("momentCurve", "The complete moment curve", All("theta", R,
                     Eq(C("momentCurve", theta), C("tuple", C("cos", theta), C("sin", theta),
-                        C("cos", Seq(D(2), Cdot, theta)), C("sin", Seq(D(2), Cdot, theta))))),
+                        C("cos", Seq(D(2), Cdot, Sp, theta)), C("sin", Seq(D(2), Cdot, Sp, theta))))),
                     "The full real parameter domain is retained."),
                 Def("body", "The original convex body", Eq(C("body"), C("convexHull", R, C("range", C("momentCurve")))),
                     "The convex hull of the entire curve, with no finite approximation."),
@@ -89,13 +89,13 @@ internal sealed class TrigonometricMomentGapDocument : IScribeDocumentDefinition
                 Def("unit", "The unchanged original unit", All("w", Space, Eq(App(C("unit"), w), C("fst", w))),
                     "The first-coordinate real-linear map. It is strictly positive at every nonzero element of the cone."),
                 Def("effect", "Every real-linear original effect", All("a", R, All("b", X, All("w", Space,
-                    Eq(App(C("effect", a, b), w), Seq(a, Cdot, C("fst", w), Plus, C("dot", b, C("snd", w))))))),
+                    Eq(App(C("effect", a, b), w), Seq(a, Cdot, Sp, C("fst", w), Plus, C("dot", b, C("snd", w))))))),
                     "The dot product sums all four coordinates. Every real-linear map from Carrier to the reals has this form; properness is not assumed in this representation."),
                 Def("trigonometric", "The full degree-two restriction", All("a", R, All("b", X, All("theta", R,
-                    Eq(trig, Seq(a, Plus, App(b, D(0)), Cdot, C("cos", theta), Plus,
-                        App(b, D(1)), Cdot, C("sin", theta), Plus,
-                        App(b, D(2)), Cdot, C("cos", Seq(D(2), Cdot, theta)), Plus,
-                        App(b, D(3)), Cdot, C("sin", Seq(D(2), Cdot, theta))))))),
+                    Eq(trig, Seq(a, Plus, App(b, D(0)), Cdot, Sp, C("cos", theta), Plus,
+                        App(b, D(1)), Cdot, Sp, C("sin", theta), Plus,
+                        App(b, D(2)), Cdot, Sp, C("cos", Seq(D(2), Cdot, Sp, theta)), Plus,
+                        App(b, D(3)), Cdot, Sp, C("sin", Seq(D(2), Cdot, Sp, theta))))))),
                     "The original proper interval is exactly the set of these polynomials whose values lie in [0,1] at every real angle. Both implications are proved on the entire cone."),
                 Def("pairSupport", "The full exposed two-point zero face", All("a", R, All("b", R, All("theta", R,
                     Eq(App(C("pairSupport", a, b), C("curve", theta)),
