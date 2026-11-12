@@ -138,10 +138,23 @@ proof-shape review remain required before freezing.
 
 ## ASSUMED-UNVERIFIED
 
-The inherited literature screen is bounded: six citing full texts, exact MathDB
-solution pages, and the original 2011 Alwardi–Soner–Gutman PDF remain unread.
+The literature screen is bounded. Jannat's author-deposited thesis Chapter 2,
+printed pages 23–45, contains the prior general bound but no explicit all-group
+Conjecture 2 settlement was located in that reading. Selected readings of
+Chapters 1, 3, 4 and 7 distinguish individual noncentral vertices, restricted
+group families and conjugacy-class graphs; these readings and keyword searches
+are not a proof of absence. The institutional sources and their relationship
+to accepted paper [81] are recorded in `jannat2024cnzagreb`.
+The original 2011 Alwardi–Soner–Gutman definitions and $C=A^2-D$ identity have
+also been checked, as recorded in `nath2021commutingcn`.
+
+Fasfous's 2021 thesis, the latest standalone accepted Nath–Jannat–Das manuscript,
+six citing full texts and exact MathDB solution pages remain unread.
+The 17 OpenAlex and 17 Semantic Scholar forward-citation records were metadata
+screens, not full-text readings of every record.
 arXiv:2605.22160v1 treats clique unions and CC-ring cases; DOI
 10.3390/math13111834 treats dihedral and generalized-quaternion families.
+The former concerns Conjecture 3, rather than the all-group Conjecture 2.
 Those readings do not establish worldwide absence of an earlier all-group
 settlement, global priority, or an exhaustive bibliography.
 

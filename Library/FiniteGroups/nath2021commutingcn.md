@@ -26,6 +26,13 @@ with SHA-256 `2f02c5ddc74678fa272ea30169d5dc75aae11bed13a64ea2031f6de60f1f000b`.
 The conjecture imposes no abelian-centralizer, quotient, genus, regularity or
 connectivity restriction.
 
+The original Alwardi–Soner–Gutman common-neighborhood definition is available
+from the [EMIS mirror](https://www.maths.tcd.ie/EMIS/journals/BSANU/36/r4.pdf),
+SHA-256 `0a51328894227131c874dfa46e93a7abc94bf3a983e3b5bd54ddb41d6bd41e07`.
+Definitions 1.5–1.7 on printed page 51 specify the matrix and spectral energy;
+Example 2.1 on page 52 gives the complete-graph value, and Proposition 2.7 on
+page 53 states $C=A^2-D$.
+
 The publisher source is CC BY 4.0. This citation-only note contains no copied
 proof, program, figure or data table.
 
