@@ -220,7 +220,19 @@ For every finite index type of cardinality three, commutative ring R, nontrivial
 
 The pair family is the full powerset of pairDomain. The star family is the powerset of starDomain with the powerset of starTailDomain removed. The proved disjoint configuration decomposition therefore evaluates using Mathlib's powerset product expansion. The empty configuration occurs once, in the pair family. This is the polynomial defined by the native independent-set sum, without an assumed counting formula.
 
-**Theorem 1.18 (Coefficients count all actual independent subsets).**
+**Theorem 1.18 (Every native coefficient is an independent-subset count).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.coefficient_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.coefficient_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every commutative ring R, finite set V of its actual zero divisor vertices, and natural rank k, the integer coefficient at k of the native independence polynomial equals the cardinality of the independent configurations on V having exactly k vertices, cast to the integers. No product decomposition or coordinate assumptions are needed.
+
+**Theorem 1.19 (Coefficients count all actual independent subsets).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independent_count_formula`
 
@@ -234,7 +246,7 @@ Under the same full hypotheses and for every natural k, the integer cast of the 
 
 Each configuration contributes exactly X to the power of its cardinality in the native polynomial. Extracting coefficient k is therefore the cardinality of the filter by cardinality k. Mathlib's coefficient formula for (1+X) to a natural power then gives the displayed binomial expression, including k=0 and ranks above every family size.
 
-**Theorem 1.19 (All six multiplicities in the full ring graph).**
+**Theorem 1.20 (All six multiplicities in the full ring graph).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.independencePolynomial_three_coordinates`
 
@@ -255,6 +267,7 @@ The exact native polynomial and coefficient counts do not establish log concavit
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.SupportedVertex`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.Vertex`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.actualSupportIso`
+- Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.coefficient_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.configurations_four_families`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.coordinateSupport`
 - Truth anchor: `D5/S3/Combinatorics/Graph/ZeroDivisor/Support.crt`
