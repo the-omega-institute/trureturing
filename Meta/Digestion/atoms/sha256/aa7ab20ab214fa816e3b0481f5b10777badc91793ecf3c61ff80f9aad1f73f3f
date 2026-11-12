@@ -1,0 +1,11 @@
+**定义 37.1（固定实际三次域与四维窗口）。** 固定特征零域 $F$、实际有限扩张 $D/F$ 及已经存在的实际中间域 $F\subseteq A\subseteq D$，$[A:F]=3$。对四维 $F$-子空间 $W\le_F D$，沿用 §§28–29、36 的记号
+
+$$
+d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),\qquad
+AW=\operatorname{span}_A W\subseteq D,\qquad
+r_W(A)=\dim_A AW.
+\tag{37.1}
+$$
+
+所有标量与张成都使用原 $D$ 的乘法；不要求 $F(W/W)=D$，也不要求稳定子 $E_W=\{c\in D:cW\subseteq W\}$ 等于 $F$。
+

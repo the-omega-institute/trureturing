@@ -1,0 +1,10 @@
+**（一）零平方缺陷的 Jordan 闭包。** 暂取一般有限 EJA $X,Y$，正保单位实线性映射 $\Phi:X\to Y$。对 $a=\sum_i\lambda_ie_i$ 的完整谱框架，置 $z_i=\Phi e_i\ge0,b=\Phi a$。由 $\sum_i z_i=1,\sum_i\lambda_i z_i=b$ 及二次表示保正，
+$$
+P_{\lambda1-b}=\lambda^2\mathrm{id}-2\lambda\ell_b+P_b,\qquad
+\Delta(a):=\Phi(a^2)-b^2=\sum_iP_{\lambda_i1-b}z_i\ge0. \tag{75.12}
+$$
+求和三项分别为 $\Phi(a^2),-2b^2,b^2$；不要求 $\lambda_i1-b\ge0$，所以此证包含 Albert。若 $\Delta(a)=0$，对任意实 $t$、任意 $x$，
+$$
+0\le\Delta(a+tx)=2t[\Phi(a\circ x)-\Phi a\circ\Phi x]+t^2\Delta(x). \tag{75.13}
+$$
+分别令 $t$ 从正、负两侧趋零，锥闭且尖即得 $\Phi(a\circ x)=\Phi a\circ\Phi x$。若 $a,c$ 均零缺陷，展开 $\Delta(a+c)$ 并用此混合恒等式得零；$\Delta(ta)=t^2\Delta(a)$，故 $\mathcal D_\Phi=\{a:\Delta(a)=0\}$ 是含单位的实线性空间。还需闭平方：幂结合性与混合恒等式依次给 $\Phi(a^2)=b^2,\Phi(a^3)=b^3,\Phi(a^4)=b^4$，从而 $\Delta(a^2)=b^4-(b^2)^2=0$。极化遂使 $\mathcal D_\Phi$ 成为 Jordan 子代数；仅有线性闭包尚不足以得到这点。

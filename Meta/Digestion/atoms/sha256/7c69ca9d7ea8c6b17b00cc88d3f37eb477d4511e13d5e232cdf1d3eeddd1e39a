@@ -1,0 +1,21 @@
+**推论 74.10（原静态消费者及逆向）。** 恢复 PRE 后，66.3、66.8 在 C13 之前已给保原迹 Jordan 坐标中的
+$$
+A=\bigoplus_iH_{n_i}(\mathbb C),\quad D=\bigoplus_{i,j}H_{n_in_j}(\mathbb C),\quad E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\quad n=\sum_i n_i,
+$$
+$$
+\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda),\qquad
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,\quad0\le f_\lambda\le I_\lambda. \tag{74.18}
+$$
+扇区集有限非空，$n_i\ge1$；全部有序块、重复标签、经典标量及混合扇区都保留。纯态是单扇区射影纯态，同区比较为平方重叠、异区为零；全部纠缠态仍在原态基。H13 只补组合的相对方向相容性。
+**证明与参数。** C13 前必须保留 66.4—66.7 的有序转置位及全锥正读回的完整方向限制；不能提前取共同普通方向。由定理 74.9 恢复 C13 后，才按 66.10、65.9—65.11 同时取辅助 $F(a,b)_{ij}=a_i\otimes b_j$、$N(d,c)_{ijk}=d_{ij}\otimes c_k$。全部原始模型恰是
+$$
+M(a,b)_{ij}=a_i\otimes\sqrt{u_{ij}}b_j\sqrt{u_{ij}},\qquad
+L(d,c)_{ijk}=d_{ij}\otimes\sqrt{g_{ijk}}c_k\sqrt{g_{ijk}},\qquad
+u_{ij},g_{ijk}>0,\quad\sum_{i,j}n_i\operatorname{Tr}(u_{ij}^{-1})=n^2. \tag{74.19}
+$$
+置 $A_{jk}=I_j\otimes\sqrt{u_{jk}}$、$W_{ijk}=I_i\otimes u_{ij}^{-1/2}\otimes g_{ijk}^{-1/2}$，同一个原读回在整个 $E$ 上唯一为
+$$
+(pz)_{jk}=A_{jk}\left[\sum_i\operatorname{Tr}_1(W_{ijk}z_{ijk}W_{ijk})\right]A_{jk},\qquad \omega_{ij}=I_{n_in_j}/n^2. \tag{74.20}
+$$
+65.11 的逆向从这些 $L,p$、原 $\omega$ 重算同一个 $p$ 两次，给实际 $M$ 及所有原前件；定理 74.7 与 72.8 再给有限关系和 H13，故双向闭合。唯一权重约束是所列逆迹平衡，不另要求跨块对称、共同对角化或同腿的 $u,g$ 交换。辅助归一化一般不保原迹一截面，不能删去权重或转送为原 $M,H_{\mathrm s}$ 保单位、原 $p$ 保迹；其精确边界仍按 65.12、66.8—66.9，原插入伴随也一般不保迹。∎
+

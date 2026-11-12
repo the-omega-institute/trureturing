@@ -1,0 +1,108 @@
+**定理 42.2（全部原子空间的完整纤维分类）。** 对原 $D$ 中每个非零有理子空间 $Y$，下列条件等价：
+
+$$
+\begin{aligned}
+&Q_Y=Q_X;\\
+&d_Y(r)=d_X(r)\qquad\text{对每个原 }r\in D^\times;\\
+&Y=\gamma X\quad\text{或}\quad Y=\gamma Z
+\qquad\text{对某个原 }\gamma\in D^\times.
+\end{aligned}
+\tag{42.2}
+$$
+
+这两个原标量轨道彼此不同。因此完整商支持纤维与完整交维函数纤维均恰好由这两个轨道组成。进一步，在 $Q_Y=Q_X$ 的条件下，单个共同见证读数满足
+
+$$
+\begin{aligned}
+J_Y(\alpha,\alpha^3)=1&\quad\Longleftrightarrow\quad Y=\gamma X,\\
+J_Y(\alpha,\alpha^3)=0&\quad\Longleftrightarrow\quad Y=\gamma Z,
+\end{aligned}
+\qquad\gamma\in D^\times.
+\tag{42.3}
+$$
+
+证明。先由支持确定维数。式 (41.13) 给出原 $Q_X$ 的嵌入闭包维数为七，且 $Q_X\ne D$。若 $m=\dim_{\mathbb Q}Y\le3$，其逐坐标商参数 $[u:v]$ 共有至多 $2m-1\le5$ 个独立参数：在分母的任一非零基坐标片上，公共缩放可将该坐标置为一。因此 $Q_Y$ 的几何闭包维数至多五，不能等于 $Q_X$ 的闭包。若 $m\ge5$，则对每个 $r\in D^\times$ 都有
+
+$$
+\dim(Y\cap rY)\ge2m-8>0,
+$$
+
+所以 $Q_Y=D$，也不可能。故 $Q_Y=Q_X$ 强制 $m=4$。
+
+现在应用定理 41.2。其第一种非基集合 $\mathcal A\cup\mathcal B$ 是经典拟阵 $P_8$ 的一个固定标签版本。精确对应为
+
+$$
+\begin{array}{c|rrrrrrrr}
+\text{原嵌入标签}&0&1&2&3&4&5&6&7\\\hline
+P_8\text{ 标签}&1&2&8&6&4&3&5&7.
+\end{array}
+\tag{42.4}
+$$
+
+在此对应下，十个非基依次成为
+
+$$
+\begin{gathered}
+1238,\ 2568,\ 4678,\ 1346,\ 2345,\\
+3578,\ 1567,\ 1247,\ 1458,\ 2367,
+\end{gathered}
+\tag{42.5}
+$$
+
+其中 $1238$ 表示 $\{1,2,3,8\}$。这正是 Pendavingh–van Zwam，[*Confinement of matroid representations to subsets of partial fields*，arXiv:0806.4487v2，Theorem 4.18、式 (81)、Lemma 5.2](https://arxiv.org/html/0806.4487v2) 所用 $P_8$ 的十个非基。其标准表示为
+
+$$
+[\,I_4\mid A_8\,],\qquad
+A_8=\begin{pmatrix}
+0&1&1&2\\
+1&0&1&1\\
+1&1&0&1\\
+2&1&1&0
+\end{pmatrix}.
+\tag{42.6}
+$$
+
+这里直接消费该成熟结果的特征零有标签表示唯一性，不将 $P_8$ 或其唯一性列作新定理。为明确所用的等价关系，原文 Theorem 4.18 的固定基和树归一化把任意表示化为
+
+$$
+\left[\,I_4\ \middle|\
+\begin{matrix}
+0&1&1&x\\
+1&0&1&1\\
+y&z&0&1\\
+u&v&1&0
+\end{matrix}\right].
+$$
+
+其中五个变量均非零；非基 $1458,2367$ 给出 $y=v=1$，非基 $4678,1567,2568,3578$ 给出原文式 (57)–(60)：
+
+$$
+2-x=0,\qquad z+1-zu=0,\qquad
+u+x(1-zu)=0,\qquad u+x(1-u)=0.
+$$
+
+因此 $x=u=2$、$z=1$，全部归一化参数唯一，恰得 (42.6)。这些变换只使用行基变换与各列的非零缩放；转置回八行嵌入矩阵，便是列基变换与八行的独立缩放。式 (42.4) 对两份配置使用同一个置换，比较后消去该置换，故没有改变任何原域标签。
+
+若 $\mathcal N(Y)=\mathcal N(X)$，该唯一性于是给出
+
+$$
+Y\otimes K=t(X\otimes K)
+\quad\text{对某个 }t\in(K^\times)^8
+\simeq(D\otimes K)^\times,
+\tag{42.7}
+$$
+
+乘法在分裂坐标中逐坐标进行。若 $\mathcal N(Y)=\mathcal N(Z)$，取标准点积的正交补后，两份配置的非基集合都成为 $\mathcal N(X)$。应用同一唯一性，再取正交补，得到 (42.7) 中以 $Z$ 替换 $X$ 的结论；这是因为 $(tH)^\perp=t^{-1}H^\perp$。
+
+最后将这个分裂乘数返回原域。对 $W=X$ 或 $Z$，式 (42.1) 是原域上的有限线性方程组，扩域保核给出
+
+$$
+T(W,Y)\otimes_{\mathbb Q}K
+=\{c\in D\otimes K:c(W\otimes K)\subseteq Y\otimes K\}.
+\tag{42.8}
+$$
+
+这是 §26 式 (26.9)–(26.10) 使用的同一核扩底事实。式 (42.7) 的非零 $t$ 使右边非零，因此原 $T(W,Y)$ 也非零。选 $0\ne\gamma\in T(W,Y)$；由于 $D$ 为域，乘 $\gamma$ 单射，$\gamma W\subseteq Y$ 又与 $Y$ 同为四维，故 $Y=\gamma W$。至此证明支持相等推出式 (42.2) 的第三项，未将分裂后的任意等价直接冒作原域等价。
+
+反向，原域乘法交换，故整体乘 $\gamma\ne0$ 保持每一个原标签下的二重、三重交维。式 (40.17) 已给出 $d_Z=d_X$，所以第三项推出第二项。交维的正支持恰为非零原商，故第二项推出第一项。两轨道不同由定理 40.5；式 (42.3) 则消费前卷命题 24.2 的已知读数 $J_X(\alpha,\alpha^3)=1$、$J_Z(\alpha,\alpha^3)=0$，再用整体标量不变性。$\square$
+

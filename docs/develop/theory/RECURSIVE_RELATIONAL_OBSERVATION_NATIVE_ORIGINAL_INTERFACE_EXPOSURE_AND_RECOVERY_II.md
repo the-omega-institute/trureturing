@@ -1623,3 +1623,1187 @@ while the full persistent mutual-recovery and
 minimality objective remains open. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Suspended unary receivers in one original-boot source
+
+**Definition 10.1 (source and meaning of the construction).** Let
+$G_O$ be the finite original-boot instance specified in §§10–18.
+The suppliers are CAP2–8, ARC2–3/6, RCA11–13 and RG3–9/16–22/25–38,
+with their source contracts at
+`dec49aff60d5ad95634ef463c1de05c3ce7b4ec6`.
+The source parameters are precisely Definition1.2's single preparation
+$\xi$, private beta packet10, initial capacity1, original prior
+$\{\alpha,\beta\}$, table24, saved original configuration25 and waiting
+packet27, proposal $(0,B,1)$, seed acquisition, source16 and segmented
+address map $\phi_K$. Keep their actual origins and all seven original
+service meanings. Replace only the original-boot native/public code
+supplies by the pair belonging to $G_O$ in Definition12.1.
+This does not modify a reached $G_C$, $G_V$ or $G_{\mathrm H}$.
+
+The foundation is ARC1.2's ideal sequential constructed-tape machine,
+with exactly its74 ports, eight finite symbol latches, current tokens,
+paid finite control and receipt side effect. Finite required boot supply
+and the pointwise progress of reached original service/prior computations
+have Definition1.2's meanings. No future guard bit is a premise for a
+capture. Physical conformance of that primitive foundation is
+ASSUMED-UNVERIFIED. The conclusion is a finite mathematical program
+specification and a constructibility proof in this foundation. It supplies
+neither a printed expanded installation word, an installed/executed native
+artifact, fresh Lean verification, nor physical conformance.
+
+**Definition 10.2 (the complete hook domain).** Expand RG5.1's original
+unary receiver, including the finite testing CTLs that implement its
+symbol alternative. Its input, payload and test latches remain5,69,4:
+
+$$
+\mathtt{IN}(5);\ \mathtt{EX}(69);\
+\mathtt{WR}(69,5);\ \mathtt{RD}(69,4);\
+\text{literal test edges};\ \mathtt{MR}_b(69).
+\tag{O.1}
+$$
+
+The two MR alternatives have their actual successors: another IN on1,
+and original separator/status/descriptor construction on0. The hook set
+$\mathcal H$ contains the initial boundary after completed Base/setup and
+before the first IN, every post-IN, post-EX, post-WR, post-RD, every
+attained testing-CTL boundary, and each post-MR boundary, for both bits.
+A post-MR(1) boundary is already the next pre-IN boundary; it is listed
+once. Literal caller, branch, parity, role permutation and the remaining
+finite native control alternatives distinguish members of this finite set.
+The domain includes every finite attained prefix of an unfinished unary
+word, without requiring that any subsequent bit or zero be supplied.
+It includes every finitely reached external round and each of the three
+actual response-dependent internal stages of RG8.1.
+
+Replace an original receiver-row successor by its designated native
+entry $H_\eta$, $\eta\in\mathcal H$. The public finite map
+$\operatorname{owed}(\eta)$ is the old literal successor, with its actual
+branch. At the initial hook it is the first original IN. Capture exits
+enter this owed row directly. Only these original row identities are
+instrumented: an EX or RD executed inside a capture is not another hook.
+Representing an original row in Step is bank computation, not executing
+that row's live hook. This rule needs no interrupt, request bit, scheduler,
+native recursive call or runtime word-valued return address.
+
+Let $z$ be an attained prefix whose next PC is $H_\eta$, before that
+hook's first row. The selected snapshot is $z$, not the later completion
+of its spill, delivery, checking or return. It has RG invocation1,
+handler/client/original invocation0, idle mailbox, the full pool at $A$,
+and the source-service token at the dispatcher. These are actual entry
+facts inherited from GuardIngress, not permissions read from an image.
+
+**Lemma 10.3 (native context at every declared boundary).** At every
+boundary in Definition10.2 the compiler has a complete sealed active
+$r_O$-field bank, and each live public work role on1–12 has a complete
+current word. There is no pending compiler assignment, partial loan,
+channel parser or native66/67 operand requiring preservation across the
+receiver body. The following are the exact native obligations.
+
+| Boundary | Actual69 head/symbol | Outstanding input | Owed original row |
+| --- | --- | --- | --- |
+| Initial pre-IN or post-MR(1) | Current R | None | IN5 |
+| Post-IN$(b)$ | Existing R at its matching position | Latch5 holds $b$ | EX69 |
+| Post-EX$(b)$ | Blank at that position, new R to its right | Same latch5 bit | WR69,5 |
+| Post-WR$(b)$ | Written $b$ | None | RD69,4 |
+| Post-RD$(b)$ or a testing-CTL boundary | Written $b$;4 has its actual test value | None | Remaining literal test or the selected MR |
+| Post-MR(0) | Current R | None | Original sep/status/descriptor continuation |
+
+*Proof.* RG5.1 enters only after the original raw response and its full
+row/dependency/ACK/source-token return, or after the internal proposal's
+complete construction. Its pool loan is complete. CAP3.3's Base/setup
+finishes its current words before IN. ARC/RG word code reaches this
+native receiver through a completed bank boundary. Between its listed
+rows only69, public latches4/5, finite test control and the meter change.
+The original descriptor work starts after the last zero MR; it is not
+partly executed at that boundary. CAP3.1's work values are newest
+sep-terminated words; dead roles with no value remain dead until New.
+The compiler's native scratch is not an operand of (O.1).
+
+IN changes5 without changing69. EX changes that R to blank, leaves
+its head there and constructs the adjacent R. WR writes exactly5.
+RD then loads4; the expanded finite tests select the actual MR edge.
+MR reaches the existing R in either bit case. This proves the table
+and context assertion by induction over samples, with no zero premise.
+The same argument applies to every reached external/internal caller.
+It does not claim a comparable entry fact inside descriptor construction,
+a compiler dry pass, a partial pool transfer or a copy. ∎
+
+## 11. A native spill whose source is never its destination
+
+**Definition 11.1 (literal spill on actor30).** Write
+$A_p(s)=\mathtt{EX}(p);\mathtt{WR}(p,s);\mathtt{MR}(p)$,
+where $s$ is a literal symbol. Home and Tail are testing RD4/move loops.
+At $H_\eta$, before any RD or assignment, test public4 and5 by the
+PR57.D1 finite testing CTLs. Their eight-by-eight alternatives, together
+with the entry's finite control case, select a literal header branch.
+Private0–3 are neither tested nor changed. Execute Tail30, append a fresh
+F, a fixed-width code of $\eta$, the two three-bit symbol codes for the
+attained4 and5, then F and an ordinary sealing CTL. Finite header width
+is determined by the finite hook/control set. The choices have been
+made before Tail30 overwrites4. No unbounded value is a native state.
+
+For each $p=1,\ldots,12,69$, in that fixed unrolled order, execute:
+
+| Native label | Actual leaves and successor |
+| --- | --- |
+| Save$_p$ | RD$(p,4)$ testing L; on non-L, ML$(p)$, $A_{30}(1)$, and return to Save$_p$ |
+| SaveEnd$_p$ | On L, $A_{30}(0)$, $A_{30}(\mathsf F)$, ordinary seal, MR$(p)$ |
+| Scan$_p$ | RD$(p,4)$ testing R; otherwise choose its literal symbol triple by the ordered finite testing CTLs |
+| Emit$_{p,s}$ | Append the three literal code bits of $s$ to30, MR$(p)$, return to Scan$_p$ |
+| ScanEnd$_p$ | On R, $A_{30}(\mathsf F)$ and ordinary seal; proceed to the next fixed port |
+
+The saved distance is relative to L, including a head on R. A symbol scan
+excludes L/R and includes every ordinary bit, blank, sep, seal and F.
+Symbol codes are the eight-symbol order of ARC2.1, each at width3.
+The spill has one header and26 F-terminated binary fields following its
+fresh initial F. It is raw actor30 material, not a CAP record on29.
+Its declared checking consumer is the target selector/audit in §12.
+It is not a minimality certificate and is not an operative return capsule.
+
+Only after the last field seals may capture normalize helper roles,
+enter the complete bank compiler, and import the closed ordinary30 word
+by ARC3.1's Save/Scan/Restore expansion with source30. That expansion
+uses64–68 as compiler scratch and has no concurrent30 writer.
+Parse exactly the final27 binary fields and their preceding F.
+Each field has no literal F inside its binary payload, so this suffix is
+unambiguous even after arbitrary older CAP/RCA/raw30 material.
+Count its initial F's actual ordinary-cell position $c$ in this imported
+closed word. The fresh F occupies precisely the position that was30's R
+at $z$. No live meter, supplied count or target numeral is read.
+
+**Lemma 11.2 (spill safety, provenance and attained termination).**
+Definition11.1 terminates at every attained $z$. It obtains the exact
+entry4/5, finite control, thirteen source symbol words and head distances.
+It writes no69 cell, changes no source symbol on1–12, and invokes no
+compiler before their context has been saved. In particular post-IN's
+real R and post-EX's real blank survive. The resulting $c$ is the
+actual entry30 R position, acquired by this finite scan.
+
+*Proof.* After $a$ Save iterations, the source has moved $a$ cells left
+and exactly $a$ ones have been appended to the distance field on30.
+Its existing L is a finite bound. At L the terminal0/F is appended,
+and MR reaches its first ordinary cell or R. After $j$ Scan iterations,
+30 contains the first $j$ symbol triples and the source is at its next
+cell. The source cannot grow: every append destination is30, whereas
+all thirteen source ports are different from30. Its attained R is fixed.
+The selected literal triple survives the append leaves without any
+assumption that4 survives a helper. Latch5 is not assigned.
+
+Both loops terminate on these fixed finite sources, even when69 holds
+only an unfinished all-ones word. Each field ends before the next one
+starts. The native rows and actual30 token construct their bytes; the
+subsequent closed importer merely acquires those bytes into bank fields.
+Its compiler assignments move64–68, not its30 source. Counting through
+the imported fixed suffix locates the exact newly created F, including
+all earlier raw fragments and record delimiters. Thus $c$ was measured,
+not guessed from the number of words, guards or captures. The sources'
+heads have moved and4 is scratch after this operation. That is why a
+native return proof is still required. ∎
+
+**Definition 11.3 (capture-only footprint).** Keep original code unchanged
+outside the declared insertions. In the new suspended-receiver capture
+clone, every public parser/compiler/import/metadata read uses4. Channel
+data and OUT use6; channel length/budget tests use7. Replace every other
+capture-only public length-test use of5 by7. Latch5 is reserved from
+first spill to final reload. Finite alternatives select a literal before
+any bank helper overwrites4. Captures have no live IN, BF, source call,
+NativeLocal or Halt. Represented IN/BF/OUT/TOK are literal Step word work.
+
+All capture-only native staging on69 is relocated to actor30: Stage66,
+Stage67, fresh marker, placement staging and placement import. Their
+banks/scratch/descriptors remain64–68. Original completed-entry $G_C$
+and later historical routines retain their own staging69, at entries
+where no unfinished guard bit exists. Port31 is never borrowed.
+
+**Lemma 11.4 (complete pending-latch and destination footprint).** Before
+the final reload of §16, every leaf of this capture clone preserves5
+and every old69 symbol. No second variable IN occurs before the original
+owed WR. The same holds through a successful final reload when an input
+is pending.
+
+*Proof.* The first-spill table reads4, tests public4/5 and writes literal
+symbols to30. ARC/RCA assignments and all acyclic word operations use
+literal branches and public reads4 on64–68; their represented latches
+are bits in bank words. Closed old-data imports use RD4 and move their
+owned sources. Native CAP field/descriptor/status exports write fresh
+30/70/29; their work on1–12 uses4 and the clone's explicit7 length tests.
+Stage66/67 and descriptor positioning use4, with30 as staging source or
+destination in disjoint phases. The channel's tested copy leaves read
+length7 and data6; their WR/OUT consumes6 before another data read.
+Callback import, codecs, replay, re-encoding, audit and comparison are
+those same assignments and literal scans. ACK/availability/invocation
+TOKs do not target latches or69. The native parser, bank and word
+reconstruction below use4 and literal writes, never IN or BF.
+This enumerates the clone's helper families; no inherited latch5 test
+is left implicit. The only final write to5 is an RD that loads the
+selected received target5, proved in §16 to equal the pending bit.
+Original IN5 and WR69,5 lie outside the clone. Ordinary seal tracks and
+heads change only where their actual named leaves say so. ∎
+
+## 12. Enlarged source catalog and attained hook recovery
+
+**Definition 12.1 (finite generated source).** Hygienically inline the
+retained $G_C$ routines with §§10–17's spill, relocated capture helpers,
+argument parser, four decoders/audits, plan encoder, native parser and
+literal restore exits. Calls are statically inlined, with both bank
+parities and the finite role/control alternatives. Number word fields
+by first occurrence to obtain $r_O$. The final native bank parser has
+$r_O$ statically unrolled field cases; it introduces no new word fields.
+Number rows by ARC2.1/RG35.1's textual/port/latch/symbol/false-before-true
+order. Every while has the specified actual source cursor and terminal
+test. Tags beginning RGO are ASCII octets inside Frame; fixed list/tuple
+arities and all exhaustion tests are part of the word specification.
+
+Generate $\Delta_O,E_O,C_O,J_O,\Pi_O$ by Definitions2.2–2.4/4.1's
+algorithms on this finite syntax. Include each new row, finite debt/site
+case, $H_\eta\mapsto\operatorname{owed}(\eta)$ edge, literal restore
+case, actual role permutation, slot and boot constructor. InputFrame
+lists every original IN and its actual destination/next-write path;
+it does not give hooked guard writes the old constant ordinal offsets.
+$J_O$ distinguishes raw/active code, absent bits, both meter marks and
+all new finite locations. No address string interpreted as code becomes
+a free finite location. The native install consumes $E_O$ and the separate
+paid public-copy ingress consumes
+$[\mathtt{RGH\mbox{-}CODE1},\Delta_O,E_O,C_O]$.
+Their original21/17 sender, route48, local28/29 comparison, ACK and pool
+return give the actual acquired lineage $\mathcal B_O$.
+
+The program has generic finite code/catalog parsers; its complete
+$\Delta_O$ is not a literal inside itself. Syntax first determines the
+finite graph and $r_O$, and only then its serialized code and public
+supply. Thus this is a finite effective specification, independent of
+future guard lengths, round count, selected operands and finish time.
+
+**Lemma 12.2 (initialized all-row square for this source).** Step74 with
+$(\Delta_O,E_O,C_O,r_O,\mathcal B_O)$ has precisely the actual native
+successor/event/receipt at each enabled row of this installation.
+It includes spill, relocated staging, native return, earlier interpreters
+and partial boot. The seven-vertex compact instance generated from
+$J_O,\Pi_O$ has the corresponding initialized row square.
+
+*Proof.* Apply the supplied local opcode proof of Definition2.4 and
+RG35.3 to the enlarged finite catalog, checking its new cases.
+Spill and parser leaves are RD, testing CTL, literal WR, ML/MR and EX.
+Reconstruction changes only its named bank/work cells and literal finite
+parity/role/entry bits. No CTL restores a word, grants a decoded right,
+or installs a decoded PC value. Native TOK has its actual source1 and
+destination0 tests. The active code is selected only after real DONE;
+all newly installed finite bits have their paid boot constructors.
+After each core append its actual ordinary/F receipt, retaining the
+core's meter-read mark and resolving aliases in native order.
+The same physical-symbol/mark/slot rule enumeration supplies the finite
+compact patch. These are exactly the supplier's local cases, now on
+this catalog and new row identities. Foundation induction proves the
+square, including interior native return rows. No claimed semantic
+termination of an interpreter is needed for one of its literal rows. ∎
+
+**Definition 12.3 (acquired hook argument and target test).** Before any
+new CAP29 export, close/count29 and acquire the actual25/26/28/29/code
+and seed material by the owned readers of Definition3.1. For this entry
+include the just acquired spill suffix, $\eta$ and its measured $c$.
+The original unfinished guard is a symbol word with an optional sample,
+not a purported complete $U(h)$. Freeze this finite evidence in a fresh
+CAP70 argument, with its measured native29 descriptor/status and real
+invocation transfer. Give raw/reference fields their actual full
+origins; retain earlier joins and complete refusal responses.
+All staging needed for these exports is the30 clone of Definition11.3.
+
+The input-demand program has the following exhaustive evidence map.
+Fixed public boot/code bits have their acquired canonical supplies;
+private packet10 is obtained from the acquired original beta by the
+supplier's converter. Mode and choice bits use their first matching
+consequent25 states, with version/caller/round/preceding ends. Original
+raw13 demands compute their matching-WR address from the represented
+pre-state and select the unique acquired original sender interval and
+its completed local dependency at that origin. All such raw returns
+are complete before GuardIngress. Guard demands use their represented
+pre-IN69 R position. In the frozen raw69 word, a bit at that position
+is that actual written sample. R or blank means the unique outstanding
+sample; use the spill's saved5 with its literal site/debt check. No new
+IN occurs within a capture and no capture writes69. Earlier original
+completed-entry/historical staging appends only after completed guards.
+These alternatives never inspect an unfinished payload's reserved zero
+as if it were a supplied bit.
+
+Start the represented foundation, tally and event list as in
+Definition3.4, with these input rules. Stop at the first represented
+state whose next PC is $H_\eta$ and whose30 R ordinary position is $c$.
+Check its finite context, original69 symbol word/head and entry4/5 against
+the spill; also compare all twelve spilled symbol/head pairs.
+This required comparison is the consumer of that duplicated data.
+The predicate uses reconstructed word data, not a native dynamic PC.
+A target certificate names $(\mathcal B_O,\xi,\eta,c)$, the actual
+proposal/round/previous-end origins and this spill's acquired lineage.
+It contains no input ordinal supplied in advance. A missing/ambiguous
+origin, wrong-site sample, parser failure or reached wrong terminal
+has its distinct finite fault tag, as in Definition5.4.
+
+**Theorem 12.4 (finite recovery at an unfinished original guard).** At
+each attained $z$ whose earlier hooks have returned as specified below,
+Definition12.3 terminates and returns exactly
+
+$$
+\bigl(n,W_z\bigr)=
+\bigl(|z|,(I(z),\mathcal I(z),z,X(z),\operatorname{Bill}(z))\bigr).
+\tag{O.2}
+$$
+
+Its input is already owned finite material obtained after $z$; it needs
+neither another IN, a final zero, a completed current guard state,
+a present-clock read nor a completed current image.
+
+*Proof.* Lemma10.3 gives the full actual local pool and idle channel;
+Lemma11.2 gives a finite spill with no69 writer. The subsequent imports
+have their real actor read rights and fixed unchanged sources. New
+exports have measured fresh intervals and complete descriptors before
+invocation. No private producer port or current meter is read.
+
+The fixed boot/seed input is the same original occurrence. For mode,
+choice and completed earlier guards the consequent-state argument of
+Lemma3.2 applies with $\mathcal B_O$. Raw13 dependencies were received
+and checked before this guard entry, including genuine refusals.
+The raw69 snapshot additionally covers the current unfinished word.
+Every earlier guard input has its distinct persistent position there,
+unless it is the same one input still pending between IN and WR.
+Spill has preserved that bit in5; earlier completed captures preserved
+or reloaded the same bit. Thus every represented input through $z$
+is supplied without a future witness. No original input family has
+been added by the new graph.
+
+Use Lemma12.2 to identify its first $|z|$ represented rows with the
+actual ones. This includes every native loop and receipt of earlier
+captures; Step does not invoke a semantic summary of their results.
+Each finite iteration and predicate test terminates, so the genuinely
+attained $|z|$ gives a pointwise bound on search. Its tally supplies $n$
+only on reaching the target.
+
+Every earlier hook appends at least its fresh F on30 and retains it.
+Consequently30's R position strictly increases between successive hook
+entries, even when they have the same $\eta$, bit, round or guard value.
+No non-hook phase satisfies the PC predicate. The acquired $c$ is exactly
+30's R position at $z$, so there is no earlier satisfying hook and the
+target is unique. Deterministic replay also verifies every spill comparison.
+Its full endpoint has next PC $H_\eta$, whereas the eventual return must
+use $\operatorname{owed}(\eta)$. Confusing these two PCs would enter the
+current capture again. They are kept distinct. ∎
+
+## 13. Own-body input across inserted unfinished-guard captures
+
+**Definition 13.1 (direct readings and separate interfaces).** Generate
+$S_O,B_O,T_O$ by Definition4.1–4.2's support, child-terminal and patch
+schemas using the actual $J_O,\Pi_O$. Use the same five-field memory
+schema, selected directly from the endpoint before any history inverse:
+actual13 cells, actual69 cells, actual meter cells, selected finite
+rights/role bindings, and optional occupied-latch record. Each cell
+contains its eight raw tracks in creation order. A debt state identifies
+the original literal IN/caller/latch5 and its pending bit; it supplies
+neither a destination address nor an ordinal. The debt persists through
+its inserted post-IN/post-EX captures until the original matching WR.
+It is a finite control case generated in $C_O$, not a second input.
+
+PublicO is Definition4.3's canonical public binding with all code,
+register, catalog and compact parameters replaced by this installation's
+ones. It contains no spill, argument70, current input reservoir, target
+image, saved bank, audit endpoint or pending guard value. A target binding
+contains source/code/origin references, $\eta,c$, and the count/bill
+obtained in (O.2), but no operative saved context. Kind $d$ has its own
+ViewRef with this binding and its independently constructed body.
+Its decoder arguments are precisely
+
+$$
+(v_{z,d},b_z,\mathrm{PublicO},P_{z,d}).
+\tag{O.3}
+$$
+
+The placement binding $P_{z,d}$ supplies actual read/positioning authority,
+not endpoint data. Separate decoder work/output fields and the clearing
+rules of Definition4.3 exclude every other body, frozen argument, spill,
+producer candidate and audit work from this read set.
+
+**Lemma 13.2 (pending guard extraction without transplanted offsets).**
+For an authentic body at a supported $z$, each consumed variable bit is
+recoverable from that body's own selected memory. For a guard IN,
+compute its destination $k$ from the represented pre-IN69 R. If the
+body's final symbol there is0/1, that is the bit; if it is R/blank,
+its own occupied5 item is the bit. There is at most one such unresolved
+sample, even across earlier completed captures. No formula $j+3$ for a
+hooked guard write is needed or asserted.
+
+*Proof.* The original guard EX/WR fragment constructs at precisely $k$.
+The first-spill/capture footprint never appends69 or changes its symbols.
+Until WR, this position is therefore R or its EX-created blank. There is
+no next IN before WR, and5 has its actual pending bit, including after
+an earlier successful same-bit reload. After WR, that very position is
+0/1 and every later69 append is fresh. Hence the cases are disjoint and
+exhaustive; a different reservation cannot impersonate this input.
+When post-IN and post-EX captures both occurred before $z$, they are
+still between this one IN and its one WR, not two unresolved inputs.
+
+Mode/choice and unhooked raw13 retain their catalogued input paths.
+At a raw13 IN derive its actual matching destination and finite
+unhooked IN-to-WR path from $C_O$. Compare the resulting write count
+with the count obtained from this body's own meter before reading a
+reserved zero; before WR use its own occupied item instead. At the
+present guard targets all these raw writes and deliveries are past.
+Boot/private/copy inputs are PublicO's prescribed same-source values.
+There is no other native IN leaf. This proves the complete extraction
+rule without an old guard-write timing assumption. ∎
+
+**Theorem 13.3 (independent reconstruction of the full unfinished prefix).**
+Each authentic independently acquired body in (O.3) terminates and
+returns (O.2)'s complete $W_z$, with its actual input origins, native
+records, rights, code, heads, latches, endpoint and costs. It re-encodes
+to its identical received bits. This assertion includes targets whose
+prefixes contain earlier captures at the same still-unwritten input.
+
+*Proof.* For M, count its own meter cells and subtract the two foundation
+cells to obtain $n$. Do not trust the wrapper's claimed numeral for this
+step. Starting at PublicO's foundation, run exactly $n$ literal Step
+iterations. At each variable IN, Lemma13.2 supplies its actual bit from
+this same body. Lemma12.2 therefore identifies the full next row/event.
+Later origins are emitted only after their represented actual creation;
+a pending input is not given a future descriptor. Each iteration and
+finite list lookup terminates. The count is a finite outer bound,
+including when a represented row belongs to an earlier interpreter,
+decoder, first spill or native restore. No such routine's eventual
+answer is treated as a single Step.
+
+S first uses its own raw support inverse to obtain its endpoint and
+hence its own M. B takes its own terminal prefix closure and the same
+support inverse. These are the credited finite-tree inverses of
+RG36.4 and Theorem4.4, on the new catalog. T checks its own chronological
+$\Pi_O$ records, actual IN labels, operands, guards, ordered effects,
+births, commits and receipts, applying the initialized patch square.
+It needs no M from another body. Each route recovers the same native
+prefix and checks its $H_\eta,c$ target, count, bill and source binding.
+The fixed canonical order then gives identical re-encoding.
+
+The pending-latch premise is established before decoding by Lemma11.4;
+the decoder does not need to assume its own future reload. For earlier
+completed hooks it is supplied by the finite induction of §18. This
+is a well-founded dependence on earlier actual hook targets, rather
+than a circular assertion that every capture already succeeded.
+No audit is an argument or a source of a reconstructed operand. ∎
+
+## 14. Four paid flights on the off69 staging lane
+
+**Definition 14.1 (current flights with actual30 staging).** Use
+Definition5.1's four statically inlined flights with target (O.2),
+argument70, $\mathcal B_O$ and the new code/register/body parameters.
+Rerun the attained-hook search separately for each kind and construct
+only that kind's body. Send its complete seven-field transport and
+five-field ViewRef through fresh71,72,73 placements. Body copies and
+printing have the same actual tested channel leaves; they are not
+replaced by a body-equality assertion.
+
+Relocate only this capture's native staging literal69 to30. Stage66$(e)$
+measures Base30 into66, so the saved source's backward scratch offset is
+$e+1$, as in RCA13.2; Stage67 leaves its67 source record unchanged.
+Stage each latest68 placement descriptor immediately upon its creation.
+Its own staged block has measured Base, wire length, RCA descriptor,
+F and seal. These are separate from the transported payload length.
+
+After sender71's descriptor, append a fresh F/seal on30 and stage that
+sender descriptor. Acquire idle-to-held by its actual TOK. Measure and
+initialize fresh72 and73, staging mailbox then receiver immediately.
+No bank assignment occurs in the native setup/copy/print segment.
+No CAP30 export or unrelated30 append occurs until the callback has
+acquired all three placements. Completion records append on71.
+Before each copy and print, recover the actual endpoint bases and the
+sender payload length anew, using the full staged-field scans and Seek.
+The two tested six-row copies, their terminal tests, seals, completion/
+read TOKs and the five-row print loop all execute. Print is an additional
+tagged body output, never NativeLocal, original task output or Halt.
+
+Handler-to-client TOK and callback occur only after completion and print.
+Before any bank assignment recover/Seek73 from its still-latest placement.
+Import its actual received word through F, preserving73 during bank work.
+Acquire the three30 placements by the closed importer with compiler64–68,
+before any further30 writer. The fresh preceding F and exactly three
+complete fields determine their order. Check owner, ports71/72/73,
+lengths, flags, full descriptors and actual completion binding. This is
+$P_{z,d}$ in (O.3). It is actual current authority earned by this channel.
+
+**Definition 14.2 (audit, successes and selected data).** Parse transport
+and ViewRef, check all origins/tags/arity/exhaustion, clear producer and
+decoder work, run exactly its own decoder, and re-encode/compare.
+Keep that received output in its own field. A separate replay from
+argument70 computes an audit $W$ and compares every field against the
+received result. Its only interface output is Boolean. Clear its endpoint
+and work afterward; it can approve or reject, but cannot assign return
+operands. Export a fresh complete success30 CAP block with its real29
+descriptor/status, body placement and received $W$ provenance.
+
+Kind3 is selected at installation. After its own decoding/audit, copy
+its received $W_z$ into a distinct selected field. After all four successes,
+compare their complete bindings/results without assigning that field
+from another result. Construct, seal, reimport and check a fresh CAP30
+use record containing the target binding, selected received-body/placement
+reference, all four success references and the selected native-return
+projection of Definition15.1. The operative projection is computed only
+from selected kind3 and PublicO. Frozen70 and raw30 spill are recovery/
+audit evidence; neither supplies any of its fields.
+
+**Lemma 14.3 (actual off69 delivery and released authority).** Every
+attained authentic hook with the premises of Theorem12.4 reaches four
+complete independent received/decoded/audited successes. The channel is
+ACKed exactly once per body and returns to idle. The final real
+client-to-RG TOK precedes native reconstruction. The actual slot account is:
+
+| Boundary | RG,handler,client,original | Idle,held | Required real right |
+| --- | --- | --- | --- |
+| Spill/import/argument | 1,0,0,0 | 1,0 | Actor sources and complete pool |
+| Argument invocation/preparation | 0,1,0,0 | 1,0 | Handler invocation |
+| Setup/copy/print | 0,1,0,0 | 0,1 | Current measured sender and destination slots |
+| Callback/decode/audit | 0,0,1,0 | 0,1 | This sealed receiver's read/completion right |
+| Post-ACK | 0,0,1,0 | 1,0 | No outstanding delivery |
+| Next kind, when $d<3$ | 0,1,0,0 | 1,0 | Actual client-to-handler TOK |
+| Four-success/use boundary | 0,0,1,0 | 1,0 | Selected received3 and four successes |
+| Native return | 1,0,0,0 | 1,0 | Actual client-to-RG TOK once |
+
+The dispatcher source token and complete $A$ pool remain held as at entry.
+There is no second loan, substitute ACK or reconstructed permission.
+
+*Proof.* Theorem12.4 supplies each finite construction. Source30 is owned
+by $A$, different from every64–68 compiler role. Thus the relocation
+satisfies RCA13.2's actual source/destination conditions. Its Base scan
+accounts for all older CAP/raw/staging cells. The stated offset increment
+prevents reading the newly appended Base as the old source.
+The immediate descriptor copies and protected suffix give the precise
+three most recent records needed for allocation, copy and print. Native
+copy induction with their measured lengths gives equality of the actual
+71/72/73 payloads. Actual completion precedes read authority and callback;
+73 and the staged descriptors are acquired before their source convention
+can be changed by another writer.
+
+Theorem13.3 proves each separate own-body decoding. The independent
+attained replay is (O.2), so its whole-state/event/bill comparison succeeds.
+The selected field comes from received3, with audit only a Boolean guard.
+Each actual success/export and slot transition therefore has its genuine
+precondition. The supplier channel proof supplies its two copy-completion
+steps and ACK, while the table supplies invocation and availability joins.
+Induct over the four finite kind branches. The final client-to-RG transfer
+uses client1/RG0, independently of any endpoint right bits. All loops
+consume finite measured words, a fixed finite prefix, or sealed body data.
+No native69 staging has occurred. ∎
+
+## 15. A selected received endpoint supplies a native return plan
+
+**Definition 15.1 (return projection and wire plan).** From selected
+received $W_z$, inspect its endpoint $X(z)$ using only PublicO's physical
+layout and finite code catalog. Require its PC to be $H_\eta$ and its
+context to satisfy Lemma10.3; derive the literal owed row from that
+catalog. Extract the target role permutation, bank parity $p$, public
+latches4–7, actual69 L-distance, and the $r_O$ bit fields of the active
+complete bank in their declared order. Extract on each physical1–12:
+its defined/dead tag, newest completed word when defined, and target
+head relation. Retain old encoded address values as numbers referring
+to their unchanged external backing; work words are CAP3.1 values,
+not relocated archive blocks.
+
+The native plan is one binary word. It contains a bounded finite header
+for the above finite alternatives, then $r_O$ word fields, the twelve
+work cases, the69 distance, and an explicit final tag/exhaustion check.
+A bit word $w=b_0\cdots b_{m-1}$ has the self-delimiting representation
+
+$$
+\mathcal W(w)=0b_0\,0b_1\cdots0b_{m-1}\,1.
+\tag{O.4}
+$$
+
+Every unbounded distance has wire form $U(d)=1^d0$. A work case has its
+fixed tag, $\mathcal W(w)$ if defined, a finite head-kind tag and its
+unary move count where needed. The head kinds are: at current R; inside
+the newest completed word including sep; at an older unchanged cell or L.
+For the middle case the count is $|w|+1-e$, with $e$ its zero-based
+position inside $w\mathsf{sep}$; for the last it is the old L-distance.
+The defined intervals and head kinds are computed from the received
+endpoint's own cell list/marks. A dead role has no asserted empty value;
+it is unused until the original New. Its head can be positioned at the
+corresponding unchanged old cell or new R without asserting a live word.
+
+Word operations of ARC2/RCA12.1 compute this plan and all range/arity/
+head-kind checks. Its inputs are selected received3 and PublicO alone.
+Its provenance is the use30 record of Definition14.2. This projection is
+an actual word computation, not a native Restore, tuple-write, semantic
+PlanDecoded or arbitrary control-transfer primitive.
+
+**Definition 15.2 (final export and literal stream parser).** Complete
+all use checks, then obtain actual RG invocation by Lemma14.3's TOK.
+Construct the return plan in its bank field and compare it with the
+selected projection in the already checked use30 record. That record
+names the existing received3 placement, not a future plan placement.
+Append a fresh F on30 and
+export that field by RCA's measured native field writer: actual Base30
+on66, dry count on67, actual source reposition/copy, final F and seal,
+closed68 ordinal and full RCA descriptor. Freeze its source during both
+passes. No assignment or unrelated30 append intervenes after this final
+export until native plan consumption ends. Its payload is binary and
+lies between the fresh F and its final F; its descriptor is on68.
+
+Position the still-latest plan by Tail30; ML; ML; repeated RD4/ML to its
+preceding F; then MR. Parse the bounded header by RD30,4, testing CTLs
+and MR30. Carry its finite alternatives as native product-control cases,
+including the four final latch symbols. This is finitely many cases,
+not a live unbounded register. For each $\mathcal W$ field, RD30,4 tests
+its prefix. Prefix0 advances to one literal bit; RD/tests select0/1,
+perform the specified literal append to a distinct destination, MR30,
+and repeat. Prefix1 consumes that end marker and exits. For $U(d)$,
+RD30,4 on1 performs the specified single destination move and MR30;
+on0 it consumes the terminator and exits. Ports, field numbers, control
+alternatives and return labels are static finite cases. Invalid symbols,
+missing fields or nonexhaustion take their own fault exits with actual
+partial material; they do not claim an original successful continuation.
+
+**Lemma 15.3 (native construction of a true replacement bank).** The
+plan parser constructs a new complete version on the received target
+physical bank $p$, with exactly its target $r_O$ fields and a descriptor
+measuring that new physical interval. It establishes the compiler boundary
+relation of ARC2.4/RCA11.4 with parity $p$. No old descriptor is reused
+for a new interval, and no plan read aliases its bank destination.
+
+*Proof.* Execute Tail66; Base$(p)$ to66, obtaining the actual new base
+on that bank, then Tail67. Base ends with $p$ at its actual R.
+For each of the $r_O$ statically unrolled $\mathcal W$ fields, use
+Definition15.2's parser to append each literal bit to $p$ and one1 to67.
+At its terminal1 append exactly one sep to $p$ and one1 to67.
+Thus67 counts every emitted payload cell, including all $r_O$ seps.
+After the last field append0,sep and ordinary seal to67; append F to
+$p$ and seal the bank. The actual payload length is the newly measured
+$U(\ell)$ on67. No supplied length substitutes for this measurement.
+
+Count the current complete68 descriptors into a new unary ordinal word
+on66, with its zero,sep and seal. Write the RCA descriptor on68:
+literal owner $A$, literal bank $p$, Base from66 offset1, length from67,
+flags10 and ordinal from66 offset0, then F and seal. These are exactly
+the measured base/length/zero-based ordinal fields of RCA11.3. Parity
+changes to $p$ only after all these real constructions complete.
+This direct emission is justified because the finite plan source on30
+is already sealed; it does not require a bank assignment during emission.
+Every source/destination/scratch is different. In particular the bank
+that earlier held the plan field can now be rebuilt safely: the operative
+plan is its actual exported30 copy. Its source head stays on30 throughout.
+
+Induction over the statically known fields and their finite bit streams
+shows equality with the received target fields, including unassigned
+old original/capture fields and any dead empty fields. The opposite bank
+and all old bank versions remain constructed. Their lengths, origins and
+receipts differ from the target's old ones and remain in the real history.
+The compiler boundary relation requires a current complete version and
+its actual new descriptor, not identity of a retired bank's old origin.
+This establishes precisely that relation. ∎
+
+## 16. Work-word, latch and suspended-row correspondence
+
+**Definition 16.1 (continuation representation relation).** For target
+$X(z)$, relate a native returned state $Y$ by $\mathcal R_\eta(X(z),Y)$
+when the following hold. The actual source16, directory/source counters,
+original table/configuration/packet/seed, raw13 backing, original
+responses/dependencies and all their old origins are preserved.69 has
+its original symbols, length, cell identities and head. Private0–3 and
+public4–7 have their target symbols. The complete pool, dispatcher source
+token, RG invocation and idle channel are the actual required ones.
+The finite owed control, role permutation and active-bank field values
+are those of §§15–16, with a genuinely measured new bank descriptor.
+
+Each live work role has its received target value as its newest completed
+word. A target cursor inside that current word corresponds to the same
+relative position in its new copy; a target R corresponds to the actual
+new R; an older unchanged ordinary cell or L corresponds to itself.
+Dead roles carry no value obligation until New. All extra versions,
+spills, use/success/placement records, scratch, delivery heads, finite
+helper exits and receipts have their actual charged values. They are
+not asserted to be the target's whole physical state.
+
+**Lemma 16.2 (native work-word rematerialization).** Using only the
+exported selected plan, native rows establish Definition16.1's twelve
+work-word/cursor clauses, without changing any old word symbol,13 or69.
+They do not restore an old overwritten R by treating it as a boundary.
+
+*Proof.* After the bank reconstruction, make no further bank assignment
+or public-word helper call. For each fixed physical port $q=1,\ldots,12$,
+parse its plan case. When defined, execute Tail$(q)$ and stream its
+$\mathcal W(w)$ bits into actual Append leaves, then append one sep.
+The new copy of $w$ is now its newest completed word. If the target
+head was in $w\mathsf{sep}$ at offset $e$, the actual head is at its
+new R; consume the encoded $U(|w|+1-e)$ by that many ML$(q)$ leaves.
+The distance is correct even for an empty word, whose sole sep is
+one move left of R. If the head kind is R, leave it at the actual R.
+If it is an older cell or L, Home$(q)$ and consume the encoded old
+L-distance by MR$(q)$ leaves. Every such old cell still exists with
+its original symbol: CAP word/copy/arithmetic helpers append versions
+and do not overwrite older payloads. The target R case is deliberately
+separate, since helper appends may have converted its old cell to data.
+For a dead role no word is asserted; any prescribed head positioning
+uses the same actual boundary/old-cell distinction.
+
+This also proves the native calling relation rather than just value
+equality. CAP3.1's Last selects the newest completed word, which is now
+$w$, and New starts at the actual R. CopyField/FieldBody/UnaryBody use a
+positioned current word and consume its finite bits/delimiter; the
+relative cursor relation gives exactly those symbols and moves.
+Arithmetic first positions its operands by Last and output by New.
+Base/At use those value words as unary addresses, positioning by Last
+before their counted seeks. A numerical address into69, source or an
+archive keeps the same backing and value. It is not a work-port physical
+address relocated by this copy.
+
+At the particular hooks of Lemma10.3 there is no unfinished pool-field
+parser. The owed body rows do not use the pool; at the zero exit the
+retained separator/status/length/descriptor routines use the just listed
+Last/New/positioned-field conventions. An old noncurrent cursor is
+therefore either unused until repositioning or already names its unchanged
+cell; it is not an undisclosed pointer into a helper-produced word.
+The original staging convention stores persistent blocks outside these
+work values. These clauses are preserved by each of the listed routines'
+loops and finite role exchange. No helper touches a reconstructed work
+port after this final per-port pass. Thus the corresponding original
+consumers, not merely an abstract decoder, receive the target words and
+positions. ∎
+
+**Lemma 16.3 (native69, latch and finite-control return).** From the
+selected plan and the actual slots of Lemma14.3, the remaining native
+rows reach exactly $\operatorname{owed}(\eta)$ and establish
+$\mathcal R_\eta$. No restoration data is read from the spill, audit,
+old live bank, old work word or another received body.
+
+*Proof.* Home69 by testing RD4/ML, and consume the plan's target69
+L-distance by one MR69/MR30 per leading1 and the terminal test0.
+Lemma11.4 says this tape has not been extended or written by the capture.
+Thus the actual old head cell, including its R/blank/written-bit type,
+is reached. The position is an executed cursor path, not a numeric head
+assignment. All plan loops use source30 and actual distinct destinations.
+Their final tag/exhaustion test is against the real payload end F.
+
+The finite header alternatives were parsed before these loops. They
+contain the received symbols for6,7,5,4, each in the eight-symbol alphabet.
+Load those latches in that order. To load a nonboundary symbol $s$, execute
+Tail30; EX30; WR30 with literal $s$; RD30 into the designated latch;
+then MR30. For L or R position the real30 L or R and RD into that latch.
+Do not construct an interior counterfeit L or R. Later loader positioning
+uses4 only and cannot overwrite a previously loaded6,7 or5. Loading4 is
+last; there is no subsequent RD4 or word helper. These materialized symbol
+cells are additional actual paid data, after the consumed plan. The5 load
+therefore flows from received3 even when reservation kept its old value.
+If the original IN is pending, Theorem13.3 identifies that target5 as the
+same supplied $b$, proving the final clause of Lemma11.4.
+
+A final literal CTL selects the finite target role/purpose/parity case
+and the catalog's fixed owed successor. That edge is one of finitely
+many installed alternatives; no native word supplies a PC. The bank
+already has its actual measured new descriptor. The pool and source
+slots have not been transferred by reconstruction; RG invocation was
+returned by an actual TOK and the mailbox is idle. No endpoint token
+bit is a source of authority. Private latches were untouched throughout.
+The operative parser's entire source was the selected plan on30. The
+other raw30 bytes are never read by it: its completed binary block was
+positioned while latest and consumed in order, before any later append.
+This proves all clauses of $\mathcal R_\eta$. ∎
+
+**Theorem 16.4 (each owed original row executes exactly once).** A
+successful hook returns to its original receiver continuation on its
+original actual input/source, with relation $\mathcal R_\eta$.
+The selected received data supply its native owed row and subsequent
+original consumers. An owed non-IN row executes once with its original
+opcode, operands, enabledness and response/release type. At an owed IN,
+the legal next supply remains the original one; capture termination
+requires no such supply.
+
+*Proof.* For post-IN, actual69 is R, so the actual owed EX is enabled
+and creates its own blank/new R. For post-EX, the actual blank is writable
+and received-derived5 is $b$, so the owed original WR writes $b$ there,
+without another IN. For post-WR, the owed RD reads that same persistent
+$b$. At each test boundary the actual restored4 and the literal branch
+case give the original testing-CTL/MR successor, rather than recomputing
+a different control edge. Post-MR(1) enables exactly the next original
+IN and does not require it to finish this capture. Post-MR(0) has the
+real69 R, target latch symbols, current work values and bank field
+relation; its original append-sep/status/descriptor graph therefore has
+the CAP/RG calling relation established in Lemma16.2. It obtains this
+actual guard block's descriptor and its original validity/binding/Plan
+route, or the original zero/decreasing-domain exit.
+
+The return edge bypasses $H_\eta$ and enters $\operatorname{owed}(\eta)$.
+Its exit enters the hook of that newly completed original row, not the
+current hook again. Thus no owed row is executed by both replay and
+return: replay performed only bank computations, while this is the one
+live original occurrence. Original IN remains one actual bit supply.
+The next full physical successor includes real rematerialized banks,
+old and new work cells, changed checking heads and all capture receipts.
+It is not identified with the shorter successor in an uninstrumented
+run. The primitive row correspondence and its continuation relation
+preserve the original task while retaining these real differences. ∎
+
+## 17. Original records, rights and terminal consumers after return
+
+**Lemma 17.1 (the30 consumer join).** All original CAP/RG and retained
+$G_C$ consumers of actor30 continue to resolve their actual records
+and payloads after these raw spills, capture staging and native plans.
+They need no rule recognizing every30 byte as a CAP block.
+
+*Proof.* GuardIngress starts after the preceding completed original
+service/delivery checks; no30 checking parser is suspended at a declared
+hook. CAP2.2 expressly allows append/scan on28–31 while preserving old
+payloads and handle meanings. Each existing CAP30 record is selected by
+its full29 descriptor, actual base/length/type/status/ordinal and origin.
+Spill, staging and native-plan bytes are outside those bounded payloads
+and are not inserted as malformed29 records. Later Base30 measures all
+of them, so a fresh export cannot accidentally use an old empty-stream
+offset. Its actual new status/seal is separate from the raw data.
+
+The retained current $G_C$ target/success/use/link records have their
+own actual CAP references; Definitions3.1/5.2/6.2–6.3 resolve and compare
+those records through fresh closed29 bounds. No30 record becomes an
+RG-S2 state on25 merely through an empty origin or a similar tag.
+A suspended-hook success export occurs only after the protected
+three-placement suffix has been acquired, so it cannot change that
+suffix's recency. The final native plan is read before its first later
+30 append. RG22.1's checked30 is itself a newly bounded CAP block;
+RG37.1's V_CLOSE/V_ENABLE imports that specific sealed reference using
+a new closed29 scan, with actual receiver73 placement and historical
+origin bindings. It does not parse the entire mixed30 stream as checked
+output. These are all30 interface consumers used by the retained routes.
+The raw spill additionally has §12's explicit symbol/head comparison
+consumer; no minimality conclusion follows from retaining it. ∎
+
+**Lemma 17.2 (original service and response joins).** Captures and native
+returns preserve the original proposal, guard occurrence, original
+source/boot, current rights, complete response/records and actual
+next-entry meaning. Their effects do not prepare/reset source16,
+change an original service refusal, or substitute a computed call for
+a later operand that the internal consumer has not yet acquired.
+
+*Proof.* The added footprints are the actor banks/scratch, append30/70/29,
+channel71–73, their actual finite slots, pool work and ordinary receipts.
+They include no source16 read/write, directory or producer-counter/journal
+write, source-token transfer, source service, NativeLocal or terminal
+commit. Original13 input symbols and old25–29 payloads are untouched.
+The inherited actual source permission remains at the dispatcher while
+the actor's full pool is retained. Encoded rights reconstructed in a
+body are output data only.
+
+By Theorem16.4 each original guard sample writes once into the same69
+block and reaches its original zero exit. Its Base value and retained
+context have the original meanings. RG5.1's measured descriptor/status,
+complete $U(h)$ parser, monotonicity test and actual proposal/previous-end
+binding therefore still establish the real GuardAcquired state. Its
+retained completed-entry $G_C$ path is re-instantiated with
+$(\Delta_O,E_O,C_O,r_O,\mathcal B_O)$; it is not replaced by the
+suspended receiver's return. Sections1–7's proofs apply there with the
+new input closure of §§12–13, including all earlier hook rows.
+
+That path extracts its own received completed-entry Plan input and
+executes the unchanged original planning and Send/return code of
+Definition6.3 and RG6–7. It retains the real Reserve/Raise/final packets,
+strict guard, source outcomes, full response, counters, semantic/unified
+rows, acquired dependencies, row ACK, source-token return and next Entry.
+The internal C0/C1/C2 constructor is still run only after its preceding
+actual response; captures add no future operand or source event.
+Nonpositive/decreasing completed guards take their local domain exits;
+raw malformed/partial frames, executed refusals and missing-token/Busy
+unexecuted attempts keep their distinct types. A partial receiver without
+future zero remains a receiver, with its completed captures retained. ∎
+
+**Theorem 17.3 (unchanged original terminal consumer on actual new costs).**
+When the original finite finish premises hold, the re-instantiated
+historical acquisition/batch or its specified bypass, HandbackResume,
+original Stop and original INITIAL route are actual continuations of
+this same $G_O$ run. No additional body or raw30 data replaces their
+complete original terminal packet, checks, output or return.
+
+*Proof.* After a completed positive round, the actual slot/pool and
+original persistent-state invariant is the one in §§7/RG22/37–38,
+with new instance parameters and the added durable material.
+The historical argument uses its completed guards and full dependencies;
+its target replay includes every added literal hook/return row, with the
+input rule of §13 for any historical unfinished-guard subtarget.
+At that later Handback phase no pending original69 write exists, so its
+original staging69 remains valid. The actual checked30, received73 and
+saved-original references retain Lemma17.1's origin/length conditions.
+ACK, availability and RG invocation return really execute before
+HandbackResume reads saved25/27 and positions the unchanged table24.
+
+The original interpreter still executes the original Stop table, not
+$E_O$ as a substituted Turing program. Port31 was never used as a spare
+capture lane. Its fresh genuine terminal output and complete instruction/
+output dependencies are sent on route49 to producer21 before Halt
+commitment, as CAP8.1 requires. The original semantic/unified terminal
+row, full row delivery and ACK, SEG-P1 snapshot on50, verifier32/33,
+SEG-R1 receipt on51, consumer40/41 checks, target43 output, final ACK/
+token returns and absorbing halt all remain their original consumers.
+Their real fences and closed scans include the added occurrence/cell
+costs; no old numerical fence or $G_C$ clock is substituted.
+Thus the original output is $(0,B,1)$ on the same source occurrence,
+with all intervening returned records, not just an equal final answer.
+There is no reentry after its absorbing terminal CTL. ∎
+
+## 18. Simultaneous finite repetition without a future zero
+
+**Definition 18.1 (induction invariant and complete instance substitution).**
+At an original receiver hook, retain the original boot/source/proposal/
+previous-response bindings, full $A$ pool, dispatcher source token,
+RG invocation/idle channel and Lemma10.3's native context. All earlier
+hooks have their real four deliveries/ACKs and returned once with
+$\mathcal R$; their raw/success/use/plan bytes and all receipts remain.
+The unique pending guard input, if any, has its same actual5 until WR.
+Every original13/69 supplied bit whose write completed persists at its
+own position. Old acquired code/seed/state/row dependencies are authentic
+and usable under their actual tokens. No assertion supplies a future
+input or treats a prospective round as already attained.
+
+Every input-demand interpreter in this installation, including retained
+completed-entry and historical decoders, uses the generated $C_O$ site
+map and §13's new guard rule. Their old $j+3$ append formula is used
+only for the original unhooked fragments where its literal path still
+justifies it; it is never retained for hooked guard IN. All retained
+code/bank/boot/compact/fee parameters are the $O$ instance's ones.
+The actual copied original source/table/response meanings are unchanged.
+
+**Theorem 18.2 (well-founded hook and round induction).** The invariant
+of Definition18.1 holds at every finitely reached declared hook of
+$G_O$. Each such capture completes finitely and returns to its native
+owed row, independently of whether any later guard zero, external
+selection, next round or finish will be supplied. This remains true
+for arbitrarily many finite repetitions and all three actual internal
+stages, with prefixes containing the earlier capture rows themselves.
+
+*Proof.* At the first hook, original initialization, completed seed/code
+acquisition, completed raw/internal proposal and full guard setup give
+the context of Lemma10.3. There is no earlier capture premise to use.
+The spill terminates by Lemma11.2; all inputs through this attained target
+are the already available fixed/current evidence of §12. Hence the
+attained search, four body constructions, own decoders, audits and actual
+flights finish by Theorems12.4/13.3 and Lemma14.3. The selected projection
+is finite and its native export/parser/reconstruction terminate on their
+sealed finite sources. Lemmas15.3/16.2–16.3 give $\mathcal R$, and
+Theorem16.4 gives the exact owed join. This establishes the first return
+without a hypothesis about another hook.
+
+Assume the first $k$ actual hooks completed and consider the next
+finitely reached original hook. If the intervening owed row was IN,
+this next target includes precisely its one actually supplied bit;
+if no bit arrived, this hook has not been reached and nothing is invented.
+If it was EX, WR, RD, test or MR, its one real native effect was already
+proved by $\mathcal R$. A still-pending bit was preserved through earlier
+post-IN/post-EX captures, so their same5 invariant supplies §12's input
+rule and Lemma13.2's own-body rule at this next target. After its actual
+WR, the retained69 cell supplies the bit instead. There cannot be two
+pending samples because the next original IN is beyond that WR.
+
+Earlier capture rows are now ordinary literal rows of the longer
+attained prefix. The Step square processes their writes, scans, expanded
+interpreters, plan parsing, new descriptors and rematerialized words
+individually. Their completion is the induction hypothesis, not an
+oracle executed during replay. No current capture row belongs to its
+own target. Its attained finite length therefore bounds its target
+search and own counted decoders even though those rows describe earlier
+replay code. Lemma11.4 preserves the current pending5 before the current
+decoder, and the proved decoder output justifies its final same-bit
+reload. Thus there is no circular dependency between a capture's decoder
+and its future native return. The same finite argument completes hook
+$k+1$ and reestablishes the invariant.
+
+At a zero MR, the owed descriptor/parser route has Lemma16.2's original
+word relation. A zero/decreasing guard takes its actual local domain
+exit; there is no spurious next successful round. A positive guard seals
+its actual GuardAcquired state and reaches the retained completed-entry
+path. At that point every consumed guard bit is durable, including every
+bit separated from its WR by earlier captures. Definition18.1's enlarged
+input substitution therefore supplies precisely the missing premise for
+§§3–7's re-instantiated completed-entry proof. Its real Plan/service/
+return work gives the original next Entry invariant by Lemma17.2.
+Fresh later raw requests, independent guard acquisitions and their
+complete responses keep their actual new origins.
+
+Induct over the finite number of actually reached external rounds.
+In internal mode apply the same statement to C0, then the genuine
+C0-response-dependent C1 constructor, then the genuine C1-response-
+dependent C2 constructor. No C1/C2 operand is supplied in advance.
+This establishes every actual finite hook/round combination without
+postulating a bound on their number or length. An arbitrarily long
+finite all-ones guard prefix has only finitely many such hook returns,
+and the argument never asks for its missing zero. ∎
+
+**Theorem 18.3 (full suspended-guard acquisition and original continuation).**
+There exists one finite $G_O$ in the declared ideal foundation, from
+Definition10.1's single original boot/source, with the following property.
+For every finitely reached boundary in Definition10.2, it actually obtains
+four separate authentic bodies of that selected entry prefix through
+four paid native constructions/channels/prints/callbacks. Each decoder,
+using its own received body and only (O.3)'s public/placement binding,
+returns the full prefix/endpoint and all actual input, record, permission,
+response and cost coordinates. Selected received3 data supply the native
+owed continuation through (O.4)'s executed parser and actual tape/control
+leaves. The owed row executes once when its original input premise holds;
+there is no substitute semantic Restore or decoded-right transfer.
+
+The assertion covers initial/pre-IN, post-IN/EX/WR/RD/test/MR for both
+samples, arbitrarily long finite unfinished prefixes without a later zero,
+every finite external repetition and the three actual internal stages.
+Completed positive guards retain their real completed-entry acquisition,
+original Plan/services/full returns and next Entry. A finite original
+finish retains the historical route and actual original terminal
+consumers of Theorem17.3. Partial inputs, malformed/domain outcomes,
+source refusals, unexecuted Busy attempts and absorbing halt retain
+their original types and actual partial histories.
+
+*Proof.* Lemma12.2 supplies the finite native/code/source realization,
+not just a code-length equivalence. Theorem12.4 establishes actual
+owned acquisition at the new current boundary. Lemma13.2 discharges the
+new independent pending-input obligation; Theorem13.3 gives the four
+independent inverse computations. Lemma14.3 supplies their actual
+placements/authority/releases. Lemmas15.3/16.2–16.3 give the new native
+bank, current-word/cursor,69/latch/control joins from the selected
+received result, and Theorem16.4 supplies their original owed consumer.
+Theorem18.2 proves the premises simultaneously at every finite reached
+hook/round; Theorem17.3 supplies the original finish.
+
+The full endpoint returned by each decoder is exactly $X(z)$.
+The current native state after capture is instead $Y$ related by
+$\mathcal R_\eta$, with additional constructed cells and receipts.
+The theorem deliberately preserves those different real physical
+origins and costs. Neither equal final INITIAL output nor successful
+audit alone is used to infer the intervening native correspondence. ∎
+
+## 19. Actual occurrence account and the remaining relation problem
+
+**Definition 19.1 (full event word and retained storage).** Evaluate
+Definition8.1's literal actual-row recurrence on $G_O$ and the actually
+supplied finite inputs. At each row append its actual opcode/purpose,
+read/write/input/output/slot/constructor data and ordinary/F receipt;
+update its physical tuple by Lemma12.2. This is the mathematical
+actual event word, not an installed transcript or free meter query.
+Let $n$ be its length, $A_O(n)$ all nonmeter cell births and $b_O(n)$
+the installed finite-bit births outside cells in that prefix. With the
+supplier foundation $S_0$, the occurrence account is
+
+$$
+T_O(n)=n,\qquad F_O(n)=2n,\qquad
+S_O(n)=S_0+8n+8A_O(n)+b_O(n).
+\tag{O.5}
+$$
+
+All actual boot/code/boundary bits, raw spill, scratch, retained/retired
+bank and work versions,30/70/29 records,71–73 bodies/completions,
+new native plan/materialized latch cells and receipts are included.
+No retired version or earlier capture is subtracted. Each actual row
+has exactly one opcode and one executed purpose; these partitions,
+together with original resident/completed-entry/historical/terminal
+intervals, are disjoint. A seal is ordinary unless its literal row
+is a declared meter fence.
+
+**Theorem 19.2 (finite evaluable complete bill, without uniform bounds).**
+Every completed hook and every actually executed finite prefix has
+(O.5)'s full account. Each hook's bill includes earlier captures inside
+its target history, all its own acquisition/decoder/audit work, native
+return and subsequent actual owed row, with no uncharged acquisition,
+current-state copy, return operation or source progress. Each supported
+capture terminates pointwise with finite storage/time. There is no
+uniform bound in guard length, number of captures, round count or
+future finish time.
+
+*Proof.* Every listed native occurrence has one actual receipt-cell
+birth, one tick and two fees; ordinary constructors and finite-bit
+installation contribute exactly their actual separate births.
+Induction on the event word proves (O.5), including fault/partial
+prefixes. The represented target bill is decoded data equal to that
+earlier prefix's real bill. Live work constructing/replaying that data
+has its own literal rows; the old numeral is not added a second time as
+live events and the new rows are not erased by calling them bookkeeping.
+
+For explicit new spill accounting, a source at L-distance $h$ contributes
+$5h+1$ Save rows: one RD/ML/three-row literal append per non-L cell,
+then the terminal L test. Its terminal0/F appends, seal and MR add8.
+Each scanned ordinary symbol $s$ contributes $11+k(s)$ rows, where
+$k(s)$ is the number of actual finite symbol-testing CTLs after its RD;
+the final R test, F append and seal add5. Thus the two fields have
+subtotal
+
+$$
+5h+14+\sum_{s\text{ in the attained source}}(11+k(s)).
+\tag{O.6}
+$$
+
+Sum this over all thirteen scanned sources, then add actual header4/5
+CTLs, Tail30, marker/header appends and seals. This is only the spill
+subtotal. The closed30/25/26/28/29 imports, descriptor counts and target/
+argument exports/reimports remain additional work.
+
+Each of four flights retains every replay of previous native capture
+rows, body constructor/traversal, measured Base/dry count/real emission,
+RCA descriptor/placement staging, both copies, print, import, independent
+decoder, re-encoding, separate whole-result audit and success export.
+For $k$ transported bits the reused copies plus print subtotal is
+$17k+7$, not the whole channel price. The use record, selected plan
+projection, final measured export, native parsing, measured bank
+construction, all twelve work copies/cursor moves,69 positioning,
+four actual latch loads and final CTL are additional occurrences.
+Every real TOK, ordinary test, terminal test, dry pass, status, descriptor,
+ACK and availability transfer is retained. Original service, completed-
+entry, historical and terminal costs stay those of their actual new
+instance, including full refusals and original meter readout/fences.
+
+Every source scan has an attained fixed finite end. Each replay/search
+is bounded by its genuinely attained target as proved in §12, each own
+decoder by its own finite meter-derived count, each traversal/channel by
+its actual finite source, and each native reconstruction by its completed
+finite plan. Theorem18.2 composes these pointwise facts. No fixed finite
+resource or uniform deadline follows, since these bounds grow with the
+actual prefixes, which themselves contain earlier captures. The separate
+compact realization retains its own priced atomic-patch endowment and
+cost coordinate; it is neither a free native instruction nor a physical
+cost identity with (O.5). ∎
+
+**Proposition 19.3 (credited ingredients, concrete gain and open scope).**
+The new result is repo-derived: the actor30 spill/selector, reserved5
+pending-input extraction across inserted captures, protected off69
+placement acquisition, selected-body native bank/current-word/cursor/
+latch return, and their simultaneous finite original-consumer join.
+It advances the actual current-acquisition part of the relation problem
+beyond completed GuardAcquired entries. The following ingredients and
+limits remain distinct.
+
+| Reused source | Exact use |
+| --- | --- |
+| CAP2–3/4.6/6/8 | Real port owners, newest-word/positioned-field calling convention, original unary receiver, measured CAP records/channels, original source and terminal consumers |
+| ARC1–3/6 and RCA11–13 | Ideal74-role relocation, complete-bank compiler, owned closed importer, literal Step, measured native field/descriptor/staging and channel positioning |
+| RG3–9/16–22/25–38 | Original proposal/guard/service/full-response/next-entry/Handback semantics, generated code lineage, initialized raw/compact row squares, seven-vertex encoding, independent codecs and historical acquisition |
+| §§1–9 | Completed-entry capture, independent body interfaces/audit discipline, actual ACK/invocation route, operative Plan input, finite rounds and complete original terminal suffix at their stated completed-entry conditions |
+| EXPOSURE23–24 | Already established acquired-operand separation for the next-source task; no repetition of its fibre lower bound or change to its unchanged INITIAL conclusion |
+
+*Proof.* Earlier completed-entry acquisition does not have an entry at
+post-IN/post-EX, and its native69 staging changes the very R/blank needed
+by the original owed EX/WR. The new source instead saves the actual context
+without a compiler or69 write, obtains the missing unfinished input evidence,
+and keeps all four flights off69. Its native plan then constructs actual
+compiler/word/head/latch/control interfaces from received data and the
+actual current tokens. Lemmas11.2/13.2/15.3/16.2–16.4 are the new joins;
+Theorem18.2 supplies their unbounded-finite repetition. Ordinary finite
+induction, Frame/support/boundary inverses and deterministic Step are
+credited ingredients, not new general coding or replay theorems.
+
+The spill's duplicate word snapshots have an explicit comparison consumer,
+not a necessity or minimum claim. Port30 is one sufficient choice; no
+cheapest relation structure, minimum memory or best control layout has
+been proved. The native return relation is rematerialization with actual
+fresh origins, not equality of the whole later machine to its snapshot.
+The new code supply belongs to this single new original boot, not an
+already installed unchanged $G_C/G_V$ service and not a second source.
+
+The actual-call domain remains the stated original unary receiver cuts.
+Arbitrary busy cuts, partial compiler/descriptor/loan/copy interiors,
+noncanonical programs/preparations/priors, and transport into an unchanged
+old native installation remain outside the proved callable construction.
+Original-$Q$ kernels for the added rows, cross-entry original-$Q$
+equivalence, a full original terminal-task kernel, broader structural
+minimality and physical realization remain open. The closed unchanged-
+source original-$Q$ inquiry supplies no extra theorem here. Mathematical
+conversions between the four authentic images retain their initialized
+common-source scope and grant no new live operation at those other cuts.
+Finite repeated acquisition does not promise completion of an infinite
+unfinished guard, a future external finish, finite uniform resources,
+a particular physical deadline or any reentry after halt. These are
+remaining parts of the persistent full recovery/minimality objective,
+which this construction does not declare completed. ∎
+
+## 追加锚（本行以下为增补区）

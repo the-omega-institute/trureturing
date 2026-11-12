@@ -1,0 +1,26 @@
+**引理 40.2（迹正交补的交维公式）。** 设 $[D:F]=n$，$W\le_F D$ 的维数为 $k$，并以非退化结合配对
+$$
+\langle x,y\rangle=\operatorname{Tr}_{D/F}(xy)
+$$
+定义 $U=W^\perp$。则
+$$
+\boxed{d_W(r)=2k-n+d_U(r)}
+\qquad(r\in D^\times).
+\tag{40.2}
+$$
+
+**证明。** 由 $(rW)^\perp=r^{-1}U$，以及
+$$
+d_U(r^{-1})=d_U(r),
+$$
+有
+$$
+\begin{aligned}
+d_U(r^{-1})
+&=\dim_F(U\cap r^{-1}U)\\
+&=n-\dim_F(W+rW)\\
+&=n-2k+d_W(r).
+\end{aligned}
+$$
+整理即得 (40.2)。最后一个对称性由乘以 $r$ 在 $U\cap r^{-1}U$ 与 $rU\cap U$ 之间的同构给出。$\square$
+

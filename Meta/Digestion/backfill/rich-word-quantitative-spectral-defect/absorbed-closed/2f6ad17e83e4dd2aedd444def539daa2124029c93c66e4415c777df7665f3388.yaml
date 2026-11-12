@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2f6ad17e83e4dd2aedd444def539daa2124029c93c66e4415c777df7665f3388
+  normalized_sha256: sha256:2f6ad17e83e4dd2aedd444def539daa2124029c93c66e4415c777df7665f3388
+cas_ref: sha256:2f6ad17e83e4dd2aedd444def539daa2124029c93c66e4415c777df7665f3388
+coverage_gids:
+  - gid: D5/S1/Words/RichWordOutputDecoder.typeI_transport
+    target_statement_id: sha256:4aa264a035d7cd7a3b7593114be602c617d302b9d072d7813af2db9c8f6d4332
+receipts:
+  unresolved_subitems: []
