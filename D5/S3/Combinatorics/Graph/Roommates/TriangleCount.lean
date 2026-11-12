@@ -121,11 +121,11 @@ private theorem forward_ranking_injective (i : Fin 3) :
   intro b c h
   fin_cases i
   · have hh := congrArg (fun r : Ranking => r 2) h
-    cases b <;> cases c <;> simp_all [forwardRanking, rankingValues]
+    cases b <;> cases c <;> simp [forwardRanking, rankingValues] at hh ⊢
   · have hh := congrArg (fun r : Ranking => r 1) h
-    cases b <;> cases c <;> simp_all [forwardRanking, rankingValues]
+    cases b <;> cases c <;> simp [forwardRanking, rankingValues] at hh ⊢
   · have hh := congrArg (fun r : Ranking => r 0) h
-    cases b <;> cases c <;> simp_all [forwardRanking, rankingValues]
+    cases b <;> cases c <;> simp [forwardRanking, rankingValues] at hh ⊢
 
 private theorem forbidden_injective : Function.Injective forbiddenWord := by
   rintro ⟨o, b⟩ ⟨p, c⟩ h
@@ -139,7 +139,7 @@ private theorem forbidden_injective : Function.Injective forbiddenWord := by
     cases o
     · simpa [forbiddenWord] using h
     · have hh := congrArg reflectWord h
-      simpa only [forbiddenWord, if_true, reflect_reflect] using hh
+      simpa only [forbiddenWord, ite_true, reflect_reflect] using hh
   congr 1
   funext i
   exact forward_ranking_injective i (congrFun hf i)
@@ -163,7 +163,8 @@ theorem count_three_bound : count 3 ≤ 13808 := by
       exact w.property⟩
   have hi : Function.Injective f := by
     intro x y h
-    exact Subtype.ext (congrArg Subtype.val h)
+    have he := congrArg (fun z : {w : Word 3 // w ∉ forbiddenProfiles} => z.val) h
+    exact Subtype.ext he
   have hc := Fintype.card_le_of_injective f hi
   have hn : Fintype.card {w : Word 3 // w ∉ forbiddenProfiles} =
       Fintype.card (Word 3) - forbiddenProfiles.card := by
