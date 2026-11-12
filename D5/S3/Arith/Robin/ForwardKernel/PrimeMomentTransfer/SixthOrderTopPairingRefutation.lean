@@ -18,6 +18,7 @@ admission_basis: escape-witness.
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyRefutation
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectAlgebra
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderPairingExpansion
 import Mathlib.Data.Fintype.CardEmbedding
 import Mathlib.Algebra.BigOperators.Ring.Nat
 
@@ -52,6 +53,7 @@ def claim : Prop :=
         finitePairingPolynomial Finset.univ
           (subsetDistinctMoment (D n).ℓ (D n).Y g)| ≤
         C * (Real.sqrt ((D n).H * (D n).L)) ^ 6 / (D n).H) →
+    Tendsto (fun n => (D n).L / (D n).H) atTop (𝓝 0) →
     Tendsto (fun n =>
       (subsetFamilyMoment (D n).ℓ (D n).Y (fun (_ : Fin 6) _ => (1 : ℝ)) Finset.univ -
         finitePairingPolynomial Finset.univ
@@ -233,6 +235,82 @@ private lemma subset_unit_moment {k : ℕ} (N : ℕ) (U : Finset (Fin k)) :
   rw [hR, distinct_moments]
   simp only [Finset.prod_const_one, Finset.sum_const,
     nsmul_eq_mul, mul_one, hc, Fintype.card_coe]
+
+private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
+    distinctIndexMoment (modelFunctional N) (modelY N) ![f, h] =
+      (1 / (N : ℝ)) *
+        ((∑ d, f d) * (∑ d, h d) - ∑ d, f d * h d) := by
+  classical
+  have hsum :
+      (∑ x : Fin 2 → Fin N with Function.Injective x, ∏ i, ![f, h] i (x i)) =
+        ∑ d, ∑ e with d ≠ e, f d * h e := by
+    simpa [Fin.prod_univ_two] using (sum_two (fun d e => f d * h e))
+  have hsplit (d : Fin N) :
+      (∑ e : Fin N with d ≠ e, f d * h e) + f d * h d =
+        ∑ e : Fin N, f d * h e := by
+    simpa using Finset.sum_filter_add_sum_filter_not
+      (Finset.univ : Finset (Fin N)) (fun e => d ≠ e) (fun e => f d * h e)
+  have htotal : (∑ d, ∑ e with d ≠ e, f d * h e) + (∑ d, f d * h d) =
+      (∑ d, f d) * (∑ e, h e) := by
+    rw [← Finset.sum_add_distrib]
+    simp_rw [hsplit, ← Finset.mul_sum]
+    rw [Finset.sum_mul]
+  rw [distinct_moments, hsum]
+  simp only [moment_values.2.2.1, Real.sq_sqrt (by positivity)]
+  congr 1
+  linarith
+
+-- DEVIATION
+
+private lemma model_unit_transfer (N : ℕ) (hN : 4 ≤ N) :
+    ∃ E : ℝ,
+      subsetFamilyMoment (modelFunctional N) (modelY N)
+          (fun (_ : Fin 6) _ => (1 : ℝ)) Finset.univ -
+        finitePairingPolynomial Finset.univ
+          (subsetFamilyMoment (modelFunctional N) (modelY N)
+            (fun (_ : Fin 6) _ => (1 : ℝ))) =
+        subsetPairingDefect (modelFunctional N) (modelY N)
+            (fun (_ : Fin 6) _ => (1 : ℝ)) Finset.univ +
+          (N : ℝ) * ∑ e ∈ (Finset.univ : Finset (Fin 6)).powersetCard 2,
+            subsetPairingDefect (modelFunctional N) (modelY N)
+              (fun (_ : Fin 6) _ => (1 : ℝ)) (Finset.univ \ e) + E ∧
+      |E| ≤ pairingDefectConstant 6 4 * Real.sqrt N ^ 6 *
+        (Real.sqrt (1 / (N : ℝ)) + 1 / N) := by
+  classical
+  have hunit : modelFunctional N 1 = 1 := by
+    simpa only [Finset.prod_empty, Finset.card_empty, pow_zero, div_one, moment_values.1]
+      using model_character N ∅
+  have hcenter : ∀ d, modelFunctional N (modelY N d) = 0 := by
+    intro d
+    simpa only [Finset.prod_singleton, Finset.card_singleton, pow_one,
+      moment_values.2.1, zero_div] using model_character N {d}
+  have hquad : ∀ d, modelY N d ^ 2 = (0 : ℝ) • modelY N d + (1 : ℝ) • 1 := by
+    intro d
+    funext ω
+    change sign (ω d)^2 = 0 * sign (ω d) + 1 * 1
+    cases ω d <;> norm_num [sign]
+  have hR : DisjointLabelMomentBound (modelFunctional N) (modelY N)
+      (fun (_ : Fin 6) _ => (1 : ℝ)) 4 (Real.sqrt ((N : ℝ) * 1)) := by
+    intro r hr hr6 labels _ _
+    simpa using distinct_bound N r (by omega) hr hr6 (fun _ _ => 1) (by simp)
+  obtain ⟨E, _, hE, hb⟩ := quadratic_pairing_defect_transfer
+    (modelFunctional N) (modelY N) (fun (_ : Fin 6) _ => (1 : ℝ))
+    0 1 4 N 1 (by norm_num) (by exact_mod_cast (show 1 ≤ N by omega))
+    (by norm_num) (by norm_num) (by norm_num) hquad hunit hcenter
+    (by simp; positivity) (by simp) hR
+  have hcollapse := partialPairing_six_convolution (Finset.univ : Finset (Fin 6))
+    (by simp) (N : ℝ)
+    (subsetPairingDefect (modelFunctional N) (modelY N)
+      (fun (_ : Fin 6) _ => (1 : ℝ)))
+    (fun V _ hV => subset_pairing_defect_small (modelFunctional N) (modelY N)
+      (fun (_ : Fin 6) _ => (1 : ℝ)) hunit hcenter V hV)
+  simp only [subsetWeightSum, indexSum, Finset.prod_const, one_pow,
+    Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    mul_one, one_mul] at hE
+  rw [hcollapse] at hE
+  refine ⟨E, ?_, ?_⟩
+  · simpa only [subsetFamilyMoment, quadraticFamilyMoment] using hE
+  · simpa only [mul_one] using hb
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation

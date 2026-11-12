@@ -39,7 +39,7 @@ internal sealed class PerfectPairingCountDocument : IScribeDocumentDefinition
                 + "Conversely, insert the edge with endpoints a and b into a perfect pairing of the remaining labels. "
                 + "The residual support excludes both endpoints, so these constructions are mutually inverse."),
             Entry("perfect-pairing-count", "perfectPairingCount", "Double-factorial count",
-                "If the cardinality of U is even, p(U) equals the double factorial of cardinality(U) minus one, "
+                "If the cardinality of U is even, p(U) equals the double factorial of (cardinality(U) minus one), "
                 + "where natural subtraction gives zero in the empty case. If the cardinality is odd, p(U) equals zero. "
                 + "The even formula follows by induction using the partner recursion and its cardinality(U) minus one possible partners. "
                 + "The odd case follows because every perfect pairing covers twice its number of edges. "

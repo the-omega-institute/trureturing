@@ -73,7 +73,7 @@ theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
         (IsPerfectPairing ((U.erase a).erase b))).card := by
   have hsupp (e : Finset α) : pairingSupport {e} = e := by
     change (({e} : Finset (Finset α)).biUnion fun d => d) = e
-    rw [Finset.biUnion_singleton]
+    rw [Finset.singleton_biUnion]
   have hrem (b : α) : U \ {a, b} = (U.erase a).erase b := by
     ext i
     simp only [Finset.mem_sdiff, Finset.mem_insert, Finset.mem_singleton, Finset.mem_erase]
@@ -160,10 +160,11 @@ theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
       refine ⟨P, hPS, ?_⟩
       have hbp : pick P hP = b := by
         have hp := hpick P hP
-        have he : {a, pick P hP} = {a, b} := by
+        have he : ({a, pick P hP} : Finset α) = {a, b} := by
           by_contra hn
           exact Finset.disjoint_left.mp
-            (hP.1.2.1 hp.2 (by simp [P]) hn) (by simp) (by simp)
+            (hP.1.2.1 hp.2 (by simp [P]) hn)
+            (show a ∈ ({a, pick P hP} : Finset α) by simp) (by simp)
         have hm : pick P hP ∈ ({a, b} : Finset α) :=
           he ▸ (by simp : pick P hP ∈ ({a, pick P hP} : Finset α))
         have hh : pick P hP = a ∨ pick P hP = b := by simpa using hm
