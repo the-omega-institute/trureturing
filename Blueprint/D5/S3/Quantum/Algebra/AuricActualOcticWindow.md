@@ -24,8 +24,6 @@ Write rho(S) for the dimension of the projection of this actual split window ont
 
 Rank-nullity applied twice to n restricted to the complementary coordinate space gives 2 rho(S) at most the cardinality of S plus rank N[S,S complement]. If both crossing ranks were at most one for a cut of size two through six, strict rank forces a triple C with rho(C)=2 and rho(C complement)=3. Two conjugate triples cannot meet in two points, by submodularity on the triples and strict rank on their intersection and union. They cannot meet in one point, by applying the same argument to one triple and the complement of the other. Distinct conjugate triples are therefore disjoint. Transitivity would partition eight labels into triples, a contradiction. Hence at least one actual crossing block has rank at least two. This is the cut-free clause of the existing source argument; the full classification and the separate fixed-N irreducibility bridge remain open. The rank machinery is supplied by AuricOcticRanks and is consumed here on the actual window. There is no general-position, uniformity, connectivity or certificate premise, and no normalization requiring one to lie in W. No mathematical novelty is claimed.
 
-The source-owner Reg mirror proves an exact full-telescope equivalence with the original inverse-obstruction operator as readout. Four-slot registration still requires whole-family variation, sensitivity, observational dependence and raw source binding, as recorded in https://github.com/the-omega-institute/trureturing/issues/29718. No declared_validated registration status is asserted.
-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/AuricActualOcticWindow.general43_2_cut_free`

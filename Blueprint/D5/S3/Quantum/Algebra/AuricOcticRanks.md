@@ -4,7 +4,7 @@
 
 The rank arguments consumed by the actual octic window theorem.
 
-All statements concern finite coordinate labels over an arbitrary field. Group actions are finite and literal. toMatrix is the standard coordinate matrix; block uses the indicated row and column subtypes. These symbolic dimension and orbit arguments are not a finite certified instance or enumeration. The source is the rank and cut argument of general section 43.2, together with the strict-rank mechanism of section 26. No mathematical novelty is claimed. The source-owner Reg mirror supplies exact telescope equivalences for all seven public theorems. Four-slot registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29718; no declared_validated status is asserted.
+All statements concern finite coordinate labels over an arbitrary field. Group actions are finite and literal. toMatrix is the standard coordinate matrix; block uses the indicated row and column subtypes. These symbolic dimension and orbit arguments are not a finite certified instance or enumeration. The source is the rank and cut argument of general section 43.2, together with the strict-rank mechanism of section 26. No mathematical novelty is claimed.
 
 **Theorem 1.1 (Complementary coordinate images are disjoint).**
 
@@ -16,7 +16,7 @@ $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\r
 
 *Commentary.*
 
-projected(U,S) is the image of U under the coordinate projection retaining S. The two images have disjoint coordinate supports. This auxiliary result is consumed by window connectivity.
+projected(U,S) is the image of U under the coordinate projection retaining S. The two images have disjoint coordinate supports. This gives one of the two dimension identities used in window connectivity.
 
 **Theorem 1.2 (The window lies in the sum of its projected images).**
 
@@ -28,7 +28,7 @@ $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\r
 
 *Commentary.*
 
-Every vector is the sum of its two complementary coordinate projections. The actual window connectivity proof consumes this containment and complementary disjointness.
+Every vector is the sum of its two complementary coordinate projections. Together with complementary disjointness, this bounds the window dimension by the sum of the projection dimensions.
 
 **Theorem 1.3 (Complementary rank equality forces projection stability).**
 
@@ -40,7 +40,7 @@ $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\r
 
 *Commentary.*
 
-rowRank(U,S) is the dimension of projected(U,S). Equality in the complementary dimension bound makes U equal the direct sum of those images. Its S projection therefore preserves U. The actual scalar-idealizer argument consumes this conclusion to exclude equality.
+rowRank(U,S) is the dimension of projected(U,S). Equality in the complementary dimension bound makes U equal the direct sum of those images. Its S projection therefore preserves U. The actual scalar-idealizer argument uses this conclusion to exclude equality.
 
 **Theorem 1.4 (Membership in an actual translate).**
 
@@ -52,7 +52,7 @@ $$\forall Omega \in Type,\; \forall G \in Type,\; [\operatorname{Fintype}\left(O
 
 *Commentary.*
 
-orbitSet(S,g) is the image of S under the action of g. This consumed auxiliary identity connects the Galois semilinear coordinate map to the translated projection.
+orbitSet(S,g) is the image of S under the action of g. This identity connects the Galois semilinear coordinate map to the translated projection.
 
 **Theorem 1.5 (Connected transitive half-ranks are strictly balanced).**
 
@@ -64,7 +64,7 @@ $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\r
 
 *Commentary.*
 
-The frozen fractional_submodular_cover theorem is applied to translates of S with their constant covering multiplicity to obtain the weak half-rank bound. For the nonnegative invariant submodular defect 2 rowRank minus cardinality, a minimal nonempty zero set has translates that cannot cross any zero set. Transitivity covers the complement by such translates, so equality on S forces equality on its complement. Connectedness excludes both equalities. This equality-rigidity argument is the escape content consumed by the actual strict-rank theorem; the existing fractional-cover application is reused.
+The fractional_submodular_cover theorem is applied to translates of S with their constant covering multiplicity to obtain the weak half-rank bound. For the nonnegative invariant submodular defect 2 rowRank minus cardinality, a minimal nonempty zero set has translates that cannot cross any zero set. Transitivity covers the complement by such translates, so equality on S forces equality on its complement. Connectedness excludes both equalities. This equality-rigidity argument supplies the strict-rank bound for the actual split window.
 
 **Theorem 1.6 (Operator crossing rank equals its literal matrix block rank).**
 
@@ -76,7 +76,7 @@ $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\r
 
 *Commentary.*
 
-crossRank(n,S) is the dimension of the image of extension by zero from S complement, followed by n and projection to S. The literal subtype-indexed matrix block represents that map; extension by zero in the target is injective. The actual cut-free endpoint consumes this identity to state its conclusion using the actual matrix entries.
+crossRank(n,S) is the dimension of the image of extension by zero from S complement, followed by n and projection to S. The literal subtype-indexed matrix block represents that map; extension by zero in the target is injective. The actual cut-free endpoint uses this identity to state its conclusion using the actual matrix entries.
 
 **Theorem 1.7 (Transitive strict half-ranks exclude a cut on eight labels).**
 
