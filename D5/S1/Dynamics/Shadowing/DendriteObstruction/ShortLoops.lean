@@ -8,8 +8,11 @@
 
 import Mathlib.Topology.Instances.AddCircle.Defs
 import Mathlib.Topology.Order.Compact
-import Mathlib.Topology.MetricSpace.UniformConvergence
+import Mathlib.Topology.MetricSpace.Pseudo.Defs
+import Mathlib.Topology.UniformSpace.HeineCantor
 import Mathlib.Tactic
+
+/-! The minimum positive repeated-pair gap produces an actual circle injection. -/
 
 open Set Function
 open scoped Topology
@@ -56,7 +59,8 @@ theorem short_repeated_pair {X : Type*} [TopologicalSpace X] [T2Space X]
   have minimal : ∀ u ∈ Icc (0 : ℝ) 1, ∀ v ∈ Icc (0 : ℝ) 1,
       u < v → h u = h v → b - a ≤ v - u := by
     intro u hu v hv huv huv_eq
-    exact habmin ⟨⟨⟨hu, hv⟩, huv_eq⟩, lower u hu v hv huv huv_eq⟩
+    have hmem : (u, v) ∈ S := ⟨⟨⟨hu, hv⟩, huv_eq⟩, lower u hu v hv huv huv_eq⟩
+    exact habmin hmem
   have hi : InjOn h (Ico a b) := by
     intro u hu v hv huv_eq
     by_contra huv_ne
@@ -71,7 +75,8 @@ theorem short_repeated_pair {X : Type*} [TopologicalSpace X] [T2Space X]
   have hk : ContinuousOn k (Icc 0 1) := by
     apply hh.comp (continuous_const.add (continuous_const.mul continuous_id)).continuousOn
     intro t ht
-    constructor <;> nlinarith [ht.1, ht.2]
+    change 0 ≤ a + (b - a) * t ∧ a + (b - a) * t ≤ 1
+    constructor <;> nlinarith [ha.1, hb.2, ht.1, ht.2]
   have hk_end : k 0 = k 1 := by simpa [k] using he
   have hk_inj : InjOn k (Ico 0 1) := by
     intro u hu v hv huv
