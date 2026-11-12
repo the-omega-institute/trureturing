@@ -54,8 +54,8 @@ theorem actual_law : arena.{u,v}.Law actual :=
 
 theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
-  let μ : ProbabilityMeasure (ULift.{u} Unit) := ProbabilityMeasure.dirac (ULift.up ())
-  let ν : ProbabilityMeasure (ULift.{v} Unit) := ProbabilityMeasure.dirac (ULift.up ())
+  let μ : ProbabilityMeasure (ULift.{u} Unit) := ⟨Measure.dirac (ULift.up ()), Measure.dirac.isProbabilityMeasure⟩
+  let ν : ProbabilityMeasure (ULift.{v} Unit) := ⟨Measure.dirac (ULift.up ()), Measure.dirac.isProbabilityMeasure⟩
   exact h μ ν (fun _ => 0) continuous_const
     (kantorovich_duality_compact μ ν (fun _ => 0) continuous_const)
 

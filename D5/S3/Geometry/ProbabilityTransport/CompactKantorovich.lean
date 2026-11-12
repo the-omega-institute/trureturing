@@ -24,10 +24,8 @@ Retire this source only when the locally adopted Mathlib pin provides the full e
 arbitrary continuous real rectangular-cost compact probability-space duality theorem.
 -/
 
-module
-
-public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-public import D5.S3.Geometry.ProbabilityTransport.CostCoupling
+import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+import D5.S3.Geometry.ProbabilityTransport.CostCoupling
 import Lean
 import Mathlib.Algebra.Order.Module.PositiveLinearMap
 import Mathlib.Algebra.Order.Star.Real
@@ -54,8 +52,6 @@ import Mathlib.Topology.Order.Compact
 Strong Kantorovich duality on products of nonempty compact
 metric Borel probability spaces with continuous cost.
 -/
-
-@[expose] public section
 
 section
 open MeasureTheory
