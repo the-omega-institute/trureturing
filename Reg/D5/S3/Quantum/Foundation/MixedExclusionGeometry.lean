@@ -51,21 +51,21 @@ def outcome (P : Inputs.{v}) (hc : IsClosed (P.cone : Set P.V))
     mixedExcluded P.cone P.unit = intrinsicFrontier ℝ (base P.cone P.unit) \ pure P.cone P.unit ∧
     (∀ (x : mixedExcluded P.cone P.unit) (p : pure P.cone P.unit), σ x = p ↔
       (x : P.V) ∈ intrinsicInterior ℝ (exclusion P.cone P.unit p)) ∧
-    Continuous (reflection hc hs hg P.balls hW) ∧
-    Function.Involutive (reflection hc hs hg P.balls hW) ∧
-    (∀ x : mixedExcluded P.cone P.unit, reflection hc hs hg P.balls hW x = x ↔
+    Continuous (reflection hc hs hg P.balls) ∧
+    Function.Involutive (reflection hc hs hg P.balls) ∧
+    (∀ x : mixedExcluded P.cone P.unit, reflection hc hs hg P.balls x = x ↔
       x ∈ Set.range (centerSection hc hs hg P.balls)) ∧
     Continuous (σ) ∧
     Continuous (centerSection hc hs hg P.balls) ∧
     (∀ p : pure P.cone P.unit, σ (centerSection hc hs hg P.balls p) = p) ∧
-    Continuous (contraction hc hs hg P.balls hW) ∧
+    Continuous (contraction hc hs hg P.balls) ∧
     (∀ x : mixedExcluded P.cone P.unit,
-      contraction hc hs hg P.balls hW (⟨0,by norm_num⟩,x) = x ∧
-      contraction hc hs hg P.balls hW (⟨1,by norm_num⟩,x) = centerSection hc hs hg P.balls (σ x)) ∧
+      contraction hc hs hg P.balls (⟨0,by norm_num⟩,x) = x ∧
+      contraction hc hs hg P.balls (⟨1,by norm_num⟩,x) = centerSection hc hs hg P.balls (σ x)) ∧
     (∀ (p : pure P.cone P.unit) (t : Set.Icc (0 : ℝ) 1),
-      contraction hc hs hg P.balls hW (t,centerSection hc hs hg P.balls p) = centerSection hc hs hg P.balls p) ∧
+      contraction hc hs hg P.balls (t,centerSection hc hs hg P.balls p) = centerSection hc hs hg P.balls p) ∧
     (∀ (p : pure P.cone P.unit) (t : Set.Icc (0 : ℝ) 1) (x : mixedExcluded P.cone P.unit),
-      ((contraction hc hs hg P.balls hW (t,x) : mixedExcluded P.cone P.unit) : P.V) ∈ exclusion P.cone P.unit p ↔
+      ((contraction hc hs hg P.balls (t,x) : mixedExcluded P.cone P.unit) : P.V) ∈ exclusion P.cone P.unit p ↔
         (x : P.V) ∈ exclusion P.cone P.unit p)
 
 abbrev arena : Arena where

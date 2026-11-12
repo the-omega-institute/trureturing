@@ -28,7 +28,9 @@ internal sealed class MixedExclusionGeometryDocument : IScribeDocumentDefinition
     private static Formula S => C("intrinsicFrontier", R, K);
     private static Formula Sigma => C("label", Cone, Unit);
     private static Formula Section => C("centerSection", V("hc"), V("hs"), V("hg"), V("hB"));
-    private static Formula Map(string name) => C(name,V("hc"),V("hs"),V("hg"),V("hB"),V("hW"));
+    private static Formula Map(string name) => name is "reflection" or "contraction"
+        ? C(name,V("hc"),V("hs"),V("hg"),V("hB"))
+        : C(name,V("hc"),V("hs"),V("hg"),V("hB"),V("hW"));
     private static Formula App(Formula f, Formula x) => C("apply", f, x);
     private static Formula Val(Formula x) => C("value", x);
     private static Formula Pair(Formula a, Formula b) => C("pair", a, b);
@@ -37,15 +39,15 @@ internal sealed class MixedExclusionGeometryDocument : IScribeDocumentDefinition
     private static Formula Ht(Formula t, Formula x) => App(Map("contraction"),Pair(t,x));
     private static Formula Strict => All("x",Space,Imp(In(V("x"),Cone),
         Imp(Not(Eq(V("x"),D(0))),new Formula.Relation(D(0),FormulaRelationOperator.LessThan,App(Unit,V("x"))))));
-    private static Formula Context(Formula body) => All("V",V("Type"),Seq(
+    private static Formula Parameters(Formula body) => All("V",V("Type"),Seq(
         OpenBracket,C("NormedAddCommGroup",Space),CloseBracket,Sp,
         OpenBracket,C("NormedSpace",R,Space),CloseBracket,Sp,
         OpenBracket,C("FiniteDimensional",R,Space),CloseBracket,Sp,
         OpenBracket,C("Nontrivial",Space),CloseBracket,Sp,
         All("C",C("PointedCone",R,Space),All("u",C("LinearMap",R,Space,R),
         All("hc",C("IsClosed",Cone),All("hs",Strict,
-        All("hg",Eq(C("span",R,Cone),C("top")),All("hB",C("exclusionBalls",Cone,Unit),
-        All("hW",C("weakPair",Cone,Unit),body)))))))));
+        All("hg",Eq(C("span",R,Cone),C("top")),All("hB",C("exclusionBalls",Cone,Unit),body))))))));
+    private static Formula Context(Formula body) => Parameters(All("hW",C("weakPair",Cone,Unit),body));
 
     public DocumentDefinition Create()
     {
@@ -61,7 +63,7 @@ internal sealed class MixedExclusionGeometryDocument : IScribeDocumentDefinition
             All("x",M,And(Eq(Ht(D(0),x),x),Eq(Ht(D(1),x),App(Section,App(Sigma,x))))),
             All("p",P,All("t",T,Eq(Ht(t,section),section))),
             All("p",P,All("t",T,All("x",M,Iff(In(Val(Ht(t,x)),Dp(p)),In(Val(x),Dp(p))))))));
-        Formula definitions=Context(And(
+        Formula definitions=Parameters(And(
             All("x",Space,Iff(In(x,M),And(Not(In(x,P)),Ex("p",P,In(x,Dp(p)))))),
             All("p",P,Eq(Val(section),Center(p))),
             All("x",M,Eq(Val(App(tau,x)),C("subtract",C("smul",D(2),Center(App(Sigma,x))),Val(x)))),

@@ -35,6 +35,7 @@ variable (hc : IsClosed (C : Set V))
   (hB : exclusionBalls C u) (hW : weakPair C u)
 
 include hc hs hg in
+omit [Nontrivial V] in
 private theorem frontier_covered {x : V} (hx : x ∈ intrinsicFrontier ℝ (base C u)) :
     ∃ p : pure C u, x ∈ exclusion C u p := by
   have hxK := intrinsicFrontier_subset (base_compact hc hs).isClosed hx
@@ -76,6 +77,7 @@ private theorem frontier_covered {x : V} (hx : x ∈ intrinsicFrontier ℝ (base
   exact ⟨p,hxK,g,hg',hz x (by simpa using hfx)⟩
 
 include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem exclusion_frontier (p : pure C u) :
     exclusion C u p ⊆ intrinsicFrontier ℝ (base C u) := by
   intro x hx
@@ -98,6 +100,7 @@ private theorem exclusion_frontier (p : pure C u) :
   linarith
 
 include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem mixed_boundary :
     mixedExcluded C u = intrinsicFrontier ℝ (base C u) \ pure C u := by
   ext x
@@ -148,6 +151,7 @@ private theorem label_iff (x : mixedExcluded C u) (p : pure C u) :
     exact label_unique hc hs hg hB hW x.property.1 x.property.2.choose_spec hp
 
 include hc hs hg in
+omit [Nontrivial V] in
 private theorem incidence_closed :
     IsClosed {s : V × pure C u | s.1 ∈ exclusion C u s.2} := by
   let : CompactSpace (effects C u) := isCompact_iff_compactSpace.mp (effects_compact hs hg)
@@ -181,6 +185,7 @@ private theorem label_continuous : Continuous (label (C := C) (u := u)) := by
   exact (incidence_closed hc hs hg).preimage (by fun_prop)
 
 include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem chart_mixed (p : pure C u) (b : ExclusionChart C u p)
     (v : EuclideanSpace ℝ (Fin b.dim)) :
     b.param v ∈ exclusion C u p ∧ b.param v ∉ pure C u ↔ ‖v‖ < 1 := by
@@ -209,6 +214,7 @@ private theorem chart_mixed (p : pure C u) (b : ExclusionChart C u p)
     have : ‖v‖ = 1 := by simpa using hw
     linarith
 
+omit [FiniteDimensional ℝ V] [Nontrivial V] in
 private theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
     intrinsicInterior ℝ (exclusion C u p) = b.param '' Metric.ball 0 1 := by
   let E := EuclideanSpace ℝ (Fin b.dim)
@@ -241,6 +247,7 @@ private theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
   exact (himage (Metric.ball 0 1)).symm
 
 include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem exclusion_interior (p : pure C u) :
     intrinsicInterior ℝ (exclusion C u p) = exclusion C u p \ pure C u := by
   let b := (hB p).some
@@ -254,6 +261,7 @@ private theorem exclusion_interior (p : pure C u) :
     exact ⟨v,by simpa using (chart_mixed hc hs hg hB p b v).mp ⟨hx,hn⟩,rfl⟩
 
 include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem center_mixed (p : pure C u) : center hB p ∈ mixedExcluded C u := by
   have hh := (chart_mixed hc hs hg hB p (hB p).some 0).mpr (by simp)
   exact ⟨hh.2,p,hh.1⟩
@@ -277,7 +285,8 @@ private theorem label_center (p : pure C u) : label (centerSection hc hs hg hB p
   apply (label_iff hc hs hg hB hW _ p).mpr
   exact (chart_mixed hc hs hg hB p (hB p).some 0).mpr (by simp) |>.1
 
-include hc hs hg hB hW in
+include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem contraction_mem (x : mixedExcluded C u) (t : Set.Icc (0 : ℝ) 1) :
     AffineMap.lineMap (x : V) (center hB (label x)) (t : ℝ) ∈ mixedExcluded C u ∧
       AffineMap.lineMap (x : V) (center hB (label x)) (t : ℝ) ∈ exclusion C u (label x) := by
@@ -285,7 +294,8 @@ private theorem contraction_mem (x : mixedExcluded C u) (t : Set.Icc (0 : ℝ) 1
   let b := (hB p).some
   have hx : (x : V) ∈ exclusion C u p := x.property.2.choose_spec
   obtain ⟨v,hv,he⟩ := b.whole.symm ▸ hx
-  have hnorm : ‖v‖ < 1 := (chart_mixed hc hs hg hB p b v).mp ⟨he.symm ▸ hx,he.symm ▸ x.property.1⟩
+  have hnorm : ‖v‖ < 1 := (chart_mixed hc hs hg hB p b v).mp
+    ⟨he.symm ▸ hx,he.symm ▸ x.property.1⟩
   have hball : AffineMap.lineMap v 0 (t : ℝ) ∈ Metric.ball (0 : EuclideanSpace ℝ (Fin b.dim)) 1 :=
     (convex_ball (0 : EuclideanSpace ℝ (Fin b.dim)) 1).lineMap_mem
       (by simpa using hnorm) (by simp) t.property
@@ -301,15 +311,15 @@ private theorem contraction_mem (x : mixedExcluded C u) (t : Set.Icc (0 : ℝ) 1
 /-- Straight motion within the actual original exclusion, without choosing continuous ball charts. -/
 def contraction (z : Set.Icc (0 : ℝ) 1 × mixedExcluded C u) : mixedExcluded C u :=
   ⟨AffineMap.lineMap (z.2 : V) (center hB (label z.2)) (z.1 : ℝ),
-    (contraction_mem hc hs hg hB hW z.2 z.1).1⟩
+    (contraction_mem hc hs hg hB z.2 z.1).1⟩
 
 include hc hs hg hB hW in
 private theorem contraction_label (t : Set.Icc (0 : ℝ) 1) (x : mixedExcluded C u) :
-    label (contraction hc hs hg hB hW (t,x)) = label x :=
-  (label_iff hc hs hg hB hW _ _).mpr (contraction_mem hc hs hg hB hW x t).2
+    label (contraction hc hs hg hB (t,x)) = label x :=
+  (label_iff hc hs hg hB hW _ _).mpr (contraction_mem hc hs hg hB x t).2
 
 include hc hs hg hB hW in
-private theorem contraction_continuous : Continuous (contraction hc hs hg hB hW) := by
+private theorem contraction_continuous : Continuous (contraction hc hs hg hB) := by
   apply Continuous.subtype_mk
   simp only [AffineMap.lineMap_apply_module]
   exact (continuous_const.sub (continuous_subtype_val.comp continuous_fst)).smul
@@ -318,7 +328,8 @@ private theorem contraction_continuous : Continuous (contraction hc hs hg hB hW)
         (continuous_subtype_val.comp ((center_continuous hc hs hg hB hW).comp
           ((label_continuous hc hs hg hB hW).comp continuous_snd))))
 
-include hc hs hg hB hW in
+include hc hs hg hB in
+omit [Nontrivial V] in
 private theorem reflection_mem (x : mixedExcluded C u) :
     (2 : ℝ) • center hB (label x) - (x : V) ∈ mixedExcluded C u ∧
       (2 : ℝ) • center hB (label x) - (x : V) ∈ exclusion C u (label x) := by
@@ -340,18 +351,18 @@ private theorem reflection_mem (x : mixedExcluded C u) :
 
 /-- Reflection in the actual center of the uniquely determined exclusion ball. -/
 def reflection (x : mixedExcluded C u) : mixedExcluded C u :=
-  ⟨(2 : ℝ) • center hB (label x) - (x : V),(reflection_mem hc hs hg hB hW x).1⟩
+  ⟨(2 : ℝ) • center hB (label x) - (x : V),(reflection_mem hc hs hg hB x).1⟩
 
 include hc hs hg hB hW in
 private theorem reflection_label (x : mixedExcluded C u) :
-    label (reflection hc hs hg hB hW x) = label x :=
-  (label_iff hc hs hg hB hW _ _).mpr (reflection_mem hc hs hg hB hW x).2
+    label (reflection hc hs hg hB x) = label x :=
+  (label_iff hc hs hg hB hW _ _).mpr (reflection_mem hc hs hg hB x).2
 
 include hc hs hg hB hW in
 private theorem reflection_laws :
-    Continuous (reflection hc hs hg hB hW) ∧
-    Function.Involutive (reflection hc hs hg hB hW) ∧
-    (∀ x : mixedExcluded C u, reflection hc hs hg hB hW x = x ↔
+    Continuous (reflection hc hs hg hB) ∧
+    Function.Involutive (reflection hc hs hg hB) ∧
+    (∀ x : mixedExcluded C u, reflection hc hs hg hB x = x ↔
       x ∈ Set.range (centerSection hc hs hg hB)) := by
   refine ⟨?_,?_,?_⟩
   · apply Continuous.subtype_mk
@@ -360,7 +371,7 @@ private theorem reflection_laws :
         continuous_subtype_val
   · intro x
     apply Subtype.ext
-    change (2 : ℝ) • center hB (label (reflection hc hs hg hB hW x)) -
+    change (2 : ℝ) • center hB (label (reflection hc hs hg hB x)) -
       ((2 : ℝ) • center hB (label x) - (x : V)) = _
     rw [reflection_label hc hs hg hB hW]
     abel
@@ -381,27 +392,28 @@ private theorem reflection_laws :
       rw [label_center hc hs hg hB hW]
       simp [two_smul,centerSection]
 
-/-- The actual contraction simultaneously preserves every complete mixed fiber and its complement. -/
+include hc hs hg hB hW in
+/-- The actual contraction preserves every complete mixed fiber and its complement. -/
 theorem original_mixed_exclusion_contraction :
     (pure C u ⊆ intrinsicFrontier ℝ (base C u)) ∧
     mixedExcluded C u = intrinsicFrontier ℝ (base C u) \ pure C u ∧
     (∀ (x : mixedExcluded C u) (p : pure C u), label x = p ↔
       (x : V) ∈ intrinsicInterior ℝ (exclusion C u p)) ∧
-    Continuous (reflection hc hs hg hB hW) ∧
-    Function.Involutive (reflection hc hs hg hB hW) ∧
-    (∀ x : mixedExcluded C u, reflection hc hs hg hB hW x = x ↔
+    Continuous (reflection hc hs hg hB) ∧
+    Function.Involutive (reflection hc hs hg hB) ∧
+    (∀ x : mixedExcluded C u, reflection hc hs hg hB x = x ↔
       x ∈ Set.range (centerSection hc hs hg hB)) ∧
     Continuous (label (C := C) (u := u)) ∧
     Continuous (centerSection hc hs hg hB) ∧
     (∀ p : pure C u, label (centerSection hc hs hg hB p) = p) ∧
-    Continuous (contraction hc hs hg hB hW) ∧
+    Continuous (contraction hc hs hg hB) ∧
     (∀ x : mixedExcluded C u,
-      contraction hc hs hg hB hW (⟨0,by norm_num⟩,x) = x ∧
-      contraction hc hs hg hB hW (⟨1,by norm_num⟩,x) = centerSection hc hs hg hB (label x)) ∧
+      contraction hc hs hg hB (⟨0,by norm_num⟩,x) = x ∧
+      contraction hc hs hg hB (⟨1,by norm_num⟩,x) = centerSection hc hs hg hB (label x)) ∧
     (∀ (p : pure C u) (t : Set.Icc (0 : ℝ) 1),
-      contraction hc hs hg hB hW (t,centerSection hc hs hg hB p) = centerSection hc hs hg hB p) ∧
+      contraction hc hs hg hB (t,centerSection hc hs hg hB p) = centerSection hc hs hg hB p) ∧
     (∀ (p : pure C u) (t : Set.Icc (0 : ℝ) 1) (x : mixedExcluded C u),
-      ((contraction hc hs hg hB hW (t,x) : mixedExcluded C u) : V) ∈ exclusion C u p ↔
+      ((contraction hc hs hg hB (t,x) : mixedExcluded C u) : V) ∈ exclusion C u p ↔
         (x : V) ∈ exclusion C u p) := by
   have hri (x : mixedExcluded C u) (p : pure C u) : label x = p ↔
       (x : V) ∈ intrinsicInterior ℝ (exclusion C u p) := by
@@ -431,7 +443,7 @@ def centerRetraction : C(mixedExcluded C u,mixedExcluded C u) :=
 /-- The actual straight-line strong deformation as a homotopy of continuous maps. -/
 def contractionHomotopy : (ContinuousMap.id (mixedExcluded C u)).Homotopy
     (centerRetraction hc hs hg hB hW) where
-  toFun := contraction hc hs hg hB hW
+  toFun := contraction hc hs hg hB
   continuous_toFun := contraction_continuous hc hs hg hB hW
   map_zero_left x := by apply Subtype.ext; simp [contraction]
   map_one_left x := by apply Subtype.ext; simp [contraction,centerRetraction,centerSection]
@@ -461,7 +473,7 @@ def pairCenterMap (p : pure C u) : deletedPointPair p ⟶ deletedFiberPair p :=
       exact hq ((label_center hc hs hg hB hW q).symm.trans
         ((label_iff hc hs hg hB hW _ p).mpr hm)))
 
-/-- The center contraction is a homotopy from the identity to the composite of the actual pair maps. -/
+/-- The center contraction joins the identity to the composite of the actual pair maps. -/
 def deletedFiberPairHomotopy (p : pure C u) :
     TopPair.Homotopy (𝟙 (deletedFiberPair p))
       (pairLabelMap hc hs hg hB hW p ≫ pairCenterMap hc hs hg hB hW p) := by
@@ -476,6 +488,6 @@ def deletedFiberPairHomotopy (p : pure C u) :
       obtain ⟨_,_,_,_,_,_,_,_,_,_,_,_,hpres⟩ :=
         original_mixed_exclusion_contraction hc hs hg hB hW
       exact hx ((hpres p t x).mp hm))
-  convert H using 1 <;> first | rfl | (apply heq_of_eq; ext : 2 <;> rfl)
+  convert H using 1 <;> rfl
 
 end D5.S3.Quantum.Foundation.MixedExclusionGeometry
