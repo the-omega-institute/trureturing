@@ -8,10 +8,12 @@
 
 import D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredContraction
 import D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
+import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
 
 /-! The actual cyclic no-dark theorem feeds the frozen dark-block estimate. -/
 
 noncomputable section
+open Matrix
 open scoped InnerProductSpace Matrix.Norms.L2Operator
 
 namespace D5.S3.QuantumChannels.ProjectionDiagnostics.CyclicMonitoredPowerBound
@@ -38,12 +40,17 @@ private theorem conservation (U : E ≃ₗᵢ[ℂ] E) (v : E) :
     rw [inner_sub_right] at h2
     have h1' := sub_eq_zero.mp h1
     have h2' := sub_eq_zero.mp h2
+    change inner ℂ (U (x : E)) (P (U (y : E))) =
+      inner ℂ (P (U (x : E))) (P (U (y : E))) at h1'
+    change inner ℂ (P (U (x : E))) (U (y : E)) =
+      inner ℂ (P (U (x : E))) (P (U (y : E))) at h2'
     change inner ℂ (U (x : E) - P (U (x : E)))
       (U (y : E) - P (U (y : E))) +
       inner ℂ (P (U (x : E))) (P (U (y : E))) = inner ℂ (x : E) (y : E)
     simp only [inner_sub_left, inner_sub_right, h1', h2', sub_self, sub_zero,
       sub_add_cancel, U.inner_map_map]
-  ext x
+  apply ContinuousLinearMap.ext
+  intro x
   apply ext_inner_left ℂ
   intro y
   simpa only [ContinuousLinearMap.add_apply, mul_apply_eq_comp,
@@ -79,11 +86,13 @@ theorem cyclic_power_contraction (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ 
       intro n
       have hn := (Submodule.mem_iInf _).mp ((Submodule.mem_iInf _).mp hy n) ()
       rw [LinearMap.mem_ker] at hn ⊢
+      change M (L () * Q ^ n) y = 0 at hn
       have hm : M (φ (B * A ^ n)) y = 0 := by
         simpa only [map_mul, map_pow, Q, L] using hn
       rw [hφ, LinearIsometryEquiv.conjStarAlgEquiv_apply_apply] at hm
-      have hm' := e.injective (by simpa using hm)
-      simpa only [mul_apply_eq_comp, ContinuousLinearMap.toLinearMap_pow] using hm'
+      have hm' : (B * A ^ n) (e.symm y) = 0 := e.injective (by simpa using hm)
+      rw [LinearMap.comp_apply, ← ContinuousLinearMap.toLinearMap_pow]
+      exact hm'
     rw [cyclic_future_kernel_eq_bot U v] at hx
     have hx' : e.symm y = 0 := hx
     have := congrArg e hx'
@@ -92,7 +101,7 @@ theorem cyclic_power_contraction (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ 
     simp [darkProjection, hzero]
   have hd : d ≠ 0 := by
     intro hd
-    haveI : Subsingleton C := (Module.finrank_eq_zero_iff.mp hd)
+    haveI : Subsingleton C := (Module.finrank_zero_iff.mp hd)
     have hvmem : v ∈ C := Submodule.subset_span ⟨0, rfl⟩
     have hz : (⟨v, hvmem⟩ : C) = 0 := Subsingleton.elim _ _
     have hvzero : v = 0 := congrArg Subtype.val hz
