@@ -88,4 +88,4 @@ For the arithmetic step t = (finRotate n)^a with n > 0, the existing residue cha
 - Truth anchor: `D5/S3/FiniteGroups/Partitions/OrbitSymmetryDynamics.normalizer_le_orbitAut`
 - Truth anchor: `D5/S3/FiniteGroups/Partitions/OrbitSymmetryDynamics.orbitAut`
 - Truth anchor: `D5/S3/FiniteGroups/Partitions/OrbitSymmetryDynamics.orbit_relation_determines_iff`
-- Dependency: [D5/S3/FiniteGroups/SuccessorQuotient](SuccessorQuotient.md)
+- Dependency: [D5/S3/FiniteGroups/SuccessorQuotient](../SuccessorQuotient.md)
