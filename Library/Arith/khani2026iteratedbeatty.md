@@ -56,12 +56,12 @@ at $2$ and positive at $3$, continuity gives a root greater than $2$, hence
 $\sqrt2<3/2<2<\rho$. The same witness lies in the lower printed branch.
 The original theorem for $\alpha>c$ is not refuted.
 
-The formal module imports Mathlib's original `beattySeq`, whose integer
-value at $k$ is $\lfloor k\alpha\rfloor$, and uses `Function.iterate`.
-Multiplication commutes, and for $\alpha>1$ each positive integer $k$
-satisfies $k\le\lfloor\alpha k\rfloor$. Thus all iterates stay positive;
-the integer-valued implementation restricted to positive natural preimages
-is exactly the source's natural floor-map composition.
+The formal module defines the source's map directly on natural numbers using
+Mathlib's natural floor of the real product $\alpha k$, and uses
+`Function.iterate` for composition. For $\alpha>1$ each positive integer $k$
+satisfies $k\le\lfloor\alpha k\rfloor$, so all iterates stay positive.
+The real products are nonnegative; natural floor consequently has the same
+integer value as the source's floor at every intermediate step.
 
 The exact calculation is $2<2\sqrt2<3$, so $f_{\sqrt2}(2)=2$ and
 $f_{\sqrt2}^3(2)=2$. Meanwhile $\{2/(\sqrt2)^2\}=0$ and

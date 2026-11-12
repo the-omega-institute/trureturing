@@ -14,17 +14,17 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
         "The positive fixed point two at modulus sqrt two defeats the full proposed extension.",
         H("Iterated Beatty Range: the Universal Extension Fails"),
         Blocks(
+            Node("nativeBeatty", "The source's natural floor map", StepFormula(),
+                "nativeBeatty(alpha,k) is Mathlib's natural floor of the real product alpha k. "
+                + "For alpha>1 all products at natural inputs are nonnegative, so natural floor "
+                + "has exactly the integer value of the source's floor.", DescribeRole.Definition),
             Node("nativeRange", "The native iterated range", RangeFormula(),
-                "Mathlib's original beattySeq(alpha,z) is floor(z alpha), with integer input and "
-                + "integer output. The superscript [n] denotes Function.iterate, the actual n-fold "
+                "The superscript [n] denotes Function.iterate, the actual n-fold "
                 + "composition, including each intermediate floor. It is not floor(alpha^n k). "
                 + "The preimage k is a positive natural. For alpha>1 and k>=1, k<=alpha k, hence "
                 + "k<=floor(alpha k). Induction keeps every intermediate value positive, so this "
-                + "integer extension agrees exactly with the source's map on positive naturals. "
-                + "Commutativity identifies floor(k alpha) with floor(alpha k).",
+                + "is exactly the source's natural floor-map composition on positive naturals.",
                 DescribeRole.Definition),
-            new DocumentBlock.DisplayFormula(Disp(Equal(Call("beattySeq", A, F.Id("z")),
-                new Formula.Floor(Mul(F.Id("z"), A))))),
             new DocumentBlock.DisplayFormula(Disp(Equal(Call("frac", F.Id("t")),
                 Sub(F.Id("t"), new Formula.Floor(F.Id("t")))))),
             Node("fractionalTest", "Every strict source condition", TestFormula(),
@@ -46,7 +46,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
             Node("result", "Literal negation of the extension", Disp(new Formula.Not(F.Id("claim"))),
                 "Take alpha=sqrt(2), n=3, x=2 and the positive preimage k=2. Existing Mathlib "
                 + "theorems supply irrationality, 1<sqrt(2)<3/2<c and its exact square. "
-                + "The strict bounds 2<2sqrt(2)<3 give beattySeq(sqrt(2),2)=2. "
+                + "The strict bounds 2<2sqrt(2)<3 give nativeBeatty(sqrt(2),2)=2. "
                 + "Function.iterate_fixed therefore gives actual third-iterate membership. "
                 + "The fractional parts at indices two and three are 0 and 1/sqrt(2). "
                 + "At i=3 the tested expression is 1/sqrt(2), strictly greater than "
@@ -94,10 +94,13 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
     private static Formula Ex(string name, Formula domain, Formula body) => new Formula.BindMany(
         FormulaQuantifier.Exists, [new(FormulaIdentifier.Create(name), domain)], body);
 
+    private static Formula StepFormula() => Disp(For("alpha", Real(), For("k", Nat(),
+        Equal(Call("nativeBeatty", A, F.Id("k")), new Formula.Floor(Mul(A, F.Id("k")))))));
+
     private static Formula RangeFormula()
     {
         var k = F.Id("k");
-        var iterate = new Formula.Apply(Pow(Par(Call("beattySeq", A)), Seq(OpenBracket, N, CloseBracket)), [k]);
+        var iterate = new Formula.Apply(Pow(Par(Call("nativeBeatty", A)), Seq(OpenBracket, N, CloseBracket)), [k]);
         return Disp(For("alpha", Real(), For("n", Nat(), For("x", Nat(),
             Iff(Call("nativeRange", A, N, X), Ex("k", Nat(), And(LeN(D(1), k), Equal(iterate, X))))))));
     }
