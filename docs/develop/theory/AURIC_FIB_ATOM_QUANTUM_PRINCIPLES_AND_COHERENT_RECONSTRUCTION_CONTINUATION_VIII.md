@@ -1217,3 +1217,440 @@ closures 和 positive maps 不能供应这些 permissions。非加性、history-
 [BMU8]: https://arxiv.org/html/1403.4147v4
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 全效应有限区分容量、联合未来秩与零合并的 Born 选择
+
+### 9.1 同一实际未来的两个像商
+
+**定义 9.1（射线响应、像锥、容量与秩）。** 令 $n\ge3$，
+$X=\mathbb {CP}^{n-1}$，把射线写为迹一秩一投影 $P$，令 $G=PU(n)$。
+给定非空有限标签集 $\Lambda$ 和连续实函数
+
+$$
+q_w:X\longrightarrow[0,1],\qquad \sum_{w\in\Lambda}q_w(P)=1.
+\tag{9.1}
+$$
+
+实际未来是一个固定有限字母表上的全部有限正向时序字 $\mathsf W$，包含空字。
+其已给矩阵满足 $K_{af}=K_fK_a$；记 $g_fP=K_fPK_f^*$，并假定
+$\{[K_f]:f\in\mathsf W\}$ 在 $G$ 中稠密。固定一个纯 ready $P_e$，
+$P_a=K_aP_eK_a^*$，其实际准备轨道于是也稠密。这里只讨论同一个无中途读取
+终端接口；数学群闭包没有增加实际字或控制权限。
+
+置
+
+$$
+\begin{aligned}
+I&=\{\star\}\sqcup(\mathsf W\times\Lambda),\qquad
+B=\ell^\infty(I,\mathbb R),\\
+\Phi(P)&=\bigl(1,(q_w(g_fP))_{f,w}\bigr),\qquad u(z)=z(\star),\\
+J\mu&=\left(\mu(X),\left(\int_Xq_w(g_fP)\,d\mu(P)\right)_{f,w}\right).
+\end{aligned}
+\tag{9.2}
+$$
+
+$M(X)$ 是全部有限实符号正则 Borel 测度，$M_{\rm fin}(X)$ 是有限支撑者。
+两种模型分别取以下真正的像，而不预设 $J$ 单射：
+
+$$
+\begin{array}{c|ccc}
+a&V_a&C_a&K_a\\\hline
+\mathrm{alg}&J M_{\rm fin}(X)&J M_{{\rm fin},+}(X)&
+J\operatorname {Prob}_{\rm fin}(X)\\
+\mathrm{meas}&J M(X)&J M_+(X)&J\operatorname {Prob}(X).
+\end{array}
+\tag{9.3}
+$$
+
+因而 $V_{\rm alg}=\operatorname {span}_{\mathbb R}\Phi(X)$、
+$K_{\rm alg}=\operatorname {conv}\Phi(X)$；这里的 convex hull 只取有限组合。
+Jordan 分解给 $V_a=\operatorname {span}_{\mathbb R}C_a$。正代表的每个坐标
+非负，故 $C_a$ 尖；正代表若总质量为零就是零，所以 $u$ 在非零正元上严格正，
+$K_a=C_a\cap\{u=1\}$。锥是 (9.3) 的生成／正测度像锥，不能换成较大的
+逐坐标非负行锥。
+
+在每个模型中，整个 proper effect interval 定义为
+
+$$
+\mathcal E_a=[0,u]_a
+=\{e\in\operatorname {Hom}_{\mathbb R}(V_a,\mathbb R):
+e(C_a)\ge0,\ (u-e)(C_a)\ge0\}.
+\tag{9.4}
+$$
+
+此处不附加行范数连续性。一个有限测量是正线性泛函的有限族，其和为 $u$。
+定义 $\operatorname {Cap}(K_a)$ 为可由**同一个**有限测量完美区分的归一状态数的
+上确界：允许任意混态 $x_1,\ldots,x_m\in K_a$，要求正效果
+$e_1,\ldots,e_m,e_0$ 满足
+
+$$
+\sum_{i=0}^me_i=u,\qquad e_i(x_j)=\delta_{ij}\quad(1\le i,j\le m).
+\tag{9.5}
+$$
+
+$e_0$ 是允许的正余项；它可为零，也可合入一个选定结果。
+该容量不同于 native II78–84 中称为 predictive capacity 的线性秩。
+后者在这里始终记为
+
+$$
+r_{\rm fut}=\sup_{A,F\text{ finite}}
+\operatorname {rank}_{\mathbb R}
+\bigl(q_w(g_fP_a)\bigr)_{a\in A,\,(f,w)\in F}
+\in\mathbb N\cup\{\infty\}.
+\tag{9.6}
+$$
+
+星列已由任意固定 future 的全部标签之和给出，不另增加一个常数维。
+零、常数及重复标签都保留；每个 future 都仍是实际正向字。
+
+### 9.2 有限容量与有限活跃次数的完整等价
+
+**定理 9.2（两个像商上的容量—秩定理）。** 采用定义 9.1。令
+$\mathcal H_k^{\mathbb C}$ 为球面上双次数 $(k,k)$ 的复调和多项式下降到 $X$
+后的空间，$\mathcal H_k$ 为其实值实型，$E_k$ 为相应正交投影。记
+
+$$
+S=\{k\ge1:\exists w,\ E_kq_w\ne0\},\qquad
+d_k=\binom{n+k-1}{k}^{\!2}-\binom{n+k-2}{k-1}^{\!2}.
+\tag{9.7}
+$$
+
+对 $a=\mathrm{alg},\mathrm{meas}$ 分别有
+
+$$
+\operatorname {Cap}(K_a)<\infty
+\quad\Longleftrightarrow\quad r_{\rm fut}<\infty
+\quad\Longleftrightarrow\quad \dim_{\mathbb R}V_a<\infty
+\quad\Longleftrightarrow\quad |S|<\infty.
+\tag{9.8}
+$$
+
+有限分支的准确值为
+
+$$
+r_{\rm fut}=\dim V_{\rm alg}=\dim V_{\rm meas}
+=1+\sum_{k\in S}d_k=:r,
+\qquad \operatorname {Cap}(K_a)\le r.
+\tag{9.9}
+$$
+
+$S=\varnothing$ 时两个归一基均为 singleton，秩与容量均为一。
+$S$ 无限时，无论活跃次数多么稀疏，每个有限 distinct 射线集的 profiles 都是
+distinct 极点，并被 (9.5) 的一个共同测量完美区分。这一结论不要求
+$J:M(X)\to B$ 单射，也不声称一般容量等于秩或在选择 Born 前容量至多 $n$。
+
+证明。先给出对无限次数及符号测度所需的谱论细节，再连接实际矩阵秩。
+
+在 $X$ 上取归一不变测度 $\nu$。它有全支撑：任一非空开集的群平移覆盖
+紧 $X$，有限子覆盖与不变性排除该开集质量为零。沿球面商拉回，
+$L^2(X,\mathbb C)$ 恰为 $L^2(S^{2n-1},\mathbb C)$ 的相位不变部分。
+Moretti–Pastorello [Theorem 5(a)–(c)][MP9] 的双次数分解、不可约性和互不等价性
+表明，相位权 $p-q$ 为零的部分恰给
+
+$$
+L^2(X,\mathbb C)=\widehat{\bigoplus}_{k\ge0}\mathcal H_k^{\mathbb C}.
+\tag{9.10}
+$$
+
+中心在每个 balanced 分量上平凡，故它们是互不等价的不可约 $PU(n)$ 模块；
+最高权为 $(k,0,\ldots,0,k)$。共轭保持每个 balanced 分量，其固定空间
+$\mathcal H_k$ 的复化就是 $\mathcal H_k^{\mathbb C}$。非零真不变实子空间若存在，
+复化便违反复不可约性。因此这是不可约实型，实维等于复维，不乘二。
+
+维数直接复用 native [II78.3 的 (78.7)–(78.8)][II9C] 的一般多项式论证：
+令 $N_k=\binom{n+k-1}{k}$，双次数 $(k,k)$ 的 Hermitian 系数空间实维为
+$N_k^2$，系数到球面限制单射，乘 $\|z\|^2$ 纳入低次数。
+Fischer／对称幂分解给此空间为 $\bigoplus_{j=0}^k\mathcal H_j$，故
+$\dim\mathcal H_0=1$、$\dim\mathcal H_k=N_k^2-N_{k-1}^2=d_k$。
+此处把 II 的参数 $13$ 换为声明中的 $n$，只消费其表示论方法及
+[Masanes–Galley–Müller Appendix A Lemmas 5、7][MGM9]；没有搬用 II 的原十三维来源。
+连续 $q_w$ 的原始无限调和级数在此只保证 $L^2$ 收敛。
+
+为避免把 $L^2$ 等式误用于奇异测度，令 $U_gh(P)=h(g^{-1}P)$。
+这是 $C(X)$ 上强连续的等距作用，且 $U_hU_g=U_{hg}$。若 $D_k$ 为
+$\mathcal H_k^{\mathbb C}$ 上的酉表示，$\chi_k=\operatorname {Tr}D_k$，则
+
+$$
+E_kh=d_k\int_G\overline{\chi_k(g)}\,U_gh\,dg.
+\tag{9.11}
+$$
+
+对连续 $h$，这是 $C(X)$ 中的积分，因被积函数在紧群上范数连续。
+归一化因子来自 Schur 正交式
+
+$$
+\int_G\overline{D_k(g)_{ab}}D_\ell(g)_{cd}\,dg
+=\frac{\delta_{k\ell}\delta_{ac}\delta_{bd}}{d_k}.
+\tag{9.12}
+$$
+
+该式也可由对两个不可约酉模块间的线性映射作 Haar 平均、应用 Schur 引理，
+再取迹固定标量得到。对 $a=b$ 求和说明 (9.11) 在第 $k$ 分量是恒等，
+在其它分量为零；有界性和 (9.10) 将它延拓到 $L^2$。连续积分代表与有限维
+调和代表几乎处处相等，二者连续且 $\nu$ 全支撑，故处处相等。
+实型使投影保持实函数。这是 [MP Proposition 9][MP9] 的投影在本域中的准确使用。
+特别地，$E_kq_w$ 先只落在**一致闭**轨道张成内，尚不必在代数列张成内。
+
+记 $\overline{\mathcal F}$ 为 $1$ 与全部 $U_gq_w$ 的一致闭实张成。
+每个活跃 $E_kq_w$ 的群轨道由不可约性张成整个 $\mathcal H_k$，所以
+
+$$
+\overline{\mathcal F}
+=\overline{\mathbb R1\oplus\bigoplus_{k\in S}\mathcal H_k}^{\,\|\cdot\|_\infty}
+=\{h\in C(X,\mathbb R):E_\ell h=0\ (\ell\ge1,\ell\notin S)\}.
+\tag{9.13}
+$$
+
+这里第二个等式可不用原始级数的一致收敛证明。取非负、积分一、支撑趋于单位
+的连续 Haar 近似单位 $a$，则 $\int a(g)U_gh\,dg\to h$ 一致。
+有限矩阵系数的代数含常数、在共轭下封闭、乘积仍是张量表示的系数，并由
+$PU(n)$ 的忠实 adjoint 表示分离点；Stone–Weierstrass 使其在 $C(G)$ 中稠密。
+用有限系数多项式 $t$ 在 $L^1$ 中逼近 $a$ 时，积分误差至多
+$\|t-a\|_1\|h\|_\infty$。Schur 正交式使 $\int t(g)U_gh\,dg$ 只含有限个
+球面不可约分量，而且不会产生 $h$ 没有的分量。这先是 $L^2$ 恒等式，再由
+连续性成为逐点恒等式；必要时取实部。所以相应有限调和和一致逼近 $h$，
+给出 (9.13)。实际 $g_f$ 稠密及一致连续性说明实际列也有相同的闭张成。
+这只是合适的求和逼近，不宣称未经加权的无限级数逐点或一致收敛。
+
+现在设 $J\mu=0$，其中 $\mu$ 是任意有限实符号正则测度。
+$L_\mu(h)=\int h\,d\mu$ 是 $C(X,\mathbb R)$ 的有界泛函，复线性延拓后仍满足
+$|L_\mu(h)|\le\|\mu\|_{\rm TV}\|h\|_\infty$。
+函数 $g\mapsto\int q_w(gP)\,d\mu(P)$ 连续，在全部实际 $g_f$ 上为零，故在
+整个 $G$ 为零。因此 $L_\mu$ 消去每个 $U_gq_w$。将其穿过 (9.11) 的连续积分，
+对任意 $h\in G$ 得
+
+$$
+L_\mu(U_hE_kq_w)
+=d_k\int_G\overline{\chi_k(g)}L_\mu(U_{hg}q_w)\,dg=0.
+\tag{9.14}
+$$
+
+积分交换也由有限界
+$d_k^2\|q_w\|_\infty\|\mu\|_{\rm TV}$ 直接保证。若 $k\in S$，选一个非零投影，
+其轨道实张成 $\mathcal H_k$，所以 $\mu$ 消去整个 $\mathcal H_k$ 及其复化。
+此结论包括奇异、diffuse 和正负相减测度；没有把测度当作 $L^2$ 向量，
+也没有将测度积分与无限调和和交换。
+
+取 $\mathcal H_k^{\mathbb C}$ 的 $L^2(\nu)$ 正交基 $Y_1,\ldots,Y_{d_k}$。
+其再生核及归一核为
+
+$$
+R_k(P,Q)=\sum_{b=1}^{d_k}\overline{Y_b(P)}Y_b(Q),\qquad
+Z_k(P,Q)=\frac{R_k(P,Q)}{d_k}
+=\frac{P_k^{(n-2,0)}(2\operatorname {Tr}(PQ)-1)}{P_k^{(n-2,0)}(1)}.
+\tag{9.15}
+$$
+
+对角值群不变，积分为 $d_k$，故 $R_k(P,P)=d_k$。
+Jacobi 识别来自 [Koornwinder §3、(3.2)][K9]：其复环境维数 $q=n$、次数为
+这里的 $k$，再除以对角值。因而 $Z_k$ 实值，在任一变量中属于第 $k$ 分量，
+$Z_k(P,P)=1$，基和的 Cauchy–Schwarz 不等式给全域 $|Z_k(P,Q)|\le1$。
+
+令 $\alpha=n-2\ge1$。对固定 $0<\operatorname {Tr}(PQ)<1$，
+[DLMF 18.15.4_5][D9I] 的固定参数 Darboux 公式，在
+$-1<2\operatorname {Tr}(PQ)-1<1$ 的内部给分子 $O(k^{-1/2})$。
+[DLMF Table 18.6.1][D9E] 给
+
+$$
+P_k^{(\alpha,0)}(1)=\binom{k+\alpha}{\alpha},\qquad
+P_k^{(\alpha,0)}(-1)=(-1)^k.
+\tag{9.16}
+$$
+
+所以内部归一核为 $O(k^{-\alpha-1/2})\to0$；正交射线则必须另用端点式，得到
+$Z_k(P,Q)=(-1)^k/\binom{k+\alpha}{\alpha}\to0$。
+相同射线的核始终为一。内部估计没有越过端点使用，故
+
+$$
+Z_k(P,Q)\longrightarrow\mathbf1_{\{P\}}(Q)\qquad(k\to\infty).
+\tag{9.17}
+$$
+
+若 $S$ 无限，取任意趋于无穷的活跃子序列 $k_j\in S$。(9.14) 使
+$\int Z_{k_j}(P,Q)\,d\mu(Q)=0$。对有限测度 $|\mu|$ 应用支配收敛，得到
+
+$$
+J\mu=0,\quad |S|=\infty\quad\Longrightarrow\quad
+\mu(\{P\})=0\quad(P\in X).
+\tag{9.18}
+$$
+
+这里无限活跃是不可删的前件；常数响应下 $\delta_P-\delta_Q$ 就属于核。
+(9.18) 只恢复 singleton masses，不恢复全部 diffuse 测度。
+例如若某个正次数 $\ell$ 不活跃，任取非零实 $h\in\mathcal H_\ell$，
+则 $h\nu$ 是非零 diffuse 符号核测度：总质量为零，且与每个实际平移的响应
+由调和正交性配对为零。无限 $S$ 允许这种缺项，也不必包含某个尾部的所有次数。
+
+仍在无限分支，对两个像商分别定义
+
+$$
+e_P(J\mu)=\mu(\{P\}).
+\tag{9.19}
+$$
+
+(9.18) 保证换代表不改变值，故这是商上的实线性泛函。
+正代表满足 $0\le\mu(\{P\})\le\mu(X)$，所以 $e_P\in\mathcal E_a$。
+对 distinct $P_1,\ldots,P_m$，
+$e_0=u-\sum_i e_{P_i}$ 在正代表上非负，给出同一个 (9.5) 测量；
+$e_{P_i}(\Phi(P_j))=\delta_{ij}$，余项在所列点为零，在其它纯 profile 上为一。
+因此任意有限这样的集合共同可区分，并线性独立。
+若某概率测度代表 $\Phi(P)$，将其与 $\delta_P$ 相减后用 (9.18)，其在 $P$
+的质量必为一，故该代表就是 $\delta_P$。任意把 $\Phi(P)$ 分解为两个归一
+像状态的非平凡凸组合，取两者正概率代表后也只能得到 $\delta_P$，所以两者
+都等于 $\Phi(P)$。这同时证明两个模型中这些 profiles 的 distinct 性和极端性。
+
+最后核对实际 rank，而不比较无限 Hamel 基数。令
+
+$$
+\mathcal F_{\rm act}
+=\operatorname {span}_{\mathbb R}\{1,q_w\circ g_f:f\in\mathsf W,w\in\Lambda\}
+\subset C(X,\mathbb R).
+\tag{9.20}
+$$
+
+native II78.3 的评价论证在此逐项使用同一个 dense ready 轨道和 actual futures：
+有限个线性独立函数限制到 $\{P_a\}$ 后仍独立；其评价向量必张成对应 Euclidean
+空间，否则某个非零线性组合在稠密集上消失，继而处处消失。因此可选有限个
+实际行给非奇异评价矩阵。独立函数若为列的有限组合，选入所有参与的实际列，
+仍得到至少同样的有限子矩阵秩。反向，任何有限子矩阵秩都受函数空间维数约束。
+故 (9.6) 有限恰当且仅当 $\mathcal F_{\rm act}$ 有限维，有限时维数就是它。
+
+有限维时，全部点评价张成 $\mathcal F_{\rm act}^*$：共同消去它们的函数只有零。
+坐标把 $V_{\rm alg}$ 与这个对偶识别；对测度积分得到的对偶元素仍在同一个
+有限维像内，所以 $V_{\rm meas}=V_{\rm alg}$。反过来，任一行空间有限维就约束
+其坐标函数空间有限维。若 $S$ 有限，(9.10) 及连续性给逐点的有限恒等式
+$q_w=E_0q_w+\sum_{k\in S}E_kq_w$，所以列空间包含在
+$\mathbb R1\oplus\bigoplus_{k\in S}\mathcal H_k$ 内。
+它现已有限维，因而一致闭；密度纳入全部数学群平移，(9.11) 及不可约性又纳入
+每个活跃分量。故两空间恰相等，给 (9.9)。若 $S$ 无限，上述共同区分表已给
+任意大的独立行集；等价地 (9.11) 使一致闭列张成含任意多完整分量，故不可能
+有有限维列空间。这给各空间及有限子矩阵 rank 同时为無穷，但不宣称它们的
+无限 Hamel 维数相等。
+
+若一个共同测量区分任意混态 $x_1,\ldots,x_m$，对
+$\sum_jc_jx_j=0$ 应用其 $e_i$ 得 $c_i=0$，所以 $m\le\dim V_a$。
+有限分支由此给 (9.9) 的容量上界；无限分支的 singleton 测量给无穷容量。
+$S=\varnothing$ 时所有 $q_w=c_w$，所有归一行相同，秩一且容量一。
+这证明两种像商上的全部等价。∎
+
+### 9.3 范数完成与不连续全效应的边界
+
+**定理 9.3（概率像的凸完成及无限分支的严格区别）。** 在定义 9.1 中，
+
+$$
+K_{\rm meas}=\overline{\operatorname {conv}\Phi(X)}^{\,\|\cdot\|_\infty},\qquad
+\overline{V_{\rm alg}}^{\,\|\cdot\|_\infty}
+=\overline{V_{\rm meas}}^{\,\|\cdot\|_\infty}=:B_0.
+\tag{9.21}
+$$
+
+$K_{\rm meas}$ 范数紧。若 $S$ 无限，则
+$K_{\rm alg}\subsetneq K_{\rm meas}$、$V_{\rm alg}\subsetneq V_{\rm meas}$，
+而 (9.19) 的效果在行范数下不连续。在 $V_{\rm meas}$ 上甚至存在不同全效应，
+它们在每个纯 profile 上的限制相同。故 (9.21) 不将正则测度像空间宣称为它的
+Banach 完成，也不将全代数对偶换成行连续对偶。
+
+证明。紧 $G\times X$ 上有限个 $q_w(gP)$ 一致连续，故 $P\mapsto\Phi(P)$
+在全未来上确界范数中连续。对任意固定符号测度，各坐标积分随 $g$ 连续；
+实际 $g_f$ 稠密，所以实际 future 上确界等于全群上确界。
+函数族
+
+$$
+\mathcal Q=\{1\}\cup\{q_w\circ g:g\in G,w\in\Lambda\}
+\subset C(X)
+\tag{9.22}
+$$
+
+是紧的，因为它是有限个紧群的范数连续像之并。
+若 $\mu_\beta\to\mu$ 在概率测度的 weak-* 拓扑中收敛，取 $\mathcal Q$ 的有限
+$\varepsilon$ 网 $h_1,\ldots,h_N$，有
+
+$$
+\|J\mu_\beta-J\mu\|_\infty
+\le\max_j\left|\int h_j\,d(\mu_\beta-\mu)\right|+2\varepsilon.
+\tag{9.23}
+$$
+
+先令 $\beta$ 趋于极限再令 $\varepsilon\downarrow0$，证明 weak-* 到行范数的
+连续性，而不只是逐坐标连续。概率测度集 weak-* 紧，故其像紧且闭凸，包含
+$\Phi(X)$。反向，用有限小开覆盖的 Borel 分割，将各块概率质量放到该块一点；
+$\Phi$ 的一致连续性使所得有限原子重心在行范数中任意接近原重心。
+连续且紧的 $\Phi$ 值域可分，所以这里也确实存在 $B$ 中的 Bochner 积分。
+因此得到第一式。对符号测度的正、负部分分别作相同近似，得到第二式。
+
+不变概率 $\nu$ 无原子：传递性使各 singleton 质量相同，任意大的有限点集迫使
+该共同质量为零。若无限 $S$ 下有 $J\nu=J\eta$、$\eta$ 为有限符号原子测度，
+(9.18) 迫使 $\eta$ 的每个原子质量为零，故 $\eta=0$，与归一化坐标矛盾。
+这同时给出两处严格包含。取 $Q_j\ne P$、$Q_j\to P$，则
+$\Phi(Q_j)\to\Phi(P)$ 范数收敛，但 $e_P$ 的值从零跳到一，故不连续。
+
+进一步定义总原子质量泛函
+
+$$
+A(J\mu)=\sum_{Q\in X}\mu(\{Q\}).
+\tag{9.24}
+$$
+
+有限符号测度只有可数个非零原子，且该和绝对收敛、绝对值至多总变差。
+(9.18) 保证它与代表无关；有限个测度相加时对其原子集的可数并求和，说明它
+实线性。对正代表有 $0\le A\le u$，所以 $A,u$ 都是 $V_{\rm meas}$ 的全效应。
+它们在每个 $\Phi(P)$ 上都等于一，但在 $J\nu$ 上分别为零和一。
+等价地，非零 proper effect $u-A$ 消去全部纯 profiles，却不消去 diffuse 重心。
+这不与 $V_{\rm alg}$ 上纯限制决定线性泛函矛盾，因为后者由纯行**代数张成**；
+$V_{\rm meas}$ 只有闭张成关系。数学全效应的定义在无限分支确实容许这种
+行不连续性。∎
+
+### 9.4 有限分支的同域、同锥与最小值
+
+**定理 9.4（有限容量后的精确域匹配）。** 若定理 9.2 的任一等价有限条件成立，
+则
+
+$$
+\begin{gathered}
+V_{\rm alg}=V_{\rm meas}=B_0=:V,\qquad
+K_{\rm alg}=K_{\rm meas}=\operatorname {conv}\Phi(X)=:K,\\
+C_{\rm alg}=C_{\rm meas}=\operatorname {cone}K=:C,
+\qquad \mathcal E_{\rm alg}=\mathcal E_{\rm meas}=[0,u].
+\end{gathered}
+\tag{9.25}
+$$
+
+这里 $K$ 紧、$C$ 闭尖生成，$u$ 在非零正元上严格正。
+实际 ready 行的实张成也是 $V$，其闭凸包为 $K$，闭生成锥为 $C$。
+所有 distinct 轨道 profiles 都是 exposed 极点，且 $\operatorname {ext}K=\Phi(X)$。
+对任意归一 $p,x\in K$，定义
+
+$$
+\mathcal F_p=\{e\in[0,u]:e(p)=1\},\qquad
+T_p(x)=\min_{e\in\mathcal F_p}e(x).
+\tag{9.26}
+$$
+
+这个最小值达到，包含下文要求的全部混态参数。
+
+证明。定理 9.2 已给有限维的共同像空间。紧 $\Phi(X)$ 的仿射维数至多 $r-1$；
+Carathéodory 定理使每个凸组合至多需要 $r$ 项，故其凸包紧。
+与 (9.21) 合用即得共同 $K$，再取正倍和张成得 (9.25)。若 $t_jk_j$ 收敛，
+$t_j=u(t_jk_j)$ 收敛；$t_j\to0$ 时由 $K$ 有界得零极限，否则由紧性取到
+仍在锥内的极限，故 $C$ 闭。尖性和生成性已在定义 9.1 得出。
+实际准备轨道稠密，$\Phi$ 范数连续，所以实际行的闭包是 $\Phi(X)$；有限维
+线性子空间闭，故实际行张成正好是 $V$。这也说明只从实际行定义的有限 rank
+没有被悄悄加强为另一完成域的 rank。
+
+经坐标拉回，$V^*$ 与有限空间 $\mathcal F_{\rm act}$ 识别：坐标泛函分离 $V$，
+有限维使它们张成整个对偶，其拉回像恰为 (9.20)。有限维闭性及实际密度使此
+空间在全 $G$ 拉回下不变。对偶作用 $L_g$ 因此满足
+$L_g\Phi(P)=\Phi(gP)$，保持 $C,K,u$，连续且可逆。
+平均一个内积得到不变内积，各 $\Phi(P)$ 的范数相同。
+固定 profile $p$ 的高度 $z\mapsto\langle p,z\rangle$ 在轨道上的唯一最大向量是
+$p$，由等范数的 Cauchy–Schwarz 等号条件可知；有限凸组合将唯一性传到 $K$。
+反向，$K$ 的极点有有限轨道凸表示，极性迫使全部正权项等于该点。
+这也处理 profile 映射尚未证明忠实的情形及 singleton 情形。
+
+最后从 $K$ 取 $V$ 的一组基。每个 proper effect 在这些基向量上的值都在
+$[0,1]$，所以 $[0,u]$ 在有限维对偶中有界；定义不等式又使它闭，故紧。
+$\mathcal F_p$ 含 $u$ 且是闭子集，所以非空紧。评价连续，故 (9.26) 达到。
+效果集的一致有界性还给 $T_p$ 连续且 Lipschitz；它是非负函数的下包络。
+这些事实只为同域比较提供数学基础，不给实际准备或效果执行。∎
+
+## 追加锚（本行以下为增补区）
