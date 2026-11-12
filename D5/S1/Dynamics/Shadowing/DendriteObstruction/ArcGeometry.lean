@@ -103,4 +103,11 @@ theorem compact_continua_ge [CompactSpace X] (a : ℝ) :
   (closed_connected_compacts.inter
     (isClosed_le continuous_const continuous_compact_diam)).isCompact
 
+/-- Closed containment preserves compactness of the macroscopic-continuum family. -/
+theorem compact_continua_ge_in [CompactSpace X] (a : ℝ) {Y : Set X}
+    (hY : IsClosed Y) :
+    IsCompact {K : NonemptyCompacts X |
+      (IsConnected (K : Set X) ∧ a ≤ Metric.diam (K : Set X)) ∧ (K : Set X) ⊆ Y} :=
+  (compact_continua_ge a).inter_right (NonemptyCompacts.isClosed_subsets_of_isClosed hY)
+
 end D5.S1.Dynamics.Shadowing.DendriteObstruction

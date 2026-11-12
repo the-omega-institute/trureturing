@@ -30,13 +30,13 @@ variable {X : Type*} [MetricSpace X]
 
 def carrier (A : EmbeddedArc X) : Set X := A.param '' Icc 0 1
 
-private theorem compact (A : EmbeddedArc X) : IsCompact A.carrier :=
+theorem compact (A : EmbeddedArc X) : IsCompact A.carrier :=
   isCompact_Icc.image_of_continuousOn A.continuous
 
-private theorem connected (A : EmbeddedArc X) : IsConnected A.carrier :=
+theorem connected (A : EmbeddedArc X) : IsConnected A.carrier :=
   (isConnected_Icc (by norm_num : (0 : ℝ) ≤ 1)).image A.param A.continuous
 
-private theorem infinite (A : EmbeddedArc X) : A.carrier.Infinite :=
+theorem infinite (A : EmbeddedArc X) : A.carrier.Infinite :=
   (Icc_infinite (by norm_num : (0 : ℝ) < 1)).image A.injective
 
 private theorem affine_mem {a b u : ℝ} (ha : a ∈ Icc (0 : ℝ) 1)
@@ -45,7 +45,7 @@ private theorem affine_mem {a b u : ℝ} (ha : a ∈ Icc (0 : ℝ) 1)
   constructor <;> nlinarith [ha.1, hb.2, hu.1, hu.2]
 
 /-- Affine restriction to a genuine closed subinterval. -/
-private def subarc (A : EmbeddedArc X) {a b : ℝ}
+def subarc (A : EmbeddedArc X) {a b : ℝ}
     (ha : a ∈ Icc (0 : ℝ) 1) (hb : b ∈ Icc (0 : ℝ) 1) (hab : a < b) :
     EmbeddedArc X where
   param u := A.param (a + (b - a) * u)
@@ -57,7 +57,7 @@ private def subarc (A : EmbeddedArc X) {a b : ℝ}
     have := A.injective (affine_mem ha hb hab hu) (affine_mem ha hb hab hv) he
     nlinarith
 
-private theorem subarc_carrier (A : EmbeddedArc X) {a b : ℝ}
+theorem subarc_carrier (A : EmbeddedArc X) {a b : ℝ}
     (ha : a ∈ Icc (0 : ℝ) 1) (hb : b ∈ Icc (0 : ℝ) 1) (hab : a < b) :
     (A.subarc ha hb hab).carrier = A.param '' Icc a b := by
   ext x
@@ -75,13 +75,13 @@ private theorem subarc_carrier (A : EmbeddedArc X) {a b : ℝ}
       field_simp
       <;> ring
 
-private theorem subarc_subset (A : EmbeddedArc X) {a b : ℝ}
+theorem subarc_subset (A : EmbeddedArc X) {a b : ℝ}
     (ha : a ∈ Icc (0 : ℝ) 1) (hb : b ∈ Icc (0 : ℝ) 1) (hab : a < b) :
     (A.subarc ha hb hab).carrier ⊆ A.carrier := by
   rw [subarc_carrier]
   exact image_mono (fun _ hu => ⟨ha.1.trans hu.1, hu.2.trans hb.2⟩)
 
-private theorem small_subarc (A : EmbeddedArc X) {ε : ℝ} (hε : 0 < ε) :
+theorem small_subarc (A : EmbeddedArc X) {ε : ℝ} (hε : 0 < ε) :
     ∃ B : EmbeddedArc X, B.carrier ⊆ A.carrier ∧
       ∀ x ∈ B.carrier, ∀ y ∈ B.carrier, dist x y < ε := by
   obtain ⟨δ, hδ, hd⟩ := Metric.uniformContinuousOn_iff.mp
@@ -125,9 +125,9 @@ structure CompactHistory (f : X → X) (ε : ℝ) (r : ℕ) where
     (r : ℕ∞) ≤ (source ∩ (f^[time]) ⁻¹' {w}).encard
 
 private theorem initial_history {f : X → X} {ε : ℝ} (hε : 0 < ε)
-    (A : EmbeddedArc X) : Nonempty (CompactHistory f ε 1) := by
-  obtain ⟨B, _, hsmall⟩ := A.small_subarc hε
-  refine ⟨⟨B.carrier, B.compact, B.connected.nonempty, 0, B, by simp, ?_, ?_⟩⟩
+    (A : EmbeddedArc X) : ∃ H : CompactHistory f ε 1, H.source ⊆ A.carrier := by
+  obtain ⟨B, hBA, hsmall⟩ := A.small_subarc hε
+  refine ⟨⟨B.carrier, B.compact, B.connected.nonempty, 0, B, by simp, ?_, ?_⟩, hBA⟩
   · intro j hj x hx y hy
     have : j = 0 := by omega
     subst j
@@ -150,13 +150,17 @@ private theorem history_bound {f : X → X} {ε : ℝ} {N r : ℕ}
   · exact fun i j => (hv i).2.trans (hv j).2.symm
 
 private theorem attained_maximum {f : X → X} {ε : ℝ} {N : ℕ}
-    (hε : 0 < ε) (hB : ForwardBowenBound f univ ε N) (A : EmbeddedArc X) :
-    ∃ r : ℕ, 1 ≤ r ∧ Nonempty (CompactHistory f ε r) ∧
-      ∀ s : ℕ, Nonempty (CompactHistory f ε s) → s ≤ r := by
+    (hε : 0 < ε) (hB : ForwardBowenBound f univ ε N) {Y : Set X}
+    (A : EmbeddedArc X) (hAY : A.carrier ⊆ Y) :
+    ∃ r : ℕ, 1 ≤ r ∧ (∃ H : CompactHistory f ε r, H.source ⊆ Y) ∧
+      ∀ s : ℕ, (∃ H : CompactHistory f ε s, H.source ⊆ Y) → s ≤ r := by
   classical
-  let S := {r : ℕ | Nonempty (CompactHistory f ε r)}
-  have hS : Set.Finite S := (finite_Iic N).subset (fun r hr => history_bound hε hB hr.some)
-  have h1 : 1 ∈ S := initial_history hε A
+  let S := {r : ℕ | ∃ H : CompactHistory f ε r, H.source ⊆ Y}
+  have hS : Set.Finite S := (finite_Iic N).subset (by
+    rintro r ⟨H, _⟩; exact history_bound hε hB H)
+  have h1 : 1 ∈ S := by
+    obtain ⟨H, hH⟩ := initial_history (f := f) hε A
+    exact ⟨H, hH.trans hAY⟩
   obtain ⟨r, hr, hmax⟩ := hS.toFinset.exists_max_image id ⟨1, hS.mem_toFinset.mpr h1⟩
   exact ⟨r, hmax 1 (hS.mem_toFinset.mpr h1), hS.mem_toFinset.mp hr,
     fun s hs => hmax s (hS.mem_toFinset.mpr hs)⟩
@@ -263,7 +267,8 @@ private theorem extend_double_history {f : X → X} (hf : Continuous f) {ε : �
     (hsub : P ∪ Q ⊆ H.terminal.carrier)
     (hP : f^[q] '' P = B.carrier) (hQ : f^[q] '' Q = B.carrier)
     (hsmall : ∀ j ≤ q, ∀ x ∈ P ∪ Q, ∀ y ∈ P ∪ Q,
-      dist (f^[j] x) (f^[j] y) < ε) : Nonempty (CompactHistory f ε (2 * r)) := by
+      dist (f^[j] x) (f^[j] y) < ε) :
+    ∃ H' : CompactHistory f ε (2 * r), H'.source ⊆ H.source := by
   classical
   let E := H.source ∩ (f^[H.time]) ⁻¹' (P ∪ Q)
   have hE : E ⊆ H.source := inter_subset_left
@@ -282,7 +287,7 @@ private theorem extend_double_history {f : X → X} (hf : Continuous f) {ε : �
     exact this.of_image
   refine ⟨⟨E, H.compact.inter_right
     ((hPc.union hQc).isClosed.preimage (hf.iterate H.time)), hne,
-    H.time + q, B, honto, ?_, ?_⟩⟩
+    H.time + q, B, honto, ?_, ?_⟩, hE⟩
   · intro k hk x hx y hy
     by_cases hkt : k ≤ H.time
     · exact H.small k hkt x (hE hx) y (hE hy)
@@ -321,6 +326,27 @@ private theorem extend_double_history {f : X → X} (hf : Continuous f) {ε : �
       _ = (V ∪ U).encard := (Set.encard_union_eq hVU).symm
       _ ≤ _ := Set.encard_mono hVUsub
 
+/-- The attained history can be restricted to any forward-invariant set containing
+an arc. The invariant set need not be connected. -/
+theorem exists_iterate_injective_arc_invariant [CompactSpace X] {f : X → X}
+    (hf : Continuous f) (hfin : FinitelyPositiveExpansive f)
+    (hull : StaticArcHull X)
+    (no_circle : ∀ g : AddCircle (1 : ℝ) → X, Continuous g → ¬ Injective g)
+    {Y : Set X} (hY : MapsTo f Y Y) (A : EmbeddedArc X) (hAY : A.carrier ⊆ Y) :
+    ∃ K : EmbeddedArc X, K.carrier ⊆ Y ∧ ∀ n : ℕ, InjOn (f^[n]) K.carrier := by
+  classical
+  obtain ⟨ε, hε, N, _, hB⟩ := hfin
+  obtain ⟨r, hr, ⟨H, hHY⟩, hmax⟩ := attained_maximum hε hB A hAY
+  refine ⟨H.terminal, ?_, fun q => ?_⟩
+  · rw [← H.onto]
+    exact (image_mono hHY).trans (hY.iterate H.time).image_subset
+  · by_contra hn
+    obtain ⟨B, P, Q, hPc, hQc, hPQ, hsub, hP, hQ, hs⟩ :=
+      compact_double_cover hf hε hB hull no_circle H.terminal q hn
+    obtain ⟨H', hH'⟩ := extend_double_history hf H q B P Q hPc hQc hPQ hsub hP hQ hs
+    have hd := hmax (2 * r) ⟨H', hH'.trans hHY⟩
+    omega
+
 /-- Finite positive expansivity and static dendroid geometry force an actual
 nondegenerate arc on which every natural iterate is injective. -/
 theorem exists_iterate_injective_arc [CompactSpace X] {f : X → X}
@@ -329,17 +355,11 @@ theorem exists_iterate_injective_arc [CompactSpace X] {f : X → X}
     (no_circle : ∀ g : AddCircle (1 : ℝ) → X, Continuous g → ¬ Injective g)
     (A : EmbeddedArc X) :
     ∃ K : EmbeddedArc X, ∀ n : ℕ, InjOn (f^[n]) K.carrier := by
-  classical
-  obtain ⟨ε, hε, N, _, hB⟩ := hfin
-  obtain ⟨r, hr, ⟨H⟩, hmax⟩ := attained_maximum hε hB A
-  refine ⟨H.terminal, fun q => ?_⟩
-  by_contra hn
-  obtain ⟨B, P, Q, hPc, hQc, hPQ, hsub, hP, hQ, hs⟩ :=
-    compact_double_cover hf hε hB hull no_circle H.terminal q hn
-  have hd := hmax (2 * r) (extend_double_history hf H q B P Q hPc hQc hPQ hsub hP hQ hs)
-  omega
+  obtain ⟨K, _, hK⟩ := exists_iterate_injective_arc_invariant hf hfin hull no_circle
+    (mapsTo_univ f univ) A (subset_univ _)
+  exact ⟨K, hK⟩
 
-private theorem arc_in_continuum (hull : StaticArcHull X) {C : Set X}
+theorem arc_in_continuum (hull : StaticArcHull X) {C : Set X}
     (hc : IsCompact C) (hcon : IsConnected C) (hnt : C.Nontrivial) :
     ∃ A : EmbeddedArc X, A.carrier ⊆ C := by
   obtain ⟨x, hx, y, hy, hxy⟩ := hnt
@@ -355,13 +375,13 @@ private theorem continuum_image_infinite [CompactSpace X] {f : X → X} {ε : �
     (IntervalObstruction.finite_fibres isCompact_univ hB hε) (subset_univ _) A.infinite n).mono
       (image_mono hAC)
 
-private theorem nontrivial_of_diam_pos {C : Set X} (hp : 0 < Metric.diam C) : C.Nontrivial := by
+theorem nontrivial_of_diam_pos {C : Set X} (hp : 0 < Metric.diam C) : C.Nontrivial := by
   apply Set.not_subsingleton_iff.mp
   intro h
   rw [Metric.diam_subsingleton h] at hp
   exact lt_irrefl _ hp
 
-private theorem continuum_expands [CompactSpace X] {f : X → X} (hf : Continuous f)
+theorem continuum_expands [CompactSpace X] {f : X → X} (hf : Continuous f)
     {ε : ℝ} {N : ℕ} (hε : 0 < ε) (hB : ForwardBowenBound f univ ε N)
     (hull : StaticArcHull X) {C : Set X} (hc : IsCompact C)
     (hcon : IsConnected C) (hnt : C.Nontrivial) (M : ℕ) :
@@ -373,7 +393,7 @@ private theorem continuum_expands [CompactSpace X] {f : X → X} (hf : Continuou
   exact ⟨n, hn, hxy.trans (Metric.dist_le_diam_of_mem (hc.image (hf.iterate n)).isBounded
     (mem_image_of_mem _ (hAC hx)) (mem_image_of_mem _ (hAC hy)))⟩
 
-private theorem uniform_continuum_persistence [CompactSpace X] {f : X → X}
+theorem uniform_continuum_persistence [CompactSpace X] {f : X → X}
     (hf : Continuous f) {ε : ℝ} {N : ℕ} (hε : 0 < ε)
     (hB : ForwardBowenBound f univ ε N) (hull : StaticArcHull X) {a : ℝ}
     (ha : 0 < a) (haε : a < ε) :
@@ -448,7 +468,7 @@ private theorem uniform_continuum_persistence [CompactSpace X] {f : X → X}
   change δ ≤ Metric.diam (f^[n - t] '' (f^[t] '' C)) at hbound
   simpa only [image_image, ← Function.iterate_add_apply, Nat.sub_add_cancel htn] using hbound
 
-private theorem eventual_arc_persistence [CompactSpace X] {f : X → X}
+theorem eventual_arc_persistence [CompactSpace X] {f : X → X}
     (hf : Continuous f) (hfin : FinitelyPositiveExpansive f) (hull : StaticArcHull X) :
     ∃ δ > 0, ∀ A : EmbeddedArc X, ∃ T : ℕ, ∀ n ≥ T,
       δ ≤ Metric.diam (f^[n] '' A.carrier) := by
