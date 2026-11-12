@@ -45,7 +45,7 @@ def observedSide {ι : Type u} [Fintype ι] [DecidableEq ι] (J : RealJoin ι)
   (∀ X : HermitianMat ι ℝ, X ∈ J.cone ↔ X ∈ J.L ∧ 0 ≤ X ∧ X.support ≤ J.U) ∧
   (∀ X : HermitianMat ι ℝ, X ∈ J.cone ↔ X ∈ J.space ∧ 0 ≤ X) ∧
   ROG J.space ∧
-  (SectionROGFrame.base J.space).extremePoints ℝ = pureRanks J.space ∧
+  (_root_.D5.S3.Quantum.Foundation.SectionROGFrame.base J.space).extremePoints ℝ = pureRanks J.space ∧
   (∀ p : J.space, p.val ∈ pureRanks J.space →
     (J.inclusion p).val ∈ pureRanks J.L) ∧
   (∃ R : J.L →ₗ[ℝ] J.space,
@@ -112,13 +112,16 @@ private theorem singleton_rog :
       have hs : Real.sqrt (X (0 : Fin 1) (0 : Fin 1)) = 0 := by simpa [v] using hh
       exact hz ((Real.sqrt_eq_zero ha).mp hs)
     refine ⟨1, fun _ => v, fun _ => ⟨hv, Submodule.mem_top⟩, ?_⟩
+    change X = ∑ _ : Fin 1, rankOne v
+    rw [Fin.sum_univ_one]
     apply HermitianMat.ext
     ext i j
     have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
     have hj : j = (0 : Fin 1) := Subsingleton.elim _ _
     subst i
     subst j
-    simp [rankOne, v, ← sq, Real.sq_sqrt ha]
+    change X 0 0 = Real.sqrt (X 0 0) * Real.sqrt (X 0 0)
+    exact (Real.mul_self_sqrt ha).symm
 
 private def singletonJoin : RealJoin (Fin 1) where
   L := ⊤
