@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormDesignOb
 
 *Commentary.*
 
-Every such actual qubit design has 2≤v≤4. Coherence excludes a common overlap of one. Taking traces of a vanishing linear combination, then pairing it with each projector, proves complex linear independence. The full complex qubit matrix space has dimension four. The one-member case contradicts coherence and idempotence. No finite cardinality search is used.
+Every such actual qubit design has 2≤v≤4. Coherence excludes a common overlap of one. Taking traces of a vanishing linear combination, then pairing it with each projector, proves complex linear independence. The full complex qubit matrix space has dimension four. The one-member case contradicts coherence and idempotence. The received written derivation also gives the overlap (v-2)/(2(v-1)) and the positive-definite Gram form (1-mu)I+mu*11 transpose; the formal proof uses the equivalent direct linear-independence argument. No finite cardinality search is used.
 
 **Theorem 1.3 (Coherence needs enough pure projectors).**
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormDesignOb
 
 *Commentary.*
 
-For every integer D≥5 there is no common-size nonempty pair of the specified regular coherent degree-one pure designs in dimensions 2 and D. The preceding global bounds give D≤v≤4. This excludes precisely that paired construction; it does not refute arbitrary designs or every interpretation of Peled et al.’s broad general-p design characterization. Attainment of the unrestricted fourth-order maximum is a separate required result, not supplied by this obstruction alone. Source: the CC BY 4.0 return note by Haobo Ma (Chrono AI, Singapore) and Wenlin Zhang (NUS and Chrono AI, Singapore). No novelty, consent, publication or submission claim.
+For every integer D≥5 there is no common-size nonempty pair of the specified regular coherent degree-one pure designs in dimensions 2 and D. The preceding global bounds give D≤v≤4. This excludes precisely that paired construction; it does not refute arbitrary designs or every interpretation of Peled et al.’s broad general-p design characterization. Attainment of the unrestricted fourth-order maximum is proved separately by CorrelationMinorNormQubitBound.coherent_pair_obstruction_with_attainment using the actual zero-noise tetrahedral state for every D>=5. No design-existence premise supplies that attainment. Source: the CC BY 4.0 return note by Haobo Ma (Chrono AI, Singapore) and Wenlin Zhang (NUS and Chrono AI, Singapore). No novelty, consent, publication or submission claim.
 
 ## References
 

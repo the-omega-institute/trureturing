@@ -186,20 +186,95 @@ Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry
 
 For every real square matrix the full-order infinity and finite p≥1 quantities equal abs(det C). No signed determinant is used as a norm.
 
+**Definition 1.14 (Actual real basis change).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange`
+
+*Formalization.* `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
+
+*Commentary.*
+
+The real coefficients of one actual complete normalized Hermitian basis in another define the change matrix.
+
+**Theorem 1.15 (Orthogonality).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange_orthogonal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange_orthogonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
+
+*Commentary.*
+
+Hermitian Parseval and exact unit trace-product normalization prove that this actual real change matrix is orthogonal.
+
+**Theorem 1.16 (Actual correlation transformation).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.correlation_basisChange_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.correlation_basisChange_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
+
+*Commentary.*
+
+The actual correlation matrix transforms by left multiplication under a complete normalized Alice basis change, with no normalization factor.
+
+**Theorem 1.17 (Full-order basis invariance).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.full_order_basisChange_left`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.full_order_basisChange_left` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
+
+*Commentary.*
+
+Every actual finite p≥1 and infinity full-order quantity is invariant under the actual local Alice orthogonal basis change, by the row-Gram determinant formula.
+
+**Theorem 1.18 (separable density).**
+
+Lean statement: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.separable_density`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.separable_density` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bar Y. Peled; Amit Te'eni; Avishy Carmi; Eliahu Cohen (2021). *Correlation minor norms, entanglement detection and discord*. DOI: [10.1038/s41598-021-82303-3](https://doi.org/10.1038/s41598-021-82303-3). URL: <https://arxiv.org/abs/2005.12079v2>.
+
+*Commentary.*
+
+Every actual finite convex combination of local density products is a density. This shared proof is consumed by the tetrahedral state and the actual covariance marginal-purity theorem.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange_orthogonal`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.coordinate_reconstruction`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.coordinates`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.coordinates_inner`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.coordinates_purity`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.corr_product_entry`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.correlation_basisChange_left`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.correlation_finite_decomposition`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.density_purity_bounds`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.density_purity_dimension_lower`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.fullRows`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.full_order_basisChange_left`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.full_order_energy`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.full_order_norms`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.hermitian_pair_real`
+- Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.separable_density`
 - Truth anchor: `D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.square_full_order_norms`
 - Dependency: [D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormFNFRefutation](CorrelationMinorNormFNFRefutation.md)
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](../../Information/ActualPureQubitGeometry.md)

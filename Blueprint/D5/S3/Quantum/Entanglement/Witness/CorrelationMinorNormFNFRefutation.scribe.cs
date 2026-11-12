@@ -22,6 +22,16 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                     + "authorship-consent, correspondence, publication or submission claim. "
                     + "The original source intake disclosed exposure to communication framing; inherited repository context is also prior-exposed. "
                     + "The supplied scientific arguments and planning conclusions are fallible inputs, not independent final review.")),
+            Paragraph(Text(
+                "The fixed source conventions are actual positive-semidefinite trace-one complex bipartite matrices and actual finite convex mixtures of local densities. Complete Hermitian bases have trace(A_i A_k)=delta_ik, without an extra factor two. Filter normal form means both actual reduced states are maximally mixed. "
+                    + "Peled et al. Theorem 1 assumes separability, FNF, D<=d cubed and h>1 in the CMN domain, and bounds the p=1 elementary symmetric polynomial by S_h(alpha,beta,...,beta), with d squared variables, alpha=1/sqrt(Dd) and beta=sqrt(((D-1)/D)((d-1)/d))/(d squared-1). "
+                    + "Their Theorem 3 assumes separability and FNF with sqrt(Dd)<=h<=d squared and gives B(D,d,h). Both subsequent paragraphs conjecture removal of FNF. The counterexamples here address those extensions and retain all original hypotheses of the original theorems.")),
+            Paragraph(Text(
+                "Theorems 2 and 4 are conditional constructions from existing paired regular coherent degree-one pure designs of a common size v. Regular means rank-one projectors; coherent means their sum is proportional to identity; degree one means a common distinct-pair trace overlap. At v=d squared the equal-weight product construction has singular values alpha once and beta d squared-1 times. At v=h it has alpha once, beta prime h-1 times and then zero, where beta prime=sqrt(((D-1)/(D(h-1)))((d-1)/(d(h-1)))). Coherence gives FNF. Existence in arbitrary dimensions/cardinalities is not asserted. "
+                    + "The coherent-pair obstruction formalized separately excludes exactly that construction at D>=5; it neither refutes every interpretation of the broad general-p design suggestion nor classifies all maximizers.")),
+            Paragraph(Text(
+                "Printed Appendix D31 omits the square root. D28 supplies s1>=1/sqrt(Dd), D29 nonnegativity and D30 the CCNR total bound. Appendix D.5 invokes numerical simultaneous-saturation observations, assumes D31 saturation forces FNF and assumes no additional active constraints before its Lagrange calculation. The corrected tail proof does not validate those assumptions or establish a general no-FNF extension. "
+                    + "The received full-text source reading covers Sections I-VI, Appendices A-E and references of arXiv v2; it is a disclosed supplier dependency, not a fresh journal-text verification. Operator-Schmidt/SVD identities, pure-state Schmidt rank/entropy, the reported unequal-dimensional CMN-versus-CCNR example and CMN discord/Theorem 5 remain primary context outside this note's claimed new coverage. Numerical plots/examples remain source reports. The arbitrary finite-decomposition proof here does not rely on positivity of altered local factors in Appendix C.1.")),
             Describe.Lean(DescribeId.Create("noisy-state"), DeclarationHandle.Create(Prefix + "noisyRho"),
                 H("The continuous rational noisy state"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(Source),
@@ -55,7 +65,7 @@ internal sealed class CorrelationMinorNormFNFRefutationDocument : IScribeDocumen
                     "For every real 0 ≤ t ≤ 1/200, the theorem asserts actual separability and density, complete normalized bases, "
                         + "the exact correlation and Bob marginal diag(r,r,r,s), a nonuniform Bob marginal, the PSD noise lower bound, "
                         + "positive definiteness for positive noise and the strict third-order operator violation. "
-                        + "The nonuniform marginal excludes filter normal form. The selected IZX/012 minor equals "
+                        + "The same theorem retains the actual three local densities and their idempotence, with the original explicit projector matrices. The nonuniform marginal excludes filter normal form. The selected IZX/012 minor equals "
                         + "16(4−t)(1−t)²/(1350√2). Its strict comparison with 3/(64√2) reduces to "
                         + "512(4−t)(1−t)² > 2025. Both positive factors are bounded below over the whole interval, "
                         + "and the value of this difference at the upper endpoint is 574/15625. This is a uniform real-parameter proof."))),

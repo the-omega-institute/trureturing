@@ -117,6 +117,18 @@ open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (IsSeparable)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
+/-- Any actual finite convex mixture of product densities is a density. -/
+theorem separable_density {da db : ℕ}
+    (ρ : Matrix (Fin da × Fin db) (Fin da × Fin db) ℂ) (hρ : IsSeparable ρ) : IsDensity ρ := by
+  obtain ⟨v, w, A, B, hw, hsum, hab, heq⟩ := hρ
+  rw [heq]
+  constructor
+  · exact Matrix.posSemidef_sum _ (fun j _ =>
+      ((hab j).1.1.kronecker (hab j).2.1).smul (Complex.zero_le_real.mpr (hw j)))
+  · simp only [Matrix.trace_sum, Matrix.trace_smul, Matrix.trace_kronecker,
+      (hab _).1.2, (hab _).2.2, mul_one]
+    simpa [Complex.real_smul] using congrArg (fun x : ℝ => (x : ℂ)) hsum
+
 /-- The general local density-purity bound is reused from the actual Hermitian
 trace inner product, in arbitrary finite dimension. -/
 theorem density_purity_bounds (M : Matrix (Fin n) (Fin n) ℂ) (hM : IsDensity M) :
@@ -248,5 +260,72 @@ theorem square_full_order_norms (C : Matrix (Fin n) (Fin n) ℝ) :
   have hd : Real.sqrt (C * C.transpose).det = |C.det| := by
     rw [Matrix.det_mul, Matrix.det_transpose, ← pow_two, Real.sqrt_sq_eq_abs]
   simpa only [hd] using full_order_norms C
+
+/-- The actual real change between two complete normalized Hermitian bases. -/
+def basisChange (a₀ a₁ : Fin m → Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin m) (Fin m) ℝ :=
+  fun i j => coordinates a₀ (a₁ i) j
+
+/-- Complete normalized Hermitian basis changes are real orthogonal. -/
+theorem basisChange_orthogonal (a₀ a₁ : Fin m → Matrix (Fin n) (Fin n) ℂ)
+    (h₀ : IsHermBasis a₀) (h₁ : IsHermBasis a₁) :
+    basisChange a₀ a₁ * (basisChange a₀ a₁).transpose = 1 := by
+  ext i k
+  have hp := coordinates_inner a₀ h₀ (a₁ i) (a₁ k) (h₁.1 i) (h₁.1 k)
+  rw [EuclideanSpace.inner_eq_star_dotProduct] at hp
+  simp only [star_trivial, dotProduct] at hp
+  simp only [Matrix.mul_apply, Matrix.transpose_apply, basisChange]
+  rw [show (∑ j, coordinates a₀ (a₁ i) j * coordinates a₀ (a₁ k) j) =
+      (a₁ i * a₁ k).trace.re by simpa only [mul_comm] using hp,
+    h₁.2.2]
+  by_cases h : i = k <;> simp [h, Matrix.one_apply]
+
+/-- The actual correlation transforms by this real orthogonal matrix. -/
+theorem correlation_basisChange_left {da db ma mb : ℕ}
+    (ρ : Matrix (Fin da × Fin db) (Fin da × Fin db) ℂ)
+    (a₀ a₁ : Fin ma → Matrix (Fin da) (Fin da) ℂ)
+    (b : Fin mb → Matrix (Fin db) (Fin db) ℂ)
+    (h₀ : IsHermBasis a₀) (h₁ : IsHermBasis a₁) :
+    corr ρ a₁ b = basisChange a₀ a₁ * corr ρ a₀ b := by
+  ext i k
+  change (ρ * (a₁ i ⊗ₖ b k)).trace.re = _
+  nth_rw 1 [coordinate_reconstruction a₀ h₀ (a₁ i) (h₁.1 i)]
+  have hsum : (∑ j, ((coordinates a₀ (a₁ i) j : ℝ) : ℂ) • a₀ j) ⊗ₖ b k =
+      ∑ j, ((coordinates a₀ (a₁ i) j : ℝ) : ℂ) • (a₀ j ⊗ₖ b k) := by
+    ext r s
+    simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.kroneckerMap_apply, Finset.sum_mul, smul_eq_mul, mul_assoc]
+  rw [hsum]
+  simp only [Matrix.mul_sum,
+    Matrix.mul_smul, Matrix.trace_sum, Matrix.trace_smul, Complex.re_sum,
+    Matrix.mul_apply, basisChange, corr, smul_eq_mul, Complex.mul_re,
+    Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+
+/-- Full-order quantities are invariant under the actual complete local Alice
+basis change; this proof uses orthogonality and actual row-Gram determinants. -/
+theorem full_order_basisChange_left {da db mb : ℕ}
+    (ρ : Matrix (Fin da × Fin db) (Fin da × Fin db) ℂ)
+    (a₀ a₁ : Fin (da^2) → Matrix (Fin da) (Fin da) ℂ)
+    (b : Fin mb → Matrix (Fin db) (Fin db) ℂ)
+    (h₀ : IsHermBasis a₀) (h₁ : IsHermBasis a₁) :
+    cmnInf (da^2) (corr ρ a₁ b) = cmnInf (da^2) (corr ρ a₀ b) ∧
+    ∀ p : ℝ, 1 ≤ p → cmnP p (da^2) (corr ρ a₁ b) = cmnP p (da^2) (corr ρ a₀ b) := by
+  let O := basisChange a₀ a₁
+  let C := corr ρ a₀ b
+  have ho : O * O.transpose = 1 := basisChange_orthogonal a₀ a₁ h₀ h₁
+  have hod := congrArg Matrix.det ho
+  rw [Matrix.det_mul, Matrix.det_transpose, Matrix.det_one] at hod
+  have hg : ((O*C)*(O*C).transpose).det = (C*C.transpose).det := by
+    rw [Matrix.transpose_mul]
+    have he : (O*C)*(C.transpose*O.transpose) = O*(C*C.transpose)*O.transpose := by
+      simp only [Matrix.mul_assoc]
+    rw [he, Matrix.det_mul, Matrix.det_mul, Matrix.det_transpose]
+    calc
+      _ = (O.det * O.det) * (C*C.transpose).det := by ring
+      _ = _ := by rw [hod, one_mul]
+  rw [correlation_basisChange_left ρ a₀ a₁ b h₀ h₁]
+  change cmnInf (da^2) (O*C) = cmnInf (da^2) C ∧ _
+  constructor
+  · rw [(full_order_norms (O*C)).1, (full_order_norms C).1, hg]
+  · intro p hp
+    rw [(full_order_norms (O*C)).2 p hp, (full_order_norms C).2 p hp, hg]
 
 end D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormGeometry

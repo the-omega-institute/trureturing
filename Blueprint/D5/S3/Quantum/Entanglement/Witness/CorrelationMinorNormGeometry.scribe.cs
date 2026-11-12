@@ -57,5 +57,29 @@ internal sealed class CorrelationMinorNormGeometryDocument : IScribeDocumentDefi
             Describe.Lean(DescribeId.Create("square-full-order-norms"), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.square_full_order_norms"),
                 H("Absolute determinant"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor")),
-                Blocks(Paragraph(Text("For every real square matrix the full-order infinity and finite p≥1 quantities equal abs(det C). No signed determinant is used as a norm."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every real square matrix the full-order infinity and finite p≥1 quantities equal abs(det C). No signed determinant is used as a norm."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("basis-change"), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange"),
+                H("Actual real basis change"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor")),
+                Blocks(Paragraph(Text("The real coefficients of one actual complete normalized Hermitian basis in another define the change matrix."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("basis-change-orthogonal"), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.basisChange_orthogonal"),
+                H("Orthogonality"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor")),
+                Blocks(Paragraph(Text("Hermitian Parseval and exact unit trace-product normalization prove that this actual real change matrix is orthogonal."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("correlation-basis-change-left"), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.correlation_basisChange_left"),
+                H("Actual correlation transformation"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor")),
+                Blocks(Paragraph(Text("The actual correlation matrix transforms by left multiplication under a complete normalized Alice basis change, with no normalization factor."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("full-order-basis-change-left"), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry.full_order_basisChange_left"),
+                H("Full-order basis invariance"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor")),
+                Blocks(Paragraph(Text("Every actual finite p≥1 and infinity full-order quantity is invariant under the actual local Alice orthogonal basis change, by the row-Gram determinant formula."))), DescribeRole.Theorem),
+            Entry("separable-density", "separable_density", "separable density",
+                "Every actual finite convex combination of local density products is a density. This shared proof is consumed by the tetrahedral state and the actual covariance marginal-purity theorem.", DescribeRole.Theorem))));
+    private static DocumentBlock Entry(string id, string declaration, string title, string text, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Quantum/Entanglement/Witness/CorrelationMinorNormGeometry." + declaration), H(title),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Entropy/peledteenicarmicohen2021minor")),
+            Blocks(Paragraph(Text(text))), role);
+
 }

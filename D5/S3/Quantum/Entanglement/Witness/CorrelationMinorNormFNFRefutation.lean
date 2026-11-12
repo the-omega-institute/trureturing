@@ -149,6 +149,12 @@ private lemma projectors_density (j : Fin 3) : IsDensity (projectors j) := by
       norm_num [Matrix.vecMulVec, Matrix.trace, Fin.sum_univ_two,
         Pi.star_apply, Complex.real_smul, Complex.star_def, map_ofNat]
 
+private lemma projectors_idempotent (j : Fin 3) :
+    projectors j * projectors j = projectors j := by
+  ext i k
+  fin_cases j <;> fin_cases i <;> fin_cases k <;>
+    norm_num [projectors,Matrix.mul_apply,Fin.sum_univ_two]
+
 private lemma noisy_separable (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     IsSeparable (noisyRho t) := by
   classical
@@ -861,10 +867,12 @@ theorem rational_noisy_family (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1 / 200) :
     partialTraceLeft (noisyRho t) ≠ (1 / 4 : ℂ) • 1 ∧
     (noisyRho t - ((t / 8 : ℝ) : ℂ) • 1).PosSemidef ∧
     (0 < t → (noisyRho t).PosDef) ∧
-    bound 2 4 3 < cmnInf 3 (corr (noisyRho t) alice bob) := by
+    bound 2 4 3 < cmnInf 3 (corr (noisyRho t) alice bob) ∧
+    ∀ j : Fin 3, IsDensity (projectors j) ∧ projectors j * projectors j = projectors j := by
   have ht : t ≤ 1 := by linarith
   exact ⟨noisy_separable t ht0 ht, noisy_density t ht0 ht, alice_basis, bob_basis,
     correlation_eq t, noisy_bob_marginal t, noisy_not_bob_mixed t ht1,
-    noisy_noise_lower t ht, fun h => noisy_positive t h ht, noisy_violation t ht0 ht1⟩
+    noisy_noise_lower t ht, fun h => noisy_positive t h ht, noisy_violation t ht0 ht1,
+    fun j => ⟨projectors_density j,projectors_idempotent j⟩⟩
 
 end D5.S3.Quantum.Entanglement.Witness.CorrelationMinorNormFNFRefutation
