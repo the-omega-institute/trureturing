@@ -96,7 +96,9 @@ theorem rather_problem_one (p q r : ℕ)
     exact_mod_cast h
   have hcount (k : ℕ) : s k =
       (((configurations G Finset.univ).filter fun S => S.card = k).card : ℤ) := by
-    exact Support.coefficient_card (R := ZMod (p*q*r)) Finset.univ k
+    convert (preTransparency := .reducible)
+      (Support.coefficient_card (R := ZMod (p*q*r)) Finset.univ k) <;>
+      congr 1 <;> ext x <;> simp
   obtain ⟨S, hS⟩ := Finset.card_pos.mp (show 0 <
       ((configurations G Finset.univ).filter fun S => S.card = N).card by
     have h := hpos N le_rfl
@@ -110,7 +112,7 @@ theorem rather_problem_one (p q r : ℕ)
     have hmem : T ∈ (configurations G Finset.univ).filter fun U => U.card = T.card := by
       simp only [Finset.mem_filter, configurations, Finset.mem_powerset,
         Finset.subset_univ, true_and]
-      exact ⟨hT, rfl⟩
+      exact ⟨hT, trivial⟩
     have hcpos : 0 < s T.card := by
       rw [hcount]
       exact_mod_cast Finset.card_pos.mpr ⟨T, hmem⟩
