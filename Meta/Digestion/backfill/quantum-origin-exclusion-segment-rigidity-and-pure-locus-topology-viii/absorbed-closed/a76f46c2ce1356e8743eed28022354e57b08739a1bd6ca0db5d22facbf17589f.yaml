@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a76f46c2ce1356e8743eed28022354e57b08739a1bd6ca0db5d22facbf17589f
+  normalized_sha256: sha256:a76f46c2ce1356e8743eed28022354e57b08739a1bd6ca0db5d22facbf17589f
+cas_ref: sha256:a76f46c2ce1356e8743eed28022354e57b08739a1bd6ca0db5d22facbf17589f
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/NativeTangentDisjointness.whole_native_tangent_disjointness
+    target_statement_id: sha256:a410d117040fb107d8cd83c075baa861df39c16ec9c3356ebcd52e54bfa67961
+receipts:
+  unresolved_subitems: []
