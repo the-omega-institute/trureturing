@@ -70,7 +70,7 @@ theorem normalized_pair (A B : Matrix n n ℂ) (hA : A.PosSemidef)
   refine ⟨congruence_pos _ _ hK hA, congruence_pos _ _ hK hB, ?_⟩
   simpa only [normalize, Matrix.mul_add, Matrix.add_mul] using hnorm
 
-private theorem reconstruct_normalize (S X : Matrix n n ℂ) (hS : S.PosSemidef)
+theorem reconstruct_normalize (S X : Matrix n n ℂ) (hS : S.PosSemidef)
     (hPX : spectralSupport S * X = X) (hXP : X * spectralSupport S = X) :
     reconstruct S (normalize S X) = X := by
   obtain ⟨hRK, hKR, -, -⟩ := spectral_sqrt_inverse_products S hS

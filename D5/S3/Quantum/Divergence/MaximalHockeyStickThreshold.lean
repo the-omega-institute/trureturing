@@ -133,7 +133,7 @@ theorem weighted_overlap_optimal_iff (A B W Y : Matrix n n ℂ)
 def canonicalOverlap (D : Matrix n n ℂ) (t : ℝ) : Matrix n n ℂ :=
   cfc (fun x : ℝ => min x (t * (1 - x))) D
 
-private theorem canonical_residuals (D : Matrix n n ℂ) (hD : D.IsHermitian) (t : ℝ) :
+theorem canonical_residuals (D : Matrix n n ℂ) (hD : D.IsHermitian) (t : ℝ) :
     D - canonicalOverlap D t = thresholdPositive D t ∧
       t • (1 - D) - canonicalOverlap D t = thresholdNegative D t := by
   have hc (f : ℝ → ℝ) : ContinuousOn f (spectrum ℝ D) :=

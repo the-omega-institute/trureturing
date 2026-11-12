@@ -6,7 +6,7 @@
    utility: none
    digest: Original singular-pair hockey overlap classification on the actual common corner. -/
 
-import D5.S3.Quantum.Divergence.MaximalHockeyStickCornerCriterion
+import D5.S3.Quantum.Divergence.MaximalHockeyStickSingularCriterion
 import D5.S3.Quantum.Divergence.MaximalHockeyStickProfile
 
 /-! The trace optimizer criterion is transported back to the original PSD pair. -/
@@ -27,7 +27,7 @@ open D5.S3.Quantum.Divergence.MaximalHockeyStickProfile
 open D5.S3.Quantum.Divergence.MaximalHockeyStickSupport
 open D5.S3.Quantum.Divergence.MaximalHockeyStickCorner
 open D5.S3.Quantum.Divergence.MaximalHockeyStickCornerWeight
-open D5.S3.Quantum.Divergence.MaximalHockeyStickCornerCriterion
+open D5.S3.Quantum.Divergence.MaximalHockeyStickSingularCriterion
 open D5.S3.Quantum.Divergence.MaximalHockeyStickThreshold
 open D5.S3.Quantum.Divergence.MaximalHockeyStickSpectral
 
@@ -79,7 +79,10 @@ private theorem reconstruct_feasible (A B : Matrix n n ℂ)
   · simpa only [reconstruct, hroot.eq] using
       (hY.1.posSemidef.conjTranspose_mul_mul_same (CFC.sqrt (A + B))).nonneg
   · have hh := hmono hY.2.2
-    simpa only [reconstruct, Matrix.mul_smul, Matrix.smul_mul, hrecB] using hh
+    have hs (Z : Matrix n n ℂ) : reconstruct (A + B) (t • Z) =
+        t • reconstruct (A + B) Z := by
+      simp only [reconstruct, Matrix.mul_smul, Matrix.smul_mul]
+    simpa only [hs, hrecB] using hh
 
 private theorem normalize_feasible (A B : Matrix n n ℂ)
     (hA : A.PosSemidef) (hB : B.PosSemidef) (t : ℝ) (ht : 0 ≤ t)
@@ -119,5 +122,60 @@ theorem original_optimal_iff_normalized (A B : Matrix n n ℂ)
     have htrace := reconstruction_trace (A + B) (normalize (A + B) X) (hA.add hB)
     rw [hrec] at htrace
     simpa only [← htrace] using hh
+
+/-- The canonical scalar minimum gives an actual feasible overlap after
+reconstruction to the original singular pair. -/
+theorem original_canonical_feasible (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) (t : ℝ) (ht : 0 ≤ t) :
+    reconstruct (A + B) (canonicalOverlap (normalize (A + B) A) t) ∈
+      positiveOverlaps A (t • B) := by
+  apply reconstruct_feasible A B hA hB t
+  exact canonical_feasible _ (normalized_pair A B hA hB).1
+    (normalized_contraction A B hA hB) t ht
+
+/-- Every positive threshold of the original singular PSD pair has its actual
+overlap supremum at the canonical point exactly when the original total mass
+commutes with the normalized pair inside their common interior corner.
+No optimizer, commutation, or faithfulness premise is assumed. -/
+theorem original_all_thresholds_iff_commute (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    let S := A + B
+    let C := normalize S A
+    let P := interiorProjection C
+    (∀ t : ℝ, 0 < t → maximalHockey A B t =
+      A.trace.re - (S * canonicalOverlap C t).trace.re) ↔
+      (P * S * P) * (P * C * P) = (P * C * P) * (P * S * P) := by
+  dsimp only
+  let C := normalize (A + B) A
+  have hC : C.PosSemidef := (normalized_pair A B hA hB).1
+  have hC1 : C ≤ 1 := normalized_contraction A B hA hB
+  have hweight := original_pair_weight_posDef A B hA hB
+  have hcrit := common_all_thresholds_iff_commute C (A + B) hC hC1
+    (hA.add hB).isHermitian hweight
+  dsimp only at hcrit
+  rw [← hcrit]
+  apply forall_congr'
+  intro t
+  apply imp_congr_right
+  intro ht
+  have hnorm := original_optimal_iff_normalized A B hA hB t ht.le
+  dsimp only at hnorm
+  rw [← hnorm]
+  have hfeas := original_canonical_feasible A B hA hB t ht.le
+  have hlow := feasible_le_value hfeas
+  rw [reconstruction_trace (A + B) (canonicalOverlap C t) (hA.add hB)] at hlow
+  constructor
+  · intro he X hX
+    have hh := feasible_le_value hX
+    dsimp only [maximalHockey] at he
+    dsimp only [C] at hh ⊢
+    linarith
+  · intro h
+    obtain ⟨X, hX, hx⟩ := overlap_attained A (t • B) hA (hB.smul ht.le)
+    have hh := h X hX
+    rw [hx] at hh
+    have he := le_antisymm hh hlow
+    dsimp only [maximalHockey]
+    rw [he]
 
 end D5.S3.Quantum.Divergence.MaximalHockeyStickOriginalPair

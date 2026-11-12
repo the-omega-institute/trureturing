@@ -82,19 +82,22 @@ theorem diagonal_feasible (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
       positiveOverlaps (diagonal (fun i => (d i : ℂ)))
         (t • (1 - diagonal (fun i => (d i : ℂ)))) := by
   refine ⟨(Matrix.PosSemidef.diagonal (fun i => by
+    change (0 : ℂ) ≤ _
     exact_mod_cast le_min (hd i).1 (mul_nonneg ht (sub_nonneg.mpr (hd i).2)))).nonneg,
     Matrix.le_iff.mpr ?_, Matrix.le_iff.mpr ?_⟩
   · rw [Matrix.diagonal_sub]
     exact Matrix.PosSemidef.diagonal (fun i => by
+      change (0 : ℂ) ≤ _
       exact_mod_cast sub_nonneg.mpr (min_le_left (d i) (t * (1 - d i))))
   · have he : t • (1 - diagonal (fun i => (d i : ℂ))) =
-        diagonal (fun i => (t * (1 - d i) : ℂ)) := by
-      rw [← Matrix.diagonal_one, Matrix.diagonal_sub, Matrix.diagonal_smul]
-      congr 1
+        diagonal (fun i => ((t * (1 - d i) : ℝ) : ℂ)) := by
+      rw [← Matrix.diagonal_one, Matrix.diagonal_sub, ← Matrix.diagonal_smul]
+      apply congrArg (fun f : n → ℂ => diagonal f)
       funext i
       simp [Complex.real_smul]
     rw [he, Matrix.diagonal_sub]
     exact Matrix.PosSemidef.diagonal (fun i => by
+      change (0 : ℂ) ≤ _
       exact_mod_cast sub_nonneg.mpr (min_le_right (d i) (t * (1 - d i))))
 
 theorem diagonal_optimization_reduction (d : n → ℝ)
@@ -120,8 +123,11 @@ theorem diagonal_optimization_reduction (d : n → ℝ)
   have htrY : (W * Y).trace =
       ((W.submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val)) *
         (Y.submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val))).trace := by
-    rw [← hrecY]
-    exact trace_extension p W _
+    calc
+      _ = (W * (inclusion p * (Y.submatrix (fun i : {i // p i} => i.val)
+          (fun i : {i // p i} => i.val)) * (inclusion p)ᴴ)).trace :=
+        congrArg (fun M : Matrix n n ℂ => (W * M).trace) hrecY.symm
+      _ = _ := trace_extension p W _
   have hB : (t • (1 - D)).submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val) =
       t • (1 - D.submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val)) := by
     ext i j
@@ -137,14 +143,14 @@ theorem diagonal_optimization_reduction (d : n → ℝ)
         exact hX.2.2
       have hh := extend_le p hb'
       have hdB (i : n) : 0 ≤ t * (1 - d i) := mul_nonneg ht (sub_nonneg.mpr (hd i).2)
-      have he : t • (1 - D) = diagonal (fun i => (t * (1 - d i) : ℂ)) := by
+      have he : t • (1 - D) = diagonal (fun i => ((t * (1 - d i) : ℝ) : ℂ)) := by
         ext i j
         by_cases hij : i = j
         · subst j; simp [D, Complex.real_smul]
         · simp [D, Matrix.diagonal, Matrix.one_apply, hij]
       apply hh.trans
       rw [he]
-      exact extend_compress_le_diagonal p _ hdB
+      exact extend_compress_le_diagonal p (fun i => t * (1 - d i)) hdB
     have hh := h (J * X * Jᴴ) ⟨(hX.1.posSemidef.mul_mul_conjTranspose_same J).nonneg, hDX, hBX⟩
     rw [htrY, trace_extension p W X] at hh
     exact hh
@@ -155,7 +161,16 @@ theorem diagonal_optimization_reduction (d : n → ℝ)
     rw [hB] at hxB
     have hh := h (X.submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val))
       ⟨(hX.1.posSemidef.submatrix _).nonneg, compress_le p hX.2.1, hxB⟩
-    rw [htrY, ← hrecX, trace_extension p W] 
+    have htrX : (W * X).trace =
+        ((W.submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val)) *
+          (X.submatrix (fun i : {i // p i} => i.val) (fun i : {i // p i} => i.val))).trace := by
+      calc
+        _ = (W * (inclusion p * (X.submatrix (fun i : {i // p i} => i.val)
+            (fun i : {i // p i} => i.val)) * (inclusion p)ᴴ)).trace :=
+          congrArg (fun M : Matrix n n ℂ => (W * M).trace) hrecX.symm
+        _ = _ := trace_extension p W _
+    change (W * X).trace.re ≤ (W * Y).trace.re
+    rw [htrX, htrY]
     exact hh
 
 end D5.S3.Quantum.Divergence.MaximalHockeyStickCornerOptimization

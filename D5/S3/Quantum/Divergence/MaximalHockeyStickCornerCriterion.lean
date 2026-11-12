@@ -29,7 +29,7 @@ namespace D5.S3.Quantum.Divergence.MaximalHockeyStickCornerCriterion
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
+theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 1)
     (W : Matrix n n ℂ)
     (hW : (W.submatrix (fun i : {i // 0 < d i ∧ d i < 1} => i.val) Subtype.val).PosDef)
     (t : ℝ) (ht : 0 < t) :
@@ -41,7 +41,9 @@ private theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ 
         diagonal (fun i => ((max (t * (1 - d i) - d i) 0 : ℝ) : ℂ)) = 0 := by
   classical
   dsimp only
-  rw [diagonal_optimization_reduction d hd W t ht.le]
+  have hred := diagonal_optimization_reduction d hd W t ht.le
+  dsimp only at hred
+  rw [hred]
   let I := {i // 0 < d i ∧ d i < 1}
   let D : Matrix I I ℂ := diagonal (fun i => (d i.val : ℂ))
   let Y : Matrix I I ℂ := diagonal (fun i => ((min (d i.val) (t * (1 - d i.val)) : ℝ) : ℂ))
@@ -49,6 +51,7 @@ private theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ 
   have hY : Y.PosDef := Matrix.PosDef.diagonal (fun i => by
     exact_mod_cast lt_min i.property.1 (mul_pos ht (sub_pos.mpr i.property.2)))
   have hD : D.IsHermitian := (Matrix.PosSemidef.diagonal (fun i => by
+    change (0 : ℂ) ≤ _
     exact_mod_cast (hd i.val).1)).isHermitian
   have hfeas := diagonal_feasible (fun i : I => d i.val) (fun i => hd i.val) t ht.le
   have hc : (∀ X ∈ positiveOverlaps D (t • (1 - D)),
@@ -66,10 +69,10 @@ private theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ 
       simp [min_eq_left, min_eq_right, h, sub_nonpos.mpr h, sub_nonneg.mpr h]
   have hrB : t • (1 - D) - Y =
       diagonal (fun i : I => ((max (t * (1 - d i.val) - d i.val) 0 : ℝ) : ℂ)) := by
-    have he : t • (1 - D) = diagonal (fun i : I => (t * (1 - d i.val) : ℂ)) := by
+    have he : t • (1 - D) = diagonal (fun i : I => ((t * (1 - d i.val) : ℝ) : ℂ)) := by
       dsimp only [D]
-      rw [← Matrix.diagonal_one, Matrix.diagonal_sub, Matrix.diagonal_smul]
-      congr 1
+      rw [← Matrix.diagonal_one, Matrix.diagonal_sub, ← Matrix.diagonal_smul]
+      apply congrArg (fun f : I → ℂ => diagonal f)
       funext i
       simp [Complex.real_smul]
     rw [he]
