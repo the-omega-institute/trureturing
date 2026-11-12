@@ -1028,3 +1028,300 @@ $$
 [BH9]: https://arxiv.org/html/1904.03753v1
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 实际全未来行、可逆预测距离与局部三维面的内禀重建
+
+**定义 13.1（只由实际概率生成的载体）。** 固定同一个实际有限字集
+$\mathsf W_{11}=\{0,\ldots,10\}^{<\infty}$，空字记为 $\epsilon$，连接仍按调用先后进行。给定同一来源、同一终端事件的实际概率 $p:\mathsf W_{11}\to[0,1]$，定义
+
+$$
+\begin{gathered}
+x_a=\bigl(1,(p(af))_{f\in\mathsf W_{11}}\bigr),\qquad
+V=\operatorname{span}_{\mathbb R}\{x_a:a\in\mathsf W_{11}\},\qquad
+r=\dim_{\mathbb R}V<\infty,\\
+\|z\|_\infty=\sup_{h\in\{\star\}\sqcup\mathsf W_{11}}|z(h)|,\qquad
+u(z)=z(\star),\qquad
+K=\overline{\operatorname{conv}\{x_a:a\in\mathsf W_{11}\}},\qquad C=\operatorname{cone}K.
+\end{gathered}
+\tag{13.1}
+$$
+
+闭包取原上确界范数，$\operatorname{conv}$ 为有限凸组合，$\operatorname{cone}K=\{tk:t\ge0,k\in K\}$。$V$ 中每个向量是有限个有界行的线性组合，故该范数有限。$C$ 不是逐坐标非负锥的替代品。保留逐实际前缀、逐完整未来的统计关系
+
+$$
+\mathrm R_{10}:\qquad
+p(aj^{10}f)=p(af)\qquad
+(a,f\in\mathsf W_{11},\ j=0,\ldots,10).
+\tag{13.2}
+$$
+
+定义不包含 Hilbert 空间、射线标签、原生矩阵、Born 公式或 ready 的环境纯性。即使另有 $K_j^{10}=I$，它也不替代实际统计式 (13.2)。本章的凸组合、全对偶、群闭包与连续路径均为数学对象，不授予物理混合、额外准备、控制路径或极限程序。
+
+**命题 13.2（同一个实际行轨道的纯性与完整基）。** 在定义 13.1 下，各原地址有唯一线性算子 $T_j$ 满足 $T_jx_a=x_{aj}$，并且
+
+$$
+T_j^{10}=I,\qquad uT_j=u,\qquad
+\|T_jz\|_\infty=\|z\|_\infty.
+\tag{13.3}
+$$
+
+令 $T_a=T_{j_s}\cdots T_{j_1}$，其中 $a=j_1\cdots j_s$。由这些算子生成的群的算子范数闭包记为 $H$。则 $H$ 是保持 $u,K,C$ 的紧群，而且
+
+$$
+\begin{gathered}
+T_{ab}=T_bT_a,\qquad T_ax_\epsilon=x_a,\\
+O:=Hx_\epsilon=\overline{\{x_a:a\in\mathsf W_{11}\}},\qquad
+K=\operatorname{conv}O,\qquad \operatorname{ext}K=O,\\
+C\text{ 闭、尖、生成},\qquad
+u(z)>0\quad(0\ne z\in C),\qquad
+K=C\cap\{u=1\}.
+\end{gathered}
+\tag{13.4}
+$$
+
+特别地，唯一实际 ready $x_\epsilon$ 及所有实际行已经是这个预测基的极点；此结论先于任何 Jordan 重建。
+
+证明。对有界行先写坐标移位
+
+$$
+(T_jz)(\star)=z(\star),\qquad (T_jz)(f)=z(jf).
+\tag{13.5}
+$$
+
+它将每个 $x_a$ 送到 $x_{aj}$，因此保持所有实际行之间的线性关系并限制到 $V$。实际行张成给唯一性；(13.2) 在每个生成行上给 $T_j^{10}=I$。坐标限制给 $\|T_jz\|_\infty\le\|z\|_\infty$，对逆 $T_j^9$ 使用同一不等式即得等号。因逆可由九次正向调用表示，所有群元素仍对应有限原字；乘法顺序由 (13.5) 给出。
+
+有限维线性等距群在算子空间中有界且闭。若等距算子序列收敛，其极限仍等距，故单射且因有限维而满射；逆映射连续。因此它是紧群，$H$ 是其闭子群。各实际行范数为一，$K$ 闭有界，因有限维而紧。每个原移位及其逆都置换实际行，故保持 $K$；取极限后 $H$ 仍保持 $K$ 和 $u$。紧性及 $T_ax_\epsilon=x_a$ 给 $O=\overline{\{x_a\}}$。Carathéodory 定理使紧 $O$ 的有限凸包紧，因而恰为 $K$。
+
+对任意内积作 $H$ 的 Haar 平均，得到不变正定内积。$O$ 中向量在此内积下等长且非零。对固定 $v\in O$，泛函 $z\mapsto\langle v,z\rangle$ 在 $O$ 上的唯一最大点为 $v$：Cauchy–Schwarz 的等号及等长性排除其余点。有限凸分解使它也是 $K$ 上的唯一最大点，所以每个 $v\in O$ 为 exposed 极点。反向，$K$ 的极点有有限 $O$ 分解，正权项必须全部等于该点。因此 $\operatorname{ext}K=O$。这里只使用标准紧群与紧凸几何工具，没有把射线标签预先当成极点。
+
+$u=1$ 于 $K$。若 $t_nk_n\to z$，其中 $t_n\ge0,k_n\in K$，则 $t_n=u(t_nk_n)\to u(z)$。若该极限为零，$K$ 有界给 $z=0$；否则紧性给 $z=u(z)k\in C$。故 $C$ 闭，且其非零元的 $u$ 严格为正，继而 $C\cap(-C)=\{0\}$。实际行张成使 $C-C=V$。同一归一化立即给完整基恒等式。其严格单位还使 $u$ 为 $C^*$ 的序单位：对 $g\in V^*$，$M=\max_K|g|<\infty$ 给 $-Mu\le g\le Mu$。本命题的紧基、闭锥、尖性、生成性与严格单位均由实际行取得，不另列前提。∎
+
+**定义 13.3（同锥的三个实质入口）。** 在 (13.1) 的同一个 $V,C,u,K$ 上，记 $P=\operatorname{ext}K$，使用整个数学 proper 区间
+
+$$
+[0,u]=\{e\in V^*:e(C)\ge0, (u-e)(C)\ge0\},\qquad
+F_v=\{e\in[0,u]:e(v)=1\},\qquad
+\mathcal T_v(z)=\min_{e\in F_v}e(z).
+\tag{13.6}
+$$
+
+这里 $v\in P,z\in K$；命题 13.2 和 PRE77.1–77.2 的紧 proper 区间论证给非空紧 $F_v$ 与最小值达到。为避免混淆，$T_j$ 表示移位，$\mathcal T_v$ 表示比较。要求如下。
+
+比较入口是完整 S：每个 $v\in P$ 有一个最小确认者 $e_v\in F_v$，在整个对偶锥序下满足 $e_v\le e$ 对所有 $e\in F_v$ 成立，并且 $e_v(w)=e_w(v)$ 对所有 $v,w\in P$ 成立。它等价于
+
+$$
+\mathcal T_v\!\left(\sum_i\lambda_iw_i\right)
+ =\sum_i\lambda_i\mathcal T_{w_i}(v),\qquad
+v,w_i\in P,\quad\lambda_i\ge0,\quad\sum_i\lambda_i=1,
+\tag{13.7}
+$$
+
+量化全部有限列表、重标签及零权。也可原样采用 [Library 固定半附录][L13] 的同载体等价入口
+
+$$
+\mathcal T_v\!\left(\frac{w+z}{2}\right)
+ =\frac{\mathcal T_w(v)+\mathcal T_v(z)}2
+\qquad(v,w\in P, z\in K),
+\tag{13.8}
+$$
+
+其中 $z$ 必须包含任意原混态余项。另一等价写法为 9.3 所列全部纯参照的全部支持极小有限回路平衡；其闭尖生成锥、严格单位、完整基、全部极点和整个 proper 区间前件均取本定义，不能只查某些实际字或某张纯二项表。这里不采用只在一个 ready 上的版本，因为 9.3 用于该削减的原生端点交换尚未作为本章前提。
+
+作用入口逐原地址要求
+
+$$
+T_j\in\operatorname{Aut}(C)^0\qquad(j=0,\ldots,10),\qquad
+\operatorname{Aut}(C)=\{A\in GL(V):A(C)=C\}.
+\tag{13.9}
+$$
+
+上标 $0$ 为完整数学锥自同构群的单位连通分支；它是有限维闭矩阵群，所以等价于存在连续路径 $A_j:[0,1]\to\operatorname{Aut}(C)$，$A_j(0)=I,A_j(1)=T_j$。中间 $A_j(t)$ 不必保持 $u$，更不表示实际可调用的控制。若给出 $\operatorname{Aut}(C,u)$ 内路径，当然也足够，但那是较强的见证条件。原移位本身已由 13.2 保单位。
+
+局部几何入口是存在两个不同纯 profiles $v,w\in P$，其整个最小锥面 $F(v,w)$ 满足
+
+$$
+\dim\operatorname{aff}\bigl(F(v,w)\cap\{u=1\}\bigr)=3.
+\tag{13.10}
+$$
+
+$F(v,w)$ 是所有同时含两条纯射线的锥面的交，不是任选一个三维截面、坐标图、三个标签或整个 $K$ 的维数。三个入口均是关于原行所生成对象的条件；有限秩、概率归一与统计回返没有自动供应它们。
+
+**定理 13.4（不预供复射线的实际行／局部面重建）。** 在定义 13.1、13.3 下，存在整数 $n\ge2$ 和实线性同构 $\Phi:V\to\operatorname{Herm}_n(\mathbb C)$，使
+
+$$
+\begin{gathered}
+\Phi(C)=\operatorname{PSD}_n(\mathbb C),\qquad
+\Phi(K)=\{\rho\ge0:\operatorname{Tr}\rho=1\},\qquad
+\operatorname{Tr}\Phi(z)=u(z),\\
+\Phi(x_\epsilon)=\Omega,\quad\operatorname{rank}\Omega=1,\quad
+r=n^2,\qquad\operatorname{cap}K=n.
+\end{gathered}
+\tag{13.11}
+$$
+
+容量是同一完整 proper 区间下可由一次共同测试完美区分的最大纯态数。每个原生成元有酉矩阵 $U_j$，且唯一 Hermitian 效应 $0\le E\le I_n$ 表示原空未来读数，使对全部原有限字成立
+
+$$
+\begin{gathered}
+\Phi T_j\Phi^{-1}(X)=U_jXU_j^*,\qquad
+U_a=U_{j_s}\cdots U_{j_1},\quad U_\epsilon=I,\quad U_{ab}=U_bU_a,\\
+p(a)=\operatorname{Tr}(E U_a\Omega U_a^*),\qquad
+U_j^{10}=e^{i\theta_j}I_n.
+\end{gathered}
+\tag{13.12}
+$$
+
+此外，全体原 proper 效应恰且唯一对应 $0\le F\le I_n$，$e(z)=\operatorname{Tr}(F\Phi(z))$；这是同载体的序与单位对应。$\Phi$ 的选择仅有一个共同酉／整体转置规范，$U_j$ 还各有独立相位自由。结论没有另需 ready 纯性、简单性、连通纯态传递性、容量至少三或秩至少三；也不宣称 $H$ 连通。
+
+证明。命题 13.2 首先取得实际 ready 及整个完成轨道的极性，并提供比较桥的所有有限维载体条件。然后直接复用 [Library 的完整纸面桥][L13]，而不重证该桥或将它计为新增分类。其依赖次序是：最小 proper 确认的正对偶最大值剥离给正对偶生成和共同完整框架；互反性给正定自对偶配对与同框架有符号谱分解；每个面内的谱论给正交正面投影、归一化收缩和 projectivity；该桥的最大杂质论证用完整最小性强制所有 filters 将纯输入送到零或纯射线。于是恰好供应 [Barnum–Müller–Ududec，1403.4147v4 Theorem 16][BMU13] 的 projectivity、对称转移概率及 filter purity，取得有限 Euclidean Jordan 代数 $J$ 的整个归一态基与锥。归一化对应规范 Jordan 迹。此处不借 Theorem 17 的额外强对称性，不另添全框架强对称或齐性。`CircuitBalancedConfirmation.full_mixture_iff_circuit_balance` 只承担上述回路／S／最小确认等价，不形式化这条完整桥。
+
+先证明只有一个简单因子。有限 EJA 的标准分解写成 $J=\bigoplus_{\alpha=1}^mJ_\alpha$。对应锥的非零不可分解直和理想组成有限集合，每个锥自同构置换它们。这些理想在 Grassmann 空间中为有限离散集，故沿从单位开始的连续锥自同构路径，每个理想恒定。这个论证在完整 $\operatorname{Aut}(C)$ 中进行，不要求路径中间保持迹。因 $x_\epsilon$ 已是纯点，其 Jordan 像只支撑在一个因子 $J_{\alpha_0}$；由 (13.9)，每个原移位保持该因子，所有 $x_a$ 都在其对应线性子空间。但这些实际行张成整个 $V$，故没有别的非零因子，$m=1$。这是唯一 ready 的真实单轨道张成论证；没有使用“每个扇区各选一个 ready”，也没有由连通环境推断生成闭群 $H$ 连通。
+
+再消费标准简单 EJA 分类及其面几何，参见 [Barnum–Hilgert，1904.03753v1 §4、Table 1][BH13]。若 Jordan 秩至少三，两个不同本原纯点的并面为秩二面；在实、复、四元数矩阵型中它是相应两维支撑上的 Hermitian 正锥，在 Albert 型中是八元数秩二面。其归一基维数依次为
+
+$$
+\begin{array}{c|cccc}
+\text{简单型}&\operatorname{Herm}_n(\mathbb R)&\operatorname{Herm}_n(\mathbb C)&
+\operatorname{Herm}_n(\mathbb H)&\operatorname{Herm}_3(\mathbb O)\\
+\dim\operatorname{aff}(F(v,w)\cap\{u=1\})&2&3&5&9
+\end{array}
+\tag{13.13}
+$$
+
+这些是整个最小面的标准维数，和两点是否正交无关。因此 (13.10) 在秩至少三时只留下复矩阵型 $n\ge3$。秩一没有两个不同纯点；简单秩二的其余统一写法是 spin factor，基为某个 $B^d$。球的严格凸性使任意两个不同极点的最小面为整个球，故 (13.10) 恰给 $d=3$。这个三维球就是 $\operatorname{Herm}_2(\mathbb C)$ 的密度基，必须保留 $n=2$，不能把它列为反例。两种情形合给 (13.11) 的复 PSD 类型。标准谱论给实维 $n^2$、完整框架长度及容量 $n$；这些分类和谱论读数是文献复用，不是新一般结果，也没有说明物理空间为何三维。
+
+逐个运输原作用 $A_j=\Phi T_j\Phi^{-1}$。复 PSD 锥的标准实线性自同构分类是
+
+$$
+X\longmapsto M X M^*\quad\text{或}\quad X\longmapsto M X^{\mathsf T}M^*,\qquad M\in GL_n(\mathbb C).
+\tag{13.14}
+$$
+
+其单位分支正是第一类；[BH13] §4 的 Table 1 及紧随的自同构群说明给出复型的连通 congruence 群和额外 transpose 分支。$n=2$ 同样成立，在 Bloch 坐标中该额外分支反转取向。将 (13.9) 的完整锥路径经 $\Phi$ 运输，排除每个 $A_j$ 的 transpose 分支，而非只排除某个合成字的分支。又 $uT_j=u$，所以对全部 Hermitian $X$ 有 $\operatorname{Tr}(M_j^*M_jX)=\operatorname{Tr}X$，推出 $M_j^*M_j=I$。取 $U_j=M_j$ 就得到每个原生成元的酉共轭。此处从未要求原路径在中途保迹。
+
+空未来评价 $\ell(z)=z(\epsilon)$ 在每个实际行上取 $p(a)\in[0,1]$；连续性及凸闭包给 $\ell\in[0,u]$。矩阵迹配对唯一给 Hermitian $E$；$\ell$ 与 $u-\ell$ 在整个 PSD 锥上的非负性恰给 $0\le E\le I$。同一论证对每个原 proper 效应成立，并反向得到全部矩阵效应。由 $x_a=T_ax_\epsilon$、原字顺序及 13.2 的 ready 极性，得到秩一 $\Omega$ 和 (13.12) 的所有字公式。$T_j^{10}=I$ 在整个 $V$ 上成立，故 $\operatorname{Ad}(U_j^{10})=I$ 在整个 Hermitian 空间上成立；其复线性张成是 $M_n(\mathbb C)$，commutant 为标量，给所列 projective $\mathrm R_{10}$。不要求实际概率读数能选择这些相位。
+
+若 $\Phi'$ 是另一个同锥、同单位识别，$\Phi'\Phi^{-1}$ 保迹，(13.14) 使它为一个共同 $\operatorname{Ad}W$ 或 $\operatorname{Ad}W\circ\mathsf T$。相应规范准确为
+
+$$
+\begin{array}{c|ccc}
+&\Omega'&E'&U_j'\text{（可再乘独立相位）}\\
+\operatorname{Ad}W&W\Omega W^*&WEW^*&WU_jW^*\\
+\operatorname{Ad}W\circ\mathsf T&W\Omega^{\mathsf T}W^*&WE^{\mathsf T}W^*&W\overline{U_j}W^*
+\end{array}
+\tag{13.15}
+$$
+
+所以整体转置时门必须同时复共轭，不能只转置态与效应而原样保留门。矩阵表述没有引入额外合法操作。∎
+
+定理 13.4 的直观守恒量已经在 (13.3) 中出现：对任意实际 $a,b$，
+
+$$
+\|x_{aj}-x_{bj}\|_\infty=\|x_a-x_b\|_\infty
+=\sup_{f\in\mathsf W_{11}}|p(af)-p(bf)|.
+\tag{13.16}
+$$
+
+它准确表示统计可逆性保存原全部未来的预测可区分距离。这里没有把该距离认作 Shannon 熵或 von Neumann 熵，守恒本身也不是复量子类型的充分条件。所导出的谱演算将每个实可观测量放入同一个有序 Jordan／复 Hermitian 几何；每个量各有谱分解，但非对易量不因此共有一个本征基或联合经典谱。这些解释只是同一定理的后果，不增加物理公理。
+
+## 14. 同一个实际行接口的必要控制
+
+**命题 14.1（两个三维球的乘积仍缺最小确认）。** 有十一地址、统计 $\mathrm R_{10}$、有限实际行秩、同一 ready 的轨道张成、各移位在 $\operatorname{Aut}(C,u)^0$ 中且满足局部条件 (13.10) 的数学概率模型，其完整预测基为 $B^3\times B^3$，但不满足 S。
+
+证明。先给下列控制共用的有限旋转字母。$A,B,D\in SO(3)$ 分别为绕轴 $e_z$、$(\sin\vartheta,0,\cos\vartheta)$、$(0,1,1)/\sqrt2$ 的半周旋转，固定 $\vartheta/\pi$ 无理。这三者均为二阶，故十次为单位。$A B$ 是绕 $e_y$ 的角度 $\pm2\vartheta$ 旋转，幂闭包包含整个 $e_y$ 旋转圆；$D$ 将 $e_y$ 送到 $e_z$，故闭群也含整个 $e_z$ 旋转圆。两个圆的 Lie 代数及其括号张成 $\mathfrak{so}(3)$，因此三者生成群在 $SO(3)$ 稠密。这里只用标准闭子群／Lie 代数工具，不要求任何实际连续控制。
+
+在 $B^3\times B^3$ 上取一个 ready $(e_z,e_z)$，六个地址分别在第一或第二球作用 $A,B,D$，其余五个为单位，共十一地址。按原顺序记其作用 $(R_a,S_a)$，取
+
+$$
+p(a)=\frac12+\frac{(R_ae_z)_z+(S_ae_z)_z}{4}.
+\tag{14.1}
+$$
+
+全部概率在 $[0,1]$，每个字母二阶使 $p(aj^{10}f)=p(af)$ 对所有实际前缀和未来成立。用线性行映射
+
+$$
+\Psi(t,v,w)=\left(t,
+ \left(\frac t2+\frac{(R_fv)_z+(S_fw)_z}{4}\right)_{f\in\mathsf W_{11}}\right).
+\tag{14.2}
+$$
+
+注意全线性定义的第一坐标必须为 $t$。若该行为零，先得 $t=0$；读数在稠密 $SO(3)\times SO(3)$ 上为零，连续性给全群为零。先对 $S$ 作 Haar 平均，得 $(Rv)_z=0$ 对所有 $R$，故 $v=0$；同理 $w=0$。因此 $\Psi$ 单射，真实行秩为七。ready 轨道稠密于 $S^2\times S^2$，其闭凸包为整个 $B^3\times B^3$，锥和全部 proper 效应准确由 $\Psi$ 运输。原各旋转有保单位锥路径，故满足更强的 component 见证。
+
+取两纯点 $(e_z,w_1),(e_z,w_2)$、$w_1\ne w_2$。球的真非空面只有单点，所以它们在乘积中的整个最小面为 $\{e_z\}\times B^3$，归一仿射维数恰三。可是 ready 有两个 proper 确认效应
+
+$$
+f(v,w)=\frac{1+v_z}{2},\qquad g(v,w)=\frac{1+w_z}{2}.
+\tag{14.3}
+$$
+
+若存在最小确认者 $e$，则 $0\le e\le f,g$。写 $e(v,w)=c+a\cdot v+b\cdot w$。在 $v=-e_z$、全部 $w$ 上 $f=0$，得 $b=0,c=a_z$；在 $w=-e_z$、全部 $v$ 上 $g=0$，得 $a=0,c=b_z$。于是 $e=0$，不能确认 ready。因此全 proper 区间下最小确认失败，S 失败。这个乘积不是两个量子扇区的直和；它检验 S 的独立作用，不能用于否定保留 S 的定理。∎
+
+**命题 14.2（实际交换两个相同扇区时的单 ready 控制）。** 删除 (13.9) 后，即使完整 S、局部三维最小面、有限秩及统计回返都成立，真正单一 ready 的实际轨道张成也不排除两个相同复扇区。
+
+证明。取 $P_z=\operatorname{diag}(1,0)=(I+\sigma_z)/2$、$\sigma_z=\operatorname{diag}(1,-1)$。令 $J=\operatorname{Herm}_2(\mathbb C)\oplus\operatorname{Herm}_2(\mathbb C)$，取其全 PSD 直和锥及总迹单位，ready 为 $(P_z,0)$。用 14.1 的三个球旋转所对应的酉共轭分别作用于两个块，得六个字母；第七个字母为实际块交换 $\sigma(X,Y)=(Y,X)$，另四个为单位。全部字母在态空间上的阶整除二，故满足统计 $\mathrm R_{10}$。取原终端效应 $E=(P_z,P_z/2)$，置 $p(a)=\operatorname{Tr}(E G_a(P_z,0))$，其中 $G_a$ 是这些原字母的顺序复合。
+
+严格的行分离由
+
+$$
+\Psi(X,Y)=\left(\operatorname{Tr}X+\operatorname{Tr}Y,
+ (\operatorname{Tr}(E G_f(X,Y)))_{f\in\mathsf W_{11}}\right)
+\tag{14.4}
+$$
+
+给出，不能只写归一输入的 $(1,\ldots)$。若所有未来读数为零，对两个块的稠密独立旋转取连续延拓及平均，得到 $\operatorname{Tr}X/2+\operatorname{Tr}Y/4=0$；再将未来先加块交换，得到 $\operatorname{Tr}X/4+\operatorname{Tr}Y/2=0$。故两迹均零。独立改变一个块的旋转又使该块全部迹零分量为零，所以 $X=Y=0$。由此实际预测载体正是 $J$，秩为八，而不是看不见另一扇区的商。
+
+唯一 ready 的闭轨道为两个块中全部迹一秩一投影；其凸包是整个直和密度基，线性张成也为整个 $J$。全 proper 最小确认是相应块内的 $(P,0)$ 或 $(0,P)$，互反性由迹配对给出，故 S 成立。同一块中任意两个不同纯点的并面为那个完整 qubit 锥，满足 (13.10)。块交换确实把单一 ready 送到另一块，然而它置换两个不可分解理想，不能从单位沿完整锥自同构路径取得。它就是 (13.9) 排除的部分。只陈列异型且不可达的环境扇区不会给这个反例，因为那时单 ready 的实际行张成达不到整个所声称载体。∎
+
+**命题 14.3（纯态空间连通不排除转置门）。** 在 (13.9) 之外，纯态空间的连通性及 S 比较几何的连通性不足以保证每个原生成元为酉共轭。
+
+证明。在一个完整 qubit 锥中取 14.1 的三个稠密旋转字母，加入第四个原字母 $X\mapsto X^{\mathsf T}$，再加七个单位，共十一地址。ready 和终端效应均取 $P_z$。用 (14.4) 的单块版本定义线性行映射；非标量 $P_z$ 的旋转轨道张成全部 Hermitian 空间，故该映射单射，实际行的完成基是整个 Bloch 球，秩四。每个字母十次为单位，S 和局部三维面成立，纯态空间为连通 $S^2$，比较为连续的 $\operatorname{Tr}(PQ)$；任意两纯点也可经非零比较边连接。可是转置反转 Bloch 球的 $y$ 坐标，是取向反转；任何酉共轭属于 $SO(3)$，所以转置不是酉共轭。它也不在完整 PSD 锥自同构单位分支。这正区分“纯点之间能连续移动”与“这个指定的原门属于正确作用分支”。∎
+
+**命题 14.4（预测极点不等于环境纯化）。** 命题 13.2 的 ready 极性不推出任意另供环境中的 ready 是纯态。
+
+证明。固定 $0<\eta<1$，在一个仅用于比较的环境 qubit 中取混态 $\rho_0=(I+\eta\sigma_z)/2$，终端 $P_z$，使用 14.1 的三个稠密旋转及八个单位字母。全部实际概率为
+
+$$
+p(a)=\frac12+\frac\eta2(R_ae_z)_z.
+\tag{14.5}
+$$
+
+其行由 $\Psi_\eta(t,v)=(t,(t/2+\eta(R_fv)_z/2)_f)$ 给出，$\eta\ne0$ 和旋转稠密性使它单射。实际闭轨道对应 $S^2$，预测基是 $B^3$；故 ready 在预测基中极端。其环境凸包却只是半径 $\eta$ 的 Bloch 球，$\rho_0$ 在整个环境密度基中混合。内禀识别将该小球线性缩放到标准球，终端效应同时变为 $(I+\eta\sigma_z)/2$，ready 的内禀像才为秩一。这不是加辅助系统的纯化，也没有证明环境中不存在混合。14.1–14.4 都只是精确满足所列实际行接口的终端数学控制；没有为它们声称原完整来源、全部记录、档案、可靠性、预算或失败／Return 合同的物理实现。∎
+
+## 15. 原生回接的复用、共同规范与不变的来源缺口
+
+**推论 15.1（既有原生表示给内禀入口的准确附着）。** 另行保留定义 10.1 的全部原来源、实际有限秩、统计 $\mathrm R_{10}$ 和原 III150 的完整 ready 行回返，并保留原全 $89$ 维 projective 密度。若在其同一个实际完成锥上有完整 S 且 $p$ 非恒定，则无需独立增加 (13.9)、(13.10)，即可消费 13.4；所得 $n=89,r=7921$，且与 9.2、10.3 的原生表示仅差一个共同酉／整体转置规范。若再有 10.4 的全部附加前件，终端效应在原生坐标中正是原 $Q$。
+
+证明。全部原生匹配直接复用本卷定理 10.2、9.2 及推论 10.3，不重建 GM spherical 模块、成对闭包、原生 $89$ 维或 adjoint 识别。10.2 在原 ready 回返与原 projective 密度上已经给全 $G=PU(89)$ 的连续实际行作用、全群／原字的等距载体同构、同锥同单位及整个效应区间。这个结论先于 S，而且 $T_j$ 正是 $[K_j]$ 的作用。$PU(89)$ 连通且有从单位到每个 $[K_j]$ 的路径，连续表示遂给同一预测锥的保单位路径，支付 (13.9)。这是原数学闭像的连续作用，不是新合法控制；也不以“生成元在连通群内”为由声称一般闭子群连通。
+
+在此载体上 S 与 (9.4) 等价。非恒定分支的 9.2、10.3 已给保原生作用的序／单位同构 $\Phi_{\rm nat}$，其 $\Phi_{\rm nat}(x_a)=P_{\chi_a}$、$r=89^2$。整个复 PSD 锥的两个不同纯点有三维归一并面，故 (13.10) 在这条附着路线中是既有识别的后果，不是另付的物理前提，更不是原给复几何的起源。现在 13.4 作用于同一个原字锥；$\Phi\Phi_{\rm nat}^{-1}$ 为保迹序自同构，按 (13.15) 仅有一个共同酉或共同酉加整体转置。因此原门分别为 $WK_jW^*$ 或 $W\overline{K_j}W^*$，允许各自相位。
+
+这也说明任何从全部 Hermitian 空间写出的原生行映射必须为
+
+$$
+X\longmapsto\left(\operatorname{Tr}X,
+ (\operatorname{Tr}(E_{\rm nat}K_fXK_f^*))_{f\in\mathsf W_{11}}\right),
+\tag{15.1}
+$$
+
+而不是第一坐标恒为一；后一写法只适用于迹一截面。若原已假设全字 Born 公式，(15.1) 只是相容性核对，不能把这个假设本身当作概率的起源。
+
+最后，$E_{\rm nat}=Q$ 准确调用推论 10.4，保留其全部地址 $2,\ldots,10$ 的事件不变性、$e_0,e_1$ 两项原标定及原 $55/34$ 成对块闭包。两标定单独不足，10.4 的反测仍适用。换到内禀规范，效应相应为 $WQW^*$ 或 $WQ^{\mathsf T}W^*$。旧记录条件 C、D 及其各消费者的档案条件核义务没有从本推论中删除。恒定分支仍为 10.3 的秩一单点，不能套用本推论的非恒定或局部三维结论。∎
+
+**命题 15.2（新增接口与完整来源目标的边界）。** 定理 13.4 的仓内纸面增益是：从不预供 Hilbert／射线域的实际全未来行先取得 ready 与轨道纯性，再以原生成元在完整锥自同构群中的分支和整个局部并面，接上简单性、复型和每个原作用的共同表示。紧群／紧凸、EJA 分类、面维数、矩阵锥自同构及完整 S 桥均属所引成熟工具或已有仓内结果，不作为新的标准分类或全球新颖性主张。15.1 的可选原生匹配整体属于复用，不计作独立新增的原生 Born 成果。
+
+证明。13.2 在 S 及 Jordan 之前由原行建立纯性；13.4 的理想路径论证消费真实单 ready 的张成，局部面数据只在这个已简单的对象上选择复型，随后逐原门排除转置。这三处均在同一个实际行载体上完成，不用另供物理混合、全酉控制、全框架强对称或 ready 纯性。另一方面，它们仍以完整 S、(13.9) 和 (13.10) 为条件；13.2 不证明这些条件，14.1–14.3 保留相应失败界。这里没有绝对最少公理、完整物理前件净数量下降、穷尽文献不存在性或历史优先权结论。
+
+原来源回接始终保留唯一的原 $\Omega$、同一来源和原合法程序、字顺序、实际历史、标签及档案核。这里的派生矩阵 $\Omega=\Phi(x_\epsilon)$ 只是该 ready 预测行的坐标；它不是替换完整原 $\Omega$ 来源的另一个世界或额外准备。预终端使用十一地址，记录后未来仍只有原七地址；全部零支撑、零／失败／拒绝／停止／告警及 Return 分支、有限成本和可靠性域、每个仍合法未来均保留，未定义请求不补零。只要某个反馈实际影响 $p(af)$，它的影响已属于实际全未来行，不能以“被动档案”名义排除；真正不回馈该读数的被动档案排除仅在其原范围成立。
+
+一个终端事件的式 (13.12) 不识别所有实际历史，不确定其它标签的联合响应，不供真实相关复合、CP 仪器、更新律或时钟／能量／$\hbar$ 单位。12.1 的全标签结论仍需共同联合行／同锥仿射效应的额外前件；原记录定理仍需 C、D、支撑、实际纯后继和完整档案条件核。数学态、效应、滤器、Haar 平均、路径与群闭包都不转成免费准备、测试、复制、参考、彩票或控制权限。
+
+[PRE 第五卷][PRE13] 第 84 章的 84.10、84.20、84.35，在其精确第一接口及完整原候选中已经把第一层质量族归约到一个原单位对标量，并保留 E3、原锚、方向和实际事件条件；它不供本章的 S、component 或局部三维面。第 85 章定理 85.2 和推论 85.4 已在共同锚点与指定纯三腿探针的完整核相容条件下给精确序反射和 CP 测试。85.16–85.17 还要求同一个原事件的全实提升、实际记录／准备、两预算、更新及时间合同，85.11 的原接受与 active-ready 接头仍在。这些是已有的条件过程成果，不能说 CP 工作全无，也不能从它们宣布无条件 CP 或完整量子起源已得。Wick／defect 反演与算术 Brauer-node 问题不进入本章状态锥论证。
+
+因此本章关闭的是所列条件下的实际行纯性／扇区／原作用接口，不是这些条件的完整物理来源。原完整 $\Omega$ 的实现、自然选择 S 与局部几何、实际控制分支、相关复合和全部过程／时间来源仍须各按原合同完成；完整量子起源目标保持未完成。∎
+
+[L13]: ../../../Library/QuantumStates/mullerududec2012selfduality.md
+[BMU13]: https://arxiv.org/html/1403.4147v4
+[BH13]: https://arxiv.org/html/1904.03753v1
+[PRE13]: https://github.com/the-omega-institute/trureturing/blob/a7b3facac785d39d5f05005009a170d7f0aca452/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+
+## 追加锚（本行以下为增补区）
