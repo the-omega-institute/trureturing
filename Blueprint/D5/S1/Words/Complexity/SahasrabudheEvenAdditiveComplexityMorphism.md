@@ -78,7 +78,19 @@ $$\operatorname{claim} = (\forall \alpha: \operatorname{Type}, [\operatorname{Fi
 
 Section 5, printed p. 7: “Can a construction of this form be generalized to give constructions of words with fixed even complexity?” The proposition answers the question negatively for every finite nonempty source alphabet and every universal source word. The map assigns a finite integer list to each letter. Its infinite output cannot have 2k distinct length-n sums for all positive n with k positive. Source indices are translated to zero-based natural indices, with no change in factor lengths or counts.
 
-**Theorem 1.7 (No positive constant even complexity).**
+**Theorem 1.7 (Exact intervals between cumulative boundaries).**
+
+$$\forall \alpha: \operatorname{Type}, \forall w: \mathbb{N} \to \alpha, \forall \phi: \alpha \to \operatorname{List}\left(\mathbb{Z}\right), \forall y: \mathbb{N} \to \mathbb{Z}, \forall b: \mathbb{N} \to \mathbb{N}, (\operatorname{Monotone}\left(b\right)) \Rightarrow ((\forall i: \mathbb{N}, b\left(i + 1\right) = b\left(i\right) + \operatorname{List.length}\left(\phi\left(w\left(i\right)\right)\right)) \Rightarrow ((\forall i: \mathbb{N}, \forall j: \mathbb{N}, (j < \operatorname{List.length}\left(\phi\left(w\left(i\right)\right)\right)) \Rightarrow (y\left(b\left(i\right) + j\right) = \operatorname{List.get}\left(\phi\left(w\left(i\right)\right), j\right))) \Rightarrow (\forall s: \mathbb{N}, \forall t: \mathbb{N}, \operatorname{List.ofFn}\left(\operatorname{wordFactor}\left(y, b\left(s + t\right) - b\left(s\right), b\left(s\right)\right)\right) = \operatorname{List.flatMap}\left(\phi, \operatorname{List.ofFn}\left(\operatorname{wordFactor}\left(w, t, s\right)\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.morphic_block` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any source type, source stream, integer-valued finite codewords, integer output stream and monotone natural boundaries, the step law and every local codeword letter equation identify the entire interval from b(s) to b(s+t) with the flatMap of the actual length-t source factor. Neither a universal source nor unbounded boundaries is required for this finite interval identity. Zero-length codewords and t=0 remain in scope.
+
+**Theorem 1.8 (No positive constant even complexity).**
 
 $$\forall \alpha: \operatorname{Type}, [\operatorname{Fintype}\left(\alpha\right)] [\operatorname{Nonempty}\left(\alpha\right)], \forall w: \mathbb{N} \to \alpha, \forall \phi: \alpha \to \operatorname{List}\left(\mathbb{Z}\right), \forall y: \mathbb{N} \to \mathbb{Z}, (\operatorname{UniversalInput}\left(w\right)) \Rightarrow ((\operatorname{IsMorphicImage}\left(w, \phi, y\right)) \Rightarrow (\neg (\exists k: \mathbb{N}, (0 < k) \land (\forall n: \mathbb{N}, (0 < n) \Rightarrow (\operatorname{additiveComplexity}\left(y, n\right) = 2 \cdot k)))))$$
 
@@ -103,6 +115,7 @@ If all positive-length sum counts had one positive constant value, equal-length 
 - Truth anchor: `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.additiveComplexity`
 - Truth anchor: `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.claim`
 - Truth anchor: `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.factorSum`
+- Truth anchor: `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.morphic_block`
 - Truth anchor: `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.result`
 - Truth anchor: `D5/S1/Words/Complexity/SahasrabudheEvenAdditiveComplexityMorphism.sumSet`
 - Dependency: [D5/S1/Words/Complexity/MorseHedlund](MorseHedlund.md)
