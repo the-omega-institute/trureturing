@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/OddPrimeJetStabilizerArithmetic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/group_theory/index]
+   anchors: [mathlib/module/Mathlib.GroupTheory.SemidirectProduct]
    utility: none
    digest: The actual odd-prime jet label stabilizer has order dividing the weighted semilinear ambient order. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetGroup
