@@ -1,0 +1,11 @@
+**定义 90.11（已有图表示上的同一完整候选）。** 完整保留89.7的同一个原装饰元组 $\mathcal O$、共同 $\mathfrak S(\mathcal O)$ 及全部非几何条件。仅在每个原 $X=A,D,E$ 已有同载体保单位序同构
+
+$$
+\iota_X:V_X\longrightarrow V_{G_X},\qquad
+\iota_X(C_X)=C_{G_X},\qquad
+u_{G_X}\circ\iota_X=u_X
+\tag{90.19}
+$$
+
+的范围内，将该原 $X$ 上的几何项 $\mathrm B+\mathrm{Boundary}$ 等价写成 $\mathrm{Z0}_{\rm pure}$，或 $\mathrm{Z0}$，或原图关系 $\sim_{G_X}$ 传递。图表示是明示模型前提；不是由一般 $\mathrm B+\mathrm{Z0}$ 推出的新接口，也不以限制到三个坐标的映射代替(90.19)的全域同构。所述三种写法是89.7在这个同一表示域内的等价候选，不另造一般更弱的包。
+
