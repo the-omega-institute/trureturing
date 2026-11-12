@@ -117,4 +117,41 @@ theorem reverse_test_from_components (G : n → Matrix n n ℂ)
   obtain ⟨R, hc, -⟩ := reverse_test_from_components_profile G hG x hx
   exact ⟨R, hc⟩
 
+/-- Independently indexed positive components with two arbitrary nonnegative
+weights. A coordinate for each label supplies a state only when its component
+has zero mass; in particular an empty matrix carrier may use an empty alphabet. -/
+theorem reverse_test_from_weighted_components {l : Type*} [Fintype l]
+    (coordinate : l → n) (G : l → Matrix n n ℂ)
+    (hG : ∀ i, (G i).PosSemidef) (a b : l → ℝ)
+    (ha : ∀ i, 0 ≤ a i) (hb : ∀ i, 0 ≤ b i) :
+    ∃ R : ReverseTest (∑ i, a i • G i) (∑ i, b i • G i) (Fintype.card l),
+      ∀ t : ℝ, R.hockey t =
+        ∑ i, max (a i - t * b i) 0 * (G i).trace.re := by
+  classical
+  let e := (Fintype.equivFin l).symm
+  let s : l → ℝ := fun i => (G i).trace.re
+  have hs (i : l) : 0 ≤ s i := (Complex.nonneg_iff.mp (hG i).trace_nonneg).1
+  let R : ReverseTest (∑ i, a i • G i) (∑ i, b i • G i) (Fintype.card l) :=
+    { p := fun j => a (e j) * s (e j)
+      q := fun j => b (e j) * s (e j)
+      p_nonneg := fun j => mul_nonneg (ha (e j)) (hs (e j))
+      q_nonneg := fun j => mul_nonneg (hb (e j)) (hs (e j))
+      state := fun j => componentState (G (e j)) (hG (e j)) (coordinate (e j))
+      prepares_left := by
+        simp only [mul_smul, s, componentState_mass]
+        exact e.sum_comp (fun i => a i • G i)
+      prepares_right := by
+        simp only [mul_smul, s, componentState_mass]
+        exact e.sum_comp (fun i => b i • G i) }
+  refine ⟨R, ?_⟩
+  intro t
+  change (∑ j, max (a (e j) * s (e j) - t * (b (e j) * s (e j))) 0) = _
+  have hterm (i : l) :
+      max (a i * s i - t * (b i * s i)) 0 = max (a i - t * b i) 0 * s i := by
+    rw [show a i * s i - t * (b i * s i) = (a i - t * b i) * s i by ring]
+    simpa only [zero_mul] using
+      (max_mul_of_nonneg (a i - t * b i) 0 (hs i)).symm
+  simp_rw [hterm]
+  exact e.sum_comp (fun i => max (a i - t * b i) 0 * (G i).trace.re)
+
 end D5.S3.Quantum.Divergence.MaximalHockeyStickComponents

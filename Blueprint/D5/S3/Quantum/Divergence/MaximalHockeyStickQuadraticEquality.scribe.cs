@@ -15,7 +15,7 @@ internal sealed class MaximalHockeyStickQuadraticEqualityDocument : IScribeDocum
                         + "quadratic_integrated_eq_iff_commute"),
                 H("The actual infimum and the original matrix pair"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyitomamichel2026hockeystick")),
                 Blocks(Paragraph(Text(
                     "For every finite positive semidefinite pair A,B, put S=A+B, "
                         + "C=normalize(S,A) and P=interiorProjection(C). The infimum over "
@@ -33,7 +33,7 @@ internal sealed class MaximalHockeyStickQuadraticEqualityDocument : IScribeDocum
                         + "vanishing_curvature_gaps_imply_commute"),
                 H("Actual approximate tests transfer to the quadratic reference"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyitomamichel2026hockeystick")),
                 Blocks(Paragraph(Text(
                     "For any sequence of actual finite reverse tests, integrable gaps "
                         + "whose integrals tend to zero against a locally finite measure "
@@ -44,5 +44,17 @@ internal sealed class MaximalHockeyStickQuadraticEqualityDocument : IScribeDocum
                         + "gap integrals explicitly. It does not establish the general "
                         + "convex Stieltjes representation, its finite-cost approximation, "
                         + "or the full all-convex divergence equality classification."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("maximal-hockey-quadraticequality-compactmaximal"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/MaximalHockeyStickQuadraticEquality.compactMaximal"),
+                H("The compact-coordinate PSD maximal profile"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyitomamichel2026hockeystick")),
+                Blocks(Paragraph(Text("compactMaximal A B u=(1-u) maximalHockey A B (u/(1-u)). The relevant interval is 0<u<1; the definition alone does not impose that interval. The integrated quadratic criterion uses this profile with endpoint measure-zero handling."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("maximal-hockey-quadraticequality-quadratichockeyvalue"),
+                DeclarationHandle.Create("D5/S3/Quantum/Divergence/MaximalHockeyStickQuadraticEquality.quadraticHockeyValue"),
+                H("The bounded quadratic hockey value"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyitomamichel2026hockeystick")),
+                Blocks(Paragraph(Text("quadraticHockeyValue A B is Tr(B)-3 Tr(A) plus eight times the real interval integral of compactMaximal A B over [0,1]. It is the actual maximal hockey reference for the standard quadratic generator in finite dimension. The exact operational identification of its PSD profile is supplied by Operational."))), DescribeRole.Definition))));
 }
