@@ -22,10 +22,6 @@ $$\forall epsilon \in Real,\; 0 < epsilon \Rightarrow \left(\exists N \in Nat,\;
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/OeisA130095RatioLimit.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/oeis-a130095-ratio-limit` (proved) by `D5/S3/Arith/Divisors/OeisA130095RatioLimit.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a130095-ratio-limit","declaration_gid":"D5/S3/Arith/Divisors/OeisA130095RatioLimit.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gary W. Adamson; Peter Bala (2007). *OEIS A130095: Inverse Möbius transform of odd-indexed Fibonacci numbers*. URL: <https://oeis.org/A130095>.
