@@ -28,7 +28,7 @@ internal sealed class PositiveWordRayDescentDocument : IScribeDocumentDefinition
         compact ? Seq(Sp,Land,Sp,Call("CompactSpace",R)) : Seq(),
         statistics ? Seq(Sp,Land,Sp,Call("Rten",L)) : Seq(),
         ready ? Seq(Sp,Land,Sp,Call("ReadyReturn",L,G)) : Seq(),
-        Sp,Rightarrow,Sp,body)))));
+        Sp,Rightarrow,Sp,body))))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Positive statistical return and sequential ready return yield a continuous full-row response.",
@@ -39,8 +39,9 @@ internal sealed class PositiveWordRayDescentDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("positive-word-row-return"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/PositiveWordRayDescent.row_return_transport"),
                 H("The same positive inverse transports both rows"),
-                StatementSource.FromAuthor(premise(all(a,W,all(b,W,Seq(
-                    d(row(a),row(b)),Eq,d(row(append(a,inv(b))),row(empty))))),statistics:true)),
+                StatementSource.FromAuthor(Disp(all(L,Call("Law"),Seq(
+                    Call("Rten",L),Sp,Rightarrow,Sp,all(a,W,all(b,W,Seq(
+                    d(row(a),row(b)),Eq,d(row(append(a,inv(b))),row(empty))))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("inverseWord reverses the address order and replaces each address by nine positive copies. Statistical Rten cancels b++inverseWord(b) between every prefix and every future. Appending any word is a contraction on row differences because it restricts the future coordinates. Appending its positive inverse recovers the original difference, so the contraction is an isometry on these row pairs. In particular x(b++inverseWord(b))=x([]), and simultaneous transport gives the displayed identity. Geometry plays no part in this statistical proof. This identity does not equate program histories or provide a physical inverse service."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("positive-word-uniform-fibers"),
@@ -82,6 +83,7 @@ internal sealed class PositiveWordRayDescentDocument : IScribeDocumentDefinition
         H("Original native application and remaining geometric correspondence"),
         Paragraph(Text("The intended source is VII24.1-25.1 with III150.1 geometry and VII10.1/17.1 conventions. Its native specialization is R=the pure rays of the original V12^1, complex dimension 89, with d(P,Q)=operatorNorm(P-Q); gate(j) is conjugation by the same original K_j; ready is P_(e0) with e0=R0 v; p(a) is the unknown actual event probability for A={b1=1}. Every eleven-address positive history and every terminal future is retained. The 26-dimensional J(H tensor C^2) code and all 63 complementary dimensions, J itself, the phase/address convention, ordinary causal normalization and original ideal, finite-supply, reliability and cost contracts keep their original meanings. Geometry and density are inputs from the paper, never deductions from statistical Rten.")),
         Paragraph(Text("This metric-geometry theorem does not yet instantiate that original carrier. WeightedLegalPathTemperleyLieb.LegalPath/pathProjection and WeightedPathArtinRepresentation.rho/rhoUnit supply reusable path and generator algebra, but a typed equality with the original V12^1, all eleven normalized gates, e0, J and Q is still required. RankOneContextCommutator.IsNormalizedRankOneProjection is algebraic; it does not provide the compact operator-norm ray space. The further obligations are the faithful normalized-projector metric/compactness bridge, original gate unitarity and tenth-order phase specialization, and DenseRange of the same actual ready rays while preserving the full PU(89) density assumption. No arbitrary Fin 89 matrix family or different NativeProtocol is identified with those native objects.")),
+        Paragraph(Text("The intended path parameters are the two labels Bool, with true denoting vacuum, adjacency excluding two consecutive true labels, d(true)=1, d(false)=phi and delta=phi. The n=12 true-to-true block has the literal boundary form (1,0,b1,...,b9,0,1), with no adjacent occupied internal bits. The required source correspondence sends this full path block to the original basis; the original extra right boundary bit remains fixed at zero. This parameter assignment specifies a concrete correspondence to prove, not a completed Lean equivalence. With A=exp(2*pi*i/5), the original phase convention calls for K_j=-rho_j on that same block; verifying the parameter equation, projection entries and this phase identity is part of the unpaid native gate bridge.")),
         Paragraph(Text("The result supplies the analytic return/descent predecessor needed by the closed native consumer in Quantum VI89.9. The entire fixed native theorem remains conditional on those native bridges. The full-span linear operator formulation of VII24.2 is separate from the row-distance transport proved here. No Born classification, predictive capacity, finite separating future family, physical inverse availability or change to the original program domain follows from this unit. Generic bounded-function construction, coordinate evaluation and dense extension are direct Mathlib applications; the new inference is the positive-word passage from sequential ready return to global row consistency and its continuous descent consumer."))));
 
     private static Formula DescentFormula() => premise(Seq(

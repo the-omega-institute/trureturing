@@ -188,6 +188,85 @@ private theorem ready_control (L : Law) (G : Geometry R) (hu : ReadyReturn L G)
   obtain ⟨n, hn⟩ := hh.exists
   exact (not_lt_of_ge (he n)) hn
 
+
+def returnErrors (L : Law) (G : Geometry R) (s : ℝ) : Set ℝ :=
+  {r | ∃ c, dist (G.ray c) (G.ray []) ≤ s ∧ dist (L.row c) (L.row []) = r}
+
+def pairErrors (L : Law) (G : Geometry R) (s : ℝ) : Set ℝ :=
+  {r | ∃ a b, dist (G.ray a) (G.ray b) ≤ s ∧ dist (L.row a) (L.row b) = r}
+
+def scalarErrors (L : Law) (G : Geometry R) (s : ℝ) : Set ℝ :=
+  {r | ∃ a b, dist (G.ray a) (G.ray b) ≤ s ∧
+    dist (L.probability a) (L.probability b) = r}
+
+private theorem row_distance_le_one (L : Law) (a b : Word) :
+    dist (L.row a) (L.row b) ≤ 1 := by
+  apply (BoundedContinuousFunction.dist_le zero_le_one).2
+  intro i
+  rw [Real.dist_eq, abs_sub_le_iff]
+  have hi := value_bounds L a i
+  have hj := value_bounds L b i
+  change L.value a i - L.value b i ≤ 1 ∧ L.value b i - L.value a i ≤ 1
+  constructor <;> linarith [hi.1, hi.2, hj.1, hj.2]
+
+private theorem scalar_distance_le_row (L : Law) (a b : Word) :
+    dist (L.probability a) (L.probability b) ≤ dist (L.row a) (L.row b) := by
+  simpa [Law.row, Law.value] using
+    (BoundedContinuousFunction.dist_coe_le_dist (f := L.row a) (g := L.row b) (some []))
+
+/-- Nonattained real suprema over all words agree; no return-continuity premise is used. -/
+theorem three_moduli_equal (L : Law) (G : Geometry R) (h : L.R10)
+    (s : ℝ) (hs : 0 ≤ s) :
+    sSup (returnErrors L G s) = sSup (pairErrors L G s) ∧
+    sSup (pairErrors L G s) = sSup (scalarErrors L G s) ∧
+    sSup (returnErrors L G s) ∈ Icc (0 : ℝ) 1 := by
+  have hr0 : (0 : ℝ) ∈ returnErrors L G s := ⟨[], by simpa using hs, by simp⟩
+  have hp0 : (0 : ℝ) ∈ pairErrors L G s := ⟨[], [], by simpa using hs, by simp⟩
+  have hq0 : (0 : ℝ) ∈ scalarErrors L G s := ⟨[], [], by simpa using hs, by simp⟩
+  have hrb : BddAbove (returnErrors L G s) := by
+    refine ⟨1, ?_⟩
+    rintro r ⟨c, _, rfl⟩
+    exact row_distance_le_one L c []
+  have hpb : BddAbove (pairErrors L G s) := by
+    refine ⟨1, ?_⟩
+    rintro r ⟨a, b, _, rfl⟩
+    exact row_distance_le_one L a b
+  have hqb : BddAbove (scalarErrors L G s) := by
+    refine ⟨1, ?_⟩
+    rintro r ⟨a, b, _, rfl⟩
+    exact (scalar_distance_le_row L a b).trans (row_distance_le_one L a b)
+  have hqr : 0 ≤ sSup (scalarErrors L G s) := le_csSup hqb hq0
+  have hrp : sSup (returnErrors L G s) = sSup (pairErrors L G s) := by
+    apply le_antisymm
+    · apply csSup_le ⟨0, hr0⟩
+      rintro r ⟨c, hc, rfl⟩
+      exact le_csSup hpb ⟨c, [], hc, rfl⟩
+    · apply csSup_le ⟨0, hp0⟩
+      rintro r ⟨a, b, hab, rfl⟩
+      apply le_csSup hrb
+      refine ⟨a ++ inverseWord b, ?_, ?_⟩
+      · rwa [← ray_return_transport]
+      · exact (row_return_transport L h a b).symm
+  have hpq : sSup (pairErrors L G s) = sSup (scalarErrors L G s) := by
+    apply le_antisymm
+    · apply csSup_le ⟨0, hp0⟩
+      rintro r ⟨a, b, hab, rfl⟩
+      apply (BoundedContinuousFunction.dist_le hqr).2
+      intro i
+      cases i with
+      | none => simpa [Law.row, Law.value] using hqr
+      | some f =>
+        apply le_csSup hqb
+        refine ⟨a ++ f, b ++ f, ?_, rfl⟩
+        simpa only [ray_append, (act_isometry G f).dist_eq] using hab
+    · apply csSup_le ⟨0, hq0⟩
+      rintro r ⟨a, b, hab, rfl⟩
+      exact (scalar_distance_le_row L a b).trans (le_csSup hpb ⟨a, b, hab, rfl⟩)
+  refine ⟨hrp, hpq, le_csSup hrb hr0, csSup_le ⟨0, hr0⟩ ?_⟩
+  rintro r ⟨c, _, rfl⟩
+  exact row_distance_le_one L c []
+
+
 /-- Sequential return at one ready controls all pairs and all equal-ray word fibers. -/
 theorem uniform_rows_and_fibers (L : Law) (G : Geometry R)
     (h : L.R10) (hu : ReadyReturn L G) :
@@ -197,11 +276,24 @@ theorem uniform_rows_and_fibers (L : Law) (G : Geometry R)
   have hp : ∀ ε > 0, ∃ δ > 0, ∀ a b,
       dist (G.ray a) (G.ray b) < δ → dist (L.row a) (L.row b) < ε := by
     intro ε hε
-    obtain ⟨δ, hδ, hc⟩ := ready_control L G hu ε hε
+    obtain ⟨δ, hδ, hc⟩ := ready_control L G hu (ε / 2) (half_pos hε)
     refine ⟨δ, hδ, fun a b hab => ?_⟩
-    rw [row_return_transport L h]
-    apply hc
-    rwa [← ray_return_transport]
+    have hpb : BddAbove (pairErrors L G (dist (G.ray a) (G.ray b))) := by
+      refine ⟨1, ?_⟩
+      rintro r ⟨u, v, _, rfl⟩
+      exact row_distance_le_one L u v
+    have hpair : dist (L.row a) (L.row b) ≤
+        sSup (pairErrors L G (dist (G.ray a) (G.ray b))) :=
+      le_csSup hpb ⟨a, b, le_rfl, rfl⟩
+    have hzero : (0 : ℝ) ∈ returnErrors L G (dist (G.ray a) (G.ray b)) :=
+      ⟨[], by simpa using (dist_nonneg : 0 ≤ dist (G.ray a) (G.ray b)), by simp⟩
+    have hreturn : sSup (returnErrors L G (dist (G.ray a) (G.ray b))) ≤ ε / 2 := by
+      apply csSup_le ⟨0, hzero⟩
+      rintro r ⟨c, hcr, rfl⟩
+      exact (hc c (hcr.trans_lt hab)).le
+    rw [← (three_moduli_equal L G h
+      (dist (G.ray a) (G.ray b)) dist_nonneg).1] at hpair
+    exact (hpair.trans hreturn).trans_lt (half_lt_self hε)
   refine ⟨hp, fun a b hab => dist_eq_zero.1 ?_⟩
   apply le_antisymm _ dist_nonneg
   apply le_of_forall_pos_lt_add
@@ -328,83 +420,6 @@ theorem ready_return_iff_unique_response [CompactSpace R] (L : Law) (G : Geometr
       (funext fun a => Subtype.ext ((hr a).trans (hqa a).symm))) P
   · rintro ⟨q, hq, _⟩
     exact represented_statistics L G q hq
-
-def returnErrors (L : Law) (G : Geometry R) (s : ℝ) : Set ℝ :=
-  {r | ∃ c, dist (G.ray c) (G.ray []) ≤ s ∧ dist (L.row c) (L.row []) = r}
-
-def pairErrors (L : Law) (G : Geometry R) (s : ℝ) : Set ℝ :=
-  {r | ∃ a b, dist (G.ray a) (G.ray b) ≤ s ∧ dist (L.row a) (L.row b) = r}
-
-def scalarErrors (L : Law) (G : Geometry R) (s : ℝ) : Set ℝ :=
-  {r | ∃ a b, dist (G.ray a) (G.ray b) ≤ s ∧
-    dist (L.probability a) (L.probability b) = r}
-
-private theorem row_distance_le_one (L : Law) (a b : Word) :
-    dist (L.row a) (L.row b) ≤ 1 := by
-  apply (BoundedContinuousFunction.dist_le zero_le_one).2
-  intro i
-  rw [Real.dist_eq, abs_sub_le_iff]
-  have hi := value_bounds L a i
-  have hj := value_bounds L b i
-  change L.value a i - L.value b i ≤ 1 ∧ L.value b i - L.value a i ≤ 1
-  constructor <;> linarith [hi.1, hi.2, hj.1, hj.2]
-
-private theorem scalar_distance_le_row (L : Law) (a b : Word) :
-    dist (L.probability a) (L.probability b) ≤ dist (L.row a) (L.row b) := by
-  simpa [Law.row, Law.value] using
-    (BoundedContinuousFunction.dist_coe_le_dist (f := L.row a) (g := L.row b) (some []))
-
-/-- Nonattained real suprema over all words agree; no return-continuity premise is used. -/
-theorem three_moduli_equal (L : Law) (G : Geometry R) (h : L.R10)
-    (s : ℝ) (hs : 0 ≤ s) :
-    sSup (returnErrors L G s) = sSup (pairErrors L G s) ∧
-    sSup (pairErrors L G s) = sSup (scalarErrors L G s) ∧
-    sSup (returnErrors L G s) ∈ Icc (0 : ℝ) 1 := by
-  have hr0 : (0 : ℝ) ∈ returnErrors L G s := ⟨[], by simpa using hs, by simp⟩
-  have hp0 : (0 : ℝ) ∈ pairErrors L G s := ⟨[], [], by simpa using hs, by simp⟩
-  have hq0 : (0 : ℝ) ∈ scalarErrors L G s := ⟨[], [], by simpa using hs, by simp⟩
-  have hrb : BddAbove (returnErrors L G s) := by
-    refine ⟨1, ?_⟩
-    rintro r ⟨c, _, rfl⟩
-    exact row_distance_le_one L c []
-  have hpb : BddAbove (pairErrors L G s) := by
-    refine ⟨1, ?_⟩
-    rintro r ⟨a, b, _, rfl⟩
-    exact row_distance_le_one L a b
-  have hqb : BddAbove (scalarErrors L G s) := by
-    refine ⟨1, ?_⟩
-    rintro r ⟨a, b, _, rfl⟩
-    exact (scalar_distance_le_row L a b).trans (row_distance_le_one L a b)
-  have hqr : 0 ≤ sSup (scalarErrors L G s) := le_csSup hqb hq0
-  have hrp : sSup (returnErrors L G s) = sSup (pairErrors L G s) := by
-    apply le_antisymm
-    · apply csSup_le ⟨0, hr0⟩
-      rintro r ⟨c, hc, rfl⟩
-      exact le_csSup hpb ⟨c, [], hc, rfl⟩
-    · apply csSup_le ⟨0, hp0⟩
-      rintro r ⟨a, b, hab, rfl⟩
-      apply le_csSup hrb
-      refine ⟨a ++ inverseWord b, ?_, ?_⟩
-      · rwa [← ray_return_transport]
-      · exact (row_return_transport L h a b).symm
-  have hpq : sSup (pairErrors L G s) = sSup (scalarErrors L G s) := by
-    apply le_antisymm
-    · apply csSup_le ⟨0, hp0⟩
-      rintro r ⟨a, b, hab, rfl⟩
-      apply (BoundedContinuousFunction.dist_le hqr).2
-      intro i
-      cases i with
-      | none => simpa [Law.row, Law.value] using hqr
-      | some f =>
-        apply le_csSup hqb
-        refine ⟨a ++ f, b ++ f, ?_, rfl⟩
-        simpa only [ray_append, (act_isometry G f).dist_eq] using hab
-    · apply csSup_le ⟨0, hq0⟩
-      rintro r ⟨a, b, hab, rfl⟩
-      exact (scalar_distance_le_row L a b).trans (le_csSup hpb ⟨a, b, hab, rfl⟩)
-  refine ⟨hrp, hpq, le_csSup hrb hr0, csSup_le ⟨0, hr0⟩ ?_⟩
-  rintro r ⟨c, _, rfl⟩
-  exact row_distance_le_one L c []
 
 end
 end D5.S3.Quantum.Algebra.PositiveWordRayDescent
