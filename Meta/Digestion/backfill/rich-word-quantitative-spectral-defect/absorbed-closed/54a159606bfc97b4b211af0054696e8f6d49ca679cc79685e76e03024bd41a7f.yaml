@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:54a159606bfc97b4b211af0054696e8f6d49ca679cc79685e76e03024bd41a7f
   normalized_sha256: sha256:54a159606bfc97b4b211af0054696e8f6d49ca679cc79685e76e03024bd41a7f
 cas_ref: sha256:54a159606bfc97b4b211af0054696e8f6d49ca679cc79685e76e03024bd41a7f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/RichWordRecurrence.source_no_tail
+    target_statement_id: sha256:f0b3aafa3d1bb63dcdccc7fb19580853908b5ad909049bb6c48d4e733102f621
 receipts:
   unresolved_subitems: []
