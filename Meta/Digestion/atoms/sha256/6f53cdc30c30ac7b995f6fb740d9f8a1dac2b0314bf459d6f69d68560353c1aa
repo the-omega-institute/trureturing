@@ -1,0 +1,12 @@
+**定理 33.2（两条原轴像对第三格的全称核盲区）。** 若 $\mathcal W=\mathbb C e_1$ 或 $\mathcal W=\mathbb C e_2$，则对每一个 (33.1) 的完整有限合法同时核对，均有
+
+$$
+\boxed{\quad
+F(E_{33})=\operatorname{Re}(\overline{v_3}u_3)
+=\operatorname{Re}\bigl(\overline{(w-\iota Xu)_3}u_3\bigr)=0.
+\quad}
+\tag{33.2}
+$$
+
+$u$ 可以有任意额外坐标支撑，$w=0$、$v=0$、特殊斜率 $\zeta_-=\iota$ 和所有退化对角插值系数均在量词内。结论对两个 $\sigma$ 分别成立。它反驳的是“每个非零实际像都能用这些完整合法核读取分离全部对角残量”的全称主张；没有断言 $S=E_{33}$ 或任一非零倍数满足全部原 PB。
+
