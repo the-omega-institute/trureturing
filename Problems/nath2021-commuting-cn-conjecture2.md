@@ -145,8 +145,5 @@ arXiv:2605.22160v1 treats clique unions and CC-ring cases; DOI
 Those readings do not establish worldwide absence of an earlier all-group
 settlement, global priority, or an exhaustive bibliography.
 
-The [linked registration boundary](https://github.com/the-omega-institute/trureturing/issues/29340#issuecomment-6807007168)
-remains applicable until a current source-bound registration is validated.
-A compiled Reg proof alone does not imply `declared_validated`.
 This dossier does not certify independent review, freeze, required CI, or merged
 delivery, and does not revise the earlier unit's unresolved settlement.

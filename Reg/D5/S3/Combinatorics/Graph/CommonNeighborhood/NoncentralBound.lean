@@ -6,12 +6,13 @@ import Mathlib.Data.Fintype.Perm
 namespace Reg.D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound
 
 open _root_.D5.S3.Combinatorics.Graph.CommonNeighborhood.NoncentralBound
-open _root_.D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation
+open _root_.D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation (graphEnergy)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 set_option autoImplicit false
 noncomputable section
+attribute [local instance] Classical.propDecidable Classical.decEq
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ → Prop)

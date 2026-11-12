@@ -6,7 +6,6 @@
    utility: none
    digest: The noncentral commuting graph satisfies the complete-graph CN energy bound. -/
 
-/- Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/29340#issuecomment-6807007168 -/
 import D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation
 import Mathlib.GroupTheory.Index
 import Mathlib.GroupTheory.Subgroup.Centralizer
