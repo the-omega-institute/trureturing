@@ -13,6 +13,8 @@ import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Module
 
+/-! Finite-dimensional common-anchor order reflection and simultaneous linear decoding. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -20,7 +22,7 @@ noncomputable section
 namespace D5.S3.HilbertOperators.CommonAnchorOrderReflection
 
 open scoped InnerProductSpace BigOperators
-open ContinuousLinearMap
+open ContinuousLinearMap InnerProductSpace
 
 variable {E F S : Type*}
   [NormedAddCommGroup E] [InnerProductSpace ℂ E] [FiniteDimensional ℂ E]
@@ -92,6 +94,7 @@ private theorem finite_kernel_bound {G H K : Type*}
   intro z
   have hd : D (B z) = A z := congrArg (fun L => L z) hD
   have hn := D.toContinuousLinearMap.le_opNorm (B z)
+  change ‖D (B z)‖ ≤ ‖D.toContinuousLinearMap‖ * ‖B z‖ at hn
   rw [hd] at hn
   have hs := sq_le_sq₀ (norm_nonneg (A z)) (by positivity) |>.mpr hn
   dsimp [c]
@@ -129,9 +132,8 @@ private theorem decoder_compression (V : S → E →L[ℂ] F) (p : S → ℝ)
   simp
 
 private theorem inner_rankOne (x u : E) :
-    (inner ℂ ((rankOne ℂ x x) u) u).re = ‖inner ℂ x u‖ ^ 2 := by
-  rw [rankOne_apply, inner_smul_left, RCLike.conj_mul, ← Complex.ofReal_pow,
-    Complex.ofReal_re]
+    RCLike.re (inner ℂ ((rankOne ℂ x x) u) u) = ‖inner ℂ x u‖ ^ 2 := by
+  rw [rankOne_apply, inner_smul_left, RCLike.conj_mul, RCLike.re_ofReal_pow]
 
 private theorem norm_complement_rankOne (x u : E) (hx : ‖x‖ = 1) :
     ‖u - (rankOne ℂ x x) u‖ ^ 2 = ‖u‖ ^ 2 - ‖inner ℂ x u‖ ^ 2 := by
@@ -168,27 +170,25 @@ private theorem weighted_complement_norm (V : S → E →L[ℂ] F) (p : S → �
 
 private theorem sandwich_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
     (X : E →L[ℂ] E) (z : F) :
-    (inner ℂ (sandwich V p X z) z).re =
-      ∑ l, p l * (inner ℂ (X ((V l).adjoint z)) ((V l).adjoint z)).re := by
+    RCLike.re (inner ℂ (sandwich V p X z) z) =
+      ∑ l, p l * RCLike.re (inner ℂ (X ((V l).adjoint z)) ((V l).adjoint z)) := by
   classical
   simp only [sandwich, sum_apply, smul_apply, comp_apply, sum_inner, inner_smul_left,
-    map_sum, map_mul, Complex.conj_ofReal, Complex.mul_re, Complex.ofReal_re,
-    Complex.ofReal_im, zero_mul, sub_zero]
+    map_sum, RCLike.conj_ofReal, RCLike.re_ofReal_mul]
   apply Finset.sum_congr rfl
   intro l _
   rw [← (V l).adjoint_inner_right]
 
 private theorem test_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
     (x : E) (η : ℝ) (z : F) :
-    (inner ℂ (sandwich V p (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) z) z).re =
+    RCLike.re (inner ℂ (sandwich V p (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) z) z) =
       (∑ l, p l * ‖(V l).adjoint z‖ ^ 2) -
         (1 + η) * ∑ l, p l * ‖inner ℂ x ((V l).adjoint z)‖ ^ 2 := by
   rw [sandwich_quadratic, Finset.mul_sum, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro l _
-  simp only [sub_apply, one_apply, smul_apply, inner_sub_left, inner_smul_left,
-    map_sub, Complex.conj_ofReal, Complex.mul_re, Complex.ofReal_re,
-    Complex.ofReal_im, zero_mul, sub_zero, inner_self_eq_norm_sq, inner_rankOne]
+  simp only [sub_apply, one_def, id_apply, smul_apply, inner_sub_left, inner_smul_left,
+    map_sub, RCLike.conj_ofReal, RCLike.re_ofReal_mul, inner_self_eq_norm_sq, inner_rankOne]
   ring
 
 private theorem test_selfAdjoint (x : E) (η : ℝ) :
@@ -213,6 +213,8 @@ private theorem rank_one_ray (V : S → E →L[ℂ] F) (p : S → ℝ)
     apply ht
     refine ⟨(sandwich_selfAdjoint V p (test_selfAdjoint x c⁻¹)).isSymmetric, ?_⟩
     intro z
+    change 0 ≤ RCLike.re (inner ℂ
+      (sandwich V p (1 - ((1 + c⁻¹ : ℝ) : ℂ) • rankOne ℂ x x) z) z)
     rw [test_quadratic]
     have hA := weighted_norm V p (fun l => (hp l).le) z
     have hB := weighted_complement_norm V p (fun l => (hp l).le) x hx z
@@ -223,7 +225,9 @@ private theorem rank_one_ray (V : S → E →L[ℂ] F) (p : S → ℝ)
     have hmul := mul_le_mul_of_nonneg_left hb (inv_nonneg.mpr hc.le)
     rw [← mul_assoc, hi, one_mul] at hmul
     have hnon := mul_nonneg (inv_nonneg.mpr hc.le) (sq_nonneg ‖B z‖)
-    nlinarith [sq_nonneg ‖B z‖]
+    rw [hA, hB] at hmul
+    rw [hB] at hnon
+    nlinarith
   simp only [SetLike.le_def, not_forall, not_imp] at hn
   obtain ⟨z, hzB, hzA⟩ := hn
   refine ⟨z, ?_, ?_⟩
@@ -273,6 +277,7 @@ private theorem tests_force_compatibility [Nonempty S]
         _ = ∑ l, inner ℂ ((V l).adjoint z) (u l) := by
           simp_rw [hcoeff, inner_smul_left]
           rw [inner_sum, Finset.mul_sum]
+          rfl
         _ = inner ℂ z (∑ l, V l (u l)) := by
           simp_rw [ContinuousLinearMap.adjoint_inner_left]
           rw [inner_sum]
@@ -282,7 +287,9 @@ private theorem tests_force_compatibility [Nonempty S]
     have hx : x ≠ 0 := by rintro rfl; simp at hex
     have hn : ‖x‖ ≠ 0 := norm_ne_zero_iff.mpr hx
     let a : ℂ := (‖x‖⁻¹ : ℝ)
-    have ha : a ≠ 0 := by exact_mod_cast inv_ne_zero hn
+    have ha : a ≠ 0 := by
+      dsimp [a]
+      exact_mod_cast inv_ne_zero hn
     have hnorm : ‖a • x‖ = 1 := by
       simp [a, norm_smul, abs_of_nonneg (inv_nonneg.mpr (norm_nonneg x)),
         inv_mul_cancel₀ hn]
@@ -317,7 +324,7 @@ private theorem decoder_iff_compatible (V : S → E →L[ℂ] F) :
     ext x
     have h := congrArg (fun L : (S → E) →ₗ[ℂ] E => L (Pi.single l x)) hD
     simpa [synthesis, coordinateSum, LinearMap.comp_apply, LinearMap.sum_apply,
-      Pi.single_apply] using h
+      Pi.single_apply, apply_ite] using h
 
 /-- The four original conditions and the exact decoder compression on every operator.
 The common image may be zero and no individual component is assumed injective. -/
@@ -337,11 +344,11 @@ theorem common_anchor_order_reflection [Nonempty S]
     have hn := hi.re_inner_nonneg_left x
     have hxinner : inner ℂ x x = 1 := by rw [inner_self_eq_norm_sq_to_K, hx]; norm_num
     have happ : (1 - ((1 + η : ℝ) : ℂ) • rankOne ℂ x x) x = -(η : ℂ) • x := by
-      simp only [sub_apply, one_apply, smul_apply, rankOne_apply, hxinner, one_smul]
+      simp only [sub_apply, one_def, id_apply, smul_apply, rankOne_apply, hxinner, one_smul,
+        Complex.ofReal_add, Complex.ofReal_one]
       module
     rw [happ, inner_smul_left, hxinner] at hn
-    simp only [map_neg, Complex.conj_ofReal, neg_mul, mul_one, Complex.neg_re,
-      Complex.ofReal_re] at hn
+    simp only [map_neg, RCLike.conj_ofReal, mul_one, RCLike.ofReal_re] at hn
     linarith
   have h23 : RankOneTests V p → HasDecoder V := fun ht =>
     (decoder_iff_compatible V).mpr (tests_force_compatibility V p hp e he v hanchor ht)

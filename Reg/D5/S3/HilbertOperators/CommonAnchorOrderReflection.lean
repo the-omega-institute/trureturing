@@ -86,8 +86,8 @@ private theorem rejected_law : ¬ arena.{u,v,w}.Law rejected := by
   have hh := h (fun _ : S => (0 : E →L[ℂ] F)) (fun _ => 1)
     (by intro _; norm_num) (by simp) e he 0 (by intro _; rfl)
   have hn := (hh.2.2.2.2 0 isPositive_zero).re_inner_nonneg_left f
-  change 0 ≤ (inner ℂ ((-1 : F →L[ℂ] F) f) f).re at hn
-  simp only [neg_apply, one_apply, inner_neg_left, Complex.neg_re,
+  change 0 ≤ RCLike.re (inner ℂ ((-1 : F →L[ℂ] F) f) f) at hn
+  simp only [neg_apply, one_def, id_apply, inner_neg_left, map_neg,
     inner_self_eq_norm_sq] at hn
   have hp := sq_pos_of_pos (norm_pos_iff.mpr hf)
   linarith
