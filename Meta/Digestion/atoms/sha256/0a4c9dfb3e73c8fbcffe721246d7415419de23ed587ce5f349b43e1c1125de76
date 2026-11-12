@@ -1,0 +1,3 @@
+**定义 78.2（完整原态关系）。** 在 $\delta=0$ 恢复 PRE 后，完全按定义 76.2 读取原 H13：对每个两端秩至少二的活跃块 $x=\pi_{ik}\rho$，至少 $\alpha_{ik}\alpha_{ik}^*x-x$ 或 $\beta_{ik}\beta_{ik}^*x-x$ 有严格负方向；伴随为原规范迹伴随，边缘铺回用未经维数归一化的单位。非活跃块任意正元含零；活跃集空时资格为整个 $K_D$。$\rho$ 为同一个原总迹一态，不作纯性、固定 Schmidt 谱或逐块条件化要求。
+以同一原 $\widetilde M$、$T_{\rm raw}(a,c)=L(Ja,c)$ 定义 $I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}$；H13 要求存在上述合格原 $\rho$，其整个原输出 $I^{\rm raw}\rho$ 正。C13 则要求 $I^{\rm raw}(D_+)\subseteq E_+$。该阶段顺序不允许把未恢复 PRE 的对象预先赋予其块结构。
+

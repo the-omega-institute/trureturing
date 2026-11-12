@@ -1,0 +1,20 @@
+**引理 79.10（用于控制的完整实际族）。** 取 $h\ge2$，$A=\mathbb R^h,D=\mathbb R^{h^2},E=\mathbb R^{h^3}$，各取完整逐坐标正锥、求和质量、全态全效应。给正数 $u_{ij},g_{ijk}$，仅要求 $\sum_{i,j}u_{ij}^{-1}=h^2$。只供应
+$$
+\omega_{ij}=h^{-2},\qquad L(d,c)_{ijk}=g_{ijk}d_{ij}c_k,\qquad
+(pz)_{jk}=u_{jk}\sum_i\frac{z_{ijk}}{u_{ij}g_{ijk}}. \tag{79.21}
+$$
+则得到完整 PRE+C13 的同一实际元组，且
+$$
+\begin{aligned}
+(pL(d,c))_{jk}&=u_{jk}\left(\sum_i d_{ij}/u_{ij}\right)c_k,\\
+w_j&=h^{-2}\sum_i u_{ij}^{-1},&K(a)_{jk}&=u_{jk}w_ja_k,\\
+M(a,b)_{jk}&=u_{jk}a_jb_k,&Q(a,b,c)_{ijk}&=u_{ij}g_{ijk}a_ib_jc_k,\\
+\mathrm A_0\text{ 左边}&=h^{-3}\sum_{i,j,k}g_{ijk}.
+\end{aligned} \tag{79.22}
+$$
+**证明。** (79.21) 在整个正锥上正。直接计算第一式，$\sum_jw_j=1$，所以 $\sum_jK(a)_{jk}/u_{jk}=a_k$；将同一个 $pL$ 再用一次便给所示 $M$，没有独立供应它。乘积基与严格正权重给两张成；$J(a)_{ij}=u_{ij}a_i$、$H(d)_{ijk}=g_{ijk}d_{ij}$ 保持各自全部正交正元对。令 $(sd)_j=\sum_id_{ij}/u_{ij}$，则 $sM(a,b)=u_A(a)b$，故 $B_1M=u_A(a)Jb$，恢复律 $pQ=u_A(a)M(b,c)$ 亦直接成立。经典纯参照比较是相应坐标，完整 $S$ 成立。原插入作用为
+$$
+(I^{\rm raw}x)_{ijk}=\frac{u_{ij}g_{ijk}}{u_{ik}}x_{ik},
+$$
+故覆盖整个 $D_+$ 正，给 C13；这里没有两端非标量活跃块，NB/H13 的资格为整个态基。这也是第四卷 66.7 取全标量扇区、零方向位的特例；原 $p$ 的两次使用及全部控制的原属据此明确，不把例子称作整个 $\Omega$ 的反模型。证毕。
+

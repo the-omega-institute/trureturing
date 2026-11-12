@@ -1,0 +1,9 @@
+**Remark 7.3 (what is and is not a new direction).** The added central
+drift is an accumulated effect of original two-control rectangles. It
+is not a new original actuator and uses no third noise. The source ray
+dimension is three, the direct control rank is two, the bracket growth
+is $(2,3)$, and the local volume exponent for the declared geometry is
+four. The bottom-observation base is two-dimensional. These numbers,
+task-dependent predictive capacity, and a count of physical spatial
+axes are distinct. None of the laws here selects physical three-space.
+

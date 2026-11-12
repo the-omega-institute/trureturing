@@ -45,6 +45,8 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
                 AlternatingCanonFormula(), true),
             Node("two_label_classification", "Classification when one label is omitted",
                 TwoLabelClassificationFormula(), true),
+            Node("canon_two_eq", "The canonical two-label pattern is zero-one alternation",
+                CanonTwoEqFormula(), true),
             Node("counting_bridge", "The canonical-form counting bridge", BridgeFormula(), true),
             Paragraph(Text("The beta-label identifies the pairs {0,5}, {1,4}, {2,3}; "
                 + "the side is an independent Boolean choice. Normalization introduces "
@@ -208,6 +210,18 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
         return All("n", Q("Nat"), All("hn", Le(D(2), n),
             All("P", Arrow(cells, Fin(D(3))), All("hp", proper,
                 All("d", Fin(D(3)), All("hd", omitted, classification))))));
+    }
+
+    private static Formula CanonTwoEqFormula()
+    {
+        var n = V("n"); var p = V("P");
+        var proper = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233177PairTransfer.Proper", p);
+        return All("n", Q("Nat"), All("hn", Le(D(2), n),
+            All("P", Arrow(Cells(n), Fin(D(3))), All("hp", proper,
+                All("hc", Own("Canon", p), All("hu", Eq(Own("used", p), D(2)),
+                    Eq(p, Own("alternating", n, Typed(D(0), Fin(D(3))),
+                        Typed(D(1), Fin(D(3)))))))))));
     }
 
     private static Formula RecurrenceFormula(Formula? n)

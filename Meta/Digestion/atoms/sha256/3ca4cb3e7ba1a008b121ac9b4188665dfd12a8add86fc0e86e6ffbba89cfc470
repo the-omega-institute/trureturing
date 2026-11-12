@@ -1,0 +1,61 @@
+**定理 104.12（完整原确认面的参数化）。** 只取 $n=2$，记 $u=u_2$、$p=p_{I_2}/3$。所有在 $p$ 为零的原正线性泛函恰为
+
+$$
+ g_B(a,R,S)=\operatorname{tr}(BS)-2\operatorname{tr}(BR)
+             +a\operatorname{tr}B,\qquad B\succeq0.
+\tag{VII104.31}
+$$
+
+所有原 $f\in F_p$ 恰为 $f_B=u-g_B$，参数准确满足
+
+$$
+ 0\preceq B\prec I_2,\qquad
+ \operatorname{tr}\bigl(B(I_2-B)^{-1}\bigr)\le1.
+\tag{VII104.32}
+$$
+
+等价地，以
+
+$$
+ Q=B(I_2-B)^{-1}\succeq0,\quad\operatorname{tr}Q\le1,
+ \qquad B=Q(I_2+Q)^{-1}
+\tag{VII104.33}
+$$
+
+参数化整个确认面，包含 $Q=0$ 所给 $f=u$。
+
+证明。任意原线性泛函唯一写为
+
+$$
+ g=\alpha a+2\operatorname{tr}(M^{\mathsf T}R)+\operatorname{tr}(BS),
+ \quad M\in\mathbb R^{2\times2},\quad B\in\operatorname{Sym}_2.
+\tag{VII104.34}
+$$
+
+若 $g\ge0$，在全部 $a=0$ 的原边界态上检验给 $B\succeq0$。在全部原射线 $p_Y$ 上有
+$\alpha+2\operatorname{tr}(M^{\mathsf T}Y)+\operatorname{tr}(BY^{\mathsf T}Y)\ge0$。
+若又 $g(p)=0$，此二次多项式在 $Y=I_2$ 达到零的全局最小值。其梯度给 $M=-B$，值本身给 $\alpha=\operatorname{tr}B$，得到(VII104.31)。反向对 $a>0$ 写 $Y=R/a$、$Z=S-R^{\mathsf T}R/a\succeq0$，则
+
+$$
+ g_B=a\operatorname{tr}\bigl(B(Y-I_2)^{\mathsf T}(Y-I_2)\bigr)
+          +\operatorname{tr}(BZ)\ge0.
+\tag{VII104.35}
+$$
+
+$a=0$ 时 $R=0$，只余 $\operatorname{tr}(BS)\ge0$。所以已穷尽所有原正零尺，不借环境PSD效应子菜单。
+
+$f\in F_p$ 当且仅当 $g=u-f\ge0$、$g(p)=0$ 及 $f\ge0$；故已知 $f=u-g_B$。在 $a=0$ 上 $f\ge0$ 强制 $I_2-B\succeq0$。若 $Bv=v$、$\|v\|=1$，取 $Y=-t vv^{\mathsf T}$，在 $p_Y$ 上的二次项沿此方向为零，线性项为 $-2t$，大 $t$ 时 $f<0$。所以必须 $B\prec I_2$。
+
+此时对所有原 $a>0$ 点完成平方，得到
+
+$$
+\begin{aligned}
+ f_B(a,R,S)={}&a(1-\operatorname{tr}Q)\\
+ &+a\operatorname{tr}\bigl((I_2-B)(Y+Q)^{\mathsf T}(Y+Q)\bigr)\\
+ &+\operatorname{tr}\bigl((I_2-B)Z\bigr).
+\end{aligned}
+\tag{VII104.36}
+$$
+
+取 $Y=-Q,Z=0$ 表明非负性必要地要求 $\operatorname{tr}Q\le1$；该条件又使右侧全部非负，且在 $a=0$ 时 $f_B=\operatorname{tr}((I_2-B)S)\ge0$。这证明(VII104.32)充分必要，反变换给(VII104.33)。由于原 $g_B\ge0$，$f_B\le u$ 也已自动满足，参数化确为整个 $F_p$。证毕。
+

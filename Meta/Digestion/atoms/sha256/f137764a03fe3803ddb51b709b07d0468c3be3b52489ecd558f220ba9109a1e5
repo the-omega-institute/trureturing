@@ -1,0 +1,21 @@
+**引理 96.2（共同正提升）。** 在(96.1)的任意实余维 $c$ 下，令
+
+$$
+\mathcal M=(I_n+L^\perp)\cap\mathcal H_{n,+}(\mathbb F),\qquad
+\mathcal M_{pq}=\{M\in\mathcal M:v^*Mw=0\},
+\quad p=vv^*,\ q=ww^*\in P.
+\tag{96.3}
+$$
+
+$\mathcal M$ 非空紧凸，仿射维数为 $c$，且 $\operatorname{tr}M=n$。
+对任意有限列 $q_j=w_jw_j^*\in P$，有精确等价
+
+$$
+\begin{aligned}
+&\exists f\in[0,u]:\ f(p)=1,\ f(q_j)=0\quad(\forall j)\\
+&\qquad\Longleftrightarrow\quad
+\exists M\in\mathcal M:\ v^*Mw_j=0\quad(\forall j).
+\end{aligned}
+\tag{96.4}
+$$
+

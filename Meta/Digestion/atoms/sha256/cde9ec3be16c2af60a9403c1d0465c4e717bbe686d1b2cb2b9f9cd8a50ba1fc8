@@ -1,0 +1,38 @@
+**定义 100.1（有限全混态零拼合域）。** 本章的VII97.x—100.x指本卷，VI89.x、VI90.x指[第六卷](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md)，V88.x指[第五卷](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)。取非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的原线性单位 $u$，并使用
+
+$$
+\begin{gathered}
+C^*=\{f\in V^*:f(C)\subseteq\mathbb R_+\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad |P|<\infty,\\
+[0,u]=\{f\in V^*:f\in C^*,\ u-f\in C^*\},\qquad
+F_p=\{f\in[0,u]:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+p\perp x\ \Longleftrightarrow\ T_p(x)=0,\qquad
+D_p=\{x\in K:p\perp x\},\\
+\mathrm{Z0}:\quad
+\forall p\in P\ \forall x,y\in K,\quad
+p\perp x\ \land\ p\perp y\ \Longrightarrow\ p\perp(x+y)/2,\qquad
+m=\dim\operatorname{aff}K=\dim V-1.
+\end{gathered}
+\tag{VII100.1}
+$$
+
+$P$ 是整个原基的全部纯点，$x,y$ 遍历全部原混态，$[0,u]$ 是整个原区间。紧基张成 $V$，故 $[0,u]$ 及非空 $F_p$ 紧，上式最小值达到；零排除等价于存在同一张 $f\in[0,u]$ 在 $p$ 取一、在 $x$ 取零。本章假设这个完整 $\mathrm{Z0}$，不假设 $\mathrm B$、least确认、自对偶、正定配对、正交模律、Jordan乘积、ROG表示或正滤子，也不加入标签归一化或实际装置前提。
+
+$m\ge1$ 时直接复用VII97.2—97.5：$p\mapsto D_p$ 是顶点到facet的双射，$h_p\in[0,u]$ 是零面为 $D_p$ 且 $h_p(p)=1$ 的唯一规范facet效应，且 $h_p$ 只在 $p$ 达到一。记
+
+$$
+T_{pq}:=h_p(q),\qquad
+0\le T_{pq}<1\ (p\ne q),\qquad
+T_{pq}=0\ \Longleftrightarrow\ T_{qp}=0.
+\tag{VII100.2}
+$$
+
+这里 $T_{pq}$ 是已指定的规范facet读数，$T_p(q)$ 则仍是遍历全部原确认效应的下包络；不将二者认同。对面 $F$ 沿用 $F^\#=\bigcap_{r\in\operatorname{ext}F}D_r$、$\varnothing^\#=K$，以及VII97.3的反序对合和 $\dim F+\dim F^\#=m-1$。$\operatorname{span}\varnothing=\{0\}$。本章的实际边是 $K$ 的一维面 $E=[p,q]$，$p,q\in P$ 不同；$m=1$ 时允许 $E=K$。取定这样一条边后置
+
+$$
+a=T_{qp}=h_q(p),\qquad b=T_{pq}=h_p(q),\qquad
+d=1-ab>0,\qquad E^\#=D_p\cap D_q.
+\tag{VII100.3}
+$$
+
