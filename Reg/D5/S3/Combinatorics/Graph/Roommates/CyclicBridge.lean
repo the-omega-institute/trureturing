@@ -55,7 +55,10 @@ def cutFamily : Registration cutArena (type_of% source_count_le_open_count) := b
     exact ⟨(), (0, 0), (1, 0), by norm_num [actual, realize]⟩
 
 /-- Typed source-count comparison. Native source-selection binding is absent;
-this declaration alone supplies no declared_validated status. -/
+this declaration alone supplies no declared_validated status.
+The public coordinate/rank helpers wrap_val, wrap_index, wrap_add, wrap_signed,
+signed_bounds and rank_wrap have no completed native source bindings here;
+the unfinished audit is tracked by trureturing issue 29645. -/
 def cutAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@source_count_le_open_count) (Realization comparisonSignature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.Graph.Roommates.CyclicBridge.cutUnit

@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
 
@@ -8,10 +9,34 @@ internal sealed class CyclicBridgeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial components of the Mertens range-two proof; the full theorem remains open.",
         H("CyclicBridge"), Blocks(
+            Describe.Lean(DescribeId.Create("wrap-val"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.wrap_val"),
+                H("wrap_val"), StatementSource.FromAuthor(ArithmeticFormula(0)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cyclic closure uses this coordinate or rank identity with the literal supplier offsets."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("wrap-index"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.wrap_index"),
+                H("wrap_index"), StatementSource.FromAuthor(ArithmeticFormula(1)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cyclic closure uses this coordinate or rank identity with the literal supplier offsets."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("wrap-add"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.wrap_add"),
+                H("wrap_add"), StatementSource.FromAuthor(ArithmeticFormula(2)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cyclic closure uses this coordinate or rank identity with the literal supplier offsets."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("wrap-signed"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.wrap_signed"),
+                H("wrap_signed"), StatementSource.FromAuthor(ArithmeticFormula(3)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cyclic closure uses this coordinate or rank identity with the literal supplier offsets."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("signed-bounds"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.signed_bounds"),
+                H("signed_bounds"), StatementSource.FromAuthor(ArithmeticFormula(4)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cyclic closure uses this coordinate or rank identity with the literal supplier offsets."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rank-wrap"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.rank_wrap"),
+                H("rank_wrap"), StatementSource.FromAuthor(ArithmeticFormula(5)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The cyclic closure uses this coordinate or rank identity with the literal supplier offsets."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("closing-old-nonblocking"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.closing_old_nonblocking"),
                 H("closing_old_nonblocking"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Every old--old edge in the literal source cycle has the original certificate nonblocking test, with actual signed-offset ranks for exterior partners and rank four for singles. New--new and mixed edges, and the full closure injection, remain open."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("Every old--old edge in the literal source cycle has the original certificate nonblocking test, with actual signed-offset ranks for exterior partners and rank four for singles. The complete new and mixed edge argument and closure injection are supplied by CyclicClosure."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("closing-request-source-target"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.closing_request_source_target"),
                 H("closing_request_source_target"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
@@ -51,5 +76,30 @@ internal sealed class CyclicBridgeDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("source-probability-le-open-proportion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.source_probability_le_open_proportion"),
                 H("source_probability_le_open_proportion"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The cyclic cut gives the upper comparison p_N<=b_N/24^N. The inverse closure injection, padded supermultiplicativity and exact same-q theorem remain unproved here."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The cyclic cut gives the upper comparison p_N<=b_N/24^N. CyclicClosure supplies the inverse closure injection. Padded supermultiplicativity and the exact same-q theorem remain separate obligations."))), DescribeRole.Theorem))));
+    private static Formula Call(string name, params Formula[] args) => args.Length == 0
+        ? new Formula.NamedConstant(FormulaIdentifier.Create(name))
+        : new Formula.Apply(new Formula.NamedConstant(FormulaIdentifier.Create(name)), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula ArithmeticFormula(int which)
+    {
+        Formula n=F.Id("n"), i=F.Id("i"), a=F.Id("a"), b=F.Id("b"), z=F.Id("z"), s=F.Id("s"), p=F.Id("p");
+        Formula nat=Call("Nat"), integer=Call("Int"), size=Add(n,D(5)), vi=Call("intVal",i), ss=Call("signed",s);
+        Formula body = which switch {
+            0 => All("n",nat,All("z",integer,Eq(Call("intVal",Call("wrap",n,z)),Call("mod",z,size)))),
+            1 => All("n",nat,All("i",Call("Fin",size),Eq(Call("wrap",n,vi),i))),
+            2 => All("n",nat,All("a",integer,All("b",integer,Eq(Call("wrap",n,Add(a,b)),Add(Call("wrap",n,a),Call("wrap",n,b)))))),
+            3 => All("n",nat,All("s",Call("Fin",D(4)),Eq(Call("wrap",n,ss),Call("offset",n,s)))),
+            4 => All("s",Call("Fin",D(4)),And(Le(Call("neg",D(2)),ss),And(Le(ss,D(2)),new Formula.Relation(ss,FormulaRelationOperator.NotEqual,D(0))))),
+            _ => All("n",nat,All("p",Call("Profile",n),All("i",Call("Fin",size),All("a",integer,
+                new Formula.Logic(And(Le(Call("neg",D(2)),a),Le(a,D(2))),FormulaLogicOperator.Implies,
+                    Eq(Call("rank",p,i,Call("wrap",n,Add(vi,a))),Call("offsetRank",Call("apply",p,i),a)))))))
+        };
+        return Disp(body);
+    }
 }
