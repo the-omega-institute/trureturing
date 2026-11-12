@@ -554,4 +554,87 @@ end Complex
 
 #print axioms fixed_output_anchor_identity
 
+private theorem m4J_comm (a b : M4E) : m4J a b = m4J b a := by
+  apply Subtype.ext
+  simp [m4J, m4Jordan, m4JordanVal, add_comm]
+
+/-- The original diagonal actor with its environment eigenvalue zero. -/
+def m4C : M4E := m4Herm (Matrix.diagonal ![1, 2, 3, 0]) (by
+  simp [Matrix.star_eq_conjTranspose])
+
+private def m4Edge (i j : Fin 4) (z : ℂ) : M4E :=
+  m4Herm (Matrix.single i j z + Matrix.single j i (star z)) (by
+    simp [Matrix.star_eq_conjTranspose, add_comm])
+
+/-- The original two-leg star, without rotating either complex coefficient. -/
+def m4T (q₁ q₂ : ℂ) : M4E := m4Edge 0 3 q₁ + m4Edge 1 3 q₂
+
+/-- The oriented commutator row on the real self-adjoint matrix carrier. -/
+def m4Kappa (c : M4E) (ι : ℂ) (hι : ι = Complex.I ∨ ι = -Complex.I) :
+    M4E →ₗ[ℝ] M4E where
+  toFun x := m4Herm ((ι / 2) • ((c : M4) * x - (x : M4) * c)) (by
+    have hc : star (c : M4) = (c : M4) := c.property
+    have hx : star (x : M4) = (x : M4) := x.property
+    rcases hι with rfl | rfl <;> simp [star_mul, hc, hx, sub_eq_add_neg] <;> module)
+  map_add' := by
+    intro a b
+    apply Subtype.ext
+    simp [Matrix.mul_add, Matrix.add_mul]
+    module
+  map_smul' := by
+    intro r a
+    apply Subtype.ext
+    simp [Matrix.mul_smul, Matrix.smul_mul, smul_comm]
+
+private def m4N (i : Fin 4) : M4E :=
+  m4Herm (Matrix.diagonal (fun r => if r = i then 2 else 0)) (by
+    simp [Matrix.star_eq_conjTranspose, Matrix.diagonal_conjTranspose])
+
+private def m4Eigen (i : Fin 4) : ℝ := ![1, 2, 3, 0] i
+
+private theorem m4J_c_entry (x : M4E) (r s : Fin 4) :
+    ((m4J m4C x : M4E) : M4) r s =
+      ((m4Eigen r + m4Eigen s : ℝ) / 2 : ℂ) * (x : M4) r s := by
+  simp [m4J, m4Jordan, m4JordanVal, m4Herm, m4C, m4Eigen,
+    Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.smul_apply]
+  ring
+
+private theorem m4K_c_entry (ι : ℂ) (hι : ι = Complex.I ∨ ι = -Complex.I)
+    (x : M4E) (r s : Fin 4) :
+    ((m4Kappa m4C ι hι x : M4E) : M4) r s =
+      ι * ((m4Eigen r - m4Eigen s : ℝ) / 2 : ℂ) * (x : M4) r s := by
+  simp [m4Kappa, m4Herm, m4C, m4Eigen, Matrix.diagonal_mul,
+    Matrix.mul_diagonal, Matrix.smul_apply]
+  ring
+
+private theorem m4J_n_entry (i : Fin 4) (x : M4E) (r s : Fin 4) :
+    ((m4J (m4N i) x : M4E) : M4) r s =
+      (if r = i then (x : M4) r s else 0) +
+      (if s = i then (x : M4) r s else 0) := by
+  simp [m4J, m4Jordan, m4JordanVal, m4Herm, m4N,
+    Matrix.diagonal_mul, Matrix.mul_diagonal, Matrix.smul_apply]
+  split_ifs <;> ring
+
+private theorem m4Edge_entry (i j r s : Fin 4) (z : ℂ) :
+    (m4Edge i j z : M4) r s =
+      (if r = i ∧ s = j then z else 0) +
+      (if r = j ∧ s = i then star z else 0) := by
+  simp [m4Edge, m4Herm, Matrix.single_apply]
+
+private theorem m4Op_apply (a : M4E) (v : M4H) (r : Fin 4) :
+    m4Op a v r = ∑ s, (a : M4) r s * v s := rfl
+
+private theorem m4Edge_apply (i j : Fin 4) (z : ℂ) (v : M4H) :
+    m4Op (m4Edge i j z) v =
+      EuclideanSpace.single i (z * v j) + EuclideanSpace.single j (star z * v i) := by
+  ext r
+  simp [m4Op_apply, m4Edge_entry, Finset.sum_add_distrib,
+    ite_and, PiLp.single_apply, ite_mul]
+
+private theorem m4N_apply (i : Fin 4) (v : M4H) :
+    m4Op (m4N i) v = EuclideanSpace.single i (2 * v i) := by
+  ext r
+  simp [m4Op_apply, m4N, m4Herm, Matrix.diagonal_apply,
+    PiLp.single_apply, ite_mul]
+
 end D5.S3.Quantum.Algebra.PBFixedOutputGram
