@@ -219,7 +219,7 @@ theorem result (G : Type) [Group G] [Fintype G]
       _ ≤ ∑ _x : Vertex G,
           ((Fintype.card (Vertex G) : ℝ) - Fintype.card (Subgroup.center G) - 2) :=
         Finset.sum_le_sum fun x _ => twice_degree_bound G x
-      _ = _ := by simp
+      _ = _ := by simp <;> ring
   have he := cn_energy_le_twice_degree_sum (commutingGraph G)
   nlinarith [sq_nonneg ((Fintype.card (Vertex G) : ℝ) - 2), mul_nonneg hn hz]
 
