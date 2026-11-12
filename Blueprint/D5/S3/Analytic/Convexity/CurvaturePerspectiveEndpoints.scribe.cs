@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Convexity;
 
 internal sealed class CurvaturePerspectiveEndpointsDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Analytic/Convexity/CurvaturePerspectiveEndpoints.";
+    private const string Prefix = "D5/S3/Analytic/Convexity/CurvatureHingeRepresentation.";
     private static Formula Fn => Arrow(Real(), Real());
     private static Formula Convex => Call("ConvexOn", Real(), Call("Ioi", D(0)), Id("f"));
     private static Formula Mu => Call("curvature", Id("h"));
@@ -50,6 +50,8 @@ internal sealed class CurvaturePerspectiveEndpointsDocument : IScribeDocumentDef
                 "For any measurable space, s-finite measure nu and measurable real functions p,q, the integral of curvatureRemainder h (p x) (q x) equals the sum of the curvature integrals of the integrated negative and positive hockey-stick kernels. Both sides are extended nonnegative integrals. Joint measurability is proved from p and q, then Tonelli is applied to each branch. No cost finiteness assumption is used.", true),
             Node("closedPerspectiveCost", CostDefinition(),
                 "For nonnegative densities, the pointwise closed-perspective representation proves that this is the actual perspective integral with finite affine subtraction. It is defined as the real integral of the affine support plus the extended nonnegative integral of curvatureRemainder. The latter may be infinite.", false),
+            Node("closedPerspectiveCost_eq_mass", MassCost(),
+                "For arbitrary measurable integrable densities, the affine term is f(1) times the q mass plus the right derivative at one times the difference of the p and q masses. Both nonnegative curvature integrals remain extended valued. There is no normalization of the inputs and no infinite subtraction.", true),
             Node("closedPerspectiveCost_eq", NormalizedCost(),
                 "On any s-finite measure space with measurable integrable real densities p and q of integral one, the cost equals f(1) plus the two integrated hockey-stick remainders. For nonnegative densities this is the actual closed-perspective cost. Integrability justifies the finite affine integral, whose derivative term cancels; Tonelli justifies the two nonnegative curvature integrals even when the cost is infinite.", true)
         )));
@@ -64,6 +66,25 @@ internal sealed class CurvaturePerspectiveEndpointsDocument : IScribeDocumentDef
             All("q", Arrow(Id("alpha"), Real()), Eqn(Call("closedPerspectiveCost", Id("h"), Id("nu"), Id("p"), Id("q")),
                 Add(Call("Integral", Lambda("x", affine), Id("nu")),
                     Call("LIntegral", Lambda("x", remainder), Id("nu")))))))));
+    }
+
+    private static Formula MassCost()
+    {
+        var negative = Call("ENNReal.ofReal", Sub(Mul(Id("t"), Call("q", Id("x"))), Call("p", Id("x"))));
+        var positive = Call("ENNReal.ofReal", Sub(Call("p", Id("x")), Mul(Id("t"), Call("q", Id("x")))));
+        var pMass = Call("Integral", Lambda("x", Call("p", Id("x"))), Id("nu"));
+        var qMass = Call("Integral", Lambda("x", Call("q", Id("x"))), Id("nu"));
+        var affine = Add(Mul(Call("f", D(1)), qMass), Mul(Slope, Sub(pMass, qMass)));
+        var rhs = Add(affine, Add(
+            LI(Call("Iic", D(1)), Call("LIntegral", Lambda("x", negative), Id("nu")), Mu),
+            LI(Call("Ioi", D(1)), Call("LIntegral", Lambda("x", positive), Id("nu")), Mu)));
+        var equality = Eqn(Call("closedPerspectiveCost", Id("h"), Id("nu"), Id("p"), Id("q")), rhs);
+        var hypotheses = Imp(Call("SFinite", Id("nu")), Imp(Call("Measurable", Id("p")),
+            Imp(Call("Measurable", Id("q")), Imp(Call("Integrable", Id("p"), Id("nu")),
+            Imp(Call("Integrable", Id("q"), Id("nu")), equality)))));
+        return All("alpha", Call("Type"), All("m", Call("MeasurableSpace", Id("alpha")),
+            All("nu", Call("Measure", Id("alpha")), All("p", Arrow(Id("alpha"), Real()),
+            All("q", Arrow(Id("alpha"), Real()), hypotheses)))));
     }
 
     private static Formula NormalizedCost()

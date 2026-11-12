@@ -396,6 +396,24 @@ def closedPerspectiveCost (hf : ConvexOn ℝ (Ioi 0) f)
   ((∫ x, f 1 * q x + rightDeriv f 1 * (p x - q x) ∂ν : ℝ) : EReal) +
     (∫⁻ x, curvatureRemainder hf (p x) (q x) ∂ν : ℝ≥0∞)
 
+/-- Arbitrary integrable masses retain their finite affine contribution. The
+two curvature integrals may be infinite, with no infinite subtraction. -/
+theorem closedPerspectiveCost_eq_mass (hf : ConvexOn ℝ (Ioi 0) f)
+    {α : Type*} [MeasurableSpace α] (ν : Measure α) [SFinite ν]
+    {p q : α → ℝ} (hmp : Measurable p) (hmq : Measurable q)
+    (hp : Integrable p ν) (hq : Integrable q ν) :
+    closedPerspectiveCost hf ν p q =
+      ((f 1 * (∫ x, q x ∂ν) +
+        rightDeriv f 1 * ((∫ x, p x ∂ν) - ∫ x, q x ∂ν) : ℝ) : EReal) +
+      ((∫⁻ t in Iic one, (∫⁻ x, ENNReal.ofReal ((t : ℝ) * q x - p x) ∂ν) ∂curvature hf) +
+        (∫⁻ t in Ioi one, (∫⁻ x, ENNReal.ofReal (p x - (t : ℝ) * q x) ∂ν) ∂curvature hf) : ℝ≥0∞) := by
+  have hiq : Integrable (fun x => f 1 * q x) ν := hq.const_mul _
+  have hipq : Integrable (fun x => rightDeriv f 1 * (p x - q x)) ν :=
+    (hp.sub hq).const_mul _
+  rw [closedPerspectiveCost, integral_add hiq hipq,
+    integral_const_mul, integral_const_mul, integral_sub hp hq,
+    integral_curvatureRemainder hf ν hmp hmq]
+
 /-- For normalized integrable measurable densities, the actual cost is f(1) plus
 curvature-integrated hockey-stick costs, including infinite values. The integral is
 understood by the finite affine subtraction convention in `closedPerspectiveCost`. -/
@@ -407,20 +425,14 @@ theorem closedPerspectiveCost_eq (hf : ConvexOn ℝ (Ioi 0) f)
     closedPerspectiveCost hf ν p q = (f 1 : EReal) +
       ((∫⁻ t in Iic one, (∫⁻ x, ENNReal.ofReal ((t : ℝ) * q x - p x) ∂ν) ∂curvature hf) +
         (∫⁻ t in Ioi one, (∫⁻ x, ENNReal.ofReal (p x - (t : ℝ) * q x) ∂ν) ∂curvature hf) : ℝ≥0∞) := by
-  have ha : (∫ x, f 1 * q x + rightDeriv f 1 * (p x - q x) ∂ν) = f 1 := by
-    have hiq : Integrable (fun x => f 1 * q x) ν := hq.const_mul _
-    have hipq : Integrable (fun x => rightDeriv f 1 * (p x - q x)) ν :=
-      (hp.sub hq).const_mul _
-    have hs : (∫ x, p x - q x ∂ν) = (∫ x, p x ∂ν) - ∫ x, q x ∂ν :=
-      integral_sub hp hq
-    rw [integral_add hiq hipq, integral_const_mul, integral_const_mul, hs, hpn, hqn]
-    ring
-  rw [closedPerspectiveCost, ha, integral_curvatureRemainder hf ν hmp hmq]
+  rw [closedPerspectiveCost_eq_mass hf ν hmp hmq hp hq, hpn, hqn]
+  simp only [mul_one, sub_self, mul_zero, add_zero]
 
 #print axioms tendsto_zeroEndpoint
 #print axioms tendsto_infinityEndpoint
 #print axioms closedPerspective_eq_affine_add_curvature
 #print axioms integral_curvatureRemainder
+#print axioms closedPerspectiveCost_eq_mass
 #print axioms closedPerspectiveCost_eq
 
 end D5.S3.Analytic.Convexity.CurvatureHingeRepresentation
