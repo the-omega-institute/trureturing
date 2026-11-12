@@ -168,7 +168,10 @@ private theorem substitution_preserves (t : ℕ) (ell : ℤ)
   | zero =>
       simpa using isWeightedHomogeneous_zero ℂ
         (fun y : Fin t × ℕ => (y.2 : ℤ)+1) ell
-  | add P Q hP hQ ihP ihQ => simpa only [map_add] using ihP.add ihQ
+  | add P Q hP hQ ihP ihQ =>
+      change IsWeightedHomogeneous _ ((substitution A) (P+Q)) ell
+      rw [map_add]
+      exact ihP.add ihQ
   | monomial e c he =>
       rw [substitution,MvPolynomial.aeval_monomial]
       have h := IsWeightedHomogeneous.prod e.support
@@ -207,7 +210,7 @@ private theorem columns_rows : columns F B * rows F B = 1 := by
   ext i j
   have h := congrFun ((F.completeBasis B).sum_repr (standardBasis D j)) i
   simpa only [columns,rows,Matrix.mul_apply,Finset.sum_apply,Pi.smul_apply,
-    smul_eq_mul,mul_comm,standardBasis,Pi.basisFun_apply,Matrix.one_apply,eq_comm] using h
+    smul_eq_mul,mul_comm,standardBasis,Pi.basisFun_apply,Pi.single_apply,Matrix.one_apply,eq_comm] using h
 
 private theorem rows_columns : rows F B * columns F B = 1 := by
   classical
@@ -216,7 +219,7 @@ private theorem rows_columns : rows F B * columns F B = 1 := by
     ((standardBasis D).sum_repr (F.completeBasis B d))
   simpa only [rows,columns,Matrix.mul_apply,map_sum,map_smul,smul_eq_mul,
     Module.Basis.coord_apply,Module.Basis.repr_self,Finsupp.single_apply,
-    Matrix.one_apply,eq_comm,mul_comm] using h
+    Matrix.one_apply,eq_comm,mul_comm,standardBasis,Pi.basisFun_repr] using h
 
 private theorem full_gram_entry (c d : Label t) :
     ((columns F B).transpose * gramComplex D * columns F B) c d =
@@ -253,12 +256,15 @@ private theorem transverse_right_inverse (H : Matrix (Fin D.rank) (Fin D.rank) �
       _ = (rows F B * columns F B).transpose := by
         rw [hGH,Matrix.mul_one,Matrix.transpose_mul]
       _ = 1 := by rw [rows_columns,Matrix.transpose_one]
+  have hbTrans (j : Fin t) : F.completeBasis B (.inr (.inr j)) = (B j : E D) :=
+    completeBasis_transverse F B j
+  have hbPlus : F.completeBasis B (.inl ()) = F.ePlus := completeBasis_plus F B
+  have hbMinus : F.completeBasis B (.inr (.inl ())) = F.eMinus := completeBasis_minus F B
   ext a b
   have h := congrArg (fun M => M (transverse t a) (transverse t b)) hfull
   rw [Matrix.mul_apply] at h
   simp only [full_gram_entry,full_inverse_entry,
-    Fintype.sum_sum_type,Fintype.sum_unique,completeBasis_transverse,
-    completeBasis_plus,completeBasis_minus,K_plus,K_minus,zero_mul,zero_add,
+    Fintype.sum_sum_type,Fintype.sum_unique,hbTrans,hbPlus,hbMinus,K_plus,K_minus,zero_mul,zero_add,
     Matrix.one_apply,transverse,Sum.inr.injEq,ite_true] at h
   simpa only [Matrix.mul_apply,transverseGram,transverseInverse,
     Matrix.one_apply] using h
@@ -277,12 +283,15 @@ private theorem transverse_left_inverse (H : Matrix (Fin D.rank) (Fin D.rank) �
         rw [columns_rows,Matrix.transpose_one,Matrix.mul_one]
         simp only [Matrix.mul_assoc]
       _ = 1 := by rw [hHG,Matrix.mul_one,rows_columns]
+  have hbTrans (j : Fin t) : F.completeBasis B (.inr (.inr j)) = (B j : E D) :=
+    completeBasis_transverse F B j
+  have hbPlus : F.completeBasis B (.inl ()) = F.ePlus := completeBasis_plus F B
+  have hbMinus : F.completeBasis B (.inr (.inl ())) = F.eMinus := completeBasis_minus F B
   ext a b
   have h := congrArg (fun M => M (transverse t a) (transverse t b)) hfull
   rw [Matrix.mul_apply] at h
   simp only [full_gram_entry,full_inverse_entry,
-    Fintype.sum_sum_type,Fintype.sum_unique,completeBasis_transverse,
-    completeBasis_plus,completeBasis_minus,plus_K,minus_K,zero_mul,mul_zero,zero_add,
+    Fintype.sum_sum_type,Fintype.sum_unique,hbTrans,hbPlus,hbMinus,plus_K,minus_K,zero_mul,mul_zero,zero_add,
     add_zero,Matrix.one_apply,transverse,Sum.inr.injEq,ite_true] at h
   simpa only [Matrix.mul_apply,transverseGram,transverseInverse,
     Matrix.one_apply] using h
@@ -342,7 +351,7 @@ private theorem transverseDerivative_X (a b : Fin t) (r s : ℕ) :
   classical
   by_cases hrs : r=s
   · subst s
-    simp [transverseDerivative,pderiv_X,Prod.mk.injEq]
+    simp [transverseDerivative,pderiv_X,Prod.mk.injEq,Pi.single_apply]
   · simp [transverseDerivative,pderiv_X,Prod.mk.injEq,hrs]
 
 private theorem transverseDerivative_transport (a : Fin t) (r : ℕ) (Q : Poly t) :
@@ -368,7 +377,7 @@ private theorem integerWick_lin (u : E D) (r : ℕ) (P Q : Oscillator D) :
   rw [a_single,polynomialCurrent_negative,a_single,
     show -(-(r : ℤ)-1)=(r : ℤ)+1 by ring,polynomialCurrent_positive] at h
   simpa only [sourcePairing_single_single,neg_zero,if_pos rfl,map_smul,
-    LinearMap.smul_apply,smul_eq_mul,neg_mul] using h
+    LinearMap.smul_apply,smul_eq_mul,neg_mul,ite_true] using h
 
 private theorem factorial_variable (A : ℕ → Matrix (Fin t) (Fin t) ℂ)
     (a : Fin t) (r : ℕ) (P Q : Poly t) :
@@ -397,7 +406,7 @@ private theorem transverse_wick (P Q : Poly t) :
   | C c =>
       have hc : integerWick D (C c) (transverseOriginal F B Q) = c * Q.coeff 0 := by
         change wick D (retune D (C c)) (transverseOriginal F B Q) = _
-        have hC : retune D (C c) = C c := by simp
+        have hC : retune D (C c) = C c := (retune D).commutes c
         rw [hC,wick_constant_left,transverse_constant]
       have hphi : transverseOriginal F B (C c) = C c := by simp
       have hsub : substitution (covariance F B) (C c) = C c := by simp
@@ -429,8 +438,14 @@ variable {D : LatticeData} (F : NullFrame D) {t : ℕ}
 private def levelWick : levelSpace t ell →ₗ[ℂ] Module.Dual ℂ (levelSpace t ell) where
   toFun f := (FactorialBilinear.form (Fin t × ℕ)
     (substitution (covariance F B) f.val)).comp (levelSpace t ell).subtype
-  map_add' f g := by ext h;simp only [map_add,LinearMap.add_apply]
-  map_smul' c f := by ext h;simp only [map_smul,LinearMap.smul_apply]
+  map_add' f g := by
+    ext h
+    simp only [LinearMap.comp_apply,Submodule.subtype_apply,Submodule.coe_add,
+      map_add,LinearMap.add_apply]
+  map_smul' c f := by
+    ext h
+    simp only [LinearMap.comp_apply,Submodule.subtype_apply,Submodule.coe_smul,
+      map_smul,LinearMap.smul_apply,RingHom.id_apply]
 
 private def inverseWickMonomial (a : LevelIndex t ell) : levelSpace t ell :=
   (FactorialFockMetric.weight a.val : ℂ)⁻¹ •
@@ -462,7 +477,7 @@ private def levelInverse : Module.Dual ℂ (levelSpace t ell) →ₗ[ℂ] levelS
   map_add' lam mu := by
     simp only [LinearMap.add_apply,add_smul,Finset.sum_add_distrib]
   map_smul' c lam := by
-    simp only [LinearMap.smul_apply,smul_eq_mul,mul_smul,Finset.smul_sum]
+    simp only [LinearMap.smul_apply,smul_eq_mul,mul_smul,Finset.smul_sum,RingHom.id_apply]
 
 private theorem level_forward_inverse {D : LatticeData} (F : NullFrame D) {t : ℕ}
     (B : Module.Basis (Fin t) ℂ F.K) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -517,15 +532,17 @@ end FiniteInverse
 
 section OriginalPhysicalFibers
 
-variable (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-  (h26 : D.rank = 26) (hHG : H * gramComplex D = 1)
-  (hGH : gramComplex D * H = 1) (p : Charge D) (hp : p ≠ 0)
-
 private def chosenFrame (D : LatticeData)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (h26 : D.rank = 26)
     (hHG : H * gramComplex D = 1) (p : Charge D) (hp : p ≠ 0) :
     NullFrame D := Classical.choose
   (LatticeNullFrameExistence.exists_nullFrame_pPlus_ne_zero D H hHG (by omega) p hp)
+
+
+variable (D : LatticeData) (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+  (h26 : D.rank = 26) (hHG : H * gramComplex D = 1)
+  (hGH : gramComplex D * H = 1) (p : Charge D) (hp : p ≠ 0)
+
 
 private theorem chosenFrame_plus : (chosenFrame D H h26 hHG p hp).pPlus p ≠ 0 :=
   Classical.choose_spec
