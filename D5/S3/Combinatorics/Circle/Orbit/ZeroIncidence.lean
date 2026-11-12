@@ -8,7 +8,7 @@
 
 module
 public import D5.S3.Combinatorics.Circle.SourceWidth
-public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+public import D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 public import Mathlib.Logic.Equiv.Fin.Rotate
 public import Mathlib.Tactic
 

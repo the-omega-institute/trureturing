@@ -1,0 +1,2 @@
+**定义 34.1（完整二元函数的剖面逆问题）。** 固定特征零域 $F$ 及实际有限扩张 $D/F$，$[D:F]=2m$。对每个 $m$ 维窗口 $X\le_F D$，沿用 $d_X(r)=\dim_F(X\cap rX)$、$J_X(r,s)=\dim_F(X\cap rX\cap sX)$、$D_X=F(X/X)$、$E_X=\{c\in D:cX\subseteq X\}$，以及 (33.1) 在每个实际中间域 $F\subseteq A\subseteq D$ 上的 $t_X(A)=\dim_F AX-m$。比较的是全部原 $r\in D^\times$ 上的函数 $d_X$，包含零交读数，不重标标签。记 $X^\perp$ 为乘法迹配对 $\operatorname{Tr}_{D/F}(xy)$ 的正交补。第 $j$ 阶最小正共同交维 $\delta_j(X)$ 仍允许重复原标签，且第一份窗口的标签为 $1$。
+

@@ -16,7 +16,7 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
         Blocks(
             Paragraph(Text("The sequence a has integer values and starts at index one; a(0) is unused. "
                 + "All power series have rational coefficients, and every exponential and substitution "
-                + "is formal. IntegralSeries is the predicate from HannaLogarithmicPowerClosure: "
+                + "is formal. IntegralSeries is the shared predicate in IntegralPowerSeries, with its original qualified name: "
                 + "every ordinary coefficient is the image of an integer. The displayed casts are "
                 + "the canonical embeddings into the indicated carrier. Division in the exponent "
                 + "is rational field division. PowerSeries.subst takes the substituted series first "
@@ -36,6 +36,7 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
                 + "integer sequence satisfying the defining condition, every natural prime p, "
                 + "including two, and every positive natural r.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+
             Node("result", "All positive prime powers", Disp(ClaimBody()),
                 "An integer Euler ledger gives m^2-a(m) as the sum of d times the ledger "
                 + "entry over positive divisors d of m. The difference between the divisor "

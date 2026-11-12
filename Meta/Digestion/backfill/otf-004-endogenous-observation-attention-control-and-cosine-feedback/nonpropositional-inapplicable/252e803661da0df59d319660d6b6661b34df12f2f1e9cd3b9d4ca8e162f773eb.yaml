@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:252e803661da0df59d319660d6b6661b34df12f2f1e9cd3b9d4ca8e162f773eb
+  normalized_sha256: sha256:252e803661da0df59d319660d6b6661b34df12f2f1e9cd3b9d4ca8e162f773eb
+cas_ref: sha256:252e803661da0df59d319660d6b6661b34df12f2f1e9cd3b9d4ca8e162f773eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This paragraph records literature sources, the mature ingredients reused and the limited attribution of the section. It introduces no independent mathematical claim or historical-novelty claim. The cited inequalities and original-model consumer statements require their own mathematical evidence; this provenance receipt supplies none.
+    previous_atom_id: b53c3b2789b7c153243e33b77745a2a280b40d45a2210ea714b769e79348a120
+    next_atom_id: b26411c7d2de4cbdc47f593b263eb5aa96b0516a80eab4868704f17ab7e1330f

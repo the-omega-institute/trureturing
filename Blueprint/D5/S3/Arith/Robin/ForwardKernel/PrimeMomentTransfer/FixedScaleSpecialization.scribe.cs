@@ -23,7 +23,7 @@ internal sealed class FixedScaleSpecializationDocument : IScribeDocumentDefiniti
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let 0<theta<beta<1/4. Assume MeanSquareHL4(concreteSS,beta) and IntervalCorrelations(concreteSS), the interval-correlation conclusions of Lemma 498.3 taken as a hypothesis. Then psi(x)-x satisfies the third fixed-scale mixed-moment interface of section 497 with zero limit. For each bounded family of nonnegative prefix lengths and each logarithmic dyadic block [u,v], the product of three increments at length X^theta, divided by (X^theta log X)^(3/2), has block expectation tending to zero. This is the cubic specialization of Theorem 498.1."))),
+                    "Let 0<theta<beta<1/3. Assume MeanSquareHL(3,concreteSS,beta) and IntervalCorrelations(concreteSS), the interval-correlation conclusions of Lemma 498.3 taken as a hypothesis. Then psi(x)-x satisfies the third fixed-scale mixed-moment interface of section 497 with zero limit. For each bounded family of nonnegative prefix lengths and each logarithmic dyadic block [u,v], the product of three increments at length X^theta, divided by (X^theta log X)^(3/2), has block expectation tending to zero. This is the cubic specialization of Theorem 498.1."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("fixed-scale-fourth"),

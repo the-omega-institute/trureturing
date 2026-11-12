@@ -1,0 +1,27 @@
+**命题 73.14（四项补全及标量锚仍不检测接合方向）。** 已获命题 66.11 的实际 qubit 数据通过四项正补全和 $\mathrm A_0$，却不满足 NB／C13；因此 73.1 的交叉入口不能由这些补全替代。
+
+**证明。** 原数据为 $A=H_2,D=H_4,E=H_8$，$L(d,c)=d\otimes c$，$p(z)=(\operatorname{Tr}_1z)^T$，其中最后转置作用于保留的整个 $4\times4$ 块。66.11 已逐项核对其全部 PRE，包括同一 $p$ 两次实际给
+
+$$
+K(a)=(I_2/2)\otimes a^T,\qquad M(a,b)=a\otimes b^T,
+\tag{73.31}
+$$
+
+两条实张成、$D_J,D_H,Z$ 和原全锥正保迹 $p$。这里不在 NB 之前冒用普通方向分类。直接按实际乘积律核对 $M$ 两位置的联合重置为
+
+$$
+Z\longmapsto\sigma_B\otimes\operatorname{Tr}_1Z,\qquad
+Z\longmapsto(\operatorname{Tr}_2Z)\otimes\sigma_C^T.
+\tag{73.32}
+$$
+
+它们都在整个 $D_+$ 上正保迹。$L$ 的两个联合重置分别是 $Z\mapsto\sigma_D\otimes\operatorname{Tr}_{D}Z$ 和 $Z\mapsto(\operatorname{Tr}_A Z)\otimes\sigma_A$，同样全锥正保迹。与各自恒等失败分支配对，即得到任意指定 $0<c\le1$ 的四项补全。$\tau_E L(I_4/4,I_2/2)=1$，故标量锚成立。
+
+但原实际插入为
+
+$$
+I^{\rm raw}Z=\operatorname{ins}_2[(\operatorname{id}\otimes\Theta)Z].
+$$
+
+端点 Bell 投影的部分转置在反对称向量上为 $-1/2$，中间任意单位向量保持该负值，故 C13 失败，71.6 随即给 NB 失败。整个论证只使用全块转置的正性及显式重置，未把坐标转置当作 CP 操作。$\square$
+

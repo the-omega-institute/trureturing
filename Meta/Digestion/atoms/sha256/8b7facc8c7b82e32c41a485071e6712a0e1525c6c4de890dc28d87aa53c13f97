@@ -1,0 +1,177 @@
+**定理 50.1（负实部、负虚部整个象限的严格间隙）。** 沿用约定 46.1
+的两个实际来源、完整接触域及定义 46.2 的源对齐坐标。
+在 $h=0$、取向 $i$ 下，每个满足 $x<0$、$y<-1$ 的完整非轴不利接触都有
+
+$$
+0<t<\frac14,\qquad
+\mathcal R_0(x,y,t)>\frac{5\sqrt{15}}{16}>\frac65.
+\tag{50.1}
+$$
+
+此界覆盖全部合法正根，包括二重根、三重根和真奇点，
+不要求任何约束导数非零。另一取向使用约定 46.1 的适配虚坐标，结论相同。
+
+**证明。** 不利过滤 $y(4t-1)>0$ 给 $0<t<1/4$。置
+
+$$
+\begin{gathered}
+s=-x>0,\qquad v=-y>1,\qquad w=4t\in(0,1),\qquad \sigma=1-w,\\
+A_s=(s+1)^2,\qquad B_s=(s+2)(1-s),\\
+U_s=s+7-3w+\frac{3\sigma}{s},\qquad
+V_s=3+(s+8)w-\frac{3\sigma}{s},\\
+\mathfrak p=2+3w-\frac{3\sigma}{s},\qquad
+\mathfrak q=-3-5w+\frac{3\sigma}{s}.
+\end{gathered}
+\tag{50.2}
+$$
+
+这些是本证明中的实标量；$s,v,w$ 不是演员质量或预算。
+将 $x=-s$、$y=-v$、$t=w/4$ 代入 (46.5)，得到
+
+$$
+\begin{aligned}
+F&=\frac12\left[-U_s+i\left(v\mathfrak p+
+                  \frac{3(1+w)A_s}{v}\right)\right],\\
+G&=\frac14\left[-2V_s+i\left(v\mathfrak q+
+                  \frac{3(1+w)B_s}{v}\right)\right].
+\end{aligned}
+\tag{50.3}
+$$
+
+例如 $\alpha_0=3(s+1)(1+w)/(2v)$、
+$\chi_0=3(1-s)(1+w)/(2v)$、
+$\kappa_0=3\sigma/(2s)-3(1+w)/2$，逐项乘开即给这两个式子。
+特别地，$\mathfrak p+\mathfrak q=-(1+2w)$。
+对 (50.3) 的两个模平方作联合展开，得恒等式
+
+$$
+\begin{aligned}
+4(|F|^2+8|G|^2)
+={}&v^2(\mathfrak p^2+2\mathfrak q^2)+\mathcal Q(s,w)
+ +\frac{9(1+w)^2(A_s^2+2B_s^2)}{v^2},\\
+\mathcal Q(s,w)
+={}&U_s^2+8V_s^2+6(1+w)(\mathfrak p A_s+2\mathfrak q B_s)\\
+={}&(49+126w+86w^2)s^2+(20+198w+278w^2)s\\
+ &-5+126w+539w^2
+ -\frac{(48+348w)(1-w)}s+\frac{81(1-w)^2}{s^2}.
+\end{aligned}
+\tag{50.4}
+$$
+
+下面给出 $\mathcal Q>90$ 的全域代数证书。定义
+
+$$
+\begin{aligned}
+a(s)&=86s^4+278s^3+539s^2+348s+81,\\
+b(s)&=126s^4+198s^3+126s^2-300s-162,\\
+c(s)&=49s^4+20s^3-95s^2-48s+81.
+\end{aligned}
+\tag{50.5}
+$$
+
+由 (50.4) 按 $w$ 收集系数，
+
+$$
+s^2(\mathcal Q-90)=a(s)w^2+b(s)w+c(s).
+\tag{50.6}
+$$
+
+这里 $a(s)>0$，并且有精确恒等式
+
+$$
+\begin{aligned}
+4a(s)c(s)-b(s)^2&=s^2\mathcal D(s),\\
+\mathcal D(s)
+ &=980s^6+11472s^5+24248s^4+14880s^3
+      -42868s^2+576s+27864\\
+ &=24248(s^2-1)^2+980s^6+11472s^5+14880s^3
+      +5628s^2+576s+3616>0.
+\end{aligned}
+\tag{50.7}
+$$
+
+因此，对每个 $s>0$ 和任意实 $w$，
+
+$$
+a(s)w^2+b(s)w+c(s)
+=a(s)\left(w+\frac{b(s)}{2a(s)}\right)^2
+ +\frac{s^2\mathcal D(s)}{4a(s)}>0.
+\tag{50.8}
+$$
+
+这证明所需的 $\mathcal Q(s,w)>90$，没有限制到 $t$ 的某个子区间。
+又由平方恒等式
+
+$$
+\mathfrak p^2+2\mathfrak q^2
+ -\frac23(\mathfrak p+\mathfrak q)^2
+ =\frac13(\mathfrak p-2\mathfrak q)^2\ge0,
+$$
+
+(50.4) 给
+
+$$
+4(|F|^2+8|G|^2)>\alpha v^2+90,
+\qquad \alpha=\frac23(1+2w)^2>0.
+\tag{50.9}
+$$
+
+此处尚未使用接触等式。在原完整接触上，$P=0$ 精确给出
+$|G|^2=(w/2)|F|^2$，所以
+
+$$
+4(1+4w)|F|^2>\alpha v^2+90.
+\tag{50.10}
+$$
+
+这一替换同时使用同一个实际来源的两个坐标；不能把 $F,G$
+当成分别可选的独立数据。代回原不利比值 (46.7)，得
+
+$$
+\mathcal R_0>
+\frac{v(\alpha v^2+90)}{12(v^2-1)(1-w)(1+4w)}.
+\tag{50.11}
+$$
+
+因为 $v>1$，
+
+$$
+\frac{v(\alpha v^2+90)}{v^2-1}
+>\alpha v+\frac{90}{v}
+\ge2\sqrt{90\alpha}=4\sqrt{15}(1+2w).
+\tag{50.12}
+$$
+
+最后利用
+
+$$
+\begin{aligned}
+16(1+2w)-15(1-w)(1+4w)
+ &=60w^2-13w+1\\
+ &=60\left(w-\frac{13}{120}\right)^2+\frac{71}{240}>0,
+\end{aligned}
+$$
+
+在整个 $0<w<1$ 上得到
+
+$$
+\mathcal R_0>
+\frac{\sqrt{15}(1+2w)}{3(1-w)(1+4w)}
+>\frac{5\sqrt{15}}{16}.
+$$
+
+常数的最后比较等价于 $25\sqrt{15}>96$；两边为正，
+平方后是 $9375>9216$。
+证明只用了完整接触的 $P=0$、不利过滤和原系数，
+未除以 $P_t,P_x,P_y$，故全部根重数与真奇点均在范围内。
+每个根的唯一相位及全部四实图条件、两个来源坐标的重构
+直接使用前卷定理 43.2–43.3；没有将模平方条件单独充作来源实现。
+取向运输保持来源 $r$、适配坐标 $y$ 及比值，故给另一取向的结论。
+
+联合平方与 (50.7) 是本模型的 `repo-derived` 推导。
+所用加权 Cauchy–Schwarz 与算术—几何平均不等式为成熟工具，
+参见 NIST *Digital Library of Mathematical Functions*
+[§1.7(i)，式 (1.7.1)](https://dlmf.nist.gov/1.7.E1) 与
+[§1.7(iii)，式 (1.7.7)](https://dlmf.nist.gov/1.7.E7)；
+这里的具体权重和正性证书不归属于该文献。∎
+

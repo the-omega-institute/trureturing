@@ -59,6 +59,25 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                 "The sum is over all 6^5 individual colour rows with the original scanner."),
             Entry("firstcount", "firstCount", "First-row class distribution", FirstCount(),
                 "The first colour is fixed to zero and both initial scanner flags are false."),
+            Describe.Lean(DescribeId.Create("labelsum"),
+                DeclarationHandle.Create(Gid + "label_sum"), H("Expanding the label sum"),
+                StatementSource.FromAuthor(Disp(LabelSum())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("The function-space sum expands into five independent label sums."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rowvalid"),
+                DeclarationHandle.Create(Gid + "row_valid"), H("Compatibility-free row validity"),
+                StatementSource.FromAuthor(Disp(RowValid())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Horizontal legality and the scanner preserve validity "
+                    + "once colour one has occurred, independently of inter-row bonds."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("initialvalid"),
+                DeclarationHandle.Create(Gid + "initial_valid"), H("First-row validity"),
+                StatementSource.FromAuthor(Disp(InitialValid())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("A legal normalized first row determines a valid scanner boundary."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("certificate"),
                 DeclarationHandle.Create(Gid + "finite_certificate"), H("Single-row certificate"),
                 StatementSource.FromAuthor(Disp(Certificate())),
@@ -97,6 +116,36 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
             literature ? AssessedProvenance.FromLiterature(Source)
                 : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula LabelSum()
+    {
+        var g = V("g");
+        Formula rhs = At(g, Vector(V("a"), V("b"), V("c"), V("d"), V("e")));
+        foreach (var name in new[] { "e", "d", "c", "b", "a" })
+            rhs = SumOver(name, Fin(3), rhs);
+        return All("g", Arrow(PairRow(), Name("Int")),
+            Eq(SumOver("q", PairRow(), At(g, V("q"))), rhs));
+    }
+
+    private static Formula RowValid()
+    {
+        var s = V("s"); var c = V("c");
+        return All("s", Seen(), All("c", Name(RowOwner + "Row"),
+            Imp(Eq(Proj(s, true), Name("Bool.true")),
+                Imp(Call(RowOwner + "rowLegal", c), Imp(Call(Scanner + "good", s, c),
+                    Call(BoundaryOwner + "Valid", Call(Scanner + "finish", s, c),
+                        Call(Root + "labels", c)))))));
+    }
+
+    private static Formula InitialValid()
+    {
+        var c = V("c");
+        return All("c", Name(RowOwner + "Row"), Imp(
+            And(Eq(At(c, Typed(D(0), Fin(5))), D(0)), And(
+                Call(RowOwner + "rowLegal", c), Call(Scanner + "good", Flags(), c))),
+            Call(BoundaryOwner + "Valid", Call(Scanner + "finish", Flags(), c),
+                Call(Root + "labels", c))));
+    }
 
     private static Formula Vertical()
     {

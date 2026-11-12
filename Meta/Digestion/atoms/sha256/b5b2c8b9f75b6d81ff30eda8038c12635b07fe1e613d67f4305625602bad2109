@@ -1,0 +1,35 @@
+**定理 24.2（无逆元的整载体传播）。**在定义 24.1 下，有
+
+$$
+\begin{aligned}
+d(a\cdot s,b\cdot s)&=d(a,b)
+&& (a,b\in M,\ s\in S),\\
+d(a\cdot z,b\cdot w)&=d(a,b)
+&& (a,b\in M,\ z,w\in Z),
+\end{aligned}
+\tag{24.3}
+$$
+
+其中 $Z=\{s\in S:F_Ss=0\}$，$F_S$ 是下面证明中在同一限制核 $d|_{S^2}$ 上取得的可加仿射复 Hilbert 表示。该构造满足 $p_3\in Z$，从而在全部原载体上有
+
+$$
+\boxed{d(P_3a,b)=d(a,b)=d(a,P_3b)\quad(a,b\in M).}
+\tag{24.4}
+$$
+
+**证明：共同尾巴。**固定原 $a,b\in M$，在 $S$ 上置 $h(x)=d(a\cdot x,b\cdot x)$。对 (24.1) 取增量 $x,x$，其第零项及非负性给
+
+$$
+0\le h(x)\le3d(a,b)\quad(x\in S).
+\tag{24.5}
+$$
+
+对每个固定 $s\in S$，再取背景 $a\cdot x,b\cdot x$ 和增量 $s,s$，由 (24.2) 得
+
+$$
+\sum_{j=0}^2h(x\cdot U^js)=3h(x)\qquad(x\in S).
+\tag{24.6}
+$$
+
+$U^js\in S$，这三个右平移在交换幺半群 $S$ 上交换。[IV 引理 2.1](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_IV.md#2-两个既有调和工具的有限版本)适用于有界实函数 $h$，给每个平移各自保持 $h$。特别第零平移给 $h(x\cdot s)=h(x)$；在 $x=e$ 取值，得到 (24.3) 第一式。此处既未解方程 $xu=y$，也未使用 $Ue=e$。
+

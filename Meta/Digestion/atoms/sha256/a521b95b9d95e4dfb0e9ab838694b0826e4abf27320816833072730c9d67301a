@@ -1,0 +1,27 @@
+#### 定理 2.4：有限程序不能精确选择连续全部锐轴
+
+设固定装置的二元效应 $G$ 作用于 qubit 与程序空间 $C$。 纯程序 $\eta_{\mathbf m}$ 精确实现 $P_{\mathbf m}=(I+\mathbf m\cdot\boldsymbol{\sigma})/2$。 若 $\mathbf m\ne\mathbf n$，则
+
+$$
+\langle\eta_{\mathbf m},\eta_{\mathbf n}\rangle=0.
+$$
+
+因此 $\dim C=D$ 时，至多可用纯程序精确实现 $D$ 个不同的锐轴测试 （结果标签固定）。
+
+**证明。**
+
+输入 $|\mathbf m,+\rangle|\eta_{\mathbf m}\rangle$ 对 $G$ 的回答概率为一， 输入 $|\mathbf n,-\rangle|\eta_{\mathbf n}\rangle$ 的概率为零。 因为 $0\leq G\leq I$，前者是 $G$ 的特征值一向量，后者属于其核， 两向量必须正交。因此
+
+$$
+\langle\mathbf m,+|\mathbf n,-\rangle
+ \langle\eta_{\mathbf m}|\eta_{\mathbf n}\rangle=0.
+$$
+
+当 $\mathbf m\ne\mathbf n$， $|\langle\mathbf m,+|\mathbf n,-\rangle|^2 =(1-\mathbf m\cdot\mathbf n)/2>0$， 所以程序正交。有限维空间中的正交非零向量至多有 $D$ 个。
+
+$\square$
+
+这并不禁止有限装置近似测量许多方向， 也不禁止分别给定不同硬件设置。 它限制的是 *同一个固定装置仅靠有限维纯程序精确编程全部连续锐方向* 。 一根可以连续取向的量子参考轴不是自动可完美读取的经典程序表。
+
+<a id="section-3"></a>
+

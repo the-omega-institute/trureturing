@@ -19,8 +19,9 @@ open private rank amplitude delta heads newHeads successor newSuccessor start le
 open private four_perm from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private Checks from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Arithmetic
 open private checks_strip from D5.S3.Combinatorics.Circle.FourNegative.EqualLastThreeUpper.Physical
-open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
-open private size negatives source_signs sourceMod chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
+open private source_signs sourceMod chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives)
 open private finish toList_sum large_mass adjacent_mass corner_two_mass corner_three_mass
   from D5.S3.Combinatorics.Circle.FourNegative.EqualLastTwo.Schedule
 open private large_checks adjacent_checks corner_two_checks corner_three_checks

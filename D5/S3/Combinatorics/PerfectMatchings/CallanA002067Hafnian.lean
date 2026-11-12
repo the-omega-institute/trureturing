@@ -11,14 +11,13 @@ proof_shape: result: content (unbounded involution extension and weighted-walk i
 escape_witness: none (the settling result supplies admission).
 admission_basis: open-problem-resolution (#23975; Proved)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24743
-Direct frozen dependencies: D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.P
-  statement_id: sha256:6aac71030c2a17e40a268263a7019b4adcba311901f8c027ea08fca89bb49d7d.
+The partner-map type is supplied by D5/S0/Certificates/Combinatorics/NormalizedPfaffian.P.
 The Dyck identity also uses DepthBudgetIidGreedyOptimality.words and
 SchroederPeakAlternatingQuadraticMoment.PrefixNonnegative with its Step constructors
 and instances, through the delivered Dyck module.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Matching
+import D5.S3.Combinatorics.PerfectMatchings.AlternatingCyclePfaffian
 import D5.S3.Combinatorics.PerfectMatchings.CallanA002067Dyck
 import D5.S0.Certificates.Combinatorics.DeformedJucysMurphyNoncommutation
 
@@ -48,88 +47,6 @@ def claim : Prop :=
   (∃ a : ℕ → ℕ, IsSourceSequence a) ∧
     ∀ a : ℕ → ℕ, IsSourceSequence a →
       ∀ n : ℕ, a n = hafnian n ∧ a n = weightedDyckSum n
-
-private noncomputable def matchingMate {V : Type*} (M : (⊤ : SimpleGraph V).Subgraph)
-    (hM : M.IsPerfectMatching) (v : V) : V :=
-  ((SimpleGraph.Subgraph.isPerfectMatching_iff.mp hM) v).choose
-
-private theorem matchingMate_adj {V : Type*} (M : (⊤ : SimpleGraph V).Subgraph)
-    (hM : M.IsPerfectMatching) (v : V) : M.Adj v (matchingMate M hM v) :=
-  ((SimpleGraph.Subgraph.isPerfectMatching_iff.mp hM) v).choose_spec.1
-
-private theorem matchingMate_eq_iff {V : Type*} (M : (⊤ : SimpleGraph V).Subgraph)
-    (hM : M.IsPerfectMatching) (v w : V) : matchingMate M hM v = w ↔ M.Adj v w := by
-  constructor
-  · rintro rfl
-    exact matchingMate_adj M hM v
-  · intro h
-    exact hM.1.eq_of_adj_left (matchingMate_adj M hM v) h
-
-private theorem matchingMate_involutive {V : Type*} (M : (⊤ : SimpleGraph V).Subgraph)
-    (hM : M.IsPerfectMatching) : Function.Involutive (matchingMate M hM) := by
-  intro v
-  apply (matchingMate_eq_iff M hM _ _).mpr
-  exact (matchingMate_adj M hM v).symm
-
-private theorem matchingMate_ne {V : Type*} (M : (⊤ : SimpleGraph V).Subgraph)
-    (hM : M.IsPerfectMatching) (v : V) : matchingMate M hM v ≠ v := by
-  have h := M.adj_sub (matchingMate_adj M hM v)
-  simpa only [SimpleGraph.top_adj, ne_comm] using h
-
-private noncomputable def matchingToPairing (n : ℕ)
-    (M : {M : (⊤ : SimpleGraph (Fin (2 * n))).Subgraph // M.IsPerfectMatching}) : P n :=
-  ⟨matchingMate M.val M.property, matchingMate_involutive M.val M.property,
-    matchingMate_ne M.val M.property⟩
-
-private noncomputable def pairingGraph {n : ℕ} (p : P n) :
-    (⊤ : SimpleGraph (Fin (2 * n))).Subgraph where
-  verts := Set.univ
-  Adj v w := p.val v = w
-  adj_sub := by
-    intro v w h
-    rw [SimpleGraph.top_adj]
-    intro he
-    exact p.property.2 v (h.trans he.symm)
-  edge_vert := by simp
-  symm := ⟨by
-    intro v w h
-    rw [← h]
-    exact p.property.1 v⟩
-
-private theorem pairingGraph_perfect {n : ℕ} (p : P n) : (pairingGraph p).IsPerfectMatching := by
-  rw [SimpleGraph.Subgraph.isPerfectMatching_iff]
-  intro v
-  refine ⟨p.val v, rfl, ?_⟩
-  intro w h
-  change p.val v = w at h
-  exact h.symm
-
-private noncomputable def pairingToMatching {n : ℕ} (p : P n) :
-    {M : (⊤ : SimpleGraph (Fin (2 * n))).Subgraph // M.IsPerfectMatching} :=
-  ⟨pairingGraph p, pairingGraph_perfect p⟩
-
-private theorem pairing_matching_inverse {n : ℕ} (p : P n) :
-    matchingToPairing n (pairingToMatching p) = p := by
-  apply Subtype.ext
-  funext v
-  apply (matchingMate_eq_iff (pairingGraph p) (pairingGraph_perfect p) v (p.val v)).mpr
-  rfl
-
-private theorem matching_pairing_inverse (n : ℕ)
-    (M : {M : (⊤ : SimpleGraph (Fin (2 * n))).Subgraph // M.IsPerfectMatching}) :
-    pairingToMatching (matchingToPairing n M) = M := by
-  apply Subtype.ext
-  ext v w
-  · simp only [pairingToMatching, pairingGraph, Set.mem_univ, true_iff]
-    exact M.property.2 v
-  · exact matchingMate_eq_iff M.val M.property v w
-
-private noncomputable def matchingEquiv (n : ℕ) :
-    {M : (⊤ : SimpleGraph (Fin (2 * n))).Subgraph // M.IsPerfectMatching} ≃ P n where
-  toFun := matchingToPairing n
-  invFun := pairingToMatching
-  left_inv := matching_pairing_inverse n
-  right_inv := pairing_matching_inverse
 
 private theorem matching_weight_row (n : ℕ)
     (M : (⊤ : SimpleGraph (Fin (2 * n))).Subgraph) (hM : M.IsPerfectMatching)

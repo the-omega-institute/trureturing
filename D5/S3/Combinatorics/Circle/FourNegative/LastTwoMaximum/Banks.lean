@@ -17,8 +17,7 @@ open private vNat mask
   from D5.S3.Combinatorics.Circle.FourNegative.LastTwoMaximum.Source
 open private stock full stock_split canonical_inventory stock_good stock_mass complement_mass
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
-open private size negatives chainLength chainStart
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives chainLength chainStart)
 
 /- The high decoder uses the original V index b-2+e.  A mask weight is
    never used as a physical label.  In particular the W tail is decoded

@@ -1,0 +1,4 @@
+## 22. 实际产品右输入的三相运输与自由正规障碍
+
+本节把 W 续卷的平稳总模型直接用于实际乘积作为右输入的情形，并给出一个独立的可数载体、处处有限值的总自由正规模型。所用的仓内关系是 [W 引理 17.1](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#17-实际单位碰撞与全部探针上的标记消去) 的同层滑移、[W 定理 44.2 与推论 44.3](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#44-保全实际第三标记返回的平稳扩张与双向来源链) 的平稳扩张和 [W 定理 45.2–推论 45.3](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#45-共同平移核的实际乘积平分与三相背景运输) 的共同背景运输；新增部分是这些已付关系在实际乘积右输入、二坐标预算和自由正规模型中的应用。这里不把来源集合对乘法封闭作为前提。
+

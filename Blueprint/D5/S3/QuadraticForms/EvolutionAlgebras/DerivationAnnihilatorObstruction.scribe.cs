@@ -54,6 +54,20 @@ internal sealed class DerivationAnnihilatorObstructionDocument : IScribeDocument
                 Blocks(Paragraph(Text("For a finite-dimensional commutative bilinear algebra with semisimple derivations, either the annihilator is zero or every vector belongs to the square space. A nonzero annihilator together with a proper square space produces an abelian ideal or an annihilator action of trace one."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("annihilator-zero-square-mem-ann"),
+                DeclarationHandle.Create(Prefix + "zero_square_mem_ann"),
+                H("A zero natural square lies in the annihilator"),
+                StatementSource.FromAuthor(Disp(ProductContext(All(Iota, Type,
+                    All(X("b"), Basis(Iota, X("V")), Hyp(Natural(X("b"), Iota),
+                        All(X("i"), Iota, Hyp(
+                            Eq(Apply(Mu, Apply(X("b"), X("i")), Apply(X("b"), X("i"))), D(0)),
+                            new Formula.Relation(Apply(X("b"), X("i")),
+                                FormulaRelationOperator.MemberOf,
+                                Apply(Qualified("LinearMap", "ker"), Mu)))))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For any natural basis, a basis vector with zero square multiplies every basis vector to zero and hence lies in the actual annihilator. This existing proof is exposed unchanged for the arbitrary zero-annihilator radical-quotient theorem; it needs no finite-dimensionality or semisimplicity assumption. The consuming KMV result retains the supplied Haobo Ma then Wenlin Zhang attribution."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("annihilator-semisimple-natural-squares-ne-zero"),
                 DeclarationHandle.Create(Prefix + "semisimple_natural_squares_ne_zero"),
                 H("semisimple natural squares ne zero"),
