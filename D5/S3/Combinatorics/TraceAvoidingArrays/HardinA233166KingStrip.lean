@@ -870,18 +870,19 @@ private theorem literal_weighted_count {n : ℕ} (hn : 0 < n) :
       Nat.card (Set.range P) = (Finset.univ.image P).card :=
     Nat.subtype_card (Finset.univ.image P) (by intro b; simp)
   simp_rw [hr]
-  rw [← Finset.sum_subtype (Finset.univ.filter (fun P : Fin (n*6) → Fin 4 =>
-    Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P)) (by simp)]
+  rw [← Finset.sum_subtype
+    (p := fun P : Fin (n*6) → Fin 4 =>
+      Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P)
+    (Finset.univ.filter (fun P : Fin (n*6) → Fin 4 =>
+      Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P))
+    (by simp) (fun P => 2^(n*6-(Finset.univ.image P).card))]
   exact Finset.sum_filter _ _ _
 
 /-- The exceptional literal one-row cardinality, including unused colours. -/
 private theorem one_row_count : a 1 = 236 := by
   classical
+  rw [literal_weighted_count (n := 1) (by omega)]
   calc
-    a 1 = ∑ P : Fin 6 → Fin 4,
-      if Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P
-      then 2^(6-(Finset.univ.image P).card) else 0 :=
-        literal_weighted_count (by omega : 0 < 1)
     _ = ∑ P : Fin 6 → Fin 4, oneRowWeight P := by
       apply Finset.sum_congr rfl
       intro P _
