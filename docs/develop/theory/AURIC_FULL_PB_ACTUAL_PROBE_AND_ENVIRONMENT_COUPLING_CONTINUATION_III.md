@@ -4732,3 +4732,194 @@ $$
 上述原模型不等式、相位象限过滤、极小集有理截断及响应权重常数分别用于
 (60.13)、(60.16) 和 (59.6)–(59.7)。原 $S_{\rm pair}$ 的符号、零性和
 有限 PB 的最终阈值排序仍待 (60.27) 的实际全域证书。
+
+## 追加锚（本行以下为增补区）
+
+## 62. 完整严格 P2 区间上的有限阶段失败向上持续
+
+本节只使用前卷 §§37–38 的实际来源、完整原探针、两笔预算和完整正泛函量词，
+以及本卷 §§50–61 对同一接触域的闭包、紧性和固定参数结论。写
+
+$$
+b(h,\lambda)=\frac{h\lambda^2}{\sqrt{3(\lambda^2+3/2)}}.
+$$
+
+对来源 $r=\pm1$，令 $\mathcal A_{r,h,\lambda}$ 是原事件中满足全部原 PB
+和严格 P2 的 $k$ 集合；这里 $\rho=k/\lambda^2$，故严格 P2 域正是
+$0\le k<b(h,\lambda)$。
+
+**引理 62.1（高价格轴见证的统一单调尾）。** 存在 $h_{\rm tail}>0$ 和
+$\Lambda_{\rm tail}(h)$，使 $0<h<h_{\rm tail}$、$\lambda\ge
+\Lambda_{\rm tail}(h)$ 时，对两个来源和两个取向，所有
+
+$$
+2\le k<b(h,\lambda)
+$$
+
+都严格违反原 PB；同一见证的两笔原预算严格为正。
+
+**证明。** 对取向 $\iota=i$ 使用 (38.8)–(38.23) 的有限实际见证，
+并把其中的 $\rho$ 暂写成 $k/\lambda^2$。置 $Q^0_\lambda=
+iCv_\lambda-\ell p_\lambda$，则 (38.23) 给出
+
+$$
+\begin{aligned}
+F_\lambda(k):=\lambda^2\mathcal D_\lambda(k)
+={}&\lambda^2\sum_{d=\pm1}\alpha_d^{-1}
+ \left\|P_\lambda+dQ^0_\lambda+d\frac{k}{\lambda^2}T_Au_\lambda\right\|^2\\
+&+\frac9{40}\lambda^2\|e_\lambda\|^2
+ +4k\,\operatorname{Re}(v_\lambda^*T_Au_\lambda).
+\end{aligned}
+\tag{62.1}
+$$
+
+其中 $u_\lambda,p_\lambda,q_\lambda,e_\lambda$ 与 $k$ 无关。由
+(38.14)、(38.17)–(38.19)，在必要时缩小 $h_0$ 后，对 $0<h\le h_0$ 一致有
+
+$$
+P_\lambda=O(\lambda^{-3}),\qquad Q^0_\lambda=O(\lambda^{-3}),\qquad
+\operatorname{Re}(v_\lambda^*T_Au_\lambda)=-3+O(\lambda^{-3}),
+$$
+
+and
+
+$$
+\frac9{40}\lambda^2\|e_\lambda\|^2=\frac{809}{40}+O(\lambda^{-2}).
+$$
+
+Consequently $F_\lambda(2)=809/40-24+O(\lambda^{-2})<0$ for all
+sufficiently large $\lambda$, with the cutoff uniform in the two values of $r$.
+Differentiating (62.1) gives the exact identity
+
+$$
+\begin{aligned}
+F_\lambda'(k)
+={}&4\operatorname{Re}(v_\lambda^*T_Au_\lambda)\\
+&+2\sum_{d=\pm1}\alpha_d^{-1}d\,\operatorname{Re}
+ \left((P_\lambda+dQ^0_\lambda)^*T_Au_\lambda\right)
+ +\frac{2k}{\lambda^2}\sum_{d=\pm1}\alpha_d^{-1}\|T_Au_\lambda\|^2.
+\end{aligned}
+\tag{62.2}
+$$
+
+在严格 P2 域内有 $k/\lambda^2<h/\sqrt{3(\lambda^2+3/2)}$。
+因此先取充分小的 $h_{\rm tail}$，再取充分大的 $\lambda$，(62.2) 在整个
+$[2,b(h,\lambda))$ 上都小于 $-6$，从而 $F_\lambda(k)<0$。式 (38.26)
+给出两笔预算的严格正性。复共轭给出另一取向，(38.1) 给出两个来源。∎
+
+**引理 62.2（有界价格的统一接触提取）。** 固定 $K\ge2$。设
+$\lambda_n\to\infty$、$0\le k_{1,n}\le k_{2,n}\le K$，并假定每个 $n$ 都有
+有限归一原测试满足
+
+$$
+\mathcal D_{\lambda_n}(k_{1,n})<0.
+$$
+
+取子列后，其数据收敛到接触
+$c\in\mathcal C_\iota(a_r)$，且 $k_{1,n}\to k_1$，满足
+
+$$
+J_{k_1}(c)\le0.
+$$
+若 $k_{2,n}-k_{1,n}\to0$，则沿同一测试有
+
+$$
+\frac{\partial}{\partial k}\bigl(\lambda_n^2\mathcal D_{\lambda_n}(k)\bigr)
+\longrightarrow 4\epsilon\zeta(c)
+$$
+
+且对 $k\in[k_{1,n},k_{2,n}]$ 一致成立。
+
+**证明。** 定理 37.5 的证明，特别是 (37.26)–(37.29)，只通过 $|k|$
+进入估计，故可用单一上界 $K$。于是对变动的 $k_{1,n}$ 仍有相同的子列紧性，
+(37.23) 给出所列不等式。由 (37.21) 极限满足 $\eta\ne0$，所以
+$J_{k_1}(c)\le0$ 强制 $k_1>0$ 且 $\epsilon\zeta(c)<0$。
+
+对固定测试在 (37.10) 中写
+$Q_\lambda=Q^0_\lambda+(k/\lambda^2)T_Au$。归一化缺陷关于 $k$ 的精确导数为
+
+$$
+4\epsilon\zeta
+{}+2\sum_{d=\pm1}\alpha_d^{-1}d\,\operatorname{Re}
+ \left((\mathsf P+d\mathsf Q^0)^*T_Au\right)
+{}+\frac{2k}{\lambda^2}\sum_{d=\pm1}\alpha_d^{-1}\|T_Au\|^2.
+\tag{62.3}
+$$
+
+紧性估计给出 $\mathsf P,\mathsf Q^0\to0$ 及 $k/\lambda^2\to0$，故得到所列一致极限。∎
+
+**定理 62.3（整个严格 P2 移动区间的失败向上持续）。** 存在共同的
+$h_{\rm up}>0$，且 $h_{\rm up}\le10^{-3}$，使每个 $0<h<h_{\rm up}$
+都有共同有限截止 $\Lambda_{\rm up}(h)$，对两个来源和两个取向均成立：当
+$\lambda\ge\Lambda_{\rm up}(h)$ 且
+
+$$
+0\le k_1\le k_2<b(h,\lambda),
+$$
+
+在 $k_1$ 处完整原 PB 失败时，在 $k_2$ 处也失败。
+
+**证明。** 假设断言失败。高价格情形 $k_{1,n}\ge2$ 被引理 62.1 排除；若
+$k_{2,n}\ge2$，引理 62.1 已直接给出 $k_{2,n}$ 处的失败。因此取子列后可设反例
+满足 $0\le k_{1,n}<k_{2,n}<2$。选取 $k_{1,n}$ 处的有限归一失败见证；引理 62.2
+给出极限接触 $c$ 及 $J_{k_1}(c)\le0$。
+
+若 $k_{2,n}-k_{1,n}$ 不趋于零，再取子列使 $k_2-k_1>0$。由于 $\eta\ne0$ 且
+$\epsilon\zeta(c)<0$，
+
+$$
+J_{k_2}(c)=J_{k_1}(c)+4\epsilon\zeta(c)(k_2-k_1)<0.
+$$
+
+引理 62.2 给出的接触紧族上，恢复构造 (37.40)–(37.42) 对 $k=k_{2,n}$ 一致，
+故对充分大 $n$ 产生 $k_{2,n}$ 处的有限负缺陷见证，矛盾。
+
+剩下 $k_{2,n}-k_{1,n}\to0$ 的情形。同一一致估计说明满足 $0\le k\le2$、
+$J_k\le0$ 的极限接触集紧。在此集合上 $\eta\ne0$，故 $\epsilon\zeta$ 不会为零；
+于是存在 $\delta>0$ 使 $\epsilon\zeta\le-\delta$。由 (62.3)，对原失败见证及所有
+$k\in[k_{1,n},k_{2,n}]$，
+
+$$
+\frac{\partial}{\partial k}\bigl(\lambda_n^2\mathcal D_{\lambda_n}(k)\bigr)
+\le-\delta<0
+$$
+
+对充分大 $n$ 有上式。缺陷在 $k_{1,n}$ 已为负，故在 $k_{2,n}$ 仍为负，再次矛盾。
+来源和取向只有有限个，因而可取共同截止。∎
+
+**定理 62.4（事件 F 的有限阶段闭区间与端点收敛）。** 存在 $h_{\rm reg}>0$，
+使每个 $0<h<h_{\rm reg}$、每个来源 $r=\pm1$ 都有共同有限截止 $\Lambda_r(h)$
+及函数 $\kappa_{(r,h)}(\lambda)$，对所有 $\lambda\ge\Lambda_r(h)$ 有
+
+$$
+\mathcal A_{r,h,\lambda}=[0,\kappa_{(r,h)}(\lambda)],\qquad
+0\le\kappa_{(r,h)}(\lambda)<b(h,\lambda),\qquad
+\kappa_{(r,h)}(\lambda)\longrightarrow K_r(h).
+$$
+
+同一个 $h_{\rm reg}$ 及一个共同截止可对两个来源和两个取向同时选取。因此原事件
+$F$ 按原来源、全部有限 Hermitian 测试、完整正复线性泛函、严格 P2 区间、共同截止
+及端点包含性成立。
+
+**证明。** 取 $h_{\rm reg}$ 小于 §§37、41、50、56 的正半径、引理 62.1 的
+半径以及 $10^{-3}$。精确 P2 计算 (38.27)–(38.28) 将允许的 $k$ 域确定为
+$[0,b(h,\lambda))$。由前卷定理 35.4 的共同小半径估计，$k=0$ 满足全部原 PB；当
+$b(h,\lambda)>2$ 时，引理 62.1 在 $k=2$ 给出失败。
+
+固定 $r,h,\lambda$，在该严格域内令 $S=\mathcal A_{r,h,\lambda}$。同一完整测试与
+泛函域上的原 PB 条件已有相对闭性，故 $S$ 相对闭。定理 62.3 说明其补集向上封闭。
+由于 $0\in S$ 且 $k=2$ 已在允许域内失败，存在唯一
+$\kappa<b(h,\lambda)$ 使 $S=[0,\kappa]$；相对闭性包含端点。此处不假设有限 PB
+变分下确界取到。
+
+最后使用 §§37、41 已有的固定 $k$ 严格侧结论。对每个 $0\le q<K_r(h)$，充分大
+$\lambda$ 有 $q\in S$，故 $\liminf\kappa_{(r,h)}(\lambda)\ge q$。对每个
+$q>K_r(h)$，充分大 $\lambda$ 在 $q$ 处失败；向上持续性于是给出
+$\kappa_{(r,h)}(\lambda)\le q$。令 $q$ 从两侧趋于 $K_r(h)$ 即得收敛。对来源和取向
+的有限个截止取最大值，仍得到共同的 $\Lambda(h)$。∎
+
+定理 62.3 将显式高价格导数 (62.2) 与有界价格接触导数 (62.3) 结合，
+把固定 $k$ 的结论延伸到完整移动严格 P2 区间；端点、来源、取向、探针、泛函及预算
+量词均保持原事件的范围。
+
+## 追加锚（本行以下为增补区）
