@@ -6,6 +6,14 @@
    utility: none
    digest: Six-label pairing-defect convolutions retain only the empty and single-edge terms. -/
 
+/-
+proof_shape: partialPairing_six_convolution: bind-only (consumer:
+  SixthOrderTopPairingRefutation.model_unit_transfer).
+escape_witness: none; this consumed finite-sum reduction organizes the substantive
+  sixth-order countermodel proof without providing an independent admission witness.
+admission_basis: consumed-helper.
+-/
+
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectInversion
 
 open scoped BigOperators
@@ -74,6 +82,28 @@ theorem partialPairing_six_convolution (U : Finset α) (hU : U.card ≤ 6)
   change (∑ P ∈ S, N ^ P.card * δ (U \ pairingSupport P)) = _
   rw [hreduced, Finset.sum_insert h01, ← hsingle, ← Finset.mul_sum]
   simp [pairingSupport]
+
+/-- A quantitative lower bound for the four-label defect of the sixth-order model. -/
+theorem sixth_four_defect_lower (N : ℝ) (hN : 100 ≤ N) :
+    N ^ 2 / 2 ≤ Real.sqrt 15 * (N * (N - 1) * (N - 2) * (N - 3)) / N ^ 2 -
+      3 * (N - 1) ^ 2 := by
+  have hpos : 0 < N := by linarith
+  have hslo : (15 : ℝ) / 4 ≤ Real.sqrt 15 := by
+    have hs : 0 ≤ Real.sqrt 15 := by positivity
+    nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num]
+  have hshi : Real.sqrt 15 ≤ (4 : ℝ) := by
+    have hs : 0 ≤ Real.sqrt 15 := by positivity
+    nlinarith [show (Real.sqrt 15)^2 = (15 : ℝ) by norm_num]
+  have hp : N ^ 4 - 6 * N ^ 3 ≤ N * (N - 1) * (N - 2) * (N - 3) := by
+    nlinarith [sq_nonneg N]
+  rw [le_sub_iff_add_le, le_div_iff₀ (sq_pos_of_pos hpos)]
+  have hprod := mul_le_mul_of_nonneg_left hp (show 0 ≤ Real.sqrt 15 by positivity)
+  have hlarge : (0 : ℝ) ≤ N ^ 4 - 6 * N ^ 3 := by
+    nlinarith [show 0 ≤ N^3 * (N - 6) by exact mul_nonneg (pow_nonneg hpos.le 3) (by linarith)]
+  have hlo := mul_le_mul_of_nonneg_right hslo hlarge
+  have hnp : 0 ≤ N^3 * (N - 100) := mul_nonneg (pow_nonneg hpos.le 3) (by linarith)
+  have hnp₂ : 0 ≤ N^2 * (N - 100) := mul_nonneg (sq_nonneg N) (by linarith)
+  nlinarith [hprod, hlo, hnp, hnp₂, sq_nonneg N]
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

@@ -32,5 +32,22 @@ theorem IsPerfectPairing.card {U : Finset α} {P : Finset (Finset α)}
   rw [← hP.2]
   exact pairingSupport_card hP.1
 
+/-- Rank-one edge weights have the same product on every perfect pairing. -/
+theorem finitePairingPolynomial_rankOne (U : Finset α) (c : Finset α → ℝ)
+    (x : α → ℝ) (hc : ∀ e, e.card = 2 → c e = ∏ i ∈ e, x i) :
+    finitePairingPolynomial U c =
+      (((Finset.univ : Finset (Finset (Finset α))).filter
+        (IsPerfectPairing U)).card : ℝ) * ∏ i ∈ U, x i := by
+  unfold finitePairingPolynomial
+  have hprod (P : Finset (Finset α)) (hP : IsPerfectPairing U P) :
+      (∏ e ∈ P, c e) = ∏ i ∈ U, x i := by
+    rw [Finset.prod_congr rfl (fun e he => hc e (hP.1.1 e he))]
+    have h := Finset.prod_biUnion (f := x) hP.1.2.1
+    change (∏ i ∈ pairingSupport P, x i) = ∏ e ∈ P, ∏ i ∈ e, x i at h
+    rw [hP.2] at h
+    exact h.symm
+  rw [Finset.sum_congr rfl (fun P hP => hprod P (Finset.mem_filter.mp hP).2)]
+  simp
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
