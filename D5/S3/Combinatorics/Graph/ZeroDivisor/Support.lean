@@ -285,6 +285,159 @@ theorem configurations_four_families (hι : Fintype.card ι = 3)
     rw [hui] at hju
     exact hij (Finset.mem_singleton.mp hju).symm
 
+open D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
+
+/-- Actual vertices in the two-coordinate cells of a finite domain. -/
+def pairDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) : Finset (Vertex R) :=
+  V.filter fun x => (support e x.1).card = 2
+
+/-- Actual vertices whose supports contain a specified coordinate. -/
+def starDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
+    Finset (Vertex R) := V.filter fun x => i ∈ support e x.1
+
+/-- The same domain with its singleton-support cell removed. -/
+def starTailDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
+    Finset (Vertex R) := (starDomain e V i).filter fun x => support e x.1 ≠ {i}
+
+private theorem pair_family_powerset (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
+    pairFamily e V = (pairDomain e V).powerset := by
+  ext S
+  simp only [pairFamily, pairDomain, Finset.mem_filter, Finset.mem_powerset]
+  constructor
+  · rintro ⟨hV, hpair⟩ x hx
+    exact ⟨hV hx, hpair x hx⟩
+  · intro h
+    exact ⟨fun x hx => (h hx).1, fun x hx => (h hx).2⟩
+
+private theorem star_family_sdiff (e : R ≃+* ∀ i, K i)
+    (V : Finset (Vertex R)) (i : ι) :
+    starFamily e V i = (starDomain e V i).powerset \
+      (starTailDomain e V i).powerset := by
+  ext S
+  simp only [starFamily, starDomain, starTailDomain, Finset.mem_filter,
+    Finset.mem_sdiff, Finset.mem_powerset]
+  constructor
+  · rintro ⟨hV, ⟨u, hu, hui⟩, hall⟩
+    refine ⟨fun x hx => ⟨hV hx, hall x hx⟩, ?_⟩
+    intro htail
+    exact (htail hu).2 hui
+  · rintro ⟨hdom, hnot⟩
+    refine ⟨fun x hx => (hdom hx).1, ?_, fun x hx => (hdom hx).2⟩
+    by_contra hnone
+    apply hnot
+    intro x hx
+    exact ⟨hdom hx, fun he => hnone ⟨x, hx, he⟩⟩
+
+private theorem powerset_polynomial {α : Type*} (V : Finset α) :
+    (∑ S ∈ V.powerset, (Polynomial.X : Polynomial ℤ) ^ S.card) =
+      (1 + Polynomial.X) ^ V.card := by
+  simpa only [Finset.prod_const] using
+    (Finset.prod_one_add (f := fun _ : α => (Polynomial.X : Polynomial ℤ)) V).symm
+
+private theorem star_polynomial (e : R ≃+* ∀ i, K i)
+    (V : Finset (Vertex R)) (i : ι) :
+    (∑ S ∈ starFamily e V i, (Polynomial.X : Polynomial ℤ) ^ S.card) =
+      (1 + Polynomial.X) ^ (starDomain e V i).card -
+        (1 + Polynomial.X) ^ (starTailDomain e V i).card := by
+  rw [star_family_sdiff, Finset.sum_sdiff_eq_sub, powerset_polynomial,
+    powerset_polynomial]
+  exact Finset.powerset_mono.mpr (Finset.filter_subset _ _)
+
+/-- The native independence polynomial is the generating function of the four
+actual families. The exponents are cardinalities of actual finite vertex domains. -/
+theorem independencePolynomial_four_families (hι : Fintype.card ι = 3)
+    (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
+    independencePolynomial (graph R) V =
+      (1 + Polynomial.X) ^ (pairDomain e V).card +
+        ∑ i, ((1 + Polynomial.X) ^ (starDomain e V i).card -
+          (1 + Polynomial.X) ^ (starTailDomain e V i).card) := by
+  obtain ⟨hfamily, hpair, hstars⟩ := configurations_four_families hι e V
+  have hd : Disjoint (pairFamily e V) (Finset.univ.biUnion (starFamily e V)) := by
+    exact Finset.disjoint_biUnion_right.mpr (fun i _ => hpair i)
+  unfold independencePolynomial partition
+  simp only [Finset.prod_const]
+  rw [hfamily, Finset.sum_union hd, Finset.sum_biUnion]
+  · rw [pair_family_powerset, powerset_polynomial]
+    congr 1
+    exact Finset.sum_congr rfl (fun i _ => star_polynomial e V i)
+  · intro i _ j _ hij
+    exact hstars hij
+
+private theorem coefficient_card (V : Finset (Vertex R)) (k : ℕ) :
+    (independencePolynomial (graph R) V).coeff k =
+      (((configurations (graph R) V).filter fun S => S.card = k).card : ℤ) := by
+  simp [independencePolynomial, partition, Polynomial.coeff_X_pow, eq_comm]
+
+/-- Each coefficient counts all actual independent k-subsets, with the exact
+binomial expression supplied by the native disjoint-family polynomial identity. -/
+theorem independent_count_formula (hι : Fintype.card ι = 3)
+    (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (k : ℕ) :
+    (((configurations (graph R) V).filter fun S => S.card = k).card : ℤ) =
+      ((pairDomain e V).card.choose k : ℤ) +
+        ∑ i, (((starDomain e V i).card.choose k : ℤ) -
+          ((starTailDomain e V i).card.choose k : ℤ)) := by
+  rw [← coefficient_card, independencePolynomial_four_families hι e V]
+  simp [Polynomial.coeff_one_add_X_pow]
+
+private theorem support_filter_card [Fintype R] [∀ i, Fintype (K i)]
+    (e : R ≃+* ∀ i, K i) (P : Finset ι → Prop) :
+    ((Finset.univ : Finset (Vertex R)).filter fun x => P (support e x.1)).card =
+      ∑ S ∈ (Finset.univ : Finset (Finset ι)).filter
+        (fun S => S.Nonempty ∧ S ≠ Finset.univ ∧ P S),
+          ∏ i ∈ S, (Fintype.card (K i) - 1) := by
+  let T := (Finset.univ : Finset (Finset ι)).filter
+    (fun S => S.Nonempty ∧ S ≠ Finset.univ ∧ P S)
+  have h := Finset.sum_card_fiberwise_eq_card_filter
+    (Finset.univ : Finset (Vertex R)) T (fun x => support e x.1)
+  have hright : ((Finset.univ : Finset (Vertex R)).filter
+      (fun x => support e x.1 ∈ T)) = Finset.univ.filter
+        (fun x : Vertex R => P (support e x.1)) := by
+    ext x
+    have hv := (vertex_iff e x.1).mp x.2
+    simp [T, hv.1, hv.2]
+  rw [hright] at h
+  rw [← h]
+  apply Finset.sum_congr rfl
+  intro S hS
+  have hs := (Finset.mem_filter.mp hS).2
+  simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype] using
+    support_fiber_card e S hs.1 hs.2.1
+
+/-- The exact four-family polynomial on the full actual ring graph, with all
+six support multiplicities evaluated. The finite coordinate domains are arbitrary. -/
+theorem independencePolynomial_three_coordinates
+    {L : Fin 3 → Type*} [∀ i, CommRing (L i)] [∀ i, NoZeroDivisors (L i)]
+    [∀ i, Nontrivial (L i)] [∀ i, Fintype (L i)] [Fintype R]
+    (e : R ≃+* ∀ i, L i) :
+    let a := Fintype.card (L 0) - 1
+    let b := Fintype.card (L 1) - 1
+    let c := Fintype.card (L 2) - 1
+    independencePolynomial (graph R) Finset.univ =
+      (1 + Polynomial.X) ^ (a*b + a*c + b*c) +
+      ((1 + Polynomial.X) ^ (a + a*b + a*c) -
+        (1 + Polynomial.X) ^ (a*b + a*c)) +
+      ((1 + Polynomial.X) ^ (b + a*b + b*c) -
+        (1 + Polynomial.X) ^ (a*b + b*c)) +
+      ((1 + Polynomial.X) ^ (c + a*c + b*c) -
+        (1 + Polynomial.X) ^ (a*c + b*c)) := by
+  have hU : (Finset.univ : Finset (Finset (Fin 3))) =
+      {∅, {0}, {1}, {2}, {0,1}, {0,2}, {1,2}, {0,1,2}} := by decide
+  have hfin : (Finset.univ : Finset (Fin 3)) = {0,1,2} := by decide
+  have hpair := support_filter_card e (fun S => S.card = 2)
+  have hstar (i : Fin 3) := support_filter_card e (fun S => i ∈ S)
+  have htail (i : Fin 3) := support_filter_card e (fun S => i ∈ S ∧ S ≠ {i})
+  simp only [hU, hfin] at hpair hstar htail
+  norm_num at hpair hstar htail
+  rw [independencePolynomial_four_families (by decide) e]
+  simp only [pairDomain, starDomain, starTailDomain, Finset.filter_filter]
+  simp only [hpair, hstar, htail, Fin.sum_univ_three]
+  ring
+
+#print axioms independencePolynomial_three_coordinates
+
+#print axioms independencePolynomial_four_families
+#print axioms independent_count_formula
+
 #print axioms prime_support_fiber_card
 #print axioms configurations_four_families
 

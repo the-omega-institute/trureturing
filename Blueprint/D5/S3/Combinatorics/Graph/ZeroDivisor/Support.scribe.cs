@@ -58,5 +58,38 @@ internal sealed class SupportDocument : IScribeDocumentDefinition
                     Paragraph(Text("An actual vertex has nonempty proper support, so with three coordinates its support has size one or two. If an independent subset contains a singleton support at i, independence forces every other support to contain i. If no singleton support occurs, all supports have size two; any two such subsets of a three-element set intersect, so the corresponding vertices are independent. A singleton support in a star family identifies its index uniquely and precludes membership in the family of two-coordinate supports.")),
                     Paragraph(Text("The identity uses the existing powerset-filter definition of independent configurations, so it partitions all independent subsets, including the empty set. It makes no assertion about maximality or domination, and the finite domain V may be the entire actual vertex set."))),
                 DescribeRole.Theorem),
-            Paragraph(Text("The support correspondence, exact cell multiplicities and disjoint family decomposition do not establish log concavity or unimodality of the independence polynomial. Evaluating the family generating functions, identifying the actual independence number and proving uniform coefficient inequalities require further arguments.")))));
+            Definition("pairDomain", "The actual two-coordinate vertex domain",
+                "For a finite domain V of actual ring vertices, pairDomain is its subset of vertices whose support has cardinality two."),
+            Definition("starDomain", "The actual domain containing a coordinate",
+                "For a coordinate i, starDomain is the subset of V whose supports contain i."),
+            Definition("starTailDomain", "Removing the singleton cell",
+                "starTailDomain removes from starDomain(i) precisely the vertices whose support equals the singleton containing i."),
+            Describe.Lean(
+                DescribeId.Create("zero-divisor-independence-polynomial-four-families"),
+                DeclarationHandle.Create(Prefix + "independencePolynomial_four_families"),
+                H("The exact native family generating function"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every finite index type of cardinality three, commutative ring R, nontrivial commutative coordinate rings K(i) without zero divisors, ring equivalence e from R to their product, and finite domain V of actual vertices, the native independence polynomial equals (1+X) to the cardinality of pairDomain, plus the sum over i of the difference between (1+X) to the cardinality of starDomain(i) and (1+X) to the cardinality of starTailDomain(i). The equality is in Polynomial over the integers, so subtraction is integer polynomial subtraction.")),
+                    Paragraph(Text("The pair family is the full powerset of pairDomain. The star family is the powerset of starDomain with the powerset of starTailDomain removed. The proved disjoint configuration decomposition therefore evaluates using Mathlib's powerset product expansion. The empty configuration occurs once, in the pair family. This is the polynomial defined by the native independent-set sum, without an assumed counting formula."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("zero-divisor-independent-count-formula"),
+                DeclarationHandle.Create(Prefix + "independent_count_formula"),
+                H("Coefficients count all actual independent subsets"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Under the same full hypotheses and for every natural k, the integer cast of the number of native configurations S contained in V with cardinality k is choose(card(pairDomain),k), plus the sum over the three coordinates i of choose(card(starDomain(i)),k) minus choose(card(starTailDomain(i)),k). The differences and sum are taken in the integers, not with truncated natural subtraction.")),
+                    Paragraph(Text("Each configuration contributes exactly X to the power of its cardinality in the native polynomial. Extracting coefficient k is therefore the cardinality of the filter by cardinality k. Mathlib's coefficient formula for (1+X) to a natural power then gives the displayed binomial expression, including k=0 and ranks above every family size."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("zero-divisor-independence-polynomial-three-coordinates"),
+                DeclarationHandle.Create(Prefix + "independencePolynomial_three_coordinates"),
+                H("All six multiplicities in the full ring graph"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let L(0), L(1), L(2) be arbitrary finite nontrivial commutative rings without zero divisors, let R be a finite commutative ring, and specify a ring equivalence from R to their product. Set a=card(L(0))-1, b=card(L(1))-1, c=card(L(2))-1 and y=1+X. On the entire actual vertex domain, the native polynomial is y^(ab+ac+bc) + (y^(a+ab+ac)-y^(ab+ac)) + (y^(b+ab+bc)-y^(ab+bc)) + (y^(c+ac+bc)-y^(ac+bc)).")),
+                    Paragraph(Text("The proof partitions each actual vertex domain by its nonempty proper support and uses the inverse coordinate-choice bijection to evaluate its fibers. The six supports on three coordinates give pair-domain size ab+ac+bc, and coordinate-i star sizes a+ab+ac, b+ab+bc, c+ac+bc with the corresponding singleton cells removed for the tail domains. This evaluates Rather's Theorem 4.1 formula on actual ring elements. For distinct primes p,q,r the native CRT gives a=p-1, b=q-1, c=r-1, including p=2; no prime upper bound is introduced."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The exact native polynomial and coefficient counts do not establish log concavity or unimodality. Identifying and attaining the actual independence number, proving positivity through that maximum and the zero tail, and proving uniform coefficient inequalities require further arguments.")))));
 }
