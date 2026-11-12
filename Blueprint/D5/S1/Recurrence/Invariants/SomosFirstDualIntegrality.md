@@ -50,6 +50,10 @@ $$\forall p \in \mathbb{N},\; \forall q \in \mathbb{N},\; \forall c \in \operato
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/SomosFirstDualIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ovsienko-tabachnikov-first-dual-somos-integrality` (proved) by `D5/S1/Recurrence/Invariants/SomosFirstDualIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ovsienko-tabachnikov-first-dual-somos-integrality","declaration_gid":"D5/S1/Recurrence/Invariants/SomosFirstDualIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Valentin Ovsienko; Serge Tabachnikov (2017). *Dual numbers, weighted quivers, and extended Somos and Gale-Robinson sequences*. DOI: [10.1007/s10468-018-9779-3](https://doi.org/10.1007/s10468-018-9779-3). URL: <https://arxiv.org/abs/1705.01623v1>.
