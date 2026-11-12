@@ -5,8 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Foundation;
 internal sealed class LowAffineDimensionalBOnlyDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original whole-base ball branch of VII98.7 supplies an ambient proper antipodal effect.",
-        H("Whole-base ball branch of VII98.7"),
+        "Whole-base balls and the Radon segment-face branch supply original proper antipodal effects.",
+        H("Whole-base and segment-face branches of VII98.7"),
         Blocks(
             Paragraph(Text("For the original finite-dimensional closed pointed generating cone and its original strictly positive unit, an entire pair ball equal to the whole normalized base yields a genuine linear proper effect separating every unit antipodal chart pair.")),
             Describe.Lean(DescribeId.Create("ball-chart-antipodal-effect"),
@@ -19,5 +19,11 @@ internal sealed class LowAffineDimensionalBOnlyDocument : IScribeDocumentDefinit
                 H("Consumer: the original allAntipodes predicate"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("When every distinct pure pair has a chart whose pair base is the whole base, the preceding effect supplies allAntipodes on the original carrier."))), DescribeRole.Theorem),
-            Paragraph(Text("The segment-face and positive-dimensional-facet branches of the complete VII98.7 theorem require additional geometric arguments.")))));
+            Describe.Lean(DescribeId.Create("segment-faces-lowdim-antipodes"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/LowAffineDimensionalBOnly.segment_faces_lowdim_antipodes"),
+                H("Radon reduction of the entire segment-face branch"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Start with the entire original pure set, with no finiteness or closedness hypothesis on it. Assume affine dimension at most three and that every distinct pure pair has its entire native pair base equal to its segment. Radon's theorem partitions any dependent family of at most five pure points into two intersecting convex hulls. One side has at most two points; its hull is an extreme singleton or a native segment face. Every pure point on the other side lies outside that face, and the complement of an extreme set in the original convex base is convex. Thus the hulls cannot intersect. Five distinct original pure points would be dependent by affine dimension, so the whole pure set is finite. The same argument gives its affine independence, and compact convex generation identifies the whole base with its simplex. The frozen zero-kernel coordinate-effect theorem then supplies genuine proper linear effects on the original carrier. Its coordinate values distinguish every distinct pure pair, including both endpoints of every actual admitted ball-chart antipode."))), DescribeRole.Theorem),
+            Paragraph(Text("The dimension is the finrank of the affine direction vectorSpan of the original base, not the linear span of that normalized base. The result also bounds the full pure-set cardinality by affine dimension plus one.")),
+            Paragraph(Text("These are applications of the source VII98.7 branches, not the complete B-implies-A theorem. The m=0 and m=1 reductions, the full-dimensional-face reduction, and the m=3 spherical-facet branch from VII98.6 remain unproved here. In particular no general positive-dimensional-facet exclusion or m-at-least-four failure conclusion is asserted. The source atom remains open and uncovered.")))));
 }

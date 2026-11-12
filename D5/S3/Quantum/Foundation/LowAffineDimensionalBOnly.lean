@@ -4,15 +4,15 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: A whole-base ball chart supplies an original proper antipodal effect.
--/
+   digest: Whole-base balls and low-dimensional segment faces supply original antipodal effects. -/
 
 import D5.S3.Quantum.Foundation.WholePairBallConfirmation
 import D5.S3.Quantum.Foundation.FinitePureSimplex
 import Mathlib.LinearAlgebra.Basis.VectorSpace
+import Mathlib.Analysis.Convex.Radon
 
 /-!
-The full-base branch of the arbitrary-pure low-dimensional argument.  The
+The full-base and segment-face branches of the arbitrary-pure low-dimensional argument. The
 coordinate functional is defined on the chart direction, extended as a linear
 map on the original carrier, and then normalized with the original unit.  The
 properness proof is on the whole original cone; no restricted effect space or
@@ -27,6 +27,11 @@ open CircuitBalancedConfirmation
 open WholePairBallConfirmation
 open FinitePureSimplex
 open scoped RealInnerProductSpace
+
+open private pair_extreme chart_sphere_pure from
+  D5.S3.Quantum.Foundation.WholePairBallConfirmation
+open private simplex_kernel_zero from
+  D5.S3.Quantum.Foundation.FinitePureSimplex
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V]
@@ -159,5 +164,137 @@ theorem allAntipodes_of_full_pair_balls
   obtain ⟨_, hwhole⟩ := hB p q hpq
   obtain ⟨f, hf, hz⟩ := ball_chart_antipodal_effect C u hclosed hstrict b hwhole hn
   exact ⟨f, hf, hz⟩
+
+private theorem small_pure_hull_face
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    (hseg : ∀ p q : pure C u, p ≠ q →
+      pairBase C u p q = segment ℝ (p : V) (q : V))
+    {ι : Type*} (f : ι → pure C u) (hf : Function.Injective f)
+    (s : Finset ι) (hs : s.card ≤ 2) :
+    IsExtreme ℝ (base C u) (convexHull ℝ ((fun i => (f i : V)) '' (s : Set ι))) ∧
+    ∀ i, (f i : V) ∈ convexHull ℝ ((fun i => (f i : V)) '' (s : Set ι)) → i ∈ s := by
+  classical
+  have hcases : s.card = 0 ∨ s.card = 1 ∨ s.card = 2 := by omega
+  rcases hcases with hzero | hone | htwo
+  · have he : s = ∅ := Finset.card_eq_zero.mp hzero
+    subst s
+    simp only [Finset.coe_empty, Set.image_empty, convexHull_empty]
+    exact ⟨⟨Set.empty_subset _, by simp⟩, by simp⟩
+  · obtain ⟨i, rfl⟩ := Finset.card_eq_one.mp hone
+    simp only [Finset.coe_singleton, Set.image_singleton, convexHull_singleton]
+    refine ⟨isExtreme_singleton.mpr (f i).property, ?_⟩
+    intro j hj
+    have he : f j = f i := Subtype.ext (Set.mem_singleton_iff.mp hj)
+    simpa using hf he
+  · obtain ⟨i, j, hij, rfl⟩ := Finset.card_eq_two.mp htwo
+    have hface := pair_extreme C u (f i) (f j)
+    rw [hseg (f i) (f j) (fun h => hij (hf h))] at hface
+    simp only [Finset.coe_pair, Set.image_pair, convexHull_pair]
+    refine ⟨hface, ?_⟩
+    intro k hk
+    have he := (mem_extremePoints_iff_forall_segment.mp (f k).property).2
+      (f i) (f i).property.1 (f j) (f j).property.1 hk
+    rcases he with hi | hj
+    · exact Finset.mem_pair.mpr (Or.inl (hf (Subtype.ext hi)).symm)
+    · exact Finset.mem_pair.mpr (Or.inr (hf (Subtype.ext hj)).symm)
+
+private theorem small_pure_family_independent
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    (hseg : ∀ p q : pure C u, p ≠ q →
+      pairBase C u p q = segment ℝ (p : V) (q : V))
+    {ι : Type*} [Fintype ι] (f : ι → pure C u) (hf : Function.Injective f)
+    (hcard : Fintype.card ι ≤ 5) :
+    AffineIndependent ℝ (fun i => (f i : V)) := by
+  classical
+  by_contra hdep
+  obtain ⟨I, z, hzI, hzIc⟩ := Convex.radon_partition hdep
+  have hside (J : Set ι) (hJ : J.toFinset.card ≤ 2)
+      (hzJ : z ∈ convexHull ℝ ((fun i => (f i : V)) '' J))
+      (hzJc : z ∈ convexHull ℝ ((fun i => (f i : V)) '' Jᶜ)) : False := by
+    obtain ⟨hface, hvertices⟩ := small_pure_hull_face hseg f hf J.toFinset hJ
+    simp only [Set.coe_toFinset] at hface hvertices
+    have havoid : (fun i => (f i : V)) '' Jᶜ ⊆
+        base C u \ convexHull ℝ ((fun i => (f i : V)) '' J) := by
+      rintro _ ⟨i, hi, rfl⟩
+      exact ⟨(f i).property.1, fun h => hi (by simpa using hvertices i h)⟩
+    exact (convexHull_min havoid (hface.convex_sdiff (base_convex C u)) hzJc).2 hzJ
+  by_cases hI : I.toFinset.card ≤ 2
+  · exact hside I hI hzI hzIc
+  · have hIc : Iᶜ.toFinset.card ≤ 2 := by
+      have hsum : I.toFinset.card + Iᶜ.toFinset.card = Fintype.card ι := by
+        simpa using Finset.card_add_card_compl I.toFinset
+      omega
+    exact hside Iᶜ hIc hzIc (by simpa using hzI)
+
+/-- The segment-face branch of VII98.7 starts with the entire arbitrary pure
+set. Radon forces it to be finite and affinely independent in affine dimension
+at most three; the resulting original coordinate effects supply every chart
+antipode. No finiteness or exposedness premise is used. -/
+theorem segment_faces_lowdim_antipodes
+    (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hspan : Submodule.span ℝ (C : Set V) = ⊤)
+    (hdim : Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 3)
+    (hseg : ∀ p q : pure C u, p ≠ q →
+      pairBase C u p q = segment ℝ (p : V) (q : V)) :
+    Finite (pure C u) ∧ simplex C u ∧
+      Nat.card (pure C u) ≤ Module.finrank ℝ (vectorSpan ℝ (base C u)) + 1 ∧
+      allAntipodes C u := by
+  classical
+  have hnofive (f : Fin 5 → pure C u) (hf : Function.Injective f) : False := by
+    have hai := small_pure_family_independent hseg f hf (by simp)
+    have hrank := hai.finrank_vectorSpan (by simp : Fintype.card (Fin 5) = 4 + 1)
+    have hle : vectorSpan ℝ (Set.range (fun i => (f i : V))) ≤
+        vectorSpan ℝ (base C u) :=
+      vectorSpan_mono ℝ (by rintro _ ⟨i, rfl⟩; exact (f i).property.1)
+    have := Submodule.finrank_mono hle
+    omega
+  have hfinite : Finite (pure C u) := by
+    by_contra hn
+    letI : Infinite (pure C u) := not_finite_iff_infinite.mp hn
+    exact hnofive (fun i => Infinite.natEmbedding (pure C u) i.val)
+      (fun _ _ h => Fin.ext ((Infinite.natEmbedding (pure C u)).injective h))
+  letI : Finite (pure C u) := hfinite
+  letI : Fintype (pure C u) := Fintype.ofFinite _
+  have hcard : Fintype.card (pure C u) ≤ 4 := by
+    by_contra hn
+    have hle : Fintype.card (Fin 5) ≤ Fintype.card (pure C u) := by simpa using hn
+    let f := Fintype.embeddingOfCardLE hle
+    exact hnofive f f.injective
+  have hai : AffineIndependent ℝ (fun p : pure C u => (p : V)) :=
+    small_pure_family_independent hseg id Function.injective_id (by omega)
+  have hbase : base C u = convexHull ℝ (pure C u) := by
+    have hh := closure_convexHull_extremePoints (base_compact hclosed hstrict) (base_convex C u)
+    change closure (convexHull ℝ (pure C u)) = base C u at hh
+    rw [(Set.toFinite (pure C u)).isClosed_convexHull.closure_eq] at hh
+    exact hh.symm
+  have hS : simplex C u := ⟨hai, hbase⟩
+  have hbound : Nat.card (pure C u) ≤
+      Module.finrank ℝ (vectorSpan ℝ (base C u)) + 1 := by
+    cases isEmpty_or_nonempty (pure C u) with
+    | inl he => simp
+    | inr he =>
+      have hrank := hai.finrank_vectorSpan_add_one
+      have hle : vectorSpan ℝ (Set.range (fun p : pure C u => (p : V))) ≤
+          vectorSpan ℝ (base C u) :=
+        vectorSpan_mono ℝ (by rintro _ ⟨p, rfl⟩; exact p.property.1)
+      simpa [Nat.card_eq_fintype_card, ← hrank] using
+        Nat.add_le_add_right (Submodule.finrank_mono hle) 1
+  obtain ⟨e, he, hvalues, _, _, _⟩ :=
+    zero_kernel_least_confirmation C u hclosed hstrict hspan (simplex_kernel_zero hS)
+  refine ⟨hfinite, hS, hbound, ?_⟩
+  intro p q hpq b n hn ha
+  let a : pure C u := ⟨b.param n, ha⟩
+  let r : pure C u := ⟨b.param (-n), chart_sphere_pure b (by simpa using hn)⟩
+  have hra : r ≠ a := by
+    intro h
+    have hh := b.injective (congrArg Subtype.val h)
+    have hzero : (2 : ℝ) • n = 0 := by
+      have := congrArg (fun s => s + n) hh
+      simpa [two_smul] using this.symm
+    have : n = 0 := (smul_eq_zero.mp hzero).resolve_left (by norm_num)
+    simp [this] at hn
+  exact ⟨e a, he a, by simpa [hvalues, hra]⟩
 
 end D5.S3.Quantum.Foundation.LowAffineDimensionalBOnly
