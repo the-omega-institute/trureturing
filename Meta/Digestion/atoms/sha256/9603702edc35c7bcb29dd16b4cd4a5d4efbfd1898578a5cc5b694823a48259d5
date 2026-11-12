@@ -1,0 +1,96 @@
+**复用引理 41.2（只消费标量预算之后的谱格论证）。** 全称原 PB 必迫使
+
+$$
+E:=g-K(c,t)=\operatorname{diag}(s_1,s_2,s_3,s_0),\qquad s_j\in\mathbb R.
+\tag{41.4}
+$$
+
+这里 $s_0$ 没有被置零。多项式 PB 定理 28.2 的原陈述含有比定义 41.1 更强的完整未知响应前件，不能把那个陈述直接改读为本引理。准确可复用的是该证明在 (28.13) 之后的纯标量推导 (28.14)–(28.25)：本处 (41.3) 已直接供应其 (28.13)，不必再由未知外层响应及另一份 P2 推出它。
+
+证明。取演员内不同的原谱格 $l=e_ie_i^*,m=e_je_j^*$，$i,j\in\{1,2,3\}$、$i\ne j$，谱值分别为 $a,b$。令
+
+$$
+\begin{gathered}
+e=e_ie_j^*+e_je_i^*,\quad j_0=\iota(l-m)e,\quad n_l=2l,\quad
+\lambda=(a-b)/2\ne0,\quad\mu_0=(a+b)/2,\\
+V_l=a\,n_l\circ t-n_l\circ k_t,\qquad Z_l=t+ak_t.
+\end{gathered}
+$$
+
+取原探针 $x=Te+\alpha n_l$，$T,\alpha$ 为任意有限实数。已知的 $K(c,x)$ 和 $c\circ x$ 给出
+
+$$
+\begin{aligned}
+R_+&=T(e+\lambda j_0)-k_t+\alpha n_l,&
+S_+&=t+g+\mu_0Te+a\alpha n_l,\\
+R_-&=T(e-\lambda j_0)+k_t+\alpha n_l,&
+S_-&=t-g-\mu_0Te-a\alpha n_l,\\
+L&=2Te\circ k_t-2\mu_0Tt\circ e-2t\circ g
+       -2\alpha(\lambda Tj_0+V_l).
+\end{aligned}
+\tag{41.5}
+$$
+
+因此原 PB 正是多项式卷 (28.13)。下面说明所消费接口的全部数学操作，尤其没有独立 P2：在实半内积 $\langle U,Z\rangle_\phi=\phi(U\circ Z)$ 中，Gram 列消元给
+
+$$
+B_\phi(A_0+\alpha n_l,B_0+\theta\alpha n_l)
+=B_\phi(A_0+\alpha n_l,B_0-\theta A_0).
+$$
+
+右端是 $\alpha$ 的非负二次多项式，首项为 $B_\phi(n_l,B_0-\theta A_0)$。对 (41.5) 两笔分别取 $\theta=a,-a$，再将 PB 除以 $|\alpha|$ 并取标量多项式极限，得到
+
+$$
+\begin{gathered}
+2|\phi(\lambda Tj_0+V_l)|\le
+\sqrt{B_\phi(n_l,C_+)}+\sqrt{B_\phi(n_l,C_-)},\\
+C_+=Z_l+g-\lambda Te-a\lambda Tj_0,\qquad
+C_-=Z_l-g+\lambda Te-a\lambda Tj_0.
+\end{gathered}
+\tag{41.6}
+$$
+
+首项预算为零也允许此连续极限。由 $cl=al$ 直接有 $lV_ll=(1-l)V_l(1-l)=0$ 及
+
+$$
+lV_l(1-l)=\tfrac12l[c,t](1-l).
+\tag{41.7}
+$$
+
+取单位 $\xi\in(1-l)\mathcal H$，先设 $d=\|m\xi\|>0$，令 $\eta=j_0\xi/d$、$\nu=e\xi/d=-\iota\eta$。在向量 $\xi_\varepsilon=(\xi+\varepsilon\eta)/\sqrt{1+\varepsilon^2}$ 上读 (41.6)。若 $\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$，完整实 Gram 的准确值为
+
+$$
+B_{\phi_\varepsilon}(n_l,W)
+=\frac{4\varepsilon^2}{(1+\varepsilon^2)^2}
+ \|\Pi_\eta(W\xi+\varepsilon W\eta)\|^2.
+$$
+
+约去共同正因子后令 $\varepsilon\downarrow0$；$\Pi_\eta(j_0\xi)=0$ 消掉两份中共同的 $-a\lambda Tj_0$，所得为
+
+$$
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\nu\|+\|z_-+\lambda Td\nu\|,
+\quad
+A_\xi=\operatorname{Re}\langle\eta,V_l\xi\rangle,\quad
+z_\pm=\Pi_\eta((Z_l\pm g)\xi).
+\tag{41.8}
+$$
+
+在 $T\to+\infty$ 和 $T\to-\infty$ 两向减去共同的 $2|\lambda T|d$，用平方差有理化，准确得到 $\operatorname{Re}\langle\nu,g\xi\rangle=-A_\xi$。再对同一谱格取第二伴轴 $e'=j_0,j'_0=-e$，得到第二个实读数；两读数合为
+
+$$
+\langle j_0m\xi,(g-\iota V_l)\xi\rangle=0.
+\tag{41.9}
+$$
+
+$d=0$ 时左边本来为零，不定义 $\eta$。对固定算子作齐次扩展，在 $\xi=u+z$、$u\in m\mathcal H,z\in(1-l-m)\mathcal H$ 上相减，先得 $l(g-\iota V_l)(1-l-m)=0$；对 $z=0$ 的复二次型极化，再得 $l(g-\iota V_l)m=0$。由 (41.7) 即
+
+$$
+l(g-K(c,t))(1-l)=0.
+\tag{41.10}
+$$
+
+所有极限只施于固定矩阵的标量范数或 Gram 多项式，没有对未知映射取极限。对三个演员谱格分别选一个不同的演员谱格作配对，(41.10) 锁住每条行到整个余空间，尤其包含第四列。$E=E^*$ 再锁住相应列；剩下的恰是四个实对角元，得到 (41.4)。环境本身没有被作为已识别的演员谱格，故这一论证不读出 $s_0=0$。∎
+
+若另已给 $s_0=0$，取定义 39.1 的 $m=1,B=0,V=q,D_{\rm env}=0,\eta=1$，定理 39.2 就直接给 $s_1=s_2=s_3=0$。这是原支持截面的复用结论；不需要另一套九次读取，也不将这条结论重复计为新内容。
+
