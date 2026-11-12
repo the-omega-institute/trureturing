@@ -4,7 +4,19 @@
 
 Positive normalization-preserving dynamics contract the cone base norm.
 
-**Theorem 1.1 (Positive normalized dynamics are base-norm contractions).**
+**Theorem 1.1 (Strict positivity implies nonnegativity on the whole cone).**
+
+$$\forall V, C, u, x,\\{}\operatorname{AddCommGroup}\left(V\right) \land \operatorname{Module}\left(\operatorname{Real}\left(\right), V\right) \land \operatorname{ConvexCone}\left(C, V\right) \land \operatorname{RealLinearFunctional}\left(u, V\right) \land \operatorname{StrictlyPositive}\left(u, C\right) \land x \in C \Rightarrow 0 \leq \operatorname{Eval}\left(u, x\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/BaseNormContraction.functional_nonneg_on_cone` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any additive commutative group V with a real module structure, any real convex cone C and any real-linear functional u strictly positive on every nonzero element of C, u is nonnegative at every element of C, including zero. No norm, dimension, closedness or generating hypothesis is used. This is the original consumed lemma: cone_decomposition_costs_bddBelow uses it in the base-norm proof, and OriginalMassCalibration.original_mass_factorization applies it to both actual mass tensors. Public visibility adds no mathematical content.
+
+**Theorem 1.2 (Positive normalized dynamics are base-norm contractions).**
 
 $$\forall V, C, u, T, t, x,\\{}\operatorname{ConvexCone}\left(C, V\right) \land \operatorname{Generates}\left(C, V\right) \land \operatorname{StrictlyPositive}\left(u, C\right) \land\\{}(\forall s, T_{s}(C) \subseteq C \land u \circ T_{s} = u) \Rightarrow \\{}\operatorname{baseNorm}\left(C, u, T_{t}(x)\right) \leq \operatorname{baseNorm}\left(C, u, x\right).$$
 
@@ -24,4 +36,5 @@ The decomposition-cost set for x is therefore contained in the one for its image
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Dynamics/BaseNormContraction.functional_nonneg_on_cone`
 - Truth anchor: `D5/S3/Quantum/Dynamics/BaseNormContraction.positive_normalization_preserving_dynamics_contracts_base_norm`
