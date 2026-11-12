@@ -44,7 +44,10 @@ internal sealed class DelgadoSuerYesilPhiRefutationDocument : IScribeDocumentDef
             Entry("claim", "The whole unrestricted event", claimFormula(),
                 "For every proper symmetric numerical set T, there exists a proper almost symmetric numerical semigroup S with phi S equal to T. Both carriers include every possible finite nonempty gap set; no parameter cutoff or target additive closure is present.", DescribeRole.Definition),
             Entry("result", "The unrestricted event is false", resultFormula(),
-                "Take T={0,1} union all naturals at least 4. Its complete gap set is {2,3}, with F=3. The complementary pairs {0,3} and {1,2} each have exactly one member, so T is proper and symmetric. It contains 1, whereas phi S omits 1 for every proper numerical semigroup S. Hence no proper almost symmetric semigroup has this image. The exclusion is analytic and quantifies over every possible source; there is no preimage enumeration or bound on source size. This gives an obstruction and a counterexample, without characterizing the full image.", DescribeRole.Theorem, false)
+                "Take T={0,1} union all naturals at least 4. Its complete gap set is {2,3}, with F=3. The complementary pairs {0,3} and {1,2} each have exactly one member, so T is proper and symmetric. It contains 1, whereas phi S omits 1 for every proper numerical semigroup S. Hence no proper almost symmetric semigroup has this image. The exclusion is analytic and quantifies over every possible source; there is no preimage enumeration or bound on source size. This gives an obstruction and a counterexample, without characterizing the full image.", DescribeRole.Theorem, false,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("delgado-suer-yesil-2026-symmetrization-surjectivity"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static Formula membersFormula() =>
@@ -77,11 +80,11 @@ internal sealed class DelgadoSuerYesilPhiRefutationDocument : IScribeDocumentDef
         new Formula.Not(Local("claim"));
 
     private static DocumentBlock Entry(string name, string title, Formula formula, string prose,
-        DescribeRole role, bool literature = true) => Describe.Lean(
+        DescribeRole role, bool literature = true, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("delgado-phi-" + name.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Local(string name) => Q("D5", "S3", "Combinatorics", "Partitions", "DelgadoSuerYesilPhiRefutation", name);
     private static Formula Q(params string[] parts)
     {

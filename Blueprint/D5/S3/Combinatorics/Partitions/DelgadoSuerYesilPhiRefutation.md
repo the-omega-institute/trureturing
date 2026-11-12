@@ -186,6 +186,10 @@ $$\neg \operatorname{D5.S3.Combinatorics.Partitions.DelgadoSuerYesilPhiRefutatio
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/delgado-suer-yesil-2026-symmetrization-surjectivity` (refuted) by `D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"delgado-suer-yesil-2026-symmetrization-surjectivity","declaration_gid":"D5/S3/Combinatorics/Partitions/DelgadoSuerYesilPhiRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Manuel Delgado, Meral Suer, Mehmet Yesil (2026). *A Symmetrization for Almost Symmetric Numerical Semigroups*. URL: <https://arxiv.org/abs/2611.14268v1>.
