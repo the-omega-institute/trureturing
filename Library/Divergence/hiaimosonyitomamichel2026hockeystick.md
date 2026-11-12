@@ -3,6 +3,7 @@ bibkey: hiaimosonyitomamichel2026hockeystick
 authors: Fumio Hiai; Milan Mosonyi; Marco Tomamichel
 year: 2026
 title: Hockey stick f-divergences
+doi: null
 url: https://arxiv.org/abs/2607.08760v1
 claim: "Proposition V.1 gives the maximal positive-overlap hockey formulas and a three-label attaining reverse test; the final equality question concerns maximal hockey-stick versus maximal f-divergence."
 strata_touched:

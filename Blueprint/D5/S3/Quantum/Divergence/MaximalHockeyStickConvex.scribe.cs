@@ -7,6 +7,8 @@ internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Divergence/hiaimosonyitomamichel2026hockeystick");
+    private static readonly LibraryNoteRef Matsumoto =
+        LibraryNoteRef.Create("D5/L/Divergence/matsumoto2018newquantumfdivergence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "General convex maximal hockey equality for actual finite reverse tests and arbitrary singular matrix pairs.",
@@ -39,8 +41,8 @@ internal sealed class MaximalHockeyStickConvexDocument : IScribeDocumentDefiniti
         )));
 
     private static DocumentBlock Node(string name, string heading, string prose, bool theorem) =>
-        Describe.Lean(DescribeId.Create("maximal-hockey-convex-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("maximal-hockey-convex-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(heading), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))),
+            AssessedProvenance.FromRepo(Source, Matsumoto), Blocks(Paragraph(Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 }
