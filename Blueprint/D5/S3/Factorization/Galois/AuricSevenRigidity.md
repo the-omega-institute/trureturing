@@ -1,34 +1,48 @@
-# The zero-product tensor endpoint
+# Quotient rigidity in a degree-seven extension
 
 ## Abstract
 
-The zero-product tensor endpoint forces homothety of two actual field spans.
+Quotient inclusion and one-dimensional intersections determine three-dimensional subspaces up to multiplication.
 
-**Theorem 1.1 (Zero-product tensor homothety).**
+Let F and D be commutative fields, with D an F-algebra. For an F-subspace W of D, write Q(W) for the elements u/v with nonzero u,v in W. All these quotients lie in D. Write rW for the image of W under actual multiplication by r in D. The condition LowIntersection(U) means dim_F(U intersect rU) is at most one for every nonzero r outside the embedded base field. The excluded zero does not change the original exclusion of F's nonzero scalars.
 
-$$\forall (F: Type*), \forall (D: Type*), [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(D\right)] [\operatorname{Algebra}\left(F, D\right)] \forall (u1: D), \forall (u2: D), \forall (u3: D), \forall (p: D), \forall (q: D), \forall (s: D), ((u1 \ne 0) \land ((s \ne 0) \land ((u1 \cdot p = u3 \cdot s) \land (u1 \cdot q = -u2 \cdot s)))) \Rightarrow (\operatorname{Submodule}.\operatorname{span}\left(F, \{p, q, s\}\right) = \operatorname{Submodule}.\operatorname{map}\left(\operatorname{LinearMap}.\operatorname{mulLeft}\left(F, s / u1\right), \operatorname{Submodule}.\operatorname{span}\left(F, \{u1, u2, u3\}\right)\right))$$
+**Theorem 1.1 (A shared plane determines the third vector).**
 
-*Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/AuricSevenRigidity.zero_product_tensor_homothety` (`✓ std3`). ∎
+$$\forall (F: Type*), \forall (D: Type*), [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(D\right)] [\operatorname{Algebra}\left(F, D\right)] [\operatorname{CharZero}\left(F\right)] (\operatorname{finrank}\left(F, D\right) = 7) \Rightarrow (\forall (U: \operatorname{Submodule}\left(F, D\right)), \forall (V: \operatorname{Submodule}\left(F, D\right)), \forall (b: \operatorname{Basis}\left(\operatorname{Fin}\left(3\right), F, V\right)), ((\operatorname{finrank}\left(F, U\right) = 3) \land ((\operatorname{LowIntersection}\left(U\right)) \land ((\operatorname{Q}\left(U\right) \subseteq \operatorname{Q}\left(V\right)) \land ((\operatorname{b}\left(0\right) \in U) \land (\operatorname{b}\left(1\right) \in U))))) \Rightarrow (\operatorname{b}\left(2\right) \in U))$$
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For fields F and D with an F-algebra structure, the three actual zero-product identities u₁p=u₃s and u₁q=−u₂s, with u₁ and s nonzero, identify the span of p,q,s with the image of the span of u₁,u₂,u₃ under multiplication by the original element s/u₁. This is the endpoint calculation used after the adjugate coefficient comparison; the preceding degree-seven contraction classification remains a separate obligation of the full source lemma.
-
-**Theorem 1.2 (Nonzero homothety witness).**
-
-$$\forall (F: Type*), \forall (D: Type*), [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(D\right)] [\operatorname{Algebra}\left(F, D\right)] \forall (u1: D), \forall (u2: D), \forall (u3: D), \forall (p: D), \forall (q: D), \forall (s: D), ((u1 \ne 0) \land ((s \ne 0) \land ((u1 \cdot p = u3 \cdot s) \land (u1 \cdot q = -u2 \cdot s)))) \Rightarrow (\exists (gamma: D), (gamma \ne 0) \land (\operatorname{Submodule}.\operatorname{span}\left(F, \{p, q, s\}\right) = \operatorname{Submodule}.\operatorname{map}\left(\operatorname{LinearMap}.\operatorname{mulLeft}\left(F, gamma\right), \operatorname{Submodule}.\operatorname{span}\left(F, \{u1, u2, u3\}\right)\right)))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/AuricSevenRigidity.zero_product_tensor_homothety_nonzero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/AuricSevenRigidity.shared_plane_third_vector` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The same calculation packages the multiplier as an explicit nonzero element of D. This declaration is a consumed witness for the preceding endpoint theorem, rather than an independent classification claim.
+Assume characteristic zero and dim_F D=7. Let U have dimension three and satisfy LowIntersection(U). Suppose Q(U) is contained in Q(V), and a basis s,t,w of V has s,t in U. Then w is in U.
+
+First the product span UV has dimension at least six. Otherwise the nondegenerate trace form supplies independent p,q orthogonal to UV. Both pU and qU lie in the four-dimensional orthogonal complement of V, so their intersection has dimension at least two. Multiplication by the inverse of p identifies this intersection with U intersect (q/p)U. Independence puts q/p outside F, contradicting the hypothesis.
+
+Consider the relation space R of triples (x,y,z) in U cubed satisfying sx+ty+wz=0. The image of this map is UV, so rank-nullity bounds dim R by three. Relations with z=0 form precisely the line generated by (t,-s,0): the intersection bound forces x to be a scalar multiple of t, and cancellation then determines y. Quotient inclusion gives a nonzero relation in H cubed for every plane H in U, by expanding a numerator and denominator in the basis s,t,w.
+
+The third-coordinate projection of R has dimension two. Its kernel has dimension one, giving the upper bound. If the image were contained in a line Fz0, choose a functional nonzero on both z0 and s; for zero image take z0=s. A relation in the kernel plane would have third coordinate zero and hence be a multiple of (t,-s,0). The functional's value on s forces that multiple to vanish, a contradiction.
+
+Choose a basis z,z' of the projection image, lift z to B=(x,y,z) in R, and extend z,z' to a basis z,z',e of U. For each scalar j let ell_j be the functional with values 0,1,j on z,z',e. A plane relation for ell_j has third coordinate proportional to z, and subtracting the corresponding multiple of B leaves a multiple of (t,-s,0). Its first two coordinates imply ell_j(s)ell_j(x)+ell_j(t)ell_j(y)=0, including the case when the first contraction vanishes. Evaluating at 0,1,-1 makes all three scalar quadratic coefficients zero, since two is nonzero in F.
+
+Remove each vector's z coordinate. The scalar coefficient identities show in D that s_flat*x_flat+t_flat*y_flat=0. Expanding the removed coordinates gives sx+ty=zE for an element E of U. The defining relation of B gives z(w+E)=0. Since z is nonzero, w=-E belongs to U. This uses only vector-space coordinates modulo Fz; no multiplication on a quotient vector space is assumed.
+
+**Theorem 1.2 (Three-dimensional quotient rigidity).**
+
+$$\forall (F: Type*), \forall (D: Type*), [\operatorname{Field}\left(F\right)] [\operatorname{Field}\left(D\right)] [\operatorname{Algebra}\left(F, D\right)] [\operatorname{CharZero}\left(F\right)] (\operatorname{finrank}\left(F, D\right) = 7) \Rightarrow (\forall (U: \operatorname{Submodule}\left(F, D\right)), \forall (V: \operatorname{Submodule}\left(F, D\right)), ((\operatorname{finrank}\left(F, U\right) = 3) \land ((\operatorname{finrank}\left(F, V\right) = 3) \land ((\operatorname{LowIntersection}\left(U\right)) \land (\operatorname{Q}\left(U\right) \subseteq \operatorname{Q}\left(V\right))))) \Rightarrow (\exists (gamma: D), (gamma \ne 0) \land (V = \operatorname{translate}\left(gamma, U\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/AuricSevenRigidity.original_lemma40_3` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary three-dimensional subspaces U,V in a degree-seven extension of a characteristic-zero field, LowIntersection(U) and Q(U) contained in Q(V) imply V=gamma U for a nonzero gamma in D. No low-intersection condition is required of V, and gamma need not belong to F.
+
+Choose independent s,t in U. Quotient inclusion represents s/t as c/d with nonzero c,d in V. Set gamma=d/t, so gamma*s=c and gamma*t=d. The subspace gamma inverse times V contains s,t, retains dimension three and has the same quotient set as V. Extend s,t to a basis there. The shared-plane theorem places its third vector in U. Equal dimensions identify this normalized subspace with U; multiplication by gamma gives the conclusion.
 
 ## References
 
-- Truth anchor: `D5/S3/Factorization/Galois/AuricSevenRigidity.zero_product_tensor_homothety`
-- Truth anchor: `D5/S3/Factorization/Galois/AuricSevenRigidity.zero_product_tensor_homothety_nonzero`
+- Truth anchor: `D5/S3/Factorization/Galois/AuricSevenRigidity.original_lemma40_3`
+- Truth anchor: `D5/S3/Factorization/Galois/AuricSevenRigidity.shared_plane_third_vector`
