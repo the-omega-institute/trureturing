@@ -12,7 +12,7 @@ license: citation-only
 triage: anchor
 ---
 
-## Source and locator
+## Verified locator
 
 The fixed preprint is https://arxiv.org/abs/1705.01623v1, source archive
 https://arxiv.org/src/1705.01623v1. Its archive SHA-256 is

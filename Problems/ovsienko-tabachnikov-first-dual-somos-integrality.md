@@ -90,6 +90,24 @@ growth questions or general weighted quivers. Those questions remain open
 in this delivery. Independent source-fidelity review and canonical freezing
 are prerequisites for a repository resolution claim.
 
+## Admission boundary
+
+The registered admission basis is `open-problem-resolution`, under the
+full statement in issue 29468 and its prediction registration
+https://github.com/the-omega-institute/trureturing/issues/29468#issuecomment-6814930874.
+That registration claims no `escape-witness` qualification. The content
+classification of the divisibility and induction theorems does not supply
+a preregistered escape-witness admission basis.
+
+The independent architecture and test reviews approve the mathematical
+package. The quality review accepts the full pointwise mathematics but
+rejects the publication package; focused independent quality approval
+remains pending. The Scribe has no `OpenProblemResolutionClaim`, and the
+module has not been canonically frozen. After that approval, the typed
+resolution claim, canonical emission and deposit, and the applicable
+required checks remain necessary before a repository resolution claim.
+No merged delivery or new problem-resolution credit is asserted here.
+
 ## ASSUMED-UNVERIFIED
 
 The bounded source screen does not prove exhaustive absence of an earlier
