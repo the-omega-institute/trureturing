@@ -10,7 +10,9 @@ import Mathlib.Data.Finset.Max
 import Mathlib.Data.Finset.Card
 import Mathlib.Data.Finset.Range
 import Mathlib.Data.Set.Defs
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
+
+/-! The boundary is recorded by the horizontal coordinate of each labelled up step. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -27,6 +29,9 @@ structure NumericalSet where
 /-- Membership is the complement of the complete finite gap set. -/
 def members (U : NumericalSet) : Set ℕ := {n | n ∉ U.gaps}
 
+local instance (U : NumericalSet) (n : ℕ) : Decidable (n ∈ members U) :=
+  inferInstanceAs (Decidable (n ∉ U.gaps))
+
 /-- The largest gap; the carrier excludes the improper numerical set. -/
 def frobenius (U : NumericalSet) : ℕ := U.gaps.max' U.proper
 
@@ -39,8 +44,9 @@ def PseudoFrobenius (U : NumericalSet) (f : ℕ) : Prop :=
   f ∈ U.gaps ∧ ∀ s : ℕ, 0 < s → s ∈ members U → f + s ∈ members U
 
 /-- The genus/type equality, in addition to additive closure. -/
-def AlmostSymmetric (U : NumericalSet) : Prop :=
-  Semigroup U ∧ 2 * U.gaps.card = frobenius U +
+def AlmostSymmetric (U : NumericalSet) : Prop := by
+  classical
+  exact Semigroup U ∧ 2 * U.gaps.card = frobenius U +
     (U.gaps.filter (PseudoFrobenius U)).card
 
 /-- Exactly one of each complementary pair belongs, including both endpoints. -/
@@ -52,35 +58,56 @@ def rowLength (U : NumericalSet) (r : ℕ) : ℕ :=
   ((Finset.range r).filter (fun a => a ∈ members U)).card
 
 /-- Original row labels, deleting exactly PF(U) except the Frobenius row. -/
-def retainedRows (U : NumericalSet) : Finset ℕ :=
-  U.gaps.filter (fun r => r = frobenius U ∨ ¬ PseudoFrobenius U r)
+def retainedRows (U : NumericalSet) : Finset ℕ := by
+  classical
+  exact U.gaps.filter (fun r => r = frobenius U ∨ ¬ PseudoFrobenius U r)
 
 /-- Inverse boundary: an up step has label x+y, where x is its row length and
     y counts preceding up steps. The finite row labels are ordered increasingly. -/
 def inverseBoundary (rows : Finset ℕ) (lengths : ℕ → ℕ) : Finset ℕ :=
   rows.image (fun r => lengths r + (rows.filter (fun q => q < r)).card)
 
-/-- Row deletion preserves each retained horizontal coordinate, then inverts the boundary. -/
+/-- Delete original up steps; each retained label shifts by the number deleted before it. -/
+def deleteRows (U : NumericalSet) (rows : Finset ℕ) : Finset ℕ :=
+  rows.image (fun r => r - ((U.gaps \ rows).filter (fun q => q < r)).card)
+
+/-- The numerical set obtained by deleting the original PF-minus-F rows. -/
 def phi (U : NumericalSet) : Set ℕ :=
-  {n | n ∉ inverseBoundary (retainedRows U) (rowLength U)}
+  {n | n ∉ deleteRows U (retainedRows U)}
 
 private theorem original_boundary_label (U : NumericalSet) (r : ℕ) :
     rowLength U r + (U.gaps.filter (fun q => q < r)).card = r := by
   have he : U.gaps.filter (fun q => q < r) =
       (Finset.range r).filter (fun q => q ∉ members U) := by
     ext q
-    simp only [Finset.mem_filter, Finset.mem_range, members, Set.mem_setOf_eq, not_not]
+    simp only [Finset.mem_filter, Finset.mem_range, members, Set.mem_ofPred_eq, not_not]
     exact and_comm
   rw [he]
   exact (Finset.card_filter_add_card_filter_not (s := Finset.range r)
     (fun q => q ∈ members U)).trans (Finset.card_range r)
 
-/-- Inverting the complete row boundary recovers precisely the original gaps. -/
-private theorem inverse_original_boundary (U : NumericalSet) :
-    inverseBoundary U.gaps (rowLength U) = U.gaps := by
-  have he : ∀ r, rowLength U r + (U.gaps.filter (fun q => q < r)).card = r :=
-    original_boundary_label U
-  simp only [inverseBoundary, he, Finset.image_id]
+private theorem deletion_is_inverse_boundary (U : NumericalSet) (R : Finset ℕ)
+    (hR : R ⊆ U.gaps) : deleteRows U R = inverseBoundary R (rowLength U) := by
+  apply Finset.image_congr
+  intro r hr
+  have hsub : R.filter (fun q => q < r) ⊆ U.gaps.filter (fun q => q < r) := by
+    intro q hq
+    obtain ⟨hq, hqr⟩ := Finset.mem_filter.mp hq
+    exact Finset.mem_filter.mpr ⟨hR hq, hqr⟩
+  have he : (U.gaps \ R).filter (fun q => q < r) =
+      (U.gaps.filter (fun q => q < r)) \ (R.filter (fun q => q < r)) := by
+    ext q
+    simp only [Finset.mem_filter, Finset.mem_sdiff]
+    constructor
+    · rintro ⟨⟨hg, hn⟩, hlt⟩
+      exact ⟨⟨hg, hlt⟩, fun h => hn h.1⟩
+    · rintro ⟨⟨hg, hlt⟩, hn⟩
+      exact ⟨⟨hg, fun h => hn ⟨h, hlt⟩⟩, hlt⟩
+  have hc := Finset.card_sdiff_add_card_eq_card hsub
+  have hb := original_boundary_label U r
+  dsimp only
+  rw [he]
+  omega
 
 private theorem length_one (U : NumericalSet) (r : ℕ) (hr : 0 < r)
     (h : ∀ a, 0 < a → a < r → a ∉ members U) : rowLength U r = 1 := by
@@ -97,6 +124,7 @@ private theorem length_one (U : NumericalSet) (r : ℕ) (hr : 0 < r)
 
 private theorem retained_length_one (U : NumericalSet) (hS : Semigroup U) :
     ∃ r ∈ retainedRows U, rowLength U r = 1 := by
+  classical
   let small := (Finset.range (frobenius U + 1)).filter
     (fun a => 0 < a ∧ a ∈ members U)
   have hF : frobenius U ∈ U.gaps := Finset.max'_mem _ _
@@ -144,6 +172,7 @@ private theorem retained_length_one (U : NumericalSet) (hS : Semigroup U) :
 
 /-- Every proper numerical semigroup has 1 absent after the original row deletion. -/
 theorem phi_omits_one (U : NumericalSet) (hS : Semigroup U) : 1 ∉ phi U := by
+  classical
   obtain ⟨r, hr, hlen⟩ := retained_length_one U hS
   let R := retainedRows U
   have hR : R.Nonempty := ⟨r, hr⟩
@@ -173,7 +202,8 @@ theorem phi_omits_one (U : NumericalSet) (hS : Semigroup U) : 1 ∉ phi U := by
     have hqa := Finset.min'_le R a ha
     change q ≤ a at hqa
     omega
-  change ¬ (1 ∉ inverseBoundary R (rowLength U))
+  change ¬ (1 ∉ deleteRows U R)
+  rw [deletion_is_inverse_boundary U R (Finset.filter_subset _ _)]
   intro hn
   apply hn
   apply Finset.mem_image.mpr
@@ -194,14 +224,15 @@ private theorem counterexample_symmetric : Symmetric counterexample := by
   have hF : frobenius counterexample = 3 := by decide
   intro a ha
   rw [hF] at ha ⊢
-  simp only [members, Set.mem_setOf_eq, counterexample, Finset.mem_insert,
-    Finset.mem_singleton, not_or, not_not]
+  simp only [members, Set.mem_ofPred_eq, counterexample, Finset.mem_insert,
+    Finset.mem_singleton, not_or]
   omega
 
 theorem result : ¬ claim := by
   intro h
   obtain ⟨S, hS, he⟩ := h counterexample counterexample_symmetric
-  have hone : 1 ∈ members counterexample := by decide
+  have hone : 1 ∈ members counterexample := by
+    simp [members, counterexample]
   rw [← he] at hone
   exact phi_omits_one S hS.1 hone
 
