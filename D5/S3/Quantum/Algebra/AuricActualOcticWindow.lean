@@ -747,8 +747,9 @@ private theorem no_tight_triple (U : Submodule K (Ω → K))
     · left
       have heA : A ∩ B = A := Finset.eq_of_subset_of_card_le
         Finset.inter_subset_left (by omega)
-      exact Finset.eq_of_subset_of_card_le
-        (heA ▸ Finset.inter_subset_right) (by omega)
+      apply Finset.eq_of_subset_of_card_le _ (by omega)
+      intro x hx
+      exact (Finset.mem_inter.mp (heA.symm ▸ hx)).2
     right
     have hzero : (A ∩ B).card = 0 := by
       by_contra hn
@@ -756,7 +757,8 @@ private theorem no_tight_triple (U : Submodule K (Ω → K))
       rcases hcases with h1 | h2
       · have hd : (A ∩ Bᶜ).card = 2 := by
           have hh := Finset.card_inter_add_card_sdiff A B
-          simpa only [Finset.sdiff_eq_inter_compl, h1, hA] using hh
+          rw [Finset.sdiff_eq_inter_compl] at hh
+          omega
         have hu : (A ∪ Bᶜ).card = 6 := by
           have hh := Finset.card_union_add_card_inter A Bᶜ
           have hb := hcomp B
@@ -793,7 +795,12 @@ private theorem no_tight_triple (U : Submodule K (Ω → K))
     obtain ⟨g, _, rfl⟩ := Finset.mem_image.mp hA
     exact (orbitSet_card C g).trans hC
   rw [horbit, Finset.card_univ, hΩ] at hcount
-  simp only [id_eq, hcards, Finset.sum_const, nsmul_eq_mul] at hcount
+  have hsum : ∑ A ∈ O, A.card = O.card * 3 := by
+    calc
+      _ = ∑ _ ∈ O, 3 := Finset.sum_congr rfl (fun A hA => hcards A hA)
+      _ = _ := by simp
+  change 8 = ∑ A ∈ O, A.card at hcount
+  rw [hsum] at hcount
   omega
 
 end NoTripleBlocks
@@ -816,6 +823,34 @@ private theorem coordinateExtend_injective (S : Finset Ω) :
 
 private def crossRank (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Finset Ω) : ℕ :=
   finrank K (LinearMap.range ((coordinateProject S).comp (n.comp (coordinateExtend Sᶜ))))
+
+
+private theorem crossRank_matrix (n : (Ω → K) →ₗ[K] (Ω → K)) (S : Finset Ω) :
+    ((LinearMap.toMatrix' n).submatrix (fun i : S => (i : Ω))
+      (fun j : Sᶜ => (j : Ω))).rank = crossRank n S := by
+  let M := (LinearMap.toMatrix' n).submatrix (fun i : S => (i : Ω))
+    (fun j : Sᶜ => (j : Ω))
+  have hext (j : Sᶜ) : coordinateExtend (K := K) Sᶜ (Pi.single j 1) =
+      Pi.single (j : Ω) 1 := by
+    ext i
+    by_cases hi : i ∈ Sᶜ
+    · simp [coordinateExtend, hi, Pi.single_apply, Subtype.ext_iff]
+    · have hij : i ≠ (j : Ω) := fun h => hi (h ▸ j.property)
+      simp [coordinateExtend, hi, Pi.single_apply, hij]
+  have hmap : (coordinateExtend S).comp M.mulVecLin =
+      (coordinateProject S).comp (n.comp (coordinateExtend Sᶜ)) := by
+    apply (Pi.basisFun K Sᶜ).ext
+    intro j
+    ext i
+    simp only [Pi.basisFun_apply, LinearMap.comp_apply, Matrix.mulVecLin_apply,
+      Matrix.mulVec_single_one, hext]
+    by_cases hi : i ∈ S <;>
+      simp [coordinateExtend, coordinateProject, hi, M, Matrix.submatrix_apply,
+        LinearMap.toMatrix'_apply]
+  change finrank K M.mulVecLin.range = _
+  rw [crossRank, ← hmap, LinearMap.range_comp]
+  exact (Submodule.equivMapOfInjective (coordinateExtend S)
+    (coordinateExtend_injective S) M.mulVecLin.range).finrank_eq
 
 private theorem cross_rank_bound (U : Submodule K (Ω → K))
     (n : (Ω → K) →ₗ[K] (Ω → K)) (hker : n.ker = U) (hrange : n.range = U)
@@ -949,6 +984,43 @@ private theorem splitOperator_covariance (g : K ≃ₐ[F] K)
   simp only [coordinates_split, splitOperator, LinearMap.comp_apply,
     AlgEquiv.toLinearMap_apply, AlgEquiv.symm_apply_apply]
   rw [baseOperator_galois]
+
+
+private theorem splitMatrix_square_zero :
+    LinearMap.toMatrix' (splitOperator K hK W hD hW a ha) *
+      LinearMap.toMatrix' (splitOperator K hK W hD hW a ha) = 0 := by
+  rw [← LinearMap.toMatrix'_mul]
+  change LinearMap.toMatrix' ((splitOperator K hK W hD hW a ha).comp
+    (splitOperator K hK W hD hW a ha)) = 0
+  rw [splitOperator_square_zero, map_zero]
+
+private theorem splitMatrix_rank :
+    (LinearMap.toMatrix' (splitOperator K hK W hD hW a ha)).rank = 4 := by
+  have hm : (LinearMap.toMatrix' (splitOperator K hK W hD hW a ha)).mulVecLin =
+      splitOperator K hK W hD hW a ha :=
+    Matrix.toLin'_toMatrix' _
+  rw [Matrix.rank, hm, splitOperator_range, splitWindow_finrank, hW]
+
+private theorem galoisCoordinates_single (g : K ≃ₐ[F] K) (τ : D →ₐ[F] K) :
+    galoisCoordinates K g (Pi.single τ 1) = Pi.single (g • τ) 1 := by
+  ext σ
+  by_cases h : σ = g • τ
+  · subst σ
+    simp [galoisCoordinates, Pi.single_apply]
+  · have hi : g⁻¹ • σ ≠ τ := by
+      intro he
+      apply h
+      have hh := congrArg (g • ·) he
+      simpa using hh
+    simp [galoisCoordinates, Pi.single_apply, h, hi]
+
+private theorem splitMatrix_covariance (g : K ≃ₐ[F] K) (σ τ : D →ₐ[F] K) :
+    LinearMap.toMatrix' (splitOperator K hK W hD hW a ha) (g • σ) (g • τ) =
+      g (LinearMap.toMatrix' (splitOperator K hK W hD hW a ha) σ τ) := by
+  have hh := congrFun (splitOperator_covariance K hK W hD hW a ha g (Pi.single τ 1))
+    (g • σ)
+  rw [galoisCoordinates_single] at hh
+  simpa [LinearMap.toMatrix'_apply, galoisCoordinates] using hh
 
 end ActualSplitOperator
 
