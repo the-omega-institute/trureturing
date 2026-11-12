@@ -6,6 +6,13 @@
    utility: none
    digest: Perfect pairing polynomials expand over partial pairings without multiplicities. -/
 
+/-
+proof_shape: mem_pairingSupport: bind-only (consumer: PerfectPairingCount).
+escape_witness: none; this delivery changes visibility only, with no new proof
+  content. The existing support membership identity is reused across modules.
+admission_basis: consumed-helper reuse.
+-/
+
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticMomentDefs
 
 /-! The finite matching decomposition behind arbitrary-order pairing polynomials. -/
@@ -36,7 +43,7 @@ def finitePairingPolynomial (U : Finset α) (c : Finset α → ℝ) : ℝ :=
   ∑ P : Finset (Finset α) with IsPerfectPairing U P, ∏ e ∈ P, c e
 
 omit [Fintype α] in
-private theorem mem_pairingSupport (i : α) (P : Finset (Finset α)) :
+theorem mem_pairingSupport (i : α) (P : Finset (Finset α)) :
     i ∈ pairingSupport P ↔ ∃ e ∈ P, i ∈ e := by
   simp [pairingSupport]
 

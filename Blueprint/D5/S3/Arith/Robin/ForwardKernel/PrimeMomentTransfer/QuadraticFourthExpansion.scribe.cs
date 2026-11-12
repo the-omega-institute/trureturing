@@ -11,6 +11,17 @@ internal sealed class QuadraticFourthExpansionDocument : IScribeDocumentDefiniti
         H("Fourth-order expansion"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("sum-two"),
+                DeclarationHandle.Create(Prefix + "sum_two"),
+                H("Two distinct indices"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every finite index type with decidable equality and every real function F of two indices, "
+                    + "the sum of F(x(0),x(1)) over injective functions x from the two-element type equals "
+                    + "the iterated sum of F(d,e) over all ordered pairs of unequal indices d,e."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("quadratic-fourth-moment-expansion"),
                 DeclarationHandle.Create(Prefix + "quadratic_fourth_moment_expansion"),
                 H("Expansion under a quadratic relation"),

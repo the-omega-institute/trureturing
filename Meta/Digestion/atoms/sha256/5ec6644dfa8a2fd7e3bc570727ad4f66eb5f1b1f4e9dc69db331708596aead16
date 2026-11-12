@@ -1,0 +1,90 @@
+**定理 91.2（团重叠的全域判据）。** 定义91.1满足89.1的全部载体条件，且对每个图、两种域都自动满足 $\mathrm B$。准确的全部纯点和全部 proper 效应为
+
+$$
+\begin{gathered}
+P^{\rm cl}_{G,\mathbb F}
+=\{p_v=vv^\dagger:\|v\|=1,\ \operatorname{supp}v\text{ 为团}\},\\
+[0,u]=\{f_E:X\mapsto\operatorname{tr}(EX):
+E\in V_{G,\mathbb F},\quad
+0\le E[Q]\le I_Q\text{ 对每个团 }Q\}.
+\end{gathered}
+\tag{91.2}
+$$
+
+其中 $E[Q]$ 为主子矩阵；不要求整个环境 $0\le E\le I_n$。对任意不同纯点 $p_v,p_w$，令 $T=\operatorname{span}_{\mathbb F}\{v,w\}$。其整个最小面准确为
+
+$$
+H(p_v,p_w)=
+\begin{cases}
+\{X\ge0:\operatorname{ran}X\subseteq T,\ \operatorname{tr}X=1\},
+&\operatorname{supp}v\cup\operatorname{supp}w\text{ 为团},\\
+[p_v,p_w],&\operatorname{supp}v\cup\operatorname{supp}w\text{ 不为团}.
+\end{cases}
+\tag{91.3}
+$$
+
+第一支在实域为 $B^2$、复域为 $B^3$，第二支为 $B^1$。在这一整个原载体上，
+
+$$
+\boxed{\mathrm{Z0}\ \Longleftrightarrow\ \mathrm{Z0}_{\rm pure}
+\ \Longleftrightarrow\ \mathrm A
+\ \Longleftrightarrow\ S
+\ \Longleftrightarrow\ (\sim_G\text{ 传递})
+\ \Longleftrightarrow\ (G\text{ 的每个连通分量完全}).}
+\tag{91.4}
+$$
+
+若图有诱导链 $a-b-c$，则(90.6)中的实向量在两域均给原纯点；仍在本章整个原效应区间上有精确值
+
+$$
+T_p(q_+)=T_p(q_-)=0,\qquad
+T_p((q_++q_-)/2)=\tfrac14.
+\tag{91.5}
+$$
+
+同一诱导链的(90.10)还给 $H(p_0,r_0)=[p_0,r_0]$ 而 $p_0\not\perp r_0$。因此每个非完全连通分量都在本章自动成立的 $\mathrm B$ 下同时违反 $\mathrm A$ 与 $\mathrm{Z0}$。
+
+证明。先核对整个原载体。全部单位团支撑向量的投影组成有限个紧集之并 $\mathcal P$；其凸包紧，每个锥生成元按迹归一后属于 $\mathcal P$，故 $K^{\rm cl}=\operatorname{conv}\mathcal P$。从迹一紧基的锥表示可知 $C^{\rm cl}$ 闭：若 $t_kx_k$ 收敛，$t_k=\operatorname{tr}(t_kx_k)$ 收敛，$x_k$ 可取收敛子列；$t_k\to0$ 时极限为零。它包含在PSD锥中，故尖，且迹在其非零元上严格正。
+
+对角矩阵单位已在锥中；每条边上的 $e_i+e_j$ 投影和对角矩阵的实线性组合给该边实对称方向。在复域，$e_i+\mathrm i e_j$ 的投影再给该边虚Hermitian方向，故锥生成整个 $V_{G,\mathbb F}$，没有删除虚坐标。每个 $p_v\in\mathcal P$ 都在整个环境密度基中极端，故在本章基中也极端；反向，有限凸组合表示说明 $\operatorname{conv}\mathcal P$ 的任一极点必须属于 $\mathcal P$。这证明全部纯点公式。
+
+实迹内积在 $V_{G,\mathbb F}$ 上非退化，故每个实线性效应有唯一 $E\in V_{G,\mathbb F}$ 表示。对每个团 $Q$ 的所有向量 $v$ 测试 $f_E(vv^\dagger)=v^\dagger E[Q]v$，正性等价于 $E[Q]\ge0$；补正性等价于 $I_Q-E[Q]\ge0$。反向由全部生成元即可检验锥正性。这证明(91.2)确为全区间，包括允许的复虚系数，而非环境效应的一个子菜单。
+
+接着证明(91.3)是整个最小面。令 $\Pi_{T^\perp}$ 为环境正交投影。函数 $X\mapsto\operatorname{tr}(\Pi_{T^\perp}X)$ 在原锥上非负，其在原基上的零面 $F_T$ 恰由像空间包含在 $T$ 中的原归一PSD矩阵组成。若这样的 $X$ 分解为团支撑秩一正项，则每项向量 $z$ 必在 $T$ 中：非负数 $\|\Pi_{T^\perp}z\|^2$ 的和为零。不同 $p_v,p_w$ 使 $v,w$ 在相应域上线性独立。
+
+若支撑并集为团，$T$ 中任一向量均有团支撑，所以该零面就是 $T$ 上完整PSD锥的迹一基，且 $(p_v+p_w)/2$ 在其相对内部。若并集不是团，可取不相邻的 $a,b$ 属于该并集；由于 $v,w$ 自身各有团支撑，交换名字后必有
+
+$$
+a\in\operatorname{supp}v\setminus\operatorname{supp}w,\qquad
+b\in\operatorname{supp}w\setminus\operatorname{supp}v.
+\tag{91.6}
+$$
+
+任一 $\alpha v+\beta w$ 若 $\alpha\beta\ne0$，其 $a,b$ 坐标分别为 $\alpha v_a,\beta w_b$，都不为零，故不可能有团支撑。该像空间零面中可用的秩一生成射线只有 $p_v,p_w$，所以整个零面恰为线段，而中点也在其相对内部。两支都因包含该中点为相对内点而是整个最小面，不只是一个包含二点的球形切片。在 $T$ 的正交归一基中，对完整二阶PSD基，实坐标 $(X_{11}-X_{22},2X_{12})$ 给 $B^2$；复坐标 $(X_{11}-X_{22},2\operatorname{Re}X_{12},2\operatorname{Im}X_{12})$ 给 $B^3$。这是标准二阶PSD球表示在整个原面的应用，证明了全称 $\mathrm B$。
+
+现在把90.4的计算用于改变后的原锥，先核对其全效应类型。在整个 $V_{G,\mathbb F}$ 上取
+
+$$
+f_\pm(X)=\tfrac12(X_{aa}+X_{bb}+X_{cc})
++\operatorname{Re}X_{ab}\mp\operatorname{Re}X_{bc}.
+\tag{91.7}
+$$
+
+由于 $X_{ac}=0$，(90.8)的两个二次型等式在复域将转置改为伴随后仍逐项成立。因此 $f_\pm$ 与 $u-f_\pm$ 对整个 $C^\cap_{G,\mathbb F}$ 非负，尤其对本章整个 $C^{\rm cl}_{G,\mathbb F}$ 非负。也可直接用(91.2)：一个团不能同时含 $a,c$，其 $E_\pm[Q]$ 只可能有 $ab$ 或 $bc$ 的二阶秩一投影块、剩余的 $1/2$ 对角元及零对角元，均为正收缩。两个前件于是由原 full proper 效应达到，且原团支撑保证 $p,q_\pm$ 都是本章纯点。
+
+对于下界，任意本章 $f\in F_p$ 限制到完整 $ab$ 二阶PSD子锥，仍是 Hermitian 正收缩 $A$。确认使 $Av=v$，从而 $A\ge vv^\dagger$，故 $f(e_be_b^\dagger)\ge1/2$；另有 $f(e_ce_c^\dagger)\ge0$。因此所有原确认者在 $m=(q_++q_-)/2$ 的值至少为 $1/4$。环境投影的限制 $X\mapsto\operatorname{tr}(pX)$ 在本章全基上 proper，确认 $p$ 且在 $m$ 达到 $1/4$。这证明(91.5)的精确最小值，未以原来较小的效应区间代替本章全区间。
+
+同样，(90.10)的 $p_0,r_0$ 支撑并集不是团，所以(91.3)给整个最小面为线段。若原 $f$ 确认 $p_0$ 并排除 $r_0$，它在 $ab$ 块上的正收缩必须使同一个 $f(e_be_b^\dagger)\ge3/4$，在 $bc$ 块上的正收缩必须使该值 $\le1/4$，矛盾。这正是90.5的共享对角量计算；对复Hermitian正收缩，确认向量的正交补仍是一维复空间，所得上下界相同。
+
+由(91.5)，$\mathrm{Z0}_{\rm pure}$ 排除每条诱导 $P_3$；由上述对径控制，$\mathrm A$ 也排除每条诱导 $P_3$。最短路论证如90.6给没有诱导 $P_3$ 当且仅当每个连通分量完全，也等价于 $\sim_G$ 传递。$\mathrm{Z0}\Rightarrow\mathrm{Z0}_{\rm pure}$ 直接来自量词。
+
+若分量 $I_j$ 都完全，原锥本身便为 $\bigoplus_j\operatorname{PSD}_{|I_j|}(\mathbb F)$，全 proper 区间为各块正收缩。对任一原纯 $p$，$e_p(X)=\operatorname{tr}(pX)$ 确认 $p$。任何确认者在其所在块固定 $p$ 的单位向量，故在该块支配 $p$，其余块非负；所以 $e_p$ 是整个锥序的 least 元。迹互反给完整 $S$，而且
+
+$$
+T_p(x)=\operatorname{tr}(px)\quad(\forall x\in K^{\rm cl}),\qquad
+D_p=K^{\rm cl}\cap\ker e_p.
+\tag{91.8}
+$$
+
+后一零面凸，给对全部纯态和混态的 $\mathrm{Z0}$。同块整二阶球的任意纯点与其球对径为正交秩一投影，异块线段的两端也被 $e_p$ 区分，故有完整 $\mathrm A$。任意原载体中的 $S\Rightarrow\mathrm{Z0}$ 已由90.6的 least 零集论证给出，因而闭合(91.4)。$n=1$ 时基为单点，$e_p=u$、$D_p=\varnothing$，所有球与对径条件空真；孤立顶点各为一维块，断开分量间保留整条 $B^1$。这些分支不需要额外连通假设。由自动成立的 $\mathrm B$ 及89.4，(91.4)还等价于原 $\mathrm H,\mathrm{Boundary},\mathrm Q$。证毕。
+

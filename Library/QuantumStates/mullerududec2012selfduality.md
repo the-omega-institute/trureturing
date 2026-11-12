@@ -2993,3 +2993,6 @@ is selected by this conditional finite theorem.
 相同更新，相同矩阵通道也不抹掉设备的历史和权限。与第 84 章相比，这里舍去一般
 EJA 静态入口却承担同种二元和全有限寄存器控制；那里的指定两三份不能冒充这里的
 全拷贝合同。Bloch 三维、物理时钟、能量单位和时空仍是各自不同的问题。
+
+
+The signed coupling-network and strict same-carrier pair-discard appendix is continued in [the capacity-split note](../ContinuousObservables/mullerududec2012signedcoupling.md).
