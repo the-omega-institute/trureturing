@@ -160,6 +160,18 @@ def physicalCycles (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
       by simpa only [Submodule.coe_smul, map_smul, bx, smul_zero],
       by simpa only [Submodule.coe_smul, map_smul, nx]⟩
 
+-- Pin the inherited structures before quotient elaboration. Searching for
+-- them through the nested fixed-sector carrier unfolds large proof data.
+local instance physicalCyclesAddCommGroup
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (beta : Charge D) (level : ℤ) : AddCommGroup (physicalCycles H beta level) :=
+  Submodule.addCommGroup _
+
+local instance physicalCyclesModule
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (beta : Charge D) (level : ℤ) : Module ℂ (physicalCycles H beta level) :=
+  Submodule.module _
+
 /-- Inclusion in the existing unrestricted global original-Q kernel. -/
 def cycleInclusion (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (beta : Charge D) (level : ℤ) :
@@ -220,6 +232,20 @@ abbrev PhysicalQuotient (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (Submodule ℂ (physicalCycles H beta level))
     (Submodule.hasQuotient (R := ℂ) (M := physicalCycles H beta level))
     (physicalBoundaries H beta level critical hHG hGH)
+
+local instance physicalQuotientAddCommGroup
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (beta : Charge D) (level : ℤ) (critical : D.rank = 26)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) :
+    AddCommGroup (PhysicalQuotient H beta level critical hHG hGH) :=
+  Submodule.Quotient.addCommGroup _
+
+local instance physicalQuotientModule
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (beta : Charge D) (level : ℤ) (critical : D.rank = 26)
+    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1) :
+    Module ℂ (PhysicalQuotient H beta level critical hHG hGH) :=
+  Submodule.Quotient.module _
 
 /-- The actual physical subquotient maps into the original global quotient. -/
 def quotientToGlobal (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -453,25 +479,7 @@ def physicalImageForm
       physicalImage H beta level critical hHG hGH →ₗ[ℂ] ℂ := by
   let e := physicalImageEquiv H beta level critical hHG hGH
   let q := physicalQuotientForm F B H hHG hGH beta level hp critical shell
-  exact {
-    toFun := fun x => {
-      toFun := fun y => q (e.symm x) (e.symm y)
-      map_add' := by
-        intro y z
-        simp only [map_add]
-      map_smul' := by
-        intro a y
-        simp only [map_smul, RingHom.id_apply] }
-    map_add' := by
-      intro x z
-      apply LinearMap.ext
-      intro y
-      simp only [map_add, LinearMap.add_apply]
-    map_smul' := by
-      intro a x
-      apply LinearMap.ext
-      intro y
-      simp only [map_smul, map_smulₛₗ, LinearMap.smul_apply] }
+  exact (q.comp e.symm.toLinearMap).compl₂ e.symm.toLinearMap
 
 @[simp] theorem physicalImageForm_imageClass
     (F : NullFrame D) {t : ℕ} (B : Module.Basis (Fin t) ℂ F.K)
