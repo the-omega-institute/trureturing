@@ -30,28 +30,22 @@ open D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
 above Q_j uses v_p(m)+1<=j; deletion below Q_j uses j<=v_p(m).
 Recordhood is always at the original mu, including the signed strict mass gap. -/
 
-private theorem marginal_antitone {p a b : ℕ} (hp : p.Prime)
-    (ha : 1 ≤ a) (hab : a ≤ b) :
+private theorem marginal_antitone {p a b : ℕ} (hp : p.Prime) (ha : 1 ≤ a) (hab : a ≤ b) :
     goldenLayerMarginal p b ≤ goldenLayerMarginal p a := by
   rcases eq_or_lt_of_le hab with rfl | hlt
   · exact le_rfl
   · exact (golden_layer_strict_decrease hp ha hlt).le
 
-private theorem insertion_bound {m j p : ℕ} (hm : 0 < m) (hj : 2 ≤ j)
-    (hp : p.Prime) (hQp : layerPrime m j < p) {r : ℝ}
-    (hr : 2 ≤ r) (hpr : (p : ℝ) ≤ r) :
-    beta j r ≤ goldenLayerMarginal p (m.factorization p + 1) := by
+private theorem insertion_bound {m j p : ℕ} (hm : 0 < m) (hj : 2 ≤ j) (hp : p.Prime) (hQp : layerPrime m j < p) {r : ℝ}
+    (hr : 2 ≤ r) (hpr : (p : ℝ) ≤ r) : beta j r ≤ goldenLayerMarginal p (m.factorization p + 1) := by
   have hv := valuation_above_layer_prime hm (by omega : 1 ≤ j) hp hQp
   have hreal : 2 ≤ (p : ℝ) := by exact_mod_cast hp.two_le
   have hb := (beta_strictAntiOn hj).antitoneOn hreal hr hpr
   rw [beta_nat hp (by omega : 1 ≤ j)] at hb
   exact hb.trans (marginal_antitone hp (by omega) (by omega))
 
-private theorem deletion_bound {m j p : ℕ} (hj : 2 ≤ j)
-    (hp : p.Prime)
-    (hanti : ∀ q r : ℕ, q.Prime → r.Prime → q < r →
-      m.factorization r ≤ m.factorization q)
-    (hpQ : p ≤ layerPrime m j) {r : ℝ} (hr : 2 ≤ r) (hrp : r ≤ (p : ℝ)) :
+private theorem deletion_bound {m j p : ℕ} (hj : 2 ≤ j) (hp : p.Prime) (hanti : ∀ q r : ℕ, q.Prime → r.Prime → q < r →
+      m.factorization r ≤ m.factorization q) (hpQ : p ≤ layerPrime m j) {r : ℝ} (hr : 2 ≤ r) (hrp : r ≤ (p : ℝ)) :
     goldenLayerMarginal p (m.factorization p) ≤ beta j r := by
   have hv := valuation_below_layer_prime hp hanti hpQ
   have hreal : 2 ≤ (p : ℝ) := by exact_mod_cast hp.two_le
@@ -59,17 +53,11 @@ private theorem deletion_bound {m j p : ℕ} (hj : 2 ≤ j)
   rw [beta_nat hp (by omega : 1 ≤ j)] at hb
   exact (marginal_antitone hp (by omega) hv).trans hb
 
-private theorem lower_probe_exchange {m j : ℕ} {mu lambda e W a r : ℝ}
-    (hm : 0 < m) (hj : 2 ≤ j) (hrecord : FullRecord m mu)
-    (First S : Finset ℕ)
-    (hFirst : ∀ p ∈ First, p.Prime ∧ p ∣ m ∧
-      log (p : ℝ) ≤ W ∧ beta 1 (p : ℝ) ≤ (1 + e) * lambda)
-    (hS : ∀ p ∈ S, p.Prime ∧ a ≤ (p : ℝ) ∧ (p : ℝ) ≤ r)
-    (hdis : Disjoint First S) (hr : 2 ≤ r)
-    (hN : 0 ≤ logMass S) (hfull : logMass S < logMass First)
-    (hQa : (layerPrime m j : ℝ) < a) :
-    ∃ D ⊆ First, logMass S < logMass D ∧ logMass D ≤ logMass S + W ∧
-      beta j r * logMass S < (1 + e) * lambda * logMass D -
+private theorem lower_probe_exchange {m j : ℕ} {mu lambda e W a r : ℝ} (hm : 0 < m) (hj : 2 ≤ j) (hrecord : FullRecord m mu)
+    (First S : Finset ℕ) (hFirst : ∀ p ∈ First, p.Prime ∧ p ∣ m ∧ log (p : ℝ) ≤ W ∧ beta 1 (p : ℝ) ≤ (1 + e) * lambda)
+    (hS : ∀ p ∈ S, p.Prime ∧ a ≤ (p : ℝ) ∧ (p : ℝ) ≤ r) (hdis : Disjoint First S) (hr : 2 ≤ r)
+    (hN : 0 ≤ logMass S) (hfull : logMass S < logMass First) (hQa : (layerPrime m j : ℝ) < a) :
+    ∃ D ⊆ First, logMass S < logMass D ∧ logMass D ≤ logMass S + W ∧ beta j r * logMass S < (1 + e) * lambda * logMass D -
         mu * (logMass D - logMass S) := by
   obtain ⟨D, hDF, hND, hDN⟩ := subset_just_above First (fun p => log (p : ℝ))
     hN (fun p hp => (hFirst p hp).2.2.1) hfull
@@ -82,8 +70,7 @@ private theorem lower_probe_exchange {m j : ℕ} {mu lambda e W a r : ℝ}
     apply sum_le_sum
     intro p hp
     have hf := hFirst p (hDF hp)
-    have hv : 1 ≤ m.factorization p :=
-      (hf.1.dvd_iff_one_le_factorization hm.ne').mp hf.2.1
+    have hv : 1 ≤ m.factorization p := (hf.1.dvd_iff_one_le_factorization hm.ne').mp hf.2.1
     have hb := marginal_antitone hf.1 (by norm_num : 1 ≤ 1) hv
     rw [← beta_nat hf.1 (by norm_num : 1 ≤ 1)] at hb
     exact mul_le_mul_of_nonneg_right (hb.trans hf.2.2.2) (log_natCast_nonneg p)
@@ -96,19 +83,12 @@ private theorem lower_probe_exchange {m j : ℕ} {mu lambda e W a r : ℝ}
     exact mul_le_mul_of_nonneg_right
       (insertion_bound hm hj hs.1 hQp hr hs.2.2) (log_natCast_nonneg p)
 
-private theorem upper_probe_exchange {m j : ℕ} {mu lambda e W r b : ℝ}
-    (hm : 0 < m) (hj : 2 ≤ j) (hrecord : FullRecord m mu)
-    (hanti : ∀ q t : ℕ, q.Prime → t.Prime → q < t →
-      m.factorization t ≤ m.factorization q)
-    (First S : Finset ℕ)
-    (hFirst : ∀ p ∈ First, p.Prime ∧ m.factorization p = 0 ∧
-      log (p : ℝ) ≤ W ∧ (1 - e) * lambda ≤ beta 1 (p : ℝ))
-    (hS : ∀ p ∈ S, p.Prime ∧ r ≤ (p : ℝ) ∧ (p : ℝ) ≤ b)
-    (hdis : Disjoint S First) (hr : 2 ≤ r)
-    (hN : 0 < logMass S) (hfull : logMass S ≤ logMass First)
-    (hbQ : b ≤ (layerPrime m j : ℝ)) :
-    ∃ U ⊆ First, logMass U < logMass S ∧ logMass S ≤ logMass U + W ∧
-      (1 - e) * lambda * logMass U < beta j r * logMass S -
+private theorem upper_probe_exchange {m j : ℕ} {mu lambda e W r b : ℝ} (hm : 0 < m) (hj : 2 ≤ j) (hrecord : FullRecord m mu)
+    (hanti : ∀ q t : ℕ, q.Prime → t.Prime → q < t → m.factorization t ≤ m.factorization q) (First S : Finset ℕ)
+    (hFirst : ∀ p ∈ First, p.Prime ∧ m.factorization p = 0 ∧ log (p : ℝ) ≤ W ∧ (1 - e) * lambda ≤ beta 1 (p : ℝ))
+    (hS : ∀ p ∈ S, p.Prime ∧ r ≤ (p : ℝ) ∧ (p : ℝ) ≤ b) (hdis : Disjoint S First) (hr : 2 ≤ r)
+    (hN : 0 < logMass S) (hfull : logMass S ≤ logMass First) (hbQ : b ≤ (layerPrime m j : ℝ)) :
+    ∃ U ⊆ First, logMass U < logMass S ∧ logMass S ≤ logMass U + W ∧ (1 - e) * lambda * logMass U < beta j r * logMass S -
         mu * (logMass S - logMass U) := by
   obtain ⟨U, hUF, hUN, hNU⟩ := subset_just_below First (fun p => log (p : ℝ))
     hN (fun p hp => (hFirst p hp).2.2.1) hfull
@@ -147,25 +127,15 @@ The finite pool conditions below are not an eventual count theorem. -/
 while both strict predecessors use the original positive mu. No equality of
 actual exponents or adjacent-layer geometry is assumed. -/
 theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q W : ℝ}
-    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
-    (_hLambda : lambda = beta 1 (largestPrime m : ℝ))
-    (hrho : 2 ≤ rho) (hroot : beta j rho = lambda)
-    (hrm : 2 ≤ rm) (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
-    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
-    (FirstLo FirstHi Sm Sp : Finset ℕ)
-    (hFL : ∀ p ∈ FirstLo, p.Prime ∧ p ≤ largestPrime m ∧
-      log (p : ℝ) ≤ W ∧ |beta 1 (p : ℝ) - lambda| ≤ e * lambda)
-    (hFU : ∀ p ∈ FirstHi, p.Prime ∧ largestPrime m < p ∧
-      log (p : ℝ) ≤ W ∧ |beta 1 (p : ℝ) - lambda| ≤ e * lambda)
-    (hSm : ∀ p ∈ Sm, p.Prime ∧ a ≤ (p : ℝ) ∧ (p : ℝ) ≤ rm)
-    (hSp : ∀ p ∈ Sp, p.Prime ∧ rp ≤ (p : ℝ) ∧ (p : ℝ) ≤ b)
-    (hdisM : Disjoint FirstLo Sm) (hdisP : Disjoint Sp FirstHi)
-    (hNm : 0 < logMass Sm) (hNp : 0 < logMass Sp)
-    (hfullM : logMass Sm < logMass FirstLo) (hfullP : logMass Sp ≤ logMass FirstHi)
-    (hWM : W ≤ q * logMass Sm) (hWP : W ≤ q * logMass Sp)
-    (hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm))
-    (hsepP : e + q ≤ (j : ℝ) / 6 * log (rp / rho))
-    (hsmallP : (j : ℝ) / 3 * log (rp / rho) ≤ 1) :
+    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j) (_hLambda : lambda = beta 1 (largestPrime m : ℝ))
+    (hrho : 2 ≤ rho) (hroot : beta j rho = lambda) (hrm : 2 ≤ rm) (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
+    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q) (FirstLo FirstHi Sm Sp : Finset ℕ) (hFL : ∀ p ∈ FirstLo, p.Prime ∧ p ≤ largestPrime m ∧
+      log (p : ℝ) ≤ W ∧ |beta 1 (p : ℝ) - lambda| ≤ e * lambda) (hFU : ∀ p ∈ FirstHi, p.Prime ∧ largestPrime m < p ∧
+      log (p : ℝ) ≤ W ∧ |beta 1 (p : ℝ) - lambda| ≤ e * lambda) (hSm : ∀ p ∈ Sm, p.Prime ∧ a ≤ (p : ℝ) ∧ (p : ℝ) ≤ rm)
+    (hSp : ∀ p ∈ Sp, p.Prime ∧ rp ≤ (p : ℝ) ∧ (p : ℝ) ≤ b) (hdisM : Disjoint FirstLo Sm) (hdisP : Disjoint Sp FirstHi)
+    (hNm : 0 < logMass Sm) (hNp : 0 < logMass Sp) (hfullM : logMass Sm < logMass FirstLo) (hfullP : logMass Sp ≤ logMass FirstHi)
+    (hWM : W ≤ q * logMass Sm) (hWP : W ≤ q * logMass Sp) (hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm))
+    (hsepP : e + q ≤ (j : ℝ) / 6 * log (rp / rho)) (hsmallP : (j : ℝ) / 3 * log (rp / rho) ≤ 1) :
     a ≤ (layerPrime m j : ℝ) ∧ (layerPrime m j : ℝ) < b := by
   have hm0 : 0 < m := by omega
   have hlam : 0 < lambda := hroot ▸ beta_pos hrho (by omega : 1 ≤ j)
@@ -196,15 +166,13 @@ theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q
   · by_contra! hbad
     obtain ⟨D, _, hND, hDN, hex⟩ := lower_probe_exchange hm0 hj hrecord
       FirstLo Sm hFirstLo hSm hdisM hrm hNm.le hfullM hbad
-    have hgap : 0 < mu * (logMass D - logMass Sm) :=
-      mul_pos hmu (sub_pos.mpr hND)
+    have hgap : 0 < mu * (logMass D - logMass Sm) := mul_pos hmu (sub_pos.mpr hND)
     have hcost : 0 ≤ (1 + e) * lambda := by positivity
     have hD : logMass D ≤ (1 + q) * logMass Sm := by linarith
     have hprod := mul_le_mul_of_nonneg_left hD hcost
     have hbound : beta j rm / lambda < (1 + e) * (1 + q) := by
       apply (div_lt_iff₀ hlam).mpr
-      have hh : beta j rm * logMass Sm <
-          ((1 + e) * (1 + q) * lambda) * logMass Sm := by
+      have hh : beta j rm * logMass Sm < ((1 + e) * (1 + q) * lambda) * logMass Sm := by
         nlinarith only [hex, hgap, hprod]
       exact (mul_lt_mul_iff_left₀ hNm).mp hh
     have hlog := log_lt_log (div_pos (beta_pos hrm (by omega)) hlam) hbound
@@ -219,15 +187,13 @@ theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q
   · by_contra! hbad
     obtain ⟨U, _, hUN, hNU, hex⟩ := upper_probe_exchange hm0 hj hrecord hanti
       FirstHi Sp hFirstHi hSp hdisP (hrho.trans hrhop) hNp hfullP hbad
-    have hgap : 0 < mu * (logMass Sp - logMass U) :=
-      mul_pos hmu (sub_pos.mpr hUN)
+    have hgap : 0 < mu * (logMass Sp - logMass U) := mul_pos hmu (sub_pos.mpr hUN)
     have hcost : 0 ≤ (1 - e) * lambda := mul_nonneg (by linarith) hlam.le
     have hU : (1 - q) * logMass Sp ≤ logMass U := by linarith
     have hprod := mul_le_mul_of_nonneg_left hU hcost
     have hratio : (1 - e) * (1 - q) < beta j rp / lambda := by
       apply (lt_div_iff₀ hlam).mpr
-      have hh : ((1 - e) * (1 - q) * lambda) * logMass Sp <
-          beta j rp * logMass Sp := by
+      have hh : ((1 - e) * (1 - q) * lambda) * logMass Sp < beta j rp * logMass Sp := by
         nlinarith only [hex, hgap, hprod]
       exact (mul_lt_mul_iff_left₀ hNp).mp hh
     have herr : 1 - beta j rp / lambda < e + q := by
@@ -236,12 +202,10 @@ theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q
     have hslope := log_beta_drop hj hrho hrhop
     rw [hroot] at hslope
     have hlog := log_le_sub_one_of_pos (div_pos hlam hbp)
-    have hmul : ((j : ℝ) / 3 * log (rp / rho)) * (beta j rp / lambda) ≤
-        1 - beta j rp / lambda := by
+    have hmul : ((j : ℝ) / 3 * log (rp / rho)) * (beta j rp / lambda) ≤ 1 - beta j rp / lambda := by
       have h := mul_le_mul_of_nonneg_right (hslope.trans hlog)
         (div_pos hbp hlam).le
-      have hid : (lambda / beta j rp - 1) * (beta j rp / lambda) =
-          1 - beta j rp / lambda := by field_simp
+      have hid : (lambda / beta j rp - 1) * (beta j rp / lambda) = 1 - beta j rp / lambda := by field_simp
       rwa [hid] at h
     have hnonneg : 0 ≤ (j : ℝ) / 3 * log (rp / rho) := by
       have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
@@ -255,17 +219,11 @@ theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q
         linarith
     linarith
 
-private theorem counted_probe_pools {K : ℕ} {C c X rm rp : ℝ}
-    (hcount : ∀ x : ℝ, X ≤ x →
-      c * x ^ bhpExponent / log x ≤
-        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧
-      c * x ^ bhpExponent / log x ≤
-        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ))
-    (hXm : X ≤ rm) (hXp : X ≤ rp)
-    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
-    (hcapP : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp) :
-    ∃ Sm Sp : Finset ℕ, Sm.card = K ∧ Sp.card = K ∧
-      (∀ p ∈ Sm, p.Prime ∧ rm - C * rm ^ bhpExponent ≤ (p : ℝ) ∧ (p : ℝ) ≤ rm) ∧
+private theorem counted_probe_pools {K : ℕ} {C c X rm rp : ℝ} (hcount : ∀ x : ℝ, X ≤ x → c * x ^ bhpExponent / log x ≤
+        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧ c * x ^ bhpExponent / log x ≤
+        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ)) (hXm : X ≤ rm) (hXp : X ≤ rp)
+    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm) (hcapP : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp) :
+    ∃ Sm Sp : Finset ℕ, Sm.card = K ∧ Sp.card = K ∧ (∀ p ∈ Sm, p.Prime ∧ rm - C * rm ^ bhpExponent ≤ (p : ℝ) ∧ (p : ℝ) ≤ rm) ∧
       (∀ p ∈ Sp, p.Prime ∧ rp ≤ (p : ℝ) ∧ (p : ℝ) ≤ rp + C * rp ^ bhpExponent) := by
   classical
   have hM : K ≤ (primesIn (rm - C * rm ^ bhpExponent) rm).card := by
@@ -274,12 +232,10 @@ private theorem counted_probe_pools {K : ℕ} {C c X rm rp : ℝ}
     exact_mod_cast hcapP.trans (hcount rp hXp).2
   obtain ⟨Sm, hm, hmc⟩ := exists_subset_card_eq hM
   obtain ⟨Sp, hp, hpc⟩ := exists_subset_card_eq hP
-  exact ⟨Sm, Sp, hmc, hpc,
-    fun p h => (mem_filter.mp (hm h)).2,
+  exact ⟨Sm, Sp, hmc, hpc, fun p h => (mem_filter.mp (hm h)).2,
     fun p h => (mem_filter.mp (hp h)).2⟩
 
-private theorem logMass_bounds (S : Finset ℕ) {lo hi : ℝ}
-    (h : ∀ p ∈ S, lo ≤ log (p : ℝ) ∧ log (p : ℝ) ≤ hi) :
+private theorem logMass_bounds (S : Finset ℕ) {lo hi : ℝ} (h : ∀ p ∈ S, lo ≤ log (p : ℝ) ∧ log (p : ℝ) ≤ hi) :
     (S.card : ℝ) * lo ≤ logMass S ∧ logMass S ≤ (S.card : ℝ) * hi := by
   constructor
   · simpa [logMass] using sum_le_sum (s := S) (fun p hp => (h p hp).1)
@@ -289,34 +245,19 @@ private theorem logMass_bounds (S : Finset ℕ) {lo hi : ℝ}
 three actual centers P, rm and rp. Its first upper CLOSED interval loses the
 endpoint P; the probe intervals retain their endpoints. Only explicit scalar
 conditions remain for the eventual moving-index threshold. -/
-theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
-    {mu C c X P rho rm rp e q Z : ℝ}
-    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
-    (hK : 1 ≤ K) (hPdef : P = (largestPrime m : ℝ)) (hP : 4 ≤ P)
-    (hC : 0 < C) (hX : 2 ≤ X)
-    (hcount : ∀ x : ℝ, X ≤ x →
-      c * x ^ bhpExponent / log x ≤
-        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧
-      c * x ^ bhpExponent / log x ≤
-        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ))
-    (hXP : X ≤ P) (hXm : X ≤ rm) (hXp : X ≤ rp)
-    (hcapP : (K : ℝ) + 1 ≤ c * P ^ bhpExponent / log P)
-    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
-    (hcapR : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp)
-    (hwidth : C * P ^ bhpExponent ≤ P / 2)
-    (hrho : 2 ≤ rho) (hroot : beta j rho = beta 1 P)
-    (hrm : 2 ≤ rm - C * rm ^ bhpExponent)
-    (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
-    (hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent)
-    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
-    (hprice : priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ e * beta 1 P)
-    (hZ : 0 < Z) (hZM : Z ≤ log (rm - C * rm ^ bhpExponent))
-    (hZP : Z ≤ log rp) (hbudget : 2 * log P ≤ q * ((K : ℝ) * Z))
-    (hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm))
-    (hsepP : e + q ≤ (j : ℝ) / 6 * log (rp / rho))
-    (hsmallP : (j : ℝ) / 3 * log (rp / rho) ≤ 1) :
-    rm - C * rm ^ bhpExponent ≤ (layerPrime m j : ℝ) ∧
-      (layerPrime m j : ℝ) < rp + C * rp ^ bhpExponent := by
+theorem counted_displaced_root_boundary_squeeze {m j K : ℕ} {mu C c X P rho rm rp e q Z : ℝ}
+    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j) (hK : 1 ≤ K) (hPdef : P = (largestPrime m : ℝ)) (hP : 4 ≤ P)
+    (hC : 0 < C) (hX : 2 ≤ X) (hcount : ∀ x : ℝ, X ≤ x → c * x ^ bhpExponent / log x ≤
+        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧ c * x ^ bhpExponent / log x ≤
+        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ)) (hXP : X ≤ P) (hXm : X ≤ rm) (hXp : X ≤ rp)
+    (hcapP : (K : ℝ) + 1 ≤ c * P ^ bhpExponent / log P) (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
+    (hcapR : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp) (hwidth : C * P ^ bhpExponent ≤ P / 2)
+    (hrho : 2 ≤ rho) (hroot : beta j rho = beta 1 P) (hrm : 2 ≤ rm - C * rm ^ bhpExponent) (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
+    (hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent) (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
+    (hprice : priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ e * beta 1 P) (hZ : 0 < Z) (hZM : Z ≤ log (rm - C * rm ^ bhpExponent))
+    (hZP : Z ≤ log rp) (hbudget : 2 * log P ≤ q * ((K : ℝ) * Z)) (hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm))
+    (hsepP : e + q ≤ (j : ℝ) / 6 * log (rp / rho)) (hsmallP : (j : ℝ) / 3 * log (rp / rho) ≤ 1) :
+    rm - C * rm ^ bhpExponent ≤ (layerPrime m j : ℝ) ∧ (layerPrime m j : ℝ) < rp + C * rp ^ bhpExponent := by
   classical
   have hP0 : 0 < P := by linarith
   have hv : 0 < C * P ^ bhpExponent := mul_pos hC (rpow_pos_of_pos hP0 _)
@@ -324,15 +265,13 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
   have hwm : 0 < C * rm ^ bhpExponent := mul_pos hC (rpow_pos_of_pos hrm0 _)
   have hrm2 : 2 ≤ rm := by linarith
   have hrp2 : 2 ≤ rp := hrho.trans hrhop
-  have hwp : 0 < C * rp ^ bhpExponent :=
-    mul_pos hC (rpow_pos_of_pos (by linarith : 0 < rp) _)
+  have hwp : 0 < C * rp ^ bhpExponent := mul_pos hC (rpow_pos_of_pos (by linarith : 0 < rp) _)
   have hhalf : 2 ≤ P / 2 := by linarith
   have hleft : 0 < P - C * P ^ bhpExponent := by linarith
   have hK0 : (0 : ℝ) < K := by exact_mod_cast (show 0 < K by omega)
   have hKP : (largestPrime m : ℝ) = P := hPdef.symm
   obtain ⟨FL, FU, hcFL, hcFU, hFL, hFU⟩ := counted_higher_pools
-    hcount (N := largestPrime m) (K := K) (by simpa [hKP] using hXP)
-    (by simpa [hKP] using hcapP)
+    hcount (N := largestPrime m) (K := K) (by simpa [hKP] using hXP) (by simpa [hKP] using hcapP)
   simp only [hKP] at hFL hFU
   obtain ⟨Sm, Sp, hcSm, hcSp, hSm, hSp⟩ := counted_probe_pools hcount hXm hXp hcapM hcapR
   have hlogP : 0 < log P := log_pos (by linarith)
@@ -349,8 +288,7 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
     have hphalf : P / 2 ≤ (p : ℝ) := by linarith
     have hp0 : (0 : ℝ) < p := by linarith
     refine ⟨(log_le_log hp0 hhi).trans hlogUpper, ?_⟩
-    have hdist : |(p : ℝ) - P| ≤ C * P ^ bhpExponent :=
-      abs_le.mpr ⟨by linarith, by linarith⟩
+    have hdist : |(p : ℝ) - P| ≤ C * P ^ bhpExponent := abs_le.mpr ⟨by linarith, by linarith⟩
     exact (price_variation (by norm_num : 1 ≤ 1) hhalf (by linarith : P / 2 ≤ P)
       hphalf).trans ((mul_le_mul_of_nonneg_left hdist (priceLip_nonneg 1 hhalf)).trans hprice)
   have hmBounds := logMass_bounds Sm (lo := Z) (hi := log rm) (by
@@ -367,14 +305,11 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
     (hi := 2 * log P) (by
       intro p hp
       have hh := hFL p hp
-      exact ⟨log_le_log hleft hh.2.1,
-        (hBand p hh.2.1 (by linarith [hh.2.2])).1⟩)).1
+      exact ⟨log_le_log hleft hh.2.1, (hBand p hh.2.1 (by linarith [hh.2.2])).1⟩)).1
   have hfU := (logMass_bounds FU (lo := log (P - C * P ^ bhpExponent))
-    (hi := 2 * log P) (by
-      intro p hp
+    (hi := 2 * log P) (by intro p hp
       have hh := hFU p hp
-      exact ⟨log_le_log hleft (by linarith [hh.2.1]),
-        (hBand p (by linarith [hh.2.1]) hh.2.2).1⟩)).1
+      exact ⟨log_le_log hleft (by linarith [hh.2.1]), (hBand p (by linarith [hh.2.1]) hh.2.2).1⟩)).1
   rw [hcSm] at hmBounds
   rw [hcSp] at hpBounds
   rw [hcFL] at hfL
@@ -386,8 +321,7 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
     have hl := log_lt_log (by linarith : 0 < rp + C * rp ^ bhpExponent) hprefix
     exact hpBounds.2.trans ((mul_lt_mul_of_pos_left hl hK0).le.trans hfU)
   apply displaced_root_boundary_squeeze hm hmu hrecord hj
-    (lambda := beta 1 P) (rho := rho) (rm := rm) (rp := rp)
-    (e := e) (q := q) (W := 2 * log P)
+    (lambda := beta 1 P) (rho := rho) (rm := rm) (rp := rp) (e := e) (q := q) (W := 2 * log P)
     (by rw [hPdef]) hrho hroot hrm2 hmrho hrhop he he1 hq FL FU Sm Sp
   · intro p hp
     have hh := hFL p hp
@@ -415,9 +349,7 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
   · exact hsepP
   · exact hsmallP
 
-private theorem window_log_bounds {r w : ℝ} (hr : 0 < r)
-    (hw : 0 ≤ w) (hhalf : w ≤ r / 2) :
-    log r - 2 * (w / r) ≤ log (r - w) ∧
+private theorem window_log_bounds {r w : ℝ} (hr : 0 < r) (hw : 0 ≤ w) (hhalf : w ≤ r / 2) : log r - 2 * (w / r) ≤ log (r - w) ∧
       log (r + w) ≤ log r + 2 * (w / r) := by
   have hminus : 0 < r - w := by linarith
   have hplus : 0 < r + w := by linarith
@@ -442,38 +374,21 @@ set_option maxHeartbeats 800000 in
 /-- Literal-cutoff logarithmic localization from explicit finite count and
 smallness conditions. This is the finite core, not a growing-index eventual
 threshold assertion. The error constant has no layer-index factor. -/
-theorem counted_displaced_cutoff_log_localization {m j K : ℕ}
-    {mu C c X P rho rm rp e q Z H t : ℝ}
-    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
-    (hK : 1 ≤ K) (hPdef : P = (largestPrime m : ℝ)) (hP : 4 ≤ P)
-    (hC : 0 < C) (hX : 2 ≤ X) (hH : 0 < H)
-    (htdef : t = P ^ (-priceExponent j))
+theorem counted_displaced_cutoff_log_localization {m j K : ℕ} {mu C c X P rho rm rp e q Z H t : ℝ}
+    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j) (hK : 1 ≤ K) (hPdef : P = (largestPrime m : ℝ)) (hP : 4 ≤ P)
+    (hC : 0 < C) (hX : 2 ≤ X) (hH : 0 < H) (htdef : t = P ^ (-priceExponent j))
     (hrhodef : rho = cutoff j (beta 1 P)) (hactive : beta 1 P < beta j 2)
-    (hrmdef : rm = rho * exp (-(H * t))) (hrpdef : rp = rho * exp (H * t))
-    (hcount : ∀ x : ℝ, X ≤ x →
-      c * x ^ bhpExponent / log x ≤
-        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧
-      c * x ^ bhpExponent / log x ≤
-        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ))
-    (hXP : X ≤ P) (hXm : X ≤ rm) (hXp : X ≤ rp)
-    (hcapP : (K : ℝ) + 1 ≤ c * P ^ bhpExponent / log P)
-    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
-    (hcapR : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp)
-    (hwidth : C * P ^ bhpExponent ≤ P / 2)
-    (hrm : 2 ≤ rm - C * rm ^ bhpExponent)
-    (hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent)
-    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
-    (hprice : priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ e * beta 1 P)
-    (hZ : 0 < Z) (hZM : Z ≤ log (rm - C * rm ^ bhpExponent))
-    (hZP : Z ≤ log rp) (hbudget : 2 * log P ≤ q * ((K : ℝ) * Z))
-    (hseparate : e + q ≤ (j : ℝ) / 6 * (H * t))
-    (hsmall : (j : ℝ) / 3 * (H * t) ≤ 1)
-    (hwm : C * rm ^ bhpExponent / rm ≤ 4 * C * t)
-    (hwp : C * rp ^ bhpExponent / rp ≤ 4 * C * t)
-    (hshort : 4 * C * t ≤ 1 / 2) :
-    2 < cutoff j (beta 1 P) ∧ 0 < layerPrime m j ∧
-      |log (layerPrime m j : ℝ) - log (cutoff j (beta 1 P))| ≤
-        (H + 16 * C) * P ^ (-priceExponent j) := by
+    (hrmdef : rm = rho * exp (-(H * t))) (hrpdef : rp = rho * exp (H * t)) (hcount : ∀ x : ℝ, X ≤ x → c * x ^ bhpExponent / log x ≤
+        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧ c * x ^ bhpExponent / log x ≤
+        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ)) (hXP : X ≤ P) (hXm : X ≤ rm) (hXp : X ≤ rp)
+    (hcapP : (K : ℝ) + 1 ≤ c * P ^ bhpExponent / log P) (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
+    (hcapR : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp) (hwidth : C * P ^ bhpExponent ≤ P / 2) (hrm : 2 ≤ rm - C * rm ^ bhpExponent)
+    (hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent) (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
+    (hprice : priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ e * beta 1 P) (hZ : 0 < Z) (hZM : Z ≤ log (rm - C * rm ^ bhpExponent))
+    (hZP : Z ≤ log rp) (hbudget : 2 * log P ≤ q * ((K : ℝ) * Z)) (hseparate : e + q ≤ (j : ℝ) / 6 * (H * t))
+    (hsmall : (j : ℝ) / 3 * (H * t) ≤ 1) (hwm : C * rm ^ bhpExponent / rm ≤ 4 * C * t) (hwp : C * rp ^ bhpExponent / rp ≤ 4 * C * t)
+    (hshort : 4 * C * t ≤ 1 / 2) : 2 < cutoff j (beta 1 P) ∧ 0 < layerPrime m j ∧
+      |log (layerPrime m j : ℝ) - log (cutoff j (beta 1 P))| ≤ (H + 16 * C) * P ^ (-priceExponent j) := by
   have hP0 : 0 < P := by linarith
   have ht : 0 < t := htdef ▸ rpow_pos_of_pos hP0 _
   have hht : 0 < H * t := mul_pos hH ht
@@ -504,12 +419,9 @@ theorem counted_displaced_cutoff_log_localization {m j K : ℕ}
     nlinarith
   have hbracket := counted_displaced_root_boundary_squeeze hm hmu hrecord hj hK
     hPdef hP hC hX hcount hXP hXm hXp hcapP hcapM hcapR hwidth hrho.le hroot
-    hrm hmrho hrhop hprefix he he1 hq hprice hZ hZM hZP hbudget hsepM
-    (by rwa [hlogRatioP]) (by rwa [hlogRatioP])
-  have hwm0 : 0 ≤ C * rm ^ bhpExponent :=
-    mul_nonneg hC.le (rpow_pos_of_pos hrm0 _).le
-  have hwp0 : 0 ≤ C * rp ^ bhpExponent :=
-    mul_nonneg hC.le (rpow_pos_of_pos hrp0 _).le
+    hrm hmrho hrhop hprefix he he1 hq hprice hZ hZM hZP hbudget hsepM (by rwa [hlogRatioP]) (by rwa [hlogRatioP])
+  have hwm0 : 0 ≤ C * rm ^ bhpExponent := mul_nonneg hC.le (rpow_pos_of_pos hrm0 _).le
+  have hwp0 : 0 ≤ C * rp ^ bhpExponent := mul_nonneg hC.le (rpow_pos_of_pos hrp0 _).le
   have hhalfM : C * rm ^ bhpExponent ≤ rm / 2 := by
     have hh := (div_le_iff₀ hrm0).mp (hwm.trans hshort)
     linarith
@@ -529,14 +441,9 @@ theorem counted_displaced_cutoff_log_localization {m j K : ℕ}
 
 /-- Product and logarithmic bounds at the literal first-layer price. All
 constants are uniform in the natural layer index. -/
-theorem literal_root_geometry {j : ℕ} {P rho : ℝ} (hj : 2 ≤ j)
-    (hP : 4 ≤ log P) (hP0 : 0 < P) (hrho : 2 ≤ rho)
-    (hroot : beta j rho = beta 1 P)
-    (hlog : log (2 * log P / log 2) ≤ log P / 4) :
-    P * log P / 2 ≤ rho ^ j * log rho ∧
-      rho ^ j * log rho ≤ 2 * P * log P ∧
-      log P - log 2 ≤ (j : ℝ) * log rho ∧
-      (j : ℝ) * log rho ≤ 5 * log P / 4 := by
+theorem literal_root_geometry {j : ℕ} {P rho : ℝ} (hj : 2 ≤ j) (hP : 4 ≤ log P) (hP0 : 0 < P) (hrho : 2 ≤ rho)
+    (hroot : beta j rho = beta 1 P) (hlog : log (2 * log P / log 2) ≤ log P / 4) : P * log P / 2 ≤ rho ^ j * log rho ∧
+      rho ^ j * log rho ≤ 2 * P * log P ∧ log P - log 2 ≤ (j : ℝ) * log rho ∧ (j : ℝ) * log rho ≤ 5 * log P / 4 := by
   have hP2 : 2 ≤ P := by
     by_contra! h
     have hh := log_le_log hP0 h.le
@@ -591,8 +498,7 @@ theorem literal_root_geometry {j : ℕ} {P rho : ℝ} (hj : 2 ≤ j)
 
 /-- Uniform activation at the literal beta(1,P), with no reference-price
 substitution. The index restriction is a scalar consequence of the window. -/
-theorem literal_cutoff_active {j : ℕ} {P : ℝ} (hj : 2 ≤ j)
-    (hP0 : 0 < P) (hP : 4 ≤ log P) (hjx : (j : ℝ) ≤ log P / 4) :
+theorem literal_cutoff_active {j : ℕ} {P : ℝ} (hj : 2 ≤ j) (hP0 : 0 < P) (hP : 4 ≤ log P) (hjx : (j : ℝ) ≤ log P / 4) :
     beta 1 P < beta j 2 := by
   have h2 : 0 < log 2 := log_pos (by norm_num)
   have h21 : log 2 ≤ 1 := by
@@ -622,19 +528,11 @@ theorem literal_cutoff_active {j : ℕ} {P : ℝ} (hj : 2 ≤ j)
 /-- Displaced roots retain the uniform logarithmic scale and BHP relative
 width. The estimate uses the literal root product, not a higher-layer
 Lipschitz constant. -/
-theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ}
-    (hj : 2 ≤ j) (hP0 : 0 < P) (hP : 4 ≤ log P) (hrho : 2 ≤ rho)
-    (hroot : beta j rho = beta 1 P)
-    (hlog : log (2 * log P / log 2) ≤ log P / 4)
-    (hH : 0 < H) (hsmall : H * P ^ (-priceExponent j) ≤ 1) :
-    let t := P ^ (-priceExponent j)
-    let rm := rho * exp (-(H * t))
-    let rp := rho * exp (H * t)
-    log P / (j : ℝ) - 2 ≤ log rm ∧
-      log P / (j : ℝ) - 1 ≤ log rp ∧
-      log rp ≤ 5 * log P / (4 * (j : ℝ)) + 1 ∧
-      rm ^ bhpExponent / rm ≤ 4 * t ∧
-      rp ^ bhpExponent / rp ≤ 4 * t := by
+theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ} (hj : 2 ≤ j) (hP0 : 0 < P) (hP : 4 ≤ log P) (hrho : 2 ≤ rho)
+    (hroot : beta j rho = beta 1 P) (hlog : log (2 * log P / log 2) ≤ log P / 4)
+    (hH : 0 < H) (hsmall : H * P ^ (-priceExponent j) ≤ 1) : let t := P ^ (-priceExponent j) let rm := rho * exp (-(H * t))
+    let rp := rho * exp (H * t) log P / (j : ℝ) - 2 ≤ log rm ∧ log P / (j : ℝ) - 1 ≤ log rp ∧ log rp ≤ 5 * log P / (4 * (j : ℝ)) + 1 ∧
+      rm ^ bhpExponent / rm ≤ 4 * t ∧ rp ^ bhpExponent / rp ≤ 4 * t := by
   dsimp only
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
   have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
@@ -689,8 +587,7 @@ theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ}
             mul_le_mul_of_nonpos_left hl (by norm_num)
           _ ≤ 1 + (-(19 / 40 : ℝ) * log P / j) := by ring_nf; norm_num
       _ = exp 1 * exp (-(19 / 40 : ℝ) * log P / j) := exp_add _ _
-      _ ≤ 4 * exp (-(19 / 40 : ℝ) * log P / j) :=
-        mul_le_mul_of_nonneg_right (by linarith [exp_one_lt_d9]) (exp_pos _).le
+      _ ≤ 4 * exp (-(19 / 40 : ℝ) * log P / j) := mul_le_mul_of_nonneg_right (by linarith [exp_one_lt_d9]) (exp_pos _).le
   exact ⟨hmlo, hplo, hphi, hwidth _ hrm0 hmlo, hwidth _ hrp0 (by linarith)⟩
 
 open Filter Asymptotics
@@ -698,12 +595,9 @@ open scoped Topology
 
 /-- A simultaneous lower bound on x/u throughout the growing window. The
 threshold precedes every real u in the window, rather than each fixed index. -/
-theorem moving_window_log_scale {delta A : ℝ} (hdelta : 0 < delta) (hA : 0 < A) :
-    ∀ᶠ x : ℝ in atTop, 1 ≤ log x ∧ 0 < x ∧
-      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 →
-        A * log x ≤ x / u := by
-  have hratio : Tendsto (fun x : ℝ => log x / x) atTop (𝓝 0) :=
-    isLittleO_log_id_atTop.tendsto_div_nhds_zero
+theorem moving_window_log_scale {delta A : ℝ} (hdelta : 0 < delta) (hA : 0 < A) : ∀ᶠ x : ℝ in atTop, 1 ≤ log x ∧ 0 < x ∧
+      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 → A * log x ≤ x / u := by
+  have hratio : Tendsto (fun x : ℝ => log x / x) atTop (𝓝 0) := isLittleO_log_id_atTop.tendsto_div_nhds_zero
   have hlim : Tendsto (fun x : ℝ => A * (delta / log x + log x / x))
       atTop (𝓝 0) := by
     convert ((tendsto_const_nhds.div_atTop tendsto_log_atTop).add hratio).const_mul A using 1
@@ -714,13 +608,11 @@ theorem moving_window_log_scale {delta A : ℝ} (hdelta : 0 < delta) (hA : 0 < A
   refine ⟨hx, hx0, ?_⟩
   intro u hu hule
   have hl : 0 < log x := by linarith
-  have hid : (delta * x / (log x) ^ 2 + 1) * log x / x =
-      delta / log x + log x / x := by
+  have hid : (delta * x / (log x) ^ 2 + 1) * log x / x = delta / log x + log x / x := by
     field_simp
   rw [← hid] at hsmall
   have hfull : A * (delta * x / (log x) ^ 2 + 1) * log x ≤ x := by
-    have hh : A * ((delta * x / (log x) ^ 2 + 1) * log x / x) =
-        (A * (delta * x / (log x) ^ 2 + 1) * log x) / x := by ring
+    have hh : A * ((delta * x / (log x) ^ 2 + 1) * log x / x) = (A * (delta * x / (log x) ^ 2 + 1) * log x) / x := by ring
     rw [hh] at hsmall
     simpa only [one_mul] using ((div_lt_iff₀ hx0).mp hsmall).le
   apply (le_div_iff₀ hu).mpr
@@ -729,11 +621,8 @@ theorem moving_window_log_scale {delta A : ℝ} (hdelta : 0 < delta) (hA : 0 < A
 
 /-- Every fixed polynomial is dominated uniformly on the whole moving
 window. This is not a collection of fixed-index asymptotic limits. -/
-theorem moving_window_exp_small {delta a : ℝ} (hdelta : 0 < delta) (ha : 0 < a)
-    (k : ℕ) :
-    ∀ᶠ x : ℝ in atTop, 1 ≤ x ∧
-      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 →
-        x ^ k * exp (-a * x / u) ≤ 1 / x := by
+theorem moving_window_exp_small {delta a : ℝ} (hdelta : 0 < delta) (ha : 0 < a) (k : ℕ) : ∀ᶠ x : ℝ in atTop, 1 ≤ x ∧
+      ∀ u : ℝ, 0 < u → u ≤ delta * x / (log x) ^ 2 + 1 → x ^ k * exp (-a * x / u) ≤ 1 / x := by
   have hA : 0 < ((k : ℝ) + 1) / a := by positivity
   filter_upwards [moving_window_log_scale hdelta hA,
     eventually_ge_atTop (1 : ℝ)] with x hx hx1
@@ -753,14 +642,11 @@ theorem moving_window_exp_small {delta a : ℝ} (hdelta : 0 < delta) (ha : 0 < a
     rw [neg_mul, exp_neg, ← Nat.cast_add_one, exp_nat_mul, exp_log hx.2.1]
   rw [heq] at he
   calc
-    x ^ k * exp (-a * x / u) ≤ x ^ k * (x ^ (k + 1))⁻¹ :=
-      mul_le_mul_of_nonneg_left he (pow_nonneg hx.2.1.le _)
+    x ^ k * exp (-a * x / u) ≤ x ^ k * (x ^ (k + 1))⁻¹ := mul_le_mul_of_nonneg_left he (pow_nonneg hx.2.1.le _)
     _ = 1 / x := by rw [pow_succ]; field_simp
 
-private theorem first_price_error_bound {P C : ℝ}
-    (hP0 : 0 < P) (hP : 4 ≤ log P) (hC : 0 < C) :
-    priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤
-      (48 * C * P ^ (-priceExponent 1)) * beta 1 P := by
+private theorem first_price_error_bound {P C : ℝ} (hP0 : 0 < P) (hP : 4 ≤ log P) (hC : 0 < C) :
+    priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ (48 * C * P ^ (-priceExponent 1)) * beta 1 P := by
   have h2 : log 2 ≤ 1 := by
     have := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
     linarith
@@ -781,20 +667,15 @@ private theorem first_price_error_bound {P C : ℝ}
       _ = P ^ (1 : ℝ) * P ^ (-priceExponent 1) := rpow_add hP0 _ _
       _ = _ := by rw [rpow_one]
   calc
-    _ ≤ (24 / (P ^ 2 * log P)) * (C * P ^ bhpExponent) :=
-      mul_le_mul_of_nonneg_right hlip (by positivity)
+    _ ≤ (24 / (P ^ 2 * log P)) * (C * P ^ bhpExponent) := mul_le_mul_of_nonneg_right hlip (by positivity)
     _ = 24 * C * P ^ (-priceExponent 1) * (1 / (P * log P)) := by
       rw [hid]
       field_simp
-    _ ≤ 24 * C * P ^ (-priceExponent 1) * (2 * beta 1 P) :=
-      mul_le_mul_of_nonneg_left hb (by positivity)
+    _ ≤ 24 * C * P ^ (-priceExponent 1) * (2 * beta 1 P) := mul_le_mul_of_nonneg_left hb (by positivity)
     _ = _ := by ring
 
-private theorem exchange_error_margin {j : ℕ} {P C : ℝ} (hj : 2 ≤ j)
-    (hP : 1 ≤ P) (hC : 0 < C) :
-    48 * C * P ^ (-priceExponent 1) +
-        8 * (j : ℝ) / (comparisonCount j P : ℝ) ≤
-      (j : ℝ) / 6 * ((1024 * (1 + C)) * P ^ (-priceExponent j)) := by
+private theorem exchange_error_margin {j : ℕ} {P C : ℝ} (hj : 2 ≤ j) (hP : 1 ≤ P) (hC : 0 < C) : 48 * C * P ^ (-priceExponent 1) +
+        8 * (j : ℝ) / (comparisonCount j P : ℝ) ≤ (j : ℝ) / 6 * ((1024 * (1 + C)) * P ^ (-priceExponent j)) := by
   have hP0 : 0 < P := by linarith
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
   have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
@@ -810,8 +691,7 @@ private theorem exchange_error_margin {j : ℕ} {P C : ℝ} (hj : 2 ≤ j)
     norm_num
     apply (div_le_iff₀ (by positivity : (0 : ℝ) < 40 * j)).mpr
     nlinarith
-  have ht1 : P ^ (-priceExponent 1) ≤ P ^ (-priceExponent j) :=
-    rpow_le_rpow_of_exponent_le hP hgamma
+  have ht1 : P ^ (-priceExponent 1) ≤ P ^ (-priceExponent j) := rpow_le_rpow_of_exponent_le hP hgamma
   have he := mul_le_mul_of_nonneg_left ht1 (show 0 ≤ 48 * C by positivity)
   have hq := mul_le_mul_of_nonneg_left hinv (show 0 ≤ 8 * (j : ℝ) by positivity)
   have hCjt := mul_le_mul_of_nonneg_right hj2 (mul_nonneg hC.le ht.le)
@@ -819,13 +699,9 @@ private theorem exchange_error_margin {j : ℕ} {P C : ℝ} (hj : 2 ≤ j)
   simp only [mul_one_div] at hq
   nlinarith
 
-private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j)
-    (hP : 1 < P) (hr : 0 < r) (hc : 0 < c)
-    (hz : 4 ≤ log P / (j : ℝ))
-    (hlo : log P / (j : ℝ) - 2 ≤ log r)
-    (hhi : log r ≤ 2 * (log P / (j : ℝ)))
-    (hcap : 4 * (log P / (j : ℝ)) * exp (-(log P / (j : ℝ)) / 20) ≤
-      c * exp (-(21 / 20 : ℝ))) :
+private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j) (hP : 1 < P) (hr : 0 < r) (hc : 0 < c) (hz : 4 ≤ log P / (j : ℝ))
+    (hlo : log P / (j : ℝ) - 2 ≤ log r) (hhi : log r ≤ 2 * (log P / (j : ℝ)))
+    (hcap : 4 * (log P / (j : ℝ)) * exp (-(log P / (j : ℝ)) / 20) ≤ c * exp (-(21 / 20 : ℝ))) :
     (comparisonCount j P : ℝ) ≤ c * r ^ bhpExponent / log r := by
   have hP0 : 0 < P := by linarith
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
@@ -841,12 +717,10 @@ private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j)
     rw [rpow_def_of_pos hP0]; congr 1; unfold priceExponent; ring
   have hscaled := mul_le_mul_of_nonneg_right hcap
     (exp_pos ((21 / 40 : ℝ) * (log P / j))).le
-  have hleft : 4 * (log P / (j : ℝ)) * exp (-(log P / (j : ℝ)) / 20) *
-      exp ((21 / 40 : ℝ) * (log P / j)) =
+  have hleft : 4 * (log P / (j : ℝ)) * exp (-(log P / (j : ℝ)) / 20) * exp ((21 / 40 : ℝ) * (log P / j)) =
       4 * (log P / (j : ℝ)) * exp ((19 / 40 : ℝ) * (log P / j)) := by
     rw [mul_assoc, ← exp_add]; congr 2; ring
-  have hright : c * exp (-(21 / 20 : ℝ)) * exp ((21 / 40 : ℝ) * (log P / j)) =
-      c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := by
+  have hright : c * exp (-(21 / 20 : ℝ)) * exp ((21 / 40 : ℝ) * (log P / j)) = c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := by
     rw [mul_assoc, ← exp_add]; congr 2; ring
   rw [hleft, hright] at hscaled
   have hrpow : exp ((21 / 40 : ℝ) * (log P / j - 2)) ≤ r ^ bhpExponent := by
@@ -856,16 +730,12 @@ private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j)
     linarith
   apply (le_div_iff₀ hlr).mpr
   calc
-    _ ≤ (2 * P ^ priceExponent j) * (2 * (log P / (j : ℝ))) :=
-      mul_le_mul hceil hhi (by positivity) (by positivity)
+    _ ≤ (2 * P ^ priceExponent j) * (2 * (log P / (j : ℝ))) := mul_le_mul hceil hhi (by positivity) (by positivity)
     _ = 4 * (log P / (j : ℝ)) * exp ((19 / 40 : ℝ) * (log P / j)) := by rw [hform]; ring
-    _ ≤ c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := hscaled
-    _ ≤ _ := mul_le_mul_of_nonneg_left hrpow hc.le
+    _ ≤ c * exp ((21 / 40 : ℝ) * (log P / j - 2)) := hscaled _ ≤ _ := mul_le_mul_of_nonneg_left hrpow hc.le
 
-private theorem first_count_capacity {j : ℕ} {P c : ℝ} (hj : 2 ≤ j)
-    (hP : 1 < P) (hc : 0 < c)
-    (hcap : 3 * log P * exp (-(23 / 80 : ℝ) * log P) ≤ c) :
-    (comparisonCount j P : ℝ) + 1 ≤ c * P ^ bhpExponent / log P := by
+private theorem first_count_capacity {j : ℕ} {P c : ℝ} (hj : 2 ≤ j) (hP : 1 < P) (hc : 0 < c)
+    (hcap : 3 * log P * exp (-(23 / 80 : ℝ) * log P) ≤ c) : (comparisonCount j P : ℝ) + 1 ≤ c * P ^ bhpExponent / log P := by
   have hP0 : 0 < P := by linarith
   have hx : 0 < log P := log_pos hP
   have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
@@ -884,11 +754,9 @@ private theorem first_count_capacity {j : ℕ} {P c : ℝ} (hj : 2 ≤ j)
     linarith
   have hscaled := mul_le_mul_of_nonneg_right hcap
     (rpow_pos_of_pos hP0 bhpExponent).le
-  have hid : 3 * log P * exp (-(23 / 80 : ℝ) * log P) * P ^ bhpExponent =
-      (3 * exp ((19 / 80 : ℝ) * log P)) * log P := by
+  have hid : 3 * log P * exp (-(23 / 80 : ℝ) * log P) * P ^ bhpExponent = (3 * exp ((19 / 80 : ℝ) * log P)) * log P := by
     rw [rpow_def_of_pos hP0, mul_assoc, ← exp_add]
-    have hh : -(23 / 80 : ℝ) * log P + log P * bhpExponent =
-        (19 / 80 : ℝ) * log P := by
+    have hh : -(23 / 80 : ℝ) * log P + log P * bhpExponent = (19 / 80 : ℝ) * log P := by
       norm_num [bhpExponent]
       ring
     rw [hh]; ring
@@ -901,19 +769,11 @@ set_option maxHeartbeats 800000 in
 /-- One threshold before the original record, its original price and the
 moving index. Only the real-center count supplier is used; the independently
 typed maximum-gap premise is retained. -/
-theorem bhp_uniform_moving_boundary_localization
-    (_hgap : BHPMaximumGap) (hcount : BHPShortIntervalCount) :
-    ∃ B : ℝ, 0 < B ∧ ∀ delta : ℝ, 0 < delta →
-      ∃ T : ℝ, 0 < T ∧ ∀ m : ℕ, 2 ≤ m →
-        ∀ mu : ℝ, 0 < mu → FullRecord m mu →
-          T ≤ (largestPrime m : ℝ) →
-          ∀ j : ℕ, 2 ≤ j →
-            (j : ℝ) ≤ delta * log (largestPrime m : ℝ) /
-              (log (log (largestPrime m : ℝ))) ^ 2 + 1 →
-            2 < cutoff j (beta 1 (largestPrime m : ℝ)) ∧
-              0 < layerPrime m j ∧
-              |log (layerPrime m j : ℝ) -
-                log (cutoff j (beta 1 (largestPrime m : ℝ)))| ≤
+theorem bhp_uniform_moving_boundary_localization (_hgap : BHPMaximumGap) (hcount : BHPShortIntervalCount) :
+    ∃ B : ℝ, 0 < B ∧ ∀ delta : ℝ, 0 < delta → ∃ T : ℝ, 0 < T ∧ ∀ m : ℕ, 2 ≤ m → ∀ mu : ℝ, 0 < mu → FullRecord m mu →
+          T ≤ (largestPrime m : ℝ) → ∀ j : ℕ, 2 ≤ j → (j : ℝ) ≤ delta * log (largestPrime m : ℝ) /
+              (log (log (largestPrime m : ℝ))) ^ 2 + 1 → 2 < cutoff j (beta 1 (largestPrime m : ℝ)) ∧ 0 < layerPrime m j ∧
+              |log (layerPrime m j : ℝ) - log (cutoff j (beta 1 (largestPrime m : ℝ)))| ≤
                 B * (largestPrime m : ℝ) ^ (-priceExponent j) := by
   obtain ⟨C, c, X, hC, hc, hX, hcount⟩ := hcount
   let H : ℝ := 1024 * (1 + C)
@@ -993,10 +853,8 @@ theorem bhp_uniform_moving_boundary_localization
   have hHt0 : 0 < H * t := mul_pos hH ht
   have hw := hwindow (j : ℝ) hj0 hindex
   have hz8 : 8 ≤ x / (j : ℝ) := (le_max_left _ _).trans (hS.trans hw.1)
-  have hzS0 : S0 ≤ x / (j : ℝ) :=
-    (le_trans (le_max_right _ _) (le_max_right _ _)).trans (hS.trans hw.1)
-  have hzX : log X + 2 ≤ x / (j : ℝ) :=
-    (le_trans (le_max_left _ _) (le_max_right _ _)).trans (hS.trans hw.1)
+  have hzS0 : S0 ≤ x / (j : ℝ) := (le_trans (le_max_right _ _) (le_max_right _ _)).trans (hS.trans hw.1)
+  have hzX : log X + 2 ≤ x / (j : ℝ) := (le_trans (le_max_left _ _) (le_max_right _ _)).trans (hS.trans hw.1)
   have hjx : (j : ℝ) ≤ x / 4 := by
     have hh := (le_div_iff₀ hj0).mp hz8
     linarith
@@ -1006,8 +864,7 @@ theorem bhp_uniform_moving_boundary_localization
     rw [rpow_def_of_pos hP0]
     congr 1; unfold priceExponent; ring
   have hxt : x * t ≤ 1 / x := by rw [htform]; exact hw.2
-  have hjt : (j : ℝ) * t ≤ 1 / x :=
-    (mul_le_mul_of_nonneg_right hjx1 ht.le).trans hxt
+  have hjt : (j : ℝ) * t ≤ 1 / x := (mul_le_mul_of_nonneg_right hjx1 ht.le).trans hxt
   have hHjt : H * ((j : ℝ) * t) ≤ 1 := by
     have hh := mul_le_mul_of_nonneg_left hjt hH.le
     have hdiv : H * (1 / x) ≤ 1 := by
@@ -1046,8 +903,7 @@ theorem bhp_uniform_moving_boundary_localization
   have hrp0 : 0 < rp := mul_pos hrho0 (exp_pos _)
   have hgeo := literal_displaced_probe_geometry hj hP0 (by linarith : 4 ≤ log P)
     hrho.le hroot hlog hH hHt
-  change x / (j : ℝ) - 2 ≤ log rm ∧ x / (j : ℝ) - 1 ≤ log rp ∧
-    log rp ≤ 5 * x / (4 * (j : ℝ)) + 1 ∧
+  change x / (j : ℝ) - 2 ≤ log rm ∧ x / (j : ℝ) - 1 ≤ log rp ∧ log rp ≤ 5 * x / (4 * (j : ℝ)) + 1 ∧
     rm ^ bhpExponent / rm ≤ 4 * t ∧ rp ^ bhpExponent / rp ≤ 4 * t at hgeo
   have hmrp : rm ≤ rp := by
     dsimp only [rm, rp]
@@ -1056,8 +912,7 @@ theorem bhp_uniform_moving_boundary_localization
     have hid : 5 * x / (4 * (j : ℝ)) = (5 / 4 : ℝ) * (x / j) := by ring
     rw [hid] at hgeo
     linarith only [hgeo.2.2.1, hz8]
-  have hupm : log rm ≤ 2 * (x / (j : ℝ)) :=
-    (log_le_log hrm0 hmrp).trans hupp
+  have hupm : log rm ≤ 2 * (x / (j : ℝ)) := (log_le_log hrm0 hmrp).trans hupp
   have hcapz := hS0 (x / (j : ℝ)) hzS0
   have hcapM := probe_count_capacity hj hP1 hrm0 hc (by linarith : 4 ≤ log P / (j : ℝ))
     hgeo.1 hupm hcapz
