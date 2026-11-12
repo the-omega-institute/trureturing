@@ -677,7 +677,7 @@ theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ}
       rw [rpow_def_of_pos hr, ← exp_log hr, ← exp_sub]
       congr 1
       norm_num [bhpExponent]
-      <;> ring
+      ring
     rw [hid, htform]
     calc
       exp (-(19 / 40 : ℝ) * log r) ≤
@@ -716,7 +716,6 @@ theorem moving_window_log_scale {delta A : ℝ} (hdelta : 0 < delta) (hA : 0 < A
   have hid : (delta * x / (log x) ^ 2 + 1) * log x / x =
       delta / log x + log x / x := by
     field_simp
-    <;> ring
   rw [← hid] at hsmall
   have hfull : A * (delta * x / (log x) ^ 2 + 1) * log x ≤ x := by
     have hh : A * ((delta * x / (log x) ^ 2 + 1) * log x / x) =
@@ -786,7 +785,6 @@ private theorem first_price_error_bound {P C : ℝ}
     _ = 24 * C * P ^ (-priceExponent 1) * (1 / (P * log P)) := by
       rw [hid]
       field_simp
-      <;> ring
     _ ≤ 24 * C * P ^ (-priceExponent 1) * (2 * beta 1 P) :=
       mul_le_mul_of_nonneg_left hb (by positivity)
     _ = _ := by ring
@@ -854,7 +852,7 @@ private theorem probe_count_capacity {j : ℕ} {P r c : ℝ} (hj : 2 ≤ j)
     rw [rpow_def_of_pos hr]
     apply exp_le_exp.mpr
     norm_num [bhpExponent]
-    <;> linarith
+    linarith
   apply (le_div_iff₀ hlr).mpr
   calc
     _ ≤ (2 * P ^ priceExponent j) * (2 * (log P / (j : ℝ))) :=
@@ -889,7 +887,9 @@ private theorem first_count_capacity {j : ℕ} {P c : ℝ} (hj : 2 ≤ j)
       (3 * exp ((19 / 80 : ℝ) * log P)) * log P := by
     rw [rpow_def_of_pos hP0, mul_assoc, ← exp_add]
     have hh : -(23 / 80 : ℝ) * log P + log P * bhpExponent =
-        (19 / 80 : ℝ) * log P := by norm_num [bhpExponent]; <;> ring
+        (19 / 80 : ℝ) * log P := by
+      norm_num [bhpExponent]
+      ring
     rw [hh]; ring
   rw [hid] at hscaled
   apply (le_div_iff₀ hx).mpr
@@ -920,8 +920,14 @@ theorem bhp_uniform_moving_boundary_localization
   refine ⟨H + 16 * C, by positivity, ?_⟩
   intro delta hdelta
   have hprobeLim : Tendsto (fun z : ℝ => 4 * z * exp (-z / 20)) atTop (𝓝 0) := by
-    convert (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 (1 / 20)
-      (by norm_num)).const_mul 4 using 1 <;> simp [rpow_one]; <;> congr 2 <;> ring
+    have hh : Tendsto (fun z : ℝ => 4 * (z * exp (-(1 / 20 : ℝ) * z))) atTop (𝓝 0) := by
+      simpa only [rpow_one, mul_zero] using
+        (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 1 (1 / 20) (by norm_num)).const_mul 4
+    convert hh using 1
+    funext z
+    simp only [mul_assoc]
+    congr 2
+    ring
   obtain ⟨S0, hS0⟩ := eventually_atTop.mp
     (hprobeLim.eventually_le_const (by positivity : 0 < c * exp (-(21 / 20 : ℝ))))
   let S : ℝ := max 8 (max (log X + 2) S0)
