@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 The source definition and conjecture are quoted in
-`Library/Arith/kimberling2017a289923.md`.
+`Library/RecurrenceAlgebraic/kimberling2017a289923.md`.
 
 The complete target includes existence and uniqueness of an integer sequence
 whose nth coefficient is eventually constant throughout a left neighborhood of

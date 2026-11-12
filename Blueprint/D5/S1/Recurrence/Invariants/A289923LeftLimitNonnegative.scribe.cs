@@ -8,7 +8,7 @@ internal sealed class A289923LeftLimitNonnegativeDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S1/Recurrence/Invariants/A289923LeftLimitNonnegative.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/kimberling2017a289923");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/kimberling2017a289923");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The coefficientwise left limit defining OEIS A289923 exists uniquely and is nonnegative at every index.",
