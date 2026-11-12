@@ -25,9 +25,9 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Finset.univ ranges over every function on Fin n times Fin 6 into Fin 8. There is no group quotient, orbit divisor, transposition or boundary identification. The zero constant coefficient extends the positive-height source sequence only for its formal generating series."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
-                H("The complete conjectural conjunction"), StatementSource.FromAuthor(Disp(ClaimFormula())),
+                H("The complete source conjunction"), StatementSource.FromAuthor(Disp(ClaimFormula())),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. X denotes PowerSeries.X over the rationals. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The candidate result declaration below has exactly this proposition as its intended conclusion. The full-event implementation is unverified; no proof of this conjunction is claimed here."))),
+                Blocks(Paragraph(Text("FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. X denotes PowerSeries.X over the rationals. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The result below proves exactly this conjunction about the literal count."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("proper"), DeclarationHandle.Create(Prefix + "Proper"),
                 H("Labelled proper pair-colourings"), StatementSource.FromAuthor(Disp(ProperFormula())),
@@ -47,11 +47,11 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, {1,6}, {2,5}, {3,4}. The binary operation xor is bitwise exclusive-or on Fin 4. Every adjacent square has four distinct pair colours. The xor of its upper edge equals that of its lower edge, and likewise for its left and right edges. Induction along rows and columns gives the displayed reconstruction. Horizontal and vertical increments are nonzero, and every horizontal increment differs from every vertical increment because the antidiagonal cells are adjacent. The first square also contains all four pair colours. Strict precedence then forces the literal colours one, two and three to have appeared within the first two rows. There are two allowed nonzero vertical increments when all five horizontal increments agree, and one otherwise. This is a count of pair increments, not yet a count of signed colour-row continuations. The zone correspondence is the algebraic rectangular form of Eppstein's published kinggraph construction. This statement concerns the original literal functions and does not replace their count with a labelled count."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
-                H("Unverified full-event implementation"), StatementSource.FromAuthor(Disp(Call("claim"))),
+                H("The complete literal count and formal series"), StatementSource.FromAuthor(Disp(EventFormula())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("The candidate implementation targets the complete conjunction defined above. A successful current build of that result is missing. The following describes its proposed argument and does not certify the full event. At the first occurrence of each complementary pair, the literal colour is its lower representative. All other positions have independent Boolean signs. The explicit fibre equivalence therefore has size two to the number of cells minus the number of used pair labels. A two-by-two square forces all four labels at heights at least two, giving the exact sign factor 2^(6n-4). Canonical representatives use labels in first-occurrence order. The existing general canonical-representative theorem supplies existence and uniqueness; a bijection with the twenty-four permutations of four labels proves the label factor, using the square's surjectivity. No division is assumed for missing labels.")),
+                Blocks(Paragraph(Text("The theorem proves the complete conjunction defined above. At the first occurrence of each complementary pair, the literal colour is its lower representative. All other positions have independent Boolean signs. The explicit fibre equivalence therefore has size two to the number of cells minus the number of used pair labels. A two-by-two square forces all four labels at heights at least two, giving the exact sign factor 2^(6n-4). Canonical representatives use labels in first-occurrence order. The existing general canonical-representative theorem supplies existence and uniqueness; a bijection with the twenty-four permutations of four labels proves the label factor, using the square's surjectivity. No division is assumed for missing labels.")),
                     Paragraph(Text("For each first-row offset word, vertical words are walks whose permitted xor increments form its available set. The existing general finite-walk counting theorem gives four times the available-set cardinality to the number of vertical steps. Among proper offset words of length six beginning at zero, exactly three have two choices, ninety have one, and one hundred fifty have none. This finite certificate concerns 4^6 pair words; height remains arbitrary. It gives labelled count 4(3 times 2^(n-1)+90) for every n at least two. Combining the two exact fibres yields the displayed literal formula.")),
-                    Paragraph(Text("The height-one certificate uses canonical proper pair words and the weight 2^(6-k), where k is the actual number of used labels. It includes absent colours and gives 236. The integer recurrence follows from the two geometric terms 2 times 128^(n-1) and 60 times 64^(n-1). Multiplying the formal series by the denominator proves its coefficient identity, with the exceptional initial coefficients handled separately. Its constant coefficient is one, and the formal inverse law gives precisely the claimed rational series. The full-event declaration has not passed a current combined build. Independent pre-freeze review, registration and publication remain unpaid."))),
+                    Paragraph(Text("The height-one certificate uses canonical proper pair words and the weight 2^(6-k), where k is the actual number of used labels. It includes absent colours and gives 236. The integer recurrence follows from the two geometric terms 2 times 128^(n-1) and 60 times 64^(n-1). Multiplying the formal series by the denominator proves its coefficient identity, with the exceptional initial coefficients handled separately. The denominator has constant coefficient one, and the formal inverse law gives precisely the claimed rational series. Registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29434. Independent pre-freeze review and publication remain pending. Validation within the original research window is unestablished; no timely research settlement is asserted."))),
                 DescribeRole.Theorem))));
 
     private static Formula LegalFormula()
@@ -85,7 +85,9 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         return All("n",V("Nat"),Eq(Call("a",n),Call("Finset.card",Call("Finset.filter",pred,Call("Finset.univ")))));
     }
 
-    private static Formula ClaimFormula()
+    private static Formula ClaimFormula() => Iff(Call("claim"), EventFormula());
+
+    private static Formula EventFormula()
     {
         var x=V("X"); var n=V("n");
         Formula A(Formula k) => Call("a",k);
@@ -96,7 +98,7 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var closed=All("n",V("Nat"),Imp(Le(D(2),n),Eq(A(n),Mul(Pow(D(6,4),Sub(n,D(1))),Add(Pow(D(2),n),D(6,0))))));
         var recurrence=All("n",V("Nat"),Imp(Le(D(4),n),Eq(Par(Seq(A(n),Colon,Sp,V("Int"))),
             Sub(Mul(D(1,9,2),Par(Seq(A(Sub(n,D(1))),Colon,Sp,V("Int")))),Mul(D(8,1,9,2),Par(Seq(A(Sub(n,D(2))),Colon,Sp,V("Int"))))))));
-        return Iff(Call("claim"),And(Eq(A(D(1)),D(2,3,6)),And(gf,And(closed,recurrence))));
+        return And(Eq(A(D(1)),D(2,3,6)),And(gf,And(closed,recurrence)));
     }
 
     private static Formula RectangleFormula()
