@@ -6,7 +6,31 @@ Greatest feasible global optimizers and exact full original two-layer budgets.
 
 All logarithms are real natural logarithms. For a natural integer m and real c, write a=optimalLayerCount(c,2), v=v_2(m), r=v-a with natural subtraction, and I=Icc(a+1,v). The entire original tail I includes equality layers: a is the strict canonical cutoff, so its next equality layer is excluded from the prefix and retained with zero loss. Define h=h2(m,c)=r log(2), J=J2(m,c)=sum_{j in I}(c-goldenLayerMarginal(2,j))log(2), U=ordinary2tailReward(m,c)=sum_{j in I}goldenLayerMarginal(2,j)log(2), and n=deleted2tailInteger(m,c)=m/2^r using natural division. The literal library resource objective is denoted by F_t(n).
 
-**Theorem 1.1 (Construct the greatest feasible global optimizer).**
+**Theorem 1.1 (Transfer the literal objective between two prices).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.objective_price_difference`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.objective_price_difference` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real mu,s and positive natural m,C, F_s(C)-F_s(m)=F_mu(C)-F_mu(m)+(s-mu)log(m/C). The original objective and original integers are retained; neither price needs to be positive. The full-tail arbitrary-bracket comparison consumes this identity at the actual greatest feasible optimizer.
+
+**Theorem 1.2 (The reward and deficit of the same full tail).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.reward_deficit_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.reward_deficit_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m and real c, ordinary2tailReward(m,c)=c*h2(m,c)-J2(m,c). The finite interval is the complete original tail, with natural truncated subtraction. No positivity or occupied-tail assumption is required. The arbitrary-bracket full-tail comparison uses this identity together with actual integer deletion and the existing reward bound.
+
+**Theorem 1.3 (Construct the greatest feasible global optimizer).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.greatest_feasible_global_gap`
 
@@ -20,7 +44,7 @@ For every real s>0 and natural m with strictInteger(s)<=m<=maximalInteger(s), if
 
 For EVERY prime q with this omitted-valuation inequality, its next marginal equals s, q*C remains globally optimal, m<q*C, y<log(q), and s*q*log(q)<1. No number of equality primes is bounded or assumed. The finite set of actual global optimizers in Icc(1,m) contains strictInteger(s); its natural-order maximum constructs C. At each omitted prime, the threshold criterion and the maximal weak valuation give equality of the next marginal to s. Inserting that layer preserves the objective, and maximality forces the product above m. The first-layer logarithm bound then yields s*q*log(q)<1 and the exponential bound.
 
-**Theorem 1.2 (Delete the entire original tail at any comparison price).**
+**Theorem 1.4 (Delete the entire original tail at any comparison price).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.full_original2tail_deletion_identity`
 
@@ -32,7 +56,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.f
 
 For every natural m>=1, every real c with a<=v, and EVERY real comparison price t, the deleted integer n satisfies 1<=n, v_2(n)=a, n*2^r=m, and F_t(m)-F_t(n)=(c-t)*h-J. There is no positivity assumption on c or t. The prime-factorization division identity leaves every other prime valuation unchanged. The literal local objective difference is the full finite sum over Icc(a+1,v), derived from the existing local_eq_layer_sum. In particular the identity applies at both the original record price mu and the bracket price s.
 
-**Theorem 1.3 (The exact ordinary reward of the same tail).**
+**Theorem 1.5 (The exact ordinary reward of the same tail).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.full_original2tail_reward_telescope`
 
@@ -44,7 +68,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.f
 
 For every natural m and real c with a<=v, U=log((2-(2 inverse)^v)/(2-(2 inverse)^a)). The powers have natural exponents and the inverse is real. No m>=1 or c>0 hypothesis is needed. The finite local telescope at price zero and positivity of its geometric numerators prove the equality, including a=v.
 
-**Theorem 1.4 (Bound the full reward by its first tail layer).**
+**Theorem 1.6 (Bound the full reward by its first tail layer).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.full_original2tail_reward_bound`
 
@@ -56,7 +80,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.f
 
 For every natural m and real c>0 with a<=v, U<2*(goldenLayerMarginal(2,a+1)*log(2)) and U<2*c*log(2). Put x=(2 inverse)^(a+1) and z=(2 inverse)^(v+1). The exact reward is log((1-z)/(1-x))<log(1/(1-x)). The strict inequality 1-x<(1-x/2)^2 bounds it by twice the first tail reward. Strict canonical cutoff membership bounds the next marginal by c. No layer is removed from U, h or J, and the empty-tail case is included.
 
-**Theorem 1.5 (A necessary forbidden-window budget for a full predecessor record).**
+**Theorem 1.7 (A necessary forbidden-window budget for a full predecessor record).**
 
 Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.full_original2tail_forbidden_budget`
 
@@ -81,6 +105,8 @@ These are necessary restrictions under the stated hypotheses. They do not establ
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.full_original2tail_reward_bound`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.full_original2tail_reward_telescope`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.greatest_feasible_global_gap`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.objective_price_difference`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualElementaryGlobalBudgetGap.reward_deficit_identity`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../../GoldenResource/FirstLayerMarginalAntitone.md)
 - Dependency: [D5/S3/Arith/GoldenResource/GoldenResourceSupremum](../../GoldenResource/GoldenResourceSupremum.md)
 - Dependency: [D5/S3/Arith/Robin/ActualGlobalBracketing](../ActualGlobalBracketing.md)
