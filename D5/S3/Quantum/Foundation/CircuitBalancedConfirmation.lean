@@ -164,7 +164,7 @@ private theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   refine ⟨C.smul_mem (inv_nonneg.mpr (hu x hx hne).le) hx, ?_⟩
   simp [map_smul, (hu x hx hne).ne']
 
-private theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hclosed : IsClosed (C : Set A))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) : IsCompact (base C u) := by
   have hK : IsClosed (base C u) :=
@@ -199,7 +199,7 @@ private theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
   have hh' := (le_div_iff₀ hz0).mp hmz
   exact (le_div_iff₀ hm).mpr (by simpa [mul_comm] using hh')
 
-private theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
+theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hf : ∀ p : pure C u, 0 ≤ f p) : ∀ x ∈ C, 0 ≤ f x := by
@@ -220,7 +220,7 @@ private theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
   have hux := hu x hx hx0
   simpa only [map_smul, smul_eq_mul, mul_nonneg_iff_of_pos_left (inv_pos.mpr hux)] using hh
 
-private theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
+theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hf : ∀ p : pure C u, 0 ≤ f p ∧ f p ≤ 1) : proper C u f := by
@@ -463,7 +463,5 @@ theorem full_mixture_iff_circuit_balance
     rw [he p q, he q p]
     exact hs q p
 
-#print axioms circuit_balance_least_confirmation
-#print axioms full_mixture_iff_circuit_balance
 
 end D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
