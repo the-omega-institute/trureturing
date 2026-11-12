@@ -45,7 +45,6 @@ import Mathlib.Topology.ContinuousMap.Bounded.Normed
 import Mathlib.Topology.ContinuousMap.CompactlySupported
 import Mathlib.Topology.Order.Compact
 
-
 /-!
 # Kantorovich duality on compact metric spaces
 
@@ -56,9 +55,7 @@ metric Borel probability spaces with continuous cost.
 section
 open MeasureTheory
 open scoped BoundedContinuousFunction CompactlySupported ENNReal
-
 namespace CompactKantorovich
-
 private abbrev IsCoupling {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
     (μ : ProbabilityMeasure X) (ν : ProbabilityMeasure Y)
     (π : ProbabilityMeasure (X × Y)) : Prop :=
@@ -998,6 +995,5 @@ theorem kantorovich_duality_compact
     rintro q ⟨π, hπ, rfl⟩
     obtain ⟨hφ, hψ, hle⟩ := hfeas
     exact dual_le_primal_of_isCoupling μ ν c hc φ ψ hφ hψ hle π hπ
-
 end CompactKantorovich
 end
