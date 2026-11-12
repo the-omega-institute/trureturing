@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import D5.S3.Quantum.Foundation.WholeExclusionSupport
 
+/-! Entire original exclusion-ball geometry and global three-effect completion. -/
+
 noncomputable section
 open Set
 open scoped RealInnerProductSpace
@@ -30,6 +32,13 @@ def common (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p : V)
     (a : V →ₗ[ℝ] ℝ) : Prop :=
   confirms C u p a ∧ ∀ x ∈ exclusion C u p, a x = 0
 
+/-- A finite mathematical measurement distinguishes original pure points.
+This asserts no physical menu or device implementation. -/
+def measurement (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (n : ℕ) : Prop :=
+  ∃ p : Fin n → pure C u, ∃ f : Fin n → (V →ₗ[ℝ] ℝ),
+    (∀ i, proper C u (f i)) ∧
+    (∀ i j, f i (p j) = if i = j then 1 else 0) ∧ ∑ i, f i = u
+
 /-- All clauses for a specified pair and its third point. -/
 def jointThird (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
     (p q r : pure C u) : Prop :=
@@ -43,6 +52,7 @@ def jointThird (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
     (u - a - b) p = 0 ∧ (u - a - b) q = 0 ∧ (u - a - b) r = 1 ∧
     a + b + (u - a - b) = u
 
+omit [FiniteDimensional ℝ V] in
 private theorem not_self {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (p : pure C u) : (p : V) ∉ exclusion C u p := by
   rintro ⟨_, f, hf, hz⟩
@@ -104,11 +114,6 @@ private theorem sum_on_pair_ball {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     simp [f, hnp, ha.2, (pure_mem p).2]
   have hf := affine_zero_antipode f (by simpa using hn : ‖-n‖ = 1) hfpos hfzero
   have hfcoeff : f (-n) = 1 := by
-    have hh := hf n
-    change u (b.param n) - a (b.param n) =
-      (u (b.param (-n)) - a (b.param (-n))) / 2 * (1 + ⟪-n, n⟫) at hh
-    have hh0 := hf 0
-    -- The zero at n alone does not determine the coefficient; use q below.
     obtain ⟨m, hm, hmq⟩ := b.whole.symm ▸
       (show (q : V) ∈ pairBase C u p q from ⟨pure_mem q, fun _ _ h => h⟩)
     have hmn : ‖m‖ = 1 := chart_pure_norm b (by simpa using hm) (by rw [hmq]; exact q.property)
@@ -187,7 +192,7 @@ private theorem complete_pair {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
 /-- Complete original all-P joint triples and the exclusion of a fourth
 pairwise original orthogonal point. No global pair or finiteness assumption. -/
-theorem whole_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem whole_joint_completion [Nontrivial V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hW : weakPair C u) :
@@ -195,16 +200,20 @@ theorem whole_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (∀ p : pure C u, ∃ q r : pure C u, jointThird C u p q r) ∧
     (∀ p q r s : pure C u,
       excludes C u p q → excludes C u p r → excludes C u p s →
-      excludes C u q r → excludes C u q s → ¬ excludes C u r s) := by
+      excludes C u q r → excludes C u q s → ¬ excludes C u r s) ∧
+    measurement C u 3 ∧ (∀ n, measurement C u n → n ≤ 3) := by
   have hpairs := complete_pair hc hs hg hB hW
-  refine ⟨hpairs, ?_, ?_⟩
-  · intro p
+  have hevery : ∀ p : pure C u, ∃ q r : pure C u, jointThird C u p q r := by
+    intro p
     obtain ⟨geom, _, _⟩ := exclusion_ball_faces hc hs hg hB
     obtain ⟨q, hq⟩ := (geom p).2.1.extremePoints_nonempty (geom p).1.nonempty
     have hpure : q ∈ pure C u := (geom p).2.2.2.2.1.extremePoints_subset_extremePoints hq
     obtain ⟨r, hr, _⟩ := hpairs p ⟨q, hpure⟩ hq.1.2
     exact ⟨⟨q, hpure⟩, r, hr⟩
-  · intro p q r s hpq hpr hps hqr hqs hrs
+  have hfour : ∀ p q r s : pure C u,
+      excludes C u p q → excludes C u p r → excludes C u p s →
+      excludes C u q r → excludes C u q s → ¬ excludes C u r s := by
+    intro p q r s hpq hpr hps hqr hqs hrs
     obtain ⟨t, ht, _⟩ := hpairs p q hpq
     have hr : (r : V) = t := by
       have hh : (r : V) ∈ exclusion C u p ∩ exclusion C u q :=
@@ -217,6 +226,46 @@ theorem whole_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     have he : r = s := Subtype.ext (hr.trans hss.symm)
     subst s
     exact not_self r ⟨pure_mem r, hrs⟩
+
+  refine ⟨hpairs, hevery, hfour, ?_, ?_⟩
+  · have hP : (pure C u).Nonempty := by
+      by_contra hn
+      have hh := pure_span (base_compact hc hs) hs hg
+      rw [Set.not_nonempty_iff_eq_empty.mp hn, Submodule.span_empty] at hh
+      exact bot_ne_top hh
+    obtain ⟨p, hp⟩ := hP
+    let p' : pure C u := ⟨p, hp⟩
+    obtain ⟨q, r, hr⟩ := hevery p'
+    obtain ⟨geom, _, _⟩ := exclusion_ball_faces hc hs hg hB
+    obtain ⟨a, ha, haz⟩ := (geom p').2.2.2.2.2.2
+    obtain ⟨b, hb, hbz⟩ := (geom q).2.2.2.2.2.2
+    have haA : common C u p' a := ⟨ha, fun x hx => (haz ▸ hx).2⟩
+    have hbA : common C u q b := ⟨hb, fun x hx => (hbz ▸ hx).2⟩
+    obtain ⟨hcA, hap, haq, har, hbp, hbq, hbr, hcp, hcq, hcr, hsum⟩ :=
+      hr.2.2.2.2.2 a b haA hbA
+    refine ⟨![p', q, r], ![a, b, u - a - b], ?_, ?_, ?_⟩
+    · intro i
+      fin_cases i
+      · exact ha.1
+      · exact hb.1
+      · exact hcA.1.1
+    · intro i j
+      fin_cases i <;> fin_cases j <;> simp [hap, haq, har, hbp, hbq, hbr, hcp, hcq, hcr]
+    · simp [Fin.sum_univ_succ, add_assoc]
+  · intro n hn
+    obtain ⟨p, f, hf, hdelta, _⟩ := hn
+    by_contra! hlarge
+    have horth (i j : Fin n) (hne : i ≠ j) : excludes C u (p i) (p j) := by
+      refine ⟨f i, ⟨hf i, ?_⟩, ?_⟩
+      · simpa using hdelta i i
+      · simpa [hne] using hdelta i j
+    let i : Fin n := ⟨0, by omega⟩
+    let j : Fin n := ⟨1, by omega⟩
+    let k : Fin n := ⟨2, by omega⟩
+    let l : Fin n := ⟨3, by omega⟩
+    exact hfour (p i) (p j) (p k) (p l)
+      (horth i j (by simp [i, j, k, l, Fin.ext_iff])) (horth i k (by simp [i, j, k, l, Fin.ext_iff])) (horth i l (by simp [i, j, k, l, Fin.ext_iff]))
+      (horth j k (by simp [i, j, k, l, Fin.ext_iff])) (horth j l (by simp [i, j, k, l, Fin.ext_iff])) (horth k l (by simp [i, j, k, l, Fin.ext_iff]))
 
 #print axioms whole_joint_completion
 
