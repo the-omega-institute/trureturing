@@ -35,7 +35,8 @@ import D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalLieSectors
 import D5.S3.VertexAlgebra.LatticeActualConformalState
 
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
+set_option maxRecDepth 4096
 
 open scoped BigOperators TensorProduct VertexOperator
 
@@ -106,7 +107,9 @@ private theorem cartanState_coeff (e : Fin D.rank → ℂ) (l : TensorLabel D) :
       ∑ i, if cartanLabel D i = l then e i else 0 := by
   classical
   change (tensorBasis D).repr (∑ i, e i • tensorBasis D (cartanLabel D i)) l = _
-  simp [Module.Basis.repr_self, Finsupp.single_apply]
+  simp only [map_sum, map_smul, Finsupp.finsetSum_apply, Finsupp.smul_apply,
+    Module.Basis.repr_self, Finsupp.single_apply, smul_eq_mul,
+    mul_ite, mul_one, mul_zero]
 
 private theorem cartanState_coordinate (e : Fin D.rank → ℂ) (i : Fin D.rank) :
     coeff D (cartanState D e) (cartanLabel D i) = e i := by
@@ -199,7 +202,8 @@ private theorem oscillator_energy_one (d : Exponent D) (hd : oscillatorEnergy d 
   refine ⟨x.1, ?_⟩
   have hsum := Finsupp.sub_add_single_one_cancel hx0
   rw [hz, zero_add] at hsum
-  simpa only [show x = (x.1, 0) from Prod.ext rfl hx2] using hsum.symm
+  exact hsum.symm.trans (congrArg (fun y : Index D => Finsupp.single y (1 : ℕ))
+    (Prod.ext rfl hx2))
 
 private theorem number_of_nonzero_coefficient
     (x : State D) (g : ℤ) (hN : tensorNumber D x = (g : ℂ) • x)
@@ -384,7 +388,10 @@ private theorem current_creation (i : Fin D.rank) :
 private theorem neutral_ground_nonnegative (i : Fin D.rank) (m : ℤ) (hm : 0 ≤ m) :
     neutralMode D i m (Finsupp.single 0 (1 : Oscillator D)) = 0 := by
   classical
-  simp [neutralMode, neutralPolynomialMode, not_lt.mpr hm, bilinear]
+  by_cases hm0 : m = 0
+  · simp [neutralMode, neutralPolynomialMode, not_lt.mpr hm, hm0, bilinear]
+  · simp [neutralMode, neutralPolynomialMode, not_lt.mpr hm, hm0, bilinear,
+      LinearMap.smul_apply, LinearMap.sum_apply]
 
 private theorem current_nonnegative_sugawara
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -407,7 +414,7 @@ private theorem current_nonnegative_sugawara
     current_creation, Int.cast_neg, Int.cast_one, neg_neg,
     LinearMap.smul_apply, one_smul] at h
   by_cases hm0 : m = 0
-  · simpa only [hm0, zero_add, if_pos rfl, current_creation] using h
+  · simpa only [hm0, zero_add, ite_true, current_creation] using h
   · rw [if_neg hm0]
     rw [h]
     exact neutral_ground_nonnegative D i (m + -1) (by omega)
@@ -426,7 +433,7 @@ private theorem basis_current_Q
     rw [finsum_eq_single _ 0]
     · simp only [LatticeMatterGhostCoupling.summand, TensorProduct.map_tmul,
         current_nonnegative_sugawara D H hHG hGH i 0 (by omega),
-        if_pos rfl, neg_zero]
+        ite_true, neg_zero]
     · intro m hm
       simp only [LatticeMatterGhostCoupling.summand, TensorProduct.map_tmul]
       by_cases hneg : m < 0
@@ -442,9 +449,8 @@ private theorem basis_current_Q
 
 private theorem basis_current_fixed (i : Fin D.rank) :
     tensorBasis D (cartanLabel D i) ∈ fixedMomentum D 0 := by
-  have h := chargeProject_mem D 0 (tensorBasis D (cartanLabel D i))
-  simpa only [cartan_basis_tensor, chargeProject_tmul, currentState,
-    Finsupp.single_eq_same] using h
+  rw [LatticeRelativeMassShell.fixedMomentum_eq_span]
+  exact Submodule.subset_span ⟨cartanLabel D i, rfl, rfl⟩
 
 private theorem cartanState_fixed (e : Fin D.rank → ℂ) :
     cartanState D e ∈ fixedMomentum D 0 := by
@@ -467,12 +473,17 @@ theorem cartan_physical
     · change tensorNumber D (LatticeBRSTZeroEnergyReduction.fullBasis D
         (cartanLabel D i)) = _
       rw [number_basis]
-      norm_num [cartanLabel, charge]
-    · rw [LatticeRelativeMassShell.totalL0_basis D H hHG hGH]
+      have hc : charge ({1} : Finset ℕ) = 1 := by
+        norm_num [charge, Finset.filter_singleton]
+      simpa only [cartanLabel, hc, Int.cast_one, one_smul]
+    · change LatticeRelativeMassShell.totalL0 D H
+        (tensorBasis D (cartanLabel D i)) = 0
+      rw [LatticeRelativeMassShell.totalL0_basis D H hHG hGH]
       norm_num [LatticeRelativeMassShell.totalEnergy, cartanLabel,
         LatticePositiveEnergy.energy, oscillatorEnergy,
         BcGhostRelativeEnergy.energy, BcGhostRelativeEnergy.siteEnergy,
         BcGhostCharge.siteMode, BcGhostCharge.siteSign]
+  change (∑ i, e i • tensorBasis D (cartanLabel D i)) ∈ physicalStates D H
   apply (physicalStates D H).sum_mem
   intro i hi
   exact (physicalStates D H).smul_mem _ (physical i)
@@ -491,7 +502,8 @@ private theorem basis_current_action (i : Fin D.rank) (a : Charge D)
     rw [cartan_basis_tensor]
     norm_num [ghostB, TensorProduct.map_tmul, BcGhostFock.b,
       CountableOccupationFock.annihilate_ket, CountableOccupationFock.phase,
-      CountableOccupationFock.lowerCount, CountableOccupationFock.vacuum]
+      CountableOccupationFock.lowerCount, CountableOccupationFock.vacuum,
+      Finset.filter_singleton]
   have op : descentCurrent D (tensorBasis D (cartanLabel D i)) =
       TensorProduct.map (neutralMode D i 0) (LinearMap.id : Fock →ₗ[ℂ] Fock) := by
     change originalMode D 0 (ghostB D (-1) (tensorBasis D (cartanLabel D i))) = _
@@ -508,7 +520,8 @@ private theorem basis_current_action (i : Fin D.rank) (a : Charge D)
       change l.1.1 = a at hl
       simp only [LatticeRelativeMassShell.tensorBasis_apply, TensorProduct.map_tmul,
         LinearMap.id_apply, LatticeSugawaraVirasoro.neutralMode_zero_single,
-        TensorProduct.smul_tmul, hl, LatticeSugawaraVirasoro.chargeScalar]
+        TensorProduct.smul_tmul, TensorProduct.tmul_smul, hl,
+        LatticeSugawaraVirasoro.chargeScalar]
   | zero => simp
   | add y z hy hz iy iz => simp only [map_add, iy, iz, smul_add]
   | smul t y hy iy => simp only [map_smul, iy, smul_comm t]
@@ -653,7 +666,9 @@ private theorem project_physical (a : Charge D) (x : physicalStates D H) :
     · rw [if_pos hl]
       have h := congrArg (fun y : State D =>
         (LatticeBRSTZeroEnergyReduction.fullBasis D).repr y l) x.property.2.2.1
-      simpa only [number_coefficient] using h
+      simpa only [number_coefficient, coeff, tensorCoeffEquiv,
+        LatticeBRSTZeroEnergyReduction.fullBasis, tensorBasis,
+        LatticeRelativeMassShell.ghostBasis] using h
     · simp only [if_neg hl, mul_zero]
   · apply (LatticeRelativeMassShell.totalL0_zero_iff D H hHG hGH _).mpr
     intro l hl

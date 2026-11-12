@@ -24,7 +24,7 @@ There is no positivity, unimodularity, charge cut, or replacement differential.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -50,7 +50,7 @@ variable {D : LatticeData}
 private def matterC : Carrier D →ₛₗ[starRingEnd ℂ] Carrier D where
   toFun v := theta D (kappaCarrier v)
   map_add' v w := by simp only [kappaCarrier_add, map_add]
-  map_smul' a v := by simp only [kappaCarrier_smul, map_smul]; rfl
+  map_smul' a v := by simp only [kappaCarrier_smul, map_smul]
 
 private theorem matterC_square (v : Carrier D) : matterC (matterC v) = v := by
   simp only [matterC, LinearMap.coe_mk, AddHom.coe_mk,
@@ -74,15 +74,17 @@ coordinates it is theta(kappaCarrier(-)) on each original matter coefficient.
 Thus it conjugates a tensor coefficient once, rather than twice. -/
 def conjugation (D : LatticeData) : State D →ₛₗ[starRingEnd ℂ] State D where
   toFun x := (slices D).symm
-    (((slices D) x).mapRange matterC (map_zero _))
+    (((slices D) x).mapRange (matterC (D := D)) (map_zero _))
   map_add' x y := by
     apply (slices D).injective
     ext S
-    simp
+    simp only [LinearEquiv.apply_symm_apply, map_add, Finsupp.mapRange_apply,
+      Finsupp.add_apply]
   map_smul' a x := by
     apply (slices D).injective
     ext S
-    simp
+    simp only [LinearEquiv.apply_symm_apply, map_smul, Finsupp.mapRange_apply,
+      Finsupp.smul_apply, map_smulₛₗ]
 
 @[simp] private theorem slices_conjugation (x : State D) (S : Finset ℕ) :
     (slices D) (conjugation D x) S = matterC ((slices D x) S) := by
@@ -119,13 +121,13 @@ in the sign. Charges and modes have no sign or nonzero restrictions. -/
 example (p : Charge D) (e : Index D →₀ ℕ) (S : Finset ℕ)
     (a : ℂ) :
     conjugation D
-        (a • (Finsupp.single p (MvPolynomial.monomial e 1) ⊗ₜ[ℂ] ket S)) =
+        (a • (Finsupp.single p (MvPolynomial.monomial e (1 : ℂ)) ⊗ₜ[ℂ] ket S)) =
       (star a * (-1 : ℂ) ^ (occurrences D e).length) •
-        (Finsupp.single (-p) (MvPolynomial.monomial e 1) ⊗ₜ[ℂ] ket S) := by
+        (Finsupp.single (-p) (MvPolynomial.monomial e (1 : ℂ)) ⊗ₜ[ℂ] ket S) := by
   rw [map_smulₛₗ, conjugation_tmul_ket]
   change star a •
     (thetaLinear D (Finsupp.single p
-      (kappaOsc (MvPolynomial.monomial e 1))) ⊗ₜ[ℂ] ket S) = _
+      (kappaOsc (MvPolynomial.monomial e (1 : ℂ)))) ⊗ₜ[ℂ] ket S) = _
   have hk : kappaOsc (MvPolynomial.monomial e 1 : Oscillator D) =
       MvPolynomial.monomial e 1 := by simp [kappaOsc]
   rw [hk, theta_single, sigma_monomial]
@@ -139,8 +141,9 @@ private theorem ghostC_create (j : ℕ) (g : Fock) :
   | add g h hg hh => simp only [map_add, hg, hh]
   | single S a =>
       have ha : Finsupp.single S a = a • ket S := by simp [ket]
-      by_cases hj : j ∈ S <;>
-        simp [ha, create_ket, hj, map_smulₛₗ, phase_real]
+      simp only [ha, map_smul, map_smulₛₗ, create_ket, ghostC_ket]
+      split_ifs <;> simp only [map_zero, smul_zero, map_smulₛₗ,
+        starRingEnd_apply, phase_real, ghostC_ket]
 
 private theorem ghostC_annihilate (j : ℕ) (g : Fock) :
     ghostC (annihilate j g) = annihilate j (ghostC g) := by
@@ -150,18 +153,23 @@ private theorem ghostC_annihilate (j : ℕ) (g : Fock) :
   | add g h hg hh => simp only [map_add, hg, hh]
   | single S a =>
       have ha : Finsupp.single S a = a • ket S := by simp [ket]
-      by_cases hj : j ∈ S <;>
-        simp [ha, annihilate_ket, hj, map_smulₛₗ, phase_real]
+      simp only [ha, map_smul, map_smulₛₗ, annihilate_ket, ghostC_ket]
+      split_ifs <;> simp only [map_zero, smul_zero, map_smulₛₗ,
+        starRingEnd_apply, phase_real, ghostC_ket]
 
 private theorem ghostC_b (m : ℤ) (g : Fock) :
     ghostC (BcGhostFock.b m g) = BcGhostFock.b m (ghostC g) := by
   unfold BcGhostFock.b
-  split_ifs <;> first | exact ghostC_create _ _ | exact ghostC_annihilate _ _
+  split_ifs
+  · exact ghostC_create (2 * (-m-2).toNat) g
+  · exact ghostC_annihilate (2 * (m+1).toNat + 1) g
 
 private theorem ghostC_c (m : ℤ) (g : Fock) :
     ghostC (BcGhostFock.c m g) = BcGhostFock.c m (ghostC g) := by
   unfold BcGhostFock.c
-  split_ifs <;> first | exact ghostC_create _ _ | exact ghostC_annihilate _ _
+  split_ifs
+  · exact ghostC_create (2 * (1-m).toNat + 1) g
+  · exact ghostC_annihilate (2 * (m-2).toNat) g
 
 private theorem tensor_covariance
     (A : Module.End ℂ (Carrier D)) (G : Module.End ℂ Fock)
@@ -200,8 +208,11 @@ private theorem matterC_sugawara
   rw [map_sum]
   apply Finset.sum_congr rfl
   intro j hj
-  rw [map_smulₛₗ, hH, map_finsum matterC.toAddMonoidHom
-    (normalSummand_finite D i j m v)]
+  rw [map_smulₛₗ, starRingEnd_apply, hH]
+  have hsum := map_finsum (matterC (D := D)).toAddMonoidHom
+    (normalSummand_finite D i j m v)
+  change matterC (∑ᶠ k : ℤ, normalSummand D i j k (m-k) v) = _ at hsum
+  rw [hsum]
   congr 1
   apply finsum_congr
   intro k
@@ -216,13 +227,15 @@ private theorem ghostC_cubicTerm (pq : ℤ × ℤ) (g : Fock) :
     ghostC (BcGhostBRST.cubicTerm pq g) =
       BcGhostBRST.cubicTerm pq (ghostC g) := by
   simp only [BcGhostBRST.cubicTerm, LinearMap.smul_apply, map_smulₛₗ,
-    map_mul, map_div₀, map_ofNat, map_intCast, ghostC_cubic]
+    map_mul, map_div₀, map_one, map_ofNat, map_intCast, ghostC_cubic]
 
 private theorem ghostC_Qg (g : Fock) :
     ghostC (BcGhostBRST.Qg g) = BcGhostBRST.Qg (ghostC g) := by
   change ghostC (∑ᶠ pq : ℤ × ℤ, BcGhostBRST.cubicTerm pq g) =
     ∑ᶠ pq : ℤ × ℤ, BcGhostBRST.cubicTerm pq (ghostC g)
-  rw [map_finsum ghostC.toAddMonoidHom (BcGhostBRST.cubicTerm_finite g)]
+  have hsum := map_finsum ghostC.toAddMonoidHom (BcGhostBRST.cubicTerm_finite g)
+  change ghostC (∑ᶠ pq : ℤ × ℤ, BcGhostBRST.cubicTerm pq g) = _ at hsum
+  rw [hsum]
   exact finsum_congr fun pq => ghostC_cubicTerm pq g
 
 private theorem conjugation_summand
@@ -240,7 +253,9 @@ private theorem conjugation_T
     conjugation D (T D H x) = T D H (conjugation D x) := by
   change conjugation D (∑ᶠ m : ℤ, summand D H m x) =
     ∑ᶠ m : ℤ, summand D H m (conjugation D x)
-  rw [map_finsum (conjugation D).toAddMonoidHom (summand_finite D H x)]
+  have hsum := map_finsum (conjugation D).toAddMonoidHom (summand_finite D H x)
+  change conjugation D (∑ᶠ m : ℤ, summand D H m x) = _ at hsum
+  rw [hsum]
   exact finsum_congr fun m => conjugation_summand H hHG hGH m x
 
 /-- Commutation with the original global Q, from its actual finite cubic
@@ -323,12 +338,15 @@ example : ∃ G : Matrix (Fin 26) (Fin 26) ℤ,
   let H : Matrix (Fin 26) (Fin 26) ℂ := (2 : ℂ)⁻¹ • 1
   have hG : G.map (Int.castRingHom ℂ) = (2 : ℂ) • 1 := by
     ext i j
-    by_cases hij : i = j <;> simp [G, Matrix.one_apply, hij]
+    dsimp only [G, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul]
+    by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
   refine ⟨G, H, ?_, ?_, ?_⟩
   · rw [hG]
     norm_num [H, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, smul_smul]
   · rw [hG]
     norm_num [H, Algebra.smul_mul_assoc, Algebra.mul_smul_comm, smul_smul]
-  · norm_num [G, Matrix.det_smul, Int.isUnit_iff]
+  · change ¬IsUnit (((2 : ℤ) • (1 : Matrix (Fin 26) (Fin 26) ℤ)).det)
+    rw [Matrix.det_smul, Matrix.det_one]
+    norm_num [Int.isUnit_iff]
 
 end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTChargeReflection

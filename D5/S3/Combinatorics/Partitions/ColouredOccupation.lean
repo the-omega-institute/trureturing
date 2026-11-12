@@ -95,7 +95,12 @@ private def occupationColouring (r N : ℕ) (d : OccupationFiber r N) :
   refine ⟨fun i => d.val (i, k.val - 1), ?_⟩
   have hk : 0 < k.val := (occupationPartition r N d).parts_pos
     (Multiset.mem_toFinset.mp k.property)
-  rw [occupationPartition_parts, ← count_mode, Nat.sub_add_cancel hk]
+  calc
+    _ = (d.val.toMultiset.map (fun x => x.2 + 1)).count (k.val - 1 + 1) :=
+      (count_mode r d.val (k.val - 1)).symm
+    _ = (d.val.toMultiset.map (fun x => x.2 + 1)).count k.val := by
+      rw [Nat.sub_add_cancel hk]
+    _ = _ := congrArg (Multiset.count k.val) (occupationPartition_parts r N d).symm
 
 private def encode (r N : ℕ) (d : OccupationFiber r N) : PartitionData r N :=
   ⟨occupationPartition r N d, occupationColouring r N d⟩
@@ -241,6 +246,7 @@ private theorem encode_decode (r N : ℕ) (s : PartitionData r N) :
     (Subtype.heq_iff_coe_eq (by intro x; rw [hp])).mp hkl
   apply allocation_heq r
   intro i
+  dsimp only [encode, occupationColouring]
   change decodeOccupation r p c (i,k.val-1) = (c l).val i
   rw [hval]
   exact decode_at r p c l i
