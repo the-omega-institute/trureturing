@@ -17,6 +17,7 @@ admission_basis: escape-witness.
 -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FifthOrderTopOnlyRefutation
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticFourthExpansion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PairingDefectAlgebra
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderPairingExpansion
 import Mathlib.Data.Fintype.CardEmbedding
@@ -248,15 +249,20 @@ private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
   have hsplit (d : Fin N) :
       (∑ e : Fin N with d ≠ e, f d * h e) + f d * h d =
         ∑ e : Fin N, f d * h e := by
-    simpa using Finset.sum_filter_add_sum_filter_not
+    have ht := Finset.sum_filter_add_sum_filter_not
       (Finset.univ : Finset (Fin N)) (fun e => d ≠ e) (fun e => f d * h e)
+    have hd : Finset.univ.filter (fun e : Fin N => ¬d ≠ e) = {d} := by
+      ext e
+      simp [eq_comm]
+    rw [hd, Finset.sum_singleton] at ht
+    exact ht
   have htotal : (∑ d, ∑ e with d ≠ e, f d * h e) + (∑ d, f d * h d) =
       (∑ d, f d) * (∑ e, h e) := by
     rw [← Finset.sum_add_distrib]
     simp_rw [hsplit, ← Finset.mul_sum]
     rw [Finset.sum_mul]
-  rw [distinct_moments, hsum]
-  simp only [moment_values.2.2.1, Real.sq_sqrt (by positivity)]
+  rw [distinct_moments, hsum, moment_values.2.2.1]
+  rw [Real.sq_sqrt (show (0 : ℝ) ≤ N by positivity)]
   congr 1
   linarith
 
@@ -292,12 +298,24 @@ private lemma model_unit_transfer (N : ℕ) (hN : 4 ≤ N) :
   have hR : DisjointLabelMomentBound (modelFunctional N) (modelY N)
       (fun (_ : Fin 6) _ => (1 : ℝ)) 4 (Real.sqrt ((N : ℝ) * 1)) := by
     intro r hr hr6 labels _ _
-    simpa using distinct_bound N r (by omega) hr hr6 (fun _ _ => 1) (by simp)
+    simp only [Finset.prod_const_one, mul_one]
+    have hb := distinct_bound N r (by omega) hr hr6 (fun _ _ => 1) (by simp)
+    convert hb using 1
+    congr 1
+    unfold distinctIndexMoment
+    apply Finset.sum_congr
+    · ext x
+      simp
+    · intro x hx
+      rfl
   obtain ⟨E, _, hE, hb⟩ := quadratic_pairing_defect_transfer
     (modelFunctional N) (modelY N) (fun (_ : Fin 6) _ => (1 : ℝ))
     0 1 4 N 1 (by norm_num) (by exact_mod_cast (show 1 ≤ N by omega))
     (by norm_num) (by norm_num) (by norm_num) hquad hunit hcenter
-    (by simp; positivity) (by simp) hR
+    (by
+      simp only [Fintype.card_fin]
+      have hn : (0 : ℝ) ≤ N := by positivity
+      linarith) (by simp) hR
   have hcollapse := partialPairing_six_convolution (Finset.univ : Finset (Fin 6))
     (by simp) (N : ℝ)
     (subsetPairingDefect (modelFunctional N) (modelY N)

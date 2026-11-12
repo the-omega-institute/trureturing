@@ -19,7 +19,7 @@ set_option autoImplicit false
 variable {ι A : Type*} [Fintype ι] [DecidableEq ι]
   [CommRing A] [Algebra ℝ A]
 
-private lemma sum_two (F : ι → ι → ℝ) :
+lemma sum_two (F : ι → ι → ℝ) :
     (∑ x : Fin 2 → ι with Function.Injective x, F (x 0) (x 1)) =
       ∑ d, ∑ e with d ≠ e, F d e := by
   simp only [Finset.sum_filter]

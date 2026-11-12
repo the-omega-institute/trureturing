@@ -22,7 +22,7 @@ internal sealed class PerfectPairingCountDocument : IScribeDocumentDefinition
             Entry("pairing-support-card", "pairingSupport_card", "Cardinality of a partial pairing support",
                 "For every partial pairing P of U, the cardinality of pairingSupport(P) equals twice the cardinality of P. "
                 + "The disjoint-union cardinality formula sums the cardinality two of every edge."),
-            Entry("perfect-pairing-card", "IsPerfectPairing.card", "Number of edges in a perfect pairing",
+            Entry("perfect-pairing-card", "card", "Number of edges in a perfect pairing",
                 "If P is a perfect pairing of U, then the cardinality of U equals twice the cardinality of P."),
             Entry("pairing-polynomial-rank-one", "finitePairingPolynomial_rankOne", "Rank-one edge evaluation",
                 "Let x be a real weight on labels and let c be a real weight on finite label sets. "
