@@ -1,0 +1,63 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
+
+internal sealed class SourceModelDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Partial formal development of the exact Mertens range-two problem; the full theorem remains open.",
+        H("SourceModel"), Blocks(
+            Describe.Lean(DescribeId.Create("offset"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.offset"),
+                H("offset"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("ring"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.ring"),
+                H("ring"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("profile"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.Profile"),
+                H("Profile"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("rank"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.rank"),
+                H("rank"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("hasstablematching"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.HasStableMatching"),
+                H("HasStableMatching"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("solutionprobability"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.solutionProbability"),
+                H("solutionProbability"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("offset-injective"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.offset_injective"),
+                H("offset_injective"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("offset-ne-zero"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.offset_ne_zero"),
+                H("offset_ne_zero"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("exists-offset-neg"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.exists_offset_neg"),
+                H("exists_offset_neg"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rank-neighbor"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.rank_neighbor"),
+                H("rank_neighbor"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rank-self"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.rank_self"),
+                H("rank_self"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rank-neighbor-lt-self"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.rank_neighbor_lt_self"),
+                H("rank_neighbor_lt_self"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("card-profile"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/SourceModel.card_profile"),
+                H("card_profile"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Supplier model with N=n+5. Matching is an involutive permutation, fixed points are singles, stability tests improvement at both endpoints, and solutionProbability counts profiles with an existential matching once. The definitions and API lemmas are compatibility ports credited to the Formal Conjectures Authors, not new mathematical contributions."))), DescribeRole.Theorem))));
+}

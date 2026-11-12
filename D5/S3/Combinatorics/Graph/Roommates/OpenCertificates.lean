@@ -6,6 +6,7 @@
    utility: none
    digest: Integer-target-injective certificates restrict to intervals and count profiles once. -/
 
+import Mathlib.GroupTheory.Perm.Fin
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Tactic
@@ -110,6 +111,156 @@ theorem count_submultiplicative (m k : ℕ) : count (m + k) ≤ count m * count 
   have h := Fintype.card_le_of_injective (split m k) (split_injective m k)
   simpa only [Fintype.card_prod] using h
 
+
+private def pairedOffset {m : ℕ} (i : Fin m) : ℤ :=
+  if i.val % 2 = 0 then 1 else -1
+
+private theorem paired_reciprocal {m : ℕ} (i j : Fin m)
+    (h : (i.val : ℤ) + pairedOffset i = j.val) : pairedOffset j = -pairedOffset i := by
+  by_cases hi : i.val % 2 = 0 <;> by_cases hj : j.val % 2 = 0 <;>
+    simp only [pairedOffset, hi, hj, ite_true, ite_false] at * <;> omega
+
+private theorem paired_injective {m : ℕ} (i j : Fin m)
+    (h : (i.val : ℤ) + pairedOffset i = (j.val : ℤ) + pairedOffset j) : i = j := by
+  apply Fin.ext
+  by_cases hi : i.val % 2 = 0 <;> by_cases hj : j.val % 2 = 0 <;>
+    simp only [pairedOffset, hi, hj, ite_true, ite_false] at * <;> omega
+
+private theorem rank_injective (r : Ranking) {a b : ℤ}
+    (ha : -2 ≤ a ∧ a ≤ 2) (hb : -2 ≤ b ∧ b ≤ 2)
+    (ha0 : a ≠ 0) (hb0 : b ≠ 0) (h : offsetRank r a = offsetRank r b) : a = b := by
+  interval_cases a <;> interval_cases b <;> simp_all [offsetRank] <;>
+    have he := r.injective (Fin.ext h) <;> norm_num at he
+
+private theorem paired_certificate {m : ℕ} (w : Word m)
+    (htop : ∀ i, offsetRank (w i) (pairedOffset i) = 0) : Certificate w pairedOffset := by
+  constructor
+  · intro i
+    unfold pairedOffset
+    split <;> omega
+  · intro i j _ h
+    exact paired_reciprocal i j h
+  · intro i j _ _ h
+    exact paired_injective i j h
+  · intro i j hij hdist
+    by_cases he : pairedOffset i = (j.val : ℤ) - i.val
+    · exact Or.inl he
+    · right
+      left
+      rw [htop]
+      apply Nat.pos_of_ne_zero
+      intro hz
+      apply he
+      apply rank_injective (w i) (by unfold pairedOffset; split <;> omega)
+        (by omega) (by unfold pairedOffset; split <;> omega) (by omega)
+      exact (htop i).trans hz.symm
+
+private def topRanking (s : Fin 4) (e : Equiv.Perm (Fin 3)) : Ranking :=
+  (Equiv.Perm.decomposeFin.symm (s, e)).symm
+
+private theorem topRanking_zero (s : Fin 4) (e : Equiv.Perm (Fin 3)) :
+    topRanking s e s = 0 := by
+  apply (Equiv.Perm.decomposeFin.symm (s, e)).injective
+  simp [topRanking]
+
+private theorem topRanking_injective (s : Fin 4) : Function.Injective (topRanking s) := by
+  intro e f h
+  have hh := congrArg (fun r : Ranking => Equiv.Perm.decomposeFin r.symm) h
+  simpa only [topRanking, Equiv.symm_symm, Equiv.apply_symm_apply, Prod.mk.injEq,
+    true_and] using hh
+
+private def topWord {m : ℕ} (e : Fin m → Equiv.Perm (Fin 3)) : CertifiedWord m := by
+  let w : Word m := fun i => topRanking (if i.val % 2 = 0 then 0 else 2) (e i)
+  refine ⟨w, pairedOffset, paired_certificate w ?_⟩
+  intro i
+  dsimp [w]
+  by_cases hi : i.val % 2 = 0 <;>
+    simp [pairedOffset, offsetRank, hi, topRanking_zero]
+
+private theorem topWord_injective (m : ℕ) : Function.Injective (@topWord m) := by
+  intro e f h
+  funext i
+  exact topRanking_injective _ (congrArg (fun w : CertifiedWord m => w.val i) h)
+
+/-- Six independent orders remain after placing each prescribed partner first.
+The possible final odd vertex requests the exterior target m, so both parities are covered. -/
+theorem count_lower (m : ℕ) : 6 ^ m ≤ count m := by
+  have h := Fintype.card_le_of_injective (@topWord m) (topWord_injective m)
+  simpa [count, Fintype.card_pi_const, Fintype.card_perm, Nat.factorial] using h
+
+/-- A directed three-cycle whose two triangle neighbors precede all exterior partners. -/
+def ExclusiveTriangle (w : Word 3) : Prop :=
+  offsetRank (w 0) 1 < offsetRank (w 0) 2 ∧
+  offsetRank (w 1) 1 < offsetRank (w 1) (-1) ∧
+  offsetRank (w 2) (-2) < offsetRank (w 2) (-1) ∧
+  (∀ a : ℤ, -2 ≤ a → a ≤ 2 → a ≠ 1 → a ≠ 2 →
+    offsetRank (w 0) 2 < offsetRank (w 0) a) ∧
+  (∀ b : ℤ, -2 ≤ b → b ≤ 2 → b ≠ -1 → b ≠ 1 →
+    offsetRank (w 1) (-1) < offsetRank (w 1) b) ∧
+  (∀ c : ℤ, -2 ≤ c → c ≤ 2 → c ≠ -2 → c ≠ -1 →
+    offsetRank (w 2) (-1) < offsetRank (w 2) c)
+
+/-- Exterior requests and singles do not evade the exclusive-triangle obstruction. -/
+theorem exclusive_triangle_not_certified {w : Word 3} (ht : ExclusiveTriangle w) :
+    ¬ ∃ d, Certificate w d := by
+  rintro ⟨d, hc⟩
+  rcases ht with ⟨h0, h1, h2, he0, he1, he2⟩
+  have hb0 := hc.bounded 0
+  have hb1 := hc.bounded 1
+  have hb2 := hc.bounded 2
+  have h01 : d 0 = 1 ↔ d 1 = -1 := by
+    constructor
+    · intro h
+      have hh := hc.reciprocal 0 1 (by omega) (by simp [h])
+      omega
+    · intro h
+      have hh := hc.reciprocal 1 0 (by omega) (by simp [h])
+      omega
+  have h02 : d 0 = 2 ↔ d 2 = -2 := by
+    constructor
+    · intro h
+      have hh := hc.reciprocal 0 2 (by omega) (by simp [h])
+      omega
+    · intro h
+      have hh := hc.reciprocal 2 0 (by omega) (by simp [h])
+      omega
+  have h12 : d 1 = 1 ↔ d 2 = -1 := by
+    constructor
+    · intro h
+      have hh := hc.reciprocal 1 2 (by omega) (by simp [h])
+      omega
+    · intro h
+      have hh := hc.reciprocal 2 1 (by omega) (by simp [h])
+      omega
+  have hn01 := hc.nonblocking 0 1 (by decide) (by decide)
+  have hn02 := hc.nonblocking 0 2 (by decide) (by decide)
+  have hn12 := hc.nonblocking 1 2 (by decide) (by decide)
+  norm_num at hn01 hn02 hn12
+  by_cases ha1 : d 0 = 1
+  · have hb : d 1 = -1 := h01.mp ha1
+    have hc1 : d 2 ≠ -1 := by intro h; have := h12.mpr h; omega
+    have hc2 : d 2 ≠ -2 := by intro h; have := h02.mpr h; omega
+    have hce := he2 (d 2) hb2.1 hb2.2 hc2 hc1
+    rw [hb] at hn12
+    omega
+  by_cases ha2 : d 0 = 2
+  · have hc2 : d 2 = -2 := h02.mp ha2
+    have hb1 : d 1 ≠ 1 := by intro h; have := h12.mp h; omega
+    have hb2 : d 1 ≠ -1 := by intro h; exact ha1 (h01.mpr h)
+    have hbe := he1 (d 1) (hc.bounded 1).1 (hc.bounded 1).2 hb2 hb1
+    rw [ha2] at hn01
+    omega
+  have hae := he0 (d 0) hb0.1 hb0.2 ha1 ha2
+  by_cases hb : d 1 = 1
+  · have hc2 : d 2 = -1 := h12.mp hb
+    rw [hc2] at hn02
+    omega
+  · have hb2 : d 1 ≠ -1 := by intro h; exact ha1 (h01.mpr h)
+    have hbe := he1 (d 1) hb1.1 hb1.2 hb2 hb
+    omega
+
+#print axioms count_lower
+#print axioms exclusive_triangle_not_certified
 #print axioms certificate_restrict
 #print axioms count_submultiplicative
 
