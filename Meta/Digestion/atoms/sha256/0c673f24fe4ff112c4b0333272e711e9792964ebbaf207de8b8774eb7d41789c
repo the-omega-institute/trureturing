@@ -1,0 +1,24 @@
+**定理 79.6（PRE 上的精确质量分类）。** 固定任意 $t,s\in(0,1)$。在同一完整 PRE 元组上，$\mathsf{Mass}_{t,s}$ 恰好等价于第四卷前 C13 正规形中的
+$$
+u_{ij}=I_j,\qquad g_{ijk}=\kappa I_k\quad\text{对全部有序 }i,j,k,\quad\kappa>0. \tag{79.12}
+$$
+式中的 $u_{ij}$ 为矩阵滤子，与归一化泛函 $u_X$ 区分。所有允许的有序转置位及其原读回正性限制仍然保留。结论不预设共同普通方向。
+
+**证明。** 在质量推导 (79.8)—(79.11) 完成后，才用既有第四卷 66.3—66.7 的前 C13 分类。保原迹、全态、全效应的坐标给
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes\sqrt{u_{ij}}b_j^{T^{\varepsilon_{ij}}}\sqrt{u_{ij}},\\
+L(d,c)_{ijk}&=d_{ij}\otimes\sqrt{g_{ijk}}c_k^{T^{\delta_{ijk}}}\sqrt{g_{ijk}},
+\end{aligned} \tag{79.13}
+$$
+$u_{ij},g_{ijk}>0$，位 $\varepsilon_{ij},\delta_{ijk}$ 完整满足 (66.20)，逆迹平衡仍为 (66.14)。选择只支撑在指定 $i,j$ 的正输入，(79.11) 给
+$$
+\operatorname{Tr}(u_{ij}b_j^{T^{\varepsilon_{ij}}})=\operatorname{Tr}b_j\quad(b_j\ge0).
+$$
+PSD 锥张满 Hermitian 空间，迹配对非退化，故 $u_{ij}^{T^{\varepsilon_{ij}}}=I_j$，即 $u_{ij}=I_j$。再选择只支撑在 $i,j,k$ 的输入，$m_3$ 的乘积式给 $g_{ijk}^{T^{\delta_{ijk}}}=\kappa I_k$，故 $g_{ijk}=\kappa I_k$。独立块支撑只是全量词证明中的数学取值，不供应物理选块或制备。
+逆向，在 (79.12) 下，任意允许的转置保持迹，直接给 $m_2=u_A^{\otimes2}$、$m_3=\kappa u_A^{\otimes3}$。因而任何正保归一化 $\Phi$ 都满足两质量恒等式。为满足全部泛函的固定条件，选任一数学态 $\sigma\in K_A$，令
+$$
+\Phi(a)=u_A(a)\sigma. \tag{79.14}
+$$
+它正保归一化，且 $f\Phi=f$ 当且仅当 $f=f(\sigma)u_A$。$\sigma$ 可在边界、可秩亏、可只在一个扇区；不需忠实稳态。该构造只给数学存在见证，不推出原源已供应这个重置程序。证毕。
+

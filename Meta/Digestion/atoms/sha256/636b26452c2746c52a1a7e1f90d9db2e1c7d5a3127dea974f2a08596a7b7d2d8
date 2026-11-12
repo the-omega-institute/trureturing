@@ -1,0 +1,10 @@
+**定义 81.1（原基底与内在矩）。** 完整原基底取定义 80.1 的 $\mathrm{PRE}_0^{\rm mix}$：非零有限维 $A,D,E$ 使用全部原态与 proper 效应、纯态最小确认比较及任意混态余项的全部二元律；先由 77.19 恢复完整 $S$，再按原正对偶生成、忠实态效应对应、共同框架、面投影、项目性及滤波纯性等完整条件进入一般有限 EJA。允许异型直和、秩一和 Albert。原接合 $L:D\times A\to E$、原读回 $p:E\to D$ 在整个原锥上正，包括纠缠方向；同一个 $p$ 连续两次，原 $\omega=1_D/\tau_D1_D$、两实张成和全部实 $Z$ 均不变。全部 $K,M,J,H_{\rm s},B_1,U,G,F$ 严格按 (80.1) 定义。两张成与正性先给 $U,G>0$，故在零关系之前 $F=P_{U^{-1/2}}M$ 已正且保单位。
+
+以下 $d=\dim_{\mathbb R}A$、$n=\operatorname{rank}A$，$\operatorname{Tr}$ 为原迹 Hilbert 空间上线性算子的迹，区别于 Jordan 迹 $\tau_A$。对完整本原框架 $B$ 令
+$$
+\Pi_B=\sum_{e\in B}|e\rangle\langle e|,\qquad
+\mathscr P_A=\{\Pi_B:B\text{ 是原完整本原框架}\}.
+\tag{81.1}
+$$
+$\Pi_B$ 是到框架实张成的正交投影，$\Pi_B^2=\Pi_B$、$\operatorname{Tr}\Pi_B=n$、$\Pi_B1_A=1_A$。标签只重排求和，不是新输入。以全部数学 Jordan 自同构的紧群 $\mathscr G_A=\operatorname{Aut}_J(A)$ 共轭作用于 $\mathscr P_A$；不把该群自动认作原源供应的物理操作。
+

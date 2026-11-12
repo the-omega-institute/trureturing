@@ -1,0 +1,30 @@
+**命题 76.5（完整插入正性不能补回遗漏的生成性）。** 固定 $0<\lambda<1$，取完整标准矩阵态、效应、迹和比较，并令
+$$
+A=H_4(\mathbb C),\quad D=H_{16}(\mathbb C),\quad E=H_{64}(\mathbb C),\qquad
+T_\lambda a=\frac{1+\lambda}{2}a+\frac{1-\lambda}{2}a^T,\quad
+L_\lambda(d,a)=d\otimes T_\lambda a,\quad p=\operatorname{Tr}_1,\quad\omega=I_{16}/16. \tag{76.14}
+$$
+这里 $p$ 始终为同一个四维首腿偏迹。上述数据满足整个 $\mathrm{PRE}_0$、完整 $D_H$ 和完整 C13；对 $(E,F,G^{\mathrm r})$ 两张有限零表均成立，所选原子及其 $J,F,H_{\mathrm s}F$ 像与 $T=\mathrm{id}$ 的标准模型逐项相同，但 $D_J$ 失败。
+
+**证明。** $T_\lambda$ 为恒等与转置的凸组合，所以全锥正、保单位、保迹且对迹配对自伴随。它在实对称部分恒等，在纯虚反对称 Hermitian 部分乘 $\lambda$，故实线性可逆，不要求逆正。$L_\lambda$ 因而对全部 $d\in D_+,a\in A_+$ 正，包括纠缠的 $d$；$p$ 在整个 $E_+$ 上正。标准全态效应满足 (76.1)。原参考经同一个 $p$ 两次直接给
+$$
+\begin{aligned}
+K(a)&=I_4/4\otimes T_\lambda a,&M(a,b)&=T_\lambda a\otimes T_\lambda b,&J(a)&=T_\lambda a\otimes I_4,\\
+H_{\mathrm s}(d)&=d\otimes I_4,&U&=I_{16},&G&=I_{64},\quad F=M.
+\end{aligned} \tag{76.15}
+$$
+$T_\lambda$ 可逆给两条实张成，且全部实输入上
+$$
+B_1M(a,b)=\operatorname{Tr}(T_\lambda a)\,T_\lambda b\otimes I_4=\operatorname{Tr}(a)Jb. \tag{76.16}
+$$
+$H_{\mathrm s}$ 保持整个 $D_+$ 上的正交，给完整 $D_H$。三套实框架的每个成员被 $T_\lambda$ 固定，因此 $Je=e\otimes I_4$、$F(e,f)=e\otimes f$、$H_{\mathrm s}F(e,f)=e\otimes f\otimes I_4$。全部所列读数与标准模型相同，两表成立，甚至所有 $B_r\times B_t$ 的旧第二表也成立。
+在标准实张量识别下，$\widetilde M=T_\lambda\otimes T_\lambda$ 可逆，而 $T_{\rm raw}(a,c)=T_\lambda a\otimes I_4\otimes T_\lambda c$。因此逆映射消去两端的 $T_\lambda$，$I^{\rm raw}$ 在整个 $D$ 上恰为通常的中间插单位映射，是 $d\mapsto d\otimes I_4$ 的腿置换；它保整个正锥，给完整 C13，所有原输入的插入输出都与标准模型相同。此处可逆性由显式公式给出，未借尚未取得的 65.3。
+最后在前两维角取 $p_\pm=(I_2\pm Y)/2$，其余两维补零。这两个本原投影正交，但
+$$
+\operatorname{Tr}(T_\lambda p_+T_\lambda p_-)=\frac{1-\lambda^2}{2},\qquad
+\langle Jp_+,Jp_-\rangle_D=2(1-\lambda^2)>0. \tag{76.17}
+$$
+所以 $D_J$ 失败，且失败来自同一个原 $p$、原参考和整个原正锥。证毕。
+
+本例只是否定“删去生成性仍能恢复 $D_J$”：指定的 $(E,F,G^{\mathrm r})$ 不生成 $A$。$A=H_4(\mathbb C)$ 本身仍存在其他至多三套生成框架，但它们不能同时通过第一表，否则 75.4（三）会推出与 (76.17) 矛盾的 $D_J$。完整 C13 不表示已经恢复 PRE。若将 (76.5) 的单块边缘公式明确延拓到本例，令 $\alpha(a)=T_\lambda a\otimes I$、$\beta(a)=I\otimes T_\lambda a$，则四维归一 Bell 投影 $\rho_\Omega$ 的两边缘均为 $I_4/4$，两种铺回差都为 $I_{16}/4-\rho_\Omega$，在 Bell 方向为 $-3/4$；其原插入输出仍正。这只是该单块公式延拓的通过，不是定义 76.2 的前序结构已经成立，也不能据以替代生成性。
+

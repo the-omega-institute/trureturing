@@ -1,0 +1,13 @@
+**Definition 2.2 (One stationary consecutive-bit source).** At $q=e^{-s}$, $s>0$, define
+
+$$
+\begin{aligned}
+Z_i(q)&=\sum_{k\ge1}F_i(k)q^k,&
+f_{i,q}(k)&=\frac{F_i(k)q^k}{Z_i(q)}\quad(k\ge1),\\
+S_{i,q}(b)&=\sum_{k\ge\max(1,b)}f_{i,q}(k)\quad(b\ge0),&
+\mu_i(q)&=\sum_{k\ge1}(k+1)f_{i,q}(k),\\
+\beta_i(q)&=\frac{\sum_{k\ge1}k(k+1)f_{i,q}(k)}{2\mu_i(q)}.&
+\end{aligned}
+\tag{2.4}
+$$
+

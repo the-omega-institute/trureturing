@@ -1,0 +1,27 @@
+**命题 83.9（保留完整原接口的非零检验）。** 对 (78.16) 的同一模型，$0<\lambda<1$ 时
+$$
+\boxed{\mathcal Q_{\times,\lambda}=\frac{72}{25}(1-\lambda^2)(13+2\lambda^2)>0.}\tag{83.15}
+$$
+**证明。** 保留全部原态效应及其比较入口，$A=H_4(\mathbb C),D=H_{16}(\mathbb C),E=H_{64}(\mathbb C)$，原全锥上
+$$
+T_\lambda a=\tfrac{1+\lambda}{2}a+\tfrac{1-\lambda}{2}a^T,\qquad
+L(d,a)=d\otimes T_\lambda a,\qquad p=\operatorname{Tr}_1,\qquad\omega=I_{16}/16.
+\tag{83.16}
+$$
+这里 $p$ 始终是同一个四维首腿偏迹。$T_\lambda$ 正、保单位、保迹且实线性可逆，$L$ 对全部纠缠 $d\ge0$ 仍正，$p$ 对整个 $E_+$ 正。两次实际调用给
+$$
+K(a)=I_4/4\otimes T_\lambda a,\quad M(a,b)=T_\lambda a\otimes T_\lambda b,\quad J(a)=T_\lambda a\otimes I_4,\quad
+H_{\rm s}d=d\otimes I_4,\quad U=I_{16},\ G=I_{64},\ F=M.
+\tag{83.17}
+$$
+可逆性及 Hermitian 简单张量的实张成给两条原实张成；$B_1(d)=(\operatorname{Tr}_1d)\otimes I_4$，故 $B_1M(a,b)=\tau_A(a)Jb$ 对全部实 $a,b$ 成立。$\widetilde M=T_\lambda\otimes T_\lambda$ 在 $I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}$ 中抵消两端 $T_\lambda$，原插入是普通中间插入 $I_4$，对整个纠缠锥正；所以整个原 C13 成立。$H_{\rm s}$ 保全部正交正元，而 78.20 的同一对正交 $p_\pm$ 有 $\langle Jp_+,Jp_-\rangle=2(1-\lambda^2)>0$。这个正缺陷对象不被预先赋予分阶段 H13 资格。
+(83.3) 给 $\mathsf C_A=P_{\mathbb R I_4}+\frac15P_{A^0}$。$T_\lambda$ 在实对称十维为恒等，在纯虚反对称六维乘 $\lambda$，因此
+$$
+S=\operatorname{Tr}(T_\lambda^*T_\lambda\mathsf C_A)
+=1+\tfrac95+\tfrac65\lambda^2=\tfrac{14+6\lambda^2}{5},\qquad
+\|J\mathsf D_A\|_{\rm HS}^2=4S,\quad
+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2=4S^2.
+\tag{83.18}
+$$
+于是 $\mathcal Q_\times=80-4S-4S^2$，展开得 (83.15)，不需要同框架四阶积分。实框架仍有旧 $q(B)=0$，所以零平均约束并非定义恒真。与 (81.11) 的同框架值比较，$\mathcal Q_{\times,\lambda}-\mathcal Q_\lambda=\frac{72}{175}(1-\lambda^2)^2>0$，显式展示两个平均不同。$\lambda=0$ 的极限丢失实张成，不把它算作完整原模型。证毕。
+

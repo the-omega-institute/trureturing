@@ -1,0 +1,197 @@
+**定理 27.2（全部三维窗口的分类与单行分离）。** 对定义 27.1 中每一个 $W$，$E_W$ 是包含 $F$ 的子域，且 $E_W\subseteq D_W$。置 $h=[D_W:F]$、$e=[E_W:F]$，则 $h\ge3$、$h\mid[L:F]$，精确分类为
+
+$$
+(e,\delta_W)=
+\begin{cases}
+(3,3),&h=3,\\
+(1,2),&h=4,\\
+(1,1),&h\ge5.
+\end{cases}
+\tag{27.3}
+$$
+
+任取 $w\in W\setminus\{0\}$，都有 $w^{-1}W\subseteq D_W$ 及 $F(w^{-1}W)=D_W$，并存在原 $\theta\in w^{-1}W$ 满足 $F(\theta)=D_W$。特别地，$\theta=(w\theta)/w$ 是原窗口比值。任意正交叠标签都属于 $D_W^\times$，而且
+
+$$
+D_W=F\bigl(\{r\in L^\times:d_W(r)>0\}\bigr),\qquad
+E_W=\{0\}\cup\{r\in L^\times:d_W(r)=3\}.
+\tag{27.4}
+$$
+
+三次分支有 $W=wD_W$，且 $d_W(r)=3$ 对全部 $r\in D_W^\times$ 成立；四次分支有 $w^{-1}W$ 为 $D_W$ 的 $F$-超平面，且
+
+$$
+d_W(r)=
+\begin{cases}
+3,&r\in F^\times,\\
+2,&r\in D_W^\times\setminus F^\times,\\
+0,&r\in L^\times\setminus D_W^\times.
+\end{cases}
+\tag{27.5}
+$$
+
+在三次分支及次数至少五的分支，存在原 $u,v\in W\setminus\{0\}$，使 $W\cap(u/v)W=E_Wu$。四次分支的最小正交叠为二，严格大于稳定子次数一。
+
+任取 $W$ 的最小正行标签 $r_0$，有
+
+$$
+T_{W,r_0}=
+\begin{cases}
+D_W,&h\in\{3,4\},\\
+z^{-1}W,&h\ge5,\quad 0\ne z\in W\cap r_0W.
+\end{cases}
+\tag{27.6}
+$$
+
+尽管四次分支的 $T_{W,r_0}$ 为四维而不是窗口的标量倍，任意这样的行仍分离全部三维竞争窗口：对每个 $V\le_F L$、$\dim_F V=3$，不假设 $r_0$ 对 $V$ 最小，仍有
+
+$$
+\begin{aligned}
+&\bigl[\ \forall s\in L^\times,\quad
+J_V(r_0,s)>0\ \Longleftrightarrow\ J_W(r_0,s)>0\ \bigr]\\
+&\hspace{30mm}\Longleftrightarrow\quad
+\exists x\in L^\times,\quad V=xW.
+\end{aligned}
+\tag{27.7}
+$$
+
+因此完整原标签恰好恢复原标量轨道：
+
+$$
+\bigl[\ \forall(r,s)\in(L^\times)^2,\quad J_V(r,s)=J_W(r,s)\ \bigr]
+\quad\Longleftrightarrow\quad
+\exists x\in L^\times,\quad V=xW.
+\tag{27.8}
+$$
+
+证明。固定任意 $w\in W\setminus\{0\}$，缩写 $D=D_W$、$E=E_W$，令 $U=w^{-1}W$。原乘法的交换性给出 $J_U=J_W$ 及 $E_U=E_W$。因为 $1\in U$，且每个 $u\in U$ 都是原窗口中某个元素与 $w$ 的比值，故 $U\subseteq D$。反之，原窗口任一比值均为两个 $U$ 元素之商，因而
+
+$$
+D=F(U).
+\tag{27.9}
+$$
+
+这同时表明 $D$ 是包含某个窗口标量倍的最小子域：若 $xW\subseteq K$，其中 $K$ 是原 $L$ 中包含 $F$ 的子域、$x\in L^\times$，则窗口比值均属于 $K$，故 $D\subseteq K$。由 $\dim_F U=3$ 得 $h\ge3$，域塔公式给 $h\mid[L:F]$。对每个原 $r\ne0$，
+
+$$
+d_W(r)>0
+\quad\Longleftrightarrow\quad
+r=u/v\quad\text{对某些 }u,v\in W\setminus\{0\}.
+\tag{27.10}
+$$
+
+确实，非零公共向量可以写成 $u=rv$；反向该等式本身给出公共向量。这证明 (27.4) 的第一式，并说明 $D$ 外的所有二重及三重交叠均为零。特别是当 $D\subsetneq L$ 时，证明没有丢弃原 $L$ 中的其余标签。
+
+消费有限维乘法稳定子的通常事实：$E$ 包含 $F$，对加、减、乘封闭；若 $0\ne a\in E$，则乘以 $a$ 在有限维 $W$ 上单射，故 $aW=W$，从而 $a^{-1}W=W$。所以 $E$ 为域，$W$ 为 $E$-空间，$e\mid3$。又因 $aw\in W$，每个 $a\in E$ 均属于 $D$。$d_W(r)=3$ 恰好表示 $rW=W$，于是得到 (27.4) 的第二式。这些稳定子事实与前节相同，见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.3 的有限维稳定子说明](https://arxiv.org/pdf/1510.01354v2)，只在此应用内部使用。
+
+若 $e=3$，则 $W=wE$，原比值域就是 $E$，所以 $h=3$。反之，若 $h=3$，则 $U\subseteq D$ 的两边都是三维，故 $U=D$、$W=wD$，稳定子为 $D$。此时 $D^\times$ 中所有标签保持窗口，$D$ 外交叠为零，因而 $\delta_W=3$；取 $u=v=w$ 就有 $W=E_Wu$。这证明三次分支，并排除 $h\ge4$ 时 $e=3$ 的可能，故此后 $E=F$。
+
+对所有 $h\ge3$，为把本原元真正选在原窗口比值内，取 $U$ 的一个 $F$-基 $1,a,b$。由 (27.9)，$D=F(a,b)$。特征零使 $D/F$ 可分；在它的有限正规闭包中，考虑 $D$ 的 $h$ 个 $F$-嵌入。任意两个不同嵌入不可能同时在 $a,b$ 上相等。因而使这两个嵌入在 $a+tb$ 上相等的 $t\in F$ 至多一个。所有嵌入对只排除有限多个 $t$，而 $F$ 无限，故可取原 $t\in F$，使 $\theta=a+tb$ 在这 $h$ 个嵌入下的像两两不同。其最小多项式遂有至少 $h$ 个不同的根，次数又至多 $h$，故 $[F(\theta):F]=h$，即 $F(\theta)=D$。这里是本原元定理的标准有限避集论证；所得 $\theta\in U$、$w\theta\in W$ 都在原域中，正规闭包仅用于证明这次原域选择存在。
+
+若 $h=4$，$U$ 是四维 $D$ 中的三维超平面。对每个 $r\in D^\times$，两个三维空间 $U,rU\subseteq D$ 的交维至少 $3+3-4=2$。交维为三恰好表示 $r\in E^\times=F^\times$；其余 $r\in D^\times$ 的交维因此恰为二。结合 (27.10) 得到 (27.5) 及 $\delta_W=2$。例如刚选出的原 $\theta$ 满足 $\theta\in D\setminus F$，故 $r=\theta=(w\theta)/w$ 就是原域最小正行标签。这一分支不把二维交叠解释成稳定子线。
+
+以下设 $h\ge5$。原 $\theta$ 的次数为 $h$，且 $\theta\in U\cap\theta U$，所以 $d_W(\theta)>0$。因为 $\theta\notin E=F$，该值只能是一或二。若它是一，则
+
+$$
+W\cap\theta W=F(w\theta),\qquad
+\theta=(w\theta)/w,
+\tag{27.11}
+$$
+
+已给出所需原域见证 $u=w\theta,v=w$。
+
+若 $d_W(\theta)=2$，则维数公式给出
+
+$$
+\dim_F(U+\theta U)=3+3-2=4.
+\tag{27.12}
+$$
+
+此时直接应用 Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，§6，第 18 页，Proposition 6.3](https://arxiv.org/pdf/2201.02003v1)。将该命题的环境扩张取为原 $L$ 内的子域扩张 $D/F$，取 $S=U$、$k=3$、$T=\operatorname{span}_F\{1,\theta\}$、$\mu=\theta$。逐项有 $\theta\notin F$、$\theta$ 在 $F$ 上代数、$k+2=5\le h=\dim_FD$，且乘积张成 $\langle ST\rangle_F=U+\theta U$ 的维数正是 $k+1$。由于 $[F(\theta):F]=h>k$，该成熟命题的第一分支给出原 $c\in D^\times$，满足
+
+$$
+U=c\operatorname{span}_F\{1,\theta,\theta^2\}.
+\tag{27.13}
+$$
+
+这里使用的是原文明确允许一般域扩张的 Proposition 6.3，不借有限域中的三维分类替代它。选择了生成整个 $D$ 的原 $\theta$，所以该命题中低次数的另一分支无需额外假设就被排除。
+
+因 $h\ge5$，原 $1,\theta,\theta^2,\theta^3,\theta^4$ 在 $F$ 上线性无关。比较这五个系数，(27.13) 便给出
+
+$$
+U\cap\theta^2U=Fc\theta^2,\qquad
+W\cap\theta^2W=Fwc\theta^2.
+\tag{27.14}
+$$
+
+取原 $u=wc\theta^2$、$v=wc$，两者都在 $W\setminus\{0\}$，且 $u/v=\theta^2$。因此 $d_W(u/v)=1$，交叠恰为 $E_Wu$。连同 (27.11)，这证明所有 $h\ge5$ 分支的 $\delta_W=1$ 及原窗口见证，完成 (27.3)。该论证不要求 $D=L$；即使 $D$ 是真子域，也只在这同一个原 $D$ 中应用成熟命题，再使用原 $L$ 的合法标签 $\theta$ 或 $\theta^2$。
+
+接着证明 (27.6)。若 $h\ge5$，任意最小正行都有 $W\cap r_0W=Fz$，$z\ne0$。对任一原 $s\ne0$，
+
+$$
+\begin{aligned}
+J_W(r_0,s)>0
+&\Longleftrightarrow Fz\cap sW\ne\{0\}\\
+&\Longleftrightarrow z/s\in W.
+\end{aligned}
+\tag{27.15}
+$$
+
+最后一步用 $W$ 的 $F$-线性消去公共非零 $F$ 系数。对原标签取逆，便得 $T_{W,r_0}=z^{-1}W$。这是前卷 §25、前节 (26.28) 已使用的支持取逆机制在一维交叠上的直接消费。
+
+若 $h\in\{3,4\}$，由 (27.10) 知 $r_0\in D^\times$。置 $A=U\cap r_0U$，则 $\dim_FA=\delta_W$。对于 $s\in D^\times$，$A,sU$ 均包含于 $D$，故
+
+$$
+\dim_F(A\cap sU)\ge\delta_W+3-h>0.
+\tag{27.16}
+$$
+
+严格正性在 $h=3$ 时为 $3$，在 $h=4$ 时为 $1$。对于 $s\notin D$，$D\cap sD=\{0\}$：否则非零等式 $a=sb$、$a,b\in D$ 会迫使 $s=a/b\in D$。因此此时 $A\cap sU=\{0\}$。由于整体乘以 $w$ 不改变交维，得到
+
+$$
+\{s\in L^\times:J_W(r_0,s)>0\}=D^\times,
+\tag{27.17}
+$$
+
+而 $D^\times$ 对取逆封闭，故 $T_{W,r_0}=D$。这也解释四次分支为何不能沿用 $T=z^{-1}W$：两边维数分别为四与三。
+
+现在设 (27.7) 左边成立，完整处理全部竞争 $V$。因为 $J_W(r_0,1)>0$，支持相等给出 $V\cap r_0V\ne\{0\}$。仅在证明中取 $0\ne y\in V\cap r_0V$。对每个 $v\in V\setminus\{0\}$，原标签 $s=y/v$ 满足 $y\in V\cap r_0V\cap sV$，故支持相等蕴涵 $s^{-1}=v/y\in T_{W,r_0}$。于是统一得到
+
+$$
+y^{-1}V\subseteq T_{W,r_0}.
+\tag{27.18}
+$$
+
+推导 (27.18) 没有使用 $V$ 的稳定子、比值域、最小正值或 $V\cap r_0V$ 的维数。
+
+若 $h\ge5$，(27.6) 及 (27.18) 给 $y^{-1}V\subseteq z^{-1}W$，两边同为三维，因而相等，$V=(y/z)W$。若 $h=3$，它们给 $y^{-1}V\subseteq D$，同维又给 $V=yD=(y/w)W$。两种情形的标量均属于原 $L^\times$。
+
+若 $h=4$，则 (27.18) 只先给出 $B=y^{-1}V\subseteq D$，其中 $B$ 与 $U$ 都是原四次域 $D/F$ 的 $F$-超平面。这里直接消费前卷 §§20、22、23 已用的乘法配对及超平面的原标量传递性：写 $U=\ker\lambda$、$B=\ker\eta$，其中 $\lambda,\eta:D\to F$ 为非零 $F$-线性泛函。配对 $\lambda(ab)$ 非退化，因为 $a\ne0$ 时可取 $b=t/a$、$\lambda(t)\ne0$。故映射
+
+$$
+D\longrightarrow\operatorname{Hom}_F(D,F),\qquad
+c\longmapsto\bigl(b\longmapsto\lambda(cb)\bigr)
+\tag{27.19}
+$$
+
+是四维空间间的线性同构。于是存在原 $c\in D^\times$ 使 $\eta(b)=\lambda(cb)$，从而 $B=c^{-1}U$，得到
+
+$$
+V=yB=\frac{y}{cw}W.
+\tag{27.20}
+$$
+
+所用成熟配对见上述 Bachoc–Serra–Zémor 原文 §2.2；它不要求正规性，也不把超平面等价改成一般线性或半线性等价。这里的 $c$ 位于原 $D\subseteq L$，(27.20) 正是所需原标量轨道。因此四次分支同样完成 (27.7) 的充分方向。
+
+反向，若 $V=xW$、$x\in L^\times$，则乘以 $x$ 将每个 $W\cap rW\cap sW$ 同构到 $V\cap rV\cap sV$，因为原乘法交换；故逐原标签保持全部维数，尤其保持指定行的正支持。这证明 (27.7) 的必要方向及 (27.8) 的反向。若两份完整 $J$ 相等，取 $s=1$ 即得 $d_V=d_W$，可以为 $W$ 选任一最小正行标签，再由 (27.7) 得 $V=xW$。这完成 (27.8) 的证明。$\square$
+
+本定理的文献对应与数学差额。Castello–Polverino–Zullo，[*On one-orbit cyclic subspace codes of $G_q(n,3)$*，arXiv:2405.01652v1，Lemma III.1、Theorem III.2、Lemma III.3、Proposition III.4](https://arxiv.org/pdf/2405.01652v1)，已给有限域中的低交余维结构、三维平方张成分类及四次域超平面的标量等价；这些不作为新的基础。其 Definition II.1 允许域自同构参与半线性等价，而 (27.7)–(27.8) 始终固定每个原标签。该文的码最小距离由 $6-2\dim_F(W\cap rW)$ 对不同轨道点取最小，控制的是相应交叠的最大值，不能直接充当这里的最小正交叠。
+
+同作者 [*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 5.2](https://arxiv.org/pdf/2405.19911v1)，已定义有限域窗口标量倍的最小容纳域，并在 Theorem 5.2 原样调用一般域扩张的 critical-pair 分类。这里的 (27.9) 将该容纳对象落实为原比值域，(27.12)–(27.14) 只消费被该文引用的原 Proposition 6.3。有限域的唯一子域结构、有限域计数及半线性分类均未被当作任意特征零域的前件。
+
+相对于这些指定原文、前卷 §§20、22、23、25 及本卷 §26，本定理的仓内应用推导（repo-derived）差额是全部三维实际窗口的统一连接：原窗口比值内本原元的选择把次数至少五的最小正交叠接到已有 critical-pair 结构；三次、四次与更高次数由 (27.3) 完整分流；四次拥挤分支的行支持虽扩大为整个 $D_W$，却仍由 (27.18) 迫使每个竞争窗口成为同一原四次域中的超平面，进而接回已有的原标量传递性。§26 的半维结论不被用来预设这些非半维分支。这里不主张全球首次性。
+
+白话说，高次数时能在原窗口的两个比值方向中避开有限的重合，使一个原比值生成整个容纳域；一旦交叠只差一维，成熟结构便提供另一个只留一线的原比例。四次时三个方向放在四个位置中，任意最小行的正支持铺满整个容纳域；这虽多出一个方向，却没有多出标量轨道，因为该域内所有超平面都能由原乘法互移。恢复结果因此是窗口的原标量轨道，而不是某个唯一的窗口集合。
+
+本定理仅讨论无限、无噪声、逐原标签精确观察的集合论可识别性。证明中的 $w,\theta,c,y,z$、正规闭包及各超平面泛函均不作为新增观察输入；最终标量始终属于原 $L^\times$。它不提供有限查询、有效恢复算法、噪声结论、二元观察的充分性或三重观察的最小性，也不推出量子公理、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
+
