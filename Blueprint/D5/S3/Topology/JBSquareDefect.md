@@ -16,9 +16,33 @@ Lean statement: `D5/S3/Topology/JBSquareDefect.HasFiniteSpectralResolutions`
 
 *Commentary.*
 
-For every real source element a there is a finite family of original idempotents e and real coefficients r whose sums are u, a and S(a,a) with coefficients 1, r and r squared. This predicate contains no target map, square-defect condition or multiplicativity conclusion. Its existence for the original finite EJA is an additional unproved application bridge; this module does not manufacture that existence from a certificate field called EJA.
+For every real source element a there is a finite family of original idempotents e and real coefficients r whose sums are u, a and S(a,a) with coefficients 1, r and r squared. This predicate contains no target map, square-defect condition or multiplicativity conclusion. EJAFiniteSpectral.finite_spectral_resolution supplies its existence from the original finite EJA laws. This predicate itself remains a supplier interface and does not assume a certificate field containing the desired conclusion.
 
-**Theorem 1.2 (The square defect is an actual square).**
+**Theorem 1.2 (The explicit same-spectrum sum identity).**
+
+Lean statement: `D5/S3/Topology/JBSquareDefect.square_defect_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/JBSquareDefect.square_defect_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same complete spectrum, target product and unital map, the sum of the quadratic representations at r_i v-Phi(a) applied to Phi(e_i) is exactly the square defect. This is the algebraic identity used by square_defect_of_spectral. It requires only the symmetric target product and unit law, with no JB norm assumption and no positivity of r_i v-Phi(a).
+
+**Theorem 1.3 (Zero defect gives every mixed product).**
+
+Lean statement: `D5/S3/Topology/JBSquareDefect.zero_defect_cross`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/JBSquareDefect.zero_defect_cross` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If all square defects have actual square roots and the defect at a vanishes, all real cross products with a are preserved. Signed perturbations, square monotonicity and a uniform bound force the cross defect to vanish. The source product is assumed symmetric; no associativity or representation is assumed.
+
+**Theorem 1.4 (The square defect is an actual square).**
 
 Lean statement: `D5/S3/Topology/JBSquareDefect.square_defect_of_spectral`
 
@@ -30,7 +54,7 @@ Lean statement: `D5/S3/Topology/JBSquareDefect.square_defect_of_spectral`
 
 For every a, Phi(S(a,a))-T(Phi(a),Phi(a)) has a square root in the same Y. In a finite spectral resolution put z_i=Phi(e_i) and b=Phi(a). The defect is the sum of U(r_i v-b,z_i). The existing JBComplexification.quadratic_preserves_squares supplies positivity for every real argument r_i v-b, without a sign assumption on it. Finite sums are actual squares by the existing norm-center characterization and the norm triangle inequality. This result is used in the spanning-idempotent theorem.
 
-**Theorem 1.3 (All cross products are forced by a spanning set).**
+**Theorem 1.5 (All cross products are forced by a spanning set).**
 
 Lean statement: `D5/S3/Topology/JBSquareDefect.multiplicative_of_spanning_idempotents`
 
@@ -42,11 +66,13 @@ Lean statement: `D5/S3/Topology/JBSquareDefect.multiplicative_of_spanning_idempo
 
 For every real spanning subset s of X, if each e in s and Phi(e) are idempotent in their respective original products, then Phi(S(a,x))=T(Phi(a),Phi(x)) for every real a,x. The square-defect result first supplies all perturbed defects as actual squares. If the defect at a vanishes, the defects at t a+x and -t a+x sum to twice the defect at x and differ by four t times the cross defect. Square monotonicity bounds both perturbed defects uniformly in t. An explicit real t contradicts any nonzero cross defect. Linear span induction then proves the whole product identity. Zero images, empty spectral index types and degenerate carriers are permitted.
 
-Application boundary for Quantum Origin V Section 74.2. This proves the square-defect and subsequent linear-extension step under the displayed suppliers. The intended source product and map are unchanged. Applying the result to the actual normalized maps of Section 74 still requires the faithful PRE-to-EJA/JB bridge and finite spectral resolutions, U and G interior before normalization, actual support normalization of each chosen frame image, and the weight commutator. The first and second original interfaces, the product-frame spanning argument and the original same-rho H13/C13 consumer are not supplied here. In particular neither Theorem 74.7 nor 74.9 nor the queued 73.7 is declared proved. This module provides no freeze or atom coverage.
+Application boundary for Quantum Origin V Section 74.2. This proves the square-defect and subsequent linear-extension step under the displayed suppliers. The intended source product and map are unchanged. EJAFiniteSpectral, EJASpectralNorm and EJADefiniteDomain supply the spectral and JB norm bridges from genuine finite EJA data and the stronger Jordan-generating definite-domain consumer. Applying these to the actual maps of Section 74 still requires the faithful PRE-to-EJA bridge, U and G interior before normalization, actual support normalization of each chosen frame image, and the weight commutator. The first and second original interfaces, the product-frame spanning argument and the original same-rho H13/C13 consumer are not supplied here. In particular neither Theorem 74.7 nor 74.9 nor the queued 73.7 is declared proved. These algebraic and analytic results alone do not establish those whole-model statements.
 
 ## References
 
 - Truth anchor: `D5/S3/Topology/JBSquareDefect.HasFiniteSpectralResolutions`
 - Truth anchor: `D5/S3/Topology/JBSquareDefect.multiplicative_of_spanning_idempotents`
+- Truth anchor: `D5/S3/Topology/JBSquareDefect.square_defect_identity`
 - Truth anchor: `D5/S3/Topology/JBSquareDefect.square_defect_of_spectral`
+- Truth anchor: `D5/S3/Topology/JBSquareDefect.zero_defect_cross`
 - Dependency: [D5/S3/Topology/JBComplexification](JBComplexification.md)
