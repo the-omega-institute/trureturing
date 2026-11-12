@@ -32,6 +32,7 @@ namespace D5.S3.Quantum.Algebra.AuricActualOcticWindow
 
 open Module LinearMap
 open scoped TensorProduct
+open scoped Classical
 
 variable {F D : Type*} [Field F] [Field D] [Algebra F D]
 
@@ -294,6 +295,70 @@ private def projected (U : Submodule K (Ω → K)) (S : Finset Ω) :
 private def rowRank (U : Submodule K (Ω → K)) (S : Finset Ω) : ℕ :=
   finrank K (projected U S)
 
+private def coordinateKernel (U : Submodule K (Ω → K)) (S : Finset Ω) : Submodule K U :=
+  LinearMap.ker ((coordinateProject S).domRestrict U)
+
+private theorem mem_coordinateKernel (U : Submodule K (Ω → K)) (S : Finset Ω) (x : U) :
+    x ∈ coordinateKernel U S ↔ ∀ i ∈ S, (x : Ω → K) i = 0 := by
+  change coordinateProject S (x : Ω → K) = 0 ↔ _
+  constructor
+  · intro hx i hi
+    simpa [coordinateProject, hi] using congrFun hx i
+  · intro hx
+    ext i
+    by_cases hi : i ∈ S <;> simp [coordinateProject, hi, hx]
+
+private theorem coordinate_rank_nullity (U : Submodule K (Ω → K)) (S : Finset Ω) :
+    rowRank U S + finrank K (coordinateKernel U S) = finrank K U := by
+  simpa only [rowRank, projected, coordinateKernel, LinearMap.range_domRestrict] using
+    LinearMap.finrank_range_add_finrank_ker ((coordinateProject S).domRestrict U)
+
+private theorem rowRank_empty (U : Submodule K (Ω → K)) : rowRank U ∅ = 0 := by
+  have he : (coordinateProject (∅ : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K)) = 0 := by
+    ext x i
+    simp [coordinateProject]
+  simp [rowRank, projected, he]
+
+private theorem rowRank_univ (U : Submodule K (Ω → K)) : rowRank U Finset.univ = finrank K U := by
+  have he : (coordinateProject (Finset.univ : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K)) = .id := by
+    ext x i
+    simp [coordinateProject]
+  simp [rowRank, projected, he]
+
+private theorem rowRank_mono (U : Submodule K (Ω → K)) {S T : Finset Ω} (h : S ⊆ T) :
+    rowRank U S ≤ rowRank U T := by
+  have hk : coordinateKernel U T ≤ coordinateKernel U S := by
+    intro x hx
+    rw [mem_coordinateKernel] at hx ⊢
+    exact fun i hi => hx i (h hi)
+  have hl := Submodule.finrank_mono hk
+  have hs := coordinate_rank_nullity U S
+  have ht := coordinate_rank_nullity U T
+  omega
+
+private theorem rowRank_submodular (U : Submodule K (Ω → K)) (S T : Finset Ω) :
+    rowRank U (S ∪ T) + rowRank U (S ∩ T) ≤ rowRank U S + rowRank U T := by
+  have hc : coordinateKernel U (S ∪ T) = coordinateKernel U S ⊓ coordinateKernel U T := by
+    ext x
+    simp only [Submodule.mem_inf, mem_coordinateKernel, Finset.mem_union]
+    aesop
+  have hi : coordinateKernel U S ⊔ coordinateKernel U T ≤ coordinateKernel U (S ∩ T) := by
+    apply sup_le
+    · intro x hx
+      rw [mem_coordinateKernel] at hx ⊢
+      exact fun i hi => hx i (Finset.mem_inter.mp hi).1
+    · intro x hx
+      rw [mem_coordinateKernel] at hx ⊢
+      exact fun i hi => hx i (Finset.mem_inter.mp hi).2
+  have hd := Submodule.finrank_sup_add_finrank_inf_eq (coordinateKernel U S) (coordinateKernel U T)
+  have hl := Submodule.finrank_mono hi
+  have hS := coordinate_rank_nullity U S
+  have hT := coordinate_rank_nullity U T
+  have hC := coordinate_rank_nullity U (S ∪ T)
+  have hI := coordinate_rank_nullity U (S ∩ T)
+  rw [hc] at hC
+  omega
+
 private theorem project_add_complement (S : Finset Ω) (x : Ω → K) :
     coordinateProject S x + coordinateProject Sᶜ x = x := by
   ext i
@@ -322,10 +387,11 @@ private theorem projection_stable_of_rank_equality (U : Submodule K (Ω → K))
   rw [(projected_disjoint U S).eq_bot, finrank_bot, add_zero] at hd
   have he : U = projected U S ⊔ projected U Sᶜ :=
     Submodule.eq_of_le_of_finrank_eq (window_le_projected_sup U S)
-      (by simpa only [rowRank, h] using hd.symm)
+      (h.symm.trans hd.symm)
   intro x hx
   rw [he]
-  exact le_sup_left (show coordinateProject S x ∈ projected U S from ⟨x, hx, rfl⟩)
+  exact (show projected U S ≤ projected U S ⊔ projected U Sᶜ from le_sup_left)
+    (show coordinateProject S x ∈ projected U S from ⟨x, hx, rfl⟩)
 
 end CoordinateRanks
 
@@ -346,8 +412,9 @@ private theorem actual_row_rank_connected (W : Submodule F D) (hW : ScalarIdeali
   have hU : finrank K U = finrank F W := splitWindow_finrank K hK W
   by_contra hn
   have he : rowRank U S + rowRank U Sᶜ = finrank K U := by
-    change finrank K (projected U S) + finrank K (projected U Sᶜ) ≤ finrank F W at hn
-    dsimp only [rowRank]
+    have hnr : rowRank U S + rowRank U Sᶜ ≤ finrank F W := Nat.le_of_not_gt hn
+    change finrank K (projected U S) + finrank K (projected U Sᶜ) ≤ finrank F W at hnr
+    change finrank K (projected U S) + finrank K (projected U Sᶜ) = finrank K U
     omega
   let c : (D →ₐ[F] K) → K := fun σ => if σ ∈ S then 1 else 0
   have hc : ∀ x ∈ U, c * x ∈ U := by
@@ -362,5 +429,44 @@ private theorem actual_row_rank_connected (W : Submodule F D) (hW : ScalarIdeali
   simpa [c, hσ, Finset.mem_compl.mp hτ] using hh
 
 end ActualConnectivity
+
+section GaloisLabels
+
+variable (K : Type*) [Field K] [Algebra F K]
+
+private instance embeddingAction : MulAction (K ≃ₐ[F] K) (D →ₐ[F] K) where
+  smul g σ := g.toAlgHom.comp σ
+  one_smul σ := by ext d; rfl
+  mul_smul g h σ := by ext d; rfl
+
+private theorem embeddings_transitive [Normal F K] (σ τ : D →ₐ[F] K) :
+    ∃ g : K ≃ₐ[F] K, g • σ = τ := by
+  let e := σ.equivFieldRange.symm.trans τ.equivFieldRange
+  let g := e.liftNormal K
+  refine ⟨g, ?_⟩
+  ext d
+  have h := e.liftNormal_commutes K (σ.equivFieldRange d)
+  simpa [g, e] using h
+
+private def galoisTensor (g : K ≃ₐ[F] K) : K ⊗[F] D ≃ₗ[F] K ⊗[F] D :=
+  TensorProduct.congr g.toLinearEquiv (LinearEquiv.refl F D)
+
+private theorem split_galois_covariance (g : K ≃ₐ[F] K) (z : K ⊗[F] D)
+    (σ : D →ₐ[F] K) :
+    splitHom F D K (galoisTensor K g z) (g • σ) = g (splitHom F D K z σ) := by
+  induction z using TensorProduct.inductionOn with
+  | tmul c d => simp [galoisTensor, splitHom_tmul, embeddingAction]
+  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+
+private theorem galoisTensor_window (W : Submodule F D) (g : K ≃ₐ[F] K)
+    {z : K ⊗[F] D} (hz : z ∈ W.baseChange K) :
+    galoisTensor K g z ∈ W.baseChange K := by
+  obtain ⟨v, rfl⟩ := hz
+  induction v using TensorProduct.inductionOn with
+  | tmul c w =>
+      simpa [galoisTensor] using W.tmul_mem_baseChange_of_mem (g c) w.property
+  | add x y hx hy => simpa only [map_add] using (W.baseChange K).add_mem hx hy
+
+end GaloisLabels
 
 end D5.S3.Quantum.Algebra.AuricActualOcticWindow
