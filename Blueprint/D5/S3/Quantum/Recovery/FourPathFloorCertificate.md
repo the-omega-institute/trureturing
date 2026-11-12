@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathFloorCertificate.segment_majoran
 
 For every one of the seven rows, the recorded non-radical and radical bounds sum to a value strictly below 49359/40000. The result is the finite rational arithmetic core of Section 71.
 
-This certificate does not define G_- or the triangular domain, prove the geometric support bounds, or establish the energy threshold bridge. Those parts of Theorem 71.1 remain open.
+The complete negative-row theorem FourPathNegativeFloor.negative_floor applies these comparisons to the actual radical support bounds on the closed triangle and combines them with the strict energy threshold. The rational table alone makes no assertion about the original defect.
 
 ## References
 
