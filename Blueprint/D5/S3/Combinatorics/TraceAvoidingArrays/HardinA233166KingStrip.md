@@ -1,8 +1,8 @@
-# Strict normalization and four-colour rectangle structure
+# Literal normalization, zone counting and the formal generating series
 
 ## Abstract
 
-Literal six-column king strips and complementary-pair zones.
+Literal six-column king strips, complementary-pair fibres and their exact count.
 
 OEIS A233166, revision 8, NAME: Number of n X 6 0..7 arrays with no element x(i,j) adjacent to itself or value 7-x(i,j) horizontally, diagonally, antidiagonally or vertically, top left element zero, and 1 appearing before 2 3 4 5 and 6, 2 appearing before 3 4 and 5, and 3 appearing before 4 in row major order (unlabelled 8-colorings with no clashing color pairs).
 
@@ -30,7 +30,7 @@ $$\forall n: Nat, (\operatorname{a}\left(n\right) = \operatorname{Finset}.\opera
 
 Finset.univ ranges over every function on Fin n times Fin 6 into Fin 8. There is no group quotient, orbit divisor, transposition or boundary identification. The zero constant coefficient extends the positive-height source sequence only for its formal generating series.
 
-**Definition 1.3 (The complete conjectural conjunction).**
+**Definition 1.3 (The complete source conjunction).**
 
 $$(\operatorname{claim}\left(\right)) \Leftrightarrow ((\operatorname{a}\left(1\right) = 236) \land ((\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = 4 \cdot X \cdot \left(59 - 10304 \cdot X + 356352 \cdot (X)^{2}\right) \cdot (\left(1 - 64 \cdot X\right) \cdot \left(1 - 128 \cdot X\right))^{-1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right)) \land ((\forall n: Nat, ((2 \leq n) \implies (\operatorname{a}\left(n\right) = (64)^{n - 1} \cdot \left((2)^{n} + 60\right)))) \land (\forall n: Nat, ((4 \leq n) \implies ((\operatorname{a}\left(n\right): Int) = 192 \cdot (\operatorname{a}\left(n - 1\right): Int) - 8192 \cdot (\operatorname{a}\left(n - 2\right): Int)))))))$$
 
@@ -40,7 +40,7 @@ $$(\operatorname{claim}\left(\right)) \Leftrightarrow ((\operatorname{a}\left(1\
 
 *Commentary.*
 
-FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. X denotes PowerSeries.X over the rationals. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The rectangle theorem below does not prove this conjunction: the signed normalization fibres and their counts remain to be established.
+FORMULA: Empirical: a(n) = 192*a(n-1) - 8192*a(n-2) for n>3. Conjectures from _Colin Barker_, Oct 09 2018: (Start) G.f.: 4*x*(59 - 10304*x + 356352*x^2) / ((1 - 64*x)*(1 - 128*x)). a(n) = 64^(n-1) * (2^n+60) for n>1. (End). The first DATA entry is 236. This proposition includes that exceptional value and every universal onset. PowerSeries.mk uses rational casts of the actual counts. X denotes PowerSeries.X over the rationals. The displayed denominator has constant coefficient one, so its formal inverse exists uniquely. The result below proves exactly this conjunction about the literal count.
 
 **Definition 1.4 (Labelled proper pair-colourings).**
 
@@ -98,6 +98,24 @@ $$\forall n: Nat, ((2 \leq n) \implies (\forall f: ((\operatorname{Fin}\left(n\r
 
 Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, {1,6}, {2,5}, {3,4}. The binary operation xor is bitwise exclusive-or on Fin 4. Every adjacent square has four distinct pair colours. The xor of its upper edge equals that of its lower edge, and likewise for its left and right edges. Induction along rows and columns gives the displayed reconstruction. Horizontal and vertical increments are nonzero, and every horizontal increment differs from every vertical increment because the antidiagonal cells are adjacent. The first square also contains all four pair colours. Strict precedence then forces the literal colours one, two and three to have appeared within the first two rows. There are two allowed nonzero vertical increments when all five horizontal increments agree, and one otherwise. This is a count of pair increments, not yet a count of signed colour-row continuations. The zone correspondence is the algebraic rectangular form of Eppstein's published kinggraph construction. This statement concerns the original literal functions and does not replace their count with a labelled count.
 
+**Theorem 1.8 (The complete literal count and formal series).**
+
+$$(\operatorname{a}\left(1\right) = 236) \land ((\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = 4 \cdot X \cdot \left(59 - 10304 \cdot X + 356352 \cdot (X)^{2}\right) \cdot (\left(1 - 64 \cdot X\right) \cdot \left(1 - 128 \cdot X\right))^{-1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right)) \land ((\forall n: Nat, ((2 \leq n) \implies (\operatorname{a}\left(n\right) = (64)^{n - 1} \cdot \left((2)^{n} + 60\right)))) \land (\forall n: Nat, ((4 \leq n) \implies ((\operatorname{a}\left(n\right): Int) = 192 \cdot (\operatorname{a}\left(n - 1\right): Int) - 8192 \cdot (\operatorname{a}\left(n - 2\right): Int))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233166: normalized eight-colour six-column king strips*. URL: <https://oeis.org/A233166>.
+
+*Commentary.*
+
+The theorem proves the complete conjunction defined above. At the first occurrence of each complementary pair, the literal colour is its lower representative. All other positions have independent Boolean signs. The explicit fibre equivalence therefore has size two to the number of cells minus the number of used pair labels. A two-by-two square forces all four labels at heights at least two, giving the exact sign factor 2^(6n-4). Canonical representatives use labels in first-occurrence order. The existing general canonical-representative theorem supplies existence and uniqueness; a bijection with the twenty-four permutations of four labels proves the label factor, using the square's surjectivity. No division is assumed for missing labels.
+
+For each first-row offset word, vertical words are walks whose permitted xor increments form its available set. The existing general finite-walk counting theorem gives four times the available-set cardinality to the number of vertical steps. Among proper offset words of length six beginning at zero, exactly three have two choices, ninety have one, and one hundred fifty have none. This finite certificate concerns 4^6 pair words; height remains arbitrary. It gives labelled count 4(3 times 2^(n-1)+90) for every n at least two. Combining the two exact fibres yields the displayed literal formula.
+
+The height-one certificate uses canonical proper pair words and the weight 2^(6-k), where k is the actual number of used labels. It includes absent colours and gives 236. The integer recurrence follows from the two geometric terms 2 times 128^(n-1) and 60 times 64^(n-1). Multiplying the formal series by the denominator proves its coefficient identity, with the exceptional initial coefficients handled separately. The denominator has constant coefficient one, and the formal inverse law gives precisely the claimed rational series. Registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29434. Independent pre-freeze review and publication remain pending. Validation within the original research window is unestablished; no timely research settlement is asserted.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.Legal`
@@ -105,6 +123,9 @@ Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.a`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.claim`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.pair_rectangle`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.zoneEquiv`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.zones`
+- Dependency: [D5/S3/Combinatorics/Graph/Pressure/HardinBarkerA209721EdgeDifferences](../Graph/Pressure/HardinBarkerA209721EdgeDifferences.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233196Strip](HardinA233196Strip.md)
