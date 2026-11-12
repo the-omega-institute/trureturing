@@ -107,11 +107,11 @@ private theorem finite_zero_span {P : Set V} [Finite P]
     intro y hy
     have hay : a y = 0 := haZ hy
     dsimp [b]
-    split_ifs <;> simpa [hay]
+    split_ifs <;> simp [hay]
   have hbx : b x ≠ 0 := by
     dsimp [b]
     split_ifs <;> simpa using hax
-  letI := Fintype.ofFinite P
+  let _ := Fintype.ofFinite P
   let N : Finset P := Finset.univ.filter (fun p : P => b p < 0)
   have hN : N.Nonempty := ⟨⟨q, hq⟩, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hbq⟩⟩
   have hfpos (p : P) (hp : p ∈ N) : 0 < f p := by
@@ -137,8 +137,8 @@ private theorem finite_zero_span {P : Set V} [Finite P]
     · exact add_nonneg (hf.2 y hy) (mul_nonneg ht.le (le_of_not_gt hby))
   have hgp : g p = 0 := by
     change f p + (f p / (-b p)) * b p = 0
-    field_simp
-    <;> ring
+    have he := div_mul_cancel₀ (f p) (neg_ne_zero.mpr hbp.ne)
+    nlinarith
   have hg0 : g ≠ 0 := by
     intro he
     have hgx : g x = 0 := by simp [he]
@@ -179,25 +179,25 @@ theorem finite_pure_facet [Nontrivial V]
       apply Set.eq_empty_iff_forall_notMem.mpr
       intro p hp
       have hh := (pure_mem (⟨p, hp⟩ : pure C u)).2
-      simpa [he] using hh
+      simp [he] at hh
     rw [hnone, Submodule.span_empty] at hP
     exact bot_ne_top hP
   obtain ⟨f, hf0, hfP, hzero⟩ := finite_zero_span hP u
     (fun p hp => (pure_mem (⟨p, hp⟩ : pure C u)).2) hu0
   have hfC : ∀ x ∈ C, 0 ≤ f x := nonneg_on_cone hK hstrict (fun p => hfP p p.property)
-  let F : PointedCone.Face C :=
-    { toSubmodule := C ⊓ (LinearMap.ker f : PointedCone ℝ V)
-      isFaceOf :=
-        { le := inf_le_left
-          mem_of_smul_add_mem := by
-            intro x y a hx hy ha hxy
-            refine ⟨hx, ?_⟩
-            have hh : a * f x + f y = 0 := by
-              simpa only [map_add, map_smul, smul_eq_mul] using hxy.2
-            have hfx := hfC x hx
-            have hfy := hfC y hy
-            change f x = 0
-            nlinarith } }
+  let D : PointedCone ℝ V := C ⊓ PointedCone.ofSubmodule (LinearMap.ker f)
+  have hD : D.IsFaceOf C := by
+    refine { le := inf_le_left, mem_of_smul_add_mem := ?_ }
+    intro x y a hx hy ha hxy
+    have hzero : f (a • x + y) = 0 := hxy.2
+    have hh : a * f x + f y = 0 := by
+      simpa only [map_add, map_smul, smul_eq_mul] using hzero
+    have hfx := hfC x hx
+    have hfy := hfC y hy
+    refine ⟨hx, ?_⟩
+    change f x = 0
+    nlinarith
+  let F : PointedCone.Face C := ⟨D, hD⟩
   have hspanF : Submodule.span ℝ (F : Set V) = LinearMap.ker f := by
     apply le_antisymm
     · exact Submodule.span_le.mpr (fun _ hx => hx.2)
