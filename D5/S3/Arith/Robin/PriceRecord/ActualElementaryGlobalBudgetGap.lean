@@ -377,7 +377,7 @@ private theorem original_tail_record_data {m k : ℕ} (hm : 1 ≤ m) {c mu : ℝ
     exact sub_pos.mp ((mul_pos_iff_of_pos_right hh).mp hpos)
   exact ⟨hav, hh, hJ, hn, hnm, hrec, hmc⟩
 
-private theorem objective_price_difference (mu s : ℝ) {m C : ℕ}
+theorem objective_price_difference (mu s : ℝ) {m C : ℕ}
     (hm : 1 ≤ m) (hC : 1 ≤ C) :
     goldenResourceObjective s C - goldenResourceObjective s m =
       goldenResourceObjective mu C - goldenResourceObjective mu m +
@@ -462,7 +462,7 @@ theorem full_original2tail_reward_telescope {m : ℕ} {c : ℝ}
       rw [pow_succ, pow_succ]
       norm_num <;> ring
 
-private theorem reward_deficit_identity (m : ℕ) (c : ℝ) :
+theorem reward_deficit_identity (m : ℕ) (c : ℝ) :
     ordinary2tailReward m c = c * h2 m c - J2 m c := by
   have hsum : ordinary2tailReward m c + J2 m c =
       ∑ _j ∈ original2tail m c, c * Real.log 2 := by
