@@ -33,11 +33,11 @@ internal sealed class SectionPositiveLiftDocument : IScribeDocumentDefinition
                 "For every L containing I, lifts(L) is nonempty, compact and convex. Every M in it has tr(M)=card(J). Its affine span has direction exactly L-perp, and hence its real affine dimension is real finrank(L-perp). I supplies nonemptiness. Orthogonality to I gives the trace equation; closedness and the existing PSD trace bound place the set in the compact order interval [0,card(J) I]. For each N in L-perp, ambient majorization gives t>=0 and a=1/(t+1)>0 with I+aN PSD. The direction of the affine span contains aN and therefore N, proving fullness without assuming it."),
             Paragraph(Text("These statements supply the same-unit effect lift, deflation and geometry clauses of QuantumVI Lemma 96.2. SectionROGFrame treats the whole pure carrier and the full frame using the actual ROG hypothesis. Arbitrary-original-unit support restriction and determinant normalization from 93.2/94.2 remain an outside mathematical bridge. No original arbitrary-unit normalization, full Z0, classification, PRE or completion of section 97 is asserted. The separate QuantumVII facet theorem is outside this result. Literature priority is not asserted; the existing Physlib trace-space and order port and pinned Mathlib Riesz extension are reused directly.")))));
 
-    private static Describe Definition(string id, string declaration, string title, string text) =>
+    private static DocumentBlock.Describe Definition(string id, string declaration, string title, string text) =>
         Entry(id, declaration, title, text, DescribeRole.Definition);
-    private static Describe Theorem(string id, string declaration, string title, string text) =>
+    private static DocumentBlock.Describe Theorem(string id, string declaration, string title, string text) =>
         Entry(id, declaration, title, text, DescribeRole.Theorem);
-    private static Describe Entry(string id, string declaration, string title, string text, DescribeRole role) =>
+    private static DocumentBlock.Describe Entry(string id, string declaration, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/SectionPositiveLift." + declaration),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

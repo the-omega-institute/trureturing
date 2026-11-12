@@ -4,12 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Whole pure carriers and full orthonormal frames in native rank one generated PSD sections. -/
+   digest: Whole pure carriers and full frames in native rank one generated PSD sections. -/
 
 import D5.S3.Quantum.Foundation.SectionPositiveLift
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Proj
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Analysis.Convex.Extreme
+
+/-! Whole pure carriers and ROG complement frames in the original native field. -/
 
 noncomputable section
 open scoped Matrix ComplexOrder InnerProductSpace RealInnerProductSpace
@@ -33,13 +35,15 @@ def ROG (L : Submodule ℝ (HermitianMat ι 𝕜)) : Prop :=
 def pureRanks (L : Submodule ℝ (HermitianMat ι 𝕜)) : Set (HermitianMat ι 𝕜) :=
   {X | ∃ v : EuclideanSpace 𝕜 ι, ‖v‖ = 1 ∧ rankOne v = X ∧ X ∈ L}
 
-private lemma rankOne_real_smul (v : EuclideanSpace 𝕜 ι) (r : ℝ) :
+private lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
     rankOne (r • v) = (r * r) • rankOne v := by
   apply HermitianMat.ext
+  change Matrix.vecMulVec (r • v) (star (r • v)) =
+    (r * r) • Matrix.vecMulVec v (star v)
   ext i j
-  change ((r : 𝕜) * v i) * star ((r : 𝕜) * v j) =
-    ((r * r : ℝ) : 𝕜) * (v i * star (v j))
-  simp only [star_mul, RCLike.star_def, RCLike.conj_ofReal, map_mul]
+  simp only [Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.smul_apply, Pi.star_apply,
+    RCLike.real_smul_eq_coe_mul, star_mul, RCLike.star_def,
+    RCLike.conj_ofReal, map_mul]
   ring
 
 private lemma rankOne_trace_norm (v : EuclideanSpace 𝕜 ι) :
@@ -54,7 +58,7 @@ private lemma normalized_rankOne (v : EuclideanSpace 𝕜 ι) (hv : v ≠ 0) :
     rankOne v = (‖v‖ ^ 2 : ℝ) • rankOne ((‖v‖⁻¹ : ℝ) • v) := by
   have hn : ‖v‖ ≠ 0 := norm_ne_zero_iff.mpr hv
   refine ⟨by simp [norm_smul, hn], ?_⟩
-  rw [rankOne_real_smul, smul_smul]
+  rw [WithLp.ofLp_smul, rankOne_real_smul, smul_smul]
   have h : ‖v‖ ^ 2 * (‖v‖⁻¹ * ‖v‖⁻¹) = 1 := by field_simp
   rw [h, one_smul]
 
@@ -77,7 +81,7 @@ private lemma base_eq_hull (L : Submodule ℝ (HermitianMat ι 𝕜)) (hrog : RO
     have hz (j : Fin m) : z j ∈ pureRanks L := by
       refine ⟨(‖v j‖⁻¹ : ℝ) • v j, (normalized_rankOne (v j) (hv j).1).1, rfl, ?_⟩
       dsimp [z]
-      rw [rankOne_real_smul]
+      rw [rankOne_real_smul (v j)]
       exact L.smul_mem _ (hv j).2
     have hrepr : (∑ j, w j • z j) = X := by
       rw [hsum]
@@ -109,10 +113,12 @@ private lemma pairing_one_unique (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1)
   have hxx := HermitianMat.inner_le_mul_trace hX hX
   have hpp := rankOne_self v hv
   rw [ht, mul_one] at hxx
-  have hz : ‖X - rankOne v‖ ^ 2 = 0 := by
+  have hnorm : ‖X - rankOne v‖ ^ 2 ≤ 0 := by
     rw [norm_sub_sq_real, ← real_inner_self_eq_norm_sq,
-      ← real_inner_self_eq_norm_sq, real_inner_comm X, heq, hpp]
-    nlinarith [sq_nonneg ‖X - rankOne v‖]
+      ← real_inner_self_eq_norm_sq, hpp]
+    rw [real_inner_comm (rankOne v) X, heq]
+    linarith
+  have hz := le_antisymm hnorm (sq_nonneg ‖X - rankOne v‖)
   exact sub_eq_zero.mp (norm_eq_zero.mp (sq_eq_zero_iff.mp hz))
 
 /-- The pure carrier is exactly the normalized rank one family of the whole
@@ -140,13 +146,17 @@ theorem whole_pure_carrier (L : Submodule ℝ (HermitianMat ι 𝕜)) (hrog : RO
 private lemma frame_sum (b : OrthonormalBasis ι 𝕜 (EuclideanSpace 𝕜 ι)) :
     (∑ j, rankOne (b j)) = 1 := by
   apply HermitianMat.ext
+  rw [HermitianMat.mat_finset_sum]
+  change (∑ j, Matrix.vecMulVec (b j : ι → 𝕜) (star (b j : ι → 𝕜))) = 1
   ext i j
   have h := congrArg (fun x : EuclideanSpace 𝕜 ι => x i)
     (b.sum_repr' (EuclideanSpace.single j 1))
   simpa [rankOne, HermitianMat.mat_finset_sum, Matrix.vecMulVec_apply,
-    EuclideanSpace.inner_single_right, PiLp.smul_apply, PiLp.single_apply,
+    EuclideanSpace.inner_single_right, PiLp.smul_apply, PiLp.single_apply, Matrix.sum_apply,
     Matrix.one_apply, mul_comm] using h
 
+set_option maxHeartbeats 1000000 in
+-- The maximal-family proof elaborates several dependent subspace bases and projectors.
 /-- Every original unit rank one point extends to a full orthonormal rank one
 frame inside the same ROG section. The initial point is one of its entries;
 no division by the complement dimension is used. -/
@@ -180,15 +190,20 @@ theorem rog_frame
   letI : Fintype s := hsfin.fintype
   let S := Submodule.span 𝕜 (Set.range (Subtype.val : s → EuclideanSpace 𝕜 ι))
   let bs : OrthonormalBasis s 𝕜 S :=
-    (Basis.span hson.linearIndependent).toOrthonormalBasis
-      (by simpa only [Basis.coe_span_apply] using orthonormal_span hson)
+    (Module.Basis.span hson.linearIndependent).toOrthonormalBasis
+      (by
+        convert orthonormal_span hson using 1
+        funext j
+        exact Module.Basis.span_apply hson.linearIndependent j)
   have hbs (j : s) : (bs j : EuclideanSpace 𝕜 ι) = j.val := by
-    simp [bs, Basis.coe_toOrthonormalBasis]
+    simp [bs, Module.Basis.coe_toOrthonormalBasis]
   have hproj : HermitianMat.projector S ∈ L := by
     have heq : HermitianMat.projector S = ∑ j : s, rankOne (j : EuclideanSpace 𝕜 ι) := by
       apply HermitianMat.ext
-      simpa [HermitianMat.mat_finset_sum, rankOne, hbs] using
-        HermitianMat.projector_eq_sum_rankOne S bs
+      rw [HermitianMat.mat_finset_sum]
+      change (HermitianMat.projector S).mat =
+        ∑ j : s, Matrix.vecMulVec (j.val : ι → 𝕜) (star (j.val : ι → 𝕜))
+      simpa [hbs] using HermitianMat.projector_eq_sum_rankOne S bs
     rw [heq]
     exact L.sum_mem (fun j _ => (hsA j.property).2)
   have hbot : Sᗮ = ⊥ := by
@@ -231,8 +246,9 @@ theorem rog_frame
         ext k
         exact congrFun hz k
       have hsmul : (star (w j : ι → 𝕜) ⬝ᵥ (x : ι → 𝕜)) • (w j : ι → 𝕜) = 0 := by
-        simpa only [rankOne, HermitianMat.mat_mk, Matrix.vecMulVec_mulVec,
-          op_smul_eq_smul] using hmul
+        change Matrix.vecMulVec (w j : ι → 𝕜) (star (w j : ι → 𝕜)) *ᵥ
+          (x : ι → 𝕜) = 0 at hmul
+        simpa only [Matrix.vecMulVec_mulVec, op_smul_eq_smul] using hmul
       have hscalar := (smul_eq_zero.mp hsmul).resolve_right hwne
       rw [inner_eq_zero_symm, EuclideanSpace.inner_eq_star_dotProduct, dotProduct_comm]
       exact hscalar
@@ -240,17 +256,19 @@ theorem rog_frame
     have hzn : ‖z‖ = 1 := (normalized_rankOne (w j) (hw j).1).1
     have hzL : rankOne z ∈ L := by
       dsimp [z]
-      rw [rankOne_real_smul]
+      rw [rankOne_real_smul (w j)]
       exact L.smul_mem _ (hw j).2
     have hxz (x : EuclideanSpace 𝕜 ι) (hx : x ∈ s) : ⟪x, z⟫_𝕜 = 0 := by
-      dsimp [z]
-      rw [RCLike.real_smul_eq_coe_smul, inner_smul_right, horth x hx, mul_zero]
+      have hz : z = ((‖w j‖⁻¹ : ℝ) : 𝕜) • w j := by
+        ext k
+        simp only [z, PiLp.smul_apply, RCLike.real_smul_eq_coe_mul, smul_eq_mul]
+      rw [hz, inner_smul_right, horth x hx, mul_zero]
     have hznot : z ∉ s := by
       intro hz
       have hh := hxz z hz
       rw [inner_self_eq_norm_sq_to_K, hzn] at hh
       norm_num at hh
-    have hins : Orthonormal 𝕜 (Subtype.val : (insert z s : Set _) → _) := by
+    have hins : Orthonormal 𝕜 (Subtype.val : ↥(insert z s) → EuclideanSpace 𝕜 ι) := by
       rw [orthonormal_subtype_iff_ite]
       intro x hx y hy
       rcases Set.mem_insert_iff.mp hx with rfl | hx <;>
@@ -268,16 +286,19 @@ theorem rog_frame
     OrthonormalBasis.mkOfOrthogonalEqBot hson hbot
   have hB (j : s) : B j = j.val := by simp [B]
   let e : s ≃ ι := Fintype.equivOfCardEq
-    ((Module.finrank_eq_card_basis B.toBasis).symm.trans (finrank_euclideanSpace 𝕜 ι))
+    ((Module.finrank_eq_card_basis B.toBasis).symm.trans (finrank_euclideanSpace (𝕜 := 𝕜) (ι := ι)))
   let b := B.reindex e
   let i : ι := e ⟨v, hvs (Set.mem_singleton v)⟩
   have hbL (j : ι) : rankOne (b j) ∈ L := by
-    change rankOne (B (e.symm j)) ∈ L
-    rw [hB]
+    dsimp only [b]
+    rw [OrthonormalBasis.reindex_apply, hB]
     exact (hsA (e.symm j).property).2
   have hbi : b i = v := by simp [b, i, hB]
   let b' := b.reindex (Equiv.swap i i₀)
-  have hb'L (j : ι) : rankOne (b' j) ∈ L := hbL _
+  have hb'L (j : ι) : rankOne (b' j) ∈ L := by
+    dsimp only [b']
+    rw [OrthonormalBasis.reindex_apply]
+    exact hbL _
   refine ⟨b', ?_, hb'L, ?_, frame_sum b'⟩
   · simpa [b'] using hbi
   · intro j
