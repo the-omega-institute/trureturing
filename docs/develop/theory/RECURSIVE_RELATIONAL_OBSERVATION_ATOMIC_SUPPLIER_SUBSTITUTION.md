@@ -2596,3 +2596,1120 @@ original-Q新增行／cross-entry／全terminal kernel或通用恢复核。
 也不把此有限单元当作更大RRO目标的完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 单次原始启动上的完整普通有限族
+
+**定义 26.1（原消费者、树及输入域）。** 第26–40节给出源模型安装
+`J-FAMILY-ARENA-1`。消费者是 RG 定义1.2、4.1–4.2、5.1、6.1–6.2、7.1、9.1
+的原 RG2 mode01：原 Select 实际接收 repeat／finish；repeat 后由原 raw receiver
+取得尚未知的修改请求，完整返回其真实 staging refusal，再独立接收参考守卫，
+执行原 Plan、原 computed calls、完整回应安装及下一 Entry。
+这里没有另设命令列表解释器。数学来源一律取第40节所列固定快照。
+
+树语法、左右次序、原七服务、当前权限、完整回应及原任务沿用定义1.1及 CAP1.2。
+为避免与轮数混淆，本增补把原生成器的 $N=2h-1$ 记作 $N_s$，不改原字段的意义。
+设
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,&\rho(\beta)&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle,\\
+E(t)&=\rho^2(t),&n(t)&=a(t)+b(t),&w(t)&=2a(t)+3b(t)=n(E(t)),\\
+c_{\mathrm{Rho}}(t)&=\rho t,&c_{\mathrm{Left}(v)}(t)&=\langle v,t\rangle,&
+c_{\mathrm{Right}(v)}(t)&=\langle t,v\rangle.
+\end{aligned}
+$$
+
+$E$ 是树映射，与原 ReadE 的 Clifford 值分开。Native 前序令牌为
+PAIR11、alpha01、beta10、PAD00；AA Tag 的四值编码仍为 alpha00、beta01、branch10、absent11。
+物质 unary marker 既不是逻辑叶，也不在逻辑编辑地址中。
+
+安装先于任意未来轮数、操作数、守卫及结束时刻。完整普通域量化为：每个有限 $N\ge0$，
+实际先后供应的 $A_i\in\{\mathrm{Rho},\mathrm{Left}(v_i),\mathrm{Right}(v_i)\}$，
+graft 的每个 $v_i$ 为在原 raw ingress 实际收到的任意非空有限有序树，
+另在各原 GuardIngress 独立供应有限 $1=g_0\le g_1\le\cdots\le g_N$，
+最后实际供应 finish。选择允许依赖已经真正取得的先前完整回应；未来选择不进入安装参数。
+从 $t_0=\beta$ 定义
+
+$$
+\varepsilon_i=[n(c_{A_i}(t_{i-1}))\le g_i],\qquad
+t_i=\begin{cases}c_{A_i}(t_{i-1}),&\varepsilon_i=1,\\t_{i-1},&\varepsilon_i=0.\end{cases}
+$$
+
+待证对应是每个完成 Entry 的原源16为 $E(t_i)$、实际 $h=K=w(t_i)$，
+且所选真实 arena 子树具有该有序 body。源身份、parent、历史和费用不由 body 相等而认同。
+
+**假设 26.2（逐点完成条件）。** 采用假设1.2、13.2及 AA20.1 的理想顺序原语，
+CAP 的所有权／布局／描述符／栅栏／通道合同，ARC／RCA 的有限字及双库程序，RG 的原始入口和返回。
+本次完整运行所需的实际有限新材料、工作存储、完整原 ingress 和规定确认均供应；
+实际到达的原 prior／controller 计算终止；源、记录、端口、连接的所需权限始终当前独占有效，
+没有竞争写者、撤权、崩溃或中断。连接只允许绑定 sender 在空时 OUT，
+receiver 对该位 IN 并完成规定 backing 后才开放下一位。
+
+这些是每个具体有限执行的条件，没有跨 $N$、树大小、守卫或历史的统一有限容量。
+不增加名为 Import、Bind、Ready、Return 的原语或进展公理。
+AA 的 Ready／Return 是 AA20.2 的实际阶段／边，BIND 是后文实际写出的记录。
+缺输入的执行只具有真实已到达前缀，不据此承诺 terminal。
+
+**定义 26.3（保留的另一分支）。** mode10 仅保留定义13.1、23.1及定理23.2的原域：
+C0 guard2；C1 guard2 或 guard4；C1 完整结算、原 AfterFinal／Entry／Select 后才接收
+任意有限 C2 guard，分别至少2或至少4；原真实 C1 回应决定 C2 为 Right(alpha) 或 Rho。
+它使用原 $O,F,N^*$ 三固定根及原算法。mode00、11保留各自原 raw／局部退出边。
+TMC PR57.D5／T5 的 fixed-H 有效内部策略、CAP8 的 safe-growth controller、
+本节外部独立守卫和上述固定 mode10 是各自的合同，不把其输入权力并成一个新策略域。
+
+## 27. 四个真实根、有限控制与先行身份
+
+**定义 27.1（实际载体）。** 保留 RG 的0–73端口／所有者、定义14.1的 A74及 P75／76／77。
+P16 是私有源／work，P17 是描述符，P21 是完整 staging，P22 先存 Input22，再从另测起点写 forest；
+A29、A64–68 保持原描述符／字库语法。工作池恰为端口1–12。
+16／17／25／27／74的令牌不进入该池；每次借还均执行十二个个别 TOK 和阶段 CTL，
+部分转交时没有 helper 运行。RG invocation 与 dispatcher 的 source token 各自独立。
+
+在这一个 boot 实际执行四份 AA20.1 分配／授权初始化，取得互异 alpha 根
+$O,F,N^*,r_0$。各 parent／left／right／header 置 null；各真实 allocator-returned 引用
+只写入自己的固定根槽一次。四份驱动器各有真实当前 grants、request／reply／End／local ACK／same-root Return
+连接束。$O,F,N^*$ 供 mode10；$r_0$ 是 mode01 的唯一 arena driver 根。
+新 cone 不是独立 source，也不取得新 driver、根槽或每轮授权。
+
+在 $O$ 完整执行旧 (AS.1)
+$P_\varepsilon,S_\varepsilon,S_L,P_R,S_{LL},P_{LR},S_R$，
+每项含全回复、祖先 Maintain、End、局部 ACK、同根 Return及清理，写出／检查完整 boot-done backing。
+$F,N^*,r_0$ 此时保持 alpha。即使某分支不用这些材料，四根和全部 boot 事件仍真实存在并计费。
+
+**定义 27.2（有限 supervisor 与连接）。** 一个有限 supervisor 有 backend=legacy／arena，
+四个固定 driver case，初始化／请求／结算／停车阶段；真实字段保留 reserve 路径和引用、
+selected descriptor、binding tail、active call、candidate descriptor、source／token cache、
+解析栈、输出缓冲和 pending I/O。路径、ordinal、引用、栈和历史长度是分配记录中的有限数据，
+不成为随未来轮数增加的控制标签。
+
+保留五条外层有向连接：P request→supervisor、supervisor reply→P、P PayloadACK→supervisor、
+A settlement→supervisor、supervisor settlementACK→A。Init／InitACK 分别复用前两方向的互斥阶段，
+Park／ParkACK 分别复用后两方向的互斥阶段。各 endpoint、空／满、latch、backing、子阶段均实际构造。
+原48／49／50／51路线与这些连接分开，确认各有自己的方向、语法和使能边。
+
+**定义 27.3（表、类型与描述的先后）。** 先对完整 RG／CAP／旧 AS 图和本增补各固定过程作
+hygienic 有限联合，包含两种字库 parity、固定端口／operation／fault／return cases，
+Init／InitACK／Park／ParkACK，FAM-INPUT、FAM-T、FAM-RHO0、FAM-F7-HOLDER、FAM-F7-ASSOC，
+八引用组件、28字段、Companion／Q／sidecar／Wait／M／ACK／Done／receipt、parse-frame／top／result及 pack 类型。
+按定义1.4的长度分离字 $1^{m_0+1}0U(j)$ 在旧有限表后连续编号；固定调用点内联，返回边字面化。
+所有变量深度解析使用第32节的数据栈，不递归安装控制代码。
+
+按定义14.2的首次文字出现序得到有限 resident 表 $R_N,R_A$ 及 registry $\mathcal R$。
+表外真实安装先写表，后写
+
+$$
+\mathscr D=T_4(\mathtt{J\text{-}FAMILY\text{-}ARENA\text{-}1},
+\operatorname{enc}(R_N),\operatorname{enc}(R_A),\mathcal R),\qquad
+I=T_4(\mathtt{RBG1},d_P,d_P,\mathtt{1100100000010}).
+$$
+
+$\mathscr D$ 的 P21 payload、P17 十域描述符、status 完成后才有真实 $d_P$，再写 $I$ 并取得 $i_P$。
+实际 CAP 全复制在 A 形成不同 local references，origins 分别为 $d_P,i_P$。
+所有新行使用这个安装的真实身份，resident 行没有自身描述、未来引用或未来 root 值的字面常量。
+
+**引理 27.4（有限安装与身份良基性）。** 定义27.1–27.3在假设26.2下给出固定有限 boot，
+不依赖未来输入、未来完成轮数或停止 horizon。
+
+证明。联合的过程、端口、类型、固定字段及返回 cases 有限；循环只消费实际字／链。
+先有表，再有表外写出的描述及引用，再有身份及引用，后来的 parent 对象只指向已完成对象。
+根槽只含真实分配绑定，变量路径不被转换成引用。四份 AA 初始化和旧 $O$ 七事件有各自完整生命周期。
+因此没有自描述环、每轮新 grant 或无授权入口；额外三 legacy 根只是明确的有限安装成本。$\square$
+
+## 28. 原 Lift 与 arena 初选的实际接合
+
+**定义 28.1（Native 的共同起点）。** 执行本 boot 唯一 CAP／RG beta ingress／validation、
+源布局、counter／directory、boot／prior、stationary seed acquisition及完整种子返回。
+按 RG2.2 在第一次 RG append 前保存实际原 table24、完整 configuration25、空 waiting27和头距离，
+连同初始化／seed／code bindings存入互异持久字段。实际 mode bits 决定原分支；
+mode01／10才将原 invocation 一次 TOK 到 RG 槽。
+
+mode01 保留四次原 Lift：Reserve3、Raise3、Rho、Rho；每次完成原响应、行／依赖、ACK、
+source-token／idle和返回状态安装。得到特定 sealed CompletedLift，source 为 $E(\beta)$，
+$h=K=3$，pool 在其完整返回后的 A 阶段。这里没有把 AA 初始 alpha 说成原 beta。
+
+**定义 28.2（Init 的实际取得与第一 cone）。** 在普通首次 Entry 前，A 在新 Close29 界内
+重载该 CompletedLift及真实 seed／boot／prior／source bindings，由已取得 beta seed 用原替换／遍历字程序写
+
+$$
+S_{init}=T_4(\text{lift-state-origin},\text{complete-lift-state},
+\text{actual-derived-beta-word},\operatorname{tok}(E(\beta))),
+$$
+
+再测量导出／封存
+
+$$
+Init=T_7(\mathtt{FAM\text{-}INIT},I,SourceBindings4,
+\text{full-acquired-seed-and-binding},\text{full-CompletedLift},S_{init},\text{actual-lift-final-origin}).
+$$
+
+全部子域先完成。Init 经完整49到 P21／17，完成 receiver checks／ACK／全池归还，
+然后十二 TOK 到固定 InitForward。dispatcher 仍持 idle source token，没有 source admission。
+P 完整读其本地已收块，发送 $0010\,B(Init)\,010$。
+AA 在逐位 backing 后全查版本／身份／$\xi$／seed-beta／lift-state／witness／ending。
+嵌入的 foreign occurrence words 是谱系键，只对声明且已取得的本地 payload 解引用。
+真实性由真正 Native writer／copy 归纳承担，不由 AA meter 或一个状态数值承担。
+
+在 $r_0$ 完整调用 $P_\varepsilon$、Return，再 $S_\varepsilon$、Return。
+由 owner 在 stationary Ready 读真实 right field 得到 alpha-born $r_1$，保留
+$(r_0,R,r_1,\text{actual-creation-Growth})$；读 left field取得继续 beta reserve，路径 $q=L$。
+以第29节 Build 消费实收 $\operatorname{tok}(E(\beta))$，在该 alpha-born cone 实际构造 $E(\beta)$。
+再用全新实际 Tag 遍历比较全字，封存初始 $B_0$，保留真实 descriptor及完整 Init acquisition。
+
+**定义 28.3（InitACK、carrier及首次 Entry）。** AA 封存／打印
+$0110\,B(Init)\,010$，进入 AwaitArenaRequest。
+P 完整 backing／检查 InitACK的首尾及全 echo，在76归档；按完整48将真正收到的整帧复制到 A28／29，
+所有分配、检查、ACK、pool 借还完成。P 规范角色／Tail13、17，再借池到 InitReturned。
+A 新 Close29，用该 echo 的特定 origin检查自己的 Init和特定 CompletedLift，写初始 carrier
+
+$$
+T_5(\mathtt{FAM\text{-}INIT\text{-}RECEIPT},\xi,\text{lift-final-origin},
+\text{actual-Init-A-reference},\text{actual-InitACK-A-reference}).
+$$
+
+重载同一个 CompletedLift，按原 continuation 所需测量导出／封存完成 Lift 状态，
+十二反向 TOK、恒等角色 CTL、Tail13／17及原 Entry 边真实执行。RG invocation 始终未离开原槽。
+$N=0$ 直接使用此 Entry及初始 carrier，随后真实 finish；不伪造 selected-final packet或 $Y$。
+
+**引理 28.4（实际初始关系）。** 在假设26.2下，定义28.1–28.3有限达到上述首次 Entry，
+Native source和所选真实 cone body均为 $E(\beta)$，但保留各自不同身份及历史。
+
+证明。RG2.2、6.3、7.1给出实际保存 client和四次完整 Lift；Reserve／Raise保持 beta，
+两次 Rho 的候选依次有2、3叶，真实接受。定义2.1–2.6及 CAP6.3供应测量写入和完整 owned copies。
+AA20.3供应每次 P／S／Tag 完整返回，AA17.2经出生类型检查供应首 cone 的 Build。
+实收 Init先于 $B_0$，其全 echo先于 A carrier，carrier先于原 Entry；辅助工作不改 Native 源、布局或计数。
+这些是同一实际相继出口，非分别选出的兼容 endpoint。$\square$
+
+## 29. 共享 spine、出生类型构造与真实候选取得
+
+**定义 29.1（fresh cone 的取得）。** 保存实际 beta reserve 引用及其 backed 路径 $q$。
+每次 $j>1$ 从 $r_0$ 固定 driver发送普通 $S_q$，完整取得并检查 Growth(S,q)、End，
+封存 backing、local ACK、same-$r_0$ Return／cleanup／Ready。
+此时 owner 从 reserve 的真实 right field取得新 alpha-born $r_j$，从 left field取得继续 beta，
+写 $p_j=qR$、$q:=qL$。descriptor 是真实 auxiliary record，含 $r_0,p_j,r_j,parent$、
+实际 creation request／Growth backing及后来观察／history cuts；最后才 seal。
+从初 cone起 $p_j=L^{j-1}R$。ordinal或路径从不被 cast 成对象引用。
+
+各 $p_j$ 前缀不可比。未来 reserve splits和其他 cone edits不写旧 cone 的 source interior或内部 tapes；
+但确实改变共享 scaffold 祖先的 routing tapes。每次原 Maintain从实际 target沿真实 parent走到 $r_0$，
+逐祖先比对 child fields并追加实际 L／R；非 null cone parent和全部这些变化始终保留。
+因此这是一个源的实际子树族，与 legacy 三个独立根不同。
+
+**定义 29.2（Do、ReadBody及出生构造）。** `Do(kind,a)` 在当前 cone上构造完整 AA20.2 请求，
+全局地址为 $p_j a$。请求 Tag／P／S／HasPromotion／HasSplit／FetchGrowth／Next仍为000至110，
+地址为 $U(|p_j a|)(p_j a)$，L0／R1，Growth的 kind P0／S1。
+完整发送、实收 tagged reply／End、seal副本、local ACK、same-root Return／cleanup／Ready后才执行后继。
+Growth须匹配实际 kind／地址，保留请求／reply／creation／maintenance关联。
+驱动器每次正常 Navigate／Guard重新到达目标；supervisor不传 raw-reference operand绕过根。
+owner额外字段读取只在自己的 driver已返回、stationary且权限有效时执行。
+
+ReadBody(p) 分配实际路径栈，初含 $p$。pop后真实 Tag：alpha追加01，beta追加10；
+branch追加11并压 right后left；absent进入 fault。所有栈／输出节点先写 bit／path／next，再链接；
+空栈后才封存完整 acquired word。遍历期间源静止，物质 unary marker不入栈。
+Tag本身不返回引用；需要的真实引用由 owner的已授权字段路径另取得并与普通 navigation相符。
+
+Build(span,p,birth) 是 AA17.2 的实际出生构造。帧含已取得 immutable input ref、offset／length、
+backed global target path、birth alpha／beta和 next。先以 open-slot完整扫描验证恰一棵 token tree、
+准确耗尽；短字、多树、PAD均失败。target alpha要求 birth alpha且不编辑；target beta仅在 birth alpha时 P；
+target branch仅在 birth alpha时先 P，随后 S。branch后实际完整前序扫描确定左右子 span，
+压 $(right,pR,alpha)$ 再压 $(left,pL,beta)$。每次编辑均为完整 Do。
+位访问、Add／bounds／split-point／push均由真实列表和字段操作执行，未增加 Clone、graft、reroot或Serialize原语。
+
+**引理 29.3（所需出生类型）。** 所用目标 $E(t),E(v)$、其 ordered pairing及随后 rho结果，
+均处于 AA17 的可达域；在 beta-born graft child处也满足出生约束。
+
+证明。$E(\alpha)=\langle\beta,\alpha\rangle$、
+$E(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle$，且 $E$ 保持配对。
+二者没有 L-ending alpha叶；结构组合保持该性质，根均非 alpha。
+故在 beta-born root无需非法 P，也不会要求 beta变 alpha，内部出生条件逐点满足。
+AA17.2给出每个实际事件前缀合法性。rho复用 LAB9.3–9.4在 $\mathcal D_+$ 的旧frontier结论。
+这只是这些已有定理的参数核对，不另立可达性基础。$\square$
+
+**定义 29.4（三种操作驱动的 candidate）。** 每次 selected final，先以 ReadBody(selected.path)
+取得真实旧 body全字，并与新收到的 $S_w$ 全等；selected必须是 current sealed binding中同一个 owner-held descriptor。
+graft 的 $T=\operatorname{tok}(E(v))$ 来自原 canonical prefix parser／converter，
+其 mandatory P21 backing和 Q ContextOption均实际存在并另验证。私有 source16及树名不是 supplier输入。
+
+Left：取得新 alpha cone，root完整 P再S，在 beta-born LEFT child Build实收 $T$，
+在 alpha-born RIGHT child Build实际取得旧 body，得到 $\langle E(v),E(t)\rangle$。
+Right：新 cone root P再S，在 beta-born LEFT child Build实际旧 body，在 alpha-born RIGHT child Build $T$，
+得到 $\langle E(t),E(v)\rangle$。不输入 Native拼好的候选，也不把 LAB的计数 action G当作 Right。
+
+Rho：取得新 alpha cone，先 Build实际旧 body；在任何后续编辑前实际 Tag遍历并封存其旧逻辑叶frontier。
+每项保留实际 global address／已取得 alpha或beta tag，并由 owner正常字段路径取得目标引用。
+仅按该旧链：alpha执行 P，beta执行 S；每项完整返回后前进；新生叶绝不加入旧链。
+不同旧叶前缀不可比，另项编辑不移动其真实根引用；实际 Guard／祖先维护仍逐次执行。
+
+candidate完成后必须再作一次新的 ReadBody(candidate.path)。只有此次真实 Tag位经编码转换形成候选值；
+实际数 active tokens，补 PAD至收到的 operation-dependent $c_{\rm cap}$，不能容纳则 fault。
+全位、长度和 Q关联完成才 seal outbox。Build输入、$S_w$、请求 echo均不替代这次候选取得。
+
+**引理 29.5（literal candidate与完整内层返回）。** 假设26.2及上述真实入口下，三种算法有限完成，
+新 cone恰为原 selected candidate $c_{\widehat A}(E(t))=E(c_A(t))$，outbox恰为其 padded Native token全字。
+旧 selected cone interior不变；共同环境历史真实延长。
+
+证明。出生类型引理和 AA17.2给出两次 Build各自逐前缀合法性；实际固定根 navigation及 AA20.3给每次完整返回。
+Left／Right的两个真实 child位置直接保持顺序。Rho在 sealed旧叶链逐项使用原 P／S，
+保留原 branch与次序，故 LAB9.4／定义16.4–引理16.5的结构论证给 literal rho，不只是叶数。
+RG (RG.2)供应 encoded candidate等式。最后新 Tag traversal和逐位写入给 outbox；
+共享 parent链上的每次 Maintain保留 AA19.1–19.2的全真实 routing tapes。$\square$
+
+## 30. 每次实际调用的发生键与完整旧回执
+
+**定义 30.1（原调用入口与 Companion20）。** 只在 mode01 selected computed final的
+sealed ComputedWait之后、原 packet send之前插入适配。原 raw staging／raw return、独立 GuardIngress、
+$G_i$、Plan、Reserve／Raise及其返回均保留。A完整重载本次状态，用定义15.1的实际字程序写
+$S_w=T_4(wait\text{-}origin,\text{完整wait},t,\operatorname{tok}(E(t)))$；
+$t$来自真实 seed及先前已安装完整回应，不读取 Native私有源。
+
+Companion20前17域依次是：版本、实际 packet27-ref、完整 packet、实际 waiting25-ref、完整 waiting；
+完整 $G_i$、guard-ref、完整参考守卫、proposal-origin、完整 proposal；
+$\xi$、实际轮 $U(i)$、previous-semantic-end、previous-unified-end；原 $k,z,c$。
+后三域为 RG01、完整 $S_w$、本节精确定义的 previous-receipt option。
+A先完整 route49发送 Companion、完成 check／ACK／全池返回，再完整发送原
+$T_4(\mathtt{RG\text{-}CALL2},k,z,AfterFinal)$，最后十二 TOK到 P。
+P全查两份实收 local blocks的 origins／mode／source／round／guard／proposal／wait／predecessors及 $k,z,c$，
+再由原 CAP自动构造真实 header／length／payload三块，canonical count仍为3，没有新的 final-frame IN。
+
+**定义 30.2（实际回执 bundle及本地化）。** $i=1$ 使用定义28.3的真实初始 carrier，
+连同实际 Init／InitACK／lift-final bindings，编码
+$0\Vert T_4(\text{complete-initial-carrier-payload},\text{complete-Init},
+\text{complete-InitACK},\text{full-root-key-table})$。
+root-key table标识这些实际 acquired对象；其中的引用字不授 AA driver权限。
+
+$i>1$ 时 A新 Close29，在固定已完成前缀全扫 FAM-RECEIPT，按 $\xi$、completed round $i-1$、
+$G_i$所记确切 preceding-selected-final origin筛选，要求恰一匹配；不是 LatestType。
+完整检查 descriptor／status并取得它所指的全部早先 M、Done及实收 ACK的 length／body／ending。
+ACK全字由实际已经完成且 status通过的这三块组装，不重新生成同值字冒充收件。
+previous-receipt的 present语法为
+
+$$
+1\Vert T_4(\text{ENTIRE actual prior M},\text{ENTIRE actual prior ACK},
+ReceiptCatalogue,ReceiptRootKeys).
+$$
+
+ReceiptCatalogue 为 $U(d)$ 后恰 $d$ 个五 $B$ 域项
+$(role,\text{full-original-origin-or-local-key},\text{actual-A-local-ref},type,\text{complete-payload})$，
+最后耗尽。ReceiptRootKeys标识 actual carrier、Done、Wait、captured-response-state、
+original-waiting-packet、M、ACK-parts。
+
+A用实际 pending／completed完整键列表，在该新 Close29前缀上计算这些 roots的全 typed backward closure。
+逐个真实 descriptor／seal／status／origin／owned-port读取，并用 protected-head import恢复输入头。
+包括 reader真正跟随的每个 Wait／Done／captured-state／packet／M／ACK／carrier及其所需旧 public dependencies；
+source handles／keys／payload均早于本 Companion。未被声明为解引用的 state内部发生字仍仅是谱系数据。
+A保有自己的25／27／28／74 tokens；不存在 P或AA对 A这些端口的暗中读取。
+
+整个 bundle作为真正 Companion字节经49进入 P-local immutable Companion，再作为 Q的一部分实际传给 AA并逐位 backing。
+P／AA reader把其中 A-reference words解释成 LINEAGE KEYS：全解析 catalogue，完整键匹配、type及耗尽检查后，
+得到该已收容器中的实际 payload subspan。subspan由真实 input ref、offset／length、Add／At及有界位扫描定位，
+不是伪造的 CAP child reference，也不授远程权限。重复全键必须有相同不可变实收 payload，否则 fault。
+只有 Input22其他明列 P-local CAP references走 P17／port／status路径。
+AA另把全 prior M／ACK、occurrence／binding与自己 retained binding tail、真实 prior received M、prior printed ACK逐位比较。
+更新的 raw或maintenance unified ends不替换 preceding-selected-final origin。
+
+**定义 30.3（Kcall、真正 referent及 association）。** 每个选中 final的两个实收 P-local allocations和原 A packet发生，
+在 F7前形成并由 Raw21 backing
+
+$$
+K_{call}=T_5(\text{actual-P-call-local-ref},\text{actual-P-companion-local-ref},
+\text{original-A-packet-origin},\text{actual-round},\text{actual-guard-origin}).
+$$
+
+只在真正 source admission后、唯一 source-start fence前执行一次本调用 F7Stage。
+graft完整原 prefix parser／converter得到 $d,M,T=\operatorname{tok}(E(v))$，Raw21以 FAM-T写全 $T$。
+Rho联合检查001、空 $z$、canonical零payload及三个 absent options；
+真正 New／Append0／Finish构造一位0，Raw21以 FAM-RHO0写入。Rho的空 $z$另有真实零长度块，与此 marker不同。
+两个 Raw真实返回八域 referent
+
+$$
+r_7=T_8(U(P),U(17),U(c_7),U(21),U(b_7),U(\ell_7),\tau_7,U(b_7+\ell_7+1)).
+$$
+
+$\ell_7=2M$、$\tau_7=$FAM-T，或 $\ell_7=1$、$\tau_7=$FAM-RHO0。
+十域实际 descriptor为 $(P,21,b_7,\ell_7,c_7,\tau_7,1,0,b_7+\ell_7+1,\epsilon)$，
+数字按各自原 unary编码。Base／干长度／FieldBody／sep／status0／不同输出 Add／真实 ordinal／十域／seal／
+At-WR1-CTL／八域引用／恢复角色，全部采用定义2.1，目标关闭前无嵌套 Raw。
+
+F7返回后 Raw77以 FAM-F7-HOLDER把整个 $r_7$作为 payload写入，取得不同的 holder reference $r_H$；
+再 Raw77写
+$Assoc=T_4(K_{call},r_H,r_7,\mathrm{operation})$，类型 FAM-F7-ASSOC。
+freeze此时完整 P17 count，在任何 lookup输出前全扫恰该 prefix中所有完成 associations，
+每项 payload／descriptor／status全部读完，按完整 Kcall及 operation筛选，要求恰一匹配。
+保留其真实 ordinal／payload；完整读取实际 holder，要求整个 payload等于该 $r_7$；Input22.7必须同一 $r_7$。
+ordinal是扫描键，非头位置；$r_H$、同类旧 referent、同值旧块均不能代替它。
+
+**引理 30.4（任意轮的 occurrence binding）。** 在顺序合法调用中，上述 association存在且唯一，
+回执所需每一字节均来自已实际取得的本地容器；重复同值请求不改变其所选发生。
+
+证明。每个 fresh packet／Companion有自己的完成 allocation／copy occurrence，实际 round／guard／proposal bindings
+在本次 F7前完成；不同 selected finals的完整 Kcall不同。单 admitted调用在固定阶段只写一个 association，
+其 $r_H,r_7$来自本次刚完成的两个 Raw；frozen-prefix全扫排除所有旧键并命中此项。
+完整持久块不被下次同 type覆盖，八域／十域／status读数把该项接回真实 writer。
+previous receipt从前一真实 final occurrence定位，其所有 followed bytes在 Companion／Q中实际复制，
+全键局部 subspan读取不会制造 remote read。AA retained M／ACK／binding提供另一个实际比较端。
+因此不以一个假定 dictionary、数值 origin或同值新回复补齐重复调用 seam。$\square$
+
+**定义 30.5（完整 Q24及唯一 fence）。** 实际取得旧 $h,K,r,p,v,q,g_c,e,j,m$和两 ends，
+将旧十字及互异 $q^+,g_c^+,e^+,j^+,m^+$分别完成保存。F7／holder／Assoc完成后，
+写完整 before-manifest，只执行一次真正 source-start CloseFence，保存其真实六域及引用。
+Attempt6恰为 call-origin、companion-origin、round、guard-ref、$c$、start-fence-ref。
+Q24依定义15.4的24域顺序：
+
+| 域 | 本调用真实完整内容 |
+| --- | --- |
+| 1–4 | family Q版本；Attempt6；companion-origin；完整 Companion20 |
+| 5–7 | call-origin；原 canonical count3及三完整引用；原实际 $z$ |
+| 8–10 | ContextOption；dOption；MOption |
+| 11–15 | 实际旧 $U(h),U(K),U(r),U(p),U(v)$ |
+| 16–18 | $U(N_s),U(c_{\rm cap}),U(L)$ |
+| 19–20 | 实际 start-fence完整六域；实际 $d_P$ |
+| 21–24 | 原 operation；RG01；完整 $S_w$；完整 previous-receipt option |
+
+graft的三个 option依次恰为 $1\Vert T,1\Vert U(d),1\Vert U(M)$，$d\ge1,M=2d-1$；
+Rho各恰一位0，不存在 $d,M,T$，不用 $M=0$。在真实 post-maintenance $h$重算
+
+$$
+N_s=2h-1,\qquad c_{\rm cap}=\begin{cases}1+N_s+M,&Left/Right,\\3N_s,&Rho,\end{cases}
+\qquad L=2c_{\rm cap},\qquad W=3N_s+c_{\rm cap}+8.
+$$
+
+参考守卫 $g_i$不是此处 $h$。Q没有 $r_7,r_H,Input22$引用，也无新增 canonical operand block。
+所有嵌套字段／快照先完成，才写 Q父字；到第一 source STORE前辅助工作保持源、目录和旧 counters，
+$f$只随实际 fence增加，不恢复旧 $f$。
+
+## 31. 五帧、真实 IN／WR bank与全部28域
+
+**定义 31.1（完整外层运输）。** 逐字保留定义19.1的五帧：
+
+$$
+\begin{aligned}
+Request&=0001\,B(Q)\,010,\\
+RequestACK&=1001\,B(Q)\,010,\\
+Response&=1100\,B(Q)\,U(c_{\rm cap})U(L)\,outbox[L]\,010,\\
+PayloadACK&=1010\,B(Q)\,U(L)\,010,\\
+Confirmation&=1011\,B(Q)\,U(L)\,010.
+\end{aligned}
+$$
+
+$U(k)=1^k0,B(x)=U(|x|)x,T_r$为恰 $r$个 $B$域串接；物理 sep／status不混入 wire。
+P76逐位保存完整实收 metadata／echo；AA发送前亦有封存 backing。
+Response metadata完成检查后才测实际 Base16，reserve恰 $L$位、sep、status0及实际 unavailable十域 bank descriptor。
+每个真正 AA OUT位由 P IN后直接 WR该 bank，backing完成前 latch不释放、下一 OUT不使能。
+完整 payload／ending／descriptor／status检查后才 status1并取得 $r_B$。
+完整 PayloadACK被 AA接收／检查后才 delivered，再由真实 ACK构造 Confirmation；P完整取得后才 DA6及 Input22。
+
+位前缀归纳给出：第 $t\le L$位后，bank前 $t$位与这个 sealed outbox前 $t$位相同，
+游标／计数和 pending latch也对应；$t<L$时仍不可用。
+所以这是定义5.2的 B6star真实 exclusive IN-WR关系；Q／DA／flags／等长 echo本身不能认证 payload。
+
+**定义 31.2（完整 Input22）。** 在五帧、available bank、DA完成后，
+按定义2.2先准备每个子元组／独立字段快照，再 Raw22写下列恰28域。
+第1域 ASCII tag及其 descriptor type均是本 family新版本，不能以旧版本作另一入口。
+
+| 域 | 完整实际内容 |
+| --- | --- |
+| 1 | FAM-INPUT的固定 ASCII-bit tag |
+| 2 | available immutable bank完整引用 $r_B$ |
+| 3 | 实际 acquired P-local original-call reference |
+| 4 | 实际 acquired P-local Companion20 reference |
+| 5 | 原 canonical count3及三个完整真实 references |
+| 6 | 原实际 $z$ staging reference；Rho亦有独立真实零长度块 |
+| 7 | 定义30.3同一 occurrence-associated referent $r_7$，不是 $r_H$或 option |
+| 8 | $T_6(dOption,MOption,U(N_s),U(c_{\rm cap}),U(L),U(W))$ |
+| 9 | 实际旧 $h,K,r,p,v$ staging references五元组 |
+| 10 | $T_2$（旧 $q,g_c,e,j,m$五引用，五个互异实际 prepared-plus-one引用） |
+| 11 | $T_2$（old semantic-end option，old unified-end option） |
+| 12 | 实际取得的完整 $G_i$ staging reference |
+| 13 | $T_2$（original guard reference，actual complete acquired-copy reference） |
+| 14 | $T_2$（original proposal reference，actual complete acquired-copy reference） |
+| 15 | $T_2$（original waiting reference，actual complete acquired-copy reference） |
+| 16 | 完整实际 Attempt6 |
+| 17 | 实际 Q24 reference |
+| 18 | 实收完整 RequestACK reference |
+| 19 | $T_2$（实收完整 Response metadata reference table，actual DA reference） |
+| 20 | 实发完整 PayloadACK reference |
+| 21 | 实收完整 Confirmation reference |
+| 22 | 唯一实际 source-start fence reference |
+| 23 | 完整 actual before-manifest reference |
+| 24 | $T_4(\xi,boot,prior,seed)$完整 original bindings |
+| 25 | $T_2(d_P,i_P)$实际身份／描述引用 |
+| 26 | $T_5$（original caller-kind，AfterFinal，ComputedReturned，FAM-LEFT／FAM-RIGHT／FAM-RHO，ServiceReleased） |
+| 27 | 恰九位111110000 |
+| 28 | $T_5$（actual call-origin，guard-origin，proposal-origin，round，previous-selected-final-origin） |
+
+第27域依次记录 bank-ready、echo-checked、response-complete、payloadACK-sent、confirmation-checked为1，
+settlement、source-write、candidate-read、candidate-parser-read为0；不能用这些位代替独立检查。
+第7域对父字贡献是 $B(r_7)$。先全字段 Raw77快照，再 New11、逐域 preserving Reload／Frame、
+Finish11／Copy到1、Raw22、真实 descriptor／status1；目标开启时只有允许的字面追加／Frame／Reload，
+不在同目标读源或嵌套 Raw，不以未来父 base／length作 backing。
+
+## 32. 全 decoder、可变深度数据栈与实际后置 BIND
+
+**定义 32.1（28／8／10完整扫描）。** 先归档实际 handle，检查其全八域 reference及实际十域
+P／17／22 descriptor、ordinal／base／length／family type、seal、initialized1、mutable0、空 origin、
+实际 status地址等式、At／RD status1、arena／range。
+28个固定 pass均从 Input22实际 base重启全长预算，完整消费恰28个 ReadFrame，
+检查 exhaustion和物理 sep；第 $j$域仅在该整遍关闭后保存。Rho的第7 frame同样每遍消费完整 $B(r_7)$。
+
+在解释 referent前，完整解析实际 call、Companion20、Q、mode／round／wait／guard／proposal／receipt及第26域五字段，
+共同确定 operation。type自身不决定 operation或可调用根。
+随后八遍完整 reparse $r_7$，每遍八 frame／耗尽／sep，关闭后才保存一个组件。
+完成定义30.3的完整 association frozen-prefix查找和 holder全 payload比较。
+freeze完整 descriptor count $D_7$，十个固定 pass均全读所选 actual descriptor的 tag／十域／seal，
+关闭后才保存一域，逐项比较
+
+$$
+(P,21,b_7,\ell_7,c_7,expectedType,1,0,b_7+\ell_7+1,\epsilon).
+$$
+
+状态地址用真实 unary Add及不同输出构造，实际 At／RD status1及 P21 range通过。
+未来快照用其后来另闭的界，不在 $D_7$寻找尚未完成对象。
+graft完整复制 $2M$位、sep／status，重做原 $z$ conversion／tree grammar及 $d\ge1,M=2d-1$，
+与 Q和Input22三 present options全字接合。Rho只读 typed一位0及sep／status，
+查 canonical001／空 $z$／真实零长块／三 absent options／FAM-RHO；
+其内部结果只是 NoContext-validated，不产生 context vector、$d,M$、空树或 context reference。
+
+**定义 32.2（其余全部 nested checks）。** 下列 reader逐字段全预算扫描、全结束检查后才保存，
+ReadUnary／ReadFrame实际逐位消耗预算；空域是空字，缺0、越界、多位均失败。
+
+| 对象 | 完整语法及关系 |
+| --- | --- |
+| canonical request | unary count恰3，三个全 reference frame并耗尽；header三位、全 unary length及完整 payload各有真实 sep／status／origin；全比对原 $k,z$ |
+| Companion／Q／$S_w$ | 恰20／24／4域且耗尽；wait按 RG3.1原语法全读，seed／boot／prior／source／mode／stage／round／counts／两ends／真实回应谱系相符，重算 $E(t)$；三个 options各自耗尽 |
+| previous receipt | 完整 initial或present语法、count及五域 catalogue；全 M／ACK、RootKeys、Done／Wait／carrier／captured state／packet通过实际 received-container subspans取得；AA另比 retained binding／attempt |
+| old／prepared | 第9域五引用，第10域两组各五引用；读真实十旧字，Add1重查五个互异prepared字并比ReadState／Q |
+| ends／$G_i$／guard／proposal／waiting | 第11域两个option；$G_i$含版本、$\xi,i,s_-$、preceding-final、guard-ref、proposal-origin、完整守卫；第13–15域各两项完整 original／copy绑定；守卫单调、proposal／ComputedWait和两个各自前驱全查 |
+| Attempt／fences／manifest | Attempt恰6域；fence恰6域，kind／$f$／tick／fee／$\xi$／directory和实际引用相符；manifest按实际count及tag00／01／10的6／7／5域全读、耗尽，比真实before-state |
+| transport／DA | RequestACK全头／length／Q echo／ending；Response六块、Confirmation五块及完整 $U(L)$；DA6的Q、Response、实发ACK、Confirmation及flags均与真实attempt／origins相符 |
+| identity／return | 第24域4绑定、第25域2引用；真实 $I$恰4域且两个description refs均为 $d_P$；第26域恰5和固定case、第27恰9位、第28恰5发生绑定 |
+| dimensions／bank | 第8域恰6，重算 $N_s,c_{\rm cap},L,W$；bank descriptor为 $(P,16,b,L,c_R,T_{bank},1,0,b+L+1,\epsilon)$，全引用／seal／status1／range／非别名；不 RD candidate bit |
+
+foreign origin只解析到声明且已取得的 local copy或容器subspan，不反向追 remote物；
+物理 Native descriptor的 $D(w)=w\mathsf{sep}$与 wire的 $B(w)$分开解析。
+
+**定义 32.3（可变深度 immutable parser stack）。** 旧receipt／catalogue可以任意有限深，
+不能靠增加有限 outer arities或一句“递归 decoder”完成。
+P在77实际写 immutable FAM-PARSE-FRAME：grammar-case、实际 immutable input reference、
+backed offset／remaining-length、next finite field／list phase、较早 parent-frame reference、expected occurrence、result slot。
+Top／version记录按完整 active Kcall和 parser invocation／pass键控；在恰该key的完整 bounded扫描中选择最后 completed version。
+不按全局最新 type选另一次调用的 frame。
+
+push child前先完成／snapshot当前 reader；child是同一个较早已收 immutable input的已验证严格较短span，
+或 frozen INPUT bound内的声明 typed reference target。return时验证 parent／case／slot，
+再追加parent的新 immutable version。子span预算0且其规定framing边界成立才完成；
+实际physical块的末尾另检查真实sep／status，不在inline B域之间虚构sep。
+固定case表恰为本节及定义18.4、20.3的 tuple／list／reference／manifest／row／M／ACK／receipt语法；
+input bitstrings不能选择新代码。full-key pending／completed lists遍历有限 typed closure，新 target仅一次。
+origin不反向跟随，typed依赖指向较早完成对象；inline子frame严格缩短span。
+
+明确保留两个不同界限：实际 INPUT对象的 frozen descriptor／catalogue bound，及当前 parser已封存 STACK／TOP的
+后来新 closed bound。新 frame／top／snapshot输出不加入 INPUT closure，不能令读取者追逐自己写出的尾部。
+Raw77 frame write和 Raw21 selected-field save只在当前 scan关闭后执行。
+每个 Raw返回的 frame／top reference在任何 helper覆写工作角色前亦先真实 backing。
+局部 subspan由真实 unary Add／At／bounded scan定位；没有随机访问字典或凭 numeral制造 CAP引用。
+AA的对应 parser以实际 auxiliary frame／top／marks／cursor／result records逐字段实现同一固定case表，
+request backing和closed catalogue是其本地 immutable输入，stack是另外的实际物质。
+
+**引理 32.4（全历史读取有限且保持十二字）。** 在本构造已取得的有限输入上，定义32.1–32.3
+完整读取所有保留字段，有限完成，原十二工作字及 backing纪律不被可变历史深度破坏。
+
+证明。28／8／10固定pass各在关闭源扫描后写输出；定义2.2以1–10运行 Reload，11保护活动prefix、12保护预算。
+一个 frame所需跨helper活值都已经封存；Raw内部不再嵌套Raw，后续lookup取真实较早frame。
+inline descent消耗较短有限span；reference discovery只增加 frozen finite INPUT集合内未完成的全键，
+较早依赖无未来环，completed阻止重复访问。每个frame的有限字段／剩余列表阶段消耗实际预算，return有封存parent。
+STACK新记录只能被自己的另闭界读取，不扩大INPUT；所以没有自追尾部的非终止。
+full catalogue scans和实际 local subspan检查使每个receipt字段都有已收位，不以opaque外来handle补洞。$\square$
+
+**引理 32.5（真正后置 BIND）。** 上述全 decoder成功后，恢复实际 ReceivedBankEntry角色／头，
+此时才测现在的 Base22，保存 rb22-start，按定义6.1真实 append／seal
+$BIND(r_B,\text{actual-call-local-ref},\text{actual-Input22-ref})$，arity仍为3，进入 BuildForest。
+
+证明。定义2.1–2.3供应每个实际writer，定义30.4固定本调用 referent身份，定义31.1供应bank位。
+各全pass／typed输入／stack归纳供应实际消费字段。所有 Input22／sep／status和decoder快照均已完成，
+因此新的 Base22位于它们之后；Append22写出的BIND引用同一真实handle，不是假定关系或额外原语。$\square$
+
+## 33. 只替换选中 candidate依赖的完整原程序
+
+**定义 33.1（删除片与所有保留工作）。** 仅对本 selected final，将每个 candidate-bit root换成 BANK。
+一个前置只在它的所有活消费者都在该删除片内时才删除。
+Rho删除 PR57.09的 chunk-length／private-offset／equality scatter及专属 folds；
+Left删除 slot-zero／context／source equality scatter，Right删除 last-active／context equality scatter及其专属 folds；
+相关专属 OR／PAD-fill输入一并删除。没有旧 scatter的 fallback，也不另跑一份 Native materializer验证 import。
+
+原 raw staging保留完整原 materializer，含 raw Rho。完整原 canonical／prefix／context processing、
+mandatory T backing、所有活 SOURCE消费者、$A_s,L_s,A_{N_s}=0$、unused常量／地址、
+完整 signed-width parser、全部 arithmetic／MUX arms／final carries、所有 $2N_s$ result MUX roots和
+随后所有 $2N_s$ ordered Resolve STORE、原 interpreter／cache／seek／BF／WR／recovery／terminal RD／exit，
+均保留。清理仍全扫描规定 mutable scratch，排除 immutable bank／T／marker／holder／metadata；
+response仍由真实 private $\gamma$投影写入、release及唯一 response-commit fence完成。
+旧 archive、resident其他服务、旧program和所有 STORE效果不删除。
+
+**定义 33.2（真实 forest及逐门发射）。** 从实际 rb22-start使用定义6.1、19.2的原生语法：
+每记录 $D(tag)D(w_1)\cdots D(w_a)seal$，固定tag为110101加其原suffix。
+
+| 种类／元数 | 原字段 |
+| --- | --- |
+| E6 | K、f、三个child unary、value |
+| Q3 | EXPR／STORE、node、destination或0 |
+| F7 | node、parent、slot、next、三个result references |
+| R2；TOP1；CUR1 | node／完整result reference；frame或0；已完成Q数 |
+| BIND3；FEND2 | bank／call／Input22；实际Q数／冻结forest记录数 |
+| VBIT3；VEND2；BUILD6 | vector／index／root；vector／width；phase／slot／need-vector／leaf-vector／closed-root／valid-root |
+
+Append22先全扫描／计数当前完整记录、准备全部字段快照后才打开目标；Lookup一次只保存一域，
+跳过其他域并检查该seal，多域必须重复全扫描。Q只枚举 FEND冻结集合；后来 F／R输出不增加Q。
+E的 K／f／arity严格采用定义6.3：CONST0／1、COPY／NOT／XOR／AND／OR／MUX、BANK、SOURCE、REF。
+孩子须为较早sealed E；REF须命中较早 EXPR root；unused孩子为真正 $U(0)$，value按原语法；
+错误K、错误8位truth table、非正或不更早孩子均fault。
+
+按顺序构造全部 $2c_{\rm cap}$ BANK leaves及VBIT，全部 $2N_s$ SOURCE leaves和原 masks，
+完整 parser／arithmetic／guard，再全部 $2N_s$ result MUX roots，最后才依 $i=0,\ldots,2N_s-1$写全部 STORE Q。
+各向量有完整 VEND，BUILD保存整槽旧值，FEND在全部构造完成后冻结真实计数。
+Rho的 NoContext不生成 context vector或field7 expression leaf；graft原T与完整检查仍在。
+
+生成器复用定义6.4、19.4的 Active／Waiting／Push／ChildReturn／RootReturn。
+Push先seal Waiting，再分配以该真实ordinal为parent的child；return全查node／parent／slot／next和空slot，
+追加只填本slot的新parent版本。跨helper活值各有实际77 backing。Complete分配真实 mutable available一位W结果，
+再Emit及R；REF只查早先结果，不递归展开旧证明。
+
+真实分配并seal不可变一位0 dummy。BANK.value是 $T_3(U(c_R),U(s),b)$；每次全查BIND bank／descriptor／status，
+用真实 unary Add得到 $2s+b<L$和 $b_B+2s+b$，不 RD candidate bit。
+每个 SOURCE operand或destination均实际 Resolve到当前 $\phi_K$；其他W地址来自真实分配。
+所有gate完整写为 $1f_0\cdots f_7U(d)U(a)U(b)U(c)$，
+常量／一元门的unused地址亦完整存在并指真实dummy。
+实际 Base15在本次生成前测，terminal0后测长、sep／status／descriptor／seal完成，
+At真实base才进入不变 PR57.D4解释器。
+
+**定义 33.3（原完整 parser／arithmetic）。** 初值 $(n,z,\ell,v)=(1,0,0,1)$，
+每个候选槽恰计算全部
+
+$$
+\begin{aligned}
+P&=[token=PAIR],&A&=[token=alpha],&B_\beta&=[token=beta],\\
+\Lambda&=A\lor B_\beta,&T_c&=P\lor\Lambda,\\
+I_{bad}&=([token=PAD]\land\neg z)\lor(T_c\land z),\\
+n_*&=n+[P]-[\Lambda],&n'&=MUX(T_c\land\neg z,n_*,n),\\
+\ell'&=\ell+[\Lambda\land\neg z],&z'&=z\lor[n'=0],&v'&=v\land\neg I_{bad}.
+\end{aligned}
+$$
+
+全 $c_{\rm cap}$槽完成才算
+$\gamma=v\land z\land[n=0]\land[1\le\ell]\land[\ell\le h]$。
+PAD-before-closure和nonPAD-after-closure均无效；没有私有 early stop。
+PR57.07的加法每位完整五门
+$t=x\oplus y,s=t\oplus c,u=x\land y,v_*=c\land t,c'=u\lor v_*$，含final carry；
+减法逐位NOT第二数、carry1进入同一加法；equality逐位NOT-XOR再AND。
+PR57.08的 unsigned compare以old $e,l$完整算
+$z_e=\neg(x\oplus y),n_x=\neg x,u=e\land n_x,v_x=u\land y,l'=l\lor v_x,e'=e\land z_e$，
+共七门／位；signed先翻符号位。初始常量、复制和MUX三孩子全部生成并执行，未选臂不省。
+公有整数位来自实际 unary倍增／Compare／Sub及VBIT重排，不预置私有计数向量。
+$W=3N_s+c_{\rm cap}+8$保持定义6.6的范围：未选 $n_*\in[-1,c_{\rm cap}+1]$，
+$\ell\le c_{\rm cap}$，$2^{W-1}>2c_{\rm cap}+2$，负一用同宽二补数，carry有真实位。
+
+**引理 33.4（原效果、raw STORE cuts和真正释放）。** 在假设26.2及第29–32节真实入口下，
+完整程序实际计算 whole-candidate guard，接受写整树，执行拒绝保留旧源但仍执行全部 STORE。
+
+证明。candidate全字由新 Tag→outbox→真实OUT／IN-WR→bank→BANK projection传入，
+引理32.5给真正BIND。定义6.6的parametric forest／frame／Emit归纳适用于实际正的 $N_s,c_{\rm cap},W$；
+原PR57.L3、T1–T2的parser／MUX部分给 $\gamma$，不把已删scatter仍执行当作前提。
+所有旧源位及MUX结果在首个STORE前已经算出。CAP4.3–4.5的稳定单射 $\phi_K$及fresh非别名分配保证：
+执行前 $r$个STORE后，逻辑源前 $r$位恰为选中结果，后缀仍旧位；途中raw字不要求是合法树。
+全 $2N_s$ STORE及高reserved位按原合同处理，$\xi$不变。
+解释器仍逐条读完四地址、全部cache／seek／BF／WR／recovery，最后terminal-header RD／exit。
+再真正分配unavailable response、以private $\gamma$投影、完整cleanup、status／release和唯一commit fence。
+故 ServiceReleased只在这些实际尾部之后达到：P持全池和busy source token，真实 $Y$已保存，
+旧／prepared counters和两真实fences仍在，此时尚未选择新event counters／rows；AA处于真正AwaitSettlement。$\square$
+
+## 34. 全原记录、真正返回和可重复结算
+
+**定义 34.1（真实Y之后的原计数与双链）。** ServiceReleased之后才读真实完整 $Y$，原 writer选择
+
+$$
+q'=q+1,\qquad g_c'=g_c+Y,\qquad e'=e+Y[operation=Rho],\qquad j'=j+1,\qquad m'=m+1.
+$$
+
+本 selected final保持实际 $h,K,r,p,v$；$f$包含真正两fence，不从old snapshot恢复。
+raw和maintenance仍走各自原counter cases。严格按定义20.1先J15／index18，后U18／index19：
+
+| 域 | 完整原语义字段 |
+| --- | --- |
+| J1–4 | SEG-J1；$\xi$；INITIAL-SOURCE的 $(tag,\xi,H_0,16,b_0,L_0,0)$；actual initial $H_0$/prior |
+| J5–8 | postcommit $U(j+1)$；old semantic predecessor；真实operation；原canonical count3/material-reference word |
+| J9–12 | 完整真实Y；before／after $(q,g_c,e)$六元组；历史 $U(h)$；完整SEG-SOURCE$(\xi,h,K,v,M_v)$ |
+| J13–15 | actual I；真实start-fence-ref；真实commit-fence-ref |
+| U1–4 | SEG-U1；$\xi$；actual initial $H_0$/prior；old $U(m)$ |
+| U5–8 | old unified predecessor；同一operation；完整canonical refs；完整Y |
+| U9–12 | before／after $h,K$四元组；layout／policy四元组；$q,g_c,e,j$八元组；directory count二元组 |
+| U13–16 | 完整after-manifest；start-ref；commit-ref；no-publication option0 |
+| U17–18 | option1加actual J mate；actual I |
+
+append前完整 index18 count比OLD $j$，index19 count比OLD $m$；不能把 $j+1$当已有数。
+maintenance后来新增的unified predecessor不替换semantic predecessor；两ends各自真实保留。
+manifest及六域fence来自实际writer／读数，不在行内预写自身未来seal／fee。
+
+actual J／U完成后才写 family15域sidecar，仍按定义20.2依次为
+version、I、A original-packet-ref、P acquired-call-ref、A original-companion-ref、P acquired-companion-ref、
+Q-ref、DA-ref、canonical word、c、old CountsEnds7、actual J-ref、actual U-ref、dP、Attempt6。
+原48按boot／initialization／prior、canonical所有material、J、U的规定次序全复制，
+再把新typed readers实际跟随的Q／DA／identity／sidecar／witness／receipt等PUBLIC依赖完整取得。
+每个复制含sender descriptor、receiver allocation、mailbox、两全循环、status／seal、origin-to-local resolution、
+copy-completion TOK及全部pool借还。P-local Input22／r7／holder／marker／bank／parser不虚增为public roots。
+
+A在joined ends安装前完成所有row／dependency／identity／before-after／guard／layout／manifest／fence／
+semantic mate／两个独立前驱／accepted-Rho e检查。全池回P后才原WHOLE-ROW ACK、source TOK回dispatcher、idle CTL。
+此后ComputedReturned规范角色／Tail13、17、借全池、重载特定ComputedWait、新Close29，
+以实际新ends／old counts／predecessors／origins选刚交付J／U，完整canonical $k,z$及sidecar对应，
+再测量导出／seal一个NEW actual response state，含全Y和origins。
+
+新hook仅在 mode01、这个实际family sidecar、$c=AfterFinal$、三family cases之一，
+且新response state seal之后、第一条原AfterFinal指令之前使能。
+RawReturned、Lift、Reserve、Raise均不被拦截；mode10旧hooks保留原固定cases。
+
+**定义 34.2（Wait及整个M）。** hook时A持自己的ports、全pool和RG invocation，dispatcher已持source token。
+把该特定NEW response-state reference和原waiting packet分别存入互异持久字段。
+新Close29后构造定义21.1的Wait12：family version、captured-state-ref、original-waiting-packet-ref、
+sidecar-local-ref、c、old CountsEnds7、new CountsEnds7、SourceBindings4、GuardBinding2、ProposalBinding2、round、I。
+
+在这个固定prefix上用实际pending／completed full-key lists，从J／U／sidecar／packet／Companion／guard／proposal／
+boot／prior／description／I／Q／DA及真实previous-receipt依赖作typed backward closure。
+只沿声明reader边找本地或equal-origin acquired blocks；不扫任意payload中的“像引用”的子串，
+不反向追origin，不查询未来Wait／M／ACK／Done。
+M固定前部恰九个B域：
+
+$$
+T_9(\mathtt{FAM\text{-}SETTLE},I,\text{actual-Q-key},\text{actual-DA-key},
+\text{original-canonical-count3-word},c,oldCountsEnds7,newCountsEnds7,\text{complete-real-Y}).
+$$
+
+其后实际 $U(d_{cat})$、恰 $d_{cat}$个五B域catalogue项及exhaustion；项为
+$(role,\text{full-origin-or-local-key},\text{actual-A-local-ref},type,\text{complete-acquired-payload})$。
+$CountsEnds7=T_7(q,g_c,e,j,m,semantic\text{-}endOption,unified\text{-}endOption)$。
+旧M／ACK／Done／carrier链和全部实际跟随字仍保留。
+A按真实字程序／测量导出seal M后，才发送 $U(|M|)$、整个M、010。
+
+**定义 34.3（AA全检查、binding及真实ACK）。** AA须为本attempt的delivered／AwaitSettlement，
+已保留Q／outbox／真实transportACK／Confirmation。它先逐位backing length-marks、body、全ending，
+再按九frame／count／每项五frame及第32节显式数据栈全读catalogue。
+完整检查 Q／DA／identity／canonical／operation／RG01／return case／$S_w$／prior receipt／$G_i$／guard／proposal／round，
+old／new counters含accepted-Rho e，J15／U18／两独立predecessors／semantic mate／manifest／fences／initial source／boot／prior。
+Q及transport与自己真实retained attempt逐位比较；metadata不替代bank位运行关系。
+
+在唯一 $r_0$ driver返回且当前grants有效时分配 $B_i$，逐域写 previous binding-tail、
+SAME old-selected descriptor、actual candidate descriptor、request／transport／outbox refs、实收M、全Y／J／U／dependency backing、
+从真实Y读到的outcome。seal最后完成，才更新selected：Y1选candidate，Y0保留同一个old descriptor；再链接tail。
+不改source edge、root slot或grant。旧和被拒candidate及所有历史／记录均保留。
+
+AA seal $ACK=T_4(\mathtt{FAM\text{-}ACK},I,\text{ENTIRE actual received M},\text{actual outcome})$，
+干计数并真实打印 $U(|ACK|)$、全body、010。
+A74按定义21.3分别构造真实length／body／ending blocks；body到三ending位全部接收匹配前保持status0。
+长度用IN／EX／WR／RD-test／MR至真实0，body用完整计数字逐位IN／WR／推进，ending三位各完整backing／测试。
+正确后才status1；完整四frame／exhaustion，比较全I、整个自己的M、恰一位outcome=真实Y，
+再检查Wait及特定captured-state／packet／c／两ends。
+成功才seal Done8，包含真实Wait、M、ACK三parts和captured-state refs及实际choice。
+随后写
+
+$$
+T_8(\mathtt{FAM\text{-}RECEIPT},\xi,U(i),\text{actual-J-origin},\text{actual-U-origin},
+\text{actual-M-reference},\text{actual-Done-reference},\text{actual-ACK-parts-reference-triple}).
+$$
+
+carrier只指已完成对象，不含未来completed-round state或自身未来reference。
+
+**引理 34.4（完整结算及原下一入口）。** 在假设26.2及上述真实返回上，结算有限完成，
+所选actual descriptor恰由真实Y决定，随后同一个新response state供应原AfterFinal／Entry。
+
+证明。所有catalogue roots及边均指较早sealed typed objects，full-key completion和第32节双界栈保证有限全parse，
+receipt bundle给全实收旧字。逐位send／receive归纳给AA实际M、A实际ACK，完整echo／occurrence检查将其接回本attempt。
+$B_i$ seal前已有真实old／candidate refs；选择不能由Plan或预测位代替Y。
+A临时工作与captured-state／Wait／carrier各自分离，恢复74保护头距离，原R约定恢复为新Tail74。
+再新Close29，按完整reference重载SAME captured NEW response state，不选helper遗留的旧LatestType。
+仅此时执行恰一条原AfterFinal：读真正Y更新 $t$／counts／mode／stage，测量导出／seal原完成轮状态，
+十二反向TOK回P、恒等角色CTL、实际Tail13／17及原Entry边。
+RG invocation一直在原槽，dispatcher已有source token；RG6.2–6.3遂供应下一真实loan／reload／Select／raw ingress／独立guard入口。
+下一speculative edit必须等待前一次全settlement／ACK完成。
+End／local ACK、PayloadACK、copy-completion TOK、whole-row ACK及settlement ACK各保留自己的角色，互不替代。$\square$
+
+## 35. 实际 Park与完整原 Stop／INITIAL消费者
+
+**定义 35.1（finish前置Park）。** 任意完成mode01 Entry，包括 $N=0$，保留原真实finish选择。
+原finish-selection loan／reload后pool已经在A；先按RG9.1导出／seal ORIGINAL HandbackPending，
+另存其特定reference，再在原reverse-pool／Handback边前插入固定Park子阶段，不另发起loan。
+从last-final origin选唯一当前receipt；$N=0$取initial receipt／lift-final origin。
+complete-current-receipt按定义30.2实际取得全载荷／catalogue并全检查，foreign words仍仅为本地实收容器的谱系键。
+实际写并seal
+
+$$
+Park=T_6(\mathtt{FAM\text{-}PARK},I,SourceBindings4,
+\text{actual-HandbackPending-reference-and-full-payload},
+\text{last-final-or-lift-origin},\text{complete-current-receipt}),
+$$
+
+在互斥settlement方向真实发送 $U(|Park|)$、body、010。
+AA仅在settled attempts之间、无pending edit／maintenance／request／output时接受，
+完整backing／parse，检查identity／$\xi$／current receipt和final或lift occurrence与retained binding一致。
+seal Park record，保留四根、descriptors、source／tapes、attempts／outboxes及settlements，禁用后来arena request入口。
+seal $ParkACK=T_3(\mathtt{FAM\text{-}PARKACK},I,\text{ENTIRE actual received Park})$。
+最后output边达到FinalPark，因此A收到完整ending时停车承诺已发生。
+未用legacy drivers已idle／returned，无pending request，也受backend park抑制。
+
+A按A74完整length／body／ending receiver实收ParkACK，全三frame／exhaustion／whole echo检查后恢复74 heads，
+新Close29重载SAME saved HandbackPending；此时才原十二反向TOK及CTL到Handback。
+所有连接在完整消费reply后为空；不是把park留到halt之后。
+
+**定义 35.2（原terminal全路线）。** Handback按RG9.1进行另一次新的loan／reload。
+从实际保存原字用原configuration／stack grammar作完整copy，在25追加fresh active original configuration，
+在27追加initial empty waiting，全reference fields、实测base／length／descriptor／status完成；
+保留旧RG／AA states、source／journals／archives，不rollback历史。
+按原代码定位table24，归还十二work TOK，恒等角色CTL、Tail13／17，一次invocation TOK到原client，
+再原loan／interpreter entry。原解释器真正执行Stop，在31写／seal $(0,B,1)$。
+实际terminal output／packet／原instruction／control dependencies经完整49到P21／17，在Halt前完成。
+
+原Halt执行start／commit、J／U及全部dependencies，经48全交付／checks／whole-row ACK；
+实际冻结包含Halt的两完整indices／counts／last refs，构造并seal SEG-P1。
+其每个request、semantic mate、原boot／initialization／prior／control／output／J／U依赖均实际列出，
+经50真实allocation／mailbox／copy／status／seal到verifier32／33，只从已有local copies解析origins。
+
+原verifier在 $H_0=1$枚举全部 $4^{2H_0-1}$初始包，验证prior $\{\alpha,\beta\}$，
+分开保留initial-target与replay-current。按冻结顺序完整读每个U及其J／request／control／output，
+逐行检查历史guard／layout／Reserve／Raise／manifest、真实operation／response、$q,g_c,e,j,m$、
+双predecessors、code／fences／terminal-return-kind。不能只读最新guard，也不把auxiliary字／AA工作伪造为NativeLocal。
+原seed beta取得排除initial alpha；每个后续真实原row继续保留actual beta。
+因此compatible INITIAL fiber非空且对原 $q_1$恒定，实际构造accepted SEG-R1 INITIAL-$q_1(\beta)$。
+receipt creation／seal来自真实完成delivery descriptor，不预写未来seal读数。
+
+expected-task／proposal／frozen-prefix／snapshot／two-end bindings和receipt经原51实际到consumer40／41。
+其全字段检查 $\xi,H_0,prior$、proposal／type、两counts／ends、snapshot、accepted receipt seal后，
+才在43真实Zero-allocation、逐位target copy／seal／OUT；完成实际acknowledgement、全部规定tokens归还，
+最后吸收global-halt CTL。没有以AA成功token或同名receipt替代SEG-R1和真正target输出。
+
+**定理 35.3（停车后的同次原终止）。** 在假设26.2下，从任意上述完成Entry及其真实finish，
+定义35.1–35.2有限完成恰一次原handback及INITIAL-$q_1(\beta)$消费，达到吸收global halt。
+
+证明。Entry的真实state／owners／tokens和启动前保存原配置给RG9.1及定义22.1–22.3的共同入口。
+Park只做实际paid source-free traffic，完整echo后仍重载同一HandbackPending，故原入口未被代换。
+原configuration全copy、表定位及tokens／invocation转交给原Stop入口，不把RG描述当Turing表。
+第33–34节供应每个改造final的真实原效果／历史行，其余原calls不变；CAP6.5–6.6的finite verifier
+逐行论证保留actual beta，并给完整consumer checks／输出。所有段在其前段真实出口运行。
+invocation只离开RG一次，原terminal图无返回RG边，global halt无再入；因此没有posthalt工作或later terminal task。$\square$
+
+## 36. 任意实际到达轮次的不变量与逐点有限完成
+
+**定义 36.1（returned-round关系）。** $\mathcal R_i$表示已经实际到达的mode01 Entry，满足：
+Native source为 $E(t_i)$，实际 $h=K=w(t_i)$；原RG state保留完整真实responses／rows／两ends、
+saved original client及当前invocation；P持十二work tokens，dispatcher持idle source token；
+AA固定 $r_0$ driver全部内层调用已返回，所选真实cone body为 $E(t_i)$，binding tail为 $B_i$；
+A有按 $\xi$／round／preceding-final匹配的唯一completed receipt，$i=0$时为 $B_0$及initial carrier。
+旧material、当前rights、heads／latches／channels、四根及全部共同ambient histories均在joint state内保留。
+这个关系不把它们quotient成body或一枚accept位。
+
+**定理 36.2（任意 $i$的同次一步闭合）。** 在假设26.2下，从任何实际达到的 $\mathcal R_i$，
+每个接下来真实供应的合法ordinary raw modifier及独立finite nondecreasing guard，
+都沿本构造到达 $\mathcal R_{i+1}$；原final全回应、真实 $Y=\varepsilon_{i+1}$、
+两条记录链及selected descriptor均是这一次执行的新出口。
+
+证明。按实际相继阶段证明，不预设下一阶段终点。
+
+1. 原Entry loan／Select／RawWait／RawDispatch有真实token／invocation guards。
+   RG4.3适用于tight source $E(t_i)$：未知raw Rho／Left／Right实际执行完整candidate及原refusal，
+   $h,K$及源不变；raw rows／request／operand／response安装完成。本hook没有作用于此call。
+   RG5.1–5.2随后在实际A69收到独立 $U(g_{i+1})$，写真实descriptor／status，
+   新Close29全读并构造 $G_{i+1}$，保持proposal／guard／preceding-final的不同发生。
+2. 原Plan只消费现在已经取得的operand、count pair和guard。令旧reference counts为 $(a,b)$，
+   原(RG.5)给Rho的reference candidate叶数 $a+2b$、encoded目标 $3a+5b$；
+   graft给reference叶数 $a+b+n(v)$、encoded目标 $w(t_i)+w(v)$。
+   两者encoded目标严格大于旧 $h=K$。若reference whole-candidate满足 $g_{i+1}$，
+   完整执行原strict Reserve(d)及Raise(d)，各自全return／state安装；否则不维护。
+   维护改变actual backing／guard／layout／unified历史，保留selected Native和AA body；
+   其后真实 $h$才用于第30节尺寸，绝不读未来输入。
+3. 实际ComputedWait／Companion／canonical／F7／Assoc／唯一start-fence／Q writer，
+   给第29–32节每个真实入口。fresh cone前缀不可比、birth checks及sealed old-frontier构造literal candidate；
+   全新Tag／outbox、五帧IN-WR、28／8／10及全nested／stack readers给本次bank和实际后置BIND。
+   旧selected descriptor保留同一对象；共享祖先tapes只作真实追加。
+4. 引理33.4的全原parser／MUX／ordered STORE／release给真正Y。
+   若原Plan维护，candidate为 $E(c_A(t_i))$、叶数恰actual $h=d$，故真接受；
+   若不维护，candidate叶数 $d>$旧 $h$，故真执行拒绝。
+   RG(RG.2)遂给 $Y=\varepsilon_{i+1}$、source $E(t_{i+1})$及tight $h=K=w(t_{i+1})$。
+   Plan位从未直接写response、源或AA choice。
+5. 第34节实际选择operation-dependent counters，写全J／U／indices／sidecar／dependencies，
+   完成全receiver checks／WHOLE-ROW ACK／source TOK／idle后才新response-state seal。
+   全M／ACK／Done／carrier使 $B_{i+1}$仅由真实Y选candidate或SAME旧descriptor。
+   重载同一个captured NEW response state，原AfterFinal／反向TOK／Entry边给下一 $\mathcal R_{i+1}$。
+   每个history／receipt依赖只指已完成过去，下一调用尚未运行。
+
+所以此一步对任意已到达 $i$成立，不只对一个预先枚举的后续stage成立。$\square$
+
+**引理 36.3（所有新增循环的有限进展）。** 在假设26.2及任意有限已完成前缀上，
+本构造新增的每个合法完整phase都有限返回其规定出口。
+
+证明。receiver／echo消耗实际finite marked lengths；descriptor／association扫描冻结输入count。
+ReadBody栈遍历有限stationary树；Build帧消费有限input tree的proper subtrees，每次AA调用由AA20.3完整返回；
+rho消费编辑前封存的有限frontier，输出／PAD循环消耗actual finite word／capacity。
+原forest的E孩子严格更早，FEND固定Q，原frame machine按定义6.6终止。
+full typed parser或者缩短inline span，或者访问frozen有限INPUT集合中尚未completed的key，
+自己的STACK输出不扩展INPUT界。每个receipt／catalogue在 $i$归纳下有限，即使嵌套字长迅速增长；
+current receipt不含自身future carrier／Done／descriptor。原计算／ingress／ACK的进展条件仍由假设26.2供应。
+连接的receiver在相应send阶段已就位；每次ACK只依赖刚完成输入及已有backing，没有等待未来round的数据环。
+所以材料供应、完整输入、规定确认和原计算终止之外，没有另添一个假定的join-progress条件。$\square$
+
+**定理 36.4（完整ordinary域的一boot有限完成）。** 存在定义27节这一个固定有限原始安装，
+在假设26.2下，对定义26.1整个输入域——含 $N=0$、任意有限mixed schedule、任意实际非空有限operands、
+独立nondecreasing finite guards和依先前acquired responses作的选择——均有本构造的有限完成：
+每个selected final由实际arena candidate供应，保留完整原service／response／records／return／Entry，
+最后实际Park／original Handback／Stop／INITIAL consumer output／ACK／tokens／global halt。
+
+证明。引理28.4给 $\mathcal R_0$；定理36.2按实际finite returned-round序列归纳，
+每一步量化的是前一whole response／settlement之后才真正供应的下一输入，故允许声明的online adaptive选择。
+引理36.3在相同执行的每个入口给逐点finite completion；到 $\mathcal R_N$后，定理35.3给真实finish后缀。
+所有存在对象都来自这一个boot、同一 $\xi$和前段实际出口。$N=0$用initial carrier及原finish，不虚构任何final。
+安装的port／type／driver／return-case数不随 $N$增加；数据与retained material可以增长。
+例如每次真正接收Right(alpha)、$g_i=i+1$的任意长有限运行均accept，$w(t_i)=3+2i$；
+任意大operand的覆盖来自上述一步量词，非这个特殊例子。
+没有finish或未供应完整ingress的执行只有实际前缀，不能从本定理推出有限terminal或实际无限运行。$\square$
+
+## 37. 原 mode10的准确保留与行为标签
+
+**命题 37.1（legacy分支的原域）。** 在假设26.2下，本安装的mode10分支保留定理23.2及22.4的
+全部所声明finite guards和原Stop／INITIAL完成，使用actual新身份／地址／fences，但不扩张其policy域。
+
+证明。backend选择legacy之后，执行原三固定driver、$O$七事件、原Native boot／Lift／C0／C1／C2图。
+$C_0$实际guard2后，C1 Left的真实候选 $F=\langle C,C\rangle$；C1 guard2选O、guard4选F。
+只有C1全结算／ACK／captured-state reload／原Entry之后才构造下一operand并接收C2独立guard。
+C1拒绝时C2为Right(alpha)，guard2拒绝、所有finite guard至少3接受；
+C1接受时C2为Rho，guards4、5拒绝、所有finite guard至少6接受。
+保持第23.1节的完整维护、F7 typed marker／referent／holder、28／8／10读取、原程序／rows、
+两个全settlements、原FinalPark／Handback和完整terminal route。
+新增 $r_0$在此分支未请求且保持真实alpha／idle，作为distinct framed source保留，不能认同O／F／N。
+因此旧theorems在这个更大安装的实际对应入口适用；全部费用在新入口重算，不复制旧常数。
+这不是从mode01归纳推出任意internal policy。$\square$
+
+**定义 37.2（原操作、拒绝与非执行状态）。** 全七canonical bodies ReadE、TagRead、Rho、Left、Right、Reserve、Raise
+及原journal入口仍resident，保留原guard与source-token意义。raw staging不替换candidate materializer，
+maintenance保留strict／unchanged／maintenance-refusal的不同cases。
+family hook仅作用mode01的selected computed finals及原固定mode10 hooks，
+不宣称任意七tag direct schedules或离开所声明controller域后的同步。
+
+accepted、executed source refusal、maintenance unchanged／refusal、完整合法非modifier的controller-domain exit、
+frame-fault、adapter FaultHeld、busy或missing-right的disabled none、partial ingress／status0、absorbing terminal均保留不同状态／后继。
+强制field／holder／grammar／transport错误按定义6.7、18.6耗费实际剩余预算排空、记reason、FaultHeld，
+不伪造Y0／rows／settlement／Entry；已有较早真实提交不rollback。缺输入只保留pending prefix。
+真正guard拒绝则完整通过decoder、执行全部MUX／STORE／release／records／return。
+
+**定义 37.3（full joint state与权限边界）。** 在每个cut保留Native私有coordinates、raw STORE prefix、
+AA真实parent／全部共同ancestor tapes、alias／source／call／creation identities、partial buffers、
+rights、finite controls、heads／latches、meter及费用。
+本文对应是声明的body／原标签／入口关系，不是旧／新microtrace、引用、cost或arena／disconnected-root行为相等。
+
+AA仅由owner及固定driver创建／编辑／read／Maintain；descriptor数据不创grant。
+P独占bank／Input22／F7／forest及private解释，A拥有saved client／state／receipt和全return checks，
+原verifier／terminal consumer保留原权限。foreign key只选已实收payload；没有reference-bit cast、remote dereference、
+A／AA私有source16读取、per-round安装或清除强制backing。
+RG-I／J_IC102是不同安装，其actor interval reader／emitter省略active payload-bank重建；
+本构造省略PRODUCER selected candidate scatter。两种省略不合并计新成果，
+IR既有current-capture／return结果不按同端口名自动覆盖本arena／decoder／settlement／Park内部。
+
+## 38. 同一次实际执行的全费用递推与可核对子计数
+
+**定义 38.1（实际出口上的向量）。** 将完整日程展开为同一实际执行
+$z_0\xrightarrow{\kappa_1}\cdots\xrightarrow{\kappa_M}z_M$，
+每个原语在其实际前态按Native／AA原tariff贡献独立坐标 $\delta(\kappa,z)$。
+保留按owner／purpose／opcode的Native次数、ticks／fees／receipts、ordinary construction、
+code／control／type／token／connection物质、定位／head移动、各direction wire、真实descriptor／unary／reference位；
+AA分配／grants／fields／tests／I-O／ACK／control／reference-bit costs另列，不设任意兑换汇率。
+
+$$
+V(z_r)=\delta(\kappa_{r+1},z_r)+V(z_{r+1}),\quad V(z_M)=0,\qquad
+P(z_r)=\max\{S(z_r),P(z_{r+1})\},\quad P(z_M)=S(z_M).
+$$
+
+组合严格为 $V(A;B,z)=V(A,z)+V(B,exit(A,z))$，peak取实际连续prefix的同时retained材料最大值。
+每后段在前段新实际出口计算；ordinal／地址／fence／type／reference宽度／nested receipt长度均动态改变。
+闭合fence只读旧cut，其后读数动作本身的receipt仍计费，不解自包含费用方程。
+
+Native十原语 RD／WR／ML／MR／EX／BF／IN／OUT／TOK／CTL的实际发生数为 $n_N$时，
+沿CAP／AS约定 receipts、ticks、fees分别为 $n_N,n_N,2n_N$，material为
+$S_0+b_{control}+8A_{nonmeter}+8n_N$；已作为格计入的code不重复计。
+这是坐标公式和展开程序，非已测whole-run数字。
+
+全程段包括：四根／drivers／links／types／描述／identity及public copies，Native boot／saved client／Lift，
+Init／first cone／InitACK／initial carrier；每轮原choice／raw ingress及完整raw materializer／refusal／return，
+独立guard／state／Plan／两次可能maintenance；Companion／actual旧receipt全复制／packet／canonical／F7／holder／Assoc／
+old fields／prepared increments／manifest／start fence／Q；fresh cone／全部Build／frontier／Tag／真实祖先Maintain／outbox；
+五帧／bank／DA／Input22／28-8-10及全nested stack／BIND／forest／frames／code／all-arm解释／STORE／cleanup／release／commit；
+原counter／J／U／indices／sidecar／所有48依赖／checks／ACK／source TOK／idle／新state；
+Wait／全catalogue／M／binding／完整ACK／Done／carrier／SAME-state reload／原AfterFinal／Entry；
+最后Park／ParkACK、原配置复制／Stop／Halt／snapshot／50／verifier／receipt／51／consumer／43／OUT／ACK／tokens／halt。
+每Raw／full scan／comparison／At／Last／Home／Tail／status／seal／role CTL及TOK都按实际recipe展开，未给helper单位价。
+
+**命题 38.2（源调用与arena定位子计数）。** mode01从seed后到terminal前的原Native source／maintenance calls数恰为
+
+$$
+4+2N+2N_{accept}.
+$$
+
+令 $m=N+1$为初cone及每个final candidate cone总数；$P_j,S_j$计cone $j$内部全部成功P／S，
+$D_j$为这些事件的relative-address depths之和，包含Build及rho编辑。则
+
+$$
+\begin{aligned}
+P_{ar}&=1+\sum_{j=1}^m P_j,&S_{ar}&=m+\sum_{j=1}^m S_j,\\
+D_{ar}&=\frac{m(m-1)}2+\sum_{j=1}^m\bigl(j(P_j+S_j)+D_j\bigr),&
+V_{ar}&=1+P_{ar}+2S_{ar}.
+\end{aligned}
+$$
+
+arena tape headers恰 $S_{ar}$，routing cells／side appends恰 $D_{ar}$。
+mode01仍保留legacy $O$的3P／4S／depth sum7／12source vertices，$F,N^*$各一untouched alpha vertex；故四根合计
+
+$$
+P_{tot}=P_{ar}+3,\quad S_{tot}=S_{ar}+4,\quad D_{tot}=D_{ar}+7,\quad V_{tot}=V_{ar}+14.
+$$
+
+按AA22.1，四initial roots的located source parent／child assignments恰
+$12+4P_{tot}+8S_{tot}$；located auxiliary assignments恰 $V_{tot}+3S_{tot}+4D_{tot}$。
+
+证明。四Lift、每轮raw和final、每accept的两strict maintenance给call数；auxiliary Init／AA／word／settlement／Park
+不创造Native source或NativeLocal事件，却各有实际primitive receipts和分配。
+scaffold初始一次P，取得 $m$个cones用 $m$次S，其global depths为0至 $m-1$。
+cone $j$根depth为 $j$，内部depth $d$事件在全源depth $j+d$，所以深度和恰如式。
+AA每P增加一source marker、每S增加二source vertices及一header，每proper ancestor恰追加一tape cell。
+旧O七events和另两roots给额外14vertices／7depth，四initial roots贡献12source初始化fields。
+其余located assignment由AA22.1逐事件相加；公式明确不含allocation／grant／navigation／tests／I-O／scratch／引用位费用，
+不是total tariff。mode10则取第24节actual三root子计数，另加untouched $r_0$／driver／boot footprint。$\square$
+
+**定义 38.3（完整字长、wire及复制项）。** 对实际 $r_7=T_8(a_1,\ldots,a_8)$、Input22字段 $f_j$，
+有 $|r_7|=\sum_{1}^8(2|a_i|+1)$，$|Input22|=\sum_{1}^{28}(2|f_j|+1)$。
+Rho marker payload／sep／status恰3格，holder为 $|r_7|+2$格，field7各快照亦 $|r_7|+2$，
+另外付全descriptor／reference／component snapshots／Assoc／Kcall／stack及旧versions。
+28外pass每遍全28frames，第7frame实际读28次；另八全reference reparses、十全descriptor passes、
+所有association prefix scans／holder全比较／unary算术／status／payload validation，不折成单位lookup。
+
+global depth $d$的P／S请求恰 $4+2d$wire bits，Growth payload reply恰 $5+2d$，
+End／ACK／Return和所有Tag／path／reference／ancestor work另计。
+$q_Q=|Q24|$时五外帧分别为
+
+$$
+2q_Q+8,\quad2q_Q+8,\quad2q_Q+c_{\rm cap}+2L+10,\quad
+2q_Q+L+9,\quad2q_Q+L+9,
+$$
+
+总 $10q_Q+c_{\rm cap}+4L+44$；端点print／receive／backing／echo／parse／allocation／status另计。
+M九固定域 $u_s$、$d_{cat}$项 $w_{t,s}$给
+
+$$
+\ell_M=\sum_{s=1}^9(2|u_s|+1)+(d_{cat}+1)
++\sum_{t=1}^{d_{cat}}\sum_{s=1}^5(2|w_{t,s}|+1).
+$$
+
+M wire $2\ell_M+4$、Native send核心 $8\ell_M+13$；ACK长 $a$时wire $2a+4$、Native receive核心 $10a+27$。
+完整allocation／position／descriptor／seal／四域parse／whole-M echo及AA端工作另计。
+Init／Park按其实际 $B/T$字长和真实framing计算，非单位handshake。
+每48／49长度 $k$copy保留两循环／seal／TOK核心 $12k+6$、四全池handoffs的52原语，
+并加所有setup／Base／Zero／descriptor／status／position／check；whole-row ACK／source TOK／idle另列。
+50／51／output完全采用原展开，不能由这一个核心项代替。
+
+每实际gate的 $v=(a,b,c,d)$和seek前head $h_{G,r}$仍给原PR57.06
+
+$$
+I(G)=18+5\sum_{r=1}^4(v_r+1)+\sum_{r=1}^4(2h_{G,r}+3v_r+3)+5+P_G,
+$$
+
+$P_G$具体展开cache descriptor／seek／Home／Last／At／status／control；generation、terminal RD／exit、
+allocation／cleanup／response／rows／return另计。J／U全长为各15／18域的 $\sum(2|field|+1)$。
+
+**定义 38.4（保留material及价格边界）。** peak包括original source／backing／archive及全部STORE效果，
+所有bank／state／code／counter／journal／index versions、mandatory T或marker／holder／association／snapshots，
+AA四roots／source vertices／headers／tapes／真实parents、选中及拒绝cones／descriptors／creation records／
+旧body与candidate acquired words／frontier／stacks；Init、每个Q／DA／outbox／full reply／M／ACK／Done／carrier／binding，
+recursive旧receipt全copies、connections／latches／length marks／parser cursors／reserved material／saved continuations，
+原terminal snapshots／replicas／receipt／output和全部code／control／type／token births／真实宽度references。
+清scratch不退还已构造capacity。共享spine变深、重构和嵌套全receipt可以增加费用。
+以上提供complete same-run recurrence及明确located subcounts；没有total-resource saving、polynomial bound、
+latency／throughput、统一有限hardware／time、physical price、efficiency、全资源支配或global／Pareto minimum结论。
+
+## 39. 可区分的有限前缀与反驳判据
+
+**定义 39.1（有限discriminator）。** 在同一mode01 boot实际依次选择
+Right(alpha)、Right(alpha)、Rho，独立参考guards为1、2、4，然后finish。
+按原whole-candidate法：第一raw和第一selected final均拒绝；第二raw仍拒绝，第二final接受；
+Rho的旧源必须是第二轮真正接受的后继。
+相同family type和重复Right(alpha)字不能使Kcall、call／Companion／guard／J／U origins相同；
+真正Y0／Y1必须分别保留旧descriptor／选新candidate。这里规定一个source-level区分例，未提供其执行记录。
+它不能替代定理36.2对任意 $i$的证明。
+
+在已编辑另一个cone后，直接检查旧candidate的非null parent及 $r_0$真实ambient tape，
+可区别shared arena与independent roots；把这些当null／不变即违背AA的实际维护关系。
+
+**定义 39.2（足以反驳本构造的具体义务失败）。** 任一合法实际前缀若出现：
+Kcall association缺失或选旧holder、beta-born构造需非法P、遗漏真实parent／tape更新、
+bank位不是该actual outbox、被删scatter仍是live fallback、Y0改变selected descriptor、
+任何mandatory local／public payload或token／whole-row ACK／settlement return缺失、
+Park／Handback未供应原Stop／INITIAL入口，就反驳相应构造义务。
+有限witness可反驳，有限passing fixture不能证全域；上述区分前缀及较大树例没有被当作fresh验证证据。
+
+## 40. 精确来源对应、新增接合与剩余全目标
+
+**定义 40.1（固定primary sources与适用前提）。** 本增补数学原文统一钉在
+`7785ec6df54bf056b0b59bdbce76664c3ba7777e`。下表按原编号给来源；
+本卷第1–25节仍以各自原编号／原表述使用，不改写它们的字节或原范围。
+
+| 原来源／编号 | 本增补的精确对应及限制 |
+| --- | --- |
+| [AA17.1–17.3、19.1–20.3、22.1](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | 四真实allocator根、出生类型构造、非Next服务的全生命周期、全祖先routing tapes、located counts；cone只是在固定 $r_0$内的真实subtree |
+| [LAB9.1、9.3–9.4、11.2](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md) | 整个 $\mathcal D_+$的sealed old-frontier literal rho及finite serial service已存在；本增补只用prefixed原driver实现，G不是literal Right |
+| [RG1.2、2.1–3.3、4.1–5.3、6.1–7.3、8.1–9.2、10.1](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REENTRANT_GUARDED_ACQUISITION.md) | 实际beta／saved client／Lift；未知raw全refusal／operand acquisition、独立guard／G、原Plan／computed return／Entry；同次original terminal；(RG.2)给encoded candidate law，非新代数 |
+| [AS1.2–2.6、3.3–3.5、5.1–9.6、13.1–15.4、17.1–23.3、24.1–25.3](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_SUPPLIER_SUBSTITUTION.md) | 原Raw／pack／十二字、five frames／bank、forest／frame／Emit／full parser／STORE、真实rows／settlement／terminal算法；本增补实际供应可重复occurrence／reader／entry；mode10仅原C1／C2域 |
+| [CAP1.2–2.3、3.5、4.1–4.6、6.1–6.7](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md) | 原七service／stable injective $\phi_K$／canonical count3、八reference／十descriptor／fence、全J／U／copy／ACK、历史verifier／INITIAL及原consumer |
+| [TMC PR57.D1、D4、D5、L3、T1–T2、.06–.10](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 原primitive／literal gate／parser／whole-candidate scatter及MUX语义；仅选中final scatter删除，fixed-H内部policy不并入独立guard域 |
+| [ARC2–3、16.2、26.2–28.1](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACTOR_LOCAL_RESERVE_RECOVERY.md)；[RCA11.1–12.1](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md) | finite word／list／unary、双bank、实际测量export／protected import／packet／configuration copy；parser stack为数据，static helper图不递归 |
+| [IR1.2–1.4、7.1–8.2、24.5–26.4](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMMUTABLE_INTERVAL_REGISTERS.md) | 另一安装的actor重建省略、compiler-cut取得及边界；不作为本新图内部current-capture theorem |
+
+[NativeFullSourceProducer.sourceControl／native_source_producer](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean)
+及其同名Blueprint Scribe阐明stationary acquired-reply stack traversal，前提是已经供应其Native register接口；
+它不产生AA grant、bank entry或later-task handoff。
+[SameHandleContinuation.SourceService／Completion／continuation_exists](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/D5/S3/Arith/FibonacciAtomic/Acquisition/SameHandleContinuation.lean)
+显式假定bound service、fixed handle和completion，不能代替本构造的实际handoffs。
+[TypedFiniteViewKernel.response／refinement／typed_finite_view_kernel](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean)
+及其Blueprint Scribe要求真正typed steps、完整labels／readout／legality，不供应本图新Q kernel或quotient。
+这些是源码含义／复用边界，不是本增补的新compiled applications。
+
+**命题 40.2（旧25.3的精确新增部分）。** 定理36.4补上旧25.3未由固定两stage构造供应的这一部分：
+一个新原boot，先真正接合自己的Lift与初始arena selected source，
+对全部ordinary mode01 finite rounds的每个selected Rho／Left(v)／Right(v)，
+实际operand-driven fresh candidate、发生键关联的F7／holder／Input22、可变深度完整旧receipt读取，
+完整原bank／program／rows／Y-linked settlement／receipt／Entry和preterminal Park／original INITIAL consumer。
+不对固定旧J加later stage，不把已用O／F／N重当fresh，也不扩大mode10。
+
+证明。第28节提供原始join，第29–32节提供每次真实source／operand／reference／bank／decoder入口，
+第33–35节提供原效果、真正return／settlement／next-entry及完整terminal，
+第36节以任意attained $i$归纳而非有限stage枚举将其组合。每段同一 $\xi$且在前段actual新出口执行。
+具体新增是这一boot到原消费者的可重复操作接合；AA出生构造／真实tapes、LAB rho／serial algorithms、
+RG原caller／Plan／Entry、AS writer／parser／STORE／row／settlement、CAP verifier及ARC／RCA字程序均为复用。
+没有把重新叙述这些算法、同值编码或actor interval omission计作新基础。$\square$
+
+**定义 40.3（保留的准确未决范围）。** 较大的RRO最简关系／四表达互恢复目标未由此完成。
+本新arena／supplier／decoder／settlement／Park内部，无需等待未来原完成的immediate／current reentrant acquisition仍未供应。
+[RCA15.3](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md)
+已在其同一expanded graph及canonical-frame域内给finite-completion-conditional later Cover、真正immutable取得及exact historical Call，
+包括旧handler／compiler／descriptor／ingress／copy interiors；该历史closure不重列为未解。
+它不自动给本新图任何忙碌cut的当前可请求入口。
+
+[GENERAL15.5／18.4](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GENERAL_TARGET_INCIDENCE_CYCLE.md)
+分别已覆盖同一actual Ready $P$后的unchanged-original-row source-only01 rolling／cross-entry cuts，
+以及所声明successful mixed histories的指定final post-IN／pre-EX13 cuts；
+[RG13.3](https://github.com/the-omega-institute/trureturing/blob/7785ec6df54bf056b0b59bdbce76664c3ba7777e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REENTRANT_GUARDED_ACQUISITION.md)
+已覆盖inherited non-IN charts上的声明mode／round original-Q分离。
+尚缺的是超出这些域的changed／new rows、broader mixed interiors及full terminal-task kernel，
+不是把所有cross-entry原Q结果一概判为空白。本构造也未供应all-cut四个独立可用表达及其全部原消费者。
+
+任意internally generated independently guarded policies、任意all-seven direct schedules、
+更广generic source族／非canonical物理源、实际无限执行、统一有限设备／资源、
+任意later terminal task／current target转换、total-resource advantage和global／Pareto最小性均未由此给出。
+原INITIAL始终为同一次准备的目标，没有posthalt reentry。
+其他新geometry／minimality结果不充当这座操作桥的证明前提。
+
+**文献表态。** 本增补是以上仓内来源的具体综合推导，归属为repo-derived；
+未作外部文献穷尽核查，不主张全球原创性。证据层次为有明确材料／权限／输入／原计算条件的普通source-model构造与归纳。
+本文没有提供已执行示例、新Lean／exact-S编译、公理闭包核验、physical conformance或实测whole-run费用；
+源码既有证明及其接口含义不能提升为这一个新组合的kernel验证。
+
+## 追加锚（本行以下为增补区）
