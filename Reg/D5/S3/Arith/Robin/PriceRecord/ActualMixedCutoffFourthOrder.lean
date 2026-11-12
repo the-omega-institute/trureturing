@@ -147,4 +147,71 @@ private theorem source_bridge :
 #print axioms source_bridge
 end eventual_integer_determinant_positive
 
+/- The following two public exposures have source-law attempts only; no
+additional four-slot registration or binding evidence is asserted. -/
+
+namespace actual_quartic_error
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ j X => d j X) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law W := ∀ {j : ℕ} (hj : 2 ≤ j),
+    Tendsto (fun X : ℝ => log X ^ 4 *
+      (((W.readout ()) j X) - (P (log j)).eval (1 / log X))) atTop (𝓝 0)
+
+private theorem actual_law : arena.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder.actual_quartic_error
+
+private theorem source_bridge :
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder.actual_quartic_error)) ↔ arena.Law actual := Iff.rfl
+
+#print axioms actual_law
+#print axioms source_bridge
+end actual_quartic_error
+
+namespace paid_range_rate
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ X => log X) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law W := ∀ {barL range : ℝ → ℝ} {rho lambda : ℝ}
+    (hrho : 0 < rho) (hlambda : 0 < lambda)
+    (hclose : Tendsto (fun X => barL X - ((W.readout ()) () X)) atTop (𝓝 0))
+    (hpaid : ∀ᶠ X : ℝ in atTop,
+      rho * exp (lambda * barL X) * barL X ^ 2 ≤ range X),
+    (∀ᶠ X : ℝ in atTop, 0 < range X) ∧
+      Tendsto (fun X => ((W.readout ()) () X) ^ 4 / range X) atTop (𝓝 0)
+
+private theorem actual_law : arena.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder.paid_range_rate
+
+private theorem source_bridge :
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder.paid_range_rate)) ↔ arena.Law actual := Iff.rfl
+
+#print axioms actual_law
+#print axioms source_bridge
+end paid_range_rate
+
 end Reg.D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffFourthOrder
