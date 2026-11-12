@@ -104,6 +104,10 @@ $$(\operatorname{a}\left(1\right) = 236) \land ((\operatorname{PowerSeries}.\ope
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233166` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233166","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233166KingStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233166: normalized eight-colour six-column king strips*. URL: <https://oeis.org/A233166>.
