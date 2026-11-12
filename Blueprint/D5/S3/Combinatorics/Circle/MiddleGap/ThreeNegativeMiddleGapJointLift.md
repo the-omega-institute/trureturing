@@ -6,7 +6,7 @@ A physical floor-mask joint order for strictly ordered middle-minimum gaps
 
 **Theorem 1.1 (One complete physical permutation and one literal ear cut).**
 
-Lean statement: `D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift`
+$$\forall a \in \mathrm{Nat},\; \forall b \in \mathrm{Nat},\; \forall c \in \mathrm{Nat},\; 2 \le b \Rightarrow \left(b < a \Rightarrow \left(a < c \Rightarrow \left(\exists sigma \in \operatorname{List}\left(\operatorname{Fin}\left(a + b + c\right)\right),\; \exists j \in \mathrm{Nat},\; j \le a + b + c \land \left(\operatorname{OriginalOrder}\left(a + b + c, 1 + 2^{a} + 2^{a + b}, sigma\right) \land \operatorname{OriginalOrder}\left(a + b + c + 1, 2 \cdot \left(1 + 2^{a} + 2^{a + b}\right), \operatorname{earWord}\left(a + b + c, sigma, j\right)\right)\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJointLift.actualSource_three_negative_middle_gap_joint_lift` (`✓ std3`). ∎
 
@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/MiddleGap/ThreeNegativeMiddleGapJoin
 
 *Commentary.*
 
-For every natural a,b,c with 2<=b<a<c, put k=a+b+c and u=1+2^a+2^(a+b). The theorem constructs one list sigma of Fin(k) and a natural j<=k such that OriginalOrder(k,u,sigma) and OriginalOrder(k+1,2u,earWord(k,sigma,j)). Each OriginalOrder includes the complete permutation of all physical labels, integer total zero, and both half-modulus bounds on every natural take-prefix, including empty and overlong prefixes. The old labels retain their original identity through castSucc, and the single fresh label k is inserted at the literal cut j.
+For every natural a,b,c with 2<=b<a<c, put k=a+b+c and u=1+2^a+2^(a+b). The theorem constructs one list sigma of Fin(k) and a natural j<=k such that OriginalOrder(k,u,sigma) and OriginalOrder(k+1,2u,earWord(k,sigma,j)). Each OriginalOrder includes the complete permutation of all physical labels, an independent integer total zero, and a prefix sum between zero and floor((2^k-1)/2) (respectively floor((2^(k+1)-1)/2)) for every natural take-prefix, including empty and overlong prefixes. No coprimality or unit hypothesis is imposed on either seed. The old labels retain their original identity through castSucc, and the single fresh label k is inserted at the literal cut j.
 
 Write r=2^a, s=2^b, t=2^c, N=rst-1 and C=(N-1)/2. The old actual source is f(i)=center_N(2^i*u), and the new source is g(i)=center_(2N+1)(2^(i+1)*u). The positive physical labels are U_i=i for i<c-1, V_i=c+i for i<b-1 and W_i=c+b+i for i<a-1. The three negative labels are alpha=c-1, beta=c+b-1 and gamma=k-1. Choose m=floor(C/u). The set P is exactly the U-chain binary mask m, T is exactly the W-chain binary mask r/2-1, and Q is the literal complement of P,T and the three negative labels in range(k). The word is [P,beta,Q,alpha,T,gamma], and j=|P|+1. The bound m<t/2 follows from C<u*t/2, so P fits its chain. The T mask fits its own chain, which is disjoint from P. The existing physical-inventory lemma proves exhaustiveness and no repeated physical labels. Any fixed internal ordering of each positive block works.
 
@@ -26,7 +26,7 @@ The mask sums are x=f(P)=um=C-G, g(P)=2x, y=f(T)=(r/2-1)L and g(T)=(r/2-1)(2L-s-
 
 The reused source_zero theorem establishes both complete actual integer totals. The complete physical inventory and these totals identify the middle block endpoint from the tail mass. The reused physical_schedule strip proof controls every interior positive prefix and both endpoints of each negative step. The reused lift_order and marked_word lemmas transfer this complete natural-label schedule to Fin(k) and to the literal earWord at j. All these helper applications are consumed in the final proof. The floor-mask remainder estimate and its connection to this simultaneous physical order supply the new mathematical inference.
 
-This proves the entire strict chamber 2<=b<a<c of the joint-order problem associated with Circle Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2. The construction follows the supplied independently approved ordinary floor-mask proof. The equal-outer and minimum-two statements are not prerequisites for this chamber: only general source, inventory, strip and ear machinery is reused. Full C3.1 remains active and open.
+This proves the entire strict chamber 2<=b<a<c of the joint-order problem associated with Circle Conjecture 3.1 of Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2. The equal-outer and minimum-two statements are not prerequisites for this chamber: only general source, inventory, strip and ear machinery is reused. This statement does not settle the other gap chambers, the four-gap problem, or the full joint-order problem; full C3.1 remains open.
 
 ## References
 
