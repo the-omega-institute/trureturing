@@ -77,7 +77,7 @@ internal sealed class DelgadoSuerYesilPhiRefutationDocument : IScribeDocumentDef
 
     private static DocumentBlock Entry(string name, string title, Formula formula, string prose,
         DescribeRole role, bool literature = true) => Describe.Lean(
-            DescribeId.Create("delgado-phi-" + name.Replace("_", "-")), DeclarationHandle.Create(Prefix + name), H(title),
+            DescribeId.Create("delgado-phi-" + name.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role);

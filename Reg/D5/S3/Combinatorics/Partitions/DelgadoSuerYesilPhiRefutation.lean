@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Partitions.DelgadoSuerYesilPhiRefutation
 import Reg.Support.DependentFamily
 
+/-! A source-bound readout of the complete numerical-set image. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.Combinatorics.Partitions.DelgadoSuerYesilPhiRefutation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -14,17 +16,16 @@ private def twoGaps : NumericalSet := ⟨{2,3}, by simp, by simp⟩
 
 private theorem ordinary_semigroup : Semigroup ordinary := by
   intro a b ha hb
-  change a ≠ 1 at ha
-  change b ≠ 1 at hb
-  change a + b ≠ 1
+  simp only [members, ordinary, Set.mem_ofPred_eq, Finset.mem_singleton] at ha hb ⊢
   omega
 
 private theorem twoGaps_one : 1 ∈ phi twoGaps := by
+  classical
   have hF : frobenius twoGaps = 3 := by decide
   have hp : ¬ PseudoFrobenius twoGaps 2 := by
     intro h
     have hc := h.2 1 (by decide) (by simp [members, twoGaps])
-    simpa [members, twoGaps] using hc
+    simp [members, twoGaps] at hc
   have hR : retainedRows twoGaps = twoGaps.gaps := by
     apply Finset.filter_eq_self.mpr
     intro r hr
@@ -68,7 +69,8 @@ def family : Registration arena (type_of% @phi_omits_one) where
     · intro i
       refine ⟨rejected, ?_, rfl, bad⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      change Unit at i j
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro i
       cases i
   dependence := by
