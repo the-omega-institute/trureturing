@@ -3,11 +3,11 @@
    mirror-B: D5/B/S3/Quantum/Recovery/FourPathNegativeFloor
    mirror-E: none(waiver:original-negative-triangle-bound)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Recovery/FourPathNegativeFloor.negative_floor; premises=D5/S3/Quantum/Recovery/FourPathFloorCertificate.segment_majorants_lt_floor
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Recovery/FourPathNegativeFloor.negative_floor; premises=D5/S3/Quantum/Recovery/FourPathNegativeFloor.segment_majorants_lt_floor
    digest: A strict lower bound for the original negative four-path defect on the closed population interval. -/
 
 import D5.S3.Quantum.Recovery.FourPathTriangleFibre
-import D5.S3.Quantum.Recovery.FourPathFloorCertificate
+import Mathlib.Tactic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 /-! The fixed negative row of Definition 57.1, with its original nonnegative radicals. -/
@@ -20,6 +20,25 @@ namespace D5.S3.Quantum.Recovery.FourPathNegativeFloor
 open FourPathTriangleFibre
 set_option autoImplicit false
 set_option maxHeartbeats 1400000
+
+/-- The non-radical upper bounds in the seven rows of (71.8). -/
+def segmentNonroot : Fin 7 → ℝ :=
+  ![467893519 / 512000000, 36315767 / 40000000,
+    284721081 / 320000000, 139458013 / 160000000,
+    273110971 / 320000000, 66826479 / 80000000,
+    261500861 / 320000000]
+
+/-- The radical upper bounds in the seven rows of (71.8). -/
+def segmentRadical : Fin 7 → ℝ :=
+  ![1 / 5, 79 / 250, 67 / 200, 9 / 25, 7 / 20, 31 / 100, 137 / 500]
+
+/-- Every displayed Section 71 segment majorant is strictly below the common
+floor used in the full closed-triangle comparison. -/
+theorem segment_majorants_lt_floor :
+    ∀ i : Fin 7,
+      segmentNonroot i + segmentRadical i < (49359 : ℝ) / 40000 := by
+  intro i
+  fin_cases i <;> norm_num [segmentNonroot, segmentRadical]
 
 def h : ℝ := 1/Real.sqrt 2
 def c : ℝ := Real.cos (Real.pi/8)
@@ -237,13 +256,13 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
     linarith
   have support := gamma_support q X Y hq hq' ht
   change (Gamma q X Y)^2 ≤ N a u+Real.sqrt ((185961:ℝ)/1250000*T a u) at support
-  have row (i : Fin 7) (hn : N a u ≤ FourPathFloorCertificate.segmentNonroot i)
-      (hr : (185961:ℝ)/1250000*T a u ≤ (FourPathFloorCertificate.segmentRadical i)^2) :
+  have row (i : Fin 7) (hn : N a u ≤ segmentNonroot i)
+      (hr : (185961:ℝ)/1250000*T a u ≤ (segmentRadical i)^2) :
       (Gamma q X Y)^2 < (49359:ℝ)/40000 := by
-    have rp : 0 ≤ FourPathFloorCertificate.segmentRadical i := by
-      fin_cases i <;> norm_num [FourPathFloorCertificate.segmentRadical]
+    have rp : 0 ≤ segmentRadical i := by
+      fin_cases i <;> norm_num [segmentRadical]
     have bound := Real.sqrt_le_iff.mpr ⟨rp,hr⟩
-    have finite := FourPathFloorCertificate.segment_majorants_lt_floor i
+    have finite := segment_majorants_lt_floor i
     linarith only [support,hn,bound,finite]
   have lo (v b : ℝ) (huv : u ≤ v) (hv : v ≤ 1)
       (h₀ : 0 ≤ b*v^2-B v*D (77/50) v)
@@ -260,35 +279,35 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
   have result : (Gamma q X Y)^2 < (49359:ℝ)/40000 := by
     by_cases hu₀ : u ≤ 4/5
     · refine row 0 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a] at ul ⊢
         nlinarith only [al,au,ul]
       · have cap := lo (4/5) (1/4) hu₀ (by norm_num)
           (by norm_num [B,D]) (by norm_num) (by norm_num)
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         linarith only [cap]
     by_cases hu₁ : u ≤ 9/10
     · refine row 1 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₀]
       · have cap := lo (9/10) (2/3) hu₁ (by norm_num)
           (by norm_num [B,D]) (by norm_num) (by norm_num)
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         linarith only [cap]
     by_cases hu₂ : u ≤ 1
     · refine row 2 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₁]
       · have cap := lo 1 (3/4) hu₂ (by norm_num)
           (by norm_num [B,D]) (by norm_num) (by norm_num)
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         linarith only [cap]
     have u1 : 1 < u := not_le.mp hu₂
     by_cases hu₃ : u ≤ 21/20
     · refine row 3 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,u1]
       · have td : T a u ≤ D a u := by
@@ -298,7 +317,7 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
           dsimp [D]
           nlinarith only [mul_nonneg (show 0 ≤ a-77/50 by linarith only [al])
             (show 0 ≤ a+77/50-2*u by linarith only [al,hu₃]),hu₃]
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         linarith only [td,dcap]
     by_cases hu₄ : u ≤ 11/10
     · have cap := (highB u1).trans (bcap (21/20) (by linarith))
@@ -313,26 +332,26 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
       linarith only [support,root,nonroot]
     by_cases hu₅ : u ≤ 6/5
     · refine row 4 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₄]
       · have cap := (highB u1).trans (bcap (11/10) (by linarith))
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         nlinarith only [cap]
     by_cases hu₆ : u ≤ 13/10
     · refine row 5 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₅]
       · have cap := (highB u1).trans (bcap (6/5) (by linarith))
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         nlinarith only [cap]
     · refine row 6 ?_ ?_
-      · norm_num [FourPathFloorCertificate.segmentNonroot,N]
+      · norm_num [segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₆]
       · have cap := (highB u1).trans (bcap (13/10) (by linarith))
-        norm_num [FourPathFloorCertificate.segmentRadical]
+        norm_num [segmentRadical]
         nlinarith only [cap]
   have energy := energy_threshold q hq hq'
   unfold G

@@ -9,6 +9,32 @@ internal sealed class FourPathNegativeFloorDocument : IScribeDocumentDefinition
         H("Four-path negative full-triangle lower bound"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("four-path-section-71-segment-nonroot"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentNonroot"),
+                H("Section 71 non-radical segment bounds"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The seven entries are fixed rational values indexed by Fin 7 and used as the non-radical bounds in the full-triangle proof."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("four-path-section-71-segment-radical"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentRadical"),
+                H("Section 71 radical segment bounds"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The seven entries are fixed positive rational values indexed by Fin 7 and used as the radical bounds in the full-triangle proof."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("four-path-section-71-segment-majorants-lt-floor"),
+                DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathNegativeFloor.segment_majorants_lt_floor"),
+                H("Finite segment majorants below the common floor"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every i : Fin 7, the corresponding rational non-radical and radical entries sum to a value strictly below 49359/40000. The proof enumerates Fin 7 and closes the seven rational inequalities.")),
+                    Paragraph(Text("The finite comparison is consumed by negative_floor when the actual closed-triangle support bounds are split into the seven cases; it makes no independent assertion about the defect."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("four-path-negative-floor-h"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/FourPathNegativeFloor.h"),
                 H("The constant h"),
