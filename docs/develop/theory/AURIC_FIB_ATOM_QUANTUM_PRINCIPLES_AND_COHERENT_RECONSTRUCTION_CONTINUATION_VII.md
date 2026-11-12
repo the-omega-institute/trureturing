@@ -3018,8 +3018,17 @@ D_3=\ker n_3&e_{u0v}\longleftrightarrow e_u\otimes e_v,\ u\in L_2,\ v\in L_6&3\c
 \end{array}
 $$
 
-于是 $\mathcal K=A_8\oplus B_8=C_3\oplus D_3$，且
-$C_3=\operatorname{ran}J$ 正是原 $26$ 维代码，$D_3$ 是原 $63$ 维补空间。
+于是 $\mathcal K=A_8\oplus B_8=C_3\oplus D_3$，后一个是按 $n_3$ 的切口分解。
+由 II(100.2)，原代码及其补空间则是
+
+$$
+\mathcal C=\operatorname{ran}J=\operatorname{ran}n_7,\qquad
+\mathcal C^\perp=\ker n_7.
+$$
+
+原代码路径恰有 $b_7=1$，合法性迫使 $b_6=b_8=0$。
+$C_3,D_3$ 与 $\mathcal C,\mathcal C^\perp$ 的维数分别同为 $26,63$，但子空间不同；
+例如 $J(e_{00000}\otimes|0\rangle)=e_{000000100}$ 的 $b_3=0$，属于 $\mathcal C\cap D_3$ 而不属于 $C_3$。
 $Q=n_1=\sum_{b_1(\lambda)=1}N_\lambda$ 在这些坐标中作用于首因子；在 $A_8$、$C_3$ 的首因子上均非零且非恒等。原标签仍为
 $\Lambda=\{0,1\}^{10}$，$N_\lambda$ 固定旧十位 $b_{-1},\ldots,b_8$。
 其中 $34$ 个投影秩二、$21$ 个秩一、$969$ 个为零；全部 $1024$ 个标签保留。
@@ -3052,7 +3061,7 @@ $$
 $p_\lambda(\epsilon)=\|N_\lambda e_0\|^2$ 及当前 ready 回返：
 若 $[K_{a_n}e_0]\to[e_0]$，则
 $\max_\lambda|p_\lambda(a_n)-p_\lambda(\epsilon)|\to0$。
-原代码基的联合校准写为：对 $\beta\in L_5$、$i=0,1$，沿原校准合同中的实际序列
+原代码 $\mathcal C=\operatorname{ran}J$ 的基联合校准写为：对 $\beta\in L_5$、$i=0,1$，沿原校准合同中的实际序列
 $[K_{a_n}e_0]\to[J(e_\beta\otimes|i\rangle)]$，要求
 $p_\lambda(a_n)\to\|N_\lambda J(e_\beta\otimes|i\rangle)\|^2$。
 这保留十三条原系统路径和两个记录值的同菜单校准，不授予它们新的物理准备权限，也不把代码外任意输入的全细 Born 当作校准定义。完整联合四前缀锚为
@@ -3461,6 +3470,7 @@ P_{D_3}t&=\frac1{\sqrt2}
 \tag{31.1}
 $$
 
+这是按 $n_3$ 切分原代码内的参考列 $t$；特别地 $P_{D_3}t\in\mathcal C$，不能把该分量解释为原代码补空间分量。
 因此两分量的平方范数各为 $1/2$，尤其 $D_3$ 种子非零。
 后者在 $3\times21$ 坐标中为
 $e_{00}\otimes(ye_{000100}+xe_{000101})/\sqrt2$。
@@ -3642,7 +3652,7 @@ $C_3$ 不再另缺粗相反零桥，$A_8$ 内部结论也不依赖未命名的�
 这里的精确有限递推、源特定零族和条件综合属于 repo-derived 纸面推导；
 全载体矩阵密度复用 (10.5) 及其 [FLW] 供应，正半定核与产品张成是所用有限维线性代数。
 不主张文献优先权、Lean kernel 核验或冻结认证。
-原 $89$ 路径、$26+63$ 扇区、$1024$ 标签、唯一 $\Omega$/ready、十一／七地址及有限调用次序完整保留。
+原 $89$ 路径、$26+63$ 维代码／补空间 $\mathcal C\oplus\mathcal C^\perp$、$1024$ 标签、唯一 $\Omega$/ready、十一／七地址及有限调用次序完整保留。
 VII22 的关系下降、VII24–28 的无秩 Born 路线各守原前件；
 复结构与 Born 的物理来源、实际联合复合、仪器与更新、档案及校准、
 真实时间／单位、可靠性、资源、活动返回和原全部中间切口仍是完整量子起源目标的义务。
