@@ -3578,3 +3578,515 @@ Cifuentes–Agarwal–Parrilo–Thomas，*On the local stability of semidefinite
 特征值连续性、主子式及有限维紧性只作证明中的标准工具。
 
 ## 追加锚（本行以下为增补区）
+
+## 59. 整个零阶极小集的价格排除与完整响应的显式权重界
+
+**定义 59.1（原坐标别名与响应端点）。** 固定约定 46.1 的两个来源
+$a_r=(1/\sqrt2,r)^{\mathsf T}$、$r=\pm1$，以及原矩阵
+$C=\operatorname{diag}(1,2)$、$T_A=\operatorname{diag}(1,-2)$、
+$H_h=2C+hJ_A$。有限环境始终取前卷 (37.2) 在
+$\mathbb C^2\oplus(\mathbb C^2\oplus\mathbb C)$ 上的同源环境，
+其原三矩仍为 $M_0=C^2$、$M_1=C$、$M_{2,r}=I_2+\lambda^2a_ra_r^*$。
+取向 $i$ 中仅用原参数 $g=rh$；另一取向按前卷 (39.32) 同源运输。
+
+$\mathcal M_0$ 表示定义 53.1、定理 56.3 的整个实际零阶全局极小集，
+在 (57.1) 的坐标映射 $\iota$ 下使用 $(x,y,s)$。
+本节在该集合上写的极值均遍取其全部成员。
+沿用原 $U,V,F,G,c_{\rm cost},K_0$，在 $\Omega$ 上仅置别名
+
+$$
+\begin{gathered}
+d=1-x,\qquad e=2-x,\qquad Y=y^2,\qquad
+c=\frac{4-x}{2},\qquad p=s-\frac52,\\
+T=3d+xs,\qquad h_{\rm aux}=dT,\qquad D=3d+2xs,\\
+L=4-s+\left(\frac{5s}{3}-4\right)x,\qquad n=(x+1)T,\\
+a=s+c,\qquad b=py-\frac{h_{\rm aux}}y,\qquad W=a^2+b^2,\qquad
+F=-a+ib,\qquad t=\frac14+\frac{xs}{6d}.
+\end{gathered}
+\tag{59.1}
+$$
+
+这里 $c$ 为标量，$D$ 不表示完整响应 $\mathcal D$，$p$ 不表示可见列。
+所有 $x,d,s,y,Y-1,T,D,xD$ 均严格正，且 $W\ge a^2>0$。
+在 $\mathcal M_0$ 上，保持 (46.5)、(46.8)、(57.10) 的原函数，写
+
+$$
+\begin{gathered}
+\tau=\overline{\frac{G}{\sqrt2F}},\qquad
+v=\operatorname{Re}\tau,\qquad Z_0=3(4t-1),\qquad
+E_1=\sqrt2L_1\overline\tau-L_2,\\
+Q=2\operatorname{Re}(\overline G E_1),\qquad
+\mathcal S=c_{\rm cost}
+ \left[2\operatorname{Re}(\overline F L_1)+\frac{Wv}{Z_0}\right],\\
+e_F=\frac{\mathcal S}{K_0},\qquad
+R=\frac{Q}{2tW},\qquad e_G=e_F-R,\qquad
+\Phi=\frac{\mathcal D}{K_0},\\
+\varepsilon(x,y)=\frac1{65+128y/[3(x+1)]},\qquad
+L_\varepsilon=\min(e_G,e_F-\varepsilon R),\qquad
+H_\varepsilon=\max(e_G,e_F-\varepsilon R).
+\end{gathered}
+\tag{59.2}
+$$
+
+这些是原完整响应的端点；$\mathcal D=\mathcal S-(\nu/P_t)Q$
+仍包含原固定 $t$ 接触方程的强制根运动。
+接触式 $2tW=|G|^2$ 给 $F,G\ne0$、$|\tau|^2=t>1/4$，
+故 $Z_0,tW,K_0$ 等分母均非零。允许 $Q=0$，不对其符号作假设。
+
+**定理 59.2（全极小集排除、单值价格图及显式完整响应界）。**
+对定义 59.1 的整个 $\mathcal M_0$，每一点均满足
+
+$$
+s>\frac72,\qquad
+ y^2>\frac{7+\sqrt{57}}4>\frac72,\qquad
+\operatorname{Im}F>0.
+\tag{59.3}
+$$
+
+对每个固定 $0<x<1,s>0$，原函数 $y\mapsto U(x,y,s)$、
+$y\mapsto V(x,y,s)$ 在 $y>1$ 上均有严格正的二阶导数；
+$y\mapsto\max(U,V)$ 有唯一全局极小点。因此投影
+
+$$
+\iota(\mathcal M_0)\longrightarrow\mathbb R^2,\qquad
+(x,y,s)\longmapsto(x,s)
+\tag{59.4}
+$$
+
+为到其像的同胚，整个零阶极小集在该像上是连续单值 $y$ 图。
+这不判定像的连通性、有限性或原联合极小点的唯一性。
+
+原权重 $\theta=U_s/(U_s-V_s)$ 在整个该集合上满足
+
+$$
+\begin{gathered}
+\frac1{25665}<\varepsilon(x,y)<\theta<1,\\
+L_\varepsilon\le\Phi\le H_\varepsilon,\qquad
+(e_F-\Phi)R\ge\varepsilon R^2.
+\end{gathered}
+\tag{59.5}
+$$
+
+当 $Q\ne0$ 时，$\Phi$ 严格位于两个端点之间，乘积不等式也严格；
+当 $Q=0$ 时，$\Phi=e_F=e_G=L_\varepsilon=H_\varepsilon$。
+乘积不等式表示下权重侧的限制，双端点结论同时使用原有的 $\theta<1$。
+这些连续端点给原来的极值和
+
+$$
+\begin{gathered}
+S_{\rm pair}=\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi,\\
+\min_{\mathcal M_0}L_\varepsilon+\max_{\mathcal M_0}L_\varepsilon
+\le S_{\rm pair}\le
+\min_{\mathcal M_0}H_\varepsilon+\max_{\mathcal M_0}H_\varepsilon.
+\end{gathered}
+\tag{59.6}
+$$
+
+若同时使用 (57.13)，可取交界
+
+$$
+\begin{gathered}
+L_\cap=\max(L_\varepsilon,l_\delta),\qquad
+H_\cap=\min(H_\varepsilon,u_\delta),\qquad
+L_\cap\le\Phi\le H_\cap,\\
+\min_{\mathcal M_0}L_\cap+\max_{\mathcal M_0}L_\cap
+\le S_{\rm pair}\le
+\min_{\mathcal M_0}H_\cap+\max_{\mathcal M_0}H_\cap.
+\end{gathered}
+\tag{59.7}
+$$
+
+定性内部余量已由 (57.12) 给出；(59.5) 定量收紧的是 $e_F$ 一侧。
+这里不主张它统一支配含未知 $\delta$ 的旧双侧包络。
+(59.3) 仅是实际全局极小点的必要限制，受限区域内的驻点不因这些限制
+而成为 $\mathcal M_0$ 的成员。
+
+上述结论属于整个零阶极小集。非零参数的阈值表示仍只在定理 58.2
+的共同小 $h$ 区间内成立，并只对联合全局最优矩恢复实际全局极小接触；
+任意可行矩不因此具有该恢复性质。有限原 PB 的后果仍要求同一对正
+$h,k$、(58.39) 的全部小参数交、完整原 P2 及同一个充分大有限 $\lambda$，
+并经前卷定理 41.5 的严格阈值桥梁使用。
+
+**证明。** 全程使用 (57.1) 的两个原代价；以下坐标恒等式、微分和
+通常凸性、紧性事实均在同一模型特定推导中使用。
+
+（一）整个实际极小集的完整驻定性。
+定理 57.2 给
+
+$$
+\iota(\mathcal M_0)=\{U=V=K_0\}
+=\operatorname*{argmin}_{\Omega}\max(U,V).
+$$
+
+定理 57.3 及 (57.14)–(57.16) 在它的每一点给
+
+$$
+\nabla U=\theta(\nabla U-\nabla V),\qquad
+(1-\theta)\nabla U+\theta\nabla V=0,\qquad
+0<\theta<1,\qquad U_s>0>V_s.
+\tag{59.8}
+$$
+
+梯度在全部三个坐标 $(x,y,s)$ 中取，$x$ 偏导固定 $y,s$；
+原固定 $x,y$ 的 $t$ 偏导仍保持原义。
+由 (57.3) 的 $U_x<0$，有
+$V_x=-(1-\theta)U_x/\theta>0$。
+同时 $U=K_0$ 允许应用定理 57.2，故原括号
+$H=8+2s(5x-3)/(3d)>0$。以下只在实际极小点处使用此 $H$ 正性。
+
+（二）排除整个 $0<s\le7/2$ 价格层。
+写 $J=2(x+1)T/(dy)$。从 $dH=2L$、$dJ=2n/y$ 及
+$2t=D/(6d)$，原第二代价恰为
+
+$$
+V=\frac{3y}{4s(Y-1)}(Y+e^2)
+ \left[\frac{L^2}{xD}+\frac{n^2}{YxD}\right].
+\tag{59.9}
+$$
+
+固定 $y,s$，令 $f_L=L^2/(xD)$、$f_n=n^2/(xD)$。
+若 $0<s\le7/2$，则
+
+$$
+L=(4-s)(1-x)+\frac{2s}{3}x>0.
+$$
+
+对上述有理式求导并合并分子，得到
+
+$$
+\begin{aligned}
+(f_L)_x&=\frac{LE_L}{(xD)^2},&
+E_L&=3(s-4)(1-x)+2s(2s-7)x,\\
+(f_n)_x&=\frac{nE_n}{(xD)^2},&
+E_n&=2(2s-3)(s-3)x^3+9(s-3)x^2+(18-9s)x-9\\
+&&&=-9(1-x)^3-9(1+s)x(1-x)^2\\
+&&&\hspace{6mm}-9(2+s)x^2(1-x)+2s(2s-9)x^3.
+\end{aligned}
+\tag{59.10}
+$$
+
+$E_L$ 的两个端点系数均非正，第一项严格负，因为 $s<4$、$x<1$；
+所以即使 $s=7/2$ 也有 $E_L<0$。
+$E_n$ 的四项分解在本价格层内均严格负，故 $E_n<0$。
+由 $L,n,xD>0$，得 $(f_L)_x<0,(f_n)_x<0$。
+又 $(Y+e^2)_x=-2e<0$、$f_L+f_n/Y>0$，(59.9) 给该整个层上的 $V_x<0$，
+对每个 $y>1$ 均成立。这与（一）对实际极小点强制的 $V_x>0$ 矛盾，
+故整个 $\mathcal M_0$ 均有 $s>7/2$。
+
+（三）原价格纤维的正曲率及 $y$ 排除。
+固定任意 $x,s$，令 $k_U=d/(2xs)>0$、$k_V=3/(4xsD)>0$。
+(57.1)、(59.9) 给
+
+$$
+\begin{gathered}
+U=k_U\frac{A_Uy^3+B_Uy+C_U/y}{Y-1},\qquad
+V=k_V\frac{A_Vy^3+B_Vy+C_V/y}{Y-1},\\
+A_U=p^2,\quad B_U=a^2-2p h_{\rm aux},\quad C_U=h_{\rm aux}^2,\\
+A_V=L^2,\quad B_V=e^2L^2+n^2,\quad C_V=e^2n^2.
+\end{gathered}
+\tag{59.11}
+$$
+
+两组 $A$ 非负，两组 $C$ 严格正，且 $B_V>A_V/2$。
+为核对 $B_U$，若 $p<0$，则 $B_U=a^2+2|p|h_{\rm aux}>0$。
+若 $p\ge0$，置 $q_0=(9-x)/2$、$m_0=3d^2+(5/2)xd$，则
+
+$$
+\begin{gathered}
+a=p+q_0,\qquad h_{\rm aux}=m_0+xd\,p,\\
+B_U=(1-2xd)p^2+2p(q_0-m_0)+q_0^2,\qquad
+q_0-m_0=\frac{3+6x-x^2}{2}>0.
+\end{gathered}
+\tag{59.12}
+$$
+
+由于 $xd\le1/4$，有 $B_U>0$，且在 $p>0$ 时 $B_U>A_U/2$。
+这一步不预设交叉系数的符号。
+
+为在同一证明中检验曲率，置
+$f_1(y)=y/(y^2-1)$、$f_2(y)=1/[y(y^2-1)]$。
+有
+
+$$
+\begin{gathered}
+\frac{y^3}{y^2-1}=y+f_1(y),\qquad
+f_1(y)=\frac12\left(\frac1{y-1}+\frac1{y+1}\right),\qquad
+f_2(y)=f_1(y)-\frac1y,\\
+f_1''(y)=\frac1{(y-1)^3}+\frac1{(y+1)^3}>0,\qquad
+f_2''(y)=\frac{2(6Y^2-3Y+1)}{y^3(Y-1)^3}>0.
+\end{gathered}
+\tag{59.13}
+$$
+
+最后一个分子在 $Y>1$ 上正。
+(59.11) 中每一代价因而是正倍数的
+$Ay+(A+B)f_1+Cf_2$，其中 $A\ge0,B>0,C>0$，故
+$U_{yy}>0,V_{yy}>0$ 在整个 $\Omega$ 成立。
+这里使用通常的一元二阶导数凸性准则，见 NIST DLMF
+[§1.4(viii)，(1.4.38) 后的判据](https://dlmf.nist.gov/1.4#viii)。
+严格正二阶导数使一阶导数严格递增；在任意两个不同端点间用中值定理
+比较两段割线斜率，即得严格凸性，无须引入联合凸性假设。
+
+现固定一个任意实际极小点，把它的实际 $\theta$ 作为常数，
+对 $(1-\theta)U+\theta V$ 取 $y$ 导数。
+它仍有 (59.11) 的三项形式，系数为
+
+$$
+\begin{gathered}
+A=(1-\theta)k_UA_U+\theta k_VA_V,\\
+B=(1-\theta)k_UB_U+\theta k_VB_V,\qquad
+C_1=(1-\theta)k_UC_U+\theta k_VC_V.
+\end{gathered}
+$$
+
+（二）给 $p>1$，故 $A>0$、$B>A/2$、$C_1>0$。
+(59.8) 的 $y$ 分量乘正数 $Y(Y-1)^2$ 后正是
+
+$$
+AY^2(Y-3)-BY(Y+1)-C_1(3Y-1)=0.
+\tag{59.14}
+$$
+
+于是 $AY^2(Y-3)>(A/2)Y(Y+1)$，除以正数 $AY$ 得
+$2Y^2-7Y-1>0$。因 $Y>1$，这等价于
+$Y>(7+\sqrt{57})/4>7/2$。
+没有对随点变化的 $\theta$ 求导，也没有除以 $p$ 或 $L$；
+$A$ 严格正的使用只发生在（二）之后。
+
+（四）整个极小集的纤维图。
+固定 $x,s$，若 $y_1\ne y_2$、$0<q<1$，分别对严格凸的 $U,V$ 使用
+严格凸不等式，并将各自两个端点值用对应的 $\max(U,V)$ 控制，便得
+
+$$
+\begin{aligned}
+&\max(U,V)(x,(1-q)y_1+qy_2,s)\\
+&\quad<(1-q)\max(U,V)(x,y_1,s)+q\max(U,V)(x,y_2,s).
+\end{aligned}
+$$
+
+因此这个最大值严格凸。
+当 $y\downarrow1$，$W\ge a^2>0$ 使 $U\to\infty$。
+当 $y\to\infty$，若 $p\ne0$，则 $A_U=p^2>0$ 使 $U\to\infty$；
+若 $p=0$，则 $s=5/2$、$L=3/2+x/6>0$，所以 $A_V>0$、$V\to\infty$。
+连续性和两端发散使最大值在区间内部取到极小值，严格凸性使之唯一。
+故每个实际联合全局极小点都必须使用其 $(x,s)$ 纤维的这个唯一 $y$；
+否则在同一纤维换成更低点即与 (57.2) 矛盾。(59.4) 因而单射。
+
+定义 53.1、定理 56.3 给整个 $\mathcal M_0$ 紧；
+$\iota$ 及其逆 $t=1/4+xs/(6d)$ 在此均连续。
+投影是从紧集到 Hausdorff 平面的连续单射，故为到其像的同胚。
+所用的标准紧到 Hausdorff 结论见 Munkres，*Topology*，第二版，
+§26，Theorem 26.6；在此亦可直接看出：任一闭子集仍紧，其投影紧而闭，
+所以投影的逆连续。这只说明整个实际极小集的图性质，不把一个包含它的
+驻点区域认作它本身，也不给孤立性、有限性、连通性或联合唯一性。
+
+（五）第一原代价的定量弹性。
+在任意实际极小点置
+
+$$
+\alpha=y-\frac{xd}{y}>0,\qquad
+\beta=\frac52y+\frac{3d^2}{y}>0.
+$$
+
+$\alpha>0$ 来自 $Y>7/2$、$xd\le1/4$。
+此时 $b=s\alpha-\beta$，原第一代价精确为
+
+$$
+U=\frac{yd}{2x(Y-1)}
+ \frac{(s+c)^2+(s\alpha-\beta)^2}{s}.
+\tag{59.15}
+$$
+
+由 $Y>7/2$ 可得 $\beta/\alpha<47/14$。
+确实，乘正分母后该不等式是
+
+$$
+12Y>42d^2+47xd=42-37x-5x^2,
+$$
+
+左边严格大于 $42$，右边严格小于 $42$。
+又 $0<c<2<47/14$、$s>7/2=49/14$，故
+$0<b<s\alpha$，特别地 $\operatorname{Im}F=b>0$。
+固定 $x,y$ 对 (59.15) 求导，得
+
+$$
+E_U:=\frac{sU_s}{U}
+=\frac{(1+\alpha^2)s^2-(c^2+\beta^2)}{W}.
+\tag{59.16}
+$$
+
+$c<(47/49)s$、$\beta<(47/49)s\alpha$，所以分子严格大于
+$(192/2401)(1+\alpha^2)s^2$。
+另一方面，$c<2$、$s>7/2$ 给 $s+c<11s/7$，从而
+
+$$
+\begin{gathered}
+W<\left(\frac{121}{49}+\alpha^2\right)s^2
+\le\frac{121}{49}(1+\alpha^2)s^2,\\
+E_U>\frac{192}{5929}>\frac1{32}.
+\end{gathered}
+\tag{59.17}
+$$
+
+这些估计覆盖所有实际极小点，不选择根或局部分支。
+
+（六）第二原代价的弹性及显式权重。
+复用 (57.7)，置
+
+$$
+\begin{gathered}
+\chi=\frac{3d}{2xs}>0,\qquad
+A_\chi=8\chi+5-\frac3x=\chi H>0,\qquad
+j=\frac{3(x+1)}y>0,\\
+B_\chi=1+2\chi,\qquad N=A_\chi^2+j^2B_\chi^2,\qquad
+\gamma=\frac{y[(2-x)^2+y^2]}{24(y^2-1)}>0,\qquad
+V=\gamma\frac{N}{1+\chi}.
+\end{gathered}
+\tag{59.18}
+$$
+
+这里 $A_\chi>0$ 只由（一）的实际低值结论取得，不向高代价点外推。
+在固定 $x,y$ 时 $s\chi_s=-\chi$，故
+
+$$
+E_V:=-\frac{sV_s}{V}
+=\frac{\chi(16A_\chi+4j^2B_\chi)}N-\frac{\chi}{1+\chi}>0.
+\tag{59.19}
+$$
+
+末尾正性使用原来的 $V_s<0$。
+由平方 $(A_\chi-jB_\chi)^2\ge0$ 和 $A_\chi^2\ge0$，有
+$N\ge2A_\chi jB_\chi$、$N\ge j^2B_\chi^2$。
+第一式也是 NIST DLMF [§1.7(iii)，(1.7.7)](https://dlmf.nist.gov/1.7.E7)
+的两正数算术—几何平均不等式在此的直接使用。
+因此
+
+$$
+E_V<\frac{8\chi}{jB_\chi}+\frac{4\chi}{B_\chi}
+<\frac4j+2,
+\tag{59.20}
+$$
+
+其中第一步舍去严格负项，第二步用
+$\chi/(1+2\chi)<1/2$。所有除数均严格正。
+在接触面 $U=V=K_0$ 上，由 (59.17)、(59.20) 得
+
+$$
+\theta=\frac{E_U}{E_U+E_V}
+>\frac1{65+128/j}
+=\frac1{65+128y/[3(x+1)]}=\varepsilon(x,y).
+\tag{59.21}
+$$
+
+局部显式式不需 $y$ 的统一上界。
+为取得共同有理常数，再用定义 58.1、定理 58.2 所保留的整个实际价格
+投影 $\Pi\subset\mathcal B$，故 $y\le600$；因 $x+1>1$，有
+
+$$
+\varepsilon(x,y)>
+\frac1{65+128\cdot600/3}=\frac1{25665}.
+$$
+
+上权重 $\theta<1$ 仍用 (57.11)，没有由下界取代它。
+
+（七）原完整响应的定量界。
+(57.17) 及定义 59.1 给原来的恒等式
+
+$$
+\Phi=e_F-\theta R,\qquad e_G=e_F-R.
+\tag{59.22}
+$$
+
+$\varepsilon<\theta<1$ 因而逐点给
+
+$$
+\begin{cases}
+e_G<\Phi<e_F-\varepsilon R,&R>0,\\
+e_F-\varepsilon R<\Phi<e_G,&R<0,\\
+\Phi=e_F=e_G,&R=0.
+\end{cases}
+\tag{59.23}
+$$
+
+这证明 (59.5) 的双端点界。又
+$(e_F-\Phi)R=\theta R^2$，得到乘积界及其严格条件；
+该乘积关系自身只限制下权重，(59.23) 的另一端仍需 $\theta<1$。
+没有删去非恒定分母、平均点变权重，或抑制 $Q$ 项。
+
+$\mathcal M_0$ 非空且紧，原响应和所有端点连续，所用分母均非零，
+因此各极值取到。对点值界分别取最小值、最大值再相加即得 (59.6)；
+与 (57.13) 取交后同样得到 (59.7)。这是同一完整响应上的序关系推论，
+仍是一个最小值与一个最大值之和。
+(57.12) 已给定性统一内部余量；显式 $\varepsilon$ 给的是原
+$e_F$ 到 $e_G$ 间隙中根运动必须占据的正比例，
+没有建立 $\varepsilon$ 与未知 $\delta$ 的统一大小关系。
+
+（八）原来源对应及严格有限比较的边界。
+任意上述实际极小点仍满足 $P=2tW-|G|^2=0$。
+由原相位恢复
+
+$$
+\begin{gathered}
+u_r=\frac{(1,r\tau)^{\mathsf T}}{\sqrt{1+t}},\qquad
+\eta=\frac{\sqrt2F}{\sqrt{1+t}},\qquad
+\mathbf d_{\rm src}=(F,rG/\overline\tau)^{\mathsf T}
+=\sqrt2F\,a_r,\\
+u_r^*p_{\rm vis}\in\mathbb R,\qquad
+(Cu_r)^*q_{\rm vis}\in\mathbb R,\qquad
+u_r^*q_{\rm vis}=p_{\rm vis}^*Cu_r,\qquad
+X=[p_{\rm vis}\ q_{\rm vis}][u_r\ Cu_r]^{-1}=X^*.
+\end{gathered}
+\tag{59.24}
+$$
+
+前卷定理 43.2 给两个来源坐标及这些四个实 Hermitian 图条件；
+$u_r$ 两坐标非零，所以同一个有限 $X$ 同时实现原两列。
+两笔原预算的下标记为 $j_b=\pm1$，在此取
+$\epsilon_{\rm budget}=-1$、$\alpha_{j_b}=y+j_b>0$、
+$\beta_{j_b}=j_bx$。另一取向仅按前卷 (39.32) 共轭运输，保留 $r$
+及取向适配的 $x,y$；不作相反来源或另一 $h$ 的替换。
+
+有限问题仍遍取每个有限 Hermitian $X$ 的 $X\oplus0_3$，
+以及完整 $M_5(\mathbb C)$ 上每个正复线性泛函，包含混合块和环境块，
+保留两笔预算、两个来源和两个取向。原环境不因零阶定位而改变，
+也不加入 CP、EJA、独立乘积或受限泛函假设。
+若要把阈值用于有限 PB，须保持同一对正 $h,k$ 及
+
+$$
+\begin{gathered}
+0<h<\min(h_1,h_{\rm coer},h_{\rm pos},h_x,h_0,\bar h,h_s),\qquad
+h\le10^{-3},\qquad k>0,\\
+\rho=\frac{k}{\lambda^2},\qquad
+h^2\lambda^4>3k^2(\lambda^2+3/2),
+\end{gathered}
+\tag{59.25}
+$$
+
+并选一个共同的充分大有限 $\lambda$；有限个来源、取向及完整 P2
+的截止取最大值。前卷定理 41.5 只以严格的 $k<K_r(h)$ 或
+$k>K_r(h)$ 分别给最终全部原 PB 成功或严格失败，阈值等号的有限符号
+不由这里决定。定理 58.2 的精确半定阈值式只在上述共同小参数范围
+使用，并在联合全局最优处恢复实际接触；它不是任意有限 $\lambda$
+原 PB 或任意可行矩的直接精确表示。
+
+由 (57.19) 仍有
+
+$$
+K_+(h)-K_-(h)=hK_0S_{\rm pair}+o(h),\qquad h\downarrow0.
+\tag{59.26}
+$$
+
+(59.6)、(59.7) 端点和的符号尚未确定，$S_{\rm pair}$ 的符号及
+是否为零也尚未确定；尚无同一正 $h$ 的严格阈值次序或共同分离正 $k$。
+若 $S_{\rm pair}=0$，一阶式仍不决定阈值次序。
+剩余区域内的全部驻点分量、$Q$ 的符号、切向二阶必要条件能否进一步
+排除响应危险点，以及有限 PB 变分达到性，均不由本定理推出。
+
+本定理的整个价格层排除、$y$ 系数比较及其定量弹性到原完整响应的
+推导为本固定来源模型的 `repo-derived` 结果，不作全球优先权主张。
+整个极小集、低值分离、简单性、内部权重和原包络分别复用定义 53.1、
+定理 56.3、57.2–57.3；有界价格投影复用定理 58.2。
+坐标和微分恒等式、一元严格凸性、紧到 Hausdorff 的同胚判据、
+算术—几何平均不等式及端点序运算只承担上述证明中的中间步骤。∎
+
+## 追加锚（本行以下为增补区）
