@@ -109,21 +109,6 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 H("Normalization of nonzero positive vectors"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For a unit strictly positive on every nonzero cone vector, multiplying any nonzero vector x in the cone by the inverse of u(x) places it in the entire normalized base. The same theorem applies to native face cones by restricting strict positivity along their inclusion."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("base-compact"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact"),
-                H("Compactness of the original normalized base"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For a closed original cone and a unit strictly positive at all its nonzero points, the entire normalized base is compact in the finite dimensional topology."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("nonneg-on-cone"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.nonneg_on_cone"),
-                H("From pure nonnegativity to whole-cone nonnegativity"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For the compact original base and a strictly positive unit, every original real linear functional nonnegative on all pure points is nonnegative on the entire original cone."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("cone-bound"),
-                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.cone_bound"),
-                H("From pure bounds to original properness"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For the compact original base and a strictly positive unit, an original real linear functional whose value at every pure point belongs to [0,1] is proper on the entire original cone."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pure-span"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span"),
                 H("Pure spanning of the original carrier"), StatementSource.WithoutFormula(),
