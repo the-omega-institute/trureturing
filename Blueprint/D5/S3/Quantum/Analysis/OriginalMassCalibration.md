@@ -52,7 +52,7 @@ $$\forall vA \in \operatorname{Universe}\left(\right),\; \forall A \in \operator
 
 *Commentary.*
 
-This is Corollary 79.4 for arbitrary nonzero finite-dimensional real A,D,E, closed generating cones and their strictly positive original masses. L is positive on the entire original D cone times the entire A cone, p is positive on the entire original E cone, and omega is positive. The actual M spans D and L spans E over the reals. Phi is positive and mass preserving and has no real fixed dual functional outside the line of uA. The two identities hold on every positive input, including zero and unequal masses, with weights (t,1-t) and (s*t,s*(1-t),1-s). Nothing assumes either mass factorization. The proof applies the new arbitrary-slot maximum principle to the actual two- and three-linear masses, extends to all real inputs, and obtains strict positivity from positive normalized states and real spanning. Real span is never identified with positive generation of an entangled cone.
+This is Corollary 79.4 for arbitrary nonzero finite-dimensional real A,D,E, closed generating cones and their strictly positive original masses. L is positive on the entire original D cone times the entire A cone, p is positive on the entire original E cone, and omega is positive. The actual M spans D and L spans E over the reals. Phi is positive and mass preserving and has no real fixed dual functional outside the line of uA. The two identities hold on every positive input, including zero and unequal masses, with weights (t,1-t) and (s*t,s*(1-t),1-s). Nothing assumes either mass factorization. The entire normalized base is CircuitBalancedConfirmation.base on CA.toPointedCone and the same uA; the original owner supplies its compactness, convexity and pure span. The proof applies the arbitrary-slot maximum principle to the actual two- and three-linear masses, extends to all real inputs, and obtains strict positivity from positive normalized states and real spanning. Real span is never identified with positive generation of an entangled cone.
 
 **Theorem 1.5 (The same readout twice fixes the first scalar).**
 
@@ -74,5 +74,4 @@ This successor derives both mass factorizations from the same original cone data
 - Truth anchor: `D5/S3/Quantum/Analysis/OriginalMassCalibration.original_mass_calibration`
 - Truth anchor: `D5/S3/Quantum/Analysis/OriginalMassCalibration.original_mass_factorization`
 - Dependency: [D5/S3/Quantum/Analysis/AsynchronousMassRigidity](AsynchronousMassRigidity.md)
-- Dependency: [D5/S3/Quantum/Analysis/ProperConeMassBase](ProperConeMassBase.md)
 - Dependency: [D5/S3/Quantum/Dynamics/BaseNormContraction](../Dynamics/BaseNormContraction.md)

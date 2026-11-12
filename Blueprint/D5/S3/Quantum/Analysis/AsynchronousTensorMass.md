@@ -4,7 +4,7 @@
 
 The asynchronous algebraic tensor sum has only the original tensor mass as fixed functional.
 
-This is the original arbitrary finite asynchronous tensor carrier of Quantum Origin V, Lemma 79.3. Finite I with positive weights summing to one is necessarily nonempty, so it includes every r at least one without restricting r. All dual functionals are real algebraic functionals. The tensor product is used only for its universal property and its pure-tensor spanning property. The full complex spectral disk, peripheral semisimplicity and algebraic multiplicity-one assertions remain separate obligations.
+This is the original arbitrary finite asynchronous tensor carrier of Quantum Origin V, Lemma 79.3. Finite I with positive weights summing to one is necessarily nonempty, so it includes every r at least one without restricting r. The normalized set is the entire CircuitBalancedConfirmation.base of C.toPointedCone and the original u, with compactness, convexity and spanning inherited from that original owner through the consumed geometry combination. All dual functionals are real algebraic functionals. The tensor product is used only for its universal property and its pure-tensor spanning property. The full complex spectral disk, peripheral semisimplicity and algebraic multiplicity-one assertions remain separate obligations.
 
 **Definition 1.1 (The algebraic asynchronous sum).**
 
@@ -48,4 +48,3 @@ For arbitrary nonzero finite-dimensional real proper-cone data and every finite 
 - Truth anchor: `D5/S3/Quantum/Analysis/AsynchronousTensorMass.fixed_tensor_dual`
 - Truth anchor: `D5/S3/Quantum/Analysis/AsynchronousTensorMass.tensorMass`
 - Dependency: [D5/S3/Quantum/Analysis/AsynchronousMassRigidity](AsynchronousMassRigidity.md)
-- Dependency: [D5/S3/Quantum/Analysis/ProperConeMassBase](ProperConeMassBase.md)
