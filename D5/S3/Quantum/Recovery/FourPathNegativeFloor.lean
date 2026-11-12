@@ -70,7 +70,7 @@ private lemma constants :
   have cu : c < (231/250:ℝ) := by nlinarith only [cc,ru,cp]
   refine ⟨hl,hu,sl,su,cl,cu,hh,by nlinarith only [hh,ss,hrh],
     by nlinarith only [hh,cc,hrh],?_,?_,?_,?_,?_,?_⟩
-  · nlinarith only [mul_lt_mul su hu hp (by norm_num : (0:ℝ) ≤ 3827/10000)]
+  · nlinarith only [mul_lt_mul su hu.le hp (by norm_num : (0:ℝ) ≤ 3827/10000)]
   · have ht : (h-s)^2 ≤ (3246/10000:ℝ)^2 :=
       (sq_le_sq₀ (by linarith : 0 ≤ h-s) (by norm_num)).mpr (by linarith)
     nlinarith only [ht]
