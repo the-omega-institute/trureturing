@@ -54,10 +54,10 @@ This event asks for both laws for that same unbounded permutation family.
 The two exact actual-count conclusions are present as
 `BlitvicKammounSteingrimsson14325Core.count_mod_ten` and
 `BlitvicKammounSteingrimsson14325Core.count_mod_four_iff`.
-Their joint resolution claim names both members. They have no frozen
-membership; current resolution-source validation therefore remains an
-obligation, alongside independent current-tree admission and prefreeze
-judgment. Source correspondence alone supplies none of those judgments.
+Their joint resolution claim names both members. Its validation requires
+their canonical frozen host, a matching current Lean report and the
+corresponding Scribes. Independent final review, exact-head required CI
+and dev publication remain separate delivery obligations.
 
 ## Route
 
@@ -107,8 +107,9 @@ count recurrence, rather than evidence obtained by extrapolating a finite
 table. **Source-derived:** the same recurrence links modulo-five
 stabilization and the modulo-four Catalan identity to one common
 permutation family, allowing their residue consequences to combine.
-**Unverified here:** independent reduced proof-path, utility and admission
-judgments and the canonical first-freeze gates. **Open:** extensions to
+**Delivery boundary:** source classification and prefreeze review do not
+replace independent final review, exact-head required CI or dev publication.
+**Open:** extensions to
 other patterns or overlap lengths; no such extension follows merely from
 the numerical resemblance. No finite experiments or new mathematical
 claims are part of this package.
@@ -118,8 +119,6 @@ claims are part of this package.
 Literature completeness and worldwide priority are `ASSUMED-UNVERIFIED`.
 The primary source and bounded literature assessment belong to the
 existing Library note and preregistration; this package adds no fresh
-literature-search or novelty claim. The supplied independent source
-classification is fallible source evidence and is not current compiled
-or admission approval. The two conclusion members are unfrozen, so the
-typed Proved claim is proposed content and not a validated resolution or
-a problem settlement.
+literature-search or novelty claim. A typed Proved claim alone does not
+certify completed publication, independent final review, problem settlement
+or KPI credit.
