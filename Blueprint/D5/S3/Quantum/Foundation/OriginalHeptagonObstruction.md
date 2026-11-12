@@ -1,0 +1,137 @@
+# Original heptagon effect obstruction
+
+## Abstract
+
+Original heptagon: proper mass, nonpositive splitting, and the entire extension obstruction.
+
+The carrier is the original real three-dimensional space with coordinates (t,x,y). The seven normalized rays, in order, are (1,10,0), (1,6,8), (1,-2,10), (1,-9,4), (1,-9,-4), (1,-2,-10), (1,6,-8). The cone C is their entire nonnegative real conical hull, u(t,x,y)=t, and K is C intersected with u=1. Proper effects are all real linear maps f with 0≤f(z)≤u(z) for every z in C. They are the native CircuitBalancedConfirmation objects, without effect sampling or a different normalized base.
+
+**Definition 1.1 (The whole original cone).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.C`
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.C` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+PointedCone.hull forms the nonnegative conical hull of all seven rays. The proof extracts arbitrary nonnegative real coefficients and derives that the normalized base is exactly the convex hull of the seven original points. The complete pure family is identified with those points. The unit is strictly positive on every nonzero cone vector: nonnegative coefficients have zero total mass only when they all vanish. This also proves salience. The three rays p₀,p₁,p₄ span the original real space. Closedness is proved on arbitrary convergent cone sequences: coefficient sums equal mass, so all nonnegative coefficient vectors lie in one compact box; a convergent coefficient subsequence reconstructs the limiting cone vector.
+
+**Definition 1.2 (The actual local face).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.facet`
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.facet` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The local domain is K intersected with the kernel of h₀=(9t+x)/19. It is proved to equal the entire segment [p₃,p₄] and the native wholePairBase of its endpoints, the intersection of every original cone face containing them. The same native minimal-face construction for p₀,p₁ is exactly their edge. The native ball chart s↦(1,−9,4s) is injective and maps the entire closed unit ball in the one-dimensional real Euclidean space onto [p₃,p₄]. The chart uses all local mixed points. No arbitrary subspace is substituted for either face.
+
+**Definition 1.3 (The full local endpoint ruler).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.ruler`
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.ruler` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Here h₁=(82t+6x+7y)/174 and the ruler is (87/28)h₁ restricted to the entire local face. It has value one at p₃ and zero at p₄ and lies in [0,1] at every mixed point of that face. The maximum of h₁ on that whole face is attained and equals 28/87.
+
+**Definition 1.4 (Proper edge mass on all original mixtures).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.edgeEffect`
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.edgeEffect` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The effect e=(22t+2x+y)/42 is proper on all of C. It equals (76/147)h₀+(29/49)h₁=u−h₄. Its seven readings are [1,1,2/3,4/21,0,4/21,13/21], so each of the five vertices outside p₀,p₁ has strictly positive slack (196/551)(1−e(pᵢ)). The common zero face of h₀,h₁ is exactly {p₄}.
+
+**Definition 1.5 (The specified original split).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.edgeProjection`
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.edgeProjection` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The two coordinates are (h₀−(15/19)h₁)/(196/551) and (h₁−(71/87)h₀)/(196/551). The map fixes p₀,p₁, kills p₄, and decomposes every original vector z as Πz+(u(z)−e(z))p₄. Thus the complementary direction is the original p₄ ray. Its mass is e(z), yet Π(p₅)=(29/28)p₀−(71/84)p₁ lies outside C; the original positive facet effect h₃ separates it. Its mass remains 4/21>0.
+
+**Theorem 1.6 (Full mixed-state zero gluing).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.whole_mixed_zero_gluing`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.whole_mixed_zero_gluing` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original pure point and every two original mixed states excluded by possibly different proper confirmers, a single original proper confirmer excludes their midpoint. The proof treats an arbitrary real linear confirmer f, derives hᵢ(pⱼ)≤100f(pⱼ) for all seven generators from full positivity and the confirmation equation, and extends the inequality to every conical mixture. Consequently f(z)=0 forces hᵢ(z)=0. The same bound proves that zero of the original infimum comparison is equivalent to an actual zero confirmer, so the gluing statement also has the source comparison semantics. This is a universal inequality for all f in the original proper interval, not a test of seven selected effects.
+
+The entire exclusion set for pᵢ is exactly [pᵢ₊₃,pᵢ₊₄], with indices modulo seven. A zero sum of nonnegative weighted facet readings eliminates every coefficient outside those two vertices. Conversely the original hᵢ confirms pᵢ and vanishes on that entire edge. This establishes the full mixed exclusion conclusion used by zero gluing.
+
+**Theorem 1.7 (Universal obstruction on the same original carrier).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.original_effect_obstruction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.original_effect_obstruction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The theorem retains the entire normalized convex hull and pure family, full mixed zero gluing and all seven mixed exclusion faces, both actual minimal faces, local properness and the attained maximum, the exhaustive real-linear extension equivalence, nonextension, whole-cone proper edge mass, specified splitting, its nonpositive p₅ witness, common complementary face, all seven readings and strict external slacks. It also identifies the affine span as the entire original u=1 hyperplane and retains the unique homogeneous linear extension for every affine function on that actual affine span. The coordinate-plane parametrization and its inverse are proved, and all globally proper affine extensions of the local ruler are excluded. The statement also retains the local ball chart and the original closed, salient, generating cone with its strictly positive unit.
+
+Every real linear extension is proved, from its endpoint equations, to be exactly (87/28)h₁+μh₀ for a real μ. Positivity at the original p₅ forces μ≥0; its value at p₁ is then 87/28+(15/19)μ>1. Thus every possible proper extension is excluded. The original lower envelope satisfies T_p₀(p₅)≤4/21<7/19=h₀(p₅), using the actual confirmer e. No equality with the infimum is claimed.
+
+The result is a repo-derived formalization of the original rational example, with finite-dimensional convex and affine methods attributed in the source to Rockafellar, Convex Analysis, sections 11 and 18. The unrelated positive-extension theorem EffectProbabilityExtension supplies no order-interval extension theorem. No global novelty or general finite classification is asserted.
+
+The native minimal face of p₀,p₂ is all of K. Its proof uses a convex representation of (p₀+p₂)/2 with strictly positive weights [759,2901,136,556,136,136,136]/4760. Every original cone face containing p₀,p₂ must therefore contain every original generator. The whole heptagon has no central symmetry: applying a proposed reflection to p₀ and p₃ forces the center's x-coordinate to be 1/2; the reflected p₃ and p₄ then both maximize h₀ and hence both equal p₀, contradicting their distinct y-coordinates. An affine image of a whole ball is centrally symmetric by affine decomposition and negation, so no native ball chart exists for that entire pair base. This proves that universal B fails. The example is consequently not a B+Z0 counterexample. The mathematical statement addresses this original VII100.5 instance; it does not assert the general VII100.2–100.4 theorems, non-PD self-duality, or a classification. Four-slot Reg completion remains linked to issue #29568. Freezing and coverage require independent review; the source atoms remain pending.
+
+**Definition 1.8 (The refuted full extension assertion).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim`
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The assertion asks for an arbitrary real linear f on the whole original space that is proper on C and agrees with the specified ruler at every point of the actual facet. It places no one-parameter restriction on f.
+
+**Theorem 1.9 (No original proper extension).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The designated result is the exact negation of extensionClaim. Its proof exhausts all linear extensions and derives the incompatible original inequalities at p₅ and p₁; the universal obstruction theorem consumes this result. Its hypotheses are empty and the original local proper ruler provides the nonvacuous obstruction.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.C`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.edgeEffect`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.edgeProjection`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.facet`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.original_effect_obstruction`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.result`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.ruler`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.whole_mixed_zero_gluing`
+- Dependency: [D5/S3/Quantum/Foundation/FinitePureSimplex](FinitePureSimplex.md)
+- Dependency: [D5/S3/Quantum/Foundation/WholePairBallConfirmation](WholePairBallConfirmation.md)
