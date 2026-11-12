@@ -767,16 +767,277 @@ $a_F=0$ 或 $\beta_F=\infty$ 已被114.3与114.5排除，不能再列为该前�
 
 ## 追加锚（本行以下为增补区）
 
-## 114.13 完整厚排除球的四纯态失败证书与端点剖面
+## 115. 整球极限二择、正则球丛与预算退化
 
-**命题 114.13（EB下的有限原支撑与零维或整球端点）。** 取定义114.1的同一个非零有限维实空间 $V$、
+**定义 115.1（整球参数、辅助拓扑与正则区域）。** 本章始终在定义114.1的同一个有限维实空间 $V$、闭尖生成锥 $C$、严格正单位 $u$ 上工作，并假设 $\mathrm{EB3}+\mathrm{PR}$。完整原域和比较函数明确为
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x)\ (x\in K),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+$$
+
+在 $V$ 上固定一个辅助欧氏范数 $\|\cdot\|$（并限制到 $\ker u$），只用于有限维拓扑、Hausdorff 距离和长度；它不是由模型取得的物理内积。对 $p\in P$ 写
+
+$$
+\mathcal D(p)=D_p,\qquad d(p)=\operatorname{diam}_{\|\cdot\|}D_p,\qquad
+a(p)=a_{D_p},\qquad \beta(p)=\beta_{D_p}=\frac1{2a(p)}.
+\tag{IX115.1}
+$$
+
+这里 $a_{D_p}$ 和 $\beta_{D_p}$ 是114.5—114.6在该一张完整排除三球上定义的量；只在同一球内使用其共同系数，不对不同球宣称 $a$ 相等。若 $F=D_p$，取任一仿射球坐标 $b_F:B^3\to F$，则
+
+$$
+T_{b_F(v)}(b_F(z))=1-a(p)+a(p)\,v\cdot z
+\qquad(v\in S^2,\ z\in B^3).
+\tag{IX115.2}
+$$
+
+令 $d_H$ 为该欧氏范数诱导的 Hausdorff 距离，并定义
+
+$$
+S_j=\{p\in P:d(p)\ge 1/j\},\qquad
+\mathcal R=\bigcup_{j\ge1}\operatorname{int}_P S_j,
+\qquad \Sigma=P\setminus\mathcal R.
+\tag{IX115.3}
+$$
+
+正则区的两个全纤维空间记为
+
+$$
+\mathscr B_{\mathcal R}=\{(p,x)\in\mathcal R\times K:x\in D_p\},
+\qquad
+\mathscr Z_{\mathcal R}=\{(p,q)\in\mathcal R\times P:q\in D_p\},
+\tag{IX115.4}
+$$
+
+并取它们的第一投影到 $\mathcal R$。第二个空间保留每个完整纤维 $P\cap D_p$ 的全部端点；其第二坐标可以属于 $\Sigma$。
+
+**约定 115.2（对114结果的准确复用）。** 下文不重证114.2—114.6。具体复用内容是：每个 $D_p$ 都是一个非单点、紧、暴露的完整仿射三球；其球面恰为 $P\cap D_p$；由114.4，$P$ 是紧集，并且存在
+
+$$
+L=\max_{f\in\mathcal E}\|f\|_*<\infty,
+\qquad
+|T_p(x)-T_p(y)|\le L\|x-y\|\quad(p\in P,\ x,y\in K).
+\tag{IX115.5}
+$$
+
+这里 $L>0$：每个三球含有不同的纯点，而114.5在对径端点上给出严格小于一的比较值。
+
+由114.5，$0<a(p)\le1/2$ 且(IX115.2)在整球 $B^3$ 上成立；由114.6，每个 $\beta(p)$ 都有限，且 $\beta(p)\ge1$。这里仅使用这些已发布结果，不把它们改写成新的证明或前件。
+
+**定理 115.3（纯端点间隙、三球厚度与预算的定量控制）。** 对任意 $p,p',q,q'\in P$，有
+
+$$
+|T_p(q)-T_{p'}(q')|
+\le L\bigl(\|p-p'\|+\|q-q'\|\bigr).
+\tag{IX115.6}
+$$
+
+对 $0<\varepsilon\le\operatorname{diam}P$，定义
+
+$$
+\gamma(\varepsilon)=
+\min_{\substack{r,s\in P\\\|r-s\|\ge\varepsilon}}
+\bigl(1-T_r(s)\bigr).
+\tag{IX115.7}
+$$
+
+则 $\gamma(\varepsilon)>0$。若 $F=D_p=c+A B^3$，其最大和最小半轴分别为 $s_{\max}(F)$ 与 $s_{\min}(F)$，则
+
+$$
+\operatorname{diam}F\ge\varepsilon
+\quad\Longrightarrow\quad
+\beta_F\le\frac1{\gamma(\varepsilon)},
+\qquad
+s_{\min}(F)\ge\frac{\gamma(\varepsilon)}{2L}.
+\tag{IX115.8}
+$$
+
+证明。由PR，$T_p(q)=T_q(p)$。因此
+
+$$
+\begin{aligned}
+|T_p(q)-T_{p'}(q')|
+&=|T_q(p)-T_{q'}(p')|\\
+&\le |T_q(p)-T_q(p')|+|T_q(p')-T_{q'}(p')|\\
+&=|T_q(p)-T_q(p')|+|T_{p'}(q)-T_{p'}(q')|,
+\end{aligned}
+$$
+
+再用(IX115.5)即得(IX115.6)。114.3给出对每个 $r$ 仅在 $r$ 取一的原确认效应 $e_r$；若 $r\ne s$，则 $e_r(s)<1$，从而
+$T_r(s)\le e_r(s)<1$。集合
+$\{(r,s)\in P\times P:\|r-s\|\ge\varepsilon\}$ 是紧集，(IX115.6)使 $1-T_r(s)$ 连续，所以(IX115.7)的最小值严格为正。
+
+写 $F=c+A B^3$ 的奇异值为 $s_1\ge s_2\ge s_3>0$。取最大轴的对径端点 $x_+=c+Av$、$x_-=c-Av$，则 $\|x_+-x_-\|=2s_1=\operatorname{diam}F$。由(IX115.2)和(IX115.7)，当 $\operatorname{diam}F\ge\varepsilon$ 时
+$2a_F=1-T_{x_+}(x_-)\ge\gamma(\varepsilon)$。再取最小轴的对径端点 $y_+=c+Aw$、$y_-=c-Aw$，由(IX115.5)和 $T_{y_+}(y_+)=1$，
+$2a_F=1-T_{y_+}(y_-)\le L\|y_+-y_-\|=2Ls_3$。由于 $\beta_F=1/(2a_F)$，得到(IX115.8)。证毕。
+
+**引理 115.4（原零关系的闭图）。** 若 $p_n\to p$、$x_n\to x$ 且 $x_n\in D_{p_n}$，则 $x\in D_p$。亦即
+
+$$
+\operatorname{Graph}(\mathcal D)=\{(p,x)\in P\times K:x\in D_p\}
+\quad\text{是闭集},
+\tag{IX115.9}
+$$
+
+并且 $\mathcal D$ 对 Hausdorff 拓扑上半连续，$d$ 上半连续。
+
+证明。由 $x_n\in D_{p_n}$ 及最小值达到，取 $f_n\in\mathcal E$ 使
+$f_n(p_n)=1$、$f_n(x_n)=0$。$\mathcal E$ 紧，取子列 $f_n\to f\in\mathcal E$。线性泛函在有限维空间上联合连续，故 $f(p)=1$、$f(x)=0$；于是 $T_p(x)=0$，即 $x\in D_p$，证明(IX115.9)。
+
+若 $p_n\to p$，任一 Hausdorff 收敛子列 $D_{p_n}\to Q$ 的每个 $x\in Q$ 都可由 $x_n\in D_{p_n}$ 逼近，故由闭图 $Q\subseteq D_p$。这正是紧值映射的上半连续性；再由紧集上的 Hausdorff 收敛，$\limsup d(p_n)\le d(p)$，所以 $d$ 上半连续。证毕。
+
+**定理 115.5（整球极限二择）。** 对任意 $p_n\to p$，每一个 Hausdorff 子列极限都恰为以下两者之一：
+
+$$
+D_{p_n}\longrightarrow D_p,
+\qquad\text{或}\qquad
+D_{p_n}\longrightarrow\{q\}\quad\text{其中 }q\in P\cap D_p.
+\tag{IX115.10}
+$$
+
+证明。取任意具有 Hausdorff 极限的子列，写
+$D_{p_n}=c_n+A_nB^3$。所有这些球包含在固定紧集 $K$ 内，所以中心 $c_n$ 与线性算子 $A_n$ 有界；再取子列使 $c_n\to c$、$A_n\to A$。由引理115.4，极限
+
+$$
+Q=c+A B^3\subseteq D_p.
+\tag{IX115.11}
+$$
+
+每个 $c_n+A_nv$（$v\in S^2$）属于 $P$。114.4给 $P$ 闭，故
+$c+Av\in P$。若 $A=0$，则 $Q=\{c\}$，且 $c\in P\cap D_p$，得到第二种情形。
+
+设 $A\ne0$。此时 $\operatorname{diam}Q>0$，取 $0<\varepsilon<\operatorname{diam}Q$；对充分大的 $n$，$\operatorname{diam}D_{p_n}\ge\varepsilon$，由(IX115.8)其最小半轴统一下界为 $\gamma(\varepsilon)/(2L)>0$。因此 $A$ 满秩三，$Q$ 是一个三维椭球。其边界由 $c+Av$（$v\in S^2$）组成，全部属于 $P\cap D_p$；而114.2说明 $P\cap D_p=\partial D_p$。于是 $\partial Q\subseteq\partial D_p$，从而两者的仿射包相同：$\partial Q$ 的仿射包是 $\operatorname{aff}Q$，它被包含在 $\operatorname{aff}D_p$ 中，两个空间都为三维。
+
+现在 $Q\subseteq D_p$ 且同处于三维仿射空间。若包含严格，则 $\operatorname{ri}D_p\setminus Q$ 非空；否则 $\operatorname{ri}D_p\subseteq Q$，取闭包会得到 $D_p\subseteq Q$。取 $x\in\operatorname{ri}Q$ 和 $y\in\operatorname{ri}D_p\setminus Q$。线段从 $x$ 向 $y$ 离开 $Q$ 的第一个点属于 $\partial Q$，而整条线段（除端点的无关情形外）位于 $\operatorname{ri}D_p$，这与 $\partial Q\subseteq\partial D_p$ 矛盾。因此 $Q=D_p$，得到第一种情形。证毕。
+
+**定理 115.6（Baire正则区、全部连续点与局部预算）。** $S_j$ 闭，$\mathcal R$ 是 $P$ 的开稠密子集，$\Sigma$ 闭且无处稠密。并且 $\mathcal R$ 同时是以下三个映射的连续点集：
+
+$$
+\mathcal R
+=\operatorname{Cont}(p\mapsto D_p)
+=\operatorname{Cont}(p\mapsto a(p))
+=\operatorname{Cont}(p\mapsto\beta(p)).
+\tag{IX115.12}
+$$
+
+其中第一个映射取 Hausdorff 拓扑。对每个 $p\in P$，有局部预算的充要条件
+
+$$
+ p\in\mathcal R
+\quad\Longleftrightarrow\quad
+\exists\text{ 相对开邻域 }U\ni p,
+\exists M<\infty,
+\forall p'\in U:\ \beta(p')\le M.
+\tag{IX115.13}
+$$
+
+因此 $\beta$ 在 $\mathcal R$ 的每个紧子集上一致有界。
+此外，$a$ 在整个 $P$ 上半连续，$\beta$ 在整个 $P$ 上是下半连续的。
+
+证明。由引理115.4，$d$ 上半连续，所以每个 $S_j=\{d\ge1/j\}$ 闭。114.2给每个 $d(p)>0$，故
+
+$$
+P=\bigcup_{j\ge1}S_j.
+\tag{IX115.14}
+$$
+
+任意非空相对开集 $U\subseteq P$ 是局部紧 Hausdorff 空间，因而是 Baire 空间。闭集 $U\cap S_j$ 覆盖 $U$，所以某个 $U\cap S_j$ 在 $U$ 中有非空内点；这给出 $U\cap\operatorname{int}_P S_j\ne\varnothing$。故 $\mathcal R$ 稠密，而按定义它开；$\Sigma$ 因而闭且无处稠密。
+
+若 $p\in\mathcal R$，存在邻域 $U$ 和 $j$ 使 $d(p')\ge1/j$（$p'\in U$）。对任意 $p_n\to p$，充分大时 $p_n\in U$，定理115.5的单点极限被排除，所有 Hausdorff 子极限均为 $D_p$，故 $D_{p_n}\to D_p$。反之，若 $D$ 在 $p$ 连续，直径是 Hausdorff 距离下的连续函数，且 $d(p)>0$，所以某邻域内 $d(p')\ge d(p)/2$，即 $p\in\mathcal R$。这证明 $\mathcal R$ 是整球映射的全部连续点。
+
+在 $p\in\mathcal R$ 时，取任意 $p_n\to p$。对其中任一子列，再取中心和形状算子的收敛子列；由前段和定理115.5，极限椭球只能是 $D_p$，不能是单点。其任一固定球坐标的对径端点 $x_n,y_n$ 收敛到 $D_p$ 的一对对径纯点 $x,y$。由(IX115.2)和(IX115.6)，
+$2a(p_n)=1-T_{x_n}(y_n)\to1-T_x(y)=2a(p)$。
+所有子列的聚值都相同，故 $a(p_n)\to a(p)$；于是 $\beta(p_n)\to\beta(p)$。因此 $\mathcal R$ 包含于 $a,\beta$ 各自的连续点集。
+
+对任意 $p_n\to p$，若定理115.5的子列极限是 $D_p$，同一对径端点的论证（不需要 $p\in\mathcal R$）给出 $a(p_n)\to a(p)$；若极限是单点，则定理115.3证明中的 $2a(p_n)\le Ld(p_n)$ 给出 $a(p_n)\to0$。因此 $a(p_n)$ 的每个聚值只能是 $a(p)$ 或 $0$，因而
+$\limsup a(p_n)\le a(p)$。由 $\beta=1/(2a)$ 得
+$\liminf\beta(p_n)\ge\beta(p)$，即得所述全域上半连续性与下半连续性。
+
+若 $p\notin\mathcal R$，则对每个 $n$，$p\notin\operatorname{int}_P S_n$，可选
+$p_n\in P$ 满足 $\|p_n-p\|<1/n$ 且 $d(p_n)<1/n$。定理115.3证明中的普遍最小轴估计
+$2a(p_n)\le Ld(p_n)\to0$，所以 $a(p_n)\to0$、$\beta(p_n)\to+\infty$，而114.5—114.6给 $a(p)>0$、$\beta(p)<\infty$。故 $a$ 与 $\beta$ 在 $p$ 均不连续。
+
+最后证明异常序列的完整见证。对每个 $n$ 选 $q_n\in P\cap D_{p_n}$；紧性给子列 $q_{n_k}\to q\in P$。由于 $\operatorname{diam}D_{p_{n_k}}\to0$，有 $D_{p_{n_k}}\to\{q\}$；由闭图(IX115.9)，$q\in D_p$。删去子列下标即得
+
+$$
+\forall p\in\Sigma\ \exists p_n\to p,\ \exists q\in P\cap D_p:
+D_{p_n}\to\{q\},\quad a(p_n)\to0,\quad\beta(p_n)\to+\infty.
+\tag{IX115.15}
+$$
+
+局部预算的正向由 $a$ 在 $\mathcal R$ 连续且 $a(p)>0$ 给出。反向若 $\beta\le M$ 在邻域 $U$ 上成立，则定理115.3证明中的普遍不等式 $2a(p')\le Ld(p')$ 给出
+$ d(p')\ge1/(LM)$；于是 $p\in\operatorname{int}_P S_j$，其中取 $j>LM$。这证明(IX115.13)。在 $\mathcal R$ 上 $\beta$ 连续，故其在每个紧子集上达到有限最大值。证毕。
+
+**定理 115.7（正则区的完整球丛与纯零球丛）。** 第一投影
+$\mathscr B_{\mathcal R}\to\mathcal R$ 是局部平凡的 $B^3$ 丛，第一投影
+$\mathscr Z_{\mathcal R}\to\mathcal R$ 是局部平凡的 $S^2$ 丛。第二个丛的总空间仍为完整的 $\{(p,q):q\in P\cap D_p\}$，不把 $q$ 限制在 $\mathcal R$ 内。
+
+证明。令 $H_0=\ker u$，用辅助欧氏范数识别 $H_0$ 与其对偶。每个三球唯一有中心 $c(p)$，并有唯一的半正定形状算子 $Q(p)$，秩为三，使其支撑函数写成
+
+$$
+h_{D_p}(\xi)=\langle c(p),\xi\rangle+\sqrt{\langle Q(p)\xi,\xi\rangle}
+\qquad(\xi\in H_0).
+\tag{IX115.16}
+$$
+
+中心由支撑函数的奇部确定，$Q$ 由偶部平方确定。定理115.6已给 $p\mapsto D_p$ 在 $\mathcal R$ 上 Hausdorff 连续；有限维紧凸集的支撑函数随 Hausdorff 距离一致连续，所以 $c(p)$、$Q(p)$ 在 $\mathcal R$ 上连续。$Q(p)$ 恒秩三。固定 $p_0\in\mathcal R$，在 $Q(p_0)$ 的像空间中选三个线性无关的列；连续性保证同一个三阶子式在某邻域内不为零，Gram–Schmidt 给出该邻域上连续的等距标架
+$U(p):\mathbb R^3\to\operatorname{ran}Q(p)$。
+
+正平方根 $Q(p)^{1/2}$ 连续，且极分解说明
+$D_p=c(p)+Q(p)^{1/2}U(p)B^3$。因此
+
+$$
+\Phi(p,z)=\bigl(p,\ c(p)+Q(p)^{1/2}U(p)z\bigr)
+\tag{IX115.17}
+$$
+
+是从该邻域的 $\times B^3$ 到 $\mathscr B_{\mathcal R}$ 的连续双射；其逆映射由 $Q(p)^{-1/2}$ 在 $\operatorname{ran}Q(p)$ 上的逆和 $U(p)^*$ 连续给出，故是局部平凡化。由114.2，$P\cap D_p=\partial D_p$，所以将 $z$ 限制为 $S^2$ 即得到 $\mathscr Z_{\mathcal R}$ 的局部平凡化。证毕。
+
+**定理 115.8（全域有限预算、整球连续与单位饱和的分界）。** 令
+$\mathrm{UF}$ 表示存在一个有限常数 $M$ 使 $\beta(p)\le M$ 对全部 $p\in P$ 成立。则
+
+$$
+\mathrm{UF}
+\quad\Longleftrightarrow\quad
+\Sigma=\varnothing
+\quad\Longleftrightarrow\quad
+p\mapsto D_p\text{ 在整个 }P\text{ 上 Hausdorff 连续}
+\quad\Longleftrightarrow\quad
+\sup_{p\in P}\beta(p)<\infty.
+\tag{IX115.18}
+$$
+
+证明。$\mathrm{UF}$ 与最后一个条件只是同一命题的两种写法。由定理115.6，整球映射的连续点集正是 $\mathcal R$，所以它在整个 $P$ 上连续当且仅当 $\mathcal R=P$，亦即 $\Sigma=\varnothing$。若 $\mathcal R=P$，定理115.6给 $\beta$ 在紧集 $P$ 上连续，故其上确界有限；反之若上确界为有限数，则 $\beta$ 在每个相对开邻域上都一致有界，(IX115.13)给每个 $p\in P$ 属于 $\mathcal R$，于是 $\mathcal R=P$。证毕。
+
+**约定 115.9（本章结论的未决边界）。** 114.6已经给出每个单独排除三球的有限预算 $1\le\beta(p)<\infty$；本章新增的是正则区、极限二择和全域一致有限预算的等价条件。式(IX115.18)不把有限统一预算降为单位预算：由114.8，
+
+$$
+\forall p\in P:\ \beta(p)=1
+\quad\Longleftrightarrow\quad
+\mathrm{Pair}_{\perp},
+\tag{IX115.19}
+$$
+
+而 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathrm{Pair}_{\perp}$ 仍是未决界面。因而本章没有证明 $\Sigma$ 必为空，也没有构造具有异常点的实际塌缩模型；异常点的存在与不存在均未由这些推导决定。整球连续性只在 $\mathcal R$ 上得到，不能外推为全域连续；任何逐个面取得的正延拓也没有被提升为保持原单位的联合延拓。所有比较仍是原纯端点之间的PR比较，辅助欧氏范数只承担拓扑用途。在本章结论下，全域一致有限预算与单位饱和仍是两个不同的未证目标。
+
+## 追加锚（本行以下为增补区）
+
+## 116. 完整厚排除球的四纯态失败证书与端点剖面
+
+**命题 116.1（EB下的有限原支撑与零维或整球端点）。** 取定义114.1的同一个非零有限维实空间 $V$、
 闭尖生成凸锥 $C$、严格正单位 $u$、整个归一基 $K$、全部原纯点 $P=\operatorname{ext}K$
 及整个原效应区间 $\mathcal E=[0,u]_{C^{\ast}}$。只要求完整厚球条件
 
 $$
 \forall s\in P\ \exists d_s\in\mathbb N,\ d_s\ge2:\qquad
 D_s\simeq_{\mathrm{aff}}B^{d_s}.
-\tag{IX114.45}
+\tag{IX116.1}
 $$
 
 各球的维数可以不同；$D_s$ 始终是对整个原 $K$、用整个原确认族定义的排除集。
@@ -789,7 +1050,7 @@ F=c+B_F,\qquad L(F)=\operatorname{lin}(F-F),\qquad
 B_F=\{v\in L(F):|v|_F\le1\},\\
 d=\dim F,\qquad m=\dim\ker u=\dim V-1.
 \end{gathered}
-\tag{IX114.46}
+\tag{IX116.2}
 $$
 
 这里 $|\cdot|_F$ 是这张完整仿射球的内在欧氏范数。
@@ -800,7 +1061,7 @@ $$
 
 $$
 \lambda(q_*-r_*)=a-b,\qquad e(a)=1,\qquad e(b)=0.
-\tag{IX114.47}
+\tag{IX116.3}
 $$
 
 记 $G(a),G(b)$ 为 $a,b$ 在原 $K$ 中的最小面，并记
@@ -813,7 +1074,7 @@ a\in\operatorname{ri}G(a),\quad b\in\operatorname{ri}G(b),\quad
 e|_{G(a)}=1,\quad e|_{G(b)}=0,\\
 L(F)\oplus L(a)\oplus L(b)\subseteq\ker u.
 \end{gathered}
-\tag{IX114.48}
+\tag{IX116.4}
 $$
 
 每个端点的最小面只有下列准确选择：若端点纯，则为该原纯单点、维数零；
@@ -827,7 +1088,7 @@ b=\beta y_1+(1-\beta)y_2,\\
 \lambda(q_*-r_*)&=
 \alpha x_1+(1-\alpha)x_2-\beta y_1-(1-\beta)y_2.
 \end{aligned}
-\tag{IX114.49}
+\tag{IX116.5}
 $$
 
 同一个原全单位效应 $e$ 在每个正权 $x_i$ 上取一，在每个正权 $y_j$ 上取零。
@@ -838,7 +1099,7 @@ $$
 
 $$
 m\ge d+h_++h_-.
-\tag{IX114.50}
+\tag{IX116.6}
 $$
 
 特别地，若所有完整排除球均为三球，则
@@ -846,20 +1107,20 @@ $$
 $$
 (h_+,h_-)\in\{(0,0),(0,3),(3,0),(3,3)\},\qquad
 m\ge3+h_++h_-,
-\tag{IX114.51}
+\tag{IX116.7}
 $$
 
 因而在所选实现中两端均混蕴含 $m\ge9$，即 $\dim V\ge10$。
 纯端点分支仍保留，这个条件维数界没有把两端均混作为EB的后果。
 
-反之，对同一原球 $F$ 的任意对径 $q,r$，只要存在 $\lambda>1$ 及(IX114.49)形状的
+反之，对同一原球 $F$ 的任意对径 $q,r$，只要存在 $\lambda>1$ 及(IX116.5)形状的
 原纯态凸分解恒等式，就不存在原 $h\in\mathcal E$ 在 $q,r$ 分别取一和零。
 这个反向障碍不另需假定分解支撑已具有共同饱和效应。
 
 证明。先明确所复用的前件范围。
 [VII103.2，式(VII103.4)—(VII103.5)][Q114FaceExhaustion]仅用完整 $\mathrm{EB}_{\ge1}$，
 便给所有非空原真面恰为纯单点或整张 $D_s$，且每张 $D_s$ 为非点紧暴露极大真面。
-本处(IX114.45)满足这一前件，毋须各 $d_s$ 相同。
+本处(IX116.1)满足这一前件，毋须各 $d_s$ 相同。
 于是 $\operatorname{ext}F=P\cap F$，球内对径均为原纯点。
 [VII104.2的证明][Q114LocalBall]还说明，任意两个不同的球面点在原 $K$ 中的最小面恰为 $F$；
 这只使用 $F$ 的面性质与球的严格凸性，不需要任意纯对的 $\mathrm B$。
@@ -873,7 +1134,7 @@ VII104.4的局部极性与校准比较另有 $\mathrm{Pair}_{\perp}$ 前件，�
 这些步骤只需要原紧基、全效应与当前这张完整球。
 不能移用VII98.3中由VII98.2取得的“两个端点均混”及其正维数下界：
 VII98.2正是在排除纯 $a$ 时，调用 $\mathrm B$ 使任意纯对生成的 $H(r,a)$ 为球。
-(IX114.45)只描述各个完整 $D_s$，没有给这个额外前件。
+(IX116.1)只描述各个完整 $D_s$，没有给这个额外前件。
 
 具体地，令 $\gamma$ 为原差体 $K-K$ 在 $\ker u$ 上的Minkowski泛函。
 [VII98.1，式(VII98.4)—(VII98.5)][Q114NormInterface]的同单位接口为
@@ -882,7 +1143,7 @@ $$
 \gamma(z)=\tfrac12\|z\|_C
 =\max_{f\in\mathcal E}f(z)
 =\min\{t\ge0:z=t(x-y),\ x,y\in K\},\qquad z\in\ker u,
-\tag{IX114.52}
+\tag{IX116.8}
 $$
 
 最大值、最小值均达到。其成熟基范数／序单位对偶来源为
@@ -895,7 +1156,7 @@ $$
 
 $$
 Q=(K-K)\cap L(F),\qquad R=\max_{w\in Q}|w|_F>2.
-\tag{IX114.53}
+\tag{IX116.9}
 $$
 
 $Q$ 紧凸且包含 $F-F=2B_F$。选达到 $R$ 的 $w$；平方内在范数的严格凸性使
@@ -904,21 +1165,21 @@ $w\in\operatorname{ext}Q$，否则严格凸组合的平方范数小于 $R^2$。
 
 $$
 M_w=\{(x,y)\in K\times K:x-y=w\}
-\tag{IX114.54}
+\tag{IX116.10}
 $$
 
 中选一个极点 $(a,b)$。有 $\gamma(w)\le1$；若严格小于一，
-(IX114.52)给 $w=s(x-y)$、$0<s<1$，使 $w/s\in Q$ 的长度大于 $R$，矛盾。
+(IX116.8)给 $w=s(x-y)$、$0<s<1$，使 $w/s\in Q$ 的长度大于 $R$，矛盾。
 所以 $\gamma(w)=1$。取同一对偶极大效应 $e\in\mathcal E$，则
 $1=e(w)=e(a)-e(b)$，原零一界迫 $e(a)=1$、$e(b)=0$。
 置
 
 $$
 q_*=c+\frac wR,\qquad r_*=c-\frac wR,\qquad \lambda=\frac R2>1,
-\tag{IX114.55}
+\tag{IX116.11}
 $$
 
-便得同一 $F$ 中的原纯对径和(IX114.47)。
+便得同一 $F$ 中的原纯对径和(IX116.3)。
 
 最小面相对内部性质给 $a\in\operatorname{ri}G(a)$、$b\in\operatorname{ri}G(b)$。
 包含 $a,b$ 的原暴露面 $K\cap\{e=1\}$、$K\cap\{e=0\}$
@@ -927,7 +1188,7 @@ $$
 端点非纯时，其最小面不是单点，故为整球且端点在球的相对内部。
 这一步保留了零维分支，没有以混合性填入额外假设。
 
-为得到(IX114.48)，取 $v_+\in L(a)$、$v_-\in L(b)$，并假设
+为得到(IX116.4)，取 $v_+\in L(a)$、$v_-\in L(b)$，并假设
 $v_+-v_-\in L(F)$。相对内部使充分小的同一个 $\varepsilon>0$ 满足
 $a\pm\varepsilon v_+\in G(a)$、$b\pm\varepsilon v_-\in G(b)$。
 两对同步扰动的差为 $w\pm\varepsilon(v_+-v_-)$，均在 $Q$ 中且中点为 $w$。
@@ -939,12 +1200,12 @@ $a\pm\varepsilon v_+\in G(a)$、$b\pm\varepsilon v_-\in G(b)$。
 $$
 L(a)\times L(b)\longrightarrow\ker u/L(F),\qquad
 (v_+,v_-)\longmapsto[v_+-v_-]
-\tag{IX114.56}
+\tag{IX116.12}
 $$
 
-单射。将第二个方向换号即得所述直和，维数给(IX114.50)。
+单射。将第二个方向换号即得所述直和，维数给(IX116.6)。
 第一层消去差分移动，第二层才消去共同平移；二者针对同一个原实现。
-在全三球情形，混端点最小面的维数恰为三，纯端点为零，遂得(IX114.51)及两端均混时的界。
+在全三球情形，混端点最小面的维数恰为三，纯端点为零，遂得(IX116.7)及两端均混时的界。
 它们只约束重新选出的最大方向与极端纤维端点，不是对每个失败方向或每种端点实现的断言。
 
 最后在各端点的原最小面内作纯分解。
@@ -956,23 +1217,23 @@ $$
 $$
 x_1=c_++A_+n,\qquad x_2=c_+-A_+n,\qquad
 \alpha=\frac{1+t}{2}.
-\tag{IX114.57}
+\tag{IX116.13}
 $$
 
 球面极点是原 $P$ 中的点，且这两个原纯点的凸组合正是 $a$。
-对 $b$ 用同样构造，得到 $y_1,y_2,\beta$，从而得到(IX114.49)。
-这些支撑都取自各自的原最小面，故由(IX114.48)已具有同一个 $e$ 的饱和读数。
+对 $b$ 用同样构造，得到 $y_1,y_2,\beta$，从而得到(IX116.5)。
+这些支撑都取自各自的原最小面，故由(IX116.4)已具有同一个 $e$ 的饱和读数。
 等价地，$e(a)=1$ 的凸平均与 $e(x_i)\le1$ 迫每个正权项取一，
 $e(b)=0$ 与 $e(y_j)\ge0$ 迫每个正权项取零；零权项不参与这个推论。
 
-反向若有(IX114.49)形状的恒等式，并有原 $h(q)=1$、$h(r)=0$，则原仿射性给
+反向若有(IX116.5)形状的恒等式，并有原 $h(q)=1$、$h(r)=0$，则原仿射性给
 
 $$
 \lambda
 =\alpha h(x_1)+(1-\alpha)h(x_2)
  -\beta h(y_1)-(1-\beta)h(y_2)
 \le1,
-\tag{IX114.58}
+\tag{IX116.14}
 $$
 
 与 $\lambda>1$ 矛盾，反向障碍成立。
