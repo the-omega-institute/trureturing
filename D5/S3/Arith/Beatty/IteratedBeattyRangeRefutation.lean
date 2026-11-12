@@ -19,6 +19,8 @@ import Mathlib.NumberTheory.Real.Irrational
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 
+/-! The full lower-modulus extension fails at a positive native floor-map fixed point. -/
+
 set_option autoImplicit false
 
 noncomputable section
@@ -59,7 +61,7 @@ theorem result : ¬ claim := by
     linarith [Real.sqrt_nonneg (5 : ℝ)]
   have hfixed : beattySeq (Real.sqrt 2) (2 : ℤ) = 2 := by
     apply Int.floor_eq_iff.mpr
-    norm_num
+    change (2 : ℝ) ≤ 2 * Real.sqrt 2 ∧ 2 * Real.sqrt 2 < (2 : ℝ) + 1
     constructor <;> linarith
   have hmember : nativeRange (Real.sqrt 2) 3 2 := by
     refine ⟨2, by decide, ?_⟩
