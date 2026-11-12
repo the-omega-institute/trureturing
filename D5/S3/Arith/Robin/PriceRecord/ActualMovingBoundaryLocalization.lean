@@ -108,8 +108,7 @@ private theorem upper_probe_exchange {m j : ℕ} {mu lambda e W r b : ℝ} (hm :
     apply sum_le_sum
     intro p hp
     exact mul_le_mul_of_nonneg_right
-      (deletion_bound hj (hS p hp).1 hanti (hpQ p hp) hr (hS p hp).2.1)
-      (log_natCast_nonneg p)
+      (deletion_bound hj (hS p hp).1 hanti (hpQ p hp) hr (hS p hp).2.1) (log_natCast_nonneg p)
   · unfold logMass
     rw [mul_sum]
     apply sum_le_sum
@@ -232,8 +231,7 @@ private theorem counted_probe_pools {K : ℕ} {C c X rm rp : ℝ} (hcount : ∀ 
     exact_mod_cast hcapP.trans (hcount rp hXp).2
   obtain ⟨Sm, hm, hmc⟩ := exists_subset_card_eq hM
   obtain ⟨Sp, hp, hpc⟩ := exists_subset_card_eq hP
-  exact ⟨Sm, Sp, hmc, hpc, fun p h => (mem_filter.mp (hm h)).2,
-    fun p h => (mem_filter.mp (hp h)).2⟩
+  exact ⟨Sm, Sp, hmc, hpc, fun p h => (mem_filter.mp (hm h)).2, fun p h => (mem_filter.mp (hp h)).2⟩
 
 private theorem logMass_bounds (S : Finset ℕ) {lo hi : ℝ} (h : ∀ p ∈ S, lo ≤ log (p : ℝ) ∧ log (p : ℝ) ≤ hi) :
     (S.card : ℝ) * lo ≤ logMass S ∧ logMass S ≤ (S.card : ℝ) * hi := by
@@ -307,7 +305,8 @@ theorem counted_displaced_root_boundary_squeeze {m j K : ℕ} {mu C c X P rho rm
       have hh := hFL p hp
       exact ⟨log_le_log hleft hh.2.1, (hBand p hh.2.1 (by linarith [hh.2.2])).1⟩)).1
   have hfU := (logMass_bounds FU (lo := log (P - C * P ^ bhpExponent))
-    (hi := 2 * log P) (by intro p hp
+    (hi := 2 * log P) (by
+      intro p hp
       have hh := hFU p hp
       exact ⟨log_le_log hleft (by linarith [hh.2.1]), (hBand p (by linarith [hh.2.1]) hh.2.2).1⟩)).1
   rw [hcSm] at hmBounds
@@ -530,8 +529,11 @@ width. The estimate uses the literal root product, not a higher-layer
 Lipschitz constant. -/
 theorem literal_displaced_probe_geometry {j : ℕ} {P rho H : ℝ} (hj : 2 ≤ j) (hP0 : 0 < P) (hP : 4 ≤ log P) (hrho : 2 ≤ rho)
     (hroot : beta j rho = beta 1 P) (hlog : log (2 * log P / log 2) ≤ log P / 4)
-    (hH : 0 < H) (hsmall : H * P ^ (-priceExponent j) ≤ 1) : let t := P ^ (-priceExponent j) let rm := rho * exp (-(H * t))
-    let rp := rho * exp (H * t) log P / (j : ℝ) - 2 ≤ log rm ∧ log P / (j : ℝ) - 1 ≤ log rp ∧ log rp ≤ 5 * log P / (4 * (j : ℝ)) + 1 ∧
+    (hH : 0 < H) (hsmall : H * P ^ (-priceExponent j) ≤ 1) :
+    let t := P ^ (-priceExponent j)
+    let rm := rho * exp (-(H * t))
+    let rp := rho * exp (H * t)
+    log P / (j : ℝ) - 2 ≤ log rm ∧ log P / (j : ℝ) - 1 ≤ log rp ∧ log rp ≤ 5 * log P / (4 * (j : ℝ)) + 1 ∧
       rm ^ bhpExponent / rm ≤ 4 * t ∧ rp ^ bhpExponent / rp ≤ 4 * t := by
   dsimp only
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
@@ -991,8 +993,7 @@ theorem bhp_uniform_moving_boundary_localization (_hgap : BHPMaximumGap) (hcount
     rw [hid]
   have hsmall : (j : ℝ) / 3 * (H * t) ≤ 1 := by nlinarith only [hHjt]
   exact counted_displaced_cutoff_log_localization hm hmu hrecord hj hK rfl hP4
-    hC hX hH rfl rfl hactive rfl rfl hcount hXP hXm hXp
-    (first_count_capacity hj hP1 hc hfirst) hcapM hcapR hwidth hrm hprefix
+    hC hX hH rfl rfl hactive rfl rfl hcount hXP hXm hXp (first_count_capacity hj hP1 hc hfirst) hcapM hcapR hwidth hrm hprefix
     he he1 hq (first_price_error_bound hP0 (by linarith) hC) hZ hZM hZP hbudget
     (exchange_error_margin hj hP1.le hC) hsmall hwm hwp hshort
 
