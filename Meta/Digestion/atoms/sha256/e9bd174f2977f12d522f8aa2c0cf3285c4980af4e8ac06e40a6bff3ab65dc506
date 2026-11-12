@@ -1,0 +1,57 @@
+### 38.3 相位回拉与同一取向的符号运输
+
+先处理复相位。若 $z\ne0$，令 $b=|z|>0$、
+$d_z=z/b$，并取
+
+$$
+U=\operatorname{diag}(d_z,1).
+\tag{38.9}
+$$
+
+正确的坐标关系是
+
+$$
+U^*TU=\begin{pmatrix}d&b\\b&e\end{pmatrix},\qquad
+U^*C_EU=C_E,\qquad U^*P_3U=P_3.
+\tag{38.10}
+$$
+
+第一式的两个非对角项分别是 $\overline{d_z}z=b$ 和
+$\overline z d_z=b$；若 $z=0$ 则取 $b=0$、$U=I_E$。对实矩阵 $T'=U^*TU$ 取得 $X'$、$u'$ 后，回到原坐标必须取
+
+$$
+X_{\mathrm{orig}}=UX'U^*,\qquad u_{\mathrm{orig}}=Uu'.
+\tag{38.11}
+$$
+
+因为 $U$ 与 $C_E,P_3$ 对易，每个换位、Jordan 乘积、$R_\delta$、$S_\delta$
+和 $L$ 都按 $U(\cdot)U^*$ 共轭；所有范数和实部内积保持不变。这是二维数学坐标的拉回，不是对实际输入施加一个相干控制，也没有改变实际 $B$ 或环境。
+
+在 $T=\begin{pmatrix}d&b\\b&e\end{pmatrix}$ 实对称时，固定同一个
+$\iota=\sigma i$，对任意已构造的 $(s,X,u)$ 置
+
+$$
+\widetilde s=-s,\qquad \widetilde X=-\overline X,\qquad
+\widetilde u=\overline u .
+\tag{38.12}
+$$
+
+这里的横线是逐项复共轭，取向 $\sigma$ 不变。由于 $C_E,T,P_3$ 为实矩阵，
+逐项有
+
+$$
+\widetilde R_\delta=-\overline{R_{-\delta}},\qquad
+\widetilde S_\delta=\overline{S_{-\delta}},\qquad
+\widetilde L=-\overline L .
+\tag{38.13}
+$$
+
+证明在于 $\widetilde h=\overline h$、$\widetilde k=k$、
+$\widetilde r=-\overline r$、$\widetilde g=-\overline g$；其中
+$\overline{K(C_E,T)}=-K(C_E,T)$，而残量同时变成 $-sP_3$。于是
+$\widetilde R_\delta\widetilde u=-\overline{R_{-\delta}u}$、
+$\widetilde S_\delta\widetilde u=\overline{S_{-\delta}u}$。实 Gram 面积不变而两种符号交换，且
+$\widetilde u^*\widetilde L\widetilde u=-\overline{u^*Lu}$；
+自伴性使这个期望为实数，故绝对值严格差额不变。这是在同一个固定取向下
+的符号运输，未把 $\sigma$ 换成 $-\sigma$。
+

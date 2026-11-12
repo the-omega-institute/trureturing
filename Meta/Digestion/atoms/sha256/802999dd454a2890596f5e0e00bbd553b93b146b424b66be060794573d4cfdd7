@@ -1,0 +1,62 @@
+**定理 37.3（任意复 $23$ 连线、任意离面列的三残量分类）。** 保持 (37.1) 的全部原数据和量词，仅将平面块限定为
+
+$$
+ T=T_z=\begin{pmatrix}0&z\\\overline z&0\end{pmatrix},\qquad z\in\mathbb C .
+\tag{37.12}
+$$
+
+则对每个分别固定的 $\sigma$，全部原 Hermitian 三演员角探针与完整原代数上的全部正复线性泛函满足 (32.3)，当且仅当 $S=0$。任意指定有限 $\mu>0$ 上的全称检验也给同一允许集。每个非零 $S$ 在同一原输入上都有质量恰为 $\mu$、两笔原预算同时严格正的有限实际角探针见证。$\beta,a_2,a_3,z$ 的大小及相位不受小量限制；$z=0$ 也包含在内。不假设 P2、平衡残量、环境可逆或未知总响应映射。
+
+证明先处理必要性。若 $(s_1,s_2)\ne(0,0)$，直接消费命题 36.2：它已经允许任意原 Hermitian $B$，包含 (37.1)、(37.12) 的全部 $\beta,a,z$，且允许任意 $s_3$。同一原环境、指定质量及两正预算的有限严格违反均由该命题供应，无须重新证明前两格的运输。所以全称 PB 必先给 $s_1=s_2=0$。以下只需对 $s=s_3\ne0$ 取得第三格违反。
+
+先取实 $z=b\ne0$。直接使用定理 36.3 在二维比较资料中的既有探针与向量，参数准确为
+
+$$
+ X_b=b\begin{pmatrix}0&2+\iota\\2-\iota&0\end{pmatrix},\qquad
+ u_b=\begin{pmatrix}1\\(2-\iota)/8\end{pmatrix},\qquad
+ \|u_b\|^2=69/64,\qquad S_E=\operatorname{diag}(0,s).
+\tag{37.13}
+$$
+
+两个坐标均非零，可直接代入定理 37.2。原定理 (36.17) 用 $\phi=64\mu\psi_{u_b}/69$；去掉这一归一因子，其已经证明的原列数据正是
+
+$$
+\begin{gathered}
+ \psi_{u_b}(L_E)=-sb/2,\qquad
+ \sqrt{B_{\psi_{u_b}}(R_{+,E},S_{+,E})}=0,\\
+ \sqrt{B_{\psi_{u_b}}(R_{-,E},S_{-,E})}
+ =\frac{5\sqrt5}{32}|sb|,\qquad
+ \Delta_E:=|\psi_{u_b}(L_E)|-
+   \sum_\delta\sqrt{B_{\psi_{u_b}}(R_{\delta,E},S_{\delta,E})}
+ =\frac{16-5\sqrt5}{32}|sb|>0 .
+\end{gathered}
+\tag{37.14}
+$$
+
+这只复用 (36.18)–(36.22) 已付的二维列运算，没有将原非约化 $E$ 上的压缩乘积当作完整乘积。实际原探针取 (37.3) 的补偿行，$q=0$ 时该行按式为零；实际原向量具有同一环境分量 $w=-au_bz_0$，它也允许为零。由定理 37.2，指定质量上的完整原差额准确是
+
+$$
+ \Delta_\mu=\frac\mu{N_{u_b}}\,
+               \frac{16-5\sqrt5}{32}|sb|>0,\qquad
+ N_{u_b}=\frac{69}{64}+|au_b|^2\|z_0\|^2 .
+\tag{37.15}
+$$
+
+$16^2>25\cdot5$ 给严格正性，包含 $s,b$ 的所有符号。$a$ 任意大只改变有限正分母和补偿条目，不需要把离面连线限制在连续性邻域内。
+
+为了使两笔预算同时正，仍消费定理 36.3 的同向量扰动 $X_{b,\varepsilon}=X_b+\varepsilon I_E$。在完整原空间中，这准确对应 $x_\varepsilon=x+\varepsilon P_E$，补偿行、$\xi$ 与质量均不变。(36.23) 给出的两列是
+
+$$
+\begin{gathered}
+ R_{+,E}(X_{b,\varepsilon})u_b=\varepsilon u_b,\\
+ S_{+,E}(X_{b,\varepsilon})u_b
+ =2(bJ+X_b)u_b+sE_{33}|_E u_b+\varepsilon C_Eu_b,\qquad
+ J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+ \bigl(S_{+,E}(X_{b,\varepsilon})u_b\bigr)_2
+ =b(7-\iota)/4+2\varepsilon .
+\end{gathered}
+\tag{37.16}
+$$
+
+最后一行下标 $2$ 是原第二演员的坐标，即 $E$ 的第一格。对每个实 $\varepsilon$，该坐标的通常虚部为 $-\sigma b/4\ne0$，而 $(u_b)_2=1$，所以第二列不可能是 $u_b$ 的实倍数。故 $\varepsilon\ne0$ 时第一笔实 Gram 预算严格正。第二笔预算在零处为 $125s^2b^2/1024>0$；差额在零处为 (37.14) 的正数。两者关于实 $\varepsilon$ 连续：作用列仿射，预算为非负多项式，平方根在包括零的非负半轴连续。分别取零邻域使各值超过零处的一半，再取交，便有有限 $\eta>0$，每个 $0<|\varepsilon|<\eta$ 都保留两笔正预算与严格违反。定理 37.2 对整个扰动族使用同一 $u_b,\xi,\ell$，故原完整数据也逐项如此。这一小扰动只把第一笔预算从边界移到内部；它没有缩小 $\beta,a,v,D_{\rm env}$ 的原允许域。
+
