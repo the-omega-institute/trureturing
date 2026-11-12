@@ -45,8 +45,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   let E := EuclideanSpace ℂ (ULift.{u} Unit)
   let psi : E := EuclideanSpace.single ⟨()⟩ 1
-  have hp : ‖psi‖ = 1 := by simp [psi, EuclideanSpace.single]
-  exact h (E := E) 0 IsSelfAdjoint.zero psi hp 1 (by norm_num) 0
+  have hp : ‖psi‖ = 1 :=
+    (EuclideanSpace.orthonormal_single (𝕜 := ℂ) (ι := ULift.{u} Unit)).norm_eq_one ⟨()⟩
+  exact h (E := E) 0 (IsSelfAdjoint.zero (E →L[ℂ] E)) psi hp 1 (by norm_num) 0
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
