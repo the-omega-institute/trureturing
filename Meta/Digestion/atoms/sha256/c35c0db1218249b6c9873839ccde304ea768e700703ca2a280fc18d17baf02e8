@@ -1,0 +1,61 @@
+**定理 109.2（W内的三阶剩余）。** 对任一原joint框架 $F=(p,q,r)$，令
+
+$$
+\begin{gathered}
+E_{pq}=\Pi_r-R_p-R_q,\quad
+E_{pr}=\Pi_q-R_p-R_r,\quad
+E_{qr}=\Pi_p-R_q-R_r,\\
+\mathcal I_F=I-\Pi_p-\Pi_q-\Pi_r+R_p+R_q+R_r,
+\qquad Z_F=\operatorname{im}\mathcal I_F.
+\end{gathered}
+\tag{VIII109.5}
+$$
+
+三个 $R_i$、三个 $E_{ij}$ 和 $\mathcal I_F$ 是两两乘积为零的代数投影，和为 $I$。
+这里不主张 $E_{ij}$ 或 $\mathcal I_F$ 保正。准确地有
+
+$$
+\begin{gathered}
+\Pi_p\Pi_q=\Pi_q\Pi_p=R_r,\qquad
+\operatorname{im}E_{pr}=T(q\mid p),\qquad \dim\operatorname{im}E_{pr}=d_q-1,\\
+Z_F=\ker\Pi_p\cap\ker\Pi_q\cap\ker\Pi_r\subseteq\ker u,\\
+V=\mathbb Rp\oplus\mathbb Rq\oplus\mathbb Rr
+ \oplus\operatorname{im}E_{pq}\oplus\operatorname{im}E_{pr}
+ \oplus\operatorname{im}E_{qr}\oplus Z_F,\\
+\dim Z_F=n-d_p-d_q-d_r.
+\end{gathered}
+\tag{VIII109.6}
+$$
+
+证明。$R_iR_j=\delta_{ij}R_i$。若 $i\ne j$，$\Pi_i$ 固定 $j$，
+且 $\Pi_i^*a_j=a_j$，因为 $a_j\in Z_i$；若 $i=j$，两种复合均为零。
+所以 $\Pi_iR_j=R_j\Pi_i=R_j$ 或零，分别对应 $i\ne j$ 或 $i=j$。
+
+对 $v\in C$，正像 $\Pi_p\Pi_qv$ 在 $\operatorname{cone}D_p$ 中，且
+$a_q(\Pi_p\Pi_qv)=a_q(\Pi_qv)=0$。
+两张排除面锥的交恰为共同第三点 $r$ 的射线，故这个正像在 $\mathbb R_+r$ 中。
+又由VII105.5的归一式及 $a_p\Pi_q=a_p$，
+
+$$
+u\Pi_p\Pi_q=(u-a_p)\Pi_q=u-a_q-a_p=a_r.
+\tag{VIII109.7}
+$$
+
+因此 $\Pi_p\Pi_qv=a_r(v)r$；$C$ 生成 $V$，得到全空间上的乘法式。
+交换两指标给另一复合。代入(VIII109.5)，逐项相乘即得所列七个投影
+各自幂等、两两相消和总和恒等。
+
+在 $\operatorname{span}D_q$ 中，$p,r$ 是对径，故有代数直和
+$\mathbb Rp\oplus\mathbb Rr\oplus T(q\mid p)$。
+$E_{pr}$ 杀掉前两项，在第三项上恒等；其像确为第三项：
+它的像在 $\operatorname{span}D_q$，且 $uE_{pr}=a_pE_{pr}=0$。
+这也证明其维数为 $d_q-1$，包含零维情形。
+循环指标给其余两项。
+
+每个 $\Pi_i\mathcal I_F=0$；反过来，若三个 $\Pi_i$ 均杀掉 $z$，
+由 $a_p\Pi_q=a_p$ 等式得到三个 $a_i(z)=0$，所以 $R_i z=0$，
+并有 $\mathcal I_Fz=z$。这证明共同核公式。
+$u=a_p+a_q+a_r$ 使此核位于 $\ker u$。
+直和的维数为 $3+(d_p-1)+(d_q-1)+(d_r-1)+\dim Z_F$，即得末式。
+这是原滤子的代数推导，没有先用Jordan Peirce分解。证毕。
+
