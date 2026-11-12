@@ -8,7 +8,6 @@
 
 import D5.S3.FiniteGroups.GordonFullSet
 import Mathlib.Combinatorics.Additive.ErdosGinzburgZiv
-import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -167,14 +166,14 @@ theorem exists_zero_sum_partition {G : Type u} [AddCommGroup G] [Finite G]
       refine ⟨Fin.cons t B, ?_, ?_, ?_, ?_, ?_⟩
       · intro j
         refine Fin.cases hts (fun k => (hBs k).trans sdiff_subset) j
-      · intro j k hjk
+      · intro j k
         refine Fin.cases ?_ (fun j => ?_) j
         · refine Fin.cases ?_ (fun k => ?_) k
-          · exact (hjk rfl).elim
-          · exact disjoint_sdiff.mono_right (hBs k)
+          · intro hjk; exact (hjk rfl).elim
+          · intro _; exact disjoint_sdiff.mono_right (hBs k)
         · refine Fin.cases ?_ (fun k => ?_) k
-          · exact (disjoint_sdiff.mono_right (hBs j)).symm
-          · exact hBdisj (fun he => hjk (congrArg Fin.succ he))
+          · intro _; exact (disjoint_sdiff.mono_right (hBs j)).symm
+          · intro hjk; exact hBdisj (fun he => hjk (congrArg Fin.succ he))
       · ext i
         simp only [mem_biUnion, mem_univ, true_and]
         constructor

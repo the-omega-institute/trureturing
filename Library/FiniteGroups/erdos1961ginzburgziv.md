@@ -2,6 +2,7 @@
 bibkey: erdos1961ginzburgziv
 authors: P. Erdős; A. Ginzburg; A. Ziv
 year: 1961
+doi: null
 title: Theorem in the additive number theory
 url: https://users.renyi.hu/~p_erdos/1961-25.pdf
 claim: The final paragraph states that any sequence of 2n-1 elements of an abelian group of order n contains n terms with product the identity; repeated extraction gives exact zero-sum block partitions of zero-sum labeled supports of size mn.
