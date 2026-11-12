@@ -6,6 +6,20 @@
    utility: none
    digest: Counting and evaluating perfect pairings of finite label sets. -/
 
+/-
+proof_shape: perfectPairingCount_rec, perfectPairingCount: content.
+proof_shape: pairingSupport_card: bind-only (consumer: IsPerfectPairing.card);
+  IsPerfectPairing.card: bind-only (consumers: finitePairingPolynomial_const,
+    perfectPairingCount);
+  finitePairingPolynomial_rankOne, finitePairingPolynomial_const: bind-only
+    (consumers: SixthOrderTopPairingRefutation).
+escape_witness: The partner-removal bijection yields a recursion for the cardinality of
+  perfect pairings. Induction then computes it for every even label cardinality; the support
+  cardinality excludes odd cardinalities. These facts supply the exact pairing coefficients
+  in the sixth-order refutation rather than assuming or enumerating them.
+admission_basis: escape-witness.
+-/
+
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PartialPairingPolynomial
 import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
@@ -180,6 +194,69 @@ theorem perfectPairingCount_rec (U : Finset α) (a : α) (ha : a ∈ U) :
   change S.card = _
   rw [hbij]
   exact Finset.card_sigma _ _
+
+/-- A set of even cardinality has the usual odd double-factorial number of perfect
+pairings; a set of odd cardinality has none. -/
+theorem perfectPairingCount (U : Finset α) :
+    ((Finset.univ : Finset (Finset (Finset α))).filter
+      (IsPerfectPairing U)).card =
+      if Even U.card then Nat.doubleFactorial (U.card - 1) else 0 := by
+  have heven : ∀ m : ℕ, ∀ V : Finset α, V.card = 2 * m →
+      ((Finset.univ : Finset (Finset (Finset α))).filter
+        (IsPerfectPairing V)).card = Nat.doubleFactorial (2 * m - 1) := by
+    intro m
+    induction m with
+    | zero =>
+      intro V hV
+      have hV0 : V = ∅ := Finset.card_eq_zero.mp (by simpa using hV)
+      subst V
+      have hs : ((Finset.univ : Finset (Finset (Finset α))).filter
+          (IsPerfectPairing ∅)) = {∅} := by
+        ext P
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton]
+        constructor
+        · intro hP
+          apply Finset.card_eq_zero.mp
+          have hh := hP.card
+          simp only [Finset.card_empty] at hh
+          omega
+        · rintro rfl
+          simp [IsPerfectPairing, IsPartialPairing, pairingSupport]
+      rw [hs]
+      norm_num [Nat.doubleFactorial]
+    | succ m ih =>
+      intro V hV
+      obtain ⟨a, ha⟩ := Finset.card_pos.mp (by omega : 0 < V.card)
+      rw [perfectPairingCount_rec V a ha]
+      have hterms : ∀ b ∈ V.erase a,
+          ((Finset.univ : Finset (Finset (Finset α))).filter
+            (IsPerfectPairing ((V.erase a).erase b))).card =
+            Nat.doubleFactorial (2 * m - 1) := by
+        intro b hb
+        apply ih
+        rw [Finset.card_erase_of_mem hb, Finset.card_erase_of_mem ha, hV]
+        omega
+      calc
+        _ = (V.erase a).card * Nat.doubleFactorial (2 * m - 1) :=
+          Finset.sum_const_nat hterms
+        _ = (2 * m + 1) * Nat.doubleFactorial (2 * m - 1) := by
+          rw [Finset.card_erase_of_mem ha, hV]
+          congr 1
+        _ = Nat.doubleFactorial (2 * (m + 1) - 1) := by
+          rw [show 2 * (m + 1) - 1 = 2 * m + 1 by omega,
+            Nat.doubleFactorial_add_one]
+  by_cases hU : Even U.card
+  · rw [if_pos hU]
+    obtain ⟨m, hm⟩ := hU
+    have hcard : U.card = 2 * m := by omega
+    rw [hcard]
+    exact heven m U hcard
+  · rw [if_neg hU]
+    apply Finset.card_eq_zero.mpr
+    apply Finset.filter_eq_empty_iff.mpr
+    intro P hP hPP
+    apply hU
+    exact ⟨P.card, by have hh := hPP.card; omega⟩
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer

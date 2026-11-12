@@ -15,7 +15,7 @@ internal sealed class SixthOrderTopPairingRefutationDocument : IScribeDocumentDe
                 H("The proposed sixth-order implication"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a fixed constant C at least one, assume a sequence of finite real probability algebras "
+                    "For a fixed constant C at least one, assume a sequence of finitely indexed families in real algebras with normalized linear functionals nonnegative on squares, "
                     + "with centered coordinates satisfying Y squared equals a Y plus b, one at most L at most H, "
                     + "absolute values of a and b at most C L, and index cardinality at most C H. Assume every "
                     + "coefficient family bounded by one has distinct-index moment at most C sqrt(H L) to its order "
