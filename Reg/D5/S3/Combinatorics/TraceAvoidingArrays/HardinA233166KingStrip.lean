@@ -3,8 +3,9 @@ import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 /-!
-Source-bound audit of the literal strip's necessary pair-colour zone data.
-The typed evidence compiles; source-telescope reconstruction remains unresolved:
+Source-bound audits of the pair-colour zone data and the complete literal event.
+The full-event evidence uses the identity readout on count functions. Its source
+selection is absent; the rectangle's source-telescope reconstruction is unresolved:
 https://github.com/the-omega-institute/trureturing/issues/29434.
 This mirror does not establish a `declared_validated` audit.
 -/

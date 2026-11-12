@@ -876,7 +876,7 @@ private theorem literal_weighted_count {n : ℕ} (hn : 0 < n) :
     (Finset.univ.filter (fun P : Fin (n*6) → Fin 4 =>
       Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P))
     (by simp) (fun P => 2^(n*6-(Finset.univ.image P).card))]
-  exact Finset.sum_filter _ _ _
+  exact Finset.sum_filter _ _
 
 /-- The exceptional literal one-row cardinality, including unused colours. -/
 private theorem one_row_count : a 1 = 236 := by
