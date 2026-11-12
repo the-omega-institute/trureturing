@@ -7,7 +7,7 @@ internal sealed class SupportDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Graph/ZeroDivisor/Support.";
 
     private static DocumentBlock Definition(string name, string title, string text) => Describe.Lean(
-        DescribeId.Create("zero-divisor-support-" + name), DeclarationHandle.Create(Prefix + name),
+        DescribeId.Create("zero-divisor-support-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
