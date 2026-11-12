@@ -184,22 +184,15 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end TraceTable
 
 namespace Dimensions
-abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Prop) (fun _ => Prop → Prop)
-def actual : Realization signature := realize signature (fun _ _ x y => x ∧ y) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+abbrev signature := equalitySignature ℕ
+def actual : Realization signature := equalityActual ℕ
+def rejected : Realization signature := equalityBad ℕ
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () (Module.finrank ℝ (generated (frame true)) = 10)
-    (Module.finrank ℝ (generated (frame false)) = 16)
+  Law R := R.readout () () (Module.finrank ℝ (generated (frame true))) 10 ∧
+    R.readout () () (Module.finrank ℝ (generated (frame false))) 16
 
-private theorem rejected_law : ¬ arena.Law rejected := fun h => h
-
-private theorem dependence : ObservationalDependence signature actual := by
-  intro i
-  refine ⟨(), False, True, ?_⟩
-  intro h
-  have hf : False ∧ True := Eq.mpr (congrFun h True) ⟨True.intro, True.intro⟩
-  exact hf.1
+private theorem rejected_law : ¬ arena.Law rejected := fun h => h.1
 
 def family : Registration arena (type_of% (@generated_dimensions)) where
   actual := actual
@@ -207,7 +200,7 @@ def family : Registration arena (type_of% (@generated_dimensions)) where
   variation := ⟨@generated_dimensions, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := dependence
+  dependence := equality_dependence (0 : ℕ) 1 (by decide)
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@generated_dimensions) (Realization signature) Unit Unit := {
@@ -222,7 +215,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x y => x ∧ y) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -232,7 +225,12 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "fn"]
+      path := #["fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -243,22 +241,28 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 end Dimensions
 
 namespace CompleteFrames
-abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 3 → Bits → Op) (fun _ => Prop)
-def actual : Realization signature := realize signature (fun _ _ p => Complete p) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev signature : Signature := _root_.Reg.Support.SingleDependentReadout.signature
+  Unit (fun _ => Bool) (fun _ => Fin 3 → Bits → Op)
+def actual : Realization signature := realize signature (fun _ _ c => frame c) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ c : Bool, R.readout () () (frame c)
+  Law R := ∀ c : Bool, Complete (R.readout () () c)
 
-private theorem rejected_law : ¬ arena.Law rejected := fun h => h true
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hz : Complete (0 : Fin 3 → Bits → Op) := h true
+  have hs := hz.2.2 0
+  simpa using hs
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), frame true, (0 : Fin 3 → Bits → Op), ?_⟩
+  refine ⟨(), true, false, ?_⟩
   intro h
-  have hz : Complete (0 : Fin 3 → Bits → Op) := Eq.mp h (frame_complete true)
-  have hs := hz.2.2 0
-  simpa using hs
+  change frame true = frame false at h
+  have he := congrArg (fun p : Fin 3 → Bits → Op => Module.finrank ℝ (generated p)) h
+  rw [generated_dimensions.1, generated_dimensions.2] at he
+  norm_num at he
 
 def family : Registration arena (type_of% (@frame_complete)) where
   actual := actual
@@ -281,7 +285,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ p => Complete p) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ c => frame c) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -291,7 +295,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn"]
+      path := #["body", "arg", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
