@@ -1662,7 +1662,7 @@ $V,C,K,u,[0,u]$。任选一个完成纯 profile $p_0=\Phi(P_0)$。
 
 $$
 \begin{gathered}
-T_{p_0}(x)=T_{p_0}(y)=0\ \Longrightarrow\
+T_{p_0}(x)=T_{p_0}(y)=0\ \Longrightarrow\quad
 T_{p_0}((x+y)/2)=0\qquad(x,y\in K);\\
 \text{同一零合并性质对每个纯 }p\in\operatorname {ext}K\text{ 成立};\\
 \exists!\,(E_w)_{w\in\Lambda},\quad E_w\succeq0,\quad\sum_wE_w=I_n,
@@ -1679,7 +1679,7 @@ $$
 
 $$
 \mathcal F=\mathbb R1\oplus\bigoplus_{k\in S}\mathcal H_k,
-\qquad [0,u]\ \longleftrightarrow\
+\qquad [0,u]\ \longleftrightarrow\quad
 \{h\in\mathcal F:0\le h(P)\le1\ (P\in X)\}.
 \tag{9.28}
 $$
@@ -1746,11 +1746,11 @@ $A$ 的两个非零特征值为 $\pm\|v\|$，故秩为二。
 在再生核内积下，评价嵌入在此方向的微分由函数
 
 $$
-Q\longmapsto Z'(\operatorname {Tr}(PQ))\operatorname {Tr}(AQ)
+R\longmapsto Z'(\operatorname {Tr}(PR))\operatorname {Tr}(AR)
 \tag{9.33}
 $$
 
-表示。令 $Q=zz^*/\rho$、$\rho=z^*z$，乘 $\rho^k$ 后，它变成非零常数乘
+表示。令 $R=zz^*/\rho$、$\rho=z^*z$，乘 $\rho^k$ 后，它变成非零常数乘
 
 $$
 (z^*Az)\prod_{i=1}^{k-1}z^*(P-r_iI)z.
@@ -1915,8 +1915,10 @@ native VII9 的更强 fixed-half 规律用作正向前件。∎
 
 ### 9.6 Born 后的原锥字典与任意混态区分上界
 
-**定理 9.6（两个分支的准确秩与容量）。** 在定理 9.5 的等价条件下，标量分支为
-$E_w=c_wI$、$K$ singleton，$(r_{\rm fut},\operatorname {Cap}K)=(1,1)$。
+**定理 9.6（两个分支的准确秩与容量）。** 在定义 9.1 中，若响应已具有
+(9.27) 的共同 POVM 形式，则其次数只含 $0,1$，定理 9.2 的有限条件自动成立，
+采用 (9.25) 的共同 body。标量分支为 $E_w=c_wI$、$K$ singleton，
+$(r_{\rm fut},\operatorname {Cap}K)=(1,1)$。
 非恒定分支在同一个行模型上有实线性序同构
 
 $$
@@ -2001,7 +2003,7 @@ $$
 \begin{aligned}
 p_w(aj^{10}f)&=p_w(af)
  &&(a,f\in\mathsf W_{11},\ j=0,\ldots,10,\ w\in\Lambda),\\
-P_{a_k}\to P_e&\ \Longrightarrow\
+P_{a_k}\to P_e&\ \Longrightarrow\quad
 \sup_{f\in\mathsf W_{11},w\in\Lambda}|p_w(a_kf)-p_w(f)|\to0
  &&\text{对每列实际有限字 }(a_k).
 \end{aligned}
@@ -2042,7 +2044,7 @@ $P_k=\psi_k\psi_k^*$、$k=0,5,1,6$，其中
 
 $$
 \psi_k=a\widehat e_-+b\zeta^k\widehat e_+,\qquad
-a=\varphi^{-1},\quad b=\sqrt{\varphi^{-1}},\quad a^2+b^2=1,quad
+a=\varphi^{-1},\quad b=\sqrt{\varphi^{-1}},\quad a^2+b^2=1,\quad
 \zeta=e^{3\pi i/5}.
 \tag{9.51}
 $$
