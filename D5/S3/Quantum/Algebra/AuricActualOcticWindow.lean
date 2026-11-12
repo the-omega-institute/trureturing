@@ -1140,7 +1140,14 @@ theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
   intro S h2 h6
   have hh := actual_cut_free K hsplit W hD hW hscalar a ha S h2 h6
   rw [← crossRank_matrix, ← crossRank_matrix] at hh
-  simpa only [compl_compl] using hh
+  rcases hh with hl | hr
+  · exact Or.inl hl
+  · apply Or.inr
+    have he := congrArg (fun T : Finset (D →ₐ[F] K) =>
+      ((LinearMap.toMatrix' (splitOperator K hsplit W hD hW a ha)).submatrix
+        (fun i : ↥(Sᶜ) => (i : D →ₐ[F] K))
+        (fun j : T => (j : D →ₐ[F] K))).rank) (compl_compl S)
+    exact he ▸ hr
 
 end ActualCutFree
 

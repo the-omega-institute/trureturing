@@ -54,6 +54,10 @@ internal sealed class AuricActualOcticWindowDocument : IScribeDocumentDefinition
                         + "of the other. Distinct conjugate triples are therefore disjoint. Transitivity would "
                         + "partition eight labels into triples, a contradiction. Hence at least one actual crossing "
                         + "block has rank at least two. This is the cut-free clause of the existing source argument; "
-                        + "the full classification remains open. No mathematical novelty is claimed."))),
+                        + "the full classification remains open. No mathematical novelty is claimed.")),
+                    Paragraph(Text(
+                        "Four-slot source registration remains unfinished; its concrete reconstruction and "
+                        + "variation obligations are recorded in https://github.com/the-omega-institute/trureturing/issues/29718. "
+                        + "No declared_validated registration status is asserted."))),
                 DescribeRole.Theorem))));
 }
