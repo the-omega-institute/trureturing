@@ -124,10 +124,10 @@ private theorem secant_support {r : ℕ} (hr : 1 < r) {u : ℝ}
         (goldenResourceObjective 0 r - goldenResourceObjective 0 n) /
           Real.log ((r : ℝ) / n) := by
     intro n hn hnr
-    simpa only [hell0 r hr0, hell0 q hq, hell0 n hn] using hmin n hn hnr
+    simpa only [secant, hell0 r hr0, hell0 q hq, hell0 n hn] using hmin n hn hnr
   have hbase : u < v ∧ goldenResourceObjective v q = goldenResourceObjective v r ∧
       Supports r v r := by
-    simpa only [hell0 r hr0, hell0 q hq] using
+    simpa only [hell0 r hr0, hell0 (predecessor r) hq] using
       ActualMinSecantPredecessorLogGap.secant_support hq hqr hrecord hmin0
   obtain ⟨huv, htie, hsupport⟩ := hbase
   have hmax : Supports r v q := by
@@ -229,6 +229,7 @@ private theorem chain_state {m : ℕ} (hm : 0 < m) {mu : ℝ}
       mu ≤ entryPrice mu m i ∧ LeastSupports m (entryPrice mu m i) (node m i) := by
   induction i with
   | zero =>
+    change 0 < m ∧ m ≤ m ∧ Record mu m ∧ mu ≤ mu ∧ LeastSupports m mu m
     refine ⟨hm, le_rfl, hrecord, le_rfl, ?_, ?_⟩
     · intro n hn hnm
       rcases hnm.eq_or_lt with rfl | hnm
@@ -249,7 +250,7 @@ private theorem chain_state {m : ℕ} (hm : 0 < m) {mu : ℝ}
           (And.intro hqrecord (And.intro hmunu.le hnext)))
     · have hrone : node m i = 1 := by omega
       have hpred : predecessor (node m i) = node m i := by
-        simp only [predecessor, dif_neg hr1, hrone]
+        rw [predecessor, dif_neg hr1, hrone]
       simpa only [node, entryPrice, if_neg hr1, hpred] using
         And.intro hr (And.intro hrm (And.intro hrec (And.intro hprice hsupport)))
 
@@ -439,9 +440,9 @@ private theorem uniform_mass :
     (record_mass_limits r mu (fun x => x.2.1) (fun x => x.2.2.1)
       (fun x => x.2.2.2) hP).2.2.1
   have hlo : ∀ᶠ x in l, (1 / 2 : ℝ) < Real.log (r x : ℝ) / P x :=
-    hratio.eventually (gt_mem_nhds (by norm_num))
+    hratio.eventually (lt_mem_nhds (by norm_num : (1 / 2 : ℝ) < 1))
   have hhi : ∀ᶠ x in l, Real.log (r x : ℝ) / P x < 2 :=
-    hratio.eventually (lt_mem_nhds (by norm_num))
+    hratio.eventually (gt_mem_nhds (by norm_num : (1 : ℝ) < 2))
   obtain ⟨A, hA⟩ := eventually_atTop.mp (eventually_comap.mp (hlo.and hhi))
   refine ⟨max A 2, lt_of_lt_of_le (by norm_num) (le_max_right _ _), ?_⟩
   intro n hn t ht hrec hlarge
@@ -481,7 +482,8 @@ private theorem bounded_prime_log {r : ℕ} (hr : 1 < r) {mu : ℝ}
   have hB0 : 0 < B := hPr0.trans_le hPrB
   have hsq := pow_le_pow_left₀ hPr0.le hPrB 2
   have hPrsq : (4 : ℝ) ≤ (largestPrime r : ℝ) ^ 2 := by
-    simpa using pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 2) hPr2 2
+    simpa only [show (2 : ℝ) ^ 2 = 4 by norm_num] using
+      pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 2) hPr2 2
   have hlog := Real.log_le_log
     (by positivity : (0 : ℝ) < 4 * (largestPrime r : ℝ) ^ 2)
     (show 4 * (largestPrime r : ℝ) ^ 2 ≤ 4 * B ^ 2 by nlinarith)
@@ -518,6 +520,7 @@ private theorem quantitative_threshold (A B c : ℝ) (hc : 0 < c) :
   have hdiff : Tendsto (fun P : ℝ => P / 2 - Real.log (8 * P)) atTop atTop := by
     apply (hfactor.pos_mul_atTop (by norm_num : (0 : ℝ) < 1 / 2) tendsto_id).congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with P hP
+    dsimp only [id]
     field_simp [hP.ne']
     <;> ring
   have hsquare : Tendsto (fun P : ℝ => D * (Real.log P ^ 2 / P)) atTop (𝓝 0) := by
@@ -534,7 +537,7 @@ private theorem quantitative_threshold (A B c : ℝ) (hc : 0 < c) :
     filter_upwards [eventually_ge_atTop A, eventually_ge_atTop (Real.exp 4),
       hLL.eventually_ge_atTop 1,
       hdiff.eventually_gt_atTop (B * Real.log (4 * B ^ 2)),
-      hsquare.eventually (lt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 2))]
+      hsquare.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 2))]
       with P hAP hP4 hLL1 hdiffP hsquareP
     have hP0 := (Real.exp_pos 4).trans_le hP4
     have hL4 : 4 ≤ Real.log P := by
@@ -626,7 +629,8 @@ theorem actual_record_nearby_least_global_optimizer :
   have hclock := (hmass m hm mu hmu hrecord hAP).1
   have hE0 : 0 ≤ B * Real.log (4 * B ^ 2) := by
     have hBsq : (4 : ℝ) ≤ B ^ 2 := by
-      simpa using pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 2) hB2 2
+      simpa only [show (2 : ℝ) ^ 2 = 4 by norm_num] using
+        pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 2) hB2 2
     have hlog : 0 ≤ Real.log (4 * B ^ 2) := Real.log_nonneg (by nlinarith)
     exact mul_nonneg (by linarith) hlog
   have hcutclock : Real.log (8 * P) < Real.log (m : ℝ) := by linarith
