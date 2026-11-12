@@ -30,7 +30,7 @@ open Kernel
 noncomputable section
 
 /-- The logarithmic cooling rate, with the source equilibrium extension. -/
-def hazard (τ t : ℝ) : ℝ := relaxation τ (t - τ) / relaxation τ t
+@[expose] def hazard (τ t : ℝ) : ℝ := relaxation τ (t - τ) / relaxation τ t
 
 private theorem continuous_hazard {τ : ℝ} (hτ : 0 < τ)
     (hsmall : τ ≤ Real.exp (-1)) : Continuous (hazard τ) := by
@@ -175,21 +175,15 @@ private theorem antitone_ratio {τ w : ℝ} (hτ : 0 < τ)
     simp only [relaxation_of_nonpos hτ hx, relaxation_of_nonpos hτ hy, div_one]
     exact antitone_relaxation hτ hsmall (by linarith : x + w ≤ y + w)
   have hr : AntitoneOn (fun t => relaxation τ (t + w) / relaxation τ t) (Ici 0) := by
-    apply antitoneOn_of_deriv_nonpos (convex_Ici _) (continuous_ratio hτ hsmall w).continuousOn
-    · intro t ht
-      simp only [interior_Ici, mem_Ioi] at ht
-      exact (hasDerivAt_ratio hτ hsmall ht hw).differentiableAt.differentiableWithinAt
-    · intro t ht
-      simp only [interior_Ici, mem_Ioi] at ht
-      rw [(hasDerivAt_ratio hτ hsmall ht hw).deriv]
-      apply mul_nonpos_of_nonneg_of_nonpos
-        (div_pos (relaxation_pos hτ hsmall _) (relaxation_pos hτ hsmall _)).le
-      exact sub_nonpos.mpr ((strictMonoOn_hazard hτ hsmall).monotoneOn
-        ht.le (show 0 ≤ t + w by linarith) (show t ≤ t + w by linarith))
+    rcases hw.eq_or_lt with hw0 | hwpos
+    · subst w
+      intro x _ y _ _
+      simp [(relaxation_pos hτ hsmall x).ne', (relaxation_pos hτ hsmall y).ne']
+    · exact (strictAntiOn_relaxation_ratio hτ hsmall hwpos).antitoneOn
   exact hl.Iic_union_Ici hr
 
 /-- The delayed kernel in the source bath-history integrals. -/
-def responseKernel (τ s : ℝ) : ℝ := relaxation τ (s - τ)
+@[expose] def responseKernel (τ s : ℝ) : ℝ := relaxation τ (s - τ)
 
 /-- Weak real-shift order, retaining the initial plateau of the delayed kernel.
 All ages and shifts are real; no mesh or integer-delay restriction is used. -/

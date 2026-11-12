@@ -15,7 +15,7 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "Fix a positive real delay tau. Time and temperature are real. The relaxation E is "
                     + "the normalized response to a single quench from an equilibrated state. "
-                    + "The finite sum below is the quasi-exponential in Eq. (6) of Santos, "
+                    + "The finite-sum construction is the quasi-exponential in Eq. (6) of Santos, "
                     + "The role of preparation protocols in the Mpemba effect under time-delayed "
                     + "Newton cooling, arXiv:2611.12328v1. These statements concern the scalar "
                     + "delay equation; they do not assert optimality of any preparation protocol.")),
@@ -78,8 +78,8 @@ internal sealed class KernelDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
-            DescribeId.Create("delay-kernel-" + declaration.Replace('_', '-')),
+            DescribeId.Create("delay-kernel-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }

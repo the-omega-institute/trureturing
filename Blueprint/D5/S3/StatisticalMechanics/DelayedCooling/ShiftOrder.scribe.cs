@@ -59,8 +59,8 @@ internal sealed class ShiftOrderDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
-            DescribeId.Create("delay-shift-" + declaration.Replace('_', '-')),
+            DescribeId.Create("delay-shift-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
 }
