@@ -1,0 +1,44 @@
+**定理 105.10（同框架谱存在与原序的三特征值）。** 在 $\mathrm{EB}_{\ge1}+\mathrm G$ 下，
+全部框架均满足 $p_1+p_2+p_3=U$。每个 $x\in K$ 是某个原joint三框架的凸组合；
+每个 $v\in V$ 是某个这样的框架的有符号实线性组合。
+若 $v=\sum_i\lambda_i p_i$，其排序三系数由原序唯一确定：
+
+$$
+\begin{aligned}
+\lambda_{\min}(v)&=\sup\{t\in\mathbb R:v-tU\in C\},\\
+\lambda_{\max}(v)&=\inf\{t\in\mathbb R:tU-v\in C\},\\
+\lambda_{\mathrm{mid}}(v)&=u(v)-\lambda_{\min}(v)-\lambda_{\max}(v).
+\end{aligned}
+\tag{VII105.22}
+$$
+
+这些谱值包括重数，连续且不依赖框架；并未由此得到全纯互易。
+
+证明。105.9先给弱入口，框架和由(VII105.21)及G等于 $U$。
+$x=w$ 时用任一框架的均匀组合。$x\ne w$ 时沿 $w$ 经 $x$ 延长至边界 $y$，
+写 $x=(1-t)w+ty$，$0<t\le1$。
+每个边界点都在某个 $D_p$：非纯边界点由真面穷尽给出；纯边界点 $y$ 则取
+$q\in E_y$，零对称使 $y\in D_q$。
+在该整个球内沿通过 $y$ 的直径写 $y=\theta q+(1-\theta)r$；
+球心时任选直径，$0\le\theta\le1$。三点 $(p,q,r)$ 是原joint框架，故
+
+$$
+x=\frac{1-t}{3}p+
+ \left(\frac{1-t}{3}+t\theta\right)q+
+ \left(\frac{1-t}{3}+t(1-\theta)\right)r.
+\tag{VII105.23}
+$$
+
+三个系数非负且和一；内点时 $t<1$，三者全正。
+对任意有符号 $v$，$U\in\operatorname{int}C$ 使充分大的 $s$ 满足 $v+sU\in C\setminus\{0\}$。
+归一后使用上述同框架正分解，再由同框架之和等于 $U$ 减回 $sU$，得到有符号分解。
+
+在一个这样的分解中，$a_{p_i}(v)=\lambda_i$，$a_{p_i}(U)=1$。
+因此 $v-tU\in C$ 当且仅当全部 $\lambda_i-t\ge0$：
+充分性用正组合，必要性用这同一组三把非负原尺。上界情形同理。
+原 $u(v)=\sum_i\lambda_i$，三阶仅剩一个中间值，得到(VII105.22)。
+序单位 $U$ 的范数中，若 $-\varepsilon U\le v-v'\le\varepsilon U$，
+最大、最小谱值各变化至多 $\varepsilon$；原 $u$ 连续，故中间值亦连续。
+这里谱存在是状态的框架分解，不是已含投影接口的另一种“强谱性”，
+也不自行供应Barnum—Hilgert分类所需的强对称。证毕。
+

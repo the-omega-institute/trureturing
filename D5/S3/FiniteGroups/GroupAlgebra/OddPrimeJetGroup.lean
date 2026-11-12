@@ -744,6 +744,59 @@ theorem shear_conjugation (s : K) (a : Fin (p-1) → K) (T : K →ₗ[𝔽] K) (
   module
 
 include hn hK in
+/-- A unit coordinate at the second jet level kills every weighted label
+stabilizer: the first coordinate fixes the scalar and the primitive second
+coordinate fixes the field automorphism. -/
+theorem labelGroup_subsingleton_of_primitive_coordinates
+    (hn3 : 3 ≤ n)
+    (hA0 : A (⟨0, by omega⟩ : Fin (n - 1)) = 1)
+    (hprimitive : ∀ x : Kˣ, ∃ m : ℕ,
+      A (⟨1, by omega⟩ : Fin (n - 1)) ^ m = (x : K)) :
+    Subsingleton 𝒮 := by
+  let i0 : Fin (n - 1) := ⟨0, by omega⟩
+  let i1 : Fin (n - 1) := ⟨1, by omega⟩
+  have hA0' : A i0 = 1 := by simpa [i0] using hA0
+  have hprimitive' : ∀ x : Kˣ, ∃ m : ℕ, A i1 ^ m = (x : K) := by
+    simpa [i1] using hprimitive
+  have htriv (g : 𝒮) : g = 1 := by
+    have hinv : (labelScalar hn hK A g : K)⁻¹ = 1 := by
+      have h := label_fixed hn hK A g i0
+      have hi0 : weight p n i0 = 1 := by simp [i0, weight]
+      simpa only [hA0', hi0, map_one, pow_one, mul_one,
+        Units.val_inv_eq_inv_val] using h.symm
+    have hc : labelScalar hn hK A g = 1 := by
+      apply Units.ext
+      change (labelScalar hn hK A g : K) = 1
+      simpa only [inv_inv, inv_one] using
+        congrArg (fun z : K => z⁻¹) hinv
+    have hfix : labelSigma hn hK A g (A i1) = A i1 := by
+      simpa [hc] using (label_fixed hn hK A g i1).symm
+    have hsigma : labelSigma hn hK A g = 1 := by
+      apply AlgEquiv.ext
+      intro a
+      by_cases ha : a = 0
+      · subst a
+        exact map_zero _
+      · obtain ⟨m, hm⟩ := hprimitive' (Units.mk0 a ha)
+        change A i1 ^ m = a at hm
+        calc
+          labelSigma hn hK A g a =
+              labelSigma hn hK A g (A i1 ^ m) :=
+            congrArg (labelSigma hn hK A g) hm.symm
+          _ = A i1 ^ m := by rw [map_pow, hfix]
+          _ = a := hm
+    apply Subtype.ext
+    apply MulEquiv.ext
+    intro x
+    change
+      Multiplicative.toAdd
+          (g.val (Multiplicative.ofAdd (Multiplicative.toAdd x))) =
+        Multiplicative.toAdd x
+    simpa [hc, hsigma] using
+      label_formula hn hK A g (Multiplicative.toAdd x)
+  exact ⟨fun g h => (htriv g).trans (htriv h).symm⟩
+
+include hn hK in
 /-- No chosen coefficient model restricts the scope: every normalized original q has this group. -/
 theorem normalized_group_structure (q₀ : K →ₗ[𝔽] K) (hq₀ : q₀ 1 = 0) :
     ∃ α : labelGroup q₀ →* MulAut (project q₀).ker,
@@ -805,6 +858,7 @@ theorem prime_field_cardinality (hK₁ : Fintype.card K = p) :
 #print axioms semidirectEquiv
 #print axioms normalized_group_structure
 #print axioms prime_field_cardinality
+#print axioms labelGroup_subsingleton_of_primitive_coordinates
 #print axioms normalized_conjugation
 #print axioms shear_conjugation
 end D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetGroup
