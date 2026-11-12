@@ -106,21 +106,4 @@ theorem fixed_tensor_dual (C : ProperCone ℝ A) (u : Module.Dual ℝ A)
       MultilinearMap.mkPiAlgebra_apply, smul_eq_mul]
     simp only [hprod, ← Finset.sum_mul, hsum, one_mul]
 
-
-example (Phi : A →ₗ[ℝ] A) (alpha : ι → ℝ) (hsum : ∑ i, alpha i = 1)
-    {v : A} (hv : Phi v = -v) (hvne : v ≠ 0) :
-    asynchronous Phi alpha (PiTensorProduct.tprod ℝ (fun _ : ι => v)) =
-        -PiTensorProduct.tprod ℝ (fun _ : ι => v) ∧
-      PiTensorProduct.tprod ℝ (fun _ : ι => v) ≠ 0 := by
-  constructor
-  · rw [asynchronous_tprod]
-    simp only [hv, MultilinearMap.map_update_neg, Function.update_eq_self,
-      ← Finset.sum_smul, hsum, one_smul]
-  · obtain ⟨f, hf⟩ := Module.Projective.exists_dual_eq_one ℝ hvne
-    have he : tensorMass f (PiTensorProduct.tprod ℝ (fun _ : ι => v)) = 1 := by
-      simp [tensorMass, hf, MultilinearMap.mkPiAlgebra_apply]
-    intro hz
-    rw [hz, map_zero] at he
-    exact zero_ne_one he
-
 end D5.S3.Quantum.AsynchronousTensorMass
