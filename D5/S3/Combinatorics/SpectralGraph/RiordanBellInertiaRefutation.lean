@@ -61,7 +61,7 @@ private theorem adjacency_witness : adjacency 5 witness = A := by
   fin_cases i <;> fin_cases j <;>
     norm_num [adjacency, witness, A, pow_succ, PowerSeries.coeff_mul,
       Finset.Nat.antidiagonal_succ, Finset.Nat.antidiagonal_zero,
-      PowerSeries.coeff_add, PowerSeries.coeff_X_pow, PowerSeries.coeff_one,
+      map_add, PowerSeries.coeff_X_pow, PowerSeries.coeff_one,
       PowerSeries.coeff_X]
 
 private theorem A_hermitian : A.IsHermitian := by
@@ -69,7 +69,7 @@ private theorem A_hermitian : A.IsHermitian := by
   exact adjacency_hermitian 5 witness
 
 private theorem B_det : B.det = 4 := by
-  norm_num [B, Matrix.det_succ_row_zero, Fin.sum_univ_succ]
+  norm_num [B, Matrix.det_succ_row_zero, Fin.sum_univ_succ, Fin.succAbove]
 
 private theorem congruence : Bᴴ * A * B = diagonal d := by
   ext i j
@@ -87,13 +87,17 @@ private theorem witness_inertia :
   have heq : (Bᴴ * A * B) = diagonal d := congruence
   have hp : RHLinalg.posIndex A_hermitian = 3 := by
     rw [← h.1]
-    convert hd.1 using 1 <;> norm_num [heq, d, Fin.sum_univ_succ, Finset.univ_fin_succ]
+    calc
+      _ = RHLinalg.posIndex (isHermitian_diagonal d) := by congr 1
+      _ = _ := hd.1
+      _ = 3 := by norm_num [d, Fin.card_filter_univ_succ]
   have hn : RHLinalg.negIndex A_hermitian = 2 := by
     rw [← h.2]
-    convert hd.2 using 1 <;> norm_num [heq, d, Fin.sum_univ_succ, Finset.univ_fin_succ]
-  have hA := adjacency_witness
-  subst hA
-  exact ⟨hp, hn⟩
+    calc
+      _ = RHLinalg.negIndex (isHermitian_diagonal d) := by congr 1
+      _ = _ := hd.2
+      _ = 2 := by norm_num [d, Fin.card_filter_univ_succ]
+  simpa only [← adjacency_witness] using And.intro hp hn
 
 /-- The exact negation of the complete universal question, witnessed by n=5
 and the integer formal power series 1+X^3. -/
