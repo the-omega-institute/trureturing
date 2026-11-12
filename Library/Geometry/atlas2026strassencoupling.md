@@ -109,7 +109,7 @@ and namespace packaging. Lean 4.35.0 and Mathlib revision
 Lake dependency is added.
 
 The adapted native source SHA-256 is
-`ea6a92a41ac37cdd30e62410965426ebcf0a311c63ebb9d977ad897987937c88`.
+`fc8180d1dc5bfaeb5495f6dae8ed563d08f652541da0709d62778c60fc195fe6`.
 Retire this compact-duality adaptation only when the locally adopted
 Mathlib pin provides the full equivalent arbitrary continuous real
 rectangular-cost compact probability-space theorem. The finite Strassen
