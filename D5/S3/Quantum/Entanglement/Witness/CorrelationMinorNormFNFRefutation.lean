@@ -675,7 +675,7 @@ private lemma single_row_gram {m n : Type*} [Fintype m] [Fintype n]
       Pi.single_apply, Matrix.diagonal_apply, pow_two]
   all_goals aesop
 
-private lemma single_row_opnorm {m n : Type*} [Fintype m] [Fintype n]
+lemma single_row_opnorm {m n : Type*} [Fintype m] [Fintype n]
     [DecidableEq m] [DecidableEq n] (r : m) (v : n → ℝ) :
     ‖Matrix.vecMulVec (Pi.single r (1 : ℝ)) v‖ = Real.sqrt (∑ j, v j ^ 2) := by
   have h := Matrix.l2_opNorm_conjTranspose_mul_self
@@ -698,7 +698,7 @@ private lemma single_row_complex_gram {m n : Type*} [Fintype m] [Fintype n]
       Pi.single_apply, Matrix.diagonal_apply, pow_two, ← map_sum]
   all_goals aesop
 
-private lemma single_row_schatten {m n : Type*} [Fintype m] [Fintype n]
+lemma single_row_schatten {m n : Type*} [Fintype m] [Fintype n]
     [DecidableEq m] [DecidableEq n] (r : m) (v : n → ℝ) (p : ℝ) (hp : 0 < p) :
     D5.S3.Quantum.Schatten.Partition.rectangularNorm
       ((Matrix.vecMulVec (Pi.single r (1 : ℝ)) v).map Complex.ofReal) p =
