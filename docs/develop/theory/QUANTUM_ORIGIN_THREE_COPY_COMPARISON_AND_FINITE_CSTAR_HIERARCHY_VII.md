@@ -883,3 +883,253 @@ S3 的较短写法由命题102.3与既有电路等价支付；
 这个等价不构成对所有站立条件之逻辑独立性或前提最少性的证明。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 103. 二份比较与一个共同基相干叉口
+
+### 103.1 低二份接口与资源的量词
+
+**假设 103.1（仅在低二份调用的条件供应）。** 模型始终是定义102.1的原全有限强分块层级，
+包括每个实际分块的两个界、全部原置换、固定配对、全部原极点和完整 proper 效应。
+比较输入仅为(102.5)在 $N=2$ 的 $S_2$，量化全部原二份纯极点及全部有限准备。
+以下具名纸面接口作为条件供应使用：
+
+| 接口 | 完整代入 | 使用的输出 |
+| --- | --- | --- |
+| 低二份 $S$ 到 Jordan | 分别代入 $(W_q,C_q,u_q,K_q,P_q,\mathcal E_q)$，$q=1,2$；$S_1$ 由命题102.3的纯旁观下降取得 | least proper 确认、互反、自对偶正定配对、同框架谱分解、正面投影及其保纯性、保迹 EJA 表示，允许直和 |
+| 一个实际自复合 | 只代入 $(W_1,W_1,W_2)$；两因子与复合的上述 Jordan 输出，正双线性态／效应产品、单位与精确配对、乘积效应分离 | 原局部简单块为复矩阵块；原二份扇区的整锥直和、秩与实维乘法，含标量块 |
+| 实际两因子产品正规形 | 对每个原扇区 $(i,j)$ 代入已选复型及维数 $n_i,n_j,n_i n_j$；原态与效应产品的正性、全域配对及效应单位 | 固定输出酉与固定输入转置的正规形；标量因子用其单因子边界 |
+
+第一接口指
+[reciprocal least confirmation and the spectrality bridge](../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge)
+及其中
+[least confirmation forces face-filter purity](../../../Library/QuantumStates/mullerududec2012selfduality.md#least-confirmation-forces-face-filter-purity)。
+这里 $S_q$ 的单项准备先给互反，再把任意准备的等式转为 $T_p$ 的仿射性；
+完整效应区间使其线性延拓成为一个 proper 确认效应，并低于每个确认效应，故是 least。
+反之，least 性与互反给原准备等式。因此代入的是该接口的全部 $S$，不是一张互反数表。
+该接口所经的正双极、谱、projectivity 与 filter purity 桥均保留；
+Barnum–Müller–Ududec 定理16是其中被调用的成熟分类结果，并不单独断言 $S_2$ 的整条路线。
+
+第二接口指
+[sector composites without a connectedness input](../../../Library/QuantumStates/barnumhilgert2019spectral.md#sector-composites-without-a-connectedness-input)
+和
+[complex sectors from a single self-composite](../../../Library/QuantumStates/barnumhilgert2019spectral.md#complex-sectors-from-a-single-self-composite)。
+最小界供应正态产品，最大界供应正效应产品；原实张量空间和配对供应张成、分离与局部层析。
+各原中心扇区的限制继承这些输入与完整效应。简单自复合的秩平方、实维平方才供复型选择；
+不假设比较图连通、非经典块存在或预选 qubit。
+第三接口是
+[actual two-factor products after complex-type selection](../../../Library/QuantumStates/barnumhilgert2019spectral.md#actual-two-factor-products-after-complex-type-selection)，
+其中 Xu–Zheng–Fošner 的产品秩一保持分类承担正规形步骤，
+DOI [10.1017/S1446788714000603](https://doi.org/10.1017/S1446788714000603)。
+这些供应是具名条件纸面桥，不将其全链归给任一成熟论文。
+
+具体地，固定一个保迹局部 Jordan 坐标
+
+$$
+\theta:V\longrightarrow A_{\rm h},\qquad
+A=\bigoplus_{i\in I}M_{n_i}(\mathbb C),\quad
+\theta(C_1)=A_+,\quad u\theta^{-1}=\sum_i\operatorname{Tr},
+\qquad n_i\ge1.
+\tag{103.1}
+$$
+
+以后用 $\theta^{\otimes N}$ 只识别原实向量空间，把运输后的原锥仍记 $C_N$。
+记 $\mathsf D_N$ 为(102.10)中的标准块 PSD 锥。
+低二份供应在这一固定原产品坐标中的结论是
+
+$$
+C_2=\bigoplus_{i,j\in I}\Gamma_1^{\epsilon_{ij}}
+       \operatorname{Herm}_+(\mathbb C^{n_i}\otimes\mathbb C^{n_j}),
+\qquad \epsilon_{ij}\in\mathbb Z/2,
+\tag{103.2}
+$$
+
+其中 $\Gamma_1$ 只转置第一条腿，绝不表示原锥上的已知正映射。
+为核对这一输出，设实际产品在某个二份 Jordan 表示下为
+$\Phi_{ij}=\operatorname{Ad}_{U_{ij}}(T_i^r\otimes T_j^s)$。
+原固定产品坐标中的锥是 $\Phi_{ij}^{-1}(\mathrm{PSD})$。
+因为 $\operatorname{Ad}_{U_{ij}^{-1}}$ 把整个 PSD 锥送回它自身，输出酉在这个整锥拉回中消失；
+再利用全部转置保持 PSD，得到 $\epsilon_{ij}=r+s$ 的(103.2)。
+这不是把 $U_{ij}$ 宣布为高阶原对称。
+若任一因子为标量，该部分转置锥就是 PSD，不可观测的掩码一律取零。
+同一个坐标的原对偶为实迹配对；$\Gamma_1$ 是正交自逆线性映射且固定单位，故
+$C_2^*$ 也由(103.2)的相同直和锥表示，proper 上界仍是原单位。
+这里没有调用三份 Jordan 分类、B3 或普遍 $S_3$。
+
+**定义 103.2（共同基三腿资源 $\mathsf F$）。** 在(103.1)的某一个局部 Jordan 迹坐标中，
+每块选一个正交归一向量基 $(|a\rangle_i)_{a=1}^{n_i}$，包括其相位，三条腿使用同一个基。
+令
+
+$$
+g_i=\sum_{a=1}^{n_i}|a\rangle_i|a\rangle_i|a\rangle_i,
+\qquad \Delta_i=|g_i\rangle\langle g_i|,
+\qquad \Delta=\bigoplus_i\Delta_i,
+\qquad R=\sum_i n_i.
+\tag{103.3}
+$$
+
+$\Delta_i$ 支撑于原向量扇区 $(i,i,i)$，其他扇区为零。
+$\mathsf F$ 是存在上述共同坐标与共同基，使 $\Delta\in C_3$ 的条件。
+此时 $u_3(\Delta)=R$，所以 $\Delta/R\in K_3$。
+这个条件只指定一个锥元素，不指定物理制备事件；
+$\Delta_i$ 的矩阵秩一暂不意味着它是原 $K_3$ 的纯极点。
+
+**命题 103.3（$\mathsf F$ 的被动坐标不变性）。** 定义103.2的存在性不依赖局部 Jordan
+迹表示中的酉、转置及等型块重标记。无需假定这些局部改变在原 $C_3$ 上是主动对称。
+
+**证明。** 两个此类表示的转移，逐块为 $x\mapsto U_i xU_i^*$ 或
+$x\mapsto U_i x^{\mathsf T}U_i^*$，再作保大小的块重标记。
+这是有限复矩阵 Jordan 自同构的标准形式。
+前一种把三个位置的基同时变为 $(U_i|a\rangle_i)_a$；后一种变为
+$(U_i\overline{|a\rangle_i})_a$。
+三腿同时转置是该扇区的全部转置，把 $|g_i\rangle\langle g_i|$ 变为
+$|\overline{g_i}\rangle\langle\overline{g_i}|$，所以两种情况下同一原向量的坐标仍恰为(103.3)。
+原锥也随坐标被动运输，成员关系保持。逆坐标改变给反向结论。
+相位是向量基的一部分：只给一族秩一投影未必确定 $g_i$，本定义对此没有取商。
+因此可以把见证基选为计算基；这一步只改表示，不调用三份局域酉正性。∎
+
+### 103.2 未对齐二份锥中的杯、帽与自身判据
+
+**引理 103.4（由 $\Delta$ 支付的 Bell 配对）。** 在假设103.1和 $\mathsf F$ 下，
+即使(103.2)的非对角掩码尚未确定，仍有
+$\epsilon_{ii}=0$ 对全部 $n_i\ge2$ 成立。
+在见证基中定义 $\Omega_i,\Omega,\beta,R,L$ 如(102.13)，其中 $L=\max_i n_i$。
+则
+
+$$
+\Omega\in C_2,\quad \Omega/R\in K_2,\quad
+\beta\in C_2^*,\quad \beta/L\in\mathcal E_2.
+\tag{103.4}
+$$
+
+用此杯定义(102.14)的 $J(F)$，对任意 $m,n\ge1$ 有
+
+$$
+J(F)\in C_{m+n}
+\quad\Longleftrightarrow\quad
+(\mathrm{id}_{W_r}\otimes F)(C_{r+m})\subseteq C_{r+n}
+\quad\text{对全部 }r\ge0.
+\tag{103.5}
+$$
+
+这里旁观锥是所有原 $C_r$，输入包括其与被作用腿之间的全部原纠缠。
+归一杯与 proper 帽的 $m$ 对蛇式系数仍为 $(RL)^{-m}$。
+
+**证明。** 先用引理102.6；它只消费原最大界与闭锥双极性。
+令 $\eta_i=\sum_a|a\rangle_i$，令 $f_i(x)=\langle\eta_i|x_i|\eta_i\rangle$，
+在其他局部块取零。$f_i\in C_1^*$，故直接切原 $\Delta$ 的第三腿给
+
+$$
+(\mathrm{id}\otimes\mathrm{id}\otimes f_i)(\Delta)=\Omega_i\in C_2.
+\tag{103.6}
+$$
+
+不需要先取得三份中心投影。若 $n_i\ge2$ 而 $\epsilon_{ii}=1$，
+(103.2)将要求 $\Gamma_1\Omega_i\succeq0$。
+它却是交换算子，在任意两条不同基向量的反对称向量上有本征值 $-1$，矛盾。
+标量块自动标准。因此二份所有对角块的原锥均为 PSD。
+对这些块 $0\le\Omega_i\le n_i I$，其余块的帽为零。
+利用(103.2)的整锥直和，$\beta$ 及 $u_2-\beta/L$ 对每一块均正，得到(103.4)。
+各 $\Omega_i$ 求和给原杯；其迹为 $R$。
+若要求切片预算，则 $f_i/n_i$ 是 proper，且从 $\Delta/R$ 切得
+$\Omega_i/(Rn_i)$，质量为 $1/R$。
+对 $f=\sum_i f_i$，$f/L$ proper，切得 $\Omega/(RL)$，质量为 $1/L$。
+由正倍数恢复杯的锥成员关系不把这些系数变成确定性制备概率。
+
+现在(102.16)的矩阵单位恒等式和蛇式逐块适用，它们只要求已取得的对角杯帽。
+最小界和原置换把 $m$ 个杯放入原 $C_{2m}$，没有假定这个高阶锥标准。
+帽的每次切片由引理102.6作用于当时的整个原剩余输入。
+若用 $\beta/L$，对 $z\in C_{b+2}$ 有
+
+$$
+0\le (u_b\otimes\beta/L)(z)\le u_{b+2}(z),
+\tag{103.7}
+$$
+
+因为 $u_b\otimes(u_2-\beta/L)$ 由最大界为正。迭代给全部预算。
+
+正向(103.5)直接把原旁观正映射作用于 $\Omega_m$。
+反向令 $z\in C_{r+m}$ 任意；最小界把 $z\otimes J(F)$ 放入
+原 $C_{r+2m+n}$，逐对收缩输入和参考腿，再用原置换保留旁观腿与输出腿。
+上述整锥切片使所得落入 $C_{r+n}$。
+在参考／输出扇区 $(s,t)$，Choi 展开为
+$\sum_{a,b}E_{ab}^{(s)}\otimes F_{t,s}(E_{ab}^{(s)})$；
+蛇式把 $z$ 的输入系数原样交给 $F$，所以输出恰是
+$(\mathrm{id}_{W_r}\otimes F)z$，没有转置余项。
+恒等式在简单张量上核对，再由实张量张成推广；正性已对整个原 $z$ 证明。
+这正是(102.17)的证明，所用输入已由(103.4)供应，非对角 $C_2$ 是否标准不参与。
+归一杯帽只把该输出乘以 $(RL)^{-m}>0$，不改变数学正性。
+同一系数展开还给 $J$ 的向量空间双射。全程未引入任意矩阵辅助物。∎
+
+### 103.3 可见掩码的复合约束
+
+**定理 103.5（秩二实角强制共同方向）。** 在引理103.4的坐标中，令
+$I_{\rm a}=\{i:n_i\ge2\}$。
+存在 $a_i\in\mathbb Z/2$，使全部可见掩码满足
+
+$$
+\epsilon_{ij}=a_i+a_j\qquad(i,j\in I_{\rm a}).
+\tag{103.8}
+$$
+
+同时对每条腿都改用同一个局部坐标 $x_i\mapsto x_i^{T^{a_i}}$，
+便有 $C_1=\mathsf D_1$、$C_2=\mathsf D_2$，而同一个 $\Delta$ 仍属于原 $C_3$。
+标量块、零个或一个非经典块均包含在结论中。
+
+**证明。** 对任意矩形 $K:\mathbb C^{n_i}\to\mathbb C^{n_j}$，
+令 $F_{ji}^K$ 在输入块 $i$、输出块 $j$ 上为
+
+$$
+F_{ji}^K(x)=Kx^{T^{\epsilon_{ij}}}K^*,
+\tag{103.9}
+$$
+
+其余输入／输出分量为零。在“参考、输出”次序中，
+
+$$
+J(F_{ji}^K)_{i,j}=\Gamma_1^{\epsilon_{ij}}
+ |K\rangle\!\rangle\langle\!\langle K|\in C_2.
+\tag{103.10}
+$$
+
+引理103.4于是使每个(103.9)原旁观正；这里没有先宣称跨块普通合同正。
+原置换交换两个因子，把 $\Gamma_1^{\epsilon_{ij}}\mathrm{PSD}$ 送为
+$\Gamma_2^{\epsilon_{ij}}\mathrm{PSD}=\Gamma_1^{\epsilon_{ij}}\mathrm{PSD}$。
+在两个活跃因子上，标准与部分转置锥不同：嵌入二维 Bell 投影后部分转置在反对称方向为负。
+因此 $\epsilon_{ij}=\epsilon_{ji}$；对角零掩码已由引理103.4取得。
+
+对每个活跃块，在见证基的前两条向量上取实等距嵌入
+$E_i:\mathbb C^2\to\mathbb C^{n_i}$，令 $L_{ji}=E_jE_i^*$。
+复合 $F_{kj}^{L_{kj}}F_{ji}^{L_{ji}}$ 原旁观正。
+因为所有 $E_i$ 在这些坐标中为实矩阵，$E_j^*E_j=I_2$，其非零分量恰是
+
+$$
+x\longmapsto E_kE_i^*x^{T^{\epsilon_{ij}+\epsilon_{jk}}}E_iE_k^*.
+\tag{103.11}
+$$
+
+它的 Choi 元素必须在原 $(i,k)$ 扇区锥内。
+令 $\omega_{ik}$ 是向量 $\sum_{a=0}^1 E_i|a\rangle\otimes E_k|a\rangle$ 的 dyad。
+对这个 Choi 元素施加 $\Gamma_1^{\epsilon_{ik}}$，得到
+$\Gamma_1^{\epsilon_{ij}+\epsilon_{jk}+\epsilon_{ik}}\omega_{ik}$。
+若指数为一，其在该二维角的归一反对称向量上读数为 $-1$，不可能 PSD。
+所以对全部活跃 $i,j,k$，包括重复标签，
+
+$$
+\epsilon_{ik}=\epsilon_{ij}+\epsilon_{jk}.
+\tag{103.12}
+$$
+
+若 $I_{\rm a}$ 非空，选 $h\in I_{\rm a}$，置 $a_i=\epsilon_{hi}$；
+(103.12)给(103.8)，且 $a_h=0$。若只有一个活跃块，这就是其已知的对角零掩码。
+若无活跃块，所有二份锥本来就是标量正射线直和，取全部 $a_i=0$。
+对所有标量标签也取 $a_i=0$；与标量配对的转置在整个锥上不可见，不施加虚假的边约束。
+
+共同坐标改变后，活跃 $(i,j)$ 上的锥成为
+$\Gamma_1^{\epsilon_{ij}+a_i+a_j}\mathrm{PSD}=\mathrm{PSD}$；
+有标量因子的块仍标准。这是同一个局部图在全部腿上的使用，未按有序对另选坐标。
+在 $(i,i,i)$ 上，三次 $T_i^{a_i}$ 为全部转置；见证基中 $\Delta_i$ 为实矩阵，故保持 $\Delta_i$。
+所以原 $\Delta$ 的坐标不变，$\mathsf F$ 在对齐后仍由同一元素见证。
+该证明只在尚未标准的 $C_2$ 中使用已取得的自身 Choi 判据和映射复合，
+没有从预设三份 PSD 反推二份方向。∎
+
+## 追加锚（本行以下为增补区）
