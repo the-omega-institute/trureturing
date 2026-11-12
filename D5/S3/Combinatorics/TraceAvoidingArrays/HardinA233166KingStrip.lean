@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Literal six-column king strips and their four-colour rectangle structure. -/
+   digest: Exact literal six-column king-strip counts, recurrence and formal series. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import Mathlib.RingTheory.PowerSeries.Inverse
@@ -15,15 +15,13 @@ import D5.S3.Combinatorics.Graph.Pressure.HardinBarkerA209721EdgeDifferences
 
 /-!
 The literal array count retains strict first-occurrence conditions and free
-boundaries. The rectangle identity concerns complementary colour pairs; it
-does not count signed lifts or assert the generating-function conjecture.
+boundaries. Complementary-pair zones and exact first-occurrence fibres give
+the all-height count, exceptional one-row value and formal generating series.
 -/
 
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
 set_option maxRecDepth 100000
--- Finite pair-word cardinality conversions require a larger elaboration budget.
-set_option maxHeartbeats 4000000
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
   (beta colour_bond_iff)
@@ -769,6 +767,7 @@ private instance (v : Fin 6 → Fin 4) : Decidable (offsetOK v) := by
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
+-- Exhaustive four-label offset words certify the fixed width only.
 private theorem offset_certificate :
     (∀ v : Fin 6 → Fin 4, offsetOK v → (offsetChoices v).card ≤ 2) ∧
     ((Finset.univ.filter (fun v : Fin 6 → Fin 4 =>
@@ -856,24 +855,39 @@ private def oneRowWeight (P : Fin 6 → Fin 4) : ℕ :=
 
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 0 in
+-- The fixed one-row certificate enumerates pair words, retaining absent labels.
 private theorem one_row_certificate : (∑ P : Fin 6 → Fin 4, oneRowWeight P) = 236 := by
   decide +kernel
+
+open scoped Classical in
+private theorem literal_weighted_count {n : ℕ} (hn : 0 < n) :
+    a n = ∑ P : Fin (n*6) → Fin 4,
+      if Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P
+      then 2^(n*6-(Finset.univ.image P).card) else 0 := by
+  classical
+  rw [literal_signed_count hn]
+  have hr (P : Fin (n*6) → Fin 4) :
+      Nat.card (Set.range P) = (Finset.univ.image P).card :=
+    Nat.subtype_card (Finset.univ.image P) (by intro b; simp)
+  simp_rw [hr]
+  rw [← Finset.sum_subtype (Finset.univ.filter (fun P : Fin (n*6) → Fin 4 =>
+    Proper (fun p => P (finProdFinEquiv p)) ∧ Canonical P)) (by simp)]
+  exact Finset.sum_filter _ _ _
 
 /-- The exceptional literal one-row cardinality, including unused colours. -/
 private theorem one_row_count : a 1 = 236 := by
   classical
-  rw [literal_signed_count (by omega : 0 < 1)]
-  change (∑ P : {P : Fin 6 → Fin 4 //
-    Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P},
-      2 ^ (6 - Nat.card (Set.range P.val))) = 236
-  have hr (P : Fin 6 → Fin 4) : Nat.card (Set.range P) = (Finset.univ.image P).card := by
-    exact Nat.subtype_card (Finset.univ.image P) (by intro b; simp)
-  simp_rw [hr]
-  rw [← Finset.sum_subtype (Finset.univ.filter (fun P : Fin 6 → Fin 4 =>
-    Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P)) (by simp)]
-  rw [Finset.sum_filter]
-  exact one_row_certificate
-
+  calc
+    a 1 = ∑ P : Fin 6 → Fin 4,
+      if Proper (fun p : Fin 1 × Fin 6 => P (finProdFinEquiv p)) ∧ Canonical P
+      then 2^(6-(Finset.univ.image P).card) else 0 :=
+        literal_weighted_count (by omega : 0 < 1)
+    _ = ∑ P : Fin 6 → Fin 4, oneRowWeight P := by
+      apply Finset.sum_congr rfl
+      intro P _
+      unfold oneRowWeight
+      split_ifs <;> rfl
+    _ = 236 := one_row_certificate
 
 private theorem closed_shift (m : ℕ) : a (m+2) = 64^(m+1)*(2^(m+2)+60) := by
   have h := literal_pair_count (by omega : 2 ≤ m+2)
