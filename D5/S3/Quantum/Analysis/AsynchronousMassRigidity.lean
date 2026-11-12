@@ -122,13 +122,9 @@ private theorem weighted_max_eq (alpha : ι → ℝ) (hpos : ∀ i, 0 < alpha i)
     simp only [mul_sub, Finset.sum_sub_distrib, ← Finset.sum_mul, hsum, one_mul, hav,
       sub_self]
   have hterm : alpha i * (M - v i) = 0 := by
-    apply le_antisymm
-    · calc
-        alpha i * (M - v i) ≤ ∑ j, alpha j * (M - v j) :=
-          Finset.single_le_sum (fun j _ => mul_nonneg (hpos j).le (sub_nonneg.mpr (hle j)))
-            (Finset.mem_univ i)
-        _ = 0 := hz
-    · exact mul_nonneg (hpos i).le (sub_nonneg.mpr (hle i))
+    exact (Finset.sum_eq_zero_iff_of_nonneg
+      (fun j _ => mul_nonneg (hpos j).le (sub_nonneg.mpr (hle j)))).mp hz i
+        (Finset.mem_univ i)
   exact (sub_eq_zero.mp ((mul_eq_zero.mp hterm).resolve_left (hpos i).ne')).symm
 
 /-- A maximizing tuple can be replaced, one coordinate at a time, by the same normalized
