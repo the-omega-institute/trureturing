@@ -75,4 +75,88 @@ theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) :
     change m.choose a * n.choose 2 * _ = m.choose a * n.choose 2 * _
     simp [hz]
 
+/-- Uniform restriction to a nine-subset, with rational hypergeometric weights. -/
+theorem nine_restriction (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N)
+    (hk : 3 ≤ k ∧ k ≤ 5) :
+    (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) /
+        ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) =
+      ∑ j ∈ range 10,
+        ((m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) *
+          ((j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ) /
+            ((9 : ℕ).choose (k+1) * ((k+1).choose 2 : ℚ))) := by
+  have hmn : m+(N-m) = N := by omega
+  have hcount := nine_restriction_count m (N-m) k hk
+  rw [hmn] at hcount
+  have hsum : (∑ j ∈ range 10,
+      (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) *
+        (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ)) =
+      (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) *
+        ((N-(k+1)).choose (9-(k+1)) : ℚ) := by exact_mod_cast hcount
+  have hcomp : (N.choose 9 : ℚ) * ((9 : ℕ).choose (k+1) : ℚ) =
+      (N.choose (k+1) : ℚ) * ((N-(k+1)).choose (9-(k+1)) : ℚ) := by
+    exact_mod_cast (Nat.choose_mul (n := N) (k := 9) (s := k+1) (by omega))
+  have hD : (N.choose (k+1) : ℚ) ≠ 0 := by
+    exact_mod_cast Nat.choose_ne_zero (by omega : k+1 ≤ N)
+  have hW : (N.choose 9 : ℚ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero hN
+  have hS : ((9 : ℕ).choose (k+1) : ℚ) ≠ 0 := by
+    exact_mod_cast Nat.choose_ne_zero (by omega : k+1 ≤ 9)
+  have hP : ((k+1).choose 2 : ℚ) ≠ 0 := by
+    exact_mod_cast Nat.choose_ne_zero (by omega : 2 ≤ k+1)
+  calc
+    _ = ((m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) *
+          ((N-(k+1)).choose (9-(k+1)) : ℚ)) /
+        ((N.choose 9 : ℚ) * ((9 : ℕ).choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) := by
+      apply (div_eq_div_iff (mul_ne_zero hD hP)
+        (mul_ne_zero (mul_ne_zero hW hS) hP)).mpr
+      linear_combination (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) *
+        ((k+1).choose 2 : ℚ) * hcomp
+    _ = (∑ j ∈ range 10,
+        (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) *
+          (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ)) /
+        ((N.choose 9 : ℚ) * ((9 : ℕ).choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) := by
+      rw [hsum]
+    _ = _ := by
+      rw [sum_div]
+      apply sum_congr rfl
+      intro j _
+      field_simp
+      <;> ring
+
+/-- The three small-rank bounds hold in every population of size at least nine. -/
+theorem nine_restriction_bound (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N)
+    (hk : 3 ≤ k ∧ k ≤ 5) :
+    (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) /
+        ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) ≤
+      if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ) := by
+  have hmn : m+(N-m) = N := by omega
+  have hW : (N.choose 9 : ℚ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero hN
+  have hv : ∑ j ∈ range 10, m.choose j * (N-m).choose (9-j) = N.choose 9 := by
+    have h := Nat.add_choose_eq m (N-m) 9
+    rw [hmn, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at h
+    exact h.symm
+  have hw : (∑ j ∈ range 10,
+      (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) = 1 := by
+    rw [← sum_div]
+    have hv' : (∑ j ∈ range 10,
+        (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ)) = (N.choose 9 : ℚ) := by
+      exact_mod_cast hv
+    rw [hv', div_self hW]
+  have htable : ∀ j ∈ range 10,
+      (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ) /
+          (((9 : ℕ).choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) ≤
+        if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ) := by
+    intro j hj
+    have hj' := mem_range.mp hj
+    obtain ⟨hklo, hkhi⟩ := hk
+    interval_cases k <;> interval_cases j <;> norm_num [Nat.choose]
+  rw [nine_restriction N m k hN hm hk]
+  calc
+    _ ≤ ∑ j ∈ range 10,
+        ((m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) *
+          (if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ)) := by
+      apply sum_le_sum
+      intro j hj
+      exact mul_le_mul_of_nonneg_left (htable j hj) (by positivity)
+    _ = _ := by rw [← sum_mul, hw, one_mul]
+
 end D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction
