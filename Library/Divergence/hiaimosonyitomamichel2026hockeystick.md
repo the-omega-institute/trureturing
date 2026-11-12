@@ -8,11 +8,13 @@ claim: "Proposition V.1 gives the maximal positive-overlap hockey formulas and a
 strata_touched:
   - D5/S3/Quantum/Divergence/MaximalHockeyStickOperational
   - D5/S3/Quantum/Divergence/MaximalHockeyStickConvex
+  - D5/S3/Quantum/Divergence/MaximalHockeyStickL1ReverseTest
+  - D5/S3/Quantum/Divergence/MaximalHockeyStickAllL1Convex
 license: citation-only
 triage: anchor
 ---
 
-# Maximal hockey profiles and the finite-source equality question
+# Maximal hockey profiles and the original L1 equality question
 
 Hiai, Mosonyi and Tomamichel, *Hockey stick f-divergences*,
 arXiv:2607.08760v1, Proposition V.1, pp. 34--36, equations
@@ -56,12 +58,55 @@ antecedents. Matsumoto, *A new quantum version of f-divergence*, in
 Quantum Theory*, pp. 229--273 (2018), is the attainment antecedent cited
 by HMT. GGJ's *On the infimum of quantum effects* is separately credited
 for common-support localization. None is credited with the repository's
-general convex approximate-test classification. No Bayer--Teichmann
-cubature theorem is consumed.
+general convex approximate-test classification. The separate actual
+all-L1 general-f source bridge uses Bayer--Teichmann finite moments.
+Matsumoto's arXiv:1311.4722v4, p. 8, Lemma 4.1, already supplies
+one-cost finite-source compression with bound 2d^2+3; the formal
+interface asserts a finite alphabet without a cardinality bound.
 
-The finite/all-L1 source equivalence and the arbitrary von Neumann
-algebra theorem require separate proofs. The present finite-source
-classification does not assert either. Operator-convex generators are
-included only under the stated curvature and finite-value conditions
-for necessity. Worldwide priority of the classification remains
+The original source quantifiers are all sigma-finite L1 spaces, not just
+finite alphabets. MaximalHockeyStickL1ReverseTest formalizes the direct
+positive-L1 part of Proposition V.1. For any actual positive
+complex-linear TP map on the entire complex L1 space, integrable
+nonnegative inputs p,q and one specified t>0, let h=min(p,tq).
+Positivity and linearity give the three PSD components Gamma(h),
+A-Gamma(h), tB-Gamma(h); TP preserves their trace masses. The existing
+weighted-component supplier gives a finite reverse test with exactly
+both Bochner integrals of max(p-tq,0) and max(tq-p,0). Empty output
+dimension forces both inputs to vanish almost everywhere and uses the
+empty alphabet. This construction needs neither a measure-class
+hypothesis nor an assumed density factorization or continuity.
+Measurable representatives preserve arbitrary original positive complex
+L1 inputs and both integrals by almost-everywhere equality.
+
+The universe-lifted finite counting preparation embeds every finite
+test in every arbitrary source universe. Thus the positive and negative
+profile value sets over the original sigma-finite sources, and also over
+every s-finite source, equal the finite sets at each positive threshold.
+Their infima are the two PSD-overlap formulas. This is the known HMT
+Proposition V.1, not a new conjecture result; it asserts a finite
+realization for each specified threshold, not one for all thresholds.
+
+For general convex f, finite counting sources lie inside the original
+sigma-finite class, which lies inside the s-finite class. The already
+proved exact one-cost atomization equates the two extreme infima, so the
+original maximal f-value has the same extended value. The actual
+original L1 operational formulas are consumed pointwise in the exact
+integrated identity of MaximalHockeyStickAllL1Convex. Its
+original_eq_iff_commute compares the two original sigma-finite values:
+with actual full-support curvature and real finite original maximal
+f-value, equality holds exactly when PSP commutes with PCP. Its
+commute_implies_original_eq retains convex sufficiency as extended
+values without those two assumptions. The s-finite actual operational
+classifier is also retained. Arbitrary traces, empty, singular and zero
+outputs, infinite endpoints and the negative-branch atom at one remain
+in scope. No infimum-integral interchange, all-threshold finite
+compression, necessity from infinity=infinity, global commutator
+criterion or arbitrary von Neumann output theorem is asserted.
+Operator-convex generators are included under the stated necessity
+conditions. Worldwide priority of the classification remains
 unresolved; source attribution and Lean verification are distinct.
+
+## Verified locator
+
+https://arxiv.org/abs/2607.08760v1

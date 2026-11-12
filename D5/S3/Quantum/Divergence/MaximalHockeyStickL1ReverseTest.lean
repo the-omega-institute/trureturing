@@ -6,7 +6,7 @@
    utility: none
    digest: Positive trace-preserving maps on actual complex L1 sources. -/
 
-import D5.S3.Quantum.Divergence.MaximalHockeyStickReverseTest
+import D5.S3.Quantum.Divergence.MaximalHockeyStickOperational
 import D5.S3.Quantum.Measurement.MeasurableInstrumentHistory
 import D5.S3.Quantum.Matrix.CartesianVariance
 import D5.S3.Analytic.Convexity.CurvaturePerspectiveEndpoints
@@ -824,12 +824,11 @@ theorem allL1Costs_of_positive_L1 {X : Type u} [MeasurableSpace X]
       prepares_right := congrArg Γ.toLinearMap hqe }
   exact ⟨X, inferInstance, μ, inferInstance, R, (cost_congr_ae hf hpr hqr).symm⟩
 
-/-- Each finite reverse test embeds in the actual all-L1 class, with exactly its
-extended cost. Universe lifting changes only the names of the finite labels. -/
-theorem finiteCosts_subset_allL1Costs {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
-    (A B : Matrix n n ℂ) : finiteCosts hf A B ⊆ allL1Costs.{u} hf A B := by
+/-- The counting-measure embedding uses the existing preparation on the whole
+complex L1 space, with source universe independent of the matrix carrier. -/
+def finiteL1ReverseTest {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k) :
+    L1ReverseTest A B (Measure.count : Measure (ULift.{u} (Fin k))) := by
   classical
-  rintro z ⟨k, R, rfl⟩
   let X := ULift.{u} (Fin k)
   let p : X → ℝ := fun i => R.p i.down
   let q : X → ℝ := fun i => R.q i.down
@@ -852,7 +851,7 @@ theorem finiteCosts_subset_allL1Costs {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 
       _ = _ := Equiv.ulift.sum_comp
         (fun i : Fin k => v i • CStarMatrix.ofMatrix.symm (R.state i).1)
 
-  let T : L1ReverseTest A B (Measure.count : Measure X) :=
+  exact
     { preparation := Γ
       p := p
       q := q
@@ -864,10 +863,25 @@ theorem finiteCosts_subset_allL1Costs {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 
       q_nonneg := Measure.ae_count_iff.mpr (fun i => R.q_nonneg i.down)
       prepares_left := (hprepare R.p hp).trans R.prepares_left
       prepares_right := (hprepare R.q hq).trans R.prepares_right }
-  refine ⟨X, inferInstance, Measure.count, inferInstance, T, ?_⟩
-  change _ = closedPerspectiveCost hf Measure.count p q
-  rw [finite_cost_count hf p q (fun i => R.p_nonneg i.down) (fun i => R.q_nonneg i.down)]
-  exact (Equiv.ulift.sum_comp _).symm
+
+/-- Counting embedding preserves the exact closed-perspective cost. -/
+theorem finiteL1ReverseTest_cost {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k) :
+    closedPerspectiveCost hf Measure.count (finiteL1ReverseTest.{u} R).p
+      (finiteL1ReverseTest.{u} R).q = ∑ i, closedPerspective hf (R.p i) (R.q i) := by
+  change closedPerspectiveCost hf Measure.count (fun i : ULift.{u} (Fin k) => R.p i.down)
+    (fun i => R.q i.down) = _
+  rw [finite_cost_count hf (fun i : ULift.{u} (Fin k) => R.p i.down)
+    (fun i => R.q i.down) (fun i => R.p_nonneg i.down) (fun i => R.q_nonneg i.down)]
+  exact Equiv.ulift.sum_comp (fun i : Fin k => closedPerspective hf (R.p i) (R.q i))
+
+/-- Each finite reverse test embeds in the actual all-L1 class, with exactly its
+extended cost. Universe lifting changes only the names of the finite labels. -/
+theorem finiteCosts_subset_allL1Costs {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) : finiteCosts hf A B ⊆ allL1Costs.{u} hf A B := by
+  rintro z ⟨k, R, rfl⟩
+  exact ⟨ULift.{u} (Fin k), inferInstance, Measure.count, inferInstance,
+    finiteL1ReverseTest R, (finiteL1ReverseTest_cost hf R).symm⟩
 
 /-- Every finite-valued actual source cost is exactly a finite-alphabet cost. -/
 theorem allL1Costs_finite {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
@@ -897,6 +911,402 @@ theorem source_class_infimum_eq {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
     by_cases ht : z = ⊤
     · simp [ht]
     · exact sInf_le (allL1Costs_finite hf A B hz ht)
+
+namespace L1ReverseTest
+
+variable {A B : Matrix n n ℂ} {μ : Measure α}
+
+/-- The actual positive L1 hockey profile, as a Bochner integral. -/
+def hockey (R : L1ReverseTest A B μ) (t : ℝ) : ℝ :=
+  ∫ a, max (R.p a - t * R.q a) 0 ∂μ
+
+/-- The actual negative L1 hockey profile, as a Bochner integral. -/
+def negativeHockey (R : L1ReverseTest A B μ) (t : ℝ) : ℝ :=
+  ∫ a, max (t * R.q a - R.p a) 0 ∂μ
+
+/-- Actual integrable inputs give a finite positive profile at every threshold. -/
+theorem hockey_integrable (R : L1ReverseTest A B μ) (t : ℝ) :
+    Integrable (fun a => max (R.p a - t * R.q a) 0) μ :=
+  (R.p_integrable.sub (R.q_integrable.const_mul t)).pos_part
+
+/-- Actual integrable inputs give a finite negative profile at every threshold. -/
+theorem negative_hockey_integrable (R : L1ReverseTest A B μ) (t : ℝ) :
+    Integrable (fun a => max (t * R.q a - R.p a) 0) μ :=
+  ((R.q_integrable.const_mul t).sub R.p_integrable).pos_part
+
+private theorem input_trace (Γ : PositiveTracePreservingL1Map (n := n) μ)
+    (v : α → ℝ) (hv : Integrable v μ) :
+    (Γ.toLinearMap (hv.ofReal.toL1 (fun a => (v a : ℂ)))).trace.re = ∫ a, v a ∂μ := by
+  rw [Γ.trace_preserving,
+    integral_congr_ae hv.ofReal.coeFn_toL1, integral_complex_ofReal]
+  rfl
+
+/-- TP preserves the two unnormalized input masses. -/
+theorem input_masses (R : L1ReverseTest A B μ) :
+    (∫ a, R.p a ∂μ) = A.trace.re ∧ (∫ a, R.q a ∂μ) = B.trace.re := by
+  constructor
+  · exact (input_trace R.preparation R.p R.p_integrable).symm.trans
+      (congrArg (fun M : Matrix n n ℂ => M.trace.re) R.prepares_left)
+  · exact (input_trace R.preparation R.q R.q_integrable).symm.trans
+      (congrArg (fun M : Matrix n n ℂ => M.trace.re) R.prepares_right)
+
+/-- The negative and positive profiles differ by the original trace masses. -/
+theorem negative_hockey_eq (R : L1ReverseTest A B μ) (t : ℝ) :
+    R.negativeHockey t = R.hockey t - A.trace.re + t * B.trace.re := by
+  have he (a : α) : max (t * R.q a - R.p a) 0 =
+      max (R.p a - t * R.q a) 0 - R.p a + t * R.q a := by
+    rcases le_total (R.p a) (t * R.q a) with h | h
+    · rw [max_eq_left (sub_nonneg.mpr h), max_eq_right (sub_nonpos.mpr h)]; ring
+    · rw [max_eq_right (sub_nonpos.mpr h), max_eq_left (sub_nonneg.mpr h)]; ring
+  unfold negativeHockey hockey
+  simp_rw [he]
+  rw [integral_add (f := fun a => max (R.p a - t * R.q a) 0 - R.p a)
+      (g := fun a => t * R.q a) ((R.hockey_integrable t).sub R.p_integrable)
+      (R.q_integrable.const_mul t),
+    integral_sub (f := fun a => max (R.p a - t * R.q a) 0)
+      (g := R.p) (R.hockey_integrable t) R.p_integrable, integral_const_mul,
+    R.input_masses.1, R.input_masses.2]
+
+/-- HMT Proposition V.1's direct three-component construction preserves both
+actual profiles at one specified positive threshold. No hypothesis on the source
+measure, density factorization or continuity is used. -/
+theorem finite_hockey_realization (R : L1ReverseTest A B μ) (t : ℝ) (ht : 0 < t) :
+    ∃ (k : ℕ) (T : ReverseTest A B k), T.hockey t = R.hockey t ∧
+      MaximalHockeyStickOperational.negativeHockey T t = R.negativeHockey t := by
+  classical
+  suffices hpos : ∃ (k : ℕ) (T : ReverseTest A B k), T.hockey t = R.hockey t by
+    obtain ⟨k, T, he⟩ := hpos
+    refine ⟨k, T, he, ?_⟩
+    rw [MaximalHockeyStickOperational.negative_hockey_eq, he, R.negative_hockey_eq]
+  by_cases hn : Nonempty n
+  · let i₀ : n := Classical.choice hn
+    let r : α → ℝ := fun a => max (R.p a - t * R.q a) 0
+    let h : α → ℝ := fun a => R.p a - r a
+    let s : α → ℝ := fun a => t * R.q a - h a
+    have hr : Integrable r μ := R.hockey_integrable t
+    have hh : Integrable h μ := R.p_integrable.sub hr
+    have hse (a : α) : s a = max (t * R.q a - R.p a) 0 := by
+      dsimp [s, h, r]
+      rcases le_total (R.p a) (t * R.q a) with he | he
+      · rw [max_eq_right (sub_nonpos.mpr he), max_eq_left (sub_nonneg.mpr he)]
+        ring
+      · rw [max_eq_left (sub_nonneg.mpr he), max_eq_right (sub_nonpos.mpr he)]
+        ring
+    have hs : Integrable s μ := (R.negative_hockey_integrable t).congr
+      (Eventually.of_forall fun a => (hse a).symm)
+    have hhn : ∀ᵐ a ∂μ, 0 ≤ h a := by
+      filter_upwards [R.p_nonneg, R.q_nonneg] with a hp hq
+      dsimp [h, r]
+      exact sub_nonneg.mpr (max_le (by nlinarith) hp)
+    have hsn : ∀ᵐ a ∂μ, 0 ≤ s a := by
+      filter_upwards [] with a
+      dsimp [s, h, r]
+      have := le_max_left (R.p a - t * R.q a) 0
+      linarith
+    let Γ := R.preparation
+    let action (v : α → ℝ) (hv : Integrable v μ) : Matrix n n ℂ :=
+      Γ.toLinearMap (hv.ofReal.toL1 (fun a => (v a : ℂ)))
+    have hsub (v w : α → ℝ) (hv : Integrable v μ) (hw : Integrable w μ) :
+        action (fun a => v a - w a) (hv.sub hw) = action v hv - action w hw := by
+      dsimp only [action]
+      rw [← map_sub, ← Integrable.toL1_sub]
+      apply congrArg Γ.toLinearMap
+      apply (Integrable.toL1_eq_toL1_iff _ _ _ _).mpr
+      exact Eventually.of_forall fun a => by simp
+    have hsmul (v : α → ℝ) (hv : Integrable v μ) :
+        action (fun a => t * v a) (hv.const_mul t) = t • action v hv := by
+      dsimp only [action]
+      rw [RCLike.real_smul_eq_coe_smul (K := ℂ), ← map_smul, ← Integrable.toL1_smul']
+      apply congrArg Γ.toLinearMap
+      apply (Integrable.toL1_eq_toL1_iff _ _ _ _).mpr
+      exact Eventually.of_forall fun a => by simp [smul_eq_mul]
+    have hpositive (v : α → ℝ) (hv : Integrable v μ)
+        (hvn : ∀ᵐ a ∂μ, 0 ≤ v a) : (action v hv).PosSemidef := by
+      apply Γ.positive
+      have he := (show Integrable (fun a => (v a : ℂ)) μ from hv.ofReal).coeFn_toL1
+      filter_upwards [he, hvn] with a ha hb
+      rw [ha]
+      exact_mod_cast hb
+    let X := action h hh
+    have hp : action R.p R.p_integrable = A := R.prepares_left
+    have hq : action R.q R.q_integrable = B := R.prepares_right
+    have hAX : A - X = action r hr := by
+      have he := hsub R.p r R.p_integrable hr
+      change X = action R.p R.p_integrable - action r hr at he
+      rw [hp] at he
+      rw [he]; abel
+    have htBX : t • B - X = action s hs := by
+      change _ = action (fun a => t * R.q a - h a) hs
+      rw [hsub, hsmul, hq]
+    let G : Fin 3 → Matrix n n ℂ := ![X, A - X, t • B - X]
+    have hG : ∀ i, (G i).PosSemidef := by
+      intro i
+      fin_cases i
+      · exact hpositive h hh hhn
+      · change (A - X).PosSemidef
+        rw [hAX]
+        exact hpositive r hr (Eventually.of_forall fun a => le_max_right _ _)
+      · change (t • B - X).PosSemidef
+        rw [htBX]
+        exact hpositive s hs hsn
+    let a : Fin 3 → ℝ := ![1, 1, 0]
+    let b : Fin 3 → ℝ := ![t⁻¹, 0, t⁻¹]
+    have ha : ∀ i, 0 ≤ a i := by intro i; fin_cases i <;> norm_num [a]
+    have hb : ∀ i, 0 ≤ b i := by
+      intro i; fin_cases i <;> simp [b, inv_nonneg.mpr ht.le]
+    have hleft : (∑ i, a i • G i) = A := by simp [a, G, Fin.sum_univ_succ]
+    have hright : (∑ i, b i • G i) = B := by
+      simp [b, G, Fin.sum_univ_succ]
+      rw [smul_sub, smul_smul, inv_mul_cancel₀ ht.ne', one_smul]
+      abel
+    have hex := MaximalHockeyStickComponents.reverse_test_from_weighted_components
+      (fun _ => i₀) G hG a b ha hb
+    rw [hleft, hright] at hex
+    obtain ⟨T, hT⟩ := hex
+    refine ⟨_, T, ?_⟩
+    have hprofile : T.hockey t = A.trace.re - X.trace.re := by
+      rw [hT]
+      simp [a, b, G, Fin.sum_univ_succ, mul_inv_cancel₀ ht.ne',
+        Matrix.trace_sub, Complex.sub_re]
+    rw [hprofile]
+    have htrace : X.trace.re = ∫ a, h a ∂μ := input_trace Γ h hh
+    rw [htrace]
+    dsimp only [h]
+    rw [integral_sub R.p_integrable hr, R.input_masses.1]
+    dsimp only [hockey, r]
+    ring
+  · letI : IsEmpty n := not_nonempty_iff.mp hn
+    have hp : R.p =ᵐ[μ] 0 := by
+      apply (integral_eq_zero_iff_of_nonneg_ae R.p_nonneg R.p_integrable).mp
+      simpa [Matrix.trace] using R.input_masses.1
+    have hq : R.q =ᵐ[μ] 0 := by
+      apply (integral_eq_zero_iff_of_nonneg_ae R.q_nonneg R.q_integrable).mp
+      simpa [Matrix.trace] using R.input_masses.2
+    let T : ReverseTest A B 0 :=
+      { p := Fin.elim0
+        q := Fin.elim0
+        p_nonneg := fun i => i.elim0
+        q_nonneg := fun i => i.elim0
+        state := Fin.elim0
+        prepares_left := Subsingleton.elim _ _
+        prepares_right := Subsingleton.elim _ _ }
+    refine ⟨0, T, ?_⟩
+    have hz : R.hockey t = 0 := by
+      unfold hockey
+      calc
+        _ = ∫ _ : α, (0 : ℝ) ∂μ := integral_congr_ae (by
+          filter_upwards [hp, hq] with a ha hb
+          simp [ha, hb])
+        _ = 0 := integral_zero _ _
+    simpa [ReverseTest.hockey] using hz.symm
+
+end L1ReverseTest
+
+/-- Universe-lifted counting embedding preserves both actual hockey integrals. -/
+theorem finiteL1ReverseTest_profiles {A B : Matrix n n ℂ} {k : ℕ}
+    (R : ReverseTest A B k) (t : ℝ) :
+    (finiteL1ReverseTest.{u} R).hockey t = R.hockey t ∧
+    (finiteL1ReverseTest.{u} R).negativeHockey t =
+      MaximalHockeyStickOperational.negativeHockey R t := by
+  constructor
+  · change (∫ i : ULift.{u} (Fin k), max (R.p i.down - t * R.q i.down) 0
+      ∂Measure.count) = ∑ i, max (R.p i - t * R.q i) 0
+    rw [integral_count]
+    exact Equiv.ulift.sum_comp (fun i : Fin k => max (R.p i - t * R.q i) 0)
+  · change (∫ i : ULift.{u} (Fin k), max (t * R.q i.down - R.p i.down) 0
+      ∂Measure.count) = ∑ i, max (t * R.q i - R.p i) 0
+    rw [integral_count]
+    exact Equiv.ulift.sum_comp (fun i : Fin k => max (t * R.q i - R.p i) 0)
+
+/-- Measurable representatives preserve the original positive complex L1 inputs
+and both actual integral profiles, at every threshold. No measure-class premise
+is needed for this representative change. -/
+theorem positive_L1_profiles {X : Type*} [MeasurableSpace X] {μ : Measure X}
+    (Γ : PositiveTracePreservingL1Map (n := n) μ)
+    (p q : X →₁[μ] ℂ) (hp : ∀ᵐ a ∂μ, 0 ≤ p a) (hq : ∀ᵐ a ∂μ, 0 ≤ q a) :
+    ∃ R : L1ReverseTest (Γ.toLinearMap p) (Γ.toLinearMap q) μ,
+      ∀ t : ℝ,
+        R.hockey t = (∫ a, max ((p a).re - t * (q a).re) 0 ∂μ) ∧
+        R.negativeHockey t = (∫ a, max (t * (q a).re - (p a).re) 0 ∂μ) := by
+  obtain ⟨p', hp', hpm, hpn, hpe, hpr⟩ := measurable_positive_L1_input p hp
+  obtain ⟨q', hq', hqm, hqn, hqe, hqr⟩ := measurable_positive_L1_input q hq
+  let R : L1ReverseTest (Γ.toLinearMap p) (Γ.toLinearMap q) μ :=
+    { preparation := Γ
+      p := p'
+      q := q'
+      p_measurable := hpm
+      q_measurable := hqm
+      p_integrable := hp'
+      q_integrable := hq'
+      p_nonneg := hpn
+      q_nonneg := hqn
+      prepares_left := congrArg Γ.toLinearMap hpe
+      prepares_right := congrArg Γ.toLinearMap hqe }
+  refine ⟨R, fun t => ⟨?_, ?_⟩⟩ <;>
+    apply integral_congr_ae <;>
+    filter_upwards [hpr, hqr] with a ha hb <;>
+    simp only [R, ha, hb]
+
+/-- Raw positive complex L1 inputs admit the same fixed-threshold finite
+realization; representative choice preserves the literal original integrals. -/
+theorem positive_L1_finite_hockey_realization {X : Type*} [MeasurableSpace X]
+    {μ : Measure X} (Γ : PositiveTracePreservingL1Map (n := n) μ)
+    (p q : X →₁[μ] ℂ) (hp : ∀ᵐ a ∂μ, 0 ≤ p a) (hq : ∀ᵐ a ∂μ, 0 ≤ q a)
+    (t : ℝ) (ht : 0 < t) :
+    ∃ (k : ℕ) (T : ReverseTest (Γ.toLinearMap p) (Γ.toLinearMap q) k),
+      T.hockey t = (∫ a, max ((p a).re - t * (q a).re) 0 ∂μ) ∧
+      MaximalHockeyStickOperational.negativeHockey T t =
+        (∫ a, max (t * (q a).re - (p a).re) 0 ∂μ) := by
+  obtain ⟨R, he⟩ := positive_L1_profiles Γ p q hp hq
+  obtain ⟨k, T, hT, hN⟩ := R.finite_hockey_realization t ht
+  exact ⟨k, T, hT.trans (he t).1, hN.trans (he t).2⟩
+
+/-- The original HMT source class: all sigma-finite spaces in any fixed source
+universe, with both actual integral orientations recorded for the same test. -/
+def sigmaFiniteHockeyProfiles (A B : Matrix n n ℂ) (t : ℝ) : Set (ℝ × ℝ) :=
+  {z | ∃ (X : Type u) (m : MeasurableSpace X),
+    letI : MeasurableSpace X := m
+    ∃ (μ : Measure X), SigmaFinite μ ∧ ∃ R : L1ReverseTest A B μ,
+      z = (R.hockey t, R.negativeHockey t)}
+
+/-- The existing s-finite source class, using the very same actual integrals. -/
+def sFiniteHockeyProfiles (A B : Matrix n n ℂ) (t : ℝ) : Set (ℝ × ℝ) :=
+  {z | ∃ (X : Type u) (m : MeasurableSpace X),
+    letI : MeasurableSpace X := m
+    ∃ (μ : Measure X), SFinite μ ∧ ∃ R : L1ReverseTest A B μ,
+      z = (R.hockey t, R.negativeHockey t)}
+
+/-- The paired finite profile values at the one specified threshold. -/
+def finiteHockeyProfiles (A B : Matrix n n ℂ) (t : ℝ) : Set (ℝ × ℝ) :=
+  {z | ∃ k, ∃ R : ReverseTest A B k,
+    z = (R.hockey t, MaximalHockeyStickOperational.negativeHockey R t)}
+
+/-- Every original sigma-finite profile pair is realized by a finite test, and
+counting measure embeds every finite test back into the original source class. -/
+theorem sigmaFiniteHockeyProfiles_eq (A B : Matrix n n ℂ) (t : ℝ) (ht : 0 < t) :
+    sigmaFiniteHockeyProfiles.{u} A B t = finiteHockeyProfiles A B t := by
+  ext z
+  constructor
+  · rintro ⟨X, m, hz⟩
+    letI : MeasurableSpace X := m
+    rcases hz with ⟨μ, _, R, rfl⟩
+    obtain ⟨k, T, hp, hq⟩ := R.finite_hockey_realization t ht
+    exact ⟨k, T, by rw [hp, hq]⟩
+  · rintro ⟨k, T, rfl⟩
+    refine ⟨ULift.{u} (Fin k), inferInstance, Measure.count, inferInstance,
+      finiteL1ReverseTest T, ?_⟩
+    rw [(finiteL1ReverseTest_profiles T t).1, (finiteL1ReverseTest_profiles T t).2]
+
+/-- The same exact paired profile equality holds for every s-finite source. -/
+theorem sFiniteHockeyProfiles_eq (A B : Matrix n n ℂ) (t : ℝ) (ht : 0 < t) :
+    sFiniteHockeyProfiles.{u} A B t = finiteHockeyProfiles A B t := by
+  ext z
+  constructor
+  · rintro ⟨X, m, hz⟩
+    letI : MeasurableSpace X := m
+    rcases hz with ⟨μ, _, R, rfl⟩
+    obtain ⟨k, T, hp, hq⟩ := R.finite_hockey_realization t ht
+    exact ⟨k, T, by rw [hp, hq]⟩
+  · rintro ⟨k, T, rfl⟩
+    refine ⟨ULift.{u} (Fin k), inferInstance, Measure.count, inferInstance,
+      finiteL1ReverseTest T, ?_⟩
+    rw [(finiteL1ReverseTest_profiles T t).1, (finiteL1ReverseTest_profiles T t).2]
+
+/-- Original sigma-finite positive hockey infimum of the actual L1 integrals. -/
+def operationalL1Hockey (A B : Matrix n n ℂ) (t : ℝ) : ℝ :=
+  sInf (Prod.fst '' sigmaFiniteHockeyProfiles.{u} A B t)
+
+/-- Original sigma-finite negative hockey infimum of the actual L1 integrals. -/
+def operationalL1NegativeHockey (A B : Matrix n n ℂ) (t : ℝ) : ℝ :=
+  sInf (Prod.snd '' sigmaFiniteHockeyProfiles.{u} A B t)
+
+/-- Positive hockey infimum over every s-finite actual L1 source. -/
+def sFiniteOperationalHockey (A B : Matrix n n ℂ) (t : ℝ) : ℝ :=
+  sInf (Prod.fst '' sFiniteHockeyProfiles.{u} A B t)
+
+/-- Negative hockey infimum over every s-finite actual L1 source. -/
+def sFiniteOperationalNegativeHockey (A B : Matrix n n ℂ) (t : ℝ) : ℝ :=
+  sInf (Prod.snd '' sFiniteHockeyProfiles.{u} A B t)
+
+private theorem finite_profile_fst (A B : Matrix n n ℂ) (t : ℝ) :
+    Prod.fst '' finiteHockeyProfiles A B t =
+      {z : ℝ | ∃ k, ∃ R : ReverseTest A B k, z = R.hockey t} := by
+  ext z
+  constructor
+  · rintro ⟨v, ⟨k, R, rfl⟩, rfl⟩
+    exact ⟨k, R, rfl⟩
+  · rintro ⟨k, R, rfl⟩
+    exact ⟨_, ⟨k, R, rfl⟩, rfl⟩
+
+private theorem finite_profile_snd (A B : Matrix n n ℂ) (t : ℝ) :
+    Prod.snd '' finiteHockeyProfiles A B t =
+      {z : ℝ | ∃ k, ∃ R : ReverseTest A B k,
+        z = MaximalHockeyStickOperational.negativeHockey R t} := by
+  ext z
+  constructor
+  · rintro ⟨v, ⟨k, R, rfl⟩, rfl⟩
+    exact ⟨k, R, rfl⟩
+  · rintro ⟨k, R, rfl⟩
+    exact ⟨_, ⟨k, R, rfl⟩, rfl⟩
+
+/-- Original and s-finite operational infima both equal the actual finite
+infima. Equality of the profile sets precedes taking these infima. -/
+theorem operationalL1_eq_finite (A B : Matrix n n ℂ) (t : ℝ) (ht : 0 < t) :
+    operationalL1Hockey.{u} A B t = MaximalHockeyStickOperational.operationalHockey A B t ∧
+    operationalL1NegativeHockey.{u} A B t =
+      MaximalHockeyStickOperational.operationalNegativeHockey A B t ∧
+    sFiniteOperationalHockey.{u} A B t = MaximalHockeyStickOperational.operationalHockey A B t ∧
+    sFiniteOperationalNegativeHockey.{u} A B t =
+      MaximalHockeyStickOperational.operationalNegativeHockey A B t := by
+  simp only [operationalL1Hockey, operationalL1NegativeHockey,
+    sFiniteOperationalHockey, sFiniteOperationalNegativeHockey,
+    sigmaFiniteHockeyProfiles_eq A B t ht, sFiniteHockeyProfiles_eq A B t ht,
+    finite_profile_fst, finite_profile_snd,
+    MaximalHockeyStickOperational.operationalHockey,
+    MaximalHockeyStickOperational.operationalNegativeHockey, and_self]
+
+/-- HMT Proposition V.1 for the original sigma-finite and the full s-finite L1
+source classes, with arbitrary unnormalized finite PSD outputs. -/
+theorem operationalL1_hockey_eq (A B : Matrix n n ℂ)
+    (hA : A.PosSemidef) (hB : B.PosSemidef) (t : ℝ) (ht : 0 < t) :
+    operationalL1Hockey.{u} A B t = MaximalHockeyStickOverlap.maximalHockey A B t ∧
+    operationalL1NegativeHockey.{u} A B t =
+      t * B.trace.re - MaximalHockeyStickOverlap.overlapValue A (t • B) ∧
+    sFiniteOperationalHockey.{u} A B t = MaximalHockeyStickOverlap.maximalHockey A B t ∧
+    sFiniteOperationalNegativeHockey.{u} A B t =
+      t * B.trace.re - MaximalHockeyStickOverlap.overlapValue A (t • B) := by
+  rcases operationalL1_eq_finite.{u} A B t ht with ⟨hp, hn, hsp, hsn⟩
+  rw [hp, hn, hsp, hsn, MaximalHockeyStickOperational.operational_hockey_eq A B hA hB t ht,
+    MaximalHockeyStickOperational.operational_negative_hockey_eq A B hA hB t ht]
+  exact ⟨rfl, rfl, rfl, rfl⟩
+
+/-- The original sigma-finite class for the same actual closed-perspective cost. -/
+def sigmaFiniteL1Costs {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) : Set EReal :=
+  {z | ∃ (X : Type u) (m : MeasurableSpace X),
+    letI : MeasurableSpace X := m
+    ∃ (μ : Measure X), SigmaFinite μ ∧ ∃ R : L1ReverseTest A B μ,
+      z = closedPerspectiveCost hf μ R.p R.q}
+
+/-- Finite counting sources lie in the original class, which lies in the
+s-finite class. Their already proved extreme infima agree, so the original
+sigma-finite maximal value has that same faithful extended value. -/
+theorem sigma_finite_source_infimum_eq {f : ℝ → ℝ} (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) :
+    sInf (sigmaFiniteL1Costs.{u} hf A B) = sInf (finiteCosts hf A B) := by
+  have hfinite : finiteCosts hf A B ⊆ sigmaFiniteL1Costs.{u} hf A B := by
+    rintro z ⟨k, R, rfl⟩
+    exact ⟨ULift.{u} (Fin k), inferInstance, Measure.count, inferInstance,
+      finiteL1ReverseTest R, (finiteL1ReverseTest_cost hf R).symm⟩
+  have hall : sigmaFiniteL1Costs.{u} hf A B ⊆ allL1Costs.{u} hf A B := by
+    rintro z ⟨X, m, hz⟩
+    letI : MeasurableSpace X := m
+    rcases hz with ⟨μ, hμ, R, he⟩
+    letI : SigmaFinite μ := hμ
+    exact ⟨X, m, μ, inferInstance, R, he⟩
+  apply le_antisymm (sInf_le_sInf hfinite)
+  rw [← source_class_infimum_eq.{u} hf A B]
+  exact sInf_le_sInf hall
 
 #print axioms PositiveTracePreservingL1Map.norm_bound
 #print axioms finite_source_density

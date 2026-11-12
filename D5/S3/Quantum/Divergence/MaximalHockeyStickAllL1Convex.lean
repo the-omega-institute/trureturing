@@ -69,6 +69,118 @@ theorem integrated_eq_iff_commute (hf : ConvexOn ℝ (Ioi 0) f)
     exact (MaximalHockeyStickConvex.integrated_eq_iff_commute hf A B hA hB c hc).1 he
   · exact commute_implies_integrated_eq hf A B hA hB
 
+/-- The original sigma-finite maximal f-value, with the actual closed-perspective
+cost and arbitrary independent source universe. -/
+def originalL1Value (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
+  sInf (sigmaFiniteL1Costs.{u} hf A B)
+
+/-- Original maximal hockey-stick f-value: the actual sigma-finite operational
+negative infimum on (0,1] and positive infimum on (1,infinity), integrated against
+the actual curvature. The full atom at one is in the negative branch. -/
+def originalHockeyValue (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
+  (affineMass f A B : EReal) +
+    (∫⁻ t : Positive, ENNReal.ofReal
+      (if (t : ℝ) ≤ 1 then operationalL1NegativeHockey.{u} A B t
+        else operationalL1Hockey.{u} A B t) ∂curvature hf : ℝ≥0∞)
+
+/-- The same actual operational curvature value over all s-finite L1 sources. -/
+def sFiniteHockeyValue (hf : ConvexOn ℝ (Ioi 0) f) (A B : Matrix n n ℂ) : EReal :=
+  (affineMass f A B : EReal) +
+    (∫⁻ t : Positive, ENNReal.ofReal
+      (if (t : ℝ) ≤ 1 then sFiniteOperationalNegativeHockey.{u} A B t
+        else sFiniteOperationalHockey.{u} A B t) ∂curvature hf : ℝ≥0∞)
+
+/-- Finite counting sources sandwich the original sigma-finite class inside the
+s-finite class, identifying the original maximal value without changing its cost. -/
+theorem originalL1Value_eq_allL1Value (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) : originalL1Value.{u} hf A B = allL1Value.{u} hf A B := by
+  rw [originalL1Value, sigma_finite_source_infimum_eq,
+    allL1Value_eq_maximalValue]
+  rfl
+
+/-- The actual original and s-finite L1 hockey infima, rather than an assumed
+hinge perspective identity, identify the exact integrated PSD hockey value. -/
+theorem hockeyValue_eq_original_operational (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef) :
+    hockeyValue hf A B = originalHockeyValue.{u} hf A B ∧
+      hockeyValue hf A B = sFiniteHockeyValue.{u} hf A B := by
+  have hp (t : Positive) := operationalL1_hockey_eq.{u} A B hA hB t t.2
+  have hσ : (fun t : Positive => maximalKernel A B t) =
+      (fun t : Positive => if (t : ℝ) ≤ 1 then operationalL1NegativeHockey.{u} A B t
+        else operationalL1Hockey.{u} A B t) := by
+    funext t
+    rw [(hp t).1, (hp t).2.1]
+    rfl
+  have hs : (fun t : Positive => maximalKernel A B t) =
+      (fun t : Positive => if (t : ℝ) ≤ 1 then sFiniteOperationalNegativeHockey.{u} A B t
+        else sFiniteOperationalHockey.{u} A B t) := by
+    funext t
+    rw [(hp t).2.2.1, (hp t).2.2.2]
+    rfl
+  constructor
+  · unfold hockeyValue originalHockeyValue
+    rw [hσ]
+  · unfold hockeyValue sFiniteHockeyValue
+    rw [hs]
+
+/-- Common-interior commutation gives the actual all-L1 operational equality
+for every convex generator, retaining infinite endpoints and extended values. -/
+theorem commute_implies_allL1_operational_eq (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
+    (hc : let S := A + B
+      let C := MaximalHockeyStickSupport.normalize S A
+      let P := interiorProjection C
+      (P * S * P) * (P * C * P) = (P * C * P) * (P * S * P)) :
+    allL1Value.{u} hf A B = originalHockeyValue.{u} hf A B ∧
+      allL1Value.{u} hf A B = sFiniteHockeyValue.{u} hf A B := by
+  have he := commute_implies_integrated_eq.{u} hf A B hA hB hc
+  exact ⟨he.trans (hockeyValue_eq_original_operational hf A B hA hB).1,
+    he.trans (hockeyValue_eq_original_operational hf A B hA hB).2⟩
+
+/-- The all-L1 classifier now consumes the original operational infima. Necessity
+requires actual full-support curvature and a real finite maximal value. -/
+theorem allL1_operational_eq_iff_commute (hf : ConvexOn ℝ (Ioi 0) f)
+    [(curvature hf).IsOpenPosMeasure]
+    (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
+    (c : ℝ) (hc : allL1Value.{u} hf A B = (c : EReal)) :
+    let S := A + B
+    let C := MaximalHockeyStickSupport.normalize S A
+    let P := interiorProjection C
+    ((allL1Value.{u} hf A B = originalHockeyValue.{u} hf A B) ↔
+      (P * S * P) * (P * C * P) = (P * C * P) * (P * S * P)) ∧
+    ((allL1Value.{u} hf A B = sFiniteHockeyValue.{u} hf A B) ↔
+      (P * S * P) * (P * C * P) = (P * C * P) * (P * S * P)) := by
+  rw [← (hockeyValue_eq_original_operational hf A B hA hB).1,
+    ← (hockeyValue_eq_original_operational hf A B hA hB).2]
+  exact ⟨integrated_eq_iff_commute hf A B hA hB c hc,
+    integrated_eq_iff_commute hf A B hA hB c hc⟩
+
+/-- The original HMT sigma-finite formulation, with both sides referring to
+its actual original source class. Sufficiency has no finiteness assumption. -/
+theorem commute_implies_original_eq (hf : ConvexOn ℝ (Ioi 0) f)
+    (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
+    (hc : let S := A + B
+      let C := MaximalHockeyStickSupport.normalize S A
+      let P := interiorProjection C
+      (P * S * P) * (P * C * P) = (P * C * P) * (P * S * P)) :
+    originalL1Value.{u} hf A B = originalHockeyValue.{u} hf A B := by
+  rw [originalL1Value_eq_allL1Value]
+  exact (commute_implies_allL1_operational_eq hf A B hA hB hc).1
+
+/-- Exact original-source equality classification for arbitrary finite PSD
+outputs, including empty, singular and zero pairs and arbitrary trace masses. -/
+theorem original_eq_iff_commute (hf : ConvexOn ℝ (Ioi 0) f)
+    [(curvature hf).IsOpenPosMeasure]
+    (A B : Matrix n n ℂ) (hA : A.PosSemidef) (hB : B.PosSemidef)
+    (c : ℝ) (hc : originalL1Value.{u} hf A B = (c : EReal)) :
+    let S := A + B
+    let C := MaximalHockeyStickSupport.normalize S A
+    let P := interiorProjection C
+    (originalL1Value.{u} hf A B = originalHockeyValue.{u} hf A B) ↔
+      (P * S * P) * (P * C * P) = (P * C * P) * (P * S * P) := by
+  rw [originalL1Value_eq_allL1Value] at hc ⊢
+  exact (allL1_operational_eq_iff_commute hf A B hA hB c hc).1
+
 #print axioms allL1Value_eq_maximalValue
 #print axioms commute_implies_integrated_eq
 #print axioms integrated_eq_iff_commute
