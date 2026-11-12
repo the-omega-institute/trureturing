@@ -599,5 +599,101 @@ private lemma sixth_ratio_limit (offset : ℕ) :
     (tendsto_atTop_add_const_right atTop (offset : ℝ) tendsto_natCast_atTop_atTop)
 
 
+set_option backward.isDefEq.respectTransparency false in
+/-- The positive biased-cube mixture refutes the sixth-order top-pairing implication. -/
+theorem result : ¬ claim := by
+  classical
+  intro hclaim
+  let K := pairingDefectConstant 6 4
+  obtain ⟨offset, hoffset⟩ := exists_nat_ge (max (1000 : ℝ) (K^2))
+  have hsize (n : ℕ) : (1000 : ℝ) ≤ ((n + offset : ℕ) : ℝ) := by
+    have := (le_max_left (1000 : ℝ) (K^2)).trans hoffset
+    push_cast at *
+    have hn : (0 : ℝ) ≤ n := by positivity
+    linarith
+  have hsizeNat (n : ℕ) : 1000 ≤ n + offset := by exact_mod_cast hsize n
+  have hsqrt (n : ℕ) : K ≤ Real.sqrt ((n + offset : ℕ) : ℝ) := by
+    have hKsq : K^2 ≤ ((n + offset : ℕ) : ℝ) := by
+      have := (le_max_right (1000 : ℝ) (K^2)).trans hoffset
+      push_cast at *
+      nlinarith [show (0 : ℝ) ≤ n by positivity]
+    exact (le_abs_self K).trans ((Real.le_sqrt (abs_nonneg K) (by positivity)).2
+      (by simpa only [sq_abs] using hKsq))
+  let D := sixthCounterData offset
+  have hone : ∀ n, (D n).ℓ 1 = 1 := by
+    intro n
+    dsimp only [D, sixthCounterData]
+    simpa only [Finset.prod_empty, Finset.card_empty, pow_zero, div_one, moment_values.1]
+      using model_character (n + offset) ∅
+  have hpositive : ∀ n (y : (D n).A), 0 ≤ (D n).ℓ (y * y) := by
+    intro n y
+    exact model_positive (n + offset) (by have := hsizeNat n; omega) y
+  have hcenter : ∀ n d, (D n).ℓ ((D n).Y d) = 0 := by
+    intro n d
+    dsimp only [D, sixthCounterData] at d ⊢
+    simpa only [Finset.prod_singleton, Finset.card_singleton, pow_one,
+      moment_values.2.1, zero_div] using model_character (n + offset) {d}
+  have hquad : ∀ n d, (D n).Y d ^ 2 = (D n).a • (D n).Y d + (D n).b • 1 := by
+    intro n d
+    funext ω
+    change sign (ω d)^2 = 0 * sign (ω d) + 1 * 1
+    cases ω d <;> norm_num [sign]
+  have hlower : ∀ n r, 2 ≤ r → r < 6 → ∀ (g : Fin r → (D n).ι → ℝ),
+      (∀ i d, |g i d| ≤ 1) →
+      |distinctIndexMoment (D n).ℓ (D n).Y g| ≤
+        720 * Real.sqrt ((D n).H * (D n).L)^r := by
+    intro n r hr hr6 g hg
+    dsimp only [D, sixthCounterData] at g hg ⊢
+    simp only [mul_one]
+    exact (distinct_bound (n + offset) r (by have := hsizeNat n; omega) hr hr6 g hg).trans
+      (by gcongr; norm_num)
+  have htop : ∀ n (g : Fin 6 → (D n).ι → ℝ), (∀ i d, |g i d| ≤ 1) →
+      |subsetDistinctMoment (D n).ℓ (D n).Y g Finset.univ -
+        finitePairingPolynomial Finset.univ
+          (subsetDistinctMoment (D n).ℓ (D n).Y g)| ≤
+        720 * Real.sqrt ((D n).H * (D n).L)^6 / (D n).H := by
+    intro n g hg
+    dsimp only [D, sixthCounterData] at g hg ⊢
+    simp only [mul_one]
+    have hb := top_order_bound (n + offset) (by have := hsizeNat n; omega) g hg
+    have hpos : (0 : ℝ) < ((n + offset : ℕ) : ℝ) := by
+      exact_mod_cast (show 0 < n + offset by have := hsizeNat n; omega)
+    have hs : Real.sqrt ((n + offset : ℕ) : ℝ)^6 = ((n + offset : ℕ) : ℝ)^3 := by
+      calc
+        _ = (Real.sqrt ((n + offset : ℕ) : ℝ)^2)^3 := by ring
+        _ = _ := by rw [Real.sq_sqrt hpos.le]
+    rw [hs]
+    convert hb using 1 <;> field_simp [ne_of_gt hpos] <;> ring
+  have hlimit := hclaim 720 (by norm_num) D hone hpositive hcenter hquad
+    (by intro n; change (1 : ℝ) ≤ ((n + offset : ℕ) : ℝ); linarith [hsize n])
+    (by intro n; exact le_refl 1)
+    (by intro n; norm_num [D, sixthCounterData])
+    (by intro n; norm_num [D, sixthCounterData])
+    (by intro n
+        change (Fintype.card (Fin (n + offset)) : ℝ) ≤
+          720 * ((n + offset : ℕ) : ℝ)
+        rw [Fintype.card_fin]
+        have hn : (0 : ℝ) ≤ ((n + offset : ℕ) : ℝ) := by positivity
+        linarith)
+    hlower htop (sixth_ratio_limit offset)
+  have hev := hlimit.eventually (gt_mem_nhds (show (0 : ℝ) < 1/2 by norm_num))
+  obtain ⟨n, hn⟩ := Filter.Eventually.exists hev
+  have hb := deviation_lower_bound (n + offset) (hsizeNat n) (hsqrt n)
+  have hspos : 0 < Real.sqrt ((n + offset : ℕ) : ℝ)^6 := by
+    apply pow_pos
+    apply Real.sqrt_pos.2
+    exact_mod_cast (show 0 < n + offset by have := hsizeNat n; omega)
+  have hl : (1 : ℝ) ≤
+      (subsetFamilyMoment (D n).ℓ (D n).Y
+          (fun (_ : Fin 6) _ => (1 : ℝ)) Finset.univ -
+        finitePairingPolynomial Finset.univ
+          (subsetFamilyMoment (D n).ℓ (D n).Y
+            (fun (_ : Fin 6) _ => (1 : ℝ)))) /
+        Real.sqrt ((D n).H * (D n).L)^6 := by
+    dsimp only [D, sixthCounterData]
+    simp only [mul_one]
+    exact (le_div_iff₀ hspos).2 (by simpa only [one_mul] using hb)
+  linarith
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
