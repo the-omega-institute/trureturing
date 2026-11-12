@@ -1,0 +1,32 @@
+**定义 86.2（原二阶零关系）。** 对原 $A=\bigoplus_iA_i$ 的简单理想，记单位、规范迹、秩、实维数为 $1_i,\tau_i,r_i,d_i$，置
+
+$$
+\Pi_i a_i=\frac{\tau_i(a_i)}{r_i}1_i,\qquad
+\mathsf C_i=\begin{cases}I_{A_i},&r_i=1,\\
+\Pi_i+\dfrac{r_i-1}{d_i-1}(I_{A_i}-\Pi_i),&r_i>1,
+\end{cases}\qquad
+\mathsf C_A=\bigoplus_i\mathsf C_i,\quad\mathsf D_A=\mathsf C_A^{1/2}.
+$$
+
+秩一理想没有迹零项。令 $\mathcal T=H\widetilde F:A\otimes_{\mathbb R}A\to E$，保留原 (83.8)，即
+
+$$
+\|J\mathsf D_A\|_{\rm HS}^2+
+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2
+=\|U\|_2^2+\|G\|_2^2.
+\tag{86.3}
+$$
+
+这里 Hilbert–Schmidt 范数使用原迹内积。定理 83.4 在同一原基底上使它恰好等价于
+
+$$
+\begin{aligned}
+D_J:&\quad a,b\in A_+,\ \langle a,b\rangle_A=0
+\Longrightarrow\langle Ja,Jb\rangle_D=0,\\
+D_H:&\quad d,d'\in D_+,\ \langle d,d'\rangle_D=0
+\Longrightarrow\langle Hd,Hd'\rangle_E=0.
+\end{aligned}
+$$
+
+第二行遍及整个原 $D_+$。以下 PRE 严格指 72.1 的完整 $S$、上述全部原数据及 $D_J,D_H,Z$；因此 $\mathrm{PRE}_0^{1/2}+(86.3)$ 与 PRE 同数据等价。两个几何积分变量不增加实际独立性，范数等式也不把原态锥换成球。
+

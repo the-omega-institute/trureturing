@@ -1,0 +1,30 @@
+**引理 82.2（单块的精确三腿 Choi 压缩）。** 对 $\Phi:M_d\to M_d$，置
+$$
+|G_d\rangle=d^{-1/2}\sum_{i=1}^d|iii\rangle,\qquad G_d=|G_d\rangle\langle G_d|,
+$$
+并定义复线性 $F_d:\mathbb C^d\otimes\mathbb C^d\to(\mathbb C^d)^{\otimes3}$：
+$$
+F_d(\operatorname{vec}B)=\sum_i B_{ii}|iii\rangle+
+\sum_{j\ne i}B_{ji}(|jii\rangle+|iji\rangle+|iij\rangle).
+\tag{82.3}
+$$
+则对定义 82.1 的全部三腿权重，
+$$
+\boxed{F_d^*\,\mathcal K_{3,\alpha}(\Phi)(G_d)\,F_d=J(\Phi)/d.} \tag{82.4}
+$$
+$F_d^*F_d$ 在对角矩阵单位坐标上为一，在非对角坐标上为三，故 $F_d$ 单射且 $F_d^*F_d\le3I$；它通常不是等距映射。
+
+**证明。** 对角字符串 $iii$ 与每组具有两个 $i$、一个不同 $j$ 的三个字符串互不相交；多数标签唯一确定 $i$，少数标签唯一确定 $j$。因此 (82.3) 给出的范数平方恰为 $\sum_i|B_{ii}|^2+3\sum_{j\ne i}|B_{ji}|^2$。
+HP 使 $J(\Phi)$ Hermitian。对它作有限谱分解，把每个特征向量反向量化为 $H_a$，由矩阵单位上的 Choi 对应得到带实符号的 Kraus 展开
+$$
+J(\Phi)=\sum_a c_a|\operatorname{vec}H_a\rangle\langle\operatorname{vec}H_a|,\qquad
+\Phi(X)=\sum_a c_aH_aXH_a^*,\qquad c_a\in\mathbb R. \tag{82.5}
+$$
+这里允许负 $c_a$，没有预用 CP。对每个 $H_a$ 和任一腿 $\ell$，直接比较字符串系数：
+$$
+\langle F_d(\operatorname{vec}B)|H_a^{(\ell)}|G_d\rangle
+=d^{-1/2}\sum_{j,i}\overline{B_{ji}}(H_a)_{ji}
+=d^{-1/2}\operatorname{Tr}(B^*H_a).
+$$
+三种位置得到完全相同的振幅。因此把 (82.5) 代入三腿平均并用 $\sum_\ell\alpha_\ell=1$，所得每个二次型都是 $d^{-1}\sum_ac_a|\operatorname{Tr}(B^*H_a)|^2$，即 $J(\Phi)/d$ 的二次型。Hermitian 极化给算子恒等式 (82.4)。$d=1$ 也直接成立。证毕。
+

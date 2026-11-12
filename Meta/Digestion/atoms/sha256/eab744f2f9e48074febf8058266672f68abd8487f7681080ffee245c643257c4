@@ -1,0 +1,30 @@
+**定理 112.3（三个实际球丛投影与原标签置换）。** 令
+
+$$
+\mathcal A=\{(p,q,r)\in P^3:p\perp q,\ q\perp r,\ r\perp p\},\qquad
+\pi_i:\mathcal A\longrightarrow P
+\tag{VIII112.9}
+$$
+
+为三个坐标投影。它是原紧ordered joint空间，三个 $\pi_i$ 都是同一
+秩 $d$ 丛 $\xi$ 的单位 $S^{d-1}$ 球丛的一个识别。
+$\mathfrak S_3$ 在 $\mathcal A$ 上的实际坐标置换严格置换这三个投影。
+
+证明。原正交关系闭使 $\mathcal A$ 紧。
+对 $\pi_1$，准确的识别及逆为
+
+$$
+(p,q,r)\longmapsto(p,q-c_p)\in S(\xi),\qquad
+(p,v)\longmapsto(p,c_p+v,c_p-v).
+\tag{VIII112.10}
+$$
+
+W保证 $q,r$ 是 $D_p$ 中对径，反向每个这样的对径都给唯一joint，
+故两式互逆；112.2与球心连续性保证连续。
+$\pi_2$ 同样取 $(q,p-c_q)$，$\pi_3$ 取 $(r,p-c_r)$，
+都识别为 $S(\xi)\to P$。
+任意置换仅重排同一个实际三元组；特别地换前两标签交换 $\pi_1,\pi_2$ 而固定 $\pi_3$，
+换后两标签固定 $\pi_1$ 而交换 $\pi_2,\pi_3$。
+不要求这些重标号延伸为 $V$ 上的线性变换或锥对称。
+这里的 $\mathfrak S_3$ 是三标签置换群，不能与全有限层级的三份比较条件 $S_3$ 混同。证毕。
+

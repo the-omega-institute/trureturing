@@ -1,0 +1,29 @@
+**定理 33.4（剖面不恢复的字典序首个规模）。** 在定义 33.1 的全部窗口对中，全部最小值序列相同而实际中间域张成剖面不同的首个规模恰为 $(m,N)=(3,6)$。这包括排除任意比值域次数下的 $m=1,2$，以及排除 $m=3$、$N<6$；首个规模中每一个固定实际 $D/F$ 的全部分离，恰由 (33.4) 描述。
+
+证明。以下在相同实际 $D$ 上证明更强的结论：较早规模的任意窗口都有相同剖面，甚至不必先假设最小值序列相同。
+
+若 $m=1$，$X=xF$，故 $D=F$，唯一条目 $t_X(F)=0$。若 $m=2$，归一化写 $x^{-1}X=F+F\theta$，其中 $\theta\notin F$、$D=F(\theta)$。对每个实际真中间域 $F\subseteq A\subsetneq D$，必有 $\theta\notin A$，否则 $D\subseteq A$。所以 $1,\theta$ 在 $A$ 上独立，而 $D$ 张成的秩为一，得
+
+$$
+t_X(A)=
+\begin{cases}
+2[A:F]-2,&A\subsetneq D,\\
+N-2,&A=D.
+\end{cases}
+\tag{33.10}
+$$
+
+这对任意次数 $N$ 成立，完全由同一实际域 $D$ 及其实际中间域决定。
+
+若 $m=3$，归一化的三维空间容在 $D$ 内，故 $N\ge3$。$N=3$ 时空间就是 $D$，所有条目为零。$N=4$ 时，$F$ 条目为零，$D$ 条目为一；每个实际真非平凡中间域都为二次，三维空间的 $A$-张成不可能只有二维，故必为整个 $D$，条目也是一。$N=5$ 为素数，没有真非平凡中间域，只有 $t_X(F)=0$、$t_X(D)=2$。这些剖面均与窗口无关，因此排除了全部较早规模。命题 33.3 在 $(3,6)$ 取到分离；定理 33.2 已给这个规模的完整实际域充要条件。$\square$
+
+上述逆问题与既有形状须分别归属。Castello–Polverino–Zullo，[*On one-orbit cyclic subspace codes of $\mathcal G_q(n,3)$*，arXiv:2405.01652v1，Definition II.3、Theorem III.2(3.1)–(3.2)](https://arxiv.org/html/2405.01652v1)，已定义子域张成的相对维数，并在有限域的三维平方张成分类中区分幂窗口的二次域秩三与部分二次域窗口的秩二。其记号 $\delta_t(S)$ 是子域张成秩，不是这里的第 $j$ 阶最小交维；在该有限域对应中，$t_X(\mathbb F_{q^t})=t\delta_t(X)-m$。这些秩分支及窗口形状不是本节新增的分类。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Examples 6.2、6.4、Proposition 6.3](https://arxiv.org/html/2201.02003v1)，已给一般域的部分子域方向与幂窗口的临界对形状。对 (33.6)，$W_0+\gamma W_0=AW_0$（$\gamma\in A\setminus F$）及 $V_0+\theta V_0=\langle1,\theta,\theta^2,\theta^3\rangle_F$ 均为四维；其 $k=3$、环境维数六满足 Proposition 6.3 的 $k+2\le\dim_F D$，分别属于其二次域部分方向与次数六的幂方向。这里直接采用这些形状作存在见证，不重立临界对定理。
+
+Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 4.4、Proposition 4.8、Corollary 4.11、Theorem 5.2](https://arxiv.org/html/2405.19911v1)，已给子域张成与最小容纳域、有限域幂窗口分布和部分二次域族，并直接引用上述一般域 Proposition 6.3。取其幂窗口参数 $k=3,t=n=6$，及部分二次域族参数 $\ell=1,[\mathbb F_{q^2}(\theta):\mathbb F_{q^2}]=3$，已有正交维一的标签。重复同一标签即延续到全部阶；这个延续不构成新的高阶机制。Shi–Özbudak，[*Linear equivalence of full weight spectrum cyclic orbit codes*，arXiv:2611.04947v1，Theorem 1.1、§2](https://arxiv.org/html/2611.04947v1)，进一步给这两类有限域码各自的线性等价判据，包括真子域参数：幂族用分式线性变换及 Frobenius，部分二次域族用二次域仿射变换及 Frobenius。其分类不作为本节的窗口标量轨道分类；本节也没有断言秩三的全部窗口均为幂窗口。
+
+仓内定理 27.2 已承担特征零三维窗口的原域单线取等；(29.2)、(31.4)、(32.3) 已承担剖面到极小值的正向关系、共同见证下界及一般超平面的取等桥。本节不重立这些机制。相对于上述指定原文与这些既有结论，本节的仓内推导（repo-derived）差额是反向信息损失的精确结算：全部最小值仍不能恢复实际域剖面，首个字典序规模为 $(3,6)$，且每一个固定实际六次域上的全部剖面差异恰为唯一实际二次域的秩二与秩三之别。有限域中两类已知形状的秩差与单线取等本身已有先例；这些来源对应不推出全球优先权。
+
+白话说，把每一阶最少还能相交多少个方向全部列出，仍会丢掉窗口在某个实际子域下需要补几个方向的信息。六次域里的三维窗口已经发生这种损失：两种窗口都能在第二份加入时只剩一线，此后重复它便永远只剩这一线；但二次域补齐一个窗口只添一维，补齐另一个却添三维。这个尺度没有其他域条目可以分离它们，而且二次域若存在便只有一个。保留该域中任一非底域的实际标签，交维二与零就能重新显出差异。完整标签关系因此保留了被全部最小值汇总删掉的信息。
+
