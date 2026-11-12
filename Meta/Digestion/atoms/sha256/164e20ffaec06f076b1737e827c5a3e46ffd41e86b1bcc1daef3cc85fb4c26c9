@@ -1,0 +1,32 @@
+**引理 101.3（参考互反钉住所有支持的 $S$-限制）。** 对任意 $x\in\operatorname{ext}B$ 和任意 $j\in J(x)$，有
+
+$$
+ j(s_i)=j_i(x)\qquad(1\le i\le d-1).
+\tag{101.3}
+$$
+
+对一般边界点 $y\in\partial B$，仍用同一公式
+$J(y)=\{j:N^*(j)=1,\ j(y)=1\}$。设 $L:W\to S^*$ 是线性映射，由
+$L(x)(s_i)=j_i(x)$ 定义。则对任意 $y\in\partial B$ 及任意 $j\in J(y)$，都有
+
+$$
+ j|_S=L(y).
+\tag{101.4}
+$$
+
+**证明。** 由 $\mathrm R_{i,+}$ 和(101.2)，
+
+$$
+\frac{1+j_i(x)}2=T_{c+s_i}(c+x)=T_{c+x}(c+s_i)
+ =\frac{1+\min_{k\in J(x)}k(s_i)}2,
+$$
+
+故 $\min_{k\in J(x)}k(s_i)=j_i(x)$。对 $q_i=c-s_i$ 使用 $\mathrm R_{i,-}$ 得
+$\max_{k\in J(x)}k(s_i)=j_i(x)$，从而(101.3)成立。
+
+若 $y\in\partial B$，取 $j\in J(y)$。紧凸面
+$G=\{z\in B:j(z)=1\}$ 的极点均为 $B$ 的极点，有限维凸分解给
+$y=\sum_a\lambda_a x_a$，其中 $x_a\in\operatorname{ext}B$ 且
+$j\in J(x_a)$。由(101.3)和线性性，
+$j(s_i)=\sum_a\lambda_a j_i(x_a)=j_i(y)$，这就是(101.4)。这一段把纯点上的支持约束提升到所有边界支持，不使用所有边界点纯或全局光滑。
+

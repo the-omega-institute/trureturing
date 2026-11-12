@@ -1,0 +1,56 @@
+### 33.4 $\operatorname{Re}\gamma\ne0$：完整乘积与负平方
+
+写 $\gamma=x+\iota y$，$x,y\in\mathbb R$。由 (33.10)–(33.11) 直接得到全部插值系数
+
+$$
+\begin{aligned}
+A_a&=((3a+11)\gamma-2\iota)/3,&
+A_3&=(20\gamma-2\iota)/3,\\
+B_a&=((a^2-9a-2)\gamma+(-a^2+3a+2)\iota)/3,&
+B_3&=(-20\gamma+(11-3a)\iota)/3.
+\end{aligned}
+\tag{33.16}
+$$
+
+先设 $x\ne0$。$a=1$ 时四个 $\gamma$ 系数依次为 $14,20,-10,-20$，$a=2$ 时为 $17,20,-16,-20$，均非零。因此 $A_a,A_3,B_a,B_3$ 均非零。又 $z_a,z_3$ 非零，所以
+$\tau_a=A_az_a$、$\tau_3=B_3z_3$ 是非零实数。式 (33.13) 的最后一式给出准确等式
+
+$$
+\frac{A_a\overline{B_a}}{A_3\overline{B_3}}
+=\frac{\tau_a}{\tau_3}\frac{|B_a|^2}{|A_3|^2}
+\in\mathbb R.
+\tag{33.17}
+$$
+
+全部分母在本分支已证非零。令 $r_\gamma=x^2+y^2$，$N_a=A_a\overline{B_a}$、$M_a=A_3\overline{B_3}$；$M_a$ 的 $B_3$ 仍使用同一个 $a$。逐项乘法给
+
+$$
+\begin{aligned}
+N_1&=\frac{-140r_\gamma+76y-8}{9}-4\iota x,&
+M_1&=\frac{-400r_\gamma+200y-16}{9}-\frac{40}{3}\iota x,\\
+N_2&=\frac{-272r_\gamma+100y-8}{9}-4\iota x,&
+M_2&=\frac{-400r_\gamma+140y-10}{9}-\frac{20}{3}\iota x.
+\end{aligned}
+\tag{33.18}
+$$
+
+例如 $N_1=(14\gamma-2\iota)(-10\overline\gamma-4\iota)/9$，实部为
+$(-140(x^2+y^2)+76y-8)/9$，相对于 $\iota$ 的虚部为 $-4x$；其余三式由 (33.16) 同样直接相乘得到。
+
+由 (33.17)，$N_a=\rho_aM_a$，$\rho_a\in\mathbb R$。比较 (33.18) 的虚部并用 $x\ne0$，强制
+$\rho_1=3/10$、$\rho_2=3/5$。但完整差值是
+
+$$
+\begin{aligned}
+N_1-\frac3{10}M_1
+ &=\frac{-20(x^2+y^2)+16y-16/5}{9}
+ =-\frac{20}{9}\left(x^2+\left(y-\frac25\right)^2\right),\\
+N_2-\frac35M_2
+ &=\frac{-32(x^2+y^2)+16y-2}{9}
+ =-\frac{32}{9}\left(x^2+\left(y-\frac14\right)^2\right).
+\end{aligned}
+\tag{33.19}
+$$
+
+两者在 $x\ne0$ 时均严格负，不可能等于零。故反设 $n\ne0$ 不能发生在本分支。
+

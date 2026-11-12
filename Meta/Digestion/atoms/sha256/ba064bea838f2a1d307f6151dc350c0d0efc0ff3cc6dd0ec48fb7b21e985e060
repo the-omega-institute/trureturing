@@ -1,0 +1,18 @@
+**定义 82.1（矩阵、迹和量词）。** 令 $\mathcal A=\bigoplus_{i\in I}M_{n_i}(\mathbb C)$，$I$ 有限非空，$n_i\ge1$，$A=\mathcal A_{\rm sa}$，$n=\sum_i n_i$，$u_A=\sum_i\operatorname{Tr}$。二份、三份为全部有序块的普通矩阵张量直和，包含整个 PSD 锥；不只包含可分离元。$\Phi:\mathcal A\to\mathcal A$ 为复线性保 Hermitian 映射（HP），其输入 $i$、输出 $j$ 的块记 $\Phi_{ji}$。实 Hermitian 线性映射一律取唯一的这种复延拓。
+在每个原块上任意固定一套共同矩阵标架，先于且独立于 $\Phi$；向量化及未归一 Choi 顺序取输出在前、输入在后：
+$$
+\operatorname{vec}X=\sum_{a,b}X_{ab}|a\rangle\otimes|b\rangle,\qquad
+J(\Phi_{ji})=\sum_{a,b=1}^{n_i}\Phi_{ji}(E_{ab})\otimes E_{ab}. \tag{82.1}
+$$
+令 $\Phi_\ell$ 只作用第 $\ell$ 位置，按块转移并对输入标签求和。例如三份的第一位置满足
+$$
+(\Phi_1Z)_{jkl}=\sum_i(\Phi_{ji}\otimes\operatorname{id}_{n_k}\otimes\operatorname{id}_{n_l})Z_{ikl}.
+$$
+定义
+$$
+\mathcal K_{2,t}(\Phi)=t\Phi_1+(1-t)\Phi_2,\quad 0\le t\le1,\qquad
+\mathcal K_{3,\alpha}(\Phi)=\sum_{\ell=1}^3\alpha_\ell\Phi_\ell,\quad
+\alpha_\ell\ge0,\quad\sum_\ell\alpha_\ell=1. \tag{82.2}
+$$
+每个位置必须是**同一份** $\Phi$；不能以三个不相关事件的平均替代。本章 CP 判据本身不要求 $\Phi$ 正、TP、保单位、遍历或混合。三腿和整个二腿锥判据允许权重端点，与第 79 章质量定理所需的严格 $t,s\in(0,1)$ 分开。
+

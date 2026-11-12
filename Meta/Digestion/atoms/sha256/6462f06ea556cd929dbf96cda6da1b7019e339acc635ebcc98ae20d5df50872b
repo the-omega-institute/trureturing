@@ -1,0 +1,24 @@
+**定理 97.2（有限零拼合的完整facet配对）。** 在定义VII97.1、$m\ge1$ 及 $\mathrm{Z0}$ 下，
+
+$$
+D_p\subseteq D_q\quad\Longrightarrow\quad p=q,
+\qquad
+P\longrightarrow\mathcal A(K),\quad p\longmapsto D_p
+\text{ 是双射},\qquad f=n.
+\tag{VII97.2}
+$$
+
+这个结论适用于任意有限 $m\ge1$，不要求 $\mathrm B$、$m=6$ 或关系零度上界。
+
+证明。V88.3给每个非空 $D_p$ 为暴露真面，空 $D_p$ 也视为真面；VII96.2给每个facet $F$ 一个原纯点 $r$，使 $F=D_r$。先设 $D_p\subseteq D_q$。取任意包含 $p$ 的facet $F=D_r$。纯点排除对称性给
+
+$$
+p\in D_r\ \Longrightarrow\ r\in D_p\subseteq D_q
+\ \Longrightarrow\ q\in D_r=F.
+\tag{VII97.3}
+$$
+
+顶点 $\{p\}$ 等于所有包含它的facets之交，故 $q=p$。这里使用的是多面体的面由包含它的全部facets相交表示，未假设 $D_p$ 已是facet。
+
+任取 $p\in P$，将真面 $D_p$ 包含于某个facet $D_r$；空面时也可这样选择。刚证出的蕴含给 $p=r$，所以 $D_p=D_r$ 本身就是facet。VII96.2已经给满射，而 $D_p=D_q$ 蕴含 $p=q$，故得到双射及 $f=n$。这也排除了 $m\ge1$ 时的空 $D_p$。证毕。
+
