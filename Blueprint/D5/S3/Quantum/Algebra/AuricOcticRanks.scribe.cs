@@ -72,25 +72,25 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
         var projected = Dsc("projected_disjoint", "Complementary coordinate images are disjoint",
             Context(All("S", Sets, Call("Disjoint", Call("projected", U, S), Call("projected", U, C(S))))),
             "projected(U,S) is the image of U under the coordinate projection retaining S. The two images "
-            + "have disjoint coordinate supports. This auxiliary result is consumed by window connectivity.");
+            + "have disjoint coordinate supports. This gives one of the two dimension identities used in window connectivity.");
         var containment = Dsc("window_le_projected_sup", "The window lies in the sum of its projected images",
             Context(All("S", Sets, Rel(U, FormulaRelationOperator.SubsetOf,
                 Call("sup", Call("projected", U, S), Call("projected", U, C(S)))))),
-            "Every vector is the sum of its two complementary coordinate projections. The actual window "
-            + "connectivity proof consumes this containment and complementary disjointness.");
+            "Every vector is the sum of its two complementary coordinate projections. Together with "
+            + "complementary disjointness, this bounds the window dimension by the sum of the projection dimensions.");
         var equality = Dsc("projection_stable_of_rank_equality", "Complementary rank equality forces projection stability",
             Context(All("S", Sets, Imp(Equal(Add(R(S), R(C(S))), Call("finrank", K, U)),
                 All("x", Coordinates, Imp(Mem(V("x"), U), Mem(Call("coordinateProject", S, V("x")), U)))))),
             "rowRank(U,S) is the dimension of projected(U,S). Equality in the complementary dimension "
             + "bound makes U equal the direct sum of those images. Its S projection therefore preserves U. "
-            + "The actual scalar-idealizer argument consumes this conclusion to exclude equality.");
+            + "The actual scalar-idealizer argument uses this conclusion to exclude equality.");
         var orbit = Dsc("mem_orbitSet", "Membership in an actual translate",
             All("Omega G", V("Type"), Seq(Instance("Fintype", O), Instance("DecidableEq", O),
                 Instance("Group", G), Instance("Fintype", G), Instance("MulAction", G, O),
                 All("S", Sets, All("g", G, All("i", O, Logic(
                     Mem(V("i"), Call("orbitSet", S, V("g"))), FormulaLogicOperator.Iff,
                     Mem(Call("act", Call("inverse", V("g")), V("i")), S))))))),
-            "orbitSet(S,g) is the image of S under the action of g. This consumed auxiliary identity "
+            "orbitSet(S,g) is the image of S under the action of g. This identity "
             + "connects the Galois semilinear coordinate map to the translated projection.");
         var connected = All("T", Sets, Imp(And(Call("Nonempty", V("T")), Call("Nonempty", C(V("T")))),
             Less(D(4), Add(R(V("T")), R(C(V("T")))))));
@@ -99,13 +99,13 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
                 Transitive, Invariant, connected), All("S", Sets,
                 Imp(And(Call("Nonempty", S), Call("Nonempty", C(S))),
                     Leq(Add(Card(S), D(1)), Mul(D(2), R(S)))))))),
-            "The frozen fractional_submodular_cover theorem is applied to translates of S with their "
+            "The fractional_submodular_cover theorem is applied to translates of S with their "
             + "constant covering multiplicity to obtain the weak half-rank bound. For the nonnegative "
             + "invariant submodular defect 2 rowRank minus cardinality, a minimal nonempty zero set has "
             + "translates that cannot cross any zero set. Transitivity covers the complement by such "
             + "translates, so equality on S forces equality on its complement. Connectedness excludes "
-            + "both equalities. This equality-rigidity argument is the escape content consumed by the "
-            + "actual strict-rank theorem; the existing fractional-cover application is reused.");
+            + "both equalities. This equality-rigidity argument supplies the strict-rank bound for "
+            + "the actual split window.");
         var matrix = Dsc("crossRank_matrix", "Operator crossing rank equals its literal matrix block rank",
             All("K Omega", V("Type"), Seq(Instance("Field", K), Instance("Fintype", O), Instance("DecidableEq", O),
                 All("n", Operators, All("S", Sets, Equal(
@@ -114,7 +114,7 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
             "crossRank(n,S) is the dimension of the image of extension by zero from S complement, "
             + "followed by n and projection to S. The literal subtype-indexed matrix block represents "
             + "that map; extension by zero in the target is injective. The actual cut-free endpoint "
-            + "consumes this identity to state its conclusion using the actual matrix entries.");
+            + "uses this identity to state its conclusion using the actual matrix entries.");
         var cut = Dsc("cut_free_of_actual_ranks", "Transitive strict half-ranks exclude a cut on eight labels",
             Context(Action(All("n", Operators, Imp(And(Equal(Call("ker", V("n")), U),
                 Equal(Call("range", V("n")), U), Equal(Call("card", O), D(8)),
@@ -134,9 +134,6 @@ internal sealed class AuricOcticRanksDocument : IScribeDocumentDefinition
                 + "indicated row and column subtypes. These symbolic dimension and orbit arguments are "
                 + "not a finite certified instance or enumeration. The source is the rank and cut argument "
                 + "of general section 43.2, together with the strict-rank mechanism of section 26. "
-                + "No mathematical novelty is claimed. The source-owner Reg mirror supplies exact telescope "
-                + "equivalences for all seven public theorems. Four-slot registration remains unfinished under "
-                + "https://github.com/the-omega-institute/trureturing/issues/29718; no declared_validated "
-                + "status is asserted.")), projected, containment, equality, orbit, strict, matrix, cut)));
+                + "No mathematical novelty is claimed.")), projected, containment, equality, orbit, strict, matrix, cut)));
     }
 }

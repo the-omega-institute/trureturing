@@ -130,12 +130,6 @@ internal sealed class AuricActualOcticWindowDocument : IScribeDocumentDefinition
                         + "the full classification and the separate fixed-N irreducibility bridge remain open. "
                         + "The rank machinery is supplied by AuricOcticRanks and is consumed here on the actual "
                         + "window. There is no general-position, uniformity, connectivity or certificate premise, "
-                        + "and no normalization requiring one to lie in W. No mathematical novelty is claimed.")),
-                    Paragraph(Text(
-                        "The source-owner Reg mirror proves an exact full-telescope equivalence with the "
-                        + "original inverse-obstruction operator as readout. Four-slot registration still requires "
-                        + "whole-family variation, sensitivity, observational dependence and raw source binding, "
-                        + "as recorded in https://github.com/the-omega-institute/trureturing/issues/29718. "
-                        + "No declared_validated registration status is asserted."))),
+                        + "and no normalization requiring one to lie in W. No mathematical novelty is claimed."))),
                 DescribeRole.Theorem))));
 }
