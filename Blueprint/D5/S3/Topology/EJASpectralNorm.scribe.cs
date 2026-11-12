@@ -1,0 +1,48 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
+
+internal sealed class EJASpectralNormDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The spectral JB norm is constructed from the original finite real Euclidean Jordan laws on a separate type copy.",
+        H("The spectral norm of an original finite real EJA"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("coeff"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.coeff"),
+                H("Normalized inner functionals"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For an idempotent c the functional is x ↦ inner(c,x)/inner(c,c). A nonzero c gives a positive functional on every actual Jordan square and takes value one on the original unit. At c=0 division by zero gives the zero functional. Its inclusion only adjoins zero to the set of readouts."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("values"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.values"),
+                H("All idempotent readouts"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The value set consists of the absolute normalized inner functional values at all original idempotents, with no chosen spectral family or primitive-frame premise."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("spectralNorm"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.spectralNorm"),
+                H("The spectral norm"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("N(x) is the supremum of the nonempty set of absolute idempotent readouts. For any actual complete spectral resolution the supremum is the maximum of zero and |r_i| over the nonzero e_i. Coefficients attached to zero idempotents never constrain the value. The empty family and the zero algebra are included."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("Space"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.Space"),
+                H("A separate normed type copy"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Space(A) is an algebraic type copy of the original carrier. The given Hilbert norm and inner product on X are retained. Only this copy receives the newly derived spectral norm."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("equiv"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.equiv"),
+                H("The original-carrier identification"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The identity of underlying elements is a real linear equivalence from the type copy back to X. It transports the product, unit and actual square-root witnesses exactly."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("product"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.product"),
+                H("The original product on the copy"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The bilinear product on Space(A) is exactly the original real bilinear S, transported along equiv. No matrix or associative representation is introduced."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("jb-data"),
+                DeclarationHandle.Create("D5/S3/Topology/EJASpectralNorm.jb_data"),
+                H("The derived JB realization"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The three algebraic laws are transported from the original EJA data. Positivity of idempotent inner functionals follows from the licensed single-idempotent Peirce projections. A complete actual spectrum bounds every functional by the largest nonzero-idempotent coefficient, while the same idempotents read each such coefficient back. These bounds prove finiteness and definiteness, including zero units and zero idempotents. Functional linearity proves the triangle and homogeneity laws. Square reconstruction proves N(x²)=N(x)². Positivity gives N(x²)≤N(x²+y²). For the same actual pair x,y, positivity of each functional on (t x+y)² and the quadratic discriminant give the Cauchy inequality; the square norm law then gives N(x∘y)≤N(x)N(y). Finite dimensionality gives completeness of the normed copy. Thus the full six JB laws are derived, with no norm law, cone selfduality, trace normalization, simplicity, representation, specialness or primitive-frame hypothesis."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("The private Peirce and inner-product dependency is adapted from Bryan Ehrlich, ehrlich-b/euclidean-jordan at immutable revision a83407e4dbf73c77c31a2291c02f20b37a5ebbaf, EuclideanJordan/Peirce.lean and EuclideanJordan/Order.lean. The Apache-2.0 license and authorship are retained at docs/reports/third-party/euclidean-jordan-LICENSE.txt. The two needed original results are inner_mul_self_nonneg_of_idem and inner_left_coeff. Their hypotheses are precisely bilinearity, commutativity, the ordinary Jordan identity and inner associativity; no order, trace or special representation occurs.")),
+            Paragraph(Text("The application to Quantum Origin V 75.4(I) is the missing norm bridge needed to invoke the existing general JB quadratic-positivity and square-defect results on the original finite EJA carrier. This construction does not supply weight commutants, support normalization, the two PRE interfaces or the full H13/C13 consumers. Albert algebras, nonisomorphic direct sums, rank one and the zero algebra remain within the original data interface.")))));
+}
