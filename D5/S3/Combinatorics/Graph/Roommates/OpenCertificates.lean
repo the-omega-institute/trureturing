@@ -61,12 +61,15 @@ theorem certificate_restrict {n m : ℕ} {w : Word n} {d : Fin n → ℤ}
     exact hc.bounded _
   · intro i j hdi he
     apply hc.reciprocal (intervalIndex s h i) (intervalIndex s h j) hdi
-    simp only [intervalIndex, Fin.val_mk, Nat.cast_add]
+    change ((s + i.val : ℕ) : ℤ) + d (intervalIndex s h i) = (s + j.val : ℕ)
+    simp only [Nat.cast_add]
     omega
   · intro i j hdi hdj he
     have ht : (↑(intervalIndex s h i).val : ℤ) + d (intervalIndex s h i) =
         ↑(intervalIndex s h j).val + d (intervalIndex s h j) := by
-      simp only [intervalIndex, Fin.val_mk, Nat.cast_add]
+      change ((s + i.val : ℕ) : ℤ) + d (intervalIndex s h i) =
+        ((s + j.val : ℕ) : ℤ) + d (intervalIndex s h j)
+      simp only [Nat.cast_add]
       omega
     have hi := congrArg Fin.val (hc.target_injective _ _ hdi hdj ht)
     apply Fin.ext
@@ -109,7 +112,7 @@ private theorem split_injective (m k : ℕ) : Function.Injective (split m k) := 
 /-- Submultiplicativity is an injection on distinct preference profiles. -/
 theorem count_submultiplicative (m k : ℕ) : count (m + k) ≤ count m * count k := by
   have h := Fintype.card_le_of_injective (split m k) (split_injective m k)
-  simpa only [Fintype.card_prod] using h
+  simpa only [count, Fintype.card_prod] using h
 
 
 private def pairedOffset {m : ℕ} (i : Fin m) : ℤ :=
@@ -118,17 +121,19 @@ private def pairedOffset {m : ℕ} (i : Fin m) : ℤ :=
 private theorem paired_reciprocal {m : ℕ} (i j : Fin m)
     (h : (i.val : ℤ) + pairedOffset i = j.val) : pairedOffset j = -pairedOffset i := by
   by_cases hi : i.val % 2 = 0 <;> by_cases hj : j.val % 2 = 0 <;>
-    simp only [pairedOffset, hi, hj, ite_true, ite_false] at * <;> omega
+    simp only [pairedOffset, hi, hj, ite_true, ite_false] at h ⊢ <;> omega
 
 private theorem paired_injective {m : ℕ} (i j : Fin m)
     (h : (i.val : ℤ) + pairedOffset i = (j.val : ℤ) + pairedOffset j) : i = j := by
   apply Fin.ext
   by_cases hi : i.val % 2 = 0 <;> by_cases hj : j.val % 2 = 0 <;>
-    simp only [pairedOffset, hi, hj, ite_true, ite_false] at * <;> omega
+    simp only [pairedOffset, hi, hj, ite_true, ite_false] at h ⊢ <;> omega
 
 private theorem rank_injective (r : Ranking) {a b : ℤ}
     (ha : -2 ≤ a ∧ a ≤ 2) (hb : -2 ≤ b ∧ b ≤ 2)
     (ha0 : a ≠ 0) (hb0 : b ≠ 0) (h : offsetRank r a = offsetRank r b) : a = b := by
+  rcases ha with ⟨haL, haU⟩
+  rcases hb with ⟨hbL, hbU⟩
   interval_cases a <;> interval_cases b <;> simp_all [offsetRank] <;>
     have he := r.injective (Fin.ext h) <;> norm_num at he
 
@@ -166,8 +171,8 @@ private theorem topRanking_zero (s : Fin 4) (e : Equiv.Perm (Fin 3)) :
 private theorem topRanking_injective (s : Fin 4) : Function.Injective (topRanking s) := by
   intro e f h
   have hh := congrArg (fun r : Ranking => Equiv.Perm.decomposeFin r.symm) h
-  change (s, e) = (s, f) at hh
-  exact congrArg Prod.snd hh
+  have hh' := congrArg Prod.snd hh
+  simpa [topRanking] using hh'
 
 private def topWord {m : ℕ} (e : Fin m → Equiv.Perm (Fin 3)) : CertifiedWord m := by
   let w : Word m := fun i => topRanking (if i.val % 2 = 0 then 0 else 2) (e i)

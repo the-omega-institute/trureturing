@@ -27,7 +27,7 @@ theorem additive_defect_bounds (f : ℕ → ℝ) (D : ℝ)
     ⟨0, by rintro _ ⟨n, rfl⟩; exact div_nonneg (hnonneg n) (Nat.cast_nonneg n)⟩
   let h := hsub.lim
   have ht : Tendsto (fun n => f n / (n : ℝ)) atTop (𝓝 h) := hsub.tendsto_lim hb
-  have hpos : 0 ≤ h := le_of_tendsto ht (Eventually.of_forall fun n =>
+  have hpos : 0 ≤ h := ge_of_tendsto ht (Eventually.of_forall fun n =>
     div_nonneg (hnonneg n) (Nat.cast_nonneg n))
   let u : ℕ → ℝ := fun n => -f n + D
   have hu : Subadditive u := by

@@ -145,4 +145,12 @@ theorem card_profile (n : ℕ) : Fintype.card (Profile n) = 24 ^ (n + 5) := by
   simp [Profile, Fintype.card_perm, Nat.factorial]
 
 
+#print axioms offset_injective
+#print axioms offset_ne_zero
+#print axioms exists_offset_neg
+#print axioms rank_neighbor
+#print axioms rank_self
+#print axioms rank_neighbor_lt_self
+#print axioms card_profile
+
 end D5.S3.Combinatorics.Graph.Roommates.SourceModel

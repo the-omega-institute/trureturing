@@ -58,3 +58,19 @@ The research line is https://github.com/the-omega-institute/trureturing/issues/2
 Its 2026-11-26T15:30:00Z deadline and all prior forecasts and dispositions remain
 unchanged. Threshold0 is unresolved, not a refutation or line termination.
 This work claims neither formal acceptance nor worldwide novelty or priority.
+
+Checked partial scope: the supplier model and its seven ported API lemmas,
+interval certificate restriction, profile-count submultiplicativity, the
+all-parity six-orders lower bound, the open exclusive-triangle obstruction,
+and the two abstract logarithmic Fekete bounds passed direct Lean file checks
+at the project pins. Their printed theorem axiom closures are subsets of
+propext, Classical.choice and Quot.sound. These are partial checks, not a
+normal project build, report, source-model bridge or solution. The generic buffer layout and arbitrary injective request-completion theorem
+also passed these file checks with standard axiom closures. Full translated
+and cyclic stability, source correspondence and the Reg mirror remain open.
+
+The faithful registration gap is
+https://github.com/the-omega-institute/trureturing/issues/29645.
+Scribe sources exist, but canonical Markdown emission is unfinished because
+the selected declarations have no produced native statement material. No
+Markdown projection, freeze, declared_validated status or delivery is claimed.

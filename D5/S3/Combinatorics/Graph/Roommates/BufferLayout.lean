@@ -9,9 +9,10 @@
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Tactic
 
-open scoped Classical
 
 set_option autoImplicit false
+set_option maxHeartbeats 2000000
+set_option maxSynthPendingDepth 32
 namespace D5.S3.Combinatorics.Graph.Roommates.BufferLayout
 
 /-- The four boundary sites already reserved for old partners. -/
@@ -51,7 +52,15 @@ private theorem layout_facts (b : Fin 4 → Bool) :
       occupied b j = true ∨ mate b j ≠ j) := by
   rcases h0 : b 0 with _ | _ <;> rcases h1 : b 1 with _ | _ <;>
     rcases h2 : b 2 with _ | _ <;> rcases h3 : b 3 with _ | _ <;>
-    simp only [mate, occupied, h0, h1, h2, h3] <;> decide
+    simp only [mate, occupied, h0, h1, h2, h3]
+  all_goals
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · intro i; fin_cases i <;> decide
+    · intro i; fin_cases i <;> decide
+    · intro i; fin_cases i <;> decide
+    · intro i; fin_cases i <;> decide
+    · intro i; fin_cases i <;> decide
+    · intro i j; fin_cases i <;> fin_cases j <;> decide
 
 /-- The layout is an involution, with every newly single site interior and
 surrounded by matched sites after occupied sites receive their old partners. -/
@@ -66,6 +75,8 @@ theorem buffer_completion (b : Fin 4 → Bool) :
       occupied b j = true ∨ mate b j ≠ j) := layout_facts b
 
 
+open scoped Classical
+
 /-- Boundary sites at which old requests can land. -/
 def boundarySite : Fin 4 → Fin 6 := ![0, 1, 4, 5]
 
@@ -76,9 +87,10 @@ private theorem occupied_iff {α : Type} (request : α → Fin 6)
     (hcentral : ∀ a, request a ≠ 2 ∧ request a ≠ 3) (i : Fin 6) :
     occupied (flags request) i = true ↔ ∃ a, request a = i := by
   classical
-  fin_cases i <;> simp [occupied, flags, boundarySite, hcentral,
+  fin_cases i <;> simp [occupied, flags, boundarySite, hcentral, decide_eq_true_eq,
     show ¬ (∃ a, request a = 2) from fun ⟨a, h⟩ => (hcentral a).1 h,
     show ¬ (∃ a, request a = 3) from fun ⟨a, h⟩ => (hcentral a).2 h]
+  all_goals exact ⟨of_decide_eq_true, fun h => decide_eq_true h⟩
 
 /-- Every request is fulfilled. Unreserved buffer sites use the local layout. -/
 noncomputable def partner {α : Type} (request : α → Fin 6) :
@@ -120,7 +132,8 @@ theorem complete_requests {α : Type} (request : α → Fin 6)
           have hy := hmate i
           rw [hx] at hy
           exact h ⟨a, ha.trans hy⟩
-        simp only [partner, dif_neg h, dif_neg hfree, hmate]
+        simp only [partner, dif_neg h, dif_neg hfree]
+        exact congrArg Sum.inr (hmate i)
   · constructor
     · intro a
       rfl
