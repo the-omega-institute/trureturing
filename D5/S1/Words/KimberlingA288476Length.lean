@@ -1,7 +1,7 @@
 /- GID: D5/S1/Words/KimberlingA288476Length
    generality: G
    mirror-B: D5/B/S1/Words/KimberlingA288476Length
-   mirror-E: none
+   mirror-E: none(waiver:Pure theorem proof; no separate empirical evidence artifact)
    anchors: []
    utility: none
    digest: Native replacement-iterate lengths for Kimberling's OEIS A288476 conjecture. -/
