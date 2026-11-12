@@ -23,10 +23,10 @@ open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 open D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference
 open D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 
-private def block (a b : ℝ) : Finset ℕ :=
+def block (a b : ℝ) : Finset ℕ :=
   Nat.primesLE ⌊b⌋₊ \ Nat.primesLE ⌊a⌋₊
 
-private theorem mem_block {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b) {p : ℕ} :
+theorem mem_block {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b) {p : ℕ} :
     p ∈ block a b ↔ p.Prime ∧ a < (p : ℝ) ∧ (p : ℝ) ≤ b := by
   simp only [block, mem_sdiff, Nat.mem_primesLE]
   constructor
@@ -57,7 +57,7 @@ private theorem theta_block_le_count {a b : ℝ} (ha : 1 < a) (hab : a < b) :
       exact log_le_log (by exact_mod_cast hpp.pos) hpb
     _ = _ := by simp
 
-private theorem first_margin {X : ℝ} {p : ℕ} (hp : p.Prime) :
+theorem first_margin {X : ℝ} {p : ℕ} (hp : p.Prime) :
     rawLayerMargin X p 1 = log (1 + 1 / (p : ℝ)) - log p / (X * log X) := by
   rw [rawLayerMargin, golden_layer_marginal_one_eq_log_one_add_inv hp]
   unfold referencePrice
@@ -101,7 +101,7 @@ private theorem occupied_margin {X a : ℝ} (hX : 1 < X) (hXa : X < a)
   rw [first_margin hp]
   linarith
 
-private theorem positive_margin_mem {X : ℝ} (hX : 1 < X) (m : ℕ)
+theorem positive_margin_mem {X : ℝ} (hX : 1 < X) (m : ℕ)
     {p : ℕ} (hp : p.Prime) (hg : 0 < rawLayerMargin X p 1) :
     p ∈ lossPrimes X m := by
   have hprice : 0 < referencePrice X :=

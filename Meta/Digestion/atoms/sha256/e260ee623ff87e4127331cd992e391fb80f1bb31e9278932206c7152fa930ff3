@@ -1,0 +1,15 @@
+**命题 79.9（指定局部映射的质量不认证联合合法性）。** 在已归一化的普通 qubit 元组上，令 $\Theta(X)=X^T$、$R(X)=\operatorname{Tr}(X)I_2/2$，并取
+$$
+\Phi_\epsilon=(1-\epsilon)\Theta+\epsilon R,\qquad0<\epsilon<2/3. \tag{79.19}
+$$
+它正保迹且固定效应只有标量，满足全部质量关系，却对每个 $t\in(0,1)$ 都没有正的第一层延拓。
+
+**证明。** 转置与 $R$ 均正保迹且迹自伴。$\Phi_\epsilon$ 在 $I,X,Y,Z$ 的特征值依次为 $1,1-\epsilon,-(1-\epsilon),1-\epsilon$，故固定 Hermitian 效应恰为 $\mathbb RI$。归一化元组的两质量已为乘积迹，所以 (79.5) 对这份 $\Phi_\epsilon$ 全部成立。
+令 $\Omega_2=|\Omega_2\rangle\langle\Omega_2|$、$|\Omega_2\rangle=(|00\rangle+|11\rangle)/\sqrt2$。任一腿的部分转置都将它送到 $F_{\rm swap}/2$，任一腿的 $R$ 都送到 $I_4/4$。因而唯一由第一层实乘积律确定的 $\mathcal K_2$ 满足
+$$
+\mathcal K_2(\Omega_2)=(1-\epsilon)F_{\rm swap}/2+\epsilon I_4/4,
+\qquad
+\langle\psi_-|\mathcal K_2(\Omega_2)|\psi_-\rangle=(3\epsilon-2)/4<0. \tag{79.20}
+$$
+两腿结果相同，故与 $t$ 无关。$\Omega_2$ 是原完整数学联合正锥中的方向，负值直接排除全锥正延拓；这不宣称供应其物理制备。它是过程解释的反模型，不反驳质量校准定理，更没有把任意正 TP 升级为 CP。证毕。
+

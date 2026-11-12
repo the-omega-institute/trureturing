@@ -1,0 +1,54 @@
+**命题 93.3（原锥中的失败提升）。** 在定义93.1的整个实ROG载体上，不假设 $\mathrm{Z0}$。若某个整个二态球内的一对局部对径 $p_0,r_0$ 不能由原全局 proper 效应完美区分，则存在原纯点 $s,x\in P$ 及原态 $y\in K$，使
+
+$$
+s\perp x,\qquad s\perp y,\qquad
+T_s\bigl((x+y)/2\bigr)>0.
+\tag{93.21}
+$$
+
+更精确地，先用(93.9)的同归一化坐标，以下的 $C,L$ 指该坐标中的整个原锥与原空间。此时 $n\ge2$，可取
+
+$$
+\begin{gathered}
+s=vv^{\mathsf T},\quad x=ww^{\mathsf T},\quad
+\|v\|=\|w\|=1,\quad c=\operatorname{tr}(sx)=|v^{\mathsf T}w|^2\in(0,1),\\
+y=\frac{I_n-s}{n-1},\qquad m=\frac{x+y}{2}\succ0,\qquad
+m-\frac{c}{2n}s\in C,\qquad T_s(m)\ge\frac{c}{2n}>0.
+\end{gathered}
+\tag{93.22}
+$$
+
+这里 $y$ 的秩为 $n-1$，在 $n>2$ 时为混态；正性、两个零见证和下界均在整个原锥与全效应区间中成立。运输回 $V$ 后，$s,x,y$ 的实线性张成至多三维，这只是三向量的有限提升，不限制原空间、环境支撑或全部混态的维数。
+
+证明。归一化不改变全域区分与球对径。由90.9，原基范数满足 $0<\|p_0-r_0\|_C<2$。取原最优分解及同一个对偶饱和效应，如(93.12)的成熟极性计算，得到
+
+$$
+p_0-r_0=X-Y,\quad X,Y\in C,\quad
+\operatorname{tr}X=\operatorname{tr}Y=t\in(0,1),\quad
+f\in[0,u],\quad f(X)=t,\ f(Y)=0.
+\tag{93.23}
+$$
+
+分别作有限ROG纯分解 $X=\sum_i\alpha_i s_i$、$Y=\sum_j\beta_jq_j$，全部非零系数为正，则 $f(s_i)=1$、$f(q_j)=0$。
+
+若所有交叉迹积 $\operatorname{tr}(s_iq_j)$ 都为零，则 $XY=0$，所以 $X=(p_0-r_0)_+$、$Y=(p_0-r_0)_-$。令 $W_0$ 为 $p_0,r_0$ 的两个支撑向量之张成。差 $p_0-r_0$ 在 $W_0$ 上为非零迹零二阶矩阵，故 $X,Y$ 均为支撑于 $W_0$ 的非零秩一矩阵。90.3的整个最小面公式使 $X/t,Y/t$ 都属于 $H(p_0,r_0)$。局部对径的中点在原球的相对内部，故此面也就是起始的整个球。
+
+若该面是圆盘，局部对径在其完整实二阶PSD迹一坐标内正交，遂 $p_0r_0=0$、$X=p_0,Y=r_0$，与 $t<1$ 矛盾。若该面是线段，则 $X/t,Y/t$ 是其秩一纯端点，只能分别为 $p_0,r_0$ 或反序。代入 $p_0-r_0=t(X/t-Y/t)$，正序给 $t=1$，反序给 $t=-1$，均矛盾。这两支耗尽90.3的全最小面，故必有一对交叉迹积严格正。
+
+取这一对为 $s=vv^{\mathsf T},x=ww^{\mathsf T}$，则 $f(s)=1,f(x)=0$、$c=\operatorname{tr}(sx)>0$。二者不同，故 $c<1$。这给 $s\perp x$。由 $I_n-s\in L\cap\operatorname{PSD}_n$，(93.22)的 $y$ 是原态，投影限制效应 $h_s(Z)=\operatorname{tr}(sZ)$ 在整个原锥上 proper、确认 $s$ 并排除 $y$，故 $s\perp y$；未要求 $f=h_s$。
+
+为约束全部原确认者，写 $w=av+b$、$b\perp v$、$a^2=c$，任意实向量写作 $\xi=\alpha v+h$、$h\perp v$。加权Cauchy–Schwarz给
+
+$$
+\begin{aligned}
+c\alpha^2
+&=\bigl(w^{\mathsf T}\xi-b^{\mathsf T}h\bigr)^2\\
+&\le\bigl(1+(n-1)\|b\|^2\bigr)
+\left((w^{\mathsf T}\xi)^2+\frac{\|h\|^2}{n-1}\right)\\
+&\le n\,\xi^{\mathsf T}(x+y)\xi.
+\end{aligned}
+\tag{93.24}
+$$
+
+因此 $m-cs/(2n)\succeq0$；这个差还属于原 $L$，所以确在原 $C=L\cap\operatorname{PSD}_n$ 中。对每一个原 $g\in F_s$，全锥正性给 $g(m)\ge c\,g(s)/(2n)=c/(2n)$，取最小值即得(93.22)。此外 $\ker y=\mathbb Rv$ 而 $v\notin\ker x$，故 $m\succ0$。这同时给内部态和定量严格正的最小读数，不只排除某一把选定效应。最后以 $\Psi^{-1}$ 运输所有向量及效应，保留原归一化、中点与锥差，便得原载体的(93.21)。证毕。
+
