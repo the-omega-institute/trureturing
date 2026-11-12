@@ -580,5 +580,24 @@ private lemma deviation_lower_bound (N : ℕ) (hN : 1000 ≤ N)
     hEs (by dsimp only [Δ, S] at *; linarith [hid])
   simpa only [hs] using hv
 
+private def sixthCounterData (offset n : ℕ) : FifthData where
+  ι := Fin (n + offset)
+  A := (Fin (n + offset) → Bool) → ℝ
+  ℓ := modelFunctional (n + offset)
+  Y := modelY (n + offset)
+  a := 0
+  b := 1
+  H := ((n + offset : ℕ) : ℝ)
+  L := 1
+
+private lemma sixth_ratio_limit (offset : ℕ) :
+    Tendsto (fun n : ℕ => (sixthCounterData offset n).L /
+      (sixthCounterData offset n).H) atTop (𝓝 0) := by
+  change Tendsto (fun n : ℕ => 1 / ((n + offset : ℕ) : ℝ)) atTop (𝓝 0)
+  simp only [Nat.cast_add, one_div]
+  exact tendsto_inv_atTop_zero.comp
+    (tendsto_atTop_add_const_right atTop (offset : ℝ) tendsto_natCast_atTop_atTop)
+
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
