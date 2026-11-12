@@ -648,23 +648,26 @@ variable (K : Type*) [Field K] [Algebra F K]
 variable [FiniteDimensional F D] [Algebra.IsSeparable F D] [FiniteDimensional F K]
 variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
 
-private instance galoisRingInvPair (g : K ≃ₐ[F] K) :
-    RingHomInvPair g.toRingEquiv.toRingHom g.symm.toRingEquiv.toRingHom :=
-  RingHomInvPair.of_ringEquiv g.toRingEquiv
-
 private def galoisCoordinates (g : K ≃ₐ[F] K) :
-    ((D →ₐ[F] K) → K) ≃ₛₗ[g.toRingEquiv.toRingHom] ((D →ₐ[F] K) → K) where
+    ((D →ₐ[F] K) → K) ≃+ ((D →ₐ[F] K) → K) where
   toFun x σ := g (x (g⁻¹ • σ))
   invFun x σ := g.symm (x (g • σ))
   left_inv x := by ext σ; simp
   right_inv x := by ext σ; simp
   map_add' x y := by ext σ; simp
-  map_smul' c x := by ext σ; simp
+
+private theorem coordinates_smul (g : K ≃ₐ[F] K) (c : K)
+    (x : (D →ₐ[F] K) → K) :
+    galoisCoordinates K g (c • x) = g c • galoisCoordinates K g x := by
+  ext σ
+  change g (c * x (g⁻¹ • σ)) = g c * g (x (g⁻¹ • σ))
+  exact map_mul g _ _
 
 private theorem coordinates_split (g : K ≃ₐ[F] K) (z : K ⊗[F] D) :
     galoisCoordinates K g (splitEquiv F D K hK z) =
       splitEquiv F D K hK (galoisTensor K g z) := by
   ext τ
+  change g (splitHom F D K z (g⁻¹ • τ)) = splitHom F D K (galoisTensor K g z) τ
   have hh := split_galois_covariance K g z (g⁻¹ • τ)
   simpa only [smul_inv_smul] using hh.symm
 
@@ -672,6 +675,7 @@ private theorem coordinates_window (W : Submodule F D) (g : K ≃ₐ[F] K)
     {x : (D →ₐ[F] K) → K} (hx : x ∈ splitWindow K hK W) :
     galoisCoordinates K g x ∈ splitWindow K hK W := by
   obtain ⟨z, hz, rfl⟩ := hx
+  change galoisCoordinates K g (splitEquiv F D K hK z) ∈ _
   rw [coordinates_split]
   exact (splitWindow_mem_iff K hK W _).mpr (galoisTensor_window K W g hz)
 
@@ -680,32 +684,37 @@ private theorem coordinates_project (g : K ≃ₐ[F] K) (S : Finset (D →ₐ[F]
     galoisCoordinates K g (coordinateProject S x) =
       coordinateProject (orbitSet S g) (galoisCoordinates K g x) := by
   ext σ
-  by_cases h : g⁻¹ • σ ∈ S <;> simp [galoisCoordinates, coordinateProject, mem_orbitSet, h]
+  change g (if g⁻¹ • σ ∈ S then x (g⁻¹ • σ) else 0) =
+    if σ ∈ orbitSet S g then g (x (g⁻¹ • σ)) else 0
+  by_cases h : g⁻¹ • σ ∈ S <;> simp [mem_orbitSet, h]
 
-private theorem projected_galois_map (W : Submodule F D) (g : K ≃ₐ[F] K)
-    (S : Finset (D →ₐ[F] K)) :
-    (projected (splitWindow K hK W) S).map (galoisCoordinates K g).toLinearMap =
-      projected (splitWindow K hK W) (orbitSet S g) := by
-  let U := splitWindow K hK W
-  apply le_antisymm
-  · rintro _ ⟨_, ⟨x, hx, rfl⟩, rfl⟩
-    exact ⟨galoisCoordinates K g x, coordinates_window K hK W g hx,
-      (coordinates_project K g S x).symm⟩
-  · rintro _ ⟨x, hx, rfl⟩
-    let y := galoisCoordinates K g⁻¹ x
-    have hy : y ∈ U := coordinates_window K hK W g⁻¹ hx
-    refine ⟨coordinateProject S y, ⟨y, hy, rfl⟩, ?_⟩
-    rw [coordinates_project]
-    congr 1
-    ext σ
-    simp [y, galoisCoordinates]
+private theorem coordinates_projected (W : Submodule F D) (g : K ≃ₐ[F] K)
+    (S : Finset (D →ₐ[F] K)) {x : (D →ₐ[F] K) → K}
+    (hx : x ∈ projected (splitWindow K hK W) S) :
+    galoisCoordinates K g x ∈ projected (splitWindow K hK W) (orbitSet S g) := by
+  obtain ⟨y, hy, rfl⟩ := hx
+  exact ⟨galoisCoordinates K g y, coordinates_window K hK W g hy,
+    (coordinates_project K g S y).symm⟩
 
 private theorem actual_row_rank_galois (W : Submodule F D) (g : K ≃ₐ[F] K)
     (S : Finset (D →ₐ[F] K)) :
     rowRank (splitWindow K hK W) (orbitSet S g) = rowRank (splitWindow K hK W) S := by
-  let e := (galoisCoordinates K g).ofSubmodules _ _ (projected_galois_map K hK W g S)
-  have hr := rank_eq_of_equiv_equiv (g : K → K) e.toAddEquiv g.bijective
-    (fun r x => e.map_smulₛₗ r x)
+  have horb : orbitSet (orbitSet S g) g⁻¹ = S := by
+    ext i
+    simp [mem_orbitSet]
+  let e : projected (splitWindow K hK W) S ≃+
+      projected (splitWindow K hK W) (orbitSet S g) :=
+    { toFun := fun x => ⟨galoisCoordinates K g x, coordinates_projected K hK W g S x.property⟩
+      invFun := fun y => ⟨galoisCoordinates K g⁻¹ y, by
+        have hh := coordinates_projected K hK W g⁻¹ (orbitSet S g) y.property
+        rwa [horb] at hh⟩
+      left_inv := by intro x; apply Subtype.ext; ext σ; simp [galoisCoordinates]
+      right_inv := by intro x; apply Subtype.ext; ext σ; simp [galoisCoordinates]
+      map_add' := by intro x y; apply Subtype.ext; exact map_add (galoisCoordinates K g) x y }
+  have hr := rank_eq_of_equiv_equiv (g : K → K) e g.bijective (by
+    intro r x
+    apply Subtype.ext
+    exact coordinates_smul K g r x)
   exact (congrArg Cardinal.toNat hr).symm
 
 private theorem actual_strict_row_rank [Normal F K] (W : Submodule F D)
@@ -1030,15 +1039,16 @@ private theorem splitMatrix_rank :
 private theorem galoisCoordinates_single (g : K ≃ₐ[F] K) (τ : D →ₐ[F] K) :
     galoisCoordinates K g (Pi.single τ (1 : K)) = Pi.single (g • τ) (1 : K) := by
   ext σ
+  change g (Pi.single τ (1 : K) (g⁻¹ • σ)) = Pi.single (g • τ) (1 : K) σ
   by_cases h : σ = g • τ
   · subst σ
-    simp [galoisCoordinates, Pi.single_apply]
+    simp [Pi.single_apply]
   · have hi : g⁻¹ • σ ≠ τ := by
       intro he
       apply h
       have hh := congrArg (g • ·) he
       simpa using hh
-    simp [galoisCoordinates, Pi.single_apply, h, hi]
+    simp [Pi.single_apply, h, hi]
 
 private theorem splitMatrix_covariance (g : K ≃ₐ[F] K) (σ τ : D →ₐ[F] K) :
     LinearMap.toMatrix' (splitOperator K hK W hD hW a ha) (g • σ) (g • τ) =
@@ -1046,7 +1056,9 @@ private theorem splitMatrix_covariance (g : K ≃ₐ[F] K) (σ τ : D →ₐ[F] 
   have hh := congrFun (splitOperator_covariance K hK W hD hW a ha g (Pi.single τ 1))
     (g • σ)
   rw [galoisCoordinates_single] at hh
-  simpa [LinearMap.toMatrix'_apply, galoisCoordinates] using hh
+  change (splitOperator K hK W hD hW a ha) (Pi.single (g • τ) 1) (g • σ) =
+    g ((splitOperator K hK W hD hW a ha) (Pi.single τ 1) σ)
+  simpa only [galoisCoordinates, AddEquiv.coe_mk, inv_smul_smul] using hh
 
 end ActualSplitOperator
 
