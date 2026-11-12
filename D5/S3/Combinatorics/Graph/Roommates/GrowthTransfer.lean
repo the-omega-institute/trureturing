@@ -33,12 +33,13 @@ theorem same_q_probability_of_counts
     lt_of_lt_of_le (pow_pos (by norm_num : (0 : ℕ) < 6) m) (count_lower m)
   have hcpos (m : ℕ) : (0 : ℝ) < count m := by exact_mod_cast hcposN m
   have hcone (m : ℕ) : (1 : ℝ) ≤ count m := by
-    exact_mod_cast (hcposN m)
+    exact_mod_cast (Nat.succ_le_iff.mpr (hcposN m))
   have hc0 : count 0 = 1 := by
     have hu : count 0 ≤ 1 := by
       calc
         count 0 ≤ Fintype.card (Word 0) := Fintype.card_subtype_le _
         _ = 1 := by simp [Word]
+    have hl := hcposN 0
     omega
   let f : ℕ → ℝ := fun m => Real.log (count m)
   have hf0 : f 0 = 0 := by simp [f, hc0]
@@ -84,7 +85,7 @@ theorem same_q_probability_of_counts
     div_pos hepos (by norm_num), (div_lt_one (by norm_num)).mpr helt,
     one_div_pos.mpr (pow_pos hepos 6), hcpos 6, ?_⟩
   intro n hn
-  rw [CyclicBridge.source_probability_eq]
+  simp only [CyclicBridge.source_probability_eq]
   have hclose' : count (n - 1) ≤
       Fintype.card {p : SourceModel.Profile n // SourceModel.HasStableMatching p} := by
     have he : n - 1 + 1 = n := by omega
@@ -94,7 +95,7 @@ theorem same_q_probability_of_counts
   have hlower : (1 / Real.exp h ^ 6) * (Real.exp h / 24) ^ (n + 5) =
       Real.exp h ^ (n - 1) / (24 : ℝ) ^ (n + 5) := by
     rw [div_pow, hpows]
-    field_simp
+    field_simp [ne_of_gt hepos]
   constructor
   · rw [hlower]
     apply div_le_div_of_nonneg_right _ (by positivity)

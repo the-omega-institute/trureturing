@@ -39,7 +39,7 @@ abbrev transferArena : Arena where
         R.readout () () (SourceModel.solutionProbability n) ≤ C * q ^ (n + 5)
 
 /-- Exact reconstruction of the source telescope; no count premise is omitted. -/
-def sourceBridge : (type_of% GrowthTransfer.same_q_probability_of_counts) ↔
+def sourceBridge : (type_of% _root_.D5.S3.Combinatorics.Graph.Roommates.GrowthTransfer.same_q_probability_of_counts) ↔
     transferArena.Law actual := Iff.rfl
 
 /-- The actual readout observes its real operand. -/
