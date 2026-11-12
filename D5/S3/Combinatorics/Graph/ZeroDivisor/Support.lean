@@ -517,9 +517,11 @@ example (p q r : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hr : Nat.Prime r)
     exact Nat.mul_ne_zero (Nat.mul_ne_zero hp.ne_zero hq.ne_zero) hr.ne_zero
   letI : NeZero (∏ i, m i) := ⟨hprodne⟩
   letI : Fintype (ZMod (∏ i, m i)) := inferInstance
-  simpa only [ZMod.card, hmprod] using
+  letI : NeZero (p * q * r) := ⟨hmprod ▸ hprodne⟩
+  simpa only [ZMod.card] using
     (independencePolynomial_three_coordinates
-      (R := ZMod (∏ i, m i)) (e := crt m hc))
+      (R := ZMod (p * q * r))
+      (e := (ZMod.ringEquivCongr hmprod.symm).trans (crt m hc)))
 
 
 end D5.S3.Combinatorics.Graph.ZeroDivisor.Support
