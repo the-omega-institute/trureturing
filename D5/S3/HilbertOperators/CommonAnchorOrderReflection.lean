@@ -17,6 +17,7 @@ import Mathlib.Tactic.Module
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 noncomputable section
 namespace D5.S3.HilbertOperators.CommonAnchorOrderReflection
@@ -168,13 +169,20 @@ private theorem weighted_complement_norm (V : S → E →L[ℂ] F) (p : S → �
   rw [norm_complement_rankOne x _ hx]
   ring
 
+private theorem re_complex_real_mul (r : ℝ) (z : ℂ) :
+    RCLike.re ((r : ℂ) * z) = r * RCLike.re z := by
+  change ((r : ℂ) * z).re = r * z.re
+  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+
+private theorem re_complex_real (r : ℝ) : RCLike.re (r : ℂ) = r := rfl
+
 private theorem sandwich_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
     (X : E →L[ℂ] E) (z : F) :
     RCLike.re (inner ℂ (sandwich V p X z) z) =
       ∑ l, p l * RCLike.re (inner ℂ (X ((V l).adjoint z)) ((V l).adjoint z)) := by
   classical
   simp only [sandwich, sum_apply, smul_apply, comp_apply, sum_inner, inner_smul_left,
-    map_sum, RCLike.conj_ofReal, RCLike.re_ofReal_mul]
+    map_sum, Complex.conj_ofReal, re_complex_real_mul]
   apply Finset.sum_congr rfl
   intro l _
   rw [← (V l).adjoint_inner_right]
@@ -188,7 +196,7 @@ private theorem test_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
   apply Finset.sum_congr rfl
   intro l _
   simp only [sub_apply, one_def, id_apply, smul_apply, inner_sub_left, inner_smul_left,
-    map_sub, RCLike.conj_ofReal, RCLike.re_ofReal_mul, inner_self_eq_norm_sq, inner_rankOne]
+    map_sub, Complex.conj_ofReal, re_complex_real_mul, inner_self_eq_norm_sq, inner_rankOne]
   ring
 
 private theorem test_selfAdjoint (x : E) (η : ℝ) :
@@ -348,7 +356,7 @@ theorem common_anchor_order_reflection [Nonempty S]
         Complex.ofReal_add, Complex.ofReal_one]
       module
     rw [happ, inner_smul_left, hxinner] at hn
-    simp only [map_neg, RCLike.conj_ofReal, mul_one, RCLike.ofReal_re] at hn
+    simp only [map_neg, Complex.conj_ofReal, mul_one, re_complex_real] at hn
     linarith
   have h23 : RankOneTests V p → HasDecoder V := fun ht =>
     (decoder_iff_compatible V).mpr (tests_force_compatibility V p hp e he v hanchor ht)
