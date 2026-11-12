@@ -443,10 +443,32 @@ theorem independencePolynomial_three_coordinates
       (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
     unfold pairDomain
     omega
+  have hs0' : (starDomain e Finset.univ 0).card =
+      (Fintype.card (L 0)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
+      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) := by
+    simpa [starDomain, add_assoc, add_left_comm, add_comm] using hs0
+  have hs1' : (starDomain e Finset.univ 1).card =
+      (Fintype.card (L 1)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
+      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+    simpa [starDomain, add_assoc, add_left_comm, add_comm] using hs1
+  have hs2' : (starDomain e Finset.univ 2).card =
+      (Fintype.card (L 2)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) +
+      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+    simpa [starDomain, add_assoc, add_left_comm, add_comm] using hs2
+  have ht0' : (starTailDomain e Finset.univ 0).card =
+      (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
+      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) := by
+    simpa [starTailDomain, starDomain, Finset.filter_filter, add_comm] using ht0
+  have ht1' : (starTailDomain e Finset.univ 1).card =
+      (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
+      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+    simpa [starTailDomain, starDomain, Finset.filter_filter, add_comm] using ht1
+  have ht2' : (starTailDomain e Finset.univ 2).card =
+      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) +
+      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+    simpa [starTailDomain, starDomain, Finset.filter_filter, add_comm] using ht2
   rw [independencePolynomial_four_families (by decide) e, hp']
-  simp only [Fin.sum_univ_three, starDomain, starTailDomain, Finset.filter_filter]
-  simp_all only [hs0, hs1, hs2, ht0, ht1, ht2]
-  simp only [pow_add]
+  simp only [Fin.sum_univ_three, hs0', hs1', hs2', ht0', ht1', ht2']
   ring
 
 #print axioms independencePolynomial_three_coordinates
