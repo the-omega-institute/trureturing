@@ -83,12 +83,19 @@ pureRanks(L) consists of every X for which there exists a native Euclidean vecto
 Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_real_smul`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_real_smul` (`✓ std3`). ∎
+**Theorem 1.8 (Rank one trace is squared native vector norm).**
+
+$$\forall F \in Type,\; \forall J \in Type,\; [\operatorname{RCLike}\left(F\right)] [\operatorname{Fintype}\left(J\right)] [\operatorname{DecidableEq}\left(J\right)] \forall v \in \operatorname{EuclideanSpace}\left(F, J\right),\; \operatorname{trace}\left(\operatorname{rankOne}\left(v\right)\right) = \Vert v\Vert^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_trace_norm` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
 For every native vector v and real scalar r, rankOne(r v) equals (r r) rankOne(v). The original declaration is public for the same-Psi rank-one reconstruction consumer in OriginalUnitSupport; this is an existing algebraic identity.
+For every native vector v and real scalar r, rankOne(r v) equals (r r) rankOne(v). The original declaration is public for the same-Psi rank-one reconstruction consumer in OriginalUnitSupport; this is an existing algebraic identity.
+For every real or complex native field F, finite index type J with decidable equality, and vector v in the native Euclidean space, the real trace of vv* equals the squared norm of v. The vector may be zero. The original declaration supplies the trace estimate for congruence on a projective ROG join.
 
 **Theorem 1.8 (Extreme points equal the entire rank one family).**
 
@@ -171,5 +178,6 @@ The full original frame and the positive-extension, finite-effect and geometry a
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_nonneg`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_real_smul`
+- Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_trace_norm`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rog_frame`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.whole_pure_carrier`
