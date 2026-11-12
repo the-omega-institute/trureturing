@@ -174,7 +174,7 @@ theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
   simpa only [map_add, map_smul, smul_eq_mul, hx.2, hy.2, mul_one] using hab
 
 omit [FiniteDimensional ℝ A] in
-private theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) {x : A} (hx : x ∈ C) (hne : x ≠ 0) :
     (u x)⁻¹ • x ∈ base C u := by
   refine ⟨C.smul_mem (inv_nonneg.mpr (hu x hx hne).le) hx, ?_⟩
