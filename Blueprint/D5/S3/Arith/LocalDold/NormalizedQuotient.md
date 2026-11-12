@@ -4,7 +4,7 @@
 
 Actual normalized quotient observation
 
-The actual monic quotient Z[X]/(f) is Mathlib AdjoinRoot of the characteristic polynomial. LinearRecurrence coefficients are ascending: manuscript c_j is coeffs(k-j). The source equation L(x^n)=U_n is proved through the canonical remainder coefficient, the quotient root relation and uniqueness of the actual impulse recurrence. The triangular block/nonconstant-coordinate ideal correspondence is supplied by QuotientBlock; QuotientBlock also proves a positive scalar-return block rank at every prime not dividing the characteristic polynomial constant coefficient; general-modulus scalar returns and valuation lifting remain open; this theorem does not assume those conclusions as parameters. The observation_eq_impulse registration is declared_validated in the current scoped report; this does not certify other family targets.
+The actual monic quotient Z[X]/(f) is Mathlib AdjoinRoot of the characteristic polynomial. LinearRecurrence coefficients are ascending: manuscript c_j is coeffs(k-j). The source equation L(x^n)=U_n is proved through the canonical remainder coefficient, the quotient root relation and uniqueness of the actual impulse recurrence. The triangular block/nonconstant-coordinate ideal correspondence is supplied by QuotientBlock; for order at least two, QuotientBlock also proves a positive scalar-return block rank at every prime not dividing the characteristic polynomial constant coefficient; general-modulus scalar returns and valuation lifting remain open; this theorem does not assume those conclusions as parameters. The observation_eq_impulse registration is declared_validated in the current scoped report; this does not certify other family targets.
 
 **Theorem 1.1 (observation_eq_impulse).**
 
