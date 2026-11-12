@@ -44,8 +44,8 @@ theorem scalar_prod_diff_bound {α : Type*} [DecidableEq α]
     calc
       _ ≤ |g a| * |g b| * 1 := by gcongr; exact hd c (by simp)
       _ ≤ B ^ 2 := by simpa using hm a b (by simp) (by simp) g g hg hg
-  simp only [Finset.prod_insert (by simp [hab, hac]),
-    Finset.prod_insert (by simp [hbc]), Finset.prod_singleton]
+  simp only [Finset.prod_insert (show a ∉ ({b, c} : Finset α) by simp [hab, hac]),
+    Finset.prod_insert (show b ∉ ({c} : Finset α) by simp [hbc]), Finset.prod_singleton]
   have he : f a * (f b * f c) - g a * (g b * g c) =
       (f a - g a) * f b * f c + g a * (f b - g b) * f c +
         g a * g b * (f c - g c) := by ring
