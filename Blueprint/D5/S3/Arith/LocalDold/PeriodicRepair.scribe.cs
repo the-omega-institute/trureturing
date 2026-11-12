@@ -61,5 +61,20 @@ internal sealed class PeriodicRepairDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/LocalDold/PeriodicRepair.residue_repair_necessary"),
                 H("residue_repair_necessary"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Scale/jaidee2026blockdold")),
-                Blocks(Paragraph(Text("For R>0, 0<=z<R and C,c positive, Dold divisibility for c times 1+C times the single residue indicator modulo R implies R divides 2z. The minus-one unit yields precisely the zero-or-half restriction. No assumption of this desired conclusion is placed in the hypotheses."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For R>0, 0<=z<R and C,c positive, Dold divisibility for c times 1+C times the single residue indicator modulo R implies R divides 2z. The minus-one unit yields precisely the zero-or-half restriction. No assumption of this desired conclusion is placed in the hypotheses."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("periodicrepair-residue-dold-iff"),
+                DeclarationHandle.Create("D5/S3/Arith/LocalDold/PeriodicRepair.residue_dold_iff"),
+                H("residue_dold_iff"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Scale/jaidee2026blockdold")),
+                Blocks(Paragraph(Text("For R>0, z<R and C,c positive, c times the actual single-residue sample is Dold exactly when R divides 2z and R/gcd(R,C) divides c. Necessity uses unit invariance and the minus-one unit; sufficiency reduces to the proved zero or half transforms. Thus every positive multiplier is classified, including the exact least one, without assuming the desired zero-or-half conclusion."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("periodicrepair-half-no-model"),
+                DeclarationHandle.Create("D5/S3/Arith/LocalDold/PeriodicRepair.half_no_model"),
+                H("half_no_model"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Scale/jaidee2026blockdold")),
+                Blocks(Paragraph(Text("For positive D,C,c, no map with finite positive-time fixed sets realizes c times the half-residue sample. This uses the actual fixed-cardinality Mobius nonnegativity theorem and the strictly negative transform at 2D. It applies even to a noninjective map on an uncountable space."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("periodicrepair-residue-almost-realizable-iff"),
+                DeclarationHandle.Create("D5/S3/Arith/LocalDold/PeriodicRepair.residue_almost_realizable_iff"),
+                H("residue_almost_realizable_iff"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Scale/jaidee2026blockdold")),
+                Blocks(Paragraph(Text("For R>0, z<R and C>0, the single-residue sample has a positive multiplier realized at every positive time by a map with finite fixed sets exactly when z=0. The zero case constructs one actual finite permutation using the least Dold repair. The negative case excludes arbitrary maps. The actual bounded-affine recurrence-to-residue valuation bridge is still open."))), DescribeRole.Theorem))));
 }

@@ -7,7 +7,7 @@ internal sealed class CountableRealizationDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual countable cycles realize all positive indices simultaneously.",
         H("Countable and signed realization"), Blocks(
-            Paragraph(Text("This construction extends the existing finite divisor-table supplier to a single all-length carrier. It supplies the cycle-realization step required by the complete Jaidee manuscript, but the actual block valuation/transform identification, bounded half-residue arithmetic and formal zeta Euler identities need their own proofs. See the complete scope and attribution in "), Ref("D5/L/Scale/jaidee2026blockdold"), Text(". Registration is unfinished under issue 29392; no declared_validated status is claimed.")),
+            Paragraph(Text("This construction extends the existing finite divisor-table supplier to a single all-length carrier. It supplies the cycle-realization step required by the complete Jaidee manuscript, but the actual block valuation/transform identification, bounded half-residue arithmetic and formal zeta Euler identities need their own proofs. See the complete scope and attribution in "), Ref("D5/L/Scale/jaidee2026blockdold"), Text(". The fixed_card registration is declared_validated in its current scoped report. Every other newly authored audit target remains unfinished under issue 29392; that status does not cover the other theorems.")),
             Describe.Lean(DescribeId.Create("countable-countable-and-locally-finite"),
                 DeclarationHandle.Create("D5/S1/Dynamics/PeriodicOrbits/CountableRealization.countable_and_locally_finite"),
                 H("countable_and_locally_finite"), StatementSource.WithoutFormula(),
@@ -33,6 +33,11 @@ internal sealed class CountableRealizationDocument : IScribeDocumentDefinition
                 H("finite_carrier_of_support"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/FiniteGroups/puri2001arithmetic")),
                 Blocks(Paragraph(Text("If the nonzero multiplicities are supported on divisors of one positive exponent M, the whole carrier is finite by an explicit equivalence to the finite divisor carrier. This supplies actual finite carriers when bounded sample arithmetic establishes finite support."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("countable-necessary"),
+                DeclarationHandle.Create("D5/S1/Dynamics/PeriodicOrbits/CountableRealization.necessary"),
+                H("necessary"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/FiniteGroups/puri2001arithmetic")),
+                Blocks(Paragraph(Text("For any map on any type with finite fixed sets at every positive time, the integer Mobius transform of its actual fixed counts is nonnegative and divisible by the index. Neither a finite total carrier nor injectivity nor global countability is assumed. The proof restricts the map to the finite nth fixed set and reuses OrbitCounting; PeriodicRepair consumes this result to exclude all maps for a positive half-residue sample."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("countable-signed-realization"),
                 DeclarationHandle.Create("D5/S1/Dynamics/PeriodicOrbits/CountableRealization.signed_realization"),
                 H("signed_realization"), StatementSource.WithoutFormula(),

@@ -281,6 +281,121 @@ theorem residue_repair_necessary {R z C c : ℕ} (hR : 0 < R) (hz : z < R)
     rw [Nat.add_mod,hm,Nat.mod_eq_of_lt hz] at hs
     exact Nat.dvd_of_mod_eq_zero (by simpa [two_mul] using hs)
 
+private theorem zero_or_half {R z : ℕ} (hR : 0 < R) (hz : z < R)
+    (hd : R ∣ 2*z) : z=0 ∨ R=2*z := by
+  by_cases h0 : z=0
+  · exact Or.inl h0
+  · obtain ⟨q,hq⟩ := hd
+    have hp : 0 < q := by
+      by_contra h
+      have he : q=0 := by omega
+      simp [he] at hq
+      omega
+    have hl : q<2 := by nlinarith
+    have he : q=1 := by omega
+    right
+    simpa [he] using hq.symm
+
+private theorem residue_zero (R : ℕ) (C : ℤ) :
+    residueSample R 0 C = zeroSample R C := by
+  funext n
+  simp [residueSample,zeroSample,Nat.dvd_iff_mod_eq_zero]
+
+/-- Complete exact multiplier classification for one periodic residue class. -/
+theorem residue_dold_iff {R z C c : ℕ} (hR : 0 < R) (hz : z < R)
+    (hC : 0 < C) (hc : 0 < c) :
+    Dold (fun n => (c : ℤ)*residueSample R z (C : ℤ) n) ↔
+      R ∣ 2*z ∧ R / Nat.gcd R C ∣ c := by
+  constructor
+  · intro hD
+    have hd := residue_repair_necessary hR hz hC hc hD
+    refine ⟨hd,?_⟩
+    rcases zero_or_half hR hz hd with h0 | he
+    · subst z
+      rw [residue_zero] at hD
+      exact (zero_repair_iff hR C c).mp hD
+    · have hzpos : 0 < z := by omega
+      subst R
+      have hs : residueSample (2*z) z (C : ℤ) = halfSample z (C : ℤ) :=
+        funext (fun n => (half_residue hzpos (C : ℤ) n).symm)
+      rw [hs] at hD
+      exact (half_repair_iff hzpos C c).mp hD
+  · rintro ⟨hd,hcdiv⟩
+    rcases zero_or_half hR hz hd with h0 | he
+    · subst z
+      rw [residue_zero]
+      exact (zero_repair_iff hR C c).mpr hcdiv
+    · have hzpos : 0 < z := by omega
+      subst R
+      have hs : residueSample (2*z) z (C : ℤ) = halfSample z (C : ℤ) :=
+        funext (fun n => (half_residue hzpos (C : ℤ) n).symm)
+      rw [hs]
+      exact (half_repair_iff hzpos C c).mpr hcdiv
+
+private theorem table_transform {X : Type*} (f : X → X) (u : ℕ → ℤ)
+    (ht : ∀ n : ℕ, 0 < n → (fixedCard f n : ℤ) = u n)
+    {n : ℕ} (hn : 0 < n) :
+    mobiusSum u n = D5.S1.Dynamics.PeriodicOrbits.OrbitCounting.delta (fixedCard f) n := by
+  unfold mobiusSum D5.S1.Dynamics.PeriodicOrbits.OrbitCounting.delta
+  rw [← Nat.sum_divisorsAntidiagonal' (f := fun a b => μ a * u b)]
+  apply Finset.sum_congr rfl
+  intro p hp
+  rw [ht p.2 (Nat.pos_of_mem_divisors (Nat.snd_mem_divisors_of_mem_antidiagonal hp))]
+
+/-- No map with finite positive-time fixed sets realizes any positive half-residue
+multiple. Neither finiteness of the whole space nor injectivity is assumed. -/
+theorem half_no_model {X : Type*} (f : X → X)
+    (hf : ∀ n : ℕ, 0 < n → Finite {x : X // f^[n] x = x})
+    {D C c : ℕ} (hD : 0 < D) (hC : 0 < C) (hc : 0 < c) :
+    ¬ ∀ n : ℕ, 0 < n →
+      (fixedCard f n : ℤ) = (c : ℤ)*halfSample D (C : ℤ) n := by
+  intro ht
+  have hn : 0 < 2*D := by omega
+  have hh := (necessary f hf hn).1
+  rw [← table_transform f _ ht hn] at hh
+  exact (not_lt_of_ge hh) (half_negative hD hC hc)
+
+/-- Almost realizability of a single residue class is exactly the zero-residue
+case. The constructed model is a finite permutation; the obstruction applies to all maps. -/
+theorem residue_almost_realizable_iff {R z C : ℕ} (hR : 0 < R) (hz : z < R)
+    (hC : 0 < C) :
+    (∃ c : ℕ, 0 < c ∧ ∃ (X : Type) (f : X → X),
+      (∀ n : ℕ, 0 < n → Finite {x : X // f^[n] x = x}) ∧
+      ∀ n : ℕ, 0 < n →
+        (fixedCard f n : ℤ) = (c : ℤ)*residueSample R z (C : ℤ) n) ↔ z=0 := by
+  constructor
+  · rintro ⟨c,hc,X,f,hf,ht⟩
+    have hD : Dold (fun n => (c : ℤ)*residueSample R z (C : ℤ) n) := by
+      intro n hn
+      rw [table_transform f _ ht hn]
+      exact (necessary f hf hn).2
+    have hd := (residue_dold_iff hR hz hC hc).mp hD
+    rcases zero_or_half hR hz hd.1 with h0 | he
+    · exact h0
+    · by_contra h0
+      have hzpos : 0 < z := by omega
+      subst R
+      apply half_no_model f hf hzpos hC hc
+      intro n hn
+      rw [ht n hn,half_residue hzpos]
+      rfl
+  · intro h0
+    subst z
+    let M := R / Nat.gcd R C
+    have hg : 0 < Nat.gcd R C := Nat.gcd_pos_of_pos_left C hR
+    have hM : 0 < M := Nat.div_pos (Nat.le_of_dvd hR (Nat.gcd_dvd_left R C)) hg
+    have hd : R ∣ M*C := (repair_divisor hR C M).mpr dvd_rfl
+    obtain ⟨cp,hcp,ht⟩ := zero_finite_model hR C M hd
+    letI : Finite (Carrier cp) := hcp
+    refine ⟨M,hM,Carrier cp,rotation cp,fun n hn => inferInstance,?_⟩
+    intro n hn
+    rw [residue_zero]
+    exact ht n hn
+
+#print axioms residue_dold_iff
+#print axioms half_no_model
+#print axioms residue_almost_realizable_iff
+
 #print axioms half_residue
 #print axioms periodic_unit_invariance
 #print axioms residue_repair_necessary
