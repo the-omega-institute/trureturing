@@ -10,6 +10,8 @@ import D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredReturnConservation
 import D5.S3.ObserverMemory.Dynamics.MaximalUnobservableSubspace
 import D5.S3.ObserverMemory.Dynamics.InfiniteObservabilityOrthogonalDuality
 
+/-! Actual cyclic restrictions and their all-future observability. -/
+
 noncomputable section
 open scoped InnerProductSpace
 
@@ -26,7 +28,7 @@ def cyclicSpace (U : E ≃ₗᵢ[ℂ] E) (v : E) : Submodule ℂ E :=
   Submodule.span ℂ (Set.range fun n : ℕ => (U.toLinearMap ^ n) v)
 
 private theorem initial_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) : v ∈ cyclicSpace U v := by
-  simpa using (Submodule.subset_span (s := Set.range fun n : ℕ =>
+  simpa [cyclicSpace] using (Submodule.subset_span (s := Set.range fun n : ℕ =>
     (U.toLinearMap ^ n) v) ⟨0, rfl⟩)
 
 private theorem unitary_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) :
@@ -35,7 +37,7 @@ private theorem unitary_mem (U : E ≃ₗᵢ[ℂ] E) (v : E) :
   induction hx using Submodule.span_induction with
   | mem x hx =>
       obtain ⟨n, rfl⟩ := hx
-      exact Submodule.subset_span ⟨n + 1, by simp [pow_succ', LinearMap.mul_apply]⟩
+      exact Submodule.subset_span ⟨n + 1, by simp [pow_succ', mul_apply_eq_comp]⟩
   | zero => simpa using (cyclicSpace U v).zero_mem
   | add x y _ _ hx hy => simpa using (cyclicSpace U v).add_mem hx hy
   | smul a x _ hx => simpa using (cyclicSpace U v).smul_mem a hx
@@ -65,8 +67,7 @@ private theorem step_pow_coe (U : E ≃ₗᵢ[ℂ] E) (v : E) (n : ℕ)
   induction n with
   | zero => rfl
   | succ n ih =>
-      rw [pow_succ', pow_succ', ContinuousLinearMap.mul_apply,
-        ContinuousLinearMap.mul_apply]
+      rw [pow_succ', pow_succ', mul_apply_eq_comp, mul_apply_eq_comp]
       exact congrArg (monitoredStep U v) ih
 
 /-- Every actual cyclic state with zero click at every future time is zero.
@@ -114,19 +115,19 @@ theorem cyclic_future_kernel_eq_bot (U : E ≃ₗᵢ[ℂ] E) (v : E) :
       rw [← hy']
       exact hclick y y.2.1
     exact Submodule.mem_orthogonal_singleton_iff_inner_right.mp
-      (Submodule.starProjection_apply_eq_zero_iff.mp hp)
+      ((Submodule.starProjection_apply_eq_zero_iff (ℂ ∙ v)).mp hp)
   have horbit (n : ℕ) : ∀ x : E, x ∈ K → inner ℂ ((U.toLinearMap ^ n) v) x = 0 := by
     induction n with
     | zero => simpa using hvorth
     | succ n ih =>
         intro x hx
-        rw [pow_succ', LinearMap.mul_apply]
+        rw [pow_succ']
         change inner ℂ (U ((U.toLinearMap ^ n) v)) x = 0
         rw [U.inner_map_eq_flip]
         exact ih _ (hinverse hx)
   have hzero (x : E) (hx : x ∈ K) : x = 0 := by
     have hxorth : x ∈ (cyclicSpace U v)ᗮ := by
-      apply Submodule.mem_orthogonal'.mpr
+      rw [Submodule.mem_orthogonal']
       intro y hy
       induction hy using Submodule.span_induction with
       | mem y hy =>
@@ -138,11 +139,13 @@ theorem cyclic_future_kernel_eq_bot (U : E ≃ₗᵢ[ℂ] E) (v : E) :
     exact (inner_self_eq_zero).mp (hxorth x hx.2)
   apply le_antisymm ?_ bot_le
   intro x hx
-  apply Submodule.mem_bot.mpr
+  change x = 0
   apply Subtype.ext
   apply hzero
   refine ⟨?_, x.2⟩
-  rw [hH, Submodule.mem_iInf]
+  change (x : E) ∈ H
+  rw [hH]
+  apply (Submodule.mem_iInf _).mpr
   intro n
   have hn := (Submodule.mem_iInf _).mp hx n
   rw [LinearMap.mem_ker] at hn ⊢
@@ -150,8 +153,12 @@ theorem cyclic_future_kernel_eq_bot (U : E ≃ₗᵢ[ℂ] E) (v : E) :
   change (ℂ ∙ v).starProjection
     (U (((cyclicStep U v).toLinearMap ^ n) x : E)) = 0 at hn'
   rw [← ContinuousLinearMap.toLinearMap_pow] at hn'
+  change (ℂ ∙ v).starProjection (U (((cyclicStep U v ^ n) x : cyclicSpace U v) : E)) = 0 at hn'
   rw [step_pow_coe] at hn'
-  simpa only [A, B, LinearMap.comp_apply, ContinuousLinearMap.toLinearMap_pow] using hn'
+  change (ℂ ∙ v).starProjection
+    (U (((monitoredStep U v).toLinearMap ^ n) (x : E))) = 0
+  rw [← ContinuousLinearMap.toLinearMap_pow]
+  exact hn'
 
 #print axioms cyclic_future_kernel_eq_bot
 
