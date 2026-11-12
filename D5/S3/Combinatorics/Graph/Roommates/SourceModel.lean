@@ -6,6 +6,7 @@
    utility: none
    digest: Pinned supplier model for range-two cyclic stable partial matchings. -/
 
+import Mathlib.Algebra.Ring.Fin
 import Mathlib.Combinatorics.SimpleGraph.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fintype.Perm

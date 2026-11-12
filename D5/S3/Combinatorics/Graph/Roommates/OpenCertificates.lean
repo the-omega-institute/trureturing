@@ -166,8 +166,8 @@ private theorem topRanking_zero (s : Fin 4) (e : Equiv.Perm (Fin 3)) :
 private theorem topRanking_injective (s : Fin 4) : Function.Injective (topRanking s) := by
   intro e f h
   have hh := congrArg (fun r : Ranking => Equiv.Perm.decomposeFin r.symm) h
-  simpa only [topRanking, Equiv.symm_symm, Equiv.apply_symm_apply, Prod.mk.injEq,
-    true_and] using hh
+  change (s, e) = (s, f) at hh
+  exact congrArg Prod.snd hh
 
 private def topWord {m : ℕ} (e : Fin m → Equiv.Perm (Fin 3)) : CertifiedWord m := by
   let w : Word m := fun i => topRanking (if i.val % 2 = 0 then 0 else 2) (e i)
