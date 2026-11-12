@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/Galois/AuricSevenRigidity
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [mathlib/module/Mathlib.Algebra.Algebra.Operations, mathlib/module/Mathlib.LinearAlgebra.Dimension.Constructions]
+   anchors: [mathlib/module/Mathlib.Algebra.Algebra.Operations, mathlib/module/Mathlib.LinearAlgebra.Dimension.Free]
    utility: none
    digest: Low intersection multiplicities and quotient inclusion force homothety in degree seven. -/
 
