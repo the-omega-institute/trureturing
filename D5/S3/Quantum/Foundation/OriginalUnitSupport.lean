@@ -7,6 +7,8 @@
    digest: Native support compression constructs original-unit normalization and transports the entire original geometry. -/
 
 import D5.S3.Quantum.Foundation.SectionROGFrame
+import D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition
+import Mathlib.Data.Sym.Card
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Convex.Cone.Basic
 import Mathlib.Analysis.InnerProductSpace.Symmetric
@@ -35,7 +37,7 @@ generation, or normalized section is assumed.
 -/
 
 noncomputable section
-open scoped Matrix BigOperators ComplexOrder MatrixOrder
+open scoped Matrix BigOperators ComplexOrder MatrixOrder Pointwise
 open Filter Topology
 
 namespace D5.S3.Quantum.Foundation.OriginalUnitSupport
@@ -706,10 +708,12 @@ private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
   have hsum : A = ∑ j, A.H.eigenvalues j •
       SectionROGFrame.rankOne (A.H.eigenvectorBasis j) := by
     apply HermitianMat.ext
+    change A.mat = (∑ j, A.H.eigenvalues j •
+      SectionROGFrame.rankOne (A.H.eigenvectorBasis j)).mat
     simp only [HermitianMat.mat_finset_sum, HermitianMat.mat_smul]
     conv_lhs => rw [A.H.spectral_theorem, Unitary.conjStarAlgAut_apply]
     ext k l
-    simp [Matrix.mul_apply, Matrix.diagonal_apply, Matrix.vecMulVec_apply,
+    simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.mul_apply, Matrix.diagonal_apply, Matrix.vecMulVec_apply,
       SectionROGFrame.rankOne, Matrix.conjTranspose_apply, Matrix.star_apply,
       mul_comm, mul_left_comm, mul_assoc, RCLike.real_smul_eq_coe_mul]
   have heq : A = A.H.eigenvalues i.val •
@@ -915,14 +919,16 @@ private theorem original_effect_geometry [Nontrivial V]
     have hrep : (C : ConvexCone ℝ V).IsReproducing :=
       ConvexCone.IsReproducing.of_span_eq_top hgen
     intro x
-    have hx : x ∈ (C : Set V) - (C : Set V) := by rw [hrep]; trivial
+    have hx : x ∈ (C : Set V) - (C : Set V) :=
+      (Set.eq_univ_iff_forall.mp hrep) x
     exact Set.mem_sub.mp hx
   choose a ha b hb hab using hd
   let B : Set (V → ℝ) := Set.pi Set.univ (fun x => Set.Icc (-u (b x)) (u (a x)))
   have hB : IsCompact B := isCompact_univ_pi fun _ => isCompact_Icc
   have hsub : E ⊆ B := by
     rintro _ ⟨f, hf, rfl⟩ x _
-    have heq : f x = f (a x) - f (b x) := by rw [← hab x, map_sub]
+    have heq : f x = f (a x) - f (b x) :=
+      (congrArg f (hab x).symm).trans (map_sub f _ _)
     have hfa := hf (a x) (ha x)
     have hfb := hf (b x) (hb x)
     change -u (b x) ≤ f x ∧ f x ≤ u (a x)
@@ -963,6 +969,151 @@ private theorem original_effect_geometry [Nontrivial V]
     exact ⟨f, hf, hfp, hz⟩
   · rintro ⟨j, hj, hjp, hjx⟩
     exact le_antisymm (hjx ▸ hleast j hj hjp) (hf x hx).1
+
+/-- Native real and complex ambient dimensions and their trace codimensions. -/
+def NativeAmbientDimensions (n : ℕ) : Prop :=
+  Module.finrank ℝ (HermitianMat (Fin n) ℝ) = n * (n + 1) / 2 ∧
+  Module.finrank ℝ (HermitianMat (Fin n) ℂ) = n ^ 2 ∧
+  (∀ L : Submodule ℝ (HermitianMat (Fin n) ℝ),
+    Module.finrank ℝ L + Module.finrank ℝ Lᗮ = n * (n + 1) / 2) ∧
+  (∀ L : Submodule ℝ (HermitianMat (Fin n) ℂ),
+    Module.finrank ℝ L + Module.finrank ℝ Lᗮ = n ^ 2)
+
+private def real_symmetric_coordinates (n : ℕ) :
+    HermitianMat (Fin n) ℝ ≃ₗ[ℝ] (Sym2 (Fin n) → ℝ) where
+  toFun A := Sym2.lift ⟨A.mat, fun i j => by
+    simpa only [Matrix.conjTranspose_apply, star_trivial] using (congrFun₂ A.H i j).symm⟩
+  invFun f := ⟨fun i j => f s(i, j), by
+    change (fun i j => star (f s(j, i))) = (fun i j => f s(i, j))
+    ext i j
+    simp only [star_trivial, Sym2.eq_swap]⟩
+  left_inv A := by apply HermitianMat.ext; ext i j; rfl
+  right_inv f := by
+    funext q
+    exact Sym2.ind (fun i j => rfl) q
+  map_add' A B := by
+    funext q
+    exact Sym2.ind (fun i j => rfl) q
+  map_smul' r A := by
+    funext q
+    exact Sym2.ind (fun i j => rfl) q
+
+private theorem native_ambient_dimensions (n : ℕ) : NativeAmbientDimensions n := by
+  have hr : Module.finrank ℝ (HermitianMat (Fin n) ℝ) = n * (n + 1) / 2 := by
+    rw [(real_symmetric_coordinates n).finrank_eq,
+      Module.finrank_fintype_fun_eq_card, Sym2.card, Fintype.card_fin,
+      Nat.choose_two_right]
+    simp only [Nat.add_sub_cancel, Nat.mul_comm]
+  let e : HermitianMat (Fin n) ℂ ≃ₗ[ℝ]
+      D5.S3.Quantum.Measurement.BasisMeasurementProjection.HermitianSpace n :=
+    { toFun := fun A => ⟨A.mat, A.property⟩
+      invFun := fun A => ⟨A.val, A.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl
+      map_add' := fun _ _ => rfl
+      map_smul' := fun _ _ => rfl }
+  have hc : Module.finrank ℝ (HermitianMat (Fin n) ℂ) = n ^ 2 :=
+    e.finrank_eq.trans
+      (D5.S3.Quantum.Entanglement.BipartiteSectorDecomposition.hermitian_space_finrank n)
+  exact ⟨hr, hc,
+    fun L => L.finrank_add_finrank_orthogonal.trans hr,
+    fun L => L.finrank_add_finrank_orthogonal.trans hc⟩
+
+/-- The same native normalization congruence transports the full image,
+trace coefficients, annihilators and real ambient codimension. -/
+def NativeCongruence (σ Ψ : V →ₗ[ℝ] Matrix ι ι 𝕜) (S : Matrix ι ι 𝕜) : Prop :=
+  ∃ (H₀ H₁ : V →ₗ[ℝ] HermitianMat ι 𝕜)
+    (e : HermitianMat ι 𝕜 ≃ₗ[ℝ] HermitianMat ι 𝕜),
+    (∀ v, (H₀ v).mat = σ v) ∧ (∀ v, (H₁ v).mat = Ψ v) ∧
+    (∀ A, (e A).mat = S * A.mat * S) ∧
+    (∀ A, (e.symm A).mat = S⁻¹ * A.mat * S⁻¹) ∧
+    (∀ v, H₁ v = e (H₀ v)) ∧ H₁.range = H₀.range.map e.toLinearMap ∧
+    Module.finrank ℝ H₀.rangeᗮ = Module.finrank ℝ H₁.rangeᗮ ∧
+    (∀ A B, inner ℝ (e A) B = inner ℝ A (e B)) ∧
+    (∀ A v, RCLike.re (A.mat * Ψ v).trace =
+      RCLike.re ((e A).mat * σ v).trace) ∧
+    (∀ A, A ∈ H₁.rangeᗮ ↔ e A ∈ H₀.rangeᗮ) ∧
+    (∀ A, A ∈ H₀.rangeᗮ ↔ e.symm A ∈ H₁.rangeᗮ)
+
+private theorem native_congruence
+    (σ Ψ : V →ₗ[ℝ] Matrix ι ι 𝕜) (hσ : ∀ v, (σ v).IsHermitian)
+    (S : Matrix ι ι 𝕜) (hS : S.IsHermitian) (hSU : IsUnit S)
+    (hΨ : ∀ v, Ψ v = S * σ v * S) : NativeCongruence σ Ψ S := by
+  classical
+  have hd : IsUnit S.det := (Matrix.isUnit_iff_isUnit_det S).mp hSU
+  have hl : S⁻¹ * S = 1 := Matrix.nonsing_inv_mul S hd
+  have hr : S * S⁻¹ = 1 := Matrix.mul_nonsing_inv S hd
+  have hSinv : (S⁻¹).IsHermitian := hS.inv
+  let T := HermitianMat.conjLinear ℝ S
+  let Tinv := HermitianMat.conjLinear ℝ S⁻¹
+  have hT (A : HermitianMat ι 𝕜) : (T A).mat = S * A.mat * S := by
+    change S * A.mat * Sᴴ = _
+    rw [hS.eq]
+  have hTi (A : HermitianMat ι 𝕜) : (Tinv A).mat = S⁻¹ * A.mat * S⁻¹ := by
+    change S⁻¹ * A.mat * S⁻¹ᴴ = _
+    rw [hSinv.eq]
+  have hleft (A : HermitianMat ι 𝕜) : Tinv (T A) = A := by
+    apply HermitianMat.ext
+    rw [hTi, hT]
+    calc
+      S⁻¹ * (S * A.mat * S) * S⁻¹ = (S⁻¹ * S) * A.mat * (S * S⁻¹) := by
+        simp only [Matrix.mul_assoc]
+      _ = A.mat := by rw [hl, hr, Matrix.one_mul, Matrix.mul_one]
+  have hright (A : HermitianMat ι 𝕜) : T (Tinv A) = A := by
+    apply HermitianMat.ext
+    rw [hT, hTi]
+    calc
+      S * (S⁻¹ * A.mat * S⁻¹) * S = (S * S⁻¹) * A.mat * (S⁻¹ * S) := by
+        simp only [Matrix.mul_assoc]
+      _ = A.mat := by rw [hl, hr, Matrix.one_mul, Matrix.mul_one]
+  let e : HermitianMat ι 𝕜 ≃ₗ[ℝ] HermitianMat ι 𝕜 :=
+    { toLinearMap := T, invFun := Tinv, left_inv := hleft, right_inv := hright }
+  let H₀ : V →ₗ[ℝ] HermitianMat ι 𝕜 :=
+    { toFun := fun v => ⟨σ v, (hσ v).isSelfAdjoint⟩
+      map_add' := by intros; apply HermitianMat.ext; exact σ.map_add _ _
+      map_smul' := by intros; apply HermitianMat.ext; exact σ.map_smul _ _ }
+  let H₁ : V →ₗ[ℝ] HermitianMat ι 𝕜 := T.comp H₀
+  have hH₁ (v : V) : (H₁ v).mat = Ψ v := (hT (H₀ v)).trans (hΨ v).symm
+  have hmap : H₁.range = H₀.range.map e.toLinearMap := by
+    rw [LinearMap.range_comp]
+    rfl
+  have hdim : Module.finrank ℝ H₀.rangeᗮ = Module.finrank ℝ H₁.rangeᗮ := by
+    have h₀ := H₀.range.finrank_add_finrank_orthogonal
+    have h₁ := H₁.range.finrank_add_finrank_orthogonal
+    have hm : Module.finrank ℝ H₁.range = Module.finrank ℝ H₀.range := by
+      rw [hmap]
+      exact e.finrank_map_eq H₀.range
+    omega
+  have hadj (A B : HermitianMat ι 𝕜) : inner ℝ (e A) B = inner ℝ A (e B) := by
+    simp only [HermitianMat.inner_eq_re_trace]
+    change RCLike.re ((T A).mat * B.mat).trace = RCLike.re (A.mat * (T B).mat).trace
+    rw [hT, hT]
+    congr 1
+    calc
+      (S * A.mat * S * B.mat).trace = (S * (A.mat * (S * B.mat))).trace := by
+        simp only [Matrix.mul_assoc]
+      _ = ((A.mat * (S * B.mat)) * S).trace := Matrix.trace_mul_comm _ _
+      _ = (A.mat * (S * B.mat * S)).trace := by simp only [Matrix.mul_assoc]
+  have hcoeff (A : HermitianMat ι 𝕜) (v : V) :
+      RCLike.re (A.mat * Ψ v).trace = RCLike.re ((e A).mat * σ v).trace := by
+    have hh : inner ℝ A (H₁ v) = inner ℝ (e A) (H₀ v) := (hadj A (H₀ v)).symm
+    simpa only [HermitianMat.inner_eq_re_trace, hH₁] using hh
+  have hann (A : HermitianMat ι 𝕜) : A ∈ H₁.rangeᗮ ↔ e A ∈ H₀.rangeᗮ := by
+    rw [H₁.range.mem_orthogonal', H₀.range.mem_orthogonal']
+    constructor
+    · intro h X hX
+      obtain ⟨v, rfl⟩ := hX
+      rw [hadj]
+      exact h (H₁ v) ⟨v, rfl⟩
+    · intro h X hX
+      obtain ⟨v, rfl⟩ := hX
+      change inner ℝ A (e (H₀ v)) = 0
+      rw [← hadj]
+      exact h (H₀ v) ⟨v, rfl⟩
+  refine ⟨H₀, H₁, e, fun _ => rfl, hH₁, hT, hTi, fun _ => rfl,
+    hmap, hdim, hadj, hcoeff, hann, ?_⟩
+  intro A
+  simpa only [e.apply_symm_apply] using (hann (e.symm A)).symm
 
 private theorem matrix_eq_one_of_card_one (A : Matrix ι ι 𝕜)
     (hcard : Fintype.card ι = 1) (htrace : A.trace = 1) : A = 1 := by
@@ -1049,7 +1200,8 @@ theorem exists_original_unit_normalization
             (∀ p x,
               d '' {f | O f ∧ f p = 1 ∧ ∀ g, O g → g p = 1 → f x ≤ g x} =
               {g | N g ∧ g (e p) = 1 ∧ ∀ j, N j → j (e p) = 1 → g (e x) ≤ j (e x)}) ∧
-            NativeGeometry C u Ψ h ∧ OriginalEffectGeometry C u := by
+            NativeGeometry C u Ψ h ∧ OriginalEffectGeometry C u ∧
+            NativeAmbientDimensions n ∧ NativeCongruence σ Ψ S := by
   classical
   dsimp only
   obtain ⟨hn, U, σ, hU, hUr, hσeq, hrec, hσ, hHerm, hC, hrank,
@@ -1311,7 +1463,7 @@ theorem exists_original_unit_normalization
         change 0 ≤ d f (e v) ∧ d f (e v) ≤ RCLike.re (Ψ v).trace at hp
         simpa only [hd, hreal] using hp
     refine ⟨e, (fun _ => rfl), hbase, ?_, hconvex, hface, hminimal,
-      hproper, ?_, ?_, ?_, ?_, ?_⟩
+      hproper, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · rw [image_extremePoints, hbase]
     · intro p
       ext g
@@ -1350,5 +1502,7 @@ theorem exists_original_unit_normalization
       exact native_geometry C u Ψ hΨ hΨHerm hΨtrace hΨC h hroot
 
     · exact original_effect_geometry C hgen u hu
+    · exact native_ambient_dimensions _
+    · exact native_congruence σ Ψ hHerm S hSH hSU (fun _ => rfl)
 
 end D5.S3.Quantum.Foundation.OriginalUnitSupport

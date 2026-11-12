@@ -198,7 +198,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("p", space, All("x", space, Eq(originalReadings, normalizedReadings))),
             All("p", space, All("x", space,
                 Eq(Call("image", dual, originalMinimizers), normalizedMinimizers))),
-            Call("NativeGeometry", cone, unit, psi, m)));
+            Call("NativeGeometry", cone, unit, psi, m), Call("OriginalEffectGeometry", cone, unit)));
         Formula singleton = Call("singleton", m);
         Formula oneDimensional = Imp(Eq(dimension, D(1)), Chain(
             Eq(baseOriginal, singleton),
@@ -261,6 +261,28 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
         Formula nativeGeometryStatement = parameters(All("C", Call("PointedCone", real, space),
             All("u", linear(real), All("Psi", genericPsi, All("m", space,
                 IffF(Call("NativeGeometry", cone, unit, psi, m), nativeGeometry(index, psi)))))));
+        Formula coeFn = F.Id("coeFn");
+        Formula allEffects = Call("image", coeFn, setOf(f, properOriginal(f)));
+        Formula allConfirmers = Call("image", coeFn,
+            setOf(f, And(properOriginal(f), Eq(app(f, p), D(1)))));
+        Formula minReadings = setOf(r, Ex("g", linear(real),
+            Chain(properOriginal(g), Eq(app(g, p), D(1)), Eq(app(g, x), r))));
+        Formula attained = Ex("f", linear(real), Chain(properOriginal(f), Eq(app(f, p), D(1)),
+            All("g", linear(real), Imp(properOriginal(g), Imp(Eq(app(g, p), D(1)),
+                le(app(f, x), app(g, x))))),
+            Eq(app(f, x), Call("sInf", minReadings)),
+            Imp(Member(x, cone), IffF(Eq(app(f, x), D(0)),
+                Ex("g", linear(real), Chain(properOriginal(g), Eq(app(g, p), D(1)),
+                    Eq(app(g, x), D(0))))))));
+        Formula effectGeometry = Chain(Call("IsCompact", allEffects),
+            All("p", space, Imp(Eq(app(unit, p), D(1)), Chain(
+                Call("IsCompact", allConfirmers), Call("Nonempty", allConfirmers),
+                All("x", space, attained)))));
+        Formula effectGeometryStatement = All("V", F.Id("Type"), Seq(
+            Bracket(Call("AddCommGroup", space)), Sp, Bracket(Call("Module", real, space)), Sp,
+            All("C", Call("PointedCone", real, space), All("u", linear(real),
+                IffF(Call("OriginalEffectGeometry", cone, unit),
+                    Call("let", Eq(coeFn, Seq(f, Mapsto, Sp, Call("coe", f))), effectGeometry))))));
         Formula normalizationStatement = nativeInputs(And(LtF(D(0), dimension),
             Ex("U", Call("Matrix", index, nIndex, field),
                 Ex("sigma", Call("LinearMap", real, space, nativeMatrices),
@@ -308,6 +330,12 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(nativeGeometryStatement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("H lifts the actual Psi into Hermitian matrices, with no change of map or original carrier. Its full positive trace-one base is the image of the entire original base. The finite native matrix-rank-one decomposition property is equivalent to the original rho property by the normalization theorem. Under that property, this actual Hermitian image is ROG and its full pure carrier is the image of all original extreme points. Every original pure point extends at any prescribed index to a native orthonormal frame. The original states corresponding to all frame entries are pure, include the prescribed original point, and sum to the same h. Every such pure matrix is bounded by the identity. When the native dimension exceeds one, the original vector (h-p)/(n-1) belongs to the original base and H carries it to (I-H(p))/(n-1). The complement branch makes no assertion with a zero denominator."))),
                     DescribeRole.Definition),
+                Describe.Lean(DescribeId.Create("original-effect-geometry"),
+                    DeclarationHandle.Create(Owner + "OriginalEffectGeometry"),
+                    H("Compact original intervals and attained confirming comparisons"),
+                    StatementSource.FromAuthor(Disp(effectGeometryStatement)), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("The full original algebraic dual is embedded faithfully as its functions V to R with the pointwise product topology; coeFn is this canonical inclusion. The proper interval is compact in this topology. For every original p with u(p)=1, its entire confirmer set is compact and nonempty, and evaluation at every original x attains its minimum. The minimum equals the infimum of all actual confirming readings. For x in the original cone, that minimum is zero exactly when some original confirmer has zero reading. Every original linear functional is retained, with no finite-catalog or ambient-effect restriction. A generating cone writes every vector as a difference of two original cone vectors. Properness therefore bounds each pointwise reading in a compact real interval. Linearity and all proper inequalities define a closed subset of the product of those intervals. Tychonoff compactness gives the whole interval, intersection with the closed confirming equation gives compact confirmer sets, and the original unit u supplies their nonemptiness. The continuous evaluation map attains its minimum. Nonnegative readings on cone vectors give the zero equivalence. This proof does not require a prespecified minimizer, a PD dual representative or matrix full support."))),
+                    DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("original-unit-normalization"),
                     DeclarationHandle.Create(Owner + "exists_original_unit_normalization"),
                     H("Actual original-unit normalization on the entire original carrier"),
@@ -315,7 +343,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     Blocks(Paragraph(Text("Use the very same compressed original mass-n point h supplied by inverse-trace stationarity. Its unique determinant maximum and principal inverse square root S define the real-linear map Psi(v) = S sigma(v) S on every original vector. Cyclicity of trace and S squared = sigma(h) inverse give trace Psi(v) = u(v), while S sigma(h) S = I makes the identity an actual member of this same image. Invertibility of S reconstructs sigma and then the original rho from every Psi(v); hence Psi is faithful. Congruence preserves Hermitian symmetry, the exact entire PSD cone section and native matrix rank. The image of the entire original unit-one base is exactly the positive trace-one part of this same linear image. No ambient dual lift is inverted and no normalized-section hypothesis is introduced. For each original cone element, finite decompositions into original native rank-one positive matrices correspond under the same Psi, retaining each original summand. Thus the entire ROG property transports in both directions. If the original base is a singleton and the cone is ROG, an actual rank-one summand of the full-support point is a positive multiple of that point. Its compressed matrix is positive definite and has rank n, forcing n = 1. The equivalence e from the original space onto the range of this same Psi carries the entire base and all its extreme points to the positive trace-one base in that range. It preserves convexity and every extreme subset, for arbitrary ambient subsets. It consequently carries the entire intersection of convex extreme subsets containing any prescribed set onto the corresponding intersection. This includes the entire minimal faces of both the original cone and its base. Its contravariant dual d(f) = f composed with e inverse carries the entire proper interval and each full confirmer set bijectively. For every original p and x, the sets of attainable confirming readings agree exactly, so their lower envelopes agree and d maps all minimizers onto all minimizers. In particular every actual zero confirmer transports in both directions, even when different zero conditions initially have different confirmers. Only elements of the actual image are passed to e inverse. When n is one, the original base and its entire extreme-point set are both the singleton containing the same h. Generation and strict positivity show every cone vector is its original mass times h. Thus every original effect is t times u with t in the closed unit interval, the only confirmer of h is u, and its entire exclusion set is empty. No division by n minus one occurs."))),
                     DescribeRole.Theorem),
                 Paragraph(Text("For a concrete native real or complex application, take V = R, C = the nonnegative ray, u(x) = 2x and rho(x) = diag(x, 0). This representation is faithful and its entire PSD section is exactly C. The original base is the compact singleton {1/2}. The ambient matrix rho(1) is singular and its trace is one, whereas u(1) is two. Thus neither ambient full support nor an original trace unit is present. The native common support nevertheless has dimension one. The construction has h = 1/2 and Psi(x) = [2x] in the one-dimensional support, as its trace identity determines its only entry. It returns the entire original base and pure carrier {1/2}, confirmer {u}, empty exclusion set, and every proper effect t u for 0 <= t <= 1. The same native argument applies over R and C without replacing complex rank by real rank.")),
-                Paragraph(Text("The actual Hermitian image and native matrix-rank-one bridge reuse SectionROGFrame.whole_pure_carrier and rog_frame. They return all original pure points, native frames summing to the same original h, and the same-h original complement for n greater than one. Compressed real/complex codimension and annihilator congruence still require proofs. The established reading-set and minimizer transport does not yet prove existence of a comparison minimum from the original effect interval. The dimension-one singleton-base, entire effect interval and empty-exclusion return, and the converse from a singleton ROG base to support dimension one, are included. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
+                Paragraph(Text("The actual Hermitian image and native matrix-rank-one bridge reuse SectionROGFrame.whole_pure_carrier and rog_frame. They return all original pure points, native frames summing to the same original h, and the same-h original complement for n greater than one. Compressed real/complex codimension and annihilator congruence still require proofs. The full original proper interval and every original confirmer set are compact under the faithful pointwise realization of all linear functionals; the original unit supplies nonemptiness. Every original confirming comparison attains its infimum, and on the cone its minimum is zero exactly when an actual original confirmer reads zero. The dimension-one singleton-base, entire effect interval and empty-exclusion return, and the converse from a singleton ROG base to support dimension one, are included. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
     private static Formula Chain(params Formula[] formulas)

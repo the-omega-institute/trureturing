@@ -237,7 +237,8 @@ def arena : Arena where
             (∀ p x,
               d '' {f | O f ∧ f p = 1 ∧ ∀ g, O g → g p = 1 → f x ≤ g x} =
               {g | N g ∧ g (e p) = 1 ∧ ∀ j, N j → j (e p) = 1 → g (e x) ≤ j (e x)}) ∧
-            NativeGeometry C u Ψ h ∧ OriginalEffectGeometry C u
+            NativeGeometry C u Ψ h ∧ OriginalEffectGeometry C u ∧
+            NativeAmbientDimensions n ∧ NativeCongruence σ Ψ S
 
 set_option maxHeartbeats 1200000 in
 theorem source_bridge : sourceScope.{u,v,w} ↔ arena.{u,v,w}.Law relationActual := Iff.rfl
