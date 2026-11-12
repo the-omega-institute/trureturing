@@ -129,7 +129,7 @@ private theorem paired_injective {m : ℕ} (i j : Fin m)
   by_cases hi : i.val % 2 = 0 <;> by_cases hj : j.val % 2 = 0 <;>
     simp only [pairedOffset, hi, hj, ite_true, ite_false] at h ⊢ <;> omega
 
-private theorem rank_injective (r : Ranking) {a b : ℤ}
+theorem rank_injective (r : Ranking) {a b : ℤ}
     (ha : -2 ≤ a ∧ a ≤ 2) (hb : -2 ≤ b ∧ b ≤ 2)
     (ha0 : a ≠ 0) (hb0 : b ≠ 0) (h : offsetRank r a = offsetRank r b) : a = b := by
   rcases ha with ⟨haL, haU⟩

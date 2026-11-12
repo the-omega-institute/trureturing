@@ -83,7 +83,7 @@ def boundarySite : Fin 4 → Fin 6 := ![0, 1, 4, 5]
 noncomputable def flags {α : Type} (request : α → Fin 6) : Fin 4 → Bool :=
   fun j => decide (∃ a, request a = boundarySite j)
 
-private theorem occupied_iff {α : Type} (request : α → Fin 6)
+theorem occupied_iff {α : Type} (request : α → Fin 6)
     (hcentral : ∀ a, request a ≠ 2 ∧ request a ≠ 3) (i : Fin 6) :
     occupied (flags request) i = true ↔ ∃ a, request a = i := by
   classical
