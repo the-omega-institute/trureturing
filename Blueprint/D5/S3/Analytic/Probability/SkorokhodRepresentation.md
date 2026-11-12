@@ -12,7 +12,7 @@ $$\begin{aligned}\forall u, \forall X: \operatorname{Type}\left(u\right), \opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Probability/SkorokhodRepresentation.skorokhod_representation` (`✓ std3`). ∎
 
-*Citation.* Unattributed source file; copyright Meta Platforms, Inc. and affiliates (2026). *Skorokhod representation theorem in ATLAS Lean*. URL: <https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Probability/SkorokhodRepresentation.lean>.
+*Citation.* Unattributed source file; copyright Meta Platforms, Inc. and affiliates (2026). *Strassen coupling, compact Kantorovich duality and Skorokhod representation in ATLAS Lean*. URL: <https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Probability/StrassenCoupling.lean>.
 
 *Commentary.*
 

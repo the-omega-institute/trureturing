@@ -46,7 +46,7 @@ internal sealed class SkorokhodRepresentationDocument : IScribeDocumentDefinitio
                 H("Exact laws and almost-sure convergence of the full sequence"),
                 StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/Analytic/atlas2026skorokhodrepresentation")),
+                    LibraryNoteRef.Create("D5/L/Geometry/atlas2026strassencoupling")),
                 Blocks(
                     Paragraph(Text("The limit law supplies nonemptiness of X. A countable family of arbitrarily small balls with limit-law-null frontiers gives each point a Boolean address. Coordinates are continuous away from the union of those frontiers, and convergence of addresses forces convergence in X. Composing with the inverse of the canonical Cantor-set homeomorphism and subtype inclusion gives a measurable real embedding that is continuous almost everywhere for the limit law and reflects sequence convergence.")),
                     Paragraph(Text("For each pushed-forward real law, use the adopted generalized inverse quantile. Portmanteau convergence on continuity sets gives convergence of the distribution functions at all limit-law-null singletons. At every interior continuity point of the limiting raw quantile, the quantile sequence converges. The limiting quantile has only countably many interior discontinuities. The endpoint and countable exceptional sets have Lebesgue measure zero.")),
