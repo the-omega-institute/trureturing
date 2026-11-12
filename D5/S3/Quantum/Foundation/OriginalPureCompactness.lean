@@ -33,8 +33,8 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
       simp [proper]
     rw [he]
     exact isClosed_iInter fun x => isClosed_iInter fun _ =>
-      (isClosed_le continuous_const (ContinuousLinearMap.continuous_apply x)).inter
-        (isClosed_le (ContinuousLinearMap.continuous_apply x) continuous_const)
+      (isClosed_le continuous_const (by fun_prop)).inter
+        (isClosed_le (by fun_prop) continuous_const)
   have hspan := pure_span (base_compact hc hs) hs hg
   let b := Module.Basis.ofSpan hspan.ge
   let := FiniteDimensional.fintypeBasisIndex b
@@ -47,6 +47,7 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     intro i
     have hp := Module.Basis.ofSpan_subset hspan.ge (mem_range_self i)
     have hi := hf (b i) hp.1.1
+    change 0 ≤ f (b i) ∧ f (b i) ≤ u (b i) at hi
     rw [Real.norm_eq_abs, abs_of_nonneg hi.1]
     simpa [hp.1.2] using hi.2
   simpa using hle
@@ -136,7 +137,7 @@ private theorem separated_zeros_force_pure [Nontrivial V]
     have hn : ‖n‖ = 1 := by simp [n, EuclideanSpace.single]
     have pure_sphere (v : EuclideanSpace ℝ (Fin chart.dim)) (hv : ‖v‖ = 1) :
         chart.param v ∈ pure C u := by
-      letI : Nonempty (Fin chart.dim) := ⟨i⟩
+      let : Nonempty (Fin chart.dim) := ⟨i⟩
       have hvext : v ∈ (Metric.closedBall 0 1).extremePoints ℝ := by
         rw [StrictConvexSpace.extremePoints_closedBall_eq_sphere]
         simpa using hv
@@ -158,7 +159,7 @@ private theorem separated_zeros_force_pure [Nontrivial V]
         have hsum : n + n = 0 := (congrArg (fun v => n + v) hnt).trans (add_neg_cancel n)
         have : (2 : ℝ) • n = 0 := by simpa only [two_smul] using hsum
         exact (smul_eq_zero.mp this).resolve_left (by norm_num)
-      simpa [hn0] using hn
+      simp [hn0] at hn
     have hyz : y ≠ z := by intro he; rw [he, hbz] at hby; norm_num at hby
     have he := equal_exclusions_of_two_points hc hs hg hB s t
       ⟨⟨hy, a.toLinearMap, ⟨ha, has⟩, hay⟩, ⟨hy, a.toLinearMap, ⟨ha, hat⟩, hay⟩⟩

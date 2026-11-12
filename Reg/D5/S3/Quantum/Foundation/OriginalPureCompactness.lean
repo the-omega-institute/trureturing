@@ -26,7 +26,7 @@ attribute [instance] Inputs.add Inputs.space Inputs.finite Inputs.nontrivial
 
 abbrev signature : Signature where
   Params := Inputs.{v}
-  State _ := Unit
+  State P := P.V
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -35,7 +35,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{v} :=
-  realize signature (fun _ P _ => IsCompact (pure P.cone P.unit)) (fun e => nomatch e)
+  realize signature (fun _ P x => x ∈ pure P.cone P.unit) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{v}
@@ -43,7 +43,8 @@ abbrev arena : Arena where
     IsClosed (P.cone : Set P.V) →
     (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
     Submodule.span ℝ (P.cone : Set P.V) = ⊤ →
-    exclusionBalls P.cone P.unit → weakPair P.cone P.unit → O.readout () P ()
+    exclusionBalls P.cone P.unit → weakPair P.cone P.unit →
+      IsCompact {x : P.V | O.readout () P x}
 
 abbrev sourceScope : Prop := type_of% (@whole_pure_compact.{v})
 
