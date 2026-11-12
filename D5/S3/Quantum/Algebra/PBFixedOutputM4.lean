@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/PBFixedOutputM4
    mirror-E: none(waiver:registration-template-not-established)
-   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.LinearMap]
+   anchors: [mathlib/module/Mathlib.Analysis.Matrix.Hermitian]
    utility: none
    digest: Concrete full-space matrix realization of scalar fixed-output PB. -/
 
