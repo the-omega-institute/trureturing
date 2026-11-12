@@ -40,8 +40,9 @@ def states : Set Carrier := convexHull ℝ (range curve)
 
 private theorem states_image : states = lift '' body := by
   rw [body, lift.image_convexHull]
+  unfold states
   congr 1
-  exact (range_comp lift momentCurve).symm
+  exact range_comp lift momentCurve
 
 private theorem curve_mem (θ : ℝ) : curve θ ∈ states :=
   subset_convexHull ℝ _ ⟨θ, rfl⟩
@@ -135,15 +136,95 @@ private theorem effect_curve (a : ℝ) (b : Coordinates) (θ : ℝ) :
 private theorem all_linear_effects (f : Carrier →ₗ[ℝ] ℝ) :
     ∃ a b, f = effect a b := by
   refine ⟨f (1, 0), fun i => f (0, Pi.single i 1), ?_⟩
-  ext x
+  apply LinearMap.ext
+  intro x
   have hx : x = x.1 • (1, (0 : Coordinates)) +
       ∑ i : Fin 4, x.2 i • (0, Pi.single i 1) := by
     ext i
-    · simp
+    · simp [Fin.sum_univ_succ]
     · simp [Fin.sum_univ_succ]
       fin_cases i <;> simp [Pi.single_apply]
-  conv_lhs => rw [hx]
-  simp [effect, map_add, map_smul, map_sum, mul_comm]
+  calc
+    f x = f (x.1 • (1, (0 : Coordinates)) +
+        ∑ i : Fin 4, x.2 i • (0, Pi.single i 1)) := congrArg f hx
+    _ = x.1 * f (1, 0) + ∑ i : Fin 4, x.2 i * f (0, Pi.single i 1) := by
+      rw [map_add, map_smul, map_sum]
+      simp only [map_smul, smul_eq_mul]
+    _ = _ := by simp [effect, mul_comm]
+
+private theorem unique_support_hull {S : Set Carrier} {v : Carrier}
+    (l : Carrier →ₗ[ℝ] ℝ) (h : ∀ w ∈ S, w = v ∨ l w < l v) :
+    ∀ w ∈ convexHull ℝ S, w = v ∨ l w < l v := by
+  apply convexHull_min h
+  intro w hw z hz a b ha hb hab
+  by_cases ha0 : a = 0
+  · have hb1 : b = 1 := by linarith
+    simpa [ha0, hb1] using hz
+  by_cases hb0 : b = 0
+  · have ha1 : a = 1 := by linarith
+    simpa [hb0, ha1] using hw
+  have ha' : 0 < a := lt_of_le_of_ne ha (Ne.symm ha0)
+  have hb' : 0 < b := lt_of_le_of_ne hb (Ne.symm hb0)
+  have he : a * l v + b * l v = l v := by rw [← add_mul, hab, one_mul]
+  rcases hw with rfl | hw <;> rcases hz with rfl | hz
+  · left
+    rw [← add_smul, hab, one_smul]
+  · right
+    simp only [map_add, map_smul, smul_eq_mul]
+    nlinarith [mul_pos hb' (sub_pos.mpr hz)]
+  · right
+    simp only [map_add, map_smul, smul_eq_mul]
+    nlinarith [mul_pos ha' (sub_pos.mpr hw)]
+  · right
+    simp only [map_add, map_smul, smul_eq_mul]
+    nlinarith [mul_pos ha' (sub_pos.mpr hw), mul_pos hb' (sub_pos.mpr hz)]
+
+private theorem curve_eq_of_cos_sub {a θ : ℝ} (h : Real.cos (θ - a) = 1) :
+    curve θ = curve a := by
+  have he : Real.cos θ * Real.cos a + Real.sin θ * Real.sin a = 1 := by
+    simpa only [Real.cos_sub] using h
+  have hsq : (Real.cos θ - Real.cos a) ^ 2 + (Real.sin θ - Real.sin a) ^ 2 = 0 := by
+    nlinarith [Real.sin_sq_add_cos_sq θ, Real.sin_sq_add_cos_sq a]
+  have hc : Real.cos θ = Real.cos a := by
+    nlinarith [sq_nonneg (Real.cos θ - Real.cos a), sq_nonneg (Real.sin θ - Real.sin a)]
+  have hs : Real.sin θ = Real.sin a := by
+    nlinarith [sq_nonneg (Real.cos θ - Real.cos a), sq_nonneg (Real.sin θ - Real.sin a)]
+  ext i
+  · rfl
+  · fin_cases i <;> simp [curve, lift, momentCurve, Real.cos_two_mul, Real.sin_two_mul, hc, hs]
+
+private theorem curve_extreme (a : ℝ) : curve a ∈ states.extremePoints ℝ := by
+  let l := effect 0 ![Real.cos a, Real.sin a, 0, 0]
+  have hl (θ : ℝ) : l (curve θ) = Real.cos (θ - a) := by
+    simp [l, effect_curve, trigonometric, Real.cos_sub]
+    ring
+  have hp : l (curve a) = 1 := by simp [hl]
+  have hbound : ∀ w ∈ states, w = curve a ∨ l w < l (curve a) := by
+    apply unique_support_hull l
+    rintro _ ⟨θ, rfl⟩
+    by_cases he : Real.cos (θ - a) = 1
+    · exact Or.inl (curve_eq_of_cos_sub he)
+    · right
+      rw [hl, hp]
+      exact lt_of_le_of_ne (Real.cos_le_one _) he
+  refine ⟨curve_mem a, ?_⟩
+  intro w hw z hz hseg
+  by_contra hne
+  have hwlt := (hbound w hw).resolve_left hne
+  have hzle : l z ≤ l (curve a) := by
+    rcases hbound z hz with rfl | hzlt
+    · exact le_rfl
+    · exact hzlt.le
+  obtain ⟨r, s, hr, hs, hrs, he⟩ := hseg
+  have he' := congrArg l he
+  simp only [map_add, map_smul, smul_eq_mul] at he'
+  nlinarith [mul_pos hr (sub_pos.mpr hwlt), mul_nonneg hs.le (sub_nonneg.mpr hzle)]
+
+private theorem original_pure : pure cone unit = range curve := by
+  rw [CircuitBalancedConfirmation.pure, original_base]
+  apply Subset.antisymm (extremePoints_convexHull_subset (𝕜 := ℝ))
+  rintro _ ⟨a, rfl⟩
+  exact curve_extreme a
 
 def p : Carrier := curve 0
 def x : Carrier := (1 / 2 : ℝ) • (curve (Real.pi / 2) + curve (-Real.pi / 2))
@@ -155,7 +236,7 @@ def attainer : Carrier →ₗ[ℝ] ℝ := effect (17 / 50) ![12 / 25, 0, 9 / 50,
 
 private theorem midpoint_mem {a b : Carrier} (ha : a ∈ states) (hb : b ∈ states) :
     (1 / 2 : ℝ) • (a + b) ∈ states := by
-  simpa [smul_add] using (convex_convexHull ℝ (range curve)) ha hb
+  simpa only [states, smul_add] using (convex_convexHull ℝ (range curve)) ha hb
     (by norm_num : 0 ≤ (1 / 2 : ℝ)) (by norm_num : 0 ≤ (1 / 2 : ℝ)) (by norm_num)
 
 private theorem state_members : p ∈ states ∧ x ∈ states ∧ y ∈ states ∧
@@ -169,8 +250,8 @@ private theorem decomposition : mixed = (1 / 10 : ℝ) • p + (9 / 10 : ℝ) �
   ext i
   · norm_num [mixed, x, y, p, z, curve, lift]
   · fin_cases i <;>
-      simp [mixed, x, y, p, z, curve, lift, momentCurve, Real.cos_two_mul,
-        Real.sin_two_mul, Real.cos_neg, Real.sin_neg, hc] <;> ring
+      norm_num [mixed, x, y, p, z, curve, lift, momentCurve, neg_div, Real.cos_two_mul,
+        Real.sin_two_mul, Real.cos_neg, Real.sin_neg, hc]
 
 private theorem attainer_formula (θ : ℝ) :
     attainer (curve θ) = ((3 * Real.cos θ + 2) / 5) ^ 2 := by
@@ -196,7 +277,7 @@ private theorem attainer_value : attainer mixed = 1 / 10 := by
   rw [decomposition, map_add, map_smul, map_smul, attainer_confirms.2]
   have hz : attainer z = 0 := by
     have hc : Real.cos angle = -2 / 3 := Real.cos_arccos (by norm_num) (by norm_num)
-    simp [z, map_smul, map_add, attainer_formula, hc, Real.cos_neg]
+    norm_num [z, map_smul, map_add, attainer_formula, hc, Real.cos_neg]
   norm_num [hz]
 
 private theorem universal_lower (f : Carrier →ₗ[ℝ] ℝ) (hf : confirms cone unit p f) :
@@ -206,10 +287,47 @@ private theorem universal_lower (f : Carrier →ₗ[ℝ] ℝ) (hf : confirms con
   dsimp only [smul_eq_mul]
   linarith
 
+private theorem endpoint_exclusions :
+    (∃ f, confirms cone unit p f ∧ f x = 0) ∧
+    (∃ f, confirms cone unit p f ∧ f y = 0) := by
+  let fx := effect (1 / 2) ![0, 0, 1 / 2, 0]
+  let fy := effect (1 / 2) ![1 / 2, 0, 0, 0]
+  have hfx (θ : ℝ) : fx (curve θ) = Real.cos θ ^ 2 := by
+    simp [fx, effect_curve, trigonometric, Real.cos_two_mul]
+    ring
+  have hfy (θ : ℝ) : fy (curve θ) = (1 + Real.cos θ) / 2 := by
+    simp [fy, effect_curve, trigonometric]
+    ring
+  have hpx : proper cone unit fx := (proper_on_curve fx).mpr (fun θ => by
+    rw [hfx]
+    exact ⟨sq_nonneg _, by nlinarith [Real.sin_sq_add_cos_sq θ, sq_nonneg (Real.sin θ)]⟩)
+  have hpy : proper cone unit fy := (proper_on_curve fy).mpr (fun θ => by
+    rw [hfy]
+    constructor <;> linarith [Real.neg_one_le_cos θ, Real.cos_le_one θ])
+  constructor
+  · refine ⟨fx, ⟨hpx, ?_⟩, ?_⟩
+    · norm_num [p, hfx]
+    · norm_num [x, map_smul, map_add, hfx, neg_div]
+  · refine ⟨fy, ⟨hpy, ?_⟩, ?_⟩
+    · norm_num [p, hfy]
+    · norm_num [y, hfy]
+
+private theorem zero_gluing_fails : ¬ zeroGluing cone unit := by
+  intro h
+  have hp : p ∈ pure cone unit := by rw [original_pure]; exact ⟨0, rfl⟩
+  have hx : x ∈ base cone unit := by rw [original_base]; exact state_members.2.1
+  have hy : y ∈ base cone unit := by rw [original_base]; exact state_members.2.2.1
+  obtain ⟨f, hf, hz⟩ := h ⟨p, hp⟩ x y hx hy endpoint_exclusions.1 endpoint_exclusions.2
+  have hb := universal_lower f hf
+  change f mixed = 0 at hz
+  rw [hz] at hb
+  norm_num at hb
+
 /-- The minimum is over every original globally proper real-linear confirmer.
 The coefficient description is surjective onto all such effects. -/
 theorem attained_full_effect_gap :
     base cone unit = lift '' body ∧
+    pure cone unit = range curve ∧
     (∀ f : Carrier →ₗ[ℝ] ℝ, ∃ a b, f = effect a b) ∧
     (∀ a b, proper cone unit (effect a b) ↔
       ∀ θ : ℝ, 0 ≤ trigonometric a b θ ∧ trigonometric a b θ ≤ 1) ∧
@@ -218,10 +336,13 @@ theorem attained_full_effect_gap :
     mixed ∈ base cone unit ∧ z ∈ base cone unit ∧
     (∀ f, confirms cone unit p f → (1 / 10 : ℝ) ≤ f mixed) ∧
     confirms cone unit p attainer ∧ attainer mixed = 1 / 10 ∧
-    comparison cone unit p mixed = 1 / 10 := by
-  refine ⟨original_base.trans states_image, all_linear_effects, ?_,
+    comparison cone unit p mixed = 1 / 10 ∧
+    (∃ f, confirms cone unit p f ∧ f x = 0) ∧
+    (∃ f, confirms cone unit p f ∧ f y = 0) ∧ ¬ zeroGluing cone unit := by
+  refine ⟨original_base.trans states_image, original_pure, all_linear_effects, ?_,
     fun _ hw hn => cone_strict hw hn, ?_, ?_, ?_, ?_, ?_, universal_lower,
-    attainer_confirms, attainer_value, ?_⟩
+    attainer_confirms, attainer_value, ?_, endpoint_exclusions.1,
+    endpoint_exclusions.2, zero_gluing_fails⟩
   · intro a b
     simpa only [effect_curve] using proper_on_curve (effect a b)
   · rw [original_base]; exact state_members.1
