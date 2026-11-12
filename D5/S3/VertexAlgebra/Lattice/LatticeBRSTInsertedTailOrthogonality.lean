@@ -4,7 +4,7 @@ import D5.S3.VertexAlgebra.SourceBPZ.TransverseHermitian
 import Batteries.Tactic.OpenPrivate
 
 /-!
-SOURCE ONLY; unparsed and uncompiled. Consumed ordinary-pairing lemmas for
+Initially prepared as a source-only candidate. Ordinary-pairing lemmas for
 LatticeBRSTPhysicalTransverseRealization. The argument uses the ORIGINAL
 Hm tensor ordinary Hg. Longitudinal boosts are skew-adjoint because BOTH
 actual null vectors are real. The degree selection is proved from current
@@ -61,13 +61,16 @@ private theorem matter_current (u : E D) (p : Charge D) (n : ℤ)
   change Finsupp.single p _ = Finsupp.single p _
   congr 1
   apply (F.coordinateEquiv B).injective
-  rw [fixed_charge_transport, AlgEquiv.apply_symm_apply, AlgEquiv.apply_symm_apply]
+  rw [fixed_charge_transport, AlgEquiv.apply_symm_apply]
+  change (cm F B u p n) Q =
+    (F.coordinateEquiv B) ((F.coordinateEquiv B).symm ((cm F B u p n) Q))
+  exact ((F.coordinateEquiv B).apply_symm_apply _).symm
 
 private theorem Hm_real_current (u : E D) (hu : ∀ i, star (u i) = u i)
     (n : ℤ) (x y : Carrier D) : Hm (a u n x) y = Hm x (a u (-n) y) := by
   simp only [a, LinearMap.sum_apply, LinearMap.smul_apply,
     Hm_finset_sum_left, Hm_finset_sum_right, Hm_smul_left, Hm_smul_right,
-    hu, Hm_neutralMode]
+    starRingEnd_apply, hu, Hm_neutralMode]
 
 /-- A finite frequency boost on the literal original matter carrier. -/
 private def boostTerm (r : ℕ) : Module.End ℂ (Carrier D) :=
@@ -117,7 +120,7 @@ private theorem boostTerm_skew
     Hm_real_current F.ePlus plusReal, Hm_real_current F.eMinus minusReal,
     Hm_real_current F.eMinus minusReal, Hm_real_current F.ePlus plusReal]
   simp only [show -(-(r : ℤ) - 1) = (r : ℤ) + 1 by ring,
-    show -((r : ℤ) + 1) = -(r : ℤ) - 1 by ring, star_inv₀,
+    show -((r : ℤ) + 1) = -(r : ℤ) - 1 by ring, starRingEnd_apply, star_inv₀,
     star_add, star_natCast, star_one]
   ring
 
@@ -132,10 +135,12 @@ private theorem degree_frequency_sum (m : Exponents t) (s : Finset ℕ)
     · intro x hx
       exact Finset.mem_product.mpr ⟨Finset.mem_univ _, hs x hx⟩
     · intro x _ hx
+      change (m x : ℤ) * variableWeight x = 0
       rw [Finsupp.notMem_support_iff.mp hx, Nat.cast_zero, zero_mul]
-  rw [he, Finset.sum_product]
+  rw [he, Finset.product_eq_sprod, Finset.sum_product Finset.univ s
+    (fun x : Variables t => (m x : ℤ) * variableWeight x)]
   simp [variableWeight, plus, minus, Fintype.sum_sum_type,
-    Finset.sum_sub_distrib]
+    Finset.sum_add_distrib, Finset.sum_neg_distrib, sub_eq_add_neg]
 
 private theorem boostSum_monomial (p : Charge D) (m : Exponents t) (s : Finset ℕ)
     (hs : ∀ x ∈ m.support, x.2 ∈ s) :
@@ -170,7 +175,7 @@ private theorem Hm_monomial_degree_selection
   dsimp only [x, y] at skew
   rw [boostSum_monomial F B p m s hm, boostSum_monomial F B q n s hn,
     Hm_smul_left, Hm_smul_right] at skew
-  simp only [star_intCast] at skew
+  simp only [starRingEnd_apply, star_intCast] at skew
   have eq : (((exponentDegree m + exponentDegree n : ℤ) : ℂ)) * Hm x y = 0 := by
     push_cast
     linear_combination skew
@@ -183,12 +188,13 @@ theorem c0_down : c 0 (ket ({1} : Finset ℕ)) = -ket ({1, 3} : Finset ℕ) := b
 
 /-- The ordinary Hg normalization is PLUS ONE. No rotated F is used. -/
 theorem Hg_down_c0_down : Hg (ket ({1} : Finset ℕ)) (c 0 (ket {1})) = 1 := by
-  rw [c0_down]
-  change Hg (ket ({1} : Finset ℕ)) ((-1 : ℂ) • ket {1, 3}) = 1
-  rw [Hg_smul_right, Hg_ket_left]
-  norm_num [row, rowList, rho, dCreate, daggerMode, tau, E,
-    mode, create_ket, phase, lowerCount, ket, Finset.filter_insert,
-    Finset.filter_singleton]
+  rw [c0_down, Hg_ket_left, map_neg]
+  norm_num [row, rowList, rho, dCreate, daggerMode, tau,
+    D5.S3.Quantum.Fermionic.BcGhostHermitian.E,
+    mode, create_ket, create, phase, lowerCount, ket, Finset.filter_insert,
+    Finset.filter_singleton, Finsupp.lsum_single, LinearMap.smulRight_apply,
+    LinearMap.id_apply, Finsupp.single_apply,
+    show ({5, 1, 3} : Finset ℕ) = {1, 3, 5} by decide]
 
 /-- Actual ground representatives use precisely the just-computed scalar. -/
 theorem inserted_groundMap (p q : Charge D)

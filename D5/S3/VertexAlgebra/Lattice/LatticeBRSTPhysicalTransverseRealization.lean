@@ -5,12 +5,12 @@ import D5.S3.VertexAlgebra.Lattice.LatticeBRSTInsertedTailOrthogonality
 import Batteries.Tactic.OpenPrivate
 
 /-!
-SOURCE ONLY: no parser, elaborator, compiler or kernel has checked this file.
+Initially prepared as a source-only candidate; native evidence is separate.
 
 Actual finite-HPL realization in the literal current physicalImage. The
 incoming boundaries remain the supplied global comap, hence range(Q) on ALL
 State D. The maps below use finiteInput and its existing K/J, with their
-proved two-sided inverse laws. No replacement Q, pairing, quotient, transfer
+proved two-sided inverse (laws). No replacement Q, pairing, quotient, transfer
 certificate, target assumption or old/new operator equality is introduced.
 
 The saved OriginalQRelativeFiniteHpl, OriginalQEnergyInclusionPairing and
@@ -92,9 +92,9 @@ local notation "bE" => sectorB0 H beta level
 local notation "nE" => sectorN F B H hHG hGH beta level
 local notation "c" => finiteInput F B H hHG hGH beta level hp critical
 local notation "cutoff" => (2 * level.toNat + 2)
-local notation "inc" => c.I cutoff
-local notation "proj" => c.P cutoff
-local notation "hom" => c.H cutoff
+local notation "inc" => (c).I cutoff
+local notation "proj" => (c).P cutoff
+local notation "hom" => (c).H cutoff
 local notation "laws" => actual_nonzero_charge_original_q_transfer
   F B H hHG hGH beta level hp critical
 
@@ -132,7 +132,7 @@ def groundN : Module.End ℂ U where
 
 private theorem sector_B0_delta
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) :
-    bE * c.delta + c.delta * bE = 0 := by
+    bE * (c).delta + (c).delta * bE = 0 := by
   change bE * (qE - dE) + (qE - dE) * bE = 0
   have hq : bE * qE + qE * bE = 0 := by
     rw [add_comm, sector_B0_original_ward, shell, zero_smul]
@@ -141,41 +141,41 @@ private theorem sector_B0_delta
     _ = 0 := by rw [hq, sector_B0_d0, sub_self]
 
 /-- B0 commutes with BOTH genuine finite inverse operators on the shell.
-The naturality calculation consumes the actual K/J two-sided inverse laws. -/
+The naturality calculation consumes the actual K/J two-sided inverse (laws). -/
 theorem finite_B0_inverses
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) :
-    bE * c.K cutoff = c.K cutoff * bE ∧
-      bE * c.J cutoff = c.J cutoff * bE := by
-  have hb : bE * c.h = -(c.h * bE) :=
+    bE * (c).K cutoff = (c).K cutoff * bE ∧
+      bE * (c).J cutoff = (c).J cutoff * bE := by
+  have hb : bE * (c).h = -((c).h * bE) :=
     eq_neg_iff_add_eq_zero.mpr (sector_B0_h F B H hHG hGH beta level)
-  have hd : bE * c.delta = -(c.delta * bE) :=
+  have hd : bE * (c).delta = -((c).delta * bE) :=
     eq_neg_iff_add_eq_zero.mpr
       (sector_B0_delta F B H hHG hGH beta level hp critical shell)
-  have hk : bE * (c.h * c.delta) = (c.h * c.delta) * bE := by
+  have hk : bE * ((c).h * (c).delta) = ((c).h * (c).delta) * bE := by
     calc
-      _ = (bE * c.h) * c.delta := by noncomm_ring
-      _ = -(c.h * bE) * c.delta := by rw [hb]
-      _ = -c.h * (bE * c.delta) := by noncomm_ring
+      _ = (bE * (c).h) * (c).delta := by noncomm_ring
+      _ = -((c).h * bE) * (c).delta := by rw [hb]
+      _ = -(c).h * (bE * (c).delta) := by noncomm_ring
       _ = _ := by rw [hd]; noncomm_ring
-  have hj : bE * (c.delta * c.h) = (c.delta * c.h) * bE := by
+  have hj : bE * ((c).delta * (c).h) = ((c).delta * (c).h) * bE := by
     calc
-      _ = (bE * c.delta) * c.h := by noncomm_ring
-      _ = -(c.delta * bE) * c.h := by rw [hd]
-      _ = -c.delta * (bE * c.h) := by noncomm_ring
+      _ = (bE * (c).delta) * (c).h := by noncomm_ring
+      _ = -((c).delta * bE) * (c).h := by rw [hd]
+      _ = -(c).delta * (bE * (c).h) := by noncomm_ring
       _ = _ := by rw [hb]; noncomm_ring
   constructor
-  · exact inverse_naturality bE (1 + c.h * c.delta) (c.K cutoff)
+  · exact inverse_naturality bE (1 + (c).h * (c).delta) ((c).K cutoff)
       (by simpa only [mul_add, add_mul, mul_one, one_mul] using
-        congrArg (fun x => bE + x) hk) laws.K_left laws.K_right
-  · exact inverse_naturality bE (1 + c.delta * c.h) (c.J cutoff)
+        congrArg (fun x => bE + x) hk) (laws).K_left (laws).K_right
+  · exact inverse_naturality bE (1 + (c).delta * (c).h) ((c).J cutoff)
       (by simpa only [mul_add, add_mul, mul_one, one_mul] using
-        congrArg (fun x => bE + x) hj) laws.J_left laws.J_right
+        congrArg (fun x => bE + x) hj) (laws).J_left (laws).J_right
 
 /-- Actual corrected inclusion AND projection are compatible with actual B0. -/
 theorem finite_B0_inclusion_projection
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) :
-    bE.comp inc = inc.comp (groundB0 F B H hHG hGH beta level) ∧
-      proj.comp bE = (groundB0 F B H hHG hGH beta level).comp proj := by
+    (bE).comp inc = (inc).comp (groundB0 F B H hHG hGH beta level) ∧
+      (proj).comp bE = (groundB0 F B H hHG hGH beta level).comp proj := by
   have hi := finite_B0_inverses F B H hHG hGH beta level hp critical shell
   constructor
   · apply LinearMap.ext
@@ -184,41 +184,41 @@ theorem finite_B0_inclusion_projection
   · apply LinearMap.ext
     intro x
     apply Subtype.ext
-    change pE (c.J cutoff (bE x)) = bE (pE (c.J cutoff x))
-    rw [← show bE (c.J cutoff x) = c.J cutoff (bE x) from
+    change pE ((c).J cutoff (bE x)) = bE (pE ((c).J cutoff x))
+    rw [← show bE ((c).J cutoff x) = (c).J cutoff (bE x) from
       LinearMap.congr_fun hi.2 x]
     exact (LinearMap.congr_fun (sector_B0_P0 F B H hHG hGH beta level)
-      (c.J cutoff x)).symm
+      ((c).J cutoff x)).symm
 
 /-- Native ghost number commutes with the actual finite K, independently of shell. -/
-theorem finite_N_K : nE * c.K cutoff = c.K cutoff * nE := by
-  exact inverse_naturality nE (1 + c.h * c.delta) (c.K cutoff)
+theorem finite_N_K : nE * (c).K cutoff = (c).K cutoff * nE := by
+  exact inverse_naturality nE (1 + (c).h * (c).delta) ((c).K cutoff)
     (by simpa only [mul_add, add_mul, mul_one, one_mul] using
       congrArg (fun x => nE + x)
-        (sector_N_hdelta F B H hHG hGH beta level)) laws.K_left laws.K_right
+        (sector_N_hdelta F B H hHG hGH beta level)) (laws).K_left (laws).K_right
 
 private theorem sector_N_deltah :
-    nE * (c.delta * c.h) = (c.delta * c.h) * nE := by
+    nE * ((c).delta * (c).h) = ((c).delta * (c).h) * nE := by
   have nd := sector_N_delta F B H hHG hGH beta level
-  have nh : nE * c.h - c.h * nE = -c.h := by
+  have nh : nE * (c).h - (c).h * nE = -(c).h := by
     apply LinearMap.ext
     intro x
     apply Subtype.ext
     exact LinearMap.congr_fun (N_h F B beta) x.val
-  change nE * c.delta - c.delta * nE = c.delta at nd
-  linear_combination (norm := noncomm_ring) nd * c.h + c.delta * nh
+  change nE * (c).delta - (c).delta * nE = (c).delta at nd
+  linear_combination (norm := noncomm_ring) nd * (c).h + (c).delta * nh
 
 /-- Native ghost number commutes with the actual finite J too. -/
-theorem finite_N_J : nE * c.J cutoff = c.J cutoff * nE := by
-  exact inverse_naturality nE (1 + c.delta * c.h) (c.J cutoff)
+theorem finite_N_J : nE * (c).J cutoff = (c).J cutoff * nE := by
+  exact inverse_naturality nE (1 + (c).delta * (c).h) ((c).J cutoff)
     (by simpa only [mul_add, add_mul, mul_one, one_mul] using
       congrArg (fun x => nE + x)
         (sector_N_deltah F B H hHG hGH beta level hp critical))
-    laws.J_left laws.J_right
+    (laws).J_left (laws).J_right
 
 theorem finite_N_inclusion_projection :
-    nE.comp inc = inc.comp (groundN F B H hHG hGH beta level) ∧
-      proj.comp nE = (groundN F B H hHG hGH beta level).comp proj := by
+    (nE).comp inc = (inc).comp (groundN F B H hHG hGH beta level) ∧
+      (proj).comp nE = (groundN F B H hHG hGH beta level).comp proj := by
   constructor
   · apply LinearMap.ext
     intro u
@@ -227,11 +227,11 @@ theorem finite_N_inclusion_projection :
   · apply LinearMap.ext
     intro x
     apply Subtype.ext
-    change pE (c.J cutoff (nE x)) = nE (pE (c.J cutoff x))
-    rw [← show nE (c.J cutoff x) = c.J cutoff (nE x) from
+    change pE ((c).J cutoff (nE x)) = nE (pE ((c).J cutoff x))
+    rw [← show nE ((c).J cutoff x) = (c).J cutoff (nE x) from
       LinearMap.congr_fun (finite_N_J F B H hHG hGH beta level hp critical) x]
     exact (LinearMap.congr_fun (sector_N_P0 F B H hHG hGH beta level)
-      (c.J cutoff x)).symm
+      ((c).J cutoff x)).symm
 
 /-- Actual zero-count range in this sector maps into current absoluteGround. -/
 def groundToAbsolute : U →ₗ[ℂ]
@@ -268,7 +268,10 @@ theorem relative_ground_coordinate_recovery (u : U) (hu : ghostB0 u.val.val = 0)
   have hz := (LatticeRelativeBRSTCohomology.Ground.groundMap_injective F B beta)
     (hg.trans (map_zero (groundMap F B beta)).symm)
   refine ⟨hz, ?_⟩
-  simpa only [LatticeBRSTAbsoluteQuartetGround.G, hz, map_zero, add_zero] using eq
+  change groundMap F B beta (groundCoordinates F B H hHG hGH beta level u).1 +
+    ghostC D 0 (groundMap F B beta
+      (groundCoordinates F B H hHG hGH beta level u).2) = u.val.val at eq
+  simpa only [hz, map_zero, add_zero] using eq
 
 variable (shell : groundEnergy beta + (level : ℂ) - 1 = 0)
 
@@ -278,7 +281,9 @@ def transverseInput : energyTarget D t beta →ₗ[ℂ] U where
     have hm := (groundMap_mem_shell_iff F B H hHG hGH beta f.val).mpr f.property
     let v : E := ⟨groundMap F B beta f.val,
       LinearMap.congr_fun (groundMap_identities F B beta).2.2 f.val,
-      by simpa only [shell, zero_smul] using hm.2⟩
+      by
+        rw [shell, zero_smul]
+        exact hm.2⟩
     have fix : pE v = v := by
       apply Subtype.ext
       exact LatticeRelativeBRSTCohomology.Ground.target_projection_fix F B beta
@@ -298,9 +303,9 @@ private theorem transverseInput_coordinates (f : energyTarget D t beta) :
       (transverseInput F B H hHG hGH beta level shell f) =
       LatticeBRSTAbsoluteGroundCohomology.groundState F B beta (f.val, 0) := by
     apply Subtype.ext
-    simp only [groundToAbsolute, transverseInput_state,
-      LatticeBRSTAbsoluteGroundCohomology.groundState,
-      LatticeBRSTAbsoluteQuartetGround.G, map_zero, add_zero]
+    change groundMap F B beta f.val =
+      groundMap F B beta f.val + ghostC D 0 (groundMap F B beta 0)
+    simp only [map_zero, add_zero]
   change LatticeBRSTAbsoluteGroundCohomology.coordinates F B beta _ = _
   rw [eq, LatticeBRSTAbsoluteGroundCohomology.coordinates_groundState]
 
@@ -313,7 +318,7 @@ theorem corrected_transverse_physical (f : energyTarget D t beta) :
   let u := transverseInput F B H hHG hGH beta level shell f
   have hz := on_shell_transferred_zero F B H hHG hGH beta level hp critical shell
   have hq : qE (inc u) = 0 := by
-    have eq := LinearMap.congr_fun laws.inclusion_chain u
+    have eq := LinearMap.congr_fun (laws).inclusion_chain u
     rw [input_D] at eq
     simpa only [LinearMap.comp_apply, hz, LinearMap.zero_apply, map_zero] using eq
   have hb : bE u.val = 0 := by
@@ -331,7 +336,7 @@ theorem corrected_transverse_physical (f : energyTarget D t beta) :
   have hiN := LinearMap.congr_fun
     (finite_N_K F B H hHG hGH beta level hp critical) u.val
   have hn' : nE (inc u) = inc u := by
-    change nE (c.K cutoff u.val) = c.K cutoff (nE u.val) at hiN
+    change nE ((c).K cutoff u.val) = (c).K cutoff (nE u.val) at hiN
     simpa only [hn] using hiN
   exact ⟨congrArg Subtype.val hq, congrArg Subtype.val hb', congrArg Subtype.val hn'⟩
 
@@ -357,7 +362,7 @@ private theorem projected_polynomial_mem (a : physicalCycles H beta level) :
     (proj a.val) (projected_relative F B H hHG hGH beta level hp critical shell a)).2
   apply (groundMap_mem_shell_iff F B H hHG hGH beta _).mp
   rw [recover]
-  refine ⟨⟨fixedSector_mem_fixedMomentum F B H hHG hGH beta level (proj a.val).val,
+  refine ⟨⟨fixedSector_mem_fixedMomentum H beta level (proj a.val).val,
     projected_relative F B H hHG hGH beta level hp critical shell a⟩, ?_⟩
   simpa only [shell, zero_smul] using (proj a.val).val.property.2
 
@@ -366,7 +371,7 @@ coordinate inverse. The polynomial energy condition is proved, not assumed. -/
 def physicalProjection : physicalCycles H beta level →ₗ[ℂ] energyTarget D t beta :=
   (((LinearMap.fst ℂ (MvPolynomial (Fin t × ℕ) ℂ) (MvPolynomial (Fin t × ℕ) ℂ)).comp
     (groundCoordinates F B H hHG hGH beta level)).comp
-      (proj.comp (physicalCycles H beta level).subtype)).codRestrict _
+      ((proj).comp (physicalCycles H beta level).subtype)).codRestrict _
         (projected_polynomial_mem F B H hHG hGH beta level hp critical shell)
 
 /-- Exact recovery of the projected CURRENT state from transverse coordinates. -/
@@ -381,7 +386,7 @@ theorem physicalProjection_lift (f : energyTarget D t beta) :
     physicalProjection F B H hHG hGH beta level hp critical shell
       (physicalLift F B H hHG hGH beta level hp critical shell f) = f := by
   apply Subtype.ext
-  have ret := LinearMap.congr_fun laws.retract
+  have ret := LinearMap.congr_fun (laws).retract
     (transverseInput F B H hHG hGH beta level shell f)
   change (groundCoordinates F B H hHG hGH beta level (proj (inc _))).1 = f.val
   rw [show proj (inc (transverseInput F B H hHG hGH beta level shell f)) =
@@ -394,7 +399,7 @@ theorem physicalProjection_boundary (a : physicalCycles H beta level)
     physicalProjection F B H hHG hGH beta level hp critical shell a = 0 := by
   obtain ⟨y, hy⟩ := (ambient_boundary_sector_preimage F B H hHG hGH beta level a.val).mp
     ((mem_physicalBoundaries H beta level critical hHG hGH a).mp ha)
-  have eq := LinearMap.congr_fun laws.projection_chain y
+  have eq := LinearMap.congr_fun (laws).projection_chain y
   rw [input_D] at eq
   have hz : proj a.val = 0 := by
     simpa only [LinearMap.comp_apply, hy,
@@ -450,7 +455,7 @@ theorem actual_class_recovery (a : physicalCycles H beta level) :
         (physicalLift F B H hHG hGH beta level hp critical shell
           (physicalProjection F B H hHG hGH beta level hp critical shell a)).val.val := by
   have hq : qE a.val = 0 := Subtype.ext a.property.1
-  have eq := LinearMap.congr_fun laws.homotopy a.val
+  have eq := LinearMap.congr_fun (laws).homotopy a.val
   rw [input_D] at eq
   have hu : transverseInput F B H hHG hGH beta level shell
       (physicalProjection F B H hHG hGH beta level hp critical shell a) = proj a.val := by
@@ -500,7 +505,7 @@ def physicalTransverseEquiv : energyTarget D t beta ≃ₗ[ℂ]
 The sum is sectorwise finite for every INTEGER level, including negative. -/
 def inclusionTail (f : energyTarget D t beta) : E :=
   ∑ r ∈ (Finset.range cutoff).erase 0,
-    ((-(c.h * c.delta)) ^ r)
+    ((-((c).h * (c).delta)) ^ r)
       (transverseInput F B H hHG hGH beta level shell f).val
 
 private theorem inclusion_expansion (f : energyTarget D t beta) :
@@ -508,13 +513,13 @@ private theorem inclusion_expansion (f : energyTarget D t beta) :
       (transverseInput F B H hHG hGH beta level shell f).val +
         inclusionTail F B H hHG hGH beta level hp critical shell f := by
   classical
-  change c.K cutoff (transverseInput F B H hHG hGH beta level shell f).val = _
+  change (c).K cutoff (transverseInput F B H hHG hGH beta level shell f).val = _
   simp only [FinitePerturbation.Input.K, FinitePerturbation.inversePolynomial,
     LinearMap.sum_apply]
   have h0 : 0 ∈ Finset.range cutoff := Finset.mem_range.mpr (by omega)
   simpa only [pow_zero, Module.End.one_apply, inclusionTail] using
     (Finset.add_sum_erase (Finset.range cutoff)
-    (fun r => ((-(c.h * c.delta)) ^ r)
+    (fun r => ((-((c).h * (c).delta)) ^ r)
       (transverseInput F B H hHG hGH beta level shell f).val) h0).symm
 
 private theorem input_lower_zero (f : energyTarget D t beta) :
@@ -554,19 +559,19 @@ theorem actual_inclusion_positive_tail (f : energyTarget D t beta) :
         simpa only [LatticeBRSTFiniteTransfer.normalizedPerturbation,
           pow_succ', Module.End.mul_apply, Nat.cast_add, Nat.cast_one] using step
   have signedPower (r : ℕ) :
-      (((( -(c.h * c.delta)) ^ r) u.val) : State D) ∈
+      (((( -((c).h * (c).delta)) ^ r) u.val) : State D) ∈
         signedFiltration F B beta level (r : ℤ) := by
-    have hsign : (-(c.h * c.delta)) ^ r =
-        ((-1 : ℂ) ^ r) • (c.h * c.delta) ^ r := by
-      simpa only [neg_one_smul] using (smul_pow (-1 : ℂ) (c.h * c.delta) r)
+    have hsign : (-((c).h * (c).delta)) ^ r =
+        ((-1 : ℂ) ^ r) • ((c).h * (c).delta) ^ r := by
+      simpa only [neg_one_smul] using (smul_pow (-1 : ℂ) ((c).h * (c).delta) r)
     rw [hsign]
-    change ((-1 : ℂ) ^ r) • (((c.h * c.delta) ^ r) u.val : State D) ∈ _
+    change ((-1 : ℂ) ^ r) • ((((c).h * (c).delta) ^ r) u.val : State D) ∈ _
     rw [sector_correction_power_coe F B H hHG hGH beta level]
     exact Submodule.smul_mem _ _ (powers r)
   have lower : (inclusionTail F B H hHG hGH beta level hp critical shell f).val ∈
       signedFiltration F B beta level 1 := by
     change (↑(∑ r ∈ (Finset.range cutoff).erase 0,
-      ((-(c.h * c.delta)) ^ r) u.val) : State D) ∈ _
+      ((-((c).h * (c).delta)) ^ r) u.val) : State D) ∈ _
     rw [Submodule.coe_sum]
     apply Submodule.sum_mem
     intro r hr
