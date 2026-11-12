@@ -1,1 +1,0 @@
-WIP: final handoff after fresh-base scoped validation; Proposition 76.4 Jordan closures remain open
