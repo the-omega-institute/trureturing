@@ -96,4 +96,43 @@ theorem short_repeated_pair {X : Type*} [TopologicalSpace X] [T2Space X]
   · simpa using (AddCircle.equivIco 1 0 y).property
   · exact hxy
 
+/-- With the terminal time fixed first, a repeated terminal image admits a
+loop interval whose entire images stay small throughout the finite prefix.
+The parameterization need only be continuous; in particular this applies to arcs. -/
+theorem short_repeated_pair_finite_prefix {X : Type*} [MetricSpace X]
+    (no_circle : ∀ g : AddCircle (1 : ℝ) → X, Continuous g → ¬ Injective g)
+    {f : X → X} (hf : Continuous f) {φ : ℝ → X}
+    (hφ : ContinuousOn φ (Icc 0 1)) (q : ℕ)
+    (hn : ¬ InjOn (fun t => f^[q] (φ t)) (Icc 0 1)) {η : ℝ} (hη : 0 < η) :
+    ∃ a ∈ Icc (0 : ℝ) 1, ∃ b ∈ Icc (0 : ℝ) 1,
+      a < b ∧ f^[q] (φ a) = f^[q] (φ b) ∧
+      ∀ j ≤ q, ∀ s ∈ Icc a b, ∀ t ∈ Icc a b,
+        dist (f^[j] (φ s)) (f^[j] (φ t)) < η := by
+  have scale : ∀ p : ℕ, ∃ δ > 0, ∀ j < p, ∀ s ∈ Icc (0 : ℝ) 1,
+      ∀ t ∈ Icc (0 : ℝ) 1, dist s t < δ →
+        dist (f^[j] (φ s)) (f^[j] (φ t)) < η := by
+    intro p
+    induction p with
+    | zero => exact ⟨1, zero_lt_one, by simp⟩
+    | succ p ih =>
+      obtain ⟨δ, hδ, hd⟩ := ih
+      have hc : ContinuousOn (fun t => f^[p] (φ t)) (Icc 0 1) :=
+        (hf.iterate p).comp_continuousOn hφ
+      obtain ⟨γ, hγ, hg⟩ := Metric.uniformContinuousOn_iff.mp
+        (isCompact_Icc.uniformContinuousOn_of_continuous hc) η hη
+      refine ⟨min δ γ, lt_min hδ hγ, ?_⟩
+      intro j hj s hs t ht hst
+      rcases Nat.lt_succ_iff_lt_or_eq.mp hj with hj | rfl
+      · exact hd j hj s hs t ht (hst.trans_le (min_le_left _ _))
+      · exact hg s hs t ht (hst.trans_le (min_le_right _ _))
+  obtain ⟨δ, hδ, hd⟩ := scale (q + 1)
+  obtain ⟨a, ha, b, hb, hab, hgap, he⟩ := short_repeated_pair no_circle
+    ((hf.iterate q).comp_continuousOn hφ) hn hδ
+  refine ⟨a, ha, b, hb, hab, he, ?_⟩
+  intro j hj s hs t ht
+  apply hd j (by omega) s ⟨ha.1.trans hs.1, hs.2.trans hb.2⟩
+    t ⟨ha.1.trans ht.1, ht.2.trans hb.2⟩
+  rw [Real.dist_eq]
+  exact abs_lt.mpr ⟨by linarith [hs.1, ht.2], by linarith [ht.1, hs.2]⟩
+
 end D5.S1.Dynamics.Shadowing.DendriteObstruction
