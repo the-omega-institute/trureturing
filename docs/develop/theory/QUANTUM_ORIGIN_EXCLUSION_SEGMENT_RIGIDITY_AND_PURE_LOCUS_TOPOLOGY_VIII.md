@@ -2008,7 +2008,7 @@ $$
 
 $$
 \begin{gathered}
-V_F=\bigoplus_{i=1}^3\mathbb Rp_i\ \oplus\!!igoplus_{i<j}V_{ij},
+V_F=\bigoplus_{i=1}^3\mathbb Rp_i\ \oplus\!\bigoplus_{i<j}V_{ij},
 \qquad V=V_F\oplus Z_F,\\
 V_F=\operatorname{span}(D_{p_1}\cup D_{p_2}\cup D_{p_3}).
 \end{gathered}
