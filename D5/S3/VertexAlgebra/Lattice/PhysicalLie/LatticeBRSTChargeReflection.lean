@@ -129,7 +129,11 @@ example (p : Charge D) (e : Index D →₀ ℕ) (S : Finset ℕ)
   simp only [matterC, LinearMap.coe_mk, AddHom.coe_mk, kappaCarrier_single]
   have hk : kappaOsc (MvPolynomial.monomial e 1 : Oscillator D) =
       MvPolynomial.monomial e 1 := by simp [kappaOsc]
-  rw [hk, theta_single, sigma_monomial]
+  rw [hk]
+  change star a •
+    (thetaLinear D (Finsupp.single p (MvPolynomial.monomial e (1 : ℂ))) ⊗ₜ[ℂ]
+      ket S) = _
+  rw [theta_single, sigma_monomial]
   simp only [← Finsupp.smul_single, TensorProduct.smul_tmul', smul_smul]
 
 private theorem ghostC_create (j : ℕ) (g : Fock) :
