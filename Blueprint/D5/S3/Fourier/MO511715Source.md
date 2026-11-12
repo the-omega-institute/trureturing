@@ -160,6 +160,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/MO511715Source.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mathex-2026-mo511715-cutoff-bound` (refuted) by `D5/S3/Fourier/MO511715Source.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mathex-2026-mo511715-cutoff-bound","declaration_gid":"D5/S3/Fourier/MO511715Source.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* mathex (MathOverflow user 138491) (2026). *Bound of series*. URL: <https://mathoverflow.net/questions/511715/bound-of-series>.
