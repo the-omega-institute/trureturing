@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A faithful native PSD cone representation has an original-unit state with the entire common support. -/
+   digest: Original-unit states carrying the native common support of a faithful PSD cone. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Convex.Cone.Basic
