@@ -126,7 +126,7 @@ Use the SAME Lambda_q for the signed affine function H(y)=inner(n,y)/2 and defin
 
 To prove vanishing on D_p, use the rational circle coefficients c=(1-t^2)/(1+t^2), s=2t/(1+t^2). The all-space identity and original positive effects give a_r(x)t^2+2B(x)t>=0 for every real t and every x in D_p. The standard mathlib quadratic discriminant theorem forces B(x)=0. Together with B(p)=0 this gives vanishing on M_p, without introducing a global smoothness assumption or any projection interface.
 
-Boundaries: full positive/signed spectral generation in VII105.3, all original positive image/kernel equalities and projection construction in VII105.5, exact VIII108.6 tangent disjointness and the VIII109 reconstruction goals remain downstream. No G, globalPair, numerical reciprocity, spectrality, PSD representation, physical implementation, or open-source claim is supplied. The construction is repository-derived; no literature novelty is claimed. The mirrored full-telescope Reg attempt has unfinished whole-family intervention/sensitivity, dependence, enrollment and sourceSelection evidence tracked in issue #29689. No declared_validated status, freeze, coverage or admission is asserted.
+Boundaries: full positive/signed spectral generation in VII105.3, all original positive image/kernel equalities and projection construction in VII105.5, exact VIII108.6 tangent disjointness and the VIII109 reconstruction goals remain downstream. No G, globalPair, numerical reciprocity, spectrality, PSD representation, physical implementation, or open-source claim is supplied. The construction is repository-derived; no literature novelty is claimed.
 
 ## References
 
