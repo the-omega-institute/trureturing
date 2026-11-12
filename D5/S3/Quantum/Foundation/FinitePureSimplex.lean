@@ -6,8 +6,10 @@
    utility: none
    digest: Least coordinate effects on the entire finite-pure original cone. -/
 
-import D5.S3.Quantum.Foundation.FinitePureEffectDescent
+import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
 import Mathlib.Analysis.Convex.Combination
+import Mathlib.Geometry.Convex.Cone.Face.Basic
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 /-! Weighted relations and comparison on the original finite pure carrier. -/
 
@@ -16,7 +18,7 @@ open scoped BigOperators
 
 namespace D5.S3.Quantum.Foundation.FinitePureSimplex
 
-open CircuitBalancedConfirmation FinitePureEffectDescent
+open CircuitBalancedConfirmation WeightedRelationConfirmation
 
 variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
   [FiniteDimensional ℝ A]
@@ -79,37 +81,6 @@ theorem zero_kernel_least_confirmation (C : PointedCone ℝ A) (u : A →ₗ[ℝ
     (hproper p y hy.1).1
   exact ⟨e p,hconf p,by simp [map_smul,map_add,hex,hey]⟩
 
-
-omit [FiniteDimensional ℝ A] in
-private theorem no_single_positive {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
-    [Fintype (pure C u)] (w : pure C u → ℝ)
-    (hw : coordinates C u w = 0) (q : pure C u) (hq : 0 < w q)
-    (hother : ∀ i, i ≠ q → w i ≤ 0) : False := by
-  classical
-  let s := Finset.univ.erase q
-  have hmass : (∑ i ∈ s, -w i) = w q := by
-    have hz := relation_sum_zero w hw
-    have hh := Finset.sum_erase_add (s := Finset.univ) w (Finset.mem_univ q)
-    simp only [Finset.sum_neg_distrib]
-    dsimp [s]
-    linarith
-  have hvec : (∑ i ∈ s, (-w i) • (i : A)) = w q • (q : A) := by
-    have hh := Finset.sum_erase_add (s := Finset.univ)
-      (fun i : pure C u => w i • (i : A)) (Finset.mem_univ q)
-    change (∑ i, w i • (i : A)) = 0 at hw
-    rw [hw] at hh
-    dsimp [s]
-    simp only [neg_smul,Finset.sum_neg_distrib]
-    exact neg_eq_iff_add_eq_zero.mpr hh
-  have hmem : (q : A) ∈ convexHull ℝ (base C u \ {(q : A)}) := by
-    have h := s.centerMass_mem_convexHull (s := base C u \ {(q : A)})
-      (z := fun i : pure C u => (i : A))
-      (fun i hi => neg_nonneg.mpr (hother i (Finset.ne_of_mem_erase hi)))
-      (by simpa [hmass] using hq)
-      (fun i hi => ⟨pure_mem i,by
-        simpa only [Set.mem_singleton_iff,ne_eq,Subtype.coe_inj] using Finset.ne_of_mem_erase hi⟩)
-    simpa only [Finset.centerMass,hmass,hvec,inv_smul_smul₀ hq.ne'] using h
-  exact ((base_convex C u).mem_extremePoints_iff_mem_sdiff_convexHull_sdiff.mp q.property).2 hmem
 
 private theorem one_relation_obstruction {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     [Fintype (pure C u)] (hclosed : IsClosed (C : Set A))
@@ -220,6 +191,20 @@ private theorem one_relation_obstruction {C : PointedCone ℝ A} {u : A →ₗ[�
   exact (not_le_of_gt (div_pos hp hmass)) hh
 
 
+omit [FiniteDimensional ℝ A] in
+private theorem simplex_kernel_zero {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+    [Fintype (pure C u)] (hS : simplex C u) :
+    LinearMap.ker (coordinates C u) = ⊥ := by
+  apply LinearMap.ker_eq_bot'.mpr
+  intro w hw
+  have hsum := relation_sum_zero w hw
+  have hweighted : Finset.univ.weightedVSub (fun p : pure C u => (p : A)) w = 0 := by
+    rw [Finset.weightedVSub_eq_weightedVSubOfPoint_of_sum_eq_zero _ _ _
+      (by simpa using hsum) (0 : A),Finset.weightedVSubOfPoint_apply]
+    simpa [coordinates,Fintype.linearCombination_apply] using hw
+  ext p
+  exact (affineIndependent_iff_of_fintype ℝ _).mp hS.1 w hsum hweighted p
+
 /-- The original whole-base theorem: for a finite full pure set and relation
 nullity at most one, mixed-state zero gluing is equivalent to being a simplex. -/
 theorem zero_gluing_iff_simplex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
@@ -281,18 +266,67 @@ theorem zero_gluing_iff_simplex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     apply (linearIndependent_iff_injective_fintypeLinearCombination).mpr
     exact LinearMap.ker_eq_bot.mp (hzero hZ)
   · intro hS
-    have hker : LinearMap.ker (coordinates C u) = ⊥ := by
-      apply LinearMap.ker_eq_bot'.mpr
-      intro w hw
-      have hsum := relation_sum_zero w hw
-      have hweighted : Finset.univ.weightedVSub (fun p : pure C u => (p : A)) w = 0 := by
-        rw [Finset.weightedVSub_eq_weightedVSubOfPoint_of_sum_eq_zero _ _ _
-          (by simpa using hsum) (0 : A),Finset.weightedVSubOfPoint_apply]
-        simpa [coordinates,Fintype.linearCombination_apply] using hw
-      ext p
-      exact (affineIndependent_iff_of_fintype ℝ _).mp hS.1 w hsum hweighted p
+    have hker := simplex_kernel_zero hS
     obtain ⟨e,he,hvalues,hleast,hcomp,hZ⟩ :=
       zero_kernel_least_confirmation C u hclosed hstrict hspan hker
     exact hZ
+
+/-- The whole normalized smallest cone face containing the two original rays:
+intersection over every native cone face containing both points. -/
+def wholePairBase (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (p q : A) : Set A :=
+  {x | x ∈ base C u ∧ ∀ F : PointedCone ℝ A,
+    F.IsFaceOf C → p ∈ F → q ∈ F → x ∈ F}
+
+/-- Global separation of pure antipodes about any center of symmetry of each
+entire two-point face. On an entire ball this uses its intrinsic ball center. -/
+def antipodalSeparation (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Prop :=
+  ∀ (p q : pure C u), p ≠ q → ∀ (a r : pure C u),
+    (a : A) ∈ wholePairBase C u p q → ∀ c : A,
+    (∀ x ∈ wholePairBase C u p q, (2 : ℝ) • c - x ∈ wholePairBase C u p q) →
+    (r : A) = (2 : ℝ) • c - (a : A) →
+    ∃ f, confirms C u a f ∧ f r = 0
+
+/-- A finite full-pure carrier with original midpoint gluing and a failed local
+antipodal separation has at least two independent full preparation relations. -/
+theorem antipodal_failure_nullity_bound (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    [Fintype (pure C u)] (hclosed : IsClosed (C : Set A))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hspan : Submodule.span ℝ (C : Set A) = ⊤)
+    (hZ : zeroGluing C u) (hfailure : ¬ antipodalSeparation C u) :
+    2 ≤ Module.finrank ℝ (LinearMap.ker (coordinates C u)) ∧
+      2 ≤ Fintype.card (pure C u) - Module.finrank ℝ A := by
+  classical
+  have hbound : 2 ≤ Module.finrank ℝ (LinearMap.ker (coordinates C u)) := by
+    by_contra hn
+    have hle : Module.finrank ℝ (LinearMap.ker (coordinates C u)) ≤ 1 := by omega
+    have hS := (zero_gluing_iff_simplex C u hclosed hstrict hspan hle).mp hZ
+    obtain ⟨e,he,hvalues,_,_,_⟩ :=
+      zero_kernel_least_confirmation C u hclosed hstrict hspan (simplex_kernel_zero hS)
+    apply hfailure
+    intro p q hpq a r ha c hc hr
+    have hpH : (p : A) ∈ wholePairBase C u p q :=
+      ⟨pure_mem p,fun F _ hp _ => hp⟩
+    have hqH : (q : A) ∈ wholePairBase C u p q :=
+      ⟨pure_mem q,fun F _ _ hq => hq⟩
+    have hra : r ≠ a := by
+      intro hra
+      have hfix : (2 : ℝ) • c - (a : A) = (a : A) := by simpa [hra] using hr.symm
+      have hca : c = (a : A) := by
+        apply smul_right_injective A (by norm_num : (2 : ℝ) ≠ 0)
+        calc
+          (2 : ℝ) • c = (a : A) + (a : A) := sub_eq_iff_eq_add.mp hfix
+          _ = (2 : ℝ) • (a : A) := by module
+      have hmid (v : pure C u) (hv : (v : A) ∈ wholePairBase C u p q) :
+          (v : A) = (a : A) := by
+        apply a.property.2 (pure_mem v) (hc v hv).1
+        refine ⟨(1/2:ℝ),(1/2:ℝ),by norm_num,by norm_num,by norm_num,?_⟩
+        rw [hca]
+        module
+      exact hpq (Subtype.ext ((hmid p hpH).trans (hmid q hqH).symm))
+    exact ⟨e a,he a,by simp [hvalues,hra]⟩
+  have hrank := (coordinates C u).finrank_range_add_finrank_ker
+  rw [LinearMap.range_eq_top.mpr (coordinates_surjective C u hclosed hstrict hspan),
+    finrank_top,Module.finrank_fintype_fun_eq_card] at hrank
+  exact ⟨hbound,by omega⟩
 
 end D5.S3.Quantum.Foundation.FinitePureSimplex
