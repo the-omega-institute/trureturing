@@ -52,7 +52,9 @@ $$\exists a: \mathbb{N} \to \mathbb{Z}, (\operatorname{IsLeftLimit}\left(a\right
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/A289923LeftLimitNonnegative.result` (`✓ std3`). ∎
 
-*Citation.* Clark Kimberling; Colin Barker (2017). *OEIS A289923: limiting inverse coefficients at 19/21 from the left*. URL: <https://oeis.org/A289923>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Clark Kimberling; Colin Barker (2017). *OEIS A289923: limiting inverse coefficients at 19/21 from the left*. URL: <https://oeis.org/A289923>.
 
 *Commentary.*
 
