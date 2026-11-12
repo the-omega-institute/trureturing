@@ -1201,3 +1201,1196 @@ Alfsen—Shultz，[*State spaces of Jordan algebras*，Acta Mathematica 140，15
 白话说，这个完整候选仍在同一批原准备、测试、过程和未来上，只把几何入口写成两条：任意两个纯点所在的最小面是整球；固定一个纯点后，各自能被排除的任意混态，其混合仍能被排除。第二条把所有零读数拼成同一张原零面。四维中，两张圆盘的方向刚好用满空间，零面覆盖便会要求有限多个点盖住整条圆周，因而两盘不能共存；只剩一盘时，商平面的两条邻边挑出两个外顶点，原边的面性又排除其他顶点，整个形状只能是圆盘与线段的全联结。连同无盘、整球和球棱锥，恰是99.8的四类。反事实也可精确量出：若删掉混态零拼合，三角矩曲线让每一纯对仍有整条原边，两种目标也各自能读零，但它们等量混合后的最低读数却是 $1/10$。这些几何结论恢复的是原全域效应与最小确认；复数、实际复合、操作和时间仍由完整候选中各自的原合同承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 100. 原有限全效应的边四边形、指定投影与facet延拓障碍
+
+### 100.1 整个原载体、两种比较与实际边
+
+**定义 100.1（有限全混态零拼合域）。** 本章的VII97.x—100.x指本卷，VI89.x、VI90.x指[第六卷](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md)，V88.x指[第五卷](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)。取非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的原线性单位 $u$，并使用
+
+$$
+\begin{gathered}
+C^*=\{f\in V^*:f(C)\subseteq\mathbb R_+\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad |P|<\infty,\\
+[0,u]=\{f\in V^*:f\in C^*,\ u-f\in C^*\},\qquad
+F_p=\{f\in[0,u]:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+p\perp x\ \Longleftrightarrow\ T_p(x)=0,\qquad
+D_p=\{x\in K:p\perp x\},\\
+\mathrm{Z0}:\quad
+\forall p\in P\ \forall x,y\in K,\quad
+p\perp x\ \land\ p\perp y\ \Longrightarrow\ p\perp(x+y)/2,\qquad
+m=\dim\operatorname{aff}K=\dim V-1.
+\end{gathered}
+\tag{VII100.1}
+$$
+
+$P$ 是整个原基的全部纯点，$x,y$ 遍历全部原混态，$[0,u]$ 是整个原区间。紧基张成 $V$，故 $[0,u]$ 及非空 $F_p$ 紧，上式最小值达到；零排除等价于存在同一张 $f\in[0,u]$ 在 $p$ 取一、在 $x$ 取零。本章假设这个完整 $\mathrm{Z0}$，不假设 $\mathrm B$、least确认、自对偶、正定配对、正交模律、Jordan乘积、ROG表示或正滤子，也不加入标签归一化或实际装置前提。
+
+$m\ge1$ 时直接复用VII97.2—97.5：$p\mapsto D_p$ 是顶点到facet的双射，$h_p\in[0,u]$ 是零面为 $D_p$ 且 $h_p(p)=1$ 的唯一规范facet效应，且 $h_p$ 只在 $p$ 达到一。记
+
+$$
+T_{pq}:=h_p(q),\qquad
+0\le T_{pq}<1\ (p\ne q),\qquad
+T_{pq}=0\ \Longleftrightarrow\ T_{qp}=0.
+\tag{VII100.2}
+$$
+
+这里 $T_{pq}$ 是已指定的规范facet读数，$T_p(q)$ 则仍是遍历全部原确认效应的下包络；不将二者认同。对面 $F$ 沿用 $F^\#=\bigcap_{r\in\operatorname{ext}F}D_r$、$\varnothing^\#=K$，以及VII97.3的反序对合和 $\dim F+\dim F^\#=m-1$。$\operatorname{span}\varnothing=\{0\}$。本章的实际边是 $K$ 的一维面 $E=[p,q]$，$p,q\in P$ 不同；$m=1$ 时允许 $E=K$。取定这样一条边后置
+
+$$
+a=T_{qp}=h_q(p),\qquad b=T_{pq}=h_p(q),\qquad
+d=1-ab>0,\qquad E^\#=D_p\cap D_q.
+\tag{VII100.3}
+$$
+
+### 100.2 两张facet效应给整个边效应面和严格外部余量
+
+**定理 100.2（实际边的原效应四边形）。** 在定义VII100.1的前件下，对每条实际边 $E=[p,q]$，令
+
+$$
+\begin{gathered}
+Q_E=\{f\in C^*:f|_{E^\#}=0\},\qquad
+\mathcal I_E=\{f\in[0,u]:f|_{E^\#}=0\},\\
+e_E=\frac{(1-a)h_p+(1-b)h_q}{d}.
+\end{gathered}
+\tag{VII100.4}
+$$
+
+则 $Q_E=\mathbb R_+h_p+\mathbb R_+h_q$，且 $\mathcal I_E$ 是整个原 $[0,u]$ 的二维面，准确为
+
+$$
+\begin{aligned}
+\mathcal I_E
+&=\{\alpha h_p+\beta h_q:\alpha,\beta\ge0,
+\ \alpha+a\beta\le1,\ b\alpha+\beta\le1\}\\
+&=\operatorname{conv}\{0,h_p,e_E,h_q\}.
+\end{aligned}
+\tag{VII100.5}
+$$
+
+$e_E$ 是唯一在 $E^\#$ 恒零、在 $p,q$ 都取一的原效应；其整个零面和一面分别为 $E^\#$ 和 $E$。特别是，对每个原顶点 $r\in P\setminus\{p,q\}$，有严格余量
+
+$$
+\Delta_{pqr}:=d-(1-a)T_{pr}-(1-b)T_{qr}
+=d\bigl(1-e_E(r)\bigr)>0.
+\tag{VII100.6}
+$$
+
+若 $m\ge2$，还存在对每个 $s\in\operatorname{ext}E^\#$ 都严格正的系数 $\lambda_s$，使
+
+$$
+u=e_E+\sum_{s\in\operatorname{ext}E^\#}\lambda_sh_s.
+\tag{VII100.7}
+$$
+
+若 $m=1$，则 $E=K$、$E^\#=\varnothing$、$a=b=0$、$e_E=u$，式(VII100.7)的和为空和零，不要求存在任何系数。$m=0$ 没有实际边，因而本定理的边量词为空。
+
+证明。先设 $m\ge2$。VII97.3给 $\dim E^\#=m-2$，所以 $\dim\operatorname{span}E^\#=m-1$，其在 $V^*$ 中的消灭子为二维。$h_p,h_q$ 都消灭这个空间；它们在 $p,q$ 上的评价矩阵为
+
+$$
+\begin{pmatrix}1&b\\a&1\end{pmatrix},\qquad \det=d>0,
+\tag{VII100.8}
+$$
+
+故它们是一组基。不同facets $D_q,D_p$ 互不包含，存在原顶点 $r\in D_q\setminus D_p$ 和 $s\in D_p\setminus D_q$。若 $f=\alpha h_p+\beta h_q\in C^*$，分别在 $r,s$ 评价便给 $\alpha,\beta\ge0$。反向由 $h_p,h_q\in C^*$ 直接成立。因此得到 $Q_E$ 的准确表达。$m=1$ 时 $K=[p,q]$，两张规范facet效应是端点重心坐标，$D_p=\{q\}$、$D_q=\{p\}$，同一矩阵为单位矩阵，且整个 $V^*=\operatorname{span}\{h_p,h_q\}$；上述非负锥表达也成立。
+
+以下对所有 $m\ge1$ 同时论证。对任意 $0\ne f\in Q_E$，令 $M_f=\max_K f>0$。若原顶点 $v$ 达到 $M_f$，则 $f/M_f$ 是原 proper 效应，确认 $v$ 并消灭 $E^\#$，故 $E^\#\subseteq D_v$。反序对合给 $v\in E^{\#\#}=E$。由于 $K$ 是整个有限顶点凸包，$f$ 的极大集也是由其极大顶点生成的面，故
+
+$$
+\operatorname{argmax}_K f\subseteq E,\qquad
+\max_K f=\max\{f(p),f(q)\}.
+\tag{VII100.9}
+$$
+
+这对任意非零 $f\in Q_E$ 只给极大集包含于 $E$，没有声称每个这样的 $f$ 都在整条边恒定。零泛函的零一界直接成立。因此 $\alpha h_p+\beta h_q$ 为proper，当且仅当两系数非负且端点值 $\alpha+a\beta,b\alpha+\beta$ 都不超过一，得到(VII100.5)第一行。
+
+该平面区域在坐标轴上的顶点为 $(0,0),(1,0),(0,1)$；另外两条上界直线的交点为
+
+$$
+(\alpha_*,\beta_*)=
+\left(\frac{1-a}{d},\frac{1-b}{d}\right),\qquad
+\alpha_*,\beta_*>0.
+\tag{VII100.10}
+$$
+
+每条上界在线段轴端的另一约束均严格，交点两坐标为正，故这四点正是全部顶点，按 $0,h_p,e_E,h_q$ 循环排列。$e_E(p)=e_E(q)=1$，由(VII100.9)其一面恰为 $E$；两个严格正系数又使其零面恰为 $D_p\cap D_q=E^\#$。同一可逆矩阵给唯一性，并立即给(VII100.6)。由于所有原效应在 $E^\#$ 非负，若一个严格凸组合在其上恒零，两个分量也都恒零，故 $\mathcal I_E$ 是原区间的面；它含仿射独立的 $0,h_p,h_q$ 且在上述二维消灭子内，维数恰为二。空 $E^\#$ 时它就是整个二维原区间。
+
+为证(VII100.7)，只需标准多面体的facet—对偶极射线对应：VII97.2已列出全部facets，因而 $C^*=\operatorname{cone}\{h_s:s\in P\}$。其有限维分离证明是：这些半空间 $h_s\ge0$ 的交正是 $C$；若某个原正泛函不在这些法向的有限生成闭锥中，分离就给一个在所有 $h_s$ 上非负、在该泛函上为负的向量，与它属于 $C$ 矛盾。这是成熟凸锥对偶步骤，不是额外自对偶前提。
+
+$m\ge2$ 时令 $R=\operatorname{ext}E^\#\ne\varnothing$、$g=u-e_E$、$S_R=\sum_{s\in R}h_s$。$g,S_R$ 都在 $p,q$ 取零；对其他原顶点 $v$，$g(v)>0$。有限性允许取 $\varepsilon>0$，使 $g(v)-\varepsilon S_R(v)\ge0$ 对全部 $v\in P$ 成立，于是 $g-\varepsilon S_R\in C^*$。将它写成上述 $h_s$ 的非负组合。在 $p,q$ 评价为零，迫使每个有非零系数的 $h_s$ 同时消灭 $p,q$，亦即 $s\in D_p\cap D_q=E^\#$，其中用了纯点零排除对称性。因此加回 $\varepsilon S_R$ 后每个 $s\in R$ 的系数都严格正。$m=1$ 时端点重心坐标之和就是 $u$，单独给所述空和分支。证毕。
+
+### 100.3 沿原补面张成的指定分裂及其正性
+
+**定理 100.3（proper质量不代付正投影）。** 在定义VII100.1下，每条实际边都有准确线性直和
+
+$$
+V=\operatorname{span}\{p,q\}\oplus\operatorname{span}E^\#.
+\tag{VII100.11}
+$$
+
+沿这里的原补面张成投到边张成的唯一线性投影为
+
+$$
+\begin{gathered}
+\Pi_E(x)=\xi_p(x)p+\xi_q(x)q,\\
+\xi_p=\frac{h_p-bh_q}{d},\qquad
+\xi_q=\frac{h_q-ah_p}{d},\qquad
+u\circ\Pi_E=\xi_p+\xi_q=e_E\in[0,u].
+\end{gathered}
+\tag{VII100.12}
+$$
+
+下列条件等价：
+
+$$
+\begin{gathered}
+\Pi_E(C)\subseteq C;\qquad
+q\in D_p;\qquad a=b=0;\\
+e_E-h_p\in C^*;\qquad e_E-h_q\in C^*;\qquad
+\mathcal I_E\text{ 是平行四边形}.
+\end{gathered}
+\tag{VII100.13}
+$$
+
+这些条件成立时 $\Pi_E$ 的像锥为 $\operatorname{cone}\{p,q\}$；失败时(VII100.12)的总质量效应仍为proper。若 $m=1$，$\Pi_E=1_V$，这些条件全成立；$m=0$ 无边，不构造 $\Pi_E$。
+
+证明。$p,q$ 线性独立，因为它们不同且 $u(p)=u(q)=1$。若 $\eta p+\theta q$ 属于 $\operatorname{span}E^\#$，分别作用 $h_p,h_q$ 并用(VII100.8)可得 $\eta=\theta=0$。当 $m\ge2$ 时两个子空间维数为 $2,m-1$，和为 $\dim V=m+1$；$m=1$ 时第二个为零，也得到(VII100.11)。两个 $\xi$ 消灭补面张成，在 $p,q$ 上分别给 $(1,0),(0,1)$，所以(VII100.12)确是所指定的投影，满足 $\Pi_E^2=\Pi_E$，其质量式由直接相加得到。
+
+还需核对像锥：
+
+$$
+C\cap\operatorname{span}\{p,q\}=\operatorname{cone}\{p,q\}.
+\tag{VII100.14}
+$$
+
+若 $0\ne z$ 属于左边，则 $u(z)>0$，且 $u-e_E$ 消灭 $p,q$，故 $(u-e_E)(z)=0$。于是 $z/u(z)\in K$ 位于 $e_E$ 的整个一面 $E=[p,q]$，给出右边的非负分解；零向量及反向包含直接成立。因此 $\Pi_E$ 正，当且仅当其两个唯一坐标 $\xi_p,\xi_q$ 都属于 $C^*$。
+
+若 $a=b=0$，两坐标就是 $h_p,h_q$，故正；它又固定 $p,q$，所以像锥恰为(VII100.14)。若 $a>0$，取VII100.2证明中的原顶点 $r\in D_q\setminus D_p$，则
+
+$$
+\xi_q(r)=-\frac{a h_p(r)}d<0,
+\tag{VII100.15}
+$$
+
+故 $\Pi_E(r)\notin C$。由(VII100.2)，$a=0$ 当且仅当 $b=0$，且等价于 $q\in D_p$；这排除了只有一个非零交叉值的分支。
+
+另一方面，
+
+$$
+e_E-h_p=\frac{1-b}{d}(h_q-ah_p),\qquad
+e_E-h_q=\frac{1-a}{d}(h_p-bh_q).
+\tag{VII100.16}
+$$
+
+当 $a>0$ 时，第一式在同一个 $r$ 为负；交换 $p,q$ 得第二式在某个 $s\in D_p\setminus D_q$ 为负。当 $a=b=0$ 时两式分别为 $h_q,h_p$，故得到两项锥序等价。特别是非接触边上的 $e_E\in F_p$ 不支配 $h_p$，不能把规范facet确认当作least确认。
+
+最后，四边形的循环顶点已为 $0,h_p,e_E,h_q$，所以它是平行四边形当且仅当 $e_E=h_p+h_q$。在 $p,q$ 评价这一等式给 $a=b=0$，反向由公式立即成立，完成全部等价。这里的质量proper只给 $0\le u(\Pi_Ex)\le u(x)$（$x\in C$），没有给 $\Pi_Ex\in C$。它因而不产生正滤子、事件更新或可调用量子操作。证毕。
+
+只有在另行加入有限整个纯集的原全称 $\mathrm B$ 时，VII97.4才保证每个不同纯对都是实际边，且每条边就是该对的整个二态球，局部对径为另一端点。按这个已证对应，VI90.10的全部接触准确成为(VII100.13)对每条边成立，亦即这些指定投影全正；VI90.8的整个二态球逐效应延拓仍按它自己的量词消费。本章未从有限 $\mathrm B+\mathrm{Z0}$ 推出所有 $a=b=0$，因而未证明其一般接触或单纯形结论。
+
+### 100.4 每个非接触纯对的一张局部facet尺排除全部延拓
+
+**定理 100.4（指定局部proper效应的全延拓障碍）。** 在定义VII100.1下，任取有序不同原纯对 $p,q\in P$ 满足 $q\notin D_p$；不要求 $[p,q]$ 是边。令
+
+$$
+F=D_p,\qquad M=\max_{x\in F}h_q(x),\qquad
+\ell_{p,q}=\frac{h_q|_F}{M}.
+\tag{VII100.17}
+$$
+
+这里 $[0,1]_{\operatorname{aff}(F)}$ 指 $F$ 上全部实仿射函数中满足 $0\le\ell(x)\le1$ 对每个 $x\in F$ 成立者；零一界只在 $F$ 上要求。则 $0<M<1$，$\ell_{p,q}\in[0,1]_{\operatorname{aff}(F)}$ 是指定的局部proper效应，而
+
+$$
+\nexists f\in[0,u]:\quad f|_F=\ell_{p,q}.
+\tag{VII100.18}
+$$
+
+更准确地，其全部实线性延拓恰为
+
+$$
+f=\frac{h_q}{M}+\mu h_p,\qquad \mu\in\mathbb R,
+\tag{VII100.19}
+$$
+
+而没有任何一个同时满足原 $f\ge0$ 及 $f\le u$。全局仿射延拓到 $K$ 也同样被排除，因为 $\operatorname{aff}K=\{u=1\}$，其仿射函数唯一齐次线性延伸到 $V$。
+
+证明。固定 $k_0\in K$，有 $V=\mathbb Rk_0\oplus\ker u$。$\operatorname{aff}K$ 上的仿射式 $c+L(x-k_0)$ 唯一对应 $V$ 上的线性式 $f(tk_0+w)=tc+L(w)$，所以全局仿射延拓与线性延拓的上述对应保持同一原单位。
+
+不同的 $p,q$ 对应不同facets，所以 $F\not\subseteq D_q$，$h_q$ 在 $F$ 上不恒零，得到 $M>0$。$h_q$ 在整个 $K$ 只在 $q$ 达到一，且 $q\notin F$；由 $F$ 紧知 $M<1$。非负性与最大值定义给局部零一界，并在某个 $F$ 的顶点达到一。
+
+$F$ 为facet，$\dim\operatorname{span}F=m$，故其消灭子是一维且由 $h_p$ 张成。两个延拓的差消灭 $F$，因此(VII100.19)穷尽全部实线性延拓。不同facets又给一个原顶点 $r\in D_q\setminus D_p$。若这样的 $f$ 在整个原锥非负，则
+
+$$
+f(r)=\mu h_p(r)\ge0,\qquad h_p(r)>0,
+\quad\Longrightarrow\quad\mu\ge0.
+\tag{VII100.20}
+$$
+
+但在同一个原纯点 $q$ 上随即有
+
+$$
+f(q)=\frac1M+\mu T_{pq}>1=u(q),
+\tag{VII100.21}
+$$
+
+矛盾。这排除了全部延拓，不只是自然猜测 $h_q/M$ 的失败。$m=0$ 没有不同纯对，$m=1$ 的两个不同纯点互相接触，所以这两支都没有符合前件的非接触对；$p=q$ 从未在本定理量词内。
+
+这是 $F=D_p$ 上的一张局部facet效应障碍。除非另有对应证明 $F$ 是VI90.8所量化的某个整个二态球，否则不能把(VII100.18)认作该球的延拓反例，更不能由它断言一般 $\mathrm B+\mathrm{Z0}$ 已失败。即使 $[p,q]$ 本身是边，这个 $F=D_p$ 也不是自动等于 $[p,q]$。证毕。
+
+### 100.5 同一个有理七边形中的非正分裂和不可延拓尺
+
+**命题 100.5（原载体上的非空障碍实例）。** 使用VII97.6的整个七点 $p_i=(1,v_i)$、原锥 $C$、单位 $u(t,x,y)=t$ 及整个原效应区间。该载体已满足全混态 $\mathrm{Z0}$。对实际边 $E=[p_0,p_1]$，有
+
+$$
+\begin{gathered}
+E^\#=\{p_4\},\qquad
+h_0(t,x,y)=\frac{9t+x}{19},\qquad
+h_1(t,x,y)=\frac{82t+6x+7y}{174},\\
+a=\frac{71}{87},\qquad b=\frac{15}{19},\qquad
+ d=\frac{196}{551},\qquad
+ e_E=\frac{76}{147}h_0+\frac{29}{49}h_1
+     =\frac{22t+2x+y}{42}=u-h_4.
+\end{gathered}
+\tag{VII100.22}
+$$
+
+它在全部原顶点上的读数和严格外部余量为
+
+| 原顶点 | $p_0$ | $p_1$ | $p_2$ | $p_3$ | $p_4$ | $p_5$ | $p_6$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $e_E$ | $1$ | $1$ | $2/3$ | $4/21$ | $0$ | $4/21$ | $13/21$ |
+| $1-e_E$ | $0$ | $0$ | $1/3$ | $17/21$ | $1$ | $17/21$ | $8/21$ |
+
+因此五个外部顶点都有 $\Delta_{p_0p_1r}=(196/551)(1-e_E(r))>0$。然而
+
+$$
+\Pi_E(p_5)=\frac{29}{28}p_0-\frac{71}{84}p_1\notin C,
+\qquad u(\Pi_E(p_5))=\frac4{21}>0.
+\tag{VII100.23}
+$$
+
+同一个有序非接触对 $p=p_0,q=p_1$ 的facet为 $F=D_{p_0}=[p_3,p_4]$，其(VII100.17)效应满足
+
+$$
+M=\frac{28}{87},\qquad
+\ell_{p_0,p_1}(p_3)=1,\quad \ell_{p_0,p_1}(p_4)=0,
+\tag{VII100.24}
+$$
+
+且没有原 proper 延拓。此处 $F$ 的确是 $p_3,p_4$ 的整个最小面，是一维整球；故这一特定facet障碍也给出该整个线段上的局部端点尺不可延拓，但该载体没有全称 $\mathrm B$。
+
+证明。VII97.14—97.15的第 $3,4$ 行分别给 $h_0=s_3/152$、$h_1=s_4/174$，正是(VII100.22)的齐次式。$D_{p_0}=[p_3,p_4]$、$D_{p_1}=[p_4,p_5]$ 给 $E^\#=\{p_4\}$。代入(VII100.4)并合并系数得到 $e_E$，而第 $0$ 行给 $h_4=(20t-2x-y)/42$，所以补效应也符合(VII100.7)。逐个代入VII97.11的七个坐标得到表中全部值，未更换基或归一超平面。$h_0(p_5)=7/19$、$h_1(p_5)=0$，代入(VII100.12)给(VII100.23)。两个坐标中第二个为负，(VII100.14)即排除其属于原锥，尽管总质量为正且由proper效应读出。
+
+这也实际区分了两种比较：$e_E\in F_{p_0}$，从而
+
+$$
+T_{p_0}(p_5)\le\frac4{21}<\frac7{19}=T_{p_0p_5}.
+\tag{VII100.25}
+$$
+
+本式只使用下包络的定义，没有将该上界冒称其精确值。
+
+在 $F$ 的两端，$h_1(p_3)=56/174=28/87$、$h_1(p_4)=0$，所以最大值和局部效应为(VII100.24)。任意全局线性延拓为 $f=(87/28)h_1+\mu h_0$。在同一个 $p_5\in D_{p_1}\setminus D_{p_0}$，非负性迫使 $\mu\ge0$；但 $f(p_1)=87/28+(15/19)\mu>1$，证明全部proper延拓不存在。因为 $[p_3,p_4]$ 是实际边，包含它两端的整个最小面恰是该边；局部 $\ell$ 是它唯一的端点零一仿射尺，故上述球对应在这一实例中明确成立。
+
+另一方面，VII97.6已给 $H(p_0,p_2)=K$，整个七边形不是整欧氏球，故全称 $\mathrm B$ 失败。因此这个实例同时实现本章一般有限 $\mathrm{Z0}$ 域内的严格外部slack、proper总质量、指定分裂非正及局部尺全延拓失败，仍不是VI89.12的 $\mathrm B+\mathrm{Z0}$ 反例。证毕。
+
+### 100.6 数学归属和原消费者的条件边界
+
+**约定 100.6（复用与尚存的桥）。** VII100.2—100.4的边四边形及 $\Delta$ 公式、沿原补面张成的指定投影正性充要条件、以及 $\ell_{p,q}$ 的全部延拓障碍采用 `repo-derived` 归属。它们由VII97.2—97.5的既有完整facet配对、反序对合及规范slack推导；VII100.5直接使用VII97.6的原七边形，不另主张新载体。证明内的有限维支撑／分离、facet法向生成对偶锥、面上极值及二维线性代数是成熟步骤（凸分析来源沿用VII98.6所引 Rockafellar，*Convex Analysis*，§11、§18），不将它们分别计作新定理。
+
+[FinitePureSimplex](../../../Blueprint/D5/S3/Quantum/Foundation/FinitePureSimplex.md)的 `zero_gluing_iff_simplex` 要求整个纯点坐标核维数至多一，`zero_kernel_least_confirmation` 要求该核为零；[WeightedRelationConfirmation](../../../Blueprint/D5/S3/Quantum/Foundation/WeightedRelationConfirmation.md)的加权精确确认值也在完整一关系域内。它们不供应本章任意关系零度的边、投影及facet延拓公式；本章亦不重证这些既有支路。VI90.8—90.10的原全效应限制／接触接口是本章的既有消费者，只有已证的整个面对应才能接入。
+
+Dobbins，*Antiprismless, or: Reducing Combinatorial Equivalence to Projective Equivalence in Realizability Problems for Polytopes*，[arXiv:1307.0071v3 §3 Theorem 3.2、Lemma 3.3、Theorem 3.9](https://arxiv.org/html/1307.0071v3)讨论balanced pair、antiprism和interval polytope的组合实现及存在性边界；这些结果不是(VII100.4)—(VII100.24)在此原锥和原单位上的数值公式或正性、延拓判据。本章只确定每条实际边的上述二维效应面，不主张原 $[0,u]$ 的全部面或全部极端效应分类。该有限来源对应不主张全球原创、文献穷尽或一般开放状态认证。
+
+VI99.7的全实ROG、任意共同支撑维数及余维的 $\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S$ 闭合按其完整ROG表示前件复用；裸有限 $\mathrm{Z0}$ 没有在本章取得该表示。有限 $\mathrm B+\mathrm{Z0}$ 一般域仍须证明每条原边的 $a=b=0$，才能沿VII97.4及VI90.10完成全部接触；VII98.5的临界等号、一般VI89.12和一般有限 $\mathrm B+\mathrm{Z0}$ 的单纯形问题均未由本章解决。指定 $\Pi_E$ 的正性也不是VI90.8所要求的任意整球逐效应延拓的无条件替代。
+
+复型与Born、指定复合、同事件CP和仪器、更新、实际来源及物理时间仍保留VI89.7—89.10及VII98.8—98.9的全部原合同。[原生来源续卷VII](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md)第33—34章的指定 $\mathrm H_8,\mathrm H_3$ 联合供应和第35章的特定候选障碍按既有范围复用；它们不是本章待补缺口。原全字精确细零关系、细Born、实际操作与时间则仍未由这些几何效应供应。以上是明确模型条件内的纸面推导，不声明Lean核验或经验实现。
+
+## 追加锚（本行以下为增补区）
+
+## 101. 最小共同零障碍的仿射独立、纯目标元数与四维精确替换
+
+### 101.1 原确认面与纯目标的共同零要求
+
+**定义 101.1（固定确认点的 $\mathrm G_k$）。** 使用VI89.1、VII99.1的同一个有限维原 $V,C,u,K,P$ 和全部原 proper 仿射效应，保留严格正单位及整个原混态域。记
+
+$$
+\begin{gathered}
+m=\dim\operatorname{aff}K=\dim V-1,\qquad
+F_p=\{f\in[0,u]_{C^*}:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\qquad E_p=P\cap D_p.
+\end{gathered}
+\tag{VII101.1}
+$$
+
+这里 $p\in P$；$m$ 始终是仿射维数，不是矩阵环境余维。除构造101.6外，不限制整个 $P$ 的基数、闭性、光滑性或可数性，不预设ROG、PSD表示、内积、谱性或局部效应延拓。$\mathrm B$、$\mathrm A$、$S$ 仍取VI89.1—89.4的定义；只在明写 $\mathrm B$ 的结论中使用球形二纯面。
+
+对整数 $k\ge0$，定义
+
+$$
+\mathrm G_k:\quad
+\forall p\in P\ \forall Q\subseteq E_p,\ |Q|\le k,
+\quad\exists f\in F_p\quad\forall q\in Q,\ f(q)=0.
+\tag{VII101.2}
+$$
+
+$Q$ 是至多 $k$ 个不同原纯目标组成的有限集；允许空集，空集由 $u$ 确认。$p\notin D_p$，所以固定确认的纯点 $p$ 是额外一个标签：$\mathrm G_2$ 最多涉及三个纯标签，$\mathrm G_3$ 最多涉及四个。$\mathrm G_1$ 在本定义下自动成立，因为 $E_p$ 中每个点本来就可由某张 $F_p$ 效应排除；$\mathrm G_0$ 也为空要求。
+
+区别在于
+
+$$
+\forall q\in Q\ \exists f_q\in F_p:\ f_q(q)=0
+\quad\text{与}\quad
+\exists f\in F_p\ \forall q\in Q:\ f(q)=0.
+\tag{VII101.3}
+$$
+
+前者是分别排除，后者是同一效应共同排除，不能交换量词。目标之间不要求能被一张多结果测量彼此区分。原混态条件仍准确为
+
+$$
+\mathrm{Z0}:\quad
+\forall p\in P\ \forall x,y\in D_p,\quad (x+y)/2\in D_p.
+\tag{VII101.4}
+$$
+
+本章不把(VII101.4)预放入 $\mathrm G_k$ 的前提。
+
+### 101.2 混态零拼合与全部有限纯目标
+
+**引理 101.2（全域共同零的等价）。** 在定义101.1下，下列三项等价：原 $\mathrm{Z0}$；对每个 $p$，任意有限 $Q\subseteq E_p$ 可由同一原确认效应共同排除；对每个 $p$，存在 $g_p\in F_p$ 满足
+
+$$
+D_p=K\cap\{g_p=0\}.
+\tag{VII101.5}
+$$
+
+这里即使 $P$ 不闭，所用分解也只是原 $K=\operatorname{conv}P$ 中的有限纯分解；共同零效应尚不被称为least确认。
+
+证明。先核对紧性。原 $K$ 张成 $V$，从中取一个线性基；全部原效应在这个基上取值于 $[0,1]$，故效应区间有界，且由定义为闭集。因此它紧，$F_p$ 非空紧，$T_p$ 的最小值达到。$D_p$ 是紧集
+
+$$
+\{(f,x)\in F_p\times K:f(x)=0\}
+$$
+
+的投影，因而紧。这没有使用 $P$ 的紧性。
+
+若有 $\mathrm{Z0}$，$D_p$ 中点凸且闭，故凸。非空时取 $z\in\operatorname{ri}D_p$ 及 $g_p\in F_p$，使 $g_p(z)=0$。对任意 $x\in D_p$，相对内点性给 $y\in D_p$、$0<t<1$，使 $z=tx+(1-t)y$；非负性迫使 $g_p(x)=0$。反向，$g_p(x)=0$ 本身就见证 $x\in D_p$，得到(VII101.5)。空 $D_p$ 取 $g_p=u$。这是V88.3共同零面论证在同一全效应域内的复用。于是任意有限纯目标当然可共同排除。
+
+反过来，只设所有有限纯目标可共同排除。给 $x\in D_p$，选一张原 $h_x\in F_p$ 使 $h_x(x)=0$，再取原有限纯分解
+
+$$
+x=\sum_{a=1}^{s}\lambda_a q_a,\qquad
+\lambda_a>0,\quad\sum_a\lambda_a=1,\quad q_a\in P.
+\tag{VII101.6}
+$$
+
+$0=\sum_a\lambda_a h_x(q_a)$ 与逐项非负给每个 $q_a\in E_p$。对任意 $x,y\in D_p$ 都这样分解，将两分解中的纯目标合并成有限集。其共同确认效应同时零于 $x,y$，也零于它们的中点，故有原 $\mathrm{Z0}$。
+
+同一论证还能直接接回共同零面：各闭集 $\{f\in F_p:f(q)=0\}$、$q\in E_p$ 具有有限交性质，$F_p$ 紧给一个同时零于全部 $E_p$ 的效应。由(VII101.6)，它也零于整个 $D_p$；反向包含仍由定义给出。因而这里从有限纯检验回到整个原混态域，没有把无限纯点集替换成抽样或闭包。证毕。
+
+### 101.3 实际最小不相容组必与确认点仿射独立
+
+**引理 101.3（对角见证与维数界）。** 若原 $\mathrm{Z0}$ 失败，则存在原纯 $p$ 和有限的不同目标 $q_1,\ldots,q_k\in E_p$，整组不能共同排除，但删掉任一目标后可以。必有
+
+$$
+2\le k\le m,
+\qquad p,q_1,\ldots,q_k\text{ 仿射独立}.
+\tag{VII101.7}
+$$
+
+证明。取实际失败的 $x,y\in D_p$，使 $(x+y)/2\notin D_p$。按(VII101.6)取两者的原有限纯分解。每个正权分量都在 $E_p$；若这些分量的有限并集可共同排除，中点也可排除，矛盾。从这个实际有限集选包含意义下最小的不相容子集 $\{q_1,\ldots,q_k\}$。空集与单点集都相容，所以 $k\ge2$。
+
+逐一删掉 $q_i$，得到同一个原域中的效应 $f_i$，满足
+
+$$
+f_i\in F_p,\qquad f_i(q_j)=0\ (j\ne i),\qquad
+ a_i:=f_i(q_i)\in(0,1].
+\tag{VII101.8}
+$$
+
+$a_i>0$ 来自整组不相容：若为零，$f_i$ 就排除了整组；$a_i\le1$ 来自它在整个原 $K$ 上的proper上界。
+
+先设 $\sum_i d_iq_i=0$ 且 $\sum_i d_i=0$。对这个仿射关系应用 $f_j$，得到 $d_ja_j=0$，因而全部 $d_j=0$。所以目标本身仿射独立。再假定 $p\in\operatorname{aff}\{q_1,\ldots,q_k\}$，写
+
+$$
+p=\sum_i c_iq_i,\qquad\sum_i c_i=1.
+$$
+
+每张 $f_i$ 都给 $1=c_i a_i$，故 $c_i=1/a_i\ge1$，与 $k\ge2$ 及 $\sum_i c_i=1$ 矛盾。于是 $p$ 不在目标的仿射包中，$p,q_1,\ldots,q_k$ 仿射独立，直接得 $k\le m$。这里既不只检查某个效应字典，也不需要Helly的额外有限化机制。证毕。
+
+**推论 101.4（一般仿射维数的纯元数界）。** 对任意有限 $m\ge1$，
+
+$$
+\boxed{\mathrm G_m\quad\Longleftrightarrow\quad\mathrm{Z0}.}
+\tag{VII101.9}
+$$
+
+证明。$\mathrm{Z0}$ 的方向由101.2给出。若有 $\mathrm G_m$ 而 $\mathrm{Z0}$ 失败，101.3给一个元数至多 $m$ 的不相容纯目标组，直接违反 $\mathrm G_m$。
+
+$m=0$ 时整个 $K$ 为单点，$F_p=\{u\}$、$D_p=\varnothing$，$\mathrm{Z0}$ 与所有 $\mathrm G_k$ 都成立，不需不相容组。$m=1$ 时原紧凸体为线段，只有两端为纯点；对每个端点，确认它的原重心坐标使 $D_p$ 恰为另一端点，故 $\mathrm{Z0}$ 成立。这也说明(VII101.9)在 $m=1$ 与自动成立的 $\mathrm G_1$ 一致。证毕。
+
+### 101.4 球形二纯面排除满维障碍
+
+**定理 101.5（$\mathrm B$ 下少一个纯目标）。** 在定义101.1、$\mathrm B$ 及 $m\ge2$ 下，每个最小不相容纯目标组的元数至多 $m-1$，并且
+
+$$
+\boxed{\mathrm G_{m-1}\quad\Longleftrightarrow\quad\mathrm{Z0}.}
+\tag{VII101.10}
+$$
+
+证明。任意有限最小不相容组都适用101.3证明中从(VII101.8)开始的论证，故只需排除 $k=m$。设有这样的组，沿用其原 $p,q_i,f_i,a_i$。此时 $p,q_1,\ldots,q_m$ 是原 $\operatorname{aff}K$ 的仿射基。定义
+
+$$
+\begin{gathered}
+F=(f_1,\ldots,f_m),\qquad
+F(p)=\boldsymbol 1,\qquad F(q_i)=a_i e_i,\\
+S_0=\sum_{i=1}^{m}\frac1{a_i}>1,\qquad
+L(y)=\sum_{i=1}^{m}\frac{y_i}{a_i},\qquad
+h=\frac{L\circ F-1}{S_0-1}.
+\end{gathered}
+\tag{VII101.11}
+$$
+
+这里 $S_0$ 只是正数，区别于完整最小确认条件 $S$。像点 $a_i e_i$ 仿射独立并张成超平面 $L=1$，而 $L(\boldsymbol1)=S_0\ne1$，所以这些像点连同 $\boldsymbol1$ 也是仿射基。因此 $F:\operatorname{aff}K\to\mathbb R^m$ 是仿射同构，不是丢失信息的投影。每个 $f_i$ 在整个原 $K$ 上属于 $[0,1]$，故
+
+$$
+F(K)\subseteq[0,1]^m,\qquad
+h(p)=1,\qquad h(q_i)=0,\qquad h\le1\text{ 于整个 }K.
+\tag{VII101.12}
+$$
+
+最后一项来自 $L(F(x))\le S_0$。若再有 $h\ge0$ 于整个 $K$，它就是一张原proper确认效应并共同排除所有 $q_i$，违反不相容性。因此失败只能发生在下界：$\min_Kh<0$。这个仿射最小值的紧暴露面有一个极点，它也是原 $K$ 的极点，故可取原纯 $r$ 满足 $h(r)<0$。特别是 $r\ne p$。
+
+置 $v=F(r)$、$t=L(v)<1$。由(VII101.12)，$v_i\ge0$。在同一条原线段上取
+
+$$
+\theta=\frac{S_0-1}{S_0-t}\in(0,1),\qquad
+z=(1-\theta)p+\theta r.
+\tag{VII101.13}
+$$
+
+于是 $L(F(z))=1$，且每个坐标 $F(z)_i=(1-\theta)+\theta v_i>0$。令 $\gamma_i=F(z)_i/a_i$，便有 $\gamma_i>0$、$\sum_i\gamma_i=1$，以及
+
+$$
+F(z)=\sum_i\gamma_iF(q_i).
+$$
+
+现在才用 $F$ 的可逆性，得到原空间中的真实等式
+
+$$
+z=\sum_i\gamma_iq_i
+\in (p,r)\cap\operatorname{ri}\operatorname{conv}\{q_1,\ldots,q_m\}.
+\tag{VII101.14}
+$$
+
+这不是把两个商像相等当成两个原点相等。原最小面 $H(p,r)$ 含 $z$，面的性质及全部 $\gamma_i>0$ 使它含每个 $q_i$。它又含 $p$，而这些点张成 $\operatorname{aff}K$，故该面含有 $K$ 的相对内点，只能等于 $K$。$p,r$ 是不同原纯点，所以 $\mathrm B$ 使整个原 $K$ 为一个仿射欧氏球。
+
+在这个整球中，固定 $p$ 的对径唯一。任意原proper效应若在 $p$ 取一、在另一纯点取零，该纯点必为此对径：在单位球坐标写成 $a+b\cdot x$，proper界给 $\|b\|\le a\le1-\|b\|$，同时取一和零迫使 $a=\|b\|=1/2$，两个取等方向相反。对每个 $q_j$，因为 $m\ge2$，可选 $i\ne j$，由 $f_i(p)=1$、$f_i(q_j)=0$ 得 $q_j$ 是同一个 $p$ 的唯一对径。于是至少两个不同的 $q_j$ 被迫相等，矛盾。这覆盖 $m=2$，没有遗漏同点或退化球分支。
+
+故 $k=m$ 不可能。若 $\mathrm G_{m-1}$ 成立而 $\mathrm{Z0}$ 失败，101.3的实际不相容组就给矛盾；反向由101.2。定理只给通用充分元数上界，未声称它在所有较高维数都最优。证毕。
+
+### 101.5 等重心单纯形自由和的原全效应模型
+
+**构造 101.6（成熟自由和与全部纯点）。** 取整数 $N\ge3$，在互补实方向空间 $U,V$ 中各放一个以原点 $o$ 为重心的 $(N-1)$ 维单纯形，顶点分别为 $a_1,\ldots,a_N$ 和 $b_1,\ldots,b_N$。例如各自在 $\{s\in\mathbb R^N:\sum s_i=0\}$ 中取 $e_i-\boldsymbol1/N$，再放入 $U\oplus V$ 的两因子。定义整个原模型
+
+$$
+\begin{gathered}
+K_N=\operatorname{conv}\{a_1,\ldots,a_N,b_1,\ldots,b_N\},\qquad
+\frac1N\sum_i a_i=\frac1N\sum_j b_j=o,\\
+V_N=\mathbb R\oplus U\oplus V,\qquad
+C_N=\{t(1,x):t\ge0,\ x\in K_N\},\qquad
+u_N(t,w)=t.
+\end{gathered}
+\tag{VII101.15}
+$$
+
+$u_N$ 是严格正原单位；$C_N$ 闭、尖、生成，$K_N$ 与其整个归一基 $\{(1,x):x\in K_N\}$ 作保单位识别。以下省去首坐标一。使用这个原模型的全部proper效应，不为它预付任何矩阵表示。它是共享一个重心的自由和，仿射维数为 $m=2N-2$；不是仿射联结，也不是两个有序锥的直和。
+
+任意原仿射函数 $f$ 的顶点值记为 $\alpha_i=f(a_i)$、$\beta_j=f(b_j)$。完整效应条件准确为
+
+$$
+0\le\alpha_i,\beta_j\le1,\qquad
+\sum_i\alpha_i=\sum_j\beta_j.
+\tag{VII101.16}
+$$
+
+证明其充分性而不只用必要性：等式两边除以 $N$ 得共同常数 $c=f(o)$；各组 $\alpha_i-c$、$\beta_j-c$ 都是零和数列。单纯形的顶点只满足各自的和为零关系，所以这些值分别唯一给出 $U,V$ 上的线性泛函；加共同常数 $c$ 就得到整个 $U\oplus V$ 上唯一仿射函数。顶点上的零一界再由凸性给整个 $K_N$ 上的零一界。反向由共同重心和proper性直接得到(VII101.16)。因此这里确实描述了原全部效应。
+
+全部原纯点恰为这 $2N$ 个顶点。极点只可能来自给定有限生成集；而在 $A$ 侧给某个顶点值一、其他同侧顶点值 $-1/(N-1)$，在 $B$ 侧全取零，所得零和线性函数唯一暴露这个顶点。另一侧同理。
+
+每对不同纯点也都暴露一条原真边。同侧一对可取该侧两点值一、其余点值 $-2/(N-2)$，另一侧全零；两侧各自零和，所以存在原线性函数，最大值一恰在这两个顶点达到。跨侧一对则在每侧所选顶点取一，该侧其余顶点取 $-1/(N-1)$，同样给最大面恰为这两点之间的线段。因此每个 $H(p,q)=[p,q]$，$\mathrm B$ 成立。这里的暴露线性函数只用于识别原面，不把它们直接称为proper效应。
+
+定义原proper效应 $e_{ij}$：它在 $a_i,b_j$ 取一，在全部其他顶点取零。这满足(VII101.16)。对固定 $p=a_i$，所有其他同侧纯点都被每张 $e_{ij}$ 排除；任一 $b_\ell$ 可选 $j\ne\ell$ 排除。另一侧对称。因此每个不同纯对可由原全效应二元区分，原边上的对径端点满足 $\mathrm A$。
+
+给任意至多 $N-1$ 个属于 $E_{a_i}$ 的目标，总有某个 $b_j$ 未被选中；同一张 $e_{ij}$ 排除这些全部目标。同理处理确认点位于另一侧的情形，故
+
+$$
+\mathrm B+\mathrm A+\mathrm G_{N-1}\text{ 在 }K_N\text{ 上成立}.
+\tag{VII101.17}
+$$
+
+但固定 $p=a_i$ 后，全部 $N$ 个 $b_j$ 不可能共同排除：若 $\beta_j=0$ 对全部 $j$ 成立，(VII101.16)及非负性给全部 $\alpha_i=0$，与 $\alpha_i=1$ 矛盾。这个组的每个真子集可排除，所以它是实际最小不相容组，$\mathrm G_N$ 失败。
+
+### 101.6 全原效应的精确转移、零facet并集与无least
+
+**定理 101.7（完整确认区间的下包络）。** 在构造101.6中，任取一个原非负顶点分解
+
+$$
+x=\sum_{k=1}^N\lambda_k a_k+\sum_{\ell=1}^N\mu_\ell b_\ell,
+\qquad\lambda_k,\mu_\ell\ge0,\qquad
+\sum_k\lambda_k+\sum_\ell\mu_\ell=1.
+\tag{VII101.18}
+$$
+
+则在全部原确认效应上精确有
+
+$$
+\boxed{\begin{aligned}
+T_{a_i}(x)&=\min_{1\le j\le N}(\lambda_i+\mu_j),\\
+T_{b_j}(x)&=\min_{1\le i\le N}(\lambda_i+\mu_j).
+\end{aligned}}
+\tag{VII101.19}
+$$
+
+这些值与分解的选择无关。原排除集为原暴露facet的并集，具体为
+
+$$
+\begin{gathered}
+Q_{ij}=\operatorname{conv}\bigl(\{a_k:k\ne i\}\cup\{b_\ell:\ell\ne j\}\bigr)
+       =K_N\cap\{e_{ij}=0\},\\
+D_{a_i}=\bigcup_jQ_{ij},\qquad D_{b_j}=\bigcup_iQ_{ij}.
+\end{gathered}
+\tag{VII101.20}
+$$
+
+每个纯点均无全锥序least确认，但原纯转移数值仍互反。
+
+证明。先固定 $p=a_i$。任意 $f\in F_{a_i}$ 的顶点值满足 $\alpha_i=1$，故
+
+$$
+s:=\sum_k\alpha_k=\sum_\ell\beta_\ell\ge1.
+$$
+
+取 $w_j=\beta_j/s$，则 $w_j\ge0$、$\sum_jw_j=1$ 且 $w_j\le\beta_j$。原确认效应 $e_w=\sum_jw_je_{ij}$ 在 $a_i$ 取一、其余 $A$ 顶点取零、在 $b_j$ 取 $w_j$。所以 $f-e_w$ 在每个原顶点非负，从而在整个 $K_N$ 及其齐次锥上非负。对每个原混态 $x$，
+
+$$
+f(x)\ge e_w(x)=\sum_jw_je_{ij}(x)
+             \ge\min_j e_{ij}(x).
+\tag{VII101.21}
+$$
+
+每张 $e_{ij}$ 自己又属于 $F_{a_i}$，故下界可由其中某张达到。由(VII101.18)，$e_{ij}(x)=\lambda_i+\mu_j$，得到第一式；交换两侧得到第二式。这是对每一张原确认效应的支配论证，没有用受限字典的最小值冒充全效应最小值。
+
+良定义性也可直接看出。若另一归一顶点系数 $\lambda',\mu'$ 表示同一个 $x$，互补方向及各单纯形的唯一线性关系给
+
+$$
+\lambda'_k-\lambda_k=t\quad(\forall k),\qquad
+\mu'_\ell-\mu_\ell=-t\quad(\forall\ell).
+\tag{VII101.22}
+$$
+
+后一个常数为 $-t$ 来自总权重仍为一。因此每个 $\lambda_i+\mu_j$ 都不变，不只是它们的最小值不变。此结论适用于任意原非负分解，包括零权与重复顶点合并后的分解。
+
+$e_{ij}\ge0$，其顶点零集恰为(VII101.20)列出的 $2N-2$ 个点，故整个零面就是它们的凸包。全部顶点唯一的仿射依赖由 $\sum a_i=\sum b_j$ 给出，并有全支撑；删掉任何顶点后剩余配置仿射独立。因此 $Q_{ij}$ 中的这些点仿射独立，其维数为 $2N-3=m-1$，确为原暴露facet。有限个非负数的最小值为零，当且仅当其中一个为零，给出两条并集公式。
+
+每个不同原纯对的转移值为零，同点为一，所以
+
+$$
+T_p(q)=T_q(p)=\begin{cases}1,&p=q,\\0,&p\ne q.\end{cases}
+\tag{VII101.23}
+$$
+
+这只有纯数值互反，尚不使 $T_p$ 成为仿射函数。若 $a_i$ 有least确认 $e$，对每个其他纯点 $q$，取一张排除 $q$ 的确认效应 $f_q$。$0\le e(q)\le f_q(q)=0$ 迫使 $e$ 在除 $a_i$ 外的全部顶点为零，却在 $a_i$ 为一，违反(VII101.16)。因此least不存在；另一侧同理。具体地，同一确认面中的 $e_{ij},e_{i\ell}$ 在 $b_j,b_\ell$ 的值相反，$j\ne\ell$ 时互不可比。后面的重心读数还将直接见证(VII101.20)的并集不是凸集。证毕。
+
+### 101.7 双三角形与任意固定纯元数的反事实
+
+**命题 101.8（四维的两个目标确实不足）。** 对 $N=3$，$m=4$ 的同一个原 $K_3$ 满足
+
+$$
+\mathrm B+\mathrm G_2+\mathrm A
+\quad\text{及全部原纯数值互反},\qquad
+\neg\mathrm G_3,\quad\neg\mathrm{Z0},\quad\neg S.
+\tag{VII101.24}
+$$
+
+证明。前半和 $\neg\mathrm G_3$ 已由101.6—101.7在全部原效应上证明。固定 $p=a_1$，取两个原混态
+
+$$
+x=\frac{2b_1+b_2}{3},\qquad
+y=\frac{b_2+2b_3}{3},\qquad
+\frac{x+y}{2}=\frac{b_1+b_2+b_3}{3}=o.
+\tag{VII101.25}
+$$
+
+$e_{13}$ 排除 $x$，$e_{11}$ 排除 $y$，二者都确认同一个 $p$。但对任意原 $f\in F_p$，重心关系给
+
+$$
+f(o)=\frac{\sum_i\alpha_i}{3}\ge\frac13;
+\qquad T_p(o)=\frac13,
+\tag{VII101.26}
+$$
+
+等号由任一 $e_{1j}$ 达到。因此 $x,y\in D_p$，它们的原中点却不在 $D_p$，直接违反完整混态 $\mathrm{Z0}$。无least已由101.7证明，所以完整 $S$ 也失败。所有二纯最小面仍是原暴露边，每两个被排除纯目标仍可由同一确认效应读零；缺失恰发生在三个目标的共同要求。这个反例否定 $\mathrm B+\mathrm G_2\Rightarrow\mathrm{Z0}$ 及其推出 $S$ 的版本，不否定 $\mathrm B+\mathrm G_2\Rightarrow\mathrm A$，因为它自己的 $\mathrm A$ 成立；也不否定 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$。证毕。
+
+**推论 101.9（不存在跨所有有限维的固定纯元数替代）。** 对每个 $N\ge3$，构造101.6满足 $\mathrm G_{N-1}$、不满足 $\mathrm G_N$ 和 $\mathrm{Z0}$，且仍有 $\mathrm B+\mathrm A$ 与纯数值互反。一般 $N$ 的两个原混态反例可以统一取为
+
+$$
+x=b_1,\qquad y=\frac1{N-1}\sum_{j=2}^{N}b_j,\qquad
+w=\frac{x+y}{2}.
+\tag{VII101.27}
+$$
+
+证明。固定 $p=a_1$，$e_{12}(x)=0$、$e_{11}(y)=0$。$w$ 的同一原分解中 $\lambda_i=0$、$\mu_1=1/2$，其余 $\mu_j=1/[2(N-1)]$，故101.7准确给
+
+$$
+T_p(w)=\frac1{2(N-1)}>0.
+\tag{VII101.28}
+$$
+
+全部 $B$ 顶点在这个分解中都有正权，不能留下额外的零权 $B$ 顶点供另一张 $e_{1j}$ 排除整个中点。共同重心仍有
+
+$$
+o=\frac1N x+\frac{N-1}{N}y,
+\qquad T_p(o)=\frac1N,
+\tag{VII101.29}
+$$
+
+后式或由(VII101.19)，或由任意确认效应的共同顶点和至少为一得到。$N=3$ 的对称中点(VII101.25)是专门的三点实现；将它照搬到 $N>3$ 会漏掉其余 $b_j$，不能作为一般反例。式(VII101.27)才覆盖全部 $N$。
+
+任给固定 $k\ge1$，选择 $N\ge\max\{3,k+1\}$，则这个有限维原模型满足 $\mathrm G_k$ 却失败 $\mathrm{Z0}$，即使另给 $\mathrm B+\mathrm A$ 和纯数值互反也不改变结论。因此不存在独立于维数的固定纯目标元数替代原 $\mathrm{Z0}$。在这个自由和族中最小不相容组元数为 $N=m/2+1$；除四维情形外，这并不证明通用上界 $m-1$ sharp。证毕。
+
+### 101.8 四维的三个纯目标与原四类几何
+
+**定理 101.10（四维纯元数三的精确替换）。** 在定义101.1的同一个原载体及 $m=4$ 下，
+
+$$
+\boxed{\begin{aligned}
+\mathrm B+\mathrm G_3
+&\Longleftrightarrow\mathrm B+\mathrm{Z0}\\
+&\Longleftrightarrow
+K\cong_{\rm aff}\Delta_4,\ \mathbb B^4,\
+\mathbb B^3*\Delta_0\ \text{或}\ \mathbb B^2*\Delta_1\\
+&\Longleftrightarrow S.
+\end{aligned}}
+\tag{VII101.30}
+$$
+
+四类的全部原效应、least确认和局部proper效应的原全域延拓仍准确取定理99.8的公式；这些结论不是本定理的额外前件。在这一固定维数和 $\mathrm B$ 下，以至多几个原纯目标作统一替代，充分且最小的元数为三；固定确认纯点另算，合计至多四个纯标签。
+
+证明。第一步直接应用101.5的 $m-1=3$，不预设 $\mathrm{Z0}$。第二步及四类的完整 $S$ 直接消费VII99.8，不重复四类证明。反向从 $S$ 复用VI89.4及least零面得到原 $\mathrm B+\mathrm{Z0}$，再由101.2得到 $\mathrm G_3$。101.8的同维 $K_3$ 满足 $\mathrm B+\mathrm G_2$ 却失败 $\mathrm{Z0}$，故元数二不足。这里的最小性只比较(VII101.2)这一族原纯目标检验；不声称整个物理包具有最少独立公理。证毕。
+
+### 101.9 同一完整原数据上的几何替换候选
+
+**定义与定理 101.11（$\mathsf R_{\mathrm{BG3},\le4}^{(4)}$）。** 固定定理99.10的同一个完整原装饰元组 $\mathcal O$、选定集合 $J\subseteq\{A,D,E\}$、共同适用域及全部非几何条件，并记
+
+$$
+J_4=\{X\in J:m_X=4\}.
+$$
+
+以99.10的完整 $\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)$ 为定义起点，仅对 $X\in J_4$ 把原几何项 $\mathrm B_X+\mathrm{Z0}_X$ 换为同一原载体的 $\mathrm B_X+\mathrm G_{3,X}$，所得完整谓词记为 $\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)$。$J\setminus J_4$ 的几何项仍按99.10及VII98.8的原分支取 $\mathrm B_X+\mathrm{Z0}_X$；未选中的载体仍取其原几何项。这是精确局部替换定义，原 $\mathcal O$ 的其余每一条件逐项继承，不是只保留几何条件的摘要。于是同数据有
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)
+&\Longleftrightarrow\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII101.31}
+$$
+
+证明。逐 $X\in J_4$ 应用101.10，便恢复99.10的完整谓词；其余项按定义相同，再直接调用VII(99.37)。所有 $\mathrm G_{3,X}$ 都使用原 $P_X$ 和原整个 $F_{p,X}$，没有另造确认字典或把某个归一支撑子族当成整个确认面。
+
+准确保留的非几何合同就是VI89.7—89.10、VII98.8—98.9和定理99.10的完整合同。特别是，原概率像自身的紧性、有限仿射维与每个原中点实现，原测试像自身的闭性、零、单位、中点、补、有界倍增及同一原测试对全部准备实现，原带质量输出和重复标签、全部非负缩放及零／次归一／不等质量，以及各过程与参考自身的全部相关联合输入域，均保留原量词。原全效应域和这些实际实现条件不能相互代付。
+
+同一个原 $L,p,\omega$、两次使用同一读回、两实张成、全实 $Z$、含秩一分支的完整(83.8)、原迹／伴随／二次表示／单位、VI(89.13)全部两尺度等式、C2与整个 $G=1_E$，以及精确PRE后同一个原资格态的整个H13输出，均保持原定义；全部活跃块、严格负方向、共享总迹一、零质量及空活跃集仍在原域内。共同 $\mathfrak S(\mathcal O)$ 的设备／事件／来源绑定、全部菜单与分支、实际参考／副本／相关联合、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合服务、全部合法未来、旧支撑及每个中间切口也全部保留。
+
+VI89.9与VII98.9中复型、Born、指定复合和读回、CP事件、Kraus与实际仪器、条件更新／Lüders、物理时间各自的完整前件继续原义；VI89.10的原生来源各入口、原射影结构与密度、全部字和terminal futures、联合行与菜单、原细标签及粗归组、记录后的条件未来、source-adoption map和资源合同也继续原义。已有入口已经导出的结论无需重付，但 $\mathrm G_3$ 不生成这些非几何对象或来源。故该完整候选压缩的是四维几何入口的目标域，不宣称减少整个包的独立前提或完成量子物理来源。证毕。
+
+### 101.10 文献归属、尚存问题与白话
+
+Beck—Jayawant—McAllister，*Lattice-Point Generating Functions for Free Sums of Convex Sets*，[arXiv:1207.0164v2，§1](https://arxiv.org/pdf/1207.0164v2)，将含原点、位于互补坐标子空间的两凸集之并的凸包称为free sum，并说明它与Cartesian product的极性对偶背景。本章的两方向空间可选择为两坐标因子，且共同重心在两单纯形内部，故借用的是这一成熟凸几何构造和名称。原文有关有理／整数格点、reflexive多面体、生成函数与Ehrhart公式的前件和结论都未用于这里的证明；本模型不以格点条件为前提。
+
+Weiner，*Realization of an Arbitrary Structure of Perfect Distinguishability of States in General Probability Theory*，[arXiv:2301.06553v1，§1及§3](https://arxiv.org/pdf/2301.06553v1)，在全部仿射测量的GPT框架下区分两两完美区分与多态联合完美区分，并构造任意独立系统的联合区分结构。本章只借其成熟的一般GPT背景。该文的联合区分需要一张到单纯形的测量，为每个被区分态提供不同的确定结果；这里固定 $p$ 的共同排除只需一张二元效应把 $p$ 送到一、把所有目标一起送到零，并不区分这些目标。前一种测量可经结果合并给后一种二元效应，反方向并未成立。因此不把该文§3的独立系统构造直接认作本章固定确认点模型或反例的既有证明。
+
+有限维紧凸纯分解、效应紧性、面与相对内部、最小不相容组、仿射依赖、球的唯一对径，以及Helly的一般凸交背景均属成熟方法；本章的元数证明直接从实际失败的有限分解取得见证，不另立Helly定理。原问题内的组合增量为：对角取值使确认点与最小共同零目标组仿射独立；以同一个原线段的真实交点和 $\mathrm B$ 排除满维组；由此得到一般的(VII101.9)—(VII101.10)及四维原 $\mathrm G_3$ 等价；再对等重心自由和的全部原效应给出(VII101.19)—(VII101.29)的精确计算和同数据回接。这些采用 `repo-derived` 归属，不将自由和、一般二元／联合区别或单纯形仿射关系本身重报为新理论，不主张全球原创、文献穷尽或kernel核验。
+
+一般较高维 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 仍须在已有充分域之外解决VI90.10的全部原接触；101.5把 $\mathrm{Z0}$ 写成 $\mathrm G_{m-1}$ 后没有补上这一步。更强的通用纯元数上界及各较高维的最优值也未由本章确定。四维的 $\mathrm B+\mathrm G_2\Rightarrow\mathrm{Z0}$ 则已被101.8否定，不能继续列为未决问题。VI99的全实ROG域与本章任意原凸体的假设不同，不与这里的反例冲突。四维分类及纯目标压缩仍不推出复数、Born、指定复合、CP、仪器、更新、时间或实际来源；完整量子起源目标保持原未决边界。
+
+白话说，先固定一个必须被确认的纯状态，再挑出几种各自能读零的纯目标；真正的问题是能否用同一张原测试让它们全读零。若最小的一组做不到，删去每个目标后留下的测试会像对角表一样标出它，因此这组目标连同确认点必须占据独立的仿射方向，有限维就限制了障碍的大小。球形二纯面又排除了占满全部方向的最后一种障碍：同一条原线段穿过目标单纯形内部，会把整个状态空间迫成球，所有目标却只能挤到确认点的唯一对径，产生矛盾。所以在四维，至多三个纯目标的共同零要求已经等价于全部混态零拼合；确认点另算，总共是四个纯标签。两个目标确实不够：两片共享重心、方向互补的三角形中，每两个目标都能一起读零，任意纯对仍有原边、可二元区分且数值互反，但三个对侧顶点无法一起读零，两种分别可排除的混态之中点最低仍读到三分之一。更高维可用更大的两单纯形把障碍推到任意固定元数之后。这一压缩恢复同一原数据上的四维几何与最小确认；完整候选中关于来源、操作、复合和时间的合同继续各负其责。
+
+## 追加锚（本行以下为增补区）
+
+## 102. 合格纯目标与确认面的双秩降阶及全锚点逐维最优性
+
+### 102.1 同一原效应域内的逐源资格与两个秩
+
+**定义 102.1（合格目标秩与确认效应秩）。** 完整采用VII101.1的同一个有限维原 $V,C,u,K,P,[0,u]$ 及 $F_p,T_p,D_p,E_p$。整个 $P=\operatorname{ext}K$ 可无限、不闭；不预设光滑、ROG、PSD、自对偶、谱性或局部效应延拓。固定原纯 $p$，定义
+
+$$
+\begin{gathered}
+L_p=\operatorname{aff}(\{p\}\cup E_p),\qquad
+d_p=\dim L_p,\qquad h_p=\dim\operatorname{aff}F_p,\\
+b_p=\max\{1,\min\{h_p,d_p-1\}\},\qquad
+m=\dim\operatorname{aff}K.
+\end{gathered}
+\tag{VII102.1}
+$$
+
+这里 $u\in F_p$，所以 $h_p=\dim\operatorname{span}\{f-u:f\in F_p\}$，且 $0\le h_p,d_p\le m$。$h_p$ 在本章专指整数维数，区别于VII100的规范facet效应记号；$m$ 是原仿射维数，绝不与ROG矩阵环境余维 $c$ 混用。$E_p=\varnothing$ 时 $L_p=\{p\}$、$d_p=0$，仍按同一公式取 $b_p=1$。
+
+将VII101.1的全称条件拆为固定锚点的原谓词：
+
+$$
+\begin{aligned}
+\mathrm G_k(p):\quad&
+\forall\text{有限 }Q\subseteq E_p,\ |Q|\le k,
+\quad\exists f\in F_p\quad f|_Q=0,\\
+\mathrm{Z0}(p):\quad&
+\forall x,y\in D_p,\quad (x+y)/2\in D_p,\\
+\mathrm G_k&\Longleftrightarrow\forall p\in P,\ \mathrm G_k(p),\qquad
+\mathrm{Z0}\Longleftrightarrow\forall p\in P,\ \mathrm{Z0}(p).
+\end{aligned}
+\tag{VII102.2}
+$$
+
+$\mathrm G_{b_p}(p)$ 的锚点先固定，再只取原合格目标 $E_p$；不同锚点可有不同 $b_p$。$\mathrm G_1(p)$ 由资格定义自动成立，空集由 $u$ 处理，不能将它计作额外物理信息。这里的有限性只限制一次共同排除的目标集，不限制整个 $P$。
+
+原纯点零关系已经对称：若 $f(p)=1,f(q)=0$，则原补效应 $u-f$ 在 $q$ 取一、在 $p$ 取零。本章不以额外的纯数值互易 $\mathrm R:T_p(q)=T_q(p)$ 重新获得这一零对称性，也不把它计作新增结论。
+
+### 102.2 最小不相容组同时受两个原秩限制
+
+**定理 102.2（双秩障碍界）。** 固定 $p$。若 $\mathrm{Z0}(p)$ 失败，则有一个实际最小不相容组 $Q=\{q_1,\ldots,q_k\}\subseteq E_p$ 及原效应 $f_i$，满足
+
+$$
+\begin{gathered}
+k\ge2,\qquad f_i\in F_p,\qquad
+f_i(q_j)=a_i\delta_{ij},\qquad 0<a_i\le1,\\
+p,q_1,\ldots,q_k\text{ 仿射独立},\qquad
+k\le\min\{d_p,h_p\}.
+\end{gathered}
+\tag{VII102.3}
+$$
+
+同样的界适用于任意已经给定的有限最小不相容组，不以事先选定的混态反例为限。
+
+证明。VII101.2的有限纯分解与共同零等价可逐 $p$ 使用；VII101.3从实际失败的有限组删到最小，给这里的 $q_i,f_i,a_i$ 及 $p,q_1,\ldots,q_k$ 的仿射独立。这些是既有结论的直接复用。所有这些点都在 $L_p$，故 $k\le d_p$。
+
+还须核对确认面这一侧，而不能只援引目标空间维数。设
+
+$$
+\sum_{i=1}^k t_i(f_i-u)=0,\qquad
+T=\sum_i t_i,\qquad S_0=\sum_i\frac1{a_i}>1.
+$$
+
+在每个 $q_j$ 评价给 $t_ja_j-T=0$，因而 $t_j=T/a_j$。求和得 $T=TS_0$；由 $S_0>1$，$T=0$，再得全部 $t_j=0$。于是 $f_i-u$ 线性独立，$u,f_1,\ldots,f_k$ 是 $F_p$ 中的 $k+1$ 个仿射独立点，故 $k\le h_p$。这使用原确认效应的实际对角读数，不以抽象Helly数替代此秩计算。证毕。
+
+### 102.3 球形二纯面排除占满合格目标方向的障碍
+
+**定理 102.3（最小点仍在原资格域内）。** 在定义102.1及全称原 $\mathrm B$ 下，任意固定 $p$ 的有限最小不相容组满足
+
+$$
+2\le k\le\min\{h_p,d_p-1\}.
+\tag{VII102.4}
+$$
+
+证明。由102.2只需排除 $k=d_p$。沿用其 $q_i,f_i,a_i$，记 $L=L_p$，并在整个原 $K$ 上定义仿射函数
+
+$$
+\begin{gathered}
+F=(f_1,\ldots,f_k),\qquad
+\ell(y)=\sum_{i=1}^k\frac{y_i}{a_i},\qquad
+S_0=\sum_{i=1}^k\frac1{a_i}>1,\\
+\eta(x)=\frac{\ell(F(x))-1}{S_0-1}.
+\end{gathered}
+\tag{VII102.5}
+$$
+
+$F(p)=\boldsymbol1$、$F(q_i)=a_ie_i$；后面 $k$ 点张成 $\ell=1$ 的仿射超平面，$\ell(\boldsymbol1)=S_0\ne1$。因为 $p,q_1,\ldots,q_k$ 已是 $k$ 维 $L$ 的仿射基，
+
+$$
+F|_L:L\longrightarrow\mathbb R^k
+\quad\text{是仿射同构}.
+\tag{VII102.6}
+$$
+
+每个 $f_i$ 在原整个 $K$ 上满足 $0\le f_i\le1$，故 $\eta\le1$，且 $\eta(p)=1,\eta(q_i)=0$。若 $\eta\ge0$，它就是共同排除整组的原proper效应，矛盾。因此
+
+$$
+c_0=\min_K\eta<0.
+$$
+
+紧的最小值暴露面有原极点 $r\in P$ 达到 $c_0$。关键不是任取一个负值点后将它投到 $L$，而是使用同一个全局函数的真正最小点。定义
+
+$$
+g(x)=\frac{\eta(x)-c_0}{1-c_0}\quad(x\in K).
+\tag{VII102.7}
+$$
+
+这是原 $K$ 上的仿射函数，满足 $0\le g\le1$、$g(p)=1$、$g(r)=0$；其齐次表达为 $(\eta-c_0u)/(1-c_0)$。于是 $g$ 是原proper确认效应，$r\in E_p\subseteq L$，且 $r\ne p$。这里没有把 $L\cap K$ 换成新状态体，也没有调用 $L$ 上局部效应的延拓。
+
+置 $v=F(r)$、$t_0=\ell(v)<1$。所有 $v_i\ge0$，并且
+
+$$
+\theta=\frac{S_0-1}{S_0-t_0}\in(0,1),\qquad
+z=(1-\theta)p+\theta r,
+\qquad \ell(F(z))=1.
+$$
+
+$F(z)_i=(1-\theta)+\theta v_i>0$，故 $\gamma_i=F(z)_i/a_i$ 满足 $\gamma_i>0$、$\sum_i\gamma_i=1$，以及 $F(z)=\sum_i\gamma_iF(q_i)$。现在 $z,q_i$ 都在 $L$，(VII102.6)的可逆性才给原空间中的真实相交：
+
+$$
+z=\sum_i\gamma_iq_i
+\in(p,r)\cap\operatorname{ri}\operatorname{conv}\{q_1,\ldots,q_k\}.
+\tag{VII102.8}
+$$
+
+原最小面 $H(p,r)$ 含 $z$；面的性质与全部 $\gamma_i>0$ 使它包含所有 $q_i$。由 $\mathrm B$，这个整个原面是仿射欧氏球。$p,q_i$ 是原纯点，因而也是这个面的极点。对每个 $j$ 选 $i\ne j$，原 $f_i$ 限制到这个球仍有 $0\le f_i\le1$、$f_i(p)=1,f_i(q_j)=0$。球上一个proper仿射函数同时达到一和零时，两取等纯点必须为对径；单位球坐标中的条件为 $\|b\|\le a\le1-\|b\|$，同时取等迫使 $a=\|b\|=1/2$。所以所有不同的 $q_j$ 都必须等于 $p$ 在这个球中的唯一对径，与 $k\ge2$ 矛盾。
+
+这里的球是 $H(p,r)$；不需要 $H(p,r)=K$，也不需要 $L=\operatorname{aff}K$。102.3对VII101.5的加强正是(VII102.7)保证最小点仍在原 $E_p$，从而让原真实交点论证在 $L_p$ 上成立。证毕。
+
+### 102.4 逐源有限准则及低秩分支
+
+**推论 102.4（双秩有限纯目标准则）。** 在同一原有限维载体上，
+
+$$
+\boxed{\mathrm B\quad\Longrightarrow\quad
+\forall p\in P:\quad
+\bigl[\mathrm{Z0}(p)\Longleftrightarrow\mathrm G_{b_p}(p)\bigr].}
+\tag{VII102.9}
+$$
+
+因此在 $\mathrm B$ 下，原全部混态 $\mathrm{Z0}$ 等价于 $\forall p\in P,\ \mathrm G_{b_p}(p)$。$b_p$ 是从原资格域与原确认面得到的充分检验上界，不声称每个特定 $K,p$ 的实际最小充分元数都等于 $b_p$。
+
+证明。$\mathrm{Z0}(p)$ 到全部有限纯目标共同排除，直接逐源复用VII101.2。若反向失败，102.2给实际最小不相容组，102.3使其元数 $k\ge2$ 且 $k\le\min\{h_p,d_p-1\}\le b_p$，违反 $\mathrm G_{b_p}(p)$。
+
+低秩分支也由此完整包含。$E_p=\varnothing$ 时，VII101.6的非负纯分解表明 $D_p=\varnothing$，两条件均为空真。$h_p\le1$ 或 $d_p\le2$ 时不可能有(VII102.4)的最小组，故 $\mathrm{Z0}(p)$ 自动成立，$b_p=1$，没有增加假设。$m=0$ 时 $K$ 为单点、$F_p=\{u\}$、$h_p=d_p=0$；$m=1$ 时 $K$ 为线段，端点的原重心坐标确认给 $D_p$ 为另一端点，$d_p=h_p=1$。两者均落在 $b_p=1$ 分支。特别地 $m=2$ 的 $\mathrm B$ 域也自动有 $\mathrm{Z0}$。
+
+对 $m\ge2$，$b_p\le m-1$，所以VII101.5的全称 $\mathrm G_{m-1}$ 仍是统一充分条件；(VII102.9)允许每个源按自己实际的两种秩降低检验数。它不把仅一个固定源满足条件写成全部源满足条件。证毕。
+
+### 102.5 加权自由和的原顶点、原面与全部效应字典
+
+**定义 102.5（整个加权单纯形回路）。** 取整数 $r,s\ge2$，正数 $u_i,v_j$ 满足 $\sum_i u_i=\sum_jv_j=1$。在互补方向空间 $U,W$ 中，取维数分别为 $r-1,s-1$ 的单纯形，顶点为 $a_i,b_j$，满足
+
+$$
+\sum_{i=1}^r u_i a_i=\sum_{j=1}^s v_jb_j=o=0,
+\qquad
+K=\operatorname{conv}(\{a_i\}_i\cup\{b_j\}_j),
+\qquad m=r+s-2.
+\tag{VII102.10}
+$$
+
+$u_i,v_j$ 是关系权重，原单位仍是齐次化空间 $\mathbb R\oplus U\oplus W$ 上的 $u(t,w)=t$；原锥是 $\{t(1,x):t\ge0,x\in K\}$。它闭、尖、生成，$u$ 严格正，整个归一基就是此 $K$。两侧的 $o$ 均为相对内点；其正权平均给整个 $K$ 的相对内点。此处取的是成熟的单纯形自由和及全支撑仿射回路，不把它们另立为新多面体分类。
+
+为后面的全锚点证明，先把其原字典核对完整。互补性与每侧单纯形的唯一线性关系表明，全部顶点的仿射关系恰为
+
+$$
+(\Delta\lambda_i,\Delta\mu_j)=t(u_i,-v_j).
+\tag{VII102.11}
+$$
+
+每个非零关系在两侧都有至少两个非零系数，故没有一个所列点是其余点的凸组合。有限凸包不再有其他极点，所以 $P$ 恰为全部这 $r+s$ 个顶点；不是在更大原纯点集中只挑出一条关系。原全效应的精确条件因此是
+
+$$
+\alpha_i=f(a_i),\quad\beta_j=f(b_j),\qquad
+0\le\alpha_i,\beta_j\le1,\qquad
+\sum_i u_i\alpha_i=\sum_jv_j\beta_j.
+\tag{VII102.12}
+$$
+
+充分性可直接复用VI(92.8)：此关系就是整个仿射关系空间。亦可令共同加权值为 $c$，分别将 $\alpha_i-c$、$\beta_j-c$ 唯一实现为 $U,W$ 上的线性泛函，再加常数 $c$；顶点零一界给整个 $K$ 上的proper界。这是原全部效应，不是一个预选子字典。
+
+原真面的顶点子集恰为两侧各至少遗漏一个点的子集。必要性在于：若一个面含整侧顶点，就含 $o\in\operatorname{ri}K$，只能是 $K$。充分性可沿VI92.3的成熟面证书写出：对这样的子集 $S$，令未选两侧权重分别为
+
+$$
+U_S=\sum_{a_i\notin S}u_i>0,\qquad
+V_S=\sum_{b_j\notin S}v_j>0.
+$$
+
+在 $S$ 上赋零，未选 $A$ 顶点赋 $V_S/(U_S+V_S)$，未选 $B$ 顶点赋 $U_S/(U_S+V_S)$。两侧加权值相等且都在 $[0,1]$，所以这是一张原proper效应，其整个零面正是 $\operatorname{conv}S$。允许空面。特别地，$r,s\ge3$ 时任意两个不同顶点组成的集合都在两侧留下遗漏点，它们的整个最小面就是原真边，故全称 $\mathrm B$ 成立。这里复用的是标准仿射回路面结构，而非从一张局部线段尺假定全域延拓。
+
+### 102.6 原资格阈值与全部混态的加权下包络
+
+**命题 102.6（共同排除的容量条件与全效应比较）。** 在定义102.5的整个原模型中，固定 $p=a_i$，任取 $Q\subseteq P\setminus\{a_i\}$，有精确充要条件
+
+$$
+\exists f\in F_{a_i},\ f|_Q=0
+\quad\Longleftrightarrow\quad
+\sum_{j:b_j\in Q}v_j\le1-u_i.
+\tag{VII102.13}
+$$
+
+因此同侧所有不同纯点都属于 $E_{a_i}$，而
+
+$$
+b_j\in E_{a_i}\quad\Longleftrightarrow\quad u_i+v_j\le1.
+\tag{VII102.14}
+$$
+
+交换两侧，对源 $b_j$ 的条件准确为 $\sum_{i:a_i\in Q}u_i\le1-v_j$；其同侧不同纯点也全部合格。若在合格目标中取最小不相容组，必全部来自对侧，并且其权重和首次超过这个阈值；其中每个单目标仍须先满足(VII102.14)，不能把不合格点塞入较短障碍。
+
+任取原混态的任一非负归一顶点分解
+
+$$
+x=\sum_k\lambda_k a_k+\sum_j\mu_jb_j,
+\qquad\lambda_k,\mu_j\ge0,\quad\sum_k\lambda_k+\sum_j\mu_j=1.
+$$
+
+原全部确认效应的最小值是
+
+$$
+\boxed{\begin{aligned}
+T_{a_i}(x)&=\lambda_i+
+\min\left\{\sum_j\mu_j\gamma_j:
+0\le\gamma_j\le1,\ \sum_jv_j\gamma_j=u_i\right\},\\
+T_{b_j}(x)&=\mu_j+
+\min\left\{\sum_i\lambda_i\delta_i:
+0\le\delta_i\le1,\ \sum_i u_i\delta_i=v_j\right\}.
+\end{aligned}}
+\tag{VII102.15}
+$$
+
+两式均与所用分解无关，最小值均由原proper效应达到。特别地，记 $t_+=\max\{t,0\}$，跨侧纯值准确为
+
+$$
+T_{a_i}(b_j)=\frac{(u_i+v_j-1)_+}{v_j},\qquad
+T_{b_j}(a_i)=\frac{(u_i+v_j-1)_+}{u_i}.
+\tag{VII102.16}
+$$
+
+证明。(VII102.13)的必要性来自 $\alpha_i=1$、选中 $B$ 目标的 $\beta_j=0$，以及
+
+$$
+u_i\le\sum_k u_k\alpha_k=\sum_{b_j\notin Q}v_j\beta_j
+\le1-\sum_{b_j\in Q}v_j.
+$$
+
+反向令 $\alpha_i=1$、其他 $\alpha_k=0$，选中 $B$ 目标取零，未选 $B$ 点统一取 $u_i/(1-\sum_{b_j\in Q}v_j)$。前件保证分母至少为 $u_i>0$，且全部赋值在 $[0,1]$，(VII102.12)给所需原效应。同侧目标不增加任何容量，所以最小不相容组不能含同侧点。取单目标得资格式，另一侧完全同理。
+
+为证(VII102.15)确实遍历原全部效应，任取 $f\in F_{a_i}$，记
+
+$$
+c_f=\sum_k u_k\alpha_k=\sum_j v_j\beta_j\ge u_i>0.
+$$
+
+将它改为顶点赋值
+
+$$
+\widetilde\alpha_i=1,\qquad\widetilde\alpha_k=0\ (k\ne i),
+\qquad\widetilde\beta_j=\frac{u_i}{c_f}\beta_j.
+\tag{VII102.17}
+$$
+
+这些值仍在 $[0,1]$ 且两侧加权值恰为 $u_i$，故给一张原 $\widetilde f\in F_{a_i}$；它在每个原顶点都不大于 $f$，于是于整个原 $K$ 乃至原锥上满足 $\widetilde f\le f$。所以原全部确认效应的最小值可在这个精确截片上取得。截片非空（可取全部 $\gamma_j=u_i$）且紧，目标线性，最小值达到；每个截片点又都由(VII102.12)给原proper效应，从而上下界相合。交换两侧得第二式。
+
+两种归一分解之差由(VII102.11)给
+
+$$
+\lambda'_k=\lambda_k+t u_k,\qquad
+\mu'_j=\mu_j-t v_j.
+$$
+
+对截片中的每一个 $\gamma$，表达式变化恰为 $t u_i-t\sum_jv_j\gamma_j=0$；因此不只最小值不变，截片中的每个候选值都不变。这允许零分解系数，没有另换混态模型。
+
+最后，在源 $a_i$ 下最小化单个 $\gamma_j$，其他坐标最多承担 $1-v_j$ 的加权量，故它至少为 $(u_i+v_j-1)_+/v_j$。若 $u_i\le1-v_j$，取 $\gamma_j=0$、其他坐标统一取 $u_i/(1-v_j)$；否则其他坐标全取一并令 $\gamma_j=(u_i+v_j-1)/v_j$。两支都在原截片中达到下界，另一方向交换两侧即得。
+
+VI92.2及既有WeightedRelationConfirmation已经给分组重心中点的精确值；这里不将该既有值再计作新增。式(VII102.15)把计算写到同一一关系载体上的任意混态，并为下面的全锚点元数计算提供直接接口。证毕。
+
+### 102.7 不均匀三角形侧把全称障碍推迟到m减一
+
+**定理 102.7（每个 $m\ge4$ 的全锚点最优族）。** 对每个整数 $n\ge3$，在定义102.5中取
+
+$$
+\begin{gathered}
+r=3,\qquad s=n,\qquad m=n+1,\\
+u_0=1-2\varepsilon,\quad u_1=u_2=\varepsilon,
+\qquad v_j=1/n,\qquad 0<2\varepsilon<1/n.
+\end{gathered}
+\tag{VII102.18}
+$$
+
+$A$ 侧记为 $a_0,a_1,a_2$，$B$ 侧为 $b_1,\ldots,b_n$。这个整个原模型满足
+
+$$
+\boxed{\mathrm B+\mathrm G_{n-1},\qquad
+\neg\mathrm G_n,\qquad\neg\mathrm{Z0}.}
+\tag{VII102.19}
+$$
+
+因此对每个仿射维数 $m\ge4$，仅在原 $\mathrm B$ 域内，以VII101.1的全称同类纯目标条件替代 $\mathrm{Z0}$，统一充分元数 $m-1$ 已经逐维最小：$\mathrm B+\mathrm G_{m-2}$ 不足。这里的下界量化全部原锚点，不能由只检查一个轻源代替。
+
+证明。两侧顶点数都至少三，102.5已核对每个不同纯对的整个最小面为真边，所以原全称 $\mathrm B$ 成立。接着分别核对全部三类源。
+
+对重源 $a_0$，有 $u_0+1/n>1$，所以
+
+$$
+E_{a_0}=\{a_1,a_2\}.
+$$
+
+取原赋值 $\alpha_0=1,\alpha_1=\alpha_2=0$、全部 $\beta_j=u_0$，即同时排除全部合格目标。因此这个源满足所有 $\mathrm G_k(a_0)$；其 $d_{a_0}=2$，(VII102.1)也只要求自动成立的 $\mathrm G_1(a_0)$。
+
+对任一轻源 $a_i$、$i=1,2$，有 $\varepsilon+1/n<1$，所以
+
+$$
+E_{a_i}=P\setminus\{a_i\}.
+$$
+
+任取至多 $n-1$ 个合格目标，总有一个 $b_{j_0}$ 未选。令 $\alpha_i=1$、其他 $\alpha_k=0$，$\beta_{j_0}=n\varepsilon$、其他 $\beta_j=0$。由于 $0<n\varepsilon<1/2$，这给原proper确认效应，且共同排除所选全部目标，包括其中可能出现的重顶点。故两个轻源都满足 $\mathrm G_{n-1}(a_i)$。若要求排除全部 $n$ 个 $b_j$，其总关系权重为一，严格大于 $1-\varepsilon$，由(VII102.13)不可能。每个真子集仍可共同排除，所以它们是实际元数 $n$ 的最小不相容组。
+
+对任一对侧源 $b_j$，资格准确为
+
+$$
+E_{b_j}=\{a_1,a_2\}\cup\{b_\ell:\ell\ne j\};
+\qquad a_0\notin E_{b_j}.
+$$
+
+取 $\beta_j=1$、其余 $\beta_\ell=0$，$\alpha_1=\alpha_2=0$、$\alpha_0=1/(n u_0)$。由 $u_0>1-1/n$ 及 $n\ge3$，$0<1/(nu_0)<1$；两侧加权值均为 $1/n$。所以这也是一张原proper确认效应，且同时排除这个源的全部合格目标，给所有 $\mathrm G_k(b_j)$。
+
+至此全部原源都满足 $\mathrm G_{n-1}$，两个轻源失败 $\mathrm G_n$，VII101.2再给 $\neg\mathrm{Z0}$。较短的反向三目标集合 $\{a_0,a_1,a_2\}$ 不能作为 $b_j$ 的合格不相容组，因为其中 $a_0$ 连单独都不合格；仅数回路两侧的顶点数会漏掉这个条件。
+
+轻源还使双秩上界本身达到一般最大值：$d_{a_i}=m$，且 $h_{a_i}=m$。后者可在 $\alpha_i=1$ 的超平面内，给其他 $\alpha_k$ 统一取小的 $\delta\in(0,1)$，再令全部 $\beta_j=\varepsilon+\delta(1-\varepsilon)\in(0,1)$，取得其余所有坐标严格在零一界内部的点。原赋值空间只有一个关系，确认再去掉一维，所以 $\dim\operatorname{aff}F_{a_i}=r+s-2=m$。于是 $b_{a_i}=m-1=n$；任何声称在仅 $\mathrm B$ 域内一律用 $m-2$ 个目标的替换，都被同维的整个原模型否定。四维的最小元数三已由VII101.8—101.10给出；此族把逐维结论延伸到全部 $m\ge4$，并未将原四维结论重新计作新结果。证毕。
+
+### 102.8 轻源全部混态的值、五维整数实现及互易边界
+
+**命题 102.8（原中点精确缺口及七点实现）。** 在102.7中，对任一轻源 $a_i$、$i=1,2$，任意非负归一顶点分解均给
+
+$$
+T_{a_i}(x)=\lambda_i+n\varepsilon\min_j\mu_j.
+\tag{VII102.20}
+$$
+
+其 $D_{a_i}$ 是原暴露facet
+
+$$
+Q_{ij}=\operatorname{conv}(P\setminus\{a_i,b_j\})
+$$
+
+的并集。取原态
+
+$$
+x=b_1,\qquad y=\frac1{n-1}\sum_{j=2}^n b_j,\qquad w=(x+y)/2,
+$$
+
+有
+
+$$
+T_{a_i}(x)=T_{a_i}(y)=0,\qquad
+T_{a_i}(w)=\frac{n\varepsilon}{2(n-1)}>0,
+\qquad T_{a_i}(o)=\varepsilon.
+\tag{VII102.21}
+$$
+
+在 $m=5$ 可取七个整数坐标顶点
+
+$$
+\begin{gathered}
+a_0=(-1,-1;0,0,0),\quad a_1=(14,0;0,0,0),\quad a_2=(0,14;0,0,0),\\
+b_1=(0,0;1,1,1),\quad b_2=(0,0;1,-1,-1),\\
+b_3=(0,0;-1,1,-1),\quad b_4=(0,0;-1,-1,1),\\
+14a_0+a_1+a_2=4\sum_{j=1}^4b_j.
+\end{gathered}
+\tag{VII102.22}
+$$
+
+它满足 $\mathrm B+\mathrm G_3$ 而失败 $\mathrm G_4$ 和原混态 $\mathrm{Z0}$；上式轻源中点的最低原确认值为 $1/24$，共同内点值为 $1/16$。但原纯数值互易 $\mathrm R$ 失败。
+
+证明。在(VII102.15)中，轻源的约束为 $\sum_j\gamma_j=n\varepsilon<1/2$。任意可行向量都有
+
+$$
+\sum_j\mu_j\gamma_j\ge n\varepsilon\min_j\mu_j,
+$$
+
+把全部 $n\varepsilon$ 放在一个最小 $\mu_j$ 坐标即可达到，仍满足各坐标不超过一。这证明任意混态的(VII102.20)。其达到效应在 $a_i$ 取一、在相应 $b_j$ 取 $n\varepsilon$，其他顶点取零，因此整个零面为 $Q_{ij}$。删去这两个点后留下 $m$ 个仿射独立顶点，故它是维数 $m-1$ 的原facet；全部最低值为零当且仅当至少一张这样的效应取零，得到并集式。另一方面，重源及 $b_j$ 源的全部合格目标已有同一张效应排除，VII101.6直接给
+
+$$
+D_{a_0}=\operatorname{conv}\{a_1,a_2\},\qquad
+D_{b_j}=\operatorname{conv}\bigl(\{a_1,a_2\}\cup\{b_\ell:\ell\ne j\}\bigr).
+$$
+
+对(VII102.21)的 $w$，其 $B$ 权重为 $\mu_1=1/2$、$\mu_j=1/[2(n-1)]$（$j\ge2$），且 $\lambda_i=0$；全部 $B$ 顶点都有正权，所以最低值严格为正。$x$ 与 $y$ 各自缺少至少一个 $B$ 顶点，最低值为零。共同内点 $o=\sum_jb_j/n$ 给最低值 $\varepsilon$。这些分组态的中点值也正是VI92.2的已有效果：取 $t=\varepsilon$、分组权 $b=1/n$，其 $t/(2\max\{b,1-b\})$ 等于这里的数值；此特殊精确缺口属于复用。
+
+七点坐标的两方向分别张成 $\mathbb R^2$ 和 $\mathbb R^3$，两侧分别为三角形及四面体，正权重准确为
+
+$$
+(u_0,u_1,u_2)=(7/8,1/16,1/16),\qquad v_j=1/4.
+$$
+
+故 $\varepsilon=1/16,n=4$，(VII102.21)给 $4/(16\cdot6)=1/24$，共同内点值 $1/16$；102.7已核对全部七个源。
+
+一般族的重源与任一 $b_j$ 有
+
+$$
+T_{a_0}(b_j)=1-2n\varepsilon,\qquad
+T_{b_j}(a_0)=\frac{1/n-2\varepsilon}{1-2\varepsilon}.
+\tag{VII102.23}
+$$
+
+两值的共同正分子为 $1/n-2\varepsilon$，分母分别为 $1/n$ 和 $1-2\varepsilon$，二者不等；所以整个族均不满足 $\mathrm R$。七点例中准确为 $1/2$ 和 $1/7$。这些点仍是原边的对径端点，因而此族的 $\mathrm A$ 也失败；它同时失败 $\mathrm{Z0}$，没有反驳一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$。特别地，五维七点例不满足 $\mathrm B+\mathrm R+\mathrm G_3$ 的前件，不能据它否定该附加互易域的待证问题。仅 $\mathrm B$ 域的逐维最优性不能搬到 $\mathrm B+\mathrm R$ 域。证毕。
+
+### 102.9 完整原装饰数据中的精确逐源替换
+
+**定义与定理 102.9（完整 $\mathsf R_{\rm rank,\le4}$ 候选）。** 固定VII99.10的同一个完整原装饰元组 $\mathcal O$、选定 $J\subseteq\{A,D,E\}$、共同适用域及共同来源合同 $\mathfrak S(\mathcal O)$。对每个原载体 $X$，用其自己的原 $P_X,F_{p,X},E_{p,X}$ 定义
+
+$$
+\begin{gathered}
+d_{p,X}=\dim\operatorname{aff}(\{p\}\cup E_{p,X}),\qquad
+h_{p,X}=\dim\operatorname{aff}F_{p,X},\\
+b_{p,X}=\max\{1,\min\{h_{p,X},d_{p,X}-1\}\},\qquad
+\mathcal G_{{\rm rank},X}:\quad
+\forall p\in P_X,\ \mathrm G_{b_{p,X},X}(p).
+\end{gathered}
+\tag{VII102.24}
+$$
+
+从VII99.10定义的完整 $\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)$ 出发，仅将所选 $X\in J$ 的原几何项 $\mathrm B_X+\mathrm{Z0}_X$ 改写为 $\mathrm B_X+\mathcal G_{{\rm rank},X}$，其余每一项完整继承；所得谓词为 $\mathsf R_{\rm rank,\le4}(\mathcal O)$。它与VII101.11的 $\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)$ 使用同一 $J$、同一 $\mathcal O$ 及同一共同域。于是
+
+$$
+\boxed{\begin{aligned}
+\mathsf R_{\rm rank,\le4}(\mathcal O)
+&\Longleftrightarrow\mathsf R_{\mathrm{BG3},\le4}^{(4)}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\mathrm{BZ},\le4}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm polar}(\mathcal O)
+\Longleftrightarrow\mathsf R_{\rm zero\text{-}ball}(\mathcal O)\\
+&\Longleftrightarrow\mathsf R_{\rm mid}(\mathcal O)
+\Longleftrightarrow\mathsf R_{86}^{\rm ev}(\mathcal O)
+\Longleftrightarrow[\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}]^{\rm ev}(\mathcal O).
+\end{aligned}}
+\tag{VII102.25}
+$$
+
+证明。对所选每个 $X$，102.4在同一个原载体上给
+
+$$
+\mathrm B_X+\mathcal G_{{\rm rank},X}
+\Longleftrightarrow\mathrm B_X+\mathrm{Z0}_X.
+\tag{VII102.26}
+$$
+
+这条逐源替换对任意有限仿射维都成立；它本身没有低维、有限 $P_X$ 或表示前件。但(VII102.25)再回到完整 $S_X$ 和旧包的那一步，仍准确使用VII99.10、VII98.8的原共同适用域：单点、原 $m_X<3\delta_X$ 分支、$1\le m_X\le4$，或正维球形facet等各自已有充分条件。四维分支与VII101.11的原 $\mathrm G_{3,X}$ 等价直接复用VII101.10。域外的一般高维 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 并未由(VII102.26)得到证明。
+
+完整继承具有逐项含义：VI89.7—89.10、VII98.8—98.9和VII101.11规定的全部原准备、测试、过程、参考、读回、装饰及来源数据、原像自身的紧闭与中点／补／有界倍增条件、同一测试对全部准备实现、重复标签、带质量输出和全部非负缩放、零与次归一及不等质量、原过程自身的全部相关联合输入域均保持原量词。它们不是 $\mathcal G_{\rm rank}$ 的推论。
+
+同一个原 $L,p,\omega$ 与两次同一读回、两实张成、全实 $Z$、含秩一分支的完整(83.8)、原单位／迹／伴随／二次表示、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$，以及精确PRE之后同一资格态的整个H13输出仍完整保留。严格负方向、共享总迹一、活跃及非活跃块、零质量和空活跃集继续在其原域；这里的仿射维数 $m_X$ 不改写VI89.7中其他有类型的尺度参数。共同 $\mathfrak S(\mathcal O)$ 的设备／事件／来源绑定、菜单和分支、参考／副本／相关联合、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合服务、合法未来、旧支撑及每个中间切口逐项继承。
+
+复型与Born、指定复合和读回、同事件CP、Kraus及实际仪器、条件更新与Lüders、物理时间继续消费VII98.9和VI89.9各自的完整前件；原生来源及细化继续消费VI89.10的原几何、密度、全字、terminal futures、联合菜单／全部有符号关系、原细标签与粗归组、记录后条件未来、source-adoption map及资源合同。已有入口实际导出的后果直接复用，不重新列为缺口。这里只精化原谓词内部的几何检验，不替换原状态体，也不自动减少整个物理包的独立前件。
+
+若另有VI99.7的完整全实ROG前件，原 $\mathrm G_2\Longleftrightarrow\mathrm{Z0}\Longleftrightarrow S$ 可在交集中直接使用；其他实／复低余维分支亦仅按VI99.8自己的原域消费。反过来，双秩准则及本章有限加权模型都不供应ROG表示。证毕。
+
+### 102.10 数学归属、未决桥梁与完整白话
+
+**约定 102.10（复用范围与理论边界）。** VII101.2—101.3的有限纯闭合、最小不相容组与仿射独立，VII101.5的 $m-1$ 一般充分界，以及VII99.8、VII101.10的四维分类与既有最优值均按原范围复用。双秩部分的新增组合为：由 $f_i-u$ 的独立性读取原确认面维数；由原全域最小点的proper归一化证明 $r\in E_p$；再于 $L_p$ 中保持真实交点和原球唯一对径矛盾。这给(VII102.9)，不要求整个 $H(p,r)=K$。
+
+一关系部分直接引用VI92.1—92.3。[WeightedRelationConfirmation](../../../Blueprint/D5/S3/Quantum/Foundation/WeightedRelationConfirmation.md)及其[原声明源码](../../../D5/S3/Quantum/Foundation/WeightedRelationConfirmation.lean)的 `full_effect_iff`、`relation_effect` 对应全部原纯点、全部关系上的有界平衡赋值下降；`weighted_gap_after_exchange` 在全关系零度一、正权及交换后最小权重源上给任意非空真分组的原混态精确缺口，并允许原零系数顶点保留。[FinitePureSimplex](../../../Blueprint/D5/S3/Quantum/Foundation/FinitePureSimplex.md)及其[原声明源码](../../../D5/S3/Quantum/Foundation/FinitePureSimplex.lean)的 `zero_kernel_least_confirmation` 处理整个关系核为零，`zero_gluing_iff_simplex` 处理整个核维数至多一，均不要求球性。它们的对应Blueprint叙述与VI92保留这些全载体前件；本章不将已有效应下降、一关系失败 $\mathrm{Z0}$ 或分组中点精确值重报为新增。加权部分的组合增量是(VII102.13)—(VII102.17)的资格／全混态接口与不均匀 $3\mid n$ 族的全部锚点核对，从而建立每个 $m\ge4$ 的全称最优性，而非只找到一个固定源的长障碍。
+
+Beck—Jayawant—McAllister，*Lattice-Point Generating Functions for Free Sums of Convex Sets*，[arXiv:1207.0164v2，§1](https://arxiv.org/pdf/1207.0164v2)，以含原点、位于正交坐标子空间的两凸集之并的凸包定义free sum。本章的互补方向可选择为两个坐标因子，且共同原点在各单纯形内部，故借用其成熟构造与名称；不使用该文的格点、reflexive条件、Ehrhart或生成函数结论。全支撑仿射回路、标准面证书及一关系赋值使用VI92的Gale／Radon背景；VII100的任意关系零度facet计算仍按自身完整 $\mathrm{Z0}$ 前件保留，不由这里的一关系族重新证明。上述秩与全锚点最优性组合采用 `repo-derived` 归属，不主张全球首创、文献穷尽或Lean kernel核验。
+
+一般高维原 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 及其完整量子起源仍未由本章解决；双秩条件精确重写的是 $\mathrm{Z0}$，不是到 $\mathrm A$ 的缺失桥。仅 $\mathrm B$ 域内 $m\ge4$ 的统一元数问题由102.7确定，但附加全部纯数值互易 $\mathrm R$ 后的更强高维界未由这一不互易族确定，特别是五维 $\mathrm B+\mathrm R+\mathrm G_3$ 问题仍需独立处理。复型、Born、指定复合、CP、仪器、更新、时间和实际来源的条件仍为102.9所准确继承者；这里的纸面数学不作经验实现或完整物理来源认证。
+
+白话说，先固定一个必须读一的纯状态，只把那些本来就能单独读零的原纯状态列为合格目标，再问能否用同一张原测试让一组选中的目标全读零。一个最小失败组会让删去不同目标后取得的测试形成对角表，所以它既要占据足够多的合格目标方向，也要占据足够多的确认测试方向；这是两种秩。若它恰好占满合格目标的方向，把这些原测试合成的一把尺在全状态空间取最小值，再按真实最小值归一化，就会得到另一个仍合格的原纯点。确认点到这个点的真实线段穿过目标单纯形内部，把所有目标装进同一个原球面；它们却都必须是确认点唯一的对径，于是矛盾，目标方向的上界因此还能减一。最优反例由共享一个内点的三角形和更大单纯形组成：三角形中两个顶点很轻，确认它们时，只需让对面某个尚未被要求读零的顶点承担一点正值，所以删去对面任意一个目标总能成功，全部目标同时出现才暴露冲突。很重的第三个顶点则让反向的短障碍失去资格——对侧源连单独排除它都做不到，不能拿它凑成更短的合格失败组。这样每个原源都通过小一阶的检验，整组却仍失败，证明仅球形二纯面下的通用阶数已经最优。轻源的两种分别可排除状态混合后，最低读数可以精确算成正数；五维七点例是二十四分之一。这个例子同时失去纯数值互易，所以不能用来判断保留互易后的更强候选。完整候选仍在原来的准备、测试、过程和未来上工作，只把几何中的共同零条件精确换成按源计秩的纯目标准则，其他量子结构、操作和来源继续由各自完整合同承担。
+
+## 追加锚（本行以下为增补区）
