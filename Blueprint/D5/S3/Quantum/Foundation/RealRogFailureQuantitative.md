@@ -1,12 +1,28 @@
-# Quantitative cross-pair predecessor
+# Original primal attainment and quantitative cross-pair predecessor
 
 ## Abstract
 
-A supplied normalized rank-one cross pair gives an actual cone gap against every proper confirmer on the entire PSD section.
+Original-unit primal attainment and a supplied normalized rank-one cross pair give separate parts of the failure-lift argument.
 
-This is the quantitative predecessor in Quantum Origin VI Proposition 93.3, equations (93.22) and (93.24). Its premises explicitly supply trace normalization and a cross pair separated by an effect on the section. The original arbitrary strictly positive unit, full-support compression, determinant maximizer, primal and dual attainment, extraction from a failed local antipodal pair, purity transport and the return to the original carrier remain unpaid. This result does not complete Proposition 93.3 and supplies no block classification, Jordan structure, self-duality or zero-gluing premise.
+The normalized quantitative predecessor addresses Quantum Origin VI Proposition 93.3, equations (93.22) and (93.24). Its premises explicitly supply trace normalization and a cross pair separated by an effect on the section. A separate original-carrier theorem proves primal attainment for the arbitrary strictly positive original unit, using the original compact base and generating cone. Full-support compression, determinant normalization, a same-object saturating dual effect, extraction from an actual failed local antipodal pair, purity transport and the return to the original carrier remain unpaid. Neither result completes Proposition 93.3 or supplies block classification, Jordan structure, self-duality or a zero-gluing premise.
 
-**Theorem 1.1 (The dimension-uniform quadratic estimate).**
+**Theorem 1.1 (An attained primal on the original cone with its original unit).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let A be an arbitrary finite-dimensional real normed vector space, C a pointed cone whose real span is all of A, and u the same real linear functional throughout. Assume u is strictly positive on every nonzero point of C and the entire base C intersect {u=1} is compact. For every z in A, there exist X,Y in C with z=X-Y and u(X)+u(Y) equal to BaseNormContraction.baseNorm for this C,u,z. The same X,Y minimize the original mass cost over every feasible pair in C. Their masses are respectively (baseNorm(z)+u(z))/2 and (baseNorm(z)-u(z))/2. In particular u(z)=0 forces equal masses on this actual optimum; no change of unit or matrix representation occurs.
+
+The compactness step identifies the entire mass cap {a in C : u(a)<=R} with [0,R] times the original base with zero adjoined, including the zero vector and empty-base case. The product of two such compact caps, intersected with the closed original difference fiber X-Y=z, is compact and contains an initial feasible decomposition supplied by PointedCone.mem_span. A continuous mass minimum on this fiber is a global minimum: every lower-cost feasible pair lies in both caps, and every pair outside the cost bound has larger cost. IsLeast.csInf_eq then identifies this actual minimum with the existing source-defined base norm. This mass-cap compactness statement is a live proof dependency, rather than a reformulation of the final attainment conclusion.
+
+This proves the primal portion used in (93.12) and (93.23), on the whole original carrier and without trace normalization, ROG or a zero-gluing assumption. It does not produce a dual functional, prove base-norm polarity or the failed-pair bound 0<baseNorm(p-r)<2, or establish saturation by a common proper effect. Those obligations cannot be inferred from attainment alone. The cone base-norm definition is reused from BaseNormContraction; finite-dimensional continuity and compact minimization are pinned Mathlib inputs. The mass-cap and global-minimum argument implements the source's compactness proof in 90.9; no literature-priority claim is made.
+
+**Theorem 1.2 (The dimension-uniform quadratic estimate).**
 
 Lean statement: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.midpoint_psd_gap`
 
@@ -20,7 +36,7 @@ Let the finite coordinate type have cardinality n at least two, and let v and w 
 
 The proof constructs the orthogonal residuals b = w-(v dot w)v and h = z-(v dot z)v for each test vector z. Their squared norms and cross product reduce to the original dot products. The finite Cauchy-Schwarz theorem bounds (b dot h)^2 by the squared norm of h. A weighted square then gives c(v dot z)^2 <= n((w dot z)^2 + (z dot z-(v dot z)^2)/(n-1)). The PSD criterion converts this estimate into the actual matrix difference. The normalized section theorem below consumes this cone difference on its live proof path.
 
-**Theorem 1.2 (Two zeros and a uniform positive midpoint on the whole section).**
+**Theorem 1.3 (Two zeros and a uniform positive midpoint on the whole section).**
 
 Lean statement: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.normalized_cross_pair_gap`
 
@@ -42,4 +58,6 @@ Reuse: finite Cauchy-Schwarz and the real matrix PSD quadratic criterion are pin
 
 - Truth anchor: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.midpoint_psd_gap`
 - Truth anchor: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.normalized_cross_pair_gap`
+- Truth anchor: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment`
+- Dependency: [D5/S3/Quantum/Dynamics/BaseNormContraction](../Dynamics/BaseNormContraction.md)
 - Dependency: [D5/S3/Quantum/Foundation/CircuitBalancedConfirmation](CircuitBalancedConfirmation.md)
