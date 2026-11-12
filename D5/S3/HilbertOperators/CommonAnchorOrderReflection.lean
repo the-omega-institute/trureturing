@@ -170,11 +170,9 @@ private theorem weighted_complement_norm (V : S → E →L[ℂ] F) (p : S → �
   ring
 
 private theorem re_complex_real_mul (r : ℝ) (z : ℂ) :
-    RCLike.re ((r : ℂ) * z) = r * RCLike.re z := by
-  change ((r : ℂ) * z).re = r * z.re
-  simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    RCLike.re ((r : ℂ) * z) = r * RCLike.re z := RCLike.re_ofReal_mul r z
 
-private theorem re_complex_real (r : ℝ) : RCLike.re (r : ℂ) = r := rfl
+private theorem re_complex_real (r : ℝ) : RCLike.re (r : ℂ) = r := RCLike.ofReal_re r
 
 private theorem sandwich_quadratic (V : S → E →L[ℂ] F) (p : S → ℝ)
     (X : E →L[ℂ] E) (z : F) :
