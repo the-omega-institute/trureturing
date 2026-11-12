@@ -202,7 +202,7 @@ private theorem odd_disjoint (c : Vector → Fin 18) (i j : Fin 18) (hij : i ≠
   intro e hei hej
   obtain ⟨u,hu,hue⟩ := Finset.mem_image.mp hei
   obtain ⟨v,hv,hve⟩ := Finset.mem_image.mp hej
-  have huv : u = v := oddPoint_involutive.injective (hue.trans hve.symm)
+  have huv : u = v := oddPoint_injective (hue.trans hve.symm)
   have hi := (Finset.mem_filter.mp (Finset.mem_filter.mp hu).1).2
   have hj := (Finset.mem_filter.mp (Finset.mem_filter.mp hv).1).2
   exact hij (hi.symm.trans ((congrArg c huv).trans hj))

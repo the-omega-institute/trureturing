@@ -424,12 +424,6 @@ private theorem two_shift (a b v : ℝ) :
   simp [h,quintic,L2,R2,S2,R2d,T2,U2]
   ring
 
-private theorem two_eval (a b c : ℝ) : (twoPolynomial a b).eval c=h a b c 2 := by
-  simp only [twoPolynomial,eval_comp,eval_add,eval_mul,eval_C,eval_pow,eval_X,eval_sub]
-  have he:=two_shift a b (c-b)
-  rw [show b+(c-b)=c by ring] at he
-  linear_combination -he
-
 private theorem two_deriv (a b c : ℝ) :
     (twoPolynomial a b).derivative.eval c=3*U2 a b*(c-b)^2+2*T2 a b*(c-b)+S2 a b := by
   rw [twoPolynomial,Polynomial.derivative_comp]

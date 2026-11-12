@@ -599,8 +599,7 @@ private theorem bezout_identity (a : ℚ) :
       Polynomial.C (a^2*(a-1)^4*(2*a+1)^2) := by
     apply Polynomial.funext
     intro b
-    simp [quarticPolynomial,quartic,A,B,C₀]
-    ring
+    simp [quarticPolynomial,quartic_coefficients] <;> ring
   rw [hq]
   simp only [derivative_add,derivative_mul,derivative_C,derivative_pow,
     derivative_X,zero_mul,zero_add,mul_one]

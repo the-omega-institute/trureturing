@@ -184,12 +184,6 @@ private def pointCongr {F : Type*} [Field F] [DecidableEq F]
   subst D
   rfl
 
-private theorem pointCongr_xRep {F : Type*} [Field F] [DecidableEq F]
-    {C D : WeierstrassCurve F} (h : C=D) (P : C.toAffine.Point) :
-    (pointCongr h P).xRep=P.xRep := by
-  subst D
-  rfl
-
 open A6EllipticModels A6GaloisCoset A6DyadicInfiniteOrder A6TorsionArithmetic
 
 private def shortModelEquiv (F : Type*) [Field F] [CharZero F] [DecidableEq F] :
