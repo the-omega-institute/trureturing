@@ -57,13 +57,16 @@ private theorem sum_squares (A : Data Y T v) {ι : Type*}
     rw [Finset.sum_insert hi]
     exact add_squares A (hf i (by simp)) (ih (fun j hj => hf j (by simp [hj])))
 
-/-- Positivity of the square defect is derived from finite spectral data and
-the original all-argument quadratic-positivity theorem. -/
-theorem square_defect_of_spectral (A : Data Y T v)
-    (hspec : HasFiniteSpectralResolutions S u) (Φ : X →ₗ[ℝ] Y)
-    (hunit : Φ u = v) (hpos : ∀ x, ∃ y, T y y = Φ (S x x)) (a : X) :
-    ∃ z, T z z = Φ (S a a) - T (Φ a) (Φ a) := by
-  obtain ⟨n, e, r, he, heu, hea, heaa⟩ := hspec a
+omit [CompleteSpace Y] in
+/-- The explicit spectral sum identity for the same map, spectrum and target product. -/
+theorem square_defect_identity (htsymm : ∀ x y, T x y = T y x)
+    (htunit : ∀ x, T v x = x) {n : ℕ}
+    (e : Fin n → X) (r : Fin n → ℝ) (Φ : X →ₗ[ℝ] Y)
+    (hunit : Φ u = v) (heu : ∑ i, e i = u) {a : X}
+    (hea : ∑ i, r i • e i = a)
+    (heaa : ∑ i, (r i * r i) • e i = S a a) :
+    ∑ i, quadratic T (r i • v - Φ a) (Φ (e i)) =
+      Φ (S a a) - T (Φ a) (Φ a) := by
   let z : Fin n → Y := fun i => Φ (e i)
   let b := Φ a
   have hz : ∑ i, z i = v := by
@@ -74,12 +77,12 @@ theorem square_defect_of_spectral (A : Data Y T v)
     simp only [z, ← map_smul, ← map_sum, heaa]
   have hsum : ∑ i, quadratic T (r i • v - b) (z i) =
       Φ (S a a) - T b b := by
-    have hright (x : Y) : T x v = x := (A.symm x v).trans (A.unit_mul x)
+    have hright (x : Y) : T x v = x := (htsymm x v).trans (htunit x)
     have hquad (i : Fin n) : quadratic T (r i • v - b) (z i) =
         (r i * r i) • z i - (2 : ℝ) • (r i • T b (z i)) +
           quadratic T b (z i) := by
       simp only [quadratic, map_sub, map_smul, LinearMap.sub_apply,
-        LinearMap.smul_apply, A.unit_mul, hright]
+        LinearMap.smul_apply, htunit, hright]
       module
     have hcross : ∑ i, r i • T b (z i) = T b b := by
       simpa only [map_sum, map_smul] using congrArg (T b) hrz
@@ -90,16 +93,26 @@ theorem square_defect_of_spectral (A : Data Y T v)
     simp only [hquad, Finset.sum_add_distrib, Finset.sum_sub_distrib,
       ← Finset.smul_sum, hrrz, hcross, hp]
     module
+  exact hsum
+
+/-- Positivity of the square defect is derived from finite spectral data and
+the original all-argument quadratic-positivity theorem. -/
+theorem square_defect_of_spectral (A : Data Y T v)
+    (hspec : HasFiniteSpectralResolutions S u) (Φ : X →ₗ[ℝ] Y)
+    (hunit : Φ u = v) (hpos : ∀ x, ∃ y, T y y = Φ (S x x)) (a : X) :
+    ∃ z, T z z = Φ (S a a) - T (Φ a) (Φ a) := by
+  obtain ⟨n, e, r, he, heu, hea, heaa⟩ := hspec a
+  have hsum := square_defect_identity A.symm A.unit_mul e r Φ hunit heu hea heaa
   rw [← hsum]
   apply sum_squares A
   intro i _
   obtain ⟨w, hw⟩ := hpos (e i)
   rw [he i] at hw
-  obtain ⟨q, hq⟩ := quadratic_preserves_squares A (r i • v - b) w
-  exact ⟨q, by simpa only [hw, z] using hq.symm⟩
+  obtain ⟨q, hq⟩ := quadratic_preserves_squares A (r i • v - Φ a) w
+  exact ⟨q, by simpa only [hw] using hq.symm⟩
 
 omit [CompleteSpace Y] in
-private theorem zero_defect_cross (A : Data Y T v)
+theorem zero_defect_cross (A : Data Y T v)
     (hsymm : ∀ x y, S x y = S y x) (Φ : X →ₗ[ℝ] Y)
     (hdef : ∀ a, ∃ z, T z z = Φ (S a a) - T (Φ a) (Φ a))
     (a : X) (ha : Φ (S a a) - T (Φ a) (Φ a) = 0) (x : X) :
