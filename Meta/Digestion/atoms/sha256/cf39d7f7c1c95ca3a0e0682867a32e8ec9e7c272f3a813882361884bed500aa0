@@ -1,0 +1,10 @@
+## 38. 任意 Hermitian 二演员块的零模回接与第三残量刚性
+
+本节只在 §37 的原轴环境中推进剩余的第三格问题。二维比较块现在是任意
+Hermitian
+$$
+T=\begin{pmatrix}d&z\\\overline z&e\end{pmatrix},\qquad d,e\in\mathbb R,\quad z\in\mathbb C,
+$$
+而残量只写成 $sP_3$，其中 $P_3=\operatorname{diag}(0,1)$、$s\in\mathbb R$。
+本节的新结论由逐项矩阵恒等式给出：不把二维矩阵当成实际压缩，不改变原 $B$、原环境或实际探针域。§36.2 继续负责前两格，§37.2 负责把同一份二维见证接回完整原矩阵；本节只支付 §37.6 中「任意 $T$ 的非零对角项尚未分类」这一条在本轴环境内的缺口。
+
