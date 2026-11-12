@@ -80,10 +80,6 @@ private theorem cone_weights {z : V} (hz : z ∈ C) :
   obtain ⟨w,hw⟩ := (Submodule.mem_span_range_iff_exists_fun (R := {r : ℝ // 0 ≤ r})).mp hz
   exact ⟨fun i => (w i : ℝ),fun i => (w i).property,hw⟩
 
-private theorem weights_cone (w : Fin 7 → ℝ) (hw : ∀ i, 0 ≤ w i) :
-    ∑ i, w i • p i ∈ C :=
-  C.sum_mem (fun i _ => C.smul_mem (hw i) (p_mem i))
-
 private theorem base_weights {z : V} (hz : z ∈ K) :
     ∃ w : Fin 7 → ℝ, (∀ i, 0 ≤ w i) ∧ (∑ i, w i) = 1 ∧ ∑ i, w i • p i = z := by
   obtain ⟨w,hw,rfl⟩ := cone_weights hz.1
@@ -126,8 +122,9 @@ private theorem linear_coordinates (f : V →ₗ[ℝ] ℝ) (z : V) :
   conv_lhs => rw [hz]
   simp [map_add,map_smul,smul_eq_mul]
 
-/-- Universal domination supplies the full mixed exclusion argument. The input f
-is arbitrary in the entire proper interval, not one of the seven facet effects. -/
+set_option maxHeartbeats 2000000 in
+-- The seven symbolic confirmer polyhedra require seven-by-seven linear checks.
+/-- Universal domination uses arbitrary proper real linear confirmers. -/
 private theorem confirmer_bound (i j : Fin 7) (f : V →ₗ[ℝ] ℝ)
     (hf : confirms C u (p i) f) : h i (p j) ≤ 100 * f (p j) := by
   have h0 := hf.1 (p 0) (p_mem 0)
@@ -150,25 +147,53 @@ private theorem confirmer_bound (i j : Fin 7) (f : V →ₗ[ℝ] ℝ)
   fin_cases i <;> fin_cases j <;>
     norm_num [h,p,u,form_apply] at * <;> linarith
 
+private theorem confirmer_bound_cone (i : Fin 7) (f : V →ₗ[ℝ] ℝ)
+    (hf : confirms C u (p i) f) {z : V} (hz : z ∈ C) : h i z ≤ 100 * f z := by
+  obtain ⟨w,hw,rfl⟩ := cone_weights hz
+  calc
+    h i (∑ j, w j • p j) = ∑ j, w j * h i (p j) := by
+      simp [map_sum,map_smul,smul_eq_mul]
+    _ ≤ ∑ j, w j * (100 * f (p j)) :=
+      Finset.sum_le_sum (fun j _ =>
+        mul_le_mul_of_nonneg_left (confirmer_bound i j f hf) (hw j))
+    _ = 100 * f (∑ j, w j • p j) := by
+      simp only [map_sum,map_smul,smul_eq_mul,Finset.mul_sum]
+      congr 1
+      ext j
+      ring
+
 private theorem exclusion_zero (i : Fin 7) {z : V} (hz : z ∈ C)
     (he : ∃ f, confirms C u (p i) f ∧ f z = 0) : h i z = 0 := by
   obtain ⟨f,hf,hfz⟩ := he
   apply le_antisymm _ ((h_proper i z hz).1)
-  obtain ⟨w,hw,rfl⟩ := cone_weights hz
-  have hb : ∑ j, w j * h i (p j) ≤ ∑ j, w j * (100 * f (p j)) :=
-    Finset.sum_le_sum (fun j _ => mul_le_mul_of_nonneg_left (confirmer_bound i j f hf) (hw j))
-  have heq : (∑ j, w j * (100 * f (p j))) = 100 * f (∑ j, w j • p j) := by
-    simp only [map_sum,map_smul,smul_eq_mul,Finset.mul_sum]
-    congr 1
-    ext j
-    ring
-  rw [heq,hfz,mul_zero] at hb
-  simpa [map_sum,map_smul,smul_eq_mul] using hb
+  simpa only [hfz,mul_zero] using confirmer_bound_cone i f hf hz
+
+private theorem comparison_zero_iff (i : Fin 7) (z : V) (hz : z ∈ C) :
+    comparison C u (p i) z = 0 ↔ ∃ f, confirms C u (p i) f ∧ f z = 0 := by
+  let R := {r : ℝ | ∃ f, confirms C u (p i) f ∧ f z = r}
+  have hne : R.Nonempty := ⟨h i z,h i,⟨h_proper i,h_self i⟩,rfl⟩
+  have hb : BddBelow R := ⟨0,by rintro r ⟨f,hf,rfl⟩; exact (hf.1 z hz).1⟩
+  have hn : 0 ≤ sInf R := le_csInf hne (by
+    rintro r ⟨f,hf,rfl⟩
+    exact (hf.1 z hz).1)
+  constructor
+  · intro he
+    have hl : h i z / 100 ≤ sInf R := by
+      apply le_csInf hne
+      rintro r ⟨f,hf,rfl⟩
+      have hh := confirmer_bound_cone i f hf hz
+      linarith
+    change sInf R = 0 at he
+    rw [he] at hl
+    exact ⟨h i,⟨h_proper i,h_self i⟩,le_antisymm (by linarith) (h_proper i z hz).1⟩
+  · rintro ⟨f,hf,hfz⟩
+    exact le_antisymm (csInf_le hb ⟨f,hf,hfz⟩) hn
 
 private theorem self_fiber (i : Fin 7) (z : V) (hz : z ∈ K)
     (he : h i z = 1) : z = p i := by
   obtain ⟨w,hw,hs,rfl⟩ := base_weights hz
-  have hn (j : Fin 7) : 0 ≤ 1-h i (p j) := sub_nonneg.mpr (h_proper i _ (p_mem j)).2
+  have hn (j : Fin 7) : 0 ≤ 1-h i (p j) := by
+    simpa only [unit_p,sub_nonneg] using (h_proper i _ (p_mem j)).2
   have ht : ∑ j, w j * (1-h i (p j)) = 0 := by
     simp only [mul_sub,mul_one,Finset.sum_sub_distrib]
     rw [hs]
@@ -181,8 +206,11 @@ private theorem self_fiber (i : Fin 7) (z : V) (hz : z ∈ K)
       fin_cases i <;> fin_cases j <;> norm_num [h,p,form_apply] at *
     exact (mul_eq_zero.mp hh).resolve_right hne
   have hwi : w i = 1 := by
-    simpa only [Finset.sum_eq_single i (fun j _ hji => hj0 j hji)
-      (by simp)] using hs
+    calc
+      w i = ∑ j, w j := by
+        symm
+        exact Finset.sum_eq_single i (fun j _ hji => hj0 j hji) (by simp)
+      _ = 1 := hs
   rw [Finset.sum_eq_single i]
   · simp [hwi]
   · intro j _ hji
@@ -192,8 +220,9 @@ private theorem self_fiber (i : Fin 7) (z : V) (hz : z ∈ K)
 private theorem pure_family : pure C u = Set.range p := by
   apply Set.Subset.antisymm
   · intro q hq
-    apply extremePoints_convexHull_subset
-    simpa only [pure,← base_hull] using hq
+    apply extremePoints_convexHull_subset (𝕜 := ℝ)
+    rw [← base_hull]
+    exact hq
   · rintro _ ⟨i,rfl⟩
     refine ⟨p_base i,?_⟩
     intro x hx y hy hseg
@@ -211,8 +240,9 @@ private theorem pure_family : pure C u = Set.range p := by
 theorem whole_mixed_zero_gluing : zeroGluing C u := by
   intro q x y hx hy he hf
   have hq : (q : V) ∈ Set.range p := by
-    apply extremePoints_convexHull_subset
-    simpa only [pure,← base_hull] using q.property
+    apply extremePoints_convexHull_subset (𝕜 := ℝ)
+    rw [← base_hull]
+    exact q.property
   obtain ⟨i,hi⟩ := hq
   have he' : h i x = 0 := exclusion_zero i hx.1 (by simpa [hi] using he)
   have hf' : h i y = 0 := exclusion_zero i hy.1 (by simpa [hi] using hf)
@@ -286,25 +316,22 @@ private theorem edge_one_face : {z | z ∈ K ∧ edgeEffect z = 1} =
       ext z
       constructor <;> rintro ⟨hz,he⟩ <;> refine ⟨hz,?_⟩
       · simp [LinearMap.sub_apply,hz.2,he]
-      · simpa [LinearMap.sub_apply,hz.2,sub_eq_zero,eq_comm] using he
+      · have hh : 1-edgeEffect z = 0 := by
+          simpa only [LinearMap.sub_apply,hz.2] using he
+        linarith
     _ = _ := he
 
 private theorem ruler_local (z : V) (hz : z ∈ facet) : 0 ≤ ruler z ∧ ruler z ≤ 1 := by
   rw [facet_segment] at hz
   obtain ⟨a,b,ha,hb,hab,rfl⟩ := hz
-  norm_num [ruler,map_add,map_smul,h,p,form_apply]
+  rw [map_add,map_smul,map_smul]
+  norm_num [ruler,h,p,form_apply]
   exact ⟨ha,by linarith⟩
 
 private theorem facet_maximum : IsGreatest ((h 1) '' facet) (28/87 : ℝ) := by
   constructor
   · exact ⟨p 3,by rw [facet_segment]; exact left_mem_segment ..,
-      by norm_num [h,p,form_apply],projection_split,
-    projection_on_generators.1,projection_on_generators.2.1,projection_on_generators.2.2,
-    complementary_face,affine_homogeneous_bridge,no_affine_extension,
-    by intro i; fin_cases i <;> norm_num [edgeEffect,p,form_apply],
-    by intro i hi hj; fin_cases i <;> norm_num [edgeEffect,p,form_apply] at *,
-    by intro z; constructor <;> norm_num [h,u,edgeEffect,form_apply] <;> ring,
-    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family,original_affine_span⟩
+      by norm_num [h,p,form_apply]⟩
   · rintro _ ⟨z,hz,rfl⟩
     have hb := (ruler_local z hz).2
     simp only [ruler,LinearMap.smul_apply,smul_eq_mul] at hb
@@ -366,7 +393,8 @@ private theorem extensions_exhaustive (f : V →ₗ[ℝ] ℝ) :
     have h3 := hf (p 3) facet_endpoints.1
     have h4 := hf (p 4) facet_endpoints.2
     refine ⟨19 * (f (Pi.single 0 1) - ruler (Pi.single 0 1)) / 9,?_⟩
-    ext z
+    apply LinearMap.ext
+    intro z
     rw [linear_coordinates f (p 3)] at h3
     rw [linear_coordinates f (p 4)] at h4
     rw [linear_coordinates f z]
@@ -449,9 +477,13 @@ private theorem homogenize_value (g : (Fin 2 → ℝ) →ᵃ[ℝ] ℝ)
   have he : spatial z = z 1 • Pi.single 0 1 + z 2 • Pi.single 1 1 := by
     ext k
     fin_cases k <;> simp [spatial]
-  have hg := congrFun g.decomp (spatial z)
-  rw [he] at hg
-  simp only [map_add,map_smul,smul_eq_mul] at hg
+  have hg : g (spatial z) = g.linear (spatial z) + g 0 :=
+    congrFun g.decomp (spatial z)
+  have hl : g.linear (spatial z) =
+      z 1 * g.linear (Pi.single 0 1) + z 2 * g.linear (Pi.single 1 1) := by
+    rw [he,map_add,map_smul,map_smul]
+    rfl
+  rw [hl] at hg
   change z 0 = 1 at hz
   norm_num [homogenize,form_apply,hz]
   linarith
@@ -469,7 +501,8 @@ private theorem linear_unique_on_base (f g : V →ₗ[ℝ] ℝ)
   have a : d (Pi.single 0 1) = 0 := by linarith
   have b : d (Pi.single 1 1) = 0 := by linarith
   have c : d (Pi.single 2 1) = 0 := by linarith
-  ext z
+  apply LinearMap.ext
+  intro z
   have heq := linear_coordinates d z
   simp only [a,b,c,mul_zero,add_zero] at heq
   exact sub_eq_zero.mp heq
@@ -480,6 +513,9 @@ private theorem original_affine_span :
     { carrier := {z | u z = 1}
       smul_vsub_vadd_mem' := by
         intro a x y z hx hy hz
+        change u x = 1 at hx
+        change u y = 1 at hy
+        change u z = 1 at hz
         change u (a • (x-y)+z) = 1
         simp [map_add,map_smul,map_sub,hx,hy,hz] }
   have hle : affineSpan ℝ K ≤ H := affineSpan_le.mpr (fun z hz => hz.2)
@@ -494,10 +530,12 @@ private theorem original_affine_span :
     let b := (-8*(z 1-10*z 0)-4*z 2)/168
     have hm := (affineSpan ℝ K).smul_vsub_vadd_mem b h4 h0
       ((affineSpan ℝ K).smul_vsub_vadd_mem a h1 h0 h0)
-    convert hm using 1
-    ext k
-    change z 0 = 1 at hz
-    fin_cases k <;> norm_num [a,b,p,hz] <;> ring
+    have he : z = b • (p 4 -ᵥ p 0) +ᵥ a • (p 1 -ᵥ p 0) +ᵥ p 0 := by
+      ext k
+      change z 0 = 1 at hz
+      fin_cases k <;> norm_num [a,b,p,hz] <;> ring
+    rw [he]
+    exact hm
 
 private theorem affine_homogeneous_bridge (g : (Fin 2 → ℝ) →ᵃ[ℝ] ℝ) :
     ∃! f : V →ₗ[ℝ] ℝ, ∀ z ∈ K, f z = g (spatial z) := by
@@ -565,7 +603,9 @@ theorem original_effect_obstruction :
       edgeEffect z = u z-h 4 z) ∧
     edgeProjection (p 5) = (29/28 : ℝ) • p 0 - (71/84 : ℝ) • p 1 ∧
     pure C u = Set.range p ∧
-    (affineSpan ℝ K : Set V) = {z | u z = 1} := by
+    (affineSpan ℝ K : Set V) = {z | u z = 1} ∧
+    (∀ (i : Fin 7) (z : V), z ∈ C →
+      (comparison C u (p i) z = 0 ↔ ∃ f, confirms C u (p i) f ∧ f z = 0)) := by
   exact ⟨base_hull,whole_mixed_zero_gluing,entire_exclusion_face,facet_segment,
     whole_facet_pair,edge_is_pair,ruler_local,facet_maximum,extensions_exhaustive,
     no_extension,edge_proper,projection_mass,p_mem 5,projection_not_positive,
@@ -576,7 +616,7 @@ theorem original_effect_obstruction :
     by intro i; fin_cases i <;> norm_num [edgeEffect,p,form_apply],
     by intro i hi hj; fin_cases i <;> norm_num [edgeEffect,p,form_apply] at *,
     by intro z; constructor <;> norm_num [h,u,edgeEffect,form_apply] <;> ring,
-    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family,original_affine_span⟩
+    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family,original_affine_span,comparison_zero_iff⟩
 
 /-- The original facet ruler has no proper real linear extension. -/
 theorem result : ¬ extensionClaim := original_effect_obstruction.2.2.2.2.2.2.2.2.2.1
