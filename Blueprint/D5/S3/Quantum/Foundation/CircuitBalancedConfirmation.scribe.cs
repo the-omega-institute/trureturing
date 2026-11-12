@@ -104,6 +104,11 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 H("Convexity of the normalized base"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The entire normalized base of the original cone and linear unit is convex."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("normalized-mem"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.normalized_mem"),
+                H("Normalization of nonzero positive vectors"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For a unit strictly positive on every nonzero cone vector, multiplying any nonzero vector x in the cone by the inverse of u(x) places it in the entire normalized base. The same theorem applies to native face cones by restricting strict positivity along their inclusion."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pure-span"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_span"),
                 H("Pure spanning of the original carrier"), StatementSource.WithoutFormula(),
