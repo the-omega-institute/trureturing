@@ -29,7 +29,10 @@ internal sealed class RiordanBellInertiaRefutationDocument : IScribeDocumentDefi
                     DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
                 Node("result", "The order-five counterexample", "result", Seq(Neg, Sp, Par(ClaimBody())),
                     "Set n=5 and g=1+X^3 in PowerSeries Int. Direct coefficient multiplication gives lower rows (1), (0,1), (0,0,1), (1,0,0,1), before reduction modulo two. The adjacency rows are (0,1,0,0,1), (1,0,1,0,0), (0,1,0,1,0), (0,0,1,0,1), (1,0,0,1,0). Let B have rows (1,1,-1,-1,1), (1,-1,0,0,-1), (0,0,1,1,-1), (0,0,1,-1,1), (0,0,0,0,1). Exact finite matrix arithmetic gives det B=4 and B transpose times A times B = diagonal(2,-2,2,-2,2). Apply D5.S3.Weil.Pick.InvertibleHermitianInertiaPullback.inertia_invariant_of_isUnit_det, then D5.S3.QuadraticForms.StructuredRankOneInertia.diagonal_counts. The indices are therefore 3 and 2, contradicting the universal inequality. The coefficient-to-adjacency equality is proved from the source series, rather than assumed from the cycle graph. The counterexample uses no restriction on the universal input domain.",
-                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("cheon-riordan-bell-inertia-611"),
+                        ResolutionKind.Refuted)))));
     }
 
     private static Formula Series() => Call("PowerSeries", C("Int"));
@@ -42,10 +45,11 @@ internal sealed class RiordanBellInertiaRefutationDocument : IScribeDocumentDefi
     private static Formula Index(bool positive) => Call(positive ? "posIndex" : "negIndex",
         Call("adjacency", V("n"), V("g")));
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("riordan-bell-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Call(string name, params Formula[] args) =>

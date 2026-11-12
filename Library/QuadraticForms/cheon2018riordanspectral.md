@@ -42,7 +42,7 @@ r_{ij}\equiv[z^{i-2}]g(z)f(z)^{j-1}\pmod 2.
 The generating series have integer coefficients. For the Bell type,
 f(z)=zg(z), which has zero constant coefficient for every g in Z[[z]].
 Properness is defined separately and is not imposed by Problem 6.11.
-Section 2.2, page 6, counts strictly positive and strictly negative adjacency
+Section 2.4, page 6, counts strictly positive and strictly negative adjacency
 eigenvalues with multiplicity; zero eigenvalues count in neither index.
 
 ## Encoding and counterexample
