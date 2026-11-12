@@ -8,8 +8,9 @@
 
 import D5.S3.Quantum.Foundation.FacetZeroGluing
 import D5.S3.Quantum.Foundation.WholePairBallConfirmation
-import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Analysis.Normed.Affine.AddTorsorBases
+
+/-! Original full-effect exclusions and all convex faces of the normalized cone base. -/
 
 noncomputable section
 open Set
@@ -45,10 +46,11 @@ private theorem face_eq_of_interior {E : Type*} [NormedAddCommGroup E]
   intro y hy
   have hcont : Continuous (fun t : ℝ => AffineMap.lineMap y x t) :=
     AffineMap.lineMap_continuous
-  obtain ⟨t, ht, hz⟩ := hcont.tendsto' 1 (AffineMap.lineMap_apply_one y x) |>.eventually_mem
+  obtain ⟨t, ht, hz⟩ := hcont.tendsto' 1 x (AffineMap.lineMap_apply_one y x) |>.eventually_mem
     (mem_interior_iff_mem_nhds.mp hx) |>.exists_gt
   apply hF.left_mem_of_mem_openSegment hy hz hxF
-  rw [← AffineMap.lineMap_apply_zero (k := ℝ) y x, ← image_openSegment]
+  nth_rw 1 [← AffineMap.lineMap_apply_zero (k := ℝ) y x]
+  rw [← image_openSegment]
   exact ⟨1, Ioo_subset_openSegment ⟨zero_lt_one, ht⟩, AffineMap.lineMap_apply_one y x⟩
 
 private theorem proper_cone_face_support {C : PointedCone ℝ V}
@@ -103,17 +105,21 @@ private theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ
   obtain ⟨q, hq⟩ := hsome
   let L := g.toContinuousLinearMap
   obtain ⟨m, hm, hmax⟩ := hK.exists_isMaxOn ⟨q, pure_mem q⟩ L.continuous.continuousOn
-  obtain ⟨p, hp⟩ := (L.toExposed.isExposed.isCompact hK).extremePoints_nonempty
+  have hex : IsExposed ℝ (base C u) (L.toExposed (base C u)) :=
+    ContinuousLinearMap.toExposed.isExposed
+  obtain ⟨p, hp⟩ := (hex.isCompact hK).extremePoints_nonempty
     ⟨m, hm, hmax⟩
-  have hpure : p ∈ pure C u := L.toExposed.isExposed.isExtreme.extremePoints_subset_extremePoints hp
+  have hpure : p ∈ pure C u := hex.isExtreme.extremePoints_subset_extremePoints hp
   have hgp : 0 < g p := hq.trans_le (hp.1.2 q (pure_mem q))
   let f := (g p)⁻¹ • g
   refine ⟨⟨p, hpure⟩, f, ⟨cone_bound hK hstrict ?_, ?_⟩, ?_⟩
   · intro r
     change 0 ≤ (g p)⁻¹ * g r ∧ (g p)⁻¹ * g r ≤ 1
-    exact ⟨mul_nonneg (inv_nonneg.mpr hgp.le) (hpos r (pure_mem r).1), by
-      simpa [mul_comm, div_eq_mul_inv] using
-        (div_le_one hgp).mpr (hp.1.2 r (pure_mem r))⟩
+    refine ⟨mul_nonneg (inv_nonneg.mpr hgp.le) (hpos r (pure_mem r).1), ?_⟩
+    have hr : g r ≤ g p := hp.1.2 r (pure_mem r)
+    calc
+      (g p)⁻¹ * g r = g r / g p := by rw [div_eq_mul_inv, mul_comm]
+      _ ≤ 1 := (div_le_one hgp).mpr hr
   · simp [f, hgp.ne']
   · intro x hx
     simp [f, hx]
@@ -145,6 +151,7 @@ private theorem ball_face_eq {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ
       (by norm_num : (0 : ℝ) < 1 / 2) (by norm_num : (1 / 2 : ℝ) + 1 / 2 = 1)
   exact face_eq_of_interior hface hzint hzF
 
+omit [FiniteDimensional ℝ V] in
 private theorem chart_face_eq {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p : V}
     (b : ExclusionChart C u p) {F : Set V} (hconv : Convex ℝ F)
     (hface : IsExtreme ℝ (exclusion C u p) F) (hnon : F.Nontrivial) :
@@ -164,21 +171,25 @@ private theorem chart_face_eq {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p
     obtain ⟨x, hx, y, hy, hxy⟩ := hnon
     obtain ⟨a, _, ha⟩ := b.whole.symm ▸ hface.subset hx
     obtain ⟨c, _, hc⟩ := b.whole.symm ▸ hface.subset hy
-    refine ⟨a, ha ▸ hx, c, hc ▸ hy, ?_⟩
+    refine ⟨a, (show b.param a ∈ F from ha.symm ▸ hx), c,
+      (show b.param c ∈ F from hc.symm ▸ hy), ?_⟩
     intro he
     exact hxy (ha.symm.trans ((congrArg b.param he).trans hc))
   have hSeq := ball_face_eq (hconv.affine_preimage b.param) hSface hSnon
   apply Subset.antisymm hface.subset
   intro x hx
   obtain ⟨a, ha, rfl⟩ := b.whole.symm ▸ hx
-  exact (show a ∈ S from hSeq.symm ▸ ha)
+  have : a ∈ S := by rw [show S = _ from hSeq]; exact ha
+  exact this
 
+omit [FiniteDimensional ℝ V] in
 private theorem ball_exclusion_convex {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hB : exclusionBalls C u) (p : pure C u) : Convex ℝ (exclusion C u p) := by
   obtain ⟨b⟩ := hB p
   rw [← b.whole]
   exact (convex_closedBall _ _).affine_image b.param
 
+omit [FiniteDimensional ℝ V] in
 private theorem ball_zero_gluing {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hB : exclusionBalls C u) : zeroGluing C u := by
   intro p x y hx hy hfx hfy
@@ -187,6 +198,7 @@ private theorem ball_zero_gluing {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (by norm_num : (1 / 2 : ℝ) + 1 / 2 = 1)
   simpa only [← smul_add] using hh.2
 
+omit [FiniteDimensional ℝ V] in
 private theorem chart_nontrivial {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p : V}
     (b : ExclusionChart C u p) : (exclusion C u p).Nontrivial := by
   let i : Fin b.dim := ⟨0, b.dim_pos⟩
@@ -214,13 +226,14 @@ private theorem exclusion_exposed {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ
     refine ⟨hx, fun y hy => ?_⟩
     change -f y ≤ -f x
     rw [hfx]
-    exact neg_nonpos.mpr (hf.1 y hy.1).1
+    simpa using neg_nonpos.mpr (hf.1 y hy.1).1
   · rintro ⟨hx, hmax⟩
     have hh := hmax z hz.1
     change -f z ≤ -f x at hh
     rw [hz.2] at hh
     exact ⟨hx, by linarith [(hf.1 x hx.1).1]⟩
 
+omit [FiniteDimensional ℝ V] in
 private theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
     Convex ℝ (pairBase C u p q) := by
   intro x hx y hy a b ha hb hab
@@ -287,7 +300,10 @@ theorem exclusion_ball_faces {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
   refine ⟨hpairs, fun p q hpq => ?_⟩
   obtain ⟨r, hr⟩ := hpairs p q hpq
   obtain ⟨b⟩ := hB r
-  exact ⟨{ dim := b.dim, dim_pos := b.dim_pos, param := b.param,
-    injective := b.injective, whole := b.whole.trans hr.symm }⟩
+  exact ⟨{ dim := b.dim
+           dim_pos := b.dim_pos
+           param := b.param
+           injective := b.injective
+           whole := b.whole.trans hr.symm }⟩
 
 end D5.S3.Quantum.Foundation.ExclusionBallFaces
