@@ -181,7 +181,9 @@ theorem full_original2tail_power_bound :
     norm_num
   have hcontinuous : Continuous (fun r : ℝ => r * exp (2 * r * log 2)) := by fun_prop
   have hev : ∀ᶠ r : ℝ in 𝓝 1, r * exp (2 * r * log 2) < K :=
-    (tendsto_order.mp hcontinuous.continuousAt).2 K (by rwa [hfour])
+    (tendsto_order.mp hcontinuous.continuousAt).2 K (by
+      change (1 : ℝ) * exp (2 * 1 * log 2) < K
+      rwa [hfour])
   obtain ⟨l, u, ⟨hl, hu⟩, hsub⟩ := hev.exists_Ioo_subset
   obtain ⟨r, hr, hru⟩ := exists_between hu
   have hrK : r * exp (2 * r * log 2) < K := hsub ⟨hl.trans hr, hru⟩
@@ -229,5 +231,6 @@ theorem full_original2tail_power_bound :
     nlinarith
 
 #print axioms full_original2tail_power_bound
+#print axioms MediumPNT
 
 end D5.S3.Arith.Robin.PriceRecord.ActualArbitraryBracketTwoTail
