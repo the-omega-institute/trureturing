@@ -58,11 +58,14 @@ Buffer offsets fulfill the requests, stay within range and isolate new singles.
 Old--old stability survives separated placement; the cyclic closure helpers
 preserve original request destinations and exclude old--old wrap edges.
 
-Exact remaining mathematics: complete the assignments and preference word on
-the whole concatenated interval, prove reciprocity and target injectivity for
-all old/new vertices, and prove every new or mixed edge nonblocking. Upgrade the proved word
-injection to certified output and derive b_m*b_k<=b_(m+k+6). For closure, produce the actual
-source matching and prove cyclic stability, including the extra buffer--buffer
+The concrete padded word has a full certificate in `padded_certificate`:
+all old/new assignments are reciprocal, all nonzero integer targets are
+injective, and every old, mixed and new edge is nonblocking, including singles.
+The certified word injection proves b_m*b_k<=b_(m+k+6) for all natural m,k,
+without counting certificate witnesses. This has a guarded direct Lean check;
+native target/report and rendered Scribe verification are separate boundaries.
+
+Exact remaining mathematics: for closure, produce the actual source matching and prove cyclic stability, including the extra buffer--buffer
 wrap edges at m=1, then derive the profile injection b_m<=a_(m+6) for every
 m>=1. The requester/buffer involutions alone do not supply these conclusions.
 The exact triangle count, strict growth bound and final common-q normalization

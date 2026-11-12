@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Fintype.Card]
    utility: none
-   digest: Separated certified pieces have globally injective requests into the six-site buffer. -/
+   digest: Concrete six-buffer completion certifies padded profiles and proves the padded count inequality. -/
 
 import D5.S3.Combinatorics.Graph.Roommates.OpenCertificates
 import D5.S3.Combinatorics.Graph.Roommates.BufferLayout
@@ -402,7 +402,15 @@ private theorem request_bounds {m k : ℕ} (w : CertifiedWord m) (v : CertifiedW
     | inl a => exact ((chosen_certificate w).bounded a).2
     | inr a => exact ((chosen_certificate v).bounded a).2
 
-private theorem padded_buffer_facts {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) :=
+private theorem padded_buffer_facts {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) :
+    let r := request (chosenOffset w) (chosenOffset v)
+    let d := fun a : Requester (chosenOffset w) (chosenOffset v) =>
+      oldOffset (chosenOffset w) (chosenOffset v) a.val
+    (∀ a, bufferOffset r d (r a) = -d a) ∧
+    (∀ i, -2 ≤ bufferOffset r d i ∧ bufferOffset r d i ≤ 2) ∧
+    (∀ i, bufferOffset r d i = 0 → i = 2 ∨ i = 3) ∧
+    (∀ i j, bufferOffset r d i = 0 → i ≠ j →
+      i.val ≤ j.val + 2 → j.val ≤ i.val + 2 → bufferOffset r d j ≠ 0) :=
   buffer_offset_completion (request (chosenOffset w) (chosenOffset v))
     (fun a => oldOffset (chosenOffset w) (chosenOffset v) a.val)
     (request_injective (chosen_certificate w) (chosen_certificate v))
@@ -416,12 +424,18 @@ private theorem old_reciprocal {m k : ℕ} {w : Word m} {v : Word k}
   | inl a =>
     cases b with
     | inl b => exact hw.reciprocal a b ha he
-    | inr b => have := hw.bounded a; have := a.isLt
-                simp only [oldTarget, oldPosition, oldOffset] at he; omega
+    | inr b =>
+      have := hw.bounded a
+      have := a.isLt
+      simp only [oldTarget, oldPosition, oldOffset] at he
+      omega
   | inr a =>
     cases b with
-    | inl b => have := hv.bounded a; have := b.isLt
-                simp only [oldTarget, oldPosition, oldOffset] at he; omega
+    | inl b =>
+      have := hv.bounded a
+      have := b.isLt
+      simp only [oldTarget, oldPosition, oldOffset] at he
+      omega
     | inr b =>
       apply hv.reciprocal a b ha
       simp only [oldTarget, oldPosition, oldOffset] at he
@@ -446,29 +460,44 @@ private theorem old_to_buffer {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWo
   have hr : request (chosenOffset w) (chosenOffset v) ar = b := by
     apply Fin.ext
     have hc := request_coordinate ar
+    change (m : ℤ) + (request (chosenOffset w) (chosenOffset v) ar).val =
+      oldTarget (chosenOffset w) (chosenOffset v) a at hc
     omega
   rw [buffer_index_offset, ← hr]
   exact (padded_buffer_facts w v).1 ar
 
-/-- A new nonzero assignment always targets an actual vertex of the padded interval. -/
+private theorem buffer_offset_requested {α : Type} (r : α → Fin 6) (d : α → ℤ)
+    (b : Fin 6) (h : ∃ a, r a = b) : bufferOffset r d b = -d (Classical.choose h) := by
+  simp only [bufferOffset, dif_pos h]
+
+private theorem buffer_offset_free {α : Type} (r : α → Fin 6) (d : α → ℤ)
+    (b : Fin 6) (h : ¬∃ a, r a = b) :
+    bufferOffset r d b = (BufferLayout.mate (BufferLayout.flags r) b).val - (b.val : ℤ) := by
+  simp only [bufferOffset, dif_neg h]
+
+/-- A new assignment always targets an actual vertex of the padded interval. -/
 private theorem buffer_target_internal {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
     (b : Fin 6) : ∃ j : Fin (m + k + 6),
       ((bufferIndex (m := m) (k := k) b).val : ℤ) + paddedOffset w v (bufferIndex b) = j.val := by
   let r := request (chosenOffset w) (chosenOffset v)
+  let d := fun a : Requester (chosenOffset w) (chosenOffset v) =>
+    oldOffset (chosenOffset w) (chosenOffset v) a.val
+  rw [buffer_index_offset]
+  change ∃ j : Fin (m + k + 6), (↑(bufferIndex b).val : ℤ) + bufferOffset r d b = j.val
   by_cases h : ∃ a, r a = b
   · refine ⟨oldIndex (Classical.choose h).val, ?_⟩
-    rw [buffer_index_offset, old_index_position]
+    rw [buffer_offset_requested r d b h, old_index_position]
     have hc := request_coordinate (Classical.choose h)
     have hr := Classical.choose_spec h
     change r (Classical.choose h) = b at hr
     change (m : ℤ) + (r (Classical.choose h)).val = _ at hc
     rw [hr] at hc
-    simp only [bufferOffset, dif_pos h]
     simp only [bufferIndex, Fin.val_mk, Nat.cast_add, oldTarget] at *
+    dsimp [d]
     omega
   · refine ⟨bufferIndex (BufferLayout.mate (BufferLayout.flags r) b), ?_⟩
-    rw [buffer_index_offset]
-    simp only [bufferOffset, dif_neg h, bufferIndex, Fin.val_mk, Nat.cast_add]
+    rw [buffer_offset_free r d b h]
+    simp only [bufferIndex, Fin.val_mk, Nat.cast_add]
     omega
 
 private theorem padded_reciprocal {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
@@ -486,20 +515,25 @@ private theorem padded_reciprocal {m k : ℕ} (w : CertifiedWord m) (v : Certifi
       exact old_reciprocal (chosen_certificate w) (chosen_certificate v) a a' hi he
     · exact old_to_buffer w v a b hi (by simpa [oldTarget, bufferIndex] using he)
   · rw [buffer_index_offset] at hi he ⊢
+    change bufferOffset r d b ≠ 0 at hi
+    change (↑(bufferIndex b).val : ℤ) + bufferOffset r d b = j.val at he
+    change paddedOffset w v j = -bufferOffset r d b
     by_cases h : ∃ a, r a = b
     · have ht := request_coordinate (Classical.choose h)
       have hr := Classical.choose_spec h
       change r (Classical.choose h) = b at hr
       change (m : ℤ) + (r (Classical.choose h)).val = _ at ht
       rw [hr] at ht
+      rw [buffer_offset_requested r d b h] at he ⊢
+      have hp := old_index_position (Classical.choose h).val
       have ho : j = oldIndex (Classical.choose h).val := by
         apply Fin.ext
-        rw [old_index_position]
-        simp only [bufferOffset, dif_pos h, bufferIndex, Fin.val_mk, Nat.cast_add] at he
+        simp only [bufferIndex, Fin.val_mk, Nat.cast_add] at he
         simp only [oldTarget] at ht
+        dsimp [d] at he
         omega
       rw [ho, old_index_offset]
-      simp only [bufferOffset, dif_pos h]
+      dsimp [d]
       omega
     · let c := BufferLayout.mate (BufferLayout.flags r) b
       have hl := BufferLayout.buffer_completion (BufferLayout.flags r)
@@ -511,13 +545,15 @@ private theorem padded_reciprocal {m k : ℕ} (w : CertifiedWord m) (v : Certifi
         change BufferLayout.mate (BufferLayout.flags r) c = b at hy
         rw [hx] at hy
         exact h ⟨a, ha.trans hy⟩
+      rw [buffer_offset_free r d b h] at he ⊢
       have hj : j = bufferIndex c := by
         apply Fin.ext
-        simp only [bufferOffset, dif_neg h, bufferIndex, Fin.val_mk, Nat.cast_add] at he ⊢
+        simp only [bufferIndex, Fin.val_mk, Nat.cast_add] at he ⊢
         dsimp [c]
         omega
       rw [hj, buffer_index_offset]
-      simp only [bufferOffset, dif_neg h, dif_neg hfree]
+      change bufferOffset r d c = -((BufferLayout.mate (BufferLayout.flags r) b).val - (b.val : ℤ))
+      rw [buffer_offset_free r d c hfree]
       have hh := hl.1 b
       change BufferLayout.mate (BufferLayout.flags r) c = b at hh
       rw [hh]
@@ -543,6 +579,108 @@ private theorem padded_target_injective {m k : ℕ} (w : CertifiedWord m) (v : C
       · obtain ⟨t, ht'⟩ := buffer_target_internal w v b
         exact (ht ⟨t, he.trans ht'⟩).elim
     · exact (ht (buffer_target_internal w v b)).elim
+
+private theorem top_rejects (r : Ranking) (a b : ℤ)
+    (ha : -2 ≤ a ∧ a ≤ 2) (hb : -2 ≤ b ∧ b ≤ 2)
+    (ha0 : a ≠ 0) (hb0 : b ≠ 0) (htop : offsetRank r a = 0) (hne : a ≠ b) :
+    offsetRank r a < offsetRank r b := by
+  rw [htop]
+  apply Nat.pos_of_ne_zero
+  intro hz
+  exact hne (rank_injective r ha hb ha0 hb0 (htop.trans hz.symm))
+
+private theorem buffer_single_far_old {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (b : Fin 6) (a : Fin m ⊕ Fin k) (hz : paddedOffset w v (bufferIndex b) = 0) :
+    ¬ (((bufferIndex (m := m) (k := k) b).val : ℤ) ≤ oldPosition a + 2 ∧
+       oldPosition a ≤ (bufferIndex (m := m) (k := k) b).val + 2) := by
+  rw [buffer_index_offset] at hz
+  have hc := (padded_buffer_facts w v).2.2.1 b hz
+  intro hd
+  rcases hc with rfl | rfl <;> cases a with
+  | inl a => have := a.isLt; simp only [oldPosition, bufferIndex, Fin.val_mk] at hd; norm_num at hd; omega
+  | inr a => simp only [oldPosition, bufferIndex, Fin.val_mk] at hd; norm_num at hd; omega
+
+private theorem padded_nonblocking {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k)
+    (i j : Fin (m + k + 6)) (hij : i.val < j.val) (hdist : j.val ≤ i.val + 2) :
+    paddedOffset w v i = (j.val : ℤ) - i.val ∨
+      offsetRank (paddedWord w v i) (paddedOffset w v i) <
+        offsetRank (paddedWord w v i) ((j.val : ℤ) - i.val) ∨
+      offsetRank (paddedWord w v j) (paddedOffset w v j) <
+        offsetRank (paddedWord w v j) ((i.val : ℤ) - j.val) := by
+  by_cases he : paddedOffset w v i = (j.val : ℤ) - i.val
+  · exact Or.inl he
+  have left_reject (hn : paddedOffset w v i ≠ 0)
+      (ht : offsetRank (paddedWord w v i) (paddedOffset w v i) = 0) :
+      offsetRank (paddedWord w v i) (paddedOffset w v i) <
+        offsetRank (paddedWord w v i) ((j.val : ℤ) - i.val) :=
+    top_rejects _ _ _ (padded_bounded w v i) (by omega) hn (by omega) ht he
+  have right_reject (hn : paddedOffset w v j ≠ 0)
+      (ht : offsetRank (paddedWord w v j) (paddedOffset w v j) = 0) :
+      offsetRank (paddedWord w v j) (paddedOffset w v j) <
+        offsetRank (paddedWord w v j) ((i.val : ℤ) - j.val) := by
+    apply top_rejects _ _ _ (padded_bounded w v j) (by omega) hn (by omega) ht
+    intro hh
+    have hr := padded_reciprocal w v j i hn (by omega)
+    exact he (by omega)
+  rcases index_cases i with ⟨a, rfl⟩ | ⟨b, rfl⟩
+  · rcases index_cases j with ⟨a', rfl⟩ | ⟨c, rfl⟩
+    · simpa only [old_index_offset, old_index_word, old_index_position] using
+        old_nonblocking (chosen_certificate w) (chosen_certificate v) a a'
+          (by rw [← old_index_position a, ← old_index_position a']; omega)
+          (by rw [← old_index_position a, ← old_index_position a']; omega)
+    · have hn : paddedOffset w v (bufferIndex c) ≠ 0 := by
+        intro hz
+        apply buffer_single_far_old w v c a hz
+        rw [← old_index_position a]
+        constructor <;> omega
+      exact Or.inr (Or.inr (right_reject hn (by
+        rw [buffer_index_word, buffer_index_offset]
+        exact padded_buffer_top w v c (by simpa only [buffer_index_offset] using hn))))
+  · by_cases hn : paddedOffset w v (bufferIndex b) ≠ 0
+    · exact Or.inr (Or.inl (left_reject hn (by
+        rw [buffer_index_word, buffer_index_offset]
+        exact padded_buffer_top w v b (by simpa only [buffer_index_offset] using hn))))
+    · have hz : paddedOffset w v (bufferIndex b) = 0 := not_ne_iff.mp hn
+      rcases index_cases j with ⟨a, rfl⟩ | ⟨c, rfl⟩
+      · exfalso
+        apply buffer_single_far_old w v b a hz
+        rw [← old_index_position a]
+        constructor <;> omega
+      · have hc : paddedOffset w v (bufferIndex c) ≠ 0 := by
+          rw [buffer_index_offset]
+          apply (padded_buffer_facts w v).2.2.2 b c
+            (by simpa only [buffer_index_offset] using hz)
+          · intro hh; subst c; omega
+          · simp only [bufferIndex, Fin.val_mk] at hij hdist; omega
+          · simp only [bufferIndex, Fin.val_mk] at hij hdist; omega
+        exact Or.inr (Or.inr (right_reject hc (by
+          rw [buffer_index_word, buffer_index_offset]
+          exact padded_buffer_top w v c (by simpa only [buffer_index_offset] using hc))))
+
+/-- The concrete six-buffer word has a full certificate, including exterior targets
+and every old/new nonblocking test. No completion hypothesis is assumed. -/
+theorem padded_certificate {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) :
+    Certificate (paddedWord w v) (paddedOffset w v) :=
+  ⟨padded_bounded w v, padded_reciprocal w v, padded_target_injective w v,
+    padded_nonblocking w v⟩
+
+/-- The completion is a map of certified preference profiles. -/
+def paddedCertified {m k : ℕ} (w : CertifiedWord m) (v : CertifiedWord k) :
+    CertifiedWord (m + k + 6) :=
+  ⟨paddedWord w v, paddedOffset w v, padded_certificate w v⟩
+
+/-- Count input profiles once, regardless of how many certificates they admit.
+The construction also covers empty input words, so positivity is unnecessary here. -/
+theorem count_padded_supermultiplicative (m k : ℕ) :
+    count m * count k ≤ count (m + k + 6) := by
+  have hi : Function.Injective (fun p : CertifiedWord m × CertifiedWord k =>
+      paddedCertified p.1 p.2) := by
+    intro p q h
+    exact padded_word_injective m k (congrArg Subtype.val h)
+  simpa only [count, Fintype.card_prod] using Fintype.card_le_of_injective _ hi
+
+#print axioms padded_certificate
+#print axioms count_padded_supermultiplicative
 
 #print axioms old_target_injective
 #print axioms padded_request_completion
