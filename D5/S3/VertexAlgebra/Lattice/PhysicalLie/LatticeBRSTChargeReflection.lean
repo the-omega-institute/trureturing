@@ -26,6 +26,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
+set_option maxHeartbeats 1000000
 
 noncomputable section
 open scoped BigOperators TensorProduct
@@ -276,13 +277,15 @@ theorem conjugation_totalCharge
 theorem conjugation_ghostB (m : ℤ) (x : State D) :
     conjugation D (LatticeMatterGhostCoupling.ghostB D m x) =
       LatticeMatterGhostCoupling.ghostB D m (conjugation D x) :=
-  tensor_covariance LinearMap.id (BcGhostFock.b m) (fun _ => rfl) (ghostC_b m) x
+  tensor_covariance (D := D) (LinearMap.id : Module.End ℂ (Carrier D))
+    (BcGhostFock.b m) (fun _ => rfl) (ghostC_b m) x
 
 /-- The original c modes commute with C; in particular the insertion remains c0. -/
 theorem conjugation_ghostC (m : ℤ) (x : State D) :
     conjugation D (LatticeMatterGhostCoupling.ghostC D m x) =
       LatticeMatterGhostCoupling.ghostC D m (conjugation D x) :=
-  tensor_covariance LinearMap.id (BcGhostFock.c m) (fun _ => rfl) (ghostC_c m) x
+  tensor_covariance (D := D) (LinearMap.id : Module.End ℂ (Carrier D))
+    (BcGhostFock.c m) (fun _ => rfl) (ghostC_c m) x
 
 private theorem ghostC_number (g : Fock) :
     ghostC (BcGhostCharge.ghostNumber g) = BcGhostCharge.ghostNumber (ghostC g) := by
@@ -297,7 +300,7 @@ private theorem ghostC_number (g : Fock) :
 private theorem conjugation_number (x : State D) :
     conjugation D (LatticeMatterGhostDegree.tensorNumber D x) =
       LatticeMatterGhostDegree.tensorNumber D (conjugation D x) :=
-  tensor_covariance LinearMap.id BcGhostCharge.ghostNumber
+  tensor_covariance (D := D) (LinearMap.id : Module.End ℂ (Carrier D)) BcGhostCharge.ghostNumber
     (fun _ => rfl) ghostC_number x
 
 private theorem conjugation_totalL0

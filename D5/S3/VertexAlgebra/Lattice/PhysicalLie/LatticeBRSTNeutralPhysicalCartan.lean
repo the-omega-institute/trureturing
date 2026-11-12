@@ -449,8 +449,15 @@ private theorem basis_current_Q
 
 private theorem basis_current_fixed (i : Fin D.rank) :
     tensorBasis D (cartanLabel D i) ∈ fixedMomentum D 0 := by
-  rw [LatticeRelativeMassShell.fixedMomentum_eq_span]
-  exact Submodule.subset_span ⟨cartanLabel D i, rfl, rfl⟩
+  classical
+  apply (mem_fixedMomentum_iff D 0 _).mpr
+  intro l hl
+  change (tensorBasis D).repr (tensorBasis D (cartanLabel D i)) l = 0
+  rw [Module.Basis.repr_self]
+  have hne : cartanLabel D i ≠ l := by
+    intro he
+    exact hl (congrArg (fun k : TensorLabel D => k.1.1) he).symm
+  simp only [Finsupp.single_apply, if_neg hne]
 
 private theorem cartanState_fixed (e : Fin D.rank → ℂ) :
     cartanState D e ∈ fixedMomentum D 0 := by
@@ -475,12 +482,14 @@ theorem cartan_physical
       rw [number_basis]
       have hc : charge ({1} : Finset ℕ) = 1 := by
         norm_num [charge, Finset.filter_singleton]
-      simpa only [cartanLabel, hc, Int.cast_one, one_smul]
+      simp only [cartanLabel, hc, Int.cast_one, one_smul]
+      rfl
     · change LatticeRelativeMassShell.totalL0 D H
         (tensorBasis D (cartanLabel D i)) = 0
       rw [LatticeRelativeMassShell.totalL0_basis D H hHG hGH]
       norm_num [LatticeRelativeMassShell.totalEnergy, cartanLabel,
         LatticePositiveEnergy.energy, oscillatorEnergy,
+        Finsupp.weight_single,
         BcGhostRelativeEnergy.energy, BcGhostRelativeEnergy.siteEnergy,
         BcGhostCharge.siteMode, BcGhostCharge.siteSign]
   change (∑ i, e i • tensorBasis D (cartanLabel D i)) ∈ physicalStates D H
@@ -666,9 +675,11 @@ private theorem project_physical (a : Charge D) (x : physicalStates D H) :
     · rw [if_pos hl]
       have h := congrArg (fun y : State D =>
         (LatticeBRSTZeroEnergyReduction.fullBasis D).repr y l) x.property.2.2.1
-      simpa only [number_coefficient, coeff, tensorCoeffEquiv,
-        LatticeBRSTZeroEnergyReduction.fullBasis, tensorBasis,
-        LatticeRelativeMassShell.ghostBasis] using h
+      rw [number_coefficient] at h
+      change (charge l.2 : ℂ) *
+        (LatticeBRSTZeroEnergyReduction.fullBasis D).repr (x : State D) l =
+          (LatticeBRSTZeroEnergyReduction.fullBasis D).repr (x : State D) l
+      exact h
     · simp only [if_neg hl, mul_zero]
   · apply (LatticeRelativeMassShell.totalL0_zero_iff D H hHG hGH _).mpr
     intro l hl
