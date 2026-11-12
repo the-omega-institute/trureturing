@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Foundation/OriginalHeptagonObstruction
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
-   utility: certified-instance; basis=refutes=gid:D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim; result=D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.result; claim=D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim; result=D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.result; claim=D5/S3/Quantum/Foundation/OriginalHeptagonObstruction.extensionClaim
    digest: The original seven-point cone obstructs full proper extension of its facet ruler. -/
 
 import D5.S3.Quantum.Foundation.FinitePureSimplex
@@ -570,8 +570,9 @@ private theorem plane_param_inverse (z : affineSpan ℝ K) :
     rw [original_affine_span] at hh
     exact hh
   change (z : V) 0 = 1 at hz
+  change normalizedEmbedding (spatial (z : V)) = (z : V)
   ext k
-  fin_cases k <;> simp [planeParam,normalizedEmbedding,spatial,hz,LinearMap.pi_apply]
+  fin_cases k <;> simp [normalizedEmbedding,spatial,hz,LinearMap.pi_apply]
 
 private theorem actual_affine_bridge (g : (affineSpan ℝ K) →ᵃ[ℝ] ℝ) :
     ∃! f : V →ₗ[ℝ] ℝ, ∀ z : affineSpan ℝ K, f z = g z := by
@@ -798,8 +799,11 @@ private theorem no_whole_ball :
     exact ⟨-s,by simpa using hs,rfl⟩
   have he : (2 : ℝ) • b.param 0 - b.param s = b.param (-s) := by
     have hn : b.param (-s) = - b.param.linear s + b.param 0 := by
-      rw [congrFun b.param.decomp (-s),map_neg]
-    rw [hn,congrFun b.param.decomp s]
+      calc
+        b.param (-s) = b.param.linear (-s) + b.param 0 := congrFun b.param.decomp (-s)
+        _ = - b.param.linear s + b.param 0 := by rw [map_neg]
+    have hp : b.param s = b.param.linear s + b.param 0 := congrFun b.param.decomp s
+    rw [hn,hp]
     module
   rw [he]
   exact hneg
@@ -813,9 +817,10 @@ private theorem universal_ball_failure : ¬ WholePairBallConfirmation.wholePairB
   have hh := congrArg (fun q : pure C u => (q : V) 1) he
   norm_num [p] at hh
 
-/-- A complete original effect obstruction unit: full mixed zero gluing, all
-mixed exclusion faces, the actual local minimal face, all real linear extensions,
-proper edge mass, and failure of positivity of the specified split. -/
+/-- The original VII100.5 unit on the closed, salient, generating seven-point cone:
+full mixed zero gluing, actual minimal faces, the local whole-ball chart, all
+linear and affine extensions, proper mass with a nonpositive specified split,
+and failure of universal whole-pair balls. -/
 theorem original_effect_obstruction :
     K = convexHull ℝ (Set.range p) ∧
     zeroGluing C u ∧
