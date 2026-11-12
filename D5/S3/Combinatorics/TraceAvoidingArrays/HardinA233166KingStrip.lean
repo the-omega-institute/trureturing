@@ -973,4 +973,3 @@ theorem result : claim := by
     _ = _ := congrArg (fun t : PowerSeries ℚ => t*D⁻¹) hc
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
-
