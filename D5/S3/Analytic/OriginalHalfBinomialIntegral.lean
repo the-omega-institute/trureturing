@@ -26,9 +26,9 @@ open D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
 
 def b (n : ℕ) : ℝ := (Nat.centralBinom n : ℝ) / 4 ^ n
 
-private theorem b_nonneg (n : ℕ) : 0 ≤ b n := by unfold b; positivity
+theorem b_nonneg (n : ℕ) : 0 ≤ b n := by unfold b; positivity
 
-private theorem b_le_one (n : ℕ) : b n ≤ 1 := by
+theorem b_le_one (n : ℕ) : b n ≤ 1 := by
   rw [b, div_le_one (by positivity)]
   exact_mod_cast Nat.centralBinom_le_four_pow n
 
@@ -73,7 +73,7 @@ theorem b_multichoose (n : ℕ) :
   rw [Polynomial.ascPochhammer_smeval_eq_eval, hpoch, nsmul_eq_mul] at h
   exact (mul_left_cancel₀ (by exact_mod_cast Nat.factorial_ne_zero n)) h
 
-private theorem binomial_hasSum (u : ℝ) (hu0 : 0 ≤ u) (hu1 : u < 1) :
+theorem binomial_hasSum (u : ℝ) (hu0 : 0 ≤ u) (hu1 : u < 1) :
     HasSum (fun n : ℕ => b n * u ^ n) (1 / Real.sqrt (1 - u)) := by
   have hu : u ∈ Metric.eball (0 : ℝ) 1 := by
     simpa [edist_dist, dist_eq_norm, Real.norm_eq_abs, abs_of_nonneg hu0,

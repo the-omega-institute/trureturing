@@ -1,0 +1,45 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
+internal sealed class ActualFirstLayerBlockCoercivityDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "ActualFirstLayerBlockCoercivity", H("Finite first-layer block coercivity"),
+        Blocks(
+            Paragraph(Text("Finite theta-mass lower bounds for the complete first-layer arithmetic loss on missing and occupied prime blocks. The theorem package retains the prime-prefix support together with endpoint and logarithmic-budget conditions.")),
+            Describe.Lean(
+                DescribeId.Create("actual-first-block-mem-block"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerBlockCoercivity.mem_block"),
+                H("mem_block"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complete candidate statement: theorem mem_block {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b) {p : ℕ} :     p ∈ block a b ↔ p.Prime ∧ a < (p : ℝ) ∧ (p : ℝ) ≤ b"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-first-block-first-margin"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerBlockCoercivity.first_margin"),
+                H("first_margin"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complete candidate statement: theorem first_margin {X : ℝ} {p : ℕ} (hp : p.Prime) :     rawLayerMargin X p 1 = log (1 + 1 / (p : ℝ)) - log p / (X * log X)"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-first-block-positive-margin-mem"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerBlockCoercivity.positive_margin_mem"),
+                H("positive_margin_mem"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complete candidate statement: theorem positive_margin_mem {X : ℝ} (hX : 1 < X) (m : ℕ)     {p : ℕ} (hp : p.Prime) (hg : 0 < rawLayerMargin X p 1) :     p ∈ lossPrimes X m"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-first-block-missing-block-theta-lower-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerBlockCoercivity.missing_block_theta_lower_bound"),
+                H("missing_block_theta_lower_bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complete candidate statement: theorem missing_block_theta_lower_bound {X a b : ℝ} {m Q : ℕ}     (hX : 4 < X) (_hm : 2 ≤ m) (hsupport : m.primeFactors = Nat.primesLE Q)     (ha : 1 < a) (hab : a < b) (hQa : (Q : ℝ) ≤ a) (hbX : b + 1 / 2 < X) :     (X - b - 1 / 2) * (Chebyshev.theta b - Chebyshev.theta a) /       (X * (b + 1 / 2) * log b) ≤ completeFirstLayerLoss X m"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-first-block-occupied-block-theta-lower-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerBlockCoercivity.occupied_block_theta_lower_bound"),
+                H("occupied_block_theta_lower_bound"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Complete candidate statement: theorem occupied_block_theta_lower_bound {X a b : ℝ} {m Q : ℕ}     (hX : 4 < X) (_hm : 2 ≤ m) (hsupport : m.primeFactors = Nat.primesLE Q)     (ha : 1 < a) (hab : a < b) (hbQ : b ≤ (Q : ℝ)) (hXa : X < a) :     (a - X) * (Chebyshev.theta b - Chebyshev.theta a) /       (X * a * log b) ≤ completeFirstLayerLoss X m"))),
+                DescribeRole.Theorem)
+        )));
+}

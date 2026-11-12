@@ -1,0 +1,103 @@
+**定理 27.4（平衡残量的精确值域／二次条件）。** 固定任意同一 $B,V,D_{\rm env}$ 和一个 $\sigma$，令
+
+$$
+T_A=\operatorname{diag}(1,-2),\qquad s=\rho T_A\oplus0_m,\qquad\rho\in\mathbb R.
+\tag{27.22}
+$$
+
+保持定义 27.1 的 $\mathcal E_0,F$ 及索引族不变。对每个 $\theta$，其系数矩阵准确有形式
+
+$$
+\mathscr Q_{\sigma,\rho T_A}(\theta)=
+\begin{pmatrix}
+A&b_0+\rho b_1\\
+(b_0+\rho b_1)^{\mathsf T}&\gamma_0+\rho\gamma_1+\rho^2\kappa
+\end{pmatrix},
+\tag{27.23}
+$$
+
+其中 $A,b_0,b_1,\gamma_0,\gamma_1,\kappa$ 均不依赖 $\rho$，并且
+
+$$
+A\succeq0,\qquad b_0\in\operatorname{ran}A,\qquad
+q_0:=\gamma_0-b_0^{\mathsf T}A^\dagger b_0\ge0,\qquad
+\kappa=(\alpha_+^{-1}+\alpha_-^{-1})\|T_Au\|^2>0.
+\tag{27.24}
+$$
+
+定义实系数
+
+$$
+q_1=\gamma_1-2b_1^{\mathsf T}A^\dagger b_0,\qquad
+q_2=\kappa-b_1^{\mathsf T}A^\dagger b_1.
+\tag{27.25}
+$$
+
+则这个固定输入在残量 (27.22) 下满足全部原 PB，当且仅当对每个 $\theta$ 同时有
+
+$$
+\boxed{\qquad
+\rho(I-AA^\dagger)b_1=0,\qquad
+q_0+\rho q_1+\rho^2q_2\ge0.
+\qquad}
+\tag{27.26}
+$$
+
+对 $\rho\ne0$，第一条准确等价于 $b_1\in\operatorname{ran}A$。若某个索引不满足该值域条件，则同一固定 $B,V,D_{\rm env}$ 的全部非零 $\rho$ 都不能满足全部 PB，并分别具有定理 27.2–27.3 的有限严格正预算见证。这里不对尚未分类的 $q_1,q_2$ 赋予符号，也不据 (27.26) 断言 PB 允许的 $\rho$ 集合为区间。
+
+证明。令 $e_n$ 仍为最后一个坐标向量，置
+
+$$
+w_u=(T_Au,0)\in\mathcal H,\qquad
+\mathcal Wz=(e_n^{\mathsf T}z)w_u,\qquad
+\mathcal M_\delta=\mathcal S_{\delta,0}-\beta_\delta\mathcal R_\delta.
+$$
+
+(27.4)–(27.5) 给出准确的残量依赖
+
+$$
+\begin{gathered}
+\mathcal G_{\rho T_A}=\mathcal G_0+\rho\mathcal W,\qquad
+\mathcal S_{\delta,\rho T_A}=\mathcal S_{\delta,0}+\delta\rho\mathcal W,\\
+\mathscr L_{\rho T_A}=\mathscr L_0-2\rho\operatorname{Sym}(\mathcal T,\mathcal W).
+\end{gathered}
+\tag{27.27}
+$$
+
+所以 (27.7) 展开为
+
+$$
+\begin{gathered}
+\mathscr Q_{\sigma,\rho T_A}
+=\mathscr Q_{\sigma,0}+\rho(e_n h^{\mathsf T}+h e_n^{\mathsf T})
++\rho^2\kappa e_ne_n^{\mathsf T},\\
+h=\sum_{\delta=\pm1}\delta\alpha_\delta^{-1}
+     \mathcal M_\delta^{\mathsf T}w_u+2\epsilon\mathcal T^{\mathsf T}w_u,
+\qquad
+\kappa=\sum_{\delta=\pm1}\alpha_\delta^{-1}\|w_u\|^2.
+\end{gathered}
+\tag{27.28}
+$$
+
+所有转置与像仍取原空间实内积。令 $b_1$ 为 $h$ 的前 $n-1$ 个坐标、$\gamma_1=2e_n^{\mathsf T}h$，并按 (27.23) 分解 $\mathscr Q_{\sigma,0}$，即得全部系数公式。特别是残量只改变最后一行与列，前块 $A$ 无 $\rho$ 依赖；$\|T_Au\|^2=|u_1|^2+4|u_2|^2>0$ 给 $\kappa>0$。
+
+$s=0$ 的全部原 PB 直接复用 §1 的标准零残量结果，不重新证明标准映射的因式分解。由定理 27.2，$\mathscr Q_{\sigma,0}(\theta)\succeq0$ 对全部索引成立。将既有零残量结论代入 (27.9)，便得到 (27.24) 的 $A\succeq0$、$b_0\in\operatorname{ran}A$ 和 $q_0\ge0$。
+
+现在对 (27.23) 使用 (27.9)。其实值域条件为
+
+$$
+(I-AA^\dagger)(b_0+\rho b_1)=0.
+$$
+
+因 $b_0$ 已在值域内，这准确化成 (27.26) 的第一条。剩下的标量广义 Schur 补准确为
+
+$$
+\begin{aligned}
+&\gamma_0+\rho\gamma_1+\rho^2\kappa
+-(b_0+\rho b_1)^{\mathsf T}A^\dagger(b_0+\rho b_1)\\
+&\hspace{25mm}=q_0+\rho q_1+\rho^2q_2,
+\end{aligned}
+$$
+
+即得第二条与全部 PB 的充要关系。$\rho=0$ 时两条自动成立；任意非零 $\rho$ 时，值域失败已经使系数矩阵非正。定理 27.2–27.3 随即给出所述同一输入上的有限见证。$\kappa>0$ 只属于未消元矩阵的最后对角系数，不能替代对消元后二次系数 $q_2$ 的判断。∎
+

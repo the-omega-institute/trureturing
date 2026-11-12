@@ -34,19 +34,7 @@ $$\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}
 
 Substitute the formal logarithm into the exponential generating series.
 
-**Definition 1.3 (Integral ordinary coefficients).**
-
-$$\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall f: \operatorname{PowerSeries}\left(K\right), \operatorname{IntegralSeries}\left(f\right) = \forall n: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{coeff}\left(n, f\right) = \operatorname{cast}\left(K, z\right)$$
-
-*Formalization.* `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.IntegralSeries` (`✓ std3`).
-
-*Citation.* Paul D. Hanna (2009). *Hanna's logarithmic integer-series power closure conjecture*. URL: <https://oeis.org/A167138>.
-
-*Commentary.*
-
-Every ordinary coefficient lies in the canonical image of the integers. The integer can vary with the degree; no sign or size bound is imposed.
-
-**Theorem 1.4 (The exact finite coefficient window).**
+**Theorem 1.3 (The exact finite coefficient window).**
 
 $$\forall L: \mathbb{N} \to \mathbb{Q}, \forall r: \mathbb{N}, \operatorname{coeff}\left(r, \operatorname{logarithmicTransform}\left(L\right)\right) = \operatorname{sumRange}\left(0, r, (n: \mathbb{N} \mapsto \frac{\operatorname{L}\left(n\right)}{\operatorname{castNat}\left(\mathbb{Q}, \operatorname{factorial}\left(n\right)\right)} \cdot \operatorname{coeff}\left(r, \operatorname{log}\left(\mathbb{Q}\right)^{n}\right))\right)$$
 
@@ -58,7 +46,7 @@ $$\forall L: \mathbb{N} \to \mathbb{Q}, \forall r: \mathbb{N}, \operatorname{coe
 
 sumRange(0,r,f) denotes the inclusive finite sum of f(n) for 0<=n<=r. The logarithm has zero constant coefficient, so its nth power has no coefficient at degree r when n>r. The formula includes r=0 and arbitrary rational L. It supplies the coefficient expansion for both multiplication and arithmetic extraction.
 
-**Theorem 1.5 (A common finite Stirling window).**
+**Theorem 1.4 (A common finite Stirling window).**
 
 $$\forall a: \mathbb{N} \to \mathbb{Z}, \forall n: \mathbb{N}, \forall r: \mathbb{N}, (n \le r) \implies (\operatorname{T}\left(a, n\right) = \operatorname{sumRange}\left(0, r, (i: \mathbb{N} \mapsto \operatorname{a}\left(i\right) \cdot \operatorname{q}\left(i, n\right))\right))$$
 
@@ -70,7 +58,7 @@ $$\forall a: \mathbb{N} \to \mathbb{Z}, \forall n: \mathbb{N}, \forall r: \mathb
 
 The sum uses every index from zero through r. Since q(i,n)=0 for i>n, the exact integer reconstruction T(a,n) can use any larger common window r. No congruence or truncation error is introduced. The arithmetic-extraction proof applies this with n=m*t+b and r=m*d+b for each contributing t<=d.
 
-**Theorem 1.6 (Hanna's full closure conjecture).**
+**Theorem 1.5 (Hanna's full closure conjecture).**
 
 $$\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall L: \mathbb{N} \to K, \forall m: \mathbb{N}, (\operatorname{IntegralSeries}\left(\operatorname{logarithmicTransform}\left(L\right)\right)) \implies ((0 < m) \implies (\operatorname{IntegralSeries}\left(\operatorname{logarithmicTransform}\left((n: \mathbb{N} \mapsto \operatorname{L}\left(n\right)^{m})\right)\right)))$$
 
@@ -88,11 +76,11 @@ Hanna's same conjecture on A167138, A167139 and A167141 is one question. Integra
 
 ## References
 
-- Truth anchor: `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.IntegralSeries`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.T_window`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.coeff_transform`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.egf`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.logarithmicTransform`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.result`
+- Dependency: [D5/S1/Recurrence/Algebraic/IntegralPowerSeries](IntegralPowerSeries.md)
 - Dependency: [D5/S1/Recurrence/Periodic/IntegralEgfTotientPeriod](../Periodic/IntegralEgfTotientPeriod.md)
 - Dependency: [D5/S1/Recurrence/Periodic/ScaledLogColumnPeriodicity](../Periodic/ScaledLogColumnPeriodicity.md)

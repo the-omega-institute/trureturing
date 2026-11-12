@@ -116,7 +116,49 @@ $$\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatornam
 
 The first colour is fixed to zero and both initial scanner flags are false.
 
-**Theorem 1.9 (Single-row certificate).**
+**Theorem 1.9 (Expanding the label sum).**
+
+$$\forall (g: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary} \to \operatorname{Int}), (\sum_{q: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}} (g\left(q\right)) = \sum_{a: \operatorname{Fin}\left(3\right)} (\sum_{b: \operatorname{Fin}\left(3\right)} (\sum_{c: \operatorname{Fin}\left(3\right)} (\sum_{d: \operatorname{Fin}\left(3\right)} (\sum_{e: \operatorname{Fin}\left(3\right)} (g\left(![a, b, c, d, e]\right)))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.label_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233126: six-colour complementary-pair exclusion on a five-column square strip*. URL: <https://oeis.org/A233126>.
+
+*Commentary.*
+
+The function-space sum expands into five independent label sums.
+
+**Theorem 1.10 (Compatibility-free row validity).**
+
+$$\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}), ((\operatorname{Prod}.\operatorname{fst}\left(s\right) = \operatorname{Bool}.\operatorname{true}) \implies ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right)) \implies ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, c\right)) \implies (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Valid}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left(s, c\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{labels}\left(c\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.row_valid` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233126: six-colour complementary-pair exclusion on a five-column square strip*. URL: <https://oeis.org/A233126>.
+
+*Commentary.*
+
+Horizontal legality and the scanner preserve validity once colour one has occurred, independently of inter-row bonds.
+
+**Theorem 1.11 (First-row validity).**
+
+$$\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}), (((c\left((0: \operatorname{Fin}\left(5\right))\right) = 0) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), c\right)))) \implies (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Valid}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), c\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{labels}\left(c\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.initial_valid` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233126: six-colour complementary-pair exclusion on a five-column square strip*. URL: <https://oeis.org/A233126>.
+
+*Commentary.*
+
+A legal normalized first row determines a valid scanner boundary.
+
+**Theorem 1.12 (Single-row certificate).**
 
 $$(\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Boundary}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233254TriangleStrip}.\operatorname{Valid}\left(s, p\right)) \implies (\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{classCount}\left(s, p, k\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{transfer}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{boundaryClass}\left(s, p\right), k\right)))))) \land (\forall (k: \operatorname{Fin}\left(7\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{firstCount}\left(k\right) = ![8, 0, 8, 4, 8, 4, 4]\left(k\right)))$$
 
@@ -130,7 +172,7 @@ $$(\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.
 
 Exact scanner fibres reduce the transition counts to 3^5 label rows. The single-row certificate supplies the numerical premises of the all-height induction.
 
-**Theorem 1.10 (The recurrence at every height).**
+**Theorem 1.13 (The recurrence at every height).**
 
 $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int}) = ((((((544) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int}))) - ((82944) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int})))) + ((5144576) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (4)\right): \operatorname{Int})))) - ((146800640) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (3)\right): \operatorname{Int})))) + ((1879048192) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (2)\right): \operatorname{Int})))) - ((8589934592) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233126SquareStrip}.\operatorname{a}\left((n) + (1)\right): \operatorname{Int}))))$$
 
@@ -157,8 +199,11 @@ The complementary-pair labels are the fibres {0,5}, {1,4}, {2,3} of D5.S3.Observ
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.compatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.firstCount`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.initial_valid`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.label_sum`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.labels`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.result`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.row_valid`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.transfer`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip](HardinA233175PairStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)

@@ -1,0 +1,113 @@
+**定理 17.3（四条保留历史的补偿界）。** 对任意 $h,v\in S^2$，从独立初始参考 $\tau_h$ 运行定义 17.1 的后缀，以 $v$ 供应两枚独立纯场令牌。其实际完整输出 $\Omega_c$ 满足
+$$
+\left\|\Omega_c-\tau_h\otimes\pi_Z\otimes\sigma_1\right\|_1
+<\frac{73}{D},\qquad
+D_{\rm tr}\!\left(\Omega_c,\tau_h\otimes\operatorname{Tr}_R\Omega_c\right)
+<\frac{80}{D}.
+\tag{17.7}
+$$
+其中 $D_{\rm tr}=\|\cdot\|_1/2$；所有补偿量子输出、原生记录与实际副本均包含在右端口中。
+
+**证明。** 写 $m=D-1$、$\delta=1/D$、$\lambda=\sqrt m/D$，仅取证明坐标 $h=z$，$e=|j,j\rangle$、$f=|j,j-1\rangle$、$\tau_e=|e\rangle\langle e|$、$\tau_f=|f\rangle\langle f|$。由既有 (13.14)，第一槽退相干并按负标签交换后，两条未归一向量为
+$$
+x_+=\frac{e\chi-\delta e\chi'-\lambda f\psi}{\sqrt2},\qquad
+x_-=\frac{(1-\delta)e\chi-\lambda f\psi}{\sqrt2},
+\qquad \chi'=|\downarrow\uparrow\rangle.
+\tag{17.8}
+$$
+负分支省去的只是整体负号；实际概率为 $(1+\delta)/2$、$(1-\delta)/2$，没有重新归一。令 $w=(e\chi-\lambda f\psi)/\sqrt2$，则 $\|x_b-w\|=1/(\sqrt2D)$，$\|x_b\|,\|w\|\le1$。利用
+$\|xx^\dagger-ww^\dagger\|_1\le(\|x\|+\|w\|)\|x-w\|$，
+两条历史合计差小于 $3/D$；再去掉 $ww^\dagger$ 的尾对角项合计只需 $\lambda^2\le1/D$。因此第一槽完整态距下式的迹范数小于 $4/D$：
+$$
+\frac12\sum_{b=\pm}|bb\rangle\langle bb|_{H_1E_1}\otimes
+\left[\tau_e\otimes|\chi\rangle\langle\chi|
+-\lambda\bigl(|e\rangle\langle f|\otimes|\chi\rangle\langle\psi|
++\text{h.c.}\bigr)\right].
+\tag{17.9}
+$$
+实际参考边缘恰为 $(1-\lambda^2)\tau_e+\lambda^2\tau_f$；这个小的边缘误差没有使联合态成为乘积。
+
+经 $\widehat\Phi$ 后，(17.9) 方括号的参考—探针对应为
+$$
+G=\tau_e\otimes A_0-
+\lambda\bigl(|e\rangle\langle f|\otimes B_0+\text{h.c.}\bigr).
+\tag{17.10}
+$$
+以上比较算子一般不是正态，尤其不得把 $\tau_e-\lambda K$ 当成所制备的态。它们只用于线性 Hermitian 比较；实际态始终由指定准备、原生槽和 CPTP 节点产生。保迹正映射由正负分解收缩 Hermitian 算子的迹范数，故这些完整余项可以经真实后缀传播。
+
+先计算第二槽对 $\tau_e\otimes A_0$ 的作用，包含退相干和探针替换，略去相同固定量子因子。两份参考块由 (13.14) 精确给出
+$$
+\begin{aligned}
+G_+^{(0)}
+&=\left(\frac12+\frac1{2D^2}\right)\tau_e
++\frac{\lambda^2}{2}\tau_f
++\lambda\bigl((A_0)_{\uparrow\downarrow}|e\rangle\langle f|
++\text{h.c.}\bigr),\\
+G_-^{(0)}
+&=\frac{m^2}{2D^2}\tau_e+\frac{\lambda^2}{2}\tau_f.
+\end{aligned}
+\tag{17.11}
+$$
+相对于各自的 $\tau_e/2$ 和所显示交叉项，剩余对角块的总迹范数为 $(2D-1)/D^2<2/D$，因而也小于 $4/D$。
+
+为估计 (17.10) 的交叉输入，令 $W_1=\operatorname{span}\{e,f\}$、$P_\pm=|\uparrow/\downarrow\rangle\langle\uparrow/\downarrow|$。由 (13.5) 的角动量系数，
+$$
+\|(\Pi_b-I_R\otimes P_b)P_{W_1\otimes S}\|
+\le\frac2D+\sqrt2\lambda<4\lambda.
+\tag{17.12}
+$$
+具体地，除 (13.14) 外，$\Pi_+(f\uparrow)=(1-\delta)f\uparrow+\lambda e\downarrow$，而
+$\Pi_+(f\downarrow)=2\delta f\downarrow+
+\sqrt{2(m-1)}\,|j,j-2\rangle\uparrow/D$；末项不存在时取零。把 $\Pi_b$ 与 $I_R\otimes P_b$ 各按 $|bb\rangle_{H_2E_2}$ 堆叠成原生和理想等距 $V,W$，得到 $\|(V-W)P_{W_1\otimes S}\|<6\lambda$。交叉输入的迹范数为 $2\lambda\|B_0\|_1$，展开 $VYV^\dagger-WYW^\dagger$ 后，两份完整仪器输出合计差小于
+$24\lambda^2\|B_0\|_1\le24/D$。此估计同时覆盖两个原始标签；后续退相干、量子替换均收缩该差。
+
+理想交叉输入在两个标签的 $e/f$ 系数分别为 $-\lambda(B_0)_{\uparrow\uparrow}$ 和 $-\lambda(B_0)_{\downarrow\downarrow}$。结合 (17.11) 及 (17.2)，第二槽两份首阶系数分别为
+$$
+\lambda\bigl[(A_0)_{\uparrow\downarrow}
+-(B_0)_{\uparrow\uparrow}\bigr]=-\frac{\lambda c_ta}{2},
+\qquad
+-\lambda(B_0)_{\downarrow\downarrow}=-\frac{\lambda c_ta}{2}.
+\tag{17.13}
+$$
+这不是在不同原始标签间平均相反误差。连同第一槽的两份 $1/2$ 比较权重，四条未归一历史各有相同的参考块 $(\tau_e-\lambda K_t)/4$，其中
+$$
+K_t=c_ta|e\rangle\langle f|+\overline{c_ta}|f\rangle\langle e|.
+$$
+第一槽余项、(17.11) 对角余项及交叉仪器余项相加，给第二槽及替换后的实际完整态 $\Theta$：
+$$
+\left\|\Theta-(\tau_e-\lambda K_t)\otimes\pi_Z\otimes\sigma_0\right\|_1
+\le\frac{4+4+24}{D}=\frac{32}{D}.
+\tag{17.14}
+$$
+实际四条历史的概率偏离 $1/4$ 也包含在这个联合界中，没有重置原始标签。
+
+最后令 $\gamma=tD/m$、$z=e^{i\gamma}$、$c_\gamma=1-e^{-i\gamma}$，并以 $c_\gamma$ 替换 $K_t$ 中的 $c_t$ 定义 $K_\gamma$。由原终端谱分解 (16.8)，略去整体相位后 $U_{\rm term}=\Pi_++z\Pi_-$。终端 qubit 的实际替换使完整参考因子准确为
+$$
+\mathcal T_v(X)=\operatorname{Tr}_{S_t}
+[U_{\rm term}(X\otimes\rho_v)U_{\rm term}^\dagger],
+$$
+并在实际口附上 $I_{S_t}/2$，正是 (16.5) 的相关输入语义。由
+$e\downarrow\mapsto(1+mz)e\downarrow/D+\lambda(1-z)f\uparrow$，得到
+$$
+\mathcal T_v(\tau_e)=\tau_e+\lambda K_\gamma
++\lambda^2|c_\gamma|^2(\rho_v)_{\downarrow\downarrow}(\tau_f-\tau_e).
+\tag{17.15}
+$$
+取 $U_0=I_R\otimes(P_++zP_-)$。(17.12) 给
+$\|(U_{\rm term}-U_0)P_{W_1\otimes S_t}\|\le4|c_\gamma|\lambda$；
+而 $\|K_t\|_1=2|c_ta|\le|c_t|$，$U_0$ 的参考边缘作用为恒等。因此
+$$
+\|\mathcal T_v(K_t)-K_t\|_1\le8|c_\gamma||c_t|\lambda,\qquad
+\lambda\|K_\gamma-K_t\|_1
+\le\lambda|\gamma-t|=\frac{t}{D\sqrt m}\le\frac{t}{D}.
+\tag{17.16}
+$$
+由 $|c_\gamma|,|c_t|\le2$、$\lambda^2\le1/D$，(17.15) 的尾对角项和 (17.16) 的交叉演化项分别至多 $8/D$、$32/D$，故
+$$
+\|\mathcal T_v(\tau_e-\lambda K_t)-\tau_e\|_1
+\le\frac{40+t}{D}.
+\tag{17.17}
+$$
+把 (17.14) 余项经同一个实际终端通道传播，得到完整输出与真正乘积态
+$\tau_e\otimes\pi_Z\otimes\sigma_1$ 的迹范数差至多 $(72+t)/D<73/D$。对其实际 $K$ 边缘再用一次收缩性，两项半迹范数的三角不等式给实际边缘返回误差小于 $73/D<80/D$。协变性把计算送到全部 $h,v$。$W_1$ 只限制比较项，实际更高降低数分量均已包含在完整余项内，不假定真实运行永久支撑于 $W_1$。$\square$
+

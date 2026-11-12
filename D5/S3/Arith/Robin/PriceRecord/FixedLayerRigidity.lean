@@ -154,7 +154,7 @@ private theorem eventually_prime_in_relative_window {A B : ℝ}
       (fun q _ _ => Real.log_natCast_nonneg q)
   exact hthetaless.not_ge htheta_le
 
-private theorem fixed_cardinality_prime_window {A B : ℝ}
+theorem fixed_cardinality_prime_window {A B : ℝ}
     (hA : 0 < A) (hAB : A < B) (N : ℕ) : ∃ Y : ℝ, ∀ x : ℝ, Y ≤ x → ∃ S : Finset ℕ,
       S.card = N ∧ ∀ q ∈ S,
         q.Prime ∧ A * x < (q : ℝ) ∧ (q : ℝ) ≤ B * x := by

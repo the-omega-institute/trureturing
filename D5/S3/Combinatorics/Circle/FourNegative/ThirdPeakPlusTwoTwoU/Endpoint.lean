@@ -14,8 +14,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size base sourceMod oldValue newValue
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base oldValue newValue)
 open private banks terminals pre post word marked
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Banks
 open private physical_word from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPlusTwoTwoU.Physical

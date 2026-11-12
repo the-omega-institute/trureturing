@@ -13,9 +13,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private size sourceMod base newBase chainLength chainStart nextBase nextNewBase
-  oldValue newValue negatives chain_values new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod nextBase nextNewBase chain_values new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private masked_weighted_masses
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers.ActualBlocks
 

@@ -1,0 +1,15 @@
+#### 推论 8.3：根的简单性及渐近分布
+
+两方程的全部根都是简单根，非实根序列无有限聚点。并且
+
+$$
+y_n=\log(2\pi n)+o(1),\qquad
+ \beta(y_n)\sim\frac{\log(2\pi n)}{\pi n}.
+$$
+
+**证明。**
+
+令 $f_s(z)=\cos z-sz$。 若 $f_s(z)=f_s'(z)=0$，则 $\cos z=sz$、$\sin z=-s$。 复三角恒等式给出 $z^2=0$， 但 $f_s(0)=1$，矛盾。 由 $G(y_n)=n\pi$ 及严格单调性，$y_n\to\infty$， 因此非实序列无有限聚点。 又 $b(y_n)\to1$、$\beta(y_n)\to0$， 故 $\cosh y_n/(n\pi)\to1$。 于是 $e^{y_n}/(2n\pi)\to1$， 给出第一项渐近式。 最后 $\beta(y)\sim a(y)=y/\sinh y$， 且 $\sinh y_n\sim n\pi$，得到第二项。
+
+$\square$
+

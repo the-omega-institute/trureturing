@@ -1,0 +1,82 @@
+### 24.2 IV 的未锚定仿射适配
+
+继续证明定理 24.2。下面只在 $S$ 内使用限制核，不先将群化、线性空间或表示赋给整个 $M$。[IV 定义 1.1 与定理 1.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_IV.md#1-来源与候选关系)有 $Ue=e$ 前件，在这里不能直接调用；可复用的是该卷 §3 在处理标记之前的证明。其不依赖固定锚的准确适配如下。
+
+令 $G$ 为交换幺半群 $S$ 的 Grothendieck 群，$\iota:S\to G$ 为自然映射，置
+
+$$
+q(\iota u-\iota v)=d(u,v).
+\tag{24.7}
+$$
+
+共同尾巴不变性已支付良定义性：若两个差相等，存在 $r\in S$ 使 $u\cdot v'\cdot r=u'\cdot v\cdot r$；分别给两端接相同尾巴即可比较这两个读数。$\iota$ 无须单射，未对原 $S$ 作消去。于是 $q\ge0$、$q(0)=0$。对原 $u,v\in S$ 记 $h_j=\iota(U^ju)-\iota(U^jv)$，完整关系成为
+
+$$
+\sum_{j=0}^2q(x+h_j)=3q(x)+3q(h_0)\qquad(x\in G).
+\tag{24.8}
+$$
+
+这里没有在 $G$ 上定义 $U$。每个群元可作某一原对的 $h_0$，非负性给 $q(x+y)\le3(q(x)+q(y))$。对任意有限多原对 $(u_i,v_i)$，将 $q$ 拉回自由格 $\mathbb Z^{3r}$：
+
+$$
+Q(n)=q\left(\sum_{i,j}n_{i,j}h_{i,j}\right),\qquad
+\Delta_0Q=3\sum_i\bigl(q(h_{i,0})+q(-h_{i,0})\bigr).
+\tag{24.9}
+$$
+
+常数 Poisson 式来自对各原对与交换后的原对求和，重复或有整数关系的方向照样保留。盒上最大值的二分界为 $A(2R)\le6A(R)$，所以增长指数为 $\log_2 6<3$。IV 引理 2.2 因而适用；IV §3 的差分、非负性和 Gram 构造给
+
+$$
+q(x)=B(x,x)+\ell(x),\qquad
+B\text{ 对称双可加},\quad\ell\text{ 可加}.
+\tag{24.10}
+$$
+
+一次项的消失也不使用固定锚。对每个原对置 $s_*=h_0+h_1+h_2$，在 (24.8) 减去 $x=0$ 的式子，给 $B(x,s_*)=0$。于是 $B(s_*,s_*)=0$，$q(s_*),q(-s_*)\ge0$ 迫使 $\ell(s_*)=0$；再把 $x=0$ 的原对与交换原对两式相减，给 $\ell(s_*)=3\ell(h_0)$。所有群元都可作 $h_0$，故 $\ell=0$。
+
+按 IV §3 的整数 Gram、清分母和有限实极限步骤，$B$ 的实线性延拓半正定；商去零空间并完成得到实 Hilbert 空间 $H_{\mathbb R}$ 及可加 $F_S:S\to H_{\mathbb R}$，满足
+
+$$
+F_Se=0,\qquad d(u,v)=\|F_Su-F_Sv\|^2,
+\qquad H_{\mathbb R}=\overline{\operatorname{span}_{\mathbb R}F_S(S)}.
+\tag{24.11}
+$$
+
+这些步骤及常数 Poisson 工具均是 IV 的已付推导；其方程只涉及成对标记差，未设 $p_1=e$。现在显式补上该证明原来使用固定锚的标记步骤。
+
+在背景 $e,e$ 上反复用 (24.1)，对 $r_n=d(U^nu,U^nv)$ 得 $r_{n+1}+r_{n+2}=2r_n$。解 $r_n=\alpha+\beta(-2)^n$ 的全部非负性迫使 $\beta=0$，故 $U$ 保持成对距离。令 $t=F_Sp_1$、$G_u=F_S(Uu)-t$。由于 $G_e=0$，距离极化给
+
+$$
+(G_u,G_v)_{\mathbb R}=(F_Su,F_Sv)_{\mathbb R}.
+\tag{24.12}
+$$
+
+故 $F_Su\mapsto G_u$ 在实线性包上良定义：任何有限实线性关系的像，其范数平方按 (24.12) 与原关系相同，必为零。它延伸为整个 $H_{\mathbb R}$ 上的实线性等距算子 $T$，并有
+
+$$
+F_S(Uu)=TF_Su+t,\qquad
+F_S(U^2u)=T^2F_Su+Tt+t.
+\tag{24.13}
+$$
+
+前面的 $B(x,s_*)=0$ 在 Gram 商中给真正的向量等式
+
+$$
+\sum_{j=0}^2\bigl(F_S(U^ju)-F_S(U^jv)\bigr)=0.
+\tag{24.14}
+$$
+
+用 (24.13) 并取 $v=e$，漂移逐项相消，得到 $(I+T+T^2)F_Su=0$。实线性稠密性遂给 $I+T+T^2=0$，因而 $T^3=I$；特别 $T$ 此时才知为满射。令 $J=(I+2T)/\sqrt3$，则 $J^2=-I$、$J^*=-J$。按 IV 的约定以 $J$ 作为乘以 $i$ 的作用，得到同一实空间上的复 Hilbert 空间 $H_S$，$T$ 成为乘以 $\omega=\exp(2\pi i/3)$，且
+
+$$
+\begin{gathered}
+F_S(u\cdot v)=F_Su+F_Sv,\qquad
+F_S(Uu)=\omega F_Su+t,\\
+d(u,v)=\|F_Su-F_Sv\|^2\quad(u,v\in S),\qquad
+H_S=\overline{\operatorname{span}_{\mathbb C}F_S(S)}.
+\end{gathered}
+\tag{24.15}
+$$
+
+这里保留任意 $t$，没有以旋转中心替换实际聚合单位，也没有调用前件未满足的锚定分类。
+

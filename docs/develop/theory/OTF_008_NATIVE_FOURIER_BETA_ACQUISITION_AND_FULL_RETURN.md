@@ -2968,3 +2968,898 @@ OTF004 命题 24.3 假设已制造并永久保留经典总自旋 $b$，给出该
 相关停止形态的文献为 Paetznick–Svore，[Repeat-Until-Success: Non-deterministic decomposition of single-qubit unitaries, arXiv:1311.1074v2](https://arxiv.org/html/1311.1074v2)，§3、§3.2；其测量成功／失败、可逆失败与期望成本不供应本节原菜单下完整等距转换或最坏预算。Guerreschi，[Repeat-Until-Success circuits with fixed-point oblivious amplitude amplification, arXiv:1808.02900v1](https://arxiv.org/html/1808.02900v1)，§III、§IV，讨论受控 RUS 的历史相关畸变并在放大中使用 $A S_\phi A^\dagger S_\varphi$；该伴随不是免费 $V^\dagger$，其畸变也不被认作本节障碍。这些相关文献不作为原生实现的精确命中，不承担 (19.2)–(19.27) 的证明，也不支持穷尽文献或历史新颖性断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 原有理精度全域上的完整输出原生消费者
+
+**定义 20.1（原合同、输入与精确有限参数）。** 本节采用 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 和本卷定义 1.1 的完整原合同。对每个正有理数 $0<e\le1/100$，所有对数均为自然对数，置
+
+$$
+\begin{aligned}
+u&=u_e=e/8,\qquad H_e=\log(18/e),\\
+k&=k_e=\left\lceil2048e^{-2}H_e\right\rceil,\qquad
+\ell=\ell_e=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,\\
+N&=N_e=\max\left\{N_*,
+ \left\lceil\frac{3k+2}{10}\right\rceil,
+ \left\lceil\frac{15\ell+1}{18}\right\rceil\right\},\\
+D&=D_e=\left\lceil\max\{8{,}000{,}000N^2,9k/e\}\right\rceil,\\
+m&=m_e=D-1=2j,\qquad M=M_e=L=L_e=10N,\qquad Q=Q_e=18N+1,\\
+q&=3k.
+\end{aligned}
+\tag{20.1}
+$$
+
+这些是原精度 $e$ 的原整数，不在另一精度重算。公共参数仍为 $d=1/64$、$\tau_0=1$、$r=1/4$、$B_{\rm field}=2$、$G=1$；内部采样步长 $u$ 不替代 $d$。
+
+场遍历全部原允许的 $C^2$、秩二映射 $n:U\to S^2$，其中开集 $U$ 包含两条完整闭 $r$ 轴段，并满足
+
+$$
+\|n_{aa}(t e_a)\|_2\le2\quad(a=x,y,\ |t|\le r),
+\qquad \|n_x(0)\|_2,\|n_y(0)\|_2\le1.
+\tag{20.2}
+$$
+
+场信息只由原独立重置服务 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$ 供应。方向遍历全部 $h\in S^2$，目标仍为
+
+$$
+D_h(n)=\left(
+ \frac{h\cdot[n(0)\times n_x(0)]}{2},
+ \frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+ \frac{h\cdot n_y(0)}2\right).
+\tag{20.3}
+$$
+
+原标记参考 $R=\operatorname{Sym}^m(\mathbb C^2)$ 只准备一次，初态 $\tau_h=|j,h\rangle\langle j,h|$ 与全部其他输入独立，是唯一含未知 $h$ 的输入。设备、控制、解码器及除声明场服务外的准备均不依赖实际 $n,h$；固定 $n$ 后，完整非参考输入律对全部 $h$ 相同。原比较类仍允许任意独立有限混合辅助，包括奇异态，以及记忆、反馈、纠缠和探针回用；不供应混合输入的纯化。以下固定调度只指定该类中的一个见证，不约束其他控制器。
+
+只有前向原生等距 $V$ 和一次规定终端接触 $R$：
+
+$$
+\begin{aligned}
+V&=\Pi_+\otimes|++\rangle_{HE}+\Pi_-\otimes|--\rangle_{HE},\\
+\Pi_+&=\frac{J\cdot\sigma+(j+1)I}{D},\qquad
+\Pi_-=\frac{jI-J\cdot\sigma}{D},\\
+U_{\rm term}&=\exp[-idJ\cdot\sigma/m].
+\end{aligned}
+\tag{20.4}
+$$
+
+其他全部操作在原 $R$ 上为恒等。终端必须使用在 $+d e_x$ 独立重置且此前未经改动的原场令牌；不提供参考旋转、替换、重置、直接读取、未知射线反射、免费逆或受控原生访问。
+
+**定义 20.2（完整有限电路、记录与有理解码器）。** 取 $q=3k$ 个互异探针 $S_i$，各自独立处于 $I/2$。每槽另准备一个独立备用 qubit $G_i$ 于 $I/2$ 和一个空白 $F_i$ 于 $|0\rangle$。各三元组与 $R$、全部先前寄存器及其他三元组独立。三个固定实验室 Pauli 轴 $a=x,y,z$ 各分配 $k$ 槽。主动非场混合输入恰为这 $2q$ 个 $I/2$ qubit，不访问任何输入纯化。
+
+在槽 $i$，对 $R,S_i$ 执行一次前向 $V$，产生原生 $H_i,E_i$。用已知计算基复制酉把原 $H_i$ 标签复制到 $F_i$，其中 $+$ 编码为 $0$、$-$ 编码为 $1$；再以 $H_i=-$ 为控制交换 $S_i,G_i$。这是保留所有输出的非参考酉操作，不是经未保留浴实现的替换通道。永久保留 $S_i,G_i,H_i,E_i,F_i$。
+
+随后在该槽指定的固定轴 $a$ 上，执行显式 Pauli 记录等距
+
+$$
+\mathsf M_a=
+ \sum_{y\in\{+1,-1\}}P_{a,y}\otimes|y\rangle_{Y_i}\otimes|y\rangle_{Z_i},
+\qquad P_{a,y}=\frac{I+y\sigma_a}{2}.
+\tag{20.5}
+$$
+
+$Y_i,Z_i$ 都是实际输出 qubit，原 $S_i$ 也保留。该等距由已知基变换、向两个空白 qubit 的复制门及逆基变换组成；全部操作均在非参考口。将 $Y_i=+1$ 的次数写入对应计数器。旧 $S_i,G_i,H_i,E_i,F_i,Y_i,Z_i$ 均不再进入任何后续 $R$ 接触；每个下一原生输入确实是新的独立 $I/2$。
+
+场采样取五个点
+
+$$
+\mathcal Z_e=\{0,+u e_x,-u e_x,+u e_y,-u e_y\}.
+\tag{20.6}
+$$
+
+对每个 $z\in\mathcal Z_e$ 和每个固定轴 $b=x,y,z$，请求 $\ell$ 个互异独立原场令牌。对每个令牌执行同一 $\mathsf M_b$，保留令牌及两个记录输出，并记录 $+1$ 次数。这恰使用 $15\ell$ 次重置，不接触 $R$。因为 $u=e/8\le1/800<r$，全部采样点都在原完整场域内。
+
+将原始记录的值记为 $Y_i\in\{+1,-1\}$ 和 $X_{z,b,s}\in\{+1,-1\}$。这些字母表示实际记录基中的数值，不表示另增观测。定义
+
+$$
+\begin{aligned}
+\widehat h_b&=\frac2k\sum_{i\text{ 分配给 }b}Y_i,\\
+\widehat n_b(z)&=\frac1\ell\sum_{s=1}^{\ell}X_{z,b,s},\qquad
+\widehat n_0=\widehat n(0),\\
+\widehat g_a&=\frac{\widehat n(+u e_a)-\widehat n(-u e_a)}{2u}
+\quad(a=x,y),\\
+\widehat D&=\left(
+ \frac{\widehat h\cdot[\widehat n_0\times\widehat g_x]}2,
+ \frac{\widehat h\cdot[\widehat n_0\times\widehat g_y]}4,
+ 0,\frac{\widehat h\cdot\widehat g_y}2\right).
+\end{aligned}
+\tag{20.7}
+$$
+
+不对 $\widehat h$ 或 $\widehat n$ 归一化。若参考计数为 $c_{h,b}$、场计数为 $c_{n,z,b}$，前两行分别是 $2(2c_{h,b}-k)/k$ 和 $(2c_{n,z,b}-\ell)/\ell$，故正有理 $e$ 上全部输出四元组都是有理的。将四元组写入实际输出 $O$ 及实际读出副本 $O'$，保留所有原始串、计数和两份输出。
+
+计数、写入和复制由保持数据的有限可逆操作完成。有三个维数 $k+1$ 的计数器和十五个维数 $\ell+1$ 的计数器，联合维数为
+
+$$
+d_C=(k+1)^3(\ell+1)^{15}.
+\tag{20.8}
+$$
+
+有理输出四元组的有限集合基数至多 $d_C$，取 $O,O'$ 为该集合的标签寄存器。由所保留计数器控制的固定写入即完全指定输出操作，无须丢弃工作空间。计数可按上述各有限维数作模加法，实际计数不溢出所需范围。另保留静态程序 $P$、维数 $q+15\ell+2$ 的宏步计数器 $T$，以及任意额外独立有限混合旁观态 $\eta_A$；$A$ 始终由恒等作用保留，包括奇异 $\eta_A$。
+
+记录及解码输出均已生成之后，再请求一个在 $+d e_x$ 独立重置的原场令牌 $S_t$。在其唯一接触前，除规定源准备外不对它作任何操作。恰执行一次 (20.4) 的 $U_{\rm term}$ 并保留 $S_t$。$d=1/64<r$ 保证该点在原域内。不再执行其他后缀、补偿节点、参考操作、逆、受控原生调用、分支后选择或系统丢弃。$T$ 只是有限程序寄存器，不供应物理钟。
+
+该指定电路的完整非参考口 $K$ 恰包含：每个 $S_i,G_i,H_i,E_i,F_i,Y_i,Z_i$；全部 $15\ell$ 个采样场令牌及每个令牌的两个 Pauli 记录输出；终端令牌 $S_t$；十八个计数寄存器；$O,O',P,T,A$。没有其他生成环境或工作空间。原生 $H,E$ 及复制的原标签 $F$ 永不覆盖。qubit 口总数恰为
+
+$$
+7q+45\ell+1,
+\tag{20.9}
+$$
+
+此外是上述有限计数／输出／程序／步寄存器和 $A$。参考 $R$ 的维数为 $D$，不属于 $K$。若另一实现另产生实际输出，必须纳入其自己的 $K$ 并核对实现前件；本节不认证未指定的物理设备。原场服务是原声明来源输入，不是额外未知场口或辅助纯化。
+
+**定理 20.3（同一完整运行的条件成功与显式自身边缘返回；repo-derived 应用）。** 假设原合同的实际量子准备、前向原生、固定标架非参考控制／读出、独立场重置和规定终端菜单按定义 20.1–20.2 的实际端口供应。对每个原正有理 $0<e\le1/100$，定义 20.2 给出一个与实际 $n,h$ 无关的有限因果控制器 $W_e$ 和有限有理四坐标解码器。对全部原允许场 $n$ 和全部 $h\in S^2$，同一完成运行满足
+
+$$
+\begin{gathered}
+\Pr[\|\widehat D-D_h(n)\|_\infty\le e]\ge1-e,\\
+T_V=q=3k\le L,\qquad
+T_{\rm reset}=15\ell+1\le Q,\qquad
+T_{\rm terminal}=1,\qquad T_R=q+1.
+\end{gathered}
+\tag{20.10}
+$$
+
+置
+
+$$
+\begin{aligned}
+\lambda_m^2&=\frac m{D^2},\\
+g_m&=\frac{4m}{D^2}\sin^2\left(\frac{dD}{2m}\right),\\
+r_e&=1-(1-g_m)(1-\lambda_m^2)^q,\\
+B_e&=\min\{1,2\sqrt{r_e}\}.
+\end{aligned}
+\tag{20.11}
+$$
+
+对同一完整实际输出 $\Omega_{n,h}$，以其全部实际 $K$ 和其自身实际边缘为比较对象，有
+
+$$
+\begin{aligned}
+\overline\delta
+&:=\sup_{n,h}\frac12\left\|
+ \Omega_{n,h}-\tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}
+ \right\|_1\\
+&\le B_e
+ \le\min\left\{1,
+ \frac{160\sqrt{\log(18/e)}}{e\sqrt m}\right\}.
+\end{aligned}
+\tag{20.12}
+$$
+
+$B_e$ 是显式有限上界证书，不是迹距离的精确值。任意独立有限混合旁观态 $\eta_A$，包括奇异态，均可原样保留；不使用输入纯化。实际最终参考泄漏的精确表达式为下文 (20.29)，其一致上确界恰为 (20.30)。
+
+证明。以下分别把同一电路的记录事件和实际参考边缘接回原工具；两者始终属于同一完成运行。
+
+### 20.1 保留实现的约化对应及其事件用途
+
+令 $X$ 为 $S,H$ 与任意旁观系统上的联合输入，记 $X_{bb}=\langle b|_H X|b\rangle_H$，旁观系统可包括 $R,E$ 及旧记忆。先复制 $H$ 到空白 $F$，再以负标签控制交换 $S,G$。对该实际酉输出作数学偏迹，得到
+
+$$
+\begin{aligned}
+&\operatorname{Tr}_{GF}\left[
+ U_{\rm cswap}U_{\rm copy}
+ (X\otimes I_G/2\otimes|0\rangle\langle0|_F)
+ U_{\rm copy}^{\dagger}U_{\rm cswap}^{\dagger}\right]\\
+&\quad=X_{++}\otimes|+\rangle\langle+|_H
+ +\frac{I_S}{2}\otimes\operatorname{Tr}_S(X_{--})
+                  \otimes|-\rangle\langle-|_H
+ =\mathcal C(X),
+\end{aligned}
+\tag{20.13}
+$$
+
+其中张量次序按旁观因子重排。对 $F$ 的偏迹消去不同 $H$ 标签间的非对角块；负块中的交换将原先可能与旁观系统相关的 $S$ 内容留在 $G$，把独立 $I/2$ 放在 $S$；正块不变。这正是 OTF004 (13.7)–(13.8)，并对相关输入及全部旁观系统成立。
+
+这里的偏迹仅用于分析记录概率；$G,F$ 在实际电路中均永久保留，并进入 (20.12)。它们不再参与后续接触或解码，所以对任意仅依赖解码记录的事件，电路的约化旧端口律恰为原 $q$ 槽 $\mathcal C$ 前缀，再接所声明的 Pauli 读出、场采样和解码。
+
+直接复用 OTF004 (13.16)–(13.19)，理想单槽和完整旧端口前缀比较为
+
+$$
+\begin{aligned}
+\xi_h&=\frac12P_{h,+}\otimes|++\rangle\langle++|
+       +\frac14I_S\otimes|--\rangle\langle--|,\\
+D_{\rm tr}\left(
+ \text{旧实际 }q\text{ 槽输出},\tau_h\otimes\xi_h^{\otimes q}
+ \right)&\le q\kappa_D,
+\qquad \kappa_D=\frac{2D-1}{2D^2}.
+\end{aligned}
+\tag{20.14}
+$$
+
+共同非参考读出、独立场采样和解码通道保持此距离界，从而保持相同事件概率差的界。无需假设实际槽历史独立，也没有把旧约化 CP 返回界转移到新增 $G,F$ 或读出口。
+
+### 20.2 原四坐标事件、有限解码与确定预算
+
+在 $\xi_h$ 中，轴 $b$ 的 Pauli 记录 $Y$ 满足 $\mathbb E(2Y)=h_b$，且 $2Y\in[-2,2]$。理想乘积槽中的三个 $k$ 样本均值直接应用 OTF004 定义 19.1 所用有界样本估计，给出
+
+$$
+\Pr_{\rm ideal}\left[\exists b:\
+ |\widehat h_b-h_b|>e/16\right]
+ \le6\exp(-ke^2/2048)\le e/3.
+\tag{20.15}
+$$
+
+每个场 Pauli 记录在 $[-1,1]$ 内，均值为 $n_b(z)$。十五个均值同样满足
+
+$$
+\Pr\left[\exists z,b:\
+ |\widehat n_b(z)-n_b(z)|>eu/16\right]
+ \le30\exp(-\ell e^2u^2/512)\le e/3.
+\tag{20.16}
+$$
+
+第一指数由 $k\ge2048e^{-2}\log(18/e)$ 至少为 $\log(18/e)$；第二指数因 $u=e/8$ 及原 $\ell$ 至少为 $\log(90/e)$。所以两尾分别不超过 $6(e/18)=e/3$ 和 $30(e/90)=e/3$，对整个原有理域成立。
+
+在两好事件上，利用 $\sqrt3<2$，有
+
+$$
+\|\widehat h-h\|_2\le e/8,\qquad
+\|\widehat n(z)-n(z)\|_2\le eu/8.
+\tag{20.17}
+$$
+
+精确中心差分是 $n_a(t e_a)$ 在 $[-u,u]$ 上的平均。由 (20.2)，$\|n_a(t e_a)-n_a(0)\|_2\le2|t|$，故其偏差至多 $u$。两端采样在差分中另贡献至多 $(2eu/8)/(2u)=e/8$，于是
+
+$$
+\|\widehat g_a-n_a(0)\|_2\le u+e/8=e/4
+\quad(a=x,y).
+\tag{20.18}
+$$
+
+并且 $\|\widehat h\|_2,\|\widehat n_0\|_2\le2$。把未缩放叉积误差写成
+
+$$
+\begin{aligned}
+&\widehat h\cdot[\widehat n_0\times\widehat g_a]
+      -h\cdot[n(0)\times n_a(0)]\\
+&=(\widehat h-h)\cdot[n(0)\times n_a(0)]\\
+&\quad+\widehat h\cdot[
+ (\widehat n_0-n(0))\times n_a(0)
+ +\widehat n_0\times(\widehat g_a-n_a(0))].
+\end{aligned}
+\tag{20.19}
+$$
+
+因 $\|n(0)\|_2=1$、$\|n_a(0)\|_2\le1$、$u<1$，其绝对值至多
+
+$$
+e/8+2(e/8+2e/4)=11e/8.
+\tag{20.20}
+$$
+
+因此第一、第二坐标误差分别至多 $11e/16$、$11e/32$。第四坐标误差至多
+
+$$
+\frac12\left(e/8+2e/4\right)=5e/16,
+\tag{20.21}
+$$
+
+第三坐标精确为零。两好事件遂蕴涵原 $\ell^\infty$ 四坐标 $e$ 成功事件，不需估计归一化、导数下界或改变目标。
+
+由 (20.14) 及原 $D\ge9k/e$，实际记录事件概率与理想实验之差至多
+
+$$
+q\kappa_D\le\frac{3k}{D}\le e/3.
+\tag{20.22}
+$$
+
+总失败概率至多 $e/3+e/3+e/3=e$。这只转移记录事件。最后 $U_{\rm term}$ 仅在 $R,S_t$ 上作用，是保迹操作；即使先前记录与 $R$ 相关，它也不改变已经写好的完整记录边缘，故同一完成运行保持此成功概率。
+
+每支确定支付 $T_V=q$、$T_{\rm reset}=15\ell+1$、$T_{\rm terminal}=1$ 和 $T_R=q+1$。原最大值与上取整精确给出
+
+$$
+q+2\le10N=L,\qquad15\ell+1\le18N<Q=18N+1.
+\tag{20.23}
+$$
+
+未使用调用不执行也不计费。具体非参考操作为 $q$ 次原标签复制、$q$ 次受控交换、$q+15\ell$ 次 (20.5)，随后是有限可逆计数与输出写入。记录等距的投影分支正交且投影和为恒等；保留原始串的受控模计数和计数控制的输出置换均无需未列出的丢弃空间。十八个计数器及至多 $d_C$ 个输出标签保证解码有限，$q+15\ell+2$ 个步状态足以标记 $q+15\ell+1$ 个接触／采样宏步骤。这里没有期望成本、随机停止或极限电路，也没有把程序寄存器当作实际物理钟。
+
+### 20.3 新鲜混合输入链与实际参考边缘
+
+除 $V$ 外，所有获取、Pauli 记录、场观测、计数和解码操作只作用在非参考系统。即使 $R$ 与每个旧保留口相关，下一个 $S_i$ 仍是未受作用的独立 $I/2$。因此实际参考边缘逐槽恰按 OTF004 (20.11) 的通道更新：
+
+$$
+\mathcal T(X)=\frac{
+ 2\sum_{a=x,y,z}J_aXJ_a+((j+1)^2+j^2)X}{D^2}.
+\tag{20.24}
+$$
+
+$q$ 槽后的实际参考边缘精确为 $\mathcal T^q(\tau_h)$。保留 $G,F$、全部读出环境、场令牌和解码器均不改变该边缘；这里没有把相关旧记忆假设成独立。
+
+只在证明坐标中沿 $h$ 取 $e_r=|j,j-r\rangle_h$，$0\le r\le m$。直接复用 OTF004 (20.12) 的已给对角自旋递推，不另立一般递推定理：令 $\pi_r^{(0)}=\mathbf1_{r=0}$，并令 $\pi^{(q)}$ 为以下有限转移矩阵的 $q$ 步分布，边界缺项为零，
+
+$$
+\begin{aligned}
+\mathsf P(r,r+1)&=\frac{(m-r)(r+1)}{D^2},\\
+\mathsf P(r,r-1)&=\frac{r(m-r+1)}{D^2},\\
+\mathsf P(r,r)&=1-\mathsf P(r,r+1)-\mathsf P(r,r-1),\\
+\mathcal T^q(\tau_h)&=\sum_{r=0}^m\pi_r^{(q)}|e_r\rangle\langle e_r|.
+\end{aligned}
+\tag{20.25}
+$$
+
+这是一份精确有限矩阵幂定义，不是数值递推结果。始终停留在 $r=0$ 的路径给出
+
+$$
+\pi_0^{(q)}\ge\left(1-\frac m{D^2}\right)^q.
+\tag{20.26}
+$$
+
+这些 Markov 路径只是约化对角态的数学展开，不是额外实际自旋测量、独立物理历史或依赖未知 $h$ 的实验操作。
+
+### 20.4 未触终端令牌与精确最终人口
+
+记 $v=n(+d e_x)$、$c=h\cdot v$。终端令牌独立于整个先前运行，故最终参考边缘可仅由 $\mathcal T^q(\tau_h)\otimes\rho_v$ 计算；旧 $R$–记忆相关不影响这一约化计算。由 OTF004 (13.14)、(16.8) 的原总自旋系数，忽略共同标量相位，
+
+$$
+U_{\rm term}=\Pi_++z\Pi_-,\qquad z=\exp(idD/m).
+\tag{20.27}
+$$
+
+在该等式中忽略的只是全局相位。$e_0\otimes|\downarrow\rangle_h$ 与 $e_1\otimes|\uparrow\rangle_h$ 间的跃迁振幅模平方恰为
+
+$$
+\left|\frac{\sqrt m(1-z)}D\right|^2
+ =\frac{4m}{D^2}\sin^2\left(\frac{dD}{2m}\right)=g_m.
+\tag{20.28}
+$$
+
+只有初始参考层 $0,1$ 能贡献最终第 $0$ 层人口。参考输入对角，终端自旋的非对角项不另贡献此人口；自旋人口分别为 $(1+c)/2$ 和 $(1-c)/2$。从初始第 $0$ 层流出的量为 $g_m(1-c)\pi_0^{(q)}/2$，由第 $1$ 层流入的量为 $g_m(1+c)\pi_1^{(q)}/2$。所以对同一完整实际 $\Omega_{n,h}$，最终泄漏精确为
+
+$$
+\begin{aligned}
+p_{\rm final}(n,h)
+&:=1-\operatorname{Tr}[(\tau_h\otimes I_K)\Omega_{n,h}]\\
+&=1-\pi_0^{(q)}
+ +\frac{g_m}{2}\left[
+ (1-c)\pi_0^{(q)}-(1+c)\pi_1^{(q)}\right].
+\end{aligned}
+\tag{20.29}
+$$
+
+$c$ 的系数为 $-g_m(\pi_0^{(q)}+\pi_1^{(q)})/2\le0$，所以最大值在 $c=-1$。分布 $\pi^{(q)}$ 与方向无关；对每个原允许场 $n$，$h=-n(+d e_x)$ 都是允许方向。因此精确一致泄漏为
+
+$$
+\sup_{n,h}p_{\rm final}(n,h)
+ =1-(1-g_m)\pi_0^{(q)}.
+\tag{20.30}
+$$
+
+再用 (20.26)，得到
+
+$$
+\sup_{n,h}p_{\rm final}(n,h)
+ \le1-(1-g_m)\left(1-\frac m{D^2}\right)^q=r_e.
+\tag{20.31}
+$$
+
+这是完整输出的实际参考边缘结论；没有把约化 CP 返回界提升到新增保留口。
+
+### 20.5 对全部实际输出的自身边缘投影应用
+
+对该完整实际态直接应用有限纯参考投影估计。为明确此处的应用，记 $P_h=\tau_h\otimes I_K$、$Q_h=I-P_h$，把 $\Omega=\Omega_{n,h}$ 分块为
+
+$$
+P_h\Omega P_h=\tau_h\otimes A_0,\qquad
+Q_h\Omega Q_h=B_0,\qquad
+P_h\Omega Q_h=C_0,\qquad p=\operatorname{Tr}B_0.
+\tag{20.32}
+$$
+
+有 $\operatorname{Tr}_R C_0=0$ 和 $\operatorname{Tr}_R\Omega=A_0+\operatorname{Tr}_R B_0$。由正性和标准 Schatten Cauchy–Schwarz 估计，
+
+$$
+\|C_0\|_1\le\sqrt{p(1-p)}.
+\tag{20.33}
+$$
+
+差态的两个对角项 $B_0$ 与 $-\tau_h\otimes\operatorname{Tr}_R B_0$ 具有正交参考支持，各自迹范数为 $p$。两个交叉块的半迹范数贡献至多 $\|C_0\|_1$。故在这一完整 $K$ 上，
+
+$$
+\begin{aligned}
+\frac12\|\Omega-\tau_h\otimes\operatorname{Tr}_R\Omega\|_1
+&\le p+\sqrt{p(1-p)}\\
+&\le2\sqrt p.
+\end{aligned}
+\tag{20.34}
+$$
+
+这是标准投影到自身边缘工具在具体电路上的应用，不主张新增一般定理。它不使用可访问纯化、辅助密度逆或正的最小本征值，故包括所有奇异混合旁观输入。比较对象恰是同一 $\Omega$ 的自身实际 $K$ 边缘，不是旧端口边缘或另选乘积态。迹距离的一般上界为 $1$，联同 (20.31) 即得 $\overline\delta\le B_e$。
+
+### 20.6 全有理域的绝对常数
+
+由 $\sin^2x\le x^2$ 及 $D=m+1$，
+
+$$
+0\le g_m\le\frac{d^2}{m},\qquad
+\frac m{D^2}\le\frac1m.
+\tag{20.35}
+$$
+
+$g_m$ 是 (20.28) 的跃迁概率，故 $g_m\le1$。Bernoulli 不等式给出
+
+$$
+\begin{aligned}
+r_e
+&\le q\frac m{D^2}+g_m
+ \le\frac{q+d^2}{m}.
+\end{aligned}
+\tag{20.36}
+$$
+
+令 $A_e=e^{-2}\log(18/e)$。在整个原域内 $A_e\ge10{,}000$，而 $d^2=1/4096$。精确上取整给出
+
+$$
+\begin{aligned}
+k&\le2048A_e+1,\\
+q+d^2=3k+d^2
+ &\le6144A_e+3+1/4096\\
+ &\le6145A_e<6400A_e.
+\end{aligned}
+\tag{20.37}
+$$
+
+因此
+
+$$
+B_e\le\min\left\{1,2\sqrt{\frac{q+d^2}{m}}\right\}
+ \le\min\left\{1,
+ \frac{160\sqrt{\log(18/e)}}{e\sqrt m}\right\}.
+\tag{20.38}
+$$
+
+这包括 $e=1/100$、每个上取整端点及全部更小的原正有理精度，不用渐近窗口、二进限制、逐门 diamond 近似、实际历史独立或近纯辅助假设。定理得证。$\square$
+
+**边界 20.4（原全文来源、既有结果域与未付目标）。** 定理 20.3 是以原实际量子菜单供应为前件的有限消费者应用；这些菜单的物理供应仍标为 `ASSUMED-UNVERIFIED`。完整物理来源保持 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md)、本卷定义 1.1、[PB 实际探针与环境耦合续卷 §6](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md) 及 [PB 两角正证书续卷定义 49.1、边界 49.2](AURIC_FULL_PB_TWO_CORNER_POSITIVE_CERTIFICATE_CONTINUATION.md) 的完整合同与全部逐层固定上游，不以七项摘要或另造来源谓词替代其全文。
+
+来源身份按 `deb96eeabf0e2411c95c872ca8232c766ce7dd60` 的上述四份正文解释：OTF004 的 blob 为 `316045b4f10114cb1cb207c0f50dc6285b2b8f51`，本卷 §§1–19 为 `55dbc6ce3410ba3cc1aa4bf8f43c31e81ea603f9`，PB 实际探针续卷为 `d9e05528552f6b39c04cea6e97542acab6265114`，PB 两角续卷为 `3d833411c88065cf06a00372069f17738d01db86`。这些身份引用完整保留内部递归钉版，不用外层读取提交压平内层 SQ、AH、SF、PB 身份。原 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$ 中 $S,D$ 仍是原 Jordan 来源响应，其中 $S(a,b)=a\circ b$；它们不被自旋维数 $D=D_e$ 替换。
+
+同一原 $\Omega$ 最终仍须共同供应全部七项完整合同：实际复 Hilbert／相干准备；原态、效果、Born、完整菜单及全部质量分支；真正相关联合、复合与张量；typed CP 及整台递归参考；完整仪器、TP、条件更新与 Lüders；全部合法历史、CountRead、真遗忘及真实全未来 Return；实际动力学、物理钟、能量和共同正 $\hbar$。每项均连同所引原对象、量词、准备、切口、记录、拒绝、停止、销毁、泄漏、全部输出和每个合法未来保留在同一原实现上，不分别换源。该说明与全文共同保留，不缩短全文。条件量子输出 $\Omega_{n,h}$ 的有限电路不生产这个原物理来源 $\Omega$，也不生产实际相干准备、菜单／Born 绑定、全部质量、共同相关复合、整台参考规则、完整仪器、全未来 Return、物理钟或共同作用量；不从搜索未命中推出来源不存在。
+
+本节不合成 $Q_D$、受控 $Q_D$ 或 Fourier 字母，直接使用互异新鲜探针，故不抵触 §19 的固定同探针、仅历史处理局部障碍。该局部门障碍不是原所有消费者的必要门条件。既有 CP、部分保留、重置、rotation 及 §§18–19 结果各保留自身精确适用域：§§1–11 的声明 CP 实际口不被默认为本节完整等距口；§§12–15 的部分保留条件不自动处理其他实际环境；§16 的重置必要阶及匹配阶保持；§17 无条件 rotation 反例仍不成为原成功控制器反例；§18 的完整成功等距及共同二值置信前件保持。
+
+尤其，§18 的已有成功完整等距下界 $1/(512e\sqrt m)$ 与 (20.12) 相容。本节仅给出一个带 $\sqrt{\log(18/e)}$ 差距的完整消费者证书；一致无对数的 $O(1/(e\sqrt{m_e}))$ 匹配上界，以及 $e$ 无关常数 $C$ 的同一运行一致 $p_R\le C/(m_e e^2)$ 构造仍未证。本节不重提 §18 前件下已排除的完整等距 $O(1/(m_e e^2))$ 自身边缘目标，不主张最优性、新增全局下界或物理来源不存在。精确式 (20.29)–(20.30) 是人口／泄漏等式；(20.31)、$B_e$ 及 (20.12) 都是上界，不能改读成精确迹距离。
+
+[C139 父代敏感读树续卷 §§10–15](AURIC_C139_PARENT_SENSITIVE_READ_TREE_AND_GAIN_RECOVERY_BOUNDARY.md) 的保留 occurrence、可读系数与条件平坦地址服务，在其明确扩充的 $P$ 来源内给出条件 CountRead 与同载体 Return；[C139 有限返回校准续卷 §164](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 仍区分该来源与原 $B_r$、原钟及全未来接口，尚无这份识别。[E4 阈值卷 §17](FIB_ENTROPY_HARMONIC_RENEWAL_STATE_THRESHOLD.md) 从完整确定坐标矩形与精确有效行得到条件实际运行结论，不是量子原语来源，也不消除其完整 E4 桥梁。二者均不是定理 20.3 的前提；不以扩充 $P$、E4、R5、MPS 或其他 DEV 成果替换原来源或供应本节量子菜单。
+
+**来源 20.5（直接复用与证据范围）。** 本节承重结果是定义 20.2 的具体完整输出消费者、其同一运行成功对应、精确终端人口以及有限 $B_e$ 和绝对常数 $160$ 的普通纸面推导，标为 `repo-derived` 应用。原获取证书、固定标架样本与成功常数直接复用 OTF004 定义 13.1–13.2、(13.5)–(13.19) 和定义 19.1；终端系数直接复用 (13.14)、(16.8)；新鲜 $I/2$ 参考边缘及对角递推直接复用 (20.11)–(20.12)。约化对应只承担记录成功律，完整返回另由实际参考边缘和全部实际口上的投影应用承担。Pauli 记录、有限可逆计数／写入、偏迹局域性、有界样本估计和 Schatten 投影估计均为应用中间工具，不另交付一般 Stinespring、gentle、复制、编译或递推定理。
+
+新鲜完全混合自旋输入的已知递推可参见 Bartlett、Rudolph、Spekkens、Turner，[Degradation of a quantum reference frame, arXiv:quant-ph/0602069v2](https://arxiv.org/html/quant-ph/0602069v2)，§III 与附录 B (39)–(42)。其精确系数在 $m=2j$、下降指标 $r$ 下对应 (20.25)；不使用其后大自旋近似，也不把该数学递推当作原物理来源实现。本节不主张历史原创性或穷尽文献／库搜索，不主张 Lean／kernel 核验、数值或实验验证、工程 CI 认证、物理实现或原七项共同来源目标已经完成。
+
+## 追加锚（本行以下为增补区）
+
+## 21. 正自旋缓存路由与原完整输出的无对数返回
+
+**定义 21.1（原合同与精确精度曲线）。** 沿用 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 和定义 1.1。对每个正有理数 $0<e\le1/100$，未标底的对数为自然对数，置
+
+$$
+\begin{aligned}
+u&=u_e=e/8,\quad k=k_e=\left\lceil2048e^{-2}\log(18/e)\right\rceil,\quad
+\ell=\ell_e=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,\qquad
+N=N_e=\max\left\{N_*,\left\lceil\frac{3k+2}{10}\right\rceil,
+ \left\lceil\frac{15\ell+1}{18}\right\rceil\right\},\\
+D&=D_e=\left\lceil\max\{8{,}000{,}000N^2,9k/e\}\right\rceil,\qquad
+m=m_e=D-1=2j,\\
+M&=M_e=L=L_e=10N,\qquad Q=Q_e=18N+1.
+\end{aligned}
+\tag{21.1}
+$$
+
+公共参数仍为 $d=1/64$、$\tau_0=1$、$r=1/4$、$B_{\rm field}=2$、$G=1$；$u$ 不替代 $d$。场遍历所有原允许的 $C^2$ 秩二映射 $n:U\to S^2$，其中开集 $U$ 包含两条完整闭 $r$ 轴段，且 $\|n_{aa}(v e_a)\|_2\le2$（$a=x,y$、$|v|\le r$）、$\|n_x(0)\|_2,\|n_y(0)\|_2\le1$。场信息只经原独立重置 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$ 供应。对所有 $h\in S^2$，四坐标目标为
+
+$$
+D_h(n)=\left(
+ \frac{h\cdot[n(0)\times n_x(0)]}{2},
+ \frac{h\cdot[n(0)\times n_y(0)]}{4},0,
+ \frac{h\cdot n_y(0)}2\right).
+\tag{21.2}
+$$
+
+原标记参考 $R=\operatorname{Sym}^m(\mathbb C^2)$ 只准备一次，初态 $\tau_h=|j,h\rangle\langle j,h|$ 与其余输入独立，是唯一含未知 $h$ 的输入。设备、程序、解码器及除声明场服务外的准备均不依赖实际 $n,h$；固定 $n$ 后非参考来源的完整律对所有 $h$ 相同。原合同允许任意独立有限混合辅助 $\eta_A$，包括奇异态及 $A$ 内部相关，不供应其纯化；本构造将任意这样的 $\eta_A$ 由恒等作用保留。参考接触只有至多 $L$ 次前向原生等距及恰一次规定终端：
+
+$$
+\begin{aligned}
+\Pi_+&=(J\cdot\sigma+(j+1)I)/D,\qquad \Pi_-=(jI-J\cdot\sigma)/D,\qquad
+Q_D=\Pi_+-\Pi_-,\\
+V&=\Pi_+\otimes|++\rangle_{HE}+\Pi_-\otimes|--\rangle_{HE},\\
+U_{\rm term}&=\exp(-idJ\cdot\sigma/m).
+\end{aligned}
+\tag{21.3}
+$$
+
+场重置至多 $Q$ 次。终端令牌在 $+d e_x$ 独立重置，此前未经改动；其他操作在原 $R$ 上为恒等。直接参考操作、原生逆、受控原生调用和终端逆均不作为供应。每个实际生成的非参考系统都进入同一运行的 $K$，不作分支后选择。下文用半迹范数 $D_{\rm tr}(\rho,\sigma)=\|\rho-\sigma\|_1/2$。
+
+**定义 21.2（逻辑等距、常数与公开精度分支）。** 令 $a=e/64$、$s=e/768$、$t=me^2$、$\lambda=ms^2=t/768^2$。使用 §§3–6 的同一个同时有限化球冠 $f$、堆叠 $A_{\rm stack}$ 及极等距
+
+$$
+W=A_{\rm stack}(A_{\rm stack}^\dagger A_{\rm stack})^{-1/2}.
+\tag{21.4}
+$$
+
+记定理 6.2 的完整逻辑酉 $U_{\rm outer}$ 为 $U_{\rm out}$，用其原有限表、相位选择、编译标志和全部非投影块，止于 (3.11) 工作替换及 $L$ 经典读出之前。展开所有正、逆及受控查询，记其中 $Q_D$ 或受控 $Q_D$ 的实际逻辑字母数为 $\nu$；其余门均为已知非参考门。$K_{\rm work}$ 始终保留，不施行 (3.11)、约化获取或约化补偿后缀。
+
+常数精确取 (2.1)–(2.7)。为区分记号，将 (2.6) 的 $C$ 记为 $C_{\rm src}$，将 (2.2) 的 $B=A$ 在本节记为 $B_{\rm cap}$。具体地，单位圆盘内用 $q(w)=\exp(-1/(1-|w|^2))$、$\alpha(w)=\bar w/(1-|w|^2)$ 和 $F_k(w)=\sqrt{q(w)}\exp(-|\alpha(w)|^2/2)\alpha(w)^k/\sqrt{k!}$，盘外按 (2.1) 平坦延拓。置 $z_0=\int q(w)\,dA(w)/\pi$、$M_F=\sup_w(\|F\|+\|DF\|+\|D^2F\|)$，则
+
+$$
+\begin{aligned}
+A=B_{\rm cap}&=10000(1+M_F)/\sqrt{z_0},\qquad R_0=4(A+B_{\rm cap}+2),\qquad
+C_{\rm fail}=1+256A^2,\\
+C_{\rm src}&=1+\left\lceil10^{100}(26!)^{10}
+ \left[1+A+B_{\rm cap}+z_0^{-1}+\sum_{j=0}^{26}(M_j+G_j)\right]^{100}\right\rceil,\\
+M_{\rm Fourier}&=2^{50}C_{\rm src}^4,\quad
+A_0=2^{20}768^2M_{\rm Fourier},\quad C_\nu=2^{26}A_0,\quad U_0=3\cdot10^{16},\\
+r_0&=\max\left\{r_{\rm base},7,
+ \left\lceil\log_2(1000U_0M_{\rm Fourier}768^{24})\right\rceil,
+ \left\lceil\log_2(10000A_0)\right\rceil,
+ \left\lceil\log_2(10000C_\nu^2)\right\rceil\right\}.
+\end{aligned}
+\tag{21.5}
+$$
+
+$r_{\rm base}$ 及球冠窗口精确取 (2.2)–(2.3)，$M_j,G_j$ 精确取定义 2.2。$M_j$ 是 $\|D^jF\|$ 与 $\|N_{\rm osc}D^jF\|$ 之和的上确界，$(N_{\rm osc}v)_k=kv_k$；$G_j$ 是同一紧域上 Euler 作用、旋转立体图、径向图及截断的导数界。截断仍为 (2.4) 的 $\chi(\rho)=\theta(8\rho-4)\theta(12-8\rho)$，其中 $\theta(v)=H_+(v)/(H_+(v)+H_+(1-v))$，$H_+(v)=\exp(-1/v)$ 当 $v>0$，否则为零。第 2 节的平坦延拓和紧域界给这些常数的有限性。定义
+
+$$
+\begin{aligned}
+K_N&=1280(C_\nu+1),&
+e_0&=\min\{2^{-r_0},1/(10^6K_N^2)\},\\
+K_{\rm cap}&=768(A+R_0+C_{\rm fail})+1,&
+C&=\left\lceil\max\{(K_{\rm cap}+K_N^2+132)^2,\,
+                              6400\log(18/e_0)\}\right\rceil.
+\end{aligned}
+\tag{21.6}
+$$
+
+$e_0$ 是正有理数，$C$ 是有限正整数，均不依赖实际输入或辅助维数。$e\le e_0$ 使用定义 21.3，$e>e_0$ 使用定义 20.2 的同一完整电路及解码器，包括其独立未触令牌终端。两支均取请求精度 $e$ 的 (21.1)，不在内部尺度、二进精度或另一精度重算原元组。
+
+**定义 21.3（保留的缓存、路由、解码与全部实际口）。** 在 $e\le e_0$ 支取
+
+$$
+q=\lceil\log_2(DL/e)\rceil,\qquad B=\nu q .
+\tag{21.7}
+$$
+
+先准备 $q$ 对相互独立的已知自旋单态 $(B_i,A_i)$（singlet）；对 $i=1,\ldots,q$，在 $R,B_i$ 上各作一次前向 $V$，相干保留原生 $H_i,E_i$。从 $H$ 标签串写入首个正标签的索引，若不存在则写零，并保留原标签、索引及失败位。非零索引控制交换对应的 $B_i$ 与指定位置 $B_1$，称该位置的 qubit 为缓存 $C_{\rm cache}$；零索引时不交换。所有探针、伙伴和原生标签保留，不测量、退相干或后选择该准备。已知单态是控制器自身的准备，不是额外未知方向输入或 $\eta_A$ 的纯化。
+
+依原次序运行展开后的 $U_{\rm out}$。每个逻辑字母 $U\in\{Q_D,\mathrm{controlled}\ Q_D\}$ 对原逻辑探针 $S$ 使用固定 $q$ 槽。槽活动位和奇偶由本字已有记录可逆写入。每槽都恰作一次前向 $V$：活动槽直接用 $S$；非活动槽先受控交换 $S$ 与缓存，调用后交换回来。第一活动槽在调用后施行 (7.1) 的 $F_{cH}$（不受控字取 $c=1$）；后续活动校正槽省去该相位。每个活动槽使用相干记录等距
+
+$$
+\mathsf M_X=\sum_{x,y=0}^1|x_X y_X\rangle\langle x_X y_X|_{HE}
+                       \otimes|xy\rangle_{B_{\rm X}}\otimes|xy\rangle_{F_{\rm X}},
+\qquad |x_X\rangle=(|+\rangle+(-1)^x|-\rangle)/\sqrt2.
+\tag{21.8}
+$$
+
+原 $H,E$、原始 $xy$ 与实际副本均保留。第一槽奇偶零即成功；若为一，第一处校正奇偶一使该字成功。若到第 $q$ 槽仍活动，写入截止标志并以实际态继续。原始 $xy$ 永不覆盖；本字历史只用于本地停止和记录，后续逻辑门不读取这些历史。
+
+非活动槽不作 $F_{cH}$ 或 $X$ 读出。把该槽原生 $H,E$ 中的原生对通过以非活动为控制的交换移入新鲜两位标志 $Z_i$，原 $H,E$ 寄存器和 $Z_i$ 都保留。$Z_i=00$ 表示正标签，$Z_i=11$ 表示负标签，活动槽留 $Z_i$ 为空白 $00$；另保留活动位。负标签不被舍去，且任何后续门均不读取或覆盖 $Z_i$。这只是相干数据的可逆搬移：非活动槽原 $H,E$ 留下交换来的空白，原生对仍在实际口内。所有槽的非活动空白、失败、截止和不匹配分支均保留。
+
+逻辑字结束后，以有限记录等距 $|l\rangle_L\mapsto|l\rangle_L|l\rangle_{\rm read}|l\rangle_{\rm copy}$ 读 $L$。按定义 10.1 写入 $\widehat h(l)$：正标签中心按坐标以误差至多 $a$ 取有理值，零及无效码取零；保留旧两坐标解码输出、无效码和失败码。场采样在 $0,\pm u e_x,\pm u e_y$ 五点，对三个固定实验室 Pauli 轴各取 $\ell$ 个独立原场令牌。逐个使用 (20.5) 的保留记录等距，保留令牌、两份记录及十五组计数和均值 $\widehat n_b(z)$。置
+
+$$
+\begin{aligned}
+\widehat g_a&=\frac{\widehat n(+u e_a)-\widehat n(-u e_a)}{2u}\quad (a=x,y),\\
+\widehat D&=\left(
+ \frac{\widehat h\cdot[\widehat n(0)\times\widehat g_x]}2,\,
+ \frac{\widehat h\cdot[\widehat n(0)\times\widehat g_y]}4,\,
+ 0,\frac{\widehat h\cdot\widehat g_y}2\right).
+\end{aligned}
+\tag{21.9}
+$$
+
+由保留数据控制的有限可逆查表写入 $\widehat D$ 及一份实际副本。所有算术输入和输出均保留，值为有理数且标签集合有限。随后请求一个在 $+d e_x$ 独立重置的原令牌，不作任何中间操作，恰施行一次 $U_{\rm term}$ 并保留令牌。不另施行补偿、恢复、参考替换、逆或后选择。
+
+该分支的 $K$ 包含全部 $2q$ 个准备探针和伙伴、$2q$ 个准备原生 $H_i,E_i$、索引、失败和路由输出；全部逻辑探针、频率、系数标签、$L$、$K_{\rm work}$、LCU 与 QSVT 的选择器、相位、标志及编译口；每个付费槽的原 $H,E$、$X$ 原记录及副本、$Z_i$、活动、奇偶、成功、截止、有限计数及每项历史计算输出；$L$ 的读出及副本、$\widehat h$、旧解码口；全部 $15\ell$ 个场样本令牌及其两份记录、十五组计数和均值、两个差分向量、$\widehat D$ 及副本和全部算术输出；终端令牌、固定公开程序与表、宏步、路由及计数寄存器和 $\eta_A$。布尔函数以保留输入并将函数值加到新有限输出的方式实现。非参考操作是指定有限矩阵、受控置换或显式记录等距，无未列出的丢弃口。另一实现若产生额外实际系统，须将其纳入自己的 $K$ 并另给完整输出对应。$e>e_0$ 支的完整 $K$ 取定义 20.2 的全部实际口。
+
+**定理 21.4（同一完成运行的原成功、无对数泄漏和自身边缘返回）。** 假设原合同实际供应上述量子准备、前向原生、所用已知非参考控制与保留读出（包括相干探针路由）、独立场重置和规定终端。对每个原正有理 $0<e\le1/100$，定义 21.2–21.3 给出一个与实际 $n,h$ 无关的有限因果控制器及有限有理四坐标解码器。对所有定义 21.1 的 $n,h$ 和任意独立有限混合 $\eta_A$，其同一完整实际完成态 $\Omega_{n,h}$ 满足
+
+$$
+\begin{gathered}
+\Pr[\|\widehat D-D_h(n)\|_\infty>e]\le e,\qquad
+T_V\le L_e,\qquad T_{\rm reset}\le Q_e,\qquad T_{\rm terminal}=1,\\
+p_R(n,h):=1-\operatorname{Tr}[(\tau_h\otimes I_K)\Omega_{n,h}]
+ \le \frac{C}{m_e e^2},\\
+\frac12\|\Omega_{n,h}-\tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}\|_1
+ \le \min\left\{1,\frac{2\sqrt C}{e\sqrt{m_e}}\right\}.
+\end{gathered}
+\tag{21.10}
+$$
+
+$C$ 精确取 (21.6)，比较边缘是该 $\Omega_{n,h}$ 自己的实际 $K$ 边缘。小精度支的逐支确定计数为 $q+\nu q$ 次前向原生、$15\ell+1$ 次原重置、一次终端和 $q+\nu q+1$ 次参考接触；另一支的确定计数由 (20.10) 给出。相同结论包括每个取整端点、$e=e_0$ 及 $e=1/100$。
+
+证明。先证明 $e\le e_0$ 支，取 $H=\log(1/e)$。辅助 $\eta_A$ 始终按恒等张量保留；获取证明可先在其余系统的纯向量上作，之后张量 $\eta_A$。这不调用其纯化。场采样及终端在各自实际混合令牌上处理。
+
+### 21.1 原有理精度上的逻辑供应
+
+OTF004 §26 的球冠窗口已量化于每个正有理 $e\le e_*$。本卷 §§3–6 的有限公式使用 $e$ 本身、整数上取整、固定区间选择和二进相位舍入；原 $e=2^{-r}$ 的指数 $r$ 不进入这些构造。所需大小条件由 $e\le2^{-r_0}$ 和原整数直接取得。具体地，在整个原域上，
+
+$$
+\begin{gathered}
+27000e^{-4}H\le N\le60000e^{-4}H,\qquad D=8{,}000{,}000N^2,\\
+10^{15}e^{-8}H^2\le m\le3\cdot10^{16}e^{-8}H^2,\qquad t\le U_0 e^{-8},\\
+q\le64H,\qquad \log(2t/e)\le40+9H\le20H .
+\end{gathered}
+\tag{21.11}
+$$
+
+下界用 $N\ge5\ell/6$；上界用 $\log(90/e)\le2H$ 及 (21.1) 的上取整逐项界住最大值。$N\ge3k/10$、$k\ge1/e$ 给 $9k/e\le8{,}000{,}000N^2$，右边已是整数。平方后减一给 $m$ 的两界，$H^2\le e^{-2}$ 给 $t$ 的上界。$\log D\le19H$、$\log L\le8H$ 代入 (21.7) 给 $q$ 界；$U_0$ 与 $H\ge\log 100$ 给最后一界。上述推导使用原取整定义，包括其等号端点。
+
+球冠的 (2.8) 由 OTF004 (26.3) 的同一 $m$ 和 $e\le2^{-r_{\rm base}}$ 给出。截断、正求积及导数估计 (3.4)、(3.7)、(3.10) 使用该 $\lambda,s$ 窗口；Fourier 尾至多 $M_{\rm Fourier}768^{24}e^{39/4}$，乘 $t$ 后由 $U_0e^{-8}$ 和 (2.7) 中相应门槛控制。表和 Taylor 误差用同一 $s,t$ 与 (2.7) 的 $A_0$ 门槛；于是 (5.14) 的矩形误差、极分解间隙和 §6 的 erf 多项式估计仍在同一窗口内。(7.7)–(7.9) 的内外次数界使用这些不等式及 $\log(2t/e)$，并逐个展开正、逆和受控字母；不使用二进等式，也不将频率标签数乘入共享访问。故 (6.11) 和 (7.9) 在这些有理 $e$ 上保持原常数。这里延用的是工作替换前的逻辑估计，不扩展定理 1.2 的声明 CP 消费者。
+
+其中所用奇异值变换是 Gilyén–Su–Low–Wiebe，[Quantum singular value transformation and beyond, arXiv:1806.01838v1](https://arxiv.org/src/1806.01838v1) 的原始文稿 Definition 15（交替相位字）、Theorem 17（奇异值变换）、Corollary 18（实多项式）和 Lemma 19（交替相位字的实现）。§§5–6 的输入输出投影及酉在共同有限空间上，内层偶、奇多项式和外层实奇多项式满足各自次数、奇偶性和整个 $[-1,1]$ 上的界，外层用同一正奇异值间隙。受控与伴随逻辑访问照 (7.9) 逐字计费；投影块不当作确定输出。由 (6.9)–(6.11)，包括编译标志及所有非投影振幅的比较为
+
+$$
+\|U_{\rm out}\psi-|0_{\rm compiler}\rangle W\psi\|<\frac1{32t},
+\qquad
+\nu\le C_\nu e^{-3}\log(2t/e),\qquad B\le K_N e^{-3}H^2
+\tag{21.12}
+$$
+
+（$\psi$ 为逻辑输入嵌入中的单位向量）。最后一界来自 (21.11) 的 $64H$ 和 $20H$。另由 OTF004 (26.4)–(26.5)、引理 26.8 及本卷 (3.10)、(10.3)，同一有限 $W$ 有
+
+$$
+\|(I-\tau_h)W|j,h\rangle\|\le A/\sqrt\lambda+(R_0+C_{\rm fail})/\lambda,\qquad
+\Pr_W[\|\widehat h-h\|_\infty>e/16]
+ \le 3C_{\rm fail}/\lambda+4\exp[-(m+2)e^2/16384].
+\tag{21.13}
+$$
+
+后一式只读 $L$ 的分布，无须替换 $K_{\rm work}$。
+
+### 21.2 缓存准备的完整向量比较
+
+只在证明中固定 $h$ 的坐标，记 $e_b=|j,j-b\rangle_h$，顶层向量写为 $|j,h\rangle$。写 $|h+\rangle,|h-\rangle$ 为探针沿 $h$ 的本征向量。比较等距为
+
+$$
+v_h=P_{h,+}\otimes|++\rangle+P_{h,-}\otimes|--\rangle,\qquad
+P_{h,\pm}=|h\pm\rangle\langle h\pm|.
+\tag{21.14}
+$$
+
+由 OTF004 (13.14)，$V-I_R\otimes v_h$ 在 $|j,h\rangle|h+\rangle$ 上为零，在 $|j,h\rangle|h-\rangle$ 上等于
+
+$$
+D^{-1}\bigl(|j,h\rangle|h-\rangle+\sqrt m\,e_1|h+\rangle\bigr)
+       \otimes(|++\rangle-|--\rangle).
+\tag{21.15}
+$$
+
+故限制在参考 $|j,h\rangle$ 上的算子范数恰为 $\sqrt{2/D}$，张量任意探针旁观仍成立。以理想前缀、实际后缀逐项作望远镜，每个理想前缀保持参考为 $|j,h\rangle$。在包括全部准备输出、索引及交换的同一向量空间中，实际准备和 $q$ 次 $v_h$ 的比较误差至多 $q\sqrt{2/D}\le2q/\sqrt m$。后接实际等距保持该界。
+
+对一半已知单态，$v_h$ 的正、负分支各有平方范数 $1/2$；理想准备的分支相互独立，全负扇区平方范数为 $f_0=2^{-q}$。其正交补内，首个正标签交换把 $|h+\rangle$ 放在缓存位置，因此在固定 $h$ 时缓存与所有其余系统因子化。仅在证明中归一化这成功扇区，记其向量为 $|j,h\rangle|h+\rangle_{C_{\rm cache}}\otimes\kappa_h$，其中 $\kappa_h$ 含其余准备口。实际控制器既不知道 $h$，也不选择或归一化该扇区。全负扇区始终保留，其振幅 $\sqrt{f_0}$ 在下文计入。该计算对所有方向（包括实验室极点）相同。
+
+### 21.3 跳过非活动调用的完整比较及理想前缀激发
+
+令 $\mathcal G$ 为数学比较电路，复制定义 21.3 的相干活动槽、读出及全部历史，只在非活动槽写空白而跳过调用，不接触缓存。这个受控调用／跳过只用于比较。由 OTF004 (24.7)–(24.8)，(21.8) 的首槽、校正槽的精确分支算子依次为 $2^{-1}Q_D^{x\oplus y}U$、$2^{-1}Q_D^{x\oplus y}$，包括受控 $U$ 的相干控制交叉块。长度 $b$ 的成功历史因此有算子 $2^{-b}U$，截止历史有 $2^{-q}Q_DU$。每份历史含 $X$ 基的 $H,E$、原始 $xy$、副本、活动位和停止数据。于是成功历史的相干叠加与逻辑输入因子化，且平方范数 $1-2^{-q}$ 与输入无关。每个逆字母也分别满足此对应。相关的停止形态见 Paetznick–Svore，[Repeat-Until-Success: Non-deterministic decomposition of single-qubit unitaries, arXiv:1311.1074v2](https://arxiv.org/html/1311.1074v2)；这里所用的是上述有限分支系数。
+
+所有 $\nu$ 字都成功的扇区恰作 $U_{\rm out}$，张量归一化、输入无关的完整成功历史向量。保留的截止标志区分其正交补，其平方范数
+
+$$
+F=1-(1-2^{-q})^\nu\le\nu2^{-q}.
+\tag{21.16}
+$$
+
+在归一化的理想成功准备上，$\mathcal G$ 的完整输出相对于对应的 $U_{\rm out}$ 张量全成功历史，半迹距离至多 $\sqrt F$（纯态平方重叠为 $1-F$），并有 $\sqrt{p_R(\mathcal G)}\le\sqrt{p_R(U_{\rm out})}+\sqrt F$，由对两正交历史分量施加同一个参考正交投影得到。
+
+令 $N_h=jI-J_h$，则 $N_h|j,h\rangle=0$。$Q_D$ 只在有限自旋二维块 $\{e_b|h-\rangle,e_{b+1}|h+\rangle\}$（$0\le b<m$）作非对角耦合，其系数为 $2\sqrt{(m-b)(b+1)}/D$。两端不耦合的状态不给交换子贡献。每块乘上 $\sqrt{N_h}$ 的本征值差后，由
+
+$$
+\frac{2\sqrt{(m-b)(b+1)}}D(\sqrt{b+1}-\sqrt b)
+ \le\frac{2\sqrt m}D\le\frac2{\sqrt m}
+\tag{21.17}
+$$
+
+得 $\|[\sqrt{N_h},Q_D]\|\le2/\sqrt m$。在 $V$ 的输入输出之间，相应交换子为 $[\sqrt{N_h},Q_D]\otimes(|++\rangle-|--\rangle)/2$，不增加该界。活动控制与其余非参考门、相位、记录和路由记账均与 $\sqrt{N_h}$ 交换；一次相干受活动控制的比较槽至多增加同一界。由 $\|\sqrt{N_h}\mathcal G_i\Psi\|\le\|\sqrt{N_h}\Psi\|+2/\sqrt m$ 逐槽归纳，在上述成功准备及空白逻辑输入上，$\mathcal G$ 的任一经过至多 $b$ 槽的完整前缀 $\Psi_b$ 满足
+
+$$
+\|\sqrt{N_h}\Psi_b\|\le2b/\sqrt m,\qquad
+\langle N_h\rangle_{\Psi_b}\le4b^2/m.
+\tag{21.18}
+$$
+
+旧记录和反馈全在同一向量内，不假设历史独立。缓存只在 $\mathcal G$ 中始终保持 $|h+\rangle$ 因子。有限自旋端点与半整数 $j$ 同样适用。
+
+### 21.4 付费路由与同一相互作用图景中的记录投影
+
+在缓存为 $|h+\rangle$ 的比较输入上，任意参考向量 $\psi$（可带任意纠缠旧记忆）满足
+
+$$
+\langle h+|\Pi_-^{RC_{\rm cache}}|h+\rangle=N_h/D,\qquad
+\|\Pi_-^{RC_{\rm cache}}(\psi\otimes|h+\rangle)\|^2
+   =\langle\psi|N_h|\psi\rangle/D.
+\tag{21.19}
+$$
+
+第一式用 $\langle h+|\sigma|h+\rangle=h$，第二式用 $\Pi_-^2=\Pi_-$。此式只给未投影理想前缀上的精确失配质量，并不假设实际缓存经历其他参考接触后仍为联合本征态。
+
+将全部 $B$ 槽按时间编号。对第 $i$ 槽在活动位已写、调用未执行的切口，令 $A_i$ 为活动投影。此处 $A_i$ 作用在保留活动数据上，与 $RC_{\rm cache}$ 投影交换。定义
+
+$$
+P_i=A_i I+(I-A_i)\Pi_+^{RC_{\rm cache}},\qquad
+\mathsf J_i=P_i\otimes|00\rangle_{Z_i}+(I-P_i)\otimes|11\rangle_{Z_i}.
+\tag{21.20}
+$$
+
+$P_i$ 是正交投影。在活动扇区，$\mathsf J_i$ 只给空白标志，实际槽与 $\mathcal G$ 的活动槽相同；在非活动扇区，成对受控交换使实际前向 $V$ 恰作用在 $R,C_{\rm cache}$，原生标签移入 $Z_i$ 后恰有 (21.20) 的两项，其他新槽口和比较电路一样为空白。因而实际槽精确因子化为先 $\mathsf J_i$、再相同切口上的理想槽及共同记账，后者在非活动扇区不再作原生调用，并在两扇区都不作用于 $Z_i$。这里的因子化是两扇区上的线性等距等式，故也适用于活动与非活动的相干叠加；其实现就是已付费的路由槽，不需物理投影测量。
+
+在预置全部空白口的同一有限空间内取理想槽及共同门的酉延拓，均在所有 $Z_i$ 上为恒等。令 $G_{<i}$ 为从初始切口到第 $i$ 槽投影前的理想前缀（包括活动位计算），$G_{\rm end}$ 为整个比较获取字。令 $\Psi$ 为 §21.2 的归一化理想成功准备连同逻辑输入及空白口。共同相互作用图景中的投影及其单次失配质量为
+
+$$
+\begin{aligned}
+\widetilde P_i&=G_{<i}^\dagger P_iG_{<i},\\
+\varepsilon_i&=\|(I-\widetilde P_i)\Psi\|^2
+ =\|(I-A_i)\Pi_-^{RC_{\rm cache}}G_{<i}\Psi\|^2
+ \le\frac{4B^2}{mD},\\
+\sum_{i=1}^B\varepsilon_i&\le S:=\frac{4B^3}{mD}.
+\end{aligned}
+\tag{21.21}
+$$
+
+用 (21.19) 和 (21.18) 估计的是同一初态的**未投影**理想前缀；$I-A_i$ 只会降低该范数。酉延拓和其伴随仅作坐标变换，不提供实际逆。因为没有后续门读取或覆盖旧 $Z_i$，实际完整向量的全零标志振幅恰为
+
+$$
+G_{\rm end}\widetilde P_B\cdots\widetilde P_1\Psi.
+\tag{21.22}
+$$
+
+即第 1 槽投影先作用，最后再推回到理想最终坐标；其余旗标历史全在正交补。空槽情形 $\nu=0$ 取 $B=S=F=0$，投影积为恒等。
+
+将 Jingliang Gao，[Quantum union bounds for sequential projective measurements, arXiv:1410.5688v2](https://arxiv.org/html/1410.5688v2)，Theorem 1(a),(b) 应用于同一初态 $|\Psi\rangle\langle\Psi|$ 和上述依次作用的有限正交投影。设接受质量 $a_{\rm acc}=\|\widetilde P_B\cdots\widetilde P_1\Psi\|^2$。在需要非平凡界的窗口内，(b) 给 $a_{\rm acc}\ge1-4S>0$；(a) 比较的是初态与将该投影积所得向量按 $\sqrt{a_{\rm acc}}$ 归一化后的态。其 $D$ 为**全迹范数**，上界 $2\sqrt{\sum_i\varepsilon_i}$，故本卷半迹距离至多 $\sqrt S$。经 $G_{\rm end}$ 推回，归一化接受向量与理想输出的平方重叠至少 $1-S$。全输出与理想输出（张量全空白 $Z_i$）的平方重叠只由 (21.22) 贡献，至少为 $(1-4S)(1-S)\ge1-5S$，在 $S<1/5$ 时给出非平凡界；其余 $S$ 用距离至多一。于是
+
+$$
+D_{\rm tr}(\text{实际完整路由输出},\text{理想完整输出})
+ \le\min\{1,\sqrt{5S}\}.
+\tag{21.23}
+$$
+
+另取归一化接受向量的整体相位使其与理想向量的距离最小，平方重叠界给向量距离至多 $\sqrt{2S}$。施参考正交投影后，其泄漏振幅至多 $\sqrt{p_R(\mathcal G)}+\sqrt{2S}$。非接受的全部保留历史的总平方范数至多 $4S$，且标志与接受历史正交。因此用 $\sqrt{2S}+2\sqrt S\le4\sqrt S$ 得
+
+$$
+\sqrt{p_R(\text{理想成功准备上的实际路由})}
+ \le\sqrt{p_R(\mathcal G)}+4\sqrt S.
+\tag{21.24}
+$$
+
+只需对 $S<1/16$ 作此推导；否则右侧至少为一。两个界均作用在无条件完整输出，归一化只在证明中使用。误差由未投影同一历史的平方缺陷之和控制；这依赖成功比较准备及完整理想历史的有限自旋激发界，不是对任意门输入的 diamond 范数供应。一个已取得的缓存供全部路由槽使用，其准备代价不按字母重付。
+
+### 21.5 完整获取及原未触终端
+
+由 (21.13)、$\lambda\ge1$、$t\ge1$ 和 (21.12)，有 $\sqrt{p_R(U_{\rm out})}\le K_{\rm cap}/\sqrt t$。将实际准备换为完整理想准备，泄漏振幅及事件半迹误差均至多增加 $2q/\sqrt m$，因为同一实际后缀保持向量差。理想准备中全负扇区的平方范数为 $f_0$，在后缀前后与成功扇区保持正交。比较到归一化成功准备的半迹距离为 $\sqrt{f_0}$；对泄漏振幅分解两分量并用三角不等式，其贡献也至多 $\sqrt{f_0}$。随后对成功准备应用 (21.23)–(21.24)，对 $\mathcal G$ 应用 (21.16)，最后接入相同 $L$ 读出和有理方向解码。得实际获取的泄漏与实际方向坏事件 $b_{\rm acq}$ 的界
+
+$$
+\begin{aligned}
+\sqrt{p_{\rm acq}}&\le K_{\rm cap}/\sqrt t+2q/\sqrt m
+                   +\sqrt{2^{-q}}+\sqrt{\nu2^{-q}}+4\sqrt S,\\
+b_{\rm acq}:=\Pr_{\rm actual}[\|\widehat h-h\|_\infty>e/16]
+ &\le 3C_{\rm fail}/\lambda+4\exp[-(m+2)e^2/16384]+1/(32t)\\
+ &\qquad+2q/\sqrt m+\sqrt{2^{-q}}+\sqrt{\nu2^{-q}}+\sqrt{5S}.
+\end{aligned}
+\tag{21.25}
+$$
+
+方向界使用相同完整口上的距离比较及事件概率差；没有对 $K_{\rm work}$ 作替换，也没有在返回估计中迹掉它。$\kappa_h$ 是从原唯一参考接触实际取得的口所对应的比较因子，不是另行供应的含 $h$ 输入。
+
+对终端取 $P_h=\tau_h\otimes I$。由 (20.27)–(20.28) 的原谱系数及 $\sin^2 x\le x^2$，
+
+$$
+\|(I-P_h)U_{\rm term}P_h\|\le\sqrt{g_m}\le d/\sqrt m,\qquad
+g_m=\frac{4m}{D^2}\sin^2\!\left(\frac{dD}{2m}\right).
+\tag{21.26}
+$$
+
+对含旧相关及实际独立令牌的任意密度算子 $\rho$，将 $(I-P_h)U_{\rm term}\rho^{1/2}$ 在 $U_{\rm term}$ 前按 $P_h,I-P_h$ 分解，用 Hilbert–Schmidt 三角不等式，得终端至多增加 $d/\sqrt m$ 的泄漏振幅。非参考采样、读出和算术不增加参考泄漏。故同一完成态满足
+
+$$
+\sqrt{p_R(n,h)}\le K_{\rm cap}/\sqrt t+(2q+d)/\sqrt m
+                   +\sqrt{2^{-q}}+\sqrt{\nu2^{-q}}+4\sqrt S .
+\tag{21.27}
+$$
+
+终端只作用于 $R$ 和未经改动的独立原令牌，保持已经写好的解码边缘。
+
+### 21.6 逐支预算及全部原场的成功
+
+实际前向调用精确为 $q+B$：准备付 $q$ 次，每字的 $q$ 槽不论活动与否各付一次。由 (21.11)–(21.12)，
+
+$$
+\frac{B}{L}\le\frac{K_N eH}{270000}
+ \le\frac{K_N\sqrt e}{270000}<\frac14,\qquad
+\frac{q}{L}\le\frac{64e^4}{270000}<\frac14 ,
+\tag{21.28}
+$$
+
+其中 $H\le e^{-1/2}$ 且 $e\le1/(10^6K_N^2)$。因此 $q+B\le L/2\le L$。场重置恰为 $15\ell+1\le18N<Q$，终端恰一次，故参考接触恰为 $q+B+1$。不存在按期望计算或免费省去的槽。
+
+同一组界给
+
+$$
+2q/\sqrt m\le e/100,\qquad
+\sqrt{2^{-q}}\le e/100,\qquad
+\sqrt{\nu2^{-q}}\le e/100,\qquad
+\sqrt{5S}\le e/100.
+\tag{21.29}
+$$
+
+第一项用 $q\le64H$、$\sqrt m\ge10^7 e^{-4}H$；中间两项用 $2^{-q}\le e/(DL)$、$\nu\le L$ 及 $D\ge m\ge10^{15}e^{-8}H^2$。最后一项用
+
+$$
+\sqrt{5S}\le5 B^{3/2}/m
+ \le 5 K_N^{3/2}e^{7/2}H/10^{15}
+ \le 5 K_N^{3/2}e^3/10^{15}
+ \le e/100
+\tag{21.30}
+$$
+
+以及 (21.6) 的阈值。(21.25) 中其余三项合并至多 $K_{\rm risk}/t+4\exp(-t/16384)$，其中 $K_{\rm risk}=3\cdot768^2 C_{\rm fail}+1$。由 (2.8) 的 $t\ge6K_{\rm risk}/e$、$t\ge16384\log(24/e)$，这部分至多 $e/3$，故 $b_{\rm acq}\le e/3+4e/100$。
+
+十五个场均值坏事件的总概率由 (20.16) 至多 $30\exp(-\ell e^2u^2/512)\le e/3$。在两类好事件上，$\|\widehat h-h\|_2\le e/8$，$\|\widehat n(z)-n(z)\|_2\le eu/8$；原二阶导数上界使精确中心差分偏差至多 $u$，两端样本另贡献至多 $e/8$，故 $\|\widehat g_a-n_a(0)\|_2\le e/4$。代入 (21.9)，由 (20.19)–(20.21) 同一分解，四坐标误差分别至多 $11e/16,11e/32,0,5e/16$。这里只用原上界，不增加导数下界或限制场或方向。于是完成运行失败概率至多 $2e/3+4e/100<e$，不要求两个好事件独立。采样和终端分别有 $|u|<r$、$d<r$。当 $e>e_0$，原精度 $e$ 上的定理 20.3 直接给成功及确定预算。两支的所有计数和输出字母表有限。
+
+### 21.7 统一无对数常数及同一完整边缘
+
+将 (21.27) 乘 $\sqrt t=e\sqrt m$。第一项变为 $K_{\rm cap}$；准备项至多 $128eH\le128$，终端项 $de\le1$。由 $\nu\le L$ 和 $2^{-q}\le e/(DL)$，全负及截止的两项乘 $\sqrt t$ 后各至多一。路由项为
+
+$$
+4\sqrt S\,\sqrt t
+ =8e B^{3/2}/\sqrt D
+ \le(8/10^7)K_N^{3/2}\sqrt e\,H^2
+ \le K_N^2.
+\tag{21.31}
+$$
+
+末步用 $K_N\ge1$ 及 $\sup_{y\ge0}y^2\exp(-y/2)=16\exp(-2)<3$。故此支有
+
+$$
+p_R(n,h)\le (K_{\rm cap}+K_N^2+131)^2/(me^2).
+\tag{21.32}
+$$
+
+对 $e>e_0$，(20.29)–(20.37) 在该支自身完整运行上给
+
+$$
+p_R(n,h)\le\frac{3k+d^2}{m}
+ \le\frac{6400\log(18/e)}{me^2}
+ \le\frac{6400\log(18/e_0)}{me^2}.
+\tag{21.33}
+$$
+
+(21.6) 的同一个 $C$ 覆盖两支。对每支的实际完成态直接用 (20.32)–(20.34)：以 $P_h=\tau_h\otimes I_K$ 分块，正交参考块的迹为 $p_R$，交叉块的迹范数至多 $\sqrt{p_R(1-p_R)}$；其参考偏迹为零，比较乘积态的第二因子正是这两对角块给出的实际 $\operatorname{Tr}_R\Omega_{n,h}$。故
+
+$$
+\frac12\|\Omega_{n,h}-\tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}\|_1
+ \le p_R+\sqrt{p_R(1-p_R)}\le2\sqrt{p_R}.
+\tag{21.34}
+$$
+
+再取一般距离界一，得 (21.10) 的无对数 $O(1/(e\sqrt{m_e}))$ 完整返回。张量同一独立混合密度算子不改变人口、距离或解码事件概率；不需要最小本征值为正、辅助密度逆或可访问纯化。$\square$
+
+**命题 21.5（一次成功逻辑作用后的有限缓存失配）。** 固定 $h=e_z$，参考为原一次准备的 $\tau_{e_z}$，取已知独立缓存 $|\uparrow\rangle$、逻辑探针 $|\downarrow\rangle$。一个 $Q_D$ 字在第一活动槽成功后，紧随的非活动槽对缓存的原生调用出现负标签的条件概率恰为 $4m/D^3$；首槽成功且该槽出现负标签的联合概率为 $2m/D^3$。这里考虑有该非活动槽的字（$q\ge2$），并固定这一输入与这一槽序列。
+
+证明。令 $e_b=|j,j-b\rangle_{e_z}$。由 (21.3) 及 OTF004 (13.14)，归一化的成功逻辑态为
+
+$$
+Q_D(e_0|\downarrow\rangle)
+ =\frac{1-m}{D}e_0|\downarrow\rangle
+  +\frac{2\sqrt m}{D}e_1|\uparrow\rangle.
+\tag{21.35}
+$$
+
+由 (21.19)，第一分量无失配，第二分量的缓存负投影平方范数因子为 $1/D$；两分量的逻辑探针正交，故负标签概率为 $4m/D^3$。首槽奇偶为零的质量为 $1/2$，得联合概率。此例排除该有限输入上的精确无害缓存恒等式；(21.21) 已按 $N_h/D$ 支付这类缺陷。$\square$
+
+**定义 21.6（适用域及原来源对应）。** 定理 21.4 是 §§3–6 的完整逻辑等距在上述原实际菜单前提下的应用；其承重对应为 (21.20)–(21.24) 的完整历史路由，随后由同一运行消费于 (21.25)–(21.34)。$\Omega_{n,h}$ 是此有限数学消费者的实际端口语义下的完成态。原物理来源 $\Omega$ 则是 [PB 实际探针与环境耦合续卷 §6](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md) 与 [PB 两角正证书续卷定义 49.1、边界 49.2](AURIC_FULL_PB_TWO_CORNER_POSITIVE_CERTIFICATE_CONTINUATION.md) 中同一个 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$ 的来源对象。完整合同及全部版本身份沿用边界 20.4，逐层保留原定义、全文、量词及固定上游；外层引用不替代内层 SQ、AH、SF、PB 等来源身份，原 $S(a,b)=a\circ b$ 和原响应 $D$ 也不换成电路符号。
+
+同一原 $\Omega$ 仍须共同给出下列七项，各项连同上述全文与全部递归上游保留：
+
+1. 原复 Hilbert、原可观测量、原标签与共同全词上的实际相干准备及合法控制。
+2. 原态、效果、Born 绑定、实际完整菜单及全部质量，包括零、不等、次归一、静默与非正常支。
+3. 同一实际来源的真正相关联合、复合、张量与实际参考副本。
+4. 每条实际 typed CP 分支、未归一上下文、全部输出与合法未来，以及整台递归参考。
+5. 完整仪器、TP、成功／失败与细记录输出、条件更新及原 Lüders 前件。
+6. 全部合法历史、真遗忘、实际完整活动输出、读后 ready、第一合法消费者及真实全未来 Return／CountRead。
+7. 实际动力学、物理钟、能量、一般生成元域及共同正 $\hbar$。
+
+有限数学等距、同一运行的自身边缘比较、相同边缘、形式环境和声明 CP 端口不供应这些同源物理条件。实际接受关联仍守 PB 边界 49.2 的原域和未归一标尺；自身边缘比较不是对全部合法未来的真实 Return。其他有限读出或地址关系不作为定理 21.4 的量子菜单前提。此处的原生控制见证要求供应具体非参考矩阵及准备，不能从其数学描述倒推出实际菜单。
+
+定理 21.4 的充分机制不成为所有原控制器的必要条件。大精度支的 $3k$ 槽、新鲜 $I/2$ 和固定调度仍只是 §20 的见证。小精度支路由探针，不在 §19 固定同探针、仅历史处理的局部障碍类内。§§1–11 的声明 CP 结果、§§12–15 的部分保留条件、§16 的重置必要阶与匹配阶、§17 的无条件旋转反例各保留原域。§18 的完整等距、共同二值置信读出下界保留其准确前件，与 (21.10) 的量级相容；不扩张为任意约化 CP 下界，也不由 (21.10) 取得该类的 $O(1/t)$ 完整返回。§20 的 $B_e$ 及其人口公式仍是原电路的结论，不转移到小精度支的新端口。
+
+## 追加锚（本行以下为增补区）

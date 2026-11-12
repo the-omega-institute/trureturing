@@ -50,7 +50,7 @@ def polygon (N : ℕ) : Fin N ⊕ Fin N → ℝ := fun p =>
 def jacobian (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ :=
   fun p q => deriv (fun t : ℝ => field N (polygon N + t • Pi.single q 1) p) 0
 
-private lemma distinctness_certificate (m k l : ℕ)
+lemma distinctness_certificate (m k l : ℕ)
     (hk : 2 ≤ k) (hkl : k < l) (hlm : l < m) :
     ((m : ℝ) - k) ^ 2 * ((k : ℝ) ^ 2 - 2) ≠
       ((m : ℝ) - l) ^ 2 * ((l : ℝ) ^ 2 - 2) := by
@@ -109,7 +109,7 @@ private lemma distinctness_certificate (m k l : ℕ)
   have hz : (k - (l : ℝ)) * Q m = 0 := by rw [← hfactor, he, sub_self]
   exact (mul_ne_zero (by linarith) hQ) hz
 
-private lemma chord_sq (N : ℕ) (j k : Fin N) :
+lemma chord_sq (N : ℕ) (j k : Fin N) :
     (polygon N (Sum.inl j) - polygon N (Sum.inl k))^2 +
       (polygon N (Sum.inr j) - polygon N (Sum.inr k))^2 =
         4 * Real.sin (Real.pi * ((j.val : ℝ) - k.val) / N)^2 := by
@@ -120,7 +120,7 @@ private lemma chord_sq (N : ℕ) (j k : Fin N) :
   simpa only [sub_zero, Real.cos_zero, mul_one, ← pow_two, hab] using
     ConceptDynamics.ObservationTopology.HarmonicSensors.PairedDelayGeometry.planar_chord_dot a b 0
 
-private lemma chord_sq_ne_zero (N : ℕ) (j k : Fin N) (hjk : j ≠ k) :
+lemma chord_sq_ne_zero (N : ℕ) (j k : Fin N) (hjk : j ≠ k) :
     (polygon N (Sum.inl j) - polygon N (Sum.inl k))^2 +
       (polygon N (Sum.inr j) - polygon N (Sum.inr k))^2 ≠ 0 := by
   have hN : (0 : ℝ) < N := by exact_mod_cast (show 0 < N from Nat.zero_lt_of_lt j.isLt)
@@ -237,7 +237,7 @@ private lemma reflection_charge (m : ℕ) (j k : Fin (2 * m)) :
     _ = (-1 : ℝ)^((k.val + 2) % 2) := by rw [hp]
     _ = _ := (neg_one_pow_eq_pow_mod_two _).symm
 
-private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj : k ≠ j) :
+private lemma reflection_pair_all (m : ℕ) (hm : 1 ≤ m) (j k : Fin (2 * m)) (hkj : k ≠ j) :
     let z := polygon (2 * m)
     let d := fun a b : Fin (2 * m) =>
       (z (Sum.inl a)-z (Sum.inl b))^2 + (z (Sum.inr a)-z (Sum.inr b))^2
@@ -301,7 +301,17 @@ private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj 
   · rw [hcb, hcc]; ring
   · rw [hsb, hsc]; ring
 
-private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
+private lemma reflection_pair (m : ℕ) (hm : 3 ≤ m) (j k : Fin (2 * m)) (hkj : k ≠ j) :
+    let z := polygon (2 * m)
+    let d := fun a b : Fin (2 * m) =>
+      (z (Sum.inl a)-z (Sum.inl b))^2 + (z (Sum.inr a)-z (Sum.inr b))^2
+    (z (Sum.inl j)-z (Sum.inl k)) / d j k +
+        (z (Sum.inl j)-z (Sum.inl (j+j-k))) / d j (j+j-k) = z (Sum.inl j) ∧
+      (z (Sum.inr j)-z (Sum.inr k)) / d j k +
+        (z (Sum.inr j)-z (Sum.inr (j+j-k))) / d j (j+j-k) = z (Sum.inr j) := by
+  exact reflection_pair_all m (by omega) j k hkj
+
+theorem equilibrium_all (m : ℕ) (hm : 1 ≤ m) :
     field (2 * m) (polygon (2 * m)) = 0 := by
   classical
   have : NeZero (2 * m) := ⟨by omega⟩
@@ -350,24 +360,28 @@ private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
   cases p with
   | inl j =>
     have hs := hsum j (fun k => z (Sum.inr k))
-      (fun k hk => (reflection_pair m hm j k hk).2)
+      (fun k hk => (reflection_pair_all m hm j k hk).2)
     change -charge (2 * m) j * (1/2:ℝ) * z (Sum.inr j) - _ = 0
     rw [hs]; ring
   | inr j =>
     have hs := hsum j (fun k => z (Sum.inl k))
-      (fun k hk => (reflection_pair m hm j k hk).1)
+      (fun k hk => (reflection_pair_all m hm j k hk).1)
     change charge (2 * m) j * (1/2:ℝ) * z (Sum.inl j) + _ = 0
     rw [hs]; ring
 
 
-private def rotation (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ :=
+private lemma equilibrium (m : ℕ) (hm : 3 ≤ m) :
+    field (2 * m) (polygon (2 * m)) = 0 := by
+  exact equilibrium_all m (by omega)
+
+def rotation (N : ℕ) : Matrix (Fin N ⊕ Fin N) (Fin N ⊕ Fin N) ℝ :=
   Matrix.fromBlocks
     (Matrix.diagonal (fun j => polygon N (Sum.inl j)))
     (Matrix.diagonal (fun j => -polygon N (Sum.inr j)))
     (Matrix.diagonal (fun j => polygon N (Sum.inr j)))
     (Matrix.diagonal (fun j => polygon N (Sum.inl j)))
 
-private lemma rotation_mul_transpose (N : ℕ) :
+lemma rotation_mul_transpose (N : ℕ) :
     rotation N * (rotation N).transpose = 1 := by
   delta rotation; rw [Matrix.fromBlocks_transpose, Matrix.fromBlocks_multiply]
   simp only [Matrix.diagonal_transpose, Matrix.diagonal_mul_diagonal]
@@ -515,7 +529,7 @@ private lemma jacobian_diagonal (N : ℕ) (j : Fin N) :
     by_cases hkj : k = j <;> simp [hkj]
     ring
 
-private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) :
+private lemma rotated_jacobian_diagonal_all (m : ℕ) (hm : 1 ≤ m) (j : Fin (2 * m)) :
     let R := (rotation (2 * m)).transpose * jacobian (2*m) * rotation (2*m)
     let w := ∑ k : Fin (2*m), charge (2*m) k * weights m j k
     R (Sum.inl j) (Sum.inl j) = 0 ∧
@@ -561,8 +575,8 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
       linear_combination
         charge (2*m) k*((x k)^2+(y k)^2-x j*x k-y j*y k)*hu j +
           charge (2*m) k*((x j)^2+(y j)^2-x j*x k-y j*y k)*hu k
-  have hfx := congr_fun (equilibrium m hm) (Sum.inl j)
-  have hfy := congr_fun (equilibrium m hm) (Sum.inr j)
+  have hfx := congr_fun (equilibrium_all m hm) (Sum.inl j)
+  have hfy := congr_fun (equilibrium_all m hm) (Sum.inr j)
   change -charge (2*m) j*(1/2:ℝ)*y j-sy = 0 at hfx
   change charge (2*m) j*(1/2:ℝ)*x j+sx = 0 at hfy
   have hA0 : ((x j)^2-(y j)^2)*T - 2*x j*y j*U = 0 := by
@@ -589,7 +603,16 @@ private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m
   · linear_combination -hA0
 
 
-private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
+private lemma rotated_jacobian_diagonal (m : ℕ) (hm : 3 ≤ m) (j : Fin (2 * m)) :
+    let R := (rotation (2 * m)).transpose * jacobian (2*m) * rotation (2*m)
+    let w := ∑ k : Fin (2*m), charge (2*m) k * weights m j k
+    R (Sum.inl j) (Sum.inl j) = 0 ∧
+    R (Sum.inl j) (Sum.inr j) = w ∧
+    R (Sum.inr j) (Sum.inl j) = charge (2*m) j + w ∧
+    R (Sum.inr j) (Sum.inr j) = 0 := by
+  exact rotated_jacobian_diagonal_all m (by omega) j
+
+theorem rotated_jacobian_all (m : ℕ) (hm : 1 ≤ m) :
     (rotation (2 * m)).transpose * jacobian (2*m) * rotation (2*m) =
       Matrix.fromBlocks 0 (blockB m) (blockC m) 0 := by
   classical
@@ -599,10 +622,10 @@ private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
   all_goals
     by_cases h : j = k
     · subst k
-      rcases rotated_jacobian_diagonal m hm j with ⟨hrr, hra, har, haa⟩
+      rcases rotated_jacobian_diagonal_all m hm j with ⟨hrr, hra, har, haa⟩
       have hsum : (∑ k : Fin (2*m), charge (2*m) k * weights m j k) =
           charge (2*m) j * diagonalWeight m := by
-        simpa [charge] using (alternating_weight_sum m hm j)
+        simpa [charge] using (alternating_weight_sum_all m hm j)
       rw [hsum] at hra har
       first
       | simpa only [Matrix.fromBlocks_apply₁₁, Matrix.zero_apply] using hrr
@@ -616,9 +639,15 @@ private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
       | simpa [charge, chargeMatrix_diagonal, Matrix.mul_diagonal, h, mul_comm] using har
       | simpa only [Matrix.fromBlocks_apply₂₂, Matrix.zero_apply] using haa
 
-private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
-    (jacobian (2 * m)).charpoly.IsRoot x ↔
-      (x^2 • 1 - blockC m * blockB m).det = 0 := by
+private lemma rotated_jacobian (m : ℕ) (hm : 3 ≤ m) :
+    (rotation (2 * m)).transpose * jacobian (2*m) * rotation (2*m) =
+      Matrix.fromBlocks 0 (blockB m) (blockC m) 0 := by
+  exact rotated_jacobian_all m (by omega)
+
+/-- The nonzero-parameter Schur calculation gives an equality, not only a root test. -/
+lemma nonzero_characteristic_value (m : ℕ) (hm : 1 ≤ m) (x : ℝ) (hx : x ≠ 0) :
+    (jacobian (2 * m)).charpoly.eval x =
+      (x^2 • 1 - blockC m * blockB m).det := by
   let B := blockB m
   let C := blockC m
   let I : Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ := 1
@@ -629,7 +658,7 @@ private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0)
   have hchar : (jacobian (2 * m)).charpoly =
       (Matrix.fromBlocks 0 B C 0).charpoly := by
     change _ = (Matrix.fromBlocks 0 (blockB m) (blockC m) 0).charpoly
-    rw [← rotated_jacobian m hm, Matrix.charpoly_mul_comm, ← Matrix.mul_assoc,
+    rw [← rotated_jacobian_all m hm, Matrix.charpoly_mul_comm, ← Matrix.mul_assoc,
       rotation_mul_transpose, Matrix.one_mul]
   have hmat : Matrix.scalar (Fin (2*m) ⊕ Fin (2 * m)) x - Matrix.fromBlocks 0 B C 0 =
       Matrix.fromBlocks (x • I) (-B) (-C) (x • I) := by
@@ -650,15 +679,41 @@ private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0)
   have hscale : x • (x • I - (-C) * (x⁻¹ • I) * (-B)) =
       x^2 • I - C * B := by
     simp [smul_sub, smul_smul, I, hx, pow_two]
-  have hd : (x • I).det ≠ 0 := by simp [I, hx]
+  rw [hchar, Matrix.eval_charpoly, hmat, hschur, ← hscale, Matrix.det_smul]
+  simp [I]
+
+/-- Polynomial continuation includes zero and every complex characteristic root. -/
+theorem charpoly_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 1 ≤ m) :
+    (jacobian (2 * m)).charpoly =
+      ∏ k : ZMod (2 * m), (X ^ 2 - C (gamma m k)) := by
+  classical
+  apply Polynomial.eq_of_infinite_eval_eq
+  have hs : (Set.univ \ {0} : Set ℝ).Infinite :=
+    Set.infinite_univ.sdiff (Set.finite_singleton (0 : ℝ))
+  apply hs.mono
+  intro x hx
+  have hx : x ≠ 0 := by simpa using hx
+  change Polynomial.eval x (jacobian (2 * m)).charpoly = _
+  rw [nonzero_characteristic_value m hm x hx, product_spectrum_all m hm]
+  simp only [Polynomial.eval_prod, Polynomial.eval_sub, Polynomial.eval_pow,
+    Polynomial.eval_X, Polynomial.eval_C]
+
+/-- The same identity in the actual complexification of the Cartesian Jacobian. -/
+theorem complex_charpoly_mode_product (m : ℕ) [NeZero (2 * m)] (hm : 1 ≤ m) :
+    ((jacobian (2 * m)).map Complex.ofRealHom).charpoly =
+      ∏ k : ZMod (2 * m), (X ^ 2 - C (gamma m k : ℂ)) := by
+  rw [Matrix.charpoly_map, charpoly_mode_product m hm]
+  simp only [Polynomial.map_prod, Polynomial.map_sub, Polynomial.map_pow,
+    Polynomial.map_X, Polynomial.map_C, Complex.ofRealHom_eq_coe]
+
+private lemma nonzero_root_iff (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
+    (jacobian (2 * m)).charpoly.IsRoot x ↔
+      (x^2 • 1 - blockC m * blockB m).det = 0 := by
   change Polynomial.eval x (jacobian (2 * m)).charpoly = 0 ↔ _
-  rw [hchar, Matrix.eval_charpoly, hmat, hschur]; rw [mul_eq_zero, or_iff_right hd]
-  change _ ↔ (x^2 • I - C*B).det = 0
-  rw [← hscale, Matrix.det_smul]
-  exact (mul_eq_zero.trans (or_iff_right (pow_ne_zero _ hx))).symm
+  rw [nonzero_characteristic_value m (by omega) x hx]
 
 
-private lemma root_iff_mode (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
+lemma root_iff_mode (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
     (jacobian (2 * m)).charpoly.IsRoot x ↔
       ∃ r : ℕ, 2 ≤ r ∧ r < m ∧
         x^2 = ((m : ℝ) - r)^2 * ((r : ℝ)^2 - 2) / 4 := by
@@ -693,17 +748,17 @@ private lemma root_iff_mode (m : ℕ) (hm : 3 ≤ m) (x : ℝ) (hx : x ≠ 0) :
     have hf : min (r : ZMod (2 * m)).val (2*m - (r : ZMod (2 * m)).val) = r := by rw [hv]; omega
     delta gamma; simpa only [hf] using hr
 
-private def positiveRoot (m r : ℕ) : ℝ :=
+def positiveRoot (m r : ℕ) : ℝ :=
   ((m : ℝ) - r) * Real.sqrt ((r : ℝ)^2 - 2) / 2
 
-private lemma positiveRoot_pos (m r : ℕ) (hr : 2 ≤ r) (hrm : r < m) :
+lemma positiveRoot_pos (m r : ℕ) (hr : 2 ≤ r) (hrm : r < m) :
     0 < positiveRoot m r := by
   have hrR : (2 : ℝ) ≤ r := by exact_mod_cast hr
   have hmR : (r : ℝ) < m := by exact_mod_cast hrm
   unfold positiveRoot
   exact div_pos (mul_pos (by linarith) (Real.sqrt_pos.mpr (by nlinarith))) (by norm_num)
 
-private lemma positiveRoot_sq (m r : ℕ) (hr : 2 ≤ r) :
+lemma positiveRoot_sq (m r : ℕ) (hr : 2 ≤ r) :
     (positiveRoot m r)^2 = ((m : ℝ) - r)^2 * ((r : ℝ)^2 - 2) / 4 := by
   have hrR : (2 : ℝ) ≤ r := by exact_mod_cast hr
   unfold positiveRoot; rw [div_pow, mul_pow, Real.sq_sqrt (by nlinarith : 0 ≤ (r : ℝ)^2 - 2)]

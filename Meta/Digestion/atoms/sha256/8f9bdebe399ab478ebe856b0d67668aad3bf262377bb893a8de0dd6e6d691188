@@ -1,0 +1,32 @@
+**定义 16.1（协议、实际端口与终端节点）。** 固定定义 13.1 的任一原始元组，保留完整半径 $r$ 的场域及导数承诺、独立纯场重置服务、唯一初始方向资源 $\tau_h$ 和全部原始访问限制。写
+$$
+m=2j=D-1,\qquad t=d\tau_0=\frac1{64},\qquad
+e=e_{\rm CP}=\min\{1,M\kappa_D\},\qquad
+\kappa_D=\frac{2D-1}{2D^2},\qquad \zeta=\frac{t}{\sqrt m}.
+\tag{16.1}
+$$
+这里 $N\ge N_*$、$M=L=10N$、$Q=18N+1$、$D\ge8{,}000{,}000N^2$，均与 (13.4) 相同。记定理 13.1、命题 13.2 的原协议为 $\mathsf P_{\rm raw}$；其十设置获取日程、通道 $\mathcal C$、全部资源和 (13.24) 的有限解码器均固定不变。
+
+令 $K_0$ 为额外终端重置之前、获取与解码结束时的全部实际非参考寄存器，包括所有先前探针和场输出、原生 $H,E$、原始 $b,Y$、标量 qubit、指针与实际复制/读出环境、已保留的噪声系统、全部记录、二十个计数器、路由/程序/步进/解码工作区及旁观者。含解码工作区的实际获取结束态记为 $\eta_{n,h}$。额外重置仍供应独立的纯态
+$$
+P_v=\frac{I+v\cdot\sigma}{2},\qquad v=n(+d e_x),
+$$
+并在同一标记 $R$ 上实际执行原定交换 $U_{\rm term}=\exp(-itJ\cdot\sigma/m)$。其后只在同一个输出 qubit $S_t$ 上追加固定确定性节点
+$$
+\mathcal E(X)=\operatorname{Tr}(X)\frac{I_2}{2},\qquad
+K_{ab}=\frac{|a\rangle\langle b|}{\sqrt2}\quad(a,b=0,1).
+\tag{16.2}
+$$
+所得协议记为 $\mathsf P_{\rm dep}$。四个 Kraus 项全部求和，不产生新读数或选择分支。两协议的实际最终口均为 $K=K_0\otimes S_t$，用各自的实际边缘 $\omega_{\rm raw},\omega_{\rm dep}$ 按 (13.10) 定义 $\Delta_{\rm raw},\Delta_{\rm dep}$，并记 $\bar\delta_\bullet=\sup_{n,h}\Delta_\bullet(n,h)$。
+
+本节的端口假设是上述指定约化实现：终端交换为 $R S_t$ 上的幺正原语，$\mathcal E:S_t\to S_t$ 没有另行声明的实际输出；获取阶段的完整口满足 (13.19)。若 $\mathcal C$ 或 $\mathcal E$ 的另一实现产生额外实际噪声、随机记录或工作寄存器 $F$，则必须把 $F$ 纳入实际 $K$ 并重新估计；下述定理不覆盖未经该完整口估计的实现。形式 Kraus 指标和证明用扩张空间不自动成为实际输出，实际存在的输出也不得由此删去。
+
+置
+$$
+x_D=\frac{Dt}{2m},\qquad
+b_D=\frac{2\sqrt m}{D}\sin x_D,\qquad
+g_D=\frac{b_D}{2\sqrt{1-b_D^2}},\qquad
+D_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+\tag{16.3}
+$$
+

@@ -1,0 +1,29 @@
+**命题 46.6（指定数域族与线性集先例的精确对应）。** 对每个 $h\ge0$，令 $\theta_h=2^{1/(6\cdot5^h)}>0$，所有正根均取自 $\mathbb R$，并令
+
+$$
+D_h=\mathbb Q(\theta_h),\qquad
+\theta_{h-1}=\theta_h^5\ (h\ge1).
+\tag{46.18}
+$$
+
+则 $[D_h:\mathbb Q]=6\cdot5^h$，且 $[D_h:D_{h-1}]=5$（$h\ge1$）。每个固定 $D_h$ 中存在至少 $2^{h+1}$ 个 $3\cdot5^h$ 维原标量类，具有完全相同的完整原标签交维函数，并由原迹正交补配成全部位翻转。这里明确指定的是环境数域；窗口的系数由引理 46.3 的实际有理点存在性选取。这个下界随有限高度无界，不给出固定 $D_h$ 内的精确纤维大小或次数最小性。
+
+证明。$X^{6\cdot5^h}-2$ 在素数二处满足 Eisenstein 判据，故得到所述绝对次数。兼容正根的等式给出实际包含 $D_{h-1}\subset D_h$，再用域塔公式取得相对次数五；于是对 $F=\mathbb Q,E_j=D_j$ 应用定理 46.5 即得结论。每个高度只有有限次实际参数选择，不以独立指定的分裂坐标代替这些选择。
+
+为精确比较已有线性集语言，对任意实际 $W\le_F B$ 定义 Cartesian 平方 $U_W=W\times W\subset B^2$，在射影点上的权重为 $w_{U_W}([u:v])=\dim_F(U_W\cap B(u,v))$。于是
+
+$$
+w_{U_W}([r:1])
+=\dim_F\{y\in W:ry\in W\}
+=d_W(r)\qquad(r\in B^\times).
+\tag{46.19}
+$$
+
+第二步由 $y\mapsto ry$ 给出；两坐标轴的权重均为 $\dim_F W$。因此本节的同交维族也给出同一完整逐点权重函数的 Cartesian 平方。且 $U_{W'}=\gamma U_W$ 当且仅当 $W'=\gamma W$，由任一坐标投影即可验证，故所计数的正是原标量定义类。
+
+有限域中，Csajbók–Marino–Polverino，[*Classes and equivalence of linear sets in PG(1,q^n)*，arXiv:1607.06962v1，Result 2.1、Definitions 2.3–2.4](https://arxiv.org/html/1607.06962v1)，已给出迹辛对偶在射影直线固定点上的保权，并分别定义按标量和按较大半线性群计数的定义类。这里采用前一种等价关系；本节不把原标量类下界扩张为半线性类下界。Zullo 的 [arXiv:2112.08781v2，Theorem 3.5](https://arxiv.org/html/2112.08781v2) 已联系 Cartesian 乘积的点权、商集和标量交叠，(46.19) 则直接给出当前所需对应。
+
+Van de Voorde–Zullo，[*On the weight distribution of linear sets with complementary weights and related constructions*，arXiv:2511.20057v1，§4.3、Proposition 4.7、Theorem 5.1、§5.2](https://arxiv.org/html/2511.20057v1)，明确研究 Cartesian 平方；其 Theorem 5.1 在二次有限域扩张及相应可逆性条件下给出旧、新点权的逐点传递，§5.2 迭代得到具有多种不同权重的线性集。本节的目标则是同一个完整权重函数所容许的多个标量定义类。该区别只界定这里的结论，不断言该文没有其他相关结果，也不将一般权重传递或迭代想法称为新概念。
+
+Pepe 的 [arXiv:2403.01551v2，Theorems 8、24](https://arxiv.org/html/2403.01551v2) 分别在其有限域最大秩条件下联系同线性集与 Dickson 对应主子式，并研究中间迹项的提升；这些与 §45 所引的迹对偶、Grassmannian 和 Plücker 工具都是中间先例。本节的仓内综合推导是将偶数次数的实际传递、实际 $E$-参数和非均匀中心的旗标归纳连接为 (46.14) 的任意有限高度下界；不作全球文献优先权判断。$\square$
+

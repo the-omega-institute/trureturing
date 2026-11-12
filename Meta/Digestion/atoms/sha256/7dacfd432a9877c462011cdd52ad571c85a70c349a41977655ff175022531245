@@ -1,0 +1,103 @@
+**命题 44.3（每个半维次数的非统一实际域族与单轨道纤维）。** 对每个 $m\ge4$，令 $\zeta$ 为本原 $2m$ 次单位根、$t$ 为超越元，并在实际域中置
+
+$$
+F=\mathbb Q(\zeta)(t),\qquad
+D=F(\alpha),\qquad \alpha^{2m}=t,\qquad
+W=\operatorname{span}_F\{1,\alpha,\ldots,\alpha^{m-2},\alpha^m\}.
+\tag{44.24}
+$$
+
+则 $[D:F]=2m$，$W$ 满足 $\mathrm H$，其嵌入行拟阵却不统一，并且
+
+$$
+W^\perp=\alpha W,\qquad
+\{0\ne Y\le_FD:Q_Y=Q_W\}
+=\{\gamma W:\gamma\in D^\times\}.
+\tag{44.25}
+$$
+
+证明。$X^{2m}-t$ 在 $\mathbb Q(\zeta)[t][X]$ 中对素元 $t$ 满足 Eisenstein 判据，故在 $F[X]$ 中不可约，给出所述次数及幂基。因 $F$ 已含全部 $2m$ 次单位根，全部嵌入在 $D$ 中为
+
+$$
+\sigma_j(\alpha)=\alpha\zeta^j,\qquad 0\le j<2m.
+$$
+
+对任意 $m$ 个不同的根 $z_1,\ldots,z_m\in\mu_{2m}$，相应的行子式除去公共非零列因子后为
+
+$$
+\det
+\begin{pmatrix}
+1&z_1&\cdots&z_1^{m-2}&z_1^m\\
+\vdots&\vdots&&\vdots&\vdots\\
+1&z_m&\cdots&z_m^{m-2}&z_m^m
+\end{pmatrix}
+=\prod_{i<j}(z_j-z_i)\sum_{i=1}^m z_i.
+\tag{44.26}
+$$
+
+这是经典 alternant 恒等式在一阶对称因子上的情形，也可直接核对：在各 $z_i$ 处，$\prod_{\ell=1}^m(T-z_\ell)=0$ 将最后一列 $z_i^m$ 写成 $(\sum_\ell z_\ell)z_i^{m-1}$ 加上前 $m-1$ 列的线性组合，行列式即为右边。因此该行集为基当且仅当所选根之和非零。
+
+取互补半圆根集
+
+$$
+E=\{1,\zeta,\ldots,\zeta^{m-1}\},\qquad E^c=-E,\qquad
+s=\sum_{z\in E}z=\frac{2}{1-\zeta}.
+\tag{44.27}
+$$
+
+在复嵌入 $\zeta\mapsto e^{\pi i/m}$ 下，
+
+$$
+|s|=\frac1{\sin(\pi/(2m))}>2,
+\tag{44.28}
+$$
+
+因为 $m\ge4$ 使 $0<\pi/(2m)\le\pi/8<\pi/6$。两组根之和为 $s,-s$，故它们都是行基。任取 $a\in E,b\in E^c$，交换后的根和为 $s-a+b$；由
+
+$$
+|s-a+b|\ge|s|-|a-b|\ge|s|-2>0
+$$
+
+知该行集仍为基。全部 $2m$ 个根之和为零，其互补交换行集的根和就是 $-(s-a+b)$，也非零。这证明 $\mathrm H$，无须对其他高阶子式加条件。
+
+但 $m$ 元根集
+
+$$
+\{1,\zeta^2,\zeta^4,\ldots,\zeta^{2m-2}\}
+$$
+
+恰为全部 $m$ 次单位根，根和为零。由 (44.26)，其行子式为零，故该实际域族不统一。这也证明 $\mathrm H$ 在实际原域窗口中严格弱于统一性，而非仅有抽象分裂矩阵的区别。
+
+最后，对任意非负整数 $k$，
+
+$$
+\operatorname{Tr}_{D/F}(\alpha^k)
+=\alpha^k\sum_{j=0}^{2m-1}\zeta^{jk}
+=\begin{cases}
+2m\,\alpha^k,&2m\mid k,\\
+0,&2m\nmid k.
+\end{cases}
+\tag{44.29}
+$$
+
+对指数集 $S=\{0,1,\ldots,m-2,m\}$，在模 $2m$ 意义下，$-S$ 的补集恰为
+
+$$
+T=\{1,2,\ldots,m-1,m+1\}.
+$$
+
+因此幂基迹配对使 $\operatorname{span}_F\{\alpha^j:j\in T\}$ 与 $W$ 正交；两者各为 $m$ 维，迹配对非退化，故
+
+$$
+W^\perp
+=\operatorname{span}_F\{\alpha,\alpha^2,\ldots,\alpha^{m-1},\alpha^{m+1}\}
+=\alpha W.
+\tag{44.30}
+$$
+
+将所证 $\mathrm H$ 与 (44.30) 代入定理 44.2，两种原标量轨道重合，得到 (44.25)。$\square$
+
+白话说，不必要求任取一半嵌入都独立：只要先找到两组互补的基，任意交换它们之间的一个成员后，两边仍然是基，就足以锁住整个原商纤维。支撑表先确定一张不可约方程并强制候选维数，再由经典主子式重建留下窗口及其迹对偶两种形状；原域线性核保证这些形状之间的整体乘数确实属于原 $D$。分裂证明中出现的零坐标向量只负责证明某个多项式非零，不能充当原域元素。
+
+命题 44.3 给出每个 $m\ge4$ 的实际例子：某些一半根集确实线性相关，然而所选两组互补半圆及全部单交换都独立。这些窗口的迹对偶又恰是整体乘以 $\alpha$，所以完整原商表只对应一个原标量轨道。结论始终使用全部精确原标签与原标量等价；根和公式、迹计算和所引重建各自只承担上述明确步骤。
+
