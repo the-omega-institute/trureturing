@@ -190,12 +190,13 @@ private lemma subsetDistinct_univ {N : ℕ} (ℓ : ((Fin N → Bool) → ℝ) �
     subsetDistinctMoment ℓ Y g (Finset.univ : Finset (Fin 6)) =
       distinctIndexMoment ℓ Y g := by
   classical
-  unfold subsetDistinctMoment
-  congr 1
-  funext j
-  apply congrArg g
-  apply Subtype.ext
-  simp
+  let e : (Finset.univ : Finset (Fin 6)) ≃ Fin 6 :=
+    { toFun := Subtype.val
+      invFun := fun i => ⟨i, Finset.mem_univ i⟩
+      left_inv := by intro i; rfl
+      right_inv := by intro i; rfl }
+  rw [subsetDistinctMoment, ← retained_assignment_reindex ℓ Y Finset.univ g]
+  exact assignment_moment_reindex ℓ Y e (fun i => g i.val)
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation

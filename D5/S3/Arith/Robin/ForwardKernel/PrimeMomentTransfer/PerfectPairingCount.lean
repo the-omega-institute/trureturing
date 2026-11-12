@@ -9,6 +9,8 @@
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PartialPairingPolynomial
 import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
+/-! Cardinality and evaluations of finite perfect pairings. -/
+
 open scoped BigOperators
 namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
 noncomputable section
@@ -23,6 +25,12 @@ theorem pairingSupport_card {U : Finset α} {P : Finset (Finset α)}
   rw [Finset.card_biUnion hP.2.1]
   rw [Finset.sum_congr rfl hP.1]
   simp [Nat.mul_comm]
+
+/-- A perfect pairing has half as many edges as covered labels. -/
+theorem IsPerfectPairing.card {U : Finset α} {P : Finset (Finset α)}
+    (hP : IsPerfectPairing U P) : U.card = 2 * P.card := by
+  rw [← hP.2]
+  exact pairingSupport_card hP.1
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
