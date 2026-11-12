@@ -28,19 +28,7 @@ Lean statement: `D5/S3/Topology/EJADefiniteDomain.mixedDomain`
 
 The real submodule consists of a such that Phi(a∘x)=Phi(a)∘Phi(x) for every original real x. For a positive unital map, the zero-square-defect theorem identifies this with the original set Delta(a)=0.
 
-**Theorem 1.3 (Quadratic positivity on the original carrier).**
-
-Lean statement: `D5/S3/Topology/EJADefiniteDomain.quadratic_preserves_squares`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Topology/EJADefiniteDomain.quadratic_preserves_squares` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The derived JB realization on the target type copy is passed directly to JBComplexification.quadratic_preserves_squares. Its unrestricted real argument a is preserved, so a need not be positive. The square-root witness is transported back to the same original target carrier.
-
-**Theorem 1.4 (The original positive-map inequality).**
+**Theorem 1.3 (The original positive-map inequality).**
 
 Lean statement: `D5/S3/Topology/EJADefiniteDomain.square_defect`
 
@@ -52,7 +40,7 @@ Lean statement: `D5/S3/Topology/EJADefiniteDomain.square_defect`
 
 The actual spectral resolution of A supplies the original finite spectral supplier. The derived target JB realization is passed to JBSquareDefect.square_defect_of_spectral for the same Phi. The original square_defect_identity exposes equation 75.12: with b=Phi(a), z_i=Phi(e_i), the sum of P_(r_i v-b)(z_i) equals Phi(a²)-b². Its three sums are Phi(a²), -2b² and b². Every summand is an actual square by unrestricted quadratic positivity, and their sum is an actual square. No square-defect or spectral condition is assumed as model data.
 
-**Theorem 1.5 (The complete mixed identity).**
+**Theorem 1.4 (The complete mixed identity).**
 
 Lean statement: `D5/S3/Topology/EJADefiniteDomain.mixed_of_zero_defect`
 
@@ -64,7 +52,7 @@ Lean statement: `D5/S3/Topology/EJADefiniteDomain.mixed_of_zero_defect`
 
 The original zero_defect_cross proof is reused at the derived target JB realization. A vanishing defect at a forces Phi(a∘x)=Phi(a)∘Phi(x) for every real x, by the two signed affine perturbations and their uniform norm bound. The original private proof is made public at its owner; no second proof is introduced.
 
-**Theorem 1.6 (The zero-defect domain is Jordan closed).**
+**Theorem 1.5 (The zero-defect domain is Jordan closed).**
 
 Lean statement: `D5/S3/Topology/EJADefiniteDomain.domain_jordan_closed`
 
@@ -76,7 +64,7 @@ Lean statement: `D5/S3/Topology/EJADefiniteDomain.domain_jordan_closed`
 
 The domain contains the original unit and is a real submodule. If a lies in it, the ordinary Jordan identity at a,a writes a²∘a² as a∘(a∘a²). Applying the full mixed identity twice and Delta(a)=0 gives Delta(a²)=0. The zero-defect theorem puts a² in the same mixed domain. Polarizing (a+b)²-a²-b² then proves closure under a∘b. Thus linear closure alone is not substituted for Jordan closure.
 
-**Theorem 1.7 (Propagation from a genuine Jordan-generating family).**
+**Theorem 1.6 (Propagation from a genuine Jordan-generating family).**
 
 Lean statement: `D5/S3/Topology/EJADefiniteDomain.multiplicative_of_jordan_generating`
 
@@ -99,7 +87,6 @@ This is a mathematical predecessor to the newest same-original-data Quantum Orig
 - Truth anchor: `D5/S3/Topology/EJADefiniteDomain.mixedDomain`
 - Truth anchor: `D5/S3/Topology/EJADefiniteDomain.mixed_of_zero_defect`
 - Truth anchor: `D5/S3/Topology/EJADefiniteDomain.multiplicative_of_jordan_generating`
-- Truth anchor: `D5/S3/Topology/EJADefiniteDomain.quadratic_preserves_squares`
 - Truth anchor: `D5/S3/Topology/EJADefiniteDomain.square_defect`
 - Dependency: [D5/S3/Topology/EJASpectralNorm](EJASpectralNorm.md)
 - Dependency: [D5/S3/Topology/JBSquareDefect](JBSquareDefect.md)

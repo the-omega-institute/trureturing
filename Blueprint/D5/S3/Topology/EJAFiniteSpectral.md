@@ -7,14 +7,14 @@ Every element of a general finite real Euclidean Jordan algebra has a complete f
 **Remark 1.1 (Scalar compatibility of the commutative product).**
 
 $$
-a \circ (r \cdot b) = (r \cdot (a \circ b))
+\forall (J: \operatorname{Type}), [\operatorname{NonUnitalNonAssocCommRing} J] [\operatorname{Module} \mathbb{R} J] [\operatorname{IsScalarTower} \mathbb{R} J J], \forall (r: \mathbb{R}) (a b: J), a \circ (r \cdot b) = (r \cdot (a \circ b))
 $$
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The existing public Lean theorem `mul_smul_comm'` proves this identity for real scalars and the original commutative product. This makes multiplication by a fixed element real linear and supplies the scalar compatibility used in polynomial evaluation and the spectral-norm Peirce projections. The theorem itself remains the exact Lean supplier; this remark records its equation without assigning the apostrophe-bearing local name a noncanonical declaration GID.
+Here the circle denotes the multiplication of the arbitrary nonunital nonassociative commutative ring J, and the dot denotes its real scalar action. The public Lean theorem `mul_smul_comm'` proves the identity from exactly the displayed ring, module and scalar-tower instances; no Jordan law is needed. This makes multiplication by a fixed element real linear and supplies the scalar compatibility used in polynomial evaluation and the spectral-norm Peirce projections.
 
 **Definition 1.2 (The auxiliary formal-reality predicate).**
 
@@ -60,7 +60,7 @@ Repository reuse boundary: JBAlgebra's npow, polarized and private powers_struct
 
 Source application: Quantum Origin V 75.4(I), before equation 75.12, requires a complete spectral resolution in a general finite EJA. This theorem supplies exactly that predecessor from the original carrier, product, unit and given inner product. The spectral norm and square-defect consumers are supplied separately by EJASpectralNorm and EJADefiniteDomain. For the spectral identities alone, no normalization of the inner product to the canonical trace is needed.
 
-EJASpectralNorm supplies the spectral JB norm and its laws on a separate type copy. EJADefiniteDomain supplies original-carrier quadratic positivity, the positive-map square defect, full mixed identities and the Jordan-generating definite-domain consumer. Canonical trace normalization, inner-product cone selfduality, primitive-frame refinement, weight-commutant closure, support normalization and the full J/H/PRE and H13/C13 interfaces remain separate source bridges.
+EJASpectralNorm supplies the spectral JB norm and its laws on a separate type copy. EJADefiniteDomain supplies the original-carrier positive-map square defect, full mixed identities and the Jordan-generating definite-domain consumer. Canonical trace normalization, inner-product cone selfduality, primitive-frame refinement, weight-commutant closure, support normalization and the full J/H/PRE and H13/C13 interfaces remain separate source bridges.
 
 The new Reg mirror reconstructs the complete EJA telescope and actual product readout. Whole-family intervention, sensitivity, observational dependence and compiled source-coordinate ties remain separate audit obligations; no declared_validated registration is asserted.
 
