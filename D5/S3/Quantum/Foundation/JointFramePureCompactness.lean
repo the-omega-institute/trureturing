@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FacetZeroGluing
 import Mathlib.Analysis.Convex.Exposed
+import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
 
 /-! All states, effects and exclusions refer to the same entire original cone base.
 The joint-frame and incidence hypotheses are explicit; no ball or local-pair
@@ -70,9 +71,8 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     intro f hf
     apply b.opNorm_le hM
     intro i
-    have hbi : b i ∈ C := by
-      change (i : V) ∈ C
-      exact hs i.property
+    have hbi : b i ∈ C := hs (by
+      simpa [b, Module.Basis.coe_mk] using i.property)
     have hb := hf (b i) hbi
     calc
       ‖f (b i)‖ = f (b i) := Real.norm_of_nonneg hb.1
@@ -81,9 +81,9 @@ private theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
       _ ≤ M := Finset.single_le_sum (fun j _ => norm_nonneg (u (b j)))
         (Finset.mem_univ i)
 
+omit [FiniteDimensional ℝ V] in
 /-- A proper confirmer with two distinct, simultaneously excluded states
 cannot have a mixed one-face under point-exclusion incidence. -/
-omit [FiniteDimensional ℝ V] in
 private theorem two_zero_confirming_face {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u)) (hI : pointBallIncidence C u)
     {x y z : V} (hx : x ∈ base C u) (hy : y ∈ base C u) (hz : z ∈ base C u)
@@ -163,12 +163,16 @@ theorem pure_closed_of_joint_completion {C : PointedCone ℝ V} {u : V →ₗ[�
           ∀ i j, w.2 i (w.1 j) = if i = j then 1 else 0} := by
       apply IsClosed.inter
       · exact isClosed_eq (by fun_prop) continuous_const
-      · simp only [Set.ofPred_forall]
+      · change IsClosed {w : (Fin 3 → V) × (Fin 3 → V →L[ℝ] ℝ) |
+          ∀ i j, w.2 i (w.1 j) = if i = j then 1 else 0}
+        simp only [Set.ofPred_forall]
         exact isClosed_iInter fun i => isClosed_iInter fun j =>
-          isClosed_eq (by fun_prop) continuous_const
+          isClosed_eq
+            ((continuous_apply i |>.comp continuous_snd).clm_apply
+              (continuous_apply j |>.comp continuous_fst)) continuous_const
     convert hc.inter_right hr using 1
     ext w
-    simp only [T, jointFrame, Set.mem_setOf_eq, Set.mem_inter_iff, Set.mem_prod,
+    simp only [T, jointFrame, Set.mem_ofPred_eq, Set.mem_inter_iff, Set.mem_prod,
       Set.mem_pi, Set.mem_univ, forall_true_left]
     tauto
   have hP : pure C u = (fun w : (Fin 3 → V) × (Fin 3 → V →L[ℝ] ℝ) => w.1 0) '' T := by
