@@ -4,10 +4,11 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: [mathlib/module/Mathlib.Analysis.Normed.Module.HahnBanach]
    utility: none
-   digest: An original signed blind direction yields two actual states separated by a full proper effect. -/
+   digest: Original signed blind directions yield distinct states and a full proper separator. -/
 
 import D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 import Mathlib.Analysis.Normed.Module.HahnBanach
+import Mathlib.Analysis.Normed.Affine.AddTorsorBases
 import Mathlib.Topology.Algebra.Module.PerfectSpace
 import Mathlib.Tactic.Module
 
@@ -29,7 +30,7 @@ private theorem normalized_interior [Nontrivial V]
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤) :
     ∃ w ∈ base C u, w ∈ interior (C : Set V) := by
-  letI : PerfectSpace V := perfectSpace_of_module ℝ V
+  let : PerfectSpace V := perfectSpace_of_module ℝ V
   have hint : (interior (C : Set V)).Nonempty := by
     apply C.convex.interior_nonempty_iff_affineSpan_eq_top.mpr
     rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.zero_mem), hgen]
@@ -95,7 +96,7 @@ theorem original_blind_direction_counterfactual
       w + e • z ∈ interior (C : Set V) ∧ w - e • z ∈ interior (C : Set V) ∧
       w + e • z ≠ w - e • z ∧ T (w + e • z) = T (w - e • z) ∧
       0 < f (w + e • z) - f (w - e • z) := by
-  letI : Nontrivial V := nontrivial_of_ne z 0 hz
+  let : Nontrivial V := nontrivial_of_ne z 0 hz
   obtain ⟨w, hwK, hwint⟩ := normalized_interior hstrict hgen
   have hplus : ∀ᶠ t : ℝ in 𝓝 0, w + t • z ∈ interior (C : Set V) := by
     apply (show Continuous (fun t : ℝ => w + t • z) from
