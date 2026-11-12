@@ -26,7 +26,7 @@ internal sealed class TriangleCountDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("cardinality"), DeclarationHandle.Create(Prefix + "forbidden_card"),
                 H("Exact removal cardinality"), StatementSource.FromAuthor(Disp(new Formula.Relation(
                     Call("card", Call("forbiddenProfiles")), FormulaRelationOperator.Equal, D(1,6)))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Injectivity of forbiddenWord proves that precisely sixteen ranking profiles are removed."))), DescribeRole.Theorem),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The rank of offset 1 at the middle position recovers the orientation: it is zero forward and one after reflection. After undoing reflection, ranks at coordinates 2, 1 and 0 of positions 0, 1 and 2 respectively recover the three exterior-order bits. This word-level injection proves that precisely sixteen ranking profiles are removed, without enumerating all pairs of profiles."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("count"), DeclarationHandle.Create(Prefix + "count_three_bound"),
                 H("Three-site count bound"), StatementSource.FromAuthor(Disp(new Formula.Relation(
                     Call("count", D(3)), FormulaRelationOperator.LessThanOrEqual, D(1,3,8,0,8)))),

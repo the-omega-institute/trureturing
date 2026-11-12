@@ -23,24 +23,28 @@ abbrev comparisonSignature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization comparisonSignature := realize comparisonSignature
-  (fun b _ x => if b then decide (x.1 = x.2) else decide (x.1 ≤ x.2)) (fun e => nomatch e)
+  (fun _ b x => if b then decide (x.1 = x.2) else decide (x.1 ≤ x.2)) (fun e => nomatch e)
 def rejected : Realization comparisonSignature :=
   realize comparisonSignature (fun _ _ _ => false) (fun e => nomatch e)
 
 abbrev countArena : Arena where
   signature := comparisonSignature
-  Law R := R.readout false () (count 3, 13808) = true
+  Law R := R.readout () false (count 3, 13808) = true
 abbrev cardArena : Arena where
   signature := comparisonSignature
-  Law R := R.readout true () (forbiddenProfiles.card, 16) = true
+  Law R := R.readout () true (forbiddenProfiles.card, 16) = true
 
 def countFamily : Registration countArena (type_of% count_three_bound) := by
   have bridge : (type_of% count_three_bound) ↔ countArena.Law actual := by
     simp [countArena, actual, realize]
   have hp := bridge.mp count_three_bound
   have hn : ¬countArena.Law rejected := by simp [countArena, rejected, realize]
-  refine { actual := actual, bridge := bridge, variation := ⟨hp, rejected, hn⟩,
-    sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := actual
+    bridge := bridge
+    variation := ⟨hp, rejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_ }
   · constructor
     · intro i; refine ⟨rejected, ?_, rfl, hn⟩
       intro j hj; exact (hj (Subsingleton.elim _ _)).elim
@@ -52,8 +56,12 @@ def cardFamily : Registration cardArena (type_of% forbidden_card) := by
     simp [cardArena, actual, realize]
   have hp := bridge.mp forbidden_card
   have hn : ¬cardArena.Law rejected := by simp [cardArena, rejected, realize]
-  refine { actual := actual, bridge := bridge, variation := ⟨hp, rejected, hn⟩,
-    sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := actual
+    bridge := bridge
+    variation := ⟨hp, rejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_ }
   · constructor
     · intro i; refine ⟨rejected, ?_, rfl, hn⟩
       intro j hj; exact (hj (Subsingleton.elim _ _)).elim
@@ -76,7 +84,7 @@ def wordRejected : Realization wordSignature :=
   realize wordSignature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev wordArena : Arena where
   signature := wordSignature
-  Law R := ∀ s, R.readout s () (forbiddenWord s) = true
+  Law R := ∀ s, R.readout () s (forbiddenWord s) = true
 
 def wordFamily : Registration wordArena (type_of% forbidden_not_certified) := by
   have bridge : (type_of% forbidden_not_certified) ↔ wordArena.Law wordActual := by
@@ -87,8 +95,12 @@ def wordFamily : Registration wordArena (type_of% forbidden_not_certified) := by
   have hg : Nonempty (CertifiedWord 3) := Fintype.card_pos_iff.mp
     (lt_of_lt_of_le (by norm_num : 0 < 6 ^ 3) (count_lower 3))
   let good : CertifiedWord 3 := Classical.choice hg
-  refine { actual := wordActual, bridge := bridge, variation := ⟨hp, wordRejected, hn⟩,
-    sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := wordActual
+    bridge := bridge
+    variation := ⟨hp, wordRejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_ }
   · constructor
     · intro i; refine ⟨wordRejected, ?_, rfl, hn⟩
       intro j hj; exact (hj (Subsingleton.elim _ _)).elim
