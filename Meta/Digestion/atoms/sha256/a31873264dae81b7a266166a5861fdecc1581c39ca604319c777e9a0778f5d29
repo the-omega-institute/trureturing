@@ -1,0 +1,17 @@
+**定义 85.3（活跃腿、Choi 约定与相容条件）。** 在单块 $M_d(\mathbb C)$ 上保留 (82.1) 的未归一 Choi、输出在前／输入在后的向量化。令 $\psi\in(\mathbb C^d)^{\otimes3}$ 为归一化纯向量，$\rho_\psi=|\psi\rangle\langle\psi|$。固定 $\alpha_\ell\ge0$、$\sum_{\ell=1}^3\alpha_\ell=1$，只取活跃集 $S_\alpha=\{\ell:\alpha_\ell>0\}$。在 Hilbert–Schmidt 空间 $\mathsf E=M_d$ 上令
+
+$$
+V_{\psi,\ell}(H)=H^{(\ell)}\psi,\qquad
+\mathbb V_{\psi,S}((H_\ell))=\sum_{\ell\in S}H_\ell^{(\ell)}\psi,\qquad
+\Sigma_S((H_\ell))=\sum_{\ell\in S}H_\ell.
+\tag{85.6}
+$$
+
+称 $\psi$ 对这些活跃腿相容，当且仅当
+
+$$
+\boxed{\ker\mathbb V_{\psi,S_\alpha}\subseteq\ker\Sigma_{S_\alpha}.}\tag{85.7}
+$$
+
+共同锚点为 $e=I_d$，每个 $V_{\psi,\ell}(I_d)=\psi$。全部矩阵均为复矩阵；只检验 Hermitian 局部生成元、局部酉轨道或几个坐标不能替代这个复线性核条件。记 $\mathcal K_{3,\alpha}(\Phi)=\sum\alpha_\ell\Phi_\ell$，各腿为同一份复线性 HP 映射 $\Phi$。
+

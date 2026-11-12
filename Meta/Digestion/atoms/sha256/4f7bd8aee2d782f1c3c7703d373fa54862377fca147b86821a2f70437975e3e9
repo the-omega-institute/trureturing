@@ -1,0 +1,25 @@
+**定理 78.6（有界原接口类的统一收敛）。** 固定 EJA 三元组 $A,D,E$、框架数 $1\le s\le3$、一套固定有限源 Jordan 字典位置集，以及正数 $\kappa,\zeta,R_0,\alpha,\beta$，其中 $\alpha\le\beta$。令 $W_{\mathfrak B}:\mathbb R^q\to A$ 为该字典的求值合成算子。考虑满足整个 $\mathrm{PRE}_0$ 和以下条件的全部原 $(L,p,\mathfrak B)$：
+$$
+\begin{gathered}
+W_{\mathfrak B}W_{\mathfrak B}^*\succeq\kappa I_A,\qquad
+\|\widetilde L\|,\|p\|\le R_0,\\
+\widetilde M\widetilde M^*\succeq\zeta^2 I_D,\qquad
+\widetilde L\widetilde L^*\succeq\zeta^2 I_E,\\
+\alpha1_D\le U\le\beta1_D,\qquad \alpha1_E\le G\le\beta1_E.
+\end{gathered} \tag{78.21}
+$$
+波浪号为双线性映射的原实线性化，映射范数、伴随均用原迹 Hilbert 张量坐标；行算子下界保持两条原实张成，不是要求冗余字典的列 Gram 正定。以谱范数至多一的全部正交正元对分别最大化 (78.7) 两个左端，得到 $r_J,r_H$。该类存在只依赖上述固定参数的有限模量 $\Omega(t)$，使
+$$
+r_J+r_H\le\Omega(\delta),\qquad \Omega(0)=0,\qquad
+\lim_{t\downarrow0}\Omega(t)=0. \tag{78.22}
+$$
+
+**证明。** 全部有标签完整本原框架的集合紧：幂等、迹一、正交及和为单位是闭条件，且原子迹范数为一。有限字求值连续，故第一条行下界闭且保证生成。映射受统一范数界约束，全锥正性及全实 $Z$ 闭；两条映射行下界使满射张成在极限保留，$U,G$ 的下界使可逆性及归一化连续。因此 (78.21) 的完整原模型类 $\mathscr K$ 是有限维紧集。其余原态、效应及 $S$ 几何均已固定，没有把严格的满秩条件擅自当成自动闭条件。
+$\delta$ 连续；两个残差对固定紧测试集取最大值，也连续。定义
+$$
+\Omega(t)=\sup\bigl(\{r_J+r_H:(L,p,\mathfrak B)\in\mathscr K,\ \delta\le t\}\cup\{0\}\bigr).
+$$
+紧性保证有限，精确零点定理 78.4 保证 $\Omega(0)=0$。若有 $t_k\downarrow0$ 而模量不趋零，取近似达上确界的模型并抽收敛子列，将得到同属 $\mathscr K$、缺陷零而残差正的极限，矛盾。证毕。
+
+本结论只支付源字典下界，却另支付整个原接口的有界右逆和谱界；它只给定性收敛。显式 (78.7) 则直接支付两层字典参数，给指定指数和常数。不能把精确 65.3 当成正缺陷模型中的同态，免费从 $K_A$ 推出统一 $K_D$；如何在只知源条件数及原接口界时得到可用的第二层显式估计仍为 open。源框架字典在命题 78.5 的极限落入 $H_4(\mathbb R)$，故其行下界也必趋零，与本定理不矛盾。
+
