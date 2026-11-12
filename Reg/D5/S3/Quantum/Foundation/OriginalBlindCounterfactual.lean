@@ -62,9 +62,10 @@ abbrev sourceScope : Prop := type_of% (@original_blind_direction_counterfactual.
 
 theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law actual.{u,v} := by
   constructor
-  · intro h P hc hu hg z hz huz hTz
-    exact @h P.V P.add P.space P.finite P.O P.addO P.moduleO
-      P.cone P.unit hc hu hg P.readout z hz huz hTz
+  · intro h P
+    exact fun hc hu hg z hz huz hTz =>
+      @h P.V P.add P.space P.finite P.O P.addO P.moduleO
+        P.cone P.unit hc hu hg P.readout z hz huz hTz
   · intro h V add space finite O addO moduleO C u hc hu hg T z hz huz hTz
     exact h (@Inputs.mk V add space finite O addO moduleO C u T) hc hu hg z hz huz hTz
 

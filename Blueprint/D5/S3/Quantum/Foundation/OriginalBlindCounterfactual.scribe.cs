@@ -36,7 +36,7 @@ internal sealed class OriginalBlindCounterfactualDocument : IScribeDocumentDefin
         Formula cone = V("C"), unit = V("u"), z = V("z"), w = V("w"), e = V("e"), f = V("f"), t = V("T");
         Formula dual = C("LinearMap", R, V("V"), R);
         Formula k = C("base", cone, unit), interior = C("interior", cone);
-        Formula plus = Seq(w, Plus, e, Cdot, z), minus = Seq(w, Minus, e, Cdot, z);
+        Formula plus = Seq(w, Plus, e, Cdot, Sp, z), minus = Seq(w, Minus, e, Cdot, Sp, z);
         Formula strict = All("x", V("V"), Imp(In(V("x"), cone),
             Imp(Ne(V("x"), D(0)), Lt(D(0), App(unit, V("x"))))));
         Formula result = Ex("w", V("V"), Ex("e", R, Ex("f", dual, Conj(
@@ -44,12 +44,15 @@ internal sealed class OriginalBlindCounterfactualDocument : IScribeDocumentDefin
             In(plus, k), In(minus, k), In(plus, interior), In(minus, interior),
             Ne(plus, minus), Eq(App(t, plus), App(t, minus)),
             Lt(D(0), Seq(App(f, plus), Minus, App(f, minus)))))));
-        Formula statement = All("V", V("Type"), All("O", V("Type"), Instances(
-            All("C", C("PointedCone", R, V("V")), All("u", dual,
-            Imp(C("IsClosed", cone), Imp(strict, Imp(Eq(C("span", R, cone), C("top")),
-            All("T", C("LinearMap", R, V("V"), V("O")), All("z", V("V"),
-            Imp(Ne(z, D(0)), Imp(Eq(App(unit, z), D(0)),
-                Imp(Eq(App(t, z), D(0)), result))))))))))));
+        Formula directions = Imp(Ne(z, D(0)), Imp(Eq(App(unit, z), D(0)),
+            Imp(Eq(App(t, z), D(0)), result)));
+        Formula readouts = All("T", C("LinearMap", R, V("V"), V("O")),
+            All("z", V("V"), directions));
+        Formula assumptions = Imp(C("IsClosed", cone), Imp(strict,
+            Imp(Eq(C("span", R, cone), C("top")), readouts)));
+        Formula coneAndUnit = All("C", C("PointedCone", R, V("V")),
+            All("u", dual, assumptions));
+        Formula statement = All("V", V("Type"), All("O", V("Type"), Instances(coneAndUnit)));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Every nonzero original normalized blind direction has two actual interior states and a distinguishing full proper effect.",
             H("Original blind directions and actual counterfactual states"), Blocks(
