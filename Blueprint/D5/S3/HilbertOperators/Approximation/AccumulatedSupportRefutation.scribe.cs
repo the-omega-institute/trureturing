@@ -37,7 +37,7 @@ internal sealed class AccumulatedSupportRefutationDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(Owner + "coefficients_to_tuple"), H("Enumeration and zero padding"),
                 StatementSource.FromAuthor(Disp(All("d", Call("Nat"), All("c", Call("RealTuple", D(6,4)), Implies(Leq(Call("card", Call("support", V("c"))), V("d")), ExistsIn("a", Call("SupportTuple", V("d")), ExistsIn("r", Call("RealTuple", V("d")), Equal(Call("tupleCombination", V("a"), V("r")), Call("C", V("c")))))))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Conversely, every real coefficient vector with at most d nonzero coordinates is realized by a tuple of exactly d actual support points. Enumerate its nonzero support and pad the remaining slots by a fixed support point with coefficient zero. This also covers empty supports."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("accumulated-support-errorSet-eq"),
+            Describe.Lean(DescribeId.Create("accumulated-support-error-set-eq"),
                 DeclarationHandle.Create(Owner + "errorSet_eq"), H("Equality of the actual optimizing sets"),
                 StatementSource.FromAuthor(Disp(All("d", Call("Nat"), Equal(Call("E", V("d")), Call("F", V("d")))))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every natural d, the original support-tuple squared-error set equals the full real sparse quadratic error set. Consolidation and enumeration give both directions, and multiplication by eight is invertible and preserves nonzero supports."))), DescribeRole.Theorem),
