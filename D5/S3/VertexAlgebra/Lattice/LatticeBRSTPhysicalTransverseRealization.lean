@@ -122,22 +122,6 @@ def groundB0 : Module.End ℂ U where
   map_add' _ _ := Subtype.ext (map_add bE _ _)
   map_smul' _ _ := Subtype.ext (map_smul bE _ _)
 
-private theorem sector_N_P0 : nE * pE = pE * nE := by
-  apply LinearMap.ext
-  intro x
-  apply Subtype.ext
-  exact LinearMap.congr_fun (sub_eq_zero.mp (N_P0 F B)) x.val
-
-/-- Native N on the same literal projector range, before selecting a branch. -/
-def groundN : Module.End ℂ U where
-  toFun u := ⟨nE u.val, by
-    obtain ⟨x, hx⟩ := u.property
-    refine ⟨nE x, ?_⟩
-    rw [← hx]
-    exact (LinearMap.congr_fun (sector_N_P0 F B H hHG hGH beta level) x).symm⟩
-  map_add' _ _ := Subtype.ext (map_add nE _ _)
-  map_smul' _ _ := Subtype.ext (map_smul nE _ _)
-
 private theorem sector_B0_delta
     (shell : groundEnergy beta + (level : ℂ) - 1 = 0) :
     bE * (qE - dE) + (qE - dE) * bE = 0 := by
@@ -206,46 +190,6 @@ theorem finite_N_K : nE * (c).K cutoff = (c).K cutoff * nE := by
     (by simpa only [mul_add, add_mul, mul_one, one_mul] using
       (congrArg (fun x => nE + x)
         (sector_N_hdelta F B H hHG hGH beta level))) (laws).K_left (laws).K_right
-
-private theorem sector_N_deltah :
-    nE * ((qE - dE) * hE) = ((qE - dE) * hE) * nE := by
-  have nd := sector_N_delta F B H hHG hGH beta level
-  have nh : nE * hE - hE * nE = -hE := by
-    apply LinearMap.ext
-    intro x
-    apply Subtype.ext
-    exact LinearMap.congr_fun (N_h F B beta) x.val
-  change nE * (qE - dE) - (qE - dE) * nE = (qE - dE) at nd
-  have algebra {R : Type} [Ring R] (n d h : R)
-      (nd : n * d - d * n = d) (nh : n * h - h * n = -h) :
-      n * (d * h) = (d * h) * n := by
-    linear_combination (norm := noncomm_ring) nd * h + d * nh
-  exact algebra (R := Module.End ℂ ↥E) nE (qE - dE) hE nd nh
-
-/-- Native ghost number commutes with the actual finite J too. -/
-theorem finite_N_J : nE * (c).J cutoff = (c).J cutoff * nE := by
-  exact inverse_naturality nE (1 + (qE - dE) * hE) ((c).J cutoff)
-    (by simpa only [mul_add, add_mul, mul_one, one_mul] using
-      (congrArg (fun x => nE + x)
-        (sector_N_deltah F B H hHG hGH beta level)))
-    (laws).J_left (laws).J_right
-
-theorem finite_N_inclusion_projection :
-    (nE).comp inc = (inc).comp (groundN F B H hHG hGH beta level) ∧
-      (proj).comp nE = (groundN F B H hHG hGH beta level).comp proj := by
-  constructor
-  · apply LinearMap.ext
-    intro u
-    exact LinearMap.congr_fun
-      (finite_N_K F B H hHG hGH beta level hp critical) u.val
-  · apply LinearMap.ext
-    intro x
-    apply Subtype.ext
-    change pE ((c).J cutoff (nE x)) = nE (pE ((c).J cutoff x))
-    rw [← show nE ((c).J cutoff x) = (c).J cutoff (nE x) from
-      LinearMap.congr_fun (finite_N_J F B H hHG hGH beta level hp critical) x]
-    exact (LinearMap.congr_fun (sector_N_P0 F B H hHG hGH beta level)
-      ((c).J cutoff x)).symm
 
 /-- Actual zero-count range in this sector maps into current absoluteGround. -/
 def groundToAbsolute : U →ₗ[ℂ]

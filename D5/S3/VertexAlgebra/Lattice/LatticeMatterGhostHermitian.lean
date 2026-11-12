@@ -191,22 +191,6 @@ theorem Hmg_tmul (v w : Carrier D) (u z : Fock) :
         Hmg_tmul_ket_left]
       ring
 
-/-- Sesquilinear packaging on the original State D. -/
-def tensorForm (D : LatticeData) :
-    State D →ₛₗ[starRingEnd ℂ] State D →ₗ[ℂ] ℂ where
-  toFun x := {
-    toFun := Hmg x
-    map_add' := Hmg_add_right x
-    map_smul' := fun a y => Hmg_smul_right a x y }
-  map_add' x z := by
-    apply LinearMap.ext
-    intro y
-    exact Hmg_add_left x z y
-  map_smul' a x := by
-    apply LinearMap.ext
-    intro y
-    exact Hmg_smul_left a x y
-
 private def leftAdd (y : State D) : State D →+ ℂ where
   toFun x := Hmg x y
   map_zero' := Hmg_zero_left y

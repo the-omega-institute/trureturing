@@ -261,15 +261,6 @@ def quotientToGlobal (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
       exact (Submodule.Quotient.mk_eq_zero
         (LatticeBRSTCohomologyField.boundaries D H critical hHG hGH)).mpr hx)
 
-@[simp] theorem quotientToGlobal_mk
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (beta : Charge D) (level : ℤ) (critical : D.rank = 26)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (x : physicalCycles H beta level) :
-    quotientToGlobal H beta level critical hHG hGH
-        ((physicalBoundaries H beta level critical hHG hGH).mkQ x) =
-      physicalClass H beta level critical hHG hGH x := rfl
-
 theorem quotientToGlobal_injective
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (beta : Charge D) (level : ℤ) (critical : D.rank = 26)
@@ -440,19 +431,6 @@ def physicalQuotientForm
       have eq := inserted_representatives F B H hHG hGH beta level hp critical shell
         a a b 0 rfl (by simpa only [map_zero] using hb0)
       simpa only [Submodule.coe_zero, inserted_zero_right] using eq)
-
-/-- Exact representative recovery for BOTH arguments of the physical quotient. -/
-@[simp] theorem physicalQuotientForm_mk
-    (F : NullFrame D) {t : ℕ} (B : Module.Basis (Fin t) ℂ F.K)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
-    (hHG : H * gramComplex D = 1) (hGH : gramComplex D * H = 1)
-    (beta : Charge D) (level : ℤ) (hp : F.pPlus beta ≠ 0)
-    (critical : D.rank = 26) (shell : groundEnergy beta + (level : ℂ) - 1 = 0)
-    (a b : physicalCycles H beta level) :
-    physicalQuotientForm F B H hHG hGH beta level hp critical shell
-        ((physicalBoundaries H beta level critical hHG hGH).mkQ a)
-        ((physicalBoundaries H beta level critical hHG hGH).mkQ b) =
-      Hmg a.val.val (ghostC D 0 b.val.val) := rfl
 
 theorem physicalQuotientForm_hermitian
     (F : NullFrame D) {t : ℕ} (B : Module.Basis (Fin t) ℂ F.K)

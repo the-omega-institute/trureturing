@@ -160,10 +160,6 @@ def ambientToSector : State D →ₗ[ℂ] E :=
   (ambientSectorProjection F B beta level).codRestrict E
     (ambientSectorProjection_mem F B H hHG hGH beta level)
 
-@[simp] theorem ambientToSector_coe (v : State D) :
-    (ambientToSector F B H hHG hGH beta level v : State D) =
-      ambientSectorProjection F B beta level v := rfl
-
 /-- An unrestricted original-Q primitive can be projected to the same actual
 charge/energy sector. No relative or homogeneous property of that primitive
 is assumed or needed. -/
@@ -204,9 +200,6 @@ private theorem B0_preserves_fixedSector (v : State D) (hv : v ∈ E) :
 
 def sectorB0 : Module.End ℂ E :=
   ghostB0.restrict (B0_preserves_fixedSector H beta level)
-
-@[simp] theorem sectorB0_coe (v : E) :
-    (sectorB0 H beta level v : State D) = ghostB0 v.val := rfl
 
 local notation "bE" => sectorB0 H beta level
 
