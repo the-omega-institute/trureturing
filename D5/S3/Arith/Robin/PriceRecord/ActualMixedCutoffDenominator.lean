@@ -504,4 +504,3 @@ theorem eventual_actual_mixed_denominator
 #print axioms eventual_actual_mixed_denominator
 
 end D5.S3.Arith.Robin.PriceRecord.ActualMixedCutoffDenominator
-
