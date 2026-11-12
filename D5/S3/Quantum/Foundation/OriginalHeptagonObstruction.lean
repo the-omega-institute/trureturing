@@ -304,7 +304,7 @@ private theorem facet_maximum : IsGreatest ((h 1) '' facet) (28/87 : ℝ) := by
     by intro i; fin_cases i <;> norm_num [edgeEffect,p,form_apply],
     by intro i hi hj; fin_cases i <;> norm_num [edgeEffect,p,form_apply] at *,
     by intro z; constructor <;> norm_num [h,u,edgeEffect,form_apply] <;> ring,
-    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family⟩
+    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family,original_affine_span⟩
   · rintro _ ⟨z,hz,rfl⟩
     have hb := (ruler_local z hz).2
     simp only [ruler,LinearMap.smul_apply,smul_eq_mul] at hb
@@ -474,6 +474,31 @@ private theorem linear_unique_on_base (f g : V →ₗ[ℝ] ℝ)
   simp only [a,b,c,mul_zero,add_zero] at heq
   exact sub_eq_zero.mp heq
 
+private theorem original_affine_span :
+    (affineSpan ℝ K : Set V) = {z | u z = 1} := by
+  let H : AffineSubspace ℝ V :=
+    { carrier := {z | u z = 1}
+      smul_vsub_vadd_mem' := by
+        intro a x y z hx hy hz
+        change u (a • (x-y)+z) = 1
+        simp [map_add,map_smul,map_sub,hx,hy,hz] }
+  have hle : affineSpan ℝ K ≤ H := affineSpan_le.mpr (fun z hz => hz.2)
+  ext z
+  constructor
+  · exact fun hz => hle hz
+  · intro hz
+    have h0 := mem_affineSpan ℝ (p_base 0)
+    have h1 := mem_affineSpan ℝ (p_base 1)
+    have h4 := mem_affineSpan ℝ (p_base 4)
+    let a := (19*z 2 - 4*(z 1-10*z 0))/168
+    let b := (-8*(z 1-10*z 0)-4*z 2)/168
+    have hm := (affineSpan ℝ K).smul_vsub_vadd_mem b h4 h0
+      ((affineSpan ℝ K).smul_vsub_vadd_mem a h1 h0 h0)
+    convert hm using 1
+    ext k
+    change z 0 = 1 at hz
+    fin_cases k <;> norm_num [a,b,p,hz] <;> ring
+
 private theorem affine_homogeneous_bridge (g : (Fin 2 → ℝ) →ᵃ[ℝ] ℝ) :
     ∃! f : V →ₗ[ℝ] ℝ, ∀ z ∈ K, f z = g (spatial z) := by
   refine ⟨homogenize g,fun z hz => homogenize_value g z hz.2,?_⟩
@@ -539,7 +564,8 @@ theorem original_effect_obstruction :
     (∀ z, edgeEffect z = (76/147 : ℝ) * h 0 z + (29/49 : ℝ) * h 1 z ∧
       edgeEffect z = u z-h 4 z) ∧
     edgeProjection (p 5) = (29/28 : ℝ) • p 0 - (71/84 : ℝ) • p 1 ∧
-    pure C u = Set.range p := by
+    pure C u = Set.range p ∧
+    (affineSpan ℝ K : Set V) = {z | u z = 1} := by
   exact ⟨base_hull,whole_mixed_zero_gluing,entire_exclusion_face,facet_segment,
     whole_facet_pair,edge_is_pair,ruler_local,facet_maximum,extensions_exhaustive,
     no_extension,edge_proper,projection_mass,p_mem 5,projection_not_positive,
@@ -550,7 +576,7 @@ theorem original_effect_obstruction :
     by intro i; fin_cases i <;> norm_num [edgeEffect,p,form_apply],
     by intro i hi hj; fin_cases i <;> norm_num [edgeEffect,p,form_apply] at *,
     by intro z; constructor <;> norm_num [h,u,edgeEffect,form_apply] <;> ring,
-    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family⟩
+    by rw [projection_formula]; norm_num [h,p,form_apply]; ext k; fin_cases k <;> norm_num,pure_family,original_affine_span⟩
 
 /-- The original facet ruler has no proper real linear extension. -/
 theorem result : ¬ extensionClaim := original_effect_obstruction.2.2.2.2.2.2.2.2.2.1
