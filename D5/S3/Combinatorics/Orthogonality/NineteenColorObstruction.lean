@@ -25,7 +25,6 @@ private def D : Finset Vector := deleted.toFinset
 private theorem mem_D (v : Vector) : v ∈ D ↔ v ≠ 0 ∧ v ≠ 127 := by simp [D,deleted]
 private theorem D_card : D.card = 126 := by decide +kernel
 private theorem z_odd : ¬ even (127 : Vector) := by decide +kernel
-private theorem dot_lt (u v : Vector) : dot u v < 2 := Nat.mod_lt _ (by decide)
 
 private theorem even_mem_D (u : Vector) (hu : u ∈ evenPoints) : u ∈ D := by
   have hh := Finset.mem_filter.mp hu

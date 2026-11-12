@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum3
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportFiniteMinimum3
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum3
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum3.actual_application; instance=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportFiniteMinimum3.result

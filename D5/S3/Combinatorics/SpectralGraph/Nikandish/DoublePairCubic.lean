@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairCubic
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/DoublePairCubic
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairCubic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

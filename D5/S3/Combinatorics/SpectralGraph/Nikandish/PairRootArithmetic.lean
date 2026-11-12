@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/PairRootArithmetic
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/PairRootArithmetic
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/PairRootArithmetic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/PairCoprimeCompletion
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/PairCoprimeCompletion
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/PairCoprimeCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/PairCoprimeCompletion.actual_nonintegral; premises=D5/S3/Combinatorics/SpectralGraph/Nikandish/PairCoprimeCompletion.small_three_nonzero

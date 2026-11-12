@@ -125,7 +125,9 @@ theorem E_no_two_torsion (P : E.toAffine.Point) (hP : P+P=0) : P=0 := by
   | some x y h =>
     have hr:=Point.isRoot_twoTorsionPolynomial_of_add_self h hP
     rw [IsRoot.def,WeierstrassCurve.eval_toPoly_twoTorsionPolynomial] at hr
-    simp [E,WeierstrassCurve.b₂,WeierstrassCurve.b₄,WeierstrassCurve.b₆] at hr
+    rw [← integerE_rational] at hr
+    simp [integerE,WeierstrassCurve.map,WeierstrassCurve.b₂,
+      WeierstrassCurve.b₄,WeierstrassCurve.b₆] at hr
     exfalso
     apply rational_no_root x
     linarith [hr]

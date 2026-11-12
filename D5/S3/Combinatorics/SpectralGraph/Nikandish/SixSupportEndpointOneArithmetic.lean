@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointOneArithmetic
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic.result; instance=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic.residue_certificate

@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairModularTables
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/RepeatedPairModularTables
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairModularTables
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairModularTables.actual_five; instance=D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairModularTables.five_table

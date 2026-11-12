@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/SixSupportEndpointTwoBase
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase.endpoint_one_for_actual_integral; instance=D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointTwoBase.result
