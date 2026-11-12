@@ -498,5 +498,3 @@ theorem result :
     exact ⟨hin.1, hin.2, (fraction i).den_pos, (fraction i).reduced, (Rat.num_div_den _).symm⟩
 
 end D5.S3.Arith.CounterSequences.KimberlingA371279
-
-
