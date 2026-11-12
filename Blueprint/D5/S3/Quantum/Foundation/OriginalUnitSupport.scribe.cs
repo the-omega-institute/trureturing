@@ -52,9 +52,74 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                                 Imp(Call("Injective", rho),
                                     Imp(All("x", space, Imp(Member(x, cone),
                                         Call("PosSemidef", mat(x)))), conclusion)))))))));
+        Formula dimension = Call("finrank", field, support);
+        Formula nIndex = Call("Fin", dimension);
+        Formula nativeMatrices = Call("Matrix", nIndex, nIndex, field);
+        Formula inclusion = F.Id("U"), sigma = F.Id("sigma"), m = F.Id("m"),
+            v = F.Id("v"), t = F.Id("t");
+        Formula sigmaAt(Formula a) => app(sigma, a);
+        Formula mul(Formula a, Formula b) => Call("mul", a, b);
+        Formula adjoint(Formula a) => Call("conjTranspose", a);
+        Formula inv(Formula a) => Call("inv", a);
+        Formula det(Formula a) => Call("det", a);
+        Formula delta(Formula a) => Call("re", det(a));
+        Formula massSlice(Formula mass) => Call("setOf", Seq(x, Mapsto, Sp,
+            And(Member(x, cone), Eq(app(unit, x), mass))));
+        Formula compactBase = Call("IsCompact", massSlice(D(1)));
+        Formula nativeInputs(Formula body, bool compact)
+        {
+            Formula tail = All("rho", linear(matrices), Imp(Call("Injective", rho),
+                Imp(All("x", space, IffF(Member(x, cone), Call("PosSemidef", mat(x)))), body)));
+            if (compact) tail = Imp(compactBase, tail);
+            tail = All("u", linear(real), Imp(All("x", space, Imp(Member(x, cone),
+                Imp(Seq(x, Neq, Sp, D(0)), LtF(D(0), app(unit, x))))), tail));
+            tail = All("C", Call("PointedCone", real, space),
+                Imp(Eq(Call("span", real, cone), Call("top", Call("Submodule", real, space))), tail));
+            Formula topological = compact ? Seq(
+                Bracket(Call("TopologicalSpace", space)), Sp,
+                Bracket(Call("IsTopologicalAddGroup", space)), Sp,
+                Bracket(Call("ContinuousSMul", real, space)), Sp,
+                Bracket(Call("T2Space", space)), Sp) : Bracket(Call("Nontrivial", space));
+            return compact
+                ? parameters(Seq(Bracket(Call("FiniteDimensional", real, space)), Sp,
+                    Bracket(Call("Nontrivial", space)), Sp, topological, tail))
+                : parameters(Seq(Bracket(Call("FiniteDimensional", real, space)), Sp,
+                    Bracket(Call("Nontrivial", space)), Sp, tail));
+        }
+        Formula compressionLaws = Chain(
+            Eq(mul(adjoint(inclusion), inclusion), D(1)),
+            Eq(Call("range", Call("toEuclideanLin", inclusion)), support),
+            All("x", space, Eq(sigmaAt(x), mul(mul(adjoint(inclusion), mat(x)), inclusion))),
+            All("x", space, Eq(mat(x), mul(mul(inclusion, sigmaAt(x)), adjoint(inclusion)))),
+            Call("Injective", sigma), All("x", space, Call("IsHermitian", sigmaAt(x))),
+            All("x", space, IffF(Member(x, cone), Call("PosSemidef", sigmaAt(x)))),
+            All("x", space, Eq(Call("rank", sigmaAt(x)), Call("rank", mat(x)))));
+        Formula coordinateWitness(Formula laws) => And(LtF(D(0), dimension),
+            Ex("U", Call("Matrix", index, nIndex, field),
+                Ex("sigma", Call("LinearMap", real, space, nativeMatrices), laws)));
+        Formula supportState = Ex("y", space, Chain(Member(y, cone),
+            Eq(app(unit, y), D(1)), Call("PosDef", sigmaAt(y))));
+        Formula compressionStatement = nativeInputs(coordinateWitness(
+            And(compressionLaws, supportState)), false);
+        Formula maximum = All("x", space, Imp(Member(x, cone),
+            Imp(Eq(app(unit, x), dimension),
+                new Formula.Relation(delta(sigmaAt(x)), FormulaRelationOperator.LessThanOrEqual,
+                    delta(sigmaAt(m))))));
+        Formula affine = Call("add", m, Call("smul", t, v));
+        Formula variation = All("v", space, Call("HasDerivAt",
+            Seq(t, Colon, Sp, real, Mapsto, Sp, delta(sigmaAt(affine))),
+            mul(delta(sigmaAt(m)), Call("re", Call("trace", mul(inv(sigmaAt(m)), sigmaAt(v))))), D(0)));
+        Formula root = Call("sqrt", inv(sigmaAt(m)));
+        Formula rootLaws = Chain(Call("IsHermitian", root), Call("IsUnit", root),
+            Eq(mul(root, root), inv(sigmaAt(m))), Eq(mul(mul(root, sigmaAt(m)), root), D(1)));
+        Formula maximizer = Ex("m", space, Chain(Member(m, cone),
+            Eq(app(unit, m), dimension), Call("PosDef", sigmaAt(m)),
+            LtF(D(0), delta(sigmaAt(m))), maximum, variation, rootLaws));
+        Formula maximumStatement = nativeInputs(coordinateWitness(Chain(compressionLaws,
+            Call("IsCompact", Call("image", sigma, massSlice(dimension))), maximizer)), true);
         return DocumentDefinition.Create(ScribeNode.Create(
-            "An arbitrary strictly positive original unit admits a state carrying the entire native PSD support.",
-            H("Original unit and common matrix support"), Blocks(
+            "Native support compression produces an actual original-unit positive determinant maximizer.",
+            H("Original unit, native support and determinant maximization"), Blocks(
                 Paragraph(Text("Let F be a real or complex scalar field, represented by RCLike, and let iota be any finite decidable matrix index type. V is a nonzero finite dimensional real vector space. C is a pointed cone whose real linear span is V. The real linear map rho is injective and sends every member of C to a positive semidefinite native F-matrix. The original real linear unit u is strictly positive on every nonzero member of C. No trace normalization, positive definite ambient representative, rank-one generation, closedness, or compactness is needed for this support result.")),
                 Describe.Lean(DescribeId.Create("common-support"),
                     DeclarationHandle.Create(Owner + "commonSupport"), H("Native common support"),
@@ -70,9 +135,27 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("Finite dimensionality selects a finite spanning subset of the original cone. For its sum a, positive semidefiniteness makes a zero quadratic value force each summand to annihilate the same vector. Real spanning then propagates this annihilation to every represented original vector. Injectivity and nontriviality ensure a is nonzero. Hence u(a) is strictly positive and y = a / u(a) is an actual original state with exactly the same kernel. Hermitian orthogonal range-kernel duality identifies its range with the entire common support. A nonzero vector in that support has strictly positive quadratic value: otherwise it belongs to both the range and its orthogonal complement. This allows support-deficient ambient representations and includes support dimension one. ofLp denotes the ordinary coordinate vector of a Euclidean vector; re is the real part."))),
                     DescribeRole.Theorem),
-                Paragraph(Text("The result supplies the original-unit positive-on-support candidate needed before determinant normalization. It does not construct support coordinates, the determinant maximizer, its uniqueness or stationarity, inverse-square-root congruence, a trace-preserving cone equivalence, or the returned order unit. Whole-base, pure-point, dual-effect, confirmation, exclusion, face and rank transport, together with fixed-complement and frame conclusions, require those further constructions. No classification or physical realization is inferred. The finite spanning, PSD quadratic-form and orthogonal-complement tools are standard; no literature priority is claimed.")))));
+                Describe.Lean(DescribeId.Create("original-unit-support-compression"),
+                    DeclarationHandle.Create(Owner + "exists_original_unit_support_compression"),
+                    H("Faithful native coordinates on the entire common support"),
+                    StatementSource.FromAuthor(Disp(compressionStatement)), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("The support dimension n is finrank over F, with no complex realification. U consists of an orthonormal basis of the entire common support. Real generation extends range containment and Hermitian symmetry from cone elements to every original vector. U adjoint U is the identity, and the common-support projection fixes every original matrix on both sides, giving whole-V reconstruction. Compression sigma is therefore injective. Rectangular congruence in both directions gives the exact PSD section, and the two factorizations give equality of native F-ranks. The original-unit state from the preceding producer compresses to a positive definite matrix. No ambient full-support or normalized-section hypothesis is imposed. The theorem returns n positive and includes n equal to one."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(DescribeId.Create("original-unit-determinant-maximum"),
+                    DeclarationHandle.Create(Owner + "exists_original_unit_determinant_maximum"),
+                    H("An actual positive determinant maximum and its affine variation"),
+                    StatementSource.FromAuthor(Disp(maximumStatement)), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("Retain the same compression laws and assume the entire original unit-one base is compact in the finite dimensional Hausdorff real vector topology. The mass-n original slice is exactly n times this base, so its sigma image is compact. Scaling the produced unit-one state by n gives an actual positive definite competitor. Continuity of the real part of the native determinant supplies a global maximum at M = sigma(m). The competitor makes its real determinant strictly positive; the exact PSD section then makes M positive definite. Every original feasible vector participates in the maximum comparison. For every original v, including indefinite represented directions, the real derivative of det sigma(m + t v) at zero is Re(det M) times Re tr(M inverse sigma(v)). This derivative is not asserted to vanish. It directly reuses the pinned polynomial determinant derivative at the identity, restricts scalars to the real line, and factors out M. The principal inverse square root S = CFC.sqrt(M inverse) is Hermitian and invertible, satisfies S squared = M inverse and S M S = I. These are ambient matrix identities and require no square-root or inverse closure of the image section."))),
+                    DescribeRole.Theorem),
+                Paragraph(Text("Full original-u normalization remains unresolved here. Two-sided feasible variation and its zero derivative, full-vector inverse-trace stationarity, uniqueness, the actual trace-preserving Psi and same-h original return, whole-base and pure-point transport, dual effects, confirmations, comparison minima and minimizers, exclusion, all minimal faces, ROG, codimension and annihilator transport, and same-frame complement conclusions still require proofs. The dimension-one support case is included in the producers but its entire singleton-base/effect/empty-complement and converse-ROG return is not established. Classification and physical realization are not inferred. The linear-algebra, compact-extremum, polynomial-derivative and functional-calculus tools are standard; no literature priority is claimed.")))));
     }
 
+    private static Formula Chain(params Formula[] formulas)
+    {
+        Formula result = formulas[^1];
+        for (int i = formulas.Length - 2; i >= 0; --i) result = And(formulas[i], result);
+        return result;
+    }
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
     private static Formula All(string name, Formula type, Formula body) =>

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Original-unit states carrying the native common support of a faithful PSD cone. -/
+   digest: Native support compression and actual original-unit determinant maximizers. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Convex.Cone.Basic
@@ -21,8 +21,12 @@ import Mathlib.Tactic
 /-!
 A finite positive sum detects the common kernel of a generating cone. Scaling
 this sum by its original strictly positive unit produces an actual state without
-changing its native real or complex support. No full-support ambient matrix,
-trace unit, rank-one generation, or normalized section is assumed.
+changing its native real or complex support. Native orthonormal compression
+reconstructs the entire original representation. The given compact original base
+then supplies a positive definite determinant maximum, its affine first variation
+and principal inverse square root. Stationarity and trace normalization remain
+separate obligations. No full-support ambient matrix, trace unit, rank-one
+generation, or normalized section is assumed.
 -/
 
 noncomputable section
@@ -363,6 +367,7 @@ private theorem determinant_first_variation (A B : Matrix ι ι 𝕜) (hA : A.Po
     (RCLike.re A.det)).congr_of_eventuallyEq
   apply Filter.Eventually.of_forall
   intro t
+  dsimp only
   rw [hfactor, Matrix.det_mul, RCLike.mul_re, hdetim, zero_mul, sub_zero]
 
 private theorem principal_inverse_sqrt_laws (A : Matrix ι ι 𝕜) (hA : A.PosDef) :
@@ -370,7 +375,8 @@ private theorem principal_inverse_sqrt_laws (A : Matrix ι ι 𝕜) (hA : A.PosD
     S.IsHermitian ∧ IsUnit S ∧ S * S = A⁻¹ ∧ S * A * S = 1 := by
   let S := CFC.sqrt A⁻¹
   have hnonneg : 0 ≤ A⁻¹ := hA.inv.posSemidef.nonneg
-  have hSH : S.IsHermitian := (CFC.sqrt_nonneg A⁻¹).posSemidef.isHermitian
+  have hSH : S.IsHermitian :=
+    (Matrix.nonneg_iff_posSemidef.mp (CFC.sqrt_nonneg A⁻¹)).isHermitian
   have hSU : IsUnit S := (CFC.isUnit_sqrt_iff A⁻¹ hnonneg).mpr hA.inv.isUnit
   have hSS : S * S = A⁻¹ := CFC.sqrt_mul_sqrt_self A⁻¹ hnonneg
   have hSinv : IsUnit S.det := (Matrix.isUnit_iff_isUnit_det S).mp hSU
@@ -381,9 +387,10 @@ private theorem principal_inverse_sqrt_laws (A : Matrix ι ι 𝕜) (hA : A.PosD
       _ = (S * S)⁻¹ := congrArg (fun X : Matrix ι ι 𝕜 => X⁻¹) hSS.symm
       _ = S⁻¹ * S⁻¹ := Matrix.mul_inv_rev S S
   refine ⟨hSH, hSU, hSS, ?_⟩
-  rw [hAeq]
+  change S * A * S = 1
   calc
-    S * (S⁻¹ * S⁻¹) * S = (S * S⁻¹) * (S⁻¹ * S) := by simp only [Matrix.mul_assoc]
+    S * A * S = S * (S⁻¹ * S⁻¹) * S := congrArg (fun X => S * X * S) hAeq
+    _ = (S * S⁻¹) * (S⁻¹ * S) := by simp only [Matrix.mul_assoc]
     _ = 1 := by rw [Matrix.mul_nonsing_inv S hSinv, Matrix.nonsing_inv_mul S hSinv,
       Matrix.one_mul]
 
