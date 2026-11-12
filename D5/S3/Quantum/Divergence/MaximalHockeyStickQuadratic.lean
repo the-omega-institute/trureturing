@@ -87,6 +87,28 @@ theorem square_jensen (E : k → Matrix n n ℂ) (r : k → ℝ)
   apply Matrix.le_iff.mpr
   exact square_variance_identity E r hsum ▸ hp
 
+/-- The same inequality on an actual support corner. The missing effect is
+completed by `1 - ∑ E` with scalar value zero. -/
+theorem square_jensen_subunital (E : k → Matrix n n ℂ) (r : k → ℝ)
+    (hE : ∀ i, (E i).PosSemidef) (hsum : ∑ i, E i ≤ 1) :
+    (∑ i, r i • E i) * (∑ i, r i • E i) ≤ ∑ i, (r i) ^ 2 • E i := by
+  classical
+  let F : Option k → Matrix n n ℂ := fun j =>
+    match j with
+    | none => 1 - ∑ i, E i
+    | some i => E i
+  let s : Option k → ℝ := fun j =>
+    match j with
+    | none => 0
+    | some i => r i
+  have hF : ∀ j, (F j).PosSemidef := by
+    intro j
+    cases j with
+    | none => exact (sub_nonneg.mpr hsum).posSemidef
+    | some i => exact hE i
+  have hsumF : ∑ j, F j = 1 := by simp [F]
+  simpa [F, s] using square_jensen F s hF hsumF
+
 /-- The compact perspective `(2x-1)^2` obeys matrix Jensen without any
 operator-convex-function hypothesis. Endpoint labels `x=0,1` are allowed. -/
 theorem compact_quadratic_jensen (E : k → Matrix n n ℂ) (x : k → ℝ)
