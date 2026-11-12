@@ -4231,6 +4231,8 @@ GENERAL15.5／18.4、RG13.3的既有cross-entry／inherited original-Q域不缩�
 保留四个互异的实际 AA 根 $O,F,N^*,r_0$、固定根槽、驱动器、supervisor、真实 parent及共同祖先 tapes。
 增广绑定这些实际对象，不另选一个相同 body 的源，不把 AA 初始 alpha 当作 Native 初始 beta。
 新的类型、分配域、工作区、日志和协议连接与原对象分开；原根槽与原源连接不重绑定。
+F2的独立wake peer使用支持命名域中的固定typed endpoint及专属有限控制字段，
+与原sender及每个ancestor的运行peer／连接状态分开；同一owner名称不使这些端点或字段成为同一对象。
 
 原端口及所有者仍为第27.1节的0–77，工作池仍恰为1–12，16／17／25／27／74仍受原保护。
 原48–51路线、四个固定 AA request／reply／End／local ACK／same-root Return连接束，
@@ -4245,7 +4247,9 @@ AA未完成 Reserve／source template／Maintain、全部真实根／parent／ch
 有限控制及引用寄存器、实际细胞和mark、每条连接的当前位及空满、已收未back的latch、发送者及接收者阶段，
 以及已发生的原记录和支持记录。权限为独立的当前关系 $\mathsf{Rights}(z)$，对象中描述的权限字不构成该关系。
 
-从实际入口至一个有限原语边界的历史写为 $H$，出口为 $z_H$，定义
+入口 $z_0$ 恰为F0真实genesis；$H$ 只列此后实际发生的联合occurrences，包含全部boot／安装，
+不把入口供应另算成一条有journal或meter的动作。费用及材料的唯一分界见续卷58.1。
+从 $z_0$ 至一个有限原语边界的历史写为 $H$，出口为 $z_H$，定义
 
 $$
 X(H)=\bigl(H,z_H,\mathsf{Rights}(z_H),C(H),\mathsf{Ret}(z_H)\bigr).
@@ -4274,12 +4278,12 @@ $$
 一个额外的有限字段机引擎解释被选capsule。同一个引擎可解释任意多实际出生的capsules；
 动态活动数是数据量，不是引擎数或深度编号的代码数。
 
-每个原mutator及原通道参与者的组为 $b$，支持对象及其协议peer的组为其实际capsule。
+每个原mutator及原通道参与者的组为 $b$；除独立wake endpoint的ENTER例外外，支持运行对象及其协议peer session的组为其实际capsule。
 动态对象继承创建规则规定的实际组绑定。
 活动 $p$ 的操作框架 $\mathsf{OpFrame}(p)$ 包括其原有运行堆、控制、heads／latches、
 寄存器、pending action、私有工作及被保留的连接状态和原权限。
-公共日志尾、追加分配inventory、累计账、子活动档案、进入／退休元数据不属于此框架。
-它们仍属于 $X$，并在子活动执行时继续增长。
+公共日志尾、追加分配inventory、累计账、子活动档案、进入／退休元数据及独立wake endpoint的专属控制不属于此框架。
+它们仍属于 $X$；公共追加材料在子活动执行时增长，wake控制保留其实际有限变化。
 因此“保持父活动”表示父操作框架及其所欠动作保持，不表示整个世界或全部费用回到旧值。
 
 **定义 49.4（声明的完整输入与请求域）。** 一次安装先于全部未来输入。
@@ -4298,6 +4302,10 @@ C1全结算／AfterFinal／Entry／Select之后才接收C2；拒绝C1时C2为Rig
 Input22、variable-depth decoder、forest、settlement／receipt、Park、terminal ACK，
 以及下文安装后支持程序的分配、接收、解释、复制、检查、部分回写与返回内部。
 请求可有限重复并形成任意有限有序嵌套森林；不预先限制树高。
+在每一个这样的cut均允许按F2供应一个授权请求：其供应包括当前源绑定wake权、
+独立peer的genuine one-bit handoff及相应有限材料，并包括F3的后续framing／traffic／ACK。
+这是对全部cut的统一供应合同，不按当时是否已有wake位、Ready、完成对象或空闲parent筛选cut。
+有限森林中的每次出现各有自己的真实handoff及origin，不从父输入／ACK、原pool或未来完成取得wake。
 每个请求的目标前缀是首次capture side effect之前的实际前缀，
 不能先执行该cut的owed action或等待原过程完成以取得入口。
 已使能且已有genuine buffered bit的IN也在域内；缺原输入的动作返回后仍缺它自己的输入。
@@ -4308,13 +4316,17 @@ Input22、variable-depth decoder、forest、settlement／receipt、Park、termin
 genesis只含原不可约Native入口及有限支持控制／endpoint根的实际绑定与规定常量，
 不含未知seed、代码、输入或既存未记录历史的免费snapshot。
 未知字由其原有后续IN／WR及构造操作进入。日志从这个入口起记录支持安装和原boot。
+按续卷58.1，入口已有的不可约材料只属genesis项；其后构造的材料及安装工作只属各实际occurrence。
 
 原所有者实际委托三个相互有别的当前行政能力：源绑定的invocation gating、
-各局部规则实际effect disclosure、held-context控制字段访问。
+各局部规则实际effect disclosure、held-context控制字段访问；
+另实际委托F2的源绑定wake endpoint／ENTER权限及wake peer的handoff权，覆盖基本活动及全部动态capsule边界。
 这些不是旧AA源grant、一个descriptor或OC的ReadPC能力的推论。
 以逐比特／逐字段操作构造有限literal支持代码、类型、根槽、banks、连接backing和grant表示，
 执行实际原bootstrap、四根初始化、$O$七事件、原Native准备／seed／saved client。
-支持code／banks／所需source bindings完成后，才付费写 EnableCapture，且在首个覆盖runtime过程之前。
+独立wake endpoint、专属控制、合法peer绑定及其grant表示也须完成，
+所委托的wake权在整个prehalt覆盖期保持当前，动态capsule不另需逐层安装或新grant。
+支持code／banks／所需source bindings及上述wake接线完成后，才付费写 EnableCapture，且在首个覆盖runtime过程之前。
 本假设供应有限primitive基础及其材料，不声称由旧动作菜单或从无硬件构造此基础。
 
 **假设 50.2（F1：真实有限effect日志）。** 固定原与新增primitive规则的有限schema并集。
@@ -4355,8 +4367,20 @@ custodian独占日志写权，持每个真实闭合prefix的read／retention权�
 
 在enabled且prehalt时，$\mathsf{ENTER}(\mathit{peer},1)$ 要求当前合法wake权限、
 实际授权peer的一次genuine one-bit handoff及足够fresh材料。
-此handoff含该sender自己的实际有限控制effect；它不消费任何原request、parent ACK或原input连接。
-此前任何已经发生的发送／backing仍属于进入前缀。
+F2的统一供应条件为：任取EnableCapture之后、halt之前的实际covered cut、当时任意Active及其partial状态，
+若在此请求，就供应当前源绑定wake权限、这个独立peer本次真正的位1及其有限handoff材料，
+使该ENTER可在不执行任何父owed action、不等任何原输入／ACK／完成的条件下发生。
+该条件逐次量化每个有限有序请求森林中的所有occurrences，包括post-ENTER及post-LEAVE边界，
+不是只对已经幸运使能wake的cut下结论；没有请求时不假定已经发送或预存一个位。
+
+此handoff仅修改支持命名域中wake endpoint自己的规定有限控制字段，
+它不是原sender，也不是held parent／ancestor运行peer的推进；其效果由ENTER的F1 tuple真实记录。
+该固定endpoint为ENTER例外边的一部分，不另增executive、polling系统或按深度复制的装置。
+后续request／delivery的peer session使用新capsule的实际记录和连接，归新capsule组；
+wake endpoint及其专属控制则仍为下次独立ENTER保留，不因Active是一个busy handler而失去上述供应合同。
+它不消费任何原request、parent ACK、ancestor连接或原input。
+此前任何已经发生的发送／backing原样属于进入前缀；任何实际preparatory发送／backing也须先记入真实prefix，
+不能删去或与没有这些动作的cut认同。目标 $H$ 是ENTER紧前的真实prefix，故包括一切这种较早effect。
 设调用前 $\mathsf{Active}=p$、$L=l$。该边原子地出生capsule $c$ 和key $k$，写
 
 $$
@@ -4371,13 +4395,15 @@ k.\mathsf{child}=c,\quad k.\mathsf{parent}=p,\quad k.\mathsf{unspent}=1,
 \tag{AS50.1}
 $$
 
-新peer工作归这个capsule组。只有gate custodian可使用ENTER／selector权；
+新capsule的协议peer工作归这个capsule组；独立wake endpoint只用上述ENTER例外。
+只有gate custodian可使用ENTER／selector权；
 key生命周期字段只有custodian的ENTER／LEAVE可写，普通支持字段写及收到的identity字不能重置它。
 该边只创建两个固定schema对象、写一个selector及有限handoff字段，交给F1记录。
 它不复制parent heap、PC、latch或任意环境，不推进父动作；父对象留在原处。
 这是新固定元数的reference原语，既不是旧CTL，也不是批量save／capture。
 
-每次实际进入供应相应fresh capsule／key材料。
+每次实际进入按上述统一条件供应相应fresh capsule／key及wake材料和实际handoff；
+该wake条件是F2已有有限进入边的输入／授权前提，不把完整capture或whole-state读取假定为基础。
 同一个支持引擎及当前peer获得独立于被停row的执行服务，不依赖父pool、父ACK或父过程完成。
 不供应每个深度一个新engine，不设固定emergency frame数；实际frame数可以随有限树高增长。
 ENTER前后都是覆盖边界，入口没有另一个须先完成的软件save prologue。
@@ -4408,6 +4434,8 @@ Native的真实PC／latch各有限字段、各实际head-mark细胞，AA及支�
 每一确认有指定方向、origin和使能阶段，位相等不替代真实ACK。
 部分连接构造也是raw状态。每个请求的合法有限framing、分stage traffic与规定genuine ACK、
 足够有限workspace及fresh材料均实际供应；active本地动作与peer在有限干扰后进展。
+本条的framing／traffic／ACK是F2真实wake之后的供应，不能代替F2逐请求的wake权及handoff。
+两项供应对AS49.4每个cut及任意有限森林同时适用，不依赖parent操作是否使能。
 本条不供应缺失的原ordinary input，不让父receiver先消费自己的位来为child腾入口。
 
 **假设 50.5（F4：一次线性释放）。** 新原语 $\mathsf{LEAVE}(k,p)$ 要求custodian实际持有key，
@@ -4444,9 +4472,12 @@ ReceiveSelection、ReceiveSelectedBody、Verify、Reinstate、Leave，
 $O,F,N^*,r_0$只来自四次真实allocator return，$O$七事件照原先后完整发生；
 新cone仍从 $r_0$ 的真正reserve spine产生，保留非null parent及全部共享ancestor append。
 记录从boot前开始，因此这些bindings、Native准备及Lift／Init的真实输入不是genesis猜定字。
-EnableCapture只在相应安装条件完成之后发生，未来 $N$、operand、guard、请求数及树高均不进入代码表。
+EnableCapture只在相应安装及F2 wake接线／当前授权条件完成之后发生。
+其固定endpoint及有限控制不含未来 $N$、operand、guard、请求数或树高；后来的每次wake由该次请求真实供应，
+不在boot预写未来流量，不要求为每个深度另装peer／engine。
 
-**定义 51.2（无嵌套时的一次处理）。** ENTER的前态历史为 $H$，新capsule为 $c$，
+**定义 51.2（无嵌套时的一次处理）。** 在AS49.4的任意covered cut，先按F2本次供应合同执行真实ENTER；
+无须先消耗所悬置动作的输入。ENTER的前态历史为 $H$，新capsule为 $c$，
 故 $c.\mathsf{cut}=L(H)$、$c.\mathsf{parent}=\mathsf{Active}(H)$。
 Entry保留这两个真实值，逐字段构造自己的工作root、渠道及peer状态，
 收完wake之后的合法有限request frame。每次bit IN先占pending latch，
@@ -4503,10 +4534,12 @@ child不要求parent先完成任何上述操作。第54–56节对同一schema�
 
 **定义 52.1（闭合日志的fold）。** $L(H)$ 的prev链给出真实联合occurrences
 $e_1,\ldots,e_m$，每项携自己的真实journal-node binding。
-从真实genesis开始，$\mathsf{Fold}$逐项执行该schema的core effect，
+从真实genesis及其唯一入口项 $C_{\rm gen}$ 开始，$\mathsf{Fold}$逐项执行该schema的core effect，
 再执行F1的固定节点birth／payload／grant／inventory／tail规则。
 这里执行发生在重建数据上，不重放到live source。
 有限状态、未初始化标记、实际alias、权限关系、保留材料与每个tariff的实际前态均随fold保留。
+按续卷58.1–58.3，入口项只在归纳基计一次，所有已记boot／安装及wake／journal工作逐步累加，
+不把入口材料再作为boot出生材料，也不从费用中省略较早sender或支持effect。
 $\mathsf{Fold}$的正确性为续卷定理54.1；此定义没有假定old meter已记录private值。
 
 **定义 52.2（各自的完整结构）。** 对同一个实际 $H$，每个body有共同有限头：

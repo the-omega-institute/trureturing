@@ -10,8 +10,12 @@ TMC指[Transport Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_M
 
 一个有限请求森林是有限多个有序root请求及其有限有序child请求树。
 child在其parent处理的一个真正到达原语边界进入，返回的consumer是那个partial parent的所欠动作。
-root在原活动的真正到达边界进入。每个请求均有F3的实际合法有限traffic／ACK／材料；
-森林只规定实际有限请求，不为一个无限请求流承诺终止，也不把树高作为安装参数。
+root在原活动的真正到达边界进入。每个请求occurrence均有AS50.3（F2）的当前源绑定wake权、
+独立授权peer本次genuine one-bit handoff及有限进入材料，并有F3的后续实际合法有限framing／traffic／ACK／workspace。
+这些是每次请求的实际供应，不从parent原input／ACK、工作池或完成事件借取。
+F2统一量化AS49.4全部covered cuts：在任意这样一个cut均可供应上述授权请求，
+不是先从cut域挑出已有wake位或已Ready的子集再定义森林。
+森林只规定实际有限请求，不为一个无限请求流承诺终止，也不把树高或未来operand作为安装参数。
 
 **定理 53.2（局部日志与保留活动的当前供应）。** 假定AS50.1–50.5全部成立：
 真实记录从该组件自己的不可约boot入口开始，当前owner实际委托所有披露、门控、held-context权限，
@@ -19,10 +23,14 @@ root在原活动的真正到达边界进入。每个请求均有F3的实际合�
 F1 coeffect、F2 ENTER及F4 LEAVE按声明的有限足迹原子执行；
 此外保留AS26.2的逐点有限原材料、原controller／prior计算终止、完整原输入及规定原确认条件，
 当前source／record／port／connection权限独占有效，没有竞争写者、未建模写入、撤权或崩溃，
-每个capture有F3的独立有限workspace、真实分stage traffic／genuine ACK与active本地进展。
+并且对AS49.4每个covered cut、每个有限森林的每次请求，均实际供应F2的当前源绑定wake权、
+独立授权peer的一次genuine one-bit handoff及fresh进入材料，使ENTER先于该cut的owed action可执行，
+再供应F3的独立有限workspace、合法framing、真实分stage traffic／genuine ACK与active本地进展。
+该统一供应不以原输入／ACK已到、原pool完整或parent已经完成为条件。
 则AS49–52的同一个有限 $J^+$ 安装，对AS49.4的整个ordinary域及准确mode10域满足以下结论。
 
-在EnableCapture之后、吸收halt之前，每个真正到达的原或新增原语边界上的请求，
+在上述逐请求wake及后续traffic实际供应下，EnableCapture之后、吸收halt之前，
+每个真正到达的原或新增原语边界上的请求，
 包括任意有限重复及每个有限嵌套森林，均可先于该边界的owed action有限进入并完成。
 若 $H$ 是该请求ENTER之前的实际prefix，实际requester分别取得四个完整body，
 每个单独解码为同一 $X(H)$，且各有AS52.2的实际space／time／boundary／memory含义。
@@ -36,7 +44,9 @@ F1 coeffect、F2 ENTER及F4 LEAVE按声明的有限足迹原子执行；
 所有支持工作、先前sender effects、部分对象和共存材料均保留且在同次实际前态计费。
 该结论的原子边界恰为F0–F4声明粒度，不包括尚未实现的更细基础内部。
 
-证明。第54节证明真实局部记录与统一held-frame不变量；第55节由实际四份生产、完整traffic及实收字段回写给一次处理。
+证明。先对任意covered cut用AS50.3的统一供应取得真实授权handoff；
+其ENTER只动独立wake控制、fresh capsule／key及selector，故不先执行父owed action。
+第54节证明真实局部记录与统一held-frame不变量；第55节由实际四份生产、完整traffic及实收字段回写给一次处理。
 第56节证明该不变量在全部partial支持状态中闭合，并对任意有限森林作结构归纳。
 第57节先建立原source投影，再应用AS36.4、37.1及真实终止消费者；第58节给精确同次账。
 这些证明均不以父owed action先执行或原过程先完成为前提。$\square$
@@ -50,7 +60,9 @@ AS52.1从旧tail读取的fold恢复恰好 $X(H)$，包括日志本身、inventor
 
 证明。对联合occurrence数 $m$ 归纳。$m=0$ 时只有F0声明的真实不可约入口及支持根，
 其有限字段、当前授权和材料就是genesis；未知seed／code／input尚不在状态中。
-初始基础材料的计费按第58.1节承担，不从未来日志读取其未有的字。
+此时 $H=\varepsilon_{z_0}$、$L=\mathsf{null}$、$C(H)=C_{\rm gen}$、$S(z_0)=S_{\rm gen}$，
+只包含第58.1节列出的入口材料及已给基础权；没有boot receipt或journal node。
+初始费用从同一真实genesis及给定tariff确定，不从未来日志读取其未有的字。
 
 设已经恢复前 $m$ 项，考虑真实下一core $e$。
 Native动作只读写相邻有限细胞／marks或有限latch／token／control，原receipt只添固定有限meter材料；
@@ -68,7 +80,9 @@ inventory entry及新tail。这些是已知有限规则的effects，不需要另
 下一项仍取这个新后态作前态，故别名、重复写入、refusal／test、sender／receiver的交错均保持。
 
 由归纳恢复每个实际前态及其规则，故也恢复 $H$ 的全部已发生occurrences、rights变化及retained material。
-按第58节在这些前态应用原／新tariff便得到 $C(H)$；没有从另一schedule借bill。
+以 $C_{\rm gen}$ 为唯一基项，按第58节在每个前态加该步core／gate／journal的互斥收费项便得到 $C(H)$。
+对 $S$ 同样从genesis材料并入逐步实际出生的不同材料；旧材料上的读写只另计访问工作，不再计出生。
+全部boot／安装也属于这些步，没有从另一schedule借bill或再加一份基础费。
 读旧tail时后续ENTER／扫描／输出的节点不在该链中，
 所以无需让一个body描述自己将来的生产，也无需解自包含费用或无限logger方程。
 因此fold恰为(AS49.1)。所有重放只在构造的数据图上发生，不改变live原源。$\square$
@@ -79,13 +93,17 @@ inventory entry及新tail。这些是已知有限规则的effects，不需要另
 这个不变量不依赖 $p$ 的PC、对象完成性或活动栈高度。
 
 证明。在ENTER前，所有persistent变量已在真实原组件或capsule／heap中。
-ENTER只写其固定新capsule／key、selector和实际wake effect，不读写父运行环境。
+F2对这个cut供应的真实授权handoff不依赖父是否Ready或其输入是否已到。
+ENTER只写其固定新capsule／key、selector和独立支持wake endpoint的实际有限effect，不读写父运行环境。
+wake endpoint的专属控制与原sender及ancestor协议peer字段不同，按AS49.3属于公共支持域；
+较早原sender／backing仍留在 $H$，其后果不被这个独立handoff改写。
 它保存的是旧L及旧Active的真实绑定；$c.\mathsf{localRoot}=\mathsf{null}$ 本身就是完整定义的raw入口。
 
 选中 $c$ 后，ancestor组都与Active不同。除ENTER外，每个实际mutator调用都受F2门控，
 因此原driver、sender、queue、receiver及backing控制器均不能自行推进其所欠动作。
 仅控制receiver并不足以得此结论；这里用的是全参与者前提。
-新子工作与其peer处在新组，使用新workspace及连接，不读写原token owner或借用父scratch。
+新子工作与其协议peer session处在新组，使用新workspace及连接，不读写原token owner或借用父scratch。
+固定wake endpoint只参加独立授权ENTER边；该边的有限效果与费用亦属真实 $X$，不冒称父框架上的零全局效果。
 当前grant由custodian保留，没有因serialize或selector改变而转移成数据字。
 
 child的普通工作只写自己的可变堆及公共追加状态。
@@ -95,7 +113,9 @@ child的普通工作只写自己的可变堆及公共追加状态。
 日志及inventory写在被排除的公共增长域，不影响父扫描已固定的输入尾。
 child只可消耗自己的top key，ancestor key不能由普通字段写重置。
 
-若中途再次ENTER，原Active就是这个partial child；同一论证把它的完整raw操作框架留在原处。
+若中途再次请求，F2逐请求供应同样当前的wake权及这个新occurrence自己的真实handoff，
+无须partial child先腾出连接或执行所欠动作；ENTER的原Active就是这个partial child。
+同一论证把它的完整raw操作框架留在原处。
 未完成link、occupied latch、半写字及parser next index都不是例外。
 匹配LEAVE在同一个有限边中spend／retire／select父；不夹入其它ancestor动作。
 归纳遍历实际occurrences便得不变量。
@@ -190,7 +210,9 @@ child也无写权重置key或花掉ancestor key。
 **定理 56.1（边界schema的自适用闭合）。** 定理54.2、55.2的frame及return关系适用于
 AS49.4每个真正到达边界，包括每个新增handler内部，不要求其localRoot非null、对象sealed或父helper可调用。
 
-证明。按下一规则的schema逐类检查，而非选一个有限深度样本集。
+证明。任取AS49.4的边界，F2统一供应覆盖该cut的Active及partial状态，
+故其真实wake handoff可先于owed action发生；没有用下面的状态分类筛掉未预存wake位的cut。
+随后按下一规则的schema逐类检查，而非选一个有限深度样本集。
 普通field／bit／control步之前与之后的全部persistent状态都已在capsule／heap中；
 原子birth之后即有真实binding和未初始化字段，即使尚未写入parent link也由inventory及F1记录。
 因此child可以捕获“已分配、未初始化”“已初始化、未链接”“部分framing、尚未seal”各状态。
@@ -221,7 +243,9 @@ F1日志node发布是core的固定原子coeffect，没有另一个半发布的�
 每个有限请求森林均有限完成所有节点的四份取得、实收返回及原pending-consumer接续；
 安装代码与engine数不随树高变化，实际frame／材料数可以增长。
 
-证明。先不插child。Collect每步缩短固定旧prev链；反转、graph与box构造消费固定有限序列。
+证明。先不插child。在任意请求cut按AS53.1／50.3供应当前wake权、该次独立handoff和fresh材料，
+执行ENTER即可选中新capsule；这一步不等parent ACK、原输入、原完成或完整pool。
+Collect每步缩短固定旧prev链；反转、graph与box构造消费固定有限序列。
 copy／parse／比较的输入为完整有限frame及冻结INPUT集合，identity查找消费固定inventory区间。
 其内部栈虽可增长，每项代表该固定有限输入尚待处理的节点／字段；
 逐项全扫描、按固定graph边或proper subspan推进给有限遍历，不把STACK增长并入INPUT。
@@ -231,7 +255,8 @@ copy／parse／比较的输入为完整有限frame及冻结INPUT集合，identit
 
 对有限树的节点数作结构归纳。叶子就是上述无child情形。
 设一个节点的所有child子树均已有结论。
-每个child进入时，定理56.1保留这个节点当前partial状态；归纳假设使该child有限完成，
+每个child请求时，F2的同一供应合同在这个实际partial cut仍给当前wake权及自己的genuine handoff；
+ENTER不推进这个节点，定理56.1保留其当前partial状态。归纳假设使该child有限完成，
 定理55.2返回这个节点的同一个owed action和同一个局部进展字段。
 可以在证明父终止时收缩这一有限child片段。
 收缩只去掉child占用的时间和追加公共材料，不去掉它的真实effects／账，也不回退实际世界。
@@ -240,7 +265,8 @@ copy／parse／比较的输入为完整有限frame及冻结INPUT集合，identit
 
 这个节点只有有限多个child，依其真实出现次序逐个收缩，得到父有限处理结束。
 所得论证同样适用于正在return／reinstatement的parent，因为其next index等局部字段由同一frame保持。
-最后按有限root次序组合便得整个森林完成。
+最后按有限root次序组合；每个新root同样由该cut的F2授权handoff进入，便得整个森林完成。
+归纳没有把后续F3 traffic当作ENTER的输入，也没有把一个wake位重复用作多个occurrences的handoff。
 归纳量是这次请求树的有限大小，没有预选最大深度；每次实际ENTER以新材料出生一个capsule／key。
 一台固定engine只是反复选取当前capsule，不要求每层新executor。
 该证明不推出无限请求流终止、统一有限硬件或统一latency。$\square$
@@ -250,13 +276,16 @@ copy／parse／比较的输入为完整有限frame及冻结INPUT集合，identit
 **定理 57.1（同一个实际组件的原投影）。** 在定理53.2前提及合法支持traffic下，
 去掉支持动作／新增coeffects和暂时gate区间，保留每个原occurrence、genuine I/O、原backing、原record及其实际对象次序，
 得到定义49.1那个原组件的一条合法执行。
-反之，每条声明域内的原有限schedule可在足够材料及traffic下插入任意有限请求森林，
+反之，每条声明域内的原有限schedule可在AS53.1逐次F2 wake／授权及F3材料／traffic供应下插入任意有限请求森林，
 所以投影没有删掉ordinary的输入量词。
 
 证明。对原occurrence的实际次序归纳。
 开始时原boot按自己的真实输入、分配、初始化运行；F0只另装支持基础，
 没有把已知AA alpha当作未知Native seed，四个原root都来自各自真实allocator return。
 原source、tokens、port及记录字段保持其原语义；支持命名域与原非event对象分开。
+ENTER所含wake sender effect只属于独立支持endpoint的专属控制，不是任何原sender或held ancestor的协议动作。
+其真实handoff、较早支持发送／backing、origin、日志及费用全留在增广 $H$ 和 $X(H)$ 中；
+投影去掉它们是按真实类型／endpoint的支持归属，不按bit相同或receiver尚未消费作删减。
 每次支持进入仅保留运行frame，字段回写按第55.2节等于保持值，LEAVE不执行原动作。
 故在下一个原occurrence之前，原操作数、PC、head、latch、当前授权及真实连接位恰为先前原effects所决定的值。
 它的原guard／使能性、操作、response、source edit和原coeffects与相应未插入支持片段的步骤相符。
@@ -268,8 +297,10 @@ copy／parse／比较的输入为完整有限frame及冻结INPUT集合，identit
 因此每个投影step有原程序允许的实际前置和effects；被抹掉的支持区间只造成原字段上的stuttering。
 新旧完整microhistory、identity描述及费用不被断言相等，额外档案在实际增广执行中继续存在。
 
-反向在原schedule任意真正到达cut插入请求。
-ENTER不需要先执行该cut动作，第56.2节给该有限森林的完成，返回后同一个原动作仍有原前置。
+反向在原schedule任意真正到达covered cut插入请求，不要求cut已Ready或已有wake位。
+F0安装好的源绑定endpoint及持续授权、F2对每次请求实际供应的独立peer handoff和fresh材料
+使ENTER在此cut可执行；F3再供应之后的traffic。较早原sender effects全部保留，缺原输入不被补入。
+第56.2节给该有限森林的完成，返回后同一个原动作仍有原前置。
 依次插入有限多个root即得增广执行。不同 $N$、树大小、guards及adaptive选择都不影响安装表。
 所以得到的是同一真实来源的保守操作对应，不是由一个body相同的模拟source替代它。
 原no-interrupt假设是在该投影中满足，不能直接对含支持嵌套的完整chronology调用原完成定理。$\square$
@@ -326,50 +357,91 @@ pre-LEAVE时保持同一个尚未spent key，post-LEAVE时请求的新parent已�
 
 ## 58. 同次实际前态的全部费用与同时保留
 
-**定义 58.1（坐标及入口材料）。** 费用取非负向量，按owner／purpose／opcode分开：
+**定义 58.1（唯一入口分界及互斥收费项）。** 费用取非负向量，按owner／purpose／opcode分开：
 原Native、原AA、auxiliary field／bit／I-O／control、行政写、grant／capability访问、
 gate比较、ENTER、LEAVE、journal birth／backing及实际reference-bit访问各有坐标。
-不设任意标量兑换率。设 $C_{\rm gen}$ 为F0不可约有限基础的显式供应／材料费用，
-原不可约材料亦列在相应入口坐标；若从计费入口开始列历史，把这一固定项作为入口项 $e_0$ 计入。
-没有从“不可约”推论“免费”，也没有把支付它当作已证明实际可用。
+不设任意标量兑换率。固定同一组原／新tariff参数；未指定价格的坐标保留为实际计数／材料量或符号函数，
+不给它们虚构whole-run数值。
 
-对后续联合步 $e$ 及其实际前态 $z$，定义
+唯一计费入口为 $z_0=\mathsf{genesis}$，在任何原或支持boot occurrence之前。
+令 $\mathcal G$ 为此时实际已有的不可约材料集合：原Native primitive meter的两个boundary markers、
+其固定primitive控制位，以及F0有限recorder／gate／bootstrap控制、基本活动／selector、
+初始空journal／inventory所需的固定根、独立wake endpoint的primitive根及其基础typed bindings／grants表示。
+只含这个有限入口确有的字段与规定常量；journal尾为null，没有journal node或已记occurrence，原meter有零receipt。
+未初始化字段仍未初始化。literal支持程序、安装后的grant／连接backing、普通tape boundaries、
+四个AA根／drivers、$O$七事件、Native未知seed／code／input／saved client及Lift／Init均不在 $\mathcal G$ 中，
+它们的实际构造／接收／初始化必须出现在后续历史里。
+
+$C_{\rm gen}$ 恰是供应这批 $\mathcal G$ 的入口材料／基础供应向量，$S_{\rm gen}=S(z_0)$ 是它的实际保留量。
+没有由入口模型描述出一个未执行的物理制造过程、tick、receipt或journal事件。
+本卷一律写 $H=(z_0\xrightarrow{e_1}\cdots\xrightarrow{e_m}z_m)$，
+其中 $e_i$ 是入口之后真实发生的联合occurrence，包含全部支持安装和原boot。
+不把 $e_0$ 作为可执行／可记日志的原语；若发票把入口列作一行 $e_0$，
+该行仅是 $C_{\rm gen}$ 的别名，不在 $H$ 内、不参加 $\delta$ 求和，也不再另加一次。
+
+对每个实际材料单位（包括固定对象的字段／reference backing及后来扩展的细胞／位）按真实birth归属分区：
+
+$$
+\mathcal A(H)=\mathcal G\;\dot\cup\;
+ \mathop{\dot\bigcup}_{i=1}^{m}
+ \bigl(\mathcal A_i^{\rm core}\;\dot\cup\;
+       \mathcal A_i^{\rm gate}\;\dot\cup\;\mathcal A_i^{J}\bigr).
+\tag{AS58.1a}
+$$
+
+这里 $\mathcal A_i^q$ 只含该步相应部分实际新构造／供应的材料；没有新材料的部分取空集。
+对象后来扩展时只有新增部分入新的集合；同一材料的别名、初始化或覆盖写不再成为一次birth。
+旧材料上的实际read／write／grant检查仍有操作／访问费，不能因没有新birth而省略。
+若不可约基础已有一个endpoint根，之后构造它的code／grant表示或backing仍逐项计后来的新材料与全部安装操作，
+但不再次供应那个已有根。
+
+对实际后续联合步 $e$ 及其真实前态 $z$，定义
 
 $$
 \delta(e,z)=\delta_{\rm core}(e,z)+\delta_{\rm gate}(e,z)+\delta_J(e,z).
 \tag{AS58.1}
 $$
 
-原core用其原Native／AA tariff，支持core用下述明确操作计数及真实字段／bit量。
-若某具体模型为这些新坐标给定非负价格函数，下列关系对该函数逐项精确成立；
-这里不给未规定价格虚构whole-run数值。
+这三个项也按实际动作角色互斥分配：core含原规则或支持规则的本体及原Native receipt coeffect；
+gate只含该次invocation的自动组绑定／当前wake权等门控guard检查；
+$J$只含F1新增node、字段、read／retention grant、inventory登记与tail更新的coeffect。
+ENTER／LEAVE本体的handoff、capsule／key／selector写归core，其自动门检查归gate，F1记录归 $J$。
+软件显式inventory／capability检查是另一个收费的支持core，不与自动gate检查认同。
+每个实际访问或构造项恰归一处，旧Native receipt不再列入新增journal费；
+$C_{\rm gen}$ 的供应项不属任一后续 $\delta$。不同opcode次数、访问位量与材料量是不同向量坐标，
+不是把同一次材料供应在两个来源中重复收费。
 
-**定义 58.2（新增动作的逐项tariff）。** READ／WRITE／TEST／ALLOC／finite-control／bit-IN／bit-OUT／local-ACK
-各在其命名auxiliary坐标记一次，并计全部实际读写字段、比特、引用表示及构造schema／backing材料。
+**定义 58.2（新增动作及全部boot的tariff）。** READ／WRITE／TEST／ALLOC／finite-control／bit-IN／bit-OUT／local-ACK
+各在其命名auxiliary坐标记一次，并计其全部实际字段／比特／reference访问及属于该步的实际新材料。
 word copy、整数计算、seek、full comparison、framing、length cursor、status／seal和cleanup是这些实际occurrences之和。
-held-context写另计行政写及其bit／reference访问；inventory全扫描、完整identity比较及当前capability检查分别收费，
+held-context写另计其行政写／访问坐标；inventory全扫描、完整identity比较及当前capability检查分别按实际步骤收费，
 不设一个单位价Resolve隐藏其中工作。
 
-ENTER计一次enter、两个固定schema对象birth、AS50.1的全部capsule／key初始化、
-selector／wake字段访问、真实sender effect、当前grant及gate比较、实际reference表示，随后计其F1 journal。
-LEAVE计一次leave、实际key／top／parent全比较、spent／retired／selector字段写及表示访问，随后计journal。
+ENTER的core计一次enter、两个固定schema对象birth、AS50.1的全部capsule／key初始化、
+selector／wake字段访问及独立wake peer的真实sender effect与reference表示访问；其自动guard仅在gate项收费。
+LEAVE的core计一次leave、其本体key／top／parent访问、spent／retired／selector字段写及表示访问，
+自动使能检查仅在gate项收费；每一实际访问按58.1的角色只计一次。
+两者随后各有自己的F1 journal项。原输入或parent ACK不供应wake，已经发生的各自sender／backing步骤另按所属原或支持core计费。
 父动作未发生时不计虚构的原action receipt；它真正发生时再按原tariff计费。
-每个受门控的实际调用承担其binding equality及guard字段访问，固定gate／wire／grant材料另在安装计入。
-缺input的disabled状态本身不制造一次IN、原receipt或收到的bit。
+固定gate／wire／grant材料中，入口已有部分只在 $C_{\rm gen}$，后续安装部分只在实际安装步中计入。
+缺input的disabled状态本身不制造一次IN、原receipt或收到的bit；实际执行的测试／失败检查仍按其规则收费。
 
-journal coeffect记一次node birth，并计实际 $b_J(e,z)$ bits的schema／tag／prev／effect backing、
+journal项计一次node birth，并计实际 $b_J(e,z)$ bits的schema／tag／prev／effect backing、
 实际reference宽度、所复制字段位、read／retention grant／inventory登记及tail访问。
 $b_J$ 是这一次真实固定schema tuple的表示长度，字段元数有界不使它成为统一常数。
 节点自己的birth／grants／links由这一coeffect收费一次，不再递归启动logger；
 日后把节点读成body或复制又是另外的普通工作。
 
-boot计全部真实boundary／cell／code／control／type／endpoint／grant bit及安装动作，
-包括四根／原Native准备／saved client／Lift及F0基础。
+boot不是另加的固定价，而是 $H$ 中从 $z_0$ 起实际boot／安装occurrences的同一 $\delta$ 之和。
+它包含全部后入口boundary／cell／code／control／type／endpoint／grant的真实构造、接收、安装及访问，
+四根／原Native准备／saved client／Lift、独立wake接线及EnableCapture均按自己的实际步骤计入。
+这些步不重新收取 $\mathcal G$ 的供应费；若访问或初始化入口已有字段，只收实际发生的访问／初始化工作及新扩展材料。
 每个capsule的channel／peer／backing、四份独立遍历／body／mailbox／destination、
-完整selected-body重传／ACK、解析／比较、当前authority检查、个别回写、retired key／frame及清理均计入真实occurrences。
+完整selected-body重传／ACK、解析／比较、当前authority检查、个别回写、retired key／frame及清理也如此计费。
+没有原或支持材料、安装工作或较早sender effect因入口分界而消失，
 没有从旧copy-loop、另一个engine或另一次schedule借常数或bill。
 
-**定理 58.3（精确同次加法与peak）。** 对定理53.2的一条实际有限历史
+**定理 58.3（全prefix的精确同次加法与peak）。** 对定理53.2的一条实际有限历史
 $H=(z_0\xrightarrow{e_1}\cdots\xrightarrow{e_m}z_m)$，令
 
 $$
@@ -380,34 +452,49 @@ P(H)&=\max_{0\le i\le m}S(z_i).
 \tag{AS58.2}
 $$
 
-若后继 $\tau=(z_m\xrightarrow{f_1}\cdots\xrightarrow{f_r}z_{m+r})$ 实际发生，则
+对一条从任意实际出口 $z$ 开始的后续片段定义增量 $\Delta C(\tau;z)$ 为其中各联合步的同一 $\delta$ 之和，
+不含 $C_{\rm gen}$。若
+$\tau=(z_m\xrightarrow{f_1}\cdots\xrightarrow{f_r}z_{m+r})$ 实际发生，则
 
 $$
 \begin{aligned}
-C(H;\tau)&=C(H)+\sum_{j=1}^{r}\delta(f_j,z_{m+j-1}),\\
+C(H;\tau)&=C(H)+\Delta C(\tau;z_m)
+          =C(H)+\sum_{j=1}^{r}\delta(f_j,z_{m+j-1}),\\
 P(H;\tau)&=\max\{P(H),\max_{0\le j\le r}S(z_{m+j})\}.
 \end{aligned}
 \tag{AS58.3}
 $$
 
-其中 $S(z)$ 将每个实际allocation只算一次，包含原source／mandatory backing／archives及constructed capacity，
-固定支持代码／endpoint／grant、全部journal node／inventory、live及retired capsules／keys／channels／peers，
+$S(z)$ 将当时实际保留的材料／constructed capacity按58.1的birth分区各算一次，
+包括仍保留的genesis、原source／mandatory backing／archives、固定支持代码／endpoint／grant、
+全部journal node／inventory、live及retired capsules／keys／channels／peers、独立wake endpoint控制及其backing、
 四body及copy archives／selected-body backing、全部partial parent／child work和原terminal材料。
+材料费用是供应／构造流量，$S$是同一材料的保留存量；取peak不再给它加一次供应费。
 
-证明。每个实际联合occurrence按(AS58.1)在自己的真实前态贡献一次，拼接仅分开同一有限和的索引。
-入口费用只有一份，后段不再收费一次 $C_{\rm gen}$；若以 $e_0$ 表示入口，则第一式也就是包含 $e_0$ 的逐项和。
-有限最大值的索引分成旧段与新段即得第二式。
-共享引用不重复计同一个allocation，但四个独立body／mailbox／destination是真实不同allocation，不能按字相等去重。
-child工作时，所有held ancestor的实际材料与child、journal、旧archives同时存在，
-因此它们在那个 $S(z)$ 中相加，再沿同一history取最大；不能把分别达到的peaks相加或挑另一run的低点。
+证明。空prefix $H=\varepsilon_{z_0}$ 时，$C(H)=C_{\rm gen}$、$P(H)=S_{\rm gen}$，
+无occurrence、receipt或journal node。第一个安装步从此真实 $z_0$ 计费，
+只把它的新材料及工作加入后续项，不重复入口供应。以后每步由58.1的互斥分区归属一次；
+F1 coeffect和core同属这一步，其自身材料／登记／写入也只在 $J$ 项出现一次。
+AS54.1的fold从同一genesis起恢复这些实际前态、birth归属及tariff参数，
+因此恢复的 $C$ 正是(AS58.2)，包括pre-enable的全部安装及后来的wake／peer工作。
+拼接仅分开同一有限和的索引，不把后段当作第二次从genesis启动的运行。
+空后段有 $\Delta C=0$；在boot中途、恰好EnableCapture、ENTER／LEAVE前后或halt之后截取均使用同一分界。
+若后段含真正halt，计其core、原receipt（适用时）及F1 coeffect一次；吸收halt之后只有空合法后段。
+
+有限最大值的索引分成旧段与新段即得peak拼接式；共同出口在两个最大值中出现不引起材料相加。
+共享引用不重复计同一材料，但四个独立body／mailbox／destination是实际不同allocation，不能按字相等去重。
+child工作时，所有held ancestor材料与child、journal、旧archives同时存在，
+因此在那个 $S(z)$ 中按不同材料相加，再沿同一history取最大；不能把分别达到的peaks相加或挑另一run的低点。
 清scratch可改变live值，不退已构造capacity；LEAVE不撤销records、sender effects或任何已收费动作。
-全部坐标非负，故返回也不重置账。$\square$
+全部坐标非负，返回不重置账，历史入口也不会因retired capsule而再次收费。$\square$
 
 **命题 58.4（原计数与有限性边界）。** 若 $n_N(H)$ 是这条真实增广prefix中的原Native core数，
+令 $b_{{\rm control},N}(H)$ 为截至该cut实际已构造且未另列为细胞的原control／code位量，
+$A_{{\rm nonmeter},N}(H)$ 为截至该cut实际构造的原nonmeter细胞数；两者不预计尚未安装的部分。
 则原Native receipt／tick／fee仍分别为 $n_N,n_N,2n_N$，其构造材料沿AS38.1为
 
 $$
-S_{0,N}+b_{{\rm control},N}+8A_{{\rm nonmeter},N}+8n_N.
+S_{0,N}+b_{{\rm control},N}(H)+8A_{{\rm nonmeter},N}(H)+8n_N(H).
 \tag{AS58.4}
 $$
 
@@ -418,6 +505,8 @@ $$
 所以逐次增加一receipt、一tick、二fee；ordinary cell与meter的八bit表示给(AS58.4)，已计为cell的code不再重复计。
 AA动作不会因新全actor journal而被改计成Native occurrence；
 其原allocation／grant／fields／navigation／I-O／ACK／control及reference-bit工作分别保留。
+(AS58.4)中 $S_{0,N}$ 属genesis存量，后续 $b_{{\rm control},N}$、ordinary cells及receipts按真实安装／birth归属；
+空prefix时后三项均为零；这是保留材料的分类恒等式，不在 $C_{\rm gen}$ 和boot增量之外另收费一份。
 AA22.1的 $V=1+P+2S$、$S$ headers及 $D$ appends仍只是各真实root／完成局部段上的located subcounts，
 不是任意partial cut的免费counter或whole tariff。
 第56节给每个有限森林有限步，原finite schedule由第57节完成，
@@ -428,18 +517,21 @@ AA22.1的 $V=1+P+2S$、$S$ headers及 $D$ appends仍只是各真实root／完成
 ## 59. 来源、方法归属与仍须供应的关系
 
 **定义 59.1（来源对应及方法适用域）。** 下表原primitive／source合同以
-`9d9e025231cfb55c1268b799472e41b1b2f9d9e3` 的原文为对应，AS45–48按同卷现行字节使用。
-各既有结论只在自己的实际安装与域上复用。
+`9d9e025231cfb55c1268b799472e41b1b2f9d9e3` 的原文为对应；
+AS41–48统一引用同卷现行且属于保护前缀的
+`ab9261a8d2617d1ae873ce8152950be302349863` 字节。
+AS41–44在两pin之间逐节字节相同，AS45–48不在旧9d9e文本内；不把后者归到旧pin。
+下表将原合同与这些current请求规格／障碍定位分开，各结论只在自己的实际安装与域上复用。
 
 | 来源 | 在本构造中的准确角色 |
 | --- | --- |
-| AS1.2–1.4、26–29、34–38、41.1 | 原literal操作／连接、真实四根／Init／Build、完整ordinary及准确mode10、原pending-consumer规格与实际账；不自带F0–F4 |
+| AS1.2–1.4、26–29、34–38（9d9e原合同） | 原literal操作／连接、真实四根／Init／Build、完整ordinary及准确mode10与实际账；不自带F0–F4 |
 | [TMC PR57.D1／(PR57.03)、D7／L4](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | 固定局部足迹、真实head mark／input latch、原meter、有限control展开、完整immutable copy方法；meter不是private transcript |
 | [AA20.1–20.3、22.1](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) | 真实分配返回／当前字段权限、Reserve、pending append、link-before-tail及完整同根Return；原busy owner不自动向新client授权 |
 | [CAP的十二TOK及latch合同](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md)、[RG9.1–9.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REENTRANT_GUARDED_ACQUISITION.md) | partial loan保留、真实HandbackPending／Stop／INITIAL终端消费者；不把completed-boundary handback冒充任意busy capture |
 | [OC2.1–2.3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_OWNER_CONTROL_HISTORICAL_ACQUISITION.md) | 显式新增行政endpoint、当前grant与有限coeffect的建模先例；其PC-only socket不是本联合来源的完整grant |
 | [Sparse Entry10.1–10.3、14.1–14.2、23.1–23.2](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_NATIVE_ENTRY_ACQUISITION.md) | owner-local数据与实际collected observation的区别、unfinished-tail／raw状态及付费扫描边界；不推导本client已有busy read |
-| AS43.1及46.1–48.3 | 既有K admission障碍与真实first-$P_R$可见性义务；本构造用明确新gate／日志离开其前提，不重计这些结果 |
+| AS41.1、43.1及45–48（上述ab9261 current字节） | 全cut／pending-consumer请求规格、既有K admission障碍与真实first-$P_R$可见性义务；本构造用明确新gate／日志离开其前提，不重计这些结果 |
 
 有限codec／逆、graph序列化、完整复制、逐步record／reconstruction及有限树归纳为复用方法。
 有限continuation constructor携全部free variables、一个apply dispatcher解释动态数据实例的背景见
@@ -477,10 +569,13 @@ DOI [10.1145/2908080.2908101](https://doi.org/10.1145/2908080.2908101)，§4.2.1
 它不证明未改装J-FAMILY已有这些基础，不给历史数据到当前权限的推论，
 不解决更广策略／来源、实际无限运行、统一有限设备或global／Pareto最小性。
 
-证明。F0–F4的真实委托、全mutator接线、原子边及材料供给在定理53.2中均作为前提，
+证明。F0–F4的真实委托、全mutator接线、每个cut可供应的当前授权wake handoff、原子边及材料供给
+在定理53.2中均作为前提，
 证明没有从旧菜单构造它们的步骤；故支付费用不能消去可用性前提。
 若漏记实际boot前已擦去的信息，定理54.1的归纳基不再是完整目标；
 若一个sender／queue可绕gate改变held连接，定理54.2的frame不再成立。
+若某个covered cut不能供应当前授权独立wake，F2统一供应前提就不成立；不能把该cut从AS49.4删掉，
+也不能以父ACK或较晚完成替代本次handoff。这仍是新增理想基础的可用性边界，其实际可用性未被证明。
 若把ENTER／LEAVE／journal coeffect细分成多行，定理56.1逐schema论证未涵盖那些新内部状态，
 须给新的source realization及closure证明。
 这些是本证明具体使用的义务，不是对其它合法增广的普遍不可能结论。
