@@ -20,5 +20,15 @@ internal sealed class SixthOrderPairingExpansionDocument : IScribeDocumentDefini
                 + "Disjointness gives card(pairingSupport(P))=2*card(P). Every pairing with at least two edges therefore leaves "
                 + "at most two labels and contributes zero. The empty pairing contributes delta(U); the singleton pairings "
                 + "correspond bijectively to two-element subsets. The identity is finite and requires no probabilistic assumptions."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("sixth-four-defect-lower"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/SixthOrderPairingExpansion.sixth_four_defect_lower"),
+                H("A quantitative fourth-order defect"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every real N>=100, sqrt(15)*N*(N-1)*(N-2)*(N-3)/N^2-3*(N-1)^2 is at least N^2/2. "
+                    + "The falling product is at least N^4-6*N^3 and sqrt(15)>=15/4. "
+                    + "This explicit inequality converts the four-label defect of the biased-cube model into a uniform positive quadratic contribution."))),
+                DescribeRole.Theorem))));
 }

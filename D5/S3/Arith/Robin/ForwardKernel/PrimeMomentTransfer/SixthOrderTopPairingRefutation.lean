@@ -196,7 +196,13 @@ private lemma subsetDistinct_univ {N : ℕ} (ℓ : ((Fin N → Bool) → ℝ) �
       left_inv := by intro i; rfl
       right_inv := by intro i; rfl }
   rw [subsetDistinctMoment, ← retained_assignment_reindex ℓ Y Finset.univ g]
-  convert assignment_moment_reindex ℓ Y e (fun i => g i.val) using 1 <;> rfl
+  convert assignment_moment_reindex ℓ Y e (fun i => g i.val) using 1
+  unfold distinctIndexMoment
+  apply Finset.sum_congr
+  · ext x
+    simp
+  · intro x hx
+    rfl
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation

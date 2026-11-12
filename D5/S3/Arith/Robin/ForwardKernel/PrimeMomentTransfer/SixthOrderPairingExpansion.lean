@@ -8,7 +8,9 @@
 
 /-
 proof_shape: partialPairing_six_convolution: bind-only (consumer:
-  SixthOrderTopPairingRefutation.model_unit_transfer).
+  SixthOrderTopPairingRefutation.model_unit_transfer);
+  sixth_four_defect_lower: bind-only (consumer:
+  SixthOrderTopPairingRefutation.model_four_defect_lower).
 escape_witness: none; this consumed finite-sum reduction organizes the substantive
   sixth-order countermodel proof without providing an independent admission witness.
 admission_basis: consumed-helper.
