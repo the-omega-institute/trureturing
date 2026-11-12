@@ -224,6 +224,17 @@ private theorem legal_seen {n : ℕ} (hn : 2 ≤ n)
   · exact ⟨q₂,hr₂,by simp [hq₂c]⟩
   · exact ⟨q,hq,by simp [hq3]⟩
 
+private def choices (h : Fin 5 → Fin 4) : Finset (Fin 4) :=
+  Finset.univ.filter (fun v => v ≠ 0 ∧ ∀ j, h j ≠ v)
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 0 in
+private theorem choices_card : ∀ h : Fin 5 → Fin 4,
+    (∀ j, h j ≠ 0) → (∃ v, v ≠ 0 ∧ ∀ j, h j ≠ v) →
+    (choices h).card = if ∀ j, h j = h 0 then 2 else 1 := by
+  intro h
+  fin_cases h <;> decide +kernel
+
 /-- The complete necessary zone data of a literal strip of height at least two. -/
 theorem pair_rectangle {n : ℕ} (hn : 2 ≤ n)
     (f : Fin n × Fin 6 → Fin 8) (hf : Legal f) :
@@ -236,12 +247,19 @@ theorem pair_rectangle {n : ℕ} (hn : 2 ≤ n)
       ∀ j : Fin 5, c (z,j.castSucc) ^^^ c (z,j.succ) ≠
         c (⟨i,by omega⟩,0) ^^^ c (⟨i+1,hi⟩,0)) ∧
     (∀ k : Fin 4, ∃ p, p.1.val ≤ 1 ∧ c p = k) ∧
-    (∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1) := by
+    (∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1) ∧
+    ((Finset.univ.filter (fun v : Fin 4 => v ≠ 0 ∧ ∀ j : Fin 5,
+      c (z,j.castSucc) ^^^ c (z,j.succ) ≠ v)).card =
+      if ∀ j : Fin 5, c (z,j.castSucc) ^^^ c (z,j.succ) = c (z,0) ^^^ c (z,1)
+      then 2 else 1) := by
   have hc := legal_proper f hf
-  exact ⟨proper_rectangle (by omega) _ hc,
+  refine ⟨proper_rectangle (by omega) _ hc,
     (proper_increments (by omega) _ hc).1,
     (proper_increments (by omega) _ hc).2, proper_exhausts hn _ hc,
-    legal_seen hn f hf⟩
+    legal_seen hn f hf, ?_⟩
+  apply choices_card
+  · exact (proper_increments (by omega) _ hc).1
+  · exact ⟨_, (proper_increments (by omega) _ hc).2 0 (by omega)⟩
 
 
 /-- First-column values and first-row offsets with disjoint nonzero increments. -/
