@@ -1,5 +1,5 @@
 ---
-bibkey: pr39864subtreehelly
+bibkey: mathlib2026subtreehelly
 authors: 8e7; original file authors Kyle Miller and Rémi Bottinelli
 year: 2026
 title: "Helly property for subtrees of a tree (mathlib PR 39864)"

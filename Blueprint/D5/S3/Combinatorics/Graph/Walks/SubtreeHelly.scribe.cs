@@ -14,7 +14,7 @@ internal sealed class SubtreeHellyDocument : IScribeDocumentDefinition
             H("A common vertex for a nonempty finite family"),
             StatementSource.FromAuthor(MainFormula()),
             AssessedProvenance.FromLiterature(
-                LibraryNoteRef.Create("D5/L/ConceptDynamics/pr39864subtreehelly")),
+                LibraryNoteRef.Create("D5/L/ConceptDynamics/mathlib2026subtreehelly")),
             Blocks(
                 Paragraph(Text("The universe levels u and v are independent. V is an arbitrary vertex type in Type u, G is a simple undirected graph on V, and I is an arbitrary index type in Type v. The family a maps I to Set(V), and s is a Finset(I). Assume G.IsTree, s.Nonempty, Connected(G.induce(a(i))) for every i in s, and Nonempty(a(i) intersect a(j)) for every i in s and every j in s. Then there exists x in V belonging to a(i) for every i in s, equivalently the intersection indexed by i in s is nonempty. The formula writes this common-intersection conclusion in membership form. The arrow denotes the function type, and inter denotes set intersection.")),
                 Paragraph(Text("Only the selected family is finite: neither V nor I is assumed finite. Indices outside s are unrestricted. The pairwise premise includes equal indices. Native Connected includes a nonempty vertex type, and native IsTree includes connectedness and acyclicity. Thus the hypotheses rule out an empty selected fiber and an empty ambient vertex type, rather than adding a finiteness assumption on either carrier.")),
