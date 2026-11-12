@@ -39,10 +39,14 @@ private theorem normalized_contraction (A B : Matrix n n ℂ)
     (hA : A.PosSemidef) (hB : B.PosSemidef) : normalize (A + B) A ≤ 1 := by
   obtain ⟨hC, hD, hsum⟩ := normalized_pair A B hA hB
   have hQ : spectralSupport (A + B) ≤ 1 := by
-    rw [spectralSupport, ← cfc_const 1 (A + B) (hA.add hB).isHermitian.isSelfAdjoint]
-    exact cfc_mono (fun x _ => by split_ifs <;> norm_num)
-      ((A + B).finite_real_spectrum.continuousOn _)
-      ((A + B).finite_real_spectrum.continuousOn _)
+    calc
+      spectralSupport (A + B) ≤ cfc (fun _ : ℝ => 1) (A + B) :=
+        cfc_mono (fun x _ => by split_ifs <;> norm_num)
+          ((A + B).finite_real_spectrum.continuousOn _)
+          ((A + B).finite_real_spectrum.continuousOn _)
+      _ = 1 := by
+        simpa only [map_one] using
+          (cfc_const (1 : ℝ) (A + B) (hA.add hB).isHermitian.isSelfAdjoint)
   calc
     normalize (A + B) A ≤ normalize (A + B) A + normalize (A + B) B :=
       le_add_of_nonneg_right hD.nonneg
@@ -92,10 +96,14 @@ private theorem normalize_feasible (A B : Matrix n n ℂ)
   have hx := ((overlap_bijection A B hA hB t).1 X hX).1
   obtain ⟨-, -, hsum⟩ := normalized_pair A B hA hB
   have hQ : spectralSupport (A + B) ≤ 1 := by
-    rw [spectralSupport, ← cfc_const 1 (A + B) (hA.add hB).isHermitian.isSelfAdjoint]
-    exact cfc_mono (fun x _ => by split_ifs <;> norm_num)
-      ((A + B).finite_real_spectrum.continuousOn _)
-      ((A + B).finite_real_spectrum.continuousOn _)
+    calc
+      spectralSupport (A + B) ≤ cfc (fun _ : ℝ => 1) (A + B) :=
+        cfc_mono (fun x _ => by split_ifs <;> norm_num)
+          ((A + B).finite_real_spectrum.continuousOn _)
+          ((A + B).finite_real_spectrum.continuousOn _)
+      _ = 1 := by
+        simpa only [map_one] using
+          (cfc_const (1 : ℝ) (A + B) (hA.add hB).isHermitian.isSelfAdjoint)
   have hb : normalize (A + B) B ≤ 1 - normalize (A + B) A := by
     have hh : normalize (A + B) A + normalize (A + B) B ≤ 1 := hsum.trans_le hQ
     exact (le_sub_iff_add_le').mpr hh
@@ -168,7 +176,6 @@ theorem original_all_thresholds_iff_commute (A B : Matrix n n ℂ)
   · intro he X hX
     have hh := feasible_le_value hX
     dsimp only [maximalHockey] at he
-    dsimp only [C] at hh ⊢
     linarith
   · intro h
     obtain ⟨X, hX, hx⟩ := overlap_attained A (t • B) hA (hB.smul ht.le)

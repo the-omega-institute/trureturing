@@ -83,9 +83,11 @@ theorem common_canonical_optimal_iff (C W : Matrix n n ℂ)
     rw [canonicalOverlap, hH.cfc_eq]
     rfl
   have hF : e F = interiorProjection C := by
-    rw [interiorProjection, hH.cfc_eq]
-    simp only [e, F, d, Function.comp_def, apply_ite, Complex.ofReal_one, Complex.ofReal_zero]
-    rfl
+    have he : interiorProjection C = e (diagonal (fun i =>
+        ((if 0 < d i ∧ d i < 1 then 1 else 0 : ℝ) : ℂ))) := by
+      rw [interiorProjection, hH.cfc_eq]
+      rfl
+    simpa only [F, apply_ite, Complex.ofReal_one, Complex.ofReal_zero] using he.symm
   have hV : (V.submatrix (fun i : {i // 0 < d i ∧ d i < 1} => i.val)
       (fun i : {i // 0 < d i ∧ d i < 1} => i.val)).PosDef := by
     rw [← inclusion_compress]
@@ -141,7 +143,12 @@ theorem common_canonical_optimal_iff (C W : Matrix n n ℂ)
     rfl
   rw [hp, hn, ← hF, show W = e V from (e.apply_symm_apply W).symm,
     ← map_mul, ← map_mul, ← map_mul, ← map_mul]
-  exact ⟨fun h => by rw [h, map_zero], fun h => e.injective (by simpa only [map_zero] using h)⟩
+  constructor
+  · intro h
+    rw [h, map_zero]
+  · intro h
+    have hh := congrArg (fun Z : Matrix n n ℂ => e.symm Z) h
+    simpa only [e.symm_apply_apply, map_zero, F] using hh
 
 /-- The exact all-threshold criterion on the common interior corner of a
 singular positive contraction. Only the compressed weight must be faithful. -/
@@ -162,11 +169,12 @@ theorem common_all_thresholds_iff_commute (C W : Matrix n n ℂ)
       (C.finite_real_spectrum.continuousOn _)]
     apply cfc_congr
     intro x _
+    dsimp only
     split_ifs <;> norm_num
   have hPC : P * C = C * P := by
     have hh := (cfc_commute_cfc (fun x : ℝ => if 0 < x ∧ x < 1 then 1 else 0)
       (fun x : ℝ => x) C).eq
-    simpa only [cfc_id' ℝ C hC.isHermitian.isSelfAdjoint] using hh
+    simpa only [P, interiorProjection, cfc_id' ℝ C hC.isHermitian.isSelfAdjoint] using hh
   have hRP : R * P = R := by simp only [R, Matrix.mul_assoc, hPP]
   have hPR : P * R = R := by simp only [R, ← Matrix.mul_assoc, hPP]
   have hleft : R * (P * C * P) = R * C := by

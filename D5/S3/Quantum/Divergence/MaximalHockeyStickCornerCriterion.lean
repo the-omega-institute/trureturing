@@ -56,8 +56,9 @@ theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 
   have hfeas := diagonal_feasible (fun i : I => d i.val) (fun i => hd i.val) t ht.le
   have hc : (∀ X ∈ positiveOverlaps D (t • (1 - D)),
       (V * X).trace.re ≤ (V * Y).trace.re) ↔
-      (D - Y) * V * (t • (1 - D) - Y) = 0 :=
-    weighted_overlap_optimal_iff D (t • (1 - D)) V Y hD
+      (D - Y) * V * (t • (1 - D) - Y) = 0 := by
+    simpa only [positiveOverlaps, Set.mem_setOf_eq, and_imp] using
+      weighted_overlap_optimal_iff D (t • (1 - D)) V Y hD
       ((Matrix.isHermitian_one.sub hD).smul (IsSelfAdjoint.all t)) hW hY
       hfeas.2.1 hfeas.2.2
   have hrA : D - Y = diagonal (fun i : I => ((max (d i.val - t * (1 - d i.val)) 0 : ℝ) : ℂ)) := by
@@ -85,6 +86,8 @@ theorem diagonal_optimal_iff (d : n → ℝ) (hd : ∀ i, 0 ≤ d i ∧ d i ≤ 
   have hc' := hc
   rw [hrA, hrB] at hc'
   simp only [Matrix.submatrix_diagonal _ _ Subtype.val_injective] 
+  change (∀ X ∈ positiveOverlaps D (t • (1 - D)),
+    (V * X).trace.re ≤ (V * Y).trace.re) ↔ _
   rw [hc']
   constructor
   · intro h
