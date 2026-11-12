@@ -31,8 +31,8 @@ namespace D5.S3.Factorization.Galois.AuricSevenRigidity
 
 open Module Submodule
 
-set_option backward.isDefEq.respectTransparency false
-set_option backward.isDefEq.respectTransparency.types false
+set_option maxRecDepth 4000
+set_option maxHeartbeats 800000
 
 variable {F D : Type*} [Field F] [Field D] [Algebra F D]
 
@@ -285,10 +285,8 @@ private lemma zero_third_relation [FiniteDimensional F D]
   fin_cases i <;> simp [hx0, hx1, hz]
 
 private def thirdProjection (U : Submodule F D) (s t : U) (w : D) :
-    (relationMap U ![(s : D), (t : D), w]).ker →ₗ[F] U where
-  toFun x := x.val 2
-  map_add' _ _ := rfl
-  map_smul' _ _ := rfl
+    (relationMap U ![(s : D), (t : D), w]).ker →ₗ[F] U :=
+  (LinearMap.proj 2).comp (relationMap U ![(s : D), (t : D), w]).ker.subtype
 
 private lemma thirdProjection_kernel [FiniteDimensional F D]
     (U : Submodule F D) (hlow : LowIntersection U)
@@ -301,19 +299,24 @@ private lemma thirdProjection_kernel [FiniteDimensional F D]
     intro h
     have ht : t = 0 := congrFun (congrArg Subtype.val h) 0
     exact hst.ne_zero 0 ht
+  let R : Submodule F (Fin 3 → U) := (relationMap U ![(s : D), (t : D), w]).ker
   have heq : (thirdProjection U s t w).ker = Submodule.span F {A} := by
     apply le_antisymm
     · intro x hx
       have hx2 : x.val 2 = 0 := hx
       obtain ⟨a, ha⟩ := zero_third_relation U hlow s t w hst x.val x.property hx2
-      apply Submodule.mem_span_singleton.mpr
+      apply (Submodule.mem_span_singleton (R := F) (M := R)).mpr
       refine ⟨a, ?_⟩
       apply Subtype.ext
       exact ha.symm
     · apply Submodule.span_le.mpr
-      simp [Set.singleton_subset_iff, LinearMap.mem_ker, thirdProjection, A]
+      intro x hx
+      obtain rfl := Set.mem_singleton_iff.mp hx
+      change A.val 2 = 0
+      rfl
   rw [heq]
-  exact finrank_span_singleton hA
+  exact finrank_span_singleton (K := F)
+    (V := (relationMap U ![(s : D), (t : D), w]).ker) hA
 
 
 private lemma dual_nonzero_pair {E : Type*} [AddCommGroup E] [Module F E]
@@ -345,13 +348,18 @@ private lemma projection_finrank [FiniteDimensional F D]
       relationMap U ![(s : D), (t : D), w] x = 0 ∧ ∀ i, ell (x i) = 0) :
     finrank F (thirdProjection U s t w).range = 2 := by
   classical
-  let f := thirdProjection U s t w
+  let f : (relationMap U ![(s : D), (t : D), w]).ker →ₗ[F] U :=
+    thirdProjection U s t w
   have hker : finrank F f.ker = 1 := thirdProjection_kernel U hlow s t w hst
-  have hrank := LinearMap.finrank_range_add_finrank_ker (K := F) f
+  have hrank := LinearMap.finrank_range_add_finrank_ker (K := F)
+    (V := (relationMap U ![(s : D), (t : D), w]).ker) (V₂ := U) f
   have hle : finrank F f.range ≤ 2 := by omega
-  suffices ¬ finrank F f.range ≤ 1 by omega
+  suffices ¬ finrank F f.range ≤ 1 by
+    change finrank F f.range = 2
+    omega
   intro hn
-  obtain ⟨z, hgen⟩ := (finrank_le_one_iff (K := F)).mp hn
+  letI : Module.Free F f.range := Module.Free.of_divisionRing (K := F) (V := f.range)
+  obtain ⟨z, hgen⟩ := (finrank_le_one_iff (K := F) (V := f.range)).mp hn
   have hs : s ≠ 0 := (linearIndependent_fin2.mp hst).1
   have hzgen : ∃ z₀ : U, z₀ ≠ 0 ∧ ∀ x ∈ f.range, ∃ a : F, a • z₀ = x := by
     by_cases hz : (z : U) = 0
@@ -397,7 +405,7 @@ private lemma flat_cancellation (U : Submodule F D) (b : Basis (Fin 3) F U)
   have hexp (v : U) : (v : D) =
       c v 0 * (b 0 : D) + c v 1 * (b 1 : D) + c v 2 * (b 2 : D) := by
     have hv := congrArg (fun v : U ↦ (v : D)) (b.sum_repr v)
-    simpa only [Submodule.coe_sum, Submodule.coe_smul, Fin.sum_univ_three,
+    simpa only [Submodule.coe_sum, Submodule.coe_smul, Fin.sum_univ_three, Submodule.coe_add, Submodule.coe_smul,
       Algebra.smul_def, c] using hv.symm
   let E : U := b.repr s 0 • x + b.repr x 0 • (s - b.repr s 0 • b 0) +
     b.repr t 0 • y + b.repr y 0 • (t - b.repr t 0 • b 0)
@@ -462,20 +470,23 @@ private lemma relation_rigidity [FiniteDimensional F D] [CharZero F]
     (hplane : ∀ ell : U →ₗ[F] F, ∃ x : Fin 3 → U, x ≠ 0 ∧
       relationMap U ![(s : D), (t : D), w] x = 0 ∧ ∀ i, ell (x i) = 0) : w ∈ U := by
   classical
-  let f := thirdProjection U s t w
-  let P := f.range
+  let f : (relationMap U ![(s : D), (t : D), w]).ker →ₗ[F] U :=
+    thirdProjection U s t w
+  let P : Submodule F U := f.range
   have hP : finrank F P = 2 := projection_finrank U hlow s t w hst hR hplane
+  letI : Module.Free F P := Module.Free.of_divisionRing (K := F) (V := P)
   let bP : Basis (Fin 2) F P := Module.finBasisOfFinrankEq F P hP
   let z : U := bP 0
   let z' : U := bP 1
   have hzpair : LinearIndependent F ![z, z'] := by
-    have h := bP.linearIndependent.map' P.subtype (Submodule.ker_subtype _)
+    have h := LinearIndependent.map' (R := F) (M := P) (M' := U)
+      bP.linearIndependent P.subtype (Submodule.ker_subtype _)
     convert h using 1
     ext i
     fin_cases i <;> rfl
   obtain ⟨e, he⟩ := exists_linearIndependent_snoc_of_lt_finrank hzpair (by rw [hU]; decide)
   let b : Basis (Fin 3) F U := basisOfLinearIndependentOfCardEqFinrank he (by simp [hU])
-  have hb (i : Fin 3) : b i = Fin.snoc ![z, z'] e i := by
+  have hb (i : Fin 3) : b i = (Fin.snoc ![z, z'] e : Fin 3 → U) i := by
     exact congrFun (coe_basisOfLinearIndependentOfCardEqFinrank he (by simp [hU])) i
   have hb0 : b 0 = z := by simp [hb]
   have hb1 : b 1 = z' := by simp [hb]
@@ -542,5 +553,139 @@ private lemma relation_rigidity [FiniteDimensional F D] [CharZero F]
   apply flat_cancellation U b s t (B.val 0) (B.val 1) w ?_ h₀ h₁ h₂
   have h := B.property
   simpa [relationMap, Fin.sum_univ_three, hB2, ← hb0] using h
+
+/-- The third vector of a basis sharing a plane with the first subspace belongs
+there too, under the original quotient and low-intersection assumptions. -/
+theorem shared_plane_third_vector [CharZero F]
+    (hD : finrank F D = 7) (U V : Submodule F D)
+    (hU : finrank F U = 3) (hlow : LowIntersection U)
+    (hQ : quotientSet U ⊆ quotientSet V) (bV : Basis (Fin 3) F V)
+    (hs : (bV 0 : D) ∈ U) (ht : (bV 1 : D) ∈ U) : (bV 2 : D) ∈ U := by
+  letI : FiniteDimensional F D := Module.finite_of_finrank_pos (by omega)
+  let s : U := ⟨bV 0, hs⟩
+  let t : U := ⟨bV 1, ht⟩
+  let w : D := bV 2
+  have hV : finrank F V = 3 := by simpa using Module.finrank_eq_card_basis bV
+  have hpairV : LinearIndependent F ![bV 1, bV 0] := by
+    convert bV.linearIndependent.comp ![(1 : Fin 3), 0] (by
+      intro i j h
+      fin_cases i <;> fin_cases j <;> simp_all) using 1
+    ext i
+    fin_cases i <;> rfl
+  have hpairD : LinearIndependent F ![(bV 1 : D), (bV 0 : D)] := by
+    convert hpairV.map' V.subtype (Submodule.ker_subtype _) using 1
+    ext i
+    fin_cases i <;> rfl
+  have hpair : LinearIndependent F ![t, s] := by
+    apply LinearIndependent.of_comp U.subtype
+    convert hpairD using 1
+    ext i
+    fin_cases i <;> rfl
+  have hvals : (fun i ↦ (bV i : D)) = ![(s : D), (t : D), w] := by
+    ext i
+    fin_cases i <;> rfl
+  have hR : finrank F (relationMap U ![(s : D), (t : D), w]).ker ≤ 3 := by
+    rw [← hvals]
+    exact relation_finrank hD U V hU hV hlow bV
+  apply relation_rigidity U hU hlow s t w hpair hR
+  intro ell
+  rw [← hvals]
+  exact plane_relation U V hU hQ bV ell
+
+private lemma quotientSet_translate (a : D) (ha : a ≠ 0) (U : Submodule F D) :
+    quotientSet (translate a U) = quotientSet U := by
+  ext r
+  constructor
+  · rintro ⟨u, ⟨x, hx, rfl⟩, v, ⟨y, hy, rfl⟩, hu, hv, heq⟩
+    have hx0 : x ≠ 0 := by intro h; simp [h] at hu
+    have hy0 : y ≠ 0 := by intro h; simp [h] at hv
+    refine ⟨x, hx, y, hy, hx0, hy0, ?_⟩
+    simpa only [LinearMap.mulLeft_apply, mul_div_mul_left _ _ ha] using heq
+  · rintro ⟨u, hu, v, hv, hu0, hv0, heq⟩
+    refine ⟨a * u, ⟨u, hu, rfl⟩, a * v, ⟨v, hv, rfl⟩,
+      mul_ne_zero ha hu0, mul_ne_zero ha hv0, ?_⟩
+    simpa only [mul_div_mul_left _ _ ha] using heq
+
+/-- Original degree-seven quotient rigidity: the multiplier is in the extension
+field and no intersection condition is imposed on the second subspace. -/
+theorem original_lemma40_3 [CharZero F]
+    (hD : finrank F D = 7) (U V : Submodule F D)
+    (hU : finrank F U = 3) (hV : finrank F V = 3)
+    (hlow : LowIntersection U) (hQ : quotientSet U ⊆ quotientSet V) :
+    ∃ γ : D, γ ≠ 0 ∧ V = translate γ U := by
+  classical
+  letI : FiniteDimensional F D := Module.finite_of_finrank_pos (by omega)
+  let bU : Basis (Fin 3) F U := Module.finBasisOfFinrankEq F U hU
+  let s : U := bU 0
+  let t : U := bU 1
+  have hs : (s : D) ≠ 0 := by intro h; exact bU.ne_zero 0 (Subtype.ext h)
+  have ht : (t : D) ≠ 0 := by intro h; exact bU.ne_zero 1 (Subtype.ext h)
+  have hquot : (s : D) / t ∈ quotientSet U := ⟨s, s.property, t, t.property, hs, ht, rfl⟩
+  obtain ⟨c, hc, d, hd, hc0, hd0, hcd⟩ := hQ hquot
+  let γ := d / (t : D)
+  have hγ : γ ≠ 0 := div_ne_zero hd0 ht
+  have hγt : γ * (t : D) = d := div_mul_cancel₀ d ht
+  have hγs : γ * (s : D) = c := by
+    have h := (div_eq_div_iff hd0 ht).mp hcd
+    apply mul_right_cancel₀ ht
+    calc
+      γ * (s : D) * (t : D) = γ * (t : D) * (s : D) := by ring
+      _ = c * (t : D) := by rw [hγt]; simpa [mul_comm] using h.symm
+  let W := translate γ⁻¹ V
+  have hW : finrank F W = 3 := by rw [translate_finrank _ (inv_ne_zero hγ), hV]
+  have hsW : (s : D) ∈ W := by
+    refine ⟨c, hc, ?_⟩
+    change γ⁻¹ * c = s
+    rw [← hγs, ← mul_assoc, inv_mul_cancel₀ hγ, one_mul]
+  have htW : (t : D) ∈ W := by
+    refine ⟨d, hd, ?_⟩
+    change γ⁻¹ * d = t
+    rw [← hγt, ← mul_assoc, inv_mul_cancel₀ hγ, one_mul]
+  let sW : W := ⟨s, hsW⟩
+  let tW : W := ⟨t, htW⟩
+  have hstU : LinearIndependent F ![s, t] := by
+    convert bU.linearIndependent.comp ![(0 : Fin 3), 1] (by
+      intro i j h
+      fin_cases i <;> fin_cases j <;> simp_all) using 1
+    ext i
+    fin_cases i <;> rfl
+  have hstD : LinearIndependent F ![(s : D), (t : D)] := by
+    convert hstU.map' U.subtype (Submodule.ker_subtype _) using 1
+    ext i
+    fin_cases i <;> rfl
+  have hstW : LinearIndependent F ![sW, tW] := by
+    apply LinearIndependent.of_comp W.subtype
+    convert hstD using 1
+    ext i
+    fin_cases i <;> rfl
+  obtain ⟨wW, hw⟩ := exists_linearIndependent_snoc_of_lt_finrank hstW (by rw [hW]; decide)
+  let bW : Basis (Fin 3) F W := basisOfLinearIndependentOfCardEqFinrank hw (by simp [hW])
+  have hbW (i : Fin 3) : bW i = (Fin.snoc ![sW, tW] wW : Fin 3 → W) i := by
+    exact congrFun (coe_basisOfLinearIndependentOfCardEqFinrank hw (by simp [hW])) i
+  have hQW : quotientSet U ⊆ quotientSet W := by
+    rw [quotientSet_translate _ (inv_ne_zero hγ)]
+    exact hQ
+  have hthird : (bW 2 : D) ∈ U := shared_plane_third_vector hD U W hU hlow hQW bW
+    (by simpa [hbW, sW] using s.property) (by simpa [hbW, tW] using t.property)
+  have hWU : W ≤ U := by
+    intro v hv
+    have hrepr := congrArg (fun v : W ↦ (v : D)) (bW.sum_repr ⟨v, hv⟩)
+    simp only [Submodule.coe_sum, Submodule.coe_smul] at hrepr
+    change (∑ i, bW.repr ⟨v, hv⟩ i • (bW i : D)) = v at hrepr
+    rw [← hrepr]
+    apply U.sum_mem
+    intro i _
+    apply U.smul_mem
+    fin_cases i
+    · simpa [hbW, sW] using s.property
+    · simpa [hbW, tW] using t.property
+    · exact hthird
+  have hWeq : W = U := Submodule.eq_of_le_of_finrank_le hWU (by rw [hW, hU])
+  refine ⟨γ, hγ, ?_⟩
+  have hundo : translate γ W = V := by
+    change translate γ (translate γ⁻¹ V) = V
+    rw [translate_translate, mul_inv_cancel₀ hγ, translate_one]
+  rw [hWeq] at hundo
+  exact hundo.symm
 
 end D5.S3.Factorization.Galois.AuricSevenRigidity
