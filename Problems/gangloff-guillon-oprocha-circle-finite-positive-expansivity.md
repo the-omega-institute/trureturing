@@ -24,13 +24,15 @@ $$B^+_\varepsilon(x)=\{y\in\mathbb T:\ \forall t\in\mathbb N_0,\ d(f^t(x),f^t(y)
 
 The exact repository theorem is
 
-$$\forall f:\mathbb T\to\mathbb T,\quad
-\left[\operatorname{Continuous}(f)\ \land\
-\exists\varepsilon>0\ \exists N\in\mathbb N,\ N\ge1\ \land\
+$$
+\forall f:\mathbb T\to\mathbb T,\quad
+\left[\operatorname{Continuous}(f)\ \land
+\exists\varepsilon>0\ \exists N\in\mathbb N,\ N\ge1\ \land
 \forall x\in\mathbb T,\ \#B^+_\varepsilon(x)\le N\right]
 \Longrightarrow
-\exists c>0\ \forall x,y\in\mathbb T,\
-\left[(\forall t\in\mathbb N_0,\ d(f^t(x),f^t(y))<c)\Longrightarrow x=y\right].$$
+\exists c>0\ \forall x,y\in\mathbb T,
+\left[(\forall t\in\mathbb N_0,\ d(f^t(x),f^t(y))<c)\Longrightarrow x=y\right].
+$$
 
 Here `Circle` is exactly `AddCircle (1 : ℝ)`. `ForwardBowen` quantifies over
 every natural time, including zero, with strict distance inequalities;

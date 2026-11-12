@@ -4,6 +4,8 @@
 
 Uniform finite positive expansivity implies positive expansivity for every continuous circle selfmap.
 
+Gangloff, Guillon and Oprocha, Various questions around finitely positively expansive dynamical systems, arXiv:2310.17241v1, Question 3.1, page 7, ask for a positively (n+1)-expansive circle map that is not positively n-expansive, for every n>=1. The full-circle theorem below answers negatively: every finite positive-expansivity bound collapses to ordinary positive expansivity, possibly at a new uniform scale. Conversely, positive expansivity supplies the finite bound N=1, so all strict finite levels above one are absent. The known interval obstruction, their Theorem 3.8, is consumed by the proof. The circle argument is repository-derived; this source connection asserts no worldwide novelty, map classification, arbitrary-graph or higher-dimensional extension, or settlement of their other-space questions. The paper's other results remain unaffected.
+
 **Theorem 1.1 (Local injectivity is derived).**
 
 Lean statement: `D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness.isLocallyInjective_of_finitelyPositiveExpansive`
@@ -22,7 +24,13 @@ Lean statement: `D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness.posi
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness.positivelyExpansive_of_finitelyPositiveExpansive` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gangloff-guillon-oprocha-circle-finite-positive-expansivity` (refuted) by `D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness.positivelyExpansive_of_finitelyPositiveExpansive`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gangloff-guillon-oprocha-circle-finite-positive-expansivity","declaration_gid":"D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness.positivelyExpansive_of_finitelyPositiveExpansive","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Silvère Gangloff; Pierre Guillon; Piotr Oprocha (2023). *Various questions around finitely positively expansive dynamical systems*. URL: <https://arxiv.org/abs/2310.17241v1>.
 
 *Commentary.*
 

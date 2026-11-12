@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Shadowing;
 internal sealed class CircleFinitePositiveExpansivenessDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S1/Dynamics/Shadowing/CircleFinitePositiveExpansiveness.";
-    private static readonly LiteratureRef Source = LiteratureRef.Create("D5/L/Topology/gangloff2023various");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Topology/gangloff2023various");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Uniform finite positive expansivity implies positive expansivity for every continuous circle selfmap.",
