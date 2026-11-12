@@ -55,7 +55,7 @@ def commonSupport (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
       ∀ n, ‖n‖ = 1 → b.param n = p → g (b.param (-n)) = 0
 
 omit [FiniteDimensional ℝ V] in
-private theorem affine_extreme_preimage {E : Type*} [AddCommGroup E] [Module ℝ E]
+theorem affine_extreme_preimage {E : Type*} [AddCommGroup E] [Module ℝ E]
     (f : E →ᵃ[ℝ] V) (hf : Function.Injective f) (S : Set E) (x : E) :
     f x ∈ (f '' S).extremePoints ℝ → x ∈ S.extremePoints ℝ := by
   rintro ⟨hx, he⟩
