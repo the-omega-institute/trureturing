@@ -28,6 +28,7 @@ variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
 def exclusion (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) (p : A) : Set A :=
   {x | x ∈ base C u ∧ ∃ f, confirms C u p f ∧ f x = 0}
 
+omit [FiniteDimensional ℝ A] in
 private theorem finite_zero_test {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hZ : zeroGluing C u) (p : pure C u)
     (hD : (exclusion C u p).Nonempty) (s : Finset A)
@@ -81,6 +82,7 @@ theorem zero_gluing_common_effect {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ
   · intro hx
     exact ⟨hx.1, f, hf, hx.2⟩
 
+omit [FiniteDimensional ℝ A] in
 private theorem face_span_inter {C : PointedCone ℝ A} (F : PointedCone.Face C)
     {x : A} (hx : x ∈ C) (hxspan : x ∈ Submodule.span ℝ (F : Set A)) : x ∈ F := by
   obtain ⟨a, ha, b, hb, hab⟩ := F.toPointedCone.mem_span.mp hxspan
@@ -248,6 +250,7 @@ private theorem facet_exclusion {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     have hhp := (hzero p (pure_mem p)).mpr hpF
     linarith [hh.2]
 
+omit [FiniteDimensional ℝ A] in
 private theorem exclusion_symmetric {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (p q : pure C u) : (q : A) ∈ exclusion C u p ↔ (p : A) ∈ exclusion C u q := by
   suffices ∀ p q : pure C u, (q : A) ∈ exclusion C u p →
@@ -329,6 +332,7 @@ private theorem facet_slice_dimension {C : PointedCone ℝ A} {u : A →ₗ[ℝ]
   have hf := F.2
   omega
 
+omit [FiniteDimensional ℝ A] in
 private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x) {S : Set A}
     (hconv : Convex ℝ S) (hext : IsExtreme ℝ (base C u) S) :
@@ -387,7 +391,8 @@ private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
         (u z)⁻¹ • z ∈ base C u :=
       ⟨C.smul_mem (inv_nonneg.mpr huz.le) hz, by simp [map_smul, huz.ne']⟩
     have hnD : (u (x + y))⁻¹ • (x + y) ∈ base D u :=
-      ⟨D.smul_mem (inv_nonneg.mpr hsum.le) hxy, by simp [map_smul, hsum.ne']⟩
+      ⟨D.smul_mem (inv_nonneg.mpr hsum.le) hxy, by
+        rw [map_smul, smul_eq_mul, inv_mul_cancel₀ hsum.ne']⟩
     rw [hbase] at hnD
     have hseg : (u (x + y))⁻¹ • (x + y) ∈
         openSegment ℝ ((u x)⁻¹ • x) ((u y)⁻¹ • y) := by
@@ -396,7 +401,8 @@ private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
       · rw [← add_div, ← map_add, div_self hsum.ne']
       · simp only [smul_smul, div_eq_mul_inv]
         rw [mul_right_comm (u x), mul_inv_cancel₀ hux.ne',
-          mul_right_comm (u y), mul_inv_cancel₀ huy.ne', one_mul, one_mul, smul_add]
+          mul_right_comm (u y), mul_inv_cancel₀ huy.ne']
+        simp only [one_mul, smul_add]
     have hnS := hext.left_mem_of_mem_openSegment (hnK hx hux) (hnK hy huy) hnD hseg
     apply hmem.mpr
     exact Or.inr ⟨u x, hux, (u x)⁻¹ • x, hnS, by simp [smul_smul, hux.ne']⟩
@@ -434,6 +440,7 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (∀ S : baseFacets C u, ∃ F : facets C, base F.1.toPointedCone u = S.1) ∧
     (∀ S : baseFacets C u, ∃ p : pure C u,
       exclusion C u p = S.1 ∧ (p : A) ∉ S.1) ∧
+    Nat.card (baseFacets C u) ≤ Nat.card (pure C u) ∧
     (∀ v : baseFacets C u → pure C u,
       (∀ S, exclusion C u (v S) = S.1) →
       Function.Injective v ∧ Nat.card (baseFacets C u) ≤ Nat.card (pure C u) ∧
@@ -458,10 +465,34 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     have hd := normalized_face_dimension F.toPointedCone u
       (fun y hy => hstrict y (F.isFaceOf.le hy)) ⟨x, hxF.1, hx0⟩
     rw [hF] at hd
+    change Module.finrank ℝ (affineSpan ℝ S.1).direction + 1 =
+      Module.finrank ℝ (Submodule.span ℝ (F : Set A)) at hd
     have hS := S.2.2.2.2
     exact ⟨⟨F, by omega⟩, hF⟩
+  have hactual (S : baseFacets C u) : ∃ p : pure C u,
+      exclusion C u p = S.1 ∧ (p : A) ∉ S.1 := by
+    obtain ⟨F, hF⟩ := hlift S
+    obtain ⟨p, hp, hnon⟩ := facet_exclusion hclosed hstrict hgen hdim hZ F
+    refine ⟨p, hp.trans hF, ?_⟩
+    intro hpin
+    have hpF : (p : A) ∈ base F.1.toPointedCone u := hF.symm ▸ hpin
+    exact hnon hpF.1
+  have hchoices (v : baseFacets C u → pure C u)
+      (hv : ∀ S, exclusion C u (v S) = S.1) :
+      Function.Injective v ∧ Nat.card (baseFacets C u) ≤ Nat.card (pure C u) ∧
+        ∀ F G, (v G : A) ∈ F.1 ↔ (v F : A) ∈ G.1 := by
+    have hinj : Function.Injective v := by
+      intro F G h
+      apply Subtype.ext
+      rw [← hv F, ← hv G, h]
+    refine ⟨hinj, Nat.card_le_card_of_injective v hinj, ?_⟩
+    intro F G
+    rw [← hv F, ← hv G]
+    exact exclusion_symmetric (v F) (v G)
+  let v : baseFacets C u → pure C u := fun S => (hactual S).choose
+  have hv : ∀ S, exclusion C u (v S) = S.1 := fun S => (hactual S).choose_spec.1
   refine ⟨hbaseDim, ?_, ?_, facet_exclusion hclosed hstrict hgen hdim hZ,
-    ?_, hlift, ?_, ?_⟩
+    ?_, hlift, hactual, (hchoices v hv).2.1, hchoices⟩
   · intro F hne
     have hf := normalized_face_dimension F.toPointedCone u
       (fun x hx => hstrict x (F.isFaceOf.le hx)) hne
@@ -508,21 +539,5 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
       rw [hv G]
       exact ⟨fun h => ⟨h, (pure_mem (v F)).2⟩, fun h => h.1⟩
     exact hF.trans ((exclusion_symmetric (v F) (v G)).trans hG.symm)
-  · intro S
-    obtain ⟨F, hF⟩ := hlift S
-    obtain ⟨p, hp, hnon⟩ := facet_exclusion hclosed hstrict hgen hdim hZ F
-    refine ⟨p, hp.trans hF, ?_⟩
-    intro hpin
-    have hpF : (p : A) ∈ base F.1.toPointedCone u := hF.symm ▸ hpin
-    exact hnon hpF.1
-  · intro v hv
-    have hinj : Function.Injective v := by
-      intro F G h
-      apply Subtype.ext
-      rw [← hv F, ← hv G, h]
-    refine ⟨hinj, Nat.card_le_card_of_injective v hinj, ?_⟩
-    intro F G
-    rw [← hv F, ← hv G]
-    exact exclusion_symmetric (v F) (v G)
 
 end D5.S3.Quantum.Foundation.FacetZeroGluing
