@@ -139,7 +139,7 @@ private theorem preserves_finite_relations {P : Set A} {v : P → ℝ}
       rw [Finset.sum_comm]
     _ = 0 := Finset.sum_eq_zero (fun j _ => hz j)
 
-private theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
+theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
     (hspan : Submodule.span ℝ P = ⊤) :
     ∃ e : A →ₗ[ℝ] ℝ, ∀ p : P, e p = v p := by
   classical
@@ -162,12 +162,12 @@ private theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
   simpa [Q, V, e] using he
 
 omit [FiniteDimensional ℝ A] in
-private theorem pure_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem pure_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (p : pure C u) : (p : A) ∈ C ∧ u p = 1 :=
   p.property.1
 
 omit [FiniteDimensional ℝ A] in
-private theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
+theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
     Convex ℝ (base C u) := by
   intro x hx y hy a b ha hb hab
   refine ⟨C.add_mem (C.smul_mem ha hx.1) (C.smul_mem hb hy.1), ?_⟩
@@ -246,7 +246,7 @@ theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
   · simpa only [LinearMap.sub_apply, sub_nonneg] using hh
   · simpa only [LinearMap.sub_apply, (pure_mem p).2, sub_nonneg] using (hf p).2
 
-private theorem pure_span {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem pure_span {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u))
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
