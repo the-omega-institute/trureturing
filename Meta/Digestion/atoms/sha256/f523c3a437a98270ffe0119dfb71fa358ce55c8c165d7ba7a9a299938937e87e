@@ -1,0 +1,12 @@
+**定义 84.30（三质量与原锚）。** 固定 (84.18) 的同一份 $\Phi$ 及 $t,s\in(0,1)$，完整保留原三质量 $m_3(a,b,c)=\tau_EQ(a,b,c)$ 的
+$$
+\begin{aligned}
+\mathsf E_3(\Phi;t,s):\quad m_3(a,b,c)={}&st\,m_3(\Phi a,b,c)
++s(1-t)m_3(a,\Phi b,c)\\
+&+(1-s)m_3(a,b,\Phi c),\\
+\mathrm A_0:\quad&\tau_EL(\omega,e)=1.
+\end{aligned}
+\tag{84.31}
+$$
+量词仍遍及全部原正输入，含零和不等质量。完整主候选固定取 $\Phi=R_A$、$t=1/2$、$s=2/3$，故 E3 是三槽各权 $1/3$，与定义 83.10 相同。C2 只替换 E2，没有删除 E3 中的 $R_A$ 定义。
+

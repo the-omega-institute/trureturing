@@ -11,15 +11,6 @@ internal sealed class FifthOrderTopOnlyRefutationDocument : IScribeDocumentDefin
         H("Fifth-order top-only transfer fails"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("fifth-data"), DeclarationHandle.Create(Prefix + "FifthData"),
-                H("Finite algebraic moment data"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "A datum consists of a finite decidable index type, a commutative real algebra, "
-                    + "a real linear functional, an indexed algebra family, and four real parameters a,b,H,L. "
-                    + "Both underlying types are in universe zero; positivity is a hypothesis of the implication below."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The proposed fifth-moment implication"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -64,6 +55,10 @@ internal sealed class FifthOrderTopOnlyRefutationDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "This positive probability model gives the fifth-order obstruction in Proposition 500.4 "
                         + "of FIBONACCI_ANALYTIC_FRONTIER_INTERFACES_II. The construction and its "
-                        + "mathematical interpretation are repository-derived."))),
+                        + "mathematical interpretation are repository-derived.")),
+                    Paragraph(Text(
+                        "The biased-cube mixture construction is shared with the sixth-order refutation. "
+                        + "The fifth-order example uses an asymmetric mixing law; the sixth-order example "
+                        + "uses a symmetric law and isolates the missing fourth-order pairing defect."))),
                 DescribeRole.Theorem))));
 }

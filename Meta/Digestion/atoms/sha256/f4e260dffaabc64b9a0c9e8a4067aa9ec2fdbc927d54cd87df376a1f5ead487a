@@ -1,0 +1,25 @@
+**推论 87.5（同一个 $L,p$，不是两个分别拟合的延拓）。** 分别固定 $L$ 的另一个原槽，应用引理 87.4；$p$ 在全部原 $K_E$ 上应用。于是唯一有
+
+$$
+\begin{aligned}
+L\left(\sum_i c_i k_{\delta_i},\sum_j b_j k_{\alpha_j}\right)
+ &=\sum_{i,j}c_i b_jw_L(\delta_i,\alpha_j),\\
+p\left(\sum_i c_i k_{\epsilon_i}\right)&=\sum_i c_iw_p(\epsilon_i).
+\end{aligned}
+\tag{87.7}
+$$
+
+改变第一个展开，逐个固定原 $\alpha_j$ 用 (87.5) 使差为零；改变第二个展开，逐个固定原 $\delta_i$ 同理。因此同时良定义，$L$ 实双线性、$p$ 实线性，原像张成给唯一性。这也自含地给出原附录 (13)—(14) 的关系商步骤。对任意 $\lambda,\mu\ge0$，
+$L(\lambda k_\delta,\mu k_\alpha)=\lambda\mu w_L(\delta,\alpha)\in C_E$、
+$p(\lambda k_\epsilon)=\lambda w_p(\epsilon)\in C_D$。$K_D,K_E$ 是整个原联合基，所以包含分类后的全部纠缠方向，不假定联合正锥由本地正乘积生成。
+
+有限维线性下降以后才得到连续性和紧基上的质量有界性，二者是后果。原加权调用与这个数学延拓相符仍需另留
+
+$$
+w_p(a\epsilon)=a\,w_p(\epsilon),\qquad
+w_L(a\delta,b\alpha)=ab\,w_L(\delta,\alpha)\qquad(a,b\ge0),
+\tag{87.8}
+$$
+
+包括零输入、零输出、次归一与不等质量；其他已供应多槽过程逐槽保留相应缩放。记号 $a\epsilon$ 仅指原来源已供应的加权输入，不授予新调用。归一标签上的图律没有读取这些质量，不能自行推出 (87.8)。参考过程亦须保留同事件、同记录和原产品扩张律，而非从边缘重建扩张。
+

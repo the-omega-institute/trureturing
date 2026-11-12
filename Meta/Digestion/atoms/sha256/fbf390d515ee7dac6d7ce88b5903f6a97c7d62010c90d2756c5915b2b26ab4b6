@@ -1,0 +1,60 @@
+**定义 89.3（固定纯点的内在关系）。** 固定 $p\in P$，令 $\mathcal F_p=\{H(p,q):q\in P\setminus\{p\}\}$，相同面只计一次。对 $F\in\mathcal F_p$，任选仿射球图 $\chi:F\to B^d$，记 $n=\chi(p)$。因为 $F$ 是 $K$ 的面，$\operatorname{ext}F=P\cap F$，故 $\|n\|=1$。定义
+
+$$
+\begin{gathered}
+r_{p,F}=\chi^{-1}(-n),\qquad
+E_{p,F}=\{a\in\operatorname{ext}F:\chi(a)\cdot n=0\},\\
+\mathcal G_{p,F}=\{r_{p,F}\}\cup
+\{2a-p-r_{p,F}:a\in E_{p,F}\},\qquad
+N_{p,F}=\operatorname{span}_{\mathbb R}\mathcal G_{p,F},\\
+\mathcal G_p=\bigcup_{F\in\mathcal F_p}\mathcal G_{p,F},\qquad
+N_p=\sum_{F\in\mathcal F_p}N_{p,F}
+     =\operatorname{span}_{\mathbb R}\mathcal G_p,\qquad
+\mathrm Q_p:\ p\notin N_p,\qquad
+\mathrm Q:\ \forall p\in P,\ \mathrm Q_p.
+\end{gathered}
+\tag{89.2}
+$$
+
+空族的和为零，特别是单点基时 $N_p=0$。所有张成都指有限线性组合，虽 $P$ 和面族可无穷。$2a-p-r$ 通常不是原空间的零向量；所要求的是它在下面的标量商中归零，并未把原准备向量或历史标签宣告相等。每个这种生成元只涉及 $p,r,a$ 三个原纯点，其线性提升位于至多三维的张成中；不限制球维数或整个 $V$ 的维数。
+
+定义不依赖球图。事实上，两个球图的过渡保持球心，故为把单位球映到自身的线性变换；它及其逆的球界给范数相等，因而正交。球心的唯一性可由两个对称中心会产生非零平移、与有界性矛盾得到。因此对径和内积为零的赤道集合均不变。这只使用该椭球自身的欧氏结构，不比较不同球的坐标或概率。
+
+为明确这些关系的几何意义，在一个固定面写
+
+$$
+\chi^{-1}(s)=c+Js,\qquad c=(p+r)/2,\qquad
+p=c+Jn,\quad r=c-Jn,\quad
+T=J(n^\perp).
+\tag{89.3}
+$$
+
+$J$ 是到该面平行空间的线性同构，$u(c)=1$、$uJ=0$。若 $d\ge2$，赤道单位向量张成 $n^\perp$，且 $2a-p-r=2J\chi(a)$；若 $d=1$，赤道为空且 $T=0$。所以在全部维数下，$N_{p,F}=\mathbb Rr+T$。球在对径点 $r$ 的唯一相对支撑超平面为 $r+T$，其线性张成正是 $N_{p,F}$，而
+
+$$
+\operatorname{span}F=\mathbb Rp\oplus N_{p,F}.
+\tag{89.4}
+$$
+
+这是新商桥内部所用的标准球支持与线性代数步骤：$c,Jn$ 由 $p,r$ 张成，其他方向在 $T$ 中；支撑高度 $(t+n\cdot s)/2$ 在 $tc+Js$ 上消灭 $\mathbb Rr+T$、在 $p$ 取一，故交为零。尚未声称这把局部尺有全局正扩张。
+
+同一候选的边界写法只使用这些内在对径：令 $\operatorname{ri}K$、$\operatorname{rbd}K=K\setminus\operatorname{ri}K$ 分别为 $K$ 在 $\operatorname{aff}K=\{u=1\}$ 中的相对内部和相对边界，置
+
+$$
+R_p=\{r_{p,F}:F\in\mathcal F_p\},\qquad
+\mathrm{Boundary}_p:\quad
+\operatorname{conv}R_p\cap\operatorname{ri}K=\varnothing,\qquad
+\mathrm{Boundary}:\quad\forall p\in P,\ \mathrm{Boundary}_p.
+\tag{89.4a}
+$$
+
+若 $K$ 非单点，每个 $R_p$ 非空；按88.11的有限仿射基选择，任选 $r_1,\ldots,r_k\in R_p$ 仿射独立且张成 $\operatorname{aff}R_p$，令
+
+$$
+1\le k=\dim\operatorname{aff}R_p+1\le\dim V,\qquad
+z_p=\frac1k\sum_{i=1}^k r_i\in\operatorname{conv}R_p\subseteq K.
+\tag{89.4b}
+$$
+
+$R_p$ 不必闭或有限，凸包仍只指有限凸组合，不先取闭包。单点时不选对径点、仿射基或重心；空对径族的凸包约定为空集，$\mathrm{Boundary}_p$ 为空真。这里的数学凸组合与有限仿射基既不供应实际混态准备，也不构成全域条件的有限操作认证。
+

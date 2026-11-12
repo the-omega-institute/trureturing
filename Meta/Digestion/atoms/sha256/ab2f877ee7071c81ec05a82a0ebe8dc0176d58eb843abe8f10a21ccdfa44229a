@@ -1,0 +1,15 @@
+**定理 81.8（完整同数据候选）。** 在同一实际原模型类中，
+$$
+\boxed{\mathrm{PRE}_0^{\rm mix}+\langle\Gamma_z,v_A\rangle_{\rm HS}=0+\mathsf E_2+\mathsf E_3+\mathrm A_0+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.
+\tag{81.14}
+$$
+删去质量、锚及 $C_{\rm joint}$ 的精确未校准版本同样成立。它接回现有量子公理的全部条件如下。
+
+| 量子结构 | 同数据回接与保留的前提 |
+| --- | --- |
+| 复 Hilbert 表示、密度态、全效应与 Born 配对 | 完整比较及一般 EJA 桥先成立；零平均给两层全域保零，65—66、75.7 才给有限复 Hermitian 直和及纯态 $\bigsqcup_i\mathbb{CP}^{n_i-1}$，配对为 $\sum_i\operatorname{Tr}(\rho_if_i)$。 |
+| 二份、三份张量及相对方向 | 精确 PRE 后的同一原 H13 给整个原 C13，沿 72.7—72.8 取得共同普通方向；不自动给四份以上或另一括号的共同来源。 |
+| 原尺度、标准准备与偏迹 | 两条 (81.13) 加原锚先于 H13 恢复 $C_{\rm joint}$；方向条件随后使同一个原 $M,L,p$ 同时标准归一化。 |
+| CP 事件、仪器与 Lüders 更新 | 69.1—69.11 的实际事件、参考、同事件联合正性、局部及原联合两预算、共同重置输入行等条件仍另付；锐投影效应与全部确定接受态逐点不变才给原 Lüders 结论。 |
+| Hamiltonian 动力学 | 仍需原物理时间上的连续齐次可逆 $*$-自同构群；静态零平均不供应时间群、单位或 $\hbar$。 |

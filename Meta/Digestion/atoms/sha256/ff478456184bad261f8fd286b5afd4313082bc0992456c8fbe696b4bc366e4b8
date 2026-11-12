@@ -1,0 +1,22 @@
+**命题 86.15（保留原标记可准确重建交叉插入）。** 在完整校准 PRE 中，若保留源标记 $\alpha,\beta:A\to D$ 与 $\eta,\iota:D\to E$，令 $\ell=\eta\alpha$、$r=\iota\beta$。唯一满足
+
+$$
+S\,M(a,c)=\ell(a)\circ r(c)\qquad(a,c\in A)
+\tag{86.22}
+$$
+
+的实线性 $S:D\to E$ 恰为原 $I^{\rm raw}$。
+
+**证明。** (86.10) 给 $r(c)=Q(1_A,1_A,c)=L(1_D,c)$、$\ell(a)=HJa$。66.2 的第二接口在校准后就是 $L$，其两份 Jordan 嵌入算子交换，故 $\ell(a)\circ r(c)=L(Ja,c)=T_{\rm raw}(a,c)$。满可逆 $\widetilde M$ 给唯一性及 $S=\widetilde T_{\rm raw}\widetilde M^{-1}$。证毕。
+
+这里保留的是原 $D$ 锥上的逐点接合，不是另加全局物理方向。用第四卷 70.1—70.3 的原有序正规形，仍准确为
+
+$$
+\chi_{ijk}=\delta_{ijk}\oplus\varepsilon_{ik},\qquad
+\mathrm{C13}\Longleftrightarrow
+\chi_{ijk}=0\quad(n_i,n_k\ge2,\ \text{每个 }j),
+\tag{86.23}
+$$
+
+包括标量中间 $n_j=1$；端点有标量腿时无额外约束。三个标签均活跃时，已有 $\chi_{ijk}=\varepsilon_{ij}\oplus\varepsilon_{jk}\oplus\varepsilon_{ik}$ 余循环缺陷。86.13 的两点是 $\varepsilon=s,\delta=0$，故 $\chi=s$，而投影仍相同。任何充分读数至少须区分这两个点；原标记与原 H13 已提供充分关系。$\eta\beta=\iota\alpha$ 在两个点都成立，单保中间重叠等式仍不够。这里没有断言所有表示中的全局最小标记集。
+

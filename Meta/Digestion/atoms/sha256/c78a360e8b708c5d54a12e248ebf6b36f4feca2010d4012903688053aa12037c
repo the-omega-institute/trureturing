@@ -1,0 +1,57 @@
+**引理 99.2（原单位的紧 Gram 纤维）。** 存在 $H\succ0$ 使 $u(X)=\operatorname{tr}(HX)$ ($X\in L$)。令
+
+$$
+\mathcal M_u=\{M\succeq0:M-H\in L^\perp\}.
+\tag{99.1}
+$$
+
+则 $\mathcal M_u$ 是非空紧凸集；对每个 $N\in L^\perp$，充分小的 $\eta$ 使 $H\pm\eta N\in\mathcal M_u$。对任意原纯方向 $v$，置
+
+$$
+h(v)=v^{\mathsf T}Hv,\qquad p_v=\frac{vv^{\mathsf T}}{h(v)}.
+$$
+
+给定有限原纯方向 $w_1,\ldots,w_s$，有精确等价
+
+$$
+\begin{aligned}
+&\exists f\in[0,u]_{C^*}: f(p_v)=1,\ f(p_{w_j})=0\ (1\le j\le s)\\
+&\quad\Longleftrightarrow\quad
+\exists M\in\mathcal M_u:\ v^{\mathsf T}Mw_j=0\ (1\le j\le s).
+\end{aligned}
+\tag{99.2}
+$$
+
+若 $f\in[0,u]_{C^*}$ 且 $f(p_v)=1$，任取 $A\succeq0$ 表示 $f$、$B\succeq0$ 表示 $u-f$，令 $M=A+B$，则 $M\in\mathcal M_u$ 且
+
+$$
+A\succeq\frac{(Mv)(Mv)^{\mathsf T}}{h(v)}.
+\tag{99.3}
+$$
+
+证明。共同支撑 $E$ 由原ROG锥中的纯方向张成；选有限个张成 $E$ 的纯向量 $v_i$，则 $X_0=\sum_i v_iv_i^{\mathsf T}\in C$ 且 $X_0\succ0$。先将96.2的PSD投影闭性论证运输到这些坐标：若 $A_i\succeq0$ 且其迹正交投影 $\pi_L(A_i)$ 收敛，则
+
+$$
+\lambda_{\min}(X_0)\operatorname{tr}A_i
+\le\operatorname{tr}(A_iX_0)
+=\langle\pi_L(A_i),X_0\rangle
+$$
+
+一致有界。故 $A_i$ 有PSD收敛子列，$\pi_L(\operatorname{PSD}(E))$ 闭；其在 $L$ 中的对偶为 $C$，双极性给出每个原正泛函都有环境PSD代表。严格正性及 $C\cap\{\operatorname{tr}X=1\}$ 的紧性给
+$\varepsilon\in(0,\min\{u(X):X\in C,\operatorname{tr}X=1\})$。令 $A_\varepsilon\succeq0$ 表示正泛函 $u-\varepsilon\operatorname{tr}|_L$，则
+
+$$
+H=A_\varepsilon+\varepsilon I_E\succ0,\qquad
+\operatorname{tr}(HX)=u(X)\quad(X\in L).
+$$
+
+这不要求 $I_E\in L$，也不令任意原单位的交叉块消失。每个 $M\in\mathcal M_u$ 满足 $\operatorname{tr}(MX_0)=u(X_0)$；同一正定下界给 $\operatorname{tr}M$ 的统一上界，闭性给出紧性，$H\in\mathcal M_u$ 给非空。固定 $N\in L^\perp$ 后，小的正负扰动 $H\pm\eta N$ 保持正定。
+
+若左边成立，$f(p_v)=1$ 使 $v^{\mathsf T}Bv=0$，从而 $Bv=0$、$Av=Mv$；Cauchy--Schwarz 给出(99.3)，而 $f(p_{w_j})=0$ 给出 $Aw_j=0$，故 $v^{\mathsf T}Mw_j=0$。反之给定 $M$，令
+
+$$
+A_v(M)=\frac{(Mv)(Mv)^{\mathsf T}}{h(v)}.
+$$
+
+由 $v^{\mathsf T}Mv=h(v)$ 及半正定 Cauchy--Schwarz，$0\preceq A_v(M)\preceq M$。它在 $L$ 上定义原 proper 效应，确认 $p_v$，并在所给 $w_j$ 上为零。证毕。
+

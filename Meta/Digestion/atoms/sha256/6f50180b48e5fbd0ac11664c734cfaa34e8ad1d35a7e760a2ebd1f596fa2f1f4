@@ -1,0 +1,38 @@
+### 38.1 二维资料、面积和质量
+
+固定一个取向 $\sigma\in\{1,-1\}$，写 $\iota=\sigma i$，并在二维空间固定
+$C_E=\operatorname{diag}(2,3)$。对 Hermitian $X$ 定义
+
+$$
+\begin{gathered}
+K(A,B)=\frac{\iota}{2}[A,B],\qquad A\circ B=\frac{AB+BA}{2},\\
+h=K(C_E,X),\quad k=C_E\circ T,\quad r=C_E\circ X,\quad
+ g=K(C_E,T)+sP_3,\\
+R_\delta=X+\delta(h-k),\qquad
+S_\delta=T+\delta(r+g),\qquad \delta\in\{1,-1\},\\
+L=-2X\circ(h-k)-2T\circ(r+g).
+\end{gathered}
+\tag{38.1}
+$$
+
+对非零 $u\in\mathbb C^2$ 记 $\psi_u(A)=u^*Au$。因为 $R_\delta$、$S_\delta$
+自伴，完整 PB 面积的未归一形式是
+
+$$
+\mathcal A_\delta(X,u)^2
+ =\|R_\delta u\|^2\|S_\delta u\|^2
+  -\bigl(\operatorname{Re}((R_\delta u)^*S_\delta u)\bigr)^2
+ =B_{\psi_u}(R_\delta,S_\delta)\ge0 .
+\tag{38.2}
+$$
+
+这里的平方是实化后的 Gram 行列式。任给 $0<\mu<\infty$，
+
+$$
+\phi_{\mu,u}(A)=\frac{\mu}{\|u\|^2}u^*Au
+\tag{38.3}
+$$
+
+是全矩阵代数上的正复线性泛函，且 $\phi_{\mu,u}(I)=\mu$；其左端和每个
+面积分别乘以 $\mu/\|u\|^2$，预算本身乘以该因子的平方。
+
