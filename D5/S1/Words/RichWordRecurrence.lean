@@ -33,16 +33,6 @@ private theorem subst_lower {α β : Type*} (f : α → List β) (c : ℕ)
       List.length_cons, Nat.mul_add, Nat.mul_one]
     omega
 
-private theorem image_growth {α : Type*} (f : α → List α)
-    (h : ∀ a, 2 ≤ (f a).length) (k : ℕ) (a : α) :
-    k + 1 ≤ (image f k a).length := by
-  induction k with
-  | zero => simp
-  | succ k ih =>
-    have := subst_lower f 2 h (image f k a)
-    simp only [RankOneMorphismIterationBound.image_succ]
-    omega
-
 private theorem image_subst {α : Type*} (f : α → List α) (k : ℕ) (w : List α) :
     subst (image f (k+1)) w = subst f (subst (image f k) w) := by
   induction w with
@@ -116,7 +106,7 @@ theorem source_uniform_recurrence (i n : ℕ) :
       factor word j n = factor word i n := by
   let k := i+n
   have hg : i+n ≤ (image phi k 0).length := by
-    have := image_growth phi (by intro a; unfold phi; split <;> simp) k 0
+    have := RichWordTypeIOccurrence.iterate_growth k
     omega
   have hp (a : Fin 7) : image phi k 0 <+: image phi (k+1) a := by
     rw [image_add phi k 1, RankOneMorphismIterationBound.image_one]
@@ -231,12 +221,6 @@ private theorem output_core (w : List (Fin 7)) (j : ℕ)
   · intro k hk
     exact output_control.1.injective (by simpa using hk.1.symm)
 
-private theorem output_marker (A : ℕ) :
-    RichWordOutputDecoder.x A = 0 ↔ ∃! j, A = RichWordOutputDecoder.E j := by
-  simpa [RichWordOutputDecoder.Occ, RichWordTypeIOccurrence.Occ, factor, subst,
-    RichWordOutputDecoder.Left, RichWordOutputDecoder.Right] using
-    RichWordOutputDecoder.occurrence_decoder [] [] [] A (by simp) (by simp)
-
 /-- Uniform recurrence of every literal output window, without a boundary-alignment restriction. -/
 theorem output_uniform_recurrence (A n : ℕ) :
     ∃ B, ∀ q, ∃ C, q ≤ C ∧ C+n ≤ q+B ∧
@@ -322,16 +306,18 @@ theorem output_no_tail : ¬ Complexity.EventuallyPeriodicWord RichWordOutputDeco
   have hshift (t : ℕ) : ∃ k, RichWordOutputDecoder.E k =
       RichWordOutputDecoder.E (s+t)+p := by
     have hm : RichWordOutputDecoder.x (RichWordOutputDecoder.E (s+t)) = 0 :=
-      (output_marker _).mpr ⟨s+t,rfl,by intro k hk; exact output_control.1.injective hk.symm⟩
+      (RichWordOutputDecoder.marker_boundary _).mpr
+        ⟨s+t,rfl,by intro k hk; exact output_control.1.injective hk.symm⟩
     have h := htail (RichWordOutputDecoder.E (s+t)) (by have := hge (s+t); omega)
     rw [hm] at h
-    obtain ⟨k,hk,_⟩ := (output_marker _).mp h
+    obtain ⟨k,hk,_⟩ := (RichWordOutputDecoder.marker_boundary _).mp h
     exact ⟨k,hk.symm⟩
   choose T hT using hshift
   have hsucc (t : ℕ) : T (t+1) = T t+1 := by
     apply output_control.1.injective
     have h := periodic_marker_successor RichWordOutputDecoder.x 0
-      RichWordOutputDecoder.E output_control.1 output_marker s p (s+t) (T t)
+      RichWordOutputDecoder.E output_control.1 RichWordOutputDecoder.marker_boundary
+        s p (s+t) (T t)
       htail (by have := hge (s+t); omega) (hT t)
     rw [hT (t+1)]
     simpa only [Nat.add_assoc] using h.symm
