@@ -14,6 +14,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/29240 -/
+
 namespace D5.S3.Quantum.Algebra.PBFixedOutputM4
 
 open PBFixedOutputGram
@@ -171,11 +173,7 @@ theorem m4VectorFunctional_positive (v : M4H) :
   refine ⟨?_, hA.2 v⟩
   change (inner ℂ v (Matrix.toEuclideanLin A v)).im = 0
   have hs := Matrix.isSymmetric_toEuclideanLin_iff.mpr hA.1
-  have hi := congrArg Complex.im (hs v v)
-  rw [← inner_conj_symm (Matrix.toEuclideanLin A v) v] at hi
-  change -(inner ℂ v (Matrix.toEuclideanLin A v)).im =
-    (inner ℂ v (Matrix.toEuclideanLin A v)).im at hi
-  linarith
+  exact hs.im_inner_self_apply v
 
 /-- Actor support is stated on the original four-by-four carrier; the fourth
 row and column are retained in the ambient positive functional. -/
@@ -483,15 +481,19 @@ private theorem m4_pair_quadratic
     simp [w, norm_smul, Real.norm_eq_abs, abs_of_nonneg (inv_nonneg.mpr (norm_nonneg ξ)), hn]
   have h := m4_pair_unit_quadratic ι hι i j hij hi hj hlam t g hPB w hw
     (by simp [w, hxi])
-  simp only [w, map_smul] at h
-  simp only [RCLike.real_smul_eq_coe_smul (K := ℂ),
-    inner_smul_left, inner_smul_right, Complex.conj_ofReal, Complex.ofReal_inv] at h
-  field_simp at h
-  have hc : ((1 / ‖ξ‖ : ℝ) : ℂ) ≠ 0 :=
-    Complex.ofReal_ne_zero.mpr (one_div_ne_zero hn)
-  apply mul_left_cancel₀ (a := ((1 / ‖ξ‖ : ℝ) : ℂ) * star ((1 / ‖ξ‖ : ℝ) : ℂ))
-    (mul_ne_zero hc (star_ne_zero.mpr hc))
-  convert h using 1 <;> simp only [starRingEnd_apply, one_div, Complex.ofReal_inv] <;> ring
+  have hback : ‖ξ‖ • w = ξ := by simp [w, smul_smul, hn]
+  let factor : ℂ := star (‖ξ‖ : ℂ) * (‖ξ‖ : ℂ)
+  have scale (a b : M4E) :
+      inner ℂ (m4Op a ξ) (m4Op b ξ) =
+        factor * inner ℂ (m4Op a w) (m4Op b w) := by
+    conv_lhs => rw [← hback]
+    simp only [map_smul]
+    simp only [RCLike.real_smul_eq_coe_smul (K := ℂ), inner_smul_left,
+      inner_smul_right, starRingEnd_apply]
+    dsimp [factor]
+    ring
+  rw [scale, scale, h]
+  ring
 
 private def m4P (i : Fin 4) : M4E :=
   m4Herm (Matrix.diagonal (fun r => if r = i then 0 else 1)) (by
@@ -588,15 +590,6 @@ theorem m4_scalar_pb_diagonal_residual (q₁ q₂ : ℂ) (_hq : q₁ * q₂ ≠ 
     rw [← (herm g).apply i k, ← (herm (m4Kappa m4C ι hι t)).apply i k,
       row k hk i hik]
   · exact row i hi k hik.symm
-
-example (q₁ q₂ : ℂ) : (m4T q₁ q₂ : M4) =
-    !![0, 0, 0, q₁; 0, 0, 0, q₂; 0, 0, 0, 0; star q₁, star q₂, 0, 0] := by
-  ext r s
-  fin_cases r <;> fin_cases s <;> simp [m4T, m4Edge, m4Herm, Matrix.single_apply]
-
-example : (m4C : M4) = Matrix.diagonal ![1, 2, 3, 0] := by
-  ext r s
-  fin_cases r <;> fin_cases s <;> simp [m4C, m4Herm, m4Eigen, Matrix.diagonal_apply]
 
 #print axioms m4_scalar_pb_diagonal_residual
 

@@ -1,8 +1,8 @@
-/- GID: D5 / S3 / Quantum / Algebra / PBFixedOutputGram
+/- GID: D5/S3/Quantum/Algebra/PBFixedOutputGram
    generality: G
-   mirror - B: D5 / B / S3 / Quantum / Algebra / PBFixedOutputGram
-   mirror - E: none(waiver:registration - template - not - established)
-   anchors: [mathlib / module / Mathlib.Analysis.InnerProductSpace.Symmetric]
+   mirror-B: D5/B/S3/Quantum/Algebra/PBFixedOutputGram
+   mirror-E: none(waiver:registration-template-not-established)
+   anchors: [mathlib/module/ Mathlib.Analysis.InnerProductSpace.Symmetric]
    utility: none
    digest: Scalar PB yields full vector transverse identities. -/
 

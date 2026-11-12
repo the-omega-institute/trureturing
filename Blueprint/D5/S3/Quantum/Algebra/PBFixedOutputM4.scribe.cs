@@ -19,7 +19,7 @@ internal sealed class PBFixedOutputM4Document : IScribeDocumentDefinition
             D("m4J", "The concrete M4 Jordan product", Eq(I("m4J"), C("M4JordanProduct")),
                 "The carrier is the real self-adjoint submodule of Matrix (Fin 4) (Fin 4) Complex, with literal symmetrized matrix multiplication.", DescribeRole.Definition),
             D("m4VectorModel", "The concrete M4 vector model", Eq(I("m4VectorModel"), C("VectorModel", C("EuclideanSpace", I("Complex"), C("Fin", N(4))), I("m4J"))),
-                "The operator is literal matrix action on the entire four-dimensional Euclidean space; the environment coordinate remains in the representation.", DescribeRole.Theorem),
+                "The operator is literal matrix action on the entire four-dimensional Euclidean space; the environment coordinate remains in the representation.", DescribeRole.Definition),
             D("m4_full_row_reconstruction", "Hermitian full-row reconstruction", C("HermitianRowReconstruction", I("g"), I("k")),
                 "Agreement on every off-diagonal entry of two Hermitian four-by-four matrices leaves a diagonal residual with real entries.", DescribeRole.Theorem),
             D("m4VectorFunctional", "A full-space vector functional", Eq(I("m4VectorFunctional"), C("VectorState", I("v"))),
