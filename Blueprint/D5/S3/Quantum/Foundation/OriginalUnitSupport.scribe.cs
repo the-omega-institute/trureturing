@@ -198,7 +198,8 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("p", space, All("x", space, Eq(originalReadings, normalizedReadings))),
             All("p", space, All("x", space,
                 Eq(Call("image", dual, originalMinimizers), normalizedMinimizers))),
-            Call("NativeGeometry", cone, unit, psi, m), Call("OriginalEffectGeometry", cone, unit)));
+            Call("NativeGeometry", cone, unit, psi, m), Call("OriginalEffectGeometry", cone, unit),
+            Call("NativeAmbientDimensions", dimension), Call("NativeCongruence", sigma, psi, root)));
         Formula singleton = Call("singleton", m);
         Formula oneDimensional = Imp(Eq(dimension, D(1)), Chain(
             Eq(baseOriginal, singleton),
@@ -233,7 +234,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
         Formula nativeGeometry(Formula ni, Formula map)
         {
             Formula hm = Call("HermitianMat", ni, field), hmap = F.Id("H"),
-                hx = F.Id("X"), hb = F.Id("b"), hy = F.Id("y"), hi = F.Id("i0"),
+                hx = F.Id("X"), hb = F.Id("b"), hy = F.Id("y"), hi = F.Id("i"),
                 hj = F.Id("j"), card = Call("card", ni);
             Formula hrange = Call("range", hmap), hpure = Call("extremePoints", baseOriginal, real);
             Formula rankOne(Formula q) => Call("rankOne", q);
@@ -241,7 +242,7 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             Formula nativeBase = setOf(hx, Chain(Member(hx, hrange), le(D(0), hx),
                 Eq(Call("trace", hx), D(1))));
             Formula rankDecomposition = All("x", space, Imp(Member(x, cone), decomp(map, x)));
-            Formula frames = All("p", space, Imp(Member(p, hpure), All("i0", ni,
+            Formula frames = All("p", space, Imp(Member(p, hpure), All("i", ni,
                 Ex("b", Call("OrthonormalBasis", ni, field, Call("EuclideanSpace", field, ni)),
                     Ex("y", Seq(ni, To, Sp, space), Chain(Eq(app(hy, hi), p),
                         All("j", ni, And(Member(app(hy, hj), hpure),
@@ -283,6 +284,51 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
             All("C", Call("PointedCone", real, space), All("u", linear(real),
                 IffF(Call("OriginalEffectGeometry", cone, unit),
                     Call("let", Eq(coeFn, Seq(f, Mapsto, Sp, Call("coe", f))), effectGeometry))))));
+        Formula complex = Seq(Mathbb, Grp(F.Id("C"))), ambientN = F.Id("n"), ell = F.Id("L");
+        Formula ambient(Formula scalar) => Call("HermitianMat", Call("Fin", ambientN), scalar);
+        Formula rank(Formula carrier) => Call("finrank", real, carrier);
+        Formula perp(Formula carrier) => Call("orthogonal", carrier);
+        Formula add(Formula a, Formula b) => Call("add", a, b);
+        Formula realDim = Call("div", mul(ambientN, add(ambientN, D(1))), D(2));
+        Formula complexDim = Call("pow", ambientN, D(2));
+        Formula dimensionsStatement = All("n", Call("Nat"), IffF(
+            Call("NativeAmbientDimensions", ambientN), Chain(
+                Eq(rank(ambient(real)), realDim), Eq(rank(ambient(complex)), complexDim),
+                All("L", Call("Submodule", real, ambient(real)),
+                    Eq(add(rank(ell), rank(perp(ell))), realDim)),
+                All("L", Call("Submodule", real, ambient(complex)),
+                    Eq(add(rank(ell), rank(perp(ell))), complexDim)))));
+        Formula hmAmbient = Call("HermitianMat", index, field),
+            hzero = F.Id("H"), hone = F.Id("J"), equiv = F.Id("E"),
+            aa = F.Id("A"), bb = F.Id("B"), congruent = F.Id("S");
+        Formula hmat(Formula a) => Call("mat", a);
+        Formula ep(Formula a) => app(equiv, a);
+        Formula ei(Formula a) => app(Call("symm", equiv), a);
+        Formula ip(Formula a, Formula b) => Call("inner", real, a, b);
+        Formula trre(Formula a) => Call("re", Call("trace", a));
+        Formula hzrange = Call("range", hzero), horange = Call("range", hone);
+        Formula congruenceBody = Ex("H", linear(hmAmbient), Ex("J", linear(hmAmbient),
+            Ex("E", Call("LinearEquiv", real, hmAmbient, hmAmbient), Chain(
+                All("v", space, Eq(hmat(app(hzero, v)), sigmaAt(v))),
+                All("v", space, Eq(hmat(app(hone, v)), psiAt(v))),
+                All("A", hmAmbient,
+                    Eq(hmat(ep(aa)), mul(mul(congruent, hmat(aa)), congruent))),
+                All("A", hmAmbient,
+                    Eq(hmat(ei(aa)), mul(mul(inv(congruent), hmat(aa)), inv(congruent)))),
+                All("v", space, Eq(app(hone, v), ep(app(hzero, v)))),
+                Eq(horange, Call("map", hzrange, Call("toLinearMap", equiv))),
+                Eq(rank(perp(hzrange)), rank(perp(horange))),
+                All("A", hmAmbient, All("B", hmAmbient,
+                    Eq(ip(ep(aa), bb), ip(aa, ep(bb))))),
+                All("A", hmAmbient, All("v", space,
+                    Eq(trre(mul(hmat(aa), psiAt(v))), trre(mul(hmat(ep(aa)), sigmaAt(v)))))),
+                All("A", hmAmbient,
+                    IffF(Member(aa, perp(horange)), Member(ep(aa), perp(hzrange)))),
+                All("A", hmAmbient,
+                    IffF(Member(aa, perp(hzrange)), Member(ei(aa), perp(horange))))))));
+        Formula congruenceStatement = parameters(All("sigma", genericPsi,
+            All("Psi", genericPsi, All("S", matrices,
+                IffF(Call("NativeCongruence", sigma, psi, congruent), congruenceBody)))));
         Formula normalizationStatement = nativeInputs(And(LtF(D(0), dimension),
             Ex("U", Call("Matrix", index, nIndex, field),
                 Ex("sigma", Call("LinearMap", real, space, nativeMatrices),
@@ -335,6 +381,18 @@ internal sealed class OriginalUnitSupportDocument : IScribeDocumentDefinition
                     H("Compact original intervals and attained confirming comparisons"),
                     StatementSource.FromAuthor(Disp(effectGeometryStatement)), AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text("The full original algebraic dual is embedded faithfully as its functions V to R with the pointwise product topology; coeFn is this canonical inclusion. The proper interval is compact in this topology. For every original p with u(p)=1, its entire confirmer set is compact and nonempty, and evaluation at every original x attains its minimum. The minimum equals the infimum of all actual confirming readings. For x in the original cone, that minimum is zero exactly when some original confirmer has zero reading. Every original linear functional is retained, with no finite-catalog or ambient-effect restriction. A generating cone writes every vector as a difference of two original cone vectors. Properness therefore bounds each pointwise reading in a compact real interval. Linearity and all proper inequalities define a closed subset of the product of those intervals. Tychonoff compactness gives the whole interval, intersection with the closed confirming equation gives compact confirmer sets, and the original unit u supplies their nonemptiness. The continuous evaluation map attains its minimum. Nonnegative readings on cone vectors give the zero equivalence. This proof does not require a prespecified minimizer, a PD dual representative or matrix full support."))),
+                    DescribeRole.Definition),
+                Describe.Lean(DescribeId.Create("native-ambient-dimensions"),
+                    DeclarationHandle.Create(Owner + "NativeAmbientDimensions"), H("Native ambient dimensions and trace codimension"),
+                    StatementSource.FromAuthor(Disp(dimensionsStatement)),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("For every natural n, including zero, native real symmetric matrices have real dimension n(n+1)/2 and native complex Hermitian matrices have real dimension n squared. For every real linear subspace L in either native ambient space, its real dimension plus that of its trace orthogonal complement equals the corresponding ambient dimension. Real symmetric coordinates are real functions on unordered pairs of indices. The pinned Sym2 cardinality supplies their count. The complex formula directly reuses BipartiteSectorDecomposition.hermitian_space_finrank through the exact HermitianMat/selfAdjoint equivalence. The normalization theorem consumes these formulas at its actual positive native support dimension."))),
+                    DescribeRole.Definition),
+                Describe.Lean(DescribeId.Create("native-original-congruence"),
+                    DeclarationHandle.Create(Owner + "NativeCongruence"), H("The same ambient congruence and inverse annihilator transport"),
+                    StatementSource.FromAuthor(Disp(congruenceStatement)),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("H and J lift the actual compressed sigma and normalized Psi into native Hermitian matrices. E is the invertible real linear ambient map A to S A S; its inverse is A to S inverse A S inverse. It maps every H(v) to J(v), so the whole image subspaces correspond and their real trace codimensions agree. Cyclicity of trace makes E self adjoint for the real trace inner product. Thus the reading of any ambient coefficient A on Psi(v) equals the reading of E(A) on sigma(v). In particular an annihilator of the Psi image is transported by E to an annihilator of the sigma image; an annihilator of the sigma image is transported by E inverse in the opposite direction. No ambient coefficient is passed through the inverse of the original-space embedding."))),
                     DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("original-unit-normalization"),
                     DeclarationHandle.Create(Owner + "exists_original_unit_normalization"),

@@ -707,10 +707,13 @@ private theorem psd_rank_one_outer (A : HermitianMat ι 𝕜)
     exact hj (congrArg Subtype.val (hi ⟨j, hne⟩))
   have hsum : A = ∑ j, A.H.eigenvalues j •
       SectionROGFrame.rankOne (A.H.eigenvectorBasis j) := by
+    have houter (j : ι) : (SectionROGFrame.rankOne (A.H.eigenvectorBasis j)).mat =
+        Matrix.vecMulVec (A.H.eigenvectorBasis j : ι → 𝕜)
+          (star (A.H.eigenvectorBasis j : ι → 𝕜)) := rfl
     apply HermitianMat.ext
     change A.mat = (∑ j, A.H.eigenvalues j •
       SectionROGFrame.rankOne (A.H.eigenvectorBasis j)).mat
-    simp only [HermitianMat.mat_finset_sum, HermitianMat.mat_smul]
+    simp only [HermitianMat.mat_finset_sum, HermitianMat.mat_smul, houter]
     conv_lhs => rw [A.H.spectral_theorem, Unitary.conjStarAlgAut_apply]
     ext k l
     simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.mul_apply, Matrix.diagonal_apply, Matrix.vecMulVec_apply,
@@ -1076,7 +1079,6 @@ private theorem native_congruence
   have hH₁ (v : V) : (H₁ v).mat = Ψ v := (hT (H₀ v)).trans (hΨ v).symm
   have hmap : H₁.range = H₀.range.map e.toLinearMap := by
     rw [LinearMap.range_comp]
-    rfl
   have hdim : Module.finrank ℝ H₀.rangeᗮ = Module.finrank ℝ H₁.rangeᗮ := by
     have h₀ := H₀.range.finrank_add_finrank_orthogonal
     have h₁ := H₁.range.finrank_add_finrank_orthogonal
@@ -1097,7 +1099,8 @@ private theorem native_congruence
   have hcoeff (A : HermitianMat ι 𝕜) (v : V) :
       RCLike.re (A.mat * Ψ v).trace = RCLike.re ((e A).mat * σ v).trace := by
     have hh : inner ℝ A (H₁ v) = inner ℝ (e A) (H₀ v) := (hadj A (H₀ v)).symm
-    simpa only [HermitianMat.inner_eq_re_trace, hH₁] using hh
+    simpa only [HermitianMat.inner_eq_re_trace, hH₁,
+      show (H₀ v).mat = σ v from rfl] using hh
   have hann (A : HermitianMat ι 𝕜) : A ∈ H₁.rangeᗮ ↔ e A ∈ H₀.rangeᗮ := by
     rw [H₁.range.mem_orthogonal', H₀.range.mem_orthogonal']
     constructor
