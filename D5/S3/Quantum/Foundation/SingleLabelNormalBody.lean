@@ -208,6 +208,37 @@ private theorem normal_body_convex (p c : V) : Convex ℝ (normalBody C p c) := 
   · change s * b c + t * d c = 1
     simpa [hb.2.2, hd.2.2] using hst
 
+/-- The whole image definition agrees with the original full-ball affine formula,
+quantifying over every original real-linear positive functional. -/
+theorem slope_body_original {p : V} (a : ExclusionChart C u p)
+    (v : EuclideanSpace ℝ (Fin a.dim)) :
+    v ∈ slopeBody a ↔ ∃ b : V →ₗ[ℝ] ℝ,
+      (∀ x ∈ C, 0 ≤ b x) ∧ b p = 0 ∧ b (a.param 0) = 1 ∧
+      ∀ z ∈ Metric.closedBall (0 : EuclideanSpace ℝ (Fin a.dim)) 1,
+        b (a.param z) = 1 + ⟪v, z⟫ := by
+  constructor
+  · rintro ⟨b, hb, rfl⟩
+    exact ⟨b.toLinearMap, hb.1, hb.2.1, hb.2.2,
+      fun z _ => by simpa [hb.2.2] using slope_formula a b z⟩
+  · rintro ⟨b, hpos, hp, hc, hformula⟩
+    have hspan : affineSpan ℝ (Metric.closedBall
+        (0 : EuclideanSpace ℝ (Fin a.dim)) 1) = ⊤ := by
+      apply (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
+      exact ⟨0, mem_interior_iff_mem_nhds.mpr (Metric.closedBall_mem_nhds _ zero_lt_one)⟩
+    have heq : b.toAffineMap.comp a.param =
+        (InnerProductSpace.toDual ℝ _ v).toLinearMap.toAffineMap +
+          AffineMap.const ℝ _ (1 : ℝ) :=
+      AffineMap.ext_on hspan (fun z hz => by simpa [add_comm] using hformula z hz)
+    refine ⟨b.toContinuousLinearMap, ⟨hpos, hp, hc⟩, ?_⟩
+    apply ext_inner_right ℝ
+    intro z
+    have hh := congrArg (fun f => f z) heq
+    have hslope := slope_formula a b.toContinuousLinearMap z
+    change b (a.param z) = b (a.param 0) + _ at hslope
+    change b (a.param z) = ⟪v, z⟫ + 1 at hh
+    rw [hc] at hslope
+    linarith
+
 /-- The whole original slope body is compact and convex, and lies in the unit ball. -/
 theorem slope_body_geometry (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -217,8 +248,12 @@ theorem slope_body_geometry (hc : IsClosed (C : Set V))
       slopeBody a ⊆ Metric.closedBall 0 1 := by
   refine ⟨(normal_body_compact hc hs hg p a).image (slope a).continuous_of_finiteDimensional,
     (normal_body_convex _ _).linear_image (slope a), ?_⟩
-  rintro v ⟨b, hb, rfl⟩
-  simpa using slope_norm_le a hb
+  intro v hv
+  obtain ⟨b, hpos, _, _, hformula⟩ := (slope_body_original a v).mp hv
+  have hnorm : ‖v‖ ≤ 1 := affine_nonneg_bound (fun z hz => by
+    rw [← hformula z (by simpa using hz)]
+    exact hpos _ (a.whole ▸ mem_image_of_mem a.param (by simpa using hz)).1.1)
+  simpa using hnorm
 
 private theorem slope_eq_of_formula {p : V} (a : ExclusionChart C u p)
     (b : V →L[ℝ] ℝ) (v : EuclideanSpace ℝ (Fin a.dim))
@@ -397,5 +432,241 @@ theorem slope_body_inradius (hc : IsClosed (C : Set V))
     convert hsum using 1
     ext k
     simp [v, EuclideanSpace.single, Finset.sum_apply, hd.ne']
+
+/-- The original all-effect gap between antipodal points of the original chart. -/
+def gap {p : V} (a : ExclusionChart C u p) (n : EuclideanSpace ℝ (Fin a.dim)) : ℝ :=
+  comparison C u (a.param n) (a.param (-n))
+
+private theorem slope_confirmer (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (p : pure C u) (a : ExclusionChart C u p)
+    {n : EuclideanSpace ℝ (Fin a.dim)} (hn : ‖n‖ = 1)
+    {t : ℝ} (ht : 0 ≤ t) (hv : t • n ∈ slopeBody a) :
+    ∃ f : V →ₗ[ℝ] ℝ, confirms C u (a.param n) f ∧
+      f (a.param (-n)) = (1 - t) / (1 + t) := by
+  obtain ⟨b, hb, hv⟩ := hv
+  have hb0 : b.toLinearMap ≠ 0 := by
+    intro h
+    have hh := LinearMap.congr_fun h (a.param 0)
+    simp [hb.2.2] at hh
+  obtain ⟨s, hsD, _, hmax⟩ := positive_annihilator_maximum hc hs hg p b.toLinearMap hb0 hb.1 hb.2.1
+  have hbs : b s ≤ 1 + t := by
+    obtain ⟨z, hz, he⟩ := a.whole.symm ▸ hsD
+    rw [← he, slope_formula, hb.2.2, hv, real_inner_smul_left]
+    have hz' : ‖z‖ ≤ 1 := by simpa using hz
+    have hh : ⟪n, z⟫ ≤ 1 := (real_inner_le_norm n z).trans (by simpa [hn] using hz')
+    nlinarith
+  have hden : 0 < 1 + t := by linarith
+  let f : V →ₗ[ℝ] ℝ := (1 + t)⁻¹ • b.toLinearMap
+  have hf : proper C u f := cone_bound (base_compact hc hs) hs (fun r => by
+    change 0 ≤ (1 + t)⁻¹ * b r ∧ (1 + t)⁻¹ * b r ≤ 1
+    refine ⟨mul_nonneg (inv_nonneg.mpr hden.le) (hb.1 r (pure_mem r).1), ?_⟩
+    rw [← div_eq_inv_mul, div_le_one hden]
+    exact (hmax r (pure_mem r)).trans hbs)
+  refine ⟨f, ⟨hf, ?_⟩, ?_⟩
+  · change (1 + t)⁻¹ * b (a.param n) = 1
+    rw [slope_formula, hb.2.2, hv, real_inner_smul_left, real_inner_self_eq_norm_sq, hn]
+    field_simp
+    <;> ring
+  · change (1 + t)⁻¹ * b (a.param (-n)) = (1 - t) / (1 + t)
+    rw [slope_formula, hb.2.2, hv, real_inner_smul_left, inner_neg_right,
+      real_inner_self_eq_norm_sq, hn]
+    ring
+
+private theorem comparison_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u) (x : V) :
+    ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = comparison C u p x := by
+  let F : Set (V →L[ℝ] ℝ) := {f | proper C u f.toLinearMap ∧ f p = 1}
+  have hcompact : IsCompact F := (effects_compact hs hg).inter_right
+    (isClosed_eq (by fun_prop) continuous_const)
+  have hunit : u.toContinuousLinearMap ∈ F := by
+    refine ⟨fun y hy => ⟨?_, le_rfl⟩, (pure_mem p).2⟩
+    by_cases hz : y = 0
+    · simp [hz]
+    · exact (hs y hy hz).le
+  obtain ⟨f, hf, hmin⟩ := hcompact.exists_isMinOn ⟨_, hunit⟩
+    (show ContinuousOn (fun g : V →L[ℝ] ℝ => g x) F by fun_prop)
+  refine ⟨f.toLinearMap, hf, ?_⟩
+  symm
+  apply IsLeast.csInf_eq
+  refine ⟨⟨f.toLinearMap, hf, rfl⟩, ?_⟩
+  rintro r ⟨g, hg, rfl⟩
+  exact hmin (show g.toContinuousLinearMap ∈ F from hg)
+
+private theorem comparison_le {q x : V} (hx : x ∈ C)
+    {f : V →ₗ[ℝ] ℝ} (hf : confirms C u q f) : comparison C u q x ≤ f x := by
+  apply csInf_le
+  · exact ⟨0, by rintro r ⟨g, hg, rfl⟩; exact (hg.1 x hx).1⟩
+  · exact ⟨f, hf, rfl⟩
+
+/-- Zero gap is equivalent to membership in the whole actual slope body. -/
+theorem zero_gap_iff (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) (a : ExclusionChart C u p)
+    (n : EuclideanSpace ℝ (Fin a.dim)) (hn : ‖n‖ = 1) :
+    gap a n = 0 ↔ n ∈ slopeBody a := by
+  let q := chartPure hc hs hg hB p a n hn
+  have hqD : (q : V) ∈ exclusion C u p := chart_mem a hn.le
+  have hrD := chart_mem a (by simpa using hn.le : ‖-n‖ ≤ 1)
+  constructor
+  · intro hgap
+    obtain ⟨f, hf, hfx⟩ := comparison_attained hs hg q (a.param (-n))
+    have hrq : a.param (-n) ∈ exclusion C u q := ⟨hrD.1, f, hf, hfx.trans hgap⟩
+    obtain ⟨e, he, hzero⟩ := (exclusion_ball_faces hc hs hg hB).1 q |>.2.2.2.2.2.2
+    have her : e (a.param (-n)) = 0 := (hzero ▸ hrq).2
+    have hep : e p = 0 := (hzero ▸ (exclusion_symmetric p q).mp hqD).2
+    have hformula := affine_zero_antipode (e.toAffineMap.comp a.param) hn
+      (fun z hz => (he.1 _ (chart_mem a hz).1.1).1) her
+    have heq : e (a.param n) = 1 := he.2
+    have hb : ((2 : ℝ) • e.toContinuousLinearMap) ∈ normalBody C p (a.param 0) := by
+      refine ⟨fun x hx => mul_nonneg (by norm_num) (he.1 x hx).1, ?_, ?_⟩
+      · change 2 * e p = 0
+        rw [hep, mul_zero]
+      · have hh := hformula 0
+        change e (a.param 0) = e (a.param n) / 2 * (1 + ⟪n, 0⟫) at hh
+        change 2 * e (a.param 0) = 1
+        rw [heq, inner_zero_right] at hh
+        linarith
+    refine ⟨(2 : ℝ) • e.toContinuousLinearMap, hb, slope_eq_of_formula a _ n ?_⟩
+    intro z
+    have hh := hformula z
+    change e (a.param z) = e (a.param n) / 2 * (1 + ⟪n, z⟫) at hh
+    rw [heq] at hh
+    change 2 * e (a.param z) = _
+    rw [hb.2.2]
+    linarith
+  · intro hv
+    obtain ⟨f, hf, hfr⟩ := slope_confirmer hc hs hg p a hn (by norm_num : (0 : ℝ) ≤ 1)
+      (by simpa using hv : (1 : ℝ) • n ∈ slopeBody a)
+    have hfr0 : f (a.param (-n)) = 0 := by simpa using hfr
+    apply le_antisymm
+    · exact (comparison_le hrD.1.1 hf).trans_eq hfr0
+    · apply le_csInf
+      · exact ⟨0, f, hf, hfr0⟩
+      · rintro r ⟨g, hg, rfl⟩
+        exact (hg.1 _ hrD.1.1).1
+
+/-- Uniform original-effect control on every unit direction, with the exact zero locus. -/
+theorem uniform_original_gap (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) (hp : SingleLabel C u p) (a : ExclusionChart C u p) :
+    ∃ rho : ℝ, 0 < rho ∧ rho ≤ 1 ∧ Metric.closedBall 0 rho ⊆ slopeBody a ∧
+      ∀ n : EuclideanSpace ℝ (Fin a.dim), ‖n‖ = 1 →
+        gap a n ≤ (1 - rho) / (1 + rho) ∧ (1 - rho) / (1 + rho) < 1 ∧
+        (gap a n = 0 ↔ n ∈ slopeBody a) := by
+  obtain ⟨rho, hrho, hrho1, hball⟩ := slope_body_inradius hc hs hg hB p hp a
+  refine ⟨rho, hrho, hrho1, hball, fun n hn => ?_⟩
+  have hv : rho • n ∈ slopeBody a := hball (by simpa [norm_smul, abs_of_pos hrho, hn])
+  obtain ⟨f, hf, hfr⟩ := slope_confirmer hc hs hg p a hn hrho.le hv
+  refine ⟨(comparison_le (chart_mem a (by simpa using hn.le : ‖-n‖ ≤ 1)).1.1 hf).trans_eq hfr,
+    (div_lt_one (by linarith : 0 < 1 + rho)).mpr (by linarith),
+    zero_gap_iff hc hs hg hB p a n hn⟩
+
+private theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
+    u (a.param.linear z) = 0 := by
+  have hspan : affineSpan ℝ (Metric.closedBall (0 : EuclideanSpace ℝ (Fin a.dim)) 1) = ⊤ := by
+    apply (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
+    exact ⟨0, mem_interior_iff_mem_nhds.mpr
+      (Metric.closedBall_mem_nhds (0 : EuclideanSpace ℝ (Fin a.dim)) zero_lt_one)⟩
+  have heq : u.toAffineMap.comp a.param =
+      AffineMap.const ℝ (EuclideanSpace ℝ (Fin a.dim)) (1 : ℝ) :=
+    AffineMap.ext_on hspan (fun z hz => (chart_mem a (by simpa using hz)).1.2)
+  have hh := congrArg AffineMap.linear heq
+  exact LinearMap.congr_fun hh z
+
+private theorem tangent_annihilation (p : pure C u) (q : V)
+    (a : ExclusionChart C u q) (m : EuclideanSpace ℝ (Fin a.dim))
+    (hm : ‖m‖ = 1) (hmp : a.param m = p)
+    (b : V →L[ℝ] ℝ) (hpos : ∀ x ∈ C, 0 ≤ b x) (hbp : b p = 0)
+    (z : EuclideanSpace ℝ (Fin a.dim)) (hz : ⟪m, z⟫ = 0) :
+    b (a.param.linear z) = 0 := by
+  have hformula := affine_zero_antipode (b.toLinearMap.toAffineMap.comp a.param)
+    (by simpa using hm : ‖-m‖ = 1)
+    (fun v hv => hpos _ (chart_mem a hv).1.1)
+    (by simpa [hmp] using hbp)
+  have h0 := hformula 0
+  have hv := hformula z
+  change b (a.param 0) = b (a.param (-m)) / 2 * (1 + ⟪-m, 0⟫) at h0
+  change b (a.param z) = b (a.param (-m)) / 2 * (1 + ⟪-m, z⟫) at hv
+  rw [inner_zero_right] at h0
+  rw [inner_neg_left, hz] at hv
+  have hdecomp := congrArg b (congrFun a.param.decomp z)
+  change b (a.param z) = b (a.param.linear z + a.param 0) at hdecomp
+  rw [map_add] at hdecomp
+  linarith
+
+/-- The two actual charts force the dimension inequality in the original V. -/
+theorem native_dimension (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) (hp : SingleLabel C u p) (a : ExclusionChart C u p)
+    (q : pure C u) (hq : (q : V) ∈ exclusion C u p) (bq : ExclusionChart C u q) :
+    a.dim + bq.dim + 1 ≤ Module.finrank ℝ V := by
+  classical
+  have hpq := (exclusion_symmetric p q).mp hq
+  have hpboundary : (p : V) ∈ exclusion C u q ∩ pure C u := ⟨hpq, p.property⟩
+  rw [chart_boundary hc hs hg hB q bq] at hpboundary
+  obtain ⟨m, hm, hmp⟩ := hpboundary
+  have hmnorm : ‖m‖ = 1 := by simpa using hm
+  have hm0 : m ≠ 0 := by intro h; simpa [h] using hmnorm
+  let T : Submodule ℝ (EuclideanSpace ℝ (Fin bq.dim)) := (ℝ ∙ m)ᗮ
+  let F : ((ℝ × EuclideanSpace ℝ (Fin a.dim)) × (ℝ × T)) →ₗ[ℝ] V :=
+    { toFun := fun x => x.1.1 • a.param 0 + a.param.linear x.1.2 +
+        (x.2.1 • (p : V) + bq.param.linear x.2.2)
+      map_add' := by intro x y; simp; module
+      map_smul' := by intro t x; simp; module }
+  have hker (x) (hx : F x = 0) : x = 0 := by
+    have hread (b : V →L[ℝ] ℝ) (hb : b ∈ normalBody C p (a.param 0)) :
+        x.1.1 + ⟪slope a b, x.1.2⟫ = 0 := by
+      have ht : b (bq.param.linear x.2.2) = 0 :=
+        tangent_annihilation p q bq m hmnorm hmp b hb.1 hb.2.1 x.2.2
+          (Submodule.mem_orthogonal_singleton_iff_inner_right.mp x.2.2.property)
+      have hh := congrArg b hx
+      change b (x.1.1 • a.param 0 + a.param.linear x.1.2 +
+        (x.2.1 • (p : V) + bq.param.linear x.2.2)) = b 0 at hh
+      have hslope : b (a.param.linear x.1.2) = ⟪slope a b, x.1.2⟫ := by
+        change _ = ⟪(InnerProductSpace.toDual ℝ (EuclideanSpace ℝ (Fin a.dim))).symm
+          (b.comp a.param.linear.toContinuousLinearMap), x.1.2⟫
+        exact (InnerProductSpace.toDual_symm_apply (𝕜 := ℝ)
+          (x := x.1.2) (y := b.comp a.param.linear.toContinuousLinearMap)).symm
+      simpa [map_add, map_smul, hb.2.2, hb.2.1, ht, hslope] using hh
+    obtain ⟨b0, hb0, hv0⟩ := slope_body_zero hc hs hg hB p a
+    have hxscalar : x.1.1 = 0 := by simpa [hv0] using hread b0 hb0
+    obtain ⟨rho, hrho, _, hball⟩ := slope_body_inradius hc hs hg hB p hp a
+    have hxvector : x.1.2 = 0 := by
+      by_contra hne
+      let n := ‖x.1.2‖⁻¹ • x.1.2
+      have hn : ‖n‖ = 1 := by simp [n, norm_smul, norm_pos_iff.mpr hne |>.ne']
+      obtain ⟨b, hb, hv⟩ := hball (show rho • n ∈ Metric.closedBall 0 rho by
+        simpa [norm_smul, abs_of_pos hrho, hn])
+      have hh := hread b hb
+      rw [hxscalar, hv, show n = ‖x.1.2‖⁻¹ • x.1.2 from rfl,
+        real_inner_smul_left, real_inner_smul_left,
+        real_inner_self_eq_norm_sq] at hh
+      have hnorm : 0 < ‖x.1.2‖ := norm_pos_iff.mpr hne
+      have hhpos : 0 < rho * (‖x.1.2‖⁻¹ * ‖x.1.2‖ ^ 2) := by positivity
+      linarith
+    have hxT : x.2.1 • (p : V) + bq.param.linear x.2.2 = 0 := by
+      simpa [F, hxscalar, hxvector] using hx
+    have hxscalarT : x.2.1 = 0 := by
+      have hh := congrArg u hxT
+      simpa [map_add, map_smul, (pure_mem p).2, chart_unit_linear bq] using hh
+    have hxvectorT : x.2.2 = 0 := by
+      apply Subtype.ext
+      apply (bq.param.linear_injective_iff.mpr bq.injective)
+      simpa [hxscalarT] using hxT
+    exact Prod.ext (Prod.ext hxscalar hxvector) (Prod.ext hxscalarT hxvectorT)
+  have hinj : Function.Injective F := by
+    intro x y hxy
+    exact sub_eq_zero.mp (hker (x - y) (by rw [map_sub, hxy, sub_self]))
+  have hdim := F.finrank_le_finrank_of_injective hinj
+  have ht := (ℝ ∙ m).finrank_add_finrank_orthogonal
+  have ht' : 1 + Module.finrank ℝ T = bq.dim := by
+    simpa [T, finrank_span_singleton hm0] using ht
+  simp only [Module.finrank_prod, Module.finrank_self, finrank_euclideanSpace_fin] at hdim
+  omega
 
 end D5.S3.Quantum.Foundation.SingleLabelNormalBody
