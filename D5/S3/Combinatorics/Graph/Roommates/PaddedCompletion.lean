@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/Roommates/PaddedCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Fintype.Card]

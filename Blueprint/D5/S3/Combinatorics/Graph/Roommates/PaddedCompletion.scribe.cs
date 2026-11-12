@@ -31,7 +31,7 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("count-padded-supermultiplicative"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.count_padded_supermultiplicative"),
                 H("count_padded_supermultiplicative"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. GrowthTransfer.result consumes this inequality together with CyclicClosure and TriangleCount in the same-base probability estimate."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The product of the two certified profile counts is at most the count at length m+k+6, for all natural lengths and hence every m,k at least one. The injection recovers the two ranking words; neither certificate choices nor matching witnesses are counted. GrowthTransfer.result consumes this inequality together with the cyclic closure and exclusive-triangle count in the same-base probability estimate."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("partnerfirst"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.partnerFirst"),
                 H("partnerFirst"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -87,7 +87,7 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("closing-request-completion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_request_completion"),
                 H("closing_request_completion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every length, actual closing requests are injective and avoid central sites. The existing sixteen layouts fulfill all requests with a genuine involution and only central new singles. CyclicClosure supplies full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For every length, actual closing requests are injective and avoid central sites. The finite-clique construction fulfill all requests with a genuine involution and only central new singles. CyclicClosure supplies full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("oldposition"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.oldPosition"),
                 H("oldPosition"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -115,5 +115,5 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("padded-request-completion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.padded_request_completion"),
                 H("padded_request_completion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The actual gap requests are injective and avoid the two central buffer sites. Apply the existing sixteen-layout construction to obtain a genuine involution on requesters plus buffer, with only central new singles. The full padded certificate additionally proves reciprocity on every old/new pair, injectivity of every integer target and all nonblocking tests."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The actual gap requests are injective and avoid the two central buffer sites. Apply the finite-clique construction to obtain a genuine involution on requesters plus buffer, with only central new singles. The full padded certificate additionally proves reciprocity on every old/new pair, injectivity of every integer target and all nonblocking tests."))), DescribeRole.Theorem))));
 }

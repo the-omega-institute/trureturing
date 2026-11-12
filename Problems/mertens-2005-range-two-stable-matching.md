@@ -44,7 +44,7 @@ all wrap edges and both parities. Cutting an actual stable partial matching
 gives A(n)<=b(n+5). Certificates and matching witnesses are not counted.
 
 For f(m)=log b(m), Mathlib Fekete and the bounded-defect estimate in
-FixedGapGrowth give a real h with h*m<=f(m)<=h*m+f(6). Exponentiation gives
+GrowthTransfer give a real h with h*m<=f(m)<=h*m+f(6). Exponentiation gives
 exp(h)^m<=b(m)<=exp(h)^m*b(6). The sixteen distinct exclusive-triangle words
 supply b(3)<=13808<13824=24^3, hence h<log 24. Set q=exp(h)/24,
 c=1/exp(h)^6 and C=b(6). The actual cyclic comparisons and exact division by
@@ -69,7 +69,7 @@ Fekete then supplies one growth base for all lengths, while the exclusive
 triangle makes that base strictly smaller than 24. These are proved in
 `PaddedCompletion.count_padded_supermultiplicative`,
 `CyclicClosure.count_le_successful_profile_count`,
-`FixedGapGrowth.fixed_gap_log_bounds`, and `TriangleCount.count_three_bound`,
+`GrowthTransfer.fixed_gap_log_bounds`, and `OpenCertificates.count_three_bound`,
 and consumed by `GrowthTransfer.result`. Singles and both parities are in the
 proved domain. The constants need not be sharp; no exact value of q is claimed.
 The proof does not settle general d,r in Conjecture 3, complete-graph
