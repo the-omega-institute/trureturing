@@ -26,7 +26,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
                 + "is exactly the source's natural floor-map composition on positive naturals.",
                 DescribeRole.Definition),
             new DocumentBlock.DisplayFormula(Disp(Equal(Call("frac", F.Id("t")),
-                Sub(F.Id("t"), new Formula.Floor(F.Id("t")))))),
+                Sub(F.Id("t"), Floor(F.Id("t")))))),
             Node("fractionalTest", "Every strict source condition", TestFormula(),
                 "The function frac is Int.fract: t minus its integer floor. Every division is real "
                 + "division. Exponents and i-1 are natural-number operations; i>=2 prevents truncated "
@@ -69,7 +69,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source)
                 : AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role);
 
-    private static Formula A => F.Id("alpha");
+    private static Formula A => Alpha;
     private static Formula N => F.Id("n");
     private static Formula X => F.Id("x");
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
@@ -82,6 +82,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Div(Formula a, Formula b) => new Formula.Fraction(a, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    private static Formula Floor(Formula value) => Seq(Lfloor, Sp, value, Sp, Rfloor);
     private static Formula Frac(Formula f) => Call("frac", f);
     private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula LtN(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
@@ -93,16 +94,17 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
         FormulaQuantifier.ForAll, [new(FormulaIdentifier.Create(name), domain)], body);
     private static Formula Ex(string name, Formula domain, Formula body) => new Formula.BindMany(
         FormulaQuantifier.Exists, [new(FormulaIdentifier.Create(name), domain)], body);
+    private static Formula ForAlpha(Formula body) => Seq(Forall, Sp, A, InMacro, Sp, Real(), Comma, Sp, body);
 
-    private static Formula StepFormula() => Disp(For("alpha", Real(), For("k", Nat(),
+    private static Formula StepFormula() => Disp(ForAlpha(For("k", Nat(),
         Equal(Call("nativeBeatty", A, F.Id("k")),
-            new Formula.Subscript(new Formula.Floor(Mul(A, F.Id("k"))), Nat())))));
+            new Formula.Subscript(Floor(Mul(A, F.Id("k"))), Nat())))));
 
     private static Formula RangeFormula()
     {
         var k = F.Id("k");
         var iterate = new Formula.Apply(Pow(Par(Call("nativeBeatty", A)), Seq(OpenBracket, N, CloseBracket)), [k]);
-        return Disp(For("alpha", Real(), For("n", Nat(), For("x", Nat(),
+        return Disp(ForAlpha(For("n", Nat(), For("x", Nat(),
             Iff(Call("nativeRange", A, N, X), Ex("k", Nat(), And(LeN(D(1), k), Equal(iterate, X))))))));
     }
 
@@ -115,7 +117,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
                 And(LtN(Sub(D(1), Div(D(2), A)), middle), LtN(middle, Sub(D(1), Div(D(1), A))))))));
     }
 
-    private static Formula TestFormula() => Disp(For("alpha", Real(), For("n", Nat(), For("x", Nat(),
+    private static Formula TestFormula() => Disp(ForAlpha(For("n", Nat(), For("x", Nat(),
         Iff(Call("fractionalTest", A, N, X), TestBody())))));
 
     private static Formula ClaimBody()
@@ -124,7 +126,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
         var inputs = For("x", Nat(), Imp(LeN(D(1), X), equivalence));
         var iterates = For("n", Nat(), Imp(LeN(D(1), N), inputs));
         var upper = LtN(A, Div(Add(D(3), Seq(Sqrt, Grp(D(5)))), D(2)));
-        return For("alpha", Real(), Imp(Call("Irrational", A),
+        return ForAlpha(Imp(Call("Irrational", A),
             Imp(LtN(D(1), A), Imp(upper, iterates))));
     }
 }
