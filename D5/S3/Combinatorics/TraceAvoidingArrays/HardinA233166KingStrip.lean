@@ -10,6 +10,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Data.Fin.Init
 import Mathlib.Tactic.FinCases
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 
 /-!
 The literal array count retains strict first-occurrence conditions and free
@@ -342,5 +343,368 @@ def zoneEquiv {n : ℕ} (hn : 0 < n) :
       rw [z.2.1,Fin.xor_zero]
       rw [← Fin.xor_assoc (show 4 = 2^2 from rfl),Fin.xor_self,
         Fin.xor_comm,Fin.xor_zero]
+
+
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical (Canonical)
+open private first_occurrence First firstEquiv canonical_unique from
+  D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+
+private def colourEquiv8 : Fin 8 ≃ Fin 4 × Bool where
+  toFun x := (beta x, decide (4 ≤ x.val))
+  invFun p := if p.2 then ⟨7 - p.1.val, by have := p.1.isLt; omega⟩
+    else ⟨p.1.val, by have := p.1.isLt; omega⟩
+  left_inv := by decide +kernel
+  right_inv := by decide +kernel
+
+
+private def Normal8 {C : Type*} [LT C] (f : C → Fin 8) : Prop :=
+  ∀ i,
+    ((f i = 2 ∨ f i = 3 ∨ f i = 4 ∨ f i = 5 ∨ f i = 6) →
+      ∃ j, j < i ∧ f j = 1) ∧
+    ((f i = 3 ∨ f i = 4 ∨ f i = 5) → ∃ j, j < i ∧ f j = 2) ∧
+    (f i = 4 → ∃ j, j < i ∧ f j = 3)
+
+private def FirstSides8 {C : Type*} [LT C] (f : C → Fin 8) : Prop :=
+  ∀ i, (∀ j, j < i → beta (f j) ≠ beta (f i)) →
+    (f i).val = (beta (f i)).val
+
+private theorem normalization8_iff {C : Type*} [Fintype C] [LinearOrder C]
+    (z : C) (hz : ∀ i, z ≤ i) (f : C → Fin 8) (hf : f z = 0) :
+    Normal8 f ↔ Canonical (beta ∘ f) ∧ FirstSides8 f := by
+  classical
+  constructor
+  · intro hn
+    have before (i : C) (hi : beta (f i) ≠ 0) : z < i := by
+      apply lt_of_le_of_ne (hz i)
+      intro he
+      subst i
+      exact hi (by rw [hf]; rfl)
+    constructor
+    · intro i b hb
+      change b < beta (f i) at hb
+      by_cases hb0 : b = 0
+      · subst b
+        exact ⟨z, before i (ne_of_gt hb), by change beta (f z) = 0; rw [hf]; rfl⟩
+      · have hx : ∀ x : Fin 8, ∀ b : Fin 4, b ≠ 0 → b < beta x →
+            (b = 1 ∧ (x = 2 ∨ x = 3 ∨ x = 4 ∨ x = 5)) ∨
+            (b = 2 ∧ (x = 3 ∨ x = 4)) := by decide +kernel
+        rcases hx (f i) b hb0 hb with ⟨rfl,hx⟩ | ⟨rfl,hx⟩
+        · obtain ⟨j,hj,he⟩ := (hn i).1 (by
+            rcases hx with h | h | h | h
+            · exact Or.inl h
+            · exact Or.inr (Or.inl h)
+            · exact Or.inr (Or.inr (Or.inl h))
+            · exact Or.inr (Or.inr (Or.inr (Or.inl h))))
+          exact ⟨j,hj,by change beta (f j) = 1; rw [he]; rfl⟩
+        · obtain ⟨j,hj,he⟩ := (hn i).2.1 (by
+            rcases hx with h | h
+            · exact Or.inl h
+            · exact Or.inr (Or.inl h))
+          exact ⟨j,hj,by change beta (f j) = 2; rw [he]; rfl⟩
+    · intro i hi
+      have hi' := hn i
+      generalize he : f i = x at *
+      fin_cases x
+      · rfl
+      · rfl
+      · rfl
+      · rfl
+      · obtain ⟨j,hj,h⟩ := hi'.2.2 rfl
+        exact False.elim (hi j hj (by rw [h]; rfl))
+      · obtain ⟨j,hj,h⟩ := hi'.2.1 (Or.inr (Or.inr rfl))
+        exact False.elim (hi j hj (by rw [h]; rfl))
+      · obtain ⟨j,hj,h⟩ := hi'.1 (Or.inr (Or.inr (Or.inr (Or.inr rfl))))
+        exact False.elim (hi j hj (by rw [h]; rfl))
+      · have hzlt : z < i := by
+          apply lt_of_le_of_ne (hz i)
+          intro hei
+          have hv := congrArg (fun j => (f j).val) hei
+          rw [hf,he] at hv
+          norm_num at hv
+        exact False.elim (hi z hzlt (by rw [hf]; rfl))
+  · rintro ⟨hc,hs⟩
+    have lift (i : C) (d : Fin 4) (h : ∃ j, j < i ∧ beta (f j) = d) :
+        ∃ j, j < i ∧ f j = ⟨d.val,by have := d.isLt; omega⟩ := by
+      obtain ⟨j,hj,hd⟩ := h
+      obtain ⟨t,ht,he,hfirst⟩ := first_occurrence (beta ∘ f) j
+      have hs' := hs t hfirst
+      refine ⟨t,lt_of_le_of_lt ht hj,Fin.ext ?_⟩
+      exact hs'.trans (congrArg Fin.val (he.trans hd))
+    have earlier (i : C) (h : (f i).val ≠ (beta (f i)).val) :
+        ∃ j, j < i ∧ beta (f j) = beta (f i) := by
+      by_contra hn
+      apply h
+      exact hs i (fun j hj he => hn ⟨j,hj,he⟩)
+    intro i
+    have h1 (h : f i = 2 ∨ f i = 3 ∨ f i = 4 ∨ f i = 5 ∨ f i = 6) :
+        ∃ j, j < i ∧ f j = 1 := by
+      have hlabel : ∃ j, j < i ∧ beta (f j) = 1 := by
+        rcases h with h | h | h | h | h
+        · exact hc i 1 (by change (1 : Fin 4) < beta (f i); rw [h]; decide)
+        · exact hc i 1 (by change (1 : Fin 4) < beta (f i); rw [h]; decide)
+        · exact hc i 1 (by change (1 : Fin 4) < beta (f i); rw [h]; decide)
+        · exact hc i 1 (by change (1 : Fin 4) < beta (f i); rw [h]; decide)
+        · simpa only [h,show beta (6 : Fin 8) = 1 from rfl] using
+            earlier i (by rw [h]; decide)
+      exact lift i 1 hlabel
+    have h2 (h : f i = 3 ∨ f i = 4 ∨ f i = 5) :
+        ∃ j, j < i ∧ f j = 2 := by
+      have hlabel : ∃ j, j < i ∧ beta (f j) = 2 := by
+        rcases h with h | h | h
+        · exact hc i 2 (by change (2 : Fin 4) < beta (f i); rw [h]; decide)
+        · exact hc i 2 (by change (2 : Fin 4) < beta (f i); rw [h]; decide)
+        · simpa only [h,show beta (5 : Fin 8) = 2 from rfl] using
+            earlier i (by rw [h]; decide)
+      exact lift i 2 hlabel
+    refine ⟨h1,h2,?_⟩
+    intro h
+    apply lift i 3
+    simpa only [h,show beta (4 : Fin 8) = 3 from rfl] using
+      earlier i (by rw [h]; decide)
+
+private abbrev Fibre8 {C : Type*} [LT C] (P : C → Fin 4) :=
+  {f : C → Fin 8 // (∀ i, beta (f i) = P i) ∧ FirstSides8 f}
+
+private theorem side_false8 (x : Fin 8) :
+    (colourEquiv8 x).2 = false ↔ x.val = (beta x).val := by
+  fin_cases x <;> decide +kernel
+
+private noncomputable def fibreEquiv8 {C : Type*} [Fintype C] [LinearOrder C]
+    (P : C → Fin 4) : Fibre8 P ≃ ({i // ¬ First P i} → Bool) := by
+  classical
+  let build (b : {i // ¬ First P i} → Bool) (i : C) : Fin 8 :=
+    colourEquiv8.symm (P i, if hi : First P i then false else b ⟨i, hi⟩)
+  have build_label (b : {i // ¬ First P i} → Bool) (i : C) :
+      beta (build b i) = P i := by
+    exact congrArg Prod.fst (colourEquiv8.apply_symm_apply _)
+  have build_bit (b : {i // ¬ First P i} → Bool) (i : C) :
+      (colourEquiv8 (build b i)).2 = if hi : First P i then false else b ⟨i, hi⟩ := by
+    exact congrArg Prod.snd (colourEquiv8.apply_symm_apply _)
+  refine {
+    toFun := fun f i => (colourEquiv8 (f.val i.val)).2
+    invFun := fun b => ⟨build b, build_label b, ?_⟩
+    left_inv := ?_
+    right_inv := ?_ }
+  · intro i hi
+    apply (side_false8 _).mp
+    rw [build_bit]
+    have hf : First P i := by
+      intro j hj he
+      exact hi j hj (by rw [build_label, build_label, he])
+    simp only [dite_eq_left hf]
+  · intro f
+    apply Subtype.ext
+    funext i
+    change build (fun j => (colourEquiv8 (f.val j.val)).2) i = f.val i
+    apply colourEquiv8.injective
+    apply Prod.ext
+    · change beta (build (fun j => (colourEquiv8 (f.val j.val)).2) i) = beta (f.val i)
+      exact (build_label (fun j => (colourEquiv8 (f.val j.val)).2) i).trans
+        (f.property.1 i).symm
+    · rw [build_bit (fun j => (colourEquiv8 (f.val j.val)).2) i]
+      by_cases hi : First P i
+      · rw [dite_eq_left hi]
+        apply ((side_false8 _).mpr (f.property.2 i ?_)).symm
+        intro j hj he
+        exact hi j hj (by rw [← f.property.1 j, ← f.property.1 i]; exact he)
+      · rw [dite_eq_right hi]
+  · intro b
+    funext i
+    change (colourEquiv8 (build b i.val)).2 = b i
+    rw [build_bit, dite_eq_right i.property]
+
+private theorem fibre_card8 {C : Type*} [Fintype C] [LinearOrder C] (P : C → Fin 4) :
+    Nat.card (Fibre8 P) = 2 ^ (Fintype.card C - Nat.card (Set.range P)) := by
+  classical
+  have hf : Fintype.card {i // First P i} = Fintype.card (Set.range P) :=
+    Fintype.card_congr (firstEquiv P)
+  rw [Nat.card_congr (fibreEquiv8 P), Nat.card_eq_fintype_card]
+  simp only [Fintype.card_fun, Fintype.card_bool, Fintype.card_subtype_compl, hf,
+    Nat.card_eq_fintype_card]
+
+
+open scoped Classical in
+private theorem normalized_card8 {C : Type*} [Fintype C] [LinearOrder C]
+    (z : C) (hz : ∀ i, z ≤ i) (S : (C → Fin 4) → Prop) :
+    Nat.card {f : C → Fin 8 // S (beta ∘ f) ∧ f z = 0 ∧ Normal8 f} =
+      ∑ P : {P : C → Fin 4 // S P ∧ Canonical P},
+        2 ^ (Fintype.card C - Nat.card (Set.range P.val)) := by
+  classical
+  have first_zero (P : C → Fin 4) (hc : Canonical P) : P z = 0 := by
+    by_contra hn
+    have hlt : (0 : Fin 4) < P z := Fin.pos_iff_ne_zero.mpr hn
+    obtain ⟨j, hj, _⟩ := hc z 0 hlt
+    exact (not_lt_of_ge (hz j)) hj
+  have mk_normal (P : {P : C → Fin 4 // S P ∧ Canonical P}) (f : Fibre8 P.val) :
+      S (beta ∘ f.val) ∧ f.val z = 0 ∧ Normal8 f.val := by
+    have heq : beta ∘ f.val = P.val := funext f.property.1
+    have hc : Canonical (beta ∘ f.val) := by rw [heq]; exact P.property.2
+    have hzero : f.val z = 0 := by
+      have hfirst := f.property.2 z (fun j hj => False.elim ((not_lt_of_ge (hz j)) hj))
+      apply Fin.ext
+      exact hfirst.trans (congrArg Fin.val ((f.property.1 z).trans
+        (first_zero P.val P.property.2)))
+    exact ⟨by rw [heq]; exact P.property.1, hzero,
+      (normalization8_iff z hz f.val hzero).mpr ⟨hc, f.property.2⟩⟩
+  let E : (Σ P : {P : C → Fin 4 // S P ∧ Canonical P}, Fibre8 P.val) →
+      {f : C → Fin 8 // S (beta ∘ f) ∧ f z = 0 ∧ Normal8 f} :=
+    fun p => ⟨p.2.val, mk_normal p.1 p.2⟩
+  have hE : Function.Bijective E := by
+    constructor
+    · rintro ⟨P, f⟩ ⟨Q, g⟩ h
+      have hfg : f.val = g.val := congrArg Subtype.val h
+      have hPQ : P = Q := by
+        apply Subtype.ext
+        funext i
+        rw [← f.property.1 i, ← g.property.1 i, hfg]
+      cases hPQ
+      exact Sigma.ext rfl (heq_of_eq (Subtype.ext hfg))
+    · intro f
+      have hn := (normalization8_iff z hz f.val f.property.2.1).mp f.property.2.2
+      exact ⟨⟨⟨beta ∘ f.val, f.property.1, hn.1⟩, ⟨f.val, fun _ => rfl, hn.2⟩⟩, rfl⟩
+  rw [← Nat.card_congr (Equiv.ofBijective E hE), Nat.card_eq_fintype_card,
+    Fintype.card_sigma]
+  apply Finset.sum_congr rfl
+  intro P _
+  simpa only [Nat.card_eq_fintype_card] using fibre_card8 P.val
+
+private theorem canonical_pattern_card4 {C : Type*} [Fintype C] [LinearOrder C]
+    (S : (C → Fin 4) → Prop)
+    (hinv : ∀ e : Equiv.Perm (Fin 4), ∀ P, S (e ∘ P) ↔ S P)
+    (huse : ∀ P, S P → Function.Surjective P) :
+    Nat.card {P // S P} = 24 * Nat.card {P // S P ∧ Canonical P} := by
+  classical
+  let E : ({P // S P ∧ Canonical P} × Equiv.Perm (Fin 4)) → {P // S P} :=
+    fun q => ⟨q.2 ∘ q.1.val, (hinv q.2 q.1.val).mpr q.1.property.1⟩
+  have hE : Function.Bijective E := by
+    constructor
+    · rintro ⟨Q, e⟩ ⟨R, d⟩ he
+      have heq : e ∘ Q.val = d ∘ R.val := congrArg Subtype.val he
+      have hQR : Q.val = R.val := by
+        apply canonical_unique _ _ Q.property.2 R.property.2
+        intro i j
+        calc
+          Q.val i = Q.val j ↔ e (Q.val i) = e (Q.val j) := e.injective.eq_iff.symm
+          _ ↔ d (R.val i) = d (R.val j) := by
+            rw [show e (Q.val i) = d (R.val i) from congrFun heq i,
+              show e (Q.val j) = d (R.val j) from congrFun heq j]
+          _ ↔ R.val i = R.val j := d.injective.eq_iff
+      have hsub : Q = R := Subtype.ext hQR
+      subst R
+      have hed : e = d := by
+        ext b
+        obtain ⟨i,rfl⟩ := huse Q.val Q.property.1 b
+        exact congrFun heq i
+      exact Prod.ext rfl hed
+    · intro P
+      obtain ⟨Q, ⟨hQ, e, he⟩, _⟩ := D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.canonical_exists_unique P.val
+      have hSQ : S Q := he ▸ (hinv e P.val).mpr P.property
+      refine ⟨(⟨Q, hSQ, hQ⟩, e.symm), ?_⟩
+      apply Subtype.ext
+      funext i
+      change e.symm (Q i) = P.val i
+      rw [he]
+      exact e.symm_apply_apply _
+  have hc := Nat.card_congr (Equiv.ofBijective E hE)
+  rw [Nat.card_prod, Nat.card_eq_fintype_card (α := Equiv.Perm (Fin 4)),
+    Fintype.card_perm, Fintype.card_fin] at hc
+  norm_num at hc
+  simpa only [Nat.mul_comm, Nat.card_eq_fintype_card] using hc.symm
+
+
+
+private theorem legal_word_iff {n : ℕ} (hn : 0 < n) (f : Fin (n*6) → Fin 8) :
+    Legal (fun p => f (finProdFinEquiv p)) ↔
+      Proper (fun p => beta (f (finProdFinEquiv p))) ∧
+        f ⟨0,by omega⟩ = 0 ∧ Normal8 f := by
+  constructor
+  · intro hf
+    refine ⟨legal_proper _ hf, ?_, ?_⟩
+    · obtain ⟨i,hi,hf⟩ := hf.1
+      have he : finProdFinEquiv (i,(0 : Fin 6)) = (⟨0,by omega⟩ : Fin (n*6)) := by
+        apply Fin.ext
+        dsimp [finProdFinEquiv]
+        omega
+      simpa only [he] using hf
+    · intro p
+      let q : Fin n × Fin 6 := finProdFinEquiv.symm p
+      have he : finProdFinEquiv q = p := finProdFinEquiv.apply_symm_apply p
+      have h := hf.2.2 q
+      rw [he] at h
+      have push (d : Fin 8) (h : ∃ r : Fin n × Fin 6,
+          6*r.1.val+r.2.val < 6*q.1.val+q.2.val ∧ f (finProdFinEquiv r) = d) :
+          ∃ t, t < p ∧ f t = d := by
+        obtain ⟨r,hr,hd⟩ := h
+        refine ⟨finProdFinEquiv r,?_,hd⟩
+        have heval := congrArg Fin.val he
+        change (finProdFinEquiv r).val < p.val
+        dsimp [finProdFinEquiv] at heval ⊢
+        omega
+      exact ⟨fun h' => push 1 (h.1 h'), fun h' => push 2 (h.2.1 h'),
+        fun h' => push 3 (h.2.2 h')⟩
+  · rintro ⟨hp,hz,hnorm⟩
+    refine ⟨⟨⟨0,hn⟩,rfl,?_⟩,?_,?_⟩
+    · exact hz
+    · intro p q hne h₁ h₂ h₃ h₄
+      exact (colour_bond_iff _ _).mpr (hp p q hne h₁ h₂ h₃ h₄)
+    · intro p
+      have h := hnorm (finProdFinEquiv p)
+      have pull (d : Fin 8) (h : ∃ t, t < finProdFinEquiv p ∧ f t = d) :
+          ∃ q : Fin n × Fin 6,
+            6*q.1.val+q.2.val < 6*p.1.val+p.2.val ∧ f (finProdFinEquiv q) = d := by
+        obtain ⟨t,ht,hd⟩ := h
+        let q : Fin n × Fin 6 := finProdFinEquiv.symm t
+        have he : finProdFinEquiv q = t := finProdFinEquiv.apply_symm_apply t
+        refine ⟨q,?_,by rw [he]; exact hd⟩
+        have heval := congrArg Fin.val he
+        change t.val < (finProdFinEquiv p).val at ht
+        dsimp [finProdFinEquiv] at heval ht
+        omega
+      exact ⟨fun h' => pull 1 (h.1 h'),fun h' => pull 2 (h.2.1 h'),
+        fun h' => pull 3 (h.2.2 h')⟩
+
+/-- The signed fibre and label-permutation factors for the literal count. -/
+theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
+    24 * a n = 2^(6*n-4) * Nat.card {c : Fin n × Fin 6 → Fin 4 // Proper c} := by
+  classical
+  let S (P : Fin (n*6) → Fin 4) := Proper (fun p => P (finProdFinEquiv p))
+  let A := {f : Fin (n*6) → Fin 8 // S (beta ∘ f) ∧ f ⟨0,by omega⟩ = 0 ∧ Normal8 f}
+  let E : {f : Fin n × Fin 6 → Fin 8 // Legal f} ≃ A := {
+    toFun := fun g => ⟨fun t => g.val (finProdFinEquiv.symm t),
+      (legal_word_iff (by omega) _).mp (by simpa only [Equiv.symm_apply_apply] using g.property)⟩
+    invFun := fun f => ⟨fun p => f.val (finProdFinEquiv p),
+      (legal_word_iff (by omega) _).mpr f.property⟩
+    left_inv := fun f => Subtype.ext (by funext p; simp only [Equiv.symm_apply_apply])
+    right_inv := fun f => Subtype.ext (by funext p; simp only [Equiv.apply_symm_apply]) }
+  have ha : a n = Nat.card A := by
+    rw [← Nat.card_congr E, Nat.card_eq_fintype_card]
+    exact (Fintype.card_subtype (fun f => Legal f)).symm
+  have huse : ∀ P, S P → Function.Surjective P := by
+    intro P hp k
+    obtain ⟨p,_,he⟩ := proper_exhausts hn _ hp k
+    exact ⟨finProdFinEquiv p,he⟩
+  have hs := normalized_card8 (⟨0,by omega⟩ : Fin (n*6)) (fun i => Fin.zero_le i) S
+  have hfibre : a n = 2^(6*n-4) * Nat.card {P // S P ∧ Canonical P} := by
+    rw [ha]
+    change Nat.card {f : Fin (n*6) → Fin 8 // S (beta ∘ f) ∧ f ⟨0,by omega⟩ = 0 ∧ Normal8 f} = _
+    rw [hs]
+    have hrange (P : {P // S P ∧ Canonical P}) : Set.range P.val = Set.univ :=
+      Set.range_eq_univ.mpr (huse P.val P.property.1)
+    simp only [hrange, Nat.card_eq_fintype_card, Fintype.card_fin, Fintype.card_set_univ,
+      Finset.sum_const, Finset.card_univ, smul_eq_mul]
+    rw [Nat.mul_comm n 6, Nat.mul_comm]
+  have hperm := canonical_pattern_card4 S (by
+    intro e P
+    constructor <;> intro hp p q hne h₁ h₂ h₃ h₄
+    · exact fun he => hp p q hne h₁ h₂ h₃ h₄ (congrArg e he)
+    · exact fun he => hp p q hne h₁ h₂ h₃ h₄ (e.injective he)) huse
+  let EP : {P // S P} ≃ {c : Fin n × Fin 6 → Fin 4 // Proper c} := {
+    toFun := fun P => ⟨fun p => P.val (finProdFinEquiv p),P.property⟩
+    invFun := fun c => ⟨fun t => c.val (finProdFinEquiv.symm t),by
+      simpa only [S,Equiv.symm_apply_apply] using c.property⟩
+    left_inv := fun P => Subtype.ext (by funext t; simp only [Equiv.apply_symm_apply])
+    right_inv := fun c => Subtype.ext (by funext p; simp only [Equiv.symm_apply_apply]) }
+  rw [← Nat.card_congr EP, hperm,hfibre]
+  ring
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
