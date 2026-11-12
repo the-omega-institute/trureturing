@@ -31,35 +31,33 @@ theorem firstRetentionAux_mem_iff (seen xs : List ℚ) (x : ℚ) :
   | nil => simp [firstRetentionAux]
   | cons a xs ih =>
       by_cases ha : a ∈ seen
-      · simp [firstRetentionAux, ha, ih]
-      · simp only [firstRetentionAux, if_neg ha, List.mem_cons, ih]
-        constructor
-        · intro h
-          rcases h with h | h
-          · exact ⟨Or.inl rfl, by simpa [h] using ha⟩
-          · exact ⟨Or.inr h.1, h.2⟩
-        · rintro ⟨hmem, hseen⟩
-          rcases hmem with rfl | hmem
-          · exact Or.inl rfl
-          · exact Or.inr ⟨hmem, by simpa using hseen⟩
+      · rw [firstRetentionAux, if_pos ha, ih seen]
+        by_cases hxa : x = a <;> simp [hxa, ha]
+      · rw [firstRetentionAux, if_neg ha]
+        simp only [List.mem_cons]
+        rw [ih (a :: seen)]
+        by_cases hxa : x = a <;> simp [hxa, ha]
 
 theorem firstRetention_mem_iff (xs : List ℚ) (x : ℚ) :
     x ∈ firstRetention xs ↔ x ∈ xs := by
   simpa [firstRetention] using firstRetentionAux_mem_iff ([] : List ℚ) xs x
 
-theorem firstRetention_nodup (xs : List ℚ) : (firstRetention xs).Nodup := by
-  unfold firstRetention
-  induction xs with
+theorem firstRetentionAux_nodup (seen xs : List ℚ) :
+    (firstRetentionAux seen xs).Nodup := by
+  induction xs generalizing seen with
   | nil => simp [firstRetentionAux]
   | cons a xs ih =>
-      by_cases ha : a ∈ ([] : List ℚ)
+      by_cases ha : a ∈ seen
       · simp [firstRetentionAux, ha, ih]
       · simp only [firstRetentionAux, if_neg ha]
         apply List.nodup_cons.mpr
-        refine ⟨?_, ih⟩
+        refine ⟨?_, ih (a :: seen)⟩
         intro h
         rw [firstRetentionAux_mem_iff] at h
         exact h.2 (by simp)
+
+theorem firstRetention_nodup (xs : List ℚ) : (firstRetention xs).Nodup := by
+  exact firstRetentionAux_nodup [] xs
 
 /-- The complete ordered pair list, with the outer index first. -/
 def pairList (xs : List ℚ) : List ℚ :=
@@ -67,7 +65,15 @@ def pairList (xs : List ℚ) : List ℚ :=
 
 theorem pairList_mem_iff (xs : List ℚ) (z : ℚ) :
     z ∈ pairList xs ↔ ∃ x ∈ xs, ∃ y ∈ xs, z = x / (1 + y) := by
-  simp [pairList, List.mem_flatMap]
+  constructor
+  · intro hz
+    rcases (List.mem_flatMap.mp hz) with ⟨x, hx, hz⟩
+    rcases List.mem_map.mp hz with ⟨y, hy, hxy⟩
+    exact ⟨x, hx, y, hy, hxy.symm⟩
+  · rintro ⟨x, hx, y, hy, hxy⟩
+    apply List.mem_flatMap.mpr
+    refine ⟨x, hx, List.mem_map.mpr ⟨y, hy, ?_⟩⟩
+    exact hxy.symm
 
 /-- New values are first-retained among the pair list, while the old prefix is untouched. -/
 def freshTail (xs : List ℚ) : List ℚ :=
@@ -88,10 +94,9 @@ theorem nextList_mem_iff (xs : List ℚ) (z : ℚ) :
     · exact Or.inr h
   · rintro (h | h)
     · exact Or.inl h
-    · exact Or.inr ⟨h, by
-        intro hz
-        rcases h with ⟨x, hx, y, hy, rfl⟩
-        exact hz⟩
+    · by_cases hz : z ∈ xs
+      · exact Or.inl hz
+      · exact Or.inr ⟨h, hz⟩
 
 theorem freshTail_nodup (xs : List ℚ) : (freshTail xs).Nodup := by
   exact firstRetention_nodup _
@@ -123,7 +128,7 @@ theorem cumulative_mono {m n : ℕ} (hmn : m ≤ n) :
   | base => exact fun z hz => hz
   | succ n hmn ih =>
       intro z hz
-      exact (cumulative_prefix n).mem hz |>.trans (ih z)
+      exact (cumulative_prefix n).mem (ih z hz)
 
 theorem cumulative_one_mem (n : ℕ) : (1 : ℚ) ∈ cumulative n := by
   exact cumulative_mono (Nat.zero_le n) 1 (by simp [cumulative])
@@ -136,60 +141,86 @@ theorem coverage_q : ∀ q p : ℕ, 1 ≤ p → p ≤ q →
       intro p hp hpq
       by_cases hpeq : p = q
       · subst q
-        simpa [div_self (by exact_mod_cast hp.ne')]
-          using cumulative_one_mem p
+        have hp0 : (p : ℚ) ≠ 0 := by
+          exact_mod_cast (show p ≠ 0 by omega)
+        rw [div_self hp0]
+        exact cumulative_one_mem p
       have hpq' : p < q := by omega
       by_cases hdiag : 2 * p ≤ q
       · have hd : 1 ≤ q - p := by omega
         have hlt : q - p < q := by omega
         have hpd : p ≤ q - p := by omega
         have ht := ih (q - p) hlt p hp hpd
-        have ht' : ((p : ℚ) / ((q - p : ℕ) : ℚ)) ∈ cumulative q :=
-          cumulative_mono (by omega) ht
+        have ht' : ((p : ℚ) / ((q - p : ℕ) : ℚ)) ∈ cumulative (q - 1) :=
+          cumulative_mono (m := q - p) (n := q - 1) (by omega) _ ht
         have hpair : (p : ℚ) / (q : ℚ) =
             ((p : ℚ) / ((q - p : ℕ) : ℚ)) /
               (1 + (p : ℚ) / ((q - p : ℕ) : ℚ)) := by
-          have hq : (q : ℚ) ≠ 0 := by exact_mod_cast (by omega : 0 < q)
-          have hdq : ((q - p : ℕ) : ℚ) ≠ 0 := by exact_mod_cast (by omega : 0 < q - p)
+          have hq : (q : ℚ) ≠ 0 := by
+            exact_mod_cast (show q ≠ 0 by omega)
+          have hdq : ((q - p : ℕ) : ℚ) ≠ 0 := by
+            exact_mod_cast (show q - p ≠ 0 by omega)
           field_simp [hq, hdq]
-          ring
+          norm_num [Nat.cast_sub (by omega : p ≤ q)]
         rw [hpair]
-        exact (nextList_mem_iff (cumulative q) _).mpr
+        have hnext := (nextList_mem_iff (cumulative (q - 1)) _).mpr
           (Or.inr ⟨_, ht', _, ht', rfl⟩)
+        have hcum : cumulative q = nextList (cumulative (q - 1)) := by
+          obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
+          simp [cumulative]
+        rw [hcum]
+        exact hnext
       · have ha : 1 ≤ q - p := by omega
         have hlt : p < q := hpq'
         have hat := ih p hlt (q - p) ha (by omega)
-        have hat' : ((q - p : ℕ) : ℚ) / (p : ℚ) ∈ cumulative q :=
-          cumulative_mono (by omega) hat
-        have hone : (1 : ℚ) ∈ cumulative q := cumulative_one_mem q
+        have hat' : ((q - p : ℕ) : ℚ) / (p : ℚ) ∈ cumulative (q - 1) :=
+          cumulative_mono (m := p) (n := q - 1) (by omega) _ hat
+        have hone : (1 : ℚ) ∈ cumulative (q - 1) := cumulative_one_mem (q - 1)
         have hpair : (p : ℚ) / (q : ℚ) =
             (1 : ℚ) / (1 + ((q - p : ℕ) : ℚ) / (p : ℚ)) := by
-          have hq : (q : ℚ) ≠ 0 := by exact_mod_cast (by omega : 0 < q)
-          have hpq0 : (p : ℚ) ≠ 0 := by exact_mod_cast (by omega : 0 < p)
+          have hq : (q : ℚ) ≠ 0 := by
+            exact_mod_cast (show q ≠ 0 by omega)
+          have hpq0 : (p : ℚ) ≠ 0 := by
+            exact_mod_cast (show p ≠ 0 by omega)
           field_simp [hq, hpq0]
-          ring
+          norm_num [Nat.cast_sub (by omega : p ≤ q)]
         rw [hpair]
-        exact (nextList_mem_iff (cumulative q) _).mpr
+        have hnext := (nextList_mem_iff (cumulative (q - 1)) _).mpr
           (Or.inr ⟨1, hone, _, hat', rfl⟩)
+        have hcum : cumulative q = nextList (cumulative (q - 1)) := by
+          obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
+          simp [cumulative]
+        rw [hcum]
+        exact hnext
 
 /-- Every rational in `(0,1]` occurs in the exact first-retention cumulative run. -/
 theorem every_rational_interval (r : ℚ) (hr : 0 < r) (hr1 : r ≤ 1) :
-    r ∈ cumulative r.den := by
+  ∃ p q : ℕ, 1 ≤ p ∧ p ≤ q ∧ r = (p : ℚ) / (q : ℚ) ∧
+    (p : ℚ) / (q : ℚ) ∈ cumulative q := by
   have hnum : 0 < r.num := Rat.num_pos.mpr hr
   have hden : 0 < r.den := r.den_pos
   have hfrac : (r.num : ℚ) / (r.den : ℚ) ≤ 1 := by
     simpa [r.num_div_den] using hr1
   have hnumdenQ : (r.num : ℚ) ≤ (r.den : ℚ) := by
-    exact (div_le_iff₀ (by exact_mod_cast hden)).mp hfrac
+    simpa using (div_le_iff₀ (by exact_mod_cast hden)).mp hfrac
   have hnumden : r.num ≤ (r.den : ℤ) := by exact_mod_cast hnumdenQ
   let p : ℕ := r.num.natAbs
   have hpcast : (p : ℤ) = r.num := by
     simpa [p] using (Int.natAbs_of_nonneg (le_of_lt hnum))
   have hp : 1 ≤ p := by
-    exact_mod_cast hnum
+    have : 0 < p := by
+      exact Int.natAbs_pos.mpr (ne_of_gt hnum)
+    omega
   have hpq : p ≤ r.den := by
-    exact_mod_cast hnumden
+    have hnumden' : (p : ℤ) ≤ (r.den : ℤ) := by
+      simpa [hpcast] using hnumden
+    exact_mod_cast hnumden'
   have h := coverage_q r.den p hp hpq
-  simpa [hpcast, p, Rat.num_div_den] using h
+  have hpqcast : (p : ℚ) = r.num := by exact_mod_cast hpcast
+  have hr_eq : r = (p : ℚ) / (r.den : ℚ) := by
+    calc
+      r = (r.num : ℚ) / (r.den : ℚ) := (Rat.num_div_den r).symm
+      _ = (p : ℚ) / (r.den : ℚ) := by rw [hpqcast]
+  exact ⟨p, r.den, hp, hpq, hr_eq, h⟩
 
 end D5.S3.Arith.CounterSequences.KimberlingA371279
