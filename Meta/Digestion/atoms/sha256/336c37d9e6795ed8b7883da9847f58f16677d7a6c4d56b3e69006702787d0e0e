@@ -1,0 +1,56 @@
+**引理 46.3（代价中心与系数的显式恒等式）。** 令 $t_c=1/4$、$Y=y^2>1$。
+定义 46.2 的系数满足
+
+$$
+\begin{aligned}
+f_1&=-\frac{6i(x-1)\overline\ell(\ell-1)}{xy},\\
+g_0&=\frac{3i(x+1)\overline\ell(\ell-2)}{4xy},\\
+F(t_c)&=\frac{x-4}{2}-i\frac{5Y+6(x-1)^2}{2y},\\
+G(t_c)&=(\ell-2)\left[2+\frac{3i(x+1)}{2y}\right].
+\end{aligned}
+\tag{46.9}
+$$
+
+特别地，$F(t_c)G(t_c)\ne0$。若再置 $z=4t$、$\beta=3(1+z)$，则
+
+$$
+G(t)=-\frac{2-\ell}{4}
+\left[D+i\frac{\beta(x+1)}y\right],\qquad
+D=3+5z-\frac{3(z-1)}x.
+\tag{46.10}
+$$
+
+**证明。** 在 (46.5) 中，
+$\partial_t\alpha_0=6(x-1)/y$、
+$\partial_t\kappa_0=-6(x-1)/x$。
+因此
+
+$$
+f_1=6(x-1)(1-\ell)(1/x+i/y)
+=-\frac{6i(x-1)\overline\ell(\ell-1)}{xy}.
+$$
+
+在 $t=0$ 代入 $\chi_0=-3(x+1)/(2y)$、
+$\kappa_0=-3(x+1)/(2x)$，即得 $g_0$ 式。
+这两式亦是前卷 (44.1) 的因式写法。
+在 $t=t_c$，$\beta_0=6$、$Z_0=0$、$\kappa_0=-3$。
+逐项相乘得
+
+$$
+\begin{aligned}
+F(t_c)
+&=i(1-\ell)\left[\frac{3(x-1)}y-3i\right]-(2-\ell/2)\\
+&=\frac{x-4}{2}-i\frac{5Y+6(x-1)^2}{2y}.
+\end{aligned}
+$$
+
+又 $G=(2-\ell)(\kappa_0-4t+i\chi_0)/2$，而
+
+$$
+\kappa_0-4t=-\frac12\left[3+5z-\frac{3(z-1)}x\right],\qquad
+\chi_0=-\frac{3(1+z)(x+1)}{2y},
+$$
+
+给出 (46.10) 及 $z=1$ 时的 $G(t_c)$。
+$F(t_c)$ 的虚部非零，$G(t_c)$ 的两个因子也均非零，故得非消失性。∎
+

@@ -1,0 +1,19 @@
+**Proposition 2.1.** Suppose the center is $\{0,1,2\}$ and the pointwise
+sphere counts are $(1,2,4)$. The space has eight points, and at least two
+distinct distances in $(0,1)$ are necessary. Any two fixed distances in
+that gap suffice, with no extra distances in $(1,2)$.
+
+*Proof.* The recurrence gives $A_1=\{3,4\}$. Among the positive divisors
+of $4$, only $4$ is a sum from $A_1$, so $A_2=\{8\}$. As in the
+necessity proof, every strict $2$-class has four points and must be a
+single closed $1$-ball. Within such a ball every strict $1$-class has
+two points. Every point therefore has a neighbor at a distance in
+$(0,1)$. If only one distance in that interval occurred, it would be
+central, contrary to the prescribed center.
+
+Conversely, form two four-point blocks, each split into two pairs. Use the
+first chosen distance within pairs of the first block and the second within
+pairs of the second block. Put distance $1$ between pairs in a block and
+distance $2$ between blocks. This is an ultrametric by the join argument.
+Each point has exactly two neighbors at $1$ and four at $2$, and each
+chosen distance is absent from every sphere centered in the other block.

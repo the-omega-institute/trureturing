@@ -1,0 +1,2 @@
+**条件数为何必须退化。** 对任何预先固定的有限 Jordan 字典位置集，$\theta=0$ 的所有求值都实。取一个固定纯虚 Hermitian 元 $x$，使 $\|x\|_2=1$，则每个 $\langle x,w_j(\theta)\rangle$ 为 $\sin\theta$ 的倍数且余因子在零附近有界：Jordan 字的矩阵元素是 $c,t$ 的有限多项式，其纯虚部分在 $t=0$ 为零。因此若 $x=\sum_jc_jw_j(\theta)$，便有 $1\le C_W|\sin\theta|\sum_j|c_j|$。任何满足 (78.4) 的统一系数界必须至少按 $1/|\sin\theta|$ 发散，不能以“每次都生成”替代定量下界。
+
