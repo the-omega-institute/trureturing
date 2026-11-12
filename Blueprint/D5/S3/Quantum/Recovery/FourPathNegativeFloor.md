@@ -4,7 +4,45 @@
 
 The original negative defect is strictly greater than 23/50 on the whole closed Section 71 triangle.
 
-**Definition 1.1 (The constant h).**
+**Definition 1.1 (Section 71 non-radical segment bounds).**
+
+Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentNonroot`
+
+*Formalization.* `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentNonroot` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The seven entries are fixed rational values indexed by Fin 7 and used as the non-radical bounds in the full-triangle proof.
+
+**Definition 1.2 (Section 71 radical segment bounds).**
+
+Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentRadical`
+
+*Formalization.* `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentRadical` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The seven entries are fixed positive rational values indexed by Fin 7 and used as the radical bounds in the full-triangle proof.
+
+**Theorem 1.3 (Finite segment majorants below the common floor).**
+
+Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segment_majorants_lt_floor`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segment_majorants_lt_floor` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every i : Fin 7, the corresponding rational non-radical and radical entries sum to a value strictly below 49359/40000. The proof enumerates Fin 7 and closes the seven rational inequalities.
+
+The finite comparison is consumed by negative_floor when the actual closed-triangle support bounds are split into the seven cases; it makes no independent assertion about the defect.
+
+**Definition 1.4 (The constant h).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.h`
 
@@ -16,7 +54,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.h`
 
 h=1/sqrt(2).
 
-**Definition 1.2 (The constant c).**
+**Definition 1.5 (The constant c).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.c`
 
@@ -28,7 +66,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.c`
 
 c=cos(pi/8).
 
-**Definition 1.3 (The constant s).**
+**Definition 1.6 (The constant s).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.s`
 
@@ -40,7 +78,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.s`
 
 s=sin(pi/8).
 
-**Definition 1.4 (The trace threshold).**
+**Definition 1.7 (The trace threshold).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.L`
 
@@ -52,7 +90,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.L`
 
 For every real q, L(q)=19/16+q/2.
 
-**Definition 1.5 (The fixed negative-row R radical).**
+**Definition 1.8 (The fixed negative-row R radical).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.R`
 
@@ -64,7 +102,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.R`
 
 For every real q,X,Y, R(q,X,Y)=sqrt(s²X+h²Y+sh(L(q)²−X−Y)). The order of X and Y is the negative row of Definition 57.1.
 
-**Definition 1.6 (The fixed negative-row C radical).**
+**Definition 1.9 (The fixed negative-row C radical).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.C`
 
@@ -76,7 +114,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.C`
 
 For every real q,X,Y, C(q,X,Y)=sqrt(c²(1−X)+h²(1−Y)+2chF(L(q),X,Y)). F retains the original normalized Z radical.
 
-**Definition 1.7 (The shared-feedback response).**
+**Definition 1.10 (The shared-feedback response).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.Gamma`
 
@@ -88,7 +126,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.Gamma`
 
 For every real q,X,Y, Gamma(q,X,Y)=sqrt(1−q) R(q,X,Y)+sqrt(q) C(q,X,Y). Both terms use the same X,Y and the same original fibre radical.
 
-**Definition 1.8 (The negative-row energy).**
+**Definition 1.11 (The negative-row energy).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.E`
 
@@ -100,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.E`
 
 For every real q, E(q)=(2(h+s))²(1−q)+(2(h+c))²q. These are the original e² and d² coefficients.
 
-**Definition 1.9 (The original negative defect).**
+**Definition 1.12 (The original negative defect).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.G`
 
@@ -112,7 +150,7 @@ Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.G`
 
 For every real q,X,Y, G(q,X,Y)=E(q)−4Gamma(q,X,Y)². This is the negative row G_- of Definition 57.1, with all square roots on their nonnegative branches.
 
-**Theorem 1.10 (The full Continuation VI Theorem 71.1).**
+**Theorem 1.13 (The full Continuation VI Theorem 71.1).**
 
 Lean statement: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.negative_floor`
 
@@ -136,5 +174,7 @@ For every real q in [11/100,23/200] and every real X,Y in [0,1] with sqrt(X)+sqr
 - Truth anchor: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.h`
 - Truth anchor: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.negative_floor`
 - Truth anchor: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.s`
-- Dependency: [D5/S3/Quantum/Recovery/FourPathFloorCertificate](FourPathFloorCertificate.md)
+- Truth anchor: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentNonroot`
+- Truth anchor: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segmentRadical`
+- Truth anchor: `D5/S3/Quantum/Recovery/FourPathNegativeFloor.segment_majorants_lt_floor`
 - Dependency: [D5/S3/Quantum/Recovery/FourPathTriangleFibre](FourPathTriangleFibre.md)
