@@ -30,7 +30,7 @@ suggested the invariant-space route; the source maps are authoritative.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -61,7 +61,8 @@ namespace D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalPureDown
 
 open LatticeGeneratingFieldLocality LatticeFiniteNegativeGeneration
 open LatticeSugawaraCurrents LatticeLightConeCoordinates
-open LatticeLightConeCoordinates.NullFrame LatticeQuartetContraction
+open LatticeLightConeCoordinates.NullFrame
+open LatticeQuartetContraction hiding State
 open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPureDownHomotopy D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPureGhostPrimary
 open LatticeBRSTModeFiltration (derivative_monomial X_mul_monomial cm cm_plus_positive)
 open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPerturbationFiltration D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTFiniteTransfer
@@ -130,7 +131,7 @@ private theorem derivative_noMinus {t : ℕ} (x : Variables t)
   | zero => simp
   | add Q R hQ hR iQ iR => simpa only [map_add] using
       (noMinusPolynomials t).add_mem iQ iR
-  | smul a Q hQ iQ => simpa only [map_smul] using
+  | smul a Q hQ iQ => simpa only [smul_eq_C_mul, pderiv_C_mul] using
       (noMinusPolynomials t).smul_mem a iQ
 
 private theorem minus_derivative_zero {t : ℕ}
@@ -142,7 +143,7 @@ private theorem minus_derivative_zero {t : ℕ}
       exact noMinus_derivative e he r
   | zero => simp
   | add Q R hQ hR iQ iR => simp only [map_add, iQ, iR, add_zero]
-  | smul a Q hQ iQ => simp only [map_smul, iQ, smul_zero]
+  | smul a Q hQ iQ => simp only [smul_eq_C_mul, pderiv_C_mul, iQ, mul_zero]
 
 /- Restricted polynomial induction, derived from the actual finite exponent
 induction. In particular, no inference about a summand is made from a
@@ -157,7 +158,7 @@ private theorem noMinus_induction {t : ℕ}
   have hmono (e : Exponents t) : NoMinus e → M (monomial e 1) := by
     apply @Finsupp.induction (Variables t) ℕ _ _ e
     · intro he
-      simpa only [monomial_zero, C_1] using hone
+      simpa only [monomial_zero', C_1] using hone
     · intro x n e hxe hn ih he
       have he' : NoMinus e := by
         intro r
@@ -168,7 +169,9 @@ private theorem noMinus_induction {t : ℕ}
         intro hxm
         have hz := he x.2
         have heq : x = (minus t,x.2) := Prod.ext hxm rfl
-        simp only [Finsupp.add_apply, heq, Finsupp.single_eq_same] at hz
+        have hs : (Finsupp.single x n) (minus t,x.2) = n := by
+          rw [← heq, Finsupp.single_eq_same]
+        simp only [Finsupp.add_apply, hs] at hz
         omega
       have hk (k : ℕ) : M (monomial e 1 * X x ^ k) := by
         induction k with
@@ -190,7 +193,8 @@ private theorem noMinus_induction {t : ℕ}
 private theorem rename_noMinus {t : ℕ} (f : MvPolynomial (Fin t × ℕ) ℂ) :
     rename transverseVariable f ∈ noMinusPolynomials t := by
   induction f using MvPolynomial.induction_on with
-  | C a => simpa using (noMinusPolynomials t).smul_mem a (one_noMinus t)
+  | C a => simpa only [map_C, C_eq_smul_one] using
+      (noMinusPolynomials t).smul_mem a (one_noMinus t)
   | add f g hf hg => simpa only [map_add] using (noMinusPolynomials t).add_mem hf hg
   | mul_X f x hf =>
       simpa only [map_mul, rename_X, mul_comm] using
@@ -295,7 +299,9 @@ private theorem creation_matterMap (x : Variables t) (p : Charge D)
     (P : PolynomialCoordinates (Label t)) :
     matterMap F B p (X x * P) =
       a (F.completeBasis B x.1) (-(x.2 : ℤ)-1) (matterMap F B p P) := by
-  change Finsupp.single p ((F.coordinateEquiv B).symm (X x * P)) = _
+  change Finsupp.single p ((F.coordinateEquiv B).symm (X x * P)) =
+    a (F.completeBasis B x.1) (-(x.2 : ℤ)-1)
+      (Finsupp.single p ((F.coordinateEquiv B).symm P))
   rw [a_single, polynomialCurrent_negative, map_mul, polynomialEquiv_symm_X]
 
 /- The actual current commutator proves invariance, with no expansion of L
@@ -567,7 +573,7 @@ private theorem primary_physical
   refine ⟨hq,hb,?_,?_⟩
   · change v ⊗ₜ[ℂ] BcGhostCharge.ghostNumber (ket {1}) = v ⊗ₜ[ℂ] ket {1}
     rw [number_ket]
-    norm_num [BcGhostCharge.charge]
+    norm_num [BcGhostCharge.charge, Finset.filter_singleton]
   · have hw := LinearMap.congr_fun (LatticeBRST.total_ward_b D H 0)
       (v ⊗ₜ[ℂ] ket {1})
     change LatticeBRST.totalCharge D H (ghostB D 0 (v ⊗ₜ[ℂ] ket {1})) +
