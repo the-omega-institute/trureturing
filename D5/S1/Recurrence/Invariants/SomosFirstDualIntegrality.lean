@@ -1,12 +1,13 @@
 /- GID: D5/S1/Recurrence/Invariants/SomosFirstDualIntegrality
    generality: G
    mirror-B: D5/B/S1/Recurrence/Invariants/SomosFirstDualIntegrality
-   mirror-E: none(waiver:unfinished-formalization)
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Local divisibility and orbit interfaces for the first dual Somos recurrence. -/
+   digest: First dual Somos orbit shadows are integral exactly when p equals one. -/
 
 import Mathlib.Algebra.DualNumber
+import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Group.TypeTags.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Defs
 import Mathlib.RingTheory.Ideal.Span
@@ -17,6 +18,31 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.LinearCombination
 import Lean.Elab.Tactic.Omega
+
+/-! Integer shadows of the first non-homogeneous dual Somos recurrence.
+
+The source is Corollary 5.2(i) and its following conjecture in
+Ovsienko–Tabachnikov, arXiv:1705.01623v1, §5.4.
+The arbitrary leading shadows are indexed from zero.
+The proof uses an elementary quotient-ring divisibility criterion. -/
+
+/-
+admission_basis: escape-witness
+escape_witness: integral_orbit_of_zero_obstruction
+proof_shape: result: content
+The zero-obstruction theorem constructs integer representatives for every
+index by strong induction. Each step uses the local quotient criterion and
+only previously constructed integer terms; real coprimality is propagated
+from the earlier exchange equations. The full result consumes this witness.
+All other declarations are definitions or consumed proof helpers; none is
+an independent finite-instance or enumeration deliverable.
+
+The p=1 sufficient direction is published prior work. No exact frozen D5 or
+pinned Mathlib recurrence theorem supplies the full assertion. The inspected
+external ClusterAlgebras Laurent supplier retains four unproved proposition
+arguments and is not imported. Mathlib's dual-number algebra, ideal quotient,
+Bezout coprimality and Nat.mul_le_pow are reused directly.
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -96,10 +122,13 @@ private theorem unit_mod_of_coprime {R : Type*} [CommRing R]
 private theorem deformation_power_difference (p : ℕ) (v : ℤ) :
     (1 + inr v : DualNumber ℤ) ^ (2 * p) -
       (1 + inr v) ^ 2 = inr ((2 * (p : ℤ) - 2) * v) := by
-  apply TrivSqZeroExt.ext <;> simp [TrivSqZeroExt.snd_pow, show (2 : DualNumber ℤ).fst = 2 from rfl] <;> ring
+  apply TrivSqZeroExt.ext
+  · simp
+  · simp [TrivSqZeroExt.snd_pow, show (2 : DualNumber ℤ).fst = 2 from rfl]
+    ring
 
 /-- The local obstruction depends on the real divisor, independently of all shadows. -/
-theorem local_divisibility (A B C D E F G H : DualNumber ℤ) (p q : ℕ) (v : ℤ)
+private theorem local_divisibility (A B C D E F G H : DualNumber ℤ) (p q : ℕ) (v : ℤ)
     (hp : 0 < p) (hq : 0 < q) (hE : E.fst ≠ 0)
     (hB : IsCoprime B.fst E.fst) (hC : IsCoprime C.fst E.fst)
     (hD : IsCoprime D.fst E.fst)
@@ -156,7 +185,7 @@ theorem local_divisibility (A B C D E F G H : DualNumber ℤ) (p q : ℕ) (v : �
     (Units.ext (by simpa [hb, hf, hd, ht] using e1))
     (Units.ext (by simpa [hc, hg, hf, hd] using e2))
     (Units.ext (by simpa [hd, hh, ht, hf] using e3))
-  simp only [Units.val_mul, hb, hc, hd, hf, hg, hh, ht] at he
+  simp only [Units.val_mul, hf, hg, hh, ht] at he
   have hdiff : φ (1 + inr v) ^ (2 * p) -
       φ (1 + inr v) ^ 2 = φ (inr ((2 * (p : ℤ) - 2) * v)) := by
     simpa only [map_sub, map_pow] using congrArg φ (deformation_power_difference p v)
@@ -188,7 +217,7 @@ private theorem coprime_add_of_dvd {R : Type*} [CommRing R] {x y z : R}
 
 private theorem coprime_next {R : Type*} [CommRing R] (a b c d e : R)
     (p q : ℕ) (hp : 0 < p) (hq : 0 < q)
-    (hbc : IsCoprime b c) (hbd : IsCoprime b d) (hcd : IsCoprime c d)
+    (hbc : IsCoprime b c) (hcd : IsCoprime c d)
     (he : a * e = (b * d) ^ p + c ^ q) :
     IsCoprime b e ∧ IsCoprime c e ∧ IsCoprime d e := by
   have hb : b ∣ (b * d) ^ p := dvd_trans (dvd_mul_right b d) (dvd_pow_self _ (Nat.ne_of_gt hp))
@@ -205,12 +234,12 @@ private theorem coprime_next {R : Type*} [CommRing R] (a b c d e : R)
     hNd.of_mul_left_right.symm⟩
 
 /-- Coefficientwise inclusion of integer dual numbers in rational dual numbers. -/
-def integerCast : DualNumber ℤ →+* DualNumber ℚ where
+private def integerCast : DualNumber ℤ →+* DualNumber ℚ where
   toFun x := inl (x.fst : ℚ) + inr (x.snd : ℚ)
   map_one' := by ext <;> simp
   map_zero' := by ext <;> simp
   map_add' x y := by ext <;> simp
-  map_mul' x y := by ext <;> simp [DualNumber.snd_mul]
+  map_mul' x y := by ext <;> simp
 
 private theorem integerCast_injective : Function.Injective integerCast := by
   intro x y h
@@ -221,7 +250,7 @@ private theorem integerCast_injective : Function.Injective integerCast := by
     simpa [integerCast] using h'
 
 /-- The total forward orbit uses the canonical inverse of a rational dual number. -/
-noncomputable def orbit (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) : DualNumber ℚ :=
+private noncomputable def orbit (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) : DualNumber ℚ :=
   if hn : n < 4 then 1 + inr (c ⟨n, hn⟩ : ℚ) else
     (((orbit p q v c (n - 4 + 1) * orbit p q v c (n - 4 + 3)) ^ p +
       (1 + inr (v : ℚ)) * orbit p q v c (n - 4 + 2) ^ q) *
@@ -231,34 +260,34 @@ decreasing_by all_goals omega
 
 private theorem orbit_initial (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (i : Fin 4) :
     orbit p q v c i = 1 + inr (c i : ℚ) := by
-  rw [orbit, dif_pos i.isLt]
+  rw [orbit, dite_eq_left i.isLt]
 
 private theorem orbit_step (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) :
     orbit p q v c (n + 4) =
       ((orbit p q v c (n + 1) * orbit p q v c (n + 3)) ^ p +
         (1 + inr (v : ℚ)) * orbit p q v c (n + 2) ^ q) * (orbit p q v c n)⁻¹ := by
-  rw [orbit, dif_neg (by omega)]
+  rw [orbit, dite_eq_right (by omega)]
   simp only [Nat.add_sub_cancel]
 
 /-- Positivity follows from the specified initial real parts and positive summands. -/
-theorem orbit_positive (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) :
+private theorem orbit_positive (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) :
     0 < (orbit p q v c n).fst := by
   induction n using Nat.strong_induction_on with
   | h n ih =>
     by_cases hn : n < 4
-    · rw [orbit, dif_pos hn]
+    · rw [orbit, dite_eq_left hn]
       simp
     · have h0 := ih (n - 4) (by omega)
       have h1 := ih (n - 4 + 1) (by omega)
       have h2 := ih (n - 4 + 2) (by omega)
       have h3 := ih (n - 4 + 3) (by omega)
-      rw [orbit, dif_neg hn]
+      rw [orbit, dite_eq_right hn]
       simp only [fst_mul, fst_add, fst_pow, fst_inv, fst_one, fst_inr,
         add_zero, one_mul]
       exact mul_pos (add_pos (pow_pos (mul_pos h1 h3) _) (pow_pos h2 _)) (inv_pos.mpr h0)
 
 /-- Exchange equations hold without additional nonvanishing assumptions. -/
-theorem orbit_exchange (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) :
+private theorem orbit_exchange (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) (n : ℕ) :
     orbit p q v c (n + 4) * orbit p q v c n =
       (orbit p q v c (n + 1) * orbit p q v c (n + 3)) ^ p +
         (1 + inr (v : ℚ)) * orbit p q v c (n + 2) ^ q := by
@@ -285,7 +314,7 @@ private theorem coprime_windows (a : ℕ → ℤ) (p q : ℕ) (hp : 0 < p) (hq :
     obtain ⟨hab, hac, had, hbc, hbd, hcd⟩ := ih (fun k hk => hex k (by omega))
     have he : a n * a (n + 4) = (a (n + 1) * a (n + 3)) ^ p + a (n + 2) ^ q := by
       simpa [mul_comm] using hex n (by omega)
-    obtain ⟨hbe, hce, hde⟩ := coprime_next _ _ _ _ _ p q hp hq hbc hbd hcd he
+    obtain ⟨hbe, hce, hde⟩ := coprime_next _ _ _ _ _ p q hp hq hbc hcd he
     simpa only [CoprimeWindow, Nat.add_assoc, Nat.succ_eq_add_one] using
       (show IsCoprime (a (n + 1)) (a (n + 2)) ∧
         IsCoprime (a (n + 1)) (a (n + 3)) ∧ IsCoprime (a (n + 1)) (a (n + 4)) ∧
@@ -293,7 +322,7 @@ private theorem coprime_windows (a : ℕ → ℤ) (p q : ℕ) (hp : 0 < p) (hq :
         IsCoprime (a (n + 3)) (a (n + 4)) from ⟨hbc, hbd, hbe, hcd, hce, hde⟩)
 
 /-- Integral means membership in the coefficientwise image of the integer duals. -/
-def Integral (x : DualNumber ℚ) : Prop := ∃ z : DualNumber ℤ, integerCast z = x
+private def Integral (x : DualNumber ℚ) : Prop := ∃ z : DualNumber ℤ, integerCast z = x
 
 private theorem integral_of_divides (X : DualNumber ℚ) (E N : DualNumber ℤ)
     (hE : (integerCast E).fst ≠ 0) (hX : X * integerCast E = integerCast N)
@@ -317,7 +346,7 @@ private theorem prefix_exchange (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
 
 private theorem prefix_coprime (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
     (hp : 0 < p) (hq : 0 < q) (z : ℕ → DualNumber ℤ) (N : ℕ)
-    (hN : 4 ≤ N) (hz : ∀ i < N, integerCast (z i) = orbit p q v c i)
+    (hz : ∀ i < N, integerCast (z i) = orbit p q v c i)
     (n : ℕ) (hn : n + 3 < N) : CoprimeWindow (fun i => (z i).fst) n := by
   apply coprime_windows _ p q hp hq
   · intro i hi
@@ -338,7 +367,7 @@ private theorem integral_next (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
     (hprefix i hi).choose else 0
   have hz : ∀ i < n + 4, integerCast (z i) = orbit p q v c i := by
     intro i hi
-    simpa only [z, dif_pos hi] using (hprefix i hi).choose_spec
+    simpa only [z, dite_eq_left hi] using (hprefix i hi).choose_spec
   let N : DualNumber ℤ := (z (n + 1) * z (n + 3)) ^ p +
     (1 + inr v) * z (n + 2) ^ q
   have hmap : orbit p q v c (n + 4) * integerCast (z n) = integerCast N := by
@@ -359,7 +388,7 @@ private theorem integral_next (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
     · have hn4 : 4 ≤ n := by omega
       let k := n - 4
       have hkn : k + 4 = n := by omega
-      have hw := prefix_coprime p q v c hp hq z (n + 4) (by omega) hz
+      have hw := prefix_coprime p q v c hp hq z (n + 4) hz
         (k + 1) (by omega)
       obtain ⟨hab, hac, had, hbc, hbd, hcd⟩ := hw
       have hre : (z (k + 4)).fst ≠ 0 := by
@@ -384,7 +413,7 @@ private theorem integral_next (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
       simpa only [N, ← hkn, Nat.add_assoc] using hd
 
 /-- When the obstruction vanishes, the full infinite integer-dual orbit exists. -/
-theorem integral_orbit_of_zero_obstruction (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
+private theorem integral_orbit_of_zero_obstruction (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ)
     (hp : 0 < p) (hq : 0 < q) (hkappa : (2 * (p : ℤ) - 2) * v = 0) :
     ∀ n, Integral (orbit p q v c n) := by
   intro n
@@ -405,8 +434,8 @@ private theorem orbit_fst_independent (p q : ℕ) (v w : ℤ) (c d : Fin 4 → �
     by_cases hn : n < 4
     · rw [orbit_initial p q v c ⟨n, hn⟩, orbit_initial p q w d ⟨n, hn⟩]
       simp
-    · conv_lhs => rw [orbit, dif_neg hn]
-      conv_rhs => rw [orbit, dif_neg hn]
+    · conv_lhs => rw [orbit, dite_eq_right hn]
+      conv_rhs => rw [orbit, dite_eq_right hn]
       simp only [fst_mul, fst_add, fst_pow, fst_inv, fst_one, fst_inr, add_zero, one_mul]
       rw [ih (n - 4 + 1) (by omega), ih (n - 4 + 2) (by omega),
         ih (n - 4 + 3) (by omega), ih (n - 4) (by omega)]
@@ -453,20 +482,8 @@ private theorem orbit_fifth_real (p q : ℕ) (v : ℤ) (c : Fin 4 → ℤ) :
 
 private theorem obstruction_bound (p : ℕ) (hp : 2 ≤ p) :
     0 < 2 * (p : ℤ) - 2 ∧ 2 * (p : ℤ) - 2 < (2 : ℤ) ^ p + 1 := by
-  have hpow : ∀ k : ℕ, 2 * ((k : ℤ) + 2) ≤ (2 : ℤ) ^ (k + 2) := by
-    intro k
-    induction k with
-    | zero => norm_num
-    | succ k ih =>
-      rw [show k + 1 + 2 = (k + 2) + 1 by omega, pow_succ]
-      have hk := Int.natCast_nonneg k
-      push_cast
-      nlinarith
-  have he : p - 2 + 2 = p := by omega
-  have hi := hpow (p - 2)
-  rw [he] at hi
-  have hc : ((p - 2 : ℕ) : ℤ) + 2 = p := by omega
-  rw [hc] at hi
+  have hi : 2 * (p : ℤ) ≤ (2 : ℤ) ^ p := by
+    exact_mod_cast (Nat.mul_le_pow (by decide : (2 : ℕ) ≠ 1) p)
   constructor <;> omega
 
 private theorem parameter_one_of_integral (p q : ℕ) (c : Fin 4 → ℤ)
@@ -474,7 +491,7 @@ private theorem parameter_one_of_integral (p q : ℕ) (c : Fin 4 → ℤ)
   classical
   let z : ℕ → DualNumber ℤ := fun n => (hAll n).choose
   have hz : ∀ n, integerCast (z n) = orbit p q 1 c n := fun n => (hAll n).choose_spec
-  have hw := prefix_coprime p q 1 c hp hq z 10 (by omega) (fun i _ => hz i) 2 (by omega)
+  have hw := prefix_coprime p q 1 c hp hq z 10 (fun i _ => hz i) 2 (by omega)
   obtain ⟨hab, hac, had, hbc, hbd, hcd⟩ := hw
   have hre : (z 5).fst ≠ 0 := by
     have he := congrArg (fst (R := ℚ) (M := ℚ)) (hz 5)
@@ -506,7 +523,7 @@ private theorem parameter_one_of_integral (p q : ℕ) (c : Fin 4 → ℤ)
   omega
 
 /-- Every integer initial tuple is retained inside the equivalence. -/
-theorem all_shadows_integral_iff (p q : ℕ) (c : Fin 4 → ℤ)
+private theorem all_shadows_integral_iff (p q : ℕ) (c : Fin 4 → ℤ)
     (hp : 0 < p) (hq : 0 < q) :
     (∀ n, ∃ b : ℤ, (b : ℚ) = (orbit p q 1 c n).snd) ↔ p = 1 := by
   constructor
@@ -544,18 +561,92 @@ private theorem orbit_unique (p q : ℕ) (c : Fin 4 → ℤ) (X : ℕ → DualNu
       apply hu.mul_right_cancel
       exact he.trans ho.symm
 
-/-- Full pointwise statement, including existence, uniqueness, and derived positivity. -/
+/-- The faithful coefficientwise inclusion into the source's real dual numbers. -/
+noncomputable def realCast : DualNumber ℚ →+* DualNumber ℝ where
+  toFun x := inl (x.fst : ℝ) + inr (x.snd : ℝ)
+  map_one' := by ext <;> simp
+  map_zero' := by ext <;> simp
+  map_add' x y := by ext <;> simp
+  map_mul' x y := by ext <;> simp
+
+/-- The original real-dual formulation has the same four initial shadows. -/
+def IsRealOrbit (p q : ℕ) (c : Fin 4 → ℤ) (X : ℕ → DualNumber ℝ) : Prop :=
+  (∀ i : Fin 4, X i = 1 + inr (c i : ℝ)) ∧
+  ∀ n, X (n + 4) * X n = (X (n + 1) * X (n + 3)) ^ p +
+    (1 + DualNumber.eps) * X (n + 2) ^ q
+
+private theorem realCast_injective : Function.Injective realCast := by
+  intro x y he
+  apply TrivSqZeroExt.ext
+  · have h := congrArg (fst (R := ℝ) (M := ℝ)) he
+    simpa [realCast] using h
+  · have h := congrArg (snd (R := ℝ) (M := ℝ)) he
+    simpa [realCast] using h
+
+private theorem real_orbit_bridge (p q : ℕ) (c : Fin 4 → ℤ) :
+    ∀ B, IsRealOrbit p q c B ↔ B = fun n => realCast (orbit p q 1 c n) := by
+  let A := fun n => realCast (orbit p q 1 c n)
+  have hA : IsRealOrbit p q c A := by
+    constructor
+    · intro i
+      simp [A, orbit_initial p q 1 c i, realCast]
+    · intro n
+      have he := congrArg realCast (orbit_exchange p q 1 c n)
+      have ht : realCast (1 + inr ((1 : ℤ) : ℚ)) =
+          (1 + DualNumber.eps : DualNumber ℝ) := by ext <;> simp [realCast]
+      simpa only [map_mul, map_add, map_pow, ht] using he
+  intro B
+  constructor
+  · intro hB
+    funext n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      by_cases hn : n < 4
+      · exact (hB.1 ⟨n, hn⟩).trans (hA.1 ⟨n, hn⟩).symm
+      · let k := n - 4
+        have hk : k + 4 = n := by omega
+        have he := hB.2 k
+        rw [ih k (by omega), ih (k + 1) (by omega), ih (k + 2) (by omega),
+          ih (k + 3) (by omega), hk] at he
+        have ho := hA.2 k
+        rw [hk] at ho
+        have hpos : 0 < (A k).fst := by
+          simpa [A, realCast] using
+            (Rat.cast_pos.mpr (orbit_positive p q 1 c k) : (0 : ℝ) < _)
+        have hu : IsUnit (A k) := TrivSqZeroExt.isUnit_iff_isUnit_fst.mpr
+          (isUnit_iff_ne_zero.mpr (ne_of_gt hpos))
+        apply hu.mul_right_cancel
+        exact he.trans ho.symm
+  · rintro rfl
+    exact hA
+
+private theorem real_shadow_iff (x : DualNumber ℚ) :
+    (∃ b : ℤ, (b : ℝ) = (realCast x).snd) ↔ ∃ b : ℤ, (b : ℚ) = x.snd := by
+  constructor
+  · rintro ⟨b, hb⟩
+    refine ⟨b, Rat.cast_injective (α := ℝ) ?_⟩
+    simpa [realCast] using hb
+  · rintro ⟨b, hb⟩
+    refine ⟨b, ?_⟩
+    simpa [realCast] using congrArg (fun r : ℚ => (r : ℝ)) hb
+
+/-- Full pointwise statement, including the faithful real-dual source realization. -/
 theorem result (p q : ℕ) (c : Fin 4 → ℤ) (hp : 0 < p) (hq : 0 < q) :
     ∃ A : ℕ → DualNumber ℚ,
       IsOrbit p q c A ∧ (∀ X, IsOrbit p q c X → X = A) ∧
       (∀ n, 0 < (A n).fst) ∧
-      ((∀ n, ∃ b : ℤ, (b : ℚ) = (A n).snd) ↔ p = 1) := by
+      ((∀ n, ∃ b : ℤ, (b : ℚ) = (A n).snd) ↔ p = 1) ∧
+      (∀ B, IsRealOrbit p q c B ↔ B = fun n => realCast (A n)) ∧
+      ((∀ n, ∃ b : ℤ, (b : ℝ) = (realCast (A n)).snd) ↔ p = 1) ∧
+      Function.Injective realCast := by
   refine ⟨orbit p q 1 c, ⟨orbit_initial p q 1 c, ?_⟩,
     fun X hX => orbit_unique p q c X hX, orbit_positive p q 1 c,
-    all_shadows_integral_iff p q c hp hq⟩
-  intro n
-  simpa only [Int.cast_one, show (inr (1 : ℚ) : DualNumber ℚ) = DualNumber.eps from rfl]
-    using orbit_exchange p q 1 c n
+    all_shadows_integral_iff p q c hp hq, real_orbit_bridge p q c, ?_, realCast_injective⟩
+  · intro n
+    simpa only [Int.cast_one, show (inr (1 : ℚ) : DualNumber ℚ) = DualNumber.eps from rfl]
+      using orbit_exchange p q 1 c n
+  · simp only [real_shadow_iff]
+    exact all_shadows_integral_iff p q c hp hq
 
 #print axioms result
 
