@@ -1861,7 +1861,7 @@ annex、未完成原任务raw保留、pre-helper四公开latch保护、split-loa
 Reynolds，[*Separation Logic*](https://www.cs.cmu.edu/~jcr/seplogic.pdf)，§4的frame rule，
 供应disjoint footprint／free-variable纪律；本文必须另以16.1–16.4核对每个任务端口，
 并以21.3恢复被移动head及actual token，不能只凭“分离”一词借权。
-Leroy，[*Formal verification of a realistic compiler*](https://arxiv.org/html/0902.2137v3)，§3.7，
+Leroy，[*A formally verified compiler back-end*](https://arxiv.org/html/0902.2137v3)，§3.7，
 提供initial／final relation及forward simulation的评价框架，不提供PR57入口。
 Flueckiger等，[*Correctness of Speculative Optimizations with Dynamic Deoptimization*](https://arxiv.org/html/1711.03050v2)，
 讨论continuation／varmap／deoptimization；有限continuation map本身不复位tape head或owner。
@@ -1876,9 +1876,12 @@ Flueckiger等，[*Correctness of Speculative Optimizations with Dynamic Deoptimi
 pure set不必有限；`circuit_balance_least_confirmation`还给实际取得的comparison infimum及pure reciprocity。
 
 `WeightedRelationConfirmation.weighted_gap_after_exchange`另需整个pure set有限、
-完整 $L+R+Z$ indexing、全coordinate kernel nullity恰为1、两侧严格正且归一化weight，
-保留全部零系数pure点；全局最小label并换侧后，原proper confirmer取得两端0与
-中点 $t/(2\max(b,1-b))>0$。其中 $t$是换侧后选中label的最小正weight，
+完整 $L+R+Z$ indexing $e$、全coordinate kernel nullity恰为1、两侧严格正且归一化weight $\alpha,\beta$，
+并满足carrier中的实际向量关系 `hrelation`：
+$\sum_{i\in L}\alpha_i\,e(\operatorname{inl}i)=\sum_{j\in R}\beta_j\,e(\operatorname{inr}(\operatorname{inl}j))$，
+保留全部零系数pure点；全局最小label并换侧后，两端的comparison值各为0，
+中点的comparison值为 $t/(2\max(b,1-b))>0$；这三个值分别由各自的原proper confirmer取得，
+所用的三个effect可不同，不要求同一个effect同时取得。其中 $t$是换侧后选中label的最小正weight，
 $b$是另一侧某非空真分割 $J$的总weight；两端为 $J$及其补集各自归一化barycenter。
 `full_effect_iff`把取值在 $[0,1]$、湮灭整个relation kernel的全pure赋值，
 对应到唯一原proper effect，不只挑一组test。`FinitePureSimplex.zero_gluing_iff_simplex`则在全pure有限、nullity至多1
