@@ -162,5 +162,8 @@ internal sealed class RatherProblemOneDocument : IScribeDocumentDefinition
                 Paragraph(Text("Distinct primes give Mathlib's native Chinese remainder equivalence. Its three finite fields satisfy the ordered-cardinality hypotheses of the general native coefficient theorem. Coefficient positivity at N supplies a nonempty family of actual independent N-subsets. Conversely, an independent set above N would give a positive coefficient in the zero tail. A maximum independent set therefore has cardinality exactly N.")),
                 Paragraph(Text("Cast the positive coefficients to the reals and choose a maximum on the finite interval from zero through N. The existing strict log-concavity peak lemmas give strict adjacent steps away from the two immediate boundaries of this selected peak; maximality gives the weak inequalities at those boundaries. Chaining adjacent steps gives weak monotonicity on each side. At every log-concavity center at least N, the right neighboring coefficient vanishes, so the endpoint and the whole zero tail satisfy the same inequality.")),
                 Paragraph(Text("The statement is Problem 1 of arXiv:2606.04789v1 on printed page 24. The native support formula is Theorem 4.1 on printed pages 18–20. This consumer and its coefficient argument are repository derivations; no assumed coefficient formula, finite prime bound or exclusion of the prime two is used."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("rather-2026-zero-divisor-problem-one"),
+                ResolutionKind.Proved)))));
 }
