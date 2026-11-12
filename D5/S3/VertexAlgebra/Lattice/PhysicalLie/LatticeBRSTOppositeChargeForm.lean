@@ -28,7 +28,7 @@ Mathlib finite sums and the neutral candidate's actual classification.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -60,15 +60,20 @@ def statePairing (D : LatticeData) : LinearMap.BilinForm ℂ (State D) where
     map_add' y z := inserted_add_right _ y z
     map_smul' a y := inserted_smul_right a _ y }
   map_add' x z := by
-    ext y
+    apply LinearMap.ext
+    intro y
+    change inserted (conjugation D (x + z)) y = _
     simp only [map_add, inserted_add_left, LinearMap.add_apply]
   map_smul' a x := by
-    ext y
-    simp only [map_smulₛₗ, inserted_smul_left, star_star, LinearMap.smul_apply,
+    apply LinearMap.ext
+    intro y
+    change inserted (conjugation D (a • x)) y = _
+    simp only [map_smulₛₗ, inserted_smul_left, starRingEnd_apply, star_star, LinearMap.smul_apply,
       smul_eq_mul, RingHom.id_apply]
 
 private theorem state_expansion (x : State D) :
     (∑ S ∈ (slices D x).support, (slices D x) S ⊗ₜ[ℂ] ket S) = x := by
+  classical
   apply (slices D).injective
   simp only [map_sum, slices_tmul_ket]
   exact Finsupp.sum_single _
@@ -91,11 +96,8 @@ private theorem ghostInsertion_real (S T : Finset ℕ) :
   by_cases h : 3 ∈ T
   · simp [h]
   · simp only [if_neg h, Hg_smul_right, star_mul, phase_real]
-    congr 1
     rw [Hg_ket_ket]
-    split_ifs
-    · rcases eps_sign S with hS | hS <;> simp [hS]
-    · simp
+    split_ifs <;> rcases eps_sign S with hS | hS <;> simp [hS, phase_real]
 
 private theorem ghostInsertion_symmetric (S T : Finset ℕ) :
     Hg (ket S) (BcGhostFock.c 0 (ket T)) =
@@ -113,6 +115,7 @@ private theorem pairing_slices (x y : State D) :
           Hg (ket S) (BcGhostFock.c 0 (ket T)) := by
   conv_lhs => rw [← state_expansion x, ← state_expansion y]
   simp only [map_sum, LinearMap.sum_apply, pairing_tmul_ket]
+  rw [Finset.sum_comm]
 
 /-- Symmetry is ordinary complex bilinear symmetry, with no ghost parity sign. -/
 theorem statePairing_symmetric (x y : State D) :
@@ -127,6 +130,7 @@ theorem statePairing_symmetric (x y : State D) :
 private theorem slices_b0 (x : State D) (T : Finset ℕ) :
     slices D (ghostB D 0 x) T =
       if 3 ∈ T then 0 else phase 3 T • slices D x (insert 3 T) := by
+  classical
   induction x using TensorProduct.inductionOn with
   | tmul v g =>
       change slices D (v ⊗ₜ[ℂ] BcGhostFock.b 0 g) T = _
@@ -139,6 +143,7 @@ private theorem slices_b0 (x : State D) (T : Finset ℕ) :
 
 private theorem relative_slice (x : State D) (hx : ghostB D 0 x = 0)
     (S : Finset ℕ) (hS : 3 ∈ S) : slices D x S = 0 := by
+  classical
   have h := slices_b0 x (S.erase 3)
   rw [hx, map_zero, Finsupp.zero_apply,
     if_neg (Finset.notMem_erase _ _), Finset.insert_erase hS] at h
@@ -152,7 +157,7 @@ private theorem ghostInsertion_relative (S T : Finset ℕ) (hS : 3 ∉ S) :
   by_cases h : T = relativePartner S
   · simp [ket, h, relativePartner, relativeEps, mul_assoc]
   · have ht : T ≠ (partner S).erase 3 := h
-    simp [ket, Finsupp.single_apply, ht]
+    simp [ket, Finsupp.single_apply, ht, h]
 
 /-- The finite occupation/charge formula on the literal relative carrier.
 The second argument is unrestricted. Neither polynomial is conjugated.
@@ -191,13 +196,17 @@ theorem statePairing_relative_coefficients (x y : State D)
         ∑ p ∈ ((slices D x) S).support,
           integerWick D (((slices D x) S) p)
             (((slices D y) (relativePartner S)) (-p)) := by
-    conv_lhs => rw [← Finsupp.sum_single ((slices D x) S)]
-    simp only [map_sum, LinearMap.sum_apply, sourcePairing_single]
+    have hs := congrArg (fun u : Carrier D =>
+      sourcePairing D u ((slices D y) (relativePartner S)))
+      (Finsupp.sum_single ((slices D x) S))
+    simp only [map_sum, LinearMap.sum_apply, sourcePairing_single] at hs
+    exact hs.symm
   rw [expand, Finset.mul_sum]
 
 private theorem slices_chargeProject (p : Charge D) (x : State D) (S : Finset ℕ) :
     slices D (LatticeQuartetContraction.chargeProject p x) S =
       Finsupp.single p (((slices D x) S) p) := by
+  classical
   induction x using TensorProduct.inductionOn with
   | tmul v g =>
       change slices D (Finsupp.single p (v p) ⊗ₜ[ℂ] g) S = _
@@ -210,6 +219,7 @@ theorem statePairing_charge_orthogonal (p q : Charge D) (x y : State D)
     (hx : LatticeQuartetContraction.chargeProject p x = x)
     (hy : LatticeQuartetContraction.chargeProject q y = y) (hpq : p + q ≠ 0) :
     statePairing D x y = 0 := by
+  classical
   have hqp : q ≠ -p := by
     intro h
     apply hpq
@@ -220,9 +230,9 @@ theorem statePairing_charge_orthogonal (p q : Charge D) (x y : State D)
   apply Finset.sum_eq_zero
   intro T hT
   have hxs : (slices D x) S = Finsupp.single p (((slices D x) S) p) := by
-    simpa only [hx] using (slices_chargeProject p x S).symm
+    simpa only [hx] using (slices_chargeProject p x S)
   have hyt : (slices D y) T = Finsupp.single q (((slices D y) T) q) := by
-    simpa only [hy] using (slices_chargeProject q y T).symm
+    simpa only [hy] using (slices_chargeProject q y T)
   rw [hxs, hyt, sourcePairing_single_single, if_neg hqp, zero_mul]
 
 private theorem pairing_down (v w : Carrier D) :
@@ -244,7 +254,7 @@ private theorem current_gram (i j : Fin D.rank) :
       (D.G i j : ℂ) • vacuum D := by
     change neutralMode D i ((0 : ℤ)+1)
       (Finsupp.single 0 (MvPolynomial.X (j,0))) = _
-    rw [neutralMode_single, neutralPolynomialMode_positive]
+    rw [neutralMode_single, neutralPolynomialMode_positive D i (0 : Charge D) 0]
     simp [weightedPartial, MvPolynomial.pderiv_X, vacuum, ← Finsupp.smul_single]
   rw [← hcreate,
     SourceBPZ.SourcePairingLaws.sourcePairing_neutralMode D i (-1), neg_neg, hann]
@@ -270,6 +280,7 @@ theorem statePairing_cartan (e f : Fin D.rank → ℂ) :
   intro i hi
   apply Finset.sum_congr rfl
   intro j hj
+  rw [D.symmetric j i]
   ring
 
 section NeutralDescent
@@ -284,7 +295,7 @@ def neutralImageForm : LinearMap.BilinForm ℂ
     (neutralPhysicalImage D H h26 hHG hGH) := by
   let E := neutralCartanEquiv D H h26 hHG hGH
   let A : (Fin D.rank → ℂ) →ₗ[ℂ] State D := cartanState D
-  exact ((statePairing D).comp (A.comp E.symm.toLinearMap)).compl₂
+  exact (statePairing D).compl₁₂ (A.comp E.symm.toLinearMap)
     (A.comp E.symm.toLinearMap)
 
 /-- Recovery from arbitrary neutral physical representatives with equality
