@@ -10,7 +10,8 @@ import D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret
 import D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair
 
-/-! Finite one-sided localization without exact probe valuations. -/
+/-! Uniform moving-index localization from one-sided exchanges and a
+simultaneous scalar threshold, without exact probe valuations. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
