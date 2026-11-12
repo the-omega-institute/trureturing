@@ -77,7 +77,7 @@ internal sealed class CyclicBridgeDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("source-probability-le-open-proportion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.source_probability_le_open_proportion"),
                 H("source_probability_le_open_proportion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The cyclic cut gives the upper comparison p_N<=b_N/24^N. CyclicClosure supplies the inverse closure injection. Padded supermultiplicativity and the exact same-q theorem remain separate obligations."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The cyclic cut gives the upper comparison p_N<=b_N/24^N. CyclicClosure supplies the inverse closure injection. PaddedCompletion supplies supermultiplicativity, and GrowthTransfer.result combines these bounds into the exact same-q theorem."))), DescribeRole.Theorem))));
     private static Formula Call(string name, params Formula[] args) => args.Length == 0
         ? new Formula.NamedConstant(FormulaIdentifier.Create(name))
         : new Formula.Apply(new Formula.NamedConstant(FormulaIdentifier.Create(name)), [.. args]);

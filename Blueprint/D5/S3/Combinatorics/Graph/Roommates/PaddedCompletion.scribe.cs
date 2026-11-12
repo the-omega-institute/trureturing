@@ -87,7 +87,7 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("closing-request-completion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_request_completion"),
                 H("closing_request_completion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every length, actual closing requests are injective and avoid central sites. The existing sixteen layouts fulfill all requests with a genuine involution and only central new singles. Full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles are still missing."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For every length, actual closing requests are injective and avoid central sites. The existing sixteen layouts fulfill all requests with a genuine involution and only central new singles. CyclicClosure supplies full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("oldposition"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.oldPosition"),
                 H("oldPosition"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

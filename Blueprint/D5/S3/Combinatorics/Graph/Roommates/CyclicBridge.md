@@ -208,7 +208,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.source_probabi
 
 *Commentary.*
 
-The cyclic cut gives the upper comparison p_N<=b_N/24^N. CyclicClosure supplies the inverse closure injection. Padded supermultiplicativity and the exact same-q theorem remain separate obligations.
+The cyclic cut gives the upper comparison p_N<=b_N/24^N. CyclicClosure supplies the inverse closure injection. PaddedCompletion supplies supermultiplicativity, and GrowthTransfer.result combines these bounds into the exact same-q theorem.
 
 ## References
 

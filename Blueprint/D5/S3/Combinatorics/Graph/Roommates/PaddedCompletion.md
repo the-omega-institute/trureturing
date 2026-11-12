@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_re
 
 *Commentary.*
 
-For every length, actual closing requests are injective and avoid central sites. The existing sixteen layouts fulfill all requests with a genuine involution and only central new singles. Full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles are still missing.
+For every length, actual closing requests are injective and avoid central sites. The existing sixteen layouts fulfill all requests with a genuine involution and only central new singles. CyclicClosure supplies full source-cycle stability, including m=1 extra buffer wrap edges, and injectivity on closed preference profiles.
 
 **Definition 1.21 (oldPosition).**
 
