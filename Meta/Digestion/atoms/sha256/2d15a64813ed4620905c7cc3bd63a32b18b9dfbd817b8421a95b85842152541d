@@ -1,0 +1,16 @@
+**定义 76.2（保留原混态方向条件）。** 两表恢复 PRE 后，完全按定义 75.3 读取 H13。写 $A=\bigoplus_iA_i$ 的中心单位为 $c_i$、秩为 $n_i$，$D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$ 的中心投影为 $\pi_{ik}$，并令
+$$
+\alpha_{ik}=F(-,c_k)|_{A_i},\quad\beta_{ik}=F(c_i,-)|_{A_k},\quad
+\mathcal Q=\{(i,k):n_i,n_k\ge2\},\qquad
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal Q,
+\ \alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0,\ x=\pi_{ik}\rho\}. \tag{76.5}
+$$
+伴随取原规范迹内积；每个活跃块至少一差有严格负方向，不要求两差都不正或负定。非活跃块任取正元含零，只受同一原总迹一约束；$\mathcal Q$ 空时资格为整个 $K_D$。这里的边缘铺回使用未经维数归一化的单位，不要求纯态、固定 Schmidt 谱或逐块条件化。
+以原 $\widetilde M$ 和 $T_{\rm raw}(a,c)=L(Ja,c)$ 定义
+$$
+I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+,\qquad
+\mathrm{C13}:\ I^{\rm raw}(D_+)\subseteq E_+. \tag{76.6}
+$$
+检测同一个原 $\rho$ 的整个原输出，不以滤波后的态、固定效应、总迹或校准后的输出替代。这个分阶段定义不把尚未恢复 PRE 的对象自动视作具有其结构。
+

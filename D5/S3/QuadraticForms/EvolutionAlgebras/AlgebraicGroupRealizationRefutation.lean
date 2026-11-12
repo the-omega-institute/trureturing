@@ -49,7 +49,7 @@ open D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismTangentBridge
 namespace D5.S3.QuadraticForms.EvolutionAlgebras.AlgebraicGroupRealizationRefutation.Dimensions
 attribute [local instance 100] LieRing.ofAssociativeRing
 open LieAlgebra
-variable {k : Type} [Field k] [CharZero k]
+variable {k : Type*} [Field k] [CharZero k]
 
 private def upperMap (m : ℕ) : Orthogonal.so (Fin m) k →ₗ[k] ({p : Fin m × Fin m // p.1 < p.2} → k) :=
   LinearMap.pi fun p => (LinearMap.proj p.val.2).comp
@@ -91,11 +91,11 @@ private theorem upper_card (m : ℕ) : Fintype.card ({p : Fin m × Fin m // p.1 
   rw [Fintype.card_subtype]
   simpa using (Finset.card_product_filter_lt (s := (Finset.univ : Finset (Fin m))))
 
-private theorem so_finrank (m : ℕ) :
+theorem so_finrank (m : ℕ) :
     Module.finrank k (Orthogonal.so (Fin m) k) = m.choose 2 := by
   simpa only [Module.finrank_pi, upper_card] using (upperEquiv (k := k) m).finrank_eq
 
-private theorem sl3_finrank : Module.finrank k (SpecialLinear.sl (Fin 3) k) = 8 := by
+theorem sl3_finrank : Module.finrank k (SpecialLinear.sl (Fin 3) k) = 8 := by
   have ht : Matrix.traceLinearMap (Fin 3) k k ≠ 0 :=
     LinearMap.ne_zero_of_surjective (Matrix.trace_surjective (n := Fin 3) (R := k))
   have h := Module.Dual.finrank_ker_add_one_of_ne_zero ht

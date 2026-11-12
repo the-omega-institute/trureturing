@@ -13,7 +13,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private size sourceMod base newBase oldValue newValue chainLength chainStart
+open PacketNormalForm (size base newBase oldValue newValue chainLength chainStart blocksWord insertAt)
+open private sourceMod
   source_totals chain_values nextBase nextNewBase
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private mask full terminal full_split sub_split chain_inventory mask_mass mask_positive
@@ -22,8 +23,6 @@ open private mask full terminal full_split sub_split chain_inventory mask_mass m
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddleCore
 open private actual_nat_joint_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private blocksWord insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private packetChecks withEar withEar_split
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private withEar_positive withEar_negatives

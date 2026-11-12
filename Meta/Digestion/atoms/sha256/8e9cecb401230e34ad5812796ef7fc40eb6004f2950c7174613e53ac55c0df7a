@@ -1,0 +1,29 @@
+**定义 44.1（同一原域与互补基单交换条件）。** 固定特征零域 $F$、同一个实际域扩张 $D/F$ 及整数 $m\ge4$，满足 $[D:F]=2m$。对每个非零 $F$-子空间 $U\le_F D$，沿用
+
+$$
+Q_U=\{u/v:u,v\in U,\ v\ne0\},\qquad
+d_U(r)=\dim_F(U\cap rU)\quad(r\in D^\times).
+\tag{44.1}
+$$
+
+原商集包含零。所有商、标签与整体乘数均使用这个原 $D$ 的乘法，不作标签自同构重排。$U^\perp$ 表示原迹配对 $\operatorname{Tr}_{D/F}(uv)$ 的正交补。
+
+取有限正规闭包 $K/F$，以 $\Omega=\operatorname{Hom}_F(D,K)$ 标记分裂同构 $D\otimes_F K\simeq K^\Omega$，并将 $W_K=W\otimes_F K$ 视为其中的 $m$-平面。选择原 $W$ 的一个 $F$-基 $w_1,\ldots,w_m$，令 $B_W=(\sigma(w_j))_{\sigma,j}$。称 $W$ 满足条件 $\mathrm H$，若存在分拆 $\Omega=E\sqcup E^c$，使 $E,E^c$ 都是 $B_W$ 的行基，且
+
+$$
+E-\{e\}+\{f\},\qquad E^c-\{f\}+\{e\}
+\quad\text{均为行基}\qquad(e\in E,\ f\in E^c).
+\tag{44.2}
+$$
+
+这只涉及带标签行拟阵，不依赖所选列基或进一步扩域。将 $E$ 的行排在前面并归一化列基，等价地写成
+
+$$
+W_K=\operatorname{colspan}\begin{pmatrix}I_m\\ A\end{pmatrix},
+\qquad A\in\operatorname{GL}_m(K),\qquad
+a_{ji}\ne0,\quad (A^{-1})_{ij}\ne0\quad(1\le i,j\le m).
+\tag{44.3}
+$$
+
+确实，以 $E$ 为基时的单交换子式是 $A$ 的条目；以 $E^c$ 为基时的单交换子式是 $A^{-1}$ 的条目，均只差非零基子式及符号。统一行拟阵，即每个 $m$ 元行集都是基，蕴含 $\mathrm H$；$\mathrm H$ 只要求这两组互补基及其单交换。
+

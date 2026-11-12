@@ -1,0 +1,25 @@
+**定义 87.3（未归一输出合同）。** 一条已供应原分支的输出有原有限质量 $m\ge0$，$m>0$ 时有原归一准备标签 $\eta$，其输出像为 $w=m k_\eta\in C_Y$；$m=0$ 时像为零，原分支、记录、失败和未来仍在。逐指定过程及分支固定其原上下文，不把不同随机结果混成同一分支。对当前原接合与读回，记
+
+$$
+w_L(\delta,\alpha)\in C_E\quad(\delta\in\Sigma_D,\alpha\in\Sigma_A),
+\qquad w_p(\epsilon)\in C_D\quad(\epsilon\in\Sigma_E).
+$$
+
+对全部原标签及全部中点实现要求
+
+$$
+\begin{aligned}
+R_D(\delta,\delta';\mu)&\Rightarrow
+2w_L(\mu,\alpha)=w_L(\delta,\alpha)+w_L(\delta',\alpha)
+&&(\text{每个原 }\alpha),\\
+R_A(\alpha,\alpha';\nu)&\Rightarrow
+2w_L(\delta,\nu)=w_L(\delta,\alpha)+w_L(\delta,\alpha')
+&&(\text{每个原 }\delta),\\
+R_E(\epsilon,\epsilon';\zeta)&\Rightarrow
+2w_p(\zeta)=w_p(\epsilon)+w_p(\epsilon').
+\end{aligned}
+\tag{87.4}
+$$
+
+等式约束原质量加权输出，不是除去质量后的条件态。每个其他已要求全域正输出的过程／参考扩张，在其**自己的全部原联合输入像**上要求对应图律；使用下述替换时，该输入像须已完整凸，或满足引理 87.2 的自身紧有限维中点条件，输出类型也须有闭尖原正锥。局部边缘或乘积输入集合不能代替相关参考的整个原联合域。未满足这些域条件的过程继续保留其原全实下降合同，不能借 $A,D,E$ 的结论替它付款。
+

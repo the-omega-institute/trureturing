@@ -1,0 +1,75 @@
+### 27A.3 有限斜率的精确消去及连续延拓
+
+对实际有限 $\delta$，选择
+
+$$
+\lambda_{+,\delta}=\frac{(S_+\xi)_2}{(R_+\xi)_2},\qquad
+\lambda_{-,\delta}=\frac{(S_-\xi)_2}{(R_-\xi)_2}.
+\tag{27A.19}
+$$
+
+分子分母同乘 $\delta$，它们分别成为
+
+$$
+\begin{array}{c|cc}
+ &D_{\pm,\delta}:=\delta(R_\pm\xi)_2
+ &N_{\pm,\delta}:=\delta(S_\pm\xi)_2\\\hline
++&1/4-3\delta/2-2b\delta^2U
+ &-i+\delta(1+i/2)+(b-2\rho)\delta^2U\\
+-&1/4-i+3\delta/2+2b\delta^2U
+ &i+\delta(1-i/2)+(b+2\rho)\delta^2U
+\end{array}
+\tag{27A.20}
+$$
+
+故在充分小的正 $\delta$ 上分母非零，且
+
+$$
+\lambda_{+,\delta}\longrightarrow-4i=:\lambda_{+,0},\qquad
+\lambda_{-,\delta}\longrightarrow\frac{-16+4i}{17}=: \lambda_{-,0}.
+\tag{27A.21}
+$$
+
+两虚部有 (27A.12) 所需符号。关键是 $E_{\pm,\delta}$ 使用 (27A.19) 的实际有限比值，因而
+
+$$
+(E_{+,\delta})_2=(E_{-,\delta})_2=0
+\quad\text{对每个这样的实际 }\delta>0\text{ 精确成立。}
+\tag{27A.22}
+$$
+
+没有在有限 $\delta$ 上代入极限斜率再丢掉剩余常数。其他三坐标有普通有限极限。记
+
+$$
+\begin{aligned}
+z_+&=d+\frac52\tau+\frac32\rho+i(4d+19\tau-2\rho),\\
+z_-&=-d-\frac{61}{2}\tau-\frac12\rho+i(-4d-3\tau-2\rho).
+\end{aligned}
+$$
+
+直接从 (27A.16)、(27A.19) 得
+
+$$
+\begin{gathered}
+E_{+,0}=\bigl(z_+,0,\varepsilon(1-5i/2),0\bigr)^{\mathsf T},\\
+E_{-,0}=\bigl(z_-/17,0,\varepsilon(25/17+13i/34),0\bigr)^{\mathsf T},\\
+w_{+,0}=1/8,\qquad w_{-,0}=17/8.
+\end{gathered}
+\tag{27A.23}
+$$
+
+最后一项缺陷同样由原列计算。准确地，$s\xi=(\rho,-2\rho\delta U,0,0)^{\mathsf T}$、$t\xi=(\rho/2+\delta U,1+b\delta U,\varepsilon,\delta U)^{\mathsf T}$，故
+
+$$
+\phi_\xi(t\circ s)=\frac{\rho^2}{2}-3\rho\tau\delta-2\rho b\delta^2|U|^2,
+\qquad \phi_\xi(h)=\operatorname{Im}U=2\tau.
+$$
+
+结合 (27A.11)，得到精确有限等式
+
+$$
+2\phi_\xi(t\circ s+K_1(x,s))
+=\rho^2+12\rho\tau-6\rho\tau\delta-4\rho b\delta^2|U|^2.
+\tag{27A.24}
+$$
+

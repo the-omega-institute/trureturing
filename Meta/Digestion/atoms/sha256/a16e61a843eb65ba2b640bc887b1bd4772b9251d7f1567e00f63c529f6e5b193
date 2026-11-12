@@ -1,0 +1,80 @@
+**定理 6.2（包括标志和非投影块的完整误差）。** 将外层实奇 QSVT 应用于定理 5.2 的实际矩形编码，而不作投影或后选择，所得完整逻辑等距 $U_{\rm outer}$ 满足
+
+$$
+\sup_{\|\psi\|=1}
+\|U_{\rm outer}\psi-|0_{\rm compiler}\rangle W\psi\|
+<\frac1{32t}.
+\tag{6.4}
+$$
+
+相应完整通道的半 diamond 误差至多 $1/(32t)$，对任意旁观记忆稳定。
+
+证明。由 (3.10)、(5.14)，$\sigma_{\min}(\widehat A)\ge2/3$。记
+$\widehat W=\widehat A(\widehat A^\dagger\widehat A)^{-1/2}$。编码块的每个输入奇异值大于 $\delta=1/(2\beta)$；左侧零奇异子空间不构成输入承诺，也不要求物理投影。
+
+具体的极扰动界为
+
+$$
+\|\widehat W-W\|\le10\|\widehat A-A_{\rm stack}\|.
+\tag{6.5}
+$$
+
+事实上，令 $S=A_{\rm stack}^\dagger A_{\rm stack}$、$T=\widehat A^\dagger\widehat A$，则两者均至少 $4I/9$，且
+$\|T-S\|\le3\|\widehat A-A_{\rm stack}\|$。$x^{-1/2}$ 的预解式积分给
+
+$$
+\|T^{-1/2}-S^{-1/2}\|
+\le\frac{\|T-S\|}{2(4/9)^{3/2}}.
+\tag{6.6}
+$$
+
+展开两极因子并用 $\|A_{\rm stack}\|\le1$、$\|\widehat A\|<1.01$ 得 (6.5)。
+
+在参数 $\rho=1+\delta/2$ 的 Bernstein 椭圆上，$|\operatorname{Im}z|\le\delta/2$。沿竖线积分 $\operatorname{erf}$ 给
+
+$$
+|\operatorname{erf}(\kappa z)|
+\le1+\frac{\sqrt{H_s}}{\sqrt\pi}e^{H_s/4}\le M_s.
+\tag{6.7}
+$$
+
+Chebyshev 系数的 Cauchy 界于是给
+
+$$
+\|\operatorname{erf}(\kappa x)-E_{n_s}(x)\|_{[-1,1]}
+\le\frac{2M_s\rho^{-n_s}}{\rho-1}\le\epsilon_s/8.
+\tag{6.8}
+$$
+
+对 $x\ge\delta$，初等 Gaussian 尾界给
+$1-\operatorname{erf}(\kappa x)\le\epsilon_s/16$。因此 $P_s$ 为实奇多项式，整个 $[-1,1]$ 上范数不超过一，且在 $[\delta,1]$ 上至少 $1-\epsilon_s$；负半轴结论由奇性给出。
+
+现在对共同有限空间上的 $U_e,\Pi,\widetilde\Pi$ 应用上述 v1 `BlockHam.tex` Corollary 18，增加它的一个实多项式标志 qubit。实性、奇偶性、全区间界和矩形输入奇异值间隙均已核对。对每个单位输入，完整酉输出与嵌入的 $\widehat W\psi$ 的内积恰为
+
+$$
+\left\langle\psi,
+P_s\left(\sqrt{\widehat A^\dagger\widehat A}/\beta\right)\psi\right\rangle
+\ge1-\epsilon_s.
+\tag{6.9}
+$$
+
+此内积为实数，两完整向量范数均为一，所以
+
+$$
+\|U_{\rm outer}\psi-|0_{\rm compiler}\rangle\widehat W\psi\|^2
+\le2\epsilon_s.
+\tag{6.10}
+$$
+
+这包含每个标志、探针和全部非投影块振幅；没有把成功投影块当成确定性通道。残余概率按平方根支付振幅代价。
+
+加上极扰动及可选相位舍入，完整等距误差小于
+
+$$
+\frac{10\cdot3/2500+\sqrt{2/10000}+10^{-6}}t
+<\frac1{32t}.
+\tag{6.11}
+$$
+
+算子范数等距误差控制半 diamond 距离，张量任意旁观系统仍成立；比较编译口为固定纯空白态。这证明 (6.4)。$\square$
+

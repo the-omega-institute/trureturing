@@ -1,0 +1,27 @@
+#### 定理 10.1：记录驱动控制的内部闭合
+
+给定有限程序集、仪器 $\{\mathcal I_b^{(c)}\}$ 及更新函数 $f(c,b)$。对经典控制相关态 $\xi=\sum_c|c\rangle\langle c|\otimes\rho_c$，定义
+
+$$
+\mathfrak T(\xi)=
+ \sum_{c,b}|f(c,b)\rangle\langle f(c,b)|
+ \otimes\mathcal I_b^{(c)}(\rho_c).
+$$
+
+该更新是保迹完全正映射，并可在保留旧程序及结果历史的内部 幺正扩张中实现。
+
+**证明。**
+
+抽取控制对角块、应用 CP 仪器、制备新程序并求和， 都是 CP 操作；总迹为 $\sum_c\sum_b\operatorname{tr}\mathcal I_b^{(c)}(\rho_c) =\sum_c\operatorname{tr}\rho_c=1$。 对可逆实现，先用定理 2.2 记录 $b$， 再将
+
+$$
+|c\rangle|b\rangle|0\rangle\longmapsto
+ |c\rangle|b\rangle|f(c,b)\rangle
+$$
+
+扩张为幺正。保留的旧数据使不同输入仍正交， 所以即使 $f$ 非单射也没有可逆性矛盾。 不读取旧数据时得到所示约化通道。
+
+$\square$
+
+有限网格的余弦反馈、有限步样本均值估计和结果依赖的测量选择， 都可在足够大的有限内部寄存器上编排为这一形式。 这是一族逐个有限协议的实现定理； 无限精度、无限次测量或无限样本极限不等于一个固定有限装置的免费能力。 只跟踪系统 $S$ 的边缘一般也不足以闭合预测， 因为下一步设置可能由与 $S$ 相关的控制和历史决定。
+

@@ -41,5 +41,5 @@ The setting is the circle configuration problem of Damasdi, Frankl, Pach and Pal
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/OriginalLowerFullBank.canonical_lower_full_bank`
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](Orbit/ZeroSumSubsets.md)
 - Dependency: [D5/S3/Combinatorics/Circle/OriginalSourceRows](OriginalSourceRows.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)

@@ -869,5 +869,98 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 end full_family
 
+namespace pow_constant
+universe u
+
+abbrev signature : Signature where
+  Params := Reg.Support.OddPrimeJetAudit.Data.{u} × ℕ
+  State z := Reg.Support.OddPrimeJetAudit.Vector z.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ z := Reg.Support.OddPrimeJetAudit.Vector z.1
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} := realize signature (fun _ z v =>
+  let d := z.1
+  letI := d.prime; letI := d.odd; letI := d.field; letI := d.algebra
+  ((derivativeEnd (p := d.p) (K := d.K))^z.2) v) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} := realize signature (fun i z v =>
+  letI := z.1.field
+  actual.readout i z v + Reg.Support.OddPrimeJetAudit.vectorOne z.1)
+  (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law r := ∀ {p : ℕ} [pp : Fact p.Prime] [po : Fact (2 < p)]
+    {K : Type u} [kk : Field K] [ka : Algebra (ZMod p) K]
+    (j : ℕ) (hj : 0 < j) (c : K),
+    r.readout () (⟨p,pp,po,K,kk,ka⟩,j) (constantLinear c) = 0
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro hbad
+  let d := Reg.Support.OddPrimeJetAudit.testData.{u}
+  letI := d.prime; letI := d.odd; letI := d.field; letI := d.algebra
+  have h := hbad (p := d.p) (K := d.K) 1 (by decide) 0
+  exact Reg.Support.OddPrimeJetAudit.vectorOne_ne_zero d
+    (by simpa [rejected, actual, realize] using h)
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  let d := Reg.Support.OddPrimeJetAudit.testData.{u}
+  letI := d.prime; letI := d.odd; letI := d.field; letI := d.algebra
+  let v := dividedMonomial (p := d.p) (K := d.K) 1 (by decide) 1
+  have hd : derivativeEnd (p := d.p) (K := d.K) v =
+      Reg.Support.OddPrimeJetAudit.vectorOne d := by
+    simpa [v, Reg.Support.OddPrimeJetAudit.vectorOne, dividedMonomial_zero] using
+      (dividedMonomial_succ (p := d.p) (K := d.K) 0 (by decide) 1)
+  refine ⟨(d,1), v, 0, ?_⟩
+  simpa only [actual, realize, pow_one, hd, map_zero] using
+    Reg.Support.OddPrimeJetAudit.vectorOne_ne_zero d
+
+def family : Registration arena.{u} (type_of% (@_root_.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation.pow_constant.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation.pow_constant.{u}, rejected, rejected_law⟩
+  sensitivity := Reg.Support.UniverseSingleReadout.sensitivity _ _ _ rejected_law
+  dependence := dependence
+
+noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation.pow_constant.{u})
+    (Realization signature.{u}) Unit Unit where
+  unitName := `D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation.pow_constant.__information_unit
+  realizationName := `Reg.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation.pow_constant.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation
+    definition := none
+    coordinates := #[0,1,2,3,4,5,6]
+    readouts := #[{
+      path := #["body","body","body","body","body","body","body","body","body","fn","arg","fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end pow_constant
+
 end
 end Reg.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation

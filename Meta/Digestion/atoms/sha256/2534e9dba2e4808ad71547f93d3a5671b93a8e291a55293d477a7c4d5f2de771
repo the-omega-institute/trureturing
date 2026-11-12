@@ -1,0 +1,23 @@
+#### 定理 5.5：移动注意设置可以输运状态
+
+设归一化路径 $\psi:[0,T]\to\mathcal H$ 为 $C^1$， $L_\psi=\max_t\left\|\dot\psi(t)\right\|$。 在自由 $H=0$ 时，从 $\psi(0)$ 出发依次测量 $P_k=|\psi(kT/N)\rangle\langle \psi(kT/N)|$。 当全程成功概率 $p_N>0$ 时，条件末态射线恰为 $[\psi(T)]$，且
+
+$$
+p_N=\prod_{k=1}^N
+ |\langle\psi(kT/N),\psi((k-1)T/N)\rangle|^2
+ \ge1-\frac{L_\psi^2T^2}{N}.
+$$
+
+**证明。**
+
+每个成功投影给出下一指定射线，故概率相乘。 归一化向量 $u,v$ 满足
+
+$$
+1-|\langle u,v\rangle|^2
+ \le2(1-\operatorname{Re}\langle u,v\rangle)=\left\|u-v\right\|^2.
+$$
+
+路径导数界把每步失败率限制在 $L_\psi^2(T/N)^2$ 以内。 再用 $\prod_k(1-a_k)\ge1-\sum_k a_k$，其中 $0\le a_k\le1$， 即得所述下界。
+
+$\square$
+

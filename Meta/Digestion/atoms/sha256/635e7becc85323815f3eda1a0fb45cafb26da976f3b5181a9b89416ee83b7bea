@@ -1,0 +1,44 @@
+**定理 85.12（不等维、标量及所有转移的精确证书）。** 对定义 85.11 的固定探针、每个非负三腿权重（和为一）及每个 HP $\Phi:\mathcal A\to\mathcal A$，
+
+$$
+\boxed{\mathcal K_{3,\alpha}(\Phi)(\Xi_\psi)\ge0
+\quad\Longleftrightarrow\quad\Phi\text{ CP}
+\quad\Longleftrightarrow\quad\mathcal K_{3,\alpha}(\Phi)\text{ 全锥正}.}
+\tag{85.23}
+$$
+
+这里不要求不可约、相等块维数、各权重严格正或实际副本生成。
+
+**证明。** 在输出 $iii$，只有种子 $iii$ 能贡献，因为别的全相同标签种子不可能只改一腿就变为 $iii$。该块恰为 $\beta_i\mathcal K_{3,\alpha}(\Phi_{ii})(\rho_{\psi_i})$，经 $C_i$ 压缩为 $\beta_iJ(\Phi_{ii})$，所以输出 PSD 给全部对角 Choi 块 PSD。
+
+先核对非对角转移所需的秩。每个 $CV_{\psi_i,\ell}=I$ 使 $V_{\psi_i,\ell}$ 单射。若 $\psi_i$ 在第 $\ell$ 腿的约化密度 $\rho_{i,\ell}$ 不满秩，可取非零 $H$ 消去其支撑，于是 $H^{(\ell)}\psi_i=0$，矛盾。故三个 $\rho_{i,\ell}>0$。对任意输出块 $j$，定义矩形线性作用
+
+$$
+V_{ji,\ell}:M_{n_j\times n_i}\longrightarrow
+\mathbb C^{n_i}\otimes\mathbb C^{n_i}\otimes\mathbb C^{n_i}
+\text{ 中将第 }\ell\text{ 因子换成 }\mathbb C^{n_j},\qquad
+V_{ji,\ell}(H)=H^{(\ell)}\psi_i.
+\tag{85.24}
+$$
+
+目标空间按该因子次序理解，未把不等维因子认作同一空间。直接按部分迹定义有
+
+$$
+\|V_{ji,\ell}(H)\|^2=\operatorname{Tr}(H^*H\rho_{i,\ell})
+\ge\lambda_{\min}(\rho_{i,\ell})\|H\|_{\rm HS}^2.
+\tag{85.25}
+$$
+
+故 $V_{ji,\ell}$ 单射，其最小奇异值平方恰为 $\lambda_{\min}(\rho_{i,\ell})$：取一行沿该最小特征向量即可取得等号。
+
+对 $j\ne i$，若第 $\ell$ 腿活跃，输出标签在该位置是 $j$、其余两处是 $i$ 的块只能来自种子 $iii$ 的这一腿。对矩形 Choi 作带符号分解，所得块准确是
+
+$$
+\beta_i\alpha_\ell V_{ji,\ell}J(\Phi_{ji})V_{ji,\ell}^*.
+\tag{85.26}
+$$
+
+其余种子与其他两腿均不落在这个块。单射 $V_{ji,\ell}$ 有线性左逆，压缩即得 $J(\Phi_{ji})\ge0$。至少一腿活跃，因此全部非对角转移也被检测；目标 $n_j=1$、源 $n_i=1$ 及其他不等维均适用。有限直和 CP 恰为所有分量 CP，理由仍是中心包含／投影与任意放大后的逐输出正和，故 $\Phi$ CP。反向每个一腿扩张 CP，非负权和全锥正，特别在 $\Xi_\psi$ 正。证毕。
+
+定义 85.11 的全三腿解码性质使同一个探针适用于任意权重。若只讨论预先固定的活跃集，则每个块对该活跃集满足 (85.7) 已足够：所需满 Schmidt 秩只在被选的活跃腿上使用，直接由该腿的左逆得到。零权腿无须额外认证。若把某个种子的 $\beta_i$ 置零，就会失去本证明对该输入块的检测，不能借“原模型允许零质量”删掉正权测试种子；反过来，也不能把测试种子的正权要求加到所有原态。全经典直和正性本就等于 CP；定理 85.10 的单个非经典块噪声障碍没有被外推到全经典系统。
+

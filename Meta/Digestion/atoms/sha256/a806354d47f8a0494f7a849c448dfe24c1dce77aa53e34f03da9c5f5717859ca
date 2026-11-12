@@ -1,0 +1,64 @@
+**定理 27.3（有限探针扰动的共同正预算见证）。** 在定理 27.2 的同一有限类中，若全部原 PB 不成立，则对每个指定有限 $\mu>0$，存在一个实际有限角探针 $x'$ 和一个质量为 $\mu$ 的原全空间向量泛函 $\phi$，使
+
+$$
+B_\phi(R_+(x'),S_+(x'))>0,\qquad
+B_\phi(R_-(x'),S_-(x'))>0,
+$$
+
+且原 PB 在 $x',\phi$ 上严格失败。准确地，可以先取 (27.16)–(27.18) 的严格见证，保持其中的 $\phi$ 完全不变，只作一次有限探针扰动 $x'=x+\lambda j$，其中
+
+$$
+j=J\oplus0_m,\qquad J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{27.19}
+$$
+
+$\lambda$ 可取在零的任意充分小邻域中一个实际非零实数。输入 $t$、残量、取向、两个预算的泛函及其质量均不改变。
+
+证明。由定理 27.2，全部 PB 失败给一个系数失败及 (27.16)–(27.18) 的有限严格见证。写 $\phi=\phi_\xi$、$\xi=(w,y)$，则 $w\ne0$。在同一 $\xi$ 上，$x+\lambda j$ 的每份原作用像关于实 $\lambda$ 都是仿射的，因此
+
+$$
+p_\delta(\lambda)=B_{\phi_\xi}(R_\delta(x+\lambda j),S_\delta(x+\lambda j))
+\tag{27.20}
+$$
+
+是处处非负的实多项式，次数至多四。其四次系数来自两份原像的最高次项
+
+$$
+A_\delta=((J+\delta H_\sigma(J))w,0),\qquad
+C_\delta=(\delta\tfrac32Jw,0).
+$$
+
+由于 $H_\sigma(J)=\sigma i\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)/2$，直接乘法有
+
+$$
+\begin{gathered}
+J_C(J)=\tfrac32J,\qquad
+\|Jw\|^2=\|w\|^2,\qquad
+\|H_\sigma(J)w\|^2=\tfrac14\|w\|^2,\\
+\langle Jw,H_\sigma(J)w\rangle_{\mathbb R}=0,\\
+\|A_\delta\|^2=\tfrac54\|w\|^2,\qquad
+\|C_\delta\|^2=\tfrac94\|w\|^2,\qquad
+\langle A_\delta,C_\delta\rangle_{\mathbb R}
+=\delta\tfrac32\|w\|^2.
+\end{gathered}
+$$
+
+故 (27.20) 的四次系数准确是
+
+$$
+\|A_\delta\|^2\|C_\delta\|^2
+-\langle A_\delta,C_\delta\rangle_{\mathbb R}^2
+=\frac9{16}\|w\|^4>0
+\qquad(\delta=1,-1).
+\tag{27.21}
+$$
+
+这是原像随探针变化的最高次系数，不是删去常数环境像后的预算替代式。两多项式均非零，各自实零点有限。原严格差额
+
+$$
+\lambda\longmapsto
+|\phi_\xi(L(x+\lambda j))|-\sqrt{p_+(\lambda)}-\sqrt{p_-(\lambda)}
+$$
+
+连续，在 $0$ 为正，故在零的某个开邻域内仍严格为正。该开邻域去掉两多项式的有限零点及 $0$ 后非空；任取其中一个有限 $\lambda$，两多项式因非负且不为零而同时严格为正，原差额也仍严格为正。这样一次选择同时支付两根，泛函始终是同一个 $\phi_\xi$。此论证适用于演员轴方向、$m=0$ 及任意奇异环境；没有用渐近序列代替取得的探针。质量零只给零等式，不能成为严格见证。∎
+

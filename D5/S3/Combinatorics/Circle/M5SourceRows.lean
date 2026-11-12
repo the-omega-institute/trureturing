@@ -7,7 +7,7 @@
    digest: Original centered M5 predicates, row telescope and physical partition. -/
 module
 import all D5.S3.Combinatorics.Circle.ThreeRowScheduler
-public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+public import D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 public import D5.S3.Combinatorics.Circle.ThreeParentFamily
 public import Mathlib.Data.Finset.Sort
 /-! # M5SourceRows -/

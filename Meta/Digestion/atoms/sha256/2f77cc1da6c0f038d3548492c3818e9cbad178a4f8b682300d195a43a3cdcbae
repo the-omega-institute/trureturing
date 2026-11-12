@@ -1,0 +1,42 @@
+**定义 4.1（径向延拓和有限有理系数表）。** 在 $[-2,2]^3$ 上令
+
+$$
+b_e(x)=\chi(|x|)f(x/|x|),\qquad
+c_n=\frac1{64}\int_{[-2,2]^3}b_e(x)e^{-i\pi n\cdot x/2}\,dx,
+\quad n\in\mathbb Z^3.
+\tag{4.1}
+$$
+
+在原点邻域取零，按每坐标周期四延拓。令
+
+$$
+R_F=\lceil e^{-3/2}\rceil,\quad
+\mathcal F=\{n:|n|_\infty\le R_F\},\quad
+F_{\rm count}=(2R_F+1)^3,\quad\xi_n=\pi n/2.
+\tag{4.2}
+$$
+
+为给出完全有限的系数表，固定
+
+$$
+L_{\rm int}=C^4/s+6R_F,\quad
+B_{\rm int}=\left\lceil10^8tF_{\rm count}(L_{\rm int}+1)\right\rceil,
+\quad p_{\rm int}=\left\lceil\log_2(10^8tF_{\rm count}d_f)\right\rceil.
+\tag{4.3}
+$$
+
+把立方体等分为 $B_{\rm int}^3$ 个单元，在中点对 (4.1) 作归一和。每个实、虚分量的函数值取误差至多 $2^{-p_{\rm int}}$ 的二进有理数；以有证明的初等函数区间求值和一个固定枚举中首个合格输出确定选择。由此定义有理复向量 $a_n$；其 $l=0$ 分量始终精确取零。积分、常数及该有限求值规定定义公共数据，不要求数值执行。
+
+置
+
+$$
+\widehat\alpha=\sum_{n\in\mathcal F}\|a_n\|_2,\quad
+v_n=a_n/\|a_n\|_2\ (a_n\ne0),\quad
+\epsilon_{\rm in}=\frac1{10000t\widehat\alpha},\quad
+\beta=2(1+\epsilon_{\rm in})\widehat\alpha,\quad
+\delta=\frac1{2\beta}.
+\tag{4.4}
+$$
+
+零向量的准备权重为零、方向取任意固定向量。
+

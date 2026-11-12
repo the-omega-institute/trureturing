@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Mean-square prime correlations: Fourth moment sampling errors control weighted products of continuous and cell increments. -/
+   digest: Second and fourth moment bounds control continuous sampling and weighted product replacement. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CellMomentBounds
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.ContinuousSampling
@@ -143,6 +143,168 @@ theorem weighted_product_difference (k : ℕ) (f g : Fin k → ℝ → ℝ)
     _ = B * (∫ t, |(∏ i, f i t) - (∏ i, g i t)| ∂μ) := integral_const_mul _ _
     _ ≤ B * ((k : ℝ) * D ^ (1 / 4 : ℝ) * K ^ (((k : ℝ) - 1) / 4)) := mul_le_mul_of_nonneg_left hrep hB
     _ = _ := by ring
+
+/-- A cubic product is stable under a uniformly bounded perturbation using only second
+moment bounds. The separate cubic products are assumed integrable, with no bound on their
+third moments. -/
+theorem weighted_cubic_difference (f g : Fin 3 → ℝ → ℝ)
+    (w : ℝ → ℝ) (K e B : ℝ) (he : 0 ≤ e) (hB : 0 ≤ B)
+    (hf : ∀ i, MemLp (f i) 2 (volume.restrict (Icc (1 : ℝ) 2)) ∧
+      MemLp (g i) 2 (volume.restrict (Icc (1 : ℝ) 2)))
+    (hif : Integrable (fun t => ∏ i, f i t) (volume.restrict (Icc (1 : ℝ) 2)))
+    (hig : Integrable (fun t => ∏ i, g i t) (volume.restrict (Icc (1 : ℝ) 2)))
+    (hfb : ∀ i, (∫ t in (1 : ℝ)..2, |f i t| ^ 2) ≤ K)
+    (hgb : ∀ i, (∫ t in (1 : ℝ)..2, |g i t| ^ 2) ≤ K)
+    (hdb : ∀ i t, t ∈ Icc (1 : ℝ) 2 → |f i t - g i t| ≤ e)
+    (hw : IntervalIntegrable w volume 1 2)
+    (hwb : ∀ t ∈ Icc (1 : ℝ) 2, |w t| ≤ B) :
+    |(∫ t in (1 : ℝ)..2, w t * (∏ i, f i t)) -
+      (∫ t in (1 : ℝ)..2, w t * (∏ i, g i t))| ≤ 6 * B * e * K := by
+  let μ := volume.restrict (Icc (1 : ℝ) 2)
+  simp_rw [intervalIntegral.integral_of_le (by norm_num : (1 : ℝ) ≤ 2),
+    ← integral_Icc_eq_integral_Ioc] at hfb hgb ⊢
+  have hwi : IntegrableOn w (Icc (1 : ℝ) 2) := by
+    rw [integrableOn_Icc_iff_integrableOn_Ioc]
+    exact hw.1
+  have hwb' : ∀ᵐ t ∂μ, ‖w t‖ ≤ B := by
+    filter_upwards [ae_restrict_mem measurableSet_Icc] with t ht
+    simpa only [Real.norm_eq_abs] using hwb t ht
+  have hwf := hif.bdd_mul hwi.aestronglyMeasurable hwb'
+  have hwg := hig.bdd_mul hwi.aestronglyMeasurable hwb'
+  have hfi (i : Fin 3) : Integrable (fun t => |f i t| ^ 2) μ := by
+    simpa only [Real.norm_eq_abs] using (hf i).1.integrable_norm_pow (by norm_num : 2 ≠ 0)
+  have hgi (i : Fin 3) : Integrable (fun t => |g i t| ^ 2) μ := by
+    simpa only [Real.norm_eq_abs] using (hf i).2.integrable_norm_pow (by norm_num : 2 ≠ 0)
+  let U := fun t => (∑ i, |f i t| ^ 2) + ∑ i, |g i t| ^ 2
+  have hUi : Integrable U μ :=
+    (integrable_finsetSum _ (fun i _ => hfi i)).add
+      (integrable_finsetSum _ (fun i _ => hgi i))
+  have hpoint (t : ℝ) (ht : t ∈ Icc (1 : ℝ) 2) :
+      |(∏ i, f i t) - (∏ i, g i t)| ≤ e * U t := by
+    have htel : (∏ i, f i t) - (∏ i, g i t) =
+        (f 0 t - g 0 t) * f 1 t * f 2 t +
+        g 0 t * (f 1 t - g 1 t) * f 2 t +
+        g 0 t * g 1 t * (f 2 t - g 2 t) := by
+      rw [Fin.prod_univ_three, Fin.prod_univ_three]
+      ring
+    have h₀ := hdb 0 t ht
+    have h₁ := hdb 1 t ht
+    have h₂ := hdb 2 t ht
+    have hp (u v : ℝ) : |u| * |v| ≤ (|u| ^ 2 + |v| ^ 2) / 2 := by
+      nlinarith [sq_nonneg (|u| - |v|)]
+    calc
+      _ ≤ |f 0 t - g 0 t| * |f 1 t| * |f 2 t| +
+          |g 0 t| * |f 1 t - g 1 t| * |f 2 t| +
+          |g 0 t| * |g 1 t| * |f 2 t - g 2 t| := by
+        rw [htel]
+        simpa only [abs_mul] using
+          (abs_add_le ((f 0 t - g 0 t) * f 1 t * f 2 t +
+            g 0 t * (f 1 t - g 1 t) * f 2 t)
+            (g 0 t * g 1 t * (f 2 t - g 2 t))).trans
+            (add_le_add (abs_add_le _ _) le_rfl)
+      _ ≤ e * |f 1 t| * |f 2 t| + |g 0 t| * e * |f 2 t| +
+          |g 0 t| * |g 1 t| * e := by gcongr
+      _ ≤ e * U t := by
+        dsimp [U]
+        rw [Fin.sum_univ_three, Fin.sum_univ_three]
+        nlinarith [mul_le_mul_of_nonneg_left (hp (f 1 t) (f 2 t)) he,
+          mul_le_mul_of_nonneg_left (hp (g 0 t) (f 2 t)) he,
+          mul_le_mul_of_nonneg_left (hp (g 0 t) (g 1 t)) he,
+          mul_nonneg he (sq_nonneg |f 0 t|),
+          mul_nonneg he (sq_nonneg |f 1 t|),
+          mul_nonneg he (sq_nonneg |g 1 t|),
+          mul_nonneg he (sq_nonneg |g 2 t|)]
+  rw [← integral_sub hwf hwg]
+  calc
+    _ ≤ ∫ t, |w t * (∏ i, f i t) - w t * (∏ i, g i t)| ∂μ := abs_integral_le_integral_abs
+    _ ≤ ∫ t, B * e * U t ∂μ := by
+      apply integral_mono_ae (hwf.sub hwg).abs (hUi.const_mul _)
+      filter_upwards [ae_restrict_mem measurableSet_Icc] with t ht
+      simp only [Pi.sub_apply]
+      rw [← mul_sub, abs_mul]
+      calc
+        _ ≤ B * (e * U t) := mul_le_mul (hwb t ht) (hpoint t ht)
+          (abs_nonneg _) hB
+        _ = _ := by ring
+    _ = B * e * ((∑ i, ∫ t, |f i t| ^ 2 ∂μ) +
+        ∑ i, ∫ t, |g i t| ^ 2 ∂μ) := by
+      rw [integral_const_mul, integral_add
+        (integrable_finsetSum _ (fun i _ => hfi i))
+        (integrable_finsetSum _ (fun i _ => hgi i)),
+        integral_finsetSum _ (fun i _ => hfi i),
+        integral_finsetSum _ (fun i _ => hgi i)]
+    _ ≤ B * e * ((∑ _i : Fin 3, K) + ∑ _i : Fin 3, K) :=
+      mul_le_mul_of_nonneg_left
+        (add_le_add (Finset.sum_le_sum (fun i _ => hfb i))
+          (Finset.sum_le_sum (fun i _ => hgb i))) (mul_nonneg hB he)
+    _ = _ := by simp; ring
+
+/-- Continuous and cell increments have uniform second moments and a vanishing pointwise
+sampling error. Membership in L4 records boundedness for each individual sampling scale;
+no uniform fourth moment estimate is used. -/
+theorem uniform_sampling_second (SS : Finset ℕ → ℝ) (α β M : ℝ)
+    (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 3)
+    (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
+    (hMS : MeanSquareHL 3 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
+    ∃ C : ℝ, 1 ≤ C ∧ ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
+      ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
+      ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
+        (MemLp (fun t => Z H a b (N * t) N) 4 (volume.restrict (Icc (1 : ℝ) 2)) ∧
+         MemLp (fun t => S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)) 4
+          (volume.restrict (Icc (1 : ℝ) 2))) ∧
+        (∫ t in (1 : ℝ)..2, |Z H a b (N * t) N| ^ 2) ≤ C ∧
+        (∫ t in (1 : ℝ)..2, |S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)| ^ 2) ≤ C ∧
+        (∀ t ∈ Icc (1 : ℝ) 2,
+          |Z H a b (N * t) N - S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)| ≤ δ) := by
+  obtain ⟨Cg, hCg, hcell⟩ := uniform_cell_second SS α β M
+    hα hαβ hβ hSS hSS1 hMS hcor hM
+  refine ⟨2 * (Cg + 1), by linarith, ?_⟩
+  intro δ hδ
+  filter_upwards [hcell, p_sampling_error_rate α (min δ 1) hα (lt_min hδ zero_lt_one),
+    range_geometry α β M hα (by linarith) (by linarith)]
+    with N hcell hsmall hgeom
+  intro H hHlo hHhi a b ha hab hb
+  obtain ⟨hH, _hHN, hMH⟩ := hgeom.2.2 H hHlo hHhi
+  have hH1 : 1 ≤ (H : ℝ) := by linarith
+  have hmem := sampling_memLp N H M a b hgeom.1 hgeom.2.1 hH1 hM hMH ha hab hb
+  have hg := hcell H hHlo hHhi a b ha hab hb
+  have hN0 : 0 < N := by linarith [hgeom.1]
+  have hL0 : 0 < Real.log N := by linarith [hgeom.2.1]
+  have hQ : 0 < Real.sqrt ((H : ℝ) * Real.log N) := Real.sqrt_pos.mpr (by positivity)
+  have herr (t : ℝ) (ht : t ∈ Icc (1 : ℝ) 2) :
+      |Z H a b (N * t) N - S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)| ≤ min δ 1 := by
+    have hx : N * t ∈ Icc N (2 * N) := by constructor <;> nlinarith [ht.1, ht.2]
+    have hp := sampling_pointwise hgeom.1 hH1 ha hab hb hMH hx
+    rw [Z, ← sub_div, abs_div, abs_of_pos hQ]
+    exact (div_le_div_of_nonneg_right hp hQ.le).trans (hsmall H hHlo)
+  have hf2 : (∫ t in (1 : ℝ)..2, |Z H a b (N * t) N| ^ 2) ≤ 2 * (Cg + 1) := by
+    let f := fun t => Z H a b (N * t) N
+    let g := fun t => S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)
+    have hfi : IntervalIntegrable (fun t => |f t| ^ 2) volume 1 2 := by
+      rw [intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num : (1 : ℝ) ≤ 2)]
+      simpa only [Real.norm_eq_abs, f, IntegrableOn] using
+        (hmem.1.mono_exponent (by norm_num : (2 : ENNReal) ≤ 4)).integrable_norm_pow (by norm_num : 2 ≠ 0)
+    have hgi : IntervalIntegrable (fun t => |g t| ^ 2) volume 1 2 := by
+      rw [intervalIntegrable_iff_integrableOn_Icc_of_le (by norm_num : (1 : ℝ) ≤ 2)]
+      simpa only [Real.norm_eq_abs, g, IntegrableOn] using
+        (hmem.2.mono_exponent (by norm_num : (2 : ENNReal) ≤ 4)).integrable_norm_pow (by norm_num : 2 ≠ 0)
+    calc
+      _ ≤ ∫ t in (1 : ℝ)..2, 2 * (|g t| ^ 2 + 1) := by
+        apply intervalIntegral.integral_mono_on (by norm_num) hfi
+          ((hgi.add intervalIntegrable_const).const_mul 2)
+        intro t ht
+        have hd : |f t - g t| ≤ 1 := (herr t ht).trans (min_le_right δ 1)
+        have ht' := abs_add_le (f t - g t) (g t)
+        rw [sub_add_cancel] at ht'
+        have hle : |f t| ≤ 1 + |g t| := by linarith
+        have hs := pow_le_pow_left₀ (abs_nonneg (f t)) hle 2
+        nlinarith [sq_nonneg (|g t| - 1)]
+      _ = 2 * ((∫ t in (1 : ℝ)..2, |g t| ^ 2) + 1) := by
+        rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_add hgi intervalIntegrable_const]
+        norm_num
+      _ ≤ _ := by dsimp [g]; linarith
+  exact ⟨hmem, hf2, hg.trans (by linarith),
+    fun t ht => (herr t ht).trans (min_le_left δ 1)⟩
 
 /-- Continuous and cell increments have uniform fourth moments and vanishing fourth error. -/
 theorem uniform_sampling_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)

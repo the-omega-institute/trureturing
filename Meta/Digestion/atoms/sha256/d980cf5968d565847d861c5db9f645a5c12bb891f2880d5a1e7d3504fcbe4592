@@ -1,0 +1,18 @@
+#### 命题 9.1：加权读取的凸性与非投影性
+
+对固定有限实 $Q,K$，每行权重 $a_j>0$ 且 $\sum_j a_j=1$， 故一行输出为 $\sum_j a_jv_j$。 该输出不必等于任何一个输入 $v_j$， 注意矩阵即使为方阵，也一般不满足 $A^2=A$。
+
+**证明。**
+
+softmax 权重为 $a_j=e^{\ell_j}/\sum_k e^{\ell_k}$， 直接给出正性及归一化。 对标量 value $v_1=0,v_2=2$ 和相等 logits， 输出为 $1$，不同于两个输入。 再取 $1/2<p<1$，
+
+$$
+A=\begin{pmatrix}p&1-p\\1-p&p\end{pmatrix}.
+$$
+
+它可由 logits $\begin{psmallmatrix}u&0\\0&u\end{psmallmatrix}$ 产生，其中 $u=\log[p/(1-p)]$。 其特征值为 $1$ 与 $2p-1\in(0,1)$， 所以 $A^2\ne A$。 该 logits 矩阵可取 $Q=\sqrt{d_k}\,\mathrm{diag}(u,u)$、 $K=I_2$、$d_k=2$ 实现。
+
+$\square$
+
+几何上还应保留范数： $q\cdot k=\left\|q\right\|\,\left\|k\right\|\cos\theta$。 没有归一化时，点积不只是夹角余弦； 缩放 $1/\sqrt{d_k}$ 也不等于对每个向量作单位化。 另一方面，余弦函数 $x\mapsto\cos x$ 本身不满足幂等性， 因此也不能仅因其输出是投影坐标，就把它当作线性投影算子。
+

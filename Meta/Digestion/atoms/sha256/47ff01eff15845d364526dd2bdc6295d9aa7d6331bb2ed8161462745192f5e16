@@ -1,0 +1,31 @@
+**定义 25.1（同一实际估计器的风险与返回）。** 全部精度参数沿定义 19.1 的正有理曲线：$0<e\le1/100$，$m=m_e=D_e-1$，$j=m/2$，$L=L_e=10N_e$，$Q=Q_e=18N_e+1$，$d=1/64$，$\tau_0=1$。参考空间仍为 $R=\operatorname{Sym}^m(\mathbb C^2)$，唯一初始未知方向源为 $\tau_h=|e_h\rangle\langle e_h|$。所有准备和控制参数均不依赖实际 $h,n$。固定允许场
+
+$$
+ n_*(x,y)=(x,y,\sqrt{1-x^2-y^2}),\qquad x^2+y^2<1/9.
+ \tag{25.1}
+$$
+
+对这个场，(19.2) 的目标为 $(h_y/2,-h_x/4,0,h_y/2)$。一个固定有限解码器输出两个有理数 $(\widehat a,\widehat b)$，完整输出解释为 $(\widehat a,\widehat b,0,\widehat a)$。对包括规定终端的同一个过程 $\Omega_h$，定义
+
+$$
+\begin{aligned}
+ \beta_e&=\sup_{h\in S^2}\Pr_h\!\left[
+ \max\{|\widehat a-h_y/2|,|\widehat b+h_x/4|\}>e\right],\\
+ \delta_e&=\sup_{h\in S^2}D_{\rm tr}\!\left(
+ \Omega_h,\tau_h\otimes\operatorname{Tr}_R\Omega_h\right),
+ \qquad D_{\rm tr}(X,Y)=\tfrac12\|X-Y\|_1.
+\end{aligned}
+\tag{25.2}
+$$
+
+$K$ 在这里始终是该过程自己的全部实际非参考输出：原始记录、实际副本、解码和工作输出、旧记忆、探针、场令牌、程序、路由、补偿和终端输出均保留。约化 CP 节点的形式 Kraus 指标只标记代数求和；它不自动是实际端口，另行产生的实际环境却必须计入 $K$。
+
+所考察的原生候选必要关系是：存在绝对 $c_0,c_1>0$ 及一个正有理精度窗口，使每个原始有限原生控制器及其实际解码器满足
+
+$$
+ \beta_e+\delta_e\ge c_0\exp(-c_1m_e e^2\delta_e).
+ \tag{25.3}
+$$
+
+它保留定义 19.1 的全部场、混合辅助、量子与经典记忆、反馈、探针回用、最坏调用上限和规定终端。本节另考察一个明确的放宽：在获取阶段允许一个直接作用于 $R$ 的、有限且与 $h,n$ 无关的约化 CPTP 仪器；其余完成过程仍用定义 17.1。这个额外 CP 节点没有被赋予原生槽成本，也不是原合同所许可的 $R$ 操作。
+

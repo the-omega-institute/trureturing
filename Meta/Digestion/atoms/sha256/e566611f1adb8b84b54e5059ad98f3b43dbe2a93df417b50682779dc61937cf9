@@ -1,0 +1,73 @@
+**定理 73.3（两个唯一延拓与非交换双预算）。** 以 $\Phi_{ab}$ 表示输入块 $b$ 到输出块 $a$，以 $\Theta_{\ell k}$ 表示输入块 $k$ 到输出块 $\ell$。置
+
+$$
+(T^B_\Phi Z)_{ak}=\sum_b(\Phi_{ab}\otimes\operatorname{id}_{n_k})Z_{bk},\qquad
+(T^C_\Theta Z)_{b\ell}=\sum_k(\operatorname{id}_{d_b}\otimes\Theta_{\ell k})Z_{bk}.
+$$
+
+(73.3) 的唯一实线性解分别为
+
+$$
+\widehat\Phi=C_wT^B_\Phi C_w^{-1},\qquad
+\widehat\Theta=C_wT^C_\Theta C_w^{-1}.
+\tag{73.6}
+$$
+
+特别地，右位置的完整公式是
+
+$$
+(\widehat\Theta Z)_{b\ell}
+ =S_{b\ell}\left[\sum_k(\operatorname{id}_{d_b}\otimes\Theta_{\ell k})
+ (S_{bk}^{-1}Z_{bk}S_{bk}^{-1})\right]S_{b\ell}.
+\tag{73.7}
+$$
+
+若 $\Phi,\widehat\Phi$ 都正，记 $F_{ab}=\Phi_{ab}^*(I_a)\ge0$。其局部 TNI／TP 预算与联合 TNI／TP 预算分别为
+
+$$
+\sum_aF_{ab}\le I_b,\qquad
+\sum_aF_{ab}\otimes w_{ak}\le I_b\otimes w_{bk}
+\quad(\forall b,k),
+\tag{73.8}
+$$
+
+其中分别把 $\le$ 换成 $=$ 就得到对应 TP 条件。若 $\Theta,\widehat\Theta$ 都正，右位置的两预算分别为
+
+$$
+\sum_\ell\Theta_{\ell k}^*(I_\ell)\le I_k,\qquad
+\sum_\ell\Theta_{\ell k}^*(w_{b\ell})\le w_{bk}
+\quad(\forall b,k).
+\tag{73.9}
+$$
+
+等号同样分别刻画 TP。特别地，对任一右局部总映射 $T:C\to C$，其联合延拓 TP 当且仅当
+
+$$
+T^*w_b=w_b\quad(\forall b),\qquad w_b=(w_{bk})_k\in C.
+\tag{73.10}
+$$
+
+**证明。** 每个完整 Hermitian 块由实 Hermitian 简单张量张成，按输入中心标签可单独支撑任意 $(b,k)$；$C_w$ 可逆，故 $m_w(B,C)$ 实张满整个 $J$。两式 (73.6) 在全部乘积上满足 (73.3)，从而存在且唯一。这没有断言乘积正元生成整个联合正锥；正性仍须测试纠缠输入。
+
+左式取迹伴随作用于联合单位，在输入 $(b,k)$ 得
+
+$$
+(\widehat\Phi^*1_J)_{bk}
+ =\sum_a F_{ab}\otimes
+       w_{bk}^{-1/2}w_{ak}w_{bk}^{-1/2}.
+\tag{73.11}
+$$
+
+其推导仅用 $T^B_\Phi$ 的迹伴随，不用 Kraus 表示。对该效应作 $S_{bk}$ 合同得到 (73.8)。局部预算是相同的迹对偶论证。右式则给
+
+$$
+(\widehat\Theta^*1_J)_{bk}
+ =I_b\otimes w_{bk}^{-1/2}
+ \left[\sum_\ell\Theta_{\ell k}^*(w_{b\ell})\right]w_{bk}^{-1/2}.
+\tag{73.12}
+$$
+
+正映射 TNI 等价于效应不超过单位，TP 等价于效应为单位，故得到 (73.9)–(73.10)。这里先去输入滤子，作用局部映射，再放回输出滤子；伴随把输出权重放入 $\Theta_{\ell k}^*$ 内。不能将它交换到映射外，也没有假定不同行权重同时对角化。TP 的迹恒等式本身对任意实线性映射也成立；TNI 的正分支解释另需已述正性。$\square$
+
+左式是 69.2、69.4 在一般两个载体上的直接复用，(73.8) 的效应论证明确说明其必要性没有用 CP。右式把右槽实际滤波及块间迁移的对偶预算补齐，不能由把 (73.8) 的标签对调得到。
+
