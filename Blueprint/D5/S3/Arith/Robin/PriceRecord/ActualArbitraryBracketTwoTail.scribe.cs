@@ -7,7 +7,7 @@ internal sealed class ActualArbitraryBracketTwoTailDocument : IScribeDocumentDef
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Unconditional asymptotic bounds for the full binary tail of original strict records.",
         H("The full original binary tail at every coefficient above four"),
-        Describe.Lean(
+        Blocks(Describe.Lean(
             DescribeId.Create("arbitrary-bracket-full-original-binary-tail"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualArbitraryBracketTwoTail.full_original2tail_power_bound"),
             H("A uniform threshold before both the original integer and its price"),
@@ -51,5 +51,5 @@ internal sealed class ActualArbitraryBracketTwoTailDocument : IScribeDocumentDef
                     + "deletion and optimizer-gap results. It makes no claim of a new PNT, a finite "
                     + "coefficient-four theorem at arbitrary price, a single-layer bound, the eight-bank "
                     + "small-slack obstruction, Robin beyond 5040, or RH."))),
-            DescribeRole.Theorem)));
+            DescribeRole.Theorem))));
 }
