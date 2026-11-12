@@ -181,5 +181,29 @@ private lemma distinct_bound (N r : ℕ) (hN : 0 < N) (hr : 2 ≤ r) (hr6 : r < 
       rw [he]
       field_simp
 
+private lemma subsetDistinct_univ (ℓ : ((Fin N → Bool) → ℝ) →ₗ[ℝ] ℝ)
+    (Y : Fin N → (Fin N → Bool) → ℝ) (g : Fin 6 → Fin N → ℝ) :
+    subsetDistinctMoment ℓ Y g (Finset.univ : Finset (Fin 6)) =
+      distinctIndexMoment ℓ Y g := by
+  classical
+  unfold subsetDistinctMoment
+  congr 1
+  funext j
+  simp
+
+private lemma distinct_pair_formula (N : ℕ) (f h : Fin N → ℝ) :
+    distinctIndexMoment (modelFunctional N) (modelY N) ![f, h] =
+      (1 / (N : ℝ)) *
+        ((∑ d, f d) * (∑ d, h d) - ∑ d, f d * h d) := by
+  classical
+  rw [distinct_moments]
+  simp only [moment_values.2.2.1, Finset.prod_univ_two]
+  rw [← Finset.sum_filter_add_sum_filter_not _ Function.Injective]
+  simp only [Finset.sum_filter, Finset.mem_univ, true_and]
+  simp only [Function.Injective, Fin.isValue, Matrix.cons_val_zero, Matrix.cons_val_one]
+  rw [← Finset.sum_mul, ← Finset.mul_sum]
+  simp only [Finset.sum_sub_distrib]
+  ring
+
 end
 end D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.SixthOrderTopPairingRefutation
