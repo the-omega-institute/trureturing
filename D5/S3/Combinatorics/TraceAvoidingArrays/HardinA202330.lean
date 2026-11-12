@@ -130,7 +130,7 @@ private theorem count_transfer (m : ℕ) :
     · rw [Finset.sum_eq_single b]
       · simp
       · intro y _ hy
-        simp only [Prod.mk.injEq, true_and, eq_self_iff_true, true_and, hy, ite_false]
+        simp only [Prod.mk.injEq, true_and, true_and, hy, ite_false]
       · simp
     · intro x _ hx
       apply Finset.sum_eq_zero

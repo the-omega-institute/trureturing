@@ -55,7 +55,6 @@ internal sealed class HardinA202330Document : IScribeDocumentDefinition
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula LeqF(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula AndF(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
@@ -67,11 +66,9 @@ internal sealed class HardinA202330Document : IScribeDocumentDefinition
     private static Formula NatF() => Op("Nat");
     private static Formula IntF() => Op("Int");
     private static Formula RatF() => Op("Rat");
-    private static Formula RealF() => Op("Real");
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(Parenthesized(a), b);
     private static Formula PlusF(Formula a, Formula b) => Add(a, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => Multiply(a, b);
-    private static Formula MatrixF(Formula rows, Formula cols, Formula field) => Call("Matrix", rows, cols, field);
 
 }
