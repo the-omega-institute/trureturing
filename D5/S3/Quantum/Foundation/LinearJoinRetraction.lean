@@ -89,8 +89,10 @@ private theorem left_kernel_compatibility (J : JoinData (A := A)) :
   change (u : A) + ((Submodule.inclusion J.hSU) (J.piY w) : A) = 0
   rw [hpi]
   change (u : A) + (J.overlapSubspace.inclusion J.hSW s : A) = 0
-  rw [hsW]
-  simpa [add_comm] using hsum
+  have hsW' : ((J.overlapSubspace.inclusion J.hSW s : J.rightSubspace) : A) =
+      (w : A) := congrArg (fun t : J.rightSubspace => (t : A)) hsW
+  change (u : A) + (w : A) = 0
+  exact hsum
 
 private theorem right_kernel_compatibility (J : JoinData (A := A)) :
     LinearMap.ker J.sumMap ≤
@@ -117,7 +119,10 @@ private theorem right_kernel_compatibility (J : JoinData (A := A)) :
   apply Subtype.ext
   change ((Submodule.inclusion J.hSW) (J.piZ u) : A) + (w : A) = 0
   rw [hpi]
-  simpa [add_comm] using hsum
+  have hsU' : ((J.overlapSubspace.inclusion J.hSU s : J.leftSubspace) : A) =
+      (u : A) := congrArg (fun t : J.leftSubspace => (t : A)) hsU
+  change (u : A) + (w : A) = 0
+  exact hsum
 
 /-- The left retraction (R_Y), obtained by gluing the identity on (U) to
 (pi_S:W	o S). -/
@@ -215,7 +220,10 @@ private theorem left_positive (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   change J.leftSubspace.subtype
       (J.leftRetraction (∑ z ∈ c.support, c z • z)) ∈ C
   rw [map_sum]
+  rw [map_sum]
   simp only [map_smul]
+  change (∑ z ∈ c.support,
+      c z • J.leftSubspace.subtype (J.leftRetraction z)) ∈ C
   exact C.sum_mem (fun z hz =>
     C.smul_mem (hnonneg z) (H.maps_to_side z (hc hz)))
 
@@ -226,14 +234,19 @@ private theorem left_subunit (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   rw [H.generates] at hx
   rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
   rw [← hsum]
-  simp only [map_sum, map_smul]
+  change u (J.leftSubspace.subtype
+      (J.leftRetraction (∑ z ∈ c.support, c z • z))) ≤
+    u (∑ z ∈ c.support, c z • z)
+  repeat rw [map_sum]
   have hterm : ∀ z, z ∈ c.support →
       sideUnit u J.leftSubspace (J.leftRetraction z) ≤ u z := fun z hz => H.subunit z (hc hz)
   have hmul : ∀ z ∈ c.support, c z •
       sideUnit u J.leftSubspace (J.leftRetraction z) ≤ c z • u z := by
     intro z hz
     exact smul_le_smul_of_nonneg_left (hterm z hz) (hnonneg z)
-  exact Finset.sum_le_sum hmul
+  apply Finset.sum_le_sum
+  intro z hz
+  simpa [sideUnit, map_smul, smul_eq_mul] using hmul z hz
 
 theorem extend_effect_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (J : JoinData (A := A)) (H : RetractionCertificate C u J)
@@ -251,7 +264,6 @@ theorem restrict_extend_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   ext x
   simp only [LinearMap.coe_comp, Function.comp_apply]
   rw [J.leftRetraction_on_left]
-  rfl
 
 theorem restrict_surjective_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (J : JoinData (A := A)) (H : RetractionCertificate C u J) :
@@ -274,17 +286,25 @@ theorem inherit_G2_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   have hf' : proper C u (f.comp J.leftRetraction) := extend_effect_left C u J H f hf.1
   have hg' : proper C u (g.comp J.leftRetraction) := extend_effect_left C u J H g hg.1
   have hp' : (f.comp J.leftRetraction) (p0 : A) = 1 := by
+    change f (J.leftRetraction (p0 : A)) = 1
     rw [hp0]
-    simpa [hf.2, J.leftRetraction_on_left]
+    rw [show J.leftRetraction (p : A) = p from J.leftRetraction_on_left p]
+    exact hf.2
   have hp'' : (g.comp J.leftRetraction) (p0 : A) = 1 := by
+    change g (J.leftRetraction (p0 : A)) = 1
     rw [hp0]
-    simpa [hg.2, J.leftRetraction_on_left]
+    rw [show J.leftRetraction (p : A) = p from J.leftRetraction_on_left p]
+    exact hg.2
   have hq' : (f.comp J.leftRetraction) (q0 : A) = 0 := by
+    change f (J.leftRetraction (q0 : A)) = 0
     rw [hq0]
-    simpa [J.leftRetraction_on_left] using hfq
+    rw [show J.leftRetraction (q : A) = q from J.leftRetraction_on_left q]
+    exact hfq
   have hr' : (g.comp J.leftRetraction) (r0 : A) = 0 := by
+    change g (J.leftRetraction (r0 : A)) = 0
     rw [hr0]
-    simpa [J.leftRetraction_on_left] using hgr
+    rw [show J.leftRetraction (r : A) = r from J.leftRetraction_on_left r]
+    exact hgr
   obtain ⟨k, hk, hkm⟩ := hG p0 q0 r0 ⟨f.comp J.leftRetraction, ⟨hf', hp'⟩, hq'⟩
     ⟨g.comp J.leftRetraction, ⟨hg', hp''⟩, hr'⟩
   let kside : sideProperEffect C u J.leftSubspace :=
@@ -295,8 +315,137 @@ theorem inherit_G2_left (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
   · simpa [kside, restrictEffect, map_smul, map_add, hp0, hq0, hr0,
       J.leftRetraction_on_left] using hkm
 
+/-! The right-hand statements are deliberately separate so that each side
+can carry its own ROG generator certificate.  This is the symmetric half of
+the source lemma, rather than an assumption that one certificate is silently
+reused for both sides. -/
+
+structure RightRetractionCertificate (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) where
+  generators : Set A
+  generates : C = PointedCone.hull ℝ generators
+  maps_to_side : ∀ x ∈ generators,
+    J.rightSubspace.subtype (J.rightRetraction x) ∈ C
+  subunit : ∀ x ∈ generators,
+    sideUnit u J.rightSubspace (J.rightRetraction x) ≤ u x
+  pureLift : ∀ p : pure (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace),
+    ∃ q : pure C u,
+    (q : A) = (p : A)
+
+private theorem right_positive (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
+    ∀ x ∈ C, J.rightRetraction x ∈ sideCone C J.rightSubspace := by
+  intro x hx
+  rw [H.generates] at hx
+  rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
+  change J.rightSubspace.subtype (J.rightRetraction x) ∈ C
+  rw [← hsum]
+  change J.rightSubspace.subtype
+      (J.rightRetraction (∑ z ∈ c.support, c z • z)) ∈ C
+  rw [map_sum]
+  rw [map_sum]
+  simp only [map_smul]
+  change (∑ z ∈ c.support,
+      c z • J.rightSubspace.subtype (J.rightRetraction z)) ∈ C
+  exact C.sum_mem (fun z hz =>
+    C.smul_mem (hnonneg z) (H.maps_to_side z (hc hz)))
+
+private theorem right_subunit (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
+    ∀ x ∈ C, sideUnit u J.rightSubspace (J.rightRetraction x) ≤ u x := by
+  intro x hx
+  rw [H.generates] at hx
+  rcases (PointedCone.mem_hull_set.mp hx) with ⟨c, hc, hnonneg, hsum⟩
+  rw [← hsum]
+  change u (J.rightSubspace.subtype
+      (J.rightRetraction (∑ z ∈ c.support, c z • z))) ≤
+    u (∑ z ∈ c.support, c z • z)
+  repeat rw [map_sum]
+  have hterm : ∀ z, z ∈ c.support →
+      sideUnit u J.rightSubspace (J.rightRetraction z) ≤ u z :=
+    fun z hz => H.subunit z (hc hz)
+  have hmul : ∀ z ∈ c.support, c z •
+      sideUnit u J.rightSubspace (J.rightRetraction z) ≤ c z • u z := by
+    intro z hz
+    exact smul_le_smul_of_nonneg_left (hterm z hz) (hnonneg z)
+  apply Finset.sum_le_sum
+  intro z hz
+  simpa [sideUnit, map_smul, smul_eq_mul] using hmul z hz
+
+theorem extend_effect_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)
+    (g : J.rightSubspace →ₗ[ℝ] ℝ)
+    (hg : proper (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) g) :
+    proper C u (g.comp J.rightRetraction) := by
+  intro x hx
+  have hR := right_positive C u J H x hx
+  have hU := hg (J.rightRetraction x) hR
+  exact ⟨hU.1, hU.2.trans (right_subunit C u J H x hx)⟩
+
+theorem restrict_extend_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (g : J.rightSubspace →ₗ[ℝ] ℝ) :
+    (g.comp J.rightRetraction).comp J.rightSubspace.subtype = g := by
+  ext x
+  simp only [LinearMap.coe_comp, Function.comp_apply]
+  rw [J.rightRetraction_on_right]
+
+theorem restrict_surjective_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J) :
+    Function.Surjective (restrictEffect C u J.rightSubspace) := by
+  intro g
+  refine ⟨⟨g.1.comp J.rightRetraction, extend_effect_right C u J H g.1 g.2⟩, ?_⟩
+  apply Subtype.ext
+  exact restrict_extend_right C u J g.1
+
+theorem inherit_G2_right (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
+    (J : JoinData (A := A)) (H : RightRetractionCertificate C u J)
+    (hG : G2 C u) :
+    G2 (sideCone C J.rightSubspace) (sideUnit u J.rightSubspace) := by
+  intro p q r hpq hpr
+  obtain ⟨p0, hp0⟩ := H.pureLift p
+  obtain ⟨q0, hq0⟩ := H.pureLift q
+  obtain ⟨r0, hr0⟩ := H.pureLift r
+  rcases hpq with ⟨f, hf, hfq⟩
+  rcases hpr with ⟨g, hg, hgr⟩
+  have hf' : proper C u (f.comp J.rightRetraction) :=
+    extend_effect_right C u J H f hf.1
+  have hg' : proper C u (g.comp J.rightRetraction) :=
+    extend_effect_right C u J H g hg.1
+  have hp' : (f.comp J.rightRetraction) (p0 : A) = 1 := by
+    change f (J.rightRetraction (p0 : A)) = 1
+    rw [hp0]
+    rw [show J.rightRetraction (p : A) = p from J.rightRetraction_on_right p]
+    exact hf.2
+  have hp'' : (g.comp J.rightRetraction) (p0 : A) = 1 := by
+    change g (J.rightRetraction (p0 : A)) = 1
+    rw [hp0]
+    rw [show J.rightRetraction (p : A) = p from J.rightRetraction_on_right p]
+    exact hg.2
+  have hq' : (f.comp J.rightRetraction) (q0 : A) = 0 := by
+    change f (J.rightRetraction (q0 : A)) = 0
+    rw [hq0]
+    rw [show J.rightRetraction (q : A) = q from J.rightRetraction_on_right q]
+    exact hfq
+  have hr' : (g.comp J.rightRetraction) (r0 : A) = 0 := by
+    change g (J.rightRetraction (r0 : A)) = 0
+    rw [hr0]
+    rw [show J.rightRetraction (r : A) = r from J.rightRetraction_on_right r]
+    exact hgr
+  obtain ⟨k, hk, hkm⟩ := hG p0 q0 r0
+    ⟨f.comp J.rightRetraction, ⟨hf', hp'⟩, hq'⟩
+    ⟨g.comp J.rightRetraction, ⟨hg', hp''⟩, hr'⟩
+  let kside : sideProperEffect C u J.rightSubspace :=
+    restrictEffect C u J.rightSubspace ⟨k, hk.1⟩
+  refine ⟨kside.1, ?_, ?_⟩
+  · refine ⟨kside.2, ?_⟩
+    simpa [kside, restrictEffect, hp0, J.rightRetraction_on_right] using hk.2
+  · simpa [kside, restrictEffect, map_smul, map_add, hp0, hq0, hr0,
+      J.rightRetraction_on_right] using hkm
+
 end D5.S3.Quantum.Foundation.LinearJoinRetraction
 
 #print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.JoinData.leftRetraction
 #print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.restrict_surjective_left
 #print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.inherit_G2_left
+#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.restrict_surjective_right
+#print axioms D5.S3.Quantum.Foundation.LinearJoinRetraction.inherit_G2_right
