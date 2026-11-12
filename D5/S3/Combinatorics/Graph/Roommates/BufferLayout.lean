@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Matching]
    utility: none
-   digest: Finite clique matchings joined through central vertices give the six-buffer completion. -/
+   digest: Clique matchings joined at their centers give six-buffer completion. -/
 
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Combinatorics.SimpleGraph.Matching
@@ -31,30 +31,30 @@ private theorem clique_partner {α : Type} (G : SimpleGraph α) (s : Set α)
   have he : ∃ u : Set α, u ⊆ s ∧ (∀ x, x ∈ s → x ∉ u → x = c) ∧
       ∃ M : G.Subgraph, M.verts = u ∧ M.IsMatching := by
     by_cases hp : Even s.ncard
-    · exact ⟨s, Set.Subset.rfl, by simp, (hcl.even_iff_exists_isMatching hs).mp hp⟩
+    · exact ⟨s, Set.Subset.rfl, by intro x hx hn; exact (hn hx).elim, (hcl.even_iff_exists_isMatching hs).mp hp⟩
     · have hp' : Even (s \ {c}).ncard := by
         have hn := Set.ncard_sdiff_singleton_add_one hc hs
         rw [← hn, Nat.even_add_one] at hp
         simpa only [not_not] using hp
       refine ⟨s \ {c}, Set.sdiff_subset, ?_,
-        ((hcl.subset Set.sdiff_subset).even_iff_exists_isMatching (hs.sdiff _)).mp hp'⟩
+        ((hcl.subset Set.sdiff_subset).even_iff_exists_isMatching hs.sdiff).mp hp'⟩
       intro x hx hxu
       simpa only [Set.mem_sdiff, Set.mem_singleton_iff, hx, true_and, not_not] using hxu
   obtain ⟨u, hus, hmissing, M, hverts, hM⟩ := he
   let f : α → α := fun x => if hx : x ∈ M.verts then (hM hx).choose else x
   have ha (x : α) (hx : x ∈ M.verts) : M.Adj x (f x) := by
-    simpa only [f, dif_pos hx] using (hM hx).choose_spec.1
+    simpa only [f, dite_eq_left hx] using (hM hx).choose_spec.1
   have hi : Function.Involutive f := by
     intro x
     by_cases hx : x ∈ M.verts
     · have hax := ha x hx
       have hfx := hax.snd_mem
       exact hM.eq_of_adj_left (ha (f x) hfx) hax.symm
-    · simp only [f, dif_neg hx]
+    · simp only [f, dite_eq_right hx]
   refine ⟨f, hi, ?_, ?_, ?_⟩
   · intro x hx
     have hn : x ∉ M.verts := by rw [hverts]; exact fun h => hx (hus h)
-    exact dif_neg hn
+    exact dite_eq_right hn
   · intro x hx hfix
     apply hmissing x hx
     intro hxu
@@ -64,7 +64,7 @@ private theorem clique_partner {α : Type} (G : SimpleGraph α) (s : Set α)
   · intro x hx
     have hm : x ∈ M.verts := by
       by_contra hn
-      exact hx (dif_neg hn)
+      exact hx (dite_eq_right hn)
     exact M.adj_sub (ha x hm)
 
 /-- Joining two disjoint cliques through their hubs leaves at most one single.
@@ -94,23 +94,23 @@ private theorem two_clique_partner {α : Type} (G : SimpleGraph α) (s t : Set �
   have hki : Function.Involutive k := by
     intro x
     by_cases hx : x ∈ s
-    · simp only [k, if_pos hx, if_pos ((hmemf x).mpr hx), hfi x]
+    · simp only [k, ite_eq_left hx, ite_eq_left ((hmemf x).mpr hx), hfi x]
     · have hgx : g x ∉ s := by
         by_cases hxt : x ∈ t
         · exact fun h => hdst _ h ((hmemg x).mpr hxt)
         · simpa only [hgo x hxt] using hx
-      simp only [k, if_neg hx, if_neg hgx, hgi x]
+      simp only [k, ite_eq_right hx, ite_eq_right hgx, hgi x]
   have hko (x : α) (hx : x ∉ s ∪ t) : k x = x := by
     simp only [Set.mem_union, not_or] at hx
-    simp only [k, if_neg hx.1, hgo x hx.2]
+    simp only [k, ite_eq_right hx.1, hgo x hx.2]
   have hka (x : α) (hx : k x ≠ x) : G.Adj x (k x) := by
     by_cases hxs : x ∈ s
-    · simp only [k, if_pos hxs] at hx ⊢; exact hfa x hx
-    · simp only [k, if_neg hxs] at hx ⊢; exact hga x hx
+    · simp only [k, ite_eq_left hxs] at hx ⊢; exact hfa x hx
+    · simp only [k, ite_eq_right hxs] at hx ⊢; exact hga x hx
   have hkfix (x : α) (hx : x ∈ s ∪ t) (he : k x = x) : x = c ∨ x = d := by
     by_cases hxs : x ∈ s
-    · exact Or.inl (hfc x hxs (by simpa only [k, if_pos hxs] using he))
-    · exact Or.inr (hgc x (hx.resolve_left hxs) (by simpa only [k, if_neg hxs] using he))
+    · exact Or.inl (hfc x hxs (by simpa only [k, ite_eq_left hxs] using he))
+    · exact Or.inr (hgc x (hx.resolve_left hxs) (by simpa only [k, ite_eq_right hxs] using he))
   have hne : c ≠ d := fun h => hdst c hc (h.symm ▸ hd)
   by_cases hp : k c = c ∧ k d = d
   · let q : α → α := fun x => if x = c then d else if x = d then c else k x
@@ -121,28 +121,31 @@ private theorem two_clique_partner {α : Type} (G : SimpleGraph α) (s t : Set �
     have hqi : Function.Involutive q := by
       intro x
       by_cases hxc : x = c
-      · subst x; simp only [q, if_pos rfl, if_neg hne.symm]
+      · subst x; simp [q, hne, hne.symm]
       by_cases hxd : x = d
-      · subst x; simp only [q, if_neg hne.symm, if_pos rfl]
+      · subst x; simp [q, hne, hne.symm]
       have hh := hqoff x hxc hxd
-      simp only [q, if_neg hxc, if_neg hxd, if_neg hh.1, if_neg hh.2, hki x]
+      simp only [q, ite_eq_right hxc, ite_eq_right hxd, ite_eq_right hh.1, ite_eq_right hh.2, hki x]
     have hqfix (x : α) (he : q x = x) : x ≠ c ∧ x ≠ d ∧ k x = x := by
       by_cases hxc : x = c
-      · subst x; simp only [q, if_pos rfl] at he; exact (hne he.symm).elim
+      · subst x; simp only [q, ite_eq_left rfl] at he; exact (hne he.symm).elim
       by_cases hxd : x = d
-      · subst x; simp only [q, if_neg hne.symm, if_pos rfl] at he; exact (hne he).elim
-      exact ⟨hxc, hxd, by simpa only [q, if_neg hxc, if_neg hxd] using he⟩
+      · subst x
+        have hh : c = d := by
+          simpa only [q, ite_eq_right hne.symm, ite_eq_left rfl, ite_true] using he
+        exact (hne hh).elim
+      exact ⟨hxc, hxd, by simpa only [q, ite_eq_right hxc, ite_eq_right hxd] using he⟩
     refine ⟨q, hqi, ?_, ?_, ?_, ?_⟩
     · intro x hx
       have hxc : x ≠ c := fun h => hx (Or.inl (h.symm ▸ hc))
       have hxd : x ≠ d := fun h => hx (Or.inr (h.symm ▸ hd))
-      simpa only [q, if_neg hxc, if_neg hxd] using hko x hx
+      simpa only [q, ite_eq_right hxc, ite_eq_right hxd] using hko x hx
     · intro x hx
       by_cases hxc : x = c
-      · subst x; simpa only [q, if_pos rfl] using hcd
+      · subst x; simpa only [q, ite_eq_left rfl] using hcd
       by_cases hxd : x = d
-      · subst x; simpa only [q, if_neg hne.symm, if_pos rfl] using hcd.symm
-      simp only [q, if_neg hxc, if_neg hxd] at hx ⊢; exact hka x hx
+      · subst x; simpa [q, hne, hne.symm] using hcd.symm
+      simp only [q, ite_eq_right hxc, ite_eq_right hxd] at hx ⊢; exact hka x hx
     · intro x hx he
       have hh := hqfix x he
       exact (hkfix x hx hh.2.2).elim (fun h => (hh.1 h).elim) (fun h => (hh.2.1 h).elim)
@@ -170,8 +173,12 @@ private def rightFree (b : Fin 4 → Bool) : Set (Fin 6) :=
 
 private theorem free_union (b : Fin 4 → Bool) (i : Fin 6) :
     i ∈ leftFree b ∪ rightFree b ↔ occupied b i = false := by
-  change (i.val ≤ 2 ∧ _ ) ∨ (3 ≤ i.val ∧ _) ↔ _
-  omega
+  constructor
+  · rintro (⟨_, h⟩ | ⟨_, h⟩) <;> exact h
+  · intro h
+    by_cases hi : i.val ≤ 2
+    · exact Or.inl ⟨hi, h⟩
+    · exact Or.inr ⟨by omega, h⟩
 
 private theorem layout_exists (b : Fin 4 → Bool) :
     ∃ f : Fin 6 → Fin 6, Function.Involutive f ∧
@@ -191,12 +198,14 @@ private theorem layout_exists (b : Fin 4 → Bool) :
     have := hi.1; have := hj.1; omega
   have hcl : bufferGraph.IsClique (leftFree b) := by
     intro i hi j hj hij
-    exact ⟨hij, by have := hi.1; have := hj.1; omega⟩
+    exact ⟨hij, ⟨by have := hi.1; have := hj.1; omega,
+      by have := hi.1; have := hj.1; omega⟩⟩
   have hcr : bufferGraph.IsClique (rightFree b) := by
     intro i hi j hj hij
-    exact ⟨hij, by have := hi.1; have := hj.1; have := i.isLt; have := j.isLt; omega⟩
+    exact ⟨hij, ⟨by have := hi.1; have := hj.1; have := i.isLt; have := j.isLt; omega,
+      by have := hi.1; have := hj.1; have := i.isLt; have := j.isLt; omega⟩⟩
   obtain ⟨f, hfi, hfo, hfa, hfc, hsingle⟩ := two_clique_partner bufferGraph
-    (leftFree b) (rightFree b) (Set.toFinite _) (Set.toFinite _) hd 2 3 hl hr hcl hcr (by decide)
+    (leftFree b) (rightFree b) (Set.toFinite _) (Set.toFinite _) hd 2 3 hl hr hcl hcr (by norm_num [bufferGraph, Fin.ext_iff])
   have hocc (i : Fin 6) (hi : occupied b i = true) : f i = i := by
     apply hfo
     rw [free_union]
@@ -279,10 +288,10 @@ theorem complete_requests {α : Type} (request : α → Fin 6)
     | inl a =>
       have h : ∃ a', request a' = request a := ⟨a, rfl⟩
       have hc : Classical.choose h = a := hinj (Classical.choose_spec h)
-      simp only [partner, dif_pos h, hc]
+      simp only [partner, dite_eq_left h, hc]
     | inr i =>
       by_cases h : ∃ a, request a = i
-      · simp only [partner, dif_pos h]
+      · simp only [partner, dite_eq_left h]
         rw [Classical.choose_spec h]
       · have ho : occupied (flags request) i = false := by
           cases he : occupied (flags request) i
@@ -294,21 +303,21 @@ theorem complete_requests {α : Type} (request : α → Fin 6)
           have hy := hmate i
           rw [hx] at hy
           exact h ⟨a, ha.trans hy⟩
-        simp only [partner, dif_neg h, dif_neg hfree]
+        simp only [partner, dite_eq_right h, dite_eq_right hfree]
         exact congrArg Sum.inr (hmate i)
   · constructor
     · intro a
       rfl
     · intro i hi
       by_cases h : ∃ a, request a = i
-      · simp only [partner, dif_pos h] at hi
+      · simp only [partner, dite_eq_left h] at hi
         cases hi
       · have ho : occupied (flags request) i = false := by
           cases he : occupied (flags request) i
           · rfl
           · exact (h ((hocc i).mp he)).elim
         have he : mate (flags request) i = i := by
-          simpa only [partner, dif_neg h, Sum.inr.injEq] using hi
+          simpa only [partner, dite_eq_right h, Sum.inr.injEq] using hi
         exact hlocal.2.2.2.2.1 i ho he
 
 #print axioms complete_requests
