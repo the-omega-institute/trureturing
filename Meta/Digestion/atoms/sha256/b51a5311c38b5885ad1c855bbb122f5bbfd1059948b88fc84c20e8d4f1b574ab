@@ -1,0 +1,11 @@
+**推论 101.4（一般仿射维数的纯元数界）。** 对任意有限 $m\ge1$，
+
+$$
+\boxed{\mathrm G_m\quad\Longleftrightarrow\quad\mathrm{Z0}.}
+\tag{VII101.9}
+$$
+
+证明。$\mathrm{Z0}$ 的方向由101.2给出。若有 $\mathrm G_m$ 而 $\mathrm{Z0}$ 失败，101.3给一个元数至多 $m$ 的不相容纯目标组，直接违反 $\mathrm G_m$。
+
+$m=0$ 时整个 $K$ 为单点，$F_p=\{u\}$、$D_p=\varnothing$，$\mathrm{Z0}$ 与所有 $\mathrm G_k$ 都成立，不需不相容组。$m=1$ 时原紧凸体为线段，只有两端为纯点；对每个端点，确认它的原重心坐标使 $D_p$ 恰为另一端点，故 $\mathrm{Z0}$ 成立。这也说明(VII101.9)在 $m=1$ 与自动成立的 $\mathrm G_1$ 一致。证毕。
+
