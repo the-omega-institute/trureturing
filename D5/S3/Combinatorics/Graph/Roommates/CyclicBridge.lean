@@ -27,18 +27,18 @@ def wrap (n : ℕ) (z : ℤ) : Fin (n + 5) :=
     have h' := Int.emod_lt_of_pos z (show (0 : ℤ) < n + 5 by omega)
     omega⟩
 
-private theorem wrap_val (n : ℕ) (z : ℤ) :
+theorem wrap_val (n : ℕ) (z : ℤ) :
     ((wrap n z).val : ℤ) = z % (n + 5) := by
   simp only [wrap]
   exact Int.toNat_of_nonneg (Int.emod_nonneg _ (by omega))
 
-private theorem wrap_index {n : ℕ} (i : Fin (n + 5)) : wrap n i.val = i := by
+theorem wrap_index {n : ℕ} (i : Fin (n + 5)) : wrap n i.val = i := by
   apply Fin.ext
   have h := wrap_val n i.val
   rw [Int.emod_eq_of_lt (by omega) (by omega)] at h
   exact_mod_cast h
 
-private theorem wrap_add (n : ℕ) (a b : ℤ) :
+theorem wrap_add (n : ℕ) (a b : ℤ) :
     wrap n (a + b) = wrap n a + wrap n b := by
   apply Fin.ext
   have ha := wrap_val n a
@@ -49,7 +49,7 @@ private theorem wrap_add (n : ℕ) (a b : ℤ) :
   change (wrap n (a + b)).val = ((wrap n a).val + (wrap n b).val) % (n + 5)
   exact_mod_cast hab
 
-private theorem wrap_signed (n : ℕ) (s : Fin 4) : wrap n (signed s) = SourceModel.offset n s := by
+theorem wrap_signed (n : ℕ) (s : Fin 4) : wrap n (signed s) = SourceModel.offset n s := by
   apply Fin.ext
   fin_cases s
   · change (wrap n 1).val = 1
@@ -107,7 +107,7 @@ private theorem wrap_reverse {n : ℕ} (i j : Fin (n + 5)) (a b : ℤ)
   have hz : a + b = 0 := Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdiv (by omega)
   omega
 
-private theorem signed_bounds (s : Fin 4) : -2 ≤ signed s ∧ signed s ≤ 2 ∧ signed s ≠ 0 := by
+theorem signed_bounds (s : Fin 4) : -2 ≤ signed s ∧ signed s ≤ 2 ∧ signed s ≠ 0 := by
   fin_cases s <;> norm_num [signed]
 
 private theorem signed_rank (r : Ranking) (s : Fin 4) :
@@ -336,7 +336,7 @@ theorem closing_old_edge_local {m : ℕ} (i j : Fin m)
     Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdvd (by omega)
   omega
 
-private theorem rank_wrap {n : ℕ} (p : SourceModel.Profile n) (i : Fin (n + 5))
+theorem rank_wrap {n : ℕ} (p : SourceModel.Profile n) (i : Fin (n + 5))
     (a : ℤ) (ha : -2 ≤ a ∧ a ≤ 2) :
     SourceModel.rank p i (wrap n (i.val + a)) = offsetRank (p i) a := by
   have hcases : a = 0 ∨ ∃ s, signed s = a := by
