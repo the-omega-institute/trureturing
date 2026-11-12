@@ -97,6 +97,19 @@ than copied from the unlicensed author repository.
 
 Worldwide absence of earlier solutions, publication priority, acceptance by
 the original authors, official CI, and final independent formal-source review
-are not established by the local Lean build. Four-slot audit validation and
-its exact source-selection binding must be assessed from the native report;
-neither compilation alone nor a linked issue establishes declared_validated.
+are not established by the local Lean build.
+
+The retained four-slot registrations for `no_finite_open_independent_cover`
+and `result` are `declared_unresolved`: the native reader reports
+`IE-C050 ClosedTruthReadout`, respectively `rule=source.operand_mode` and
+`rule=source.definition_type`. Their complete typed source bridges compile.
+The complete typed families for `countablyCompactSpace_deletedSquare_power`
+and `boundedCliqueProperty_of_countablyCompact_power` also compile, but their
+attempted polymorphic Contract records encounter
+`contract.discovery:rigid_universes` and are not retained as active records.
+The missing evidence is native validated template/source-selection binding
+for all four public theorems. This unfinished audit is disclosed under the
+linked-issue exception at
+https://github.com/the-omega-institute/trureturing/issues/29397;
+the issue is not audit validation or mathematical proof. No judge change or
+weakening of a theorem is used to obtain a different audit status.

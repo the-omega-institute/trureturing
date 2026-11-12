@@ -16,7 +16,15 @@ internal sealed class DeletedSquareChromaticDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, body);
     private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), Sp, Rightarrow, Sp, b);
+    private static Formula Iff(Formula a, Formula b) => Seq(Grp(a), Sp, Leftrightarrow, Sp, Grp(b));
     private static Formula Fn(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
+    private static Formula Inst(string name, Formula type, Formula body) =>
+        Seq(OpenBracket, App(name, type), CloseBracket, Comma, Sp, body);
+    private static Formula WithType(string name, Formula body) =>
+        All("u", V("UniverseLevel"), All(name, Seq(V("Type"), Underscore, Grp(V("u"))),
+            body));
+    private static Formula WithSpace(string name, Formula body) =>
+        WithType(name, Inst("TopologicalSpace", V(name), body));
     private static Formula X => App("DeletedSquare", App("Ultrafilter", V("Nat")));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -25,39 +33,51 @@ internal sealed class DeletedSquareChromaticDocument : IScribeDocumentDefinition
         Blocks(
             Describe.Lean(DescribeId.Create("deleted-square-space"),
                 DeclarationHandle.Create(Prefix + "DeletedSquare"), H("The actual deleted square"),
-                StatementSource.FromAuthor(Disp(Seq(App("DeletedSquare", V("K")), Sp, Eq, Sp,
-                    OpenBrace, V("z"), Colon, Sp, V("K"), Times, V("K"), Sp, Mid, Sp,
-                    App("fst", V("z")), Sp, Neq, Sp, App("snd", V("z")), CloseBrace))),
+                StatementSource.FromAuthor(Disp(WithType("K", Seq(App("DeletedSquare", V("K")), Sp, Eq, Sp,
+                    OpenBrace, V("z"), Colon, Sp, V("K"), Sp, Times, Sp, V("K"), Sp, Mid, Sp,
+                    App("fst", V("z")), Sp, Neq, Sp, App("snd", V("z")), CloseBrace)))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "DeletedSquare K is the subtype of ordered unequal pairs in K times K, with exactly the induced product topology. It inherits Hausdorffness when K is Hausdorff. For the endpoint K is the compact Stone space of all ultrafilters on Nat, homeomorphic to the Stone–Cech compactification of discrete Nat."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("deleted-square-bounded-property"),
                 DeclarationHandle.Create(Prefix + "BoundedCliqueProperty"), H("Universal bounded-clique property"),
-                StatementSource.FromAuthor(Disp(All("G", App("SimpleGraph", V("X")),
+                StatementSource.FromAuthor(Disp(WithSpace("X", Iff(App("BoundedCliqueProperty", V("X")),
+                    All("G", App("SimpleGraph", V("X")),
                     Imp(App("IsClosed", App("AdjSet", V("G"))),
                         Seq(Exists, Sp, V("N"), Colon, Sp, V("Nat"), Comma, Sp,
                             All("S", App("Set", V("X")), Imp(App("IsClique", V("G"), V("S")),
-                                And(App("Finite", V("S")), Seq(App("ncard", V("S")), Sp, Le, Sp, V("N"))))))))),
+                                And(App("Finite", V("S")), Seq(App("ncard", V("S")), Sp, Le, Sp, V("N")))))))))))),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
                     "A SimpleGraph is exactly an arbitrary symmetric irreflexive binary relation. AdjSet G is the set of all pairs (x,y) with G.Adj x y, in the entire product X times X, including its diagonal. Every subset S whose distinct pairs are related is quantified over. The conclusion requires finiteness as well as the ncard bound; it does not use ncard's zero value on infinite sets to hide infinite cliques. The bound may depend on G."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("deleted-square-open-property"),
                 DeclarationHandle.Create(Prefix + "FiniteOpenChromaticProperty"), H("Universal finite open chromatic property"),
-                StatementSource.FromAuthor(Disp(All("G", App("SimpleGraph", V("X")),
+                StatementSource.FromAuthor(Disp(WithSpace("X", Iff(App("FiniteOpenChromaticProperty", V("X")),
+                    All("G", App("SimpleGraph", V("X")),
                     Imp(App("IsClosed", App("AdjSet", V("G"))),
                         Seq(Exists, Sp, V("m"), Colon, Sp, V("Nat"), Comma, Sp,
                             Exists, Sp, V("U"), Colon, Sp, Fn(App("Fin", V("m")), App("Set", V("X"))),
-                            Comma, Sp, App("OpenIndependentCover", V("G"), V("U"))))))),
+                            Comma, Sp, App("OpenIndependentCover", V("G"), V("U"))))))))),
                 AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(
                     "OpenIndependentCover G U means every U(i) is open, every point lies in at least one U(i), and for every i no two points in U(i) are adjacent. There is no partition or disjointness requirement. Both zero and one proposed colors remain in the quantifier m : Nat. The property again quantifies over every whole-product closed symmetric irreflexive relation."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("deleted-square-swap-graph"),
+                DeclarationHandle.Create(Prefix + "swapGraph"), H("The coordinate-swap orthogonality"),
+                StatementSource.FromAuthor(Disp(WithType("K",
+                    All("x", App("DeletedSquare", V("K")), All("y", App("DeletedSquare", V("K")), Seq(
+                    App("Adj", App("swapGraph", V("K")), V("x"), V("y")), Sp, Leftrightarrow, Sp,
+                    And(Seq(App("fst", V("x")), Sp, Eq, Sp, App("snd", V("y"))),
+                        Seq(App("snd", V("x")), Sp, Eq, Sp, App("fst", V("y")))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every type K this is a SimpleGraph on DeletedSquare K. Symmetry reverses the two equalities, and a self-edge would equate the two coordinates of a deleted-square point. When K is Hausdorff, the two equality sets are closed in the entire product of the deleted square with itself."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("deleted-square-power"),
                 DeclarationHandle.Create(Prefix + "countablyCompactSpace_deletedSquare_power"),
                 H("Countable compactness of the full countable power"),
-                StatementSource.FromAuthor(Disp(All("K", V("Type"),
-                    Imp(And(App("TopologicalSpace", V("K")), And(App("CompactSpace", V("K")),
-                        And(App("T2Space", V("K")), App("ExtremallyDisconnected", V("K"))))),
-                        App("CountablyCompactSpace", Fn(V("Nat"), App("DeletedSquare", V("K")))))))),
+                StatementSource.FromAuthor(Disp(WithSpace("K",
+                    Inst("CompactSpace", V("K"), Inst("T2Space", V("K"),
+                        Inst("ExtremallyDisconnected", V("K"),
+                            App("CountablyCompactSpace", Fn(V("Nat"), App("DeletedSquare", V("K")))))))))),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The theorem applies to arbitrary compact Hausdorff extremally disconnected K, with its given topology. Countable compactness is the native countable-open-cover property, equivalently that every sequence has a cluster point. Neither sequential compactness nor a general product theorem for countably compact spaces is used.")),
                     Paragraph(Text("On each infinite pool, enumerate the pool increasingly and apply the native PointPairSeparation eventual-equality theorem contrapositively. If no clopen separates infinitely many pairs in either orientation, each fixed clopen test eventually agrees, forcing eventual equality and contradicting the deleted-square condition. Complementation turns this into an oriented clopen separator. Repeat for each coordinate, retaining decreasing infinite pools. The native diagonal_pool supplies an infinite pseudointersection; injective enumeration makes the exceptional preimage finite for every coordinate.")),
@@ -66,13 +86,12 @@ internal sealed class DeletedSquareChromaticDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("deleted-square-power-cliques"),
                 DeclarationHandle.Create(Prefix + "boundedCliqueProperty_of_countablyCompact_power"),
                 H("The countable-power criterion for all closed orthogonalities"),
-                StatementSource.FromAuthor(Disp(All("X", V("Type"),
-                    Imp(And(App("TopologicalSpace", V("X")),
-                        App("CountablyCompactSpace", Fn(V("Nat"), V("X")))),
+                StatementSource.FromAuthor(Disp(WithSpace("X",
+                    Inst("CountablyCompactSpace", Fn(V("Nat"), V("X")),
                         App("BoundedCliqueProperty", V("X")))))),
                 AssessedProvenance.FromLiterature(Source), Blocks(
                     Paragraph(Text("This is Feldman–Wilce Theorem 1, formalized independently from the mathematical argument. Constant-coordinate sequences transfer the power cluster property to X. An infinite clique sequence has a cluster point x; every neighborhood rectangle of (x,x) contains two terms of distinct indices. Closedness then gives a loop, a contradiction. This excludes every infinite clique subset by a choice of an injective natural-number sequence in it.")),
-                    Paragraph(Text("If finite clique sizes had no uniform bound, choose an (n+1)-point clique for each n, enumerate its entries in the first n+1 coordinates, and pad with its last entry. A cluster point q of this sequence in X to Nat satisfies adjacency between q(i) and q(j) for all distinct i and j: the corresponding pairs lie eventually in the closed adjacency set. Applying the previous cluster-point contradiction to q gives the uniform bound. No closedness restriction away from the diagonal or separation axiom is added to this criterion."))),
+                    Paragraph(Text("If finite clique sizes had no uniform bound, choose an (n+1)-point clique for each n, enumerate its entries in the first n+1 coordinates, and pad with its last entry. A cluster point q of this sequence in Nat to X satisfies adjacency between q(i) and q(j) for all distinct i and j: the corresponding pairs lie eventually in the closed adjacency set. Applying the previous cluster-point contradiction to q gives the uniform bound. No closedness restriction away from the diagonal or separation axiom is added to this criterion."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("deleted-square-ramsey-obstruction"),
                 DeclarationHandle.Create(Prefix + "no_finite_open_independent_cover"),

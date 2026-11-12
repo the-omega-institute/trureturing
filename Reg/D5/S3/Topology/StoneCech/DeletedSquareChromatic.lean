@@ -80,7 +80,7 @@ def coverFamily : DependentFamily.Registration coverArena coverScope where
     exact huniv 0 forward (mem_univ _) backward (mem_univ _) ⟨rfl, rfl⟩
 
 def coverRegistration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       (@no_finite_open_independent_cover) (DependentFamily.Realization coverSignature) Unit True where
   unitName := `D5.S3.Topology.StoneCech.DeletedSquareChromatic.no_finite_open_independent_cover.__information_unit
   realizationName := `Reg.D5.S3.Topology.StoneCech.DeletedSquareChromatic.coverFamily
@@ -155,7 +155,7 @@ private theorem bottomBounded : endpointActual.readout () () (⊥ : SimpleGraph 
     intro x hx y hy
     by_contra hne
     exact hS hx hy hne
-  exact ⟨hsub.finite, Set.ncard_le_one.mpr hsub⟩
+  exact ⟨hsub.finite, (Set.ncard_le_one hsub.finite).mpr hsub⟩
 
 private theorem topUnbounded : ¬ endpointActual.readout () () (⊤ : SimpleGraph X) := by
   intro h
@@ -190,7 +190,7 @@ def endpointFamily : DependentFamily.Registration endpointArena endpointScope wh
     exact topUnbounded (Eq.mp heq bottomBounded)
 
 def endpointRegistration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       (@result) (DependentFamily.Realization endpointSignature) Unit True where
   unitName := `D5.S3.Topology.StoneCech.DeletedSquareChromatic.result.__information_unit
   realizationName := `Reg.D5.S3.Topology.StoneCech.DeletedSquareChromatic.endpointFamily
@@ -226,5 +226,150 @@ def endpointRegistration :
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+universe u
+
+private theorem emptyBound (Y : Type u) :
+    ∃ N : ℕ, ∀ S : Set Y, (⊥ : SimpleGraph Y).IsClique S → S.Finite ∧ S.ncard ≤ N := by
+  refine ⟨1, fun S hS => ?_⟩
+  have hsub : S.Subsingleton := by
+    intro x hx y hy
+    by_contra hne
+    exact hS hx hy hne
+  exact ⟨hsub.finite, (Set.ncard_le_one hsub.finite).mpr hsub⟩
+
+private theorem completeUnbounded (Y : Type u) [Infinite Y] :
+    ¬ (∃ N : ℕ, ∀ S : Set Y, (⊤ : SimpleGraph Y).IsClique S → S.Finite ∧ S.ncard ≤ N) := by
+  rintro ⟨N, hN⟩
+  exact Set.infinite_univ (hN univ (fun _ _ _ _ hne => hne)).1
+
+@[reducible] def boundedSignature : DependentFamily.Signature where
+  Params := Σ K : Type u, TopologicalSpace K
+  State p := SimpleGraph p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def boundedActual : DependentFamily.Realization boundedSignature.{u} :=
+  DependentFamily.realize boundedSignature (fun _ p G =>
+    ∃ N : ℕ, ∀ S : Set p.1, G.IsClique S → S.Finite ∧ S.ncard ≤ N)
+    (fun a => nomatch a)
+
+@[reducible] def boundedArena : DependentFamily.Arena where
+  signature := boundedSignature.{u}
+  Law R := ∀ (K : Type u) (t : TopologicalSpace K),
+    letI := t
+    CountablyCompactSpace (ℕ → K) →
+      ∀ G : SimpleGraph K, IsClosed {p : K × K | G.Adj p.1 p.2} → R.readout () ⟨K, t⟩ G
+
+abbrev boundedScope := type_of% (@boundedCliqueProperty_of_countablyCompact_power.{u})
+
+theorem boundedBridge : boundedScope.{u} ↔ boundedArena.{u}.Law boundedActual := Iff.rfl
+
+def boundedRejected : DependentFamily.Realization boundedSignature.{u} :=
+  DependentFamily.realize boundedSignature (fun _ _ _ => False) (fun a => nomatch a)
+
+theorem boundedNegative : ¬ boundedArena.{u}.Law boundedRejected := by
+  intro h
+  exact h PUnit inferInstance inferInstance ⊥ (by simp)
+
+def boundedFamily : DependentFamily.Registration boundedArena.{u} boundedScope.{u} where
+  actual := boundedActual
+  bridge := boundedBridge
+  variation := ⟨@boundedCliqueProperty_of_countablyCompact_power.{u}, boundedRejected, boundedNegative⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨boundedRejected, ?_, rfl, boundedNegative⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨⟨ULift.{u} ℕ, inferInstance⟩, ⊥, ⊤, ?_⟩
+    intro heq
+    exact completeUnbounded (ULift.{u} ℕ) (Eq.mp heq (emptyBound _))
+
+private def powerProperty (K : Type u) (t : TopologicalSpace K) : Prop :=
+  letI := t
+  CountablyCompactSpace (ℕ → DeletedSquare K)
+
+@[reducible] def powerSignature : DependentFamily.Signature where
+  Params := Type u
+  State K := TopologicalSpace K
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def powerActual : DependentFamily.Realization powerSignature.{u} :=
+  DependentFamily.realize powerSignature (fun _ K t => powerProperty K t) (fun a => nomatch a)
+
+@[reducible] def powerArena : DependentFamily.Arena where
+  signature := powerSignature.{u}
+  Law R := ∀ (K : Type u) (t : TopologicalSpace K),
+    letI := t
+    CompactSpace K → T2Space K → ExtremallyDisconnected K → R.readout () K t
+
+abbrev powerScope := type_of% (@countablyCompactSpace_deletedSquare_power.{u})
+
+theorem powerBridge : powerScope.{u} ↔ powerArena.{u}.Law powerActual := Iff.rfl
+
+def powerRejected : DependentFamily.Realization powerSignature.{u} :=
+  DependentFamily.realize powerSignature (fun _ _ _ => False) (fun a => nomatch a)
+
+theorem powerNegative : ¬ powerArena.{u}.Law powerRejected := by
+  intro h
+  exact h PUnit inferInstance inferInstance inferInstance inferInstance
+
+private theorem powerPositiveFiber : powerProperty (ULift.{u} ℕ) ⊤ := by
+  letI : TopologicalSpace (ULift.{u} ℕ) := ⊤
+  letI : IndiscreteTopology (DeletedSquare (ULift.{u} ℕ)) :=
+    inferInstanceAs (IndiscreteTopology {p : ULift.{u} ℕ × ULift.{u} ℕ // p.1 ≠ p.2})
+  exact inferInstanceAs (CountablyCompactSpace (ℕ → DeletedSquare (ULift.{u} ℕ)))
+
+private theorem powerNegativeFiber : ¬ powerProperty (ULift.{u} ℕ) ⊥ := by
+  letI : TopologicalSpace (ULift.{u} ℕ) := ⊥
+  letI : DiscreteTopology (ULift.{u} ℕ) := discreteTopology_bot _
+  letI : DiscreteTopology (DeletedSquare (ULift.{u} ℕ)) :=
+    inferInstanceAs (DiscreteTopology {p : ULift.{u} ℕ × ULift.{u} ℕ // p.1 ≠ p.2})
+  intro h
+  letI : CountablyCompactSpace (ℕ → DeletedSquare (ULift.{u} ℕ)) := h
+  let e : ℕ → DeletedSquare (ULift.{u} ℕ) := fun n =>
+    ⟨(⟨n⟩, ⟨n + 1⟩), fun heq => by
+      have := congrArg ULift.down heq
+      change n = n + 1 at this
+      omega⟩
+  have he : Function.Injective e := by
+    intro n m hnm
+    exact congrArg (fun x : DeletedSquare (ULift.{u} ℕ) => x.val.1.down) hnm
+  haveI : Infinite (DeletedSquare (ULift.{u} ℕ)) := Infinite.of_injective e he
+  exact completeUnbounded (DeletedSquare (ULift.{u} ℕ))
+    (boundedCliqueProperty_of_countablyCompact_power (DeletedSquare (ULift.{u} ℕ)) ⊤
+      (isClosed_discrete _))
+
+def powerFamily : DependentFamily.Registration powerArena.{u} powerScope.{u} where
+  actual := powerActual
+  bridge := powerBridge
+  variation := ⟨@countablyCompactSpace_deletedSquare_power.{u}, powerRejected, powerNegative⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨powerRejected, ?_, rfl, powerNegative⟩
+      intro j hji
+      exact (hji (Subsingleton.elim j i)).elim
+    · intro a
+      exact nomatch a
+  dependence := by
+    intro i
+    refine ⟨ULift.{u} ℕ, ⊤, ⊥, ?_⟩
+    intro heq
+    exact powerNegativeFiber (Eq.mp heq powerPositiveFiber)
 
 end Reg.D5.S3.Topology.StoneCech.DeletedSquareChromatic
