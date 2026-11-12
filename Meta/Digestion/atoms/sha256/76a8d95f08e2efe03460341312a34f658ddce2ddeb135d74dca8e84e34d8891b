@@ -1,0 +1,51 @@
+**推论 94.3（同载体的谱与相位几何）。** 在定理94.2的等价条件下，令 $\rho=\Theta x$、$p'=\Theta p$。整个原 proper 区间、least尺和任意原混态的最小读数为
+
+$$
+\begin{gathered}
+f_E(X)=\operatorname{tr}\bigl(E\Theta X\bigr),\qquad
+E\in\bigoplus_\alpha\operatorname{Sym}_{r_\alpha}(\mathbb R)
+\oplus\bigoplus_\beta\operatorname{Herm}_{s_\beta}(\mathbb C),\\
+f_E\in[0,u]\ \Longleftrightarrow\
+0\preceq E_\gamma\preceq I_\gamma\quad(\text{每个块 }\gamma),\\
+e_p(X)=\operatorname{tr}\bigl(p'\Theta X\bigr),\qquad
+T_p(x)=\operatorname{tr}(p'\rho)\quad(p\in P,\ x\in K).
+\end{gathered}
+\tag{94.18}
+$$
+
+每个原混态有同一原基内的正交谱混合 $x=\sum_j\lambda_jp_j$，$\lambda_j\ge0$、$\sum_j\lambda_j=1$、$e_{p_i}(p_j)=\delta_{ij}$。纯几何准确为各实块的 $\mathbb{RP}^{r_\alpha-1}$ 与各复块的 $\mathbb{CP}^{s_\beta-1}$ 的不交并；同一实块内不同纯点的整个二纯面为 $B^2$，同一复块为 $B^3$，异块为 $B^1$。局部对径都可由原全域效应区分，且固定 $p$ 的同一个 $e_p$ 排除其全部局部对径，故原 $\mathrm A,\mathrm H,\mathrm{Boundary},\mathrm Q$ 都成立。
+
+对同块三个纯点 $p_v=vv^*$、$p_w=ww^*$、$p_z=zz^*$，定义相位不变量
+
+$$
+\begin{gathered}
+\mathcal B(v,w,z)=\operatorname{tr}(p_vp_wp_z)
+=(v^*w)(w^*z)(z^*v),\\
+|\mathcal B|^2
+=e_{p_v}(p_w)e_{p_w}(p_z)e_{p_z}(p_v),\\
+\det\operatorname{Gram}(v,w,z)
+=1-|v^*w|^2-|w^*z|^2-|z^*v|^2
++2\operatorname{Re}\mathcal B\ge0.
+\end{gathered}
+\tag{94.19}
+$$
+
+$\mathcal B$ 不受三个向量各自的单位相位改变影响；反转三点次序使它共轭。实块中它为实数，但不必为正；复块容许非实值。三个成对比较只固定其模，不能一般决定其相位。
+
+证明。(94.18)是(94.12)和least性的同数据运输；每个 $f\in F_p$ 都满足 $f-e_p\in C^*$，所以在任意原混态上取最小值确得 $e_p(x)$，不限于纯点。对各实／复块分别作普通正交／酉谱分解，再合并全部块的特征值，便得上述原谱混合，零特征值可省略。这里没有要求谱混合成为实际准备程序。
+
+实块的复秩一投影若矩阵条目全实，选一个非零坐标并调整整体相位使它实且正，则与该坐标相乘的矩阵条目迫使其余坐标全实。因此纯向量模去正负号正是 $\mathbb{RP}^{r-1}$；复块模去全部单位相位为 $\mathbb{CP}^{s-1}$。二纯面的结论用(94.8)：同块两条不同的实或复直线张成相应二维支撑，完整块给全部实或复二阶PSD面；异块则只有两条独立射线。实／复二阶迹一基的中心均为二维支撑单位的一半，对径投影之和为该支撑单位，故互相矩阵正交；异块两端也正交。(94.18)遂给全域排除及共同尺，再由89.4得边界和规范商。商尺与 $e_p$ 同为同一确认集的least元，因而相等；单点按空对径族约定。
+
+(94.19)逐次相乘秩一矩阵并展开三阶Gram行列式即得。Gram矩阵PSD给最后的不等式；各向量的相位因子沿乘积相消。取复二阶块内
+
+$$
+v=(1,0)^{\mathsf T},\qquad
+w=(1,1)^{\mathsf T}/\sqrt2,\qquad
+z=(1,i)^{\mathsf T}/\sqrt2
+\tag{94.20}
+$$
+
+时，三个成对比较均为 $1/2$，而 $\mathcal B=(1+i)/4$。将三个向量同时共轭，全部成对比较不变，$\mathcal B$ 变成 $(1-i)/4$，故比较数不决定三点相位。实二维中取与固定轴成 $0,\pi/3,2\pi/3$ 的三个单位向量，则 $\mathcal B=-1/8$。因此(94.17)对坐标边实线的平坦性，也不要求任意三个纯向量的比较乘积为正。若三个纯点不全在同一块，矩阵乘积及 $\mathcal B$ 为零，相位无需定义。
+
+谱定理、射影空间识别、Gram行列式和三纯点迹积是成熟线性代数及几何工具；这里将其用于(94.5)已经证明的同一个原载体，不另报这些公式为独立的新分类。证毕。
+
