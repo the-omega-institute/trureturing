@@ -40,8 +40,12 @@ def splitFamily : Registration splitArena (type_of% count_submultiplicative) := 
     intro h
     have he : false = true := h 0 0
     cases he
-  refine { actual := actual, bridge := bridge, variation := ⟨hp, rejected, hn⟩,
-    sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := actual
+    bridge := bridge
+    variation := ⟨hp, rejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_ }
   · constructor
     · intro i
       refine ⟨rejected, ?_, rfl, hn⟩

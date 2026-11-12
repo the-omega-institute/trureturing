@@ -42,5 +42,11 @@ Retire the port when this project's own pinned Mathlib contains equivalent APIs.
 A bounded primary-source and citation screen found no exact solution; this is
 not a worldwide openness, novelty or priority guarantee. The independent
 complete paper verification of the six-buffer argument is paper-level evidence
-only. The exact Lean probability theorem and its source correspondence remain
-unresolved until all construction and counting bridges are kernel checked.
+only. The exact source probability is the conclusion of
+D5/S3/Combinatorics/Graph/Roommates/GrowthTransfer.result. Its scope is
+d=1,r=2, all labelled sizes N>=7, with partial matchings and singles.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1088/1742-5468/2005/10/P10008
+- arXiv: https://arxiv.org/abs/cond-mat/0509221v2

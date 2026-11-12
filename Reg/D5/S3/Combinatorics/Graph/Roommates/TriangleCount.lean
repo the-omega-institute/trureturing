@@ -107,8 +107,11 @@ def wordFamily : Registration wordArena (type_of% forbidden_not_certified) := by
     · intro i; exact nomatch i
   · intro i
     refine ⟨(false, fun _ => false), forbiddenWord (false, fun _ => false), good.val, ?_⟩
-    have hgood := good.property
-    simp [wordActual, realize, forbidden_not_certified, hgood]
+    change decide (¬∃ d, Certificate (forbiddenWord (false, fun _ => false)) d) ≠
+      decide (¬∃ d, Certificate good.val d)
+    rw [decide_eq_true (forbidden_not_certified _),
+      decide_eq_false (not_not_intro good.property)]
+    decide
 
 /-- Typed reconstruction and variation; native source-selection binding remains unverified. -/
 def countAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}

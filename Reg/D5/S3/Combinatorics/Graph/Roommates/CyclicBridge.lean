@@ -5,6 +5,7 @@ import D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
 set_option autoImplicit false
 noncomputable section
 open scoped Classical
+open D5.S3.Combinatorics.Graph.Roommates
 open D5.S3.Combinatorics.Graph.Roommates.OpenCertificates
 open D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -42,8 +43,12 @@ def cutFamily : Registration cutArena (type_of% source_count_le_open_count) := b
     intro h
     have he : false = true := h 0
     cases he
-  refine { actual := actual, bridge := bridge, variation := ⟨hp, rejected, hn⟩,
-    sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := actual
+    bridge := bridge
+    variation := ⟨hp, rejected, hn⟩
+    sensitivity := ?_
+    dependence := ?_ }
   · constructor
     · intro i
       refine ⟨rejected, ?_, rfl, hn⟩

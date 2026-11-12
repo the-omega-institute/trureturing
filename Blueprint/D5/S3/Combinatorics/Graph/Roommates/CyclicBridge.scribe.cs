@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Roommates;
 internal sealed class CyclicBridgeDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Partial components of the Mertens range-two proof; the full theorem remains open.",
+        "Cyclic cut and rank transport for the exact Mertens range-two proof.",
         H("CyclicBridge"), Blocks(
             Paragraph(Text("Declarations without a displayed formula retain explicit statement-projection gaps. Their descriptions state the model and proof roles; they do not claim a rendered formula for an unsupported projection.")),
             Describe.Lean(DescribeId.Create("wrap-val"),

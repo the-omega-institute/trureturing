@@ -3,7 +3,7 @@ slug: mertens-2005-range-two-stable-matching
 bibkey: mertens2005stable
 doi: 10.1088/1742-5468/2005/10/P10008
 url: https://arxiv.org/abs/cond-mat/0509221v2
-triage: wall
+triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Graph/Roommates/OpenCertificates.count_submultiplicative
 ---
@@ -24,85 +24,75 @@ including odd and even N. Supplier SourceModel uses N=n+5.
 
 ## Route
 
-Use open-interval certificates retaining the true rank of exterior requests,
-with injectivity of all integer partner targets. Restriction induces an
-injection of certified words into pairs of shorter certified words. Six fresh
-vertices fulfil boundary requests; pair remaining free vertices at distance at
-most two, with at most one central single. Matched new vertices rank their
-partners first. The central single has four matched buffer neighbors. This is
-the proposed general concatenation and cyclic closure construction, including
-small cycles with extra buffer wrap edges.
+Let b(m) count ranking words admitting an open-interval certificate, and let
+A(n) count successful SourceModel.Profile n profiles, each counted once.
+Certificates retain signed exterior requests at their actual ranks, require
+injectivity of every nonzero integer target including exterior targets, and
+exclude every internal blocking edge. Restriction and word splitting give
+b(m+k)<=b(m)b(k). Putting prescribed partners first gives 6^m<=b(m), including
+odd lengths with a final exterior request.
 
-The independent paper argument gives b_(N-6)<=a_N<=b_N and one lambda with
-6<=lambda<24 and lambda^(N-6)<=a_N<=lambda^(N+6) for every N>=7. Here b counts
-certified words and a counts solvable labelled cycle profiles. This is a
-paper-level result, not the current formal theorem. An alternative bounded
-defect Fekete inference allows a coarser fixed upper constant and the identical
-full probability target; it does not assume or supply the missing word maps.
+Six inserted vertices fulfill boundary requests, pair the remaining free sites
+at distance at most two, and leave at most one central single. Matched buffer
+vertices put their partners first; every neighbor of a buffer single is
+matched. The actual word injections give b(m)b(k)<=b(m+k+6) and
+b(m)<=A(m+1). The latter is a source cycle with m+6 sites, including m=1, m=2,
+all wrap edges and both parities. Cutting an actual stable partial matching
+gives A(n)<=b(n+5). Certificates and matching witnesses are not counted.
+
+For f(m)=log b(m), Mathlib Fekete and the bounded-defect estimate in
+FixedGapGrowth give a real h with h*m<=f(m)<=h*m+f(6). Exponentiation gives
+exp(h)^m<=b(m)<=exp(h)^m*b(6). The sixteen distinct exclusive-triangle words
+supply b(3)<=13808<13824=24^3, hence h<log 24. Set q=exp(h)/24,
+c=1/exp(h)^6 and C=b(6). The actual cyclic comparisons and exact division by
+24^(n+5) give the full source event for every n>=2, equivalently N>=7.
 
 ## Triage
 
-Unresolved: the complete Lean/Scribe theorem. The partial source modules are
-WIP, not separately admitted results or a solved problem. No conditional
-certificate-completion or cyclic-bridge premise replaces the original target.
+The unconditional Lean theorem is
+`D5/S3/Combinatorics/Graph/Roommates/GrowthTransfer.result`:
+there exist real q,c,C with 0<q<1 and c,C>0 such that, for every natural n>=2,
+c*q^(n+5)<=SourceModel.solutionProbability(n)<=C*q^(n+5).
+There is no completion, count, rate, perfect-matching or parity premise.
+The corresponding Scribe carries the exact source-probability statement and
+an open-problem-resolution claim for this specialization. The components are
+consumed helpers of this single result, with no separate solved-problem credit.
+Independent full pre-freeze review, admissibility, freezing and normal
+publication remain separate obligations.
 
-The source-cycle cut is implemented in `CyclicBridge`: actual signed offsets,
-single rank four, and the supplier ranks give an open certificate on the same
-word for every N>=5. Its profile injection gives a_N<=b_N; exact normalization
-gives p_N<=b_N/24^N. `PaddedCompletion` constructs the actual injective boundary
-requests for two separated pieces and for closing one word, then applies the
-six-site involution. Integer targets are never truncated or quotient-counted.
-The actual padded word map recovers both input words and is injective on
-preference words; its buffer assignments are first-ranked when nonzero.
-Buffer offsets fulfill the requests, stay within range and isolate new singles.
-Old--old stability survives separated placement; the cyclic closure helpers
-preserve original request destinations and exclude old--old wrap edges.
+### What the settlement shows
 
-The concrete padded word has a full certificate in `padded_certificate`:
-all old/new assignments are reciprocal, all nonzero integer targets are
-injective, and every old, mixed and new edge is nonblocking, including singles.
-The certified word injection proves b_m*b_k<=b_(m+k+6) for all natural m,k,
-without counting certificate witnesses. The padded source and its two Reg
-mirror attempts have a successful scoped native Lean report. Its canonical
-Scribe Markdown is emitted and retains the complete construction and scope.
+The decisive mechanism is the pair of word injections with a fixed six-site
+gap: they bound the logarithmic counting defect independently of length.
+Fekete then supplies one growth base for all lengths, while the exclusive
+triangle makes that base strictly smaller than 24. These are proved in
+`PaddedCompletion.count_padded_supermultiplicative`,
+`CyclicClosure.count_le_successful_profile_count`,
+`FixedGapGrowth.fixed_gap_log_bounds`, and `TriangleCount.count_three_bound`,
+and consumed by `GrowthTransfer.result`. Singles and both parities are in the
+proved domain. The constants need not be sharp; no exact value of q is claimed.
+The proof does not settle general d,r in Conjecture 3, complete-graph
+asymptotics, or any additional external problem. Global novelty and priority
+remain unproved.
 
-Exact remaining mathematics: for closure, produce the actual source matching
-and prove cyclic stability, including the extra buffer--buffer
-wrap edges at m=1, then derive the profile injection b_m<=a_(m+6) for every
-m>=1. The requester/buffer involutions alone do not supply these conclusions.
-The exact triangle count, strict growth bound and final common-q normalization
-remain separate obligations. No pending contributor result is assumed.
+The model is a consumed compatibility port of the Formal Conjectures Authors'
+API at dc0fa7334537d8733edceaba09fd88163eeb7cef. Supplier Lean/mathlib pins are
+incompatible with direct import; the port retains N=n+5, labelled rankings,
+existential partial matchings and singles. The exact Apache-2.0 license is
+`docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt`.
 
-The generic Fekete inference must be consumed with proved concatenation and
-closure hypotheses. Faithful Reg bindings and independent pre-freeze audit
-remain necessary; no mathematical component is separately admitted here.
-
-The research line is https://github.com/the-omega-institute/trureturing/issues/29622.
-Its 2026-11-26T15:30:00Z deadline and all prior forecasts and dispositions remain
-unchanged. Threshold0 is unresolved, not a refutation or line termination.
-This work claims neither formal acceptance nor worldwide novelty or priority.
-
-The source and its Scribe definitions remain unfrozen Stage A components.
-Guarded direct Lean checks are distinct from native target builds, scoped
-reports, canonical Markdown emission, inventory acceptance and required CI.
-The successful padded scoped report covers its mathematical and Reg targets
-and imports. The padded Markdown is tracked. Current inventory rejects five
-other Stage A Markdown projections absent from tracked files and the inherited
-`docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt` path under the
-existing reports policy. Its license bytes and supplier attribution are
-preserved. Full-project verification, inventory acceptance and required CI
-remain separate obligations. Main is observation-only; this contribution
-makes no main-cache health or delivery claim.
-
-The faithful registration gap is
+The incomplete information-escape audit is tracked at
 https://github.com/the-omega-institute/trureturing/issues/29645.
-The padded certificate and padded count inequality have compiled typed
-dependent-family mirrors retaining their full original telescopes, concrete
-certificate observations and exact cardinality operands. Native reporting
-records both as declared_unresolved with IE-C050, source.selection_missing.
-Source-selection and occurrence bindings remain absent; neither is
-declared_validated. The earlier source-count mirror and other certificate,
-completion and source-rank targets retain their unfinished audit obligations.
-The padded Scribe uses explicit no-formula projection gaps for declarations
-outside the fixed projection corpus. No freeze or publication PR is authorized
-before the separately assigned independent pre-freeze audit.
+Typed mirrors retain actual observations, original telescopes, exact source
+reconstruction and variation evidence where provided. Raw source-selection
+and occurrence bindings remain absent, and coverage of all public helper
+targets is unfinished; no declared_validated status is claimed. Canonical
+Scribes retain explicit no-formula gaps for unsupported component projections.
+The final probability statement and the available closure and count formulas
+are displayed explicitly.
+
+The research line is
+https://github.com/the-omega-institute/trureturing/issues/29622.
+Its 2026-11-26T15:30:00Z deadline, forecasts and all earlier dispositions remain
+unchanged. Threshold0 remains unresolved. This local theorem is not a claim
+of completed independent review, admission, publication or worldwide priority.

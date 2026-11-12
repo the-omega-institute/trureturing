@@ -63,7 +63,7 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("buffer-offset-completion"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.buffer_offset_completion"),
                 H("buffer_offset_completion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The actual signed buffer offsets simultaneously fulfill every incoming request, stay between -2 and 2, and allow only central singles. Every distinct buffer neighbor at distance at most two from a single has nonzero displacement. These bounds and isolation facts are consumed in the full padded certificate. The source-cycle matching remains a separate obligation."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The actual signed buffer offsets simultaneously fulfill every incoming request, stay between -2 and 2, and allow only central singles. Every distinct buffer neighbor at distance at most two from a single has nonzero displacement. These bounds and isolation facts are consumed in the full padded certificate. CyclicClosure uses the same buffer facts for its actual source-cycle matching."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("closing-coordinate"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_coordinate"),
                 H("closing_coordinate"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
