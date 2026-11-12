@@ -40,8 +40,8 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
                 + "It asserts the complete equivalence between native iterate-range membership "
                 + "and all fractional conditions. The internal split rho, the greatest real root "
                 + "of t^4-2t^3-t+1, is included even though the displayed union of open branches omits it. "
-                + "The bounded source reading does not decide whether its naturals include zero; "
-                + "positivity here is the registered interpretation, not a claimed source convention.",
+                + "The source's convention on including zero is unresolved; this definition uses "
+                + "positive naturals.",
                 DescribeRole.Definition),
             Node("result", "Literal negation of the extension", Disp(new Formula.Not(F.Id("claim"))),
                 "Take alpha=sqrt(2), n=3, x=2 and the positive preimage k=2. Existing Mathlib "
