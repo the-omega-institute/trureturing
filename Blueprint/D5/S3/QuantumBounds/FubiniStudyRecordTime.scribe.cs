@@ -178,17 +178,15 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 + "It never divides by Delta or by the overlap modulus: zero variance and "
                 + "overlaps of modulus zero or one are included. At Delta=0 it forces zero "
                 + "ray displacement at every time; at t=0 the initial overlap is one.")),
-            Paragraph(Text(
-                "Classical attribution: Deffner and Campbell, Quantum speed limits: from "
-                + "Heisenberg's uncertainty principle to optimal quantum control, "
-                + "arXiv:1705.08023v2, Section 2.5, equation (23) and equations (28)–(33), "
-                + "DOI 10.1088/1751-8121/aa86c6. Equation (23) fixes the overlap-angle convention; "
+            Paragraph(Text("Classical attribution: "),
+                Ref("D5/L/HilbertOperators/deffnercampbell2017speedlimits"),
+                Text(", Section 2.5, equation (23) and equations (28)–(33). "
+                + "Equation (23) fixes the overlap-angle convention; "
                 + "equation (28) centers the Hamiltonian, and equations (29)–(33) give the "
                 + "energy-standard-deviation speed and integrated duration bound. "
                 + "The autonomous finite-dimensional specialization has constant Delta. "
-                + "The source and its precise applicability are recorded in "),
-                Ref("D5/L/HilbertOperators/deffnercampbell2017speedlimits"),
-                Text(". This derivation is reuse of classical literature and upstream results, "
+                + "The cited Library note records the full source attribution and its precise applicability. "
+                + "This derivation is reuse of classical literature and upstream results, "
                     + "with no claim of research novelty or additional frozen dynamics theorem.")),
             Paragraph(Text(
                 "For the record-time application, use psi=a and t=tau with tau>=0. "
