@@ -3,6 +3,7 @@ bibkey: alexandersson2026dyck
 authors: Per Alexandersson
 year: 2026
 title: "The Narayana distribution of Dyck-word peaks (RealRooted DyckStatistics)"
+doi: null
 url: https://github.com/PerAlexandersson/RealRooted/blob/27276f93bbaf6b46bce689bca110bbacab1bba6b/RealRooted/Mathlib/Combinatorics/Enumerative/DyckStatistics.lean
 claim: "Actual Mathlib Dyck-word peak fibers have Narayana cardinality, with explicit zero-peak exceptions."
 strata_touched:

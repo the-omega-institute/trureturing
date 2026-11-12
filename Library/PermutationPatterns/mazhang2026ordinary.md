@@ -3,6 +3,7 @@ bibkey: mazhang2026ordinary
 authors: Haobo Ma and Wenlin Zhang
 year: 2026
 title: "Ten Wilf classes, two pair equivalences and a Catalan bijection for ascent sequences (revision 3)"
+doi: null
 url: https://github.com/the-omega-institute/trureturing/issues/29483#issuecomment-6832487181
 claim: "Literal ordinary ascent sequences; admissible ranks and an explicit Dyck bijection for the pair 10-1,20-1."
 strata_touched:
@@ -10,6 +11,8 @@ strata_touched:
   - D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanSites
   - D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanRank
   - D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanStatistics
+  - D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentExtensions
+  - D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentCatalanPolynomial
 license: CC-BY-4.0
 triage: anchor
 ---
@@ -55,5 +58,7 @@ The other Catalan pair, 02-1,12-0, retains its separate Mansour-attributed
 enumeration gap. The revision-3 bijection is not attributed to that pair. The
 3-noncrossing and enhanced partition bridges, the ten-class certification,
 run-expansion and refined-pair identities, weighted joint-H correspondence,
-and polynomial/formal-series/Lagrange claims remain separate obligations.
+and refined-pair polynomial identities remain separate obligations. The finite
+ordinary-avoider/Dyck peak-polynomial transport is included in this installment;
+the formal-series functional equations and Lagrange inversion over Q[y] remain open.
 Historical Mansour 152/207 stages and other source families are not restarted.

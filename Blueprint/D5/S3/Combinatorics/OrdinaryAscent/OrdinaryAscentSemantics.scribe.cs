@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.OrdinaryAscent;
 internal sealed class OrdinaryAscentSemanticsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentSemantics.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/mazhang2026ordinary");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/mazhang2026ordinary");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal ordinary ascent words, actual admissible ranks and the Catalan-pair construction, with its precise carrier and boundary conditions.",

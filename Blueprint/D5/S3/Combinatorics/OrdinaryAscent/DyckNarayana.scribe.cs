@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.OrdinaryAscent;
 internal sealed class DyckNarayanaDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OrdinaryAscent/DyckNarayana.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/alexandersson2026dyck");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/alexandersson2026dyck");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Licensed suffix-ballot enumeration of actual Mathlib Dyck-word peak fibers, used by the ordinary-avoider statistic equivalence.",
