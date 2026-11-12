@@ -78,7 +78,7 @@ internal sealed class SupportDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "coefficient_card"),
                 H("Every native coefficient is an independent-subset count"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every commutative ring R, finite domain V of its actual zero divisor vertices, and natural rank k, the integer coefficient at k of the native independence polynomial equals the cardinality of the independent configurations on V having exactly k vertices, cast to the integers. No product decomposition or coordinate assumptions are needed."))),
+                Blocks(Paragraph(Text("For every commutative ring R, finite set V of its actual zero divisor vertices, and natural rank k, the integer coefficient at k of the native independence polynomial equals the cardinality of the independent configurations on V having exactly k vertices, cast to the integers. No product decomposition or coordinate assumptions are needed."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("zero-divisor-independent-count-formula"),
