@@ -9,6 +9,8 @@
 import Mathlib.Topology.PartitionOfUnity
 import Mathlib.Tactic
 
+/-! Centered finite refinements from partitions of unity on compact Hausdorff spaces. -/
+
 set_option autoImplicit false
 
 open Set Topology
@@ -39,7 +41,8 @@ theorem exists_finite_centered_star_refinement
   let U : X → Set X := fun c => {x | ∀ j, |f j x - f j c| < δ}
   have hUo : ∀ c, IsOpen (U c) := by
     intro c
-    change IsOpen (⋂ j : Fin n, {x | |f j x - f j c| < δ})
+    change IsOpen {x | ∀ j : Fin n, |f j x - f j c| < δ}
+    simp only [setOf_forall]
     exact isOpen_iInter_of_finite fun j =>
       isOpen_lt (((f j).continuous.sub continuous_const).abs) continuous_const
   have hUc : ∀ c, c ∈ U c := by
@@ -48,10 +51,13 @@ theorem exists_finite_centered_star_refinement
   obtain ⟨s, hs⟩ := isCompact_univ.elim_finite_subcover U hUo
     (by intro x _; exact mem_iUnion.mpr ⟨x, hUc x⟩)
   refine ⟨U, s, hUo, hUc, ?_, ?_⟩
-  · simpa only [subset_def, mem_univ, true_implies, mem_iUnion, Finset.mem_coe] using hs
+  · intro x
+    obtain ⟨c, hc⟩ := mem_iUnion.mp (hs (mem_univ x))
+    obtain ⟨hc, hx⟩ := mem_iUnion.mp hc
+    exact ⟨c, hc, hx⟩
   · intro c hc
     have hsum : ∑ j, f j c = 1 := by
-      simpa only [ContinuousMap.sum_apply, ContinuousMap.one_apply] using hfsum (mem_univ c)
+      simpa only [Finset.sum_apply, Pi.one_apply] using hfsum (mem_univ c)
     have hlarge : ∃ j, 3 * δ < f j c := by
       by_contra! h
       have hle := Finset.sum_le_sum (s := Finset.univ) (fun j _ => h j)
