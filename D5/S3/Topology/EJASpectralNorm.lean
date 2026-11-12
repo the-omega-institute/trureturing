@@ -71,12 +71,14 @@ private def peirceOne (c : J) : J →ₗ[ℝ] J := (2 : ℝ) • (mulL c ∘ₗ 
 private def peirceHalf (c : J) : J →ₗ[ℝ] J := (4 : ℝ) • mulL c - (4 : ℝ) • (mulL c ∘ₗ mulL c)
 
 private theorem peirceOne_of_eigen {c y : J} (h : c * y = y) : peirceOne c y = y := by
-  simp only [peirceOne, mulL, h]
+  change (2 : ℝ) • (c * (c * y)) - c * y = y
+  simp only [h]
   module
 
 private theorem peirceHalf_of_eigen_half {c y : J} (h : c * y = (2 : ℝ)⁻¹ • y) :
     peirceHalf c y = y := by
-  simp only [peirceHalf, mulL, h, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm']
+  change (4 : ℝ) • (c * y) - (4 : ℝ) • (c * (c * y)) = y
+  simp only [h, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm']
   module
 
 end Projections
@@ -126,13 +128,17 @@ private theorem peirce_cube {c : J} (hc : c * c = c) (y : J) :
 /-- The image of `peirceOne c` lies in the `1`-eigenspace of `L_c`. -/
 private theorem mul_peirceOne {c : J} (hc : c * c = c) (y : J) :
     c * peirceOne c y = peirceOne c y := by
-  simp only [peirceOne, mulL, mul_sub, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm', peirce_cube hc y]
+  change c * ((2 : ℝ) • (c * (c * y)) - c * y) =
+    (2 : ℝ) • (c * (c * y)) - c * y
+  simp only [mul_sub, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm', peirce_cube hc y]
   module
 
 /-- The image of `peirceHalf c` lies in the `1/2`-eigenspace of `L_c`. -/
 private theorem mul_peirceHalf {c : J} (hc : c * c = c) (y : J) :
     c * peirceHalf c y = (2 : ℝ)⁻¹ • peirceHalf c y := by
-  simp only [peirceHalf, mulL, mul_sub, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm', peirce_cube hc y]
+  change c * ((4 : ℝ) • (c * y) - (4 : ℝ) • (c * (c * y))) =
+    (2 : ℝ)⁻¹ • ((4 : ℝ) • (c * y) - (4 : ℝ) • (c * (c * y)))
+  simp only [mul_sub, D5.S3.Topology.EJAFiniteSpectral.mul_smul_comm', peirce_cube hc y]
   module
 
 end Peirce
@@ -163,12 +169,16 @@ private theorem inner_mul_self_nonneg_of_idem
   have hsa : ∀ u v : J, inner ℝ (c * u) v = inner ℝ u (c * v) := fun u v => hassoc c u v
   have hsa1 : ∀ u v : J, inner ℝ (peirceOne c u) v = inner ℝ u (peirceOne c v) := by
     intro u v
-    simp only [peirceOne, mulL, inner_sub_left, inner_sub_right, real_inner_smul_left,
+    change inner ℝ ((2 : ℝ) • (c * (c * u)) - c * u) v =
+      inner ℝ u ((2 : ℝ) • (c * (c * v)) - c * v)
+    simp only [inner_sub_left, inner_sub_right, real_inner_smul_left,
       real_inner_smul_right]
     rw [hsa (c * u) v, hsa u (c * v), hsa u v]
   have hsah : ∀ u v : J, inner ℝ (peirceHalf c u) v = inner ℝ u (peirceHalf c v) := by
     intro u v
-    simp only [peirceHalf, mulL, inner_sub_left, inner_sub_right, real_inner_smul_left,
+    change inner ℝ ((4 : ℝ) • (c * u) - (4 : ℝ) • (c * (c * u))) v =
+      inner ℝ u ((4 : ℝ) • (c * v) - (4 : ℝ) • (c * (c * v)))
+    simp only [inner_sub_left, inner_sub_right, real_inner_smul_left,
       real_inner_smul_right]
     rw [hsa (c * u) v, hsa u (c * v), hsa u v]
   have hid1 : peirceOne c (peirceOne c y) = peirceOne c y :=
@@ -176,8 +186,8 @@ private theorem inner_mul_self_nonneg_of_idem
   have hidh : peirceHalf c (peirceHalf c y) = peirceHalf c y :=
     peirceHalf_of_eigen_half (mul_peirceHalf hc' y)
   have hsplit : (m c y : J) = peirceOne c y + (2 : ℝ)⁻¹ • peirceHalf c y := by
-    change c * y = _
-    simp only [peirceOne, peirceHalf, mulL]
+    change c * y = (2 : ℝ) • (c * (c * y)) - c * y +
+      (2 : ℝ)⁻¹ • ((4 : ℝ) • (c * y) - (4 : ℝ) • (c * (c * y)))
     module
   have key1 : inner ℝ (peirceOne c y) (peirceOne c y) = inner ℝ (peirceOne c y) y := by
     rw [hsa1 y (peirceOne c y), hid1, real_inner_comm]

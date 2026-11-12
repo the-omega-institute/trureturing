@@ -12,7 +12,7 @@ internal sealed class EJAFiniteSpectralDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.mul_smul_comm'"),
                 H("Scalar compatibility of the commutative product"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("The original scalar lemma is public at its spectral supplier. EJASpectralNorm directly uses it to construct the linear multiplication operator and in the Peirce calculations. Its statement and proof are unchanged; public visibility supplies reuse and no new mathematical content. The owner Reg mirror reconstructs its full commutative-ring, real-module and scalar-tower telescope with actual multiplication and scalar-action readouts. Whole-family variation, sensitivity, observational dependence and source-coordinate bindings remain unfinished under issue #29408; no declared_validated registration is asserted."))),
+                    Paragraph(Text("Commutativity and the real scalar-tower law give a ∘ (r • b) = r • (a ∘ b). This makes multiplication by a fixed element real linear and supplies the scalar compatibility used in polynomial evaluation and the spectral-norm Peirce projections. The statement needs no Jordan identity, unit, finite dimensionality or norm."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("formal-reality"),
                 DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.IsFormallyReal"),
