@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:65082fd98946b7b02f8b2e93d4c9a26dc225f1307bce24ba58837a60c8e1f484
   normalized_sha256: sha256:65082fd98946b7b02f8b2e93d4c9a26dc225f1307bce24ba58837a60c8e1f484
 cas_ref: sha256:65082fd98946b7b02f8b2e93d4c9a26dc225f1307bce24ba58837a60c8e1f484
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/HilbertOperators/CommonAnchorOrderReflection.common_anchor_order_reflection
+    target_statement_id: sha256:8ad17f37244a69c1302bb2c7e607c53cb9ffea8b4e1aa3acef3d5cfea6f209c4
 receipts:
   unresolved_subitems: []
