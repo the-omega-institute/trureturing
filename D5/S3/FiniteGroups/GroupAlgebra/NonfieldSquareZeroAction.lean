@@ -109,7 +109,7 @@ private theorem determinant_ne_zero (t : Fin 4 → ZMod 2) (ht : t ≠ 0) :
   all_goals try simp only [root_square]
   all_goals ring_nf
   all_goals reduce_mod_char!
-  all_goals simpa only [add_comm] using hw
+  all_goals simp [root_zero, hw, add_comm]
 
 
 private noncomputable def codeMatrix (t : Fin 4 → ZMod 2) : Matrix (Fin 2) (Fin 2) K :=
@@ -263,7 +263,7 @@ private theorem cyclic_projective (H : Subgroup E) [IsCyclic H] :
 private def direction (i : Fin 4) : E := Multiplicative.ofAdd (Pi.single i 1)
 
 private theorem code_identity (u : U) : code (direction 0).toAdd u = u := by
-  apply Prod.ext <;> simp [direction, code, coeff, Pi.single_apply]
+  apply Prod.ext <;> simp [direction, code, coeff]
 
 -- This argument starts with an arbitrary intertwiner of the entire space.
 -- The identity direction recovers the layer and its injective first readout.
@@ -315,14 +315,15 @@ private theorem no_field_model {L : Type*} [Field L] [Algebra K L]
     rw [hnorm, hnorm, hnorm, hnorm]
     ring
   have he := congrArg Prod.snd (hcomm (direction 1) (direction 2) (1, 0))
-  simp [direction, code, coeff, Pi.single_apply] at he
+  have he' : root * root + root * (1 + root) = 1 + root := by
+    simpa [direction, code, coeff] using he
   have h01 : (1 : K) = 0 := by
     have hs : root * root + root * (1 + root) = root := by
       calc
         _ = root + (root * root + root * root) := by ring
         _ = root := by rw [CharTwo.add_self_eq_zero, add_zero]
-    rw [hs] at he
-    exact add_right_cancel (he.symm.trans (zero_add root).symm)
+    rw [hs] at he'
+    exact add_right_cancel (he'.symm.trans (zero_add root).symm)
   exact one_ne_zero h01
 
 /-- The closed assertion that minimal actual-cyclic-projective, square-zero
@@ -362,10 +363,11 @@ theorem field_translation_universality_fails : ¬ field_translation_universality
       decide
     · have halg : ZMod.algebra K 2 = (inferInstance : Algebra (ZMod 2) K) :=
         Subsingleton.elim _ _
-      simpa only [halg] using hlower
+      rw [halg] at hlower
+      exact hlower
   obtain ⟨L, fieldL, algebraL, T, c, hinter⟩ := h rho hcyc hmin square_zero
-  letI : Field L := fieldL
-  letI : Algebra K L := algebraL
+  let : Field L := fieldL
+  let : Algebra K L := algebraL
   exact no_field_model T c hinter
 
 end D5.S3.FiniteGroups.GroupAlgebra.NonfieldSquareZeroAction
