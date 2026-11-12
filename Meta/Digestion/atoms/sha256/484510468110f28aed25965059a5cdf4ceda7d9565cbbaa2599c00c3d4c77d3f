@@ -1,0 +1,31 @@
+**情形 D：两条已付分支。** 当 $d=e=0$、$b>0$ 时，直接消费 §36.3 的纯混合见证
+
+$$
+X=b\begin{pmatrix}0&2+\iota\\2-\iota&0\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\(2-\iota)/8\end{pmatrix},\qquad
+\psi_u(L)=-\frac{sb}{2},\quad
+\mathcal A_+=0,\quad
+\mathcal A_- =\frac{5\sqrt5}{32}|sb|,
+\tag{38.28}
+$$
+
+其严格差额是 $(16-5\sqrt5)|sb|/32>0$；这里不重写已付的列乘法。当
+$d=e=b=0$ 时直接消费 §35.1 的零矩阵见证
+
+$$
+X=\frac{s}{2}\begin{pmatrix}-5&4+\iota\\4-\iota&-4\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\psi_u(L)=\frac{9s^2}{4},\quad
+\mathcal A_+=\frac{5s^2}{8},\quad
+\mathcal A_- =\frac{5\sqrt5\,s^2}{8},
+\tag{38.29}
+$$
+
+其严格差额是 $(13-5\sqrt5)s^2/8>0$，且两笔面积已经严格正。
+
+这四种情形穷尽所有 $d,e\in\mathbb R$ 与 $b\ge0$：先按 $e$ 是否为零、再按 $b$ 是否为零，
+当 $e=0$ 时按 $d$ 是否为零分开。A、C 的根式和分母已逐项核对，B 的
+$H_0$ 非零；D 的两个向量均有两个非零坐标。对一般复 $z$ 用 (38.9)–(38.11)
+拉回，对实际符号用 (38.12)–(38.13) 拉回；同一固定取向下，严格差额和有限性均保持。
+因此 (38.14) 对所有 $T$、所有 $s\ne0$ 成立。
+
