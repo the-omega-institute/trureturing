@@ -51,23 +51,21 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
                 + "The fractional parts at indices two and three are 0 and 1/sqrt(2). "
                 + "At i=3 the tested expression is 1/sqrt(2), strictly greater than "
                 + "1-1/sqrt(2), because 2/sqrt(2)=sqrt(2)>1. Thus the required upper bound fails. "
-                + "The result has the literal Lean type Not claim and has no assumed test failure. "
                 + "Both the input and iterate witness are 2, so the same counterexample applies "
                 + "if the source's naturals also include zero. The polynomial defining rho has "
                 + "value -1 at 2 and 25 at 3; continuity gives a root in (2,3), so its greatest "
                 + "root exceeds 2. Consequently this witness is in the lower printed branch as well. "
-                + "The theorem originally restricted to alpha>c is not refuted. "
-                + "The proof shape is bind-only; admission is the named external open-problem "
-                + "resolution exception preregistered in issue #29668. Only the designated refutation "
-                + "result is a public theorem, so the section 3.9 refutation audit exemption applies.",
-                DescribeRole.Theorem))));
+                + "The theorem originally restricted to alpha>c is not refuted.",
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("khani-valizadeh-zarei-2026-iterated-beatty-extension"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role) => Describe.Lean(
+        string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("iterated-beatty-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             role == DescribeRole.Theorem ? AssessedProvenance.FromRepo(Source)
-                : AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role);
+                : AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula A => Alpha;
     private static Formula N => F.Id("n");

@@ -86,3 +86,9 @@ The Chew–Tanny publisher final text returned 403, and its identity with
 the author manuscript is unverified. OpenAlex returned 429, and MathDB
 challenge pages remained unread. These are bounded source readings;
 no exhaustive novelty or worldwide priority claim is made.
+
+## Verified locator
+
+https://arxiv.org/abs/2607.12817v1, main characterization on printed page 1
+and Question 1 on printed page 8. The inspected PDF SHA-256 is
+`5907ce19916db99b8e34fbecee5ce6bf9d693f2a769d2267bfb9952c2d5f037f`.
