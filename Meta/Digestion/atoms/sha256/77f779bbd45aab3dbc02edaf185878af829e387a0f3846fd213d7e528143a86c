@@ -1,0 +1,47 @@
+证明。这里消费的是Carathéodory三角矩曲线凸体的成熟构造，不把模型或neighborly性质重新归为新增结果。其原始条件与一般化见 Sanyal—Sottile—Sturmfels，*Orbitopes*，arXiv:0911.5436v4，§5.1、Theorem 5.2、Corollary 5.4。为落实当前原效应与阈值计算，直接核对所需接口如下。
+
+五个函数 $1,\cos\theta,\sin\theta,\cos2\theta,\sin2\theta$ 线性无关，故 $\dim\operatorname{aff}K_2=4$。曲线紧，凸包紧。取 $V=\mathbb R\oplus\mathbb R^4$、$C=\{t(1,z):t\ge0,z\in K_2\}$、$u(t,w)=t$，即得闭尖生成锥与严格正单位，归一基就是整个 $K_2$。每个 $c_a$ 由第一谐波 $\cos(\theta-a)$ 唯一暴露；反向，紧曲线凸包中的极点只能来自曲线，因为有限凸组合中的非平凡多项组合不可能极端。因此全部原纯点恰是整条曲线。
+
+对任意 $a\ne b\pmod {2\pi}$，三角多项式
+
+$$
+h_{a,b}(\theta)=(1-\cos(\theta-a))(1-\cos(\theta-b))
+\tag{VII99.33}
+$$
+
+非负、阶数至多二，且零点恰为 $a,b$。它是原仿射泛函在曲线上的限制，所以其整个原零面恰为 $[c_a,c_b]$，是一条暴露真边。故所有不同原纯对的整个最小面均为线段，$\mathrm B$ 成立。这是上述成熟面结构在本模型中的具体使用。
+
+这个原全效应区间恰对应全部满足 $0\le g(\theta)\le1$ 的实二阶三角多项式；没有只保留平方效应。它不可能使所有不同纯对完全可区分。否则对 $q_n=c_{1/n}\to p$，$\mathrm A$ 在原边 $[p,q_n]$ 上给 $f_n\in F_p$、$f_n(q_n)=0$。原 $F_p$ 紧，取收敛子列 $f_n\to f\in F_p$；评价联合连续给 $f(p)=\lim_n f_n(q_n)=0$，而 $f\in F_p$ 又给 $f(p)=1$，矛盾。因此 $\mathrm A$ 失败。VII98.7已给全部 $m\le3$ 的正结论，所以四维是B-only失败的准确最低仿射维。此论证只用原全效应紧性，不需要额外的纯态区分阈值公式。
+
+现在计算(VII99.32)。原效应 $g_1(\theta)=\cos^2\theta$ 在 $p$ 取一、在组成 $x$ 的两个纯点取零，故 $p\perp x$；原效应 $g_2(\theta)=(1+\cos\theta)/2$ 在 $p$ 取一、在 $y$ 取零，故 $p\perp y$。两者都是阶数至多二且在整圆取值于 $[0,1]$ 的原效应。
+
+取 $u_0\in(0,\pi)$，使 $\cos u_0=-2/3$。逐一比较原四坐标，得到
+
+$$
+\begin{gathered}
+x=(0,0,-1,0),\qquad y=(-1,0,1,0),\qquad
+m_0=(-1/2,0,0,0),\\
+z_0:=\frac{c_{u_0}+c_{-u_0}}2=(-2/3,0,-1/9,0),\\
+m_0=\frac1{10}p+\frac9{10}z_0.
+\end{gathered}
+\tag{VII99.34}
+$$
+
+因此对每一张原 $f\in F_p$，正性和仿射性都给
+
+$$
+f(m_0)=\frac1{10}+\frac9{10}f(z_0)\ge\frac1{10}.
+\tag{VII99.35}
+$$
+
+这个下界遍历整个确认区间，不来自局部候选效应的失败。另一方面，取
+
+$$
+g_*(\theta)=\left(\frac{3\cos\theta+2}{5}\right)^2,
+\qquad
+f_*(X)=\frac{17}{50}+\frac{12}{25}X_1+\frac9{50}X_3.
+\tag{VII99.36}
+$$
+
+$g_*=f_*\circ c$；由于 $-1\le3\cos\theta+2\le5$，它在整圆满足 $0\le g_*\le1$，因而 $f_*$ 是整个 $K_2$ 的原 proper 效应。它在 $p$ 取一，在 $c_{\pm u_0}$ 取零，故 $f_*(m_0)=1/10$。与(VII99.35)合用，得精确最小值。该模型只有 $\mathrm B$ 而没有全混态 $\mathrm{Z0}$，所以不是一般 $\mathrm B+\mathrm{Z0}\Rightarrow\mathrm A$ 的反例。证毕。
+

@@ -1,0 +1,67 @@
+**定理 100.3（proper质量不代付正投影）。** 在定义VII100.1下，每条实际边都有准确线性直和
+
+$$
+V=\operatorname{span}\{p,q\}\oplus\operatorname{span}E^\#.
+\tag{VII100.11}
+$$
+
+沿这里的原补面张成投到边张成的唯一线性投影为
+
+$$
+\begin{gathered}
+\Pi_E(x)=\xi_p(x)p+\xi_q(x)q,\\
+\xi_p=\frac{h_p-bh_q}{d},\qquad
+\xi_q=\frac{h_q-ah_p}{d},\qquad
+u\circ\Pi_E=\xi_p+\xi_q=e_E\in[0,u].
+\end{gathered}
+\tag{VII100.12}
+$$
+
+下列条件等价：
+
+$$
+\begin{gathered}
+\Pi_E(C)\subseteq C;\qquad
+q\in D_p;\qquad a=b=0;\\
+e_E-h_p\in C^*;\qquad e_E-h_q\in C^*;\qquad
+\mathcal I_E\text{ 是平行四边形}.
+\end{gathered}
+\tag{VII100.13}
+$$
+
+这些条件成立时 $\Pi_E$ 的像锥为 $\operatorname{cone}\{p,q\}$；失败时(VII100.12)的总质量效应仍为proper。若 $m=1$，$\Pi_E=1_V$，这些条件全成立；$m=0$ 无边，不构造 $\Pi_E$。
+
+证明。$p,q$ 线性独立，因为它们不同且 $u(p)=u(q)=1$。若 $\eta p+\theta q$ 属于 $\operatorname{span}E^\#$，分别作用 $h_p,h_q$ 并用(VII100.8)可得 $\eta=\theta=0$。当 $m\ge2$ 时两个子空间维数为 $2,m-1$，和为 $\dim V=m+1$；$m=1$ 时第二个为零，也得到(VII100.11)。两个 $\xi$ 消灭补面张成，在 $p,q$ 上分别给 $(1,0),(0,1)$，所以(VII100.12)确是所指定的投影，满足 $\Pi_E^2=\Pi_E$，其质量式由直接相加得到。
+
+还需核对像锥：
+
+$$
+C\cap\operatorname{span}\{p,q\}=\operatorname{cone}\{p,q\}.
+\tag{VII100.14}
+$$
+
+若 $0\ne z$ 属于左边，则 $u(z)>0$，且 $u-e_E$ 消灭 $p,q$，故 $(u-e_E)(z)=0$。于是 $z/u(z)\in K$ 位于 $e_E$ 的整个一面 $E=[p,q]$，给出右边的非负分解；零向量及反向包含直接成立。因此 $\Pi_E$ 正，当且仅当其两个唯一坐标 $\xi_p,\xi_q$ 都属于 $C^*$。
+
+若 $a=b=0$，两坐标就是 $h_p,h_q$，故正；它又固定 $p,q$，所以像锥恰为(VII100.14)。若 $a>0$，取VII100.2证明中的原顶点 $r\in D_q\setminus D_p$，则
+
+$$
+\xi_q(r)=-\frac{a h_p(r)}d<0,
+\tag{VII100.15}
+$$
+
+故 $\Pi_E(r)\notin C$。由(VII100.2)，$a=0$ 当且仅当 $b=0$，且等价于 $q\in D_p$；这排除了只有一个非零交叉值的分支。
+
+另一方面，
+
+$$
+e_E-h_p=\frac{1-b}{d}(h_q-ah_p),\qquad
+e_E-h_q=\frac{1-a}{d}(h_p-bh_q).
+\tag{VII100.16}
+$$
+
+当 $a>0$ 时，第一式在同一个 $r$ 为负；交换 $p,q$ 得第二式在某个 $s\in D_p\setminus D_q$ 为负。当 $a=b=0$ 时两式分别为 $h_q,h_p$，故得到两项锥序等价。特别是非接触边上的 $e_E\in F_p$ 不支配 $h_p$，不能把规范facet确认当作least确认。
+
+最后，四边形的循环顶点已为 $0,h_p,e_E,h_q$，所以它是平行四边形当且仅当 $e_E=h_p+h_q$。在 $p,q$ 评价这一等式给 $a=b=0$，反向由公式立即成立，完成全部等价。这里的质量proper只给 $0\le u(\Pi_Ex)\le u(x)$（$x\in C$），没有给 $\Pi_Ex\in C$。它因而不产生正滤子、事件更新或可调用量子操作。证毕。
+
+只有在另行加入有限整个纯集的原全称 $\mathrm B$ 时，VII97.4才保证每个不同纯对都是实际边，且每条边就是该对的整个二态球，局部对径为另一端点。按这个已证对应，VI90.10的全部接触准确成为(VII100.13)对每条边成立，亦即这些指定投影全正；VI90.8的整个二态球逐效应延拓仍按它自己的量词消费。本章未从有限 $\mathrm B+\mathrm{Z0}$ 推出所有 $a=b=0$，因而未证明其一般接触或单纯形结论。
+

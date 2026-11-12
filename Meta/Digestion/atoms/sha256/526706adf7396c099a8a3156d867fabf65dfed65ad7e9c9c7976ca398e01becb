@@ -1,0 +1,101 @@
+**定理 99.8（任意原纯点集的四维分类）。** 在定义99.1及 $m=4$ 下，严格同原载体地有
+
+$$
+\boxed{\mathrm B+\mathrm{Z0}
+\quad\Longleftrightarrow\quad
+K\cong_{\rm aff}\Delta_4,\ \mathbb B^4,\
+\mathbb B^3*\Delta_0\ \text{或}\ \mathbb B^2*\Delta_1.}
+\tag{VII99.20}
+$$
+
+四类均满足全部原 $\mathrm A,\mathrm H,S$；每个整个二纯球上的任意 proper 仿射效应都有原全域延拓。仿射同构同时运输原 $C,u$、全部状态及全部效应，没有替换原单位或缩小效应集。
+
+证明。正向先分出整球 $\mathbb B^4$；有三维球facet时直接消费VII98.6，得到 $\mathbb B^3*\Delta_0$。其余分支由99.6至多有一盘。有一盘时99.7给 $\mathbb B^2*\Delta_1$。无盘时99.7先推出整个 $P$ 有限，再直接消费VII96.4的有限 $m\le5$ 结论，给 $\Delta_4$。此处没有用有限抽取替代原纯点集。
+
+为核对反向及所有原效应，统一写后三个含球类型的规范齐次坐标为
+
+$$
+\begin{gathered}
+C_{d,j}=\{(t,x,y):t\ge\|x\|,\ y\in\mathbb R_+^j\},\qquad
+u_{d,j}(t,x,y)=t+\sum_{i=1}^j y_i,\\
+(d,j)=(4,0),(3,1),(2,2),\qquad
+K_{d,j}=C_{d,j}\cap\{u_{d,j}=1\}.
+\end{gathered}
+\tag{VII99.21}
+$$
+
+其纯点是球因子的 $p_v=(1,v,0)$、$\|v\|=1$，以及标量因子的 $s_i=(0,0,e_i)$。任一线性效应必唯一写成
+
+$$
+f(t,x,y)=a t+b\cdot x+\sum_i\eta_i y_i.
+\tag{VII99.22}
+$$
+
+直接在整个锥上检验 $f\ge0$ 和 $u_{d,j}-f\ge0$，准确得到全部 proper 区间
+
+$$
+\|b\|\le a\le1-\|b\|,\qquad 0\le\eta_i\le1.
+\tag{VII99.23}
+$$
+
+必要性由球因子 $x=\pm tv$ 及每个标量射线给出；充分性由 $|b\cdot x|\le\|b\|t$ 及 $y_i\ge0$ 给出。因此这不是另选的效应子族。
+
+同一球因子内任意不同纯对的最小面是整个底球；球纯点与标量顶点的最小面是两点之间的原边。例如非负泛函
+
+$$
+t-v\cdot x+\sum_{k\ne i}y_k
+\tag{VII99.24}
+$$
+
+的整个归一零面恰为 $[p_v,s_i]$。两标量顶点的边由 $t+\sum_{k\ne i,j}y_k$ 的零面暴露。因此全部不同纯对满足 $\mathrm B$。$j=0$ 时只有整个球一类二纯面。
+
+原least确认可显式写为
+
+$$
+e_{p_v}(t,x,y)=\frac{t+v\cdot x}{2},\qquad
+e_{s_i}(t,x,y)=y_i.
+\tag{VII99.25}
+$$
+
+若(VII99.22)确认 $p_v$，则 $a+b\cdot v=1$，与(VII99.23)合用迫使 $b=\beta v$、$a=1-\beta$、$0\le\beta\le1/2$。因而在整个原规范锥上
+
+$$
+f-e_{p_v}=(1/2-\beta)(t-v\cdot x)+\sum_i\eta_i y_i\ge0.
+\tag{VII99.26}
+$$
+
+若 $f$ 确认 $s_i$，则 $\eta_i=1$，其余项仍为正泛函，所以 $f-e_{s_i}\ge0$。这些 $e$ 自身都是 proper 确认效应，故它们是全锥序least，而非仅极小；对全部原混态均有 $T_p(x)=e_p(x)$。纯点间的值为
+
+$$
+e_{p_v}(p_w)=\frac{1+v\cdot w}{2},\qquad
+e_{p_v}(s_i)=e_{s_i}(p_v)=0,\qquad
+e_{s_i}(s_k)=\delta_{ik}.
+\tag{VII99.27}
+$$
+
+所以互反性成立，得到完整 $S$。而 $D_p=K_{d,j}\cap\ker e_p$ 是一个原效应的整个零面，直接给全部混态的 $\mathrm{Z0}$；这里没有使用裸 $\mathrm B+\mathrm A\Rightarrow\mathrm{Z0}$。这些零面具体为
+
+$$
+D_{p_v}=\operatorname{conv}(\{p_{-v}\}\cup\{s_i\}_{i=1}^j),\qquad
+D_{s_i}=\operatorname{conv}(\{p_w:\|w\|=1\}\cup\{s_k:k\ne i\}).
+\tag{VII99.28}
+$$
+
+球内对径由 $e_{p_v}$ 排除，原边两端由(VII99.23)独立指定，故全部 $\mathrm A$ 成立；所有经过同一纯点的球对径又由同一个 $e_p$ 同时排除，给 $\mathrm H$。
+
+全部局部 proper 效应也有明确全域公式。球面上任取 $g(x)=a+b\cdot x\in[0,1]$，并任给所有外顶点值 $\eta_i\in[0,1]$，(VII99.22)—(VII99.23)就是它的整个基上延拓。在99.7的仿射坐标中，特别有
+
+$$
+\widetilde g(x,y_1,y_2)
+=a+b\cdot x+(\eta_1-a)y_1+(\eta_2-a)y_2.
+\tag{VII99.29}
+$$
+
+这在生成整个 $K$ 的 $F,s,t$ 上取值于 $[0,1]$，故在整个 $K$ 上亦如此。对跨因子的原边，可任意指定两个端点读数：球端值用球上的常数效应取得，标量端值独立指定；两标量边同理。由仿射性得到边上的任意 proper 效应。整球类型的延拓是恒等操作。
+
+对 $\Delta_4$，取 $C=\mathbb R_+^5$、$u(z)=\sum_i z_i$。全部效应为 $\sum_i\eta_i z_i$、$0\le\eta_i\le1$，原least确认为重心坐标 $e_i=z_i$。它们的整个零面给全混态 $\mathrm{Z0}$，互反值为 $\delta_{ik}$；全部二纯面是边，任意边效应也可独立指定端点后延拓。这完成四类的反向和全部效应陈述。
+
+最后，若 $\phi:K\to K'$ 是上述仿射同构，它唯一齐次延伸为线性同构 $\widehat\phi:V\to V'$，满足 $\widehat\phi(tk)=t\phi(k)$、$\widehat\phi(C)=C'$、$u'\widehat\phi=u$。仿射性与 $K$ 张成 $V$ 保证此延伸线性且唯一。原效应通过 $f'\mapsto f'\widehat\phi$ 与规范全部效应区间双射，所有零面、整个最小面、least序和混态量词均随同运输。因此上述公式确实回到同一个原单位与原效应域。证毕。
+
+规范表示只描述结论，不是前提。$\mathbb B^4$ 的锥是五维Lorentz锥，属于spin-factor分支；它既不是三维Bloch球的复qubit，也不是仿射维十五的完整复四能级态空间。$\mathbb B^3*\Delta_0$ 可表示为 $\operatorname{Herm}_2(\mathbb C)_+\oplus\mathbb R_+$ 的迹一基，$\mathbb B^2*\Delta_1$ 可表示为 $\operatorname{Sym}_2(\mathbb R)_+\oplus\mathbb R_+^2$ 的迹一基；这些是保单位序坐标，未给原模型增加矩阵假设。
+
