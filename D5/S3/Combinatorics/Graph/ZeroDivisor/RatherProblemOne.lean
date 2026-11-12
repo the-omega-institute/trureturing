@@ -5,8 +5,6 @@
    anchors: [mathlib/module/Mathlib.Data.ZMod.QuotientRing]
    utility: none
    digest: The actual three-prime zero-divisor independence polynomial is log concave and weakly unimodal. -/
-
-
 import D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
 import D5.S3.Combinatorics.RealRootedPermutations.LogConcave
 import Mathlib.Data.ZMod.QuotientRing
@@ -14,86 +12,55 @@ import Mathlib.Data.Nat.Choose.Vandermonde
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Data.Nat.Choose.Cast
 import Mathlib.Tactic
-
 /-!
 The native three-prime zero-divisor independence polynomial.
-
 admission_basis: open-problem-resolution (#29545; original Problem 1).
 The terminal rather_problem_one is the host resolution statement.
 All propositional helpers have proof_shape: bind-only and escape_witness: none.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.Vertex: proof_shape: definition; consumers: graph, fiberEquiv, rather_problem_one.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.graph: proof_shape: definition; consumers: independent_four, coefficient_card, rather_problem_one.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.coordinateSupport: proof_shape: definition; consumers: support.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support: proof_shape: definition; consumers: mem_support, vertex_iff, fiberEquiv, independent_four.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.mem_support: proof_shape: bind-only; consumers: support_nonempty, mul_eq_zero_iff, vertex_iff, fiberEquiv.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support_nonempty: proof_shape: bind-only; consumers: vertex_iff.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.mul_eq_zero_iff: proof_shape: bind-only; consumers: vertex_iff, independent_four.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.vertex_iff: proof_shape: bind-only; consumers: fiberEquiv, independent_four, support_filter_card.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.fiberEquiv: proof_shape: definition; consumers: support_fiber_card.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support_fiber_card: proof_shape: bind-only; consumers: support_filter_card.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.crt: proof_shape: definition; consumers: rather_problem_one.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.pairFamily: proof_shape: definition; consumers: configurations_four_families, pair_family_powerset, independencePolynomial_four_families.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.starFamily: proof_shape: definition; consumers: configurations_four_families, star_family_sdiff, star_polynomial.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.independent_four: proof_shape: bind-only; consumers: configurations_four_families.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.configurations_four_families: proof_shape: bind-only; consumers: independencePolynomial_four_families.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.pairDomain: proof_shape: definition; consumers: pair_family_powerset, independencePolynomial_four_families, independencePolynomial_three_coordinates.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.starDomain: proof_shape: definition; consumers: star_family_sdiff, star_polynomial, independencePolynomial_three_coordinates.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.starTailDomain: proof_shape: definition; consumers: star_family_sdiff, star_polynomial, independencePolynomial_three_coordinates.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.pair_family_powerset: proof_shape: bind-only; consumers: independencePolynomial_four_families.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.star_family_sdiff: proof_shape: bind-only; consumers: star_polynomial.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.powerset_polynomial: proof_shape: bind-only; consumers: star_polynomial, independencePolynomial_four_families.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.star_polynomial: proof_shape: bind-only; consumers: independencePolynomial_four_families.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.independencePolynomial_four_families: proof_shape: bind-only; consumers: independencePolynomial_three_coordinates.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.coefficient_card: proof_shape: bind-only; consumers: coefficients_three_domains, rather_problem_one.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support_filter_card: proof_shape: bind-only; consumers: independencePolynomial_three_coordinates.
-D5.S3.Combinatorics.Graph.ZeroDivisor.Support.independencePolynomial_three_coordinates: proof_shape: bind-only; consumers: coefficients_three_domains.
-D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction.nine_restriction_count: proof_shape: bind-only; consumers: nine_restriction.
-D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction.nine_restriction: proof_shape: bind-only; consumers: nine_restriction_bound.
-D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction.nine_restriction_bound: proof_shape: bind-only; consumers: normalized_second_difference_bound.
-D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature.normalized_second_difference: proof_shape: bind-only; consumers: normalized_second_difference_bound, coefficients_three_domains.
-D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature.normalized_second_difference_bound: proof_shape: bind-only; consumers: coefficients_three_domains.
-D5.S3.Combinatorics.Graph.ZeroDivisor.NativeCoefficients.coefficients_three_domains: proof_shape: bind-only; consumers: rather_problem_one.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.Vertex: proof_shape: definition; consumers: graph, fiberEquiv, rather_problem_one. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.graph: proof_shape: definition; consumers: independent_four, coefficient_card, rather_problem_one.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.coordinateSupport: proof_shape: definition; consumers: support. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support: proof_shape: definition; consumers: mem_support, vertex_iff, fiberEquiv, independent_four.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.mem_support: proof_shape: bind-only; consumers: support_nonempty, mul_eq_zero_iff, vertex_iff, fiberEquiv. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support_nonempty: proof_shape: bind-only; consumers: vertex_iff.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.mul_eq_zero_iff: proof_shape: bind-only; consumers: vertex_iff, independent_four. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.vertex_iff: proof_shape: bind-only; consumers: fiberEquiv, independent_four, support_filter_card.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.fiberEquiv: proof_shape: definition; consumers: support_fiber_card. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support_fiber_card: proof_shape: bind-only; consumers: support_filter_card.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.crt: proof_shape: definition; consumers: rather_problem_one. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.pairFamily: proof_shape: definition; consumers: configurations_four_families, pair_family_powerset, independencePolynomial_four_families.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.starFamily: proof_shape: definition; consumers: configurations_four_families, star_family_sdiff, star_polynomial. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.independent_four: proof_shape: bind-only; consumers: configurations_four_families.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.configurations_four_families: proof_shape: bind-only; consumers: independencePolynomial_four_families. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.pairDomain: proof_shape: definition; consumers: pair_family_powerset, independencePolynomial_four_families, independencePolynomial_three_coordinates.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.starDomain: proof_shape: definition; consumers: star_family_sdiff, star_polynomial, independencePolynomial_three_coordinates. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.starTailDomain: proof_shape: definition; consumers: star_family_sdiff, star_polynomial, independencePolynomial_three_coordinates.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.pair_family_powerset: proof_shape: bind-only; consumers: independencePolynomial_four_families. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.star_family_sdiff: proof_shape: bind-only; consumers: star_polynomial.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.powerset_polynomial: proof_shape: bind-only; consumers: star_polynomial, independencePolynomial_four_families. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.star_polynomial: proof_shape: bind-only; consumers: independencePolynomial_four_families.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.independencePolynomial_four_families: proof_shape: bind-only; consumers: independencePolynomial_three_coordinates. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.coefficient_card: proof_shape: bind-only; consumers: coefficients_three_domains, rather_problem_one.
+D5.S3.Combinatorics.Graph.ZeroDivisor.Support.support_filter_card: proof_shape: bind-only; consumers: independencePolynomial_three_coordinates. D5.S3.Combinatorics.Graph.ZeroDivisor.Support.independencePolynomial_three_coordinates: proof_shape: bind-only; consumers: coefficients_three_domains.
+D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction.nine_restriction_count: proof_shape: bind-only; consumers: nine_restriction. D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction.nine_restriction: proof_shape: bind-only; consumers: nine_restriction_bound.
+D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction.nine_restriction_bound: proof_shape: bind-only; consumers: normalized_second_difference_bound. D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature.normalized_second_difference: proof_shape: bind-only; consumers: normalized_second_difference_bound, coefficients_three_domains.
+D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature.normalized_second_difference_bound: proof_shape: bind-only; consumers: coefficients_three_domains. D5.S3.Combinatorics.Graph.ZeroDivisor.NativeCoefficients.coefficients_three_domains: proof_shape: bind-only; consumers: rather_problem_one.
 D5.S3.Combinatorics.Graph.ZeroDivisor.RatherProblemOne.rather_problem_one: proof_shape: bind-only; consumers: terminal external-problem result.
 -/
-
 section
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 noncomputable section
 open scoped BigOperators Classical
 open Function
-
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.Support
-
 /-- A vertex is an actual nonzero ring element with a nonzero annihilator. -/
 abbrev Vertex (R : Type*) [CommRing R] :=
   {x : R // x ≠ 0 ∧ ∃ y : R, y ≠ 0 ∧ x * y = 0}
-
 /-- Distinct actual vertices are adjacent precisely when their product vanishes. -/
 def graph (R : Type*) [CommRing R] : SimpleGraph (Vertex R) where
   Adj u v := u ≠ v ∧ u.1 * v.1 = 0
   symm := ⟨by rintro u v ⟨hne, hmul⟩; exact ⟨hne.symm, by simpa [mul_comm] using hmul⟩⟩
   loopless := ⟨by intro u h; exact h.1 rfl⟩
-
 variable {ι R : Type*} [Fintype ι] [CommRing R]
 variable {K : ι → Type*} [∀ i, CommRing (K i)]
-
 /-- The finite set of indices with nonzero coordinate value. -/
 def coordinateSupport (x : ∀ i, K i) : Finset ι :=
   Finset.univ.filter fun i => x i ≠ 0
-
 /-- The nonzero coordinate support under a specified ring equivalence. -/
 def support (e : R ≃+* ∀ i, K i) (x : R) : Finset ι :=
   coordinateSupport (e x)
-
-private theorem mem_support (e : R ≃+* ∀ i, K i) (x : R) (i : ι) :
-    i ∈ support e x ↔ e x i ≠ 0 := by
+private theorem mem_support (e : R ≃+* ∀ i, K i) (x : R) (i : ι) : i ∈ support e x ↔ e x i ≠ 0 := by
   simp [support, coordinateSupport]
-
-private theorem support_nonempty (e : R ≃+* ∀ i, K i) (x : R) :
-    (support e x).Nonempty ↔ x ≠ 0 := by
+private theorem support_nonempty (e : R ≃+* ∀ i, K i) (x : R) : (support e x).Nonempty ↔ x ≠ 0 := by
   rw [Finset.nonempty_iff_ne_empty]
   have h : support e x = ∅ ↔ x = 0 := by
     constructor
@@ -105,11 +72,8 @@ private theorem support_nonempty (e : R ≃+* ∀ i, K i) (x : R) :
     · rintro rfl
       simp [support, coordinateSupport]
   exact not_congr h
-
 variable [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)]
-
-private theorem mul_eq_zero_iff (e : R ≃+* ∀ i, K i) (x y : R) :
-    x * y = 0 ↔ Disjoint (support e x) (support e y) := by
+private theorem mul_eq_zero_iff (e : R ≃+* ∀ i, K i) (x y : R) : x * y = 0 ↔ Disjoint (support e x) (support e y) := by
   rw [Finset.disjoint_left]
   constructor
   · intro h i hx hy
@@ -125,10 +89,7 @@ private theorem mul_eq_zero_iff (e : R ≃+* ∀ i, K i) (x y : R) :
         by_contra hy
         exact h ((mem_support e x i).mpr hx) ((mem_support e y i).mpr hy)
       simp [hy]
-
-private theorem vertex_iff (e : R ≃+* ∀ i, K i) (x : R) :
-    (x ≠ 0 ∧ ∃ y : R, y ≠ 0 ∧ x * y = 0) ↔
-      (support e x).Nonempty ∧ support e x ≠ Finset.univ := by
+private theorem vertex_iff (e : R ≃+* ∀ i, K i) (x : R) : (x ≠ 0 ∧ ∃ y : R, y ≠ 0 ∧ x * y = 0) ↔ (support e x).Nonempty ∧ support e x ≠ Finset.univ := by
   rw [← support_nonempty e x]
   apply and_congr_right
   intro _
@@ -153,10 +114,7 @@ private theorem vertex_iff (e : R ≃+* ∀ i, K i) (x : R) :
       have hx : e x i = 0 := by simpa [mem_support] using hi
       simp [y, hx]
     · simp [y, Pi.single_eq_of_ne hji]
-
-private def fiberEquiv (e : R ≃+* ∀ i, K i) (S : Finset ι)
-    (hS : S.Nonempty) (hSu : S ≠ Finset.univ) :
-    {x : Vertex R // support e x.1 = S} ≃ (∀ i : S, {a : K i.1 // a ≠ 0}) where
+private def fiberEquiv (e : R ≃+* ∀ i, K i) (S : Finset ι) (hS : S.Nonempty) (hSu : S ≠ Finset.univ) : {x : Vertex R // support e x.1 = S} ≃ (∀ i : S, {a : K i.1 // a ≠ 0}) where
   toFun x i := ⟨e x.1.1 i.1, (mem_support e _ _).mp (x.2.symm ▸ i.2)⟩
   invFun f := by
     let z : ∀ i, K i := fun i => if hi : i ∈ S then (f ⟨i, hi⟩).1 else 0
@@ -185,41 +143,22 @@ private def fiberEquiv (e : R ≃+* ∀ i, K i) (S : Finset ι)
     funext i
     apply Subtype.ext
     simp
-
-/-- Every genuine support cell consists of exactly the independent choices of
-nonzero coordinate values. The equality counts actual ring elements. -/
-private theorem support_fiber_card [∀ i, Fintype (K i)]
-    (e : R ≃+* ∀ i, K i) (S : Finset ι)
-    (hS : S.Nonempty) (hSu : S ≠ Finset.univ) :
-    Nat.card {x : Vertex R // support e x.1 = S} =
-      ∏ i ∈ S, (Fintype.card (K i) - 1) := by
-  rw [Nat.card_congr (fiberEquiv e S hS hSu), Nat.card_eq_fintype_card,
-    Fintype.card_pi]
+/-- Every genuine support cell consists of exactly the independent choices of nonzero coordinate values. The equality counts actual ring elements. -/
+private theorem support_fiber_card [∀ i, Fintype (K i)] (e : R ≃+* ∀ i, K i) (S : Finset ι) (hS : S.Nonempty) (hSu : S ≠ Finset.univ) : Nat.card {x : Vertex R // support e x.1 = S} = ∏ i ∈ S, (Fintype.card (K i) - 1) := by
+  rw [Nat.card_congr (fiberEquiv e S hS hSu), Nat.card_eq_fintype_card, Fintype.card_pi]
   simp only [Fintype.card_subtype_compl, Fintype.card_subtype_eq]
   exact Finset.prod_coe_sort S (fun i => Fintype.card (K i) - 1)
-
-/-- The native Chinese remainder equivalence for every finite pairwise coprime
-modulus family, directly reusing Mathlib's ring equivalence. -/
-def crt (p : ι → ℕ) (hcop : Pairwise fun i j => Nat.Coprime (p i) (p j)) :
-    ZMod (∏ i, p i) ≃+* ∀ i, ZMod (p i) :=
+/-- The native Chinese remainder equivalence for every finite pairwise coprime modulus family, directly reusing Mathlib's ring equivalence. -/
+def crt (p : ι → ℕ) (hcop : Pairwise fun i j => Nat.Coprime (p i) (p j)) : ZMod (∏ i, p i) ≃+* ∀ i, ZMod (p i) :=
   ZMod.prodEquivPi p hcop
-
 /-- Subsets using only the two-coordinate cells. -/
-def pairFamily (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
-    Finset (Finset (Vertex R)) :=
+def pairFamily (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) : Finset (Finset (Vertex R)) :=
   V.powerset.filter fun S => ∀ x ∈ S, (support e x.1).card = 2
-
 /-- Subsets meeting the singleton cell at i, with all their supports containing i. -/
-def starFamily (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
-    Finset (Finset (Vertex R)) :=
+def starFamily (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) : Finset (Finset (Vertex R)) :=
   V.powerset.filter fun S =>
     (∃ x ∈ S, support e x.1 = {i}) ∧ ∀ x ∈ S, i ∈ support e x.1
-
-private theorem independent_four (hι : Fintype.card ι = 3)
-    (e : R ≃+* ∀ i, K i) (S : Finset (Vertex R)) :
-    (graph R).IsIndepSet (S : Set (Vertex R)) ↔
-      (∀ x ∈ S, (support e x.1).card = 2) ∨
-        ∃ i, (∃ x ∈ S, support e x.1 = {i}) ∧ ∀ x ∈ S, i ∈ support e x.1 := by
+private theorem independent_four (hι : Fintype.card ι = 3) (e : R ≃+* ∀ i, K i) (S : Finset (Vertex R)) : (graph R).IsIndepSet (S : Set (Vertex R)) ↔ (∀ x ∈ S, (support e x.1).card = 2) ∨ ∃ i, (∃ x ∈ S, support e x.1 = {i}) ∧ ∀ x ∈ S, i ∈ support e x.1 := by
   constructor
   · intro hind
     by_cases hpairs : ∀ x ∈ S, (support e x.1).card = 2
@@ -252,20 +191,11 @@ private theorem independent_four (hι : Fintype.card ι = 3)
     · intro u hu v hv _ hadj
       exact Finset.disjoint_left.mp ((mul_eq_zero_iff e u.1 v.1).mp hadj.2)
         (hall u hu) (hall v hv)
-
-/-- All actual independent subsets split into four disjoint families when there
-are exactly three domain coordinates. The ambient finite vertex domain is arbitrary. -/
-theorem configurations_four_families (hι : Fintype.card ι = 3)
-    (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
-    D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations (graph R) V =
-      pairFamily e V ∪ Finset.univ.biUnion (starFamily e V) ∧
-    (∀ i, Disjoint (pairFamily e V) (starFamily e V i)) ∧
-    Pairwise (fun i j => Disjoint (starFamily e V i) (starFamily e V j)) := by
+/-- All actual independent subsets split into four disjoint families when there are exactly three domain coordinates. The ambient finite vertex domain is arbitrary. -/
+theorem configurations_four_families (hι : Fintype.card ι = 3) (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) : D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations (graph R) V = pairFamily e V ∪ Finset.univ.biUnion (starFamily e V) ∧ (∀ i, Disjoint (pairFamily e V) (starFamily e V i)) ∧ Pairwise (fun i j => Disjoint (starFamily e V i) (starFamily e V j)) := by
   refine ⟨?_, ?_, ?_⟩
   · ext S
-    simp only [D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations,
-      pairFamily, starFamily, Finset.mem_union, Finset.mem_biUnion, Finset.mem_univ,
-      true_and, Finset.mem_filter, Finset.mem_powerset]
+    simp only [D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion.configurations, pairFamily, starFamily, Finset.mem_union, Finset.mem_biUnion, Finset.mem_univ, true_and, Finset.mem_filter, Finset.mem_powerset]
     rw [independent_four hι e S]
     aesop
   · intro i
@@ -282,41 +212,27 @@ theorem configurations_four_families (hι : Fintype.card ι = 3)
     have hju := (Finset.mem_filter.mp hj).2.2 u hu
     rw [hui] at hju
     exact hij (Finset.mem_singleton.mp hju).symm
-
 open D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
-
 /-- Actual vertices in the two-coordinate cells of a finite domain. -/
 def pairDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) : Finset (Vertex R) :=
   V.filter fun x => (support e x.1).card = 2
-
 /-- Actual vertices whose supports contain a specified coordinate. -/
-def starDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
-    Finset (Vertex R) := V.filter fun x => i ∈ support e x.1
-
+def starDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) : Finset (Vertex R) := V.filter fun x => i ∈ support e x.1
 /-- The same domain with its singleton-support cell removed. -/
-def starTailDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) :
-    Finset (Vertex R) := (starDomain e V i).filter fun x => support e x.1 ≠ {i}
-
+def starTailDomain (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) : Finset (Vertex R) := (starDomain e V i).filter fun x => support e x.1 ≠ {i}
 omit [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)] in
-private theorem pair_family_powerset (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
-    pairFamily e V = (pairDomain e V).powerset := by
+private theorem pair_family_powerset (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) : pairFamily e V = (pairDomain e V).powerset := by
   ext S
-  simp only [pairFamily, pairDomain, Finset.mem_filter, Finset.mem_powerset,
-    Finset.subset_iff, Finset.mem_filter]
+  simp only [pairFamily, pairDomain, Finset.mem_filter, Finset.mem_powerset, Finset.subset_iff, Finset.mem_filter]
   constructor
   · rintro ⟨hV, hpair⟩ x hx
     exact ⟨hV hx, hpair x hx⟩
   · intro h
     exact ⟨fun x hx => (h hx).1, fun x hx => (h hx).2⟩
-
 omit [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)] in
-private theorem star_family_sdiff (e : R ≃+* ∀ i, K i)
-    (V : Finset (Vertex R)) (i : ι) :
-    starFamily e V i = (starDomain e V i).powerset \
-      (starTailDomain e V i).powerset := by
+private theorem star_family_sdiff (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) : starFamily e V i = (starDomain e V i).powerset \ (starTailDomain e V i).powerset := by
   ext S
-  simp only [starFamily, starDomain, starTailDomain, Finset.mem_filter,
-    Finset.mem_sdiff, Finset.mem_powerset, Finset.subset_iff, Finset.mem_filter]
+  simp only [starFamily, starDomain, starTailDomain, Finset.mem_filter, Finset.mem_sdiff, Finset.mem_powerset, Finset.subset_iff, Finset.mem_filter]
   constructor
   · rintro ⟨hV, ⟨u, hu, hui⟩, hall⟩
     refine ⟨fun x hx => ⟨hV hx, hall x hx⟩, ?_⟩
@@ -328,31 +244,15 @@ private theorem star_family_sdiff (e : R ≃+* ∀ i, K i)
     apply hnot
     intro x hx
     exact ⟨hdom hx, fun he => hnone ⟨x, hx, he⟩⟩
-
-private theorem powerset_polynomial {α : Type*} (V : Finset α) :
-    (∑ S ∈ V.powerset, (Polynomial.X : Polynomial ℤ) ^ S.card) =
-      (1 + Polynomial.X) ^ V.card := by
+private theorem powerset_polynomial {α : Type*} (V : Finset α) : (∑ S ∈ V.powerset, (Polynomial.X : Polynomial ℤ) ^ S.card) = (1 + Polynomial.X) ^ V.card := by
   simpa only [Finset.prod_const] using
     (Finset.prod_one_add (f := fun _ : α => (Polynomial.X : Polynomial ℤ)) V).symm
-
 omit [∀ i, NoZeroDivisors (K i)] [∀ i, Nontrivial (K i)] in
-private theorem star_polynomial (e : R ≃+* ∀ i, K i)
-    (V : Finset (Vertex R)) (i : ι) :
-    (∑ S ∈ starFamily e V i, (Polynomial.X : Polynomial ℤ) ^ S.card) =
-      (1 + Polynomial.X) ^ (starDomain e V i).card -
-        (1 + Polynomial.X) ^ (starTailDomain e V i).card := by
-  rw [star_family_sdiff, Finset.sum_sdiff_eq_sub, powerset_polynomial,
-    powerset_polynomial]
+private theorem star_polynomial (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) (i : ι) : (∑ S ∈ starFamily e V i, (Polynomial.X : Polynomial ℤ) ^ S.card) = (1 + Polynomial.X) ^ (starDomain e V i).card - (1 + Polynomial.X) ^ (starTailDomain e V i).card := by
+  rw [star_family_sdiff, Finset.sum_sdiff_eq_sub, powerset_polynomial, powerset_polynomial]
   exact Finset.powerset_mono.mpr (Finset.filter_subset _ _)
-
-/-- The native independence polynomial is the generating function of the four
-actual families. The exponents are cardinalities of actual finite vertex domains. -/
-theorem independencePolynomial_four_families (hι : Fintype.card ι = 3)
-    (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) :
-    independencePolynomial (graph R) V =
-      (1 + Polynomial.X) ^ (pairDomain e V).card +
-        ∑ i, ((1 + Polynomial.X) ^ (starDomain e V i).card -
-          (1 + Polynomial.X) ^ (starTailDomain e V i).card) := by
+/-- The native independence polynomial is the generating function of the four actual families. The exponents are cardinalities of actual finite vertex domains. -/
+theorem independencePolynomial_four_families (hι : Fintype.card ι = 3) (e : R ≃+* ∀ i, K i) (V : Finset (Vertex R)) : independencePolynomial (graph R) V = (1 + Polynomial.X) ^ (pairDomain e V).card + ∑ i, ((1 + Polynomial.X) ^ (starDomain e V i).card - (1 + Polynomial.X) ^ (starTailDomain e V i).card) := by
   obtain ⟨hfamily, hpair, hstars⟩ := configurations_four_families hι e V
   have hd : Disjoint (pairFamily e V) (Finset.univ.biUnion (starFamily e V)) := by
     exact (Finset.disjoint_biUnion_right _ _ _).mpr (fun i _ => hpair i)
@@ -364,25 +264,14 @@ theorem independencePolynomial_four_families (hι : Fintype.card ι = 3)
     exact Finset.sum_congr rfl (fun i _ => star_polynomial e V i)
   · intro i _ j _ hij
     exact hstars hij
-
-theorem coefficient_card (V : Finset (Vertex R)) (k : ℕ) :
-    (independencePolynomial (graph R) V).coeff k =
-      (((configurations (graph R) V).filter fun S => S.card = k).card : ℤ) := by
+theorem coefficient_card (V : Finset (Vertex R)) (k : ℕ) : (independencePolynomial (graph R) V).coeff k = (((configurations (graph R) V).filter fun S => S.card = k).card : ℤ) := by
   simp [independencePolynomial, partition, Polynomial.coeff_X_pow, eq_comm]
-
-private theorem support_filter_card [Fintype R] [∀ i, Fintype (K i)]
-    (e : R ≃+* ∀ i, K i) (P : Finset ι → Prop) :
-    ((Finset.univ : Finset (Vertex R)).filter fun x => P (support e x.1)).card =
-      ∑ S ∈ (Finset.univ : Finset (Finset ι)).filter
-        (fun S => S.Nonempty ∧ S ≠ Finset.univ ∧ P S),
-          ∏ i ∈ S, (Fintype.card (K i) - 1) := by
+private theorem support_filter_card [Fintype R] [∀ i, Fintype (K i)] (e : R ≃+* ∀ i, K i) (P : Finset ι → Prop) : ((Finset.univ : Finset (Vertex R)).filter fun x => P (support e x.1)).card = ∑ S ∈ (Finset.univ : Finset (Finset ι)).filter (fun S => S.Nonempty ∧ S ≠ Finset.univ ∧ P S), ∏ i ∈ S, (Fintype.card (K i) - 1) := by
   let T := (Finset.univ : Finset (Finset ι)).filter
     (fun S => S.Nonempty ∧ S ≠ Finset.univ ∧ P S)
   have h := Finset.sum_card_fiberwise_eq_card_filter
     (Finset.univ : Finset (Vertex R)) T (fun x => support e x.1)
-  have hright : ((Finset.univ : Finset (Vertex R)).filter
-      (fun x => support e x.1 ∈ T)) = Finset.univ.filter
-        (fun x : Vertex R => P (support e x.1)) := by
+  have hright : ((Finset.univ : Finset (Vertex R)).filter (fun x => support e x.1 ∈ T)) = Finset.univ.filter (fun x : Vertex R => P (support e x.1)) := by
     ext x
     have hv := (vertex_iff e x.1).mp x.2
     simp [T, hv.1, hv.2]
@@ -393,14 +282,8 @@ private theorem support_filter_card [Fintype R] [∀ i, Fintype (K i)]
   have hs := (Finset.mem_filter.mp hS).2
   simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype] using
     support_fiber_card e S hs.1 hs.2.1
-
-/-- The exact four-family polynomial on the full actual ring graph, with all
-six support multiplicities evaluated. The finite coordinate domains are arbitrary. -/
-theorem independencePolynomial_three_coordinates
-    {L : Fin 3 → Type*} [∀ i, CommRing (L i)] [∀ i, NoZeroDivisors (L i)]
-    [∀ i, Nontrivial (L i)] [∀ i, Fintype (L i)] [Fintype R]
-    (e : R ≃+* ∀ i, L i) :
-    let a := Fintype.card (L 0) - 1
+/-- The exact four-family polynomial on the full actual ring graph, with all six support multiplicities evaluated. The finite coordinate domains are arbitrary. -/
+theorem independencePolynomial_three_coordinates {L : Fin 3 → Type*} [∀ i, CommRing (L i)] [∀ i, NoZeroDivisors (L i)] [∀ i, Nontrivial (L i)] [∀ i, Fintype (L i)] [Fintype R] (e : R ≃+* ∀ i, L i) : let a := Fintype.card (L 0) - 1
     let b := Fintype.card (L 1) - 1
     let c := Fintype.card (L 2) - 1
     independencePolynomial (graph R) Finset.univ =
@@ -411,8 +294,7 @@ theorem independencePolynomial_three_coordinates
         (1 + Polynomial.X) ^ (a*b + b*c)) +
       ((1 + Polynomial.X) ^ (c + a*c + b*c) -
         (1 + Polynomial.X) ^ (a*c + b*c)) := by
-  have hU : (Finset.univ : Finset (Finset (Fin 3))) =
-      {∅, {0}, {1}, {2}, {0,1}, {0,2}, {1,2}, {0,1,2}} := by decide
+  have hU : (Finset.univ : Finset (Finset (Fin 3))) = {∅, {0}, {1}, {2}, {0,1}, {0,2}, {1,2}, {0,1,2}} := by decide
   have hfin : (Finset.univ : Finset (Fin 3)) = {0,1,2} := by decide
   have hpair := support_filter_card e (fun S => S.card = 2)
   have hs0 := support_filter_card e (fun S => (0 : Fin 3) ∈ S)
@@ -424,58 +306,33 @@ theorem independencePolynomial_three_coordinates
   simp only [hU, hfin, Finset.sum_filter] at hpair hs0 hs1 hs2 ht0 ht1 ht2
   simp (disch := decide) only [Finset.sum_insert, Finset.sum_singleton] at hpair hs0 hs1 hs2 ht0 ht1 ht2
   simp +decide [Finset.prod_insert] at hpair hs0 hs1 hs2 ht0 ht1 ht2
-  have hp' : (pairDomain e Finset.univ).card =
-      (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
-      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) +
-      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+  have hp' : (pairDomain e Finset.univ).card = (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) + (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
     unfold pairDomain
     omega
-  have hs0' : (starDomain e Finset.univ 0).card =
-      (Fintype.card (L 0)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
-      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) := by
+  have hs0' : (starDomain e Finset.univ 0).card = (Fintype.card (L 0)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) := by
     simpa [starDomain, add_assoc, add_left_comm, add_comm] using hs0
-  have hs1' : (starDomain e Finset.univ 1).card =
-      (Fintype.card (L 1)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
-      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+  have hs1' : (starDomain e Finset.univ 1).card = (Fintype.card (L 1)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) + (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
     simpa [starDomain, add_assoc, add_left_comm, add_comm] using hs1
-  have hs2' : (starDomain e Finset.univ 2).card =
-      (Fintype.card (L 2)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) +
-      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+  have hs2' : (starDomain e Finset.univ 2).card = (Fintype.card (L 2)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) + (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
     simpa [starDomain, add_assoc, add_left_comm, add_comm] using hs2
-  have ht0' : (starTailDomain e Finset.univ 0).card =
-      (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
-      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) := by
+  have ht0' : (starTailDomain e Finset.univ 0).card = (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) + (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) := by
     simpa [starTailDomain, starDomain, Finset.filter_filter, add_comm] using ht0
-  have ht1' : (starTailDomain e Finset.univ 1).card =
-      (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) +
-      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+  have ht1' : (starTailDomain e Finset.univ 1).card = (Fintype.card (L 0)-1)*(Fintype.card (L 1)-1) + (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
     simpa [starTailDomain, starDomain, Finset.filter_filter, add_comm] using ht1
-  have ht2' : (starTailDomain e Finset.univ 2).card =
-      (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) +
-      (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
+  have ht2' : (starTailDomain e Finset.univ 2).card = (Fintype.card (L 0)-1)*(Fintype.card (L 2)-1) + (Fintype.card (L 1)-1)*(Fintype.card (L 2)-1) := by
     simpa [starTailDomain, starDomain, Finset.filter_filter, add_comm] using ht2
   rw [independencePolynomial_four_families (by decide) e, hp']
   simp only [Fin.sum_univ_three, hs0', hs1', hs2', ht0', ht1', ht2']
   ring
-
 end D5.S3.Combinatorics.Graph.ZeroDivisor.Support
 end
-
 end
-
 section
-
 set_option autoImplicit false
-
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction
-
 open Finset
-
 /-- Count a nine-subset together with a marked prefix and an unmarked pair. -/
-theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) :
-    (∑ j ∈ range 10,
-      m.choose j * n.choose (9-j) * j.choose (k-1) * (9-j).choose 2) =
-      m.choose (k-1) * n.choose 2 * (m+n-(k+1)).choose (9-(k+1)) := by
+theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) : (∑ j ∈ range 10, m.choose j * n.choose (9-j) * j.choose (k-1) * (9-j).choose 2) = m.choose (k-1) * n.choose 2 * (m+n-(k+1)).choose (9-(k+1)) := by
   let a := k-1
   let r := 9-(k+1)
   have ha : 2 ≤ a ∧ a ≤ 4 := by dsimp [a]; omega
@@ -484,8 +341,7 @@ theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) :
     intro j hj
     simp only [mem_Ico, mem_range] at *
     omega
-  have hvanish : ∀ j ∈ range 10, j ∉ Ico a 8 →
-      m.choose j * n.choose (9-j) * j.choose a * (9-j).choose 2 = 0 := by
+  have hvanish : ∀ j ∈ range 10, j ∉ Ico a 8 → m.choose j * n.choose (9-j) * j.choose a * (9-j).choose 2 = 0 := by
     intro j hj hnot
     by_cases hja : j < a
     · simp [Nat.choose_eq_zero_of_lt hja]
@@ -493,9 +349,7 @@ theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) :
         simp only [mem_Ico, not_and, not_lt] at hnot
         omega
       simp [Nat.choose_eq_zero_of_lt hlast]
-  have key : (∑ j ∈ range 10,
-      m.choose j * n.choose (9-j) * j.choose a * (9-j).choose 2) =
-      m.choose a * n.choose 2 * ((m-a)+(n-2)).choose r := by
+  have key : (∑ j ∈ range 10, m.choose j * n.choose (9-j) * j.choose a * (9-j).choose 2) = m.choose a * n.choose 2 * ((m-a)+(n-2)).choose r := by
     calc
       _ = ∑ t ∈ range (r+1),
           m.choose (a+t) * n.choose (9-(a+t)) *
@@ -513,8 +367,7 @@ theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) :
           _ = (m.choose (a+t) * (a+t).choose a) *
               (n.choose (9-(a+t)) * (9-(a+t)).choose 2) := by ring
           _ = _ := by
-            rw [Nat.choose_mul (Nat.le_add_right a t), Nat.choose_mul htwo,
-              Nat.add_sub_cancel_left, heq]
+            rw [Nat.choose_mul (Nat.le_add_right a t), Nat.choose_mul htwo, Nat.add_sub_cancel_left, heq]
             ring
       _ = _ := by
         rw [Nat.add_choose_eq, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
@@ -529,26 +382,13 @@ theorem nine_restriction_count (m n k : ℕ) (hk : 3 ≤ k ∧ k ≤ 5) :
   · have hz : m.choose a = 0 := Nat.choose_eq_zero_of_lt (by omega)
     change m.choose a * n.choose 2 * _ = m.choose a * n.choose 2 * _
     simp [hz]
-
 /-- Uniform restriction to a nine-subset, with rational hypergeometric weights. -/
-theorem nine_restriction (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N)
-    (hk : 3 ≤ k ∧ k ≤ 5) :
-    (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) /
-        ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) =
-      ∑ j ∈ range 10,
-        ((m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) *
-          ((j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ) /
-            ((9 : ℕ).choose (k+1) * ((k+1).choose 2 : ℚ))) := by
+theorem nine_restriction (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N) (hk : 3 ≤ k ∧ k ≤ 5) : (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) / ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) = ∑ j ∈ range 10, ((m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) * ((j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ) / ((9 : ℕ).choose (k+1) * ((k+1).choose 2 : ℚ))) := by
   have hmn : m+(N-m) = N := by omega
   have hcount := nine_restriction_count m (N-m) k hk
   rw [hmn] at hcount
-  have hsum : (∑ j ∈ range 10,
-      (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) *
-        (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ)) =
-      (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) *
-        ((N-(k+1)).choose (9-(k+1)) : ℚ) := by exact_mod_cast hcount
-  have hcomp : (N.choose 9 : ℚ) * ((9 : ℕ).choose (k+1) : ℚ) =
-      (N.choose (k+1) : ℚ) * ((N-(k+1)).choose (9-(k+1)) : ℚ) := by
+  have hsum : (∑ j ∈ range 10, (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) * (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ)) = (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) * ((N-(k+1)).choose (9-(k+1)) : ℚ) := by exact_mod_cast hcount
+  have hcomp : (N.choose 9 : ℚ) * ((9 : ℕ).choose (k+1) : ℚ) = (N.choose (k+1) : ℚ) * ((N-(k+1)).choose (9-(k+1)) : ℚ) := by
     exact_mod_cast (Nat.choose_mul (n := N) (k := 9) (s := k+1) (by omega))
   have hD : (N.choose (k+1) : ℚ) ≠ 0 := by
     exact_mod_cast Nat.choose_ne_zero (by omega : k+1 ≤ N)
@@ -576,30 +416,20 @@ theorem nine_restriction (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N)
       intro j _
       field_simp
       <;> ring
-
 /-- The three small-rank bounds hold in every population of size at least nine. -/
-theorem nine_restriction_bound (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N)
-    (hk : 3 ≤ k ∧ k ≤ 5) :
-    (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) /
-        ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) ≤
-      if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ) := by
+theorem nine_restriction_bound (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N) (hk : 3 ≤ k ∧ k ≤ 5) : (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) / ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) ≤ if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ) := by
   have hmn : m+(N-m) = N := by omega
   have hW : (N.choose 9 : ℚ) ≠ 0 := by exact_mod_cast Nat.choose_ne_zero hN
   have hv : ∑ j ∈ range 10, m.choose j * (N-m).choose (9-j) = N.choose 9 := by
     have h := Nat.add_choose_eq m (N-m) 9
     rw [hmn, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk] at h
     exact h.symm
-  have hw : (∑ j ∈ range 10,
-      (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) = 1 := by
+  have hw : (∑ j ∈ range 10, (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ) / (N.choose 9 : ℚ)) = 1 := by
     rw [← sum_div]
-    have hv' : (∑ j ∈ range 10,
-        (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ)) = (N.choose 9 : ℚ) := by
+    have hv' : (∑ j ∈ range 10, (m.choose j : ℚ) * ((N-m).choose (9-j) : ℚ)) = (N.choose 9 : ℚ) := by
       exact_mod_cast hv
     rw [hv', div_self hW]
-  have htable : ∀ j ∈ range 10,
-      (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ) /
-          (((9 : ℕ).choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) ≤
-        if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ) := by
+  have htable : ∀ j ∈ range 10, (j.choose (k-1) : ℚ) * ((9-j).choose 2 : ℚ) / (((9 : ℕ).choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) ≤ if k = 3 then (5/63 : ℚ) else if k = 4 then (1/21 : ℚ) else (1/28 : ℚ) := by
     intro j hj
     have hj' := mem_range.mp hj
     obtain ⟨hklo, hkhi⟩ := hk
@@ -613,29 +443,15 @@ theorem nine_restriction_bound (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N)
       intro j hj
       exact mul_le_mul_of_nonneg_left (htable j hj) (by positivity)
     _ = _ := by rw [← sum_mul, hw, one_mul]
-
 end D5.S3.Combinatorics.Graph.ZeroDivisor.NineRestriction
-
 end
-
 section
-
 set_option autoImplicit false
-
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature
-
 open Finset
-
 /-- The normalized second difference is the marked-prefix and unmarked-pair ratio. -/
-theorem normalized_second_difference (N m k : ℕ) (hm : m ≤ N)
-    (hk : 1 ≤ k) (hkN : k < N) :
-    (m.choose (k-1) : ℚ) / (N.choose (k-1) : ℚ) -
-        2 * ((m.choose k : ℚ) / (N.choose k : ℚ)) +
-        (m.choose (k+1) : ℚ) / (N.choose (k+1) : ℚ) =
-      (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) /
-        ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) := by
-  have step (n j : ℕ) : (n.choose (j+1) : ℚ) * (j+1) =
-      (n.choose j : ℚ) * ((n : ℚ)-j) := by
+theorem normalized_second_difference (N m k : ℕ) (hm : m ≤ N) (hk : 1 ≤ k) (hkN : k < N) : (m.choose (k-1) : ℚ) / (N.choose (k-1) : ℚ) - 2 * ((m.choose k : ℚ) / (N.choose k : ℚ)) + (m.choose (k+1) : ℚ) / (N.choose (k+1) : ℚ) = (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) / ((N.choose (k+1) : ℚ) * ((k+1).choose 2 : ℚ)) := by
+  have step (n j : ℕ) : (n.choose (j+1) : ℚ) * (j+1) = (n.choose j : ℚ) * ((n : ℚ)-j) := by
     by_cases hj : j ≤ n
     · have h := congrArg (fun t : ℕ => (t : ℚ)) (Nat.choose_succ_right_eq n j)
       simpa only [Nat.cast_mul, Nat.cast_add, Nat.cast_one, Nat.cast_sub hj] using h
@@ -655,41 +471,28 @@ theorem normalized_second_difference (N m k : ℕ) (hm : m ≤ N)
   have vstep := step m (k-1)
   have bstep := step N (k-1)
   simp only [Nat.sub_add_cancel hk, Nat.cast_sub hk, Nat.cast_one] at vstep bstep
-  have vform : (m.choose k : ℚ) =
-      (m.choose (k-1) : ℚ) * ((m : ℚ)-k+1) / k := by
+  have vform : (m.choose k : ℚ) = (m.choose (k-1) : ℚ) * ((m : ℚ)-k+1) / k := by
     apply (eq_div_iff hk0).mpr
     linear_combination vstep
-  have bform : (N.choose k : ℚ) =
-      (N.choose (k-1) : ℚ) * ((N : ℚ)-k+1) / k := by
+  have bform : (N.choose k : ℚ) = (N.choose (k-1) : ℚ) * ((N : ℚ)-k+1) / k := by
     apply (eq_div_iff hk0).mpr
     linear_combination bstep
-  have wform : (m.choose (k+1) : ℚ) =
-      (m.choose (k-1) : ℚ) * ((m : ℚ)-k+1) * ((m : ℚ)-k) /
-        ((k : ℚ)*((k : ℚ)+1)) := by
+  have wform : (m.choose (k+1) : ℚ) = (m.choose (k-1) : ℚ) * ((m : ℚ)-k+1) * ((m : ℚ)-k) / ((k : ℚ)*((k : ℚ)+1)) := by
     have h := step m k
     rw [vform] at h
     field_simp [hk0, hkp0] at h ⊢
     nlinarith [h]
-  have cform : (N.choose (k+1) : ℚ) =
-      (N.choose (k-1) : ℚ) * ((N : ℚ)-k+1) * ((N : ℚ)-k) /
-        ((k : ℚ)*((k : ℚ)+1)) := by
+  have cform : (N.choose (k+1) : ℚ) = (N.choose (k-1) : ℚ) * ((N : ℚ)-k+1) * ((N : ℚ)-k) / ((k : ℚ)*((k : ℚ)+1)) := by
     have h := step N k
     rw [bform] at h
     field_simp [hk0, hkp0] at h ⊢
     nlinarith [h]
-  rw [vform, wform, bform, cform, Nat.cast_choose_two, Nat.cast_choose_two,
-    Nat.cast_sub hm]
+  rw [vform, wform, bform, cform, Nat.cast_choose_two, Nat.cast_choose_two, Nat.cast_sub hm]
   push_cast
   field_simp [hA, hk0, hkp0, hNk, hNk1]
   <;> ring
-
 /-- A uniform curvature bound, including the three small ranks. -/
-theorem normalized_second_difference_bound (N m k : ℕ) (hN : 9 ≤ N)
-    (hm : m ≤ N) (hk : 3 ≤ k) (hkN : k < N) :
-    (m.choose (k-1) : ℚ) / (N.choose (k-1) : ℚ) -
-        2 * ((m.choose k : ℚ) / (N.choose k : ℚ)) +
-        (m.choose (k+1) : ℚ) / (N.choose (k+1) : ℚ) ≤
-      1 / (3 * ((k : ℚ)+1)) := by
+theorem normalized_second_difference_bound (N m k : ℕ) (hN : 9 ≤ N) (hm : m ≤ N) (hk : 3 ≤ k) (hkN : k < N) : (m.choose (k-1) : ℚ) / (N.choose (k-1) : ℚ) - 2 * ((m.choose k : ℚ) / (N.choose k : ℚ)) + (m.choose (k+1) : ℚ) / (N.choose (k+1) : ℚ) ≤ 1 / (3 * ((k : ℚ)+1)) := by
   rw [normalized_second_difference N m k hm (by omega) hkN]
   by_cases hk6 : 6 ≤ k
   · have hmn : m+(N-m) = N := by omega
@@ -702,8 +505,7 @@ theorem normalized_second_difference_bound (N m k : ℕ) (hN : 9 ≤ N)
         (s := range (k+1+1)) (by intro j _; exact Nat.zero_le _)
         (show k-1 ∈ range (k+1+1) from mem_range.mpr (by omega))
       simpa only [show k+1-(k-1) = 2 by omega] using h
-    have htermQ : (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) ≤
-        (N.choose (k+1) : ℚ) := by exact_mod_cast hterm
+    have htermQ : (m.choose (k-1) : ℚ) * ((N-m).choose 2 : ℚ) ≤ (N.choose (k+1) : ℚ) := by exact_mod_cast hterm
     have hD : 0 < (N.choose (k+1) : ℚ) := by
       exact_mod_cast Nat.choose_pos (by omega : k+1 ≤ N)
     have hP : 0 < ((k+1).choose 2 : ℚ) := by
@@ -724,31 +526,17 @@ theorem normalized_second_difference_bound (N m k : ℕ) (hN : 9 ≤ N)
       (show 3 ≤ k ∧ k ≤ 5 by omega)
     rcases (show k=3 ∨ k=4 ∨ k=5 by omega) with h | h | h <;>
       subst k <;> norm_num at hsmall ⊢ <;> linarith
-
 end D5.S3.Combinatorics.Graph.ZeroDivisor.NormalizedCurvature
-
 end
-
 section
-
 set_option autoImplicit false
 noncomputable section
 open scoped Classical
 open D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
-
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.NativeCoefficients
-
 set_option maxHeartbeats 1800000 in
 /-- Native coefficients for three ordered finite domains, including the smallest field. -/
-theorem coefficients_three_domains
-    {R : Type*} [CommRing R] [Fintype R]
-    {L : Fin 3 → Type*} [∀ i, CommRing (L i)] [∀ i, NoZeroDivisors (L i)]
-    [∀ i, Nontrivial (L i)] [∀ i, Fintype (L i)]
-    (e : R ≃+* ∀ i, L i)
-    (h01 : Fintype.card (L 0) ≤ Fintype.card (L 1))
-    (h12 : Fintype.card (L 1) ≤ Fintype.card (L 2))
-    (h1 : 3 ≤ Fintype.card (L 1)) (h2 : 5 ≤ Fintype.card (L 2)) :
-    let a := Fintype.card (L 0) - 1
+theorem coefficients_three_domains {R : Type*} [CommRing R] [Fintype R] {L : Fin 3 → Type*} [∀ i, CommRing (L i)] [∀ i, NoZeroDivisors (L i)] [∀ i, Nontrivial (L i)] [∀ i, Fintype (L i)] (e : R ≃+* ∀ i, L i) (h01 : Fintype.card (L 0) ≤ Fintype.card (L 1)) (h12 : Fintype.card (L 1) ≤ Fintype.card (L 2)) (h1 : 3 ≤ Fintype.card (L 1)) (h2 : 5 ≤ Fintype.card (L 2)) : let a := Fintype.card (L 0) - 1
     let b := Fintype.card (L 1) - 1
     let c := Fintype.card (L 2) - 1
     let N := max (a*b+a*c+b*c) (c+a*c+b*c)
@@ -801,13 +589,9 @@ theorem coefficients_three_domains
   have hT1U : T1 ≤ U1 := by dsimp [T1, U1]; omega
   have hT2U : T2 ≤ U2 := by dsimp [T2, U2]; omega
   have hpoly := Support.independencePolynomial_three_coordinates e
-  have hs (k : ℕ) : s k = (A.choose k : ℚ) +
-      ((U0.choose k : ℚ)-(T0.choose k : ℚ)) +
-      ((U1.choose k : ℚ)-(T1.choose k : ℚ)) +
-      ((U2.choose k : ℚ)-(T2.choose k : ℚ)) := by
+  have hs (k : ℕ) : s k = (A.choose k : ℚ) + ((U0.choose k : ℚ)-(T0.choose k : ℚ)) + ((U1.choose k : ℚ)-(T1.choose k : ℚ)) + ((U2.choose k : ℚ)-(T2.choose k : ℚ)) := by
     have h := congrArg (fun Q : Polynomial ℤ => (Q.coeff k : ℚ)) hpoly
-    simpa only [Polynomial.coeff_add, Polynomial.coeff_sub,
-      Polynomial.coeff_one_add_X_pow, Int.cast_add, Int.cast_sub, Int.cast_natCast] using h
+    simpa only [Polynomial.coeff_add, Polynomial.coeff_sub, Polynomial.coeff_one_add_X_pow, Int.cast_add, Int.cast_sub, Int.cast_natCast] using h
   have lower (k : ℕ) : (N.choose k : ℚ) ≤ s k := by
     have h0 : (T0.choose k : ℚ) ≤ U0.choose k := by
       exact_mod_cast Nat.choose_le_choose k hT0U
@@ -828,13 +612,7 @@ theorem coefficients_three_domains
     lt_of_lt_of_le (by exact_mod_cast Nat.choose_pos hk) (lower k)
   have tail (k : ℕ) (hk : N < k) : s k = 0 := by
     rw [hs]
-    simp [Nat.choose_eq_zero_of_lt (hAN.trans_lt hk),
-      Nat.choose_eq_zero_of_lt (hU0N.trans_lt hk),
-      Nat.choose_eq_zero_of_lt (hU1N.trans_lt hk),
-      Nat.choose_eq_zero_of_lt (hU2N.trans_lt hk),
-      Nat.choose_eq_zero_of_lt ((hT0A.trans hAN).trans_lt hk),
-      Nat.choose_eq_zero_of_lt ((hT1A.trans hAN).trans_lt hk),
-      Nat.choose_eq_zero_of_lt ((hT2A.trans hAN).trans_lt hk)]
+    simp [Nat.choose_eq_zero_of_lt (hAN.trans_lt hk), Nat.choose_eq_zero_of_lt (hU0N.trans_lt hk), Nat.choose_eq_zero_of_lt (hU1N.trans_lt hk), Nat.choose_eq_zero_of_lt (hU2N.trans_lt hk), Nat.choose_eq_zero_of_lt ((hT0A.trans hAN).trans_lt hk), Nat.choose_eq_zero_of_lt ((hT1A.trans hAN).trans_lt hk), Nat.choose_eq_zero_of_lt ((hT2A.trans hAN).trans_lt hk)]
   let v := A+a+b+c
   let E := A+3*a*b*c
   have hs0 : s 0 = 1 := by rw [hs]; norm_num
@@ -852,12 +630,9 @@ theorem coefficients_three_domains
     ring
   have hv : 21 ≤ v := by dsimp [v]; omega
   have count1 : (Fintype.card (Support.Vertex R) : ℚ) = s 1 := by
-    have hsets : ((configurations (Support.graph R) Finset.univ).filter
-        fun S => S.card = 1) =
-        (Finset.univ : Finset (Support.Vertex R)).image (fun x => {x}) := by
+    have hsets : ((configurations (Support.graph R) Finset.univ).filter fun S => S.card = 1) = (Finset.univ : Finset (Support.Vertex R)).image (fun x => {x}) := by
       ext S
-      simp only [Finset.mem_filter, configurations, Finset.mem_powerset,
-        Finset.subset_univ, true_and, Finset.mem_image, Finset.mem_univ]
+      simp only [Finset.mem_filter, configurations, Finset.mem_powerset, Finset.subset_univ, true_and, Finset.mem_image, Finset.mem_univ]
       constructor
       · rintro ⟨_, hS⟩
         obtain ⟨x, rfl⟩ := Finset.card_eq_one.mp hS
@@ -873,17 +648,13 @@ theorem coefficients_three_domains
   have countcard : Fintype.card (Support.Vertex R) = v := by
     exact_mod_cast count1.trans hs1
   have hs3 : s 3 ≤ ((v.choose 3 : ℕ) : ℚ) := by
-    have hsub : ((configurations (Support.graph R) Finset.univ).filter
-        fun S => S.card = 3) ⊆
-        (Finset.univ : Finset (Support.Vertex R)).powersetCard 3 := by
+    have hsub : ((configurations (Support.graph R) Finset.univ).filter fun S => S.card = 3) ⊆ (Finset.univ : Finset (Support.Vertex R)).powersetCard 3 := by
       intro S hS
       exact Finset.mem_powersetCard.mpr ⟨Finset.subset_univ _, (Finset.mem_filter.mp hS).2⟩
     have hcard := Finset.card_le_card hsub
     rw [Finset.card_powersetCard, Finset.card_univ, countcard] at hcard
     have hcount := Support.coefficient_card (R := R) Finset.univ 3
-    have hcountQ : s 3 =
-        (((configurations (Support.graph R) Finset.univ).filter
-          fun S => S.card = 3).card : ℚ) := by
+    have hcountQ : s 3 = (((configurations (Support.graph R) Finset.univ).filter fun S => S.card = 3).card : ℚ) := by
       dsimp [s, P]
       exact_mod_cast hcount
     rw [hcountQ]
@@ -906,10 +677,7 @@ theorem coefficients_three_domains
     have hax : (a : ℚ) = x+1 := by dsimp [x]; rw [Nat.cast_sub ha]; ring
     have hby : (b : ℚ) = y+2 := by dsimp [y]; rw [Nat.cast_sub hb]; norm_num
     have hcz : (c : ℚ) = z+4 := by dsimp [z]; rw [Nat.cast_sub hc]; norm_num
-    have hid : (v : ℚ)*((v : ℚ)-1)-11*(E : ℚ) =
-        2+49*(x^2-x)+6*x+36*y^2+59*y+16*z^2+65*z+
-        14*(x^2-x)*y+12*x*(y^2-y)+8*x*y+20*x*z+45*y*z+
-        14*x^2*z+12*y^2*z+8*x*z^2+8*y*z^2+x*y*z+(x*y+x*z+y*z)^2 := by
+    have hid : (v : ℚ)*((v : ℚ)-1)-11*(E : ℚ) = 2+49*(x^2-x)+6*x+36*y^2+59*y+16*z^2+65*z+ 14*(x^2-x)*y+12*x*(y^2-y)+8*x*y+20*x*z+45*y*z+ 14*x^2*z+12*y^2*z+8*x*z^2+8*y*z^2+x*y*z+(x*y+x*z+y*z)^2 := by
       dsimp [v, E, A]
       push_cast
       rw [hax, hby, hcz]
@@ -985,8 +753,7 @@ theorem coefficients_three_domains
     positivity
   have hDbd (m : ℕ) (hm : m ≤ N) : D m ≤ 1/(3*((k : ℚ)+1)) :=
     NormalizedCurvature.normalized_second_difference_bound N m k (by omega) hm hk3 hkN
-  have hdecomp : f (k-1)-2*f k+f (k+1) =
-      D A+D U0+D U1+D U2-D T0-D T1-D T2 := by
+  have hdecomp : f (k-1)-2*f k+f (k+1) = D A+D U0+D U1+D U2-D T0-D T1-D T2 := by
     dsimp only [f]
     rw [hs (k-1), hs k, hs (k+1)]
     dsimp [D]
@@ -1027,8 +794,7 @@ theorem coefficients_three_domains
   have hfourk := mul_le_mul_of_nonneg_left hfour hkQ
   have hysq : 0 ≤ y^2-y := by nlinarith
   have hslack : 0 < 4*t^3*y^2-(k : ℚ)*(2*t*y+1)^2 := by
-    have hid : 4*t^3*y^2-(k : ℚ)*(2*t*y+1)^2 =
-        4*t^2*(y^2-y)+4*t*(y-1)+3*(k : ℚ)+4 := by dsimp [t]; ring
+    have hid : 4*t^3*y^2-(k : ℚ)*(2*t*y+1)^2 = 4*t^2*(y^2-y)+4*t*(y-1)+3*(k : ℚ)+4 := by dsimp [t]; ring
     rw [hid]
     have hy1 : 0 ≤ y-1 := by linarith only [hy]
     positivity
@@ -1057,27 +823,18 @@ theorem coefficients_three_domains
     have hstrict := mul_lt_mul_of_pos_right hscalar (sq_pos_of_pos (hB k (by omega)))
     nlinarith only [hmul, hstrict]
   exact (mul_lt_mul_iff_right₀ ht).mp hscaled
-
 end D5.S3.Combinatorics.Graph.ZeroDivisor.NativeCoefficients
 end
-
 end
-
 section
-
 set_option autoImplicit false
 noncomputable section
 open scoped Classical
 open D5.S3.StatisticalMechanics.HardCore.IndependentPartitionDeletion
-
 namespace D5.S3.Combinatorics.Graph.ZeroDivisor.RatherProblemOne
-
 set_option maxHeartbeats 1200000 in
 /-- The original all-prime graph has attained support, log concavity and weak unimodality. -/
-theorem rather_problem_one (p q r : ℕ)
-    (hp : Nat.Prime p) (hq : Nat.Prime q) (hr : Nat.Prime r)
-    (hpq : p < q) (hqr : q < r) :
-    letI : NeZero (p*q*r) :=
+theorem rather_problem_one (p q r : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hr : Nat.Prime r) (hpq : p < q) (hqr : q < r) : letI : NeZero (p*q*r) :=
       ⟨Nat.mul_ne_zero (Nat.mul_ne_zero hp.ne_zero hq.ne_zero) hr.ne_zero⟩
     let a := p-1
     let b := q-1
@@ -1134,9 +891,7 @@ theorem rather_problem_one (p q r : ℕ)
     (by rw [cardm 1]; simpa [m] using hq3)
     (by rw [cardm 2]; simpa [m] using hr5)
   change 14 ≤ N ∧ G.indepNum = N ∧ _
-  have hco' : 14 ≤ N ∧ (∀ k, k ≤ N → 0 < sQ k) ∧
-      (∀ k, N < k → sQ k = 0) ∧
-      (∀ k, 1 ≤ k → k < N → sQ (k-1)*sQ (k+1) < sQ k^2) := by
+  have hco' : 14 ≤ N ∧ (∀ k, k ≤ N → 0 < sQ k) ∧ (∀ k, N < k → sQ k = 0) ∧ (∀ k, 1 ≤ k → k < N → sQ (k-1)*sQ (k+1) < sQ k^2) := by
     simp only [cardm 0, cardm 1, cardm 2] at hco
     convert (preTransparency := .reducible) hco <;> congr 1 <;> ext x <;> simp
   obtain ⟨hN, hposQ, htailQ, hlcQ⟩ := hco'
@@ -1148,8 +903,7 @@ theorem rather_problem_one (p q r : ℕ)
     have h := htailQ k hk
     dsimp only [sQ] at h
     exact_mod_cast h
-  have hcount (k : ℕ) : s k =
-      (((configurations G Finset.univ).filter fun S => S.card = k).card : ℤ) := by
+  have hcount (k : ℕ) : s k = (((configurations G Finset.univ).filter fun S => S.card = k).card : ℤ) := by
     convert (preTransparency := .reducible)
       (Support.coefficient_card (R := ZMod (p*q*r)) Finset.univ k) <;>
       congr 1 <;> ext x <;> simp
@@ -1161,11 +915,9 @@ theorem rather_problem_one (p q r : ℕ)
   have hSind : G.IsIndepSet (S : Set _) :=
     (Finset.mem_filter.mp (Finset.mem_filter.mp hS).1).2
   have hScard : S.card = N := (Finset.mem_filter.mp hS).2
-  have hbound (T : Finset (Support.Vertex (ZMod (p*q*r))))
-      (hT : G.IsIndepSet (T : Set _)) : T.card ≤ N := by
+  have hbound (T : Finset (Support.Vertex (ZMod (p*q*r)))) (hT : G.IsIndepSet (T : Set _)) : T.card ≤ N := by
     have hmem : T ∈ (configurations G Finset.univ).filter fun U => U.card = T.card := by
-      simp only [Finset.mem_filter, configurations, Finset.mem_powerset,
-        Finset.subset_univ, true_and]
+      simp only [Finset.mem_filter, configurations, Finset.mem_powerset, Finset.subset_univ, true_and]
       exact ⟨hT, trivial⟩
     have hcpos : 0 < s T.card := by
       rw [hcount]
@@ -1239,8 +991,6 @@ theorem rather_problem_one (p q r : ℕ)
     intro i _ hi _
     exact downstep i hi
   exact ⟨hN, halpha, ⟨S, hSind, hScard⟩, hpos, htail, hlc, j, hjN, hup, hdown⟩
-
 end D5.S3.Combinatorics.Graph.ZeroDivisor.RatherProblemOne
 end
-
 end

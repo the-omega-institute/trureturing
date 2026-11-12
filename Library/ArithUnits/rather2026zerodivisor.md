@@ -7,8 +7,7 @@ doi: 10.48550/arXiv.2606.04789
 url: https://arxiv.org/abs/2606.04789v1
 claim: "Theorem 4.1 counts independent subsets of the three-prime zero divisor graph; Problem 1 asks for unimodality and log concavity for every prime triple p<q<r."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/ZeroDivisor/Support
-  - D5/S3/Combinatorics/Graph/ZeroDivisor/NativeCoefficients
+  - D5/S3/Combinatorics/Graph/ZeroDivisor/RatherProblemOne
 license: citation-only
 triage: anchor
 ---
@@ -32,7 +31,7 @@ independent-subset formula obtained by the singleton and two-coordinate
 support cells under the Chinese remainder equivalence. The support
 multiplicities are p-1, q-1, r-1 and their pairwise products.
 
-The repository's `Support` module uses these actual vertices and the native
+The support declarations in the repository's `RatherProblemOne` module uses these actual vertices and the native
 independent-configuration polynomial. The polynomial identity follows from
 four disjoint families of all independent subsets.
 
