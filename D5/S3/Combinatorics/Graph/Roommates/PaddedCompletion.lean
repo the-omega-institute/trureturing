@@ -157,7 +157,7 @@ def closingRequest {m : ℕ} (d : Fin m → ℤ) (hd : ∀ i, -2 ≤ d i ∧ d i
   else ⟨((i.val.val : ℤ) + d i.val - m).toNat, by
     have := hd i.val; have := i.property; have := i.val.isLt; omega⟩
 
-private theorem closing_coordinate {m : ℕ} {d : Fin m → ℤ}
+theorem closing_coordinate {m : ℕ} {d : Fin m → ℤ}
     (hd : ∀ i, -2 ≤ d i ∧ d i ≤ 2) (i : ClosingRequester d) :
     if (i.val.val : ℤ) + d i.val < 0 then
       (closingRequest d hd i).val = (i.val.val : ℤ) + d i.val + 6

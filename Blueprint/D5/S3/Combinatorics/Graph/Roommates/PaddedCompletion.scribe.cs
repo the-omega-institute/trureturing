@@ -8,6 +8,10 @@ internal sealed class PaddedCompletionDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial components of the Mertens range-two proof; the full theorem remains open.",
         H("PaddedCompletion"), Blocks(
+            Describe.Lean(DescribeId.Create("closing-coordinate"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.closing_coordinate"),
+                H("closing_coordinate"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The exact buffer coordinate is target+6 for a left exterior request and target-m for a right exterior request. The full integer-coordinate identity is retained for source-cycle transport."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("oldranking"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/PaddedCompletion.oldRanking"),
                 H("oldRanking"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),

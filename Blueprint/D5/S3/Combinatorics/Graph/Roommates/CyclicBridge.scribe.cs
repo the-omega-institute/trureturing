@@ -8,6 +8,14 @@ internal sealed class CyclicBridgeDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Partial components of the Mertens range-two proof; the full theorem remains open.",
         H("CyclicBridge"), Blocks(
+            Describe.Lean(DescribeId.Create("closing-request-source-target"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.closing_request_source_target"),
+                H("closing_request_source_target"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual buffer target of every closing request is the original signed-offset neighbor in the literal source cycle of size m+6. Both left and right exterior requests preserve their cyclic destinations."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("closing-old-edge-local"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.closing_old_edge_local"),
+                H("closing_old_edge_local"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A six-site closing buffer creates no wrap edge between old vertices. Every source edge with two old endpoints has integer separation at most two, including old lengths one and two."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("signed"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicBridge.signed"),
                 H("signed"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),

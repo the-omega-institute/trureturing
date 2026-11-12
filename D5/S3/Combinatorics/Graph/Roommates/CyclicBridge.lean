@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.Roommates.SourceModel
 import D5.S3.Combinatorics.Graph.Roommates.OpenCertificates
+import D5.S3.Combinatorics.Graph.Roommates.PaddedCompletion
 import Mathlib.Data.Int.ModEq
 
 set_option autoImplicit false
@@ -285,9 +286,55 @@ theorem source_probability_le_open_proportion (n : ℕ) :
   exact div_le_div_of_nonneg_right (by exact_mod_cast source_count_le_open_count n)
     (by positivity)
 
+/-- A closing request reaches exactly its original signed-offset source neighbor.
+The six-site insertion changes neither the old request nor its cyclic destination. -/
+theorem closing_request_source_target {m : ℕ} {w : Word m} {d : Fin m → ℤ}
+    (hw : Certificate w d) (i : PaddedCompletion.ClosingRequester d) :
+    wrap (m + 1) (i.val.val + d i.val) =
+      wrap (m + 1) ((m : ℤ) + (PaddedCompletion.closingRequest d hw.bounded i).val) := by
+  have hc := PaddedCompletion.closing_coordinate hw.bounded i
+  by_cases hn : (i.val.val : ℤ) + d i.val < 0
+  · simp only [hn, ite_true] at hc
+    apply Fin.ext
+    have hl := wrap_val (m + 1) (i.val.val + d i.val)
+    have hr := wrap_val (m + 1)
+      ((m : ℤ) + (PaddedCompletion.closingRequest d hw.bounded i).val)
+    have he : (m : ℤ) + (PaddedCompletion.closingRequest d hw.bounded i).val =
+        i.val.val + d i.val + ((m : ℤ) + 1 + 5) := by omega
+    rw [he, Int.add_emod, Int.emod_self, add_zero, Int.emod_emod] at hr
+    omega
+  · simp only [hn, ite_false] at hc
+    congr 1
+    omega
+
+/-- No new edge between old vertices appears across the closing buffer.
+This covers all positive old lengths, including one and two. -/
+theorem closing_old_edge_local {m : ℕ} (i j : Fin m)
+    (h : (SourceModel.ring (m + 1)).Adj ⟨i.val, by omega⟩ ⟨j.val, by omega⟩) :
+    (i.val : ℤ) < j.val + 3 ∧ (j.val : ℤ) < i.val + 3 := by
+  obtain ⟨s, hs⟩ := h
+  have he : wrap (m + 1) (i.val + signed s) = (⟨j.val, by omega⟩ : Fin (m + 1 + 5)) := by
+    rw [wrap_add, wrap_signed]
+    have hi : wrap (m + 1) i.val = (⟨i.val, by omega⟩ : Fin (m + 1 + 5)) :=
+      wrap_index _
+    rw [hi]
+    exact hs.symm
+  have heval := congrArg (fun x : Fin (m + 1 + 5) => (x.val : ℤ)) he
+  rw [wrap_val] at heval
+  have hmod : Int.ModEq (m + 1 + 5 : ℤ) (i.val + signed s) (j.val : ℤ) := by
+    simpa only [Int.ModEq, Int.emod_eq_of_lt (by omega : (0 : ℤ) ≤ j.val)
+      (by omega : (j.val : ℤ) < m + 1 + 5)] using heval
+  have hdvd := hmod.dvd
+  have hb := signed_bounds s
+  have hz : (j.val : ℤ) - (i.val + signed s) = 0 :=
+    Int.eq_zero_of_dvd_of_natAbs_lt_natAbs hdvd (by omega)
+  omega
+
 #print axioms cut_certificate
 #print axioms source_count_le_open_count
 #print axioms source_probability_eq
 #print axioms source_probability_le_open_proportion
+#print axioms closing_request_source_target
+#print axioms closing_old_edge_local
 
 end D5.S3.Combinatorics.Graph.Roommates.CyclicBridge
