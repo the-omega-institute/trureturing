@@ -167,7 +167,7 @@ theorem finite_moments {E α : Type*} [NormedAddCommGroup E]
   letI : NeZero μ := ⟨hμ⟩
   let ν := (μ univ)⁻¹ • μ
   obtain ⟨k, w, a, hw, hw1, ha, he⟩ := finite_moments_probability ν
-    hfi.to_average (ae_mono' smul_absolutelyContinuous hs)
+    hfi.to_average (hs.filter_mono (Measure.ae_mono' smul_absolutelyContinuous))
   refine ⟨k, fun i => μ.real univ * w i, a,
     fun i => mul_nonneg ENNReal.toReal_nonneg (hw i), ?_, ha, ?_⟩
   · rw [← Finset.mul_sum, hw1, mul_one]
