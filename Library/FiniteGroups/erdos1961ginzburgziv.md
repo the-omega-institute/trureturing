@@ -15,7 +15,7 @@ triage: anchor
 # Theorem in the additive number theory
 
 P. Erdős, A. Ginzburg and A. Ziv, *Bulletin of the Research Council of
-Israel, Section F: Mathematics and Physics*, **10F1** (1961), 41–43.
+Israel, Section F: Mathematics and Physics*, **10F1** (1961).
 The [author-hosted primary article](https://users.renyi.hu/~p_erdos/1961-25.pdf)
 is cited without redistributing its PDF.
 

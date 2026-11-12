@@ -6,7 +6,7 @@ import Mathlib.Algebra.Group.ULift
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.FiniteGroups.Aliabadi.AbelianZeroSumPartition
-open scoped BigOperators
+open scoped BigOperators Classical
 
 noncomputable section
 universe u v

@@ -13,7 +13,7 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open scoped BigOperators
+open scoped BigOperators Classical
 open Finset
 
 universe u v w
