@@ -90,8 +90,6 @@ growth questions or general weighted quivers. Those questions remain open
 in this delivery. Independent source-fidelity review and canonical freezing
 are prerequisites for a repository resolution claim.
 
-## Admission boundary
-
 The registered admission basis is `open-problem-resolution`, under the
 full statement in issue 29468 and its prediction registration
 https://github.com/the-omega-institute/trureturing/issues/29468#issuecomment-6814930874.
