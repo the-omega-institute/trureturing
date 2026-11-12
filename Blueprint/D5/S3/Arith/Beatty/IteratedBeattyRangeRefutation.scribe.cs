@@ -118,9 +118,13 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
     private static Formula TestFormula() => Disp(For("alpha", Real(), For("n", Nat(), For("x", Nat(),
         Iff(Call("fractionalTest", A, N, X), TestBody())))));
 
-    private static Formula ClaimBody() => For("alpha", Real(),
-        Imp(Call("Irrational", A), Imp(LtN(D(1), A),
-            Imp(LtN(A, Div(Add(D(3), Seq(Sqrt, Grp(D(5)))), D(2))),
-                For("n", Nat(), Imp(LeN(D(1), N), For("x", Nat(), Imp(LeN(D(1), X),
-                    Iff(Call("nativeRange", A, N, X), Call("fractionalTest", A, N, X)))))))));
+    private static Formula ClaimBody()
+    {
+        var equivalence = Iff(Call("nativeRange", A, N, X), Call("fractionalTest", A, N, X));
+        var inputs = For("x", Nat(), Imp(LeN(D(1), X), equivalence));
+        var iterates = For("n", Nat(), Imp(LeN(D(1), N), inputs));
+        var upper = LtN(A, Div(Add(D(3), Seq(Sqrt, Grp(D(5)))), D(2)));
+        return For("alpha", Real(), Imp(Call("Irrational", A),
+            Imp(LtN(D(1), A), Imp(upper, iterates))));
+    }
 }
