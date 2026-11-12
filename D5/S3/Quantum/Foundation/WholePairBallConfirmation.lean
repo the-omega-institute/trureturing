@@ -71,7 +71,7 @@ private theorem chart_mem {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q :
   rw [← b.whole]
   exact ⟨s, by simpa using hs, rfl⟩
 
-private theorem chart_pure_norm {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
+theorem chart_pure_norm {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V}
     (b : BallChart C u p q) {s} (hs : ‖s‖ ≤ 1)
     (hp : b.param s ∈ pure C u) : ‖s‖ = 1 := by
   have : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
@@ -105,7 +105,7 @@ private theorem affine_nonneg_bound {E : Type*} [NormedAddCommGroup E]
   rw [he] at hh
   linarith
 
-private theorem affine_zero_antipode {E : Type*} [NormedAddCommGroup E]
+theorem affine_zero_antipode {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
     (f : E →ᵃ[ℝ] ℝ) {n : E} (hn : ‖n‖ = 1)
     (hpos : ∀ s, ‖s‖ ≤ 1 → 0 ≤ f s) (hz : f (-n) = 0) :
@@ -132,7 +132,7 @@ private abbrev swapChart {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : 
   injective := b.injective
   whole := b.whole.trans (by ext x; simp only [pairBase, Set.mem_ofPred_eq]; aesop)
 
-private theorem endpoint_coordinates {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem endpoint_coordinates {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (p q : pure C u) (b : BallChart C u p q) :
     ∃ n, ‖n‖ = 1 ∧ b.param n = p := by
   have hp : (p : V) ∈ pairBase C u p q := ⟨p.property.1, fun _ hp _ => hp⟩

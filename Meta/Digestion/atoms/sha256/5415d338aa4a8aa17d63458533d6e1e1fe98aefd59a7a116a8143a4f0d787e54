@@ -1,0 +1,7 @@
+**命题 76.4（生成性不是所选两点表的后处理）。** 在同一个 $A=H_4(\mathbb C)$ 中，令 $X,Y,Z$ 为 Pauli 矩阵、$I=I_2$，省略张量符号。对 $s,t\in\{\pm1\}$ 定义
+$$
+\begin{aligned}
+E_{st}&=(I_4+sZI+tIZ+stZZ)/4,&F_{st}&=(I_4+sXI+tIX+stXX)/4,\\
+G^{\mathrm r}_{st}&=(I_4+sXZ+tZX+stYY)/4,&G^{\mathrm c}_{st}&=(I_4+sYI+tIY+stYY)/4.
+\end{aligned} \tag{76.12}
+$$

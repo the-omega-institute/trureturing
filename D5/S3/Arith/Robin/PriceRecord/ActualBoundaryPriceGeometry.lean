@@ -218,7 +218,7 @@ theorem price_variation {j : ℕ} (hj : 1 ≤ j) {a x y : ℝ}
 /- Strict mass crossing: equality is never mistaken for a strict predecessor.
 These are subset constructors; no new integer/product legality proof is made. -/
 
-private theorem subset_just_above {α : Type*} [DecidableEq α] (S : Finset α)
+theorem subset_just_above {α : Type*} [DecidableEq α] (S : Finset α)
     (f : α → ℝ) {t H : ℝ} (ht : 0 ≤ t) (hH : ∀ a ∈ S, f a ≤ H)
     (htotal : t < ∑ a ∈ S, f a) :
     ∃ D ⊆ S, t < ∑ a ∈ D, f a ∧ (∑ a ∈ D, f a) ≤ t + H := by
@@ -239,7 +239,7 @@ private theorem subset_just_above {α : Type*} [DecidableEq α] (S : Finset α)
       have := hH a (mem_insert_self _ _)
       linarith
 
-private theorem subset_just_below {α : Type*} [DecidableEq α] (S : Finset α)
+theorem subset_just_below {α : Type*} [DecidableEq α] (S : Finset α)
     (f : α → ℝ) {t H : ℝ} (ht : 0 < t) (hH : ∀ a ∈ S, f a ≤ H)
     (htotal : t ≤ ∑ a ∈ S, f a) :
     ∃ U ⊆ S, (∑ a ∈ U, f a) < t ∧ t ≤ (∑ a ∈ U, f a) + H := by
@@ -292,7 +292,7 @@ private theorem sum_price_upper (S : Finset ℕ) {b : ℝ} (r : ℕ → ℝ)
 
 /- A finite signed comparison, retaining every logarithmic mass and price cost.
 The certificate below is the existing legal n=(m/productD)*productU proof. -/
-private theorem exchange_mass_bound {m : ℕ} {mu lambda h : ℝ}
+theorem exchange_mass_bound {m : ℕ} {mu lambda h : ℝ}
     (hm : 0 < m) (hrecord : FullRecord m mu)
     (D U : Finset ℕ) (hD : ∀ p ∈ D, p.Prime) (hU : ∀ p ∈ U, p.Prime)
     (hDvd : ∀ p ∈ D, p ∣ m) (hdis : Disjoint D U)

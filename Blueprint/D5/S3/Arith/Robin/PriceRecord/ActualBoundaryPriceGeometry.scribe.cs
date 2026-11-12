@@ -42,5 +42,26 @@ internal sealed class ActualBoundaryPriceGeometryDocument : IScribeDocumentDefin
                 H("Exact prime cardinalities on both sides"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A supplied two-sided short-interval count and capacity K+1 give two finite sets of exactly K distinct actual primes near a natural endpoint N. The lower set retains the closed upper endpoint; the upper set excludes N. The extra unit pays for deleting a possible prime endpoint. This result uses the count supplier directly."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actualboundarypricegeometry-subset-just-above"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subset_just_above"),
+                H("Strict upper mass crossing"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A finite pool with total mass strictly above t has a subset with mass strictly above t and at most t+H. Exact partial-sum equalities are retained on the strict side. Exact Lean telescope: {α : Type*} [DecidableEq α] (S : Finset α) (f : α → ℝ) {t H : ℝ} (ht : 0 ≤ t) (hH : ∀ a ∈ S, f a ≤ H) (htotal : t < ∑ a ∈ S, f a) : ∃ D ⊆ S, t < ∑ a ∈ D, f a ∧ (∑ a ∈ D, f a) ≤ t + H"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actualboundarypricegeometry-subset-just-below"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.subset_just_below"),
+                H("Strict lower mass crossing"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A finite pool with total mass at least positive t has a subset with mass strictly below t and deficiency at most H. The case of total mass exactly t is included. Exact Lean telescope: {α : Type*} [DecidableEq α] (S : Finset α) (f : α → ℝ) {t H : ℝ} (ht : 0 < t) (hH : ∀ a ∈ S, f a ≤ H) (htotal : t ≤ ∑ a ∈ S, f a) : ∃ U ⊆ S, (∑ a ∈ U, f a) < t ∧ t ≤ (∑ a ∈ U, f a) + H"))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actualboundarypricegeometry-exchange-mass-bound"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceGeometry.exchange_mass_bound"),
+                H("Original signed finite exchange"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For disjoint distinct-prime deletion and insertion sets with strictly smaller insertion logmass, the original full record gives the signed comparison. The complete term -mu*(logMass D-logMass U) is retained, without assuming a sign for the comparison price or the marginal fees. Exact Lean telescope: {m : ℕ} {mu lambda h : ℝ} (hm : 0 < m) (hrecord : FullRecord m mu) (D U : Finset ℕ) (hD : ∀ p ∈ D, p.Prime) (hU : ∀ p ∈ U, p.Prime) (hDvd : ∀ p ∈ D, p ∣ m) (hdis : Disjoint D U) (hbalance : logMass U < logMass D) (hupper : (∑ p ∈ D, goldenLayerMarginal p (m.factorization p) * log p) ≤ lambda * logMass D) (hlower : h * logMass U ≤ ∑ p ∈ U, goldenLayerMarginal p (m.factorization p + 1) * log p) : h * logMass U < lambda * logMass D - mu * (logMass D - logMass U)"))),
                 DescribeRole.Theorem))));
 }
