@@ -44,7 +44,19 @@ Lean statement: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.fourBonacci`
 
 fourBonacci(0)=0 is an unused natural placeholder. The positive initial values are B1=B2=B3=1 and B4=2. For every n>=1, B(n+4)=B(n+3)+B(n+2)+B(n+1)+B(n). Thus the positive sequence is (1,1,1,2,5,9,17,33,...). It is strictly positive at every positive index. The integer companion model uses B0=-1 solely to encode the positive-index recurrence; it does not assert equality to the natural placeholder at zero.
 
-**Theorem 1.4 (Empty good-prime sets and unbounded prime-index violations).**
+**Theorem 1.4 (All shifts exclude every positive repair).**
+
+Lean statement: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.all_shifts_no_repair`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/LocalDold/TribonacciFourBonacci.all_shifts_no_repair` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Wenlin Zhang (2026). *Scalar local-Dold criterion and backward-zero obstruction (communicated notes)*. URL: <https://github.com/the-omega-institute/trureturing/issues/29392>.
+
+*Commentary.*
+
+For the actual native tribonacci or printed fourBonacci sequence, every prime p, nonnegative shift s and positive multiplier c, the positive-index integer sequence c*pPart(p,a(n+s)) is not Dold in the BackwardZero sense. The historical proof constructs the integer companion correspondence and applies the scalar backward-zero theorem. This positive-seed result does not classify normalized impulse block samples or revive the withdrawn vector mismatch.
+
+**Theorem 1.5 (Empty good-prime sets and unbounded prime-index violations).**
 
 Lean statement: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.result`
 
@@ -68,6 +80,7 @@ A finite mod-p period T and polynomial congruence lifting give the weak integral
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.all_shifts_no_repair`
 - Truth anchor: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.dold`
 - Truth anchor: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.fourBonacci`
 - Truth anchor: `D5/S3/Arith/LocalDold/TribonacciFourBonacci.goodPrimes`
@@ -75,4 +88,5 @@ A finite mod-p period T and polynomial congruence lifting give the weak integral
 - Dependency: [D5/S0/Tower/Tribonacci/Names](../../../S0/Tower/Tribonacci/Names.md)
 - Dependency: [D5/S0/Tower/Tribonacci/Values](../../../S0/Tower/Tribonacci/Values.md)
 - Dependency: [D5/S1/Recurrence/FiniteCompanionCyclicModule](../../../S1/Recurrence/FiniteCompanionCyclicModule.md)
+- Dependency: [D5/S3/Arith/LocalDold/BackwardZero](BackwardZero.md)
 - Dependency: [D5/S3/Arith/LocalDold/UnimodularObstruction](UnimodularObstruction.md)

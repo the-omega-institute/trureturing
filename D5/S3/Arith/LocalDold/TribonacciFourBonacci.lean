@@ -7,6 +7,7 @@
    digest: The printed Tribonacci and four-Bonacci sequences have no local-Dold good prime. -/
 
 import D5.S3.Arith.LocalDold.UnimodularObstruction
+import D5.S3.Arith.LocalDold.BackwardZero
 import D5.S1.Recurrence.FiniteCompanionCyclicModule
 import D5.S0.Tower.Tribonacci.Names
 import D5.S0.Tower.Tribonacci.Values
@@ -270,6 +271,77 @@ theorem result (a : ℕ → ℕ) (ha : a = tribonacci ∨ a = fourBonacci) :
   intro p hp
   obtain ⟨q, hq0, hq, hpos, hlt, hnd⟩ := hw p hp.1 0
   exact hnd (hp.2 q (by omega))
+
+private theorem shifted_coordinate_no_repair {d : ℕ} (A : GLInt d)
+    (v : Fin d → ℤ) (i : Fin d)
+    (hz : ((A⁻¹).val.mulVec v) i = 0)
+    (ha : ∀ n : ℕ, 0 < n → ((A.val^n).mulVec v) i ≠ 0)
+    (p : ℕ) (hp : p.Prime) :
+    ∀ s c : ℕ, 0 < c → ¬ BackwardZero.Dold
+      (fun n => (c:ℤ)*BackwardZero.localPart p
+        (fun n => ((A.val^n).mulVec v) i) (n+s)) := by
+  let y := (A⁻¹).val.mulVec v
+  let l : Fin d → ℤ := Pi.single i 1
+  have hzero : dotProduct l y = 0 := by simpa [l,single_one_dotProduct,y] using hz
+  have hobs : ∀ n, BackwardZero.observation A.val y l (n+1) =
+      ((A.val^n).mulVec v) i := by
+    intro n
+    dsimp [BackwardZero.observation,y]
+    have he : A.val*(A⁻¹).val=1 := congrArg Units.val (mul_inv_cancel A)
+    rw [pow_succ,Matrix.mulVec_mulVec,Matrix.mul_assoc,he,Matrix.mul_one]
+    simp [l,single_one_dotProduct]
+  have hdet : ¬ (p:ℤ) ∣ A.val.det := by
+    intro hd
+    exact (Nat.prime_iff_prime_int.mp hp).not_unit
+      (isUnit_of_dvd_unit hd ((Matrix.isUnit_iff_isUnit_det A.val).mp A.isUnit))
+  intro s c hc hD
+  have hns : ∀ n : ℕ, 0 < n → BackwardZero.observation A.val y l (n+(1+s)) ≠ 0 := by
+    intro n hn
+    rw [show n+(1+s)=(n+s)+1 by omega,hobs]
+    exact ha (n+s) (by omega)
+  apply BackwardZero.kernel_orbit_no_repair A.val y l (1+s) (by omega)
+    hzero p hp hdet hns c hc
+  unfold BackwardZero.Dold BackwardZero.mobiusSum at *
+  simpa only [show ∀ n, BackwardZero.observation A.val y l (n+(1+s)) =
+      ((A.val^(n+s)).mulVec v) i from fun n => by
+        rw [show n+(1+s)=(n+s)+1 by omega,hobs],BackwardZero.localPart] using hD
+
+/-- Every nonnegative shift of either printed sequence fails every positive
+local Dold repair. This includes all primes and unbounded repair factors. -/
+theorem all_shifts_no_repair (a : ℕ → ℕ) (ha : a=tribonacci ∨ a=fourBonacci)
+    (p : ℕ) (hp : p.Prime) :
+    ∀ s c : ℕ, 0 < c → ¬ BackwardZero.Dold
+      (fun n => (c:ℤ)*(pPart p (a (n+s)):ℤ)) := by
+  have help {d : ℕ} (A : GLInt d) (v : Fin d → ℤ) (i : Fin d)
+      (hz : ((A⁻¹).val.mulVec v) i=0)
+      (hcoord : ∀ n, 0 < n → (a n:ℤ)=((A.val^n).mulVec v) i)
+      (hpos : ∀ n, 0 < n → 0 < a n) :
+      ∀ s c : ℕ, 0 < c → ¬ BackwardZero.Dold
+        (fun n => (c:ℤ)*(pPart p (a (n+s)):ℤ)) := by
+    have hn : ∀ n, 0 < n → ((A.val^n).mulVec v) i ≠ 0 := by
+      intro n hn
+      rw [← hcoord n hn]
+      exact_mod_cast (hpos n hn).ne'
+    intro s c hc hD
+    apply shifted_coordinate_no_repair A v i hz hn p hp s c hc
+    intro n hn'
+    have hDn := hD n hn'
+    change (n:ℤ) ∣ ∑ d ∈ n.divisors, _ at hDn ⊢
+    convert hDn using 1
+    apply Finset.sum_congr rfl
+    intro j hj
+    dsimp only [BackwardZero.localPart]
+    rw [← hcoord (j+s) (by have := Nat.pos_of_mem_divisors hj; omega)]
+    simp [BackwardZero.localPart,pPart,padicValInt.of_nat]
+  rcases ha with rfl | rfl
+  · apply help tribonacciMatrix tribonacciState (2:Fin 3)
+    · rw [tribonacci_state_inverse]; rfl
+    · exact tribonacci_coordinate
+    · exact tribonacci_pos
+  · apply help fourBonacciMatrix fourBonacciState (3:Fin 4)
+    · rw [fourBonacci_state_inverse]; rfl
+    · exact fourBonacci_coordinate
+    · exact fourBonacci_pos
 
 end
 end D5.S3.Arith.LocalDold.TribonacciFourBonacci

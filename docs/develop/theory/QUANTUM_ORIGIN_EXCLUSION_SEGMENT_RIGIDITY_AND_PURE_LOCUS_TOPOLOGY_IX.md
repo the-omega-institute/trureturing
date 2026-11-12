@@ -1,0 +1,768 @@
+# QUANTUM ORIGIN: EXCLUSION SEGMENT RIGIDITY AND PURE LOCUS TOPOLOGY IX
+
+**约定 114.0（卷间编号）。** 未另注卷名的107—113章及相应条目均指[第八卷][Q114VIII]；
+114章属于本卷，式号以IX114为前缀。所有原域、完整球及原单位仍按各条目明确列出的前件使用。
+
+## 114. 纯端点互惠的严格暴露、排除三球刻度与有限正延拓预算
+
+**定义 114.1（同一个原全态与全效应域）。** 沿用107.1、109.1及112.1的非零有限维实空间 $V$、
+闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的泛函 $u$。始终取
+
+$$
+\begin{gathered}
+C^{\ast}=\{f\in V^{\ast}:f(c)\ge0\ (c\in C)\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\\
+\mathcal E=[0,u]_{C^{\ast}}
+=\{f\in V^{\ast}:0\le_C f\le_C u\},\\
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{IX114.1}
+$$
+
+第一个参数 $p$ 是原纯点；第二个参数 $x$ 遍历整个原 $K$，包括全部混态。
+$K$ 是整个归一基，$P$ 是全部极点，最小化使用整个原确认族 $F_p$。
+$H(p,q)$ 表示原 $K$ 中包含 $p,q$ 的最小面。所比较的条件为
+
+$$
+\begin{aligned}
+\mathrm{PR}:&\quad \forall p,q\in P:\ T_p(q)=T_q(p),\\
+\mathrm{EB}_m:&\quad \forall p\in P:\ D_p\simeq_{\mathrm{aff}}B^m
+\quad(m\ge1\text{ 为固定整数}),\\
+\mathrm{Pair}_{\perp}:&\quad
+\forall p,q\in P:\ T_p(q)=0\ \Longrightarrow\ H(p,q)\ne K,
+\end{aligned}
+\tag{IX114.2}
+$$
+
+其中 $B^m$ 是整个闭欧氏单位球，$\mathrm{EB3}$ 指 $\mathrm{EB}_3$。
+只找到若干三球零面、直径或纯点子集，不满足这个完整纤维条件。
+$p\perp q$ 简记 $T_p(q)=0$。
+
+严格正性使 $K$ 紧：在 $C$ 与辅助单位球面的交上，$u$ 有严格正的最小值，
+从而 $K$ 有界；闭性给紧性。$C$ 生成 $V$，所以 $K$ 线性张成 $V$，
+且 $\operatorname{aff}K=\{u=1\}$。每个 $K$ 上的仿射泛函唯一齐次化为 $V^{\ast}$ 中的线性泛函。
+取 $K$ 中的一组线性基，效应在这些基向量上的值都在 $[0,1]$，故 $\mathcal E$ 有界；
+它又是闭集，因此紧。$F_p$ 非空且紧，全部最小值均达到。
+
+此核对应[Landsman §1.3，式(1.4)—(1.9)][Q114L]的完整仿射效应最小确认构造，
+两端记号作相应交换。PR只交换两个纯端点的数值比较，不是先后测量的交换律。
+每张固定原效应都仿射；分别优化不同确认任务所得的比较函数，并不因此在整个 $K$ 上仿射。
+本章不把W、least确认效应、共同内积、Jordan结构或面效应延拓作为前件。
+
+**约定 114.2（既有完整球原面分类的复用）。** 在定义114.1的原域中，
+若 $\mathrm{EB}_m$ 成立，下文援用[完整排除球原面分类，定理1.6][Q114Faces]的前两项，
+作为本章推导的中间结果，不另列为新增数学结论。本处不要求PR。
+
+前件逐项对应于同一个有限维实空间 $V$、闭尖锥 $C$、在 $C\setminus\{0\}$ 上严格正的 $u$
+以及 $C$ 生成 $V$；其中的归一基、纯集及原效应分别就是完整的 $K$、$P$ 和 $\mathcal E$。
+定义114.1中最小值达到，所以 $D_p$ 恰是该定理在整个原 $K$ 上以某张原确认效应取得零值的完整排除集，
+而 $\mathrm{EB}_m$ 供应其完整非退化仿射球图。故前两项直接给出：
+每个 $D_p$ 都是非单点紧凸暴露真面，且存在 $e_p\in F_p$ 使
+
+$$
+D_p=K\cap\ker e_p.
+\tag{IX114.3}
+$$
+
+这个共同零确认结论亦见[原全效应凸排除集的共同零确认结论(OP4)][Q114OP4]，
+其适用域并不限于多边形；这里不重复证明，也不由此取得全域least或单位预算延拓。
+对任意非空真凸面 $A\subsetneq K$，分类直接给出 $A=\{r\}$ 或 $A=D_r$，其中 $r\in P$；
+不预设 $A$ 闭，因而每个含至少两个点的真面恰为一张完整仿射 $m$ 球。
+本处不使用该定理最后一项所需的“每对不同原纯点均生成真最小面”前件；
+这个全对前件尚未取得，也不能用只量化原正交纯对的 $\mathrm{Pair}_{\perp}$ 代替。
+
+下文还使用这一分类的初等推论。若面 $A$ 满足 $D_p\subseteq A\subsetneq K$，
+则分类给 $A=D_r$；$D_p$ 是完整球 $D_r$ 的非单点面，所以 $D_p=D_r$。
+因此每个 $D_p$ 都是极大真面。两个不同的这类面的非空交是二者的真面，
+故只能为单点；单点面是原 $K$ 的纯点。
+此外，任意这样的面 $F$ 都满足
+$\operatorname{ext}F=P\cap F$，球面边界就是其中全部原纯点。
+
+**定理 114.3（单侧端点互惠迫使原纯点严格暴露）。** 不要求任何 $\mathrm{EB}_m$。
+固定 $p\in P$，若
+
+$$
+\forall x\in P:\qquad T_x(p)\ge T_p(x),
+\tag{IX114.4}
+$$
+
+则存在 $h\in\mathcal E$，使 $K\cap\ker h=\{p\}$。
+因此 $p$ 在整个原 $K$ 中暴露，$u-h$ 是仅在 $p$ 取值一的原确认效应。
+特别地，PR使全部原纯点暴露。
+
+证明。若 $K=\{p\}$，零泛函已在 $K$ 上暴露这个唯一点，结论直接成立。
+以下设 $K$ 非单点。定义正锥及其原零效应截面
+
+$$
+\mathcal N_p=\{g\in C^{\ast}:g(p)=0\},\qquad
+G_p=\mathcal N_p\cap\mathcal E.
+\tag{IX114.5}
+$$
+
+$p$ 是相对边界点，支撑泛函经常数平移和齐次化后表明 $\mathcal N_p\ne\{0\}$。
+取 $h\in\operatorname{ri}\mathcal N_p$，并重标定为 $\max_Kh=1$。
+于是 $h(p)=0$、$0\le_C h\le_Cu$。
+令 $U_p=\operatorname{span}\mathcal N_p$，在这个有限维空间选辅助范数。
+相对内部给出 $\varepsilon>0$，使
+
+$$
+h+B_{U_p}(0,\varepsilon)\subseteq\mathcal N_p.
+$$
+
+$G_p$ 紧，故存在 $R<\infty$ 使 $\|g\|\le R$ 对全部 $g\in G_p$ 成立。
+取 $c>R/\varepsilon$，便有 $h-g/c\in\mathcal N_p$，因此
+
+$$
+g\le_C ch\quad(g\in G_p),\qquad
+1-T_p(y)=\max_{g\in G_p}g(y)\le ch(y)\quad(y\in K).
+\tag{IX114.6}
+$$
+
+第二式使用了 $f\mapsto u-f$ 从 $F_p$ 到 $G_p$ 的双射。
+这只是对所有零效应的统一标量控制；$ch$ 不必属于 $\mathcal E$，
+没有由此取得一张least确认效应。
+
+设 $Z=K\cap\ker h$ 非单点。选择仿射泛函 $\ell$，使
+
+$$
+\alpha=\max_Z\ell>\ell(p),\qquad \delta=\alpha-\ell(p)>0.
+\tag{IX114.7}
+$$
+
+对每个正整数 $t$，令 $m_t=\max_K(\ell-th)$，
+并在这个非空紧最大面中选择一个原纯点 $x_t$。
+因为 $h|_Z=0$，有 $m_t\ge\alpha$，所以
+
+$$
+0\le t h(x_t)=\ell(x_t)-m_t\le\ell(x_t)-\alpha.
+\tag{IX114.8}
+$$
+
+$\ell$ 有界先给 $h(x_t)\to0$。由 $K$ 紧，任意聚点都属于 $Z$。
+式(IX114.8)又给 $\ell(x_t)\ge\alpha$，而每个聚点在 $Z$ 上的 $\ell$ 值不超过 $\alpha$。
+若 $\ell(x_t)$ 不趋于 $\alpha$，可取一个始终偏离 $\alpha$ 的子列，
+再取收敛子列，其聚点便违反这个上界。故
+
+$$
+\ell(x_t)\longrightarrow\alpha,\qquad
+t h(x_t)\longrightarrow0.
+\tag{IX114.9}
+$$
+
+这里的聚点无需是纯点，亦未使用 $P$ 闭或 $T$ 第一参数的连续性。
+
+令 $n_t=\min_K(\ell-th)$、$\Delta_t=m_t-n_t$。
+$\ell|_Z$ 非恒定，所以 $\Delta_t>0$。实际原效应
+
+$$
+e_t=\frac{\ell-th-n_tu}{\Delta_t}\in\mathcal E,\qquad
+e_t(x_t)=1
+\tag{IX114.10}
+$$
+
+确实属于 $F_{x_t}$，没有调用面上的未证延拓。
+设 $A=\max_K\ell-\min_K\ell$。由 $0\le h\le1$，
+
+$$
+\Delta_t\le A+t,\qquad
+1-e_t(p)=\frac{m_t-\ell(p)}{\Delta_t}\ge\frac{\delta}{\Delta_t}.
+\tag{IX114.11}
+$$
+
+单侧假设只用于原纯点 $x_t$，给
+$e_t(p)\ge T_{x_t}(p)\ge T_p(x_t)$。结合(IX114.6)、(IX114.9)—(IX114.11)，
+
+$$
+\begin{aligned}
+0<\delta
+&\le\Delta_t(1-e_t(p))\\
+&\le\Delta_t(1-T_p(x_t))\\
+&\le c\Delta_t h(x_t)
+\le c(A+t)h(x_t)\longrightarrow0.
+\end{aligned}
+\tag{IX114.12}
+$$
+
+矛盾。因此 $Z=\{p\}$，而 $u-h$ 的值一集合恰为 $\{p\}$。证毕。
+
+**推论 114.4（PR下全部原纯点的紧性）。** 在定义114.1的完整原域中，
+PR蕴含 $P=\operatorname{ext}K$ 紧。本结论不要求EB3，也不以 $P$ 已闭为前件。
+
+证明。单点基直接成立。其余情形由114.3，每个纯点有一张全域暴露确认效应。
+选 $V$ 上范数，令
+
+$$
+L_0=\max_{f\in\mathcal E}\|f\|_{\ast}<\infty.
+$$
+
+每个固定的 $T_p$ 是一族具有共同Lipschitz常数 $L_0$ 的效应的最小值，
+故对全部 $y,z\in K$，
+
+$$
+|T_p(y)-T_p(z)|\le L_0\|y-z\|.
+\tag{IX114.13}
+$$
+
+设 $p_n\in P$、$p_n\to x\in K$，而 $x$ 非纯。
+有限维紧凸集的有限纯点分解可写成
+
+$$
+x=\lambda r+(1-\lambda)y,\qquad
+r\in P,\quad y\in K,\quad 0<\lambda<1,\quad x\ne r.
+$$
+
+置 $\varepsilon_n=L_0\|p_n-x\|$。对每个 $f\in F_{p_n}$，有 $f(x)\ge1-\varepsilon_n$。
+固定原效应的普通仿射性与非负余量给
+
+$$
+\varepsilon_n\ge1-f(x)
+=\lambda(1-f(r))+(1-\lambda)(1-f(y))
+\ge\lambda(1-f(r)).
+$$
+
+这对整个 $F_{p_n}$ 成立，故 $T_{p_n}(r)\ge1-\varepsilon_n/\lambda$。
+PR给 $T_r(p_n)=T_{p_n}(r)$；固定 $T_r$ 的(IX114.13)于是迫 $T_r(x)=1$。
+但114.3给仅在 $r$ 取一的原确认效应 $e_r$，而 $x\ne r$，
+所以 $T_r(x)\le e_r(x)<1$，矛盾。$P$ 因而闭于紧 $K$，故紧。
+这里仿射的是每个固定 $f$，没有把各自最小化的比较函数当作全域仿射函数。证毕。
+
+**定理 114.5（排除三球上严格正的共同刻度）。** 假设EB3与PR。
+对任一完整排除面 $F=D_p$，选仿射同构 $b_F:B^3\to F$，记 $q_v=b_F(v)$。
+存在唯一 $a_F$，满足
+
+$$
+0<a_F\le\frac12,\qquad
+T_{q_v}(b_F(z))=1-a_F+a_F\,v\cdot z
+\quad(v\in S^2,\ z\in B^3).
+\tag{IX114.14}
+$$
+
+这包括球内全部混态 $z$，而不仅是球面。
+
+证明。114.2保证球面点 $q_v$ 都是原纯点。任取 $f\in F_{q_v}$，在整个球上写
+$f(b_F(z))=c+\ell\cdot z$。原效应界给 $0\le c+\ell\cdot z\le1$，所以
+
+$$
+1=c+\ell\cdot v\le c+\|\ell\|\le1.
+$$
+
+两次不等式均取等号，故 $\ell=a_fv$、$c=1-a_f$，其中 $a_f=\|\ell\|\ge0$。
+球上最小值 $1-2a_f$ 非负，得到
+
+$$
+f(b_F(z))=1-a_f+a_f\,v\cdot z,\qquad 0\le a_f\le\frac12.
+\tag{IX114.15}
+$$
+
+$F_{q_v}$ 紧，系数是限制效应的连续函数，故
+$a(v)=\max_{f\in F_{q_v}}a_f$ 达到。
+由于 $1-v\cdot z\ge0$ 对全部 $z\in B^3$ 成立，同一最大系数实现整个球上的原最小值：
+
+$$
+T_{q_v}(b_F(z))=1-a(v)(1-v\cdot z).
+\tag{IX114.16}
+$$
+
+对不同 $v,w\in S^2$，PR给
+$(a(v)-a(w))(1-v\cdot w)=0$；后一因子严格正，所以 $a(v)=a(w)$。
+这确定唯一共同系数 $a_F$。更换仿射球坐标仅作正交变换，不改变它。
+
+最后，114.3给一张仅在 $q_v$ 取一的原确认效应。
+它在非单点球 $F$ 上不恒定，所以(IX114.15)中它的系数严格正；
+$a_F$ 不小于该系数，故 $a_F>0$。
+因此零刻度情形被严格排除：若 $a_F=0$，所有确认 $q_v$ 的原效应都会在整个 $F$ 上恒为一，
+与上述全域暴露确认效应矛盾。这不是尚待实现的EB3加PR分支。
+(IX114.14)只给 $T_{q_v}$ 在这张 $F$ 上的仿射性，并不将它延到整个 $K$。证毕。
+
+**定理 114.6（达到的尖锐预算与整个面效应族的正提升）。** 在114.5的前件下，定义
+
+$$
+\begin{gathered}
+h_v(b_F(z))=\frac{1+v\cdot z}{2}\quad(v\in S^2),\\
+\beta_F(v)=
+\inf\{M\ge0:\ \exists g\in V^{\ast},\
+0\le_Cg\le_CMu,\ g|_F=h_v\}.
+\end{gathered}
+\tag{IX114.17}
+$$
+
+空集的下确界约定为 $+\infty$。则
+
+$$
+\beta_F(v)=\beta_F=\frac1{2a_F}\in[1,\infty),
+\tag{IX114.18}
+$$
+
+且下确界实际达到。每个非负仿射 $k:F\to[0,\infty)$ 都有原锥上的正线性延拓。
+对全部面效应，其共同最优预算准确为
+
+$$
+\sup_{\,k\in\operatorname{Aff}(F),\ 0\le k\le1_F}
+\ \inf_{\substack{g\in C^{\ast}\\g|_F=k}}\max_Kg
+=\beta_F<\infty.
+\tag{IX114.19}
+$$
+
+证明。先取 $g\in C^{\ast}$，$g|_F=h_v$，令 $M=\max_Kg$。
+$g(q_v)=1$，故 $M\ge1$，且 $e=u-g/M$ 是整个原 $\mathcal E$ 中的效应。
+它确认反极点 $q_{-v}$，在 $F$ 上的系数为 $1/(2M)$。
+按114.5的最大系数定义，$1/(2M)\le a_F$，所以
+
+$$
+M\ge\frac1{2a_F}.
+\tag{IX114.20}
+$$
+
+反过来，取在 $q_{-v}$ 达到系数 $a_F$ 的原确认效应 $e_{-v}$，定义
+
+$$
+g_v=\frac{u-e_{-v}}{2a_F}.
+\tag{IX114.21}
+$$
+
+它在原 $C$ 上非负，满足 $g_v|_F=h_v$，
+且 $g_v\le_Cu/(2a_F)$。结合(IX114.20)，其最大值恰为 $1/(2a_F)$；
+这证明预算有限、与方向无关且实际达到。
+
+任意非负仿射面函数可写成 $k(b_F(z))=c+b\cdot z$，其中 $c\ge t=\|b\|$。
+若 $t=0$，直接以 $cu$ 延拓。若 $t>0$，令 $v=b/t$，则
+
+$$
+k=(c-t)1_F+2t\,h_v,\qquad
+\widetilde k=(c-t)u+2t\,g_v\in C^{\ast}.
+\tag{IX114.22}
+$$
+
+因此任意非负面函数都取得实际正延拓。若进一步 $k\le1_F$，则 $c+t\le1$、
+$2t\le1$。写 $B=\beta_F\ge1$，所得延拓满足
+
+$$
+0\le_C\widetilde k
+\le_C(c-t+2tB)u,\qquad
+c-t+2tB=(c+t)+2t(B-1)\le B.
+\tag{IX114.23}
+$$
+
+故 $B$ 对整个面效应族共同可用；$h_v$ 本身要求预算 $B$，给出(IX114.19)的锐性。
+特别地，
+
+$$
+\{f|_F:f\in\mathcal E\}
+=[0,1_F]_{\operatorname{Aff}(F)}
+\quad\Longleftrightarrow\quad
+a_F=\frac12
+\quad\Longleftrightarrow\quad
+\beta_F=1.
+\tag{IX114.24}
+$$
+
+正提升逐个效应给出；尚未得到保持原单位的正线性延拓算子，
+也不能将分别取得的延拓自动视为效应和为 $u$ 的联合测量。证毕。
+
+**推论 114.7（所有锥面的正限制满射与niceness）。** 在EB3加PR下，原 $C$ 的每个面都暴露。
+对每个锥面 $L\unlhd C$，以同一环境对偶空间定义
+
+$$
+L^\perp=\{\ell\in V^{\ast}:\ell|_L=0\},\qquad
+L^{\ast}=\{\ell\in V^{\ast}:\ell(x)\ge0\ (x\in L)\}.
+$$
+
+则有准确恒等式
+
+$$
+C^{\ast}+L^\perp=L^{\ast}\qquad(L\unlhd C).
+\tag{IX114.25}
+$$
+
+所以所有这些和都闭，$C$ 是facially dual complete，亦称nice。
+
+证明。非零真锥面与归一基的非空真面对应。
+114.2处理所有非单点基面，114.3处理纯单点基面，因此每个非零真锥面都由同一原正泛函暴露。
+零面由严格正的 $u$ 暴露，整个 $C$ 由零泛函暴露。
+
+显然 $C^{\ast}+L^\perp\subseteq L^{\ast}$。
+若 $L=\operatorname{cone}F$ 且 $F$ 为一个排除三球，
+任取 $\ell\in L^{\ast}$，则 $\ell|_F$ 是非负仿射函数。
+114.6给 $g\in C^{\ast}$，$g|_F=\ell|_F$，所以 $\ell-g\in L^\perp$。
+若 $L=\mathbb R_+p$ 为纯射线，令 $g=\ell(p)u\in C^{\ast}$，同样有 $\ell-g\in L^\perp$。
+$L=\{0\}$ 时两侧均为 $V^{\ast}$；$L=C$ 时两侧均为 $C^{\ast}$。
+由114.2的面分类，这穷尽全部锥面，证明反向包含。
+
+$L^{\ast}$ 本身闭，所以(IX114.25)确实给出niceness。
+这是[Pataki，arXiv:1202.4043v4，Theorem 2，PDF pp.8—9][Q114P]所讨论的面上正限制性质；
+该文Theorem 3及Corollary 1（PDF pp.10—11）给出它与面暴露的关系及相应条件。
+这里的恒等式和面暴露均由原模型直接推出，并未把文献中的一般性质另作公理。
+有限正延拓不供应 $\beta_F=1$，也不供应同一个全局自对偶内积或锥的perfection。证毕。
+
+**定理 114.8（原Pair、共同正交点与单位饱和的等价）。** 在EB3加PR下，
+设 $p,q\in P$、$p\perp q$，令 $F=D_p$、$q=b_F(v)$，其中 $v\in S^2$。
+则
+
+$$
+\begin{aligned}
+H(p,q)\ne K
+&\ \Longleftrightarrow\ D_p\cap D_q\ne\varnothing\\
+&\ \Longleftrightarrow\ a_F=\frac12
+\ \Longleftrightarrow\ \beta_F=1.
+\end{aligned}
+\tag{IX114.26}
+$$
+
+这些条件成立时，共同正交纯点唯一，准确为
+
+$$
+r=b_F(-v),\qquad D_p\cap D_q=\{r\},\qquad H(p,q)=D_r.
+\tag{IX114.27}
+$$
+
+因此在完整原域中，
+
+$$
+\mathrm{Pair}_{\perp}
+\ \Longleftrightarrow\
+\forall p\in P:\ a_{D_p}=\frac12
+\ \Longleftrightarrow\
+\forall p\in P:\ \beta_{D_p}=1.
+\tag{IX114.28}
+$$
+
+证明。首先，原效应的补已经给出零对称，不需要PR：
+若 $f(p)=1$、$f(q)=0$，则 $(u-f)(q)=1$、$(u-f)(p)=0$，所以
+
+$$
+T_p(q)=0\quad\Longleftrightarrow\quad T_q(p)=0
+\qquad(p,q\in P).
+\tag{IX114.29}
+$$
+
+$p\ne q$，因为 $T_p(p)=1$。若 $H(p,q)$ 为真面，它含两个不同点，
+114.2给 $H(p,q)=D_s$，其中 $s\in P$。
+$p,q\in D_s$ 与零对称给 $s\in D_p\cap D_q$。
+
+反之，$D_p\ne D_q$，因为 $q\in D_p$ 而 $q\notin D_q$。
+若二者交非空，114.2给它恰为某个原纯单点 $\{r\}$。
+零对称给 $p,q\in D_r$，故 $H(p,q)\subseteq D_r\subsetneq K$。
+还须确定等号：$H(p,q)$ 是非单点真面，所以 $H(p,q)=D_s$；
+它包含于 $D_r$ 且含 $p,q$ 两个不同点，而两个不同球面至多交于一个点，
+于是 $D_s=D_r$，即 $H(p,q)=D_r$。
+
+由于纯 $q\in F$ 位于 $F$ 的球面，114.5对完整球给
+
+$$
+D_p\cap D_q=
+\{b_F(z):z\in B^3,\ 1-a_F+a_Fv\cdot z=0\}.
+\tag{IX114.30}
+$$
+
+当 $0<a_F<1/2$ 时，左式中的标量最小值 $1-2a_F$ 严格正，故交为空。
+当 $a_F=1/2$ 时，零值要求 $v\cdot z=-1$；
+$\|v\|=1$、$\|z\|\le1$ 迫 $z=-v$，故交恰为 $\{b_F(-v)\}$。
+再用114.6的预算公式，得到(IX114.26)—(IX114.27)。
+对所有原正交纯对量化便得(IX114.28)；
+反向检验每个 $D_p$ 时可任取其球面上的 $q$，所以没有遗漏任何排除面。
+此处只确定三点两两原正交；联合测量将由下面明确进入的W支路承担。证毕。
+
+**推论 114.9（单位饱和后准确接入112.8）。** 在同一个原域中，下列候选包
+
+$$
+\mathrm{EB3}+\mathrm{PR}
++\bigl(\forall p\in P:\beta_{D_p}=1\bigr)
+\tag{IX114.31}
+$$
+
+等价于同原锥、同原单位的复三能级表示：
+存在实线性双射 $\Phi:H_3(\mathbb C)\to V$，满足
+
+$$
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi X)=\operatorname{tr}X.
+\tag{IX114.32}
+$$
+
+它给 $\dim_{\mathbb R}V=9$ 及112.8的完整静态态、效应、Born和有限POVM字典。
+这不是由EB3加PR单独得到的复型结论。
+
+证明。先用114.8取得原 $\mathrm{Pair}_{\perp}$。
+此时才由112.1的定义取得
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$；
+EB3同时供应 $\mathrm{UniformEB}_{\ge2}$ 中的共同维数 $d=3$。
+故112.8可在同一 $C,u,K,P,\mathcal E$ 上直接应用，得到(IX114.32)。
+不再要求G、$\mathrm{TFD}_{3,\exists}$、TFD3、TRI2或九维作为额外前件。
+W所供应的同域joint、least与后续Jordan桥都是进入该分支后的后果，
+并未在114.2—114.8中预支。
+
+准确的静态范围是(VIII112.30)：全部原归一态对应全部迹一PSD矩阵，
+全部原纯态对应全部秩一投影，整个原效应区间对应全部 $0\preceq E\preceq I_3$；
+原评价为 $\operatorname{tr}(E\rho)$，纯—纯读数为 $|v^{\ast}w|^2$，
+任意有限原数学测量准确对应 $E_j\succeq0$、$\sum_jE_j=I_3$。
+同一个双射保持原凸混合、效应补与效应和，未缩减原态或效应域。
+
+反向由112.8的同锥同单位字典，完整排除集全为三球，纯比较由迹配对互惠；
+任一纯正交对可补成三个正交秩一投影，故原Pair成立，
+再用114.8得到全部单位饱和。
+所以(IX114.31)只是已有校准几何候选的等价表述，
+不是新增的独立公理减少或最少公理数结论。
+112.9中全有限复合层级、实际事件、仪器、物理时间与 $\hbar$ 的各自条件和全称量词仍完整保留：
+单体静态字典不供应纠缠联合域、旁观者正性、实际实现或时钟。证毕。
+
+**定理 114.10（固定球维数至少二时的无facet障碍）。** 在定义114.1的原域中，
+设某个固定整数 $m\ge2$ 满足 $\mathrm{EB}_m$，不要求PR。则
+
+$$
+\dim\operatorname{aff}K\ge m+2,
+\qquad K\text{ 没有余维一面}.
+\tag{IX114.33}
+$$
+
+特别地，EB3已经蕴含 $\dim\operatorname{aff}K\ge5$ 及无facet。
+
+证明。记 $d=\dim\operatorname{aff}K$，在该仿射空间中看 $K$ 的内部与边界。
+114.2的证明对固定 $m$ 适用，所以所有非单点真面的维数恰为 $m$，
+且不同这类面至多交于一个纯点。
+存在一个 $m$ 维真面先给 $d\ge m+1$。反设 $d=m+1$；
+于是这些非单点真面恰为facets，记其全体为 $\mathscr F$。
+
+先证明每个 $F\in\mathscr F$ 的相对内部是 $\partial K$ 中的开集。
+取 $x\in\operatorname{ri}F$，在其支撑超平面内取以 $x$ 为中心的小闭盘，整个盘仍在 $F$ 中，
+再取 $y\in\operatorname{ri}K$。这个盘与 $y$ 的凸包是包含于 $K$ 的满维小锥体。
+把 $x$ 的邻域取得足够小，支撑超平面内侧、离平面为正距离的所有邻域点
+都落在该小锥体的内部，因而在 $\operatorname{ri}K$ 中；
+平面上的邻域点则仍在 $\operatorname{ri}F$ 中，平面外侧不属于 $K$。
+因此这个邻域与 $\partial K$ 的交包含于 $\operatorname{ri}F$，证得所需开性。
+
+不同facets的相对内部两两不交，而 $\partial K$ 第二可数，
+所以非空开集族 $\{\operatorname{ri}F:F\in\mathscr F\}$ 至多可数。
+例如在每个开集内选一个可数拓扑基元素；不交性使所选基元素互异。
+故 $\mathscr F$ 至多可数。
+
+固定一个 $F\in\mathscr F$，考虑邻面映射
+
+$$
+\nu_F:\operatorname{ext}F\longrightarrow\mathscr F,\qquad q\longmapsto D_q.
+\tag{IX114.34}
+$$
+
+它只能单射或常值。为证此事，设不同 $q,r\in\operatorname{ext}F$ 满足
+$D_q=D_r=G$。对任意 $s\in\operatorname{ext}G$，
+原补效应所给的零对称(IX114.29)迫 $q,r\in D_s$。
+于是 $F\cap D_s$ 含两个不同点，114.2迫 $D_s=F$。
+再取任意 $t\in\operatorname{ext}F$，对所有这样的 $s$ 再用零对称，
+有 $\operatorname{ext}G\subseteq D_t$，故 $G\subseteq D_t$；
+极大性给 $D_t=G$。这说明只要有一次重复，整个 $\nu_F$ 就恒为 $G$。
+
+由于 $m\ge2$，$\operatorname{ext}F\simeq S^{m-1}$ 不可数；
+而 $\mathscr F$ 可数，$\nu_F$ 不可能单射，故恒定。
+将其值记为 $F^\dagger$。刚才的证明同时给
+
+$$
+(F^\dagger)^\dagger=F.
+\tag{IX114.35}
+$$
+
+若不同 $F,H\in\mathscr F$ 相交，交点由114.2为原纯点 $q$，
+于是 $D_q=F^\dagger=H^\dagger$，对合性又迫 $F=H$，矛盾。
+所以所有facets两两不交。
+
+它们还覆盖整个 $\partial K$。任意边界点 $x$ 属于一个非空支撑真面 $A$；
+若 $A$ 非单点，114.2给 $A\in\mathscr F$。
+若 $A=\{x\}$，则 $x=p$ 为原纯点；
+在完整 $D_p$ 的球面取原纯 $q$，零对称给 $p\in D_q\in\mathscr F$。
+故 $\partial K$ 被至多可数个两两不交的非空闭facet覆盖。
+这个分拆非平凡：若 $q\in\operatorname{ext}F$，则 $q\notin D_q=F^\dagger$，
+所以 $F^\dagger\ne F$。
+
+$K$ 是 $d$ 维凸体，$d=m+1\ge3$；
+从内部点作径向参数化可知 $\partial K$ 同胚于 $S^{d-1}$，是紧连通欧氏集合。
+有限的非平凡闭分拆直接违反连通性；
+无限可数的两两不交非空闭分拆则违反
+[Sierpiński连续统定理，原刊p.300、扫描第1页][Q114Si]。
+因此 $d=m+1$ 不可能，得到 $d\ge m+2$。
+现在若有facet，其维数为 $d-1\ge m+1$，但114.2规定非单点真面的维数只能为 $m$，矛盾。
+这给出无facet结论。证明使用了可数性、常值邻面映射、对合与不交覆盖，
+最后才应用连续统定理，不能由Baire定理单独代替。证毕。
+
+$m\ge2$ 的限制不能删去。[原奇多边形应用(OP2)—(OP3)][Q114Polygon]
+在同一完整原域实现了 $\mathrm{EB}_1+\mathrm{PR}$ 而所有纯零对失败Pair；
+该文(OP7)—(OP8)还给五边形面效应的锐正延拓预算为黄金比，大于一。
+这些已给出的原域计算说明一维边界确有有限超单位预算，
+并不构成整个排除集为三球的模型，也不代替114.8所留下的三球饱和义务。
+
+**命题 114.11（矩阵加厚的整个排除集是两个三球之并）。** 固定 $0<t<1$，令
+
+$$
+\begin{gathered}
+V_t=\operatorname{Herm}_3(\mathbb C),\qquad
+K_t=\{X\in V_t:0\preceq X\preceq I,\ \operatorname{tr}X=1+t\},\\
+C_t=\operatorname{cone}K_t,\qquad
+u_t(X)=\frac{\operatorname{tr}X}{1+t},\qquad
+p=\operatorname{diag}(1,t,0).
+\end{gathered}
+\tag{IX114.36}
+$$
+
+这个载体满足定义114.1的有限维锥基条件。以它的全部原效应定义比较，
+$p$ 是原纯点，其完整确认族在 $K_t$ 上恰为
+
+$$
+f(X)=1-A(1-X_{11})-BX_{33},\qquad
+A,B\ge0,\quad A+B\le1.
+\tag{IX114.37}
+$$
+
+因此对所有原归一 $X\in K_t$，
+
+$$
+T_p(X)=\min\{X_{11},\,1-X_{33}\},\qquad
+D_p=F_1\cup F_2,
+\tag{IX114.38}
+$$
+
+其中
+
+$$
+F_1=\{X\in K_t:X_{11}=0\},\qquad
+F_2=\{X\in K_t:X_{33}=1\}.
+\tag{IX114.39}
+$$
+
+每个 $F_i$ 都是完整仿射三球，但整个 $D_p$ 非凸，所以此载体失败EB3。
+
+证明。$K_t$ 紧，且在迹超平面有内部点 $(1+t)I/3$。
+故其锥生成 $V_t$；归一基紧且远离零，锥闭；
+非零锥元素有严格正迹，故锥尖且 $u_t$ 严格正，归一基准确为 $K_t$。
+
+先证 $p$ 纯。若 $p=\lambda X+(1-\lambda)Y$，$X,Y\in K_t$、$0<\lambda<1$，
+则 $X_{11}=Y_{11}=1$、$X_{33}=Y_{33}=0$。
+半正定矩阵的零对角元使对应行列为零：
+对 $X,Y$ 的第三行列如此，对 $I-X,I-Y$ 的第一行列亦如此。
+所以所有非对角项均为零，迹约束又使第二对角元为 $t$；
+于是 $X=Y=p$。
+
+原确认效应 $f$ 在 $p$ 达到全局最大值一。写其仿射限制为
+$f(X)=\operatorname{tr}(HX)+b$，其中 $H$ Hermitian，常数可用迹约束吸收入线性泛函。
+在完整酉轨道 $UpU^{\ast}\subseteq K_t$ 上的一阶极值条件给 $[H,p]=0$。
+$1,t,0$ 两两不同，故 $H$ 在这些坐标中对角化。
+再分别交换第一、第二特征方向以及第二、第三特征方向，
+最大性给 $(h_1-h_2)(1-t)\ge0$、$(h_2-h_3)t\ge0$。
+因此 $h_1\ge h_2\ge h_3$。
+
+令 $A=h_1-h_2\ge0$、$B=h_2-h_3\ge0$。
+代入迹约束及 $f(p)=1$，恰得(IX114.37)的表达式。
+在反序原态 $\operatorname{diag}(0,t,1)$ 上的非负性迫 $A+B\le1$。
+反之，若这三个系数条件成立，整个 $K_t$ 上都有
+$0\le1-X_{11}\le1$、$0\le X_{33}\le1$，
+所以 $1-A-B\le f(X)\le1$，确为原确认效应。
+这证明整个确认族的必要性与充分性。
+
+对系数三角形的三个顶点 $(0,0),(1,0),(0,1)$ 最小化，得
+$\min\{1,X_{11},1-X_{33}\}$；因后两项已在 $[0,1]$，得到(IX114.38)。
+非负性同时给整个零集的并集描述，包括全部混态。
+
+令 $\mathcal D_2=\{\rho\in\operatorname{Herm}_2(\mathbb C):\rho\succeq0,\operatorname{tr}\rho=1\}$
+为完整二阶密度矩阵体。$X_{11}=0$ 迫第一行列为零，余下块的迹为 $1+t$，
+且在 $[0,I_2]$ 内；其最小特征值至少为 $t$，故
+
+$$
+F_1=\{\,0\oplus[tI_2+(1-t)\rho]:\rho\in\mathcal D_2\,\}.
+\tag{IX114.40}
+$$
+
+$X_{33}=1$ 则迫第三方向与其余块解耦，剩余块非负且迹为 $t$，所以
+
+$$
+F_2=\{\,t\rho\oplus1:\rho\in\mathcal D_2\,\}.
+\tag{IX114.41}
+$$
+
+$0<t<1$ 保证两个映射都非退化。
+用完整Pauli坐标 $\rho=(I_2+z\cdot\sigma)/2$，$\rho\succeq0$ 等价于 $\|z\|\le1$，
+故两者确为完整三球。
+但取实际原态
+
+$$
+X=\operatorname{diag}(0,1,t)\in F_1,\qquad
+Y=\operatorname{diag}(t,0,1)\in F_2,
+$$
+
+其原中点满足
+
+$$
+T_p\!\left(\frac{X+Y}{2}\right)
+=\min\left\{\frac t2,\frac{1-t}{2}\right\}>0.
+\tag{IX114.42}
+$$
+
+所以整个 $D_p$ 不凸，不能为一个完整三球。
+这排除了该矩阵加厚路线；它不是EB3加PR的反模型。证毕。
+
+**约定 114.12（有限预算、校准与静态字典的准确范围）。** 在EB3加PR下，
+114.3—114.7已给全域暴露的原纯点、紧的全部原纯集、所有面的暴露与niceness，
+以及每张完整排除三球上严格正的共同刻度和实际达到的有限正延拓预算。
+剩余义务准确为
+
+$$
+\boxed{\quad
+\mathrm{EB3}+\mathrm{PR}
+\ \stackrel{?}{\Longrightarrow}\
+\forall p\in P:\ \beta_{D_p}=1
+\quad}
+\tag{IX114.43}
+$$
+
+其中 $\beta_F\ge1$ 已由114.6证明。这一蕴含及其否定均未在上述推导中取得；
+等价的 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathrm{Pair}_{\perp}$ 仍待证明或同域反例。
+条件性的两个数值区域是
+
+$$
+\begin{array}{c|c|c}
+\text{球刻度}&\text{球内最小确认读数}&\text{锐正延拓预算}\\ \hline
+0<a_F<1/2&1-2a_F>0&1<\beta_F<\infty\\
+a_F=1/2&0&\beta_F=1
+\end{array}
+\tag{IX114.44}
+$$
+
+这只是参数判据，不是第一行有原锥实现的存在性证明。
+$a_F=0$ 或 $\beta_F=\infty$ 已被114.3与114.5排除，不能再列为该前件下的可容许分支。
+无facet及矩阵例子分别排除具体路线，未排除所有高余维的有限超预算实现。
+
+[Landsman，quant-ph/9603005v2，Definition 6，PDF p.10／印刷p.10][Q114L]
+的two-sphere性质已包含校准核 $(1+\cos\theta)/2$，
+并置于其well-behaved转移概率框架中；
+§1.3式(1.4)—(1.9)（PDF p.5／印刷p.5）用于这里的核、补效应零对称及概率一分离的对应。
+不能仅从未校准的(IX114.14)输入该校准条件，
+也没有从PR获得其极大正交集的概率和规则。
+114.3的单侧暴露蕴含与114.5—114.8的原球预算推导，是这里给出证明的凸几何推导，
+不归为该文已经陈述的定理。
+
+[Pataki，arXiv:1202.4043v4][Q114P]供应114.7所用的nice／面正限制术语和一般关系，
+不供应单位预算；[Sierpiński原文][Q114Si]的连续统定理由114.10实际消费。
+原[多边形应用][Q114Polygon]中的OP4及一维边界计算按其既有证明复用。
+上述组合推导是普通有限维数学，不宣称文献原创、内核验证或独立公理的最小性。
+只有(IX114.43)的饱和条件另行成立后，才有114.9所述同原域完整静态复三能级字典；
+全有限复合、仪器和物理动力学仍按112.9各自的原合同承担。
+
+上述结论的中文图景是：互惠首先使每个纯点都有一项原效应测试，只有在该点，通过概率才为一。
+其它原态的通过概率严格小于一，但仍可能通过；这不表示一次测试就能完全区分该点与其它态。
+每张完整排除三球上的所有方向又共用一把刻度尺；
+确认北极的最优原比较在北极为一，在南极为 $1-2a_F$，
+其中 $0<a_F\le1/2$，这把尺不能完全失去刻度。
+球内任何合法的非负仿射按钮，都能逐个接回整个原锥并保持正性；
+对全部零一面效应，共同且锐的有限代价是 $\beta_F=1/(2a_F)$。
+尚缺的是让这些按钮仍守住原来的零到一单位预算。
+预算恰为一时，南极读数才恰为零，原正交纯对才得到唯一第三个共同正交纯点；
+此后进入W与全三球支路，112.8才供应完整静态量子字典。
+这里的互惠始终只比较纯端点，完整球与原单位的校准条件不能从图景中删去。
+
+[Q114Faces]: ../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionBallFaces.md "完整排除球的共同暴露与全部原真凸面分类，定理1.6前两项；最后一项另需每对不同原纯点均生成真最小面。"
+[Q114OP4]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md#4-a-convex-exclusion-set-has-a-common-original-zero-confirmer "原全效应凸排除集的共同零确认结论，OP4。"
+[Q114Polygon]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md#odd-polygons-reciprocal-comparisons-original-faces-and-extension-budgets "奇多边形的原全域应用，OP2—OP8；一维球不代表三球。"
+[Q114Si]: https://www.jstage.jst.go.jp/article/tmj1911/13/0/13_0_300/_article "W. Sierpiński, Un théorème sur les continus, Tohoku Mathematical Journal, First Series 13 (1918), 300–303；定理在印刷p.300／扫描第1页。"
+[Q114P]: https://arxiv.org/pdf/1202.4043v4 "Gábor Pataki, On the connection of facially exposed and nice cones, arXiv:1202.4043v4；Theorem 2 PDF pp.8–9，Theorem 3 p.10，Corollary 1 p.11；J. Math. Anal. Appl. 400 (2013), 211–221，DOI 10.1016/j.jmaa.2012.10.033。"
+[Q114L]: https://arxiv.org/pdf/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, arXiv:quant-ph/9603005v2；§1.3 (1.4)–(1.9) PDF p.5／印刷p.5，Definition 6 PDF p.10／印刷p.10；Rev. Math. Phys. 9 (1997), 29–58，DOI 10.1142/S0129055X97000038。"
+
+[Q114VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "原全态全效应域及107—113章的条件重构。"
+
+## 追加锚（本行以下为增补区）
