@@ -69,6 +69,8 @@ def conclusion (p : Parameters.{u, v, w, z})
       (∀ σ τ, Relation.ReflTransGen (fun i j => N i j ≠ 0) σ τ) ∧
       (∀ σ τ, Relation.ReflTransGen (fun i j => algebraMap p.K p.L (N i j) ≠ 0) σ τ) ∧
       Irreducible (_root_.D5.S3.Quantum.Algebra.FixedDiagonalDeterminant.rowMatrix
+        (N.map (algebraMap p.K p.L))).det ∧
+      Irreducible (_root_.D5.S3.Quantum.Algebra.FixedDiagonalDeterminant.diagonalMatrix
         (N.map (algebraMap p.K p.L))).det
 
 abbrev arena : Arena where

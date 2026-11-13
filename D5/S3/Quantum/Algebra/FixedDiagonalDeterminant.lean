@@ -12,6 +12,7 @@ public import Mathlib.LinearAlgebra.Matrix.Adjugate
 public import Mathlib.Algebra.MvPolynomial.PDeriv
 public import Mathlib.Algebra.MvPolynomial.NoZeroDivisors
 public import Mathlib.Algebra.MvPolynomial.Nilpotent
+public import Mathlib.RingTheory.Localization.FractionRing
 public import Mathlib.Tactic
 
 /-! Fixed coefficients and independent row parameters. -/
@@ -31,6 +32,36 @@ variable {k ι : Type*} [Field k] [Fintype ι] [DecidableEq ι]
 /-- The row-parameter matrix; no matrix entry is made into an independent variable. -/
 def rowMatrix (N : Matrix ι ι k) : Matrix ι ι (MvPolynomial ι k) :=
   1 + diagonal (fun i => X i) * N.map (C : k →+* MvPolynomial ι k)
+
+/-- Independent diagonal parameters added to the same fixed coefficients. -/
+def diagonalMatrix (N : Matrix ι ι k) : Matrix ι ι (MvPolynomial ι k) :=
+  diagonal (fun i => X i) + N.map (C : k →+* MvPolynomial ι k)
+
+private lemma reciprocal_matrix {A : Type*} [CommRing A] (f : k →+* A)
+    (x : ι → Aˣ) (N : Matrix ι ι k) :
+    (rowMatrix N).map (eval₂Hom f (fun i => (x i : A))) =
+      diagonal (fun i => (x i : A)) *
+        (diagonalMatrix N).map (eval₂Hom f (fun i => ((x i)⁻¹ : Aˣ))) := by
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    simp [rowMatrix, diagonalMatrix, Matrix.diagonal_mul, mul_add]
+  · simp [rowMatrix, diagonalMatrix, Matrix.diagonal_mul, Matrix.diagonal_apply,
+      Matrix.one_apply, hij]
+
+/-- Reciprocal coordinates multiply the diagonal determinant by precisely the
+product of the coordinates. The formula applies in any commutative ring when
+the coordinates are units, including a Laurent polynomial ring. -/
+theorem reciprocal_determinant {A : Type*} [CommRing A] (f : k →+* A)
+    (x : ι → Aˣ) (N : Matrix ι ι k) :
+    eval₂Hom f (fun i => (x i : A)) (rowMatrix N).det =
+      (∏ i, (x i : A)) *
+        eval₂Hom f (fun i => ((x i)⁻¹ : Aˣ)) (diagonalMatrix N).det := by
+  rw [RingHom.map_det]
+  change ((rowMatrix N).map _).det = _
+  rw [reciprocal_matrix, Matrix.det_mul, Matrix.det_diagonal]
+  congr 1
+  exact ((eval₂Hom f (fun i => ((x i)⁻¹ : Aˣ))).map_det _).symm
 
 private def derivativeMatrix (i : ι) (M : Matrix ι ι (MvPolynomial ι k)) :=
   M.map (pderiv i)
@@ -344,6 +375,199 @@ theorem row_determinant_irreducible [Nontrivial ι] (N : Matrix ι ι k)
   have hgfij : pderiv i (pderiv j f) = 0 := by rw [hfj, map_zero]
   have hggij : pderiv i (pderiv j g) = 0 := by rw [pderiv_comm, hgi, map_zero]
   have hh := rayleigh_nonzero N hij (hN i j) (hN j i)
+  rw [hfg] at hh
+  apply hh
+  simp only [pderiv_mul, map_add, hgi, hfj, hgfij, hggij, mul_zero, zero_mul, add_zero, zero_add]
+  ring
+
+private abbrev rationalMap : MvPolynomial ι k →+* FractionRing (MvPolynomial ι k) :=
+  algebraMap _ _
+
+private def coordinateUnit (i : ι) : (FractionRing (MvPolynomial ι k))ˣ :=
+  Units.mk0 (rationalMap (X i))
+    (by
+      intro hz
+      apply X_ne_zero (R := k) i
+      exact (IsFractionRing.injective (MvPolynomial ι k) (FractionRing (MvPolynomial ι k)))
+        (by simpa only [map_zero] using hz))
+
+private lemma coordinate_eval :
+    eval₂Hom (rationalMap.comp C) (fun i => (coordinateUnit (k := k) i :
+      FractionRing (MvPolynomial ι k))) = rationalMap := by
+  ext <;> simp [coordinateUnit, RingHom.comp_apply]
+
+private lemma diagonal_determinant_ne_zero (N : Matrix ι ι k) :
+    (diagonalMatrix N).det ≠ 0 := by
+  intro hz
+  have h := reciprocal_determinant (rationalMap.comp C) (coordinateUnit (k := k)) N
+  rw [coordinate_eval, hz, map_zero, mul_zero] at h
+  exact determinant_ne_zero N
+    ((IsFractionRing.injective (MvPolynomial ι k) (FractionRing (MvPolynomial ι k)))
+      (by simpa only [map_zero] using h))
+
+private lemma diagonal_adjugate_nonzero (N : Matrix ι ι k) {i j : ι}
+    (h : Relation.ReflTransGen (fun a b => N a b ≠ 0) i j) :
+    (diagonalMatrix N).adjugate i j ≠ 0 := by
+  intro hz
+  let f := (rationalMap (k := k) (ι := ι)).comp C
+  let x := coordinateUnit (k := k) (ι := ι)
+  let ε := eval₂Hom f (fun a => ((x a)⁻¹ : (FractionRing (MvPolynomial ι k))ˣ))
+  have hr : (rowMatrix N).map rationalMap =
+      diagonal (fun a => (x a : FractionRing (MvPolynomial ι k))) *
+        (diagonalMatrix N).map ε := by
+    have he : eval₂Hom f (fun a => (x a : FractionRing (MvPolynomial ι k))) =
+        rationalMap := coordinate_eval
+    have hh := reciprocal_matrix f x N
+    rw [he] at hh
+    exact hh
+  have ha : (rowMatrix N).adjugate.map rationalMap =
+      (diagonalMatrix N).adjugate.map ε *
+        diagonal (fun a => ∏ b ∈ Finset.univ.erase a,
+          (x b : FractionRing (MvPolynomial ι k))) := by
+    change rationalMap.mapMatrix _ = _
+    rw [RingHom.map_adjugate]
+    change ((rowMatrix N).map rationalMap).adjugate = _
+    rw [hr, Matrix.adjugate_mul_distrib, Matrix.adjugate_diagonal]
+    congr 1
+    exact (ε.map_adjugate _).symm
+  have hh := congrArg (fun A : Matrix ι ι (FractionRing (MvPolynomial ι k)) => A i j) ha
+  simp only [Matrix.map_apply, Matrix.mul_diagonal, hz, map_zero, zero_mul] at hh
+  exact adjugate_nonzero_of_reachable N h
+    ((IsFractionRing.injective (MvPolynomial ι k) (FractionRing (MvPolynomial ι k)))
+      (by simpa only [map_zero] using hh))
+
+private lemma diagonal_derivative (N : Matrix ι ι k) (i : ι) :
+    derivativeMatrix i (diagonalMatrix N) = diagonal (Pi.single i 1) := by
+  ext a b
+  by_cases hab : a = b
+  · subst b
+    simp [derivativeMatrix, diagonalMatrix, Pi.single_apply, pderiv_X, eq_comm]
+  · simp [derivativeMatrix, diagonalMatrix, Matrix.diagonal_apply, hab]
+
+private lemma diagonal_adjugate_column_derivative (N : Matrix ι ι k) (i j : ι) :
+    pderiv i ((diagonalMatrix N).adjugate j i) = 0 := by
+  rw [Matrix.adjugate_apply]
+  apply derivative_det_zero
+  intro a b
+  by_cases hai : a = i
+  · subst a
+    rw [Matrix.updateRow_self]
+    by_cases hjb : j = b <;> simp [Pi.single_apply, hjb]
+  · rw [Matrix.updateRow_ne hai]
+    have hx : pderiv i (X a : MvPolynomial ι k) = 0 := pderiv_X_of_ne hai
+    by_cases hab : a = b
+    · subst b
+      simp only [diagonalMatrix, Matrix.add_apply, Matrix.diagonal_apply_eq, Matrix.map_apply]
+      rw [map_add, hx, pderiv_C, add_zero]
+    · simp [diagonalMatrix, Matrix.diagonal_apply, hab]
+
+private lemma diagonal_determinant_derivative (N : Matrix ι ι k) (i : ι) :
+    pderiv i (diagonalMatrix N).det = (diagonalMatrix N).adjugate i i := by
+  let M := diagonalMatrix N
+  have h := congrArg (fun A : Matrix ι ι (MvPolynomial ι k) => A i i)
+    (congrArg (derivativeMatrix i) (Matrix.mul_adjugate M))
+  rw [derivative_mul, diagonal_derivative] at h
+  have hz : (M * derivativeMatrix i M.adjugate) i i = 0 := by
+    simp [Matrix.mul_apply, derivativeMatrix, M, diagonal_adjugate_column_derivative]
+  simp only [Matrix.add_apply] at h
+  rw [hz, add_zero, Matrix.diagonal_mul] at h
+  simpa [derivativeMatrix] using h.symm
+
+private lemma diagonal_rayleigh_nonzero (N : Matrix ι ι k) {i j : ι} (hij : i ≠ j)
+    (hijN : Relation.ReflTransGen (fun a b => N a b ≠ 0) i j)
+    (hjiN : Relation.ReflTransGen (fun a b => N a b ≠ 0) j i) :
+    pderiv i (diagonalMatrix N).det * pderiv j (diagonalMatrix N).det -
+      (diagonalMatrix N).det * pderiv i (pderiv j (diagonalMatrix N).det) ≠ 0 := by
+  let M := diagonalMatrix N
+  let G := M.adjugate
+  have hbase := derivative_adjugate i M
+  rw [diagonal_derivative] at hbase
+  have h := congrArg (fun B : Matrix ι ι (MvPolynomial ι k) => B j j) hbase
+  have hs : ((G * diagonal (Pi.single i 1) * G) : Matrix ι ι (MvPolynomial ι k)) j j =
+      G j i * G i j := by
+    simp [Matrix.mul_apply, Matrix.diagonal_apply, Pi.single_apply, Finset.mul_sum]
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] at h
+  rw [hs] at h
+  change G j i * G i j + M.det * pderiv i (G j j) = pderiv i M.det * G j j at h
+  have hd : ∀ a, pderiv a M.det = G a a := diagonal_determinant_derivative N
+  have heq : pderiv i M.det * pderiv j M.det - M.det * pderiv i (pderiv j M.det) =
+      G j i * G i j := by
+    rw [hd j]
+    change pderiv i M.det * G j j - M.det * pderiv i (G j j) = _
+    linear_combination -h
+  change pderiv i M.det * pderiv j M.det - M.det * pderiv i (pderiv j M.det) ≠ 0
+  rw [heq]
+  exact mul_ne_zero (diagonal_adjugate_nonzero N hjiN) (diagonal_adjugate_nonzero N hijN)
+
+private lemma diagonal_multiaffine (N : Matrix ι ι k) (i : ι) :
+    (diagonalMatrix N).det.degreeOf i ≤ 1 := by
+  have he (a b : ι) : (diagonalMatrix N a b).degreeOf i ≤ if a = i then 1 else 0 := by
+    simp only [diagonalMatrix, Matrix.add_apply, Matrix.map_apply]
+    apply (degreeOf_add_le _ _ _).trans
+    apply max_le
+    · by_cases hab : a = b
+      · subst b
+        simp [degreeOf_X, eq_comm]
+      · simp [Matrix.diagonal_apply, hab]
+    · simp
+  rw [Matrix.det_apply]
+  apply (degreeOf_sum_le i _ _).trans
+  apply Finset.sup_le
+  intro σ _
+  have hp : degreeOf i (∏ a, diagonalMatrix N (σ a) a) ≤ 1 := by
+    apply (degreeOf_prod_le _ _ _).trans
+    calc
+      ∑ a, degreeOf i (diagonalMatrix N (σ a) a) ≤ ∑ a, if σ a = i then 1 else 0 :=
+        Finset.sum_le_sum (fun a _ => he (σ a) a)
+      _ = 1 := by simp [← Equiv.eq_symm_apply]
+  rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs <;>
+    simpa [hs, degreeOf_neg] using hp
+
+/-- Strong connectivity of the actual fixed nonzero support suffices for
+irreducibility of the determinant with independent diagonal parameters. -/
+theorem diagonal_determinant_irreducible [Nontrivial ι] (N : Matrix ι ι k)
+    (hN : ∀ i j, Relation.ReflTransGen (fun a b => N a b ≠ 0) i j) :
+    Irreducible (diagonalMatrix N).det := by
+  classical
+  have hf := diagonal_determinant_ne_zero N
+  have hu : ¬ IsUnit (diagonalMatrix N).det := by
+    intro hu
+    obtain ⟨c, _, hc⟩ := isUnit_iff_eq_C_of_isReduced.mp hu
+    obtain ⟨i, j, hij⟩ := exists_pair_ne ι
+    have hh := diagonal_rayleigh_nonzero N hij (hN i j) (hN j i)
+    simp [hc] at hh
+  refine ⟨hu, ?_⟩
+  intro f g hfg
+  by_contra hn
+  obtain ⟨hfu, hgu⟩ := not_or.mp hn
+  have hfn : f ≠ 0 := left_ne_zero_of_mul (hfg ▸ hf)
+  have hgn : g ≠ 0 := right_ne_zero_of_mul (hfg ▸ hf)
+  have hd : Disjoint f.vars g.vars := by
+    apply Finset.disjoint_left.mpr
+    intro i hif hig
+    have hdf := mem_vars_iff_degreeOf_ne_zero.mp hif
+    have hdg := mem_vars_iff_degreeOf_ne_zero.mp hig
+    have hh := diagonal_multiaffine N i
+    rw [hfg, degreeOf_mul_eq hfn hgn] at hh
+    omega
+  have hv (p : MvPolynomial ι k) (hp : p ≠ 0) (hpu : ¬ IsUnit p) : p.vars.Nonempty := by
+    by_contra hn
+    have hc := vars_eq_empty_iff_eq_C.mp (Finset.not_nonempty_iff_eq_empty.mp hn)
+    have hp0 : p.coeff 0 ≠ 0 := by
+      intro hz
+      apply hp
+      simpa [hz] using hc
+    exact hpu (hc ▸ (isUnit_iff_ne_zero.mpr hp0).map C)
+  obtain ⟨i, hi⟩ := hv f hfn hfu
+  obtain ⟨j, hj⟩ := hv g hgn hgu
+  have hig : i ∉ g.vars := fun h => Finset.disjoint_left.mp hd hi h
+  have hjf : j ∉ f.vars := fun h => Finset.disjoint_left.mp hd h hj
+  have hij : i ≠ j := by intro h; exact hig (h ▸ hj)
+  have hgi := pderiv_eq_zero_of_notMem_vars hig
+  have hfj := pderiv_eq_zero_of_notMem_vars hjf
+  have hgfij : pderiv i (pderiv j f) = 0 := by rw [hfj, map_zero]
+  have hggij : pderiv i (pderiv j g) = 0 := by rw [pderiv_comm, hgi, map_zero]
+  have hh := diagonal_rayleigh_nonzero N hij (hN i j) (hN j i)
   rw [hfg] at hh
   apply hh
   simp only [pderiv_mul, map_add, hgi, hfj, hgfij, hggij, mul_zero, zero_mul, add_zero, zero_add]

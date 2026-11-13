@@ -35,7 +35,8 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
         var coordinates = Call("Map", omega, k);
         var support = And(Call("StronglyConnected", Call("nonzeroSupport", m)),
             Call("StronglyConnected", Call("nonzeroSupport", Call("map", Call("algebraMap", k, l), m))),
-            Call("Irreducible", Call("det", Call("rowMatrix", Call("map", Call("algebraMap", k, l), m)))));
+            Call("Irreducible", Call("det", Call("rowMatrix", Call("map", Call("algebraMap", k, l), m)))),
+            Call("Irreducible", Call("det", Call("diagonalMatrix", Call("map", Call("algebraMap", k, l), m)))));
         var definitions = All("n", Call("LinearMap", k, coordinates, coordinates),
             Imp(Equal(n, Call("compose", Call("linear", e), Call("baseChange", k, Call("actualOperator", w, a)),
                 Call("linear", Call("inverse", e)))),
@@ -57,7 +58,7 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Directed support and row-parameter determinant of the actual octic window operator.", H("Actual octic support connectivity"),
+        "Directed support and parameter determinants of the actual octic window operator.", H("Actual octic support connectivity"),
         Blocks(
             Paragraph(Text(
                 "F has characteristic zero, D/F has degree eight, and W is an arbitrary four dimensional "
@@ -88,9 +89,12 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
                     + "so every edge and every finite path remains present over L. "
                     + "The fixed-matrix row-parameter theorem now proves irreducibility of the determinant "
                     + "of I plus diag(x) times the coefficient image of this same actual N over L. "
+                    + "The diagonal-parameter theorem proves irreducibility of det(diag(y)+N) for that "
+                    + "same coefficient image, with the same literal embedding labels. "
                     + "No connectivity hypothesis is added to the original window telescope. The theorem "
                     + "does not identify this polynomial with the original multiplication obstruction "
                     + "in its chosen original basis; that normalization and coordinate bridge remain separate. "
-                    + "The diagonal-plus-N determinant and its Laurent inversion bridge also remain separate."))),
+                    + "The reciprocal determinant identity applies to this same N in any commutative "
+                    + "coefficient ring with unit coordinates, including the Laurent polynomial ring."))),
                 DescribeRole.Theorem))));
 }

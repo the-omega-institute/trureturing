@@ -27,6 +27,7 @@ internal sealed class FixedDiagonalDeterminantDocument : IScribeDocumentDefiniti
         nontrivial ? Instance("Nontrivial", V("Omega")) : Sp,
         All("N", Call("Matrix", V("Omega"), V("Omega"), V("K")), body)));
     private static Formula Row => Call("rowMatrix", V("N"));
+    private static Formula Diagonal => Call("diagonalMatrix", V("N"));
     private static Formula RowDefinition => Context(Equal(Row,
         new Formula.Binary(D(1), FormulaBinaryOperator.Add,
             new Formula.Binary(Call("diagonal", Call("X", V("Omega"))), FormulaBinaryOperator.Multiply,
@@ -34,6 +35,18 @@ internal sealed class FixedDiagonalDeterminantDocument : IScribeDocumentDefiniti
     private static Formula Irreducibility => Context(Imp(
         All("i j", V("Omega"), Call("ReflTransGen", Call("nonzeroSupport", V("N")), V("i"), V("j"))),
         Call("Irreducible", Call("det", Row))), true);
+    private static Formula DiagonalDefinition => Context(Equal(Diagonal,
+        new Formula.Binary(Call("diagonal", Call("X", V("Omega"))), FormulaBinaryOperator.Add,
+            Call("map", Call("coefficientEmbedding", V("K"), V("Omega")), V("N")))), false);
+    private static Formula DiagonalIrreducibility => Context(Imp(
+        All("i j", V("Omega"), Call("ReflTransGen", Call("nonzeroSupport", V("N")), V("i"), V("j"))),
+        Call("Irreducible", Call("det", Diagonal))), true);
+    private static Formula Reciprocal => Context(All("A", V("Type"), Seq(
+        Instance("CommRing", V("A")), All("f", Call("RingHom", V("K"), V("A")),
+        All("x", Call("Map", V("Omega"), Call("Units", V("A"))), Equal(
+            Call("eval", V("f"), Call("values", V("x")), Call("det", Row)),
+            new Formula.Binary(Call("product", Call("values", V("x"))), FormulaBinaryOperator.Multiply,
+                Call("eval", V("f"), Call("inverseValues", V("x")), Call("det", Diagonal)))))))), false);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Irreducibility for the row-parameter determinant of a fixed matrix.",
@@ -48,6 +61,22 @@ internal sealed class FixedDiagonalDeterminantDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
                     "The matrix is I plus diag(x) times N. Its determinant has constant coefficient one."))),
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("diagonal-matrix"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/FixedDiagonalDeterminant.diagonalMatrix"),
+                H("Fixed matrix plus diagonal parameters"), StatementSource.FromAuthor(Disp(DiagonalDefinition)),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "Only the diagonal parameters vary; every entry of N remains a coefficient."))),
+                DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("reciprocal-determinant"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/FixedDiagonalDeterminant.reciprocal_determinant"),
+                H("Reciprocal unit coordinates"), StatementSource.FromAuthor(Disp(Reciprocal)),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "values(x) and inverseValues(x) are the coordinate values of the units x and their "
+                    + "inverses. product multiplies those values over all labels. Factoring diag(x) from "
+                    + "diag(inverseValues(x))+N gives I+diag(x)N. Taking determinants gives the formula. "
+                    + "The product is itself a unit, so the formula applies without introducing a "
+                    + "nonunit scalar on the coordinate torus, also over a Laurent polynomial ring."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("row-determinant-irreducible"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/FixedDiagonalDeterminant.row_determinant_irreducible"),
                 H("Irreducibility from the actual directed support"),
@@ -69,7 +98,22 @@ internal sealed class FixedDiagonalDeterminantDocument : IScribeDocumentDefiniti
                     Paragraph(Text("The fixed-matrix irreducibility criterion is classical; compare "
                     + "Al Ahmadieh, The Fiber of the principal minor map, arXiv:2309.00806v2, "
                     + "Lemmas 2.2, 4.2 and 5.1. This proof supplies its row-scaled form directly. "
-                    + "It does not supply the diagonal-plus-N statement, a Laurent inversion equivalence, "
-                    + "or an identification with the original multiplication obstruction polynomial."))),
+                    + "An identification with the original multiplication obstruction polynomial "
+                    + "requires its original basis and normalization correspondence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("diagonal-determinant-irreducible"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/FixedDiagonalDeterminant.diagonal_determinant_irreducible"),
+                H("Irreducibility of the diagonal-plus-fixed-matrix determinant"),
+                StatementSource.FromAuthor(Disp(DiagonalIrreducibility)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Embed the polynomial ring in its fraction field, where every coordinate X(i) "
+                    + "is a unit. The reciprocal matrix identity and the multiplicative adjugate identity "
+                    + "transfer every nonzero adjugate entry along the directed support from the row "
+                    + "matrix to the diagonal matrix. Differentiating with respect to y(i) now inserts "
+                    + "the elementary diagonal matrix at i, so a two-parameter Rayleigh difference is "
+                    + "the product of the two opposite adjugate entries. It is nonzero. "
+                    + "Multiaffinity again forces the variables of any two nonconstant factors to be "
+                    + "disjoint, contradicting that Rayleigh difference. This proves the fixed matrix "
+                    + "criterion over every field in every size at least two."))),
                 DescribeRole.Theorem))));
 }

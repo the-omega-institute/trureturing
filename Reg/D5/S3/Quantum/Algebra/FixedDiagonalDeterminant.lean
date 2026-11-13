@@ -94,4 +94,88 @@ def source_registration : Registration arena.{u, v}
       exact nomatch e
   dependence := dependence
 
+def diagonalConclusion (p : Parameters.{u, v}) (N observed : Matrix p.I p.I p.k) : Prop :=
+  (∀ i j, Relation.ReflTransGen (fun a b => N a b ≠ 0) i j) →
+    Irreducible (diagonalMatrix observed).det
+
+abbrev diagonalArena : Arena where
+  signature := signature.{u, v}
+  Law R := ∀ (p : Parameters.{u, v}) (N : signature.State p),
+    diagonalConclusion p N (R.readout () p N)
+
+theorem diagonal_full_telescope_bridge :
+    (type_of% (@diagonal_determinant_irreducible.{u, v})) ↔
+      diagonalArena.{u, v}.Law actual := by
+  constructor
+  · intro h p N hN
+    exact @h p.k p.I p.field p.finite p.decidable p.nontrivial N hN
+  · intro h k I fieldInst finiteInst decidableInst nontrivialInst N hN
+    let p : Parameters := {
+      k := k
+      I := I
+      field := fieldInst
+      finite := finiteInst
+      decidable := decidableInst
+      nontrivial := nontrivialInst }
+    exact h p N hN
+
+universe w
+
+structure ReciprocalParameters where
+  k : Type u
+  I : Type v
+  A : Type w
+  [field : Field k]
+  [finite : Fintype I]
+  [decidable : DecidableEq I]
+  [ring : CommRing A]
+  f : k →+* A
+  x : I → Aˣ
+
+attribute [instance] ReciprocalParameters.field ReciprocalParameters.finite
+  ReciprocalParameters.decidable ReciprocalParameters.ring
+
+abbrev reciprocalSignature : Signature where
+  Params := ReciprocalParameters.{u, v, w}
+  State p := Matrix p.I p.I p.k
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix p.I p.I p.k
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def reciprocalActual : Realization reciprocalSignature.{u, v, w} := realize reciprocalSignature
+  (fun _ _ N => N) (fun e => nomatch e)
+
+def reciprocalConclusion (p : ReciprocalParameters.{u, v, w})
+    (N observed : Matrix p.I p.I p.k) : Prop :=
+  MvPolynomial.eval₂Hom p.f (fun i => (p.x i : p.A)) (rowMatrix observed).det =
+    (∏ i, (p.x i : p.A)) *
+      MvPolynomial.eval₂Hom p.f (fun i => ((p.x i)⁻¹ : p.Aˣ)) (diagonalMatrix N).det
+
+abbrev reciprocalArena : Arena where
+  signature := reciprocalSignature.{u, v, w}
+  Law R := ∀ (p : ReciprocalParameters.{u, v, w}) (N : reciprocalSignature.State p),
+    reciprocalConclusion p N (R.readout () p N)
+
+theorem reciprocal_full_telescope_bridge :
+    (type_of% (@reciprocal_determinant.{u, v, w})) ↔
+      reciprocalArena.{u, v, w}.Law reciprocalActual := by
+  constructor
+  · intro h p N
+    exact @h p.k p.I p.field p.finite p.decidable p.A p.ring p.f p.x N
+  · intro h k I fieldInst finiteInst decidableInst A ringInst f x N
+    let p : ReciprocalParameters := {
+      k := k
+      I := I
+      A := A
+      field := fieldInst
+      finite := finiteInst
+      decidable := decidableInst
+      ring := ringInst
+      f := f
+      x := x }
+    exact h p N
+
 end Reg.D5.S3.Quantum.Algebra.FixedDiagonalDeterminant

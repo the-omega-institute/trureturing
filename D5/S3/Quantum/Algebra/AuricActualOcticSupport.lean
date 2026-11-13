@@ -40,7 +40,8 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
       let N := LinearMap.toMatrix' n
       (∀ σ τ, Relation.ReflTransGen (fun i j => N i j ≠ 0) σ τ) ∧
       (∀ σ τ, Relation.ReflTransGen (fun i j => algebraMap K L (N i j) ≠ 0) σ τ) ∧
-      Irreducible (FixedDiagonalDeterminant.rowMatrix (N.map (algebraMap K L))).det := by
+      Irreducible (FixedDiagonalDeterminant.rowMatrix (N.map (algebraMap K L))).det ∧
+      Irreducible (FixedDiagonalDeterminant.diagonalMatrix (N.map (algebraMap K L))).det := by
   classical
   obtain ⟨_, e, he, hn⟩ := general43_2_cut_free K W hD hW hE a ha
   let U := (W.baseChange K).map e.toLinearMap
@@ -99,7 +100,8 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
   refine ⟨e, he, hreach, hreachL, ?_⟩
   have hcard : 1 < Fintype.card (D →ₐ[F] K) := by rw [hΩ]; decide
   haveI : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp hcard
-  exact FixedDiagonalDeterminant.row_determinant_irreducible _ hreachL
+  exact ⟨FixedDiagonalDeterminant.row_determinant_irreducible _ hreachL,
+    FixedDiagonalDeterminant.diagonal_determinant_irreducible _ hreachL⟩
 
 end ActualSupport
 
