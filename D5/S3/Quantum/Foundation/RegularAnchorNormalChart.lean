@@ -77,7 +77,7 @@ private theorem constant_normal
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     (p : pure C u) (a : ExclusionChart C u p)
-    (e : V →ₗ[ℝ] ℝ) (_he : common C u p e)
+    (e : V →ₗ[ℝ] ℝ)
     (huniq : ∀ f, common C u p f → f = e)
     (f : V →ₗ[ℝ] ℝ) (hf : f ∈ zeroPositive C u p)
     (hzero : slope a f.toContinuousLinearMap = 0) :
@@ -95,7 +95,7 @@ private theorem constant_normal
     have hn := OriginalWidthContact.normalized_effect (base_compact hc hs) hs
       (a := (p : V)) (z := q)
       (fun x hx => by simpa only [hf.2] using hf.1 x hx.1)
-      (fun x hx => hmax x hx) (by simpa only [hf.2] using hqpos)
+      (fun x hx => hmax x hx) (by simpa only [hf.2, sub_zero] using hqpos)
     simpa only [hf.2, sub_zero, zero_smul, hqc] using hn
   have hcommon : common C u p (u - b) := by
     refine ⟨⟨?_, ?_⟩, ?_⟩
@@ -179,8 +179,8 @@ private theorem positive_coordinates_injective
     have hv := congrArg Prod.snd heq
     change slope a f.toContinuousLinearMap = slope a k.toContinuousLinearMap at hv
     simpa only [map_add, ← hv] using hfslope
-  have hfconst := constant_normal hc hs hg p a e he huniq (f + d) hfadd hfslope
-  have hkconst := constant_normal hc hs hg p a e he huniq (k + d) hkadd hkslope
+  have hfconst := constant_normal hc hs hg p a e huniq (f + d) hfadd hfslope
+  have hkconst := constant_normal hc hs hg p a e huniq (k + d) hkadd hkslope
   have hcenter := congrArg Prod.fst heq
   change f (a.param 0) = k (a.param 0) at hcenter
   apply add_right_cancel (b := d)
@@ -382,7 +382,8 @@ theorem regular_anchor_native
     simpa [Module.finrank_prod, Module.finrank_self, ThreeSpace, finrank_euclideanSpace_fin] using hh
   refine ⟨⟨E, hE, H, hchart, hspan, hanchor, complement_normal he,
     complement_chart he (nativeChart a), ?_, ⟨3 * r⁻¹, by positivity, hbound⟩,
-    fun x hx => ExclusionWidthCompactness.comparison_zero_iff hs hg p hx, hsalient,
+    fun x hx => ExclusionWidthCompactness.comparison_zero_iff hs hg p hx,
+    hsalient,
     SingleLabelNormalBody.chart_unit_linear (nativeChart a), hdim⟩⟩
   intro x hx hxp
   have hnonneg := (complement_normal he).1 x hx.1
