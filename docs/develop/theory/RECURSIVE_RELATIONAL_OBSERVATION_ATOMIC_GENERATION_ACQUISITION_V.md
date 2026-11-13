@@ -2156,8 +2156,10 @@ quiescence and progress conditions, compute (V.17) in ReadEpoch's
 admitted phase using only the current source and owned-record rights of
 Definition 17.1. Reservation covers the finite scan and its actual
 backing. Couple the original request grants and denials; no new grant or
-source authority is supplied. Under these conditions the two
-representations have identical:
+source authority is supplied. The installed driver fixes the read rule.
+A uniform chain decoder needs no per-seed selector; a mixed rule must
+retain and charge every actual mode tag, descriptor and selection read.
+Under these conditions the two representations have identical:
 
 1. epoch values, header identities and the exact acquisition-version field
    required by V6.2 (the initial token $v_0$ is used only as the chain
@@ -2259,9 +2261,9 @@ every old-sample occurrence, identity and value. Each distinct member of
 $R$ is therefore absent only from the derived protected-payload
 coordinate; every field in $F\setminus R$ remains. Since $R\cap M$ is
 empty, subtracting the two finite counts gives (V.19). Separate
-equal-valued sample fields are common
-summands, whereas shared fields are one common summand, not two. No
-independence of the values is used. $\square$
+equal-valued sample fields are common summands, whereas shared fields
+are one common summand, not two. No independence of the values is used.
+$\square$
 
 ## 18. The finite epoch-cut distinction and its domain
 
@@ -2269,20 +2271,22 @@ independence of the values is used. $\square$
 At a returned cut of the finite known-alpha entrance, let $B^{-}$ retain
 the actual current native source with its parent/child and arity fields,
 its original root and full ancestral tapes, the current root/seed-header
-and boundary bindings, current rights, enrolled status and Ready state.
-Reference equality and the retained incidence or descriptor bindings keep
-their original meanings. The projection omits:
+and boundary bindings, current rights on that retained backing, enrolled
+status and Ready state. Reference equality and the retained incidence or
+descriptor bindings keep their original meanings. The projection omits:
 
 1. the protected epoch value and the alpha/beta result of the epoch's
    enumeration or enrollment Tag read;
 2. any retained Tag, ReadCurrent or ReadEpoch sample that identifies that
-   epoch value, including its payload, sample identity, acquisition version
-   and links that reveal a different occurrence count;
+   epoch value, including its payload, sample identity, acquisition version,
+   object-specific rights and links that reveal a different occurrence count;
 3. the initial and current version tokens, all predecessor/event-token
    data, sample-version fields, and any checkpoint or descriptor locating
-   the epoch in the full ancestral history; and
-4. post-epoch request/action records, their counts and links, when they
-   distinguish a pre-epoch occurrence from a post-epoch occurrence.
+   the epoch in the full ancestral history, together with the references
+   and object-specific rights to this omitted backing; and
+4. post-epoch request/action records, their counts, links and
+   object-specific rights, when they distinguish a pre-epoch occurrence
+   from a post-epoch occurrence.
 
 The full successful native word remains recoverable from the current
 source and tapes by AA19.2; only its epoch designation is omitted.
@@ -2398,6 +2402,7 @@ chosen frontier representation and charge the following coordinates:
 | --- | --- | --- |
 | Separately stored protected payload | Distinct fields $F\setminus M$ | Fields $(F\setminus R)\setminus M$, with $R,M$ defined by actual backing identity in Proposition 17.4 |
 | Enrollment and label metadata | Actual seed headers, list entries, markers, record identities and links | Same retained material; no disappearance of a guard or exposed record identity |
+| Representation selection | Fixed protected-read rule | Fixed uniform chain rule, or every actually backed mode tag/descriptor and selection read of a mixed rule |
 | Source and tapes | Actual vertices, logical root bindings, parent/child fields and ancestral tapes | Same source and tapes |
 | Epoch/version backing | Initial token, current-token header and every successful-event token with its predecessor, operand and kind fields | Same objects, fields and reference widths |
 | Immutable samples | Every actual acquired payload, source/header/cut/operand alias, acquisition version and record link | Same immutable contents and identities; a shared protected/sample field remains |
@@ -2473,11 +2478,12 @@ retained work-capacity coordinates have the charges of Proposition
 Only one protected alpha/beta payload field is omitted, so $R=\{e_h\}$.
 The equal-valued sample does not turn this difference into zero.
 
-For the shared case, let an actually required immutable enrollment
-sample have $e_h$ itself as its alpha/beta payload field, with its
-actual header, acquisition version, identity and links. Such sharing
-is permitted by the original retained-label/sample interface. There is
-only one payload field, not a label plus an invented duplicate setup
+For the shared case, issue an actual ReadEpoch request at the epoch
+and let its required immutable sample have $e_h$ itself as its
+alpha/beta payload field, with the actual header, acquisition version
+$v_0$, identity and links. Such sharing is permitted by the original
+retained-label/sample interface. There is only one payload field, not a
+label plus an invented duplicate setup
 record. The derived representation must keep that field to preserve
 the old sample. It is therefore outside $R$, giving zero protected
 payload saving for this seed even though chain decoding is available.
