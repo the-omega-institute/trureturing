@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5cf3dd485fc02e000f3e14a3f920ea745d4cae53b17fced9f32e4dea8259536f
+  normalized_sha256: sha256:5cf3dd485fc02e000f3e14a3f920ea745d4cae53b17fced9f32e4dea8259536f
+cas_ref: sha256:5cf3dd485fc02e000f3e14a3f920ea745d4cae53b17fced9f32e4dea8259536f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是119.3标题下对既有来源的解释、前件分离与重叠说明，不是紧随其后的推论119.3。VI97.2的实ROG矩阵截面、迹单位及全部纯射线的两片线性拼接和完整射影交叠，是不放大原单位回缩的适用前件；此处不声称EB3+Inj推出这些前件，也不据此借得κ≤1。IX114.6的逐个面函数正延拓及统一预算，与IX119.2在EB3+Inj下用六张原效应构造同一个共同线性正延拓，是来源和量词的比较；不把逐个存在改成同一线性算子，不把重叠表述另立为新命题。本结算不覆盖前邻IX119.2或后邻推论119.3的投影暴露、固定面误差界及成熟锥性质，不把文献说明或消化收据当作Lean证明。有限增益回缩的原单位偏差仍为uPκ-u=(κ-1)e，κ>1时在p上质量放大到κ，既不保原单位也不是相对原单位的TNI；本说明不消除这些限制。
+    previous_atom_id: 6a93daf1f20b326e043b6c294fe48d2caf1d9134bf9edf1e77948ed33b1683ab
+    next_atom_id: ba684823699137b33fa23fbeeee8f5d279a8c575af2d16f9f0d90503b694e7de
