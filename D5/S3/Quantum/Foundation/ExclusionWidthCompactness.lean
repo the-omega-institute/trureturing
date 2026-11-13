@@ -65,7 +65,7 @@ private theorem comparison_attained
     exact ⟨g.toLinearMap, ⟨hg.1, hg.2⟩, hgr⟩
 
 /-- The original minimum definition agrees with existential exclusion on all of K. -/
-private theorem comparison_zero_iff
+theorem comparison_zero_iff
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u)
     {x : V} (hx : x ∈ base C u) :

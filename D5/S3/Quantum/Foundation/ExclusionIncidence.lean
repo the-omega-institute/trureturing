@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.ContinuousFrameSum
 import D5.S3.Quantum.Foundation.OriginalFacePolarity
+import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 import Mathlib.Topology.Sequences
 import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Topology.Semicontinuity.Hemicontinuity
@@ -63,36 +64,6 @@ def incidenceSwap (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) :
   right_inv _ := rfl
   continuous_toFun := by fun_prop
   continuous_invFun := by fun_prop
-
-private theorem comparison_zero_iff_exclusion
-    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
-    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hg : Submodule.span ℝ (C : Set V) = ⊤)
-    (p : pure C u) {x : V} (hx : x ∈ base C u) :
-    comparison C u p x = 0 ↔ x ∈ exclusion C u p := by
-  constructor
-  · intro hzero
-    let F : Set (V →L[ℝ] ℝ) := {f | f ∈ effects C u ∧ f p = 1}
-    have hcompact : IsCompact F := (effects_compact hs hg).inter_right
-      (isClosed_eq (by fun_prop) continuous_const)
-    have hunit : u.toContinuousLinearMap ∈ F := by
-      refine ⟨?_, (pure_mem p).2⟩
-      intro y hy
-      refine ⟨?_, le_rfl⟩
-      by_cases he : y = 0
-      · simp [he]
-      · exact (hs y hy he).le
-    obtain ⟨f, hf, hmin⟩ := hcompact.exists_isMinOn ⟨_, hunit⟩
-      (show ContinuousOn (fun g : V →L[ℝ] ℝ => g x) F by fun_prop)
-    have heq : comparison C u p x = f x :=
-      attained_comparison hx.1 f.toLinearMap hf
-        (fun g hg => hmin (show g.toContinuousLinearMap ∈ F from hg))
-    exact ⟨hx, f.toLinearMap, hf, heq.symm.trans hzero⟩
-  · rintro ⟨_, f, hf, hfx⟩
-    have heq := attained_comparison hx.1 f hf (fun g hg => by
-      rw [hfx]
-      exact (hg.1 x hx.1).1)
-    exact heq.trans hfx
 
 /-- A pure limiting label retains every limit of actual mixed exclusion states.
 The effect interval and base compactness are derived on the original normed space. -/
@@ -180,9 +151,9 @@ private theorem exclusion_lower_sequence {C : PointedCone ℝ V} {u : V →ₗ[�
   have hboundary : exclusion C u p ∩ pure C u ⊆ L := by
     intro q hq
     obtain ⟨qn, hqn, ht⟩ := hO p ⟨q, hq.2⟩
-      ((comparison_zero_iff_exclusion hs hg p hq.1.1).mpr hq.1) pn hp
+      ((ExclusionWidthCompactness.comparison_zero_iff hs hg p hq.1.1).mpr hq.1) pn hp
     exact ⟨fun n => (qn n : V),
-      fun n => (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mp (hqn n),
+      fun n => (ExclusionWidthCompactness.comparison_zero_iff hs hg (pn n) (pure_mem (qn n))).mp (hqn n),
       continuous_subtype_val.tendsto _ |>.comp ht⟩
   have hhull : exclusion C u p = convexHull ℝ (exclusion C u p ∩ pure C u) := by
     obtain ⟨b⟩ := hB p
@@ -257,16 +228,16 @@ private theorem edge_lifting_iff_projection_open
     have hmem : p ∈ firstProjection C u '' W := by simpa using hnot
     obtain ⟨z, hz, rfl⟩ := hmem
     obtain ⟨qn, hqn, ht⟩ := hO z.1.1 z.1.2
-      ((comparison_zero_iff_exclusion hs hg z.1.1 (pure_mem z.1.2)).mpr z.2) pn hp
+      ((ExclusionWidthCompactness.comparison_zero_iff hs hg z.1.1 (pure_mem z.1.2)).mpr z.2) pn hp
     let zn : ℕ → incidence C u := fun n => ⟨(pn n, qn n),
-      (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mp (hqn n)⟩
+      (ExclusionWidthCompactness.comparison_zero_iff hs hg (pn n) (pure_mem (qn n))).mp (hqn n)⟩
     have hzt : Tendsto zn atTop (𝓝 z) :=
       tendsto_subtype_rng.mpr (hp.prodMk_nhds ht)
     obtain ⟨n, hzn⟩ := (hzt.eventually (hW.mem_nhds hz)).exists
     exact hn n ⟨zn n, hzn, rfl⟩
   · intro hopen p q hq pn hp
     let z : incidence C u := ⟨(p, q),
-      (comparison_zero_iff_exclusion hs hg p (pure_mem q)).mp hq⟩
+      (ExclusionWidthCompactness.comparison_zero_iff hs hg p (pure_mem q)).mp hq⟩
     have hlower : LowerHemicontinuousAt
         (fun r => (firstProjection C u) ⁻¹' {r}) p :=
       (isOpenMap_iff_lowerHemicontinuous.mp hopen) p
@@ -285,7 +256,7 @@ private theorem edge_lifting_iff_projection_open
       · simpa only [firstProjection] using he ▸ (zn n).2
       · exact hfallback (pn n)
     refine ⟨qn, fun n =>
-      (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mpr (hqmem n), ?_⟩
+      (ExclusionWidthCompactness.comparison_zero_iff hs hg (pn n) (pure_mem (qn n))).mpr (hqmem n), ?_⟩
     have hsecond : Tendsto (fun n => (zn n).1.2) atTop (𝓝 q) :=
       (continuous_snd.comp continuous_subtype_val).tendsto z |>.comp ht
     apply hsecond.congr'
@@ -405,25 +376,16 @@ private theorem sphere_eq_extreme [StrictConvexSpace ℝ E] (c : V) (L : E →L[
     (sphereImage c L : Set V) = Set.extremePoints ℝ (ballImage c L : Set V) := by
   let a : E →ᵃ[ℝ] V := (AffineEquiv.constVAdd ℝ V c).toAffineMap.comp L.toLinearMap.toAffineMap
   have ha : Function.Injective a := fun x y h => hL (add_left_cancel h)
-  have him : ∀ x y, a '' openSegment ℝ x y = openSegment ℝ (a x) (a y) :=
-    fun x y => image_openSegment ℝ a x y
   have hext : a '' Set.extremePoints ℝ (Metric.closedBall (0 : E) 1) =
       Set.extremePoints ℝ (a '' Metric.closedBall (0 : E) 1) := by
     ext y
     constructor
     · rintro ⟨x, hx, rfl⟩
-      refine ⟨⟨x, hx.1, rfl⟩, ?_⟩
-      rintro _ ⟨z, hz, rfl⟩ _ ⟨w, hw, rfl⟩ hseg
-      rw [← him] at hseg
-      obtain ⟨t, ht, he⟩ := hseg
-      have htx : t = x := ha he
-      subst t
-      exact congrArg a (hx.2 hz hw ht)
+      exact CircuitBalancedConfirmation.affine_extreme_image _ (convex_closedBall _ _)
+        a ha.injOn hx
     · intro hy
-      obtain ⟨x, hx, rfl⟩ := hy.1
-      refine ⟨x, ⟨hx, ?_⟩, rfl⟩
-      intro z hz w hw hseg
-      exact ha (hy.2 ⟨z, hz, rfl⟩ ⟨w, hw, rfl⟩ ((him z w) ▸ ⟨x, hseg, rfl⟩))
+      obtain ⟨x, _, rfl⟩ := hy.1
+      exact ⟨x, WholePairBallConfirmation.affine_extreme_preimage a ha _ x hy, rfl⟩
   rw [StrictConvexSpace.extremePoints_closedBall_eq_sphere] at hext
   exact hext
 
@@ -608,13 +570,13 @@ theorem original_open_incidence_iff_whole_continuous
     have hqS : (q : V) ∈ S p := by
       change (q : V) ∈ (S p : Set V)
       rw [hS p]
-      exact ⟨q.property, (comparison_zero_iff_exclusion hs hg p (pure_mem q)).mp hq⟩
+      exact ⟨q.property, (ExclusionWidthCompactness.comparison_zero_iff hs hg p (pure_mem q)).mp hq⟩
     choose xn hxn heq using fun n =>
       (S (pn n)).isCompact.exists_infDist_eq_dist (S (pn n)).nonempty (q : V)
     let qn (n : ℕ) : pure C u := ⟨xn n, ((hS (pn n)) ▸ hxn n).1⟩
     refine ⟨qn, ?_, ?_⟩
     · intro n
-      exact (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mpr
+      exact (ExclusionWidthCompactness.comparison_zero_iff hs hg (pn n) (pure_mem (qn n))).mpr
         (((hS (pn n)) ▸ hxn n).2)
     · apply tendsto_subtype_rng.mpr
       apply tendsto_iff_dist_tendsto_zero.mpr
