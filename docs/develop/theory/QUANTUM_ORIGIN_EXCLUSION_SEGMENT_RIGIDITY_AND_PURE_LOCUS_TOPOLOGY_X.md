@@ -3949,7 +3949,7 @@ $$
 
 在 $K$ 上的投影。这里直接使用[SAME_READBACK126.1][Q130SR]的原零关联紧投影构造；该构造只要求 $K,\mathcal E$ 紧及评价连续，不依赖该章随后针对EB3的纤维结论。两集均在 $S$ 内，$A\ne\varnothing$，且任取 $r\in S_p$，零对称给 $p\in D_r\subset B$，所以 $B\ne\varnothing$。
 
-先证 $A\cap B=\varnothing$。否则存在 $r\in S_p$ 使 $A\cap D_r\ne\varnothing$。这个交是非空紧原面，故有一个原纯点 $t$。于是 $r,t\in S_p$ 且 $t\in D_r$，得到 $p,r,t$ 的真实三角，矛盾。交中的原纯点来自原面的极点，不是把任意混态交点当作纯点；此处使用的正是[IX116.1式(IX116.3)][Q130IX]与[SAME_READBACK126.2][Q130SR]的共同真面接口。
+先证 $A\cap B=\varnothing$。否则存在 $r\in S_p$ 使 $A\cap D_r\ne\varnothing$。这个交是非空紧原面，故有一个原纯点 $t$。于是 $r,t\in S_p$ 且 $t\in D_r$，得到 $p,r,t$ 的真实三角，矛盾。交中的原纯点来自原面的极点，不是把任意混态交点当作纯点；这里复用[IX116.1式(IX116.3)][Q130IX]在可变球维数域中的取交点步骤。[SAME_READBACK126.2][Q130SR]在EB3域给出相应的关系平方表述，不将其额外纤维结论用于本条的可变维数域。
 
 $\mathsf D_2(p)$ 给 $P\subset A\cup B$：与 $p$ 相邻的纯点在 $A$ 中；其余纯点由同一个共同邻点 $r\in S_p$ 落入 $D_r\subset B$。现检查每一张完整原球 $D_s$。若 $s\in A$，纯性给 $s\in S_p$，所以 $D_s\subset B$。若 $s\notin A$，则 $s\in B$；可取 $r\in S_p$ 使 $s\in D_r$，零对称给
 
