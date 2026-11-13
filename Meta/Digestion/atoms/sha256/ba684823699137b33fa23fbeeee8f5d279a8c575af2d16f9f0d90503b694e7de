@@ -1,0 +1,41 @@
+**推论119.3（原锥的投影暴露与固定面误差界）。**
+在EB3+Inj下，原 $C$ 的每张面都是 $C$ 的线性幂等投影像，
+即 $C$ 是projectionally exposed。
+每个固定锥面 $\mathcal F$ 有有限常数 $\|P\|$，使
+
+$$
+\operatorname{dist}(x,\mathcal F)\le
+\|P\|\operatorname{dist}(x,C)\qquad(x\in\operatorname{span}\mathcal F).
+\tag{IX119.11}
+$$
+
+证明。球锥用定理119.2；纯射线 $\mathbb R_+r$ 用正投影 $x\mapsto u(x)r$；
+零面和整个锥用零映射和恒等。基面分类穷尽全部锥面。
+若 $P(C)=\mathcal F$ 且 $x\in\operatorname{span}\mathcal F$，则对每个 $y\in C$，
+$Py\in\mathcal F$ 且 $x-Py=P(x-y)$。取范数和下确界即得(IX119.11)。证毕。
+
+成熟的一般蕴含是
+
+$$
+\text{projectionally exposed}\ \Longrightarrow\
+\text{amenable}\ \Longrightarrow\ \text{nice}\ \Longrightarrow\
+\text{facially exposed}.
+\tag{IX119.12}
+$$
+
+准确来源为Lourenço–Roshchina–Saunderson，
+[Amenable cones are particularly nice，arXiv:2011.07745v2，Proposition 2.3][Q119LRS22]
+及其证明，期刊DOI为10.1137/20M138466X。
+该文定义中的投影不要求正交，amenability常数允许依赖面。
+这里的固定面误差界还有上面的直接证明。
+nice意味着每个锥面满足 $C^*+\mathcal F^\perp=\mathcal F^*$，其中右侧使用环境对偶空间；
+它不包含保单位条件或移动法向的连续性。
+
+同三位作者的
+[Inner approximations of convex sets and intersections of projectionally exposed cones，
+arXiv:2501.12717v1，Theorem 1.3、§2.1、§4.2][Q119LRS25]
+构造两张五维投影暴露闭凸锥，其交是amenable而非投影暴露。
+这区分成熟性质，不是本章EB3+Inj的反例；
+该构造没有供应“所有原完整排除集都是三球”的全称条件。
+上述文献也没有把本章正投影的原单位增益自动压到一。
+

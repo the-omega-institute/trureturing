@@ -1,0 +1,34 @@
+**约定 125.1（同一原实现与前件范围）。** 本章的VII103—105指[完整排除面第七卷][Q125VII]，VIII109—111指[排除球第八卷][Q125VIII]，IX116、118、120指[排除球第九卷][Q125IX]，121—122指[THREE_COPY第七卷][Q125T]，123—124指本卷已有章节。取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_b=\{f\in\mathcal E:f(b)=1\},\qquad
+T_b(x)=\min_{f\in\mathcal F_b}f(x),\\
+D_b=\{x\in K:T_b(x)=0\},\qquad
+\mathcal A_b=\{e\in\mathcal F_b:e|_{D_b}=0\},\\
+N_b=\{h\in C^*:h(b)=0\},\qquad
+\mathcal B(b)=N_b\cap\mathcal E,\qquad S_b=\operatorname{span}N_b.
+\end{gathered}
+\tag{Q125.1}
+$$
+
+这里是整个原紧态基、全部原纯点、全部原效应和每个标签的完整排除集合。EB3表示每个 $D_b$ 仿射同构于整个闭三球，Inj表示 $D_b=D_c\Rightarrow b=c$。除125.9保留的裸EB3候选外，本章均取EB3+Inj。定义
+
+$$
+\begin{gathered}
+b\perp c\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(b)=1, f(c)=0,\\
+P_0=\{b\in P:\mathcal A_b\text{ 是单点}\},\qquad
+\mathcal A_b=\{e_b\}\quad(b\in P_0),\\
+\mathcal T=\{b\in P:\exists c,d\in P,
+\ b\perp c, b\perp d, c\perp d\}.
+\end{gathered}
+\tag{Q125.2}
+$$
+
+补效应使原边对称，且 $b\perp c\Longleftrightarrow c\in D_b$，$b\notin D_b$。真实三角只表示三条各自真实的原边。三个非负数学效应在整个 $V$ 上和为 $u$，以及同一实际三结果仪器，是另外两个层次。
+
+直接复用VII103.2、104.1和IX120.2：每个 $D_b$ 是非点紧暴露极大真面，$\mathcal A_b\ne\varnothing$；全部非空真面只有纯单点和完整球；不同完整球相交时仅交于一个原纯点。每个完整球 $F$ 满足 $P\cap F=\partial_{\rm rel}F$、$F=\operatorname{conv}(P\cap F)$。Inj还给每张 $e\in\mathcal A_b$ 的一值面恰为 $\{b\}$，零面恰为 $D_b$；一值面结论包括全部原混态。
+

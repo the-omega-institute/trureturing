@@ -1,0 +1,8 @@
+**定理 123.4（同一锚点、全部方向的正高度）。** 对每个 $p\in P_{\rm reg}$，存在同一个 $\sigma_p>0$，使
+
+$$
+\boxed{\qquad \forall v\in S^2:\quad
+ g_p(a_v)=\max_{D_{q_v}}g_p\ge\sigma_p.\qquad}
+\tag{Q123.14}
+$$
+

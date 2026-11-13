@@ -1,0 +1,60 @@
+**约定 102.4（B1—B3 的条件性供应接口）。** 以下使用已有纸面桥和它们引用的成熟定理，
+保持各自全部输入。供应对应为：
+
+| 供应 | 本层级中的精确输入 | 所用输出与边界 |
+| --- | --- | --- |
+| B1：$S$ 到 Jordan | 对 $q=1,2,3$ 分别取 $(W_q,C_q,u_q,K_q,P_q,\mathcal E_q)$；命题102.3给 $S_q$，效应不受限 | reciprocal least 尺、自对偶正定配对、共同框架谱分解、正面投影及其保纯性，随后有限维 EJA，包括直和 |
+| B2：实际复合与自复合复块 | 实际 $(W_1,W_1,W_2)$；再取 $(W_2,W_1,W_3)$ 及 $(W_1,W_2,W_3)$；各自 B1，正态／效应双乘积、单位、配对和局部层析 | 原扇区的整锥直和、框架秩乘法与实维乘法；一个实际自复合选出任意大小的复矩阵块，三份块的大小是 $n_i n_j n_k$ |
+| B3：共同方向 | 两个三份括号使用同一个原 $W_2$；重括号是 $W_3$ 上恒等映射；原 $\tau_{12}$ 在全部 $C_3$ 上正；全部 B2 及实际产品校准 | 存在一套固定坐标，使原一、二、三份的产品同时为标准产品；结论此处只到三份 |
+
+B1 使用
+[least confirmation、谱与面保纯的完整桥](../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge)，
+特别是其中 “Least confirmation forces face-filter purity” 的结论，及其所调用的
+Barnum–Müller–Ududec，[arXiv:1403.4147v4](https://arxiv.org/abs/1403.4147v4)，定理16。
+该归约的 projectivity、对称转移与 filter purity 均保留；不把 bit symmetry、
+强对称、纯传递或保纯性另塞为输入。
+
+B2 使用
+[实际产品框架与比较因子化](../../../Library/QuantumStates/barnumhilgert2019spectral.md#local-comparison-and-composite-frames)、
+[无连通输入的扇区复合](../../../Library/QuantumStates/barnumhilgert2019spectral.md#sector-composites-without-a-connectedness-input)
+和[一个自复合的复型选择](../../../Library/QuantumStates/barnumhilgert2019spectral.md#complex-sectors-from-a-single-self-composite)。
+正效应产品来自最大界，正态产品来自最小界；张成与分离来自原实张量空间和原配对。
+三份中 $(W_2,W_1)$ 的每个简单扇区复合有秩 $n_i n_j n_k$、实维其平方，
+故供应中的同一分类包含其标量、秩二与更高秩边界。
+不要求比较图连通，也不要求某块非经典。
+
+B3 使用
+[实际矩阵产品的条件正规形](../../../Library/QuantumStates/barnumhilgert2019spectral.md#actual-two-factor-products-after-complex-type-selection)
+及[一个旁观交换与正重括号定理](../../../Library/QuantumStates/barnumhilgert2019spectral.md#one-spectator-swap-and-positive-reassociation)。
+前者内部使用 Xu–Zheng–Fošner 的秩一 Hermitian 产品保持定理，
+DOI [10.1017/S1446788714000603](https://doi.org/10.1017/S1446788714000603)；
+后者处理所有活跃位置的共同转置方向，包含重复扇区与标量旁观者。
+这里 $E_L=E_R=W_3$，两个产品分别是 $(x\otimes y)\otimes z$ 与
+$x\otimes(y\otimes z)$，所以其指定重括号在整锥上为恒等正同构。
+一个指定旁观交换由定义102.1提供，作用于全部纠缠态和全部扇区。
+这些已有低阶桥作为供应结果使用，不在此重复证明。
+
+具体地，供应给出非空有限集 $I$、整数 $n_i\ge1$，以及保单位的整锥同构
+
+$$
+\theta:V\longrightarrow A_{\rm h},\qquad
+A=\bigoplus_{i\in I}M_{n_i}(\mathbb C),\qquad
+u\theta^{-1}(x)=\sum_i\operatorname{Tr}x_i,
+\tag{102.8}
+$$
+
+和二、三份整锥同构 $\theta_2,\theta_3$，满足
+
+$$
+\begin{aligned}
+\theta_2(x\otimes y)&=\theta(x)\otimes\theta(y),\\
+\theta_3(x\otimes y\otimes z)&=\theta(x)\otimes\theta(y)\otimes\theta(z).
+\end{aligned}
+\tag{102.9}
+$$
+
+纯产品实张成各个原张量空间，所以(102.9)在整个空间上强制
+$\theta_q=\theta^{\otimes q}$，$q=2,3$，而非仅在正乘积上巧合。
+精确配对同时决定对偶效应坐标。
+以下固定这一个 $\theta$，不按份数或按输入重新选方向。
+

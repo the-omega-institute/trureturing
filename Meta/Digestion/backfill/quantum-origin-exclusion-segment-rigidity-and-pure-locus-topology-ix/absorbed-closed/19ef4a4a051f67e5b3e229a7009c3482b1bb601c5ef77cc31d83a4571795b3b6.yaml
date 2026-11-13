@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:19ef4a4a051f67e5b3e229a7009c3482b1bb601c5ef77cc31d83a4571795b3b6
+  normalized_sha256: sha256:19ef4a4a051f67e5b3e229a7009c3482b1bb601c5ef77cc31d83a4571795b3b6
+cas_ref: sha256:19ef4a4a051f67e5b3e229a7009c3482b1bb601c5ef77cc31d83a4571795b3b6
+coverage_gids:
+  - gid: D5/S3/Analytic/Convexity/Danskin.hasRightDirDeriv_iSup
+    target_statement_id: sha256:0b8c16567721ad618b683b6c308b170fb992954682ce16ca8663e055527ed769
+receipts:
+  unresolved_subitems: []

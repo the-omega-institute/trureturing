@@ -1,0 +1,83 @@
+**命题 123.3（B：穿孔二维邻域通过全部六颗完整球）。**
+另设同一配置满足 $D>B_0$，即 $\sigma_y>0$。
+存在 $\epsilon>0$，使每个 $z\in Z_y$、$\|z\|_K<\epsilon$ 都满足
+
+$$
+\begin{gathered}
+h_z>0\text{ 于全部 }U_4,\qquad h_z|_{D_y}=0,\\
+h_z\ge0\text{ 于全部 }D_b,\qquad
+\{\xi\in D_b:h_z(\xi)=0\}=\{x\}.
+\end{gathered}
+\tag{X123.13}
+$$
+
+其中 $z=0$ 给原正 $e_y$；每个非零这种 $z$ 则有
+
+$$
+h_z\in Q_6\setminus N_x.
+\tag{X123.14}
+$$
+
+这是整个二维横向平面中一个穿孔邻域，不是只沿一条轴线。
+
+证明。
+在完整 Dx，原反向确认式给 $\min_{D_x}e_y=\Delta>0$。
+$e_y\in L_{\rm ax}$，而 (X123.4)、(X121.11) 和 (X121.9)
+说明它在 Dp 的限制只依赖 $v\cdot w$。
+在直径两端 b、s 的值分别是 $\Delta,\sigma_y$，所以
+
+$$
+e_y(c+Bw)=\frac{\Delta+\sigma_y}{2}
++\frac{\sigma_y-\Delta}{2}v\cdot w.
+\tag{X123.15}
+$$
+
+严格分支使它在整个 Dp 的最小值 $\min\{\Delta,\sigma_y\}>0$。
+在两颗其余种子球上，原全球支撑式给
+
+$$
+\begin{aligned}
+e_y|_{D_q}&=e_y(p)e_p+e_y(r)e_r,\qquad e_p+e_r=1,\\
+e_y|_{D_r}&=e_y(p)e_p+e_y(q)e_q,\qquad e_p+e_q=1.
+\end{aligned}
+\tag{X123.16}
+$$
+
+这些式子可把 $e_y$ 在 $L_{\rm ax}=\operatorname{span}\{u,e_p,e_b\}$ 中逐项限制而得，
+其中 $e_b$ 的跨球支撑由校准卷 125.7 给出；不是仅从端点插值猜测全高维球。
+$e_y(p)>0$ 已由 (X123.4) 支付。
+由 $v\ne\pm v_0$，$q,r$ 均不同于 Dp 的可能零端点 s，
+所以 (X123.15) 给 $e_y(q),e_y(r)>0$；严格分支下整个 Dp 本已严格正。
+因此 (X123.16) 在整个 Dq、Dr 各有正下界。
+
+置
+
+$$
+\mu=\min\{\Delta,\sigma_y,e_y(p),e_y(q),e_y(r)\}>0.
+\tag{X123.17}
+$$
+
+以上整球式给 $e_y\ge\mu$ 于有限紧并 $U_4$。
+取 $0<\epsilon<\mu/2$；则 $\|z\|_K<\epsilon$ 使
+$h_z=e_y+z>\mu/2$ 于全部 U4，也使 $h_z(p)>0$。
+根据 $Z_y$ 定义，$h_z$ 在整个 Dy 恒零。
+
+还需整颗 Db，不能只检查它的端点。
+同一实际球 Db 含球面点 x 及另一点 p，且 $g_x(p)=1-a>0$。
+对每个正法向 $k\in N_x$，唯一球支撑论证使其在 Db 的限制与 $g_x$ 成比例。
+取 span 后对每个有符号 $k\in S_x$ 仍有
+
+$$
+k|_{D_b}=\frac{k(p)}{g_x(p)}g_x|_{D_b}.
+\tag{X123.18}
+$$
+
+对当前 $h_z$，系数正，且 $g_x$ 在 Db 仅于 x 为零。
+因此 (X123.13) 的最后两项对整个混合球成立。
+若 $z\ne0$，命题 123.2 的原全局正切片唯一性给 $h_z\notin C^*$；
+它属于 $S_x$，从而正好是 (X123.14)。
+当 $z=0$ 则 $h_0=e_y\in N_x$，不在负见证分支。证毕。
+
+本结论条件于严格分支，没有证明该分支有一个全签名实现，也没有排除它。
+它准确说明这六颗整球上的必要非负测试不足以支付原全局正性。
+

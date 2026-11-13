@@ -1,0 +1,117 @@
+**命题 122.3（B：一般冗余法向的同接触因子）。**
+记 $H_s=S_s=\operatorname{span}N_s$。
+用完整 G 图定义线性限制及 F 斜率
+
+$$
+\begin{aligned}
+R_s:H_s&\longrightarrow\mathbb R\times\mathbb R_G^3,
+&h(c_s+Az)&=\alpha+v\cdot z,\quad R_sh=(\alpha,v),\\
+S_F:H_s&\longrightarrow\mathbb R_F^3,
+&h(c+Bw)&=h(c)+(S_Fh)\cdot w.
+\end{aligned}
+\tag{X122.6}
+$$
+
+则
+
+$$
+\ker R_s\subseteq\ker S_F.
+\tag{X122.7}
+$$
+
+有唯一线性映射 $T_s:\mathbb R\times\mathbb R_G^3\to\mathbb R_F^3$ 满足
+$S_F=T_sR_s$，以及唯一线性 $L:\mathbb R_G^3\to n^\perp$，使
+
+$$
+T_s(\alpha,v)=-\frac M2(\alpha+\eta\cdot v)n+Lv,
+\qquad T_s(1,0)=-\frac M2n.
+\tag{X122.8}
+$$
+
+核的原载体表达为
+
+$$
+\begin{gathered}
+\ker R_s=H_s\cap\operatorname{ann}(\operatorname{span}G),\\
+\ker S_F=H_s\cap\operatorname{ann}(\operatorname{lin}(F-F)),\\
+\operatorname{lin}(F-F)\subseteq\operatorname{span}G+H_s^\perp,
+\end{gathered}
+\tag{X122.9}
+$$
+
+其中 $H_s^\perp=\{x\in V:h(x)=0\text{ 对全部 }h\in H_s\}$。
+
+证明。
+[EXCLUSION IX120.7 及定理 IX119.10](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+已给 $R_s$ 满射和某个 $g_0\in\operatorname{ri}N_s$，其 $R_sg_0=(1,0)$。
+这里的相对内部取于实际 $H_s=\operatorname{span}N_s$。
+同一接口见 [OriginalNormalRestriction](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalNormalRestriction.md)：
+常数一的原正切片等于整个完整确认纤维的补，并与实际法向张成空间中的内部相交。
+这些输入不需要 $s\in P_0$；本命题不重立六轴满射或内部切片定理。
+
+对任一实际 $g\in N_s$ 且 $R_sg=(1,0)$，
+旧原正法向最大值公式给
+
+$$
+\max_Kg=\max_Gg=1.
+\tag{X122.10}
+$$
+
+它已在整个 $C$ 非负。
+对非零 $x\in C$ 按原 $u(x)>0$ 归一到 $K$，得 $0\le g(x)\le u(x)$；
+零向量也满足，故 $g$ 是原全锥效应。
+$u-g$ 在 $s$ 为一，在全部 $G$ 为零，因此属于整个 $\mathcal A_s$。
+命题 122.2 遂给
+
+$$
+S_Fg=-\frac M2n.
+\tag{X122.11}
+$$
+
+现在取任意 $k\in\ker R_s$。
+$g_0$ 在 $H_s$ 中相对内，所以存在可依赖于 $k$ 的 $\epsilon>0$，使
+
+$$
+g_0+\epsilon k\in N_s,\qquad g_0-\epsilon k\in N_s.
+\tag{X122.12}
+$$
+
+二者仍有同一常数一的完整 G 限制。
+(X122.11) 给它们同一 F 斜率；相减得到 $2\epsilon S_Fk=0$。
+因此 $S_Fk=0$，证明核包含。
+满射 $R_s$ 及该包含使 $T_s(\alpha,v)=S_Fh$ 对任一 $R_sh=(\alpha,v)$ 定义良好，
+且线性、唯一。
+
+对每个有符号 $h\in H_s$ 都有 $h(s)=0$。
+把它作用于固定弦，得
+
+$$
+2n\cdot S_Fh=-Mh(y)=-M(\alpha+\eta\cdot v).
+\tag{X122.13}
+$$
+
+(X122.11) 又固定 $T_s(1,0)$。
+因此取 $T_s(0,v)$ 在 $n^\perp$ 上的正交投影为 $Lv$，
+便给 (X122.8)，且没有常数坐标的横向项。
+唯一性也由投影及满射给出。
+
+限制为零恰是消去 $\operatorname{span}G$，斜率为零恰是消去 $\operatorname{lin}(F-F)$，
+给 (X122.9) 前两式。
+核包含表明每个 F 方向消去 $H_s\cap\operatorname{ann}(\operatorname{span}G)$。
+有限维双重消去律
+
+$$
+\bigl(H_s\cap\operatorname{ann}(\operatorname{span}G)\bigr)^\perp
+=H_s^\perp+\operatorname{span}G
+$$
+
+给最后的载体包含。证毕。
+
+若另外给 $s\in P_0$，旧 EXCLUSION IX120.8／定理 IX119.10
+已经使 $R_s$ 为同构；此时对任何斜率映射都自动存在 $S_FR_s^{-1}$。
+所以这个特例没有新增限制单射、四维或法向同构结论。
+一般 $s$ 下新组合是接触导致的核包含和一个共同因子的固定接触公式。
+它没有证明一般 $R_s$ 单射，没有使 $T_s$ 为正，
+也没有为任意有符号坐标给出原正提升。
+(X122.9) 只涉及方向空间，不识别中心值或跨球度量。
+

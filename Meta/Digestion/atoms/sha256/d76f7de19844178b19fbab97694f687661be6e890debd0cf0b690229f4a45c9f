@@ -1,0 +1,70 @@
+**定理 103.5（秩二实角强制共同方向）。** 在引理103.4的坐标中，令
+$I_{\rm a}=\{i:n_i\ge2\}$。
+存在 $a_i\in\mathbb Z/2$，使全部可见掩码满足
+
+$$
+\epsilon_{ij}=a_i+a_j\qquad(i,j\in I_{\rm a}).
+\tag{103.8}
+$$
+
+同时对每条腿都改用同一个局部坐标 $x_i\mapsto x_i^{T^{a_i}}$，
+便有 $C_1=\mathsf D_1$、$C_2=\mathsf D_2$，而同一个 $\Delta$ 仍属于原 $C_3$。
+标量块、零个或一个非经典块均包含在结论中。
+
+**证明。** 对任意矩形 $K:\mathbb C^{n_i}\to\mathbb C^{n_j}$，
+令 $F_{ji}^K$ 在输入块 $i$、输出块 $j$ 上为
+
+$$
+F_{ji}^K(x)=Kx^{T^{\epsilon_{ij}}}K^*,
+\tag{103.9}
+$$
+
+其余输入／输出分量为零。在“参考、输出”次序中，
+
+$$
+J(F_{ji}^K)_{i,j}=\Gamma_1^{\epsilon_{ij}}
+ |K\rangle\!\rangle\langle\!\langle K|\in C_2.
+\tag{103.10}
+$$
+
+引理103.4于是使每个(103.9)原旁观正；这里没有先宣称跨块普通合同正。
+原置换交换两个因子，把 $\Gamma_1^{\epsilon_{ij}}\mathrm{PSD}$ 送为
+$\Gamma_2^{\epsilon_{ij}}\mathrm{PSD}=\Gamma_1^{\epsilon_{ij}}\mathrm{PSD}$。
+在两个活跃因子上，标准与部分转置锥不同：嵌入二维 Bell 投影后部分转置在反对称方向为负。
+因此 $\epsilon_{ij}=\epsilon_{ji}$；对角零掩码已由引理103.4取得。
+
+对每个活跃块，在见证基的前两条向量上取实等距嵌入
+$E_i:\mathbb C^2\to\mathbb C^{n_i}$，令 $L_{ji}=E_jE_i^*$。
+复合 $F_{kj}^{L_{kj}}F_{ji}^{L_{ji}}$ 原旁观正。
+因为所有 $E_i$ 在这些坐标中为实矩阵，$E_j^*E_j=I_2$，其非零分量恰是
+
+$$
+x\longmapsto E_kE_i^*x^{T^{\epsilon_{ij}+\epsilon_{jk}}}E_iE_k^*.
+\tag{103.11}
+$$
+
+它的 Choi 元素必须在原 $(i,k)$ 扇区锥内。
+令 $\omega_{ik}$ 是向量 $\sum_{a=0}^1 E_i|a\rangle\otimes E_k|a\rangle$ 的 dyad。
+对这个 Choi 元素施加 $\Gamma_1^{\epsilon_{ik}}$，得到
+$\Gamma_1^{\epsilon_{ij}+\epsilon_{jk}+\epsilon_{ik}}\omega_{ik}$。
+若指数为一，其在该二维角的归一反对称向量上读数为 $-1$，不可能 PSD。
+所以对全部活跃 $i,j,k$，包括重复标签，
+
+$$
+\epsilon_{ik}=\epsilon_{ij}+\epsilon_{jk}.
+\tag{103.12}
+$$
+
+若 $I_{\rm a}$ 非空，选 $h\in I_{\rm a}$，置 $a_i=\epsilon_{hi}$；
+(103.12)给(103.8)，且 $a_h=0$。若只有一个活跃块，这就是其已知的对角零掩码。
+若无活跃块，所有二份锥本来就是标量正射线直和，取全部 $a_i=0$。
+对所有标量标签也取 $a_i=0$；与标量配对的转置在整个锥上不可见，不施加虚假的边约束。
+
+共同坐标改变后，活跃 $(i,j)$ 上的锥成为
+$\Gamma_1^{\epsilon_{ij}+a_i+a_j}\mathrm{PSD}=\mathrm{PSD}$；
+有标量因子的块仍标准。这是同一个局部图在全部腿上的使用，未按有序对另选坐标。
+在 $(i,i,i)$ 上，三次 $T_i^{a_i}$ 为全部转置；见证基中 $\Delta_i$ 为实矩阵，故保持 $\Delta_i$。
+所以原 $\Delta$ 的坐标不变，$\mathsf F$ 在对齐后仍由同一元素见证。
+该证明只在尚未标准的 $C_2$ 中使用已取得的自身 Choi 判据和映射复合，
+没有从预设三份 PSD 反推二份方向。∎
+
