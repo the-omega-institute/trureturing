@@ -1,5 +1,6 @@
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Algebra.FixedDiagonalDeterminant
+import Mathlib.Algebra.Field.ULift
 
 /-! Complete source reconstruction from the fixed coefficient matrix readout. -/
 
@@ -49,9 +50,15 @@ theorem full_telescope_bridge :
   constructor
   · intro h p N hN
     exact @h p.k p.I p.field p.finite p.decidable p.nontrivial N hN
-  · intro h k I field finite decidable nontrivial N hN
-    exact h { k := k, I := I, field := field, finite := finite,
-      decidable := decidable, nontrivial := nontrivial } N hN
+  · intro h k I fieldInst finiteInst decidableInst nontrivialInst N hN
+    let p : Parameters := {
+      k := k
+      I := I
+      field := fieldInst
+      finite := finiteInst
+      decidable := decidableInst
+      nontrivial := nontrivialInst }
+    exact h p N hN
 
 def rejected : Realization signature.{u, v} := realize signature
   (fun _ _ _ => 0) (fun e => nomatch e)
