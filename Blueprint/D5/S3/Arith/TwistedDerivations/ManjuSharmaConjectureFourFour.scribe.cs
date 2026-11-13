@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.TwistedDerivations;
 internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Arith/manjusharma2024twisted");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Quad/manjusharma2024twisted");
     private static Formula N => F.Id("Nat");
     private static Formula Z => F.Id("Int");
     private static Formula Q => F.Id("Rat");
