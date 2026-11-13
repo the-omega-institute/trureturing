@@ -149,3 +149,143 @@ $$
 本仓推导的是：恒等式 (1.2)、定理 1.2 与推论 1.3（回答该文注记 4.16），局部下界 (1.4)，以及定理 1.5（对 $1<\kappa<3/2$ 回答该文第 8 节关于定理 6.1 的提问：$E_\kappa$ 无条件为假，把定理 6.1 延伸到这些 $\kappa$ 所得的命题等价于 RH 不成立）。所查范围（该文正文、Molnar 2026 的后续论文、arXiv 标题检索“Robin criterion”）内未见这两个问题的解答。
 
 ## 追加锚（本行以下为增补区）
+
+## 2. 端点 κ = 3/2
+
+本节证明 (1.1) 在 $\kappa=3/2$ 处也对无穷多个 $n$ 不成立。注记 1.6 曾把这一端点记为 open，本节将它结算。记 $E_\kappa$ 为“(1.1) 对所有充分大的 $n$ 成立”。结合 Fan–Kobayashi–Molnar 定理 1.5、本卷定理 1.5 与本节定理 2.3，可得对一切 $\kappa>1$，$E_\kappa\iff(\mathrm{RH}\wedge\kappa>3/2)$。
+
+记 $P(x)=\prod_{p\le x}(1-p^{-1})^{-1}$，$f(x)=e^\gamma\log\theta(x)/P(x)$。按 Nicolas [Small values of the Euler function and the Riemann hypothesis, Acta Arith. 155 (2012), 311–321; arXiv:1202.0729] 的记号，令
+
+$$
+W(x)=\sum_\rho\frac{x^{i\Im\rho}}{\rho(1-\rho)},\qquad \beta=\sum_\rho\frac1{\rho(1-\rho)}=2+\gamma-\log\pi-2\log2=0.0461914\ldots,
+$$
+
+其中 $\rho$ 遍历 $\zeta$ 的非平凡零点。RH 下 $|W(x)|\le\beta$。
+
+**引理 2.1（Nicolas）。** 设 RH 成立，则对 $x\ge10^9$，
+
+$$
+\log\frac{P(x)}{e^\gamma\log\theta(x)}=-\log f(x)\ \ge\ \frac{2+W(x)}{\sqrt x\log x}-\frac{2.062}{\sqrt x\log^2x}.
+$$
+
+**证明。** 这是 Nicolas 上述论文命题 2.1 中不等式 (2.16) 的右半部分，即 $\log f(x)\le-(2+W(x))/(\sqrt x\log x)+2.062/(\sqrt x\log^2x)$，两边取负号即得。证毕。
+
+**引理 2.2（局部因子与 Euler 尾项）。** 记 $\kappa=3/2$，$r=1/p$。
+- 对素数 $p$ 与整数 $a\ge1$，$\dfrac{\sigma^{[\kappa]}(p^a)}{p^{\kappa a}}\ge(1-r)^{-\kappa}(1-r^\kappa)\Bigl(1-\dfrac{\kappa}{1-r^\kappa}r^{a+1}\Bigr)$。
+- $x\to\infty$ 时，$\sum_{p>x}-\log(1-p^{-3/2})=\dfrac{2+o(1)}{\sqrt x\log x}$。
+- $y\to\infty$ 时，$\sum_{p>y}p^{-2}=\dfrac{1+o(1)}{y\log y}$。
+
+**证明。**
+- 第一式就是引理 1.4 证明中的中间不等式 $(1-r)^\kappa\sigma^{[\kappa]}(p^a)/p^{\kappa a}\ge1-\kappa r^{a+1}-r^\kappa$。
+- 第二式：$-\log(1-u)=u+O(u^2)$，$\sum_{p>x}p^{-3}=O(x^{-2})$；由素数定理分部求和，$\sum_{p>x}p^{-3/2}=\int_x^\infty t^{-3/2}(\log t)^{-1}\,dt\,(1+o(1))=(2+o(1))/(\sqrt x\log x)$。
+- 第三式同理。
+
+证毕。
+
+**定理 2.3（端点 $\kappa=3/2$）。** 存在无穷多个正整数 $n$ 使
+
+$$
+\sigma^{[3/2]}(n)\ >\ \frac{(e^\gamma n\log\log n)^{3/2}}{\zeta(3/2)} .
+$$
+
+更确切地，设 RH 成立，取 $y=\sqrt{2x}$、$z=x^{1/3}$ 及
+
+$$
+n_x=\prod_{p\le z}p^{\lfloor2\log x/\log p\rfloor}\prod_{z<p\le y}p^{2}\prod_{y<p\le x}p ,
+$$
+
+则
+
+$$
+\log\frac{\zeta(3/2)\,\sigma^{[3/2]}(n_x)}{(e^\gamma n_x\log\log n_x)^{3/2}}\ \ge\ \frac{5-3\sqrt2+\tfrac32W(x)+o(1)}{\sqrt x\log x}\ \ge\ \frac{5-3\sqrt2-\tfrac32\beta+o(1)}{\sqrt x\log x},
+$$
+
+其中 $5-3\sqrt2-\tfrac32\beta=0.68807\ldots>0$。
+
+**证明。** 若 RH 不成立，由 Fan–Kobayashi–Molnar 定理 5.2（对一切 $\kappa>1$）即得。以下设 RH 成立，记 $\kappa=3/2$，$a_p$ 为 $n_x$ 中 $p$ 的指数，$x$ 充分大。由可乘性与 $\zeta(\kappa)=\prod_p(1-p^{-\kappa})^{-1}$，有恒等式
+
+$$
+\log\frac{\zeta(\kappa)\sigma^{[\kappa]}(n_x)}{(e^\gamma n_x\log\log n_x)^\kappa}=T+M+Q,
+$$
+
+其中
+
+$$
+T=\sum_{p>x}-\log(1-p^{-\kappa}),\qquad
+M=\kappa\log\frac{P(x)}{e^\gamma\log\log n_x},\qquad
+Q=\sum_{p\le x}\log\frac{\sigma^{[\kappa]}(p^{a_p})}{p^{\kappa a_p}(1-p^{-1})^{-\kappa}(1-p^{-\kappa})}.
+$$
+
+由 $-\log(1-u)\ge u$ 与引理 2.2 的第二式的证明，$T\ge\sum_{p>x}p^{-3/2}=(2+o(1))/(\sqrt x\log x)$。
+
+*估计 $Q$。* 只需下界。由引理 2.2 的第一式，记 $u_p=\kappa p^{-(a_p+1)}/(1-p^{-\kappa})$，$x$ 充分大时 $u_p\le1/2$。由 $\log(1-u)\ge-u-u^2$（$0\le u\le1/2$），$Q$ 的每一项不小于 $-u_p-u_p^2$。按指数分三段：
+- $y<p\le x$（$a_p=1$）：$u_p=\kappa p^{-2}(1+O(y^{-3/2}))$，$u_p^2=O(p^{-4})$，故这一段之和不小于 $-\kappa(1+o(1))\sum_{p>y}p^{-2}$。由引理 2.2 的第三式，它等于 $-\tfrac32(1+o(1))/(y\log y)$。由于 $y\log y=\sqrt{2x}\cdot\tfrac12\log(2x)=(1+o(1))\sqrt x\log x/\sqrt2$，这一段不小于 $-(3\sqrt2/2+o(1))/(\sqrt x\log x)$。
+- $z<p\le y$（$a_p=2$）：$u_p+u_p^2=O(p^{-3})$，这一段不小于 $-O(\sum_{p>z}p^{-3})=-O(x^{-2/3})$。
+- $p\le z$：$p^{a_p+1}>x^2$，故 $u_p+u_p^2=O(x^{-2})$，这一段不小于 $-O(\pi(z)x^{-2})$。
+
+后两段都是 $o(1/(\sqrt x\log x))$，所以 $Q\ge-(3\sqrt2/2+o(1))/(\sqrt x\log x)$。
+
+*估计 $M$。* 先估计 $\log n_x$：
+
+$$
+\log n_x\le\theta(x)+\theta(y)+2\pi(z)\log x .
+$$
+
+RH 下 $\theta(t)=t+O(\sqrt t\log^2t)$，故 $\theta(y)=\sqrt2\sqrt x+O(x^{1/4}\log^2x)$。又 $\pi(z)\log x=O(x^{1/3})$，且 $\theta(x)=x(1+o(1))$，所以
+
+$$
+\log\log n_x\le\log\theta(x)+\frac{\sqrt2+o(1)}{\sqrt x},\qquad
+\log\log\log n_x\le\log\log\theta(x)+\frac{\sqrt2+o(1)}{\sqrt x\log x},
+$$
+
+后一式用了 $\log\theta(x)=\log x+o(1)$。再由引理 2.1，
+
+$$
+M=\kappa\Bigl(\log\frac{P(x)}{e^\gamma\log\theta(x)}-\log\frac{\log\log n_x}{\log\theta(x)}\Bigr)\ \ge\ \frac32\cdot\frac{2+W(x)-\sqrt2+o(1)}{\sqrt x\log x}.
+$$
+
+*合并。* 三项相加，
+
+$$
+T+M+Q\ \ge\ \frac{2+3+\tfrac32W(x)-\tfrac32\sqrt2-\tfrac32\sqrt2+o(1)}{\sqrt x\log x}=\frac{5-3\sqrt2+\tfrac32W(x)+o(1)}{\sqrt x\log x}.
+$$
+
+由 $|W(x)|\le\beta$ 得到所述下界。它对充分大的 $x$ 为正，而 $n_x\to\infty$，故 (1.1) 在 $\kappa=3/2$ 对无穷多个 $n$ 不成立。两种情形合并即得定理。证毕。
+
+**推论 2.4（Fan–Kobayashi–Molnar 判据的精确参数域）。** 记 $E_\kappa$ 为“(1.1) 对所有充分大的 $n$ 成立”。对一切实数 $\kappa>1$，
+
+$$
+E_\kappa\iff\bigl(\mathrm{RH}\wedge\kappa>3/2\bigr).
+$$
+
+特别地：
+- 对 $\kappa>3/2$，$E_\kappa$ 是 RH 的等价判据；
+- 对 $1<\kappa\le3/2$，$E_\kappa$ 无条件为假，命题“$\mathrm{RH}\iff E_\kappa$”等价于 RH 不成立，因此不能用来验证 RH。
+
+**证明。**
+- $\kappa>3/2$：由 Fan–Kobayashi–Molnar 定理 1.5，$E_\kappa\iff\mathrm{RH}$。
+- $1<\kappa<3/2$：由本卷定理 1.5，$E_\kappa$ 为假。
+- $\kappa=3/2$：由定理 2.3，$E_\kappa$ 为假。
+
+三种情形合起来即为所述等价。后半句是命题逻辑：$E_\kappa$ 为假时，$(\mathrm{RH}\iff E_\kappa)\iff\neg\mathrm{RH}$。证毕。
+
+**注记 2.5（机理与对注记 1.6 的更正）。** 注记 1.6 的端点论断由本节取代：$\kappa=3/2$ 不再是 open。在该端点，主项 $1/(\sqrt x\log x)$ 的系数由四部分组成：
+
+| 来源 | 系数 |
+|---|---|
+| Euler 尾项 | $+2$ |
+| Mertens 乘积相对 $e^\gamma\log\theta(x)$ 的偏差（Nicolas） | $+\tfrac32(2+W)$ |
+| $\log\log n$ 因指数 2 层而产生的移位 | $-\tfrac32\sqrt2$ |
+| 指数 1 层的局部损失 | $-\tfrac32\sqrt2$ |
+
+两项代价之和 $\tfrac32 c+3/c$ 在分层位置 $y=c\sqrt x$ 取 $c=\sqrt2$ 时最小，这与该文引理 4.13 中 $\kappa$-巨丰数的分层 $x_2\sim\sqrt{2x}$ 一致。此时系数为 $5-3\sqrt2+\tfrac32W(x)$，振荡部分的幅度 $\tfrac32\beta\approx0.069$ 小于非振荡部分 $5-3\sqrt2\approx0.757$。因此结论不依赖零点的分布细节，只用到 RH 下 $|W|\le\beta$。
+
+**范围。** 外部输入如下：
+- Nicolas 2012 命题 2.1（RH 下显式）；
+- Fan–Kobayashi–Molnar 定理 1.5、5.2；
+- RH 下 $\theta(t)=t+O(\sqrt t\log^2t)$；
+- 素数定理与 Chebyshev 上界。
+
+本仓推导的是定理 2.3、推论 2.4 及注记 2.5 的分解。在所查范围（该文第 8 节把阈值问题列为 future work；Molnar arXiv:2610.12816v1；arXiv 标题检索）内未见此结论，本节不主张文献优先权。
+
+## 追加锚（本行以下为增补区）
