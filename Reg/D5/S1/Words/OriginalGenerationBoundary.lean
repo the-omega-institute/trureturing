@@ -14,12 +14,12 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature :=
-  Reg.Support.SingleDependentReadout.signature Unit
-    (fun _ => List Bool × List Bool) (fun _ => List Bool)
+  Reg.Support.SingleDependentReadout.signature (List Bool)
+    (fun _ => List Bool) (fun _ => List Bool)
 
 def actual : Realization signature :=
   realize signature
-    (fun _ _ state => sigmaThree state.2 ++ [false, true])
+    (fun _ _ state => sigmaThree state ++ [false, true])
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -28,7 +28,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (uK w : List Bool),
-    R.readout () () (uK, w) = [false, true] ++ tauWord w ∧
+    R.readout () uK w = [false, true] ++ tauWord w ∧
       finitePrefix uK w = uK ++ tauWord w ++ [false, false]
 
 private theorem actual_law : arena.Law actual := by
@@ -44,7 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), ([], []), ([], [true]), ?_⟩
+  refine ⟨[], [], [true], ?_⟩
   change sigmaThree [] ++ [false, true] ≠ sigmaThree [true] ++ [false, true]
   decide
 
@@ -71,7 +71,7 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ _ state => sigmaThree state.2 ++ [false, true])
+    (fun _ _ state => sigmaThree state ++ [false, true])
     (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -80,12 +80,12 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0
   sourceSelection := some {
     owner := `D5.S1.Words.OriginalGenerationBoundary
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "fn", "arg"]
-      stateBinder := 0
+      path := #["body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 1
       functionOperand := false
-      stateOperand := some #["arg", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The explicit finite-word boundary conjugacy for the original generation morphisms.
-   -/
+   digest: The explicit finite-word boundary conjugacy for the original generation morphisms. -/
 
 import Mathlib.Data.Bool.Basic
 import Mathlib.Data.List.Basic

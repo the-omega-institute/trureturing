@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c607c4e4aa2e8a266ca9d868c8d1e8478ef6eb22a94469868cc33d0e3f20d15a
   normalized_sha256: sha256:c607c4e4aa2e8a266ca9d868c8d1e8478ef6eb22a94469868cc33d0e3f20d15a
 cas_ref: sha256:c607c4e4aa2e8a266ca9d868c8d1e8478ef6eb22a94469868cc33d0e3f20d15a
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/OriginalGenerationBoundary.original_generation_boundary
+    target_statement_id: sha256:6918b7081130fe2428387cc82e89e2d36b33fc63ad0608ea1d30ad73f11433fe
 receipts:
   unresolved_subitems: []
