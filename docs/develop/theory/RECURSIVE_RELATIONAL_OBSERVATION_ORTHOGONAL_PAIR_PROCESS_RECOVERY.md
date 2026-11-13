@@ -1067,3 +1067,394 @@ Quantum116 的 $\sigma,\tau$ 与 Fibonacci 的 $\alpha,\beta$ 没有由此取得
 [ORTHOCLONE]: https://arxiv.org/pdf/quant-ph/0110016v1 "Jaromír Fiurášek, Sofyan Iblisdir, Serge Massar and Nicolas J. Cerf, Quantum cloning of orthogonal qubits；(4)、(15)—(16)：正交 qubit 输入与单克隆平均保真度。"
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 同一双份输入的经典历史与精确返回合同
+
+**定义 11.1（经典历史返回类）。** 保留定义 5.1 的整个复承诺域 $\mathfrak F$、同一未知输入 $P_A\otimes Q_B$、指定目标 $P_A\otimes R_B$，以及同一最坏第一边缘迹距离 $D(\mathcal N)$。原来源应用仍要求定义 1.1—1.2 的完整 $\mathsf Q_1$、同锥同单位 $\Phi$ 和假设 1.3 的实际 $\mathrm E_2$ 准备。没有传入 $(P,Q)$ 的描述、依赖准备的程序、额外未知样本或成功后选择。
+
+令 $\mathsf C$ 为非空有限或可数经典结果集。固定仪器的每个结果可以是一条完整有限经典历史；其一般 CP 分支记为 $\mathcal M_c:\mathcal L(AB)\to\mathcal L(AB)$，不假定一个结果只有一个 Kraus 算子。写
+
+$$
+\mathcal M(X)=\bigoplus_{c\in\mathsf C}\mathcal M_c(X)
+ =\sum_{c\in\mathsf C}\mathcal M_c(X)\otimes|c\rangle\langle c|,
+\qquad
+\mathcal N(X)=\sum_c\mathcal M_c(X).
+\tag{11.1}
+$$
+
+要求 $\mathcal N$ 是整个九维输入代数上的 CPTP 通道。可数情形采用通常的可数可加仪器：正输入的和在迹范数中收敛，其他输入由线性延拓。第一种写法把输出视为九维迹类空间的 $\ell^1$ 直和；第二种是同一经典输出的块对角表示。这里的 $\mathsf C$ 不包含未建模的连续模拟结果。
+
+返回操作可访问的全部保留量子输出恰为 $AB$，另可读取经典 $c$。允许丢弃不可访问的环境；不允许在返回时另取保存了输入信息的相干量子工作区。与准备无关的新辅助态、随机性和自适应控制可以包含在操作中，但其实际供给和费用仍须另付。
+
+称该仪器具有精确工作寄存器返回，若有固定 CPTP 操作 $\mathcal D$ 从这个经典—量子输出到 $AB$，使
+
+$$
+\mathcal D\mathcal M(P\otimes Q)=P\otimes Q
+\quad\text{对每个 }(P,Q)\in\mathfrak F.
+\tag{11.2}
+$$
+
+这里允许任意记录条件化校正，不要求它是另一次固定 $\tau$ 调用。故 (11.2) 是原完整返回的必要放宽：它只要求工作寄存器，尚未要求原记录、控制状态、权限、所欠动作和资源也返回。定义
+
+$$
+F_{\rm ret}(\varepsilon)=
+\sup\left\{\inf_{\mathfrak F}s_{\mathcal N}(P,Q):
+ D(\mathcal N)\le\varepsilon,\ (\mathcal M,\mathcal D)
+ \text{ 满足 }(11.1)\text{—}(11.2)\right\},
+\qquad 0\le\varepsilon\le1.
+\tag{11.3}
+$$
+
+不预设这个上确界取到，也不把分数解释成带标志的精确输出概率。
+
+**命题 11.2（复用承诺刚性与经典校正判据）。** 若 (11.2) 成立，则
+
+$$
+\mathcal D\mathcal M=\operatorname{id}_{AB}
+\quad\text{在整个矩阵代数上成立}.
+\tag{11.4}
+$$
+
+而且存在与输入无关的 $p_c\ge0$、$\sum_cp_c=1$，使每个非零分支均为
+
+$$
+\mathcal M_c(X)=p_cU_cXU_c^\dagger,
+\qquad U_c\in U(9).
+\tag{11.5}
+$$
+
+因此 $\mathcal N$ 是混合酉通道，特别地 $\mathcal N(I_9)=I_9$。这一步是本卷定理 2.1 与成熟精确校正结构的应用，不是新的校正判据；保单位性仅为必要条件。
+
+证明。置 $\mathcal T=\mathcal D\mathcal M$。虽然中间历史可以可数，$\mathcal T$ 的输入、输出都只有九维，且为 CPTP。由 (11.2)，它满足 (1.1)；定理 2.1 直接给出全局 $\mathcal T=\operatorname{id}_A\otimes\Lambda_B$。每个秩一 $Q$ 都有某个正交 $P$，所以 (11.2) 又给出 $\Lambda(Q)=Q$。秩一投影实张成全部 Hermitian 矩阵，再复线性张成全部矩阵，故 $\Lambda=\operatorname{id}$，得到 (11.4)。这里没有假定正交产品承诺本身线性张成整个两份代数。全局通道恒等也保留任意未触碰参考系统的相关。
+
+把 $\mathcal D$ 限制到第 $c$ 个经典输入块，得到九维 CPTP 通道 $\mathcal D_c(Y)=\mathcal D(Y\otimes|c\rangle\langle c|)$。未归一化 Choi 矩阵满足
+
+$$
+\sum_cJ_{\mathcal D_c\mathcal M_c}
+ =J_{\operatorname{id}}=|I_9\rangle\!\rangle\langle\!\langle I_9|.
+\tag{11.6}
+$$
+
+左边各项为正。右边秩一，故每项的支撑都在 $\mathbb C|I_9\rangle\!\rangle$ 内：对其正交补向量，各项非负二次型之和为零；正性再使交叉分量为零。因此 $\mathcal D_c\mathcal M_c=p_c\operatorname{id}$，$p_c\ge0$，且 $\sum_cp_c=1$。可数时这个正矩阵和在迹范数中收敛，其总迹为九，同样的逐项支撑论证仍成立，不必把有限维结构定理直接用于无限维历史空间。
+
+由 $\mathcal D_c$ 保迹，对所有正 $X$ 有 $\operatorname{Tr}\mathcal M_c(X)=p_c\operatorname{Tr}X$。所以结果概率与输入无关，$p_c=0$ 的分支为零；若 $p_c>0$，则 $\mathcal M_c/p_c$ 是九维 CPTP 通道，且具有 CPTP 左逆 $\mathcal D_c$。直接应用 [Nayak—Sen，定理 2.1][CRNS] 的输入、输出同维情形，它必须是酉共轭，得到 (11.5)。这也是 [Gregoratti—Werner，命题 2、§II.3.1][CRGW] 的整码经典辅助校正结构在本问题中的形式。最后逐项求和得到混合酉和保单位性。整个论证从一般 CP 分支出发，没有预置纯分支或单 Kraus 结果。证毕。
+
+**例 11.3（已有零扰动端点的返回校准）。** 类 (11.3) 非空，而且
+
+$$
+F_{\rm ret}(0)=\frac38,\qquad
+F_{\rm ret}(\varepsilon)\ge\frac38\quad(0\le\varepsilon\le1).
+\tag{11.7}
+$$
+
+证明。直接使用 (3.5) 的八个非恒等 qutrit Weyl，等概率施加 $I_A\otimes W_{ab}$ 并保留其八值经典标签。忽略标签正是 $\mathcal N_*$，$D=0$ 且每个目标重叠为 $3/8$。若另给标签条件化的逆控制，施加 $I_A\otimes W_{ab}^\dagger$ 即在全部输入上返回。也可只用同一正向门：这些固定 Weyl 满足 $W_{ab}^3=I$，故再调用两次 $W_{ab}$ 给出相同校正。这个存在性校准复用既有 Weyl 混合和经典校正工具；实际采样器、三比特标签、全部执行记录、初始门和两次校正门、两个寄存器及控制器均须供给并计费。上界由 $F_{\rm ret}(0)\le F(0)=3/8$ 给出；同一实例对所有非负预算可行。它不提供正扰动时的最优返回族。证毕。
+
+## 12. 全复重数与全部剩余扇区的保单位约束
+
+本节沿用定义 6.1 的向量化、$S$、$T_a$、四个 $E_i$，以及定理 6.2 的完整 $2\cdot\mathbf1+4\cdot\mathbf8+\mathbf{10}+\overline{\mathbf{10}}+\mathbf{27}$ 分解。所有复正重数矩阵与三个剩余扇区都保留。对各正 Choi 块对应的 CP 映射 $\mathcal N_\alpha$，定义
+
+$$
+\Delta_\alpha=\mathcal N_\alpha(I_9)-\mathcal N_\alpha^*(I_9).
+\tag{12.1}
+$$
+
+星号在这里是 Hilbert—Schmidt 对偶。单个块无需保迹；整个通道保迹时，$\sum_\alpha\Delta_\alpha=\mathcal N(I_9)-I_9$。
+
+**引理 12.1（伴随块的完整缺陷公式）。** 对 (6.7) 的任意复系数与任意重数分解，
+
+$$
+\Delta_{\mathbf8}
+ =2\operatorname{Re}\sum_r
+  (\overline{x_r}-\overline{y_r})(z_r-w_r)(I_9-3S).
+\tag{12.2}
+$$
+
+任意标量块的 $\Delta_{\mathbf1}$ 为零。
+
+证明。记 (8.4) 的第 $i,j$ 项为 $M_{ij}=\sum_aE_i(T_a)^\dagger E_j(T_a)$。这些算子都是 $I_9,S$ 的实线性组合，且 $M_{ij}=M_{ji}$。由 $S^2=I_9$ 和交换恒等式，
+
+$$
+E_0(T)^\dagger=E_0(T^\dagger),\quad
+E_1(T)^\dagger=E_1(T^\dagger),\quad
+E_2(T)^\dagger=E_3(T^\dagger),\quad
+E_3(T)^\dagger=E_2(T^\dagger).
+\tag{12.3}
+$$
+
+取共轭转置后的 $T_a$ 仍是一组无迹正交归一基，故完整性恒等式 (6.4) 不变。令 $\pi$ 交换指标 $2,3$ 而固定 $0,1$，则 $\sum_aE_i(T_a)E_j(T_a)^\dagger=M_{\pi(i),\pi(j)}$。将 (8.4) 代入，全部十六个系数同时给出
+
+$$
+\left(\sum_a[E_i(T_a)E_j(T_a)^\dagger
+                    -E_j(T_a)^\dagger E_i(T_a)]\right)_{ij}
+ =\begin{pmatrix}
+0&0&1&-1\\
+0&0&-1&1\\
+1&-1&0&0\\
+-1&1&0&0
+\end{pmatrix}(I_9-3S).
+\tag{12.4}
+$$
+
+例如第 $0,2$ 项为 $I_9-S/3-(8/3)S=I_9-3S$；第 $1,2$ 项为其负，其余项由表给出。用 $c_r=(x_r,y_r,z_r,w_r)$，把 (12.4) 乘上 $c_{r,i}\overline{c_{r,j}}$ 并求和，即得 (12.2)。这是完整复半双线性形式，不要求系数实数，也不要求重数矩阵秩一。标量 Kraus $aI_9+bS$ 与自身伴随对易，故每项 $KK^\dagger-K^\dagger K$ 为零；任意复标量重数块亦如此。证毕。
+
+**引理 12.2（剩余扇区的缺陷与泄漏）。** 对全部剩余正块之和，存在实数 $a_{\rm rest}$，使
+
+$$
+\Delta_{\rm rest}=a_{\rm rest}(I_9-3S),\qquad
+|a_{\rm rest}|\le\frac1{12}\operatorname{Tr}J_{\rm rest}
+                 \le\frac{10}{7}\delta_{\rm rest},\qquad
+s_{\rm rest}\le\frac{20}{7}\delta_{\rm rest}.
+\tag{12.5}
+$$
+
+证明。每个等型正块本身协变，所以 $\mathcal N_{\rm rest}(I_9)$ 与 $\mathcal N_{\rm rest}^*(I_9)$ 都与所有 $U\otimes U$ 对易。其差为 Hermitian，且迹为零；两份张量表示的交换子代数由 $I_9,S$ 张成。因此差必须为实数倍的 $I_9-3S$，因为 $\operatorname{Tr}I_9=9$、$\operatorname{Tr}S=3$。
+
+令 $A=\mathcal N_{\rm rest}(I_9)$、$B=\mathcal N_{\rm rest}^*(I_9)$。它们均为正，且各自迹等于 $\operatorname{Tr}J_{\rm rest}$。由 $\|S\|_{\rm op}=1$，
+
+$$
+|\operatorname{Tr}[S(A-B)]|
+ \le\operatorname{Tr}A+\operatorname{Tr}B
+ =2\operatorname{Tr}J_{\rm rest},\qquad
+\operatorname{Tr}[S(I_9-3S)]=-24.
+\tag{12.6}
+$$
+
+这给出第一个不等式。定理 7.1 的完整泄漏谱在 $\mathbf{10},\overline{\mathbf{10}},\mathbf{27}$ 上给 $\mathscr D\succeq(7/120)I$；而 (7.11) 给 $0\preceq\mathscr T\preceq I/6$。直接复用这些已证算子界，得到 $\operatorname{Tr}J_{\rm rest}\le(120/7)\delta_{\rm rest}$ 和 $s_{\rm rest}\le\operatorname{Tr}J_{\rm rest}/6$，即 (12.5)。没有删去任何剩余扇区，也没有假定这些界可同时取等。证毕。
+
+## 13. 任意保单位通道的统一上界
+
+**定理 13.1（全复、全扇区的保单位界）。** 置
+
+$$
+k=\frac{83}{304},\qquad c=\frac{87}{133},\qquad
+U(\varepsilon)=\min\left\{1,
+\frac{20}{7}\varepsilon+
+\frac{\left(\sqrt{k\varepsilon}
+ +\sqrt{3/2+(k+4c)\varepsilon}\right)^2}{4}\right\}.
+\tag{13.1}
+$$
+
+对任意保单位 CPTP 通道 $\mathcal N:\mathcal L(AB)\to\mathcal L(AB)$，若 $D(\mathcal N)\le\varepsilon$，$0\le\varepsilon\le1$，则
+
+$$
+\inf_{(P,Q)\in\mathfrak F}s_{\mathcal N}(P,Q)\le U(\varepsilon).
+\tag{13.2}
+$$
+
+因而经典历史精确返回类满足 $F_{\rm ret}(\varepsilon)\le U(\varepsilon)$。这是必要的非锐上界，不是混合酉实现判据或可达前沿。
+
+证明。先只为证明上界作 (5.6) 的 $U\otimes U$ Haar 平均。平均通道 $\widetilde{\mathcal N}$ 仍为 CPTP 且保单位；由 (5.7) 及其稳定子证明，
+
+$$
+s_{\widetilde{\mathcal N}}(P,Q)=\bar s_{\mathcal N}
+ \ge\inf_{\mathfrak F}s_{\mathcal N},\qquad
+D(\widetilde{\mathcal N})=\delta=\bar\ell_{\mathcal N}
+ \le D(\mathcal N)\le\varepsilon.
+\tag{13.3}
+$$
+
+所以只需对协变保单位通道的恒定分数证明界。这里不要求平均后的通道保留任何已实现的返回合同，也不由这个解析积分供应实际 Haar 采样器。
+
+对平均通道使用定理 6.2 的全部正块，仍记 $X=\sum_r|x_r|^2$、$v_r=(y_r,z_r,w_r)^{\mathsf T}$ 和 (6.8) 的 $\mathsf Q$。由 (6.9)、(6.10) 及 (12.5)，
+
+$$
+\begin{aligned}
+\delta&=\delta_{\mathbf1}+\delta_{\mathbf8}+\delta_{\rm rest},
+ &\delta_\alpha&\ge0,\\
+\delta_{\mathbf8}&=\sum_rv_r^\dagger\mathsf Qv_r,
+ &s&=X+s_{\rm rest}\le X+\frac{20}{7}\delta_{\rm rest},\\
+X-\frac38&\le\operatorname{Re}\sum_r\overline{x_r}h^\dagger v_r,
+ &h&=(1/4,0,-3/4)^{\mathsf T}.
+\end{aligned}
+\tag{13.4}
+$$
+
+保单位性现在增加一个原上界中没有使用的限制。由 $\Delta_{\mathbf1}=0$、(12.2)、(12.5) 及总缺陷为零，
+
+$$
+\left|\operatorname{Re}\sum_r\overline{x_r}(z_r-w_r)\right|
+ \le\sum_r|y_r|\,|z_r-w_r|+\frac57\delta_{\rm rest}.
+\tag{13.5}
+$$
+
+对于任意复 $y,z,w$，三角不等式及两次 $2ab\le a^2+b^2$ 给出
+
+$$
+|y|\,|z-w|\le |y|(|z|+|w|)
+ \le |y|^2+\frac{|z|^2+|w|^2}{2}
+ \le\|(y,z,w)\|^2.
+\tag{13.6}
+$$
+
+而 $\mathsf Q$ 严格正定，且
+
+$$
+\mathsf Q^{-1}=\frac1{21}
+ \begin{pmatrix}13&-5&-1\\-5&10&2\\-1&2&13\end{pmatrix},
+\qquad \operatorname{Tr}\mathsf Q^{-1}=\frac{12}{7}.
+\tag{13.7}
+$$
+
+正矩阵的最大本征值不超过其迹，所以 $\|v\|^2\le(12/7)v^\dagger\mathsf Qv$。将其代入 (13.5)，并用各块泄漏非负，得到
+
+$$
+\left|\operatorname{Re}\sum_r\overline{x_r}(z_r-w_r)\right|
+ \le\frac{12}{7}\delta_{\mathbf8}+\frac57\delta_{\rm rest}
+ \le\frac{12}{7}\varepsilon.
+\tag{13.8}
+$$
+
+令
+
+$$
+e=(0,1,-1)^{\mathsf T},\qquad
+\lambda=\frac{29}{76},\qquad
+h'=h-\lambda e=(1/4,-29/76,-7/19)^{\mathsf T}.
+\tag{13.9}
+$$
+
+直接乘 (13.7) 可得
+
+$$
+(h')^\dagger\mathsf Q^{-1}e=0,\qquad
+(h')^\dagger\mathsf Q^{-1}h'=\frac{83}{304}=k,
+\qquad \lambda\frac{12}{7}=\frac{87}{133}=c.
+\tag{13.10}
+$$
+
+把 (13.4) 的 $h$ 分解成 $h'+\lambda e$。在 $\mathsf Q$ 内积中对所有重数指标一起应用复 Cauchy—Schwarz，再使用 (13.8)，得到
+
+$$
+\begin{aligned}
+X-\frac38
+&\le\left|\sum_r\overline{x_r}(h')^\dagger v_r\right|
+ +\lambda\left|\operatorname{Re}\sum_r\overline{x_r}e^\dagger v_r\right|\\
+&\le\sqrt{kX\delta_{\mathbf8}}+c\varepsilon
+ \le\sqrt{kX\varepsilon}+c\varepsilon.
+\end{aligned}
+\tag{13.11}
+$$
+
+置 $z=\sqrt X\ge0$。它满足 $z^2-\sqrt{k\varepsilon}\,z-(3/8+c\varepsilon)\le0$，故
+
+$$
+X\le\frac{\left(\sqrt{k\varepsilon}
+       +\sqrt{3/2+(k+4c)\varepsilon}\right)^2}{4}.
+\tag{13.12}
+$$
+
+这里直接解二次不等式，没有把符号未定的 $X-3/8-c\varepsilon$ 平方。再用 (13.4) 的 $s\le X+(20/7)\varepsilon$ 和 $s\le1$，即得 (13.1)—(13.2)。命题 11.2 将全部返回兼容仪器的忽略记录通道包含在这个保单位类中，取上确界得到 $F_{\rm ret}\le U$。证毕。
+
+## 14. 与无返回约束首项的严格分离
+
+**推论 14.1（经典精确返回的首项损失）。** 经典历史返回类满足
+
+$$
+\limsup_{\varepsilon\downarrow0}
+ \frac{F_{\rm ret}(\varepsilon)-3/8}{\sqrt\varepsilon}
+ \le\sqrt{\frac{249}{2432}}
+ <\sqrt{\frac{17}{112}}.
+\tag{14.1}
+$$
+
+因此不可能以满足 (11.2) 的一族仪器达到定理 5.3 的无返回约束最优首项。此结论不确定 $F_{\rm ret}$ 的首项是否存在或取等。
+
+证明。令 $B(\varepsilon)$ 为 (13.1) 中截断到一以前的根式上界。因 $B(0)=3/8<1$，零点邻域内 $U=B$。在 $q=\sqrt\varepsilon$ 中展开通常的正根号，得到
+
+$$
+U(\varepsilon)=\frac38+
+ \sqrt{\frac{3k}{8}}\sqrt\varepsilon
+ +\left(\frac{k}{2}+c+\frac{20}{7}\right)\varepsilon
+ +O(\varepsilon^{3/2})
+ =\frac38+\sqrt{\frac{249}{2432}}\sqrt\varepsilon
+ +\frac{15525}{4256}\varepsilon+O(\varepsilon^{3/2}).
+\tag{14.2}
+$$
+
+定理 13.1 给出 $F_{\rm ret}\le U$，例 11.3 给出相同零点值，故有 (14.1) 的非严格部分。两个正首项系数的平方差为
+
+$$
+\frac{17}{112}-\frac{249}{2432}=\frac{841}{17024}>0.
+\tag{14.3}
+$$
+
+其值分别约为 $0.3895968612$ 和 $0.3199763560$；严格比较由有理数 (14.3) 承担。定理 5.3 已证明前者是原无返回约束 $F$ 的首项，故两类在足够小正预算下严格分离。没有把非锐有限误差上界的一次项指认为最优返回系数。证毕。
+
+## 15. 已有正参数通道族的非保单位见证
+
+**推论 15.1（整个正参数区间都不容经典精确返回）。** 对定义 8.1 的同一通道族，全部 $0<t\le1/1000$ 满足
+
+$$
+\mathcal N_t(I_9)-I_9=a(t)(I_9-3S),\qquad
+a(t)=\frac{3t(1-16t)(1-95t)(29+869t)}{4f(t)}>0.
+\tag{15.1}
+$$
+
+所以任何以 $\mathcal N_t$ 为忽略记录通道、仅保留 $AB$ 和有限或可数经典历史的仪器，都不存在满足 (11.2) 的 CPTP 校正。这覆盖任意经典结果细化、一般 CP 分支和任意后续校正，强于只检查 $\mathcal N_t^2$ 是否恒等。
+
+证明。该族只有伴随块，(8.3) 已给全代数保迹。把 $x=A(t)^{-1/2}$、$y=u_tA(t)^{-1/2}$、$z=v_tA(t)^{-1/2}$、$w=w_tA(t)^{-1/2}$ 代入 (12.2)，得到缺陷系数
+
+$$
+a(t)=\frac{2(1-u_t)(v_t-w_t)}{A(t)},\qquad
+v_t-w_t=\frac{t(29+869t)}{1-95t}.
+\tag{15.2}
+$$
+
+使用 (8.3) 的 $A(t)=8f(t)/(3(1-95t)^2)$ 即化成 (15.1)。在所述正区间，$1-16t\ge984/1000>0$、$1-95t\ge905/1000>0$、$29+869t>0$，且复用 (8.7)，
+
+$$
+f(t)\ge\frac{24246927}{31250000}>0.
+\tag{15.3}
+$$
+
+故 $a(t)>0$；$I_9-3S\ne0$，所以通道不保单位。若有任意上述仪器及校正，命题 11.2 将迫使同一个 $\mathcal N_t$ 保单位，矛盾。$t=0$ 的缺陷为零，且已有例 11.3 的返回校准；它没有被排除。这里新增的是既有通道族的返回障碍应用，不把有理通道构造或成熟校正判据再计为新成果。证毕。
+
+## 16. 完整第一步输出的目标效应后果
+
+**推论 16.1（同一原输入上的完整输出距离）。** 对每个满足 (11.1)—(11.2)、$D(\mathcal N)\le\varepsilon$ 的仪器，存在一个原承诺对 $(P,Q)\in\mathfrak F$，使它的实际完整第一步输出 $\Xi=\mathcal M(P\otimes Q)$ 与每个满足 $\operatorname{Tr}_{\mathsf C}\Omega=P\otimes R$ 的理想归一化联合输出 $\Omega$ 均满足
+
+$$
+\frac12\|\Xi-\Omega\|_1
+ \ge\max\{0,1-U(\varepsilon)\}.
+\tag{16.1}
+$$
+
+同一个承诺对对全部这些理想历史输出同时有效；不要求它们具有相同的经典标签分布。
+
+证明。忽略记录后的 $\mathcal N$ 是有限维通道，所以 $s_{\mathcal N}(P,Q)$ 在紧集 $\mathfrak F$ 上连续并取得最小值。由命题 11.2 和定理 13.1，选取最小值点使 $s_{\mathcal N}(P,Q)\le U(\varepsilon)$。在完整输出上使用有界效应
+
+$$
+E_{P,Q}=(P\otimes R)\otimes I_{\mathsf C},\qquad
+\operatorname{Tr}(E_{P,Q}\Xi)=s_{\mathcal N}(P,Q),\qquad
+\operatorname{Tr}(E_{P,Q}\Omega)=1.
+\tag{16.2}
+$$
+
+迹距离的效应变分界给 $\|\Xi-\Omega\|_1/2\ge1-s_{\mathcal N}(P,Q)\ge1-U(\varepsilon)$，再与非负性合并。可数经典输出仍是迹类态，$E_{P,Q}$ 是范数一的块对角效应，同一迹对偶界适用。也可先对历史作部分迹，再用迹距离在该通道下不增加得到同一结论。这个单个效应已约束完整输出，不把小第一边缘扰动误读成小联合恢复误差；目标重叠仍不是带成功标志的精确制备概率。证毕。
+
+## 17. 原消费者、成熟工具与未决桥
+
+**应用 17.1（同原 $\tau^2$ 返回腿的必要条件）。** 在定义 1.1—1.3 的完整实际接口下，定理 13.1、推论 14.1、15.1 和 16.1 都针对同一个未知 $\mathrm E_2(p,q)$ 及同一个 $\mathrm E_2(\tau(p,q))$ 目标。若一次候选 $\tau$ 仪器后还要求仅凭其 $AB$ 和经典历史精确恢复原工作寄存器，则必须满足这些限制。证明只用定义 1.2 的双向原关联对应，把 $P,Q,R$ 沿同一个 $\Phi$ 解释；原态、效应、单位和目标均未更换。
+
+这样的任意 CPTP 返回已比第二次固定 $\tau$ 更宽，故推论 15.1 排除相应经典返回路线。但 (11.2) 不等于原完整操作返回，定理 13.1 也只利用它的必要保单位后果。保单位通道一般不都是混合酉，[Gregoratti—Werner，§II.3.1][CRGW] 已明确给出这一边界；本卷不由保单位性断言存在可执行的校正，也不声称 $U$ 锐、可取等，或已求得正误差的 $F_{\rm ret}$。
+
+执行一次 $\tau$ 再执行返回，具有两个实际干预、其中间输出、记录及费用。即使最终 $AB$ 精确相等，也没有把这些记录和资源变成空字的历史。先在纸面约简关联字、只执行端点，不能供应被省略的中间 body、在线回应或切口取得。当前没有构造一套在实际非承诺输出及记录条件化未来上共同定义的物理 $\sigma,\tau$，使 $\tau^2$、$\sigma^2$、$(\sigma\tau)^3$ 连同所有中间输出和完整返回语义成立。应用 4.1 已有的 $\mathrm E_3$ 寄存器置换有限字作用继续成立；它使用已供给的第三样本，不能作为这个 $\mathrm E_2$ 缺口的免费解法。
+
+本障碍只针对精确返回。近似返回误差与扰动、历史之间的定量折衷尚未证明。若另保留可访问的相干量子环境，命题 11.2 的同维分支论证不再适用；本结果没有排除这种模型。那时须实际给出该环境的准备、维数、保存、访问、逆控制、校准和全部费用，Stinespring 等式本身不供应这些能力或当前权限。有限或可数经典历史以外的结果模型也未包含在本定理中。
+
+**原任务边界。** 原来源的合法域、守卫、接受与执行后拒绝、全部回应和记录、谱系、当前授权、控制、backing、原终止消费者及 Handback／Stop／INITIAL、AA／ACK／token／吸收 halt 和下一入口语义仍按应用 4.1、定理 10.1 保留。四份独立实际取得、所选完整收到的 body 驱动同一 owed consumer、全部实际流量与同次运行的费用向量及同时峰值，都未由矩阵返回合同供应。采样、标签保存和通信、门、辅助系统、设备、程序、验证与返回的实际费用不能以数学可逆性删除。Quantum116 的 $\sigma,\tau$ 与 Fibonacci 的 $\alpha,\beta$ 没有因本结果取得来源或操作认同，也没有得到总资源优势或全局最简关系结论。
+
+已有 [ATOMIC_SUPPLIER_SUBSTITUTION II，定理 65.3、70.2、75.4][CRJR] 在增广 $J_r$ 的完整真实入口、封闭 writer／输入、门、当前权限、各请求切口的独立 wake、材料和进展前提下，已经条件性证明全部声明切口、每个有限有序请求森林及原 owed-action 返回；这些结论继续复用，不重新归为全未决。未增广或物理来源、更细 primitive 内部、广泛实际 $\alpha/\beta$ 到原消费者的桥及全局最小性仍有各自义务。该卷所引 GENERAL15.5／18.4、RG13.3 的既有受限 cross-entry／inherited original-Q 结果也保持原范围，不能笼统说全部 cross-entry 核都未解。这里没有推进其外的 changed／new-row Q、较广 mixed interiors 或 full terminal-task kernel。
+
+静态几何、单位费用连续性、共同正方向和有限份复合的条件结果仍只在各自前提下使用；本返回界不支付实际产品准备、一般 completion-added 态的同时准备、未付的 $3+3$ 产品、同族仪器或物理时间合同。第一步的一个量子必要障碍不结算更广的原来源互恢复目标。
+
+**文献与内容归属。** 定理 2.1 的承诺刚性、定理 5.2 的群平均、定理 6.2 的全部复重数、定理 7.1—7.2 的泄漏谱与剩余块估计、定理 5.3 的无返回首项和定义 8.1 的有理族都是本卷既有供应。Choi 正性、Schur 分解、Cauchy—Schwarz、迹距离效应界与同维 CPTP 左逆结构均是成熟工具。经典辅助整输入校正应归于 [Gregoratti—Werner，命题 2、§II.3.1][CRGW]，同维左逆结构直接取 [Nayak—Sen，定理 2.1][CRNS]；仓内 [MINIMAL_RECORD_DILATIONS，定理 2.2、假设 2.3][CRMR] 已在另一固定源上应用前者，并保留实际测量、反馈和逆控制条件。
+
+本卷新增的数学关系是：在相同 $\mathrm E_2/\tau$ 目标下，用 (12.2) 的保单位缺陷约束原伴随相干，结合全部剩余扇区取得 (13.1) 的统一界及 (14.1) 的严格首项分离；(15.1) 是既有族的具体不返回后果，(16.1) 是同一目标效应给出的完整输出后果。它们是 repository-new 的源内综合推导，不把成熟判据、零扰动校准或已有通道改名作为新意。这里给出普通数学证明，不宣称 Lean／kernel 核验、物理实现认证或全球原创；全球文献优先性未验证。
+
+[CRGW]: https://arxiv.org/html/quant-ph/0209025v1 "Matteo Gregoratti and Reinhard F. Werner, Quantum Lost and Found；Proposition 2、§II.3.1：经典环境辅助的整量子信息校正、缩放等距、同维混合酉，以及保单位一般不充分。"
+[CRNS]: https://arxiv.org/html/quant-ph/0605041v4 "Ashwin Nayak and Pranab Sen, Invertible Quantum Operations and Perfect Encryption of Quantum States；Theorem 2.1：有 CPTP 左逆的有限维 CPTP 映射结构，输入输出同维时为酉共轭。"
+[CRMR]: RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md "Theorem 2.2、Assumption 2.3：指定五模式源上的经典反馈整输入／参考恢复及实际资源条件。"
+[CRJR]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_SUPPLIER_SUBSTITUTION_II.md "Theorems 65.3、70.2、75.4：增广 Jr 的源内完整重建、全部有限有序森林／owed-action 返回与更大任务边界。"
+
+## 追加锚（本行以下为增补区）
