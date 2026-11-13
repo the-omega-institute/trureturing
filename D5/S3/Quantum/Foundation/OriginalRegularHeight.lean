@@ -34,6 +34,7 @@ private abbrev normalSpan (C : PointedCone ℝ V) (p : V) :=
 private abbrev chartSpace {p : V} (a : ExclusionChart C u p) :=
   EuclideanSpace ℝ (Fin a.dim)
 
+omit [FiniteDimensional ℝ V] in
 private theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a) :
     u (a.param z) = 1 := by
   have hspan : affineSpan ℝ (Metric.closedBall (0 : chartSpace a) 1) = ⊤ := by
@@ -46,6 +47,7 @@ private theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a)
       a.whole ▸ mem_image_of_mem a.param hw).1.2
   exact congrArg (fun f : chartSpace a →ᵃ[ℝ] ℝ => f z) heq
 
+omit [FiniteDimensional ℝ V] in
 private theorem peak_formula {p : V} (a : ExclusionChart C u p)
     (e : V →ₗ[ℝ] ℝ) (he : proper C u e)
     (v : chartSpace a) (hv : ‖v‖ = 1) (hpeak : e (a.param v) = 1) :
@@ -55,7 +57,7 @@ private theorem peak_formula {p : V} (a : ExclusionChart C u p)
     (fun z hz => sub_nonneg.mpr (he _
       (show a.param z ∈ exclusion C u p from
         a.whole ▸ mem_image_of_mem a.param (by simpa using hz)).1.1).2)
-    (by simpa [chart_unit a, hpeak])
+    (by simp [chart_unit a, hpeak])
   intro z
   have hh := hf z
   change u (a.param z) - e (a.param z) =
@@ -88,13 +90,14 @@ private theorem original_coordinates
 private def directionLift {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) : chartSpace a →ₗ[ℝ] normalSpan C p :=
   k.equivalence.symm.toLinearMap.comp
-    { toFun := fun v => (InnerProductSpace.toDual ℝ (chartSpace a) v).toLinearMap.toAffineMap
+    ({
+      toFun := fun v => (InnerProductSpace.toDual ℝ (chartSpace a) v).toLinearMap.toAffineMap
       map_add' := by intro v w; ext z; simp
       map_smul' := by
         intro t v
         ext z
         change ⟪t • v, z⟫ = t * ⟪v, z⟫
-        simp }
+        exact real_inner_smul_left _ _ _ } : chartSpace a →ₗ[ℝ] (chartSpace a →ᵃ[ℝ] ℝ))
 
 private theorem directionLift_value {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) (v z : chartSpace a) :
@@ -191,7 +194,7 @@ private theorem neighbor_unique
       intro h
       simp only [h, mul_zero, add_zero] at hey
       exact hgn hey.symm
-    have hlam : lam = μ := (mul_right_cancel₀ hdiff).mp (by linarith [hey, hfy])
+    have hlam : lam = μ := mul_right_cancel₀ hdiff (by linarith [hey, hfy])
     have hmaps : e.toContinuousLinearMap = f.toContinuousLinearMap := by
       rw [heL, hfL]
       change (k.g + lam • _).val = (k.g + μ • _).val
@@ -284,7 +287,8 @@ private theorem neighbor_parameter_bound
   have hmul := mul_le_mul_of_nonneg_left
     (show k.g.val y - (directionLift k v).val y ≤ (1 + M) * k.g.val y by linarith) hlam
   have hone : 1 ≤ lam * (1 + M) := by nlinarith
-  exact (div_le_iff₀ (by linarith : 0 < 1 + M)).mpr (by nlinarith)
+  change 1 / (1 + M) ≤ lam
+  exact (div_le_iff₀ (by linarith : 0 < 1 + M)).mpr (by nlinarith only [hone])
 
 private theorem two_ball_identity
     {p q aa : pure C u} {b : ExclusionChart C u q}
@@ -338,9 +342,13 @@ private theorem two_ball_identity
   have hh := congrArg (fun f : normalSpan C q => f.val x) hidentity
   change (1 - ea p) * ep x + (1 - ep aa) * ea x =
     (1 - ea p * ep aa) * kq.g.val x at hh
-  simpa only [kq.g_value] using hh
+  change (1 - ea p) * ep x + (1 - ep aa) * ea x =
+    (1 - ea p * ep aa) * ((u - eq) x)
+  rw [kq.g_value] at hh
+  exact hh
 
 set_option maxHeartbeats 800000 in
+-- The uniform estimate combines both complete ball charts in one elaboration.
 /-- One positive original height at a given regular anchor works for every
 unit direction, every complete adjacent ball chart, its actual opposite
 endpoint and every full original confirming effect of that endpoint. -/
@@ -385,8 +393,13 @@ theorem original_regular_height
   have hap : (aa : V) ≠ p := by
     intro he
     have hneg : -s = s := b.injective (hsa.trans (he.trans hsp.symm))
-    have hs0 : s = 0 := by have hh := congrArg (fun z => z + s) hneg; simpa using hh
-    simpa [hs0] using hsphere
+    have hs0 : s = 0 := by
+      have hh : (2 : ℝ) • s = 0 := by
+        calc
+          (2 : ℝ) • s = s - (-s) := by module
+          _ = 0 := by rw [hneg]; simp
+      exact (smul_eq_zero.mp hh).resolve_left (by norm_num)
+    simp [hs0] at hsphere
   have htpos : 0 < 1 - ep aa := by
     simpa only [LinearMap.sub_apply, (pure_mem aa).2] using
       g_positive hc hs hg hB hInj p hep (pure_mem aa) hap
@@ -408,7 +421,9 @@ theorem original_regular_height
     linarith
   have hmul := mul_le_mul_of_nonneg_right hfactor hlam0
   have hreading : 2 / (1 + M) ≤ ea (a.param (-v)) := by
-    have htwo : 2 / (1 + M) ≤ 1 - eq (a.param (-v)) := by linarith
+    have htwo : 2 / (1 + M) ≤ 1 - eq (a.param (-v)) := by
+      rw [show 2 / (1 + M) = 2 * (1 / (1 + M)) by ring]
+      linarith only [hlam]
     have hmid : 1 - eq (a.param (-v)) ≤ ea (a.param (-v)) := by nlinarith
     exact htwo.trans hmid
   refine ⟨hheight aa ea hea ⟨_, hzD, hreading⟩, haD, ?_⟩
