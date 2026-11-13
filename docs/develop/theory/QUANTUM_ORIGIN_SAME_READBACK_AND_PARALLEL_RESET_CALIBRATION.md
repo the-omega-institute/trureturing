@@ -1409,3 +1409,578 @@ IX118.4的纯／混标签判据、118.10的零效应最大值与唯一一值面�
 把同一原状态体想成一块完整凸实体，站在一个对所有趋近原标签都保持全部零测试稳定的正规锚点上，身后是一颗由全部原测试定义的完整排除球。它的球面每个方向都标出一个真实邻点；邻点又带来一颗真正经过脚下的花瓣球，穿过花瓣球心走到另一端，就得到一个真实远端。前一章已经保证这些远端在同一原单位量出的高度不会掉到零，三维影壳也完整、光滑而严格凸。本章追问的是另一种失稳：方向轻轻变化，远端的高度会不会突然比极限方向的远端更低？如果真下降，远端不一定趋向纯态；若极限为混态，它就在极限花瓣的相对内部。与此同时，它的完整确认测试却被迫趋于那个邻点确认测试的补，反向排除的整颗实心球一起缩成邻点，连球里的全部混态也无处可留。这是第二层球的塌缩，不是前一章已经保住高度的第一层花瓣。更细地看，所有确认测试的聚点只能落在真实远端确认与这个补测试之间的一条确定线段上；趋近方向的反向读数下极限，不能低于极限方向本身的反向读数；严格高度下降更迫使这些趋近读数升到一。再让一个真实远端的确认测试去检查另一个远端，因为它在整块原实体上都不能读过一，便得到高度差受到同一影壳支撑余差的约束。余差比方向的一阶变化更小，所以如果整张费用边界连续，沿任何球面弧都不能真正涨高，反向走也不能涨高，最后高度只能处处相同；远端连续与费用连续恰好是这同一件事。反向确认始终离一留有共同缺口，就足以取得这项常值性；若第二层整球也保持非塌缩，还能取得完整确认的连续性。但“处处同高”仍没有把这个高度证明成一，也没有把每个最省提升压到一份原单位。真正缺的仍是同一个完整原实现的联合约束：任何有限批真实花瓣远端，都必须留下一个共同单位方向，使所有第三候选读数同时非负，或等价地排除真实影点包住严格放大单位球。只有这种F在整个原纯标签域的正规锚点中稠密，才接回已有的全部原纯态、混态、效应、Born概率、有限数学POVM和谱结构的复三能级静态模型。三条真实边、数学效应和为单位、同一实际仪器继续分开；商、提升、支撑余差和有限证书都不是物理操作。共同来源、全部原操作、所有有限复合与纠缠输入、叉口资源、全旁观CP、同族事件和仪器、物理钟、Hamiltonian及数值 $\hbar$ 的完整原合同也仍须分别供应。
 
 ## 追加锚（本行以下为增补区）
+
+## 125. 单个真实三角的九维原态—效应配对与邻边校准缺口
+
+### 125.1 完整原域、种子层次与既有三窗口结果
+
+**约定 125.1（同一原实现与前件范围）。** 本章的VII103—105指[完整排除面第七卷][Q125VII]，VIII109—111指[排除球第八卷][Q125VIII]，IX116、118、120指[排除球第九卷][Q125IX]，121—122指[THREE_COPY第七卷][Q125T]，123—124指本卷已有章节。取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_b=\{f\in\mathcal E:f(b)=1\},\qquad
+T_b(x)=\min_{f\in\mathcal F_b}f(x),\\
+D_b=\{x\in K:T_b(x)=0\},\qquad
+\mathcal A_b=\{e\in\mathcal F_b:e|_{D_b}=0\},\\
+N_b=\{h\in C^*:h(b)=0\},\qquad
+\mathcal B(b)=N_b\cap\mathcal E,\qquad S_b=\operatorname{span}N_b.
+\end{gathered}
+\tag{Q125.1}
+$$
+
+这里是整个原紧态基、全部原纯点、全部原效应和每个标签的完整排除集合。EB3表示每个 $D_b$ 仿射同构于整个闭三球，Inj表示 $D_b=D_c\Rightarrow b=c$。除125.9保留的裸EB3候选外，本章均取EB3+Inj。定义
+
+$$
+\begin{gathered}
+b\perp c\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(b)=1, f(c)=0,\\
+P_0=\{b\in P:\mathcal A_b\text{ 是单点}\},\qquad
+\mathcal A_b=\{e_b\}\quad(b\in P_0),\\
+\mathcal T=\{b\in P:\exists c,d\in P,
+\ b\perp c, b\perp d, c\perp d\}.
+\end{gathered}
+\tag{Q125.2}
+$$
+
+补效应使原边对称，且 $b\perp c\Longleftrightarrow c\in D_b$，$b\notin D_b$。真实三角只表示三条各自真实的原边。三个非负数学效应在整个 $V$ 上和为 $u$，以及同一实际三结果仪器，是另外两个层次。
+
+直接复用VII103.2、104.1和IX120.2：每个 $D_b$ 是非点紧暴露极大真面，$\mathcal A_b\ne\varnothing$；全部非空真面只有纯单点和完整球；不同完整球相交时仅交于一个原纯点。每个完整球 $F$ 满足 $P\cap F=\partial_{\rm rel}F$、$F=\operatorname{conv}(P\cap F)$。Inj还给每张 $e\in\mathcal A_b$ 的一值面恰为 $\{b\}$，零面恰为 $D_b$；一值面结论包括全部原混态。
+
+**既有结果的准确范围。** VIII109.2—109.3、111.2已经在
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 下证明三球可见空间、共同盲核、直和分解和联合零效应分离的等价式；VIII111.12给其完整几何解释。该入口已经供应全纯least确认、共同正延拓及正面投影。固定全部球均为三球时，VIII113及IX116的既有分类还已给整个 $V$ 九维。以下不把这些结论重计为新的全W结果；所证增量是在未支付全域 $\mathrm{Pair}_{\perp}$、正投影或全纯框架完成的EB3+Inj域，仅从一个实际三角取得准确局部张成，并在一个 $P_0$ 种子上取得双侧配对。121.9已有无需种子的 $\dim V\ge9$，本章不把该维数下界计为新结论。
+
+种子条件有三个层次：$\mathcal T\ne\varnothing$、$P_0\cap\mathcal T\ne\varnothing$、$P_{\rm reg}\cap\mathcal T\ne\varnothing$。其中
+
+$$
+P_{\rm reg}=P_0\cap\operatorname{Cont}(\mathcal B)
+\tag{Q125.3}
+$$
+
+沿123.1量化整个 $P$ 中全部趋近纯序列。第三层蕴含第二层，第二层蕴含第一层；本章不证明反向。$P_0$、$P_{\rm reg}$ 在整个 $P$ 中稠密，仅凭这一稠密性不能推出它们与非空相对闭集 $\mathcal T$ 相交，也不能取得任何固定 $\partial D_b$ 上的相交稠密性；这些相交结论仍未在此取得。
+
+### 125.2 一个真实三角的三球横向方向
+
+**定义 125.2（只由三角与实际球定义的空间）。** 固定任意真实三角 $\triangle=(p_1,p_2,p_3)$，暂不要求其顶点属于 $P_0$。任取 $a_i\in\mathcal A_{p_i}$，记
+
+$$
+D_i=D_{p_i},\qquad M_i=\operatorname{span}D_i,\qquad
+U_\triangle=M_1+M_2+M_3,\qquad
+\eta_\triangle=(p_1+p_2+p_3)/3.
+\tag{Q125.4}
+$$
+
+对互异 $i,j,k$，$a_j$ 在 $D_i$ 上于 $p_j,p_k$ 取一、零。完整仿射球上一个 $[0,1]$ 值仿射函数若取得一、零，两极值点必为对径。因此
+
+$$
+c_i=(p_j+p_k)/2,\qquad d_i=(p_j-p_k)/2.
+\tag{Q125.5}
+$$
+
+令 $W_i=\operatorname{lin}(D_i-c_i)$，以该球为单位球定义其欧氏内积 $g_i$；于是 $g_i(d_i,d_i)=1$。定义相对于这条三角直径的横向二平面
+
+$$
+L_i=\{z\in W_i:g_i(z,d_i)=0\}.
+\tag{Q125.6}
+$$
+
+这里 $W_i$ 三维，$L_i$ 二维；没有把不同球的内积拼成共同内积。球内的极值公式给
+
+$$
+\begin{gathered}
+a_j(c_i+z)=\tfrac12(1+g_i(d_i,z)),\qquad
+a_k(c_i+z)=\tfrac12(1-g_i(d_i,z)),\\
+a_i|_{M_i}=0,\qquad
+M_i=\mathbb Rp_j\oplus\mathbb Rp_k\oplus L_i.
+\end{gathered}
+\tag{Q125.7}
+$$
+
+这些限制与所选 $a_i$ 无关，故 $L_i$ 也可写成 $M_i\cap\ker a_j\cap\ker a_k$。
+
+### 125.3 原正法向直接分离九个方向
+
+**定理 125.3（无需全域W的准确三球张成）。** 在EB3+Inj中，每个真实三角满足
+
+$$
+\boxed{\quad
+U_\triangle=
+\mathbb Rp_1\oplus\mathbb Rp_2\oplus\mathbb Rp_3
+\oplus L_1\oplus L_2\oplus L_3,
+\qquad \dim U_\triangle=9.
+\quad}
+\tag{Q125.8}
+$$
+
+而且 $\eta_\triangle\in\operatorname{ri}K\subset\operatorname{int}C$。这里不推出 $U_\triangle=V$。
+
+证明。先说明唯一支撑所给的跨球消去。非负仿射函数 $h(c+Bz)=\alpha+\ell\cdot z$ 在单位球上非负，并在单位端点 $v$ 为零时，$\alpha\ge\|\ell\|$、$\ell\cdot v=-\alpha$ 迫使 $\ell=-\alpha v$。故该函数是该端点唯一支撑函数的非负倍数，包含恒零情形。
+
+固定互异 $i,j,k$。任意 $h\in N_{p_i}$ 在球 $D_j$ 上非负，在其对径端 $p_i$ 为零。以另一端 $p_k$ 的值确定倍数，得到
+
+$$
+h|_{M_j}=h(p_k)a_k|_{M_j},\qquad
+h(L_j)=0.
+\tag{Q125.9}
+$$
+
+这里先在整个仿射球得到等式，再因 $D_j$ 线性张成 $M_j$ 而延至 $M_j$，没有延至整个 $V$。交换 $j,k$，亦得 $h(L_k)=0$。因此 $N_{p_i}$ 消去另外两球的横向平面。
+
+另一方面，$N_{p_i}$ 分离自己的 $L_i$。给定 $0\ne w\in L_i$，取实际球面点
+
+$$
+s=c_i+w/\|w\|_{g_i}\in P\cap D_i
+$$
+
+及任意 $a_s\in\mathcal A_s$。零边对称给 $p_i\in D_s$，故 $a_s\in N_{p_i}$。它在 $D_i$ 上不超过一，在 $s$ 取一；由于整个原一值面只有 $s$，其限制非恒定。球上仿射函数的最大值方向唯一，故存在 $\beta>0$，使其线性部分沿 $w/\|w\|_{g_i}$，从而
+
+$$
+a_s(w)=\beta\|w\|_{g_i}>0.
+\tag{Q125.10}
+$$
+
+这一步使用Inj所支付的一值面单点性，没有假设 $s$ 已进入某个三角。
+
+(Q125.7)已给三球和由所列九个方向张成。若
+
+$$
+\sum_{i=1}^3\alpha_i p_i+w_1+w_2+w_3=0,
+\qquad w_i\in L_i,
+$$
+
+作用 $a_i$，由(Q125.7)得 $a_i(w_j)=0$ 对全部 $i,j$ 成立，且 $a_i(p_j)=\delta_{ij}$，故全部 $\alpha_i=0$。再固定 $i$，作用全部 $N_{p_i}$；(Q125.9)消去 $w_j,w_k$，(Q125.10)的分离性迫使 $w_i=0$。所以确为直和，维数为 $3+2+2+2=9$。
+
+最后，若 $\eta_\triangle$ 在原相对边界，取包含它的一个真支撑面。面性质使其包含三个 $p_i$。该面非点，原面分类使其为某完整球 $F$。它与 $D_1$ 同含不同的 $p_2,p_3$，只能 $F=D_1$；但它又含 $p_1\notin D_1$，矛盾。因此 $\eta_\triangle\in\operatorname{ri}K$。严格正单位的径向坐标 $(t,x)\mapsto tx$ 把 $t>0$ 与 $K$ 的相对内部化为 $C$ 的内部，故也有锥内点结论。证毕。
+
+在这个证明中，$a_1+a_2+a_3=u$ 只已在 $U_\triangle$ 上成立：双方在三个顶点与三个横向平面上的值相同。未假设顶点属于 $P_0$ 时，这个球上张成论证不把该等式推广至全部 $V$。即使重心是全锥内点，也不能将一个经过它的九维线性截面认作整个 $V$；同样不能把在该截面上为零的有符号泛函认作全域为零。
+
+### 125.4 唯一确认种子的九维原效应空间
+
+**定理 125.4（单种子的双侧非退化配对）。** 另设真实三角的一个顶点属于 $P_0$。则三个顶点均属于 $P_0$；写 $e_i=e_{p_i}$，有
+
+$$
+e_1+e_2+e_3=u\quad\text{于整个 }V.
+\tag{Q125.11}
+$$
+
+定义
+
+$$
+S_i=S_{p_i},\qquad
+\mathcal S_\triangle=S_1+S_2+S_3,\qquad
+\mathcal Q_i=\{f\in S_i:f(p_j)=f(p_k)=0\}.
+\tag{Q125.12}
+$$
+
+则 $\dim S_i=4$、$\dim\mathcal Q_i=2$，且
+
+$$
+\begin{gathered}
+S_i=\operatorname{span}\{e_j,e_k\}\oplus\mathcal Q_i,\\
+\mathcal S_\triangle=
+\operatorname{span}\{e_1,e_2,e_3\}
+\oplus\mathcal Q_1\oplus\mathcal Q_2\oplus\mathcal Q_3,
+\qquad\dim\mathcal S_\triangle=9,\\
+\operatorname{res}_{U_\triangle}:\mathcal S_\triangle
+\overset\sim\longrightarrow U_\triangle^*.
+\end{gathered}
+\tag{Q125.13}
+$$
+
+证明。IX120.12使一个 $P_0$ 标签的全部真实邻点仍在 $P_0$，故三个顶点均属 $P_0$。在每颗球上，另外两顶点由确认效应读一、零，确为对径；沿IX120.14的实际对径行走恰形成三周期。于是IX120.18—120.19给(Q125.11)，这是全 $V$ 上的恒等式，不是仅在九维空间上相加。
+
+IX120.8给每个限制 $S_i\to\operatorname{Aff}(D_i)$ 为线性同构，维数四。$e_j,e_k\in N_{p_i}$，其在 $p_j,p_k$ 的读数是两条坐标向量，故两个端点评价独立，$\mathcal Q_i$ 维数二，且给第一行直和。
+
+一个在球 $D_i$ 上于对径两端为零的仿射函数，常数项及直径方向系数均为零；其余正是 $L_i$ 上的任意线性函数。因此限制
+
+$$
+\mathcal Q_i\longrightarrow L_i^*
+\tag{Q125.14}
+$$
+
+是同构。$S_i$ 全在 $p_i$ 为零，故 $\mathcal Q_i$ 在全部三个顶点为零。(Q125.9)对正泛函成立，因而对其线性张成 $S_i$ 也成立，所以 $\mathcal Q_i$ 消去 $L_j,L_k$。
+
+于是(Q125.13)的效应块与(Q125.8)的态向量块逐块配对：三个 $e_i$ 分离三个顶点并消去全部横向平面；$\mathcal Q_i$ 只读自己的 $L_i$，且给其全部线性读数。这证明所列效应和为直和，并且限制到 $U_\triangle$ 的矩阵逐块可逆，得到九维及同构。证毕。
+
+这里使用 $S_i$ 的线性同构，尚未使用或证明 $N_{p_i}$ 对整个球正仿射锥满射。后者是正性问题，不能由四维数相同或限制线性可逆代付。
+
+### 125.5 规范剩余、联合零测试与旧TFD关系
+
+**定理 125.5（准确盲核及同一原态上的反事实）。** 在定理125.4的前件下，令
+
+$$
+R_\triangle=\mathcal S_\triangle^\perp
+=\{z\in V:f(z)=0\ (f\in\mathcal S_\triangle)\}.
+\tag{Q125.15}
+$$
+
+则有规范线性分解与投影
+
+$$
+\begin{gathered}
+V=U_\triangle\oplus R_\triangle,\qquad
+\dim R_\triangle=\dim V-9,\qquad R_\triangle\subseteq\ker u,\\
+\pi_\triangle:V\to U_\triangle,\qquad
+f(\pi_\triangle x)=f(x)\quad(f\in\mathcal S_\triangle),\qquad
+u\pi_\triangle=u.
+\end{gathered}
+\tag{Q125.16}
+$$
+
+对这个固定三角，定义原联合关系
+
+$$
+\begin{split}
+\mathsf J_\triangle:\quad
+\forall x,y\in K:\quad
+\bigl[\forall i\in\{1,2,3\}\ \forall b\in\mathcal E,
+\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]
+\Rightarrow x=y.
+\end{split}
+\tag{Q125.17}
+$$
+
+有准确等价
+
+$$
+\boxed{\quad
+\mathsf J_\triangle
+\Longleftrightarrow R_\triangle=0
+\Longleftrightarrow U_\triangle=V
+\Longleftrightarrow\mathcal S_\triangle=V^*
+\Longleftrightarrow\dim V=9.
+\quad}
+\tag{Q125.18}
+$$
+
+证明。定理125.4使 $U_\triangle$ 与 $\mathcal S_\triangle$ 非退化配对。故对每个 $x\in V$，存在唯一 $y\in U_\triangle$，使 $f(y)=f(x)$ 对全部 $f\in\mathcal S_\triangle$ 成立。于是 $x-y\in R_\triangle$，交为零，得到规范直和、投影及维数公式。由(Q125.11)，$u\in\mathcal S_\triangle$，故剩余在 $\ker u$ 内，投影保留 $u$。
+
+任一非零 $h\in N_{p_i}$ 都有 $m=\max_Kh>0$，且 $h/m\in\mathcal B(p_i)$；反向 $\mathcal B(p_i)\subset N_{p_i}$。因此这些全部原零效应张成的空间恰为 $\mathcal S_\triangle$。若 $R_\triangle=0$，两态的全部这些读数相同就使其差为零，得到 $\mathsf J_\triangle$。
+
+反之，若 $0\ne z\in R_\triangle$，用定理125.3的原内点，取充分小的 $\epsilon>0$，使
+
+$$
+x_+=\eta_\triangle+\epsilon z\in K,\qquad
+x_-=\eta_\triangle-\epsilon z\in K.
+\tag{Q125.19}
+$$
+
+两者不同，且因 $u(z)=0$ 都仍归一；三个 $\mathcal B(p_i)$ 的全部效应对它们同读，故否定 $\mathsf J_\triangle$。它们仍可被整个原效应区间分离：取 $\ell\in V^*$、$\ell(z)\ne0$，令 $M=\max_K|\ell|>0$，则 $u/2+t\ell\in\mathcal E$ 对 $0<t\le1/(2M)$ 成立，在两态上读数不同。这里的盲向量不是正态，真正反事实是(Q125.19)中的两张原混态。其余等价由直和和双方维数立即得到。证毕。
+
+**关系对应。** $\mathsf J_\triangle$ 逐字就是VIII111.1中 $\mathrm{TFD}_{3,\exists}$ 的固定框架分离子句：取否定形式，即对任意不同 $x,y\in K$，某个在一个顶点读零的原效应能区分它们。在本章 $P_0$ 种子域，对这种三角取存在量词，所得关系是同一存在式TFD关系在该域的使用，不是新命名的一条独立公设。本章未证明一般EB3+Inj域中，一个满足存在式TFD的三角必含 $P_0$ 顶点；(Q125.18)不删去其种子前件。
+
+在旧W域中，$S_i=\operatorname{im}\Pi_{p_i}^*$，所以本章 $R_\triangle$ 正是VIII109.2的 $Z_F$，$U_\triangle$ 正是VIII111.2的 $V_F$，$\pi_\triangle$ 正是其 $\pi_F$：它们有相同像、相同核。旧的无盲核到全部原纯互易及Jordan重构还使用W已经供应的全纯least、正球读回和每个纯点的框架完成；不能只凭同一个分离公式把这些强前置一并搬入本章。
+
+### 125.6 原线性球读回的乘法式与正性的准确费用
+
+**定理 125.6（单种子上的线性七块代数与正性判据）。** 仍在定理125.4的前件下，由 $S_i\to\operatorname{Aff}(D_i)$ 的同构定义唯一线性映射 $T_i:V\to M_i$：
+
+$$
+f(T_i x)=f(x)\qquad(f\in S_i).
+\tag{Q125.20}
+$$
+
+并置 $\mathsf R_i(x)=e_i(x)p_i$。则
+
+$$
+\begin{gathered}
+T_i^2=T_i,\quad\operatorname{im}T_i=M_i,\quad T_i p_i=0,
+\quad uT_i=u-e_i,\\
+i\ne j, \{i,j,k\}=\{1,2,3\}:\qquad T_iT_j=T_jT_i=\mathsf R_k,\\
+E_i=T_i-\mathsf R_j-\mathsf R_k,\quad
+\operatorname{im}E_i=L_i,\qquad
+\pi_\triangle=T_1+T_2+T_3-\mathsf R_1-\mathsf R_2-\mathsf R_3.
+\end{gathered}
+\tag{Q125.21}
+$$
+
+三个 $\mathsf R_i$、三个 $E_i$ 及 $I-\pi_\triangle$ 是两两乘积为零、和为 $I$ 的代数投影；最后一个像为 $R_\triangle$。此处只断言线性投影。
+
+更准确地，在任一球图 $D_i=c_i+B_i\mathbb B^3$ 中，令 $g_i^0=u-e_i$，以IX120.10的同构定义 $H^{(i)}$，使 $H^{(i)}(c_i+B_iw)=w$。则
+
+$$
+T_i x=g_i^0(x)c_i+B_iH^{(i)}(x).
+\tag{Q125.22}
+$$
+
+以下四项等价：$T_i(C)\subset C$；$N_{p_i}|_{D_i}=\operatorname{Aff}(D_i)_+$；$\rho_{p_i}(v)=1$ 对全部 $v\in S^2$ 成立；每条原边 $(p_i,s)$、$s\in P\cap D_i$ 都能由某个原纯点完成真实三角。
+
+证明。限制同构与 $D_i$ 对 $M_i$ 的线性张成，使 $S_i$ 和 $M_i$ 非退化配对，故(Q125.20)唯一存在。它在 $M_i$ 上恒等，而 $S_i$ 全在 $p_i$ 为零，故前两项及 $T_ip_i=0$ 成立。$e_j,e_k\in S_i$，而 $e_i|_{M_i}=0$，(Q125.11)便给 $uT_i=e_j+e_k=u-e_i$。
+
+将(Q125.9)线性延至 $S_i$。对 $f\in S_i$、$i\ne j$，有
+
+$$
+f(T_iT_jx)=f(T_jx)=f(p_k)e_k(T_jx)=f(p_k)e_k(x).
+$$
+
+两端待比较向量都在 $M_i$，非退化配对给 $T_iT_jx=e_k(x)p_k$；交换 $i,j$ 同理。又有 $T_i\mathsf R_i=\mathsf R_iT_i=0$，而 $i\ne j$ 时 $T_i\mathsf R_j=\mathsf R_jT_i=\mathsf R_j$。连同 $\mathsf R_i\mathsf R_j=\delta_{ij}\mathsf R_i$，逐项展开给 $E_i^2=E_i$、$E_iE_j=0$（$i\ne j$），以及 $E_i\mathsf R_j=\mathsf R_jE_i=0$ 对全部 $i,j$ 成立。$E_i$ 的像在 $M_i$ 中，且 $e_jE_i=e_kE_i=0$，故由(Q125.7)包含于 $L_i$；它又固定 $L_i$，所以像恰为 $L_i$。所列六块之和在 $U_\triangle$ 上恒等；$T_i$ 和 $\mathsf R_i$ 都消去 $R_\triangle$，故六块之和等于规范 $\pi_\triangle$。其补 $I-\pi_\triangle$ 因而也是投影，像为 $R_\triangle$，与前六块双向乘积均为零。
+
+$g_i^0,H^{(i)}$ 张成 $S_i$；在 $M_i$ 上它们读出质量和三个球坐标，因而给(Q125.22)。由于 $e_i$ 的零面是 $D_i$，
+
+$$
+C\cap M_i=\operatorname{cone}D_i.
+\tag{Q125.23}
+$$
+
+所以 $T_i$ 为正恰当且仅当 $\|H^{(i)}(x)\|\le g_i^0(x)$ 对全部 $x\in C$ 成立。这又等价于每个球内非负仿射函数 $\alpha+v\cdot w$ 的唯一线性延拓 $\alpha g_i^0+v\cdot H^{(i)}$ 在原锥上非负，即第二项。IX120.11给原正法向准确由 $\alpha\ge\rho_{p_i}(v)$ 刻画，而全部球内非负函数由 $\alpha\ge\|v\|$ 刻画；配合正齐次性和 $\rho_{p_i}\ge\|\cdot\|$，即得第三项。
+
+最后，对 $s=c_i+B_iv$，IX120.13给 $\rho_{p_i}(v)=1$ 恰等价于 $s$ 与该球内对径 $c_i-B_iv$ 原正交。若边 $(p_i,s)$ 由某个 $t$ 完成，则 $s,t\in D_i$，完整确认 $e_s$ 在它们取一、零，球内极值迫使 $t=c_i-B_iv$。因此“某个完成”已经等价于这一指定对径完成，得到第四项。证毕。
+
+这给出正性费用的明确位置：一个原正泛函限制到实际球当然非负，线性逆映射是否把所有球内非负函数送回原正锥，仍须证明。代数乘法、秩、保单位等式均未代付这个序条件。$\pi_\triangle$ 保单位，但其正性也未由上述线性分解取得；若另有 $\mathsf J_\triangle$，它只是变为恒等映射，仍不由此得到各 $T_i$ 的正性。
+
+作为124.6的条件应用，若某个种子顶点 $p_i$ 还属于 $P_{\rm reg}$，且其完整费用边界连续，124.4使高度为常数，已有 $p_i\in\mathcal T$ 又使124.6中的常数为一，故全部 $\rho_{p_i}=1$，上述 $T_i$ 为正，邻边全部完成。这里额外费用连续性仍是实质前件；单个种子不自动提供它，也不使所有到达标签成为正规点。
+
+### 125.7 跨球乘法与种子重心的准确读数偏差
+
+**定理 125.7（同一原效应的跨球读数与边完成判据）。** 固定 $P_0$ 种子三角 $(p,q,r)$。对任意 $s\in P\cap D_p$、$t\in P\cap D_q$，均有
+
+$$
+e_s(t)=e_s(r)e_r(t),\qquad
+e_t(s)=e_t(r)e_r(s).
+\tag{Q125.24}
+$$
+
+取 $D_p=c+B\mathbb B^3$，写 $q=c+Bv_0$、$r=c-Bv_0$、$\|v_0\|=1$，令
+
+$$
+g=u-e_p,\quad H(c+Bw)=w,\quad s=q_v=c+Bv,\quad
+R=\rho_p(v),\quad \tau=v\cdot v_0,\quad
+\delta_p(s)=\frac{R-1}{R+1}.
+\tag{Q125.25}
+$$
+
+则 $0\le\delta_p(s)<1$，有
+
+$$
+\begin{aligned}
+e_s(q)&=\frac{R+\tau}{1+R},& e_q(s)&=\frac{1+\tau}{2},\\
+e_s(r)&=\frac{R-\tau}{1+R},& e_r(s)&=\frac{1-\tau}{2},\\
+e_s(q)-e_q(s)&=\frac{1-\tau}{2}\delta_p(s),&
+e_s(r)-e_r(s)&=\frac{1+\tau}{2}\delta_p(s),
+\end{aligned}
+\tag{Q125.26}
+$$
+
+以及
+
+$$
+\boxed{\quad
+\delta_p(s)=e_s(q)+e_s(r)-1
+=3e_s(\eta_\triangle)-1
+=\min_{x\in D_p}e_s(x)\ge0.
+\quad}
+\tag{Q125.27}
+$$
+
+下列条件等价：$\delta_p(s)=0$；$e_s(q_{-v})=0$；$(p,s,q_{-v})$ 是真实三角；原边 $(p,s)$ 可由某个原纯点完成；$e_s(\eta_\triangle)=1/3$。当 $s\ne q$ 时，还等价于 $e_s(q)=e_q(s)$。
+
+证明。全部到达点属 $P_0$ 已由IX120.12支付。$e_s(p)=0$，而 $p,r$ 是球 $D_q$ 内的对径。(Q125.9)给 $e_s|_{D_q}=e_s(r)e_r|_{D_q}$；在 $t$ 评价即得(Q125.24)第一式。反向把 $e_t$ 限制到 $D_p$ 同理。两个式子保留各自系数，未把它们当作互易性。
+
+种子使 $q\perp r$，IX120.13在 $v_0,-v_0$ 给 $\rho_p(v_0)=\rho_p(-v_0)=1$。IX120.12因而在整个 $V$ 上给
+
+$$
+e_q=(g+v_0\cdot H)/2,\quad
+e_r=(g-v_0\cdot H)/2,\quad
+e_s=(Rg+v\cdot H)/(1+R).
+\tag{Q125.28}
+$$
+
+在 $q,r,s$ 评价，得到(Q125.26)的前两行；相减并用 $\delta_p(s)=(R-1)/(R+1)$ 即得后两式。$R\ge1$ 且有限，给偏差范围。
+
+两个种子端点读数之和是 $2R/(1+R)$；$e_s(p)=0$，故其减一也等于 $3e_s(\eta_\triangle)-1$。在整个 $D_p$ 上，$e_s(c+Bw)=(R+v\cdot w)/(1+R)$，最小值在唯一对径 $q_{-v}$ 达到，为 $(R-1)/(R+1)$，得到(Q125.27)。
+
+偏差为零恰使这一原效应在 $q_{-v}$ 为零，给 $s\perp q_{-v}$；两者都已与 $p$ 原正交，故为真实三角。反向若任意 $t$ 完成边 $(p,s)$，它也在 $D_p$，$e_s$ 在球上于 $s,t$ 取一、零，迫使 $t=q_{-v}$，故偏差为零。重心条件由(Q125.27)等价。当 $s\ne q$ 时，$\tau<1$，(Q125.26)的严格正系数使最后的互易式也等价。证毕。
+
+IX120.13已经有 $\rho_p(v)=1$ 的局部对径判据；本定理增加的是它与同一实际种子重心、两端原读数及跨球乘法的准确联系。已有的是 $e_s(\eta_\triangle)\ge1/3$ 和两端比较的单向不等式；未证的是它们在全部方向取等。$\delta_p(s)>0$ 精确否定边 $(p,s)$ 的完成，并不否定 $s$ 通过另一组原三角属于 $\mathcal T$。
+
+### 125.8 线性拼全、邻边完成与整个原域覆盖
+
+**命题 125.8（局部校准和全域到达的不同量词）。** 从一个 $P_0$ 种子三角定义
+
+$$
+G_0=\{p,q,r\},\qquad
+G_{n+1}=G_n\cup\bigcup_{a\in G_n}(P\cap D_a),\qquad
+G=\bigcup_{n\ge0}G_n.
+\tag{Q125.29}
+$$
+
+则 $G\subset P_0$。若另有以下两项条件，才可沿这条路线推出 $\mathcal T=P$：
+
+$$
+\begin{split}
+&\forall a\in G\cap\mathcal T\quad
+\exists b,c\in P:\ (a,b,c)\text{ 是真实三角},\\
+&\hspace{23mm}\forall s\in P\cap D_a:\ e_s(b)=e_b(s);\\
+&\overline G^{\,P}=P.
+\end{split}
+\tag{Q125.30}
+$$
+
+证明。IX120.12沿每条真实边传播 $P_0$，归纳给 $G\subset P_0$；故(Q125.30)中的完整确认效应均已定义。种子使 $G_0\subset\mathcal T$。若 $G_n\subset\mathcal T$，对每个 $a\in G_n$ 取(Q125.30)的实际三角。定理125.7在 $s\ne b$ 时把互易式变成边 $(a,s)$ 的完成；$s=b$ 时原三角自身给完成。于是所有新增邻标签属于 $\mathcal T$，归纳得 $G\subset\mathcal T$。IX120.4已给 $\mathcal T$ 在 $P$ 中相对闭，再以第二条件取闭包，得到 $\mathcal T=P$。证毕。
+
+(Q125.30)只是对这条路线的充分联合条件，不另计为减少公理的重构。一个标签可沿图到达，不表示该条到达边已完成；一个标签在某个三角中，也不表示其全部出边完成。$G$ 的稠密性还未由种子证明，$P$ 的连通性、原边投影开放性或球面在整个 $P$ 中为邻域均未预付。
+
+本章留下三个不同的缺项。第一，EB3+Inj与一个 $P_0$ 种子是否强迫 $\mathsf J_\triangle$，即三族原零效应分离全部原态；本章只给其准确九维等价式。第二，即使另有 $\mathsf J_\triangle$，还没有证明各 $T_i$ 为正、$\delta_{p_i}$ 全方向为零、全部原标签满足接触，或原全域的least与互易。旧VIII111.4把任意纯点补成框架再作总预算取等；本章不能对任意纯点使用这个尚未支付的步骤。第三，即使局部邻边完成，仍需把所得部分接回整个原 $P$ 的覆盖，或找到直接给全域接触的其他论证。
+
+对九维加种子的这些剩余蕴含，本章既未完成证明，也未给出满足全部EB3的反模型。一般九维线性配对本身不携带原序锥；单张凸影壳的光滑、严格凸、闭性或常值高度也不替代全标签的单位接触。124.4—124.6的常值费用分支若没有种子接触，仍须排除 $M_p<1$；若有正规种子且费用连续，则125.6的条件应用只解决该锚点的邻边，尚未自动给(Q125.30)的全域量词。
+
+### 125.9 完整原域的条件静态候选与反向量词
+
+**条件应用 125.9（沿既有桥保留的完整候选）。** 定义
+
+$$
+\begin{gathered}
+\mathcal T_{\rm mid}=
+\{b\in P:\exists x\in D_b, (b+x)/2\in\partial_{\rm rel}K\},\\
+\mathsf{DC}:\ \overline{\mathcal T_{\rm mid}}^{\,P}=P,
+\qquad \mathsf{MC}:\ \mathcal T_{\rm mid}=P,\\
+W(D_b)=\max_{f\in\mathcal E}\bigl(\max_{D_b}f-\min_{D_b}f\bigr).
+\end{gathered}
+\tag{Q125.31}
+$$
+
+它们从整个原域定义，允许接触端起初为混态。对 $p\in P_{\rm reg}$，沿123定义 $g_p,H_p,q_w$，并令 $a_w$ 为 $p$ 在完整 $D_{q_w}$ 内的对径端。完整有限相容性为
+
+$$
+\mathsf F(p):\quad
+\forall k\ge1\ \forall w_1,\ldots,w_k\in S^2\quad
+\exists v\in S^2\ \forall i\le k:\quad
+v\cdot H_p(a_{w_i})\le g_p(a_{w_i}).
+\tag{Q125.32}
+$$
+
+准确保留124.6的同一模型类：
+
+$$
+\begin{array}{c}
+\mathrm{EB3}+\mathrm{Inj}+
+\overline{\{p\in P_{\rm reg}:\mathsf F(p)\}}^{\,P}=P\\
+\Updownarrow\\
+\mathrm{EB3}+\mathsf{DC}
+\Longleftrightarrow\mathrm{EB3}+\mathsf{MC}
+\Longleftrightarrow\mathrm{EB3}+\forall b\in P: W(D_b)=1\\
+\Updownarrow\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V
+\text{ 实线性},\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\end{array}
+\tag{Q125.33}
+$$
+
+证明与反向全模型计算。121.2使中点接触逐标签等价于满宽，且接触端必纯；IX120.4使满宽标签集相对闭；122.2、123.10及123.15给稠密接触与正规F稠密的对应。取得全部原标签满宽后，才消费IX116.17及VIII113的完整条件重构。这里不把存在一个种子、$\dim V=9$ 或 $\mathsf J_\triangle$ 替换入等价链。
+
+反向取整个矩阵实现 $V=\operatorname{Herm}_3(\mathbb C)$、$C=\mathrm{PSD}_3$、$u=\operatorname{Tr}$。对每个非零 $z$，$p=zz^*/(z^*z)$ 是原纯点，全部确认矩阵恰为 $p\oplus A$、$0\preceq A\preceq I_{z^\perp}$。对每个迹一正矩阵 $\rho$，
+
+$$
+T_p(\rho)=\operatorname{Tr}(p\rho),\qquad
+D_p=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho z=0\}.
+\tag{Q125.34}
+$$
+
+这是整个 $z^\perp\cong\mathbb C^2$ 上的全部密度矩阵，Pauli坐标给完整三球；不同纯标签给不同正交补，故Inj成立。每条原球直径由一对正交秩一投影给满幅效应，所以每个标签满宽，且每条边都完成三角。每个 $x\in P\cap D_p$ 使 $(p+x)/2$ 秩二，确在原相对边界，故MC成立。
+
+每个 $\mathcal A_p$ 单点。对任意纯序列 $p_n\to p$ 和任意 $0\preceq A\preceq I$、$\operatorname{Tr}(Ap)=0$，正性给 $Ap=0$；令 $Q_n=I-p_n$，$Q_nAQ_n$ 是零于 $p_n$ 的原效应，且
+
+$$
+\|Q_nAQ_n-A\|_{\rm op}\le2\|p_n-p\|_{\rm op}\to0.
+\tag{Q125.35}
+$$
+
+此估计统一量化全部 $A$；另一Hausdorff包含由紧性与评价给出。因此 $P=P_{\rm reg}$。原球图中 $g=\operatorname{Tr}((I-p)\,\cdot)$，$H/g$ 属于单位球，且 $a_w=q_{-w}$、$g(a_w)=1$。于是任意有限批都满足(Q125.32)，因为单位 $v$ 对单位球点均有 $v\cdot H(a_w)\le1$。所有公式经同一个 $\Phi$ 运输，完成全部原纯、混态、效应及单位的反向量词。证毕。
+
+### 125.10 全部静态QM对象的同一对应
+
+以下仅在(Q125.33)的完整条件成立后，复用124.8及既有静态字典。125.3—125.7单独不供应此表。
+
+| 静态数学对象 | 同一原实现的全部量词 |
+| --- | --- |
+| 复射线与纯态 | 全部 $z\ne0$ 给 $p_z=\Phi(zz^*/(z^*z))$，恰为整个 $P\cong\mathbb{CP}^2$ |
+| 混态、概率混合与质量 | 整个 $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，$C=\Phi(\mathrm{PSD}_3)$ 含零与全部非负质量，保持全部有限凸组合，$\dim_{\mathbb R}V=9$ |
+| 单位、全部效应和Born评价 | $u\Phi=\operatorname{Tr}$；整个 $\mathcal E$ 恰为 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$、$0\preceq A\preceq I_3$，含全部混态输入及零、单位、补 |
+| least确认与完整排除球 | $T_{p_z}(\Phi\rho)=\operatorname{Tr}(zz^*\rho)/(z^*z)$；least效应为相应秩一投影，完整 $D_{p_z}$ 为 $z^\perp$ 上全部密度矩阵 |
+| 纯比较与原二元边 | $T_{p_z}(p_w)=|z^*w|^2/((z^*z)(w^*w))$，零恰为复内积正交 |
+| 正交完备基和数学三结果 | 每条原边有唯一第三纯点，三秩一投影之和为 $I_3$，三原非负效应之和为 $u$，读数为Kronecker值，容量为三 |
+| 全部有限数学POVM | 对每个有限结果数，全部原 $f_j\ge0,\sum_jf_j=u$ 恰对应全部 $A_j\succeq0,\sum_jA_j=I_3$ |
+| 谱和全部实可观测量 | 每个混态有三项正交谱分解，允许零权与重复谱；全部实线性可观测量对应全部Hermitian矩阵并有实谱分解 |
+| 派生共同几何 | 中心为 $\Phi(I_3/3)$，共同内积为 $B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$，Jordan积为 $\Phi((XY+YX)/2)$ |
+
+复射线中的叠加是该数学模型的一部分；实际相干准备、相位参考和可调用门仍按各自原来源与操作合同供应。数学POVM和三个种子效应均不自动成为实际共同仪器。
+
+### 125.11 原来源、所有有限复合与实际动态合同
+
+**共同来源与全部原操作。** 124.9及其所引123.13、VIII113.11、VIII112.9、IX120.11、121.12、122.14的同一原装饰元组 $\mathcal O$ 全部保留：共同来源域、全部中点实现、原概率像紧性、全测试表与闭性、零／单位／补／有界倍增、重复标签及每种同中点实现；全部非负质量，零／次归一／不等质量，以及过程和参考各自的完整相关联合输入域。原 $L,p,\omega,K,M$、两次同一读回、两实张成、全实关系、完整(83.8)、VI(89.13)的全部两尺度等式、C2、整个 $G=1_E$、精确PRE之后的整个H13、每个原资格态、活跃块严格负方向、共享总迹一、非活跃零质量与空活跃集都由原消费者承担。操作合同的映射 $p$ 与本章纯标签不同型。
+
+设备／事件／来源绑定、全部菜单分支、参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、全部合法未来与每个中间切口，以及VI89.9—89.10的原生／细化消费者、terminal futures、联合有符号关系、细标签粗归组、记录后条件未来、source-adoption和资源合同均保留。线性投影 $T_i,\pi_\triangle$、比值读数和图可达集不供应这些实际制备或接线。
+
+**全部有限联合层级。** 对每个有限 $N\ge1$，仍需实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$ 及整个原效应区间。每个实际分块 $a+b=N$ 保留
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+\tag{Q125.36}
+$$
+
+同一产品配对、严格张量单位、全部原因子置换及逆的正性、规范重括号、指定运输下的不连续位置分块全部保留。二份比较仍是整个联合 $S_2$：对每个产品或纠缠纯点 $p\in P_2$、每个有限原纯准备族 $q_\ell\in P_2$、全部 $t_\ell\ge0$ 且 $\sum_\ell t_\ell=1$，包括零权和重复标签，完整保留VIII111.35：
+
+$$
+T_p^{(2)}\!\left(\sum_\ell t_\ell q_\ell\right)
+=\sum_\ell t_\ell T_{q_\ell}^{(2)}(p),\qquad
+T_p^{(2)}(x)=\inf_{\substack{f\in[0,u_2]_{C_2^*}\\ f(p)=1}}f(x).
+\tag{Q125.36S}
+$$
+
+这不是仅在产品态上的比较。
+
+三项具名供应仍分别是原低二份 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥；唯一实际自复合 $(W_1,W_1,W_2)$ 的直和扇区限制、秩和实维乘法的复型选择；同一实际两因子的产品正规形。在同一保迹局部坐标中，非经典支路保留同一最大块 $n_r=L\ge2$ 的 $\mathsf F_{\max}$，要求同一含相位正交基给
+
+$$
+g_r=\sum_{a=1}^{L}|a\rangle_r|a\rangle_r|a\rangle_r,\qquad
+\Delta_r=|g_r\rangle\langle g_r|\in C_3,\qquad u_3(\Delta_r)=L.
+\tag{Q125.37}
+$$
+
+其余三份扇区零，归一原源为 $\Delta_r/L$，不预付三份纯性或实际制备；全经典 $L=1$ 支路不要求该资源。仅在全部联合前件与三项供应齐备后使用既有全有限层级定理。单体三球不制造 $S_2$、纠缠来源、叉口资源或高阶张量锥；复三能级的二、三份秩为九、二十七，高阶载体不再要求单体EB3或秩三W。
+
+**全旁观CP、事件和同族仪器。** 数学全旁观正性仍量化每个 $b\ge0$ 及任意含纠缠的同一共同输入，要求
+
+$$
+(\operatorname{id}_{W_b}\otimes F)(C_{b+m})\subseteq C_{b+n}.
+\tag{Q125.38}
+$$
+
+只有全层级已给，通常CP、矩形跨扇区Kraus及逐输入TP/TNI预算才沿既有Choi桥取得。同一事件的CP另需原完整提升、实际探针及相容核；全部数学CP-TNI分支成为实际事件，还需事件饱和选择。同族仪器另需共同输入预算、接线、记录、粗粒化和校准。只对正质量分支作条件归一，零质量分支不强定归一条件态。Lüders更新另需同一分支的锐效应、接受态中性和输出校准。三条真实边、数学效应和为 $u$、全部数学POVM与实际同族仪器继续分开。
+
+**时间、Hamiltonian和 $\hbar$。** 原钟、实际动态来源、连续齐次可逆时间群、单位及 $\hbar$ 各保留自己的合同。若另给同一载体全实时间连续线性群 $A_t$，满足 $A_0=I$、$A_{s+t}=A_sA_t$、$A_t(C)=C$、$uA_t=u$，有限维生成元只描述这个额外供应。已重构复块中，给定保迹酉时间族的通常表达为
+
+$$
+U_t=\exp(-itH/\hbar),\qquad
+\rho_t=U_t\rho U_t^*,\qquad
+\mathcal L(\rho)=-\frac{i}{\hbar}[H,\rho],\qquad H=H^*.
+\tag{Q125.39}
+$$
+
+全部输入和全部时间的量词保留。球面参数、实际对径行走和证明中的弧均不是物理钟。$H$ 的标量平移不改变态作用，时间重标改变生成元尺度而保留静态模型。恒等时间族和非平凡Hamiltonian族可共享全部静态数据，故实际 $H$、数值 $\hbar$、能量标定、时空与物理空间维数不由本章取得。
+
+### 125.12 复用边界与成熟文献的已付前件
+
+本章的原域综合按repo-derived归属：125.3用实际球唯一支撑与全部原正法向，证明单个真实三角的准确九维张成；125.4—125.6将IX120.8的限制同构接到这个配置，取得效应配对、规范剩余、同一TFD关系及未预设正性的乘法代数；125.7将IX120.12—120.13接到同一实际种子的重心及跨球读数。球支撑的极值计算、有限维非退化配对、消去子和代数投影是成熟中间工具。三角重心内点性在旧W域已有VIII110.5，本章只在所需弱域给同一原面论证；不另作独立新原理。125.8是量词分工的条件应用，125.9—125.11完整复用既有静态及物理接口，不计为新分类。
+
+[Ududec—Barnum—Emerson][Q125UBE] Proposition 1及Appendix已有三缝包含—排除恒等式与二面线性张成的等价。其standing condition要求每个暴露面有唯一的中性互补滤子及唯一补滤子；命题还使用三个两两正交滤子及其生成的多缝滤子。本章125.6只在一个种子上证明线性乘法，未取得其全域滤子前件，故不将本章 $I-\pi_\triangle$ 当作已实现的三缝干涉操作，也不凭相同公式消费其操作结论。
+
+[Alfsen—Shultz][Q125AS]印刷页160的Hilbert ball property要求每一对原极点生成的最小面是norm-exposed且仿射同构Hilbert球。印刷页188 Corollary 7.5在有限维紧凸集上要求该性质与每个norm-exposed face均projective；strong spectrality不是此推论另列的第三个条件。印刷页158的P-projection是其order-unit／base-norm对偶中的弱星连续正压缩投影，存在同类quasicomplement，且两投影在原空间及其对偶上都满足正核／正像互补。单种子三球、九维配对或线性保单位投影均未支付这些全域条件。这里仅引用该已知条件接口，不将其重述为新定理。
+
+现有原源码[PositiveComplementaryProjections.whole_positive_projections][Q125Proj]也明确带weakPair前件，即每个原正交纯对生成真最小面；本章未调用它来提前取得 $T_i$ 正性。所有新增结论的前件均保留EB3对全部原纯标签的完整量词，没有以三张所选球、抽象关联图、选择性效应菜单或一般光滑凸壳替换原模型。本章不主张全球原创、逻辑独立性、自动接触或独立公理数减少。
+
+[Q125VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、104.1及105：完整原面、强入口的原确认与共同延拓。"
+[Q125VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII109.2—109.3、111.2与111.12：全W三窗口、盲核及联合零效应分离；VIII113：既有分类。"
+[Q125IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120.8、120.12、120.18—120.19：P0限制同构、邻标签传播和三周期全空间单位恒等式；IX116.17：既有静态重构。"
+[Q125T]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "121—122：残余稳定、原切扇、中点接触、实际影像和未证全域桥。"
+[Q125UBE]: https://arxiv.org/pdf/0909.4787v1 "Cozmin Ududec, Howard Barnum and Joseph Emerson, Three slit experiments and the structure of quantum theory, standing condition, Proposition 1 and Appendix."
+[Q125AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140, DOI 10.1007/BF02392307，印刷页158、160、188。"
+[Q125Proj]: https://github.com/the-omega-institute/trureturing/blob/b81f2d41bb9f9bac626c602802613f9722a450c6/D5/S3/Quantum/Foundation/PositiveComplementaryProjections.lean "whole_positive_projections的weakPair前件。"
+
+### 125.13 完整白话
+
+把全部原状态想成同一块完整凸实体，所有原测试都是从零到一读数的尺，任何混态、纯标签和测试都不先删去。现在只找到一个三角：三个实际纯点之间，各有真正的零一边，却还没有宣布这三条边来自一台共同仪器。每个顶点背后的完整排除球，都把另外两个顶点当作自己的一条直径；三颗球因此共有三个顶点方向，每颗又带两个横向方向。关键在原正尺：一把在第一个顶点读零的尺，限制到经过该点的另外两颗球时，只能贴着那个端点的唯一支撑面，所以读不见那两球的横向方向；但用第一颗球上每个真实球面端自己的确认尺，又能看见第一颗球自己的任意非零横向箭头。三个顶点加六条横向方向因此确实互不混淆，三张完整球恰好张成九维；三角重心虽已在整块实体内部，这九维截面仍不自动填满整个原空间。如果种子的一个顶点还有唯一完整确认，原边把这种唯一性传给另外两点，已有三周期公式才使三张确认尺在全部原空间相加为同一单位尺。此时三族全部零尺也恰有九个独立方向，与三球的九维空间逐块配对，留下一个准确的共同盲区；盲区非零时，从同一个原内部态向正反两边各挪一小步，就得到两张真实混态，三族全部零尺对它们同读，别的原尺却能区分。要求这三族尺联合看清整个实体，正是旧有三元二面可辨关系在这个较弱入口的原义，不是一条新起名字的公设。配对还给三张规范线性球读回及同样的投影乘法式，但把箭头线性送回球的张成空间，不等于把正态送回实心球；后者恰要求该球上的每一条邻边都能完成真实三角。沿种子球走到一个新纯点，它自己的确认尺在种子重心的读数只能等于或高于三分之一；超出的三倍，恰是这把尺在整颗原球上的最低读数，也恰控制它与两个种子端点的转移读数不对称。最低读数降到零，原边才由指定对径补出第三点；新点从另一组三角进入过，并不替这条边完成。现在还缺的是为何这些偏差全方向为零、为何三族原零尺没有剩余盲区，以及完成的部分如何到达或逼近每个原纯点。正规种子若再有完整费用连续性，已有常值刚性能把这一锚点的全部邻边校准，但仍不能跳过其余标签。完整接触在整个原域稠密后，才沿已有条件重构接回全部复三能级纯态、混态、效应、Born概率、数学POVM和谱结构；共同来源、实际准备与门、全部有限复合及纠缠、叉口资源、全旁观CP、同族事件仪器、Lüders更新、物理钟、Hamiltonian和数值 $\hbar$ 仍须各自的完整原合同。
+
+## 追加锚（本行以下为增补区）
