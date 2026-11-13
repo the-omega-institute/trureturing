@@ -103,8 +103,11 @@ minimum formula, and both source conclusions.
 The corresponding typed Scribe states all the construction and
 quantifier conventions. The Reg mirror observes the factorial-index
 function inside the complete assertion, with a full equivalence bridge,
-whole-function variation, sensitivity, and actual dependence; a compiled
-registration alone does not assert machine binding validation.
+whole-function variation, sensitivity, and actual dependence. Its
+source-bound escape audit remains unfinished under the linked-issue
+exception in [issue #30128](https://github.com/the-omega-institute/trureturing/issues/30128).
+The compiled registration supplies proof data, without an accepted binding
+certificate or a claim of audit completion.
 
 ## Triage
 
