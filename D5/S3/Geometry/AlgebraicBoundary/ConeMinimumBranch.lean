@@ -7,6 +7,7 @@
    digest: Actual low-degree cone minima determine all-direction roots and the whole closed branch. -/
 
 import D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
+import D5.S3.Geometry.AlgebraicBoundary.BoundaryPrincipalIdeal
 
 noncomputable section
 
@@ -14,6 +15,9 @@ open Set Filter
 open scoped Topology Pointwise
 
 namespace D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch
+
+open private minimum_boundary_ideal
+  from D5.S3.Geometry.AlgebraicBoundary.BoundaryPrincipalIdeal
 
 open private exists_full_compact_base base_chart_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
@@ -408,9 +412,8 @@ private theorem ray_boundary_ideal {E : Type*} [NormedAddCommGroup E]
     have hx0 : x = 0 := by simpa [hfr] using hx
     rw [map_mul, hleval, hx0, map_zero, zero_mul]
 
-/-- The analytic conclusions are obtained from the arbitrary entire-boundary
-equation on the original carrier. Principality of the boundary ideal is not
-asserted by this statement. -/
+/-- The selected minimum generates the actual entire-boundary ideal, and its
+analytic conclusions retain all original directions and ambient vectors. -/
 private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] [Nontrivial E] (c : E ≃L[ℝ] (ι → ℝ))
     (C : ProperCone ℝ E) (hs : (C : ConvexCone ℝ E).Salient)
@@ -423,6 +426,8 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
       (∀ r : MvPolynomial ι ℝ, r ≠ 0 →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
           q.totalDegree ≤ r.totalDegree) ∧
+      (∀ r : MvPolynomial ι ℝ,
+        (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ↔ q ∣ r) ∧
       (∀ y ∈ interior (C : Set E), 0 < MvPolynomial.eval (c y) q) ∧
       (∀ r : MvPolynomial ι ℝ, r ≠ 0 → r.totalDegree ≤ d →
         (∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) →
@@ -507,9 +512,11 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
     intro y hy
     exact hqpos (c y) (by simpa [hi] using hy)
   refine ⟨d, q, hdpos, hdp, hq, hqhom,
-    minimum_equation_squarefree _ q hq hqv hqm, hqvo, ?_, hqpo, ?_, ?_, ?_, ?_⟩
+    minimum_equation_squarefree _ q hq hqv hqm, hqvo, ?_, ?_, hqpo, ?_, ?_, ?_, ?_⟩
   · intro r hr hrv
     exact hqm r hr ((hboundary r).mp hrv)
+  · intro r
+    exact (hboundary r).trans (minimum_boundary_ideal D hfullD q hq hdpos hqhom hqv hqm r)
   · intro r hr hrd hrv
     have hrd' : r.totalDegree ≤ q.totalDegree := by rwa [hqhom.totalDegree hq]
     exact minimum_scalar_unique D hsD hfullD q r hq hr hqd hrd'
