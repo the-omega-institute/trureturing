@@ -207,7 +207,7 @@ def evalGamma {m : ℕ} (Gamma : Fin m → Mat2) : List (Fin m) → Mat2
 theorem evalGamma_append {m : ℕ} (Gamma : Fin m → Mat2) (u v : List (Fin m)) :
     evalGamma Gamma (u ++ v) = evalGamma Gamma u * evalGamma Gamma v := by
   induction u with
-  | nil => simp
+  | nil => simp [evalGamma]
   | cons i u ih => simp [ih, mul_assoc]
 
 theorem evalGamma_inverseWord {m : ℕ} (Gamma : Fin m → Mat2)
@@ -219,7 +219,7 @@ theorem evalGamma_inverseWord {m : ℕ} (Gamma : Fin m → Mat2)
   | nil => simp [inverseWord, evalGamma]
   | cons i w ih =>
       rw [inverseWord, List.reverse_cons, List.map_append, evalGamma_append]
-      simp only [List.map_cons, List.map_nil, evalGamma_cons, evalGamma_nil, mul_one]
+      simp only [List.map_cons, List.map_nil, evalGamma_cons, evalGamma, mul_one]
       have ih' : evalGamma Gamma (List.map inverseLetter w.reverse) =
           star (evalGamma Gamma w) := by
         simpa [inverseWord] using ih
