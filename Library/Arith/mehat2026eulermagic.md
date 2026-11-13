@@ -14,6 +14,21 @@ triage: anchor
 
 # Euler magic matrices and orthogonality factors
 
+## Verified locator
+
+Primary source: https://arxiv.org/html/2609.05530v1.
+Section 9, Problem 9.2 is at `S9.Thmtheorem2` and asks for order-three
+orthogonality factors for every finite length with all indexed products of
+entry squares pairwise distinct. Definition 2.1 at `S2.Thmtheorem1` defines
+an integer orthogonality factor by `A A^T = gamma I` with nonzero integer
+`gamma`. Lemma 2.4 at `S2.Thmtheorem4`, equation (4) at `S2.E4`, gives the
+nine-entry quaternion matrix and its squared-norm orthogonality constant.
+This citation-only note identifies the problem and classical construction;
+the answer proved in this repository is repository-derived, not attributed
+to the cited paper.
+
+## Scope
+
 The primary source is arXiv:2609.05530v1, Section 9, Problems 9.2 and 9.1.
 Definition 2.1 and Lemma 2.4 give the integer orthogonality-factor condition
 and the quaternion rotation formula. Definitions 1.1 and 3.1, Corollary 3.11,

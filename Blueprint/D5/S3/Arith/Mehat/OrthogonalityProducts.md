@@ -4,9 +4,11 @@
 
 Arbitrarily many integer orthogonality factors can have pairwise distinct products of entry squares.
 
+Fin(n) is the finite type of integers from zero through n minus one. Matrix(m,n,R) is the type of R-valued matrices with row type m and column type n; matrix multiplication and transpose have their usual meanings. The symbol smul denotes integer scalar multiplication, and the typed matrix 1 is the identity. Function.Injective means that equality of outputs implies equality of the complete input functions. Every product below ranges over all indices in Fin(k), and its value is an integer. The implicit parameter R ranges over arbitrary universe levels; [CommRing(R)] is an anonymous commutative-ring instance.
+
 **Definition 1.1 (Problem 9.2).**
 
-Lean statement: `D5/S3/Arith/Mehat/OrthogonalityProducts.Problem92`
+$$\operatorname{Problem92} : \operatorname{Prop} := \forall k \in \mathbb{N},\; 1 \le k \Rightarrow \exists (A : \operatorname{Fin}\left(k\right) \to \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \mathbb{Z}\right)) (\gamma : \operatorname{Fin}\left(k\right) \to \mathbb{Z}), (\forall i \in \operatorname{Fin}\left(k\right),\; \gamma\left(i\right) \ne 0 \land A\left(i\right) \cdot (A\left(i\right))^{T} = \operatorname{smul}\left(\gamma\left(i\right), (1 : \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \mathbb{Z}\right))\right)) \land \operatorname{Function}.\operatorname{Injective}\left((p : \operatorname{Fin}\left(k\right) \to (\operatorname{Fin}\left(3\right) \times \operatorname{Fin}\left(3\right))) \mapsto \prod_{i \in \operatorname{Fin}\left(k\right)} (A\left(i\right)\left((p\left(i\right))_{1}, (p\left(i\right))_{2}\right))^{2}\right)$$
 
 *Formalization.* `D5/S3/Arith/Mehat/OrthogonalityProducts.Problem92` (`✓ std3`).
 
@@ -18,7 +20,7 @@ For every positive natural k there are k integer matrices of order three, each w
 
 **Definition 1.2 (Quaternion factors).**
 
-Lean statement: `D5/S3/Arith/Mehat/OrthogonalityProducts.quaternionMatrix`
+$$\forall \{R : \operatorname{Type}^{*}\} [\operatorname{CommRing}\left(R\right)] (a : \operatorname{Fin}\left(4\right) \to R), (\operatorname{quaternionMatrix}\left(a\right) : \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), R\right)) = \begin{pmatrix}a\left(0\right)^{2} + a\left(1\right)^{2} - a\left(2\right)^{2} - a\left(3\right)^{2}&2 \cdot (a\left(1\right) \cdot a\left(2\right) - a\left(0\right) \cdot a\left(3\right))&2 \cdot (a\left(1\right) \cdot a\left(3\right) + a\left(0\right) \cdot a\left(2\right))\\2 \cdot (a\left(1\right) \cdot a\left(2\right) + a\left(0\right) \cdot a\left(3\right))&a\left(0\right)^{2} - a\left(1\right)^{2} + a\left(2\right)^{2} - a\left(3\right)^{2}&2 \cdot (a\left(2\right) \cdot a\left(3\right) - a\left(0\right) \cdot a\left(1\right))\\2 \cdot (a\left(1\right) \cdot a\left(3\right) - a\left(0\right) \cdot a\left(2\right))&2 \cdot (a\left(2\right) \cdot a\left(3\right) + a\left(0\right) \cdot a\left(1\right))&a\left(0\right)^{2} - a\left(1\right)^{2} - a\left(2\right)^{2} + a\left(3\right)^{2}\end{pmatrix}$$
 
 *Formalization.* `D5/S3/Arith/Mehat/OrthogonalityProducts.quaternionMatrix` (`✓ std3`).
 
@@ -30,7 +32,7 @@ The classical quaternion rotation formula gives a polynomial matrix with orthogo
 
 **Theorem 1.3 (Factors for every positive length).**
 
-Lean statement: `D5/S3/Arith/Mehat/OrthogonalityProducts.problem92`
+$$\operatorname{problem92} : \operatorname{Problem92}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Mehat/OrthogonalityProducts.problem92` (`✓ std3`). ∎
 
