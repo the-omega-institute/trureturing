@@ -4590,7 +4590,8 @@ $B_3B_3 00=00100100$. That length-eight block has two ones, but
 (IV.127) gives at least $8-\lceil8s\rceil=3$ ones in every such block,
 since $4<8s<5$. Hence $3,3$ is impossible. At any marker the prefix
 $0010$ is forced by the exclusions $000$ and $11$. If $D_1=5$,
-the nine-letter word from $p_0$ is therefore $B_5,0010=001010010$.
+the nine-letter word from $p_0$ is the concatenation of $B_5$ and
+$0010$, namely $001010010$.
 If $D_1=3$, the following mathematical return exists by the same
 source stopping argument and must be five; the nine-letter word is
 the first nine letters of $B_3B_5 00$, namely $001001010$.
@@ -4598,7 +4599,7 @@ This use of an unqueried return is a consequence of the source promise,
 not a second Resume. Thus in the two cases form respectively
 
 $$
-U_K,001010010,\qquad U_K,001001010,
+U_K\,001010010,\qquad U_K\,001001010,
 \tag{IV.150}
 $$
 
@@ -4844,8 +4845,9 @@ the lower/upper distinction in
 [Klouda–Medková–Pelantová–Starosta, §2.2](https://arxiv.org/pdf/1801.09203v3).
 
 Since $\ell^{-1}=3+2s$, expanding $(x-a)/\ell$ gives
-$2p-3M+(p-2M-1)s$, the first equality in (IV.156). The integer
-part is $2p-3M$, and $0\le y<1$, proving its fractional-part form.
+$2p-3M+(p-2M-1)s$, the first equality in (IV.156).
+Since $2p-3M$ is an integer and $0\le y<1$, the expression equals
+$\{(q+2)s\}$, proving its fractional-part form.
 For any integer $q$, the original lower-floor coding satisfies
 $f(q)=1$ exactly when $\{(q+2)s\}\in[s,1)$: this is the
 image of its $f(q)=1$ phase interval $[0,t)$ after one rotation.
