@@ -4782,3 +4782,130 @@ $$
 在完整E0里，若补齐这项边界谱性，就恢复W，再由已有全部三球分类接回复三能级静态量子结构；它与129的固定内球接触IC0等价。但E0为什么必然补齐它，仍未证明，也没有完整E0反模型。仿射直径给出新的较弱域全态覆盖和一个更准确的非谱边界见证，没有替原目标结算。IC0候选保持原样；实际来源与操作、任意有限复合和纠缠、三份资源、全旁观CP、事件与共同仪器、Lüders、完整记录和合法未来、物理钟、Hamiltonian及数值 $\hbar$ 仍各按127.10承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 131. 近似原框架的共同极限与坏见证距离
+
+**定义 131.1（同一原框架内的近似集合）。** 取非零有限维实范数空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的实线性泛函 $u\in V^*$。沿用(Q130.1)的整个原域
+
+$$
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},
+$$
+
+其中 $\mathcal E$ 包含全部在 $C$ 上满足 $e\ge0$、$u-e\ge0$ 的实线性效应。对每个 $r\in P$，取完整原排除集合
+
+$$
+D_r=\{x\in K:\exists e\in\mathcal E,\ e(r)=1,\ e(x)=0\}.
+$$
+
+假设全局条件 $\mathrm{EB}_{\ge1}$：对每个 $r\in P$，存在有限整数 $d_r\ge1$ 和单射仿射映射 $\phi_r:\mathbb R^{d_r}\to V$，使 $D_r=\phi_r(\overline B^{d_r})$，其中 $\overline B^{d_r}$ 是整个欧氏闭单位球；维数 $d_r$ 允许随标签变化。
+
+固定 $p\in P$ 及其一个球图，取该完整球的一对不同对径 $q,\bar q\in P\cap D_p$，且没有 $e\in\mathcal E$ 满足 $e(q)=1,e(\bar q)=0$。置 $y=(3q+\bar q)/4$。由[VII103.2][Q130VII]在上述全局 $\mathrm{EB}_{\ge1}$ 下的结论，$D_p$ 是紧暴露真面，且 $P\cap D_p=\partial_{\rm rel}D_p$；特别地，$y\in\operatorname{ri}D_p$ 且不是球心。
+
+对 $\eta\ge0$，一个 $\eta$-框架是任意有限的 $N\ge1$、两两不同的
+$q_1,\ldots,q_N\in P$ 及线性泛函 $b_1,\ldots,b_N$，满足
+
+$$
+ b_i\ge0\ \text{于 }C,\qquad \sum_{i=1}^N b_i=u,\qquad
+ \max_{i,j}|b_i(q_j)-\delta_{ij}|\le\eta .
+\tag{Q131.1}
+$$
+
+这里每个 $b_i$ 都是完整原效应：确实
+$u-b_i=\sum_{j\ne i}b_j\ge0$ 于 $C$，故 $b_i\in\mathcal E$。定义
+
+$$
+ M_\eta:=\bigcup_{N\ge1}\left\{
+ \sum_{i=1}^N\lambda_iq_i: (q_i,b_i)_{i=1}^N\text{ 满足(Q131.1)}, \lambda_i\ge0,\ \sum_i\lambda_i=1\right\} .
+\tag{Q131.2}
+$$
+
+每个混合只在一个同一框架内形成；(Q131.2)不是不同框架并集的凸包。单例框架、零权重、任意有限 $N$ 均保留，标签允许随序列移动，也不要求距离的下确界达到。所有闭包均在原空间 $V$ 中取，所有距离均取其固定的原范数。
+
+**定理 131.2（坏见证的近似闭包等价）。** 对上述固定模型和固定见证，
+
+$$
+ y\in\bigcap_{\eta>0}\overline{M_\eta}
+ \quad\Longleftrightarrow\quad
+ y\in\overline{M_0}
+ \quad\Longleftrightarrow\quad
+ y\in\overline P .
+\tag{Q131.3}
+$$
+
+并且有以下两个距离条件的等价
+
+$$
+\begin{aligned}
+ \operatorname{dist}(y,M_0)>0
+ &\Longleftrightarrow y\notin\overline P,\\
+ \exists\eta_0,\delta>0\ \forall\,0\le\eta\le\eta_0:
+ \operatorname{dist}(y,M_\eta)\ge\delta
+ &\Longleftrightarrow y\notin\overline P .
+\end{aligned}
+\tag{Q131.4}
+$$
+
+这里 $\eta_0,\delta$ 只依赖给定模型、见证和范数。
+
+**证明。** 单例框架 $(q_1,b_1)=(r,u)$ 对每个 $r\in P$ 都是零误差框架，故
+$P\subset M_0\subset M_\eta$；于是
+$\overline P\subset\overline{M_0}\subset\bigcap_{\eta>0}\overline{M_\eta}$。
+
+设 $y\in\bigcap_{\eta>0}\overline{M_\eta}$。取 $\eta_n=1/n$，并从不要求达到的下确界中选
+$z_n\in M_{\eta_n}$ 使 $\|z_n-y\|<1/n$。先给出同一模型内的框架大小控制。
+令 $B=\max_{e\in\mathcal E}\|e\|_*>0$；由(Q130.1)的原有限维条件，$K,\mathcal E$ 紧，故 $B<\infty$。当 $\eta_n\le1/4$ 且 $i\ne j$ 时，
+
+$$
+ B\|q_i^{(n)}-q_j^{(n)}\|
+ \ge |b_i^{(n)}(q_i^{(n)})-b_i^{(n)}(q_j^{(n)})|
+ \ge1-2\eta_n\ge\tfrac12 .
+\tag{Q131.5}
+$$
+
+因此每个此类标签族在紧集 $K$ 中具有统一正分离。用半径 $1/(8B)$ 的开球有限覆盖 $K$，每个覆盖球至多容纳一个标签，故存在只依赖给定模型与范数的有限数 $N_*$ 使 $N_n\le N_*$。这是推导出的固定模型基数控制，不是跨模型的框架上限。
+
+去掉有限项后，取子列使 $N_n=N$ 恒定。把该子列中的全部槽位同时记为
+$(q_i^{(n)},b_i^{(n)},\lambda_i^{(n)})_{i=1}^N$。由 $K,\mathcal E$ 和有限单纯形的紧性，再取一个共同子列，得到
+
+$$
+ q_i^{(n)}\to r_i\in K,\qquad b_i^{(n)}\to b_i\in\mathcal E,\qquad
+ \lambda_i^{(n)}\to\lambda_i\ge0,\qquad \sum_i\lambda_i=1 .
+\tag{Q131.6}
+$$
+
+零权槽位不删除，仍保留其各自的极限。评价连续性给出
+
+$$
+ \sum_i b_i=u,\qquad b_i(r_j)=\delta_{ij},\qquad r_i\ne r_j\ (i\ne j),\qquad
+ y=\sum_i\lambda_i r_i .
+\tag{Q131.7}
+$$
+
+其中标签极限必互异，因为同一 $b_i$ 在两个相等极限上不可能同时取一和零。
+
+令 $I=\{i:\lambda_i>0\}$。由于 $D_p$ 是真面且 $y\in D_p$，(Q131.7)的面性推出
+$r_i\in D_p$ 对所有 $i\in I$。若 $|I|=1$，设 $I=\{k\}$。则 $\lambda_k=1$，且
+
+$$
+ \|z_n-q_k^{(n)}\|\le(1-\lambda_k^{(n)})\operatorname{diam}K\longrightarrow0,
+$$
+
+所以 $q_k^{(n)}\to y$，从而 $y\in\overline P$。
+
+若 $|I|\ge2$，固定 $i\in I$ 并取另一个 $j\in I$。限制 $b_i|_{D_p}$ 非常数，且在 $r_i,r_j$ 分别取一、零。完整欧氏球上的非恒定仿射泛函的一值面是单点；沿用[VII103.2][Q130VII]的球面端点纯性结论，得 $r_i\in P\cap D_p$。对任意不同的 $i,j\in I$，同一完整效应 $b_i$ 区别这两个纯点；沿用[IX116.9][Q130IX]的球内面—对径论证，$r_i,r_j$ 必为该球的对径。球中两两对径点至多两个，故 $|I|=2$。
+
+这两个对径点的线段含有非中心点 $y$。非中心点所在的直径唯一，而 $q,\bar q$ 已是经过 $y$ 的该直径端点，故 $\{r_i:i\in I\}=\{q,\bar q\}$。(Q131.7)中的相应 $b_i$ 或 $b_j$ 遂给出一个完整效应在这两个端点取一、零，矛盾于坏见证的不可区别假设。因此 $|I|\ge2$ 不可能，只能是单一正权情形，已经得到 $y\in\overline P$。这给出了(Q131.3)所需的反向蕴含。
+
+对(Q131.4)，在任意度量空间中 $\operatorname{dist}(y,A)=\operatorname{dist}(y,\overline A)$，故第一式由(Q131.3)立即得到。若 $y\notin\overline P$，则按(Q131.3)存在 $\eta_0>0$ 使 $y\notin\overline{M_{\eta_0}}$。令
+$\delta=\operatorname{dist}(y,M_{\eta_0})>0$。由于 $M_\eta\subseteq M_{\eta_0}$（$0\le\eta\le\eta_0$），得到第二式的下界。反之，若 $y\in\overline P$，则 $P\subset M_\eta$ 对每个 $\eta$ 成立，所有这些距离均为零，故第二式不成立。证毕。
+
+**定义 131.3（指定见证的局部纯极限排除）。** 在定义131.1的模型和坏对径见证下，记
+
+$$
+\mathsf{LP}_{p,y}:\quad
+\neg\exists(r_n)_{n\ge1}\subset P\; (r_n\to y).
+$$
+
+由于 $V$ 是度量空间，$\mathsf{LP}_{p,y}$ 等价于 $y\notin\overline P$；故(Q131.4)中的两个距离条件分别等价于 $\mathsf{LP}_{p,y}$。在全局 $\mathrm{EB}_{\ge1}$ 域上，对所有这样的坏对径见证断言 $\mathsf{LP}_{p,y}$，仍是待证命题。
+
+## 追加锚（本行以下为增补区）
