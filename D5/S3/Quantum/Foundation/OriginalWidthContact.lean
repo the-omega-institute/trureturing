@@ -144,7 +144,7 @@ theorem top_subsingleton_of_zero_exclusion
     exact closure_minimal (convexHull_min hext (convex_singleton _)) isClosed_singleton
   exact fun x hx y hy => (hsub hx).trans (hsub hy).symm
 
-private theorem contact_face_subsingleton
+theorem contact_face_subsingleton
     {C : PointedCone ℝ V} {u f : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
