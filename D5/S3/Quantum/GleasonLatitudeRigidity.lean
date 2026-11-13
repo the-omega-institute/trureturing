@@ -32,7 +32,10 @@ theorem additive_bounded_linear (g : ℝ → ℝ) (hadd : ∀ s t : ℝ, g (s + 
     {M : ℝ} (hM : ∀ t : ℝ, |t| ≤ 1 → |g t| ≤ M) (x : ℝ) : g x = x * g 1 := by
   let G : ℝ →+ ℝ :=
     { toFun := g
-      map_zero' := by linarith [hadd 0 0]
+      map_zero' := by
+        have h := hadd 0 0
+        rw [add_zero] at h
+        linarith
       map_add' := hadd }
   have hc : Continuous G := G.continuous_of_isBounded_nhds_zero
     (Metric.closedBall_mem_nhds (0 : ℝ) (by norm_num : (0 : ℝ) < 1)) (by
