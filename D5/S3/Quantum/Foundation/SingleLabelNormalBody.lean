@@ -120,7 +120,7 @@ def slope {p : V} (a : ExclusionChart C u p) :
 def slopeBody {p : V} (a : ExclusionChart C u p) : Set (EuclideanSpace ℝ (Fin a.dim)) :=
   slope a '' normalBody C p (a.param 0)
 
-private theorem slope_formula {p : V} (a : ExclusionChart C u p)
+theorem slope_formula {p : V} (a : ExclusionChart C u p)
     (b : V →L[ℝ] ℝ) (z) : b (a.param z) = b (a.param 0) + ⟪slope a b, z⟫ := by
   rw [show ⟪slope a b, z⟫ = b (a.param.linear z) from
     by
@@ -263,7 +263,7 @@ private theorem slope_eq_of_formula {p : V} (a : ExclusionChart C u p)
   linarith [slope_formula a b z, h z]
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_mem {p : V} (a : ExclusionChart C u p)
+theorem chart_mem {p : V} (a : ExclusionChart C u p)
     {z} (hz : ‖z‖ ≤ 1) : a.param z ∈ exclusion C u p :=
   a.whole ▸ mem_image_of_mem a.param (by simpa using hz)
 
@@ -565,7 +565,7 @@ theorem uniform_original_gap (hc : IsClosed (C : Set V))
     (div_lt_one (by linarith : 0 < 1 + rho)).mpr (by linarith),
     zero_gap_iff hc hs hg hB p a n hn⟩
 
-private theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
+theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
     u (a.param.linear z) = 0 := by
   have hspan : affineSpan ℝ (Metric.closedBall (0 : EuclideanSpace ℝ (Fin a.dim)) 1) = ⊤ := by
     apply (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
@@ -577,7 +577,7 @@ private theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
   have hh := congrArg AffineMap.linear heq
   exact LinearMap.congr_fun hh z
 
-private theorem tangent_annihilation (p : pure C u) (q : V)
+theorem tangent_annihilation (p : pure C u) (q : V)
     (a : ExclusionChart C u q) (m : EuclideanSpace ℝ (Fin a.dim))
     (hm : ‖m‖ = 1) (hmp : a.param m = p)
     (b : V →L[ℝ] ℝ) (hpos : ∀ x ∈ C, 0 ≤ b x) (hbp : b p = 0)
