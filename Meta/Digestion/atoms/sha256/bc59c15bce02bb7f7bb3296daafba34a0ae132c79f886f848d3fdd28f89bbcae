@@ -1,0 +1,42 @@
+**引理119.12（固定面的三种准确等价）。**
+对完整原域中任意非空凸子集 $F\subseteq K$，以下存在性条件等价：
+(a) 有仿射回缩 $r:K\to F$；
+(b) 有正线性幂等 $P:V\to V$，
+$P(C)=\operatorname{cone}F$、$uP=u$；
+(c) 有正线性幂等 $P:V\to V$，
+$P(C)=\operatorname{cone}F$、$uP\le_Cu$。
+这里 $F$ 不必先是球；幂等映射的线性像都是 $\operatorname{span}F$。
+
+证明。(a)的齐次线性延拓需先证明良定义。
+对 $K$ 中任意有限线性关系 $\sum_jt_jx_j=0$，施加 $u$ 给
+$\sum_jt_j=0$。把正负系数分开；若非平凡，两侧总系数相同且正，
+除以总系数就得到同一个原凸混合的两种表达。
+二元仿射逐项推出所有有限凸混合保持，所以
+$\sum_jt_jr(x_j)=0$。$K$ 张成 $V$，于是
+$P(\sum_jt_jx_j)=\sum_jt_jr(x_j)$ 是唯一良定义实线性映射。
+每个非零 $x\in C$ 有唯一表示 $x=u(x)k,k\in K$，
+故 $Px=u(x)r(k)\in\operatorname{cone}F$，且 $uPx=u(x)$。
+$P$ 固定 $F$，因而固定 $\operatorname{span}F$；
+像恰为此张成，正锥像恰为 $\operatorname{cone}F$，并且幂等。这给(b)。
+反过来，(b)限制到 $K$ 得到(a)，(b)显然给(c)。
+
+最后，从(c)选定 $c_F\in F$，置 $\delta=u-uP\in C^*$，定义
+
+$$
+\overline P x=Px+\delta(x)c_F.
+\tag{IX119.29}
+$$
+
+因为 $C$ 生成 $V$，$P(C)=\operatorname{cone}F$ 给
+$\operatorname{ran}P=\operatorname{span}F$。
+幂等性使 $P$ 在该空间恒等，所以 $\delta$ 在该空间为零。
+两个加项对 $C$ 均在 $\operatorname{cone}F$，故 $\overline P$ 正；
+$u\overline P=uP+\delta=u$。
+它仍固定 $\operatorname{span}F$，像落在该空间，故幂等且正锥像准确等于
+$\operatorname{cone}F$。这给(b)。证毕。
+
+(c)与(b)等价的是回缩的存在性，不是说每张次单位投影自身已保单位。
+补质量公式使用的是同一原 $u$，并把差额填到同一原面中的固定态；
+没有更换归一截面。该公式不能用于 $\kappa>1$ 的 $P_\kappa$，
+因为那时差额 $(1-\kappa)e$ 为负，补入不再保证正性。
+

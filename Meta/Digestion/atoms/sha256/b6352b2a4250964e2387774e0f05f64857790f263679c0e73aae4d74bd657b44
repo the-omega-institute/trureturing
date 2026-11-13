@@ -1,0 +1,150 @@
+**定理 117.2（压缩锚片识别实际闭包）。** 在定义117.1及全部锚条件(IX117.3)下，令
+
+$$
+\begin{aligned}
+\Omega={}&\{(i,j,1):1\le i,j<d\}\\
+&\mathbin{\cup}\{(i,1,k):1\le i<d,\ 2\le k<d\},\\
+\Gamma_\Omega&=\sum_{(i,j,k)\in\Omega}\Delta_{ijk}.
+\end{aligned}
+\tag{IX117.6}
+$$
+
+两部分不相交，且
+
+$$
+|\Omega|=(d-1)^2+(d-1)(d-2)=(d-1)(2d-3).
+\tag{IX117.7}
+$$
+
+有如下精确结论。
+
+（一）全部二元表与 $\Omega$ 上的复数 $b$ 恢复两张完整锚片，进而确定全部有标签框架到共同酉共轭。两张未压缩锚片共有 $2d^2-d$ 个不同三元位置。
+
+（二）只用全部二元表与 $\Omega$ 上的实数 $j$ 即可计算 $\Gamma_\Omega\ge0$，并且
+
+$$
+\begin{aligned}
+\Gamma_\Omega=0
+&\ \Longleftrightarrow\ \sum_{i,j,k=1}^d\Delta_{ijk}=0\\
+&\ \Longleftrightarrow\ \text{存在共同酉矩阵使全部 }E_i,F_j,G_k\text{ 都为实矩阵}\\
+&\ \Longleftrightarrow\ J=U\operatorname{Sym}_d(\mathbb R)U^*
+                      \text{ 对某个酉矩阵 }U,\\
+\Gamma_\Omega>0
+&\ \Longleftrightarrow\ J=\operatorname{Herm}_d(\mathbb C).
+\end{aligned}
+\tag{IX117.8}
+$$
+
+两种闭包的实维数分别为 $d(d+1)/2$ 和 $d^2$。因此 $\Omega$ 中任意一个严格不等式 $\Delta_{ijk}>0$ 就认证这里的复闭包。位置数(IX117.7)只是一个充分输入上界，不主张最少、独立参数数或实验次数。
+
+证明。先写 $P=pp^*,Q=qq^*,R=rr^*$，其中三个向量均为单位向量。直接相乘给
+
+$$
+b(P,Q,R)=\langle p,q\rangle\langle q,r\rangle\langle r,p\rangle,
+\qquad |b(P,Q,R)|^2=q(P,Q)q(Q,R)q(R,P).
+\tag{IX117.9}
+$$
+
+故每个 $\Delta_{ijk}=(\operatorname{Im}b(E_i,F_j,G_k))^2\ge0$。该因子化是通常的三点 Bargmann 恒等式，不作为新的不变量分类。
+
+首先利用完整框架之和等于单位。令
+
+$$
+a_i=q(E_i,G_1),\quad c_j=q(F_j,G_1),\quad
+t_i=q(E_i,F_1),\quad h_k=\sqrt{q(F_1,G_k)}>0.
+$$
+
+迹的线性性和循环性给同一实际实现上的全部和约束
+
+$$
+\begin{array}{ll}
+\displaystyle\sum_jM_{ij}=a_i,&\displaystyle\sum_iM_{ij}=c_j,\\[2pt]
+\displaystyle\sum_kN_{ik}=t_i,&\displaystyle\sum_iN_{ik}=h_k^2.
+\end{array}
+\tag{IX117.10}
+$$
+
+这四类和均为已知实数；各片的行和总数、列和总数均为一。给出 $i,j<d$ 的 $M_{ij}$ 后，依次恢复
+
+$$
+\begin{aligned}
+M_{id}&=a_i-\sum_{j<d}M_{ij}&&(i<d),\\
+M_{dj}&=c_j-\sum_{i<d}M_{ij}&&(j<d),\\
+M_{dd}&=c_d-\sum_{i<d}M_{id}.
+\end{aligned}
+\tag{IX117.11}
+$$
+
+最后一行的行和自动为 $a_d$，因为总行和等于总列和。再用 $N_{i1}=M_{i1}$，已知 $i<d,2\le k<d$ 的 $N_{ik}$ 即可恢复
+
+$$
+\begin{aligned}
+N_{id}&=t_i-\sum_{k<d}N_{ik}&&(i<d),\\
+N_{dk}&=h_k^2-\sum_{i<d}N_{ik}&&(k<d),\\
+N_{dd}&=h_d^2-\sum_{i<d}N_{id}.
+\end{aligned}
+\tag{IX117.12}
+$$
+
+当 $k=1$ 时，该式与已经得到的 $N_{d1}=M_{d1}$ 一致；最后一行同样由总和一致补齐。$d=2$ 时第二个候选集合为空，恢复公式仍成立。这证明了复数锚片的压缩。特别地，若候选位置上的 $b$ 都实，所有补回条目也都实。
+
+接着给直接坐标恢复，以支付相位与零边的义务。先用共同酉变换使 $E_i=e_ie_i^*$ 为标准坐标框架。第一组锚允许再用对角酉变换及向量相位，使 $F_1=f_1f_1^*$ 且
+
+$$
+(f_1)_i=r_i=\sqrt{t_i}>0.
+$$
+
+对每个 $G_k=g_kg_k^*$ 选择代表向量相位，使 $\langle f_1,g_k\rangle=h_k>0$；然后对每个 $F_j=f_jf_j^*$ 选择相位，使
+$\langle f_j,g_1\rangle=w_j=\sqrt{c_j}>0$。当 $j=1$ 时两条件相容，$w_1=h_1$。由(IX117.9)，
+
+$$
+N_{ik}=r_ih_k\overline{(g_k)_i},\qquad
+M_{ij}=(f_j)_iw_j\overline{(g_1)_i}.
+\tag{IX117.13}
+$$
+
+所以
+
+$$
+(g_k)_i=\frac{\overline{N_{ik}}}{r_ih_k},\qquad
+(f_j)_i=\frac{M_{ij}}{w_j\overline{(g_1)_i}}.
+\tag{IX117.14}
+$$
+
+所有分母均非零：$r_i,h_k,w_j$ 由锚为正，且 $|(g_1)_i|^2=a_i>0$。公式先恢复全部 $g_k$，再恢复全部 $f_j$。两组实际框架若有相同二元表及相同候选复数，把它们都变到此规范就得到相同投影，故原框架由一个共同酉变换联系。这是有限框架相位重构的直接应用；一般循环不变量重构已有 Chien–Waldron 的 Theorem 3.2，三套以上互补正交基的完整三元版本见其 Theorem 4.7 [Q117CW]。这里不用图的模二循环生成来代替复相位计算。该文内积第一变量线性，因此其同序三元积是(IX117.9)的复共轭。
+
+若 $\Gamma_\Omega=0$，非负项逐项为零，候选 $b$ 全实；(IX117.11)—(IX117.12)使两片全实。(IX117.14)先使全部 $g_k$ 实，再使全部 $f_j$ 实。反向，若全部框架经共同酉变换为实，则每个有序迹积实，全部 $\Delta$ 为零。于是候选残量、完整 $d^3$ 残量与共同实表示具有同一个零集。
+
+最后必须识别闭包而非只识别向量相位。以下复用第五卷命题76.4的秩一角提取与虚边传播方法 [Q117V]。在上述 $f_1=(r_i)$ 的规范中，以 $B_{ij}=e_ie_j^*$ 记矩阵单位，并置
+
+$$
+R_{ij}=B_{ij}+B_{ji},\qquad A_{ij}=\mathrm i(B_{ij}-B_{ji})\quad(i\ne j).
+$$
+
+对任意 $X\in J$ 和 $i\ne j$，
+
+$$
+4E_i\circ(E_j\circ X)=X_{ij}B_{ij}+\overline{X_{ij}}B_{ji}.
+\tag{IX117.15}
+$$
+
+取 $X=F_1$ 即得 $r_ir_jR_{ij}\in J$；连同全部 $E_i$，这些元张成 $\operatorname{Sym}_d(\mathbb R)$。若全部生成投影实，实对称矩阵在 $\circ$ 下闭合，因此 $J$ 恰等于这个实对称空间。
+
+若某个生成投影 $X$ 有 $\operatorname{Im}X_{ij}=\beta\ne0$，(IX117.15)减去 $(\operatorname{Re}X_{ij})R_{ij}$ 并除以 $\beta$ 就得到 $A_{ij}\in J$。不同指标上的矩阵单位乘法给
+
+$$
+2A_{ij}\circ R_{jk}=A_{ik},\qquad
+2R_{ij}\circ A_{ik}=A_{jk}\quad(i,j,k\text{ 两两不同}).
+\tag{IX117.16}
+$$
+
+从一条虚边出发，第一式先得到以其一个端点为中心的全部虚边，第二式再得到其余端点之间的全部虚边。$d=2$ 时原来一条虚边已足够。全部 $E_i$ 以及 $i<j$ 的 $R_{ij},A_{ij}$ 是 $A$ 的实基，故此时 $J=A$。因而在本规范中闭包只有上述两种可能；若 $\Gamma_\Omega>0$，框架不可能全实，必落入第二种。反向，$J=A$ 不可能同时有维数较小的共同实闭包。两个维数按对角元、实边、虚边直接计数，得到(IX117.8)。证毕。
+
+实数 $q,j$ 的结论只识别这里的闭包类型，不供应每个非零虚部的符号。共同复共轭保持 $q,j,\Gamma_\Omega$，却将 $b$ 变为 $\overline b$；定理（一）所用的带符号复数数据比定理（二）的输入更多。甚至在 $d=2$，把 [Q117B] 的已有 Bloch 公式 $j=(1+r\cdot s+s\cdot t+t\cdot r)/4$ 与 $q(P,Q)=(1+r\cdot s)/2$ 直接相配，已给
+
+$$
+2j(P,Q,R)=q(P,Q)+q(Q,R)+q(R,P)-1,
+$$
+
+所以该维数下的候选实三元可由二元表算出。这也表明(IX117.7)没有最小性含义。
+

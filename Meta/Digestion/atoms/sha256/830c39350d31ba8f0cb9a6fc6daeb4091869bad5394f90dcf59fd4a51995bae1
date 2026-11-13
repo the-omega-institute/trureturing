@@ -1,0 +1,11 @@
+**定义 88.1（同载体的二元零排除）。** 令 $V\ne0$ 为有限维实空间，$C$ 为闭、尖、生成凸锥，$u$ 在 $C\setminus\{0\}$ 上严格正，$K=C\cap\{u=1\}$ 为整个紧基，$P=\operatorname{ext}K$，效应为整个 $[0,u]_{C^*}$。对纯 $p\in P$ 和任意归一 $x\in K$，定义
+
+$$
+F_p=\{f\in[0,u]:f(p)=1\},\qquad
+p\perp x\ \Longleftrightarrow\ \exists f\in F_p:\ f(x)=0,\qquad
+D_p=\{x\in K:p\perp x\}.
+\tag{88.1}
+$$
+
+同一个见证 $f$ 同时在 $p$ 取一、在 $x$ 取零；不是两张独立读数表。关系只由原完整区间定义，不另补实际装置、菜单或更新。两个纯端点的零排除本来就对称：见证 $f$ 的补 $u-f$ 见证反向；这尚未给非零比较值的互反性。记 $H(p,q)=K\cap\operatorname{face}_C(p,q)$ 为包含两条纯射线的整个最小锥面的归一基。
+

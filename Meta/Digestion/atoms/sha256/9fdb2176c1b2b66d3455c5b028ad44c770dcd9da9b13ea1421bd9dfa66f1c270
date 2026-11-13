@@ -1,0 +1,54 @@
+**命题 31.3（同原域、同二元最小值的严格三元分离）。** 取实正根 $\alpha^{15}=2$，令
+
+$$
+F=\mathbb Q,\quad L=\mathbb Q(\alpha),\quad
+\beta=\alpha^3,\quad A=\mathbb Q(\beta),\quad
+B=\ker\operatorname{Tr}_{A/\mathbb Q},\quad
+W=B\oplus A\alpha,\quad V=\langle 1,\alpha,\ldots,\alpha^8\rangle_{\mathbb Q}.
+\tag{31.12}
+$$
+
+两个窗口的 $(m,N,e)$ 都是 $(9,15,1)$，且 $\delta_2(W)=\delta_2(V)=3$、$\delta_3(W)=2$、$\delta_3(V)=1$。令 $u=\beta+\alpha$、$v=\beta^2+\alpha$、$w=\beta^3+\alpha$。取等的原标签和精确交空间为
+
+$$
+\begin{aligned}
+W\cap(u/v)W &= u\langle1,\beta,\beta^2\rangle_{\mathbb Q},&
+W\cap(u/v)W\cap(u/w)W &= u\langle1,\beta\rangle_{\mathbb Q},\\
+V\cap\alpha^6 V &= \langle\alpha^6,\alpha^7,\alpha^8\rangle_{\mathbb Q},&
+V\cap\alpha^6 V\cap\alpha^8 V &= \mathbb Q\alpha^8.
+\end{aligned}
+\tag{31.13}
+$$
+
+逐原标签的二元函数并不相同，例如标签 $\beta$ 在 $W$、$V$ 上的交维分别为八和六。
+
+证明。$x^{15}-2$ 和 $x^5-2$ 在素数二处满足 Eisenstein 判据，故原 $L$、$A$ 的次数分别为十五和五，$1,\alpha,\alpha^2$ 是 $L/A$ 的基。对 $1\le j\le4$，在 $A$ 的幂基中乘 $\beta^j$ 将每个基向量送到不同幂次的方向（用 $\beta^5=2$ 降幂），故迹为零；$\operatorname{Tr}_{A/\mathbb Q}(1)=5$。所以 $B=\langle\beta,\beta^2,\beta^3,\beta^4\rangle_{\mathbb Q}$。$W$、$V$ 都是九维，$AW=A\oplus A\alpha=:Z$ 是十维。$W/W$ 含 $(\beta\alpha)/\alpha=\beta$ 和 $\alpha/\beta$，故 $D_W=L$；$V/V$ 含 $\alpha/1$，故 $D_V=L$。$W$ 的稳定子次数整除九和十（它稳定 $AW$），所以 $E_W=\mathbb Q$。对 $V$，若 $cV\subseteq V$，由 $1\in V$ 可写 $c=\sum_{j=0}^8 c_j\alpha^j$。若有最高非零正次 $k\in[1,8]$，则 $c\alpha^{9-k}$ 的最高次为九，未经降幂，故不在 $V$，而 $\alpha^{9-k}\in V$。矛盾，故 $c\in\mathbb Q$，证明 $E_V=\mathbb Q$。
+
+任意原 $r\in L^\times$ 下，$W,rW$ 和 $V,rV$ 分别是十五维空间中的两个九维子空间，二元交维都至少为三。对任意正原三元标签 $(r,s)$，$W$ 的交维由 (31.4) 取 $A$ 至少为二；$V$ 的交维至少为一。下面计算 (31.13)，以同一原域中的实际取等结算这些下界。
+
+对 $W$，$u,v,w$ 都在 $W\setminus\{0\}$。$u/v\notin A$，因为若 $u=cv$ 且 $c\in A$，比较 $\alpha$ 的系数得到 $c=1$，再比较常数项就得到 $\beta=\beta^2$，与五次幂基矛盾。$Z$ 在原 $L$ 内的稳定子恰是 $A$：若 $cZ\subseteq Z$，由 $1\in Z$ 写 $c=c_0+c_1\alpha$，再用 $c\alpha\in Z$ 及 $1,\alpha,\alpha^2$ 的独立性得 $c_1=0$。因此 $Z$ 与 $(u/v)Z$ 是不同的 $A$-二维空间，且共同含 $u$，所以交空间恰是 $Au$。同一个 $Au$ 也在 $(u/w)Z$ 中，因为 $(u/w)w=u$。
+
+在 $Au$ 上写元素为 $a u$，$a=\sum_{j=0}^4 a_j\beta^j\in A$。落在 $W$ 等价于 $a\beta\in B$；落在 $(u/v)W$ 等价于 $av\in W$，即 $a\beta^2\in B$；落在 $(u/w)W$ 等价于 $aw\in W$，即 $a\beta^3\in B$。从 $B$ 的迹计算及 $\beta^5=2$，
+
+$$
+\operatorname{Tr}_{A/\mathbb Q}(a\beta)=10a_4,\qquad
+\operatorname{Tr}_{A/\mathbb Q}(a\beta^2)=10a_3,\qquad
+\operatorname{Tr}_{A/\mathbb Q}(a\beta^3)=10a_2.
+$$
+
+前两个条件切出 $\langle1,\beta,\beta^2\rangle_{\mathbb Q}$，三个同时切出 $\langle1,\beta\rangle_{\mathbb Q}$，得 (31.13) 第一行。
+
+对 $V$，$\alpha^6 V$ 的幂基范围为六至十四，与 $V$ 共同的幂次为六、七、八。$\alpha^8 V$ 则由八至十四次幂及 $1,\alpha$ 张成，因为十五、十六次幂分别等于 $2,2\alpha$。因此三者仅共有八次幂方向，得 (31.13) 第二行。最后，$\beta W=\beta B\oplus A\alpha$，而 $B\cap\beta B=\langle\beta^2,\beta^3,\beta^4\rangle_{\mathbb Q}$，故在标签 $\beta$ 的交维为 $3+5=8$；$\beta V=\alpha^3V$ 与 $V$ 共有三至八次幂，交维为六。相等的是二元最小正值，不是两条逐标签函数。$\square$
+
+**原文对应与应用差额。** §29 的 (29.5)–(29.8) 已用子域维数下界、唯一最少块分拆与 Galois 下降；§30 的 (30.3)、(30.8)–(30.14) 已给两窗口各自的缩放及原系数子式返回。Raz–Wigderson 的 [*Subspace arrangements, graph rigidity and derandomization through submodular optimization*，arXiv:1901.09423v1](https://arxiv.org/pdf/1901.09423v1) 中，Definition 2.1 指定最少块取等分拆，Corollary 3.2 给唯一性，Definition 5.1 给超平面一般位置条件，Theorems 5.2、7.1 分别给一刀切面的分拆秩及其在特征零下的泛性。Antolini–Dewar–Tanigawa 的 [*Dilworth truncations and Hadamard products of linear spaces*，arXiv:2508.04798v1，§3.2，式 (7)–(9)](https://arxiv.org/pdf/2508.04798v1) 给二因子切面与矩阵的对应。其 §4.1 的图拟阵反例推翻不受限的三因子 Hadamard 猜想；§4.2 的分拆拟阵反例还排除了以各种二因子迭代次序的秩上界取最小来得到一般等式。这里 (31.6)–(31.9) 切出的是同一个超平面内的共同核约束，每个嵌入给 $h-1$ 行；没有识别多因子 Hadamard 像的拟阵。
+
+De Beule–Demuys–Polverino–Zullo 的 [*Few-Weight Linear Sets and Divisibility of Rank-Metric Codes*，arXiv:2611.08044v1，Theorem 3.7](https://arxiv.org/pdf/2611.08044v1) 已在任意 $h\ge2$ 的相应有限域范围内给出整体公式的取等域。具体取 $F=\mathbb F_q$、$D=\mathbb F_{q^N}$、$U=\prod_i X_i\subseteq D^h$，其 $D$-张成是 $D^h$（每个 $X_i$ 含 $1$），原文的扩张次数、底域秩分别为 $N$、$M=\sum_i m_i$。对无零坐标的点 $P=D(\rho_1^{-1},\ldots,\rho_h^{-1})$，其中 $\rho_1=1$，第一坐标把 $U\cap P$ 同构到 $\bigcap_i \rho_i X_i$。若一个正点有零坐标，取 $U\cap P$ 中一个非零代表元，并将其零坐标各补入相应 $X_i$ 的一个非零元素。在原有非零坐标上，沿新代表元的乘数仍须满足同样条件；新增坐标只增加约束。所以新点有正权、无零坐标且权不大于旧点，全部正点的最小权正是 $\delta_h$。这一逐点接口在二元情形由 Van de Voorde–Zullo [*On the weight distribution of linear sets with complementary weights and related constructions*，arXiv:2511.20057v1，Theorem 3.2、Corollary 3.3、Lemma 3.6](https://arxiv.org/pdf/2511.20057v1) 给出：原文刻画 Cartesian 定义空间的至少及恰好某权的点，并有 $w(\langle(1,\gamma)\rangle)=\dim_{\mathbb F_q}(X_1\cap\gamma^{-1}X_2)$，坐标轴仍保留其各自权。
+
+Theorem 3.7 的条件在上述对应下是 $q\ge N$、$M\le(h-1)N$。最小正权 $\delta_h>1$ 时，原文给实际子域 $C=\mathbb F_{q^c}\subseteq D$，使 $\langle U\rangle_C=\prod_i CX_i$ 定义同一线性集、具有相对 $C$ 权一的点，且 $\dim_F\langle U\rangle_C=M+c-\delta_h$。代入即得 $\Lambda_h(C)=\delta_h$；(31.4) 的商空间论证不依赖特征，可用于所有实际中间域。若 $\delta_h=1$，则 $C=F$ 已取等。因此该原文确实蕴含上述有限域范围的整个 Cartesian 极值公式；它还保有同点集结论。这里的特征零证明依赖可分分裂与原域非零子式，不以有限域计点为前提，也不声称放大后仍定义相同点集。
+
+Napolitano–Polverino–Santonastaso–Zullo 的 [*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Examples 6.2、6.4、Proposition 6.3](https://arxiv.org/pdf/2201.02003v1) 给一般域中已有临界关系 $\dim_F(S+\mu S)=\dim_F S+1$ 的形状分类，要求 $\mu\notin F$ 在 $F$ 上代数且 $\dim_F L\ge\dim_F S+2$。这里 $(S,\mu)=(W,\beta)$、$(V,\alpha)$ 都满足该前提：前者的和是 $Z$，后者的和由零至九次幂张成。对应前者的完整方向是 $A\alpha$，截短方向是 $B=\beta\langle1,\beta,\beta^2,\beta^3\rangle_{\mathbb Q}$；后者是长度九的单幂窗口。Castello–Polverino–Zullo 的 [*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorems 4.4、5.2、6.3(ii) 及式 (13)](https://arxiv.org/pdf/2405.19911v1) 已使用子域张成维数并引用该临界对分类。式 (13) 的二元补维下界在截短长度四、子域次数五时是 $2\cdot4-5=3$；其有限域幂窗口分布在原环境与生成域均为十五次、窗口长度九时也有最小交维三（最大子空间距离为十二）。这些是窗口形状与二元下界的先例；(31.13) 的原标签、三元交空间和 (31.11) 的全体窗口阈值由本节推导。
+
+相对于指定原文及 §§29–30，本节的仓内应用差额（repo-derived）是三份同一窗口的九维充要条件，以及同一原数域、同 $(m,N,e)$、同二元最小值下的严格三元分离。定理 30.3 的八维是两个可不同窗口的总维数；(31.11) 的九维按同一窗口的单份维数计。共同核的分拆秩只作为本应用的取等工具。结论限于实际中间域、原标签的精确共同交维及最小正值，不涉及完整逐标签函数的恢复；文献对应不主张全球优先权。
+
+白话说，三份窗口要分享的是同一个方向。把窗口在较大的标量域上补齐后，一个共同见证能带来整条域直线；再回到三个原窗口，各自删去自己没有保留的方向。维数九第一次能让五次域先给出五个方向、三份窗口各花一维，最后留下两个，超过原先两个端点给出的保证。在同一个十五次域里，两个窗口只看单窗口参数和两份的最小交叠都分不出来，第三份加入才显出差别：一个最少还剩两个方向，另一个只剩一个。
+

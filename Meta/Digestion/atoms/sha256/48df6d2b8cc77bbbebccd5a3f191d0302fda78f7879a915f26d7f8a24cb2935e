@@ -1,0 +1,17 @@
+**Source convention 1.1 (fixed published suppliers).** The repository
+sources below are read at commit
+`1604b2c78dd048bea53452f9e692031da52e72c3`:
+
+| Symbol | Source and exact supplied scope |
+| --- | --- |
+| N | [Probability, phase transport and holonomy](AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY.md), Definitions 3.1, 8.1 and 9.1, §§9.1–9.3, Definition 10.1 and §10.5: original histories, preparations, chronological partial action, guards, costs and the declared diffusion. |
+| O | [Native observation quotient and Green escape](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md), Definitions 1.1–1.2 and Theorem 2.1: actual two-circle coordinates, guarded bottom-observation quotient and its killed free factor. The specialization used here is its parameter $\varepsilon=1$. |
+| G | [Native two-control Green stability](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md), Definition 4.1 and Proposition 6.1: the same declared horizontal clock and height killing. No attraction or stability classification is used here. |
+
+The missing bridge addressed here is between finite lawful N-histories and
+N's separately declared diffusion. The finite chronology, the phenomenon
+of area corrections in smooth approximations, and stochastic integration
+are existing suppliers. The work here is their explicit guarded native
+correspondence, including executed costs and the lifetime boundary.
+No unmerged rigidity manuscript is a dependency.
+

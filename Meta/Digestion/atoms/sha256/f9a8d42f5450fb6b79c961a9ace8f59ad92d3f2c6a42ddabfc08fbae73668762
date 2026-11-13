@@ -1,0 +1,99 @@
+**定理 38.4（二维严格见证的完整原运输）。** 在上述 $s_2=0$、$s=s_3$ 的专门比较下，
+对定理 38.2 或引理 38.3 的任意 $u=(u_2,u_3)^{\mathsf T}$（两个坐标非零）和任意
+Hermitian $X$，置
+
+$$
+ p=au,\qquad q=aC_Eu,\qquad w_0=-p z_0,\qquad
+ \xi=(0,u,w_0),\qquad
+ \ell=\left(-\frac{\iota q}{u_2},\frac{\iota q}{u_3}\right),
+\tag{38.34}
+$$
+
+并在原探针域中取
+
+$$
+ x=\begin{pmatrix}0&\ell&0\\\ell^*&X&0\\0&0&0_m\end{pmatrix}.
+\tag{38.35}
+$$
+
+则 $x=x^*=PxP$。设二维量仍由 (38.1) 计算，完整原量由 (32.1)–(32.2)
+计算。逐项有
+
+$$
+\ell u=0,\qquad \ell C_Eu=\iota q,\qquad vw_0=-p,\qquad Dw_0=0,
+\tag{38.36}
+$$
+
+从而完整作用列为
+
+$$
+\begin{array}{c|ccc}
+ &e_1&E&\mathrm{env}\\ \hline
+ x\xi&0&Xu&0\\
+ xc\xi&\iota q&XC_Eu&0\\
+ cx\xi&0&C_EXu&0\\
+ t\xi&0&Tu&0\\
+ tc\xi&q&TC_Eu&0\\
+ ct\xi&0&C_ETu&0
+\end{array}
+\tag{38.37}
+$$
+
+并且由原换位和 Jordan 乘积得到
+
+$$
+\begin{array}{c|ccc}
+ &e_1&E&\mathrm{env}\\ \hline
+ h\xi&q/2&h_Eu&0\\
+ k_t\xi&q/2&k_Eu&0\\
+ r\xi&\iota q/2&r_Eu&0\\
+ g\xi&-\iota q/2&g_Eu&0
+\end{array}
+\tag{38.38}
+$$
+
+所以
+
+$$
+\begin{gathered}
+(h-k_t)\xi=(0,(h_E-k_E)u,0),\qquad
+(r+g)\xi=(0,(r_E+g_E)u,0),\\
+R_\delta\xi=(0,R_{\delta,E}u,0),\qquad
+S_\delta\xi=(0,S_{\delta,E}u,0),
+\end{gathered}
+\tag{38.39}
+$$
+
+这里的 $s_1$ 第一格因 $\xi_1=0$ 不产生额外项，而 $s_2=0$ 使 $E$-列没有额外的
+$s_2u_2$；所以 (38.37)–(38.39) 的每一列都与 (38.1) 的二维列逐项相同，环境列仍为零，
+从而 (38.40) 的完整乘积与两份实 Gram 等式也逐项恢复。对任意原自伴 $U,Z$，
+$\xi^*U^2\xi=\|U\xi\|^2$、
+$\xi^*(U\circ Z)\xi=\operatorname{Re}((U\xi)^*Z\xi)$；因此完整乘积而非
+压缩平方满足
+
+$$
+\xi^*L\xi=u^*L_Eu,\qquad
+B_{\phi_\xi}(R_\delta,S_\delta)
+ =B_{\psi_u}(R_{\delta,E},S_{\delta,E}),\qquad
+\phi_\xi(A)=\xi^*A\xi .
+\tag{38.40}
+$$
+
+证明就是 (38.36) 的四个有限列等式代入 (38.37)–(38.38)，再逐项应用上述
+自伴列恒等式；没有丢掉第一轴或环境列。特别，(38.40) 不断言
+$L\xi$ 等于嵌入的 $L_Eu$，也不声称全部原算子的乘积在 $E$ 上交织。
+
+原向量的实际归一因子是
+
+$$
+N_u=\|\xi\|^2=\|u\|^2+|au|^2\|z_0\|^2>0,\qquad
+\phi_{\mu}^{\mathrm{orig}}(A)=\frac{\mu}{N_u}\xi^*A\xi .
+\tag{38.41}
+$$
+
+它在完整原代数上正且质量恰为 $\mu$；左端和每笔面积准确乘
+$\mu/N_u$。只有交叉行 $\ell$（即离面条目）依赖所选 $u$ 而与 $X$ 无关；完整探针 $x$ 仍含 $X$，
+故 $X+\varepsilon I_E$ 的扰动仍使用同一个 $\xi,\ell,N_u$。这正是定理 37.2 的
+精确运输；它不建立一个固定原探针对所有 $u$ 的混合泛函等价，不要求 $E$ 为 $t$ 的
+reducing plane，也不把不同 $u$ 的二维资料拼成一份固定混合泛函。
+
