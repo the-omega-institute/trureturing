@@ -1,0 +1,32 @@
+### 5.1　一条共同轴与两个新增量的三维提升
+
+取 $K=\mathbb Re_0$，两方各增加一条可见方向。将两个记录写为
+
+$$
+a=\alpha e_0+\sqrt{\Delta_A}\,e_1,
+ \qquad
+ b=\beta e_0+\sqrt{\Delta_B}
+       \bigl(t e_1+\sqrt{1-t^2}\,e_2\bigr),
+ \quad -1\le t\le1,
+$$
+
+其中 $e_0,e_1,e_2$ 正交归一，$\Delta_A,\Delta_B\ge0$ 是各自旧投影外的自读余量。 于是两份局部记录恰容许区间
+
+$$
+\bigl|\langle a,b\rangle-\alpha\beta\bigr|
+ \le\sqrt{\Delta_A\Delta_B}.
+\tag{2}
+$$
+
+这就是一维残差间收缩 $C=t$；可令 $t=\cos\theta$。 两边余量都正时，$|t|<1$ 给两条独立创新方向；$t=\pm1$ 则把它们识别成同一直线。 任一余量为零时，交叉余量必须为零，$t$ 本身不再可辨。
+
+```mermaid
+flowchart LR
+    K["共同轴 K = ℝe₀；原点 0"] -->|"旧投影 αe₀"| A0["αe₀"]
+    K -->|"旧投影 βe₀"| B0["βe₀"]
+    A0 -->|"√Δ_A e₁：A 的新增量"| A["记录 a"]
+    B0 -->|"√Δ_B (t e₁ + √(1−t²) e₂)：B 的新增量"| B["记录 b"]
+    A --- Q["交叉余量 γ = ⟨a,b⟩ − αβ = t√(Δ_A Δ_B)；−1 ≤ t ≤ 1"]
+    B --- Q
+```
+
