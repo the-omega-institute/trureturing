@@ -129,7 +129,7 @@ theorem original_row_saturation
     obtain ⟨_, _, _, hcs⟩ := hscale w hw s rfl
     have hcs0 : comparison C u s (a.param (-w)) = 0 := by
       rw [hcs (-w) (by simpa using hw.le), htunit]
-      simp [inner_neg_right, real_inner_self_eq_norm_sq, hw]
+      norm_num [inner_neg_right, real_inner_self_eq_norm_sq, hw]
     have hDs := (comparison_zero_iff hs hg s
       (SingleLabelNormalBody.chart_mem a (z := -w) (by simpa using hw.le)).1).mp hcs0
     obtain ⟨_, _, _, _, _, _, ho⟩ := original_neighbor_support hc hs hg hB hInj p hep k s w hw rfl
@@ -143,11 +143,13 @@ theorem original_row_saturation
     rw [hform s]
     nlinarith
   have hpure (s : pure C u) : comparison C u p s = ep s := by
-    rw [hrow, min_eq_left]
+    rw [hrow s]
+    apply min_eq_left
     have hh := heqle s
     rw [k.g_value] at hh
-    simpa only [LinearMap.sub_apply, (pure_mem s).2] using (show ep s ≤ (u-eq) s by
-      simp only [LinearMap.sub_apply, (pure_mem s).2] at *; linarith)
+    change eq s ≤ u s - ep s at hh
+    change ep s ≤ u s - eq s
+    linarith
   have hleast (f : V →ₗ[ℝ] ℝ) (hf : confirms C u p f) : ∀ x ∈ C, ep x ≤ f x := by
     have hnon : ∀ s : pure C u, 0 ≤ (f-ep) s := by
       intro s
@@ -161,7 +163,9 @@ theorem original_row_saturation
   intro x hx
   apply le_antisymm
   · exact csInf_le ⟨0, by rintro z ⟨f, hf, rfl⟩; exact (hf.1 x hx.1).1⟩ ⟨ep, hep.1, rfl⟩
-  · apply le_csInf ⟨ep x, ep, hep.1, rfl⟩
+  · change ep x ≤ sInf {z : ℝ | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = z}
+    apply le_csInf (show ({z : ℝ | ∃ f : V →ₗ[ℝ] ℝ,
+      confirms C u p f ∧ f x = z} : Set ℝ).Nonempty from ⟨ep x, ep, hep.1, rfl⟩)
     rintro z ⟨f, hf, rfl⟩
     exact hleast f hf x hx.1
 
