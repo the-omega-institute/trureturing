@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Analysis.Convex.Intrinsic
+import Mathlib.Topology.Maps.Proper.Basic
 
 /-! Relative-boundary geometry of the entire original normalized cone base. -/
 
@@ -50,6 +51,7 @@ private theorem exclusion_boundary
   rw [← closure_sdiff_intrinsicInterior, hK.closure_eq]
   refine ⟨hx.1, ?_⟩
   rintro ⟨a, ha, he⟩
+  letI : Nonempty (affineSpan ℝ (base C u)) := ⟨a⟩
   let b : affineSpan ℝ (base C u) := ⟨p, subset_affineSpan ℝ _ (pure_mem p)⟩
   have hcont : Continuous (fun t : ℝ => AffineMap.lineMap (k := ℝ) b a t) :=
     AffineMap.lineMap_continuous
@@ -140,5 +142,142 @@ theorem original_boundary_cover_and_midpoint
   · rintro ⟨p, hp, hq⟩
     exact exclusion_boundary hclosed hstrict hgen hB p
       ((all.1 p).2.2.1.midpoint_mem hp hq)
+
+private theorem repeated_ball_isolated
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p s : pure C u) (hps : p ≠ s) (hs : exclusion C u s = exclusion C u p)
+    (q : pure C u) :
+    exclusion C u p = exclusion C u q ∨ Disjoint (exclusion C u p) (exclusion C u q) := by
+  classical
+  have all := exclusion_ball_faces hclosed hstrict hgen hB
+  have two (a b : pure C u) {x y : V}
+      (hx : x ∈ exclusion C u a ∩ exclusion C u b)
+      (hy : y ∈ exclusion C u a ∩ exclusion C u b) (hxy : x ≠ y) :
+      exclusion C u a = exclusion C u b := by
+    have hc := (all.1 a).2.2.1.inter (all.1 b).2.2.1
+    have hf := (all.1 a).2.2.2.2.1.inter (all.1 b).2.2.2.2.1
+    have hn : (exclusion C u a ∩ exclusion C u b).Nontrivial := ⟨x, hx, y, hy, hxy⟩
+    have ha := chart_face_eq (hB a).some hc
+      (hf.mono (all.1 a).2.2.2.2.1.subset inter_subset_left) hn
+    have hb := chart_face_eq (hB b).some hc
+      (hf.mono (all.1 b).2.2.2.2.1.subset inter_subset_right) hn
+    exact ha.symm.trans hb
+  by_cases he : exclusion C u p = exclusion C u q
+  · exact Or.inl he
+  right
+  apply Set.disjoint_left.mpr
+  intro x hxp hxq
+  have hsingle : exclusion C u p ∩ exclusion C u q = {x} := by
+    apply Set.Subsingleton.eq_singleton_of_mem _ ⟨hxp, hxq⟩
+    intro a ha b hb
+    by_contra hab
+    exact he (two p q ha hb hab)
+  have hxP : x ∈ pure C u := by
+    apply isExtreme_singleton.mp
+    rw [← hsingle]
+    exact (all.1 p).2.2.2.2.1.inter (all.1 q).2.2.2.2.1
+  let r : pure C u := ⟨x, hxP⟩
+  have hpr : (p : V) ∈ exclusion C u r := (exclusion_symmetric p r).mp hxp
+  have hsr : (s : V) ∈ exclusion C u r := (exclusion_symmetric s r).mp (hs.symm ▸ hxp)
+  have hqr : (q : V) ∈ exclusion C u r := (exclusion_symmetric q r).mp hxq
+  have hpure : (exclusion C u p).extremePoints ℝ ⊆ exclusion C u q := by
+    intro y hy
+    have hyP : y ∈ pure C u := (all.1 p).2.2.2.2.1.extremePoints_subset_extremePoints hy
+    let t : pure C u := ⟨y, hyP⟩
+    have hpt : (p : V) ∈ exclusion C u t := (exclusion_symmetric p t).mp hy.1
+    have hst : (s : V) ∈ exclusion C u t :=
+      (exclusion_symmetric s t).mp (hs.symm ▸ hy.1)
+    have htr : exclusion C u t = exclusion C u r :=
+      two t r ⟨hpt, hpr⟩ ⟨hst, hsr⟩ (fun h => hps (Subtype.ext h))
+    exact (exclusion_symmetric q t).mpr (htr.symm ▸ hqr)
+  have hsub : exclusion C u p ⊆ exclusion C u q := by
+    rw [← closure_convexHull_extremePoints (all.1 p).2.1 (all.1 p).2.2.1]
+    exact closure_minimal (convexHull_min hpure (all.1 q).2.2.1) (all.1 q).2.1.isClosed
+  exact he (chart_face_eq (hB q).some (all.1 p).2.2.1
+    ((all.1 p).2.2.2.2.1.mono (all.1 q).2.2.2.2.1.subset hsub) (all.1 p).1)
+
+/-- In the all-repeated contradiction branch, the literal midpoint relation on
+all of the actual relative boundary is a closed equivalence relation. Its actual
+quotient is compact Hausdorff, and the canonical projection is continuous,
+surjective and closed. No regularity of the quotient is assumed. -/
+theorem original_all_repeated_boundary_quotient
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hrepeated : ∀ p : pure C u, ∃ s : pure C u,
+      p ≠ s ∧ exclusion C u s = exclusion C u p) :
+    ∃ r : Setoid (intrinsicFrontier ℝ (base C u)),
+      (∀ x y, r x y ↔ midpoint ℝ (x : V) (y : V) ∈ intrinsicFrontier ℝ (base C u)) ∧
+      (∀ x y, r x y ↔ ∃ p : pure C u, (x : V) ∈ exclusion C u p ∧
+        (y : V) ∈ exclusion C u p) ∧
+      IsClosed {z : intrinsicFrontier ℝ (base C u) × intrinsicFrontier ℝ (base C u) |
+        r z.1 z.2} ∧
+      CompactSpace (Quotient r) ∧ T2Space (Quotient r) ∧
+      Continuous (Quotient.mk r) ∧ Function.Surjective (Quotient.mk r) ∧
+      IsClosedMap (Quotient.mk r) := by
+  classical
+  let S := intrinsicFrontier ℝ (base C u)
+  have hSclosed : IsClosed S :=
+    isClosed_intrinsicFrontier (affineSpan ℝ (base C u)).closed_of_finiteDimensional
+  have hSK : S ⊆ base C u := intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed
+  have hScompact : IsCompact S := (base_compact hclosed hstrict).of_isClosed_subset hSclosed hSK
+  letI : CompactSpace S := hScompact.compactSpace
+  have crit := (original_boundary_cover_and_midpoint hclosed hstrict hgen hB).2
+  let r : Setoid S :=
+    { r := fun x y => midpoint ℝ (x : V) (y : V) ∈ S
+      iseqv := ⟨by intro x; simpa only [midpoint_self] using x.property,
+        by intro x y h; simpa only [midpoint_comm] using h,
+        by
+          intro x y z hxy hyz
+          obtain ⟨p, hxp, hyp⟩ := (crit x (hSK x.property) y (hSK y.property)).mp hxy
+          obtain ⟨q, hyq, hzq⟩ := (crit y (hSK y.property) z (hSK z.property)).mp hyz
+          obtain ⟨s, hps, hs⟩ := hrepeated p
+          rcases repeated_ball_isolated hclosed hstrict hgen hB p s hps hs q with he | hd
+          · exact (crit x (hSK x.property) z (hSK z.property)).mpr ⟨p, hxp, he.symm ▸ hzq⟩
+          · exact ((Set.disjoint_left.mp hd) hyp hyq).elim⟩ }
+  have hgraph : IsClosed {z : S × S | r z.1 z.2} := by
+    exact hSclosed.preimage ((continuous_subtype_val.comp continuous_fst).midpoint
+      (continuous_subtype_val.comp continuous_snd))
+  let q : S → Quotient r := Quotient.mk r
+  have hq : IsQuotientMap q := isQuotientMap_quotient_mk'
+  have hqclosed : IsClosedMap q := by
+    intro F hF
+    apply hq.isCoinducing.isClosed_preimage.mp
+    have he : q ⁻¹' (q '' F) = Prod.snd ''
+        ({z : S × S | r z.1 z.2} ∩ (F ×ˢ univ)) := by
+      ext b
+      constructor
+      · rintro ⟨a, ha, hab⟩
+        exact ⟨(a,b), ⟨Quotient.exact hab, ha, mem_univ b⟩, rfl⟩
+      · rintro ⟨⟨a,c⟩, ⟨hac, ha, _⟩, rfl⟩
+        exact ⟨a, ha, Quotient.sound hac⟩
+    rw [he]
+    exact isClosedMap_snd_of_compactSpace _ (hgraph.inter (hF.prod isClosed_univ))
+  have hproper : IsProperMap q := by
+    apply isProperMap_iff_isClosedMap_and_compact_fibers.mpr
+    refine ⟨hq.continuous, hqclosed, ?_⟩
+    intro b
+    obtain ⟨a, rfl⟩ := Quotient.exists_rep b
+    have he : q ⁻¹' {q a} = {c | r a c} := by
+      ext c
+      simp only [mem_preimage, mem_singleton_iff, mem_setOf_eq]
+      exact ⟨fun h => Quotient.exact h.symm, fun h => (Quotient.sound h).symm⟩
+    rw [he]
+    exact (hgraph.preimage (continuous_const.prodMk continuous_id)).isCompact
+  have hprod : IsQuotientMap (Prod.map q q) :=
+    (hproper.prodMap hproper).isClosedMap.isQuotientMap
+      (hq.continuous.prodMap hq.continuous) (hq.surjective.prodMap hq.surjective)
+  have hT2 : T2Space (Quotient r) := by
+    apply t2_iff_isClosed_diagonal.mpr
+    apply hprod.isCoinducing.isClosed_preimage.mp
+    convert hgraph using 1
+    ext z
+    exact Quotient.eq
+  refine ⟨r, (by intros; rfl), ?_, hgraph, inferInstance, hT2,
+    hq.continuous, hq.surjective, hqclosed⟩
+  intro x y
+  exact crit x (hSK x.property) y (hSK y.property)
 
 end D5.S3.Quantum.Foundation.ActualExclusionBoundary
