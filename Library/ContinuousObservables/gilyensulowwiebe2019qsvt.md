@@ -5,10 +5,12 @@ year: 2019
 title: "Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics"
 doi: 10.1145/3313276.3316366
 url: https://arxiv.org/abs/1806.01838v1
-claim: "Lemma 6 gives parity-controlled interval sums of squares; Theorem 3 synthesizes exact-length QSP phase lists, yielding full signed-circle factorizations of their continuous unitary completions."
+claim: "Lemma 6 gives parity-controlled interval sums of squares; Theorem 3 synthesizes exact-length QSP phase lists, yielding full signed-circle factorizations of their continuous unitary completions; Definitions 15–16 and Theorem 17 lift scalar reflection words to projected unitary encodings."
 strata_touched:
   - D5/S3/ContinuousObservables/IntervalSOSCompletion
   - D5/S3/ContinuousObservables/PhaseSynthesis
+  - D5/S3/ContinuousObservables/ProjectedUnitaryLifting
+  - D5/S3/ContinuousObservables/PhaseSynthesisLifting
 license: citation-only
 triage: anchor
 ---
@@ -53,3 +55,9 @@ Theorem 3, equations (4)–(8), printed pages 8–9, gives the polynomial-pair p
 The original Lean producer is `QSVT/QSP/Existence.lean`, `exists_phases`, from the same pinned Apache-2.0 source. The additional consumed helpers come from QSP/PolyW.lean, QSP/Poly.lean and Polynomial/Parity.lean. Its induction is on the budget, so zero top coefficients and lower actual degree retain exact list length. Matching top coefficient norms gives a canceling phase; the inverse pair lowers the budget, preserves parity and the polynomial norm identity, and is sent back to the original pair by the last forward step. At budget zero the constant can be any complex number of modulus one.
 
 For the same SOS factors B,C above, set P=c(p)+i c(B) and Q=c(C), with c denoting complexification. Their polynomial norm identity is precisely the SOS identity. The native phase product starts at diag(e^(iφ₀),e^(−iφ₀)) and multiplies on the right by phaseCompletion(X,0,1) and the next diagonal phase. At every signed circle point x+iy it equals the entire matrix U above. This is equality in CyclicObservable 2, with no restriction to the upper semicircle. The phase list, scalar factors, both star products, determinant and real readout all concern the same witnesses. The result reuses established synthesis and SOS proofs; the signed-circle matrix and list transport is an application, not a new synthesis theorem or a full QSVT result.
+
+## Projected unitary lifting
+
+Definitions 15–16 and Theorem 17, printed pages 17–19 of the fixed arXiv v1 text, treat arbitrary finite-dimensional complex Hilbert spaces, a unitary and two orthogonal projections. The alternating phase word has an input-projected block equal to the singular-value polynomial, with the output projection selected by parity. The even transformation retains the polynomial's value at zero on the complete input range, including a dimension surplus relative to the output range.
+
+Corollary 8 converts a nonempty rotation phase list to reflection phases while preserving the scalar 00 polynomial. The full matrix relation includes a power of i and a right diagonal phase. These identities do not themselves construct real-part extraction or certify the resources of a native circuit.

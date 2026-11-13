@@ -1,0 +1,16 @@
+### 130.7 数学归属与分类边界
+
+本章采用 `repo-derived` 纸面综合归属。仿射直径的普遍存在归所引成熟凸几何，不是新增定理；单点／完整球面分类、Inj的一值面论证、球对径必要性、W下三元共同完成、唯一原尺、效应谱唯一性，以及VIII113.7在W下的完整重构和状态谱全部复用。新增消费者是：在尚无W的EB+Inj整个原域中将仿射直径接为(Q130.6)，得到(Q130.11)的原态三项几何分解；由原球非中心混态的任意谱分解反推全部对径原区别，得到定理130.3的反向条件桥及推论130.4的明确非谱态见证；最后接回同一E0内的IC0条件链。W的谱存在、G和谱唯一性没有被重计。这里没有新的全局分类原理、全球原创或历史优先权结论。
+
+[Barnum—Hilgert][Q130BH]的Definition 3.4恰与这里的状态谱性同型；Definition 3.5是自同构群在各长度有序框架上传递的强对称，不是一个可由“有谱”直接调用的定理。其Theorem 1.1要求两者一起成立，才分类为简单EJA状态空间或单纯形。一般W的旗标支路不具有这种纯态传递性。其文中还区分谱系数唯一性及Alfsen—Shultz的另一种谱性；本章只用其状态谱性定义，EJA的进一步后果按VIII113.7等既有桥承担，不由术语相同推出。
+
+[Alfsen—Shultz][Q130AS]印刷页160的Hilbert ball property要求每一对极点生成的整个最小面是norm-exposed Hilbert球；有限维Corollary 7.5还要求每个norm-exposed face为projective。仅真面穷尽和定理130.2的几何分解没有支付这些前件，不能据此直接调用该分类。W到完整EJA则是本仓VIII113.7已经独立支付的更强桥，不把它遗漏为未知。整球卷VI89.1、89.3的L3/H路线也明列全部二纯最小面为三球及实际紧群的纯态传递性；E0没有供应这些入口。本章的分类调用只沿VIII113.7—113.9既有结果，不借文献名称越过缺项。
+
+[Q130VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2：全部真面；104.2—104.4：对径和共同三结果；105.2—105.3：原least与效应谱；105.9—105.10：G的原范围；106.2：效应谱唯一性。"
+[Q130VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7：不加G或常维的整个W分类、状态谱与其余后果；113.9：全部三球的同原复三能级表示；111.1—111.5：既有存在式TFD消费者。"
+[Q130IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "定理116.9：球内原对径与实际三轮闭合；119.1：Inj接触面；120.9：既有P0稠密。"
+[Q130TCVIII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII128：固定共同源的部分正性、混合锚反例与剩余全有限合同。"
+[Q130BHS]: https://arxiv.org/html/1403.7158v2 "Imre Bárány, Daniel Hug and Rolf Schneider, Affine diameters of convex bodies, arXiv:1403.7158v2；§1定义、§5的普遍存在事实及Soltan assertion 3.3引用。出版于Proceedings of the AMS 144 (2016), 797—812, DOI 10.1090/proc12746。"
+[Q130BH]: https://arxiv.org/abs/1904.03753v1 "Howard Barnum and Joachim Hilgert, Strongly symmetric spectral convex bodies are Jordan algebra state spaces, arXiv:1904.03753v1；Definitions 3.1—3.5和Theorem 1.1。"
+[Q130AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140 (1978), 155—190, DOI 10.1007/BF02392307；印刷页158、160、188。"
+

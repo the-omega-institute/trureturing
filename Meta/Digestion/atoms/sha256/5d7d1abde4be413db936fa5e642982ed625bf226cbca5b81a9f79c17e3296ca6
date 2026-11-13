@@ -1,0 +1,34 @@
+**定理 122.8（平面差向量给出整球塌缩）。** 若 $S_v$ 含某个 $y\ne z_v$，令
+
+$$
+n=-v,\qquad a=y-z_v,\qquad
+w_t=-\frac{n+ta}{\|n+ta\|}\quad(t>0).
+\tag{Q122.19}
+$$
+
+则 $a\ne0,n\cdot a=0$、$w_t\ne v$、$w_t\to v$，而且
+
+$$
+a\cdot z_{w_t}\ge a\cdot y
+=a\cdot z_v+\|a\|^2,
+\qquad m(w_t)\longrightarrow0,
+\qquad d_H(F_{w_t},\{p\})\longrightarrow0.
+\tag{Q122.20}
+$$
+
+证明。$z_{w_t}$ 在方向 $n+ta$ 上支撑 $S$，所以
+$(n+ta)\cdot z_{w_t}\ge(n+ta)\cdot y$。又 $n\cdot z_{w_t}\le h_S(n)=n\cdot y$；相减除以 $t>0$ 即得第一个不等式，其中固定分离量是 $\|a\|^2>0$。
+
+若 $m(w_t)$ 不趋零，存在 $t_j\downarrow0$、$\epsilon>0$ 及达到高度的 $x_j\in F_{w_{t_j}}$，使 $g(x_j)\ge\epsilon$。紧 $K$ 中取子列 $x_j\to x$。固定球面上的 $e_{q_w}$ 连续，故 $e_{q_v}(x)=0$、$x\in F_v$；又 $g(x)\ge\epsilon$，所以 $x\ne p$。比值在 $x$ 附近连续，定理122.4给
+
+$$
+z_{w_{t_j}}=H(x_j)/g(x_j)\longrightarrow H(x)/g(x)=z_v,
+\tag{Q122.21}
+$$
+
+与固定分离量矛盾。因此高度趋零。
+
+对任意 $p$ 的环境邻域 $U$，紧集 $K\setminus U$ 若非空，$g$ 在其上有严格正最小值。高度趋零使 $F_{w_t}\subset U$ 最终成立，给整球的Hausdorff上包含；每张球又都含同一个原 $p$，给下包含。于是完整三维球，而非所选纯点或某条直径，收敛到 $\{p\}$。证毕。
+
+平支撑面中缺少的实际值 $y$，由同一原实现中的真实方向旋转检测出来。此论证不需要选择 $y$ 的原态实现；恰恰因为 $y$ 只是闭影壳极限点，正高度原态聚点才会与唯一实际接触冲突。
+

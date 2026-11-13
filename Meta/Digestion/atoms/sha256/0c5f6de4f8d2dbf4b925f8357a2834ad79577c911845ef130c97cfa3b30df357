@@ -1,0 +1,40 @@
+**命题 102.3（一个纯旁观者下的精确限制）。** 在定义102.1下，不用任何 $S_N$，
+存在 $r\in P_1$；对每个 $a\ge1$，$j_r(x)=x\otimes r$ 把 $P_a$ 送入 $P_{a+1}$，且
+
+$$
+T_{j_r(p)}^{(a+1)}(j_r(x))=T_p^{(a)}(x)
+\qquad(p\in P_a,\ x\in C_a).
+\tag{102.7}
+$$
+
+因此 $S_{a+1}\Rightarrow S_a$，特别是
+$S_3\Leftrightarrow(S_1\land S_2\land S_3)$。
+在此同一载体上，$\mathsf{CB}_3\Leftrightarrow S_3$，其中纯端点互反是结论。
+
+**证明。** 有限维闭尖锥的严格正单位给出非空紧基；非零生成性排除空基，
+紧凸几何给 $P_1\ne\varnothing$。固定其中一个 $r$。
+对实际复合 $(W_a,W_1,W_{a+1})$，(102.2)—(102.3)满足
+[Barnum–Hilgert 笔记的纯边缘／纯乘积引理](../../../Library/QuantumStates/barnumhilgert2019spectral.md#a-pure-marginal-fixes-every-conditional-state)
+的全部输入：正态乘积、正效应乘积、原单位、精确配对与局部层析。
+该引理不消费 $S$；直接使用其纯乘积结论，得 $j_r(p)\in P_{a+1}$。
+
+若 $F\in\mathcal E_{a+1}$ 确认 $p\otimes r$，令 $f(x)=F(x\otimes r)$。
+由最小界和 $u_1(r)=1$，对每个 $x\in C_a$ 有
+$0\le f(x)\le u_a(x)$，且 $f(p)=1$。故所有这类 $F$ 的读数至少是右侧(102.7)。
+反之，任意确认 $p$ 的 $f\in\mathcal E_a$ 都提升为 $f\otimes u_1$。
+最大界分别作用于 $f,u_1$ 与 $u_a-f,u_1$，说明提升及其单位补均正，
+所以提升是原 proper 效应；其确认和在 $x\otimes r$ 上的读数完全相同。
+两族下确界相等。将(102.5)限制到 $j_r(p),j_r(q_\ell)$ 即得下降；先取 $a=2$，再取 $a=1$。
+
+最后直接应用既有
+[`full_mixture_iff_circuit_balance`](../../../D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.lean)
+的电路平衡等价，其陈述也列于
+[对应的数学陈述](../../../Blueprint/D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.md)。
+参数逐项取 $A=W_3$、$C=C_3$、单位 $u_3$、全部基 $K_3$、全部极点 $P_3$、
+整个 proper 区间 $\mathcal E_3$，以及原下确界(102.4)。
+任取 $W_3$ 上的有限维范数；闭性、严格正性和正锥实张成恰是定义102.1的条件。
+该陈述中的 `circuit`、`balanced`、`fullMixture` 分别就是上述极小支撑关系、
+(102.6)和(102.5)，包含零权与重复准备标签。
+它给出 $\mathsf{CB}_3\Leftrightarrow S_3$ 及 reciprocal least confirmation；
+不另作互反假设，也不重证此等价。∎
+
