@@ -1,0 +1,11 @@
+证明。固定 $p$，此证明暂记 $L=\operatorname{ri}D_p$，
+不将这个开球内点集与108.1的线性方向空间 $L_p$ 混同。
+(VIII113.2)始终保留标签，故同时保留 $L$ 及其在 $M$ 中的补集。
+于是有实际的强形变收缩对及同胚
+
+$$
+(M,M\setminus L)\searrow(B,B\setminus\{c_p\})
+ \cong(P,P\setminus\{p\}).
+\tag{VIII113.7}
+$$
+
