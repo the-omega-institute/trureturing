@@ -4,10 +4,10 @@ import Reg.Support.DependentFamily
 /-! Typed insertion-family evidence. The Contract source-selection binding remains
 unfinished: https://github.com/the-omega-institute/trureturing/issues/29924. -/
 
-open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped BigOperators
 namespace Reg.D5.S1.Words.LatticePaths.KotesovecA263160.insertion_identity
-open D5.S1.Words.LatticePaths.KotesovecA263160
+open _root_.D5.S1.Words.LatticePaths.KotesovecA263160
 
 abbrev signature : Signature where
   Params := ℕ × ℕ
@@ -36,10 +36,10 @@ private theorem rejected_failure : ¬ arena.Law rejected := by
   have h0 := h 0 0 0
   norm_num [rejected, realize] at h0
 
-noncomputable def family : Registration arena (type_of% insertion_identity) where
+noncomputable def family : Registration arena (type_of% (@_root_.D5.S1.Words.LatticePaths.KotesovecA263160.insertion_identity)) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨insertion_identity, rejected, rejected_failure⟩
+  variation := ⟨@_root_.D5.S1.Words.LatticePaths.KotesovecA263160.insertion_identity, rejected, rejected_failure⟩
   sensitivity := by
     constructor
     · intro i
@@ -50,8 +50,8 @@ noncomputable def family : Registration arena (type_of% insertion_identity) wher
       exact nomatch e
   dependence := by
     intro i
-    have h0 := insertion_identity 0 0 0
-    have h1 := insertion_identity 0 0 1
+    have h0 := _root_.D5.S1.Words.LatticePaths.KotesovecA263160.insertion_identity 0 0 0
+    have h1 := _root_.D5.S1.Words.LatticePaths.KotesovecA263160.insertion_identity 0 0 1
     norm_num at h0 h1
     refine ⟨(0,0),0,1,?_⟩
     change internal_words 0 0 0 ≠ internal_words 0 0 1

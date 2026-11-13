@@ -14,7 +14,7 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
         "Literal first-zero lattice paths and row/column insertion.",
         H("First-zero paths"),
         Blocks(
-            Paragraph(Text("Coordinates are labelled and steps are ordered. Each step decrements a nonempty subset by one. A path stops when any coordinate first reaches zero; simultaneous first zeros count once. Height zero or dimension zero admits only the empty path. The diagonal of this finite count is OEIS A263160. The terminal-word identity and uniform estimates lead to its exact real-root limit along all natural indices. The proof uses only the cofinite range n at least two and imposes no fixed-dimension hypothesis.")),
+            Paragraph(Text("Coordinates are labelled and steps are ordered. Each step decrements a nonempty subset by one. A path stops when any coordinate first reaches zero; simultaneous first zeros count once. Height zero or dimension zero admits only the empty path. The diagonal of this finite count is OEIS A263160. Write I(d,m,t) for the Lean internal_words count. The terminal-word identity and uniform estimates lead to its exact real-root limit along all natural indices. The proof uses only the cofinite range n at least two and imposes no fixed-dimension hypothesis.")),
             Node("Step", "Nonempty coordinate steps", StepFormula(), true, DescribeRole.Definition),
             Node("decrements", "Coordinate occurrences", DecrementsFormula(), false, DescribeRole.Definition),
             Node("FirstZero", "First-zero termination", FirstZeroFormula(), true, DescribeRole.Definition),
@@ -35,11 +35,21 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("a263160-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             source ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(name == "first_zero_length_bound"
-                ? "Every step uses at least one coordinate. Before the last step, each coordinate has been used at most one less than the initial height. This bounds the length and makes the displayed finite count exhaustive."
-                : name == "insertion_identity"
-                    ? "A row chooses at most m positions among k labelled columns. Transposition identifies these independent rows with columns that may be empty. Removing the empty columns gives an internal word; choosing its positions gives the binomial coefficient."
-                    : "The displayed formula specifies the objects and their ordered finite counts."))), role);
+            Blocks(Paragraph(Text(Commentary(name)))), role);
+
+    private static string Commentary(string name) => name switch
+    {
+        "first_zero_length_bound" => "Every step uses at least one coordinate. Before the last step, each coordinate has been used at most one less than the initial height. This bounds the length and makes the finite count exhaustive.",
+        "insertion_identity" => "A row chooses at most m positions among k labelled columns. Transposition identifies these independent rows with columns that may be empty. Removing the empty columns gives an internal word; choosing its positions gives the binomial coefficient.",
+        "internal_hasSum" => "The length budget truncates the insertion polynomial at d times m. Each geometric binomial column has sum two. Exchanging the finite sum with the convergent series gives twice the internal-word count.",
+        "paths_eq_internal" => "Appending a nonempty coordinate subset to an internal word either remains internal or reaches its first zero. These cases partition words, including simultaneous first zeros. Summing over lengths cancels the nonempty internal words and retains the unique empty word.",
+        "internal_count_upper" => "Vandermonde and the factorial binomial bound dominate each row polynomial by the shifted degree-m monomial divided by m factorial. A shift by m reduces the geometric moment to Mathlib's sum-integral and Gamma estimate. The polynomial and exponential are compared as separate monotone factors.",
+        "internal_count_lower" => "Every term of the positive series is at most its sum. The lower factorial bound for the binomial coefficient supplies the displayed term. Subtraction inside the natural-number cast is truncated natural subtraction.",
+        "internal_log_bounds" => "For the lower estimate take k equal to the ceiling of m times d divided by log two, plus m. The ceiling error costs at most one exponential step. Taking logarithms of that term and of the uniform upper bound gives the sandwich.",
+        "diagonal_log_estimate" => "Set d to n and m to n minus one. Mathlib's factorial-log bounds cancel the main factorial terms. The terminal-count comparison contributes only a linear error; the displayed bound is at most a constant times n log n.",
+        "diagonal_limit" => "Divide the quantitative logarithmic error by n squared and use log n divided by n tending to zero. Positivity of the finite count allows conversion of the real power to an exponential. Continuity of the exponential yields one divided by log two along every natural index.",
+        _ => "The displayed formula specifies the objects and their ordered finite counts.",
+    };
 
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Div(Formula x, Formula y) => new Formula.Fraction(x, y);
@@ -48,12 +58,11 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
     private static Formula Log(Formula x) => Qualified("Real", "log", x);
     private static Formula Fact(Formula x) => Qualified("Nat", "factorial", x);
     private static Formula C() => Log(D(2));
-    private static Formula HCount(Formula d, Formula m) => Mul(D(2), Sum("t", Range(Add(Mul(d, m), D(1))), Cast(Call("internal_words", d, m, F.Id("t")))));
+    private static Formula HCount(Formula d, Formula m) => Mul(D(2), Sum("t", Range(Add(Mul(d, m), D(1))), Cast(Call("I", d, m, F.Id("t")))));
     private static Formula Row(Formula k, Formula m) => Cast(Sum("r", Range(Add(m, D(1))), Choose(k, F.Id("r"))));
     private static Formula AllDM(Formula body) => All("d", N(), All("m", N(), body));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
-    private static Formula Nat(Formula x) => Par(Seq(x, Colon, Sp, N()));
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
     private static Formula Le(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
@@ -132,7 +141,7 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
         var words = Call("Subtype", Lam("w", new Formula.TypeArrow(Fin(t), Step(d)),
             All("i", Fin(d), Le(Dec(OfFn(w), i), m))));
         return Disp(All("d", N(), All("m", N(), All("t", N(),
-            Eq(Call("internal_words", d, m, t), Card(words))))));
+            Eq(Call("I", d, m, t), Card(words))))));
     }
 
     private static Formula LengthFormula()
@@ -146,7 +155,7 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
     {
         var d = F.Id("d"); var m = F.Id("m"); var k = F.Id("k"); var r = F.Id("r"); var t = F.Id("t");
         var lhs = new Formula.Power(Par(Sum("r", Range(Add(m, D(1))), Choose(k, r))), d);
-        var rhs = Sum("t", Range(Add(k, D(1))), Mul(Choose(k, t), Call("internal_words", d, m, t)));
+        var rhs = Sum("t", Range(Add(k, D(1))), Mul(Choose(k, t), Call("I", d, m, t)));
         return Disp(All("d", N(), All("m", N(), All("k", N(), Eq(lhs, rhs)))));
     }
     private static Formula SeriesFormula()
@@ -161,14 +170,15 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
         var d = F.Id("d"); var m = F.Id("m");
         return Disp(AllDM(Imp(Lt(D(0), d), Eq(Call("paths", d, Add(m, D(1))),
             Add(D(1), Mul(Sub(Pow(D(2), d), D(2)),
-                Sum("t", Range(Add(Mul(d, m), D(1))), Call("internal_words", d, m, F.Id("t")))))))));
+                Sum("t", Range(Add(Mul(d, m), D(1))), Call("I", d, m, F.Id("t")))))))));
     }
 
     private static Formula UpperFormula()
     {
         var d = F.Id("d"); var m = F.Id("m"); var n = Mul(m, d);
-        return Disp(AllDM(Le(HCount(d, m), Div(Mul(Pow(D(2), Add(m, D(1))), Cast(Fact(n))),
-            Mul(Pow(C(), Add(n, D(1))), Pow(Cast(Fact(m)), d)))))));
+        var numerator = Mul(Pow(D(2), Add(m, D(1))), Cast(Fact(n)));
+        var denominator = Mul(Pow(C(), Add(n, D(1))), Pow(Cast(Fact(m)), d));
+        return Disp(AllDM(Le(HCount(d, m), Div(numerator, denominator))));
     }
 
     private static Formula LowerFormula()
