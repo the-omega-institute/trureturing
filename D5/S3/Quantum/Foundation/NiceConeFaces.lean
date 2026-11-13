@@ -10,6 +10,8 @@ import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Geometry.Convex.Cone.Dual
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
+/-! Facial dual completeness and exact support-zero sections in the ambient space. -/
+
 noncomputable section
 open Set Pointwise
 
@@ -30,7 +32,7 @@ def Nice (C : PointedCone ℝ V) : Prop :=
 
 private def zeroFace (C : PointedCone ℝ V) (a : V →ₗ[ℝ] ℝ)
     (ha : ∀ x ∈ C, 0 ≤ a x) : C.Face where
-  toSubmodule := C ⊓ (a.ker.restrictScalars ℝ≥0)
+  toSubmodule := C ⊓ (a.ker.restrictScalars (Nonneg ℝ))
   isFaceOf := by
     apply PointedCone.IsFaceOf.of_mem_of_add_mem_left
     · exact inf_le_left
