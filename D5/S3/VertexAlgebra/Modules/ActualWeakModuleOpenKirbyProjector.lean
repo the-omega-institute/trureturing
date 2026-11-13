@@ -293,11 +293,9 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         input (cupVector B hD) := by
       exact (normalizedPair_input hD (ModuleHom.id A) (coevaluation B hD)
         a 0 (x ⊗ₜ[ℂ] eta0 hD) v).trans (by
-          rw [TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
-          rfl)
+          rw [TensorProduct.map_tmul, restrict_identity, coevaluation_eta0] <;> rfl)
     rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x,
-      C.map_smul, hp, hc, L.map_smul]
-    rfl
+      C.map_smul, hp, hc, L.map_smul] <;> rfl
   have hdim (c : Discriminant D) :
       (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
         (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i

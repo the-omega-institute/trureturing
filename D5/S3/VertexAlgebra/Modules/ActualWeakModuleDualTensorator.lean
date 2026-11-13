@@ -363,7 +363,7 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
         Multiplicity (dualModule (targetModule A B)) (-(c+d)) => g z) hr
   refine he.trans ?_
   refine (dualTensorFamily_jAt A B hD (-(c+d)) i w).trans ?_
-  simp [i, w, readFunctional, Xi, fiberRead, reverseFiber, dualIota, DualMultiplicity,
+  simp only [i, w, readFunctional, Xi, fiberRead, reverseFiber, dualIota, DualMultiplicity,
     LinearMap.comp_apply, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe,
     LinearEquiv.cast_apply, kappa_iota, neg_neg]
 
