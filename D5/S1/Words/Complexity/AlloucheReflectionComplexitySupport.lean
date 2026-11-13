@@ -11,14 +11,17 @@ admission_basis: escape-witness
 mirrorFactorLinear: proof_shape: content; escape_witness: mirror_factor_decomposition.
 reflectionBoundOfMirrorBound: proof_shape: content;
   escape_witness: mirror_factor_decomposition and walk_loop_removal_count.
-Direct frozen dependencies: MorseHedlund.wordFactor, wordFactorSet, mem_wordFactorSet.
+Direct frozen dependencies: D5/S1/Words/Complexity/MorseHedlund.wordFactor
+  statement_id=sha256:ac48653820670fcfa251876138fb18e7748093ca0d6fa2b0830e368730a3d908;
+  D5/S1/Words/Complexity/MorseHedlund.wordFactorSet
+  statement_id=sha256:bdef94a82837126cfe47f0537675bf25b70c1f37d1e0d6b98c990bef5aa4e08f;
+  D5/S1/Words/Complexity/MorseHedlund.mem_wordFactorSet
+  statement_id=sha256:18b041274f0eacdf0d0af311c4d451ed4008722c6716babae2498a94451dd019.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/29928
 The reflection relation and quotient count use the source expressions without reversal closure.
 -/
 
 import D5.S1.Words.Complexity.MorseHedlund
-import Mathlib.Data.Fin.Rev
-import Mathlib.SetTheory.Cardinal.NatCard
-import Mathlib.Data.Nat.Find
 
 namespace D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 
@@ -40,7 +43,7 @@ namespace D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 section Mirror
 open D5.S1.Words.Complexity
 variable {A : Type*} [Fintype A]
-noncomputable local instance decidableAlphabet : DecidableEq A := Classical.decEq A
+attribute [local instance] Classical.propDecidable
 
 private def reverseWord {n : ℕ} (w : Fin n → A) : Fin n → A := w ∘ Fin.rev
 private noncomputable def symFactors (x : ℕ → A) (n : ℕ) : Finset (Fin n → A) := by
@@ -217,7 +220,7 @@ section Orbit
 open D5.S1.Words.Complexity
 open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 variable {A : Type*}
-noncomputable local instance decidableOrbitAlphabet : DecidableEq A := Classical.decEq A
+attribute [local instance] Classical.propDecidable
 
 private noncomputable def code {n : ℕ} (w : Fin n → A) : Finset (Fin n → A) :=
   {w, w ∘ Fin.rev}
@@ -390,9 +393,8 @@ namespace D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 section Reduction
 open D5.S1.Words.Complexity
 open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
-open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 variable {A : Type*} [Fintype A]
-noncomputable local instance decidableReductionAlphabet : DecidableEq A := Classical.decEq A
+attribute [local instance] Classical.propDecidable
 
 private noncomputable def palFactors (x : ℕ → A) (n : ℕ) : Finset (Fin n → A) :=
   (symFactors x n).filter fun w => w ∘ Fin.rev = w
@@ -543,10 +545,9 @@ namespace D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 section Reduction
 open D5.S1.Words.Complexity
 open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
-open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 variable {A : Type*} [Fintype A]
 
-/-- A bounded derivative for the exact marked mirror suffices for the binding target. -/
+/-- A bounded derivative for the exact marked mirror suffices for bounded reflection differences. -/
 theorem reflectionBoundOfMirrorBound (x : ℕ → A) (D : ℕ)
     (hD : ∀ n, (intFactorSet (mirrorWord x) (n + 1)).card ≤
       (intFactorSet (mirrorWord x) n).card + D) :

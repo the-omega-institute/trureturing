@@ -9,7 +9,13 @@
 /-
 result: proof_shape: content; escape_witness: none.
 admission_basis: open-problem-resolution (#24159; Proved)
-Direct frozen dependencies: MorseHedlund.wordFactor, wordFactorSet, mem_wordFactorSet.
+Direct frozen dependencies: D5/S1/Words/Complexity/MorseHedlund.wordFactor
+  statement_id=sha256:ac48653820670fcfa251876138fb18e7748093ca0d6fa2b0830e368730a3d908;
+  D5/S1/Words/Complexity/MorseHedlund.wordFactorSet
+  statement_id=sha256:bdef94a82837126cfe47f0537675bf25b70c1f37d1e0d6b98c990bef5aa4e08f;
+  D5/S1/Words/Complexity/MorseHedlund.mem_wordFactorSet
+  statement_id=sha256:18b041274f0eacdf0d0af311c4d451ed4008722c6716babae2498a94451dd019.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/29928
 The exact marked mirror and finite weighted factor graphs prove the full bounded-difference claim.
 Automaticity and optimal bounds are separate questions.
 -/
@@ -98,8 +104,7 @@ private theorem last_of_ne (p : EdgeWalk src dst H a b) (h : b ≠ a) :
 end EdgeWalk
 
 variable [Fintype V] [Fintype E]
-noncomputable local instance decidableLocal1 : DecidableEq V := Classical.decEq V
-noncomputable local instance decidableLocal2 : DecidableEq E := Classical.decEq E
+attribute [local instance] Classical.propDecidable
 
 private noncomputable def reachSet (src dst : E → V) (H : Finset E) (a : V) : Finset V := by
   classical
@@ -160,8 +165,6 @@ private noncomputable def innerEdges (src dst : E → V) (S : Finset V) : Finset
 private noncomputable def cutOut (src dst : E → V) (S : Finset V) : Finset E := by
   classical
   exact Finset.univ.filter fun e => src e ∈ S ∧ dst e ∉ S
-
-private noncomputable def cutIn (src dst : E → V) (S : Finset V) : Finset E := cutOut dst src S
 
 private theorem split_out (src dst : E → V) (S : Finset V) :
     edgePreimage src S = innerEdges src dst S ∪ cutOut src dst S := by
@@ -228,7 +231,7 @@ without allowing a return to its source. -/
 private theorem heavy_edge_returns (src dst : E → V) (hsrc : Function.Surjective src)
     (w : E → ℕ) (K t : ℕ)
     (hcut : ∀ S : Finset V,
-      ∑ e ∈ cutIn src dst S, w e ≤ (∑ e ∈ cutOut src dst S, w e) + K)
+      ∑ e ∈ cutOut dst src S, w e ≤ (∑ e ∈ cutOut src dst S, w e) + K)
     (e : E) (he : ((Fintype.card E - Fintype.card V) + 1) * t + K < w e) :
     Nonempty (EdgeWalk src dst (Finset.univ.filter fun f => t ≤ w f) (dst e) (src e)) := by
   classical
@@ -237,8 +240,8 @@ private theorem heavy_edge_returns (src dst : E → V) (hsrc : Function.Surjecti
   by_contra hn
   have hsource : src e ∉ S := fun h => hn (mem_reachSet.mp h)
   have hdest : dst e ∈ S := reachSet_root src dst H (dst e)
-  have hein : e ∈ cutIn src dst S := by
-    simp only [cutIn, cutOut, Finset.mem_filter, Finset.mem_univ, true_and]
+  have hein : e ∈ cutOut dst src S := by
+    simp only [cutOut, Finset.mem_filter, Finset.mem_univ, true_and]
     exact ⟨hdest, hsource⟩
   have hpoint (f : E) (hf : f ∈ cutOut src dst S) : w f ≤ t := by
     have hp := (Finset.mem_filter.mp hf).2
@@ -249,7 +252,7 @@ private theorem heavy_edge_returns (src dst : E → V) (hsrc : Function.Surjecti
     calc
       _ ≤ ∑ _f ∈ cutOut src dst S, t := Finset.sum_le_sum hpoint
       _ = _ := by simp
-  have hsingle : w e ≤ ∑ f ∈ cutIn src dst S, w f :=
+  have hsingle : w e ≤ ∑ f ∈ cutOut dst src S, w f :=
     Finset.single_le_sum (fun _ _ => Nat.zero_le _) hein
   have hcard := reachable_cut_card src dst hsrc H (dst e)
   have hmul := Nat.mul_le_mul_right t hcard
@@ -263,7 +266,7 @@ private theorem no_two_heavy_edges (src dst : E → V) (hsrc : Function.Surjecti
     (w : E → ℕ) (n C K : ℕ) (hn : 4 ≤ n)
     (htotal : (∑ e : E, w e) ≤ C * n)
     (hcut : ∀ S : Finset V,
-      ∑ e ∈ cutIn src dst S, w e ≤ (∑ e ∈ cutOut src dst S, w e) + K)
+      ∑ e ∈ cutOut dst src S, w e ≤ (∑ e ∈ cutOut src dst S, w e) + K)
     (hloop : ∀ (e f : E), src e = src f → e ≠ f →
       ∀ (p : EdgeWalk src dst (Finset.univ.filter fun g => 4*C+1 ≤ w g) (dst e) (src e))
         (q : EdgeWalk src dst (Finset.univ.filter fun g => 4*C+1 ≤ w g) (dst f) (src f)),
@@ -294,7 +297,7 @@ private theorem no_two_heavy_edges (src dst : E → V) (hsrc : Function.Surjecti
 /-- Directed cuts have imbalance at most the global edge excess. -/
 private theorem cut_card_imbalance (src dst : E → V) (hsrc : Function.Surjective src)
     (hdst : Function.Surjective dst) (S : Finset V) :
-    (cutIn src dst S).card ≤ (cutOut src dst S).card + (Fintype.card E - Fintype.card V) := by
+    (cutOut dst src S).card ≤ (cutOut src dst S).card + (Fintype.card E - Fintype.card V) := by
   classical
   have hlow := card_edgePreimage_lower src hsrc S
   have hupp := card_edgePreimage_upper dst hdst S
@@ -355,29 +358,27 @@ private theorem fiberWeight_cut {V' E' : Type*} [Fintype V'] [Fintype E']
     (fv : V' → V) (fe : E' → E) (hfe : Function.Surjective fe)
     (hsource : ∀ e, src (fe e) = fv (src' e)) (htarget : ∀ e, dst (fe e) = fv (dst' e))
     (S : Finset V) :
-    (∑ e ∈ cutIn src dst S, fiberWeight fe e) ≤
+    (∑ e ∈ cutOut dst src S, fiberWeight fe e) ≤
       (∑ e ∈ cutOut src dst S, fiberWeight fe e) +
         ((Fintype.card E - Fintype.card V) + (Fintype.card E' - Fintype.card V')) := by
   classical
-  have hi := fiberWeight_sum fe hfe (cutIn src dst S)
+  have hi := fiberWeight_sum fe hfe (cutOut dst src S)
   have ho := fiberWeight_sum fe hfe (cutOut src dst S)
   have hpreout : edgePreimage fe (cutOut src dst S) =
       cutOut src' dst' (edgePreimage fv S) := by
     ext e
     simp only [edgePreimage, cutOut, Finset.mem_filter, Finset.mem_univ,
       true_and, hsource, htarget]
-  have hprein : edgePreimage fe (cutIn src dst S) =
-      cutIn src' dst' (edgePreimage fv S) := by
+  have hprein : edgePreimage fe (cutOut dst src S) =
+      cutOut dst' src' (edgePreimage fv S) := by
     ext e
-    simp only [edgePreimage, cutIn, cutOut, Finset.mem_filter, Finset.mem_univ,
+    simp only [edgePreimage, cutOut, Finset.mem_filter, Finset.mem_univ,
       true_and, hsource, htarget]
   rw [hpreout] at ho
   rw [hprein] at hi
   have hlong := cut_card_imbalance src' dst' hsrc' hdst' (edgePreimage fv S)
   have hshort := cut_card_imbalance dst src hdst hsrc S
-  have hflip : cutIn dst src S = cutOut src dst S := rfl
-  rw [hflip] at hshort
-  change (cutOut src dst S).card ≤ (cutIn src dst S).card + _ at hshort
+  change (cutOut src dst S).card ≤ (cutOut dst src S).card + _ at hshort
   omega
 
 /-- Select the unique heavy outgoing edge whenever there is one. -/
@@ -546,7 +547,7 @@ namespace D5.S1.Words.Complexity.AlloucheReflectionComplexityConjecture28.Langua
 open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport D5.S1.Words.Complexity.AlloucheReflectionComplexityConjecture28.Graph
 open scoped BigOperators
 variable {A : Type*} [Fintype A]
-noncomputable local instance decidableLocal1 : DecidableEq A := Classical.decEq A
+attribute [local instance] Classical.propDecidable
 
 /-- Crop a factor at a fixed finite offset. -/
 private noncomputable def crop (z : ℤ → Option A) (m n k : ℕ) (h : k + n ≤ m) :
@@ -574,111 +575,101 @@ private theorem crop_surjective (z : ℤ → Option A) (m n k : ℕ) (h : k + n 
   push_cast
   omega
 
-private noncomputable def source (z : ℤ → Option A) (n : ℕ) : ↥(intFactorSet z (n+1)) → ↥(intFactorSet z n) :=
-  crop z (n+1) n 0 (by omega)
-private noncomputable def target (z : ℤ → Option A) (n : ℕ) : ↥(intFactorSet z (n+1)) → ↥(intFactorSet z n) :=
-  crop z (n+1) n 1 (by omega)
-
-private theorem source_surjective (z : ℤ → Option A) (n : ℕ) : Function.Surjective (source z n) :=
+private theorem source_surjective (z : ℤ → Option A) (n : ℕ) : Function.Surjective ((crop z (n + 1) n 0 (by omega))) :=
   crop_surjective z (n+1) n 0 _
-private theorem target_surjective (z : ℤ → Option A) (n : ℕ) : Function.Surjective (target z n) :=
+private theorem target_surjective (z : ℤ → Option A) (n : ℕ) : Function.Surjective ((crop z (n + 1) n 1 (by omega))) :=
   crop_surjective z (n+1) n 1 _
 
-private noncomputable def tailMap (z : ℤ → Option A) (m n : ℕ) (h : n ≤ m) : ↥(intFactorSet z m) → ↥(intFactorSet z n) :=
-  crop z m n (m-n) (by omega)
-
 private theorem tailMap_surjective (z : ℤ → Option A) (m n : ℕ) (h : n ≤ m) :
-    Function.Surjective (tailMap z m n h) := crop_surjective z m n (m-n) _
+    Function.Surjective ((crop z m n (m - n) (by omega))) := crop_surjective z m n (m-n) _
 
 private theorem tailMap_source (z : ℤ → Option A) (m n : ℕ) (h : n ≤ m) (e : ↥(intFactorSet z (m+1))) :
-    source z n (tailMap z (m+1) (n+1) (by omega) e) =
-      tailMap z m n h (source z m e) := by
+    (crop z (n + 1) n 0 (by omega)) ((crop z (m+1) (n+1) ((m+1) - (n+1)) (by omega)) e) =
+      (crop z m n (m - n) (by omega)) ((crop z (m + 1) m 0 (by omega)) e) := by
   apply Subtype.ext
   funext i
-  dsimp [source, tailMap, crop]
+  dsimp [crop]
   apply congrArg e.val
   apply Fin.ext
   simp only [Fin.val_mk]
   omega
 
 private theorem tailMap_target (z : ℤ → Option A) (m n : ℕ) (h : n ≤ m) (e : ↥(intFactorSet z (m+1))) :
-    target z n (tailMap z (m+1) (n+1) (by omega) e) =
-      tailMap z m n h (target z m e) := by
+    (crop z (n + 1) n 1 (by omega)) ((crop z (m+1) (n+1) ((m+1) - (n+1)) (by omega)) e) =
+      (crop z m n (m - n) (by omega)) ((crop z (m + 1) m 1 (by omega)) e) := by
   apply Subtype.ext
   funext i
-  dsimp [target, tailMap, crop]
+  dsimp [crop]
   apply congrArg e.val
   apply Fin.ext
   simp only [Fin.val_mk]
   omega
 
-private def edgeLabel (z : ℤ → Option A) (n : ℕ) (e : ↥(intFactorSet z (n+1))) : Option A := e.val (Fin.last n)
-
 private theorem source_label_determines (z : ℤ → Option A) (n : ℕ) (e f : ↥(intFactorSet z (n+1)))
-    (hs : source z n e = source z n f) (hl : edgeLabel z n e = edgeLabel z n f) : e = f := by
+    (hs : (crop z (n + 1) n 0 (by omega)) e = (crop z (n + 1) n 0 (by omega)) f) (hl : e.val (Fin.last n) = f.val (Fin.last n)) : e = f := by
   apply Subtype.ext
   funext k
   refine Fin.lastCases hl (fun i => ?_) k
   have h := congrFun (congrArg Subtype.val hs) i
   change e.val ⟨i.val, by omega⟩ = f.val ⟨i.val, by omega⟩
-  simpa only [source, crop, Nat.zero_add] using h
+  simpa only [crop, Nat.zero_add] using h
 
 private theorem word_step (z : ℤ → Option A) (n : ℕ) (e : ↥(intFactorSet z (n+1))) :
-    List.ofFn (target z n e).val <:+ List.ofFn (source z n e).val ++ [edgeLabel z n e] := by
-  have hs : List.ofFn e.val = List.ofFn (source z n e).val ++ [edgeLabel z n e] := by
+    List.ofFn ((crop z (n + 1) n 1 (by omega)) e).val <:+ List.ofFn ((crop z (n + 1) n 0 (by omega)) e).val ++ [e.val (Fin.last n)] := by
+  have hs : List.ofFn e.val = List.ofFn ((crop z (n + 1) n 0 (by omega)) e).val ++ [e.val (Fin.last n)] := by
     rw [List.ofFn_succ_last]
     apply congrArg (fun l : List (Option A) => l ++ [e.val (Fin.last n)])
     apply congrArg List.ofFn
     funext i
-    dsimp [source, crop]
+    dsimp [crop]
     apply congrArg e.val
     apply Fin.ext
     simp
   rw [← hs]
   refine ⟨[e.val 0], ?_⟩
   rw [List.ofFn_succ]
-  change e.val 0 :: List.ofFn (target z n e).val = e.val 0 :: List.ofFn (fun i => e.val i.succ)
+  change e.val 0 :: List.ofFn ((crop z (n + 1) n 1 (by omega)) e).val = e.val 0 :: List.ofFn (fun i => e.val i.succ)
   apply congrArg (List.cons (e.val 0))
   apply congrArg List.ofFn
   funext i
-  dsimp [target, crop]
+  dsimp [crop]
   apply congrArg e.val
   apply Fin.ext
   simp only [Fin.val_mk, Fin.val_succ]
   omega
 
 private theorem factor_loop_obstruction (z : ℤ → Option A) (n : ℕ) (H : Finset (↥(intFactorSet z (n+1))))
-    (e f : ↥(intFactorSet z (n+1))) (hs : source z n e = source z n f) (hef : e ≠ f)
-    (p : EdgeWalk (source z n) (target z n) H (target z n e) (source z n e))
-    (q : EdgeWalk (source z n) (target z n) H (target z n f) (source z n f)) :
+    (e f : ↥(intFactorSet z (n+1))) (hs : (crop z (n + 1) n 0 (by omega)) e = (crop z (n + 1) n 0 (by omega)) f) (hef : e ≠ f)
+    (p : EdgeWalk ((crop z (n + 1) n 0 (by omega))) ((crop z (n + 1) n 1 (by omega))) H ((crop z (n + 1) n 1 (by omega)) e) ((crop z (n + 1) n 0 (by omega)) e))
+    (q : EdgeWalk ((crop z (n + 1) n 0 (by omega))) ((crop z (n + 1) n 1 (by omega))) H ((crop z (n + 1) n 1 (by omega)) f) ((crop z (n + 1) n 0 (by omega)) f)) :
     n < (p.edges.length+1)+(q.edges.length+1) := by
-  exact word_loop_obstruction (fun v => List.ofFn v.val) (edgeLabel z n) n
+  exact word_loop_obstruction (fun v => List.ofFn v.val) ((fun w : ↥(intFactorSet z (n + 1)) => w.val (Fin.last n))) n
     (fun _ => List.length_ofFn) (word_step z n) (source_label_determines z n) e f hs hef p q
 
 private theorem tailMap_comp (z : ℤ → Option A) (m l n : ℕ) (hnl : n ≤ l) (hlm : l ≤ m)
     (w : ↥(intFactorSet z m)) :
-    tailMap z l n hnl (tailMap z m l hlm w) = tailMap z m n (by omega) w := by
+    (crop z l n (l - n) (by omega)) ((crop z m l (m - l) (by omega)) w) = (crop z m n (m - n) (by omega)) w := by
   apply Subtype.ext
   funext i
-  dsimp [tailMap, crop]
+  dsimp [crop]
   apply congrArg w.val
   apply Fin.ext
   simp only [Fin.val_mk]
   omega
 
 private theorem tailMap_label (z : ℤ → Option A) (m n : ℕ) (h : n ≤ m) (e : ↥(intFactorSet z (m+1))) :
-    edgeLabel z n (tailMap z (m+1) (n+1) (by omega) e) = edgeLabel z m e := by
-  dsimp [edgeLabel, tailMap, crop]
+    (fun w : ↥(intFactorSet z (n + 1)) => w.val (Fin.last n)) ((crop z (m+1) (n+1) ((m+1) - (n+1)) (by omega)) e) = e.val (Fin.last m) := by
+  dsimp [crop]
   apply congrArg e.val
   apply Fin.ext
   simp only [Fin.val_mk, Fin.val_last]
   omega
 
 private theorem tailMap_right_resolving (z : ℤ → Option A) (m n : ℕ) (h : n ≤ m)
-    (e f : ↥(intFactorSet z (m+1))) (hs : source z m e = source z m f)
-    (ht : tailMap z (m+1) (n+1) (by omega) e = tailMap z (m+1) (n+1) (by omega) f) : e = f := by
+    (e f : ↥(intFactorSet z (m+1))) (hs : (crop z (m + 1) m 0 (by omega)) e = (crop z (m + 1) m 0 (by omega)) f)
+    (ht : (crop z (m+1) (n+1) ((m+1) - (n+1)) (by omega)) e = (crop z (m+1) (n+1) ((m+1) - (n+1)) (by omega)) f) : e = f := by
   apply source_label_determines z m e f hs
-  have hh := congrArg (edgeLabel z n) ht
+  have hh := congrArg ((fun w : ↥(intFactorSet z (n + 1)) => w.val (Fin.last n))) ht
   simpa only [tailMap_label z m n h] using hh
 
 /-- A finite interval of the language has controlled excess as soon as its two
@@ -693,7 +684,7 @@ private theorem factor_peak_bound (z : ℤ → Option A) (a n b : ℕ) (ha : 4 �
         ((intFactorSet z (b+1)).card - (intFactorSet z b).card)) + 1) := by
   classical
   have hab : a ≤ b := Nat.le_trans han hnb
-  let far := tailMap z (b+1) (a+1) (by omega)
+  let far := (crop z (b+1) (a+1) ((b+1) - (a+1)) (by omega))
   let w := fiberWeight far
   let s₁ := Fintype.card (↥(intFactorSet z (a+1))) - Fintype.card (↥(intFactorSet z a))
   let s₂ := Fintype.card (↥(intFactorSet z (b+1))) - Fintype.card (↥(intFactorSet z b))
@@ -707,22 +698,22 @@ private theorem factor_peak_bound (z : ℤ → Option A) (a n b : ℕ) (ha : 4 �
         Finset.card_univ, Fintype.card_coe] using hs
     omega
   have hcut (S : Finset (↥(intFactorSet z a))) :
-      (∑ e ∈ cutIn (source z a) (target z a) S, w e) ≤
-      (∑ e ∈ cutOut (source z a) (target z a) S, w e) + (s₁+s₂) := by
-    exact fiberWeight_cut (source z a) (target z a) (source_surjective z a) (target_surjective z a)
-      (source z b) (target z b) (source_surjective z b) (target_surjective z b)
-      (tailMap z b a hab) far hfar (tailMap_source z b a hab) (tailMap_target z b a hab) S
-  have huniq (e f : ↥(intFactorSet z (a+1))) (hs : source z a e = source z a f)
+      (∑ e ∈ cutOut ((crop z (a + 1) a 1 (by omega))) ((crop z (a + 1) a 0 (by omega))) S, w e) ≤
+      (∑ e ∈ cutOut ((crop z (a + 1) a 0 (by omega))) ((crop z (a + 1) a 1 (by omega))) S, w e) + (s₁+s₂) := by
+    exact fiberWeight_cut ((crop z (a + 1) a 0 (by omega))) ((crop z (a + 1) a 1 (by omega))) (source_surjective z a) (target_surjective z a)
+      ((crop z (b + 1) b 0 (by omega))) ((crop z (b + 1) b 1 (by omega))) (source_surjective z b) (target_surjective z b)
+      ((crop z b a (b - a) (by omega))) far hfar (tailMap_source z b a hab) (tailMap_target z b a hab) S
+  have huniq (e f : ↥(intFactorSet z (a+1))) (hs : (crop z (a + 1) a 0 (by omega)) e = (crop z (a + 1) a 0 (by omega)) f)
       (he : R < w e) (hf : R < w f) : e = f := by
     by_contra hne
-    exact no_two_heavy_edges (source z a) (target z a) (source_surjective z a) w a C (s₁+s₂)
+    exact no_two_heavy_edges ((crop z (a + 1) a 0 (by omega))) ((crop z (a + 1) a 1 (by omega))) (source_surjective z a) w a C (s₁+s₂)
       ha htotal hcut (fun e f hs hne p q => factor_loop_obstruction z a _ e f hs hne p q)
       e f hs hne he hf
-  obtain ⟨d, hd, hR⟩ := choose_default (source z a) (source_surjective z a) w R huniq
-  have hc := peak_count_bound (source z a) d hd (source z n)
-    (tailMap z n a han) (tailMap z (n+1) (a+1) (by omega))
+  obtain ⟨d, hd, hR⟩ := choose_default ((crop z (a + 1) a 0 (by omega))) (source_surjective z a) w R huniq
+  have hc := peak_count_bound ((crop z (a + 1) a 0 (by omega))) d hd ((crop z (n + 1) n 0 (by omega)))
+    ((crop z n a (n - a) (by omega))) ((crop z (n+1) (a+1) ((n+1) - (a+1)) (by omega)))
     (tailMap_source z n a han) (tailMap_right_resolving z n a han)
-    far hfar (tailMap z (b+1) (n+1) (by omega))
+    far hfar ((crop z (b+1) (n+1) ((b+1) - (n+1)) (by omega)))
     (tailMap_surjective z (b+1) (n+1) (by omega))
     (tailMap_comp z (b+1) (n+1) (a+1) (by omega) (by omega)) R hR
   simpa only [R, s₁, s₂, Fintype.card_coe] using hc
@@ -807,7 +798,6 @@ end D5.S1.Words.Complexity.AlloucheReflectionComplexityConjecture28.Scalar
 
 namespace D5.S1.Words.Complexity.AlloucheReflectionComplexityConjecture28
 open D5.S1.Words.Complexity
-open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 open D5.S1.Words.Complexity.AlloucheReflectionComplexitySupport
 
