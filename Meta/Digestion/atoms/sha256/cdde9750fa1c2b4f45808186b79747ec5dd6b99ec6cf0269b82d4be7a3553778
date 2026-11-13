@@ -1,0 +1,12 @@
+**Definition 44.4 (a source-bound anchor-transport contract).** An
+anchor-transport extension has acquired configurations carrying the
+same source handle, old chronological record, current anchor and two
+cursors. Its additional transition has source projection
+$S_e\mapsto S_{e+1}$, preserves source identity and the old record,
+and supplies active cursors whose subsequent queries obey (IV.125)
+at that new anchor. Its domain includes the actual reference and
+operation rights, backing, clock, progress, rejection and return
+conditions authorizing that transition. No transition of this kind
+is part of Definition 40.3's absorbed menu. A reset, fresh preparation
+or index/phase oracle is a different specified supply.
+

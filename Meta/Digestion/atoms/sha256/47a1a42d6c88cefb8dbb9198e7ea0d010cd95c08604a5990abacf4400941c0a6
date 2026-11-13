@@ -1,0 +1,26 @@
+**Assumption 45.2 (finite supply and returned cuts).** Every claimed
+successful finite call has its genuine source-bound rights, valid handle
+lifetime, finite backing reserved for its state and record, progress,
+acknowledgement and completed return. The controller retains its actual
+records, including grants, denials, refusals, rejections and stops.
+Record access, finite computation, counters, scratch, output construction
+and delivery have their own supplied backing and charges. A pending or
+interrupted call is not a successful returned cut. Its actual acquired
+prefix is retained; no unreturned block or answer is inferred from it.
+The positive conclusions require exactly the finitely many successful
+grants and completed queries they use. They assert no physical provision
+of this extended port and no fixed finite-capacity realization for all $H$.
+
+For indistinguishability statements, use the fixed monotone schedule:
+query right to a mark, successfully Resume with the same fixed Ack,
+then query right to the next mark, repeating a specified finite number
+of times. Public grant choices, waiting, reference representations and
+auxiliaries carry no additional source-dependent advice. This canonical
+successful record excludes extra waiting and rejected attempts; the
+larger interface still retains such events when they actually occur.
+There is no fresh suffix law or independence premise: all comparisons
+in (IV.145) read the single fixed source at its retained cumulative count.
+The same-cursor acquisition and original-consumer correspondences below
+are `repo-derived` ordinary deductions using the stated classical
+suppliers; no literature-priority assertion is part of their conclusions.
+

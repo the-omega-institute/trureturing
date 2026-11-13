@@ -1,0 +1,13 @@
+**Proposition 46.2 (the initial root certificate has a restricted domain).**
+The first-stop certificate still gives $f(e)=(K-1)\bmod2$.
+Applying the old one-marker `recoveredRoot` to the cumulative lists
+of a resumed history is not a sound replacement for that certificate.
+
+**Proof.** The first claim is the alternating-prefix argument of
+Proposition 41.2. At $e=2$, the first mark has $K=1$, followed by
+$D=5$ in (IV.146). The accumulated right list then has six queries.
+The old formula would return $(6-1)\bmod2=1$, whereas $f(2)=0$.
+An earlier marker destroys its no-earlier-marker premise. Keeping
+the original subrecord or its certified root avoids this false inference;
+continued acquisition uses `Task.raw` and the framed blocks. $\square$
+

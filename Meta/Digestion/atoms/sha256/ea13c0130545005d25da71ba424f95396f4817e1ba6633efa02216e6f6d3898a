@@ -1,0 +1,51 @@
+**Theorem 44.3 (one fixed pair defeats reanchored continuation).**
+For $e=13,18$, every original policy with the same fixed seed gives
+identical complete actual states at every horizon. Every finite
+continuation using only their absorbed native marker interface and
+source-independent postprocessing also agrees. Nevertheless
+
+$$
+f(13+6)=1,\qquad f(18+6)=0.
+\tag{IV.142}
+$$
+
+Consequently the acquired terminal record does not determine the root
+at the six-step-right anchor, even with the full query chronology
+retained. With equal prior on these two origins and any independent
+randomized controller/decoder its error for that target is at least
+$1/2$.
+
+**Proof.** Exact floors in (IV.119) give the common radius-five blocks
+
+$$
+f(e-5)\cdots f(e+5)=01001010010\qquad(e=13,18),
+\tag{IV.143}
+$$
+
+and the opposite bits (IV.142). During the first five attempts every
+source index consulted lies within that radius. Inductively identical
+records and seed give the same next side, the same compared bits and
+the same reply. By Theorem 41.1 both runs have stopped by horizon five.
+Absorption then gives equality at every horizon. Their retained root
+is $0$ in both cases. A later `nativeStep` produces only `reject`, and
+an inspection sees the same mode. Induction on a finite residual test
+therefore gives the same result. The same holds for any computation
+whose inputs are only this shared record and source-independent data.
+Couple all independent random coins identically to get identical
+observation laws. Under equal prior the same output distribution
+faces opposite required bits, so its average error is at least $1/2$
+(exactly $1/2$ for a binary-valued decoder).
+
+Both witnesses occur within the original finite generated word
+
+$$
+\operatorname{leafbits}(T_8)
+=0100101001001010010100100101001001,
+\tag{IV.144}
+$$
+
+of length $F_9=34$. This confirms that their differing natural
+origins are in one generated leaf word. The infinite source used in
+the proof remains the expressly defined two-sided extension; no
+extra finite-tree leaves are supplied. $\square$
+

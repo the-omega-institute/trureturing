@@ -1,0 +1,31 @@
+**Theorem 50.2 (a relative inverse on the canonical successful image).**
+Keep the common bound handle/version and calibration as context.
+Represent the canonical record by $(K,D_1,\ldots,D_m)$; its full
+right-query/reply, fixed Ack and stop sequence is then determined.
+It and the relative ordered tiled chart of $W_m$ recover one another,
+provided the chart marks its original anchor, starting marker boundary
+$p_0$, final cursor and orientation. For the return segment alone,
+the ordered list $(D_1,\ldots,D_m)$ and its ordered tiled chart are
+mutually recoverable once the starting marker boundary and calibration
+are retained. An unlabelled total displacement is a different observation.
+
+**Proof.** From the record use (IV.148) and integrate the lengths
+$\varphi^2-b$ from the marked anchor, as in (IV.137). Include the
+terminal two zero tiles and their end boundary. Conversely each tile's
+length recovers its bit since $\varphi\ne\varphi^2$. The count of
+tiles before the marked $p_0$ is $K-1$. Locate successive $00$ starts
+through the marked final cursor: their differences are exactly the
+$D_j$, because the actual run stopped at each next occurrence.
+For a half-open return segment, adjoin the known terminal marker $00$
+when parsing its last cell. There are no intervening marked starts
+inside a cell. Restore the initial replies $0^{K-1}1$, and for each
+subsequent cell restore Ack and $0^{D_j-1}1$. All actions are $R$.
+These operations are inverse on their actual canonical image.
+
+This recovers comparison chronology under the fixed successful schedule.
+Arbitrary waiting, denied calls, rejections, physical clocks and native
+generation histories have not been encoded by this chart. Extra such
+events must remain as extra records; they are not reconstructed from
+tile lengths. The context binding and rights are not created by the
+inverse. $\square$
+

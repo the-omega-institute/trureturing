@@ -1,0 +1,16 @@
+**Proposition 50.4 (new replies separate the old continuation fibre).**
+The original collision at $e=13,18$ remains a collision under the old
+menu. Under one successful Resume at its always-right first stop,
+new actual replies distinguish that pair.
+
+**Proof.** Both initial counts are $K=3$. Their first marker starts
+are $15,20$ and their next starts are $20,23$, giving $D_1=5,3$.
+Thus the first three resumed replies are $000$ and $001$: the third
+new comparison separates them. These marker positions and
+$f(19)=1$, $f(24)=0$ follow from (IV.144), so Theorem 48.1 also
+recovers their different offset-six letters. Ack itself is fixed and
+supplies no distinction. Without Resume there is no new sample and
+Theorem 44.3 still applies to every old policy. Its necessity of some
+additional source dependence survives; it is not a necessity theorem
+for this particular added operation or a minimality claim. $\square$
+
