@@ -367,6 +367,7 @@ theorem original_whole_edge
     refine ⟨?_, ?_, ?_⟩
     · intro x hx
       have hgx := hG x hx
+      change 0 ≤ u x - ep x ∧ u x - ep x ≤ u x at hgx
       have heqx := heq.1.1 x hx
       change 0 ≤ (1 - s) * (u x - ep x) + s * eq x ∧
         (1 - s) * (u x - ep x) + s * eq x ≤ u x

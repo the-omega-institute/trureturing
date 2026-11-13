@@ -290,18 +290,21 @@ private theorem affine_positive_lift {p : pure C u} (a : ExclusionChart C u p)
       field_simp
       <;> ring
     · intro htop x hx
-      have hcn : ‖b‖ ≤ 1 - h 0 := affine_nonneg_bound (v := -b) (fun z hz => by
-        have hh := htop z hz
-        rw [hb z] at hh
-        simp only [inner_neg_left]
-        linarith)
+      have hcn : ‖b‖ ≤ 1 - h 0 := by
+        have hhbound := affine_nonneg_bound (a := 1 - h 0) (v := -b) (fun z hz => by
+          have hh := htop z hz
+          rw [hb z] at hh
+          simp only [inner_neg_left]
+          linarith)
+        simpa using hhbound
       have hscalar : h 0 - ‖b‖ + 2 * ‖b‖ * B ≤ B := by
         have h1 : 2 * ‖b‖ ≤ 1 := by linarith
         nlinarith [mul_nonneg (sub_nonneg.mpr hB) (sub_nonneg.mpr h1)]
       change (h 0 - ‖b‖) * u x + (2 * ‖b‖) * g x ≤ B * u x
       calc
         _ ≤ (h 0 - ‖b‖) * u x + (2 * ‖b‖) * (B * u x) :=
-          add_le_add_left (mul_le_mul_of_nonneg_left (hg x hx).2 (by positivity)) _
+          add_le_add le_rfl (mul_le_mul_of_nonneg_left (hg x hx).2
+            (show 0 ≤ 2 * ‖b‖ by positivity))
         _ = (h 0 - ‖b‖ + 2 * ‖b‖ * B) * u x := by ring
         _ ≤ B * u x := mul_le_mul_of_nonneg_right hscalar (hu x hx)
 
