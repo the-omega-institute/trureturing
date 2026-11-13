@@ -27,7 +27,5 @@ internal sealed class DihedralOldNecessityCounterexampleDocument : IScribeDocume
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Combinatorics/CayleySumCodes/TotalPerfectCriterion")),
          DocumentEdge.Dependency.Create(GidRef.Create(
-            "D5/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples")),
-         DocumentEdge.Dependency.Create(GidRef.Create(
-            "D5/S3/Combinatorics/CayleySumCodes/PerfectCodeTransversal"))]));
+            "D5/S3/Combinatorics/CayleySumCodes/QuaternionDihedralCounterexamples"))]));
 }
