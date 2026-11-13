@@ -282,20 +282,6 @@ def FiniteLoewnerSlopes (A B : Matrix n n ℂ) (hA : A.PosSemidef)
       secant (optimalOverlap A B hA hB) (t i.castSucc) (t i.succ)
     (∀ i, 0 ≤ D i ∧ D i ≤ B) ∧ Antitone D
 
-/-- For a nonempty tuple of slopes the bounds used in the definition are
-exactly the displayed manuscript chain B >= first >= ... >= last >= 0.
-The empty tuple has no conditions in either formulation. -/
-theorem finite_slope_bounds_iff_chain {m : ℕ} (B : Matrix n n ℂ)
-    (D : Fin (m + 1) → Matrix n n ℂ) :
-    ((∀ i, 0 ≤ D i ∧ D i ≤ B) ∧ Antitone D) ↔
-      D 0 ≤ B ∧ Antitone D ∧ 0 ≤ D (Fin.last m) := by
-  constructor
-  · rintro ⟨hb, ha⟩
-    exact ⟨(hb 0).2, ha, (hb (Fin.last m)).1⟩
-  · rintro ⟨hfirst, ha, hlast⟩
-    exact ⟨fun i => ⟨hlast.trans (ha (Fin.le_last i)),
-      (ha (Fin.zero_le i)).trans hfirst⟩, ha⟩
-
 private theorem state_nonneg {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) (i : Fin k) : 0 ≤ R.stateMatrix i :=
   map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm (R.state i).2.1
