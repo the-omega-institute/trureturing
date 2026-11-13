@@ -26,7 +26,7 @@ and Euclidean Jordan algebra structure. Its proof uses Vinberg's
 homogeneous-cone theory. Neither hypothesis by itself is replaced by
 transitivity on an arbitrary smaller orbit or by local face symmetries.
 
-The exact consumers are [the L3 continuation, Theorems 93.2 and 93.3](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VI.md).
+The exact consumers are [the L3 continuation, Lemma 93.2 and Theorem 93.3](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VI.md).
 Their full-cone spanning certificate supplies homogeneity; the given
 compact group supplies normalized pure transitivity. Whole minimal
 two-pure faces select the complex type only after Theorem 25 has supplied

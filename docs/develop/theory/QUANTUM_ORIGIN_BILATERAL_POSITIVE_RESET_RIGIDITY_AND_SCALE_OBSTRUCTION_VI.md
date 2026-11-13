@@ -427,7 +427,7 @@ resulting affine bijection and $A$ its linear part on $W$, homogenize
 without changing the original slice:
 
 $$
-x=t b+w,quad t=u(x),\quad w\in W,\qquad
+x=t b+w,\quad t=u(x),\quad w\in W,\qquad
 \Phi(x)=t\phi(b)+Aw.
 \tag{91.6}
 $$
@@ -839,3 +839,383 @@ certificates. The rest follows by the whole-dual trace identification
 (90.4), allowing arbitrary Hermitian representatives for unrestricted
 linear quantities. Proposition 94.2 separates these normalized-word
 isometries from the spectrum and entropy of a biased branch. ∎
+
+## 95. Original returned rows and their unpaid interfaces
+
+**Definition 95.1 (The unchanged typed source and a returned family).**
+For the source of [II121.1][II] and [III138.1][III], retain
+$\mathcal K=V_{12}^{\mathbf1}$ of complex dimension $89$, its
+$26$-dimensional code $J(V_8^{\mathbf1}\otimes\mathbb C^2)$ and
+all $63$ complementary directions. The only ready is
+$R_0v=J(v\otimes|0\rangle)$ with $v=e_{00100}$. The inspected
+program productions are exactly
+
+$$
+\begin{aligned}
+\mathsf T(a)&=R_0v;K_a;\mathcal L_{10},
+&&a\in\mathsf W_{11},\\
+\mathsf R(a,f)&=R_0v;K_a;\text{read and retain }b_9=i;K_f;\mathcal L_{10},
+&&f\in\mathsf W_7=\{0,\ldots,6\}^{<\infty}.
+\end{aligned}
+\tag{95.1}
+$$
+
+The external $f$ is independent of $i$. The terminal keeps every
+$w\in\Omega_{10}=\{0,1\}^{10}$, including zero-projector labels,
+and the original true archives, failures, rejection, stopping and
+alert coordinates. No code projection or successful-outcome
+renormalization changes this domain.
+
+A returned family at parameter $t$ means a separately supplied
+already legal continuation from the actual selected branch interface
+to the original active terminal interface, with every original
+eleven-address future still legal. Its raw row $w_t(a)$ includes the
+success/unit mass and every original future-outcome coordinate,
+weighted by that same success event. All entries must be marginals
+of one actual original joint law, including the existing read event,
+true Return success and loss, true archives, complementary failures,
+rejection and stopping. At zero mass the row is zero, the labels
+remain, and no conditional division is performed.
+
+**Proposition 95.2 (Typed non-derivation).** The productions (95.1)
+alone do not supply a program of type
+read;Return;arbitrary-original-eleven-address-future;terminal.
+
+Proof. The first production has no intermediate read. The second
+allows only a seven-address external suffix after the read, followed
+by the old terminal; it contains no branch-return production and
+does not permit choosing that suffix from the outcome. Replacing its
+suffix by an arbitrary eleven-address future is therefore an added
+production, not an instance of (95.1). Matrix identities, coincident
+marginals and names of interfaces do not change this grammar.
+An undefined request is not an outcome of probability zero.
+This is non-derivation from these specified productions, not a proof
+that every possible original Return continuation is impossible. ∎
+
+**Proposition 95.3 (Full signed-relation descent and scalar columns).**
+Let the original spanning rows $x_a$ define the finite $V$ in (89.3),
+or its complete original future-outcome analogue. For fixed $t$,
+suppose candidate returned rows have coordinates $w_t(a)(i)$ in
+the same full coordinate space, including $i=\star$ for success
+mass. The following two statements are equivalent:
+
+$$
+\sum_j d_jx_{a_j}=0\ \Longrightarrow\
+\sum_jd_jw_t(a_j)=0
+\quad\text{for all finite lists and }d_j\in\mathbb R;
+\tag{95.2}
+$$
+
+for each output coordinate $i$, the function
+$a\mapsto w_t(a)(i)$ is a preparation-independent finite real
+linear combination of the original scalar columns
+$a\mapsto x_a(k)$, including the original unit column. If they
+hold and all $w_t(a)$ are in the original $C$, then there is a
+unique positive linear map $S_t:V\to V$ with $S_tx_a=w_t(a)$.
+If moreover the actual success masses are at most one, $uS_t\le u$.
+
+Proof. Under (95.2), define the output-coordinate functional by
+
+$$
+\lambda_i\!\left(\sum_jd_jx_{a_j}\right)
+=\sum_jd_jw_t(a_j)(i).
+\tag{95.3}
+$$
+
+The relation condition makes it well defined and linear. The
+original coordinate evaluations separate $V$, so in finite dimension
+they span $V^*$. Each $\lambda_i$ is therefore a finite real
+combination of those evaluations, proving the scalar-column claim.
+Conversely such a combination vanishes on every original row relation
+at each coordinate, proving (95.2), including its mass coordinate.
+The coefficients may depend on $i$ and $t$, but not on the preparation
+$a$. There is no requirement that the resulting operator belong to
+$\operatorname{span}_{\mathbb R}H$.
+
+With same-$C$ containment define
+
+$$
+S_t\!\left(\sum_jd_jx_{a_j}\right)=\sum_jd_jw_t(a_j).
+\tag{95.4}
+$$
+
+It is well defined, $V$-valued, linear and unique because the rows
+span $V$. Positivity first holds on their conic hull. Finite-dimensional
+continuity and closedness of $C$ extend it to the cone over their
+whole completed convex base, which is the original $C$.
+Similarly $u(w_t(a))\le1=u(x_a)$ extends to $uS_t\le u$.
+
+Same-$C$ containment is an additional condition: coordinatewise
+nonnegativity proves membership in the coordinate positive orthant,
+which need not be this generated cone. Nor does the scalar-column
+identity supply an actual common joint law or legality of the output
+requests. Duplicate-label descent alone checks only two equal rows;
+(95.2) also checks every signed finite combination. Affinity after
+normalizing each successful branch omits the masses in (95.3) and
+does not imply this result. These are the single-slot relations of
+[the original-process descent bridge, (12)–(14)][SBridge], and the
+full-row duality of [VII (22.7), (22.16)][VII], on their original
+complete domains. ∎
+
+**Corollary 95.4 (Exact additional supplier for the flow application).**
+Suppose one actual returned family of Definition 95.1 supplies all
+the data in Proposition 95.3, including its same-$C$ and actual-law
+conditions, on the same original carrier. To apply Theorem 93.3
+through it, it suffices additionally to supply $\eta>0$, $p\in P$,
+$a,b_0\in\mathbb R$ with $a\ne0$, and explicit state-independent
+$c_t>0$ for $t\in(-\eta,\eta)$ such that
+
+$$
+F_t=c_t^{-1}S_t\in\operatorname{Aut}(C),\qquad
+F_0=I_V,\qquad F_t\text{ differentiable for }t\in(-\eta,\eta),
+\qquad \dot F_0\mu=a p+b_0\mu.
+\tag{95.5}
+$$
+
+Together with L3 and Definition 89.1, these are a conditional
+same-carrier complex-PSD certificate. Native uses of a composed
+family still require same-interface legal composition, the actual
+positive scalar lifts and the full joint law at every composition.
+
+Proof. Proposition 95.3 supplies actual positive TNI $S_t$ from
+the mass-weighted rows. Equation (95.5) supplies a differentiable
+two-sided order deformation of the entire same cone. Its derivative
+is in the Lie algebra of the full closed $\operatorname{Aut}(C)$.
+The tangent clause of Theorem 93.3 then applies. This is a sufficient
+mathematical tangent condition; it does not assert that $F_t$ already
+forms a one-parameter subgroup. If one also claims
+$F_{s+t}=F_sF_t$ for native operations, the corresponding identity
+must hold with the actual masses and legal composition, rather than
+only after a state-dependent postselection normalization. Group
+closure and Lie exponentiation alone give no native word for a
+negative parameter or for the resulting exponential. ∎
+
+**Proposition 95.5 (A proper-face supplier is distinct from a finite
+invertible flow).** A nonzero proper-face returned-image certificate
+requires a nonzero original $e\in[0,u]$ with
+
+$$
+e(w(a))=0\quad\text{for every original preparation }a,
+\qquad u(w(a_0))>0\quad\text{for at least one }a_0.
+\tag{95.6}
+$$
+
+When these rows descend as in Proposition 95.3, such a map cannot be
+an order automorphism or any positive scalar multiple of one.
+A proved full-carrier rank-deficient linear factorization cannot
+recover its kernel through a later linear Return. Seven-address
+Born marginals by themselves establish no such factorization on
+the full returned eleven-address rows, particularly with archives.
+
+Proof. Nonzero $e\ge0$ has a proper zero face, since $C$ spans $V$.
+The image of the completed whole cone lies in that face by (95.6),
+linearity and closure. It is nonzero by the positive mass. An order
+automorphism, or its positive multiple, maps the whole cone onto
+itself, a contradiction. If a process has full-carrier factorization
+$T=RA$ with linear $A,R$, then $\ker A\subseteq\ker T$; no
+subsequent linear map removes that kernel. Applying this argument
+requires the factorization on the entire prediction space, not a
+projection onto a marginal. A retained archive may distinguish rows
+whose projected seven-address statistics agree. Thus identifying a
+projection update on those marginals does not prove the required
+rank loss on all returned coordinates. ∎
+
+**Proposition 95.6 (The stronger Born consumers retain their complete
+premises).** For the specified original seven-address record programs,
+the full $\mathcal B$, L, D and archive-sufficiency premises of
+[VII, Theorem 7.1][VII] still give
+
+$$
+\Pr_{\mathsf R(a,f)}(i,w)=\|N_wK_fM_i\chi_a\|^2,
+\qquad
+\Pr_{\mathsf R(a,f)}(i,B,w)
+=\nu_{a,i,f}(B)\|N_wK_fM_i\chi_a\|^2
+\tag{95.7}
+$$
+
+on positive-mass record blocks, with entire zero blocks equal to zero
+without division. The actual archive kernel is supplied, not determined
+by these marginals. Separately, the full original hypotheses of
+[III, Corollary 150.4][III] retain its conditional archive bridge
+
+$$
+P(A\mid a,i,h,z)=q([K_hM_i\chi_a])
+\quad\nu_{a,i,h}\text{-almost everywhere on positive blocks},
+\tag{95.8}
+$$
+
+and its conclusions
+
+$$
+q([\xi])=\|Q_A\xi\|^2,\qquad
+m_i(a)=\|M_i\chi_a\|^2,\qquad
+P_{\mathsf R(a,h)}(i,A)=\|Q_AK_hM_i\chi_a\|^2,
+\tag{95.9}
+$$
+
+where $Q_A=N_A$ is its original terminal-event projection, not a
+metric. Neither result supplies an additional F11 Return.
+
+Proof. For (95.7), retain the full $89$-dimensional coherent semantics,
+the unique original ready, ordinary causal normalized probabilities,
+the original support and zero-failure range, all actual terminal
+Born responses, actual positive-mass pure projection successors,
+the L continuity relation and D insertion relation. Actual archive
+sufficiency gives the conditional kernel formula VII (7.3).
+Its already proved $m_i=t_i$ cancels only a positive
+$t_i=\|M_i\chi_a\|^2$ and yields (95.7); at zero mass the whole
+block remains zero. This uses exactly the owned derivation, not an
+assumption of arbitrary instruments or physical POVMs.
+
+For (95.9), retain actual finite prediction rank, statistical
+$\mathrm R_{10}$, uniform ready-return, the original density and
+causal/update/archive conditions, both calibrations, all C/E/D
+relations of III144.2 and the original reliability, cost and
+zero-failure contracts in their stated ranges. The independent
+bridge (95.8), namely III (150.19), is still required. Applying
+III150.4 gives (95.9) and its $A^c$ counterpart. Terminal row
+descent concerns $P_{\mathsf T(af)}(A)$ and cannot supply the
+conditional response after a record and a fine archive. Neither
+application changes the post-read seven-address domain in (95.1)
+to an eleven-address one or invents an archive law. ∎
+
+**Proposition 95.7 (A success column need not descend under the weaker
+terminal contract).** In the owned [II117 $g_\lambda$ family][II],
+retain its whole $89$-dimensional terminal Born law, original
+calibration nodes, actual projection pure successors and complete
+labels. For $0<|\lambda|\le1$, its record-success column cannot
+descend linearly through the full-future Hermitian row identification
+of [VII17 and VII22][VII], with their stipulated nonconstant terminal
+event and dense original orbit. Consequently at least one finite
+signed row relation fails in that success coordinate. This does not
+give a counterexample to Proposition 95.6 with its stronger premises.
+
+Proof. Use the same fixed polynomial, not new fitted probabilities:
+
+$$
+\begin{gathered}
+g_\lambda(t)=t+\lambda h(t),\qquad
+h(t)=t(1-t)(2t-1)R(t)^2,\\
+R(t)=\prod_{a\in\mathcal A}(t-a),\quad
+\mathcal A=\{x,x^2,x^3,1-x^3,\rho,1-\rho\},\quad
+\rho=(1+x^2)^{-1},\quad x=\frac{2}{1+\sqrt5}=\varphi^{-1}.
+\end{gathered}
+\tag{95.10}
+$$
+
+The actual record-success probability is
+$g_\lambda(\|M_0\chi_a\|^2)$. If it descended through that original
+row space, its unique linear functional would have a Hermitian
+representative $F$. Density of the original pure orbit and continuity
+of both sides extend its equality to all rank-one projectors.
+Thus $0\le F\le I$. On every unit vector in $\operatorname{ran}M_0$
+the probability is $g_\lambda(1)=1$, and on
+$\operatorname{ran}M_1$ it is $g_\lambda(0)=0$. Positivity of
+$F$ and $I-F$ forces the corresponding off-diagonal blocks to
+vanish, giving $F=M_0$. Every $t\in[0,1]$ occurs as
+$\|M_0\chi\|^2$ for a pure vector using these two nonzero
+subspaces. Therefore $g_\lambda(t)=t$ throughout $[0,1]$,
+contradicting the nonzero polynomial $\lambda h$.
+
+By the equivalence in Proposition 95.3, failure of this scalar-column
+representation means a finite signed row relation has a nonzero
+success-coordinate residual. The same family preserves its weaker
+calibrations and terminal and successor laws, but it does not satisfy
+the record-identifying D/L or the complete C/E/D and original process
+contract of Proposition 95.6. It cannot remove their stronger
+conclusions. Nor does this comparison supply or universally forbid
+any actual Return operation. ∎
+
+## 96. The joint geometric and native conditions left to supply
+
+**Definition 96.1 (Existential and original-supplier questions).**
+On the exact domain of Definition 89.1, let $\mathsf{Equalizer}$
+denote existence of one invariant positive definite $Q$ equalizing
+all actual pair-face radii, and $\mathsf{Curvature}$ denote (91.5).
+Let $\mathsf{Bias}$ denote existence of (93.4), and
+$\mathsf{NativeBias}$ denote an actual original joint-law supplier
+of Definitions 95.1 and (95.5), including every relation (95.2),
+same-$C$ containment, true success masses and legal interfaces.
+The geometric existence question is whether L3 and the given pure
+transitivity alone imply any of these equivalent mathematical
+certificates. A faithful countermodel to that implication would have
+to satisfy all of Definition 89.1 and L3 and admit no equalizing
+invariant form; Proposition 92.1 does not meet that countermodel
+requirement. The source question additionally asks for L3 and a
+native supplier from the sole original $\Omega$, its original legal
+words and its complete prediction domain, without substituting a
+subcone, orbit completion as controls or a new preparation source.
+
+**Proposition 96.2 (Exact conditional conclusions and retained gaps).**
+On Definition 89.1 and L3 there is the conditional equivalence
+
+$$
+\begin{aligned}
+&\mathsf{Equalizer}\ \Longleftrightarrow\ \mathsf{Curvature}
+\ \Longleftrightarrow\ \mathsf{Bias}
+\ \Longleftrightarrow\ C\text{ homogeneous}\\
+&\hspace{12mm}\Longleftrightarrow\
+\exists N\ge2,\ \Phi:V\overset{\sim}{\longrightarrow}
+\operatorname{Herm}_N(\mathbb C),\quad\Phi(C)=\operatorname{PSD}_N,
+\quad\operatorname{Tr}\Phi=u.
+\end{aligned}
+\tag{96.1}
+$$
+
+An actual $\mathsf{NativeBias}$ supplier is sufficient for the
+mathematical bias certificate, but (96.1) does not supply one.
+In the original prediction specialization this is a representation
+of the same entire row carrier; it does not change $\Omega$, legal
+words or prediction requests. Processes, composition, physical time,
+composites and physical correspondence require their respective
+additional original contracts.
+
+Proof. Theorem 90.2 proves the equalizer equivalence, Theorem 91.4
+the curvature equivalence, and Lemma 93.2 and Theorem 93.3 the
+homogeneity and bias equivalences. Corollary 95.4 proves the stated
+sufficiency of a native supplier. Their premises are quantified over
+the actual whole cone and all pure points; no step proves existence
+of a certificate from L3 alone. Diameter spheres supply a lower
+curvature bound and special equality directions, not the missing
+upper bound. Positive binary fibers supply the real rank and
+boundary inequalities of 91.3, not an affine or complex-projective
+classification. Local Lorentz boosts of individual ball faces are
+not extensions to the entire cone. Extending enough such directions
+to satisfy (93.2) would suffice; extending every local boost is not
+required by that certificate.
+
+For (89.3), any obtained $\Phi$ transports all original rows and
+effects, and $x_\epsilon\in P$ gives a rank-one representative
+$\Phi(x_\epsilon)$ of that same ready prediction. Conjugating
+an original normalized continuation gives a trace-preserving cone
+automorphism, possibly with a transpose component. L3 gives
+$H^0$-transitivity of the pure locus, not identity-component
+membership of each original continuation. If the additional
+per-generator cone-path condition of VII (13.9) is supplied,
+the standard normalized automorphism argument of VII13.4 removes
+those transpose components and gives its original-word unitary
+representation. Its path premise has not been derived here.
+
+Similarly (90.4) concerns the full mathematical effect interval,
+not a legal measurement menu. Propositions 95.2–95.7 keep actual
+returned laws, scalar descent, same-cone positivity, archives and
+success mass separate. A matched marginal or invertible matrix does
+not pay them. The flow parameter is not a clock, Hamiltonian or
+Planck constant, and no reference system, tensor product, arbitrary
+instrument or completely positive dynamics has been supplied by
+this static equivalence. These are distinct additional questions,
+not consequences of relabeling one existing quantum state or its
+gate sequence. ∎
+
+[V88]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+[VII]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md
+[II]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md
+[III]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
+[SBridge]: ../../../Library/QuantumStates/mullerududec2012selfduality.md
+[BH]: ../../../Library/QuantumStates/barnumhilgert2019spectral.md
+[Mendes]: ../../../Library/Geometry/mendes2025diameterfocal.md
+[BUW]: ../../../Library/QuantumStates/barnumududecvandewetering2023homogeneity.md
+[Niestegge]: ../../../Library/ContinuousObservables/niestegge2015dynamical.md
+[Compact]: ../../../Blueprint/D5/S3/Quantum/Algebra/OriginalProbabilityCompactAction.md
+
+## 追加锚（本行以下为增补区）
