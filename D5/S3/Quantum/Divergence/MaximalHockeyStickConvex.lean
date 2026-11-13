@@ -162,7 +162,7 @@ private theorem remainder_eq_hinge (hf : ConvexOn ℝ (Ioi 0) f) (u v : ℝ) :
     by_cases ht : t ≤ one <;> simp [hinge, Set.piecewise, ht]
   rw [he, lintegral_piecewise (s := Iic one) measurableSet_Iic.nullMeasurableSet, compl_Iic]
 
-private theorem finite_cost_decomposition (hf : ConvexOn ℝ (Ioi 0) f)
+theorem finite_cost_decomposition (hf : ConvexOn ℝ (Ioi 0) f)
     {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k) :
     finiteCost hf R = (affineMass f A B : EReal) +
       (∫⁻ t, ENNReal.ofReal (testKernel R t) ∂curvature hf : ℝ≥0∞) := by
@@ -242,7 +242,7 @@ private theorem test_integral_split (hf : ConvexOn ℝ (Ioi 0) f)
 
 /-- Finite actual cost makes the nonnegative curvature gap integrable and
 splits the cost as maximal hockey value plus its real gap integral. -/
-private theorem finite_cost_gap (hf : ConvexOn ℝ (Ioi 0) f)
+theorem finite_cost_gap (hf : ConvexOn ℝ (Ioi 0) f)
     {A B : Matrix n n ℂ} {k : ℕ} (R : ReverseTest A B k)
     (hA : A.PosSemidef) (hB : B.PosSemidef) (hfin : finiteCost hf R ≠ ⊤) :
     Integrable (gap R) (curvature hf) ∧
@@ -294,7 +294,7 @@ theorem commute_implies_integrated_eq (hf : ConvexOn ℝ (Ioi 0) f)
 
 /-- A real finite infimum supplies actual finite-cost approximate tests.
 No minimizing test or fixed alphabet size is assumed. -/
-private theorem approximate_finite_tests (hf : ConvexOn ℝ (Ioi 0) f)
+theorem approximate_finite_tests (hf : ConvexOn ℝ (Ioi 0) f)
     (A B : Matrix n n ℂ) (c : ℝ) (hc : maximalValue hf A B = (c : EReal)) :
     ∃ tests : ∀ j : ℕ, Σ k : ℕ, ReverseTest A B k,
       ∀ j, finiteCost hf (tests j).2 < ((c + 1 / ((j : ℝ) + 1) : ℝ) : EReal) := by
