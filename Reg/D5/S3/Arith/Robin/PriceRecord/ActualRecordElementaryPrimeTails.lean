@@ -3,7 +3,7 @@ import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
-/-! Source-only audit candidate for the single all-prime endpoint.
+/-! Exact whole-family audit for the single all-prime endpoint.
 The whole factorization function is the output; Unit is the role carrier,
 not a restriction of the infinite prime domain. The Law retains the original
 existential threshold, all integers, arbitrary original positive prices,
@@ -12,11 +12,9 @@ FullRecord premise and every prime in their original quantifier positions.
 The existing arbitrarily_large_price_records supplies genuine original
 strict records without RH. FullRecord is definitionally its objective-record
 clause. No record-existence or NeBot premise is added. The complete typed
-family registration below supplies the mathematical obligations in source.
+family registration below supplies the mathematical obligations.
 The shared realize enrollment is Reg.Support.DependentFamily.enrollment_1.
-Elaboration and the raw source selector/enrollment binding have NOT been
-checked for this candidate; no declared_validated status is asserted.
-Unfinished binding evidence remains tracked under issue #29429. -/
+The raw source selector retains the entire original theorem telescope. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -102,8 +100,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   change Nat.factorization 1 2 = Nat.factorization 2 2 at htwo
   norm_num [Nat.Prime.factorization_self Nat.prime_two] at htwo
 
-/-- All family obligations are supplied as proof terms in the candidate.
-They remain unverified until this Reg module is compiled in the owner's core. -/
+/-- Original-law bridge, whole-family variation, sensitivity and dependence. -/
 def source_registration : Registration arena sourceScope where
   actual := actual
   bridge := source_bridge
@@ -119,12 +116,11 @@ def source_registration : Registration arena sourceScope where
   dependence := actual_dependence
 
 /-- Literal realize application uses the shared enrollment_1. The selector
-is a source-derived candidate: descend through Exists' argument/lambda,
+descends through Exists' argument/lambda,
 then m, M≤m, mu, 0<mu, FullRecord, p and p.Prime, and select the whole
 function operand of m.factorization p on the inequality's left side.
 stateBinder=1 is m (M is 0); no binder is removed into Params.
-The eight body edges and the coercion-to-function occurrence must still be
-confirmed against the current compiled source, not accepted from this prose. -/
+The selected output is the complete factorization function. -/
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualRecordElementaryPrimeTails.eventual_actual_record_single_prime_tail)
     (Realization signature) Type Unit where

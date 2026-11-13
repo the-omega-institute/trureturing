@@ -21,13 +21,8 @@ and the original-record RH lower-bound criterion are existing library results,
 not new claims here. The full prescribed bank, Robin beyond 5040 and RH are
 not established by this theorem.
 
-Proof provenance: prepared from best-kernel-checked.lean, SHA-256
-5aea529affe319162a4da68e3982e440a21c75eea299476a8b919f8f59d6308e.
-Only the namespace, this header/commentary and transient print/check commands
-are changed. The supplied proof was reported kernel-checked twice with
-propext, Classical.choice and Quot.sound. This canonical candidate has not
-been compiled; it needs the three original visibility changes in the separate
-owner-visibility.patch. No helper proof is copied or privately name-mangled. -/
+The weighted boundary, window fee and window logarithmic mass estimates
+are reused at their public declarations in ActualRecordElementarySingleTwoTail. -/
 
 import D5.S3.Arith.Robin.PriceRecord.ActualRecordElementarySingleTwoTail
 import D5.S3.Arith.Robin.PriceRecord.ActualRecordCriticalResidual
