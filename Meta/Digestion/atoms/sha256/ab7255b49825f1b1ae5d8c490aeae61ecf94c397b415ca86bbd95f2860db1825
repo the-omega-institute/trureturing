@@ -1,0 +1,9 @@
+**定义 131.3（指定见证的局部纯极限排除）。** 在定义131.1的模型和坏对径见证下，记
+
+$$
+\mathsf{LP}_{p,y}:\quad
+\neg\exists(r_n)_{n\ge1}\subset P\; (r_n\to y).
+$$
+
+由于 $V$ 是度量空间，$\mathsf{LP}_{p,y}$ 等价于 $y\notin\overline P$；故(Q131.4)中的两个距离条件分别等价于 $\mathsf{LP}_{p,y}$。在全局 $\mathrm{EB}_{\ge1}$ 域上，对所有这样的坏对径见证断言 $\mathsf{LP}_{p,y}$，仍是待证命题。
+
