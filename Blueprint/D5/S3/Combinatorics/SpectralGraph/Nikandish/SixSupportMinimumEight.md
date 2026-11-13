@@ -4,7 +4,7 @@
 
 Full minimum-eight dependency reduction on the actual ideal graph.
 
-Sources: complete selected PR9 S.minimum8 and S.min8csv, notes/minimum-eight.md and results/minimum-eight-base.csv at6d491f77b35dec808fc777b69939c56cdae5dc02. Preserve original Nikandish graph/problem and Ma/Nikandish/Zhang proof credit. The original108-row report additionally records216 independent Bareiss/Sturm controls; these source reports are not silently claimed rerun by current kernel signs. This route avoids8658 for minimum exactly8; any cumulative minimum<=8 conclusion still inherits27562 and smaller original bases. The older open-region footer is historical, superseded for exactly three primes by the separate full hybrid classification. General Q3, a6 certification and finite-enumeration reproduction limits remain unchanged. Escape audit issue28398 remains unfinished; disclosure supplies no proof or audit completion.
+Sources: complete selected PR9 S.minimum8 and S.min8csv, notes/minimum-eight.md and results/minimum-eight-base.csv at6d491f77b35dec808fc777b69939c56cdae5dc02. Preserve original Nikandish graph/problem and Ma/Nikandish/Zhang proof credit. The original108-row report additionally records216 independent Bareiss/Sturm controls; these source reports are not silently claimed rerun by current kernel signs. This route avoids8658 for minimum exactly8; any cumulative minimum<=8 conclusion still inherits27562 and smaller original bases. The older open-region footer is historical, superseded for exactly three primes by the separate full hybrid classification. General Q3, a6 certification and finite-enumeration reproduction limits remain unchanged.
 
 **Theorem 1.1 (All108 fixed-middle rows exclude every unbounded last exponent).**
 

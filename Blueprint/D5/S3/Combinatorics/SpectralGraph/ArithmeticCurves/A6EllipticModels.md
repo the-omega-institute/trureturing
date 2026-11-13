@@ -6,7 +6,7 @@ Actual a6 elliptic models and complete affine chart recovery
 
 The actual quadratic field Q(sqrt43645), nonsingular Weierstrass curves E/E0 and point objects are used. Both signs, all finite rational chart inverses, the unique zero-b finite exception and both zero-b quartic fibers are retained. Polynomial field coordinates are integral in the full integral closure, with four-coefficient reconstruction and exact c filtering. This does not yet prove the explicit full-ring generator theorem, complete rational-group coset, rank or torsion claims, saturation, or integral-point enumeration. The original nonintegral rational-chart warning and translated-integrality boundary remain binding.
 
-Sources: original Nikandish graph and problem; Ma/Nikandish/Zhang supplied scientific results at PR9 revision6d491f77b35dec808fc777b69939c56cdae5dc02. Exact source blobs and attribution are recorded in the Lean owner. Proof engineering and current native checks are distinct from historical controls. The full O1-O9, L1-L21/F1-F17, C1-C16 return remains unfinished. Exact n7/pause, generalQ3, a6 certification, finite reproduction and original rights/publication boundaries remain unchanged. Unfinished escape audits are disclosed in issue#28398.
+Sources: original Nikandish graph and problem; Ma/Nikandish/Zhang supplied scientific results at PR9 revision6d491f77b35dec808fc777b69939c56cdae5dc02. Exact source blobs and attribution are recorded in the Lean owner. Proof engineering and current native checks are distinct from historical controls. The full O1-O9, L1-L21/F1-F17, C1-C16 return remains unfinished. Exact n7/pause, generalQ3, a6 certification, finite reproduction and original rights/publication boundaries remain unchanged.
 
 **Theorem 1.1 (Sqrtd sq).**
 

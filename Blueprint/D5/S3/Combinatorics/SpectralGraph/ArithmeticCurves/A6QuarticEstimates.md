@@ -6,7 +6,7 @@ Positive-domain quartic analytic and height estimates
 
 For every positive real b, the original Fstar is strictly decreasing with its exact limit and u0=0. The improper integral is positive and strictly less than1/(sqrt43645 b). On both signs of every integer quartic point, |W|<3649b^2 and the actual rational Weil logarithmic height of R_U is bounded by log13540800+2log b. These input estimates do not provide a complete Tzanakis bound, regulator or David constants, rank/saturation, certified LLL or exhaustive point list. The Equation26 printed-factor discrepancy remains unresolved.
 
-Source: original Nikandish problem; Ma/Nikandish/Zhang supplied manuscripts at PR9 revision6d491f77b35dec808fc777b69939c56cdae5dc02. Exact source blob and attribution are retained in Lean. All O1-O9, L1-L21/F1-F17, C1-C16 outcomes and original rights/publication boundaries remain binding. Exact n7 and its pause, generalQ3, a6 certification and finite-enumeration reproduction limits are unchanged. Unfinished faithful escape registration is disclosed in issue#28398; disclosure is not audit completion.
+Source: original Nikandish problem; Ma/Nikandish/Zhang supplied manuscripts at PR9 revision6d491f77b35dec808fc777b69939c56cdae5dc02. Exact source blob and attribution are retained in Lean. All O1-O9, L1-L21/F1-F17, C1-C16 outcomes and original rights/publication boundaries remain binding. Exact n7 and its pause, generalQ3, a6 certification and finite-enumeration reproduction limits are unchanged.
 
 **Theorem 1.1 (quartic gt leading).**
 

@@ -6,7 +6,7 @@ Actual finite elliptic reduction groups and rational two-torsion exclusion
 
 The full actual nonsingular point groups, including infinity, have orders10 and16 for E mod11 and17, and14 and20 for its43645 twist. The complete mod23 domain proves the rational cubic has no root, and the actual E(Q) and Ed(Q) groups have no nonidentity two-torsion. These counts alone do not prove the full received torsion theorem. A6FullTorsion proves all received rational and quadratic torsion-triviality conclusions by an alternative dyadic argument. Full prime-to-p good-reduction torsion injectivity remains a separately unformalized source method.
 
-Original Nikandish problem and Ma/Nikandish/Zhang supplied manuscripts at PR9 revision6d491f77b35dec808fc777b69939c56cdae5dc02. Exact original blobs are attributed in Lean. Full O1-O9, L1-L21/F1-F17, C1-C16, n7 and paused exclusions, generalQ3, a6 certification, finite-enumeration reproduction limits and rights/publication boundaries remain unchanged. Issue28398 records unfinished faithful escape registration, not an audit certificate.
+Original Nikandish problem and Ma/Nikandish/Zhang supplied manuscripts at PR9 revision6d491f77b35dec808fc777b69939c56cdae5dc02. Exact original blobs are attributed in Lean. Full O1-O9, L1-L21/F1-F17, C1-C16, n7 and paused exclusions, generalQ3, a6 certification, finite-enumeration reproduction limits and rights/publication boundaries remain unchanged.
 
 **Theorem 1.1 (integerE rational).**
 

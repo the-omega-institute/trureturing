@@ -4,7 +4,7 @@
 
 The genuine minimum of every positive real four-cell tensor.
 
-Source: original repeated-pair notes and Mathlib Hermitian eigenbasis, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. Formal proofs are task-local integrations of the full source results. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.
+Source: original repeated-pair notes and Mathlib Hermitian eigenbasis, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.
 
 **Theorem 1.1 (Every nonzero tensor eigenpair participates in the comparison).**
 

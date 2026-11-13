@@ -4,7 +4,7 @@
 
 The complete old/new uniform tail-cutoff comparison
 
-Sources: four-prime-large-tail and four-prime-tail-reduction, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. All positive repeated and first-tail exponents are retained, with no relative ordering. The old large-tail graph conclusion is reused through the stronger quadratic cutoff; this does not supply the separate original ordered-second-eigenvalue statement or claim to rerun original exact controls. Necessary candidate membership never proves integrality. Original attribution, prerequisites, reported controls, failed methods and general Q3 boundaries remain. The escape audit is unfinished under linked issue #28398.
+Sources: four-prime-large-tail and four-prime-tail-reduction, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. All positive repeated and first-tail exponents are retained, with no relative ordering. The old large-tail graph conclusion is reused through the stronger quadratic cutoff; this does not supply the separate original ordered-second-eigenvalue statement or claim to rerun original exact controls. Necessary candidate membership never proves integrality. Original attribution, prerequisites, reported controls, failed methods and general Q3 boundaries remain.
 
 **Theorem 1.1 (The full strict improvement by more than 128).**
 

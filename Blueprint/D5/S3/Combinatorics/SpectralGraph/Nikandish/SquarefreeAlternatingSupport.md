@@ -4,7 +4,7 @@
 
 Full squarefree alternating spectral construction
 
-Source: PR3 b93becea662a746badeadba42fdc3d3eb3db9382, paper/sections/squarefree.tex, blob2cd18d52cd3f4581d624bb94006480340756a5c3. Original Nikandish graph/problem attribution and manuscript Ma/Nikandish/Zhang credit, prerequisites, reports, failed methods and rights boundaries are preserved. All alternating pairs and all tail supports are retained; nonzero vectors lift to the genuine ideal-intersection graph for arbitrary injective prime assignments. This is the full spectral construction, separately from the already-delivered stronger unit-entry nonintegrality theorem. General Q3, exact n7/paused exclusions, a6 certification and finite-enumeration reproducibility limits are unchanged. Unfinished escape audits are disclosed at issue28398; disclosure is not proof, audit completion or a waiver of other gates.
+Source: PR3 b93becea662a746badeadba42fdc3d3eb3db9382, paper/sections/squarefree.tex, blob2cd18d52cd3f4581d624bb94006480340756a5c3. Original Nikandish graph/problem attribution and manuscript Ma/Nikandish/Zhang credit, prerequisites, reports, failed methods and rights boundaries are preserved. All alternating pairs and all tail supports are retained; nonzero vectors lift to the genuine ideal-intersection graph for arbitrary injective prime assignments. This is the full spectral construction, separately from the already-delivered stronger unit-entry nonintegrality theorem. General Q3, exact n7/paused exclusions, a6 certification and finite-enumeration reproducibility limits are unchanged.
 
 **Theorem 1.1 (Full diagonal pair action).**
 

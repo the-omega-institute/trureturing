@@ -4,7 +4,7 @@
 
 Full paired-tensor middle-root separation and actual graph applications
 
-Sources: the entire original large-tail and harmonic-tail manuscripts, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The harmonic source assumes all positive natural a,b,c with b<c and no ordering between a and b. The full four-value spectrum retains multiplicity. The lower ordered value is the second-smallest and the next is the third-smallest. Both lift through the existing actual ideal-intersection graph application for every injective prime assignment. Original attribution, prerequisites, source reports, failed methods, uncertainties and rights boundaries remain unchanged. Root conditions and candidate tests do not establish integral spectrum. General Q3, a6 certification and finite-enumeration reproduction limits remain open. Reg issue #28398 remains an unfinished audit disclosure, not approval or a waived gate.
+Sources: the entire original large-tail and harmonic-tail manuscripts, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The harmonic source assumes all positive natural a,b,c with b<c and no ordering between a and b. The full four-value spectrum retains multiplicity. The lower ordered value is the second-smallest and the next is the third-smallest. Both lift through the existing actual ideal-intersection graph application for every injective prime assignment. Original attribution, prerequisites, source reports, failed methods, uncertainties and rights boundaries remain unchanged. Root conditions and candidate tests do not establish integral spectrum. General Q3, a6 certification and finite-enumeration reproduction limits remain open.
 
 **Theorem 1.1 (Full bounded middle-root separation).**
 

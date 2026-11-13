@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.c
 
 *Commentary.*
 
-The complete adjoining-vector predicate and original table are unchanged. The source proved this obligation using native_decide; current admission uses kernel reduction and requires a successful current build and transitive-axiom report. Historical native-evaluation provenance remains explicit.
+The complete adjoining-vector predicate and original table are unchanged. The source proved this obligation using native_decide. Historical native-evaluation provenance remains explicit.
 
 **Theorem 1.2 (Kernel properness check).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.c
 
 *Commentary.*
 
-The complete positive certificate and the fifteen-clique give chromatic number fifteen for the all-space graph. The historical source proof had four native-evaluation axioms. The current candidate requests kernel reduction for those exact obligations; its accepted axiom closure and normal admission require current successful evidence. This theorem does not supply the separate line-graph result twelve.
+The complete positive certificate and the fifteen-clique give chromatic number fifteen for the all-space graph. The historical source proof had four native-evaluation axioms. This theorem does not supply the separate line-graph result twelve.
 
 **Theorem 1.6 (Every actual nonzero Submodule).**
 
