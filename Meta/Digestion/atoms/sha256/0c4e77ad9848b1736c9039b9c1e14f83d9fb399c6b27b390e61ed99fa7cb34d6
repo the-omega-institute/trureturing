@@ -1,0 +1,18 @@
+**引理 118.2（固定维数椭球的边界极限）。** 设有限维欧氏环境中 $F_n$ 是有界的三维仿射闭球，且 $F_n\to F$ 为Hausdorff收敛，$F$ 也是三维仿射闭球。则
+
+$$
+S(F_n)=\partial_{\rm rel}F_n\longrightarrow\partial_{\rm rel}F=S(F)
+\quad\text{（Hausdorff距离）}.
+\tag{IX118.3}
+$$
+
+此处的 $S$ 只表示相对球面，不需另有共同纯点集合闭性。特别地，若 $x_n\in S(F_n)$、$x_n\to x$，则 $x\in S(F)$。
+
+证明。在任意子列上写 $F_n=c_n+A_n\overline B^3$，$A_n$ 的三列为正交半轴向量。
+Hausdorff收敛保证整列一致有界，故 $c_n,A_n$ 有界，可再取子列有 $c_n\to c,A_n\to A$。
+线性像的一致收敛给 $F=c+A\overline B^3$；$\dim F=3$ 迫 $\operatorname{rank}A=3$。
+因此同一子列上
+$\partial_{\rm rel}F_n=c_n+A_nS^2\to c+AS^2=\partial_{\rm rel}F$。
+若原序列的球面不收敛到该球面，就有一条Hausdorff距离保持正下界的子列，与刚证的再取子列结论矛盾。
+本证明允许仿射包随 $n$ 移动；没有把低维凸集的环境边界当作其相对边界。证毕。
+

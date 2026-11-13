@@ -23,5 +23,7 @@ coverage_gids:
     target_statement_id: sha256:7300f6ea21ce061e0ea4ed8e14edf5054177317431633484034534f5944b7365
   - gid: D5/S3/Quantum/Algebra/BornJaccardTracialClassification.scalar_triangle
     target_statement_id: sha256:e804515ad44c5be89d9e1cc11fe7c4034be7994a2670fad0c38bd74ff316175d
+  - gid: D5/S3/Quantum/GleasonComplexRepresentation.gleason_representation
+    target_statement_id: sha256:3b9cf59a3433a305d85d3e5675f7bc1e6404d93d49a2a55985efb9136b1d9fbd
 receipts:
   unresolved_subitems: []

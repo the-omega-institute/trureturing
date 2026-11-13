@@ -1,0 +1,36 @@
+**命题 1.3（实际公平历史与相对相位）。** 实际仪器在 $M_5$ 上合起来保迹，并且
+
+$$
+K_jB=BU_j/\sqrt2,\qquad A_jB=BV_j/\sqrt2.
+$$
+
+每个 $V_j$ 均酉。对任意嵌入三能级输入及其与有限参考系统的任意纠缠，每轮实际标签都是条件公平的新比特。长度 $n$ 的实际历史 $\mathsf H_n=h=(h_1,\ldots,h_n)$ 的概率为 $P_n(h)=2^{-n}$，分支为 $2^{-n/2}BQ_h$，其中
+
+$$
+\begin{aligned}
+\xi&=(1,1,1)^{\mathsf T}/\sqrt3,\qquad T=\xi^\perp,\qquad\lambda=e^{i\pi/6},\\
+Q_h&=V_{h_n}\cdots V_{h_1}=\lambda^n\oplus G_h
+\quad\text{于 }\mathbb C\xi\oplus T,\\
+g_j&=V_j|_T,\qquad G_h=g_{h_n}\cdots g_{h_1},\qquad
+F_h=\lambda^{-n}G_h.
+\end{aligned}
+$$
+
+空历史给出恒等矩阵。在 $T$ 的正交基
+
+$$
+f_1=(1,-1,0)^{\mathsf T}/\sqrt2,\qquad
+f_2=(1,1,-2)^{\mathsf T}/\sqrt6
+$$
+
+中，实际矩阵为
+
+$$
+A:=g_0=\frac14\begin{pmatrix}\sqrt3-i&3+i\sqrt3\\3-i\sqrt3&-\sqrt3-i\end{pmatrix},
+\quad J=\begin{pmatrix}-1&0\\0&1\end{pmatrix},\quad g_1=AJ,
+\quad\det g_0=-1,\quad\det g_1=1.
+\tag{1.1}
+$$
+
+证明。两个未旋转效应分别为 $\operatorname{diag}(1,0,1/2,0,1)$ 与 $\operatorname{diag}(0,1,1/2,1,0)$，其和为 $I_5$，故上述扩张等距并有酉延拓。测量基取内积正好产生 $A_0,A_1$；旋转的交叉项相消，故对任意复矩阵 $X$ 有 $\sum_jA_jXA_j^\dagger=\sum_jK_jXK_j^\dagger$。对 $u,v,z$ 逐列作用给出限制式。由于 $W=W^\dagger=W^{-1}$，$V_0$ 与 $V_1$ 酉，限制效应均为 $I_3/2$。每次输出仍在 $R$，所以即使附带参考系统，每个前缀之后的下一标签也以概率 $1/2$ 出现；归纳即得实际先验 $2^{-n}$。置换 $U_j$ 固定 $\xi$，故 $V_j\xi=\lambda\xi$，且 $T$ 为约化子空间。在所列基中限制得到 (1.1)，其行列式给出最后两式。公平性只在嵌入输入上主张。相位 $\lambda^{-n}$ 是 $T$ 相对于共同方向 $\xi$ 的相位，不能作为不可见整体相位删去。$\square$
+

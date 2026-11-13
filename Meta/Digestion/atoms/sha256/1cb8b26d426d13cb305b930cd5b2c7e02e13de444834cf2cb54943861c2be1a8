@@ -1,0 +1,46 @@
+**约定 125.1（同一原实现与前件范围）。** 本章的VII103—105指[完整排除面第七卷][Q125VII]，VIII109—111指[排除球第八卷][Q125VIII]，IX116、118、120指[排除球第九卷][Q125IX]，121—122指[THREE_COPY第七卷][Q125T]，123—124指本卷已有章节。取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_b=\{f\in\mathcal E:f(b)=1\},\qquad
+T_b(x)=\min_{f\in\mathcal F_b}f(x),\\
+D_b=\{x\in K:T_b(x)=0\},\qquad
+\mathcal A_b=\{e\in\mathcal F_b:e|_{D_b}=0\},\\
+N_b=\{h\in C^*:h(b)=0\},\qquad
+\mathcal B(b)=N_b\cap\mathcal E,\qquad S_b=\operatorname{span}N_b.
+\end{gathered}
+\tag{Q125.1}
+$$
+
+这里是整个原紧态基、全部原纯点、全部原效应和每个标签的完整排除集合。EB3表示每个 $D_b$ 仿射同构于整个闭三球，Inj表示 $D_b=D_c\Rightarrow b=c$。除125.9保留的裸EB3候选外，本章均取EB3+Inj。定义
+
+$$
+\begin{gathered}
+b\perp c\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(b)=1, f(c)=0,\\
+P_0=\{b\in P:\mathcal A_b\text{ 是单点}\},\qquad
+\mathcal A_b=\{e_b\}\quad(b\in P_0),\\
+\mathcal T=\{b\in P:\exists c,d\in P,
+\ b\perp c, b\perp d, c\perp d\}.
+\end{gathered}
+\tag{Q125.2}
+$$
+
+补效应使原边对称，且 $b\perp c\Longleftrightarrow c\in D_b$，$b\notin D_b$。真实三角只表示三条各自真实的原边。三个非负数学效应在整个 $V$ 上和为 $u$，以及同一实际三结果仪器，是另外两个层次。
+
+直接复用VII103.2、104.1和IX120.2：每个 $D_b$ 是非点紧暴露极大真面，$\mathcal A_b\ne\varnothing$；全部非空真面只有纯单点和完整球；不同完整球相交时仅交于一个原纯点。每个完整球 $F$ 满足 $P\cap F=\partial_{\rm rel}F$、$F=\operatorname{conv}(P\cap F)$。Inj还给每张 $e\in\mathcal A_b$ 的一值面恰为 $\{b\}$，零面恰为 $D_b$；一值面结论包括全部原混态。
+
+**既有结果的准确范围。** VIII109.2—109.3、111.2已经在
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 下证明三球可见空间、共同盲核、直和分解和联合零效应分离的等价式；VIII111.12给其完整几何解释。该入口已经供应全纯least确认、共同正延拓及正面投影。固定全部球均为三球时，VIII113及IX116的既有分类还已给整个 $V$ 九维。以下不把这些结论重计为新的全W结果；所证增量是在未支付全域 $\mathrm{Pair}_{\perp}$、正投影或全纯框架完成的EB3+Inj域，仅从一个实际三角取得准确局部张成，并在一个 $P_0$ 种子上取得双侧配对。121.9已有无需种子的 $\dim V\ge9$，本章不把该维数下界计为新结论。
+
+种子条件有三个层次：$\mathcal T\ne\varnothing$、$P_0\cap\mathcal T\ne\varnothing$、$P_{\rm reg}\cap\mathcal T\ne\varnothing$。其中
+
+$$
+P_{\rm reg}=P_0\cap\operatorname{Cont}(\mathcal B)
+\tag{Q125.3}
+$$
+
+沿123.1量化整个 $P$ 中全部趋近纯序列。第三层蕴含第二层，第二层蕴含第一层；本章不证明反向。$P_0$、$P_{\rm reg}$ 在整个 $P$ 中稠密，仅凭这一稠密性不能推出它们与非空相对闭集 $\mathcal T$ 相交，也不能取得任何固定 $\partial D_b$ 上的相交稠密性；这些相交结论仍未在此取得。
+

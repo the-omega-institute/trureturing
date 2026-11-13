@@ -1,0 +1,82 @@
+**定理 114.10（固定球维数至少二时的无facet障碍）。** 在定义114.1的原域中，
+设某个固定整数 $m\ge2$ 满足 $\mathrm{EB}_m$，不要求PR。则
+
+$$
+\dim\operatorname{aff}K\ge m+2,
+\qquad K\text{ 没有余维一面}.
+\tag{IX114.33}
+$$
+
+特别地，EB3已经蕴含 $\dim\operatorname{aff}K\ge5$ 及无facet。
+
+证明。记 $d=\dim\operatorname{aff}K$，在该仿射空间中看 $K$ 的内部与边界。
+114.2的证明对固定 $m$ 适用，所以所有非单点真面的维数恰为 $m$，
+且不同这类面至多交于一个纯点。
+存在一个 $m$ 维真面先给 $d\ge m+1$。反设 $d=m+1$；
+于是这些非单点真面恰为facets，记其全体为 $\mathscr F$。
+
+先证明每个 $F\in\mathscr F$ 的相对内部是 $\partial K$ 中的开集。
+取 $x\in\operatorname{ri}F$，在其支撑超平面内取以 $x$ 为中心的小闭盘，整个盘仍在 $F$ 中，
+再取 $y\in\operatorname{ri}K$。这个盘与 $y$ 的凸包是包含于 $K$ 的满维小锥体。
+把 $x$ 的邻域取得足够小，支撑超平面内侧、离平面为正距离的所有邻域点
+都落在该小锥体的内部，因而在 $\operatorname{ri}K$ 中；
+平面上的邻域点则仍在 $\operatorname{ri}F$ 中，平面外侧不属于 $K$。
+因此这个邻域与 $\partial K$ 的交包含于 $\operatorname{ri}F$，证得所需开性。
+
+不同facets的相对内部两两不交，而 $\partial K$ 第二可数，
+所以非空开集族 $\{\operatorname{ri}F:F\in\mathscr F\}$ 至多可数。
+例如在每个开集内选一个可数拓扑基元素；不交性使所选基元素互异。
+故 $\mathscr F$ 至多可数。
+
+固定一个 $F\in\mathscr F$，考虑邻面映射
+
+$$
+\nu_F:\operatorname{ext}F\longrightarrow\mathscr F,\qquad q\longmapsto D_q.
+\tag{IX114.34}
+$$
+
+它只能单射或常值。为证此事，设不同 $q,r\in\operatorname{ext}F$ 满足
+$D_q=D_r=G$。对任意 $s\in\operatorname{ext}G$，
+原补效应所给的零对称(IX114.29)迫 $q,r\in D_s$。
+于是 $F\cap D_s$ 含两个不同点，114.2迫 $D_s=F$。
+再取任意 $t\in\operatorname{ext}F$，对所有这样的 $s$ 再用零对称，
+有 $\operatorname{ext}G\subseteq D_t$，故 $G\subseteq D_t$；
+极大性给 $D_t=G$。这说明只要有一次重复，整个 $\nu_F$ 就恒为 $G$。
+
+由于 $m\ge2$，$\operatorname{ext}F\simeq S^{m-1}$ 不可数；
+而 $\mathscr F$ 可数，$\nu_F$ 不可能单射，故恒定。
+将其值记为 $F^\dagger$。刚才的证明同时给
+
+$$
+(F^\dagger)^\dagger=F.
+\tag{IX114.35}
+$$
+
+若不同 $F,H\in\mathscr F$ 相交，交点由114.2为原纯点 $q$，
+于是 $D_q=F^\dagger=H^\dagger$，对合性又迫 $F=H$，矛盾。
+所以所有facets两两不交。
+
+它们还覆盖整个 $\partial K$。任意边界点 $x$ 属于一个非空支撑真面 $A$；
+若 $A$ 非单点，114.2给 $A\in\mathscr F$。
+若 $A=\{x\}$，则 $x=p$ 为原纯点；
+在完整 $D_p$ 的球面取原纯 $q$，零对称给 $p\in D_q\in\mathscr F$。
+故 $\partial K$ 被至多可数个两两不交的非空闭facet覆盖。
+这个分拆非平凡：若 $q\in\operatorname{ext}F$，则 $q\notin D_q=F^\dagger$，
+所以 $F^\dagger\ne F$。
+
+$K$ 是 $d$ 维凸体，$d=m+1\ge3$；
+从内部点作径向参数化可知 $\partial K$ 同胚于 $S^{d-1}$，是紧连通欧氏集合。
+有限的非平凡闭分拆直接违反连通性；
+无限可数的两两不交非空闭分拆则违反
+[Sierpiński连续统定理，原刊p.300、扫描第1页][Q114Si]。
+因此 $d=m+1$ 不可能，得到 $d\ge m+2$。
+现在若有facet，其维数为 $d-1\ge m+1$，但114.2规定非单点真面的维数只能为 $m$，矛盾。
+这给出无facet结论。证明使用了可数性、常值邻面映射、对合与不交覆盖，
+最后才应用连续统定理，不能由Baire定理单独代替。证毕。
+
+$m\ge2$ 的限制不能删去。[原奇多边形应用(OP2)—(OP3)][Q114Polygon]
+在同一完整原域实现了 $\mathrm{EB}_1+\mathrm{PR}$ 而所有纯零对失败Pair；
+该文(OP7)—(OP8)还给五边形面效应的锐正延拓预算为黄金比，大于一。
+这些已给出的原域计算说明一维边界确有有限超单位预算，
+并不构成整个排除集为三球的模型，也不代替114.8所留下的三球饱和义务。
+

@@ -1,0 +1,68 @@
+**定理 114.8（原Pair、共同正交点与单位饱和的等价）。** 在EB3加PR下，
+设 $p,q\in P$、$p\perp q$，令 $F=D_p$、$q=b_F(v)$，其中 $v\in S^2$。
+则
+
+$$
+\begin{aligned}
+H(p,q)\ne K
+&\ \Longleftrightarrow\ D_p\cap D_q\ne\varnothing\\
+&\ \Longleftrightarrow\ a_F=\frac12
+\ \Longleftrightarrow\ \beta_F=1.
+\end{aligned}
+\tag{IX114.26}
+$$
+
+这些条件成立时，共同正交纯点唯一，准确为
+
+$$
+r=b_F(-v),\qquad D_p\cap D_q=\{r\},\qquad H(p,q)=D_r.
+\tag{IX114.27}
+$$
+
+因此在完整原域中，
+
+$$
+\mathrm{Pair}_{\perp}
+\ \Longleftrightarrow\
+\forall p\in P:\ a_{D_p}=\frac12
+\ \Longleftrightarrow\
+\forall p\in P:\ \beta_{D_p}=1.
+\tag{IX114.28}
+$$
+
+证明。首先，原效应的补已经给出零对称，不需要PR：
+若 $f(p)=1$、$f(q)=0$，则 $(u-f)(q)=1$、$(u-f)(p)=0$，所以
+
+$$
+T_p(q)=0\quad\Longleftrightarrow\quad T_q(p)=0
+\qquad(p,q\in P).
+\tag{IX114.29}
+$$
+
+$p\ne q$，因为 $T_p(p)=1$。若 $H(p,q)$ 为真面，它含两个不同点，
+114.2给 $H(p,q)=D_s$，其中 $s\in P$。
+$p,q\in D_s$ 与零对称给 $s\in D_p\cap D_q$。
+
+反之，$D_p\ne D_q$，因为 $q\in D_p$ 而 $q\notin D_q$。
+若二者交非空，114.2给它恰为某个原纯单点 $\{r\}$。
+零对称给 $p,q\in D_r$，故 $H(p,q)\subseteq D_r\subsetneq K$。
+还须确定等号：$H(p,q)$ 是非单点真面，所以 $H(p,q)=D_s$；
+它包含于 $D_r$ 且含 $p,q$ 两个不同点，而两个不同球面至多交于一个点，
+于是 $D_s=D_r$，即 $H(p,q)=D_r$。
+
+由于纯 $q\in F$ 位于 $F$ 的球面，114.5对完整球给
+
+$$
+D_p\cap D_q=
+\{b_F(z):z\in B^3,\ 1-a_F+a_Fv\cdot z=0\}.
+\tag{IX114.30}
+$$
+
+当 $0<a_F<1/2$ 时，左式中的标量最小值 $1-2a_F$ 严格正，故交为空。
+当 $a_F=1/2$ 时，零值要求 $v\cdot z=-1$；
+$\|v\|=1$、$\|z\|\le1$ 迫 $z=-v$，故交恰为 $\{b_F(-v)\}$。
+再用114.6的预算公式，得到(IX114.26)—(IX114.27)。
+对所有原正交纯对量化便得(IX114.28)；
+反向检验每个 $D_p$ 时可任取其球面上的 $q$，所以没有遗漏任何排除面。
+此处只确定三点两两原正交；联合测量将由下面明确进入的W支路承担。证毕。
+

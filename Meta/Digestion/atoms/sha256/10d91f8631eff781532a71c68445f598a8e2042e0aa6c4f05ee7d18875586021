@@ -1,0 +1,14 @@
+### 119.11 全静态字典与不删减的操作、复合、时间合同
+
+在定理119.13的完整前件下，同一个 $\Phi$ 给以下字典；
+这是IX116.17与[VIII113.8—113.11][Q119VIII]的应用。
+
+| 原对象或静态要求 | 同一个表示中的全部对应 |
+| --- | --- |
+| 全部纯点及复相位射线 | $p_z=\Phi(zz^*/(z^*z))$，全部 $P\cong\mathbb{CP}^2$ |
+| 全部混态与原混合系数 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，保全部凸组合 |
+| 全部效应、补、零与Born评价 | $f_A(\Phi X)=\operatorname{Tr}(AX)$，全部 $0\preceq A\preceq I_3$ |
+| 原最低确认与纯—纯比较 | least为秩一投影，$T_{p_z}(p_w)=|z^*w|^2/((z^*z)(w^*w))$ |
+| 全部有限数学测量 | $f_j\ge0,\sum_jf_j=u$ 恰为全部有限POVM $A_j\succeq0,\sum_jA_j=I_3$ |
+| 原三元框架、容量与谱分解 | 三个正交秩一投影，容量三；$\rho=\sum_i\lambda_iP_i,\lambda_i\ge0,\sum_i\lambda_i=1$ |
+| 原单位、派生中心与共同内积 | 迹、$\Phi(I_3/3)$、$B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$ |

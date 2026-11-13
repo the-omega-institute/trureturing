@@ -1,0 +1,7 @@
+本章的固定入口记为 $\mathsf{Ent}_\triangle$，逐项包含：
+
+1. EB3：每个原纯标签 $p$ 的完整 $D_p$ 均仿射同构于整个闭三球；Inj：$D_p=D_q\Rightarrow p=q$。
+2. 一组实际原正交三角 $\triangle=(p_1,p_2,p_3)$，且至少一个顶点属于 $P_0=\{p:\mathcal A_p\text{ 是单点}\}$。
+3. 125.5的同一个联合分离条件 $\mathsf J_\triangle$：对全部 $x,y\in K$，若在任一种子顶点读零的每张原效应均对 $x,y$ 同读，则 $x=y$。
+4. 125.6由限制配对唯一确定的三个线性 $T_i$，全部满足 $T_i(C)\subseteq C$。
+

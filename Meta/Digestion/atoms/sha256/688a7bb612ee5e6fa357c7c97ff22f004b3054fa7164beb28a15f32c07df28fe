@@ -1,0 +1,47 @@
+**推论 6.1（失真与有限历史余项的交叉）。** 定义符号常数
+
+$$
+A_{\mathrm{tail}}=(6/e)^{3/2},\qquad
+K=1+6\sqrt\pi+A_{\mathrm{tail}},\qquad
+C_{\mathrm{lower}}=\log_2(e^2K),
+$$
+
+以及
+
+$$
+t_n(\varepsilon)=\varepsilon+b_n^{2/3}.
+$$
+
+则在定理 5.3 的全部时域上，
+
+$$
+E_n(\varepsilon)\ge
+\max\left\{0,\;\frac32\log_2\frac1{t_n(\varepsilon)}-C_{\mathrm{lower}}\right\}.
+\tag{6.1}
+$$
+
+这是一个显式交叉下界，短时域可以只给零，不是 $E_n$ 的精确公式。
+
+证明。函数 $\beta^{3/2}e^{-\beta/4}$ 的对数导数为 $3/(2\beta)-1/4$，所以它在 $\beta=6$ 取得全局最大值 $A_{\mathrm{tail}}$。因此对所有 $\beta>0$，
+
+$$
+e^{-\beta/4}\le A_{\mathrm{tail}}\beta^{-3/2}.
+\tag{6.2}
+$$
+
+取 $t=t_n(\varepsilon)>0$ 与 $\beta=1/t$。由 $t\ge\varepsilon$、$t\ge b_n^{2/3}$，分别有 $\beta\varepsilon\le1$ 和 $b_n\le t^{3/2}$。于是
+
+$$
+B_n(1/t)\le(6\sqrt\pi+A_{\mathrm{tail}})t^{3/2}+b_n\le Kt^{3/2}.
+$$
+
+即使右端大于一，该不等式仍成立。将这一特定 $\beta$ 代入 (5.4)，得
+
+$$
+\frac{-2\beta\varepsilon-\ln B_n(\beta)}{\ln2}
+\ge\frac{-2-\ln(Kt^{3/2})}{\ln2}
+=\frac32\log_2(1/t)-C_{\mathrm{lower}}.
+$$
+
+再用非负性得 (6.1)。这也是 (5.4) 的一个显式后果，未修改原有长时域目标。$\square$
+

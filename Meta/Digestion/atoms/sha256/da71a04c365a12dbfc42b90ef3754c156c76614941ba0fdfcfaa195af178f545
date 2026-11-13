@@ -1,0 +1,24 @@
+证明。先核对任意 $u$ 的同时归一化。令
+
+$$
+W=\sum_{X\in\iota(C)}\operatorname{ran}X,\qquad n=\dim W\ge1.
+\tag{93.7}
+$$
+
+所有锥元均在 $W^\perp$ 上为零，$L_0=\operatorname{span}\iota(C)$ 使全部 $L_0$ 亦如此。将 $W$ 用任一正交基识别为 $\mathbb R^n$，限制到 $W$ 的映射 $R$ 在 $L_0$ 上是线性同构，其像 $L_W$ 的PSD截面恰为 $R\iota(C)$；没有丢失原态或效应。有限个锥元的像空间已张成 $W$，它们之和在 $W$ 上正定。把原 $u$ 运输为 $u_W$，在紧集
+
+$$
+\{X\in R\iota(C):u_W(X)=n\}
+\tag{93.8}
+$$
+
+上取行列式最大点 $M$。正定可行点使最大值严格正，故 $M\succ0$。对任意 $Y\in L_W\cap\ker u_W$，充分小的正负 $t$ 均使 $M+tY$ 留在(93.8)，行列式的一阶驻点条件给 $\operatorname{tr}(M^{-1}Y)=0$。这两个线性泛函因而成比例；代入 $M$，由 $u_W(M)=n=\operatorname{tr}(M^{-1}M)$ 得比例为一。因此
+
+$$
+\Psi(X)=M^{-1/2}(R\iota X)M^{-1/2},\qquad
+\operatorname{tr}\Psi(X)=u(X),\qquad \Psi(M_V)=I_n,
+\tag{93.9}
+$$
+
+其中 $M_V=(R\iota)^{-1}M$。取 $L=\Psi(V)$，即得(93.5)的前三项；合同保持秩一及ROG，Lemma 3.9给最后一项。对偶运输 $f\mapsto f\circ\Psi^{-1}$ 双射整个 proper 区间、确认集和零关系，双射 $K,P$ 及整个最小面，故保持 $\mathrm{Z0}$ 和 $S$。这项行列式驻点计算只是同载体归一化的矩阵工具，不是额外几何公理。由90.3直接得全部二纯点整最小面为 $B^1$ 或 $B^2$，所以原 $\mathrm B$ 自动成立。下文在(93.5)坐标内将 $C',u',P'$ 简记为 $C,u,P$。
+

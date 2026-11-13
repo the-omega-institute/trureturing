@@ -1,0 +1,60 @@
+**引理 116.11（三轴非塌陷、整球连续与真实向量球丛）。** 在 $\mathsf Q_1$ 下，
+在 $H=\ker u$ 上任取辅助欧氏内积。每张原球唯一写成
+
+$$
+D_p=c_p+Q_p^{1/2}\overline B_H,\qquad Q_p\ge0,\quad\operatorname{rank}Q_p=3.
+\tag{IX116.19}
+$$
+
+存在 $0<\eta\le R_0<\infty$，使全部球的三根半轴均在 $[\eta,R_0]$ 内。
+映射 $p\mapsto D_p$ 在Hausdorff距离下连续，$c_p,Q_p,Q_p^\dagger$ 及其像空间投影连续。
+空间 $\xi_p=\operatorname{im}Q_p$ 组成真实秩三向量丛，且连续球尺
+$g_p(v,w)=\langle v,Q_p^\dagger w\rangle$ 的闭单位盘恰为 $D_p-c_p$。
+
+证明。令 $L=\max_{f\in\mathcal E}\|f|_H\|$。$L$ 有限；饱和端点的差非零，故 $L>0$。
+116.10的端点与效应给
+
+$$
+1=|f(q)-f(r)|\le L\|q-r\|,\qquad
+\max\{\text{半轴长}}\ge(2L)^{-1}.
+\tag{IX116.20}
+$$
+
+各半轴长又不超过 $R_0=\operatorname{diam}K/2$。此时只得最大轴的下界。
+若最小轴无统一正下界，可取一列球，其最小轴趋零。
+将每张球写成 $c_j+A_jB^3$，列向量为按轴长排序的正交主轴；
+中心、轴长和正交三标架在有限维紧集中共同取子列，得到 $c_j\to c,A_j\to A$。
+由最大轴下界及假设，有 $1\le\operatorname{rank}A\le2$。
+任取 $v\in(\ker A)^\perp$、$\|v\|\le1$，沿非零核补 $w\in\ker A$，使 $\|v+w\|=1$。
+则
+
+$$
+c_j+A_j(v+w)\in\partial D_{p_j}\subset P,\qquad
+c_j+A_j(v+w)\longrightarrow c+Av.
+\tag{IX116.21}
+$$
+
+由 $P$ 闭，整个非退化低维盘 $c+AB^3$ 均在 $P$。
+盘含非平凡线段，其中点不能为 $K$ 的极点，矛盾。这给所有三轴的统一下界 $\eta$。
+
+现取 $p_j\to p$。任意子列可再取中心、轴标架及共同零确认效应收敛，记极限球为
+$F=c+AB^3$、效应为 $e$。非塌陷保证 $F$ 仍是三维椭球；连续评价给
+$e(p)=1,e|_F=0$，故 $F\subseteq D_p$。每个 $\partial F$ 点又是原球面纯点的极限，故在 $P$。
+二者同维且包含，仿射包相同。若严格包含，可从 $\operatorname{ri}F$ 内一点走向
+$\operatorname{ri}D_p\setminus F$ 的一点；首次离开 $F$ 的点在
+$\partial F\cap\operatorname{ri}D_p$，同时被要求纯与非纯，矛盾。
+所以每个子列极限均为 $D_p$，即得整球连续。
+
+对辅助坐标中的支持函数 $h_p(v)=\max_{x\in D_p}\langle v,x\rangle$，有
+
+$$
+h_p(v)-h_p(-v)=2\langle v,c_p\rangle,\qquad
+\left(\frac{h_p(v)+h_p(-v)}2\right)^2=\langle Q_pv,v\rangle.
+\tag{IX116.22}
+$$
+
+支持函数连续及极化确定连续的 $c_p,Q_p$。正谱与零谱有统一间隙，连续函数演算
+给像投影与伪逆连续。在任意 $p_0$ 选三个环境向量，其像投影在 $\xi_{p_0}$ 独立；
+在邻域内仍独立，连续Gram–Schmidt给局部标架。按 $g_p$ 归一给实际盘、球的局部平凡化。
+辅助欧氏尺只为描述这些原球，不是共同物理内积的输入。证毕。
+

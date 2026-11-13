@@ -1,0 +1,21 @@
+证明。令严格正的倾斜先验为
+
+$$
+r_\beta(h)=\frac{2^{-n}e^{-\beta d(h)^2}}{L_{n,t,c}(\beta)}.
+$$
+
+$\ln x\le x-1$ 给出
+
+$$
+\sum_{a(h)>0}a(h)\ln\frac{r_\beta(h)}{a(h)}
+\le\sum_{a(h)>0}r_\beta(h)-1\le0,
+$$
+
+故 $D(a\|r_\beta)\ge0$。展开对数得到精确恒等式
+
+$$
+D(a\|P_n)=D(a\|r_\beta)-\beta\mathbb E_a d^2-\ln L_{n,t,c}(\beta).
+$$
+
+用引理 5.1 即得 (5.3)。所有对数均为自然对数；这里没有微分熵，也没有确定性终端核假设。$\square$
+

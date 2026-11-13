@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4ce5aa54c94ac488a1d0f4a8e614275382716b1b87a57c83ec4b9afba7482541
+  normalized_sha256: sha256:4ce5aa54c94ac488a1d0f4a8e614275382716b1b87a57c83ec4b9afba7482541
+cas_ref: sha256:4ce5aa54c94ac488a1d0f4a8e614275382716b1b87a57c83ec4b9afba7482541
+coverage_gids:
+  - gid: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryCompactSpace
+    target_statement_id: sha256:2cec9c00a5ea65c8a268bcfb410af53b86bea819b3619fe6453185aea736e95d
+receipts:
+  unresolved_subitems: []
