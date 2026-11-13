@@ -65,8 +65,8 @@ counting identity. The proof only discards the cofinite indices
 below two. It makes no fixed-dimension or subsequence assumption.
 
 Preregistration is [issue #29912](https://github.com/the-omega-institute/trureturing/issues/29912).
-The result is not frozen or delivered to dev. Independent source/proof-shape
-review, canonical settlement, final required checks and delivery remain unpaid.
+The typed Proved resolution claim covers the historical limit. Final independent
+review, exact-head required checks and delivery to dev remain separate obligations.
 The source-bound audit is unfinished under
 [issue #29924](https://github.com/the-omega-institute/trureturing/issues/29924).
 No resolved-problem KPI is claimed.
