@@ -176,12 +176,12 @@ internal sealed class MaximalHockeyStickL1ReverseTestDocument : IScribeDocumentD
     }
     private static DocumentBlock ProfileNode(string name, string prose, bool theorem) =>
         Describe.Lean(DescribeId.Create("maximalhockeysticklone-" + name.Replace("_", "-").Replace(".", "-").ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
+            DeclarationHandle.Create(Prefix + name.Replace("PositiveTracePreservingL1Map.", "").Replace("L1ReverseTest.", "")), H(name), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
     private static DocumentBlock Node(string name, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("maximalhockeysticklone-" + name.Replace("_", "-").Replace(".", "-").ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(Disp(formula)),
+            DeclarationHandle.Create(Prefix + name.Replace("PositiveTracePreservingL1Map.", "").Replace("L1ReverseTest.", "")), H(name), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula Id(string name) => FormulaDsl.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

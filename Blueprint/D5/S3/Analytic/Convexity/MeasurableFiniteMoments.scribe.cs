@@ -45,7 +45,7 @@ internal sealed class MeasurableFiniteMomentsDocument : IScribeDocumentDefinitio
                 All("mu", Call("Measure", Id("alpha")), All("f", Arrow(Id("alpha"), Id("E")), body)))));
     private static Formula Integral() => Call("Integral", Id("f"), Id("mu"));
     private static DocumentBlock Node(string name, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create("measurablefinitemoments-" + name.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("measurablefinitemoments-" + name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(name), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula Id(string name) => FormulaDsl.Id(name);
