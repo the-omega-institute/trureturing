@@ -60,7 +60,7 @@ Lean statement: `D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.claim
 
 *Formalization.* `D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Debraj Banerjee; Kunal N. Chaudhury (2025). *On the Schur Stability of Some Image Reconstruction Operators*. URL: <https://arxiv.org/abs/2509.06715v1>.
 
 *Commentary.*
 

@@ -41,3 +41,12 @@ The repository refutes this full conjunction through P at dimension four.
 It does not assert instability of R, solve the broader classification
 in Problem 1.1, or provide new spectral theory. The separate positive
 results under their stated stronger hypotheses are outside this refutation.
+
+## Verified locator
+
+Source: https://arxiv.org/abs/2509.06715v1
+- URL: https://arxiv.org/abs/2509.06715v1 (original source `manuscript.tex`, SHA-256 `2a828b151c14f8bff40243c0a56cc6a9d3b4efce27e4258215db2940ad9baf4b`):
+  - dimension, complex spectral radius, stability and stochastic/Perron definitions, lines 117–121;
+  - the nonzero B convention and operators P and R, lines 124–138;
+  - the nonsymmetric stochastic convention, line 300;
+  - Conjecture 1.1, lines 324–328.
