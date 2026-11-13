@@ -4,7 +4,7 @@
 
 The printed adjugate denominator accepts a noninner derivation on the actual fourth cyclotomic integer ring.
 
-The source is Manju and Sharma, Twisted Derivations in Algebraic Number Fields, arXiv:2412.03507v2, Definition 2.1 and Section 4.2, Conjectures 4.3–4.4. The original TeX reference in 4.4 is to 4.3. Its denominator is p to the e, not the absolute determinant p to the power p to the e. The original version 1 also prints that denominator. Adjugate means classical adjugate.
+The source is Manju and Sharma, Twisted Derivations in Algebraic Number Fields, arXiv:2412.03507v2, Definition 2.1 and Section 4.2, Conjectures 4.3–4.4. The original TeX reference in 4.4 is to 4.3. Its denominator is p to the e, not the absolute determinant p to the power p to the e. The original version 1 also prints that denominator. Adjugate means classical adjugate. The source locators are TeX lines 120, 135–137, 470–472, 1276–1277, 1281–1283 and 1287–1289. Table 3 has the opposite matrix sign in this case; the defining multiplication operator in Section 4 fixes the sign used here.
 
 **Definition 1.1 (Integral innerness).**
 
@@ -160,6 +160,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/manju-sharma-2024-conjecture-4-4-refutation` (refuted) by `D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"manju-sharma-2024-conjecture-4-4-refutation","declaration_gid":"D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Praveen Manju and Rajendra Kumar Sharma (2024). *Twisted Derivations in Algebraic Number Fields*. URL: <https://arxiv.org/abs/2412.03507v2>.
@@ -170,7 +174,7 @@ Take p=2, k=2, n=4, u=1, v=3, e=1 and m=1. All unit, ordering, prime and factori
 
 If an integral gamma=a+bz made D inner, evaluation at z would give 1=gamma*(-z)-z*gamma=2b-2az. The real coordinate forces 1=2b, impossible over the integers. The proof pulls gamma back along the actual proved equivalence; it does not assume existence of an integral solution. The full universal iff would force this noninner D to be inner because its printed test holds. This contradicts the parity equation and proves literally Not claim.
 
-The counterexample negates the entire conjunction comprising the iff and both additional sufficient assertions. It does not separately refute either sufficient assertion, a corrected determinant-denominator statement, Conjecture 4.3 in general, or a corrigendum. The quadratic classification is prior literature, not claimed as new mathematics. The candidate admission basis is the full named external open-problem exception; no new classification theorem or independent escape witness is claimed.
+The counterexample negates the entire conjunction comprising the iff and both additional sufficient assertions. It does not separately refute either sufficient assertion, a corrected determinant-denominator statement, Conjecture 4.3 in general, or a corrigendum. Both sufficient assertions have false antecedents here, since the first coordinate of C is one. The quadratic classification is prior literature. The conclusion concerns the literal printed named conjecture; it makes no global priority claim.
 
 ## References
 
