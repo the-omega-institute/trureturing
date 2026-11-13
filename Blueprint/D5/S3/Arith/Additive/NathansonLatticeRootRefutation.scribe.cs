@@ -85,14 +85,17 @@ internal sealed class NathansonLatticeRootRefutationDocument : IScribeDocumentDe
                 + "The nonnegative square root has square three, contradicting 2²=4>3. This negates "
                 + "the complete universal proposition while proving existence of both minima at the "
                 + "counterexample; no failure of existence is used.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nathanson-2026-problem3-lattice-root-bound"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("nathansonlattice-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula App(Formula f, params Formula[] a) => a.Length == 0 ? f : new Formula.Apply(f, [.. a]);
