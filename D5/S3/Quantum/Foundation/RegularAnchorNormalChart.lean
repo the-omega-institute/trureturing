@@ -37,7 +37,7 @@ def EB3 (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
   ∀ p : pure C u, Nonempty (FullBall3Chart C u p)
 
 /-- The same chart in the existing native chart carrier. -/
-def nativeChart {p : V} (a : FullBall3Chart C u p) : ExclusionChart C u p :=
+abbrev nativeChart {p : V} (a : FullBall3Chart C u p) : ExclusionChart C u p :=
   ⟨3, by decide, a.param, a.injective, a.whole⟩
 
 /-- The original regular-anchor condition is uniqueness of the full family A_p. -/
