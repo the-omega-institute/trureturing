@@ -697,6 +697,9 @@ private theorem compression_eq_self_of_mem (P Q : H) (hP : star P = P)
 private theorem p_sub_le (x y : H) : D.p (x - y) ≤ D.p x + D.p y := by
   simpa only [p, map_sub] using norm_sub_le (D.mul x) (D.mul y)
 
+private theorem p_sub_rev (x y : H) : D.p (x - y) = D.p (y - x) := by
+  simp only [p, map_sub, norm_sub_rev]
+
 private theorem p_mul_two {τ : ℝ} (hτ : 0 ≤ τ)
     (hsmall : τ + M * δ ≤ 1 / 1024) (x y : H) :
     D.p (D.mul x y) ≤ 2 * D.p x * D.p y := by
@@ -720,8 +723,8 @@ private theorem corner_left_support (P Q : H) (hP : star P = P) (hQ : star Q = Q
     {x : H} (hx : x ∈ D.corner P Q) :
     D.p (D.mul P x - x) ≤ 24354 * (τ + M * δ) * D.p x := by
   let r := τ + M * δ
-  have hr : 0 ≤ r := add_nonneg hτ
-    (mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg)
+  have heps : 0 ≤ M * δ := mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg
+  have hr : 0 ≤ r := add_nonneg hτ heps
   have hδ : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
   have hp : D.p P ≤ 2 := projection_norm_le_two D P hP
     (by linarith : τ ≤ 1 / 4) (by linarith : δ ≤ 1 / 4) hPP
@@ -744,20 +747,23 @@ private theorem corner_left_support (P Q : H) (hP : star P = P) (hQ : star Q = Q
         _ ≤ 4 * D.p (D.mul x Q) :=
           mul_le_mul_of_nonneg_right hp2 (norm_nonneg _)
         _ ≤ _ := by linarith
-    simpa only [p, map_sub, norm_sub_rev] using h.trans (by
-      nlinarith [mul_le_mul_of_nonneg_left hprod hr])
+    rw [p_sub_rev]
+    apply h.trans
+    change r * D.p P * D.p P * D.p (D.mul x Q) ≤ _
+    nlinarith [mul_le_mul_of_nonneg_left hprod hr]
   have hb : D.p (D.mul (D.mul P P - P) (D.mul x Q)) ≤ 8 * r * D.p x := by
     apply (p_mul_two D hτ hsmall _ _).trans
     calc
       _ ≤ 2 * τ * (4 * D.p x) :=
         mul_le_mul (by linarith) hu (norm_nonneg _) (by positivity)
-      _ ≤ _ := by dsimp [r]; nlinarith
+      _ ≤ _ := by dsimp [r]; nlinarith [mul_nonneg heps hx0]
   have hc : D.p (D.mul P (x - D.mul P (D.mul x Q))) ≤
       4 * (4866 * r * D.p x) := by
     apply (p_mul_two D hτ hsmall _ _).trans
     calc
       _ ≤ 4 * D.p (x - D.mul P (D.mul x Q)) := by
-        nlinarith [norm_nonneg (D.mul (x - D.mul P (D.mul x Q)))]
+        have hv : 0 ≤ D.p (x - D.mul P (D.mul x Q)) := norm_nonneg _
+        nlinarith [mul_le_mul_of_nonneg_right hp hv]
       _ ≤ _ := by linarith
   have hid : D.mul P x - x =
       (D.mul P (x - D.mul P (D.mul x Q)) +
@@ -785,8 +791,8 @@ theorem corner_product_support (P Q R : H)
     D.p (D.compression P R (D.mul x y) - D.mul x y) ≤
       260000 * (τ + M * δ) * D.p x * D.p y := by
   let r := τ + M * δ
-  have hr : 0 ≤ r := add_nonneg hτ
-    (mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg)
+  have heps : 0 ≤ M * δ := mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg
+  have hr : 0 ≤ r := add_nonneg hτ heps
   have hδ : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
   have hp : D.p P ≤ 2 := projection_norm_le_two D P hP
     (by linarith : τ ≤ 1 / 4) (by linarith : δ ≤ 1 / 4) hPP
@@ -801,10 +807,15 @@ theorem corner_product_support (P Q R : H)
     exact ⟨star z, (compression_star D Q R hQ hR hτ hsmall hQQ hRR z).symm⟩
   have hyr : D.p (D.mul y R - y) ≤ 24354 * r * D.p y := by
     have h := corner_left_support D R Q hR hQ hτ hsmall hRR hQQ hsy
-    simpa only [← hR, ← D.star_mul, ← star_sub, p_star, star_star] using h
+    have hid : star (D.mul y R - y) = D.mul R (star y) - star y := by
+      rw [star_sub, D.star_mul, hR]
+    rw [← hid, p_star, p_star] at h
+    exact h
   have hmul := p_mul_two D hτ hsmall
-  have hleft (v : H) : D.p (D.mul P v) ≤ 4 * D.p v :=
-    (hmul P v).trans (by nlinarith [norm_nonneg (D.mul v)])
+  have hleft (v : H) : D.p (D.mul P v) ≤ 4 * D.p v := by
+    apply (hmul P v).trans
+    have hv : 0 ≤ D.p v := norm_nonneg _
+    nlinarith [mul_le_mul_of_nonneg_right hp hv]
   have h₀ : D.p (D.compression P R (D.mul x y) - D.mul P (D.mul (D.mul x y) R)) ≤
       9732 * r * D.p x * D.p y := by
     apply (compression_closeness D P R hP hR hτ hsmall hPP hRR _).1.trans
@@ -815,6 +826,7 @@ theorem corner_product_support (P Q R : H)
     rw [← map_sub]
     apply (hleft _).trans
     have h := p_assoc_error D hτ x y R
+    change D.p _ ≤ r * D.p x * D.p y * D.p R at h
     have h' : r * D.p x * D.p y * D.p R ≤ 2 * r * D.p x * D.p y := by
       nlinarith [mul_le_mul_of_nonneg_left hRnorm (mul_nonneg hr hxy0)]
     nlinarith
@@ -828,9 +840,11 @@ theorem corner_product_support (P Q R : H)
   have h₃ : D.p (D.mul P (D.mul x y) - D.mul (D.mul P x) y) ≤
       2 * r * D.p x * D.p y := by
     have h := p_assoc_error D hτ P x y
+    change D.p _ ≤ r * D.p P * D.p x * D.p y at h
     have h' : r * D.p P * D.p x * D.p y ≤ 2 * r * D.p x * D.p y := by
       nlinarith [mul_le_mul_of_nonneg_right hp (mul_nonneg hr hxy0)]
-    simpa only [p, map_sub, norm_sub_rev] using h.trans h'
+    rw [p_sub_rev]
+    exact h.trans h'
   have h₄ : D.p (D.mul (D.mul P x) y - D.mul x y) ≤
       (2 * 24354) * r * D.p x * D.p y := by
     rw [← sub_apply, ← map_sub]
@@ -849,6 +863,66 @@ theorem corner_product_support (P Q R : H)
   have hd := ht (D.mul P (D.mul x y)) (D.mul (D.mul P x) y) (D.mul x y)
   dsimp [r] at *
   nlinarith [mul_nonneg hr hxy0]
+
+private theorem corner_square_expectation_lower (P Q : H)
+    (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
+    {x : H} (hx : x ∈ D.corner P Q) :
+    ‖x‖ ^ 2 - 260000 * (τ + M * δ) * D.p x ^ 2 ≤
+      (inner ℂ D.unit (D.compression Q Q (D.mul (star x) x))).re := by
+  have hsx : star x ∈ D.corner Q P := by
+    obtain ⟨z, rfl⟩ := hx
+    exact ⟨star z, (compression_star D P Q hP hQ hτ hsmall hPP hQQ z).symm⟩
+  have hs := corner_product_support D Q P Q hQ hP hQ hτ hsmall hQQ hPP hQQ hsx hx
+  have he : ‖D.compression Q Q (D.mul (star x) x) - D.mul (star x) x‖ ≤
+      260000 * (τ + M * δ) * D.p x ^ 2 := by
+    apply (norm_le_p D _).trans
+    simpa only [p_star, pow_two, mul_assoc] using hs
+  have hid : inner ℂ D.unit (D.mul (star x) x) = inner ℂ x x := by
+    have h := ContinuousLinearMap.adjoint_inner_right (D.mul x) D.unit x
+    simpa only [D.adjoint_mul, D.right_unit] using h
+  have hc := re_inner_le_norm (𝕜 := ℂ) D.unit
+    (D.mul (star x) x - D.compression Q Q (D.mul (star x) x))
+  rw [D.unit_norm, one_mul, norm_sub_rev, inner_sub_right, hid] at hc
+  change (inner ℂ x x).re -
+    (inner ℂ D.unit (D.compression Q Q (D.mul (star x) x))).re ≤ _ at hc
+  have hn : (inner ℂ x x).re = ‖x‖ ^ 2 := inner_self_eq_norm_sq (𝕜 := ℂ) x
+  rw [hn] at hc
+  linarith only [hc, he]
+
+/-- At the stated scale, the actual compressed square detects every nonzero
+mixed-corner vector in the original Hilbert norm. This is not a scalar pairing. -/
+theorem corner_square_nondegenerate (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
+    (hpositive : 520000 * (τ + M * δ) * M ^ 2 ≤ 1)
+    {x : H} (hx : x ∈ D.corner P Q) :
+    ‖x‖ ^ 2 / 2 ≤ (inner ℂ D.unit (D.compression Q Q (D.mul (star x) x))).re ∧
+      (D.compression Q Q (D.mul (star x) x) = 0 ↔ x = 0) := by
+  have hr : 0 ≤ τ + M * δ := add_nonneg hτ
+    (mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg)
+  have hpx : 0 ≤ D.p x := norm_nonneg _
+  have hsq : D.p x ^ 2 ≤ (M * ‖x‖) ^ 2 := by
+    nlinarith only [mul_self_le_mul_self hpx (p_le D x)]
+  have he : 260000 * (τ + M * δ) * D.p x ^ 2 ≤ ‖x‖ ^ 2 / 2 := by
+    calc
+      _ ≤ 260000 * (τ + M * δ) * (M * ‖x‖) ^ 2 :=
+        mul_le_mul_of_nonneg_left hsq (by positivity)
+      _ = (520000 * (τ + M * δ) * M ^ 2) * ‖x‖ ^ 2 / 2 := by ring
+      _ ≤ _ := by
+        nlinarith only [mul_le_mul_of_nonneg_right hpositive (sq_nonneg ‖x‖)]
+  have hl := corner_square_expectation_lower D P Q hP hQ hτ hsmall hPP hQQ hx
+  have hhalf : ‖x‖ ^ 2 / 2 ≤
+      (inner ℂ D.unit (D.compression Q Q (D.mul (star x) x))).re := by
+    linarith only [hl, he]
+  refine ⟨hhalf, ?_⟩
+  constructor
+  · intro hz
+    rw [hz, inner_zero_right, Complex.zero_re] at hhalf
+    exact norm_eq_zero.mp (by nlinarith only [hhalf, norm_nonneg x])
+  · rintro rfl
+    simp only [star_zero, map_zero]
 
 end Product
 
