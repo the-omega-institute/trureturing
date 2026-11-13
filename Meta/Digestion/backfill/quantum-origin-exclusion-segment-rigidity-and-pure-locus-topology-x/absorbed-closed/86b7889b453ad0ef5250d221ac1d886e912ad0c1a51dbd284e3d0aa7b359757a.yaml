@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:86b7889b453ad0ef5250d221ac1d886e912ad0c1a51dbd284e3d0aa7b359757a
+  normalized_sha256: sha256:86b7889b453ad0ef5250d221ac1d886e912ad0c1a51dbd284e3d0aa7b359757a
+cas_ref: sha256:86b7889b453ad0ef5250d221ac1d886e912ad0c1a51dbd284e3d0aa7b359757a
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation.common_old_exclusion_confirmation
+    target_statement_id: sha256:87cfd8f666c7c094f551267afd0317023783d7fd534299e90164341bcb3e33f3
+  - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.comparison_attained
+    target_statement_id: sha256:35499a8c7af4b6e2b36f95e098b71dbd45e20ce2eae846819dca31b423a80b17
+  - gid: D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary
+    target_statement_id: sha256:e674c21245bdd878fc7aae554ecaca6685d6428a6507fae65b457c5ec96fabfe
+  - gid: D5/S3/Quantum/Foundation/OriginalWidthContact.normalized_effect
+    target_statement_id: sha256:88693052bfe7a7bb3276f1f1aceff82cbace0ab4ebb82a08b42eb43cee0d0535
+  - gid: D5/S3/Quantum/Foundation/ReciprocalEndpointExposure.reciprocal_endpoint_exposure
+    target_statement_id: sha256:39ad79353e15f4095995c6cf78ce6b33f90723f74cb53c39740cf36bf7341da9
+  - gid: D5/S3/Quantum/Foundation/ReciprocalExclusionLimits.exclusion_limit_dichotomy
+    target_statement_id: sha256:3527641c9862fe30410d53ac954fcea243dc2ead59ba1798e5b24326304f81c5
+  - gid: D5/S3/Quantum/Foundation/ReciprocalPureCompactness.reciprocal_pure_compact
+    target_statement_id: sha256:6094ab6907012810354abfec784a7f8952aa05bad198dea6dc6adfb9ca7395e6
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.affine_nonneg_bound
+    target_statement_id: sha256:a738ca70296102746e9d4b25a8ffb263b0904a4fe645995c7d46682f8d228e0f
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.affine_riesz
+    target_statement_id: sha256:ed79238163d8d6c00825aa20c8381c33b6f3410ce584845fc9b9093f391cbc73
+  - gid: D5/S3/Quantum/Foundation/WholePairBallConfirmation.affine_zero_antipode
+    target_statement_id: sha256:ac047942e12a0b6a97875a535e5a684c63f462298c829ac486298a2e836bfc82
+receipts:
+  unresolved_subitems: []
