@@ -161,11 +161,15 @@ private theorem inner_ball_support_cross {E : Type*} [NormedAddCommGroup E]
       (hky : k y = 0) : ∀ w, k (b w) = k z * (1 + ⟪n, w⟫) := by
     have hh := affine_zero_antipode (k.comp b) hn (fun w hw => hk _ (hball hw))
       (by simpa only [AffineMap.comp_apply, hbn] using hky)
-    have hzero := hh 0
-    simp only [AffineMap.comp_apply, hbapply, smul_zero, add_zero, inner_zero_right,
-      mul_one] at hzero
+    have hzero : (k.comp b) n / 2 = k z := by
+      have hh0 := hh 0
+      change k (b 0) = _ at hh0
+      rw [show b 0 = z by simp only [hbapply, smul_zero, add_zero]] at hh0
+      simpa only [inner_zero_right, add_zero, mul_one] using hh0.symm
     intro w
-    simpa only [AffineMap.comp_apply, ← hzero] using hh w
+    calc
+      k (b w) = (k.comp b) n / 2 * (1 + ⟪n, w⟫) := hh w
+      _ = k z * (1 + ⟪n, w⟫) := by rw [hzero]
   intro a c
   obtain ⟨a, rfl⟩ := hb a
   obtain ⟨c, rfl⟩ := hb c
@@ -226,7 +230,7 @@ private theorem contact_not_pure {E : Type*} [NormedAddCommGroup E]
   have hzmem : (0 : EuclideanSpace ℝ (Fin b.dim)) ∈ slopeBody b :=
     hinner (by simpa using hrho.le)
   have hvmem : v ∈ slopeBody b := hinner (by simpa only [Metric.mem_closedBall,
-    dist_zero_right, hv])
+    dist_zero_right, hv] using (le_rfl : rho ≤ rho))
   have hzero : v = 0 := hsingle hvmem hzmem
   rw [hzero, norm_zero] at hv
   linarith
@@ -255,11 +259,11 @@ theorem original_unique_confirmer_density
     let K := base C u
     let A := affineSpan ℝ K
     let pA : A := ⟨p, subset_affineSpan ℝ K (pure_mem p)⟩
-    letI : Nonempty A := ⟨pA⟩
+    let : Nonempty A := ⟨pA⟩
     let E := EuclideanSpace ℝ (Fin (Module.finrank ℝ A.direction))
     let l : E ≃ₗ[ℝ] A.direction := LinearEquiv.ofFinrankEq _ _ (by simp [E])
     let e : E ≃ᵃ[ℝ] A := l.toAffineEquiv.trans (AffineEquiv.vaddConst ℝ pA)
-    let eh := e.toHomeomorphOfFiniteDimensional
+    let eh := e.toContinuousAffineEquiv.toHomeomorph
     let a : E →ᵃ[ℝ] V := A.subtype.comp e.toAffineMap
     let S : Set E := a ⁻¹' K
     let KA : Set A := ((↑) : A → V) ⁻¹' K
@@ -293,7 +297,7 @@ theorem original_unique_confirmer_density
       simpa [eh, x0, ← heq] using hv
     have hproper : S ≠ univ := by
       intro heq
-      simpa [heq] using hxfront
+      simp [heq] at hxfront
     have hclosure : x0 ∈ closure (interior S) := by
       rw [hconv.closure_interior_eq_closure_of_nonempty_interior hnon,
         hcompact.isClosed.closure_eq]
@@ -303,7 +307,7 @@ theorem original_unique_confirmer_density
       exists_mem_frontier_infDist_compl_eq_dist (interior_subset (hzn n)) hproper
     let rn (n : ℕ) := Metric.infDist (zn n) Sᶜ
     have hrpos (n : ℕ) : 0 < rn n := by
-      apply (Metric.infDist_pos_iff_notMem_closure (nonempty_compl.mpr hproper)).mpr
+      apply (Metric.infDist_pos_iff_notMem_closure (nonempty_compl.mpr hproper)).mp
       simpa only [closure_compl, mem_compl_iff, not_not] using hzn n
     have hdist (n : ℕ) : dist (yn n) (zn n) = rn n := by
       rw [dist_comm]
@@ -342,7 +346,7 @@ theorem original_unique_confirmer_density
         obtain ⟨v, hv⟩ := hwhole (pure_mem (⟨q, hq⟩ : pure C u))
         have hh := hcross v d
         change f (a v) * en n (a d) = en n (a v) * f (a d) at hh
-        simpa only [hv, hd, (hen n).2, mul_one, LinearMap.smul_apply,
+        simpa only [hv, hd, (hen n).2, mul_one, one_mul, LinearMap.smul_apply,
           smul_eq_mul, mul_comm] using hh
       · rintro ⟨t, ht, rfl⟩
         refine ⟨fun v hv => mul_nonneg ht (((hen n).1 v hv).1), ?_⟩
@@ -370,7 +374,9 @@ theorem original_unique_confirmer_density
     have hylim : Tendsto yn atTop (𝓝 x0) := by
       apply tendsto_iff_dist_tendsto_zero.mpr
       have hzdist : Tendsto (fun n => dist (zn n) x0) atTop (𝓝 0) := by
-        simpa only [dist_self] using hzlim.dist tendsto_const_nhds
+        have hh : Tendsto (fun n => dist (zn n) x0) atTop (𝓝 (dist x0 x0)) :=
+          hzlim.dist tendsto_const_nhds
+        simpa only [dist_self] using hh
       exact squeeze_zero (fun _ => dist_nonneg) hnear
         (by simpa only [mul_zero] using tendsto_const_nhds.mul hzdist)
     have hxlim : Tendsto (fun n => a (yn n)) atTop (𝓝 x) := by
