@@ -134,4 +134,80 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+namespace BeforeStop
+
+/-- The complete active-prefix law; only its chronological count readout varies. -/
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {Seed : Type u} [m : MeasurableSpace Seed] (p : Policy Seed) (seed : Seed)
+    (z : Source) (n : ℕ), noAdjacentOnes z → (n : WithTop ℕ) < stoppingTime p seed z →
+    (∀ side i, i ≤ sideCount (actualRun p seed z n).actions side →
+      endpoint z side i = alternatingBit z.1 i) ∧
+    ∀ side, R.readout () ⟨Seed, m, p, seed, n, side⟩ z =
+      (if z.1 then sideCount (actualRun p seed z n).actions side / 2
+        else (sideCount (actualRun p seed z n).actions side + 1) / 2)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro law
+  let z : Source := (false, (fun _ => false), fun _ => false)
+  have hs : noAdjacentOnes z := by
+    intro side i
+    cases i <;> cases side <;> simp [z, endpoint, arm]
+  have hn : (0 : WithTop ℕ) < stoppingTime leftPolicy.{u} (ULift.up ()) z := by
+    apply (stopped_execution_replay_bridge leftPolicy.{u} (ULift.up ()) z 0).1.mpr
+    simp [prefixNoMarker, zeroReplay, sideCount]
+  have hh := (law leftPolicy.{u} (ULift.up ()) z 0 hs hn).2 false
+  norm_num [rejected, realize, actualRun, sideCount, z] at hh
+
+def family : Registration arena.{u} (type_of% (@actual_rise_count_before_stop.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@actual_rise_count_before_stop.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hj
+      exact (hj (@Subsingleton.elim Unit _ j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@actual_rise_count_before_stop.{u})
+    (Realization signature.{u}) Type Unit where
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.AdaptiveActualRiseCounts.BeforeStop.unit
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.AdaptiveActualRiseCounts.BeforeStop.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ p z =>
+    @actualRiseCount p.1 p.2.1 p.2.2.1 p.2.2.2.1 z p.2.2.2.2.2 p.2.2.2.2.1) Empty.elim)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.AdaptiveActualRiseCounts
+    definition := none
+    coordinates := #[0, 1, 2, 3, 5, 8]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["fn", "fn", "arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end BeforeStop
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.AdaptiveActualRiseCounts

@@ -55,6 +55,64 @@ private theorem time_count_eq_prefix_count
       · simp [actualRun, hf, ha, sideCount, Nat.count_succ]
       · simp [actualRun, hf, ha, sideCount]
 
+/-- Every active prefix alternates from the original shared root on both arms,
+and its chronological 01 counts have the root-dependent half-lengths.
+No later finite stopping time is required. -/
+theorem actual_rise_count_before_stop
+    {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed)
+    (source : Source) (n : ℕ) (hsupport : noAdjacentOnes source)
+    (hn : (n : WithTop ℕ) < stoppingTime policy seed source) :
+    (∀ side i, i ≤ sideCount (actualRun policy seed source n).actions side →
+      endpoint source side i = alternatingBit source.1 i) ∧
+    ∀ side, actualRiseCount policy seed source side n =
+      (if source.1 then sideCount (actualRun policy seed source n).actions side / 2
+        else (sideCount (actualRun policy seed source n).actions side + 1) / 2) := by
+  classical
+  have hbridge := stopped_execution_replay_bridge policy seed source n
+  have hprefix := hbridge.1.mp hn
+  have hactions := (hbridge.2.2.1 (hbridge.2.1.mpr hprefix)).1
+  have halt : ∀ side i, i ≤ sideCount (actualRun policy seed source n).actions side →
+      endpoint source side i = alternatingBit source.1 i := by
+    intro side
+    apply (no_marker_iff_alternating_prefix source.1 (endpoint source side) rfl ?_
+      (sideCount (actualRun policy seed source n).actions side)).mp
+    · intro i hi
+      have hm0 := hprefix side i (by simpa only [hactions] using hi)
+      change ¬(endpoint source side i = false ∧ arm source side i = false)
+      exact of_decide_eq_false hm0
+    · intro i
+      simpa [endpoint] using hsupport side i
+  refine ⟨halt, fun side => ?_⟩
+  rw [time_count_eq_prefix_count]
+  let c := sideCount (actualRun policy seed source n).actions side
+  have heq : ∀ i < c,
+      (endpoint source side i = false ∧ arm source side i = true) ↔
+        (if source.1 then i % 2 = 1 else i % 2 = 0) := by
+    intro i hi
+    have h0 := halt side i (by omega)
+    have h1 := halt side (i + 1) (by omega)
+    simp only [endpoint] at h1
+    rw [h0, h1, alternating_bit_succ]
+    rcases Nat.mod_two_eq_zero_or_one i with hp | hp <;>
+      cases source.1 <;> simp [alternatingBit, hp]
+  have hcount : Nat.count
+      (fun i => endpoint source side i = false ∧ arm source side i = true) c =
+      Nat.count (fun i => if source.1 then i % 2 = 1 else i % 2 = 0) c := by
+    apply Nat.le_antisymm
+    · exact Nat.count_mono_left (fun i hi => (heq i hi).mp)
+    · exact Nat.count_mono_left (fun i hi => (heq i hi).mpr)
+  rw [hcount]
+  cases hb : source.1 <;> simp only [Bool.false_eq_true, ↓reduceIte]
+  · have hc := Nat.count_modEq_card (b := c) (r := 2) (by decide) 0
+    simp only [Nat.ModEq, Nat.zero_mod] at hc
+    convert hc using 1
+    · congr 1 <;> exact Subsingleton.elim _ _
+    · split_ifs <;> dsimp [c] at * <;> omega
+  · have hc := Nat.count_modEq_card (b := c) (r := 2) (by decide) 1
+    norm_num only [Nat.ModEq, Nat.reduceMod] at hc
+    convert hc using 1 <;> split_ifs <;> dsimp [c] at * <;> omega
+
+
 /-- At the finite first marker, the last query adds no rise. The actual rise count
 on each arm is the root-dependent half-length of its preterminal zero replay. -/
 theorem actual_rise_count_at_first_stop
@@ -95,7 +153,6 @@ theorem actual_rise_count_at_first_stop
     simpa [markerResponse] using hm
   have hbridge := stopped_execution_replay_bridge policy seed source (T - 1)
   have hactions := (hbridge.2.2.1 hprev).1
-  have hprefix := hbridge.2.1.mp hprev
   refine ⟨hpos, fun side => ?_⟩
   have hterminal : actualRiseCount policy seed source side T =
       actualRiseCount policy seed source side (T - 1) := by
@@ -111,41 +168,10 @@ theorem actual_rise_count_at_first_stop
           (actualRun policy seed source (T - 1)).replies ≠ side := ha
       simp only [ha', and_false, false_and, ↓reduceIte, Nat.add_zero, Nat.add_sub_cancel]
   refine ⟨hterminal, hterminal.trans ?_⟩
-  rw [time_count_eq_prefix_count, hactions]
-  let c := sideCount (zeroReplay policy seed (T - 1)) side
-  have halt : ∀ i ≤ c, endpoint source side i = alternatingBit source.1 i := by
-    apply (no_marker_iff_alternating_prefix source.1 (endpoint source side) rfl ?_ c).mp
-    · intro i hi
-      have hm0 := hprefix side i hi
-      change ¬(endpoint source side i = false ∧ arm source side i = false)
-      exact of_decide_eq_false hm0
-    · intro i
-      simpa [endpoint] using hsupport side i
-  have heq : ∀ i < c,
-      (endpoint source side i = false ∧ arm source side i = true) ↔
-        (if source.1 then i % 2 = 1 else i % 2 = 0) := by
-    intro i hi
-    have h0 := halt i (by omega)
-    have h1 := halt (i + 1) (by omega)
-    simp only [endpoint] at h1
-    rw [h0, h1, alternating_bit_succ]
-    rcases Nat.mod_two_eq_zero_or_one i with hp | hp <;>
-      cases source.1 <;> simp [alternatingBit, hp]
-  have hcount : Nat.count
-      (fun i => endpoint source side i = false ∧ arm source side i = true) c =
-      Nat.count (fun i => if source.1 then i % 2 = 1 else i % 2 = 0) c := by
-    apply Nat.le_antisymm
-    · exact Nat.count_mono_left (fun i hi => (heq i hi).mp)
-    · exact Nat.count_mono_left (fun i hi => (heq i hi).mpr)
-  rw [hcount]
-  cases hb : source.1 <;> simp only [Bool.false_eq_true, ↓reduceIte]
-  · have hc := Nat.count_modEq_card (b := c) (r := 2) (by decide) 0
-    simp only [Nat.ModEq, Nat.zero_mod] at hc
-    convert hc using 1
-    · congr 1 <;> exact Subsingleton.elim _ _
-    · split_ifs <;> dsimp [c] at * <;> omega
-  · have hc := Nat.count_modEq_card (b := c) (r := 2) (by decide) 1
-    norm_num only [Nat.ModEq, Nat.reduceMod] at hc
-    convert hc using 1 <;> split_ifs <;> dsimp [c] at * <;> omega
+  have hn : ((T - 1 : ℕ) : WithTop ℕ) < stoppingTime policy seed source := by
+    rw [hT]
+    exact_mod_cast (show T - 1 < T by omega)
+  have hactive := actual_rise_count_before_stop policy seed source (T - 1) hsupport hn
+  simpa only [hactions] using hactive.2 side
 
 end D5.S3.Observer.ProbabilisticClosure.AdaptiveActualRiseCounts

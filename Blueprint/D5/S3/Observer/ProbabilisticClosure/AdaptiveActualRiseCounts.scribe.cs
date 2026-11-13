@@ -43,10 +43,57 @@ internal sealed class AdaptiveActualRiseCountsDocument : IScribeDocumentDefiniti
             Open, count, Eq, countPrevious, Close, Land,
             Open, count, Eq, exponent, Close, Close, Close,
             End, Grp(F.Id("gathered"))));
+        Formula n = F.Id("n");
+        Formula i = F.Id("i");
+        Formula activeLength = Call("sideCount", Call("actions", Call("actualRun", policy, seed, source, n)), side);
+        Formula activeHalf = Seq(Lfloor, Frac, Grp(activeLength), Grp(D(2)), Rfloor);
+        Formula activeHalfUp = Seq(Lfloor, Frac, Grp(Seq(activeLength, Plus, D(1))), Grp(D(2)), Rfloor);
+        Formula activeExponent = Seq(Operatorname, Grp(F.Id("if")), Sp, root,
+            Sp, Operatorname, Grp(F.Id("then")), Sp, activeHalf,
+            Sp, Operatorname, Grp(F.Id("else")), Sp, activeHalfUp);
+        Formula activeStatement = Disp(Seq(
+            Begin, Grp(F.Id("gathered")),
+            Forall, Sp, space, Colon, F.Id("Type"), Comma, Sp,
+            OpenBracket, Call("MeasurableSpace", space), CloseBracket, Comma,
+            RowBreak, Grp(),
+            Forall, Sp, policy, Colon, Call("Policy", space), Comma, Sp,
+            Forall, Sp, seed, Colon, space, Comma, Sp,
+            Forall, Sp, source, Colon, F.Id("Source"), Comma, Sp,
+            Forall, Sp, n, InMacro, naturals, Comma,
+            RowBreak, Grp(),
+            Open, Call("noAdjacentOnes", source), Land,
+            n, Lt, Call("stoppingTime", policy, seed, source), Close, Rightarrow,
+            RowBreak, Grp(),
+            Open, Open, Forall, Sp, side, Colon, F.Id("Bool"), Comma, Sp,
+            Forall, Sp, i, InMacro, naturals, Comma, Sp,
+            i, Le, activeLength, Rightarrow,
+            Call("endpoint", source, side, i), Eq, Call("alternatingBit", root, i), Close,
+            RowBreak, Grp(), Land, Open,
+            Forall, Sp, side, Colon, F.Id("Bool"), Comma, Sp,
+            Call("actualRiseCount", policy, seed, source, side, n), Eq, activeExponent,
+            Close, Close, End, Grp(F.Id("gathered"))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Actual acquired 01 transitions in an absorbing adaptive two-arm execution.",
-            H("Chronological rise counts at the first marker"),
+            H("Chronological rise counts before and at the first marker"),
             Blocks(Describe.Lean(
+                DescribeId.Create("actual-rise-count-before-stop"),
+                DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/AdaptiveActualRiseCounts.actual_rise_count_before_stop"),
+                H("Every active acquired prefix alternates and has the actual rise count"),
+                StatementSource.FromAuthor(activeStatement),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "The telescope retains every original measurable seed space, Policy, seed and Source. "
+                        + "For every natural n strictly below stoppingTime and every side s, let c be sideCount of the actions of actualRun at n. "
+                        + "Every endpoint at i at most c equals alternatingBit(root(z),i), so both prefixes start at the same original root. "
+                        + "The actual chronological 01 count is floor(c/2) for root true and floor((c+1)/2) for root false.")),
+                    Paragraph(Text(
+                        "The inequality uses the natural-number inclusion into WithTop naturals. Infinity is allowed as stoppingTime: "
+                        + "no future finite stop, termination assumption, probability law, finite mean, independence or restriction on switching is needed. "
+                        + "The private all-time transport connects chronological acquisitions to each original arm rank, including absorbed states. "
+                        + "Frozen replay and alternating-prefix results and the pinned residue-cardinality theorem supply the remaining steps. "
+                        + "The first-stop theorem below consumes this consequence at n = T minus one."))),
+                DescribeRole.Theorem), Describe.Lean(
                 DescribeId.Create("actual-rise-count-at-first-stop"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/AdaptiveActualRiseCounts.actual_rise_count_at_first_stop"),
                 H("Actual rises equal preterminal alternating half-lengths"),
@@ -69,7 +116,7 @@ internal sealed class AdaptiveActualRiseCountsDocument : IScribeDocumentDefiniti
                         + "and every finite first stopping time T. The preterminal arm lengths are read from zeroReplay at T minus one. "
                         + "No probability law or finite mean is assumed.")),
                     Paragraph(Text(
-                        "The proof first identifies chronological rise counts with counts along each actually acquired arm prefix by induction on execution time, "
+                        "The active-prefix theorem identifies chronological rise counts with counts along each actually acquired arm prefix by induction on execution time, "
                         + "including absorbed states. The stopped_execution_replay_bridge identifies the preterminal actions with zeroReplay. "
                         + "The no_marker_iff_alternating_prefix theorem then identifies the bit prefix, and the pinned natural-number residue count gives its half-length.")),
                     Paragraph(Text(
