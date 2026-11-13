@@ -29,7 +29,7 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 set_option maxHeartbeats 2000000
 
