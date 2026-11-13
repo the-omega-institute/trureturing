@@ -4327,3 +4327,577 @@ general inverse between those notions or a universal minimal relation
 structure.
 
 ## 追加锚（本行以下为增补区）
+
+## 45. A paid continuation at the obtained right cursor
+
+**Definition 45.1 (the unchanged source and the extended raw domain).**
+Fix precisely (IV.119)–(IV.125), with $e\in\mathbb Z$ unknown,
+beta $=0$, alpha $=1$, the lower floors, increasing right orientation
+and selected-chain calibration. The consumer remains $\mathcal R_H(e)$
+of (IV.122). Acquire the first marker by the original always-right
+`Task.raw` run under Assumption 40.4. Retain its actual first-stop
+subrecord, its count $K\in\{1,\ldots,5\}$ and its root certificate.
+The first marked edge starts at $p_0=e+K-1$; the actual cursor rests
+at its outer site $p_0+1=e+K$. A bound handle and immutable source
+version identify this same pointed chain throughout the following domain.
+
+An extended configuration retains that handle/version, original anchor,
+orientation, calibration, both cumulative side counts, actual cursors,
+the acquisition latch and the whole chronological record $J$.
+The left count stays zero in the construction below. At a stopped
+configuration a separately supplied, paid operation $\mathsf{Resume}$
+may succeed. Its only acquisition-state change is to clear the latch;
+it appends a fixed acknowledgement $\mathsf{Ack}$ to $J$. In particular
+it preserves $e$, the source/version, original anchor, both counts,
+cursors and every old record entry. It returns no source letter,
+index, phase, new anchor or refreshed source. With cumulative right
+count $c$, an enabled active right query has exactly the transition
+
+$$
+b=\mathbf1_{\{f(e+c)=f(e+c+1)=0\}},\qquad
+c'=c+1,\qquad \mathrm{latch}'=b.
+\tag{IV.145}
+$$
+
+It records $R$ and emits `zero` for $b=0$, `rawMark` for $b=1$.
+The new cursor is $e+c+1$. A stopped ordinary raw query still emits
+`reject`, samples nothing and leaves counts, cursor and latch unchanged.
+A Resume while active returns $\mathsf{RefuseActive}$ unchanged;
+an invalid or mismatched binding returns $\mathsf{RejectEntry}$ without
+a source sample. A supplied grant denial is recorded as $\mathsf{Denied}$
+and preserves the stopped configuration. Missing primitive authority
+or an unlawful phase disables the call rather than licensing success.
+No extra left-query continuation or two-arm anchor transport is assumed.
+
+**Assumption 45.2 (finite supply and returned cuts).** Every claimed
+successful finite call has its genuine source-bound rights, valid handle
+lifetime, finite backing reserved for its state and record, progress,
+acknowledgement and completed return. The controller retains its actual
+records, including grants, denials, refusals, rejections and stops.
+Record access, finite computation, counters, scratch, output construction
+and delivery have their own supplied backing and charges. A pending or
+interrupted call is not a successful returned cut. Its actual acquired
+prefix is retained; no unreturned block or answer is inferred from it.
+The positive conclusions require exactly the finitely many successful
+grants and completed queries they use. They assert no physical provision
+of this extended port and no fixed finite-capacity realization for all $H$.
+
+For indistinguishability statements, use the fixed monotone schedule:
+query right to a mark, successfully Resume with the same fixed Ack,
+then query right to the next mark, repeating a specified finite number
+of times. Public grant choices, waiting, reference representations and
+auxiliaries carry no additional source-dependent advice. This canonical
+successful record excludes extra waiting and rejected attempts; the
+larger interface still retains such events when they actually occur.
+There is no fresh suffix law or independence premise: all comparisons
+in (IV.145) read the single fixed source at its retained cumulative count.
+The same-cursor acquisition and original-consumer correspondences below
+are `repo-derived` ordinary deductions using the stated classical
+suppliers; no literature-priority assertion is part of their conclusions.
+
+## 46. From adjacent return words to the actual next comparison
+
+**Theorem 46.1 (same-cursor return correspondence).** Under Definitions
+45.1 and Assumption 45.2, suppose a returned stopped cursor is $p+1$
+and its marked edge is $f(p)f(p+1)=00$. After one successful Resume,
+the next actual marker is reached in exactly $D$ right comparisons,
+where $D\in\{3,5\}$. Its inner start is $p+D$, its returned cursor
+is $p+D+1$, and its actual reply word is $0^{D-1}1$. The intervening
+half-open source block and the newly acquired letters are respectively
+
+$$
+B_3=001,\quad B_5=00101,\qquad
+f[p,p+D)=B_D,\qquad
+f[p+2,p+D+2)=
+\begin{cases}100&D=3,\\10100&D=5.\end{cases}
+\tag{IV.146}
+$$
+
+Here $f[u,v)$ lists the letters at all integer indices $u\le i<v$.
+The theorem is pointwise for every integer $p$ in its marked domain.
+
+**Proof.** First fix the supplier correspondence, including its domain.
+On natural positions, `goldenWord` true represents $d(i)=1-f(i)$:
+the finite-prefix identity in
+[GoldenWord](../../../D5/S1/Words/GoldenWord.lean) and
+`fibWord_eq_beatty_floor` in
+[ZeckendorfBeattyBridge](../../../D5/S1/Words/ZeckendorfBeattyBridge.lean)
+give exactly the $i+1$ shift of (IV.119). Thus true-true corresponds
+to $00$, and increasing natural indices correspond to increasing
+right source indices, with no reversal. The existing
+[`golden_return_words_two_true_true`](../../../D5/S1/Words/ReturnWords/GoldenReturnWordsExact.lean)
+supplies true-true-false and true-true-false-true-false. Complementing
+their names gives $B_3,B_5$. Its adjacent-occurrence definition in
+[GoldenReturnWords](../../../D5/S1/Words/ReturnWords/GoldenReturnWords.lean)
+includes both marked starts and the absence of any intervening start.
+The length injectivity in
+[GoldenReturnItinerary](../../../D5/S1/Words/ReturnWords/GoldenReturnItinerary.lean)
+ensures that an observed return length identifies its word, rather
+than merely its composition.
+
+To use this natural-index supplier at every integer origin, take any
+finite block of $N$ letters starting at $u\in\mathbb Z$ and put
+$x=\{(u+1)s\}$. For $0\le j<N$ its uncomplemented letters are
+
+$$
+d(u+j)=\lfloor x+(j+1)s\rfloor-\lfloor x+js\rfloor.
+\tag{IV.147}
+$$
+
+The finitely many floors at $j=0,\ldots,N$ are constant on a common
+sufficiently short interval $[x,x+\epsilon)$, with $x+\epsilon<1$.
+This uses right continuity at an integral floor endpoint as well;
+it never replaces a lower floor by an upper floor. The positive
+irrational rotation orbit $\{\{(n+1)s\}:n\ge0\}$ is dense, so some
+nonnegative $n$ has its phase in $(x,x+\epsilon)$. Equation (IV.147)
+then gives exactly the same finite block at $n$. In particular transfer
+the entire block $f[p,p+D+2)$ when comparing two adjacent $00$ starts.
+Both two-letter endpoint occurrences and every intermediate candidate
+start survive the transfer. The supplier therefore classifies these
+integer return blocks too. This is the classical mechanical coding
+argument of [Berstel, §3.1](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf),
+used here only to transport this finite adjacent-marker certificate.
+
+It remains to obtain a next marker with the actual interface. Let
+$c=p+1-e$ be the count at the stopped cut. For the $j$th query after
+Resume, $j\ge1$, (IV.145) compares $f(p+j),f(p+j+1)$. These are
+exactly the replies of the original always-right run mathematically
+rooted at $p+1$, at its $j$th query, until its first mark. Induction
+on $j$ proves this response correspondence using $c+j-1$ as the
+unchanged original count plus the new queries. Theorem 41.1 applied
+to $S_{p+1}$ supplies a first mark within five comparisons. This
+application is an equality of suffix responses, not a new physical
+preparation or an operation moving the original anchor.
+
+Let its marked start be $p+D$. All starts $p+1,\ldots,p+D-1$
+were actually compared and unmarked. Thus it is the next adjacent
+start after $p$, so the transferred supplier gives $D=3$ or $5$ and
+$f[p,p+D)=B_D$. Exactly $D$ comparisons have occurred, because the
+first new inner endpoint was $p+1$, not $p$. Appending the final $00$
+to $B_D$ and deleting its already known initial two letters gives
+$100$ or $10100$. The emitted replies, count and outer cursor follow
+from (IV.145). Finite progress and return are Assumption 45.2's
+premises; word classification alone supplies neither. $\square$
+
+The adjacent-start convention and derived-word factorization are
+classical; see [Justin–Vuillon, §1.2](https://www.numdam.org/item/ITA_2000__34_5_343_0.pdf)
+and [Durand, §2.3](https://arxiv.org/pdf/0807.3322v1). The additional
+correspondence here is between their half-open block and this paid
+operation's outer cursor, actual comparisons and original anchored source.
+
+**Proposition 46.2 (the initial root certificate has a restricted domain).**
+The first-stop certificate still gives $f(e)=(K-1)\bmod2$.
+Applying the old one-marker `recoveredRoot` to the cumulative lists
+of a resumed history is not a sound replacement for that certificate.
+
+**Proof.** The first claim is the alternating-prefix argument of
+Proposition 41.2. At $e=2$, the first mark has $K=1$, followed by
+$D=5$ in (IV.146). The accumulated right list then has six queries.
+The old formula would return $(6-1)\bmod2=1$, whereas $f(2)=0$.
+An earlier marker destroys its no-earlier-marker premise. Keeping
+the original subrecord or its certified root avoids this false inference;
+continued acquisition uses `Task.raw` and the framed blocks. $\square$
+
+## 47. Same-source composition and finite resource bounds
+
+**Theorem 47.1 (the acquired prefix invariant).** Let $p_j$ be the
+successive actual marked starts on a canonical successful run, with
+$p_0=e+K-1$, and let $D_j=p_j-p_{j-1}$ for $1\le j\le m$.
+Define the length-$(K-1)$ word $U_K$ by
+$U_K(i)=(K-1-i)\bmod2$ for $0\le i<K-1$. At the returned cut
+after exactly $m$ resumed episodes,
+
+$$
+\begin{aligned}
+Q_m&=K+\sum_{j=1}^{m}D_j,& p_m&=e+Q_m-1,\\
+W_m&=U_K B_{D_1}\cdots B_{D_m}00
+     =f[e,e+Q_m+1).
+\end{aligned}
+\tag{IV.148}
+$$
+
+There have been exactly $Q_m$ source comparisons and $m$ paid successful
+Resumes. The right cursor is $e+Q_m=p_m+1$. The same bound source,
+version, original anchor, initial certificate and all old records persist.
+Passing to the next returned cut replaces the final $00$ by $B_D00$,
+or equivalently appends $100$ for $D=3$ and $10100$ for $D=5$.
+Thus $W_m$ is literally a prefix of $W_{m+1}$.
+
+**Proof.** Before the first mark the $K-1$ compared edges alternate,
+and the marker's inner letter is zero. Reading backwards from that
+letter gives precisely $U_K$, so $W_0=U_K00$ has length $K+1$
+and is the indicated original-source prefix. Its cursor and count
+are the original returned ones. Suppose the assertion holds at $m$.
+Resume changes only the latch and record. Theorem 46.1 then compares
+the next $D$ edges of this same source, giving the next adjacent
+marker and appending precisely its $D$ previously unacquired letters.
+This is the displayed final-$00$ replacement and proves (IV.148) at
+$m+1$. It adds $D$ comparisons and one successful Resume, preserves
+all old entries, and advances the retained cursor by $D$ sites.
+Induction proves every clause.
+
+In particular, splitting a completed run into consecutive groups of
+episodes and then concatenating their framed blocks gives the same
+word as decoding the whole run: the shared $00$ is retained once,
+not appended as a second copy. The intermediate configuration must
+be the actual preceding returned cursor on the same version.
+Concatenating separately compatible words from unrelated sources
+does not satisfy this hypothesis. Refusals and stopped-query rejections
+preserve the completed-cut prefix and counts, but add their own record
+events; they do not add a $B_D$ block. $\square$
+
+**Corollary 47.2 (every finite original request under finite supply).**
+For every finite $H\ge1$, the acquired prefix serves the unchanged
+$\mathcal R_H(e)$ whenever $Q_m+1\ge H$. One sufficient uniform budget is
+
+$$
+m_H=\max\!\left(0,\left\lceil\frac{H-2}{3}\right\rceil\right),
+\qquad Q_{m_H}\le5+5m_H.
+\tag{IV.149}
+$$
+
+It requires at most $m_H$ successful Resumes and the displayed number
+of comparisons, under the finite supply and return premises. The
+initial four-atom result of Theorem 42.1 and the nine-atom result below
+can give smaller budgets for their respective consumers.
+
+**Proof.** Each $D_j\ge3$ and $K\ge1$, so
+$Q_m+1\ge2+3m$. Equation (IV.149) makes this at least $H$.
+The upper bound follows from $K\le5$ and $D_j\le5$. Read the first
+$H$ bits of (IV.148), replace them by their atoms and apply (IV.121).
+This is a finite computation on actually acquired letters.
+All constructed counters, retained $J$, references, storage traffic,
+query and Ack records, computation, scratch and output remain separately
+paid. The bound counts comparisons and successful Resumes only; it
+is neither a physical time bound nor a total-resource optimum.
+Bounded local block decoding does not bound the memory of $J$, an
+unbounded target counter or retained outputs. The quantifier is one
+supplied finite execution for each finite request, not a completed
+infinite execution with fixed memory. $\square$
+
+## 48. The sharp nine-atom consumer of one successful Resume
+
+**Theorem 48.1 (uniform nine-atom recovery).** After the initial
+always-right marker and exactly one successful Resume followed by
+the next actual marker, the complete canonical record determines
+$(a_e,\ldots,a_{e+8})$ and $\mathcal R_9(e)$ for every $e\in\mathbb Z$.
+It uses $K+D_1\le10$ comparisons in total. In addition to its acquired
+prefix, the decoder uses the fixed source promise to infer some letters
+beyond its current cursor; these are not extra source queries.
+
+**Proof.** Two consecutive distance-three returns would contain
+$B_3B_3 00=00100100$. That length-eight block has two ones, but
+(IV.127) gives at least $8-\lceil8s\rceil=3$ ones in every such block,
+since $4<8s<5$. Hence $3,3$ is impossible. At any marker the prefix
+$0010$ is forced by the exclusions $000$ and $11$. If $D_1=5$,
+the nine-letter word from $p_0$ is therefore $B_5,0010=001010010$.
+If $D_1=3$, the following mathematical return exists by the same
+source stopping argument and must be five; the nine-letter word is
+the first nine letters of $B_3B_5 00$, namely $001001010$.
+This use of an unqueried return is a consequence of the source promise,
+not a second Resume. Thus in the two cases form respectively
+
+$$
+U_K,001010010,\qquad U_K,001001010,
+\tag{IV.150}
+$$
+
+and take the first nine letters. They start at the original $e$,
+because $|U_K|=K-1=p_0-e$. Applying (IV.121) gives the required
+ordered output tuple with every beta-output bracket retained. The
+comparison bound is $K+D_1\le5+5$. $\square$
+
+**Theorem 48.2 (no tenth-atom decoder for this two-marker protocol).**
+For the fixed canonical always-right protocol of Theorem 48.1, there
+is no decoder of its complete record that returns $\mathcal R_{10}(e)$
+uniformly over even the nonnegative origins. Source-independent
+auxiliary computation or independent decoder coins do not remove this
+obstruction. This is a bound for that specified protocol, without an
+assertion of optimality among all possible one-Resume policies.
+
+**Proof.** At $e=2$ and $e=10$ the initial count is $K=1$ and the
+next return is $D_1=5$. Both records are the first right `rawMark`,
+the same successful Ack and five right replies $00001$, with identical
+stop flags and counts. The fixed grants and waiting supply no extra
+source channel. Nevertheless their first ten bits are respectively
+
+$$
+f[2,12)=0010100100,\qquad f[10,20)=0010100101.
+\tag{IV.151}
+$$
+
+These blocks occur in (IV.144). Directly, the decisive floors are
+$\lfloor12s\rfloor=7$, $\lfloor13s\rfloor=8$,
+$\lfloor20s\rfloor=\lfloor21s\rfloor=12$, giving
+$f(11)=0$, $f(19)=1$; (IV.131) certifies each floor with integer
+square inequalities. Identical available records cannot choose between
+these different tenth atoms. Their atomic $\rho$ outputs are distinct,
+so their output tuples differ as well. Coupling independent decoder
+coins gives the same output law on the two inputs and hence average
+error at least $1/2$ under their equal prior. $\square$
+
+## 49. Consumption by the original atom and tree operations
+
+**Theorem 49.1 (the original consumer and a supplied scaffold).**
+For any $H$ justified by Theorem 47.1 or 48.1, let $b_0\cdots b_{H-1}$
+be the recovered original prefix. The consumer map is exactly
+
+$$
+b_i=0\longmapsto a_{e+i}=\beta\longmapsto\langle\beta,\alpha\rangle,
+\qquad
+b_i=1\longmapsto a_{e+i}=\alpha\longmapsto\beta.
+\tag{IV.152}
+$$
+
+It yields $\mathcal R_H(e)$ without flattening the boundaries between
+its $H$ outputs. For a supplied known ordered $H$-leaf scaffold $C$
+with its specified leaf order, it also yields
+$\rho(C[a_e,\ldots,a_{e+H-1}])$. A flat acquired prefix does not
+in general determine an unknown original bracket structure: for $H\ge3$
+the same $H$ labels admit distinct ordered brackets with different images.
+
+**Proof.** The prefix equalities identify each input letter on the
+same original source. Equation (IV.152) is the original atomic rule,
+and the homomorphic clause of (IV.121) evaluates the supplied scaffold
+by structural recursion. This directly uses FARG Definitions 2.1/3.1
+and Proposition 42.3, rather than defining a substitute consumer.
+For unknown brackets, already the trees $\langle\langle u,v\rangle,z\rangle$
+and $\langle u,\langle v,z\rangle\rangle$, with the same three atomic
+labels, have different images: the first left image has
+$|\rho(u)|+|\rho(v)|$ leaves, the second only $|\rho(u)|$.
+For $H>3$, attach the remaining common ordered leaves with the same
+outer brackets; the distinction persists. Equation (IV.136) gives
+an attained four-letter instance. Further flat letters do not observe
+these brackets. Quantity/path recovery retains its original additional
+observations. $\square$
+
+**Proposition 49.2 (conditional execution on authentic old operands).**
+Suppose an actual AA/AAII installation supplies its genuine current tree
+$t=C[a_e,\ldots,a_{e+H-1}]$ at an identified version, together with an
+authentic correspondence from the acquired ordered letters to all its
+old logical leaf operands. Suppose their acquired addresses are prefix
+free, its source/history domain holds, and its current guards, rights,
+phase, reservation, backing, writer, acknowledgement and return contract
+authorize the original operations. Then one original $P$ at each old
+alpha leaf and one original $S$ at each old beta leaf execute $\rho(t)$.
+The observation record alone supplies none of these execution premises.
+
+**Proof.** AA Definition 17.1 gives exactly
+$P:\alpha\mapsto\beta$ and
+$S:\beta\mapsto\langle\beta,\alpha\rangle$ at current logical leaves.
+Authenticity of the version and operand map makes the decoded tag the
+actual pre-edit tag. Replacing one old leaf cannot change the subtree
+at another prefix-free old address. Induction over these distinct old
+operands therefore preserves each remaining guard and gives precisely
+the homomorphic substitution of Theorem 49.1. The original complete
+request semantics, disabled calls, checked refusals and finite return
+obligations remain those of AA §20 and AAII §96; no gap-word operation
+replaces them. Native history queries require that installation's actual
+history records, not $J$ interpreted as a generation journal.
+
+The selected observation source/version remains immutable. If a native
+edit changes an object related to it, this proposition uses the acquired
+old-version correspondence only for the stated consumption. Reading
+again after interleaved edits requires a further proved version and
+continuation bridge. Neither cursor continuation nor a word equality
+provides that bridge or an installation of the native operations. $\square$
+
+## 50. Ordered geometry, comparison time and retained return memory
+
+**Theorem 50.1 (two exact displacements with distinct quantity weights).**
+For a completed return from marked start $p$ to $p+D$,
+
+$$
+P(p+D)-P(p)=P(p+D+1)-P(p+1)
+=\begin{cases}2\varphi^2+\varphi=\varphi^4&D=3,\\
+3\varphi^2+2\varphi=\varphi^5&D=5.\end{cases}
+\tag{IV.153}
+$$
+
+Thus the marker-start and actual outer-cursor displacements agree.
+The original quantities of $B_3,B_5$ are respectively $8,13$, and
+their original-$\rho$ quantities are $13,21$. None is a physical
+duration or an identification of quantity with selected metric length.
+
+**Proof.** Sum (IV.120) over $B_3$ or $B_5$: they have respectively
+$(2,1)$ and $(3,2)$ beta/alpha counts. Shifting the interval by one
+deletes $f(p)=0$ and adds $f(p+D)=0$, leaving the same length sum.
+The two polynomial identities follow from $\varphi^2=\varphi+1$.
+Quantity instead weights alpha by two and beta by three. Its original
+substitution weights are three at alpha and five at beta, giving the
+four stated integer quantities. $\square$
+
+**Theorem 50.2 (a relative inverse on the canonical successful image).**
+Keep the common bound handle/version and calibration as context.
+Represent the canonical record by $(K,D_1,\ldots,D_m)$; its full
+right-query/reply, fixed Ack and stop sequence is then determined.
+It and the relative ordered tiled chart of $W_m$ recover one another,
+provided the chart marks its original anchor, starting marker boundary
+$p_0$, final cursor and orientation. For the return segment alone,
+the ordered list $(D_1,\ldots,D_m)$ and its ordered tiled chart are
+mutually recoverable once the starting marker boundary and calibration
+are retained. An unlabelled total displacement is a different observation.
+
+**Proof.** From the record use (IV.148) and integrate the lengths
+$\varphi^2-b$ from the marked anchor, as in (IV.137). Include the
+terminal two zero tiles and their end boundary. Conversely each tile's
+length recovers its bit since $\varphi\ne\varphi^2$. The count of
+tiles before the marked $p_0$ is $K-1$. Locate successive $00$ starts
+through the marked final cursor: their differences are exactly the
+$D_j$, because the actual run stopped at each next occurrence.
+For a half-open return segment, adjoin the known terminal marker $00$
+when parsing its last cell. There are no intervening marked starts
+inside a cell. Restore the initial replies $0^{K-1}1$, and for each
+subsequent cell restore Ack and $0^{D_j-1}1$. All actions are $R$.
+These operations are inverse on their actual canonical image.
+
+This recovers comparison chronology under the fixed successful schedule.
+Arbitrary waiting, denied calls, rejections, physical clocks and native
+generation histories have not been encoded by this chart. Extra such
+events must remain as extra records; they are not reconstructed from
+tile lengths. The context binding and rights are not created by the
+inverse. $\square$
+
+**Proposition 50.3 (equal totals lose actual order).** Two successful
+two-Resume runs have the same initial $K$, comparison count, Resume
+count, total return displacement and chart end boundary, but different
+ordered words and original output tuples.
+
+**Proof.** Use $e=2$ and $e=7$. Their successive marker starts are
+$(2,7,10)$ and $(7,10,15)$, respectively; all are verified directly
+in the single word (IV.144). Both have $K=1$, but their return lists
+are $(5,3)$ and $(3,5)$. Hence $Q_2=9$ and both use two Resumes.
+Their acquired prefixes are respectively
+
+$$
+0010100100,\qquad0010010100.
+\tag{IV.154}
+$$
+
+The return displacements both equal $\varphi^5+\varphi^4$.
+Each full ten-tile prefix has seven beta and three alpha tiles, so
+its end boundary relative to its root is $7\varphi^2+3\varphi$.
+The words differ at offset four, and so do their ordered original
+$\mathcal R_{10}$ tuples. Thus totals cannot replace the ordered
+record or ordered chart in Theorem 50.2. $\square$
+
+**Proposition 50.4 (new replies separate the old continuation fibre).**
+The original collision at $e=13,18$ remains a collision under the old
+menu. Under one successful Resume at its always-right first stop,
+new actual replies distinguish that pair.
+
+**Proof.** Both initial counts are $K=3$. Their first marker starts
+are $15,20$ and their next starts are $20,23$, giving $D_1=5,3$.
+Thus the first three resumed replies are $000$ and $001$: the third
+new comparison separates them. These marker positions and
+$f(19)=1$, $f(24)=0$ follow from (IV.144), so Theorem 48.1 also
+recovers their different offset-six letters. Ack itself is fixed and
+supplies no distinction. Without Resume there is no new sample and
+Theorem 44.3 still applies to every old policy. Its necessity of some
+additional source dependence survives; it is not a necessity theorem
+for this particular added operation or a minimality claim. $\square$
+
+## 51. Exact induced-source orientation and the generation boundary
+
+**Theorem 51.1 (the actual return-type word at every integer marker).**
+At a marked start $p$ put
+
+$$
+t=s^2=1-s,\quad a=2t,\quad \ell=s^3=2s-1,\quad
+M=\lfloor(p+1)s\rfloor,\quad x=\{(p+1)s\},\quad
+y=\frac{x-a}{\ell},\quad q=p-2M-3.
+\tag{IV.155}
+$$
+
+Then $x\in[a,1)$ and $y\in[0,1)$. Its first return has $D=5$
+for $y\in[0,s)$ and $D=3$ for $y\in[s,1)$. At the next actual
+marker the induced coordinate is $\{y+t\}$ and the hidden integer
+coordinate is $q-1$. Consequently the return-type bit $g=\mathbf1_{D=3}$
+and, for any finite $m$ completed returns starting there, their actually
+obtained return types satisfy exactly
+
+$$
+y=2p-3M+(q+2)s=\{(q+2)s\},\qquad
+g_n=f(q-n)\quad(0\le n<m).
+\tag{IV.156}
+$$
+
+The integer $q$ is an analysis coordinate, not an observer input;
+the return word runs in decreasing original indices.
+
+**Proof.** A letter at phase $x$ has $f(p)=0$ just when $x\ge t$.
+Then $\{x+s\}=x-t$, so the second zero requires $x\ge2t=a$.
+This proves the precise half-open marker cylinder. Rotation by $s$
+gives successive phases at steps one, two and three as
+$x-t$, $x-2t$, $x+3s-2$, respectively. The first two lie outside
+$[a,1)$. The third lies in that interval precisely when
+$x\ge a+s^4$. In that case $D=3$ and its new phase is $x-s^4$.
+For $a\le x<a+s^4$, step three lies in $[s,a)$; step four has
+phase $x+4s-3\in[\ell,t)$ and is still outside. Step five has
+phase $x+5s-3=x+s^5\in[a+s^5,1)$ and returns. These computations
+also exclude every earlier return. Normalizing by $\ell$ changes
+the threshold to $y=s$ and the two increments to $-s$ and $t$.
+Hence the induced map is $\{y+t\}$, with exactly the displayed
+included lower endpoints. This is the classical induced-return
+rotation calculation, here with the source's specified cuts; compare
+the lower/upper distinction in
+[Klouda–Medková–Pelantová–Starosta, §2.2](https://arxiv.org/pdf/1801.09203v3).
+
+Since $\ell^{-1}=3+2s$, expanding $(x-a)/\ell$ gives
+$2p-3M+(p-2M-1)s$, the first equality in (IV.156). The integer
+part is $2p-3M$, and $0\le y<1$, proving its fractional-part form.
+For any integer $q$, the original lower-floor coding satisfies
+$f(q)=1$ exactly when $\{(q+2)s\}\in[s,1)$: this is the
+image of its $f(q)=1$ phase interval $[0,t)$ after one rotation.
+Thus the actual $D=3$ predicate equals $f(q)$, including endpoints.
+At a three-step return $M'=M+2$, while at a five-step return
+$M'=M+3$. In either case
+$q'=p+D-2M'-3=q-1$. Induction gives (IV.156).
+
+The singular integer markers are retained: $p=-3$ gives
+$M=-2$, $y=0$, $q=-2$, hence $D=5$ and $f(-2)=0$;
+$p=-6$ gives $M=-4$, $y=s$, $q=-1$, hence $D=3$ and $f(-1)=1$.
+No all-integer step uses a forward phase identification that drops
+these endpoints. The conclusion concerns the specified same-source
+returns, without an independent preparation or freely chosen phase.
+$\square$
+
+**Proposition 51.2 (original generation through an explicit word boundary).**
+Let $\sigma(0)=01$, $\sigma(1)=0$ be the frontier action of the
+original $\rho$, and put $\tau(0)=B_5$, $\tau(1)=B_3$.
+For an actually acquired finite return-type word $w=g_0\cdots g_{m-1}$,
+the original marker-to-marker segment is $\tau(w)$, and
+
+$$
+\sigma^3(w)01=01\tau(w),\qquad W_m=U_K\tau(w)00.
+\tag{IV.157}
+$$
+
+These are frontier word equalities with their displayed boundaries,
+not equalities of unknown bracketed trees or native edit histories.
+
+**Proof.** Theorem 46.1 gives the return expansion, and Theorem 51.1
+identifies each acquired $g_n$ on the exact original source with its
+reversed hidden index. Direct substitution gives
+$\sigma^3(0)01=0100101=01\tau(0)$ and
+$\sigma^3(1)01=01001=01\tau(1)$. If the first equality in (IV.157)
+holds for $u$ and $v$, then
+$\sigma^3(u)\sigma^3(v)01=\sigma^3(u)01\tau(v)
+=01\tau(u)\tau(v)$. Starting with the empty word proves it for
+every finite $w$. The second equality is the actual prefix invariant.
+The conjugating boundary is $01$, whereas the acquisition's shared
+marker is $00$; they are not interchangeable cuts.
+
+Return expansions, induced codings and morphism conjugacy are classical
+methods in the cited return-word literature. Their use here fixes the
+source, orientation and boundary in the acquired original-generation
+correspondence. The additional premises for tree consumption remain
+those of §49. In particular neither (IV.156) nor (IV.157) supplies
+unknown brackets, historical selection order, rights to perform
+$\rho^3$, or a mutable-source continuation after edits. The relative
+space, comparison order, marked boundary and retained record inverses
+of §50 have precisely that canonical successful domain; they assert
+no universal inverse, physical elapsed time or globally minimal
+relation structure. $\square$
+
+## 追加锚（本行以下为增补区）
