@@ -282,7 +282,7 @@ theorem stable_zero_implies_open_edges
 
 omit [NormedSpace ℝ V] [FiniteDimensional ℝ V] in
 /-- Recover every point of a whole compact Hausdorff limit along the same indices. -/
-private theorem recover_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
+theorem recover_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
     (hF : Tendsto F atTop (𝓝 G)) {y : V} (hy : y ∈ G) :
     ∃ yn : ℕ → V, (∀ n, yn n ∈ F n) ∧ Tendsto yn atTop (𝓝 y) := by
   choose yn hyn heq using fun n =>
@@ -292,7 +292,7 @@ private theorem recover_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyComp
   simpa only [Function.comp_def, Metric.infDist_zero_of_mem hy, heq, dist_comm] using hi
 
 omit [NormedSpace ℝ V] [FiniteDimensional ℝ V] in
-private theorem mem_compact_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
+theorem mem_compact_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
     (hF : Tendsto F atTop (𝓝 G)) {yn : ℕ → V} {y : V}
     (hyn : ∀ n, yn n ∈ F n) (hy : Tendsto yn atTop (𝓝 y)) : y ∈ G := by
   have hi := NonemptyCompacts.lipschitz_infDist.continuous.tendsto (y, G) |>.comp
