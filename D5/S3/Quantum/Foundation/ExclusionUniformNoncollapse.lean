@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 import D5.S3.Quantum.Foundation.OriginalFacePolarity
+import D5.S3.Quantum.Matrix.NumericalRange
 
 /-! Uniform control of entire affine ball charts in the original normalized base. -/
 
@@ -28,20 +29,12 @@ without changing its linear image. -/
 private theorem kernel_padding (A : E →L[ℝ] V) {k : E} (hk : k ≠ 0)
     (hAk : A k = 0) {x : E} (hx : ‖x‖ ≤ 1) :
     ∃ y : E, ‖y‖ = 1 ∧ A y = A x := by
-  let t : ℝ := (‖x‖ + 1) / ‖k‖
-  have hkpos : 0 < ‖k‖ := norm_pos_iff.mpr hk
-  have ht : 0 ≤ t := by dsimp [t]; positivity
-  have htk : ‖t • k‖ = ‖x‖ + 1 := by
-    rw [norm_smul, Real.norm_of_nonneg ht]
-    exact div_mul_cancel₀ _ hkpos.ne'
-  have hlarge : 1 ≤ ‖x + t • k‖ := by
-    have h := norm_sub_le (x + t • k) x
-    rw [add_sub_cancel_left, htk] at h
-    linarith
-  have hc : Continuous (fun s : ℝ => ‖x + s • k‖) := by fun_prop
-  obtain ⟨s, _, hs⟩ := intermediate_value_Icc ht hc.continuousOn
-    (show (1 : ℝ) ∈ Icc ‖x + (0 : ℝ) • k‖ ‖x + t • k‖ by simpa using And.intro hx hlarge)
-  exact ⟨x + s • k, hs, by simp [hAk]⟩
+  have hx' : A.toLinearMap x ∈ A.toLinearMap '' closedBall (0 : E) 1 :=
+    ⟨x, by simpa using hx, rfl⟩
+  rw [← D5.S3.Quantum.Matrix.NumericalRange.sphere_image_eq_ball_image
+    A.toLinearMap k hk hAk] at hx'
+  obtain ⟨y, hy, hAy⟩ := hx'
+  exact ⟨y, mem_sphere_zero_iff_norm.mp hy, hAy⟩
 
 /-- If an affine sphere lies entirely in the extreme locus, a noninjective
 linear part must vanish: a flattened sphere cannot bound a nontrivial disk. -/
