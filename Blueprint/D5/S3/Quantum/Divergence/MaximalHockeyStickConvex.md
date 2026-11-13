@@ -4,7 +4,7 @@
 
 General convex maximal hockey equality for actual finite reverse tests and arbitrary singular matrix pairs.
 
-The source class is exactly the existing ReverseTest A B k, with k ranging over all natural numbers. Its p and q are nonnegative real functions on Fin k, and its density-matrix preparation realizes the original A and B. No trace normalization, invertibility, nonzero-pair or nonempty-dimension hypothesis is imposed. This statement does not identify the infimum over all finite tests with an infimum over arbitrary L1 sources or prove an arbitrary von Neumann algebra theorem.
+The finite source class is exactly the existing ReverseTest A B k, with k ranging over all natural numbers. Its p and q are nonnegative real functions on Fin k, and its density-matrix preparation realizes the original A and B. No trace normalization, invertibility, nonzero-pair or nonempty-dimension hypothesis is imposed. MaximalHockeyStickAllL1Convex identifies this finite infimum with the actual all-s-finite-L1 infimum using MaximalHockeyStickL1ReverseTest.source_class_infimum_eq, and transfers the classification with finiteness stated for that actual source class. No arbitrary von Neumann algebra theorem is asserted.
 
 **Definition 1.1 (The original finite affine mass).**
 
@@ -84,7 +84,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.maximal_kerne
 
 *Commentary.*
 
-For every finite PSD A,B and positive threshold t, maximalKernel is operationalNegativeHockey A B t when t<=1 and operationalHockey A B t when t>1. Each operational quantity is independently defined as the infimum of the original sum of classical positive or negative parts over all k and actual ReverseTest A B k. Operational proves both SDP formulas with a single three-component attaining test, including empty dimension. hockey_value_eq_operational consumes this branchwise identification.
+For every finite PSD A,B and positive threshold t, maximalKernel is operationalNegativeHockey A B t when t<=1 and operationalHockey A B t when t>1. Each operational quantity is independently defined as the infimum of the original sum of classical positive or negative parts over all k and actual ReverseTest A B k. Operational proves both SDP formulas with one attaining test, using three labels in nonempty dimension and zero labels in empty dimension. hockey_value_eq_operational consumes this branchwise identification.
 
 **Theorem 1.6 (The integrated original operational profiles).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Quantum/Divergence/MaximalHockeyStickConvex.integrated_eq
 
 For every finite type n, every pair A,B of PSD complex n by n matrices, every real f convex on Ioi 0 whose constructed curvature is positive on every nonempty open set, and every real c satisfying maximalValue hf A B = c, equality maximalValue hf A B = hockeyValue hf A B is equivalent to (PSP)(PCP)=(PCP)(PSP), with S=A+B, C=normalize(S,A), P=interiorProjection(C). Local finiteness is supplied by the constructed curvature. The statement includes zero and singular pairs and the empty matrix type. Finite-cost approximate tests have integrable nonnegative gaps; their costs split as hockeyValue plus the real gap integral. Equality and the 1/(j+1) bounds force those integrals to zero, and vanishing_curvature_gaps_imply_commute supplies the original-pair commutator. No general-f attainment theorem is used. Operator-convex generators satisfying the same curvature and finite-value hypotheses are included by this scalar-convex theorem. Necessity from equality of two infinite values is not asserted.
 
-Attribution: the source equality question is Hiai, Mosonyi and Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, final equality question. Hiai's canonical spectral reverse-test construction and operator-convex optimality are antecedents, rather than new claims. The GGJ2005 result documented in its separate Library entry is a localization antecedent for separating common-support overlap geometry from endpoint pieces. The present proof consumes the repository's actual finite spectral and quadratic results and its scalar Stieltjes construction. No Bayer-Teichmann cubature or general-convex attainment result is consumed. The full-support approximate-test integration is a repository derivation; worldwide priority is unresolved.
+Attribution: the source equality question is Hiai, Mosonyi and Tomamichel, Hockey stick f-divergences, arXiv:2607.08760v1, final equality question. Hiai's canonical spectral reverse-test construction and operator-convex optimality are antecedents, rather than new claims. The GGJ2005 result documented by the Library attribution is a localization antecedent for separating common-support overlap geometry from endpoint pieces. The finite proof consumes the repository's actual finite spectral and quadratic results and its scalar Stieltjes construction. Its all-L1 application also consumes the exact one-cost finite-moment source bridge following Bayer-Teichmann's proof of Tchakaloff's theorem. No general-convex attainment result is assumed. The full-support approximate-test integration is a repository derivation; worldwide priority is unresolved.
 
 ## References
 
