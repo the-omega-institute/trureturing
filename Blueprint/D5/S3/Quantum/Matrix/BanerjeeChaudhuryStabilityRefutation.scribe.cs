@@ -81,7 +81,12 @@ internal sealed class BanerjeeChaudhuryStabilityRefutationDocument : IScribeDocu
                     + "rho (P W B t) < 1 and rho (R W B t) < 1 hold. "
                     + "The maximum-modulus interpretation of rho applies to all these finite "
                     + "matrices, including nonsymmetric operators with nonreal spectral values. "
-                    + "The unit condition makes the inverse domain explicit."))),
+                    + "The unit condition makes the inverse domain explicit and is automatic: "
+                    + "for nonnegative t, t B is positive semidefinite, so I + t B is positive "
+                    + "definite and hence a unit. Consequently claim is equivalent to the "
+                    + "universal assertion consisting of the two stability inequalities alone. "
+                    + "This implication uses Matrix.PosDef.one, PosSemidef.smul, "
+                    + "PosDef.add_posSemidef and PosDef.isUnit."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),

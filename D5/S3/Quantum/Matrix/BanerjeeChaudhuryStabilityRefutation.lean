@@ -50,6 +50,18 @@ def claim : Prop :=
     Admissible W B pi → ∀ t : ℝ, 0 < t → t < 2 / rho B →
       IsUnit (1 + t • B) ∧ rho (P W B t) < 1 ∧ rho (R W B t) < 1
 
+private theorem claim_iff_stability : claim ↔
+    ∀ (n : ℕ), 0 < n → ∀ (W B : Matrix (Fin n) (Fin n) ℝ) (pi : Fin n → ℝ),
+      Admissible W B pi → ∀ t : ℝ, 0 < t → t < 2 / rho B →
+        rho (P W B t) < 1 ∧ rho (R W B t) < 1 := by
+  constructor
+  · intro h n hn W B pi ha t ht hbound
+    exact (h n hn W B pi ha t ht hbound).2
+  · intro h n hn W B pi ha t ht hbound
+    have hpsd : B.PosSemidef := ha.2.2.2.2.2.1
+    exact ⟨(Matrix.PosDef.one.add_posSemidef (hpsd.smul ht.le)).isUnit,
+      h n hn W B pi ha t ht hbound⟩
+
 private theorem radius_max {n : ℕ} (hn : 0 < n) (A : Matrix (Fin n) (Fin n) ℝ) :
     ∃ z ∈ spectrum ℂ (A.map (algebraMap ℝ ℂ)),
       rho A = ‖z‖ ∧ radius A = ENNReal.ofReal ‖z‖ ∧
@@ -168,13 +180,13 @@ theorem result : ¬ claim := by
       norm_num [H, B, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.one_apply]
   have hunit : IsUnit (1 + (9 / 5 : ℝ) • B) := isUnit_iff_exists.mpr ⟨H, hi⟩
   have hinv : (1 + (9 / 5 : ℝ) • B)⁻¹ = H := Matrix.inv_eq_right_inv hi.1
-  have hb := h 4 (by norm_num) W B pi admissible (9 / 5) (by norm_num)
+  have hb := claim_iff_stability.mp h 4 (by norm_num) W B pi admissible (9 / 5) (by norm_num)
     (by rw [B_radius]; norm_num)
   obtain ⟨hx, he⟩ := unstable_eigenpair
   have hz := D5.S3.Combinatorics.NonBacktracking.LaplacianGapMinDegree.eigenpair_mem_spectrum
     _ (27 / 25) x hx he
   have hlo := norm_le_rho (by norm_num) (P W B (9 / 5)) hz
-  have hlt := hb.2.1
+  have hlt := hb.1
   norm_num [norm_div] at hlo
   linarith
 
