@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap.centralEdges`
 
 *Commentary.*
 
-For n>=1, centralEdges(n) is the edge sequence on Fin(2*n) whose unique central entry at n-1 is sqrt(2), with every other entry 1.
+For n>=1, centralEdges(n) is the edge sequence on Fin(2*n-1+1) whose unique central entry at n-1 is sqrt(2), with every other entry 1; the displayed dimension is 2*n under the stated threshold.
 
 **Definition 1.5 (Actual central defect Jacobi matrix).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap.centralDefect`
 
 *Commentary.*
 
-centralDefect(n) is the zero-diagonal Jacobi matrix of dimension 2*n with nearest-neighbour entries centralEdges(n), hence exactly the fixed central-sqrt(2) defect matrix from the source event.
+centralDefect(n) is the zero-diagonal Jacobi matrix of dimension 2*n-1+1 with nearest-neighbour entries centralEdges(n), hence exactly the fixed central-sqrt(2) defect matrix from the source event after the threshold identification.
 
 **Theorem 1.6 (Nonzero edge coefficients).**
 
