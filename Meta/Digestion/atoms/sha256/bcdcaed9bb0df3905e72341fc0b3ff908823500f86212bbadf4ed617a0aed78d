@@ -1,0 +1,35 @@
+#### 定理 3.5：原整数平方锥的精确边界
+
+有限维中，
+
+$$
+\boxed{\mathcal C_\mathbb Z
+ =\{A\ge0:\operatorname{Ran}A\text{ 有一组有理向量基}\},\qquad
+ \overline{\mathcal C_\mathbb Z}=\operatorname{Sym}^+_m(\mathbb R).}
+$$
+
+特别地，全部正定矩阵都在原锥中，但某些秩一正矩阵只在闭包中。
+
+**证明。**
+
+若 $A=\sum_j\lambda_jz_jz_j^{\mathsf T}$，删去零系数后， $\operatorname{ker}A$ 恰为全部 $z_j$ 的共同正交补，故其像由整数向量张成。
+
+反之，若 $A\ne0$ 的像有有理基，将这些基列成满列秩有理矩阵 $S$。 存在实正定矩阵 $B$，使 $A=SBS^{\mathsf T}$： 可取 $L=(S^{\mathsf T}S)^{-1}S^{\mathsf T}$， $B=LAL^{\mathsf T}$。 选择有理可逆矩阵 $T$ 充分接近 $B^{1/2}$，则 $D=T^{-1}BT^{-\mathsf T}$ 充分接近单位矩阵，从而严格对角占优。 它有显式正分解
+
+$$
+\begin{split}
+ D={}&\sum_i\left(D_{ii}-\sum_{j\ne i}|D_{ij}|\right)e_ie_i^{\mathsf T}\\
+ &+\sum_{\substack{i<j\\D_{ij}\ne0}}|D_{ij}|
+ (e_i+\operatorname{sgn}(D_{ij})e_j)
+ (e_i+\operatorname{sgn}(D_{ij})e_j)^{\mathsf T}.
+\end{split}
+$$
+
+乘回 $ST$ 后，出现的向量均为有理向量，逐项清除分母即可成为整数平方的正组合。 $A=0$ 取空和。 最后，$A+\varepsilon I$ 正定而在原锥中，令 $\varepsilon\downarrow0$ 即得全部正半定闭包。
+
+$\square$
+
+例如 $(1,\sqrt2)^{\mathsf T}(1,\sqrt2)$ 是正半定秩一矩阵， 其像是一条没有非零有理向量的直线，故不属于 $\mathcal C_\mathbb Z$。 它仍可由原锥中的矩阵逼近。 因此，原有限整数组合、数学完成和实际可制备集合必须分别记录。
+
+有限维线性泛函连续，故在 $\mathcal C_\mathbb Z$ 上非负当且仅当在其闭包上非负。 以迹配对表示后，它恰对应一个正半定 Gram 矩阵。 这解释了为什么只把整数清单作为输入，仍能得到完整实正几何的数学表示； 它不把闭包中的每一点自动加入实际准备菜单。
+

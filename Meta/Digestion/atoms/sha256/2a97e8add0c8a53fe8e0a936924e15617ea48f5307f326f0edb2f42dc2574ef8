@@ -1,0 +1,14 @@
+### 118.9 原静态字典、反事实与尚缺的关系
+
+定理118.8及推论118.13接回116.17、VIII113.9的同一个 $\Phi$，恢复整个原静态模型：
+
+| 原对象或现有量子公理 | 同原锥、同原单位后的对应 |
+| --- | --- |
+| 全部纯态与复相位射线 | $P=\{\Phi(vv^*):v^*v=1\}\cong\mathbb{CP}^2$；表示空间为 $\mathbb C^3$ |
+| 全部混态及混合 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$；保持全部凸组合 |
+| 全效应与Born概率 | $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$，恰含全部 $0\preceq A\preceq I_3$ |
+| 原确认与最低确认 | least为 $vv^*$；$T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2$ |
+| 正交与三元共同完成 | 原正交对唯一补成三个正交秩一投影；原三效应全域非负且和为 $u$ |
+| 全部有限数学测量 | 原 $f_j\ge0,\sum_jf_j=u$ 恰对应全部有限POVM $A_j\succeq0,\sum_jA_j=I_3$ |
+| 谱分解 | 全部密度态 $\rho=\sum_{i=1}^3\lambda_iP_i$，$\lambda_i\ge0,\sum_i\lambda_i=1$ |
+| 原单位、派生中心与共同尺 | $u\Phi=\operatorname{Tr}$、$\Phi(I_3/3)$、$B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$ |

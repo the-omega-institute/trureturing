@@ -1,0 +1,8 @@
+**定义 8.1（未预设 Lie 结构的内部比较场）。** 设 $J$ 是非零有限维实向量空间，$1\in J$，$S:J\times J\to J$ 是交换双线性运算，$g$ 是正定内积，满足
+
+$$
+S(1,a)=a,\qquad g(S(a,b),c)=g(b,S(a,c)).
+$$
+
+给实线性映射 $D:J\to\operatorname{Der}(J,S)$，并要求 $D\ne0$。记 $L_ab=S(a,b)$、$B(a,b)=D_ab$。此处不要求 $S$ 为 Jordan 乘法，不要求 $B$ 交替、自守、满足 Jacobi 或消去第一槽的单位，也不要求 $J$ 是关系球。维数 $n=\dim J$ 包括单位方向。
+

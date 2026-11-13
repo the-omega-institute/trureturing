@@ -1,0 +1,27 @@
+**定理119.8（邻接完整确认不能最大化球宽）。**
+若 $M<1$，则对任意 $F=D_p$、$q\in S(F)$、
+$a\in\mathcal A_q$、$e\in\mathcal A_p$，存在原 $b\in\mathcal E$，使
+$\operatorname{osc}_Fb>\operatorname{osc}_Fa>0$。
+
+证明。$a$ 的一值面是 $\{q\}$，零面是 $D_q$，且 $e(q)=0$。
+原最大值 $e(p)=1$、$p\in D_q$ 给
+
+$$
+m:=\min_{D_q}e\ge1-W(D_q)\ge1-M>0.
+$$
+
+由引理119.7，
+$\max_K(a+te)=1+o(t)$、$\min_K(a+te)=tm+o(t)$。
+所以其全局振幅为 $1-mt+o(t)<1$。
+另一方面 $e|_F=0$，故球上振幅不变且严格正；
+严格正性来自 $a$ 在球上的唯一最大点 $q$。
+对充分小的 $t>0$，按同一原全局范围归一：
+
+$$
+b_t=\frac{a+te-(\min_K(a+te))u}
+{\max_K(a+te)-\min_K(a+te)}\in\mathcal E.
+\tag{IX119.20}
+$$
+
+它在 $F$ 上的振幅严格增加。没有对移动的面族求导。证毕。
+

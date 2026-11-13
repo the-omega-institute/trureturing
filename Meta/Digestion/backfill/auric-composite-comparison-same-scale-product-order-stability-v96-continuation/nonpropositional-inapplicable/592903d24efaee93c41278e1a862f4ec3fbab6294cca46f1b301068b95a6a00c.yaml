@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:592903d24efaee93c41278e1a862f4ec3fbab6294cca46f1b301068b95a6a00c
+  normalized_sha256: sha256:592903d24efaee93c41278e1a862f4ec3fbab6294cca46f1b301068b95a6a00c
+cas_ref: sha256:592903d24efaee93c41278e1a862f4ec3fbab6294cca46f1b301068b95a6a00c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream consequence, with no project frozen GID covering the complete original statement. Inline the Q97.1 derivation from the original tagged report, not an assumed symmetry bound. Apply MultilinearMap.alternatization and MultilinearMap.alternatization_apply to t(x,y,z)=inner(B(x,y),z), using its last-two-slot skewness; the normalized six-term alternatization is exactly the source cyclic average phi. Compose with the original Pe(x)=x-inner(e,x)*e. InnerProductSpace.toDual, InnerProductSpace.toDual_symm_apply and InnerProductSpace.continuousLinearMapOfBilin_apply give the unique original Riesz C. The two cyclic differences cost 2*sigma/3; the three single-e projection terms cost sigma/3 each and all repeated-e terms vanish. ContinuousLinearMap.opNorm_le_bound and ContinuousLinearMap.opNorm_le_bound₂ give h=norm(C-B)_bil <= 5*sigma/3 <= 2*sigma = U*eta <= 1. Alternation gives C(e,x)=C(x,e)=0 and skewness of C_x; norm_add_le gives norm(C)_bil <= K+1. Subtract the exact original B derivation identity and apply ContinuousLinearMap.le_opNorm₂ and ContinuousMultilinearMap.opNorm_le_bound to obtain norm(F_C)_tri <= 3*K*h <= 3*K*U*eta. No free bracket, extra data or stronger algebra premise is used.
+    previous_atom_id: 5664aeb18030c92d718653630d752fe23cdb351abab65a6abc44d467fafa0711
+    next_atom_id: 1ed5e3d83bceb1cb491e43b1632bd4975ba01280ad077c50958f53b822d06e50
