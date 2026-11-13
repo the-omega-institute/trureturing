@@ -7,6 +7,8 @@ The four-slot audit additionally needs whole-family variation, role sensitivity,
 observational dependence and exact enrolled source selection. -/
 
 noncomputable section
+open Set
+open scoped RealInnerProductSpace
 universe v
 
 namespace Reg.D5.S3.Quantum.Foundation.RegularAnchorNormalChart
