@@ -18,10 +18,19 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
                 "OEIS A181074, NAME (web entry, no page number): \"Expansion of g.f.: exp( Sum_{n>=1} [ Sum_{k>=0} C(n+k-1,k)^(k+1) *x^k ] *x^n/n ).\" The exponential is formal over the rationals. PowerSeries.subst takes the inner series as its first argument.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Integer coefficients", Iffn(Call("claim"), ClaimBody()),
                 "OEIS A181074, first COMMENTS line (web entry, no page number): \"Conjecture: this sequence consists entirely of integers.\" The degree m ranges over all natural numbers, including zero; the integer z may depend on m.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("negbinomDiv", "Negative-binomial divisibility", NegativeBinomialDivisibility(),
-                "For every nonzero natural n and every natural k, n divides k times Nat.choose(n+k-1,k). The coefficient of degree k in (sum_j x^j)^n is this binomial coefficient; coefficientDivisibility supplies the divisibility.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
-            Node("negbinomCong", "Prime scaling of negative binomials", NegativeBinomialCongruence(),
-                "For every prime p, nonzero natural n and natural k, Nat.choose(p*n+p*k-1,p*k) and Nat.choose(n+k-1,k) are congruent modulo p^(padicValNat(p,n)+1). Applying coeffLift to sum_j x^j gives the congruence at the same unrestricted indices.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("negbinomDiv", "Negative binomial coefficient divisibility",
+                All("n", N(), All("k", N(), Implies(Nonzero(V("n")),
+                    Divides(V("n"), Mul(V("k"), Choose(Sub(Add(V("n"), V("k")), D(1)), V("k"))))))),
+                "For every positive natural n and every natural k, n divides k times binom(n+k-1,k). This follows by taking the kth coefficient of the nth power of the integer geometric series. divPower uses it to handle positive powers of the binomial coefficient.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("negbinomCong", "Negative binomial coefficient dilation",
+                All("p", N(), All("n", N(), All("k", N(),
+                    Implies(Qualified("Nat", "Prime", V("p")), Implies(Nonzero(V("n")),
+                        Qualified("Nat", "ModEq", Pow(V("p"), Add(Call("padicValNat", V("p"), V("n")), D(1))),
+                            Choose(Sub(Add(Mul(V("p"), V("n")), Mul(V("p"), V("k"))), D(1)), Mul(V("p"), V("k"))),
+                            Choose(Sub(Add(V("n"), V("k")), D(1)), V("k")))))))),
+                "For every prime p, positive n and natural k, the binomial coefficients at (p*n,p*k) and (n,k) are congruent modulo p^(v_p(n)+1). The coefficient-lifting theorem applied to the integer geometric series gives this full valuation modulus. The result includes p=2 and k=0.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("result", "Integrality in every degree", ClaimBody(),
                 "Every coefficient of the displayed formal exponential is an integer. The prime-scaling congruence and diagonal identity reduce the assertion to the Dold exponential integrality criterion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna181074"), ResolutionKind.Proved)))));
@@ -45,6 +54,10 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Divides(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Divides, b);
+    private static Formula Nonzero(Formula a) => Seq(a, Sp, Neq, Sp, D(0));
+    private static Formula Implies(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Eqn(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
@@ -68,26 +81,6 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
         var summand = Seq(V("if"), Sp, Parenthesized(condition), Sp, V("then"), Sp,
             new Formula.Fraction(value, Cast(n, Q())), Sp, V("else"), Sp, D(0));
         return RangeSum("n", Add(m, D(1)), RangeSum("k", Add(bounded ? n : m, D(1)), summand));
-    }
-    private static Formula Implication(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula Neq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula NegativeBinomialDivisibility()
-    {
-        var n = V("n"); var k = V("k");
-        var b = Choose(Sub(Add(n, k), D(1)), k);
-        var divides = new Formula.Relation(n, FormulaRelationOperator.Divides, Mul(k, b));
-        return All("n", N(), All("k", N(), Implication(Neq(n, D(0)), divides)));
-    }
-    private static Formula NegativeBinomialCongruence()
-    {
-        var p = V("p"); var n = V("n"); var k = V("k");
-        var b = Choose(Sub(Add(n, k), D(1)), k);
-        var scaled = Choose(Sub(Add(Mul(p, n), Mul(p, k)), D(1)), Mul(p, k));
-        var modulus = Pow(p, Add(Call("padicValNat", p, n), D(1)));
-        var congruence = Qualified("Nat", "ModEq", modulus, scaled, b);
-        return All("p", N(), All("n", N(), All("k", N(),
-            Implication(Qualified("Nat", "Prime", p), Implication(Neq(n, D(0)), congruence)))));
     }
     private static Formula ClaimBody() => All("m", N(), Ex("z", Z(), Eqn(Coeff(V("m"), Call("A")), Cast(V("z"), Q()))));
 }
