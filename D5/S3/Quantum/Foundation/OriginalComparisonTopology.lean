@@ -35,9 +35,9 @@ theorem original_uniform_comparison
   intro p x hx y hy
   have h := (CommonOldExclusionConfirmation.comparison_lipschitz hs hg p).dist_le_mul
     (⟨x, hx⟩ : base C u) (⟨y, hy⟩ : base C u)
+  change dist (comparison C u p x) (comparison C u p y) ≤ M * dist x y at h
   have hbound : |comparison C u p x - comparison C u p y| ≤ M * ‖x-y‖ := by
-    simpa only [Real.dist_eq, Subtype.dist_eq, dist_eq_norm, Real.norm_eq_abs,
-      NNReal.coe_mk] using h
+    simpa only [Real.dist_eq, dist_eq_norm, Real.norm_eq_abs] using h
   exact hbound.trans (mul_le_mul_of_nonneg_right (by dsimp [M]; linarith [le_abs_self M]) (norm_nonneg _))
 
 /-- The same bound controls every axis in every chart at every original label.
@@ -193,6 +193,7 @@ private theorem chart_diameter_axis {p : pure C u} (a : ExclusionChart C u p) :
   rw [dist_eq_norm, he]
   exact (norm_sub_le _ _).trans (by linarith [hbound z hz1, hbound w hw1])
 
+set_option maxHeartbeats 800000 in
 private theorem uniform_pure_gap
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
@@ -213,9 +214,15 @@ private theorem uniform_pure_gap
     rw [← hPR z.1 z.2, ← hPR w.1 z.2] at h1
     have h2 := hbound w.1 z.2 (pure_mem z.2) w.2 (pure_mem w.2)
     have hf : ‖(z.1 : V)-w.1‖ ≤ dist z w := by
-      simpa only [Subtype.dist_eq, dist_eq_norm] using (dist_fst_le z w)
+      calc
+        _ = dist z.1 w.1 := by rw [Subtype.dist_eq, dist_eq_norm]
+        _ ≤ max (dist z.1 w.1) (dist z.2 w.2) := le_max_left _ _
+        _ = dist z w := Prod.dist_eq.symm
     have hsnd : ‖(z.2 : V)-w.2‖ ≤ dist z w := by
-      simpa only [Subtype.dist_eq, dist_eq_norm] using (dist_snd_le z w)
+      calc
+        _ = dist z.2 w.2 := by rw [Subtype.dist_eq, dist_eq_norm]
+        _ ≤ max (dist z.1 w.1) (dist z.2 w.2) := le_max_right _ _
+        _ = dist z w := Prod.dist_eq.symm
     change |comparison C u z.1 z.2 - comparison C u w.1 w.2| ≤ (2*L)*dist z w
     exact (abs_sub_le _ _ _).trans (by nlinarith)
   let S : Set (P × P) := {z | δ ≤ ‖(z.1 : V)-z.2‖}
@@ -240,7 +247,9 @@ private theorem uniform_pure_gap
       intro heq
       have hh : (z.2 : V) ∈ ({(z.1 : V)} : Set V) := hsingle ▸ ⟨pure_mem z.2, heq⟩
       exact hnepq (Subtype.ext hh).symm
-    exact ⟨1-comparison C u z.1 z.2, by linarith, fun p q hpq => hmin hpq⟩
+    refine ⟨1-comparison C u z.1 z.2, by linarith, ?_⟩
+    intro p q hpq
+    exact hmin (show (p,q) ∈ S from hpq)
   · exact ⟨1, zero_lt_one, fun p q hpq => False.elim (hne ⟨(p,q),hpq⟩)⟩
 
 /-- A positive lower bound on actual full diameters bounds every original
@@ -265,8 +274,8 @@ theorem original_noncollapse_bounded_budget
       (show a.param (-v) ∈ a.param '' Metric.sphere 0 1 from ⟨-v, by simpa using hv, rfl⟩)).2
   let q : pure C u := ⟨a.param v, hqpure⟩
   let r : pure C u := ⟨a.param (-v), hrpure⟩
-  obtain ⟨t, ht, _, hscale, hbudget⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
-  obtain ⟨_, _, _, hcomp⟩ := hscale v hv q rfl
+  obtain ⟨t, ht, _, hscale⟩ := original_common_chart_scale hc hs hg hB hPR p a
+  obtain ⟨_, _, hcomp⟩ := (hscale a v hv).2 q rfl
   have hgap' := hgap q r ((hdiam p hp).trans hd)
   have hcomp' := hcomp (-v) (by simpa using hv.le)
   have hγt : γ ≤ 2*t := by
@@ -274,7 +283,7 @@ theorem original_noncollapse_bounded_budget
     change γ ≤ 1 - comparison C u q (a.param (-v)) at hgap'
     rw [hcomp'] at hgap'
     linarith
-  rw [(hbudget w hw).2.2]
+  rw [(hscale a w hw).1.2.2]
   exact one_div_le_one_div_of_le hγ hγt
 
 /-- Whole Hausdorff continuity is equivalent to a finite local bound for all
