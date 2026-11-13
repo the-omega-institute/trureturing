@@ -87,7 +87,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ p x => p.2 x) (fun e => nomatch e))
+  readout := some actual.{u}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
