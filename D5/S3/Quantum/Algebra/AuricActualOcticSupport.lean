@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Algebra.AuricActualOcticWindow
 import D5.S3.Quantum.Algebra.FixedDiagonalDeterminant
+import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+import Mathlib.Algebra.MvPolynomial.Nilpotent
 
 /-! Directed support of the original inverse-obstruction operator over coefficient extensions. -/
 
@@ -200,6 +202,45 @@ theorem general43_2_original_polynomial (L : Type*) [Field L] [Algebra K L]
   have hunit : IsUnit (C (algebraMap K L c) : MvPolynomial (D →ₐ[F] K) L) :=
     (isUnit_iff_ne_zero.mpr hcl).map C
   exact (irreducible_isUnit_mul hunit).mpr hrow
+
+open MvPolynomial in
+/-- The original obstruction polynomial is irreducible over every extension of its
+original coefficient field, with the original bases and window unchanged. -/
+theorem general43_2_original_geometric_irreducibility (L : Type*) [Field L] [Algebra F L]
+    (W : Submodule F D) (hD : finrank F D = 8) (hW : finrank F W = 4)
+    (hE : {c : D | ∀ w ∈ W, c * w ∈ W} = Set.range (algebraMap F D))
+    (bD : Basis (Fin 8) F D) (bW : Basis (Fin 4) F W)
+    (bQ : Basis (Fin 4) F (D ⧸ W)) (a : D) (ha : a ∉ quotientSet W) :
+    Irreducible (map (algebraMap F L) (obstructionPolynomial W bD bW bQ)) := by
+  classical
+  let A := AlgebraicClosure L
+  let φ : K →ₐ[F] A := IsAlgClosed.lift
+  letI : Algebra K A := φ.toRingHom.toAlgebra
+  letI : IsScalarTower F K A := IsScalarTower.of_algHom φ
+  let j : L →+* A := algebraMap L A
+  letI : IsLocalHom (map (σ := Fin 8) j) := by
+    refine ⟨?_⟩
+    intro p hp
+    obtain ⟨hc, hn⟩ := MvPolynomial.isUnit_iff.mp hp
+    apply MvPolynomial.isUnit_iff.mpr
+    refine ⟨?_, ?_⟩
+    · apply isUnit_iff_ne_zero.mpr
+      intro hz
+      apply (isUnit_iff_ne_zero.mp hc)
+      simpa only [coeff_map, hz, map_zero]
+    · intro d hd
+      exact (IsNilpotent.map_iff j.injective).mp
+        (by simpa only [coeff_map] using hn d hd)
+  have hA := general43_2_original_polynomial K A W hD hW hE bD bW bQ a ha
+  have hmap : map ((algebraMap K A).comp (algebraMap F K))
+      (obstructionPolynomial W bD bW bQ) =
+      map j (map (algebraMap F L) (obstructionPolynomial W bD bW bQ)) := by
+    rw [map_map]
+    change map ((algebraMap K A).comp (algebraMap F K)) _ =
+      map ((algebraMap L A).comp (algebraMap F L)) _
+    rw [← IsScalarTower.algebraMap_eq F K A, ← IsScalarTower.algebraMap_eq F L A]
+  rw [hmap] at hA
+  exact Irreducible.of_map (f := map j) hA
 
 end ActualSupport
 
