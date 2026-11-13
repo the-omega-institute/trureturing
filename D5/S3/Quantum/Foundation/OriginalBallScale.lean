@@ -250,6 +250,108 @@ theorem original_scale_and_sharp_budget
   simp only [inner_neg_left, real_inner_self_eq_norm_sq, hv, one_pow, mul_neg, mul_one] at hh
   linarith
 
-#print axioms original_scale_and_sharp_budget
+private theorem affine_positive_lift {p : pure C u} (a : ExclusionChart C u p)
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) (B : ℝ) (hB : 1 ≤ B)
+    (hlift : ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → BudgetFeasible a v B)
+    (h : EuclideanSpace ℝ (Fin a.dim) →ᵃ[ℝ] ℝ)
+    (hpos : ∀ z, ‖z‖ ≤ 1 → 0 ≤ h z) :
+    ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x) ∧
+      (∀ z, ‖z‖ ≤ 1 → g (a.param z) = h z) ∧
+      ((∀ z, ‖z‖ ≤ 1 → h z ≤ 1) → ∀ x ∈ C, g x ≤ B * u x) := by
+  obtain ⟨b, hb⟩ := affine_riesz h
+  have hc : ‖b‖ ≤ h 0 := affine_nonneg_bound (fun z hz => by rw [← hb]; exact hpos z hz)
+  have hu (x : V) (hx : x ∈ C) : 0 ≤ u x := by
+    by_cases hz : x = 0
+    · simp [hz]
+    · exact (hs x hx hz).le
+  by_cases hb0 : b = 0
+  · refine ⟨h 0 • u, ?_, ?_, ?_⟩
+    · intro x hx
+      exact mul_nonneg (hpos 0 (by simp)) (hu x hx)
+    · intro z hz
+      simp [hb z, hb0, chart_unit a]
+    · intro htop x hx
+      change h 0 * u x ≤ B * u x
+      exact mul_le_mul_of_nonneg_right ((htop 0 (by simp)).trans hB) (hu x hx)
+  · have hbpos : 0 < ‖b‖ := norm_pos_iff.mpr hb0
+    let v := ‖b‖⁻¹ • b
+    have hv : ‖v‖ = 1 := by simp [v, norm_smul, hbpos.ne']
+    obtain ⟨_, g, hg, hgval⟩ := hlift v hv
+    let G : V →ₗ[ℝ] ℝ := (h 0 - ‖b‖) • u + (2 * ‖b‖) • g
+    refine ⟨G, ?_, ?_, ?_⟩
+    · intro x hx
+      change 0 ≤ (h 0 - ‖b‖) * u x + (2 * ‖b‖) * g x
+      exact add_nonneg (mul_nonneg (sub_nonneg.mpr hc) (hu x hx))
+        (mul_nonneg (by positivity) (hg x hx).1)
+    · intro z hz
+      change (h 0 - ‖b‖) * u (a.param z) + (2 * ‖b‖) * g (a.param z) = h z
+      rw [chart_unit a, hgval z hz, hb z]
+      simp only [v, inner_smul_left, starRingEnd_apply, star_trivial]
+      field_simp
+      <;> ring
+    · intro htop x hx
+      have hcn : ‖b‖ ≤ 1 - h 0 := affine_nonneg_bound (v := -b) (fun z hz => by
+        have hh := htop z hz
+        rw [hb z] at hh
+        simp only [inner_neg_left]
+        linarith)
+      have hscalar : h 0 - ‖b‖ + 2 * ‖b‖ * B ≤ B := by
+        have h1 : 2 * ‖b‖ ≤ 1 := by linarith
+        nlinarith [mul_nonneg (sub_nonneg.mpr hB) (sub_nonneg.mpr h1)]
+      change (h 0 - ‖b‖) * u x + (2 * ‖b‖) * g x ≤ B * u x
+      calc
+        _ ≤ (h 0 - ‖b‖) * u x + (2 * ‖b‖) * (B * u x) :=
+          add_le_add_left (mul_le_mul_of_nonneg_left (hg x hx).2 (by positivity)) _
+        _ = (h 0 - ‖b‖ + 2 * ‖b‖ * B) * u x := by ring
+        _ ≤ B * u x := mul_le_mul_of_nonneg_right hscalar (hu x hx)
+
+/-- The original optimum is common to all directions and to the entire affine
+face-effect family. Every positive affine face function has an actual positive lift. -/
+theorem original_full_face_budget
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (p : pure C u) (a : ExclusionChart C u p) :
+    ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
+      (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 →
+        BudgetFeasible a v (1 / (2 * t)) ∧
+        (∀ M, BudgetFeasible a v M → 1 / (2 * t) ≤ M) ∧
+        extensionBudget a v = 1 / (2 * t)) ∧
+      (∀ h : EuclideanSpace ℝ (Fin a.dim) →ᵃ[ℝ] ℝ,
+        (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z) →
+        ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x) ∧
+          (∀ z, ‖z‖ ≤ 1 → g (a.param z) = h z) ∧
+          ((∀ z, ‖z‖ ≤ 1 → h z ≤ 1) → ∀ x ∈ C, g x ≤ (1 / (2 * t)) * u x)) ∧
+      (∀ B : ℝ, (∀ h : EuclideanSpace ℝ (Fin a.dim) →ᵃ[ℝ] ℝ,
+        (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z ∧ h z ≤ 1) →
+        ∃ g : V →ₗ[ℝ] ℝ,
+          (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ B * u x) ∧
+          ∀ z, ‖z‖ ≤ 1 → g (a.param z) = h z) → 1 / (2 * t) ≤ B) := by
+  obtain ⟨t, ht, hthalf, _, hbudget⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
+  have hBmin : 1 ≤ 1 / (2 * t) := (le_div_iff₀ (by positivity : 0 < 2 * t)).mpr (by linarith)
+  refine ⟨t, ht, hthalf, hbudget,
+    fun h hh => affine_positive_lift a hs _ hBmin (fun v hv => (hbudget v hv).1) h hh, ?_⟩
+  intro B hwhole
+  let E := EuclideanSpace ℝ (Fin a.dim)
+  letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
+  obtain ⟨v, hv⟩ := exists_norm_eq E (by norm_num : (0 : ℝ) ≤ 1)
+  let h : E →ᵃ[ℝ] ℝ := (1 / 2 : ℝ) •
+    (AffineMap.const ℝ E 1 + (InnerProductSpace.toDual ℝ E v).toLinearMap.toAffineMap)
+  have hh (z : E) : h z = (1 + ⟪v, z⟫) / 2 := by simp [h]; ring
+  obtain ⟨g, hg, hgz⟩ := hwhole h (by
+    intro z hz
+    rw [hh]
+    have hi := abs_real_inner_le_norm v z
+    rw [hv, one_mul] at hi
+    have hi' := abs_le.mp (hi.trans hz)
+    constructor <;> linarith)
+  have hB0 : 0 ≤ B := by
+    have hh' := (hg _ (SingleLabelNormalBody.chart_mem a hv.le).1.1).2
+    rw [chart_unit a, hgz v hv.le, hh] at hh'
+    simp only [real_inner_self_eq_norm_sq, hv, one_pow] at hh'
+    linarith
+  exact (hbudget v hv).2.1 B ⟨hB0, g, hg, fun z hz => (hgz z hz).trans (hh z)⟩
+
+#print axioms original_full_face_budget
 
 end D5.S3.Quantum.Foundation.OriginalBallScale
