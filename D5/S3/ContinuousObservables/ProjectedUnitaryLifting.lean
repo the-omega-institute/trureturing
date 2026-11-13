@@ -92,17 +92,17 @@ universe u
 
 structure ProjUnitaryEncoding (ℋ : Type u) [NormedAddCommGroup ℋ]
   [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ] where
-  
+
   U : L ℋ
-  
+
   hU : U ∈ unitary (L ℋ)
-  
+
   P : L ℋ
-  
+
   P' : L ℋ
-  
+
   hP : IsProjective P
-  
+
   hP' : IsProjective P'
 
 variable {ℋ : Type u} [NormedAddCommGroup ℋ]
@@ -514,13 +514,13 @@ variable {ℋ : Type u} [NormedAddCommGroup ℋ]
   [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 structure IsSingularPair (E : ProjUnitaryEncoding ℋ) (ψ : ℋ) (σ : ℝ) : Prop where
-  
+
   P_eq : E.P ψ = ψ
-  
+
   nonneg : 0 ≤ σ
-  
+
   le_one : σ ≤ 1
-  
+
   gram : (E.encoded†) (E.encoded ψ) = ((σ : ℂ) ^ 2) • ψ
 
 section Defs

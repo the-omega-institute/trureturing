@@ -38,7 +38,7 @@ def liftingLaw (r : Realization signature) : Prop :=
     (Odd Ψ.length → E.P' * altSeq E Ψ * E.P =
       E.encoded * aeval (LinearMap.adjoint E.encoded * E.encoded) R)
 
-abbrev liftingArena.{u} : Arena where
+abbrev liftingArena : Arena where
   signature := signature
   Law := liftingLaw.{u}
 
@@ -55,7 +55,7 @@ abbrev singularSignature : Signature where
 def singularActualReadout := realize singularSignature
   (fun _ phases x => seqR phases x) (fun a => nomatch a)
 def singularBad (i : Fin 2) := realize singularSignature
-  (fun j phases x => if j = i then 0 else seqR phases x) (fun a => nomatch a)
+  (fun j phases x => if j = i then (0 : Matrix (Fin 2) (Fin 2) ℂ) else seqR phases x) (fun a => nomatch a)
 
 def singularLaw (r : Realization singularSignature) : Prop :=
   ∀ {H : Type u} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
@@ -65,7 +65,7 @@ def singularLaw (r : Realization singularSignature) : Prop :=
       r.readout 0 Φ σ 0 0 • (if Even Φ.length then ψ else lvOf E ψ σ) +
       r.readout 1 Φ σ 1 0 • (if Even Φ.length then rvpOf E ψ σ else lvtOf E ψ σ)
 
-abbrev singularArena.{u} : Arena where
+abbrev singularArena : Arena where
   signature := singularSignature
   Law := singularLaw.{u}
 
@@ -103,7 +103,8 @@ theorem singularRejected (i : Fin 2) : ¬ singularArena.{u}.Law (singularBad i) 
   intro h
   let K := EuclideanSpace ℂ (ULift.{u} Unit)
   let v : K := EuclideanSpace.single ⟨()⟩ 1
-  fin_cases i
+  have hi : i = 0 ∨ i = 1 := by omega
+  rcases hi with rfl | rfl
   · let E := ofRaw (1 : K →ₗ[ℂ] K) 1 1
       (by simp [LinearMap.star_eq_adjoint, LinearMap.adjoint_one])
       (by simp [LinearMap.star_eq_adjoint, LinearMap.adjoint_one])
@@ -111,8 +112,10 @@ theorem singularRejected (i : Fin 2) : ¬ singularArena.{u}.Law (singularBad i) 
     have hp : IsSingularPair E v 1 := by
       constructor <;> simp [E, ofRaw, ProjUnitaryEncoding.encoded]
     have hv := h hp []
+    have hz : (singularBad 0).readout 0 [] 1 0 0 = (0 : ℂ) := rfl
+    rw [hz] at hv
     have hc := congrArg (fun w : K => w ⟨()⟩) hv
-    simpa [singularBad, realize, seqR, altSeq, v] using hc
+    simpa [singularBad, realize, seqR, altSeq, v, Matrix.zero_apply, Pi.zero_apply] using hc
   · let E := ofRaw (1 : K →ₗ[ℂ] K) 1 0
       (by simp [LinearMap.star_eq_adjoint, LinearMap.adjoint_one])
       (by simp [LinearMap.star_eq_adjoint, LinearMap.adjoint_one])
@@ -120,8 +123,10 @@ theorem singularRejected (i : Fin 2) : ¬ singularArena.{u}.Law (singularBad i) 
     have hp : IsSingularPair E v 0 := by
       constructor <;> simp [E, ofRaw, ProjUnitaryEncoding.encoded]
     have hv := h hp [0]
+    have hz : (singularBad 1).readout 1 [0] 0 1 0 = (0 : ℂ) := rfl
+    rw [hz] at hv
     have hc := congrArg (fun w : K => w ⟨()⟩) hv
-    simpa [singularBad, realize, seqR, altSeq, phaseZ, Rref, phaseOp, E, ofRaw, v] using hc
+    simpa [singularBad, realize, seqR, altSeq, phaseZ, Rref, phaseOp, E, ofRaw, v, Matrix.zero_apply, Pi.zero_apply] using hc
 
 theorem singularDependence : ObservationalDependence singularSignature singularActualReadout := by
   intro i

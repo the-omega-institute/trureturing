@@ -34,10 +34,6 @@ private theorem phaseZ_mul_phaseZ (φ ψ : ℝ) : phaseZ φ * phaseZ ψ = phaseZ
   congr 2 <;> push_cast <;> ring_nf
 
 
-
-
-
-
 private theorem Wrot_eq_Rref (x : ℝ) :
     Wrot x = I • (phaseZ (-(π / 4)) * Rref x * phaseZ (-(π / 4))) := by
   set e : ℂ := Complex.exp (I * ((-(π / 4) : ℝ) : ℂ)) with he_def
@@ -79,8 +75,6 @@ private theorem seqW_cons (φ₀ φ x : ℝ) (Φ : List ℝ) :
   simp only [mul_assoc]
 
 
-
-
 noncomputable def shift (φ₀ : ℝ) (Φ' : List ℝ) : List ℝ :=
   (φ₀ - π / 4) :: Φ'.dropLast.map (· - π / 2)
 
@@ -114,8 +108,6 @@ private theorem seqW_eq_seqR (φ₀ x : ℝ) {Φ' : List ℝ} (hΦ : Φ' ≠ [])
     · exact ⟨L, ψ, by simpa using h⟩
   rw [seqW_append_singleton, shift, List.dropLast_concat, List.getLast_concat,
     List.length_append, List.length_singleton]
-
-
 
 
 private theorem phaseZ_mul_apply_zero_zero (a : ℝ) (M : M₂) :

@@ -18,17 +18,17 @@ universe u
 namespace Reg.D5.S3.ContinuousObservables.PhaseSynthesisLifting
 
 abbrev signature : Signature where
-  Params := ℝ
-  State _ := List ℝ
+  Params := Unit
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := CyclicObservable 2
+  Output _ _ := List ℝ → CyclicObservable 2
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual := realize signature (fun _ φ Φ => phaseProduct φ Φ) (fun a => nomatch a)
-def rejected := realize signature (fun _ _ _ => 0) (fun a => nomatch a)
+def actual := realize signature (fun _ _ φ => phaseProduct φ) (fun a => nomatch a)
+def rejected := realize signature (fun _ _ _ => fun _ => 0) (fun a => nomatch a)
 
 def nativeLaw (r : Realization signature) : Prop :=
   ∀
@@ -52,7 +52,7 @@ def nativeLaw (r : Realization signature) : Prop :=
         (D5.S3.ContinuousObservables.CentralWinding.windingPhase t).re) ∧
       Φ.length = d ∧
       qspPolyW φ₀ Φ = (p.map (algebraMap ℝ ℂ) + Polynomial.C I * B.map (algebraMap ℝ ℂ),
-        C.map (algebraMap ℝ ℂ)) ∧ r.readout () φ₀ Φ = Ufield ∧
+        C.map (algebraMap ℝ ℂ)) ∧ r.readout () () φ₀ Φ = Ufield ∧
       let Ψ := cor8Phases φ₀ Φ hne
       let P := p.map (algebraMap ℝ ℂ) + Polynomial.C I * B.map (algebraMap ℝ ℂ)
       let E := ofRaw rawU Pi PiTilde hU hU' hPi hPiTilde
@@ -64,7 +64,7 @@ def nativeLaw (r : Realization signature) : Prop :=
       (Odd d → PiTilde * altSeq E Ψ * Pi =
         A * aeval (LinearMap.adjoint A * A) (oddRoot P))
 
-abbrev arena.{u} : Arena where
+abbrev arena : Arena where
   signature := signature
   Law := nativeLaw.{u}
 
@@ -88,15 +88,13 @@ theorem rejectedLaw : ¬ arena.{u}.Law rejected := by
 
 theorem actualDependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨0, [], [Real.pi], ?_⟩
+  refine ⟨(), 0, Real.pi, ?_⟩
   intro h
-  have hs : phaseCompletion X 0 1 (0 : AddCircle (1 : ℝ)) = 1 := by
-    ext i j
-    fin_cases i <;> fin_cases j <;> norm_num [phaseCompletion, windingPhase] <;> rfl
-  have hc := congrArg (fun M : CyclicObservable 2 => M 0 0 0) h
-  have hu : (Finset.univ : Finset (ZMod 2)) = {0, 1} := by decide
-  simp [actual, realize, phaseProduct, hs, phaseDiagonal, Matrix.mul_apply, hu, matrix2,
-    Complex.exp_pi_mul_I, mul_comm] at hc
+  have hc := congrArg (fun f : List ℝ → CyclicObservable 2 => f [] 0 0 0) h
+  simp only [actual, realize, Realization.readout, phaseProduct, List.foldl_nil,
+    phaseDiagonal, ContinuousMap.const_apply, matrix2, ite_true, mul_zero, Complex.exp_zero] at hc
+  rw [mul_comm I (Real.pi : ℂ), Complex.exp_pi_mul_I] at hc
+  norm_num at hc
 
 def family : Registration arena.{u} (type_of% (@native_phase_lifting.{u})) where
   actual := actual
@@ -113,7 +111,7 @@ def family : Registration arena.{u} (type_of% (@native_phase_lifting.{u})) where
 
 def nativeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@native_phase_lifting.{u})
-    (type_of% (realize signature (fun _ φ Φ => phaseProduct φ Φ) (fun a => nomatch a))) Unit Unit where
+    (type_of% (realize signature (fun _ _ φ => phaseProduct φ) (fun a => nomatch a))) Unit Unit where
   unitName := `Reg.D5.S3.ContinuousObservables.PhaseSynthesisLifting.nativeUnit
   realizationName := `Reg.D5.S3.ContinuousObservables.PhaseSynthesisLifting.family
   realizationSource := none
@@ -125,7 +123,7 @@ def nativeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena.{u} ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ φ Φ => phaseProduct φ Φ) (fun a => nomatch a))
+  readout := some (realize signature (fun _ _ φ => phaseProduct φ) (fun a => nomatch a))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -133,9 +131,9 @@ def nativeRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.ContinuousObservables.PhaseSynthesisLifting
     definition := none
-    coordinates := #[20]
+    coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg", "fn"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
