@@ -8,12 +8,35 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: diagonal_rank_two_closure
-Direct frozen dependencies: D5.S3.Arith.Lattices.CofactorKernel; declaration identities pending term extraction.
-The signed cofactor construction uses the existing cofactor owner in proofs; the source minor expression remains in cofactorMatrix.
+escape_witness: diagonal_rank_two_closure (used by singular_compatible_closure)
+Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
+  sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
+The signed-minor expression in cofactorMatrix is literal; proofs use the cofactor owner.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
+Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
+diagonal_rank_two_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: normalized_rank_one_closure, normalRankTwo_closure.
+normalized_rank_one_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: normalRankOne_closure.
+linearCoordinatePolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: linearCoordinatePolynomial_homogeneous, linearCoordinatePolynomial_eval, imageClosure_postcompose.
+linearCoordinatePolynomial_homogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_postcompose.
+linearCoordinatePolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_postcompose.
+postcomposeConfiguration | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: postcompose_actual, imageClosure_postcompose, postcompose_restore, compatible_coordinate_change, closure_from_bilinear_normal_form.
+postcompose_actual | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_postcompose.
+imageClosure_postcompose | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: closure_from_bilinear_normal_form.
+Compatible | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: compatible_coordinate_change, closure_from_bilinear_normal_form, normalRankOne_closure, normalRankTwo_closure, singular_compatible_closure.
+postcompose_restore | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: closure_from_bilinear_normal_form.
+compatible_coordinate_change | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: closure_from_bilinear_normal_form.
+closure_from_bilinear_normal_form | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: singular_compatible_closure.
+normalRankOne | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: normalRankOne_closure, permute_rank_normal_form, nonzero_singular_normal_form, singular_compatible_closure.
+normalRankTwo | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: normalRankTwo_closure, permute_rank_normal_form, nonzero_singular_normal_form, singular_compatible_closure.
+normalRankOne_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: singular_compatible_closure.
+normalRankTwo_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: singular_compatible_closure.
+permute_rank_normal_form | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: nonzero_singular_normal_form.
+nonzero_singular_normal_form | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: singular_compatible_closure.
+singular_compatible_closure | proof_shape: content; escape_witness: diagonal_rank_two_closure; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure.
 -/
 
 import D5.S3.Geometry.FlatlandImageAlgebra
+import Mathlib.Data.Matrix.PEquiv
 
 set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
@@ -202,19 +225,12 @@ open scoped BigOperators Classical
 def Compatible {n : ℕ} (F : Matrix (Fin 3) (Fin 3) ℂ) (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 → ℂ))) : Prop :=
   ∀ j, (p j 1).rep ⬝ᵥ (F *ᵥ (p j 0).rep) = 0
 
-private theorem mulVecLin_injective_of_isUnit (A : Matrix (Fin 3) (Fin 3) ℂ)
-    (hA : IsUnit A) : Function.Injective A.mulVecLin := by
-  intro x y hxy
-  apply Matrix.mulVec_injective_iff_isUnit.mpr hA
-  change A *ᵥ x = A *ᵥ y at hxy
-  exact hxy
-
 private theorem postcompose_restore {n : ℕ}
     (L : Fin 2 → Matrix (Fin 3) (Fin 3) ℂ) (hL : ∀ i, IsUnit (L i))
     (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 → ℂ))) :
     postcomposeConfiguration (fun i => (L i)⁻¹)
-      (fun i => mulVecLin_injective_of_isUnit ((L i)⁻¹) (Matrix.isUnit_nonsing_inv_iff.mpr (hL i)))
-      (postcomposeConfiguration L (fun i => mulVecLin_injective_of_isUnit (L i) (hL i)) p) = p := by
+      (fun i => Matrix.mulVec_injective_iff_isUnit.mpr (Matrix.isUnit_nonsing_inv_iff.mpr (hL i)))
+      (postcomposeConfiguration L (fun i => Matrix.mulVec_injective_iff_isUnit.mpr (hL i)) p) = p := by
   funext j i
   change Projectivization.map _ _ (Projectivization.map _ _ (p j i)) = p j i
   refine Projectivization.ind (fun v hv => ?_) (p j i)
@@ -232,7 +248,7 @@ private theorem compatible_coordinate_change {n : ℕ}
     (p : (Fin n → Fin 2 → Projectivization ℂ (Fin 3 → ℂ)))
     (hp : Compatible ((L 1).transpose * E * L 0) p) :
     Compatible E (postcomposeConfiguration L
-      (fun i => mulVecLin_injective_of_isUnit (L i) (hL i)) p) := by
+      (fun i => Matrix.mulVec_injective_iff_isUnit.mpr (hL i)) p) := by
   intro j
   let x := L 0 *ᵥ (p j 0).rep
   let y := L 1 *ᵥ (p j 1).rep
@@ -248,7 +264,7 @@ private theorem compatible_coordinate_change {n : ℕ}
     apply Matrix.mulVec_injective_iff_isUnit.mpr (hL i)
     simpa using hh
   have hmk (i : Fin 2) : postcomposeConfiguration L
-      (fun i => mulVecLin_injective_of_isUnit (L i) (hL i)) p j i =
+      (fun i => Matrix.mulVec_injective_iff_isUnit.mpr (hL i)) p j i =
       Projectivization.mk ℂ (L i *ᵥ (p j i).rep) (hn i) := by
     unfold postcomposeConfiguration
     conv_lhs => rw [← (p j i).mk_rep]
@@ -284,7 +300,7 @@ private theorem closure_from_bilinear_normal_form {n : ℕ}
           Matrix.one_mul,Matrix.mul_one]
   have hq := compatible_coordinate_change E L hL p (by rwa [heq])
   have hc := imageClosure_postcompose (fun i => (L i)⁻¹)
-    (fun i => mulVecLin_injective_of_isUnit ((L i)⁻¹) (Matrix.isUnit_nonsing_inv_iff.mpr (hL i)))
+    (fun i => Matrix.mulVec_injective_iff_isUnit.mpr (Matrix.isUnit_nonsing_inv_iff.mpr (hL i)))
     _ (hE _ hq)
   rwa [postcompose_restore L hL p] at hc
 

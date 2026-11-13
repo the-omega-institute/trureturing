@@ -8,16 +8,42 @@
 
 /-
 admission_basis: open-problem-resolution (#25719; Proved)
-escape_witness: none
-Direct frozen dependencies: D5.S3.Arith.Lattices.CofactorKernel; declaration identities pending term extraction.
-The signed cofactor construction uses the existing cofactor owner in proofs; the source minor expression remains in cofactorMatrix.
+escape_witness: none; settling result
+Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
+  sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
+The signed-minor expression in cofactorMatrix is literal; proofs use the cofactor owner.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
+Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
+singular_kernel_implies_equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: actual_image_equations.
+reshapeEquiv | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: equations_imply_singular_kernel, actual_image_equations, equations_imply_imageClosure.
+equations_imply_singular_kernel | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: equations_imply_imageClosure.
+segre_kernel_bilinear | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: actual_image_equations, equations_imply_imageClosure.
+segrePolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: minorPolynomial, cofactorPolynomial, segrePolynomial_homogeneous, minorPolynomial_multihomogeneous, cofactorPolynomial_homogeneous, minorPolynomial_eval.
+minorPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: minorPolynomial_multihomogeneous, minorPolynomial_eval, imageClosure_equations_of_actual.
+cofactorPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eightPointPolynomial, cofactorPolynomial_homogeneous, eightPointPolynomial_multihomogeneous, eightPointPolynomial_eval.
+eightPointPolynomial | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eightPointPolynomial_multihomogeneous, eightPointPolynomial_eval, imageClosure_equations_of_actual.
+segrePolynomial_homogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: minorPolynomial_multihomogeneous, cofactorPolynomial_homogeneous.
+minorPolynomial_multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
+cofactorPolynomial_homogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eightPointPolynomial_multihomogeneous.
+eightPointPolynomial_multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
+minorPolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
+eightPointPolynomial_eval | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_equations_of_actual.
+imageClosure_equations_of_actual | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_implies_equations.
+transpose_injective_of_surjective | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: surjective_cameras_constraint.
+singular_outer_difference | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: surjective_cameras_constraint.
+surjective_cameras_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: all_cameras_constraint.
+deficient_camera_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: all_cameras_constraint.
+all_cameras_constraint | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: actual_image_equations.
+actual_image_equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: imageClosure_implies_equations.
+imageClosure_implies_equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: result.
+claim | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: result.
+equations_imply_imageClosure | proof_shape: content; escape_witness: D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure; Direct frozen dependencies: C; consumers: result.
+result | proof_shape: content; escape_witness: D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure; Direct frozen dependencies: C; consumers: none (settling result).
 -/
 
 import D5.S3.Geometry.FlatlandImageAlgebra
 import D5.S3.Geometry.FlatlandImageClosure
 import D5.S3.Arith.Lattices.CofactorKernel
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Basis.VectorSpace
 
 set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false

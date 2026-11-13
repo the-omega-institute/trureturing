@@ -8,40 +8,62 @@
 
 /-
 admission_basis: escape-witness
-escape_witness: rank_two_pair_curves
-Direct frozen dependencies: D5.S3.Arith.Lattices.CofactorKernel; declaration identities pending term extraction.
-The signed cofactor construction uses the existing cofactor owner in proofs; the source minor expression remains in cofactorMatrix.
+escape_witness: rank_two_pair_curves (used by diagonal_rank_two_pair_curves)
+Direct frozen dependencies: C = D5/S3/Arith/Lattices/CofactorKernel.cofactor @
+  sha256:3166337f4d6d020e4b4c7683bf2c13d3987b090b3e99f722181e1790e47736fd.
+The signed-minor expression in cofactorMatrix is literal; proofs use the cofactor owner.
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/30117
+Declaration classifications (same-delivery helpers expanded; C denotes the declaration above):
+ImagingDomain | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: theta, imageClosure, imageClosure_polynomial_specialization, raw_imaging_realization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.postcompose_actual, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations.
+theta | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure, imageClosure_polynomial_specialization, raw_imaging_realization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.postcompose_actual, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations.
+coordinates | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure, imageClosure_polynomial_specialization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual.
+Multihomogeneous | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure, imageClosure_polynomial_specialization, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_multihomogeneous, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_multihomogeneous.
+imageClosure | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_polynomial_specialization, rank_one_closure_from_rank_two, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.normalized_rank_one_closure, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose, D5.S3.Geometry.FlatlandImageClosure.closure_from_bilinear_normal_form, D5.S3.Geometry.FlatlandImageClosure.normalRankOne_closure, D5.S3.Geometry.FlatlandImageClosure.normalRankTwo_closure, D5.S3.Geometry.FlatlandImageClosure.singular_compatible_closure, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.imageClosure_implies_equations, D5.S3.Geometry.FlatlandImageEquations.claim, D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure, D5.S3.Geometry.FlatlandImageEquations.result.
+segreMatrix | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: cofactorMatrix, equations, D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.segre_kernel_bilinear, D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure.
+cofactorMatrix | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: equations, D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_eval, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual.
+equations | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel, D5.S3.Geometry.FlatlandImageEquations.imageClosure_equations_of_actual, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations, D5.S3.Geometry.FlatlandImageEquations.imageClosure_implies_equations, D5.S3.Geometry.FlatlandImageEquations.claim, D5.S3.Geometry.FlatlandImageEquations.equations_imply_imageClosure, D5.S3.Geometry.FlatlandImageEquations.result.
+deformX | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: deform_at_zero, deform_nonzero, deform_compatible, rank_one_closure_from_rank_two.
+deformY | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: deform_at_zero, deform_nonzero, deform_compatible, rank_one_closure_from_rank_two.
+deform_at_zero | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: rank_one_closure_from_rank_two.
+deform_nonzero | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: rank_one_closure_from_rank_two.
+deform_compatible | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: rank_one_closure_from_rank_two.
+canonicalA | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: canonical_images, rank_two_pair_curves, diagonal_rank_two_pair_curves, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure.
+canonicalB | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: canonical_images, rank_two_pair_curves, diagonal_rank_two_pair_curves.
+canonical_images | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: rank_two_pair_curves, diagonal_rank_two_pair_curves.
+two_coordinate_ratio | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: rank_two_pair_curves.
+rank_two_pair_curves | proof_shape: content; escape_witness: rank_two_pair_curves; Direct frozen dependencies: none; consumers: diagonal_rank_two_pair_curves.
+block_weight | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eval_block_scaling.
+eval_block_scaling | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eval_block_scaling_zero_iff.
+eval_block_scaling_zero_iff | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: eval_projective_representatives_zero_iff.
+eval_coordinate_curve | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: polynomial_curve_specialization.
+polynomial_curve_specialization | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_polynomial_specialization.
+singular_in_matrix_subspace | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
+homogeneous_substitution | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose.
+homogeneous_determinant | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.minorPolynomial_multihomogeneous, D5.S3.Geometry.FlatlandImageEquations.cofactorPolynomial_homogeneous, D5.S3.Geometry.FlatlandImageEquations.eightPointPolynomial_multihomogeneous.
+diagonalB | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: diagonal_image, diagonal_rank_two_pair_curves, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure.
+diagonal_image | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: diagonal_rank_two_pair_curves.
+diagonal_rank_two_pair_curves | proof_shape: content; escape_witness: rank_two_pair_curves; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure.
+eval_projective_representatives_zero_iff | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: imageClosure_polynomial_specialization, D5.S3.Geometry.FlatlandImageClosure.imageClosure_postcompose.
+imageClosure_polynomial_specialization | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: rank_one_closure_from_rank_two, D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure.
+raw_imaging_realization | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageClosure.diagonal_rank_two_closure, D5.S3.Geometry.FlatlandImageClosure.postcompose_actual.
+bilinear_projective_mk_zero_iff | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageClosure.compatible_coordinate_change, D5.S3.Geometry.FlatlandImageEquations.actual_image_equations.
+rank_one_closure_from_rank_two | proof_shape: content; escape_witness: rank_one_closure_from_rank_two; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageClosure.normalized_rank_one_closure.
+finite_row_basis | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: full_rank_row_minor, D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
+full_rank_row_minor | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: kernel_nonzero_of_maximal_minors.
+kernel_nonzero_of_maximal_minors | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
+arbitrary_row_minor_zero | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: cofactor_in_full_kernel.
+cofactor_in_full_kernel | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
+cofactor_kernel_cross | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: kernel_eq_smul_cofactor.
+kernel_eq_smul_cofactor | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: D5.S3.Geometry.FlatlandImageEquations.singular_kernel_implies_equations.
+cofactor_nonzero_of_independent_rows | proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: C; consumers: D5.S3.Geometry.FlatlandImageEquations.equations_imply_singular_kernel.
 -/
 
-import Mathlib.Basic.Complex.Basic
 import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.RingTheory.MvPolynomial.WeightedHomogeneous
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.Logic.Equiv.Fin.Basic
-import Mathlib.Algebra.CharZero.Infinite
 import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Data.Matrix.PEquiv
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
 import Mathlib.LinearAlgebra.Matrix.Rank
 import D5.S3.Arith.Lattices.CofactorKernel
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.Data.Fintype.EquivFin
-import Lean.Elab.Tactic.Omega
 
 set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
@@ -632,34 +654,41 @@ section
 open Matrix Module
 open scoped Classical
 
+/-- A finite matrix has an independent row subset spanning all its rows. -/
+theorem finite_row_basis {K ι d : Type*} [Field K] [Fintype ι] [Fintype d]
+    (M : Matrix ι d K) :
+    ∃ I : Fin M.rank ↪ ι,
+      Submodule.span K (Set.range (M.submatrix I id).row) =
+        Submodule.span K (Set.range M.row) ∧
+      LinearIndependent K (M.submatrix I id).row := by
+  classical
+  obtain ⟨κ,a,ha,hspan,hlin⟩ := exists_linearIndependent' K M.row
+  letI : Finite κ := Finite.of_injective a ha
+  letI : Fintype κ := Fintype.ofFinite κ
+  have hcard : Fintype.card κ = M.rank := by
+    calc
+      Fintype.card κ = Module.finrank K (Submodule.span K (Set.range (M.row ∘ a))) :=
+        (finrank_span_eq_card hlin).symm
+      _ = Module.finrank K (Submodule.span K (Set.range M.row)) := by rw [hspan]
+      _ = M.rank := M.rank_eq_finrank_span_row.symm
+  let e := (Fintype.equivFinOfCardEq hcard).symm
+  let I : Fin M.rank ↪ ι := ⟨fun i => a (e i), ha.comp e.injective⟩
+  refine ⟨I,?_,?_⟩
+  · change Submodule.span K (Set.range ((M.row ∘ a) ∘ e)) = _
+    rw [e.surjective.range_comp]
+    exact hspan
+  · exact hlin.comp e e.injective
+
 /-- Full column rank is witnessed by a square row submatrix. -/
 private theorem full_rank_row_minor {K m : Type*} [Field K] [Fintype m]
     {d : ℕ} (M : Matrix m (Fin d) K) (hM : M.rank = d) :
     ∃ I : Fin d ↪ m, (M.submatrix I id).det ≠ 0 := by
   classical
-  have hspan : Submodule.span K (Set.range M.row) = ⊤ := by
-    apply Submodule.eq_top_of_finrank_eq
-    rw [← M.rank_eq_finrank_span_row, hM, Module.finrank_fintype_fun_eq_card, Fintype.card_fin]
-  let b := Module.Basis.ofSpan (le_of_eq hspan.symm)
-  have hb : ∀ i, b i ∈ Set.range M.row := by
-    intro i
-    exact Module.Basis.ofSpan_subset (le_of_eq hspan.symm) ⟨i,rfl⟩
-  choose a ha using hb
-  let e := (b.indexEquiv (Pi.basisFun K (Fin d))).symm
-  let I : Fin d ↪ m := ⟨fun i => a (e i), by
-    intro i j hij
-    apply e.injective
-    apply b.injective
-    change a (e i) = a (e j) at hij
-    exact (ha (e i)).symm.trans ((congrArg M.row hij).trans (ha (e j)))⟩
-  have hh : (M.submatrix I id).row = fun i => b (e i) := by
-    funext i
-    exact ha (e i)
-  have hli : LinearIndependent K (M.submatrix I id).row := by
-    rw [hh]
-    exact b.linearIndependent.comp e e.injective
-  have hu := Matrix.linearIndependent_row_iff_isUnit.mp hli
-  exact ⟨I, isUnit_iff_ne_zero.mp ((Matrix.isUnit_iff_isUnit_det _).mp hu)⟩
+  have hb := finite_row_basis M
+  rw [hM] at hb
+  obtain ⟨I, _, hI⟩ := hb
+  exact ⟨I, isUnit_iff_ne_zero.mp
+    ((Matrix.isUnit_iff_isUnit_det _).mp (Matrix.linearIndependent_row_iff_isUnit.mp hI))⟩
 
 /-- Vanishing full-width minors force a nonzero kernel. -/
 theorem kernel_nonzero_of_maximal_minors {K m : Type*} [Field K] [Fintype m]
@@ -765,31 +794,6 @@ section
 open Matrix Module
 open scoped BigOperators Classical
 open D5.S3.Arith.Lattices.CofactorKernel (cofactor)
-
-/-- A finite matrix has an independent row subset spanning all its rows. -/
-theorem finite_row_basis {K ι d : Type*} [Field K] [Fintype ι] [Fintype d]
-    (M : Matrix ι d K) :
-    ∃ I : Fin M.rank ↪ ι,
-      Submodule.span K (Set.range (M.submatrix I id).row) =
-        Submodule.span K (Set.range M.row) ∧
-      LinearIndependent K (M.submatrix I id).row := by
-  classical
-  obtain ⟨κ,a,ha,hspan,hlin⟩ := exists_linearIndependent' K M.row
-  letI : Finite κ := Finite.of_injective a ha
-  letI : Fintype κ := Fintype.ofFinite κ
-  have hcard : Fintype.card κ = M.rank := by
-    calc
-      Fintype.card κ = Module.finrank K (Submodule.span K (Set.range (M.row ∘ a))) :=
-        (finrank_span_eq_card hlin).symm
-      _ = Module.finrank K (Submodule.span K (Set.range M.row)) := by rw [hspan]
-      _ = M.rank := M.rank_eq_finrank_span_row.symm
-  let e := (Fintype.equivFinOfCardEq hcard).symm
-  let I : Fin M.rank ↪ ι := ⟨fun i => a (e i), ha.comp e.injective⟩
-  refine ⟨I,?_,?_⟩
-  · change Submodule.span K (Set.range ((M.row ∘ a) ∘ e)) = _
-    rw [e.surjective.range_comp]
-    exact hspan
-  · exact hlin.comp e e.injective
 
 /-- Independent rows of a d by d+1 matrix give a nonzero cofactor vector. -/
 theorem cofactor_nonzero_of_independent_rows {K : Type*} [Field K] {d : ℕ}
