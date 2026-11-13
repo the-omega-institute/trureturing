@@ -743,7 +743,7 @@ subprocess.run = transfer_run
         transfers = self.asset_calls()
         self.assertEqual(5, len(transfers))
         self.assertEqual([None] * 5, [call["timeout"] for call in transfers])
-        self.assertEqual(sorted(path.name for path in self.remote.iterdir(), reverse=True)[:5],
+        self.assertEqual(sorted((path.name for path in self.remote.iterdir()), reverse=True)[:5],
                          [call["args"][2] for call in transfers])
         self.assertEqual(7, len(list(self.remote.glob("*/lean-build.tgz"))))
         self.assertFalse((self.root / ".lake/build").exists())
