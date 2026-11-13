@@ -395,7 +395,7 @@ lemma exists_frame_of_latitudes {p : EuclideanSpace ℝ (Fin 3)} (hp : ‖p‖ =
     intro j k
     rw [B.orthonormal.inner_sum]
     have h := congrFun (congrFun (colMatrix_mul_conjTranspose_of_orthonormalBasis V) j) k
-    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, colMatrix_apply, star_trivial,
+    simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, colMatrix, Matrix.of_apply, star_trivial,
       Matrix.one_apply] at h
     simpa [RCLike.conj_to_real] using h
   have hq : Orthonormal ℝ fun j : Fin 3 => ∑ i, (V i) j • B i := orthonormal_iff_ite.mpr hinner

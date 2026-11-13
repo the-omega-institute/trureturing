@@ -22,7 +22,7 @@ The homogeneous extension of the frame function to all vectors satisfies the par
 
 Sphere positivity gives positive semidefiniteness, and the standard orthonormal frame sum gives trace one. Spectral resolution of a star projection has eigenvalues zero or one, so finite orthogonal additivity extends the rank-one formula to every projection. Equality on all rank-one projections determines the matrix, proving uniqueness.
 
-The notation Law(rho) in the formula abbreviates precisely positive semidefiniteness, trace one and equality on every star projection, with OP and N bound as displayed. Projective noncontextuality and the all-projections domain are mathematical premises. The theorem does not derive them empirically. It treats finite complex matrices only; the separable infinite-dimensional theorem, countable additivity, trace-class operators and an infinite-dimensional trace-one conclusion require additional results.
+Projective noncontextuality and the all-projections domain are mathematical premises. The theorem does not derive them empirically. It treats finite complex matrices only; the separable infinite-dimensional theorem, countable additivity, trace-class operators and an infinite-dimensional trace-one conclusion require additional results.
 
 ## References
 

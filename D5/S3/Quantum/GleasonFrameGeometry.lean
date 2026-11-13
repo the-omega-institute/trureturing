@@ -36,12 +36,9 @@ section Gram
 variable {𝕜 : Type*} [RCLike 𝕜] {N k : ℕ}
 def colMatrix (e : Fin k → EuclideanSpace 𝕜 (Fin N)) : Matrix (Fin N) (Fin k) 𝕜 :=
   Matrix.of fun a i => e i a
-omit [RCLike 𝕜] in
-@[simp] lemma colMatrix_apply (e : Fin k → EuclideanSpace 𝕜 (Fin N)) (a : Fin N) (i : Fin k) :
-    colMatrix e a i = e i a := rfl
 lemma conjTranspose_mul_colMatrix_apply (e : Fin k → EuclideanSpace 𝕜 (Fin N)) (i j : Fin k) :
     ((colMatrix e)ᴴ * colMatrix e) i j = ⟪e i, e j⟫_𝕜 := by
-  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, colMatrix_apply, PiLp.inner_apply,
+  simp only [Matrix.mul_apply, Matrix.conjTranspose_apply, colMatrix, Matrix.of_apply, PiLp.inner_apply,
     RCLike.inner_apply', RCLike.star_def]
 lemma conjTranspose_mul_colMatrix_of_orthonormal {e : Fin k → EuclideanSpace 𝕜 (Fin N)}
     (he : Orthonormal 𝕜 e) : (colMatrix e)ᴴ * colMatrix e = 1 := by
@@ -164,7 +161,7 @@ lemma orthonormal_realCombination {k : ℕ} {e : Fin k → EuclideanSpace ℂ (F
   have hcol : colMatrix (fun j => realCombination e (b j))
       = colMatrix e * (colMatrix b).map ((↑) : ℝ → ℂ) := by
     ext a j
-    simp [realCombination, colMatrix_apply, Matrix.mul_apply, mul_comm]
+    simp [realCombination, colMatrix, Matrix.of_apply, Matrix.mul_apply, mul_comm]
   have hgram := conjTranspose_mul_colMatrix_apply (fun j => realCombination e (b j)) j l
   rw [hcol, Matrix.conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc (colMatrix e)ᴴ,
     conjTranspose_mul_colMatrix_of_orthonormal he, Matrix.one_mul] at hgram
@@ -183,7 +180,7 @@ lemma sum_rankOne_realCombination {k : ℕ} (e : Fin k → EuclideanSpace ℂ (F
   have hcol : colMatrix (fun j => realCombination e (b j))
       = colMatrix e * (colMatrix b).map ((↑) : ℝ → ℂ) := by
     ext a j
-    simp [realCombination, colMatrix_apply, Matrix.mul_apply, mul_comm]
+    simp [realCombination, colMatrix, Matrix.of_apply, Matrix.mul_apply, mul_comm]
   have hBB : (colMatrix b).map ((↑) : ℝ → ℂ) * ((colMatrix b).map ((↑) : ℝ → ℂ))ᴴ = 1 := by
     have h := colMatrix_mul_conjTranspose_of_orthonormalBasis b
     have hmap : (colMatrix b).map ((↑) : ℝ → ℂ) * ((colMatrix b).map ((↑) : ℝ → ℂ))ᴴ

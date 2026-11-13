@@ -407,8 +407,6 @@ open scoped ComplexConjugate ComplexOrder InnerProductSpace
 namespace Gleason
 variable {N : ℕ}
 noncomputable def invSqrtTwo : ℂ := (((Real.sqrt 2)⁻¹ : ℝ) : ℂ)
-@[simp] lemma invSqrtTwo_re : invSqrtTwo.re = (Real.sqrt 2)⁻¹ := rfl
-@[simp] lemma invSqrtTwo_im : invSqrtTwo.im = 0 := rfl
 @[simp] lemma conj_invSqrtTwo : conj invSqrtTwo = invSqrtTwo := Complex.conj_ofReal _
 lemma invSqrtTwo_mul_self : invSqrtTwo * invSqrtTwo = 1 / 2 := by
   rw [invSqrtTwo, ← Complex.ofReal_mul, ← mul_inv, Real.mul_self_sqrt (by norm_num)]
@@ -529,11 +527,11 @@ lemma equator_combination (x y : EuclideanSpace ℂ (Fin N)) {z : ℂ} (hz : ‖
   apply Complex.ext
   · simp only [Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.sub_re,
       Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-      invSqrtTwo_re, invSqrtTwo_im, Complex.conj_re, Complex.conj_im, sq]
+      invSqrtTwo, Complex.conj_re, Complex.conj_im, sq]
     linear_combination (-(Real.sqrt 2)⁻¹ * (z.re * (y i).re + z.im * (y i).im)) * hzz
   · simp only [Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.sub_re,
       Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im,
-      invSqrtTwo_re, invSqrtTwo_im, Complex.conj_re, Complex.conj_im, sq]
+      invSqrtTwo, Complex.conj_re, Complex.conj_im, sq]
     linear_combination (-(Real.sqrt 2)⁻¹ * (z.re * (y i).im - z.im * (y i).re)) * hzz
 theorem crossTerm_phase (hreg : IsRealPlaneRegular OP.frame) {x y : EuclideanSpace ℂ (Fin N)}
     (hxy : Orthonormal ℂ ![x, y]) {e : ℂ} (he : ‖e‖ = 1) :
