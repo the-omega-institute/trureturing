@@ -88,6 +88,17 @@ $$
 \tag{V.4}
 $$
 
+For joint use with AAIV, write $P(i)=\lfloor(i+1)s\rfloor+i\varphi$
+for its selected point coordinate. The source owner additionally binds
+its original selected gap $[P(i),P(i+1)]$ to this very $r_i$ at the epoch, with
+AAIV40's orientation and calibration. The original marker handle and
+the native entrance share that authentic source binding and anchor;
+they do not point to two merely equal words. The marker test reads the
+tags of these actual adjacent operands. This initial attachment is an
+explicit entrance premise, not a consequence of equality of flat words.
+It grants no native write right by itself. There is no assumption here
+about attachment after an edit; that maintenance is Theorem 5.4.
+
 The source supplies one authentic anchor header $h_e$ and its cut
 $\kappa_e$, current source read rights and, separately, the native
 rights used in any claimed edit. Reading or following these fields is
@@ -317,7 +328,7 @@ leaves at that time, and their successors differ.
 
 For a finite native realization, build
 $T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle$ by
-$P_\varepsilon S_\varepsilon S_L$, and take $p=L L$.
+$P_\varepsilon S_\varepsilon S_LP_R$, and take $p=LL$.
 Its next epoch leaf is $LR$, of tag alpha. The two continuations just
 given are all legal there, with the full preparation retained. For a
 bilateral mechanical seed, a factor $01$ exists at every phase by
@@ -388,6 +399,16 @@ touched components; it supplies no invented order on their preparations.
 Native history decoding still uses the original tapes, not these tokens.
 Token references, fields, retention and every access are paid. The token
 is an acquired epoch/version label, not a phase or a physical clock.
+
+The live source handle binds this owned header and the same native
+source throughout. Its separately granted current-access authority
+covers reading the header and the maintained incidences; it is not
+created by a sample token or by the old marker handle. Each transaction
+actually reads the header's current token before sampling. If an entry
+explicitly requires an older expected token, mismatch yields RejectEntry
+without a sample. Reading the current token is a paid field read,
+not reacquisition of a new source. Old sample tokens stay immutable;
+maintenance changes only the live header's current-token field.
 
 **Definition 5.3 (maintenance at an actual edit).** Reserve the original
 native material, tape append material and all required auxiliary cells
@@ -620,6 +641,32 @@ neither value makes the old root a current alpha/beta leaf. The original
 $P/S$ guards on that root now return branch refusal. Version labels and
 the actual operand map distinguish these facts. $\square$
 
+**Proposition 6.6 (the old acquired record continues at its real cursor).**
+Install the joint binding and incidence backing before the first edit.
+Every finite pre-edit selected-source raw run of AAIV40, and every
+completed immutable-source right Resume episode of AAIV45–47, has the
+same original replies and real cursor in this construction. Its original
+record and initial root certificate remain available after later native
+edits. Continuation uses its current retained cut, not its old comparison
+count interpreted as an address. This does not authenticate an arbitrary
+previous record supplied without a common-source binding.
+
+Proof. Initially the original handle, epoch seed header and actual cut
+are co-bound by Definition 1.3. A right comparison reads seed $i$ and
+its actual next seed $i+1$, then transports the cursor to their shared
+cut. The resulting Boolean is exactly (IV.125)/(IV.145), by (V.2) and
+the authentic initial attachment. The left step is symmetric. Induction
+on executed pre-edit queries therefore proves equality of replies and
+identifies the actual current cut, without a numerical address cast.
+The stopped and Resume transitions have the same latch-only behavior,
+so induction also covers every finite resumed episode and all its
+actually retained Ack, refusal and rejection records. Old records are
+never rewritten. Later native events transport their cut by Theorem
+5.4 and their versioned interpretation by Theorem 6.4; they do not
+reinitialize the observer or substitute a new selected source. The old
+certificate still concerns its original seed, whereas a new current
+tag is acquired by the current source reads. $\square$
+
 ## 7. Preservation of every original request and continuation
 
 **Definition 7.1 (the unchanged original wire).** On each actual original
@@ -719,7 +766,7 @@ condition. $\square$
 
 **Corollary 7.3 (a genuinely joint finite instance).** Start with the
 actual alpha root, construct $T_3$ with
-$P_\varepsilon S_\varepsilon S_L$, and enroll its three epoch leaves.
+$P_\varepsilon S_\varepsilon S_LP_R$, and enroll its three epoch leaves.
 The current-observation menu and all original seven requests then act on
 one actual finite native source. Either continuation in Proposition 4.1,
 and any further finite lawful addressed continuation, is realized by
@@ -912,9 +959,12 @@ Repeatedly split the leftmost beta descendant of one beta seed. After
 $m$ splits its word is $01^m$, with its full left-comb brackets.
 From the cut before this block, at least the $m$ comparisons wholly
 inside it are unmarked. Taking arbitrarily large $m$ disproves the old
-uniform bound. The flat word contains arbitrarily long runs of ones,
-so the old mechanical return-word classification cannot be assumed for
-its edited returns. Proposition 4.1 supplies a stronger obstruction:
+uniform bound. For a seed factor $001$, expand its second zero this way. The
+marker on the first two zeros persists, but the next marker is more
+than $m$ positions away. Thus edited consecutive returns need not have
+length three or five. The flat word also contains arbitrarily long runs
+of ones, so the old mechanical return-word classification cannot be
+assumed for its edited returns. Proposition 4.1 supplies a stronger obstruction:
 even the entire current marker field has a fibre with different actual
 atom, guard and consumer answers. On a finite source the outside
 incidence is genuinely null, and no tail argument supplies a further
@@ -1067,7 +1117,7 @@ ideal-model realization with AA's primitive assumptions; it neither
 derives the physical apparatus nor imports another model's paid ports.
 $\square$
 
-**Corollary 10.4 (the old wire cost is still incurred).** Original address
+**Definition 10.4 (the unchanged wire charges).** Original address
 requests use $2|p|+4$ bits and original index requests use $k+4$ bits.
 Tag, Boolean and Refusal replies use respectively $5,4,5$ bits;
 Growth/Recall use $2|p|+5$; Next with old/new paths $p,q$ uses
@@ -1075,12 +1125,12 @@ $2(|p|+|q|)+7$; OutOfRange and BadFrame use three. All additional
 records, source access, seeks, grants and output have their own costs.
 No comparison count is a physical time estimate or total cost optimum.
 
-Proof. These are the unchanged prefix encodings of Definition 7.1,
-already evaluated in AAII96–97. The construction retains them exactly.
+These are the unchanged prefix encodings of Definition 7.1,
+already evaluated in AAII96–97. The construction retains them exactly;
+they are supplied charges, not new coding bounds.
 Its additional occurrences and material are separately listed in
 Definitions 10.1 and Proposition 10.2. Waiting, granted progress and
 primitive implementation time have no calibrated duration law here.
-$\square$
 
 ## 11. Recovery of space, order, boundary and usable memory
 
@@ -1187,7 +1237,7 @@ Finally revoking record/source access leaves the stored mathematical
 values unchanged while disabling a proposed read or growth. Recovering
 their values does not restore the lost right. $\square$
 
-**Corollary 11.4 (relative calibrated geometry from current acquisition).**
+**Definition 11.4 (the acquired relative calibrated view).**
 An actually acquired current list $b_0,\ldots,b_{h-1}$ at one version
 determines its calibrated ordered boundary chart relative to an assigned
 origin $X_0$ by
@@ -1201,14 +1251,16 @@ Conversely this ordered calibrated chart determines those current tags.
 It does not supply unknown tree brackets, epoch labels, native chronology
 or physical emplacement.
 
-Proof. The two assigned lengths are distinct; their ordered differences
+This is the ordered length/letter inversion already used in AAIV50.2,
+applied to the actual current list acquired by Theorem 8.2. The two
+assigned lengths are distinct; their ordered differences
 identify beta and alpha separately. Sum them to obtain the chart. A
 native promotion changes its assigned gap length; a split replaces one
 assigned gap by two whose sum need not equal the old one. Thus this is
 a versioned relative chart, with no asserted fixed exterior coordinates
 or material conservation law. The missing inverses are exactly the
 examples of Theorem 11.2 and Proposition 6.5. The quantity map $2/3$
-remains different from these calibrated lengths. $\square$
+remains different from these calibrated lengths.
 
 ## 12. Mathematical suppliers and exact remaining boundaries
 
@@ -1220,7 +1272,7 @@ following scopes; no new priority claim is attached to the deductions.
 | --- | --- |
 | Jean Berstel, *Sturmian and Episturmian Words*, survey, §3.1, pp. 30–31, [author PDF](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf) | `literature-attested`: lower/upper mechanical coding and rotation partitions, stated there for $n\ge0$; bilateral tail use here is justified from (V.5), density and explicit endpoint calculations, not from silently extending a one-sided index theorem |
 | Sebastián Barbieri, Sébastien Labbé, Štěpán Starosta, *A characterization of Sturmian sequences by indistinguishable asymptotic pairs*, [arXiv:2011.08112v3](https://arxiv.org/pdf/2011.08112v3), §3.1, [DOI 10.1016/j.ejc.2021.103318](https://doi.org/10.1016/j.ejc.2021.103318) | `literature-attested`: bilateral floor/ceiling definitions and the exceptional adjacent exchange at a singular phase; its indistinguishable-pattern-discrepancy classification is different from equality of this observer's $00$ field and is not used as that claim |
-| Jacques Justin and Laurent Vuillon, *Return words in Sturmian and episturmian words*, §1.2, [primary article](https://www.numdam.org/item/ITA_2000__34_5_343_0.pdf), [DOI 10.1051/ita:2000121](https://doi.org/10.1051/ita:2000121) | `literature-attested`: successive occurrences and half-open return blocks for a recurrent one-sided infinite word, with a possible initial prefix before its first occurrence; this supplies neither bracket identity nor edited-source observation sufficiency |
+| Jacques Justin and Laurent Vuillon, *Return words in Sturmian and episturmian words*, §1.2, [primary article](https://www.numdam.org/item/ITA_2000__34_5_343_0.pdf) | `literature-attested`: successive occurrences and half-open return blocks for a recurrent one-sided infinite word, with a possible initial prefix before its first occurrence; this supplies neither bracket identity nor edited-source observation sufficiency |
 | Fabien Durand, *A characterization of substitutive sequences using return words*, [arXiv:0807.3322v1](https://arxiv.org/pdf/0807.3322v1), §2.3 and Proposition 6 | `literature-attested`: return words to a nonempty prefix of a minimal one-sided sequence form a code, with the displayed occurrence-boundary and derived-sequence properties; code uniqueness does not acquire a return word, install a common source, grant access or prove native finite-edit closure |
 
 The recurrence/return suppliers underlie AAIV's immutable acquisition;
