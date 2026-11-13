@@ -1,0 +1,70 @@
+### Q97.3 混合报告、反序参照和全输入曲率
+
+仍固定一方，另一方原参照记为 $(r,s)$，令
+
+$$
+v=B_{\rm opp}(r,s),\qquad w=B_{\rm opp}(s,r).
+$$
+
+由 (Q97.7)，$\|v\|\ge\kappa$、$\|w+v\|\le\sigma$。取原混合探针的实际顺序
+
+$$
+(H,X,Y)=(a\otimes r,c\otimes s,b\otimes e),\qquad
+(a,b,c)=(e_i,e_j,e_k),\quad i<j.
+$$
+
+设 $z=B(a,b)$。式 (9.3) 是尚未交替时的恒等式，给
+
+$$
+R=[L_a,L_b]c\otimes v+\lambda B(c,z)\otimes w.
+$$
+
+令 $E_B(a,b)c=[L_a,L_b]c+\lambda B(B(a,b),c)$，则严格地
+
+$$
+E_B(a,b)c\otimes v
+=R+\lambda H_B(c,z)\otimes v
+-\lambda B(c,z)\otimes(w+v).
+\tag{Q97.11}
+$$
+
+这同时保留本方对称缺陷和另一方反序参照缺陷。除以 $\|v\|$，利用 $\|z\|\le K$ 得
+
+$$
+\|E_B(e_i,e_j)e_k\|\le\frac{\eta^2}{\kappa}
++K^2\sigma+\frac{K^3\sigma}{\kappa}.
+$$
+
+现在才改用
+
+$$
+E(a,b)c=[L_a,L_b]c+\lambda C(C(a,b),c).
+$$
+
+嵌套括号的替换误差至多 $\lambda h(2K+1)\le K(2K+1)h$，故
+
+$$
+\begin{aligned}
+\|E(e_i,e_j)e_k\|&\le q_0,\\
+q_0&:=\frac{\eta^2}{\kappa}
++\left(5K^2+2K+\frac{K^3}{\kappa}\right)\sigma
+\le\frac{33NK^3}{\kappa^2}\eta.
+\end{aligned}\tag{Q97.12}
+$$
+
+末步使用 $\eta\le1$、$K\ge1$、$\kappa\le1$。投影后的 $E$ 在前两槽严格交替。对单位 $a,b,c$，展开完整基给
+
+$$
+\|E(a,b)c\|\le q_0\left(\sum_{i<j}|a_ib_j-a_jb_i|\right)
+\left(\sum_k|c_k|\right).
+$$
+
+外积恒等式 $\sum_{i<j}(a_ib_j-a_jb_i)^2\le1$ 及 Cauchy–Schwarz 不等式分别将括号控制为 $\sqrt{n(n-1)/2}$、$\sqrt n$。所以
+
+$$
+\|E\|_{\rm tri}\le N^{3/2}q_0\le G\eta.
+\tag{Q97.13}
+$$
+
+无须基包含单位，也无须增加探针。
+
