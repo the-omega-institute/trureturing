@@ -36,7 +36,8 @@ theorem original_uniform_comparison
   have h := (CommonOldExclusionConfirmation.comparison_lipschitz hs hg p).dist_le_mul
     (⟨x, hx⟩ : base C u) (⟨y, hy⟩ : base C u)
   have hbound : |comparison C u p x - comparison C u p y| ≤ M * ‖x-y‖ := by
-    simpa only [Real.dist_eq, Subtype.dist_eq, dist_eq_norm] using h
+    simpa only [Real.dist_eq, Subtype.dist_eq, dist_eq_norm, Real.norm_eq_abs,
+      NNReal.coe_mk] using h
   exact hbound.trans (mul_le_mul_of_nonneg_right (by dsimp [M]; linarith [le_abs_self M]) (norm_nonneg _))
 
 /-- The same bound controls every axis in every chart at every original label.
@@ -162,7 +163,7 @@ private theorem chart_diameter_axis {p : pure C u} (a : ExclusionChart C u p) :
     have hn : 0 < ‖z‖ := norm_pos_iff.mpr hz0
     let w : E := ‖z‖⁻¹ • z
     have hw : ‖w‖ = 1 := by
-      simp only [w, norm_smul, Real.norm_eq_abs, abs_inv, abs_norm]
+      simp only [w, norm_smul, Real.norm_eq_abs, abs_inv, abs_of_nonneg (norm_nonneg z)]
       exact inv_mul_cancel₀ hn.ne'
     have heq : z = ‖z‖ • w := by simp [w, smul_smul, hn.ne']
     have hm : ‖L w‖ ≤ ‖L v‖ := hmax (by simpa using hw)
@@ -212,21 +213,21 @@ private theorem uniform_pure_gap
     rw [← hPR z.1 z.2, ← hPR w.1 z.2] at h1
     have h2 := hbound w.1 z.2 (pure_mem z.2) w.2 (pure_mem w.2)
     have hf : ‖(z.1 : V)-w.1‖ ≤ dist z w := by
-      change dist z.1 w.1 ≤ dist z w
-      exact dist_fst_le _ _
+      simpa only [Subtype.dist_eq, dist_eq_norm] using (dist_fst_le z w)
     have hsnd : ‖(z.2 : V)-w.2‖ ≤ dist z w := by
-      change dist z.2 w.2 ≤ dist z w
-      exact dist_snd_le _ _
+      simpa only [Subtype.dist_eq, dist_eq_norm] using (dist_snd_le z w)
     change |comparison C u z.1 z.2 - comparison C u w.1 w.2| ≤ (2*L)*dist z w
     exact (abs_sub_le _ _ _).trans (by nlinarith)
   let S : Set (P × P) := {z | δ ≤ ‖(z.1 : V)-z.2‖}
   have hSc : IsCompact S := isCompact_univ.of_isClosed_subset
     (isClosed_le continuous_const (by fun_prop)) (subset_univ _)
   by_cases hne : S.Nonempty
-  · obtain ⟨z, hz, hmin⟩ := hSc.exists_isMinOn hne
-      (continuous_const.sub hlip.continuous).continuousOn
+  · have hfun : Continuous (fun z : P × P => 1 - comparison C u z.1 z.2) :=
+      continuous_const.sub hlip.continuous
+    obtain ⟨z, hz, hmin⟩ := hSc.exists_isMinOn hne hfun.continuousOn
     have hnepq : z.1 ≠ z.2 := by
       intro heq
+      change δ ≤ ‖(z.1 : V) - z.2‖ at hz
       have hh : δ ≤ 0 := by simpa [heq] using hz
       exact hδ.not_ge hh
     have hstrict : comparison C u z.1 z.2 < 1 := by
