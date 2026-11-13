@@ -9,73 +9,139 @@
 /- Judgement form.
    admission_basis: open-problem-resolution (#26026; Proved)
    escape_witness: none. All theorem proofs are bind-only under the inlining rule.
-   Direct frozen dependencies: RHLinalg.vonNeumann_trace_ineq,
-   declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7;
-   RHLinalg.eigEquiv,
-   declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96;
-   RHLinalg.eigenvalues_eigEquiv,
-   declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1;
-   RHLinalg.sum_eigenvalues_reindex,
-   declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478.
-   The source edge representatives, Laplacian and eigenvalue order are stated directly;
-   the Hermitian proof in eigenvalue is supplied by lap_hermitian.
-   The sum ranges over one representative of each undirected edge, including zero weights.
-   Edge: proof_shape: bind-only; escape_witness: none; consumers: instFintypeEdge, edgeVector, laplacian, lap_hermitian, uniform, ValidWeight, eigenvalue, smallestSum, largestSum, KConformallyRigid, edgeAt, edgeEquiv, edge_card, lap_psd, lap_matrix, lap_trace, lap_X_trace, orbitWeight, all_weights_bounds.
-   instFintypeEdge: proof_shape: bind-only; escape_witness: none; consumers: settling result.
-   edgeVector: proof_shape: bind-only; escape_witness: none; consumers: laplacian, lap_psd, lap_matrix.
-   laplacian: proof_shape: bind-only; escape_witness: none; consumers: lap_hermitian, eigenvalue, lap_psd, lap_matrix, lap_trace, lap_X_trace, orbit_lap, orbit_diagonalized, uniform_eigenvalues, perturbed_eigenvalues, all_weights_bounds.
-   lap_hermitian: proof_shape: bind-only; escape_witness: none; consumers: eigenvalue, uniform_eigenvalues, perturbed_eigenvalues, all_weights_bounds.
-   uniform: proof_shape: bind-only; escape_witness: none; consumers: lap_hermitian, largestSum, KConformallyRigid, uniform_orbit, uniform_eigenvalues, graph_two_rigid, graph_not_one_rigid.
-   ValidWeight: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, perturbed_valid, all_weights_bounds, graph_not_one_rigid.
-   eigenvalue: proof_shape: bind-only; escape_witness: none; consumers: smallestSum, largestSum, uniform_eigenvalues, perturbed_eigenvalues, all_weights_bounds.
-   smallestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_two_rigid, graph_not_one_rigid.
-   largestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_two_rigid.
-   KConformallyRigid: proof_shape: bind-only; escape_witness: none; consumers: claim, graph_two_rigid, graph_not_one_rigid.
+   The source endpoint differences are expanded in laplacian; laplacian_owner connects
+   them to the existing signedIncidence construction used in lap_psd.
+   Each undirected edge is counted once, and zero weights are permitted.
+   Edge: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, ValidWeight, all_weights_bounds, edgeAt, edgeEquiv, edge_card, eigenvalue, graph_not_one_rigid, graph_two_rigid, instFintypeEdge, lap_X_trace, lap_hermitian, lap_matrix, lap_psd, lap_trace, laplacian, laplacian_owner, largestSum, orbitWeight, perturbed_valid, smallestSum, uniform, uniform_eigenvalues, uniform_orbit.
+   Direct frozen dependencies: none.
+   instFintypeEdge: proof_shape: bind-only; escape_witness: none; consumers: ValidWeight, all_weights_bounds, edge_card, graph_not_one_rigid, lap_X_trace, lap_hermitian, lap_matrix, lap_psd, lap_trace, laplacian, laplacian_owner, perturbed_valid.
+   Direct frozen dependencies: none.
+   laplacian: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, eigenvalue, lap_X_trace, lap_hermitian, lap_matrix, lap_psd, lap_trace, laplacian_owner, orbit_diagonalized, orbit_lap, perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
+   laplacian_owner: proof_shape: bind-only; escape_witness: none; consumers: lap_psd.
+   Direct frozen dependencies:
+     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
+     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
+   lap_hermitian: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, eigenvalue, perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
+   uniform: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, graph_not_one_rigid, graph_two_rigid, uniform_eigenvalues, uniform_orbit.
+   Direct frozen dependencies: none.
+   ValidWeight: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_not_one_rigid, graph_two_rigid, perturbed_valid.
+   Direct frozen dependencies: none.
+   eigenvalue: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, graph_not_one_rigid, graph_two_rigid, largestSum, perturbed_eigenvalues, smallestSum, uniform_eigenvalues.
+   Direct frozen dependencies: none.
+   smallestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_not_one_rigid, graph_two_rigid.
+   Direct frozen dependencies: none.
+   largestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_not_one_rigid, graph_two_rigid.
+   Direct frozen dependencies: none.
+   KConformallyRigid: proof_shape: bind-only; escape_witness: none; consumers: claim, graph_not_one_rigid, graph_two_rigid, result.
+   Direct frozen dependencies: none.
    claim: proof_shape: bind-only; escape_witness: none; consumers: result.
-   graph: proof_shape: bind-only; escape_witness: none; consumers: edgeAt, edgeEquiv, graph_connected, edge_card, lap_matrix, lap_trace, lap_X_trace, orbitWeight, orbit_lap, orbit_diagonalized, uniform_orbit, uniform_eigenvalues, perturbed_valid, perturbed_eigenvalues, all_weights_bounds, graph_two_rigid, graph_not_one_rigid, result.
-   edgeAt: proof_shape: bind-only; escape_witness: none; consumers: edgeEquiv, lap_matrix, lap_trace, lap_X_trace, orbit_lap, perturbed_valid.
-   edgeEquiv: proof_shape: bind-only; escape_witness: none; consumers: edge_card, lap_matrix, lap_trace, lap_X_trace, perturbed_valid.
+   Direct frozen dependencies: none.
+   graph: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, edgeAt, edgeEquiv, edge_card, graph_connected, graph_not_one_rigid, graph_two_rigid, lap_X_trace, lap_matrix, lap_trace, orbitWeight, orbit_diagonalized, orbit_lap, perturbed_eigenvalues, perturbed_valid, result, uniform_eigenvalues, uniform_orbit.
+   Direct frozen dependencies: none.
+   edgeAt: proof_shape: bind-only; escape_witness: none; consumers: edgeEquiv, lap_X_trace, lap_matrix, lap_trace, orbit_lap.
+   Direct frozen dependencies: none.
+   edgeEquiv: proof_shape: bind-only; escape_witness: none; consumers: edge_card, lap_X_trace, lap_matrix, lap_trace, perturbed_valid.
+   Direct frozen dependencies: none.
    graph_connected: proof_shape: bind-only; escape_witness: none; consumers: result.
-   edge_card: proof_shape: bind-only; escape_witness: none; consumers: perturbed_valid, all_weights_bounds.
+   Direct frozen dependencies: none.
+   edge_card: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, perturbed_valid.
+   Direct frozen dependencies: none.
    lap_psd: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   diagonalized_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, uniform_eigenvalues, perturbed_eigenvalues.
-   P: proof_shape: bind-only; escape_witness: none; consumers: diagonalized_eigenvalues, PR_identity, X_diagonalized, X_eigenvalues, orbit_diagonalized, uniform_eigenvalues, perturbed_eigenvalues.
-   R: proof_shape: bind-only; escape_witness: none; consumers: diagonalized_eigenvalues, PR_identity, X_eigenvalues, uniform_eigenvalues, perturbed_eigenvalues.
-   X: proof_shape: bind-only; escape_witness: none; consumers: diagonalized_eigenvalues, X_hermitian, X_diagonalized, X_eigenvalues, lap_X_trace, trace_certificate_bound, all_weights_bounds.
-   PR_identity: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, uniform_eigenvalues, perturbed_eigenvalues.
+   Direct frozen dependencies:
+     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
+     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
+   diagonalized_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
+   P: proof_shape: bind-only; escape_witness: none; consumers: PR_identity, X_diagonalized, X_eigenvalues, orbit_diagonalized, perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
+   R: proof_shape: bind-only; escape_witness: none; consumers: PR_identity, X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
+   X: proof_shape: bind-only; escape_witness: none; consumers: X_diagonalized, X_eigenvalues, X_hermitian, all_weights_bounds, lap_X_trace, trace_certificate_bound.
+   Direct frozen dependencies: none.
+   PR_identity: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
    X_hermitian: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, trace_certificate_bound.
+   Direct frozen dependencies: none.
    X_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues.
+   Direct frozen dependencies: none.
    X_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: trace_certificate_bound.
-   lap_matrix: proof_shape: bind-only; escape_witness: none; consumers: lap_trace, lap_X_trace, orbit_lap.
+   Direct frozen dependencies: none.
+   lap_matrix: proof_shape: bind-only; escape_witness: none; consumers: lap_X_trace, lap_trace, orbit_lap.
+   Direct frozen dependencies: none.
    lap_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   Direct frozen dependencies: none.
    lap_X_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   orbitWeight: proof_shape: bind-only; escape_witness: none; consumers: orbit_lap, orbit_diagonalized, uniform_orbit, perturbed_valid, perturbed_eigenvalues, graph_not_one_rigid.
+   Direct frozen dependencies: none.
+   orbitWeight: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid, orbit_diagonalized, orbit_lap, perturbed_eigenvalues, perturbed_valid, uniform_eigenvalues, uniform_orbit.
+   Direct frozen dependencies: none.
    orbit_lap: proof_shape: bind-only; escape_witness: none; consumers: orbit_diagonalized.
-   orbit_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: uniform_eigenvalues, perturbed_eigenvalues.
+   Direct frozen dependencies: none.
+   orbit_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: perturbed_eigenvalues, uniform_eigenvalues.
+   Direct frozen dependencies: none.
    uniform_orbit: proof_shape: bind-only; escape_witness: none; consumers: uniform_eigenvalues.
-   uniform_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_two_rigid, graph_not_one_rigid.
+   Direct frozen dependencies: none.
+   uniform_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid, graph_two_rigid.
+   Direct frozen dependencies: none.
    perturbed_valid: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
+   Direct frozen dependencies: none.
    perturbed_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
+   Direct frozen dependencies: none.
    trace_five: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   Direct frozen dependencies:
+     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
+     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
    trace_certificate_bound: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   Direct frozen dependencies:
+     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
+     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
    all_weights_bounds: proof_shape: bind-only; escape_witness: none; consumers: graph_two_rigid.
+   Direct frozen dependencies:
+     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
+     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
+     D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
+     declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
+     D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
+     declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1
+     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
+     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
+     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
+     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
    graph_two_rigid: proof_shape: bind-only; escape_witness: none; consumers: result.
+   Direct frozen dependencies:
+     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
+     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
+     D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
+     declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
+     D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
+     declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1
+     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
+     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
+     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
+     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
    graph_not_one_rigid: proof_shape: bind-only; escape_witness: none; consumers: result.
+   Direct frozen dependencies: none.
    result: proof_shape: bind-only; escape_witness: none; consumers: settling result.
+   Direct frozen dependencies:
+     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
+     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
+     D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
+     declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
+     D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
+     declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1
+     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
+     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
+     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
+     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Tactic.Ring
 
 import D5.S3.Weil.ZetaLinear.VonNeumann
 import D5.S3.Weil.ZetaLinear.PosIndex
+import D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity
 import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Lean.Elab.Tactic.LibrarySearch
 
 namespace D5.S3.Combinatorics.SpectralGraph.TotalConformalRigidityTwoNotOne
 
@@ -89,14 +155,28 @@ abbrev Edge {n : ℕ} (G : SimpleGraph (Fin n)) :=
 private noncomputable instance instFintypeEdge {n : ℕ} (G : SimpleGraph (Fin n)) : Fintype (Edge G) :=
   Fintype.ofFinite _
 
-/-- The source vector z_ab = e_a - e_b. -/
-def edgeVector {n : ℕ} {G : SimpleGraph (Fin n)} (e : Edge G) (v : Fin n) : ℝ :=
-  (if v = e.val.1 then 1 else 0) - (if v = e.val.2 then 1 else 0)
-
-/-- Equation (1): sum over undirected edges, each counted once. -/
+/-- Equation (1), with the two endpoint indicator differences expanded. -/
 def laplacian {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
     Matrix (Fin n) (Fin n) ℝ :=
-  fun a b => ∑ e : Edge G, w e * edgeVector e a * edgeVector e b
+  fun a b => ∑ e : Edge G, w e *
+    ((if a = e.val.1 then 1 else 0) - (if a = e.val.2 then 1 else 0)) *
+    ((if b = e.val.1 then 1 else 0) - (if b = e.val.2 then 1 else 0))
+
+private theorem laplacian_owner {n : ℕ} (G : SimpleGraph (Fin n))
+    (w : Edge G → ℝ) : laplacian G w =
+      ∑ e : Edge G, w e • Matrix.vecMulVec
+        (fun v => (D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence
+          (fun f : Edge G => f.val.2) (fun f => f.val.1) v e : ℝ))
+        (fun v => (D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence
+          (fun f : Edge G => f.val.2) (fun f => f.val.1) v e : ℝ)) := by
+  ext a b
+  simp only [laplacian, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    Matrix.vecMulVec_apply,
+    D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence,
+    Int.cast_sub, Int.cast_ite, Int.cast_one, Int.cast_zero]
+  apply Finset.sum_congr rfl
+  intro e _
+  ring
 
 private theorem lap_hermitian {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
     (laplacian G w).IsHermitian := by
@@ -181,19 +261,13 @@ private theorem edge_card : Fintype.card (Edge graph) = 9 := by
 
 private theorem lap_psd {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ)
     (hw : ∀ e, 0 ≤ w e) : (laplacian G w).PosSemidef := by
-  have hform : laplacian G w =
-      ∑ e : Edge G, w e • Matrix.vecMulVec (edgeVector e) (edgeVector e) := by
-    ext a b
-    simp only [laplacian, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
-      Matrix.vecMulVec_apply]
-    apply Finset.sum_congr rfl
-    intro e _
-    ring
-  rw [hform]
+  rw [laplacian_owner]
   apply Matrix.posSemidef_sum
   intro e _
   simpa only [star_trivial] using
-    (Matrix.posSemidef_vecMulVec_self_star (edgeVector e)).smul (hw e)
+    (Matrix.posSemidef_vecMulVec_self_star
+      (fun v => (D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence
+        (fun f : Edge G => f.val.2) (fun f => f.val.1) v e : ℝ))).smul (hw e)
 
 private theorem diagonalized_eigenvalues {n : ℕ} (A P R : Matrix (Fin n) (Fin n) ℝ)
     (d : Fin n → ℝ) (hA : A.IsHermitian) (hPR : P * R = 1)
@@ -259,10 +333,12 @@ private theorem lap_matrix (w : Edge graph → ℝ) :
       -w (edgeAt 1), -w (edgeAt 4), -w (edgeAt 6), w (edgeAt 1) + w (edgeAt 4) + w (edgeAt 6) + w (edgeAt 8), -w (edgeAt 8);
       -w (edgeAt 2), -w (edgeAt 5), -w (edgeAt 7), -w (edgeAt 8), w (edgeAt 2) + w (edgeAt 5) + w (edgeAt 7) + w (edgeAt 8)] := by
   ext a b
-  change (∑ e : Edge graph, w e * edgeVector e a * edgeVector e b) = _
+  change (∑ e : Edge graph, w e *
+    ((if a = e.val.1 then 1 else 0) - (if a = e.val.2 then 1 else 0)) *
+    ((if b = e.val.1 then 1 else 0) - (if b = e.val.2 then 1 else 0))) = _
   rw [← edgeEquiv.sum_comp]
   fin_cases a <;> fin_cases b <;>
-    norm_num [edgeEquiv, edgeAt, edgeVector, Fin.sum_univ_succ] <;> ring
+    norm_num [edgeEquiv, edgeAt, Fin.sum_univ_succ] <;> ring
 
 private theorem lap_trace (w : Edge graph → ℝ) :
     (laplacian graph w).trace = 2 * ∑ e : Edge graph, w e := by

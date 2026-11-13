@@ -15,14 +15,10 @@ internal sealed class TotalConformalRigidityTwoNotOneDocument : IScribeDocumentD
         Blocks(
             Node("Edge", "Undirected edges counted once", EdgeFormula(),
                 "The Introduction, printed page 1, states: “Let G = (V,E) be a simple, connected, undirected graph on n vertices with at least one edge, and let A := A(G) denote its adjacency matrix.” Vertices are Fin n; each undirected edge is represented by its two endpoints in strictly increasing order. The subtype retains exactly the adjacent pairs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("edgeVector", "The difference of endpoint basis vectors", GraphBinders(All("e", Edges(), All("v", Vertices(),
-                Eqn(Call("edgeVector", V("e"), V("v")), Sub(Call("ite", Eqn(V("v"), FirstEndpoint()), D(1), D(0)),
-                    Call("ite", Eqn(V("v"), SecondEndpoint()), D(1), D(0))))))),
-                "The Introduction, printed page 1, states: “For an edge ab ∈ E, we define z_ab := e_a − e_b, where e_a ∈ ℝ^V denotes the a-th canonical basis vector, and we also let L_ab := z_ab z_ab^T.” The two indicator values give each coordinate of that difference.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("laplacian", "The weighted Laplacian", GraphWeightBinders(All("a", Vertices(), All("b", Vertices(),
                 Eqn(Call("laplacian", V("G"), V("w"), V("a"), V("b")), SumOver("e", Edges(),
-                    Mul(Mul(App(V("w"), V("e")), Call("edgeVector", V("e"), V("a"))), Call("edgeVector", V("e"), V("b")))))))),
-                "Equation (1), printed page 1, is ℒ(w) := ∑_{ab∈E} w_ab L_ab = ∑_{ab∈E} w_ab z_ab z_ab^T. The formula gives every entry of that real matrix, with each undirected edge counted once.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+                    Mul(Mul(App(V("w"), V("e")), EndpointDifference("a")), EndpointDifference("b"))))))),
+                "The Introduction, printed page 1, states: “For an edge ab ∈ E, we define z_ab := e_a − e_b, where e_a ∈ ℝ^V denotes the a-th canonical basis vector, and we also let L_ab := z_ab z_ab^T.” Equation (1) is ℒ(w) := ∑_{ab∈E} w_ab L_ab = ∑_{ab∈E} w_ab z_ab z_ab^T. The displayed entry expands both endpoint indicator differences. Each undirected edge is counted once.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("uniform", "Uniform edge weights", GraphBinders(All("e", Edges(), Eqn(Call("uniform", V("G"), V("e")), D(1)))),
                 "The Introduction, printed page 2, states: “For the remainder of the text, we shall use 1 to denote the all-ones vector with the appropriate dimension, which will be clear from the context.” Every edge has weight one.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ValidWeight", "The closed simplex of admissible weights", GraphWeightBinders(Iff(Call("ValidWeight", V("G"), V("w")),
@@ -63,8 +59,6 @@ internal sealed class TotalConformalRigidityTwoNotOneDocument : IScribeDocumentD
     private static Formula Lt(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula Leq(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
-    private static Formula Sub(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
-    private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula Nat() => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Real() => new Formula.NamedConstant(FormulaIdentifier.Create("Real"));
     private static Formula Vertices() => Call("Fin", V("n"));
@@ -72,14 +66,17 @@ internal sealed class TotalConformalRigidityTwoNotOneDocument : IScribeDocumentD
     private static Formula Weights() => Seq(Edges(), Sp, To, Sp, Real());
     private static Formula GraphBinders(Formula body) => All("n", Nat(), All("G", Call("SimpleGraph", Vertices()), body));
     private static Formula GraphWeightBinders(Formula body) => GraphBinders(All("w", Weights(), body));
-    private static Formula FirstEndpoint() => Seq(Parenthesized(Call("val", V("e"))), Dot, D(1));
-    private static Formula SecondEndpoint() => Seq(Parenthesized(Call("val", V("e"))), Dot, D(2));
     private static Formula SumOver(string name, Formula type, Formula body) => Seq(new Formula.Subscript(Sum,
         Seq(V(name), Sp, Colon, Sp, type)), Sp, Parenthesized(body));
     private static Formula EdgeFormula() => GraphBinders(Eqn(Edges(), Seq(OpenBrace, V("e"), Sp, Colon, Sp,
         Vertices(), Sp, Times, Sp, Vertices(), Sp, Mid, Sp,
         And(Lt(Seq(V("e"), Dot, D(1)), Seq(V("e"), Dot, D(2))),
             QCall("SimpleGraph", "Adj", V("G"), Seq(V("e"), Dot, D(1)), Seq(V("e"), Dot, D(2)))), CloseBrace)));
+    private static Formula EndpointDifference(string vertex) => Parenthesized(new Formula.Binary(
+        Call("ite", Eqn(V(vertex), Seq(Parenthesized(Call("val", V("e"))), Dot, D(1))), D(1), D(0)),
+        FormulaBinaryOperator.Subtract,
+        Call("ite", Eqn(V(vertex), Seq(Parenthesized(Call("val", V("e"))), Dot, D(2))), D(1), D(0))));
+    private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula EigenvalueFormula()
     {
         Formula matrix = Call("laplacian", V("G"), V("w"));
