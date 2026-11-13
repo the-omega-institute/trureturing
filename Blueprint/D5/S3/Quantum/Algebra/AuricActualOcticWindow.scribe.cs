@@ -155,7 +155,7 @@ internal sealed class AuricActualOcticWindowDocument : IScribeDocumentDefinition
                         + "of the other. Distinct conjugate triples are therefore disjoint. Transitivity would "
                         + "partition eight labels into triples, a contradiction. Hence at least one actual crossing "
                         + "block has rank at least two. This is the cut-free clause of the existing source argument; "
-                        + "the full classification and the separate fixed-N irreducibility bridge remain open. "
+                        + "the full classification and the separate quotient-density bridge remain open. "
                         + "The rank machinery is supplied by AuricOcticRanks and is consumed here on the actual "
                         + "window. There is no general-position, uniformity, connectivity or certificate premise, "
                         + "and no normalization requiring one to lie in W. No mathematical novelty is claimed."))),

@@ -36,6 +36,7 @@ private theorem extendPolynomialEquiv_map_aux (φ : K →+* L)
     apply MvPolynomial.ringHom_ext
     · intro c
       simp [extendHom]
+      rw [show e (C c) = C c by exact e.commutes c, map_C]
     · intro i
       simp [extendHom]
   exact DFunLike.congr_fun h p
@@ -46,12 +47,14 @@ private def extendPolynomialEquiv (φ : K →+* L)
     (by
       apply MvPolynomial.algHom_ext
       intro i
+      simp only [AlgHom.comp_apply, extendHom, aeval_X, AlgHom.id_apply]
       change extendHom φ e (map φ (e.symm (X i))) = X i
       rw [extendPolynomialEquiv_map_aux]
       simp)
     (by
       apply MvPolynomial.algHom_ext
       intro i
+      simp only [AlgHom.comp_apply, extendHom, aeval_X, AlgHom.id_apply]
       change extendHom φ e.symm (map φ (e (X i))) = X i
       rw [extendPolynomialEquiv_map_aux]
       simp)
@@ -172,7 +175,8 @@ theorem general43_2_original_polynomial (L : Type*) [Field L] [Algebra K L]
   let Φ := originalPolynomialEquiv K bD a e
   have hΦ : Φ (map (algebraMap F K) f) = C c * (FixedDiagonalDeterminant.rowMatrix N).det := by
     change aeval (originalAffineCoordinates K bD a e) (map (algebraMap F K) f) = _
-    rw [aeval_def, ← eval₂_map_comp_C]
+    change eval₂ C (originalAffineCoordinates K bD a e) (map (algebraMap F K) f) = _
+    rw [← eval₂_map_comp_C]
     simpa only [FixedDiagonalDeterminant.rowMatrix, coe_eval₂Hom, map_comp_C] using hn
   let Ψ := extendPolynomialEquiv (algebraMap K L) Φ
   apply (MulEquiv.irreducible_iff Ψ.toMulEquiv).mp
