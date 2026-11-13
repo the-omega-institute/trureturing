@@ -2,21 +2,9 @@
 
 ## Abstract
 
-The original finite return word is transported through an explicit 01 boundary.
+The third Fibonacci substitution iterate is conjugate to the two block images through 01.
 
-**Definition 1.1 (The original frontier morphism).**
-
-Lean statement: `D5/S1/Words/OriginalGenerationBoundary.sigma`
-
-*Formalization.* `D5/S1/Words/OriginalGenerationBoundary.sigma` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-sigma maps 0 to 01 and 1 to 0 on the explicit Bool word alphabet.
-
-**Definition 1.2 (The marker-to-marker morphism).**
+**Definition 1.1 (The two block images).**
 
 Lean statement: `D5/S1/Words/OriginalGenerationBoundary.tau`
 
@@ -26,21 +14,21 @@ Lean statement: `D5/S1/Words/OriginalGenerationBoundary.tau`
 
 *Commentary.*
 
-tau maps 0 to B5 = 00101 and 1 to B3 = 001, with the source orientation retained.
+With false representing 0 and true representing 1, tau maps 0 to B5 = 00101 and 1 to B3 = 001.
 
-**Definition 1.3 (Applying a finite word morphism).**
+**Definition 1.2 (The third iterate in the source alphabet).**
 
-Lean statement: `D5/S1/Words/OriginalGenerationBoundary.apply`
+Lean statement: `D5/S1/Words/OriginalGenerationBoundary.sigmaThree`
 
-*Formalization.* `D5/S1/Words/OriginalGenerationBoundary.apply` (`✓ std3`).
+*Formalization.* `D5/S1/Words/OriginalGenerationBoundary.sigmaThree` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-A morphism is applied letter by letter and the finite images are concatenated.
+The canonical GoldenGapWord.subst maps true to [true, false] and false to [true]. Complementing input and output letters gives sigma(0) = 01 and sigma(1) = 0. sigmaThree complements the input word, applies FibonacciIncidence.iterate three times, and complements the result. Since Bool complement is an involution, this is the third iterate of sigma.
 
-**Definition 1.4 (The finite marker-to-marker segment).**
+**Definition 1.3 (Concatenating the block images).**
 
 Lean statement: `D5/S1/Words/OriginalGenerationBoundary.tauWord`
 
@@ -50,23 +38,11 @@ Lean statement: `D5/S1/Words/OriginalGenerationBoundary.tauWord`
 
 *Commentary.*
 
-tauWord is the marker-to-marker segment obtained from an acquired finite return-type word.
+tauWord concatenates tau's images in the order of an arbitrary finite Bool word.
 
-**Definition 1.5 (The retained finite prefix).**
+**Theorem 1.4 (Abstract finite-word boundary conjugacy).**
 
-Lean statement: `D5/S1/Words/OriginalGenerationBoundary.finitePrefix`
-
-*Formalization.* `D5/S1/Words/OriginalGenerationBoundary.finitePrefix` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The finite prefix keeps the U_K prefix, appends the marker segment, and closes with 00.
-
-**Theorem 1.6 (Original generation through the explicit word boundary).**
-
-$$\forall uK \in \operatorname{List} \operatorname{Bool},\; \forall w \in \operatorname{List} \operatorname{Bool},\; (sigmaThree\left(w\right)) ++ ([false, true]) = ([false, true]) ++ (tauWord\left(w\right)) \land finitePrefix\left(uK, w\right) = ((uK) ++ (tauWord\left(w\right))) ++ ([false, false])$$
+$$\forall w \in \operatorname{List} \operatorname{Bool},\; (sigmaThree\left(w\right)) ++ ([false, true]) = ([false, true]) ++ (tauWord\left(w\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/OriginalGenerationBoundary.original_generation_boundary` (`✓ std3`). ∎
 
@@ -74,13 +50,12 @@ $$\forall uK \in \operatorname{List} \operatorname{Bool},\; \forall w \in \opera
 
 *Commentary.*
 
-For every finite return-type word, the third iterate of sigma is conjugate to tau through the displayed 01 boundary. The same theorem records the finite prefix identity with the distinct closing 00 marker. The statement is about explicit frontier words and does not assert a bracketed-tree or edit-history equality.
+For every finite word w, sigmaThree(w) followed by 01 equals 01 followed by tauWord(w). The two letter identities extend by induction over w: the boundary moves past each substituted letter. This is the abstract conjugacy clause of Proposition 51.2 of Atomic Generation and Acquisition IV. It does not identify w with return types acquired from the specified source, locate source markers or a cursor, or establish the actual prefix equation W_m = U_K tau(w) 00. Those claims require a source and acquisition bridge. The displayed conjugating word is 01; the acquisition marker 00 has a different role. No bracketed tree or edit history is reconstructed.
 
 ## References
 
-- Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.apply`
-- Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.finitePrefix`
 - Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.original_generation_boundary`
-- Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.sigma`
+- Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.sigmaThree`
 - Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.tau`
 - Truth anchor: `D5/S1/Words/OriginalGenerationBoundary.tauWord`
+- Dependency: [D5/S1/Words/FibonacciIncidence](FibonacciIncidence.md)

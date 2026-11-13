@@ -5,5 +5,5 @@ cas_ref: sha256:c607c4e4aa2e8a266ca9d868c8d1e8478ef6eb22a94469868cc33d0e3f20d15a
 coverage_gids: []
 receipts:
   unresolved_subitems:
-    - Proposition 51.2 requires identifying the actually acquired return-type word with the specified immutable source and prove that its original marker-to-marker segment is tau(w), including marker positions and cursor orientation.
+    - Proposition 51.2 requires identifying the actually acquired return-type word with the specified immutable source and proving that its original marker-to-marker segment is tau(w), including marker positions and cursor orientation.
     - Proposition 51.2 requires proving the actual retained-prefix invariant W_m = U_K tau(w) 00 from the source return and acquisition premises; abstract 01 conjugacy alone does not supply it.
