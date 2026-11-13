@@ -91,13 +91,18 @@ theorem result (T : AddSubmonoid ℕ) (hT : (↑T : Set ℕ)ᶜ.Finite) :
     · change s ∈ S at hs
       simp only [S, Finset.mem_insert, Finset.mem_image] at hs
       rcases hs with rfl | ⟨a, ha, rfl⟩
-      · simpa using T.zero_mem
-      · simpa only [Nat.sub_sub_self (Nat.le_of_lt (hbound a ha))] using hG a ha
-    · exact htail _ (by omega)
+      · simp
+      · change M - (M - a) ∈ T
+        rw [Nat.sub_sub_self (Nat.le_of_lt (hbound a ha))]
+        exact hG a ha
+    · change M + s ∈ T
+      exact htail (M + s) (lt_of_lt_of_le hM (Nat.le_add_right M s))
   · rw [← hH]
     apply AddSubmonoid.closure_le.mpr
     intro a ha
-    have haG : a ∈ G := by simp [G, ha]
+    change a ∈ H at ha
+    have haG : a ∈ G :=
+      Finset.mem_insert_of_mem (Finset.mem_insert_of_mem ha)
     have haS : M - a ∈ S :=
       Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ haG)
     apply AddSubmonoid.subset_closure
