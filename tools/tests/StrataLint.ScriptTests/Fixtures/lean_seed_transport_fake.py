@@ -15,6 +15,8 @@ def fail():
     sys.stderr.write(os.environ.get("FAKE_FAIL_STDERR", ""))
     sys.exit(23)
 if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": fail()
+if (len(args) > 1 and verb == "download" and os.environ.get("FAKE_FAIL_ASSET") == "1"
+        and any(value.startswith("lean-build.tgz") for value in args)): fail()
 if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
     print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
 if args[0] == "api" and args[1].endswith("/branches/dev"):
