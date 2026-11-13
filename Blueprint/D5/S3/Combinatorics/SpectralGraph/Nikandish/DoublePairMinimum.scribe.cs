@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class DoublePairMinimumDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class DoublePairMinimumDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Full sharp minimum intervals of the double-pair family", H("Full sharp minimum intervals of the double-pair family"),
         Blocks(
-            Paragraph(Text("Source: supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02; the exact original source names and attribution are retained in the Lean module. All source parameter domains, prerequisites and failed-method boundaries remain binding. These are scoped implementation and normal-admission materials. Necessary tests do not imply integrality, and general four-prime/higher-prime Q3 and academic approval/publication boundaries remain open. Unfinished escape audits are disclosed in linked issue #28398.")),
+            Paragraph(Text("Source: supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02; the exact original source names and attribution are retained in the Lean module. All source parameter domains, prerequisites and failed-method boundaries remain binding. Necessary tests do not imply integrality, and general four-prime/higher-prime Q3 and academic approval/publication boundaries remain open.")),
             Item("minimum-window", "minimum_window", "A true minimum of the entire operator", "The theorem produces a nonzero full eigenvector and compares its eigenvalue with every eigenpair of the same operator."),
             Item("low-region", "low_region", "The complete lower tail region", "The original integer parameter domain and all threshold conditions are retained."),
             Item("middle-region", "middle_region", "The complete middle region with its endpoint boundary", "The full source intervals and integer endpoint exclusions are retained."),

@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class ZeroConstantPairDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class ZeroConstantPairDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The entire zero-constant endpoint family.", H("The entire zero-constant endpoint family."),
         Blocks(
-            Paragraph(Text("Source: four-prime-zero-constant, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. Formal proofs are task-local integrations of the full source results. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
+            Paragraph(Text("Source: four-prime-zero-constant, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
             Item("bezout", "denominator_bezout", "The exact universal Bezout-eight identity", "The source N and D polynomials satisfy the complete ring identity; D is odd and at least three for integer a>=2."),
             Item("denominator", "denominator_obstruction", "The sole positive rational candidate is never integer", "The entire integer a>=2 domain excludes N-Dc=0 by the odd denominator and exact Bezout identity, without a tail bound."),
             Item("factor", "factor_two", "The exact whole-operator root-two factorization", "For b=(a-1)(2a-1), the characteristic endpoint factors as 2a(a-1)c(N-Dc). Polynomial c=0 is an interpolation boundary, never a positive graph example."),

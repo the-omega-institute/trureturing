@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class PairGapSignsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class PairGapSignsDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete exact signs for all original high-root windows.", H("Complete exact signs for all original high-root windows."),
         Blocks(
-            Paragraph(Text("Source: the four small-gap and midpoint notes, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. Formal proofs are task-local integrations of the full source results. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
+            Paragraph(Text("Source: the four small-gap and midpoint notes, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
             Item("midpoint", "midpoint_positive", "The generic positive midpoint", "All eighteen source coefficients are included for every positive real a,b,r, with no size restriction."),
             Item("square", "square_lower_negative", "The full square-size negative endpoint", "The entire real a>=1,r>=2,b>=r squared domain is covered by all 91 positive coefficients, including equality."),
             Item("weighted", "weighted_lower_negative", "The complete weighted half-unit endpoint", "All 128 coefficients prove negativity for positive real a,r>=3 and 4ab>=(2a+1)r squared, including equality."),

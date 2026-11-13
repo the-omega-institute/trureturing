@@ -13,7 +13,7 @@ internal sealed class SixBitCatalogueVerificationDocument : IScribeDocumentDefin
                 H("Kernel completeness check"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
                     "D5/L/QuadraticForms/binarysubspace2026complete")),
-                Blocks(Paragraph(Text("The complete adjoining-vector predicate and original table are unchanged. The source proved this obligation using native_decide; current admission uses kernel reduction and requires a successful current build and transitive-axiom report. Historical native-evaluation provenance remains explicit."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The complete adjoining-vector predicate and original table are unchanged. Historical native-evaluation provenance remains explicit."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("native-properness-check"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.catalogue_proper"),
                 H("Kernel properness check"), StatementSource.WithoutFormula(),
@@ -37,7 +37,7 @@ internal sealed class SixBitCatalogueVerificationDocument : IScribeDocumentDefin
                 H("full source chromatic number"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
                     "D5/L/QuadraticForms/binarysubspace2026complete")),
-                Blocks(Paragraph(Text("The complete positive certificate and the fifteen-clique give chromatic number fifteen for the all-space graph. The historical source proof had four native-evaluation axioms. The current candidate requests kernel reduction for those exact obligations; its accepted axiom closure and normal admission require current successful evidence. This theorem does not supply the separate line-graph result twelve."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The complete positive certificate and the fifteen-clique give chromatic number fifteen for the all-space graph. The historical source proof had four native-evaluation axioms. This theorem does not supply the separate line-graph result twelve."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-full-submodule-chromatic-number"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.actual_chromatic_number_six"),
                 H("Every actual nonzero Submodule"), StatementSource.WithoutFormula(),

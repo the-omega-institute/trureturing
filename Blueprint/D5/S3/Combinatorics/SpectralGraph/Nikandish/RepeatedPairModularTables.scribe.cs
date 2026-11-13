@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class RepeatedPairModularTablesDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class RepeatedPairModularTablesDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete residue tables at three and five", H("Complete residue tables at three and five"),
         Blocks(
-            Paragraph(Text("Source: repeated-pair-modular, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02, original blob 68f394977f82d9f5f20003d20797bb5706a72bff, with the actual product-tail graph lift. The full original scientific domains, attribution, source reports and failed-method/open boundaries remain binding. Exact source controls are historical reported evidence, not a claim that they were newly reproduced by Lean. General Q3 and cases passing all prime-divisor tests remain open. Academic approval/publication boundaries are unchanged. The escape audit remains unfinished under linked issue #28398.")),
+            Paragraph(Text("Source: repeated-pair-modular, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02, original blob 68f394977f82d9f5f20003d20797bb5706a72bff, with the actual product-tail graph lift. The full original scientific domains, attribution, source reports and failed-method/open boundaries remain binding. Exact source controls are historical reported evidence, not a claim that they were newly reproduced by Lean. General Q3 and cases passing all prime-divisor tests remain open. Academic approval/publication boundaries are unchanged.")),
             Item("three-table", "three_table", "All three tail residues", "Exactly residue one is excluded; zero discriminant remains allowed."),
             Item("five-table", "five_table", "All five tail residues", "Exactly residues three and four are excluded."),
             Item("actual-three", "actual_three", "Actual arbitrary-tail prime-three consumer", "The table applies separately to every remaining exponent."),

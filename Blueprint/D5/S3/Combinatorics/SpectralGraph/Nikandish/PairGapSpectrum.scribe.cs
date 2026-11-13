@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class PairGapSpectrumDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class PairGapSpectrumDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Full high-root windows and actual graph nonintegrality.", H("Full high-root windows and actual graph nonintegrality."),
         Blocks(
-            Paragraph(Text("Source: the four small-gap and midpoint notes, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. Formal proofs are task-local integrations of the full source results. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
+            Paragraph(Text("Source: the four small-gap and midpoint notes, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
             Item("small-root", "small_gap_eigenpair", "Both full small-gap root windows", "Every positive natural a,b with tail gap one or two has a genuine K eigenpair in (a+b+1,a+b+2)."),
             Item("square-root", "square_gap_eigenpair", "All original square-size half-unit windows", "Every positive natural a,b,r with r>=2 and b>=r squared has a full operator eigenpair in (a+b+(r+1)/2,a+b+(r+2)/2)."),
             Item("weighted-root", "weighted_gap_eigenpair", "All original weighted half-unit windows", "The same full half-unit interval holds at every positive natural a,b with r>=3 and 4ab>=(2a+1)r squared. Equality is included."),

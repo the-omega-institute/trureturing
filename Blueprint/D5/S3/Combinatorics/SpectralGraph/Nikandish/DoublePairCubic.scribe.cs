@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class DoublePairCubicDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class DoublePairCubicDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full invariant cubic and endpoint reductions.", H("The full invariant cubic and endpoint reductions."),
         Blocks(
-            Paragraph(Text("Source: four-prime-double-pair-completion, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. Formal proofs are task-local integrations of the full source results. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
+            Paragraph(Text("Source: four-prime-double-pair-completion, supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02. The original parameter domains, attribution and failed-method limitations are retained. General four-prime and higher-prime Q3 remain open outside the stated families. Original academic approval and publication boundaries are unchanged.")),
             Item("action", "cubic_action", "The complete invariant-subspace action", "The second swap gives a three-dimensional genuine restriction of the full tensor, not a principal-submatrix spectral proxy."),
             Item("factor", "factorization", "Full scalar times cubic factorization", "The scalar eigenvalue a+b+1 and the invariant cubic give the entire four-dimensional characteristic determinant."),
             Item("two-bracket", "two_bracket", "The full unbounded exponent-root bracket at two", "For every real a at least two, the endpoint-two exponent polynomial is negative at 2a squared minus two and positive at 2a squared minus one."),

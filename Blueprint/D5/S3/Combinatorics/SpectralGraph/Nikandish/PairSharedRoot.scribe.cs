@@ -1,5 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.SpectralGraph.Nikandish;
 internal sealed class PairSharedRootDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/idealintersection2026sixsupport");
@@ -10,7 +10,7 @@ internal sealed class PairSharedRootDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete shared-prime root valuation and resonance", H("Complete shared-prime root valuation and resonance"),
         Blocks(
-            Paragraph(Text("Source: supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02; the exact original source names and attribution are retained in the Lean module. All source parameter domains, prerequisites and failed-method boundaries remain binding. These are scoped implementation and normal-admission materials. Necessary tests do not imply integrality, and general four-prime/higher-prime Q3 and academic approval/publication boundaries remain open. Unfinished escape audits are disclosed in linked issue #28398.")),
+            Paragraph(Text("Source: supplied PR9 revision 6d491f77b35dec808fc777b69939c56cdae5dc02; the exact original source names and attribution are retained in the Lean module. All source parameter domains, prerequisites and failed-method boundaries remain binding. Necessary tests do not imply integrality, and general four-prime/higher-prime Q3 and academic approval/publication boundaries remain open.")),
             Item("root-ranges", "root_ranges", "Every min/max valuation alternative", "There is no coprimality premise on the tails. Negative root offsets and every good prime are retained."),
             Item("normalized-root-resonance", "normalized_root_resonance", "Constructed normalized cubic resonance", "Integer quotient witnesses are obtained from the actual determinant root. Residue reduction never silently reduces a nonintegral rational."),
             Item("root-first-order", "root_first_order", "First-order offset forces first-order shared tails", "This is the original full first-order obstruction at every good prime."),
