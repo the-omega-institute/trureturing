@@ -1,10 +1,10 @@
 /- GID: D5/S3/Quantum/Foundation/HermitianExclusionBall
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Foundation/HermitianExclusionBall
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: A full orthogonal complex two-plane gives global affine coordinates on the entire original exclusion. -/
+   digest: Whole complex two-planes give global affine charts of all original exclusions. -/
 
 import D5.S3.Quantum.Foundation.HermitianExclusionKernel
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
@@ -33,13 +33,13 @@ private def blochLinear : EuclideanSpace ℝ (Fin 3) →ₗ[ℝ] HermitianMat (F
     apply HermitianMat.ext
     change blochMatrix 0 (r + s) = blochMatrix 0 r + blochMatrix 0 s
     ext i j
-    fin_cases i <;> fin_cases j <;> simp [blochHermitian, blochMatrix] <;> ring
+    fin_cases i <;> fin_cases j <;> simp [blochMatrix] <;> ring
   map_smul' t r := by
     apply HermitianMat.ext
     change blochMatrix 0 (t • r) = t • blochMatrix 0 r
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [blochHermitian, blochMatrix, RCLike.real_smul_eq_coe_mul] <;> ring
+      simp [blochMatrix, RCLike.real_smul_eq_coe_mul] <;> ring
 
 private def blochAffine : EuclideanSpace ℝ (Fin 3) →ᵃ[ℝ] HermitianMat (Fin 2) ℂ where
   toFun := blochHermitian 1
@@ -49,7 +49,7 @@ private def blochAffine : EuclideanSpace ℝ (Fin 3) →ᵃ[ℝ] HermitianMat (F
     change blochMatrix 1 (s + r) = blochMatrix 0 s + blochMatrix 1 r
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [blochHermitian, blochMatrix, blochLinear] <;> ring
+      simp [blochMatrix] <;> ring
 
 private theorem bloch_positive (r : EuclideanSpace ℝ (Fin 3)) :
     0 ≤ blochHermitian 1 r ↔ ‖r‖ ≤ 1 := by
@@ -109,7 +109,7 @@ theorem chart_of_full_frame (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1)
     rw [hQ]
     simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hpH,
       Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one,
-      hpX, hXp, Matrix.zero_mul, sub_zero, zero_sub]
+      hpX, hXp, sub_zero]
   let param := (HermitianMat.conjLinear ℝ W).toAffineMap.comp blochAffine
   have hparam (r) : param r = (blochHermitian 1 r).conj W := rfl
   have hinj : Function.Injective param := by
