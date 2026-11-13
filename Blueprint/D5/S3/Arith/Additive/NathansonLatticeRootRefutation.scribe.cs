@@ -8,7 +8,7 @@ internal sealed class NathansonLatticeRootRefutationDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S3/Arith/Additive/NathansonLatticeRootRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithUnits/nathanson2026latticesumsets");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/nathanson2026latticesumsets");
 
     private const string Question = "Problem 3 (p. 3) asks: “Let N(h,k) be the smallest positive integer such that ” "
         + "R_Z(h,k) = {|hA| : A ⊆ [0,N(h,k)] and |A| = k}. "
