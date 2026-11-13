@@ -227,7 +227,8 @@ private lemma reflect_residual (u w : B →L[ℂ] A) (hs : PreservesStar u) (x y
       star (defect u (star y) (star x) - linearized u w (star y) (star x)) := by
   have hs' : ∀ a, star (u (star a)) = u a := fun a => by rw [hs a, star_star]
   have hxy : star y * star x = star (x * y) := (star_mul x y).symm
-  simp only [defect, linearized, reflect_apply, star_sub, star_add, star_mul, hxy, hs']
+  simp only [defect, linearized, reflect_apply, star_sub, star_add, star_mul]
+  rw [hxy, hs' (x * y), hs' x, hs' y]
   abel
 
 private lemma correction_residual (D : FiniteDiagonal B J) (u : B →L[ℂ] A)
@@ -313,7 +314,7 @@ private lemma orbit_neighborhood [NormOneClass B] (f u : B →L[ℂ] A)
   have hn : ‖u‖ ≤ ‖u - f‖ + ‖f‖ := by
     simpa only [sub_add_cancel] using norm_add_le (u - f) f
   have hu : ‖u 1 - 1‖ ≤ ‖u - f‖ + ‖f 1 - 1‖ := by
-    have he : u 1 - 1 = (u - f) 1 + (f 1 - 1) := by simp; abel
+    have he : u 1 - 1 = (u - f) 1 + (f 1 - 1) := by simp
     rw [he]
     exact (norm_add_le _ _).trans (add_le_add (by simpa using (u - f).le_opNorm 1) le_rfl)
   constructor <;> linarith
@@ -328,7 +329,9 @@ private lemma orbit_invariant [NormOneClass B] (D : FiniteDiagonal B J)
       ‖newtonOrbit D f k - f‖ ≤ 8 * d / 3 * (1 - (1 / 4 : ℝ) ^ k) := by
   have hf := initial_norm_bound f hd hd' hs hg
   induction k with
-  | zero => simpa [newtonOrbit, newtonRadius] using And.intro hs ⟨hd, le_rfl, hg, le_rfl⟩
+  | zero =>
+    simpa [newtonOrbit, newtonRadius] using
+      (show PreservesStar f ∧ 0 ≤ d ∧ DefectBound f d from ⟨hs, hd, hg⟩)
   | succ k ih =>
     obtain ⟨hsn, hr, hrg, hgn, hclose⟩ := ih
     have hq0 : 0 ≤ (1 / 4 : ℝ) ^ k := by positivity
@@ -344,11 +347,11 @@ private lemma orbit_invariant [NormOneClass B] (D : FiniteDiagonal B J)
       hw.trans (mul_le_mul_of_nonneg_right hn hr)
     refine ⟨?_, by simp only [newtonRadius]; positivity, ?_, ?_, ?_⟩
     · intro x
-      change newtonOrbit D f k (star x) + correction D (newtonOrbit D f k) (star x) = _
+      change newtonOrbit D f k (star x) + correction D (newtonOrbit D f k) (star x) =
+        star (newtonOrbit D f k x + correction D (newtonOrbit D f k) x)
       rw [hsn x, correction_star D _ x, star_add]
-      rfl
     · change 8 * newtonRadius d k ^ 2 ≤ d * (1 / 4 : ℝ) ^ (k + 1)
-      rw [pow_succ]
+      rw [pow_succ (1 / 4 : ℝ) k]
       nlinarith
     · exact newton_defect D (newtonOrbit D f k) hr hsn hgn hn hun
     · have he : newtonOrbit D f (k + 1) - f =
@@ -359,7 +362,7 @@ private lemma orbit_invariant [NormOneClass B] (D : FiniteDiagonal B J)
         _ ≤ ‖newtonOrbit D f k - f‖ + ‖correction D (newtonOrbit D f k)‖ := norm_add_le _ _
         _ ≤ 8 * d / 3 * (1 - (1 / 4 : ℝ) ^ k) + 2 * (d * (1 / 4 : ℝ) ^ k) := by
           linarith
-        _ = _ := by rw [pow_succ]; ring
+        _ = _ := by rw [pow_succ (1 / 4 : ℝ) k]; ring
 
 /-- A dimension-free exact unital star-algebra homomorphism is constructed from
 an all-input small multiplicative defect and an exact star law. -/
@@ -385,17 +388,20 @@ theorem exists_star_hom_close [Nontrivial B] [Nontrivial A]
   have hclose : ‖ρ - f‖ ≤ 8 * d / 3 := by
     have h := dist_le_of_le_geometric_of_tendsto₀ (1 / 4 : ℝ) (2 * d)
       (by norm_num) hstep hρ
-    simpa [newtonOrbit, dist_eq_norm, norm_sub_rev, div_eq_mul_inv] using h
+    rw [newtonOrbit, dist_eq_norm, norm_sub_rev] at h
+    exact h.trans_eq (by ring)
   have heval (x : B) : Tendsto (fun k => newtonOrbit D f k x) atTop (𝓝 (ρ x)) :=
     ((ContinuousLinearMap.apply ℂ A x).continuous.tendsto ρ).comp hρ
   have hmul (x y : B) : ρ (x * y) = ρ x * ρ y := by
     have hzero : Tendsto (fun k => defect (newtonOrbit D f k) x y) atTop (𝓝 0) := by
-      apply squeeze_zero_norm (fun k => (hi k).2.2.2.1 x y |>.trans ?_) ?_
-      · exact mul_le_mul_of_nonneg_right
-          (mul_le_mul_of_nonneg_right (hi k).2.2.1 (norm_nonneg _)) (norm_nonneg _)
-      · have ht : Tendsto (fun k : ℕ => (1 / 4 : ℝ) ^ k) atTop (𝓝 0) :=
-          tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
-        simpa using ((tendsto_const_nhds.mul ht).mul_const ‖x‖).mul_const ‖y‖
+      have hb (k : ℕ) : ‖defect (newtonOrbit D f k) x y‖ ≤
+          (d * (1 / 4 : ℝ) ^ k) * ‖x‖ * ‖y‖ := by
+        exact ((hi k).2.2.2.1 x y).trans (mul_le_mul_of_nonneg_right
+          (mul_le_mul_of_nonneg_right (hi k).2.2.1 (norm_nonneg _)) (norm_nonneg _))
+      apply squeeze_zero_norm hb
+      have ht : Tendsto (fun k : ℕ => (1 / 4 : ℝ) ^ k) atTop (𝓝 0) :=
+        tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num)
+      simpa using ((tendsto_const_nhds.mul ht).mul_const ‖x‖).mul_const ‖y‖
     have hl : Tendsto (fun k => defect (newtonOrbit D f k) x y) atTop
         (𝓝 (ρ (x * y) - ρ x * ρ y)) :=
       (heval (x * y)).sub ((heval x).mul (heval y))
