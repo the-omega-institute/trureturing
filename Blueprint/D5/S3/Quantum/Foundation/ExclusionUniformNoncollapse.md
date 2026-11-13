@@ -33,3 +33,4 @@ For the native complex model take V to be the entire Hermitian three-by-three ca
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionUniformNoncollapse.all_label_uniform_noncollapse`
 - Dependency: [D5/S3/Quantum/Foundation/ExclusionWidthCompactness](ExclusionWidthCompactness.md)
 - Dependency: [D5/S3/Quantum/Foundation/OriginalFacePolarity](OriginalFacePolarity.md)
+- Dependency: [D5/S3/Quantum/Matrix/NumericalRange](../Matrix/NumericalRange.md)
