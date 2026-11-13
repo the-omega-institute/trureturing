@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:15591b7613a0c7f9f1ad57084335c7b3d190ac7f8d5e420e99faf435317768fe
+  normalized_sha256: sha256:15591b7613a0c7f9f1ad57084335c7b3d190ac7f8d5e420e99faf435317768fe
+cas_ref: sha256:15591b7613a0c7f9f1ad57084335c7b3d190ac7f8d5e420e99faf435317768fe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This is a propositional counterexample, not scope prose. Expand the unchanged frozen SimpleGraph.IsEdgeMatching and SimpleGraph.IsMaximalEdgeMatching model definitions in D5/S3/Combinatorics/Graph/RedundantLeafMatching. For V=Unit sum Bool, G=completeBipartiteGraph Unit Bool, a=Sum.inl (), u=Sum.inr false and v=Sum.inr true, the two singleton matchings Mu={s(a,u)} and Mv={s(a,v)} are maximal by simp with Sym2.forall, completeBipartiteGraph_adj, SimpleGraph.mem_edgeSet, Finset.mem_singleton, Finset.mem_insert, Sym2.mem_iff, Sym2.eq, Sym2.rel_iff', Sum.forall and Bool.forall_bool. Finset.singleton_inj and constructor discrimination give Mu != Mv. Finset.image_singleton, Sym2.map_mk and reduction of the original subtype-valued fold f(x)=if x=u then the retained v else the retained x give R Mu = N = R Mv, with N={s(the retained a,the retained v)}. Unfolding Set.InjOn and applying its equality conclusion to these two maximality memberships contradicts Mu != Mv. After transparent expansion of the frozen matching-model definitions, every step is pinned upstream normalization or logical composition. The pinned mathlib revision is 56a005855ea17e0b0958f73ec801ae140b0a1679. There is no frozen project theorem GID concluding this noninjectivity; the transport theorem alone does not prove it. This uses the CLAUDE 3.2 / SPEC 11.21 normalization-settlement route, retains no new mathematical declaration and claims no project GID coverage for the collision.
+    previous_atom_id: d592013a0d60f2ff1c0e912bcc45cf129143c80ea9cd11883799b53a05dad234
+    next_atom_id: 498c0e115364d0e3dcca2c1c825a200e58f534289d9c7873e90361a4a3208d09
