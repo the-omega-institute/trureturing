@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:b40f2fbaa46efaba16539ed9790e780ad030f27b5533d05e48099747ed004b92
   normalized_sha256: sha256:b40f2fbaa46efaba16539ed9790e780ad030f27b5533d05e48099747ed004b92
 cas_ref: sha256:b40f2fbaa46efaba16539ed9790e780ad030f27b5533d05e48099747ed004b92
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/NiceConeFaces.every_face_exposed
+    target_statement_id: sha256:ba041e23172d30ce67616779f0034fdd67630e93688b9c228aa73c8cc3997c7e
 receipts:
   unresolved_subitems: []
