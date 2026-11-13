@@ -16,6 +16,7 @@ import Mathlib.LinearAlgebra.Eigenspace.Minpoly
 import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.LinearAlgebra.Matrix.Notation
+import Mathlib.Algebra.Polynomial.Smeval
 import Mathlib.Tactic
 
 /-!
@@ -251,12 +252,8 @@ private theorem commute_P_adjoint_mul_encoded : Commute E.P (E.encoded† * E.en
 
 
 private theorem commute_P_aeval (R : ℂ[X]) : Commute E.P (aeval (E.encoded† * E.encoded) R) := by
-  induction R using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add_right hq
-  | monomial n a =>
-    rw [aeval_monomial]
-    have h0 : Commute E.P (algebraMap ℂ (L ℋ) a) := (Algebra.commutes a E.P).symm
-    exact h0.mul_right ((commute_P_adjoint_mul_encoded E).pow_right n)
+  rw [Polynomial.aeval_eq_smeval]
+  exact (Polynomial.smeval_commute_left ℂ R (commute_P_adjoint_mul_encoded E).symm).symm
 
 
 end D5.S3.ContinuousObservables.ProjectedUnitaryLifting
