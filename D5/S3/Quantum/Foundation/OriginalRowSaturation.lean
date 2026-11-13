@@ -44,7 +44,12 @@ theorem original_row_saturation
     (∀ w : chartSpace a, ‖w‖ = 1 → extensionBudget a w = 1) ∧
     (∀ b : ExclusionChart C u q, ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w = 1) ∧
     (∀ x ∈ base C u, comparison C u p x = ep x) ∧
-    (∀ f : V →ₗ[ℝ] ℝ, confirms C u p f → ∀ x ∈ C, ep x ≤ f x) := by
+    (∀ f : V →ₗ[ℝ] ℝ, confirms C u p f → ∀ x ∈ C, ep x ≤ f x) ∧
+    (∀ w : chartSpace a, ‖w‖ = 1 → ∀ s : pure C u, a.param w = s →
+      ∀ z : chartSpace a, ‖z‖ ≤ 1 → comparison C u s (a.param z) = (1 + ⟪w,z⟫) / 2) ∧
+    (∀ b : ExclusionChart C u q, ∀ w : chartSpace b, ‖w‖ = 1 →
+      ∀ s : pure C u, b.param w = s → ∀ z : chartSpace b, ‖z‖ ≤ 1 →
+        comparison C u s (b.param z) = (1 + ⟪w,z⟫) / 2) := by
   have hB : exclusionBalls C u := by intro s; obtain ⟨b, _⟩ := hEB3 s; exact ⟨b⟩
   have hep : ep ∈ fullZeroConfirmers C u p := (hp ep).mpr rfl
   obtain ⟨k⟩ := original_coordinates hc hs hg hEB3 hInj p a ha ep hp
@@ -155,15 +160,28 @@ theorem original_row_saturation
       simpa only [LinearMap.sub_apply, sub_nonneg] using hh
     intro x hx
     exact sub_nonneg.mp (nonneg_on_cone (base_compact hc hs) hs hnon x hx)
-  refine ⟨hbudgeta, hbudgetq, ?_, hleast⟩
-  intro x hx
-  apply le_antisymm
-  · exact csInf_le ⟨0, by rintro z ⟨f, hf, rfl⟩; exact (hf.1 x hx.1).1⟩ ⟨ep, hep.1, rfl⟩
-  · change ep x ≤ sInf {z : ℝ | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = z}
-    apply le_csInf (show ({z : ℝ | ∃ f : V →ₗ[ℝ] ℝ,
-      confirms C u p f ∧ f x = z} : Set ℝ).Nonempty from ⟨ep x, ep, hep.1, rfl⟩)
-    rintro z ⟨f, hf, rfl⟩
-    exact hleast f hf x hx.1
+  refine ⟨hbudgeta, hbudgetq, ?_, hleast, ?_, ?_⟩
+  · intro x hx
+    apply le_antisymm
+    · exact csInf_le ⟨0, by rintro z ⟨f, hf, rfl⟩; exact (hf.1 x hx.1).1⟩ ⟨ep, hep.1, rfl⟩
+    · change ep x ≤ sInf {z : ℝ | ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = z}
+      apply le_csInf (show ({z : ℝ | ∃ f : V →ₗ[ℝ] ℝ,
+        confirms C u p f ∧ f x = z} : Set ℝ).Nonempty from ⟨ep x, ep, hep.1, rfl⟩)
+      rintro z ⟨f, hf, rfl⟩
+      exact hleast f hf x hx.1
+  · intro w hw s hsw z hz
+    obtain ⟨_, _, _, hcs⟩ := hscale w hw s hsw
+    rw [hcs z hz, htunit]
+    ring
+  · intro b w hw s hsw z hz
+    obtain ⟨tb, htb, _, hsb, hbb⟩ := original_scale_and_sharp_budget hc hs hg hB hPR q b
+    have he : 1 / (2*tb) = 1 := ((hbb w hw).2.2).symm.trans (hbudgetq b w hw)
+    have htbu : tb = 1 / 2 := by
+      have hh := (div_eq_iff (by positivity : 2*tb ≠ 0)).mp he
+      linarith
+    obtain ⟨_, _, _, hcs⟩ := hsb w hw s hsw
+    rw [hcs z hz, htbu]
+    ring
 
 #print axioms original_row_saturation
 
