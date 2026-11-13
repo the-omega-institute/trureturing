@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.OddSquareFullInverseNorm
 import Reg.Support.SingleDependentReadout
 
+/-! Full-family source audit of the finite Euclidean amplification estimate. -/
+
 namespace Reg.D5.S3.Quantum.Dynamics.OddSquareFullInverseNorm
 
 open _root_.D5.S3.Quantum.Dynamics.OddSquareFullInverseNorm
@@ -50,9 +52,11 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(1,0,1), (fun _ => 1), (fun _ => (1 / 2 : ℝ)), ?_⟩
   intro he
   have hh := congrArg (fun M : Matrix (Fin 1) (Fin 1) ℝ => M 0 0) he
-  simp only [actual, realize, block_inverse _ (by intro k; norm_num), greenMatrix,
-    Fin.val_zero, le_refl, ite_true, Nat.sub_self, greenEntry] at hh
-  norm_num at hh
+  change ((lowerBlock (fun _ => (1 : ℝ)) 1)⁻¹) 0 0 =
+    ((lowerBlock (fun _ => (1 / 2 : ℝ)) 1)⁻¹) 0 0 at hh
+  rw [block_inverse (fun _ => (1 : ℝ)) (by intro k; norm_num),
+    block_inverse (fun _ => (1 / 2 : ℝ)) (by intro k; norm_num)] at hh
+  norm_num [greenMatrix, greenEntry] at hh
 
 def source_registration : Registration arena (type_of% @full_inverse_unit_amplification) where
   actual := actual
@@ -96,6 +100,19 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 #print axioms registration
+
+run_cmd do
+  let ty := (← getEnv).find? ``full_inverse_unit_amplification
+  let some ci := ty | throwError "missing source"
+  let rec visit (e : Expr) (p : Array String) : CommandElabM Unit := do
+    if e.getAppFn.constName? == some ``Inv.inv then
+      logInfo m!"INVERSE_SOURCE_PATH {p}"
+    match e with
+    | .forallE _ _ b _ => visit b (p.push "body")
+    | .lam _ _ b _ => visit b (p.push "body")
+    | .app f x => visit f (p.push "fn"); visit x (p.push "arg")
+    | _ => pure ()
+  visit ci.type #[]
 
 end
 end Reg.D5.S3.Quantum.Dynamics.OddSquareFullInverseNorm

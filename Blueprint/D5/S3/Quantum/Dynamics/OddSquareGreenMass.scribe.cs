@@ -18,10 +18,22 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "t(2i) and negative subdiagonal −t(2i+1). The recurrence E is its positive inverse-entry "
                 + "formula, with starting column l and row displacement d. Positive hoppings make every E positive.",
                 DescribeRole.Definition),
+            Node("entry-positive", "Positivity of each Green entry", "entry_pos", PositiveFormula(),
+                "Positive hoppings keep every forward-substitution entry strictly positive at every "
+                + "column and displacement. This also supplies the nonnegativity needed when a local "
+                + "inverse region is compared with the sum over a larger finite inverse.", DescribeRole.Theorem),
             Node("lower-block", "The finite bidiagonal block", "lowerBlock", BlockFormula(),
                 "L(t,n) is a real matrix on Fin n. Its diagonal is t(2i), its subdiagonal is "
                 + "−t(2j+1), and all other entries vanish. The proof verifies its inverse by multiplication; "
                 + "no invertibility premise is supplied by the caller.", DescribeRole.Definition),
+            Node("green-matrix", "The triangular Green matrix", "greenMatrix", GreenMatrixFormula(),
+                "G(t,n) has entry E(t,j,i-j) when j is at most i and zero otherwise. The natural "
+                + "values of the finite indices are used in the recurrence.", DescribeRole.Definition),
+            Node("block-inverse", "The actual inverse formula", "block_inverse", InverseFormula(),
+                "For every finite size n and positive hopping sequence, L(t,n) inverse is G(t,n). "
+                + "The formula is verified by multiplying the matrices. It includes n=0 and the "
+                + "first and last rows, so entries in an interior window may be transported into "
+                + "the complete open inverse by shifting both indices.", DescribeRole.Theorem),
             Node("inverse-mass", "Quadratic inverse mass in an odd square", "odd_square_inverse_paired_mass",
                 MassFormula(),
                 "All indices are zero based. In the sums, l ranges over Fin q and d over Fin(q−l). "
@@ -82,6 +94,30 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
             Eq(At(t,Add(i,size)),At(t,i))));
         return All("t",Arrow(N(),R()),All("q",N(),Implies(positive,
             Implies(bounded,Implies(repeated,Le(Mul(q,Add(q,D(1))),sum))))));
+    }
+
+    private static Formula PositiveFormula()
+    {
+        var t=F.Id("t"); var i=F.Id("i"); var l=F.Id("l"); var d=F.Id("d");
+        return All("t",Arrow(N(),R()),Implies(All("i",N(),Lt(D(0),At(t,i))),
+            All("l",N(),All("d",N(),Lt(D(0),E(t,l,d))))));
+    }
+
+    private static Formula GreenMatrixFormula()
+    {
+        var t=F.Id("t"); var n=F.Id("n"); var i=F.Id("i"); var j=F.Id("j");
+        var iv=Call("val",i); var jv=Call("val",j);
+        return All("t",Arrow(N(),R()),All("n",N(),All("i",Call("Fin",n),
+            All("j",Call("Fin",n),Eq(At(Call("G",t,n),i,j),
+                Call("ite",Le(jv,iv),E(t,jv,Sub(iv,jv)),D(0)))))));
+    }
+
+    private static Formula InverseFormula()
+    {
+        var t=F.Id("t"); var n=F.Id("n"); var i=F.Id("i");
+        return All("t",Arrow(N(),R()),Implies(All("i",N(),Lt(D(0),At(t,i))),
+            All("n",N(),Eq(new Formula.Power(Call("L",t,n),new Formula.Negate(D(1))),
+                Call("G",t,n)))));
     }
 
     private static Formula E(Formula t, Formula l, Formula d) => Call("E",t,l,d);
