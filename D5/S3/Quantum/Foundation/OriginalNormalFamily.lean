@@ -159,7 +159,7 @@ theorem normal_maximum
       rw [← hzs, normalForm_chart hep k]
       have hz1 : ‖z‖ ≤ 1 := by simpa using hz
       have hvz : ‖v‖ * ‖z‖ ≤ ‖v‖ := mul_le_of_le_one_right (norm_nonneg v) hz1
-      exact add_le_add_left ((real_inner_le_norm v z).trans hvz) α
+      exact add_le_add le_rfl ((real_inner_le_norm v z).trans hvz)
   refine ⟨hupper, ?_⟩
   by_cases hv : v = 0
   · refine ⟨a.param 0, SingleLabelNormalBody.chart_mem a (by simp), ?_⟩
@@ -169,5 +169,96 @@ theorem normal_maximum
     · simp [norm_smul, hvpos.ne']
     · rw [normalForm_chart hep k, inner_smul_right, real_inner_self_eq_norm_sq]
       field_simp
+
+/-- The original neighboring full confirmer, its exact support threshold and antipode.
+The neighbor is proved singleton before its normal coordinates can be reused. -/
+theorem original_neighbor_support
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hInj : Function.Injective (fun q : pure C u => exclusion C u q))
+    (p : pure C u) {a : ExclusionChart C u p} {ep : V →ₗ[ℝ] ℝ}
+    (hep : ep ∈ fullZeroConfirmers C u p) (k : Coordinates p a ep)
+    (q : pure C u) (v : chartSpace a) (hv : ‖v‖ = 1) (hq : a.param v = q) :
+    ∃ eq : V →ₗ[ℝ] ℝ,
+      (∀ e, e ∈ fullZeroConfirmers C u q ↔ e = eq) ∧
+      let lam := 1 / (1 + rho k v)
+      0 < lam ∧ lam ≤ 1 / 2 ∧
+      (∀ x : V, eq x = (1 - lam) * k.g.val x + lam * (directionLift k v).val x) ∧
+      eq (a.param (-v)) = (rho k v - 1) / (rho k v + 1) ∧
+      ((a.param (-v) ∈ exclusion C u q) ↔ rho k v = 1) := by
+  obtain ⟨eq, hqunique⟩ := neighbor_unique hc hs hg hB hInj p hep k q v hv hq
+  have heq : eq ∈ fullZeroConfirmers C u q := (hqunique eq).mpr rfl
+  let lam := (1 - eq (a.param (-v))) / 2
+  have hqD : (q : V) ∈ exclusion C u p := hq ▸ SingleLabelNormalBody.chart_mem a hv.le
+  have hpD := (exclusion_symmetric p q).mp hqD
+  have hEq := peak_lift hep k eq heq.1.1 (heq.2 _ hpD) v hv (hq ▸ heq.1.2)
+  have hform (x : V) : eq x = (1 - lam) * k.g.val x + lam * (directionLift k v).val x := by
+    have hh := congrArg (fun f : V →L[ℝ] ℝ => f x) hEq
+    change eq x = k.g.val x + lam * ((directionLift k v).val x - k.g.val x) at hh
+    linarith
+  obtain ⟨M, hM, hdom⟩ := direction_domination k
+  have hlower := neighbor_parameter_bound hc hs hg hB hInj p hep k M hM hdom q v hv hq eq heq
+  have hlam : 0 < lam := lt_of_lt_of_le (by positivity : 0 < 1 / (1 + M)) hlower
+  have hlamhalf : lam ≤ 1 / 2 := by
+    have hh := (heq.1.1 _ (SingleLabelNormalBody.chart_mem a (z := -v)
+      (by simpa using hv.le)).1.1).1
+    dsimp [lam]; linarith
+  obtain ⟨y₁, y₂, hy₁, hy₂, hne⟩ := pure_pair_in_ball hc hs hg hB q
+  have hex : ∃ y : pure C u, (y : V) ∈ exclusion C u q ∧ y ≠ p := by
+    by_cases h : y₁ = p
+    · exact ⟨y₂, hy₂, fun hh => hne (h.trans hh.symm)⟩
+    · exact ⟨y₁, hy₁, h⟩
+  obtain ⟨y, hy, hyp⟩ := hex
+  have hgy : 0 < k.g.val y := by
+    rw [k.g_value]
+    exact g_positive hc hs hg hB hInj p hep (pure_mem y)
+      (fun h => hyp (Subtype.val_injective h))
+  let A := (1 - lam) / lam
+  have hA : lam * A = 1 - lam := by dsimp [A]; field_simp
+  have hratio : -(directionLift k v).val y / k.g.val y = A := by
+    apply (div_eq_iff hgy.ne').mpr
+    have hh := hform y
+    rw [heq.2 _ hy] at hh
+    nlinarith
+  have hrho : rho k v = A := by
+    apply le_antisymm
+    · apply csSup_le ⟨_, y, ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
+      rintro _ ⟨x, hx, rfl⟩
+      have hgx : 0 < k.g.val x := by
+        rw [k.g_value]
+        exact g_positive hc hs hg hB hInj p hep hx.1 hx.2
+      apply (div_le_iff₀ hgx).mpr
+      have heqx := (heq.1.1 x hx.1.1).1
+      rw [hform x] at heqx
+      nlinarith
+    · rw [← hratio]
+      exact le_csSup (ratio_bound k v hv) ⟨y,
+        ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
+  have hlamrho : lam = 1 / (1 + rho k v) := by
+    rw [hrho]
+    apply (eq_div_iff (by dsimp [A]; positivity : 1 + A ≠ 0)).mpr
+    nlinarith
+  have hr : eq (a.param (-v)) = 1 - 2 * lam := by dsimp [lam]; ring
+  have hrhof := (rho_positive_iff hc hs hg hB hInj p hep k v hv).1
+  refine ⟨eq, hqunique, ?_⟩
+  dsimp only
+  refine ⟨hlamrho ▸ hlam, hlamrho ▸ hlamhalf, hlamrho ▸ hform, ?_, ?_⟩
+  · rw [hr, hlamrho]
+    field_simp
+    <;> ring
+  · constructor
+    · intro hD
+      have hz := heq.2 _ hD
+      rw [hr, hlamrho] at hz
+      have hd : 0 < 1 + rho k v := by linarith
+      have hm := (div_eq_iff hd.ne').mp (show 1 / (1 + rho k v) = 1 / 2 by linarith)
+      linarith
+    · intro hrho1
+      refine ⟨(SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1,
+        eq, heq.1, ?_⟩
+      rw [hr, hlamrho, hrho1]
+      norm_num
+
+#print axioms original_neighbor_support
 
 end D5.S3.Quantum.Foundation.OriginalNormalFamily

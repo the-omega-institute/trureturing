@@ -245,7 +245,7 @@ theorem direction_domination {p : pure C u} {a : ExclusionChart C u p}
       nlinarith
   exact hbound.trans (by nlinarith)
 
-private theorem neighbor_parameter_bound
+theorem neighbor_parameter_bound
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hInj : Function.Injective (fun q : pure C u => exclusion C u q))
