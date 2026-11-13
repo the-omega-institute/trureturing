@@ -232,7 +232,9 @@ theorem regular_anchor_uniform_height
       by_contra hne
       exact hzcluster.ne ((disjoint_nhds_nhds.mpr hne).eq_bot)
     have hone : ep x = 1 := by
-      simpa only [LinearMap.sub_apply, hx.2, sub_eq_zero] using hzero.symm
+      have hh : u x = ep x := sub_eq_zero.mp hzero
+      rw [hx.2] at hh
+      exact hh.symm
     have hxone : x ∈ ({(p : V)} : Set V) := by
       rw [← (full_zero_faces hc hs hg hB hinj p hep).2]
       exact ⟨hx, hone⟩
@@ -241,20 +243,22 @@ theorem regular_anchor_uniform_height
   obtain ⟨R, hR, hbound⟩ := (base_compact hc hs).isBounded.exists_pos_norm_le
   have hnorm : Tendsto (fun n => ‖(ea n).toContinuousLinearMap - ep.toContinuousLinearMap‖)
       atTop (𝓝 0) := by
-    simpa only [sub_self, norm_zero] using (heconv.sub tendsto_const_nhds).norm
+    simpa only [sub_self, norm_zero] using
+      (heconv.sub (tendsto_const_nhds (x := ep.toContinuousLinearMap))).norm
   have hscale : Tendsto (fun n =>
       ‖(ea n).toContinuousLinearMap - ep.toContinuousLinearMap‖ * R) atTop (𝓝 0) := by
     simpa only [zero_mul] using hnorm.mul_const R
   have hupper (n : ℕ) : ε ≤ ‖(ea n).toContinuousLinearMap - ep.toContinuousLinearMap‖ * R := by
     have hb := ((ea n).toContinuousLinearMap - ep.toContinuousLinearMap).le_opNorm (z n)
+    change ‖ea n (z n) - ep (z n)‖ ≤
+      ‖(ea n).toContinuousLinearMap - ep.toContinuousLinearMap‖ * ‖z n‖ at hb
     have hepz := hep.2 (z n) (hz n)
     have hnormeval : ea n (z n) ≤ ‖(ea n).toContinuousLinearMap - ep.toContinuousLinearMap‖ * ‖z n‖ := by
       have hreadnonneg := (hea n).1.1 (z n) (hz n).1.1
-      simpa only [ContinuousLinearMap.sub_apply, LinearMap.coe_toContinuousLinearMap,
-        hepz, sub_zero, Real.norm_eq_abs, abs_of_nonneg hreadnonneg.1] using hb
+      simpa only [hepz, sub_zero, Real.norm_eq_abs, abs_of_nonneg hreadnonneg.1] using hb
     exact (hreading n).trans (hnormeval.trans
       (mul_le_mul_of_nonneg_left (hbound (z n) (hz n).1) (norm_nonneg _)))
-  have hle : ε ≤ 0 := le_of_tendsto' hscale hupper
+  have hle : ε ≤ 0 := ge_of_tendsto' hscale hupper
   exact hε.not_ge hle
 
 #print axioms regular_confirmation_tendsto
