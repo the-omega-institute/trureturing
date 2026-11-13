@@ -1,0 +1,38 @@
+现有来源的数学所有权保持如下区分。
+
+1. [校准卷 123–125](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   与 [EXCLUSION IX119–120](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+   拥有完整确认菜单、实际全局法向体、P0 限制同构、原球面纯点、
+   实际边传播、反端点取得与种子维数接口。
+   本卷仅在这些接口上形成 X121–X123 的已列组合，
+   不复制旧接口的证明或把它们重命名为新原理。
+2. [校准卷 128](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   的弱分支给 $\nu_p\le1$，无需本卷实际种子；
+   其 E0 下的迹与球内界保留额外 E0 前件。
+   两种作用域既不相互替换，也不为本卷供给 E0。
+3. [校准卷 129](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   拥有 E0 下固定状态体的内球与 IC0 对校准间隙的条件描述。
+   固定状态体、局部法向限制与本卷整球测试缺口是不同对象，
+   不能把其内球当作本卷的共同正延拓或 PC1。
+4. [校准卷 130](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   区分几何覆盖与原反端点/正交实现，
+   其中 Pair 型接口保留自身 $\mathrm{Pair}_{\perp}$ 前件。
+   本卷不借几何覆盖插入 Pair、IC0、全原域同时实现或额外物理源。
+5. [OriginalNormalRestriction](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalNormalRestriction.md)
+   拥有原法向限制的满射、实际常一读数的相对内部点及 P0 下的限制同构。
+   满射不是任意原标签的单射；本卷 X122 的一般核消去不改这一边界。
+6. [ExclusionIncidence](../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionIncidence.md)
+   拥有其精确前件下关联 O、开性及 Hausdorff 球空间之间的条件等价。
+   条件等价不提供 O；X121、X123 的具体两分支均未被该接口自动排除。
+7. [FixedZeroObstruction](../../../Blueprint/D5/S3/Quantum/Foundation/FixedZeroObstruction.md)
+   拥有原全局最大、准确面与稳定零集推出 O 或坍缩的条件接口。
+   稳定零集存在和适用前件仍须实际供给，不能从名称或条件结论倒推。
+8. [UnitPreservingLiftImage](../../../Blueprint/D5/S3/Quantum/Foundation/UnitPreservingLiftImage.md)
+   拥有原单位图像闭性与最小成本接口。
+   该闭图像不供给当前带共同接触的正截面、仪器或球族实现。
+9. [ActualExclusionBoundary](../../../Blueprint/D5/S3/Quantum/Foundation/ActualExclusionBoundary.md)
+   的原单例标签存在、沿实际边传播及连续统多不同整球，
+   仍只说标签纤维为单例。
+   它既不替代全标签 Inj，也不等于单例确认 P0，
+   更不推出纯点传递性或正种子读回。
+

@@ -1,0 +1,30 @@
+$\mathscr S$ 是 $K$ 中的紧集。
+若 $W(D_{p_j})\to1$，则存在子列 $p_{j_k}\to p\in\mathscr S$。
+因此
+
+$$
+\mathscr S=\varnothing\quad\Longrightarrow\quad
+\sup_{p\in P}W(D_p)<1.
+\tag{IX118.24}
+$$
+
+证明。全部效应分离 $K$ 中不同点：将任何能分离两点的仿射函数按其全域最小、最大值归一，就得到原效应。
+所以非点球的宽度严格正。$\mathcal E$ 紧使最大值达到，范围至多一。
+
+对宽度趋一的序列，选达到宽度的 $b_j\in\mathcal E$、端点 $y_j,z_j\in D_{p_j}$，以及 $e_j\in\mathcal A_{p_j}$。
+紧性使同一子列收敛为 $p_j\to x,y_j\to y,z_j\to z,b_j\to b,e_j\to e$，且
+
+$$
+e(x)=1,\quad e(y)=e(z)=0,\quad b(y)=1,\quad b(z)=0.
+\tag{IX118.25}
+$$
+
+因此 $y\ne z$。有限正权纯分解 $x=\sum_i\lambda_i s_i$ 给 $y,z\in D_{s_i}$；全部这些球于是是同一球 $F$。
+$b$ 在 $F$ 上已取一、零，故 $W(F)=1$。
+116.4给这种饱和球不可能重复标签，即 $I(F)$ 单点；所以全部 $s_i$ 相同，$x=p\in P$，且 $D_p=F$、$W(D_p)=1$。
+这同时证明近饱和子列命题和 $\mathscr S$ 的序列闭性。
+若饱和集为空而上确界为一，取一条宽度趋一的序列会得到上述矛盾，故(IX118.24)成立。
+没有预设全Inj、$P$ 闭或球连续。证毕。
+
+**忠实标签下的正宽度紧层。**
+

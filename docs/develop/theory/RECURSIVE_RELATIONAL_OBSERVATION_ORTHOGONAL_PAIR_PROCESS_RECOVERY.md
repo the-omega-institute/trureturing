@@ -1458,3 +1458,1689 @@ $$
 [CRJR]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_SUPPLIER_SUBSTITUTION_II.md "Theorems 65.3、70.2、75.4：增广 Jr 的源内完整重建、全部有限有序森林／owed-action 返回与更大任务边界。"
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 同原双误差经典返回合同
+
+**定义 18.1（第一步与返回腿的两个预算）。** 完整保留定义 1.1—1.2 的 $\mathsf Q_1$、同锥同单位 $\Phi$、全部原纯点与效应及原关联的双向对应，并使用假设 1.3 实际供给的同一个未知 $\mathrm E_2(p,q)=P_A\otimes Q_B$。矩阵输入域仍是全部复正交秩一对 $\mathfrak F$，$R=I-P-Q$，第一步指定目标仍是 $P_A\otimes R_B=\mathrm E_2(\tau(p,q))$。以下不改变第一步的 $D(\mathcal N)$、$s_{\mathcal N}$ 或允许的过程类。
+
+取定义 11.1 的实际有限或可数经典仪器 $\mathcal M=(\mathcal M_c)_{c\in\mathsf C}$，其中每个 $\mathcal M_c$ 是一般 CP 分支，$\mathcal N=\sum_c\mathcal M_c$ 在整个九维矩阵代数上 CPTP。第一步完整输出仍是 $\bigoplus_c\mathcal M_c(\rho)$。返回只读取这个实际 $c$ 和保留的 $AB$，对每个 $c$ 使用一张固定、与未知准备无关的 CPTP 校正 $\mathcal D_c:AB\to AB$。置
+
+$$
+\begin{aligned}
+\mathcal T&=\sum_c\mathcal D_c\circ\mathcal M_c,\\
+E(\mathcal M,\mathcal D)&=\sup_{(P,Q)\in\mathfrak F}
+ \frac12\|\mathcal T(P\otimes Q)-P\otimes Q\|_1,\\
+F_{\rm ret}(\varepsilon,\eta)&=\sup\left\{
+ \inf_{\mathfrak F}s_{\mathcal N}(P,Q):
+ D(\mathcal N)\le\varepsilon,\ E(\mathcal M,\mathcal D)\le\eta\right\},
+ \qquad 0\le\varepsilon,\eta\le1.
+\end{aligned}
+\tag{18.1}
+$$
+
+上确界遍历上述同一仪器和校正，不预设取到；$\mathcal N$ 与 $\mathcal T$ 必须来自同一次仪器，不能分别挑选。全部成功、失败和拒绝分支均包含在和中，不条件归一或后选择；每个结果可包含完整实际经典历史。可数和采用 (11.1) 的迹范数可加性。没有额外未知样本、旗标描述、依赖准备的程序或保存输入信息的可访问相干环境。新辅助态和控制只允许与准备无关，并保留其实际供给及费用条件。
+
+由定义，$F_{\rm ret}(\varepsilon,0)$ 恰为 (11.3) 的 $F_{\rm ret}(\varepsilon)$。即使 $\eta=0$，这个合同也只返回工作寄存器；$\eta>0$ 是辅助的近似问题，不满足原精确返回承诺。
+
+为区分寄存器与保留记录的误差，另记
+
+$$
+\begin{aligned}
+p_c(\rho)&=\operatorname{Tr}\mathcal M_c(\rho),\qquad
+\mathcal T^\sharp(\rho)=\bigoplus_c\mathcal D_c\mathcal M_c(\rho),\\
+E_{\rm CQ}(\mathcal M,\mathcal D)&=
+ \sup_{\rho=P\otimes Q,\ (P,Q)\in\mathfrak F}
+ \frac12\sum_c\|\mathcal D_c\mathcal M_c(\rho)-p_c(\rho)\rho\|_1.
+\end{aligned}
+\tag{18.2}
+$$
+
+这里比较的理想记录具有同一个实际概率 $p_c(\rho)$；它不是删除记录，也不是原控制器、档案或权限的返回合同。$E$ 评价 $\mathcal T^\sharp$ 丢弃记录后的 $AB$。
+
+**约定 18.2（范数、Choi 与保真度）。** $\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}$，$\|X\|_{\rm op}$ 是算子范数；所有态距离均带 $1/2$。沿用 (6.1) 的未归一化 Choi 约定：对任意九维 CPTP 通道 $\mathcal T$，
+
+$$
+\begin{aligned}
+|I_9\rangle\!\rangle&=\sum_{j=1}^9|j,j\rangle,
+&\langle\!\langle I_9|I_9\rangle\!\rangle&=9,\\
+\Pi_I&=|I_9\rangle\!\rangle\langle\!\langle I_9|/9,
+&\operatorname{Tr}J_{\mathcal T}&=9,\\
+F_e(\mathcal T)&=\frac{\operatorname{Tr}(J_{\mathcal T}\Pi_I)}9
+ =\frac{\langle\!\langle I_9|J_{\mathcal T}|I_9\rangle\!\rangle}{81},
+&u(\mathcal N)&=\frac12\|\mathcal N(I_9/9)-I_9/9\|_1.
+\end{aligned}
+\tag{18.3}
+$$
+
+$F_e$ 是归一化最大纠缠态与其通道输出的重叠，即平方的纠缠保真度，不是根保真度。态之间的根保真度记为
+
+$$
+f_{\rm r}(\rho,\sigma)=\operatorname{Tr}\sqrt{\sqrt\rho\,\sigma\sqrt\rho}.
+\tag{18.4}
+$$
+
+$F_e$ 与第一步的 $s_{\mathcal N}$ 是不同量。Choi 参考系统和以下 Haar 平均仅用于证明，不要求实际供给纠缠探针、参考系统或连续结果仪器。
+
+## 19. 承诺泄漏提升与必要近似保单位性
+
+**定理 19.1（同一实际经典返回的定量障碍）。** 对定义 18.1 的每个仪器和校正，不要求协变性，均有
+
+$$
+\begin{aligned}
+1-F_e(\mathcal T)&\le
+ \min\left\{1,\frac{80}{21}E(\mathcal M,\mathcal D)\right\},\\
+u(\mathcal N)^2&\le1-F_e(\mathcal T)
+ \le\frac{80}{21}E(\mathcal M,\mathcal D).
+\end{aligned}
+\tag{19.1}
+$$
+
+因此 $E\le\eta$ 必须满足
+
+$$
+u(\mathcal N)\le r(\eta),\qquad
+r(\eta)=\sqrt{\min\{1,80\eta/21\}}.
+\tag{19.2}
+$$
+
+常数不声称锐；这不是从近似保单位性构造校正的充分判据。
+
+证明。先把原承诺上的联合返回误差提升到过程重叠。令 $\mathscr L_A=\mathscr D$ 为 (7.1) 的原泄漏算子，令 $W=S_{AB}\otimes S_{CD}$，并置
+
+$$
+\mathscr L_B=W\mathscr L_AW^\dagger
+ =\int I_A\otimes(I-Q)_B\otimes\bar P_C\otimes\bar Q_D\,d(P,Q).
+\tag{19.3}
+$$
+
+第二个等号使用同一归一化复 Haar 旗标分布在 $(P,Q)\mapsto(Q,P)$ 下不变。这两个算子没有除以九。由定理 7.1 的完整谱，置 $g=7/120$，有
+
+$$
+\mathscr L_A\succeq g(I-\Pi_A),\qquad
+\mathscr L_B\succeq g(I-\Pi_B),
+\tag{19.4}
+$$
+
+其中 $\Pi_A$ 投影到向量化的 $I_A\otimes\operatorname{End}(H_B)$，$\Pi_B$ 投影到 $\operatorname{End}(H_A)\otimes I_B$。将因子重排为 $AC,BD$，它们明确为
+
+$$
+\Pi_A=\frac{|\Omega_3\rangle\langle\Omega_3|_{AC}}3\otimes I_{BD},
+\qquad
+\Pi_B=I_{AC}\otimes\frac{|\Omega_3\rangle\langle\Omega_3|_{BD}}3,
+\qquad |\Omega_3\rangle=\sum_{j=0}^2|j,j\rangle.
+\tag{19.5}
+$$
+
+故两投影对易，交为 $\Pi_A\Pi_B=\Pi_I$。特别地，
+
+$$
+2I-\Pi_A-\Pi_B-(I-\Pi_I)
+ =(I-\Pi_A)(I-\Pi_B)\succeq0,
+\qquad
+\mathscr L_A+\mathscr L_B\succeq g(I-\Pi_I).
+\tag{19.6}
+$$
+
+对每个原输入 $\rho=P\otimes Q$，两个输出效应 $(I-P)\otimes I$ 和 $I\otimes(I-Q)$ 在 $\rho$ 上期望均为零，在 $\mathcal T(\rho)$ 上的期望各自不超过 $\|\mathcal T(\rho)-\rho\|_1/2\le E$。用 (6.2) 平均，再以 $J_{\mathcal T}\succeq0$ 测试 (19.6)，得到
+
+$$
+9g(1-F_e(\mathcal T))
+ =g\operatorname{Tr}[J_{\mathcal T}(I-\Pi_I)]
+ \le\operatorname{Tr}[J_{\mathcal T}(\mathscr L_A+\mathscr L_B)]
+ \le2E.
+\tag{19.7}
+$$
+
+由于 $9g=21/40$，得到第一个界；$0\le F_e\le1$ 给出截断。假设仍只在全部原正交产品上，不预置全输入或带参考的准确性。
+
+接着使用成熟经典反馈不等式，但保持实际粗记录。对每个九维 CP 分支取有限 Kraus 族 $K_{ca}$，对其实际校正取有限 Kraus 族 $R_{cb}$。于是
+
+$$
+F_e(\mathcal T)=\frac1{81}\sum_{c,a,b}
+ |\operatorname{Tr}(R_{cb}K_{ca})|^2.
+\tag{19.8}
+$$
+
+对每个 $K_{ca}=U_{ca}H_{ca}$，$H_{ca}=|K_{ca}|\succeq0$，将方阵的极分解部分等距延伸为酉 $U_{ca}$。以下是 [Gregoratti—Werner，§IV.A 命题 4，式 (17)—(21)][ARRGW04] 的逐算子 Hilbert—Schmidt Cauchy—Schwarz 步骤；同一结果亦见其 [《Quantum Lost and Found》§V 命题 8，式 (15)—(21)][ARRGW02]：
+
+$$
+\begin{aligned}
+\sum_b|\operatorname{Tr}(R_{cb}U_{ca}H_{ca})|^2
+&\le(\operatorname{Tr}H_{ca})
+ \sum_b\operatorname{Tr}\!\left[
+ H_{ca}^{1/2}U_{ca}^\dagger R_{cb}^\dagger R_{cb}U_{ca}H_{ca}^{1/2}\right]\\
+&=(\operatorname{Tr}H_{ca})^2.
+\end{aligned}
+\tag{19.9}
+$$
+
+最后一步只用 $\sum_bR_{cb}^\dagger R_{cb}=I$。同一个 $\mathcal D_c$ 作用于每个隐藏 $a$；$a$ 不是新取得的记录。由 $\sum_{c,a}\operatorname{Tr}K_{ca}^\dagger K_{ca}=9$ 和 $(\operatorname{Tr}H)^2\le9\operatorname{Tr}H^2$，
+
+$$
+F_e(\mathcal T)\le\mathcal A:=\frac1{81}
+ \sum_{c,a}(\operatorname{Tr}|K_{ca}|)^2\le1.
+\tag{19.10}
+$$
+
+不对粗记录主张上界可达，也不由代数 Kraus 细化授予环境测量权限。
+
+忽略零 $K_\alpha$，其中 $\alpha=(c,a)$，并置
+
+$$
+q_\alpha=\frac{\operatorname{Tr}K_\alpha^\dagger K_\alpha}{9},
+\qquad
+\sigma_\alpha=\frac{K_\alpha K_\alpha^\dagger}{9q_\alpha}.
+\tag{19.11}
+$$
+
+这些是数学权重和归一化态，满足 $\sum_\alpha q_\alpha=1$、$\mathcal N(I_9/9)=\sum_\alpha q_\alpha\sigma_\alpha$，且
+
+$$
+f_{\rm r}(\sigma_\alpha,I_9/9)^2
+ =\frac{(\operatorname{Tr}|K_\alpha|)^2}{81q_\alpha},
+\qquad
+\sum_\alpha q_\alpha f_{\rm r}(\sigma_\alpha,I_9/9)^2=\mathcal A.
+\tag{19.12}
+$$
+
+这里根保真度恰好平方一次。对归一化态使用 [Fuchs—van de Graaf，命题 4 式 (24)、定理 1 式 (46)][ARRFVG] 的成熟不等式，再用迹范数凸性和加权 Cauchy—Schwarz，得到
+
+$$
+\begin{aligned}
+u(\mathcal N)
+&\le\sum_\alpha q_\alpha\frac12\|\sigma_\alpha-I_9/9\|_1\\
+&\le\sum_\alpha q_\alpha\sqrt{1-f_{\rm r}(\sigma_\alpha,I_9/9)^2}
+ \le\sqrt{1-\mathcal A}\le\sqrt{1-F_e(\mathcal T)}.
+\end{aligned}
+\tag{19.13}
+$$
+
+这给出 (19.1)。$u\le1$ 因两端都是态，故有 (19.2)。
+
+可数情形中，每个分支及校正仍只有有限个 Kraus 算子，其并集可数。正输入分支和按合同在迹范数中收敛；保迹校正不改变每项的正迹，故校正和亦收敛。$J_{\mathcal T}$ 的正项和总迹为九，故也在迹范数中收敛。(19.8)—(19.12) 的标量和均非负，$\sum q_\alpha=1$；先对有限部分和应用 Cauchy—Schwarz，再取单调极限即可得到 (19.13)。没有把有限维反馈定理直接套到无限维记录空间，也没有使隐藏 Kraus 标签可观察。证毕。
+
+## 20. 两个误差共同约束原目标分数
+
+**定理 20.1（全复、全扇区的近似返回上界）。** 令
+
+$$
+\begin{aligned}
+k&=\frac{83}{304},\qquad c=\frac{87}{133},\qquad
+\beta=\frac{87}{608},\\
+B(\varepsilon,\eta)&=\frac{20}{7}\varepsilon+
+ \frac{\left(\sqrt{k\varepsilon}+
+ \sqrt{3/2+(k+4c)\varepsilon+(87/152)r(\eta)}\right)^2}{4}.
+\end{aligned}
+\tag{20.1}
+$$
+
+则定义 18.1 的整个类满足
+
+$$
+F_{\rm ret}(\varepsilon,\eta)
+ \le\min\{F(\varepsilon),1,B(\varepsilon,\eta)\}.
+\tag{20.2}
+$$
+
+可用 (5.10) 的显式右端 $B_{\rm free}(\varepsilon)$ 代替 $F(\varepsilon)$，得到完全显式的 $\min\{B_{\rm free}(\varepsilon),B(\varepsilon,\eta)\}$。这是必要非锐上界。
+
+证明。任取同一个可行 $\mathcal M,\mathcal D$，先由定理 19.1 得 $u(\mathcal N)\le r(\eta)$。仅对忽略记录通道作 (5.6) 的解析 $U\otimes U$ 平均。由 (5.7)、(13.3)，其恒定分数至少为原最坏分数，扰动不超过 $\varepsilon$。又因 $\mathcal N(I_9)-I_9$ 在平均中作酉共轭，迹范数凸性给出
+
+$$
+u(\widetilde{\mathcal N})\le u(\mathcal N)\le r(\eta).
+\tag{20.3}
+$$
+
+这里不构造平均后的返回仪器，不把 Haar 积分当成实际连续记录。
+
+协变性使 $\widetilde{\mathcal N}(I_9)-I_9$ 属于 $I_9,S$ 的实线性包，保迹性使其迹为零。因此存在实数 $a$，使
+
+$$
+\widetilde{\mathcal N}(I_9)-I_9=a(I_9-3S),
+\qquad u(\widetilde{\mathcal N})=\frac43|a|,
+\qquad |a|\le\frac34r(\eta).
+\tag{20.4}
+$$
+
+第二式来自 $S=+1,-1$ 的重数为六、三，故 $I_9-3S$ 的本征值为 $-2,4$，迹范数为 $24$；这里 $u$ 的分母为 $18$。
+
+保留 (6.5) 的所有正块、全部复重数及整体保迹。使用 (13.4) 的 $X,v_r,\delta_{\mathbf8},\delta_{\rm rest}$，令
+
+$$
+D_x=\operatorname{Re}\sum_r\overline{x_r}(z_r-w_r),
+\qquad Y=\operatorname{Re}\sum_r\overline{y_r}(z_r-w_r).
+\tag{20.5}
+$$
+
+由 (12.2)、(12.5) 及标量块缺陷为零，总缺陷恒等式为
+
+$$
+a=2(D_x-Y)+a_{\rm rest}.
+\tag{20.6}
+$$
+
+于是复用 (13.6)—(13.7) 的 $|y||z-w|\le\|v\|^2\le(12/7)v^\dagger\mathsf Qv$，得到
+
+$$
+\begin{aligned}
+|D_x|&\le\sum_r|y_r||z_r-w_r|
+       +\frac12|a_{\rm rest}|+\frac12|a|\\
+&\le\frac{12}{7}\delta_{\mathbf8}
+       +\frac57\delta_{\rm rest}+\frac38r(\eta)
+ \le\frac{12}{7}\varepsilon+\frac38r(\eta).
+\end{aligned}
+\tag{20.7}
+$$
+
+这里剩余扇区的缺陷没有删去；标量泄漏亦非负，故 $\delta_{\mathbf8}+\delta_{\rm rest}\le\varepsilon$。
+
+继续直接使用 (13.9)—(13.10) 的
+
+$$
+e=(0,1,-1)^{\mathsf T},\qquad
+\lambda=\frac{29}{76},\qquad h'=h-\lambda e,
+\qquad (h')^\dagger\mathsf Q^{-1}h'=k.
+\tag{20.8}
+$$
+
+由 (13.4) 的总迹估计，对所有复重数指标一起作 $\mathsf Q$ 内积的 Cauchy—Schwarz，得到
+
+$$
+\begin{aligned}
+X-\frac38
+&\le\left|\sum_r\overline{x_r}(h')^\dagger v_r\right|+\lambda|D_x|\\
+&\le\sqrt{kX\delta_{\mathbf8}}+
+ \lambda\left(\frac{12}{7}\varepsilon+\frac38r(\eta)\right)\\
+&\le\sqrt{kX\varepsilon}+c\varepsilon+\beta r(\eta),
+\qquad s\le X+\frac{20}{7}\varepsilon.
+\end{aligned}
+\tag{20.9}
+$$
+
+常数对应为 $\lambda(12/7)=c$、$\lambda(3/8)=\beta$。令 $z=\sqrt X\ge0$，直接解
+
+$$
+z^2-\sqrt{k\varepsilon}\,z-\left(\frac38+c\varepsilon+\beta r(\eta)\right)\le0.
+\tag{20.10}
+$$
+
+其正根给出 (20.1)，判别式中的 $4\beta=87/152$。整个推导不对符号未定的表达式平方。原最坏分数不超过这个平均分数，故逐仪器得到 $B$；另有同一第一步的 $F(\varepsilon)$ 和一的独立上界，取上确界即得 (20.2)。证毕。
+
+## 21. 精确端点、小误差尺度与完整第一步输出
+
+**推论 21.1（原精确界的延续及严格首项分离）。** 定义 18.1 满足
+
+$$
+\begin{aligned}
+F_{\rm ret}(\varepsilon,0)&=F_{\rm ret}(\varepsilon),\qquad
+\min\{1,B(\varepsilon,0)\}=U(\varepsilon),\\
+F_{\rm ret}(0,\eta)&=\frac38,\qquad
+F_{\rm ret}(\varepsilon,\eta)\ge\frac38.
+\end{aligned}
+\tag{21.1}
+$$
+
+若 $\eta(\varepsilon)=o(\varepsilon)$，则
+
+$$
+\limsup_{\varepsilon\downarrow0}
+ \frac{F_{\rm ret}(\varepsilon,\eta(\varepsilon))-3/8}{\sqrt\varepsilon}
+ \le\sqrt{\frac{249}{2432}}
+ <\sqrt{\frac{17}{112}}.
+\tag{21.2}
+$$
+
+这是上界，不断言返回类存在首项极限、取到该系数或已经求出最优前沿。
+
+证明。第一行直接比较 (18.1)、(11.3)、(20.1)、(13.1)。例 11.3 的实际 Weyl 端点在所有非负预算下仍可行，而 $F_{\rm ret}(0,\eta)\le F(0)=3/8$，得到第二行。对于同时趋零的 $\varepsilon,\eta$，把正根式写成
+
+$$
+\begin{aligned}
+B(\varepsilon,\eta)
+={}&\frac38+\beta r(\eta)
+ +\left(c+\frac{k}{2}+\frac{20}{7}\right)\varepsilon\\
+&+\frac{\sqrt{k\varepsilon}}2
+ \sqrt{3/2+(k+4c)\varepsilon+4\beta r(\eta)}\\
+={}&\frac38+\sqrt{\frac{249}{2432}}\sqrt\varepsilon
+ +\beta r(\eta)+O\!\left(\varepsilon+\sqrt\varepsilon\,r(\eta)\right).
+\end{aligned}
+\tag{21.3}
+$$
+
+第二个等号用根号在严格正数 $3/2$ 附近的有界导数，且 $3k/8=249/2432$。当 $\eta=o(\varepsilon)$ 时，$r(\eta)=o(\sqrt\varepsilon)$；代入定理 20.1 即得 (21.2)。两个正系数的平方差仍为 (14.3) 的 $841/17024>0$。条件 $\eta=o(\varepsilon)$ 在这里是充分条件，没有断言必要或最优。证毕。
+
+**推论 21.2（近似返回仪器的完整第一步距离）。** 记
+
+$$
+B_{\rm all}(\varepsilon,\eta)
+ =\min\{B_{\rm free}(\varepsilon),B(\varepsilon,\eta)\}.
+\tag{21.4}
+$$
+
+每个定义 18.1 的可行实际仪器都有一个原承诺对 $(P,Q)$，使第一步完整输出 $\Xi=\mathcal M(P\otimes Q)$ 对每个满足 $\operatorname{Tr}_{\mathsf C}\Omega=P\otimes R$ 的理想归一化联合输出同时满足
+
+$$
+\frac12\|\Xi-\Omega\|_1\ge
+ \max\{0,1-B_{\rm all}(\varepsilon,\eta)\}.
+\tag{21.5}
+$$
+
+证明。有限维 $\mathcal N$ 的连续分数在紧 $\mathfrak F$ 上取得最小值；定理 20.1 的逐仪器界及 (5.10) 使该值不超过 $B_{\rm all}$。在这个固定最小点，(16.2) 的同一个效应 $(P\otimes R)\otimes I_{\mathsf C}$ 在所有这些 $\Omega$ 上期望为一，在 $\Xi$ 上期望为 $s_{\mathcal N}(P,Q)$。迹距离效应界给出 (21.5)；可数经典输出是迹类直和，范数一的块对角效应仍适用。这个结论涉及第一步，不能用返回后的 $AB$ 误差替代。证毕。
+
+## 22. 未改通道族的双边返回误差与实际 Weyl 仪器
+
+**定理 22.1（同一 $\mathcal N_t$ 上的匹配阶）。** 保留定义 8.1 的整个有理通道族，不改变其 $\varepsilon(t)$、$s(t)$ 或输入、目标。令 $e_*(t)$ 为在全部允许的有限或可数经典仪器及其允许校正中、忽略记录通道恰为 $\mathcal N_t$ 时的 $E$ 的下确界。对 $0<t\le1/1000$，
+
+$$
+\frac7{15}a(t)^2\le e_*(t)\le\chi(t)
+ :=\frac{t^2(67-2741t)^2}{f(t)}
+ \le\min\left\{\frac92\varepsilon(t),12800t^2\right\},
+\tag{22.1}
+$$
+
+其中 $a(t)$ 为 (15.1) 的同一个正缺陷系数。下界覆盖每个实际 CP 仪器及任意允许校正，不要求隐藏 Kraus 标签可访问；上界由下述指定的实际八结果 Weyl 仪器及其极分解校正达到一个不超过该界的误差，不对所有实现主张充分性。特别地，
+
+$$
+e_*(t)=\Theta(t^2)=\Theta(\varepsilon(t))\quad(t\downarrow0),
+\qquad
+\frac{(7/15)a(t)^2}{\varepsilon(t)}\longrightarrow\frac{841}{4080}.
+\tag{22.2}
+$$
+
+最后的比值仅属于已证下界，不是最优返回系数。
+
+证明。首先，由 (15.1) 和 $\|I_9-3S\|_1=24$，$u(\mathcal N_t)=4a(t)/3$。定理 19.1 对同一个 $\mathcal N_t$ 的每个实际仪器和校正给出
+
+$$
+E(\mathcal M,\mathcal D)\ge\frac{21}{80}u(\mathcal N_t)^2
+ =\frac7{15}a(t)^2.
+\tag{22.3}
+$$
+
+$a(t)>0$ 的整个区间及正分母已由 (15.1)—(15.3) 证明，不需更换正参数族。
+
+为给出充分构造，明确指定实际结果 $j=(a,b)\in(\mathbb Z/3\mathbb Z)^2\setminus\{(0,0)\}$。使用 (3.5) 的固定 qutrit Weyl $W_j=X^aZ^b$，取 $T_j=W_j/\sqrt3$，将它们代入原 (8.2) 的 $L_j(t),K_j(t)$，实际仪器是
+
+$$
+\mathcal M_j^{\rm W}(Y)=K_j(t)YK_j(t)^\dagger,
+\qquad j\text{ 是实际保留的八值记录}.
+\tag{22.4}
+$$
+
+这些 $T_j$ 无迹且 Hilbert—Schmidt 正交归一。若另一个原定义所用基为 $T'_j=\sum_kV_{jk}T_k$，$V$ 酉，则四个 $E_i$ 的线性性给出 $K'_j=\sum_kV_{jk}K_k$，而
+
+$$
+\sum_jK'_jYK_j'^\dagger=\sum_kK_kYK_k^\dagger.
+\tag{22.5}
+$$
+
+所以忽略记录后恰是同一个已发表 $\mathcal N_t$。但是逐结果 CP 分支、记录及可用反馈可随基改变；(22.5) 不是重配一套固定装置的授权，不使每个实现都具有本构造的校正。
+
+下面直接估计最坏迹距离，不从平均保真度推断它。记
+
+$$
+d_t=1-95t,\qquad r_t=\frac1{\sqrt{3A(t)}},\qquad
+b_t=|u_t|+|v_t|+|w_t|.
+\tag{22.6}
+$$
+
+此处 $r_t$ 与 (19.2) 的 $r(\eta)$ 不同。原公式给出 $d_t\ge905/1000$，$u_t\ge0$、$v_t\le0$、$w_t\le0$，因此
+
+$$
+b_t=27t+\frac{40t-176t^2}{d_t}
+ =\frac{t(67-2741t)}{d_t}
+ \le\frac{67}{905}<1.
+\tag{22.7}
+$$
+
+每个 $W_j$ 和 $S$ 都酉，故由四个 $E_i$ 的算子范数，
+
+$$
+\|K_j(t)-r_t(I\otimes W_j)\|_{\rm op}\le r_tb_t.
+\tag{22.8}
+$$
+
+对任意单位向量应用三角不等式及其反向式，所有奇异值均在 $[r_t(1-b_t),r_t(1+b_t)]$ 内。由于 $A(t)>0$、$b_t<1$，每个 $K_j(t)$ 可逆，其极分解
+
+$$
+K_j(t)=U_j(t)H_j(t),\qquad H_j(t)=|K_j(t)|
+\tag{22.9}
+$$
+
+具有同一九维空间上的酉 $U_j(t)$，并有
+
+$$
+\|H_j(t)-r_tI_9\|_{\rm op}\le r_tb_t.
+\tag{22.10}
+$$
+
+选择实际记录条件化校正
+
+$$
+\mathcal D_j^{\rm pol}(Y)=U_j(t)^\dagger YU_j(t),\qquad
+\mathcal T_{\rm pol}(Y)=\sum_jH_j(t)YH_j(t).
+\tag{22.11}
+$$
+
+该成熟极分解反馈见 [ARRGW04，式 (19)—(20)][ARRGW04]；固定 $t$ 后所有控制均与未知 $P,Q$ 无关。正参数时结果概率无需均匀或与输入无关。
+
+由原全代数保迹性 $\sum_jH_j^2=I_9$，对任意矩阵 $Y$ 有精确恒等式
+
+$$
+\mathcal T_{\rm pol}(Y)-Y
+ =-\frac12\sum_j[H_j,[H_j,Y]]
+ =-\frac12\sum_j[Z_j,[Z_j,Y]],
+\quad Z_j=H_j-r_tI_9.
+\tag{22.12}
+$$
+
+事实上，展开双重交换子并使用 $\sum_jH_j^2=I_9$ 即得第一个等号，减去标量不改变交换子给出第二个。对任意态 $\rho$，由 $\|AXB\|_1\le\|A\|_{\rm op}\|X\|_1\|B\|_{\rm op}$，
+
+$$
+\|[Z,[Z,\rho]]\|_1
+ =\|Z^2\rho-2Z\rho Z+\rho Z^2\|_1
+ \le4\|Z\|_{\rm op}^2.
+\tag{22.13}
+$$
+
+于是 (22.10)—(22.13) 统一给出
+
+$$
+\begin{aligned}
+\frac12\|\mathcal T_{\rm pol}(\rho)-\rho\|_1
+&\le\sum_{j=1}^8\|Z_j\|_{\rm op}^2
+ \le8r_t^2b_t^2\\
+&=\frac8{3A(t)}\frac{t^2(67-2741t)^2}{d_t^2}
+ =\frac{t^2(67-2741t)^2}{f(t)}=\chi(t).
+\end{aligned}
+\tag{22.14}
+$$
+
+最后一步只代入原 $A(t)=8f(t)/(3d_t^2)$。这个估计对全部九维态成立，因而包括整个复承诺族；不假定校正后通道协变。
+
+为得到区间上的显式比较，使用 (9.3)、(8.7) 及 $67-2741t>0$：
+
+$$
+\begin{aligned}
+\frac{\chi(t)}{\varepsilon(t)}
+ &=\frac{(67-2741t)^2}{9(119-3584t+178545t^2)}\\
+ &\le\frac{4489}{9(119-3584/1000)}
+ =\frac{561125}{129843}<\frac92,\\
+\frac{\chi(t)}{t^2}
+ &\le\frac{4489\cdot31250000}{24246927}<12800.
+\end{aligned}
+\tag{22.15}
+$$
+
+所有分母均严格正。因此 (22.1) 成立。原有理式还给出
+
+$$
+a(t)=\frac{87}{4}t+O(t^2),\qquad
+\varepsilon(t)=1071t^2+O(t^3),\qquad
+\frac{(7/15)(87/4)^2}{1071}=\frac{841}{4080}>0.
+\tag{22.16}
+$$
+
+这证明 (22.2) 的正下阶；上阶由 (22.14) 或 (22.15) 给出。$t=0$ 时 $K_j(0)=I\otimes W_j/\sqrt8$，校正后为恒等通道，与例 11.3 相同。
+
+记录仍可以完整保留。为给出其准确误差含义，对任意原纯输入 $\rho$，令 $\omega_c=\mathcal D_c\mathcal M_c(\rho)$，$p_c=\operatorname{Tr}\omega_c$。忽略 $p_c=0$ 项，对 $\omega_c/p_c$ 与纯态 $\rho$ 使用 (18.4) 和 Fuchs—van de Graaf，再作加权 Cauchy—Schwarz，得到
+
+$$
+\begin{aligned}
+\frac12\sum_c\|\omega_c-p_c\rho\|_1
+&\le\sum_cp_c\sqrt{1-\operatorname{Tr}(\rho\omega_c)/p_c}\\
+&\le\sqrt{1-\operatorname{Tr}(\rho\mathcal T(\rho))}
+ \le\sqrt{\frac12\|\mathcal T(\rho)-\rho\|_1}.
+\end{aligned}
+\tag{22.17}
+$$
+
+最后一步是效应 $\rho$ 的变分界。反方向由丢弃记录的迹距离收缩性给出；取上确界即得一般的 $E\le E_{\rm CQ}\le\sqrt E$。因而本指定构造还满足 $E_{\rm CQ}\le\sqrt{\chi(t)}$，但这只给 $O(t)$，不能把 (22.1) 的 $O(t^2)$ 寄存器保证写成完整 CQ 保证或每个归一化稀有分支的保证。可数时同样由非负部分和取极限。
+
+最后，(9.3) 的第一步和分数在校正之前评价，始终未改。定理 9.2 给出严格递增的实际 $\varepsilon(t)$ 及原无返回首项，而 (22.15) 给出一个 $E=O(\varepsilon(t))$ 的真实记录仪器。故“$E\to0$”本身不能推出 (21.2) 的严格首项损失；返回误差相对于第一步扰动的速率有实质作用。这里只给同一族的非锐匹配阶，没有求 $e_*(t)$ 的首项系数、最坏分支最优校正或双误差前沿。证毕。
+
+## 23. 同原持续使用的条件应用与操作边界
+
+**应用 23.1（工作寄存器返回支付的关系）。** 在定义 1.1—1.3 的完整原来源及实际 $\mathrm E_2$ 接口下，定理 19.1—22.1 的对象均沿同一个 $\Phi$ 对应同一个未知原关联和同一个 Quantum116 的 $\tau$ 目标。其必要关系是：原第一步具有的非保单位缺陷，必须由实际经典返回腿支付至少二次的寄存器误差；在未改的 $\mathcal N_t$ 上，这个误差与其第一边缘扰动具有同阶的上下界。定理 22.1 的充分合同具体要求实际供给 (22.4) 的八结果仪器、保留并交付其真实标签，以及固定 $t$ 的 (22.11) 逆控制。它不是仅从忽略记录的 $\mathcal N_t$ 推出的装置无关可恢复性。
+
+证明。定义 1.2 的双向对应恰好覆盖全部 $\mathfrak F$，指定目标仍是 $P\otimes R$；(18.1) 的返回目标仍是同一个 $P\otimes Q$。因此这些定理的全部量词、误差和消费者可在同一原关联上解释，不需要另一个源、额外样本或准备建议。下界对每个实际允许仪器成立，上界明确给出其中一个；它们的共同对象是同一个已发表通道，而不是把两个不同通道的可达性质拼接。
+
+此条件应用只给出了 §17 近似返回问题的上述定量部分。$D(\mathcal N)$、第一步完整输出、$E$ 和 $E_{\rm CQ}$ 具有不同合同，推论 21.2 及 (22.17) 保留其区别。即使最终 $AB$ 精确返回，实际第一步、反馈、记录、流量和所耗资源也没有消失；正 $E$ 更不是原精确承诺的履行。没有由此构造在全部实际非承诺输出和记录条件化未来上共同定义的 $\sigma,\tau$ 操作，也没有给出其有限字的全部中间输出、$\tau^2,\sigma^2,(\sigma\tau)^3$ 及完整返回语义。应用 4.1 的实际 $\mathrm E_3$ 置换合同继续成立，使用的是另已供给的第三样本，不能移作本合同的免费资源。
+
+完整原来源的合法域、原守卫、接受与执行后拒绝、全部回应、记录、控制状态、谱系、backing 和当前 source-bound 权限均保留；原 Handback／Stop／INITIAL、AA／ACK／token／吸收 halt、下一入口和所欠动作语义没有由 $AB$ 接近性恢复。四份独立实际取得的完整 body、INPUT／STACK 分离，以及所选完整收到的 body 实际驱动同一 owed consumer 的返回，仍须各自合法供应。Quantum116 的对合没有被认作 Native／AA／Fibonacci 的实际生成元；同名、可编码性和末态统计不能给出这一桥。
+
+已有 [增广 $J_r$ 的定理 65.3、70.2、75.4][CRJR] 在真实完整入口、封闭 writer／输入、门、当前权限、每个请求切口的独立实际 wake、材料和进展前提下，已给出其全部声明切口、每个有限有序请求森林及原 owed-action 返回。这些条件结果继续使用；本附加合同不重新开放它们已证明的域。未增广或物理来源、更细 primitive 内部及广泛实际 $\alpha/\beta$ 到原消费者的桥仍有各自义务。GENERAL15.5／18.4 和 RG13.3 的既有受限 cross-entry／inherited original-Q 结果亦保留其范围；这里不提供其外的 changed／new-row Q、较广 mixed interiors 或 full terminal-task kernel。
+
+同样，[有限份共同源定理 123.2 及证明（六）][ARRPREFIX] 已给出任意总次数上每个 $\min(a,b)\le2$ 的产品和完整五份前缀；其式 (123.18) 的 $C_3\otimes_{\min}C_3\subseteq C_6$、一般补全新增态的同时准备与实际取得没有被此返回构造支付。固定间隙紧致性仍是存在性关系，不是当前操作权限或实际制备。
+
+上述充分合同还必须供给并计入：实际产品准备、全部正向门及辅助系统、测量、标签存储与通信、反馈与校准、执行记录、保留的两个寄存器、程序与 backing、验证和返回，以及同次运行的全部费用向量和同时峰值。八值末标签可编码为三比特，不等于完整控制器、历史或总存储只有三比特；可数标签的必要界也不给有限熵或统一比特预算。解析 Haar 平均、Kraus 细化与 Choi 参考都不供给这些资源。这里不证明全局最少关系、最少内存、最少样本或总资源优势。证毕。
+
+本附加推导的 repository-new 内容是同一正交对承诺的双边缘泄漏提升、一般实际经典分支下的近似保单位障碍、全复全扇区的双误差目标界，以及未改有理族的双边返回误差估计。定理 7.1 的谱、§12—13 的扇区恒等式、§8—9 的通道与分数和 §15 的缺陷均为既有供应。Gregoratti—Werner 的反馈／极分解工具及 Fuchs—van de Graaf 的根保真度不等式只作为这些新关系的中间步骤；没有将成熟结果另命名为新增数学内容。这里给出普通数学证明，不宣称 Lean／kernel 核验、物理实现认证或全球文献优先性；全球原创性未验证。
+
+[ARRGW04]: https://arxiv.org/pdf/quant-ph/0403092v1 "Matteo Gregoratti and Reinhard F. Werner, On quantum error-correction by classical feedback in discrete time；v1，p.7 末通道保真度定义，§IV.A Single-step channel，Proposition 4，(17)—(21)，p.8；这里只用任意有限维的单步结论，不用 qubit 多步 Proposition 5。"
+[ARRGW02]: https://arxiv.org/pdf/quant-ph/0209025v1 "Matteo Gregoratti and Reinhard F. Werner, Quantum Lost and Found；v1，§V，Proposition 8，(15)—(21)，pp.11—12；§II.C.1，Proposition 2，pp.4—5 为既有精确校正边界。"
+[ARRFVG]: https://arxiv.org/pdf/quant-ph/9712042v2 "Christopher A. Fuchs and Jeroen van de Graaf, Cryptographic Distinguishability Measures for Quantum Mechanical States；v2，§4.3 Proposition 4，(24)，p.13：根保真度；Theorem 1，(46)，p.17：半迹距离与根保真度平方的界。"
+[ARRPREFIX]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "Theorem 123.2，证明（六）—（七），(123.16)—(123.18)：同一共同源的完整五份前缀、任意 min(a,b)<=2 产品，以及第一个未付的 3+3 产品。"
+
+## 追加锚（本行以下为增补区）
+
+## 24. 固定原来源上的环境坐标与占用支撑
+
+本节至 §29 固定定义 8.1 的一个点 $t_\star=1/1000$，记 $\mathcal N_\star=\mathcal N_{t_\star}$。所研究的是这张已经给定的九维通道的扩展与精确返回，不是另选一张具有相同目标分数的通道。原来源解释完整保留定义 1.1—1.3：闭尖生成锥、严格正单位、每个原纯点的完整排除球与原全域效应所满足的 $\mathsf Q_1$，同锥同单位的实线性双射 $\Phi$，以及实际供给的同一个未知 $\mathrm E_2(p,q)=P_A\otimes Q_B$。承诺族仍为
+
+$$
+\mathfrak F=\{(P,Q):P,Q\text{ 为 }\mathbb C^3\text{ 上的秩一投影},\ PQ=0\},
+\qquad R=I-P-Q.
+\tag{24.1}
+$$
+
+它覆盖全部有序复正交对，不限制到实向量或固定坐标框架。第一步消费者仍请求 $\mathrm E_2(\tau(p,q))=P_A\otimes R_B$；返回腿请求同一个原输入 $P_A\otimes Q_B$。由 (9.12)，第一步本身的保证仍恰为
+
+$$
+D(\mathcal N_\star)=\frac{1040350905}{790405860121}>0,
+\qquad
+s_{\mathcal N_\star}(P,Q)=\frac{307134375000}{790405860121}>\frac38.
+\tag{24.2}
+$$
+
+这里的 $s$ 是目标投影重叠，不是精确制得 $P\otimes R$ 的有标志成功概率。以下扩展均须在整个 $M_9(\mathbb C)$ 上具有原 $\mathcal N_\star$ 边缘，包括承诺族以外的矩阵。
+
+**定义 24.1（供整数证书使用的复无迹基）。** 所有矩阵指标从零开始；$E_{ab}$ 是三阶矩阵单位。令
+
+$$
+\begin{aligned}
+(B_0,\ldots,B_7)
+ &=\bigl(E_{01},E_{02},E_{10},E_{12},E_{20},E_{21},
+       \operatorname{diag}(1,-1,0),\operatorname{diag}(1,1,-2)\bigr),\\
+(g_0,\ldots,g_7)&=(1,1,1,1,1,1,2,6),\qquad
+T_i=B_i/\sqrt{g_i}.
+\end{aligned}
+\tag{24.3}
+$$
+
+每个 $T_i$ 无迹，且 $\operatorname{Tr}(T_i^\dagger T_j)=\delta_{ij}$。六个非对角矩阵单位与两个对角无迹矩阵正交，后两者的平方范数分别为二、六，故 (24.3) 是整个八维复无迹矩阵空间的 Hilbert—Schmidt 正交归一基。它不是 Hermitian 基；定义 6.1、8.1 本来就允许这种复基。
+
+在本节以下，$S$ 仍是 $H_A\otimes H_B$ 的交换。由原 (8.1)—(8.3)，参数及归一化的精确值为
+
+$$
+u_\star=\frac2{125},\qquad
+v_\star=-\frac{11}{1000},\qquad
+w_\star=-\frac{4978}{113125},\qquad
+A_\star=\frac{790405860121}{307134375000}>0.
+\tag{24.4}
+$$
+
+置 $q=905000$，定义实整数矩阵
+
+$$
+\begin{aligned}
+H_i={}&905000(I\otimes B_i)+14480(B_i\otimes I)\\
+     &-9955(I\otimes B_i)S-39824(B_i\otimes I)S,\\
+K_i&=\frac{H_i}{q\sqrt{A_\star g_i}},\qquad 0\le i<8.
+\end{aligned}
+\tag{24.5}
+$$
+
+因为 $q(1,u_\star,v_\star,w_\star)=(905000,14480,-9955,-39824)$，这里的 $K_i$ 正是将 (24.3) 代入原定义 8.1 得到的 Kraus 算子；未改来源、参数或通道。
+
+**引理 24.2（归一化、最小环境与实际占用）。** 在 (24.5) 的坐标下，
+
+$$
+\begin{aligned}
+\sum_{i=0}^7\frac{H_i^{\mathsf T}H_i}{g_i}
+ &=A_\star q^2 I_9,
+& A_\star q^2&=\frac{6323246880968}{3},\\
+\operatorname{Tr}(H_i^{\mathsf T}H_j)
+ &=\delta_{ij}\frac98 A_\star q^2 g_i,
+&\operatorname{Tr}(K_i^\dagger K_j)&=\frac98\delta_{ij}.
+\end{aligned}
+\tag{24.6}
+$$
+
+因此 $\sum_iK_i^\dagger K_i=I_9$，八个 $K_i$ 线性独立。令 $E=\mathbb C^8$，以 $|i\rangle$ 为其标准基，并置
+
+$$
+V:H_A\otimes H_B\longrightarrow H_A\otimes H_B\otimes E,
+\qquad V\psi=\sum_iK_i\psi\otimes|i\rangle.
+\tag{24.7}
+$$
+
+则 $V^\dagger V=I_9$，$\operatorname{Tr}_E(VXV^\dagger)=\mathcal N_\star(X)$，且 $E$ 是最小 Kraus 环境。互补通道 $\mathcal N_\star^c(X)=\operatorname{Tr}_{AB}(VXV^\dagger)$ 满足
+
+$$
+\mathcal N_\star^c(I_9/9)=I_8/8.
+\tag{24.8}
+$$
+
+原承诺族的环境输出的共同占用支撑也是整个 $E$，不是添入了未使用坐标的八维空间。
+
+证明。第一条算子恒等式直接是 (8.4)—(8.6) 在 (24.4) 的代入；交换项严格为零。为同时检查 Gram 归一化，用 (6.12) 的完整嵌入 Gram 矩阵 $\mathsf G$，置 $c=(1,u_\star,v_\star,w_\star)^{\mathsf T}$，则
+
+$$
+\begin{aligned}
+\operatorname{Tr}[L(T)^\dagger L(U)]
+ &=(c^{\mathsf T}\mathsf Gc)\operatorname{Tr}(T^\dagger U),\\
+c^{\mathsf T}\mathsf Gc
+ &=3(1+u_\star^2+v_\star^2+w_\star^2)
+      +2(1+u_\star)(v_\star+w_\star)
+  =\frac98 A_\star,
+\end{aligned}
+\tag{24.9}
+$$
+
+其中 $L(T)$ 表示原 (8.2) 的同一线性嵌入。把 (24.3)—(24.4) 代入即得 (24.6)；$H_i$ 为实矩阵，故其转置就是伴随。非零对角 Gram 给出 Kraus 独立性和 Choi 秩八，继而给出最小性。互补输出的 $i,j$ 元是 $\operatorname{Tr}(XK_j^\dagger K_i)$，由 (24.6) 得 (24.8)。
+
+还须检查承诺自身确实使用全部环境。由原 (7.11) 的同一 Haar 正交标架平均，或先条件于 $P$ 再用 $\mathbb E[Q\mid P]=(I-P)/2$，有
+
+$$
+\bar\rho_{\mathfrak F}
+ :=\int P\otimes Q\,d(P,Q)=\frac{3I_9-S}{24}.
+\tag{24.10}
+$$
+
+其在交换对称、反对称空间的本征值分别为 $1/12,1/6$，所以忠实。完全正性和 (24.8) 给出
+
+$$
+\mathcal N_\star^c(\bar\rho_{\mathfrak F})
+ \succeq\frac1{12}\mathcal N_\star^c(I_9)
+ =\frac3{32}I_8>0.
+\tag{24.11}
+$$
+
+若一个环境方向对全部承诺输出都为零，它对这个平均也为零，与 (24.11) 矛盾。这个平均仅用于证明支撑，不要求实际供给混合样本、额外副本、连续测量或 Haar 采样器。证毕。
+
+## 25. 六十四个原 Kraus 乘积的整数证书
+
+**定理 25.1（固定点的完整乘积独立性）。** 对 (24.5) 的同一八个 $K_i$，六十四个矩阵
+
+$$
+\{K_i^\dagger K_j:0\le i,j<8\}
+\tag{25.1}
+$$
+
+在 $M_9(\mathbb C)$ 中复线性独立。
+
+证明。以下给出全部整数矩阵、子式行集和非零余数，使结论不依赖浮点秩阈值。按张量顺序 $r=3a+b$、$s=3c+d$，其中 $0\le a,b,c,d<3$，(24.5) 的逐元式是
+
+$$
+(H_i)_{3a+b,3c+d}
+ =905000\delta_{ac}(B_i)_{bd}
+  +14480(B_i)_{ac}\delta_{bd}
+  -9955\delta_{ad}(B_i)_{bc}
+  -39824(B_i)_{ad}\delta_{bc}.
+\tag{25.2}
+$$
+
+由它定义一个 $81\times64$ 整数矩阵 $M$：
+
+$$
+M_{9r+s,\,8i+j}
+ =(H_i^{\mathsf T}H_j)_{r,s}
+ =\sum_{k=0}^8(H_i)_{k,r}(H_j)_{k,s},
+\qquad 0\le r,s<9,\quad 0\le i,j<8.
+\tag{25.3}
+$$
+
+所有行、列均按零起始指标递增排列。删去且只删去以下十七行：
+
+$$
+\mathcal O=\{12,13,14,27,29,60,61,62,68,69,70,71,74,77,78,79,80\}.
+\tag{25.4}
+$$
+
+令 $\mathcal R=\{0,\ldots,80\}\setminus\mathcal O$ 按递增顺序排列，$D=M_{\mathcal R,\{0,\ldots,63\}}$。这是完全确定的 $64\times64$ 整数矩阵，其行列式有下列精确余数：
+
+| 模数 $p$ | $\det D\pmod p$ |
+| --- | --- |
+| $1000003$ | $373375$ |
+| $1000033$ | $164048$ |
+
+余数采用 (25.2)—(25.4) 的行列次序，计入行交换的行列式符号。为明确这张有限证书的求值规则，可在各素域 $\mathbb F_p$ 内使用以下消元递推；这里给的是矩阵恒等式的有限求值，不引入额外程序或实验前提。初值 $D^{[0]}=D\bmod p$、$\epsilon=1$；在 $k=0,\ldots,63$，取满足 $r\ge k$ 且 $D^{[k]}_{r,k}\ne0$ 的最小 $r$，交换第 $r,k$ 行，若 $r\ne k$ 则改变 $\epsilon$ 的符号。记交换后的矩阵为 $C$，$z_k=C_{k,k}$，对 $r>k$ 同时作
+
+$$
+D^{[k+1]}_{r,s}
+ =C_{r,s}-C_{r,k}z_k^{-1}C_{k,s}\quad(s\ge k),
+\qquad
+D^{[k+1]}_{r,s}=C_{r,s}\quad(r\le k\text{ 或 }s<k).
+\tag{25.5}
+$$
+
+此处第二式与第一式的定义区域不交叠；每步的上方行保持不变。两个模数下每一步都有非零主元，最后均取 $\epsilon\prod_{k=0}^{63}z_k\bmod p$，所得恰为表中的余数。行相减不改变行列式，换行给出 $\epsilon$，所以递推计算的就是原 $\det D$ 的余数。第一项已经足以推出整数 $\det D\ne0$，第二项是同一整数子式的另一个精确校验。这里使用的模数、矩阵元、行集和余数均为整数数据；不以行列式的数值大小、近似误差或奇异值阈值代替非零性。
+
+因此 $M$ 在整数的分式域及 $\mathbb C$ 上均列满秩。按 (24.5)，从 $H_i^{\mathsf T}H_j$ 到 $K_i^\dagger K_j$ 只将第 $8i+j$ 列乘以
+
+$$
+\frac1{q^2A_\star\sqrt{g_i g_j}}\ne0.
+\tag{25.6}
+$$
+
+可逆的列缩放不改列独立性，得到 (25.1)。证毕。
+
+**推论 25.2（标量原像与环境效应）。** 定义复线性映射
+
+$$
+\begin{aligned}
+\beta:M_8(\mathbb C)&\longrightarrow M_9(\mathbb C),\\
+\beta(Z)&=\sum_{i,j=0}^7Z_{ij}K_i^\dagger K_j
+          =V^\dagger(I_9\otimes Z)V.
+\end{aligned}
+\tag{25.7}
+$$
+
+则 $\beta$ 单射，$\beta(I_8)=I_9$，且
+
+$$
+\beta^{-1}(\mathbb C I_9)=\mathbb C I_8.
+\tag{25.8}
+$$
+
+特别地，对环境效应 $0\preceq F\preceq I_8$，
+
+$$
+\beta(F)=pI_9
+\quad\Longleftrightarrow\quad
+F=pI_8,\qquad 0\le p\le1.
+\tag{25.9}
+$$
+
+证明。定理 25.1 就是 (25.7) 的六十四列独立性。全代数保迹给 $\beta(I_8)=I_9$。若 $\beta(Z)=zI_9$，则 $\beta(Z-zI_8)=0$，单射性给 $Z=zI_8$；反向直接代入。对效应再用序约束，即得 (25.9)。按 (24.7) 的环境坐标，矩阵元是 $\langle i|Z|j\rangle=Z_{ij}$，所以 (25.7) 无须额外转置。其统计意义为
+
+$$
+\operatorname{Tr}[F\mathcal N_\star^c(\rho)]
+ =\operatorname{Tr}[\rho\beta(F)].
+\tag{25.10}
+$$
+
+证毕。
+
+六十四个伴随 Kraus 乘积独立也是成熟的 Choi 极端通道判据所用的条件，见 [Watrous，定理 2.31（Choi），(2.174)—(2.175)][RRCCHOI]。因此它还可按该判据识别 $\mathcal N_\star$ 为 CPTP 凸集的极端点。判据和这种一般推论属于既有工具；这里承担后续证明的新源内事实，是 (25.2)—(25.6) 对这张实际 $\mathcal N_\star$ 的具体求值，而不是提出新的极端性或校正判据。
+
+## 26. 任意声明经典分支的全边缘扩展
+
+**定义 26.1（可访问载体、独立准备与精确返回）。** 令 $\mathsf C$ 是非空有限或可数的实际经典结果集。每个 $c$ 可以包含一条完整的有限经典历史及全部可读取经典副本。返回前可访问的相干输出是原 $AB$ 及 $M_c$；$M_c$ 必须合计除 $AB$ 外的每一个保留相干载体，包括量子工作区、相干指针、通信载体和已与输入相关的解码器记忆。不能把这些载体改称控制器、程序或测量附件而漏计。
+
+$M_c$ 允许为非零有限维或可分 Hilbert 空间；有限资源结论针对其中的有限维分支。无限维时使用迹类算子及正常 CP 映射的通常可数 Kraus 表示。实际 CP 分支记为
+
+$$
+\Psi_c:M_9(\mathbb C)\longrightarrow
+ \mathcal T(H_A\otimes H_B\otimes M_c),\qquad
+\Psi(X)=\bigoplus_{c\in\mathsf C}\Psi_c(X),
+\tag{26.1}
+$$
+
+其中 $\mathcal T$ 表示迹类空间。分支可含任意多个隐藏 Kraus 算子，不能预置为纯分支。规定对每个正输入，分支和按迹范数可数可加，且
+
+$$
+\sum_{c\in\mathsf C}\operatorname{Tr}_{M_c}\Psi_c(X)
+ =\mathcal N_\star(X)\qquad\text{对每个 }X\in M_9(\mathbb C).
+\tag{26.2}
+$$
+
+这条全代数边缘等式是合同本身；只在一组观察值、一个平均态或较小的准备集上相等不够。它使 $\Psi$ 保迹。所有成功、失败、拒绝和零概率分支都列入仪器；不选择成功结果再归一。
+
+全部初始辅助准备可为固定的独立混合态，允许独立随机性及固定自适应控制，但不得依赖未知 $(P,Q)$。每个丢弃输出、未保留的相干指针、不可访问的经典副本及不可访问的准备纯化均被迹去，归入 CP 分支的隐藏 Kraus 指标。独立混合态的某个数学纯化不因此成为解码器的输入。没有额外未知样本、源相关建议、旗标描述、输入相关程序、依赖准备的 oracle，也不允许从未触碰的参考系统取回信息。
+
+对每个实际 $c$，返回可用一张固定 CPTP 映射
+
+$$
+\mathcal D_c:\mathcal T(H_A\otimes H_B\otimes M_c)
+                 \longrightarrow M_9(\mathbb C).
+\tag{26.3}
+$$
+
+它可以联合处理所列载体、读取 $c$，并使用实际供给的、与准备无关的新辅助态。精确工作寄存器返回要求
+
+$$
+\mathcal T_{\rm ret}:=\sum_c\mathcal D_c\Psi_c,
+\qquad
+\mathcal T_{\rm ret}(P\otimes Q)=P\otimes Q
+\quad\text{对每个 }(P,Q)\in\mathfrak F.
+\tag{26.4}
+$$
+
+这仍只是原完整操作返回的必要放宽。它未要求原记录、控制状态、谱系、backing、权限、所欠动作或全部资源返回。
+
+**定理 26.2（每个扩展都经原占用环境因子化）。** 每个满足 (26.1)—(26.2) 的扩展都有有限或可数算子族 $A_{ca}:E\to M_c$，使
+
+$$
+\begin{aligned}
+\Lambda_c(Z)&=\sum_aA_{ca}ZA_{ca}^\dagger,
+&\Lambda(Z)&=\bigoplus_c\Lambda_c(Z),\\
+\sum_{c,a}A_{ca}^\dagger A_{ca}&=I_8,
+&\Psi_c(X)&=(\operatorname{id}_{AB}\otimes\Lambda_c)(VXV^\dagger).
+\end{aligned}
+\tag{26.5}
+$$
+
+所以 $\Lambda$ 是从原最小环境 $E$ 到实际声明输出的 CPTP 通道。这是从任意实际 CP 扩展推出的因子化，不是假设实际装置先准备了一个可访问的纯 Stinespring 环境。
+
+证明。取 $\Psi_c$ 的 Kraus 算子 $L_{ca}:\mathbb C^9\to\mathbb C^9\otimes M_c$。在 $M_c$ 的正交归一基 $|m\rangle$ 中展开
+
+$$
+L_{ca,m}=(I_9\otimes\langle m|)L_{ca}.
+$$
+
+由 (26.2) 及 (6.1) 的向量化，有限维 Choi 矩阵满足
+
+$$
+J_{\mathcal N_\star}
+ =\sum_{c,a,m}|L_{ca,m}\rangle\!\rangle
+                  \langle\!\langle L_{ca,m}|
+ =\sum_{i=0}^7|K_i\rangle\!\rangle\langle\!\langle K_i|.
+\tag{26.6}
+$$
+
+对右侧支撑的任意正交向量，左侧各非负二次型之和为零，故每个分量都与该向量正交。因此
+
+$$
+L_{ca,m}\in\operatorname{span}_{\mathbb C}\{K_0,\ldots,K_7\}.
+\tag{26.7}
+$$
+
+这是通常 Choi 正支撑论证；同一支撑工具亦见 [RRCCHOI，Lemma 2.30 及定理 2.31 的证明][RRCCHOI]。由引理 24.2 的独立性，可唯一写成 $L_{ca,m}=\sum_i a_{ca,mi}K_i$。定义 $A_{ca}|i\rangle=\sum_m a_{ca,mi}|m\rangle$。这些向量确实平方可和，因为
+
+$$
+\|L_{ca}\|_{\rm HS}^2
+ =\sum_m\|L_{ca,m}\|_{\rm HS}^2
+ =\frac98\sum_{m,i}|a_{ca,mi}|^2
+ =\frac98\operatorname{Tr}(A_{ca}^\dagger A_{ca}).
+\tag{26.8}
+$$
+
+故 $A_{ca}$ 是从有限维 $E$ 出发的有界算子，并有
+
+$$
+L_{ca}=(I_9\otimes A_{ca})V.
+\tag{26.9}
+$$
+
+对全部 $c,a$ 求和，由 (26.2) 在 $I_9/9$ 上的总迹为一，得到
+
+$$
+1=\sum_{c,a}\frac{\|L_{ca}\|_{\rm HS}^2}{9}
+ =\frac18\sum_{c,a}\operatorname{Tr}(A_{ca}^\dagger A_{ca}).
+\tag{26.10}
+$$
+
+所以正算子和 $G=\sum_{c,a}A_{ca}^\dagger A_{ca}$ 在八维空间上按迹范数收敛。原扩展保迹及 (26.9) 给出
+
+$$
+I_9=\sum_{c,a}L_{ca}^\dagger L_{ca}
+    =V^\dagger(I_9\otimes G)V=\beta(G).
+\tag{26.11}
+$$
+
+推论 25.2 于是给 $G=I_8$。将 (26.9) 代回分支 Kraus 和，得到 (26.5)。
+
+可数情形不需将有限维定理直接套到无限历史上。(26.6) 的正项和总迹为九，所以在有限维 Choi 空间按迹范数收敛；(26.8)—(26.10) 又控制环境 Kraus 和的总质量。对正输入，各输出部分和单调且迹有界，故按迹范数收敛；一般输入写成四个正算子的线性组合。
+
+混合准备的吸收也可直接写明。设实际独立辅助态为 $\eta=\sum_\ell h_\ell|\ell\rangle\langle\ell|$，$h_\ell\ge0$、$\sum_\ell h_\ell=1$；将第 $c$ 分支在包括其余丢弃输出的空间 $F$ 上写成固定线性扩张 $W_c$，则
+
+$$
+\Psi_c(X)=\operatorname{Tr}_F[W_c(X\otimes\eta)W_c^\dagger],
+\qquad
+L_{c,\ell f}=\sqrt{h_\ell}
+ (I_{ABM_c}\otimes\langle f|)W_c(I_9\otimes|\ell\rangle).
+$$
+
+这里 $|f\rangle$ 遍历 $F$ 的正交归一基；实际多步控制及不可访问副本均可包含在这个 CP 扩张中。因而独立混合准备的谱指标、不可访问纯化和其他丢弃输出，只增加隐藏 Kraus 指标。证明所用的 $a,m$ 是分解坐标，未把它们另行测出或交付给返回操作；$\mathcal D_c$ 仍只读取原来可访问的 $AB,M_c,c$。证毕。
+
+## 27. 精确原承诺返回等价于完整环境可逆性
+
+**定理 27.1（同源返回的环境判据）。** 对定义 26.1 的任意扩展，取定理 26.2 的实际环境通道 $\Lambda$。以下三条件等价：
+
+1. 存在 (26.3) 的标签条件化 CPTP 返回，使 (26.4) 对整个原复承诺族成立。
+2. $\Lambda$ 在整个 $M_8(\mathbb C)$ 上有 CPTP 左逆。
+3. 每个实际经典分支的所有隐藏误差乘积均为标量，即存在标量矩阵 $\lambda_c=(\lambda_{c,ab})$，使
+
+$$
+A_{ca}^\dagger A_{cb}=\lambda_{c,ab}I_8
+\quad\text{对全部 }c,a,b.
+\tag{27.1}
+$$
+
+若成立，原返回通道必为整个 $M_9(\mathbb C)$ 上的恒等映射；还有 $p_c\ge0$、$\sum_cp_c=1$，使每个分支的返回恰为 $\mathcal D_c\Psi_c(X)=p_cX$。条件 (27.1) 是全空间 Knill—Laflamme 条件，不只是每个分支效应之和为标量。
+
+证明。先证条件一推出条件三。$\mathcal T_{\rm ret}$ 是有限维输入输出的 CPTP 通道，即使中间载体和经典标签可数亦然。精确返回使它满足原 (1.1) 的第一边缘保持。复用定理 2.1，得到整个代数上的
+
+$$
+\mathcal T_{\rm ret}=\operatorname{id}_A\otimes\mathcal L_B
+\tag{27.2}
+$$
+
+及某张 qutrit CPTP 通道 $\mathcal L$。任意秩一 $Q$ 都可配一个正交秩一 $P$，由 (26.4) 得 $\mathcal L(Q)=Q$。秩一投影张成 Hermitian 空间，再复线性延拓，得 $\mathcal L=\operatorname{id}$，所以
+
+$$
+\mathcal T_{\rm ret}=\operatorname{id}_{M_9}.
+\tag{27.3}
+$$
+
+这正是命题 11.2 已有的承诺到恒等映射的归约，不假定正交产品投影本身张成 $M_9$。所应用定理 2.1 的对象是返回复合 $\mathcal T_{\rm ret}$；由 (24.2)，有正扰动的第一步 $\mathcal N_\star$ 并不满足 (1.1)，不能把它代入该刚性定理。
+
+取返回 $\mathcal D_c$ 的 Kraus 算子 $B_{cu}:\mathbb C^9\otimes M_c\to\mathbb C^9$。恒等通道的 Choi 矩阵秩一，故 (27.3) 给出
+
+$$
+\sum_{c,u,a}|B_{cu}L_{ca}\rangle\!\rangle
+                   \langle\!\langle B_{cu}L_{ca}|
+ =|I_9\rangle\!\rangle\langle\!\langle I_9|,
+\qquad
+B_{cu}L_{ca}=r_{cua}I_9.
+\tag{27.4}
+$$
+
+每一项的标量性来自正项的秩一支撑，不预先假设实际分支是等距或单 Kraus。仓内 [KrausLeftInverseNecessity 的 identity_kraus_scalar、left_inverse_error_products][RRCKRAUS] 给出了相应有限 Kraus 代数事实；这里还显式处理一般 CP 表示和可数和，不由读取这些源码冒领新的 Lean 核验。
+
+返回保迹，$\sum_uB_{cu}^\dagger B_{cu}=I$，故对同一 $c$ 的任意 $a,b$，
+
+$$
+\begin{aligned}
+L_{ca}^\dagger L_{cb}
+ &=\sum_u(B_{cu}L_{ca})^\dagger(B_{cu}L_{cb})\\
+ &=\left(\sum_u\overline{r_{cua}}r_{cub}\right)I_9
+  =\lambda_{c,ab}I_9.
+\end{aligned}
+\tag{27.5}
+$$
+
+再由 (26.9) 及推论 25.2，
+
+$$
+\beta(A_{ca}^\dagger A_{cb})=\lambda_{c,ab}I_9
+\quad\Longrightarrow\quad
+A_{ca}^\dagger A_{cb}=\lambda_{c,ab}I_8.
+\tag{27.6}
+$$
+
+这一步用到了具体整数证书：一般的保迹性、Kraus 秩八或能够保留整个环境，都不能代替此处的标量原像结论。
+
+记 $\iota_c:M_c\to\bigoplus_dM_d$ 为包含映射。环境通道的 Kraus 算子是 $E_{ca}=\iota_cA_{ca}$，故其完整误差条件为
+
+$$
+E_{ca}^\dagger E_{db}
+ =\begin{cases}
+   \lambda_{c,ab}I_8,&c=d,\\
+   0,&c\ne d.
+  \end{cases}
+\tag{27.7}
+$$
+
+经典块之间的零乘积与同块的全部交叉项同样保留。(27.7) 正是 [Knill—Laflamme，定理 3.2，(19)—(20)][RRCKL] 在整个 $E$ 作码空间时的条件。
+
+为完整给出条件三推出条件二的恢复，也明确其可数版本，先固定 $c$。由 (27.1)，
+
+$$
+\lambda_{c,ab}=\frac18\operatorname{Tr}(A_{ca}^\dagger A_{cb}),
+\qquad
+\lambda_c\succeq0,
+\qquad
+p_c:=\operatorname{Tr}\lambda_c=\sum_a\lambda_{c,aa},
+\qquad
+\sum_cp_c=1.
+\tag{27.8}
+$$
+
+正性来自任意有限系数族 $z_a$ 的
+
+$$
+\sum_{a,b}\bar z_a\lambda_{c,ab}z_b
+ =\frac18\operatorname{Tr}\left[
+   \left(\sum_a z_aA_{ca}\right)^\dagger
+   \left(\sum_b z_bA_{cb}\right)\right]\ge0.
+$$
+
+若指标可数，(26.10) 使其成为迹类正 Gram 算子。有限维酉对角化，或这个迹类正算子的谱分解，给出一个包含零本征空间的正交归一基变换 $U_c$，使 $U_c^\dagger\lambda_cU_c$ 对角。令
+
+$$
+C_{c\mu}=\sum_a(U_c)_{a\mu}A_{ca}.
+$$
+
+酉性给出 $\sum_\mu(U_c)_{a\mu}\overline{(U_c)_{b\mu}}=\delta_{ab}$，故 Kraus 和仍为同一 CP 分支；而 (27.1) 给出新 Kraus 乘积正是该对角 Gram 的相应元素乘以 $I_8$。去掉零本征值后，得到
+
+$$
+\Lambda_c(Z)=\sum_\mu C_{c\mu}ZC_{c\mu}^\dagger,
+\qquad
+C_{c\mu}^\dagger C_{c\nu}
+ =s_{c\mu}\delta_{\mu\nu}I_8,
+\qquad s_{c\mu}>0,\quad\sum_\mu s_{c\mu}=p_c.
+\tag{27.9}
+$$
+
+零本征值所给的零 Kraus 算子已去掉。可数混合在 Hilbert—Schmidt 范数下收敛，因为 $\sum_a\|A_{ca}\|_{\rm HS}^2=8p_c$。置 $W_{c\mu}=C_{c\mu}/\sqrt{s_{c\mu}}$，则
+
+$$
+W_{c\mu}^\dagger W_{c\nu}=\delta_{\mu\nu}I_8,
+\qquad
+\Pi_c=\sum_\mu W_{c\mu}W_{c\mu}^\dagger\preceq I_{M_c}.
+\tag{27.10}
+$$
+
+这些等距映射的像两两正交，故 $\Pi_c$ 为投影；可数时是强收敛的正交投影和。任选固定八维密度矩阵 $\omega_8$，定义
+
+$$
+\mathcal R_c(Y)
+ =\sum_\mu W_{c\mu}^\dagger YW_{c\mu}
+   +\operatorname{Tr}[(I_{M_c}-\Pi_c)Y]\omega_8.
+\tag{27.11}
+$$
+
+这是 CPTP 映射：各项完全正，第一项的迹是 $\operatorname{Tr}(\Pi_cY)$，补项补足总迹。若 $p_c=0$，则全部 $A_{ca}=0$，可直接取 $\mathcal R_c(Y)=\operatorname{Tr}(Y)\omega_8$。由 (27.9)—(27.10)，对所有 $Z$ 有
+
+$$
+\mathcal R_c\Lambda_c(Z)=p_cZ.
+\tag{27.12}
+$$
+
+因此 $\mathcal R(\bigoplus_cY_c)=\sum_c\mathcal R_c(Y_c)$ 是 CPTP，且 $\mathcal R\Lambda=\operatorname{id}_{M_8}$。这是标准 Knill—Laflamme 恢复的全空间写法；等距像外补一个固定态以使操作保迹，也与 [Gregoratti—Werner，命题 2 及 (7)][CRGW] 相同。
+
+最后证条件二推出条件一。复用等距嵌入的通常左逆：任选固定九维密度矩阵 $\omega_9$，令
+
+$$
+\mathcal R_V(Y)=V^\dagger YV
+    +\operatorname{Tr}[(I_{72}-VV^\dagger)Y]\omega_9.
+\tag{27.13}
+$$
+
+它是 CPTP，且 $\mathcal R_V(VXV^\dagger)=X$。将环境左逆限制于第 $c$ 块得 CPTP 的 $\mathcal R|_c$，并取
+
+$$
+\mathcal D_c
+ =\mathcal R_V\circ(\operatorname{id}_{AB}\otimes\mathcal R|_c).
+\tag{27.14}
+$$
+
+由 (26.5) 和 $\mathcal R\Lambda=\operatorname{id}$，其总返回为恒等。这证明数学存在性的充分方向；实际执行还须提供 (27.14) 的访问及控制。对于 (27.11) 给出的左逆，(27.12) 直接给 $\mathcal D_c\Psi_c=p_c\operatorname{id}$。任意其他满足条件一的实际返回也有相同结论：由 (27.4) 对固定 $c$ 求和，得到正数倍恒等通道，返回保迹再将这个数识别为 (27.8) 的 $p_c$。
+
+以上所有可数和都有明确收敛依据。原返回在正输入上不改变各项的迹，故其和在迹范数中收敛；(27.4) 的 Choi 正项和总迹为九。由其对角项，$\sum_u|r_{cua}|^2<\infty$，于是 (27.5) 的交叉标量和由 Cauchy—Schwarz 绝对收敛；返回保迹的强算子和夹在有限秩 $L_{ca}^\dagger,L_{cb}$ 之间，给出所写等式。(27.9)—(27.12) 的正项由 $\sum s_{c\mu}=p_c$ 控制；对任意正迹类输入的恢复和亦由总迹控制。故不需要无限维历史上的有限维逆定理，也没有遗漏零分支或只恢复一个后选择结果。证毕。
+
+## 28. 同源相干载体下界、经典记录限制与匹配上界
+
+**推论 28.1（每个非零分支至少保留八维相干侧载体）。** 在定义 26.1 的合同下，若精确返回存在，则每个非零实际经典分支 $c$ 都满足
+
+$$
+\dim M_c\ge8.
+\tag{28.1}
+$$
+
+特别地，即使经典结果任意多、允许任意细化历史，也不能以经典标签代替这八维相干侧载体。维数计数排除原九维 $AB$，只计该分支中其余所有保留相干载体的联合空间。
+
+证明。若 $\Psi_c\ne0$，(26.8)—(26.10) 蕴含至少一个 $A_{ca}\ne0$。由定理 27.1，
+
+$$
+A_{ca}^\dagger A_{ca}=\lambda_{c,aa}I_8,
+\qquad
+\lambda_{c,aa}=\|A_{ca}\|_{\rm HS}^2/8>0.
+\tag{28.2}
+$$
+
+所以 $A_{ca}$ 的秩为八，其像包含在 $M_c$，得到 (28.1)。若整个分支的 $p_c=0$，则各 $A_{ca}=0$、各 $L_{ca}=0$、$\Psi_c=0$；零分支是在证明其为零后才不受维数要求。对每个非零有限维分支，这是一条八维的有限资源下界；无限维分支也不会提供更小的有限载体。证明并未将各分支的资源平均后再取下界。证毕。
+
+**推论 28.2（实际环境读出的效应必须为标量）。** 若精确返回存在，则每个实际分支的环境效应及概率为
+
+$$
+F_c:=\Lambda_c^*(I_{M_c})=\sum_aA_{ca}^\dagger A_{ca}
+     =p_cI_8,
+\qquad
+\operatorname{Tr}\Psi_c(\rho)=p_c
+\tag{28.3}
+$$
+
+对每个九维归一化输入均成立；$\sum_cp_c=1$。返回后保留的经典标签可以具有状态 $\bigoplus_cp_c\rho$，这只说明标签与返回的工作寄存器独立，不等于原历史消失或原控制器复位。
+
+证明。(28.3) 由 (27.1)、(27.8) 求对角和得到；也可将 $\operatorname{Tr}\Psi_c(\rho)=\operatorname{Tr}[\rho\beta(F_c)]$ 与逐分支返回 $p_c\rho$ 合并，再用 (25.9)。因此对占用环境实施不可逆经典读出时，任一非标量效应都与本合同的精确返回不相容。这里限制的是实际 CP 扩展对应的效应，不是任意重命名的潜在环境结果。证毕。
+
+**例 28.3（标量效应不是充分条件）。** 只擦除环境的单分支通道
+
+$$
+\Lambda(Z)=\operatorname{Tr}(Z)|0\rangle\langle0|,
+\qquad M=\mathbb C,
+\qquad A_i=|0\rangle\langle i|\quad(0\le i<8)
+\tag{28.4}
+$$
+
+具有效应 $\sum_iA_i^\dagger A_i=I_8$，故分支概率完全独立于输入。然而 $A_i^\dagger A_j=|i\rangle\langle j|$ 不满足完整标量乘积条件，$\Lambda$ 也把所有归一化环境态送到同一态，故没有左逆。其扩展只给 $\mathcal N_\star$ 及一个固定侧态，不能精确返回。即使把这个固定态嵌入八维 $M$，仍然不可逆；单独达到维数八也不是给定仪器的充分校正检验。
+
+**命题 28.4（已测 Weyl 分支不等于相干上界）。** 保留 (22.4) 的实际八结果 Weyl 仪器，而非只保留其忽略记录的通道。其环境坐标中的每个分支效应为秩一投影，故该实际仪器不容许本节的精确返回。另一方面，保留整个八维相干环境给出同一 $\mathcal N_\star$ 的匹配数学上界。
+
+证明。在 Weyl Kraus 坐标下令 $V_{\rm W}=\sum_jK_j^{\rm W}\otimes|j\rangle$。(22.4) 正是对环境作 $|j\rangle\langle j|$ 读出后的实际 $AB$ 分支。若允许给这些既定 $AB$ 分支附加任意声明侧输出，则定理 26.2 给出的对应效应仍须满足
+
+$$
+\beta_{\rm W}(F_j)=(K_j^{\rm W})^\dagger K_j^{\rm W}
+                  =\beta_{\rm W}(|j\rangle\langle j|).
+\tag{28.5}
+$$
+
+(24.3) 的基与 Weyl 基之间的酉变换只酉共轭环境坐标，因而保持乘积独立性、$\beta$ 的单射性及效应的秩；由 (28.5)，$F_j=|j\rangle\langle j|$。它在全部占用的 $\mathbb C^8$ 上非标量，与 (28.3) 矛盾。因此不能在保持这些实际测量结果和 CP 分支的同时，把装置追认成一套可精确返回的相干仪器。这与 §22 已有的非零近似返回保证相容。
+
+匹配上界直接复用完整 Kraus 环境的标准等距扩展：取单个经典结果，$M=E$、$\Lambda=\operatorname{id}_{M_8}$，则
+
+$$
+\Psi(X)=VXV^\dagger,
+\qquad
+\operatorname{Tr}_M\Psi(X)=\mathcal N_\star(X),
+\qquad
+\mathcal R_V\Psi(X)=X.
+\tag{28.6}
+$$
+
+$\dim M=8$，(27.13) 给出固定 CPTP 左逆。这是等距嵌入已有的恢复事实，亦是 [Gregoratti—Werner，(7)][CRGW] 的单等距情形；八维全环境保留及其逆是复用的上界见证，不是新的通用反演构造。有限维等距还可延伸为在已给纯辅助态上的酉操作，但这种数学延伸不供应任何实际门。
+
+因此八维只在定义 26.1 的数学扩展类中尖锐：下界由本源的 (25.1) 经 (27.6) 得到，上界由 (28.6) 达到。忽略记录后通道相同，不使 (22.4) 与 (28.6) 成为同一实际仪器；把已经不可逆记录的标签改写为相干控制会改变合同。证毕。
+
+## 29. 原消费者的使用范围、归属与未付接口
+
+**应用 29.1（同一个原返回腿的资源必要条件）。** 在定义 1.1—1.3 的完整 $\mathsf Q_1/\Phi/\mathrm E_2$ 解释与定义 26.1 的全部扩展、访问和准备合同下，对同一未知原关联先使用 $\mathcal N_\star$，再要求精确恢复 $\mathrm E_2(p,q)$，当且仅当相应的整个占用环境处理 $\Lambda$ 可逆；每个非零有限维实际分支都须保留至少八维的联合相干侧载体。八维在该数学扩展类中可达。
+
+证明。原关联与 (24.1) 的全部复正交对双向对应，第一步及返回目标没有换源或换消费者，故定理 26.2—27.1 和推论 28.1 直接适用。所需的首次全 $M_9$ 边缘仍是原通道，而 (24.2) 的分数和扰动仍在返回之前评价。所说“当且仅当”是 CPTP 操作的数学存在性，不把逆操作的实际供给包含在结论中。证毕。
+
+精确总返回是全 $M_9$ 恒等，因此在张量上也保持任意未触碰参考系统及其相关；这来自 (27.3)，没有把该参考系统交给解码器。模型也未隐藏额外未知样本、源相关建议或相干侧载体。若另给这样的输入，就不再是定义 26.1 的扩展类。与准备无关的新辅助态可供解码器使用，但已与未知输入相关的任何保留量子载体都必须计入 $M_c$，不能在下界之外免费加入。
+
+(28.6) 恢复的是原 $P\otimes Q$，不是在保留另一份独立的期望 $P\otimes R$ 的同时返回未知原输入。第一步 $\mathcal N_\star(P\otimes Q)$ 原本就只具有 (24.2) 的目标重叠，并非该精确目标产品。若还要求独立目标副本、逐次回应、验证结果或另一个未返回载体，必须声明相应输出和合法供给；本结果没有构造这种更强任务。
+
+维数八计的是每个实际分支中除 $AB$ 和经典结果以外的联合相干侧空间。它不等于总内存、控制器大小、熵、保留历史长度、物理存储、初始准备资源、关系总数或其他来源上的内存最小值。它不提供总资源优势，也不以有限或可数标签的存在推出有限熵、统一比特预算或无限次使用的统一有限费用。[MINIMAL_RECORD_DILATIONS][CRMR] 的五模式源及其指定运输和读出任务不同，不能把该源的最小值搬到本源。
+
+数学上存在逆映射及八维上界，不供应实际相干保存、门、测量、通信、访问、逆控制、校准、当前授权、复位或资源费用。一般混合环境实现的可校正性仍依赖实际耦合，正如 [Gregoratti—Werner，§VI Mixed Environments][RRCCOUPLING] 所强调的；定理 26.2 吸收独立混合准备和不可访问纯化，是为了必要性没有漏洞，不是任意给定混合装置的充分恢复方案。实际实现须逐项供给并计入同次运行的产品准备、所有辅助系统和保留载体、正向与逆向门、完整记录、标签存储与交付、反馈、程序与 backing、验证、通信、返回与复位，以及全部费用向量和同时峰值。一般相位综合、QSP 或区间 SOS 的数学结果，未给出到本源 $V$、$\mathcal R_c$、$\mathcal R_V$ 的精确操作映射时，不构成这里的实际逆控制。
+
+工作寄存器恒等仍只是原完整操作返回的必要放宽。实际发生的第一步、环境处理、读取、反馈与资源消耗没有随末态相等而消失；原合法域、守卫、接受与执行后拒绝、全部回应和记录、控制状态、来源身份与谱系、backing、当前权限、所欠动作、Handback／Stop／INITIAL、AA／ACK／token／吸收 halt 及下一入口仍各自保留。四份独立实际取得的完整 body、INPUT／STACK 的分离，以及选中完整收到的 body 驱动同一原消费者的返回，没有由一条 $AB$ 恒等式获得。这里的返回不构造一般非承诺输出上共同定义的物理 $\sigma,\tau$，也不供应其全部有限字的中间输出、关系恒等式和完整返回。
+
+已有 [增广 $J_r$ 的定理 65.3、70.2、75.4][CRJR] 在真实完整入口、封闭 writer／输入、门、当前权限、每个请求切口的独立实际 wake、材料与进展前提下，已经证明全部声明切口、每个有限有序请求森林和原 owed-action 返回。这些条件域继续作为已解决结果复用。未增广或物理来源、更细 primitive 内部，以及广泛实际 $\alpha/\beta$ 到 Native／AA／Fibonacci 原消费者的桥，仍须各自供应，不能把量子对合按名称认同为其生成元。GENERAL15.5／18.4、RG13.3 已有的受限 cross-entry／inherited original-Q 结论也保留原范围；本节没有扩展到其外的 changed／new-row Q、较广 mixed interiors 或完整 terminal-task kernel。§23 所保留的共同源准备、首个未付 $3+3$ 产品、一般 completion-added 态的同时准备与实际取得、同族仪器及物理时间合同，均未由本资源定理支付。
+
+本附加结果只认证 $t_\star=1/1000$。不从一个非零子式推广参数分类，不给其他 $t$ 的资源结论，不给连续结果仪器、近似相干资源折衷、源相关初始化、物理实现、全局最小性或完整持续互恢复目标的完成结论。§18—23 的经典近似返回及 §15 的经典精确障碍继续在其原范围成立；这里增加的是固定点上更强的相干扩展限制。
+
+**文献与内容归属。** 定理 2.1 的原复承诺刚性、命题 11.2 的精确返回归约、§6 的复无迹嵌入、§8 的全代数通道、§9 的原消费者分数与 §15、§18—23 的经典返回结果均直接复用。Choi 正支撑、秩一恒等通道的 Kraus 标量性、Choi 极端性、Knill—Laflamme 标量误差乘积条件、等距像外补项和 CPTP 左逆结构是成熟工具；分别见 [RRCCHOI][RRCCHOI]、[RRCKRAUS][RRCKRAUS]、[RRCKL][RRCKL]、[CRGW][CRGW] 和 [Nayak—Sen，定理 2.1][CRNS]。Nayak—Sen 的固定、可为混合态的独立辅助态正规形与 (27.9)—(27.11) 一致，但不替代任意实际 CP 扩展的 (26.6)—(26.11) 或本源的整数证书。
+
+这里新增的源内承重关系是：在未改的 $\mathcal N_{1/1000}$ 上具体证明全部六十四个乘积独立，确定完整标量原像，再将任何声明的精确原承诺返回传递为全部八维占用环境的可逆性和逐非零分支的相干维数下界。完整环境的逆及其八维上界仅作复用见证。正文给出普通数学证明和精确有限整数证据，不宣称 Lean／kernel 核验、构建或 CI 认证。与既有源内结果和所引文献的区别不等于全球优先性；全球原创性未认证。
+
+[RRCCHOI]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf "John Watrous, The Theory of Quantum Information，Chapter 2，Lemma 2.30、Theorem 2.31 (Choi)，(2.174)—(2.175)：正支撑与伴随 Kraus 乘积独立的极端通道判据。"
+[RRCKL]: https://arxiv.org/html/quant-ph/9604034 "Emanuel Knill and Raymond Laflamme, A Theory of Quantum Error-Correcting Codes，Theorem 3.2，(19)—(20)：码上标量误差乘积条件及恢复。"
+[RRCKRAUS]: ../../../D5/S3/Quantum/Recovery/KrausLeftInverseNecessity.lean "identity_kraus_scalar、left_inverse_error_products：有限 Kraus 恒等通道标量性及左逆的误差乘积必要条件；源码引用不表示本附加结果已形式化。"
+[RRCCOUPLING]: https://arxiv.org/html/quant-ph/0209025 "Matteo Gregoratti and Reinhard F. Werner, Quantum Lost and Found，§II.3.1 Proposition 2、(7)，§VI Mixed Environments：条件等距分支逆及混合环境的实际耦合边界。"
+
+## 追加锚（本行以下为增补区）
+
+## 30. 同原承诺返回误差与加权相干侧维数
+
+**定义 30.1（完整扩展合同下的有限误差）。** 固定原定义 8.1、§24 的同一通道 $\mathcal N_\star=\mathcal N_{1/1000}$，并完整保留定义 1.1—1.3 的 $\mathsf Q_1/\Phi/\mathrm E_2$ 来源、全部原纯点和效应、独立产品准备及全部有序复正交秩一对 $\mathfrak F$。第一步的指定消费者目标仍为 $P\otimes(I-P-Q)$，返回目标仍为同一个未知原输入 $\rho=P\otimes Q$。
+
+使用定义 26.1 的整个扩展与访问类：$\mathsf C$ 是非空有限或可数的实际经典结果集；每个 $M_c$ 是非零有限维或可分 Hilbert 空间。实际正常 CP 分支和固定 CPTP 返回为
+
+$$
+\begin{aligned}
+\Psi_c &:M_9(\mathbb C)\longrightarrow
+                 \mathcal T(\mathbb C^9\otimes M_c),\\
+\sum_c\operatorname{Tr}_{M_c}\Psi_c(X)&=\mathcal N_\star(X)
+                 \quad\text{对每个 }X\in M_9(\mathbb C),\\
+\mathcal D_c&:\mathcal T(\mathbb C^9\otimes M_c)
+                 \longrightarrow M_9(\mathbb C),\qquad
+\mathcal T=\sum_c\mathcal D_c\Psi_c.
+\end{aligned}
+\tag{30.1}
+$$
+
+正输入的分支和按迹范数可数可加。成功、失败、拒绝及全部稀有分支均留在和中，不后选择或条件归一。实际 $c$ 可包含完整有限历史；隐藏 Kraus 指标、不可访问记录、丢弃输出和独立混合准备的不可访问纯化不交给返回操作。$\mathcal D_c$ 只使用原 $AB$、声明的 $M_c$、实际 $c$ 以及实际供给的独立辅助态，不能读取未知准备、额外未知样本、输入相关建议或未触碰参考系统。所有初始辅助态、独立随机性和固定自适应控制均与未知 $(P,Q)$ 无关。
+
+$M_c$ 合计除原 $AB$ 外每一个保留的、可能与输入相关的相干载体，包括工作区、相干指针、通信、控制器、程序及解码器记忆；分开放置或改称附件不改变联合计数。无限维可分侧输出及任意多个隐藏 Kraus 算子仍属于合同。
+
+记 $d_c=\dim M_c$，无限维可分情形写 $d_c=\infty$，定义
+
+$$
+\begin{aligned}
+E&=\sup_{(P,Q)\in\mathfrak F}
+       \frac12\|\mathcal T(P\otimes Q)-P\otimes Q\|_1,\\
+q_c&=\operatorname{Tr}\Psi_c(I_9/9),\\
+h(d)&=\max\{1/d-1/8,0\}\quad(1\le d<\infty),
+\qquad h(\infty)=0.
+\end{aligned}
+\tag{30.2}
+$$
+
+$q_c$ 是同一实际扩展在数学参考态 $I_9/9$ 上的诊断概率，$q_c\ge0$、$\sum_cq_c=1$。它不被假定为任意实际承诺输入的分支概率，也不要求实际准备 $I_9/9$。$E$ 只度量返回后的原 $AB$，不是完整操作返回误差。
+
+**定理 30.2（原返回误差限制欠维相干分支的概率质量）。** 对定义 30.1 的每一个实际扩展及每一组实际固定返回，均有
+
+$$
+\boxed{\displaystyle
+E\ \ge\ \frac1{1549800}\sum_{c\in\mathsf C}q_c\,h(d_c).}
+\tag{30.3}
+$$
+
+右侧按全部实际经典结果求和，允许同时含有限维和无限维分支。结论约束原 $AB$ 仍可访问时的联合相干侧维数；不把 $AB$ 计入 $d_c$，也不以完整输入的存储维数界替代侧载体界。若改用 $h_{\rm old}(d)=\max\{(8-d)/d,0\}$、$h_{\rm old}(\infty)=0$，同一式的系数为 $1/12398400$，因为 $h_{\rm old}=8h$。
+
+证明使用 §31 的原源归一化证书，并在 §32 给出任意粗记录、矩形 Kraus 算子和可数和的推导。
+
+## 31. 原环境效应映射的定量条件证书
+
+**命题 31.1（全部复方向上的源内强制界）。** 使用 (24.3)—(24.7)、(25.7) 的原矩阵 $K_i,V,\beta$。对每个 $Z\in M_8(\mathbb C)$，
+
+$$
+\|\beta(Z)\|_{\rm HS}^2\ge\frac1{80360}\|Z\|_{\rm HS}^2,
+\qquad
+\beta(I_8)=I_9,\qquad
+\operatorname{Tr}\beta(Z)=\frac98\operatorname{Tr}Z.
+\tag{31.1}
+$$
+
+证明。后两式直接复用 (24.6)、推论 25.2。以下给出首式所需的精确有限有理证书，保留原源而不引入数值奇异值阈值。令
+
+$$
+q=905000,\qquad
+A_\star=\frac{790405860121}{307134375000},\qquad
+ a_0=A_\star q^2=\frac{6323246880968}{3},
+\tag{31.2}
+$$
+
+并按 (24.3) 取
+
+$$
+\begin{aligned}
+(B_0,\ldots,B_7)&=(E_{01},E_{02},E_{10},E_{12},E_{20},E_{21},
+                 \operatorname{diag}(1,-1,0),\operatorname{diag}(1,1,-2)),\\
+(g_0,\ldots,g_7)&=(1,1,1,1,1,1,2,6).
+\end{aligned}
+\tag{31.3}
+$$
+
+原整数矩阵完全由
+
+$$
+(H_i)_{3a+b,3c+d}
+ =905000\delta_{ac}(B_i)_{bd}
+  +14480(B_i)_{ac}\delta_{bd}
+  -9955\delta_{ad}(B_i)_{bc}
+  -39824(B_i)_{ad}\delta_{bc}
+\tag{31.4}
+$$
+
+确定，其中 $0\le a,b,c,d<3$。它等于原 (24.5) 的张量式，$K_i=H_i/\sqrt{a_0g_i}$；$H_i$ 实整数，因此转置就是伴随。归一化是原 (24.6)，即
+
+$$
+\sum_iH_i^{\mathsf T}H_i/g_i=a_0I_9,
+\qquad
+\operatorname{Tr}(H_i^{\mathsf T}H_j)
+       =\delta_{ij}(9/8)a_0g_i.
+\tag{31.5}
+$$
+
+按零起始行列序定义
+
+$$
+\begin{aligned}
+M_{9r+s,\,8i+j}&=(H_i^{\mathsf T}H_j)_{r,s},
+       &&0\le r,s<9,\quad0\le i,j<8,\\
+\Gamma&=M^{\mathsf T}M,
+&\Delta_g&=\operatorname{diag}_{8i+j}(g_i g_j).
+\end{aligned}
+\tag{31.6}
+$$
+
+这是 (25.3) 的同一个 $81\times64$ 整数矩阵，不是其选取的方形子式。令 $G_\beta$ 为六十四列 $\beta(E_{ij})=K_i^\dagger K_j$ 的 Hilbert—Schmidt Gram 矩阵，其中 $E_{ij}$ 此处是八阶矩阵单位。则
+
+$$
+\begin{aligned}
+(G_\beta)_{8i+j,8k+\ell}
+ &=\operatorname{Tr}[(K_i^\dagger K_j)^\dagger K_k^\dagger K_\ell],\\
+G_\beta&=a_0^{-2}\Delta_g^{-1/2}\Gamma\Delta_g^{-1/2},\\
+\operatorname{Tr}(G_\beta^{-1})
+ &=a_0^2\operatorname{Tr}(\Delta_g\Gamma^{-1}).
+\end{aligned}
+\tag{31.7}
+$$
+
+定理 25.1 已证明列满秩，故 $\Gamma,G_\beta$ 正定。下表列出 $\Gamma$ 的非零项图的全部连通分量；每个集合内部按递增顺序，列号为 $8i+j$。同一行中每个分量有相同的加权逆迹 $R_C=a_0^2\operatorname{Tr}[(\Delta_g)_C\Gamma_C^{-1}]$。
+
+| 分量族 | 全部列集合 $C$ | 每个分量的 $R_C$ |
+| --- | --- | --- |
+| $\mathcal C_{10}$ | $\{0,9,18,27,36,45,54,55,62,63\}$ | $R_{10}$ |
+| $\mathcal C_6$ | $\{1,34,46,47,51,59\}$；$\{5,14,15,26,52,60\}$；$\{6,7,11,44,50,58\}$；$\{8,20,30,31,53,61\}$；$\{19,38,39,40,49,57\}$；$\{22,23,25,37,48,56\}$ | $R_6$ |
+| $\mathcal C_1$ | $\{2\}$；$\{12\}$；$\{16\}$；$\{29\}$；$\{33\}$；$\{43\}$ | $R_1$ |
+| $\mathcal C_2$ | $\{3,42\}$；$\{4,10\}$；$\{13,28\}$；$\{17,32\}$；$\{21,24\}$；$\{35,41\}$ | $R_2$ |
+
+各集合互不相交且合为 $\{0,\ldots,63\}$；不同集合间的 $\Gamma$ 元素由 (31.4)—(31.6) 为零。加权逆迹的精确值为
+
+$$
+\begin{aligned}
+R_{10}&=\frac{427619839702822500240810082579541996543589775926707123600772881561780589811}
+ {45439616019121643165313516097948319078960968752463468297933589445120000},\\
+R_6&=\frac{452991846557141111480792104503570207820179804739168890044555696622689192179}
+ {68159424028682464747970274146922478618441453128695202446900384167680000},\\
+R_1&=\frac{624741423713617818134641}{289442691639595929600},\\
+R_2&=\frac{5372666586699133783584992389464322441}{1778817562497383210014988413440000}.
+\end{aligned}
+\tag{31.8}
+$$
+
+为确定这些有理数的有限求值，可对每个递增排列的 $C=\{k_0,\ldots,k_{m-1}\}$ 使用如下等价的正定消元恒等式。令 $\Gamma_C=\ell\operatorname{diag}(p_r)\ell^{\mathsf T}$，其中 $\ell$ 为单位下三角矩阵，依次定义
+
+$$
+\begin{aligned}
+p_r&=(\Gamma_C)_{rr}-\sum_{v<r}\ell_{rv}^2p_v,\\
+\ell_{sr}&=\frac{(\Gamma_C)_{sr}-\sum_{v<r}\ell_{sv}p_v\ell_{rv}}{p_r}
+                      &&(s>r),\\
+N_{rr}&=1,\qquad
+N_{sr}=-\sum_{v=r}^{s-1}\ell_{sv}N_{vr}
+                      &&(s>r),
+\qquad N=\ell^{-1}.
+\end{aligned}
+\tag{31.9}
+$$
+
+正定性保证每个 $p_r>0$；所有量均为有理数。于是，若 $k_r=8i_r+j_r$，
+
+$$
+R_C=a_0^2\sum_{r=0}^{m-1}g_{i_r}g_{j_r}
+                    \sum_{s=r}^{m-1}\frac{N_{sr}^2}{p_s}.
+\tag{31.10}
+$$
+
+(31.9) 来自逐列比较 $\Gamma_C=\ell\operatorname{diag}(p)\ell^{\mathsf T}$，而 (31.10) 来自 $\Gamma_C^{-1}=N^{\mathsf T}\operatorname{diag}(p^{-1})N$。这给出了仅由原矩阵定义复算 (31.8) 的有理递推，无须外部逆矩阵或精度前提。十九个分量的总和为
+
+$$
+\begin{aligned}
+\operatorname{Tr}(G_\beta^{-1})
+ &=R_{10}+6R_6+6R_1+6R_2\\
+ &=\frac{81144884955567687588129297292217278607694624384679201090456284627716165783}
+ {1009769244869369848118078135509962646199132638943632628842968654336000},\\
+80360-\operatorname{Tr}(G_\beta^{-1})
+ &=\frac{171562134873406639461677363319640867674480831116963364676434724794217}
+ {1009769244869369848118078135509962646199132638943632628842968654336000}>0.
+\end{aligned}
+\tag{31.11}
+$$
+
+特别地，逆迹严格介于 $80359$ 与 $80360$ 之间。正矩阵 $G_\beta^{-1}$ 的最大本征值不超过其迹，故 $G_\beta\succeq I_{64}/80360$。对任意复系数 $z_{8i+j}=Z_{ij}$，
+
+$$
+\|\beta(Z)\|_{\rm HS}^2=z^\dagger G_\beta z
+ \ge\|z\|^2/80360=\|Z\|_{\rm HS}^2/80360.
+\tag{31.12}
+$$
+
+矩阵单位在完整复 Hilbert—Schmidt 空间中正交归一；列矩阵恰好实并不把结论限制到实系数或 Hermitian 子空间。$\beta(Z)=V^\dagger(I_9\otimes Z)V$ 使用的就是 $Z_{ij}$，没有转置。证毕。
+
+## 32. 加权关系的证明：隐藏分解、实际粗记录与全部质量
+
+定理 30.2 的证明。对实际扩展直接复用定理 26.2，而不假设装置另供可访问的纯环境。取其有限或可数隐藏 Kraus 表示
+
+$$
+\begin{aligned}
+L_{ca}&=(I_9\otimes A_{ca})V,
+&\Psi_c(X)&=\sum_aL_{ca}XL_{ca}^\dagger,\\
+\sum_{c,a}A_{ca}^\dagger A_{ca}&=I_8,
+&L_{ca}^\dagger L_{ca}&=\beta(A_{ca}^\dagger A_{ca}).
+\end{aligned}
+\tag{32.1}
+$$
+
+隐藏的 $a$ 仅为数学分解。令
+
+$$
+X_{ca}=A_{ca}^\dagger A_{ca},\qquad
+w_{ca}=\operatorname{Tr}X_{ca}/8.
+\tag{32.2}
+$$
+
+由 (31.1)、(32.1) 和定义 30.1，
+
+$$
+\sum_{c,a}w_{ca}=1,\qquad
+\sum_aw_{ca}=\sum_a\operatorname{Tr}(L_{ca}^\dagger L_{ca})/9
+ =\operatorname{Tr}\Psi_c(I_9/9)=q_c.
+\tag{32.3}
+$$
+
+$w_{ca}=0$ 时正性给 $X_{ca}=0$，进而 $A_{ca}=L_{ca}=0$；只在作此识别后略去对应零项。若 $w_{ca}>0$，定义有限维密度矩阵
+
+$$
+\sigma_{ca}=\frac{X_{ca}}{8w_{ca}}\in M_8(\mathbb C),\qquad
+\tau_{ca}=\frac{\beta(X_{ca})}{9w_{ca}}
+          =\frac89\beta(\sigma_{ca})\in M_9(\mathbb C).
+\tag{32.4}
+$$
+
+即使 $M_c$ 无限维，这两个归一化矩阵仍分别在八、九维空间中；不在无限维输出上应用有限维态不等式。
+
+若 $d_c<\infty$，则 $\operatorname{rank}\sigma_{ca}\le\min\{d_c,8\}$。对其非零本征值使用普通 Cauchy—Schwarz 的秩／纯度界，得到
+
+$$
+\|\sigma_{ca}-I_8/8\|_{\rm HS}^2
+ =\operatorname{Tr}(\sigma_{ca}^2)-1/8\ge h(d_c).
+\tag{32.5}
+$$
+
+当 $d_c\ge8$ 或 $d_c=\infty$ 时使用非负性，仍得到同一式。由 $\beta(I_8)=I_9$ 和 (31.1)，
+
+$$
+\begin{aligned}
+\tau_{ca}-I_9/9&=\frac89\beta(\sigma_{ca}-I_8/8),\\
+\|\tau_{ca}-I_9/9\|_{\rm HS}^2
+ &\ge\frac{64}{81\cdot80360}h(d_c).
+\end{aligned}
+\tag{32.6}
+$$
+
+对这两个九维归一化态，使用 [Fuchs—van de Graaf，定理 1，式 (46)][ARRFVG] 的成熟界 $\|\tau-\omega\|_1/2\le\sqrt{1-f_{\rm r}(\tau,\omega)^2}$，再用 $\|Y\|_1\ge\|Y\|_{\rm HS}$，得
+
+$$
+1-f_{\rm r}(\tau_{ca},I_9/9)^2
+ \ge\frac14\|\tau_{ca}-I_9/9\|_1^2
+ \ge\frac{16}{81\cdot80360}h(d_c).
+\tag{32.7}
+$$
+
+这里 $f_{\rm r}$ 沿用 (18.4) 的根保真度，平方只取一次。
+
+现在固定实际返回 $\mathcal D_c$，取其 Kraus 算子 $B_{cu}:\mathbb C^9\otimes M_c\to\mathbb C^9$，满足 $\sum_uB_{cu}^\dagger B_{cu}=I$，可数时为强算子收敛。对同一 $c$ 的全部隐藏 $a$ 使用同一组 $B_{cu}$，没有将 $a$ 加入可读经典记录。
+
+对一个 $L=L_{ca}$ 作极分解 $L=WH$，其中 $H=\sqrt{L^\dagger L}\in M_9$，$W:\mathbb C^9\to\mathbb C^9\otimes M_c$ 是极分解的部分等距，$W^\dagger W=\operatorname{supp}H$。Hilbert—Schmidt Cauchy—Schwarz 在九维空间中给出
+
+$$
+\begin{aligned}
+|\operatorname{Tr}(B_{cu}L)|^2
+ &=|\operatorname{Tr}(H^{1/2}B_{cu}WH^{1/2})|^2\\
+ &\le\operatorname{Tr}H\;
+  \operatorname{Tr}(H^{1/2}W^\dagger B_{cu}^\dagger B_{cu}WH^{1/2}),\\
+\sum_u|\operatorname{Tr}(B_{cu}L)|^2
+ &\le(\operatorname{Tr}H)^2.
+\end{aligned}
+\tag{32.8}
+$$
+
+求和时强完备关系被夹在有限秩算子之间，右侧的第二因子之和恰为 $\operatorname{Tr}[H^{1/2}(\operatorname{supp}H)H^{1/2}]=\operatorname{Tr}H$。因此奇异 $L$、矩形 $L$ 和无限维可分输出均包含；无需把 $W$ 延伸成一个额外可用的等距操作。
+
+(32.8) 是 [Gregoratti—Werner，命题 4，式 (17)—(21)][ARRGW04] 的反馈迹界所用的极分解／Cauchy—Schwarz 步骤；这里显式给出矩形和粗记录的应用。只取任意实际返回的上界，不使用隐藏标签条件化的最优解码器，也不声称这个上界可由现有粗记录达到。
+
+复合返回的 Kraus 算子是九阶矩阵 $B_{cu}L_{ca}$。以 (18.3) 的未归一化 Choi 约定，(32.4)、(32.8) 给出
+
+$$
+\begin{aligned}
+F_e(\mathcal T)
+ &=\frac1{81}\sum_{c,a,u}|\operatorname{Tr}(B_{cu}L_{ca})|^2\\
+ &\le\frac1{81}\sum_{c,a}
+                (\operatorname{Tr}\sqrt{L_{ca}^\dagger L_{ca}})^2\\
+ &=\sum_{c,a}w_{ca}f_{\rm r}(\tau_{ca},I_9/9)^2.
+\end{aligned}
+\tag{32.9}
+$$
+
+最后一个等号使用 $L_{ca}^\dagger L_{ca}=9w_{ca}\tau_{ca}$ 和 $f_{\rm r}(\tau,I_9/9)=\operatorname{Tr}\sqrt\tau/3$。把 (32.3)、(32.7) 接入，得到
+
+$$
+1-F_e(\mathcal T)
+ \ge\sum_{c,a}w_{ca}[1-f_{\rm r}(\tau_{ca},I_9/9)^2]
+ \ge\frac{16}{81\cdot80360}\sum_cq_c h(d_c).
+\tag{32.10}
+$$
+
+剩下的接口是原承诺误差到 Choi 重叠的提升，直接复用 (19.3)—(19.7) 的第一部分。它只要求最终 $\mathcal T:M_9\to M_9$ 为 CPTP，与中间是否保留相干输出无关。具体地，原双边缘 Haar 泄漏算子满足
+
+$$
+\mathscr L_A+\mathscr L_B\succeq\frac7{120}(I-\Pi_I),
+\qquad \operatorname{Tr}J_{\mathcal T}=9.
+\tag{32.11}
+$$
+
+$7/120$ 是定理 7.1 的既有谱隙；两核投影对易且交为 $\Pi_I$，正是 (19.5)—(19.6)。每个原 $P\otimes Q$ 上的两个边缘泄漏效应各不超过 $E$，因此
+
+$$
+9\frac7{120}(1-F_e(\mathcal T))\le2E,
+\qquad E\ge\frac{21}{80}(1-F_e(\mathcal T)).
+\tag{32.12}
+$$
+
+这里没有先假设整输入或带参考的准确性，也没有使用 (19.9)—(19.13) 仅适用于经典侧信息的近似保单位推导。将 (32.10) 代入 (32.12)，精确算术为
+
+$$
+\frac{21}{80}\frac{16}{81\cdot80360}
+ =\frac1{1549800},
+\tag{32.13}
+$$
+
+得到 (30.3)。
+
+为明确全部可数极限，原 (26.8)—(26.10) 保证
+
+$$
+\sum_{c,a}\|L_{ca}\|_{\rm HS}^2=9,\qquad
+\sum_{c,a}\operatorname{Tr}X_{ca}=8.
+\tag{32.14}
+$$
+
+各 $\mathbb C^9\otimes M_c$ 可分，正常 CP 返回 $\mathcal D_c$ 因而有可数 Kraus 表示。其强完备和夹在有限秩 $L_{ca}$ 之间，在九维输入上按迹收敛；每个正输入的复合输出正项和保持全部原迹。复合 Choi 正项和总迹为九，因此 (32.9) 是同一实际 CPTP 通道的 Choi 恒等式。所有权重、平方迹和保真度项均非负，可先对有限部分和应用 (32.8)，再按单调收敛求和。由 $\sum w_{ca}=1$ 才可写 $1-\sum w_{ca}f_{\rm r}^2=\sum w_{ca}(1-f_{\rm r}^2)$。无限维侧分支只在 $h$ 中贡献零，其完整权重仍在这些质量恒等式中；没有把截断后的仪器称为保迹通道，没有丢弃尾部或把不可访问纯化送回解码器。证毕。
+
+## 33. 欠维质量、实际输入概率与保留记录
+
+**推论 33.1（七维及以下的全部质量界）。** 在定理 30.2 的完整合同下，令 $B=\{c:d_c\le7\}$。则
+
+$$
+\sum_{c\in B}q_c\le\min\{1,86788800E\}.
+\tag{33.1}
+$$
+
+若每个非零实际分支都满足 $d_c\le7$，则
+
+$$
+E\ge\frac1{86788800}.
+\tag{33.2}
+$$
+
+对每个原承诺 $\rho=P\otimes Q$，其实际欠维分支概率满足
+
+$$
+\sum_{c\in B}\operatorname{Tr}\Psi_c(\rho)
+ \le\min\{1,781099200E\}.
+\tag{33.3}
+$$
+
+证明。$1\le d\le7$ 时 $h(d)\ge h(7)=1/56$，且 $1549800\cdot56=86788800$，由 (30.3) 得 (33.1)。若 $q_c=0$，由 (32.3) 及正性该 CP 分支为零；所以第二种情形的 $B$ 含有全部质量，给出 (33.2)。任意九维密度矩阵均满足 $0\preceq\rho\preceq I_9$，正映射保序，故
+
+$$
+\operatorname{Tr}\Psi_c(\rho)
+ \le\operatorname{Tr}\Psi_c(I_9)=9q_c.
+\tag{33.4}
+$$
+
+求和并用总实际概率为一、$9\cdot86788800=781099200$ 得 (33.3)。这个保序步骤事实上适用于任意九维密度输入，不假定诊断概率等于承诺输入概率。可数时在非负部分和上取极限。证毕。
+
+**推论 33.2（同一实际记录的必要界与条件误差）。** 定义
+
+$$
+\begin{aligned}
+p_c(\rho)&=\operatorname{Tr}\Psi_c(\rho),\\
+E_{\rm CQ}&=\sup_{\rho=P\otimes Q,\ (P,Q)\in\mathfrak F}
+ \frac12\sum_c\|\mathcal D_c\Psi_c(\rho)-p_c(\rho)\rho\|_1.
+\end{aligned}
+\tag{33.5}
+$$
+
+理想 CQ 态使用全部同一实际 $c$ 及其实际概率。则
+
+$$
+E\le E_{\rm CQ}\le\sqrt E,\qquad
+E_{\rm CQ}\ge\frac1{1549800}\sum_cq_c h(d_c).
+\tag{33.6}
+$$
+
+若 $E_{\rm CQ}\le\eta$，对每个原承诺输入及每个 $p_c(\rho)>0$，归一化返回分支误差满足
+
+$$
+\frac12\left\|\frac{\mathcal D_c\Psi_c(\rho)}{p_c(\rho)}-\rho\right\|_1
+ \le\min\{1,\eta/p_c(\rho)\}.
+\tag{33.7}
+$$
+
+证明。$\mathcal D_c$ 保迹，所以 (33.5) 的各输出块迹为 $p_c(\rho)$；$\rho$ 是纯态。直接应用 (22.17) 的纯输入分块推导，它只使用这些事实，不依赖中间侧输出维数或隐藏 Kraus 数目。其加权 Cauchy—Schwarz 对可数非负和同样有效。丢弃记录的迹距离收缩性给反向 $E\le E_{\rm CQ}$；与 (30.3) 合并得到必要界。每个未归一化块的半迹距离不超过全部块之和 $\eta$，除以其真实正概率，并与归一化态距离不超过一合并，得到 (33.7)。该式没有无概率下限的统一稀有分支保证，也不把一个 $O(E)$ 的 $AB$ 上界提升为 $O(E)$ 的 CQ 上界。证毕。
+
+## 34. 正误差不推出逐非零分支八维
+
+**命题 34.1（独立稀有分支的边界）。** 在定义 30.1 的同一数学扩展类中，存在一个非零一维相干侧分支，同时 $E$ 和同一实际记录的 $E_{\rm CQ}$ 均可任意小而严格正。因此推论 28.1 的逐非零分支八维结论不能不加限定地延伸到正的无条件误差。
+
+证明。任选 $0<r<1$，声明一个独立于输入的实际二值硬币结果 $g,b$，取
+
+$$
+\begin{aligned}
+M_g&=\mathbb C^8,&\Psi_g(X)&=(1-r)VXV^\dagger,\\
+M_b&=\mathbb C,&\Psi_b(X)&=r\mathcal N_\star(X).
+\end{aligned}
+\tag{34.1}
+$$
+
+一维侧空间作自然识别。两分支忽略侧输出后的和在整个 $M_9$ 上恰为 $\mathcal N_\star$，故满足原全边缘合同；$q_g=1-r$、$q_b=r$。对 $g$ 使用已有 (27.13) 的固定 CPTP 等距左逆 $\mathcal R_V$，对 $b$ 使用原 $AB$ 上的恒等通道。这给出
+
+$$
+\mathcal T=(1-r)\operatorname{id}+r\mathcal N_\star.
+\tag{34.2}
+$$
+
+令
+
+$$
+e_{\mathcal N}=\sup_{(P,Q)\in\mathfrak F}
+     \frac12\|\mathcal N_\star(P\otimes Q)-P\otimes Q\|_1.
+\tag{34.3}
+$$
+
+由迹距离在部分迹下收缩及 (24.2)，
+
+$$
+0<\frac{1040350905}{790405860121}
+  =D(\mathcal N_\star)\le e_{\mathcal N}\le1.
+\tag{34.4}
+$$
+
+(34.2) 的 $AB$ 差恰为 $r(\mathcal N_\star(\rho)-\rho)$；同一实际 CQ 比较的 $g$ 块差为零、$b$ 块差就是这个矩阵。因此
+
+$$
+E=E_{\rm CQ}=r e_{\mathcal N}>0,\qquad
+E,E_{\rm CQ}\longrightarrow0\quad(r\longrightarrow0^+).
+\tag{34.5}
+$$
+
+$b$ 的归一化条件返回误差仍为固定的 $e_{\mathcal N}$，并未趋零。定理 30.2 对这个例子的右侧为 $7r/12398400$，正确地按真实稀有概率计费。该例只说明逐分支断言的边界；八维分支和同时峰值仍保留。它是所声明数学扩展类中的一套独立硬币扩展，不把已测 Weyl 仪器改称相干仪器，不提供某一既定实际混合装置的新访问或物理供应。证毕。
+
+## 35. 原返回腿的适用范围与数学归属
+
+**命题 35.1（同原消费者上的必要关系）。** 在定义 1.1—1.3 的完整 $\mathsf Q_1/\Phi/\mathrm E_2$ 解释和定义 30.1 的整个扩展合同下，对同一未知原关联先使用 $\mathcal N_\star$，再用所声明的实际 $AB,M_c,c$ 近似返回原 $\mathrm E_2(p,q)$，必满足 (30.3)、(33.1)—(33.3) 和 (33.6)。这是一条辅助工作寄存器返回的必要关系；它不供应原完整操作返回的充分条件。
+
+证明。定义 1.2 将全部原关联与全部复正交对双向对应，故没有更换原样本、第一步 $P\otimes(I-P-Q)$ 消费者目标或返回的 $P\otimes Q$。全 $M_9$ 边缘仍为原 $\mathcal N_\star$，其第一步扰动和目标重叠仍按 (24.2) 在返回之前评价。定理 30.2 及两个推论因此适用。
+
+$A_{ca}$、隐藏指标、矩阵单位、Gram 逆、Haar 平均、Choi 参考和 $I_9/9$ 权重均为证明坐标，不供给实际测量、参考系统访问、额外未知副本、源相关建议、准备权、相干化已测旗标或解码器门。可数经典记录不自动具有有限熵、有限历史长度或统一比特预算。只要存在输入相关的保留相干侧载体，就必须按其联合空间计入 $M_c$，而非仅计某个被命名为环境的子系统。
+
+必要性在 $d_c\ge8$ 时给该项零，并不推出该分支或整套装置可校正；例 28.3 已说明足够的名义维数仍可承载不可逆扩展。定理没有匹配的二至七维构造、锐误差前沿或特定粗仪器的 CQ 最优值。§18—23 的经典返回保证、§27—28 的精确判据及八维端点继续在原范围使用；(34.1) 只是这些已有工具给出的边界例，不作为新的反演构造。
+
+费用与操作边界完整沿用 §23、§29：实际产品准备、全部独立辅助系统和丢弃系统、保留载体、正反向门、测量和反馈、完整标签与记录的存储和通信、控制与校准、程序和 backing、验证、当前授权、返回与复位，仍计入同次运行的全部费用向量与同时峰值。侧空间维数不等于总内存、熵、物理存储或完整控制器成本；这里没有物理可用性、总费用优势或全局最小性结论。
+
+原合法域、守卫、接受与执行后拒绝、全部回应和记录、来源身份与谱系、控制状态、rights、backing、当前 source-bound 权限、所欠动作、Handback／Stop／INITIAL、AA／ACK／token／吸收 halt 和下一入口语义均保留。$AB$ 或同一实际记录的 CQ 接近性没有恢复这些对象，也没有在返回未知原输入的同时保留一份独立精确的 $P\otimes R$。本关系不构造一般非承诺中间态上的共同 $\sigma,\tau$，不供给全部有限字的在线中间输出或完整操作返回。
+
+四份独立实际取得的完整 body、INPUT／STACK 分离、所选完整收到的 body 驱动同一原 owed consumer，以及广泛 Native／AA／Fibonacci 操作对应继续要求各自的真实来源与操作桥。已有 [增广 $J_r$ 的定理 65.3、70.2、75.4][CRJR] 在完整实际入口、封闭 writer／输入、门、当前权限、每个请求切口的独立实际 wake、材料与进展前提下，已经解决全部声明切口、每个有限有序请求森林及原 owed-action 返回；这些条件域不被重新列为未解。未增广或物理来源、更细 primitive 内部和更广供应桥仍保留原义务。GENERAL15.5／18.4、RG13.3 的既有受限 cross-entry／inherited original-Q 结论仍成立；其外的 changed／new-row Q、较广 mixed interiors 和完整 terminal-task kernel 没有由本定理解决。§23、§29 的共同源准备、未付 $3+3$ 产品、一般 completion-added 态的同时准备和实际取得、同族仪器及物理时间合同也均保留。证毕。
+
+**数学归属约定 35.2。** (30.3) 是 repo-derived 的固定源有限误差加权关系：原源的 $\beta$ 条件界将欠维 Kraus 效应的秩／纯度缺口传给任何实际粗记录解码器的纠缠保真度，再经原完整复承诺的双边缘泄漏提升，限制欠维分支的实际诊断质量。常数证书是这条关系的一个前提，既有精确八维端点、经典一维障碍及完整环境左逆均不另计新内容。
+
+§24—26 的源归一化、完整乘积独立性和任意实际扩展因子化，§7、§19 的谱隙及承诺到过程桥，§22 的纯输入 CQ 比较，以及 §27—28 的等距左逆与精确边界均直接复用。一般秩／纯度界、正矩阵 Gram 估计、Choi 表示和单调收敛是标准线性代数与算子工具。[Gregoratti—Werner，命题 4，式 (17)—(21)][ARRGW04] 提供成熟反馈迹界；(32.8) 明确补足此处矩形、奇异和无限可分侧输出的应用，而不继承隐藏结果可读或反馈最优性。[Fuchs—van de Graaf，定理 1，式 (46)][ARRFVG] 提供归一化九维态上的距离／根保真度界。
+
+[Bény—Oreshkov，定理 1、推论 2—3][WRCBO] 的近似纠错与互补通道条件，以及 [Kretschmann—Schlingemann—Werner，定理 3，式 (32)][WRCKSW] 的信息—扰动关系是一般背景；其整输入最坏纠缠保真度或完全范数前提不由原承诺上的 $E$ 直接给出。本证明使用的是本卷已有的精确承诺泄漏桥，并具体计算原 $\beta$ 的条件界，不把这些一般判据重述为新的校正定理。实际耦合和访问仍依 [Gregoratti—Werner，§VI Mixed Environments][RRCCOUPLING] 区分；忽略侧输出后的同一边缘不使不同实际仪器互换。
+
+这里的数学范围限于 $t_\star=1/1000$、有限或可数实际经典结果及上述完整扩展类；连续结果、其他参数上的统一分类、锐折衷、更广的操作实现和持续互恢复的全目标仍没有本关系给出的结论。普通数学推导与精确有理证书不构成新的形式化声明；本关系的仓内推导归属也不宣称全球文献优先性。
+
+[WRCBO]: https://arxiv.org/html/0907.5391v1 "Cédric Bény and Ognyan Oreshkov, General conditions for approximate quantum error correction and near-optimal recovery channels，Theorem 1、Corollaries 2—3：最坏纠缠保真度下的互补通道条件。"
+[WRCKSW]: https://arxiv.org/html/quant-ph/0605009v1 "Dennis Kretschmann, Dirk Schlingemann and Reinhard F. Werner, The Information-Disturbance Tradeoff and the Continuity of Stinespring Representation，Theorem 3、(32)：完全范数的信息—扰动界。"
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e2856978ae2ba4f88ee2be94a93b4a486f709f55d2c46b6dbb94b0eff9e2dc8c
+  normalized_sha256: sha256:e2856978ae2ba4f88ee2be94a93b4a486f709f55d2c46b6dbb94b0eff9e2dc8c
+cas_ref: sha256:e2856978ae2ba4f88ee2be94a93b4a486f709f55d2c46b6dbb94b0eff9e2dc8c
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalRegularHeight.original_regular_height
+    target_statement_id: sha256:ef3eaf9b18dcbf90bd5790be925fbf54cbccb02627e6dd724e4f0868f969bd3f
+receipts:
+  unresolved_subitems: []

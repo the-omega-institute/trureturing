@@ -1,0 +1,20 @@
+### 122.1 裸完整EB3与稠密接触候选
+
+取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。完整原对象为
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\quad
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{Q122.1}
+$$
+
+这里 $\mathcal F_p$ 是121.1中记为 $F_p$ 的同一完整确认集合，改记号只为与邻球 $F_v$ 区分。EB3表示每个完整 $D_p$ 都是仿射闭三球；Inj表示 $D_p=D_q\Rightarrow p=q$。不先假定 $P$ 闭。原纯点之间 $p\perp q$ 表示存在同一个原全域效应在两端取一、零，补效应使关系对称；它等价于 $q\in D_p$，且 $p\notin D_p$。
+
+复用VII103.2、VII104.1：$K,\mathcal E$ 紧，每个 $D_p$ 是暴露极大真面，$\mathcal A_p$ 非空；全部非空真面只有纯单点和完整球。不同完整球若相交，只交于一个原纯点。每个完整球 $F$ 有 $P\cap F=\partial_{\rm rel}F$，且 $F=\operatorname{conv}(P\cap F)$。这些接口没有Pair前件。
+

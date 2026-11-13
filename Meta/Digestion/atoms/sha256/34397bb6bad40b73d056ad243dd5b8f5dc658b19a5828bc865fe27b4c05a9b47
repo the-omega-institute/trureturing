@@ -1,0 +1,18 @@
+**定义 104.2（单最大扇区叉口 $\mathsf F_{\max}$）。** 若 $L\ge2$，
+要求联合存在假设104.1的一张局部 Jordan 迹坐标、一个满足 $n_r=L$ 的实际块 $r$，
+以及该块的一个包含相位的正交归一向量基 $(|a\rangle_r)_{a=1}^L$，使
+
+$$
+g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r,\qquad
+\Delta_r=|g_r\rangle\langle g_r|\in C_3.
+\tag{104.1}
+$$
+
+三条腿使用同一个向量基；$\Delta_r$ 在 $(r,r,r)$ 之外的所有原向量扇区取零。
+这是一个原锥成员条件，归一源为 $\Delta_r/L\in K_3$。
+它不预设中心投影正，也不预设任何制备事件或原三份纯性。
+对 $L=1$ 不要求资源。为分离最大维的用途，另记 $\mathsf F_{r,q}$ 为同样的联合存在条件，
+但只用块 $r$ 内前 $q$ 条共同基向量，$2\le q\le n_r$：
+其向量和与 dyad 分别为 $g_{r,q}$、$\Delta_{r,q}$，归一源为 $\Delta_{r,q}/q$。
+$\mathsf F_{\max}$ 就是某个最大块上的 $\mathsf F_{r,L}$。
+
