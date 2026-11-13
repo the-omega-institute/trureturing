@@ -18,7 +18,6 @@ internal sealed class GleasonFrameGeometryDocument : IScribeDocumentDefinition
 
     private static Formula X(string x) => DefinitionDsl.Id(x);
     private static Formula C(string f, params Formula[] xs) => DefinitionDsl.Call(f, xs);
-    private static Formula App(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Eq(Formula a, Formula b) => DefinitionDsl.Equal(a, b);
     private static Formula LE(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula LT(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
@@ -38,9 +37,6 @@ internal sealed class GleasonFrameGeometryDocument : IScribeDocumentDefinition
     }
     private static Formula R() => X("R");
     private static Formula V() => C("EuclideanSpace", R(), Num(3));
-    private static Formula Fn() => new Formula.TypeArrow(V(), R());
     private static Formula Unit(Formula x) => Eq(C("norm", x), Num(1));
-    private static Formula Val(string x) => App(X("f"), X(x));
-    private static Formula Frame() => C("IsFrameFunction", R(), X("f"), X("W"));
-    private static Formula OnSphere(Formula body, string x = "x") => All(Imp(Unit(X(x)), body), (x, V()));
+
 }

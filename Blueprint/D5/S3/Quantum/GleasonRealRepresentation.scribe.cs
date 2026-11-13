@@ -21,7 +21,6 @@ internal sealed class GleasonRealRepresentationDocument : IScribeDocumentDefinit
     private static Formula App(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Eq(Formula a, Formula b) => DefinitionDsl.Equal(a, b);
     private static Formula LE(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula LT(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula All(Formula body, params (string Name, Formula Type)[] xs)

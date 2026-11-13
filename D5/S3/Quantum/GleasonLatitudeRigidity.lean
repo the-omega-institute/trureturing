@@ -30,13 +30,17 @@ public import Mathlib.Topology.Instances.RealVectorSpace
 namespace Gleason
 theorem additive_bounded_linear (g : ℝ → ℝ) (hadd : ∀ s t : ℝ, g (s + t) = g s + g t)
     {M : ℝ} (hM : ∀ t : ℝ, |t| ≤ 1 → |g t| ≤ M) (x : ℝ) : g x = x * g 1 := by
-  let G : ℝ →+ ℝ := { toFun := g, map_zero' := by have h := hadd 0 0; simpa using (show g 0 = 0 by simpa using (add_left_cancel (a := g 0) (by simpa using h.symm))), map_add' := hadd }
+  let G : ℝ →+ ℝ :=
+    { toFun := g
+      map_zero' := by linarith [hadd 0 0]
+      map_add' := hadd }
   have hc : Continuous G := G.continuous_of_isBounded_nhds_zero
     (Metric.closedBall_mem_nhds (0 : ℝ) (by norm_num : (0 : ℝ) < 1)) (by
       apply (Metric.isBounded_closedBall (x := (0 : ℝ)) (r := M)).subset
       rintro _ ⟨t, ht, rfl⟩
-      simpa only [G, Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs] using
-        hM t (by simpa only [Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs] using ht))
+      rw [Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs]
+      change |g t| ≤ M
+      exact hM t (by simpa only [Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs] using ht))
   simpa [G] using map_real_smul G hc x 1
 end Gleason
 namespace Gleason

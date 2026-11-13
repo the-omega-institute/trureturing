@@ -21,19 +21,12 @@ internal sealed class GleasonLatitudeRigidityDocument : IScribeDocumentDefinitio
     private static Formula App(Formula f, Formula x) => new Formula.Apply(f, [x]);
     private static Formula Eq(Formula a, Formula b) => DefinitionDsl.Equal(a, b);
     private static Formula LE(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula LT(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula All(Formula body, params (string Name, Formula Type)[] xs)
     {
         for (var i = xs.Length - 1; i >= 0; --i)
             body = new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(xs[i].Name), xs[i].Type, body);
-        return body;
-    }
-    private static Formula Ex(Formula body, params (string Name, Formula Type)[] xs)
-    {
-        for (var i = xs.Length - 1; i >= 0; --i)
-            body = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(xs[i].Name), xs[i].Type, body);
         return body;
     }
     private static Formula R() => X("R");
