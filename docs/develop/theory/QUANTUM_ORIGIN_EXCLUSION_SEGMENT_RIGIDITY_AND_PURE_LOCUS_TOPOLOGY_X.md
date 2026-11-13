@@ -4467,3 +4467,99 @@ VII103.2的原真面穷尽、VIII125.6的低次数分类及SAME_READBACK131.2的
 [Q131Degree]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "125.1：整个边界最低次数；125.6：AB≤3加全部正维完整排除球的同原同单位秩三EJA消费者。"
 
 ## 追加锚（本行以下为增补区）
+
+## 132. 原确认水平切片的小正无隙与局部共同零点候选
+
+**约定 132.1（完整原域）。** 全部对象严格取130.1的同一个有限维 $V,C,u$、整个 $K$、全部 $P=\operatorname{ext}K$、全效应 $\mathcal E$、原确认族 $\mathcal F_p$、最低读数 $T_p$ 及包含全部混态的完整 $D_p$。本章先只取全部 $d_p\ge2$ 的 $\mathrm{EB}_{\ge2}$，不输入PR、Inj、$P$ 紧或连通、移动球连续性或联合零核正则性。$p\perp q$ 仍是原零一关系；交换端点只使用零值对称，不交换任何正 $T$ 值。
+
+**定理 132.2（原水平切片的纯极点与固定标签小正无隙）。** 在132.1域内，固定任意原 $p\in P$，取原确认效应 $e\in\mathcal F_p$，满足 $K\cap\ker e=D_p$。对每个 $0<t<1$，非空紧切片
+
+$$
+K_t=\{x\in K:e(x)=t\}
+\tag{X132.1}
+$$
+
+的每个极点都是原纯点，而非仅在切片中被称为纯。特别地，
+
+$$
+\forall p\in P\ \forall\delta>0\ \exists q\in P:
+\qquad 0<T_p(q)<\delta.
+\tag{X132.2}
+$$
+
+证明。所需 $e$ 的原效应资格和归一化由[VII103.2][Q130VII]供应：在完整球心 $c_p$ 取达到 $T_p(c_p)=0$ 的一张 $e\in\mathcal F_p$，球心反射与非负性使它零于整个 $D_p$；反向包含来自原最低定义。故 $0\le e\le u$、$e(p)=1$，且其整个零面准确为 $D_p$。这里没有把任意支撑泛函直接称作确认效应。$D_p\ne\varnothing$ 与 $p$ 的凸组合使每个 $K_t$ 非空；紧性来自固定 $K$。
+
+置 $n=\dim\operatorname{aff}K$。因 $D_p$ 是维数至少二的真暴露面，$n\ge3$。若 $x\in\operatorname{ext}K_t$ 却在 $\operatorname{ri}K$，则在 $\ker u\cap\ker e$ 中取非零方向 $v$，其维数为 $n-1\ge2$。充分小的 $h>0$ 使 $x\pm hv\in K_t$，与极端性矛盾。
+
+因此 $x\in\partial_{\rm rel}K$。在 $x$ 取相对支撑，其接触集是含 $x$ 的原非空真面。VII103.2及[IX116.1][Q130IX]的完整面分类使它为原纯单点或某个整个 $D_a$。若 $x$ 不是原纯点，只能处于后一球的相对内部，因为 $\partial_{\rm rel}D_a=P\cap D_a$。方向空间 $\operatorname{lin}(D_a-D_a)$ 维数 $d_a\ge2$，限制 $e$ 的核至少一维；选非零核方向并在球内作充分小的正反步，又在 $K_t$ 中得到穿过 $x$ 的非退化线段，矛盾。这证明所有切片极点均属于原 $P$，并涵盖全部原边界真面。
+
+给定 $\delta>0$，取 $0<t<\min\{1,\delta\}$，在非空紧凸 $K_t$ 取极点 $q$。上段给 $q\in P$，而 $e(q)=t>0$ 使 $q\notin D_p$，故 $T_p(q)>0$；又 $e\in\mathcal F_p$ 给 $T_p(q)\le e(q)=t<\delta$。全程只使用固定切片的紧性，没有对整个 $P$ 取极限或最小值。证毕。
+
+**定义 132.3（每点小正比较带的共同原纯零点）。** 在同一原域定义局部条件
+
+$$
+\begin{aligned}
+\mathsf L:\quad
+&\forall p\in P\ \exists\varepsilon_p\in(0,1)\ \forall q\in P:\\
+&0<T_p(q)<\varepsilon_p\quad\Longrightarrow\quad
+\exists r\in P:\ T_p(r)=T_q(r)=0.
+\end{aligned}
+\tag{X132.3}
+$$
+
+两个零值必须由同一个原纯点 $r$ 实现；$\varepsilon_p$ 可依赖 $p$，没有全域统一阈值或连续选择的要求。比较带用 $T_p(q)$ 定义，未改成 $T_q(p)$。
+
+**定理 132.4（局部共同零点迫每个原纯点进入真实三角）。** 在 $\mathrm{EB}_{\ge2}+\mathsf L$ 中，每个原纯点 $p$ 都存在原 $r,s\in P$，使 $p,r,s$ 两两不同且
+
+$$
+p\perp r,\qquad p\perp s,\qquad r\perp s.
+\tag{X132.4}
+$$
+
+证明。固定 $p$，反设 $p$ 不属于任何原纯零三角。沿130.2令
+
+$$
+S_p=P\cap D_p,\qquad B_p=\bigcup_{r\in S_p}D_r.
+\tag{X132.5}
+$$
+
+直接复用130.2及其[SAME_READBACK126.1][Q130SR]紧投影：$B_p$ 是实际固定的非空紧集。该反设下，130.2的原面取交论证给 $D_p\cap B_p=\varnothing$。其适用要点是：若 $D_p\cap D_r\ne\varnothing$、$r\in S_p$，必须从这个非空紧原面的极点取原纯 $s$，才得到 $p,r,s$ 三角；不能把任意混态交点当作纯点。不交结论仅在无三角反设下使用。
+
+原全效应区间紧，故固定确认族 $\mathcal F_p$ 有一致范数界 $M<\infty$；最低定义给 $|T_p(x)-T_p(y)|\le M\|x-y\|$。于是实际固定紧集 $B_p$ 上的最小值达到，且
+
+$$
+m_p:=\min_{x\in B_p}T_p(x)>0,
+\tag{X132.6}
+$$
+
+因为零集准确为 $D_p$。对 $\delta=\min\{m_p,\varepsilon_p\}>0$ 用132.2，得到原纯 $q$ 满足 $0<T_p(q)<\delta$。由 $\mathsf L$ 取得同一原纯 $r$，使 $T_p(r)=T_q(r)=0$。因此 $r\in S_p$；第二个零值经原零对称给 $q\in D_r\subset B_p$，与 $T_p(q)<m_p$ 矛盾。这里只交换零边，没有使用正比较值互易。故三角存在；原零关系不自反保证三个顶点不同。尤其 $p\notin D_p$，结论是 $p$ 为三角的一个顶点，不是 $D_p$ 包含三角或本身是三角。证毕。
+
+**推论 132.5（局部候选的同原完整静态表示及反向）。** 在130.1的整个原域，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathsf L,\qquad \mathrm{EB3}+\mathsf D_2,\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{X132.7}
+$$
+
+证明。132.4使每个原纯点属于真实三角；[IX120.4][Q130IX]遂给全部原球宽度一，此时才由IX120.5消费IX116.17—116.18的同锥同单位静态分类。全部原对象的对应完整复用130.3及(X130.12)：整个 $K$ 的全部密度矩阵与凸混合、全部 $P$ 的复射线、整个 $\mathcal E$ 的 $0\preceq E\preceq I_3$、每个完整混态球 $D_p$，以及 $f_E(\Phi\rho)=\operatorname{Tr}(E\rho)$。对单位 $v,w$，纯比较为 $T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2$；全部有限原数学效应单位分解恰为全部有限数学POVM。谱、joint、中心、共同迹尺和Jordan乘法也都取同一130.3字典，不是另一次分类。
+
+反向仍在这个整个原模型中核对。IX116.17的全部确认计算给 $vv^*\oplus B$、$0\preceq B\preceq I_{v^\perp}$，所以最低读数及完整 $D_p$ 对所有原混态均为(X130.12)，且全部 $D_p$ 是完整三球。对任意原 $p=\Phi(vv^*)$、$q=\Phi(ww^*)$，取单位 $z\in\operatorname{span}_{\mathbb C}\{v,w\}^{\perp}$，令 $r=\Phi(zz^*)$。则 $r$ 是同一原纯点，且 $T_p(r)=T_q(r)=0$。因此可为每个 $p$ 取 $\varepsilon_p=1/2$，得到 $\mathsf L$ 的全部量词；这也给 $\mathsf D_2$，后者与表示的既有等价直接复用130.3。证毕。
+
+**定义及范围 132.6（完整局部候选与简化尺度）。** 完整静态候选是130.1的整个原 $V,C,u,K,P,\mathcal E$、全部完整EB3和(X132.3)的 $\mathsf L$。白话是：每个纯标签背后的全部零比较对象合成一整颗实心三球；只对向它读出足够小正值的原纯标签，要求找到同一原纯零邻点。132.2保证这样的原纯小正读数并非空菜单，132.4把局部要求接到每点真实三角，再由既有分类接回全部复三能级静态对象。
+
+$\mathsf D_2$ 对全部不相邻原纯对要求共同邻点，故直接蕴含 $\mathsf L$，可取任意固定阈值于 $(0,1)$。$\mathsf L$ 缩小比较范围，却增加了逐点阈值量词；在EB3中二者由132.5给出同一个已分类模型类。本章没有证明逻辑独立性、严格更弱或物理最小性。证明组织上，固定确认切片的核方向取代130.2逐球连通覆盖与整边界分离的步骤，保留同一个紧 $B_p$ 及条件不交接口；这不意味着一切符号、假设或证明成本都有绝对最小值。
+
+维数控制复用130.2所引[X122.7及完整原正五边形][Q130PentX][Q130Pent]：EB1五边形的有限纯读数可在每个标签选阈值避开全部严格正值，使 $\mathsf L$ 真空成立，而原零图仍是无三角五圈。维数一时，切片核方向可以为零，球缘为不连通的 $S^0$；132.2及132.4均未推广至此。
+
+本章的承重连接是原水平切片极点纯性到固定标签任意小正读数，以及该读数与无三角条件下紧 $B_p$ 正间隔的矛盾，采用 `repo-derived` 纸面归属，不主张全球新颖或历史优先权。完整暴露、全部原真面、紧投影、条件纯交点和静态分类均为上述原来源的复用；SAME_READBACK125的正规／种子及全域接触条件、126的闭关联，以及[BILATERAL VIII126][Q132BV]的E0种子零锥与补吸收不替代这里的裸 $\mathrm{EB}_{\ge2}$ 切片推导。
+
+原目标 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathsf L/\mathsf D_2/\mathrm{UF}$ 仍未证明；PR仍只表示交换比较两端的数值不变，不是先后测量对易。实际来源、制备与操作／仪器、所有有限复合与纠缠、全旁观CP、记录、物理钟、连续时间、Hamiltonian和数值 $\hbar$ 完整沿用130.4及其IX116.23、VIII113.11的独立合同。静态数学POVM本身不供应这些物理合同。
+
+[Q132BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "126.1—126.7：完整E0、同标签种子零锥、全效应补吸收与原返回零尺的存在边界。"
+
+## 追加锚（本行以下为增补区）
