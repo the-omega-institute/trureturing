@@ -108,7 +108,55 @@ internal sealed class RepeatedRecordExponentialDecayDocument : IScribeDocumentDe
                         + "A rotating reference frame consequently needs the coupling "
                         + "or a phase calibration. This application does not establish "
                         + "a correlated-environment evolution, experimental support, "
-                        + "or complete stationary dephasing."))),
+                        + "or complete stationary dephasing.")),
+                Paragraph(Text(
+                    "A retained environment can instead be compared with the reset "
+                        + "model without defining its true trajectory as channel powers. "
+                        + "Let tau_k be actual joint density states evolved by a fixed "
+                        + "unitary U, rho_k their system marginals, eta a fixed reference "
+                        + "environment state, and R(rho) the system marginal of "
+                        + "U(rho tensor eta)U-adjoint. Write D for half the trace norm "
+                        + "of a state difference and delta_k = D(tau_k, rho_k tensor eta). "
+                        + "Contractivity under the actual unitary and partial-trace "
+                        + "channels, together with invariance on tensoring a density "
+                        + "state, gives D(rho_N, R^N(rho_0)) at most the sum of delta_k "
+                        + "for k from zero to N minus one. The reference eta may be mixed; "
+                        + "this estimate neither assumes nor proves small defects.")),
+                Paragraph(Text(
+                    "For a pure reference basis state a, the controlled-record action "
+                        + "can be specified by the actual columns "
+                        + "U((i,b),(j,a)) = [j=i] E_i(b). If J embeds a system vector "
+                        + "with environment coordinate a and W is the controlled-record "
+                        + "isometry, these columns give UJ=W and "
+                        + "rho tensor |a><a| = J rho J-adjoint. The "
+                        + "environment_marginal_channel identity therefore derives "
+                        + "R=recordChannel from the coupling. Under the stated normalized "
+                        + "record and strict cross-class overlap premises, apply the "
+                        + "frozen estimate to R^N(rho_0). Since the Frobenius norm is "
+                        + "at most the trace norm, the actual system's Frobenius error "
+                        + "relative to record-class pinching is at most twice the sum "
+                        + "of delta_k plus q^N times the initial pinching error. The "
+                        + "factor two comes from the half-trace-norm convention for D. "
+                        + "This is an application of the existing estimates, not an "
+                        + "additional clause of the displayed frozen declaration.")),
+                Paragraph(Text(
+                    "Stationary environment marginals alone do not control these "
+                        + "joint-state defects. For system-controlled X on two qubits, "
+                        + "start the system in the plus state and take "
+                        + "eta_r=(I+rX)/2 with 0<=r<=1. The actual environment marginal "
+                        + "stays eta_r, while the joint unitary has period two and the "
+                        + "reset channel multiplies system off-diagonal entries by r. "
+                        + "At step 2m, direct matrix calculation gives trace distance "
+                        + "(1-r^(2m))/2 between the actual system and the reset iterate. "
+                        + "The environment is only (1-r)/2 from the pure plus state. "
+                        + "For example r=0.99 gives impurity 0.005 but step-100 "
+                        + "discrepancy about 0.316984. At r=1 the discrepancy is zero; "
+                        + "the example does not refute an exactly pure unchanged "
+                        + "environment premise. It shows why a fixed-step approximation "
+                        + "and an estimate uniform in time are separate obligations. "
+                        + "Control of the required joint correlations, physical "
+                        + "identification of the coupling and experimental support "
+                        + "remain outside these mathematical applications."))),
             DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
