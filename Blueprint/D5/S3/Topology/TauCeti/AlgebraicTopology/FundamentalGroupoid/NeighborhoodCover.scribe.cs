@@ -16,7 +16,7 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "existsUnique_extension"),
                 H("Strict extension from an arbitrary neighborhood cover"),
                 StatementSource.FromAuthor(F.Disp(ExtensionStatement())),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampen")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampenneighborhoodcover")),
                 Blocks(Paragraph(Text(
                     "For every topological space X, every index type I and every family U of subsets of X whose members are neighborhoods pointwise, and every target category D, compatible functors on the subtype fundamental groupoids of the U(i) have a unique strict extension to the fundamental groupoid of X. The cover members need not be open, intersections may be empty, and no connectedness, finiteness, basepoint or nonempty-intersection premise is added."))),
                 DescribeRole.Theorem),
@@ -24,7 +24,7 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "isColimitCechCocone"),
                 H("The ordinary finite-intersection Cech cocone"),
                 StatementSource.FromAuthor(F.Disp(CechStatement())),
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampen")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampenneighborhoodcover")),
                 Blocks(Paragraph(Text(
                     "For an arbitrary open cover, the diagram is indexed by nonempty finite subsets ordered by reverse inclusion. Its objects are the fundamental groupoids of the corresponding intersections, with geometric empty intersections retained by the diagram. The displayed cocone is an ordinary IsColimit in Grpd; no pseudocolimit or natural-isomorphism replacement is asserted."))),
                 DescribeRole.Theorem),
@@ -61,7 +61,7 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
         var conclusion = All("i", I, Eq(restriction, Call("F", i)));
         var unique = Seq(Exists, Bang, Sp, Parenthesized(Seq(G, Colon, Sp,
             functor(fund(X), D))), Comma, Sp, conclusion);
-        var body = Implies(hU, Implies(hF, unique));
+        var body = Implies(Parenthesized(hU), Implies(Parenthesized(hF), unique));
         body = All("F", Call("ForallFunctor", I, setX, D), body);
         body = All("U", new Formula.TypeArrow(I, setX), body);
         body = All("D", Call("Type", V("w")), Bracket(Call("Category", D)), body);
