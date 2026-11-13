@@ -77,10 +77,6 @@ internal sealed class FiniteSimplexBoundarySphereDocument : IScribeDocumentDefin
                 "The class of any full-boundary point is sent exactly to south.", DescribeRole.Theorem),
             Node("reindex-sphere", "reindexSphere", "Norm-preserving sphere reindexing",
                 "An equivalence Λ≃Fin((card Λ−1)+1) induces a LinearIsometryEquiv.piLpCongrLeft. Its norm_map and the inverse norm_map justify the sphere restrictions, giving the existing StdSphere(card Λ−1).", DescribeRole.Definition),
-            Node("reindex-sphere-exists", "reindexSphere_exists", "Exact index arithmetic",
-                "For card(Λ)≥2, equivFin followed by finCongr uses card Λ=(card Λ−1)+1.", DescribeRole.Theorem),
-            Node("reindex-sphere-norm-preserving", "reindexSphere_norm_preserving", "L2 norm under reindexing",
-                "The underlying coordinate permutation retains its LinearIsometryEquiv structure, so its norm law is available directly.", DescribeRole.Theorem),
             Node("std-index", "stdIndex", "Chosen standard index equivalence",
                 "The exact chosen equivalence is equivFin followed by finCongr for card Λ=(card Λ−1)+1, under card Λ≥2.", DescribeRole.Definition),
             Node("simplex-boundary-std-sphere", "simplexBoundaryStdSphere", "Composed StdSphere endpoint",
@@ -155,7 +151,7 @@ internal sealed class FiniteSimplexBoundarySphereDocument : IScribeDocumentDefin
                 "The actual simplex point with coordinate one at the selected label and zero at every other label.", DescribeRole.Definition),
             Node("shared-vertex-boundary", "vertex_boundary", "A real boundary point when at least two labels exist",
                 "For cardinality at least two, any literal coordinate vertex has a distinct face label of coordinate zero and hence belongs to the full boundary.", DescribeRole.Theorem),
-            Paragraph(Text("The reusable full-sphere quotient theorem assumes card(Λ)≥2. For card(Λ)=1 the standalone simplex quotient is a single point. The extra collapsed component needed for an attached-space S0 consumer, the disk collar, the literal attachment map and the universal graph supplier remain separate mathematical obligations.")))));
+            Paragraph(Text("The rational map, exact fiber criterion and non-south inverse require only a nonempty finite label type. Surjectivity and the reusable full-sphere quotient homeomorphism assume card(Λ)≥2. For card(Λ)=1 the standalone simplex quotient is a single point. The extra collapsed component needed for an attached-space S0 consumer, the disk collar, the literal attachment map and the universal graph supplier remain separate mathematical obligations.")))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(

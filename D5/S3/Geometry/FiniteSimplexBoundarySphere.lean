@@ -52,16 +52,16 @@ def boundarySetoid {Λ : Type*} [Fintype Λ] : Setoid (Simplex Λ) where
 abbrev BoundaryQuotient (Λ : Type*) [Fintype Λ] :=
   Quotient (boundarySetoid (Λ := Λ))
 
-variable {Λ : Type*} [Fintype Λ] [DecidableEq Λ]
+variable {Λ : Type*} [Fintype Λ]
 
-private def coordinateToEuclidean (x : ObservedSimplex Λ) : Simplex Λ :=
+private def coordinateToEuclidean [DecidableEq Λ] (x : ObservedSimplex Λ) : Simplex Λ :=
   ⟨WithLp.toLp 2 x.1, x.2.1, x.2.2.1⟩
 
-private def euclideanToCoordinate (x : Simplex Λ) : ObservedSimplex Λ :=
+private def euclideanToCoordinate [DecidableEq Λ] (x : Simplex Λ) : ObservedSimplex Λ :=
   ⟨WithLp.ofLp x.1, x.2.1, x.2.2, fun i hi => (hi (Finset.mem_univ i)).elim⟩
 
 /-- Only topology is transported here; no plain-function norm is used. -/
-def coordinateBridge : ObservedSimplex Λ ≃ₜ Simplex Λ where
+def coordinateBridge [DecidableEq Λ] : ObservedSimplex Λ ≃ₜ Simplex Λ where
   toFun := coordinateToEuclidean
   invFun := euclideanToCoordinate
   left_inv x := by apply Subtype.ext; rfl
@@ -151,6 +151,7 @@ private theorem pole_norm : ‖pole Λ‖ = 1 := by
   apply (sq_eq_sq₀ (norm_nonneg _) zero_le_one).mp
   simpa only [one_pow] using pole_norm_sq (Λ := Λ)
 
+omit [Nonempty Λ] in
 private theorem inner_pole (v : E Λ) :
     ⟪v, pole Λ⟫_ℝ = (Real.sqrt (cardR Λ))⁻¹ * ∑ i, v i := by
   rw [EuclideanSpace.inner_eq_star_dotProduct]
@@ -160,6 +161,7 @@ private theorem displacement_inner_pole (x : Simplex Λ) :
     ⟪displacement x, pole Λ⟫_ℝ = 0 := by
   rw [inner_pole, displacement_sum_zero, mul_zero]
 
+omit [Nonempty Λ] in
 private theorem norm_smul_sq (a : ℝ) (v : E Λ) : ‖a • v‖ ^ 2 = a ^ 2 * ‖v‖ ^ 2 := by
   simp only [norm_smul, Real.norm_eq_abs, mul_pow, sq_abs]
 
@@ -197,7 +199,7 @@ private theorem denominator_lower_bound (x : Simplex Λ) :
   exact hmul
 
 /-- The stated uniform lower bound (in fact valid for every nonempty label type). -/
-theorem psiDenominator_lower_bound (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
+theorem psiDenominator_lower_bound (x : Simplex Λ) :
     1 / ((Fintype.card Λ : ℝ) ^ 2 + 1) ≤ psiDenominator x :=
   denominator_lower_bound x
 
@@ -211,7 +213,7 @@ private theorem psiRaw_split (x : Simplex Λ) : psiRaw x =
   congr 1 <;> congr 1 <;> ring
 
 /-- The cross term vanishes in the L2 norm expansion. -/
-theorem psiRaw_norm_sq (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) : ‖psiRaw x‖ ^ 2 = 1 := by
+theorem psiRaw_norm_sq (x : Simplex Λ) : ‖psiRaw x‖ ^ 2 = 1 := by
   have hD := (denominator_pos x).ne'
   have hn : ‖psiNumerator x‖ ^ 2 = psiDenominator x ^ 2 := by
     rw [psiNumerator, norm_add_sq_real, norm_smul_sq, norm_smul_sq,
@@ -226,10 +228,10 @@ abbrev Sphere (Λ : Type*) [Fintype Λ] := EuclideanSphereJoin.UnitSphere (E Λ)
 def north : Sphere Λ := ⟨pole Λ, mem_sphere_zero_iff_norm.mpr pole_norm⟩
 def south : Sphere Λ := ⟨-pole Λ, mem_sphere_zero_iff_norm.mpr (by rw [norm_neg, pole_norm])⟩
 
-def psi (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) : Sphere Λ :=
+def psi (x : Simplex Λ) : Sphere Λ :=
   ⟨psiRaw x, mem_sphere_zero_iff_norm.mpr (by
     apply (sq_eq_sq₀ (norm_nonneg _) zero_le_one).mp
-    simpa only [one_pow] using psiRaw_norm_sq hm x)⟩
+    simpa only [one_pow] using psiRaw_norm_sq x)⟩
 
 theorem continuous_minCoord : Continuous (minCoord (Λ := Λ)) :=
   Continuous.finset_inf'_apply Finset.univ_nonempty (fun i _ =>
@@ -244,7 +246,7 @@ theorem continuous_psiRaw : Continuous (psiRaw (Λ := Λ)) := by
   exact (hD.inv₀ (fun x => (denominator_pos x).ne')).smul
     (((continuous_const.mul hs).smul hz).add (((hs.pow 2).sub ha).smul continuous_const))
 
-private theorem continuous_psi (hm : 2 ≤ Fintype.card Λ) : Continuous (psi hm (Λ := Λ)) :=
+private theorem continuous_psi : Continuous (psi (Λ := Λ)) :=
   continuous_psiRaw.subtype_mk _
 
 theorem barycenter_gauge : sigma (barycenterPoint (Λ := Λ)) = 1 := by
@@ -255,14 +257,14 @@ theorem barycenter_gauge : sigma (barycenterPoint (Λ := Λ)) = 1 := by
 private theorem barycenter_displacement : displacement (barycenterPoint (Λ := Λ)) = 0 := sub_self _
 
 /-- Exact barycenter equation. -/
-theorem psi_barycenter (hm : 2 ≤ Fintype.card Λ) : psi hm barycenterPoint = north := by
+theorem psi_barycenter : psi (barycenterPoint (Λ := Λ)) = north := by
   apply Subtype.ext
   simp [psi, psiRaw, psiNumerator, psiDenominator, barycenter_gauge,
     displacementSq, barycenter_displacement, north]
 
 /-- Every full-boundary representative has the same south image. -/
-theorem psi_boundary (hm : 2 ≤ Fintype.card Λ) {x : Simplex Λ} (hx : boundary x) :
-    psi hm x = south := by
+theorem psi_boundary {x : Simplex Λ} (hx : boundary x) :
+    psi x = south := by
   have hs := (sigma_eq_zero_iff x).2 hx
   have ha : displacementSq x ≠ 0 := by
     have hpos := denominator_pos x
@@ -284,8 +286,8 @@ private theorem psiRaw_one_add_inner (x : Simplex Λ) :
   ring
 
 /-- The north converse uses its pole component to force zero displacement. -/
-theorem psi_north_iff (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
-    psi hm x = north ↔ x.1 = barycenter Λ := by
+theorem psi_north_iff (x : Simplex Λ) :
+    psi x = north ↔ x.1 = barycenter Λ := by
   constructor
   · intro h
     have hv : psiRaw x = pole Λ := congrArg Subtype.val h
@@ -299,11 +301,11 @@ theorem psi_north_iff (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
     exact sub_eq_zero.mp hz
   · intro hx
     have he : x = barycenterPoint := Subtype.ext hx
-    rw [he, psi_barycenter hm]
+    rw [he, psi_barycenter]
 
 /-- The south converse detects exactly the vanishing minimum over face labels. -/
-theorem psi_south_iff (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
-    psi hm x = south ↔ boundary x := by
+theorem psi_south_iff (x : Simplex Λ) :
+    psi x = south ↔ boundary x := by
   constructor
   · intro h
     have hv : psiRaw x = -pole Λ := congrArg Subtype.val h
@@ -314,7 +316,7 @@ theorem psi_south_iff (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
       dsimp [psiDenominator] at he
       linarith)
     exact (sigma_eq_zero_iff x).1 hs
-  · exact psi_boundary hm
+  · exact psi_boundary
 
 private def maxNeg (v : E Λ) : ℝ :=
   Finset.univ.sup' Finset.univ_nonempty (fun i => -v i)
@@ -404,21 +406,21 @@ private theorem interior_injective {x y : Simplex Λ} (hxy : psiRaw x = psiRaw y
   simpa only [displacement, sub_add_cancel] using he
 
 /-- Equality of outputs is exactly equality or the full-boundary relation. -/
-theorem psi_eq_iff (hm : 2 ≤ Fintype.card Λ) (x y : Simplex Λ) :
-    psi hm x = psi hm y ↔ boundaryRelation x y := by
+theorem psi_eq_iff (x y : Simplex Λ) :
+    psi x = psi y ↔ boundaryRelation x y := by
   constructor
   · intro h
     by_cases hx : boundary x
     · right
-      exact ⟨hx, (psi_south_iff hm y).1 (h.symm.trans (psi_boundary hm hx))⟩
+      exact ⟨hx, (psi_south_iff y).1 (h.symm.trans (psi_boundary hx))⟩
     · left
-      have hy : ¬ boundary y := fun hy => hx ((psi_south_iff hm x).1 (h.trans (psi_boundary hm hy)))
+      have hy : ¬ boundary y := fun hy => hx ((psi_south_iff x).1 (h.trans (psi_boundary hy)))
       exact interior_injective (congrArg Subtype.val h)
         (fun hs => hx ((sigma_eq_zero_iff x).1 hs))
         (fun hs => hy ((sigma_eq_zero_iff y).1 hs))
   · rintro (h | ⟨hx, hy⟩)
-    · exact congrArg (psi hm) h
-    · exact (psi_boundary hm hx).trans (psi_boundary hm hy).symm
+    · exact congrArg (psi) h
+    · exact (psi_boundary hx).trans (psi_boundary hy).symm
 
 private def alpha (y : E Λ) : ℝ := ⟪y, pole Λ⟫_ℝ
 private def tangent (y : E Λ) : E Λ := y - alpha y • pole Λ
@@ -528,8 +530,8 @@ private theorem inverse_denominator (y : Sphere Λ) (hy : y.1 ≠ -pole Λ) :
   <;> ring
 
 /-- Substitution verifies both coefficients of the explicit non-south inverse. -/
-theorem psi_nonSouthInverse (hm : 2 ≤ Fintype.card Λ)
-    (y : Sphere Λ) (hy : y.1 ≠ -pole Λ) : psi hm (nonSouthInverse y hy) = y := by
+theorem psi_nonSouthInverse
+    (y : Sphere Λ) (hy : y.1 ≠ -pole Λ) : psi (nonSouthInverse y hy) = y := by
   have hk := (kappa_pos y hy).ne'
   have ha : 1 + alpha y.1 ≠ 0 := ne_of_gt (by linarith [alpha_gt_neg_one y hy])
   have ht : (2 * ((1 + alpha y.1) / kappa y.1) /
@@ -560,40 +562,45 @@ theorem nonSouthInverse_coordinate (y : Sphere Λ) (hy : y.1 ≠ -pole Λ) (i : 
     div_eq_mul_inv]
   ring
 
-def vertex (i : Λ) : Simplex Λ :=
-  ⟨WithLp.toLp 2 (Pi.single i (1 : ℝ)), by
+def vertex (i : Λ) : Simplex Λ := by
+  classical
+  exact ⟨WithLp.toLp 2 (Pi.single i (1 : ℝ)), by
     constructor
     · intro j; simp only [PiLp.toLp_apply, Pi.single_apply]; split_ifs <;> norm_num
     · simp⟩
 
+omit [Nonempty Λ] in
 theorem vertex_boundary (hm : 2 ≤ Fintype.card Λ) (i : Λ) : boundary (vertex i) := by
+  classical
   have hn : 1 < Fintype.card Λ := by omega
   obtain ⟨j, hj⟩ := Fintype.exists_ne_of_one_lt_card hn i
   exact ⟨j, by simp [vertex, Pi.single_apply, hj, Ne.symm hj]⟩
 
 /-- South uses a different vertex coordinate as its actual zero witness. -/
-theorem psi_surjective (hm : 2 ≤ Fintype.card Λ) : Function.Surjective (psi hm (Λ := Λ)) := by
+theorem psi_surjective (hm : 2 ≤ Fintype.card Λ) : Function.Surjective (psi (Λ := Λ)) := by
   intro y
   by_cases hy : y.1 = -pole Λ
   · have hey : y = south := Subtype.ext hy
     exact ⟨vertex (Classical.choice ‹Nonempty Λ›),
-      (psi_boundary hm (vertex_boundary hm _)).trans hey.symm⟩
-  · exact ⟨nonSouthInverse y hy, psi_nonSouthInverse hm y hy⟩
+      (psi_boundary (vertex_boundary hm _)).trans hey.symm⟩
+  · exact ⟨nonSouthInverse y hy, psi_nonSouthInverse y hy⟩
 
 /-- Native quotient descent through the full boundary relation. -/
-def psiQuotientMap (hm : 2 ≤ Fintype.card Λ) : BoundaryQuotient Λ → Sphere Λ :=
-  Quotient.lift (psi hm) (fun x y h => (psi_eq_iff hm x y).2 h)
+def psiQuotientMap : BoundaryQuotient Λ → Sphere Λ :=
+  Quotient.lift (psi) (fun x y h => (psi_eq_iff x y).2 h)
 
-private theorem continuous_psiQuotientMap (hm : 2 ≤ Fintype.card Λ) :
-    Continuous (psiQuotientMap hm (Λ := Λ)) :=
-  (continuous_psi hm).quotient_lift _
+private theorem continuous_psiQuotientMap :
+    Continuous (psiQuotientMap (Λ := Λ)) :=
+  (continuous_psi).quotient_lift _
 
-private theorem compact_observedSimplex : IsCompact
+omit [Nonempty Λ] in
+private theorem compact_observedSimplex [DecidableEq Λ] : IsCompact
     (FiniteConeCollapse.faceSimplex (Finset.univ : Finset Λ)) := by
   rw [FiniteConeCollapse.faceSimplex_eq_convexHull]
   exact (Finset.univ.finite_toSet.image _).isCompact_convexHull ℝ
 
 private def compactSimplex : CompactSpace (Simplex Λ) := by
+  classical
   letI : CompactSpace (ObservedSimplex Λ) := isCompact_iff_compactSpace.mp compact_observedSimplex
   exact Function.Surjective.compactSpace (coordinateBridge (Λ := Λ)).continuous
     (coordinateBridge (Λ := Λ)).surjective
@@ -603,30 +610,30 @@ private def compactSimplex : CompactSpace (Simplex Λ) := by
     at the single collapsed boundary class. -/
 def simplexBoundaryHomeomorph (hm : 2 ≤ Fintype.card Λ) : BoundaryQuotient Λ ≃ₜ Sphere Λ := by
   letI : CompactSpace (Simplex Λ) := compactSimplex
-  have hb : Function.Bijective (psiQuotientMap hm (Λ := Λ)) := by
+  have hb : Function.Bijective (psiQuotientMap (Λ := Λ)) := by
     constructor
     · intro p q
       refine Quotient.inductionOn₂ p q ?_
       intro x y hxy
-      exact Quotient.sound ((psi_eq_iff hm x y).1 hxy)
+      exact Quotient.sound ((psi_eq_iff x y).1 hxy)
     · intro y
       obtain ⟨x, hx⟩ := psi_surjective hm y
       exact ⟨Quotient.mk _ x, hx⟩
   exact Continuous.homeoOfEquivCompactToT2
-    (f := Equiv.ofBijective (psiQuotientMap hm (Λ := Λ)) hb) (continuous_psiQuotientMap hm)
+    (f := Equiv.ofBijective (psiQuotientMap (Λ := Λ)) hb) (continuous_psiQuotientMap)
 
 /-- Beta equation for every representative, including arbitrary boundary points. -/
 theorem simplexBoundaryHomeomorph_representative (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
-    simplexBoundaryHomeomorph hm (Quotient.mk _ x) = psi hm x := rfl
+    simplexBoundaryHomeomorph hm (Quotient.mk _ x) = psi x := rfl
 
 theorem simplexBoundaryHomeomorph_barycenter (hm : 2 ≤ Fintype.card Λ) :
     simplexBoundaryHomeomorph hm (Quotient.mk _ barycenterPoint) = north := by
-  rw [simplexBoundaryHomeomorph_representative, psi_barycenter hm]
+  rw [simplexBoundaryHomeomorph_representative, psi_barycenter]
 
 theorem simplexBoundaryHomeomorph_boundary (hm : 2 ≤ Fintype.card Λ)
     (x : Simplex Λ) (hx : boundary x) :
     simplexBoundaryHomeomorph hm (Quotient.mk _ x) = south := by
-  rw [simplexBoundaryHomeomorph_representative, psi_boundary hm hx]
+  rw [simplexBoundaryHomeomorph_representative, psi_boundary hx]
 
 /-- Retain the isometry structure throughout sphere restriction. -/
 private def reindexLinear (e : Λ ≃ Fin ((Fintype.card Λ - 1) + 1)) :
@@ -644,14 +651,6 @@ def reindexSphere (e : Λ ≃ Fin ((Fintype.card Λ - 1) + 1)) :
   continuous_toFun := ((reindexLinear e).continuous.comp continuous_subtype_val).subtype_mk _
   continuous_invFun := ((reindexLinear e).symm.continuous.comp continuous_subtype_val).subtype_mk _
 
-theorem reindexSphere_exists (hm : 2 ≤ Fintype.card Λ) :
-    ∃ e : Λ ≃ Fin ((Fintype.card Λ - 1) + 1), True := by
-  exact ⟨(Fintype.equivFin Λ).trans (finCongr (by omega)), trivial⟩
-
-theorem reindexSphere_norm_preserving
-    (e : Λ ≃ Fin ((Fintype.card Λ - 1) + 1)) (x : E Λ) : ‖reindexLinear e x‖ = ‖x‖ :=
-  (reindexLinear e).norm_map x
-
 /-- The exact coordinate equivalence chosen for the existing StdSphere. -/
 def stdIndex (hm : 2 ≤ Fintype.card Λ) : Λ ≃ Fin ((Fintype.card Λ - 1) + 1) :=
   (Fintype.equivFin Λ).trans (finCongr (by omega))
@@ -662,18 +661,18 @@ def simplexBoundaryStdSphere (hm : 2 ≤ Fintype.card Λ) :
   (simplexBoundaryHomeomorph hm).trans (reindexSphere (stdIndex hm))
 
 theorem simplexBoundaryStdSphere_representative (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
-    simplexBoundaryStdSphere hm (Quotient.mk _ x) = reindexSphere (stdIndex hm) (psi hm x) := rfl
+    simplexBoundaryStdSphere hm (Quotient.mk _ x) = reindexSphere (stdIndex hm) (psi x) := rfl
 
 theorem simplexBoundaryStdSphere_barycenter (hm : 2 ≤ Fintype.card Λ) :
     simplexBoundaryStdSphere hm (Quotient.mk _ barycenterPoint) =
       reindexSphere (stdIndex hm) north := by
-  change reindexSphere (stdIndex hm) (psi hm barycenterPoint) = _
-  rw [psi_barycenter hm]
+  change reindexSphere (stdIndex hm) (psi barycenterPoint) = _
+  rw [psi_barycenter]
 
 theorem simplexBoundaryStdSphere_boundary (hm : 2 ≤ Fintype.card Λ)
     (x : Simplex Λ) (hx : boundary x) :
     simplexBoundaryStdSphere hm (Quotient.mk _ x) = reindexSphere (stdIndex hm) south := by
-  rw [simplexBoundaryStdSphere_representative, psi_boundary hm hx]
+  rw [simplexBoundaryStdSphere_representative, psi_boundary hx]
 
 /-! The remaining constructions keep the original ambient ground and its ghosts.
     No extremum or boundary witness below ranges over an off-face coordinate. -/
@@ -828,7 +827,7 @@ variable [Nonempty (FaceIndex G face)]
 
 /-- Scalar and vector operations are extended coordinatewise; extrema remain on
     FaceIndex, never on the ambient ghosts. -/
-theorem zeroExtend_psi_formula (hm : 2 ≤ Fintype.card (FaceIndex G face))
+theorem zeroExtend_psi_formula
     (x : Simplex (FaceIndex G face)) :
     zeroExtend face (psiRaw x) = (psiDenominator x)⁻¹ •
       ((2 * sigma x) • zeroExtend face (displacement x) +
@@ -836,20 +835,20 @@ theorem zeroExtend_psi_formula (hm : 2 ≤ Fintype.card (FaceIndex G face))
   rw [psiRaw, zeroExtend_smul, psiNumerator, zeroExtend_add,
     zeroExtend_smul, zeroExtend_smul]
 
-private def ambientPsi (hm : 2 ≤ Fintype.card (FaceIndex G face)) (x : AmbientFace face) :
-    Sphere (FaceIndex G face) := psi hm ((faceCoordinateHomeomorph face).symm x)
+private def ambientPsi (x : AmbientFace face) :
+    Sphere (FaceIndex G face) := psi ((faceCoordinateHomeomorph face).symm x)
 
-private theorem ambientPsi_eq_iff (hm : 2 ≤ Fintype.card (FaceIndex G face))
+private theorem ambientPsi_eq_iff
     (x y : AmbientFace face) :
-    ambientPsi face hm x = ambientPsi face hm y ↔ (faceBoundarySetoid face).r x y := by
+    ambientPsi face x = ambientPsi face y ↔ (faceBoundarySetoid face).r x y := by
   rw [ambientPsi, ambientPsi, psi_eq_iff]
   change (_ = _ ∨ (_ ∧ _)) ↔ (x = y ∨ (_ ∧ _))
   rw [(faceCoordinateHomeomorph face).symm.injective.eq_iff,
     restriction_boundary, restriction_boundary]
 
-private def ambientPsiQuotient (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
+private def ambientPsiQuotient :
     Quotient (faceBoundarySetoid face) → Sphere (FaceIndex G face) :=
-  Quotient.lift (ambientPsi face hm) (fun x y h => (ambientPsi_eq_iff face hm x y).2 h)
+  Quotient.lift (ambientPsi face) (fun x y h => (ambientPsi_eq_iff face x y).2 h)
 
 /-- The same sphere bridge, starting from the original ambient face quotient. -/
 def ambientBoundaryHomeomorph (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
@@ -857,38 +856,38 @@ def ambientBoundaryHomeomorph (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
   letI : CompactSpace (AmbientFace face) := isCompact_iff_compactSpace.mp (by
     rw [FiniteConeCollapse.faceSimplex_eq_convexHull]
     exact (face.finite_toSet.image _).isCompact_convexHull ℝ)
-  have hc : Continuous (ambientPsi face hm) :=
-    (continuous_psi hm).comp (faceCoordinateHomeomorph face).symm.continuous
-  have hb : Function.Bijective (ambientPsiQuotient face hm) := by
+  have hc : Continuous (ambientPsi face) :=
+    (continuous_psi).comp (faceCoordinateHomeomorph face).symm.continuous
+  have hb : Function.Bijective (ambientPsiQuotient face) := by
     constructor
     · intro p q
       refine Quotient.inductionOn₂ p q ?_
       intro x y h
-      exact Quotient.sound ((ambientPsi_eq_iff face hm x y).1 h)
+      exact Quotient.sound ((ambientPsi_eq_iff face x y).1 h)
     · intro y
       obtain ⟨x, hx⟩ := psi_surjective hm y
       refine ⟨Quotient.mk _ (faceCoordinateHomeomorph face x), ?_⟩
-      change psi hm ((faceCoordinateHomeomorph face).symm (faceCoordinateHomeomorph face x)) = y
+      change psi ((faceCoordinateHomeomorph face).symm (faceCoordinateHomeomorph face x)) = y
       rw [(faceCoordinateHomeomorph face).symm_apply_apply, hx]
   exact Continuous.homeoOfEquivCompactToT2
-    (f := Equiv.ofBijective (ambientPsiQuotient face hm) hb) (hc.quotient_lift _)
+    (f := Equiv.ofBijective (ambientPsiQuotient face) hb) (hc.quotient_lift _)
 
 theorem ambientBoundaryHomeomorph_representative (hm : 2 ≤ Fintype.card (FaceIndex G face))
     (x : AmbientFace face) :
     ambientBoundaryHomeomorph face hm (Quotient.mk _ x) =
-      psi hm ((faceCoordinateHomeomorph face).symm x) := rfl
+      psi ((faceCoordinateHomeomorph face).symm x) := rfl
 
 theorem ambientBoundaryHomeomorph_barycenter (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
     ambientBoundaryHomeomorph face hm
       (Quotient.mk _ (faceCoordinateHomeomorph face barycenterPoint)) = north := by
   rw [ambientBoundaryHomeomorph_representative,
-    (faceCoordinateHomeomorph face).symm_apply_apply, psi_barycenter hm]
+    (faceCoordinateHomeomorph face).symm_apply_apply, psi_barycenter]
 
 theorem ambientBoundaryHomeomorph_boundary (hm : 2 ≤ Fintype.card (FaceIndex G face))
     (x : AmbientFace face) (hx : faceBoundary face x) :
     ambientBoundaryHomeomorph face hm (Quotient.mk _ x) = south := by
   rw [ambientBoundaryHomeomorph_representative]
-  exact psi_boundary hm ((restriction_boundary face x).2 hx)
+  exact psi_boundary ((restriction_boundary face x).2 hx)
 
 /-- The ambient coordinate equation for an arbitrary quotient representative. -/
 theorem ambientBoundaryHomeomorph_zeroExtend (hm : 2 ≤ Fintype.card (FaceIndex G face))
