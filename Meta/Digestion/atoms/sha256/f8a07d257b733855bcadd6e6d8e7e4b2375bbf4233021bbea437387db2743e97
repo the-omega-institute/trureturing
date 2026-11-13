@@ -1,0 +1,17 @@
+**引理 1.1（幂差的严格对数凹性）。** 设 $\kappa>1$，$C_\kappa(t)=(1+t)^\kappa-t^\kappa$，$B_\kappa(t)=\log C_\kappa(t)$（$t\ge0$）。则对 $t>0$，
+
+$$
+(C_\kappa')^2-C_\kappa C_\kappa''=\kappa D_\kappa^2+\kappa(\kappa-1)\,[t(1+t)]^{\kappa-2},\qquad D_\kappa(t)=(1+t)^{\kappa-1}-t^{\kappa-1},
+\tag{1.2}
+$$
+
+从而 $B_\kappa$ 在 $(0,\infty)$ 上严格凹，在 $[0,\infty)$ 上凹，且 $B_\kappa(0)=0$。
+
+**证明。** 记 $a=1+t$、$b=t$，则 $C_\kappa'=\kappa D_\kappa$，$C_\kappa''=\kappa(\kappa-1)(a^{\kappa-2}-b^{\kappa-2})$。将 $\kappa^2D_\kappa^2$ 写成 $\kappa D_\kappa^2+\kappa(\kappa-1)D_\kappa^2$。又
+
+$$
+D_\kappa^2-(a^\kappa-b^\kappa)(a^{\kappa-2}-b^{\kappa-2})=a^\kappa b^{\kappa-2}+a^{\kappa-2}b^\kappa-2a^{\kappa-1}b^{\kappa-1}=(ab)^{\kappa-2}(a-b)^2=(ab)^{\kappa-2},
+$$
+
+两式合并即得 (1.2)。由于 $C_\kappa>0$，有 $B_\kappa''=-\bigl((C_\kappa')^2-C_\kappa C_\kappa''\bigr)/C_\kappa^2$；对 $t>0$，(1.2) 右端第二项严格为正，故 $B_\kappa''<0$。所以 $B_\kappa$ 在 $(0,\infty)$ 上严格凹。又 $C_\kappa'(t)=\kappa D_\kappa(t)$ 在 $[0,\infty)$ 上连续（$\kappa>1$ 时 $t^{\kappa-1}\to0$），故 $B_\kappa$ 在 $[0,\infty)$ 上连续可微，其导数在 $(0,\infty)$ 上严格递减并在 $0$ 处连续，因而在 $[0,\infty)$ 上单调不增，$B_\kappa$ 在 $[0,\infty)$ 上凹。$B_\kappa(0)=\log1=0$。证毕。
+
