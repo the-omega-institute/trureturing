@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Routing;
 
@@ -22,7 +24,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                     + "are therefore stored in place rather than retained in additional node registers.")),
             Describe.Lean(DescribeId.Create("qram-local-split"),
                 DeclarationHandle.Create(Module + "split"), H("One routing split"),
-                StatementSource.FromLean(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For address bit b, first XOR b AND the left root into the right root. "
                         + "Then XOR the resulting right root into the left root. These are the "
@@ -33,7 +35,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                         + "permutations on arbitrary dirty wire configurations."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qram-routing"),
                 DeclarationHandle.Create(Module + "route"), H("The recursive gate network"),
-                StatementSource.FromLean(), AssessedProvenance.FromLiterature(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "At depth zero route is the identity. At depth n + 1 it applies split "
                         + "with the first address bit, then routes both subregisters using the "
@@ -44,7 +46,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                         + "bits selecting the left and right subregisters."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qram-leaf-additions"),
                 DeclarationHandle.Create(Module + "readLeaves"), H("Leaf-controlled additions"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Fix a classical memory D from Address n to an additive commutative group G. "
                         + "At each leaf, its Boolean wire controls addition of that leaf's datum "
@@ -57,7 +59,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                         + "arbitrary additive commutative data groups are the extension used here."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qram-query"),
                 DeclarationHandle.Create(Module + "query"), H("Compute, read, and uncompute"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The address controls route, the leaf additions follow, and the inverse "
                         + "route is then applied. The inverse reverses the order of the local "
@@ -67,7 +69,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                         + "For clean n true, this amount is exactly D(a)."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qram-matrix"),
                 DeclarationHandle.Create(Module + "queryMatrix"), H("The complex query matrix"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For finite G with decidable equality, queryMatrix is Mathlib's "
                         + "Matrix.permMatrixHom applied directly to query. Its rows and columns "
@@ -79,7 +81,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                         + "zero whenever the routing workspace differs from clean n true."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("qram-correctness"),
                 DeclarationHandle.Create(Module + "correctness"),
-                H("Correctness at every natural depth"), StatementSource.FromLean(),
+                H("Correctness at every natural depth"), StatementSource.FromAuthor(CorrectnessFormula()),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -115,4 +117,69 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                             + "interacts with all memory bits. Page-Wootters claims and the original "
                             + "three-state bucket-brigade construction require separate arguments."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CorrectnessFormula() => Disp(new Formula.Aligned([
+        All("n", Naturals(), All("a", Addresses(), All("i", Addresses(), All("e", Q("Bool"),
+            Equal(Call("leaf", X("n"), Call("route", X("n"), X("a"), Clean(X("e"))), X("i")),
+                At(Q("ite"), Equal(X("i"), X("a")), X("e"), Q("Bool", "false"))))))),
+        DataAll(All("a", Addresses(), All("w", Call("Wires", X("n")), All("r", X("G"),
+            Equal(Call("query", X("n"), X("D"), Pair(X("a"), Pair(X("w"), X("r")))),
+                Pair(X("a"), Pair(X("w"), Add(X("r"), Call("readAmount", X("n"), X("D"),
+                    Call("route", X("n"), X("a"), X("w")))))))))), false),
+        DataAll(All("a", Addresses(), All("r", X("G"),
+            Equal(Call("query", X("n"), X("D"), Pair(X("a"), Pair(Clean(Q("Bool", "true")), X("r")))),
+                Pair(X("a"), Pair(Clean(Q("Bool", "true")), Add(X("r"), At(X("D"), X("a")))))))), false),
+        DataAll(And(Equal(Mul(Adj(Matrix()), Matrix()), D(1)),
+            And(Equal(Mul(Matrix(), Adj(Matrix())), D(1)),
+                All("psi", Arrow(PairType(Addresses(), X("G")), Complexes()),
+                    Equal(At(Q("Matrix", "mulVec"), Matrix(), Call("initialized", X("n"), X("psi"))),
+                        Call("initialized", X("n"),
+                            LambdaOf("s", PairType(Addresses(), X("G")),
+                                At(X("psi"), Pair(At(Q("Prod", "fst"), X("s")),
+                                    Sub(At(Q("Prod", "snd"), X("s")),
+                                        At(X("D"), At(Q("Prod", "fst"), X("s")))))))))))), true)
+    ]));
+
+    private static Formula DataAll(Formula body, bool finite)
+    {
+        var result = All("D", Arrow(Addresses(), X("G")), body);
+        if (finite)
+            result = All("F", At(Q("Fintype"), X("G")),
+                All("E", At(Q("DecidableEq"), X("G")), result));
+        return All("n", Naturals(), All("G", Q("Type"),
+            All("A", At(Q("AddCommGroup"), X("G")), result)));
+    }
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Q(params string[] parts)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in parts)
+        {
+            if (items.Count > 0) items.Add(Dot);
+            items.Add(X(part));
+        }
+        return Seq(Operatorname, Grp(Seq([.. items])));
+    }
+    private static Formula Call(string name, params Formula[] args) =>
+        At(Q("D5", "S3", "Quantum", "Routing", "ReversibleQram", name), args);
+    private static Formula Addresses() => Call("Address", X("n"));
+    private static Formula Clean(Formula e) => Call("clean", X("n"), e);
+    private static Formula Matrix() => Call("queryMatrix", X("n"), X("D"));
+    private static Formula Adj(Formula value) => At(Q("Matrix", "conjTranspose"), value);
+    private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
+    private static Formula Pair(Formula left, Formula right) => Seq(Open, left, Comma, Sp, right, Close);
+    private static Formula PairType(Formula left, Formula right) => Seq(Open, left, Sp, Times, Sp, right, Close);
+    private static Formula Arrow(Formula left, Formula right) => new Formula.TypeArrow(left, right);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Open, X(name), Colon, Sp, type, Close, Comma, Sp, Open, body, Close);
+    private static Formula LambdaOf(string name, Formula type, Formula body) =>
+        Seq(LambdaLower, Sp, Open, X(name), Colon, Sp, type, Close, Sp, Mapsto, Sp, body);
+    private static Formula Equal(Formula left, Formula right) => new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+    private static Formula And(Formula left, Formula right) => new Formula.Logic(left, FormulaLogicOperator.And, right);
+    private static Formula Add(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Add, right);
+    private static Formula Sub(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
+    private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+    private static Formula Naturals() => Seq(Mathbb, Grp(X("N")));
+    private static Formula Complexes() => Seq(Mathbb, Grp(X("C")));
 }
