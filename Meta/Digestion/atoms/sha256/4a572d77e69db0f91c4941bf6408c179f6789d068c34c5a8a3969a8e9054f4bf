@@ -1,0 +1,72 @@
+**定理 126.6（无非空开重复饱和区）。** 不存在非空 $X\subset S$，同时满足
+$X$ 在 $S$ 中开且 $X$ 是若干颗完整重复三球的并。
+
+证明。反设存在这样的 $X$。它是 $R$ 中完整纤维的并，令
+$Y=q_R(X)\subset Y_R$，取限制 $q=q_R|_X:X\to Y$。定理126.4最后一段在不要求
+$X$ 闭或紧的条件下，已经证明 $q$ 对这个子空间目标为闭商映射，纤维紧且 $Y$ Hausdorff。因为
+$X$ 是紧流形 $S\cong S^m$ 的开子流形，固定 $y\in Y$，其紧纤维
+$q^{-1}(y)$ 有开邻域 $U\Subset X$。闭性使
+$O=Y\setminus q(X\setminus U)$ 是含 $y$ 的开集，且 $q^{-1}(O)\subset U$，从而
+$O\subset q(U)\subset q(\overline U)$。这里 $\overline U$ 是在 $X$ 中取得的紧闭包，
+$q(\overline U)$ 在 Hausdorff 空间 $Y$ 中紧闭，故 $\overline O\subset q(\overline U)$，
+证明 $Y$ 局部紧。对紧集 $C\subset Y$，有限个这样的
+$O$ 覆盖 $C$，于是 $q^{-1}(C)$ 是 $X$ 中闭的、并包含于有限个紧集 $\overline U$ 的并，故紧。
+因此 $q$ proper，$Y$ 是 Baire 空间。
+
+取一族可数的有理仿射超平面 $L_j\subset A$，每一张都切过
+$\operatorname{ri}K$，并且使每个正维完整球与某个 $L_j$ 相交。这样的族可由固定坐标的有理高度枚举：球内任取两个不同点，在它们某一坐标的严格中间选有理高度。于是
+
+$$
+ Y=\bigcup_j q(X\cap L_j),
+$$
+
+每项因 $q$ 闭而闭。Baire 定理给出某个 $j$ 和非空开集
+$O\subset Y$，满足 $O\subset q(X\cap L_j)$。置
+
+$$
+ X_1=q^{-1}(O),\qquad X_2=X_1\cap L_j.
+ \tag{Q126.17}
+$$
+
+$X_1$ 是 $S^m$ 的非空开 $m$-流形；$X_2$ 是
+
+$$
+ S\cap L_j=\partial_{\mathrm{rel}}(K\cap L_j)\cong S^{m-1}
+$$
+
+的非空开 $(m-1)$-流形。这里 $L_j\cap\operatorname{ri}K\ne\varnothing$ 保证切片的相对内部非空，并保证其边界正是 $S\cap L_j$。
+
+限制映射
+
+$$
+ g_1:X_1\to O,\qquad g_2:X_2\to O
+ \tag{Q126.18}
+$$
+
+都是 proper 连续满射；其纤维分别是完整重复球和该球与 $L_j$ 的非空紧凸交，故均可缩。对局部紧 Hausdorff 空间取一点紧化，proper 性把
+$g_i$ 延为保基点连续满射 $g_i^+:X_i^+\to O^+$。Lawson 的 Corollary 3.7
+在紧 Hausdorff 连续满射、逐纤维可缩的条件下给出
+
+$$
+ \check H_c^j(O;\mathbb F_2)
+ \cong \check H_c^j(X_i;\mathbb F_2)\qquad(i=1,2).
+ \tag{Q126.19}
+$$
+
+这里没有把 $Y$ 或 $O$ 说成流形、ANR 或有限维空间；Lawson 只用于这些实际的一点紧化映射和紧凸纤维。
+
+另一方面，$X_1$ 是非空 $m$-维流形开集，模二 Poincaré 对偶给
+
+$$
+ \check H_c^m(X_1;\mathbb F_2)\cong
+ H_0(X_1;\mathbb F_2)\ne0,
+$$
+
+而 $X_2$ 是维数 $m-1$ 的流形开集，所以
+
+$$
+ \check H_c^m(X_2;\mathbb F_2)=0.
+$$
+
+这与(Q126.19)矛盾。证毕。
+
