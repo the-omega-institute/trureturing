@@ -36,6 +36,10 @@ internal sealed class FixedZeroObstructionDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Owner + name),
             H(title), StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static DocumentBlock Def(string name, string prose) =>
+        Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Owner + name),
+            H(name), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     public DocumentDefinition Create()
     {
         Formula s = V("s"), t = V("t"), h = V("h"), g = V("g"), v = V("v"), x = V("x");
@@ -43,6 +47,14 @@ internal sealed class FixedZeroObstructionDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeNode.Create(
             "Entire original zero effects attain their global maximum in the exclusion face, and fixed qualitative witnesses lift all original orthogonal edges.",
             H("Fixed zero effects on the entire original state body"), Blocks(
+                Def("zeroEffects", "For every original pure t, this is exactly the set of original linear g satisfying proper(C,u,g) and g(t)=0."),
+                Def("fullZeroConfirmers", "For every original pure s, this is exactly the set of original linear h satisfying confirms(C,u,s,h) and h(x)=0 for every x in the entire exclusion(C,u,s)."),
+                Def("stateReadout", "For every original linear f, this is its continuous restriction to the entire subtype base(C,u), evaluated at every original normalized state."),
+                Def("stateNorm", "For the original closed-cone and strictly-positive-unit hypotheses and every original linear f, this is the continuous-map supremum norm of stateReadout(f). The compact-space instance is obtained from compactness of the original base."),
+                Def("faceMaximum", "For every original pure t and original linear h, this is sSup of the image of the entire exclusion(C,u,t) under h."),
+                Def("zeroDistance", "Under original compact-base hypotheses, for every pure t and original linear h, this is Metric.infDist from stateReadout(h) to the image of the entire zeroEffects(C,u,t) under stateReadout."),
+                Def("stableZeroWitness", "For every original s,r with r in exclusion(C,u,s), there exists one h in fullZeroConfirmers(C,u,s) such that for every pure sequence t(n) tending to r there exists a sequence g(n) of original linear effects, each in zeroEffects(C,u,t(n)), with stateNorm(g(n)-h) tending to zero. The h quantifier precedes the t sequence."),
+                Def("openEdges", "For every original p,s with s in exclusion(C,u,p), and every original pure sequence t(n) tending to p, there exists an original pure sequence v(n), in exclusion(C,u,t(n)) at every index, tending to s."),
                 Paragraph(Text("V is any finite dimensional real normed carrier, C is its closed generating cone, and u is strictly positive on every nonzero cone vector. K is the entire normalized base, P all its extreme points, and effects are the entire original interval between zero and u. StrictPositiveUnit denotes exactly that cone condition; InjectiveExclusionLabels denotes injectivity of p mapped to the whole exclusion. Every exclusion is an affine Euclidean closed ball of positive dimension, with dimensions allowed to vary.")),
                 Paragraph(Text("zeroEffects(C,u,t) contains exactly the proper linear effects zero at t. fullZeroConfirmers(C,u,s) contains exactly the proper confirmers of s vanishing on all of its exclusion. stateReadout restricts a linear functional to every point of K as a continuous real function. stateNorm is the existing supremum norm of that function, so its value is the maximum absolute readout over all K. faceMaximum is the supremum on the entire exclusion; compactness makes it an attained maximum. zeroDistance is the existing metric infimum distance in C(K,R) to the image of the entire zero-effect fiber, preserving the original full-state norm.")),
                 Decl("zero_effect_maximizer", "A pure global maximizer in the entire exclusion", Premises(
