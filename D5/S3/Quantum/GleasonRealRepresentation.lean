@@ -12,6 +12,10 @@ Released under Apache 2.0 license; the complete license is retained in
 Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
+The adopted elementary real core (Sphere through General) follows Cooke, Keane,
+Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
+The axis choice p, r, q, target form and identities follow section 7;
+the original formalization uses a different endgame from the paper.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/
 

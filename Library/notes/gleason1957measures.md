@@ -44,6 +44,16 @@ Warmup, SimpleFrame, Extremal, General, Polarization, Descent,
 FrameFunction, Reduction and Core sources. Copyright (c) 2026 Zayn Blore.
 Authors: Zayn Blore. No upstream NOTICE is present in this source closure.
 
+The original Core source attributes the elementary real core from Sphere
+through General to Cooke, Keane, Moran (1985), *Math. Proc. Cambridge Philos.
+Soc.* **98**, 117–128. The Extremal source credits section 6. The General
+source credits section 7 for the choice of axes p, r, q, the target form,
+identities (*) and the Claim; its formalized endgame differs from the paper's
+count of zeros on great circles. The Core source also credits Gleason (1957),
+*J. Math. Mech.* **6**, 885, Theorems 2.8 (the nonnegative core lemma) and 3.1
+(the projection theorem). These mathematical source attributions apply to
+the adopted proof alongside Zayn Blore's formalization authorship.
+
 The source distribution is modified: imports and module grouping use the
 receiving repository's mathematical subject routes; exact receiving suppliers
 replace bounded-additive continuity, integer polarization and matrix quadratic
