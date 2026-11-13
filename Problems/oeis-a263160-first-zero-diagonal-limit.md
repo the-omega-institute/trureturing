@@ -42,7 +42,10 @@ Tendsto (fun n : ℕ => Real.rpow (a n : ℝ) (1 / (n : ℝ)^2) / (n : ℝ))
 
 Here `a n = paths n n`; `paths` counts the literal finite first-zero words,
 not a series chosen to have the desired limit. The finite range is exhaustive
-by `first_zero_length_bound`. The proof only discards the cofinite indices
+by `first_zero_length_bound`: the length is at most `d*(h-1)+1`, which is at
+most `d*h` when both parameters are positive; either zero parameter permits
+only the empty word. The same bound truncates the terminal-word sum in the
+counting identity. The proof only discards the cofinite indices
 below two. It makes no fixed-dimension or subsequence assumption.
 
 Preregistration is [issue #29912](https://github.com/the-omega-institute/trureturing/issues/29912).

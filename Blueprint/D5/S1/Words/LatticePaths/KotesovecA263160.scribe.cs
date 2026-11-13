@@ -39,7 +39,7 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
 
     private static string Commentary(string name) => name switch
     {
-        "first_zero_length_bound" => "Every step uses at least one coordinate. Before the last step, each coordinate has been used at most one less than the initial height. This bounds the length and makes the finite count exhaustive.",
+        "first_zero_length_bound" => "Every step uses at least one coordinate. Before the last step, each coordinate has been used at most h minus one times, so the length is at most d times (h minus one), plus one. This is the cutoff in the terminal-word sum. Height zero or dimension zero still admits only the empty path; for positive height and dimension the cutoff is at most d times h, making the finite count exhaustive.",
         "insertion_identity" => "A row chooses at most m positions among k labelled columns. Transposition identifies these independent rows with columns that may be empty. Removing the empty columns gives an internal word; choosing its positions gives the binomial coefficient.",
         "internal_hasSum" => "The length budget truncates the insertion polynomial at d times m. Each geometric binomial column has sum two. Exchanging the finite sum with the convergent series gives twice the internal-word count.",
         "paths_eq_internal" => "Appending a nonempty coordinate subset to an internal word either remains internal or reaches its first zero. These cases partition words, including simultaneous first zeros. Summing over lengths cancels the nonempty internal words and retains the unique empty word.",
@@ -148,7 +148,7 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
     {
         var d = F.Id("d"); var h = F.Id("h"); var w = F.Id("w");
         return Disp(All("d", N(), All("h", N(), All("w", List(Step(d)),
-            Imp(Call("FirstZero", h, w), Le(Length(w), Mul(d, h)))))));
+            Imp(Call("FirstZero", h, w), Le(Length(w), Add(Mul(d, Sub(h, D(1))), D(1))))))));
     }
 
     private static Formula InsertionFormula()

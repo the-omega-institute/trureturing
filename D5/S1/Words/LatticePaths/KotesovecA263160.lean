@@ -20,11 +20,15 @@ The complete all-index root limit is `diagonal_limit`; it uses no fixed-dimensio
 hypothesis. Source: OEIS A263160 revision 21 and A263159 revision 16.
 Preregistration: https://github.com/the-omega-institute/trureturing/issues/29912.
 
-Definitions have proof_shape: bind-only and are consumed by the counting results.
-The newly authored public theorems have proof_shape: content after expansion of
-the same-delivery helpers. The live constructions are the coordinate-length
-induction, row/column equivalence, terminal/internal append partition, uniform
-series estimates, optimized positive term, and quantitative diagonal squeeze.
+The supporting `first_zero_length_bound` has proof_shape: bind-only; its consumer
+is `terminalCount_vanish`, used by `paths_eq_internal`. The coordinate-length
+budget is normalization, not an escape witness. The public `insertion_identity`,
+`internal_hasSum`, `paths_eq_internal`, `internal_count_upper`,
+`internal_count_lower`, `internal_log_bounds`, `diagonal_log_estimate`, and
+`diagonal_limit` have proof_shape: content after expansion of same-delivery
+helpers: the live row/column equivalence and terminal/internal append partition
+connect the literal word count to the analytic estimates. Standard geometric,
+moment, and factorial-log suppliers and their normalizations add no escape content.
 The final external assertion has prospective admission_basis: open-problem-resolution;
 supporting counting content has prospective admission_basis: escape-witness.
 No claim of worldwide priority or completed repository settlement is made.
@@ -95,15 +99,14 @@ private theorem internal_length_bound {d m : ℕ} (w : List (Step d))
     _ ≤ ∑ _ : Fin d, m := Finset.sum_le_sum (fun i _ => hw i)
     _ = d * m := by simp
 
-/-- Every literal path lies in the finite length range used by `paths`. -/
+/-- Before the final step every coordinate has budget at most `h - 1`. -/
 theorem first_zero_length_bound {d h : ℕ} {w : List (Step d)}
-    (hw : FirstZero h w) : w.length ≤ d * h := by
+    (hw : FirstZero h w) : w.length ≤ d * (h - 1) + 1 := by
   by_cases hz : h = 0 ∨ d = 0
   · have he : w = [] := by simpa [FirstZero, hz] using hw
     simp [he]
   · rw [FirstZero, ite_eq_right hz] at hw
     have hh : 0 < h := by omega
-    have hd : 0 < d := by omega
     have hlen : 0 < w.length := by
       by_contra hn
       have he : w = [] := List.eq_nil_of_length_eq_zero (by omega)
@@ -116,10 +119,6 @@ theorem first_zero_length_bound {d h : ℕ} {w : List (Step d)}
       omega
     have hb := internal_length_bound (w.take (w.length - 1)) ht
     simp only [List.length_take, min_eq_left (Nat.sub_le _ _)] at hb
-    have hm : d * (h - 1) + d = d * h := by
-      calc
-        _ = d * ((h - 1) + 1) := by ring
-        _ = d * h := by rw [Nat.sub_add_cancel hh]
     omega
 
 
@@ -419,19 +418,13 @@ private theorem terminalCount_zero (d m : ℕ) (hd : 0 < d) :
   have := hempty
   exact Fintype.card_eq_zero
 
-private theorem terminalCount_vanish (d m t : ℕ) (hd : 0 < d)
+private theorem terminalCount_vanish (d m t : ℕ)
     (ht : d * m + 1 < t) : terminalCount d (m + 1) t = 0 := by
   classical
-  have hz : ¬ (m + 1 = 0 ∨ d = 0) := by omega
   let : IsEmpty {w : Fin t → Step d // FirstZero (m + 1) (List.ofFn w)} :=
     ⟨fun w => by
-      have hp := (by simpa only [FirstZero, ite_eq_right hz] using w.property :
-        (∀ r < (List.ofFn w.val).length, ∀ i,
-          decrements ((List.ofFn w.val).take r) i < m + 1) ∧
-          ∃ i, decrements (List.ofFn w.val) i = m + 1).1
-      have hb := internal_length_bound ((List.ofFn w.val).take (t - 1))
-        (fun i => Nat.le_of_lt_succ (hp (t - 1) (by simp; omega) i))
-      simp only [List.length_take, List.length_ofFn, min_eq_left (Nat.sub_le _ _)] at hb
+      have hb := first_zero_length_bound w.property
+      simp only [List.length_ofFn, Nat.add_sub_cancel] at hb
       omega⟩
   exact Fintype.card_eq_zero
 
@@ -462,7 +455,7 @@ theorem paths_eq_internal (d m : ℕ) (hd : 0 < d) :
       dsimp [N]
       nlinarith
     rw [← Finset.sum_subset hsub (fun t ht hn =>
-      terminalCount_vanish d m t hd (by simp only [Finset.mem_range] at *; dsimp [N] at *; omega))]
+      terminalCount_vanish d m t (by simp only [Finset.mem_range] at *; dsimp [N] at *; omega))]
     rw [Finset.sum_range_succ']
     simp only [terminalCount_zero d m hd, add_zero]
   have hsum := Finset.sum_congr (s₁ := Finset.range (N + 1)) (s₂ := Finset.range (N + 1))
