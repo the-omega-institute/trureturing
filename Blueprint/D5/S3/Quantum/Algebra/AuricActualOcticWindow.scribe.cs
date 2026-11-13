@@ -71,6 +71,34 @@ internal sealed class AuricActualOcticWindowDocument : IScribeDocumentDefinition
                 Imp(premises, And(Call("Bijective", Call("obstruction", w, a)), splitting))))));
     }
 
+    private static Formula NormalizationStatement()
+    {
+        var f = V("F"); var d = V("D"); var k = V("K"); var w = V("W");
+        var a = V("a"); var e = V("e"); var bd = V("bD"); var bw = V("bW"); var bq = V("bQ");
+        var omega = Call("AlgHom", f, d, k);
+        var coordinates = Call("Map", omega, k);
+        var polynomial = Call("obstructionPolynomial", w, bd, bw, bq);
+        var coefficientMap = Call("algebraMap", f, k);
+        var value = Call("eval2", coefficientMap, Call("originalCoordinates", bd, a), polynomial);
+        var matrix = Call("toMatrix", Call("compose", Call("linear", e),
+            Call("baseChange", k, Call("actualOperator", w, a)), Call("linear", Call("inverse", e))));
+        var phi = Call("originalAffineCoordinates", k, bd, a, e);
+        var right = Mul(Call("C", value), Call("det", Add(Call("identity", omega),
+            Mul(Call("map", V("C"), matrix), Call("diagonal", V("X"))))));
+        var result = And(Seq(Neg, Sp, Equal(value, D(0))),
+            Equal(Call("eval2", Call("compose", V("C"), coefficientMap), phi, polynomial), right));
+        var assumptions = And(Equal(Call("finrank", f, d), D(8)), Equal(Call("finrank", f, w), D(4)),
+            Seq(Neg, Sp, Rel(a, FormulaRelationOperator.MemberOf, Call("quotientSet", w))));
+        return All("F D K", V("Type"), Seq(Instance("Field", f), Instance("Field", d), Instance("Field", k),
+            Instance("Algebra", f, d), Instance("Algebra", f, k), Instance("FiniteDimensional", f, d),
+            Instance("CharZero", f), All("W", Call("Submodule", f, d),
+            All("bD", Call("Basis", Call("Fin", D(8)), f, d),
+            All("bW", Call("Basis", Call("Fin", D(4)), f, w),
+            All("bQ", Call("Basis", Call("Fin", D(4)), f, Call("Quotient", d, w)),
+            All("a", d, All("e", Call("AlgEquiv", k, Call("Tensor", f, k, d), coordinates),
+                Imp(assumptions, result)))))))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The cut-free theorem for an arbitrary actual octic window.",
         H("Actual octic windows with scalar multiplication idealizer"),
@@ -127,9 +155,27 @@ internal sealed class AuricActualOcticWindowDocument : IScribeDocumentDefinition
                         + "of the other. Distinct conjugate triples are therefore disjoint. Transitivity would "
                         + "partition eight labels into triples, a contradiction. Hence at least one actual crossing "
                         + "block has rank at least two. This is the cut-free clause of the existing source argument; "
-                        + "the full classification and the separate fixed-N irreducibility bridge remain open. "
+                        + "the full classification and the separate quotient-density bridge remain open. "
                         + "The rank machinery is supplied by AuricOcticRanks and is consumed here on the actual "
                         + "window. There is no general-position, uniformity, connectivity or certificate premise, "
                         + "and no normalization requiring one to lie in W. No mathematical novelty is claimed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("original-polynomial-normalization"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/AuricActualOcticWindow.original_polynomial_normalization"),
+                H("The original polynomial and its exact split normalization"),
+                StatementSource.FromAuthor(Disp(NormalizationStatement())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The bases bD, bW and bQ are arbitrary original bases of D, W and D/W. "
+                    + "obstructionPolynomial is the determinant of the matrix whose entries are the linear forms "
+                    + "for multiplication on W followed by the original quotient map. originalCoordinates(bD,a) "
+                    + "means the original coordinates of a embedded into K. originalAffineCoordinates sends "
+                    + "a split vector x to the original coordinates of 1 tensor a plus e inverse of x. "
+                    + "Its linear part is invertible, and originalPolynomialEquiv gives the induced polynomial "
+                    + "algebra equivalence. The value c=f(a) is nonzero because the original obstruction at a "
+                    + "is an isomorphism. The displayed equality is Phi(f)=C(c) det(I+N diag(X)); dividing by "
+                    + "the nonzero constant gives the normalized formula. All labels and the inverse-obstruction "
+                    + "operator come from this same e, W and a. The proof uses scalar extension of the original "
+                    + "maps, multiplication in the split algebra, and Mathlib's determinant identity "
+                    + "Matrix.det_one_add_mul_comm. It requires no position or idealizer assumption."))),
                 DescribeRole.Theorem))));
 }
