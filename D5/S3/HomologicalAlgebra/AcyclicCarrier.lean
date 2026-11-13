@@ -232,8 +232,8 @@ repository's pinned Mathlib supplies the equivalent full carried statement.
 -/
 
 noncomputable section
-open CategoryTheory
-universe u v w
+open CategoryTheory Limits Module
+universe u v w x
 namespace D5.S3.HomologicalAlgebra.AcyclicCarrier
 variable {R : Type u} [CommRing R]
 variable {C D : ChainComplex (ModuleCat.{v} R) ℕ}
@@ -241,11 +241,11 @@ variable {I : ℕ → Type w} (B : ∀ n, Basis (I n) R (C.X n))
 
 structure CarrierData where
   K : ∀ n, I n → ∀ m, Submodule R (D.X m)
-  K_d : ∀ n s m (x : D.X (m+1)), x ∈ K n s (m+1) →
-    (D.d (m+1) m).hom x ∈ K n s m
-  K_face : ∀ n (s : I (n+1)) (t : I n),
-    (B n).repr ((C.d (n+1) n).hom (B (n+1) s)) t ≠ 0 →
-    ∀ m, K n t m ≤ K (n+1) s m
+  K_d : ∀ n s m (x : D.X (m + 1)), x ∈ K n s (m + 1) →
+    (D.d (m + 1) m).hom x ∈ K n s m
+  K_face : ∀ n (s : I (n + 1)) (t : I n),
+    (B n).repr ((C.d (n + 1) n).hom (B (n + 1) s)) t ≠ 0 →
+    ∀ m, K n t m ≤ K (n + 1) s m
 
 variable {B}
 
@@ -253,19 +253,16 @@ def CarrierData.Carried (𝒦 : CarrierData (D := D) B) {n m : ℕ}
     (g : C.X n ⟶ D.X m) : Prop := ∀ s, g.hom (B n s) ∈ 𝒦.K n s m
 
 theorem CarrierData.Carried.face {𝒦 : CarrierData (D := D) B} {n m : ℕ}
-    {g : C.X n ⟶ D.X m} (hg : 𝒦.Carried g) (s : I (n+1)) :
-    g.hom ((C.d (n+1) n).hom (B (n+1) s)) ∈ 𝒦.K (n+1) s m := by
+    {g : C.X n ⟶ D.X m} (hg : 𝒦.Carried g) (s : I (n + 1)) :
+    g.hom ((C.d (n + 1) n).hom (B (n + 1) s)) ∈ 𝒦.K (n + 1) s m := by
   classical
-  let x := (C.d (n+1) n).hom (B (n+1) s)
+  let x := (C.d (n + 1) n).hom (B (n + 1) s)
+  change g.hom x ∈ _
   rw [← (B n).linearCombination_repr x, Finsupp.linearCombination_apply, Finsupp.sum]
   simp only [map_sum, map_smul]
   apply Submodule.sum_mem
   intro t ht
   exact Submodule.smul_mem _ _ (𝒦.K_face n s t (Finsupp.mem_support_iff.mp ht) m (hg t))
-
-theorem CarrierData.Carried.zero {𝒦 : CarrierData (D := D) B} {n m : ℕ} : 𝒦.Carried (0 : C.X n ⟶ D.X m) := by
-  intro s
-  exact Submodule.zero_mem _
 
 theorem CarrierData.Carried.sub {𝒦 : CarrierData (D := D) B} {n m : ℕ} {g g' : C.X n ⟶ D.X m}
     (hg : 𝒦.Carried g) (hg' : 𝒦.Carried g') : 𝒦.Carried (g - g') := by
@@ -273,12 +270,12 @@ theorem CarrierData.Carried.sub {𝒦 : CarrierData (D := D) B} {n m : ℕ} {g g
   exact Submodule.sub_mem _ (hg s) (hg' s)
 
 /-- Acyclicity of the carriers relative to an augmentation `aug : D.X 0 ⟶ A`. -/
-structure CarrierData.Acyclic (𝒦 : CarrierData (D := D) B) {A : ModuleCat.{v} R} (aug : D.X 0 ⟶ A) : Prop where
-  aug_d : D.d 1 0 ≫ aug = 0
-  acyc0 : ∀ n (s : I n) (y : D.X 0), y ∈ 𝒦.K n s 0 → aug.hom y = 0 →
+structure CarrierData.Acyclic (𝒦 : CarrierData (D := D) B) {A : Type x} [AddCommGroup A] [Module R A] (aug : D.X 0 →ₗ[R] A) : Prop where
+  aug_d : aug.comp (D.d 1 0).hom = 0
+  acyc0 : ∀ n (s : I n) (y : D.X 0), y ∈ 𝒦.K n s 0 → aug y = 0 →
     ∃ x ∈ 𝒦.K n s 1, (D.d 1 0).hom x = y
-  acyc : ∀ n (s : I n) m (y : D.X (m+1)), y ∈ 𝒦.K n s (m+1) → (D.d (m+1) m).hom y = 0 →
-    ∃ x ∈ 𝒦.K n s (m+2), (D.d (m+2) (m+1)).hom x = y
+  acyc : ∀ n (s : I n) m (y : D.X (m + 1)), y ∈ 𝒦.K n s (m + 1) → (D.d (m + 1) m).hom y = 0 →
+    ∃ x ∈ 𝒦.K n s (m + 2), (D.d (m + 2) (m + 1)).hom x = y
 
 /-- Extend pointwise carrier lifts linearly along an arbitrary, possibly empty basis. -/
 theorem basis_exists_lift {n : ℕ} {Y Z : ModuleCat.{v} R}
@@ -296,12 +293,12 @@ theorem basis_exists_lift {n : ℕ} {Y Z : ModuleCat.{v} R}
     simpa using hyφ s
 
 /-- The primitive step in positive degrees. -/
-theorem CarrierData.exists_carried_primitive (𝒦 : CarrierData (D := D) B) {A : ModuleCat.{v} R} {aug : D.X 0 ⟶ A}
-    (hac : 𝒦.Acyclic aug) {n : ℕ} (m : ℕ) (Φ : C.X n ⟶ D.X (m+1)) (hΦ : 𝒦.Carried Φ)
-    (hcyc : Φ ≫ D.d (m+1) m = 0) :
-    ∃ Ψ : C.X n ⟶ D.X (m+2), 𝒦.Carried Ψ ∧ Ψ ≫ D.d (m+2) (m+1) = Φ := by
-  obtain ⟨Ψ, hΨK, hΨ⟩ := basis_exists_lift (B := B) (fun s => 𝒦.K n s (m+2))
-    (D.d (m+2) (m+1)) Φ (fun s => by
+theorem CarrierData.exists_carried_primitive (𝒦 : CarrierData (D := D) B) {A : Type x} [AddCommGroup A] [Module R A] {aug : D.X 0 →ₗ[R] A}
+    (hac : 𝒦.Acyclic aug) {n : ℕ} (m : ℕ) (Φ : C.X n ⟶ D.X (m + 1)) (hΦ : 𝒦.Carried Φ)
+    (hcyc : Φ ≫ D.d (m + 1) m = 0) :
+    ∃ Ψ : C.X n ⟶ D.X (m + 2), 𝒦.Carried Ψ ∧ Ψ ≫ D.d (m + 2) (m + 1) = Φ := by
+  obtain ⟨Ψ, hΨK, hΨ⟩ := basis_exists_lift (B := B) (fun s => 𝒦.K n s (m + 2))
+    (D.d (m + 2) (m + 1)) Φ (fun s => by
       obtain ⟨x, hx, hxd⟩ := hac.acyc n s m (Φ.hom (B n s)) (hΦ s) (by
         have := congrArg (fun ψ : C.X n ⟶ D.X m => ψ.hom (B n s)) hcyc
         simpa using this)
@@ -309,13 +306,13 @@ theorem CarrierData.exists_carried_primitive (𝒦 : CarrierData (D := D) B) {A 
   exact ⟨Ψ, hΨK, hΨ⟩
 
 /-- The primitive step in degree zero. -/
-theorem CarrierData.exists_carried_primitive0 (𝒦 : CarrierData (D := D) B) {A : ModuleCat.{v} R} {aug : D.X 0 ⟶ A}
-    (hac : 𝒦.Acyclic aug) {n : ℕ} (Φ : C.X n ⟶ D.X 0) (hΦ : 𝒦.Carried Φ) (hcyc : Φ ≫ aug = 0) :
+theorem CarrierData.exists_carried_primitive0 (𝒦 : CarrierData (D := D) B) {A : Type x} [AddCommGroup A] [Module R A] {aug : D.X 0 →ₗ[R] A}
+    (hac : 𝒦.Acyclic aug) {n : ℕ} (Φ : C.X n ⟶ D.X 0) (hΦ : 𝒦.Carried Φ) (hcyc : aug.comp Φ.hom = 0) :
     ∃ Ψ : C.X n ⟶ D.X 1, 𝒦.Carried Ψ ∧ Ψ ≫ D.d 1 0 = Φ := by
   obtain ⟨Ψ, hΨK, hΨ⟩ := basis_exists_lift (B := B) (fun s => 𝒦.K n s 1)
     (D.d 1 0) Φ (fun s => by
       obtain ⟨x, hx, hxd⟩ := hac.acyc0 n s (Φ.hom (B n s)) (hΦ s) (by
-        have := congrArg (fun ψ : C.X n ⟶ A => ψ.hom (B n s)) hcyc
+        have := congrArg (fun ψ : C.X n →ₗ[R] A => ψ (B n s)) hcyc
         simpa using this)
       exact ⟨x, hx, hxd⟩)
   exact ⟨Ψ, hΨK, hΨ⟩
@@ -327,63 +324,61 @@ theorem CarrierData.Carried.comp_left {𝒦 : CarrierData (D := D) B} {n m : ℕ
   rw [this]
   exact Submodule.smul_of_tower_mem _ ε (hg s)
 
-theorem CarrierData.Carried.add {𝒦 : CarrierData (D := D) B} {n m : ℕ} {g g' : C.X n ⟶ D.X m}
-    (hg : 𝒦.Carried g) (hg' : 𝒦.Carried g') : 𝒦.Carried (g + g') := by
-  intro s
-  exact Submodule.add_mem _ (hg s) (hg' s)
-
 /-- A carried morphism precomposed with the boundary of the complex `C` is carried (shifted by a degree). -/
 theorem CarrierData.Carried.d_comp {𝒦 : CarrierData (D := D) B} {n m : ℕ} {g : C.X n ⟶ D.X m}
-    (hg : 𝒦.Carried g) : 𝒦.Carried (C.d (n+1) n ≫ g) := by
+    (hg : 𝒦.Carried g) : 𝒦.Carried (C.d (n + 1) n ≫ g) := by
   intro s
   exact hg.face s
 
 theorem exists_sequence (State : ℕ → Type*) (I : State 0 → Prop)
-    (R : ∀ m, State m → State (m+1) → Prop)
-    (h0 : ∃ s : State 0, I s) (h : ∀ m (s : State m), ∃ s' : State (m+1), R m s s') :
-    ∃ seq : ∀ m, State m, I (seq 0) ∧ ∀ m, R m (seq m) (seq (m+1)) := by
+    (R : ∀ m, State m → State (m + 1) → Prop)
+    (h0 : ∃ s : State 0, I s) (h : ∀ m (s : State m), ∃ s' : State (m + 1), R m s s') :
+    ∃ seq : ∀ m, State m, I (seq 0) ∧ ∀ m, R m (seq m) (seq (m + 1)) := by
   obtain ⟨s0, hs0⟩ := h0
   choose step hstep using h
   let seq : ∀ m, State m := fun m => Nat.rec s0 (fun m s => step m s) m
   exact ⟨seq, hs0, fun m => hstep m (seq m)⟩
 
-/-- **Carried homotopies.**  Two carried twisted chain maps `C.X (a+q) ⟶ D.X q` with the same augmentation are
+/-- **Carried homotopies.**  Two carried twisted chain maps `C.X q ⟶ D.X q` with the same augmentation are
 homotopic by a carried homotopy. -/
-theorem CarrierData.exists_carried_homotopy (𝒦 : CarrierData (D := D) B) {A : ModuleCat.{v} R} {aug : D.X 0 ⟶ A}
-    (hac : 𝒦.Acyclic aug) (a : ℕ) (ε : ℤ) (f g : ∀ q, C.X (a+q) ⟶ D.X q)
-    (hf : ∀ q, f (q+1) ≫ D.d (q+1) q = ε • (C.d (a+q+1) (a+q) ≫ f q))
-    (hg : ∀ q, g (q+1) ≫ D.d (q+1) q = ε • (C.d (a+q+1) (a+q) ≫ g q))
+theorem CarrierData.exists_carried_homotopy (𝒦 : CarrierData (D := D) B) {A : Type x} [AddCommGroup A] [Module R A] {aug : D.X 0 →ₗ[R] A}
+    (hac : 𝒦.Acyclic aug) (ε : ℤ) (f g : ∀ q, C.X q ⟶ D.X q)
+    (hf : ∀ q, f (q + 1) ≫ D.d (q + 1) q = ε • (C.d (q + 1) q ≫ f q))
+    (hg : ∀ q, g (q + 1) ≫ D.d (q + 1) q = ε • (C.d (q + 1) q ≫ g q))
     (hfc : ∀ q, 𝒦.Carried (f q)) (hgc : ∀ q, 𝒦.Carried (g q))
-    (haug : f 0 ≫ aug = g 0 ≫ aug) :
-    ∃ h : ∀ q, C.X (a+q) ⟶ D.X (q+1), (∀ q, 𝒦.Carried (h q)) ∧ f 0 - g 0 = h 0 ≫ D.d 1 0 ∧
-      ∀ q, f (q+1) - g (q+1) = h (q+1) ≫ D.d (q+1+1) (q+1) + ε • (C.d (a+q+1) (a+q) ≫ h q) := by
-  let State : ℕ → Type := fun q =>
-    {h : C.X (a+q) ⟶ D.X (q+1) // 𝒦.Carried h ∧
-      C.d (a+q+1) (a+q) ≫ (f q - g q - h ≫ D.d (q+1) q) = 0}
+    (haug : aug.comp (f 0).hom = aug.comp (g 0).hom) :
+    ∃ h : ∀ q, C.X q ⟶ D.X (q + 1), (∀ q, 𝒦.Carried (h q)) ∧ f 0 - g 0 = h 0 ≫ D.d 1 0 ∧
+      ∀ q, f (q + 1) - g (q + 1) = h (q + 1) ≫ D.d (q + 1 + 1) (q + 1) + ε • (C.d (q + 1) q ≫ h q) := by
+  let State : ℕ → Type _ := fun q =>
+    {h : C.X q ⟶ D.X (q + 1) // 𝒦.Carried h ∧
+      C.d (q + 1) q ≫ (f q - g q - h ≫ D.d (q + 1) q) = 0}
   obtain ⟨seq, hseq0, hseq⟩ := exists_sequence State
     (fun s => f 0 - g 0 = s.1 ≫ D.d 1 0)
-    (fun q s s' => s'.1 ≫ D.d (q+1+1) (q+1) = f (q+1) - g (q+1) - ε • (C.d (a+q+1) (a+q) ≫ s.1))
+    (fun q s s' => s'.1 ≫ D.d (q + 1 + 1) (q + 1) = f (q + 1) - g (q + 1) - ε • (C.d (q + 1) q ≫ s.1))
     (by
       obtain ⟨Ψ, hΨc, hΨ⟩ := 𝒦.exists_carried_primitive0 hac (f 0 - g 0) ((hfc 0).sub (hgc 0))
-        (by rw [Preadditive.sub_comp, haug, sub_self])
+        (by
+          ext x
+          have hx := congrArg (fun k : C.X 0 →ₗ[R] A => k x) haug
+          simpa using sub_eq_zero.mpr hx)
       refine ⟨⟨Ψ, hΨc, ?_⟩, hΨ.symm⟩
       rw [hΨ, sub_self, comp_zero])
     (by
       rintro q ⟨h, hc, hcyc⟩
-      have hΦc : 𝒦.Carried (f (q+1) - g (q+1) - ε • (C.d (a+q+1) (a+q) ≫ h)) :=
-        ((hfc (q+1)).sub (hgc (q+1))).sub (hc.d_comp.comp_left ε)
-      have hΦcyc : (f (q+1) - g (q+1) - ε • (C.d (a+q+1) (a+q) ≫ h)) ≫ D.d (q+1) q = 0 := by
-        have h1 : (f (q+1) - g (q+1) - ε • (C.d (a+q+1) (a+q) ≫ h)) ≫ D.d (q+1) q =
-            ε • (C.d (a+q+1) (a+q) ≫ (f q - g q - h ≫ D.d (q+1) q)) := by
+      have hΦc : 𝒦.Carried (f (q + 1) - g (q + 1) - ε • (C.d (q + 1) q ≫ h)) :=
+        ((hfc (q + 1)).sub (hgc (q + 1))).sub (hc.d_comp.comp_left ε)
+      have hΦcyc : (f (q + 1) - g (q + 1) - ε • (C.d (q + 1) q ≫ h)) ≫ D.d (q + 1) q = 0 := by
+        have h1 : (f (q + 1) - g (q + 1) - ε • (C.d (q + 1) q ≫ h)) ≫ D.d (q + 1) q =
+            ε • (C.d (q + 1) q ≫ (f q - g q - h ≫ D.d (q + 1) q)) := by
           simp only [Preadditive.sub_comp, Preadditive.zsmul_comp, Category.assoc, hf, hg,
             Preadditive.comp_sub, smul_sub]
         rw [h1, hcyc, smul_zero]
       obtain ⟨Ψ, hΨc, hΨ⟩ := 𝒦.exists_carried_primitive hac q _ hΦc hΦcyc
       refine ⟨⟨Ψ, hΨc, ?_⟩, hΨ⟩
-      have h2 : f (q+1) - g (q+1) - Ψ ≫ D.d (q+1+1) (q+1) = ε • (C.d (a+q+1) (a+q) ≫ h) := by
+      have h2 : f (q + 1) - g (q + 1) - Ψ ≫ D.d (q + 1 + 1) (q + 1) = ε • (C.d (q + 1) q ≫ h) := by
         rw [hΨ]; abel
       rw [h2]
-      have hdd : C.d (a+(q+1)+1) (a+(q+1)) ≫ C.d (a+q+1) (a+q) = 0 := C.d_comp_d _ _ _
+      have hdd : C.d ((q + 1) + 1) ((q + 1)) ≫ C.d (q + 1) q = 0 := C.d_comp_d _ _ _
       rw [Preadditive.comp_zsmul, ← Category.assoc, hdd, zero_comp, smul_zero])
   refine ⟨fun q => (seq q).1, fun q => (seq q).2.1, hseq0, fun q => ?_⟩
   have := hseq q
@@ -391,4 +386,56 @@ theorem CarrierData.exists_carried_homotopy (𝒦 : CarrierData (D := D) B) {A :
   abel
 
 
+/-- The ordinary basis-indexed augmented acyclic-carrier homotopy theorem. -/
+theorem exists_homotopy
+    (A : ∀ n, I n → ∀ m, Submodule R (D.X m))
+    (boundary : ∀ n b m (z : D.X (m + 1)), z ∈ A n b (m + 1) →
+      (D.d (m + 1) m).hom z ∈ A n b m)
+    (nest : ∀ n (b : I (n + 1)) (c : I n),
+      (B n).repr ((C.d (n + 1) n).hom (B (n + 1) b)) c ≠ 0 →
+      ∀ m, A n c m ≤ A (n + 1) b m)
+    (epsilon : D.X 0 →ₗ[R] R)
+    (epsilon_d : epsilon.comp (D.d 1 0).hom = 0)
+    (acyc0 : ∀ n b (z : D.X 0), z ∈ A n b 0 → epsilon z = 0 →
+      ∃ y ∈ A n b 1, (D.d 1 0).hom y = z)
+    (acyc : ∀ n b m (z : D.X (m + 1)), z ∈ A n b (m + 1) →
+      (D.d (m + 1) m).hom z = 0 → ∃ y ∈ A n b (m + 2), (D.d (m + 2) (m + 1)).hom y = z)
+    (f g : C ⟶ D)
+    (augmentation : epsilon.comp (f.f 0).hom = epsilon.comp (g.f 0).hom)
+    (fc : ∀ n b, (f.f n).hom (B n b) ∈ A n b n)
+    (gc : ∀ n b, (g.f n).hom (B n b) ∈ A n b n) :
+    ∃ H : Homotopy f g, ∀ n b, (H.hom n (n + 1)).hom (B n b) ∈ A n b (n + 1) := by
+  classical
+  let K : CarrierData (D := D) B := ⟨A, boundary, nest⟩
+  have hac : K.Acyclic epsilon := ⟨epsilon_d, acyc0, acyc⟩
+  obtain ⟨h, hc, hzero, hs⟩ := K.exists_carried_homotopy hac 1 f.f g.f
+    (by intro q; simpa using (f.comm (q + 1) q).symm)
+    (by intro q; simpa using (g.comm (q + 1) q).symm)
+    (by intro q; simpa [CarrierData.Carried, K] using fc q)
+    (by intro q; simpa [CarrierData.Carried, K] using gc q)
+    (by simpa using augmentation)
+  simp only [one_smul] at hc hzero hs
+  let H : Homotopy f g :=
+    { hom := fun i j => if e : i + 1 = j then h i ≫ eqToHom (congrArg D.X e) else 0
+      zero := by
+        intro i j hij
+        exact dite_eq_right (fun e => hij e)
+      comm := by
+        intro i
+        cases i with
+        | zero =>
+          simp only [Homotopy.dNext_zero_chainComplex, Homotopy.prevD_chainComplex,
+            dite_eq_left rfl, eqToHom_refl, Category.comp_id, zero_add]
+          exact sub_eq_iff_eq_add.mp hzero
+        | succ i =>
+          simp only [Homotopy.dNext_succ_chainComplex, Homotopy.prevD_chainComplex,
+            dite_eq_left rfl, eqToHom_refl, Category.comp_id]
+          have hi := hs i
+          apply sub_eq_iff_eq_add.mp at hi
+          simpa only [add_comm, add_left_comm, add_assoc] using hi }
+  refine ⟨H, ?_⟩
+  intro n b
+  simpa [H] using hc n b
+
 end D5.S3.HomologicalAlgebra.AcyclicCarrier
+
