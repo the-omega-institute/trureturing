@@ -280,11 +280,50 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
           (openMonodromy A B hD).linearMap)
     let C : P A (I D) →ₗ[ℂ] P A (targetModule B (dualModule B)) :=
       (productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
+    let W : ModuleHom A (targetModule A (targetModule B (dualModule B))) :=
+      (productHom hD (ModuleHom.id A) (coevaluation B hD)).comp (rightUnitIso hD A).inv
+    let V : ModuleHom A (targetModule A (targetModule B (dualModule B))) :=
+      (openMonodromy A B hD).comp W
+    let U : ModuleHom A (targetModule A (I D)) :=
+      (productHom hD (ModuleHom.id A) (ribbonCap B hD)).comp V
+    have hU (s : X) : (openPartialTrace A B hD).linearMap s = rightUnit hD A (U.linearMap s) :=
+      LinearMap.comp_apply (rightUnitIso hD A).hom.linearMap U.linearMap s
+    have hV (s : X) : U.linearMap s =
+        (productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap (V.linearMap s) :=
+      LinearMap.comp_apply (productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+        V.linearMap s
+    have hW (s : X) : V.linearMap s = (openMonodromy A B hD).linearMap (W.linearMap s) :=
+      LinearMap.comp_apply (openMonodromy A B hD).linearMap W.linearMap s
+    have hC (s : X) : W.linearMap s = C ((rightUnit hD A).symm s) :=
+      LinearMap.comp_apply C (rightUnitIso hD A).inv.linearMap s
+    have hL (t : P A (targetModule B (dualModule B))) : L t =
+        rightUnit hD A ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+          ((openMonodromy A B hD).linearMap t)) :=
+      (LinearMap.comp_apply (rightUnit hD A).toLinearMap
+        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
+          (openMonodromy A B hD).linearMap) t).trans
+        (congrArg (fun z : P A (I D) => rightUnit hD A z)
+          (LinearMap.comp_apply (productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+            (openMonodromy A B hD).linearMap t))
     have hread : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
-        L (C ((rightUnit hD A).symm (classified hD A a x v))) := by
-      rfl
-    have hq : L (input (cupVector B hD)) = q (cupVector B hD) := by
-      rfl
+        L (C ((rightUnit hD A).symm (classified hD A a x v))) :=
+      (hU _).trans ((congrArg (fun z : P A (I D) => rightUnit hD A z) (hV _)).trans
+        ((congrArg (fun z : P A (targetModule B (dualModule B)) => rightUnit hD A
+          ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap z)) (hW _)).trans
+          ((congrArg (fun z : P A (targetModule B (dualModule B)) => rightUnit hD A
+            ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
+              ((openMonodromy A B hD).linearMap z))) (hC _)).trans (hL _).symm)))
+    have hqmap : L.comp input = q :=
+      (LinearMap.comp_assoc input
+        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
+          (openMonodromy A B hD).linearMap) (rightUnit hD A).toLinearMap).trans
+        (congrArg (fun f : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ] P A (I D) =>
+          (rightUnit hD A).toLinearMap.comp f)
+          (LinearMap.comp_assoc input (openMonodromy A B hD).linearMap
+            (productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap))
+    have hq : L (input (cupVector B hD)) = q (cupVector B hD) :=
+      (LinearMap.comp_apply L input (cupVector B hD)).symm.trans
+        (LinearMap.congr_fun hqmap (cupVector B hD))
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
