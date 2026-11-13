@@ -217,4 +217,56 @@ theorem actual_positive : arena.{v, w}.Law actual.{v, w} :=
 
 end AffineBoundary
 
+namespace AffineParameters
+
+structure Inputs where
+  V : Type v
+  [add : NormedAddCommGroup V]
+  [space : NormedSpace ℝ V]
+  [finite : FiniteDimensional ℝ V]
+  E : Type w
+  [sourceAdd : NormedAddCommGroup E]
+  [sourceSpace : NormedSpace ℝ E]
+  [sourceFinite : FiniteDimensional ℝ E]
+
+attribute [instance] Inputs.add Inputs.space Inputs.finite Inputs.sourceAdd
+  Inputs.sourceSpace Inputs.sourceFinite
+
+abbrev signature : Signature where
+  Params := Inputs.{v, w}
+  State P := P.V × (P.E →L[ℝ] P.V)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := TopologicalSpace.NonemptyCompacts P.V
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{v, w} :=
+  realize signature (fun _ _ a => ballImage a.1 a.2) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{v, w}
+  Law O := ∀ P : Inputs.{v, w}, ∀ (c : ℕ → P.V)
+    (L : ℕ → (P.E →L[ℝ] P.V)) (F : TopologicalSpace.NonemptyCompacts P.V),
+    Tendsto (fun n => O.readout () P (c n, L n)) atTop (𝓝 F) →
+    ∃ a : P.V × (P.E →L[ℝ] P.V), ∃ φ : ℕ → ℕ, StrictMono φ ∧
+      Tendsto (fun n => (c (φ n), L (φ n))) atTop (𝓝 a) ∧
+      O.readout () P a = F
+
+abbrev sourceScope : Prop := type_of% (@parameter_subsequence.{v, w})
+
+theorem source_bridge : sourceScope.{v, w} ↔ arena.{v, w}.Law actual.{v, w} := by
+  constructor
+  · intro h P c L F hF
+    exact @h P.V P.add P.space P.finite P.E P.sourceAdd P.sourceSpace P.sourceFinite
+      c L F hF
+  · intro h V add space finite E sourceAdd sourceSpace sourceFinite c L F hF
+    exact h (@Inputs.mk V add space finite E sourceAdd sourceSpace sourceFinite) c L F hF
+
+theorem actual_positive : arena.{v, w}.Law actual.{v, w} :=
+  source_bridge.mp (@parameter_subsequence.{v, w})
+
+end AffineParameters
+
 end Reg.D5.S3.Quantum.Foundation.ExclusionIncidence
