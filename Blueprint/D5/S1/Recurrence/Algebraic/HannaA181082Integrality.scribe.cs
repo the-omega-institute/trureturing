@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
 internal sealed class HannaA181082IntegralityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Algebraic/HannaA181082Integrality.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2010a181082");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/hanna2010a181082");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Integer coefficients of Hanna's OEIS A181082 formal exponential.",
