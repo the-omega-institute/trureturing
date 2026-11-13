@@ -42,7 +42,19 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.restriction`
 
 restriction b is the real-linear map f -> f.toAffineMap composed with b.param. Both its source and target include all signed functions. Only its restriction to Z_p is initially asserted injective.
 
-**Definition 1.4 (The three extension laws).**
+**Theorem 1.4 (Signed normals are differences of positive normals).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.positive_span_difference`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CommonPositiveExtension.positive_span_difference` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every member of the real span of the whole original positive annihilator cone is a difference of two members of that cone. This uses the standard reproducing-cone theorem in the actual span; it imposes no Pair or extension hypothesis.
+
+**Definition 1.5 (The three extension laws).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall p \in \operatorname{pure}\left(C, u\right),\; \forall b \in \operatorname{ExclusionChart}\left(C, u, p\right),\; \forall Lambda \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{AffineMap}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(\operatorname{dim}\left(b\right)\right)\right), \mathbb{R}\right), \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right)\right),\; \operatorname{PositiveLift}\left(b, Lambda\right) \Leftrightarrow \left(\left(\forall h \in \operatorname{AffineMap}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(\operatorname{dim}\left(b\right)\right)\right), \mathbb{R}\right),\; \operatorname{apply}\left(\operatorname{restriction}\left(b\right), \operatorname{apply}\left(Lambda, h\right)\right) = h\right) \land \left(\left(\forall h \in \operatorname{AffineMap}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(\operatorname{dim}\left(b\right)\right)\right), \mathbb{R}\right),\; \operatorname{apply}\left(\operatorname{apply}\left(Lambda, h\right), p\right) = 0\right) \land \left(\forall h \in \operatorname{AffineMap}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(\operatorname{dim}\left(b\right)\right)\right), \mathbb{R}\right),\; \operatorname{ballPositive}\left(h\right) \Rightarrow \left(\forall x \in V,\; x\in C \Rightarrow 0 \le \operatorname{apply}\left(\operatorname{apply}\left(Lambda, h\right), x\right)\right)\right)\right)\right)$$
 
@@ -54,7 +66,7 @@ $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\oper
 
 A real-linear map is a PositiveLift when restriction after it is the identity on every signed affine function, all its outputs vanish at p, and every nonnegative affine function has an output nonnegative on all C. These are conclusions of the construction, never premises replacing W.
 
-**Definition 1.5 (Unit, inverses, order budget and intrinsic agreement).**
+**Definition 1.6 (Unit, inverses, order budget and intrinsic agreement).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ExtensionLaws`
 
@@ -66,7 +78,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ExtensionLaws`
 
 ExtensionLaws includes PositiveLift and Lambda(1)=u-a_p; Lambda(res f)=f for EVERY f in Z_p; 0<=Lambda h<=u-a_p on every x in C whenever 0<=h<=1 on the entire ball; range Lambda=span(Z_p). For EVERY second actual chart c and EVERY positive real-linear right inverse Gamma vanishing at p, if h and k agree whenever b.param(z)=c.param(w), with both coordinates in their closed balls, then Lambda h=Gamma k. This is intrinsic chart independence, including signed functions and charts of arbitrary admissible dimensions.
 
-**Definition 1.6 (The paid confirmation clauses).**
+**Definition 1.7 (The paid confirmation clauses).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ConfirmationNormalForm`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ConfirmationNo
 
 For every original g in F_p there are original q,r in D_p with a_p+a_q+a_r=u, g=a_p+g(q)a_q+g(r)a_r, both coefficients in [0,1], and a_p(x)<=g(x) for every x in C. The proof chooses q,r as an actual chart diameter. This is the normal form and whole-cone leastness, not the full positive or signed dual spectral expansion of VII105.3.
 
-**Theorem 1.7 (The original positive restriction-cone theorem).**
+**Theorem 1.8 (The original positive restriction-cone theorem).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x\neq 0 \Rightarrow 0< \operatorname{apply}\left(u, x\right)\right)\right) \Rightarrow \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \Rightarrow \left(\operatorname{exclusionBalls}\left(C, u\right) \Rightarrow \left(\operatorname{weakPair}\left(C, u\right) \Rightarrow \left(\exists a \in \operatorname{Function}\left(\operatorname{pure}\left(C, u\right), \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right)\right),\; \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{common}\left(C, u, p, \operatorname{apply}\left(a, p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall f \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{common}\left(C, u, p, f\right) \Rightarrow f = \operatorname{apply}\left(a, p\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall g \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{confirms}\left(C, u, p, g\right) \Rightarrow \operatorname{ConfirmationNormalForm}\left(a, p, g\right)\right) \land \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall b \in \operatorname{ExclusionChart}\left(C, u, p\right),\; \operatorname{BijOn}\left(\operatorname{restriction}\left(b\right), \operatorname{zeroPositive}\left(C, u, p\right), \operatorname{positiveAffineCone}\left(b\right)\right) \land \left(\exists Lambda \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{AffineMap}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(\operatorname{dim}\left(b\right)\right)\right), \mathbb{R}\right), \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right)\right),\; \operatorname{ExtensionLaws}\left(b, \operatorname{apply}\left(a, p\right), Lambda\right) \land \left(\forall Gamma \in \operatorname{LinearMap}\left(\mathbb{R}, \operatorname{AffineMap}\left(\mathbb{R}, \operatorname{EuclideanSpace}\left(\mathbb{R}, \operatorname{Fin}\left(\operatorname{dim}\left(b\right)\right)\right), \mathbb{R}\right), \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right)\right),\; \operatorname{ExtensionLaws}\left(b, \operatorname{apply}\left(a, p\right), Gamma\right) \Rightarrow Gamma = Lambda\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -100,7 +112,7 @@ The nonnegative affine cone generates all signed affine functions: a sufficientl
 
 The original u-a_p lies in Z_p and restricts to 1, giving the exact unit value. Applying positivity to h and 1-h gives the full-cone order budget. Any positive common right inverse has signed range in span(Z_p). Two chart descriptions of one intrinsic affine function therefore produce elements of that span with identical entire restrictions; injectivity proves chart independence. Applying reconstruction to u-g gives the stated confirmation normal form and whole-cone leastness.
 
-**Definition 1.8 (The full all-space arc conclusion).**
+**Definition 1.9 (The full all-space arc conclusion).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ArcFamily`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ArcFamily`
 
 For EVERY original q,p, EVERY entire exclusion chart b of D_q, EVERY unit e with b.param(e)=p, and EVERY nonzero coordinate tangent w with inner(e,w)=0, set n=w/norm(w). There exist an original r=b.param(-e), an all-real family gamma(t)=b.param(cos(t)e+sin(t)n) of original pure points, and ONE signed linear functional B on the original V. For ALL real t, a_gamma(t)=((1+cos(t))/2)a_p+((1-cos(t))/2)a_r+sin(t)B as linear functionals on ALL V. B(p)=B(r)=0, B(b.param.linear(w))=norm(w)/2=1/(2h) for h=1/norm(w), and B vanishes on the whole span({p} union D_p). These quantifiers include every nonzero actual tangent, through the chart's injective linear direction map.
 
-**Theorem 1.9 (The common extension's whole-space arc consumer).**
+**Theorem 1.10 (The common extension's whole-space arc consumer).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x\neq 0 \Rightarrow 0< \operatorname{apply}\left(u, x\right)\right)\right) \Rightarrow \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \Rightarrow \left(\operatorname{exclusionBalls}\left(C, u\right) \Rightarrow \left(\operatorname{weakPair}\left(C, u\right) \Rightarrow \left(\exists a \in \operatorname{Function}\left(\operatorname{pure}\left(C, u\right), \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right)\right),\; \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{common}\left(C, u, p, \operatorname{apply}\left(a, p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall f \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{common}\left(C, u, p, f\right) \Rightarrow f = \operatorname{apply}\left(a, p\right)\right) \land \operatorname{ArcFamily}\left(a\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -135,6 +147,7 @@ Boundaries: full positive/signed spectral generation in VII105.3, all original p
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ExtensionLaws`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.PositiveLift`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.ballPositive`
+- Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.positive_span_difference`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.restriction`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.whole_arc_effect`
 - Truth anchor: `D5/S3/Quantum/Foundation/CommonPositiveExtension.whole_positive_extension`

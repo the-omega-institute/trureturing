@@ -30,7 +30,19 @@ Lean statement: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.unit`
 
 The unit is the real-linear pairing with the identity matrix. HermitianMat.one_inner identifies it with the trace on every Hermitian matrix.
 
-**Theorem 1.3 (The entire exclusion is an orthogonal support face).**
+**Theorem 1.3 (Every positive original functional has a positive representative).**
+
+Lean statement: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.positive_representative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/HermitianExclusionKernel.positive_representative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every real-linear functional nonnegative on the entire native PSD cone is pairing with a PSD Hermitian matrix on the entire carrier. The original Riesz proof tests every native outer product. This same declaration supplies the whole-effect model application of the original state-cover theorem.
+
+**Theorem 1.4 (The entire exclusion is an orthogonal support face).**
 
 Lean statement: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.exclusion_iff_kernel`
 
@@ -50,6 +62,7 @@ This support characterization applies in every finite complex dimension. It does
 
 - Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.cone`
 - Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.exclusion_iff_kernel`
+- Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.positive_representative`
 - Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionKernel.unit`
 - Dependency: [D5/S3/Quantum/Foundation/FacetZeroGluing](FacetZeroGluing.md)
 - Dependency: [D5/S3/Quantum/Foundation/SectionROGFrame](SectionROGFrame.md)

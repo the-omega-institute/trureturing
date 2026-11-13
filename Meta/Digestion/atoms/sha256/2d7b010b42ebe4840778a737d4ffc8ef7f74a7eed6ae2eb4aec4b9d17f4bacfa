@@ -1,0 +1,16 @@
+**补充结论（失败区中的同一局部余量）。** $p\mapsto\beta_\omega(p)$ 在 $P$ 上为下半连续函数；所以若某个 $p$ 失败，存在非空相对开邻域 $O\ni p$ 和同一个 $\epsilon>0$，使
+
+$$
+s+x-2\epsilon\omega\in C
+\qquad(s\in O,\ x\in D_s).
+\tag{Q121.9}
+$$
+
+证明。先记原排除关联具有闭图：若 $p_n\to p\in P$、$x_n\in D_{p_n}$、$x_n\to x$，每项取 $f_n\in\mathcal E$，$f_n(p_n)=1,f_n(x_n)=0$；紧性取极限给 $x\in D_p$。现在对实现 $\liminf\beta_\omega(p_n)$ 的子列取达到最小值的 $x_n,h_n$，再由 $K,\mathscr H_\omega$ 紧取共同极限 $x,h$。闭图及连续评价给
+
+$$
+\liminf_n\beta_\omega(p_n)=\frac{h(p)+h(x)}2\ge\beta_\omega(p).
+$$
+
+这就是下半连续。若 $\beta_\omega(p)>0$，在 $\{s:\beta_\omega(s)>\beta_\omega(p)/2\}$ 中取 $O$，令 $\epsilon=\beta_\omega(p)/2$，再用(Q121.8)。这不声称存在对所有纯标签统一的正余量。证毕。
+
