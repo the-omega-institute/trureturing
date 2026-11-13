@@ -9,6 +9,8 @@
 import D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerStoppingTails
 import Mathlib.Data.Bool.Count
 
+/-! Chronological opportunity counts and native finite first-failure records. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -54,20 +56,28 @@ private theorem opportunity_count_balance {Seed : Type*} [MeasurableSpace Seed]
       rw [opportunityCount, ih]
       have hf := Nat.mod_two_eq_zero_or_one (sideCount (zeroReplay policy seed n) false)
       have ht := Nat.mod_two_eq_zero_or_one (sideCount (zeroReplay policy seed n) true)
+      have hstep : zeroReplay policy seed (n + 1) =
+          replaySide policy seed n :: zeroReplay policy seed n := rfl
+      rw [hstep]
+      dsimp [sideCount] at hf ht
       cases hs : replaySide policy seed n <;> cases root <;>
         rcases hf with hf | hf <;> rcases ht with ht | ht <;>
-        simp [opportunity, alternatingBit, zeroReplay, ← replaySide, hs,
-          sideCount, List.count_cons, hf, ht] at * <;> omega
+        simp [opportunity, alternatingBit, hs,
+          sideCount, hf, ht] <;> omega
 
-private theorem enough_opportunities {Seed : Type*} [MeasurableSpace Seed]
+private theorem opportunity_count_bound {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (seed : Seed) (root : Bool) (r : ℕ) :
-    ∃ n, r < opportunityCount policy seed root n := by
-  refine ⟨2 * r + 3, ?_⟩
+    r < opportunityCount policy seed root (2 * r + 3) := by
   have hc := List.count_false_add_count_true (zeroReplay policy seed (2 * r + 3))
   rw [zero_replay_length] at hc
   rw [opportunity_count_balance]
   change sideCount _ false + sideCount _ true = 2 * r + 3 at hc
   cases root <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> omega
+
+private theorem enough_opportunities {Seed : Type*} [MeasurableSpace Seed]
+    (policy : Policy Seed) (seed : Seed) (root : Bool) (r : ℕ) :
+    ∃ n, r < opportunityCount policy seed root n :=
+  ⟨2 * r + 3, opportunity_count_bound policy seed root r⟩
 
 /-- One-based query number of the (r+1)-st opportunity. -/
 def opportunityQuery {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
@@ -83,15 +93,10 @@ private theorem opportunity_query_spec {Seed : Type*} [MeasurableSpace Seed]
   have hs := Nat.find_spec h
   have hn : Nat.find h ≠ 0 := by
     intro he
-    simpa [he, opportunityCount] using hs
+    simp [he, opportunityCount] at hs
   obtain ⟨n, he⟩ := Nat.exists_eq_succ_of_ne_zero hn
   have hp := Nat.find_min h (show n < Nat.find h by omega)
-  have hb : r < opportunityCount policy seed root (2 * r + 3) := by
-    have hc := List.count_false_add_count_true (zeroReplay policy seed (2 * r + 3))
-    rw [zero_replay_length] at hc
-    rw [opportunity_count_balance]
-    change sideCount _ false + sideCount _ true = 2 * r + 3 at hc
-    cases root <;> simp only [Bool.false_eq_true, ↓reduceIte] <;> omega
+  have hb := opportunity_count_bound policy seed root r
   have hle := Nat.find_min' h hb
   rw [he, opportunityCount] at hs
   refine ⟨n, he, by omega, ?_, ?_⟩
@@ -110,38 +115,40 @@ private theorem failure_source_arm (root : Bool) (marked side : Side) (before i 
       if marked = side ∧ before ≤ i then false else alternatingBit root (i + 1) := by
   cases side <;> rfl
 
-private theorem failure_source_prefix (root : Bool) (actions : List Side) (marked : Side) :
-    prefixNoMarker (failureSource root marked (sideCount actions marked)) actions := by
-  intro side i hi
-  have hout : arm (failureSource root marked (sideCount actions marked)) side i =
-      alternatingBit root (i + 1) := by
-    rw [failure_source_arm]
-    split_ifs with h
-    · obtain ⟨rfl, h⟩ := h
-      omega
-    · rfl
-  have hin : endpoint (failureSource root marked (sideCount actions marked)) side i =
-      alternatingBit root i := by
-    cases i with
-    | zero => simp [endpoint, failureSource, alternatingBit]
-    | succ i =>
-        rw [endpoint, failure_source_arm]
-        split_ifs with h
-        · obtain ⟨rfl, h⟩ := h
-          omega
-        · rfl
-  simp [markerResponse, hin, hout, alternating_bit_succ]
-
 private theorem failure_source_support (root : Bool) (marked : Side) (before : ℕ) :
     noAdjacentOnes (failureSource root marked before) := by
   intro side i
   cases i with
   | zero =>
-      simp only [endpoint, failureSource, failure_source_arm]
-      split_ifs <;> simp [alternating_bit_succ, alternatingBit]
+      change ¬(root = true ∧ arm (failureSource root marked before) side 0 = true)
+      rw [failure_source_arm]
+      split_ifs <;> simp [alternatingBit]
   | succ i =>
       simp only [endpoint, failure_source_arm]
       split_ifs <;> simp_all [alternating_bit_succ]
+
+private theorem failure_source_prefix (root : Bool) (actions : List Side) (marked : Side) :
+    prefixNoMarker (failureSource root marked (sideCount actions marked)) actions := by
+  let source := failureSource root marked (sideCount actions marked)
+  intro side i hi
+  have halt : ∀ j ≤ sideCount actions side,
+      endpoint source side j = alternatingBit root j := by
+    intro j hj
+    cases j with
+    | zero => simp [endpoint, source, failureSource, alternatingBit]
+    | succ j =>
+        rw [endpoint, failure_source_arm]
+        split_ifs with h
+        · obtain ⟨rfl, h⟩ := h
+          omega
+        · rfl
+  have hx : ∀ j, ¬(endpoint source side j = true ∧
+      endpoint source side (j + 1) = true) :=
+    failure_source_support root marked (sideCount actions marked) side
+  have hz := (no_marker_iff_alternating_prefix root (endpoint source side) rfl hx
+    (sideCount actions side)).mpr halt i hi
+  apply decide_eq_false
+  exact hz
 
 /-- The finite record retains the original seed and the acquired native state. -/
 def archive {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
