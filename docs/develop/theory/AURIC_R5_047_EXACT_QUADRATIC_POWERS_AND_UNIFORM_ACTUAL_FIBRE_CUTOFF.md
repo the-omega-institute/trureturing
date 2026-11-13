@@ -213,6 +213,42 @@ $$
 
 这些是经典实际乘法理论的后果，作为原族推导的中间输入使用。
 
+先明确与普通子式理想幂的经典结论的对应及区别。[Winfried Bruns，*Algebras defined by powers of determinantal ideals*，Journal of Algebra 142，150--163，Theorem 1.1，印刷页 151，作者主页所载原始发表版](https://www.home.uni-osnabrueck.de/wbruns/brunsw/pdf-article/AlgDet.published.pdf) 的系数环是任意整环 $R_0$，$X=(x_{ij})$ 是 $a\times b$ 个独立不定元组成的矩阵，$1\le t\le a\le b$，并要求 $(\min(t,a-t))!\in R_0^\times$。以 $I_j(X)$ 表示全部 $j$ 阶子式生成的理想，对每个整数 $r\ge1$，原文结论为
+
+$$
+I_t(X)^r=\bigcap_{j=1}^t I_j(X)^{((t-j+1)r)}
+\quad\text{于 }R_0[X].
+$$
+
+右侧为符号幂：$I_j(X)^{(c)}=I_j(X)^cR_0[X]_{I_j(X)}\cap R_0[X]$，该交式是普通幂的准素分解。只保留 $u\le j\le t$，其中 $u=\max(1,a-r(a-t))$，所得分解不可删减。这里的 $R_0,a,b,r$ 分别是原文的 $B,m,n,s$，不与本卷的原族环 $B$、半域次数 $m$ 或枢轴 $s$ 混同。原文将特征零的分解归于 De Concini--Eisenbud--Procesi，将上述推广归于 Bruns--Vetter。若没有阶乘可逆的条件，原文 Theorem 1.3（印刷页 152）将同一交式识别为普通幂的整闭包，不能无条件替代为普通幂本身。
+
+在本卷任意特征零域上取 $R_0=F$，阶乘条件全部满足，无须代数闭性或 $F\hookrightarrow\mathbb C$。令 $R_t(X)\subset F[X]_t$ 为 $t$ 阶子式的线性张成。Bruns 的结论确实涉及实际乘法；其最低齐次部分给
+
+$$
+\operatorname{im}\bigl(\operatorname{Sym}^rR_t(X)
+\xrightarrow{\mathrm{mult}}F[X]_{tr}\bigr)
+=(I_t(X)^r)_{tr}
+=\left(\bigcap_{j=1}^t I_j(X)^{((t-j+1)r)}\right)_{tr}.
+$$
+
+第一个等号因 $I_t(X)$ 由纯 $t$ 次元素生成：次数 $tr$ 的 $r$ 重乘积只能有常数余因子。这正是与 (184.1) 重叠的“普通幂的最低次数即恰好指定个数因子的乘法像”机制，而非只在字符中出现某个分量。不过 $t=2$ 时其生成空间仍是一般矩阵子式空间，尚不是 $K\subset\operatorname{Sym}^2(\bigwedge^2V)$。具体地，在 $N\ge4$ 时取 $a=b=N$，选基后记 $z_{ij}=e_i\wedge e_j$，$z_{ji}=-z_{ij}$、$z_{ii}=0$。实际 $F$ 代数满射
+
+$$
+\sigma:F[x_{ij}:1\le i,j\le N]\longrightarrow
+\operatorname{Sym}(\bigwedge^2V),\qquad x_{ij}\longmapsto z_{ij}
+$$
+
+虽保持乘法，却将行 $1,3$、列 $2,4$ 的子式送到
+
+$$
+\sigma(x_{12}x_{34}-x_{14}x_{32})
+=z_{12}z_{34}+z_{14}z_{23},\qquad
+w(z_{12}z_{34}+z_{14}z_{23})
+=2e_1\wedge e_2\wedge e_3\wedge e_4\ne0.
+$$
+
+所以这个交错矩阵特化并不把子式生成空间送入 $K$；原交式也不能直接特化为 (184.2)。本证明不作 Schur 分拆转置或超代数乘法迁移，不把子式幂与 $K^r$ 宣称为同一映射的像。Bruns 的精确普通幂结论及上述实际映射比较确定了经典重叠的范围；所缺的本代数乘法识别由下面 Enright--Wallach 的等式支付。
+
 先取 $F=\mathbb C$、$N\ge4$。[Enright--Wallach，*A Pieri rule for Hermitian symmetric pairs II*，Theorem 1，式 (2.1)，印刷页 53](https://msp.org/pjm/2004/216-1/pjm-v216-n1-p03-s.pdf) 在 $\mathcal B=\operatorname{Sym}(\mathfrak p^-)$ 内给出实际乘法等式
 
 $$
@@ -563,6 +599,8 @@ $$
 **约定 189.1（经典输入与本原族的对应范围）。** Enright--Wallach 的文献为 Thomas J. Enright、Nolan R. Wallach，*A Pieri rule for Hermitian symmetric pairs II*，Pacific Journal of Mathematics 216(1)，51--61，DOI [10.2140/pjm.2004.216.51](https://doi.org/10.2140/pjm.2004.216.51)。其 Theorem 1 的 (2.1) 给实际乘法等式，§3 Case 2 给 $SO^*(2N)$、秩 $\lfloor N/2\rfloor$、重复行最高权及对偶约定。§184 的全代数扭转、横二条带归纳与有理下降说明它在本题的精确适用方式；抽象公式 (184.2) 及满性阈值是这条经典理论的后果，不作为新的抽象乘法定理提出。
 
 Michael Perlman，*Regularity and Cohomology of Pfaffian Thickenings*，arXiv:1711.02777v2，§2 的 (2.1)--(2.2) 给环境的无重分解与主 Pfaffian 最高权向量；(2.3)--(2.4) 描述由一个分量生成的整个不变理想。后者允许任意齐次余因子，单独不能证明恰好 $r$ 个本卷 $K$ 因子的实际乘法像。本文的该步依赖 Enright--Wallach 的实际等式，不以理想包含或字符出现替代。
+
+Winfried Bruns，*Algebras defined by powers of determinantal ideals*，Journal of Algebra 142，150--163，DOI [10.1016/0021-8693(91)90222-t](https://doi.org/10.1016/0021-8693(91)90222-t)，Theorem 1.1 的精确整环、矩阵与阶乘条件，以及最低次数乘法像，均在 §184 的原族证明内作了直接比较。它是一般矩阵子式理想普通幂的经典准素分解；§184 给出的交错特化并不把其二阶子式空间送入本卷 $K$，故未以它冒充 (184.2) 的直接证明，也没有以整闭包结论、字符相同或分拆转置代替实际乘法对应。
 
 **约定 189.2（有限的仓内数学重叠）。** 本文原族接口与相关低阶结果的对应限于以下固定来源；一般经典输入的适用范围已在 §184 写明。
 
