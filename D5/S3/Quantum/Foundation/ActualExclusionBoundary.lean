@@ -7,6 +7,7 @@
    digest: Whole exclusions cover the actual boundary and detect its boundary midpoints. -/
 
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
+import D5.S3.Topology.FiniteConvexFiberMap
 import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
 import Mathlib.Topology.Baire.Lemmas
@@ -352,9 +353,9 @@ private theorem boundary_ray_unique {K : Set V} (hK : Convex ℝ K) (hclosed : I
     apply hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior hc
       (subset_intrinsicClosure (intrinsicFrontier_subset hclosed hx))
     rw [hyline]
-    exact lineMap_mem_openSegment _ _ ⟨ha,ha1⟩
+    exact lineMap_mem_openSegment (𝕜 := ℝ) c x (t := a) ⟨ha,ha1⟩
   · rw [ha1, one_smul] at he
-    exact sub_right_injective he
+    exact sub_left_injective he
   · have hxline : x = AffineMap.lineMap c y a⁻¹ := by
       rw [AffineMap.lineMap_apply_module', ← he, smul_smul, inv_mul_cancel₀ ha.ne', one_smul]
       abel
@@ -362,7 +363,8 @@ private theorem boundary_ray_unique {K : Set V} (hK : Convex ℝ K) (hclosed : I
     apply hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior hc
       (subset_intrinsicClosure (intrinsicFrontier_subset hclosed hy))
     rw [hxline]
-    exact lineMap_mem_openSegment _ _ ⟨inv_pos.mpr ha, inv_lt_one_of_one_lt₀ h1a⟩
+    exact lineMap_mem_openSegment (𝕜 := ℝ) c y (t := a⁻¹)
+      ⟨inv_pos.mpr ha, inv_lt_one_of_one_lt₀ h1a⟩
 
 private theorem finite_shifted_fiber_controls
     (hclosed : IsClosed (C : Set V))
@@ -425,13 +427,13 @@ private theorem finite_shifted_fiber_controls
     obtain ⟨δ, hδ, hsub⟩ := (hBcompact b).exists_thickening_subset_open
       hT.isOpen_compl hdis.subset_compl_right
     exact ⟨Metric.thickening δ (B b), Metric.isOpen_thickening,
-      (hBconvex b).thickening δ, disjoint_compl_right_iff_subset.mp hsub,
+      (hBconvex b).thickening δ, Set.disjoint_left.mpr (fun z hz ht => hsub hz ht),
       Metric.self_subset_thickening hδ _⟩
   choose N hNo hNc hNT hBN using neighborhoods
   have hNz (b) : (0 : V) ∉ N b := by
     intro hz
     apply Set.disjoint_left.mp (hNT b) hz
-    simp [T]
+    by_cases hb : b ∈ O <;> simp [T,hb]
   let W (b : Quotient r) : Set (Quotient r) :=
     (q '' {x : S | shift x ∉ N b})ᶜ ∩ (if b ∈ O then O else univ)
   have hWo (b) : IsOpen (W b) := by
@@ -445,7 +447,7 @@ private theorem finite_shifted_fiber_controls
     by_contra hn
     exact hd.1 ⟨x, hn, hx⟩
   have hWself (b) : b ∈ W b := by
-    refine ⟨?_, by split_ifs with hb; exact hb; trivial⟩
+    refine ⟨?_, by by_cases hb : b ∈ O <;> simp [hb]⟩
     rintro ⟨x,hx,hxb⟩
     exact hx (hBN b ⟨x,⟨x,hxb,rfl⟩,rfl⟩)
   obtain ⟨s, hs⟩ := isCompact_univ.elim_finite_subcover W hWo
@@ -487,8 +489,13 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
             (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
             (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : V) ∉ N j) ∧
             (∀ j, Disjoint (N j) {z | SameRay ℝ ((v : V) - c) z} ∨ W j ⊆ O) ∧
-            ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base C u),
+            (∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base C u),
               Quotient.mk r x = b → (x : V) - c ∈ N j) ∧
+            ∃ A : C(Quotient r, V),
+              (∀ b, A b ∈ (fun z : V => z - c) '' base C u) ∧
+              (∀ b, ¬ SameRay ℝ ((v : V) - c) (A b)) ∧
+              ∀ x : intrinsicFrontier ℝ (base C u),
+                (0 : V) ∉ segment ℝ ((x : V) - c) (A (Quotient.mk r x))) ∧
         O ⊆ (Quotient.mk r) '' {x | f (x : V) = (t : ℝ)} ∧
         ∀ b ∈ O, ∃ x y : intrinsicFrontier ℝ (base C u),
           Quotient.mk r x = b ∧ Quotient.mk r y = b ∧
@@ -596,11 +603,55 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
         (base_compact hclosed hstrict).isClosed hc y.property a.property hz
       have hea : y = a := Subtype.ext he
       apply hd
-      have hda : d = b := by simpa [hea,hyb] using ha.symm
+      have hda : d = b := ha.symm.trans ((congrArg q hea).symm.trans hyb)
       exact hda.symm ▸ hb
-    exact ⟨c, hc, hct, y, hyb.symm ▸ hb, hy,
+    obtain ⟨n,W,N,hWo,hWcover,hNc,hNz,hNR,hcontrol⟩ :=
       finite_shifted_fiber_controls hclosed hstrict hgen hB r hq hqc hfib hc
-        (interior (F j)) isOpen_interior R hR hBR⟩
+        (interior (F j)) isOpen_interior R hR hBR
+    have hslicerep (d : Quotient r) : ∃ a : S, q a = d ∧
+        (d ∈ interior (F j) → f j.1 a = (t : ℝ)) := by
+      by_cases hd : d ∈ interior (F j)
+      · obtain ⟨x',y',hxd,hyd,hxt,hty⟩ := across d hd
+        obtain ⟨p,hp⟩ := hfib d
+        have hxD : (x' : V) ∈ exclusion C u p := hp ▸ ⟨x',hxd,rfl⟩
+        have hyD : (y' : V) ∈ exclusion C u p := hp ▸ ⟨y',hyd,rfl⟩
+        have ht : (t : ℝ) ∈ (f j.1).toAffineMap '' segment ℝ (x' : V) (y' : V) := by
+          rw [image_segment]
+          exact Icc_subset_segment ⟨hxt.le,hty.le⟩
+        obtain ⟨z,hz,hzt⟩ := ht
+        have hzD := ((exclusion_ball_faces hclosed hstrict hgen hB).1 p).2.2.1.segment_subset hxD hyD hz
+        obtain ⟨a,ha,haz⟩ := hp.symm ▸ hzD
+        exact ⟨a,ha,fun _ => by simpa [haz] using hzt⟩
+      · obtain ⟨a,ha⟩ := Quotient.exists_rep d
+        exact ⟨a,ha,fun h => (hd h).elim⟩
+    choose a ha haL using hslicerep
+    let B (d : Quotient r) : Set V :=
+      (fun z : V => z - c) '' (Subtype.val '' (q ⁻¹' {d}))
+    let shift : V →ᵃ[ℝ] V := (AffineEquiv.vaddConst ℝ c).symm.toAffineMap
+    have hBK (d) : B d ⊆ shift '' base C u := by
+      rintro z ⟨w,⟨a,ha,rfl⟩,rfl⟩
+      exact ⟨a,hSK a.property,rfl⟩
+    have hVN : ∀ k d, d ∈ W k → B d ⊆ N k := by
+      rintro k d hd z ⟨w,⟨a,ha,rfl⟩,rfl⟩
+      exact hcontrol k d hd a ha
+    have hLR : {z : V | f j.1 z = 0} ∩ R ⊆ {0} := by
+      rintro z ⟨hzL,hzR⟩
+      change f j.1 z = 0 at hzL
+      have he := congrArg (f j.1) (sameRay_iff_norm_smul_eq.mp hzR)
+      simp only [map_smul, smul_eq_mul, hzL, mul_zero] at he
+      have hvpos : 0 < f j.1 ((y : V) - c) := by rw [map_sub,hct]; linarith
+      have hn : ‖z‖ = 0 := (mul_eq_zero.mp he.symm).resolve_right hvpos.ne'
+      exact mem_singleton_iff.mpr (norm_eq_zero.mp hn)
+    obtain ⟨A,hAK,hAR,hseg⟩ :=
+      _root_.D5.S3.Topology.FiniteConvexFiberMap.exists_continuous_ray_avoiding_fiber_map
+        W hWo hWcover B N (shift '' base C u) {z : V | f j.1 z = 0} R (interior (F j))
+        ((base_convex C u).affine_image shift) ((convex_singleton (0 : ℝ)).linear_preimage (f j.1))
+        hNc hBK hVN hNz hNR hLR (fun d => (a d : V) - c)
+        (fun d => ⟨a d,⟨a d,ha d,rfl⟩,rfl⟩)
+        (by intro d hd; change f j.1 ((a d : V) - c) = 0; rw [map_sub,haL d hd,hct]; simp)
+    refine ⟨c,hc,hct,y,(by change q y ∈ _; rw [hyb]; exact hb),hy,n,W,N,hWo,hWcover,hNc,hNz,hNR,hcontrol,A,hAK,hAR,?_⟩
+    intro x
+    exact hseg (q x) ((x : V) - c) ⟨x,⟨x,rfl,rfl⟩,rfl⟩
   · intro b hb
     obtain ⟨x,y,hxb,hyb,hx,hy⟩ := across b hb
     obtain ⟨p,hp⟩ := hfib b

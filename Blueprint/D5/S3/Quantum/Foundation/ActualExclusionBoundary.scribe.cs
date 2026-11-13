@@ -99,17 +99,27 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
             Eq(Call("QuotientMk", r, x), b), Eq(Call("QuotientMk", r, y), b),
             Lt(Call("f", x), Call("RealCast", t)), Lt(Call("RealCast", t), Call("f", y)))))));
         var n = Id("n"); var j = Id("j"); var W = Id("W"); var N = Id("N");
-        var fin = Call("Fin", n);
+        var v = Id("v"); var A = Id("A"); var fin = Call("Fin", n);
+        var ray = Call("PositiveRay", Call("Subtract", v, c));
         var control = All("j", fin, All("b", Q, Imp(Mem(b, Call("W", j)),
             All("x", S, Imp(Eq(Call("QuotientMk", r, x), b),
                 Mem(Call("Subtract", x, c), Call("N", j))))));
-        var controls = Ex("n", Id("Naturals"),
-            Ex("W", Call("Maps", fin, Call("Sets", Q)),
+        var alternative = All("j", fin, new Formula.Logic(Call("Disjoint", Call("N", j), ray),
+            FormulaLogicOperator.Or, Call("Subset", Call("W", j), O)));
+        var averaged = Ex("A", Call("ContinuousMaps", Q, V), Conj(
+            All("b", Q, Mem(Call("A", b), Call("TranslatedBase", C, u, c))),
+            All("b", Q, Call("NotSameRay", real, Call("Subtract", v, c), Call("A", b))),
+            All("x", S, Call("NotMember", F.D(0), Call("segment", real,
+                Call("Subtract", x, c), Call("A", Call("QuotientMk", r, x)))))));
+        var controls = Ex("v", S, Conj(Mem(Call("QuotientMk", r, v), O),
+            Lt(Call("RealCast", t), Call("f", v)),
+            Ex("n", Id("Naturals"), Ex("W", Call("Maps", fin, Call("Sets", Q)),
                 Ex("N", Call("Maps", fin, Call("Sets", V)), Conj(
                     All("j", fin, Call("IsOpen", Call("W", j))),
                     All("b", Q, Ex("j", fin, Mem(b, Call("W", j)))),
                     All("j", fin, Call("Convex", real, Call("N", j))),
-                    All("j", fin, Call("NotMember", F.D(0), Call("N", j))), control))));
+                    All("j", fin, Call("NotMember", F.D(0), Call("N", j))),
+                    alternative, control, averaged))))));
         var level = Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, Call("base", C, u))),
             And(Eq(Call("f", c), Call("RealCast", t)), controls)));
         var slice = Ex("f", Call("LinearMaps", real, V, real), Ex("t", Id("Rationals"),
@@ -153,13 +163,13 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
             DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("original-all-repeated-rational-slice"),
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_rational_slice"),
-            H("An actual rational slice with crossing whole fibers"),
+            H("Actual rational slices, convex controls and whole-fiber averaging"),
             StatementSource.FromAuthor(F.Disp(RationalSliceStatement())), AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text("OriginalEBDomain has exactly the preceding closed generating pointed cone, strict original unit and entire positive-dimensional exclusion-ball hypotheses. V is nonzero. AllRepeated says every original label has a distinct original label with the same entire exclusion; it is used only as the contradiction branch. The setoid is again the actual boundary-midpoint relation. Its quotient remains compact Hausdorff with continuous closed canonical projection and whole original exclusions as its ambient fibers.")),
                 Paragraph(Text("Choose a finite linear coordinate basis of the original V and restrict its coordinates to aff(K). Distinct points in each positive-dimensional whole fiber differ in some coordinate. Two rational heights strictly between their values give a countable family indexed by a finite coordinate and two rationals. Its closed set is the intersection of the projection images of the actual boundary halfspaces below the lower height and above the upper height. Both images are compact and closed; every actual quotient point belongs to one such crossing set.")),
                 Paragraph(Text("Apply the pinned compact Hausdorff Baire theorem to this countable closed cover. Some crossing set has nonempty interior O. Let t be the rational midpoint of its heights and f the selected actual coordinate. Every b in O has actual boundary representatives x and y in its same whole fiber with f(x)<t<f(y). In particular the preimage of O contains actual points outside the slice. Convexity of each entire original fiber supplies a representative at the same level t, proving O is contained in the projection image of that one boundary slice. BoundaryLevelSet(f,t) denotes exactly the boundary subtype points x with f(x)=RealCast(t); no independent slice or supplier is assumed.")),
-                Paragraph(Text("The same level genuinely meets ri(K). Choose an actual relative interior point c. If f(c)=t it suffices. Otherwise use the straddling endpoint on the opposite side; the open segment from c to that endpoint lies in ri(K), and its linear image contains t. The displayed interior-level witness therefore follows from the original K. The two strict inequalities also force f to be nonzero. With this actual c as origin, each entire shifted fiber is compact and convex and avoids zero. A sufficiently small open metric thickening is a convex neighborhood still avoiding zero. Closedness of the actual quotient projection gives an open label neighborhood on which every entire shifted fiber lies in that same convex neighborhood. Compactness of the actual quotient gives a finite subcover W indexed by Fin(n), with convex controls N avoiding zero. The displayed control applies to every boundary point x in every whole fiber over W(j), not just to selected representatives. Subtract(x,c) is the ambient vector x-c and NotMember is nonmembership. RealCast is the rational-to-real coercion; AmbientImage and Fiber retain the meanings in the preceding statement.")),
-                Paragraph(Text("The source conclusion constructs a rational level of an actual coordinate, a common slice, a nonempty actual open label set and crossing representatives for every one of its whole fibers. It does not yet establish the exceptional-label versus forbidden-ray alternative for these controls, the ray-avoiding averaging map or its radial homotopy, and does not conclude singleton-label existence, boundary propagation or continuum multiplicity. Four-slot source registration remains unfinished under issue 29762. This is an application of existing convex geometry and Baire theory, with no originality claim."))),
+                Paragraph(Text("The same level genuinely meets ri(K). Choose an actual relative interior point c. If f(c)=t it suffices. Otherwise use the straddling endpoint on the opposite side; the open segment from c to that endpoint lies in ri(K), and its linear image contains t. The displayed interior-level witness therefore follows from the original K. The two strict inequalities also force f to be nonzero. With this actual c as origin, each entire shifted fiber is compact and convex and avoids zero. A sufficiently small open metric thickening is a convex neighborhood still avoiding zero. Closedness of the actual quotient projection gives an open label neighborhood on which every entire shifted fiber lies in that same convex neighborhood. Compactness of the actual quotient gives a finite subcover W indexed by Fin(n), with convex controls N avoiding zero. The displayed control applies to every boundary point x in every whole fiber over W(j), not just to selected representatives. Choose an actual boundary point v over O with f(v)>t. The positive ray R through v-c is closed. A ray from c meets the actual boundary only once: a smaller positive multiple is on an open segment from c to a boundary point, hence is in ri(K); a larger multiple gives the same contradiction with the roles reversed. Thus every whole fiber over a label outside O avoids R. For such labels, choose its convex thickening disjoint from both zero and R; for labels in O, intersect the label neighborhood with O. This supplies the displayed exceptional-label/ray-avoidance alternative for the actual finite controls. Subtract(x,c) is the ambient vector x-c and NotMember is nonmembership. RealCast is the rational-to-real coercion; AmbientImage and Fiber retain the meanings in the preceding statement.")),
+                Paragraph(Text("The source conclusion also instantiates FiniteConvexFiberMap.exists_continuous_ray_avoiding_fiber_map on this actual quotient and these whole original fibers shifted by c. For each label in O choose its representative in the same level slice; elsewhere choose any actual quotient representative. With L the kernel of f, L intersect R is contained in the zero singleton because f(v-c)>0. The resulting continuous A takes values in TranslatedBase(C,u,c), avoids R and has zero-free segments from every point of every whole shifted fiber. PositiveRay(w) is exactly the set of z with SameRay(real,w,z), including zero; NotSameRay is its negation. TranslatedBase is exactly the image of the entire original K under z mapped to z-c, and ContinuousMaps means continuous maps. No normalized replacement or independent fiber supplier enters this instantiation. The radial homotopy and transport to the existing sphere noncontractibility theorem remain further obligations. Singleton-label existence, boundary propagation and continuum multiplicity are not conclusions here. Four-slot source registration remains unfinished under issue 29762. This is an application of existing convex geometry and Baire theory, with no originality claim."))),
             DescribeRole.Theorem))));
 }

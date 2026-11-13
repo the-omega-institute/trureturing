@@ -148,12 +148,19 @@ abbrev arena : Arena where
       Subtype.val '' ((Quotient.mk a) ⁻¹' {b}) = exclusion P.C P.unit p) ∧
     ∃ (f : P.V →ₗ[ℝ] ℝ) (t : ℚ) (O : Set (Quotient a)),
       f ≠ 0 ∧ IsOpen O ∧ O.Nonempty ∧
-      (∃ c ∈ intrinsicInterior ℝ (base P.C P.unit), f c = (t : ℝ) ∧
-        ∃ (n : ℕ) (W : Fin n → Set (Quotient a)) (N : Fin n → Set P.V),
-          (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
-          (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : P.V) ∉ N j) ∧
-          ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base P.C P.unit),
-            Quotient.mk a x = b → (x : P.V) - c ∈ N j) ∧
+        (∃ c ∈ intrinsicInterior ℝ (base P.C P.unit), f c = (t : ℝ) ∧
+          ∃ v : intrinsicFrontier ℝ (base P.C P.unit), Quotient.mk a v ∈ O ∧ (t : ℝ) < f v ∧
+          ∃ (n : ℕ) (W : Fin n → Set (Quotient a)) (N : Fin n → Set P.V),
+            (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
+            (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : P.V) ∉ N j) ∧
+            (∀ j, Disjoint (N j) {z | SameRay ℝ ((v : P.V) - c) z} ∨ W j ⊆ O) ∧
+            (∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base P.C P.unit),
+              Quotient.mk a x = b → (x : P.V) - c ∈ N j) ∧
+            ∃ A : P.C(Quotient a, P.V),
+              (∀ b, A b ∈ (fun z : P.V => z - c) '' base P.C P.unit) ∧
+              (∀ b, ¬ SameRay ℝ ((v : P.V) - c) (A b)) ∧
+              ∀ x : intrinsicFrontier ℝ (base P.C P.unit),
+                (0 : P.V) ∉ segment ℝ ((x : P.V) - c) (A (Quotient.mk a x))) ∧
       O ⊆ (Quotient.mk a) '' {x | f (x : P.V) = (t : ℝ)} ∧
       ∀ b ∈ O, ∃ x y : intrinsicFrontier ℝ (base P.C P.unit),
         Quotient.mk a x = b ∧ Quotient.mk a y = b ∧
