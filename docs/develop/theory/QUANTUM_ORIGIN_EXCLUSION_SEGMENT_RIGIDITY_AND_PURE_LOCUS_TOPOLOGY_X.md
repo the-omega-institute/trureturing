@@ -4563,3 +4563,130 @@ $\mathsf D_2$ 对全部不相邻原纯对要求共同邻点，故直接蕴含 $\
 [Q132BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "126.1—126.7：完整E0、同标签种子零锥、全效应补吸收与原返回零尺的存在边界。"
 
 ## 追加锚（本行以下为增补区）
+## 133. 反射接触极小面给出的无 Inj 原态覆盖
+
+**定义 133.1（同一完整原域与所删前提）。** 沿用 (X130.1) 的同一个有限维实空间 $V$、闭尖生成锥 $C$、严格正原单位 $u$、整个 $K$、全部 $P$、全效应 $\mathcal E$、$\mathcal F_p$、$T_p$ 与完整 $D_p$。假设全局 $\mathrm{EB}_{\ge1}$：每个 $D_p$ 是维数 $d_p\ge1$ 的完整原仿射闭球，并沿用 VII103.2、IX116.1 的真面接口：每个非空真面或者是原纯单点，或者是某个完整 $D_p$，且 $P\cap D_p$ 是该球的相对边界。这里不输入 $\mathrm{Inj}$、$\mathrm{PR}$、$P$ 的紧性、光滑性、连续纯点选择、Jordan 结构、谱性或 $\mathrm{UF}$。交换 $p,q$ 只表示原零关系的端点交换，不表示测量先后。
+
+**定理 133.2（最大反射接触面给出的原态覆盖）。** 在定义 133.1 的完整原域中，
+
+$$
+K=\bigcup_{p\in P}\operatorname{conv}(\{p\}\cup D_p).
+\tag{X133.1}
+$$
+
+更准确地，每个 $x\in K$ 都有 $p\in P$、$y\in D_p$ 和 $\lambda\in[0,1]$，使
+
+$$
+x=\lambda p+(1-\lambda)y.
+\tag{X133.2}
+$$
+
+若 $x\in\operatorname{ri}K$，则可取 $0<\lambda<1$，并存在同一个原效应 $f\in\mathcal E$ 满足 $f(p)=1$、$f(y)=0$。
+
+**证明。** 先处理 $x\in\operatorname{ri}K$。由 $\mathrm{EB}_{\ge1}$，原仿射维数非零；令 $W_0=\ker u$，$L=K-x\subset W_0$。在辅助欧氏范数中取
+
+$$
+0<r\le R,\qquad r\overline B\subseteq L\subseteq R\overline B.
+\tag{X133.3}
+$$
+
+以下最大反射包含正是普通仿射直径存在事实的原坐标实现；Bárány--Hug--Schneider 第 1 节的定义及第 5 节所引 Soltan 的 assertion 3.3 只作为成熟背景，不在此另立一般凸几何定理。定义
+
+$$
+\tau=\max\{t\ge0:-tL\subseteq L\}.
+\tag{X133.4}
+$$
+
+可行集含有 $[0,r/R]$，又由 (X133.3) 有上界 $R/r$；对每个 $z\in L$，条件 $-tz\in L$ 对 $t$ 是闭条件，故 $\tau$ 达到且 $\tau>0$。存在 $z_0\in L$ 使 $v=-\tau z_0\in\partial L$。否则紧集 $-\tau L$ 与 $L$ 的补集有正距离，取足够小的 $\varepsilon>0$ 便有 $-(1+\varepsilon)\tau L\subseteq L$，与最大性矛盾。
+
+在 $v$ 取非零支撑泛函 $h\in W_0^*$，令
+
+$$
+M=h(v)=\max_Lh>0.
+$$
+
+对任意 $z\in L$，$-\tau z\in L$ 给出
+
+$$
+-\tau h(z)\le M,\qquad h(z)\ge-\frac M\tau.
+\tag{X133.5}
+$$
+
+而 $h(z_0)=-M/\tau$，所以
+
+$$
+m:=\min_Lh=-\frac M\tau<0.
+\tag{X133.6}
+$$
+
+取接触极小面
+
+$$
+A=\{z\in L:h(z)=m\}.
+\tag{X133.7}
+$$
+
+它是非空紧暴露面。取 $A$ 的一个极点 $z_*$；暴露面的极点也是 $L$ 的极点，故 $p=x+z_*\in P$。最大包含给 $w=-\tau z_*\in L$，且由 (X133.6)
+
+$$
+h(w)=-\tau m=M.
+$$
+
+置 $y=x+w$。则 $y\in K$，并且
+
+$$
+x=\frac{\tau}{1+\tau}p+\frac1{1+\tau}y.
+\tag{X133.8}
+$$
+
+这一步选的是同一最大反射包含的接触极小面极点；没有把任意接触点替换成极点而丢掉 $-\tau L\subseteq L$。
+
+定义整个原空间上的线性泛函
+
+$$
+f(\xi)=\frac{M u(\xi)-h(\xi-u(\xi)x)}{M-m}.
+\tag{X133.9}
+$$
+
+若 $c\in C\setminus\{0\}$，写 $c=u(c)k$、$k\in K$，则 $k-x\in L$，故 $m\le h(k-x)\le M$，从而
+
+$$
+0\le f(c)=u(c)\frac{M-h(k-x)}{M-m}\le u(c).
+\tag{X133.10}
+$$
+
+$c=0$ 时同样成立，所以 $f\in[0,u]_{C^*}=\mathcal E$。由 $h(z_*)=m$、$h(w)=M$，有 $f(p)=1$、$f(y)=0$，即 $y\in D_p$。这里支付的是整个原锥上的效应不等式，不使用 least-effect 假设。
+
+现在处理 $x\in\partial_{\rm rel}K$。若 $x$ 非纯，取包含它的相对支撑真面；真面接口使该面为某个完整 $D_p$，于是取 $y=x$、$\lambda=0$。若 $x$ 是原纯点，取 $p=x$、任意 $y\in D_p$、$\lambda=1$；$D_p$ 非空由 $d_p\ge1$。反向包含由 $K$ 的凸性立即成立，故得 (X133.1)--(X133.2)。证毕。
+
+**推论 133.3（三纯项径向分解及其边界约定）。** 对每个 $p\in P$，写同一完整球为
+
+$$
+D_p=c_p+B_p\overline B^{d_p}.
+\tag{X133.11}
+$$
+
+任意 $y\in D_p$ 都可写成
+
+$$
+y=\theta q+(1-\theta)r,\qquad q,r\in P\cap D_p,\quad 0\le\theta\le1,
+\tag{X133.12}
+$$
+
+其中 $q,r$ 是同一球的对径端点；$y=c_p$ 时任取一条直径并取 $\theta=1/2$。将 (X133.2) 与 (X133.12) 合并，得到
+
+$$
+x=\lambda p+(1-\lambda)\bigl(\theta q+(1-\theta)r\bigr),
+\tag{X133.13}
+$$
+
+允许 $\lambda=0,1$ 及 $\theta=0,1$，所以纯边界、非纯边界、球心和零系数都在同一式中。由 $q,r\in D_p$，原全效应分别给 $p\perp q$、$p\perp r$；不声称 $q\perp r$，也不声称统一权重下界、最大纯权、谱性或共同三结果。
+
+在 $\mathrm{EB3}$ 域，(X133.13) 可直接接回既有 [VIII113.7--113.9] 的 EB3+Pair 分类及原全效应 Born 字典；SAME130.3--130.4 已把未证边界准确定位为最后一对 $q,r$ 是否有原可区别性，即全域 Pair。若该边界另行补齐，接回的仍是同一原锥、同一原单位的复三能级静态字典。这里的实际增益只是把 SAME130.2 的覆盖前件从 $\mathrm{EB}_{\ge1}+\mathrm{Inj}$ 缩为完整 $\mathrm{EB}_{\ge1}$，并把覆盖步骤改写为接触极小面取原极点；不宣称因此严格扩大模型类，也不把它升级为一般凸几何的新定理。现有字典中的 $f_E(\Phi\rho)=\operatorname{Tr}(E\rho)$、纯比较 $|\langle\psi,\phi\rangle|^2$ 及有限数学 POVM 仍只按原来源复用。实际物理操作、复合与纠缠、CP、仪器、记录、时间和动力学继续是独立合同。
+
+**白话。** 把内点暂时移到原点，反向放大整个状态体，直到第一次接触；接触支撑面的最低处是一张完整小面，从这张小面取一个极点，反向点仍由同一次最大包含送回状态体的最高支撑面。两端用同一张全原效应读成一和零，于是内点剥出一个原纯点，余量落在它的完整排除球内。球内余量再沿一条直径拆成两个原纯端点。球的对径只说明它们在同一排除球中相反；最后这两个端点能否由整个原效应区分，仍是未证边界。
+
+[SAME130]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "130.1--130.2：同一完整原域与原仿射直径覆盖；旧覆盖的端点纯性使用 Inj。"
+[Q133BHS]: https://arxiv.org/html/1403.7158v2 "Imre Bárány, Daniel Hug and Rolf Schneider, Affine diameters of convex bodies；§1 的定义、§5 的存在性背景及所引 Soltan assertion 3.3。"
+
+## 追加锚（本行以下为增补区）
