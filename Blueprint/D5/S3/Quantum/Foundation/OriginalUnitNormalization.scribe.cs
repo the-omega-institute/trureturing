@@ -377,7 +377,7 @@ internal sealed class OriginalUnitNormalizationDocument : IScribeDocumentDefinit
         return result;
     }
     private static Formula Call(string name, params Formula[] arguments) =>
-        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+        new Formula.Apply(new Formula.NamedConstant(FormulaIdentifier.Create(name)), [.. arguments]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Ex(string name, Formula type, Formula body) =>

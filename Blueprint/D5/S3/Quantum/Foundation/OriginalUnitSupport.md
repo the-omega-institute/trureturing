@@ -76,7 +76,7 @@ $$\forall F \in Type,\; \forall iota \in Type,\; [\operatorname{RCLike}\left(F\r
 
 *Commentary.*
 
-This consumed helper directly reuses the pinned functional calculus and invertible matrix identities. Its unchanged proof supplies the determinant maximum, inverse cross-trace uniqueness and the normalization in OriginalUnitNormalization. It is bind-only proof organization, with no independent escape or novelty claim.
+For a positive definite native real or complex matrix A, the principal square root of its inverse is Hermitian and invertible. Its square is A inverse, and its congruence sends A to the identity. These identities give the inverse square roots used in determinant maximization, inverse cross-trace uniqueness and original-unit normalization.
 
 ## References
 
