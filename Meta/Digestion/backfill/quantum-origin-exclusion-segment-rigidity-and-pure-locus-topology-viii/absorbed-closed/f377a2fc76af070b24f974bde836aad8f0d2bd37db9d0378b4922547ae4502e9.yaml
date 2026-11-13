@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f377a2fc76af070b24f974bde836aad8f0d2bd37db9d0378b4922547ae4502e9
+  normalized_sha256: sha256:f377a2fc76af070b24f974bde836aad8f0d2bd37db9d0378b4922547ae4502e9
+cas_ref: sha256:f377a2fc76af070b24f974bde836aad8f0d2bd37db9d0378b4922547ae4502e9
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/MixedExclusionGeometry.original_mixed_exclusion_contraction
+    target_statement_id: sha256:34753f4d35052d2df19ada529d48322893e6c67b1fdfe19181994ececd3a45ae
+receipts:
+  unresolved_subitems: []

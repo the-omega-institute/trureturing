@@ -1,0 +1,17 @@
+**引理 118.4（不预设纯点闭性的极限标签判据）。** 在 $\mathrm{EB}_{\ge1}+\mathrm{Inj}$ 下，设 $p_n\in P,p_n\to x$，$D_{p_n}\to G$ 为非空紧集的Hausdorff收敛。
+若 $G$ 含两个不同点，则 $x\in P$；若 $G=\{q\}$ 而 $x\notin P$，则
+
+$$
+q\in P,\qquad x\in\operatorname{ri}D_q.
+\tag{IX118.5}
+$$
+
+若极限标签本来就是纯点 $p$，则不论Inj成立与否，都有 $G\subseteq D_p$。
+
+证明。取 $e_n\in\mathcal A_{p_n}$，允许再取子列使 $e_n\to e\in\mathcal E$，得到 $e(x)=1,e|_G=0$。
+作有限正权纯分解 $x=\sum_i\lambda_i s_i$。每个 $e(s_i)=1$，故 $G\subseteq D_{s_i}$。
+若 $G$ 非点，不同球不能共同包含它，全部 $D_{s_i}$ 相同；Inj迫使全部 $s_i$ 相同，$x$ 纯。
+若 $G=\{q\}$、$x$ 混，则该分解至少含两个不同纯点，其球由Inj不同，共同包含 $q$，交点规则迫使 $q$ 纯。
+补效应 $u-e$ 确认 $q$ 且在 $x$ 读零，故 $x\in D_q$；混点不在球的纯边界上，所以 $x\in\operatorname{ri}D_q$。
+纯极限标签的末项由 $e(p)=1,e|_G=0$ 直接成立。证毕。
+

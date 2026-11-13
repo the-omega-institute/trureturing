@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Foundation;
 
@@ -21,6 +23,14 @@ internal sealed class SectionROGFrameDocument : IScribeDocumentDefinition
                 "ROG(L) means that every X in L which is PSD admits a finite list of nonzero native vectors w(j), each w(j)w(j)* in L, whose rank one matrices sum exactly to X. The list is indexed by Fin(m) for some natural m. Zero has an empty decomposition. This is finite generation by original native rank one PSD matrices, with no Jordan closure or supplied frame.", DescribeRole.Definition),
             Entry("all-native-pure-ranks", "pureRanks", "All normalized native rank one points",
                 "pureRanks(L) consists of every X for which there exists a native Euclidean vector v with norm one, vv*=X and X in L. No proper subconfiguration is selected.", DescribeRole.Definition),
+            Entry("native-rank-one-real-scaling", "rankOne_real_smul", "Real scaling of native outer products",
+                "For every native vector v and real scalar r, rankOne(r v) equals (r r) rankOne(v). The original declaration is public for the same-Psi rank-one reconstruction consumer in OriginalUnitNormalization; this is an existing algebraic identity.", DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rank-one-trace-norm"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_trace_norm"),
+                H("Rank one trace is squared native vector norm"),
+                StatementSource.FromAuthor(Disp(TraceNormFormula())),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                    "For every real or complex native field F, finite index type J with decidable equality, and vector v in the native Euclidean space, the real trace of vv* equals the squared norm of v. The vector may be zero. The original declaration supplies the trace estimate for congruence on a projective ROG join."))), DescribeRole.Theorem),
             Entry("whole-original-pure-carrier", "whole_pure_carrier", "Extreme points equal the entire rank one family",
                 "For every real subspace L satisfying ROG(L), the real extreme points of the entire base(L) equal pureRanks(L). No assumption I in L is needed for this equality. Normalize every nonzero ROG term w(j) by its Euclidean norm and use its squared norm as the positive coefficient. The trace-one equation makes the coefficients sum to one, proving base(L)=convexHull(pureRanks(L)). Conversely a unit rank one p is extreme: the trace pairing <p,X> is at most one for every normalized PSD X, and equality forces X=p by the trace bound <X,X><=tr(X)^2 and the squared norm of X-p. A nontrivial segment decomposition of p therefore has both endpoints equal to p. This equality is consumed in rog_frame to identify every frame point as an original pure state.", DescribeRole.Theorem),
             Entry("full-original-rog-frame", "rog_frame", "A full orthonormal frame with the prescribed entry",
@@ -49,6 +59,17 @@ internal sealed class SectionROGFrameDocument : IScribeDocumentDefinition
             Paragraph(Text("Exact geometry correspondence: M is the set (I+L-perp) intersect PSD in the same native ambient H. HermitianMat.isClosed_nonneg and Submodule.closed_of_finiteDimensional give closedness. Pairing M-I with I in L gives trace(M)=card(J). HermitianMat.le_trace_smul_one puts the set in [0,card(J) I], and isCompact_Icc.of_isClosed_subset gives compactness. I supplies nonemptiness; linear combinations with nonnegative real coefficients summing to one preserve PSD and the affine constraint, giving convexity. affineSpan_le and AffineSubspace.direction_le give the direction inclusion in L-perp. For each N in L-perp use the same ambient majorization and a=(t+1)^(-1)>0: I+aN is PSD and belongs to M. AffineSubspace.vsub_mem_direction between this point and I, followed by multiplication by a^(-1), yields N. Thus the direction is exactly L-perp and its real finrank is c. All quantifiers include c=0 and the empty ambient type.")),
             Paragraph(Text("The full frame below consumes the native rankOne operands, positivity and quadratic pairing. Its sum identity applies pinned OrthonormalBasis.sum_rankOne_eq_id directly and converts the operator identity by Matrix.toEuclideanLin.symm, InnerProductSpace.symm_toEuclideanLin_rankOne and Matrix.toLpLin_symm_id. The normalization, convex-hull and whole-pure-carrier helpers organize this live construction; they assert no independent mathematical novelty. The new step is the complementary-projector ROG construction of a new allowed orthogonal vector and its contradiction with maximality.")),
             Paragraph(Text("The full original frame and the positive-extension, finite-effect and geometry applications above preserve the normalized 96.1 clauses of QuantumVI Lemma 96.2. The application consequences reuse existing results; the new frame content is the complementary-projector maximality construction. The original arbitrary-unit support and determinant normalization from 93.2/94.2 remains an outside bridge. These results do not establish full Z0, classification, PRE, the separate QuantumVII facet theorem, or section 97 completion. The existing native Hermitian projector and orthonormal-basis results are reused; literature priority is not asserted.")))))));
+
+    private static Formula TraceNormFormula() =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("F"), F.Id("Type"),
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("J"), F.Id("Type"),
+        Seq(OpenBracket, Call("RCLike", F.Id("F")), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", F.Id("J")), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", F.Id("J")), CloseBracket, Sp,
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("v"),
+                Call("EuclideanSpace", F.Id("F"), F.Id("J")),
+                new Formula.Relation(Call("trace", Call("rankOne", F.Id("v"))),
+                    FormulaRelationOperator.Equal, new Formula.Power(Seq(Vert, Sp, F.Id("v"), Vert), D(2)))))));
 
     private static DocumentBlock.Describe Entry(string id, string declaration, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),

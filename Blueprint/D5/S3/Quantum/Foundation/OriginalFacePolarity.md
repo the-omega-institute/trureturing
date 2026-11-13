@@ -1,0 +1,114 @@
+# Original face polarity and the projective plane
+
+## Abstract
+
+The original zero relation identifies every pure point with an entire nonpoint proper face, reverses the whole face order, and gives a projective plane when the exclusion balls have dimension at least two.
+
+**Theorem 1.1 (Two original pure points in every exclusion ball).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalFacePolarity.pure_pair_in_ball`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalFacePolarity.pure_pair_in_ball` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every entire positive-dimensional exclusion ball contains two distinct original pure points. Compact convex faciality and Krein-Milman prevent its pure boundary from collapsing to one point.
+
+**Theorem 1.2 (Whole original pure boundary).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The intersection of the entire exclusion face with all original pure states equals the image of the whole Euclidean unit sphere under its original ball chart.
+
+Let V be a nonzero finite dimensional real normed vector space. C is the original closed generating pointed convex cone, and the real-linear functional u is strictly positive on C except at zero. K is the entire normalized base, P is the set of all its extreme points, and proper effects are all real-linear f satisfying 0<=f<=u on C. D(p) is the entire original mixed-state exclusion set. Every D(p) is an injective affine image of a whole closed unit ball of positive finite dimension; each entire minimal face of a distinct pure pair is proper. No finiteness or closedness of P, closedness premise on input faces, least effect, numerical reciprocity, common support, projectivity, self-duality, Jordan model or Born rule is assumed.
+
+**Definition 1.3 (All nonpoint proper original faces).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall F \in \operatorname{Set}\left(V\right),\; F\in \operatorname{Line}\left(C, u\right) \Leftrightarrow \left(\operatorname{Nontrivial}\left(F\right) \land \left(\left(\operatorname{Convex}\left(\mathbb{R}, F\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), F\right)\right) \land F\neq \operatorname{base}\left(C, u\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalFacePolarity.Line` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The line carrier is the subtype of all original convex extreme subsets F of K which contain two different points and differ from K. Point-line incidence is membership of the original point value in F. There is no closedness field. Its representation by the pure boundary F intersect P is proved injective.
+
+**Definition 1.4 (The guarded zero complement).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall F \in \operatorname{Set}\left(V\right),\; \forall x \in V,\; x\in \operatorname{zeroComplement}\left(C, u, F\right) \Leftrightarrow \left(x\in \operatorname{base}\left(C, u\right) \land \left(\forall q \in \operatorname{pure}\left(C, u\right),\; \operatorname{value}\left(q\right)\in F \Rightarrow x\in \operatorname{exclusion}\left(C, u, q\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalFacePolarity.zeroComplement` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The intersection is taken inside K, over every original pure q whose value belongs to F. In particular an empty index set gives K. The first endpoint x may be any mixed state of K; it is never restricted to P.
+
+**Definition 1.5 (The extra dimension condition).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{thickExclusionBalls}\left(C, u\right) \Leftrightarrow \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \exists b \in \operatorname{ExclusionChart}\left(C, u, p\right),\; 2 \le \operatorname{dim}\left(b\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalFacePolarity.thickExclusionBalls` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Only the projective-plane conclusion uses this stronger condition. The other identities allow dimension one and therefore line segments.
+
+**Definition 1.6 (The full original-face structure).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{Nonempty}\left(\operatorname{FacePolarity}\left(C, u\right)\right) \Leftrightarrow \left(\operatorname{Nonempty}\left(\operatorname{pure}\left(C, u\right)\right) \land \left(\exists e \in \operatorname{Equiv}\left(\operatorname{pure}\left(C, u\right), \operatorname{Line}\left(C, u\right)\right),\; \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{value}\left(\operatorname{apply}\left(e, p\right)\right) = \operatorname{exclusion}\left(C, u, p\right)\right) \land \left(\left(\forall L \in \operatorname{Line}\left(C, u\right),\; \forall M \in \operatorname{Line}\left(C, u\right),\; L\neq M \Rightarrow \left(\exists r \in \operatorname{pure}\left(C, u\right),\; \operatorname{inter}\left(\operatorname{value}\left(L\right), \operatorname{value}\left(M\right)\right) = \left\{\operatorname{value}\left(r\right)\right\}\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{not}\left(p\in \operatorname{apply}\left(e, p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall L \in \operatorname{Line}\left(C, u\right),\; p\in L \Leftrightarrow \operatorname{apply}\left(\operatorname{inverse}\left(e\right), L\right)\in \operatorname{apply}\left(e, p\right)\right) \land \left(\left(\operatorname{zeroComplement}\left(C, u, \left\{\right\}\right) = \operatorname{base}\left(C, u\right) \land \left(\operatorname{zeroComplement}\left(C, u, \operatorname{base}\left(C, u\right)\right) = \left\{\right\} \land \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{zeroComplement}\left(C, u, \left\{\operatorname{value}\left(p\right)\right\}\right) = \operatorname{exclusion}\left(C, u, p\right) \land \operatorname{zeroComplement}\left(C, u, \operatorname{exclusion}\left(C, u, p\right)\right) = \left\{\operatorname{value}\left(p\right)\right\}\right)\right)\right) \land \left(\left(\left(\forall F \in \operatorname{Set}\left(V\right),\; \operatorname{Convex}\left(\mathbb{R}, \operatorname{zeroComplement}\left(C, u, F\right)\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), \operatorname{zeroComplement}\left(C, u, F\right)\right)\right) \land \left(\left(\forall F \in \operatorname{Set}\left(V\right),\; \left(\operatorname{Convex}\left(\mathbb{R}, F\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), F\right)\right) \Rightarrow \operatorname{zeroComplement}\left(C, u, \operatorname{zeroComplement}\left(C, u, F\right)\right) = F\right) \land \left(\operatorname{Antitone}\left(\operatorname{zeroComplement}\left(C, u\right)\right) \land \left(\forall F \in \operatorname{Set}\left(V\right),\; \forall G \in \operatorname{Set}\left(V\right),\; \left(\left(\operatorname{Convex}\left(\mathbb{R}, F\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), F\right)\right) \land \left(\operatorname{Convex}\left(\mathbb{R}, G\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), G\right)\right)\right) \Rightarrow \left(\operatorname{subset}\left(F, G\right) \Leftrightarrow \operatorname{subset}\left(\operatorname{zeroComplement}\left(C, u, G\right), \operatorname{zeroComplement}\left(C, u, F\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall b \in \operatorname{ExclusionChart}\left(C, u, p\right),\; \operatorname{inter}\left(\operatorname{exclusion}\left(C, u, p\right), \operatorname{pure}\left(C, u\right)\right) = \operatorname{image}\left(\operatorname{param}\left(b\right), \operatorname{sphere}\left(0, 1\right)\right)\right) \land \left(\forall L \in \operatorname{Line}\left(C, u\right),\; \forall M \in \operatorname{Line}\left(C, u\right),\; \operatorname{inter}\left(\operatorname{value}\left(L\right), \operatorname{pure}\left(C, u\right)\right) = \operatorname{inter}\left(\operatorname{value}\left(M\right), \operatorname{pure}\left(C, u\right)\right) \Rightarrow L = M\right)\right) \land \left(\operatorname{thickExclusionBalls}\left(C, u\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{ProjectivePlane}\left(\operatorname{pure}\left(C, u\right), \operatorname{Line}\left(C, u\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Foundation/OriginalFacePolarity.FacePolarity` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The structure contains a point-line equivalence with value D(p), singleton intersections of distinct lines, no self-incidence, incidence reversal with the inverse equivalence, all four zero-complement endpoints, convex faciality of every zero complement, double complementation on every original convex face, inclusion reversal and its equivalence on faces, the whole pure-boundary chart identity and injectivity of the boundary representation. It also contains an actual Mathlib Configuration.ProjectivePlane on these original carriers under the extra dimension condition. The equivalence supplies both inverse identities.
+
+**Theorem 1.7 (Original point-face duality, mixed double orthogonality and projective polarity).**
+
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \left(\operatorname{Nontrivial}\left(V\right) \land \left(\operatorname{IsClosed}\left(C\right) \land \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x\neq 0 \Rightarrow 0< \operatorname{apply}\left(u, x\right)\right)\right) \land \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \land \left(\operatorname{exclusionBalls}\left(C, u\right) \land \operatorname{pairProper}\left(C, u\right)\right)\right)\right)\right)\right) \Rightarrow \left(\operatorname{Nonempty}\left(\operatorname{pure}\left(C, u\right)\right) \land \left(\exists e \in \operatorname{Equiv}\left(\operatorname{pure}\left(C, u\right), \operatorname{Line}\left(C, u\right)\right),\; \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{value}\left(\operatorname{apply}\left(e, p\right)\right) = \operatorname{exclusion}\left(C, u, p\right)\right) \land \left(\left(\forall L \in \operatorname{Line}\left(C, u\right),\; \forall M \in \operatorname{Line}\left(C, u\right),\; L\neq M \Rightarrow \left(\exists r \in \operatorname{pure}\left(C, u\right),\; \operatorname{inter}\left(\operatorname{value}\left(L\right), \operatorname{value}\left(M\right)\right) = \left\{\operatorname{value}\left(r\right)\right\}\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{not}\left(p\in \operatorname{apply}\left(e, p\right)\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall L \in \operatorname{Line}\left(C, u\right),\; p\in L \Leftrightarrow \operatorname{apply}\left(\operatorname{inverse}\left(e\right), L\right)\in \operatorname{apply}\left(e, p\right)\right) \land \left(\left(\operatorname{zeroComplement}\left(C, u, \left\{\right\}\right) = \operatorname{base}\left(C, u\right) \land \left(\operatorname{zeroComplement}\left(C, u, \operatorname{base}\left(C, u\right)\right) = \left\{\right\} \land \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{zeroComplement}\left(C, u, \left\{\operatorname{value}\left(p\right)\right\}\right) = \operatorname{exclusion}\left(C, u, p\right) \land \operatorname{zeroComplement}\left(C, u, \operatorname{exclusion}\left(C, u, p\right)\right) = \left\{\operatorname{value}\left(p\right)\right\}\right)\right)\right) \land \left(\left(\left(\forall F \in \operatorname{Set}\left(V\right),\; \operatorname{Convex}\left(\mathbb{R}, \operatorname{zeroComplement}\left(C, u, F\right)\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), \operatorname{zeroComplement}\left(C, u, F\right)\right)\right) \land \left(\left(\forall F \in \operatorname{Set}\left(V\right),\; \left(\operatorname{Convex}\left(\mathbb{R}, F\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), F\right)\right) \Rightarrow \operatorname{zeroComplement}\left(C, u, \operatorname{zeroComplement}\left(C, u, F\right)\right) = F\right) \land \left(\operatorname{Antitone}\left(\operatorname{zeroComplement}\left(C, u\right)\right) \land \left(\forall F \in \operatorname{Set}\left(V\right),\; \forall G \in \operatorname{Set}\left(V\right),\; \left(\left(\operatorname{Convex}\left(\mathbb{R}, F\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), F\right)\right) \land \left(\operatorname{Convex}\left(\mathbb{R}, G\right) \land \operatorname{IsExtreme}\left(\mathbb{R}, \operatorname{base}\left(C, u\right), G\right)\right)\right) \Rightarrow \left(\operatorname{subset}\left(F, G\right) \Leftrightarrow \operatorname{subset}\left(\operatorname{zeroComplement}\left(C, u, G\right), \operatorname{zeroComplement}\left(C, u, F\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall b \in \operatorname{ExclusionChart}\left(C, u, p\right),\; \operatorname{inter}\left(\operatorname{exclusion}\left(C, u, p\right), \operatorname{pure}\left(C, u\right)\right) = \operatorname{image}\left(\operatorname{param}\left(b\right), \operatorname{sphere}\left(0, 1\right)\right)\right) \land \left(\forall L \in \operatorname{Line}\left(C, u\right),\; \forall M \in \operatorname{Line}\left(C, u\right),\; \operatorname{inter}\left(\operatorname{value}\left(L\right), \operatorname{pure}\left(C, u\right)\right) = \operatorname{inter}\left(\operatorname{value}\left(M\right), \operatorname{pure}\left(C, u\right)\right) \Rightarrow L = M\right)\right) \land \left(\operatorname{thickExclusionBalls}\left(C, u\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{ProjectivePlane}\left(\operatorname{pure}\left(C, u\right), \operatorname{Line}\left(C, u\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalFacePolarity.original_face_polarity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For different D(p) and D(q), the whole minimal face of p,q is D(r). Original zero symmetry puts r in their intersection. The intersection is an original convex face of both whole balls. If it contained two points, ball facial rigidity would make it equal both balls. It is therefore exactly the original pure singleton r. This argument uses only that the balls differ, before injectivity of p to D(p) has been proved.
+
+Suppose different pure p,q had the same exclusion L, and let M be their whole minimal face. Since p belongs to M and does not belong to L, the two nonpoint proper faces differ. Their unique pure intersection r belongs to both. Zero symmetry puts p,q in D(r), so original minimality gives M contained in D(r). Ball rigidity gives M=D(r), contradicting r in M and r not in D(r). Thus p to D(p) is injective. The complete classification of original proper faces gives surjectivity onto the entire line carrier.
+
+Every compact nonpoint exclusion ball has two different extreme points: if its extreme set were a singleton, the closed-convex-hull form of Krein-Milman would collapse the whole ball to that singleton. These extreme points are original pure points because D(p) is a face of K. Choose two such a,b in D(p). Injectivity and the intersection theorem give D(a) intersect D(b)={p}. Every mixed x in the zero complement of D(p) lies in both sets, hence equals p. The reverse inclusion uses zero symmetry for every pure point of D(p). The two chosen points are proof witnesses; the zero-complement definition retains its entire pure index set.
+
+The pure carrier is nonempty because the original pure-span theorem gives span(P)=V and V is nonzero. Antitonicity places K's zero complement inside {p} and inside D(p), so it is empty. The empty and pure-singleton endpoints follow from the guarded definition. Each zero complement is a convex face of K by the faciality of every exclusion, including the empty-index case. The complete classification of all original proper convex faces then proves double complementation for empty, K, singleton and ball faces, without assuming any input face closed. Applying antitonicity twice gives the equivalence of the two face inclusion orders.
+
+An injective affine chart transports extreme points in both directions. The entire extreme set of a closed Euclidean unit ball is its unit sphere, so D(p) intersect P is exactly the image of the whole sphere. Two different original faces cannot share this boundary, since it contains two points while their intersection is a singleton. For chart dimension at least two, the images of e0, minus e0 and e1 are three different pure points on the line.
+
+The actual configuration has original pure points and all original nonpoint proper faces as lines. A line's pole is a point outside it, and each point lies outside its pole-line. Distinct lines intersect uniquely, and distinct pure points determine their whole minimal pair face. To construct the nondegenerate configuration, choose three different a,b,d on a line and c outside it. On the line cd choose e different from c,d. Uniqueness of intersections makes e avoid ab, ac and bc. With p1=a,p2=b,p3=c and l1=ae,l2=bc,l3=be, the required eight assertions are a not in bc, a not in be, b not in ae, b in bc, b in be, c not in ae, c in bc and c not in be. These fill Configuration.ProjectivePlane on the original carriers.
+
+The point-line equivalence and original pure zero symmetry identify p in L with the inverse pole of L in D(p). Together with p not in D(p), this is an incidence-reversing polarity without absolute points. No field coordinatization, Desargues property, projective-plane classification or physical realization follows here. When segments are allowed the face identities remain valid; the projective-plane conclusion retains its separate dimension premise. No literature priority is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.FacePolarity`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.Line`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.original_face_polarity`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.pure_pair_in_ball`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.thickExclusionBalls`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalFacePolarity.zeroComplement`
+- Dependency: [D5/S3/Quantum/Foundation/ExclusionBallFaces](ExclusionBallFaces.md)
