@@ -47,7 +47,14 @@ fixed-dimension endpoint asymptotic does not answer this question. The stopping
 rule also differs from ending with all coordinates zero: a coordinate may
 reach zero while the others remain positive.
 
-## Formal result
+## Gap
+
+The source question requires uniform control as both height and dimension
+grow. An exact endpoint formula or a fixed-dimension asymptotic alone does
+not supply that control. The counting bridge and estimates below close this
+mathematical gap for the historical limit.
+
+### Formal result
 
 `D5.S1.Words.LatticePaths.KotesovecA263160.diagonal_limit` proves
 
@@ -71,7 +78,9 @@ The source-bound audit is unfinished under
 [issue #29924](https://github.com/the-omega-institute/trureturing/issues/29924).
 No resolved-problem KPI is claimed.
 
-## Counting bridge
+## Route
+
+### Counting bridge
 
 For `m=h-1`, let `I_t` count words of nonempty labelled coordinate subsets
 in which every coordinate occurs at most `m` times. Such a word has length
@@ -107,7 +116,7 @@ nonnegative endpoint coordinates. Summing those endpoints over the box
 `0 <= r_i <= m` gives this truncated-binomial moment. The counting/moment
 representation is not claimed as a new external mathematical solution.
 
-## Uniform estimates
+### Uniform estimates
 
 Vandermonde's identity and the standard binomial factorial bounds give
 
