@@ -3,6 +3,7 @@ bibkey: childs2003gluedtrees
 authors: Andrew M. Childs; Richard Cleve; Enrico Deotto; Edward Farhi; Sam Gutmann; Daniel A. Spielman
 year: 2003
 title: "Exponential algorithmic speedup by a quantum walk"
+doi: 10.48550/arXiv.quant-ph/0209131
 url: https://arxiv.org/abs/quant-ph/0209131v2
 claim: "Section III.4, Lemma 2 supplies the inverse-cubic eigenvalue separation used in the time-averaged EXIT estimate."
 strata_touched:
