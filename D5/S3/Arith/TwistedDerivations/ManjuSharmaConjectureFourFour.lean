@@ -11,9 +11,13 @@ import Mathlib.NumberTheory.Zsqrtd.GaussianInt
 import Mathlib.LinearAlgebra.Matrix.Adjugate
 import Mathlib.LinearAlgebra.Matrix.ToLin
 
+/-! The printed criterion is encoded on the actual ring of integers. -/
+
 namespace D5.S3.Arith.TwistedDerivations.ManjuSharmaConjectureFourFour
 
 noncomputable section
+
+set_option maxHeartbeats 40000
 
 open NumberField Matrix
 
@@ -35,7 +39,8 @@ def claim : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p ^ k} ℚ K]
     [NeZero (p ^ k)] (ζ : K) (hζ : IsPrimitiveRoot ζ (p ^ k)),
   let z := hζ.toInteger
-  let pb := hζ.integralPowerBasis
+  ∀ (pb : PowerBasis ℤ (RingOfIntegers K)),
+    pb.gen = z → pb.dim = p ^ (k - 1) * (p - 1) →
   ∀ (σ τ : RingOfIntegers K →ₐ[ℤ] RingOfIntegers K), σ ≠ τ →
   ∀ (u v e m : ℕ),
     u < p ^ k → v < p ^ k → Nat.Coprime u (p ^ k) → Nat.Coprime v (p ^ k) →
@@ -50,6 +55,9 @@ def claim : Prop :=
     ((∀ i, (p : ℤ) ∣ C i) → IsInner σ τ D)
 
 abbrev K4 := CyclotomicField 4 ℚ
+private instance : IsCyclotomicExtension {4} ℚ K4 :=
+  CyclotomicField.isCyclotomicExtension 4 ℚ
+
 abbrev O4 := RingOfIntegers K4
 
 def root : K4 := IsCyclotomicExtension.zeta 4 ℚ K4
@@ -60,12 +68,115 @@ def z : O4 := root_primitive.toInteger
 
 def pb : PowerBasis ℤ O4 := root_primitive.integralPowerBasis
 
-#check root_primitive.toInteger_isPrimitiveRoot
-#check IsPrimitiveRoot.pow_div_gcd
-#check IsPrimitiveRoot.eq_neg_one_of_two_right
-#check Zsqrtd.lift
-#check Zsqrtd.lift_injective
+private theorem z_sq : z * z = (-1 : O4) := by
+  have h := root_primitive.toInteger_isPrimitiveRoot.pow_div_gcd 2 (by decide)
+  have h2 : IsPrimitiveRoot (z ^ 2) 2 := by simpa [z] using h
+  simpa [pow_two] using h2.eq_neg_one_of_two_right
+
+private theorem pb_dim : pb.dim = 2 := by
+  change root_primitive.integralPowerBasis.dim = 2
+  rw [IsPrimitiveRoot.integralPowerBasis_dim]
+  decide
+
+private def b : Module.Basis (Fin 2) ℤ O4 := pb.basis.reindex (finCongr pb_dim)
+
+private theorem b_apply (i : Fin 2) : b i = z ^ (i : ℕ) := by
+  rw [b, Module.Basis.reindex_apply, PowerBasis.basis_eq_pow]
+  have hg : pb.gen = z := root_primitive.integralPowerBasis_gen
+  rw [hg]
+  rfl
+
+private def lift : GaussianInt →+* O4 := Zsqrtd.lift ⟨z, by simpa using z_sq⟩
+
+private theorem lift_apply (a c : ℤ) : lift ⟨a,c⟩ = (a : O4) + (c : O4) * z := rfl
+
+private theorem lift_bijective : Function.Bijective lift := by
+  refine ⟨Zsqrtd.lift_injective _ ?_, ?_⟩
+  · intro a h
+    have := mul_self_nonneg a
+    omega
+  · intro x
+    refine ⟨⟨b.repr x 0, b.repr x 1⟩, ?_⟩
+    have hx := b.sum_repr x
+    simpa [Fin.sum_univ_two, b_apply, pow_zero, pow_one, zsmul_eq_mul,
+      lift_apply] using hx
+
+/-- The Gaussian integer model is identified with the actual integer ring, preserving its root. -/
+def gaussianEquiv : GaussianInt ≃ₐ[ℤ] O4 :=
+  AlgEquiv.ofBijective lift.toIntAlgHom lift_bijective
+
+private theorem gaussianEquiv_apply (a c : ℤ) :
+    gaussianEquiv ⟨a,c⟩ = (a : O4) + (c : O4) * z := rfl
+
+private theorem gaussianEquiv_i : gaussianEquiv (Zsqrtd.sqrtd : GaussianInt) = z := by
+  simpa [Zsqrtd.sqrtd] using gaussianEquiv_apply 0 1
+
+private def gaussianD : GaussianInt →ₗ[ℤ] GaussianInt :=
+  AddMonoidHom.toIntLinearMap
+    { toFun := fun x => (x.im : GaussianInt)
+      map_zero' := by simp
+      map_add' := fun x y => by simp }
+
+private theorem gaussianD_law (x y : GaussianInt) :
+    gaussianD (x * y) = gaussianD x * star y + x * gaussianD y := by
+  change ((x * y).im : GaussianInt) = (x.im : GaussianInt) * star y + x * (y.im : GaussianInt)
+  ext <;> simp <;> ring
+
+/-- Conjugation transported along the proved pointed integer-ring equivalence. -/
+def tau : O4 →ₐ[ℤ] O4 :=
+  ((gaussianEquiv.symm.trans (starRingAut.toIntAlgEquiv)).trans gaussianEquiv).toAlgHom
+
+/-- The imaginary-coordinate derivation, with values in the actual integer ring. -/
+def derivation : O4 →ₗ[ℤ] O4 :=
+  gaussianEquiv.toLinearMap.comp (gaussianD.comp gaussianEquiv.symm.toLinearMap)
+
+private theorem tau_equiv (x : GaussianInt) :
+    tau (gaussianEquiv x) = gaussianEquiv (star x) := by
+  simp [tau]
+
+private theorem derivation_equiv (x : GaussianInt) :
+    derivation (gaussianEquiv x) = gaussianEquiv (gaussianD x) := by
+  simp [derivation]
+
+/-- The required twisted law holds for every pair of actual algebraic integers. -/
+theorem derivation_twisted (x y : O4) :
+    derivation (x * y) = derivation x * tau y + x * derivation y := by
+  obtain ⟨a, rfl⟩ := gaussianEquiv.surjective x
+  obtain ⟨c, rfl⟩ := gaussianEquiv.surjective y
+  rw [← map_mul, derivation_equiv, derivation_equiv, derivation_equiv, tau_equiv]
+  rw [gaussianD_law, map_add, map_mul, map_mul]
+
+/-- The concrete root values use the proved generator-preserving bridge. -/
+theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3 := by
+  constructor
+  · rw [← gaussianEquiv_i, derivation_equiv]
+    simpa [gaussianD, Zsqrtd.sqrtd] using gaussianEquiv.map_one
+  · have hi : star (Zsqrtd.sqrtd : GaussianInt) = -Zsqrtd.sqrtd := by
+      ext <;> simp [Zsqrtd.sqrtd]
+    have ht : tau z = -z := by
+      rw [← gaussianEquiv_i, tau_equiv, hi, map_neg]
+    rw [ht, pow_succ, pow_two, z_sq]
+    ring
+
+/-- An integral inner generator would force an odd integer to equal an even integer. -/
+theorem derivation_not_inner : ¬ IsInner (AlgHom.id ℤ O4) tau derivation := by
+  rintro ⟨γ, hγ⟩
+  obtain ⟨g, rfl⟩ := gaussianEquiv.surjective γ
+  have h := hγ (gaussianEquiv (Zsqrtd.sqrtd : GaussianInt))
+  rw [derivation_equiv, tau_equiv] at h
+  have hg : gaussianD (Zsqrtd.sqrtd : GaussianInt) =
+      g * star Zsqrtd.sqrtd - Zsqrtd.sqrtd * g := by
+    apply gaussianEquiv.injective
+    simpa only [map_sub, map_mul, AlgHom.id_apply] using h
+  have hr := congrArg Zsqrtd.re hg
+  norm_num [gaussianD, Zsqrtd.sqrtd, Zsqrtd.re_mul] at hr
+  omega
+
 #print axioms claim
+#print axioms gaussianEquiv
+#print axioms derivation_twisted
+#print axioms counterinstance_root_values
+#print axioms derivation_not_inner
 
 end
 end D5.S3.Arith.TwistedDerivations.ManjuSharmaConjectureFourFour
