@@ -138,6 +138,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Additive/NathansonLatticeRootRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nathanson-2026-problem3-lattice-root-bound` (refuted) by `D5/S3/Arith/Additive/NathansonLatticeRootRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nathanson-2026-problem3-lattice-root-bound","declaration_gid":"D5/S3/Arith/Additive/NathansonLatticeRootRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Melvyn B. Nathanson (2026). *A problem on sumset sizes of sets of lattice points*. DOI: [10.48550/arXiv.2607.20571](https://doi.org/10.48550/arXiv.2607.20571). URL: <https://arxiv.org/abs/2607.20571v1>.
