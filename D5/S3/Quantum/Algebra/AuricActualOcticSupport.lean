@@ -21,6 +21,49 @@ open scoped TensorProduct
 
 variable {F D : Type*} [Field F] [Field D] [Algebra F D]
 
+section PolynomialCoefficientExtension
+
+open MvPolynomial
+
+variable {K L ι κ : Type*} [Field K] [Field L]
+private def extendHom (φ : K →+* L) (e : MvPolynomial ι K ≃ₐ[K] MvPolynomial κ K) :
+    MvPolynomial ι L →ₐ[L] MvPolynomial κ L :=
+  aeval (fun i => map φ (e (X i)))
+private theorem extendPolynomialEquiv_map_aux (φ : K →+* L)
+    (e : MvPolynomial ι K ≃ₐ[K] MvPolynomial κ K) (p : MvPolynomial ι K) :
+    extendHom φ e (map φ p) = map φ (e p) := by
+  have h : (extendHom φ e).toRingHom.comp (map φ) = (map φ).comp e.toRingHom := by
+    apply MvPolynomial.ringHom_ext
+    · intro c
+      simp [extendHom]
+    · intro i
+      simp [extendHom]
+  exact DFunLike.congr_fun h p
+private def extendPolynomialEquiv (φ : K →+* L)
+    (e : MvPolynomial ι K ≃ₐ[K] MvPolynomial κ K) :
+    MvPolynomial ι L ≃ₐ[L] MvPolynomial κ L :=
+  AlgEquiv.ofAlgHom (extendHom φ e) (extendHom φ e.symm)
+    (by
+      apply MvPolynomial.algHom_ext
+      intro i
+      change extendHom φ e (map φ (e.symm (X i))) = X i
+      rw [extendPolynomialEquiv_map_aux]
+      simp)
+    (by
+      apply MvPolynomial.algHom_ext
+      intro i
+      change extendHom φ e.symm (map φ (e (X i))) = X i
+      rw [extendPolynomialEquiv_map_aux]
+      simp)
+
+/-- Extension of coefficients commutes with the extended polynomial equivalence. -/
+private theorem extendPolynomialEquiv_map (φ : K →+* L)
+    (e : MvPolynomial ι K ≃ₐ[K] MvPolynomial κ K) (p : MvPolynomial ι K) :
+    extendPolynomialEquiv φ e (map φ p) = map φ (e p) :=
+  extendPolynomialEquiv_map_aux φ e p
+
+end PolynomialCoefficientExtension
+
 section ActualSupport
 
 variable (K : Type*) [Field K] [Algebra F K]
@@ -102,6 +145,57 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
   haveI : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp hcard
   exact ⟨FixedDiagonalDeterminant.row_determinant_irreducible _ hreachL,
     FixedDiagonalDeterminant.diagonal_determinant_irreducible _ hreachL⟩
+
+open MvPolynomial in
+/-- The original multiplication-obstruction polynomial is irreducible after every extension
+of the coefficients of the same finite normal splitting field. -/
+theorem general43_2_original_polynomial (L : Type*) [Field L] [Algebra K L]
+    (W : Submodule F D) (hD : finrank F D = 8) (hW : finrank F W = 4)
+    (hE : {c : D | ∀ w ∈ W, c * w ∈ W} = Set.range (algebraMap F D))
+    (bD : Basis (Fin 8) F D) (bW : Basis (Fin 4) F W)
+    (bQ : Basis (Fin 4) F (D ⧸ W)) (a : D) (ha : a ∉ quotientSet W) :
+    Irreducible (map ((algebraMap K L).comp (algebraMap F K))
+      (obstructionPolynomial W bD bW bQ)) := by
+  classical
+  letI : CharZero K := charZero_of_injective_algebraMap (algebraMap F K).injective
+  obtain ⟨e, he, hreach, hreachL, hrow, hdiagonal⟩ :=
+    general43_2_support K L W hD hW hE a ha
+  let n := e.toLinearMap ∘ₗ (actualOperator W hD hW a ha).baseChange K ∘ₗ e.symm.toLinearMap
+  let N := LinearMap.toMatrix' n
+  let f := obstructionPolynomial W bD bW bQ
+  let c := eval₂ (algebraMap F K) (fun i => algebraMap F K (bD.repr a i)) f
+  obtain ⟨hc, hn⟩ := original_polynomial_normalization W K hD hW bD bW bQ a ha e
+  change c ≠ 0 at hc
+  change eval₂Hom (C.comp (algebraMap F K)) (originalAffineCoordinates K bD a e) f =
+    C c * (1 + N.map C * Matrix.diagonal (fun σ => X σ)).det at hn
+  rw [Matrix.det_one_add_mul_comm] at hn
+  let Φ := originalPolynomialEquiv K bD a e
+  have hΦ : Φ (map (algebraMap F K) f) = C c * (FixedDiagonalDeterminant.rowMatrix N).det := by
+    change aeval (originalAffineCoordinates K bD a e) (map (algebraMap F K) f) = _
+    rw [aeval_def, ← eval₂_map_comp_C]
+    simpa only [FixedDiagonalDeterminant.rowMatrix, coe_eval₂Hom, map_comp_C] using hn
+  let Ψ := extendPolynomialEquiv (algebraMap K L) Φ
+  apply (MulEquiv.irreducible_iff Ψ.toMulEquiv).mp
+  have hm : map ((algebraMap K L).comp (algebraMap F K)) f =
+      map (algebraMap K L) (map (algebraMap F K) f) := by rw [map_map]
+  rw [hm]
+  change Irreducible (extendPolynomialEquiv (algebraMap K L) Φ
+    (map (algebraMap K L) (map (algebraMap F K) f)))
+  rw [extendPolynomialEquiv_map, hΦ, map_mul, map_C]
+  have hdet : map (algebraMap K L) (FixedDiagonalDeterminant.rowMatrix N).det =
+      (FixedDiagonalDeterminant.rowMatrix (N.map (algebraMap K L))).det := by
+    rw [RingHom.map_det]
+    congr 1
+    ext σ τ
+    simp [FixedDiagonalDeterminant.rowMatrix, Matrix.diagonal_mul,
+      Matrix.one_apply, Matrix.map_apply]
+  rw [hdet]
+  have hcl : algebraMap K L c ≠ 0 := by
+    intro hz
+    exact hc ((algebraMap K L).injective (by simpa using hz))
+  have hunit : IsUnit (C (algebraMap K L c) : MvPolynomial (D →ₐ[F] K) L) :=
+    (isUnit_iff_ne_zero.mpr hcl).map C
+  exact (irreducible_isUnit_mul hunit).mpr hrow
 
 end ActualSupport
 

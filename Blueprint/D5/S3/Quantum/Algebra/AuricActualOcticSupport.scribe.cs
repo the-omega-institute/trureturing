@@ -57,6 +57,27 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
             All("W", Call("Submodule", f, d), All("a", d, Imp(premises, splitting)))));
     }
 
+    private static Formula OriginalPolynomialStatement()
+    {
+        var f = V("F"); var d = V("D"); var k = V("K"); var l = V("L");
+        var w = V("W"); var a = V("a");
+        var assumptions = And(Equal(Call("finrank", f, d), D(8)), Equal(Call("finrank", f, w), D(4)),
+            Equal(Call("Idealizer", f, d, w), Call("range", Call("algebraMap", f, d))),
+            Seq(Neg, Sp, Rel(a, FormulaRelationOperator.MemberOf, Call("quotientSet", w))));
+        var result = Call("Irreducible", Call("map", Call("compose", Call("algebraMap", k, l),
+            Call("algebraMap", f, k)), Call("obstructionPolynomial", w, V("bD"), V("bW"), V("bQ"))));
+        return All("F D K L", V("Type"), Seq(
+            Instance("Field", f), Instance("Field", d), Instance("Field", k), Instance("Field", l),
+            Instance("Algebra", f, d), Instance("Algebra", f, k), Instance("Algebra", d, k),
+            Instance("Algebra", k, l), Instance("IsScalarTower", f, d, k),
+            Instance("FiniteDimensional", f, d), Instance("CharZero", f),
+            Instance("FiniteDimensional", f, k), Instance("Normal", f, k),
+            All("W", Call("Submodule", f, d), All("bD", Call("Basis", Call("Fin", D(8)), f, d),
+            All("bW", Call("Basis", Call("Fin", D(4)), f, w),
+            All("bQ", Call("Basis", Call("Fin", D(4)), f, Call("Quotient", d, w)),
+            All("a", d, Imp(assumptions, result))))))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Directed support and parameter determinants of the actual octic window operator.", H("Actual octic support connectivity"),
         Blocks(
@@ -96,5 +117,21 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
                     + "in its chosen original basis; that normalization and coordinate bridge remain separate. "
                     + "The reciprocal determinant identity applies to this same N in any commutative "
                     + "coefficient ring with unit coordinates, including the Laurent polynomial ring."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-original-polynomial-irreducible"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/AuricActualOcticSupport.general43_2_original_polynomial"),
+                H("The original obstruction polynomial over every L/K"),
+                StatementSource.FromAuthor(Disp(OriginalPolynomialStatement())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The polynomial is the original determinant in the arbitrary bases bD, bW and bQ, "
+                    + "not a polynomial with independent matrix entries. The normalization theorem uses "
+                    + "the same actual N supplied by general43_2_support. The invertible affine substitution "
+                    + "extends coefficient by coefficient from K to every L/K, together with its inverse. "
+                    + "Its image of the original polynomial is a nonzero constant times the fixed row "
+                    + "determinant, using the determinant identity to exchange the two product orders. "
+                    + "Irreducibility therefore transfers back to the original polynomial over L. "
+                    + "This theorem quantifies over extensions of K. A statement over every extension of "
+                    + "the original F additionally requires a common overfield and descent bridge. "
+                    + "The source atom also retains its separate quotient-density and classification clauses."))),
                 DescribeRole.Theorem))));
 }
