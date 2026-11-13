@@ -445,7 +445,7 @@ private theorem fullrank_sphere_limit [StrictConvexSpace ℝ E]
     (continuous_sphereImage.tendsto a).comp ha
 
 omit [Nontrivial E] in
-private theorem intrinsic_ball :
+theorem intrinsic_ball :
     intrinsicFrontier ℝ (Metric.closedBall (0 : E) 1) = Metric.sphere 0 1 := by
   have hspan : affineSpan ℝ (Metric.closedBall (0 : E) 1) = ⊤ := by
     apply top_unique
@@ -463,7 +463,7 @@ private theorem intrinsic_ball :
   exact frontier_closedBall (0 : E) (by norm_num)
 
 omit [FiniteDimensional ℝ V] [Nontrivial E] in
-private theorem intrinsic_image (a : E →ᵃ[ℝ] V) (ha : Function.Injective a) (s : Set E) :
+theorem intrinsic_image (a : E →ᵃ[ℝ] V) (ha : Function.Injective a) (s : Set E) :
     intrinsicFrontier ℝ (a '' s) = a '' intrinsicFrontier ℝ s := by
   let T : AffineSubspace ℝ V := (⊤ : AffineSubspace ℝ E).map a
   let e : E ≃ᵃ[ℝ] T := (AffineSubspace.topEquiv ℝ E E).symm.trans

@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Topology.ContinuousMap.Compact
 import Mathlib.Topology.MetricSpace.HausdorffDistance
+import D5.S3.Quantum.Foundation.ExclusionIncidence
+import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 
 /-! Full original effects and state body; no closed pure locus or least effects are assumed. -/
 
@@ -16,7 +18,9 @@ noncomputable section
 
 namespace D5.S3.Quantum.Foundation.FixedZeroObstruction
 
+open Set Filter Topology TopologicalSpace
 open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces
+open ContinuousFrameSum ExclusionIncidence ExclusionWidthCompactness OriginalFacePolarity
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
@@ -276,6 +280,359 @@ theorem stable_zero_implies_open_edges
     exact ⟨hx, hx1⟩
   exact hxS
 
+omit [NormedSpace ℝ V] [FiniteDimensional ℝ V] in
+/-- Recover every point of a whole compact Hausdorff limit along the same indices. -/
+private theorem recover_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
+    (hF : Tendsto F atTop (𝓝 G)) {y : V} (hy : y ∈ G) :
+    ∃ yn : ℕ → V, (∀ n, yn n ∈ F n) ∧ Tendsto yn atTop (𝓝 y) := by
+  choose yn hyn heq using fun n =>
+    (F n).isCompact.exists_infDist_eq_dist (F n).nonempty y
+  refine ⟨yn, hyn, tendsto_iff_dist_tendsto_zero.mpr ?_⟩
+  have hi := ((NonemptyCompacts.lipschitz_infDist_const y).continuous.tendsto G).comp hF
+  simpa only [Function.comp_def, Metric.infDist_zero_of_mem hy, heq, dist_comm] using hi
+
+omit [NormedSpace ℝ V] [FiniteDimensional ℝ V] in
+private theorem mem_compact_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
+    (hF : Tendsto F atTop (𝓝 G)) {yn : ℕ → V} {y : V}
+    (hyn : ∀ n, yn n ∈ F n) (hy : Tendsto yn atTop (𝓝 y)) : y ∈ G := by
+  have hi := NonemptyCompacts.lipschitz_infDist.continuous.tendsto (y, G) |>.comp
+    (hy.prodMk_nhds hF)
+  have hz : Metric.infDist y G = 0 := tendsto_nhds_unique hi (by
+    simpa only [Function.comp_def, Metric.infDist_zero_of_mem (hyn _)] using
+      (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0)))
+  exact G.isCompact.isClosed.mem_iff_infDist_zero G.nonempty |>.mpr hz
+
+/-- One limit effect simultaneously vanishes on the entire compact limit. -/
+private theorem whole_limit_effect
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (pn : ℕ → pure C u) {x : V}
+    (hpx : Tendsto (fun n => (pn n : V)) atTop (𝓝 x))
+    (G : NonemptyCompacts V)
+    (hG : Tendsto (fun n => Metric.hausdorffDist (exclusion C u (pn n)) G) atTop (𝓝 0)) :
+    x ∈ base C u ∧ (G : Set V) ⊆ base C u ∧
+      ∃ e ∈ effects C u, e x = 1 ∧ ∀ y ∈ G, e y = 0 := by
+  let F (n : ℕ) : NonemptyCompacts V :=
+    ⟨⟨exclusion C u (pn n), ((exclusion_ball_faces hc hs hg hB).1 (pn n)).2.1⟩,
+      ((exclusion_ball_faces hc hs hg hB).1 (pn n)).1.nonempty⟩
+  have hFG : Tendsto F atTop (𝓝 G) := by
+    apply tendsto_iff_dist_tendsto_zero.mpr
+    exact hG
+  choose e he hz using fun n => ((exclusion_ball_faces hc hs hg hB).1 (pn n)).2.2.2.2.2.2
+  obtain ⟨b, hb, φ, hφ, heb⟩ := (effects_compact hs hg).tendsto_subseq
+    (fun n => (show (e n).toContinuousLinearMap ∈ effects C u from (he n).1))
+  have ev : Continuous (fun z : (V →L[ℝ] ℝ) × V => z.1 z.2) := by fun_prop
+  have hbx : b x = 1 := by
+    apply tendsto_nhds_unique ((ev.tendsto (b, x)).comp
+      (heb.prodMk_nhds (hpx.comp hφ.tendsto_atTop)))
+    change Tendsto (fun n => e (φ n) (pn (φ n))) atTop (𝓝 1)
+    have hh (n : ℕ) : e (φ n) (pn (φ n)) = 1 := (he (φ n)).2
+    simpa only [hh] using
+      (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1))
+  have hyK (y : V) (hy : y ∈ G) : y ∈ base C u := by
+    obtain ⟨yn, hyn, hyt⟩ := recover_limit F G hFG hy
+    exact (base_compact hc hs).isClosed.mem_of_tendsto hyt
+      (Eventually.of_forall fun n => (hyn n).1)
+  refine ⟨(base_compact hc hs).isClosed.mem_of_tendsto hpx
+    (Eventually.of_forall fun n => pure_mem (pn n)), hyK, b, hb, hbx, ?_⟩
+  intro y hy
+  obtain ⟨yn, hyn, hyt⟩ := recover_limit F G hFG hy
+  apply tendsto_nhds_unique ((ev.tendsto (b, y)).comp
+    (heb.prodMk_nhds (hyt.comp hφ.tendsto_atTop)))
+  have hzero (n : ℕ) : e (φ n) (yn (φ n)) = 0 := by
+    have hyD : yn (φ n) ∈ exclusion C u (pn (φ n)) := hyn (φ n)
+    exact (hz (φ n) ▸ hyD).2
+  change Tendsto (fun n => e (φ n) (yn (φ n))) atTop (𝓝 0)
+  simpa only [hzero] using
+    (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0))
+
+/-- Full original label criterion, including mixed singleton limits and pure upper graph. -/
+theorem exclusion_limit_labels
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (pn : ℕ → pure C u) {x : V}
+    (hpx : Tendsto (fun n => (pn n : V)) atTop (𝓝 x))
+    (G : NonemptyCompacts V)
+    (hG : Tendsto (fun n => Metric.hausdorffDist (exclusion C u (pn n)) G) atTop (𝓝 0)) :
+    (Function.Injective (fun p : pure C u => exclusion C u p) →
+      ((G : Set V).Nontrivial → x ∈ pure C u) ∧
+    (∀ q : V, (G : Set V) = {q} → x ∉ pure C u →
+      q ∈ pure C u ∧ x ∈ intrinsicInterior ℝ (exclusion C u q))) ∧
+    (x ∈ pure C u → (G : Set V) ⊆ exclusion C u x) := by
+  obtain ⟨hxK, hGK, e, he, hex, heG⟩ := whole_limit_effect hc hs hg hB pn hpx G hG
+  refine ⟨?_, ?_⟩
+  · intro hInj
+    constructor
+    · rintro ⟨y, hy, z, hz, hyz⟩
+      exact common_zero_pure hc hs hg hB hInj hxK (hGK hy) (hGK hz) hyz he hex
+        (heG y hy) (heG z hz)
+    · intro q hGq hx
+      have hqG : q ∈ G := by change q ∈ (G : Set V); rw [hGq]; exact Set.mem_singleton q
+      have heq : e q = 0 := heG q hqG
+      let H := e.toExposed (base C u)
+      have hH : IsExposed ℝ (base C u) H := ContinuousLinearMap.toExposed.isExposed
+      have hxH : x ∈ H := by
+        refine ⟨hxK, fun z hz => ?_⟩
+        change e z ≤ e x
+        rw [hex]
+        simpa [hz.2] using (he z hz.1).2
+      obtain ⟨p, hp⟩ := (hH.isCompact (base_compact hc hs)).extremePoints_nonempty ⟨x, hxH⟩
+      have hpP : p ∈ pure C u := hH.isExtreme.extremePoints_subset_extremePoints hp
+      have hpxne : x ≠ p := fun h => hx (h ▸ hpP)
+      have hep : e p = 1 := by
+        apply le_antisymm
+        · simpa [(pure_mem ⟨p, hpP⟩).2] using (he p (pure_mem ⟨p, hpP⟩).1).2
+        · simpa [hex] using hp.1.2 x hxK
+      let b := u.toContinuousLinearMap - e
+      have hb : b ∈ effects C u := by
+        intro z hz
+        have hez : 0 ≤ e z ∧ e z ≤ u z := he z hz
+        change 0 ≤ u z - e z ∧ u z - e z ≤ u z
+        constructor <;> linarith
+      have hbq : b q = 1 := by
+        change u q - e q = 1
+        rw [(hGK hqG).2, heq]; norm_num
+      have hbx : b x = 0 := by change u x - e x = 0; rw [hxK.2, hex]; norm_num
+      have hbp : b p = 0 := by
+        change u p - e p = 0
+        rw [(pure_mem ⟨p, hpP⟩).2, hep]; norm_num
+      have hqP := common_zero_pure hc hs hg hB hInj (hGK hqG) hxK
+        (pure_mem ⟨p, hpP⟩) hpxne hb hbq hbx hbp
+      have hxD : x ∈ exclusion C u q := ⟨hxK, b.toLinearMap, ⟨hb, hbq⟩, hbx⟩
+      refine ⟨hqP, ?_⟩
+      obtain ⟨chart⟩ := hB ⟨q, hqP⟩
+      haveI : Nonempty (Fin chart.dim) := ⟨⟨0, chart.dim_pos⟩⟩
+      have hfront : intrinsicFrontier ℝ (exclusion C u q) =
+          exclusion C u q ∩ pure C u := by
+        rw [← chart.whole, intrinsic_image chart.param chart.injective, intrinsic_ball]
+        simpa only [chart.whole] using (chart_boundary hc hs hg hB ⟨q, hqP⟩ chart).symm
+      have hxnot : x ∉ intrinsicFrontier ℝ (exclusion C u q) := by
+        rw [hfront]
+        exact fun h => hx h.2
+      rw [← closure_sdiff_intrinsicFrontier]
+      exact ⟨subset_closure hxD, hxnot⟩
+  · intro hx y hy
+    exact ⟨hGK hy, e.toLinearMap, ⟨he, hex⟩, heG y hy⟩
+
+private theorem compact_maximum_tendsto (F : ℕ → NonemptyCompacts V)
+    (G : NonemptyCompacts V) (hF : Tendsto F atTop (𝓝 G)) (h : V →ₗ[ℝ] ℝ) :
+    Tendsto (fun n => sSup (h '' (F n : Set V))) atTop (𝓝 (sSup (h '' (G : Set V)))) := by
+  obtain ⟨y, hy, hmax⟩ := G.isCompact.exists_sSup_image_eq G.nonempty
+    h.continuous_of_finiteDimensional.continuousOn
+  obtain ⟨yn, hyn, hyt⟩ := recover_limit F G hF hy
+  have hhv := h.continuous_of_finiteDimensional.tendsto y |>.comp hyt
+  apply tendsto_order.mpr
+  constructor
+  · intro a ha
+    have hev : ∀ᶠ n in atTop, a < h (yn n) := hhv.eventually (lt_mem_nhds (by simpa [hmax] using ha))
+    exact hev.mono fun n hn => hn.trans_le (le_csSup
+      ((F n).isCompact.bddAbove_image h.continuous_of_finiteDimensional.continuousOn)
+      (Set.mem_image_of_mem h (hyn n)))
+  · intro a ha
+    let b := (sSup (h '' (G : Set V)) + a) / 2
+    have hmb : sSup (h '' (G : Set V)) < b := by dsimp [b]; linarith
+    have hba : b < a := by dsimp [b]; linarith
+    have hsub : (G : Set V) ⊆ {z | h z < b} := by
+      intro z hz
+      exact (le_csSup (G.isCompact.bddAbove_image h.continuous_of_finiteDimensional.continuousOn)
+        (Set.mem_image_of_mem h hz)).trans_lt hmb
+    have hev := hF.eventually_mem ((NonemptyCompacts.isOpen_subsets_of_isOpen
+      (isOpen_lt h.continuous_of_finiteDimensional continuous_const)).mem_nhds hsub)
+    exact hev.mono fun n hn => (csSup_le ((F n).nonempty.image h)
+      (by rintro _ ⟨z, hz, rfl⟩; exact (hn hz).le)).trans_lt hba
+
+/-- A proper common whole-face limit obstructs every fixed test on one selected edge. -/
+private theorem fixed_tests_of_proper_limit
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hInj : Function.Injective (fun p : pure C u => exclusion C u p))
+    (s r : pure C u) (hrs : (r : V) ∈ exclusion C u s)
+    (tn : ℕ → pure C u) (htr : Tendsto (fun n => (tn n : V)) atTop (𝓝 (r : V)))
+    (G : NonemptyCompacts V) (hGK : (G : Set V) ⊆ base C u) (hsG : (s : V) ∉ G)
+    (hG : Tendsto (fun n => Metric.hausdorffDist (exclusion C u (tn n)) G) atTop (𝓝 0)) :
+    ∀ h ∈ fullZeroConfirmers C u s,
+      Tendsto (fun n => h (tn n)) atTop (𝓝 0) ∧
+      0 < liminf (fun n => zeroDistance hc hs (tn n) h) atTop := by
+  intro h hh
+  have hhr : h r = 0 := hh.2 r hrs
+  refine ⟨by simpa only [Function.comp_def, hhr] using h.continuous_of_finiteDimensional.tendsto (r : V) |>.comp htr, ?_⟩
+  let F (n : ℕ) : NonemptyCompacts V :=
+    ⟨⟨exclusion C u (tn n), ((exclusion_ball_faces hc hs hg hB).1 (tn n)).2.1⟩,
+      ((exclusion_ball_faces hc hs hg hB).1 (tn n)).1.nonempty⟩
+  have hFG : Tendsto F atTop (𝓝 G) := tendsto_iff_dist_tendsto_zero.mpr hG
+  let m := sSup (h '' (G : Set V))
+  obtain ⟨y, hy, hmy⟩ := G.isCompact.exists_sSup_image_eq G.nonempty
+    h.continuous_of_finiteDimensional.continuousOn
+  have hm : m < 1 := by
+    have hyK := hGK hy
+    have hle : h y ≤ 1 := by simpa [hyK.2] using (hh.1.1 y hyK.1).2
+    have hne : h y ≠ 1 := by
+      intro heq
+      have hyS : y ∈ ({(s : V)} : Set V) := by
+        rw [← (full_zero_faces hc hs hg hB hInj s hh).2]
+        exact ⟨hyK, heq⟩
+      exact hsG (Set.mem_singleton_iff.mp hyS ▸ hy)
+    change sSup (h '' (G : Set V)) < 1
+    rw [hmy]
+    exact lt_of_le_of_ne hle hne
+  have hmax : Tendsto (fun n => faceMaximum (tn n) h) atTop (𝓝 m) :=
+    compact_maximum_tendsto F G hFG h
+  let δ := (1 - m) / 4
+  have hδ : 0 < δ := by dsimp [δ]; linarith
+  have hlow : Tendsto (fun n => (1 - faceMaximum (tn n) h) / 2)
+      atTop (𝓝 ((1 - m) / 2)) := (tendsto_const_nhds.sub hmax).div_const 2
+  have hev : ∀ᶠ n in atTop, δ ≤ zeroDistance hc hs (tn n) h := by
+    have hlt : δ < (1 - m) / 2 := by dsimp [δ]; linarith
+    exact (hlow.eventually (lt_mem_nhds hlt)).mono fun n hn =>
+      hn.le.trans (fixed_zero_distance_bound hc hs hg hB s (tn n) hh)
+  letI : CompactSpace (base C u) := isCompact_iff_compactSpace.mp (base_compact hc hs)
+  have hzero : stateReadout (C := C) (u := u) (0 : V →ₗ[ℝ] ℝ) = 0 := by ext x; rfl
+  have hdub (n : ℕ) : zeroDistance hc hs (tn n) h ≤ stateNorm hc hs h := by
+    have hz : (0 : V →ₗ[ℝ] ℝ) ∈ zeroEffects C u (tn n) := by
+      refine ⟨?_, by simp⟩
+      intro z hz
+      have hu : 0 ≤ u z := by
+        by_cases he : z = 0
+        · simp [he]
+        · exact (hs z hz he).le
+      simpa using hu
+    have hi := Metric.infDist_le_dist_of_mem
+      (x := stateReadout (C := C) (u := u) h)
+      (s := stateReadout (C := C) (u := u) '' zeroEffects C u (tn n))
+      (Set.mem_image_of_mem (stateReadout (C := C) (u := u)) hz)
+    simpa only [zeroDistance, stateNorm, hzero, dist_zero_right] using hi
+  exact hδ.trans_le (le_liminf_of_le (isCoboundedUnder_ge_of_le atTop hdub) hev)
+
+/-- The original whole-ball collapse obstructs all fixed complete zero tests on one edge. -/
+theorem fixed_zero_distance_obstruction
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (h3 : ∀ p : pure C u, ∃ b : ExclusionChart C u p, b.dim = 3)
+    (hInj : Function.Injective (fun p : pure C u => exclusion C u p))
+    (pn : ℕ → pure C u) {x q : V}
+    (hpx : Tendsto (fun n => (pn n : V)) atTop (𝓝 x))
+    (hcollapse : Tendsto (fun n => Metric.hausdorffDist
+      (exclusion C u (pn n)) {q}) atTop (𝓝 0)) :
+    ∃ s r : pure C u, (r : V) ∈ exclusion C u s ∧
+      ∃ tn : ℕ → pure C u,
+        Tendsto (fun n => (tn n : V)) atTop (𝓝 (r : V)) ∧
+        ∀ h ∈ fullZeroConfirmers C u s,
+          Tendsto (fun n => h (tn n)) atTop (𝓝 0) ∧
+          0 < liminf (fun n => zeroDistance hc hs (tn n) h) atTop := by
+  classical
+  have hB : exclusionBalls C u := fun p => ⟨(h3 p).choose⟩
+  let Q : NonemptyCompacts V := {q}
+  let F (n : ℕ) : NonemptyCompacts V :=
+    ⟨⟨exclusion C u (pn n), ((exclusion_ball_faces hc hs hg hB).1 (pn n)).2.1⟩,
+      ((exclusion_ball_faces hc hs hg hB).1 (pn n)).1.nonempty⟩
+  have hFQ : Tendsto F atTop (𝓝 Q) := tendsto_iff_dist_tendsto_zero.mpr hcollapse
+  have hlabels := exclusion_limit_labels hc hs hg hB pn hpx Q hcollapse
+  have hQK : (Q : Set V) ⊆ base C u := (whole_limit_effect hc hs hg hB pn hpx Q hcollapse).2.1
+  by_cases hx : x ∈ pure C u
+  · let r : pure C u := ⟨x, hx⟩
+    obtain ⟨a, b, ha, hb, hab⟩ := pure_pair_in_ball hc hs hg hB r
+    obtain ⟨s, hsD, hsQ⟩ : ∃ s : pure C u,
+        (s : V) ∈ exclusion C u r ∧ (s : V) ∉ Q := by
+      by_cases haq : (a : V) = q
+      · refine ⟨b, hb, ?_⟩
+        intro hbq
+        apply hab
+        apply Subtype.ext
+        exact haq.trans (Set.mem_singleton_iff.mp hbq).symm
+      · exact ⟨a, ha, haq⟩
+    have hrs := (exclusion_symmetric r s).mp hsD
+    exact ⟨s, r, hrs, pn, hpx,
+      fixed_tests_of_proper_limit hc hs hg hB hInj s r hrs pn hpx Q hQK hsQ hcollapse⟩
+  · obtain ⟨hq, hxri⟩ := (hlabels.1 hInj).2 q rfl hx
+    let r : pure C u := ⟨q, hq⟩
+    have hchoose (n : ℕ) : ∃ t : pure C u, (t : V) ∈ exclusion C u (pn n) := by
+      have g := (exclusion_ball_faces hc hs hg hB).1 (pn n)
+      obtain ⟨t, ht⟩ := g.2.1.extremePoints_nonempty g.1.nonempty
+      exact ⟨⟨t, g.2.2.2.2.1.extremePoints_subset_extremePoints ht⟩, ht.1⟩
+    choose tn htnD using hchoose
+    have htr : Tendsto (fun n => (tn n : V)) atTop (𝓝 (r : V)) := by
+      apply Metric.tendsto_nhds.mpr
+      intro ε hε
+      have hsub : (Q : Set V) ⊆ Metric.ball q ε := by
+        intro z hz
+        have hzq : z = q := hz
+        subst z
+        simpa using hε
+      have hev := hFQ.eventually_mem
+        ((NonemptyCompacts.isOpen_subsets_of_isOpen Metric.isOpen_ball).mem_nhds hsub)
+      exact hev.mono fun n hn => hn (htnD n)
+    have hswap (n : ℕ) : (pn n : V) ∈ exclusion C u (tn n) :=
+      (exclusion_symmetric (pn n) (tn n)).mp (htnD n)
+    let H (n : ℕ) : NonemptyCompacts V :=
+      ⟨⟨exclusion C u (tn n), ((exclusion_ball_faces hc hs hg hB).1 (tn n)).2.1⟩,
+        ((exclusion_ball_faces hc hs hg hB).1 (tn n)).1.nonempty⟩
+    obtain ⟨G, hGK, φ, hφ, hHG⟩ :=
+      (NonemptyCompacts.isCompact_subsets_of_isCompact (base_compact hc hs)).tendsto_subseq
+        (fun n => (show (H n : Set V) ⊆ base C u from fun z hz => hz.1))
+    have hconv : Convex ℝ (G : Set V) := by
+      intro y hy z hz a b ha hb hab
+      obtain ⟨yn, hyn, hyt⟩ := recover_limit (fun n => H (φ n)) G hHG hy
+      obtain ⟨zn, hzn, hzt⟩ := recover_limit (fun n => H (φ n)) G hHG hz
+      exact mem_compact_limit (fun n => H (φ n)) G hHG
+        (fun n => ((exclusion_ball_faces hc hs hg hB).1 (tn (φ n))).2.2.1
+          (hyn n) (hzn n) ha hb hab)
+        ((hyt.const_smul a).add (hzt.const_smul b))
+    have hxG : x ∈ G := mem_compact_limit (fun n => H (φ n)) G hHG
+      (fun n => hswap (φ n)) (hpx.comp hφ.tendsto_atTop)
+    have hGdist : Tendsto (fun n => Metric.hausdorffDist
+        (exclusion C u (tn (φ n))) G) atTop (𝓝 0) :=
+      tendsto_iff_dist_tendsto_zero.mp hHG
+    have htφ := htr.comp hφ.tendsto_atTop
+    have hsub : (G : Set V) ⊆ exclusion C u r :=
+      (exclusion_limit_labels hc hs hg hB (fun n => tn (φ n)) htφ G hGdist).2 hq
+    have hcharts (p : pure C u) : ∃ a : EuclideanSpace ℝ (Fin 3) →ᵃ[ℝ] V,
+        Function.Injective a ∧ a '' Metric.closedBall 0 1 = exclusion C u p := by
+      obtain ⟨⟨d, hd, a, ha, hw⟩, he⟩ := h3 p
+      dsimp only at he
+      subst d
+      exact ⟨a, ha, hw⟩
+    choose a ha hw using hcharts
+    let chart (p : pure C u) : ExclusionChart C u p := ⟨3, by decide, a p, ha p, hw p⟩
+    have hfront (p : pure C u) : intrinsicFrontier ℝ (exclusion C u p) =
+        exclusion C u p ∩ pure C u := by
+      rw [← hw p, intrinsic_image _ (ha p), intrinsic_ball]
+      simpa only [hw] using (chart_boundary hc hs hg hB p (chart p)).symm
+    have hproper : (G : Set V) ≠ exclusion C u r := by
+      intro heq
+      have hd : Tendsto (fun n => Metric.hausdorffDist
+          (a (tn (φ n)) '' Metric.closedBall 0 1) (a r '' Metric.closedBall 0 1))
+          atTop (𝓝 0) := by simpa only [hw, ← heq] using hGdist
+      have hboundary := (affine_ball_boundary_limit (fun n => a (tn (φ n))) (a r)
+        (fun n => ha _) (ha r) hd).2 (fun n => (pn (φ n) : V)) x
+        (fun n => by rw [hw, hfront]; exact ⟨hswap (φ n), (pn (φ n)).property⟩)
+        (hpx.comp hφ.tendsto_atTop)
+      have hxf : x ∈ intrinsicFrontier ℝ (exclusion C u r) := by
+        simpa only [hw] using hboundary
+      have hnot : x ∉ intrinsicFrontier ℝ (exclusion C u r) := by
+        rw [← closure_sdiff_intrinsicInterior]
+        exact fun h => h.2 hxri
+      exact hnot hxf
+    obtain ⟨s, hsD, hsG⟩ : ∃ s : pure C u,
+        (s : V) ∈ exclusion C u r ∧ (s : V) ∉ G := by
+      by_contra! hn
+      have hall : (exclusion C u r).extremePoints ℝ ⊆ (G : Set V) := by
+        intro z hz
+        have hzP := ((exclusion_ball_faces hc hs hg hB).1 r).2.2.2.2.1.extremePoints_subset_extremePoints hz
+        exact hn ⟨z, hzP⟩ hz.1
+      apply hproper
+      apply Set.Subset.antisymm hsub
+      rw [← closure_convexHull_extremePoints
+        ((exclusion_ball_faces hc hs hg hB).1 r).2.1
+        ((exclusion_ball_faces hc hs hg hB).1 r).2.2.1]
+      exact closure_minimal (convexHull_min hall hconv) G.isCompact.isClosed
+    have hrs := (exclusion_symmetric r s).mp hsD
+    exact ⟨s, r, hrs, (fun n => tn (φ n)), htφ,
+      fixed_tests_of_proper_limit hc hs hg hB hInj s r hrs (fun n => tn (φ n)) htφ
+        G hGK hsG hGdist⟩
+
+#print axioms fixed_zero_distance_obstruction
+
+#print axioms exclusion_limit_labels
 #print axioms zero_effect_maximizer
 #print axioms full_zero_faces
 #print axioms fixed_zero_distance_bound
