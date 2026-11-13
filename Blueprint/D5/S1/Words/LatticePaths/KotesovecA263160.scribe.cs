@@ -14,7 +14,7 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
         "Literal first-zero lattice paths and row/column insertion.",
         H("First-zero paths"),
         Blocks(
-            Paragraph(Text("Coordinates are labelled and steps are ordered. Each step decrements a nonempty subset by one. A path stops when any coordinate first reaches zero; simultaneous first zeros count once. Height zero or dimension zero admits only the empty path. The diagonal of this finite count is OEIS A263160. Its conjectured real-root limit is not asserted by the finite counting identities below.")),
+            Paragraph(Text("Coordinates are labelled and steps are ordered. Each step decrements a nonempty subset by one. A path stops when any coordinate first reaches zero; simultaneous first zeros count once. Height zero or dimension zero admits only the empty path. The diagonal of this finite count is OEIS A263160. The terminal-word identity and uniform estimates lead to its exact real-root limit along all natural indices. The proof uses only the cofinite range n at least two and imposes no fixed-dimension hypothesis.")),
             Node("Step", "Nonempty coordinate steps", StepFormula(), true, DescribeRole.Definition),
             Node("decrements", "Coordinate occurrences", DecrementsFormula(), false, DescribeRole.Definition),
             Node("FirstZero", "First-zero termination", FirstZeroFormula(), true, DescribeRole.Definition),
@@ -22,7 +22,14 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
             Node("a", "The diagonal sequence", DiagonalFormula(), true, DescribeRole.Definition),
             Node("internal_words", "Internal words with bounded rows", InternalFormula(), false, DescribeRole.Definition),
             Node("first_zero_length_bound", "A finite path-length budget", LengthFormula(), false, DescribeRole.Theorem),
-            Node("insertion_identity", "Transposing rows and inserting empty columns", InsertionFormula(), false, DescribeRole.Theorem))));
+            Node("insertion_identity", "Transposing rows and inserting empty columns", InsertionFormula(), false, DescribeRole.Theorem),
+            Node("internal_hasSum", "A positive geometric series", SeriesFormula(), false, DescribeRole.Theorem),
+            Node("paths_eq_internal", "The literal terminal count", TerminalFormula(), false, DescribeRole.Theorem),
+            Node("internal_count_upper", "A uniform factorial upper bound", UpperFormula(), false, DescribeRole.Theorem),
+            Node("internal_count_lower", "A one-term lower bound", LowerFormula(), false, DescribeRole.Theorem),
+            Node("internal_log_bounds", "Logarithmic factorial bounds", LogBoundsFormula(), false, DescribeRole.Theorem),
+            Node("diagonal_log_estimate", "A quantitative diagonal error", ErrorFormula(), false, DescribeRole.Theorem),
+            Node("diagonal_limit", "The complete diagonal real-root limit", LimitFormula(), false, DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool source, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("a263160-" + name.ToLowerInvariant().Replace('_', '-')),
@@ -33,6 +40,17 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
                 : name == "insertion_identity"
                     ? "A row chooses at most m positions among k labelled columns. Transposition identifies these independent rows with columns that may be empty. Removing the empty columns gives an internal word; choosing its positions gives the binomial coefficient."
                     : "The displayed formula specifies the objects and their ordered finite counts."))), role);
+
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
+    private static Formula Div(Formula x, Formula y) => new Formula.Fraction(x, y);
+    private static Formula Pow(Formula x, Formula y) => new Formula.Power(Par(x), y);
+    private static Formula Cast(Formula x) => Qualified("Nat", "cast", x);
+    private static Formula Log(Formula x) => Qualified("Real", "log", x);
+    private static Formula Fact(Formula x) => Qualified("Nat", "factorial", x);
+    private static Formula C() => Log(D(2));
+    private static Formula HCount(Formula d, Formula m) => Mul(D(2), Sum("t", Range(Add(Mul(d, m), D(1))), Cast(Call("internal_words", d, m, F.Id("t")))));
+    private static Formula Row(Formula k, Formula m) => Cast(Sum("r", Range(Add(m, D(1))), Choose(k, F.Id("r"))));
+    private static Formula AllDM(Formula body) => All("d", N(), All("m", N(), body));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Nat(Formula x) => Par(Seq(x, Colon, Sp, N()));
@@ -131,4 +149,61 @@ internal sealed class KotesovecA263160Document : IScribeDocumentDefinition
         var rhs = Sum("t", Range(Add(k, D(1))), Mul(Choose(k, t), Call("internal_words", d, m, t)));
         return Disp(All("d", N(), All("m", N(), All("k", N(), Eq(lhs, rhs)))));
     }
+    private static Formula SeriesFormula()
+    {
+        var d = F.Id("d"); var m = F.Id("m"); var k = F.Id("k");
+        return Disp(AllDM(Call("HasSum", Lam("k", N(),
+            Mul(Pow(Div(D(1), D(2)), k), Pow(Row(k, m), d))), HCount(d, m))));
+    }
+
+    private static Formula TerminalFormula()
+    {
+        var d = F.Id("d"); var m = F.Id("m");
+        return Disp(AllDM(Imp(Lt(D(0), d), Eq(Call("paths", d, Add(m, D(1))),
+            Add(D(1), Mul(Sub(Pow(D(2), d), D(2)),
+                Sum("t", Range(Add(Mul(d, m), D(1))), Call("internal_words", d, m, F.Id("t")))))))));
+    }
+
+    private static Formula UpperFormula()
+    {
+        var d = F.Id("d"); var m = F.Id("m"); var n = Mul(m, d);
+        return Disp(AllDM(Le(HCount(d, m), Div(Mul(Pow(D(2), Add(m, D(1))), Cast(Fact(n))),
+            Mul(Pow(C(), Add(n, D(1))), Pow(Cast(Fact(m)), d)))))));
+    }
+
+    private static Formula LowerFormula()
+    {
+        var d = F.Id("d"); var m = F.Id("m"); var k = F.Id("k");
+        return Disp(AllDM(All("k", N(), Le(Div(Mul(Pow(Div(D(1), D(2)), k),
+            Pow(Cast(Sub(Add(k, D(1)), m)), Mul(m, d))), Pow(Cast(Fact(m)), d)), HCount(d, m)))));
+    }
+
+    private static Formula LogBoundsFormula()
+    {
+        var d = F.Id("d"); var m = F.Id("m"); var n = Cast(Mul(m, d));
+        var loss = Mul(Cast(d), Log(Cast(Fact(m))));
+        var lower = Sub(Sub(Sub(Mul(n, Log(Div(n, C()))), n), Mul(Add(Cast(m), D(1)), C())), loss);
+        var upper = Sub(Sub(Add(Mul(Add(Cast(m), D(1)), C()), Log(Cast(Fact(Mul(m, d))))),
+            Mul(Add(n, D(1)), Log(C()))), loss);
+        return Disp(AllDM(Imp(Lt(D(0), d), Imp(Lt(D(0), m),
+            And(Le(lower, Log(HCount(d, m))), Le(Log(HCount(d, m)), upper))))));
+    }
+
+    private static Formula ErrorFormula()
+    {
+        var n = F.Id("n"); var r = Cast(n);
+        var error = new Formula.Absolute(Sub(Log(Cast(Call("a", n))),
+            Mul(Pow(r, D(2)), Sub(Log(r), Log(C())))));
+        var bound = Mul(r, Add(Add(Mul(D(4), Log(r)), D(6)), Mul(D(2), new Formula.Absolute(Log(C())))));
+        return Disp(All("n", N(), Imp(Le(D(2), n), Le(error, bound))));
+    }
+
+    private static Formula LimitFormula()
+    {
+        var n = F.Id("n"); var r = Cast(n);
+        var sequence = Lam("n", N(), Div(Qualified("Real", "rpow", Cast(Call("a", n)),
+            Div(D(1), Pow(r, D(2)))), r));
+        return Disp(Call("Tendsto", sequence, F.Id("atTop"), Call("nhds", Div(D(1), C()))));
+    }
+
 }

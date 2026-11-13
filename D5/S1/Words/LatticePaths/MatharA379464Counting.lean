@@ -16,8 +16,8 @@ Public declarations:
   admission_basis: escape-witness: three_positive_rotations.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25538.
 Direct frozen dependencies: D5.S1.Words.Compositions.ZeroSumWordCount.prefix_segment_sum.
-Private content theorems: hit_level, above_after_last, good_at_level, good_cut_count, above_filter_zero, path_filter_zero, cuts_count, positive_word_count, positive_word_cardinality, insertion_formula, literal_option_bridge, literal_count_insertion, zero_free_multiple, zero_free_formula. Their witnesses are hit_level, above_filter_zero, insertion_formula, or three_positive_rotations on their compiled dependency paths. The remaining private theorems are bind-only and have named live consumers in the compiled dependency inventory. Proposition-valued private definitions GoodCut, Above, ListPath, positive, Strict, and P are consumed by their counting lemmas.
-The source definitions and the cyclic count are unbounded symbolic mathematics; utility: none.
+Private content theorems: hit_level, above_after_last, good_at_level, good_cut_count, above_filter_zero, path_filter_zero, cuts_count, positive_word_count, positive_word_cardinality, literal_option_bridge, literal_count_insertion, zero_free_multiple, zero_free_formula. Their witnesses are hit_level, above_filter_zero, insertion_formula, or three_positive_rotations on their compiled dependency paths. The remaining private theorems are bind-only and have named live consumers in the compiled dependency inventory. Proposition-valued private definitions GoodCut, Above, ListPath, positive, Strict, and P are consumed by their counting lemmas.
+The generic count and insertion_formula are public and consumed by KotesovecA263160. The source definitions and the cyclic count are unbounded symbolic mathematics; utility: none.
 -/
 
 import D5.S1.Words.Compositions.ZeroSumWordCount

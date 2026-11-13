@@ -6,28 +6,36 @@
    utility: none
    digest: First-zero lattice paths and the diagonal OEIS A263160 limit. -/
 
-/-
-Source: OEIS A263160 revision 21 and A263159 revision 16.
-Preregistration: https://github.com/the-omega-institute/trureturing/issues/29912.
-The full root-limit conjecture remains open until a theorem proves it for the literal count.
-Prospective admission_basis: open-problem-resolution for the full result;
-escape-witness for independently admissible supporting counting content.
-Definitions are bind-only and used by the counting statements. The prefix-budget
-argument is content; direct applications of existing counting identities are
-bind-only auxiliaries and must have actual mathematical consumers.
-The statements are symbolic and unbounded; utility: none.
--/
-
 import D5.S1.Words.LatticePaths.MatharA379464Counting
 import Mathlib.Analysis.SumIntegralExpDecay
 import Mathlib.Analysis.SpecialFunctions.Log.Sum
 import Mathlib.Data.Nat.Choose.Bounds
 import Mathlib.Data.Nat.Choose.Vandermonde
 
+/-!
+# First-zero lattice paths and the OEIS A263160 limit
+
+The labelled ordered first-zero count is defined directly by finite words.
+The complete all-index root limit is `diagonal_limit`; it uses no fixed-dimension
+hypothesis. Source: OEIS A263160 revision 21 and A263159 revision 16.
+Preregistration: https://github.com/the-omega-institute/trureturing/issues/29912.
+
+Definitions have proof_shape: bind-only and are consumed by the counting results.
+The newly authored public theorems have proof_shape: content after expansion of
+the same-delivery helpers. The live constructions are the coordinate-length
+induction, row/column equivalence, terminal/internal append partition, uniform
+series estimates, optimized positive term, and quantitative diagonal squeeze.
+The final external assertion has prospective admission_basis: open-problem-resolution;
+supporting counting content has prospective admission_basis: escape-witness.
+No claim of worldwide priority or completed repository settlement is made.
+The unfinished source-bound registration audit is tracked at
+https://github.com/the-omega-institute/trureturing/issues/29924.
+All statements are unbounded symbolic mathematics; utility: none.
+-/
+
 open scoped BigOperators Topology
 open Filter
 
-set_option maxHeartbeats 1000000
 
 namespace D5.S1.Words.LatticePaths.KotesovecA263160
 
@@ -143,7 +151,7 @@ private noncomputable def columnEquiv (d : ℕ) : Option (Step d) ≃ Finset (Fi
   right_inv s := by
     by_cases hs : s.Nonempty
     · simp [hs]
-    · simp [hs, Finset.not_nonempty_iff_eq_empty.mp hs]
+    · simp [Finset.not_nonempty_iff_eq_empty.mp hs]
 
 private theorem countP_ofFn {α : Type} {k : ℕ} (w : Fin k → α) (p : α → Bool) :
     (List.ofFn w).countP p = (Finset.univ.filter fun j => p (w j)).card := by
@@ -223,7 +231,7 @@ private theorem internal_words_vanish (d m t : ℕ) (ht : d * m < t) :
     internal_words d m t = 0 := by
   classical
   unfold internal_words MatharA379464Counting.count
-  letI : IsEmpty {w : Fin t → Step d // ∀ i, decrements (List.ofFn w) i ≤ m} :=
+  let : IsEmpty {w : Fin t → Step d // ∀ i, decrements (List.ofFn w) i ≤ m} :=
     ⟨fun w => by
       have hl := internal_length_bound (List.ofFn w.val) w.property
       simp only [List.length_ofFn] at hl
@@ -360,7 +368,7 @@ private noncomputable def branchEquiv (d m t : ℕ) (hd : 0 < d) :
     have hl := decrements_take_le (List.ofFn w) t i
     have he : (List.ofFn w).take t = List.ofFn (fun j : Fin t => w j.castSucc) := by
       rw [List.ofFn_succ', List.concat_eq_append]
-      simp [List.take_append]
+      simp
     rw [he] at hl
     exact hl.trans (hw i)
   refine
@@ -390,7 +398,7 @@ private theorem terminal_recurrence (d m t : ℕ) (hd : 0 < d) :
   have he := Fintype.card_congr ((branchEquiv d m t hd).symm.trans (parentEquiv d m t))
   have hstep : Fintype.card (Step d) = 2 ^ d - 1 := by
     have h := Fintype.card_subtype_compl (fun s : Finset (Fin d) => s = ∅)
-    simpa [Step, Finset.nonempty_iff_ne_empty] using h
+    simp [Step, Finset.nonempty_iff_ne_empty]
   rw [Fintype.card_sum, Fintype.card_prod, hstep] at he
   simpa only [internal_words, MatharA379464Counting.count,
     ← Nat.card_eq_fintype_card] using he
@@ -407,15 +415,15 @@ private theorem terminalCount_zero (d m : ℕ) (hd : 0 < d) :
       have hw := w.property
       rw [FirstZero, ite_eq_right hz] at hw
       obtain ⟨i, hi⟩ := hw.2
-      simpa [decrements] using hi⟩
-  haveI := hempty
+      simp [decrements] at hi⟩
+  have := hempty
   exact Fintype.card_eq_zero
 
 private theorem terminalCount_vanish (d m t : ℕ) (hd : 0 < d)
     (ht : d * m + 1 < t) : terminalCount d (m + 1) t = 0 := by
   classical
   have hz : ¬ (m + 1 = 0 ∨ d = 0) := by omega
-  letI : IsEmpty {w : Fin t → Step d // FirstZero (m + 1) (List.ofFn w)} :=
+  let : IsEmpty {w : Fin t → Step d // FirstZero (m + 1) (List.ofFn w)} :=
     ⟨fun w => by
       have hp := (by simpa only [FirstZero, ite_eq_right hz] using w.property :
         (∀ r < (List.ofFn w.val).length, ∀ i,
@@ -585,5 +593,263 @@ theorem internal_count_lower (d m k : ℕ) :
   apply (series_term_bounds d m k).1.trans
   have h := sum_le_hasSum (s := {k}) (fun j _ => by positivity) (internal_hasSum d m)
   simpa using h
+
+/-- Logarithmic factorial bounds with an optimized single term for the lower estimate. -/
+theorem internal_log_bounds (d m : ℕ) (hd : 0 < d) (hm : 0 < m) :
+    let N := m * d
+    let H := 2 * ∑ t ∈ Finset.range (d * m + 1), (internal_words d m t : ℝ)
+    (N : ℝ) * Real.log ((N : ℝ) / Real.log 2) - (N : ℝ) -
+        ((m : ℝ) + 1) * Real.log 2 - (d : ℝ) * Real.log (m.factorial : ℝ) ≤ Real.log H ∧
+    Real.log H ≤ ((m : ℝ) + 1) * Real.log 2 + Real.log (N.factorial : ℝ) -
+        ((N : ℝ) + 1) * Real.log (Real.log 2) -
+          (d : ℝ) * Real.log (m.factorial : ℝ) := by
+  dsimp only
+  let N := m * d
+  let c := Real.log 2
+  let H := 2 * ∑ t ∈ Finset.range (d * m + 1), (internal_words d m t : ℝ)
+  have hc : 0 < c := Real.log_pos (by norm_num)
+  have hN : (0 : ℝ) < N := by dsimp [N]; exact_mod_cast Nat.mul_pos hm hd
+  have hF : (0 : ℝ) < m.factorial := by positivity
+  have hH : 0 < H := by
+    have hl := internal_count_lower d m m
+    have ht : (0 : ℝ) < (1 / 2 : ℝ) ^ m *
+        ((m + 1 - m : ℕ) : ℝ) ^ (m * d) / (m.factorial : ℝ) ^ d := by
+      simp only [Nat.add_sub_cancel_left, Nat.cast_one, one_pow, mul_one]
+      positivity
+    exact ht.trans_le hl
+  constructor
+  · let x := (N : ℝ) / c
+    let k := Nat.ceil x + m
+    have hx : 0 < x := div_pos hN hc
+    have hbase : x ≤ ((k + 1 - m : ℕ) : ℝ) := by
+      have hh := Nat.le_ceil x
+      have he : k + 1 - m = Nat.ceil x + 1 := by dsimp [k]; omega
+      rw [he, Nat.cast_add, Nat.cast_one]
+      linarith
+    have hk : (k : ℝ) ≤ x + (m : ℝ) + 1 := by
+      have hh := Nat.ceil_lt_add_one hx.le
+      dsimp [k]
+      push_cast
+      linarith
+    have hl : Real.exp (-(c * (k : ℝ))) * x ^ N / (m.factorial : ℝ) ^ d ≤ H := by
+      calc
+        _ ≤ (1 / 2 : ℝ) ^ k * ((k + 1 - m : ℕ) : ℝ) ^ N /
+            (m.factorial : ℝ) ^ d := by
+          rw [half_pow_exp]
+          apply div_le_div_of_nonneg_right _ (by positivity)
+          exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hx.le hbase N) (by positivity)
+        _ ≤ H := internal_count_lower d m k
+    have ht : 0 < Real.exp (-(c * (k : ℝ))) * x ^ N / (m.factorial : ℝ) ^ d := by positivity
+    have hh := Real.log_le_log ht hl
+    rw [Real.log_div (by positivity) (by positivity), Real.log_mul (by positivity)
+      (by positivity), Real.log_exp, Real.log_pow, Real.log_pow] at hh
+    have hcx : c * x = N := by dsimp [x]; field_simp
+    have hck := mul_le_mul_of_nonneg_left hk hc.le
+    change (N : ℝ) * Real.log x - (N : ℝ) - ((m : ℝ) + 1) * c -
+      (d : ℝ) * Real.log (m.factorial : ℝ) ≤ Real.log H
+    nlinarith
+  · have hh := Real.log_le_log hH (internal_count_upper d m)
+    have hu : Real.log ((2 : ℝ) ^ (m + 1) * (N.factorial : ℝ) /
+        (c ^ (N + 1) * (m.factorial : ℝ) ^ d)) =
+        ((m : ℝ) + 1) * c + Real.log (N.factorial : ℝ) -
+          ((N : ℝ) + 1) * Real.log c - (d : ℝ) * Real.log (m.factorial : ℝ) := by
+      rw [Real.log_div (by positivity) (by positivity),
+        Real.log_mul (by positivity) (by positivity),
+        Real.log_mul (by positivity) (by positivity),
+        Real.log_pow, Real.log_pow, Real.log_pow]
+      push_cast
+      dsimp [c]
+      ring
+    change Real.log H ≤ Real.log ((2 : ℝ) ^ (m + 1) * (N.factorial : ℝ) /
+      (c ^ (N + 1) * (m.factorial : ℝ) ^ d)) at hh
+    rw [hu] at hh
+    exact hh
+
+private theorem paths_log_comparison (d m : ℕ) (hd : 2 ≤ d) :
+    let H := 2 * ∑ t ∈ Finset.range (d * m + 1), (internal_words d m t : ℝ)
+    0 < (paths d (m + 1) : ℝ) ∧
+      Real.log H - Real.log 2 ≤ Real.log (paths d (m + 1) : ℝ) ∧
+      Real.log (paths d (m + 1) : ℝ) ≤
+        (d : ℝ) * Real.log 2 + Real.log H - Real.log 2 := by
+  dsimp only
+  let I := ∑ t ∈ Finset.range (d * m + 1), internal_words d m t
+  have hi : 1 ≤ I := by
+    calc
+      _ = internal_words d m 0 := (internal_words_zero d m).symm
+      _ ≤ I := Finset.single_le_sum (fun _ _ => Nat.zero_le _)
+        (Finset.mem_range.mpr (by omega))
+  have hpow : 4 ≤ 2 ^ d := by
+    simpa using Nat.pow_le_pow_right (by decide : 1 ≤ 2) hd
+  have hb := paths_eq_internal d m (by omega)
+  change paths d (m + 1) = 1 + (2 ^ d - 2) * I at hb
+  have hcoeff : 1 ≤ 2 ^ d - 2 := by omega
+  have hlo : I ≤ paths d (m + 1) := by nlinarith
+  have hhi : paths d (m + 1) ≤ 2 ^ d * I := by
+    have hp : 2 ^ d = (2 ^ d - 2) + 2 := by omega
+    rw [hp]
+    nlinarith
+  have hiR : (0 : ℝ) < I := by exact_mod_cast (show 0 < I by omega)
+  have hbR : (0 : ℝ) < paths d (m + 1) := by exact_mod_cast (show 0 < paths d (m + 1) by omega)
+  have hloR := Real.log_le_log hiR (show (I : ℝ) ≤ paths d (m + 1) by exact_mod_cast hlo)
+  have hhiR := Real.log_le_log hbR (show (paths d (m + 1) : ℝ) ≤ (2 : ℝ)^d * I by exact_mod_cast hhi)
+  rw [Real.log_mul (by positivity) (ne_of_gt hiR), Real.log_pow] at hhiR
+  have hH : Real.log (2 * ∑ t ∈ Finset.range (d * m + 1), (internal_words d m t : ℝ)) =
+      Real.log 2 + Real.log (I : ℝ) := by
+    have he : (∑ t ∈ Finset.range (d * m + 1), (internal_words d m t : ℝ)) = (I : ℝ) := by
+      dsimp [I]
+      norm_cast
+    rw [he, Real.log_mul (by norm_num) (ne_of_gt hiR)]
+  rw [hH]
+  exact ⟨hbR, by linarith, by linarith⟩
+
+private theorem log_factorial_bounds (n : ℕ) (hn : 0 < n) :
+    (n : ℝ) * Real.log n - n ≤ Real.log (n.factorial : ℝ) ∧
+    Real.log (n.factorial : ℝ) ≤ (n : ℝ) * Real.log n - n + Real.log n + 1 := by
+  constructor
+  · simpa only [Real.sum_log_eq_log_factorial] using (Real.le_sum_log_nat (N := n))
+  · have h := Real.sum_log_le (x := (n : ℝ)) (by exact_mod_cast hn)
+    simpa only [Nat.floor_natCast, Real.sum_log_eq_log_factorial] using h
+
+set_option maxHeartbeats 1000000 in
+/-- A diagonal error bound at the scale required by the conjecture. -/
+theorem diagonal_log_estimate (n : ℕ) (hn : 2 ≤ n) :
+    |Real.log (a n : ℝ) - (n : ℝ) ^ 2 *
+        (Real.log (n : ℝ) - Real.log (Real.log 2))| ≤
+      (n : ℝ) * (4 * Real.log (n : ℝ) + 6 + 2 * |Real.log (Real.log 2)|) := by
+  let m := n - 1
+  let N := m * n
+  let c := Real.log 2
+  have hm : 0 < m := by dsimp [m]; omega
+  have hn0 : 0 < n := by omega
+  have hnR : (2 : ℝ) ≤ n := by exact_mod_cast hn
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  have hmc : (m : ℝ) = (n : ℝ) - 1 := by dsimp [m]; rw [Nat.cast_sub (by omega)]; norm_num
+  have hNc : (N : ℝ) = (n : ℝ) * ((n : ℝ) - 1) := by
+    dsimp [N]
+    push_cast
+    rw [hmc]
+    ring
+  have hc : 0 < c := Real.log_pos (by norm_num)
+  have hc1 : c ≤ 1 := by
+    have h := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
+    norm_num at h
+    exact h
+  have hlogn : 0 ≤ Real.log (n : ℝ) := Real.log_nonneg (by linarith)
+  have hlogm : Real.log (m : ℝ) ≤ Real.log (n : ℝ) :=
+    Real.log_le_log hmR (by rw [hmc]; linarith)
+  have hlogN : Real.log (N : ℝ) = Real.log (n : ℝ) + Real.log (m : ℝ) := by
+    dsimp [N]
+    push_cast
+    rw [Real.log_mul (ne_of_gt hmR) (by positivity)]
+    ring
+  have hlogNc : Real.log ((N : ℝ) / c) =
+      Real.log (n : ℝ) + Real.log (m : ℝ) - Real.log c := by
+    rw [Real.log_div (by positivity) (ne_of_gt hc), hlogN]
+  have hi := internal_log_bounds n m hn0 hm
+  have hp := paths_log_comparison n m hn
+  have hfN := log_factorial_bounds N (Nat.mul_pos hm hn0)
+  have hfm := log_factorial_bounds m hm
+  dsimp only at hi hp
+  change (N : ℝ) * Real.log ((N : ℝ) / c) - N - ((m : ℝ) + 1) * c -
+      (n : ℝ) * Real.log (m.factorial : ℝ) ≤
+        Real.log (2 * ∑ t ∈ Finset.range (n * m + 1), (internal_words n m t : ℝ)) ∧
+      Real.log (2 * ∑ t ∈ Finset.range (n * m + 1), (internal_words n m t : ℝ)) ≤
+        ((m : ℝ) + 1) * c + Real.log (N.factorial : ℝ) -
+          ((N : ℝ) + 1) * Real.log c - (n : ℝ) * Real.log (m.factorial : ℝ) at hi
+  have he : m + 1 = n := by dsimp [m]; omega
+  rw [he] at hp
+  change 0 < (a n : ℝ) ∧
+      Real.log (2 * ∑ t ∈ Finset.range (n * m + 1), (internal_words n m t : ℝ)) - c ≤
+        Real.log (a n : ℝ) ∧
+      Real.log (a n : ℝ) ≤ (n : ℝ) * c +
+        Real.log (2 * ∑ t ∈ Finset.range (n * m + 1), (internal_words n m t : ℝ)) - c at hp
+  have hl : (N : ℝ) * (Real.log (n : ℝ) - Real.log c) -
+      (n : ℝ) * (Real.log (m : ℝ) + c + 1) - c ≤ Real.log (a n : ℝ) := by
+    have hmul := mul_le_mul_of_nonneg_left hfm.2 (by positivity : (0 : ℝ) ≤ n)
+    rw [hlogNc] at hi
+    simp only [hmc, hNc] at hi hmul ⊢
+    nlinarith [hi.1, hp.2.1]
+  have hu : Real.log (a n : ℝ) ≤
+      (N : ℝ) * (Real.log (n : ℝ) - Real.log c) +
+        (2 * (n : ℝ) - 1) * c + Real.log (N : ℝ) + 1 - Real.log c := by
+    have hmul := mul_le_mul_of_nonneg_left hfm.1 (by positivity : (0 : ℝ) ≤ n)
+    rw [hlogN]
+    simp only [hmc, hNc] at hi hmul ⊢
+    rw [hlogN] at hfN
+    simp only [hNc, hmc] at hfN
+    nlinarith [hi.2, hp.2.2, hfN.2]
+  have hal : -|Real.log c| ≤ Real.log c := neg_abs_le _
+  have hau : Real.log c ≤ |Real.log c| := le_abs_self _
+  have han : 0 ≤ |Real.log c| := abs_nonneg _
+  have hml := mul_le_mul_of_nonneg_left hlogm (by positivity : (0 : ℝ) ≤ n)
+  have hcl := mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ n)
+  have haln := mul_le_mul_of_nonneg_left hal (by positivity : (0 : ℝ) ≤ n)
+  have haun := mul_le_mul_of_nonneg_left hau (by positivity : (0 : ℝ) ≤ n)
+  have han1 := mul_nonneg (show (0 : ℝ) ≤ n - 1 by linarith) han
+  have hln1 := mul_nonneg (show (0 : ℝ) ≤ n - 1 by linarith) hlogn
+  rw [hlogN] at hu
+  rw [hNc] at hl hu
+  apply abs_le.mpr
+  constructor <;> dsimp only [c] at * <;> nlinarith
+
+/-- The complete all-index real-root limit conjectured for OEIS A263160. -/
+theorem diagonal_limit :
+    Tendsto (fun n : ℕ => Real.rpow (a n : ℝ) (1 / (n : ℝ) ^ 2) / (n : ℝ))
+      atTop (nhds (1 / Real.log 2)) := by
+  let c := Real.log 2
+  let K := 6 + 2 * |Real.log c|
+  let f := fun n : ℕ => Real.log (a n : ℝ) / (n : ℝ) ^ 2 -
+    Real.log (n : ℝ) + Real.log c
+  have hncast : Tendsto (fun n : ℕ => (n : ℝ)) atTop atTop :=
+    tendsto_natCast_atTop_atTop
+  have hlog : Tendsto (fun n : ℕ => Real.log (n : ℝ) / (n : ℝ)) atTop (nhds 0) :=
+    Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero.comp hncast
+  have hinv : Tendsto (fun n : ℕ => (n : ℝ)⁻¹) atTop (nhds 0) :=
+    tendsto_inv_atTop_zero.comp hncast
+  have hE : Tendsto (fun n : ℕ => (4 * Real.log (n : ℝ) + K) / (n : ℝ))
+      atTop (nhds 0) := by
+    convert (hlog.const_mul 4).add (hinv.const_mul K) using 1
+    · ext n
+      simp only [div_eq_mul_inv]
+      ring
+    · simp
+  have hb : ∀ᶠ n : ℕ in atTop,
+      |f n| ≤ (4 * Real.log (n : ℝ) + K) / (n : ℝ) := by
+    filter_upwards [eventually_ge_atTop 2] with n hn
+    have hnR : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+    have h := diagonal_log_estimate n hn
+    have he : f n = (Real.log (a n : ℝ) - (n : ℝ)^2 *
+        (Real.log (n : ℝ) - Real.log c)) / (n : ℝ)^2 := by
+      dsimp [f]
+      field_simp
+      ring
+    rw [he, abs_div, abs_of_pos (pow_pos hnR 2)]
+    have hh := div_le_div_of_nonneg_right h (le_of_lt (pow_pos hnR 2))
+    convert hh using 1
+    dsimp [K, c]
+    field_simp
+    ring
+  have hf : Tendsto f atTop (nhds 0) := squeeze_zero_norm' hb hE
+  have hg : Tendsto (fun n : ℕ => Real.log (a n : ℝ) / (n : ℝ)^2 - Real.log (n : ℝ))
+      atTop (nhds (-Real.log c)) := by
+    convert hf.sub_const (Real.log c) using 1 <;> simp [f]
+  have hexp := Real.continuous_exp.continuousAt.tendsto.comp hg
+  have hc : 0 < c := Real.log_pos (by norm_num)
+  have hout : Real.exp (-Real.log c) = 1 / c := by
+    rw [Real.exp_neg, Real.exp_log hc, one_div]
+  rw [hout] at hexp
+  apply hexp.congr'
+  filter_upwards [eventually_ge_atTop 2] with n hn
+  have hnR : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
+  have hp := (paths_log_comparison n (n - 1) hn).1
+  have hnEq : n - 1 + 1 = n := by omega
+  rw [hnEq] at hp
+  change 0 < (a n : ℝ) at hp
+  change Real.exp (Real.log (a n : ℝ) / (n : ℝ)^2 - Real.log (n : ℝ)) =
+    (a n : ℝ) ^ (1 / (n : ℝ)^2) / (n : ℝ)
+  rw [Real.rpow_def_of_pos hp, Real.exp_sub, Real.exp_log hnR]
+  congr 1
+  congr 1
+  ring
 
 end D5.S1.Words.LatticePaths.KotesovecA263160
