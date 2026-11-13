@@ -12,13 +12,19 @@ The statement retains positivity, minimal generation, gcd one, all four exact cr
 
 In the formulas, I = Fin 4, N denotes the natural numbers, Generators = Factorization = CriticalCoefficients = (I -> N), and PositiveCriticalCoefficients = (I -> I -> N). Free variables in definitions have these types: d is a generator tuple, a is critical data, b is positive critical data, z and w are factorization vectors, indices lie in I, and n, k, A, B are natural numbers. Graph vertices and the arguments of RRelated belong to the fixed fiber Factorizations(d,n); their underlying vectors are used in coordinate expressions. Definition formulas are universally quantified over these free variables. closure means additive submonoid closure; range and image have their set meanings; coordinate(v,j) means v(j). ConnectedComponent, supp, Reachable and Connected refer to the displayed simple graph. Division is natural-number division. Threshold(d,x,y,c) abbreviates gcd(d(x),d(y))/gcd(gcd(d(x),d(y)),d(c)); it imposes no representation hypothesis.
 
+Source provenance is literature-attested for the translated source definitions and the literal critical-pair ordering in main.tex:230, derived there from Lemma 2.2. The graph encoding, source-domain packaging, stronger classification and its proof are repository formalization/reuse of the attributed public argument, not theorems asserted by the paper. The source note is Library/Semigroups/chomicz2026minimalpresentations.md; the full question, clause map and result boundaries are in Problems/chomicz-2026-secondary-boundary-betti.md. No exhaustive literature or priority certification is claimed.
+
+The compiled Reg mirror supplies additive-closure, excluded-generator, set-gcd, cofiniteness, distinctness and fixed-fiber-chain bridges. Its source_domain_nonempty theorem uses d=(145,203,74,111), a=(7,5,3,2), with complete critical fibers at 1015 and 222 and existing least-data existence. This witnesses the original domain, not a universal permutation-transport theorem. All five public four-slot audits remain unfinished, with zero declared_validated; issue https://github.com/the-omega-institute/trureturing/issues/29825 names the missing variation, sensitivity, dependence, source-selection and lawful-enrollment evidence. The conditional compiled Reg mirrors do not discharge those audits.
+
+The semantic module admission basis is escape-witness and utility is none. Among the 22 authored theorem declarations, 10 carry content and 12 are bind-only with live consumers. In particular right_hub is consumed bind-only, used by result, and supplies no independent mathematical credit. No open-problem-resolution exemption or finite numeric utility is asserted. Kernel proof, interpreted source answer, literature evidence, canonical freeze and eventual delivery credit are separate claims.
+
 **Definition 1.1 (The generated additive submonoid).**
 
 $$\operatorname{semigroup}\left(d\right) = \operatorname{closure}\left(\operatorname{range}\left(d\right)\right)$$
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.semigroup` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -30,7 +36,7 @@ $$\operatorname{eval}\left(d, z\right) = \sum_{i \in I} z\left(i\right) \cdot d\
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.eval` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -42,7 +48,7 @@ $$\operatorname{factorizations}\left(d, n\right) = \{z \in Factorization \mid \o
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.factorizations` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -54,7 +60,7 @@ $$\operatorname{support}\left(z\right) = \{i \in I \mid 0 < z\left(i\right)\}$$
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.support` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -114,7 +120,7 @@ $$\operatorname{IsCriticalCoefficient}\left(d, i, k\right) \Leftrightarrow \oper
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsCriticalCoefficient` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -126,7 +132,7 @@ $$\operatorname{IsCriticalData}\left(d, a\right) \Leftrightarrow \left(\forall i
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsCriticalData` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -138,7 +144,7 @@ $$\operatorname{IsPositiveCriticalCoefficient}\left(d, m, i, k\right) \Leftright
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsPositiveCriticalCoefficient` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -150,7 +156,7 @@ $$\operatorname{IsPositiveCriticalData}\left(d, b\right) \Leftrightarrow \left(\
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsPositiveCriticalData` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -162,7 +168,7 @@ $$\operatorname{IsMinimalRelation}\left(d, i, k, z\right) \Leftrightarrow \left(
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsMinimalRelation` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -174,7 +180,7 @@ $$\operatorname{IsPositiveMinimalRelation}\left(d, m, i, k, z\right) \Leftrighta
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsPositiveMinimalRelation` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -186,7 +192,7 @@ $$\operatorname{boundaryCoefficient}\left(b, i\right) = b\left(0, i\right)$$
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.boundaryCoefficient` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -198,7 +204,7 @@ $$\operatorname{IsPrimary}\left(a, b\right) \Leftrightarrow \left(\exists m \in 
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.IsPrimary` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 
@@ -222,7 +228,7 @@ $$\operatorname{HasSecondaryOrdering}\left(d, a\right) \Leftrightarrow \left(\le
 
 *Formalization.* `D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.HasSecondaryOrdering` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Kazimierz Chomicz (2026). *The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four*. DOI: [10.48550/arXiv.2609.04000](https://doi.org/10.48550/arXiv.2609.04000). URL: <https://arxiv.org/abs/2609.04000v1>.
 
 *Commentary.*
 

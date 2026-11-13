@@ -8,6 +8,9 @@ internal sealed class SecondaryBoundaryBettiDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/NumericalSemigroups/SecondaryBoundaryBetti.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Semigroups/chomicz2026minimalpresentations");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Critical pairs control the full factorization graphs at the secondary boundary degrees.",
         H("Secondary Boundary Betti Degrees"),
@@ -16,6 +19,9 @@ internal sealed class SecondaryBoundaryBettiDocument : IScribeDocumentDefinition
             Paragraph(Text("The printed chain definition at main.tex:469 places intermediates in ambient N^4. Here chains remain in the fixed factorization fiber. Unrestricted ambient chains connect any two nonzero vectors through their sum and therefore cannot describe the intended classes. The source immediately discusses classes of a fixed fiber, invokes the minimal-presentation theorem at lines 476-480, constructs fixed-degree chains in Lemma 3.13, and calls positive critical degrees Betti at line 1050. These uses justify the explicit fiber-local interpretation; they do not establish equivalence with the unrestricted printed relation.")),
             Paragraph(Text("The statement retains positivity, minimal generation, gcd one, all four exact critical fibers, and every choice of least data and relation witnesses. It imposes no generator, degree, or fiber bound. The gcd criterion and complete component alternatives strengthen the two literal boundary questions.")),
             Paragraph(Text("In the formulas, I = Fin 4, N denotes the natural numbers, Generators = Factorization = CriticalCoefficients = (I -> N), and PositiveCriticalCoefficients = (I -> I -> N). Free variables in definitions have these types: d is a generator tuple, a is critical data, b is positive critical data, z and w are factorization vectors, indices lie in I, and n, k, A, B are natural numbers. Graph vertices and the arguments of RRelated belong to the fixed fiber Factorizations(d,n); their underlying vectors are used in coordinate expressions. Definition formulas are universally quantified over these free variables. closure means additive submonoid closure; range and image have their set meanings; coordinate(v,j) means v(j). ConnectedComponent, supp, Reachable and Connected refer to the displayed simple graph. Division is natural-number division. Threshold(d,x,y,c) abbreviates gcd(d(x),d(y))/gcd(gcd(d(x),d(y)),d(c)); it imposes no representation hypothesis.")),
+            Paragraph(Text("Source provenance is literature-attested for the translated source definitions and the literal critical-pair ordering in main.tex:230, derived there from Lemma 2.2. The graph encoding, source-domain packaging, stronger classification and its proof are repository formalization/reuse of the attributed public argument, not theorems asserted by the paper. The source note is Library/Semigroups/chomicz2026minimalpresentations.md; the full question, clause map and result boundaries are in Problems/chomicz-2026-secondary-boundary-betti.md. No exhaustive literature or priority certification is claimed.")),
+            Paragraph(Text("The compiled Reg mirror supplies additive-closure, excluded-generator, set-gcd, cofiniteness, distinctness and fixed-fiber-chain bridges. Its source_domain_nonempty theorem uses d=(145,203,74,111), a=(7,5,3,2), with complete critical fibers at 1015 and 222 and existing least-data existence. This witnesses the original domain, not a universal permutation-transport theorem. All five public four-slot audits remain unfinished, with zero declared_validated; issue https://github.com/the-omega-institute/trureturing/issues/29825 names the missing variation, sensitivity, dependence, source-selection and lawful-enrollment evidence. The conditional compiled Reg mirrors do not discharge those audits.")),
+            Paragraph(Text("The semantic module admission basis is escape-witness and utility is none. Among the 22 authored theorem declarations, 10 carry content and 12 are bind-only with live consumers. In particular right_hub is consumed bind-only, used by result, and supplies no independent mathematical credit. No open-problem-resolution exemption or finite numeric utility is asserted. Kernel proof, interpreted source answer, literature evidence, canonical freeze and eventual delivery credit are separate claims.")),
             Node("semigroup", "The generated additive submonoid",
                 "Finite nonnegative combinations of the four displayed generators.", DescribeRole.Definition),
             Node("eval", "The factorization morphism",
@@ -75,8 +81,18 @@ internal sealed class SecondaryBoundaryBettiDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(Statement(name))), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.FromAuthor(Disp(Statement(name))), Provenance(name),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static AssessedProvenance Provenance(string name) => name switch
+    {
+        "semigroup" or "eval" or "factorizations" or "support" or
+        "IsCriticalCoefficient" or "IsCriticalData" or "IsPositiveCriticalCoefficient" or
+        "IsPositiveCriticalData" or "IsMinimalRelation" or "IsPositiveMinimalRelation" or
+        "boundaryCoefficient" or "IsPrimary" or "HasSecondaryOrdering" =>
+            AssessedProvenance.FromLiterature(Source),
+        _ => AssessedProvenance.FromRepo()
+    };
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N => Seq(Mathbb, Grp(V("N")));
