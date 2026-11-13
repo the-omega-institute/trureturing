@@ -36,68 +36,12 @@ open WholePairBallConfirmation ExclusionBallFaces
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
-omit [FiniteDimensional ℝ V] in
-private theorem cone_interior_base_interior {x : V} (hx : x ∈ base C u)
-    (hi : x ∈ interior (C : Set V)) : x ∈ intrinsicInterior ℝ (base C u) := by
-  let A : AffineSubspace ℝ V := ({(1 : ℝ)} : AffineSubspace ℝ ℝ).comap u.toAffineMap
-  have hKA : affineSpan ℝ (base C u) ≤ A := affineSpan_le.mpr (by
-    intro y hy
-    simpa [A] using hy.2)
-  have hunit (y : affineSpan ℝ (base C u)) : u y = 1 := by
-    have hh := hKA y.property
-    simpa [A] using hh
-  let a : affineSpan ℝ (base C u) := ⟨x, subset_affineSpan ℝ _ hx⟩
-  refine ⟨a, mem_interior_iff_mem_nhds.mpr ?_, rfl⟩
-  have hn : {y : affineSpan ℝ (base C u) | (y : V) ∈ C} ∈ nhds a :=
-    continuous_subtype_val.continuousAt.preimage_mem_nhds
-      (mem_interior_iff_mem_nhds.mp hi)
-  exact Filter.mem_of_superset hn (fun y hy => ⟨hy, hunit y⟩)
-
 private theorem exclusion_boundary
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p : pure C u) : exclusion C u p ⊆ intrinsicFrontier ℝ (base C u) := by
   exact MixedExclusionGeometry.exclusion_frontier hclosed hstrict hgen hB p
-
-private theorem boundary_support_face
-    (hclosed : IsClosed (C : Set V))
-    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hgen : Submodule.span ℝ (C : Set V) = ⊤)
-    {x : V} (hx : x ∈ intrinsicFrontier ℝ (base C u)) :
-    ∃ F : Set V, x ∈ F ∧ Convex ℝ F ∧ IsExtreme ℝ (base C u) F ∧ F ≠ base C u := by
-  have hK := (base_compact hclosed hstrict).isClosed
-  have hxK := intrinsicFrontier_subset hK hx
-  have hnot : x ∉ interior (C : Set V) := by
-    intro hi
-    have hii := cone_interior_base_interior hxK hi
-    rw [← closure_sdiff_intrinsicInterior, hK.closure_eq] at hx
-    exact hx.2 hii
-  have hint : (interior (C : Set V)).Nonempty := by
-    apply C.convex.interior_nonempty_iff_affineSpan_eq_top.mpr
-    rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.zero_mem), hgen]
-    rfl
-  obtain ⟨f, hf, hmax⟩ := geometric_hahn_banach_of_nonempty_interior_point C.convex hnot hint
-  have h0 : 0 ≤ f x := by simpa using hmax 0 C.zero_mem
-  have h2 := hmax ((2 : ℝ) • x) (C.smul_mem (by norm_num) hxK.1)
-  have hfx : f x = 0 := by simp only [map_smul, smul_eq_mul] at h2; linarith
-  let F : Set V := f.toExposed (base C u)
-  have hext : IsExposed ℝ (base C u) F := ContinuousLinearMap.toExposed.isExposed
-  have hxF : x ∈ F := ⟨hxK, fun y hy => by simpa [hfx] using hmax y hy.1⟩
-  refine ⟨F, hxF, ?_, hext.isExtreme, ?_⟩
-  · exact hext.convex (base_convex C u)
-  · intro he
-    have hzero (p : pure C u) : f p = 0 := by
-      have hpF : (p : V) ∈ F := he.symm ▸ pure_mem p
-      exact le_antisymm (by simpa [hfx] using hmax p (pure_mem p).1)
-        (by simpa [hfx] using hpF.2 x hxK)
-    have hs : Submodule.span ℝ (pure C u) ≤ LinearMap.ker f.toLinearMap :=
-      Submodule.span_le.mpr (fun p hp => hzero ⟨p, hp⟩)
-    rw [pure_span (base_compact hclosed hstrict) hstrict hgen] at hs
-    apply hf
-    have heq := LinearMap.ker_eq_top.mp (top_le_iff.mp hs)
-    ext y
-    exact LinearMap.congr_fun heq y
 
 /-- With the original full effects and variable positive exclusion dimensions,
 whole exclusions cover the entire actual relative boundary. Two base points
