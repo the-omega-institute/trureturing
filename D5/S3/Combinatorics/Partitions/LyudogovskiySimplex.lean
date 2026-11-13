@@ -229,10 +229,9 @@ private theorem row_parts (d : YoungDiagram) (H : ℕ) (hH : d.colLen 0 ≤ H) :
       simp [part, Nat.ne_of_gt hp]
     _ = _ := by
       rw [Finset.sum_eq_multiset_sum]
-      change (((Finset.range (d.colLen 0)).val.map d.rowLen).map
-        (fun k => ({k} : Multiset ℕ))).sum = _
-      rw [Multiset.sum_map_singleton]
-      rfl
+      simpa only [Multiset.map_map, Function.comp_def, Finset.range_val,
+        Multiset.range, Multiset.map_coe, YoungDiagram.rowLens] using
+        Multiset.sum_map_singleton ((Finset.range (d.colLen 0)).val.map d.rowLen)
 
 private theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
     (h : A.cells \ B.cells = {c}) : A.rowLen c.1 = c.2 + 1 := by
