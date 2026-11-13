@@ -48,7 +48,8 @@ abbrev L (ℋ : Type u) [AddCommGroup ℋ] [Module ℂ ℋ] : Type u :=
   ℋ →ₗ[ℂ] ℋ
 
 notation X"†" => LinearMap.adjoint X
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 def IsProjective (X : L ℋ) : Prop :=
   X.IsPositive ∧ IsIdempotentElem X
 
@@ -71,8 +72,6 @@ namespace IsProjective
 
 variable {P : L ℋ}
 
-private theorem isPositive (h : IsProjective P) : P.IsPositive := h.1
-
 private theorem isIdempotentElem (h : IsProjective P) : IsIdempotentElem P := h.2
 
 private theorem isStarProjection (h : IsProjective P) : IsStarProjection P :=
@@ -89,15 +88,7 @@ private theorem one_sub (h : IsProjective P) : IsProjective (1 - P) :=
 
 private theorem mul_one_sub (h : IsProjective P) : P * (1 - P) = 0 := h.2.mul_one_sub_self
 
-private theorem one_sub_mul (h : IsProjective P) : (1 - P) * P = 0 := h.2.one_sub_mul_self
-
 end IsProjective
-
-private theorem isProjective_one : IsProjective (1 : L ℋ) :=
-  ⟨LinearMap.isPositive_one, IsIdempotentElem.one⟩
-
-private theorem isProjective_zero : IsProjective (0 : L ℋ) :=
-  ⟨LinearMap.isPositive_zero, IsIdempotentElem.zero⟩
 
 end D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator
 
@@ -107,7 +98,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator
 
 universe u
 
-structure ProjUnitaryEncoding (ℋ : Type u) [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ] where
+structure ProjUnitaryEncoding (ℋ : Type u) [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ] where
   
   U : L ℋ
   
@@ -121,7 +113,8 @@ structure ProjUnitaryEncoding (ℋ : Type u) [NormedAddCommGroup ℋ] [InnerProd
   
   hP' : IsProjective P'
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 namespace ProjUnitaryEncoding
 
@@ -187,7 +180,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator
 
 universe u
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 noncomputable def phaseOp (P : L ℋ) (φ : ℝ) : L ℋ :=
   Complex.exp (Complex.I * φ) • P + Complex.exp (-(Complex.I * φ)) • (1 - P)
@@ -200,7 +194,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator D5.S3.Continuo
 
 universe u
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 noncomputable def altSeq (E : ProjUnitaryEncoding ℋ) : List ℝ → L ℋ
   | [] => 1
@@ -222,7 +217,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator D5.S3.Continuo
 
 universe u
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 private theorem norm_proj_apply_le {P : L ℋ} (hP : IsProjective P) (x : ℋ) : ‖P x‖ ≤ ‖x‖ := by
   have key : inner ℂ (P x) (P x) = inner ℂ x (P x) := by
@@ -258,7 +254,8 @@ end D5.S3.ContinuousObservables.ProjectedUnitaryLifting
 namespace D5.S3.ContinuousObservables.ProjectedUnitaryLifting
 open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Encoding Polynomial
 universe u
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 variable (E : ProjUnitaryEncoding ℋ)
 private theorem P_mul_encoded_adjoint : E.P * E.encoded† = E.encoded† := by
   rw [← LinearMap.star_eq_adjoint, ← E.hP.isSelfAdjoint.star_eq, ← star_mul, E.encoded_mul_P]
@@ -285,7 +282,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator D5.S3.Continuo
 
 universe u
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 private theorem _root_.D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Encoding.ProjUnitaryEncoding.norm_encoded_apply_le
     (E : ProjUnitaryEncoding ℋ) (x : ℋ) : ‖E.encoded x‖ ≤ ‖x‖ :=
@@ -357,11 +355,6 @@ private theorem rv_ne_zero (i : svIndex E) : rv E i ≠ 0 := by
   rw [h, norm_zero] at h1
   exact zero_ne_one h1
 
-private theorem inner_rv_rv (i j : svIndex E) :
-    inner ℂ (rv E i) (rv E j) = if i = j then (1 : ℂ) else 0 := by
-  have h := orthonormal_iff_ite.mp (rvBasis E).orthonormal i j
-  rwa [Submodule.coe_inner] at h
-
 private theorem hasEigenvector_rv (i : svIndex E) :
     Module.End.HasEigenvector (E.encoded† * E.encoded) (σsq E i : ℂ) (rv E i) :=
   ⟨Module.End.mem_eigenspace_iff.mpr (gram_rv E i), rv_ne_zero E i⟩
@@ -378,12 +371,6 @@ private theorem σsq_eq_norm_sq (i : svIndex E) : σsq E i = ‖E.encoded (rv E 
 private theorem σsq_nonneg (i : svIndex E) : 0 ≤ σsq E i := by
   rw [σsq_eq_norm_sq]
   positivity
-
-private theorem σsq_le_one (i : svIndex E) : σsq E i ≤ 1 := by
-  rw [σsq_eq_norm_sq]
-  have h := E.norm_encoded_apply_le (rv E i)
-  rw [norm_rv] at h
-  exact pow_le_one₀ (norm_nonneg _) h
 
 noncomputable def σ (i : svIndex E) : ℝ :=
   Real.sqrt (σsq E i)
@@ -407,21 +394,6 @@ private theorem σ_le_one (i : svIndex E) : σ E i ≤ 1 := by
 
 private theorem σ_mem_Icc (i : svIndex E) : σ E i ∈ Set.Icc (0 : ℝ) 1 :=
   ⟨σ_nonneg E i, σ_le_one E i⟩
-
-private theorem σ_mem_Icc_neg_one_one (i : svIndex E) : σ E i ∈ Set.Icc (-1 : ℝ) 1 :=
-  ⟨by linarith [σ_nonneg E i], σ_le_one E i⟩
-
-private theorem σ_sq_le_one (i : svIndex E) : σ E i ^ 2 ≤ 1 := by
-  rw [σ_sq]
-  exact σsq_le_one E i
-
-private theorem σ_eq_one_of_sq_eq_one {i : svIndex E} (h : σ E i ^ 2 = 1) : σ E i = 1 :=
-  (pow_eq_one_iff_of_nonneg (σ_nonneg E i) two_ne_zero).mp h
-
-private theorem encoded_rv_eq_zero_of_σ_eq_zero {i : svIndex E} (h : σ E i = 0) :
-    E.encoded (rv E i) = 0 := by
-  rw [σ_eq_norm] at h
-  exact norm_eq_zero.mp h
 
 private theorem aeval_gram_rv (R : ℂ[X]) (i : svIndex E) :
     aeval (E.encoded† * E.encoded) R (rv E i) = R.eval ((σ E i : ℂ) ^ 2) • rv E i := by
@@ -464,7 +436,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator D5.S3.Continuo
 
 universe u
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 section Proj
 
@@ -547,7 +520,8 @@ open D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator D5.S3.Continuo
 
 universe u
 
-variable {ℋ : Type u} [NormedAddCommGroup ℋ] [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
+variable {ℋ : Type u} [NormedAddCommGroup ℋ]
+  [InnerProductSpace ℂ ℋ] [FiniteDimensional ℂ ℋ]
 
 structure IsSingularPair (E : ProjUnitaryEncoding ℋ) (ψ : ℋ) (σ : ℝ) : Prop where
   
@@ -619,9 +593,6 @@ variable {E : ProjUnitaryEncoding ℋ} {ψ : ℋ} {σ : ℝ}
 
 private theorem sq_le_one (h : IsSingularPair E ψ σ) : σ ^ 2 ≤ 1 := pow_le_one₀ h.nonneg h.le_one
 
-private theorem mem_Icc_neg_one_one (h : IsSingularPair E ψ σ) : σ ∈ Set.Icc (-1 : ℝ) 1 :=
-  ⟨by linarith [h.nonneg], h.le_one⟩
-
 private theorem eq_one_of_sq_eq_one (h : IsSingularPair E ψ σ) (h1 : σ ^ 2 = 1) : σ = 1 :=
   (pow_eq_one_iff_of_nonneg h.nonneg two_ne_zero).mp h1
 
@@ -658,10 +629,6 @@ private theorem A_adjoint_lvOf (h : IsSingularPair E ψ σ) :
 private theorem norm_lvOf (h : IsSingularPair E ψ σ) (h0 : σ ≠ 0) : ‖lvOf E ψ σ‖ = ‖ψ‖ := by
   rw [lvOf_of_ne_zero E h0, norm_smul, norm_inv, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg h.nonneg, h.norm_encoded, ← mul_assoc, inv_mul_cancel₀ h0, one_mul]
-
-private theorem norm_lvOf_of_norm_one (h : IsSingularPair E ψ σ) (h0 : σ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    ‖lvOf E ψ σ‖ = 1 := by
-  rw [h.norm_lvOf h0, hψ]
 
 private theorem P'_U_apply (h : IsSingularPair E ψ σ) : E.P' (E.U ψ) = (σ : ℂ) • lvOf E ψ σ := by
   calc E.P' (E.U ψ) = E.P' (E.U (E.P ψ)) := by rw [h.P_eq]
@@ -746,22 +713,6 @@ private theorem phaseOp_P_apply (h : IsSingularPair E ψ σ) (φ : ℝ) :
     phaseOp E.P φ ψ = Complex.exp (Complex.I * φ) • ψ :=
   phaseOp_apply_of_proj_eq φ h.P_eq
 
-private theorem mk' (hψ : E.P ψ = ψ) (hσ : 0 ≤ σ) (hG : (E.encoded†) (E.encoded ψ) = ((σ : ℂ) ^ 2) • ψ)
-    (hne : ψ ≠ 0) : IsSingularPair E ψ σ := by
-  have hsq : ‖E.encoded ψ‖ ^ 2 = σ ^ 2 * ‖ψ‖ ^ 2 := by
-    have h1 : inner ℂ ((E.encoded†) (E.encoded ψ)) ψ = inner ℂ (E.encoded ψ) (E.encoded ψ) :=
-      LinearMap.adjoint_inner_left _ _ _
-    rw [hG, inner_smul_left, inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K, map_pow,
-      Complex.conj_ofReal] at h1
-    have h2 := congrArg Complex.re h1
-    simpa [← Complex.ofReal_pow, ← Complex.ofReal_mul] using h2.symm
-  have hle : ‖E.encoded ψ‖ ^ 2 ≤ 1 * ‖ψ‖ ^ 2 := by
-    rw [one_mul]
-    exact pow_le_pow_left₀ (norm_nonneg _) (E.norm_encoded_apply_le ψ) 2
-  have hpos : 0 < ‖ψ‖ ^ 2 := by positivity
-  have hσ2 : σ ^ 2 ≤ 1 := le_of_mul_le_mul_right (hsq ▸ hle) hpos
-  exact ⟨hψ, hσ, (pow_le_one_iff_of_nonneg hσ two_ne_zero).mp hσ2, hG⟩
-
 end IsSingularPair
 
 section Headline
@@ -825,30 +776,30 @@ theorem polynomial_lifting (E : ProjUnitaryEncoding H) (Ψ : List ℝ) (R : ℂ[
       seqR Ψ x 0 0 = if Even Ψ.length then R.eval ((x : ℂ) ^ 2)
         else (x : ℂ) * R.eval ((x : ℂ) ^ 2)) :
     (Even Ψ.length → E.P * altSeq E Ψ * E.P =
-      E.P * aeval (star E.encoded * E.encoded) R * E.P) ∧
+      E.P * aeval (E.encoded† * E.encoded) R * E.P) ∧
     (Odd Ψ.length → E.P' * altSeq E Ψ * E.P =
-      E.encoded * aeval (star E.encoded * E.encoded) R) := by
+      E.encoded * aeval (E.encoded† * E.encoded) R) := by
   constructor
   · intro he
     apply ext_mul_P_of_rv E
     intro i
     have h := altSeq_apply_singular (singular_pair_rv E i) Ψ
-    rw [if_pos he, if_pos he] at h
+    rw [ite_eq_left he, ite_eq_left he] at h
     rw [Module.End.mul_apply, h, map_add, map_smul, map_smul,
-      P_rv, P_rvpOf, smul_zero, add_zero, hscalar _ (σ_mem_Icc E i), if_pos he,
+      P_rv, P_rvpOf, smul_zero, add_zero, hscalar _ (σ_mem_Icc E i), ite_eq_left he,
       Module.End.mul_apply, aeval_gram_rv, map_smul, P_rv]
   · intro ho
     have he : ¬ Even Ψ.length := Nat.not_even_iff_odd.mpr ho
-    have hs : (E.encoded * aeval (star E.encoded * E.encoded) R) * E.P =
-        E.encoded * aeval (star E.encoded * E.encoded) R := by
+    have hs : (E.encoded * aeval (E.encoded† * E.encoded) R) * E.P =
+        E.encoded * aeval (E.encoded† * E.encoded) R := by
       rw [mul_assoc, ← (commute_P_aeval E R).eq, ← mul_assoc, E.encoded_mul_P]
     rw [← hs]
     apply ext_mul_P_of_rv E
     intro i
     have h := altSeq_apply_singular (singular_pair_rv E i) Ψ
-    rw [if_neg he, if_neg he] at h
+    rw [ite_eq_right he, ite_eq_right he] at h
     rw [Module.End.mul_apply, h, map_add, map_smul, map_smul,
-      P'_lvOf, P'_lvtOf, smul_zero, add_zero, hscalar _ (σ_mem_Icc E i), if_neg he,
+      P'_lvOf, P'_lvtOf, smul_zero, add_zero, hscalar _ (σ_mem_Icc E i), ite_eq_right he,
       Module.End.mul_apply, aeval_gram_rv, map_smul,
       (singular_pair_rv E i).A_apply, smul_smul, mul_comm]
 
