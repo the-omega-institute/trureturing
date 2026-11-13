@@ -203,7 +203,7 @@ private theorem complement_singleton (p : pure C u) :
     exact he.symm ▸ hx
 
 include hclosed hstrict hgen in
-private theorem pure_nonempty [Nontrivial V] : Nonempty (pure C u) := by
+theorem pure_nonempty [Nontrivial V] : Nonempty (pure C u) := by
   by_contra hn
   have he : pure C u = ∅ := Set.eq_empty_iff_forall_notMem.mpr
     (fun x hx => hn ⟨⟨x, hx⟩⟩)

@@ -111,7 +111,7 @@ private lemma base_eq_hull (L : Submodule ℝ (HermitianMat ι 𝕜)) (hrog : RO
       exact ⟨hL, rankOne_nonneg v, by rw [rankOne_trace_norm, hv, one_pow]⟩
     · exact base_convex L
 
-private lemma rankOne_self (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) :
+lemma rankOne_self (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) :
     ⟪rankOne v, rankOne v⟫_ℝ = 1 := by
   apply RCLike.ofReal_injective (K := 𝕜)
   rw [pair_rankOne]
