@@ -161,16 +161,15 @@ private theorem unit_star : star (D.cornerUnit Q) = D.cornerUnit Q := by
 
 /-- A coordinate on the literal designated corner line, defined on the original H. -/
 def cornerCoordinate (D : Product H M δ) (Q : H) : H →ₗ[ℂ] ℂ :=
-  (‖D.cornerUnit Q‖ ^ 2 : ℂ)⁻¹ • innerₛₗ ℂ (D.cornerUnit Q)
+  (inner ℂ (D.cornerUnit Q) (D.cornerUnit Q))⁻¹ • innerₛₗ ℂ (D.cornerUnit Q)
 
 private theorem coordinate_smul (c : ℂ) :
     D.cornerCoordinate Q (c • D.cornerUnit Q) = c := by
-  have ht : (‖D.cornerUnit Q‖ : ℂ) ≠ 0 := by
-    exact_mod_cast (norm_ne_zero_iff.mpr (unit_ne_zero I))
-  simp only [cornerCoordinate, LinearMap.smul_apply, smul_eq_mul, innerₛₗ_apply_apply,
-    inner_smul_right, inner_self_eq_norm_sq_to_K]
-  push_cast
-  field_simp
+  have ht : inner ℂ (D.cornerUnit Q) (D.cornerUnit Q) ≠ 0 :=
+    inner_self_ne_zero.mpr (unit_ne_zero I)
+  simp only [cornerCoordinate, LinearMap.smul_apply, smul_eq_mul,
+    innerₛₗ_apply_apply, inner_smul_right]
+  rw [mul_comm c, ← mul_assoc, inv_mul_cancel₀ ht, one_mul]
 
 private theorem coordinate_eq {x : H} (hx : x ∈ D.corner Q Q) :
     D.cornerCoordinate Q x • D.cornerUnit Q = x := by
@@ -232,8 +231,9 @@ private theorem beta_bounds : |D.cornerBeta Q - 1| ≤ 219140 * (τ + M * δ) :=
   simp only [p, map_smul, norm_smul] at h
   have hn : 0 < D.p (D.cornerUnit Q) :=
     (norm_pos_iff.mpr (unit_ne_zero I)).trans_le (D.norm_le_p _)
+  change 0 < ‖D.mul (D.cornerUnit Q)‖ at hn
   have hc : ‖D.cornerPairing Q (D.cornerUnit Q) (D.cornerUnit Q) - 1‖ ≤
-      219140 * (τ + M * δ) := (mul_le_mul_right hn).mp h
+      219140 * (τ + M * δ) := (mul_le_mul_iff_left₀ hn).mp (by nlinarith only [h])
   exact (Complex.abs_re_le_norm _).trans hc
 
 private theorem beta_pos : 0 < D.cornerBeta Q := by
@@ -300,13 +300,15 @@ private theorem pairing_hilbert_bounds (P : H) (hP : star P = P)
   rw [inner_sub_right, hid] at hd
   change |(inner ℂ D.unit (D.compression Q Q (D.mul (star x) x))).re -
     (inner ℂ x x).re| ≤ _ at hd
-  rw [(expectation_eq I), inner_self_eq_norm_sq] at hd
+  rw [(expectation_eq I)] at hd
+  have hself : (inner ℂ x x).re = ‖x‖ ^ 2 := inner_self_eq_norm_sq (𝕜 := ℂ) x
+  rw [hself] at hd
   have hr := (radius_bounds I).1
   have hn : D.p x ^ 2 ≤ (M * ‖x‖) ^ 2 :=
     pow_le_pow_left₀ (norm_nonneg _) (D.p_le x) 2
   have hb := mul_le_mul_of_nonneg_left hn
     (by positivity : 0 ≤ 260000 * (τ + M * δ))
-  constructor <;> nlinarith [(abs_le.mp hd).1, (abs_le.mp hd).2]
+  constructor <;> nlinarith only [(abs_le.mp hd).1, (abs_le.mp hd).2, hb]
 
 private theorem square_norm_bounds (x : H) :
     (1 - δ) * D.p x ^ 2 ≤ D.p (D.mul (star x) x) ∧
@@ -354,7 +356,7 @@ private theorem pairing_regular_bounds (P : H) (hP : star P = P)
       Real.norm_eq_abs, abs_of_nonneg ((pairing_positive I) P hP hPP hx).1]
   rw [hid] at he
   have hb := (square_norm_bounds I) x
-  constructor <;> nlinarith [(abs_le.mp he).1, (abs_le.mp he).2]
+  constructor <;> nlinarith only [(abs_le.mp he).1, (abs_le.mp he).2, hb.1, hb.2]
 
 /-- All scalar geometry is conditional on the original exact rank-one input.
 The regular comparison retains the scale of the literal designated generator. -/
@@ -382,7 +384,8 @@ theorem rank_one_pairing_bounds :
     (pairing_regular_bounds I) P hP hPP hx⟩
 
 /-- A separate type carries the coefficient Hilbert geometry; H keeps its original norm. -/
-def CornerHilbert (_I : D.RankOneInput Q τ) (P : H) (_hP : star P = P) (_hPP : D.p (D.mul P P - P) ≤ τ) :=
+def CornerHilbert (_I : D.RankOneInput Q τ) (P : H) (_hP : star P = P)
+    (_hPP : D.p (D.mul P P - P) ≤ τ) : Type _ :=
   D.corner P Q
 
 instance (P : H) (hP : star P = P) (hPP : D.p (D.mul P P - P) ≤ τ) :
@@ -397,14 +400,22 @@ instance (P : H) (hP : star P = P) (hPP : D.p (D.mul P P - P) ≤ τ) :
     FiniteDimensional ℂ ((CornerHilbert I) P hP hPP) :=
   inferInstanceAs (FiniteDimensional ℂ (D.corner P Q))
 
-private def hilbertCore (P : H) (hP : star P = P)
+@[instance_reducible] private def hilbertCore (P : H) (hP : star P = P)
     (hPP : D.p (D.mul P P - P) ≤ τ) :
     InnerProductSpace.Core ℂ ((CornerHilbert I) P hP hPP) where
-  inner x y := D.cornerPairing Q (x : D.corner P Q) (y : D.corner P Q)
+  inner x y := D.cornerPairing Q (Subtype.val (show D.corner P Q from x))
+    (Subtype.val (show D.corner P Q from y))
   conj_inner_symm x y := (pairing_hermitian I) _ _
-  re_inner_nonneg x := ((rank_one_pairing_bounds I).2.2.2.2 P hP hPP x x.property).2.1
-  add_left x y z := by simp [cornerPairing, star_add, map_add]
-  smul_left x y c := by simp [cornerPairing, star_smul, map_smul, smul_eq_mul]
+  re_inner_nonneg x := ((rank_one_pairing_bounds I).2.2.2.2 P hP hPP
+    (Subtype.val (show D.corner P Q from x)) (show D.corner P Q from x).property).2.1
+  add_left x y z := by
+    change D.cornerPairing Q ((show D.corner P Q from x).val +
+      (show D.corner P Q from y).val) (show D.corner P Q from z).val = _
+    simp [cornerPairing, star_add, map_add]
+  smul_left x y c := by
+    change D.cornerPairing Q (c • (show D.corner P Q from x).val)
+      (show D.corner P Q from y).val = _
+    simp [cornerPairing, star_smul, map_smul, smul_eq_mul]
   definite x hx := by
     apply Subtype.ext
     exact ((pairing_positive I) P hP hPP x.property).2.mp (by rw [hx]; rfl)
@@ -416,7 +427,8 @@ instance (P : H) (hP : star P = P) (hPP : D.p (D.mul P P - P) ≤ τ) :
 
 instance (P : H) (hP : star P = P) (hPP : D.p (D.mul P P - P) ≤ τ) :
     InnerProductSpace ℂ ((CornerHilbert I) P hP hPP) :=
-  InnerProductSpace.ofCore { (hilbertCore I) P hP hPP with }
+  letI := hilbertCore I P hP hPP
+  InnerProductSpace.ofCore (hilbertCore I P hP hPP).toCore
 
 /-- The normalized scalar column uses beta, leaving the designated t unchanged. -/
 def scalarColumn : ℂ →ₗᵢ[ℂ] CornerHilbert I Q I.selfadjoint I.defect := by
@@ -424,7 +436,9 @@ def scalarColumn : ℂ →ₗᵢ[ℂ] CornerHilbert I Q I.selfadjoint I.defect :
   let s : ℂ := (Real.sqrt (D.cornerBeta Q) : ℂ)⁻¹
   refine (LinearMap.toSpanSingleton ℂ _ (s • t)).isometryOfInner ?_
   intro c d
-  have ht : inner ℂ t t = (D.cornerBeta Q : ℂ) := pairing_self_real I _
+  have ht : inner ℂ t t = (D.cornerBeta Q : ℂ) := by
+    change D.cornerPairing Q (D.cornerUnit Q) (D.cornerUnit Q) = _
+    exact pairing_self_real I _
   have hs : (Real.sqrt (D.cornerBeta Q) : ℂ) ≠ 0 := by
     exact_mod_cast (Real.sqrt_pos.mpr (beta_pos I)).ne'
   have hsq : (Real.sqrt (D.cornerBeta Q) : ℂ) ^ 2 = (D.cornerBeta Q : ℂ) := by
@@ -438,9 +452,18 @@ def scalarColumn : ℂ →ₗᵢ[ℂ] CornerHilbert I Q I.selfadjoint I.defect :
 private def compressedLeft (P R : H) (hP : star P = P) (hR : star R = R)
     (hPP : D.p (D.mul P P - P) ≤ τ) (hRR : D.p (D.mul R R - R) ≤ τ)
     (z : H) : CornerHilbert I R hR hRR →ₗ[ℂ] CornerHilbert I P hP hPP where
-  toFun x := ⟨D.compression P Q (D.mul z (x : D.corner R Q)), ⟨_, rfl⟩⟩
-  map_add' x y := by apply Subtype.ext; simp [map_add]
-  map_smul' c x := by apply Subtype.ext; simp [map_smul]
+  toFun x := ⟨D.compression P Q (D.mul z (Subtype.val (show D.corner R Q from x))), ⟨_, rfl⟩⟩
+  map_add' x y := by
+    apply Subtype.ext
+    change D.compression P Q (D.mul z ((show D.corner R Q from x).val +
+      (show D.corner R Q from y).val)) = _
+    simp only [map_add]
+    rfl
+  map_smul' c x := by
+    apply Subtype.ext
+    change D.compression P Q (D.mul z (c • (show D.corner R Q from x).val)) = _
+    simp only [map_smul]
+    rfl
 
 /-- The two directions of the actual symmetric compressed left action.
 The reverse is exactly the Hilbert adjoint in the coefficient geometry. -/
@@ -453,15 +476,15 @@ def symmetricCornerMaps (P R : H) (hP : star P = P) (hR : star R = R)
       ∀ (x : CornerHilbert I R hR hRR) (y : CornerHilbert I P hP hPP),
         2 * inner ℂ y (a.1 x) =
           D.cornerPairing Q
-            (D.compression R Q (D.mul (star (z : H)) (y : D.corner P Q)))
-            (x : D.corner R Q) +
-          D.cornerPairing Q (y : D.corner P Q)
-            (D.compression P Q (D.mul (z : H) (x : D.corner R Q))) } := by
+            (D.compression R Q (D.mul (star (z : H)) (Subtype.val (show D.corner P Q from y))))
+            (Subtype.val (show D.corner R Q from x)) +
+          D.cornerPairing Q (Subtype.val (show D.corner P Q from y))
+            (D.compression P Q (D.mul (z : H) (Subtype.val (show D.corner R Q from x)))) } := by
   let f := compressedLeft I P R hP hR hPP hRR (z : H)
   let g := compressedLeft I R P hR hP hRR hPP (star (z : H))
   refine ⟨((1 / 2 : ℂ) • (f + g.adjoint), (1 / 2 : ℂ) • (g + f.adjoint)), ?_, ?_⟩
   · simp only [map_smulₛₗ, map_add, LinearMap.adjoint_adjoint]
-    norm_num
+    norm_num [map_ofNat]
     rw [add_comm]
   · intro x y
     change 2 * inner ℂ y (((1 / 2 : ℂ) • (f + g.adjoint)) x) =
