@@ -6,7 +6,9 @@
    utility: none
    digest: Square-free transversal constructions and the full abelian regular-code criteria. -/
 
-import D5.S3.Combinatorics.CayleySumCodes.Regularity
+import D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
+import Mathlib.Combinatorics.SimpleGraph.Finite
+import Mathlib.Data.Set.Card
 import D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
 import D5.S3.Combinatorics.CayleySumCodes.NormalSubgroupCriterion
 import Mathlib.Algebra.Group.Subgroup.Ker
@@ -25,6 +27,88 @@ namespace D5.S3.Combinatorics.CayleySumCodes.AbelianRegularCodes
 open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 open D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
 
+section GeneralGroup
+
+variable {G : Type*} [Group G]
+
+private noncomputable def neighborEquiv (Y : Set G) (hn : NormalSubset Y) (g : G) :
+    (sumGraph Y hn).neighborSet g ≃ ↥(Y \ {g * g}) where
+  toFun h := ⟨g * h.1, h.2.2, by
+    intro he
+    have eqh : h.1 = g := mul_left_cancel (Set.mem_singleton_iff.mp he)
+    exact h.2.1 eqh.symm⟩
+  invFun y := ⟨g⁻¹ * y.1, by
+    refine ⟨?_, ?_⟩
+    · intro he
+      apply y.2.2
+      apply Set.mem_singleton_iff.mpr
+      have hh := congrArg (fun z : G => g * z) he
+      simpa using hh.symm
+    · simpa using y.2.1⟩
+  left_inv h := by apply Subtype.ext; simp
+  right_inv y := by apply Subtype.ext; simp
+
+/-- Every vertex has |Y| neighbors except that its own square, when present
+in Y, removes exactly one open neighbor. The graph is the actual loopless
+sum graph and the bijection is h maps to g*h. -/
+theorem degree_card [Finite G] (Y : Set G) (hn : NormalSubset Y) (g : G) :
+    Nat.card ((sumGraph Y hn).neighborSet g) =
+      Nat.card Y - if g * g ∈ Y then 1 else 0 := by
+  classical
+  rw [Nat.card_congr (neighborEquiv Y hn g)]
+  change (Y \ {g * g}).ncard = Y.ncard - if g * g ∈ Y then 1 else 0
+  by_cases hm : g * g ∈ Y
+  · rw [if_pos hm]
+    have he := Set.ncard_sdiff_singleton_add_one hm
+    omega
+  · rw [if_neg hm, Nat.sub_zero]
+    congr 1
+    exact Set.sdiff_singleton_eq_self hm
+
+/-- Full finite-group regularity dichotomy. Equality of the actual neighbor
+cardinality at every vertex with its value at 1 is precisely regularity:
+the group is nonempty, and that common value is its regular degree. -/
+theorem regularity_iff [Finite G] (Y : Set G) (hn : NormalSubset Y) :
+    (∀ g : G, Nat.card ((sumGraph Y hn).neighborSet g) =
+      Nat.card ((sumGraph Y hn).neighborSet 1)) ↔
+    Y ∩ squares (⊤ : Subgroup G) = ∅ ∨ squares (⊤ : Subgroup G) ⊆ Y := by
+  classical
+  have positive (x : G) (hx : x ∈ Y) : 0 < Nat.card Y := by
+    letI : Nonempty Y := ⟨⟨x, hx⟩⟩
+    exact Nat.card_pos
+  constructor
+  · intro hreg
+    by_cases h1 : (1 : G) ∈ Y
+    · right
+      rintro z ⟨g, _, rfl⟩
+      by_contra hn
+      have he := hreg g
+      rw [degree_card, degree_card] at he
+      simp only [one_mul, if_neg hn, if_pos h1, Nat.sub_zero] at he
+      have hp := positive 1 h1
+      omega
+    · left
+      apply Set.eq_empty_iff_forall_notMem.mpr
+      rintro z ⟨hz, g, _, rfl⟩
+      have he := hreg g
+      rw [degree_card, degree_card] at he
+      simp only [one_mul, if_pos hz, if_neg h1, Nat.sub_zero] at he
+      have hp := positive (g * g) hz
+      omega
+  · rintro (hfree | hall) g
+    · have hsq (x : G) : x * x ∉ Y := by
+        intro hx
+        have hm : x * x ∈ Y ∩ squares (⊤ : Subgroup G) := ⟨hx, x, by trivial, rfl⟩
+        rw [hfree] at hm
+        exact hm
+      rw [degree_card, degree_card]
+      simp only [ite_eq_right (hsq g), ite_eq_right (hsq 1)]
+    · have hsq (x : G) : x * x ∈ Y := hall ⟨x, by trivial, rfl⟩
+      rw [degree_card, degree_card]
+      simp only [ite_eq_left (hsq g), ite_eq_left (hsq 1)]
+
+end GeneralGroup
+
 variable {G : Type*} [CommGroup G]
 
 /-- The actual subgroup of ambient squares in an abelian group. -/
@@ -41,18 +125,6 @@ theorem squares_eq : squares (⊤ : Subgroup G) = (squareSubgroup (G := G) : Set
 private theorem normal (Y : Set G) : NormalSubset Y := by
   intro a x hx
   simpa [mul_comm a x, mul_assoc] using hx
-
-private theorem inverse_mem (H : Subgroup G) (g t : G) :
-    t⁻¹ * g ∈ H ↔ g⁻¹ * t ∈ H := by
-  simpa only [mul_inv_rev, inv_inv] using
-    (H.inv_mem_iff : (t⁻¹ * g)⁻¹ ∈ H ↔ t⁻¹ * g ∈ H).symm
-
-private theorem internal (H : Subgroup G) (T : Set G)
-    (ht : Subgroup.IsComplement T (H : Set G)) (h1 : (1 : G) ∈ T)
-    (t : G) (hT : t ∈ T) (hH : t ∈ H) : t = 1 := by
-  obtain ⟨s, hs, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht 1
-  exact congrArg Subtype.val ((hu ⟨t, hT⟩ (by simpa using H.inv_mem hH)).trans
-    (hu ⟨1, h1⟩ (by simp)).symm)
 
 /-- Replacing each chosen representative within its own left H-coset
 preserves the complete transversal, including uniqueness. -/
@@ -105,7 +177,7 @@ private theorem regular_of_square_free [Finite G] (Y : Set G)
     (hfree : ∀ y ∈ Y, y ∉ squareSubgroup (G := G)) :
     ∀ g : G, Nat.card ((sumGraph Y (normal Y)).neighborSet g) =
       Nat.card ((sumGraph Y (normal Y)).neighborSet 1) := by
-  apply (Regularity.result Y (normal Y)).mpr
+  apply (regularity_iff Y (normal Y)).mpr
   left
   rw [squares_eq (G := G)]
   exact Set.eq_empty_iff_forall_notMem.mpr (fun y hy => hfree y hy.1 hy.2)
@@ -145,7 +217,7 @@ theorem perfect_iff [Finite G] (H : Subgroup G) :
     have hh : (h' : G) ∈ H := h'.2
     have hne : (h' : G) ≠ 1 := fun he => hne' (Subtype.ext he)
     let h : G := h'
-    rcases (Regularity.result Y (normal Y)).mp hr with hfree | hfull
+    rcases (regularity_iff Y (normal Y)).mp hr with hfree | hfull
     · apply le_antisymm hHS
       intro x hx
       by_contra hxH
@@ -171,7 +243,7 @@ theorem perfect_iff [Finite G] (H : Subgroup G) :
           · exact Or.inr ⟨he, Set.mem_univ _⟩
         · intro h hh
           simpa using hh.1
-      · apply (Regularity.result Set.univ (normal Set.univ)).mpr
+      · apply (regularity_iff Set.univ (normal Set.univ)).mpr
         exact Or.inr (Set.subset_univ _)
     · obtain ⟨z, hzH, hz⟩ := hn
       obtain ⟨T, h1, ht, hfree⟩ := square_free_normalized H z hzH hz
@@ -179,20 +251,7 @@ theorem perfect_iff [Finite G] (H : Subgroup G) :
     · subst H
       obtain ⟨T, ht, h1⟩ := (squareSubgroup (G := G)).exists_isComplement_left 1
       exact normalized_regular _ T h1 ht (fun t ht' hne hs =>
-        hne (internal _ T ht h1 t ht' hs))
-
-private theorem coset_card [Finite G] (H : Subgroup G) (T : Set G)
-    (ht : Subgroup.IsComplement T (H : Set G)) (g : G) :
-    Nat.card {y : G // y ∈ T ∧ g⁻¹ * y ∈ H} = 1 := by
-  classical
-  letI : Fintype G := Fintype.ofFinite G
-  obtain ⟨t, hh, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht g
-  have he : ∃! y : G, y ∈ T ∧ g⁻¹ * y ∈ H := by
-    refine ⟨t.1, ⟨t.2, (inverse_mem H g t.1).mp hh⟩, ?_⟩
-    intro y hy
-    exact congrArg Subtype.val (hu ⟨y, hy.1⟩ ((inverse_mem H g y).mpr hy.2))
-  simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype] using
-    (Fintype.existsUnique_iff_card_one _).mp he
+        hne (PerfectCodeTransversal.transversal_inter _ T ht h1 t ht' hs))
 
 private theorem internal_singleton (H : Subgroup G) (T : Set G)
     (ht : Subgroup.IsComplement T (H : Set G)) (z : G)
@@ -231,7 +290,7 @@ private theorem total_square_free [Finite G] (H : Subgroup G) (z : G)
     · simpa [f, hs] using hs
   refine ⟨Y, ?_, regular_of_square_free Y hfree⟩
   apply (TotalPerfectCriterion.result H Y (normal Y)).mpr
-  refine ⟨fun g _ => coset_card H Y ht g, Or.inl ⟨z, hzH, ?_, ?_⟩⟩
+  refine ⟨fun g _ => NormalSubgroupCriterion.coset_card H Y ht g, Or.inl ⟨z, hzH, ?_, ?_⟩⟩
   · rintro ⟨h, hh, he⟩
     apply hz
     change z ∈ (squareSubgroup (G := G) : Set G)
@@ -253,11 +312,11 @@ private theorem total_two_squares [Finite G] (H : Subgroup G)
     ext y
     constructor
     · rintro ⟨hy | hy, hh⟩
-      · exact (hy.2 (internal H T ht h1 y hy.1 hh)).elim
+      · exact (hy.2 (PerfectCodeTransversal.transversal_inter H T ht h1 y hy.1 hh)).elim
       · exact hy
     · intro hy
       exact ⟨Or.inr hy, hSH hy⟩
-  refine ⟨Y, ?_, (Regularity.result Y (normal Y)).mpr (Or.inr ?_)⟩
+  refine ⟨Y, ?_, (regularity_iff Y (normal Y)).mpr (Or.inr ?_)⟩
   · apply (TotalPerfectCriterion.result H Y (normal Y)).mpr
     refine ⟨?_, Or.inr ⟨?_, ?_⟩⟩
     · intro g hg
@@ -278,7 +337,7 @@ private theorem total_two_squares [Finite G] (H : Subgroup G)
           exact ⟨Or.inl ⟨hy, fun he => notH y hh (he.symm ▸ H.one_mem)⟩, hh⟩
       change Nat.card ↥{y : G | y ∈ Y ∧ g⁻¹ * y ∈ H} = 1
       rw [eqset]
-      exact coset_card H T ht g
+      exact NormalSubgroupCriterion.coset_card H T ht g
     · change Nat.card ↥(Y ∩ (H : Set G)) = 2
       rw [he]
       exact hs
@@ -309,7 +368,7 @@ theorem total_iff [Finite G] (H : Subgroup G) :
       intro h hh
       by_contra hs
       exact hn ⟨h, hh, hs⟩
-    rcases (Regularity.result Y (normal Y)).mp hr with hfree | hfull
+    rcases (regularity_iff Y (normal Y)).mp hr with hfree | hfull
     · obtain ⟨h, ⟨hh, he⟩, _⟩ := hc 1
       have hm : h ∈ Y ∩ squares (⊤ : Subgroup G) :=
         ⟨by simpa using he.2, (squares_eq (G := G)).symm ▸ hHS hh⟩

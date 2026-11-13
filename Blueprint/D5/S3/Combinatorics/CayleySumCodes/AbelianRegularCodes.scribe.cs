@@ -17,6 +17,27 @@ internal sealed class AbelianRegularCodesDocument : IScribeDocumentDefinition
         "Full finite abelian regular-code criteria on actual loopless sum graphs.",
         H("Regular perfect and total perfect subgroup codes"),
         Blocks(
+            Describe.Lean(DescribeId.Create("sum-graph-degree"),
+                DeclarationHandle.Create(Prefix + "degree_card"), H("The exact open degree"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "At g the actual neighbor set is bijective with Y minus {g squared}, "
+                    + "by h maps to g h. Its cardinal is therefore |Y| minus one when the "
+                    + "square lies in Y and |Y| otherwise. Self-neighbors are excluded; "
+                    + "inverse closure of Y is unnecessary. This is the degree calculation "
+                    + "used in correction section 3.2 and the regularity antecedents."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("regularity-dichotomy"),
+                DeclarationHandle.Create(Prefix + "regularity_iff"), H("All squares or no squares"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text(
+                    "For every finite group and every conjugation-invariant connection "
+                    + "set Y, all actual graph degrees are equal if and only if Y contains "
+                    + "every square of G or contains none. Regularity is expressed by the "
+                    + "neighbor cardinal at every vertex equaling that at the identity, "
+                    + "which exists in every group. This supplies the full graph-regularity "
+                    + "part of C7; abelian subgroup PC/TPC classifications, Frattini "
+                    + "identities, the trivial-subgroup positive case and all reported "
+                    + "enumeration tables remain separate obligations."))), DescribeRole.Theorem),
             Item("ambient-square-subgroup", "squareSubgroup", "The subgroup of squares",
                 "In an abelian group the squaring homomorphism has subgroup image. "
                 + "This is the actual set of ambient squares, with no square premise "
@@ -70,7 +91,7 @@ internal sealed class AbelianRegularCodesDocument : IScribeDocumentDefinition
                 + "This retains Zhang 5.4, separately from the corrected regular "
                 + "criterion and all missing enumeration provenance.", DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
-            "D5/S3/Combinatorics/CayleySumCodes/Regularity")),
+            "D5/S3/Combinatorics/CayleySumCodes/TotalPerfectCriterion")),
          DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Combinatorics/CayleySumCodes/PerfectCodeTransversal")),
          DocumentEdge.Dependency.Create(GidRef.Create(

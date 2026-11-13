@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Faithful affine groups and the actual connected and disconnected corrected total-code examples. -/
+   digest: Affine groups and the actual connected and disconnected corrected total-code examples. -/
 
 import D5.S3.Combinatorics.CayleySumCodes.CodeCentralizers
 import D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
@@ -13,10 +13,10 @@ import Mathlib.Algebra.GroupWithZero.Units.Fintype
 import Mathlib.Tactic
 
 /-!
-Faithful affine actions and the complete retained affine constructions.
+Affine groups and corrected total-code examples.
 The connection sets are sets of actual group elements, with loop deletion
 inherited from `sumGraph`. The F3 and F5 applications distinguish connected
-and disconnected counterexamples to the old exhaustiveness assertions.
+and disconnected examples; the connected F3 example refutes the old exhaustiveness assertion.
 -/
 
 set_option autoImplicit false
@@ -87,57 +87,6 @@ instance [Finite F] : Finite (Affine1 F) := by
   classical
   letI := Fintype.ofFinite F
   exact Finite.of_fintype _
-
-/-- The faithful action on the entire field, rather than a scalar proxy. -/
-def action (a : Affine1 F) : Equiv.Perm F where
-  toFun x := (a.slope : F) * x + a.offset
-  invFun x := ((a.slope⁻¹ : Fˣ) : F) * (x - a.offset)
-  left_inv x := by simp [mul_add, mul_sub, ← mul_assoc]
-  right_inv x := by simp [mul_add, mul_sub, ← mul_assoc]
-
-/-- Composition is the original affine-group operation. -/
-theorem action_mul (a b : Affine1 F) : action (a * b) = action a * action b := by
-  ext x
-  change ((a.slope * b.slope : Fˣ) : F) * x +
-      (a.offset + (a.slope : F) * b.offset) =
-    (a.slope : F) * ((b.slope : F) * x + b.offset) + a.offset
-  simp only [Units.val_mul]; ring
-
-/-- No distinct group elements are identified by this action. -/
-theorem action_injective : Function.Injective (action (F := F)) := by
-  intro a b h
-  have ho := Equiv.congr_fun h 0
-  have hs := Equiv.congr_fun h 1
-  change (a.slope : F) * 0 + a.offset = (b.slope : F) * 0 + b.offset at ho
-  change (a.slope : F) * 1 + a.offset = (b.slope : F) * 1 + b.offset at hs
-  simp only [mul_zero, zero_add] at ho
-  simp only [mul_one, ho, add_left_inj] at hs
-  exact affine_ext (Units.ext hs) ho
-
-/-- The nontranslation conjugacy classes are exactly the full multiplier
-fibers. This identifies the source unions of classes with the actual affine
-connection sets used by both retained constructions. -/
-theorem conjugate_iff (s : Fˣ) (hs : s ≠ 1) (a : Affine1 F) :
-    IsConj (⟨s, 0⟩ : Affine1 F) a ↔ a.slope = s := by
-  constructor
-  · rintro ⟨u, hu⟩
-    have h := congrArg Affine1.slope hu.eq
-    change (u : Affine1 F).slope * s = a.slope * (u : Affine1 F).slope at h
-    have he : s = a.slope := mul_left_cancel (a := (u : Affine1 F).slope)
-      (by simpa [mul_comm] using h)
-    exact he.symm
-  · intro ha
-    have hsF : (s : F) ≠ 1 := fun h => hs (Units.ext h)
-    apply isConj_iff.mpr
-    refine ⟨⟨1, a.offset / (1 - (s : F))⟩, ?_⟩
-    apply affine_ext
-    · simpa [product, inverse] using ha.symm
-    · change (product (product ⟨1, a.offset / (1 - (s : F))⟩ ⟨s, 0⟩)
-        (inverse ⟨1, a.offset / (1 - (s : F))⟩)).offset = a.offset
-      dsimp [product, inverse]
-      simp only [Units.val_one, one_mul, mul_zero, add_zero, inv_one]
-      field_simp [sub_ne_zero.mpr hsF.symm]
-      <;> ring
 
 /-- The entire multiplicative complement C, fixing zero. -/
 def complement : Subgroup (Affine1 F) where
@@ -285,167 +234,7 @@ theorem connected_iff (hchar : (1 : F) ≠ -1) :
         exact hn ((congrArg Affine1.slope he).trans ha), by
         right; simpa using ha⟩).reachable
 
-/-- The actual embedded subgroup of the multiplicative complement. -/
-def liftedSubgroup (H : Subgroup Fˣ) : Subgroup (Affine1 F) where
-  carrier := {a | a.slope ∈ H ∧ a.offset = 0}
-  one_mem' := ⟨H.one_mem, rfl⟩
-  mul_mem' := by
-    intro a b ha hb
-    exact ⟨H.mul_mem ha.1 hb.1, by simp [product, ha.2, hb.2]⟩
-  inv_mem' := by
-    intro a ha
-    refine ⟨H.inv_mem ha.1, ?_⟩
-    change -((a.slope⁻¹ : Fˣ) : F) * a.offset = 0
-    rw [ha.2, mul_zero]
-
 /-- Full conjugacy classes of every chosen nonidentity multiplier. -/
 def transversalConnection (T : Set Fˣ) : Set (Affine1 F) := {a | a.slope ∈ T}
-
-theorem transversalConnection_normal (T : Set Fˣ) :
-    NormalSubset (transversalConnection T) := by
-  intro a x hx
-  change x.slope ∈ T at hx
-  change a.slope * x.slope * a.slope⁻¹ ∈ T
-  simpa [mul_comm, mul_left_comm, mul_assoc] using hx
-
-private theorem unique_internal (H : Subgroup Fˣ) (T : Set Fˣ)
-    (ht : Subgroup.IsComplement T (H : Set Fˣ)) (a0 : Fˣ)
-    (ha0 : a0 ∈ T) (haH : a0 ∈ H) (t : Fˣ) (htT : t ∈ T) (htH : t ∈ H) :
-    t = a0 := by
-  obtain ⟨u, _, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht 1
-  exact congrArg Subtype.val ((hu ⟨t, htT⟩ (by simpa using H.inv_mem htH)).trans
-    (hu ⟨a0, ha0⟩ (by simpa using H.inv_mem haH)).symm)
-
-/-- The entire retained affine total-code construction, over every finite
-field and every multiplicative subgroup. A source transversal is an actual
-coset complement in F-units; no code, graph or neighbor-count premise is used.
-The source cyclic H=<c^s> and q-1=s*t restrictions instantiate this theorem. -/
-theorem total_construction [Finite F] (H : Subgroup Fˣ) (T : Set Fˣ)
-    (ht : Subgroup.IsComplement T (H : Set Fˣ)) (a0 : Fˣ)
-    (ha0 : a0 ∈ T) (haH : a0 ∈ H) (hns : a0 ∉ squares H) :
-    IsTotalPerfectCode (sumGraph (transversalConnection T)
-      (transversalConnection_normal T)) (liftedSubgroup H) := by
-  intro g
-  obtain ⟨t, htH, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht g.slope
-  let h : Affine1 F := ⟨g.slope⁻¹ * t, 0⟩
-  have hm : h ∈ liftedSubgroup H := by
-    refine ⟨?_, rfl⟩
-    simpa [mul_inv_rev] using H.inv_mem htH
-  have hne : g ≠ h := by
-    intro heq
-    have hgH : g.slope ∈ H := heq.symm ▸ hm.1
-    have hs := congrArg Affine1.slope heq
-    have hsq : g.slope * g.slope = t := by
-      calc
-        g.slope * g.slope = g.slope * (g.slope⁻¹ * t) := congrArg (g.slope * ·) hs
-        _ = t := by simp [mul_assoc]
-    have hta := unique_internal H T ht a0 ha0 haH t t.2
-      (hsq ▸ H.mul_mem hgH hgH)
-    exact hns ⟨g.slope, hgH, hsq.trans hta⟩
-  refine ⟨h, ⟨hm, hne, ?_⟩, ?_⟩
-  · change g.slope * (g.slope⁻¹ * t) ∈ T
-    simpa [mul_assoc] using t.2
-  · intro k hk
-    have hkt : g.slope * k.slope ∈ T := hk.2.2
-    have he : g.slope * k.slope = t := by
-      exact congrArg Subtype.val (hu ⟨g.slope * k.slope, hkt⟩
-        (by simpa [mul_inv_rev, mul_assoc] using H.inv_mem hk.1.1))
-    apply affine_ext _ hk.1.2
-    change k.slope = g.slope⁻¹ * t
-    rw [← he]
-    simp [mul_assoc]
-
-/-- Remove the internal multiplier class and insert all nonidentity
-translations, as in the retained perfect-code construction. -/
-def perfectConnection (H : Subgroup Fˣ) (T : Set Fˣ) : Set (Affine1 F) :=
-  {a | (a.slope ∈ T ∧ a.slope ∉ H) ∨ (a.slope = 1 ∧ a ≠ 1)}
-
-theorem perfectConnection_normal (H : Subgroup Fˣ) (T : Set Fˣ) :
-    NormalSubset (perfectConnection H T) := by
-  intro a x hx
-  have hs : (a * x * a⁻¹).slope = x.slope := by
-    simp [mul_comm, mul_left_comm]
-  rcases hx with hx | hx
-  · left; change _ ∈ T ∧ _ ∉ H; rwa [hs]
-  · right
-    refine ⟨hs.trans hx.1, ?_⟩
-    intro he
-    apply hx.2
-    have hh := congrArg (fun z : Affine1 F => a⁻¹ * z * a) he
-    simpa [mul_assoc] using hh
-
-/-- Every source transversal yields the retained affine perfect-code
-construction, independently of a nonsquare or a total-code assumption. -/
-theorem perfect_construction [Finite F] (H : Subgroup Fˣ) (T : Set Fˣ)
-    (ht : Subgroup.IsComplement T (H : Set Fˣ)) :
-    PerfectCodeTransversal.IsPerfectCode
-      (sumGraph (perfectConnection H T) (perfectConnection_normal H T))
-      (liftedSubgroup H) := by
-  classical
-  intro g
-  by_cases hgH : g ∈ liftedSubgroup H
-  · refine ⟨g, ⟨hgH, Or.inl rfl⟩, ?_⟩
-    intro k hk
-    rcases hk.2 with he | he
-    · exact he.symm
-    · rcases he.2 with he | he
-      · exact (he.2 (H.mul_mem hgH.1 hk.1.1)).elim
-      · apply False.elim
-        apply he.2
-        apply affine_ext he.1
-        change g.offset + (g.slope : F) * k.offset = 0
-        simp [hgH.2, hk.1.2]
-  · by_cases hgs : g.slope ∈ H
-    · let h : Affine1 F := ⟨g.slope⁻¹, 0⟩
-      have hm : h ∈ liftedSubgroup H := ⟨H.inv_mem hgs, rfl⟩
-      have hgo : g.offset ≠ 0 := fun ho => hgH ⟨hgs, ho⟩
-      have hne : g ≠ h := fun he => hgo (congrArg Affine1.offset he)
-      refine ⟨h, ⟨hm, Or.inr ⟨hne, Or.inr ⟨?_, ?_⟩⟩⟩, ?_⟩
-      · change g.slope * g.slope⁻¹ = 1; simp
-      · intro he
-        have ho := congrArg Affine1.offset he
-        exact hgo (by simpa [h, product] using ho)
-      · intro k hk
-        rcases hk.2 with he | he
-        · exact (hgH (he.symm ▸ hk.1)).elim
-        · rcases he.2 with he | he
-          · exact (he.2 (H.mul_mem hgs hk.1.1)).elim
-          · apply affine_ext _ hk.1.2
-            change k.slope = g.slope⁻¹
-            have hs : g.slope * k.slope = 1 := he.1
-            exact mul_left_cancel (a := g.slope) (by simpa using hs)
-    · obtain ⟨t, htH, hu⟩ :=
-        Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp ht g.slope
-      let h : Affine1 F := ⟨g.slope⁻¹ * t, 0⟩
-      have hm : h ∈ liftedSubgroup H := by
-        refine ⟨?_, rfl⟩
-        simpa [mul_inv_rev] using H.inv_mem htH
-      have htN : (t : Fˣ) ∉ H := by
-        intro htN
-        apply hgs
-        have hp := H.mul_mem htN htH
-        simpa [mul_assoc] using hp
-      have hne : g ≠ h := fun he => hgH (he.symm ▸ hm)
-      refine ⟨h, ⟨hm, Or.inr ⟨hne, Or.inl ?_⟩⟩, ?_⟩
-      · change g.slope * (g.slope⁻¹ * t) ∈ T ∧
-          g.slope * (g.slope⁻¹ * t) ∉ H
-        simpa [mul_assoc] using And.intro t.2 htN
-      · intro k hk
-        rcases hk.2 with he | he
-        · exact (hgH (he.symm ▸ hk.1)).elim
-        · rcases he.2 with he | he
-          · have heq : g.slope * k.slope = t := by
-              exact congrArg Subtype.val (hu ⟨g.slope * k.slope, he.1⟩
-                (by simpa [mul_inv_rev, mul_assoc] using H.inv_mem hk.1.1))
-            apply affine_ext _ hk.1.2
-            change k.slope = g.slope⁻¹ * t
-            rw [← heq]; simp [mul_assoc]
-          · apply False.elim
-            apply hgs
-            have hs : g.slope * k.slope = 1 := he.1
-            have hp := H.inv_mem hk.1.1
-            have hge : g.slope = k.slope⁻¹ :=
-              (mul_eq_one_iff_eq_inv).mp hs
-            rwa [hge]
 
 end D5.S3.Combinatorics.CayleySumCodes.AffineExamples

@@ -37,7 +37,7 @@ private theorem transversal_internal (H : Subgroup G) (T : Set G)
   exact congrArg Subtype.val ((hu ⟨y, hy⟩ (by simpa using H.inv_mem hyH)).trans
     (hu ⟨1, h1⟩ (by simp)).symm)
 
-private theorem coset_card [Finite G] (H : Subgroup G) (T : Set G)
+theorem coset_card [Finite G] (H : Subgroup G) (T : Set G)
     (ht : Subgroup.IsComplement T (H : Set G)) (g : G) :
     Nat.card {y : G // y ∈ T ∧ g⁻¹ * y ∈ H} = 1 := by
   classical

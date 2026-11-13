@@ -4,7 +4,7 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/CayleySumCodes/AffineExhaustivenessCounterexample.claim; result=D5/S3/Combinatorics/CayleySumCodes/AffineExhaustivenessCounterexample.result; claim=D5/S3/Combinatorics/CayleySumCodes/AffineExhaustivenessCounterexample.claim
-   digest: The full affine F3 and F5 graphs refute the old total-code exhaustiveness. -/
+   digest: The connected affine F3 graph refutes the old total-code exhaustiveness. -/
 
 import D5.S3.Combinatorics.CayleySumCodes.AffineExamples
 
@@ -51,7 +51,7 @@ def claim : Prop :=
 /-- The old connected affine total-code exhaustiveness fails already for
 q=3, at its complete order-two multiplicative complement. The separate
 q=5 application is given by `AffineExamples.total_code` and `connected_iff`;
-it is checked as a transient application rather than retained as a duplicate. -/
+its complete parameter correspondence and derivation are given in the affine exposition. -/
 theorem result : ¬ claim := by
   have hc3 : (1 : ZMod 3) ≠ -1 := by decide +kernel
   have hs3 : ∀ a : (ZMod 3)ˣ, a * a = 1 ∨ a * a = -1 := by decide +kernel

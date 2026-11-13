@@ -23,7 +23,7 @@ itself when it belongs to C. This differs from a total perfect code. -/
 def IsPerfectCode (graph : SimpleGraph G) (C : Set G) : Prop :=
   ∀ g : G, ∃! h : G, h ∈ C ∧ (g = h ∨ graph.Adj g h)
 
-private theorem inverse_mem (H : Subgroup G) (g t : G) :
+theorem inverse_mem (H : Subgroup G) (g t : G) :
     t⁻¹ * g ∈ H ↔ g⁻¹ * t ∈ H := by
   simpa only [mul_inv_rev, inv_inv] using
     (H.inv_mem_iff : (t⁻¹ * g)⁻¹ ∈ H ↔ t⁻¹ * g ∈ H).symm
@@ -46,7 +46,7 @@ private theorem normal_normalize (Y : Set G) (hn : NormalSubset Y) :
     simp
   · exact Set.mem_insert_of_mem 1 (normal_erase Y hn a x hx)
 
-private theorem transversal_inter (H : Subgroup G) (T : Set G)
+theorem transversal_inter (H : Subgroup G) (T : Set G)
     (hc : Subgroup.IsComplement T (H : Set G)) (h1 : 1 ∈ T)
     (t : G) (ht : t ∈ T) (hh : t ∈ H) : t = 1 := by
   obtain ⟨s, hs, hu⟩ := Subgroup.isComplement_iff_existsUnique_inv_mul_mem.mp hc 1
