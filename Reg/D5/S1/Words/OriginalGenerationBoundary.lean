@@ -14,7 +14,7 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature :=
-  Reg.Support.SingleDependentReadout.signature (List Bool)
+  Reg.Support.SingleDependentReadout.signature Unit
     (fun _ => List Bool) (fun _ => List Bool)
 
 def actual : Realization signature :=
@@ -27,24 +27,21 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (uK w : List Bool),
-    R.readout () uK w = [false, true] ++ tauWord w ∧
-      finitePrefix uK w = uK ++ tauWord w ++ [false, false]
+  Law R := ∀ w : List Bool,
+    R.readout () () w = [false, true] ++ tauWord w
 
 private theorem actual_law : arena.Law actual := by
-  intro uK w
-  have h := _root_.D5.S1.Words.OriginalGenerationBoundary.original_generation_boundary uK w
-  exact ⟨h.1, h.2⟩
+  exact _root_.D5.S1.Words.OriginalGenerationBoundary.original_generation_boundary
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h [] []).1
+  have hh := h []
   change [] = [false, true] at hh
   simp at hh
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨[], [], [true], ?_⟩
+  refine ⟨(), [], [true], ?_⟩
   change sigmaThree [] ++ [false, true] ≠ sigmaThree [true] ++ [false, true]
   decide
 
@@ -80,10 +77,10 @@ noncomputable def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0
   sourceSelection := some {
     owner := `D5.S1.Words.OriginalGenerationBoundary
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 1
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

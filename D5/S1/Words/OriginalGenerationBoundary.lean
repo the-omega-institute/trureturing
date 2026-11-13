@@ -6,46 +6,36 @@
    utility: none
    digest: The explicit finite-word boundary conjugacy for the original generation morphisms. -/
 
-import Mathlib.Data.Bool.Basic
-import Mathlib.Data.List.Basic
+import D5.S1.Words.FibonacciIncidence
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S1.Words.OriginalGenerationBoundary
 
-/- The source uses `0` and `1`; the formal alphabet is Bool with false and true
-   representing those two letters. -/
-def sigma : Bool → List Bool
-  | false => [false, true]
-  | true => [false]
-
+/-- The two finite block images, with false representing 0 and true representing 1. -/
 def tau : Bool → List Bool
   | false => [false, false, true, false, true]
   | true => [false, false, true]
 
-def apply (morphism : Bool → List Bool) (w : List Bool) : List Bool :=
-  w.flatMap morphism
-
+/-- Complementing both alphabets transports the canonical Fibonacci iterate
+    to the convention sigma(0) = 01 and sigma(1) = 0. -/
 def sigmaThree (w : List Bool) : List Bool :=
-  apply sigma (apply sigma (apply sigma w))
+  (FibonacciIncidence.iterate 3 (w.map Bool.not)).map Bool.not
 
+/-- Letterwise concatenation of the two block images. -/
 def tauWord (w : List Bool) : List Bool :=
-  apply tau w
+  w.flatMap tau
 
-def finitePrefix (uK w : List Bool) : List Bool :=
-  uK ++ tauWord w ++ [false, false]
-
-theorem original_generation_boundary (uK w : List Bool) :
-    sigmaThree w ++ [false, true] = [false, true] ++ tauWord w ∧
-      finitePrefix uK w = uK ++ tauWord w ++ [false, false] := by
-  constructor
-  · induction w with
-    | nil => rfl
-    | cons b w ih =>
-        cases b <;>
-          simpa [sigmaThree, tauWord, apply, sigma, tau, List.flatMap_append,
-            List.append_assoc] using ih
-  · rfl
+/-- Abstract finite-word conjugacy. No source, acquisition or cursor is assumed. -/
+theorem original_generation_boundary (w : List Bool) :
+    sigmaThree w ++ [false, true] = [false, true] ++ tauWord w := by
+  induction w with
+  | nil => rfl
+  | cons b w ih =>
+      cases b <;>
+        simpa [sigmaThree, tauWord, FibonacciIncidence.iterate,
+          FibonacciIncidence.substitute, D5.S0.Tower.GoldenGapWord.subst,
+          tau, List.flatMap_append, List.map_append, List.append_assoc] using ih
 
 end D5.S1.Words.OriginalGenerationBoundary
