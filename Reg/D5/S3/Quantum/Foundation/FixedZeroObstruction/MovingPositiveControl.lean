@@ -10,6 +10,7 @@ open _root_.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 open _root_.D5.S3.Quantum.Foundation.FacetZeroGluing
 open _root_.D5.S3.Quantum.Foundation.ExclusionBallFaces
 open _root_.D5.S3.Quantum.Foundation.FixedZeroObstruction
+open _root_.D5.S3.Quantum.Foundation.SingleLabelNormalBody
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 abbrev controlArena : Arena where
@@ -72,5 +73,40 @@ theorem normalization_source_bridge : normalizationScope.{u} ↔ normalizationAr
 
 theorem normalization_actual_positive : normalizationArena.{u}.Law actual.{u} :=
   normalization_source_bridge.mp (@moving_positive_normalization.{u})
+
+abbrev commonArena : Arena where
+  signature := signature.{u}
+  Law O := ∀ P : Inputs.{u},
+    let C := P.cone
+    let u := P.unit
+    IsClosed (C : Set P.V) → (∀ x ∈ C, x ≠ 0 → 0 < u x) →
+    Submodule.span ℝ (C : Set P.V) = ⊤ → exclusionBalls C u →
+    ∀ p : pure C u, SingleLabel C u p →
+    ∀ y : P.V, y ∈ intrinsicInterior ℝ (exclusion C u p) →
+    ∃ (S : Finset P.V) (a : S → pure C u) (h : S → (P.V →ₗ[ℝ] ℝ)),
+      S.Nonempty ∧
+      (∀ i, (a i : P.V) = (i : P.V) ∧ (a i : P.V) ∈ O.readout () P p ∧
+        h i ∈ fullZeroConfirmers C u (a i)) ∧
+      ∃ ε : ℝ, 0 < ε ∧ ∃ δ : ℝ, 0 < δ ∧
+        (∀ r : pure C u, ‖(r : P.V) - y‖ < ε →
+          ∀ t : pure C u, (t : P.V) ∈ exclusion C u r →
+          Module.finrank ℝ (affineSpan ℝ (O.readout () P p)).direction + 1 ≤
+            Module.finrank ℝ (affineSpan ℝ (O.readout () P t)).direction ∨
+          δ ≤ sSup (Set.range fun i => positiveSourceDistance p t (h i))) ∧
+        ∀ τ : ℝ, 0 < τ → ∃ ετ : ℝ, 0 < ετ ∧
+          ∀ r : pure C u, ‖(r : P.V) - y‖ < ετ →
+            ∀ t : pure C u, (t : P.V) ∈ exclusion C u r → ∀ i, h i t ≤ τ
+
+abbrev commonScope : Prop := type_of% (@common_positive_source_obstruction.{u})
+
+theorem common_source_bridge : commonScope.{u} ↔ commonArena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P
+    exact @h P.V P.add P.space P.finite P.cone P.unit
+  · intro h V add space finite C u
+    exact h (@Inputs.mk V add space finite C u)
+
+theorem common_actual_positive : commonArena.{u}.Law actual.{u} :=
+  common_source_bridge.mp (@common_positive_source_obstruction.{u})
 
 end Reg.D5.S3.Quantum.Foundation.FixedZeroObstruction.MovingPositiveControl
