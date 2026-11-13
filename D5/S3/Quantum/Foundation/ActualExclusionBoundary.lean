@@ -4,7 +4,7 @@
    mirror-E: none(waiver:abstract-convex-geometric-construction)
    anchors: [mathlib/module/Mathlib.Analysis.Convex.Intrinsic]
    utility: none
-   digest: The actual relative boundary is covered by whole exclusions and detects common balls by midpoints. -/
+   digest: Whole exclusions cover the actual boundary and detect its boundary midpoints. -/
 
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Analysis.Convex.Intrinsic
@@ -22,6 +22,7 @@ open WholePairBallConfirmation ExclusionBallFaces
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
+omit [FiniteDimensional ℝ V] in
 private theorem cone_interior_base_interior {x : V} (hx : x ∈ base C u)
     (hi : x ∈ interior (C : Set V)) : x ∈ intrinsicInterior ℝ (base C u) := by
   let A : AffineSubspace ℝ V := ({(1 : ℝ)} : AffineSubspace ℝ ℝ).comap u.toAffineMap
@@ -50,13 +51,14 @@ private theorem exclusion_boundary
   refine ⟨hx.1, ?_⟩
   rintro ⟨a, ha, he⟩
   let b : affineSpan ℝ (base C u) := ⟨p, subset_affineSpan ℝ _ (pure_mem p)⟩
-  have hcont : Continuous (fun t : ℝ => AffineMap.lineMap b a t) :=
+  have hcont : Continuous (fun t : ℝ => AffineMap.lineMap (k := ℝ) b a t) :=
     AffineMap.lineMap_continuous
   obtain ⟨t, ht, hz⟩ := hcont.tendsto' 1 a (AffineMap.lineMap_apply_one b a) |>.eventually_mem
     (mem_interior_iff_mem_nhds.mp ha) |>.exists_gt
   have hfx : f x = 0 := (hzero ▸ hx).2
   have hbound := (hf.1 _ hz.1).1
-  have hval : f (AffineMap.lineMap b a t : V) = 1 - t := by
+  have hval : f ((AffineMap.lineMap (k := ℝ) b a t : affineSpan ℝ (base C u)) : V) =
+      1 - t := by
     rw [AffineMap.lineMap_apply]
     change f ((1 - t) • (p : V) + t • (a : V)) = 1 - t
     simp only [map_add, map_smul, smul_eq_mul, he, hfx, hf.2, mul_one, mul_zero, add_zero]
@@ -88,7 +90,7 @@ private theorem boundary_support_face
   have hext : IsExposed ℝ (base C u) F := ContinuousLinearMap.toExposed.isExposed
   have hxF : x ∈ F := ⟨hxK, fun y hy => by simpa [hfx] using hmax y hy.1⟩
   refine ⟨F, hxF, ?_, hext.isExtreme, ?_⟩
-  · exact (base_convex C u).inter (convex_halfspace_ge f.toLinearMap (f x))
+  · exact hext.convex (base_convex C u)
   · intro he
     have hzero (p : pure C u) : f p = 0 := by
       have hpF : (p : V) ∈ F := he.symm ▸ pure_mem p
