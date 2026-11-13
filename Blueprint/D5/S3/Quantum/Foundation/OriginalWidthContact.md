@@ -66,7 +66,35 @@ E: the actual intersection is {r}={p3}, and D(r)=[p0,p1] contains p and s. Its f
 
 This is an application derivation using the existing hull/exposure, finite-dimensional affine and linear algebra, trigonometric, segment-extrema and golden-ratio results. The kernel certificate attached to original_width_contact below is the general contact theorem; it is not a separate compiled certificate of all these pentagon coordinate correspondences. Each exclusion chart here has dimension one. The calculation supplies no EB3 model, logical-independence result, physical instrument, unit-preserving positive retraction or literature-originality claim. The polygon literature supplies the carrier and effect inputs; the full-width and normal-coordinate derivation is the stated elementary application.
 
-**Theorem 1.1 (The whole original one-value face is exposed).**
+The complete original-domain X126.4 application of normalized_effect is developed in CommonOldExclusionConfirmation together with X126.2 and X126.3. For every actual index i and every original f in the entire F_(p_i), choose this same f's actual whole-K minimizer a and m=f(a). When m<1, normalized_effect with minimum a and maximum p_i places a in the actual D_(p_i) through (f-mu)/(1-m). The estimate uses the unchanged f, giving 0<=f(q)-m<=M d_H(D_(p_i),{q}) with the common whole-effect norm maximum and no reciprocal loss.
+
+The owning exposition gives the unique coefficients of (f-mu) on the same entire old ball D_p, the complete alpha and slope inequalities, the nested supremum over every moving confirmer and every mixed old-ball input, and the full moving-face limit inclusion. It includes f=u with m=1 and alpha=t=0 at every index. Actual singleton purity comes from the unchanged EB3 plus pure-PR dichotomy; no arbitrary confirmer is presumed to have minimum zero, and every effect used in the moving-face application must actually confirm the same p_i.
+
+**Theorem 1.1 (Normalize on the whole base and the whole cone).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.normalized_effect`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalWidthContact.normalized_effect` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let the original base K be compact and let u be strictly positive on every nonzero point of C. For arbitrary real-linear h and points a,z in V, suppose h(a)<=h(x)<=h(z) for every x in the entire K, and h(z)-h(a)>0. Then (h(z)-h(a)) inverse times (h-h(a)u) is a proper effect on the entire original cone. The points a,z are not required to belong to K. The original state-cover proof uses the actual attained extrema as a,z, after extending its support functional from the affine direction space.
+
+**Theorem 1.2 (At least one whole contact face is a singleton).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.contact_face_subsingleton`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalWidthContact.contact_face_subsingleton` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the closed generating original cone and strictly positive unit, assume positive-dimensional entire exclusion balls and injectivity of the original exclusion map. If f is proper and x,y belong to K with f(x)=1 and f(y)=0, then either {z in K: f(z)=1} or {z in K: f(z)=0} is subsingleton. The nonempty zero face is either a pure singleton or an entire exclusion. In the latter case every pure point of the one face has that same entire exclusion, so injectivity and compact convex generation force its label. The affine-diameter decomposition uses this alternative to select an actual original pure endpoint.
+
+**Theorem 1.3 (The whole original one-value face is exposed).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.top_exposed`
 
@@ -78,7 +106,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.top_exposed`
 
 The one-value set of any original proper effect is an exposed face of the entire original base. The density label-limit proof uses this original-site result to derive purity of a cluster point after showing that this whole face is a singleton.
 
-**Theorem 1.2 (Whole one-value-face rigidity).**
+**Theorem 1.4 (Whole one-value-face rigidity).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.top_subsingleton_of_zero_exclusion`
 
@@ -90,7 +118,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalWidthContact.top_subsingleton_
 
 With the original closed generating cone, strictly positive unit, full positive-dimensional exclusion balls and injective original exclusion map, any proper original effect vanishing on the entire D(p) has a subsingleton whole one-value face. Its actual pure maximizers all have the same full exclusion as p; injectivity and compact convex generation then control every state in that face. The label-limit proof starts its limit state in K and uses this whole-face result, without assuming that the state is pure.
 
-**Definition 1.3 (The full effect width bound).**
+**Definition 1.5 (The full effect width bound).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall F \in \operatorname{Set}\left(V\right),\; \forall M \in \mathbb{R},\; \operatorname{WidthBound}\left(C, u, F, M\right) \Leftrightarrow \left(\forall f \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{proper}\left(C, u, f\right) \Rightarrow \left(\forall x \in V,\; \forall y \in V,\; \left(x\in F \land y\in F\right) \Rightarrow \operatorname{sub}\left(\operatorname{apply}\left(f, x\right), \operatorname{apply}\left(f, y\right)\right) \le M\right)\right)$$
 
@@ -102,7 +130,7 @@ $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\oper
 
 WidthBound(C,u,F,M) quantifies every original effect and every ordered pair of points of the entire F. Together with b(q)-b(r)=M for one proper b and q,r in F, it says exactly that M is the attained maximum ordered contrast. Thus it expresses W(F)=M without choosing a smaller effect or state domain.
 
-**Theorem 1.4 (One actual pair, uniqueness and all strict confirming readings).**
+**Theorem 1.6 (One actual pair, uniqueness and all strict confirming readings).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \forall b \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \left(\operatorname{IsClosed}\left(C\right) \land \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x\neq 0 \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right) \land \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \land \left(\operatorname{exclusionBalls}\left(C, u\right) \land \left(\forall p1 \in \operatorname{pure}\left(C, u\right),\; \forall p2 \in \operatorname{pure}\left(C, u\right),\; \operatorname{exclusion}\left(C, u, p1\right) = \operatorname{exclusion}\left(C, u, p2\right) \Rightarrow p1 = p2\right)\right)\right)\right)\right) \Rightarrow \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall M \in \mathbb{R},\; 0 < M \Rightarrow \left(\operatorname{WidthBound}\left(C, u, \operatorname{exclusion}\left(C, u, p\right), M\right) \Rightarrow \left(\operatorname{proper}\left(C, u, b\right) \Rightarrow \left(\forall q \in V,\; \forall r \in V,\; \left(q\in \operatorname{exclusion}\left(C, u, p\right) \land \left(r\in \operatorname{exclusion}\left(C, u, p\right) \land \operatorname{sub}\left(\operatorname{apply}\left(b, q\right), \operatorname{apply}\left(b, r\right)\right) = M\right)\right) \Rightarrow \left(\exists xy \in \operatorname{Prod}\left(V, V\right),\; \left(\operatorname{fst}\left(xy\right)\in \operatorname{base}\left(C, u\right) \land \left(\operatorname{snd}\left(xy\right)\in \operatorname{base}\left(C, u\right) \land \left(\operatorname{apply}\left(b, \operatorname{fst}\left(xy\right)\right) = 1 \land \left(\operatorname{apply}\left(b, \operatorname{snd}\left(xy\right)\right) = 0 \land \operatorname{sub}\left(q, r\right) = \operatorname{smul}\left(M, \operatorname{sub}\left(\operatorname{fst}\left(xy\right), \operatorname{snd}\left(xy\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\forall zw \in \operatorname{Prod}\left(V, V\right),\; \left(\operatorname{fst}\left(zw\right)\in \operatorname{base}\left(C, u\right) \land \left(\operatorname{snd}\left(zw\right)\in \operatorname{base}\left(C, u\right) \land \left(\operatorname{apply}\left(b, \operatorname{fst}\left(zw\right)\right) = 1 \land \left(\operatorname{apply}\left(b, \operatorname{snd}\left(zw\right)\right) = 0 \land \operatorname{sub}\left(q, r\right) = \operatorname{smul}\left(M, \operatorname{sub}\left(\operatorname{fst}\left(zw\right), \operatorname{snd}\left(zw\right)\right)\right)\right)\right)\right)\right) \Rightarrow zw = xy\right) \land \left(M < 1 \Rightarrow \left(\forall e \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{confirms}\left(C, u, p, e\right) \Rightarrow \left(\left(\forall z \in V,\; z\in \operatorname{exclusion}\left(C, u, p\right) \Rightarrow \operatorname{apply}\left(e, z\right) = 0\right) \Rightarrow \left(0 < \operatorname{apply}\left(e, \operatorname{fst}\left(xy\right)\right) \land \left(\operatorname{apply}\left(e, \operatorname{fst}\left(xy\right)\right) = \operatorname{apply}\left(e, \operatorname{snd}\left(xy\right)\right) \land \left(\operatorname{apply}\left(e, \operatorname{snd}\left(xy\right)\right) < 1 \land \left(\operatorname{not}\left(\operatorname{fst}\left(xy\right)\in \operatorname{exclusion}\left(C, u, p\right)\right) \land \operatorname{not}\left(\operatorname{snd}\left(xy\right)\in \operatorname{exclusion}\left(C, u, p\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -125,6 +153,8 @@ For the global maximum-width application, take the whole F supplied by the posit
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalWidthContact.WidthBound`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalWidthContact.contact_face_subsingleton`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalWidthContact.normalized_effect`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalWidthContact.original_width_contact`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalWidthContact.top_exposed`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalWidthContact.top_subsingleton_of_zero_exclusion`
