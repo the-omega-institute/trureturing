@@ -11,6 +11,7 @@ import D5.S3.Quantum.Foundation.ExclusionIncidence
 import D5.S3.Quantum.Foundation.FixedZeroObstruction
 import D5.S3.Quantum.Foundation.CommonPositiveExtension
 import Mathlib.Analysis.Normed.Affine.Convex
+import Mathlib.Topology.Sets.VietorisTopology
 
 /-! The state body, effects, pure labels and norms are the original ones. -/
 
@@ -18,7 +19,7 @@ noncomputable section
 
 namespace D5.S3.Quantum.Foundation.CommonSourceLiftObstruction
 
-open Set Filter Topology
+open Set Filter Topology TopologicalSpace
 open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces
 open ContinuousFrameSum SingleLabelNormalBody ExclusionIncidence
 open UniqueConfirmationDensity WholePairBallConfirmation OriginalFacePolarity
@@ -554,7 +555,7 @@ private theorem source_approximation
 
 /-- A source-distance limit uses the whole positive cone at one common return
 label sequence. No minimizer, bounded lift, or pure input sequence is assumed. -/
-theorem source_distance_test_concentration
+private theorem source_distance_test_concentration
     (hc : IsClosed (C : Set V)) (hs : ∀ z ∈ C, z ≠ 0 → 0 < u z)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p a : pure C u) (ha : (a : V) ∈ exclusion C u p)
@@ -672,7 +673,7 @@ private theorem finite_sphere_tests
 
 /-- The actual finite source tests and their common uniform vanishing are chosen
 before every nearby pure input and every return label. -/
-theorem finite_source_tests
+private theorem finite_source_tests
     (hc : IsClosed (C : Set V)) (hs : ∀ z ∈ C, z ≠ 0 → 0 < u z)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p : pure C u) (hp : SingleLabel C u p)
@@ -741,5 +742,214 @@ theorem finite_source_tests
       (hzy ▸ (MixedExclusionGeometry.chart_intrinsic p b).symm ▸
         (show b.param z ∈ b.param '' Metric.ball 0 1 from ⟨z, hz, rfl⟩)) h hzero hτ
     exact ⟨ε, hε, fun r hr t ht i => hnear r hr t ht i⟩
+
+omit [FiniteDimensional ℝ V] in
+private theorem ball_affine_span {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    (a : E →ᵃ[ℝ] V) :
+    (affineSpan ℝ (a '' Metric.closedBall (0 : E) 1)).direction = a.linear.range := by
+  have hs : affineSpan ℝ (Metric.closedBall (0 : E) 1) = ⊤ := by
+    exact affineSpan_eq_top_of_nonempty_interior ⟨0, by
+      rw [(convex_closedBall (0 : E) 1).convexHull_eq]
+      exact mem_interior_iff_mem_nhds.mpr
+        (Metric.closedBall_mem_nhds (0 : E) zero_lt_one)⟩
+  rw [← AffineSubspace.map_span, hs, AffineSubspace.map_direction]
+  simp
+
+omit [FiniteDimensional ℝ V] in
+private theorem chart_dimension (p : pure C u) (a : ExclusionChart C u p) :
+    Module.finrank ℝ (affineSpan ℝ (exclusion C u p)).direction = a.dim := by
+  rw [← a.whole, ball_affine_span,
+    LinearMap.finrank_range_of_inj (a.param.linear_injective_iff.mpr a.injective)]
+  exact finrank_euclideanSpace_fin
+
+private theorem whole_ball_boundary_contradiction
+    (hc : IsClosed (C : Set V)) (hs : ∀ z ∈ C, z ≠ 0 → 0 < u z)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) (t : ℕ → pure C u) (ht : Tendsto t atTop (𝓝 p))
+    {d m : ℕ} (hd : 0 < d)
+    (maps : ℕ → EuclideanSpace ℝ (Fin d) →ᵃ[ℝ] V)
+    (hinj : ∀ n, Function.Injective (maps n))
+    (hwhole : ∀ n, maps n '' Metric.closedBall 0 1 = exclusion C u (t n))
+    (hcap : d ≤ Module.finrank ℝ (affineSpan ℝ (exclusion C u p)).direction)
+    (a : Fin m → V)
+    (hspan : affineSpan ℝ (Set.range a) = affineSpan ℝ (exclusion C u p))
+    (xs : Fin m → ℕ → V) (hxs : ∀ i n, xs i n ∈ exclusion C u (t n))
+    (hxt : ∀ i, Tendsto (xs i) atTop (𝓝 (a i)))
+    {y : V} (hy : y ∈ intrinsicInterior ℝ (convexHull ℝ (Set.range a)))
+    (r : ℕ → pure C u) (hr : ∀ n, (r n : V) ∈ exclusion C u (t n))
+    (hrt : Tendsto (fun n => (r n : V)) atTop (𝓝 y)) : False := by
+  classical
+  let E := EuclideanSpace ℝ (Fin d)
+  let : Nonempty (Fin d) := ⟨⟨0, hd⟩⟩
+  let c (n : ℕ) := maps n 0
+  let L (n : ℕ) := (maps n).linear.toContinuousLinearMap
+  have heval (n : ℕ) (x : E) : c n + L n x = maps n x := by
+    simpa [c, L, add_comm] using (congrFun (maps n).decomp x).symm
+  have hball (n : ℕ) : (ballImage (c n) (L n) : Set V) = exclusion C u (t n) := by
+    change (fun x => c n + L n x) '' _ = _
+    simp_rw [heval]
+    exact hwhole n
+  obtain ⟨H, hHK, φ, hφ, hH⟩ :=
+    (TopologicalSpace.NonemptyCompacts.isCompact_subsets_of_isCompact
+      (base_compact hc hs)).tendsto_subseq
+      (fun n => show (ballImage (c n) (L n) : Set V) ⊆ base C u from
+        fun x hx => ((hball n) ▸ hx).1)
+  obtain ⟨⟨c0, L0⟩, ψ, hψ, hparam, hImage⟩ :=
+    parameter_subsequence (c ∘ φ) (L ∘ φ) H hH
+  let ns := φ ∘ ψ
+  have hns : StrictMono ns := hφ.comp hψ
+  let b : E →ᵃ[ℝ] V :=
+    (AffineEquiv.constVAdd ℝ V c0).toAffineMap.comp L0.toLinearMap.toAffineMap
+  have hbval (x : E) : b x = c0 + L0 x := rfl
+  have hbImage : b '' Metric.closedBall (0 : E) 1 = (H : Set V) := by
+    change (fun x => c0 + L0 x) '' _ = _
+    exact congrArg (fun S : NonemptyCompacts V => (S : Set V)) hImage
+  have hfixed (x : E) : Tendsto (fun n => maps (ns n) x) atTop (𝓝 (b x)) := by
+    have hc0 : Tendsto (fun n => c (ns n)) atTop (𝓝 c0) :=
+      (continuous_fst.tendsto (c0, L0)).comp hparam
+    have hL0 : Tendsto (fun n => L (ns n)) atTop (𝓝 L0) :=
+      (continuous_snd.tendsto (c0, L0)).comp hparam
+    have happ : Continuous (fun z : (E →L[ℝ] V) × E => z.1 z.2) := by fun_prop
+    have hv := (happ.tendsto (L0, x)).comp (hL0.prodMk_nhds tendsto_const_nhds)
+    simpa only [Function.comp_def, ns, heval, ← hbval] using hc0.add hv
+  have hHF : (H : Set V) ⊆ exclusion C u p := by
+    intro x hx
+    obtain ⟨v, hv, rfl⟩ := hbImage.symm ▸ hx
+    exact exclusion_upper_limit hc hs hg (ht.comp hns.tendsto_atTop) (hfixed v)
+      (fun n => (hwhole _).symm ▸ Set.mem_image_of_mem _ hv)
+  have haH (i : Fin m) : a i ∈ (H : Set V) := by
+    have hz (n : ℕ) : Metric.infDist (xs i (φ n)) (ballImage (c (φ n)) (L (φ n))) = 0 :=
+      Metric.infDist_zero_of_mem ((hball _).symm ▸ hxs i _)
+    have hv := NonemptyCompacts.lipschitz_infDist.continuous.tendsto (a i, H) |>.comp
+      ((hxt i |>.comp hφ.tendsto_atTop).prodMk_nhds hH)
+    have hzero : Metric.infDist (a i) (H : Set V) = 0 := tendsto_nhds_unique hv (by
+      simpa only [Function.comp_def, hz] using
+        (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0)))
+    exact (H.isCompact.isClosed.mem_iff_infDist_zero H.nonempty).mpr hzero
+  have hspanH : affineSpan ℝ (H : Set V) = affineSpan ℝ (exclusion C u p) := by
+    apply le_antisymm (affineSpan_mono ℝ hHF)
+    rw [← hspan]
+    exact affineSpan_mono ℝ (Set.range_subset_iff.mpr haH)
+  have hdim : Module.finrank ℝ b.linear.range =
+      Module.finrank ℝ (affineSpan ℝ (exclusion C u p)).direction := by
+    rw [← ball_affine_span, hbImage, hspanH]
+  have hnull := b.linear.finrank_range_add_finrank_ker
+  have hE : Module.finrank ℝ E = d := finrank_euclideanSpace_fin
+  have hzker : Module.finrank ℝ b.linear.ker = 0 := by omega
+  have hb : Function.Injective b := b.linear_injective_iff.mp
+    (LinearMap.ker_eq_bot.mp (Submodule.finrank_eq_zero.mp hzker))
+  have hHt : Tendsto (fun n => Metric.hausdorffDist
+      (maps (ns n) '' Metric.closedBall (0 : E) 1)
+      (b '' Metric.closedBall (0 : E) 1)) atTop (𝓝 0) := by
+    have h := tendsto_iff_dist_tendsto_zero.mp (hH.comp hψ.tendsto_atTop)
+    simpa only [Function.comp_def, ns, NonemptyCompacts.dist_eq,
+      hball, hbImage, hwhole] using h
+  have hrbd (n : ℕ) : (r (ns n) : V) ∈ intrinsicFrontier ℝ
+      (maps (ns n) '' Metric.closedBall (0 : E) 1) := by
+    let chart : ExclusionChart C u (t (ns n)) :=
+      ⟨d, hd, maps (ns n), hinj _, hwhole _⟩
+    rw [intrinsic_image _ (hinj _), intrinsic_ball]
+    exact (chart_boundary hc hs hg hB (t (ns n)) chart) ▸ ⟨hr _, (r _).property⟩
+  have hybd := (affine_ball_boundary_limit (fun n => maps (ns n)) b
+    (fun n => hinj _) hb hHt).2 (fun n => (r (ns n) : V)) y hrbd
+      (hrt.comp hns.tendsto_atTop)
+  rw [hbImage] at hybd
+  have hconv : Convex ℝ (H : Set V) := by
+    rw [← hbImage]
+    exact (convex_closedBall (0 : E) 1).affine_image b
+  have hch : convexHull ℝ (Set.range a) ⊆ (H : Set V) :=
+    convexHull_min (Set.range_subset_iff.mpr haH) hconv
+  have hsp : affineSpan ℝ (H : Set V) = affineSpan ℝ (convexHull ℝ (Set.range a)) := by
+    rw [affineSpan_convexHull, hspan, hspanH]
+  have hyint : y ∈ intrinsicInterior ℝ (H : Set V) := by
+    unfold intrinsicInterior at hy ⊢
+    rw [hsp]
+    exact Set.image_mono (interior_mono (Set.preimage_mono hch)) hy
+  rw [← intrinsicClosure_sdiff_intrinsicInterior] at hybd
+  exact hybd.2 hyint
+
+/-- Finite common source tests for the entire positive cone: every original
+return either increases intrinsic affine dimension or has one fixed positive
+source error. All tests precede all inputs and share the same return label. -/
+theorem finite_common_source_obstruction
+    (hc : IsClosed (C : Set V)) (hs : ∀ z ∈ C, z ≠ 0 → 0 < u z)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) (hp : SingleLabel C u p)
+    {y : V} (hy : y ∈ intrinsicInterior ℝ (exclusion C u p)) :
+    ∃ m : ℕ, 0 < m ∧ ∃ a : Fin m → pure C u, ∃ h : Fin m → V →ₗ[ℝ] ℝ,
+      (∀ i, (a i : V) ∈ exclusion C u p ∧
+        h i ∈ FixedZeroObstruction.fullZeroConfirmers C u (a i)) ∧
+      (∃ ε δ : ℝ, 0 < ε ∧ 0 < δ ∧
+        ∀ r : pure C u, ‖(r : V) - y‖ < ε →
+          ∀ t : pure C u, (t : V) ∈ exclusion C u r →
+            Module.finrank ℝ (affineSpan ℝ (exclusion C u p)).direction + 1 ≤
+                Module.finrank ℝ (affineSpan ℝ (exclusion C u t)).direction ∨
+              ∃ i, δ ≤ sourceDistance hc hs hg hB p t (h i)) ∧
+      (∀ τ : ℝ, 0 < τ → ∃ ε : ℝ, 0 < ε ∧
+        ∀ r : pure C u, ‖(r : V) - y‖ < ε →
+          ∀ t : pure C u, (t : V) ∈ exclusion C u r → ∀ i, h i t ≤ τ) := by
+  classical
+  let : CompactSpace (exclusion C u p) :=
+    isCompact_iff_compactSpace.mp ((exclusion_ball_faces hc hs hg hB).1 p).2.1
+  obtain ⟨m, hm, a, h, hfamily, hspan, hytests, hvanish⟩ :=
+    finite_source_tests hc hs hg hB p hp hy
+  refine ⟨m, hm, a, h, fun i => ⟨(hfamily i).1, (hfamily i).2.1⟩, ?_, hvanish⟩
+  let k := Module.finrank ℝ (affineSpan ℝ (exclusion C u p)).direction
+  by_contra hn
+  have hbad (ε : ℝ) (hε : 0 < ε) (δ : ℝ) (hδ : 0 < δ) :
+      ∃ r : pure C u, ‖(r : V) - y‖ < ε ∧
+        ∃ t : pure C u, (t : V) ∈ exclusion C u r ∧
+          Module.finrank ℝ (affineSpan ℝ (exclusion C u t)).direction ≤ k ∧
+          ∀ i, sourceDistance hc hs hg hB p t (h i) < δ := by
+    by_contra hh
+    apply hn
+    refine ⟨ε, δ, hε, hδ, fun r hr t ht => ?_⟩
+    by_contra hnot
+    push Not at hnot
+    exact hh ⟨r, hr, t, ht, by dsimp [k]; omega, hnot.2⟩
+  choose r hr t ht hdim herr using fun n : ℕ =>
+    hbad (1 / (n + 1 : ℝ)) (by positivity) (1 / (n + 1 : ℝ)) (by positivity)
+  have hrt : Tendsto (fun n => (r n : V)) atTop (𝓝 y) := by
+    apply tendsto_iff_norm_sub_tendsto_zero.mpr
+    exact squeeze_zero (fun n => norm_nonneg _) (fun n => (hr n).le)
+      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ))
+  have htt : Tendsto t atTop (𝓝 p) := by
+    apply tendsto_subtype_rng.mpr
+    apply Metric.tendsto_nhds.mpr
+    intro ε hε
+    filter_upwards [single_label_mixed_shrinking hc hs hg hB p hp hy r hrt hε] with n hn
+    simpa only [dist_eq_norm] using hn (t n) (ht n)
+  have hdist (i : Fin m) :
+      Tendsto (fun n => sourceDistance hc hs hg hB p (t n) (h i)) atTop (𝓝 0) :=
+    squeeze_zero (fun n => Metric.infDist_nonneg) (fun n => (herr n i).le)
+      (tendsto_one_div_add_atTop_nhds_zero_nat (𝕜 := ℝ))
+  have hmax (i : Fin m) : ∃ x : ℕ → pure C u,
+      (∀ n, (x n : V) ∈ exclusion C u (t n)) ∧
+      Tendsto (fun n => (x n : V)) atTop (𝓝 (a i : V)) :=
+    source_distance_test_concentration hc hs hg hB p (a i) (hfamily i).1
+      (single_label_neighbor hc hs hg hB p (a i) hp (hfamily i).1) (h i)
+      (hfamily i).2.1 t htt (hdist i)
+  choose x hx hxt using hmax
+  let charts (n : ℕ) : ExclusionChart C u (t n) := Classical.choice (hB (t n))
+  have hcapped (n : ℕ) : (charts n).dim ≤ k := by
+    rw [← chart_dimension (t n) (charts n)]
+    exact hdim n
+  have hfreq : ∃ᶠ n in atTop, ∃ d : Fin (k + 1), (charts n).dim = d.val :=
+    Frequently.of_forall (fun n => ⟨⟨(charts n).dim, by have := hcapped n; omega⟩, rfl⟩)
+  obtain ⟨d, hfreq⟩ := frequently_exists.mp hfreq
+  obtain ⟨φ, hφ, hφd⟩ := extraction_of_frequently_atTop hfreq
+  have hmaps (n : ℕ) : ∃ f : EuclideanSpace ℝ (Fin d.val) →ᵃ[ℝ] V,
+      Function.Injective f ∧ f '' Metric.closedBall 0 1 = exclusion C u (t (φ n)) := by
+    rw [← hφd n]
+    exact ⟨(charts (φ n)).param, (charts (φ n)).injective, (charts (φ n)).whole⟩
+  choose maps hinj hwhole using hmaps
+  have hd : 0 < d.val := by rw [← hφd 0]; exact (charts (φ 0)).dim_pos
+  have hdk : d.val ≤ k := by omega
+  exact whole_ball_boundary_contradiction hc hs hg hB p (t ∘ φ)
+    (htt.comp hφ.tendsto_atTop) hd maps hinj hwhole hdk
+    (fun i => (a i : V)) hspan (fun i n => (x i (φ n) : V))
+    (fun i n => hx i (φ n)) (fun i => (hxt i).comp hφ.tendsto_atTop) hytests
+    (r ∘ φ) (fun n => (exclusion_symmetric (r (φ n)) (t (φ n))).mp (ht (φ n)))
+    (hrt.comp hφ.tendsto_atTop)
 
 end D5.S3.Quantum.Foundation.CommonSourceLiftObstruction
