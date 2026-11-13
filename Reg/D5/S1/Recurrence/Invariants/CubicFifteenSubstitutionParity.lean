@@ -42,7 +42,10 @@ def family : Registration arena (type_of% @quadratic_unique) where
     refine ⟨(), 0, X, ?_⟩
     intro he
     have hc := congrArg (coeff 1) he
-    norm_num [actual, realize, coeff_X_pow] at hc
+    change coeff 1 ((0 : PowerSeries (ZMod 2)) + 0 ^ 2) =
+      coeff 1 ((X : PowerSeries (ZMod 2)) + X ^ 2) at hc
+    norm_num only [map_add, map_zero, zero_pow (by decide : 2 ≠ 0),
+      coeff_one_X, coeff_X_pow, ite_false, add_zero, zero_add] at hc
 
 def quadratic_unique_audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@quadratic_unique) (Realization signature) Unit Unit where

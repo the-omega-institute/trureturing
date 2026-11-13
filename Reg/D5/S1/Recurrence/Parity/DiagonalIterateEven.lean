@@ -26,7 +26,7 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h 1 (by decide)).mpr ⟨0, rfl⟩
-  norm_num [rejected, realize] at he
+  exact (not_odd_zero : ¬ Odd (0 : ℤ)) he
 
 def family : Registration arena (type_of% @result) where
   actual := actual
@@ -64,8 +64,10 @@ def result_audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S1.Recurrence.Parity.DiagonalIterateEven
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[
+      { path := #["body", "body", "fn", "arg", "arg"],
+        stateBinder := 0, functionOperand := false, stateOperand := none,
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
