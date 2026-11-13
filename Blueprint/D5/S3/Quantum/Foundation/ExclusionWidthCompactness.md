@@ -188,11 +188,24 @@ Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.no_saturatio
 
 If no original pure label has whole-ball width one, the supremum over all original pure labels is strictly less than one under the positive-dimensional entire-ball condition alone. Maximize endpoint oscillation on the entire compact joint-certificate set. Equality with one would produce a saturated pure label. No uniform gap is assumed, and this result implies neither automatic injectivity nor a saturated ball.
 
+**Theorem 1.16 (Full-effect comparison zero and entire exclusion).**
+
+Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.comparison_zero_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.comparison_zero_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any finite dimensional real normed vector space V, pointed cone C and real-linear unit u strictly positive on every nonzero vector of C, assume that the real span of C is all of V. For every original pure label p and every original state x in the entire normalized base, comparison(C,u,p,x)=0 if and only if x belongs to the entire existential exclusion D_p. Closedness of C and any exclusion-ball condition are unnecessary. The full confirming interval is compact and contains the original unit, so its minimum is attained even at mixed x. This shared bridge is consumed by original_exclusion_width, width_global_maximum and the actual Incidence lifting and projection proofs; exposing it supplies no new mathematical content.
+
 The conclusions are conditional mathematics on the same original full-effect model. They give no automatic injectivity, edge openness, stable-zero-witness principle, saturation propagation, physical realization or quantum representation. A positive attained maximum need not equal one. No literature priority is asserted.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.EndpointData`
+- Truth anchor: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.comparison_zero_iff`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.confirmingEffects`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.diameter_tendsto_zero_of_mixed_limit`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.endpointCertificates`
