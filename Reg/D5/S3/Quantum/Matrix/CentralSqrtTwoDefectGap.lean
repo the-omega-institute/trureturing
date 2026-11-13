@@ -48,37 +48,4 @@ def family : Registration ⟨signature, law⟩ (type_of% @rank_one_gap_from_iden
   sourceFamily law _ Iff.rfl (@rank_one_gap_from_identity) zeroReadout bad
 end ScalarGap
 
-namespace ScalarGap
-def audit : Contract.Registration (@rank_one_gap_from_identity) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap.ScalarGap.unit
-  realizationName := `Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap.ScalarGap.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨⟨signature, law⟩⟩
-  objectArena := .source ⟨⟨signature, law⟩⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source ⟨signature, law⟩ ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ x => x) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some ℝ
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap
-    definition := none
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"]
-      stateBinder := 0
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-end ScalarGap
-
 end Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap
