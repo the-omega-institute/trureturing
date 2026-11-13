@@ -93,10 +93,10 @@ def source_registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-def registration : Contract.Registration
+def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Quantum.Dynamics.OddSquareGreenMass.odd_square_inverse_paired_mass)
     (Realization signature) Unit Unit where
-  unitName := `D5.S3.Quantum.Dynamics.OddSquareGreenMass.odd_square_inverse_paired_mass
+  unitName := `D5.S3.Quantum.Dynamics.OddSquareGreenMass.odd_square_inverse_paired_mass.__information_unit
   realizationName := `Reg.D5.S3.Quantum.Dynamics.OddSquareGreenMass.source_registration
   realizationSource := none
   generated := false
