@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.SingleLabelNormalBody
 import D5.S3.Quantum.Foundation.MixedExclusionGeometry
+import D5.S3.Quantum.Foundation.UniqueConfirmationDensity
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Topology.Sequences
 import Mathlib.Analysis.InnerProductSpace.SingularValues
@@ -33,27 +34,6 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 def leakage (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p t : V) : ℝ :=
   sSup ((fun x => Metric.infDist x (exclusion C u p)) '' exclusion C u t)
 
-private theorem zero_on_source (p : pure C u) (a : ExclusionChart C u p)
-    {y : V} (hy : y ∈ intrinsicInterior ℝ (exclusion C u p))
-    (e : V →L[ℝ] ℝ) (he : ∀ x ∈ C, 0 ≤ e x) (hey : e y = 0) :
-    ∀ x ∈ exclusion C u p, e x = 0 := by
-  rw [MixedExclusionGeometry.chart_intrinsic p a] at hy
-  obtain ⟨ξ, hξ, rfl⟩ := hy
-  have hξ1 : ‖ξ‖ < 1 := by simpa using hξ
-  have hbound : ‖slope a e‖ ≤ e (a.param 0) := affine_nonneg_bound (fun z hz => by
-    rw [← slope_formula]
-    exact he _ (a.whole ▸ mem_image_of_mem a.param (by simpa using hz)).1.1)
-  have hcs := real_inner_le_norm (-(slope a e)) ξ
-  rw [inner_neg_left, norm_neg] at hcs
-  rw [slope_formula] at hey
-  have hn : ‖slope a e‖ = 0 := by
-    nlinarith [norm_nonneg (slope a e)]
-  have hz := norm_eq_zero.mp hn
-  intro x hx
-  obtain ⟨z, _, rfl⟩ := a.whole.symm ▸ hx
-  rw [slope_formula, hz, inner_zero_left, add_zero]
-  simpa only [hz, inner_zero_left, add_zero] using hey
-
 private theorem zero_face_eq (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
@@ -63,9 +43,9 @@ private theorem zero_face_eq (hc : IsClosed (C : Set V))
     {x | x ∈ base C u ∧ e x = 0} = exclusion C u p := by
   let G := {x | x ∈ base C u ∧ e x = 0}
   have all := exclusion_ball_faces hc hs hg hB
-  obtain ⟨a⟩ := hB p
   have hFG : exclusion C u p ⊆ G := fun x hx =>
-    ⟨hx.1, zero_on_source p a hy e (fun z hz => (he z hz).1) hey x hx⟩
+    ⟨hx.1, UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior hB p
+      e.toLinearMap (fun z hz => (he z hz).1) hy hey x hx⟩
   have hGconv : Convex ℝ G := by
     intro x hx z hz a b ha hb hab
     refine ⟨base_convex C u hx.1 hz.1 ha hb hab, ?_⟩
