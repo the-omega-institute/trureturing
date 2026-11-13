@@ -36,6 +36,10 @@ $$\operatorname{problem92} : \operatorname{Problem92}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Mehat/OrthogonalityProducts.problem92` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mehat-2026-problem-92-orthogonality-products` (proved) by `D5/S3/Arith/Mehat/OrthogonalityProducts.problem92`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mehat-2026-problem-92-orthogonality-products","declaration_gid":"D5/S3/Arith/Mehat/OrthogonalityProducts.problem92","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Sanjit Singh Mehat (2026). *Tensor constructions for Euler magic matrices and proper examples of orders 9, 27, 81 and 243*. URL: <https://arxiv.org/html/2609.05530v1>.
