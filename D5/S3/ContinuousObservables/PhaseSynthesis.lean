@@ -419,7 +419,7 @@ theorem exists_phase_factorization (k : ℕ) (p : ℝ[X]) (hp : p.natDegree ≤ 
       Polynomial.map_add, Polynomial.map_mul, Polynomial.map_X] at hm
     dsimp [P, Q]
     simp only [conjP_add, conjP_mul, conjP_C, conjP_map_algebraMap, Complex.conj_I]
-    linear_combination hm + (B.map (algebraMap ℝ ℂ)) ^ 2 * I_sq
+    linear_combination -hm - (B.map (algebraMap ℝ ℂ)) ^ 2 * I_sq
   obtain ⟨φ₀, Φ, hlen, hpair⟩ :=
     exists_phases k P Q hPd hQd hQ0 hPp hCp hunit
   refine ⟨B, C, U, φ₀, Φ, hsos, hB, hC, hC0, hBp, hCp, hU, hleft, hright,
