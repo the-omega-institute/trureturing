@@ -26,7 +26,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have he := (h 1 (by decide)).mpr ⟨0, rfl⟩
-  exact (not_odd_zero : ¬ Odd (0 : ℤ)) he
+  have hc : (0 : ZMod 2) = 1 := he.intCast_zmod_two
+  exact zero_ne_one hc
 
 def family : Registration arena (type_of% @result) where
   actual := actual
