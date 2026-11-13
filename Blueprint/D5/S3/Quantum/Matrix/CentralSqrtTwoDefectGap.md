@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap.rank_one_cross_ide
 
 *Commentary.*
 
-If A is real symmetric, B=A+c vv^T with v the coordinate vector at q, and Au=lambda u, Bv=mu v, then (mu-lambda)<u,v> =c*u(q)*v(q). The identity is proved by the matrix update and symmetry.
+Let e_q be the fixed coordinate vector at q. If A is real symmetric, B=A+c e_q e_q^T, and u,v are arbitrary vectors satisfying Au=lambda u and Bv=mu v, then (mu-lambda)<u,v> =c*u(q)*v(q). The identity is proved by the matrix update and symmetry.
 
 **Theorem 1.3 (Rank-one cross-sector gap).**
 
