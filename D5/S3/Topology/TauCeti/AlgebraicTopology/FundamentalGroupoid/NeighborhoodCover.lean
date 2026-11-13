@@ -96,15 +96,6 @@ private def cechOpenDiagram : CechIndex ι ⥤ Opens X where
   map f := homOfLE (cechIntersection_mono U f.le)
   map_id _ := Subsingleton.elim _ _
   map_comp _ _ := Subsingleton.elim _ _
-@[simp]
-private lemma cechOpenDiagram_obj (s : CechIndex ι) :
-    (cechOpenDiagram U).obj s = cechIntersection U s := (rfl)
-@[simp]
-private lemma cechOpenDiagram_map {s t : CechIndex ι} (f : s ⟶ t) :
-    (cechOpenDiagram U).map f =
-      eqToHom (cechOpenDiagram_obj U s) ≫ homOfLE (cechIntersection_mono U f.le) ≫
-        eqToHom (cechOpenDiagram_obj U t).symm :=
-  Subsingleton.elim _ _
 private def cechTopDiagram : CechIndex ι ⥤ TopCat :=
   cechOpenDiagram U ⋙ Opens.toTopCat X
 @[simp]
@@ -123,7 +114,7 @@ private def cechInclusion (s : CechIndex ι) : (cechTopDiagram U).obj s ⟶ X :=
 private lemma cechInclusion_apply (s : CechIndex ι) (x : TopCat.of (cechIntersection U s)) :
     cechInclusion U s (eqToHom (cechTopDiagram_obj U s).symm x) = x.1 :=
   congrFun Opens.coe_inclusion' x
-@[simp, reassoc]
+@[simp]
 private lemma cechTopDiagram_map_comp_inclusion {s t : CechIndex ι} (f : s ⟶ t) :
     (cechTopDiagram U).map f ≫ cechInclusion U t = cechInclusion U s := by
   ext x

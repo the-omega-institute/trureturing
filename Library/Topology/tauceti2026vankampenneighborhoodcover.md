@@ -16,15 +16,34 @@ triage: anchor
 
 The received source is attributed to the Tau Ceti contributors, Kim Morrison,
 and Lean FRO, LLC. The immutable source Git commit is
-`3780371ca1bebf9f1c2bb3d753e4bb56c9526023`. The retained source spans are the
-gluing construction at the immutable
+`3780371ca1bebf9f1c2bb3d753e4bb56c9526023`. The retained source spans include the
+gluing construction, lines 63–689 and 699–701, at the immutable
 [`Glue.lean`](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Glue.lean),
 SHA-256
 `a2ba1b2fb84296ee7bff70ff525d7c3c057aa7d85af1eb39a4c7965938b80377`, and the
-ordinary Cech construction at the immutable
+ordinary Cech construction, lines 55–152, at the immutable
 [`Cech/Colimit.lean`](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Cech/Colimit.lean),
 SHA-256
 `73a0bbcd052c6988eac1fedc40cc3b1d0b124d9d16aed8bed17859e1b78a4d21`.
+
+The owner also directly receives the following definitions and helper proofs.
+These are literature sources, including the copied diagram and cocone data;
+they are not locally derived definitions. Line spans refer to the immutable
+supplier files, and each SHA-256 identifies the complete file bytes.
+
+| Immutable supplier source | Directly received spans and declarations | SHA-256 |
+| --- | --- | --- |
+| [FundamentalGroupoid/Cech/Diagram.lean](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Cech/Diagram.lean#L44-L98) | Lines 44–45: `cechDiagram`; 48–63: object/map helpers; 66–68: `cechCocone`; 71–98: cocone helpers. The two definition bodies agree after whitespace normalization. | `f3f7ecad8737c028e7aed332f4879d64d9a2131cef78b95d0c6ca74d6bba85ec` |
+| [TopCat/Cech/Diagram.lean](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/Topology/Category/TopCat/Cech/Diagram.lean#L40-L143) | Lines 40–85 and 99–143: `CechIndex`, singleton/order helpers, `cechIntersection` and its helpers, `cechOpenDiagram`, `cechTopDiagram`, inclusions and the natural transformation, and singleton coverage. Unused supplier wrappers at 88–96 are omitted; the inclusion-composition lemma retains only its `simp` attribute. | `cba6a575c843daeefb77f026754e33f4f40b436e6559a541e3099407dd07a41c` |
+| [FundamentalGroupoid/CoverGeneration.lean](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/CoverGeneration.lean#L64-L168) | Lines 64–168: `mk_mem_iSup_im`, `mk_concat_mem_iSup_im`, `iSup_im_map_subtypeVal_eq_top`, and `functor_ext`. | `1df069a0545216aca8e7decaf1bf15065db34a29429d7241eb642eeee2d4b1fa` |
+| [FundamentalGroupoid/Basic.lean](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Basic.lean#L50-L84) | Lines 50–60: `cast_mem_arrows_iff`; 80–84: `fundamentalGroupoid_map_obj_injective`. | `85c649143c6023fcd344c82c9e8d0d7d2516b8f0f87014341e9e83640187bcc1` |
+| [MetricSpace/Lebesgue.lean](https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/Topology/MetricSpace/Lebesgue.lean#L39-L45) | Lines 39–45: `lebesgue_number_lemma_of_metric_of_mem_nhds`. | `b8275adb018c482de7f94badc13a399e51d6cef918dd502603525fc8674bf290` |
+
+The receiver makes helper declarations private and adapts proofs to its pinned
+APIs. `existsUnique_extension` packages the received gluing construction,
+restriction law and uniqueness result into the full strict `ExistsUnique`
+statement. The private `cechExtension` applies that theorem to the singleton
+legs; `isColimitCechCocone` consumes this application as colimit data.
 
 The source pin is Lean 4.36.0-rc2 with Mathlib
 `2ddf59c8f14245864e6c0ed227a2dab76b9efea2`; the receiving project uses Lean
@@ -50,8 +69,7 @@ license is retained in
 `b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1`.
 
 No novelty, priority, or first-formalization claim is made. The verified
-locator is the immutable Tau Ceti Git commit and its `Glue.lean` and
-`Cech/Colimit.lean` blobs linked above.
+locators are the immutable Tau Ceti Git commit and the source blobs linked above.
 
 ## Retirement
 

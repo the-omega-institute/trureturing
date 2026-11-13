@@ -31,13 +31,13 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("cech-diagram"),
                 DeclarationHandle.Create(Prefix + "cechDiagram"),
                 H("Fundamental-groupoid Cech diagram"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampenneighborhoodcover")), Blocks(Paragraph(Text(
                     "cechDiagram is the fundamental-groupoid image of the finite-intersection open diagram."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("cech-cocone"),
                 DeclarationHandle.Create(Prefix + "cechCocone"),
                 H("Canonical inclusion cocone"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampenneighborhoodcover")), Blocks(Paragraph(Text(
                     "cechCocone maps every intersection fundamental groupoid to the full-space fundamental groupoid through its subtype inclusion."))),
                 DescribeRole.Definition))));
 
