@@ -6,6 +6,12 @@ Literal first-zero lattice paths and row/column insertion.
 
 Coordinates are labelled and steps are ordered. Each step decrements a nonempty subset by one. A path stops when any coordinate first reaches zero; simultaneous first zeros count once. Height zero or dimension zero admits only the empty path. The diagonal of this finite count is OEIS A263160. Write I(d,m,t) for the Lean internal_words count. The terminal-word identity and uniform estimates lead to its exact real-root limit along all natural indices. The proof uses only the cofinite range n at least two and imposes no fixed-dimension hypothesis.
 
+The preregistered source is the historical A263160 revision 21 limit, added in history revision 17. Current revision 24, timestamped 2026-11-13 16:51:52 Singapore time, instead asserts a(n) asymptotic to c times n to the power n times (n minus three halves) plus one, divided by Pi to the power n/2 and log(2) to the power n times (n minus one), with c = 10.75366283..., signed Vaclav Kotesovec. History revision 22 deletes the conjecture line, revision 23 adds this stronger assertion and revision 24 approves it. The directly read JSON and history give no proof, exact constant definition or error bound. Public proof coverage remains ASSUMED-UNVERIFIED; editorial approval and cached conjecture snippets do not settle it. The historical target and the Lean limit remain the scope here; no first-proof or numerical-fit claim is made.
+
+The endpoint binomial-moment representation is prior Dima/A126086, Eger arXiv:1511.00622v2 section 5.5 equation (3), page 10, and Bala/A262809. It permits arbitrary finite positive dimension and prescribed endpoints; summing endpoints over a box yields the truncated-binomial moment here. This counting representation is not a new external mathematical solution. The read GHOW1990 author PDF, pages 133–146, DOI 10.1007/BF01787724, has a fixed-k endpoint asymptotic with O_k error. The read Caughman2011 author text, DOI 10.1016/j.disc.2011.04.024, has exact endpoint formulas allowing arbitrary finite dimension. The required uniform first-zero diagonal theorem was not found in that searched scope.
+
+A262810 revision 19 already asserts a height-equals-dimension diagonal asymptotic. Its public history revision 12, March 23, 2016, was read; revision 13 is approval, not a proof. Targeted author-paper, note and history reading found no proof source or first-zero logarithmic transfer in the searched scope. This growing-dimension assertion is not excluded as fixed-dimension work. The existing full Lean proof is retained. Independent review, freeze, supplier repin and delivery remain pending; the source-bound Reg audit is unfinished under issue #29924, and no resolved-problem KPI is claimed. The Library note records current and historical source response identities.
+
 **Definition 1.1 (Nonempty coordinate steps).**
 
 $$\forall d \in \mathbb{N},\; \operatorname{Step}\left(d\right) = \operatorname{Subtype}\left((s: \operatorname{Finset}\left(\operatorname{Fin}\left(d\right)\right) \mapsto \operatorname{Finset}.\operatorname{Nonempty}\left(s\right))\right)$$
@@ -112,7 +118,7 @@ $$\forall d \in \mathbb{N},\; \forall m \in \mathbb{N},\; \operatorname{HasSum}\
 
 *Commentary.*
 
-The length budget truncates the insertion polynomial at d times m. Each geometric binomial column has sum two. Exchanging the finite sum with the convergent series gives twice the internal-word count.
+The length budget truncates the insertion polynomial at d times m. The resulting moment representation is prior endpoint-counting work as attributed above. Each geometric binomial column has sum two. Exchanging the finite sum with the convergent series gives twice the internal-word count.
 
 **Theorem 1.10 (The literal terminal count).**
 

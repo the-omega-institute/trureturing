@@ -25,7 +25,6 @@ count one. The logarithm is natural and the exponent is a real power.
 The target is the limit along every natural index, with no fixed-dimension
 hypothesis or subsequence restriction.
 
-
 The current source is [A263160 revision 24](https://oeis.org/A263160), whose
 revision timestamp is 2026-11-13 16:51:52 Singapore time. It instead asserts
 
@@ -38,7 +37,7 @@ in #23 and approval in #24. Approval is an editorial state, not a proof.
 The current JSON and history supply no proof, exact definition of `c` or
 error bound. A proof of the stronger assertion would cover the historical
 limit, but public proof coverage remains ASSUMED-UNVERIFIED. The historical
-target and the exact Lean limit above remain the scope of this development;
+target and the exact Lean limit in Formal result remain the scope here;
 the stronger asymptotic is not a replacement target or an additional result.
 
 ## Motivation
@@ -98,7 +97,6 @@ in place with their proofs preserved. The shifted geometric binomial identity
 from pinned Mathlib then yields the convergent positive sum
 
 `Sum_{k>=0} 2^(-k)*P_m(k)^d = 2*I`.
-
 
 The endpoint binomial-moment representation is prior work: Dan Dima's
 [A126086](https://oeis.org/A126086) formula, Eger
