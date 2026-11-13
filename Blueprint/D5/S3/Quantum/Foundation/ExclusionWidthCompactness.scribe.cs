@@ -26,7 +26,7 @@ internal sealed class ExclusionWidthCompactnessDocument : IScribeDocumentDefinit
         Describe.Lean(DescribeId.Create("endpointcertificates"), DeclarationHandle.Create(Owner + "endpointCertificates"),
             H("endpointCertificates"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("Joint data in K cubed times the full effect interval squared. The last effect confirms the label and vanishes at both endpoints; the other effect separates their readings by at least a specified real threshold. Purity is a consequence for positive thresholds with faithful labels, and for threshold one without faithful labels."))), DescribeRole.Definition),
-        Describe.Lean(DescribeId.Create("width-upperSemicontinuous"), DeclarationHandle.Create(Owner + "width_upperSemicontinuous"),
+        Describe.Lean(DescribeId.Create("width-uppersemicontinuous"), DeclarationHandle.Create(Owner + "width_upperSemicontinuous"),
             H("Relative upper semicontinuity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("On the relative topology of all original pure states, whole-ball width is upper semicontinuous. Only the positive-dimensional entire-ball condition is required; faithful labels and closedness of the pure carrier are not premises. A superlevel is the inverse image of the compact projection of joint endpoint certificates."))), DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("positive-width-layer-compact"), DeclarationHandle.Create(Owner + "positive_width_layer_compact"),
