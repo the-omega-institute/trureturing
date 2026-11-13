@@ -36,7 +36,10 @@ internal sealed class OrthogonalityProductsDocument : IScribeDocumentDefinition
                     Named("problem", D(9, 2)), Sp, Colon, Sp, ProblemName()))), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For any two different coordinate polynomials, an integer quaternion makes the first zero and the second nonzero. Thus no nonzero weighted difference of their squares vanishes identically. For equal coordinates, different nonzero old products also give a nonzero difference. The product of all collision polynomials and all entry polynomials is nonzero in the integer polynomial ring. MvPolynomial.funext implies that it is nonzero at some integer tuple. Appending this quaternion factor preserves nonzero entries and injectivity, so induction gives every finite length. The induction includes the empty tuple only as an auxiliary extension; Problem 9.2 asserts positive lengths. No coefficient-size bound, efficient construction, order-seven result, or full Euler-matrix theorem is asserted here."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mehat-2026-problem-92-orthogonality-products"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula ProblemFormula()
