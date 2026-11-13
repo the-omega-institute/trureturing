@@ -86,8 +86,8 @@ internal sealed class WindowCharTwoMinimumDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("In the formula, CharTwoField(K) means that K is a field of "
-                        + "characteristic two, fK is integerFieldTask K, F_K is fourDimensional K, "
-                        + "J_K is jointHankelSpace K fK, and K4 is BlockState K. Realizes(R,fK) "
+                        + "characteristic two, fK is integerFieldTask K, FK is fourDimensional K, "
+                        + "JK is jointHankelSpace K fK, and K4 is BlockState K. Realizes(R,fK) "
                         + "means equality of both outputs on every finite word. The dimension "
                         + "symbols denote dimension over K. FiniteKSpace(V) asserts that V is a "
                         + "finite-dimensional K-vector space. LinearWordRep(R,V,K) includes its "
@@ -113,9 +113,9 @@ internal sealed class WindowCharTwoMinimumDocument : IScribeDocumentDefinition
                         + "this bound."))), DescribeRole.Theorem))));
 
     private static Formula ResultFormula() => Disp(All("K", Imp(Call("CharTwoField", V("K")), And(
-        Call("Realizes", V("F_K"), V("fK")),
-        Call("FiniteDimensional", V("K"), V("J_K")),
-        EqOf(Call("dim", V("K"), V("J_K")), D(4)),
+        Call("Realizes", V("FK"), V("fK")),
+        Call("FiniteDimensional", V("K"), V("JK")),
+        EqOf(Call("dim", V("K"), V("JK")), D(4)),
         EqOf(Call("dim", V("K"), V("K4")), D(4)),
         All("V", All("R", Imp(And(Call("FiniteKSpace", V("V")),
             Call("LinearWordRep", V("R"), V("V"), V("K"))),
