@@ -11,6 +11,8 @@ import Mathlib.Analysis.Matrix.Normed
 import Mathlib.LinearAlgebra.Matrix.Stochastic
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
 import Mathlib.LinearAlgebra.Matrix.PosDef
+import Mathlib.Analysis.Complex.Polynomial.Basic
+import Mathlib.Algebra.Order.Star.Real
 
 /-! Banerjee–Chaudhury, arXiv:2509.06715v1, Conjecture 1.1, with the
 nonsymmetry convention of the preceding paragraph. The source is CC BY 4.0.
@@ -52,19 +54,20 @@ private theorem radius_max {n : ℕ} (hn : 0 < n) (A : Matrix (Fin n) (Fin n) �
     ∃ z ∈ spectrum ℂ (A.map (algebraMap ℝ ℂ)),
       rho A = ‖z‖ ∧ radius A = ENNReal.ofReal ‖z‖ ∧
       ∀ w ∈ spectrum ℂ (A.map (algebraMap ℝ ℂ)), ‖w‖ ≤ ‖z‖ := by
-  letI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
+  let : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
   have hs := spectrum.nonempty_of_isAlgClosed_of_finiteDimensional
     (𝕜 := ℂ) (A.map (algebraMap ℝ ℂ))
   obtain ⟨z, hz, he⟩ := spectrum.exists_nnnorm_eq_spectralRadius_of_nonempty hs
   have hr : radius A = (‖z‖₊ : ℝ≥0∞) := he.symm
   refine ⟨z, hz, ?_, ?_, ?_⟩
   · simp [rho, hr]
-  · simpa using hr
+  · exact hr.trans (ENNReal.ofReal_coe_nnreal (p := ‖z‖₊)).symm
   · intro w hw
     have hle : (‖w‖₊ : ℝ≥0∞) ≤ radius A := by
       unfold radius
       rw [spectralRadius_eq_of_unital]
-      exact le_iSup₂ w hw
+      exact le_iSup₂ (f := fun w (_ : w ∈ spectrum ℂ
+        (A.map (algebraMap ℝ ℂ))) => (‖w‖₊ : ℝ≥0∞)) w hw
     rw [hr] at hle
     exact_mod_cast hle
 
@@ -152,7 +155,7 @@ private theorem unstable_eigenpair : x ≠ 0 ∧
     norm_num [x] at hh
   · ext i
     fin_cases i <;>
-      norm_num [P, W, B, x, Matrix.mulVec, dotProduct, Matrix.mul_apply,
+      norm_num [P, W, B, x, Matrix.mulVec, Matrix.vecMul, dotProduct, Matrix.mul_apply,
         Fin.sum_univ_succ, Matrix.map_apply, Matrix.one_apply, smul_eq_mul]
 
 /-- The four-dimensional example violates the first stability conclusion. -/
