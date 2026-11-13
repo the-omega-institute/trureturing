@@ -17,7 +17,7 @@ open Set Filter Topology TopologicalSpace
 open scoped RealInnerProductSpace
 
 namespace D5.S3.Quantum.Foundation.OriginalRowSaturation
-open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces
+open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces ContinuousFrameSum
 open OriginalFacePolarity FixedZeroObstruction OriginalRegularHeight
 open OriginalNormalFamily OriginalBallScale ExclusionWidthCompactness
 
@@ -44,7 +44,8 @@ theorem actual_collapse_pure_edge_row
     intro s
     obtain ⟨f, hi, hw⟩ := h3 s
     exact ⟨⟨3, by norm_num, f, hi, hw⟩⟩
-  have hpV := continuous_subtype_val.tendsto p |>.comp hp
+  have hpV : Tendsto (fun n => (pn n : V)) atTop (𝓝 (p : V)) :=
+    continuous_subtype_val.tendsto p |>.comp hp
   have hqD : (q : V) ∈ exclusion C u p :=
     (exclusion_limit_labels hc hs hg hB pn hpV ({(q : V)} : NonemptyCompacts V)
       hcollapse).2 p.property (mem_singleton (q : V))
@@ -66,13 +67,13 @@ theorem actual_collapse_pure_edge_row
     apply hle.trans_lt
     apply lt_of_le_of_ne (by simpa [(pure_mem s).2] using (hf.1 s (pure_mem s).1).2)
     intro heq
-    have hsP : (s : V) ∈ ({(p : V)} : Set V) := hsingle ▸ ⟨pure_mem s, heq.symm⟩
+    have hsP : (s : V) ∈ ({(p : V)} : Set V) := hsingle ▸ ⟨pure_mem s, heq⟩
     exact hsp (Subtype.ext hsP)
   have hpK : Tendsto (fun n => (⟨(pn n : V), pure_mem (pn n)⟩ : base C u))
-      atTop (𝓝 (⟨(p : V), pure_mem p⟩ : base C u)) := hpV.subtype_mk _
+      atTop (𝓝 (⟨(p : V), pure_mem p⟩ : base C u)) := tendsto_subtype_rng.mpr hpV
   have ht : Tendsto (fun n => comparison C u (pn n) s) atTop (𝓝 (comparison C u p s)) := by
     have h := ((hcommon.2.1 s).continuous.tendsto (⟨(p : V), pure_mem p⟩ : base C u)).comp hpK
-    simpa only [hPR s] using h
+    simpa only [Function.comp_def, hPR s] using h
   choose e he heval using fun n => comparison_attained hs hg (pn n) s
   have hsmall : ∀ᶠ n in atTop, e n s < 1 := by
     simpa only [heval] using ht.eventually (gt_mem_nhds hstrict)
@@ -110,8 +111,8 @@ theorem actual_collapse_pure_edge_row
     ((hf q (pure_mem q).1).1)
   exact ⟨f.toLinearMap, ⟨hf, hfp⟩, hfq, hfs⟩
 
-/-- From the exact fixed-edge pure row, both actual original exclusions saturate
-and the same ep is least on every original mixed state and the entire cone. -/
+/-- Actual whole-exclusion collapse saturates both original balls, and the same
+ep is least on every original mixed state and the entire original cone. -/
 theorem original_row_saturation
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
@@ -121,7 +122,9 @@ theorem original_row_saturation
     (p : pure C u) (a : ExclusionChart C u p) (ha : a.dim = 3)
     (ep : V →ₗ[ℝ] ℝ) (hp : ∀ e, e ∈ fullZeroConfirmers C u p ↔ e = ep)
     (q : pure C u) (v : chartSpace a) (hv : ‖v‖ = 1) (hq : a.param v = q)
-    (hEdge : PureEdgeRow p q) :
+    (pn : ℕ → pure C u) (hpn : Tendsto pn atTop (𝓝 p))
+    (hcollapse : Tendsto (fun n => Metric.hausdorffDist
+      (exclusion C u (pn n)) {(q : V)}) atTop (𝓝 0)) :
     (∀ w : chartSpace a, ‖w‖ = 1 → extensionBudget a w = 1) ∧
     (∀ b : ExclusionChart C u q, ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w = 1) ∧
     (∀ x ∈ base C u, comparison C u p x = ep x) ∧
@@ -132,6 +135,13 @@ theorem original_row_saturation
       ∀ s : pure C u, b.param w = s → ∀ z : chartSpace b, ‖z‖ ≤ 1 →
         comparison C u s (b.param z) = (1 + ⟪w,z⟫) / 2) := by
   have hB : exclusionBalls C u := by intro s; obtain ⟨b, _⟩ := hEB3 s; exact ⟨b⟩
+  have h3 : ReciprocalExclusionLimits.threeBallExclusions C u := by
+    intro s
+    obtain ⟨⟨d, hd, f, hi, hw⟩, heq⟩ := hEB3 s
+    dsimp at heq
+    subst d
+    exact ⟨f, hi, hw⟩
+  have hEdge := actual_collapse_pure_edge_row hc hs hg h3 hPR p q pn hpn hcollapse
   have hep : ep ∈ fullZeroConfirmers C u p := (hp ep).mpr rfl
   obtain ⟨k⟩ := original_coordinates hc hs hg hEB3 hInj p a ha ep hp
   obtain ⟨eq, hqunique, hL, hLhalf, hform, hanti, horth⟩ :=
