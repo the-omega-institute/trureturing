@@ -93,7 +93,10 @@ abbrev arena2 : Arena where
     (ep : P.V →ₗ[ℝ] ℝ) (hp : ∀ e, e ∈ fullZeroConfirmers P.cone P.unit p ↔ e = ep)
     (v : chartSpace a) (hv : ‖v‖ = 1) (hbudget : 1 < extensionBudget a v) ,
     ContinuousAt (_root_.D5.S3.Quantum.Foundation.OriginalExclusionLimits.wholeExclusion hc hs hg
-      (fun s => ⟨(hEB3 s).choose⟩)) p
+      (fun s => ⟨(hEB3 s).choose⟩)) p ∧
+      ∃ U : Set (pure P.cone P.unit), IsOpen U ∧ p ∈ U ∧ ∃ B : ℝ, 0 < B ∧
+        ∀ s ∈ U, ∀ b : ExclusionChart P.cone P.unit s,
+          ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w ≤ B
 
 abbrev source2 : Prop := type_of% (@original_nonunit_continuity.{v})
 

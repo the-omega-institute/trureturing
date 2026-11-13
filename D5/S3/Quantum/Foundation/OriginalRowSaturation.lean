@@ -10,6 +10,7 @@ import D5.S3.Quantum.Foundation.OriginalBallScale
 import D5.S3.Quantum.Foundation.OriginalNormalFamily
 import D5.S3.Quantum.Foundation.CommonOldExclusionConfirmation
 import D5.S3.Quantum.Foundation.OriginalExclusionLimits
+import D5.S3.Quantum.Foundation.OriginalComparisonTopology
 
 /-! Actual whole-exclusion collapse supplies the full fixed-edge pure row. -/
 
@@ -288,24 +289,30 @@ theorem original_nonunit_continuity
     (ep : V →ₗ[ℝ] ℝ) (hp : ∀ e, e ∈ fullZeroConfirmers C u p ↔ e = ep)
     (v : chartSpace a) (hv : ‖v‖ = 1) (hbudget : 1 < extensionBudget a v) :
     ContinuousAt (OriginalExclusionLimits.wholeExclusion hc hs hg
-      (fun s => ⟨(hEB3 s).choose⟩)) p := by
+      (fun s => ⟨(hEB3 s).choose⟩)) p ∧
+      ∃ U : Set (pure C u), IsOpen U ∧ p ∈ U ∧ ∃ B : ℝ, 0 < B ∧
+        ∀ s ∈ U, ∀ b : ExclusionChart C u s,
+          ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w ≤ B := by
   have h3 : ReciprocalExclusionLimits.threeBallExclusions C u := by
     intro s
     obtain ⟨⟨d, hd, f, hi, hw⟩, heq⟩ := hEB3 s
     dsimp at heq
     subst d
     exact ⟨f, hi, hw⟩
-  by_contra hdisc
-  obtain ⟨pn, hpn, q, hq, hcollapse⟩ :=
-    OriginalExclusionLimits.original_discontinuity_collapse hc hs hg h3 hPR p hdisc
-  have hB : exclusionBalls C u := fun s => ⟨(hEB3 s).choose⟩
-  have hqS : (q : V) ∈ a.param '' Metric.sphere 0 1 := by
-    rw [← chart_boundary hc hs hg hB p a]
-    exact ⟨hq, q.property⟩
-  obtain ⟨w, hw, hwq⟩ := hqS
-  have hw1 : ‖w‖ = 1 := by simpa using hw
-  have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hp q w hw1 hwq pn hpn hcollapse
-  exact (ne_of_gt hbudget) (hsat.1 v hv).symm
+  have hcont : ContinuousAt (OriginalExclusionLimits.wholeExclusion hc hs hg
+      (fun s => ⟨(hEB3 s).choose⟩)) p := by
+    by_contra hdisc
+    obtain ⟨pn, hpn, q, hq, hcollapse⟩ :=
+      OriginalExclusionLimits.original_discontinuity_collapse hc hs hg h3 hPR p hdisc
+    have hB : exclusionBalls C u := fun s => ⟨(hEB3 s).choose⟩
+    have hqS : (q : V) ∈ a.param '' Metric.sphere 0 1 := by
+      rw [← chart_boundary hc hs hg hB p a]
+      exact ⟨hq, q.property⟩
+    obtain ⟨w, hw, hwq⟩ := hqS
+    have hw1 : ‖w‖ = 1 := by simpa using hw
+    have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hp q w hw1 hwq pn hpn hcollapse
+    exact (ne_of_gt hbudget) (hsat.1 v hv).symm
+  exact ⟨hcont, (OriginalComparisonTopology.original_local_budget_iff hc hs hg h3 hPR p).mp hcont⟩
 
 /-- The original P0 condition concerns A(p), while all of F(p) remains available. -/
 def uniqueFullZero (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Set (pure C u) :=

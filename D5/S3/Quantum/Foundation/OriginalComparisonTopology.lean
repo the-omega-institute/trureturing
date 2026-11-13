@@ -276,6 +276,43 @@ theorem original_noncollapse_bounded_budget
   rw [(hbudget w hw).2.2]
   exact one_div_le_one_div_of_le hγ hγt
 
+/-- Whole Hausdorff continuity is equivalent to a finite local bound for all
+actual optimal budgets, using an open neighborhood in all original P. -/
+theorem original_local_budget_iff
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (h3 : ReciprocalExclusionLimits.threeBallExclusions C u)
+    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p)
+    (p : pure C u) :
+    ContinuousAt (OriginalExclusionLimits.wholeExclusion hc hs hg (OriginalExclusionLimits.ballHyp h3)) p ↔
+      ∃ U : Set (pure C u), IsOpen U ∧ p ∈ U ∧ ∃ B : ℝ, 0 < B ∧
+        ∀ s ∈ U, ∀ a : ExclusionChart C u s,
+          ∀ w : EuclideanSpace ℝ (Fin a.dim), ‖w‖ = 1 → extensionBudget a w ≤ B := by
+  let hB := OriginalExclusionLimits.ballHyp h3
+  constructor
+  · intro hcont
+    have hreg := (OriginalExclusionLimits.original_regular_iff_continuous hc hs hg h3 hPR p).mpr hcont
+    obtain ⟨j, hj⟩ := mem_iUnion.mp hreg
+    let U : Set (pure C u) := interior {s : pure C u |
+      1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u s)}
+    have hdiam : ∀ s ∈ U, 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u s) := by
+      intro s hs
+      exact (interior_subset : interior {r : pure C u |
+        1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u r)} ⊆
+        {r : pure C u | 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u r)}) hs
+    obtain ⟨B, hBp, hbudget⟩ := original_noncollapse_bounded_budget hc hs hg hB hPR U
+      (1 / (j + 1 : ℝ)) (by positivity) hdiam
+    exact ⟨U, isOpen_interior, hj, B, hBp, hbudget⟩
+  · rintro ⟨U, hU, hp, B, hBp, hbudget⟩
+    obtain ⟨δ, hδ, hdiam⟩ := original_bounded_budget_noncollapse hc hs hg hB hPR U B hBp hbudget
+    obtain ⟨j, hj⟩ := exists_nat_one_div_lt hδ
+    apply (OriginalExclusionLimits.original_regular_iff_continuous hc hs hg h3 hPR p).mp
+    apply mem_iUnion.mpr
+    refine ⟨j, mem_interior_iff_mem_nhds.mpr ?_⟩
+    exact mem_of_superset (hU.mem_nhds hp) (fun s hs => hj.le.trans (hdiam s hs))
+
+#print axioms original_local_budget_iff
+
 #print axioms original_noncollapse_bounded_budget
 
 #print axioms original_diameter_collapse_budget

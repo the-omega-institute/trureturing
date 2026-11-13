@@ -181,7 +181,10 @@ theorem original_regular_iff_continuous
     have hsmall : ∀ᶠ n in atTop,
         1 / (j + 1 : ℝ) ≤ Metric.diam (D (pn n) : Set V) :=
       (hpn.eventually (isOpen_interior.mem_nhds hj)).mono fun n h =>
-        (show 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u (pn n)) from interior_subset h)
+        (show 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u (pn n)) from
+          (interior_subset : interior {r : pure C u |
+            1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u r)} ⊆
+            {r : pure C u | 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u r)}) h)
     have hbad : 1 / (j + 1 : ℝ) ≤ 0 := by
       simpa using ge_of_tendsto hd hsmall
     exact (one_div_pos.mpr (by positivity : 0 < (j + 1 : ℝ))).not_ge hbad
