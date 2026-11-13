@@ -34,7 +34,7 @@ variable (hc : IsClosed (C : Set V))
   (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
 
 include hc hs hg hB in
-private theorem equal_of_two_points (p q : pure C u) {x y : V}
+theorem equal_of_two_points (p q : pure C u) {x y : V}
     (hxy : x ≠ y) (hx : x ∈ exclusion C u p ∩ exclusion C u q)
     (hy : y ∈ exclusion C u p ∩ exclusion C u q) :
     exclusion C u p = exclusion C u q := by
@@ -577,7 +577,7 @@ theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
   have hh := congrArg AffineMap.linear heq
   exact LinearMap.congr_fun hh z
 
-private theorem tangent_annihilation (p : pure C u) (q : V)
+theorem tangent_annihilation (p : pure C u) (q : V)
     (a : ExclusionChart C u q) (m : EuclideanSpace ℝ (Fin a.dim))
     (hm : ‖m‖ = 1) (hmp : a.param m = p)
     (b : V →L[ℝ] ℝ) (hpos : ∀ x ∈ C, 0 ≤ b x) (hbp : b p = 0)

@@ -1,0 +1,12 @@
+**既有结果的准确范围。** VIII109.2—109.3、111.2已经在
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$ 下证明三球可见空间、共同盲核、直和分解和联合零效应分离的等价式；VIII111.12给其完整几何解释。该入口已经供应全纯least确认、共同正延拓及正面投影。固定全部球均为三球时，VIII113及IX116的既有分类还已给整个 $V$ 九维。以下不把这些结论重计为新的全W结果；所证增量是在未支付全域 $\mathrm{Pair}_{\perp}$、正投影或全纯框架完成的EB3+Inj域，仅从一个实际三角取得准确局部张成，并在一个 $P_0$ 种子上取得双侧配对。121.9已有无需种子的 $\dim V\ge9$，本章不把该维数下界计为新结论。
+
+种子条件有三个层次：$\mathcal T\ne\varnothing$、$P_0\cap\mathcal T\ne\varnothing$、$P_{\rm reg}\cap\mathcal T\ne\varnothing$。其中
+
+$$
+P_{\rm reg}=P_0\cap\operatorname{Cont}(\mathcal B)
+\tag{Q125.3}
+$$
+
+沿123.1量化整个 $P$ 中全部趋近纯序列。第三层蕴含第二层，第二层蕴含第一层；本章不证明反向。$P_0$、$P_{\rm reg}$ 在整个 $P$ 中稠密，仅凭这一稠密性不能推出它们与非空相对闭集 $\mathcal T$ 相交，也不能取得任何固定 $\partial D_b$ 上的相交稠密性；这些相交结论仍未在此取得。
+
