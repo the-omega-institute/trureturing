@@ -218,7 +218,7 @@ theorem scalar_source_bridge : scalarSource.{v} ↔ scalarArena.{v}.Law scalarAc
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive : scalarArena.{v}.Law scalarActual.{v} :=
   scalar_source_bridge.mp (@original_common_continuity_sets.{v})
@@ -237,7 +237,7 @@ theorem scalar_source_bridge_0 : scalarSource0.{v} ↔ scalarArena0.{v}.Law scal
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive_0 : scalarArena0.{v}.Law scalarActual.{v} :=
   scalar_source_bridge_0.mp (@original_whole_limit_calibration.{v})
@@ -257,7 +257,7 @@ theorem scalar_source_bridge_1 : scalarSource1.{v} ↔ scalarArena1.{v}.Law scal
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive_1 : scalarArena1.{v}.Law scalarActual.{v} :=
   scalar_source_bridge_1.mp (@original_singleton_limit_scalars.{v})
@@ -283,7 +283,7 @@ theorem scalar_source_bridge_2 : scalarSource2.{v} ↔ scalarArena2.{v}.Law scal
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive_2 : scalarArena2.{v}.Law scalarActual.{v} :=
   scalar_source_bridge_2.mp (@original_scalar_subsequence.{v})
@@ -300,7 +300,7 @@ theorem scalar_source_bridge_3 : scalarSource3.{v} ↔ scalarArena3.{v}.Law scal
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive_3 : scalarArena3.{v}.Law scalarActual.{v} :=
   scalar_source_bridge_3.mp (@original_calibration_upperSemicontinuous.{v})
@@ -317,7 +317,7 @@ theorem scalar_source_bridge_4 : scalarSource4.{v} ↔ scalarArena4.{v}.Law scal
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive_4 : scalarArena4.{v}.Law scalarActual.{v} :=
   scalar_source_bridge_4.mp (@original_optimalBudget_lowerSemicontinuous.{v})
@@ -340,7 +340,7 @@ theorem scalar_source_bridge_5 : scalarSource5.{v} ↔ scalarArena5.{v}.Law scal
     exact @h P.V P.add P.space P.finite P.cone P.unit P.closed P.strict
       P.generating P.balls P.reciprocal
   · intro h V add space finite C u hc hs hg h3 hPR
-    exact h ⟨⟨V, add, space, finite, C, u⟩, hc, hs, hg, h3, hPR⟩
+    exact h ⟨@Inputs.mk V add space finite C u, hc, hs, hg, h3, hPR⟩
 
 theorem scalar_actual_positive_5 : scalarArena5.{v}.Law scalarActual.{v} :=
   scalar_source_bridge_5.mp (@original_discontinuity_scalar_witness.{v})

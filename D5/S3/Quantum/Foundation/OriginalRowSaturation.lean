@@ -312,7 +312,16 @@ theorem original_nonunit_continuity
     have hw1 : ‖w‖ = 1 := by simpa using hw
     have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hp q w hw1 hwq pn hpn hcollapse
     exact (ne_of_gt hbudget) (hsat.1 v hv)
-  exact ⟨hcont, (OriginalComparisonTopology.original_local_budget_iff hc hs hg h3 hPR p).mp hcont⟩
+  have hreg := (OriginalExclusionLimits.original_regular_iff_continuous
+    hc hs hg h3 hPR p).mpr hcont
+  obtain ⟨_, _, _, _, hlocal, _, _⟩ :=
+    OriginalComparisonTopology.original_common_continuity_sets hc hs hg h3 hPR p
+  obtain ⟨U, hU, hpU, B, hBp, hbound⟩ := hlocal.mp hreg
+  refine ⟨hcont, U, hU, hpU, B, hBp, ?_⟩
+  intro s hsU b w hw
+  obtain ⟨_, _, _, _, _, _, _, _, hlaw⟩ :=
+    OriginalComparisonTopology.original_common_continuity_sets hc hs hg h3 hPR s
+  exact (hlaw b w hw).2.2.le.trans (hbound s hsU)
 
 /-- The original P0 condition concerns A(p), while all of F(p) remains available. -/
 def uniqueFullZero (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Set (pure C u) :=
