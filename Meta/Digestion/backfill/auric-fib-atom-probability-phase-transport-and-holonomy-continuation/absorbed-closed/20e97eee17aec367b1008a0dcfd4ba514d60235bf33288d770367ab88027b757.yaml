@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:20e97eee17aec367b1008a0dcfd4ba514d60235bf33288d770367ab88027b757
   normalized_sha256: sha256:20e97eee17aec367b1008a0dcfd4ba514d60235bf33288d770367ab88027b757
 cas_ref: sha256:20e97eee17aec367b1008a0dcfd4ba514d60235bf33288d770367ab88027b757
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Fibers/FiniteRectangleTransport.polygon_admissible
+    target_statement_id: sha256:1d11ff3bf78d01887458a6488609c313b985cc6559a76848663d23d29b908204
 receipts:
   unresolved_subitems: []
