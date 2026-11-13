@@ -56,19 +56,17 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Commentary.*
 
-Every ordinary coefficient of the displayed formal exponential is an integer, without a degree cutoff, factorial scaling, positivity or extra hypotheses. The source is Paul D. Hanna's A181082 integrality conjecture, preregistration #30033. The fixed OEIS source is revision 6 at commit de48538e52019dc132e250666b0d677b40045ceb; its SHA256 is c188a5d690604f08247757259908274b40830107aae8998171b674dc76ee1da5. Global literature completeness, priority and originality are unverified.
+Every ordinary coefficient of the displayed formal exponential is an integer, without a degree cutoff, factorial scaling, positivity or extra hypotheses. This proves Paul D. Hanna's A181082 integrality conjecture.
 
-Parameter correspondence: define F82(0,k)=0 and F82(n,k)=Nat.choose(n,k)^(n+k) for n>0. Apply HannaA181070Integrality.integralGeneric to F82. Its conclusion is coefficientwise integrality of PowerSeries.subst (L F82) (PowerSeries.exp Q), using the existing DoldExponentialIntegrality criterion and existing AINTLIB port. No provider is reproved and no third-party code is copied; the port's provenance and license are in Library/RecurrenceComposition/aintlib2026dieudonnedwork.md.
+Define F82(0,k)=0 and F82(n,k)=Nat.choose(n,k)^(n+k) for n>0. The Dold-exponential criterion HannaA181070Integrality.integralGeneric gives coefficientwise integrality of PowerSeries.subst (L F82) (PowerSeries.exp Q) from divisibility and prime-scaling congruences for F82.
 
-The first criterion hypothesis is n divides k*F82(n,k) for n>0. HannaA181070Integrality.binomDiv gives n divides k*Nat.choose(n,k); multiply by Nat.choose(n,k)^(n+k-1), since n+k>=1. The private helper div82 is used directly by result.
+The first criterion hypothesis is n divides k*F82(n,k) for n>0. HannaA181070Integrality.binomDiv gives n divides k*Nat.choose(n,k); multiply by Nat.choose(n,k)^(n+k-1), since n+k>=1. This proves div82.
 
 For the prime-scaling hypothesis fix any prime p, n>0 and k>=0. Put a=padicValNat(p,n), q=p^(a+1), t=n+k, b=Nat.choose(n,k) and B=Nat.choose(p*n,p*k). HannaA181070Integrality.binomCong gives B congruent to b modulo q; taking the power p*t reduces the goal to b^(p*t) congruent to b^t modulo q.
 
-If p divides b, Nat.padicValNat_lt_self gives a<n and hence a+1<=t. Both b^t and b^(p*t) are divisible by q. This includes b=0, with no use of a valuation of zero. Otherwise p and b are coprime. From p^a divides n and n divides k*b, coprime cancellation yields p^a divides k, hence p^a divides t. Write t=p^a*u. Euler's theorem and Nat.totient_prime_pow_succ give b^((p-1)*t) congruent to 1 modulo q. Thus b^(p*t)=b^t*b^((p-1)*t) is congruent to b^t. Every prime, including 2, is covered; so are a=0 and k=0. The private exponent_congruence is consumed by cong82, which is consumed by result.
+If p divides b, Nat.padicValNat_lt_self gives a<n and hence a+1<=t. Both b^t and b^(p*t) are divisible by q. This includes b=0, with no use of a valuation of zero. Otherwise p and b are coprime. From p^a divides n and n divides k*b, coprime cancellation yields p^a divides k, hence p^a divides t. Write t=p^a*u. Euler's theorem and Nat.totient_prime_pow_succ give b^((p-1)*t) congruent to 1 modulo q. Thus b^(p*t)=b^t*b^((p-1)*t) is congruent to b^t. Every prime, including 2, is covered; so are a=0 and k=0. This proves exponent_congruence, and combining it with binomCong gives cong82.
 
-Finite diagonal equality: in degree m only n<=m and n+k=m contribute. HannaA181070Integrality.literalBounded identifies exactly the source sum with L F82. When k>n, Nat.choose(n,k)=0 and n+k>0; the term vanishes. The n=0 convention is zero. At m=0 the logarithm has coefficient zero, so the ordinary exponential has constant coefficient 1. There is no analytic convergence premise or infinite-sum rearrangement.
-
-Per-declaration shape: div82, exponent_congruence, cong82 and result are bind-only, with no escape witness. Each private helper has the live consumer named above. logarithm, A, claim and F82 are definitions, not proof credit. The direct frozen provider is D5/S1/Recurrence/Algebraic/HannaA181070Integrality with statement_id sha256:3092db66acc6fd1d6f4354d8aefb1d52c3e934f2a8cbf9e86d1bed30e823810b. The admission basis for the sole public result is open-problem-resolution; no global novelty or priority claim follows from this exposition.
+Finite diagonal equality: in degree m only n<=m and n+k=m contribute. HannaA181070Integrality.literalBounded identifies exactly the source sum with L F82. When k>n, Nat.choose(n,k)=0 and n+k>0; the term vanishes. The n=0 convention is zero. At m=0 the logarithm has coefficient zero, so the ordinary exponential has constant coefficient 1. There is no analytic convergence premise or infinite-sum rearrangement. Applying integralGeneric with div82 and cong82 proves result.
 
 ## References
 
