@@ -1,0 +1,46 @@
+**定理 1.5（$3/2$ 的尖锐性）。** 对每个实数 $1<\kappa<3/2$，存在无穷多个正整数 $n$ 使 (1.1) 不成立。因此，记 $E_\kappa$ 为“(1.1) 对所有充分大的 $n$ 成立”，对这些 $\kappa$：$E_\kappa$ 无条件为假；若 RH 成立，则该文定理 6.1 的结论失败；把该文定理 6.1 延伸到这样的 $\kappa$ 所得的命题 $\mathrm{RH}\Rightarrow E_\kappa$ 等价于 RH 不成立，命题 $\mathrm{RH}\Leftrightarrow E_\kappa$ 也等价于 RH 不成立；因此该文的 RH 判据不能在不先判定 RH 的前提下延伸到这些 $\kappa$。
+
+**证明。** 若 RH 不成立，由该文定理 5.2 即得无穷多个违反。该定理对一切 $\kappa>1$ 成立，由 Robin 定理与该文引理 5.3 $\bigl(\zeta(\kappa)\sigma^{[\kappa]}(n)\bigr)^{1/\kappa}>\sigma(n)$ 推出。以下设 RH 成立。
+
+对 $x\ge16$ 取指数 $a_p$：$\sqrt x<p\le x$ 时 $a_p=1$，$p\le\sqrt x$ 时 $a_p=\lfloor2\log x/\log p\rfloor$。令 $n_x=\prod_{p\le x}p^{a_p}$。于是 $p\le\sqrt x$ 时 $p^{a_p+1}>x^2$。由 Chebyshev 上界 $\pi(t)=O(t/\log t)$，
+
+$$
+\log n_x\le\theta(x)+2\pi(\sqrt x)\log x=\theta(x)+O(\sqrt x),\qquad
+\log\log n_x\le\log\theta(x)+O\bigl(x^{-1/2}\bigr).
+\tag{1.5}
+$$
+
+由引理 1.4，
+
+$$
+\frac{\sigma^{[\kappa]}(n_x)}{n_x^\kappa}\ \ge\ \prod_{p\le x}(1-p^{-1})^{-\kappa}\cdot\prod_{p\le x}(1-p^{-\kappa})\cdot\prod_{\sqrt x<p\le x}\bigl(1-c_\kappa p^{-2}\bigr)\cdot\prod_{p\le\sqrt x}\bigl(1-c_\kappa x^{-2}\bigr).
+$$
+
+对充分大的 $x$，各因子 $c_\kappa p^{-2}$、$c_\kappa x^{-2}$ 不超过 $1/2$，由 $\log(1-u)\ge-2u$（$0\le u\le1/2$），最后两个乘积至少为
+
+$$
+\exp\Bigl(-2c_\kappa\sum_{p>\sqrt x}p^{-2}-2c_\kappa x^{-3/2}\Bigr)=\exp\Bigl(-O_\kappa\Bigl(\frac{1}{\sqrt x\log x}\Bigr)\Bigr).
+$$
+
+对第二个乘积，由 $-\log(1-u)\ge u$，$\prod_{p\le x}(1-p^{-\kappa})=\zeta(\kappa)^{-1}\prod_{p>x}(1-p^{-\kappa})^{-1}\ge\zeta(\kappa)^{-1}\exp\bigl(\sum_{x<p\le2x}p^{-\kappa}\bigr)$。由 Chebyshev 下界 $\pi(2x)-\pi(x)\ge c_0x/\log x$（$c_0>0$ 为绝对常数，$x$ 充分大），
+
+$$
+\zeta(\kappa)\prod_{p\le x}(1-p^{-\kappa})\ \ge\ \exp\Bigl(c_02^{-\kappa}\frac{x^{1-\kappa}}{\log x}\Bigr).
+$$
+
+对第一个乘积，在 RH 下，Schoenfeld [Sharper bounds for the Chebyshev functions θ(x) and ψ(x). II, Math. Comp. 30 (1976)] 给出 $\theta(x)=x+O(\sqrt x\log^2x)$ 与 $\sum_{p\le x}1/p=\log\log x+M+O(\log x/\sqrt x)$，其中 $M$ 为 Mertens 常数。由 $\sum_p\bigl(\log(1-1/p)^{-1}-1/p\bigr)=\gamma-M$，且其 $p>x$ 部分为 $O(1/x)$，得
+
+$$
+\prod_{p\le x}(1-p^{-1})^{-1}=e^\gamma\log x\cdot\exp\bigl(O(\log x/\sqrt x)\bigr),
+\qquad
+\log\theta(x)=\log x\cdot\exp\bigl(O(\log x/\sqrt x)\bigr).
+$$
+
+合并以上估计与 (1.5)，
+
+$$
+\frac{\zeta(\kappa)\,\sigma^{[\kappa]}(n_x)}{(e^\gamma n_x\log\log n_x)^\kappa}\ \ge\ \exp\Bigl(c_02^{-\kappa}\frac{x^{1-\kappa}}{\log x}-O_\kappa\Bigl(\frac{\log x}{\sqrt x}\Bigr)\Bigr).
+$$
+
+由于 $\kappa<3/2$，两项之比 $x^{3/2-\kappa}/\log^2x\to\infty$，故对充分大的 $x$ 右端大于 $1$，即 $n_x$ 违反 (1.1)。又 $n_x\to\infty$，所以违反有无穷多次。两种情形合并即得定理。证毕。
+

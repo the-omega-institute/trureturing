@@ -1,0 +1,85 @@
+**定理 133.2（低维返回的统一方向扇区界）。** 对定义133.1的固定数据，存在 $\varepsilon,\theta,H>0$，先于所有 $r,t,b$ 选择，使每个满足(Q133.3)及 $\|r-y\|<\varepsilon$ 的实际返回，若
+
+$$
+\dim\operatorname{aff}E_t\le k,
+\tag{Q133.5}
+$$
+
+则存在一个 $i\in\{0,\ldots,k\}$，使对所有 $b\in N_t\setminus\{0\}$ 同时有
+
+$$
+g_b\ne0,\quad \|w_b-v_i\|<\theta
+\quad\Longrightarrow\quad
+\|g_b\|\le H M(b)\alpha_F(t).
+\tag{Q133.6}
+$$
+
+指标 $i$ 可以依赖 $r,t$，但不能再依赖该扇区内所测试的 $b$。
+
+证明。先给所有实际返回共用的单侧收敛：
+
+$$
+\lim_{\rho\downarrow0}
+\sup_{\substack{r\in P,\ \|r-y\|<\rho\\t\in P\cap D_r}}
+\alpha_F(t)=0,
+\tag{Q133.7}
+$$
+
+其中空集的上确界取零。若不成立，取 $r_n\to y$、$t_n\in P\cap D_{r_n}$ 及 $x_n\in D_{t_n}$，使 $\operatorname{dist}(x_n,F)$ 有统一正下界。选 $e_n\in\mathcal A_{t_n}$。原零对称给 $r_n\in D_{t_n}$，所以
+
+$$
+e_n(r_n)=e_n(x_n)=0,\qquad e_n(t_n)=1.
+$$
+
+紧 $K,\mathcal E$ 给共同收敛子列 $x_n\to x$、$t_n\to t$、$e_n\to e$，满足 $e(y)=e(x)=0$、$e(t)=1$。$e$ 的零面是真面；它包含 $y\in\operatorname{ri}F$，因而包含整个 $F$。$F$ 是极大真面，故该零面恰为 $F$，于是 $x\in F$，矛盾。这是[126.8][Q133SR]同面紧性机制在任意源球及变维实际返回上的应用；它不辨认 $t$ 的极限标签，也不要求该极限纯。命题132.2的原单位估计因此亦适用于这里的全部返回，但以下直接使用同一最大值前置。
+
+取(Q132.2)在当前欧氏尺中的 $A>0$。固定非零 $b\in N_t$ 且 $g_b\ne0$，写 $s=\|g_b\|$、$w=w_b$、$B=M(b)$、$\alpha=\alpha_F(t)$。[positive_annihilator_maximum][Q133SN]供应同一 $E_t$ 中的原纯最大点 $x$，满足 $b(x)=B$。取最近 $z=c_F+T_Fq\in F$，$\|q\|\le1$。因为 $F\subseteq K$，有 $\max_Fb=b(c_F)+s\le B$，从而
+
+$$
+\begin{aligned}
+s(1-\langle w,q\rangle)
+&\le B-b(z)=b(x-z)\le AB\alpha,\\
+\|q-w\|^2
+&\le2(1-\langle w,q\rangle).
+\end{aligned}
+\tag{Q133.8}
+$$
+
+记 $T_0=\|T_F\|>0$，得到每个源方向的接触估计
+
+$$
+\|x-a_i\|
+\le\alpha+T_0\left(\sqrt{\frac{2AB\alpha}{s}}+\|w-v_i\|\right).
+\tag{Q133.9}
+$$
+
+这个估计对 $b$ 正齐次；没有把原正泛函替换成局部函数。
+
+固定足够小的 $\delta>0$，使下列两项单纯形稳定性同时成立。若 $x_i$ 距 $a_i$ 小于 $\delta$、$r$ 距 $y$ 小于 $\delta$，且 $x_0,\ldots,x_k,r$ 同在某个维数至多 $k$ 的仿射空间，则 $x_i$ 仿射无关、张成该空间，且 $r$ 是其单纯形的严格正重心组合。另存在固定 $\beta>0$，使只要 $x_i\in\operatorname{aff}F$ 且 $\|x_i-a_i\|\le\delta$，就有
+
+$$
+\overline B_{\operatorname{aff}F}(y,\beta)
+\subseteq\operatorname{conv}\{x_0,\ldots,x_k\}.
+\tag{Q133.10}
+$$
+
+两项都由非退化单纯形的稳定性取得：令以 $a_i-a_0$ 为列的矩阵为 $D$，它的最小奇异值严格正；扰动后的列矩阵仍满列秩，其左逆连续。在第一项中，$r$ 属于同一仿射空间，所以用该左逆计算的重心坐标确实重构 $r$，并仍为正。第二项先取一个以 $y$ 为中心、闭包包含于原单纯形内部的小球，再将扰动取到使该紧球上的所有重心坐标仍严格正。收小 $\delta$ 即同时保证两项。
+
+选 $\theta,H>0$ 使
+
+$$
+T_0\theta<\delta/4,\qquad
+T_0\sqrt{2A/H}<\delta/4.
+\tag{Q133.11}
+$$
+
+再由(Q133.7)选 $0<\varepsilon<\delta$，使全部 $\varepsilon$-邻近实际返回的 $\alpha<\delta/4$。若(Q133.6)在每个扇区都失败，就能对同一个 $r,t$ 为每个 $i$ 选取一个 $b_i\in N_t\setminus\{0\}$，满足
+
+$$
+\|w_{b_i}-v_i\|<\theta,\qquad
+\|g_{b_i}\|>H M(b_i)\alpha.
+\tag{Q133.12}
+$$
+
+由(Q133.9)选得同一 $E_t$ 中的纯最大点 $x_i$，均距 $a_i$ 小于 $3\delta/4$。若 $\alpha=0$，(Q133.8)直接给 $q=w$，同一估计仍成立。由(Q133.5)和单纯形稳定性，$r$ 是这些仿射无关 $x_i$ 的严格正组合。因为 $k\ge1$，这与 $r$ 为 $K$ 的极点矛盾。证毕。
+
