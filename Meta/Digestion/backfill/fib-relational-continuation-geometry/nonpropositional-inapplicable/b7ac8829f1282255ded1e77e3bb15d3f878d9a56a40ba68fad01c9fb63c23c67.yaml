@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7ac8829f1282255ded1e77e3bb15d3f878d9a56a40ba68fad01c9fb63c23c67
+  normalized_sha256: sha256:b7ac8829f1282255ded1e77e3bb15d3f878d9a56a40ba68fad01c9fb63c23c67
+cas_ref: sha256:b7ac8829f1282255ded1e77e3bb15d3f878d9a56a40ba68fad01c9fb63c23c67
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Theorem 8.4 is fully closed by pinned upstream declarations and normalization: List.foldl_hom and DFA.evalFrom for the finite simulation; Submodule.span_le, Submodule.finiteDimensional_of_le, Submodule.finrank_mono, LinearMap.finrank_range_le, Matrix.linearIndependent_cols_of_det_ne_zero, LinearIndependent.of_comp, and Fintype.card_le_finrank for the span and rank bounds; pinned Matrix determinant identities with simp, ring, norm_num, and CharP normalization for the four-state matrix. No repository frozen GID is available.'
+    previous_atom_id: 7be801fbf06a248f6cad5095393276e5e1d50f5e6c75e7da74b10247400f52a5
+    next_atom_id: 3240d95362e2f44df2d6fff8c8972517c872ad651bed3d5277e266e687c5e010
