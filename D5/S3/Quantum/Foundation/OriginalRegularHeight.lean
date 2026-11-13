@@ -35,7 +35,7 @@ private abbrev chartSpace {p : V} (a : ExclusionChart C u p) :=
   EuclideanSpace ℝ (Fin a.dim)
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a) :
+theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a) :
     u (a.param z) = 1 := by
   have hspan : affineSpan ℝ (Metric.closedBall (0 : chartSpace a) 1) = ⊤ := by
     apply (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp
@@ -48,7 +48,7 @@ private theorem chart_unit {p : V} (a : ExclusionChart C u p) (z : chartSpace a)
   exact congrArg (fun f : chartSpace a →ᵃ[ℝ] ℝ => f z) heq
 
 omit [FiniteDimensional ℝ V] in
-private theorem peak_formula {p : V} (a : ExclusionChart C u p)
+theorem peak_formula {p : V} (a : ExclusionChart C u p)
     (e : V →ₗ[ℝ] ℝ) (he : proper C u e)
     (v : chartSpace a) (hv : ‖v‖ = 1) (hpeak : e (a.param v) = 1) :
     ∀ z, e (a.param z) = 1 - ((1 - e (a.param (-v))) / 2) * (1 - ⟪v, z⟫) := by
