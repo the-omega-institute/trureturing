@@ -45,7 +45,7 @@ The source and finite-word conventions are specified in issue #18581. No general
 identity, global minimum, or earliest-counterexample assertion is used.
 -/
 
-import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
+import D5.S1.Words.Complexity.LyndonFactorTransport
 
 set_option autoImplicit false
 set_option Elab.async false
@@ -55,21 +55,6 @@ set_option maxHeartbeats 0
 namespace D5.S1.Words.Complexity.LyndonFactorChristoffelMinimumRefutation
 
 open D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder (IsLyndon)
-
-/-- Drop `i` letters and take at most `l` letters of `w`. -/
-def factor {σ n : ℕ} (w : Fin n → Fin σ) (i l : ℕ) : List (Fin σ) :=
-  ((List.finRange n).map w).drop i |>.take l
-
-/-- Occurrences `(i, l)`, `l ≥ 1`, `i + l ≤ n`, of Lyndon factors of `w`. -/
-noncomputable def lyndonOccurrences {σ n : ℕ} (w : Fin n → Fin σ) : Finset (ℕ × ℕ) := by
-  classical
-  exact ((Finset.range n ×ˢ Finset.range (n + 1)).filter fun p =>
-    1 ≤ p.2 ∧ p.1 + p.2 ≤ n ∧ IsLyndon (factor w p.1 p.2))
-
-/-- `D(W)`: the number of distinct Lyndon factors of `W`. -/
-noncomputable def distinctLyndon {σ n : ℕ} (w : Fin n → Fin σ) : ℕ := by
-  classical
-  exact ((lyndonOccurrences w).image fun p => factor w p.1 p.2).card
 
 /-- The (lower) Christoffel word of slope `p/n` over `{a, b} = {0, 1}`, `a < b`: its `i`-th letter is
 `b` exactly when `⌊(i + 1)p/n⌋ - ⌊ip/n⌋ = 1`. It has length `n` and `p` letters `b`. -/
