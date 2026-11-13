@@ -30,7 +30,7 @@ internal sealed class GleasonLatitudeRigidityDocument : IScribeDocumentDefinitio
         return body;
     }
     private static Formula R() => X("R");
-    private static Formula V() => C("EuclideanSpace", R(), Num(3));
+    private static Formula V() => C("EuclideanSpace", R(), C("Fin", Num(3)));
     private static Formula Fn() => new Formula.TypeArrow(V(), R());
     private static Formula Unit(Formula x) => Eq(C("norm", x), Num(1));
     private static Formula Val(string x) => App(X("f"), X(x));

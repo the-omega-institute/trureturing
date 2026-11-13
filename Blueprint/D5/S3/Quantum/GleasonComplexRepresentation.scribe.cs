@@ -35,6 +35,6 @@ internal sealed class GleasonComplexRepresentationDocument : IScribeDocumentDefi
             body = new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(xs[i].Name), xs[i].Type, body);
         return body;
     }
-    private static Formula Mat() => C("Matrix", X("N"), X("N"), X("C"));
+    private static Formula Mat() => C("Matrix", C("Fin", X("N")), C("Fin", X("N")), X("C"));
     private static Formula Law(Formula rho) => And(C("PosSemidef", rho), And(Eq(C("trace", rho), Num(1)), All(Imp(C("IsStarProjection", X("P")), Eq(C("p", X("OP"), X("P")), C("Re", C("trace", Multiply(rho, X("P")))))), ("P", Mat()))));
 }

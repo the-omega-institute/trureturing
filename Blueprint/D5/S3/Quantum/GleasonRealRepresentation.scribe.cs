@@ -14,7 +14,7 @@ internal sealed class GleasonRealRepresentationDocument : IScribeDocumentDefinit
                     Paragraph(Text("Nonnegativity and the frame sum give upper bound W. Extremum attainment chooses a maximum p. Applying the minimum theorem to the sum of f and the squared inner product with p gives a minimizing direction r orthogonal to p. The cross product supplies the remaining orthogonal axis q.")),
                     Paragraph(Text("The diagonal quadratic candidate takes the values f(p), f(q) and f(r) on those axes. The difference between this candidate and f is again a frame function. Pole rotations make its values antisymmetric and force it to vanish on four great circles.")),
                     Paragraph(Text("The residual attains a maximum. The geometric half-inner-product identities and the four vanishing circles force that maximum to be zero, hence the residual vanishes everywhere on the sphere. Expanding the diagonal expression in the chosen orthonormal frame gives the symmetric real matrix."))), DescribeRole.Theorem))));
-    private static Formula MainFormula() => All(Imp(And(Frame(), OnSphere(LE(Num(0), Val("x")))), Ex(And(C("IsSymm", X("A")), OnSphere(Eq(Val("x"), C("dot", X("x"), C("mulVec", X("A"), X("x")))))), ("A", C("Matrix", Num(3), Num(3), R())))), ("f", Fn()), ("W", R()));
+    private static Formula MainFormula() => All(Imp(And(Frame(), OnSphere(LE(Num(0), Val("x")))), Ex(And(C("IsSymm", X("A")), OnSphere(Eq(Val("x"), C("dot", X("x"), C("mulVec", X("A"), X("x")))))), ("A", C("Matrix", C("Fin", Num(3)), C("Fin", Num(3)), R())))), ("f", Fn()), ("W", R()));
 
     private static Formula X(string x) => DefinitionDsl.Id(x);
     private static Formula C(string f, params Formula[] xs) => DefinitionDsl.Call(f, xs);
@@ -36,7 +36,7 @@ internal sealed class GleasonRealRepresentationDocument : IScribeDocumentDefinit
         return body;
     }
     private static Formula R() => X("R");
-    private static Formula V() => C("EuclideanSpace", R(), Num(3));
+    private static Formula V() => C("EuclideanSpace", R(), C("Fin", Num(3)));
     private static Formula Fn() => new Formula.TypeArrow(V(), R());
     private static Formula Unit(Formula x) => Eq(C("norm", x), Num(1));
     private static Formula Val(string x) => App(X("f"), X(x));
