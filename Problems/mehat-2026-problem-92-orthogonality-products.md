@@ -142,7 +142,7 @@ The primary source is the URL in the frontmatter, with Problem 9.2 at
 `S9.Thmtheorem2`, Definition 2.1 at `S2.Thmtheorem1`, and the quaternion
 formula at `S2.Thmtheorem4` / `S2.E4`. The retrieved source has SHA-256
 `6a88fafa1415222c40d99f2e9b3803136c7c58883cb8f04af3012a33340ddb59`.
-The Library note is `Library/Arith/mehat2026eulermagic.md`.
+The Library note is `Library/QuadraticForms/mehat2026eulermagic.md`.
 
 The formal source is `D5/S3/Arith/Mehat/OrthogonalityProducts.lean`, with
 its canonical Blueprint Scribe and the source-bound registration at

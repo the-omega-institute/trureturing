@@ -8,7 +8,7 @@ internal sealed class OrthogonalityProductsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/Mehat/OrthogonalityProducts.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/mehat2026eulermagic");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/mehat2026eulermagic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Arbitrarily many integer orthogonality factors can have pairwise distinct products of entry squares.",
