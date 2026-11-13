@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 import D5.S3.Arith.Additive.NathansonLatticeRootRefutation
 
+/-! Source-bound full-range and minimum observations. -/
+
 namespace Reg.D5.S3.Arith.Additive.NathansonLatticeRootRefutation
 
 open _root_.D5.S3.Arith.Additive.NathansonLatticeRootRefutation
@@ -39,7 +41,8 @@ abbrev sourceScope := type_of% (@_root_.D5.S3.Arith.Additive.NathansonLatticeRoo
 
 private theorem erased_fails : ¬ arena.Law erased := by
   change ¬ ((∅ : Set ℕ) = {5,6})
-  simp
+  intro heq
+  exact (Set.ext_iff.mp heq 5).mpr (by simp)
 
 def family : DependentFamily.Registration arena sourceScope where
   actual := actual
@@ -49,7 +52,7 @@ def family : DependentFamily.Registration arena sourceScope where
   dependence := by
     intro i
     cases i
-    refine ⟨(), 0, 3, ?_⟩
+    refine ⟨(), (0 : ℕ), (3 : ℕ), ?_⟩
     intro heq
     change integerRange 2 0 = integerRange 2 3 at heq
     have hz : 0 ∈ integerRange 2 0 := ⟨∅, rfl, by decide⟩
@@ -80,8 +83,7 @@ noncomputable def registration :
     owner := `D5.S3.Arith.Additive.NathansonLatticeRootRefutation
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["fn", "arg"], stateBinder := 0,
-        functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+    readouts := #[{ path := #["fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -115,7 +117,7 @@ abbrev sourceScope := type_of% (@_root_.D5.S3.Arith.Additive.NathansonLatticeRoo
 
 private theorem erased_fails : ¬ arena.Law erased := by
   intro h
-  have bad := h.2 0 True.intro
+  have bad : 3 ≤ (0 : ℕ) := h.2 0 True.intro
   omega
 
 def family : DependentFamily.Registration arena sourceScope where
@@ -126,7 +128,7 @@ def family : DependentFamily.Registration arena sourceScope where
   dependence := by
     intro i
     cases i
-    refine ⟨(), 0, 3, ?_⟩
+    refine ⟨(), (0 : ℕ), (3 : ℕ), ?_⟩
     intro heq
     change intervalCovers 2 3 0 = intervalCovers 2 3 3 at heq
     have bad : intervalCovers 2 3 0 := Eq.mpr heq interval_minimum.1
@@ -156,10 +158,8 @@ noncomputable def registration :
     owner := `D5.S3.Arith.Additive.NathansonLatticeRootRefutation
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["fn", "arg"], stateBinder := 0,
-        functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
-      { path := #["arg", "body", "domain"], stateBinder := 0,
-        functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+    readouts := #[{ path := #["fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+      { path := #["arg", "body", "domain"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -193,7 +193,7 @@ abbrev sourceScope := type_of% (@_root_.D5.S3.Arith.Additive.NathansonLatticeRoo
 
 private theorem erased_fails : ¬ arena.Law erased := by
   intro h
-  have bad := h.2 0 True.intro
+  have bad : 2 ≤ (0 : ℕ) := h.2 0 True.intro
   omega
 
 def family : DependentFamily.Registration arena sourceScope where
@@ -204,7 +204,7 @@ def family : DependentFamily.Registration arena sourceScope where
   dependence := by
     intro i
     cases i
-    refine ⟨(), 0, 2, ?_⟩
+    refine ⟨(), (0 : ℕ), (2 : ℕ), ?_⟩
     intro heq
     change cubeCovers 2 3 2 0 = cubeCovers 2 3 2 2 at heq
     have bad : cubeCovers 2 3 2 0 := Eq.mpr heq cube_minimum.1
@@ -234,10 +234,8 @@ noncomputable def registration :
     owner := `D5.S3.Arith.Additive.NathansonLatticeRootRefutation
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["fn", "arg"], stateBinder := 0,
-        functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
-      { path := #["arg", "body", "domain"], stateBinder := 0,
-        functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+    readouts := #[{ path := #["fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+      { path := #["arg", "body", "domain"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
