@@ -11,7 +11,7 @@ import D5.S3.Quantum.Foundation.OriginalBallScale
 /-! The pure reciprocity law is used only to exchange pure endpoints. -/
 
 noncomputable section
-open Set
+open Set Filter Topology
 open scoped RealInnerProductSpace
 
 namespace D5.S3.Quantum.Foundation.OriginalComparisonTopology
@@ -145,5 +145,50 @@ theorem original_bounded_budget_noncollapse
 
 #print axioms original_scale_axis_bound
 #print axioms original_bounded_budget_noncollapse
+
+/-- Every actual diameter-collapse sequence forces the original optimal budgets
+to diverge, for every choice of complete charts and unit directions. -/
+theorem original_diameter_collapse_budget
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p)
+    (pn : ℕ → pure C u) (a : ∀ n, ExclusionChart C u (pn n))
+    (v : ∀ n, EuclideanSpace ℝ (Fin (a n).dim)) (hv : ∀ n, ‖v n‖ = 1)
+    (hd : Tendsto (fun n => Metric.diam (exclusion C u (pn n))) atTop (𝓝 0)) :
+    Tendsto (fun n => extensionBudget (a n) (v n)) atTop atTop := by
+  obtain ⟨L, hL, haxis⟩ := original_scale_axis_bound hc hs hg hB hPR
+  have hprod (n : ℕ) : 1 ≤ extensionBudget (a n) (v n) *
+      (L * Metric.diam (exclusion C u (pn n))) := by
+    obtain ⟨t, ht, _, hbudget, hax⟩ := haxis (pn n) (a n)
+    rw [hbudget (v n) (hv n)]
+    have hdiam : ‖(a n).param (v n) - (a n).param (-v n)‖ ≤
+        Metric.diam (exclusion C u (pn n)) := by
+      rw [← dist_eq_norm]
+      exact Metric.dist_le_diam_of_mem ((exclusion_ball_faces hc hs hg hB).1 (pn n)).2.1.isBounded
+        (SingleLabelNormalBody.chart_mem (a n) (hv n).le)
+        (SingleLabelNormalBody.chart_mem (a n) (z := -v n) (by simpa using (hv n).le))
+    have hh := (hax (v n) (hv n)).trans (mul_le_mul_of_nonneg_left hdiam hL.le)
+    have hh' : (1 : ℝ) ≤ (L * Metric.diam (exclusion C u (pn n))) / (2*t) :=
+      (le_div_iff₀ (by positivity : 0 < 2*t)).mpr (by simpa using hh)
+    simpa [div_eq_mul_inv, mul_comm] using hh'
+  apply tendsto_atTop.mpr
+  intro B
+  let R := |B| + 1
+  have hR : 0 < R := by dsimp [R]; positivity
+  have hsmall : ∀ᶠ n in atTop, L * Metric.diam (exclusion C u (pn n)) < 1 / R := by
+    have ht : Tendsto (fun n => L * Metric.diam (exclusion C u (pn n))) atTop (𝓝 0) :=
+      by simpa using tendsto_const_nhds.mul hd
+    exact ht.eventually (gt_mem_nhds (by positivity : (0 : ℝ) < 1 / R))
+  filter_upwards [hsmall] with n hn
+  have hD : 0 ≤ L * Metric.diam (exclusion C u (pn n)) := mul_nonneg hL.le Metric.diam_nonneg
+  have hRD : R * (L * Metric.diam (exclusion C u (pn n))) < 1 := by
+    simpa [mul_comm] using (lt_div_iff₀ hR).mp hn
+  have hbig : R ≤ extensionBudget (a n) (v n) := by
+    by_contra h
+    have hh := mul_le_mul_of_nonneg_right (le_of_lt (lt_of_not_ge h)) hD
+    linarith [hprod n]
+  exact (show B ≤ R by dsimp [R]; linarith [le_abs_self B]).trans hbig
+
+#print axioms original_diameter_collapse_budget
 
 end D5.S3.Quantum.Foundation.OriginalComparisonTopology

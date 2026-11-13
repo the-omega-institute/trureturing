@@ -40,7 +40,9 @@ theorem original_parameter_limit_rank
   have hval (z : EuclideanSpace ℝ (Fin 3)) :
       Tendsto (fun n => b n z) atTop (𝓝 (c + A z)) := by
     have he (n : ℕ) : b n z = b n 0 + (b n).linear.toContinuousLinearMap z := by
-      simpa only [add_comm] using congrFun (b n).decomp z
+      have hh := congrFun (b n).decomp z
+      change b n z = (b n).linear z + b n 0 at hh
+      exact hh.trans (add_comm _ _)
     simp_rw [he]
     exact ((continuous_fst.add (continuous_snd.clm_apply continuous_const)).tendsto (c,A)).comp ht
   have hsub : ∀ z, ‖z‖ ≤ 1 → c + A z ∈ exclusion C u p := by
