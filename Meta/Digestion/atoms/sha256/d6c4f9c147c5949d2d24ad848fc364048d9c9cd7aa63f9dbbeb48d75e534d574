@@ -1,0 +1,29 @@
+**定理 122.6（闭像、实际影像闭与严格凸等价）。** 令
+
+$$
+\Pi=(g,H):V\to\mathbb R^4,\qquad
+L=(\operatorname{span}N_p)^\perp
+=\{x:h(x)=0\ (h\in\operatorname{span}N_p)\}.
+\tag{Q122.14}
+$$
+
+则 $\Pi$ 满射、$\ker\Pi=L$，并且
+
+$$
+\boxed{\quad C+L\text{ 闭}\quad\Longleftrightarrow\quad
+Z=S\quad\Longleftrightarrow\quad S\text{ 严格凸}.\quad}
+\tag{Q122.15}
+$$
+
+证明。$g,H_1,H_2,H_3$ 是 $\operatorname{span}N_p$ 的基，给满射和准确核。因为 $g\ge0$ 在原锥上且其原零面是 $\mathbb R_+p$，有
+
+$$
+\Pi(C)=\{0\}\ \cup\ \{t(1,z):t>0,\ z\in Z\},\qquad
+\Pi^{-1}(\Pi(C))=C+L.
+\tag{Q122.16}
+$$
+
+第一式的反向也成立：把实现 $z$ 的原态 $x$ 缩放为 $tx/g(x)\in C$ 即可。若 $Z$ 闭，由其有界性，任何收敛的 $t_n(1,z_n)$ 或有 $t_n\to0$ 并趋零，或有 $t_n\to t>0$ 并使 $z_n$ 收敛到 $Z$；故 $\Pi(C)$ 闭。反之，闭 $\Pi(C)$ 与切片 $t=1$ 相交就给 $Z$ 闭。闭 $\Pi(C)$ 的原像闭；若 $C+L$ 闭，取 $\Pi$ 的线性右逆 $J$，则 $\Pi(C)=J^{-1}(C+L)$ 也闭。因此前两项等价。
+
+若 $Z=S$，定理122.4给每个支撑面 $S_v$ 都是单点。任何非平凡边界线段的中点有支撑超平面；线性评价迫使整段都在该支撑面中，矛盾，所以 $S$ 严格凸。反之若 $S$ 严格凸，每个边界点 $z$ 取一个支撑方向 $v$，有 $S_v=\{z\}$。定理122.4的实际接触存在性给 $z=z_v\in Z$。故 $\partial S\subset Z$；每个内部点都在一条端点属于 $\partial S$ 的弦上，$Z$ 凸遂给整个 $S\subseteq Z$。证毕。
+
