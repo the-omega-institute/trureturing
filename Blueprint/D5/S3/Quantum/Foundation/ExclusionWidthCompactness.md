@@ -4,7 +4,7 @@
 
 Entire original-effect widths have compact saturation, compact positive layers under faithful labels, and a positive attained global maximum.
 
-The carrier is any finite dimensional real normed vector space with a closed pointed generating convex cone C and a real-linear unit u strictly positive on every nonzero cone vector. K is the entire normalized base, P contains all its extreme points, and effects are the entire interval from zero to u on C. The ball condition assigns to each actual original pure label an injective affine chart of its entire exclusion by a closed Euclidean unit ball of some positive finite dimension. The dimension may vary and may equal one. Only the global maximum uses a nonzero carrier explicitly.
+The carrier is any finite dimensional real normed vector space with a closed pointed generating convex cone C and a real-linear unit u strictly positive on every nonzero cone vector. K is the entire normalized base, P is exactly the set of all its extreme points, and effects are the entire interval from zero to u on C. The ball condition assigns to each actual original pure label an injective affine chart of its entire exclusion by a closed Euclidean unit ball of some positive finite dimension. The dimension may vary and may equal one. Only the global maximum uses a nonzero carrier explicitly.
 
 The original exclusion uses the minimum of every proper effect confirming the label. The existing exclusion predicate instead asks for such an effect vanishing at a specified original state. Compactness of the entire confirming-effect set proves the minimum is attained for every state, including mixed states, and makes the two definitions equal. The existing whole-ball face theorem supplies a single original confirmer vanishing on the entire exclusion. No finite effect menu, selected label set, pure closedness, Pair premise, common metric, spectral representation, fibration or whole-ball continuity is assumed.
 
@@ -162,7 +162,7 @@ Lean statement: `D5/S3/Quantum/Foundation/ExclusionWidthCompactness.width_global
 
 *Commentary.*
 
-On a nonzero finite dimensional original space with faithful labels, some actual original pure label attains the supremum of all whole-ball widths. Its width is strictly positive and at most one. Pure spanning supplies a pure label. Its positive width defines a nonempty compact layer, and relative upper semicontinuity gives a maximum on that layer; all labels outside the layer have smaller width. The conclusion gives no equality of the maximum with one.
+On a nonzero finite dimensional original space with faithful labels, some actual original pure label attains the supremum of all whole-ball widths. Its width is strictly positive and at most one by the bounds on the minimum-defined exclusion and its equality with the existential exclusion. OriginalFacePolarity.pure_nonempty supplies a pure label, and the countable reciprocal-layer exhaustion places it in an actually nonempty layer with threshold one over n plus one. This positive layer is compact, and relative upper semicontinuity gives a maximum there. Every label outside this same layer has width below its threshold and hence below the maximizing width. The conclusion gives no equality of the maximum with one.
 
 **Theorem 1.14 (Every near-saturated sequence has a saturated limit).**
 
