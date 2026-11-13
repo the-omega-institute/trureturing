@@ -288,11 +288,11 @@ section AffineBallLimits
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   [FiniteDimensional ℝ E]
 
-private def ballImage (c : V) (L : E →L[ℝ] V) : NonemptyCompacts V :=
+def ballImage (c : V) (L : E →L[ℝ] V) : NonemptyCompacts V :=
   (⟨⟨Metric.closedBall (0 : E) 1, isCompact_closedBall _ _⟩,
     ⟨0, by simp⟩⟩ : NonemptyCompacts E).map (fun x => c + L x) (by fun_prop)
 
-private theorem parameter_subsequence (c : ℕ → V) (L : ℕ → (E →L[ℝ] V)) (F : NonemptyCompacts V)
+theorem parameter_subsequence (c : ℕ → V) (L : ℕ → (E →L[ℝ] V)) (F : NonemptyCompacts V)
     (hF : Tendsto (fun n => ballImage (c n) (L n)) atTop (𝓝 F)) :
     ∃ a : V × (E →L[ℝ] V), ∃ φ : ℕ → ℕ, StrictMono φ ∧
       Tendsto (fun n => (c (φ n), L (φ n))) atTop (𝓝 a) ∧
