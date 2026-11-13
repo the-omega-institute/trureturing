@@ -10,6 +10,8 @@ import D5.S3.Quantum.Foundation.OriginalRegularHeight
 import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 import D5.S3.Quantum.Foundation.ReciprocalEndpointExposure
 
+/-! Common scale and optimal positive-extension budgets on the original whole ball. -/
+
 noncomputable section
 open Set
 open scoped RealInnerProductSpace
@@ -34,13 +36,17 @@ private theorem directional_attainment
       (∀ z, ‖z‖ ≤ 1 → comparison C u q (a.param z) = 1 - t + t * ⟪v, z⟫) := by
   obtain ⟨e, he, hmin⟩ := comparison_attained hs hg q (a.param (-v))
   let t := (1 - e (a.param (-v))) / 2
-  have her := he.1 _ (SingleLabelNormalBody.chart_mem a (by simpa using hv.le)).1.1
+  have her := he.1 _ (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1.1
   rw [chart_unit a] at her
   have ht : 0 ≤ t ∧ t ≤ 1 / 2 := by dsimp [t]; constructor <;> linarith
-  have hform := peak_formula a e.toLinearMap he.1 v hv (hq ▸ he.2)
+  have hpeak := peak_formula a e.toLinearMap he.1 v hv (hq ▸ he.2)
+  have hform (z) : e (a.param z) = 1 - t + t * ⟪v, z⟫ := by
+    dsimp [t]
+    rw [hpeak z]
+    ring
   refine ⟨t, e.toLinearMap, ht.1, ht.2, ⟨he.1, he.2⟩, ?_, ?_⟩
   · intro z
-    simpa [t] using hform z
+    exact hform z
   · intro z hz
     have hx := SingleLabelNormalBody.chart_mem a hz
     have hb : BddBelow {r | ∃ f, confirms C u q f ∧ f (a.param z) = r} :=
@@ -53,7 +59,7 @@ private theorem directional_attainment
       rintro r ⟨f, hf, rfl⟩
       have hr : comparison C u q (a.param (-v)) ≤ f (a.param (-v)) :=
         csInf_le ⟨0, by rintro r ⟨g, hg, rfl⟩; exact
-          (hg.1 _ (SingleLabelNormalBody.chart_mem a (by simpa using hv.le)).1.1).1⟩
+          (hg.1 _ (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1.1).1⟩
           ⟨f, hf, rfl⟩
       rw [hmin] at hr
       have htf : (1 - f (a.param (-v))) / 2 ≤ t := by dsimp [t]; linarith
@@ -92,12 +98,18 @@ theorem original_ball_scale
     have hne : a.param (-v₀) ≠ (q₀ : V) := by
       intro heq
       have hh : -v₀ = v₀ := a.injective heq
-      have hz : v₀ = 0 := neg_eq_self.mp hh
+      have hz : v₀ = 0 := by
+        have hz2 : (2 : ℝ) • v₀ = 0 := by
+          calc
+            (2 : ℝ) • v₀ = v₀ - (-v₀) := by module
+            _ = 0 := by rw [hh]; simp
+        exact (smul_eq_zero.mp hz2).resolve_left (by norm_num)
       simp [hz] at hv₀
     have hlow : 0 < h (a.param (-v₀)) := by
       apply lt_of_le_of_ne (hh _ hr.1.1).1
       intro hz
-      exact hne (hzero ▸ (show a.param (-v₀) ∈ {y | y ∈ base C u ∧ h y = 0} from ⟨hr.1, hz.symm⟩))
+      exact hne (show a.param (-v₀) ∈ ({(q₀ : V)} : Set V) from
+        hzero ▸ (show a.param (-v₀) ∈ {y | y ∈ base C u ∧ h y = 0} from ⟨hr.1, hz.symm⟩))
     have hle : comparison C u q₀ (a.param (-v₀)) ≤ (u - h) (a.param (-v₀)) :=
       csInf_le ⟨0, by rintro r ⟨f, hf, rfl⟩; exact (hf.1 _ hr.1.1).1⟩ ⟨u - h, he, rfl⟩
     rw [hcomp₀ (-v₀) (by simpa using hv₀.le)] at hle
@@ -123,6 +135,7 @@ theorem original_ball_scale
       change comparison C u (a.param v) (a.param v₀) = comparison C u (a.param v₀) (a.param v) at hh
       rw [show comparison C u (a.param v) (a.param v₀) = 1 - t + t * ⟪v, v₀⟫ from hq ▸ hcomp v₀ hv₀.le,
         hcomp₀ v hv.le, real_inner_comm v₀ v] at hh
+      rw [real_inner_comm v₀ v] at hh
       nlinarith
   exact ⟨e, he, heq ▸ hform, heq ▸ hcomp⟩
 
@@ -230,7 +243,9 @@ theorem original_scale_and_sharp_budget
         ⟨-v, by simpa using hv, rfl⟩)).2
   obtain ⟨e, he, hform, hcomp⟩ := hscale (-v) (by simpa using hv) ⟨a.param (-v), hq⟩ rfl
   apply sharp_budget a t ht v hv ⟨a.param (-v), hq⟩ rfl e he hform
-  simpa [inner_neg_left, real_inner_self_eq_norm_sq, hv] using hcomp v hv.le
+  have hh := hcomp v hv.le
+  simp only [inner_neg_left, real_inner_self_eq_norm_sq, hv, one_pow, mul_neg, mul_one] at hh
+  linarith
 
 #print axioms original_scale_and_sharp_budget
 
