@@ -1478,12 +1478,18 @@ $r_h$. At that point $\mathsf{Before}$ returns $\mathsf{gap}(h)$;
 $\mathsf{After}$ reads $h.\mathrm{next}$ and returns
 $\mathsf{gap}(h.\mathrm{next})$. The component binding is obtained from
 the already acquired header when available. Otherwise ascend to the actual
-native root and scan the retained enrolled-header bindings by paid root
-reference equality. A midpoint's component has already been enrolled
-before its first split; an unchanged atomic component is reached through
-its authentic header. Hence this finite search succeeds. Access to a
-previously untouched neighboring component uses the actual previous/next
-field, with its read and retention charged.
+native root and search for its header by actual root-reference equality.
+An existing finite list of authentic acquired bindings may be scanned;
+without such a list, start two backed header cursors at the supplied
+anchor, alternately advance one by next and the other by previous, and
+read/compare each visited header's root field. Every actual component lies
+at a finite seed distance from that anchor, so this search reaches its
+unique real header. It uses neither a boundary-to-header inverse nor an
+unprovided enrollment index. Header links and root bindings persist through
+native edits. Every visited field, scratch cursor and retained binding is
+charged, including visits outside the requested observation interval.
+The epoch bit remains protected by the original enrollment-before-edit
+rule; header search alone does not supply an unread epoch tag.
 
 For the finite seed binding of a descendant, ascend and compare visited
 vertices against the retained epoch-seed root references until the unique
@@ -1504,7 +1510,9 @@ the arity guard excludes physical unary markers. Each ascent shortens
 the actual remaining parent chain. For a finite tree the chain includes
 pre-epoch ancestors and ends at $r$; for a bilateral component it ends at
 its authentic root, where the supplied adjacent header gives the next
-component. Only finitely many acquired headers are scanned. At a left
+component. A finite acquired-header scan terminates, and the two-sided
+header search reaches the actual component after finitely many supplied
+next/previous steps. At a left
 child the parent's midpoint is exactly the outer right boundary of that
 child's subtree; an ascent through a right child preserves its outer
 right boundary. This proves $\mathsf{After}$, and the reversed argument
@@ -1563,6 +1571,20 @@ Constructor/sort tests and equality of acquired fields implement alias
 equality; they do not require testing the spelling or ordering of pointers.
 Alias tuples occupy actual backed fields wherever retained. Their tags,
 references, widths, copies and tests are separate charged material.
+
+A supplied boundary reference $\kappa$ is not silently cast to a header.
+Given an acquired $h$, comparison with its $\mathsf{gap}(h)$ reads
+$h$'s supplied boundary field and tests equality with that very $\kappa$.
+If a previously retained supplied-boundary alias needs a header witness,
+compare the boundary fields of finitely retained authentic header
+bindings, or use the same two-sided supplied-header search from the anchor
+until that actual boundary reference is found. The supplying header has
+finite distance and is unique. At the initial anchor it is already part
+of the entrance binding. A supplied initial-cell alias is likewise related to its
+logical-root alias by reading that supplied cell's actual operand binding.
+These accesses and any retained witness fields are charged. The typed
+correspondence therefore preserves equality with genuinely supplied old
+aliases as well as equality between newly written descriptors.
 
 To read a live cell's current operand, use its actual logical root after
 the arity guard. To obtain that cell's boundary aliases, use
@@ -1701,9 +1723,11 @@ single allowed transition meaningful. $\square$
 Definition 8.1's quiescence, finite backing, granted progress and serialization,
 the derived installation has the original finite current/epoch acquisition
 outputs on the entire domains of Theorems 8.2–8.3. For $h\ge1$ existing
-current sites it uses $h$ successful current Tag tests and $h-1$ intervening
-one-cell walks, in addition to initial and optional return Seeks. For $h=0$
-there are no site Tag tests or inter-site walks; any requested initial Seek
+current sites it uses $h$ successful ReadCurrent calls and $h-1$ intervening
+one-cell walks, in addition to initial and optional return Seeks. These
+count acquired site observations; the resolver's additional arity/Tag
+decodes are all charged in Proposition 15.4. For $h=0$ there are no site
+observations or inter-site walks; any requested initial Seek
 and saved return still have their actual paid effects. For $H\ge1$ existing
 original seeds the inter-seed current walks remain exactly (V.10).
 A quiescent Seek to a retained same-source cut at current distance $D$
@@ -1842,10 +1866,13 @@ their actual separate count $n$; enrollment alone does not imply two new
 observer cuts. The derived construction never allocates these cache objects.
 The displayed differences prove each strictness condition.
 
-For an explicit source-backing footprint, take any finite set of touched
-seed headers containing all edited components and all adjacent headers
-actually read. Count its distinct supplied headers, seed roots, initial
-cells, boundaries and incidence slots separately in both installations.
+For an explicit source-backing footprint, count the actual accessed/retained
+header sets $E_{\mathrm{inc}},E_{\mathrm{der}}$ separately; derived
+resolution can require more header reads and retained bindings. Their finite
+union contains all edited components and all adjacent headers actually
+read. Count its distinct supplied headers, seed roots, initial cells,
+boundaries and incidence slots as common supplied backing, without claiming
+that both installations acquired or retained the whole union.
 For $m$ consecutive components their two-sided initial boundary set has
 $m+1$ distinct boundaries; for a nonconsecutive footprint use its actual
 union. These supplied objects and their actual preparation/source rights
@@ -1950,9 +1977,9 @@ and its retained fields still occupies material. At a returned serialized
 cut, a possible conversion reads each retained live slot and record
 binding, acquires the boundary/cell descriptor through the actual source
 and authenticated header associations, and writes additional representation
-backing. Searching those finite old associations and matching supplied
-boundary references to retained headers is paid; a boundary-to-header
-inverse is not granted. Existing immutable records are kept, and any
+backing. Searching those finite old associations, or finding supplied
+boundaries by the actual two-sided header search, is paid; a
+boundary-to-header inverse is not granted. Existing immutable records are kept, and any
 translation for their old references requires additional retained bindings.
 All old cache, old records, newly allocated translation material, workspace
 and remaining raw-field obligations must still be counted. Without an
@@ -1990,8 +2017,7 @@ supply the immutable marker/Resume/return and original consumer results.
 AAV §§1–12 already supply the positive native-edit bridge, real epoch/Tag
 access, versioning, source correspondence and finite acquired consumers.
 Their conditional positive result is retained in full. Geometry, storage
-atlases and existing formal suppliers keep their own domains; no new
-formal-verification claim is attached to these prose deductions.
+atlases and existing mathematical suppliers keep their stated domains.
 
 **Proposition 16.2 (attained structural reduction and remaining boundaries).**
 For the same finite known-alpha and supplied bilateral entrances, the
