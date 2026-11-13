@@ -5,6 +5,8 @@ import time
 
 
 def remaining(deadline):
+    if deadline is None:
+        return float("inf")
     seconds = deadline - time.monotonic()
     if seconds <= 0:
         raise TimeoutError("Release operation deadline exhausted")

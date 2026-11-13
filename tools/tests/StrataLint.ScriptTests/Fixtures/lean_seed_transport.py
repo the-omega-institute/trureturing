@@ -666,6 +666,32 @@ pathlib.Path.open = open_path
                 self.assertEqual("timeout", rows[-1]["error_type"])
                 self.assertTrue(any("phase_duration_seconds" in row for row in rows))
 
+    def test_release_asset_transfer_has_no_whole_operation_deadline(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        environment = self.deadline_probe(1)
+        with (self.bin / "sitecustomize.py").open("a") as probe:
+            probe.write('''
+import subprocess
+original_run = subprocess.run
+def transfer_run(args, *rest, **kwargs):
+    if (args[:3] == ["gh", "release", "download"]
+            and any(value == "lean-build.tgz" or value.startswith("lean-build.tgz.part-")
+                    for value in args)):
+        globals()["clock"] = 2
+    return original_run(args, *rest, **kwargs)
+subprocess.run = transfer_run
+''')
+        result = self.transport("fetch", arguments=("--refresh-stale",), **environment)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        transfers = [call for call in self.gh_budgets()
+                     if call["args"][:2] == ["release", "download"]
+                     and any(value == "lean-build.tgz" or value.startswith("lean-build.tgz.part-")
+                             for value in call["args"])]
+        self.assertEqual(1, len(transfers))
+        self.assertIsNone(transfers[0]["timeout"])
+
     def preparation_deadline_probe(self, phase):
         # Small incompressible material reaches archive hashing and multipart
         # splitting without allocating a production-sized Release asset.

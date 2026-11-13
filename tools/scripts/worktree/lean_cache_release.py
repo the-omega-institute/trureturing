@@ -41,11 +41,11 @@ REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing"
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
 CHUNK_BYTES = 1610612736
-# Optional transport policy (#5985): a thirty-minute default operation ceiling,
-# with an explicitly selected finite extension for large multipart Release fetches
-# of the 4 GB seed on a developer host (5m08s, #2634; 7m09s for one fetch, and
-# over ten minutes when two fetches share the link). This is a policy choice,
-# not a throughput derivation or a copy of the C# ArchiveBudget.
+# Optional operation policy (#5985): a thirty-minute default budget for metadata,
+# local validation and installation, with an explicitly selected finite extension
+# for large multipart Release work. The asset stream itself is outside this
+# budget; its integrity is checked before any cache bytes are installed. This is
+# a policy choice, not a throughput derivation or a copy of the C# ArchiveBudget.
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
 RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
@@ -125,7 +125,7 @@ def interrupt_release(signum, _frame):
 def checked_run(command, deadline):
     try:
         return subprocess.run(command, check=True, capture_output=True, text=True,
-                              timeout=remaining(deadline))
+                              timeout=None if deadline is None else remaining(deadline))
     except subprocess.CalledProcessError as error:
         raise GitHubCommandError(error.returncode, error.cmd,
                                  output=error.output, stderr=error.stderr) from error
@@ -763,10 +763,18 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
     commit = manifest["producer_commit_sha"]
     with observed_phase("transfer", expected_bytes=manifest["archive_bytes"]):
         if local_assets is None:
-            gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
+            # A multi-gigabyte Release asset is a streaming transport. Its
+            # duration depends on the link and must not consume the bounded
+            # metadata/install operation budget. Integrity and attribution are
+            # checked after the transfer before any cache bytes are installed.
+            gh(None, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
                *(argument for part in parts for argument in ("--pattern", part["name"])))
         else:
-            clone_local_parts(local_assets, stage, parts, deadline)
+            clone_local_parts(local_assets, stage, parts, None)
+    # Start a fresh bounded local budget after the unbounded network transfer.
+    # This keeps hashing, reassembly, tar validation and installation fail-closed
+    # without making a slow link look like a corrupt snapshot.
+    deadline = operation_deadline()
     with observed_phase("part_validation", validated_bytes=manifest["archive_bytes"]):
         for part in parts:
             path = stage / part["name"]
