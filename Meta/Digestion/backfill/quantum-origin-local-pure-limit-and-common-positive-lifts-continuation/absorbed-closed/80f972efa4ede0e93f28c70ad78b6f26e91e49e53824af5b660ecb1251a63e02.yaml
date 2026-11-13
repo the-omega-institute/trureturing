@@ -3,6 +3,10 @@ fingerprints:
   normalized_sha256: sha256:80f972efa4ede0e93f28c70ad78b6f26e91e49e53824af5b660ecb1251a63e02
 cas_ref: sha256:80f972efa4ede0e93f28c70ad78b6f26e91e49e53824af5b660ecb1251a63e02
 coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/CommonSourceLiftObstruction.moving_positive_control
+    target_statement_id: sha256:6ebb00e3c3828d9a64af3ff45b17780761649755f1a7911e90d4d757df527e1a
+  - gid: D5/S3/Quantum/Foundation/CommonSourceLiftObstruction.moving_positive_normalization
+    target_statement_id: sha256:c6a5bc5db7144d4991f0211772ad781b8e288f61fbdf6d62d16a8bc9907163ab
   - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_control
     target_statement_id: sha256:bb70a153fd6325a87a1dba527a1a47c92f6da9430e557ca89e5543ff553e65a9
   - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_normalization
