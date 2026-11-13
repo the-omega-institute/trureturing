@@ -308,7 +308,8 @@ theorem original_coordinate_map {p : pure C u} {a : ExclusionChart C u p}
   · intro v
     exact ⟨directionLift k v, coordinateMap_inner k v⟩
   · intro H hH hchart
-    ext x
+    apply LinearMap.ext
+    intro x
     apply ext_inner_left ℝ
     intro v
     obtain ⟨f, hf⟩ := hH v
