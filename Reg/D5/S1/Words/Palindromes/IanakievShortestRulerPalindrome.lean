@@ -98,8 +98,12 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
       name := `D5.S1.Words.Palindromes.IanakievShortestRulerPalindrome.claim
       path := #[] }
     coordinates := #[]
-    readouts := #[{ path := #["fn", "arg", "body", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["fn", "arg", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
