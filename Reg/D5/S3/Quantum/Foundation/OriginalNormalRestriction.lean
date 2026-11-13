@@ -3,8 +3,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
 /-! The readout is actual restriction on every member of the full original
-normal span.  This is partial source-audit evidence, not a completed four-slot
-registration.  No model witness, intervention or dependence field is postulated. -/
+normal span.  This is conditional source-audit evidence, not a closed
+registration. Admission remains open at
+https://github.com/the-omega-institute/trureturing/issues/29829.  No model witness, intervention or dependence field is postulated. -/
 
 noncomputable section
 universe v
@@ -156,33 +157,8 @@ def family (w : ModelWitness.{v}) : Registration arena.{v} sourceScope.{v} where
       exact nomatch i
   dependence := dependence w
 
-def audit (w : ModelWitness.{v}) : LeanInformationAudit.Contract.Registration
-    (@original_normal_restriction.{v}) (Realization signature.{v}) Unit Unit where
-  unitName := `D5.S3.Quantum.Foundation.OriginalNormalRestriction.original_normal_restriction.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Foundation.OriginalNormalRestriction.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{v}⟩
-  objectArena := .source ⟨arena.{v}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{v} ⟨family w⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature.{v} (fun _ P f => restriction P f) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
-
 #print axioms source_bridge
 #print axioms actual_positive
 #print axioms family
-#print axioms audit
 
 end Reg.D5.S3.Quantum.Foundation.OriginalNormalRestriction
