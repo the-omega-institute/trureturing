@@ -10,6 +10,10 @@ import D5.S3.Quantum.Matrix.GibbsStochasticSimpleSpectrum
 import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.RootsExtrema
 
+/-! Endpoint observability and rank-one separation for finite Jacobi recurrences. -/
+
+set_option maxRecDepth 2048
+
 noncomputable section
 
 open Finset Matrix
@@ -115,7 +119,7 @@ private theorem chebyshev_u_band_bound (k : ℕ) (x : ℝ) (hx : |x| ≤ 1) :
       |x * (Polynomial.Chebyshev.U ℝ (k : ℤ)).eval x +
           (Polynomial.Chebyshev.T ℝ ((k : ℤ) + 1)).eval x| ≤
           |x| * |(Polynomial.Chebyshev.U ℝ (k : ℤ)).eval x| + 1 := by
-        exact (abs_add_le _ _).trans (by rw [abs_mul]; exact add_le_add_left (ht _) _)
+        exact (abs_add_le _ _).trans (by rw [abs_mul]; exact add_le_add_right (ht _) _)
       _ ≤ (k : ℝ) + 1 + 1 := by
         have hh := mul_le_mul hx ih (abs_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)
         simpa using hh
@@ -124,8 +128,11 @@ private theorem chebyshev_u_band_bound (k : ℕ) (x : ℝ) (hx : |x| ≤ 1) :
 private theorem chebyshev_s_band_bound (k : ℕ) (t : ℝ) (ht : |t| ≤ 2) :
     |(Polynomial.Chebyshev.S ℝ (k : ℤ)).eval t| ≤ k + 1 := by
   rw [Polynomial.Chebyshev.S_eq_U_comp_half_mul_X]
-  simpa [Polynomial.eval_comp, div_eq_mul_inv, mul_comm] using
-    chebyshev_u_band_bound k (t / 2) (by rw [abs_div]; norm_num; linarith)
+  simp only [Polynomial.eval_comp, Polynomial.eval_mul, Polynomial.eval_C,
+    Polynomial.eval_X, invOf_eq_inv]
+  have he : (2 : ℝ)⁻¹ * t = t / 2 := by ring
+  rw [he]
+  exact chebyshev_u_band_bound k (t / 2) (by rw [abs_div]; norm_num; linarith)
 
 /-- A finite free Jacobi recurrence with a Robin endpoint has a uniform cubic
 endpoint observability bound, including both exterior regimes. -/
@@ -163,7 +170,7 @@ theorem recurrence_endpoint_observability (n : ℕ) (hn : 1 ≤ n)
         convert hb using 1 <;> push_cast [Nat.cast_sub hk] <;> ring
       have hsecond : |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 2)).eval t| ≤ k := by
         by_cases hk1 : k = 1
-        · subst k; norm_num
+        · rw [hk1]; norm_num
         · have htwo : 2 ≤ k := by omega
           have hb := chebyshev_s_band_bound (k - 2) t ht
           have heq : ((k - 2 : ℕ) : ℤ) = (k : ℤ) - 2 := by omega
@@ -174,13 +181,13 @@ theorem recurrence_endpoint_observability (n : ℕ) (hn : 1 ≤ n)
         |_ - _| ≤ |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 1)).eval t| * |y n| +
             |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 2)).eval t| * (|b| * |y n|) := by
           simpa [abs_mul] using abs_sub_le
-            ((Polynomial.Chebyshev.S ℝ ((k : ℤ) - 1)).eval t * y n)
+            ((Polynomial.Chebyshev.S ℝ ((k : ℤ) - 1)).eval t * y n) 0
             ((Polynomial.Chebyshev.S ℝ ((k : ℤ) - 2)).eval t * (b * y n))
         _ ≤ (k : ℝ) * |y n| + k * (|b| * |y n|) :=
           add_le_add (mul_le_mul_of_nonneg_right hfirst (abs_nonneg _))
             (mul_le_mul_of_nonneg_right hsecond (mul_nonneg (abs_nonneg _) (abs_nonneg _)))
         _ = (1 + |b|) * k * |y n| := by ring
-        _ ≤ (1 + |b|) * n * |y n| := by gcongr; exact_mod_cast hkn
+        _ ≤ (1 + |b|) * n * |y n| := by gcongr
     · have ht' : 2 ≤ |t| := le_of_lt (lt_of_not_ge ht)
       have hm : ∀ k, k + 1 ≤ n → |y k| ≤ |y (k + 1)| := by
         intro k
@@ -213,10 +220,148 @@ theorem recurrence_endpoint_observability (n : ℕ) (hn : 1 ≤ n)
       apply Finset.sum_le_sum
       intro j hj
       have hb := hpoint (j + 1) (by omega) (by simpa using Finset.mem_range.mp hj)
-      nlinarith [sq_abs (y (j + 1)), sq_abs (y n)]
+      calc
+        y (j + 1) ^ 2 = |y (j + 1)| ^ 2 := (sq_abs _).symm
+        _ ≤ ((1 + |b|) * n * |y n|) ^ 2 := by gcongr
     _ = (1 + |b|) ^ 2 * (n : ℝ) ^ 3 * y n ^ 2 := by
       simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
       rw [mul_pow, mul_pow, sq_abs]
       ring
+
+/-- The reflection sector is a free path with its final diagonal equal to b. -/
+def sectorMatrix (n : ℕ) (b : ℝ) : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ :=
+  D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix n
+    (Pi.single (Fin.last n) b) 1
+
+private theorem sector_row (n : ℕ) (b : ℝ) (v : Fin (n + 1) → ℝ)
+    (i : Fin (n + 1)) :
+    (sectorMatrix n b *ᵥ v) i =
+      (if hi : i.val < n then v ⟨i.val + 1, by omega⟩ else b * v (Fin.last n)) +
+      (if hi : 0 < i.val then v ⟨i.val - 1, by omega⟩ else 0) := by
+  classical
+  open D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence in
+  have hup : (upperBand n 1 *ᵥ v) i =
+      if hi : i.val < n then v ⟨i.val + 1, by omega⟩ else 0 := by
+    simp only [Matrix.mulVec, dotProduct, upperBand, Pi.one_apply]
+    by_cases hi : i.val < n
+    · rw [dif_pos hi, Finset.sum_eq_single (⟨i.val + 1, by omega⟩ : Fin (n + 1))]
+      · simp
+      · intro j _ hj
+        have hne : i.val + 1 ≠ j.val := by intro he; apply hj; apply Fin.ext; omega
+        simp [hne]
+      · simp
+    · rw [dif_neg hi]
+      apply Finset.sum_eq_zero
+      intro j _
+      have hne : i.val + 1 ≠ j.val := by omega
+      simp [hne]
+  open D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence in
+  have hlow : ((upperBand n 1)ᵀ *ᵥ v) i =
+      if hi : 0 < i.val then v ⟨i.val - 1, by omega⟩ else 0 := by
+    simp only [Matrix.mulVec, dotProduct, Matrix.transpose_apply, upperBand, Pi.one_apply]
+    by_cases hi : 0 < i.val
+    · rw [dif_pos hi, Finset.sum_eq_single (⟨i.val - 1, by omega⟩ : Fin (n + 1))]
+      · have he : i.val - 1 + 1 = i.val := by omega
+        simp [he]
+      · intro j _ hj
+        have hne : j.val + 1 ≠ i.val := by intro he; apply hj; apply Fin.ext; omega
+        simp [hne]
+      · simp
+    · rw [dif_neg hi]
+      apply Finset.sum_eq_zero
+      intro j _
+      have hne : j.val + 1 ≠ i.val := by omega
+      simp [hne]
+  simp only [sectorMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix,
+    Matrix.add_mulVec, Matrix.diagonal_mulVec, Pi.add_apply, hup, hlow]
+  by_cases hi : i.val < n
+  · have hne : i ≠ Fin.last n := by intro he; subst i; simp at hi
+    simp [hi, Pi.single_apply, hne]
+  · have he : i = Fin.last n := Fin.ext (by simp; omega)
+    subst i
+    simp
+
+/-- Endpoint observability for every eigenpair of the concrete sector matrix. -/
+theorem sector_endpoint_observability (n : ℕ) (b t : ℝ) (v : Fin (n + 1) → ℝ)
+    (hv : sectorMatrix n b *ᵥ v = t • v) :
+    (∑ i, v i ^ 2) ≤ (1 + |b|) ^ 2 * (n + 1 : ℝ) ^ 3 * v (Fin.last n) ^ 2 := by
+  let y : ℕ → ℝ := fun j =>
+    if hj : 1 ≤ j ∧ j ≤ n + 1 then v ⟨j - 1, by omega⟩
+    else if j = n + 2 then b * v (Fin.last n) else 0
+  have hy0 : y 0 = 0 := by simp [y]
+  have hyn : y (n + 1) = v (Fin.last n) := by simp [y]
+  have hyb : y (n + 1 + 1) = b * y (n + 1) := by simp [y, hyn, Nat.add_assoc]
+  have hrec : ∀ j, j + 2 ≤ n + 1 + 1 → y (j + 2) = t * y (j + 1) - y j := by
+    intro j hj
+    have hjn : j ≤ n := by omega
+    let i : Fin (n + 1) := ⟨j, by omega⟩
+    have hr := congrFun hv i
+    rw [sector_row] at hr
+    simp only [Pi.smul_apply, smul_eq_mul] at hr
+    have hyi : y (j + 1) = v i := by simp [y, i, show j + 1 ≤ n + 1 by omega]
+    have hyleft : y j = if hi : 0 < i.val then v ⟨i.val - 1, by omega⟩ else 0 := by
+      by_cases h0 : j = 0
+      · subst j; simp [y, i]
+      · simp [y, i, show 1 ≤ j by omega, show j ≤ n + 1 by omega,
+          show 0 < j by omega]
+    have hyright : y (j + 2) =
+        if hi : i.val < n then v ⟨i.val + 1, by omega⟩ else b * v (Fin.last n) := by
+      by_cases hl : j < n
+      · simp [y, i, hl, show j + 2 ≤ n + 1 by omega]
+      · have he : j = n := by omega
+        subst j
+        simp [y, i]
+    rw [hyright, hyi, hyleft]
+    linarith
+  have hb := recurrence_endpoint_observability (n + 1) (by omega) t b y hy0 hrec hyb
+  rw [hyn] at hb
+  have hs : (∑ j ∈ Finset.range (n + 1), y (j + 1) ^ 2) = ∑ i, v i ^ 2 := by
+    rw [Fin.sum_univ_eq_sum_range]
+    apply Finset.sum_congr rfl
+    intro j hj
+    simp [y, Finset.mem_range.mp hj, show j + 1 ≤ n + 1 by
+      have := Finset.mem_range.mp hj; omega]
+  rw [hs] at hb
+  simpa only [Nat.cast_add, Nat.cast_one] using hb
+
+/-- Uniform separation between the two concrete reflection-sector spectra. -/
+theorem sector_inverse_cubic_gap (n : ℕ) (u v : Fin (n + 1) → ℝ) (lam mu : ℝ)
+    (hu : sectorMatrix n (-Real.sqrt 2) *ᵥ u = lam • u)
+    (hv : sectorMatrix n (Real.sqrt 2) *ᵥ v = mu • v)
+    (hnu : ∑ i, u i ^ 2 = 1) (hnv : ∑ i, v i ^ 2 = 1) :
+    (2 * Real.sqrt 2 / (1 + Real.sqrt 2) ^ 2) / (n + 1 : ℝ) ^ 3 ≤ |lam - mu| := by
+  have ha : 0 < Real.sqrt 2 := Real.sqrt_pos.2 (by norm_num)
+  let K : ℝ := (1 + Real.sqrt 2) ^ 2 * (n + 1 : ℝ) ^ 3
+  have hK : 0 < K := by dsimp [K]; positivity
+  have hs : (sectorMatrix n (-Real.sqrt 2)).IsSymm := by
+    unfold sectorMatrix D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix
+    exact (Matrix.isSymm_diagonal _).add (by
+      simpa only [add_assoc] using
+        Matrix.isSymm_add_transpose_self
+          (D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.upperBand n 1))
+  have hupdate : sectorMatrix n (Real.sqrt 2) = sectorMatrix n (-Real.sqrt 2) +
+      (2 * Real.sqrt 2) • Matrix.vecMulVec
+        (Pi.single (Fin.last n) 1) (Pi.single (Fin.last n) 1) := by
+    classical
+    ext i j
+    simp only [sectorMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix,
+      Matrix.add_apply, Matrix.smul_apply, Matrix.diagonal_apply, Matrix.vecMulVec_apply,
+      Pi.single_apply, smul_eq_mul]
+    by_cases hi : i = Fin.last n <;> by_cases hj : j = Fin.last n <;>
+      by_cases hij : i = j <;> simp_all <;> ring
+  have hx := sector_endpoint_observability n (-Real.sqrt 2) lam u hu
+  have hy := sector_endpoint_observability n (Real.sqrt 2) mu v hv
+  rw [hnu, abs_neg, abs_of_pos ha] at hx
+  rw [hnv, abs_of_pos ha] at hy
+  have hz : |u ⬝ᵥ v| ≤ 1 := by
+    have hh := Finset.sum_mul_sq_le_sq_mul_sq (Finset.univ : Finset (Fin (n + 1))) u v
+    rw [hnu, hnv] at hh
+    change |∑ i, u i * v i| ≤ 1
+    nlinarith [sq_abs (∑ i, u i * v i)]
+  have hg := rank_one_gap_of_matrices (by positivity : 0 < 2 * Real.sqrt 2) hK hs
+    hupdate u v lam mu hu hv hx hy hz
+  convert hg using 1
+  dsimp [K]
+  rw [div_div]
 
 end D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap

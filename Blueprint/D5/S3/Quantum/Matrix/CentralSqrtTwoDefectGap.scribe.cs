@@ -44,7 +44,20 @@ internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinitio
                 + "continuant formula and the Chebyshev bound |U_k(x)|<=k+1 control the "
                 + "backward recurrence. Outside the band, the forward coordinate magnitudes "
                 + "are nondecreasing.", DescribeRole.Theorem),
-            Paragraph(Text("The matrix-to-recurrence identification, source quantization and "
+            Entry("sectorMatrix", "Concrete reflection sector",
+                "sectorMatrix(n,b) is the unit-edge path on n+1 vertices, with diagonal "
+                + "zero except for the last entry b.", DescribeRole.Definition),
+            Entry("sector_endpoint_observability", "Sector eigenvector endpoint bound",
+                "For every eigenpair sectorMatrix(n,b)*v=t*v, the sum of v(i)^2 is at "
+                + "most (1+|b|)^2*(n+1)^3*v(n)^2. No normalization, nonzero endpoint, "
+                + "band location or eigenvalue separation is assumed.", DescribeRole.Theorem),
+            Entry("sector_inverse_cubic_gap", "Opposite-sector inverse-cubic gap",
+                "For unit eigenvectors of sectorMatrix(n,-sqrt(2)) and sectorMatrix(n,sqrt(2)), "
+                + "with eigenvalues lambda and mu, their distance is at least "
+                + "[2*sqrt(2)/(1+sqrt(2))^2]/(n+1)^3. This bound is uniform over all "
+                + "opposite-sector pairs, including exterior modes. It does not by itself "
+                + "bound pairs belonging to the same sector.", DescribeRole.Theorem),
+            Paragraph(Text("The full-matrix reflection identification, source quantization and "
                 + "adjacent-sector alternation needed for the complete uniform inverse-cubic "
                 + "event remain separate obligations. This module records the compiled "
                 + "rank-one bridge, finite-recurrence endpoint estimate and fixed matrix family.")))));
