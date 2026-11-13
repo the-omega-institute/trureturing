@@ -1039,3 +1039,798 @@ lattices, TwoClockKrylovClosure or the independent fixed-Hamiltonian model.
 [ATLAS]: https://github.com/the-omega-institute/trureturing/blob/11e2a65d554143d0e3f38b37f1b686453451e3c4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATLAS_STABLE_CORE_HOLONOMY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Arbitrary original height reversals and the full phase source
+
+The monotonicity restriction in Definition 2.3 and Open boundary 12.3 is
+removed below for the same two-height, pure-programme consumer. The source,
+canonical survival and complete marked instrument remain those of [Instrument
+Boundaries, Section 5.2][NMIB] and [Quantum Carrier Minimum, Section 2][NMQCM].
+The additional mathematical step is conservation of the whole purified
+live-programme overlap when the lossless direction changes along an arbitrary
+absolutely continuous path. The generator, Gram-coordinate test and producer
+port are reused from Sections 5 and 9–10. These are ordinary conditional
+mathematical results, with no Lean or physical certification asserted.
+
+**Definition 13.1 (the unchanged source and whole-input promise).** Fix the
+same preparation, source and epoch, $0<Z<1$, $r=1-Z$ and $c=r/2$.
+The five probabilities and calibrated orthonormal directions are (CP.2)–(CP.3),
+with arbitrary fixed preparation phases, including unequal phases within
+paired modes. Write the full reachable current family as
+
+$$
+\psi(k,u,w)=\sqrt{2k}e^{-iu}|+\rangle+
+ \sqrt{2(c-k)}e^{-iw}|-\rangle+\sqrt Z|2\rangle,
+\qquad (k,u,w)\in(0,c)\times\mathbb T^2,\quad
+\mathbb T=\mathbb R/(2\pi\mathbb Z).
+\tag{CP.37}
+$$
+
+This is exactly [Probability/Phase Transport Continuation, Definition
+12.1][NMC], in the calibrated basis, with its $L=c$ and its two phase
+coordinates denoted here by $u,w$. Reachability from the one fixed preparation
+is the credited original-control synthesis, not a newly available preparation
+service. The subfamily $u=\beta$, $w=\beta-\pi m$ is (CP.4); all its signed
+real histories remain included. A current ray does not identify the old real
+lift, winding, waveform, chronological record or permissions.
+
+The two possible current heights are public numbers $0<x_1<x_2<c$.
+Conditional on the actual index $j$, supply the normalized calibrated pure
+programme $r_j$, with representatives chosen so that
+$\langle r_1,r_2\rangle=\mu\in[0,1]$. It is independent of both unknown
+phase coordinates and of the actual producing history conditional on $j$.
+All other accessible assistance is jointly common and source independent,
+as in Definition 3.1. In particular source-dependent descriptions, clocks,
+selectors, permission tokens, receiver shares and readable archives cannot
+hide additional height or phase information. The public catalogue reveals
+$x_1,x_2$, not $j$. Old history-correlated classical or quantum references
+may remain, with identity action and without serving as processor inputs.
+For each actual history the programme factors from those old systems.
+
+The target is the prescribed canonical instrument, an additional operation
+contract beyond geometric transport. Sufficiency assumes calibrated ability
+to implement the common joint operators constructed in Section 15, together
+with common ancillary inputs, waveform generation, actual rights, clock and
+exact-time/five-mode recording. It does not assume a box already controlled
+by the unknown index. Geometric transport alone installs none of these
+services. The exact joint laws below apply to arbitrary
+$\rho_{VR}\otimes|r_j\rangle\langle r_j|$
+with unchanged reference $R$; no accessible history-bearing reference is
+silently introduced by this notation.
+
+**Definition 13.2 (the full original command domain).** Let $T<\infty$,
+$T\ge0$, and let $a,b:[0,T]\to\mathbb R$ start at zero. Retain both
+original regularity alternatives: both controls are absolutely continuous,
+or both are continuous finite piecewise $C^1$ with continuous derivative
+rates on each closed partition piece, allowing repeated partition times.
+The original finite variation of the real phase control is retained. The
+second alternative implies absolute continuity by the credited
+`OriginalControlComposition.original_ac` argument: integrate the rates on
+each piece and telescope, with empty pieces contributing zero. No common
+speed bound, finite number of derivative sign changes, bounded variation of
+the derivative or finite monotonicity partition is required.
+
+Set $k_j(t)=x_j+a(t)$. The whole request must be legal at both candidates:
+
+$$
+-\min_{[0,T]}a<x_j<c-\max_{[0,T]}a\quad(j=1,2).
+\tag{CP.38}
+$$
+
+This is the original partial-operation guard of [Continuation, Theorem
+10.5][NMC], not merely an endpoint test. Compactness gives a positive
+interiority margin for each request. At actual initial lift $\chi_*$ the
+tail is $\chi_*+b(t)$; $\chi_*$ is not supplied to the controller.
+Matching endpoints, literal prefixes, translated real tails and additive
+integrals use the credited `concatenate_original`. Zero duration permits
+only the matching identity. Requests legal at just one candidate retain
+their original legal/invalid distinction; they are outside the common
+service characterized here.
+
+**Definition 13.3 (rates and the credited arbitrary-path instrument).** Write
+$v=a'$ and $\omega=b'$ almost everywhere, and $v_+=\max(v,0)$,
+$v_-=\max(-v,0)$. Put
+
+$$
+\begin{aligned}
+\lambda_j&=\frac{v_+}{k_j}+\frac{v_-}{c-k_j},&
+\Gamma_j&=\frac{|v|c}{k_j(c-k_j)},&
+\delta&=\frac{(x_2-x_1)\omega}{r},\\
+\ell_{+j}&=\lambda_j-\frac{v}{k_j}
+          =\frac{v_-c}{k_j(c-k_j)},&
+\ell_{-j}&=\lambda_j+\frac{v}{c-k_j}
+          =\frac{v_+c}{k_j(c-k_j)},&
+\ell_{2j}&=\lambda_j.
+\end{aligned}
+\tag{CP.39}
+$$
+
+All these nonnegative loss rates are integrable. For $0\le s\le t\le T$ define
+$\Lambda_j(t,s)=\int_s^t\lambda_j$,
+$E_{\alpha j}(t,s)=\exp(-\frac12\int_s^t\ell_{\alpha j})$ and
+$\Phi_j(t,s)=\int_s^t k_j\omega/r$. In order $(+,-,2)$ the gauged live
+operator is
+
+$$
+\widetilde K_j(t,s)=\operatorname{diag}\left(
+ E_{+j}(t,s)e^{-i(b(t)-b(s))/2},\quad
+ E_{-j}(t,s),\quad
+ E_{2j}(t,s)e^{-i\Phi_j(t,s)}\right).
+\tag{CP.40}
+$$
+
+Indeed $E_{+j}=e^{-\Lambda_j/2}\sqrt{k_j(t)/k_j(s)}$ and
+$E_{-j}=e^{-\Lambda_j/2}\sqrt{(c-k_j(t))/(c-k_j(s))}$, by integrating
+(CP.39). Multiplying (CP.40) by $e^{i\Phi_j}$ recovers the original
+operator of [NMIB], (OC.19), restricted by [NMQCM], (QC.8)–(QC.10).
+The scalar gauge changes no CP map and is not a source-dependent operation.
+
+For $\rho_{VR}$ write $\rho^R_{\alpha\alpha}
+=\langle\alpha|\rho_{VR}|\alpha\rangle$. Define
+$\alpha(0)=\alpha(13)=+$, $\alpha(1)=\alpha(3)=-$, $\alpha(2)=2$,
+and $h_0=h_{13}=h_1=h_3=1/2$, $h_2=1$. The prescribed failure measure is
+
+$$
+\mathcal I_{j,i}(d\tau)(\rho_{VR})=
+ h_i\ell_{\alpha(i)j}(\tau)E_{\alpha(i)j}(\tau,s)^2
+ |f\rangle\langle f|\otimes\rho^R_{\alpha(i)\alpha(i)}\,d\tau,
+\quad i\in\{0,1,2,3,13\}.
+\tag{CP.41}
+$$
+
+Labels $0,13$ and labels $1,3$ remain distinct, even when their density maps
+coincide; a zero density is a retained zero-mass alternative. Exact first
+time and the absorbing successor $f$ are part of the contract. An already
+stopped input retains its old event and has only stopped continuation.
+For the actual family (CP.37), survival through $t$ is
+$S_j(t)=e^{-\Lambda_j(t,0)}>0$, and the normalized target is exactly
+$\psi(k_j(t),u+b(t)/2-\Phi_j(t,0),w-\Phi_j(t,0))$.
+Consequently it gives all five original complex edge values, with the
+original orientation and signed doubled quadratures. This is equality of
+the source state and its supplied read operations, not acquisition of all
+noncommuting readings without a measurement service.
+
+## 14. Conserved overlap and the sharp arbitrary-path criterion
+
+**Theorem 14.1 (two-height causal programming on the entire original path
+class).** Under Definitions 13.1–13.3, one common exact causal realization
+of the canonical instrument at every cut exists if and only if, almost
+everywhere,
+
+$$
+\boxed{\begin{aligned}
+\mu^2\left[\left(\frac{\lambda_1+\lambda_2}{2}\right)^2+\delta^2\right]
+ &\le\lambda_1\lambda_2,\\
+\mu^2\left(\frac{\Gamma_1+\Gamma_2}{2}\right)^2
+ &\le\Gamma_1\Gamma_2.
+\end{aligned}}
+\tag{CP.42}
+$$
+
+These are undivided inequalities, including zero rates. Necessity needs
+only the actual original pure families, their prescribed survival at every
+cut and causal consistency. It assumes neither programme return nor a
+finite-dimensional memory. Sufficiency gives the complete exact-time,
+five-labelled instrument on every $M_3$ input with every unchanged reference,
+and returns $r_j$ unchanged on live success. Failure has its actual
+programme successor and absorbing $f$, as specified in Section 15.
+
+**Lemma 14.2 (one scalar overlap through arbitrary lossless-direction
+switching).** In any realization in Theorem 14.1 there are unit purified
+live residues $e_j(t)$ such that, for the success contraction $W_t$,
+
+$$
+W_t(q\otimes r_j)=\widetilde K_j(t,0)q\otimes e_j(t)
+\quad(q\in V),\qquad
+\langle e_1(t),e_2(t)\rangle=\mu\quad(0\le t\le T).
+\tag{CP.43}
+$$
+
+The residue includes every success record and discarded environment; it
+need not be accessible memory. No regularity of the individual vectors
+$e_j(t)$ is assumed.
+
+Proof. First reuse the coefficient-comparison rigidity of Lemma 4.2, which
+does not need monotonicity for its factorization part. More explicitly, at
+fixed $j,t$ put $z=e^{-iu}$, $y=e^{-iw}$. The input is
+$d+zp+yq$, with the three nonzero vectors along $2,+,-$ respectively.
+The exact normalized target is likewise $d_t+zp_t+yq_t$ with nonzero
+coefficients. Purity makes the successful dilation that target tensor a
+residue. Projection onto $2$ shows that this residue is affine in $z,y$.
+Projection onto $+$ then has quadratic coefficients $z^2$ and $zy$;
+linearity of $W_t$ makes both vanish. Comparing coefficients on the entire
+two-torus therefore makes the residue independent of both phases. Its norm
+is fixed by the prescribed survival $S_j(t)$. Comparing the three linear
+coefficients and using the scalar convention (CP.40) gives the first
+identity in (CP.43) with a unit $e_j(t)$. Vector-valued comparison can be
+tested against continuous linear functionals. The same conclusion already
+follows from the actual $\beta$/parity subfamily used in Lemma 4.2;
+the argument does not posit additional source preparations.
+
+Every $\widetilde K_j(s,0)$ is invertible at a finite cut. Additivity of
+its rate and phase integrals and causal consistency give, for the interval
+success contraction $F_{t,s}$,
+
+$$
+F_{t,s}(q\otimes e_j(s))
+ =\widetilde K_j(t,s)q\otimes e_j(t),\qquad q\in V.
+\tag{CP.44}
+$$
+
+In the dilation retain inaccessible earlier environments and let later
+operations act trivially on them. This gives contractivity without supplying
+an environment port. Define $g(t)=\langle e_1(t),e_2(t)\rangle$, with
+$g(0)=\mu$. For either $\alpha=+$ or $-$ set
+$L_{\alpha j}=\int_s^t\ell_{\alpha j}$ and
+$d_j=e^{-L_{\alpha j}/2}$. The phase on this direction is common to the
+two candidates. The input Gram matrix of the two vectors
+$|\alpha\rangle\otimes e_j(s)$ minus their output Gram matrix is positive.
+Its determinant gives
+
+$$
+|g(s)-d_1d_2g(t)|^2
+ \le(1-d_1^2)(1-d_2^2).
+\tag{CP.45}
+$$
+
+Since $|g(t)|\le1$, $1-e^{-x}\le x$ for $x\ge0$, and
+$\sqrt{xy}\le(x+y)/2$, this implies, separately for both directions,
+
+$$
+\begin{aligned}
+|g(t)-g(s)|
+ &\le\sqrt{(1-e^{-L_{\alpha1}})(1-e^{-L_{\alpha2}})}
+       +1-e^{-(L_{\alpha1}+L_{\alpha2})/2}\\
+ &\le\sqrt{L_{\alpha1}L_{\alpha2}}
+       +\frac{L_{\alpha1}+L_{\alpha2}}2
+ \le\int_s^t(\ell_{\alpha1}+\ell_{\alpha2}).
+\end{aligned}
+\tag{CP.46}
+$$
+
+Either integrable bound makes the complex scalar $g$ absolutely continuous:
+sum (CP.46) over disjoint intervals and use absolute continuity of the
+Lebesgue integral. At a common differentiation point of $g$ and Lebesgue
+point of both rate sums it also gives
+$|g'|\le\ell_{+1}+\ell_{+2}$ and
+$|g'|\le\ell_{-1}+\ell_{-2}$. By (CP.39), the first sum vanishes when
+$v\ge0$ and the second when $v\le0$. Thus $g'=0$ almost everywhere,
+and absolute continuity gives $g(t)=\mu$ at every cut. This excludes singular
+variation of $g$; merely asserting a zero derivative without (CP.46) would
+not suffice. No partition into monotone legs, finite turn archive or
+continuity of the residue vectors enters the proof. $\square$
+
+Proof of Theorem 14.1, necessity. With (CP.43), the interval Gram determinant
+for direction $2$ reads
+
+$$
+\mu^2\left|1-E_{21}(t,s)E_{22}(t,s)
+ e^{-i(\Phi_2(t,s)-\Phi_1(t,s))}\right|^2
+ \le(1-E_{21}(t,s)^2)(1-E_{22}(t,s)^2).
+\tag{CP.47}
+$$
+
+At a common Lebesgue point $s$, put $t=s+h$. The two diagonal deficits
+are $h\lambda_j(s)+o(h)$, and the expression inside the absolute value is
+$h[(\lambda_1(s)+\lambda_2(s))/2+i\delta(s)]+o(h)$.
+Divide by $h^2$ and let $h\downarrow0$ to obtain the first inequality.
+For either horizontal direction the same expansion in (CP.45), now with
+$g=\mu$, gives
+$\mu^2[(\ell_{\alpha1}+\ell_{\alpha2})/2]^2
+\le\ell_{\alpha1}\ell_{\alpha2}$. Where $v>0$, choose $\alpha=-$;
+where $v<0$, choose $\alpha=+$; these are exactly the two $\Gamma_j$
+rates. At $v=0$ both horizontal rates vanish and the second test is $0\le0$.
+The argument never divides by a loss rate. It proves necessity even for the
+weaker task forgetting failure times, so it applies to the full contract.
+Section 15 proves sufficiency. $\square$
+
+**Corollary 14.3 (degenerate cases and the unrestricted menu).** Orthogonal
+programmes, $\mu=0$, permit every commonly legal request in Definition 13.2.
+For $\mu=1$ and distinct heights, a realization exists exactly for the
+identity command $a=b=0$. If $\mu>0$, the first test forces $\omega=0$
+almost everywhere on the set $v=0$. Zero duration is the identity.
+
+Proof. At $\mu=1$, the first test is
+$(\lambda_1-\lambda_2)^2/4+\delta^2\le0$. Distinct heights imply
+$\lambda_1\ne\lambda_2$ wherever $v\ne0$, whether $v$ is positive or
+negative. Hence $v=\omega=0$ almost everywhere. Absolute continuity and
+the initial values give the identity command, which has its identity
+implementation. The other statements follow from (CP.42) and the construction
+below. In particular, allowing any nonzero phase-only request forces
+orthogonality for a service covering the unrestricted common-legal menu.
+That universal-menu boundary is credited prior work; the new result is the
+arbitrary-sign extension for a specified request. $\square$
+
+## 15. One common instrument, its references and all five successors
+
+**Proposition 15.1 (attainment with integrable coefficients).** Suppose
+$0\le\mu<1$ and (CP.42) holds. On $H=\operatorname{span}\{r_1,r_2\}$
+define common operators by their action on the known independent basis:
+
+$$
+\begin{aligned}
+C_+r_j&=(-\ell_{+j}/2-i\omega/2)r_j,&
+C_-r_j&=-\ell_{-j}r_j/2,\\
+C_2r_j&=(-\lambda_j/2-ik_j\omega/r)r_j,&
+Q_\alpha&=-C_\alpha-C_\alpha^\dagger,\\
+C&=\sum_{\alpha\in\{+,-,2\}}
+ |\alpha\rangle\langle\alpha|\otimes C_\alpha.
+\end{aligned}
+\tag{CP.48}
+$$
+
+Then each $Q_\alpha\ge0$ almost everywhere. For the propagator
+$\partial_tM(t,s)=C(t)M(t,s)$, $M(s,s)=I$, use the five jump fields
+
+$$
+J_0=J_{13}=\frac{|f\rangle\langle+|\otimes\sqrt{Q_+}}{\sqrt2},\quad
+J_1=J_3=\frac{|f\rangle\langle-|\otimes\sqrt{Q_-}}{\sqrt2},\quad
+J_2=|f\rangle\langle2|\otimes\sqrt{Q_2}.
+\tag{CP.49}
+$$
+
+The live map $\operatorname{Ad}_{M(t,s)}$ and the first-failure measures
+with Kraus fields $J_i(\tau)M(\tau,s)$ are one normalized causal CP
+instrument. On a live input,
+
+$$
+M(t,s)(q\otimes r_j)=\widetilde K_j(t,s)q\otimes r_j.
+\tag{CP.50}
+$$
+
+Proof. Reuse Lemma 5.1 with losses $\ell_{\alpha j}$ and frequencies
+$\omega/2,0,k_j\omega/r$ in the three respective directions. For $2$,
+positivity of its Gram-coordinate quadratic form is exactly the first test
+in (CP.42). For the currently dissipative horizontal direction, the two
+frequencies coincide, its losses are $\Gamma_j$, and positivity is exactly
+the second test. The other horizontal direction has $Q=0$. This covers
+all signs, including $v=0$. These are single operators on $H$, equivalently
+$R_0\operatorname{diag}(z_{\alpha1},z_{\alpha2})R_0^{-1}$ for the
+known eigenvector matrix $R_0$; no measurement of $j$ is performed.
+
+Strict support and fixed $R_0^{-1}$ make $C$ norm-integrable. The
+finite-dimensional integral equation has its absolutely continuous
+propagator. Its fixed eigenvectors give (CP.50) and
+$M(t,u)M(u,s)=M(t,s)$ directly. The positive matrix square roots in
+(CP.49) are measurable with integrable squared norms. Values on the common
+null exceptional set can be set to zero. The same normalization computation
+as Theorem 5.2 now uses all five labels:
+
+$$
+\begin{aligned}
+\sum_iJ_i(\tau)^\dagger J_i(\tau)&=-C(\tau)-C(\tau)^\dagger,\\
+M(t,s)^\dagger M(t,s)+\sum_i\int_s^t
+ M(\tau,s)^\dagger J_i(\tau)^\dagger J_i(\tau)M(\tau,s)\,d\tau&=I.
+\end{aligned}
+\tag{CP.51}
+$$
+
+Differentiate $M^\dagger M$ almost everywhere and integrate to prove the
+second identity. Thus every branch is CP and their total is trace preserving.
+Finite-dimensional integrable CP densities give countably additive measures
+on Borel time events. Tensoring with identity gives the same statement for
+every unchanged quantum reference. Splitting the integral at any checkpoint
+and using propagator composition yields all finite checkpoint refinements
+of this one process, including the late failure law on the actual live
+successor. The stopped sector is absorbing. At $\mu=1$, Corollary 14.3
+supplies the identity case, completing sufficiency in Theorem 14.1. $\square$
+
+**Proposition 15.2 (the full joint law and actual programme successor).** For
+fixed actual history $h$ of index $j$ and input $\rho^h_{VR}$, put
+$\zeta_{\alpha j}(\tau)=\sqrt{Q_\alpha(\tau)}r_j$. Up to a fixed
+ordering of tensor factors, the unnormalized live output is
+
+$$
+(\widetilde K_j(t,s)\otimes I_R)\rho^h_{VR}
+ (\widetilde K_j(t,s)^\dagger\otimes I_R)
+ \otimes|r_j\rangle\langle r_j|,
+\tag{CP.52}
+$$
+
+and the output density with original label $i$ and first time $\tau$ is
+
+$$
+h_i E_{\alpha(i)j}(\tau,s)^2|f\rangle\langle f|
+ \otimes(\rho^h)^R_{\alpha(i)\alpha(i)}
+ \otimes|\zeta_{\alpha(i)j}(\tau)\rangle
+             \langle\zeta_{\alpha(i)j}(\tau)|\,d\tau.
+\tag{CP.53}
+$$
+
+Proof. Apply (CP.49)–(CP.50) to each input matrix block. Each jump selects
+its indicated diagonal block, and scalar phases cancel in the CP density.
+Moreover $\|\zeta_{\alpha j}\|^2=\langle r_j,Q_\alpha r_j\rangle
+=\ell_{\alpha j}$. Tracing the programme gives precisely (CP.41),
+including both separate half-strength labels in each pair. The live map is
+exactly the credited original map because the gauge is scalar. This proves
+equality on every $M_3$ matrix unit and every joint reference input, not
+only on the original orbit or on its terminal statistics. $\square$
+
+The actual joint law is (CP.52)–(CP.53) integrated against the same actual
+history measure, retaining its source, preparation, epoch, real chronology,
+rights, old archive, calibration, controller inputs and references. At
+interval-start clock $\tau_s$, live time $t$ is $\tau_s+t-s$ and a failure
+time $\tau$ is recorded at $\tau_s+\tau-s$. Past entries remain; the
+working clock advances. Append the actual request, flag and, on failure,
+its original label and first time. No hidden Kraus outcome is substituted
+for those fields. Failure latches $f$, cancels the unexecuted original tail
+and retains its displayed programme successor. A zero-mass event has no
+assigned normalized successor; otherwise its programme is the actual
+$\zeta$ divided by its norm. It need not be $r_j$.
+
+Live return factors the programme conditional on $j$ and every actual history.
+It does not force the unconditional programme or old archive marginal to be
+independent of $j$ or the flag. Conditioning on survival reweights histories
+by $S_j(t)$; identity on $R$ means the unnormalized joint operation, not an
+assertion that such conditional marginals remain unchanged. Exact first
+time is a measurable classical record, with Borel-event operations. It is
+not an uncountable orthonormal basis or finite-state timestamp memory.
+
+## 16. Finite lawful composition and original boundary updates
+
+**Proposition 16.1 (returned-programme composition for arbitrary lawful
+paths).** At each reached live cut, let a finite selector choose a public
+relative request using only actually retained request/outcome records,
+common metadata, public randomness and permitted common controller inputs.
+For every reached record, require Definition 13.1's whole-input promise,
+a request legal at both current candidates satisfying (CP.42), its calibrated
+Section 15 processor and actual execution permissions. Then every finite
+such protocol has the exact sequential canonical joint law, including
+first times, all five mode names, programme successors and old spectator
+correlations. On each live return its programme remains $r_j$ and its public
+catalogue updates by the actual request displacement.
+
+Proof. For one request this is Proposition 15.2. At a live endpoint the
+public pair is $(x_1+a(T),x_2+a(T))$, with its gap and original index
+unchanged. Conditional on that index and each reached record, (CP.52)
+provides exactly the product programme needed for the next invocation.
+The full phase torus is closed under the phase update in Definition 13.3,
+so its phase/history independence remains the same promise. No actual
+unknown phase is used by the selector. Fresh common auxiliary systems can
+therefore implement the next common processor. Splitting (CP.51) preserves
+the complete first-event law; the live maps multiply and the failure branch
+is absorbing. Integrate over the same reached records and common random
+inputs, then induct on the finite number of selected requests. Literal
+original concatenation preserves the prefix and translates the real tail;
+the integral phases and survival charges add. The conclusion includes every
+finite checkpoint refinement of each request as part of that same process.
+$\square$
+
+This extends Proposition 11.1's request class, without adding a new selector,
+readable correlated archive or return permission. If an intervention reads
+such an archive, changes the programme, or changes the allowed specimen
+support, it must establish the next whole-input and closure promises anew.
+A numerical overlap by itself supplies neither the quantum input pair nor
+an implementation. Each selected control can have arbitrarily many height
+reversals; the number of selected controls and the observation horizon here
+remain finite. No uniform capacity, unlimited-request termination or infinite
+composition theorem is asserted.
+
+**Boundary 16.2 (legal requests, service refusal and executed failure).**
+The original guard is (CP.38). A request satisfying that guard may still
+violate (CP.42); this is a programming obstruction for the specified
+programme, not an original illegality label. The common supplied service
+executes only requests certified legal at both candidates, satisfying the
+rate tests and accompanied by its actual rights and calibrated processor.
+A known permission denial, interface mismatch or request outside that
+service menu gives an unexecuted rejection with its actual reason and
+retained context. This supplies no total service executing at one candidate
+and rejecting at the other. An unflagged breach of the source or interface
+promise is outside the theorem; no detector for such a breach is constructed.
+
+The original executed failure instead has exactly (CP.53), its first actual
+time, original label, stopped status and failure programme. It does not
+return a new live specimen. No tail is executed after $f$, no loss is
+deleted by postselection, and no reset or retry is inferred from the live
+programme-return identity. Waveform and almost-everywhere inequality
+certification are explicit supplied computations, not sensors for an
+unknown past. General exact AC functions need not have finite effective
+descriptions or decidable finite inequality certificates.
+
+## 17. A returned excursion with a stricter programme requirement
+
+**Theorem 17.1 (exact two-leg return and its sharp overlap).** Take
+
+$$
+Z=r=\frac12,\quad c=\frac14,\quad
+x_1=\frac1{16},\quad x_2=\frac3{16},\quad d=\frac1{64},\quad T=2,
+\qquad b(t)=0,
+\tag{CP.54}
+$$
+
+and let $a(t)=dt$ on $[0,1]$ and $a(t)=d(2-t)$ on $[1,2]$.
+This is an original continuous finite-piecewise-$C^1$ request, legal at
+both candidates for every original phase pair and actual history. The
+largest feasible pure-programme overlap for its complete causal instrument is
+
+$$
+\mu_{\rm return}=\frac{\sqrt{33}}7.
+\tag{CP.55}
+$$
+
+The programme $\mu=5/6$ permits the whole outward ramp but cannot realize
+this returned excursion causally. Conditional on the initial live cut, the
+whole-excursion survival probabilities are $11/15$ and $9/13$ respectively.
+At live return the specimen ray and attaining programme both return;
+chronological records, elapsed time, incurred action and stopped branches
+are retained.
+
+Proof, whole-path legality. Here $\min a=0$, $\max a=d$, so (CP.38)
+is $0<x_j<15/64$. Both candidates satisfy it. Every original mode
+probability is at least $3/64$ along both branches. The two pieces join
+continuously at the apex. The height speed has magnitude $d$ almost
+everywhere, the phase variation is zero, and all original weights and
+integrals are those of the same source. Starting with any actual source
+history at $x_j$ merely appends this literal excursion.
+
+Proof, the three determinant bounds. Write $s=a(t)\in[0,d]$. Since
+$\delta=0$, the middle test on the upward leg reduces to
+
+$$
+\mu^2\le U(s):=
+ \frac{4(x_1+s)(x_2+s)}{(x_1+x_2+2s)^2}.
+\tag{CP.56}
+$$
+
+Its value is $1-(x_2-x_1)^2/(x_1+x_2+2s)^2$, increasing with $s$.
+Thus its minimum is $U(0)=3/4$. On the downward leg the complementary
+heights give instead
+
+$$
+\mu^2\le D(s):=
+ \frac{4(c-x_1-s)(c-x_2-s)}{(2c-x_1-x_2-2s)^2}.
+\tag{CP.57}
+$$
+
+It is $1-(x_2-x_1)^2/(2c-x_1-x_2-2s)^2$, decreasing with $s$;
+its minimum is $D(d)=33/49$. The value at the apex is understood as
+the continuous limit from the downward leg; changing a derivative at the
+single apex time changes no instrument.
+
+For either leg put $q_j(s)=(x_j+s)(c-x_j-s)$. Cancelling the positive
+common speed in the horizontal test gives
+$\mu^2\le H(s):=4q_1(s)q_2(s)/(q_1(s)+q_2(s))^2$.
+In this catalogue
+
+$$
+q_1(s)=A(s)+q(s),\quad q_2(s)=A(s)-q(s),\qquad
+A(s)=\frac3{256}-s^2,\quad q(s)=\frac{s}{8}.
+\tag{CP.58}
+$$
+
+The ratio $R(s)=(A-q)/(A+q)$ decreases from one: its derivative has
+positive denominator $(A+q)^2$ and numerator
+$-3/1024-s^2/4<0$. Since $4R/(1+R)^2$ increases with $R\in(0,1]$,
+$H$ is minimized at $d$. There
+$q_1(d)=55/4096$, $q_2(d)=39/4096$, giving
+
+$$
+\min U=\frac34,\qquad
+\min D=\frac{33}{49},\qquad
+\min H=\frac{4\cdot55\cdot39}{(55+39)^2}
+       =\frac{2145}{2209}.
+\tag{CP.59}
+$$
+
+The least of these is $33/49$, so Theorem 14.1 proves both the upper
+bound and attainment of (CP.55), with the complete marked law. Continuity
+also ensures that an excessive overlap fails on a positive-length interval,
+not merely at an exceptional endpoint. In particular
+$3/4-25/36=1/18>0$, whereas $25/36-33/49=37/1764>0$.
+The horizontal bound exceeds $25/36$ everywhere. Thus $5/6$ passes
+the entire outward leg and fails on a downward interval adjacent to the apex.
+
+Proof, losses and the meaning of return. Integrating $\lambda_j$ on
+the two legs gives
+
+$$
+S_j(2)=\frac{x_j}{x_j+d}\frac{c-x_j-d}{c-x_j},\qquad
+S_1(2)=\frac45\frac{11}{12}=\frac{11}{15},\quad
+S_2(2)=\frac{12}{13}\frac34=\frac9{13}.
+\tag{CP.60}
+$$
+
+Since $a(2)=b(2)=0$ and $\Phi_j=0$, (CP.40) is
+$\widetilde K_j(2,0)=\sqrt{S_j(2)}I_V$. Hence the live specimen
+returns even on arbitrary $M_3$ inputs, while its mass has decreased.
+The attaining programme returns by (CP.52). The actual clock advances by
+two and the request/outcome is appended. Earlier failures, current first
+failures and their programme successors remain. Each actual prefix's own
+preparation survival multiplies (CP.60); no prefix loss is renormalized
+away. The control duration is two, total height variation $1/32$,
+essential maximum height speed $1/64$, and phase variation zero. These
+are control-coordinate quantities; converting them to physical time,
+energy, hardware or total cost requires the corresponding calibration.
+Thus return is an identity of live state and programme, not an inverse of
+the outcome-retaining channel or an erasure of actions and records. $\square$
+
+## 18. The credited RA port priced for the return consumer
+
+**Definition 18.1 (the supplied spectator acquisition class).** Retain
+Definition 9.1 and the exact joint producer port of [Record Acquisition,
+Definition 13.2][NMRA]. The same producer has actual stable classical
+setting $k=x_j$ during calibration; the old specimen makes a permitted
+constant-height, zero-phase hold. The separate probe receives
+$R_k(A)=|0\rangle\langle0|+e^{ikA/r}|1\rangle\langle1|$.
+For every actual history and conditional old joint state, the service is
+identity on the old specimen, archive and quantum reference, tensor this
+probe action. Source/epoch binding, gain, coherent blank and phase reference,
+clock/action calibration, routing and permissions are supplied. The
+functional phase-leg correspondence does not create this separate route.
+It promises no coherent superposition of producer settings.
+
+For the sharp price, restrict acquisition to Definition 10.1: all old
+systems are spectators, all other accessible inputs and controls are jointly
+common, and all new source dependence enters through
+$H_k(t)=H_0(t)-(k/r)G(t)$. Charge
+$\mathcal A=\int_0^{T_c}\operatorname{diam}(\operatorname{spec}G(t))dt$
+on the whole common finite-time, coherently dilated and padded implementation.
+The common bounded self-adjoint coefficients are norm-measurable with
+integrable norms on each piece between finitely many common instantaneous
+operations. Retain all outcomes and environments. Parallel and controlled
+inverse couplings pay their full spectral width; early branches may be
+latched with the port off. Expected accepted-branch action, free routing
+queries, source-sensitive timing and specimen-using acquisition are not
+this price contract. The task is a total implementation of the fixed
+excursion's canonical causal law, including every acquisition outcome.
+
+**Corollary 18.2 (attained restricted action for the returned excursion).**
+Under Definition 18.1, the minimum action sufficient for the complete
+consumer of Theorem 17.1 is
+
+$$
+\mathcal A_{\rm return}=8\arccos\left(\frac{\sqrt{33}}7\right).
+\tag{CP.61}
+$$
+
+It is attained by the existing unmeasured single-probe programme and the
+Section 15 processor. The credited exact readable height-bit task in this
+access class costs $4\pi$. The smaller value (CP.61) does not produce
+such a bit and is not a total hardware or acquisition-infrastructure price.
+
+Proof. The acquired probe of Proposition 9.2 is
+$r_j(A)=(|0\rangle+e^{ix_jA/r}|1\rangle)/\sqrt2$ and has overlap
+$\cos((x_2-x_1)A/(2r))$ on the first discrimination arc. Here
+$x_2-x_1=1/8$ and $r=1/2$, so that overlap is $\cos(A/8)$.
+Put $A=8\arccos(\sqrt{33}/7)$; the overlap is exactly (CP.55).
+The joint port law yields the programme as a product conditional on each
+actual history, leaving the old joint state untouched. Theorem 14.1 and
+Proposition 15.2 then realize the whole excursion, with all failure
+successors retained. This is attainment using the same producer, not a
+mathematical choice of a distribution installed as memory.
+
+For the lower bound, purify all common acquisition inputs and retain all
+outcomes and environments. Spectator acquisition produces complete pure
+vectors $\eta_j$, independent of the original phases/history conditional
+on $j$. Granting the subsequent processor these purification residues can
+only enlarge its abilities: common dephasing and discarding simulate the
+actual protocol. Theorem 14.1 therefore requires
+$|\langle\eta_1,\eta_2\rangle|\le\sqrt{33}/7$.
+The already established query-angle bound (CP.36), with precisely this
+charged access class, gives
+
+$$
+\arccos|\langle\eta_1,\eta_2\rangle|\le\mathcal A/8.
+\tag{CP.62}
+$$
+
+Combining proves (CP.61). This applies before any acceptance conditioning;
+no failed acquisition branch is deleted. [NMRA], Theorem 14.2, gives the
+readable-bit price $\pi r/(x_2-x_1)=4\pi$, with a spectator attaining
+probe. The new value is an application of that existing acquisition method
+and (CP.36) to the stricter returned-path consumer. $\square$
+
+The ideal RA hold contributes no canonical native survival charge or
+original phase increment, and its promised port has no inconclusive or
+executed-failure branch. It still advances the clock, appends its actual
+calibration event and incurs its whole paid action and overhead. Known
+permission denial or interface mismatch is an unexecuted rejection; an
+already stopped input remains stopped. No detector for unflagged promise
+breach is supplied. If a width cap $v_*>0$ is imposed, the interrogation
+time is at least $\mathcal A_{\rm return}/v_*$ in this access class;
+a constant scalar drive attains that component under ideal instantaneous
+endpoint operations. The two-unit excursion and every actual prefix are
+additional chronology and cost.
+
+## 19. Conditional relation object, resources and unpaid bridges
+
+The sufficient conditional object is the calibrated current qutrit, its
+actual source-bound programme, the public shifted height pair and all
+mandatory source/request/record fields. The ideal propagator uses (CP.39)
+pointwise and its integrals; it needs no extra turning-point archive to
+conserve overlap. This is not a finite-description theorem for arbitrary
+waveforms or a bound on the memory of a physical waveform generator.
+
+| Component | Supplied object and retained cost or limitation |
+| --- | --- |
+| Actual source | One fixed positive preparation and its real histories, all original phases, strict five-mode probabilities, source/epoch identity and prefix survival. The catalogue is not a readable actual index. |
+| Public command | The whole legal excursion, both original regularity alternatives, real translated lift, actual waveform and almost-everywhere tests. An endpoint signature alone neither certifies legality nor prices loss. |
+| Programme | A calibrated normalized pure pair, independent of phase/history conditional on index, with all other accessible assistance jointly source independent. Its physical acquisition and authentication are additional obligations. |
+| Attaining processor | The calibrated common Gram-basis operators, coupling, coherent blanks, arithmetic, clocks, gain and actual permissions. Near-dependent programmes have eigenvector condition number $\sqrt{(1+\mu)/(1-\mu)}$; ideal integrability does not certify noise stability. |
+| Live/stopped quantum component | For $\mu<1$, qutrit times programme has live dimension six; the stopped programme sector has dimension two. Their classically flagged direct sum has dimension eight before all other fields. Using the unreduced original five-live-mode plus stopped carrier with the programme gives dimension twelve. The reduction itself requires the credited calibrated embedding. |
+| Full record and reference | Old chronology, source/preparation/epoch, permissions, calibration, requests, controller inputs, clock and references, with the actual new flags, first times and five original names. No finite-bit exact-time or total observer-memory minimum follows. |
+| Acquisition price | (CP.61) charges all source-sensitive action in the spectator port class. Blank preparation, stable producer setting, actual port, calibration, authentication, certification, recorder and execution overhead remain additional. |
+| Failure and reuse | Actual failure programme, all lost mass and absorbing $f$ remain. Live-only ray/programme return gives neither inverse execution nor post-failure retry authority. |
+
+The exact iff theorem is sharp for this specified two-element pure-programme
+promise and canonical causal instrument. It does not identify a globally
+smallest relation object, bit count, total memory, least authority or
+Pareto-optimal implementation. It does not characterize a continuum of
+unknown heights, readable height/phase-correlated assistance, mixed initial
+programmes, source-dependent legality guards or protocols acquiring their
+programme by interacting with the old specimen. Approximate hardware,
+finite precision, noisy clocks, complete-instrument minimax values and
+uniform infinite-horizon operation require separate results. The physical
+availability of the stipulated producer route, authentication, joint
+spectator identity, actuator and recorder is not verified by these ordinary
+proofs.
+
+The unresolved nonmonotone-path clause of Open boundary 12.3 is thus closed
+only for Definitions 13.1–13.3 and the exact criterion (CP.42); its other
+acquisition and broader recovery boundaries remain. In particular no new
+native source sensor, general acquired reference, full marked-law acquisition,
+all-four-expression recovery or worldwide minimality is inferred.
+No operation is transferred to Native ordered trees or AA by matching names,
+cardinalities, encodings or endpoint values.
+
+The separate existing augmented $J_r$ result already supplies all declared
+cuts, every finite ordered request forest, four actual received bodies and
+selected-body/original owed-action return conditionally: [Atomic Supplier
+Substitution II][NMJR], Theorems 65.3, 70.1–70.2 and 75.4. Its premises
+include the complete actual entry, closed writers and external inputs,
+source laws and gates, current source-bound authority, independently supplied
+cut wake, fresh finite material and progress. That proved conditional domain
+is reused; it is not reclassified as wholly open. Unaugmented or physical
+sources, finer interiors obtained by splitting its atomic primitives,
+broader alpha/beta-to-original-consumer bridges and global minimality remain
+their own unpaid obligations. This continuous quantum service establishes
+none of those correspondences or permissions.
+
+## 20. Precise suppliers, mature tools and the mathematical delta
+
+The operative repository suppliers for Sections 13–19 are the exact public
+snapshot `61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9`. Its [Continuation][NMC],
+Definition 12.1 and Theorem 10.5, fix the original full phase family, signed
+quadratures, whole-excursion guard and endpoint action. [Original Control
+Composition][NMOCC], `FiniteC1Control`, `OriginalControl`, `original_ac` and
+`concatenate_original`, supplies the unchanged regularity and literal
+chronological composition. [Instrument Boundaries][NMIB], (OC.15)–(OC.19c),
+and [Quantum Carrier Minimum][NMQCM], Definitions 2.1–2.2 and Theorem 3.1,
+supply arbitrary-path canonical survival, calibrated qutrit embedding,
+all five labels and the full joint reference law. These are reused results.
+
+Sections 4–6 of the present volume supply the pure-orbit factorization,
+programme Gram-coordinate positivity test, generator normalization and
+failure-programme bookkeeping. Lemma 14.2's interval integral bounds and
+scalar absolute-continuity argument supply the repository-new mathematical
+step relative to the monotone theorem: the purified overlap remains fixed
+through arbitrary AC sign changes, without assuming programme return.
+Theorem 14.1 is its sharp full-path consequence. The returned-excursion
+separation and its exact price are applications of that extension. Sections
+9–10 and [Record Acquisition][NMRA], Definitions 13.2 and 14.1 and Theorem
+14.2, own the additional joint port, unmeasured probe and spectral-width
+query-angle mechanism; neither the route nor that mature lower-bound method
+is claimed anew.
+
+| Primary source | Credited tool and scope of use |
+| --- | --- |
+| A. Chefles, R. Jozsa and A. Winter, [*On the existence of physical transformations between sets of quantum states*, quant-ph/0307227v1](https://arxiv.org/pdf/quant-ph/0307227v1), Theorems 2–3 | Pure-family Gram constraints and probabilistic transformation framework. Here the contraction determinants are written for actual orbit-forced linear maps, with all dilation residues retained; no acquisition route follows from the Gram framework. |
+| G. Chiribella, G. M. D'Ariano and P. Perinotti, [*A theoretical framework for quantum networks*, 0904.4483v1](https://arxiv.org/pdf/0904.4483v1), Theorems 5–6 and normalization identities (40) | Causal slot consistency differs from terminal channel feasibility. Equation (CP.51) and its interval splitting supply this particular continuous-time realization directly; a network realization theorem supplies no original actuator, source port or current right. |
+
+Absolute continuity, Lebesgue differentiation, positive Gram determinants
+and dissipative propagator normalization are standard mathematical tools.
+The source-specific combination above is `repo-derived` ordinary theory;
+worldwide novelty is unverified. Exact rational arithmetic in the excursion
+reduces to the displayed fractions, margins and survival products; it does
+not replace the general overlap proof or certify hardware. The supplied
+conditional services and the larger recovery programme retain exactly the
+boundaries in Sections 16 and 19.
+
+[NMC]: https://github.com/the-omega-institute/trureturing/blob/61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9/docs/develop/theory/AURIC_FIB_ATOM_PROBABILITY_PHASE_TRANSPORT_AND_HOLONOMY_CONTINUATION.md
+[NMOCC]: https://github.com/the-omega-institute/trureturing/blob/61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9/D5/S3/Quantum/Fibers/OriginalControlComposition.lean
+[NMIB]: https://github.com/the-omega-institute/trureturing/blob/61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_BOUNDARIES.md
+[NMQCM]: https://github.com/the-omega-institute/trureturing/blob/61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_QUANTUM_CARRIER_MINIMUM.md
+[NMRA]: https://github.com/the-omega-institute/trureturing/blob/61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_RECORD_ACQUISITION.md
+[NMJR]: https://github.com/the-omega-institute/trureturing/blob/61ab64d2844eb22ed95cd3c9e7fe6cfa343870b9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_SUPPLIER_SUBSTITUTION_II.md
+
+## 追加锚（本行以下为增补区）
