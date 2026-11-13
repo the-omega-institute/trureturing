@@ -75,6 +75,11 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
                             + "Thus the global tuple would inject C into Fin(card(C)-1), contrary "
                             + "to Fintype.card_le_of_injective.")),
                     Paragraph(Text(
+                        "For this specific relation construction the color threshold is sharp: "
+                            + "with card(C) colors, inject C into Fin(card(C)) and extend the "
+                            + "assignment to V using a default color outside C. Every scope "
+                            + "restriction belongs to its full injective-clique relation.")),
+                    Paragraph(Text(
                         "This is a known-result formalization in the classical theory of acyclic "
                             + "database schemes, not a novelty claim: Beeri, Fagin, Maier, and "
                             + "Yannakakis, On the Desirability of Acyclic Database Schemes, Journal "
@@ -98,7 +103,7 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
 
     private static Formula TheoremFormula()
     {
-        Formula q = Seq(Call("card", F.Id("C")), Sp, F.Id("-"), Sp, F.Id("1"));
+        Formula q = Seq(Call("card", F.Id("C")), Sp, Minus, Sp, D(1));
         Formula colors = Call("Fin", q);
         Formula scope = Call("S", F.Id("e"));
         Formula pairCondition = Seq(
@@ -126,11 +131,12 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
             Forall, Sp, F.Id("S"), Colon, Sp, F.Id("E"), Sp, To, Sp, Call("Set", F.Id("V")),
             Comma, Sp, F.Id("C"), Colon, Sp, Call("Finset", F.Id("V")), Comma,
             RowBreak, Grp(),
-            Open, F.Id("3"), Sp, Leq, Sp, Call("card", F.Id("C")), Sp, Land, Sp,
+            Open, D(3), Sp, Leq, Sp, Call("card", F.Id("C")), Sp, Land, Sp,
             Open, pairCondition, Close, Sp, Land, Sp, Open, properCondition, Close, Close,
             Sp, To, RowBreak, Grp(),
             Exists, Sp, F.Id("R"), Colon, Sp,
-            Call("DependentFamily", F.Id("E"), Call("Finset", Seq(scope, Sp, To, Sp, colors))),
+            Seq(Open, F.Id("e"), Colon, Sp, F.Id("E"), Close, Sp, To, Sp,
+                Call("Finset", Seq(scope, Sp, To, Sp, colors))),
             Comma, RowBreak, Grp(),
             Open, Forall, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp,
             Call("Nonempty", Call("R", F.Id("e"))), Close, Sp, Land, RowBreak, Grp(),

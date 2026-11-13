@@ -34,7 +34,7 @@ private theorem scope_embedding {V : Type v} [Finite V] (C : Finset V) (U : Set 
     (hU : ¬ (↑C : Set V) ⊆ U) :
     Nonempty ({a : V // a ∈ U ∧ a ∈ C} ↪ Fin (C.card - 1)) := by
   classical
-  letI := Fintype.ofFinite V
+  let := Fintype.ofFinite V
   obtain ⟨x, hx, hxU⟩ := Set.not_subset.mp hU
   let f : {a : V // a ∈ U ∧ a ∈ C} → C := fun y => ⟨y.val, y.property.2⟩
   have hf : Function.Injective f := fun a b h => Subtype.ext (congrArg (fun z : C => z.val) h)
@@ -99,7 +99,7 @@ theorem nonconformal_clique_obstruction (E : Type u) (V : Type v) [Finite V]
       ¬ ∃ g : V → Fin (C.card - 1),
         ∀ e, (fun x : S e => g x.val) ∈ R e := by
   classical
-  letI := Fintype.ofFinite V
+  let := Fintype.ofFinite V
   let q := C.card - 1
   have hq : 0 < q := by omega
   let R : (e : E) → Finset (S e → Fin q) := fun e => cliqueRows C (S e) q
@@ -119,7 +119,8 @@ theorem nonconformal_clique_obstruction (E : Type u) (V : Type v) [Finite V]
       if hx : x.val ∈ C then j ⟨x.val, x.property, hx⟩ else ⟨0, hq⟩
     refine ⟨r, (mem_R e r).mpr ?_⟩
     intro x y h
-    exact j.injective (by simpa only [r, dite_eq_left x.property.2, dite_eq_left y.property.2] using h)
+    exact j.injective (by
+      simpa only [r, dite_eq_left x.property.2, dite_eq_left y.property.2] using h)
   · intro e f
     apply Set.Subset.antisymm
     · rintro t ⟨r, hr, rfl⟩
