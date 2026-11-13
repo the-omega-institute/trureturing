@@ -25,10 +25,7 @@ internal sealed class AcharyyaConjectureTwentyRefutationDocument : IScribeDocume
                 H("The universal identity is false"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(X("claim")))),
                 AssessedProvenance.FromRepo(Source),
-                Counterexample(), DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("acharyya-2024-conjecture-20-pointwise-refutation"),
-                    ResolutionKind.Refuted)))));
+                Counterexample(), DescribeRole.Theorem))));
 
     private static BlockSequence Context() => Blocks(
         Paragraph(Text("Amrita Acharyya, arXiv:2404.14439v1, Conjecture 20: "),
@@ -57,7 +54,7 @@ internal sealed class AcharyyaConjectureTwentyRefutationDocument : IScribeDocume
         Paragraph(Math(Disp(Eq(C("f", D(3), D(1), X("pi")), ImageWitness())))),
         Paragraph(Text("Complementation sends the odd block to {−3,2,1} and the even block to {3,−2,−1}; orientation swaps this pair because the complemented odd block contains its positive absolute minimum. Sorting the single pair leaves it in place. The proof checks the entire output list, not just its statistics.")),
         Paragraph(Math(WitnessStatistics())),
-        Paragraph(Text("The proof checks both complete pair sets by decide +kernel. Their cardinalities are respectively 2 and 1, while k(k−1) = 0. Instantiating the full universal claim at this one admissible witness would give 1 = 2, a contradiction. Complementation followed by orientation changes the cardinality of the signed, inclusive comparison pairs; it does not transport the two ros pairs to two rcb pairs. The result has proof_shape bind-only and admission_basis open-problem-resolution under issue #30070; it is the designated Reg-exempt refutation result and supplies no escape witness. The problem dossier states the original question, the source correspondence and the limits of this resolution. The generating-function equality and general preservation or involution of f remain separate assertions.")));
+        Paragraph(Text("The proof checks both complete pair sets by decide +kernel. Their cardinalities are respectively 2 and 1, while k(k−1) = 0. Instantiating the full universal claim at this one admissible witness would give 1 = 2, a contradiction. Complementation followed by orientation changes the cardinality of the signed, inclusive comparison pairs; it does not transport the two ros pairs to two rcb pairs. The problem dossier states the original question, the source correspondence and the limits of this resolution. The generating-function equality and general preservation or involution of f remain separate assertions.")));
 
     private static Formula X(string name) => F.Id(name);
     private static Formula C(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
