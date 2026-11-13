@@ -685,6 +685,171 @@ theorem compression_idempotent (P Q : H) (hP : star P = P) (hQ : star Q = Q)
   simpa only [compression, mul_apply_eq_comp, ContinuousLinearMap.comp_apply,
     ContinuousLinearEquiv.coe_coe, ContinuousLinearEquiv.apply_symm_apply] using hx
 
+private theorem compression_eq_self_of_mem (P Q : H) (hP : star P = P)
+    (hQ : star Q = Q) {τ : ℝ} (hτ : 0 ≤ τ)
+    (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
+    {x : H} (hx : x ∈ D.corner P Q) : D.compression P Q x = x := by
+  obtain ⟨z, rfl⟩ := hx
+  exact congrArg (fun f : H →L[ℂ] H => f z)
+    (compression_idempotent D P Q hP hQ hτ hsmall hPP hQQ)
+
+private theorem p_sub_le (x y : H) : D.p (x - y) ≤ D.p x + D.p y := by
+  simpa only [p, map_sub] using norm_sub_le (D.mul x) (D.mul y)
+
+private theorem p_mul_two {τ : ℝ} (hτ : 0 ≤ τ)
+    (hsmall : τ + M * δ ≤ 1 / 1024) (x y : H) :
+    D.p (D.mul x y) ≤ 2 * D.p x * D.p y := by
+  have hδ : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
+  exact (p_mul D x y).trans (by
+    have hxy : 0 ≤ D.p x * D.p y := mul_nonneg (norm_nonneg _) (norm_nonneg _)
+    nlinarith)
+
+private theorem p_assoc_error {τ : ℝ} (hτ : 0 ≤ τ) (x y z : H) :
+    D.p (D.mul (D.mul x y) z - D.mul x (D.mul y z)) ≤
+      (τ + M * δ) * D.p x * D.p y * D.p z := by
+  apply (p_assoc D x y z).trans
+  have hxyz : 0 ≤ D.p x * D.p y * D.p z := by
+    exact mul_nonneg (mul_nonneg (norm_nonneg _) (norm_nonneg _)) (norm_nonneg _)
+  nlinarith
+
+/-- Range membership gives actual left support, up to a uniform regular-norm error. -/
+private theorem corner_left_support (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
+    {x : H} (hx : x ∈ D.corner P Q) :
+    D.p (D.mul P x - x) ≤ 24354 * (τ + M * δ) * D.p x := by
+  let r := τ + M * δ
+  have hr : 0 ≤ r := add_nonneg hτ
+    (mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg)
+  have hδ : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
+  have hp : D.p P ≤ 2 := projection_norm_le_two D P hP
+    (by linarith : τ ≤ 1 / 4) (by linarith : δ ≤ 1 / 4) hPP
+  have hq : D.p Q ≤ 2 := projection_norm_le_two D Q hQ
+    (by linarith : τ ≤ 1 / 4) (by linarith : δ ≤ 1 / 4) hQQ
+  have hp0 : 0 ≤ D.p P := norm_nonneg _
+  have hx0 : 0 ≤ D.p x := norm_nonneg _
+  have hu : D.p (D.mul x Q) ≤ 4 * D.p x := by
+    apply (p_mul_two D hτ hsmall x Q).trans
+    nlinarith
+  have he : D.p (x - D.mul P (D.mul x Q)) ≤ 4866 * r * D.p x := by
+    have h := (compression_closeness D P Q hP hQ hτ hsmall hPP hQQ x).1
+    rwa [compression_eq_self_of_mem D P Q hP hQ hτ hsmall hPP hQQ hx] at h
+  have ha : D.p (D.mul P (D.mul P (D.mul x Q)) -
+      D.mul (D.mul P P) (D.mul x Q)) ≤ 16 * r * D.p x := by
+    have h := p_assoc_error D hτ P P (D.mul x Q)
+    have hp2 : D.p P * D.p P ≤ 4 := by nlinarith
+    have hprod : D.p P * D.p P * D.p (D.mul x Q) ≤ 16 * D.p x := by
+      calc
+        _ ≤ 4 * D.p (D.mul x Q) :=
+          mul_le_mul_of_nonneg_right hp2 (norm_nonneg _)
+        _ ≤ _ := by linarith
+    simpa only [p, map_sub, norm_sub_rev] using h.trans (by
+      nlinarith [mul_le_mul_of_nonneg_left hprod hr])
+  have hb : D.p (D.mul (D.mul P P - P) (D.mul x Q)) ≤ 8 * r * D.p x := by
+    apply (p_mul_two D hτ hsmall _ _).trans
+    calc
+      _ ≤ 2 * τ * (4 * D.p x) :=
+        mul_le_mul (by linarith) hu (norm_nonneg _) (by positivity)
+      _ ≤ _ := by dsimp [r]; nlinarith
+  have hc : D.p (D.mul P (x - D.mul P (D.mul x Q))) ≤
+      4 * (4866 * r * D.p x) := by
+    apply (p_mul_two D hτ hsmall _ _).trans
+    calc
+      _ ≤ 4 * D.p (x - D.mul P (D.mul x Q)) := by
+        nlinarith [norm_nonneg (D.mul (x - D.mul P (D.mul x Q)))]
+      _ ≤ _ := by linarith
+  have hid : D.mul P x - x =
+      (D.mul P (x - D.mul P (D.mul x Q)) +
+        (D.mul P (D.mul P (D.mul x Q)) - D.mul (D.mul P P) (D.mul x Q))) +
+        (D.mul (D.mul P P - P) (D.mul x Q) - (x - D.mul P (D.mul x Q))) := by
+    simp only [map_sub, sub_apply]
+    abel
+  rw [hid]
+  exact (p_add D _ _).trans (by
+    have h₁ := p_add D (D.mul P (x - D.mul P (D.mul x Q)))
+      (D.mul P (D.mul P (D.mul x Q)) - D.mul (D.mul P P) (D.mul x Q))
+    have h₂ := p_sub_le D (D.mul (D.mul P P - P) (D.mul x Q))
+      (x - D.mul P (D.mul x Q))
+    dsimp [r] at *
+    linarith)
+
+/-- Compatible actual corners have product support close to the outer corner.
+This estimates the original product; it does not assume exact corner closure. -/
+theorem corner_product_support (P Q R : H)
+    (hP : star P = P) (hQ : star Q = Q) (hR : star R = R)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
+    (hRR : D.p (D.mul R R - R) ≤ τ)
+    {x y : H} (hx : x ∈ D.corner P Q) (hy : y ∈ D.corner Q R) :
+    D.p (D.compression P R (D.mul x y) - D.mul x y) ≤
+      260000 * (τ + M * δ) * D.p x * D.p y := by
+  let r := τ + M * δ
+  have hr : 0 ≤ r := add_nonneg hτ
+    (mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg)
+  have hδ : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
+  have hp : D.p P ≤ 2 := projection_norm_le_two D P hP
+    (by linarith : τ ≤ 1 / 4) (by linarith : δ ≤ 1 / 4) hPP
+  have hRnorm : D.p R ≤ 2 := projection_norm_le_two D R hR
+    (by linarith : τ ≤ 1 / 4) (by linarith : δ ≤ 1 / 4) hRR
+  have hx0 : 0 ≤ D.p x := norm_nonneg _
+  have hy0 : 0 ≤ D.p y := norm_nonneg _
+  have hxy0 : 0 ≤ D.p x * D.p y := mul_nonneg hx0 hy0
+  have hpx := corner_left_support D P Q hP hQ hτ hsmall hPP hQQ hx
+  have hsy : star y ∈ D.corner R Q := by
+    obtain ⟨z, rfl⟩ := hy
+    exact ⟨star z, (compression_star D Q R hQ hR hτ hsmall hQQ hRR z).symm⟩
+  have hyr : D.p (D.mul y R - y) ≤ 24354 * r * D.p y := by
+    have h := corner_left_support D R Q hR hQ hτ hsmall hRR hQQ hsy
+    simpa only [← hR, ← D.star_mul, ← star_sub, p_star, star_star] using h
+  have hmul := p_mul_two D hτ hsmall
+  have hleft (v : H) : D.p (D.mul P v) ≤ 4 * D.p v :=
+    (hmul P v).trans (by nlinarith [norm_nonneg (D.mul v)])
+  have h₀ : D.p (D.compression P R (D.mul x y) - D.mul P (D.mul (D.mul x y) R)) ≤
+      9732 * r * D.p x * D.p y := by
+    apply (compression_closeness D P R hP hR hτ hsmall hPP hRR _).1.trans
+    have h := mul_le_mul_of_nonneg_left (hmul x y) (by positivity : 0 ≤ 4866 * r)
+    nlinarith
+  have h₁ : D.p (D.mul P (D.mul (D.mul x y) R) - D.mul P (D.mul x (D.mul y R))) ≤
+      8 * r * D.p x * D.p y := by
+    rw [← map_sub]
+    apply (hleft _).trans
+    have h := p_assoc_error D hτ x y R
+    have h' : r * D.p x * D.p y * D.p R ≤ 2 * r * D.p x * D.p y := by
+      nlinarith [mul_le_mul_of_nonneg_left hRnorm (mul_nonneg hr hxy0)]
+    nlinarith
+  have h₂ : D.p (D.mul P (D.mul x (D.mul y R)) - D.mul P (D.mul x y)) ≤
+      (8 * 24354) * r * D.p x * D.p y := by
+    rw [← map_sub, ← map_sub]
+    apply (hleft _).trans
+    have h := (hmul x (D.mul y R - y)).trans
+      (mul_le_mul_of_nonneg_left hyr (by positivity : 0 ≤ 2 * D.p x))
+    nlinarith
+  have h₃ : D.p (D.mul P (D.mul x y) - D.mul (D.mul P x) y) ≤
+      2 * r * D.p x * D.p y := by
+    have h := p_assoc_error D hτ P x y
+    have h' : r * D.p P * D.p x * D.p y ≤ 2 * r * D.p x * D.p y := by
+      nlinarith [mul_le_mul_of_nonneg_right hp (mul_nonneg hr hxy0)]
+    simpa only [p, map_sub, norm_sub_rev] using h.trans h'
+  have h₄ : D.p (D.mul (D.mul P x) y - D.mul x y) ≤
+      (2 * 24354) * r * D.p x * D.p y := by
+    rw [← sub_apply, ← map_sub]
+    apply (hmul _ y).trans
+    have h := mul_le_mul_of_nonneg_right hpx (by positivity : 0 ≤ 2 * D.p y)
+    nlinarith
+  have ht (a b c : H) : D.p (a - c) ≤ D.p (a - b) + D.p (b - c) := by
+    have h := p_add D (a - b) (b - c)
+    simpa only [sub_add_sub_cancel] using h
+  have ha := ht (D.compression P R (D.mul x y))
+    (D.mul P (D.mul (D.mul x y) R)) (D.mul x y)
+  have hb := ht (D.mul P (D.mul (D.mul x y) R))
+    (D.mul P (D.mul x (D.mul y R))) (D.mul x y)
+  have hc := ht (D.mul P (D.mul x (D.mul y R)))
+    (D.mul P (D.mul x y)) (D.mul x y)
+  have hd := ht (D.mul P (D.mul x y)) (D.mul (D.mul P x) y) (D.mul x y)
+  dsimp [r] at *
+  nlinarith [mul_nonneg hr hxy0]
+
 end Product
 
 end D5.S3.Quantum.Algebra.Approximate.RegularCompression
