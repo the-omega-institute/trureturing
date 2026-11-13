@@ -1,0 +1,19 @@
+**假设 3.2（来源相对的正谱隙接口）。** 对归一化 Haar 测度，采用
+
+$$
+T_\eta f(x)=\int f(g^{-1}x)\,d\eta(g),\qquad
+T_\alpha T_\beta=T_{\alpha*\beta},\qquad\check\eta(E)=\eta(E^{-1}).
+$$
+
+令
+
+$$
+\sigma=\tfrac14(\delta_{R_1}+\delta_{R_1^{-1}}+\delta_{R_2}+\delta_{R_2^{-1}}),
+\qquad
+\gamma=\inf_{0\ne f\perp1\text{ 于 }L^2(SU(2))}
+\frac{\|f\|_2^2-\langle f,T_\sigma f\rangle}{\|f\|_2^2}>0.
+\tag{3.1}
+$$
+
+AOM 对 [BG] 的接口是：定理 1 要求有限个代数 $SU(d)$ 矩阵生成在 $SL_d(\mathbb C)$ 中 Zariski 稠密的子群，其稠密性脚注将此条件对应于在 $SU(d)$ 中的拓扑稠密。引理 3.1 给出这里的两个实际代数生成元的拓扑稠密性。对 $d=2$、两个生成元，文献记号中的自伴未归一算子为 $zf(x)=\sum_{i=1}^2[f(R_ix)+f(R_i^{-1}x)]$，对称性给出 $z/4=T_\sigma$，其 $\lambda_1(z)<4$ 对应 (3.1)。只把此文献接口的正性作为条件，不将对称算子的顶端隙直接认作实际非对称前向游走的绝对隙。$\gamma$ 与以下 $\rho$ 均为固定、存在但未计算的常数。
+

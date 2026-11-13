@@ -63,6 +63,8 @@ internal sealed class ContinuousFrameSumDocument : IScribeDocumentDefinition
         return DocumentDefinition.Create(ScribeNode.Create(
             "Original EB and common centers force weakPair and interior; original W supplies compact pure points and continuous frame sums.",
             H("Original common centers and continuous frame sums"),Blocks(
+                Describe.Lean(DescribeId.Create("effects-compact"), DeclarationHandle.Create("D5/S3/Quantum/Foundation/ContinuousFrameSum.effects_compact"), H("Compact full original effect interval"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a strictly positive unit on a finite dimensional generating cone, the entire continuous-dual interval zero<=f<=u is compact. This includes every original real-linear effect, since linear maps in finite dimension are continuous."))), DescribeRole.Theorem),
+
                 Paragraph(Text("The original carrier is any nonzero finite-dimensional real V, with closed generating cone C and the same strictly positive unit u. K is the whole normalized base, P is ALL its extreme points and [0,u] is the entire original proper-effect interval. No finite carrier, selected menu, assumed compact P, closed orthogonality, common intersection or positive-extension premise is used.")),
                 Describe.Lean(DescribeId.Create("original-centers"),DeclarationHandle.Create(Owner+"sumVector"),H("Original centers and frame carrier"),StatementSource.FromAuthor(Disp(Context(All("p",P,definitions)))),
                     AssessedProvenance.FromRepo(),Blocks(

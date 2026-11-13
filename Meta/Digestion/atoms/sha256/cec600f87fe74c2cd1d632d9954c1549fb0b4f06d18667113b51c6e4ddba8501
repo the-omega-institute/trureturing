@@ -1,0 +1,43 @@
+### Q97.8 原参照的活动性和同一标尺的全输入结论
+
+在两方分别以 $\delta=V\eta\le\delta_0$ 应用上述构造，记 $R=AV\eta$。对实 $a,b$ 定义
+
+$$
+\widetilde S(a,b)=\frac{\widehat\nu(a,b)+\widehat\nu(b,a)}2,\qquad
+\widetilde B(a,b)=\frac{i}{2\sqrt\lambda}
+\bigl(\widehat\nu(a,b)-\widehat\nu(b,a)\bigr).
+\tag{Q97.34}
+$$
+
+对合反乘法使这两个值仍在原实空间 $J$ 中。结合性使 $\widetilde B$ 交替、满足 Jacobi，且每个 $\widetilde B_a$ 是 $\widetilde S$ 的导子；单位为原来的 $e$。由 (Q97.32) 对实向量取内积的实部，$\widetilde S_a$ 自伴；取虚部，$\widetilde B_a$ 斜伴随。因此是原 $g$ 上的正 Frobenius 比较场。
+
+由 (Q97.15)、(Q97.33) 的对称部分和反对称部分分别得到
+
+$$
+\|S-\widetilde S\|_{\rm bil}\le R,\qquad
+\sqrt\lambda\|C-\widetilde B\|_{\rm bil}\le R.
+$$
+
+连同 (Q97.9)，有
+
+$$
+\begin{aligned}
+\|S-\widetilde S\|_{\rm bil}
++\sqrt\lambda\|B-\widetilde B\|_{\rm bil}
+&\le2R+\sqrt K\,U\eta,\\
+\|B-\widetilde B\|_{\rm bil}
+&\le(U+AV/\sqrt\kappa)\eta\le\kappa/2.
+\end{aligned}\tag{Q97.35}
+$$
+
+把第二式用于原来的 $(b_J,d_J)$ 即给 (Q97.2)，所以修复后的 $D$ 非零，定义 8.1 的非零条件也满足。此外 $R\le A\delta_0\le1$，故 $\|\widetilde S\|_{\rm bil}\le K+1=L$。
+
+在原复张量空间上，$\widehat\nu_A\otimes\widehat\nu_B$ 严格结合，且其乘法展开恰为
+
+$$
+\widehat\nu_A\otimes\widehat\nu_B
+=\widetilde M_\lambda-i\sqrt\lambda\,\widetilde T,
+$$
+
+其中 $\widetilde M_\lambda,\widetilde T$ 正是定义 8.2 用 (Q97.34) 形成的模板。前者是对称部分，后者是 $i/(2\sqrt\lambda)$ 乘以交换子。结合代数中 $[H,XY]=[H,X]Y+X[H,Y]$；对 $XY+YX$ 求和并除以二，便给交换子作用于对称乘法的导子恒等式。这是全部张量输入的恒等式，因此推出 (Q97.3)，包括非简单张量。此处始终是原始定义 8.4 的同一个 $\lambda=\lambda_*$。
+

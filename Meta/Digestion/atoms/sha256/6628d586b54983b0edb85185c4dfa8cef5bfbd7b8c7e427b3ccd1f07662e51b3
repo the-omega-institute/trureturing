@@ -1,0 +1,47 @@
+### Q97.5 在正确范数中应用有限维稳定性
+
+在本证明内部，先对任意满足 (Q97.15)–(Q97.16) 的有限维乘法说明修复步骤。设 $\|\mu\|_{{\rm bil},H}\le M$、$\|\mathcal A_\mu\|_{{\rm tri},H}\le\delta\le\delta_0$，且单位 $e$ 的范数为一。定义
+
+$$
+p(x)=\|L_x^\mu\|_{\rm op}.
+$$
+
+由于 $L_x^\mu e=x$，有
+
+$$
+\|x\|\le p(x)\le M\|x\|,\qquad p(e)=1,\qquad p(x^*)=p(x).
+\tag{Q97.19}
+$$
+
+所以 $p$ 是完备范数。结合缺陷给
+
+$$
+\|L_{\mu(x,y)}^\mu-L_x^\mu L_y^\mu\|_{\rm op}
+\le\delta\|x\|\|y\|.
+$$
+
+由此及 (Q97.16) 得到全部复输入上的三个估计
+
+$$
+\begin{aligned}
+p(\mu(x,y))&\le(1+\delta)p(x)p(y),\\
+p(\mathcal A_\mu(x,y,z))&\le M\delta\,p(x)p(y)p(z),\\
+p(\mu(x^*,x))&\ge\|(L_x^\mu)^\dagger L_x^\mu\|_{\rm op}
+-\delta\|x\|^2\ge(1-\delta)p(x)^2.
+\end{aligned}\tag{Q97.20}
+$$
+
+取 $\varepsilon=M\delta$。式 (Q97.20) 分别验证 Kitaev 定义 2.1 的 (2.1)、(2.2)、(2.5)；(Q97.19)、对合反乘法和原来的严格单位分别验证其 (2.4)、(2.7)。因此 $(H,p,\mu,*)$ 是该文意义下的有限维 $\varepsilon$-$C^*$ 代数。这里需要的是 $p$ 范数中的前件，不能直接把原 Hilbert 范数当作 $C^*$ 范数。
+
+当 $\delta>0$ 时，由 $\varepsilon\le\varepsilon_*$ 和所引用的定理 2.3，取真正的有限维 $C^*$ 代数 $F$ 及双射复线性映射 $v:F\to H$，严格交织对合，且令 $d=aM\delta$ 后有
+
+$$
+\begin{aligned}
+p(v(1)-e)&\le d,\\
+p(v(ab)-\mu(v(a),v(b)))&\le d\|a\|_F\|b\|_F,\\
+(1-d)\|a\|_F&\le p(v(a))\le(1+d)\|a\|_F.
+\end{aligned}\tag{Q97.21}
+$$
+
+这些正是定义 2.2 的 (2.8)–(2.10) 和严格 $*$ 条件；从定理陈述的同构方向转到这里的方向只使用其后的逆映射结论，并已吸收到普适 $a,\varepsilon_*$ 中。外部依赖到此为止：它提供范数近似同构，不直接提供原单位和原 Hilbert 内积中的修复。
+

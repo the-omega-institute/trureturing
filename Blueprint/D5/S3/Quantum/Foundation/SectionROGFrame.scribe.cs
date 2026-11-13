@@ -23,6 +23,8 @@ internal sealed class SectionROGFrameDocument : IScribeDocumentDefinition
                 "ROG(L) means that every X in L which is PSD admits a finite list of nonzero native vectors w(j), each w(j)w(j)* in L, whose rank one matrices sum exactly to X. The list is indexed by Fin(m) for some natural m. Zero has an empty decomposition. This is finite generation by original native rank one PSD matrices, with no Jordan closure or supplied frame.", DescribeRole.Definition),
             Entry("all-native-pure-ranks", "pureRanks", "All normalized native rank one points",
                 "pureRanks(L) consists of every X for which there exists a native Euclidean vector v with norm one, vv*=X and X in L. No proper subconfiguration is selected.", DescribeRole.Definition),
+            Entry("native-rank-one-real-scaling", "rankOne_real_smul", "Real scaling of native outer products",
+                "For every native vector v and real scalar r, rankOne(r v) equals (r r) rankOne(v). The original declaration is public for the same-Psi rank-one reconstruction consumer in OriginalUnitNormalization; this is an existing algebraic identity.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("rank-one-trace-norm"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_trace_norm"),
                 H("Rank one trace is squared native vector norm"),
