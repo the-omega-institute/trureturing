@@ -45,6 +45,28 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
                 "Strong induction compares coefficients of two solutions. Degrees zero, "
                 + "one and two are prescribed. At every later degree, equality of the "
                 + "lower coefficients and vanishing residuals force equality of the next coefficient."),
+            Node("H", "The characteristic-two inverse series",
+                Disp(Equal(Call("H"), Call("substInvOfIsUnit",
+                    Seq(F.Id("X"), Sp, Plus, Sp, new Formula.Power(F.Id("X"), D(2)))))),
+                "Over ZMod(2), quadratic is X+X² and quadratic_unit proves that its "
+                + "linear coefficient is a unit. H is its substInvOfIsUnit compositional "
+                + "inverse. The inverse construction supplies zero constant coefficient.",
+                DescribeRole.Definition),
+            Node("H_zero", "The inverse has zero constant coefficient",
+                Disp(Equal(Call("constantCoeff", Call("H")), D(0))),
+                "The constant coefficient of the characteristic-two inverse series H is zero."),
+            Node("H_quadratic", "The inverse satisfies the quadratic equation",
+                Disp(Equal(Seq(Call("H"), Sp, Plus, Sp, new Formula.Power(Call("H"), D(2))),
+                    F.Id("X"))),
+                "Composing X+X² with H gives X. Substitution distributes over addition "
+                + "and powers, yielding H+H²=X in the power-series ring over ZMod(2)."),
+            Node("mod_two_identity", "Reduction of the integer series is the inverse",
+                Disp(Equal(Call("map", G(), new Formula.Apply(Seq(Operatorname, Grp(F.Id("Int")), Dot,
+                    Operatorname, Grp(F.Id("castRingHom"))), [Call("ZMod", D(2))])),
+                    Call("H"))),
+                "The coefficientwise map along the integer cast to ZMod(2) takes "
+                + "generatingSeries to H. Both satisfy the normalized adjacent-iterate "
+                + "constraints, and diagonal uniqueness identifies them."),
             Node("hanna_conjecture", "Every diagonal coefficient from index two is even",
                 Disp(Seq(Bound("n", Naturals()), Implication(Seq(D(2), Sp, Le, Sp, N()),
                     Seq(D(2), Sp, Mid, Sp, Call("a", N()))))),
