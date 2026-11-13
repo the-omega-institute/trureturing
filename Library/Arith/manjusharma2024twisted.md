@@ -23,6 +23,7 @@ is available from https://arxiv.org/src/2412.03507v2.
 Definition 2.1 is at source lines 135–137, the Section 4 domain and matrix
 construction at lines 470–472, the Section 4.2 domain at 1276–1277,
 Conjecture 4.3 at 1281–1283 and Conjecture 4.4 at 1287–1289.
+The introduction's primitive-root and n-at-least-three domain is at line 120.
 The TeX resolves the inherited reference to Conjecture 4.3; the HTML
 cross-reference display is not used to infer its target.
 
@@ -59,6 +60,9 @@ where z^2=-1, sigma the identity, tau conjugation, and D(a+bz)=b.
 Here p=2, k=2, u=1, v=3, e=1 and m=1. The full twisted product law holds.
 The actual matrix is [[0,2],[-2,0]], C=(1,0), det(A)=4 and
 (1/2)Adj(A)C=(0,1). Innerness would force 1=2b for an integer b.
+Table 3 prints the opposite matrix sign for this case. Section 4 defines A
+by multiplication by tau(zeta)-sigma(zeta), which gives the matrix above;
+the table and defining formula are inconsistent at that sign.
 This negates the whole printed universal claim through its iff. It does not
 separately negate the two sufficient assertions or a repaired statement.
 The quadratic classification is prior literature; the formal delivery

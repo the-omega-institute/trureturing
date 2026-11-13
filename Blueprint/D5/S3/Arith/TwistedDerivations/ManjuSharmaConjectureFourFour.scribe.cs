@@ -46,7 +46,10 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
                 + "arXiv:2412.03507v2, Definition 2.1 and Section 4.2, Conjectures 4.3–4.4. "
                 + "The original TeX reference in 4.4 is to 4.3. Its denominator is p to the e, "
                 + "not the absolute determinant p to the power p to the e. The original version 1 "
-                + "also prints that denominator. Adjugate means classical adjugate.")),
+                + "also prints that denominator. Adjugate means classical adjugate. The source locators are "
+                + "TeX lines 120, 135–137, 470–472, 1276–1277, 1281–1283 and 1287–1289. "
+                + "Table 3 has the opposite matrix sign in this case; the defining multiplication operator "
+                + "in Section 4 fixes the sign used here.")),
             Node("IsInner", "Integral innerness", InnerFormula(),
                 "For every commutative ring O with its integer algebra structure, sigma and tau are integer-algebra "
                 + "endomorphisms and D is integer-linear. The witness gamma belongs to O itself. "
@@ -127,9 +130,11 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
             Paragraph(Text("The counterexample negates the entire conjunction comprising the iff and both "
                 + "additional sufficient assertions. It does not separately refute either sufficient assertion, "
                 + "a corrected determinant-denominator statement, Conjecture 4.3 in general, or a corrigendum. "
-                + "The quadratic classification is prior literature, not claimed as new mathematics. The "
-                + "candidate admission basis is the full named external open-problem exception; no new "
-                + "classification theorem or independent escape witness is claimed."))), DescribeRole.Theorem);
+                + "Both sufficient assertions have false antecedents here, since the first coordinate of C is one. "
+                + "The quadratic classification is prior literature. The conclusion concerns the literal printed "
+                + "named conjecture; it makes no global priority claim."))), DescribeRole.Theorem,
+        new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("manju-sharma-2024-conjecture-4-4-refutation"), ResolutionKind.Refuted));
 
     private static Formula InnerFormula()
     {
