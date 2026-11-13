@@ -476,12 +476,6 @@ theorem exists_forall_ge (hf : IsFrameFunction ℝ f W) {M m : ℝ}
   refine ⟨p, hp, fun u hu => ?_⟩
   have := h u hu
   linarith
-theorem exists_eq_sphereSup (hf : IsFrameFunction ℝ f W) {M m : ℝ}
-    (hM : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → f u ≤ M)
-    (hm : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → m ≤ f u) :
-    ∃ p : EuclideanSpace ℝ (Fin 3), ‖p‖ = 1 ∧ f p = sphereSup f := by
-  obtain ⟨p, hp, h⟩ := hf.exists_forall_le hM hm
-  exact ⟨p, hp, le_antisymm (le_sphereSup hM hp) (sphereSup_le h)⟩
 end IsFrameFunction
 end Gleason
 

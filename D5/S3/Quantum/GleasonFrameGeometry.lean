@@ -898,9 +898,9 @@ theorem exists_descent_chain {p s t : EuclideanSpace ℝ (Fin 3)} (hp : ‖p‖ 
       exact hpow
     have hend : z₀ * (((Real.cos (Complex.arg u / n))⁻¹ : ℝ) : ℂ) ^ n * u = (ρ : ℂ) * ζ := by
       rw [hρ, hu]
-      field_simp [hz₀0, hy.ne']
       push_cast
-      ring
+      field_simp [hz₀0, Complex.ofReal_ne_zero.mpr hy.ne']
+      <;> ring
     obtain ⟨c, hc0, hcn, hcmem, hcstep⟩ := spiral_reach u hu1 n hn3
     rw [hend] at hcn
     set z' : ℂ := (ρ : ℂ) * ζ * (1 + (Real.sqrt (1 / ρ - 1) : ℂ) * Complex.I) with hz'

@@ -33,116 +33,13 @@ theorem additive_bounded_linear (g : ℝ → ℝ) (hadd : ∀ s t : ℝ, g (s + 
   let G : ℝ →+ ℝ := { toFun := g, map_zero' := by have h := hadd 0 0; simpa using (show g 0 = 0 by simpa using (add_left_cancel (a := g 0) (by simpa using h.symm))), map_add' := hadd }
   have hc : Continuous G := G.continuous_of_isBounded_nhds_zero
     (Metric.closedBall_mem_nhds (0 : ℝ) (by norm_num : (0 : ℝ) < 1)) (by
-      apply (Metric.isBounded_closedBall (0 : ℝ) M).subset
+      apply (Metric.isBounded_closedBall (x := (0 : ℝ)) (r := M)).subset
       rintro _ ⟨t, ht, rfl⟩
-      simpa only [Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs] using
+      simpa only [G, Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs] using
         hM t (by simpa only [Metric.mem_closedBall, dist_zero_right, Real.norm_eq_abs] using ht))
-  simpa only [smul_eq_mul, mul_one] using map_real_smul G hc x 1
+  simpa [G] using map_real_smul G hc x 1
 end Gleason
 namespace Gleason
-theorem linear_of_add_on_Icc {g : ℝ → ℝ} (hg0 : g 0 = 0)
-    (hadd : ∀ a b : ℝ, 0 ≤ a → 0 ≤ b → a + b ≤ 1 → g (a + b) = g a + g b)
-    {K : ℝ} (hK : ∀ a, a ∈ Set.Icc (0 : ℝ) 1 → |g a| ≤ K) :
-    ∀ a, a ∈ Set.Icc (0 : ℝ) 1 → g a = a * g 1 := by
-  set G : ℝ → ℝ := fun x => g (Int.fract x) + (⌊x⌋ : ℝ) * g 1 with hG
-  have hGadd : ∀ x y : ℝ, G (x + y) = G x + G y := by
-    intro x y
-    have hu0 := Int.fract_nonneg x
-    have hu1 := Int.fract_lt_one x
-    have hv0 := Int.fract_nonneg y
-    have hv1 := Int.fract_lt_one y
-    have hx : x = ⌊x⌋ + Int.fract x := (Int.floor_add_fract x).symm
-    have hy : y = ⌊y⌋ + Int.fract y := (Int.floor_add_fract y).symm
-    rcases lt_or_ge (Int.fract x + Int.fract y) 1 with hlt | hge
-    · have hfl : ⌊x + y⌋ = ⌊x⌋ + ⌊y⌋ := by
-        rw [Int.floor_eq_iff]
-        push_cast
-        constructor <;> linarith
-      have hfr : Int.fract (x + y) = Int.fract x + Int.fract y := by
-        rw [Int.fract, hfl]
-        push_cast
-        linarith
-      simp only [hG, hfr, hfl]
-      rw [hadd _ _ hu0 hv0 hlt.le]
-      push_cast
-      ring
-    · have hfl : ⌊x + y⌋ = ⌊x⌋ + ⌊y⌋ + 1 := by
-        rw [Int.floor_eq_iff]
-        push_cast
-        constructor <;> linarith
-      have hfr : Int.fract (x + y) = Int.fract x + Int.fract y - 1 := by
-        rw [Int.fract, hfl]
-        push_cast
-        linarith
-      have h1 : g (Int.fract x) = g (Int.fract x + Int.fract y - 1) + g (1 - Int.fract y) := by
-        have := hadd (Int.fract x + Int.fract y - 1) (1 - Int.fract y) (by linarith) (by linarith)
-          (by linarith)
-        rwa [show Int.fract x + Int.fract y - 1 + (1 - Int.fract y) = Int.fract x by ring] at this
-      have h2 : g 1 = g (1 - Int.fract y) + g (Int.fract y) := by
-        have := hadd (1 - Int.fract y) (Int.fract y) (by linarith) hv0 (by linarith)
-        rwa [show 1 - Int.fract y + Int.fract y = 1 by ring] at this
-      simp only [hG, hfr, hfl]
-      push_cast
-      linarith
-  have hGbound : ∀ x : ℝ, |x| ≤ 1 → |G x| ≤ K + 2 * |g 1| := by
-    intro x hx
-    have hfl1 : (⌊x⌋ : ℝ) ≤ 2 := by
-      have := Int.floor_le x
-      have := (abs_le.mp hx).2
-      linarith
-    have hfl2 : -2 ≤ (⌊x⌋ : ℝ) := by
-      have := Int.lt_floor_add_one x
-      have := (abs_le.mp hx).1
-      linarith
-    have hfr := hK (Int.fract x) ⟨Int.fract_nonneg x, (Int.fract_lt_one x).le⟩
-    have habs : |(⌊x⌋ : ℝ) * g 1| ≤ 2 * |g 1| := by
-      rw [abs_mul]
-      have : |(⌊x⌋ : ℝ)| ≤ 2 := abs_le.mpr ⟨hfl2, hfl1⟩
-      nlinarith [abs_nonneg (g 1), abs_nonneg (⌊x⌋ : ℝ)]
-    calc |G x| = |g (Int.fract x) + (⌊x⌋ : ℝ) * g 1| := rfl
-      _ ≤ |g (Int.fract x)| + |(⌊x⌋ : ℝ) * g 1| := abs_add_le _ _
-      _ ≤ K + 2 * |g 1| := add_le_add hfr habs
-  have hlin := additive_bounded_linear G hGadd hGbound
-  have hG1 : G 1 = g 1 := by
-    simp only [hG, Int.fract_one, Int.floor_one, Int.cast_one, one_mul, hg0, zero_add]
-  intro a ha
-  rcases eq_or_lt_of_le ha.2 with rfl | ha1
-  · ring
-  · have hGa : G a = g a := by
-      simp only [hG, Int.fract_eq_self.mpr ⟨ha.1, ha1⟩, Int.floor_eq_zero_iff.mpr ⟨ha.1, ha1⟩,
-        Int.cast_zero, zero_mul, add_zero]
-    rw [← hGa, hlin a, hG1]
-theorem affine_of_sum_eq_const {f : ℝ → ℝ} {w K : ℝ}
-    (hK : ∀ a, a ∈ Set.Icc (0 : ℝ) 1 → |f a| ≤ K)
-    (h : ∀ a b c : ℝ, a ∈ Set.Icc (0 : ℝ) 1 → b ∈ Set.Icc (0 : ℝ) 1 → c ∈ Set.Icc (0 : ℝ) 1 →
-      a + b + c = 1 → f a + f b + f c = w) :
-    ∀ a, a ∈ Set.Icc (0 : ℝ) 1 → f a = (w - 3 * f 0) * a + f 0 := by
-  have h0 : (0 : ℝ) ∈ Set.Icc (0 : ℝ) 1 := ⟨le_rfl, zero_le_one⟩
-  have h1 : (1 : ℝ) ∈ Set.Icc (0 : ℝ) 1 := ⟨zero_le_one, le_rfl⟩
-  set g : ℝ → ℝ := fun a => f a - f 0 with hg
-  have hg0 : g 0 = 0 := by simp [hg]
-  have hadd : ∀ a b : ℝ, 0 ≤ a → 0 ≤ b → a + b ≤ 1 → g (a + b) = g a + g b := by
-    intro a b ha hb hab
-    have e1 := h a b (1 - a - b) ⟨ha, by linarith⟩ ⟨hb, by linarith⟩ ⟨by linarith, by linarith⟩
-      (by ring)
-    have e2 := h (a + b) 0 (1 - a - b) ⟨by linarith, hab⟩ h0 ⟨by linarith, by linarith⟩ (by ring)
-    simp only [hg]
-    linarith
-  have hKg : ∀ a, a ∈ Set.Icc (0 : ℝ) 1 → |g a| ≤ K + |f 0| := by
-    intro a ha
-    calc |g a| = |f a - f 0| := rfl
-      _ ≤ |f a| + |f 0| := abs_sub _ _
-      _ ≤ K + |f 0| := add_le_add (hK a ha) le_rfl
-  have hlin := linear_of_add_on_Icc hg0 hadd hKg
-  have hg1 : g 1 = w - 3 * f 0 := by
-    have := h 1 0 0 h1 h0 h0 (by ring)
-    simp only [hg]
-    linarith
-  intro a ha
-  have := hlin a ha
-  simp only [hg] at this hg1
-  rw [hg1] at this
-  linarith
 theorem eq_self_of_monotone_sum_eq_one {C : Set ℝ} (hC : C.Countable) (hC1 : C ⊆ Set.Ioo 0 1)
     {f : ℝ → ℝ} (hf0 : f 0 = 0)
     (hmono : ∀ a b : ℝ, a ∈ Set.Icc (0 : ℝ) 1 → b ∈ Set.Icc (0 : ℝ) 1 → a ∉ C → b ∉ C →

@@ -58,8 +58,6 @@ theorem neg (v : EuclideanSpace ℂ (Fin N)) : q (-v) = q v := by
 theorem polar_symm (u v : EuclideanSpace ℂ (Fin N)) : polar q u v = polar q v u := by
   have h : v - u = -(u - v) := by abel
   rw [polar, polar, h, hq.neg, add_comm]
-theorem polar_zero_left (v : EuclideanSpace ℂ (Fin N)) : polar q 0 v = 0 := by
-  rw [polar, zero_add, zero_sub, hq.neg, sub_self]
 omit hq in
 theorem polar_neg_right (u v : EuclideanSpace ℂ (Fin N)) :
     polar q u (-v) = - polar q u v := by
@@ -230,13 +228,6 @@ theorem matrix_eq_zero_of_quadForm_zero {D : Matrix (Fin N) (Fin N) ℂ}
           Matrix.toLpLin_apply, dotProduct_comm] using hQ (⇑x)
       rw [hx, map_zero])
   exact Matrix.toEuclideanLin.injective (by simpa using hlin)
-theorem trace_mul_isHermitian_real {ι : Type*} [Fintype ι] {A B : Matrix ι ι ℂ}
-    (hA : A.IsHermitian) (hB : B.IsHermitian) :
-    (starRingEnd ℂ) ((A * B).trace) = (A * B).trace := by
-  calc (starRingEnd ℂ) ((A * B).trace)
-      = ((A * B)ᴴ).trace := by rw [starRingEnd_apply, ← Matrix.trace_conjTranspose]
-    _ = (B * A).trace := by rw [Matrix.conjTranspose_mul, hA.eq, hB.eq]
-    _ = (A * B).trace := Matrix.trace_mul_comm _ _
 theorem trace_mul_vecMulVec (R : Matrix (Fin N) (Fin N) ℂ) (v : EuclideanSpace ℂ (Fin N)) :
     (R * Matrix.vecMulVec (⇑v) (star ⇑v)).trace = star (⇑v) ⬝ᵥ (R *ᵥ (⇑v)) := by
   simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.vecMulVec_apply,

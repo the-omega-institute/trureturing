@@ -12,7 +12,7 @@ strata_touched:
   - D5/S3/Quantum/GleasonFrameGeometry
   - D5/S3/Quantum/GleasonLatitudeRigidity
   - D5/S3/Quantum/GleasonRealRepresentation
-license: Apache-2.0 (adopted Lean proof); citation-only (Gleason article)
+license: Apache-2.0
 triage: anchor
 ---
 
