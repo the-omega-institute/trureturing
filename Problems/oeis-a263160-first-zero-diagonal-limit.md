@@ -12,7 +12,8 @@ motivation_gids:
 
 ## Problem
 
-OEIS A263160 revision 21 defines `a(n)=A263159(n,n)` and quotes:
+The preregistered historical target is OEIS A263160 revision 21, which defines
+`a(n)=A263159(n,n)` and quotes:
 
 > Conjecture: Limit_{n->oo} a(n)^(1/n^2)/n = 1/log(2). - Vaclav Kotesovec, Nov 09 2026
 
@@ -23,6 +24,22 @@ terminal word. Zero dimension or zero height gives the immediate empty path,
 count one. The logarithm is natural and the exponent is a real power.
 The target is the limit along every natural index, with no fixed-dimension
 hypothesis or subsequence restriction.
+
+
+The current source is [A263160 revision 24](https://oeis.org/A263160), whose
+revision timestamp is 2026-11-13 16:51:52 Singapore time. It instead asserts
+
+`a(n) ~ c*n^(n*(n-3/2)+1)/(Pi^(n/2)*log(2)^(n*(n-1)))`,
+
+with `c=10.75366283...`, signed Vaclav Kotesovec, November 13, 2026.
+The [public history](https://oeis.org/history?seq=A263160) records the original
+limit in #17, deletion of its conjecture line in #22, the stronger assertion
+in #23 and approval in #24. Approval is an editorial state, not a proof.
+The current JSON and history supply no proof, exact definition of `c` or
+error bound. A proof of the stronger assertion would cover the historical
+limit, but public proof coverage remains ASSUMED-UNVERIFIED. The historical
+target and the exact Lean limit above remain the scope of this development;
+the stronger asymptotic is not a replacement target or an additional result.
 
 ## Motivation
 
@@ -81,6 +98,16 @@ in place with their proofs preserved. The shifted geometric binomial identity
 from pinned Mathlib then yields the convergent positive sum
 
 `Sum_{k>=0} 2^(-k)*P_m(k)^d = 2*I`.
+
+
+The endpoint binomial-moment representation is prior work: Dan Dima's
+[A126086](https://oeis.org/A126086) formula, Eger
+[arXiv:1511.00622v2](https://arxiv.org/abs/1511.00622v2), section 5.5,
+equation (3), page 10, and Bala's [A262809](https://oeis.org/A262809) formula.
+Dima and Eger allow arbitrary finite positive dimension and prescribed
+nonnegative endpoint coordinates. Summing those endpoints over the box
+`0 <= r_i <= m` gives this truncated-binomial moment. The counting/moment
+representation is not claimed as a new external mathematical solution.
 
 ## Uniform estimates
 
@@ -144,11 +171,28 @@ fixed-dimension endpoint formula is added as a separate deliverable.
 ## ASSUMED-UNVERIFIED
 
 Worldwide priority and completeness of the literature search remain
-unverified. The OEIS source still labels the limit a conjecture. Crossref's
-exact A263160 query returned no records and GitHub's Lean identifier searches
-returned no target in their searched scope. Google returned a challenge and
-Bing returned irrelevant results, so neither supports an absence claim.
-The full bodies of GHOW1990, DOI 10.1007/BF01787724, and Caughman2011,
-DOI 10.1016/j.disc.2011.04.024, are not verified here. Pemantle-Wilson
-math/0512548 section 4.9 is a fixed-dimension endpoint-alignment supplier,
-not the required source correspondence and uniform diagonal theorem.
+unverified. The live revision 24 supersedes cached search snippets that still
+show the historical conjecture. Its stronger signed assertion has not been
+verified as an existing proved result; neither first-proof priority nor a
+numerical-fit origin is asserted. No new resolved-problem KPI is claimed.
+
+The reported primary-source reading covers GHOW1990's author PDF,
+DOI [10.1007/BF01787724](https://doi.org/10.1007/BF01787724), pages 133–146.
+Its endpoint asymptotic fixes `k` and has error `O_k`; it does not directly
+supply the growing-dimension first-zero theorem. Caughman2011's author text,
+DOI [10.1016/j.disc.2011.04.024](https://doi.org/10.1016/j.disc.2011.04.024),
+was also read: its exact endpoint formulas allow arbitrary finite dimension.
+They must not all be labelled fixed-dimension results. The required uniform
+first-zero diagonal theorem was not found in the searched scope.
+
+[A262810 revision 19](https://oeis.org/A262810) already asserts Kotesovec's
+2016 asymptotic for height and dimension both equal to `n`; it is not a
+fixed-dimension assertion. Its public history #12, March 23, 2016, was read;
+#13 is approval, not a proof. Targeted reading of author papers, notes and
+history did not locate a proof source. The transfer
+`log I(n,n-1) - log b(n) = o(n^2)`, with `b(n)=A262810(n)`, was not found in
+that literature scope either. Neither gap requires replacing or reproving
+the existing full Lean proof. The stronger A263160 revision 24 assertion is
+a more direct source lead, with its proof, constant and error control still
+unverified. Source response identities and the historical pins are recorded
+in the corresponding Library note.
