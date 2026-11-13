@@ -25,10 +25,10 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
         var S = Call("intrinsicFrontier", real, K);
         Formula D(Formula q) => Call("exclusion", C, u, q);
         var strict = All("x", V, Imp(And(Mem(x, C),
-            new Formula.Rel(x, FormulaRelationOperator.NotEqual, F.D(0))),
-            new Formula.Rel(F.D(0), FormulaRelationOperator.LessThan, Call("u", x))));
+            new Formula.Relation(x, FormulaRelationOperator.NotEqual, F.D(0))),
+            new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, Call("u", x))));
         var assumptions = And(Call("IsClosed", C), And(strict,
-            And(new Formula.Rel(Call("span", real, C), FormulaRelationOperator.Equal, Id("top")),
+            And(new Formula.Relation(Call("span", real, C), FormulaRelationOperator.Equal, Id("top")),
                 Call("exclusionBalls", C, u))));
         var cover = All("x", V, Imp(Mem(x, S), Ex("p", P, Mem(x, D(p)))));
         var common = Ex("p", P, And(Mem(x, D(p)), Mem(y, D(p))));
@@ -49,8 +49,8 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
         var x = Id("x"); var y = Id("y"); var p = Id("p"); var q = Id("s");
         Formula D(Formula a) => Call("exclusion", C, u, a);
         var repeated = All("p", P, Ex("s", P, And(
-            new Formula.Rel(p, FormulaRelationOperator.NotEqual, q),
-            new Formula.Rel(D(q), FormulaRelationOperator.Equal, D(p)))));
+            new Formula.Relation(p, FormulaRelationOperator.NotEqual, q),
+            new Formula.Relation(D(q), FormulaRelationOperator.Equal, D(p)))));
         var Q = Call("Quotient", r); var projection = Call("QuotientMk", r);
         var data = And(All("x", S, All("y", S,
                 new Formula.Logic(Call("r", x, y), FormulaLogicOperator.Iff,
