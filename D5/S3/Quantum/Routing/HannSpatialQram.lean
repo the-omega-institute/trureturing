@@ -204,7 +204,9 @@ def leaf : (n : ℕ) → Tree n → Address n → Qutrit
 private lemma leaf_vacuum (n : ℕ) (i : Address n) : leaf n (vacuum n) i = wait := by
   induction n with
   | zero => rfl
-  | succ n ih => cases i.1 <;> exact ih i.2
+  | succ n ih =>
+      rcases i with ⟨b,i⟩
+      cases b <;> exact ih i
 
 private lemma arrived_leaf (n : ℕ) (a i : Address n) (p : Qutrit) :
     leaf n (arrived n a p) i = if i = a then p else wait := by
@@ -297,7 +299,7 @@ noncomputable def queryMatrix (n : ℕ) (D : Address n → Bool) : Matrix (State
 noncomputable def initialized (n : ℕ) (ψ : Address n × Bool → ℂ) : State n → ℂ :=
   fun s => ∑ a : Address n, ∑ b : Bool, if s = clean n a b then ψ (a,b) else 0
 
-/-- Sequential programmed loading, unique payload transport, and exact clean lookup at every depth. -/
+/-- Sequential prefix loading, unique payload transport and clean lookup at every depth. -/
 theorem correctness :
     (∀ (n : ℕ) (a : Address n) (b : Qutrit) (k : ℕ), k ≤ n →
       load n k (loading n a b 0) = loading n a b k) ∧
@@ -333,7 +335,6 @@ theorem correctness :
       have heq (b : Bool) : (query n D).symm s = clean n a b ↔
           s = clean n a (xor b (D a)) := by
         rw [Equiv.symm_apply_eq, query_clean]
-      cases hD : D a <;> simp [heq, hD, Fintype.sum_bool,
-        add_comm]
+      cases hD : D a <;> simp [heq, hD, add_comm]
 
 end D5.S3.Quantum.Routing.HannSpatialQram
