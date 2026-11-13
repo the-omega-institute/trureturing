@@ -7,6 +7,7 @@
    digest: Strict zero-prepended first sums correspond to gapfree odd partitions. -/
 
 import D5.S1.Words.Compositions.ZeroPrependedFirstSumsOddParts
+import D5.S1.Words.Compositions.FirstSumsPartitionCharacterization
 
 /-!
 # Strict first sums and gapfree odd parts
@@ -56,7 +57,8 @@ private theorem gapfree_implies_odd {m : Multiset ℕ} (hm : GapfreeOdd m) :
   rw [Nat.even_iff]
   omega
 
-private theorem rowLen_zero (d : YoungDiagram) (i : ℕ) (hi : d.colLen 0 ≤ i) :
+-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26781.
+theorem rowLen_zero (d : YoungDiagram) (i : ℕ) (hi : d.colLen 0 ≤ i) :
     d.rowLen i = 0 := by
   have h : ¬ (i, 0) ∈ d := by rw [YoungDiagram.mem_iff_lt_colLen]; omega
   rw [YoungDiagram.mem_iff_lt_rowLen] at h
@@ -88,7 +90,8 @@ theorem height_mem_iff (d : YoungDiagram) (h : ℕ) (hp : 0 < h) :
     · simpa [YoungDiagram.colLen_transpose] using hj
     · simpa [YoungDiagram.rowLen_transpose] using he
 
-private theorem height_bounds (d : YoungDiagram) (h : ℕ)
+-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26781.
+theorem height_bounds (d : YoungDiagram) (h : ℕ)
     (hm : h ∈ d.transpose.rowLens) : 0 < h ∧ h ≤ d.colLen 0 := by
   refine ⟨d.transpose.pos_of_mem_rowLens h hm, ?_⟩
   obtain ⟨j, _, he⟩ := List.mem_map.mp hm

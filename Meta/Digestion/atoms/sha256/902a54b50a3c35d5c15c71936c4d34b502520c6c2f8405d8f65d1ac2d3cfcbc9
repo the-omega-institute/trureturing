@@ -1,0 +1,15 @@
+### 124.8 同一原单体的完整静态QM字典
+
+只在(Q124.27)的完整条件成立后，使用同一个 $\Phi$；以下是123.12及其既有前置的完整静态对应。
+
+| QM内容 | 全部原对象的对应 |
+| --- | --- |
+| 纯态与复射线 | 全部非零 $z\in\mathbb C^3$ 给 $p_z=\Phi(zz^*/(z^*z))$，恰为整个 $P\cong\mathbb{CP}^2$ |
+| 混态、质量与混合 | 整个 $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$；$C=\Phi(\mathrm{PSD}_3)$ 保留零与全部非负质量，所有有限凸组合保持，$\dim_{\mathbb R}V=9$ |
+| 单位、全部效应与Born概率 | $u\Phi=\operatorname{Tr}$；整个 $\mathcal E$ 恰为 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$、$0\preceq A\preceq I_3$，包括所有混态输入、零、单位与补 |
+| least确认与完整排除球 | least效应为秩一投影；$T_{p_z}(\Phi\rho)=\operatorname{Tr}(zz^*\rho)/(z^*z)$，完整 $D_{p_z}$ 为 $z^\perp$ 上全部密度矩阵 |
+| 纯比较与二元零边 | $T_{p_z}(p_w)=\lvert z^*w\rvert^2/((z^*z)(w^*w))$，零边恰为复内积正交 |
+| 框架与数学三元完成 | 每条原正交边有唯一第三纯点；三秩一投影之和为 $I_3$，三原非负效应之和为 $u$，Kronecker读数成立，容量为三 |
+| 全部有限数学POVM | 每个有限结果数的全部 $f_j\ge0,\sum_jf_j=u$ 恰对应全部 $A_j\succeq0,\sum_jA_j=I_3$ |
+| 谱与全部可观测量 | 每个混态有三项正交谱分解，含零权、重复谱；全部实线性可观测量对应全部Hermitian矩阵并有实谱分解 |
+| 派生结构 | 中心 $\Phi(I_3/3)$、内积 $B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$、Jordan积 $\Phi((XY+YX)/2)$ 都在条件重构后取得 |

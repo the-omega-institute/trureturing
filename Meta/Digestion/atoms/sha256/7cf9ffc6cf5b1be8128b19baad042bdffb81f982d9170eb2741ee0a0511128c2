@@ -1,0 +1,36 @@
+**定义 1.1（前交叉系统与原始迹）。** 本章完整保留Part IV 定义 66.1、Part IV 命题 66.2 的前 C13 条件及其条件纸面桥，具体包括：
+
+1. 每个 $X=A,D,E$ 非零、有限维，具有闭尖生成锥、严格正归一化、完整紧态基及全部对偶效应。比较按 Part IV (66.1) 的最少确认定义，对每个纯参照、每个有限纯态族和每组概率权重满足完整有限 $S$，即 Part IV (66.2)，而不只要求纯端点互反。
+2. 完整 $S$ 到一般有限 EJA 及忠实归一化的桥恰为 Part IV §66.1、Part IV (66.3) 所引条件纸面结果；项目性、共同框架及滤波纯性的义务保持其原范围，不新增独立 Jordan 输入。原态、原效应、原比较单位和配对均保留，每个本原元迹一。
+3. 唯一原始映射仍是实双线性 $L:D\times A\to E$ 和同一个实线性 $p:E\to D$，分别在整个 $D_+\times A_+$、整个 $E_+$ 上正，包括全部纠缠正元。原参考是 $\omega=1_D/\operatorname{Tr}_D1_D$。
+4. 全部实际内部映射仍按 Part IV (66.5) 定义：$\mathcal B=pL$、$K(a)=\mathcal B(\omega,a)$、$M(a,b)=\mathcal B(K(a),b)$、$J=M(-,1_A)$、$H=L(-,1_A)$、$B_1=pH$、$Q(a,b,c)=L(M(a,b),c)$、$U=M(1_A,1_A)$。形成 $M$ 的两次读回是同一个原 $p$，没有独立供应的准备。
+5. 保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$，以及 Part IV (66.6) 的全部 $D_J,D_H,Z$：两个单位切片保持正交正元的零比较，$D_H$ 覆盖整个 $D_+$，而 $B_1M(a,b)=\operatorname{Tr}_A(a)Jb$ 对全部实输入成立。
+
+这里不预加 C13、范数校准、原始保单位或保迹。直接使用Part IV 定理 66.3–66.7 的分类及完整逆向。在其保原迹坐标中，所有有序块均存在：
+
+$$
+A=\bigoplus_iH_{n_i}(\mathbb C),\quad
+D=\bigoplus_{i,j}H_{n_in_j}(\mathbb C),\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\quad n=\sum_i n_i>0.
+$$
+
+扇区集有限非空，$n_i\ge1$；迹是各完整矩阵块的普通迹之和。正定 $u_{ij}\in H_{n_j}$、$g_{ijk}\in H_{n_k}$ 和有序位 $\varepsilon_{ij},\delta_{ijk}$ 满足 Part IV (66.20)，以及已由原始内部构造推出的逆迹平衡
+
+$$
+\sum_{i,j}n_i\operatorname{Tr}(u_{ij}^{-1})=n^2.
+\tag{1.1}
+$$
+
+本章始终使用 Part IV (66.16) 的实际加权映射
+
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes\sqrt{u_{ij}}b_j^{T^{\varepsilon_{ij}}}\sqrt{u_{ij}},\\
+Q(a,b,c)_{ijk}&=a_i\otimes\sqrt{u_{ij}}b_j^{T^{\varepsilon_{ij}}}\sqrt{u_{ij}}
+ \otimes\sqrt{g_{ijk}}c_k^{T^{\delta_{ijk}}}\sqrt{g_{ijk}}.
+\end{aligned}
+\tag{1.2}
+$$
+
+它们区别于辅助归一化接口 $F,N$。实际 $p$ 仍是 Part IV (66.17) 的唯一加权读回，全部内部映射仍是 Part IV (66.18)，不将 $p$ 换成另选的信道。
+

@@ -1,0 +1,37 @@
+**定义 125.2（只由三角与实际球定义的空间）。** 固定任意真实三角 $\triangle=(p_1,p_2,p_3)$，暂不要求其顶点属于 $P_0$。任取 $a_i\in\mathcal A_{p_i}$，记
+
+$$
+D_i=D_{p_i},\qquad M_i=\operatorname{span}D_i,\qquad
+U_\triangle=M_1+M_2+M_3,\qquad
+\eta_\triangle=(p_1+p_2+p_3)/3.
+\tag{Q125.4}
+$$
+
+对互异 $i,j,k$，$a_j$ 在 $D_i$ 上于 $p_j,p_k$ 取一、零。完整仿射球上一个 $[0,1]$ 值仿射函数若取得一、零，两极值点必为对径。因此
+
+$$
+c_i=(p_j+p_k)/2,\qquad d_i=(p_j-p_k)/2.
+\tag{Q125.5}
+$$
+
+令 $W_i=\operatorname{lin}(D_i-c_i)$，以该球为单位球定义其欧氏内积 $g_i$；于是 $g_i(d_i,d_i)=1$。定义相对于这条三角直径的横向二平面
+
+$$
+L_i=\{z\in W_i:g_i(z,d_i)=0\}.
+\tag{Q125.6}
+$$
+
+这里 $W_i$ 三维，$L_i$ 二维；没有把不同球的内积拼成共同内积。球内的极值公式给
+
+$$
+\begin{gathered}
+a_j(c_i+z)=\tfrac12(1+g_i(d_i,z)),\qquad
+a_k(c_i+z)=\tfrac12(1-g_i(d_i,z)),\\
+a_i|_{M_i}=0,\qquad
+M_i=\mathbb Rp_j\oplus\mathbb Rp_k\oplus L_i.
+\end{gathered}
+\tag{Q125.7}
+$$
+
+这些限制与所选 $a_i$ 无关，故 $L_i$ 也可写成 $M_i\cap\ker a_j\cap\ker a_k$。
+
