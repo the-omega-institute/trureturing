@@ -40,8 +40,6 @@ open private unitCharacter_square from
 universe u v u' v'
 variable {D : LatticeData}
 attribute [local instance] Classical.propDecidable
-attribute [local reducible] dualModule DualMultiplicity
-attribute [local reducible] targetModule
 
 -- Keep the supplied literal `by abel` headers, with exact group cancellation
 -- tried before the normalization procedure that left a residual zsmul term.
@@ -470,7 +468,14 @@ theorem nestedEvaluation_matching (c d : Discriminant D) (v : Carrier D)
             (dualIota A c φ ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y))) v)
   have h2 : f2 z2 = (unitCharacter D hD (-c) * φ x) • z3 := by
     dsimp only [f2, z2, z3]
-    rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity]
+    have hp := normalizedPair_input hD (ModuleHom.id (dualModule B))
+      (productHom hD (evaluation A hD) (ModuleHom.id B)) (-d) d
+      (dualIota B d ψ ⊗ₜ[ℂ]
+        jAt (targetModule (dualModule A) A) B hD d ⟨(0,d),zero_add d⟩
+          (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+            (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)) v
+    simp only [TensorProduct.map_tmul, restrict_identity] at hp
+    refine hp.trans ?_
     have he := jAt_natural hD (evaluation A hD) (ModuleHom.id B) d
       (⟨(0,d),zero_add d⟩ : Fiber (D := D) d)
       (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
@@ -480,7 +485,12 @@ theorem nestedEvaluation_matching (c d : Discriminant D) (v : Carrier D)
     rw [he, TensorProduct.tmul_smul, normalizedPair_smul]
   have h3 : f3 z3 = z4 := by
     dsimp only [f3, z3, z4]
-    rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity]
+    have hp := normalizedPair_input hD (ModuleHom.id (dualModule B))
+      (leftUnitIso hD B).hom (-d) d
+      (dualIota B d ψ ⊗ₜ[ℂ]
+        jAt (I D) B hD d ⟨(0,d),zero_add d⟩ (eta0 hD ⊗ₜ[ℂ] y)) v
+    simp only [TensorProduct.map_tmul, restrict_identity] at hp
+    refine hp.trans ?_
     have hu := restrict_leftUnit_jAt (hD := hD) (A := B) d y
     rw [hu]
   have h4 : f4 z4 = (unitCharacter D hD (-d) * ψ y) • z5 := by

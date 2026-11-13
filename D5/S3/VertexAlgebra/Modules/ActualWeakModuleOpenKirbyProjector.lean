@@ -64,8 +64,6 @@ open private pairing_add pairing_neg pairing_symm character_orthogonality
 universe u v
 variable {D : LatticeData}
 attribute [local instance] Classical.propDecidable
-attribute [local reducible] dualModule DualMultiplicity
-attribute [local reducible] targetModule
 
 section OpenDiagram
 variable {X : Type u} {Y : Type v}
@@ -281,6 +279,8 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
           (openMonodromy A B hD).linearMap)
     let C := (productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
+    unfold openPartialTrace
+    dsimp only [ModuleHom.comp, LinearMap.comp, ModuleIso.hom, ModuleIso.inv, rightUnitIso]
     change L (C ((rightUnit hD A).symm (classified hD A a x v))) =
       γ⁻¹ • q (cupVector B hD)
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)

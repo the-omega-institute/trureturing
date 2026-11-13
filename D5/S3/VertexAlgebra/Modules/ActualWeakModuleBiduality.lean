@@ -30,7 +30,6 @@ open FullJacobiCurrentTransport FullJacobiIntertwiner
 universe u v w
 variable {D : LatticeData}
 attribute [local instance] Classical.propDecidable
-attribute [local reducible] dualModule DualMultiplicity
 
 section Canonical
 variable {X : Type u} [AddCommGroup X] [Module ℂ X]
@@ -97,8 +96,10 @@ private theorem linear_inverse_left (c : Discriminant D)
     (x : Multiplicity A c) :
     r ((dualMultiplicityEquiv A hD c).dualMap.symm
       (kappa (DualMultiplicity (dualModule A)) c (bidualFamily A hD c x))) = x := by
-  simp only [bidualFamily, LinearMap.comp_apply, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
-  simpa only [kappa_iota, LinearEquiv.symm_apply_apply] using hr x
+  unfold bidualFamily
+  dsimp only [LinearMap.comp]
+  rw [kappa_iota, LinearEquiv.symm_apply_apply]
+  exact hr x
 
 
 end Canonical
@@ -207,19 +208,11 @@ private theorem bidualInverseFamily_left (c : Discriminant D)
 private theorem bidualInverseFamily_right (c : Discriminant D)
     (z : Multiplicity (dualModule (dualModule A)) c) :
     bidualFamily A hD c (bidualInverseFamily A hD c z) = z := by
-  let e := (dualMultiplicityEquiv A hD c).dualMap
-  let r := (Module.evalEquiv ℂ (Multiplicity A c)).symm
-  have he (y : Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c))) :
-      Module.Dual.eval ℂ (Multiplicity A c) (r y) = y := by
-    exact (Module.evalEquiv ℂ (Multiplicity A c)).apply_symm_apply y
-  have hd := (congrArg e.toAddHom.toFun
-    (he (e.symm (kappa (DualMultiplicity (dualModule A)) c z)))).trans
-      (e.apply_symm_apply (kappa (DualMultiplicity (dualModule A)) c z))
-  have hi := congrArg (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun hd
-  have hz : iota (DualMultiplicity (dualModule A)) c
-      (kappa (DualMultiplicity (dualModule A)) c z) = z :=
-    (multiplicityEquiv (DualMultiplicity (dualModule A)) hD c).symm_apply_apply z
-  exact hi.trans hz
+  unfold bidualFamily bidualInverseFamily
+  dsimp only [LinearMap.comp]
+  rw [← Module.evalEquiv_apply, LinearEquiv.apply_symm_apply,
+    LinearEquiv.apply_symm_apply]
+  exact (multiplicityEquiv (DualMultiplicity (dualModule A)) hD c).symm_apply_apply z
 
 
 def bidualInverseHom : ModuleHom (dualModule (dualModule A)) A :=
