@@ -51,7 +51,8 @@ theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
       have hx := hk x
       change k x = u x - (u x - e x) at hx
       linarith
-    simpa only [hke] using hn
+    subst k
+    exact hn
 
 theorem actual_positive : arena.{v}.Law actual.{v} :=
   source_bridge.mp (@regular_anchor_contact_criterion.{v})
