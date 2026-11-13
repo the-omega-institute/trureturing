@@ -18,12 +18,6 @@ internal sealed class OrthogonalityProductsDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text(
                     "For every positive natural k there are k integer matrices of order three, each with a nonzero integer constant gamma and A times its transpose equal to gamma times the identity. The map from all functions choosing one of the nine entry positions in each factor to the product of those entry squares is injective. The matrices and constants may depend on k."))),
                 DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("mehat-problem91-statement"),
-                DeclarationHandle.Create(Prefix + "Problem91"), H("Problem 9.1"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text(
-                    "For every natural k at least two there is an integer matrix M of order three to the power k, with nonzero integer constant gamma, satisfying orthogonality, both squared diagonal sums equal to gamma, and injectivity of entry squares over all positions. The second diagonal uses the usual reversed finite index. This statement is separate from the factor theorem."))),
-                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("mehat-quaternion-matrix"),
                 DeclarationHandle.Create(Prefix + "quaternionMatrix"), H("Quaternion factors"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),

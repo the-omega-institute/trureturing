@@ -25,13 +25,6 @@ def Problem92 : Prop :=
     (∀ i, gamma i ≠ 0 ∧ A i * (A i)ᵀ = gamma i • (1 : Matrix (Fin 3) (Fin 3) ℤ)) ∧
     Function.Injective (fun p : Fin k → Fin 3 × Fin 3 => ∏ i, (A i (p i).1 (p i).2) ^ 2)
 
-/-- The exact unbounded order assertion of Mehat, Problem 9.1. -/
-def Problem91 : Prop :=
-  ∀ k : ℕ, 2 ≤ k → ∃ (M : Matrix (Fin (3 ^ k)) (Fin (3 ^ k)) ℤ) (gamma : ℤ),
-    gamma ≠ 0 ∧ M * Mᵀ = gamma • (1 : Matrix (Fin (3 ^ k)) (Fin (3 ^ k)) ℤ) ∧
-    (∑ i, M i i ^ 2) = gamma ∧ (∑ i, M i i.rev ^ 2) = gamma ∧
-    Function.Injective (fun p : Fin (3 ^ k) × Fin (3 ^ k) => (M p.1 p.2) ^ 2)
-
 /-- Quaternion parametrization of the nine entries, with no diagonal requirement on a factor. -/
 def quaternionMatrix {R : Type*} [CommRing R] (a : Fin 4 → R) : Matrix (Fin 3) (Fin 3) R :=
   !![a 0 ^ 2 + a 1 ^ 2 - a 2 ^ 2 - a 3 ^ 2, 2 * (a 1 * a 2 - a 0 * a 3), 2 * (a 1 * a 3 + a 0 * a 2);
