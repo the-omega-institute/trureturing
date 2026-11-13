@@ -1254,3 +1254,908 @@ $\mathcal R\subseteq H\subseteq\mathcal R^*$、$H^*=\Theta H$、
 （repo-derived）；不主张文献新颖性或优先权。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 125. 同一共同源下的六份最小锥、Four 冗余与源饱和条件准则
+
+### 125.A 原对象、完整低份接口与固定共同源
+
+**定义 125.1（固定原域及同一个辅助族）。** 使用VII卷105.1、106.1及本卷123.1的原对象。
+有限实际扇区集为 $I$，$n_i\in\{1,2,3\}$ 且至少一个 $n_s=3$；固定
+
+$$
+V=\bigoplus_{i\in I}\operatorname{Herm}_{n_i},\qquad
+W_N=V^{\otimes_{\mathbb R}N},\qquad
+u_N=u^{\otimes N}=\sum_{I^N}\operatorname{Tr},\qquad
+(W_0,C_0,u_0)=(\mathbb R,\mathbb R_+,\mathrm{id}).
+\tag{125.1}
+$$
+
+每个 $\operatorname{Herm}_d$ 是复 Hermitian 矩阵的实空间。
+实际字 $v=A_{i_1}\cdots A_{i_N}$ 的实现是这些空间的原实张量积；
+矩阵表示只使用同一局部坐标的 Kronecker 识别。
+原 allN 目标始终要求每个 $C_N$ 闭、尖、生成，$u_N$ 在非零正向量上严格正，且
+
+$$
+K_N=C_N\cap\{u_N=1\},\qquad
+P_N=\operatorname{ext}K_N,\qquad
+\mathcal E_N=[0,u_N]_{C_N^*}
+\tag{125.2}
+$$
+
+分别为整个基、全部极点和整个普通对偶 proper 区间。
+每个原位置分块都须满足原 min/max 双界；位置置换及其逆、空侧单位、
+原产品配对与规范重括号均固定。下文“定义前缀至六”只截取总次数至多六的这些定义条件，
+不会据此前缀取得消费更高次数的 allN 推论。
+
+唯一普遍比较前件是整个原 $S_2$。对每个 $p\in P_2$，
+以整个 $\mathcal E_2$ 上确认 $p$ 的效应定义原下确界
+$T_p^{(2)}(x)=\inf\{f(x):f\in\mathcal E_2,\ f(p)=1\}$，要求
+
+$$
+T_p^{(2)}\!\left(\sum_\alpha a_\alpha q_\alpha\right)
+ =\sum_\alpha a_\alpha T_{q_\alpha}^{(2)}(p)
+\quad(q_\alpha\in P_2,\ a_\alpha\ge0,\ \sum_\alpha a_\alpha=1).
+\tag{125.3}
+$$
+
+量词包括纠缠二份纯点、任意有限准备族、零权与重复标签。
+三条条件供应完整保留VII卷103.1、104.1的输入和条件来源：
+
+| 原条件供应 | 固定的全部输入及参数对应 |
+| --- | --- |
+| 低二份到保迹 Jordan 表示 | 对 $q=1,2$ 的整个 $(W_q,C_q,u_q,K_q,P_q,\mathcal E_q)$ 和原确认下确界使用 least 性、互反、同框架谱性、projectivity、正面投影及 filter purity；保留保迹表示和直和，$S_1$ 由纯旁观下降 |
+| 唯一实际自复合的复型选择 | 对同一个 $(W_1,W_1,W_2)$ 使用正双线性态产品、效应产品、原单位、全域精确配对、乘积效应分离及局部层析；全部中心扇区限制、框架秩乘法和实维乘法均保留 |
+| 每个实际两因子的产品正规形 | 对所选复型的每个实际扇区 $(i,j)$ 与尺寸 $n_i,n_j,n_in_j$ 使用实际态／效应乘积、全域配对及单位；正规形含固定输出酉和固定输入转置，标量因子也在域内 |
+
+条件来源沿VII卷103.1所链的
+[least confirmation、谱性与面保纯](../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge)及
+[实际复合与产品正规形](../../../Library/QuantumStates/barnumhilgert2019spectral.md#actual-two-factor-products-after-complex-type-selection)接口。
+它们不是一条无前提分类定理，也不改成三份 Jordan 分类或 $S_3$。
+
+同一含相位种子为 $\mathsf F_{r,2}$：在原块 $r$ 的固定共同向量基中
+$g_{r,2}=|0\rangle_r^{\otimes3}+|1\rangle_r^{\otimes3}$，
+$\Delta_{r,2}=|g_{r,2}\rangle\langle g_{r,2}|$ 在其他扇区真正为零，
+$\operatorname{Tr}\Delta_{r,2}=2$，归一态是 $\Delta_{r,2}/2$。
+不对基的相位取商，不要求原三份极端性。
+种子 qubit 嵌入、压缩记 $j_N,q_N$，满足 $q_Nj_N=\mathrm{id}$。
+原实码仍逐字为
+
+$$
+ce_0=|00\rangle,\qquad ce_1=|01\rangle,\qquad
+ce_2=|10\rangle,\qquad c^*|11\rangle=0.
+\tag{125.4}
+$$
+
+对每个实际最大块 $s$，原 $i_s=(j_2\operatorname{Ad}_c)\otimes\iota_s$、
+$q_s=i_s^*$、$\mathsf p_s=i_sq_s$ 及角内 $P=|\sum_{a=0}^2aa\rangle\langle\sum_{a=0}^2aa|/3$
+沿VII卷105.2固定；$q_s$ 中的星是普通实迹伴随。
+码外、码与余字的交叉元和其他输入扇区都按原映射送零。
+
+固定定理123.2给出的**同一个**共同 $\mathcal K$、源 $\mathcal D$、实现 $S$ 和辅助族 $E$。
+对象由实际 $A_i$、量子 $Q_k$ 和单位的所有有限字组成。
+量子字可与 $Q_{k_1\cdots k_a}$ 规范分组，实际字不改型为免费量子寄存器。
+源只含既定量子 CP、实际一体矩形 CP、杯帽、所有共同
+$X\in\mathcal K_{k,n_i}$ 的态生成元及其紧对偶、原置换及逆、重括号、复合和旁观张量扩张。
+没有任意多实际腿的集体 CP 生成元，也没有为任意 $x\in E(w)$ 或后文 $G(w)$
+增加 $s_x:\mathbf1\to w$。源的复合可以经过任意有限高次数和任意有限量子对象。
+
+记 $T_w$ 为固定基中的同时全转置，$K^*$ 为普通迹对偶，并令
+
+$$
+b_w(X,Y)=\operatorname{Tr}(X^TY),\qquad K^\vee=T_wK^*,\qquad
+\Phi^\flat=T\Phi^\dagger T.
+\tag{125.5}
+$$
+
+紧对偶字的反序由原置换识别；下文的 $\flat$ 总含这个固定识别。
+$b_w$ 对称、非退化，却通常不正定；不假定它是层上的 Hilbert 内积。
+源箭头的紧 $b$ 伴随及其全部旁观扩张仍为同一源箭头。
+特别是 $\operatorname{Ad}_A^\flat=\operatorname{Ad}_{A^T}$，尺寸反向。
+不假定新锥在全转置或部分转置下不变。
+
+源下、上包络记
+
+$$
+B(w)=\overline{\operatorname{cone}\{S(s)(1):s:\mathbf1\to w\}},\qquad
+A(w)=\{z:S(e)z\ge0\ (e:w\to\mathbf1)\}=B(w)^\vee.
+\tag{125.6}
+$$
+
+沿123.2复用 $B\subseteq E=E^\vee\subseteq A$，$B,A,E$ 均在全部源箭头下正。
+这里 $S$-system 指各层闭凸锥在每个指定 $S(f)$ 下保持正性，不含任意两补全态的产品律。
+逐字的 $B,A$ proper，夹在初等乘积 PSD dyad 锥与乘积块正锥之间，迹严格正。
+量子字上 $B=E=A=\mathrm{PSD}$，$Q_kA_i$ 上三者都是同一 $\mathcal K_{k,n_i}$，
+两实际腿上三者都是整个 $\mathrm{PSD}_{n_in_j}$。
+这些精确低类型由源态和源效应的两向夹逼给出。
+
+令 $C_a^0=\bigoplus_{|v|=a}E(v)$，$0\le a\le5$，
+$K_a^0=C_a^0\cap\{u_a=1\}$。它们自 $b$ 极、在全部原位置下不变，
+$C_1^0,C_2^0$ 是整个对齐 PSD 直和；完整五份定义包及上述三供应输入均沿123.2保持。
+原三码角还是同一 $\mathcal K_{3,3}$，整个迹一基的 $P$ 区间为 $[-1/15,2/3]$。
+后文提到“旧 $E_6$”专指这次已经选定的 $\bigoplus_{|v|=6}E(v)$，
+不能用另选第六锥代付它的成员关系。
+
+### 125.B 已支付的两输入源检验与实际二腿输出
+
+**引理 125.2（共同源的两输入 currying）。** 对上述同一 $E$，任取两个对象字
+$v,w$、$x\in E(v),y\in E(w)$ 及任意源效应 $e:vw\to\mathbf1$，均有
+$S(e)(x\otimes y)\ge0$。如果 $x,y$ 各有三条实际腿，把其中两对匹配腿按原帽收缩，
+则余下两条实际腿的输出属于整个 $C_2^0$ 的相应 PSD 块。
+这复用123.2的共同源性质，不声称 $x\otimes y\in E(vw)$。
+
+**证明（125.2）。** 紧闭 currying 将 $e$ 写成源箭头
+$\widehat e:v\to w^\vee$，满足
+$S(e)(x\otimes y)=b_w(S(\widehat e)x,y)$，含固定对偶字重排。
+$E$ 的源正性把第一输入送进相应 $E$，自 $b$ 极性给非负值。
+这里对全部源效应使用同一论证，不只取一个选定菜单。
+
+具体写 $X$ 的腿为 $(i,a,b)$，$Y$ 的腿为 $(a,b,\alpha)$，则双边收缩的分量为
+
+$$
+R_{i\alpha,j\beta}
+ =\sum_{a,b,c,d}X_{iab,jcd}\,Y_{ab\alpha,cd\beta}.
+\tag{125.7}
+$$
+
+共轭并交换 $(a,b)$ 与 $(c,d)$ 得 $R$ Hermitian。
+任取余下两实际腿上的 $H\succeq0$；其紧对偶效应是源效应，因为
+$B(A_iA_j)=A(A_iA_j)=\mathrm{PSD}_{n_in_j}$。
+把它附在余腿上，所得标量正是 $b_2(R,H)$，由两输入结论非负。
+整个二腿 PSD 锥自 $b$ 极，故 $R\succeq0$。
+该式在每条线只收缩相同 ket、bra 指标，没有在某个 $E$ 输入上插入额外转置。
+扇区不匹配时值为零；相容扇区逐块成立再求和。
+此结论只给二腿输出，不自动给四腿或六腿输出的 $E$ 成员关系。
+
+同时，任意一份或二份 PSD 元素是有限源 dyad 和。
+把这一源态附在任意 $E$ 输入上，再取非负和，给出所有总次数的低因子乘积正性；
+相应一腿或二腿紧对偶切片也在 $E$ 中正。
+这是下文已支付配对的共同依据。∎
+
+### 125.C P1：完整定义界中的最小第六锥
+
+**定理 125.3（P1 的定义前缀准则）。** 对 $1\le a\le5$ 和每个原六位置置换 $\pi$，定义
+
+$$
+\begin{aligned}
+K_{a,\pi}&=\{\tau_\pi(x\otimes y):x\in K_a^0,\ y\in K_{6-a}^0\},\\
+K&=\operatorname{conv}\bigcup_{a,\pi}K_{a,\pi},\qquad
+L_6=\{rk:r\ge0,\ k\in K\},\\
+F_6&=\overline{\operatorname{cone}}\{\tau_\pi(x\otimes y):
+ x\in C_a^0,\ y\in C_{6-a}^0,\ a=1,2\},\\
+D_6&=\overline{\operatorname{cone}}\{\tau_\pi(x\otimes y):x,y\in C_3^0\},\\
+U_6&=\bigcap_{a=1}^5\ \bigcap_\pi
+ \tau_\pi(C_a^0\otimes_{\max}C_{6-a}^0).
+\end{aligned}
+\tag{125.8}
+$$
+
+$\otimes_{\max}$ 使用两个因子的**整个普通迹对偶**：
+$z$ 在相应最大锥中当且仅当 $(f\otimes g)(z)\ge0$ 对全部
+$f\in(C_a^0)^*,g\in(C_{6-a}^0)^*$ 成立。
+反向分割由原置换包含，不连续支撑也在交并范围内。
+$L_6=F_6+D_6$，它闭、尖、生成，$u_6$ 严格正，整个归一基恰为紧集 $K$，并有
+
+$$
+U_6=L_6^\vee.
+\tag{125.9}
+$$
+
+定义以下两个全称符号条件。Cross 要求对任意 $x,y\in C_3^0$、
+$h\in C_2^0,z\in C_4^0$，当 $h$ 的两条实际腿各取自 $x,y$ 一条时，
+在所有原位置上有 $b_6(x\otimes y,\tau_\pi(h\otimes z))\ge0$。
+Four 要求对任意 $x,y,x',y'\in C_3^0$ 及每个原 $\pi$，
+
+$$
+b_6(x\otimes y,\tau_\pi(x'\otimes y'))\ge0.
+\tag{125.10}
+$$
+
+下列三项等价：存在保留固定前五层的完整**定义前缀至六**；
+$L_6\subseteq L_6^\vee$；Cross 与 Four 同时成立。
+等价条件成立时，取 $C_6=L_6$，纯点取全部 $\operatorname{ext}K$，
+效应取整个 $[0,u_6]_{L_6^*}$，即满足这些定义条件。
+此结论本身不保留全部原源合同；125.4给出这个 $L_6$ 的确切源障碍。
+
+**证明（125.3）。** 各 $K_a^0$ 紧，有限个分割、扇区及置换的连续产品像构成紧并，
+其有限维凸包 $K$ 紧且位于 $u_6=1$。
+若 $r_jk_j$ 收敛，则 $r_j=u_6(r_jk_j)$ 收敛；正极限时由紧性取 $k_j$ 子列，
+零极限时因 $K$ 有界而向量趋零。因此 $\operatorname{cone}K$ 闭，
+迹在非零元素上严格正，锥尖。初等一体 PSD 产品张成 $W_6$ 且在锥内，故生成。
+分别限制到 $a=1,2$ 或 $a=3$ 的同一基论证也给 $F_6,D_6$ 闭，
+相加后的归一基是两基的凸包，所以 $L_6=F_6+D_6$，不遗漏闭包。
+全部位置不变性由定义给出。
+
+因 $(C_a^0)^*=T_aC_a^0$，所有低份普通乘积效应的生成锥恰为 $T_6L_6$。
+全转置与原张量积及置换交换，故
+$U_6=(T_6L_6)^*=T_6L_6^*=L_6^\vee$。
+任何定义第六锥必须位于 $L_6$ 与 $U_6$ 之间；存在性因而等价于前者包含于后者。
+若包含成立，$L_6$ 自己满足所有第六 min/max 界，基、极点、全 proper 区间按定义取全。
+总次数至多五、整个 $S_2$、原种子和三供应不改。
+
+还须逐类求 $b_6(L_6,L_6)\ge0$ 的条件。每个 $F_6$ 生成元的一侧次数至多二，
+由125.2的源因子性质属于**旧** $E_6$；旧 $E_6$ 自 $b$ 极，故
+$b_6(F_6,F_6)\ge0$。这一步没有把 $D_6$ 放进旧 $E_6$。
+
+把 $x\otimes y$ 的 $3\mid3$ 生成元与任意 $1\mid5$ 生成元 $a\otimes z$ 配对。
+一体源效应 $b_1(a,-)$ 切开包含该腿的三腿输入，输出在 $C_2^0$；
+再与另一 $C_3^0$ 因子相乘，125.2给 $C_5^0$，与 $z$ 的配对非负。
+对 $2\mid4$ 生成元 $h\otimes z$，若 $h$ 的两腿同处一个三腿输入，
+整个二体源效应把它切成 $C_1^0$，再乘另一 $C_3^0$ 因子落入 $C_4^0$。
+若两腿分属两个三腿输入，余下条件恰为 Cross。
+最后 $D_6$ 与 $D_6$ 的全部配对恰为 Four。
+$b$ 的对称性、双线性与连续性把这些类覆盖到所有非负和及闭包，得到等价。∎
+
+### 125.D R0：乘积最小锥遗漏已支付的六 qubit 源
+
+**命题 125.4（R0 的精确像与 proper 分离）。** 原种子 qubit 压缩满足
+
+$$
+q_6(L_6)=\mathrm{Bisep}_6
+ :=\overline{\operatorname{cone}}\{X_J\otimes Y_{J^c}:\varnothing\ne J\subsetneq[6],\
+ X_J\succeq0,\ Y_{J^c}\succeq0\}.
+\tag{125.11}
+$$
+
+右侧是允许不同非空切口正和的六 qubit 二可分锥。
+令 $g=(|000000\rangle+|111111\rangle)/\sqrt2$、$\Gamma=|g\rangle\langle g|$。
+已支付的源态 $j_6\Gamma\in B_6$ 不在 $L_6$。
+普通泛函
+
+$$
+f(z)=\operatorname{Tr}\bigl[(I_{64}/2-\Gamma)q_6(z)\bigr]
+\tag{125.12}
+$$
+
+在 $L_6$ 上满足 $0\le f\le u_6/2$，所以 $2f\in[0,u_6]_{L_6^*}$，
+但 $2f(j_6\Gamma)=-1$。
+
+**证明（125.4）。** 对每个 $1\le a\le5$，原低份 retract 给
+$q_a(C_a^0)=\mathrm{PSD}_{2^a}$，并且压缩与原产品和位置交换。
+因此 $q_6$ 把每个 $L_6$ 产品生成元送到某一非空切口的 PSD 产品；
+反向每个这种产品可用两个低份嵌入 $j_a,j_{6-a}$ 得到。
+二可分归一基是有限切口的紧产品基之并的凸包，故紧且其锥闭。
+连续性给 $q_6(L_6)\subseteq\mathrm{Bisep}_6$，反向嵌入和非负和给等号。
+
+全部 $2^6-2=62$ 个有向非空切口上，$g$ 的两个非零 Schmidt 系数均为 $1/\sqrt2$。
+于是对每个切口产品单位向量 $v$，$|\langle g,v\rangle|^2\le1/2$。
+谱分解、正和及闭包给所有 $X\in\mathrm{Bisep}_6$ 的
+$\operatorname{Tr}(\Gamma X)\le\operatorname{Tr}X/2$。
+而 $\operatorname{Tr}\Gamma^2=\operatorname{Tr}\Gamma=1$，故 $\Gamma$ 不在此锥。
+六 qubit GHZ 的量子制备加六个分别已付的实际嵌入是原源态，
+若 $j_6\Gamma\in L_6$，压回就与上述不等式矛盾。
+
+对 $z\in L_6$，$q_6z\succeq0$ 且 $\operatorname{Tr}q_6z\le u_6(z)$：
+在每个低份产品上由两个原压缩预算相乘得到，再对正和及闭包成立。
+GHZ 上界给 $f(z)\ge0$，PSD 性给 $f(z)\le\operatorname{Tr}q_6z/2\le u_6(z)/2$。
+$q_6j_6=\mathrm{id}$ 给最后的 $-1$。
+这只排除固定的乘积选择 $C_6=L_6$；该效应不是任何源相容模型上的负概率。
+它不反驳 Cross、Four、另一个第六锥、另一低份族或全部原 allN 模型。∎
+
+### 125.E P2：同一第四锥中的 Bell-Cross 与紧诊断
+
+**命题 125.5（P2 的实际 Bell 归约）。** 固定一个实际最大 qutrit 块 $s$，
+$\Omega_s=|\sum_{j=0}^2jj\rangle\langle\sum_{j=0}^2jj|$。
+原 proper 帽为 $\beta_s/3$，其普通效应坐标是 $\Omega_s/3$，其他扇区为零。
+对 $x,y\in C_3^0$，各选择一条支撑于实际 $s$ 的收缩腿，定义四原腿输出
+$\kappa_s(x,y)$ 为
+
+$$
+b_4(\kappa_s(x,y),z)
+ =b_6\bigl(\tau(x\otimes y),\tau'(\Omega_s/3\otimes z)\bigr)
+\quad(z\in W_4),
+\tag{125.13}
+$$
+
+其中 $\tau,\tau'$ 是该位置的原置换。
+$b_4$ 非退化保证唯一性。Bell-Cross 要求每个此类输出属于**同一** $C_4^0$。
+Cross 当且仅当 Bell-Cross。
+
+记 $\delta_{\mathrm{cross}}$ 为(125.13)在上述支撑限制下的归一
+$x,y\in K_3^0,z\in K_4^0$ 和全部位置上的最小值，
+$\delta_{\mathrm{four}}$ 为(125.10)在四个 $K_3^0$ 输入及全部位置上的最小值。
+二者均达到；125.3的弱定义前缀存在当且仅当两者非负。
+在本章的完整共同源前提下，125.6进一步给 $\delta_{\mathrm{four}}=0$，
+所以这个弱准则等价于 $\delta_{\mathrm{cross}}\ge0$。
+$\delta_{\mathrm{cross}}$ 的数值未测，也未证明其非负。
+
+**证明（125.5）。** 每个实际 $C_2^0$ 块中的 $h\succeq0$ 都是有限纯 dyad 和。
+任意 $v\in\mathbb C^{n_i}\otimes\mathbb C^{n_j}$，因 $n_i,n_j\le3$，Schmidt 分解给矩形
+$A:\mathbb C^3\to\mathbb C^{n_i}$、$B:\mathbb C^3\to\mathbb C^{n_j}$，使
+
+$$
+|v\rangle\langle v|=(\operatorname{Ad}_A\otimes\operatorname{Ad}_B)(\Omega_s).
+\tag{125.14}
+$$
+
+这是两条实际最大腿上的 Bell 资源加两个独立一体映射。
+对尺寸相容的 $X,Y$，直接循环迹得
+
+$$
+\begin{aligned}
+b(AXA^*,Y)
+ &=\operatorname{Tr}(X^TA^TY\overline A)\\
+ &=b(X,A^TY\overline A)
+ =b(X,\operatorname{Ad}_{A^T}Y).
+\end{aligned}
+\tag{125.15}
+$$
+
+故跨线拉回的是真正 $b$ 伴随 $\operatorname{Ad}_{A^T}$，不是普通迹伴随。
+把 $A,B$ 分别拉到 $x,y$ 的所选实际腿，既定源旁观正性保证所得
+$\widetilde x,\widetilde y$ 仍在同一 $C_3^0$，所选腿都在 $s$。
+原 $h=|v\rangle\langle v|$ 测试恰为
+$3b_4(\kappa_s(\widetilde x,\widetilde y),z)$；系数三来自未归一 $\Omega_s$
+与 proper $\Omega_s/3$ 的差。有限 dyad 和覆盖全部 $h$ 和所有矩形实际扇区。
+反向 $\Omega_s/3\in C_2^0$，所以 Cross 包含所有 Bell 测试。
+$C_4^0=(C_4^0)^\vee$ 将全部 $z$ 的非负测试精确变成该同一锥的成员关系。
+
+任意矩形 Kraus 可乘正标量缩成收缩矩阵；符号不等式的正齐次性再恢复系数。
+这不改善物理成功预算。变换后输入若非零，严格正迹允许归一；若为零，测试就是零。
+支撑条件是闭线性子空间限制，故归一支撑基是紧 $K_3^0$ 的闭子集。
+张量、帽和配对连续，扇区与位置只有有限种，故上述两个最小值都达到。
+对所有非零输入用齐次性，对零输入直接取零，得诊断等价。
+
+由125.2，$\kappa_s(x,y)$ 自动在源上包络 $A_4$；这不把 $A_4$ 识别为 $C_4^0$。
+非构造 $E$ 没有因此取得数值成员 oracle 或有限半代数描述。
+一个负 Bell-Cross 读数只有在同一 $E$ 的全部输入成员资格和原源类型均确证时，
+才排除该固定低份族的弱六份前缀；不能以 $A$、块正锥或无关 PSD 空间的成员替代。∎
+
+### 125.F R1：Four 的四种连接均由共同源支付
+
+**定理 125.6（R1 的 Four 冗余及零端点）。** 在定义125.1的完整共同 $E$/源前提下，
+原 Four 对全部实际扇区、所有输入及全部六位置成立，而且
+$\delta_{\mathrm{four}}=0$。
+不要求 Cross，不要求两三腿输入的乘积在 $E_6$，也不要求新锥转置不变。
+
+**证明（125.6）。** 把 Four 的四个输入画成两侧各两个三端口顶点
+$X,Y$ 和 $X',Y'$。每条闭配对线从左侧接到右侧。
+若 $X$ 与 $X'$ 之间有 $k$ 条线，则度数强制整个边重数表为
+
+$$
+\begin{pmatrix}k&3-k\\3-k&k\end{pmatrix},\qquad k=0,1,2,3.
+\tag{125.16}
+$$
+
+顶点内部的原腿顺序由 $E$ 的置换不变性吸收，不改变实际扇区类型。
+不相容扇区贡献零，相容块分别按下列四种情形处理。
+
+| $k$ | 先收缩的顶点对 | 剩余标量及其正性 |
+| --- | --- | --- |
+| $0$ | $(X,Y')$、$(Y,X')$ 的全部三条线 | 两个原 $b_3$ 配对的乘积，均由 $E_3=E_3^\vee$ 非负 |
+| $3$ | $(X,X')$、$(Y,Y')$ 的全部三条线 | 同样是两个非负的 $b_3$ 配对 |
+| $1$ | $(X,Y')$、$(Y,X')$ 各自的两条公共线 | 125.2给两个整个实际二腿 PSD 输出 $R,R'$，余两线为 $b_2(R,\tau R')\ge0$ |
+| $2$ | $(X,X')$、$(Y,Y')$ 各自的两条公共线 | 同样由双线收缩得到二腿 PSD 输出，再以原两腿重排配对 |
+
+后两行的输出公式正是(125.7)。剩余两条线使用其相同 ket、bra 指标，
+所以数值恰为所列 $b_2$，无隐藏的某输入转置。
+整个 $C_2^0$ 自 $b$ 极，故这些标量非负。
+每个原置换都属于其中一种；所有块的有限和、非归一输入和零输入由多线性覆盖，
+闭锥极限由连续性覆盖。使用原 proper 帽只乘固定正预算系数。
+
+所有归一测试遂非负。取一个实际最大块中的源投影
+$a=|000\rangle\langle000|$、$d=|111\rangle\langle111|$，它们都在 $K_3^0$。
+恒等位置给 $b_6(a\otimes a,d\otimes d)=0$。
+125.5的紧最小值因而恰为零。
+Four 在这些共同源前提下已付，不能再当成与 Cross 独立的未付条件；
+它对不相关的任意有限锥族并非无条件结论。
+Cross 是否也从这些前提推出，以及更强的 R3、R4 是否互相独立，均未在此证明。∎
+
+### 125.G R2：单种子的源像饱和
+
+**命题 125.7（R2 的最小源系统）。** 对每个实际字 $v$，若 $0\le|v|\le5$，
+取所有 $E(v)$ 元素为旧种子，含 $E(\varnothing)=\mathbb R_+$。
+对每个实际六字 $v$，另取
+$\mathscr D_v$ 为所有按原 $3\mid3$ 位置放置的 $x\otimes y$，
+其中两因子分别来自该位置实际三字的同一 $E$。
+$D_6$ 是这些种子的直和闭生成锥。
+对**每个**源对象字 $w$ 定义
+
+$$
+G(w)=\overline{\operatorname{cone}}\{S(f)r:
+ r\text{ 是一个旧种子或一个 }\mathscr D_v\text{ 种子},\
+ f:\operatorname{type}(r)\to w\text{ 是原源箭头}\}.
+\tag{125.17}
+$$
+
+这是一个种子的像取正和及闭包，不免费把两个任意 $G$ 元素相乘，
+也不为种子在 $\mathcal D$ 中增加态箭头。
+$G$ 是包含全部上述种子的最小闭 $S$-system，且逐字有
+
+$$
+B(w)\subseteq G(w)\subseteq A(w),\qquad L_6\subseteq G_6.
+\tag{125.18}
+$$
+
+每层 $G(w)$ proper、迹严格正，整个归一基紧；$j_6\Gamma\in G_6$。
+但尚未证明 $G(a)=E(a)$ 对所有实际 $|a|\le5$ 成立，也未证明 $G_6\subseteq U_6$。
+
+**证明（125.7）。** 原源 $h:w\to w'$ 发送生成元 $S(f)r$ 为 $S(hf)r$。
+正和及连续性给 $S(h)G(w)\subseteq G(w')$。
+任何含全部种子的闭 $S$-system 都必须含这些像及其闭正和，故最小。
+标量种子沿原源态的像生成 $B$，从而 $B\subseteq G$。
+旧种子在 $E\subseteq A$；每个新 $\mathscr D_v$ 种子由125.2对**全部**源效应非负，
+也在 $A(v)$。$A$ 是 $S$-system，所以全部源像、正和和闭包仍在 $A$。
+
+初等乘积 PSD dyad 属于 $B$ 并张成每个实现空间，故 $G$ 生成。
+$A$ 包含于尖的乘积块正锥，故 $G$ 尖。
+更明确地，乘积块正的 $z$ 若迹零，在任一乘积正交基上，所有非负对角读数之和为零。
+任意乘积单位向量都能扩成这样的基，所以所有乘积 dyad 读数都为零；
+它们张成空间，遂 $z=0$。这给 $A$ 以及 $G$ 的严格正迹。
+闭锥与严格正迹相交的迹一截面必紧：否则归一化无界序列将产生非零迹零锥向量。
+因此所有整个基都紧，不需另选一个有界状态菜单。
+
+$D_6\subseteq G_6$ 由恒等箭头。
+每个 $F_6$ 产品的一体或二体因子是有限源 dyad 和，附加在另一旧种子上是源箭头，
+故 $F_6\subseteq G_6$，得到 $L_6\subseteq G_6$。
+125.4中的 GHZ 是源态，故在 $B_6\subseteq G_6$。
+此构造补入了 $L_6$ 的确切漏态，却没有自动保留固定低层或第六最大界。
+量子字、$Q_kA_i$ 和两实际腿的 $B=A$ 夹逼则自动保留其精确锥。
+源正性不是任意补全态的单式产品正性，故 $G$ 还不是原 allN 模型。∎
+
+### 125.H R3/R4：包含任意高中间次数的精确等价
+
+**定理 125.8（R3/R4 的源相容六份准则）。** 固定定义125.1的完整源和低族。
+考虑以下两个符号族：
+
+$$
+\begin{aligned}
+\mathrm{R3}:\quad&b_a(S(f)d,z)\ge0,\\
+&|v|=6,\ d\in\mathscr D_v,\quad a\text{ 为实际字},\ 0\le|a|\le5,\quad
+ z\in E(a),\quad f\in\mathcal D(v,a);\\[2mm]
+\mathrm{R4}:\quad&b_{v'}(S(f)d,d')\ge0,\\
+&|v|=|v'|=6,\quad d\in\mathscr D_v,\ d'\in\mathscr D_{v'},\quad
+ f\in\mathcal D(v,v').
+\end{aligned}
+\tag{125.19}
+$$
+
+$\mathscr D$ 包括所有实际扇区、原 $3\mid3$ 位置。
+$f$ 遍历原源的**全部**复合：任意有限量子对象、旁观字、任意有限实际中间次数，
+包括大于六的次数；跨扇区矩形箭头、紧 $b$ 伴随、原逆置换和重括号均在范围内。
+不能仅因显示端点次数至多六而删掉高中间次数。
+零输入给零；符号重缩放不改变原源预算，也不构成有限数值测试清单。
+
+本定理中的“源相容六份前缀”严格指存在同一源**每个字**上的闭 proper 锥族 $H(w)$，
+满足 $B\subseteq H\subseteq A$，每个原源箭头均正；每个实际 $|a|\le5$ 有
+$H(a)=E(a)$；量子及 $Q_kA_i$ 锚保持原精确 PSD／$\mathcal K$；
+实际总次数至多六满足125.1的全部原定义条件，且保留所有已支付的原源
+retract、旁观、return、真实零扩张和预算合同。
+它是具有六份定义产品律的 all-word 源系统；总次数大于六的原 min/max 产品律仍是原目标义务。
+
+下列三种表述等价：
+
+1. 存在上述源相容六份前缀 $H$。
+2. (125.17)的显式源饱和满足 $G(a)=E(a)$ 对每个实际 $|a|\le5$，且 $G_6\subseteq U_6$。
+3. R3 与 R4 都成立。
+
+等价条件成立时可取 $H=G$。
+还可条件性地取得另一个自 $b$ 极的 $S$-system
+
+$$
+G\subseteq E'=E'^\vee\subseteq G^\vee,\qquad
+E'(a)=E(a)\ (|a|\le5),\qquad L_6\subseteq E'_6\subseteq U_6.
+\tag{125.20}
+$$
+
+这是另行应用补全定理的结论，不假定 $L_6$ 或 $G$ 自极，也不识别 $E'_6$ 与旧 $E_6$。
+R3/R4 的全称符号尚未支付，因此本定理没有给出无条件源相容六份前缀。
+
+**证明（125.8）。** 若存在 $H$，它含所有旧种子；第六最小界使它含全部
+$\mathscr D_v$ 种子。125.7的最小性遂给每个字上 $G(w)\subseteq H(w)$。
+在低实际字，反向 $E(a)\subseteq G(a)$ 已由种子给出，故 $G(a)=E(a)$。
+第六最大界给 $G_6\subseteq H_6\subseteq U_6$。
+也可直接看两族必要性：$S(f)d\in H(a)=E(a)$ 与 $z\in E(a)=E(a)^\vee$ 配对给 R3；
+$S(f)d\in H(v')\subseteq U_6=L_6^\vee$，而 $d'\in L_6$，给 R4。
+此处没有假设 $H_6$ 自极。
+
+反设 R3/R4。对低目标实际字 $a$，旧种子的每个源像由旧 $E$ 的源正性落在 $E(a)$；
+新种子的每个源像与所有 $z\in E(a)$ 配对非负，由 R3 和自极性也在 $E(a)$。
+正和、闭包给 $G(a)\subseteq E(a)$；恒等像种子给反向，故相等。
+反过来，只要这个低层相等成立，就立即有 R3。
+
+证明 $G_6\subseteq U_6=L_6^\vee$ 需对每个源像生成元分别检验整个 $F_6$ 与 $D_6$，
+不能只检验裸新种子。分四类如下。
+
+旧种子 $z\in E(a)$ 经 $h:a\to v$ 到六字时，$S(h)z$ 在**旧** $E(v)$。
+$F_6$ 也在旧 $E_6$，故该像与所有 $F_6$ 配对非负。
+与 $d\in\mathscr D_v$ 的配对则移动紧伴随为
+
+$$
+b_v(S(h)z,d)=b_a(z,S(h^\flat)d)\ge0,
+\tag{125.21}
+$$
+
+最后一步恰为 R3，含原对偶字重排。
+
+新种子 $d$ 经 $g$ 到六字时，每个 $F_6$ 生成元都能写成有限正和
+$\sum_\nu S(h_\nu)z_\nu$，其中 $z_\nu$ 为旧低种子，
+$h_\nu$ 是附加一体或二体源态并置换的原箭头。
+于是
+
+$$
+b_6(S(g)d,S(h_\nu)z_\nu)
+ =b_{\operatorname{type}(z_\nu)}(S(h_\nu^\flat g)d,z_\nu)\ge0
+\tag{125.22}
+$$
+
+由 R3 支付。与 $D_6$ 生成元的配对正是 R4。
+这些 $h^\flat g$ 可以经过高次数，仍在(125.19)的全称源范围内。
+双线性、正和、连续性覆盖全部 $G_6$ 和 $L_6$，所以 $G_6\subseteq U_6$。
+反向，若 $G_6\subseteq U_6$，源正性给 $S(f)d\in G_6$，与 $d'\in L_6$ 配对即 R4。
+至此第二、三种表述等价。
+
+在第二种表述下，125.7已有每个字的 proper 性、严格迹和源正性。
+低层就是固定 $E$；第六最小界由 $L_6\subseteq G_6$，最大界由 $G_6\subseteq U_6$。
+低于六的所有界沿固定五份前缀，空侧沿标量单位。
+原位置及逆为源箭头，重括号是同一线性识别。
+取每层整个迹一基、所有极点和整个普通对偶 proper 区间，便得到余下全部原定义条件。
+$C_1,C_2$、整个 $S_2$ 和三条完整供应均不变。
+125.9证明完整源 retract 和预算，因此 $H=G$ 给第一种表述，完成全部必要与充分方向。
+
+最后证明可选(125.20)。在任意源字 $w$，取两个源像生成元
+$S(h)r,S(g)s$。紧伴随恒等式给
+
+$$
+b_w(S(h)r,S(g)s)
+ =b_{\operatorname{type}(r)}(r,S(h^\flat g)s).
+\tag{125.23}
+$$
+
+两个旧种子时，由旧 $E$ 的源正性和自极性非负；一个旧、一个新时，由 R3，
+必要时用 $b$ 对称性；两个新时由 R4。
+这涵盖任意不同实际种子字和任意源目标字，故正和及闭包给**每个字**的 $G\subseteq G^\vee$。
+
+使用 Netzer，[arXiv:2408.07389v1](https://arxiv.org/abs/2408.07389v1)定理2.2：
+同一 $S:\mathcal D\to\mathrm{FVec}_{\mathbb R}$ 是123.2已给的 star-autonomous stem，
+每个 intrinsic 锥 $A(w)$ proper，基空间 $X=\mathbb R$ 用普通标量乘法正定识别于 $X'$，
+$G$ 是刚证的 $S$-system 且 $G\subseteq G^\vee$。
+层上不定 $b_w$ 是对象对偶，绝不拿来充当该定理要求的基空间正定内积。
+定理遂给 $E'$。对低实际字，
+$E(a)=G(a)\subseteq E'(a)\subseteq G(a)^\vee=E(a)$，故低层精确保持。
+$E'_6$ 含 $L_6$，自极性又给 $E'_6\subseteq L_6^\vee=U_6$。
+它仍是同一源的 $S$-system，故全部源箭头和旁观扩张仍正；
+$B\subseteq E'\subseteq A$ 保证 proper 性、严格迹及125.9的预算。
+这里只应用锥系统补全，没有应用任意 $E'$ 输入的结合有序张量积定理。∎
+
+R3 包含 Cross：把一条三腿输入与另一条各抽一腿接原二体源效应，余四腿为输出；
+R3 对所有 $E_4$ 测试的非负性，按自极性就是125.5的同一第四锥成员关系。
+R4 的恒等及原置换子族包含 Four，125.6已支付这个子族；它不支付全部源布线的 R4。
+没有证明裸 Cross 足以推出全部 R3/R4，也不声称 R3 与 R4 独立。
+一个负 R3 或 R4 值，只有在**同一固定低族**中所有种子成员及该完整源箭头均准确合型时，
+才排除这些固定低锥的源相容六份延伸；不能据此排除别的低族、所有中间匹配锥或全部 allN 模型。
+
+### 125.I 所有已付源合同、全普通对偶与原质量
+
+**命题 125.9（双向 retract 与整个 proper 区间）。** 在125.8的等价条件下，
+取 $H=G$ 或条件补全 $E'$。它保留全部既定源态、所有原源箭头及其任意有限旁观扩张，
+包括嵌入所有有限 qubit 字的整个量子 PSD、同一含相位种子、有限码和共同 $\mathcal K$ 资源。
+全部 quantum-word 和 $Q_kA_i$ 锥分别仍精确为原 PSD 和 $\mathcal K$。
+对任一原已支付的源嵌入／压缩 $j:w'\to w,q:w\to w'$，$qj=\mathrm{id}$，有
+
+$$
+\begin{aligned}
+q(H(w))&=H(w'),\\
+H(w)\cap\operatorname{im}j&=j(H(w'))=jq(H(w)),\\
+j^*(H(w)^*)&=H(w')^*,\\
+j^*([0,u_w]_{H(w)^*})&=[0,u_{w'}]_{H(w')^*}.
+\end{aligned}
+\tag{125.24}
+$$
+
+最后一式使用原 $u_wj=u_{w'}$ 和 $0\le u_{w'}q\le u_w$。
+其范围是整个普通对偶与整个 proper 区间。
+
+**证明（125.9）。** $B\subseteq H\subseteq A$ 与已付 $B=A$ 锚给精确量子、混合类型。
+两条源箭头 $j,q$ 分别正，故
+$qH(w)\subseteq H(w')$、$jH(w')\subseteq H(w)$；$qj=\mathrm{id}$ 给两个等式的反向包含。
+这在任意旁观字上仍成立，涵盖实际标量／qubit 角、所有原中心扇区与有限实码。
+没有从普通伴随、逆或同维数识别推断任何另一个方向正。
+
+若 $f\in H(w')^*$，则 $fq\in H(w)^*$ 且 $(fq)j=f$；
+反向任意母锥正泛函沿 $j$ 限制均正，故全对偶限制恰为全子对偶。
+若 $0\le f\le u_{w'}$，则
+
+$$
+0\le fq\le u_{w'}q\le u_w.
+\tag{125.25}
+$$
+
+反向母 proper 效应沿 $j$ 的限制介于零与 $u_wj=u_{w'}$ 之间，给整个 proper 区间等号。
+
+每个已付源预算的迹亏损是源正效应或其非负和，故在 $A$ 上非负，因而在整个 $H$ 上非负。
+特别是收缩 Kraus 的亏损 $I-A^*A$ 连同所有旁观迹效应仍为源效应；
+压缩不增迹，等距嵌入保迹。原码 $c^*$ 的 $11$ 输出、码外交叉元和其他扇区仍真正为零。
+线性映射保持真零；严格正迹保证正输出若质量零则恰为零。
+只对质量严格正的支条件化。
+
+两条混合 return 方向各自沿原源实现，而不是以其中一个方向的逆或普通迹伴随代付。
+在本固定 $t=2/3$ 族中，沿VII卷105.6取
+
+$$
+\mathcal D_a(X)=aX+(1-a)\operatorname{Tr}(X)I_3/3,\qquad
+p=5/8,\quad r=-1/5,\quad pr=-1/8.
+\tag{125.26}
+$$
+
+原参考在前的 $J(\mathcal D_p)=3\tau_{2/3}$、$J(\mathcal D_r)=3\tau_{-1/15}$
+是共同 $\mathcal K_{3,3}$ 资源，交换参考／输出后的反向资源也分别在原源中。
+经原码的两个真正零扩张仍为
+
+$$
+\begin{aligned}
+A_a^0(z)&=\iota_s\mathcal D_a(c^*q_2(z)c),\\
+B_a^0(y)&=j_2\bigl(c\mathcal D_a(\pi_s y)c^*\bigr),\qquad a\in\{p,r\}.
+\end{aligned}
+\tag{125.27}
+$$
+
+这里 $\pi_s$ 是原块提取。
+$u_1A_a^0$ 恰为两种子腿的码接受效应，$u_2B_a^0$ 恰为实际 $s$ 块接受效应；
+所有旁观扩张的不增质量和接受部分保迹均沿相同源效应亏损保持。
+这只保持已经支付的两方向，不赋予 $\mathcal D_a^{-1}$ 正性，
+也不把非 PSD 的 $J(\mathcal D_r)$ 当成普通 CP 资源。
+对任意补全新增映射的全局原 Choi 等价，其全高阶原产品前提仍未支付。
+
+原种子 $\Delta_{r,2}$ 的质量二不变。
+归一 $\Delta_{r,2}/2$ 经原 proper 确认切片给 $\Omega_{r,2}/4$，质量 $1/2$。
+实际块满杯 $\Omega_i$ 的质量为 $n_i$，帽 $\beta_i/n_i$ proper；
+全对角杯质量为 $R=\sum_i n_i$，全帽 $\beta/3$ proper，非匹配扇区读数为零。
+归一全杯与该帽的 $m$ 次 snake 预算仍是 $(3R)^{-m}$。
+所有系数沿123.2及VII卷104.4、104.11保持；符号证明的正重缩放不提升成功概率，
+也不授权确定性后选择、物理制备事件或额外误差预算。∎
+
+### 125.J P3：原生连接与 Hilbert 反射的不同符号
+
+**命题 125.10（P3 的原生 signed Gram 与秩惯性）。** 对源边界字 $w$，
+令 $\mathcal F_w$ 为源开放态的形式有限实线性组合空间，
+$v:\mathcal F_w\to S(w)$ 为其原张量求值。原生连接型为
+
+$$
+M_w(F,G)=b_w(v(F),v(G)).
+\tag{125.28}
+$$
+
+源乘积 dyad 张成 $S(w)$，所以该型的秩为 $\dim_{\mathbb R}S(w)$。
+若边界包含非平凡复矩阵因子，它并非 PSD。
+在一个实际最大 qutrit 中，置
+
+$$
+\psi_\pm=(e_0\pm i e_1)/\sqrt2,\qquad P_\pm=|\psi_\pm\rangle\langle\psi_\pm|,
+\tag{125.29}
+$$
+
+并在 $e_2$ 和其他扇区上送零。
+两个允许一体纯源态的原生矩阵是 $\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，
+按原 proper qutrit 帽缩放后为
+
+$$
+\frac13\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\operatorname{spec}=\{1/3,-1/3\},\qquad
+(1,-1)M(1,-1)^T=-2/3.
+\tag{125.30}
+$$
+
+每个单独源标量仍非负。
+
+**证明（125.10）。** $P_+^T=P_-$、$\operatorname{Tr}(P_+P_-)=0$、
+$\operatorname{Tr}P_+^2=1$ 直接给(125.30)。
+固定扇区字的 Hilbert 维数为 $D$ 时，全转置在 $\operatorname{Herm}_D$ 上的正一空间
+是实对称矩阵，维数 $D(D+1)/2$；负一空间是纯虚反对称 Hermitian 矩阵，维数 $D(D-1)/2$。
+普通迹内积正定，而 $b(X,Y)=\langle TX,Y\rangle_{\operatorname{Tr}}$，
+故这就是 $b$ 的正、负惯性，满秩为 $D^2$。
+
+源乘积 dyad 含一个实基；在这样的基上拉回 $b$ 达到上述惯性及满秩。
+任意有限源矩阵都通过 $S(w)$ 分解，故不能超过它们；
+形式源空间的冗余只加入零空间。
+对实际直和令 $d_0=\sum_i n_i^2$、$r_0=\sum_i n_i$，
+$T$ 在 $V$ 上的迹为 $r_0$，在 $W_N$ 上为 $r_0^N$，遂
+
+$$
+\operatorname{rank}M_N=d_0^N,\qquad
+\operatorname{inertia}_{\pm}(M_N)=\frac{d_0^N\pm r_0^N}{2}.
+\tag{125.31}
+$$
+
+这是已明确定义的有类型端口连接型的秩，不是顶点识别图代数连接矩阵的秩。
+负 signed 组合是在反射正性检验的形式实空间中，不被宣告为物理混合态。
+
+另一个数值核
+
+$$
+H_w(F,G)=b_w(T_wv(F),v(G))
+ =\operatorname{Tr}(v(F)v(G))
+\tag{125.32}
+$$
+
+确为正 Hilbert feature Gram，具有同一有限特征秩。
+它使用不同反射。要把它解释成 admissible 反射图求值，须构造整个有类型源生成集的 involution，
+保持组合、标签、原锚、相位和预算，并在边界上实现 $T_w$。
+此桥未给出，且不假定共同 $\mathcal K/E$、$L_6$ 或 $G$ 转置不变。
+即使正 Gram 重建了求值实空间，也尚未选择原有序锥，
+更未证明任意补全态的产品或整个第六普通对偶的非负性。∎
+
+### 125.K P3：实的 proper 局部矩阵也不必 PSD
+
+**命题 125.11（P3 的六端口 localizer）。** 在同一个实际最大块取
+$a=|000\rangle\langle000|$、$d=|111\rangle\langle111|$，其他扇区为零，并令
+
+$$
+Z=(a\otimes d+d\otimes a)/2.
+\tag{125.33}
+$$
+
+$Z$ 同时是源态和普通 proper 源效应；其余量 $I_6-Z$ 为源正效应。
+对所有 $x,y\in C_3^0$，所需锥双线性读数非负：
+
+$$
+L_Z(x,y)=b_6(x\otimes y,Z)
+ =\tfrac12\bigl(b_3(x,a)b_3(y,d)+b_3(x,d)b_3(y,a)\bigr)\ge0.
+\tag{125.34}
+$$
+
+但在源输入 $(a,d)$ 上的 localizing 矩阵是
+
+$$
+\begin{pmatrix}0&1/2\\1/2&0\end{pmatrix},\qquad
+\operatorname{spec}=\{1/2,-1/2\},\qquad
+(1,-1)L(1,-1)^T=-1.
+\tag{125.35}
+$$
+
+**证明（125.11）。** $a,d$ 都是原计算基一体投影的产品。
+$Z$ 是其有限非负源和。整个六腿分块计算基上，$I_6-Z$ 在两个所选字上的系数为 $1/2$，
+在其余字及其他扇区上的系数为一，故是非负的乘积源效应和。
+每个 $b_3(-,a),b_3(-,d)$ 是源效应，在 $E_3$ 上非负，得到(125.34)。
+又 $b_3(a,a)=b_3(d,d)=1$、$b_3(a,d)=0$，故给(125.35)。
+全部矩阵为实，添加数值全转置反射也不改变此反例。
+因此“在正锥的两个输入上非负”不能替换成“在所有 signed 输入上的局部矩阵 PSD”。
+这排除的是该更强替代条件，不是原层级，也不是负物理概率；
+底层源正性仍是已支付结果，没有由此取得六份产品成员关系。∎
+
+### 125.L 原始文献的准确适用面
+
+锥系统框架沿 De les Coves–van der Eyden–Netzer，
+[*Beyond Operator Systems*, arXiv:2312.13983v1](https://arxiv.org/abs/2312.13983v1)，
+Definitions 2.8–2.9、Lemma 3.5、Definition 3.6、Remark 3.7、Definition 3.16及Theorem 3.17。
+其源内禀／余内禀锥是对偶对象上的 $A/B$，对偶反序；
+指定箭头下的 $S$-system 不据此成为 star-autonomous 或单式有序锥族。
+125.7只用源像闭包；125.8的可选补全才使用
+Netzer，[*Self-Dual Cone Systems and Tensor Products*, arXiv:2408.07389v1](https://arxiv.org/abs/2408.07389v1)，定理2.2。
+其全部条件及 $X=\mathbb R$ 的正定识别已在125.8中逐项对应。
+该文另论二元张量积的 Definition 3.1、Theorem 3.2，
+也不支付本题指定的结合性、全部原位置产品律或旧 $E_6$ 中的产品成员。
+
+相关图重建定理具有下列不同的图域和全称前提；它们只作成熟中间理论的适用边界，
+没有被应用成125.8以外的新有序锥补全。
+
+Freedman–Lovász–Schrijver，
+[*Reflection positivity, rank connectivity, and homomorphism of graphs*, arXiv:math/0404468v1](https://arxiv.org/abs/math/0404468v1)，
+§§2.1–2.2、Theorems 2.3–2.4的归一表述，针对所有有限无自环多重图上的实同构不变参数 $f$。
+连接矩阵 $M(f,k)$ 的乘法是识别相同标签的**顶点**，要求每个 $k$ 的每个有限主子矩阵 PSD，
+且存在同一个正整数 $q$ 使所有 $k\ge0$ 均有 $\operatorname{rank}M(f,k)\le q^k$。
+保留 $f(\varnothing)=1$；在此归一前提下，$k=0$ 的秩和 PSD 条件经 Proposition 2.1给乘法性。
+结论是具有正顶点权和实对称边权的加权图表示。
+该 v1 的 Theorem 2.4显示陈述未重复 Proposition 2.1所需的空图归一，
+此处只使用明确归一形式；常数参数 $f(G)=2$ 的连接矩阵秩一且 PSD，
+说明仅秩与 PSD 不能补出 $f(\varnothing)=1$。
+125.31的原有类型端口秩不是该顶点识别矩阵的秩；所需顶点代数对应与反射正性未给出。
+
+Szegedy，[*Edge coloring models and reflection positivity*, arXiv:math/0505035v1](https://arxiv.org/abs/math/0505035v1)，
+§§2.1–2.3、Proposition 2.1与Theorem 2.2，使用包含多重边、自环和无顶点圆的全部有限无向图。
+实参数须 $f(\varnothing)=1$、对不交并乘法，并对**每个** $k$ 的全部开放片段的形式实线性组合满足
+$f(\operatorname{glue}(F,F))\ge0$，即完整片段矩阵 PSD。
+结论为实有限色边模型 $t:\mathbb N^d\to\mathbb R$，颜色数由圆值给出；
+该定理不另要求指数秩界。
+端口连接虽接近紧源，却用正 Euclidean 色度量及其无类型局部规则。
+125.30反驳原生相同装饰直接满足其 Gram 前提；125.32的不同反射仍需完整源 involution。
+即使 scalar 模型存在，也不授予实际量子寄存器或任意补全锥产品。
+
+Draisma–Gijswijt–Lovász–Regts–Schrijver，
+[*Characterizing partition functions of the vertex model*, arXiv:1102.4985v1](https://arxiv.org/abs/1102.4985v1)，
+Theorems 1–2及式(3)–(6)，在代数闭特征零域 $\mathbb F$ 上讨论全部有限无向图，含自环与多重边。
+乘法性含 $f(\varnothing)=1$。
+对 $G=(V,E)$、$U\subseteq V$、$s:U\to V$，令 $G_s$ 为给每个 $u$ 加边 $us(u)$ 的图，
+重边保留。Theorem 1的 $k$ 色刻画要求对所有 $G,U,s$、$|U|=k+1$ 有
+
+$$
+\sum_{\pi\in\mathfrak S_U}\operatorname{sgn}(\pi)f(G_{s\circ\pi})=0.
+\tag{125.36}
+$$
+
+Theorem 2先假设已有一个 $k$ 色表示 $y:\mathbb N^k\to\mathbb F$，
+再以所有 $|U|=r+1$、$s:U\to V\setminus U$ 的收缩恒等式
+
+$$
+\sum_{\pi\in\mathfrak S_U}\operatorname{sgn}(\pi)f(G/(s\circ\pi))=0
+\tag{125.37}
+$$
+
+刻画可换取一个矩矩阵 $(y_{\alpha+\beta})$ 秩至多 $r$ 的表示。
+这里 $G/s$ 指先形成 $G_s$ 再收缩新加的全部边。
+前一定理允许 $s(U)$ 与 $U$ 相交，后一定理要求不交，二者不可混用。
+原源未实现这些全部加边／收缩操作及恒等式；有限边界张量维数不是矩矩阵有限秩。
+代数闭标量场也不提供保持实有序锥、原种子和预算的变换。
+
+Schrijver，[*Characterizing partition functions of the vertex model by rank growth*, arXiv:1211.3561v1](https://arxiv.org/abs/1211.3561v1)，
+Theorem 1及式(3)–(5)，对含自环、多重边和无顶点圆 $\bigcirc$ 的全部图上的复参数要求
+$f(\varnothing)=1$、$f(\bigcirc)\in\mathbb R$，以及对**每个** $k$ 的全部 $k$ 片段连接矩阵
+
+$$
+C_{f,k}(F,G)=f(F\mathbin{\cdot}G),\qquad
+\operatorname{rank}C_{f,k}\le f(\bigcirc)^k.
+\tag{125.38}
+$$
+
+结论是复有限色 vertex-model 表示，其整数色数由证明取得。
+每个矩阵仅仅有限秩不是这一统一增长假设。
+125.28尚未与该全部无类型图族识别；即使在复数上把不定对称度量改为标准形式，
+也未证明保持原实锥、开放张量、相位种子、全效应或预算。
+
+Draisma–Regts，[*Tensor invariants for certain subgroups of the orthogonal group*, arXiv:1202.3940v1](https://arxiv.org/abs/1202.3940v1)，
+Theorems 1–3，先有代数闭特征零域上、标准等价非退化对称形式中的实际标量 vertex model
+$h\in(\operatorname{Sym}V^*)^*$。
+Theorem 1可替换为 $h'$，保留所有**闭图** partition functions，并使每个边连接秩等于
+$\dim(V^{\otimes k})^{\operatorname{Stab}(h')}$。
+实版本 Theorem 2使用标准正定形式与紧正交群；非紧形式的相应断言不成立。
+原 $b$ 在实域不定，且没有证明替换 $h\mapsto h'$ 保持原类型、开放态张量、
+含相位锚、全部普通效应及源预算。
+不变张量空间或其秩等式也不单独选出原正锥。
+
+Regts–Schrijver–Sevenster，
+[*On partition functions for 3-graphs*, arXiv:1503.00337v1](https://arxiv.org/abs/1503.00337v1)，
+式(1)–(3)与主定理，图域为连通三价 cyclic graphs，含自环、多重边和例外的无顶点圆，
+并乘法扩张到所有不交并。
+$k$-join 对两图的有序不同顶点选择各 $k$ 个；对每一配对，按其 cyclic 顺序将三种重接取**平均**，
+再对全部顶点选择求和。因此每个固定选择是 $3^{-k}$ 乘三种重接的全展开和。
+weak reflection positivity 要求对每个 $k$，整个
+$(f(G\mathbin{\vee^k}H))_{G,H}$ 的每个有限主子矩阵 PSD，等价于全部 signed 图组合的非负二次型。
+结论为某个实 $c\in((\mathbb R^n)^{\otimes3})^{C_3}$ 的标量 partition function；圆值为 $n$。
+原 $E_3$ 元素带任意实际标签，不预设 cyclic invariance，源还有别的顶点度数与箭头种类。
+单个闭源标量非负不支付这些弱反射矩阵 PSD；
+$3^{-k}$ 的正系数也不改变125.30、125.35的符号障碍。
+该定理重建标量张量，不重建原自极锥族。
+
+这些文献陈述及其既有中间用途属于 literature-attested；
+125.3—125.11的原类型综合推导属于 repo-derived，不主张世界范围的新颖性或优先权。
+已支付的二元补全、原源路径／匹配／滤波结果依所引条目复用，
+没有把它们重命名为新的 allN 证明。
+
+### 125.M 普通解释与仍须满足的原目标
+
+Four 的四个三腿输入只有四种连接形状：要么直接拆成两个已知非负三腿读数，
+要么先把两对双线接掉，每对留下一个已知正的二腿对象，再把余线接完。
+因此在同一共同源和完整低层前提下，它已经非负，而且正交源输入使最小值恰为零。
+这说明 Four 冗余，不能据此宣布 Cross 或所有复杂源布线都已解决。
+
+只收集低层产品的 $L_6$ 太小：六 qubit GHZ 是必须保留的源态，
+却被这个锥的一个完整 proper 效应以 $-1$ 分开。
+这个负数揭示候选锥漏掉合法源态，不是合法模型产生了负概率。
+把每个旧低层元素或每个新 $3\mid3$ 产品，分别沿全部原源箭头推进，再取闭正和，
+得到最小源饱和 $G$，于是 GHZ 和全部固定源合同都得到保留。
+但源饱和也可能扩大旧低层或冲破第六最大界；R3、R4恰好检验这两个剩余问题。
+它们要求所有原源复合，即便途中有任意高次数或任意有限量子处理，也不能漏掉。
+
+这个 iff 的意义是把正确条件写全，并证明两方向都成立。
+它没有证明这些条件本身成立。
+Cross／Bell-Cross 进入**同一**第四锥的全称非负性、R3/R4全部符号，
+以及源饱和实际保持前五层和满足第六最大界，仍为未付义务。
+需要数值搜索时，还缺同一非构造 $E_3,E_4$ 的可认证成员接口；
+紧最小值存在不提供数值 oracle，$\delta_{\mathrm{cross}}$ 仍未测。
+正确合型的负测试只排除该固定低份族，不能提升为所有模型的排除。
+
+另选 $G_6$ 或条件性 $E'_6$ 也不支付旧预选 $E_6$ 的
+$C_3^0\otimes_{\min}C_3^0\subseteq E_6$。
+所有更高原次数、每个原位置的 min/max 产品律与整个普通对偶、
+消费这些高次数的全局原 Choi 推论，仍须在同一个原 allN 实现中成立。
+未构造结合、单式的全原层级，未证明 $\mathsf{Fusion}_3$ 或 $t=1$，
+也未给出保持全部原合同、具有统一严格 $t<1$ 间隙的合法 allN 模型。
+逐有限阶段的结果或趋向一的截断参数不满足统一严格间隙的要求。
+
+原生帽配对、添加转置后的 Hilbert Gram、顶点识别连接矩阵、片段端口矩阵及
+$k$-join 矩阵各有自己的运算与假设。
+一个有限维标量张量表示不自动选择原正锥，正 feature Gram 也不补出产品成员关系。
+最后，数学源图式与锥内成员不提供实际制备来源，
+完整记录／事件／控制仪器、物理动力学和时间作用、物理钟及其校准、单位选择与数值 $\hbar$
+仍须另建桥梁。上述条件六份结果不替代这些原目标。
+
+## 追加锚（本行以下为增补区）
