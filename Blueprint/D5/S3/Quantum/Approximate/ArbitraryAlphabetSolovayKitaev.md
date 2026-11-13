@@ -60,7 +60,7 @@ $$\forall V \in \operatorname{Mat}\left(\right),\; \forall W \in \operatorname{M
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Approximate/ArbitraryAlphabetSolovayKitaev.norm_groupCommutator_sub_le` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Christopher M. Dawson; Michael A. Nielsen (2006). *The Solovay-Kitaev algorithm*. URL: <https://arxiv.org/abs/quant-ph/0505030>.
 
 *Commentary.*
 
