@@ -8,7 +8,7 @@ internal sealed class IteratedBeattyRangeRefutationDocument : IScribeDocumentDef
 {
     private const string Prefix = "D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/khani2026iteratedbeatty");
+        LibraryNoteRef.Create("D5/L/Certificates/khani2026iteratedbeatty");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The positive fixed point two at modulus sqrt two defeats the full proposed extension.",

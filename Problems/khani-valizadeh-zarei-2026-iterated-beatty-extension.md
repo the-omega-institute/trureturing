@@ -121,7 +121,7 @@ The typed `Refuted` claim is attached only to `result`.
 The source is arXiv:2607.12817v1, with main characterization on printed
 page 1 and Question 1 on printed page 8. The inspected PDF SHA-256 is
 `5907ce19916db99b8e34fbecee5ce6bf9d693f2a769d2267bfb9952c2d5f037f`.
-The [Library note](../Library/Arith/khani2026iteratedbeatty.md) records the
+The [Library note](../Library/Certificates/khani2026iteratedbeatty.md) records the
 bounded literature screen. The read Chew–Tanny 1999 author DVI concerns
 restricted quadratic-modulus and commutator results. The publisher text
 for DOI `10.1080/10236190108808279` returned 403 and was not read; its
