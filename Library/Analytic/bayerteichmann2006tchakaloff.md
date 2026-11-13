@@ -6,7 +6,8 @@ title: "The proof of Tchakaloff's theorem"
 doi: "10.1090/S0002-9939-06-08249-9"
 url: "https://arxiv.org/abs/math/0502473v2"
 claim: "Integrable finite-dimensional measurable moments admit exact finite point-evaluation cubature without compactness or closedness of their range."
-strata_touched: [S3]
+strata_touched:
+  - D5/S3/Analytic/Convexity/MeasurableFiniteMoments
 license: "Citation only; no source text is reproduced."
 triage: anchor
 ---
