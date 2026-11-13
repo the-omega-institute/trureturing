@@ -16,21 +16,9 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_un
 
 *Commentary.*
 
-Strict positivity and generation give one finite L>0 such that abs(T(p,x)-T(p,y))<=L norm(x-y) for every original pure p and all original mixed x,y in K. Compactness of the entire original effect interval bounds every effect norm. Actual minimum attainment at each tested point supplies both inequalities. Neither EB nor PR nor Inj is needed.
+Strict positivity and generation give one finite L>0 such that abs(T(p,x)-T(p,y))<=L norm(x-y) for every original pure p and all original mixed x,y in K. This consumed helper directly uses the original frozen CommonOldExclusionConfirmation.comparison_lipschitz owner, enlarging its bound to a positive constant. It provides no independent new mathematical content or escape witness. Neither EB nor PR nor Inj is needed.
 
-**Theorem 1.2 (Joint continuity on the entire pure domain).**
-
-Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_joint_pure_comparison`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_joint_pure_comparison` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Under strict positivity, generation and pure PR, there is one L>0 such that abs(T(p,s)-T(q,t))<=L(norm(p-q)+norm(s-t)) for all original pure p,q,s,t. Pure PR is used only to exchange the first pair of pure endpoints. The second-input estimate still covers all K; no mixed PR or closedness of P is inserted.
-
-**Theorem 1.3 (Universal actual scale-to-axis estimate).**
+**Theorem 1.2 (Universal actual scale-to-axis estimate).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_scale_axis_bound`
 
@@ -42,7 +30,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_sc
 
 Under closedness, strict positivity, generation, EB and pure PR, one L>0 works at every original pure p and every complete chart a. A positive common scale t<=1/2 has extensionBudget(a,v)=1/(2t) in every unit direction and 2t<=L norm(a(v)-a(-v)). These are the same actual comparison coefficient and original optimal budget, using all mixed inputs of the original scale owner.
 
-**Theorem 1.4 (Finite budget on arbitrary whole-P label sets).**
+**Theorem 1.3 (Finite budget on arbitrary whole-P label sets).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_bounded_budget_noncollapse`
 
@@ -52,9 +40,33 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_bo
 
 *Commentary.*
 
-For any set U of original pure labels and real B>0, assume every actual chart and unit direction at every p in U has extensionBudget<=B. There is a single delta>0 with delta<=diam(D(p)) for all p in U, explicitly delta=1/(B L) for the universal comparison bound. U is an arbitrary subset of the entire P; it may be a neighborhood containing labels outside P0. This is the noncollapse direction of the local-budget argument. The converse local-budget implication, the exact whole-ball limit dichotomy, all continuity-point identifications and both Sigma branches are not asserted here.
+For any set U of original pure labels and real B>0, assume every actual chart and unit direction at every p in U has extensionBudget<=B. There is a single delta>0 with delta<=diam(D(p)) for all p in U, explicitly delta=1/(B L) for the universal comparison bound. U is an arbitrary subset of the entire P; it may be a neighborhood containing labels outside P0. This is the noncollapse direction of the local-budget argument. The reverse implication is provided by original_noncollapse_bounded_budget, and original_local_budget_iff combines them in open neighborhoods of all P.
 
-**Theorem 1.5 (Every actual diameter collapse makes budgets diverge).**
+**Theorem 1.4 (Every whole-diameter lower bound gives all-chart budgets).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_noncollapse_bounded_budget`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_noncollapse_bounded_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under closedness, strict positivity, generation, EB and pure PR, let U be any subset of all original pure labels with diam(D(p))>=delta>0. One finite positive B bounds the actual optimal extensionBudget in every complete chart and every unit direction at every p in U. Frozen pure compactness and strict exposure give a uniform positive gap 1-T(q,r) on all pure pairs at separation delta. Each actual complete chart has a unit diameter axis, and its antipodal comparison is 1-2a. The gap gives 2a>=gamma, hence all actual optimal budgets are at most 1/gamma. The budget is the attained original positive-extension optimum, not a reciprocal definition.
+
+**Theorem 1.5 (Whole-P continuity exactly equals finite local optimal budgets).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_local_budget_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_local_budget_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under original EB3 and pure PR, Hausdorff continuity at any original pure p is equivalent to an open neighborhood U containing p in all P and a finite positive B bounding every actual chart and unit-direction extensionBudget throughout U. Forward: the exact regular-region theorem gives a neighborhood with a positive whole-diameter lower bound, and original_noncollapse_bounded_budget supplies B. Reverse: original_bounded_budget_noncollapse gives a positive diameter floor on U, placing p inside an actual closed diameter layer and hence in the whole-ball continuity set. No uniqueness or Inj hypothesis is needed.
+
+**Theorem 1.6 (Every actual diameter collapse makes budgets diverge).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_diameter_collapse_budget`
 
@@ -70,7 +82,10 @@ Under the same complete EB plus pure PR hypotheses, let pn be any sequence of or
 
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_bounded_budget_noncollapse`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_diameter_collapse_budget`
-- Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_joint_pure_comparison`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_local_budget_iff`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_noncollapse_bounded_budget`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_scale_axis_bound`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_uniform_comparison`
+- Dependency: [D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation](CommonOldExclusionConfirmation.md)
 - Dependency: [D5/S3/Quantum/Foundation/OriginalBallScale](OriginalBallScale.md)
+- Dependency: [D5/S3/Quantum/Foundation/OriginalExclusionLimits](OriginalExclusionLimits.md)
