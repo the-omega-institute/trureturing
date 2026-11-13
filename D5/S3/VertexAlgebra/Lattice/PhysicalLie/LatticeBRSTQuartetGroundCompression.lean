@@ -1,7 +1,7 @@
 /- GID: D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTQuartetGroundCompression
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTQuartetGroundCompression
-   mirror-E: none(source-only)
+   mirror-E: none(waiver:algebraic-inference)
    anchors: []
    utility: none
    digest: Literal original-Q compression on the full zero-count quartet ground. -/
