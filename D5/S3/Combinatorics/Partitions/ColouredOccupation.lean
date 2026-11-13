@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Partitions/ColouredOccupation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Partitions/ColouredOccupation
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
