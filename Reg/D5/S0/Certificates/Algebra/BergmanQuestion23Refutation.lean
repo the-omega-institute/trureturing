@@ -12,41 +12,34 @@ universe u
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ F : Type u, Field F × ℕ
+  Params := Σ F : Type u, Σ _ : Field F, ℕ
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
   realize signature (fun _ p m =>
     letI := p.2.1
-    familyProperties p.1 m p.2.2) (fun e => nomatch e)
+    dimensionRatio p.1 m p.2.2) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 /-- Both the full family and its unbounded-ratio conclusion remain in the source law. -/
 abbrev arena : Arena where
   signature := signature.{u}
   Law r := ∀ (F : Type u) [field : Field F] (n : ℕ) (_hn : 2 ≤ n),
-    (∀ m : ℕ, 3 ≤ m → r.readout () ⟨F, field, n⟩ m) ∧
-    (∀ C : ℝ, ∃ m : ℕ, 3 ≤ m ∧ C < dimensionRatio F m n)
+    (∀ m : ℕ, 3 ≤ m → familyProperties F m n) ∧
+    (∀ C : ℝ, ∃ m : ℕ, 3 ≤ m ∧ C < r.readout () ⟨F, field, n⟩ m)
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  exact (h (ULift.{u} ℚ) 2 (by decide)).1 3 (by decide)
-
-private theorem zero_not_properties (F : Type u) [Field F] :
-    ¬ familyProperties F 0 2 := by
-  intro h
-  rcases h with ⟨_, _, _, _, _, _, _, hQ, _, _, hstrict, _⟩
-  norm_num at hQ
-  rw [hQ] at hstrict
-  exact (Nat.not_lt_zero _) hstrict
+  obtain ⟨m, hm, hbad⟩ := (h (ULift.{u} ℚ) 2 (by decide)).2 0
+  exact (lt_irrefl (0 : ℝ)) hbad
 
 def familyAudit : Registration arena.{u}
     (type_of% @_root_.D5.S0.Certificates.Algebra.BergmanQuestion23Refutation.family.{u}) where
@@ -64,12 +57,13 @@ def familyAudit : Registration arena.{u}
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} ℚ, inferInstance, 2⟩, 3, 0, ?_⟩
-    change familyProperties (ULift.{u} ℚ) 3 2 ≠ familyProperties (ULift.{u} ℚ) 0 2
-    intro he
-    exact zero_not_properties _
-      (he ▸ (_root_.D5.S0.Certificates.Algebra.BergmanQuestion23Refutation.family
-        (ULift.{u} ℚ) 2 (by decide)).1 3 (by decide))
+    let K := ULift.{u} ℚ
+    obtain ⟨m, hm, hval⟩ :=
+      (_root_.D5.S0.Certificates.Algebra.BergmanQuestion23Refutation.family
+        K 2 (by decide)).2 (dimensionRatio K 3 2)
+    refine ⟨⟨K, inferInstance, 2⟩, 3, m, ?_⟩
+    change dimensionRatio K 3 2 ≠ dimensionRatio K m 2
+    exact ne_of_lt hval
 
 noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S0.Certificates.Algebra.BergmanQuestion23Refutation.family.{u})
@@ -95,8 +89,8 @@ noncomputable def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "fn", "arg", "body", "body"]
-      stateBinder := 4
+      path := #["body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg"]
+      stateBinder := 5
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

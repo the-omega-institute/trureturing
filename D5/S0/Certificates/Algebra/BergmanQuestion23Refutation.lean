@@ -684,9 +684,10 @@ private theorem dimension_defect {m n : ℕ} (hm : 3 ≤ m) (hn : 2 ≤ n) :
   simp only [Nat.succ_eq_add_one] at hP
   have hsum : m + n - 1 + 1 = m + n := by omega
   rw [hsum] at hP
-  have hB := Nat.choose_succ_succ m 1
-  have hC := Nat.choose_succ_succ m 2
-  simp only [Nat.succ_eq_add_one, Nat.choose_one_right] at hB hC
+  have hB : (m + 1).choose 2 = m + m.choose 2 := by
+    simpa only [Nat.choose_one_right] using Nat.choose_succ_succ m 1
+  have hC : (m + 1).choose 3 = m.choose 2 + m.choose 3 :=
+    Nat.choose_succ_succ m 2
   have hpos := Nat.choose_pos hm
   omega
 
