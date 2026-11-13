@@ -25,8 +25,8 @@ private theorem nonpure_decomposition
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     {x : V} (hx : x ∈ base C u) (hn : x ∉ pure C u) :
-    ∃ (r : pure C u) (y : V) (λ : ℝ), y ∈ base C u ∧
-      0 < λ ∧ λ < 1 ∧ x ≠ (r : V) ∧ x = λ • (r : V) + (1-λ) • y := by
+    ∃ (r : pure C u) (y : V) (weight : ℝ), y ∈ base C u ∧
+      0 < weight ∧ weight < 1 ∧ x ≠ (r : V) ∧ x = weight • (r : V) + (1-weight) • y := by
   by_cases hri : x ∈ intrinsicInterior ℝ (base C u)
   · obtain ⟨r⟩ := pure_nonempty hc hs hg
     obtain ⟨a, ha, he⟩ := mem_intrinsicInterior.mp hri
@@ -56,16 +56,16 @@ private theorem nonpure_decomposition
       rw [← closure_sdiff_intrinsicInterior]; exact ⟨subset_closure hx, hri⟩
     obtain ⟨p, hp⟩ := MixedExclusionGeometry.frontier_covered hc hs hg hfront
     obtain ⟨b⟩ := hB p
-    obtain ⟨r, s, λ, _, _, hλ, _, hxλ⟩ :=
+    obtain ⟨r, s, weight, _, _, hweight, _, hxweight⟩ :=
       OriginalStateCover.radial_decomposition hc hs hg hB p b hp
-    refine ⟨r, s, λ, pure_mem s, ?_, ?_, ?_, hxλ⟩
-    · apply lt_of_le_of_ne hλ.1
+    refine ⟨r, s, weight, pure_mem s, ?_, ?_, ?_, hxweight⟩
+    · apply lt_of_le_of_ne hweight.1
       intro h
-      have he : x = (s : V) := by simpa [← h] using hxλ
+      have he : x = (s : V) := by simpa [← h] using hxweight
       exact hn (he.symm ▸ s.property)
-    · apply lt_of_le_of_ne hλ.2
+    · apply lt_of_le_of_ne hweight.2
       intro h
-      have he : x = (r : V) := by simpa [h] using hxλ
+      have he : x = (r : V) := by simpa [h] using hxweight
       exact hn (he.symm ▸ r.property)
     · exact fun h => hn (h.symm ▸ r.property)
 
@@ -84,8 +84,8 @@ theorem original_pr_pure_compact
     have hx : x ∈ base C u := hK.isClosed.mem_of_tendsto hconv
       (Eventually.of_forall (fun n => pure_mem ⟨pn n, hpn n⟩))
     by_contra hn
-    obtain ⟨r, y, λ, hy, hλ, hλ1, hxr, hxλ⟩ := nonpure_decomposition hc hs hg hB hx hn
-    have hineq (n : ℕ) : λ * (1 - comparison C u r (pn n)) ≤ L * ‖pn n - x‖ := by
+    obtain ⟨r, y, weight, hy, hweight, hweight1, hxr, hxweight⟩ := nonpure_decomposition hc hs hg hB hx hn
+    have hineq (n : ℕ) : weight * (1 - comparison C u r (pn n)) ≤ L * ‖pn n - x‖ := by
       let p : pure C u := ⟨pn n, hpn n⟩
       obtain ⟨f, hf, hfr⟩ := comparison_attained hs hg p r
       obtain ⟨g, hg', hgg⟩ := comparison_attained hs hg p p
@@ -96,23 +96,24 @@ theorem original_pr_pure_compact
         ⟨0, by rintro z ⟨f', hf', rfl⟩; exact (hf'.1 x hx.1).1⟩
         ⟨f.toLinearMap, hf, rfl⟩
       have hfy : f y ≤ 1 := by simpa [hy.2] using (hf.1 y hy.1).2
-      have hfxλ : f x = λ * f r + (1-λ) * f y := by rw [hxλ]; simp
+      have hfxweight : f x = weight * f r + (1-weight) * f y := by rw [hxweight]; simp
       have hfr' : f r = comparison C u r p := hfr.symm.trans (hPR p r)
-      rw [hfr'] at hfxλ
+      rw [hfr'] at hfxweight
       have hh := (abs_le.mp hnear).2
-      have hh' := mul_le_mul_of_nonneg_left hfy (sub_nonneg.mpr hλ1.le)
-      change λ * (1 - comparison C u r p) ≤ L * ‖(p : V) - x‖
+      have hh' := mul_le_mul_of_nonneg_left hfy (sub_nonneg.mpr hweight1.le)
+      change weight * (1 - comparison C u r p) ≤ L * ‖(p : V) - x‖
       nlinarith
     have hLip : LipschitzOnWith ⟨L, hL.le⟩ (comparison C u r) (base C u) := by
       apply LipschitzOnWith.of_dist_le_mul
       intro a ha b hb
+      change dist (comparison C u r a) (comparison C u r b) ≤ L * dist a b
       simpa [Real.dist_eq, dist_eq_norm] using hbound r a ha b hb
     have hconvK : Tendsto pn atTop (nhdsWithin x (base C u)) :=
       tendsto_nhdsWithin_iff.mpr ⟨hconv, Eventually.of_forall (fun n => pure_mem ⟨pn n, hpn n⟩)⟩
     have hcompconv := (hLip.continuousOn x hx).tendsto.comp hconvK
     have hnormconv : Tendsto (fun n => L * ‖pn n - x‖) atTop (𝓝 0) := by
       simpa using (tendsto_const_nhds.mul ((hconv.sub_const x).norm))
-    have hlim : λ * (1 - comparison C u r x) ≤ 0 :=
+    have hlim : weight * (1 - comparison C u r x) ≤ 0 :=
       le_of_tendsto_of_tendsto (tendsto_const_nhds.mul (tendsto_const_nhds.sub hcompconv))
         hnormconv (Eventually.of_forall hineq)
     obtain ⟨h, _, _, er, hones, _⟩ := reciprocal_endpoint_exposure hc hs hg r

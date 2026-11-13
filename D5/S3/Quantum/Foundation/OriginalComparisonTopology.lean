@@ -83,4 +83,67 @@ theorem original_joint_pure_comparison
 #print axioms original_uniform_comparison
 #print axioms original_joint_pure_comparison
 
+/-- The same bound controls every axis in every chart at every original label.
+Its scale is obtained from the actual comparison law and attained optimal budget. -/
+theorem original_scale_axis_bound
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) :
+    ∃ L : ℝ, 0 < L ∧ ∀ (p : pure C u) (a : ExclusionChart C u p),
+      ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
+        (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → extensionBudget a v = 1 / (2*t)) ∧
+        ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 →
+          2*t ≤ L * ‖a.param v - a.param (-v)‖ := by
+  obtain ⟨L, hL, hbound⟩ := original_uniform_comparison hs hg
+  refine ⟨L, hL, ?_⟩
+  intro p a
+  obtain ⟨t, ht, hth, hscale, hbudget⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
+  refine ⟨t, ht, hth, fun v hv => (hbudget v hv).2.2, ?_⟩
+  intro v hv
+  have hvP : a.param v ∈ pure C u :=
+    ((chart_boundary hc hs hg hB p a).symm ▸
+      (show a.param v ∈ a.param '' Metric.sphere 0 1 from ⟨v, by simpa using hv, rfl⟩)).2
+  let q : pure C u := ⟨a.param v, hvP⟩
+  obtain ⟨_, _, _, hcomp⟩ := hscale v hv q rfl
+  have hh := hbound q (a.param v) (SingleLabelNormalBody.chart_mem a hv.le).1
+    (a.param (-v)) (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1
+  rw [hcomp v hv.le, hcomp (-v) (by simpa using hv.le)] at hh
+  simp only [inner_neg_right, real_inner_self_eq_norm_sq, hv, one_pow] at hh
+  have hh' := (abs_le.mp hh).2
+  linarith
+
+/-- A finite budget on any set of original labels forces a uniform positive
+diameter there. The set can be a neighborhood in the entire P and need not lie in P0. -/
+theorem original_bounded_budget_noncollapse
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p)
+    (U : Set (pure C u)) (B : ℝ) (hBpos : 0 < B)
+    (hbudget : ∀ p ∈ U, ∀ a : ExclusionChart C u p,
+      ∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 → extensionBudget a v ≤ B) :
+    ∃ δ : ℝ, 0 < δ ∧ ∀ p ∈ U, δ ≤ Metric.diam (exclusion C u p) := by
+  obtain ⟨L, hL, haxis⟩ := original_scale_axis_bound hc hs hg hB hPR
+  refine ⟨1 / (B*L), by positivity, ?_⟩
+  intro p hp
+  obtain ⟨a⟩ := hB p
+  obtain ⟨t, ht, _, hbud, hax⟩ := haxis p a
+  let E := EuclideanSpace ℝ (Fin a.dim)
+  letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
+  obtain ⟨v, hv⟩ := exists_norm_eq E (by norm_num : (0 : ℝ) ≤ 1)
+  have hbd := hbudget p hp a v hv
+  rw [hbud v hv] at hbd
+  have htB : 1 ≤ B * (2*t) := (div_le_iff₀ (by positivity : 0 < 2*t)).mp hbd
+  have hdiam : ‖a.param v - a.param (-v)‖ ≤ Metric.diam (exclusion C u p) := by
+    rw [← dist_eq_norm]
+    exact Metric.dist_le_diam_of_mem ((exclusion_ball_faces hc hs hg hB).1 p).2.1.isBounded
+      (SingleLabelNormalBody.chart_mem a hv.le)
+      (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le))
+  apply (div_le_iff₀ (mul_pos hBpos hL)).mpr
+  have hh := mul_le_mul_of_nonneg_left ((hax v hv).trans
+    (mul_le_mul_of_nonneg_left hdiam hL.le)) hBpos.le
+  nlinarith
+
+#print axioms original_scale_axis_bound
+#print axioms original_bounded_budget_noncollapse
+
 end D5.S3.Quantum.Foundation.OriginalComparisonTopology
