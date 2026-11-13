@@ -3584,3 +3584,707 @@ verification, exhaustive originality result or completion of the persistent
 RRO goal is asserted.
 
 ## 追加锚（本行以下为增补区）
+
+## 40. One selected golden chain and the original atomic consumer
+
+**Definition 40.1 (selected points, gap sites and atomic names).** Put
+$\varphi=(1+\sqrt5)/2$ and $s=\varphi^{-1}=\varphi-1$. For every
+$i\in\mathbb Z$ define
+
+$$
+\begin{aligned}
+A(i)&=\lfloor(i+1)s\rfloor,& P(i)&=A(i)+i\varphi,\\
+d(i)&=A(i+1)-A(i),& f(i)&=1-d(i),\\
+a_i&=\begin{cases}\beta&f(i)=0,\\\alpha&f(i)=1.\end{cases}
+\end{aligned}
+\tag{IV.119}
+$$
+
+All floors have the displayed lower-floor convention, also at negative
+indices. A site $i$ of the binary source names the selected **gap**
+$[P(i),P(i+1)]$, rather than the point $P(i)$ alone. The orientation and
+length unit are fixed. The integral coefficient $i$ is a mathematical
+index; it is not an observed origin or a free source address.
+
+The selected lift $(A(i),i)$ is exactly `goldenWindowFiberLift i` in
+[GoldenModelSetFibreBridge](../../../D5/S3/Fourier/GoldenModelSetFibreBridge.lean).
+Its definition simplifies to (IV.119) for all integer $i$. Its natural
+step theorem gives $d(i)=\texttt{goldenMechanicalLetter}(i+1)$ for
+$i\ge0$. These are existing suppliers. In particular
+
+$$
+P(i+1)-P(i)=\varphi+d(i)=\varphi^2-f(i)
+=\begin{cases}\varphi^2&a_i=\beta,\\\varphi&a_i=\alpha.\end{cases}
+\tag{IV.120}
+$$
+
+Thus $P$ is strictly increasing. The selected set is
+$\Lambda_{\rm sel}=\{P(i):i\in\mathbb Z\}$. It has its own adjacency;
+the closed-window set is specified separately in Proposition 44.1.
+
+**Definition 40.2 (the finite original consumer).** Use the distinct
+atoms, free ordered binary trees and the original operation $\rho$ of
+[Fibonacci atomic relation generation, Definitions 2.1 and 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md):
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle u,v\rangle)=\langle\rho(u),\rho(v)\rangle.
+\tag{IV.121}
+$$
+
+For $H\ge1$ and origin $e\in\mathbb Z$, the task is the ordered tuple
+
+$$
+\mathcal R_H(e)=\big(\rho(a_e),\ldots,\rho(a_{e+H-1})\big).
+\tag{IV.122}
+$$
+
+Each beta input produces the actual ordered pair in (IV.121). The tuple
+retains the boundaries between the $H$ outputs. If only output frontiers
+are requested, encode beta by $0$ and alpha by $1$ and concatenate the
+images under $\sigma(0)=01$, $\sigma(1)=0$. The positive result below
+supplies the stronger tuple (IV.122). The quantity observation in the
+original source assigns weights $2,3$ to alpha, beta; (IV.120) assigns
+lengths $\varphi,\varphi^2$. These are two different functions of the
+same recovered atom, with no identification of their values.
+
+The existing word identity fixes the generation convention. If
+$T_j=\rho^j(\alpha)$, then for $j\ge1$ its flattened leaf word, encoded
+beta $=0$, alpha $=1$, is
+
+$$
+f(0)f(1)\cdots f(F_{j+1}-1),\qquad F_0=0,\ F_1=1.
+\tag{IV.123}
+$$
+
+Indeed `subst` and `fibWord` in
+[GoldenGapWord](../../../D5/S0/Tower/GoldenGapWord.lean) encode beta
+by `true` and alpha by `false`, starting at beta. The supplied
+[`fibWord_eq_beatty_floor`](../../../D5/S1/Words/ZeckendorfBeattyBridge.lean)
+identifies its position $i$ with $d(i)$, with exactly the $i+1$ floor
+shift in (IV.119). Complementing its Boolean names gives (IV.123), with
+$\texttt{fibWord}(j-1)$ of length $F_{j+1}$. The original structural
+recursion $T_{j+2}=\langle T_{j+1},T_j\rangle$ supplies the same leaf
+lengths. This word identity is a supplier, not a new recovery theorem.
+The two-sided extension in (IV.119) is explicitly defined; a finite
+$T_j$ is not an infinite two-arm source.
+
+The lower mechanical-word and rotation conventions used here are
+classical; see Berstel,
+[*Sturmian and Episturmian Words*, §3.1, pp. 30–31](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf).
+That identification does not supply observations, tree brackets or
+source permissions. The source-specific acquisition statements below
+are ordinary derivations using these suppliers.
+
+**Definition 40.3 (one actual source and its original marker menu).**
+An unknown fixed origin $e\in\mathbb Z$ selects
+
+$$
+S_e=\big(f(e),(L_e,R_e)\big),\qquad
+L_e(k)=f(e-k-1),\quad R_e(k)=f(e+k+1)\quad(k\in\mathbb N).
+\tag{IV.124}
+$$
+
+Both rays belong to the one sequence (IV.119), at the same origin.
+Use exactly `Source`, `Policy`, `sideCount`, `markerResponse` and
+`actualRun` in
+[AdaptiveMarkerStoppingTails](../../../D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.lean).
+Write $L$ for `false` and $R$ for `true`. A policy chooses the next side
+from its fixed seed and the actually retained action/reply history. It
+has no other source input. With $c$ previous queries on that side, the
+new query compares the pair
+
+$$
+\begin{cases}
+\big(f(e-c),f(e-c-1)\big)&L,\\
+\big(f(e+c),f(e+c+1)\big)&R.
+\end{cases}
+\tag{IV.125}
+$$
+
+The reply is $1$ precisely when both entries are $0$. Thus the marker
+tests two adjacent **long** selected gaps. Each actual query advances
+just its chosen side count. Histories are stored newest first. The
+state $h_n=(\text{actions},\text{replies},\text{stopped})$ at public
+attempt horizon $n$ starts at $([],[],0)$. While active it prepends the
+chosen side and reply and sets `stopped` to that reply. Once stopped,
+$h_{n+1}=h_n$; no policy or source is read at later horizons.
+
+The corresponding `nativeStep` in
+[FiniteAtomLinearRealization](../../../D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization.lean)
+emits `zero` on an unmarked query and, under `Task.raw`, `rawMark` on
+the marker. A later native query emits `reject` and leaves the same
+state. Such a rejection is not a new source sample. Under
+`Task.retained`, the terminal mode is `root(recoveredRoot h)`; under
+`Task.raw`, it is merely `stopped`. Residual `Test` access to mode and
+new outputs does not grant access to the whole stored history.
+
+**Assumption 40.4 (acquired port and readout contract).** The mathematical
+record results refer to the actual $h_n$ just defined. To apply them to
+a geometric acquisition, suppose an actually bound handle refers to one
+pointed selected chain, with the orientation, calibration and marker
+comparison (IV.125). Its two cursors start at that same anchor and obey
+the side counts; the handle, cursors and replies remain bound to that
+source throughout the run. The controller has the specified query
+rights and progress, and preserves every actual action, reply and stop
+flag. For results that read $h_n$, access to that complete record and
+its finite postprocessing is supplied. A public attempt clock may
+select $n=4$ without changing the native stop flag. The seed, controller,
+clock, references, records and source-independent scratch carry no
+additional $e$-dependent advice. Random seeds, if used, have a law
+independent of $e$.
+
+This is a mathematical port premise, not an assertion of physical
+installation. There is no reset, extra sample, independent second arm,
+postselection, free phase/origin read or new source output after
+absorption. Evaluating (IV.122) as syntax is a finite function of
+recovered atoms. Executing those operations on an original native tree
+additionally requires that actual tree reference, its known operand
+addresses or supplied scaffold, current edit rights, lawful phase,
+backing, writer, owed-action and return contract. The original AA/AAII
+contracts and all the earlier native-history fibres in this volume
+retain those premises. The selected-gap port does not provide them.
+
+## 41. Sharp root identification and a different stopping horizon
+
+**Theorem 41.1 (every-policy root and stopping bounds).** For every
+$e\in\mathbb Z$, every policy of Definition 40.3 and every fixed seed,
+the source $S_e$ satisfies `noAdjacentOnes` and $h_5$ is stopped. The
+existing `recoveredRoot` equals $f(e)$ at $h_5$ and every later horizon.
+With complete retained-record access, define
+
+$$
+D_4(h_4)=
+\begin{cases}
+\operatorname{recoveredRoot}(h_4)&h_4.\mathrm{stopped}=1,\\
+\#_L(h_4.\mathrm{actions})\bmod2&h_4.\mathrm{stopped}=0.
+\end{cases}
+\tag{IV.126}
+$$
+
+Then $D_4(h_4)=f(e)$. For **each** policy and fixed seed, some
+nonnegative origin remains active through four attempts and first
+marks at five. No policy with a decoder of its complete record can
+identify $f(e)$ uniformly over nonnegative origins in at most three
+attempts. The latter impossibility also holds for source-independent
+randomized control with exact recovery required almost surely at
+every origin.
+
+**Proof.** For every integer $u$ and positive integer $m$, telescoping
+the displayed floors gives
+
+$$
+\begin{aligned}
+\sum_{i=u}^{u+m-1} f(i)
+ &=m-\lfloor(u+m+1)s\rfloor+\lfloor(u+1)s\rfloor,\\
+\lfloor ms\rfloor
+ &\le \lfloor(u+m+1)s\rfloor-\lfloor(u+1)s\rfloor
+ \le\lceil ms\rceil.
+\end{aligned}
+\tag{IV.127}
+$$
+
+These are ordinary mechanical-word floor estimates, including every
+integer boundary. Since $1<2s<2$, every adjacent pair of $f$ has at
+most one $1$. Since $1<3s<2$, every triple has at least one $1$.
+Since $3<5s<4$, every length-five block has at most two $1$s. Thus
+
+$$
+11,\qquad 000,\qquad 10101
+\quad\hbox{do not occur in }f.
+\tag{IV.128}
+$$
+
+The first exclusion proves the exact `noAdjacentOnes` premise on both
+rays, including edges incident to the common root.
+
+If $q$ actual queries have all replied $0$, let $l,r$ be their left and
+right counts. Each compared edge is neither $11$ nor $00$, and hence
+alternates. Because the two rays are opposite portions of one source,
+their union is the contiguous interval
+
+$$
+f(e-l)\cdots f(e+r),\qquad l+r=q.
+\tag{IV.129}
+$$
+
+Every edge in that interval has been compared, regardless of query
+interleaving. At $q=5$ it would be an alternating six-letter word.
+Each such word contains $10101$, contradicting (IV.128). Consequently
+the fifth attempt has already marked. At an actual stopped state use
+the pointwise supplier
+[`stopped_root_recovery`](../../../D5/S3/Observer/ProbabilisticClosure/RawFiniteAtomLinearRealization.lean)
+on this very $S_e$ and its proved `noAdjacentOnes`. This supplies the
+claimed root without a probability-law premise. Absorption supplies
+all later horizons. No new conditional root-recovery principle is
+being asserted.
+
+If $h_4$ is active, all four attempts were actual queries. Its five
+letters alternate. The excluded word $10101$ leaves only $01010$ in
+(IV.129). The root is $l$ positions from its left end, so $f(e)=l\bmod2$.
+If already stopped, the same supplier applies. This proves (IV.126).
+The decoder does not set `stopped` or create a marker at attempt four.
+
+For sharpness, the exact canonical block is
+
+$$
+f(2)\cdots f(8)=0010100.
+\tag{IV.130}
+$$
+
+Fix a policy and seed and follow its four-action replay in which all
+replies are $0$. Let $l$ be the resulting left count. At origin
+$e=l+3$, the four queried edges lie inside $f(3)\cdots f(7)=01010$.
+Induction on the replay shows that all four actions really occur
+with zero replies on that source. The next query, on either side,
+adds the $0$ at index $2$ or $8$ to a zero endpoint. It marks.
+Thus every such policy has worst stopping horizon five.
+
+For the three-attempt lower bound, take its three-action zero replay
+and let its left count be $l$. The two origins $e_0=l+3$ and $e_1=l+4$
+give observed intervals $f(3)\cdots f(6)=0101$ and
+$f(4)\cdots f(7)=1010$. Both produce exactly the replay's actions,
+three zero replies and an active flag. Their roots, at the same
+offset $l$, are opposite. Any earlier readout has the same inputs on
+these sources too. Therefore no decoder succeeds on both.
+
+For a randomized policy, the third-attempt zero replay has only eight
+possible action words. At least one has positive seed probability.
+Use the same two origins for that word and couple the seed identically.
+On this event the entire available record and seed agree, and the
+correct roots differ. The sum of the two error probabilities is at
+least the event probability, so exact almost-sure recovery at every
+origin is impossible. The finite block (IV.130), and all later finite
+witnesses, follow directly from (IV.119): for $n>0$ its floors can be
+certified by
+
+$$
+\lfloor ns\rfloor=q
+\quad\Longleftrightarrow\quad
+(2q+n)^2<5n^2<(2q+2+n)^2\quad(q\ge0).
+\tag{IV.131}
+$$
+
+Irrationality makes both comparisons strict. $\square$
+
+**Proposition 41.2 (the readout domain is substantive).** The terminal
+`Task.retained` root test receives $f(e)$ by horizon five. The
+four-attempt decoder (IV.126) is not furnished by a `Task.raw` port
+that exposes only current mode and new query outputs. Neither the
+uncomplemented mechanical letters nor independent outward rays can
+replace (IV.124) in Theorem 41.1.
+
+**Proof.** At a stopped state `currentMode retained` is exactly
+`root(recoveredRoot h)`; applying the read function that returns its
+root bit gives $f(e)$. Under `Task.raw`, an active fourth-horizon state
+only exposes `active`, and the terminal mode is only `stopped`.
+The parity in (IV.126) reads side counts in the actually stored history;
+that access is an additional premise of the stated decoder. Nothing
+in the theorem changes the `Test` interface.
+
+The uncomplemented $d$ has no $00$, by the two-letter estimate in
+(IV.127). Fed directly into a $00$ marker it never marks; it also has
+$11$, for instance $d(2)=d(3)=1$, so the no-$11$ premise fails.
+For a different common-root carrier, copy the one-sided root word
+$f(3)f(4)\cdots=010100\cdots$ outward on **both** arms. Each ray
+individually is a genuine golden continuation with no $11$. Four
+queries on one ray followed by four on the other all reply $0$; query
+nine marks. These are not opposite rays of (IV.119). If merely no-$11$
+is assumed, two endlessly alternating outward rays never mark at all.
+Thus neither marginal word constraints nor conditional stopped-root
+recovery supply the common-source stopping theorem. $\square$
+
+## 42. Four consecutive original atoms from one obtained record
+
+**Theorem 42.1 (actual four-atom acquisition).** With Assumption 40.4's
+complete record access and the fixed always-right policy, one actual
+run determines
+
+$$
+(a_e,a_{e+1},a_{e+2},a_{e+3})
+\quad\hbox{and}\quad \mathcal R_4(e)
+\qquad(e\in\mathbb Z).
+\tag{IV.132}
+$$
+
+Let $K$ be the retained number of actual queries at first stop, also
+equal to $|h_5.\mathrm{actions}|$. Its exact decoding table is
+
+| $K$ | $f(e)f(e+1)f(e+2)f(e+3)$ | One canonical origin $e$ |
+| --- | --- | --- |
+| $1$ | $0010$ | $2$ |
+| $2$ | $1001$ | $1$ |
+| $3$ | $0100$ | $0$ |
+| $4$ | $1010$ | $4$ |
+| $5$ | $0101$ | $3$ |
+
+All five cases are attained in the one natural generated word.
+Consequently any exact summary of this policy's records sufficient for
+the task (IV.132) needs at least five values, and the summary $K$ attains
+that bound. This counts task-summary values, not the physical memory,
+controller state or total cost of acquisition.
+
+**Proof.** Theorem 41.1 ensures $1\le K\le5$. Before its terminal $00$
+edge, the root/right word alternates. If $K=1$, the two known letters
+are $00$; no $000$ forces the next letter to be $1$, and no $11$
+forces the following letter to be $0$. If $K=2$, the known word is
+$100$ and no $000$ forces the fourth letter to be $1$. At $K=3$ the
+known word is $0100$. At $K=4,5$ the words through the marker are
+$10100,010100$, respectively, giving the displayed four-letter
+prefixes. The inference of a letter beyond a terminal marker is a
+consequence of the fixed source promise (IV.128); it is not an
+additional source query.
+
+Exact blocks at the listed origins begin, respectively,
+$00101001$, $10010100$, $01001010$, $10100100$, $01010010$.
+Thus all rows occur. Substituting each recovered bit by its atom in
+(IV.119), and applying precisely (IV.121) to each atom, gives
+(IV.132). The two atomic $\rho$ outputs are distinct, so the five
+different input tuples also give five different output tuples. Any
+sufficient summary must distinguish them. $\square$
+
+**Theorem 42.2 (five atoms cannot be uniformly acquired).** There is no
+policy on the original absorbing menu and no postprocessing of its
+one actual run, even with its complete trace, arbitrary later horizons,
+source-independent auxiliary storage and independent randomized
+control, that supplies $\mathcal R_5(e)$ exactly for every nonnegative
+origin $e$. The same impossibility holds for the first five atomic
+labels and even for their concatenated original-$\rho$ output
+frontier. This does not forbid five-label recovery at particular
+origins or under additional source advice.
+
+**Proof.** Before the first reply, a fixed seed chooses either $R$ or
+$L$. If it chooses $R$, compare $e=20$ and $e=10$. Their first five
+bits are, respectively,
+
+$$
+00100,\qquad00101.
+\tag{IV.133}
+$$
+
+Both immediately mark on $R$. Their actual state is identical:
+actions $[R]$, replies $[1]$, stopped $=1$. If it chooses $L$, compare
+$e=21$ and $e=11$. Their first five bits are
+
+$$
+01001,\qquad01010,
+\tag{IV.134}
+$$
+
+and both have $f(e-1)=f(e)=0$. Both immediately mark on $L$, with
+identical actions $[L]$, replies $[1]$ and terminal flag. Each pair
+consists of origins of the same sequence. All later states agree by
+absorption; every native query afterwards rejects. Source-independent
+postprocessing therefore cannot return different answers on the pair.
+The atomic tuples differ, and injectivity of the two atomic outputs
+in (IV.121) makes their $\mathcal R_5$ tuples differ. Even the flattened
+outputs differ:
+
+$$
+\begin{array}{c|cc}
+\text{first side}&\text{first origin's output}&\text{second origin's output}\\
+R&010100101&01010010\\
+L&01001010&01001001.
+\end{array}
+\tag{IV.135}
+$$
+
+For independent randomized control let $p$ be the probability of
+choosing $R$ first. Coupling the same seed and any later decoder coins
+on the right witness pair shows that its two error probabilities have
+sum at least $p$. On the left witness pair that sum is at least $1-p$.
+One of these is positive. Indeed the worst error over the four fixed
+origins is at least $\max(p,1-p)/2\ge1/4$. Exact recovery almost surely
+at every origin is therefore impossible. No change to the allowed
+menu has been used. $\square$
+
+**Proposition 42.3 (scaffolds and the original tree boundary).** The
+recovered four atoms determine $\rho$ of any **supplied known** ordered
+binary scaffold filled with those atoms, preserving all scaffold and
+beta-output brackets. They do not determine the brackets of an unknown
+original tree with that frontier.
+
+**Proof.** Recursive application of (IV.121) to the supplied scaffold
+computes its output from its leaves. For the second statement the two
+trees
+
+$$
+\langle\langle\beta,\beta\rangle,\langle\alpha,\beta\rangle\rangle,
+\qquad
+\langle\beta,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle
+\tag{IV.136}
+$$
+
+both have the attained four-letter frontier $0010$. Their left children
+are a branch and an atom, respectively. After $\rho$, their left
+subtrees are respectively
+$\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle$
+and $\langle\beta,\alpha\rangle$, which still differ. The gap word
+supplies no measurement of that structure. The original source's Theorem 5.4 still
+recovers composition from its two quantity readings, and Theorem 9.3
+still recovers a tree from all its path readings. Neither set of
+premises is silently supplied by a flat marker record. $\square$
+
+## 43. The acquired metric segment and its chronological fibres
+
+**Definition 43.1 (a relative chart with its boundary).** At the first
+stopped state let $l,r$ be the total left/right counts and $K=l+r$.
+For $-l\le j\le r$ write $b_j=f(e+j)$. The rooted oriented chart has
+vertices at relative positions
+
+$$
+Q(0)=0,\qquad Q(j+1)-Q(j)=\varphi^2-b_j
+\quad(-l\le j\le r).
+\tag{IV.137}
+$$
+
+It includes all $K+1$ visited gap tiles, their $K+2$ endpoints
+$Q(-l),\ldots,Q(r+1)$, the root tile $[Q(0),Q(1)]$ and the two end
+boundary points. In the selected realization
+$Q(j)=P(e+j)-P(e)$. The boundary alone consists only of the two end
+points with the indicated orientation; it is a coarser observation
+than this full chart. No absolute translation is part of the chart.
+The event spine is the chronological side word obtained by reversing
+the stored action list.
+
+**Theorem 43.2 (exact reconstruction and the missing interleaving).**
+For every source, policy and fixed seed in Theorem 41.1, its actual
+terminal transcript determines the chart (IV.137). On the image of
+these transcripts, the chart together with its event spine determines
+the full original action/reply/stopped record. The chart alone loses
+exactly the permitted interleavings of the two outward query chains:
+if its terminal side is $L$, their number is
+$\binom{K-1}{l-1}$, and if it is $R$, their number is
+$\binom{K-1}{l}$. These fibre counts range over all policies capable
+of executing the indicated side word, rather than over a fixed
+policy's internal seed distribution.
+
+**Proof.** Let $j$ be the last side and $c$ its count **before** the last
+query. The terminal compared pair is $00$. All previous compared edges
+alternate by (IV.128). Moving $c$ edges inward from the inner zero
+endpoint gives root bit $c\bmod2$, precisely the existing
+`recoveredRoot` formula. Each other preterminal edge has different
+endpoints, so the known root and the stored side order determine both
+outward bit strings. The last reply supplies its additional outer zero
+endpoint. All $b_{-l},\ldots,b_r$ are thereby known. Substituting
+(IV.120) and summing lengths gives (IV.137), including its endpoints.
+
+Conversely the oriented chart recovers its tile bits since
+$\varphi\ne\varphi^2$, and it specifies $l,r$ relative to the root.
+On this actual terminal image there is just one $00$ adjacency among
+visited tiles: the terminal edge. All other compared adjacencies
+alternate. That edge is outermost on the last side and identifies
+that side (also when $K=1$, using the root). Before it, the two side
+chains have respectively $(l-1,r)$ or $(l,r-1)$ edges. Each chain has
+one forced outward order. Every shuffle of those preterminal chains
+is legal on this same source: it reads only the already specified
+alternating edges. Appending the terminal side produces the first
+marker at exactly $K$. There are the stated binomial numbers of
+shuffles. A fixed scheduled policy can realize each one. No other
+side word can have these counts, this final side and the same chart.
+
+Given the event spine, restore its replies as $K-1$ zeros followed
+by one $1$, reverse both lists, and set stopped to $1$. This recovers
+the actual terminal state. At a later public horizon the state is the
+same, so its chart and event spine do not encode the extra elapsed
+waiting or rejection chronology. $\square$
+
+**Proposition 43.3 (equal spatial chart, different obtained times).**
+There are distinct actual chronological transcripts on one and the
+same source with identical rooted metric chart and boundary. Neither
+that chart nor its boundary alone determines the query chronology.
+
+**Proof.** At $e=13$, the factor at indices $10$ through $14$ is
+$00101$, with root at $13$. The chronological side words
+
+$$
+LRLL,\qquad LLRL,\qquad RLLL
+\tag{IV.138}
+$$
+
+all have replies $0001$, end at $(l,r)=(3,1)$ and visit precisely
+$[e-3,e+1]$ in gap-site indices. Their last comparison is between
+indices $11,10$, the unique $00$. Their chart is the same five tiles
+$00101$, with lengths
+$\varphi^2,\varphi^2,\varphi,\varphi^2,\varphi$, and the same root
+tile. Their acquired action lists differ. This also attains the
+fibre count $\binom32=3$ in Theorem 43.2. $\square$
+
+**Definition 43.4 (which notions of time and memory are recovered).**
+The memory in Theorem 43.2 is the obtained marker transcript. Its time
+is query order on the fixed selected chain; its space is the relative
+tile chart; its boundary is that chart's two endpoints. The mutual
+inverse concerns the **supplemented** chart carrying its event spine,
+on the actual terminal image. It neither identifies this query order
+with the successful $P/S$ generation histories of Definition 1.1 nor
+recovers those histories from (IV.123). The four-atom summary $K$ in
+Theorem 42.1 is sufficient for its specified consumer under its fixed
+policy; it is not a sufficient description for every original native
+operation. Reference bindings, orientation, calibration, controller,
+clock, retention and postprocessing remain the premises in Assumption
+40.4, with their own resources. The chart has no claim of a universal
+space/time/memory/boundary inverse or a total-resource minimum.
+
+## 44. Endpoint, source law and reanchoring boundaries
+
+**Proposition 44.1 (the exact closed-window defect).** Let
+$\Lambda_{\rm cl}$ be the physical `modelSet goldenWindow` of
+[GoldenModelSetDelone](../../../D5/S3/Fourier/GoldenModelSetDelone.lean),
+with internal coordinate $a-bs$ and its supplied **closed** window
+$[s-1,s]$. Then
+
+$$
+\Lambda_{\rm cl}=\Lambda_{\rm sel}\ \sqcup\ \{-1-\varphi\}.
+\tag{IV.139}
+$$
+
+The additional point splits one selected $\varphi^2$ gap into gaps
+$\varphi$ and $1$. Thus the complete closed-set nearest-neighbour
+geometry is not globally the selected two-length chain of (IV.120).
+
+**Proof.** At integer coefficient $b$, membership requires
+
+$$
+(b+1)s-1\le a\le(b+1)s,\qquad a\in\mathbb Z.
+\tag{IV.140}
+$$
+
+Unless $(b+1)s$ is integral, this unit interval contains exactly
+$A(b)=\lfloor(b+1)s\rfloor$. Irrationality of $s$ makes its integral
+case exactly $b=-1$. At that fibre the two integers are $0$ and $-1$.
+The first is selected and gives $P(-1)=-\varphi$; the other gives
+$-1-\varphi$. Irrationality of $\varphi$ makes the representation
+$a+b\varphi$ injective on $\mathbb Z^2$, so the extra point cannot be
+selected at another fibre. It lies strictly between
+$P(-2)=-1-2\varphi$ and $P(-1)=-\varphi$. Their distances to it are
+$\varphi$ and $1$, while their selected separation was $\varphi^2$.
+This proves (IV.139). In particular a port on all closed-set neighbours
+does not satisfy Assumption 40.4 just by having the same window name.
+An actual selection service, an explicit other endpoint convention or
+a proved restricted-patch correspondence is needed. The distinct set
+named `goldenModelSet = range betaGolden` in
+[GoldenModelSetSelfSimilar](../../../D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar.lean)
+is not identified here with either side of (IV.139). $\square$
+
+**Proposition 44.2 (no transfer of the finite-mixture source law).**
+Under any probability distribution on the origins $e$ in (IV.124), the
+root/right cylinder $000$ has probability zero. In the existing
+`sourceMixture` law with root-one probability $0<p<1$, finitely many
+parameters $0<q_i<1$ and positive weights $w_i$ summing to one, its
+probability is
+
+$$
+(1-p)\sum_i w_i(1-q_i)^2>0.
+\tag{IV.141}
+$$
+
+Thus that law cannot be substituted for the present generated source.
+
+**Proof.** The absence of $000$ is (IV.128), pointwise in $e$.
+The actual `transition` supplier sends $0$ to $1$ with probability
+$q_i$ and $1$ to $0$ deterministically. Conditional on root $0$, two
+successive zeros on a fixed arm therefore have probability
+$(1-q_i)^2$. Weighting by the root probability and mixture weights
+gives (IV.141). In addition `conditionalSourceLaw` supplies two
+conditionally independent outward Markov trajectories, whereas
+(IV.124) supplies opposite parts of one fixed chain. The pointwise
+`stopped_root_recovery` used above needs neither law equality nor arm
+independence. No finite-atom carrier dimension, mixture identification
+or Markov stopping tail is inferred for $S_e$. $\square$
+
+**Theorem 44.3 (one fixed pair defeats reanchored continuation).**
+For $e=13,18$, every original policy with the same fixed seed gives
+identical complete actual states at every horizon. Every finite
+continuation using only their absorbed native marker interface and
+source-independent postprocessing also agrees. Nevertheless
+
+$$
+f(13+6)=1,\qquad f(18+6)=0.
+\tag{IV.142}
+$$
+
+Consequently the acquired terminal record does not determine the root
+at the six-step-right anchor, even with the full query chronology
+retained. With equal prior on these two origins and any independent
+randomized controller/decoder its error for that target is at least
+$1/2$.
+
+**Proof.** Exact floors in (IV.119) give the common radius-five blocks
+
+$$
+f(e-5)\cdots f(e+5)=01001010010\qquad(e=13,18),
+\tag{IV.143}
+$$
+
+and the opposite bits (IV.142). During the first five attempts every
+source index consulted lies within that radius. Inductively identical
+records and seed give the same next side, the same compared bits and
+the same reply. By Theorem 41.1 both runs have stopped by horizon five.
+Absorption then gives equality at every horizon. Their retained root
+is $0$ in both cases. A later `nativeStep` produces only `reject`, and
+an inspection sees the same mode. Induction on a finite residual test
+therefore gives the same result. The same holds for any computation
+whose inputs are only this shared record and source-independent data.
+Couple all independent random coins identically to get identical
+observation laws. Under equal prior the same output distribution
+faces opposite required bits, so its average error is at least $1/2$
+(exactly $1/2$ for a binary-valued decoder).
+
+Both witnesses occur within the original finite generated word
+
+$$
+\operatorname{leafbits}(T_8)
+=0100101001001010010100100101001001,
+\tag{IV.144}
+$$
+
+of length $F_9=34$. This confirms that their differing natural
+origins are in one generated leaf word. The infinite source used in
+the proof remains the expressly defined two-sided extension; no
+extra finite-tree leaves are supplied. $\square$
+
+**Definition 44.4 (a source-bound anchor-transport contract).** An
+anchor-transport extension has acquired configurations carrying the
+same source handle, old chronological record, current anchor and two
+cursors. Its additional transition has source projection
+$S_e\mapsto S_{e+1}$, preserves source identity and the old record,
+and supplies active cursors whose subsequent queries obey (IV.125)
+at that new anchor. Its domain includes the actual reference and
+operation rights, backing, clock, progress, rejection and return
+conditions authorizing that transition. No transition of this kind
+is part of Definition 40.3's absorbed menu. A reset, fresh preparation
+or index/phase oracle is a different specified supply.
+
+**Corollary 44.5 (additional source dependence is necessary).** No
+extension constructible solely from the acquired terminal record,
+absorbed native queries and source-independent postprocessing realizes
+six successive exact anchor transports of Definition 44.4 followed
+by the original root acquisition, uniformly over the source family.
+
+**Proof.** On $S_{13}$ and $S_{18}$ all the allowed inputs to such a
+construction agree by Theorem 44.3. Six exact transports and root
+acquisition would return their different bits at the new anchor in
+(IV.142), a contradiction. Thus a genuine extension with that consumer
+needs an additional source-dependent record or source action that
+separates those two realizations. $\square$
+
+**Definition 44.6 (mathematical scope of the source correspondence).**
+The earlier AA/AAII operational closures, finite request forests,
+original quantity/path recovery and native generation-memory results
+use their own sources and acquired contracts. The present task has
+the source (IV.124), the obtained record of Definition 40.3 and the
+finite original consumer (IV.122). The source-specific assertions in
+Theorems 41.1, 42.1–42.2, 43.2 and 44.3 are `repo-derived` ordinary
+mathematics. Their suppliers are the existing word identity, the
+floor-selected lift, the absorbing execution and the pointwise
+conditional stopped-root theorem; none is a new general Sturmian or
+root-recovery principle. Physical port realization is the explicit
+premise in Assumption 40.4; arbitrary tree brackets and moving-anchor
+continuation need the additional structures distinguished in
+Proposition 42.3 and Definition 44.4. These finite-domain expressions
+of space, query time, boundary and retained memory do not assert a
+general inverse between those notions or a universal minimal relation
+structure.
+
+## 追加锚（本行以下为增补区）
