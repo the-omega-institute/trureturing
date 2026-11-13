@@ -13,7 +13,7 @@ internal sealed class SixBitCatalogueVerificationDocument : IScribeDocumentDefin
                 H("Kernel completeness check"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create(
                     "D5/L/QuadraticForms/binarysubspace2026complete")),
-                Blocks(Paragraph(Text("The complete adjoining-vector predicate and original table are unchanged. Historical native-evaluation provenance remains explicit."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The complete adjoining-vector predicate and original table are unchanged. The source proved this obligation using native_decide. Historical native-evaluation provenance remains explicit."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("native-properness-check"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Orthogonality/SixBitCatalogueVerification.catalogue_proper"),
                 H("Kernel properness check"), StatementSource.WithoutFormula(),
