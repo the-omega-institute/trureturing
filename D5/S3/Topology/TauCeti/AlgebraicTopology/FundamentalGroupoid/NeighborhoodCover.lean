@@ -32,7 +32,7 @@ noncomputable section
 open Function Set Metric Topology
 
 namespace TauCeti
-theorem lebesgue_number_lemma_of_metric_of_mem_nhds {α : Type*} {ι : Sort*} [PseudoMetricSpace α]
+private theorem lebesgue_number_lemma_of_metric_of_mem_nhds {α : Type*} {ι : Sort*} [PseudoMetricSpace α]
     {s : Set α} {c : ι → Set α} (hs : IsCompact s) (hc : ∀ x ∈ s, ∃ i, c i ∈ 𝓝 x) :
     ∃ δ > 0, ∀ x ∈ s, ∃ i, ball x δ ⊆ c i := by
   obtain ⟨δ, hδ, h⟩ := lebesgue_number_lemma_of_metric hs (c := fun i ↦ interior (c i))
@@ -44,7 +44,7 @@ end TauCeti
 open CategoryTheory
 namespace Path.Homotopic.Quotient
 @[simp]
-theorem cast_mem_arrows_iff
+private theorem cast_mem_arrows_iff
     {X : Type*} [TopologicalSpace X]
     {S : CategoryTheory.Subgroupoid (_root_.FundamentalGroupoid X)} {a b a' b' : X}
     (q : Path.Homotopic.Quotient a b) (ha : a' = a) (hb : b' = b) :
@@ -57,7 +57,7 @@ theorem cast_mem_arrows_iff
   rw [Path.Homotopic.Quotient.cast_rfl_rfl]
 end Path.Homotopic.Quotient
 namespace ContinuousMap
-theorem fundamentalGroupoid_map_obj_injective {X A : Type*}
+private theorem fundamentalGroupoid_map_obj_injective {X A : Type*}
     [TopologicalSpace X] [TopologicalSpace A] (f : C(X, A)) (hf : Function.Injective f) :
     Function.Injective (_root_.FundamentalGroupoid.map f).obj := by
   rintro ⟨a⟩ ⟨b⟩ h
@@ -73,69 +73,69 @@ variable {ι : Type u}
 def singleton (i : ι) : CechIndex ι :=
   OrderDual.toDual ⟨{i}, Finset.singleton_nonempty i⟩
 @[simp]
-lemma coe_singleton (i : ι) : (singleton i).1 = {i} := (rfl)
+private lemma coe_singleton (i : ι) : (singleton i).1 = {i} := (rfl)
 @[simp]
-lemma le_iff {s t : CechIndex ι} : s ≤ t ↔ t.1 ⊆ s.1 := Iff.rfl
+private lemma le_iff {s t : CechIndex ι} : s ≤ t ↔ t.1 ⊆ s.1 := Iff.rfl
 end CechIndex
 variable {X : TopCat.{v}} {ι : Type u} (U : ι → Opens X)
 def cechIntersection (s : CechIndex ι) : Opens X :=
   s.1.inf U
 @[simp]
-lemma mem_cechIntersection (x : X) (s : CechIndex ι) :
+private lemma mem_cechIntersection (x : X) (s : CechIndex ι) :
     x ∈ cechIntersection U s ↔ ∀ i ∈ s.1, x ∈ U i := by
   simp [← SetLike.mem_coe, cechIntersection, Opens.coe_finset_inf, Finset.inf_set_eq_iInter]
 @[simp]
-lemma cechIntersection_singleton (i : ι) :
+private lemma cechIntersection_singleton (i : ι) :
     cechIntersection U (CechIndex.singleton i) = U i :=
   Finset.inf_singleton
-lemma cechIntersection_mono {s t : CechIndex ι} (h : s ≤ t) :
+private lemma cechIntersection_mono {s t : CechIndex ι} (h : s ≤ t) :
     cechIntersection U s ≤ cechIntersection U t :=
   Finset.inf_mono h
-def cechOpenDiagram : CechIndex ι ⥤ Opens X where
+private def cechOpenDiagram : CechIndex ι ⥤ Opens X where
   obj := cechIntersection U
   map f := homOfLE (cechIntersection_mono U f.le)
   map_id _ := Subsingleton.elim _ _
   map_comp _ _ := Subsingleton.elim _ _
 @[simp]
-lemma cechOpenDiagram_obj (s : CechIndex ι) :
+private lemma cechOpenDiagram_obj (s : CechIndex ι) :
     (cechOpenDiagram U).obj s = cechIntersection U s := (rfl)
 @[simp]
-lemma cechOpenDiagram_map {s t : CechIndex ι} (f : s ⟶ t) :
+private lemma cechOpenDiagram_map {s t : CechIndex ι} (f : s ⟶ t) :
     (cechOpenDiagram U).map f =
       eqToHom (cechOpenDiagram_obj U s) ≫ homOfLE (cechIntersection_mono U f.le) ≫
         eqToHom (cechOpenDiagram_obj U t).symm :=
   Subsingleton.elim _ _
-def cechTopDiagram : CechIndex ι ⥤ TopCat :=
+private def cechTopDiagram : CechIndex ι ⥤ TopCat :=
   cechOpenDiagram U ⋙ Opens.toTopCat X
 @[simp]
-lemma cechTopDiagram_obj (s : CechIndex ι) :
+private lemma cechTopDiagram_obj (s : CechIndex ι) :
     (cechTopDiagram U).obj s = TopCat.of (cechIntersection U s) := (rfl)
 @[simp]
-lemma cechTopDiagram_map_apply {s t : CechIndex ι} (f : s ⟶ t)
+private lemma cechTopDiagram_map_apply {s t : CechIndex ι} (f : s ⟶ t)
     (x : TopCat.of (cechIntersection U s)) :
     eqToHom (cechTopDiagram_obj U t)
         ((cechTopDiagram U).map f (eqToHom (cechTopDiagram_obj U s).symm x)) =
       ⟨x.1, cechIntersection_mono U f.le x.2⟩ :=
   Opens.toTopCat_map X (f := (cechOpenDiagram U).map f)
-def cechInclusion (s : CechIndex ι) : (cechTopDiagram U).obj s ⟶ X :=
+private def cechInclusion (s : CechIndex ι) : (cechTopDiagram U).obj s ⟶ X :=
   Opens.inclusion' (cechIntersection U s)
 @[simp]
-lemma cechInclusion_apply (s : CechIndex ι) (x : TopCat.of (cechIntersection U s)) :
+private lemma cechInclusion_apply (s : CechIndex ι) (x : TopCat.of (cechIntersection U s)) :
     cechInclusion U s (eqToHom (cechTopDiagram_obj U s).symm x) = x.1 :=
   congrFun Opens.coe_inclusion' x
 @[simp, reassoc]
-lemma cechTopDiagram_map_comp_inclusion {s t : CechIndex ι} (f : s ⟶ t) :
+private lemma cechTopDiagram_map_comp_inclusion {s t : CechIndex ι} (f : s ⟶ t) :
     (cechTopDiagram U).map f ≫ cechInclusion U t = cechInclusion U s := by
   ext x
   exact (cechInclusion_apply U t _).trans (congrArg Subtype.val (cechTopDiagram_map_apply U f x))
-def cechInclusionNatTrans :
+private def cechInclusionNatTrans :
     cechTopDiagram U ⟶ (Functor.const (CechIndex ι)).obj X where
   app := cechInclusion U
   naturality _ _ f := cechTopDiagram_map_comp_inclusion U f
 @[simp]
-lemma cechInclusionNatTrans_app (s : CechIndex ι) :
+private lemma cechInclusionNatTrans_app (s : CechIndex ι) :
     (cechInclusionNatTrans U).app s = cechInclusion U s := (rfl)
-lemma exists_mem_cechIntersection_singleton (hU : IsOpenCover U) (x : X) :
+private lemma exists_mem_cechIntersection_singleton (hU : IsOpenCover U) (x : X) :
     ∃ i, x ∈ cechIntersection U (CechIndex.singleton i) := by
   simpa using hU.exists_mem x
 
@@ -187,7 +187,7 @@ private theorem mk_concat_mem_iSup_im (hU : ∀ x, ∃ i, U i ∈ 𝓝 x) {n : �
     rw [Path.concat_succ]
     exact Subgroupoid.mul _ (ih (p ∘ Fin.castSucc) (fun k ↦ F k.castSucc) fun k ↦ hF k.castSucc)
       (mk_mem_iSup_im _ hi)
-theorem iSup_im_map_subtypeVal_eq_top (hU : ∀ x, ∃ i, U i ∈ 𝓝 x) :
+private theorem iSup_im_map_subtypeVal_eq_top (hU : ∀ x, ∃ i, U i ∈ 𝓝 x) :
     ⨆ i, Subgroupoid.im (map (ContinuousMap.subtypeVal (U i)))
       (ContinuousMap.fundamentalGroupoid_map_obj_injective
         (ContinuousMap.subtypeVal (U i)) Subtype.val_injective) = ⊤ := by
@@ -206,7 +206,7 @@ theorem iSup_im_map_subtypeVal_eq_top (hU : ∀ x, ∃ i, U i ∈ 𝓝 x) :
     rfl
   rw [hγ _ _ ht0 htn, Path.Homotopic.Quotient.mk_cast]
   exact (Path.Homotopic.Quotient.cast_mem_arrows_iff _ _ _).2 hsub
-theorem functor_ext (hU : ∀ x, ∃ i, U i ∈ 𝓝 x) {D : Type*} [Category D]
+private theorem functor_ext (hU : ∀ x, ∃ i, U i ∈ 𝓝 x) {D : Type*} [Category D]
     {F G : _root_.FundamentalGroupoid X ⥤ D}
     (h : ∀ i, map (ContinuousMap.subtypeVal (U i)) ⋙ F =
       map (ContinuousMap.subtypeVal (U i)) ⋙ G) :
@@ -810,7 +810,7 @@ private lemma lift_eq_of_homotopy {x y : X} {p q : Path x y} (H : p.Homotopy q) 
     _ = lift hU F hF (H.eval (pt N N)) := by
       rw [lift_eq_liftN hU F hF _ (hrow 0) hN, lift_eq_liftN hU F hF _ (hrow N) hN, hall N]
     _ = lift hU F hF q := by rw [pt_self hN, Path.Homotopy.eval_one]
-def glue : _root_.FundamentalGroupoid X ⥤ D where
+private def glue : _root_.FundamentalGroupoid X ⥤ D where
   obj x := glueObj hU F x.as
   map {x y} := Quotient.lift (lift hU F hF (x := x.as) (y := y.as))
     fun _ _ h ↦ lift_eq_of_homotopy hU F hF h.some
@@ -818,7 +818,7 @@ def glue : _root_.FundamentalGroupoid X ⥤ D where
   map_comp := by
     rintro _ _ _ ⟨γ⟩ ⟨δ⟩
     exact lift_trans hU F hF γ δ
-@[simp] theorem map_subtypeVal_comp_glue (i : ι) :
+@[simp] private theorem map_subtypeVal_comp_glue (i : ι) :
     map (ContinuousMap.subtypeVal (U i)) ⋙ glue hU F hF = F i := by
   refine CategoryTheory.Functor.ext (fun a ↦ (obj_eq hU F hF i a.as.2).symm) fun a b γ ↦ ?_
   induction γ using Path.Homotopic.Quotient.ind with | mk γ =>
@@ -832,7 +832,7 @@ def glue : _root_.FundamentalGroupoid X ⥤ D where
     unfold locVal
     rw [hγ]
   exact (lift_eq_locVal hU F hF γ' i hγ').trans key
-theorem eq_glue {G : _root_.FundamentalGroupoid X ⥤ D}
+private theorem eq_glue {G : _root_.FundamentalGroupoid X ⥤ D}
     (hG : ∀ i, map (ContinuousMap.subtypeVal (U i)) ⋙ G = F i) : G = glue hU F hF :=
   functor_ext hU fun i ↦ (hG i).trans (map_subtypeVal_comp_glue hU F hF i).symm
 
@@ -860,13 +860,13 @@ variable {X : TopCat.{v}} {ι : Type u} (U : ι → Opens X)
 def cechDiagram : CechIndex ι ⥤ Grpd :=
   cechTopDiagram U ⋙ _root_.FundamentalGroupoid.fundamentalGroupoidFunctor
 @[simp]
-lemma cechDiagram_obj (s : CechIndex ι) :
+private lemma cechDiagram_obj (s : CechIndex ι) :
     (cechDiagram U).obj s =
       _root_.FundamentalGroupoid.fundamentalGroupoidFunctor.obj
         (TopCat.of (cechIntersection U s)) := by
   rw [cechDiagram, Functor.comp_obj, cechTopDiagram_obj]
 @[simp]
-lemma cechDiagram_map {s t : CechIndex ι} (f : s ⟶ t) :
+private lemma cechDiagram_map {s t : CechIndex ι} (f : s ⟶ t) :
     eqToHom (cechDiagram_obj U s).symm ≫ (cechDiagram U).map f ≫
         eqToHom (cechDiagram_obj U t) =
       _root_.FundamentalGroupoid.fundamentalGroupoidFunctor.map
@@ -878,11 +878,11 @@ def cechCocone : Cocone (cechDiagram U) :=
   _root_.FundamentalGroupoid.fundamentalGroupoidFunctor.mapCocone
     (Cocone.mk X (cechInclusionNatTrans U))
 @[simp]
-lemma cechCocone_pt : (cechCocone U).pt =
+private lemma cechCocone_pt : (cechCocone U).pt =
     _root_.FundamentalGroupoid.fundamentalGroupoidFunctor.obj X := by
   rfl
 @[simp]
-lemma cechCocone_ι_app (s : CechIndex ι) :
+private lemma cechCocone_ι_app (s : CechIndex ι) :
     eqToHom (cechDiagram_obj U s).symm ≫ (cechCocone U).ι.app s ≫
         eqToHom (cechCocone_pt U) =
       _root_.FundamentalGroupoid.fundamentalGroupoidFunctor.map
@@ -890,7 +890,7 @@ lemma cechCocone_ι_app (s : CechIndex ι) :
   simp only [cechCocone, Functor.mapCocone_ι_app, cechInclusionNatTrans_app, Functor.map_comp,
     eqToHom_map]
   rfl
-lemma map_subtypeVal_eq_cechCocone_ι_app (s : CechIndex ι) :
+private lemma map_subtypeVal_eq_cechCocone_ι_app (s : CechIndex ι) :
     _root_.FundamentalGroupoid.fundamentalGroupoidFunctor.map
         (TopCat.ofHom (ContinuousMap.subtypeVal (cechIntersection U s : Set X))) =
       eqToHom (cechDiagram_obj U s).symm ≫ (cechCocone U).ι.app s := by
