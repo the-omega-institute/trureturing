@@ -126,4 +126,112 @@ theorem original_ball_scale
       nlinarith
   exact ⟨e, he, heq ▸ hform, heq ▸ hcomp⟩
 
+/-- Feasibility uses the original positive cone and unit, not a reciprocal definition. -/
+def BudgetFeasible {p : V} (a : ExclusionChart C u p)
+    (v : EuclideanSpace ℝ (Fin a.dim)) (M : ℝ) : Prop :=
+  0 ≤ M ∧ ∃ g : V →ₗ[ℝ] ℝ,
+    (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ M * u x) ∧
+    ∀ z, ‖z‖ ≤ 1 → g (a.param z) = (1 + ⟪v, z⟫) / 2
+
+/-- The original infimum over all positive extensions and all nonnegative budgets. -/
+def extensionBudget {p : V} (a : ExclusionChart C u p)
+    (v : EuclideanSpace ℝ (Fin a.dim)) : ℝ :=
+  sInf {M : ℝ | BudgetFeasible a v M}
+
+private theorem sharp_budget {p : pure C u} (a : ExclusionChart C u p)
+    (t : ℝ) (ht : 0 < t)
+    (v : EuclideanSpace ℝ (Fin a.dim)) (hv : ‖v‖ = 1)
+    (q : pure C u) (hq : a.param (-v) = q)
+    (e : V →ₗ[ℝ] ℝ) (he : confirms C u q e)
+    (hform : ∀ z, e (a.param z) = 1 - t + t * ⟪-v, z⟫)
+    (hcomp : comparison C u q (a.param v) = 1 - 2 * t) :
+    BudgetFeasible a v (1 / (2 * t)) ∧
+      (∀ M, BudgetFeasible a v M → 1 / (2 * t) ≤ M) ∧
+      extensionBudget a v = 1 / (2 * t) := by
+  have ht2 : 0 < 2 * t := by positivity
+  have hupper : BudgetFeasible a v (1 / (2 * t)) := by
+    refine ⟨by positivity, (2 * t)⁻¹ • (u - e), ?_, ?_⟩
+    · intro x hx
+      change 0 ≤ (2 * t)⁻¹ * (u x - e x) ∧
+        (2 * t)⁻¹ * (u x - e x) ≤ (1 / (2 * t)) * u x
+      have hh := he.1 x hx
+      constructor
+      · exact mul_nonneg (inv_nonneg.mpr ht2.le) (sub_nonneg.mpr hh.2)
+      · simpa only [one_div] using mul_le_mul_of_nonneg_left
+          (show u x - e x ≤ u x by linarith) (inv_nonneg.mpr ht2.le)
+    · intro z hz
+      change (2 * t)⁻¹ * (u (a.param z) - e (a.param z)) = _
+      rw [chart_unit a, hform z, inner_neg_left]
+      field_simp
+      <;> ring
+  have hlower : ∀ M, BudgetFeasible a v M → 1 / (2 * t) ≤ M := by
+    rintro M ⟨hM0, g, hg, hrestrict⟩
+    have hgq := hrestrict v hv.le
+    have hgm := hrestrict (-v) (by simpa using hv.le)
+    simp only [real_inner_self_eq_norm_sq, hv, one_pow, inner_neg_right] at hgq hgm
+    have hM : 1 ≤ M := by
+      have hh := (hg _ (SingleLabelNormalBody.chart_mem a hv.le).1.1).2
+      rw [chart_unit a] at hh
+      linarith
+    have hMpos : 0 < M := by linarith
+    let f : V →ₗ[ℝ] ℝ := u - M⁻¹ • g
+    have hf : confirms C u q f := by
+      refine ⟨?_, ?_⟩
+      · intro x hx
+        have hh := hg x hx
+        have hbound : M⁻¹ * g x ≤ u x := (inv_mul_le_iff₀ hMpos).mpr (by nlinarith [hh.2])
+        change 0 ≤ u x - M⁻¹ * g x ∧ u x - M⁻¹ * g x ≤ u x
+        constructor
+        · linarith
+        · exact sub_le_self _ (mul_nonneg (inv_nonneg.mpr hMpos.le) hh.1)
+      · rw [← hq]
+        change u (a.param (-v)) - M⁻¹ * g (a.param (-v)) = 1
+        rw [chart_unit a]
+        have hz : g (a.param (-v)) = 0 := by linarith [hgm]
+        rw [hz]; ring
+    have hle : comparison C u q (a.param v) ≤ f (a.param v) :=
+      csInf_le ⟨0, by rintro r ⟨k, hk, rfl⟩; exact
+        (hk.1 _ (SingleLabelNormalBody.chart_mem a hv.le).1.1).1⟩ ⟨f, hf, rfl⟩
+    rw [hcomp] at hle
+    change 1 - 2 * t ≤ u (a.param v) - M⁻¹ * g (a.param v) at hle
+    rw [chart_unit a] at hle
+    have hg1 : g (a.param v) = 1 := by linarith [hgq]
+    rw [hg1, mul_one] at hle
+    apply (div_le_iff₀ ht2).mpr
+    have hh : 1 ≤ (2 * t) * M := (inv_le_iff_one_le_mul₀ hMpos).mp (by linarith : M⁻¹ ≤ 2 * t)
+    nlinarith
+  refine ⟨hupper, hlower, le_antisymm ?_ ?_⟩
+  · exact csInf_le ⟨0, fun _ h => h.1⟩ hupper
+  · exact le_csInf ⟨_, hupper⟩ (fun M hM => hlower M hM)
+
+/-- Each actual chart has a common strictly positive scale and the original
+optimal positive-extension budget, attained in every unit direction. -/
+theorem original_scale_and_sharp_budget
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (p : pure C u) (a : ExclusionChart C u p) :
+    ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
+      (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 →
+        ∀ q : pure C u, a.param v = q →
+        ∃ e : V →ₗ[ℝ] ℝ, confirms C u q e ∧
+          (∀ z, e (a.param z) = 1 - t + t * ⟪v, z⟫) ∧
+          (∀ z, ‖z‖ ≤ 1 → comparison C u q (a.param z) = 1 - t + t * ⟪v, z⟫)) ∧
+      (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 →
+        BudgetFeasible a v (1 / (2 * t)) ∧
+        (∀ M, BudgetFeasible a v M → 1 / (2 * t) ≤ M) ∧
+        extensionBudget a v = 1 / (2 * t)) := by
+  obtain ⟨t, ht, hthalf, hscale⟩ := original_ball_scale hc hs hg hB hPR p a
+  refine ⟨t, ht, hthalf, hscale, ?_⟩
+  intro v hv
+  have hq : a.param (-v) ∈ pure C u :=
+    ((chart_boundary hc hs hg hB p a).symm ▸
+      (show a.param (-v) ∈ a.param '' Metric.sphere 0 1 from
+        ⟨-v, by simpa using hv, rfl⟩)).2
+  obtain ⟨e, he, hform, hcomp⟩ := hscale (-v) (by simpa using hv) ⟨a.param (-v), hq⟩ rfl
+  apply sharp_budget a t ht v hv ⟨a.param (-v), hq⟩ rfl e he hform
+  simpa [inner_neg_left, real_inner_self_eq_norm_sq, hv] using hcomp v hv.le
+
+#print axioms original_scale_and_sharp_budget
+
 end D5.S3.Quantum.Foundation.OriginalBallScale
