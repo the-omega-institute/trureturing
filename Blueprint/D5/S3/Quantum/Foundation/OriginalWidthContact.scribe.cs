@@ -33,6 +33,10 @@ internal sealed class OriginalWidthContactDocument : IScribeDocumentDefinition
         OpenBracket, C("NormedSpace", R, Space), CloseBracket, Sp,
         OpenBracket, C("FiniteDimensional", R, Space), CloseBracket, Sp,
         All("C", C("PointedCone", R, Space), All("u", Dual, body))));
+    private static Formula BasicContext(Formula body) => All("V", V("Type"), Seq(
+        OpenBracket, C("NormedAddCommGroup", Space), CloseBracket, Sp,
+        OpenBracket, C("NormedSpace", R, Space), CloseBracket, Sp,
+        All("C", C("PointedCone", R, Space), All("u", Dual, body))));
 
     public DocumentDefinition Create()
     {
@@ -58,7 +62,7 @@ internal sealed class OriginalWidthContactDocument : IScribeDocumentDefinition
             All("p", P, All("M", R, Imp(Lt(D(0), m), Imp(WB(Dp(p), m), Imp(Proper(b),
                 All("q", Space, All("r", Space, Imp(And(In(q, Dp(p)), In(r, Dp(p)),
                     Eq(Sub(App(b, q), App(b, r)), m)), conclusion)))))))))));
-        Formula width = Context(All("F", C("Set", Space), All("M", R,
+        Formula width = BasicContext(All("F", C("Set", Space), All("M", R,
             new Formula.Logic(WB(V("F"), m), FormulaLogicOperator.Iff,
                 All("f", Dual, Imp(Proper(V("f")), All("x", Space, All("y", Space,
                     Imp(And(In(V("x"), V("F")), In(V("y"), V("F"))),
