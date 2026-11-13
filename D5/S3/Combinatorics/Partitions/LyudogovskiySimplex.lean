@@ -114,7 +114,12 @@ private theorem part_sum (k : ℕ) : (part k).sum = k := by
 
 private theorem part_count (k j : ℕ) :
     (part k).countP (fun x => j < x) = if j < k then 1 else 0 := by
-  by_cases h : k = 0 <;> simp [part, h]
+  by_cases h : k = 0 <;> by_cases hj : j < k <;>
+    simp [part, h, Multiset.countP_eq_card_filter, hj]
+
+private theorem singleton_count (k j : ℕ) :
+    ({k} : Multiset ℕ).countP (fun x => j < x) = if j < k then 1 else 0 := by
+  by_cases h : j < k <;> simp [Multiset.countP_eq_card_filter, h]
 
 private theorem part_positive {k x : ℕ} (h : x ∈ part k) : 0 < x := by
   by_cases hk : k = 0
@@ -166,12 +171,12 @@ private theorem transfer_predecessor {n : ℕ} {p q : Nat.Partition n}
   · intro j
     change (part a + part b + s).countP (fun x => j < x) ≤ _
     rw [hp]
-    simp only [Multiset.countP_add, part_count, Multiset.countP_singleton]
+    simp only [Multiset.countP_add, part_count, singleton_count]
     split_ifs <;> omega
   · intro j
     change (part a + part b + s).countP (fun x => j < x) ≤ _
     rw [hq]
-    simp only [Multiset.countP_add, part_count, Multiset.countP_singleton]
+    simp only [Multiset.countP_add, part_count, singleton_count]
     split_ifs <;> omega
 
 private theorem diagram_eq_of_le {n : ℕ} {p q : Nat.Partition n}
@@ -950,7 +955,8 @@ private theorem threshold_least (r : ℕ) :
 private theorem threshold_value (r : ℕ) : threshold r = triangular r + 1 :=
   (threshold_least r).csInf_eq
 
-private theorem threshold_solution : ThresholdClaim :=
+/-- The complete threshold and global-maximum question. -/
+theorem threshold_result : ThresholdClaim :=
   ⟨fun r => ⟨threshold_value r,threshold_least r⟩,maximum_formula⟩
 
 private theorem expanded_zero (r : ℕ) : expandedStaircase r 0 = staircase r := by
@@ -1072,13 +1078,10 @@ private theorem first_layer_eq (r : ℕ) (hr : 2 ≤ r) :
     rw [maximum_at_threshold] at hhi
     omega
 
-private theorem first_occurrence_solution : FirstOccurrenceClaim := by
+/-- The entire first-occurrence family at every r ≥ 2. -/
+theorem first_occurrence_result : FirstOccurrenceClaim := by
   intro r hr
   rw [threshold_value]
   exact ⟨first_layer_eq r hr, first_layer_eq r hr, family_card r⟩
-
-/-- Both complete original questions, with the literal exact-layer threshold. -/
-theorem result : ThresholdClaim ∧ FirstOccurrenceClaim :=
-  ⟨threshold_solution, first_occurrence_solution⟩
 
 end D5.S3.Combinatorics.Partitions.LyudogovskiySimplex
