@@ -157,8 +157,11 @@ theorem regular_confirmation_tendsto
   have hev : Continuous (fun z : (V →L[ℝ] ℝ) × V => z.1 z.2) := by fun_prop
   have hep : e p = 1 := by
     apply tendsto_nhds_unique ((hev.tendsto (e, (p : V))).comp (hlim.prodMk_nhds hpix))
-    simpa only [ix, (hen _).1.2] using
-      (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1))
+    change Tendsto (fun n => en (ix n) (pn (ix n))) atTop (𝓝 1)
+    have hconst : (fun n => en (ix n) (pn (ix n))) = fun _ : ℕ => (1 : ℝ) :=
+      funext fun n => (hen (ix n)).1.2
+    rw [hconst]
+    exact tendsto_const_nhds
   have hpurezero (s : pure C u) (hsp : (s : V) ∈ exclusion C u p) : e s = 0 := by
     obtain ⟨sn, hsn, hslim⟩ := regular_pure_lift hc hs hg hB hinj hreg hsp
       (fun n => pn (ix n)) hpix
@@ -182,8 +185,9 @@ theorem regular_confirmation_tendsto
     exact (convexHull_min hsub ((convex_singleton (0 : ℝ)).linear_preimage e.toLinearMap))
       (hhull ▸ hx)
   have heq : e = ep.toContinuousLinearMap := by
-    apply ContinuousLinearMap.toLinearMap_injective
-    exact (hunique e.toLinearMap).mp ⟨⟨he, hep⟩, hzero⟩
+    ext x
+    exact congrArg (fun f : V →ₗ[ℝ] ℝ => f x)
+      ((hunique e.toLinearMap).mp ⟨⟨he, hep⟩, hzero⟩)
   exact ⟨φ, by simpa only [Function.comp_def, heq] using hlim⟩
 
 /-- At a regular original anchor, a fixed positive reading somewhere on its
@@ -209,7 +213,8 @@ theorem regular_anchor_uniform_height
       ea ∈ fullZeroConfirmers C u a ∧
       (∃ z ∈ exclusion C u p, ε ≤ ea z) ∧ (u - ep) a < 1 / ((n : ℝ) + 1) :=
     hn (1 / ((n : ℝ) + 1)) (by positivity)
-  choose a ea hea z hz hreading hsmall using hbad
+  choose a ea hea hex hsmall using hbad
+  choose z hz hreading using hex
   have hnonneg (n : ℕ) : 0 ≤ (u - ep) (a n) := by
     change 0 ≤ u (a n) - ep (a n)
     exact sub_nonneg.mpr (hep.1.1 (a n) (pure_mem (a n)).1).2
