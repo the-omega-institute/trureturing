@@ -1,6 +1,9 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
 import Reg.Support.DependentFamily
+import Mathlib.Algebra.Field.ULift
+
+/-! # Source-bound audit of the characteristic-two joint window theorem -/
 
 open _root_.D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
 open _root_.D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
