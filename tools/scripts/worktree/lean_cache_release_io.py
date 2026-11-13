@@ -1,12 +1,29 @@
 """Cooperative bounded Release I/O; the caller owns staging and rollback."""
 
+import contextlib
 import hashlib
 import time
+
+
+class OperationBudget:
+    """A computation deadline whose clock can exclude an owned asset transfer."""
+    def __init__(self, deadline):
+        self.deadline = deadline
+
+    @contextlib.contextmanager
+    def pause(self):
+        started = time.monotonic()
+        try:
+            yield
+        finally:
+            self.deadline += time.monotonic() - started
 
 
 def remaining(deadline):
     if deadline is None:
         return float("inf")
+    if isinstance(deadline, OperationBudget):
+        deadline = deadline.deadline
     seconds = deadline - time.monotonic()
     if seconds <= 0:
         raise TimeoutError("Release operation deadline exhausted")
