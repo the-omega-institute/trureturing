@@ -1,0 +1,70 @@
+**定理 Q97.2（原始有限报告的同单位、同内积、同标尺修复）。** 对每个整数 $N\ge4$、实数 $K\ge1$ 和 $0<\kappa\le1$，存在只依赖 $(N,K,\kappa)$ 的 $C_{\rm event}>0$、$\eta_0>0$，满足以下结论。设两个定义 8.1 的场 $J_A,J_B$ 满足
+
+$$
+4\le\dim J_A,\dim J_B\le N,\qquad
+\|e_J\|=1,\qquad
+\|S_J\|_{\rm bil},\|B_J\|_{\rm bil}\le K.
+$$
+
+在任意完整正交单位基中取定义 8.3 的全部带标签探针。每方的原参照对 $(b_J,d_J)$ 满足
+
+$$
+\|b_J\|,\|d_J\|\le1,\qquad
+\|B_J(b_J,d_J)\|\ge\kappa.
+$$
+
+令 $\lambda_*,\Gamma$ 恰为定义 8.4 的内生读数，并假设
+
+$$
+\lambda:=\lambda_*\in[\kappa,K],\qquad
+\eta:=\Gamma^{1/4}\le\eta_0.
+$$
+
+则每方在同一个实空间、同一个内积 $g_J$ 和同一个单位 $e_J$ 上存在乘法 $\widetilde S_J,\widetilde B_J$，满足定义 8.1，且
+
+$$
+\|\widetilde B_J(b_J,d_J)\|\ge\kappa/2.
+\tag{Q97.2}
+$$
+
+以这两个修复场形成定义 8.2 的同一模板，有
+
+$$
+\widetilde R_{\lambda_*}(H,X,Y)=0
+\quad\text{对全部 }H,X,Y\in J_A\otimes_{\mathbb R}J_B,
+\tag{Q97.3}
+$$
+
+以及
+
+$$
+\boxed{\max_{J\in\{J_A,J_B\}}\left(
+\|S_J-\widetilde S_J\|_{\rm bil}
++\sqrt{\lambda_*}\|B_J-\widetilde B_J\|_{\rm bil}
++d_H(E_{S_J},E_{\widetilde S_J})
++d_H(\Omega_{S_J},\Omega_{\widetilde S_J})
+\right)\le C_{\rm event}\Gamma^{1/4}.}
+\tag{Q97.4}
+$$
+
+式 (Q97.4) 中每方涉及的四个集合均非空紧致。修复不改变观测到的 $\lambda_*$，不改变参照输入，也不要求原场满足 Jordan、交替或 Jacobi 恒等式。
+
+常数可如下选择。取普适常数 $a\ge1$、$0<\varepsilon_*\le1$，使 Alexei Kitaev 的 [*Almost-idempotent quantum channels and approximate C*-algebras*, arXiv:2405.02434v2，§2 定义 2.1–2.2、定理 2.3](https://arxiv.org/html/2405.02434v2#S2) 及定义 2.2 后的逆映射结论，对每个 $\varepsilon\le\varepsilon_*$ 给出从某个有限维真正 $C^*$ 代数到任意有限维 $\varepsilon$-$C^*$ 代数的双射 $a\varepsilon$-同构。该同构严格保持对合，单位、乘法和范数的误差按该定义理解。这里只使用这两个普适常数的存在性，不指定其数值。令
+
+$$
+\begin{aligned}
+U&=\frac{8N}{\kappa},&
+G&=\frac{33N^{5/2}K^3}{\kappa^2},\\
+V&=3(4G+6K^{3/2}U),&
+M&=2\bigl(K+\sqrt K(K+1)\bigr),\\
+A&=10000aM^6,&
+\delta_0&=\min\{\varepsilon_*/M,1/A\},\\
+L&=K+1,&
+\eta_0&=\min\left\{1,\frac{\kappa}{8N},\frac{\delta_0}{V},
+\frac{\kappa}{2(U+AV/\sqrt\kappa)}\right\},\\
+C_{\rm event}&=(5L^2+3L+3)AV+\sqrt K\,U.
+\end{aligned}\tag{Q97.5}
+$$
+
+证明。以下全部范数都保持原来的内积；复化时使用它的标准复 Hilbert 范数。先由实际有限报告构造满足外部稳定性定理前件的乘法，再恢复原单位和原内积，最后比较 (Q97.1) 的完整集合。
+
