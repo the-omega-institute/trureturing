@@ -151,13 +151,23 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
   have hdn (q : Multiplicity (dualModule B) (-c)) :
       dualMultiplicityEquiv A hD c (restrict (dualHom hD f) (-c) q) =
         (dualMultiplicityEquiv B hD c q).comp (restrict f c) := by
+    let eLeft : Multiplicity (dualModule A) (-c) ≃ Module.Dual ℂ (Multiplicity A c) :=
+      { toFun := fun z => dualMultiplicityEquiv A hD c z
+        invFun := fun φ => (dualMultiplicityEquiv A hD c).symm φ
+        left_inv := fun z => (dualMultiplicityEquiv A hD c).symm_apply_apply z
+        right_inv := fun φ => (dualMultiplicityEquiv A hD c).apply_symm_apply φ }
+    let eRight : Multiplicity (dualModule B) (-c) ≃ Module.Dual ℂ (Multiplicity B c) :=
+      { toFun := fun z => dualMultiplicityEquiv B hD c z
+        invFun := fun ψ => (dualMultiplicityEquiv B hD c).symm ψ
+        left_inv := fun z => (dualMultiplicityEquiv B hD c).symm_apply_apply z
+        right_inv := fun ψ => (dualMultiplicityEquiv B hD c).apply_symm_apply ψ }
     exact @dualMultiplicityEquiv_natural
       (Module.Dual ℂ (Multiplicity A c)) (Module.Dual ℂ (Multiplicity B c))
       (Multiplicity (dualModule A) (-c)) (Multiplicity (dualModule B) (-c))
-      (dualMultiplicityEquiv A hD c).toEquiv (dualMultiplicityEquiv B hD c).toEquiv
-      (dualIota A c).toAddHom.toFun (dualIota B c).toAddHom.toFun
+      eLeft eRight
+      (fun φ => dualIota A c φ) (fun ψ => dualIota B c ψ)
       (dualMultiplicityEquiv_symm_apply A hD c) (dualMultiplicityEquiv_symm_apply B hD c)
-      (restrict (dualHom hD f) (-c)).toAddHom.toFun
+      (fun z => restrict (dualHom hD f) (-c) z)
       (fun ψ : Module.Dual ℂ (Multiplicity B c) => ψ.comp (restrict f c))
       (dualHom_dualIota hD f c) q
   let eA := (dualMultiplicityEquiv A hD c).dualMap
