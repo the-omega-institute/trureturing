@@ -4,7 +4,7 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: A specified adjacent-confirmation perturbation strictly increases original ball contrast. -/
+   digest: Adjacent-confirmation perturbation increases original ball contrast. -/
 
 import D5.S3.Quantum.Foundation.OriginalWidthContact
 import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
@@ -52,7 +52,7 @@ private theorem compact_range_contraction {X : Type*} [TopologicalSpace X]
     have hmul : t * (e x - e y) ≤ t :=
       (mul_le_mul_of_nonneg_left (by linarith : e x - e y ≤ 1) ht.le).trans_eq
         (mul_one t)
-    dsimp only at ham
+    change a x - a y ≤ a z.1 - a z.2 at ham
     dsimp [t] at hmul ⊢
     nlinarith
   · have hd : t * (e x - e y) < 0 := mul_neg_of_pos_of_neg ht (by linarith)
@@ -120,8 +120,8 @@ theorem adjacent_confirmation_perturbation
     ha.2, he0 q hq]
   have hgr : g r = a r := by simp [g, LinearMap.add_apply, LinearMap.smul_apply, he0 r hr]
   have hs : 0 < g xhi - g xlo := by
-    have h1 := hlo hr.1
-    have h2 := hhi hqK
+    have h1 : g xlo ≤ g r := hlo hr.1
+    have h2 : g q ≤ g xhi := hhi hqK
     rw [hgq] at h2
     rw [hgr] at h1
     linarith
@@ -133,8 +133,8 @@ theorem adjacent_confirmation_perturbation
     apply cone_bound hK hu
     intro s
     have hsK := pure_mem s
-    have h1 := hlo hsK
-    have h2 := hhi hsK
+    have h1 : g xlo ≤ g s := hlo hsK
+    have h2 : g s ≤ g xhi := hhi hsK
     change 0 ≤ (g xhi - g xlo)⁻¹ * (g s - g xlo * u s) ∧
       (g xhi - g xlo)⁻¹ * (g s - g xlo * u s) ≤ 1
     rw [hsK.2, mul_one]
@@ -158,7 +158,7 @@ theorem adjacent_confirmation_perturbation
     rw [ha.2]
   have hop : 0 < oscillation (exclusion C u p) a.toContinuousLinearMap := by
     rw [ho]
-    have hh := haz hr
+    have hh : a z ≤ a r := haz hr
     linarith
   have hbf (x : V) (hx : x ∈ exclusion C u p) :
       b x = (g xhi - g xlo)⁻¹ * (a x - g xlo) := by
