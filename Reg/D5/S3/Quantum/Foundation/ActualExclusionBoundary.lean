@@ -156,7 +156,7 @@ abbrev arena : Arena where
             (∀ j, Disjoint (N j) {z | SameRay ℝ ((v : P.V) - c) z} ∨ W j ⊆ O) ∧
             (∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base P.C P.unit),
               Quotient.mk a x = b → (x : P.V) - c ∈ N j) ∧
-            ∃ A : P.C(Quotient a, P.V),
+            ∃ A : C(Quotient a, P.V),
               (∀ b, A b ∈ (fun z : P.V => z - c) '' base P.C P.unit) ∧
               (∀ b, ¬ SameRay ℝ ((v : P.V) - c) (A b)) ∧
               ∀ x : intrinsicFrontier ℝ (base P.C P.unit),

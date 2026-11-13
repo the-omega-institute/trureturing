@@ -103,7 +103,7 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
         var ray = Call("PositiveRay", Call("Subtract", v, c));
         var control = All("j", fin, All("b", Q, Imp(Mem(b, Call("W", j)),
             All("x", S, Imp(Eq(Call("QuotientMk", r, x), b),
-                Mem(Call("Subtract", x, c), Call("N", j))))));
+                Mem(Call("Subtract", x, c), Call("N", j)))))));
         var alternative = All("j", fin, new Formula.Logic(Call("Disjoint", Call("N", j), ray),
             FormulaLogicOperator.Or, Call("Subset", Call("W", j), O)));
         var averaged = Ex("A", Call("ContinuousMaps", Q, V), Conj(
