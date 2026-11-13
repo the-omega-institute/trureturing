@@ -54,7 +54,7 @@ For the same integer $b=\binom{n+k-1}{k}$, `ZMod.pow_card` gives $p\mid b^p-b$, 
 
 ## Falsifier
 
-An ordinary degree $m$ with no integer representative for the coefficient of the displayed $A$ would contradict `result`. A finite coefficient computation, a factorial-scaled coefficient, a bounded $k$-range such as $k\le n$, or a changed exponent would concern a different statement and would not refute this result.
+An ordinary degree $m$ with no integer representative for the coefficient of the displayed $A$ would contradict `result`. Finite agreement with integrality cannot prove the all-degree claim, but a certified exact nonintegral ordinary coefficient of this same $A$ would refute it. Factorial scaling, a bounded $k$-range such as $k\le n$, or a changed exponent alters the target; any proposed refutation must establish an exact nonintegral ordinary coefficient of the displayed $A$.
 
 ## Evidence
 
