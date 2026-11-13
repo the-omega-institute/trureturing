@@ -300,53 +300,55 @@ theorem exists_phases (k : ℕ) (P Q : ℂ[X]) (hP : P.natDegree ≤ k) (hQ : Q.
 
 
 
+private theorem index_two_cases (i : ZMod 2) : i = 0 ∨ i = 1 := by
+  fin_cases i
+  · exact Or.inl rfl
+  · exact Or.inr rfl
+
+/-- A two-by-two matrix in the native cyclic index type. -/
+private def matrix2 (a b c d : ℂ) : Matrix (ZMod 2) (ZMod 2) ℂ :=
+  fun i j => if i = 0 then if j = 0 then a else b else if j = 0 then c else d
+
 /-- A constant diagonal phase in the native continuous observable algebra. -/
 noncomputable def phaseDiagonal (φ : ℝ) : CyclicObservable 2 :=
-  ContinuousMap.const _ !![Complex.exp (I * φ), 0; 0, Complex.exp (-(I * φ))]
+  ContinuousMap.const _ (matrix2 (Complex.exp (I * φ)) 0 0 (Complex.exp (-(I * φ))))
 
 /-- Ordered right multiplication by the existing signed-circle signal. -/
 noncomputable def phaseProduct (φ₀ : ℝ) (Φ : List ℝ) : CyclicObservable 2 :=
   Φ.foldl (fun U φ => U * (phaseCompletion X 0 1 * phaseDiagonal φ)) (phaseDiagonal φ₀)
 
-private def pairMatrix (x y : ℝ) (PQ : ℂ[X] × ℂ[X]) : Matrix (ZMod 2) (ZMod 2) ℂ :=
-  !![PQ.1.eval (x : ℂ), I * PQ.2.eval (x : ℂ) * (y : ℂ);
-     I * (conjP PQ.2).eval (x : ℂ) * (y : ℂ), (conjP PQ.1).eval (x : ℂ)]
+private noncomputable def pairMatrix (x y : ℝ) (PQ : ℂ[X] × ℂ[X]) : Matrix (ZMod 2) (ZMod 2) ℂ :=
+  matrix2 (PQ.1.eval (x : ℂ)) (I * PQ.2.eval (x : ℂ) * (y : ℂ))
+    (I * (conjP PQ.2).eval (x : ℂ) * (y : ℂ)) ((conjP PQ.1).eval (x : ℂ))
 
 private theorem signal_apply (t : AddCircle (1 : ℝ)) :
     phaseCompletion X 0 1 t =
-      !![((windingPhase t).re : ℂ), I * ((windingPhase t).im : ℂ);
-         I * ((windingPhase t).im : ℂ), ((windingPhase t).re : ℂ)] := by
+      matrix2 ((windingPhase t).re : ℂ) (I * ((windingPhase t).im : ℂ))
+        (I * ((windingPhase t).im : ℂ)) ((windingPhase t).re : ℂ) := by
   ext i j
-  fin_cases i <;> fin_cases j <;>
-    change (if _ then if _ then _ else _ else if _ then _ else _) = _ <;> simp
+  change (if i = 0 then if j = 0 then _ else _ else if j = 0 then _ else _) = _
+  rcases index_two_cases i with rfl | rfl <;> rcases index_two_cases j with rfl | rfl <;> simp [matrix2]
 
 /-- The elementary product identity depends on y²=1−x², not on a sign of y. -/
 private theorem mul_signal_phase {x y : ℝ} (hc : x ^ 2 + y ^ 2 = 1)
     (φ : ℝ) (a b c d : ℂ) :
-    (!![a, I * b * (y : ℂ); I * c * (y : ℂ), d] : Matrix (ZMod 2) (ZMod 2) ℂ) *
-        (!![(x : ℂ), I * (y : ℂ); I * (y : ℂ), (x : ℂ)] *
-          !![Complex.exp (I * φ), 0; 0, Complex.exp (-(I * φ))]) =
-      !![Complex.exp (I * φ) * (x * a + ((x : ℂ) ^ 2 - 1) * b),
-          I * (Complex.exp (-(I * φ)) * (x * b + a)) * (y : ℂ);
-        I * (Complex.exp (I * φ) * (x * c + d)) * (y : ℂ),
-          Complex.exp (-(I * φ)) * (x * d + ((x : ℂ) ^ 2 - 1) * c)] := by
+    matrix2 a (I * b * (y : ℂ)) (I * c * (y : ℂ)) d *
+        (matrix2 (x : ℂ) (I * (y : ℂ)) (I * (y : ℂ)) (x : ℂ) *
+          matrix2 (Complex.exp (I * φ)) 0 0 (Complex.exp (-(I * φ)))) =
+      matrix2 (Complex.exp (I * φ) * (x * a + ((x : ℂ) ^ 2 - 1) * b))
+        (I * (Complex.exp (-(I * φ)) * (x * b + a)) * (y : ℂ))
+        (I * (Complex.exp (I * φ) * (x * c + d)) * (y : ℂ))
+        (Complex.exp (-(I * φ)) * (x * d + ((x : ℂ) ^ 2 - 1) * c)) := by
   have hs : (y : ℂ) * (y : ℂ) = 1 - (x : ℂ) ^ 2 := by
     exact_mod_cast (by nlinarith [hc] : y * y = 1 - x ^ 2)
-  simp only [Matrix.mul_fin_two, mul_zero, add_zero, zero_add]
+  have hu : (Finset.univ : Finset (ZMod 2)) = {0, 1} := by decide
   ext i j
-  fin_cases i <;> fin_cases j
-  · simp only [Fin.zero_eta, Fin.isValue, Matrix.of_apply, Matrix.cons_val_zero]
-    linear_combination (b * Complex.exp (I * φ) * (y : ℂ) * (y : ℂ)) * I_sq -
+  rcases index_two_cases i with rfl | rfl <;> rcases index_two_cases j with rfl | rfl <;> simp [Matrix.mul_apply, hu, matrix2]
+  · linear_combination (b * Complex.exp (I * φ) * (y : ℂ) * (y : ℂ)) * I_sq -
       (b * Complex.exp (I * φ)) * hs
-  · simp only [Fin.zero_eta, Fin.mk_one, Fin.isValue, Matrix.of_apply, Matrix.cons_val_zero,
-      Matrix.cons_val_one, Matrix.cons_val_fin_one]
-    ring
-  · simp only [Fin.mk_one, Fin.zero_eta, Fin.isValue, Matrix.of_apply, Matrix.cons_val_one,
-      Matrix.cons_val_fin_one, Matrix.cons_val_zero]
-    ring
-  · simp only [Fin.mk_one, Fin.isValue, Matrix.of_apply, Matrix.cons_val_one,
-      Matrix.cons_val_fin_one]
-    linear_combination (c * Complex.exp (-(I * φ)) * (y : ℂ) * (y : ℂ)) * I_sq -
+  · ring
+  · ring
+  · linear_combination (c * Complex.exp (-(I * φ)) * (y : ℂ) * (y : ℂ)) * I_sq -
       (c * Complex.exp (-(I * φ))) * hs
 
 private theorem phaseProduct_concat (φ₀ φ : ℝ) (Φ : List ℝ) :
@@ -364,12 +366,14 @@ private theorem phaseProduct_eval (φ₀ : ℝ) (Φ : List ℝ) (t : AddCircle (
   | nil =>
     rw [qspPolyW_nil]
     ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [phaseProduct, phaseDiagonal, pairMatrix, eval_conjP, conj_exp_I_mul]
+    rcases index_two_cases i with rfl | rfl <;> rcases index_two_cases j with rfl | rfl <;>
+      simp [phaseProduct, phaseDiagonal, pairMatrix, matrix2, ContinuousMap.const_apply,
+        eval_conjP, conj_exp_I_mul]
   | append_singleton Φ φ ih =>
     rw [phaseProduct_concat, ContinuousMap.mul_apply, ContinuousMap.mul_apply, ih,
       signal_apply]
-    change pairMatrix _ _ _ * (_ * !![_, 0; 0, _]) = _
+    change pairMatrix _ _ _ * (_ * matrix2 (Complex.exp (I * φ)) 0 0
+      (Complex.exp (-(I * φ)))) = _
     rw [pairMatrix, mul_signal_phase hc, qspPolyW_concat]
     simp only [pairMatrix, stepW, conjP_mul, conjP_C, conjP_add, conjP_pow, conjP_sub,
       conjP_X, conjP_one, conj_exp_I_mul, conj_exp_neg_I_mul, eval_mul, eval_C,
@@ -383,9 +387,8 @@ private theorem pairMatrix_completion (p B C : ℝ[X]) (t : AddCircle (1 : ℝ))
   simp only [pairMatrix, conjP_add, conjP_mul, conjP_C, conjP_map_algebraMap,
     Complex.conj_I, eval_add, eval_mul, eval_C, hre]
   ext i j
-  fin_cases i <;> fin_cases j <;>
-    change _ = (if _ then if _ then _ else _ else if _ then _ else _) <;>
-      simp <;> push_cast <;> ring
+  change _ = (if i = 0 then if j = 0 then _ else _ else if j = 0 then _ else _)
+  rcases index_two_cases i with rfl | rfl <;> rcases index_two_cases j with rfl | rfl <;> simp [matrix2] <;> push_cast <;> ring
 
 /-- The same interval SOS witnesses admit an exact phase factorization as continuous
 matrix fields on the entire signed winding circle. -/
@@ -418,8 +421,10 @@ theorem exists_phase_factorization (k : ℕ) (p : ℝ[X]) (hp : p.natDegree ≤ 
     simp only [Polynomial.map_sub, Polynomial.map_one, Polynomial.map_pow,
       Polynomial.map_add, Polynomial.map_mul, Polynomial.map_X] at hm
     dsimp [P, Q]
-    simp only [conjP_add, conjP_mul, conjP_C, conjP_map_algebraMap, Complex.conj_I]
-    linear_combination -hm - (B.map (algebraMap ℝ ℂ)) ^ 2 * I_sq
+    simp only [conjP_add, conjP_mul, conjP_C, conjP_map_algebraMap, Complex.conj_I, Polynomial.C_neg]
+    have hi : (Polynomial.C I : ℂ[X]) ^ 2 = -1 := by
+      rw [← Polynomial.C_pow, I_sq, Polynomial.C_neg, Polynomial.C_1]
+    linear_combination -hm - (B.map (algebraMap ℝ ℂ)) ^ 2 * hi
   obtain ⟨φ₀, Φ, hlen, hpair⟩ :=
     exists_phases k P Q hPd hQd hQ0 hPp hCp hunit
   refine ⟨B, C, U, φ₀, Φ, hsos, hB, hC, hC0, hBp, hCp, hU, hleft, hright,
