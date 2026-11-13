@@ -1,0 +1,48 @@
+### Q97.1 原导子的斜伴随性和有限自守报告
+
+定义 8.1 所用的有限正 Frobenius 导子论证可具体写成如下形式。若 $d\in\operatorname{Der}(S)$，则 $de=0$、$[d,L_a]=L_{da}$。由于 $L_a$ 自伴，取伴随给 $[d^\dagger,L_a]=-L_{da}$，所以 $H=d+d^\dagger$ 与全部 $L_a$ 对易。$H$ 的每个本征空间 $J_j$ 因而是 $S$-理想。不同本征空间的乘积同时落在两个空间中，故为零。将 $e$ 正交分解为 $\sum_j e_j$，则 $e_j$ 是 $J_j$ 的单位，且 $L_{e_j}$ 是到 $J_j$ 的正交投影 $P_j$。导子作用于 $S(e_j,e_j)=e_j$ 给
+
+$$
+de_j=2P_jde_j.
+$$
+
+投影的本征值只有 $0,1$，故 $de_j=0$。若 $H|_{J_j}=h_j I$，则
+
+$$
+h_j\|e_j\|^2=g(He_j,e_j)=2g(de_j,e_j)=0.
+$$
+
+每个非零 $J_j$ 的单位 $e_j$ 非零，所以 $H=0$。这正是定义 8.1 引用的 V95 定理 2.1 的导子结论；此处对原来的每个 $D_a$ 使用它，不另添度量不变性假设。
+
+置 $\rho=\Gamma^{1/2}=\eta^2$。定义 8.4 的 $\Gamma$ 是带标签报告的未平均平方和，所以每条报告的范数都不超过 $\rho$。固定一方及另一方的原参照，记 $v=B_{\rm opp}(b,d)$。式 (9.4) 在每个定义 8.3 的自身探针上给
+
+$$
+R_\lambda(p\otimes d,p\otimes b,p\otimes e)
+=\lambda D_p^2p\otimes v.
+$$
+
+由 $\lambda\ge\kappa$、$\|v\|\ge\kappa$ 以及 $D_p^\dagger=-D_p$ 得
+
+$$
+\|D_p^2p\|\le\frac{\eta^2}{\kappa^2},\qquad
+\|B(p,p)\|^2=-g(p,D_p^2p)\le\frac{\eta^2}{\kappa^2}.
+\tag{Q97.6}
+$$
+
+这里 $p$ 是单位向量。此平方根机制是定理 10.1 的应用；下面保留完整基和两两和的系数损失。记 $\alpha=\eta/\kappa$、$H_B(x,y)=B(x,y)+B(y,x)$。基向量给 $\|H_B(e_i,e_i)\|\le2\alpha$，而
+
+$$
+H_B(e_i,e_j)=2B\left(\frac{e_i+e_j}{\sqrt2},\frac{e_i+e_j}{\sqrt2}\right)
+-B(e_i,e_i)-B(e_j,e_j)
+$$
+
+给 $i\ne j$ 时 $\|H_B(e_i,e_j)\|\le4\alpha$。对任意单位 $x,y$ 展开基系数，得到
+
+$$
+\|H_B(x,y)\|\le4\alpha\|x\|_1\|y\|_1
+\le\frac{4N\eta}{\kappa}=:\sigma.
+\tag{Q97.7}
+$$
+
+特别地，原单位律只先给 $B(x,e)=0$，再由 (Q97.7) 才得到 $\|B(e,x)\|\le\sigma\|x\|$。以上论证对两方分别完成，因此也控制反序参照。
+
