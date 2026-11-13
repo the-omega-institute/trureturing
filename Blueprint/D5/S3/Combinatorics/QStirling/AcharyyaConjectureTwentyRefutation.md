@@ -52,6 +52,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/acharyya-2024-conjecture-20-pointwise-refutation` (refuted) by `D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"acharyya-2024-conjecture-20-pointwise-refutation","declaration_gid":"D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Amrita Acharyya (2024). *Type B Set partitions, an analogue of restricted growth functions*. DOI: [10.61091/ars162-14](https://doi.org/10.61091/ars162-14). URL: <https://arxiv.org/abs/2404.14439v1>.
@@ -70,7 +74,7 @@ Complementation sends the odd block to {−3,2,1} and the even block to {3,−2,
 
 $(\operatorname{rosPairs}\left(pi\right) = \left\{(2, 2), (3, 2)\right\}) \land ((\operatorname{rcbPairs}\left(\operatorname{f}\left(3, 1, pi\right)\right) = \left\{(3, 2)\right\}) \land ((\operatorname{ros}\left(pi\right) = 2) \land (\operatorname{rcb}\left(\operatorname{f}\left(3, 1, pi\right)\right) = 1)))$
 
-The proof checks both complete pair sets by decide +kernel. Their cardinalities are respectively 2 and 1, while k(k−1) = 0. Instantiating the full universal claim at this one admissible witness would give 1 = 2, a contradiction. The authored result has proof_shape bind-only and the intended admission_basis open-problem-resolution under issue #30070; it adds no helper theorem or escape witness. The kernel result applies to the implemented model; independent source-fidelity review remains pending.
+The proof checks both complete pair sets by decide +kernel. Their cardinalities are respectively 2 and 1, while k(k−1) = 0. Instantiating the full universal claim at this one admissible witness would give 1 = 2, a contradiction. Complementation followed by orientation changes the cardinality of the signed, inclusive comparison pairs; it does not transport the two ros pairs to two rcb pairs. The result has proof_shape bind-only and admission_basis open-problem-resolution under issue #30070; it is the designated Reg-exempt refutation result and supplies no escape witness. The problem dossier states the original question, the source correspondence and the limits of this resolution. The generating-function equality and general preservation or involution of f remain separate assertions.
 
 ## References
 
