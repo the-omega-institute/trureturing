@@ -1,0 +1,11 @@
+#### 定义 6.3：由实际读口决定的共同相位
+
+令 $\mathcal E$ 为全部已声明实际效果，置
+
+$$
+\mathcal D=\{T\in\operatorname{End}_{\mathbb R}H:[T,E]=0\ (E\in\mathcal E)\},
+ \qquad \mathfrak g=\{K\in\mathcal D:K^*=-K\}.
+$$
+
+正交复结构是其中满足 $J^2=-I$ 的元素。 这类相位保持当前全部效果，并不等于一般会改变读数的 Hamiltonian。
+
