@@ -1,0 +1,20 @@
+**定义 108.3（邻球在原纯点处的切空间）。** 对 $q\in P\cap D_p$，令
+$r=2c_p-q$。在 $D_q$ 中，$p,r$ 是对径。定义
+
+$$
+T(q\mid p)=\{z\in L_q:a_p(z)=0\}.
+\tag{VIII108.4}
+$$
+
+这不是最低读数函数 $T_p$ 的另一种记法。
+由球上的直径读数，若 $e=p-c_q$，则 $\|e\|_q=1$ 且
+
+$$
+a_p(c_q+y)=\frac{1+\langle e,y\rangle_q}{2},\qquad
+T(q\mid p)=\{z\in L_q:\langle e,z\rangle_q=0\}.
+\tag{VIII108.5}
+$$
+
+所以它是球面 $P\cap D_q$ 在 $p$ 处的普通线性切空间，维数为 $d_q-1$。
+当 $d_q=1$ 时取零空间；没有对整个 $P$ 另加光滑流形假设。
+

@@ -1,0 +1,102 @@
+**定理 112.2（原常维球族的完整连续性）。** 在W与(VIII112.2)下，
+在 $H$ 上任取辅助欧氏结构 $\langle\ ,\ \rangle_0$，将各完整球唯一写成
+
+$$
+\begin{gathered}
+D_p=c_p+B_p^{1/2}\overline B_H,\qquad
+B_p\succeq0,\qquad L_p=\operatorname{im}B_p,\qquad\operatorname{rank}B_p=d,\\
+D_p=c_p+\{v\in L_p:g_p(v,v)\le1\}.
+\end{gathered}
+\tag{VIII112.3}
+$$
+
+则全部非零特征值有统一正下界及有限上界；$D_p$ 在Hausdorff拓扑下连续，
+$B_p$、$L_p$ 的正交投影及球度量 $g_p$ 连续。
+特别地
+
+$$
+\xi=\{(p,v)\in P\times H:v\in L_p\}\longrightarrow P
+\tag{VIII112.4}
+$$
+
+是实际连续秩 $d$ 实向量丛，其单位盘和单位球分别就是原球的平移与原纯边界的平移。
+辅助欧氏结构只用于描述这一丛，不是原态空间的共同物理内积。
+
+证明。先在未使用G的原域取得统一尺度。
+关系 $\mathcal O=\{(p,q)\in P^2:p\perp q\}$ 是紧集：
+它是紧集 $\{(p,q,f)\in P^2\times\mathcal E:f(p)=1,f(q)=0\}$ 的投影。
+它避开对角线，且joint存在使它非空。因此
+
+$$
+\delta=\min_{(p,q)\in\mathcal O}\|p-q\|_0>0,\qquad
+R=\tfrac12\operatorname{diam}_0K,\qquad
+\operatorname{spec}(B_p)\subseteq\{0\}\cup[\delta^2/4,R^2].
+\tag{VIII112.5}
+$$
+
+最后一项因为每条辅助欧氏主轴的两个端点，都是原 $D_p$ 的对径纯点，
+故其距离至少 $\delta$、至多 $\operatorname{diam}_0K$。
+主半轴长度因而在 $[\delta/2,R]$ 内。这排除了全部球族的塌缩，
+没有把局部球尺先拼成全局尺。
+
+现设 $p_j\to p$。任取子列，$K$ 紧与(VIII112.5)允许再取子子列，使
+
+$$
+c_{p_j}\to c,\qquad B_{p_j}\to B,\qquad
+ a_{p_j}\to f\in\mathcal E,\qquad
+D_\infty=c+B^{1/2}\overline B_H.
+\tag{VIII112.6}
+$$
+
+这里仅使用原效应区间的紧性，不使用 $p\mapsto a_p$ 连续。
+评价连续使 $f(p)=1$。平方根连续使 $D_{p_j}\to D_\infty$ 于Hausdorff距离；
+对每个 $x\in D_\infty$ 取 $x_j\in D_{p_j}$ 趋于它，便有
+$f(x)=\lim_j a_{p_j}(x_j)=0$。所以按原完整零集定义，
+
+$$
+D_\infty\subseteq D_p.
+\tag{VIII112.7}
+$$
+
+这一包含先于任何G、谱性或全局内积。
+(VIII112.5)又使 $B$ 恰有 $d$ 个正特征值，非零谱仍在同一闭区间。
+故 $D_\infty$ 和 $D_p$ 同为非退化 $d$ 维凸体，且有同一仿射包。
+
+还须排除严格包含。令 $P_j^0,P_\infty^0$ 为 $B_{p_j},B$ 的像空间辅助正交投影。
+由于零谱与正谱间有统一间隔，连续函数演算给 $P_j^0\to P_\infty^0$。
+对任意 $e\in\operatorname{im}B$、$\|e\|_0=1$，令
+$e_j=P_j^0e/\|P_j^0e\|_0$，则
+
+$$
+c_{p_j}+B_{p_j}^{1/2}e_j\longrightarrow c+B^{1/2}e.
+\tag{VIII112.8}
+$$
+
+左侧每个点都是原纯点；$P$ 闭，故右侧也纯。
+这样得到 $\partial_{\rm rel}D_\infty\subseteq P$。
+但 $\operatorname{ri}D_p$ 的点都不纯。
+若同维闭凸体 $D_\infty\subsetneq D_p$，先取其内点
+$a\in\operatorname{ri}D_\infty\subseteq\operatorname{ri}D_p$，
+再取 $b\in\operatorname{ri}D_p\setminus D_\infty$；后者存在，
+否则闭性会使 $D_\infty$ 包含整个 $D_p$。
+线段 $[a,b]$ 首次离开 $D_\infty$ 的点就在
+$\partial_{\rm rel}D_\infty\cap\operatorname{ri}D_p$，矛盾。
+故 $D_\infty=D_p$。
+
+有界非退化椭球的对称中心唯一。
+对中心化球，其支持函数满足
+$h_{D_p-c_p}(w)^2=\langle w,B_pw\rangle_0$，所有 $w\in H$ 的读数由极化唯一恢复 $B_p$。
+因而(VIII112.6)中的每个极限均为 $c=c_p,B=B_p$。
+任意子列都只能有此极限，遂得整个序列的整球及形状连续性。
+这也与既有的球心连续性一致，不另将球心结论计作新前件。
+
+取连续函数在零处取零、在 $[\delta^2/4,R^2]$ 上取一，
+其在 $B_p$ 上的函数演算给连续投影 $P_p^0$。
+同理，在正谱上取倒数、零处取零，得到连续伪逆 $B_p^\dagger$；
+球内积准确为 $g_p(v,w)=\langle v,B_p^\dagger w\rangle_0$，$v,w\in L_p$。
+固定 $p_0$，从固定 $H$ 向量中选出 $d$ 个，其在 $L_{p_0}$ 上的投影独立。
+在 $p_0$ 的一个邻域内它们仍独立，对这些连续投影向量作连续Gram–Schmidt，
+便得 $L_p$ 的局部连续标架；再按 $g_p$ 正交归一，给单位盘、球的局部平凡化。
+所以(VIII112.4)是真向量丛，而非仅有逐点维数的集合族。
+此处底空间只需其原拓扑，未从ENR推出流形。证毕。
+

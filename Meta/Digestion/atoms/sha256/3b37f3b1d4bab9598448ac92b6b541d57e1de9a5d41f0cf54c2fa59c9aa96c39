@@ -1,0 +1,16 @@
+**定义119.11（全原仿射回缩候选）。**
+在完整原域要求
+
+$$
+\boxed{\quad
+\forall p\in P:\quad
+D_p\simeq_{\rm aff}B^3,\qquad
+\exists r_p:K\to D_p\ \text{仿射},\quad r_p|_{D_p}=\operatorname{id}.
+\quad}
+\tag{IX119.28}
+$$
+
+仿射明确指保留每个原二元混合及同一系数：
+$r_p(tx+(1-t)y)=tr_p(x)+(1-t)r_p(y)$，对全部 $x,y\in K,t\in[0,1]$。
+没有关于 $p\mapsto r_p$ 的连续性，没有矩阵、物理操作、Inj或关联开放性输入。
+

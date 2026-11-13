@@ -1,0 +1,42 @@
+**Definition 16.2 (joint increment mesh).** For $s\le t$ define the
+relative chronological increment of the one target by
+
+$$
+C_{s,t}=J^\lambda_t-J^\lambda_s
+             -W^1_s(W^2_t-W^2_s).
+\tag{16.3}
+$$
+
+Starting with $t_0=0$, recursively put
+
+$$
+\begin{aligned}
+F_\rho(s,t)&=\max\left\{
+ \frac{|W^1_t-W^1_s|}{\rho},\frac{|W^2_t-W^2_s|}{\rho},
+ \frac{|C_{s,t}|}{\rho^2}\right\},\\
+t_{i+1}&=\min\{t_i+\rho^2,\ \inf\{t>t_i:F_\rho(t_i,t)\ge1\}\},\\
+\Delta_i&=t_{i+1}-t_i.
+\end{aligned}
+\tag{16.4}
+$$
+
+The infimum of an empty set is $\infty$. These are stopping times in
+the joint Brownian filtration. The mesh is an analytic partition of the
+target; it does not itself prescribe any control legs. On each elementary
+interval, including its endpoint, continuity gives
+
+$$
+\sup_{t_i\le v\le t_{i+1}}|W^j_v-W^j_{t_i}|\le\rho\quad(j=1,2),
+\qquad
+\sup_{t_i\le v\le t_{i+1}}|C_{t_i,v}|\le\rho^2.
+\tag{16.5}
+$$
+
+Random spatial knots and energy bounds using inverse interval durations
+are classical: see Lifshits–Setterqvist,
+[*Energy of Taut Strings Accompanying Wiener Process*,
+arXiv:1405.1651v1, §4.2](https://arxiv.org/html/1405.1651v1).
+Their scalar construction does not supply the chronological condition
+in (16.4), the native guard, or exact native death. Those conditions
+are retained in the construction below.
+

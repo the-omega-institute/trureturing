@@ -210,7 +210,7 @@ theorem uniform_counted_first_pools (j : ℕ) (hj : 2 ≤ j)
     counted_higher_pools hcount hXP hcapacity
   exact ⟨hP4, hv, hvP, FirstLo, FirstHi, hLo, hHi, hLoP, hHiP⟩
 
-private theorem largestPrime_prime {m : ℕ} (hm : 2 ≤ m) : (largestPrime m).Prime := by
+theorem largestPrime_prime {m : ℕ} (hm : 2 ≤ m) : (largestPrime m).Prime := by
   classical
   obtain ⟨p, hp, he⟩ := exists_mem_eq_sup m.primeFactors
     (Nat.nonempty_primeFactors.mpr (by omega)) id

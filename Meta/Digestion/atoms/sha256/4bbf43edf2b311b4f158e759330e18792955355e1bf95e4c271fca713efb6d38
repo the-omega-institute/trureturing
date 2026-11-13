@@ -1,0 +1,40 @@
+**Corollary 22.1 (uniform cemetery obstruction in the specified coupling).**
+Use exactly $E$ and its metric from Definition 4.1, with distance $2$
+from every alive point to $\dagger$. For $C\in\mathcal C_T$ let
+$q_C^\dagger$ be its actual killed native path, and compare it with
+the same target $q^{\lambda,\dagger}$ at the same clock times. Then
+
+$$
+\mathbb P\left(
+ \sup_{0\le t\le T}d_E(q_C^\dagger(t),q^{\lambda,\dagger}(t))=2
+ \right)\ge\mathbb P(\tau\le T)>0.
+\tag{22.1}
+$$
+
+For every countable sequence $C_n\in\mathcal C_T$, almost surely on
+$\{\tau\le T\}$ the displayed supremum equals $2$ for every $n$.
+Consequently such a sequence cannot converge uniformly in probability
+or almost surely to this coupled killed target. More generally the
+same conclusion holds for any same-clock uniform metric whose
+distance between cemetery and all alive points has a positive lower
+bound, with that bound replacing $2$ in the lower estimate.
+
+Proof. If the two censored death records differ, there is a time in
+$[0,T]$ when exactly one path is dead. This includes distinct finite
+deaths, a finite death versus survival, and a mismatch at $T$.
+The distance at that time is $2$, which is also the maximum possible
+distance in $E$. By Theorem 21.1 this happens almost surely on
+$\{\tau\le T\}$ for each issuer, and simultaneously for a countable
+family. The positive probability lower bound rules out convergence
+in probability; the common event of permanent distance $2$ also
+rules out almost sure convergence. The same argument uses only the
+positive alive-to-cemetery gap for the stated metric variant.
+
+This proof permits no clock change. It gives no obstruction to
+Skorokhod $J_1$ convergence, where a small time change can align nearby
+death times as in Theorem 4.2, and no obstruction to uniform convergence
+of continuously held paths in the ordinary native state space. Those
+contracts require their own path and lifetime estimates. It also
+does not assert failure for every possible coupling of marginal laws.
+$\square$
+

@@ -1,0 +1,65 @@
+**引理 116.13（整数Betti串和纤维积分）。** 在 $\mathsf Q_1$ 下，存在 $m\ge1$，使
+
+$$
+r=2m,\quad N=2m+3,\quad n=2m+5,\qquad
+H^j(P;\mathbb Z)=
+\begin{cases}\mathbb Z,&j=0,2,\ldots,2m,\\0,&\text{其余 }j.\end{cases}
+\tag{IX116.28}
+$$
+
+在 $0<j<2m+2$，$\pi_1^*H^j(P)\oplus\pi_2^*H^j(P)=H^j(\mathcal I)$，
+两份拉回都单射。取有理系数，定向Gysin序列给
+
+$$
+0\longrightarrow H^j(P)\xrightarrow{\pi_1^*}H^j(\mathcal I)
+\xrightarrow{\pi_{1!}}H^{j-2}(P)\longrightarrow0.
+\tag{IX116.29}
+$$
+
+此处尚未断言 $H^*(P)$ 由二次类生成。
+
+证明。记两盘丛半部为 $B_1,B_2$。它们各自收缩到一份 $P$；
+collar切除与整数Thom同构给
+
+$$
+H^{j+1}(S,B_2;\mathbb Z)
+\cong H^{j+1}(B_1,\mathcal I;\mathbb Z)
+\cong H^{j-2}(P;\mathbb Z).
+\tag{IX116.30}
+$$
+
+Hatcher [4D.9—4D.10][Q116H]适用，因为116.12已给真实定向秩三盘丛；
+4D.10的证明明确通过CW approximation处理非CW底，本处没有另给底的胞腔结构。
+球面对的长正合列在 $1\le j\le N-2=r+1$ 给
+$H^j(P;\mathbb Z)\cong H^{j-2}(P;\mathbb Z)$，负次数群取零。
+$H^0(P)=\mathbb Z$，故该范围内偶次为 $\mathbb Z$、奇次为零。
+ENR的奇异—层比较及覆盖维数 $r$ 给 $H^j(P)=0$ 当 $j>r$。
+若 $r$ 奇，则 $j=r+1$ 为偶数，上述递推却给 $H^{r+1}=\mathbb Z$，矛盾。
+所以 $r=2m\ge2$，得到整个整数分次群，包括顶次。
+通用系数公式和有限生成性还给整数同调无挠。
+
+球面的Mayer–Vietoris在 $0<j<N-1=2m+2$ 给两份拉回的直和同构；
+其第二分量的负号吸收到直和映射中，不改变两个像的独立性。
+$H^3(P;\mathbb Q)=0$，所以秩三丛的有理Euler类为零。
+Hatcher §4.D的Thom—连接同态构造给完整Gysin序列，因而化为(IX116.29)。
+投影公式
+$\pi_{1!}(\pi_1^*a\,b)=a\,\pi_{1!}b$
+来自Thom同构的杯积定义和连接同态的模相容性。
+它仅是模公式，绝不是把Thom同构宣布为环同构。
+对 $\mathcal I$ 的全部群，(IX116.29)还给
+
+$$
+H^{\rm odd}(\mathcal I;\mathbb Q)=0,\qquad
+\dim H^{2i}(\mathcal I;\mathbb Q)=
+\begin{cases}1,&i=0,m+1,\\2,&1\le i\le m,\\0,&\text{其余 }i.\end{cases}
+\tag{IX116.31}
+$$
+
+所有端点均在序列内：零次拉回为同构，顶次纤维积分为同构。
+整数二次还有更精确的归一：取 $a\in H^2(P;\mathbb Z)$ 生成元，
+则 $\pi_1^*a,\pi_2^*a$ 是 $H^2(\mathcal I;\mathbb Z)$ 的整数基。
+整数Euler类也在已为零的 $H^3(P;\mathbb Z)$ 中，故整数Gysin映射到 $H^0(P;\mathbb Z)$ 满射，
+核为第一份基所张成；第二份基因此送到 $\pm1$。
+限制到真实纤维，$a$ 在每张原球边上的积分为 $\pm1$，
+所以这些球边甚至是同一个整数 $H_2(P;\mathbb Z)$ 中的本原类。证毕。
+
