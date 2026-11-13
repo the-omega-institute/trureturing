@@ -1,187 +1,144 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
+using static StrataLint.Scribe.Blueprint.D5.S3.Quantum.Approximate.SolovayKitaevNotation;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Approximate;
 
 internal sealed class ArbitraryAlphabetSolovayKitaevDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Approximate/ArbitraryAlphabetSolovayKitaev.";
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The registered arbitrary finite inverse-closed dense SU(2) alphabet event is stated with literal ordinary words; the licensed SU(2) algebra and same-word list invariant compile, while the quantitative closure remains open.",
-        H("Arbitrary-alphabet ordinary-word Solovay–Kitaev candidate"),
-        Blocks(
-            Describe.Lean(DescribeId.Create("su2-quaternion"), DeclarationHandle.Create(Prefix + "su2"),
-                H("The licensed quaternion matrix"), StatementSource.FromAuthor(Disp(F.Id("su2"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The matrix su2(w,x,y,z) is the unit-quaternion 2 by 2 complex matrix. " +
-                    "The source attribution is Csd@9b2d2c17e926ae13795119c5f2f62e85ea240c2d, " +
-                    "CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean (declarations su2, su2_mul, " +
-                    "su2_det, axisRot, axisRot_det, su2_star, su2_mem_unitary, and " +
-                    "axisRot_mem_unitary), under Apache 2.0; the full " +
-                    "license is retained at docs/reports/qmutualinfo/csd-lean4-LICENSE.txt."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("su2-multiplication"), DeclarationHandle.Create(Prefix + "su2_mul"),
-                H("Quaternion multiplication"), StatementSource.FromAuthor(Disp(F.Id("su2Mul"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "Matrix multiplication is the displayed quaternion product. This is the algebraic " +
-                    "support used by the balanced commutator construction."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("axis-rotation-determinant"), DeclarationHandle.Create(Prefix + "axisRot_det"),
-                H("Axis rotations have determinant one"), StatementSource.FromAuthor(Disp(F.Id("axisRotDet"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For a real unit axis, every axisRot(a,b,c,theta) has determinant one. " +
-                    "No density or word-length assertion is hidden in this algebraic support."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("compact-finite-net"), DeclarationHandle.Create(Prefix + "compact_exists_finite_net"),
-                H("Compactness gives a finite net"), StatementSource.FromAuthor(Disp(F.Id("compactFiniteNet"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "This is the compactness finite-net lemma retained from the licensed CSD " +
-                    "CliffordTNet source. A compact set in the closure of D has a finite net drawn " +
-                    "from D; it supplies the base compactness step without a quantitative cardinality."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("su2-carrier-set"), DeclarationHandle.Create(Prefix + "SU2Set"),
-                H("The determinant-one unitary subset"), StatementSource.FromAuthor(Disp(F.Id("su2Set"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "SU2Set is the closed subset of 2 by 2 matrices satisfying the SU2 carrier predicate."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("su2-closed"), DeclarationHandle.Create(Prefix + "isClosed_SU2Set"),
-                H("The SU2 subset is closed"), StatementSource.FromAuthor(Disp(F.Id("isClosedSu2Set"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "Closedness uses the existing unitary closed-set theorem and continuity of the matrix determinant."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("su2-closed-ball"), DeclarationHandle.Create(Prefix + "su2Set_subset_closedBall"),
-                H("The SU2 subset lies in the unit ball"), StatementSource.FromAuthor(Disp(F.Id("su2SetClosedBall"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "Every unitary has operator norm one, giving the closed-ball bound used by the compactness proof."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("su2-compact"), DeclarationHandle.Create(Prefix + "isCompact_SU2Set"),
-                H("The SU2 subset is compact"), StatementSource.FromAuthor(Disp(F.Id("isCompactSu2Set"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The unitary norm bound places SU2Set in the closed unit ball, so closedness yields compactness."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("su2-closure-density"), DeclarationHandle.Create(Prefix + "SU2Set_subset_closure_evalGamma"),
-                H("Density reaches the compact SU2 carrier"), StatementSource.FromAuthor(Disp(F.Id("su2SetClosureEval"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The density premise is converted into inclusion of SU2Set in the closure of the actual " +
-                    "ordinary-word evaluations."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("finite-actual-word-net"), DeclarationHandle.Create(Prefix + "exists_finite_word_net"),
-                H("A finite actual-word base net with maximum length"), StatementSource.FromAuthor(Disp(F.Id("finiteWordNet"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For every positive radius, compactness and density produce a finite Fin(Fin m) word set, " +
-                    "a maximum actual List length L0, and an approximation witness for every SU2 target. " +
-                    "The theorem records existence only and gives no effectiveness or cardinality bound."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("commutator-quadratic"), DeclarationHandle.Create(Prefix + "norm_mul_sub_mul_comm_le"),
-                H("Near-identity commutators are quadratic"), StatementSource.FromAuthor(Disp(F.Id("commutatorQuadratic"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The norm of VW-WV is bounded by twice the product of the two distances to identity. " +
-                    "This is the licensed balanced-commutator contraction support."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("commutator-identity"), DeclarationHandle.Create(Prefix + "groupCommutator_sub_one_eq"),
-                H("Unitary commutator factorization"), StatementSource.FromAuthor(Disp(F.Id("commutatorIdentity"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For unitary factors, the group commutator minus identity factors through VW-WV and the " +
-                    "trailing adjoint product."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("commutator-basic-stability"), DeclarationHandle.Create(Prefix + "norm_groupCommutator_sub_le_basic"),
-                H("Basic commutator contraction bound"), StatementSource.FromAuthor(Disp(F.Id("commutatorBasic"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "Unitary factors near identity give the standard quadratic group-commutator bound."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("product-perturbation"), DeclarationHandle.Create(Prefix + "norm_mul_sub_mul_le_weighted"),
-                H("Two-factor perturbation estimate"), StatementSource.FromAuthor(Disp(F.Id("productPerturbation"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "A product difference is bounded by the two factor differences weighted by the companion norms."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("commutator-factor-stability"), DeclarationHandle.Create(Prefix + "norm_mul_sub_mul_comm_sub_le"),
-                H("Perturbing both commutator factors"), StatementSource.FromAuthor(Disp(F.Id("commutatorFactorStability"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The difference of two factor commutators is bounded by 4*a*delta when all four factors " +
-                    "are within a of identity and each replacement has error at most delta."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("commutator-stability"), DeclarationHandle.Create(Prefix + "norm_groupCommutator_sub_le"),
-                H("Balanced-commutator stability"), StatementSource.FromAuthor(Disp(F.Id("commutatorStability"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The licensed perturbation estimate bounds the change in a unitary group commutator by " +
-                    "4*a*delta*(1+a), the stability shape needed before the 3/2 error recurrence can be closed."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("su2-carrier"), DeclarationHandle.Create(Prefix + "SU2"),
-                H("The determinant-one unitary carrier"), StatementSource.FromAuthor(Disp(F.Id("SU2"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "SU2 U means that U is a unitary 2 by 2 complex matrix and has determinant one."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("dense-alphabet"), DeclarationHandle.Create(Prefix + "DenseAlphabet"),
-                H("Density of actual ordinary words"), StatementSource.FromAuthor(Disp(F.Id("denseAlphabet"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For every determinant-one unitary U and every positive eta, some actual List(Fin m) " +
-                    "word has L2 operator-norm error strictly less than eta."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("polylog-conclusion"), DeclarationHandle.Create(Prefix + "UniformPolylog"),
-                H("Uniform polylogarithmic ordinary-word conclusion"), StatementSource.FromAuthor(Disp(F.Id("uniformPolylog"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "UniformPolylog Gamma asks for K>0 and 0<epsilon0<1 and one actual word for each " +
-                    "U and 0<epsilon<=epsilon0, satisfying both the error and real length bounds."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("residual"), DeclarationHandle.Create(Prefix + "residual"),
-                H("Residual from the previous-level word"), StatementSource.FromAuthor(Disp(F.Id("residual"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The residual is U * star(evalGamma u), so the successor construction starts from the " +
-                    "previous-level witness u rather than a fixed initial-net word."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("ordinary-word-evaluation"), DeclarationHandle.Create(Prefix + "evalGamma"),
-                H("Left-to-right ordinary-word evaluation"), StatementSource.FromAuthor(Disp(F.Id("evalGamma"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "For Gamma : Fin m -> Matrix (Fin 2) (Fin 2) Complex, evalGamma [] is the identity " +
-                    "and evalGamma (i :: w) is Gamma i multiplied by evalGamma w. The order is literal " +
-                    "and is used unchanged by every successor witness."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("inverse-word"), DeclarationHandle.Create(Prefix + "inverseWord"),
-                H("The selector-defined inverse word"), StatementSource.FromAuthor(Disp(F.Id("inverseWord"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "inverseWord inverseLetter w is reverse.map inverseLetter. The selector is not " +
-                    "required to be involutive; the compiled inverse evaluation theorem uses only " +
-                    "Gamma (inverseLetter i) = star (Gamma i)."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("inverse-word-length"), DeclarationHandle.Create(Prefix + "inverseWord_length"),
-                H("Inverse words preserve actual length"), StatementSource.FromAuthor(Disp(F.Id("inverseWordLength"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "Reversing and mapping the selector preserves the exact List length. This is the " +
-                    "length used by the produced ordinary witness."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("balanced-word"), DeclarationHandle.Create(Prefix + "balancedCommutatorWord"),
-                H("The literal balanced successor word"), StatementSource.FromAuthor(Disp(F.Id("balancedCommutatorWord"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The successor is exactly v ++ w ++ inv(v) ++ inv(w) ++ u. Its residual is formed " +
-                    "from the previous-level u, and the same produced list is used for the value identity " +
-                    "and for its length."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("balanced-word-length"), DeclarationHandle.Create(Prefix + "successorWord_length"),
-                H("The literal successor length"), StatementSource.FromAuthor(Disp(F.Id("successorWordLength"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The same successor list has length length(v)+length(w)+length(v)+length(w)+length(u). " +
-                    "No scalar skLength or compressed-word convention is used."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("balanced-word-value"), DeclarationHandle.Create(Prefix + "successorWord_value"),
-                H("Evaluation of the same successor witness"), StatementSource.FromAuthor(Disp(F.Id("successorWordValue"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The literal list evaluates to eval(v) * eval(w) * star(eval(v)) * star(eval(w)) * eval(u). " +
-                    "This preserves the source's ordinary-list inverse mechanism and does not infer length " +
-                    "from a scalar cost function."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("residual-successor-value"), DeclarationHandle.Create(Prefix + "residual_successorWord_value"),
-                H("Residual transport through the same successor"), StatementSource.FromAuthor(Disp(F.Id("residualSuccessorValue"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "Multiplying the residual U*star(eval(u)) by the produced successor keeps the previous " +
-                    "level word u explicit and exposes the balanced commutator factor in one identity."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("registered-event"), DeclarationHandle.Create(Prefix + "OrdinaryWordSolovayKitaevEvent"),
-                H("The exact registered event telescope"), StatementSource.FromAuthor(Disp(F.Id("ordinaryWordSolovayKitaevEvent"))),
-                AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text(
-                        "For every m, including m = 0, and every finite Gamma : Fin m -> Mat2, assume each " +
-                        "letter is unitary, inverse closure holds by an existential selector, and every " +
-                        "determinant-one unitary is approximated by an ordinary List(Fin m) in the complex " +
-                        "Euclidean L2 operator norm. The conclusion asks for K > 0 and 0 < epsilon0 < 1, " +
-                        "uniformly for all U and 0 < epsilon <= epsilon0, with the same word satisfying " +
-                        "the error bound and real(length(w)) <= K * (log(1/epsilon))^(log(5)/log(3/2)).")),
-                    Paragraph(Text(
-                        "The event makes no effectiveness, numerical constant, runtime, optimality, " +
-                        "physical implementation, growing-dimension, or compressed-word claim."))),
-                DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("quantitative-closure"), DeclarationHandle.Create(Prefix + "QuantitativeClosure"),
-                H("The remaining quantitative bridge"), StatementSource.FromAuthor(Disp(F.Id("quantitativeClosure"))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
-                    "The candidate records the still-open density-derived finite seed, balanced-commutator " +
-                    "stability, and same-word induction obligations. This proposition is not presented as a " +
-                    "proof of the registered event and carries no freeze or coverage claim."))),
-                DescribeRole.Definition))));
+        "Every finite inverse-closed dense alphabet in SU(2) approximates all targets by ordinary lists with a uniform polylogarithmic length bound.",
+        H("Ordinary-word Solovay–Kitaev approximation"), Blocks(
+            Paragraph(Text("Mat denotes complex 2 by 2 matrices, with the complex Euclidean L2 operator norm. Words(m) is List(Fin m), including m=0. SU(U) means U is unitary and det(U)=1. Evaluation is ordered: eval(Gamma,[]) is the identity and eval(Gamma,i::w)=Gamma(i)*eval(Gamma,w). Every length below is the actual length of that list.")),
+            Entry("ordinary-word-evaluation", "evalGamma", "Ordered evaluation", Evaluation(),
+                "The head letter multiplies the evaluation of the tail on the left. Appending lists multiplies their evaluations in the same order.", DescribeRole.Definition),
+            Entry("inverse-word", "inverseWord", "A chosen inverse letter", InverseDefinition(),
+                "inv(sigma,w)=map(sigma,reverse(w)). The inverse selector need only satisfy Gamma(sigma(i))=star(Gamma(i)); it need not be involutive and letters need not be distinct.", DescribeRole.Definition),
+            Entry("successor-word", "successorWord", "The five-piece successor", SuccessorDefinition(),
+                "The successor is the literal concatenation v ++ w ++ inv(v) ++ inv(w) ++ u. Its length is twice length(v), twice length(w), plus length(u). Its evaluation is the commutator of eval(v),eval(w), followed by eval(u).", DescribeRole.Definition),
+            Entry("finite-word-net", "exists_finite_word_net", "A finite net made of actual words", FiniteNet(),
+                "Compactness of the determinant-one closed subset of the unitary group and density give finitely many actual word values. Choose one list for each net point and take the maximum of their actual lengths. The compact unitary carrier is reused from HaarTwoCopyTwirl.unitaryCompactSpace. No numerical bound on this maximum or effective net construction is required.", DescribeRole.Theorem),
+            Entry("commutator-stability", "norm_groupCommutator_sub_le", "Stability gains the small factor", Stability(),
+                "For four unitary factors within a of identity and factor errors at most delta, the commutator error is at most 4*a*delta*(1+a). This is the Apache-2.0 CSD estimate of Zayn Blore, specialized to the matrix carrier. Its factorization pairs a factor difference with a small near-identity factor.", DescribeRole.Theorem),
+            Entry("paired-word-invariant", "exists_word_at_level", "One list carries error and length together", Invariant(),
+                "Start with a word u from the preceding level approximating the current U. The residual is U*star(eval(Gamma,u)), whose distance from identity equals the preceding error and whose determinant remains one. BalancedSU2Commutator supplies exact factors V,W at square-root distance. Approximate both at the same preceding level and concatenate their words with inverse words and u. Stability bounds this same list's error by e(n+1)=33*e(n)^(3/2), while its actual length is bounded by 5^(n+1)*L. This alphabet-parametric construction follows the licensed CSD ordinary-word induction; the residual always uses the preceding approximation to this target.", DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniform-ordinary-word-bound"),
+                DeclarationHandle.Create(Prefix + "ordinary_word_solovay_kitaev"),
+                H("The uniform polylogarithmic ordinary-word theorem"),
+                StatementSource.FromAuthor(EventStatement()),
+                AssessedProvenance.FromLiterature("dawsonnielsen2006solovaykitaev"),
+                Blocks(
+                    Paragraph(Text("For every finite alphabet Gamma of determinant-one unitary matrices, assume inverse closure and density of its ordinary finite words in SU(2). Then K>0 and 0<epsilon0<1 can be chosen uniformly for every target U and every 0<epsilon<=epsilon0. One ordinary list w satisfies both the error and real-valued length inequalities. The exponent is exactly log(5)/log(3/2).")),
+                    Paragraph(Text("A compactness net supplies the alphabet-dependent initial length. The paired word invariant gives the same list at every level; the licensed scalar and logarithmic estimates in SolovayKitaevRate eliminate the level. Zayn Blore's Apache-2.0 CSD proof is the source of the balanced decomposition, stability and rate estimates and of the fixed-alphabet word induction. The full license is docs/reports/qmutualinfo/csd-lean4-LICENSE.txt. This theorem concerns existence and ordinary list length. It asserts no effectiveness, runtime, optimality, numerical constants, physical realization, compressed length or bound uniform in growing dimension."))),
+                DescribeRole.Theorem))));
+
+    private static ScribeNode Entry(string id, string name, string title, Formula formula,
+        string body, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(body))), role);
+
+    private static Formula Evaluation()
+    {
+        Formula m=X("m"), g=X("Gamma"), i=X("i"), w=X("w");
+        return Alphabet(And(Eq(Eval(g,Call("nil")),N(1)),
+            All("i",Call("Fin",m),All("w",Words(m),
+                Eq(Eval(g,Call("cons",i,w)),Multiply(At(g,i),Eval(g,w)))))));
+    }
+    private static Formula InverseDefinition()
+    {
+        Formula m=X("m"), s=X("sigma"), w=X("w");
+        return All("m",Call("Nat"),All("sigma",new Formula.TypeArrow(Call("Fin",m),Call("Fin",m)),
+            All("w",Words(m),Eq(Inv(s,w),Call("map",s,Call("reverse",w))))));
+    }
+    private static Formula SuccessorDefinition()
+    {
+        Formula m=X("m"), s=X("sigma"), v=X("v"), w=X("w"), u=X("u");
+        return All("m",Call("Nat"),All("sigma",new Formula.TypeArrow(Call("Fin",m),Call("Fin",m)),
+            All("v",Words(m),All("w",Words(m),All("u",Words(m),Eq(
+                Call("successorWord",s,v,w,u),Call("concat",v,w,Inv(s,v),Inv(s,w),u)))))));
+    }
+    private static Formula FiniteNet()
+    {
+        Formula m=X("m"), g=X("Gamma"), eta=X("eta"), f=X("F"), l=X("L"), u=X("U"), w=X("w");
+        Formula bound=All("w",Words(m),Imp(Member(w,f),Le(Call("length",w),l)));
+        Formula net=All("U",Call("Mat"),Imp(Su(u),Ex("w",Words(m),
+            And(Member(w,f),Lt(Error(g,u,w),eta)))));
+        return Alphabet(Imp(Density(m,g),All("eta",Call("Real"),Imp(Pos(eta),
+            Ex("F",Call("Finset",Words(m)),Ex("L",Call("Nat"),And(bound,net)))))));
+    }
+    private static Formula Stability()
+    {
+        Formula v=X("V"), w=X("W"), p=X("P"), q=X("Q"), a=X("a"), d=X("delta");
+        Formula hyp=And(Unitary(v),And(Unitary(w),And(Unitary(p),And(Unitary(q),
+            And(Le(Norm(Subtract(v,N(1))),a),And(Le(Norm(Subtract(w,N(1))),a),
+            And(Le(Norm(Subtract(p,N(1))),a),And(Le(Norm(Subtract(q,N(1))),a),
+            And(Le(Norm(Subtract(v,p)),d),Le(Norm(Subtract(w,q)),d))))))))));
+        Formula result=Le(Norm(Subtract(Comm(v,w),Comm(p,q))),
+            Multiply(Multiply(Multiply(N(4),a),d),Add(N(1),a)));
+        return All("V",Call("Mat"),All("W",Call("Mat"),All("P",Call("Mat"),All("Q",Call("Mat"),
+            All("a",Call("Real"),All("delta",Call("Real"),Imp(hyp,result)))))));
+    }
+    private static Formula Invariant()
+    {
+        Formula m=X("m"),g=X("Gamma"),s=X("sigma"),e=X("e"),l=X("L"),n=X("n"),u=X("U"),w=X("w");
+        Formula hnet=All("U",Call("Mat"),Imp(Su(u),Ex("w",Words(m),
+            And(Le(Error(g,u,w),e),Le(Call("length",w),l)))));
+        Formula hyp=And(Generators(m,g),And(ChosenInverse(m,g,s),And(Le(N(0),e),
+            And(Le(Call("sqrt",e),Frac(N(1),N(33))),hnet))));
+        Formula result=All("n",Call("Nat"),All("U",Call("Mat"),Imp(Su(u),Ex("w",Words(m),
+            And(Le(Error(g,u,w),Call("skErr",e,n)),
+                Le(Call("length",w),Multiply(Pow(N(5),n),l)))))));
+        return Alphabet(All("sigma",new Formula.TypeArrow(Call("Fin",m),Call("Fin",m)),
+            All("e",Call("Real"),All("L",Call("Nat"),Imp(hyp,result)))));
+    }
+}
+
+internal static class SolovayKitaevNotation
+{
+    internal static Formula X(string n) => F.Id(n);
+    internal static Formula N(long n) => new Formula.Number(n);
+    internal static Formula All(string n, Formula t, Formula b) => new Formula.Bind(
+        FormulaQuantifier.ForAll,FormulaIdentifier.Create(n),t,b);
+    internal static Formula Ex(string n, Formula t, Formula b) => new Formula.Bind(
+        FormulaQuantifier.Exists,FormulaIdentifier.Create(n),t,b);
+    internal static Formula At(Formula f, Formula x) => new Formula.Apply(f,[x]);
+    internal static Formula Eq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
+    internal static Formula Le(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
+    internal static Formula Lt(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
+    internal static Formula And(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.And,b);
+    internal static Formula Imp(Formula a, Formula b) => new Formula.Logic(a,FormulaLogicOperator.Implies,b);
+    internal static Formula Pos(Formula a) => Lt(N(0),a);
+    internal static Formula Frac(Formula a, Formula b) => new Formula.Fraction(a,b);
+    internal static Formula Pow(Formula a, Formula b) => new Formula.Power(a,b);
+    internal static Formula Norm(Formula a) => new Formula.Norm(a);
+    internal static Formula Star(Formula a) => Call("star",a);
+    internal static Formula Words(Formula m) => Call("List",Call("Fin",m));
+    internal static Formula Su(Formula a) => And(Unitary(a),Eq(Call("det",a),N(1)));
+    internal static Formula Unitary(Formula a) => new Formula.Relation(a,FormulaRelationOperator.MemberOf,Call("unitary",Call("Mat")));
+    internal static Formula Member(Formula a, Formula f) => new Formula.Relation(a,FormulaRelationOperator.MemberOf,f);
+    internal static Formula Eval(Formula g, Formula w) => Call("evalGamma",g,w);
+    internal static Formula Inv(Formula s, Formula w) => Call("inverseWord",s,w);
+    internal static Formula Error(Formula g, Formula u, Formula w) => Norm(Subtract(u,Eval(g,w)));
+    internal static Formula Comm(Formula v, Formula w) => Multiply(Multiply(Multiply(v,w),Star(v)),Star(w));
+    internal static Formula Exponent() => Frac(Call("log",N(5)),Call("log",Frac(N(3),N(2))));
+    internal static Formula Alphabet(Formula body) => All("m",Call("Nat"),All("Gamma",
+        new Formula.TypeArrow(Call("Fin",X("m")),Call("Mat")),body));
+    internal static Formula Generators(Formula m, Formula g) => All("i",Call("Fin",m),Su(At(g,X("i"))));
+    internal static Formula ChosenInverse(Formula m, Formula g, Formula s) => All("i",Call("Fin",m),
+        Eq(At(g,At(s,X("i"))),Star(At(g,X("i")))));
+    internal static Formula Density(Formula m, Formula g) => All("A",Call("Mat"),Imp(Su(X("A")),
+        All("eta",Call("Real"),Imp(Pos(X("eta")),Ex("v",Words(m),Lt(Error(g,X("A"),X("v")),X("eta")))))));
+    internal static Formula EventStatement()
+    {
+        Formula m=X("m"),g=X("Gamma"),k=X("K"),b=X("b"),e=X("epsilon"),u=X("U"),w=X("w");
+        Formula inverse=All("i",Call("Fin",m),Ex("j",Call("Fin",m),
+            Eq(At(g,X("j")),Star(At(g,X("i"))))));
+        Formula paired=Ex("w",Words(m),And(Le(Error(g,u,w),e),
+            Le(Call("real",Call("length",w)),Multiply(k,Pow(Call("log",Frac(N(1),e)),Exponent())))));
+        Formula result=Ex("K",Call("Real"),Ex("b",Call("Real"),And(Pos(k),And(Pos(b),And(Lt(b,N(1)),
+            All("epsilon",Call("Real"),Imp(And(Pos(e),Le(e,b)),All("U",Call("Mat"),Imp(Su(u),paired)))))))));
+        return Alphabet(Imp(And(Generators(m,g),And(inverse,Density(m,g))),result));
+    }
 }

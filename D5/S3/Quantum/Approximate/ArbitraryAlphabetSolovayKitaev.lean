@@ -1,37 +1,43 @@
 /- GID: D5/S3/Quantum/Approximate/ArbitraryAlphabetSolovayKitaev
    generality: G
    mirror-B: D5/B/S3/Quantum/Approximate/ArbitraryAlphabetSolovayKitaev
-   mirror-E: none(waiver:stage-a-candidate)
+   mirror-E: none(waiver:kernel-checked-content)
    anchors: []
    utility: none
    digest: Ordinary-word approximation over finite dense inverse-closed SU(2) alphabets. -/
 
 /-
 Attributed algebraic support: Csd@9b2d2c17e926ae13795119c5f2f62e85ea240c2d.
-Original files: CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean and
-CsdLean4/Mathlib/QuantumInfo/CommutatorDecomposition.lean,
-CsdLean4/Mathlib/QuantumInfo/CliffordTNet.lean,
-CsdLean4/Mathlib/Analysis/CStarAlgebra/GroupCommutator.lean, and
-CsdLean4/Mathlib/QuantumInfo/SolovayKitaevStep.lean.
+Source files:
+https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/CliffordTNet.lean
+(original QuantumInfo.SU2.compact_exists_finite_net),
+https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/Analysis/CStarAlgebra/GroupCommutator.lean
+(original CStarRing.norm_mul_sub_mul_comm_le and groupCommutator_sub_one_eq),
+https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/SolovayKitaevStep.lean
+(original CSD.SolovayKitaev.norm_mul_sub_mul_le', norm_mul_sub_mul_comm_sub_le,
+and norm_groupCommutator_sub_le), and
+https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/SolovayKitaevCount.lean
+(original QuantumInfo.SU2.exists_mem_skWords_norm_sub_le and
+exists_word_approx_polylog, used as proof sources for the alphabet-parametric construction).
 Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Zayn Blore.
 Full license: docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
-Only the SU(2) quaternion identities needed by this candidate are retained.
+The compact-net and stability estimates are licensed reuse. Quaternion decomposition
+and scalar rate estimates are in the two directly imported support modules.
 -/
 
-module
 
-public import D5.S3.Quantum.Approximate.BalancedSU2Commutator
-public import D5.S3.Quantum.Approximate.SolovayKitaevRate
-public import Mathlib.Analysis.CStarAlgebra.Matrix
-public import Mathlib.Topology.Instances.Matrix
-public import Mathlib.Topology.Algebra.Star.Unitary
-public import Mathlib.Tactic
+import D5.S3.Quantum.Approximate.BalancedSU2Commutator
+import D5.S3.Quantum.Approximate.SolovayKitaevRate
+import Mathlib.Analysis.CStarAlgebra.Matrix
+import Mathlib.Topology.Instances.Matrix
+import Mathlib.Topology.Algebra.Star.Unitary
+import D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl
+import Mathlib.Tactic
 
-/-! # Arbitrary finite-alphabet ordinary-word Solovay–Kitaev candidate -/
+/-! # Arbitrary finite-alphabet ordinary-word Solovay–Kitaev approximation -/
 
-@[expose] public section
 
 open Matrix
 open Metric Set
@@ -224,7 +230,7 @@ theorem inverseWord_length {m : ℕ} (inverseLetter : Fin m → Fin m)
     (w : List (Fin m)) : (inverseWord inverseLetter w).length = w.length := by
   simp [inverseWord]
 
-/-- The produced successor word required by the registered event. -/
+/-- The literal five-piece ordinary successor list. -/
 def balancedCommutatorWord {m : ℕ} (inverseLetter : Fin m → Fin m)
     (v w u : List (Fin m)) : List (Fin m) :=
   v ++ w ++ inverseWord inverseLetter v ++ inverseWord inverseLetter w ++ u
@@ -252,16 +258,13 @@ theorem isClosed_SU2Set : IsClosed SU2Set := by
   exact (isClosed_unitary (R := Mat2)).inter
     (isClosed_singleton.preimage continuous_id.matrix_det)
 
-theorem su2Set_subset_closedBall : SU2Set ⊆ Metric.closedBall (0 : Mat2) 1 := by
-  intro U hU
-  rw [mem_closedBall_zero_iff]
-  rw [CStarRing.norm_of_mem_unitary hU.1]
+theorem isCompact_SU2Set : IsCompact SU2Set := by
+  have hc : IsCompact (unitary Mat2 : Set Mat2) :=
+    isCompact_iff_compactSpace.mpr
+      (D5.S3.Quantum.RandomCircuits.HaarTwoCopyTwirl.unitaryCompactSpace (n := Fin 2))
+  exact hc.of_isClosed_subset isClosed_SU2Set (fun _ hU => hU.1)
 
-theorem isCompact_SU2Set : IsCompact SU2Set :=
-  (isCompact_closedBall (0 : Mat2) 1).of_isClosed_subset
-    isClosed_SU2Set su2Set_subset_closedBall
-
-/-- The registered density premise, including the zero-letter case. -/
+/-- Density of ordinary words, including the zero-letter case. -/
 def DenseAlphabet {m : ℕ} (Gamma : Fin m → Mat2) : Prop :=
   ∀ U, SU2 U → ∀ η : ℝ, 0 < η → ∃ w : List (Fin m),
     ‖U - evalGamma Gamma w‖ < η
@@ -312,14 +315,14 @@ def UniformPolylog {m : ℕ} (Gamma : Fin m → Mat2) : Prop :=
       ‖U - evalGamma Gamma w‖ ≤ ε ∧
       (w.length : ℝ) ≤ K * (Real.log (1 / ε)) ^ skExponent
 
-/-- The exact preregistered event, without any quantitative or physical strengthening. -/
+/-- The uniform approximation assertion over all finite SU(2) alphabets. -/
 def OrdinaryWordSolovayKitaevEvent : Prop :=
   ∀ m : ℕ, ∀ Gamma : Fin m → Mat2,
     (∀ i, SU2 (Gamma i)) →
     (∀ i, ∃ j, Gamma j = star (Gamma i)) →
     DenseAlphabet Gamma → UniformPolylog Gamma
 
-/-- A residual is formed from the previous-level word, as required by the event. -/
+/-- Residual formed from the previous-level approximation to the target. -/
 def residual {m : ℕ} (Gamma : Fin m → Mat2) (U : Mat2) (u : List (Fin m)) : Mat2 :=
   U * star (evalGamma Gamma u)
 
