@@ -14,17 +14,9 @@ namespace Reg.D5.S3.Geometry.AlgebraicBoundary.InteriorFactorDeletion
 
 universe u
 
-structure Parameters where
-  E : Type u
-  group : NormedAddCommGroup E
-  space : @NormedSpace ℝ E _ group.toSeminormedAddCommGroup
-  g : E → ℝ
-
-attribute [instance] Parameters.group Parameters.space
-
 abbrev signature : Signature where
-  Params := Parameters.{u}
-  State p := p.E
+  Params := Σ E : Type u, E → ℝ
+  State p := p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -33,28 +25,21 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ p x => p.g x) (fun e => nomatch e)
+  realize signature (fun _ p x => p.2 x) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ (p : Parameters.{u}) {B : Set p.E}, Convex ℝ B →
-    ∀ {a : p.E}, a ∈ interior B → ∀ (L : p.E →L[ℝ] ℝ), L ≠ 0 →
-    Continuous p.g → (∀ x ∈ frontier B, L (x - a) * p.g x = 0) →
-    ∀ x ∈ frontier B, R.readout () p x = 0
+  Law R := ∀ {E : Type u} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {B : Set E} (_hB : Convex ℝ B) {a : E} (_ha : a ∈ interior B)
+    (L : E →L[ℝ] ℝ) (_hL : L ≠ 0) {g : E → ℝ} (_hg : Continuous g)
+    (_hvan : ∀ x ∈ frontier B, L (x - a) * g x = 0),
+    ∀ x ∈ frontier B, R.readout () ⟨E, g⟩ x = 0
 
 private theorem bridge : (type_of% (@whole_boundary_factor_delete.{u})) ↔
-    arena.{u}.Law actual := by
-  constructor
-  · intro h p B hB a ha L hL hg hvan x hx
-    exact h hB ha L hL hg hvan x hx
-  · intro h E group space B hB a ha L hL g hg hvan x hx
-    exact h ⟨E, group, space, g⟩ hB ha L hL hg hvan x hx
-
-private abbrev zeroParameters : Parameters.{u} :=
-  ⟨ULift.{u} ℝ, inferInstance, inferInstance, fun _ => 0⟩
+    arena.{u}.Law actual := Iff.rfl
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -70,13 +55,14 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hx : (⟨1⟩ : ULift.{u} ℝ) ∈ frontier (closedBall 0 1) := by
     rw [frontier_closedBall 0 one_ne_zero]
     norm_num [mem_sphere, dist_eq_norm]
-  have hh := h zeroParameters (convex_closedBall (0 : ULift.{u} ℝ) 1) ha L hL
-    continuous_const (by intro x hx; simp [zeroParameters]) ⟨1⟩ hx
+  have hh := @h (ULift.{u} ℝ) inferInstance inferInstance (closedBall 0 1)
+    (convex_closedBall (0 : ULift.{u} ℝ) 1) 0 ha L hL (fun _ => 0)
+    continuous_const (by intro x hx; simp) ⟨1⟩ hx
   norm_num [rejected, realize] at hh
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨⟨ULift.{u} ℝ, inferInstance, inferInstance, ULift.down⟩, ⟨0⟩, ⟨1⟩, ?_⟩
+  refine ⟨⟨ULift.{u} ℝ, ULift.down⟩, ⟨0⟩, ⟨1⟩, ?_⟩
   norm_num [actual, realize]
 
 def family : Registration arena.{u} (type_of% (@whole_boundary_factor_delete.{u})) where
@@ -101,7 +87,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p x => p.g x) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p x => p.2 x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -109,7 +95,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.AlgebraicBoundary.InteriorFactorDeletion
     definition := none
-    coordinates := #[0, 1, 2, 9]
+    coordinates := #[0, 9]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
         "body", "body", "body", "body", "body", "body", "fn", "arg"]

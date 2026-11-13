@@ -33,13 +33,14 @@ internal sealed class InteriorFactorDeletionDocument : IScribeDocumentDefinition
         var boundary = Call("frontier", b);
         var vanishing = All("x", e, Imp(Member(x, boundary),
             Eq(Call("mul", Call("L", Call("sub", x, a)), Call("g", x)), F.D(0))));
-        return All("E", F.Id("RealNormedVectorSpace"),
-            All("B", Call("Set", e), All("a", e,
-                All("L", Call("ContinuousLinearMap", real, e, real),
-                    All("g", Call("Function", e, real),
-                        Imp(And(Call("Convex", real, b), Member(a, Call("interior", b)),
-                            Call("Nonzero", l), Call("Continuous", g), vanishing),
-                            All("x", e, Imp(Member(x, boundary), Eq(Call("g", x), F.D(0)))))))));
+        var conclusion = All("x", e, Imp(Member(x, boundary), Eq(Call("g", x), F.D(0))));
+        var hypotheses = And(Call("Convex", real, b), Member(a, Call("interior", b)),
+            Call("Nonzero", l), Call("Continuous", g), vanishing);
+        var body = All("g", Call("Function", e, real), Imp(hypotheses, conclusion));
+        body = All("L", Call("ContinuousLinearMap", real, e, real), body);
+        body = All("a", e, body);
+        body = All("B", Call("Set", e), body);
+        return All("E", F.Id("RealNormedVectorSpace"), body);
     }
 
     private static Formula All(string name, Formula domain, Formula body) =>

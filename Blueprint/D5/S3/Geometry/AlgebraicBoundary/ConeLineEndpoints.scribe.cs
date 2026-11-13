@@ -40,11 +40,12 @@ internal sealed class ConeLineEndpointsDocument : IScribeDocumentDefinition
             Member(Call("neg", Y(a)), Call("frontier", cone)),
             Member(Y(b), Call("frontier", cone)));
         var offAxis = All("s", real, Call("NotEqual", x, Call("smul", F.Id("s"), direction)));
-        return All("E", F.Id("RealNormedVectorSpace"),
-            All("C", Call("ConvexCone", real, e), All("e", e, All("x", e,
-                Imp(And(Call("IsClosed", cone), Call("Salient", cone),
-                    Member(direction, Call("interior", cone)), offAxis),
-                    Exists("a", real, Exists("b", real, rays)))))));
+        var hypotheses = And(Call("IsClosed", cone), Call("Salient", cone),
+            Member(direction, Call("interior", cone)), offAxis);
+        var body = All("x", e, Imp(hypotheses, Exists("a", real, Exists("b", real, rays))));
+        body = All("e", e, body);
+        body = All("C", Call("ConvexCone", real, e), body);
+        return All("E", F.Id("RealNormedVectorSpace"), body);
     }
 
     private static Formula Call(string name, params Formula[] args) =>
