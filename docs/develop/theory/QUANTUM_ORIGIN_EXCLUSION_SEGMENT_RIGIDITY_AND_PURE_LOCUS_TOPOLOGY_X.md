@@ -3868,3 +3868,602 @@ $(u-X)/2$ 的整个原零面为 $\iota(F)$，$(u+X)/2$ 的整个原零面为 $\i
 [Q129BP]: https://arxiv.org/abs/2103.08446 "J.-B. Bru and W. de Siqueira Pedra, Weak* Hypertopologies with Application to Genericity of Convex Sets，§4.3开头的有限维Straszewicz陈述；全文：https://ar5iv.labs.arxiv.org/html/2103.08446。"
 
 ## 追加锚（本行以下为增补区）
+
+## 130. 原零图的两步覆盖、连通边界与完整静态复三能级
+
+**定义 130.1（完整原域与两步条件）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{X130.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是全部原效应；不取截面、所选纯点或测试子菜单代替它们。对 $p,q\in P$ 定义
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0.
+\tag{X130.2}
+$$
+
+补效应给对称性，且 $p\not\perp p$。沿用[VII103.1—103.2][Q130VII]的 $\mathrm{EB}_{\ge2}$：对每个原 $p$，整个 $D_p$ 仿射同构于某个完整闭球 $B^{d_p}$，$d_p\ge2$，允许维数随标签改变；$\mathrm{EB3}$ 表示全部 $d_p=3$。在此域记
+
+$$
+\begin{aligned}
+\mathsf D_2(p):&\quad
+\forall q\in P:\ p\perp q\ \lor
+\exists r\in P:\ p\perp r\ \land\ q\perp r,\\
+\mathsf D_2:&\quad\forall p\in P\ \mathsf D_2(p).
+\end{aligned}
+\tag{X130.3}
+$$
+
+每个存在量词中的 $r$ 是同一原纯点，两条边均由原全域效应见证。$D_p$ 有纯球缘，故 $q=p$ 时的共同邻点自动存在。因此 $\mathsf D_2$ 正是原简单零图直径至多二，也等价于每对不同且不相邻的原纯点有共同邻点。它不要求一条已经指定的边有共同邻点。
+
+**定理 130.2（固定纯点的两步覆盖迫真实三角）。** 在定义130.1的完整 $\mathrm{EB}_{\ge2}$ 域内，固定 $p\in P$。若 $\mathsf D_2(p)$ 成立，则存在 $q,r\in P$，使
+
+$$
+p\perp q,\qquad p\perp r,\qquad q\perp r.
+\tag{X130.4}
+$$
+
+等价地，若 $p$ 不属于任何真实零三角，则存在原 $s\in P\setminus\{p\}$，满足
+
+$$
+p\not\perp s,\qquad
+\nexists r\in P:\ p\perp r\ \land\ s\perp r.
+\tag{X130.5}
+$$
+
+特别地，$\mathsf D_2$ 使每个原纯点属于一个真实三角。
+
+证明。只复用[VII103.2及IX116.1][Q130VII][Q130IX]的裸EB面接口：每个 $D_a$ 是非点紧暴露极大真面；全部非空真面只有原纯单点和完整 $D_a$；且
+
+$$
+S_a:=P\cap D_a=\partial_{\rm rel}D_a,\qquad
+D_a=\operatorname{conv}S_a.
+\tag{X130.6}
+$$
+
+这里的原面不预先要求闭。$S_a\cong S^{d_a-1}$ 是紧连通集；用到的紧性只属于各个固定球缘，不属于整个 $P$。假设 $p$ 没有三角，置
+
+$$
+A=D_p,\qquad B=\bigcup_{r\in S_p}D_r,\qquad
+S=\partial_{\rm rel}K.
+\tag{X130.7}
+$$
+
+$A$ 紧。$B$ 也紧：它是紧集
+
+$$
+\{(r,x,f)\in S_p\times K\times\mathcal E:
+f(r)=1,\ f(x)=0\}
+\tag{X130.8}
+$$
+
+在 $K$ 上的投影。这里直接使用[SAME_READBACK126.1][Q130SR]的原零关联紧投影构造；该构造只要求 $K,\mathcal E$ 紧及评价连续，不依赖该章随后针对EB3的纤维结论。两集均在 $S$ 内，$A\ne\varnothing$，且任取 $r\in S_p$，零对称给 $p\in D_r\subset B$，所以 $B\ne\varnothing$。
+
+先证 $A\cap B=\varnothing$。否则存在 $r\in S_p$ 使 $A\cap D_r\ne\varnothing$。这个交是非空紧原面，故有一个原纯点 $t$。于是 $r,t\in S_p$ 且 $t\in D_r$，得到 $p,r,t$ 的真实三角，矛盾。交中的原纯点来自原面的极点，不是把任意混态交点当作纯点；这里复用[IX116.1式(IX116.3)][Q130IX]在可变球维数域中的取交点步骤。[SAME_READBACK126.2][Q130SR]在EB3域给出相应的关系平方表述，不将其额外纤维结论用于本条的可变维数域。
+
+$\mathsf D_2(p)$ 给 $P\subset A\cup B$：与 $p$ 相邻的纯点在 $A$ 中；其余纯点由同一个共同邻点 $r\in S_p$ 落入 $D_r\subset B$。现检查每一张完整原球 $D_s$。若 $s\in A$，纯性给 $s\in S_p$，所以 $D_s\subset B$。若 $s\notin A$，则 $s\in B$；可取 $r\in S_p$ 使 $s\in D_r$，零对称给
+
+$$
+r\in S_s\cap A.
+\tag{X130.9}
+$$
+
+连通集 $S_s$ 被其两个不交相对闭子集 $S_s\cap A$ 与 $S_s\cap B$ 覆盖，且前者非空，故 $S_s\subset A$。取凸包得 $D_s\subset A$；极大真面性使 $D_s=A$。这一步逐张使用所有原球的连通纯边界；没有从 $S_s\subset B$ 擅自推出非凸并集 $B$ 包含其凸包，也没有输入标签单射。
+
+由此，每张完整球都包含于 $A$ 或 $B$；原纯单点亦已被覆盖。任意 $x\in S$ 都有一个相对支撑超平面，其接触集是含 $x$ 的非空原真面。完整面穷尽遂给
+
+$$
+S=A\sqcup B.
+\tag{X130.10}
+$$
+
+另一方面，$D_p$ 是维数至少二的真暴露面，故 $n=\dim\operatorname{aff}K\ge3$。有限维凸体从一个相对内点作径向投影，其整个相对边界同胚于 $S^{n-1}$，因而连通。这与(X130.10)的两个非空不交闭集覆盖矛盾，证明(X130.4)。否定 $\mathsf D_2(p)$ 就是(X130.5)；$s=p$ 已由非空 $S_p$ 排除。
+
+维数下界的控制直接复用[正五边形的完整原模型，OP2—OP3][Q130Pent]及[X122.7][Q130PentX]：$D_{p_i}=[p_{i+2},p_{i+3}]$，指标模五，且满足EB1与PR。其纯零图的边差是 $\pm2$，故为五圈，直径二且无三角。此时每条原排除边的纯边界为不连通的 $S^0$，恰好不能作上述连通推断；无须重算多边形的原锥、全效应或比较函数。
+
+本条的原域两步覆盖到整边界分离矛盾是 `repo-derived` 推导；紧投影、原面接口、零对称及凸体边界的球面拓扑均是复用的中间事实，不是新的紧性或分类定理。该归属不主张文献穷尽或历史优先权。证毕。
+
+**定理 130.3（两步候选的同原完整静态字典及反向）。** 在(X130.1)的整个原域，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathsf D_2,\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{X130.11}
+$$
+
+其正向新增桥是定理130.2；静态分类及全字典直接消费[IX120.4—120.5、IX116.17—116.18][Q130IX]。原域的全部对应为
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v^*v=1\}\cong\mathbb{CP}^2,\\
+\mathcal E=\{f_E:f_E(\Phi X)=\operatorname{Tr}(EX),\ 0\preceq E\preceq I_3\},\\
+T_{\Phi(vv^*)}(\Phi\rho)=\operatorname{Tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2,\\
+D_{\Phi(vv^*)}
+=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,\ \rho v=0\},
+\qquad v^*v=w^*w=1.
+\end{gathered}
+\tag{X130.12}
+$$
+
+所有原凸混合被保持；全部有限数学测量 $f_j\ge0,\sum_jf_j=u$ 恰对应全部有限POVM $E_j\succeq0,\sum_jE_j=I_3$。谱分解、原joint、迹尺、中心及Jordan乘法分别取既有同一表示中的矩阵谱、正交投影组、$\operatorname{Tr}(XY)$、$\Phi(I_3/3)$ 及运输的 $(XY+YX)/2$。PR、Inj、$P$ 紧、全Pair和每条指定原零边的唯一第三点均为此后结论。局部排除球的实维数是三，整个 $K$ 的实仿射维数是八。
+
+证明。130.2给全部原纯点属于三角，故[IX120.4][Q130IX]给每个完整 $D_p$ 的宽度为一。此时才由IX120.5调用IX116.17取得(X130.11)的同锥同单位表示，并复用其整个原静态字典。三条各自真实的零一边在130.2中没有被当作一台共同仪器；全域三结果共同效应及指定边完成由上述既有分类链供应。
+
+反向在整个标准模型中核对。对任意单位 $v$，IX116.17的完整确认计算给全部 $vv^*\oplus B$，$0\preceq B\preceq I_{v^\perp}$，因此(X130.12)对所有原混态成立。全部支撑于 $v^\perp\cong\mathbb C^2$ 的密度矩阵由Pauli坐标组成完整闭三球，所以EB3成立。对任意两个原纯点 $`vv^*,ww^*`$，包括相同端点，因 $\dim_{\mathbb C}\operatorname{span}\{v,w\}\le2$，可取单位
+
+$$
+z\in\operatorname{span}\{v,w\}^{\perp},\qquad r=zz^*.
+\tag{X130.13}
+$$
+
+原全域效应 $`f_{vv^*},f_{ww^*}`$ 分别见证 $vv^*\perp r$ 与 $ww^*\perp r$，得到全部 $\mathsf D_2$ 量词。同一个 $\Phi$ 运输整个锥、单位、效应及全部 $D_p$，并非只运输选定基。证毕。
+
+**定义 130.4（候选及原问题的保留范围）。** 完整静态候选定义为(X130.1)的同一有限维全域、全部原EB3及 $\mathsf D_2$。白话是：每个纯态的所有原零比较对象，包括混态，合成一整颗实心三球；任意两张不相邻的原纯标签，都能找到同一个原纯标签，与它们各有真实零一边。130.2把两步可达接到每点真实三角，130.3再接到全部复三能级静态态与效应。候选不输入PR、Inj、纯点紧性、CS、球族连续、滤子或Jordan结构。
+
+原PR仍指 $T_p(q)=T_q(p)$ 对全部原纯对成立；UF仍指[IX115.8及X124.9—124.13][Q130UF]的原全锥正延拓预算 $\sup_p\beta_{D_p}<\infty$。保留未决问题
+
+$$
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathsf D_2,
+\qquad
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathrm{UF}.
+\tag{X130.14}
+$$
+
+[X125.5][Q130CS]的CS与UF等价仍限于其完整EB3+PR域。BILATERAL VIII121.5的局部两步四维纯点片另有Inj前件，且不提供任意原纯对的两步覆盖[Q130BV]。130.2的直接结论是每点有三角，不是给每条指定边补第三点；后者在EB3中由130.3的既有分类取得。五边形与X129的无限一球模型都不是EB3+PR反模型。这里没有断言 $\mathsf D_2$ 独立、候选逻辑上严格更弱或物理公理数最少。
+
+单体静态字典的适用范围按[IX116.23及VIII113.11][Q130IX][Q130VIII]保留：实际来源、制备与操作、全部有限 $N$ 的共同复合及纠缠准备、全旁观正性与CP/Kraus、逐输入预算、同族事件仪器与记录、Lüders校准、原物理钟、连续动力学来源、Hamiltonian及数值 $\hbar$ 各有独立前件。数学POVM不等于可调用的实际仪器，单体几何不供应这些联合或时间合同。
+
+[Q130VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.1—103.2：完整原域、可变球维数、共同暴露及全部原真面穷尽。"
+[Q130IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1及式(IX116.3)：完整面与纯交点；IX120.4—120.5：三角、宽度及条件静态应用；IX116.17—116.18：成熟分类及同原完整静态字典；IX116.23：原过程边界。"
+[Q130SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "126.1：原零关联的紧闭投影；126.2：关系平方与同处原真面。"
+[Q130Pent]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md "OP2—OP3：整个原奇多边形排除边及PR；文献载体与全效应取Janotta—Gogolin—Barrett—Brunner §3.1式(5)、(6)、(8)及补效应。"
+[Q130PentX]: #1226-完整-eb1-五边形的准确方法控制 "X122.7：完整原五边形的一维控制。"
+[Q130UF]: #124-极端对偶零面的整球塌缩障碍与互易非塌缩重构 "X124.9—124.13：原UF预算、条件静态表示及自动UF未决项；预算原义见IX115.8。"
+[Q130CS]: #125-旧完整球的共同近零确认与固定球心的真零稳定性 "X125.5：仅在完整EB3+PR域的CS与UF等价。"
+[Q130BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "121.5：EB3+Inj的局部两步四维片；121.7：没有任意标签到种子的两步覆盖。"
+[Q130VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.11及所引112.9：全部原操作、全有限复合、CP、仪器、记录与时间合同。"
+
+## 追加锚（本行以下为增补区）
+
+## 131. 齐次原锥的矩形排除障碍与整个边界三次入口
+
+### 131.1 原全域与额外齐次性
+
+**定义 131.1（齐次限制域与完整排除）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原线性单位 $u$。始终取整个原对象
+
+$$
+\begin{gathered}
+K_u=C\cap\{u=1\},\qquad P_u=\operatorname{ext}K_u,\qquad
+\mathcal E_u=[0,u]_{C^*},\\
+\mathcal F^u_p=\{e\in\mathcal E_u:e(p)=1\},\qquad
+D^u_p=\{x\in K_u:\exists e\in\mathcal F^u_p,\ e(x)=0\}.
+\end{gathered}
+\tag{X131.1}
+$$
+
+全局 $\mathrm{EB}_{\ge1}$ 指每个 $p\in P_u$ 的整个 $D^u_p$ 都仿射同构于某个正维欧氏闭球，维数允许随标签变化。齐次性另指 $\operatorname{Aut}(C)$ 在 $\operatorname{int}C$ 上传递，不要求这些自同构保持 $u$。它是本章的额外限制，不是裸 EB 的已知后果。
+
+整个边界次数沿用 [VIII125.1][Q131Degree]：
+
+$$
+\delta(C)=\min\{\deg h:0\ne h\in\mathbb R[V],\ h|_{\partial C}=0\},
+\tag{X131.2}
+$$
+
+没有非零方程时取 $\infty$。边界相对于整个 $V$，次数为总次数。这里不假定 $P_u$ 闭、Inj、$\mathrm{Pair}_{\perp}$、谱性、共同正提升或框架大小的先验上界。
+
+### 131.2 正交乘法的同锥混积累与全效应障碍
+
+**定理 131.2（矩形方向不能满足全部标签的 EB）。** 设 $r,s,n\ge1$，$\gamma:\mathbb R^r\times\mathbb R^s\to\mathbb R^n$ 为实双线性映射，且
+
+$$
+\|\gamma(x,y)\|=\|x\|\,\|y\|,\qquad
+\gamma(x,y)=R(y)x=L(x)y.
+\tag{X131.3}
+$$
+
+不要求乘积的线性张成等于整个输出空间。取坐标 $(a,b,c,x,y,z)\in\mathbb R^3\oplus\mathbb R^r\oplus\mathbb R^s\oplus\mathbb R^n$ 及整个锥
+
+$$
+C_R=\left\{(a,b,c,x,y,z):
+\begin{pmatrix}
+aI_n&R(y)&z\\
+R(y)^{\mathsf T}&bI_r&x\\
+z^{\mathsf T}&x^{\mathsf T}&c
+\end{pmatrix}\succeq0\right\}.
+\tag{X131.4}
+$$
+
+若 $n>r$，则对这个锥的每个严格正单位，都存在一个原纯标签，其完整原排除集合非凸，故全局 $\mathrm{EB}_{\ge1}$ 失败。同一结论也适用于 $s,n\ge1$ 的零块锥
+
+$$
+C_0=\left\{(a,b,c,y,z):
+\begin{pmatrix}aI_s&y\\y^{\mathsf T}&b\end{pmatrix}\succeq0,
+\quad
+\begin{pmatrix}aI_n&z\\z^{\mathsf T}&c\end{pmatrix}\succeq0
+\right\}.
+\tag{X131.5}
+$$
+
+这些完整模型实际具有原纯点向一张完整排除球的混合内点积累；以下给出全部坐标及全效应失败的见证。它们不满足全局 EB，因而不是原 LP 的反模型。
+
+证明。先固定 $u_0=a+b+c$。由 (X131.3) 的极化，
+
+$$
+R(y)^{\mathsf T}R(y)=\|y\|^2I_r,\qquad
+L(x)^{\mathsf T}L(x)=\|x\|^2I_s.
+\tag{X131.6}
+$$
+
+矩阵表示单射，且 $(1,1,1,0,0,0)$ 给正定矩阵；所以 $C_R$ 闭、尖、生成。PSD 对角块非负，$u_0=0$ 时对角块全零，非对角块也全零，故 $u_0$ 严格正。对 $C_0$ 的两个 PSD 块作相同论证，得到同样结论。
+
+当 $a>0$，(X131.4) 的精确 Schur 条件为
+
+$$
+\begin{gathered}
+B=b-\|y\|^2/a\ge0,\qquad D=c-\|z\|^2/a\ge0,\\
+k=x-R(y)^{\mathsf T}z/a,\qquad BD\ge\|k\|^2.
+\end{gathered}
+\tag{X131.7}
+$$
+
+内部恰由 $a>0,B>0,D>0,BD>\|k\|^2$ 给出。$a=0$ 时 PSD 强制 $y=z=0$，剩余条件是 $b,c\ge0,bc\ge\|x\|^2$。在 $C_0$ 中，(X131.7) 删去 $x,k$，条件只是 $a>0,B,D\ge0$；内部要求三者严格正。$a=0$ 时仍有 $y=z=0$，而 $b,c\ge0$。
+
+两种锥在 $a>0$ 的全部极端射线分别由
+
+$$
+\begin{aligned}
+A(y,z)&=(1,\|y\|^2,\|z\|^2,R(y)^{\mathsf T}z,y,z),\\
+A_0(y,z)&=(1,\|y\|^2,\|z\|^2,y,z)
+\end{aligned}
+\tag{X131.8}
+$$
+
+生成。确实，任意 $a>0$ 点减去 $aA(y/a,z/a)$，余项正是 $(0,B,D,k,0,0)$，属于 $a=0$ 的锥；$C_0$ 的余项为 $(0,B,D,0,0)$。余项非零就给不同射线的正分解，不能极端。
+
+反向，固定 $Y,Z$。以下两个线性泛函在全锥上非负，并同时零于 $A(Y,Z)$：
+
+$$
+h_Y=b-2\langle Y,y\rangle+\|Y\|^2a,\qquad
+h_Z=c-2\langle Z,z\rangle+\|Z\|^2a.
+\tag{X131.9}
+$$
+
+在 $a>0$ 上，第一项至少为 $\|y-aY\|^2/a$，第二项至少为 $\|z-aZ\|^2/a$。在一个正分解的每个 $a_i>0$ 项上，两项为零便迫使 $y_i=a_iY,b_i=a_i\|Y\|^2,z_i=a_iZ,c_i=a_i\|Z\|^2$；(X131.7) 再迫使 $x_i=a_iR(Y)^{\mathsf T}Z$。$a_i=0$ 项的 $y_i,z_i$ 已为零，(X131.9) 为零再给 $b_i=c_i=0$，因而整项为零。故每个分解项都与 (X131.8) 成比例。$C_0$ 的证明删去 $x$ 即成。归一这些射线得到实际原纯点。
+
+记 $e_a=(1,0,0,0,0,0)$，在 $C_0$ 中删去 $x$。其完整排除集恰为
+
+$$
+F=D^{u_0}_{e_a}=\{a=0\}\cap K_{u_0}.
+\tag{X131.10}
+$$
+
+效应 $a$ 确认 $e_a$，零于全 $F$。任取另一确认 $e$，令 $g=u_0-e\ge0$。$g(e_a)=0$；将 $g$ 限制到全部 $A(ty,0)$ 与 $A(0,tz)$，所得非负二次多项式常数项为零，所以线性项全零。这使 $e$ 的 $y,z$ 系数全零，$a$ 系数为一。对 $C_R$ 的任一点，其下方主块使 $(0,b,c,x,0,0)\in C_R$；于是
+
+$$
+e(a,b,c,x,y,z)=a+e(0,b,c,x,0,0)\ge a.
+\tag{X131.11}
+$$
+
+$C_0$ 同理。所以任何确认都不能在 $a>0$ 处读零，证明 (X131.10) 对全部效应成立。$F$ 的坐标 $(b-c,2x)$ 将它仿射同构于整个 $\overline B^{r+1}$；$C_0$ 的 $F$ 是 $b+c=1$ 的整个非退化线段。
+
+取单位 $v\in\mathbb R^s$。$n>r$ 及 (X131.6) 给单位 $w\in\ker R(v)^{\mathsf T}$；在 $C_0$ 中取任意单位 $v,w$。对每个 $\varepsilon>0$，
+
+$$
+p_\varepsilon=
+\frac{(\varepsilon^2,3,1,0,\sqrt3\varepsilon v,\varepsilon w)}
+{\varepsilon^2+4}
+\ \longrightarrow
+y_*=(0,3/4,1/4,0,0,0)\in\operatorname{ri}F.
+\tag{X131.12}
+$$
+
+零块情形删去 $x$。分子是 $\varepsilon^2 A(\sqrt3v/\varepsilon,w/\varepsilon)$，所以每个 $p_\varepsilon$ 都是原纯点。$y_*$ 是 $F$ 的一对对径 $e_b,e_c$ 的 $3:1$ 混合，其中 $e_b=(0,1,0,0,0,0)$、$e_c=(0,0,1,0,0,0)$。但是原效应 $b$ 已在这两个对径上分别读一、零，故这里不是SAME_READBACK131.1的坏对径见证。
+
+现在直接证明同一完整锥中的排除失败。取任意非零 $Y,Z$ 满足 $R(Y)^{\mathsf T}Z=0$；$C_0$ 中不需此约束。记 $\alpha=\|Y\|^2>0,\beta=\|Z\|^2>0$，并取原纯点
+
+$$
+\begin{aligned}
+p&=\frac{A(Y,Z)}{1+\alpha+\beta},\\
+q_Y&=\frac{(\alpha,1,0,0,-Y,0)}{1+\alpha},\qquad
+q_Z=\frac{(\beta,0,1,0,0,-Z)}{1+\beta}.
+\end{aligned}
+\tag{X131.13}
+$$
+
+它们全由 (X131.8) 给出，$C_0$ 中仍删去 $x$。定义同一原空间上的线性泛函
+
+$$
+g_Y=\frac{\alpha a+b-2\langle Y,y\rangle}{1+\alpha},\qquad
+g_Z=\frac{\beta a+c-2\langle Z,z\rangle}{1+\beta},\qquad
+e_Y=u_0-g_Y,\quad e_Z=u_0-g_Z.
+\tag{X131.14}
+$$
+
+全锥都有 $ab\ge\|y\|^2,ac\ge\|z\|^2$。因此
+
+$$
+\alpha a+b\ge2\sqrt{\alpha ab}\ge2|\langle Y,y\rangle|,
+\qquad
+a+\alpha b\ge2\sqrt{\alpha ab}\ge2|\langle Y,y\rangle|.
+\tag{X131.15}
+$$
+
+首式给 $g_Y\ge0$，次式与 $c\ge0$ 给 $u_0-g_Y\ge0$。交换 $(b,Y,y,\alpha)$ 与 $(c,Z,z,\beta)$ 得到 $0\le g_Z\le u_0$。这在整个原锥上支付了两个效应及其补的正性。代入得到
+
+$$
+e_Y(p)=e_Z(p)=1,\qquad e_Y(q_Y)=e_Z(q_Z)=0.
+\tag{X131.16}
+$$
+
+故 $q_Y,q_Z\in D^{u_0}_p$。然而 $m=(q_Y+q_Z)/2$ 是整个锥的内点。具体地，记
+
+$$
+a_m=\frac12\left(\frac\alpha{1+\alpha}+\frac\beta{1+\beta}\right)>0.
+\tag{X131.17}
+$$
+
+此时 $x_m=0$，$y_m=-Y/(2(1+\alpha))$，$z_m=-Z/(2(1+\beta))$，所以 $R(y_m)^{\mathsf T}z_m=0$，且
+
+$$
+\begin{aligned}
+B_m&=\frac1{2(1+\alpha)}
+\left(1-\frac\alpha{2(1+\alpha)a_m}\right)>0,\\
+D_m&=\frac1{2(1+\beta)}
+\left(1-\frac\beta{2(1+\beta)a_m}\right)>0.
+\end{aligned}
+\tag{X131.18}
+$$
+
+两个严格不等式分别使用 (X131.17) 中另一个严格正的加项。故 (X131.7) 的 $k=0$ 且全部内部条件成立；$C_0$ 也同样成立。
+
+任何原 $e\in\mathcal F^{u_0}_p$ 都是非零正泛函，因而在内点 $m$ 严格正：若正泛函在内点为零，在该点的双侧小邻域上非负会迫使它在每个方向都为零。于是对**全部**原确认都有 $e(m)>0$，故 $m\notin D^{u_0}_p$。确认族紧还给 $\min_{e\in\mathcal F^{u_0}_p}e(m)>0$。这里没有把全效应域缩成 (X131.14) 的菜单。取 $Y=\sqrt3v/\varepsilon,Z=w/\varepsilon$，(X131.13) 的 $p$ 就是 (X131.12) 的 $p_\varepsilon$，所以这条混积累曲线的每个标签均具有非凸完整排除集。
+
+最后处理任意原严格正单位，而非仅 $u_0$。[Nakashima Proposition 4.3(2)—(3)][Q131N] 给 (X131.4) 的整个对偶：按配对
+
+$$
+f(a,b,c,x,y,z)=\lambda a+\mu b+\nu c
++2\langle\xi,x\rangle+2\langle\eta,y\rangle+2\langle\zeta,z\rangle,
+\tag{X131.19}
+$$
+
+有 $f\in C_R^*$ 当且仅当
+
+$$
+G_f=\begin{pmatrix}
+\lambda&\eta^{\mathsf T}&\zeta^{\mathsf T}\\
+\eta&\mu I_s&L(\xi)^{\mathsf T}\\
+\zeta&L(\xi)&\nu I_n
+\end{pmatrix}\succeq0.
+\tag{X131.20}
+$$
+
+该文给出的正定对偶锥是齐次的；加 $\epsilon I$ 后取极限给这里的整个闭对偶。$u_0$ 对应 $G_{u_0}=I$，所以整个原效应区间也恰对应 $G_f\succeq0,I-G_f\succeq0$，并非所有环境矩阵中另选一个子菜单。这些是所引成熟结果在当前坐标的应用。
+
+$C_0$ 的对偶在 (X131.19) 删去 $\xi,x$ 后，恰为
+
+$$
+G_f=\begin{pmatrix}
+\lambda&\eta^{\mathsf T}&\zeta^{\mathsf T}\\
+\eta&\mu I_s&0\\
+\zeta&0&\nu I_n
+\end{pmatrix}\succeq0.
+\tag{X131.21}
+$$
+
+这也是 [Nakashima p.11 的零块对偶][Q131N]。可直接核对其精确配对：当 $\mu,\nu>0$，在 $a>0,b\ge\|y\|^2/a,c\ge\|z\|^2/a$ 上对 $y,z$ 完成平方，正性恰要求 $\lambda\ge\|\eta\|^2/\mu+\|\zeta\|^2/\nu$，正是 (X131.21) 的 Schur 条件。$\mu=0$ 强制 $\eta=0$，$\nu=0$ 强制 $\zeta=0$，仍给相同的闭锥。
+
+其正定内部的齐次性也可显式读出。矩阵
+
+$$
+H=\begin{pmatrix}
+h&v^{\mathsf T}&w^{\mathsf T}\\
+0&kI_s&0\\
+0&0&\ell I_n
+\end{pmatrix},\qquad hk\ell\ne0,
+\tag{X131.22}
+$$
+
+的合同作用及其逆保持 (X131.21) 的线性空间和 PSD 锥。对任意正定 $G_f$，取 $k=\sqrt\mu,\ell=\sqrt\nu,v=\eta/\sqrt\mu,w=\zeta/\sqrt\nu$ 及 $h=\sqrt{\lambda-\|\eta\|^2/\mu-\|\zeta\|^2/\nu}$，便有 $HH^{\mathsf T}=G_f$。所以该对偶内部确实传递，不需额外假定对偶齐次性。
+
+在任一种模型中，严格正单位恰是 $\operatorname{int}C^*$。由上述对偶齐次性，给定任意这样的 $u$，存在对偶锥自同构 $S$ 满足 $S u_0=u$。令 $T=S^{\mathsf T}:V\to V$，即 $f(Tx)=(Sf)(x)$。双极定理给 $T(C)=C$，并且
+
+$$
+u_0(Tx)=u(x),\quad T(K_u)=K_{u_0},\quad
+S([0,u_0])=[0,u],\quad
+T(D^u_p)=D^{u_0}_{Tp}.
+\tag{X131.23}
+$$
+
+这些是全基、全部极点、整个效应区间及存在零值定义的双向运输，包含全部混态和零向量。把上述 $p,q_Y,q_Z,m$、纯点列和 $F$ 用 $T^{-1}$ 拉回，即在**同一个锥、给定的原单位**下得到全部见证。非凸性、仿射球身份和严格混合系数均保持。证毕。
+
+### 131.3 从一般齐次表示到整个边界方程
+
+**定理 131.3（齐次限制域中的原锥刚性）。** 定义131.1的原锥若齐次且满足全局 $\mathrm{EB}_{\ge1}$，则存在一个非零、总次数至多三的实多项式，在原锥的整个边界上为零。事实上
+
+$$
+\delta(C)=3,\qquad
+\exists\text{有限维秩三 EJA }J\ \exists\text{实线性双射 }\Psi:V\to J:
+\quad \Psi(C)=J_+,\quad u=\operatorname{tr}_J\Psi.
+\tag{X131.24}
+$$
+
+原全部纯点 $P_u$ 紧；对SAME_READBACK131.1中每个实际坏对径见证，指定 $y=(3q+\bar q)/4$ 都有 $y\notin\overline{P_u}$，故满足原 $\mathsf{LP}_{p,y}$。齐次性只限制本定理的适用类，不改变一般原 LP 的目标。
+
+证明。先使用成熟表示，随后支付其与定理131.2的对应。[Nakashima §2，pp.2—3][Q131N] 明确陈述 Ishi 矩阵实现：齐次尖开锥可表示为某个实对称矩阵子空间中的全部正定矩阵，其中有有限个对角块 $a_iI_{m_i}$，$m_i>0$，下三角非对角空间 $W_{ji}\subset\operatorname{Mat}(m_j,m_i;\mathbb R)$ 满足
+
+$$
+\begin{array}{ll}
+W_{kj}W_{ji}\subseteq W_{ki},&i<j<k,\\
+W_{ki}W_{ji}^{\mathsf T}\subseteq W_{kj},&i<j<k,\\
+XX^{\mathsf T}=\|X\|_{ji}^2I_{m_j},&X\in W_{ji}.
+\end{array}
+\tag{X131.25}
+$$
+
+范数来自该文 (2.2) 的标量内积。该文以不可约齐次锥为默认对象；一般齐次锥若可分解为两个正维齐次直和因子，就对因子继续分解，维数严格下降，有限次后均不可约。将各因子的上述矩阵实现并列，并将因子间的 $W_{ji}$ 置零，仍满足 (X131.25)。因此这里没有删去可约原锥。由于子空间含单位矩阵，加 $\epsilon I$ 表明其 PSD 部分恰为正定部分的闭包，故表示的是整个原闭锥，而非只是一张内部坐标图。
+
+设表示有 $k$ 个对角块。若 $k\ge4$，在原归一基中取
+
+$$
+F_1=K_u\cap\{a_1=0\},\qquad
+F_2=K_u\cap\{a_1+a_2=0\}.
+\tag{X131.26}
+$$
+
+每个 $a_i$ 在锥上非负，所以它们是原暴露面。$F_2$ 含第三、第四对角射线的不同归一点，因而非点；$F_1$ 还含第二对角射线，故 $F_2\subsetneq F_1\subsetneq K_u$。但是 [VII103.2][Q131Faces] 在仅全局 EB 下已经证明每个非点真面都是一个整个仿射欧氏球，且不能真包含另一个非点真面。矛盾。因此 $k\le3$。这是从全域 EB 得到的表示块数限制，不是预设框架上界。
+
+当 $k=3$，写表示中的任一矩阵为
+
+$$
+M=\begin{pmatrix}
+aI_{m_1}&Y^{\mathsf T}&Z^{\mathsf T}\\
+Y&bI_{m_2}&X^{\mathsf T}\\
+Z&X&cI_{m_3}
+\end{pmatrix},\qquad
+r=\dim W_{32},\ s=\dim W_{21},\ n=\dim W_{31}.
+\tag{X131.27}
+$$
+
+在三个空间中取 (X131.25) 范数的正交坐标，分别记 $x,y,z$。这些坐标范数等于矩阵行标量范数，不由未经归一的环境迹替代。若 $r,s>0$，则 $XY\in W_{31}$ 且
+
+$$
+(XY)(XY)^{\mathsf T}
+=X(YY^{\mathsf T})X^{\mathsf T}
+=\|x\|^2\|y\|^2 I_{m_3}.
+\tag{X131.28}
+$$
+
+这给 (X131.3) 的双线性正交乘法 $\gamma(x,y)$；固定一个非零输入给另一输入的单射，故 $n\ge\max(r,s)$。尤其 $r,s>0,n=0$ 不可能。
+
+还有一个必要的伴随对应。由 (X131.25)，$ZY^{\mathsf T}\in W_{32}$，其坐标恰是 $R(y)^{\mathsf T}z$。对任意 $X\in W_{32}$，确实有
+
+$$
+\begin{aligned}
+\langle ZY^{\mathsf T},X\rangle_{32}
+&=\frac1{m_3}\operatorname{tr}(ZY^{\mathsf T}X^{\mathsf T})\\
+&=\frac1{m_3}\operatorname{tr}(Z(XY)^{\mathsf T})
+=\langle z,R(y)x\rangle.
+\end{aligned}
+\tag{X131.29}
+$$
+
+这同时支付了块大小的归一因子及乘法的伴随，不能仅从两个空间维数相等推出。
+
+当 $a>0$，对 (X131.27) 的第一块作 Schur 消元，得到
+
+$$
+\begin{pmatrix}
+(b-\|y\|^2/a)I_{m_2}&(X-ZY^{\mathsf T}/a)^{\mathsf T}\\
+X-ZY^{\mathsf T}/a&(c-\|z\|^2/a)I_{m_3}
+\end{pmatrix}\succeq0.
+\tag{X131.30}
+$$
+
+由 (X131.25)，矩形余项 $W=X-ZY^{\mathsf T}/a$ 满足 $WW^{\mathsf T}=\|W\|^2I_{m_3}$。因此 (X131.30) 恰等价于 (X131.7)：先要求 $B,D\ge0$，再要求 $BD\ge\|x-R(y)^{\mathsf T}z/a\|^2$。$B=0$ 或 $D=0$ 时两侧均强制 $W=0$，故没有省掉退化 Schur 情形。$a=0$ 时 PSD 直接迫使 $Y=Z=0$，剩余条件恰为 $b,c\ge0,bc\ge\|x\|^2$。
+
+所以当 $r,s,n>0$，上述原闭锥与 (X131.4) 在全部坐标上完全一致，包括 $a=0$。这证明一般 Ishi 表示到该族的桥，而非假设任意齐次锥已经有指定的 $R$ 形式。原单位在该线性对应下只是某个严格正单位；定理131.2的 (X131.23) 已处理其与 $u_0$ 的完整效应运输。若 $n>r$，原全局 EB 就失败。于是存活的全非零块情形必须 $n=r$。
+
+此时 $R(y)$ 为方阵，(X131.6) 还给
+
+$$
+R(y)R(y)^{\mathsf T}=\|y\|^2I_n.
+\tag{X131.31}
+$$
+
+对 $y\ne0$ 由可逆性成立，$y=0$ 两侧均为零。定义显式三次多项式
+
+$$
+H=abc-a\|x\|^2-b\|z\|^2-c\|y\|^2
+       +2\langle z,R(y)x\rangle.
+\tag{X131.32}
+$$
+
+它在对角点 $(1,1,1,0,0,0)$ 取一，因而非零。对全部 $a>0$ 点，(X131.31) 给恒等式
+
+$$
+(ab-\|y\|^2)(ac-\|z\|^2)
+-\|ax-R(y)^{\mathsf T}z\|^2=aH.
+\tag{X131.33}
+$$
+
+在 $a>0$ 的边界上，(X131.7) 的 Lorentz 余锥不在内部，故左侧为零；因而 $H=0$。在 $a=0$ 的全部锥点上，$y=z=0$，(X131.32) 也直接为零。这就覆盖了**整个边界**，没有用一个相对不变量的次数代替其零集证明。
+
+零块须另外穷尽。当 $r=0,s,n>0$，(X131.25) 的第二式给 $ZY^{\mathsf T}=0$。于是 (X131.30) 的两个余对角块独立非负，整个闭锥恰为 (X131.5)。定理131.2已在每个严格正单位下排除它。$s=0,r,n>0$ 时则 $Y=0$，余项为 $X$，整个条件为
+
+$$
+a>0,\quad b\ge0,\quad c-\|z\|^2/a\ge0,\quad
+b(c-\|z\|^2/a)\ge\|x\|^2,
+\tag{X131.34}
+$$
+
+并保留 $a=0$ 的上述部分。因此
+
+$$
+H_0=abc-a\|x\|^2-b\|z\|^2
+\tag{X131.35}
+$$
+
+在其 $a>0$ 的每个边界点为零；在 $a=0$ 时 $z=0$，仍为零。$n=0,r,s>0$ 已被 (X131.28) 排除。这穷尽恰有一个零块的三种位置，不把它们当作同一种重排。
+
+其余块型和 $k<3$ 情形有如下整个边界方程；向量坐标仍按 (X131.25) 的范数归一：
+
+$$
+\begin{array}{c|c}
+\text{表示块型}&\text{非零整个边界多项式}\\ \hline
+k=1&a\\
+k=2&ab-\|y\|^2\\
+k=3,\ r>0,\ s=n=0&a(bc-\|x\|^2)\\
+k=3,\ s>0,\ r=n=0&c(ab-\|y\|^2)\\
+k=3,\ n>0,\ r=s=0&b(ac-\|z\|^2)\\
+k=3,\ r=s=n=0&abc .
+\end{array}
+\tag{X131.36}
+$$
+
+第二行包括 $W_{21}=0$，此时 $y$ 是零维坐标，多项式为 $ab$。后三种单非零块的锥，精确分解为 $a,b\ge0,ab\ge\|y\|^2$ 型锥与一个非负射线的直积；边界是一个因子在边界时的并，所以所列乘积确实覆盖整个边界。全零块是正交象限。每个多项式在相应全一对角点取一；没有恒零式。结合 (X131.32)、(X131.35)，这张表覆盖了所有存活情形。
+
+将相应多项式沿原表示线性双射拉回，得到原 $V$ 上的非零整个边界方程，总次数至多三。线性双射保持整个欧氏边界且不改变总次数，故 $\delta(C)\le3$，没有另换锥或单位。
+
+现在直接消费 [VIII125.6][Q131Degree]：其前件恰是同一闭尖满维原锥、严格正原单位、整个边界次数至多三及全部原纯标签的正维完整排除球。生成性在有限维即给满维，其他前件已逐项支付。因此得到 (X131.24) 及 $\delta(C)=3$；此处不重证该章的双曲入口、秩三分类、同单位 EJA 运输或全部效应字典，也不事先排除可约秩三支路。
+
+在该同单位表示下，全部原纯点恰对应 $J$ 中的全部本原幂等元。成熟的有限维 EJA 谱定理使它们恰为
+
+$$
+\{c\in J:c\circ c=c,\ \operatorname{tr}_Jc=1\}.
+\tag{X131.37}
+$$
+
+这是闭集；幂等元的谱值为零或一，迹一使其平方迹范数恒为一，故该集有界而紧。于是原 $P_u$ 紧。对SAME_READBACK131.1的任意实际坏见证，$q\ne\bar q$，故 $y=(3q+\bar q)/4$ 为两个不同原纯点的严格混合，不能极端。因此 $y\notin P_u=\overline{P_u}$；任取原范数都给 $\operatorname{dist}(y,P_u)>0$。这正是SAME_READBACK131.3的原 LP，并经SAME_READBACK131.2的既有等价给该固定见证的稳健原框架距离；框架的任意有限大小仍保留。证毕。
+
+### 131.4 数学归属与一般原问题的边界
+
+**约定 131.4（成熟表示、增量及未付前提）。** 齐次锥的矩阵实现与 (X131.25) 直接取 [Nakashima §2][Q131N] 对 Ishi 实现的明确陈述；正交乘法的成熟构造、两张互为对偶的齐次 PSD 模型及其准确配对取该文 §4、(4.3)—(4.5)、Proposition 4.3。零块模型及其对偶取 Proposition 4.5 证明的 p.11。本章不使用该文基本相对不变量的次数计算来推断 $\delta(C)$，也不将“秩三齐次”本身认作三次整个边界入口。
+
+定理131.2的 $r=1,s=n,R(y)=y$ 特例就是 [VII104.10—104.14][Q131Faces] 的已知 matrix norm cone 障碍，不能重新作为新实例或新数值界。这里的 repo-derived 增量是对一般正交乘法、特别是 $r\ge2,n>r$ 的同锥全效应障碍，以及 (X131.29)—(X131.36) 将一般齐次原锥接到既有整个边界消费者的完整推导。它不要求输出由乘积张满；Nakashima Remark 4.4 的 $(r,s,n)=(3,5,7)$ 也在被排除类内。零块、可约锥和全部严格正原单位均在证明的量词内。
+
+VII103.2的原真面穷尽、VIII125.6的低次数分类及SAME_READBACK131.2的框架等价均为直接复用；Schur 消元、PSD 核与正泛函、双极定理及有限维 EJA 谱定理是其中的成熟工具，不另计为新一般理论。文献归属限于这些明确接口，不主张全球原创或文献穷尽。
+
+一般裸 $\mathrm{EB}_{\ge1}$ 是否供应齐次性并未得到证明；本章不以该命题为前提去结算一般 LP。X129的全域 EB1 平坦重复球模型及其正 LP 保留原结论，不能因矩形族被排除而删去平坦分支。LOCAL_PURE_LIMIT132—133中 SingleLabel、共同正提升、共同方向条件，以及 EB3+PR 等限制域中的未付自动性，仍各按原前件使用；本章没有从一般 EB 供应它们。这里构造和分类的是有限维有序实空间及其整个效应区间，不附带物理来源、仪器、复合或动力学的实现断言。
+
+[Q131N]: https://arxiv.org/pdf/2405.09089v1 "H. Nakashima, An example of homogeneous cones whose basic relative invariant has maximal degree，§2 pp.2—3；§4 (4.3)—(4.5)、Proposition 4.3、Remark 4.4及Proposition 4.5证明p.11。"
+[Q131Faces]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "103.2：仅完整EB的全部真面穷尽；104.10—104.14：r=1的matrix norm cone、实际混积累及全效应失败。"
+[Q131Degree]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "125.1：整个边界最低次数；125.6：AB≤3加全部正维完整排除球的同原同单位秩三EJA消费者。"
+
+## 追加锚（本行以下为增补区）

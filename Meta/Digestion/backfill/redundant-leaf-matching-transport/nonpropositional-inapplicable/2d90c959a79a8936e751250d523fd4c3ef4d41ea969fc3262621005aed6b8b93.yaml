@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d90c959a79a8936e751250d523fd4c3ef4d41ea969fc3262621005aed6b8b93
+  normalized_sha256: sha256:2d90c959a79a8936e751250d523fd4c3ef4d41ea969fc3262621005aed6b8b93
+cas_ref: sha256:2d90c959a79a8936e751250d523fd4c3ef4d41ea969fc3262621005aed6b8b93
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This sentence limits the assertion to matching transport and explicitly asserts no harmonic-index conclusion; it makes no additional mathematical proposition.
+    previous_atom_id: 498c0e115364d0e3dcca2c1c825a200e58f534289d9c7873e90361a4a3208d09
+    next_atom_id: null
