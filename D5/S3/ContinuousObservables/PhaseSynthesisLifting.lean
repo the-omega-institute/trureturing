@@ -78,10 +78,6 @@ private theorem seqW_cons (φ₀ φ x : ℝ) (Φ : List ℝ) :
 noncomputable def shift (φ₀ : ℝ) (Φ' : List ℝ) : List ℝ :=
   (φ₀ - π / 4) :: Φ'.dropLast.map (· - π / 2)
 
-@[simp]
-private theorem shift_length (φ₀ : ℝ) (Φ' : List ℝ) : (shift φ₀ Φ').length = Φ'.dropLast.length + 1 := by
-  simp [shift]
-
 
 private theorem seqW_append_singleton (φ₀ ψ x : ℝ) (L : List ℝ) :
     seqW φ₀ (L ++ [ψ]) x =
@@ -90,7 +86,7 @@ private theorem seqW_append_singleton (φ₀ ψ x : ℝ) (L : List ℝ) :
   induction L generalizing φ₀ with
   | nil =>
     rw [List.nil_append, seqW_cons, seqW, List.map_nil, List.prod_nil, mul_one]
-    simp [mul_assoc]
+    simp [seqR, mul_assoc]
   | cons φ L ih =>
     rw [List.cons_append, seqW_cons, ih, Matrix.mul_smul, smul_smul, ← pow_succ',
       List.length_cons, List.map_cons]

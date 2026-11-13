@@ -156,9 +156,6 @@ noncomputable def seqW (φ₀ : ℝ) (Φ : List ℝ) (x : ℝ) : M₂ :=
   phaseZ φ₀ * (Φ.map (fun φ => Wrot x * phaseZ φ)).prod
 
 @[simp]
-private theorem seqR_nil (x : ℝ) : seqR [] x = 1 := rfl
-
-@[simp]
 private theorem seqR_cons (φ : ℝ) (Φ : List ℝ) (x : ℝ) :
     seqR (φ :: Φ) x = phaseZ φ * Rref x * seqR Φ x := rfl
 
@@ -192,8 +189,6 @@ noncomputable def altSeq (E : ProjUnitaryEncoding ℋ) : List ℝ → L ℋ
   | φ :: Φ => (if Even Φ.length then phaseOp E.P' φ * E.U else phaseOp E.P φ * E.U†) * altSeq E Φ
 
 variable (E : ProjUnitaryEncoding ℋ)
-
-@[simp] private theorem altSeq_nil : altSeq E [] = 1 := rfl
 
 @[simp] private theorem altSeq_cons (φ : ℝ) (Φ : List ℝ) :
     altSeq E (φ :: Φ) =
@@ -714,7 +709,7 @@ theorem altSeq_apply_singular (h : IsSingularPair E ψ σ) (Φ : List ℝ) :
       (seqR Φ σ) 0 0 • (if Even Φ.length then ψ else lvOf E ψ σ) +
         (seqR Φ σ) 1 0 • (if Even Φ.length then rvpOf E ψ σ else lvtOf E ψ σ) := by
   induction Φ with
-  | nil => simp
+  | nil => simp [altSeq, seqR]
   | cons φ Φ ih =>
     have hlen : Even (φ :: Φ).length ↔ ¬ Even Φ.length := by
       rw [List.length_cons]
