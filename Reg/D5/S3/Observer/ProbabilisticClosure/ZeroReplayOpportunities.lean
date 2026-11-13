@@ -86,7 +86,7 @@ def source_registration : Registration arena.{u} (type_of% @finite_replay_first_
   dependence := dependence
 
 def registration :
-    LeanInformationAudit.Contract.Registration
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@finite_replay_first_failure.{u}) (Realization signature.{u}) Unit Unit := {
   unitName := `D5.S3.Observer.ProbabilisticClosure.ZeroReplayOpportunities.finite_replay_first_failure.__information_unit
   realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.ZeroReplayOpportunities.source_registration
@@ -112,7 +112,7 @@ def registration :
     coordinates := #[0, 1, 2, 3, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
+      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
