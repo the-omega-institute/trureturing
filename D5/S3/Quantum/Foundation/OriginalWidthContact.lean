@@ -210,7 +210,7 @@ theorem original_width_contact
     rcases contact_face_subsingleton hc hu hg hB hinj hb hx hy hbx hby with ht | ht
     · have hz' : zw.1 = x := ht ⟨hz, hbz⟩ ⟨hx, hbx⟩
       apply Prod.ext hz'
-      exact (sub_right_inj.mp (hz' ▸ he)).symm.symm
+      exact sub_right_inj.mp (hz' ▸ he)
     · have hw' : zw.2 = y := ht ⟨hw, hbw⟩ ⟨hy, hby⟩
       apply Prod.ext _ hw'
       exact sub_left_inj.mp (hw' ▸ he)
