@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.claim; result=D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.result; claim=D5/S3/Arith/TwistedDerivations/ManjuSharmaConjectureFourFour.claim
    digest: The printed prime-power twisted-derivation criterion on actual cyclotomic integer rings. -/
 
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
@@ -120,7 +120,7 @@ private def gaussianD : GaussianInt →ₗ[ℤ] GaussianInt :=
 private theorem gaussianD_law (x y : GaussianInt) :
     gaussianD (x * y) = gaussianD x * star y + x * gaussianD y := by
   change ((x * y).im : GaussianInt) = (x.im : GaussianInt) * star y + x * (y.im : GaussianInt)
-  ext <;> simp <;> ring
+  ext <;> (simp; ring)
 
 /-- Conjugation transported along the proved pointed integer-ring equivalence. -/
 def tau : O4 →ₐ[ℤ] O4 :=
@@ -139,7 +139,7 @@ private theorem derivation_equiv (x : GaussianInt) :
   simp [derivation]
 
 /-- The required twisted law holds for every pair of actual algebraic integers. -/
-theorem derivation_twisted (x y : O4) :
+private theorem derivation_twisted (x y : O4) :
     derivation (x * y) = derivation x * tau y + x * derivation y := by
   obtain ⟨a, rfl⟩ := gaussianEquiv.surjective x
   obtain ⟨c, rfl⟩ := gaussianEquiv.surjective y
@@ -147,10 +147,10 @@ theorem derivation_twisted (x y : O4) :
   rw [gaussianD_law, map_add, map_mul, map_mul]
 
 /-- The concrete root values use the proved generator-preserving bridge. -/
-theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3 := by
+private theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3 := by
   constructor
   · rw [← gaussianEquiv_i, derivation_equiv]
-    simpa [gaussianD, Zsqrtd.sqrtd] using gaussianEquiv.map_one
+    simp [gaussianD, Zsqrtd.sqrtd]
   · have hi : star (Zsqrtd.sqrtd : GaussianInt) = -Zsqrtd.sqrtd := by
       ext <;> simp [Zsqrtd.sqrtd]
     have ht : tau z = -z := by
@@ -159,7 +159,7 @@ theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3 := by
     ring
 
 /-- An integral inner generator would force an odd integer to equal an even integer. -/
-theorem derivation_not_inner : ¬ IsInner (AlgHom.id ℤ O4) tau derivation := by
+private theorem derivation_not_inner : ¬ IsInner (AlgHom.id ℤ O4) tau derivation := by
   rintro ⟨γ, hγ⟩
   obtain ⟨g, rfl⟩ := gaussianEquiv.surjective γ
   have h := hγ (gaussianEquiv (Zsqrtd.sqrtd : GaussianInt))
@@ -203,7 +203,7 @@ private theorem actual_matrix :
       _ = 2 := by rw [z_sq]; ring
   ext i j
   rw [Algebra.leftMulMatrix_eq_repr_mul, b_apply]
-  fin_cases j <;> simp only [Fin.val_zero, Fin.val_one, pow_zero, pow_one, mul_one]
+  fin_cases j <;> simp only [pow_zero, pow_one, mul_one]
   · rw [hd, b_repr]
     fin_cases i <;> rfl
   · rw [hd1, b_repr]
