@@ -1,0 +1,155 @@
+---
+slug: oeis-a177775-ordinary-coefficient-parity
+bibkey: hanna2026a177775
+doi: null
+url: https://raw.githubusercontent.com/oeis/oeisdata/501c6189fe17530d95e5a4f90dbca228feb5713d/seq/A177/A177775.seq
+triage: theorem
+motivation_gids:
+  - D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result
+---
+
+# Hanna's A177775 ordinary-coefficient parity conjecture
+
+## Problem
+
+Paul D. Hanna, [OEIS A177775](https://oeis.org/A177775), conjecture comment:
+
+> Conjecture: a(n) is odd iff n is a power of 2.
+
+The [immutable source](https://raw.githubusercontent.com/oeis/oeisdata/501c6189fe17530d95e5a4f90dbca228feb5713d/seq/A177/A177775.seq)
+has SHA-256 `adff5528b1f3f6030f713ec4603f243ddb0a3442ccdf02a08880f0f180403eac`.
+The conjecture comment is from May 19, 2026, in approved revision 10 of May 20,
+2026. The entry's May 13, 2010 author date does not date this conjecture.
+The citation-only [source note](../Library/RecurrenceAlgebraic/hanna2026a177775.md)
+retains the source locators and normalization; [preregistration #30066](https://github.com/the-omega-institute/trureturing/issues/30066)
+fixes the complete target.
+
+Let $G\in\mathbb Z[[X]]$ satisfy $[X^0]G=0$ and $[X]G=[X^2]G=1$.
+Set $G^{[0]}=X$ and $G^{[m+1]}=G^{[m]}(G(X))$. For every natural $n>2$,
+require $[X^n]G^{[n]}=[X^n]G^{[n-1]}$. The source's recursive program and
+revised seed `[0,1,1]` supply the initial values; offset `1,3` adds no seed.
+The conjecture asserts
+
+\[
+\forall n\in\mathbb N,\quad n\ge1\Longrightarrow
+\bigl(\operatorname{Odd}([X^n]G)\iff\exists k\in\mathbb N,\ n=2^k\bigr).
+\]
+
+| Source clause | Lean counterpart |
+| --- | --- |
+| Integer series and the three initial coefficients | `DiagonalIterateEven.generatingSeries`, `generating_equation` |
+| Composition, starting at $X$ | `DiagonalIterateEven`'s imported `iterate` |
+| Adjacent-iterate equality at every $n>2$ | `generating_equation` and `generating_unique` |
+| Ordinary coefficient $[X^n]G$ | `PowerSeries.coeff n generatingSeries` in `DiagonalOrdinaryParity.result` |
+| Every $n\ge1$, both implications, including $n=1=2^0$ | The complete telescope and iff of `result` |
+
+The integer construction and uniqueness are proved by the existing supplier;
+existence and integrality are not hypotheses of the resolution. The source
+programs themselves are not formalized. `DiagonalIterateEven.a` is the
+different diagonal sequence A395842 and is not this target.
+
+## Motivation
+
+This is a tier 1 external OEIS conjecture. The complete ordinary-coefficient
+assertion is obtained by composing frozen characteristic-two suppliers.
+
+## Gap
+
+The bounded source and literature screen recorded in #30066 found no proof
+in the inspected OEIS revision, repository ownership search, arXiv, Crossref,
+MathOverflow or Math.SE identifier searches. Merged PR #6777 settles
+A395842 and explicitly excludes A177775. The captured dev contains no
+A177775 settlement. Identifier-free papers, unnamed ongoing work and
+worldwide publication priority are outside this screen.
+
+## Route
+
+Write $P$ for `CubicFifteenSubstitutionParity.powerTwoSeries` over
+$\mathbb Z/2\mathbb Z$. Its coefficient at $n$ is the indicator of
+$\exists k\in\mathbb N,\ n=2^k$. The first part of `thue_series_equation`
+and characteristic two yield $P+P^2=X$. The supplier's inverse series $H$
+has zero constant coefficient and satisfies $H+H^2=X$. Applying the existing
+`quadratic_unique` gives $H=P$. The existing `mod_two_identity` identifies
+the coefficientwise reduction of $G$ with $H$. Applying the coefficient
+map and `ZMod.intCast_eq_one_iff_odd` proves the stated iff.
+
+## Falsifier
+
+An index $n\ge1$ for which exactly one of oddness of $[X^n]G$ and existence
+of a natural $k$ with $n=2^k$ holds would refute this claim. Changing the
+normalization, replacing ordinary coefficients with diagonal coefficients,
+or imposing a degree bound changes the problem.
+
+## Evidence
+
+The mathematical source is `D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.lean`,
+with sole public theorem `result`. Its owning Scribe carries the exact
+statement and `OpenProblemResolutionClaim` with kind `Proved`.
+`Reg/D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.lean` retains the full
+source-equivalence audit with continuation `.unknown`. This residual marker
+does not assert undecidability or inexhaustibility.
+
+The existing suppliers expose only their original private declarations;
+their original types and proofs are retained. Their visibility change is
+canonically repinned. The unfinished full-telescope `quadratic_unique`
+source-role audit is disclosed in [#30076](https://github.com/the-omega-institute/trureturing/issues/30076);
+it is not `declared_validated`. The three closed supplier equalities
+`H_zero`, `H_quadratic` and `mod_two_identity` have compiled typed attempts in
+`Reg/D5/S1/Recurrence/Parity/DiagonalIterateEven.lean`. Their exact Laws,
+source-equivalence bridges, variation, sensitivity and dependence compile;
+their source selections remain missing and their audits remain
+`declared_unresolved`, also under #30076. `H` is a definition rather than a
+theorem audit target. Audit evidence and mathematical proof remain distinct.
+
+## Triage
+
+The exact conjecture is proved by `result`, with `proof_shape: bind-only`
+and sole `admission_basis: open-problem-resolution` under #30066. There is
+no escape-witness credit. No corresponding theory volume or digestion atom
+is identified; the target uses `deposit-uncovered`.
+
+### What the settlement shows
+
+- **Proved — decisive structure.** The integer-to-characteristic-two identity
+  `D5/S1/Recurrence/Parity/DiagonalIterateEven.mod_two_identity` reduces the
+  problem to the zero-constant solution of $H+H^2=X$. The dyadic indicator
+  satisfies that equation, and
+  `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.quadratic_unique`
+  identifies the two series. Thus
+  `D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result` determines the parity
+  of every positive ordinary coefficient, with no finite cutoff and with
+  $n=1=2^0$ included. The mechanism determines the reduction modulo two;
+  it does not determine the full integer coefficients.
+- **Proved — extent with the original normalization.**
+  `D5/S1/Recurrence/Parity/DiagonalIterateEven.generating_unique` identifies
+  every integer series satisfying the same three initial coefficients and
+  every adjacent-iterate constraint with `generatingSeries`. Together with
+  `DiagonalOrdinaryParity.result`, this transfers the parity characterization
+  to any such presentation of the source series. Existence comes from
+  `DiagonalIterateEven.generating_equation`; no extra existence, parity or
+  integrality premise is required. These statements retain the original
+  normalization and all constraints, rather than proving uniqueness for
+  changed data.
+- **Open — extensions beyond those data.** This settlement establishes no
+  corresponding characterization after changing the initial coefficients,
+  dropping adjacent-iterate constraints, or replacing parity by congruences
+  modulo higher powers of two or other primes. The present modulo-two
+  comparison supplies no full integer-coefficient formula. Such extensions
+  require separate statements and evidence; none is claimed settled here.
+- **Open — dependent-claim boundary.** The pinned source contains the parity
+  conjecture, examples of the defining iteration, and cross-references to
+  A177774, A177776 and A395842; it states no further theorem conditional on
+  the parity conjecture. No such dependent claim is identified there, so
+  no downstream theorem is discharged by this settlement. The source's
+  diagonal A395842 is a different readout: its evenness is already proved
+  separately by `D5/S1/Recurrence/Parity/DiagonalIterateEven.hanna_conjecture`, not by
+  the ordinary-coefficient iff. The cross-references alone assert no further
+  conjecture resolved here; consequences beyond the pinned source remain
+  unassessed.
+
+## ASSUMED-UNVERIFIED
+
+The source-to-Lean correspondence is a semantic assessment, distinct from
+kernel verification. The bounded search does not certify worldwide novelty
+or publication priority. External-problem delivery credit requires the
+independent final reviews, required checks and actual merge.
