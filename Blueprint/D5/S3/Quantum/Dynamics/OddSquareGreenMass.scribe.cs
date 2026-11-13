@@ -34,15 +34,49 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "each pair has product at least one and sum at least two. There are q(q+1)/2 pairs. "
                 + "The conclusion concerns the actual finite inverse, rather than an assumed Green function. "
                 + "It does not assert the Tribonacci all-prefix spectral-gap statement: that application "
-                + "also needs the exact occurrence and parity bounds, the embedding into each chosen prefix, "
-                + "and the operator-norm and finite spectral bridges. No infinite-volume spectrum, "
-                + "localization, quasimode or filling hypothesis enters this theorem.", DescribeRole.Theorem))));
+                + "also needs the exact word-to-hopping correspondence, sublattice spectral identification "
+                + "and initial short prefixes. No infinite-volume spectrum, localization, quasimode or "
+                + "filling hypothesis enters this theorem.", DescribeRole.Theorem),
+            new DocumentBlock.Section(H("Application: a Euclidean estimate for the full inverse"), Blocks(
+            Paragraph(Text(
+                "Let t be a positive real hopping sequence bounded above by one, and let n,a,q be "
+                + "natural numbers with q at least one and a+2q+1 at most n. Assume exactly the "
+                + "2q repetitions t(2a+i+2q+1)=t(2a+i), for i<2q. Set G=L(t,n) inverse, acting "
+                + "on the Euclidean space R^n, x=(1,...,1) and v=x/sqrt(n). The hypotheses imply n>0. "
+                + "The quadratic mass theorem has the following consequence, without a new "
+                + "mathematical declaration:")),
+            new DocumentBlock.DisplayFormula(FullInverseEstimate()),
+            Paragraph(Text(
+                "The forward-substitution formula transports each local inverse entry to G by "
+                + "adding a to both indices: the defining recursion has the same initial term and "
+                + "step after this index translation. Thus both exterior portions of the full path "
+                + "remain present. All entries of G are nonnegative. Each of the two triangular "
+                + "regions from the mass theorem embeds injectively in the full matrix, so "
+                + "q(q+1) is at most twice the sum of all entries of G. The factor two bounds the "
+                + "regions separately and needs no disjointness premise. The sum equals the "
+                + "Euclidean inner product of x with Gx. Cauchy--Schwarz, norm(x)^2=n and "
+                + "Gx=sqrt(n)Gv give that this sum is at most n times norm(Gv), proving the estimate.")),
+            Paragraph(Text(
+                "For an even-start repeated word window, the parameter correspondence is "
+                + "m=2q+1, s=2a and N=2n. This supplies the complete-bidiagonal-inverse "
+                + "Euclidean consequence of the mass estimate. Identifying the actual hopping "
+                + "sequence, reordering the physical symmetric matrix into its sublattices, "
+                + "performing the sign conjugation, relating its eigenvalues to the block's "
+                + "singular values and treating the short prefixes remain separate obligations. "
+                + "No all-prefix Tribonacci spectral rate or entropy law is asserted.")))))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
         StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula FullInverseEstimate()
+    {
+        var v=F.Id("v"); var q=F.Id("q"); var n=F.Id("n");
+        return And(Eq(new Formula.Norm(v),D(1)),
+            Le(Mul(q,Add(q,D(1))),Mul(Mul(D(2),n),new Formula.Norm(At(F.Id("G"),v)))));
+    }
 
     private static Formula EntryFormula()
     {
