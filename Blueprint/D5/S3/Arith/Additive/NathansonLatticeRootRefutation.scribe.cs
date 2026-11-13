@@ -90,7 +90,7 @@ internal sealed class NathansonLatticeRootRefutationDocument : IScribeDocumentDe
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create("nathansonlattice-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("nathansonlattice-" + name.ToLowerInvariant().Replace("_", "-")),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role);
 
