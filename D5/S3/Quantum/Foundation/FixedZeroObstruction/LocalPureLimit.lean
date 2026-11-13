@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.FixedZeroObstruction
 import D5.S3.Quantum.Foundation.SingleLabelNormalBody
+import D5.S3.Quantum.Foundation.UniqueConfirmationDensity
 
 /-! Original mixed interior limits under uniqueness of just the fixed label. -/
 
@@ -25,31 +26,6 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 /-- Maximum distance of the entire original exclusion from one ambient point. -/
 def exclusionRadius (p : V) (r : pure C u) : ℝ :=
   sSup ((fun x : V => ‖x - p‖) '' exclusion C u r)
-
-private theorem effect_one_on_relative_interior
-    {F : Set V} (hFK : F ⊆ base C u) {y : V}
-    (hy : y ∈ intrinsicInterior ℝ F) {e : V →L[ℝ] ℝ}
-    (he : e ∈ effects C u) (hey : e y = 1) : ∀ z ∈ F, e z = 1 := by
-  obtain ⟨a, ha, rfl⟩ := mem_intrinsicInterior.mp hy
-  have : Nonempty (affineSpan ℝ F) := ⟨a⟩
-  intro z hz
-  let zA : affineSpan ℝ F := ⟨z, subset_affineSpan ℝ F hz⟩
-  have hcont : Continuous (fun t : ℝ => AffineMap.lineMap zA a t) :=
-    AffineMap.lineMap_continuous
-  obtain ⟨t, ht, hmem⟩ := (hcont.tendsto' 1 a
-    (AffineMap.lineMap_apply_one zA a)).eventually_mem
-      (mem_interior_iff_mem_nhds.mp ha) |>.exists_gt
-  have hzle : e z ≤ 1 := by simpa [(hFK hz).2] using (he z (hFK hz).1).2
-  have hwle : e ((AffineMap.lineMap zA a t : affineSpan ℝ F) : V) ≤ 1 := by
-    simpa [(hFK hmem).2] using (he _ (hFK hmem).1).2
-  have hcalc : e ((AffineMap.lineMap zA a t : affineSpan ℝ F) : V) =
-      (1 - t) * e z + t := by
-    simp only [AffineMap.lineMap_apply, AffineSubspace.coe_vadd,
-      Submodule.coe_smul, AffineSubspace.coe_vsub, vadd_eq_add, vsub_eq_sub,
-      map_add, map_sub, map_smul, smul_eq_mul, hey, zA]
-    ring
-  rw [hcalc] at hwle
-  nlinarith
 
 private theorem local_return_limit
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -79,7 +55,13 @@ private theorem local_return_limit
       (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0))
   have hxK := (base_compact hc hs).isClosed.mem_of_tendsto hx
     (Eventually.of_forall fun n => (hxn n).1)
-  have hone := effect_one_on_relative_interior (fun _ h => h.1) hy hb hby
+  have hz := UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior hB p
+    (u - b.toLinearMap) (fun z hz => sub_nonneg.mpr (hb z hz).2) hy
+    (by simp [LinearMap.sub_apply, (intrinsicInterior_subset hy).1.2, hby])
+  have hone (z : V) (hzF : z ∈ exclusion C u p) : b z = 1 := by
+    have h := hz z hzF
+    simp only [LinearMap.sub_apply, ContinuousLinearMap.coe_coe, hzF.1.2] at h
+    linarith
   obtain ⟨a, a', ha, ha', hne⟩ := pure_pair_in_ball hc hs hg hB p
   have hxa : x ∈ exclusion C u a := ⟨hxK, b.toLinearMap, ⟨hb, hone a ha⟩, hbx⟩
   have hxa' : x ∈ exclusion C u a' := ⟨hxK, b.toLinearMap, ⟨hb, hone a' ha'⟩, hbx⟩
