@@ -1,0 +1,38 @@
+**命题 125.6（原复三能级中任意效应零面误差界的失败）。** 在完整复三能级模型中，取两两正交的秩一投影 $p,r,q$，故 $p+r+q=I_3$。对 $0<\varepsilon<1$，令
+
+$$
+A_{\varepsilon}=p+\varepsilon r,
+\qquad c=\frac{r+q}{2}.
+\tag{X125.18}
+$$
+
+以 $A_{\varepsilon}$ 同时表示原效应 $\rho\mapsto\operatorname{Tr}(A_{\varepsilon}\rho)$。则
+
+$$
+\begin{gathered}
+A_{\varepsilon}\in F_p,\qquad
+Z(A_{\varepsilon})=\{q\},\qquad
+A_{\varepsilon}(c)=\varepsilon/2,\\
+\operatorname{dist}_1(c,Z(A_{\varepsilon}))=1,\qquad
+c=c_p\in D_p,\qquad
+\max_{x\in D_p}A_{\varepsilon}(x)=\varepsilon.
+\end{gathered}
+\tag{X125.19}
+$$
+
+这里 $\|X\|_1=\operatorname{Tr}|X|$ 为未除以二的迹范数。于是不存在趋零模 $\omega(t)\to0$（$t\downarrow0$），能对原模型的所有确认效应及所有原态保证
+
+$$
+\operatorname{dist}_1(x,Z(A))
+\le\omega\bigl(\operatorname{Tr}(Ax)\bigr),
+\tag{X125.20}
+$$
+
+即使只要求 $A\in F_p$、$\min_KA=0$、$\max_KA=1$ 且固定 $x=c_p$。
+
+证明。$A_{\varepsilon}$ 的特征值为 $1,\varepsilon,0$，所以 $0\preceq A_{\varepsilon}\preceq I_3$，并确认 $p$。若正半定迹一矩阵 $\rho$ 满足 $\operatorname{Tr}(A_{\varepsilon}\rho)=0$，在 $p,r,q$ 的正交基中，$\rho_{pp}+\varepsilon\rho_{rr}=0$ 迫使两个非负对角元均为零。正半定性给 $|\rho_{jk}|^2\le\rho_{jj}\rho_{kk}$，故对应行列也全为零，余下迹一条件给 $\rho=q$。反向 $A_{\varepsilon}(q)=0$，因此零面恰为单点。
+
+旧完整 $D_p$ 是支撑在 $p^{\perp}$ 上的全部密度矩阵三球，中心为 $(r+q)/2$；这是124.10与 IX118.8 的完整反向字典。直接计算给 $A_{\varepsilon}(c)=\varepsilon/2$。矩阵 $c-q=(r-q)/2$ 的特征值为 $1/2,-1/2,0$，所以其迹范数为一。在整个 $D_p$ 上，效应值为 $\varepsilon\operatorname{Tr}(r\rho)$，最大值为 $\varepsilon$。代入 (X125.20) 便要求 $1\le\omega(\varepsilon/2)\to0$，矛盾。证毕。
+
+该例的标签始终为同一个 $p$，完整 $D_p$ 固定，且这个量子模型满足 CS、UF 与 NC。它反驳的是对任意单张效应零面所要求的统一模，不能作为 EB3+PR 的反模型，也不能反驳只涉及同标签完整 $D_a$ 的 CS。零面取零与完整排除集不可互换；把 (X125.20) 添加为目标理论的必要条件会排除目标量子模型本身。
+

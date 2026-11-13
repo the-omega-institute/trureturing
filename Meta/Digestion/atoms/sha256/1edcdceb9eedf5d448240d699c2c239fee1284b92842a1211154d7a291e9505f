@@ -1,0 +1,9 @@
+**定义 133.4（方向条件与局部纯极限的区分）。** (Q133.14)称为沿给定实际返回列的共同方向条件；它是额外前件，不是 $\mathrm{EB}_{\ge1}$ 的已得结论。定理133.2无此额外前件，量化的是一个扇区内的全部原正零泛函。定理133.3在该前件下限制实际高维返回的内禀坐标，未把高维返回删去。特别地，物理轴长趋零不能推出它的单位球参数趋零。
+
+两定理均允许重复标签纤维 $I(F)$，并适用于[131.1][Q133SR]的指定坏对径内点 $y$；没有从这些条件推出 $\mathsf{LP}_{p,y}$、共同正提升的存在性或完整原域反模型。源点在 $\overline P$ 之外也不是前件或结论。固定源测试的共同提升与本章共同方向条件之间，不附加等价断言。
+
+[Q133BF]: ../../../D5/S3/Quantum/Foundation/ExclusionBallFaces.lean "exclusion_ball_faces 的前两项：完整暴露真面与全部真面分类；极大性及球面纯性亦见 IX116.1。"
+[Q133SN]: ../../../D5/S3/Quantum/Foundation/SingleLabelNormalBody.lean "positive_annihilator_maximum：对整个原锥正泛函给同一 D_t 内的原纯全局最大点，不需 SingleLabel 或 EB。"
+[Q133SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "126.8：裸EB3重复球内点附近的整球单侧收敛；126.11—126.12：零于靠近源内点的原效应之平坦化与最大面集中；131.1—131.3：原坏见证及仍待证的局部纯极限。"
+[Q133BV]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf "Boyd and Vandenberghe, Convex Optimization, Appendix A.5.4, pp.648–649：SVD、右奇异方向及最小范数逆；这些标准线性代数仅为证明中间步骤。"
+

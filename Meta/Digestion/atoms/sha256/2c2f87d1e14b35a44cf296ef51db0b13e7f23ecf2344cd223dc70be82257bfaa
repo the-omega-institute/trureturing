@@ -1,0 +1,24 @@
+**定义 128.1（全部原纯点的形式关系空间）。** 沿用126.1的完整原域及 EB3+PR，保留同一个 $V,C,u$、全部 $K,P$ 和整个 $\mathcal E=[0,u]$，记 $k(p,s)=T_p(s)=T_s(p)$。PR 仅交换两个纯端点。令
+
+$$
+\mathcal F_0=\mathbb R^{(P)},\qquad
+J_0:\mathcal F_0\longrightarrow V,\qquad
+J_0\left(\sum_p\alpha_p[p]\right)=\sum_p\alpha_pp.
+\tag{X128.1}
+$$
+
+这里 $[p]$ 是形式基元，系数只有有限支撑；$\ker J_0$ 是全部真实原线性关系。对每张实际完整排除球 $F=D_r$，取任一仿射同构 $b_F:\overline B^3\to F$，定义
+
+$$
+\begin{aligned}
+c_{F,v,w}&=[b_F(v)]+[b_F(-v)]-[b_F(w)]-[b_F(-w)],\\
+R_{\mathrm{cent}}&=\operatorname{span}_{\mathbb R}
+\{c_{F,v,w}:F=D_r,\ r\in P,\ v,w\in S^2\}.
+\end{aligned}
+\tag{X128.2}
+$$
+
+球面点都是原纯点。每条直径的中点都是同一实际球心，故 $R_{\mathrm{cent}}\subseteq\ker J_0$。定义遍历全部原排除球及全部直径，不依赖球图的选择。任意函数 $h:P\to\mathbb R$ 都在形式空间上定义实线性泛函 $L_h(\sum\alpha_p[p])=\sum\alpha_ph(p)$；消灭 $R_{\mathrm{cent}}$ 恰指保持全部球中心关系。
+
+全关系到原全域 least 确认及 fullMixture 的下降，直接复用 [CircuitBalancedConfirmation 的两个既有结论][Q128C]：在126.1的闭生成原锥与严格正单位上，每个核行消灭全部 $\ker J_0$，即满足其全部原 circuit 的 balance 前件，从而取得同原锥上的 reciprocalLeast 与 fullMixture。此处只检验中心关系能否供应这个前件，不另立或重证该下降定理。
+
