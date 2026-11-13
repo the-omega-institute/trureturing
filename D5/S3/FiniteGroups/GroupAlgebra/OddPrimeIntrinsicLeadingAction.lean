@@ -173,7 +173,7 @@ private theorem geometric_norm_over_K :
 
 private theorem actual_norm (rho : Representation K (E p r) V)
     {g : EAdd p r} (hg : g ≠ 0) :
-    (rho.comp (Subgroup.zpowers (Multiplicative.ofAdd g)).subtype).norm =
+    Representation.norm (rho.comp (Subgroup.zpowers (Multiplicative.ofAdd g)).subtype) =
       aug rho g ^ (p - 1) := by
   classical
   let γ : E p r := Multiplicative.ofAdd g
@@ -201,7 +201,7 @@ private theorem fixed_pow (T : Module.End K V) {v : V} (hv : T v = v) (n : ℕ) 
   | succ n ih => rw [pow_succ', Module.End.mul_apply, ih, hv]
 
 private theorem cyclic_invariants (rho : Representation K (E p r) V) (g : EAdd p r) :
-    (rho.comp (Subgroup.zpowers (Multiplicative.ofAdd g)).subtype).invariants =
+    Representation.invariants (rho.comp (Subgroup.zpowers (Multiplicative.ofAdd g)).subtype) =
       LinearMap.ker (aug rho g) := by
   classical
   let γ : E p r := Multiplicative.ofAdd g
@@ -221,7 +221,7 @@ private theorem cyclic_invariants (rho : Representation K (E p r) V) (g : EAdd p
 
 private theorem cyclic_power_data (rho : Representation K (E p r) V)
     (hproj : ∀ H : Subgroup (E p r), IsCyclic H →
-      Module.Projective K[H] (rho.comp H.subtype).asModule)
+      Module.Projective K[H] (Representation.asModule (rho.comp H.subtype : Representation K H V)))
     {g : EAdd p r} (hg : g ≠ 0) :
     aug rho g ^ p = 0 ∧
       LinearMap.ker (aug rho g) = LinearMap.range (aug rho g ^ (p - 1)) := by
@@ -248,7 +248,11 @@ private theorem cyclic_power_data (rho : Representation K (E p r) V)
   · intro v hv
     have hinv : v ∈ σ.invariants := by rw [cyclic_invariants]; exact hv
     obtain ⟨x, hx⟩ := hN ⟨v, hinv⟩
-    exact ⟨x, by simpa only [σ, actual_norm rho hg] using hx⟩
+    refine ⟨x, ?_⟩
+    change (Representation.norm
+      (rho.comp (Subgroup.zpowers (Multiplicative.ofAdd g)).subtype)) x = v at hx
+    rw [actual_norm rho hg] at hx
+    exact hx
   · rintro v ⟨x, rfl⟩
     change (aug rho g * aug rho g ^ (p - 1)) x = 0
     rw [← pow_succ', Nat.sub_add_cancel (Fact.out : p.Prime).one_le, hDp]
@@ -256,7 +260,7 @@ private theorem cyclic_power_data (rho : Representation K (E p r) V)
 
 private theorem cyclic_ker_finrank (rho : Representation K (E p r) V)
     (hproj : ∀ H : Subgroup (E p r), IsCyclic H →
-      Module.Projective K[H] (rho.comp H.subtype).asModule)
+      Module.Projective K[H] (Representation.asModule (rho.comp H.subtype : Representation K H V)))
     (hV : Module.finrank K V = p * m) {g : EAdd p r} (hg : g ≠ 0) :
     Module.finrank K (LinearMap.ker (aug rho g)) = m := by
   classical
@@ -276,7 +280,7 @@ theorem intrinsic_leading_action
     (rho : Representation K (E p r) V)
     (hr : 0 < r) (hm : 0 < m) (hV : Module.finrank K V = p * m)
     (hproj : ∀ H : Subgroup (E p r), IsCyclic H →
-      Module.Projective K[H] (rho.comp H.subtype).asModule)
+      Module.Projective K[H] (Representation.asModule (rho.comp H.subtype : Representation K H V)))
     (hmixed : ∀ xs : List (EAdd p r), xs.length = p → (xs.map (aug rho)).prod = 0)
     (h : E p r) (hh : h ≠ 1) :
     ∃ A : EAdd p r →ₗ[ZMod p] Module.End K (Representation.Coinvariants rho),
@@ -398,15 +402,18 @@ theorem intrinsic_leading_action
   have hEA0 (g : EAdd p r) (u : Representation.Coinvariants rho) :
       eD (A0 g u) = n g u := eD.apply_symm_apply _
   have hAzero : A0 0 = 0 := by
-    ext u
+    apply LinearMap.ext
+    intro u
     apply eD.injective
+    change eD (A0 0 u) = eD 0
     rw [hEA0, map_zero]
     obtain ⟨v, rfl⟩ := hq u
     apply Subtype.ext
     rw [hnval, aug_zero, mul_zero]
     rfl
   have hAadd (g k : EAdd p r) : A0 (g + k) = A0 g + A0 k := by
-    ext u
+    apply LinearMap.ext
+    intro u
     apply eD.injective
     change eD (A0 (g + k) u) = eD (A0 g u + A0 k u)
     rw [map_add, hEA0, hEA0, hEA0]
@@ -430,7 +437,8 @@ theorem intrinsic_leading_action
     rw [hEA, hnval]
     rfl
   have hAh : A h.toAdd = 1 := by
-    ext u
+    apply LinearMap.ext
+    intro u
     obtain ⟨v, rfl⟩ := hq u
     apply eD.injective
     apply Subtype.ext
@@ -505,12 +513,14 @@ theorem intrinsic_leading_action
     exact heq.symm
   have hcomm (g k : EAdd p r) : Commute (A g) (A k) := by
     change A g * A k = A k * A g
-    ext u
+    apply LinearMap.ext
+    intro u
     obtain ⟨v, rfl⟩ := hq u
     obtain ⟨w, hw⟩ := hq (A k (q v))
     obtain ⟨w', hw'⟩ := hq (A g (q v))
     apply eD.injective
     apply Subtype.ext
+    change (eD (A g (A k (q v))) : V) = (eD (A k (A g (q v))) : V)
     rw [hproduct g k v w hw, hproduct k g v w' hw']
     simpa only [mul_assoc] using LinearMap.congr_fun
       (congrArg (fun T : Module.End K V => D ^ (p - 3) * T) (aug_comm rho g k).eq) v

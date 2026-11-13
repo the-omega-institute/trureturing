@@ -1,3 +1,0 @@
-WIP: integrate intrinsic odd-prime coinvariant action
-
-Preserve the arbitrary-representation theorem with independent ordered mixed vanishing and expose its two original live dependencies. Lean compilation is queued at native disk admission; this checkpoint is saved source only.
