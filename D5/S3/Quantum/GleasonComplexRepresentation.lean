@@ -12,8 +12,11 @@ Released under Apache 2.0 license; the complete license is retained in
 Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
-Gleason (1957), J. Math. Mech. 6, 885, Theorems 2.8 and 3.1,
-is the projection-theorem source. The adopted elementary real core (Sphere through General) follows Cooke, Keane,
+Gleason (1957), J. Math. Mech. 6, 885–893, supplies Lemma 3.4
+(two-dimensional restrictions to a global bounded form), Theorem 3.5
+(nonnegative frame-function regularity in dimension at least three), and
+Theorem 4.1 (closed-subspace measure trace-class representation).
+The adopted elementary real core (Sphere through General) follows Cooke, Keane,
 Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/

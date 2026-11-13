@@ -241,14 +241,13 @@ lemma real_inner_eq_dotProduct (x y : EuclideanSpace ℝ (Fin 3)) : ⟪x, y⟫_�
   rw [EuclideanSpace.inner_eq_star_dotProduct, star_trivial, dotProduct_comm]
 def cross (x y : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
   WithLp.toLp 2 (⇑x ⨯₃ ⇑y)
-@[simp] lemma coe_cross (x y : EuclideanSpace ℝ (Fin 3)) : ⇑(cross x y) = ⇑x ⨯₃ ⇑y := rfl
 lemma inner_cross_left (x y : EuclideanSpace ℝ (Fin 3)) : ⟪x, cross x y⟫_ℝ = 0 := by
-  rw [real_inner_eq_dotProduct, coe_cross, dot_self_cross]
+  rw [real_inner_eq_dotProduct, cross, dot_self_cross]
 lemma inner_cross_right (x y : EuclideanSpace ℝ (Fin 3)) : ⟪y, cross x y⟫_ℝ = 0 := by
-  rw [real_inner_eq_dotProduct, coe_cross, dot_cross_self]
+  rw [real_inner_eq_dotProduct, cross, dot_cross_self]
 lemma inner_cross_cross (u v w x : EuclideanSpace ℝ (Fin 3)) :
     ⟪cross u v, cross w x⟫_ℝ = ⟪u, w⟫_ℝ * ⟪v, x⟫_ℝ - ⟪u, x⟫_ℝ * ⟪v, w⟫_ℝ := by
-  simp only [real_inner_eq_dotProduct, coe_cross, cross_dot_cross]
+  simp only [real_inner_eq_dotProduct, cross, cross_dot_cross]
 lemma norm_cross_of_orthonormal {x y : EuclideanSpace ℝ (Fin 3)} (hx : ‖x‖ = 1) (hy : ‖y‖ = 1)
     (hxy : ⟪x, y⟫_ℝ = 0) : ‖cross x y‖ = 1 := by
   have h : ⟪cross x y, cross x y⟫_ℝ = 1 := by

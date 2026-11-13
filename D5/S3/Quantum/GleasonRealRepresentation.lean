@@ -32,15 +32,15 @@ lemma ext_coe {x y : EuclideanSpace ℝ (Fin 3)} (h : ⇑x = ⇑y) : x = y :=
   PiLp.ext fun i => congrFun h i
 lemma inner_cross_perm (u v w : EuclideanSpace ℝ (Fin 3)) :
     ⟪u, cross v w⟫_ℝ = ⟪w, cross u v⟫_ℝ := by
-  rw [real_inner_eq_dotProduct, real_inner_eq_dotProduct, coe_cross, coe_cross,
+  rw [real_inner_eq_dotProduct, real_inner_eq_dotProduct, cross, cross,
     triple_product_permutation (⇑u) (⇑v) (⇑w), triple_product_permutation (⇑v) (⇑w) (⇑u)]
 lemma cross_eq_neg_cross (x y : EuclideanSpace ℝ (Fin 3)) : cross x y = -cross y x := by
   apply ext_coe
-  rw [WithLp.ofLp_neg, coe_cross, coe_cross, cross_anticomm]
+  rw [WithLp.ofLp_neg, cross, cross, cross_anticomm]
 lemma cross_cross_left (u v w : EuclideanSpace ℝ (Fin 3)) :
     cross (cross u v) w = ⟪u, w⟫_ℝ • v - ⟪v, w⟫_ℝ • u := by
   apply ext_coe
-  rw [coe_cross, coe_cross, cross_cross_eq_smul_sub_smul, WithLp.ofLp_sub, WithLp.ofLp_smul,
+  rw [cross, cross, cross_cross_eq_smul_sub_smul, WithLp.ofLp_sub, WithLp.ofLp_smul,
     WithLp.ofLp_smul, real_inner_eq_dotProduct, real_inner_eq_dotProduct]
 structure Frame (p q r : EuclideanSpace ℝ (Fin 3)) : Prop where
   hp : ‖p‖ = 1

@@ -33,6 +33,8 @@ or makes a forced-origin claim.
 ## Verified locator
 
 - DOI: https://doi.org/10.1512/iumj.1957.6.56050
+- Original paper: https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1957/6/56050/pdf
+- Lemma 3.4: pp. 891–892; Theorem 3.5: p. 892; Theorem 4.1: pp. 892–893.
 
 ## Original Lean proof and complete license
 
@@ -49,10 +51,14 @@ through General to Cooke, Keane, Moran (1985), *Math. Proc. Cambridge Philos.
 Soc.* **98**, 117–128. The Extremal source credits section 6. The General
 source credits section 7 for the choice of axes p, r, q, the target form,
 identities (*) and the Claim; its formalized endgame differs from the paper's
-count of zeros on great circles. The Core source also credits Gleason (1957),
-*J. Math. Mech.* **6**, 885, Theorems 2.8 (the nonnegative core lemma) and 3.1
-(the projection theorem). These mathematical source attributions apply to
-the adopted proof alongside Zayn Blore's formalization authorship.
+count of zeros on great circles. Gleason (1957), *J. Math. Mech.* **6**,
+885–893, gives Lemma 3.4 (regularity on every two-dimensional subspace
+yields a global bounded bilinear or Hermitian form), Theorem 3.5
+(nonnegative frame-function regularity in real or complex dimension at least
+three), and Theorem 4.1 (positive trace-class representation of measures on
+closed subspaces of a separable real or complex Hilbert space of dimension
+at least three). These mathematical source attributions apply to the adopted
+proof alongside Zayn Blore's formalization authorship.
 
 The source distribution is modified: imports and module grouping use the
 receiving repository's mathematical subject routes; exact receiving suppliers

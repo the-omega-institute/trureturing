@@ -286,7 +286,7 @@ lemma norm_coldest (hp : ‖p‖ = 1) (hs : s ∈ northern p) (hsp : s ≠ p) :
 lemma inner_pole_cross_coldest (p s : EuclideanSpace ℝ (Fin 3)) :
     ⟪p, cross s (coldest p s)⟫_ℝ = 0 := by
   have h : ⟪p, cross s (coldest p s)⟫_ℝ = ⟪coldest p s, cross p s⟫_ℝ := by
-    rw [real_inner_eq_dotProduct, real_inner_eq_dotProduct, coe_cross, coe_cross,
+    rw [real_inner_eq_dotProduct, real_inner_eq_dotProduct, cross, cross,
       triple_product_permutation (⇑p) (⇑s) (⇑(coldest p s)),
       triple_product_permutation (⇑s) (⇑(coldest p s)) (⇑p)]
   rw [h, coldest, inner_smul_left, inner_sub_left, inner_smul_left, inner_cross_left,
