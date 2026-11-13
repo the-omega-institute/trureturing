@@ -37,7 +37,9 @@ private theorem extendPolynomialEquiv_map_aux (φ : K →+* L)
   have h : (extendHom φ e).toRingHom.comp (map φ) = (map φ).comp e.toRingHom := by
     apply MvPolynomial.ringHom_ext
     · intro c
-      simp [extendHom]
+      simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_comp, RingHom.coe_coe,
+        Function.comp_apply, map_C, algHom_C, algebraMap_eq,
+        RingEquiv.toRingHom_eq_coe, AlgEquiv.toRingEquiv_toRingHom]
       rw [show e (C c) = C c by exact e.commutes c, map_C]
     · intro i
       simp [extendHom]
@@ -147,7 +149,7 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
     exact Relation.ReflTransGen.mono hedge σ τ (hreach σ τ)
   refine ⟨e, he, hreach, hreachL, ?_⟩
   have hcard : 1 < Fintype.card (D →ₐ[F] K) := by rw [hΩ]; decide
-  haveI : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp hcard
+  have : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp hcard
   exact ⟨FixedDiagonalDeterminant.row_determinant_irreducible _ hreachL,
     FixedDiagonalDeterminant.diagonal_determinant_irreducible _ hreachL⟩
 
@@ -162,7 +164,7 @@ theorem general43_2_original_polynomial (L : Type*) [Field L] [Algebra K L]
     Irreducible (map ((algebraMap K L).comp (algebraMap F K))
       (obstructionPolynomial W bD bW bQ)) := by
   classical
-  letI : CharZero K := charZero_of_injective_algebraMap (algebraMap F K).injective
+  have : CharZero K := charZero_of_injective_algebraMap (algebraMap F K).injective
   obtain ⟨e, he, hreach, hreachL, hrow, hdiagonal⟩ :=
     general43_2_support K L W hD hW hE a ha
   let n := e.toLinearMap ∘ₗ (actualOperator W hD hW a ha).baseChange K ∘ₗ e.symm.toLinearMap
@@ -202,6 +204,8 @@ theorem general43_2_original_polynomial (L : Type*) [Field L] [Algebra K L]
   have hunit : IsUnit (C (algebraMap K L c) : MvPolynomial (D →ₐ[F] K) L) :=
     (isUnit_iff_ne_zero.mpr hcl).map C
   exact (irreducible_isUnit_mul hunit).mpr hrow
+
+include K
 
 open MvPolynomial in
 /-- The original obstruction polynomial is irreducible over every extension of its
