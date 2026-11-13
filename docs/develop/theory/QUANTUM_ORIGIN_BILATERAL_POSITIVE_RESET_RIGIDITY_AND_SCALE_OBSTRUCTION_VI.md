@@ -1213,8 +1213,8 @@ gate sequence. ∎
 [III]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_III.md
 [SBridge]: ../../../Library/QuantumStates/mullerududec2012selfduality.md
 [BH]: ../../../Library/QuantumStates/barnumhilgert2019spectral.md
-[Mendes]: ../../../Library/DifferentialGeometry/mendes2025diameterfocal.md
-[BUW]: ../../../Library/OrderedVectorSpaces/barnumududecvandewetering2023homogeneity.md
+[Mendes]: ../../../Library/Topology/mendes2025diameterfocal.md
+[BUW]: ../../../Library/LieTheory/barnumududecvandewetering2023homogeneity.md
 [Niestegge]: ../../../Library/ContinuousObservables/niestegge2015dynamical.md
 [Compact]: ../../../Blueprint/D5/S3/Quantum/Algebra/OriginalProbabilityCompactAction.md
 
