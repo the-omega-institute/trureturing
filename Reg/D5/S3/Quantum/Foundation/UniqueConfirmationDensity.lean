@@ -34,7 +34,7 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output P _ := P.V
+  Output _ P := P.V
   Anchor := Empty
   finiteAnchor := inferInstance
 

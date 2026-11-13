@@ -283,7 +283,9 @@ theorem original_unique_confirmer_density
       obtain ⟨v, hv, _⟩ := mem_intrinsicInterior.mp hv
       rw [hpre, ← eh.preimage_interior]
       refine ⟨e.symm v, ?_⟩
-      simpa [eh] using hv
+      change e (e.symm v) ∈ interior KA
+      rw [e.apply_symm_apply]
+      exact hv
     have hxK : x ∈ K := (intrinsicInterior_subset hx).1
     let xA : A := ⟨x, subset_affineSpan ℝ K hxK⟩
     let x0 : E := e.symm xA
@@ -294,7 +296,9 @@ theorem original_unique_confirmer_density
       obtain ⟨v, hv, hvx⟩ := mem_intrinsicFrontier.mp hxf
       have heq : v = xA := Subtype.ext hvx
       rw [hpre, ← eh.preimage_frontier]
-      simpa [eh, x0, ← heq] using hv
+      change e (e.symm xA) ∈ frontier KA
+      rw [e.apply_symm_apply, ← heq]
+      exact hv
     have hproper : S ≠ univ := by
       intro heq
       simp [heq] at hxfront
