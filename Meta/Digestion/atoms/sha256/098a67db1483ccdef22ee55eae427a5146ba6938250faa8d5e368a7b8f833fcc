@@ -1,0 +1,47 @@
+**命题 120.4（原三角与宽度、无需Inj的上半连续）。** 对完整球定义
+
+$$
+W(F)=\max_{f\in\mathcal E}\operatorname{osc}_F f,
+\qquad\operatorname{osc}_F f=\max_Ff-\min_Ff.
+\tag{IX120.6}
+$$
+
+在裸EB3域中，$0<W(D_p)\le1$，并且
+
+$$
+\mathcal T=\{p\in P:W(D_p)=1\},\qquad
+p_n\to p\in P\ \Longrightarrow\
+\limsup_nW(D_{p_n})\le W(D_p).
+\tag{IX120.7}
+$$
+
+因此 $\mathcal T$ 在 $P$ 中相对闭，$\mathsf{DT}$ 等价于全部原球宽度为一。
+
+证明。非点球中两点可被一个仿射函数区分；将该函数按整个 $K$ 的极值归一，所得原效应仍区分二者，所以宽度正。$\mathcal E$ 紧及评价连续给最大值达到，且每个效应在整个 $K$ 上取值于 $[0,1]$。
+
+若 $p\in\mathcal T$，则 $q,r\in D_p$；实际边 $q\perp r$ 的同一原见证在该球上给振幅一。反之，宽度一的达到效应 $f$ 在球 $D_p$ 上取一、零。其限制非恒定，球上两个极值点是对径球面点 $q,r$，由(IX120.3)都是原纯点。于是三条原边同时存在，$p\in\mathcal T$。这里尚未合成三结果效应。
+
+现令 $p_n\to p\in P$。取实现宽度上极限的子列，并在每项选
+
+$$
+e_n\in\mathcal A_{p_n},\qquad f_n\in\mathcal E,\qquad
+ y_n,z_n\in D_{p_n},\qquad
+ f_n(y_n)-f_n(z_n)=W(D_{p_n}).
+$$
+
+$K,\mathcal E$ 紧，使共同子列满足 $e_n\to e,f_n\to f,y_n\to y,z_n\to z$。连续评价给
+
+$$
+e(p)=1,\qquad e(y)=e(z)=0.
+$$
+
+所以 $e\in F_p$ 且 $y,z\in D_p$，无需预先知道极限端点纯或球连续。因此
+
+$$
+\limsup_nW(D_{p_n})=f(y)-f(z)\le W(D_p).
+$$
+
+这是 $P$ 相对拓扑上的上半连续证明，不使用Inj或 $P$ 闭。$W\le1$ 使其一值层相对闭；稠密即为全体。证毕。
+
+这是116.4、116.9与[118.7][Q120118]中饱和集和紧性方法的原图表达。118.14已经给出饱和集在 $K$ 中紧这一更强结论；本命题不把它改计为新增分类或新宽度原理。
+
