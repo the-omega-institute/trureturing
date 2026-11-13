@@ -48,3 +48,16 @@ and leaves a unified research-material license unselected. This citation and
 independent formal proof make no publication, priority, rights or author-order
 decision. The separately licensed clique formalization is reused at its actual
 scope.
+
+## Verified locator
+
+URL: https://github.com/the-omega-institute/binary-subspace-orthogonality/blob/9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce/manuscript/sections/higher-dimensions.tex
+
+At commit `9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce`, the declared file's
+SHA256 matches `0966718cb9a5c3f99ea85bf291f0c5973a2f4d30a4b9847ada554cdeb9dca6cb`.
+Proposition `prop:dimension-deletion` and its proof, lines 17–32, give the
+degree-versus-list deletion criterion with a fixed clique and restoration in
+reverse deletion order. The following dimension-seven preprocessing paragraph
+is a separate finite report, with the reproduction boundary stated above.
+This fixed source locator preserves the received O8 version and its unresolved
+research-material licensing and individual derivation attribution.

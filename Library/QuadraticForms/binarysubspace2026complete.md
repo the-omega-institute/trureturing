@@ -145,3 +145,22 @@ original hypotheses; surviving profiles are necessary, not asserted realized.
 The current canonical written lower-bound implementation passed the source-matched45-module report (SHA256 aa51bb24b859aaedf637d4375f1b6a6dc33cc6304ef449c705d903bb0696302c), with only propext, Classical.choice and Quot.sound. It covers all three actual graphs, all full classes and parity, and unique completion of every eight actual finrank-three Lagrangian Submodules. The original explicit trace family proves nonvacuity. All43 new modules passed header checks, Scribe emission, deposit and canonical ledger alignment. These are author/component checks, with full independent review and applicable final-head CI still required. The unfinished registration audit is disclosed precisely in linked issue28398, including exact statements and source hashes; disclosure is not proof, audit completion or a gate waiver. Exactn7 and a
 nineteen-color witness remain open; no paused exclusions or new coloring search have
 been run by this return.
+
+## Verified locator
+
+Canonical URL: https://github.com/the-omega-institute/binary-subspace-orthogonality
+
+The received research version is [PR1](https://github.com/the-omega-institute/binary-subspace-orthogonality/pull/1)
+at commit `9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce`. At that revision,
+[Certificate.lean](https://github.com/the-omega-institute/binary-subspace-orthogonality/blob/9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce/formal/Chromatic/Certificate.lean),
+[Data.lean](https://github.com/the-omega-institute/binary-subspace-orthogonality/blob/9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce/formal/Chromatic/Data.lean),
+and [Verify.lean](https://github.com/the-omega-institute/binary-subspace-orthogonality/blob/9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce/formal/Chromatic/Verify.lean)
+have the three original Git blob identities recorded above. The full-graph
+conclusion is `BinaryOrthogonality.chromatic_number_six` in `Verify.lean`;
+the separate line result is Theorem `thm:lines` in
+[lines.tex](https://github.com/the-omega-institute/binary-subspace-orthogonality/blob/9f065627944f30fe7b56e6ec0fb1025d3bb5a7ce/manuscript/sections/lines.tex),
+whose Git blob and SHA256 also match the received identities above.
+The repository landing URL alone does not identify this version or equate it
+with main. The source's native-evaluation provenance, manuscript distinctions,
+attribution and unresolved research-material rights retain the scope stated
+above; source identity supplies no fresh compilation or computation evidence.
