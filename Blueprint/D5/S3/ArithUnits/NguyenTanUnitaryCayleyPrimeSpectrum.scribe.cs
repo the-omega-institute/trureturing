@@ -143,7 +143,7 @@ internal sealed class NguyenTanUnitaryCayleyPrimeSpectrumDocument : IScribeDocum
             And(new Formula.Not(Parenthesized(EqFormula(v, D(0)))),
                 EqFormula(App(Q("Matrix", "mulVec"), matrix, v), D(0))));
     }
-    
+
     private static Formula ZeroEigenvalueFormula()
     {
         Formula vtype = F.Id("V"), g = F.Id("G");
