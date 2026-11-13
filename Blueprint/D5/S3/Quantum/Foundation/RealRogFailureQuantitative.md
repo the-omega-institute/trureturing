@@ -6,7 +6,19 @@ The original cone base norm attains its primal minimum with the original strictl
 
 For the primal optimization in Quantum Origin VI, the original-carrier theorem retains the arbitrary strictly positive original unit, the entire compact base and the generating cone. Full-support compression, determinant normalization, a same-object saturating dual effect, extraction from an actual failed local antipodal pair, purity transport and the return to the original carrier remain open. Primal attainment alone does not complete Proposition 93.3 or supply block classification, Jordan structure, self-duality or a zero-gluing premise.
 
-**Theorem 1.1 (An attained primal on the original cone with its original unit).**
+**Theorem 1.1 (The whole original mass cap is compact).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.mass_cap_compact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.mass_cap_compact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any real normed carrier, pointed cone C and strictly positive original unit u, compactness of the entire normalized base implies compactness of every full cap {x in C : u(x)<=R} for nonnegative R. The zero vector and empty-base case are retained. The original primal theorem and UnitPreservingLiftImage.minimum_lift and closed_lift_image consume this original statement.
+
+**Theorem 1.2 (An attained primal on the original cone with its original unit).**
 
 Lean statement: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment`
 
@@ -26,6 +38,7 @@ The base-norm definition and nonnegativity of the original unit on the cone are 
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.mass_cap_compact`
 - Truth anchor: `D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment`
 - Dependency: [D5/S3/Quantum/Dynamics/BaseNormContraction](../Dynamics/BaseNormContraction.md)
 - Dependency: [D5/S3/Quantum/Foundation/CircuitBalancedConfirmation](CircuitBalancedConfirmation.md)
