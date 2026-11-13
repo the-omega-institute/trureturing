@@ -66,12 +66,12 @@ def sequenceRegistration : Registration sequenceArena.{s} (sequenceArena.Law seq
     change (true = true ∧ ∀ m : ℕ, True) ≠ (false = true ∧ ∀ m : ℕ, True)
     simp
 
-noncomputable def sequence_contract : LeanInformationAudit.Contract.Registration
+noncomputable def sequence_contract : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.HomologicalAlgebra.AcyclicCarrier.exists_sequence.{s})
     (type_of% (realize sequenceSignature.{s}
       (fun _ p seq => p.initial (seq 0) ∧ ∀ m, p.step m (seq m) (seq (m+1)))
       (fun e => nomatch e))) Unit Unit := {
-  unitName := `Reg.D5.S3.HomologicalAlgebra.AcyclicCarrier.sequence_contract
+  unitName := `Reg.D5.S3.HomologicalAlgebra.AcyclicCarrier.sequence_unit
   realizationName := `Reg.D5.S3.HomologicalAlgebra.AcyclicCarrier.sequenceRegistration
   realizationSource := none
   generated := false
