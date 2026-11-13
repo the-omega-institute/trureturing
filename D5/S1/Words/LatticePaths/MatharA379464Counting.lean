@@ -475,7 +475,7 @@ private theorem literal_list_bridge {n : ℕ}
     Above, List.sum_ofFn, List.length_ofFn,
     prefix_ofFn, zero_add, prefixSum]
 
-private noncomputable def count (α : Type) [Fintype α] (n : ℕ) (P : List α → Prop) : ℕ :=
+noncomputable def count (α : Type) [Fintype α] (n : ℕ) (P : List α → Prop) : ℕ :=
   Fintype.card {w : Fin n → α // P (List.ofFn w)}
 
 private theorem count_succ (α : Type) [Fintype α] (n : ℕ) (P : List α → Prop) :
@@ -510,7 +510,7 @@ private theorem option_count_succ (α : Type) [Fintype α] (n : ℕ) (P : List �
   rw [count_succ, Fintype.sum_option]
   simp only [List.filterMap_cons, id_eq, Option.elim_none, Option.elim_some]
 
-private theorem insertion_formula (α : Type) [Fintype α] (n : ℕ) (P : List α → Prop) :
+theorem insertion_formula (α : Type) [Fintype α] (n : ℕ) (P : List α → Prop) :
     count (Option α) n (fun l => P (l.filterMap id)) =
       ∑ k ∈ Finset.range (n+1), n.choose k * count α k P := by
   classical

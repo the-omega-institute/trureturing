@@ -19,7 +19,9 @@ internal sealed class MatharA379464CountingDocument : IScribeDocumentDefinition
             Node("IsPath", "The bounded path predicate", IsPathFormula(), AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("a", "The path count", AFormula(), AssessedProvenance.FromLiterature(Source), DescribeRole.Definition),
             Node("three_positive_rotations", "Three positive cyclic rotations", ThreeRotationsFormula(), AssessedProvenance.FromRepo(), DescribeRole.Theorem),
-            Node("binomial_counting", "The optional-letter count", BinomialFormula(), AssessedProvenance.FromLiterature(Source), DescribeRole.Theorem))));
+            Node("binomial_counting", "The optional-letter count", BinomialFormula(), AssessedProvenance.FromLiterature(Source), DescribeRole.Theorem),
+            Node("count", "Finite words satisfying a predicate", CountFormula(), AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("insertion_formula", "Inserting optional letters", GenericInsertionFormula(), AssessedProvenance.FromRepo(), DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
@@ -105,4 +107,28 @@ internal sealed class MatharA379464CountingDocument : IScribeDocumentDefinition
         Formula sum = Sum(k, Qualified("Finset", "range", Add(n, D(1))), summand);
         return Disp(All("n", N(), Eq(Cast(A(n), Q()), sum)));
     }
+    private static Formula CountFormula()
+    {
+        var alphabet = F.Id("A"); var n = F.Id("n"); var p = F.Id("P"); var w = F.Id("w");
+        var predicateType = new Formula.TypeArrow(Call("List", alphabet), Call("Prop"));
+        var carrier = Call("Subtype", Lambda("w", new Formula.TypeArrow(Fin(n), alphabet),
+            new Formula.Apply(p, [Qualified("List", "ofFn", w)])));
+        return Disp(All("A", Call("Type"), All("inst", Call("Fintype", alphabet),
+            All("n", N(), All("P", predicateType,
+                Eq(Call("count", alphabet, n, p), Qualified("Fintype", "card", carrier)))))));
+    }
+
+    private static Formula GenericInsertionFormula()
+    {
+        var alphabet = F.Id("A"); var n = F.Id("n"); var p = F.Id("P"); var k = F.Id("k"); var l = F.Id("l");
+        var predicateType = new Formula.TypeArrow(Call("List", alphabet), Call("Prop"));
+        var erased = Qualified("List", "filterMap", Call("id"), l);
+        var predicate = Lambda("l", Call("List", Call("Option", alphabet)), new Formula.Apply(p, [erased]));
+        var lhs = Call("count", Call("Option", alphabet), n, predicate);
+        var term = Mul(Qualified("Nat", "choose", n, k), Call("count", alphabet, k, p));
+        var rhs = Sum(k, Qualified("Finset", "range", Add(n, D(1))), term);
+        return Disp(All("A", Call("Type"), All("inst", Call("Fintype", alphabet),
+            All("n", N(), All("P", predicateType, Eq(lhs, rhs))))));
+    }
+
 }
