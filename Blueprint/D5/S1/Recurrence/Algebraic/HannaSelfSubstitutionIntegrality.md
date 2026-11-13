@@ -60,7 +60,21 @@ $$\forall L: \mathbb{N} \to \mathbb{Q}, \operatorname{HannaLogarithmicPowerClosu
 
 For every rational sequence L with integral exponential input, the positive-index values L(n) have integer representatives c(n). The integer Euler ledger of the input gives p dividing c(p*m)-c(m) for every prime p and positive m. Frobenius and power lifting show that the exponential self-substitution operator preserves integer coefficients by the sufficient Dieudonne-Dwork criterion. Its logarithmic sum has constant coefficient zero, so every output has constant coefficient one. The operator raises coefficient agreement by one degree. PowerSeriesNormalizedContraction.exists_unique_fixed supplies a unique rational solution. Starting from 1, each iterate has integer coefficients. For every natural degree N, every solution agrees through degree N with the Nth iterate, so its degree-N coefficient is an integer. Thus a solution exists and every solution is integral in every degree. These are formal power-series statements without an analytic convergence hypothesis or a finite degree bound.
 
-**Theorem 1.5 (Geometric exponential inputs).**
+**Lemma 1.5 (Divisibility lifting for powers).**
+
+$$\forall R: Type, [\operatorname{CommRing}\left(R\right)] \forall p: \mathbb{N}, \forall U: R, \forall V: R, (p: R) \mid U - V \Rightarrow \forall m: \mathbb{N}, (p: R)^{\operatorname{padicValNat}\left(p, m\right) + 1} \mid U^{m} - V^{m}$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.power_lift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* P. D. Hanna (2009). *OEIS A163921 and A157675: self-substitution integrality conjectures*. URL: <https://oeis.org/A163921/internal>.
+
+*Commentary.*
+
+In any commutative ring R, if p divides U-V, then p^(padicValNat(p,m)+1) divides U^m-V^m for every natural m. Here p is any natural number. Ideal congruence power lifting and the divisibility of m by p^padicValNat(p,m) give the conclusion. No unit or coprimality hypothesis is required. This supplies the exponent-changing step for HannaA181076Integrality.
+
+**Theorem 1.6 (Geometric exponential inputs).**
 
 $$\forall a: \mathbb{Z}, \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{PowerSeries}.\operatorname{subst}\left(\operatorname{logSum}\left((fun n: \mathbb{N} \mapsto \operatorname{PowerSeries}.\operatorname{C}\left((a: \mathbb{Q})^{n}\right))\right), \operatorname{PowerSeries}.\operatorname{exp}\left(\mathbb{Q}\right)\right)\right)$$
 
@@ -80,6 +94,7 @@ For every integer a the exponential of Sum_{n>=1} a^n*x^n/n equals (1-a*X) inver
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.claim`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.geometric_input`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.logSum`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.power_lift`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaSelfSubstitutionIntegrality.result`
 - Dependency: [D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality](DoldExponentialIntegrality.md)
 - Dependency: [D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure](HannaLogarithmicPowerClosure.md)

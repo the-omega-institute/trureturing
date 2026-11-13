@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3444c1e1948c15a75c51637598d0e6b580122f89111a2431bf9d48580e1c0a57
+  normalized_sha256: sha256:3444c1e1948c15a75c51637598d0e6b580122f89111a2431bf9d48580e1c0a57
+cas_ref: sha256:3444c1e1948c15a75c51637598d0e6b580122f89111a2431bf9d48580e1c0a57
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/AdaptiveActualRiseCounts.actual_rise_count_before_stop
+    target_statement_id: sha256:82e9cd3be01a247c63b1c7b7768ee63c93c8dda2f5204337423ecf76e011b816
+receipts:
+  unresolved_subitems: []

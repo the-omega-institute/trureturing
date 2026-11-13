@@ -1,0 +1,14 @@
+**约定 132.5（与指定坏见证的局部纯极限问题对应）。** 对[131.1][Q132SR]任意指定的坏对径 $q,\bar q$ 及 $y=(3q+\bar q)/4$，本章未断言 $\mathsf{LP}_{p,y}$。若 $I(F)=\{p\}$ 且有反向的原纯列，定理132.4给同一原返回关系上的精确义务：排除实际高维返回球，并排除固定有限族在全部正锥延拓中的源误差下界。所有原球维数都是正整数且不超过 $\dim\ker u$，故最大维数存在；只有当指定 $F$ 本身达到该值时，(Q132.10)的维数上升分支才被去掉，源误差下界仍未由EB消除。这里没有把任意指定 $F$ 换成最大维数球。重复球分支亦未由本章结算。不得将这些缺项作为已经支付的前提。
+
+沿此有限测试路线，一个足够的共同选择目标是：从假想 $r_n\to y$ 选同一列 $t_n\in P\cap D_{r_n}$，同时有 $\dim\operatorname{aff}D_{t_n}\le k$ 及 $\max_iR_F(t_n,h_i)\to0$。定理132.4排除这组共同条件；从EB产生它们尚未证明。每个测试分别在不同返回标签上可修复，不供应这个同标签目标；此目标也未被声明为LP的必要条件或等价表述。
+
+命题132.2在定理132.4的活推导中支付的是共同原单位：若所需正提升精确零于同一个移动标签，且在固定整个 $F$ 上有给定的有界读数，那么无须再另求一项渐近单位预算。全锥正提升的存在性仍未证明。仅有逐点小读数、无正性延拓、不同来源的局部最大值或抽象球图，均不满足这一前件。本章没有证明原域局部混合映射开放，也没有给完整EB反模型。
+
+本章数学归属为 `repo-derived`：原面分类、单标签传播、正零泛函最大值及纯标签上关联均按下面的原声明复用；新增组合是移动标签的统一单位控制，以及在同一返回球上、预先固定有限族、以整个固定源球半范数衡量且允许无界正泛函的统一障碍。没有全球原创或历史优先权断言。固定三球加全局Inj的[fixed_zero_distance_obstruction][Q132FZ]保留其原假设与结论；它的整个 $K$ 效应距离结论未被当作本章较弱原域、较强正锥源距离结论的前置。
+
+[Q132SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "131.1—131.3：全部原态、效应、变维EB与指定坏见证；131.2的闭包等价保持原样。"
+[Q132IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "116.2：重复块与单标签二分；118.3的(IX118.4)：不需Inj的纯标签上关联。"
+[Q132SN]: ../../../D5/S3/Quantum/Foundation/SingleLabelNormalBody.lean "single_label_neighbor；positive_annihilator_maximum；既有固定标签 normal_body_bound 不包含移动标签的(Q132.4)。"
+[Q132BF]: ../../../D5/S3/Quantum/Foundation/ExclusionBallFaces.lean "exclusion_ball_faces：仅EB的全部原真面分类；不同完整球的交点性质亦见 SingleLabelNormalBody.equal_of_two_points。"
+[Q132FZ]: ../../../D5/S3/Quantum/Foundation/FixedZeroObstruction.lean "fixed_zero_distance_bound 只比较整个K上的完整效应误差；fixed_tests_of_proper_limit 与 fixed_zero_distance_obstruction 的Inj、固定维数前件不用于本章。"
+
