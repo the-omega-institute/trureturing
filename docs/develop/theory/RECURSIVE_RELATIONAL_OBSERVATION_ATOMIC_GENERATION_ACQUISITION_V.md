@@ -1352,3 +1352,703 @@ a nonquiescent progress contract. No such reduction is assumed in the
 positive result. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Actual boundary identities and paid resolution
+
+**Definition 13.1 (two source-derived boundary representations).** Keep
+exactly the free ordered grammar (V.1), both entrances of Definitions
+1.2–1.3, the actual preparations, source references, native fields and
+ancestral tapes. All descriptors below carry that same source binding.
+For the finite entrance retain its real original root $r$ and use
+
+$$
+B_{\mathrm{fin}}::=\mathsf{end}_L(r)\mid\mathsf{end}_R(r)
+                       \mid\mathsf{mid}(v).
+\tag{V.12}
+$$
+
+Here $v$ is an actual logical binary vertex, including vertices already
+binary before the epoch. For the bilateral entrance use
+
+$$
+B_{\mathrm{bil}}::=\mathsf{gap}(h)\mid\mathsf{mid}(v),
+\tag{V.13}
+$$
+
+where $h$ is the actual source-owned header on the right of the seed
+boundary. Its supplied left-boundary field names that boundary; the
+constructor stores $h$, not a presumed inverse pointer out of the boundary.
+A midpoint in (V.13) lies inside one seed component. There are no bilateral
+endpoints. These constructors are typed acquired values, not casts from
+integers or permissions to construct an arbitrary source reference.
+
+For an adjacent pair of current finite leaves define its cut descriptor
+$\partial(c)=\mathsf{mid}(v)$ using their actual least common logical
+ancestor $v$. Define the two exterior descriptors by (V.12). In the
+bilateral case, a cut inside a component has its midpoint descriptor;
+the boundary before the descendants of the root bound by $h$ has descriptor
+$\mathsf{gap}(h)$. In particular a finite inter-seed cut is a midpoint of
+an actual pre-epoch branch. It is never given a second seed constructor.
+
+A finite epoch header retains its authentic seed-root reference, read
+epoch tag and original path. Whenever its left/right boundary fields are
+needed in the alternative installation, those fields contain the acquired
+descriptors of its seed subtree's outer boundaries. They do not retain
+references to auxiliary cut objects. The finite ordered header list and
+its paid traversal backing remain allocated. In the bilateral entrance
+all supplied headers, initial boundaries and initial incidences remain
+source-owned material. No descriptor changes their owner or frees them.
+
+**Lemma 13.2 (canonical identity through all native edits).** At every
+returned state, (V.12) represents each finite current frontier cut exactly
+once. Formula (V.13) does the same for the bilateral frontier; every finite
+execution uses finitely many of its descriptors. Descriptor equality is
+cut equality, using constructor tests and paid equality of their actual
+reference fields. Every old descriptor survives $P$ and $S$. A split at
+$z$ adds exactly the new descriptor $\mathsf{mid}(z)$.
+
+Proof. In a finite ordered binary tree an interior cut has a leaf just
+before it and a leaf just after it. Their least common ancestor $v$ is
+unique, the former leaf is last in $v$'s left subtree and the latter is
+first in its right subtree. Conversely each logical binary vertex gives
+exactly this cut. Recursing on the left and right subtrees proves both
+existence and uniqueness, without identifying different brackets. Thus
+all pre-epoch and post-epoch binary vertices, together with the exterior
+cuts, give the finite bijection. In particular pre-epoch branches have
+not disappeared when their leaves are designated epoch seeds.
+
+Bilaterally each component is finite after a finite native history.
+The same argument applies internally. Between consecutive components
+there is exactly the supplied seed boundary. Each such boundary has one
+right header, and distinct right headers have distinct left boundaries
+by (V.4). The two constructors therefore have disjoint meanings and
+are injective. This is a mathematical correspondence, not an inverse
+boundary-to-header access operation.
+
+A promotion leaves every descendant interval and logical root unchanged.
+A split replaces one current leaf at $z$ by its two actual ordered
+children. It preserves every old exterior or ancestor boundary and adds
+only their shared new cut. The old unary marker becomes a logical left
+child exactly when AA's real split template makes its parent binary;
+it was not previously a midpoint. Actual source vertices are retained
+and never reallocated. Induction proves persistence and the assertion
+about the new descriptor. $\square$
+
+**Definition 13.3 (paid resolver and successor procedures).** The permitted
+primitives are exactly the actual arity, parent/left/right and header-field
+reads, null tests and reference equality of AA Assumption 20.1 and §§5–6.
+Equality is used on acquired references with their actual bindings. There
+is no reference order test, address arithmetic on references, adjacent-header
+oracle or inverse boundary lookup. Every read, test, copied reference,
+backed path, counter and pending field is paid.
+
+Write $\operatorname{first}(u)$ and $\operatorname{last}(u)$ for procedures
+that start at an acquired logical subtree root, read its actual arity,
+and descend its actual left or right logical child while it is binary.
+A terminal or unary root is the resulting logical leaf; a unary marker
+is not descended into. Define the neighbor resolvers by
+
+| Descriptor | $\mathsf{Right}$ | $\mathsf{Left}$ |
+| --- | --- | --- |
+| $\mathsf{mid}(v)$ | $\operatorname{first}(v.\mathrm{right})$ | $\operatorname{last}(v.\mathrm{left})$ |
+| $\mathsf{end}_L(r)$ | $\operatorname{first}(r)$ | Endpoint |
+| $\mathsf{end}_R(r)$ | Endpoint | $\operatorname{last}(r)$ |
+| $\mathsf{gap}(h)$ | read $h$'s root, then its first leaf | read $h.\mathrm{previous}$, read that header's root, then its last leaf |
+
+The table denotes actual separate reads. In particular the last entry
+does not follow a pointer from a boundary to its left header. The previous
+and next header directions used here are precisely those supplied in
+Definition 1.3. A finite header successor is instead obtained by the retained
+paid finite enumeration/list; no bilateral link is inferred for it.
+
+For any acquired logical vertex $u$, define $\mathsf{After}(u)$ as follows.
+Starting at $u$, read its actual parent and that parent's logical children.
+At the first parent where the ascended child is the left child, return
+that parent's midpoint. Otherwise continue up through right-child edges.
+In the finite entrance stop only at the original actual root $r$ and
+return $\mathsf{end}_R(r)$ if no such parent occurred. There is no stop at
+a finite epoch seed. For $\mathsf{Before}(u)$ interchange left and right
+and use $\mathsf{end}_L(r)$ at the root. These procedures compute the
+outer boundaries of the entire current subtree at $u$, even if it is
+now a branch. For a current leaf they are $\mathsf{NextCut}$ and
+$\mathsf{PrevCut}$.
+
+In the bilateral entrance the ascent stops at the actual component root
+$r_h$. At that point $\mathsf{Before}$ returns $\mathsf{gap}(h)$;
+$\mathsf{After}$ reads $h.\mathrm{next}$ and returns
+$\mathsf{gap}(h.\mathrm{next})$. The component binding is obtained from
+the already acquired header when available. Otherwise ascend to the actual
+native root and search for its header by actual root-reference equality.
+An existing finite list of authentic acquired bindings may be scanned;
+without such a list, start two backed header cursors at the supplied
+anchor, alternately advance one by next and the other by previous, and
+read/compare each visited header's root field. Every actual component lies
+at a finite seed distance from that anchor, so this search reaches its
+unique real header. It uses neither a boundary-to-header inverse nor an
+unprovided enrollment index. Header links and root bindings persist through
+native edits. Every visited field, scratch cursor and retained binding is
+charged, including visits outside the requested observation interval.
+The epoch bit remains protected by the original enrollment-before-edit
+rule; header search alone does not supply an unread epoch tag.
+
+For the finite seed binding of a descendant, ascend and compare visited
+vertices against the retained epoch-seed root references until the unique
+epoch ancestor is found. This is a finite scan with actual reference
+tests; it does not turn a path, rank or label into a header. Acquisition of
+a native operand path continues to use Definition 6.2's actual parent/child
+walk and backed reversal to its own original root.
+
+**Proposition 13.4 (total existing-neighbor resolution).** For every acquired
+valid descriptor at a returned state, the requested existing neighbor in
+the table is resolved to that very current logical leaf. Endpoint occurs
+exactly on a missing finite side. The boundary procedures return precisely
+the actual subtree boundaries. All these procedures terminate under the
+same finite source/read/progress premises, on both entrances.
+
+Proof. Each descent shortens the remaining finite logical subtree, and
+the arity guard excludes physical unary markers. Each ascent shortens
+the actual remaining parent chain. For a finite tree the chain includes
+pre-epoch ancestors and ends at $r$; for a bilateral component it ends at
+its authentic root, where the supplied adjacent header gives the next
+component. A finite acquired-header scan terminates, and the two-sided
+header search reaches the actual component after finitely many supplied
+next/previous steps. At a left
+child the parent's midpoint is exactly the outer right boundary of that
+child's subtree; an ascent through a right child preserves its outer
+right boundary. This proves $\mathsf{After}$, and the reversed argument
+proves $\mathsf{Before}$. The first/last procedures and Lemma 13.2 then
+identify every table entry with Theorem 5.4's actual incidence neighbor.
+A finite root has at least one leaf, so both inward endpoint entries
+always succeed. No endpoint is filled on its outward side. $\square$
+
+**Proposition 13.5 (finite seed and endpoint instances).** Prepare
+$\langle\beta,\alpha\rangle$ by the actual $P_\varepsilon S_\varepsilon$
+and choose its leaves as epoch seeds. After $S_L$, let $r$ be the original
+root and $z$ its left child. The saved inter-seed cut is
+$\mathsf{mid}(r)$. WalkLeft reaches $\mathsf{mid}(z)$, and WalkRight
+returns to that same saved $\mathsf{mid}(r)$ in one move. A zero-prehistory
+alpha source has an inward leaf on both exterior cuts. It admits the
+one-site current acquisition and both inverse endpoint-to-endpoint walks.
+
+Proof. After the split the tree is
+$\langle\langle\beta,\alpha\rangle,\alpha\rangle$ with these actual
+vertex bindings. The right new child of $z$ is immediately left of
+$\mathsf{mid}(r)$. From it the successor ascent goes through a right
+child of $z$, then a left child of $r$, returning $\mathsf{mid}(r)$.
+Thus saved-target equality and physical distance agree. The same ascent
+rule applies without alteration to Corollary 7.3's native $T_3$.
+
+For the single original alpha root, $\operatorname{first}(r)=
+\operatorname{last}(r)=r$. A right walk from $\mathsf{end}_L(r)$ crosses
+that leaf to $\mathsf{end}_R(r)$; a left walk reverses it. ReadCurrent at
+the left exterior cut reads alpha. A marker query still needs two leaves:
+it returns Endpoint with no comparison, latch change or movement when
+that pair is absent. In particular WalkLeft at the right exterior cut
+can succeed although a left marker query there has no right-hand test
+operand. $\square$
+
+## 14. Alternative installations and full typed correspondence
+
+**Definition 14.1 (retained aliases, records and installation choice).**
+Fix one actual source with its real preparation and choose the auxiliary
+installation at its observation setup. The incidence installation is
+§§5–10. The derived installation uses Definition 13.1's boundary values
+in its epoch headers, cursor slots, saved targets and newly written
+records. It allocates no independent mutable frontier cells, cut-incidence
+objects or logical-node association entries. It retains the same native
+source/tapes, enrollment facts and epoch bits, version chain, parser,
+request/output backing, latch, current grants, original root and source
+bindings. This is a comparison of alternative installations, not a procedure
+which projects an already allocated cache out of physical storage.
+
+A boundary alias has the cut sort and contains its canonical descriptor.
+A frontier-cell alias has the distinct cell sort and contains the actual
+logical source-root reference $x$ of that cell. Source-vertex aliases retain
+their actual source references. Null, header, version and record aliases
+retain their own sorts and bindings. A cell alias at $x$ is distinct from
+a source-vertex alias at $x$ and from the cut alias $\mathsf{mid}(x)$.
+Constructor/sort tests and equality of acquired fields implement alias
+equality; they do not require testing the spelling or ordering of pointers.
+Alias tuples occupy actual backed fields wherever retained. Their tags,
+references, widths, copies and tests are separate charged material.
+
+A supplied boundary reference $\kappa$ is not silently cast to a header.
+Given an acquired $h$, comparison with its $\mathsf{gap}(h)$ reads
+$h$'s supplied boundary field and tests equality with that very $\kappa$.
+If a previously retained supplied-boundary alias needs a header witness,
+compare the boundary fields of finitely retained authentic header
+bindings, or use the same two-sided supplied-header search from the anchor
+until that actual boundary reference is found. The supplying header has
+finite distance and is unique. At the initial anchor it is already part
+of the entrance binding. A supplied initial-cell alias is likewise related to its
+logical-root alias by reading that supplied cell's actual operand binding.
+These accesses and any retained witness fields are charged. The typed
+correspondence therefore preserves equality with genuinely supplied old
+aliases as well as equality between newly written descriptors.
+
+To read a live cell's current operand, use its actual logical root after
+the arity guard. To obtain that cell's boundary aliases, use
+$\mathsf{Before}(x),\mathsf{After}(x)$. Its seed/header binding is found
+by Definition 13.3's paid ancestry/header search; its original native root
+is obtained by the same real parent chain. Retirement is the actual branch
+test at $x$. Thus the cell selectors needed by the stated service are
+procedures rather than independently maintained fields. A current cut's
+left/right incidence aliases are obtained by the neighbor table, with null
+on exactly a missing side. These selectors borrow only the already granted
+source/header read rights in their lawful phase.
+
+Every sample retains its acquired source, version, direction, tested tags,
+cut/cell/operand aliases, successor, outcome and record links. Its old tag
+and version are stored values, never recomputed from today's source.
+Copies of an old alias compare equal to later copies of that same alias.
+Records keep their immutable acquired contents and backing; output words,
+old record identity comparisons, grants and refusal/return records remain
+part of the task. Representation equality is not a claim of identical
+address bytes for separately allocated private auxiliary material. The
+original interface supplies reference equality and field operations, not
+a pointer-address serialization or ordering oracle.
+
+**Lemma 14.2 (cell identity and retirement without a second frontier).**
+On both entrances the allocated frontier cells of the incidence installation
+are in bijection with their issued cell aliases in the derived installation.
+Their equality, seed/root/operand binding, current-or-retired status and
+outer boundary identities are preserved after any finite lawful native
+history. All alias sorts and their cross-sort inequalities are preserved.
+
+Proof. An initial cell belongs to one actual epoch logical leaf. At a split,
+the old cell's logical root becomes a branch; each new cell belongs to one
+of the two actual new logical child roots. Neither new logical root was
+previously the logical root of a cell. In particular the reused left unary
+marker was physical material, not a logical leaf and not a cell root.
+Source vertices are retained, roots never merge, and a logical branch never
+becomes a logical leaf again. Consequently each initial or subsequently
+allocated cell has a different logical-root reference, even when retired.
+Exactly its own split retires it, and branch arity thereafter detects that
+fact. Promotions keep the same cell root.
+
+The cell's two cuts bound its descendant subtree before retirement and
+remain that subtree's outer boundaries afterwards, by Theorem 5.4.
+Proposition 13.4 computes exactly those bounds, including for a retired
+cell now having a larger descendant tree. The epoch ancestor and native
+root are unique actual ancestors, so the paid searches give the retained
+bindings. A current cell at $x$ and a later retired cell at $x$ have one
+alias, while a later child cell has a different alias. Disjoint typed
+constructors prevent its underlying source reference from identifying it
+with a different sort of object. Cut equality follows from Lemma 13.2;
+header, version and immutable-record equality use their retained bindings.
+This proves the full equality pattern, rather than discarding private
+cell identities as unobservable. $\square$
+
+**Theorem 14.3 (same-source service on arbitrary finite serialized schedules).**
+Choose either installation of Definition 14.1 on either original entrance.
+For the same original frames, granted observation operations and lawful
+native edits, the derived installation preserves every original/current
+reply word, actual operand and bracket, typed alias/equality result, old
+record value, epoch provenance, version, cursor meaning and semantic native
+successor of the incidence installation. This includes all seven requests,
+actual FetchGrowth and Next, marker/latch/Endpoint/Resume, ReadCurrent,
+ReadEpoch, Walk, Seek and saved-return transactions. No new source port,
+preparation, reset or edited-source promise is required.
+
+Proof. Couple the two mathematical executions by their same actual native
+source references, preparations and original ancestral tapes, with aliases
+related by Lemmas 13.2 and 14.2. This coupling is not an operation making
+a second source or replaying an edit on the physical source. Initialization
+in the finite entrance traverses the actual pre-epoch tree, enrolls the
+same leaves and tags, and acquires header boundaries by
+$\mathsf{Before}/\mathsf{After}$. It uses original branch references for
+inter-seed cuts. Bilaterally the authentic anchor header supplies the gap
+binding; every further header is acquired by its supplied direction.
+Both initializations therefore have the same anchor and source.
+
+For a right marker comparison, resolve the right leaf $x$, its next cut,
+and the leaf right of that cut; for a left comparison, resolve the right
+leaf $x$ and the leaf left of the starting cut. Proposition 13.4 gives
+exactly the ordered operands of Definition 6.1. If either required operand
+is missing, Endpoint preserves cursor, counter and latch with no invented
+comparison. Otherwise test those actual tags, record the same $00$ outcome
+and version, move to the specified successor cut and set the latch to the
+same bit. Raw queries while latched reject without a sample or movement.
+A successful paid Resume Ack clears only the latch and appends its actual
+record; an active Resume refuses unchanged. Neither growth, Walk, Seek,
+nor a refusal implicitly clears the latch.
+
+ReadCurrent resolves precisely its right operand and performs the same
+native arity/Tag and path acquisition; it returns Endpoint only if that
+operand is absent. ReadEpoch reads the same protected bit, or enrolls the
+still-unchanged seed before its first edit/read. WalkRight resolves its
+right leaf and uses $\mathsf{After}$; WalkLeft resolves its left leaf and
+uses $\mathsf{Before}$. Lemma 13.2 makes each resulting cut alias exactly
+the original neighboring cut. Endpoint is directional as in the table.
+Seed access uses actual finite header-list traversal or actual bilateral
+header fields. Aliases appearing in any old or new sample satisfy
+Lemma 14.2, and stored old tag/version fields are not overwritten.
+
+The original seven-request driver uses the same parser, source, logical
+arity guards, birth typing and tapes. HasPromotion still uses actual
+alpha/root/right birth versus left beta birth; enrollment cannot erase
+pre-epoch promotion. FetchGrowth therefore decodes exactly the old literal
+kind/address pair, including $w_0$ and each supplied root's actual
+preparation. An in-range Next retains that actual pair and continuation,
+navigates its historical address on the current source, descends genuine
+logical left children to the current leaf and executes its enabled native
+operation. The new event is appended to the original ancestral tapes.
+Its single outer reply contains the same old/new pairs; no second external
+Recall or Ack is inserted. BadFrame, OutOfRange, absent, branch and
+wrong-type refusals retain their exact original meanings and successors.
+
+Before any enabled edit, reserve its required native, tape, version and
+record material and workspace. Enrollment, when needed, precedes mutation.
+The real $P/S$ template and ancestor-tape updates are unchanged. Persistence
+in Lemma 13.2 and the cell-root argument in Lemma 14.2 replace incidence
+cache maintenance; they require no auxiliary frontier update. Publish the
+same new version only after the native and tape writes finish. No query,
+second ingress or other writer is admitted during this busy interval.
+Edits at, before, after or across either cursor, or in another seed component,
+therefore preserve the same cut identities and actual source successor.
+
+All derived accesses expand into finite primitive reads/tests and backed
+loops by Proposition 13.4. BuildAnswer, Print, End, local ACK, root Return
+and clearing complete each transaction. Source rights remain current;
+missing authority or wrong phase disables a primitive, a denied grant is
+not acquisition, and pending ingress/output retains its actual prefix and
+subphase. No record is attributed to an unexecuted read or uncompleted
+transaction. Induction on acquired input bits and completed serialized
+transactions proves the assertion, including arbitrary finite adaptive
+interleavings and incomplete frames. Quiescence is needed for a common-version
+multi-transaction acquisition and its stopping claim, not for making a
+single allowed transition meaningful. $\square$
+
+**Theorem 14.4 (the same finite acquisitions and paid return).** Under
+Definition 8.1's quiescence, finite backing, granted progress and serialization,
+the derived installation has the original finite current/epoch acquisition
+outputs on the entire domains of Theorems 8.2–8.3. For $h\ge1$ existing
+current sites it uses $h$ successful ReadCurrent calls and $h-1$ intervening
+one-cell walks, in addition to initial and optional return Seeks. These
+count acquired site observations; the resolver's additional arity/Tag
+decodes are all charged in Proposition 15.4. For $h=0$ there are no site
+observations or inter-site walks; any requested initial Seek
+and saved return still have their actual paid effects. For $H\ge1$ existing
+original seeds the inter-seed current walks remain exactly (V.10).
+A quiescent Seek to a retained same-source cut at current distance $D$
+uses at most $2D(D+1)$ successful one-cell moves, besides tests, shortened
+endpoint attempts, records and returns.
+
+Proof. Consecutive walks are inverse moves along the actual current cut
+order by Proposition 13.4, including both inward finite endpoint cases.
+Canonical equality in Lemma 13.2 recognizes the saved target, regardless
+of whether it is a pre-epoch midpoint, a post-epoch midpoint, an exterior
+cut or a bilateral gap. The existing expanding-excursion Seek of
+Definition 6.3 therefore reaches the target by stage $D$. Summing its
+at most $4n$ moves per stage gives the stated bound; at $D=0$ the initial
+equality test suffices. Each resolver and finite counter scan terminates.
+An endpoint merely shortens an excursion and its actual inverse return.
+
+Theorem 14.3 supplies the same acquired current operands and versions,
+so the current read/walk counts and exact $\mathcal C_h$ follow as in
+Theorem 8.2. The empty request contributes no site observations. If a
+requested site or seed is outside finite endpoints, retain the same actual
+prefix and Endpoint, rather than manufacture completion. In particular
+$L=1$, zero prehistory and zero post-epoch edits are included.
+
+For epoch acquisition the next header is acquired from the same actual
+list/link. Its left boundary is acquired from its finite header descriptor
+or is $\mathsf{gap}(h)$ bilaterally. Crossing the predecessor seed's current
+descendant frontier reaches exactly it. Thus (V.10) and the authentic
+original tag list, $\mathcal R_H(e)$ on the selected bilateral source, and
+$\mathcal R_H(0)$ within the actual finite selected prefix remain unchanged.
+The original ordered $\rho$ brackets are constructed in paid output backing.
+Actual current-tree acquisition and optional native $\rho$ execution use
+the same subtree/operand traversal and prefix-free old-leaf argument of
+Theorem 8.3. A requested return is another real Seek to its saved alias,
+never inversion of a source edit. No acquisition clears the marker latch.
+$\square$
+
+## 15. Ownership-specific reductions and their charges
+
+**Definition 15.1 (cache and retained-representation coordinates).** Compare
+the two installations from their respective setup on the same entrance
+and the same finite native/observation schedule. Let
+
+$$
+K=(C,F_{\mathrm{cur}},F_{\mathrm{ret}},I,N)
+$$
+
+count only observer-allocated independent frontier cache: cut objects,
+current cell objects, retired cell objects, cut-to-cell incidence field
+slots, and logical-node association entries. $I$ counts two incidence
+slots per observer cut, including null slots. Cell boundary/retirement
+fields belong to their cell objects and are charged separately by width;
+they are not counted again in $I$. An alias stored in a header, cursor
+or record is retained representation material, not an independent cut/cell
+object with its own mutable incidence fields.
+
+Retain a separate vector $R$ of all actual descriptor/alias tags and
+reference fields in headers, parked/saved slots, immutable records and
+pending/scratch backing, together with every allocation, copy and test.
+Let $M$ count their retained occurrences, including repeats. Their storage
+charge is the sum of actual tag/reference widths over these occurrences;
+$M$ is not a constant independent of the record. Seed/epoch backing,
+source-owned supplied backing, native source/tapes, version objects,
+record headers/links, request/output and work capacity have separate
+coordinates. Eliminating $K$ does not set any of those coordinates to zero
+or assert that $R$ is smaller than its incidence representation.
+
+**Proposition 15.2 (finite ownership counts).** On the finite known-alpha
+entrance with $L\ge1$ epoch leaves and $b$ post-epoch splits, the two
+installations have
+
+$$
+\begin{aligned}
+K_{\mathrm{inc,fin}}&=(L+1+b,\ L+b,\ b,\ 2(L+1+b),\ 2L-1+2b),\\
+K_{\mathrm{der,fin}}&=(0,0,0,0,0).
+\end{aligned}
+\tag{V.14}
+$$
+
+Thus $C,F_{\mathrm{cur}},I,N$ strictly decrease for every finite entrance;
+$F_{\mathrm{ret}}$ strictly decreases exactly when $b>0$. The finite epoch
+headers' cut fields must be replaced by acquired descriptors: retaining
+those fields as references to the original auxiliary cuts would retain
+the cuts and would not attain (V.14).
+
+Proof. The incidence counts are (V.9); each allocated cut has the two
+specified incidence slots. The derived installation performs the same paid
+initial tree traversal and epoch enrollment, but constructs only its $L$
+seed-header records, epoch bits, paths, boundary descriptor fields and
+required slots/workspace. It allocates no initial frontier cache. A finite
+header's boundary is an acquired actual branch reference or an exterior
+constructor rooted at the actual source, so it does not depend on any
+of the omitted auxiliary cut objects. Its descriptor slots and reference
+widths remain charged in $R$. At a split the derived installation obtains
+the real children through the native template and allocates no cache.
+Lemmas 13.2 and 14.2 supply every later requested alias without a retained
+node/cut/cell table. Hence all five independent-cache coordinates are zero.
+Positivity in the displayed finite incidence vector proves precisely the
+stated strict coordinates. $\square$
+
+**Proposition 15.3 (bilateral ownership counts and zero cases).** For a finite
+bilateral execution let $b$ be its number of successful post-epoch splits,
+$t$ the number of seed components in which at least one split occurred,
+and $n$ the actual number of observer-allocated association entries in the
+chosen incidence installation. All split components lie in the finite
+touched header footprint; $0\le t\le b$. Using the source-owned initial
+cells/cuts supplied by Definition 5.1, and allocating the two new cells
+and one new cut at every split as in Definition 5.3, gives
+
+$$
+\begin{aligned}
+K_{\mathrm{inc,bil}}&=(b,\ b+t,\ b-t,\ 2b,\ n),\\
+K_{\mathrm{der,bil}}&=(0,0,0,0,0).
+\end{aligned}
+\tag{V.15}
+$$
+
+Here $n$ is counted from actual allocated entries, not from the size of
+an infinite family or from the single-tree formula $2L-1+2b$. In a policy
+that allocates an entry for each accessed initial seed root and both actual
+children of every split, $n=m_0+2b$, where $m_0$ counts those initial-root
+entries. A lazier permitted policy is compared using its actual $n$.
+
+The coordinates $C,F_{\mathrm{cur}},I$ strictly decrease exactly when
+$b>0$; $F_{\mathrm{ret}}$ strictly decreases exactly when $b>t$; $N$
+strictly decreases exactly when $n>0$. With $b=n=0$ all five coordinates
+are equal, even with an enrolled seed. All supplied source-owned material
+remains allocated in both installations.
+
+Proof. No initial supplied cut or cell is observer-allocated. Each split
+allocates one observer cut and two observer cells. Of the $b$ retired
+cells, exactly $t$ are supplied initial cells, namely the first split cell
+in each split component. The remaining $b-t$ are observer cells. Hence
+of $2b$ allocated observer cells, $b-t$ are retired and $b+t$ are current.
+There are $2b$ incidence slots on observer cuts. Association entries have
+their actual separate count $n$; enrollment alone does not imply two new
+observer cuts. The derived construction never allocates these cache objects.
+The displayed differences prove each strictness condition.
+
+For an explicit source-backing footprint, count the actual accessed/retained
+header sets $E_{\mathrm{inc}},E_{\mathrm{der}}$ separately; derived
+resolution can require more header reads and retained bindings. Their finite
+union contains all edited components and all adjacent headers actually
+read. Count its distinct supplied headers, seed roots, initial cells,
+boundaries and incidence slots as common supplied backing, without claiming
+that both installations acquired or retained the whole union.
+For $m$ consecutive components their two-sided initial boundary set has
+$m+1$ distinct boundaries; for a nonconsecutive footprint use its actual
+union. These supplied objects and their actual preparation/source rights
+are retained, with no negative allocation credited to the derived observer.
+The $t$ retired supplied cells remain material. Source-owned initial
+incidences are not deleted or counted as observer cache. In the derived
+installation they are initial backing, not a newly promised current-incidence
+port; current neighbors are actually obtained by Definition 13.3. The
+named current consumers use those paid resolutions and retain their
+source/header rights. If a separate supplied-backing contract additionally
+requires maintenance of its raw incidence fields, that backing and its
+maintenance must also be retained and charged; no saving in that coordinate
+is asserted here. Such a contract is not inferred from supplying initial
+incidences in Definition 1.3.
+
+In particular one enrolled unchanged component can have $b=n=0$, with its
+boundaries already supplied. Equation (V.15) then gives equality, not an
+invented strict cut saving. Conversely the first real split already gives
+$b=t=1$ and positive observer cut/current-cell/incidence allocations in the
+incidence installation, independently of any optional node-entry policy.
+$\square$
+
+**Proposition 15.4 (initialization, access, maintenance and record bill).**
+The structural differences (V.14)–(V.15) preserve the same original task
+and source domain with the following paid residual material and work.
+
+| Coordinate | Derived installation's retained material or actual work |
+| --- | --- |
+| Source and original service | Same actual root(s), prehistory/preparations, source vertices, native template writes, ancestral tapes, original frames/replies and Next effects |
+| Epoch and header access | Same actual finite enrollment/tag/path facts or bilateral source bindings and enrolled epoch bits; paid list/header scans, previous/next reads and root matching |
+| Boundary/cell representation | Each occurrence of a typed descriptor/alias in headers, cursors, saved slots, records and pending state, including all reference widths and equality tests |
+| Source resolution | Every arity and parent/child/header read, side comparison, null test, finite seed search and authentic operand-path acquisition |
+| Work backing | Actual recursion/ascent frames, side bits, pending operands, counters, path reversals and comparison references; peak live space and all retained cleared capacity |
+| Version and records | Initial token, one token per successful event, predecessor/source/operand/kind fields, current-token reads/publication, actual record allocation/fields/links/appends |
+| Transactions and output | Actual rights/grants/denials, pending phases, reservation, output construction/Print/End, local ACK, root Return and clearing |
+
+For example, for a finite run of resolver/alias operations indexed by $j$,
+let $u_j,w_j,q_j,A_j$ be its actual primitive field-read, field-write,
+test and work-allocation counts. The resolver bill is the vector
+
+$$
+\left(\sum_j u_j,\ \sum_j w_j,\ \sum_j q_j,\ \sum_j A_j\right),
+\tag{V.16}
+$$
+
+besides its retained-width/capacity charges and unchanged native/record/output
+bill. Every header scan and inverse-direction derivation is included.
+These are the derived installation's counts, not an unsupported difference
+from the incidence installation's own paid access bill. If a Seek's
+successful one-cell moves each cost at most $(u_*,w_*,q_*,A_*)$ in this
+coordinate convention, their contribution is at most $2D(D+1)$ times
+that vector. Initial target equality, endpoint attempts, enrollment,
+version/record work and return transactions are additional counted work.
+
+Finite setup traverses the actual pre-epoch tree, reads its $L$ tags,
+retains the same authentic epoch roots/paths and acquires its header-boundary
+descriptors by actual parent/child reads. This may use more work than simply
+retaining cuts from a traversal. It requires finite scratch/reservation,
+not free access to all ancestors or a rank-to-reference map. Bilateral
+setup reads the supplied anchor/header fields; later enrollment and
+newly touched header retention are paid before their use or mutation.
+An unenrolled seed is unchanged, as in Definition 5.1. No complete bilateral
+table or indexed version-tree access is installed.
+
+At a promotion, Definition 5.3 already preserves the old frontier cell
+and cuts. There is no claimed strictly positive frontier-maintenance
+saving for a $P$-only step. Both installations still pay enrollment when
+needed, native writes, ancestor tape appends, tokens, records and returns.
+At each split the incidence installation allocates one cut and two cells,
+retires its old cell and writes the four cut incidences described in
+Definition 5.3, together with its chosen node-entry maintenance. The derived
+installation omits these independent-cache allocations and writes. This
+is a real maintenance reduction when those writes belong to the declared
+cache; supplied-backing work required by a separate contract is kept
+separate. Arbitrary edits remain available because the reduced cache has
+no new guard. There is no maintenance or observation outside its lawful
+serialized phase.
+
+Proof. Propositions 13.4 and 14.2 expand each claimed access into the stated
+actual reads, tests and finite loops. The source and header rights are
+already those used by §§5–8; an alias grants no new right. Each expansion
+can store its finite path and counters in the backed lists of Proposition
+10.3, with their actual allocations/copies/clearing. No bulk or inverse
+access is hidden in (V.16). Lemma 13.2 requires no persistent frontier
+update, so the indicated cache writes really are omitted at setup and
+splits; it does not omit any native or tape write. Source growth and version
+counts remain respectively AA's $1+P+2S$ for a whole original finite source
+and $1+a+b$ for post-epoch tokens. Record counts and logical acquired facts
+are the same, but their alias fields are charged according to their actual
+representation, including repetition across old records. These observations
+prove the simultaneous bill and the move contribution bound. $\square$
+
+**Proposition 15.5 (already allocated material and optional migration).**
+No physical storage reduction for an already installed incidence observer
+follows by applying the alias correspondence. In particular no immutable
+record, externally retained reference, supplied object or cleared buffer
+is deallocated by (V.14) or (V.15).
+
+Proof. Those equations count allocations in the two alternative installations
+from setup. In an existing incidence installation every old cut/cell/entry
+and its retained fields still occupies material. At a returned serialized
+cut, a possible conversion reads each retained live slot and record
+binding, acquires the boundary/cell descriptor through the actual source
+and authenticated header associations, and writes additional representation
+backing. Searching those finite old associations, or finding supplied
+boundaries by the actual two-sided header search, is paid; a
+boundary-to-header inverse is not granted. Existing immutable records are kept, and any
+translation for their old references requires additional retained bindings.
+All old cache, old records, newly allocated translation material, workspace
+and remaining raw-field obligations must still be counted. Without an
+independently supplied reclamation operation and its rights, clearing or
+ceasing to use those objects releases none of their material. Hence
+conversion may permit later derived navigation, but gives no automatic
+retroactive allocation saving. The positive comparison is the directly
+installed alternative of Definition 14.1. $\square$
+
+## 16. Reused suppliers and exact scope of the reduction
+
+**Definition 16.1 (mathematical and source suppliers).** Huet's
+[*The Zipper*](https://doi.org/10.1017/S0956796897002864), Journal of
+Functional Programming 7(5), 549–554 (1997), supplies the classical
+focus/context method for navigating and locally modifying a structured
+tree. That method is reused, not asserted as a new abstract tree theorem.
+Here the retained source itself supplies the actual parent/left/right
+relations; it is not a newly available applicative copy, reset or graft
+operation. The boundary/alias and ownership arguments above concern the
+particular AA native source and its two AAV entrances.
+
+Bille and Gørtz, [*Random Access in Persistent Strings*](https://doi.org/10.4230/LIPIcs.ISAAC.2020.48),
+ISAAC 2020, LIPIcs 181, Article 48, treats access with a given complete
+version tree and indexed edits. Its access assumptions are not source
+acquisition, native operand authentication or a paid source-header inverse.
+No complexity bound from that model is transferred here.
+
+AA §§17–23, especially Assumption 20.1, supply actual retained source
+fields, reference equality, birth typing, unary/logical distinctions,
+ancestral tapes, original frames and the real native Next driver.
+AAII §§95–96 supply paid traversal/encoding facts on their own installation;
+their raw-ordinal journal does not replace the ancestral tapes here.
+AAIV §§13–26 supply history/recorder/supplement distinctions, and §§40–51
+supply the immutable marker/Resume/return and original consumer results.
+AAV §§1–12 already supply the positive native-edit bridge, real epoch/Tag
+access, versioning, source correspondence and finite acquired consumers.
+Their conditional positive result is retained in full. Geometry, storage
+atlases and existing mathematical suppliers keep their stated domains.
+
+**Proposition 16.2 (attained structural reduction and remaining boundaries).**
+For the same finite known-alpha and supplied bilateral entrances, the
+source-derived installation preserves the complete stated original/current
+service and actual native continuation. It removes independently maintained
+observer frontier material in exactly the positive coordinates and cases
+of Propositions 15.2–15.3, with the separately paid representation,
+initialization, work and record bill of Proposition 15.4. In particular
+it gives a genuine finite cache reduction and a bilateral post-split cache
+reduction; it asserts equality in every zero coordinate specified there.
+
+This does not prove a smaller total bit volume, total runtime, energy,
+Pareto improvement or global minimum. It does not reduce epoch-label bits,
+replace current Tag/read rights by a marker record, create a bilateral
+source from finite native material, erase old allocated material, or make
+nonquiescent acquisition converge. Recovery of physical elapsed time,
+unrecorded request order and revoked source access is still outside the
+proved conditions. The full objective of a minimal common relational
+structure for space, time, boundary and usable memory remains open.
+
+Proof. Lemma 13.2 gives one persistent identity for every actual cut,
+including finite pre-epoch branch cuts. Proposition 13.4 supplies all
+existing neighbors, including inward endpoints, by actual paid source
+access. Lemma 14.2 preserves typed cell/operand aliases and old retirement
+relations. Theorems 14.3–14.4 give the entire same-consumer correspondence,
+finite quiescent acquisition and actual return without narrowing either
+entrance. Propositions 15.2–15.4 establish the stated allocation and
+maintenance differences while keeping supplied material and representation
+charges separate. Proposition 15.5 precludes retroactive erasure. None
+of these arguments compares the sum of all resource coordinates or
+eliminates their hypotheses; Proposition 9.1 and the distinctions of
+§11 continue to apply. $\square$
+
+## 追加锚（本行以下为增补区）

@@ -623,7 +623,7 @@ shutil.copytree, lean_cache_release_io.extract_members, pathlib.Path.rename = co
         shutil.copy2(ROOT / "tools/scripts/maintenance_log.py", self.root / "tools/scripts/maintenance_log.py")
         for phase in ("part_validation", "reassembly", "archive_validation", "tar_scan", "extraction"):
             with self.subTest(phase=phase):
-                environment = self.deadline_probe(1)
+                environment = self.slow_asset_probe(1)
                 with (self.bin / "sitecustomize.py").open("a") as probe:
                     probe.write('''
 import sys
@@ -639,7 +639,7 @@ class TimedFetchReader:
         if block and getattr(sys.modules.get("__main__"), "CURRENT_PHASE", None) == os.environ["FAKE_FETCH_PHASE"]:
             with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "fetch-reads", "a") as log:
                 log.write(str(len(block)) + "\\n")
-            clock = 2
+            clock += 2
         return block
 def open_path(path, mode="r", *args, **kwargs):
     source = original_open(path, mode, *args, **kwargs)
@@ -665,6 +665,88 @@ pathlib.Path.open = open_path
                 self.assertEqual(phase, rows[-1]["stage"])
                 self.assertEqual("timeout", rows[-1]["error_type"])
                 self.assertTrue(any("phase_duration_seconds" in row for row in rows))
+
+    def slow_asset_probe(self, seconds=5, step=0, failures=0):
+        environment = self.deadline_probe(seconds, step=step)
+        with (self.bin / "sitecustomize.py").open("a") as probe:
+            probe.write('''
+original_transfer_run = subprocess.run
+asset_attempts = 0
+def transfer_run(args, *rest, **kwargs):
+    global clock, asset_attempts
+    if (args[:3] != ["gh", "release", "download"]
+            or not any(value.startswith("lean-build.tgz") for value in args)):
+        return original_transfer_run(args, *rest, **kwargs)
+    asset_attempts += 1
+    if asset_attempts <= int(os.environ["FAKE_ASSET_FAILURES"]):
+        os.environ["FAKE_FAIL_ASSET"] = "1"
+    else:
+        os.environ.pop("FAKE_FAIL_ASSET", None)
+    try:
+        return original_transfer_run(args, *rest, **kwargs)
+    finally:
+        clock += 21601  # Pass the former six-hour asset deadline on every attempt.
+subprocess.run = transfer_run
+''')
+        return {**environment, "FAKE_ASSET_FAILURES": str(failures)}
+
+    def asset_calls(self):
+        return [call for call in self.gh_budgets()
+                if call["args"][:2] == ["release", "download"]
+                and any(value.startswith("lean-build.tgz") for value in call["args"])]
+
+    def test_release_asset_transfer_has_no_total_deadline_in_script_or_make(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        for entry in ("script", "make"):
+            with self.subTest(entry=entry):
+                shutil.rmtree(self.root / ".lake/build")
+                environment = self.slow_asset_probe()
+                # Retired transfer policy cannot silently reintroduce a cutoff.
+                environment["STRATALINT_LEAN_CACHE_RELEASE_TRANSFER_TIMEOUT_SECONDS"] = "1"
+                if entry == "script":
+                    result = self.transport("fetch", **environment)
+                else:
+                    result = subprocess.run([shutil.which("make"), "-C", str(self.root),
+                        "lean-cache-from-github-without-mathlib", "LEAN_CACHE_REPOSITORY=" + str(self.root)],
+                        text=True, capture_output=True,
+                        env=self.transport_environment(GITHUB_ACTIONS="false", **environment))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"unpacked"', result.stdout)
+                self.assertEqual([None], [call["timeout"] for call in self.asset_calls()])
+                self.assertEqual("locally-produced-olean",
+                    (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def retain_snapshots(self, count):
+        # Suppress remote prune only while creating real, individually valid
+        # fixtures. The subsequent fetch uses the actual unmodified inventory.
+        for run in range(501, 501 + count):
+            result = self.transport("publish", str(run), FAKE_LIST_JSON="[]")
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual(count, len(list(self.remote.glob("*/lean-build.tgz"))))
+
+    def test_failed_long_transfer_preserves_metadata_budget_for_next_candidate(self):
+        self.retain_snapshots(2)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.slow_asset_probe(10, step=1, failures=1))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        self.assertEqual([None, None], [call["timeout"] for call in self.asset_calls()])
+        metadata = [call for call in self.gh_budgets() if call not in self.asset_calls()]
+        self.assertEqual([10, 9, 8, 7, 6], [call["timeout"] for call in metadata])
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+
+    def test_failed_long_transfers_stop_after_five_of_seven_actual_candidates(self):
+        self.retain_snapshots(7)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", **self.slow_asset_probe(30, step=1, failures=7))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        transfers = self.asset_calls()
+        self.assertEqual(5, len(transfers))
+        self.assertEqual([None] * 5, [call["timeout"] for call in transfers])
+        self.assertEqual(sorted((path.name for path in self.remote.iterdir()), reverse=True)[:5],
+                         [call["args"][2] for call in transfers])
+        self.assertEqual(7, len(list(self.remote.glob("*/lean-build.tgz"))))
+        self.assertFalse((self.root / ".lake/build").exists())
 
     def preparation_deadline_probe(self, phase):
         # Small incompressible material reaches archive hashing and multipart
