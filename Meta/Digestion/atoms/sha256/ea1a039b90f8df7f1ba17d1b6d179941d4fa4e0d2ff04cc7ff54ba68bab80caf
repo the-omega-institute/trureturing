@@ -1,0 +1,8 @@
+**推论 1.3（注记 4.16）。** 对每个 $\kappa>1$ 与 $\epsilon>0$，以该文定义 4.11 的记号，$x=x_1^{[\kappa]}(\epsilon)$ 与 $x_2=x_2^{[\kappa]}(\epsilon)$ 满足 $x_2<\sqrt{2x}$。即该文引理 4.15 对全部 $\kappa>1$ 成立。
+
+**证明。** 由该文定理 4.3，$F^{[\kappa]}$ 关于 $x$ 与 $a$ 都严格递减；$x_a$ 由 $F^{[\kappa]}(x_a,a)=\epsilon$ 定义。若 $x\le2$，则 $x_2<x_1=x\le\sqrt{2x}$。若 $x>2$，令 $y=\sqrt{2x}>2$。由定理 1.2，$F^{[\kappa]}(y,2)<F^{[\kappa]}(x,1)=\epsilon=F^{[\kappa]}(x_2,2)$，再由 $F^{[\kappa]}(\cdot,2)$ 严格递减得 $x_2<y$。证毕。
+
+该文对 $\kappa\ge3/2$ 的限制只出现在它证明 (1.3) 时关于 $\kappa$ 的单调性步骤，上面的论证不经过该步骤。
+
+定理 1.2 不足以把该文定理 6.1 延伸到 $\kappa\le3/2$。定理 6.1 的证明还需要正的 Euler 尾项比值 $\zeta(\kappa)\prod_{p\le x}(1-p^{-\kappa})=\exp\bigl(\Theta_\kappa(x^{1-\kappa}/\log x)\bigr)$（下界见定理 1.5 的证明，上界由 $-\log(1-u)\le2u$（$0\le u\le1/2$）与分部求和 $\sum_{p>x}p^{-\kappa}\ll_\kappa x^{1-\kappa}/\log x$ 得到） 被尺度为 $1/(\sqrt x\log x)$ 的负偏差吸收，这恰需 $\kappa>3/2$。下面的定理说明这一限制是函数族本身的性质，并非证明方法所致。
+
