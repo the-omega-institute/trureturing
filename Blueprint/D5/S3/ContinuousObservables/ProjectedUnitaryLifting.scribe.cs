@@ -28,7 +28,7 @@ internal sealed class ProjectedUnitaryLiftingDocument : IScribeDocumentDefinitio
                 H("The scalar 00 identity determines the compressed operator"),
                 StatementSource.FromAuthor(Disp(LiftingStatement())),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/ContinuousObservables/gilyensulowwiebe2019qsvt")),
-                Blocks(Paragraph(Text("The scalar premise is required for every real x in [0,1], for an arbitrary complex polynomial R. Evaluation R(G) is Polynomial.aeval. The Gram operator restricts to the input range; its symmetric spectral theorem supplies a complete orthonormal basis there, with eigenvalues sigma squared in [0,1]. The singular-pair action on each basis vector and polynomial evaluation at its eigenvalue give the two equalities. Both sides vanish on the input complement; in the odd case this uses commutation of Pi with G and every polynomial in G.")),
+                Blocks(Paragraph(Text("In the formula I=[0,1]. The scalar premise is required for every real x in [0,1], for an arbitrary complex polynomial R. Evaluation R(G) is Polynomial.aeval. The Gram operator restricts to the input range; its symmetric spectral theorem supplies a complete orthonormal basis there, with eigenvalues sigma squared in [0,1]. The singular-pair action on each basis vector and polynomial evaluation at its eigenvalue give the two equalities. Both sides vanish on the input complement; in the odd case this uses commutation of Pi with G and every polynomial in G.")),
                     Paragraph(Text("The input basis includes every zero eigenvalue, even when the output projection has smaller rank. Consequently the even action on an input vector in ker(A) is R(0) times that vector. The empty list is included and gives the input projection for R=1. No full-rank assumption, rank equality, nonzero singular-value assumption or Hermitian restriction on A occurs. The scalar premise can constrain only values on the singular spectrum, but the theorem assumes the stated identity on the whole interval.")),
                     Paragraph(Text("These are compressed operator identities. They do not identify a projected block with a deterministic output channel, synthesize a real-part ancilla circuit, prove exact query accounting, or establish a physical adjoint by negating phases. The phase gate itself need not have determinant one."))),
                 DescribeRole.Theorem),
@@ -49,17 +49,13 @@ internal sealed class ProjectedUnitaryLiftingDocument : IScribeDocumentDefinitio
     private static Formula Par(Formula p) => Seq(Open, p, Close);
     private static Formula All(string v, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(V(v), Colon, Sp, type)), Comma, Sp, body);
-    private static Formula Ex(string v, Formula type, Formula body) =>
-        Seq(Exists, Sp, Par(Seq(V(v), Colon, Sp, type)), Comma, Sp, body);
     private static Formula And(params Formula[] clauses) => Seq(clauses.SelectMany((c, i) =>
         i == 0 ? new Formula[] { Par(c) } : new Formula[] { Sp, Land, Sp, Par(c) }).ToArray());
     private static Formula Rel(Formula a, Formula op, Formula b) => Seq(a, Sp, op, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Rel(Par(a), Rightarrow, b);
     private static Formula Sq(Formula a) => Seq(Par(a), Caret, Grp(D(2)));
-    private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Real() => Seq(Mathbb, Grp(V("R")));
     private static Formula CPoly() => Seq(Mathbb, Grp(V("C")), OpenBracket, V("X"), CloseBracket);
-    private static Formula RPoly() => Seq(Mathbb, Grp(V("R")), OpenBracket, V("X"), CloseBracket);
     private static Formula Len() => Call("length", V("Psi"));
 
     private static Formula Enc() => Call("Encoding", V("H"));

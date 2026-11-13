@@ -37,7 +37,7 @@ own pinned Mathlib revision.
 
 Operator.Basic retains copied lean-quantum provenance:
 https://github.com/Hayata-Yamasaki-Group/lean-quantum,
-Quantum/QuantumMechanics/D5.S3.ContinuousObservables.ProjectedUnitaryLifting.Operator.lean, Apache License 2.0.
+Quantum/QuantumMechanics/QuantumState.lean, Apache License 2.0.
 Copyright (c) 2025 Hayata Yamasaki. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors:
