@@ -243,4 +243,3 @@ theorem all_label_uniform_noncollapse
   exact hηall (f 0) A hb hsp hnorm
 
 end D5.S3.Quantum.Foundation.ExclusionUniformNoncollapse
-
