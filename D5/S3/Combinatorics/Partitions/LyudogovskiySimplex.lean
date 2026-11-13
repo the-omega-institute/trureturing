@@ -195,7 +195,7 @@ private theorem transfer_intersection {n : ℕ} {p q : Nat.Partition n}
     intro he
     have hpq : YoungDiagram.ofPartition p ≤ YoungDiagram.ofPartition q := by
       intro c hc
-      have : c ∈ (YoungDiagram.ofPartition p ⊓ YoungDiagram.ofPartition q).cells := he ▸ hc
+      have : c ∈ (YoungDiagram.ofPartition p ⊓ YoungDiagram.ofPartition q).cells := he.symm ▸ hc
       exact (YoungDiagram.mem_inf.mp this).2
     exact h.1 (diagram_eq_of_le hpq)
   have hhi := Finset.card_lt_card hstrict
@@ -364,5 +364,92 @@ theorem transfer_iff_intersection {n : ℕ} (hn : 0 < n) (p q : Nat.Partition n)
     UnitTransfer p q ↔
       ((YoungDiagram.ofPartition p) ⊓ (YoungDiagram.ofPartition q)).card = n - 1 :=
   ⟨transfer_intersection, intersection_transfer hn p q⟩
+
+private theorem clique_difference {n : ℕ} (hn : 0 < n)
+    {C : Finset (Nat.Partition n)} (hC : (graph n).IsClique (C : Set (Nat.Partition n)))
+    {p q : Nat.Partition n} (hp : p ∈ C) (hq : q ∈ C) :
+    ((YoungDiagram.ofPartition p).cells \ (YoungDiagram.ofPartition q).cells).card ≤ 1 := by
+  by_cases he : p = q
+  · subst q
+    simp
+  · have ht := (transfer_iff_intersection hn p q).mp (hC hp hq he)
+    rw [Finset.card_sdiff, Finset.inter_comm]
+    change (YoungDiagram.ofPartition p).card -
+      (YoungDiagram.ofPartition p ⊓ YoungDiagram.ofPartition q).card ≤ 1
+    rw [YoungDiagram.card_ofPartition, ht]
+    omega
+
+private theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
+    (C : Finset (Nat.Partition n))
+    (hC : (graph n).IsClique (C : Set (Nat.Partition n))) (hcard : 2 ≤ C.card) :
+    (∃ X : YoungDiagram, X.card = n - 1 ∧
+      ∀ p ∈ C, X ≤ YoungDiagram.ofPartition p) ∨
+    (∃ U : YoungDiagram, U.card = n + 1 ∧
+      ∀ p ∈ C, YoungDiagram.ofPartition p ≤ U) := by
+  obtain ⟨p,hp,q,hq,hpq⟩ := Finset.one_lt_card.mp (by omega : 1 < C.card)
+  let A := YoungDiagram.ofPartition p
+  let B := YoungDiagram.ofPartition q
+  let X := A ⊓ B
+  let U := A ⊔ B
+  have hX : X.card = n - 1 := (transfer_iff_intersection hn p q).mp (hC hp hq hpq)
+  have hU : U.card = n + 1 := by
+    have hc := Finset.card_inter_add_card_union A.cells B.cells
+    change X.card + U.card = A.card + B.card at hc
+    simp only [A, B, YoungDiagram.card_ofPartition] at hc
+    omega
+  have hdich (v : Nat.Partition n) (hv : v ∈ C) :
+      X ≤ YoungDiagram.ofPartition v ∨ YoungDiagram.ofPartition v ≤ U := by
+    classical
+    by_cases hs : X ≤ YoungDiagram.ofPartition v
+    · exact Or.inl hs
+    · right
+      change ¬ X.cells ⊆ (YoungDiagram.ofPartition v).cells at hs
+      obtain ⟨x,hx,hxv⟩ := Finset.not_subset.mp hs
+      have hxA : x ∈ A.cells := (YoungDiagram.mem_inf.mp hx).1
+      have hxB : x ∈ B.cells := (YoungDiagram.mem_inf.mp hx).2
+      have hAv := clique_difference hn hC hp hv
+      have hBv := clique_difference hn hC hq hv
+      have hsub : U.cells.erase x ⊆ (YoungDiagram.ofPartition v).cells := by
+        intro y hy
+        obtain ⟨hyx,hy⟩ := Finset.mem_erase.mp hy
+        rcases YoungDiagram.mem_sup.mp hy with hyA | hyB
+        · by_contra hyv
+          have he := Finset.card_le_one.mp hAv y (Finset.mem_sdiff.mpr ⟨hyA,hyv⟩)
+            x (Finset.mem_sdiff.mpr ⟨hxA,hxv⟩)
+          exact hyx he
+        · by_contra hyv
+          have he := Finset.card_le_one.mp hBv y (Finset.mem_sdiff.mpr ⟨hyB,hyv⟩)
+            x (Finset.mem_sdiff.mpr ⟨hxB,hxv⟩)
+          exact hyx he
+      have hsize : (U.cells.erase x).card = n := by
+        rw [Finset.card_erase_of_mem (YoungDiagram.mem_sup.mpr (Or.inl hxA))]
+        change U.card - 1 = n
+        rw [hU]
+        omega
+      have he : U.cells.erase x = (YoungDiagram.ofPartition v).cells := by
+        apply Finset.eq_of_subset_of_card_le hsub
+        change (YoungDiagram.ofPartition v).card ≤ _
+        rw [YoungDiagram.card_ofPartition, hsize]
+      intro y hy
+      exact Finset.mem_of_mem_erase (he.symm ▸ hy)
+  by_cases hstar : ∀ p ∈ C, X ≤ YoungDiagram.ofPartition p
+  · exact Or.inl ⟨X,hX,hstar⟩
+  · right
+    push_neg at hstar
+    obtain ⟨d,hd,hdX⟩ := hstar
+    have hdU := (hdich d hd).resolve_left hdX
+    change ¬ X.cells ⊆ (YoungDiagram.ofPartition d).cells at hdX
+    obtain ⟨x,hx,hxd⟩ := Finset.not_subset.mp hdX
+    refine ⟨U,hU,?_⟩
+    intro v hv
+    by_contra hnv
+    have hvX := (hdich v hv).resolve_right hnv
+    change ¬ (YoungDiagram.ofPartition v).cells ⊆ U.cells at hnv
+    obtain ⟨y,hy,hyU⟩ := Finset.not_subset.mp hnv
+    have hxy := Finset.card_le_one.mp (clique_difference hn hC hv hd)
+      x (Finset.mem_sdiff.mpr ⟨hvX hx,hxd⟩)
+      y (Finset.mem_sdiff.mpr ⟨hy,fun hyd => hyU (hdU hyd)⟩)
+    have hxU : x ∈ U := le_sup_of_le_left inf_le_left hx
+    exact hyU (hxy ▸ hxU)
 
 end D5.S3.Combinatorics.Partitions.LyudogovskiySimplex
