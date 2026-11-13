@@ -4135,3 +4135,450 @@ Bell 杯帽、全部位置置换和规范重括号、精确张量迹，以及全
 桥梁仍属原模型的独立条件，本章有限源不实现这些物理合同。
 
 ## 追加锚（本行以下为增补区）
+
+## 130. 四张固定原零效应的正阈值障碍与纯极限紧性桥
+
+**约定 130.0（原域、卷间编号与结论范围）。** 本章属于 THREE_COPY VIII。EXCLUSION IX116、IX119、IX120，EXCLUSION X124—126、X130、X132、X133，BILATERAL VIII121，THREE_COPY VII121—122及 SAME_READBACK SECTION127.10 均指各自卷的原条目，不能按本章编号解释。主要结论是在完整 EB3 加原零图连通的分支，纯邻点逃入混态必使四张预先固定的原零效应出现统一正逼近缺口；排除此逃逸又恰好支付该分支的纯点紧性。四面体效应基、限制同构及法向内部事实是证明内的线性代数与既有接口复用。完整量子候选仍取 EXCLUSION X133 的 EB3 加一个固定覆盖根；本章不把局部障碍当作产生该根的定理。
+
+### 130.1 全部原对象与原零图连通分支
+
+**定义 130.1（完整原域与两类不同菜单）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的 $u\in V^\ast$。始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\\
+S_p=P\cap D_p,\qquad
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\\
+N_p=\{h\in C^\ast:h(p)=0\},\qquad
+L_p=\operatorname{span}N_p,\qquad
+\mathcal B(p)=\mathcal E\cap N_p.
+\end{gathered}
+\tag{TCVIII130.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是全部原效应。$K$ 张成 $V$，$\mathcal E$ 紧，$\mathcal F_p$ 非空紧，minimum 达到，第二变量遍历全部原混态。$\mathcal A_p$ 是完整暴露确认族，$\mathcal B(p)$ 是在 $p$ 读零的完整效应菜单；二者均不替代 $\mathcal F_p$。原纯关系为
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1, f(q)=0
+\quad\Longleftrightarrow\quad q\in S_p.
+\tag{TCVIII130.2}
+$$
+
+补效应给零值对称，不给正比较值互易。EB3 要求每个完整 $D_p$ 仿射等价于整个闭三球。以下到130.6均另取
+
+$$
+\mathsf{Conn}:\quad
+\forall p,q\in P\ \exists n\ge0\ \exists p_0,\ldots,p_n\in P:
+\quad p_0=p, p_n=q, p_{j-1}\perp p_j\ (1\le j\le n).
+\tag{TCVIII130.3}
+$$
+
+$n$ 可随端点改变；这不是 $P$ 拓扑连通、统一有限半径或两步覆盖。没有预付 PR、紧 $P$、所选纯子集、种子三角、规范正压缩、共同内积、自对偶、Jordan 结构或谱性。
+
+**复用组合 130.2（全域四维法向的准确费用）。** 由 FINITE_PURE VII103.2 及 EXCLUSION IX116.1，每个 $D_p$ 是非点紧暴露极大真面，$\mathcal A_p\ne\varnothing$；全部非空真面只有纯单点或完整排除球，$S_p=\partial_{\rm rel}D_p$，不同完整球至多交于一个原纯点。这里不消费全 Pair。
+
+EXCLUSION IX116.2 的重复标签若存在，给两个不交完整球 $F,G$，其球缘组成孤立完全二部原零图块。$\mathsf{Conn}$ 迫使 $P=S(F)\sqcup S(G)$。任一边界点所在的真面为纯单点或完整球。若有第三张完整球，它的任一原纯球缘点都属于 $S(F)$ 或 $S(G)$，与两球不交第三球的孤立性矛盾。因此全部完整球只有 $F,G$，而全部纯单点也在其并中。故
+
+$$
+\partial_{\rm rel}K=F\sqcup G.
+\tag{TCVIII130.4}
+$$
+
+两侧是非空不交紧集，与凸体相对边界的连通性矛盾。此处 $\dim\operatorname{aff}K\ge4$，因为它有三维真面。于是已得 Inj：$D_p=D_q\Rightarrow p=q$。
+
+再直接使用 EXCLUSION IX119.10，亦即 BILATERAL VIII121.1 的式(121.3)：$\nu_p=\dim_{\rm aff}\mathcal A_p$ 沿每条原边不变，至少一个原标签满足 $\nu=0$，且
+
+$$
+\dim L_p=\nu_p+4,\qquad
+N_{D_p}:=\{h\in C^\ast:h|_{D_p}=0\}
+=\operatorname{cone}\mathcal A_p.
+\tag{TCVIII130.5}
+$$
+
+沿各条有限原路径传播，得到 $P=P_0$，其中 $P_0=\{p:\mathcal A_p\text{ 为单点}\}$。因此可对全部原 $p$ 写
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e_p\},\qquad g_p=u-e_p,\qquad
+\dim L_p=4,\qquad N_{D_p}=\mathbb R_+e_p,\\
+\{x\in K:e_p(x)=0\}=D_p,\qquad
+\{x\in K:e_p(x)=1\}=\{p\}.
+\end{gathered}
+\tag{TCVIII130.6}
+$$
+
+最后一项用 EXCLUSION IX120.2 的 Inj 分支。EXCLUSION IX120.8 还给线性同构
+
+$$
+R_p:L_p\longrightarrow\operatorname{Aff}(D_p),\quad h\longmapsto h|_{D_p},
+\qquad g_p\in\operatorname{ri}N_p.
+\tag{TCVIII130.7}
+$$
+
+这些组合不是新的独立定理。BILATERAL VIII121.3—121.5 的闭层与真实四维紧片不供应全局覆盖；这里也不使用其另加九维的121.6来支付四维法向。唯一 $e_p$ 不等于 $\mathcal F_p=\{e_p\}$，也尚未证明 $e_p$ 是 least 或 $T_p=e_p$。限制同构没有声称其逆保持正性。
+
+### 130.2 固定球面上的四张实际零效应
+
+**构造 130.3（四面体效应基与正常数）。** 固定任意原 $p$，选一次仿射球图
+
+$$
+D_p=c_p+B_p\overline{\mathbb B}^{\,3},\qquad
+B_p:\mathbb R^3\to\ker u\text{ 单射}.
+\tag{TCVIII130.8}
+$$
+
+对 $t\in S^2$，记 $s(t)=c_p+B_pt$。由 $p\perp s(t)$，$e_{s(t)}\in\mathcal B(p)$。其在球上的最大值一只在 $s(t)$ 达到，故
+
+$$
+e_{s(t)}(c_p+B_px)=a_t+b_t\,t\cdot x,
+\qquad a_t+b_t=1,\quad 0<b_t\le\tfrac12.
+\tag{TCVIII130.9}
+$$
+
+斜率沿 $t$ 来自球上最大点；零斜率会使整个球读一，违反单点一值面。球上最小值非负给 $b_t\le1/2$，从而 $a_t\ge1/2$。
+
+取正四面体顶点 $t_1,\ldots,t_4\in S^2$，$\sum_jt_j=0$，并固定
+
+$$
+s_j=s(t_j),\quad h_j=e_{s_j},\quad
+Z=\sum_{j=1}^4\frac{a_{t_j}}{b_{t_j}},\quad
+\lambda_j=\frac1{Zb_{t_j}}>0.
+\tag{TCVIII130.10}
+$$
+
+这四张效应是同一原球面上实际邻标签的完整暴露尺，没有要求四标签两两正交。若 $\sum_jd_jh_j|_{D_p}=0$，比较斜率知 $d_jb_{t_j}=k$ 与 $j$ 无关，因为四面体方向的唯一线性关系由全一系数生成。再比较常数得 $kZ=0$，故全部 $d_j=0$。它们的限制构成四维 $\operatorname{Aff}(D_p)$ 的基，由(TCVIII130.7)知 $h_j$ 构成 $L_p$ 的基。而
+
+$$
+\sum_j\lambda_jh_j|_{D_p}=1=g_p|_{D_p}
+\quad\Longrightarrow\quad
+H\lambda=g_p,\qquad Hc:=\sum_jc_jh_j.
+\tag{TCVIII130.11}
+$$
+
+严格正系数也再次显示 $g_p$ 位于该四维单纯锥内部，因而位于 $\operatorname{ri}N_p$。这是固定效应基的显式构造；内部事实及限制同构已由 EXCLUSION IX120.8 支付，不另计新结果。
+
+使用原全态范数及固定基的常数
+
+$$
+\begin{gathered}
+\|h\|_K=\max_{x\in K}|h(x)|,\qquad
+\sigma_p=\min_{\|c\|_2=1}\|Hc\|_K>0,\qquad
+\lambda_*=\min_j\lambda_j>0,\\
+\eta_p=\min\left\{\frac{\sigma_p}{4},
+\frac{\sigma_p\lambda_*}{16\|\lambda\|_2}\right\}>0.
+\end{gathered}
+\tag{TCVIII130.12}
+$$
+
+$K$ 张成 $V$ 使第一式确为范数；$H$ 单射与单位三球面紧性给 $\sigma_p>0$。全部常数都在移动标签出现之前固定，无需跨标签统一逆范数。
+
+### 130.3 纯极限逃逸与反向完整球塌缩
+
+**定义 130.4（以纯点为端点的逃逸）。** 称 $\mathsf{Esc}(p)$ 发生，若存在全部原纯标签序列满足
+
+$$
+p_i\to p\in P,\qquad q_i\in S_{p_i},\qquad
+q_i\to q\in\operatorname{relint}D_p.
+\tag{TCVIII130.13}
+$$
+
+$q$ 是混态，$p_i,q_i$ 则始终是原纯点。这里只命名实际原域配置，不以抽象球族作为其存在证据。
+
+**引理 130.5（逃逸确定两个效应极限）。** 在完整 EB3+$\mathsf{Conn}$ 域中，(TCVIII130.13) 必满足
+
+$$
+e_{p_i}\to e_p,\qquad e_{q_i}\to g_p,\qquad
+D_{q_i}\longrightarrow\{p\},\qquad W(D_{q_i})\to0,
+\tag{TCVIII130.14}
+$$
+
+其中整球收敛取任一辅助环境范数的 Hausdorff 距离，$W(F)=\max_{f\in\mathcal E}\operatorname{osc}_F f$。
+
+证明。紧 $\mathcal E$ 中 $e_{p_i}$ 的任一聚点 $a$ 满足 $a(p)=1,a(q)=0$。非负仿射函数在 $D_p$ 的相对内点取零，必零于整个 $D_p$；因此 $a\in\mathcal A_p=\{e_p\}$。同样，$e_{q_i}$ 的任一聚点 $b$ 满足 $b(p)=0,b(q)=1$。$u-b$ 非负，在 $p$ 取一、在 $q$ 取零，所以 $u-b\in\mathcal A_p$，即 $b=g_p$。所有聚点唯一，给两个完整序列极限。
+
+任取 $x_i\in D_{q_i}$ 的收敛子列，$e_{q_i}(x_i)=0$ 给 $g_p(x)=0$。由(TCVIII130.6)，$x=p$。若整个球未趋于 $\{p\}$，可选与 $p$ 保持正距离的 $x_i$，再用紧 $K$ 取极限而矛盾。故整球趋单点。令 $M=\max_{f\in\mathcal E}\|f\|_\ast<\infty$，有 $W(D_{q_i})\le M\operatorname{diam}D_{q_i}\to0$。证毕。
+
+这里未先假设反向球塌缩，它由逃逸推出。极值面与紧效应的论法复用既有原域机制。THREE_COPY VII122.8—122.10 已在固定锚点的影壳旋转配置中证明整球、完整零菜单及倒向刻度退化；这里不重计该固定锚点定理，也不将所有反向塌缩都归因于影壳平面。固定球面上的 $s\mapsto e_s$ 连续已见 EXCLUSION IX120.12，无须另证或另列反向宽度估计。EXCLUSION X124—126 的 PR 分支结论不作为本引理前件。
+
+### 130.4 四张固定效应的定量排除
+
+**定理 130.6（有限原零效应的正阈值障碍）。** 固定130.3的 $p,h_1,\ldots,h_4,\eta_p$，对全部原 $a\in P$ 定义
+
+$$
+\Delta_p(a)=\max_{1\le j\le4}
+\operatorname{dist}_{\|\cdot\|_K}(h_j,\mathcal B(a)).
+\tag{TCVIII130.15}
+$$
+
+每条满足(TCVIII130.13)的原序列都有
+
+$$
+\Delta_p(p_i)>\eta_p\quad\text{最终成立},\qquad
+\boxed{\liminf_i\Delta_p(p_i)\ge\eta_p>0.}
+\tag{TCVIII130.16}
+$$
+
+证明。反设存在无限子列满足 $\Delta_p(p_i)\le\eta_p$。每个 $\mathcal B(p_i)$ 非空紧，距离达到，故在此子列上可选四张原效应
+
+$$
+h_{i,j}\in\mathcal E,\quad h_{i,j}(p_i)=0,\quad
+\|h_{i,j}-h_j\|_K\le\eta_p,\qquad
+H_ic=\sum_jc_jh_{i,j}.
+\tag{TCVIII130.17}
+$$
+
+对 $\|c\|_2=1$，Cauchy–Schwarz 给 $\sum_j|c_j|\le2$，于是
+
+$$
+\|H_i-H\|\le2\eta_p,\qquad
+\|H_ic\|_K\ge(\sigma_p-2\eta_p)\|c\|_2
+\ge\frac{\sigma_p}{2}\|c\|_2.
+\tag{TCVIII130.18}
+$$
+
+四张 $h_{i,j}$ 因此独立。其像包含于 $L_{p_i}$；全域已支付 $\dim L_{p_i}=4$，所以 $\operatorname{ran}H_i=L_{p_i}$。原邻边使 $e_{q_i}\in N_{p_i}$，可唯一写成 $e_{q_i}=H_i\alpha_i$。用 $H\lambda=g_p$ 得
+
+$$
+\begin{aligned}
+\frac{\sigma_p}{2}\|\alpha_i-\lambda\|_2
+&\le\|H_i(\alpha_i-\lambda)\|_K\\
+&\le\|e_{q_i}-g_p\|_K+2\eta_p\|\lambda\|_2.
+\end{aligned}
+\tag{TCVIII130.19}
+$$
+
+引理130.5使第一项趋零；第二项乘以 $2/\sigma_p$ 后不超过 $\lambda_*/4$。充分大时再使第一项乘以 $2/\sigma_p$ 小于 $\lambda_*/4$，遂有 $\|\alpha_i-\lambda\|_2<\lambda_*/2$，全部 $\alpha_{i,j}>0$。开集 $\{c\in\mathbb R^4:c_j>0\ (\forall j)\}$ 经同构 $H_i$ 的像在 $L_{p_i}$ 中开且包含于 $N_{p_i}$，故
+
+$$
+e_{q_i}\in\operatorname{ri}N_{p_i}.
+\tag{TCVIII130.20}
+$$
+
+另一方面，取原 $z_i\in\operatorname{relint}D_{q_i}$。正泛函在 $z_i$ 为零当且仅当在整个 $D_{q_i}$ 为零，因此
+
+$$
+C^\ast\cap\{h:h(z_i)=0\}
+=N_{D_{q_i}}=\mathbb R_+e_{q_i}.
+\tag{TCVIII130.21}
+$$
+
+评价 $z_i$ 非负，故这确是 $C^\ast$ 的暴露极射线；它包含于 $N_{p_i}$，也必是后者的极射线。四维尖锥的非零极射线不能经过相对内部：若内部点为 $v$，取不平行于 $v$ 的小方向 $k$，则 $v\pm k$ 都在锥中而其平均为 $v$，与极端性冲突。这与(TCVIII130.20)矛盾。
+
+所以满足 $\Delta_p(p_i)\le\eta_p$ 的指标只有有限个。由最终严格大于 $\eta_p$ 得下极限至少 $\eta_p$；这里没有把每项严格不等式误读成下极限严格大于。证毕。
+
+该证明只使用四张固定原效应、附近标签各自四维的法向张成与一条真实原边的暴露极射线。没有比较不同 $L_a$ 的预设坐标，也未预付移动法锥、球族或限制逆的一致连续性。
+
+**定义及推论 130.7（一次精度足够，全部精度另列）。** 对上述事先固定的效应基定义
+
+$$
+\begin{aligned}
+\mathsf{FA}_4(p):\quad&
+\exists U\ni p\text{，}U\text{ 在 }P\text{ 中相对开，}\\
+&\forall a\in U:\ \Delta_p(a)\le\eta_p;\\
+\mathsf{FL}_4(p):\quad&
+\forall\varepsilon>0\ \exists U\ni p\text{，}U\text{ 在 }P\text{ 中相对开，}\\
+&\forall a\in U\ \forall j\le4\ \exists h\in\mathcal E:
+\quad h(a)=0,\ \|h-h_j\|_K<\varepsilon.
+\end{aligned}
+\tag{TCVIII130.22}
+$$
+
+$\mathsf{FL}_4(p)\Rightarrow\mathsf{FA}_4(p)$，而 $\mathsf{FA}_4(p)$ 排除 $\mathsf{Esc}(p)$。前者取 $\varepsilon<\eta_p$；后者将逃逸序列最终置于 $U$ 即与定理130.6冲突。每个 $p$ 可独立选一次其固定四面体基，不要求这些选择随 $p$ 连续。
+
+这把待付的一个局部充分关系缩到四张指定效应：是否对每个原 $p$，可把这四张尺同时延续为附近原标签上的合法零尺，误差不超过(TCVIII130.12)？闭图只保证已有移动零尺的聚点仍在旧零菜单中，方向相反。THREE_COPY VII121.7 已在原 $P$ 的一个稠密 $G_\delta$ 上给完整 $\mathcal B$ 的全序列 Hausdorff 连续性，故在那里 $\mathsf{FL}_4$ 成立；这是既有结果的应用，不能把它传播到所有标签或限制成每张指定球面的稠密结论。
+
+反事实地看(TCVIII130.13)的两端，$p_i$ 仍趋向原纯 $p$，而它的原纯邻点 $q_i$ 趋向 $D_p$ 内混态 $q$。若旧零菜单 $\mathcal B(p)$ 中这四张 $e_{s_j}$ 都能以误差至多 $\eta_p$ 延续到 $\mathcal B(p_i)$，原边另一端的 $e_{q_i}$ 就会成为四个移动零尺的严格正组合，同时又必须生成该法锥的极射线，故不可能。失败准确落在 $p$ 与 $p_i$ 的零菜单延续上；其触发条件由原边 $p_i\perp q_i$ 与 $q_i$ 的混态极限给出。没有给混态 $q$ 添上新的纯标签，也没有改动原 minimum。
+
+### 130.5 纯极限逃逸、绝对紧性与纯邻域
+
+**定理 130.8（连通分支的纯紧性桥）。** 在完整 EB3+$\mathsf{Conn}$ 域中，下列条件等价：
+
+1. $P$ 在 $K$ 中闭，因而在环境空间中紧。
+2. 对每个原 $p\in P$，$\mathsf{Esc}(p)$ 均不发生。
+3. $\Gamma_S=\{(p,q)\in P\times K:q\in S_p\}$ 在 $P\times K$ 中闭。
+4. 对每个在 $K$ 中紧的原纯集 $A\subseteq P$，$\mathcal N(A):=\bigcup_{p\in A}S_p$ 在 $K$ 中紧。
+
+证明。$1\Rightarrow2$：纯列的极限仍纯，而(TCVIII130.13)的 $q$ 非纯。
+
+证 $2\Rightarrow1$ 的逆否。若原纯列 $q_i\to x\notin P$，因纯点均在闭的相对边界中，$x\in\partial_{\rm rel}K$。原面分类使 $x\in\operatorname{relint}D_p$，其中 $p\in P$；混态不会落在该球的纯球缘。在每个 $S_{q_i}$ 任取原 $a_i$，对紧 $K,\mathcal E$ 取共同子列
+
+$$
+a_i\to a\in K,\qquad e_{q_i}\to b\in\mathcal E,\qquad
+b(x)=1,\quad b(a)=0.
+\tag{TCVIII130.23}
+$$
+
+一值面包含 $D_p$ 的相对内点，故包含整个 $D_p$，由极大性恰为 $D_p$。零值面非空且真。它不可能为完整球 $G$：否则对任意 $s\in S_p$，同一 $b$ 确认 $s$ 并零于 $G$，给 $G\subseteq D_s$，极大性给 $D_s=G$，与 Inj 及 $S_p$ 至少两个点矛盾。故零面是纯单点 $\{a\}$。补效应 $u-b$ 确认 $a$、零于整个 $D_p$，于是 $D_a=D_p$，Inj 给 $a=p$。因此
+
+$$
+a_i\to p\in P,\qquad q_i\in S_{a_i},\qquad
+q_i\to x\in\operatorname{relint}D_p,
+\tag{TCVIII130.24}
+$$
+
+正是 $\mathsf{Esc}(p)$。这里极限 $a$ 的纯性由原零面证明，没有预付纯闭性。
+
+证 $2\Longleftrightarrow3$。原全态零一关联
+
+$$
+\mathcal R=\{(y,z)\in K^2:\exists f\in\mathcal E, f(y)=1, f(z)=0\}
+\tag{TCVIII130.25}
+$$
+
+是紧集的投影，故闭。若 $p_i\to p\in P,q_i\in S_{p_i},q_i\to q\in K$，则 $q\in D_p$。它若非纯，恰在 $\operatorname{relint}D_p$，就是逃逸；若纯则属于 $S_p$。这正是 $\Gamma_S$ 的序列闭性。反向，逃逸直接破坏该闭图。
+
+证 $3\Longrightarrow4$：$\Gamma_S\cap(A\times K)$ 为紧集，其投影即 $\mathcal N(A)$。证 $4\Longrightarrow3$：对上述收敛序列，$A=\{p\}\cup\{p_i:i\ge1\}$ 是紧原纯集；$q_i\in\mathcal N(A)$ 的极限仍在此紧集，故仍纯，再由 $\mathcal R$ 闭性得到 $q\in S_p$。四项等价。证毕。
+
+**推论 130.9（有限纯邻域的条件紧性）。** 若每个原 $p$ 都满足 $\mathsf{FA}_4(p)$，特别是每个原 $p$ 都满足 $\mathsf{FL}_4(p)$，则 $P$ 紧。对每个紧 $A\subseteq P$ 和每个固定整数 $n\ge0$，递归定义 $\mathcal N^0(A)=A$、$\mathcal N^{n+1}(A)=\mathcal N(\mathcal N^n(A))$，各层均在 $K$ 中紧。对事先固定的同一个根 $o$，有限原图球
+
+$$
+B_n(o)=\bigcup_{j=0}^n\mathcal N^j(\{o\})
+\tag{TCVIII130.26}
+$$
+
+也紧。证明是130.7、130.8与有限次归纳。仅对一个紧 $A$，若在它的全部端点 $p\in A$ 排除逃逸，同一闭图序列论证就足以得 $\mathcal N(A)$ 紧；不必先证明全 $P$ 紧。
+
+应区分绝对紧性与相对闭性。对紧纯集 $A$，$\mathcal R[A]=\bigcup_{p\in A}D_p$ 无条件在 $K$ 中紧，而 $\mathcal N(A)=\mathcal R[A]\cap P$ 首先只在 $P$ 中相对闭。与可能非闭的 $P$ 取交并不保紧；130.8补的正是纯极限控制。上述条件结论也不给 $P=\bigcup_nB_n(o)$ 的统一有限截断，更未给 $n=2$ 或 $n=3$。紧性对一个闭集覆盖不提供有限子覆盖；连通性中的逐目标有限步数仍不能交换成一个共同半径。
+
+### 130.6 仍缺的原关系与复用界线
+
+待证的具体局部充分桥是
+
+$$
+\mathrm{EB3}+\mathsf{Conn}
+\ \stackrel{?}{\Longrightarrow}\
+\forall p\in P\ \mathsf{FA}_4(p),
+\tag{TCVIII130.27}
+$$
+
+也可研究更强的全部精度版本 $\forall p\,\mathsf{FL}_4(p)$。定理130.6证明逃逸必使这类逼近失败，没有证明这些条件自动成立，也没有证明其必要性。即使通过此桥取得纯点紧性，本章仍另留
+
+$$
+\mathrm{EB3}+\mathsf{Conn}
+\ \stackrel{?}{\Longrightarrow}\
+\exists o\in P\ \forall q\in P:
+\bigl[o\perp q\ \lor\ \exists r\in P (o\perp r\land q\perp r)\bigr].
+\tag{TCVIII130.28}
+$$
+
+没有从本章障碍兑现 R1、PR、全局连续球族、NC、UF、九维上界或 E0 自动性，也没有完整原域反模型或逻辑独立性结论。本章不设 E0 专用候选，种子与规范正压缩均不属于130.1前件。
+
+与 THREE_COPY VII122 的区别在于：其平支撑面、真实方向旋转、同一固定锚点的整球趋单点和完整零菜单趋二维三角形已付；本章130.6量化全部趋近纯标签，以混态邻点极限为触发条件，在另一端点固定四张效应，并给仅依赖此固定基的正阈值。130.8则把任意原纯列的非纯极限重新定向为这一配置。这些原域连接不要求预先有平支撑面，也不把该旧塌缩链换名为新结论。
+
+EXCLUSION IX119.10、IX120.8—120.12承担四维、相对内部、限制同构、完整暴露及固定球面连续性；四面体构造和有限维基扰动是其中的证明工具。THREE_COPY VII121.6—121.7 的非塌缩层闭图与残余完整零菜单稳定不升级成全标签稳定。BILATERAL VIII121 的紧片不等于全域覆盖。EXCLUSION X124—126的非塌缩、固定边整行与 least 结论保留其 PR 等前件，不能移入这里。
+
+### 130.7 保留的完整候选与同原静态字典
+
+**条件应用 130.10（EXCLUSION X133，不另立分类）。** 完整候选仍是130.1的同一原全域及
+
+$$
+\boxed{\mathrm{EB3}+\mathsf R_1},\qquad
+\mathsf R_1:\quad\exists o\in P\ \forall q\in P:
+\bigl[o\perp q\ \lor\ \exists r\in P (o\perp r\land q\perp r)\bigr].
+\tag{TCVIII130.29}
+$$
+
+根在全部目标之前选定，不要求它已是三角顶点。EXCLUSION X130.2先给这个根的三角，X133.2—133.6再给全部原三角；随后才由 EXCLUSION IX120.4—120.5及IX116.17得到同一实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,\qquad
+\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{TCVIII130.30}
+$$
+
+这是已有条件定理的应用。没有将 X130.2误读为任一点自动有三角，也不以每个目标各选一根代替 R1。
+
+取单位复向量 $v,w$，写 $P_v=vv^\ast,Q_v=I_3-P_v,p_v=\Phi(P_v),U=\Phi(I_3)$。X133.7的同一个 $\Phi$ 给完整对应：
+
+| 原静态对象 | 全部对应 |
+| --- | --- |
+| 载体、锥、单位与混合 | $\dim_{\mathbb R}V=9$，$C=\Phi(\mathrm{PSD}_3)$，$u\Phi=\operatorname{Tr}$；保零、全部非负质量及全部凸组合。$u$ 是泛函，$U$ 是 Jordan 单位向量。 |
+| 全态与全部纯射线 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$；$P=\{p_v\}\cong\mathbb{CP}^2$，相差非零复标量给同一射线。$\dim_{\rm aff}K=8$，总体中心 $U/3$。 |
+| 全效应与 Born 评价 | 恰为 $f_M(\Phi X)=\operatorname{Tr}(MX)$，$0\preceq M\preceq I_3$；补、序和全部混态评价保持。 |
+| 全确认菜单、least 与 minimum | $\mathcal F_{p_v}$ 恰为 $M=P_v+B$，$B=Q_vBQ_v$、$0\preceq B\preceq Q_v$；least 为 $f_{P_v}$，$T_{p_v}(\Phi\rho)=v^\ast\rho v$。 |
+| 纯比较与完整排除球 | $T_{p_v}(p_w)=\lvert v^\ast w\rvert^2$；$D_{p_v}=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1,\rho v=0\}$。它是整个三球，球缘 $\mathbb{CP}^1\cong S^2$，球心 $(U-p_v)/2$。 |
+| 原框架与全部有限数学测量 | 原零三角为三个正交秩一投影，least 效应和为 $u$；每条零边有唯一第三点，容量三。全部有限效应单位分解恰为全部有限 POVM，概率为 $\operatorname{Tr}(M_j\rho)$。 |
+| 谱、共同尺与乘法 | 全态正交谱分解及 Hermitian 实谱；派生配对 $\langle\Phi X,\Phi Y\rangle=\operatorname{Tr}(XY)$ 下 $C$ 自对偶；$\Phi X\circ\Phi Y=\Phi((XY+YX)/2)$。允许零权与重谱。 |
+
+完整 minimum 的费用不能省略。若 $0\preceq M\preceq I_3$ 且 $v^\ast Mv=1$，则正半定性给 $(I_3-M)v=0$。Hermitian 性消去交叉块，全部且仅有上述 $P_v+B$。对每个 $\rho\succeq0$，
+
+$$
+\operatorname{Tr}(M\rho)
+=\operatorname{Tr}(P_v\rho)+\operatorname{Tr}(B\rho)
+\ge\operatorname{Tr}(P_v\rho),
+\tag{TCVIII130.31}
+$$
+
+且 $B=0$ 在同一完整菜单中达到下界。这才给全锥序 least；整个确认菜单仍有多张效应。零值等价于 $\rho v=0$，Pauli 坐标给 $v^\perp$ 上整个二阶密度矩阵三球。
+
+反向在整个标准模型中，对任意单位 $v,w$，包括相同标签，取单位 $z\perp\operatorname{span}_{\mathbb C}\{v,w\}$。同一个原纯点 $\Phi(zz^\ast)$ 同时给两条原零边，所以任意预定根都满足 R1。全部效应、原单位和 minimum 由同一个 $\Phi$ 运输，反向覆盖全部原标签与混态。这是 X133.6—133.7的复用；本章没有证明更简单的完整模型类。
+
+### 130.8 全部继承的来源、复合、事件与时间合同
+
+本节逐项保留 EXCLUSION X133.10及 SAME_READBACK SECTION127.10 的完整合同与全部传递量词；后者是节号，不是该卷关于共同圆球的定理127.10。其所引 SAME_READBACK125.11、124.9、123.13，EXCLUSION VIII112.9、113.11，EXCLUSION IX120.11，THREE_COPY VII121.12、122.14，INTRINSIC_POLAR VI89.7—89.10与全部两尺度式(89.13)、V88.6与87章及原生续卷来源／全未来合同，均按原对象和全部前件继承。
+
+同一原装饰元组 $\mathcal O$、共同来源域、全部中点实现、原概率像紧性、全测试表及闭性、零／单位／补／有界倍增、重复标签及每种同中点实现，全部非负质量及零／次归一／不等质量，过程和参考各自完整的相关联合输入域继续保留。原 $L,p,\omega,K,M$、两次使用同一读回、两实张成、全实关系、完整(83.8)、全部 VI(89.13)、C2、整个 $G=1_E$、精确 PRE 后整个 H13与每个原资格态、活跃块严格负方向、共享总迹一、非活跃零质量及空活跃集均按原定义使用。
+
+设备／事件／来源绑定、全部菜单分支、实际参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、旧 support、全部合法未来和每个中间切口，原生与细化消费者、terminal futures、联合有符号关系、细标签粗归组、记录后条件未来、source-adoption及资源合同全部保留。数学纯射线、零效应的存在与基扰动不供应这些实际来源和接线。
+
+每个有限 $N\ge1$ 仍须供应实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N$、全部 $P_N=\operatorname{ext}K_N$ 和完整效应区间。每个实际二分割 $a+b=N$ 均保留
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b.
+\tag{TCVIII130.32}
+$$
+
+同一产品配对、严格张量单位、全部原因子置换及其逆的正性、规范重括号与指定运输下不连续位置分块不删除。完整二份比较 $S_2$ 仍对每个产品或纠缠纯点 $p,q_\ell\in P_2$、每个有限族、全部 $t_\ell\ge0$、$\sum_\ell t_\ell=1$（含零权与重复标签）要求
+
+$$
+T_p^{(2)}\!\left(\sum_\ell t_\ell q_\ell\right)
+=\sum_\ell t_\ell T_{q_\ell}^{(2)}(p),\qquad
+T_p^{(2)}(x)=\inf_{\substack{f\in[0,u_2]_{C_2^\ast}\\ f(p)=1}}f(x).
+\tag{TCVIII130.33}
+$$
+
+原低二份 $q=1,2$ 的 least／谱性／正面投影及保纯到 Jordan 桥；唯一实际自复合的直和扇区限制及秩和实维乘法的复型选择；同一实际两因子的产品正规形，仍是三项分别需要的供应。
+
+非经典 $\mathsf F_{\max}$ 支路还须同一最大块 $n_r=L\ge2$、同一含相位正交基上的实际三份正性资源
+
+$$
+g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r,\qquad
+\Delta_r=|g_r\rangle\langle g_r|\in C_3,\qquad u_3(\Delta_r)=L.
+\tag{TCVIII130.34}
+$$
+
+其余扇区为零，归一原源为 $\Delta_r/L$，不预付三份纯性或实际制备；全经典 $L=1$ 支路按原规则免除该资源。本章条件单体表示有 $L=3$，二、三份秩为九、二十七，高阶整个排除集不被改成单体 EB3。所有联合前件与三项供应齐备后才消费既有全有限层级结论。
+
+对原类型 $F:W_m\to W_n$，全旁观正性继续量化每个 $b\ge0$ 和任意含纠缠共同输入：$(\operatorname{id}_{W_b}\otimes F)(C_{b+m})\subseteq C_{b+n}$。只有实际完整有限层级及共同表示已供应，才经原 Choi 桥识别 CP、矩形跨扇区 Kraus。TP／TNI 分别要求 $u_n(Fx)=u_m(x)$／$u_n(Fx)\le u_m(x)$ 对全部原 $x\in C_m$；同族总预算也在同一个原输入逐点承担。同一实际事件的 CP 仍需完整提升、实际探针及相容核，全部数学 CP-TNI 分支成为实际事件仍需饱和选择。同族仪器保留接线、共同输入预算、记录、粗粒化和校准；仅正质量分支归一，零质量分支不强定归一态。Lüders 另需同一分支的锐效应、接受态中性与输出校准。
+
+原物理钟、实际动态来源、连续齐次可逆时间群及单位各自保留。另给同载体上全实时间连续群 $A_t$，满足 $A_0=I,A_{s+t}=A_sA_t,A_t(C)=C,uA_t=u$ 后才谈该供应的有限维生成元；再给重构复块上的保迹酉时间族后才使用
+
+$$
+U_t=\exp(-\mathrm i tH/\hbar),\qquad
+\rho_t=U_t\rho U_t^\ast,\qquad
+\mathcal L(\rho)=-\mathrm i[H,\rho]/\hbar,\qquad H=H^\ast.
+\tag{TCVIII130.35}
+$$
+
+量词覆盖全部原输入和实际时间。$H$ 的标量平移与时间尺度分别保留其原意义。静态字典没有选出实际 Hamiltonian、能量识别及标定、数值 $\hbar$、时空或物理空间维数。重复记录射线与相干块的表述仍须其显式重复通道、同源及相位校准前件，不供应 R1 或四效应内逼近。原图边数不是物理时间或顺序测量次数。
+
+### 130.9 原始文献与数学归属
+
+仓内来源统一取提交 `d6b4ccca43d427e899b575e039cff9b5c05ea307` 的原正文：FINITE_PURE VII103.2；EXCLUSION IX116.1—116.2、IX119.10、IX120.2及120.8—120.12；BILATERAL VIII121.1、121.3—121.5；THREE_COPY VII121.6—121.7及122的固定锚点影壳、整球与完整零菜单退化接口；EXCLUSION X124—126的额外前件，X130.2、X132的局部带分支，X133.1—133.7及133.10；SAME_READBACK SECTION127.10。静态分类消费 X133 和 IX 的已付接口，不重新证明成熟分类。物理合同按130.8完整传递。
+
+外部原始文献只在以下范围使用。Shirokov，*Stability of convex sets and applications*，2012，§2印刷页842 Definition 1，将 stability 定义为中点映射开放；同页讨论稳定紧凸集与极点闭性，§3 Corollary 1之后明确稳定的 $\mu$-紧凸集有闭极点集。中点稳定性是额外充分前件：若混态 $x=(y+z)/2$、$y\ne z$，取不交的 $y,z$ 邻域；中点映射开放使 $x$ 附近的原状态皆有来自这两个邻域的非平凡中点表示，故不能纯。这个成熟机制不证明原 EB3 凸体已稳定，也不承担定理130.6。[原文](https://doi.org/10.1070/IM2012v076n04ABEH002606)
+
+Labardini-Fragoso–Neumann-Coto–Takane，*Cones and convex bodies with modular face lattices*，arXiv:0903.0643v1，§2印刷页4 Lemma 2以面格模性证明固定秩面族紧，印刷页5 Lemma 4(b)以整个极点集紧证明面收敛与其极点集收敛的对应。这两个前件均未在130.1预付，不能用它们代替130.8的纯极限论证。[原文](https://arxiv.org/abs/0903.0643v1)
+
+一般有限维基扰动、紧性、极值面、暴露射线与凸体边界连通性是成熟工具；本章原域增量限于130.6的固定四效应定量障碍、130.8中任意非纯极限的反向定位及其条件纯邻域后果。连通到 Inj、零冗余传播、四面体基的内部事实、残余稳定及 X133静态应用均明确复用。本章只提出这些条件性的纸面数学结论，不主张形式化核验、物理实现、全球优先权或完整模型简化。
+
+### 130.10 完整中文图景
+
+把全部原状态想成同一块凸实体，每个纯标签背后都有一整颗排除三球，球皮恰好是它的原纯零邻居；所有原读数尺仍在同一完整菜单里。全图连通只说两点之间有有限条原零边的路线，不说路线统一有两步，也不说纯标签在拓扑上连成一片。已知的孤立重复块与法向冗余传播使这个分支中每个标签都有四维零法向和唯一完整暴露尺，但确认它的全部尺仍有许多张，更没有免费取得最低尺。现在固定一个纯点，在它的同一张球皮上按四面体方向选四个实际邻居，取这四个邻居的原暴露尺；它们都在固定点读零，并把固定点暴露尺的补严格围在四维锥内部。若附近纯标签趋向这个点，而它们的纯邻居却趋到旧排除球的内部，那么邻居的暴露尺必趋向这张补尺，邻居背后的反向整颗球也必缩成原纯点。这时，只要原来的四张零尺还能小幅调整为附近标签上的合法零尺，就会把那张本应生成极射线的邻居暴露尺推到锥内部，产生矛盾。因此这种退化若发生，至少一张事先指定的尺必留下正误差，误差下界由固定四张尺本身确定。还缺的是证明原关系为什么让这四张尺在附近都能如此延续；闭图只能收下已经存在的极限尺，不能制造所需的逼近尺。另一方面，在这个连通分支，任何纯点列若趋到混态，都可利用同一个极限效应，把它重新看成上述逃逸，所以逐点排除该配置恰好给整个纯点集紧，继而给紧纯集的每个固定有限邻域紧。它仍没有把所有有限路线压成同一个半径，更没有给一个覆盖全部目标的两步根。目前完整量子候选因此仍保留 X133 的那一个事先固定的根；在明确支付它之后，已有定理才把全部原态、原尺、最低确认、Born 概率、POVM和谱结构一起对应到复三能级模型。实际来源、全有限复合与纠缠、事件仪器、记录和所有未来、物理钟、Hamiltonian、能量及数值 $\hbar$ 继续各付原合同，四张数学零尺不会制造这些物理供应。
+
+## 追加锚（本行以下为增补区）
