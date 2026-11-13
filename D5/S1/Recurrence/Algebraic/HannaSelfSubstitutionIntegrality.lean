@@ -197,7 +197,7 @@ private theorem logSum_constants (L : ℕ → ℚ) :
   · simp [hn]
   · simp [hn]
 
-private theorem power_lift {R : Type*} [CommRing R] (p : ℕ)
+theorem power_lift {R : Type*} [CommRing R] (p : ℕ)
     {U V : R} (h : (p : R) ∣ U - V) (m : ℕ) :
     (p : R) ^ (padicValNat p m + 1) ∣ U ^ m - V ^ m := by
   let I : Ideal R := Ideal.span {(p : R)}
