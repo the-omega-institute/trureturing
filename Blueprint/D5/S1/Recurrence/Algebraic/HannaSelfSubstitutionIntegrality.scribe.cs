@@ -39,21 +39,21 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                     + "forces all positive-index values of L to be integers.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Integral self-substitution fixed points", Disp(ClaimBody()),
-                "The integer Euler ledger of the exponential input gives L(p*m)=L(m) modulo p "
-                    + "for every prime p and positive m. Frobenius and power lifting show that "
+                "For every rational sequence L with integral exponential input, the positive-index "
+                    + "values L(n) have integer representatives c(n). The integer Euler ledger "
+                    + "of the input gives p dividing c(p*m)-c(m) for every prime p and positive m. "
+                    + "Frobenius and power lifting show that "
                     + "the exponential self-substitution operator preserves integer coefficients "
-                    + "by the sufficient Dieudonne-Dwork criterion. The operator raises coefficient "
-                    + "agreement by one degree. Iteration from 1 determines its unique solution, "
-                    + "and every solution coefficient equals an integer iterate coefficient. "
-                    + "The proof_shape of result, claim_of_preservation and every theorem helper "
-                    + "is bind-only; definitions have proof_shape definition. All helpers have "
-                    + "live consumers listed in the source. The frozen integer normalized "
-                    + "contraction theorem already supplies the integral fixed point under "
-                    + "preservation, so the iteration is no escape_witness. Admission is "
-                    + "open-problem-resolution of the tier-1 external assertion preregistered "
-                    + "in #18709 before probes. The preregistration attributes its OEIS and "
-                    + "literature readings; worldwide literature completeness remains "
-                    + "ASSUMED-UNVERIFIED. Escape audit #24041 remains unfinished.",
+                    + "by the sufficient Dieudonne-Dwork criterion. Its logarithmic sum has "
+                    + "constant coefficient zero, so every output has constant coefficient one. "
+                    + "The operator raises coefficient agreement by one degree. "
+                    + "PowerSeriesNormalizedContraction.exists_unique_fixed supplies a unique "
+                    + "rational solution. Starting from 1, each iterate has integer coefficients. "
+                    + "For every natural degree N, every solution agrees through degree N with "
+                    + "the Nth iterate, so its degree-N coefficient is an integer. Thus a solution "
+                    + "exists and every solution is integral in every degree. These are formal "
+                    + "power-series statements without an analytic convergence hypothesis or "
+                    + "a finite degree bound.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst"), ResolutionKind.Proved)),
             Node("geometric_input", "Geometric exponential inputs",
@@ -62,9 +62,9 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                         Pow(Cast(V("a"), Rat()), V("n"))))))))),
                 "For every integer a the exponential of Sum_{n>=1} a^n*x^n/n equals "
                     + "(1-a*X) inverse and has integer coefficients. The specialization a=2 "
-                    + "supplies the input for the A157675 equation. Its proof_shape is "
-                    + "bind-only, escape_witness is none, and its live consumer is "
-                    + "HannaSelfSubstitutionIntegralityA157675.result.",
+                    + "supplies the input for the A157675 equation through "
+                    + "HannaSelfSubstitutionIntegralityA157675.result. The identity and "
+                    + "integrality hold at every natural degree.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
