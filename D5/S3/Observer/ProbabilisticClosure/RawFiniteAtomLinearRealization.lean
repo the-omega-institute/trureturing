@@ -605,7 +605,7 @@ private theorem marker_recovers_root (source : Source) (hn : noAdjacentOnes sour
   cases hr : source.1 <;> rcases hmod with hmod | hmod <;>
     simp [alternatingBit,hr,hmod] at hb ⊢
 
-private theorem stopped_root_recovery {Seed : Type*} [MeasurableSpace Seed]
+theorem stopped_root_recovery {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (seed : Seed) (source : Source) (hn : noAdjacentOnes source)
     (n : ℕ) : (actualRun policy seed source n).stopped = true →
       recoveredRoot (actualRun policy seed source n) = source.1 := by

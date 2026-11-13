@@ -1,0 +1,118 @@
+**命题 103.7（$\Delta$ 供应(102.24)的两个原资源）。** 在定理103.5之后，
+取任意活跃 $i,j$，令 $d=n_i\ge2$、$e=n_j\ge2$。
+任取 $k$ 满足 $b=n_k\ge2$，可一直取 $k=i$。
+对(102.20)的任意秩一 $P$ 和任意基交换 $X$，
+(102.24)定义的 $\alpha\alpha^*$ 与 $\gamma\gamma^*$ 分别属于原 $C_3$ 的
+$(i,i,k)$ 与 $(k,j,j)$ 扇区。它们的迹分别为 $d,2e$。
+这些成员关系可由原 $\Delta$ 经已经取得原旁观正性的一体矩形合同得到。
+
+**证明。** 保持见证基为各源块的计算基。选正交归一 $(f_a)_{a=1}^d$，
+使 $P=|f_1\rangle\langle f_1|$。在桥块 $k$ 选两条基向量 $|0\rangle,|1\rangle$。
+定义三个从源块 $i$ 出发的矩形算子
+
+$$
+K_{\rm r}|a\rangle=|\overline{f_a}\rangle,\qquad
+K_{\rm o}|a\rangle=|f_a\rangle,\qquad
+K_{\alpha}|a\rangle=
+\begin{cases}|1\rangle_k&a=1,\\|0\rangle_k&a\ge2.\end{cases}
+\tag{103.13}
+$$
+
+前两个输出在块 $i$，第三个输出在块 $k$；对应一体映射在其他源块为零。
+由 $|I_d\rangle=\sum_a|\overline{f_a}\rangle|f_a\rangle$，有
+
+$$
+(K_{\rm r}\otimes K_{\rm o}\otimes K_{\alpha})g_i
+ =|I_d-P\rangle\!\rangle|0\rangle_k
+    +|P\rangle\!\rangle|1\rangle_k=\alpha.
+\tag{103.14}
+$$
+
+此张量映射作用于全 $\Delta$ 时自动消去其他源扇区。
+每条一体合同的原旁观正性由引理103.6先取得，所以输出 $\alpha\alpha^*\in C_3$。
+这里没有使用原三份锥的一般 PSD 正性。
+
+对 $X$ 选正交归一特征基 $(h_a)_{a=1}^e$，本征值为 $\lambda_a\in\{1,-1\}$。
+因为 $X$ 只交换两条基向量，$+1$ 的重数为 $e-1$，$-1$ 的重数为一。
+从源块 $j$ 定义
+
+$$
+K_{\gamma}|a\rangle=|0\rangle_k+\lambda_a|1\rangle_k,\qquad
+H_{\rm r}|a\rangle=|\overline{h_a}\rangle,\qquad
+H_{\rm o}|a\rangle=|h_a\rangle.
+\tag{103.15}
+$$
+
+输出标签分别为 $k,j,j$。矩阵单位向量化给
+
+$$
+(K_{\gamma}\otimes H_{\rm r}\otimes H_{\rm o})g_j
+ =|0\rangle_k|I_e\rangle\!\rangle
+   +|1\rangle_k|X\rangle\!\rangle=\gamma.
+\tag{103.16}
+$$
+
+同理 $\gamma\gamma^*\in C_3$。不同位置始终是不同张量腿，即使 $i=j=k$ 也不合并。
+正交桥基和投影互补性给
+$\|\alpha\|^2=\operatorname{Tr}(I_d-P)+\operatorname{Tr}P=d$，
+$\|\gamma\|^2=\operatorname{Tr}I_e+\operatorname{Tr}(X^*X)=2e$。
+
+为单独核对预算，置
+
+$$
+c_\alpha=\max\{1,d-1\},\qquad c_\gamma=2(e-1).
+\tag{103.17}
+$$
+
+这里 $c_\alpha,c_\gamma$ 是算子范数的平方：
+$K_\alpha K_\alpha^*=(d-1)|0\rangle\langle0|+|1\rangle\langle1|$，
+$K_\gamma K_\gamma^*$ 在 $|0\rangle\pm|1\rangle$ 的归一方向上的本征值为
+$2(e-1),2$。其余四个算子是酉。
+因此把 $K_\alpha,K_\gamma$ 分别除以 $\sqrt{c_\alpha},\sqrt{c_\gamma}$ 后，
+全部一体合同均满足 $K^*K\preceq I$，故有原全旁观不增质量预算。
+从两个独立的全局输入 $\Delta/R$，分别得到
+
+$$
+\frac{\alpha\alpha^*}{Rc_\alpha},\quad
+\frac{\gamma\gamma^*}{Rc_\gamma},\qquad
+\text{质量分别为 }\frac{d}{Rc_\alpha},\quad\frac{2e}{Rc_\gamma}.
+\tag{103.18}
+$$
+
+若先写条件源 $\Delta_i/d$ 与 $\Delta_j/e$，相应输出质量为
+$1/c_\alpha$ 与 $2/c_\gamma$；从全局源选择这些扇区还分别带权 $d/R,e/R$。
+这些条件质量不能替代(103.18)的全局质量。
+正锥缩放给归一资源 $\alpha\alpha^*/d$、$\gamma\gamma^*/(2e)$ 属于原 $K_3$；
+它不声明物理菜单已经提供上述筛选或条件制备。
+
+现在可复用引理102.9中从资源成员关系之后开始的收缩。
+两资源的原乘积在 $C_6$，两条桥腿上 $\beta_k/b$ 是 proper 帽。
+收缩与置换给
+
+$$
+\operatorname{cap}_{\beta_k/b}
+ \left[\frac{\alpha\alpha^*}{d}\otimes
+             \frac{\gamma\gamma^*}{2e}\right]
+ =\frac{J(F_{ij,U})}{2deb},\qquad
+u_4\left(\frac{J(F_{ij,U})}{2deb}\right)=\frac1{2b}.
+\tag{103.19}
+$$
+
+这逐项等于(102.21)，因为未缩放的桥收缩把向量送到
+$|A_0\rangle\!\rangle\otimes|B_0\rangle\!\rangle+
+ |A_1\rangle\!\rangle\otimes|B_1\rangle\!\rangle$，重排后为 $|U\rangle\!\rangle$，
+其范数平方为 $de$。
+若保持(103.18)的全局、不增质量输出而不归一，则相应结果为
+
+$$
+\frac{J(F_{ij,U})}{R^2c_\alpha c_\gamma b},\qquad
+\text{质量 }\frac{de}{R^2c_\alpha c_\gamma b}
+ =\frac{d}{Rc_\alpha}\frac{2e}{Rc_\gamma}\frac1{2b}.
+\tag{103.20}
+$$
+
+这还支付了源扇区权重。连接一个待处理门输入所需的额外杯帽预算另计；
+(103.19)和(103.20)都只是指定资源收缩的质量。
+原引理102.9中唯一从 $C_3=\mathsf D_3$ 引入这两个资源的步骤，
+在这里已由(103.13)—(103.16)替代。∎
+

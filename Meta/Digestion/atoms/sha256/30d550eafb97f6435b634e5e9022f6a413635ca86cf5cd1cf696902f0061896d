@@ -1,0 +1,69 @@
+**命题 102.13（自身 Choi 的完整矩形分量描述）。** 在定理102.11的层级中，取任意有限
+$m,n\ge1$，写输入扇区 $s\in I^m$、输出扇区 $t\in I^n$。
+对实线性 $F:W_m\to W_n$，以下条件等价：
+原旁观正性(102.11)；$J(F)\in C_{m+n}$；每个矩形分量
+$F_{t,s}:M_{D_s}(\mathbb C)\to M_{D_t}(\mathbb C)$ 的复线性扩张完全正。
+它们也等价于有限 Kraus 表达
+
+$$
+(Fx)_t=\sum_{s,\alpha}K_{t,s,\alpha}x_sK_{t,s,\alpha}^*,\qquad
+K_{t,s,\alpha}:\mathcal H_s\to\mathcal H_t.
+\tag{102.38}
+$$
+
+允许 $D_s\ne D_t$、$s\ne t$；零分量取空 Kraus 族。
+在这些等价条件下，$F$ 的原保质量／不增质量条件分别恰是
+
+$$
+B_s:=\sum_{t,\alpha}K_{t,s,\alpha}^*K_{t,s,\alpha}
+ =I_{D_s}\quad\text{／}\quad B_s\preceq I_{D_s}
+\quad\text{对每个输入 }s.
+\tag{102.39}
+$$
+
+**证明。** 原 Choi 当且仅当已在未假设高阶 PSD 时由引理102.7证明。
+现在定理102.11允许将其整个原 Choi 锥识别为标准 $\mathsf D_{m+n}$。
+其 $(s,t)$ 块是
+
+$$
+J(F)_{s,t}=\sum_{a,b=1}^{D_s}E_{ab}^{(s)}\otimes F_{t,s}(E_{ab}^{(s)}).
+\tag{102.40}
+$$
+
+未触动的参考标签 $s$ 保留了输入扇区；不同输入分量没有在输出中被平均。
+所以全 Choi 正性逐块测试每个(102.40)，包括改变扇区的分量。
+在每一块应用 Watrous，*The Theory of Quantum Information*，定理2.22、2.26，
+其精确来源及矩形、零分量和逐输入预算的应用见
+[既有完整通道与有限扇区笔记](../../../Library/Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations)。
+该成熟 Choi／Kraus 定理给每个非零矩形分量的完全正性及(102.38)；
+零分量直接为零映射。这里不重新证明这一表示定理。
+
+对任意 $x\in C_m$，迹循环性给
+
+$$
+u_n(Fx)=\sum_s\operatorname{Tr}(B_s x_s).
+\tag{102.41}
+$$
+
+逐个输入扇区测试任意秩一正 $x_s$，说明与 $u_m(x)$ 比较的必要充分条件正是
+(102.39)；空 Kraus 和为零，零映射也在不增质量类中。
+这是逐输入块预算，不能只比较整个 Choi 元素的总迹。
+同一预算在自身 Choi 坐标中为
+
+$$
+\sum_t\operatorname{Tr}_{\mathcal H_t}J(F)_{s,t}=B_s^{\mathsf T}.
+\tag{102.41a}
+$$
+
+所以原旁观正映射锥经 $J$ 恰为整个原 $C_{m+n}$，CP-TNI 与 TP 分别是其
+逐参考块边缘不超过 $I_{D_s}$ 与等于 $I_{D_s}$ 的切片。
+若用 $J(F)/R^m$，参考边缘相应不超过或等于
+$\sigma_m=\bigoplus_s I_{D_s}/R^m$；$\operatorname{Tr}\sigma_m=1$，
+因为 $\sum_sD_s=R^m$。
+这是相关态锥的完整边缘条件，不由总归一质量替代。
+
+这些等价也推出任意矩阵参考维数上的常规 CP 正性，因为每个已取得的 Kraus 项
+与参考恒等张量后仍保持 PSD。该结论在原锥已经确定之后得到，
+没有把任意矩阵参考当作初始可用系统。
+原参考只用了输入自身的 $m$ 份拷贝。∎
+

@@ -377,7 +377,7 @@ private theorem affine_difference {d : ℕ} (h : EuclideanSpace ℝ (Fin d) →�
     exact abs_nonneg _
 
 omit [FiniteDimensional ℝ V] in
-private theorem positive_span_difference {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem positive_span_difference {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     {p : V} {f : V →ₗ[ℝ] ℝ} (hf : f ∈ Submodule.span ℝ (zeroPositive C u p)) :
     ∃ g ∈ zeroPositive C u p, ∃ k ∈ zeroPositive C u p, f = g-k := by
   classical
