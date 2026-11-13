@@ -67,7 +67,8 @@ theorem original_discontinuity_collapse
   · refine ⟨ms, ?_⟩
     have hQD : Q = D p := NonemptyCompacts.ext heq
     simpa only [hQD, Function.comp_def] using hlim
-  · apply hno
+  · exfalso
+    apply hno
     refine ⟨fun n => pn (ns (ms n)), hpn, q, hq, ?_⟩
     have ht := tendsto_iff_dist_tendsto_zero.mp hlim
     simpa only [NonemptyCompacts.dist_eq, heq, Function.comp_def, D, wholeExclusion,
@@ -81,10 +82,12 @@ private theorem compact_diameter_control (S T : NonemptyCompacts V) :
   obtain ⟨y', hy', hyy'⟩ := T.isCompact.exists_infDist_eq_dist T.nonempty y
   have hdx : dist x x' ≤ dist S T := by
     rw [← hxx']
-    exact Metric.infDist_le_hausdorffDist_of_mem hx (NonemptyCompacts.edist_ne_top S T)
+    exact Metric.infDist_le_hausdorffDist_of_mem hx (Metric.hausdorffEDist_ne_top_of_nonempty_of_bounded
+      S.nonempty T.nonempty S.isCompact.isBounded T.isCompact.isBounded)
   have hdy : dist y y' ≤ dist S T := by
     rw [← hyy']
-    exact Metric.infDist_le_hausdorffDist_of_mem hy (NonemptyCompacts.edist_ne_top S T)
+    exact Metric.infDist_le_hausdorffDist_of_mem hy (Metric.hausdorffEDist_ne_top_of_nonempty_of_bounded
+      S.nonempty T.nonempty S.isCompact.isBounded T.isCompact.isBounded)
   have hxy := Metric.dist_le_diam_of_mem T.isCompact.isBounded hx' hy'
   have ht := dist_triangle4 x x' y' y
   rw [dist_comm y' y] at ht

@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Foundation.OriginalBallScale
 import D5.S3.Quantum.Foundation.OriginalNormalFamily
 import D5.S3.Quantum.Foundation.CommonOldExclusionConfirmation
+import D5.S3.Quantum.Foundation.OriginalExclusionLimits
 
 /-! Actual whole-exclusion collapse supplies the full fixed-edge pure row. -/
 
@@ -82,11 +83,12 @@ theorem actual_collapse_pure_edge_row
   have hfp : f p = 1 := tendsto_nhds_unique
     ((hev.tendsto (f, (p : V))).comp (hflim.prodMk_nhds (hpV.comp hφ.tendsto_atTop)))
     (by
+      change Tendsto (fun n => e (φ n) (pn (φ n))) atTop (𝓝 1)
       have hones (n : ℕ) : e (φ n) (pn (φ n)) = 1 := (he (φ n)).2
       simpa only [hones] using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1)))
   have hfs : f s = comparison C u p s := tendsto_nhds_unique
     ((show Continuous (fun g : V →L[ℝ] ℝ => g s) by fun_prop).tendsto f |>.comp hflim)
-    (by simpa only [heval] using ht.comp hφ.tendsto_atTop)
+    (by simpa only [Function.comp_def, heval] using ht.comp hφ.tendsto_atTop)
   have hbound : ∀ᶠ n in atTop, e n q ≤ M * Metric.hausdorffDist (exclusion C u (pn n)) {(q : V)} := by
     filter_upwards [hsmall] with n hn
     obtain ⟨z, hz, hez⟩ := CommonOldExclusionConfirmation.minimizer_has_zero hc hs (pn n)
@@ -106,7 +108,7 @@ theorem actual_collapse_pure_edge_row
   have hfq : f q = 0 := le_antisymm
     (le_of_tendsto_of_tendsto
       ((show Continuous (fun g : V →L[ℝ] ℝ => g q) by fun_prop).tendsto f |>.comp hflim)
-      (by simpa using (hcollapse.const_mul M).comp hφ.tendsto_atTop)
+      (by simpa only [Function.comp_def, mul_zero] using (hcollapse.const_mul M).comp hφ.tendsto_atTop)
       (hφ.tendsto_atTop.eventually hbound))
     ((hf q (pure_mem q).1).1)
   exact ⟨f.toLinearMap, ⟨hf, hfp⟩, hfq, hfs⟩
@@ -231,7 +233,7 @@ theorem original_row_saturation
       (by rw [hrho (-v) (by simpa using hv)])
     have hh := hn s (pure_mem s).1
     change 0 ≤ 1 * k.g.val s + (directionLift k (-v)).val s at hh
-    simp only [map_neg, Submodule.coe_neg, ContinuousLinearMap.neg_apply] at hh
+    simp only [map_neg, Submodule.coe_neg, neg_apply] at hh
     rw [hform s]
     nlinarith
   have hpure (s : pure C u) : comparison C u p s = ep s := by
@@ -273,6 +275,40 @@ theorem original_row_saturation
     obtain ⟨_, _, _, hcs⟩ := hsb w hw s hsw
     rw [hcs z hz, htbu]
     ring
+
+/-- A nonunit original budget at a uniquely fully confirmed label excludes
+all actual discontinuities in the whole original pure domain. -/
+theorem original_nonunit_continuity
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (hEB3 : ∀ s : pure C u, ∃ b : ExclusionChart C u s, b.dim = 3)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (hInj : Function.Injective (fun s : pure C u => exclusion C u s))
+    (p : pure C u) (a : ExclusionChart C u p) (ha : a.dim = 3)
+    (ep : V →ₗ[ℝ] ℝ) (hp : ∀ e, e ∈ fullZeroConfirmers C u p ↔ e = ep)
+    (v : chartSpace a) (hv : ‖v‖ = 1) (hbudget : 1 < extensionBudget a v) :
+    ContinuousAt (OriginalExclusionLimits.wholeExclusion hc hs hg
+      (fun s => ⟨(hEB3 s).choose⟩)) p := by
+  have h3 : ReciprocalExclusionLimits.threeBallExclusions C u := by
+    intro s
+    obtain ⟨⟨d, hd, f, hi, hw⟩, heq⟩ := hEB3 s
+    dsimp at heq
+    subst d
+    exact ⟨f, hi, hw⟩
+  by_contra hdisc
+  obtain ⟨pn, hpn, q, hq, hcollapse⟩ :=
+    OriginalExclusionLimits.original_discontinuity_collapse hc hs hg h3 hPR p hdisc
+  have hB : exclusionBalls C u := fun s => ⟨(hEB3 s).choose⟩
+  have hqS : (q : V) ∈ a.param '' Metric.sphere 0 1 := by
+    rw [← chart_boundary hc hs hg hB p a]
+    exact ⟨hq, q.property⟩
+  obtain ⟨w, hw, hwq⟩ := hqS
+  have hw1 : ‖w‖ = 1 := by simpa using hw
+  have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hp q w hw1 hwq pn hpn hcollapse
+  exact (ne_of_gt hbudget) (hsat.1 v hv).symm
+
+#print axioms actual_collapse_pure_edge_row
+#print axioms original_nonunit_continuity
 
 #print axioms original_row_saturation
 
