@@ -1,0 +1,39 @@
+**定理 120.9（标签收敛而非仅边界点收敛）。** 对任意 $p\in P$、任意 $x\in\operatorname{ri}D_p$，存在原纯标签 $p_n\in P_0$ 和点 $x_n\in\operatorname{ri}D_{p_n}$，使
+
+$$
+x_n\longrightarrow x,\qquad p_n\longrightarrow p.
+\tag{IX120.12}
+$$
+
+特别地 $\overline{P_0}^{\,P}=P$。
+
+证明。所有欧氏距离只在 $\operatorname{aff}K$ 内取辅助度量。选 $z_n\in\operatorname{ri}K$、$z_n\to x$，令 $x_n$ 为离 $z_n$ 最近的相对边界点，$r_n=\operatorname{dist}(z_n,\partial_{\rm rel}K)>0$。紧性保证最近点存在，且
+
+$$
+\|x_n-x\|\le r_n+\|z_n-x\|\le2\|z_n-x\|\longrightarrow0.
+\tag{IX120.13}
+$$
+
+闭球 $\overline B(z_n,r_n)$ 包含于 $K$：若沿某条从 $z_n$ 出发的线段在距离小于 $r_n$ 处离开 $K$，首次边界点将更近。任一在 $x_n$ 支撑 $K$ 的相对超平面也支撑这个内接欧氏球。欧氏球在该接触点只有一个支撑超平面，即法向平行 $x_n-z_n$ 的切平面。所以 $K$ 在 $x_n$ 只有一个支撑超平面，正的零于 $x_n$ 的仿射函数组成一条非零射线。
+
+若 $x_n$ 纯，120.7使该法向锥的线性张成维数至少四，矛盾。因此 $x_n$ 非纯。取其最小原面；它是某个完整球 $D_{p_n}$，而非纯性使 $x_n\in\operatorname{ri}D_{p_n}$。这里不把“任一支撑面”与“最小面”混淆：混态点在严格凸球中不可能落在球边。
+
+非负仿射函数在一个面的相对内点为零，必零于整个面。因此零于 $x_n$ 的正法向恰为零于 $D_{p_n}$ 的正法向。唯一支撑使它们只有一条射线；所有 $a\in\mathcal A_{p_n}$ 又满足 $a(p_n)=1$，故归一后只有一张，得到 $p_n\in P_0$。
+
+还须证明原标签收敛。任取 $p_n$ 的一个收敛子列，并再取其唯一确认效应的共同收敛子列，记
+
+$$
+p_n\to s\in K,\qquad e_{p_n}\to e\in\mathcal E.
+$$
+
+由 $e_{p_n}(p_n)=1$、$e_{p_n}(x_n)=0$，有 $e(s)=1,e(x)=0$。$x\in\operatorname{ri}D_p$ 及非负性迫 $e|_{D_p}=0$。若 $t$ 是 $e$ 的一值面中的任一原纯点，则同一效应在 $t$ 为一、在整个 $D_p$ 为零，故
+
+$$
+D_p\subseteq D_t\quad\Longrightarrow\quad D_t=D_p
+\quad\Longrightarrow\quad t=p.
+$$
+
+一值面非空紧且由其原纯点凸生成，所以该面只有 $p$，于是 $s=p$。这没有假定聚点 $s$ 纯；它是由同一个极限效应的一值面证明出来的。$K$ 紧且所有标签聚点都等于 $p$，因此整个原序列 $p_n\to p$。证毕。
+
+这个结论不说 $P_0=P$、$P_0$ 开或 $P$ 闭，也不说逼近中的球已Hausdorff收敛。
+

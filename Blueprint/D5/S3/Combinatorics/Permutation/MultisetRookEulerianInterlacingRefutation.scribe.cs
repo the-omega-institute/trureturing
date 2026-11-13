@@ -13,11 +13,9 @@ internal sealed class MultisetRookEulerianInterlacingRefutationDocument : IScrib
         "Multiset rook-Eulerian interlacing fails on a six-row Ferrers board.",
         H("A counterexample to multiset rook-Eulerian interlacing"),
         Blocks(
-            Paragraph(Text("A board is a weakly increasing function l on zero-based positions Fin(n). Content a on Fin(k) specifies the multiplicity of the positive letter c+1. Lists encode the source words in their original order. When the content sum is n, their length is n. Polynomial.Splits over the real field is used directly for real-rootedness; by Mathlib's splits_iff_card_roots it is equivalent to roots.card = natDegree, with multiplicity.")),
+            Paragraph(Text("A board is a weakly increasing function l on zero-based positions Fin(n). Content a on Fin(k) specifies the multiplicity of the positive letter c+1. Lists encode the source words in their original order. When the content sum is n, their length is n. The strict adjacent-ascent statistic is reused from D5/S3/Combinatorics/Permutation/WordAscents.asc for all natural-valued words, including the empty word. Polynomial.Splits over the real field is used directly for real-rootedness; by Mathlib's splits_iff_card_roots it is equivalent to roots.card = natDegree, with multiplicity.")),
             Node("words", "Words with fixed content fitting a Ferrers board", "W", Words(),
                 "Section 3.3, page 11: ‘Let α = (α₁, . . . , αₖ) be non-negative integers with total sum n, and let λ and μ be integer partitions such that λᵢ > μᵢ for all i. We let W(λ/μ, α) be all words with αᵢ entries equal to i, such that μᵢ < wᵢ ≤ λᵢ for all i = 1, 2, . . . , n.’ Here μ is zero. The defining expression constructs the list containing a(c) copies of c+1, enumerates its permutations by the existing List.permutations' operation, removes duplicate lists, and retains precisely the row inequalities. List.mem_permutations' identifies membership with permutation of that content list. No word order is identified: only repeated enumeration of the same word is removed. getD(w,i,0) is list lookup with default zero; every queried position exists when the content sum is n.", DescribeRole.Definition),
-            Node("ascents", "Strict adjacent ascents", "asc", Ascents(),
-                "Section 2, page 4: ‘if w₁w₂ . . . wℓ is a word, then i is an ascent of the word if wᵢ < wᵢ₊₁.’ The zero-based index set is range(length(w) minus one). Subtraction in this natural-valued expression is truncated, including at the empty word.", DescribeRole.Definition),
             Node("full", "The full polynomial", "R", Full(),
                 "Section 3.3, page 11, equation (10): R(λ/μ, α; t) := Σ_{w ∈ W(λ/μ, α)} t^{asc(w)}. X is the real polynomial indeterminate; summation is over distinct words.", DescribeRole.Definition),
             Node("refined", "The first-letter refined polynomial", "Rj", Refined(),
@@ -74,9 +72,6 @@ internal sealed class MultisetRookEulerianInterlacingRefutationDocument : IScrib
         return Parameters(Equal(Call("W", Id("l"), Id("a")),
             Call("filter", Call("toFinset", new Formula.Apply(F.Seq(Id("permutations"), F.Apos), [contents])), Lambda("w", ListN, rows))));
     }
-    private static Formula Ascents() => All("w", ListN, Equal(Call("asc", Id("w")),
-        Call("card", Call("filter", Call("range", Subtract(Call("length", Id("w")), Num(1))),
-            Lambda("i", N, Lt(Get(Id("w"), Id("i")), Get(Id("w"), Add(Id("i"), Num(1)))))))));
     private static Formula Full() => Parameters(Equal(Call("R", Id("l"), Id("a")),
         SumOver("w", Call("W", Id("l"), Id("a")), new Formula.Power(Id("X"), Call("asc", Id("w"))))));
     private static Formula Refined() => Parameters(All("j", N, Equal(Call("Rj", Id("l"), Id("a"), Id("j")),

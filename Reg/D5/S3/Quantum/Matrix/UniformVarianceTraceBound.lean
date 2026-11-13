@@ -349,5 +349,89 @@ def global_registration :
   familyRecord := none
   options := #[] }
 
+namespace TracePairing
+open scoped Matrix.Norms.L2Operator
+
+abbrev signature : Signature where
+  Params := Type u
+  State a := Matrix a a ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ a := Matrix a a ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ X => X) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a : Type u} [Fintype a] [DecidableEq a] (B X : Matrix a a ℂ),
+    (B * X).trace.re ≤ ‖B‖ * traceNorm (R.readout () a X)
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  have hh := h (a := ULift.{u} Unit) 1 1
+  have hz := congrArg Complex.re (traceNorm_of_posSemidef
+    (Matrix.PosSemidef.zero : (0 : Matrix (ULift.{u} Unit) (ULift.{u} Unit) ℂ).PosSemidef))
+  norm_num at hz
+  norm_num [rejected, realize, hz] at hh
+
+def source_registration : Registration arena.{u} (type_of% @re_trace_mul_le.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨re_trace_mul_le, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨ULift.{u} Unit, 0, (fun _ _ => 1), ?_⟩
+    intro h
+    have he := congrFun (congrFun h ⟨()⟩) ⟨()⟩
+    change (0 : ℂ) = 1 at he
+    exact zero_ne_one he
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@re_trace_mul_le.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound.re_trace_mul_le.__information_unit
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ _ X => X) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Matrix.UniformVarianceTraceBound
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+end TracePairing
 end
 end Reg.D5.S3.Quantum.Matrix.UniformVarianceTraceBound

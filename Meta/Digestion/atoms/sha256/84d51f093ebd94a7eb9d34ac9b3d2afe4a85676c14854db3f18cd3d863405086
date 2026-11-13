@@ -1,0 +1,13 @@
+**推论 12.3（同一仪器的两种迭代极限）。** 对定义 1.2 的固定仪器、完整终端视图与平均不折半钻石误差，
+
+$$
+\lim_{\varepsilon\downarrow0}\lim_{n\to\infty}
+\frac{E_n(\varepsilon)}n=0,
+\qquad
+\lim_{n\to\infty}\lim_{\varepsilon\downarrow0}
+\frac{E_n(\varepsilon)}n=1.
+\tag{12.4}
+$$
+
+证明。对每个固定 $0<\varepsilon<1/4$，定理 7.5 给出与 $n$ 无关的有限上界，且条件离散熵非负，故 $E_n(\varepsilon)/n\to0$。反向次序由定理 12.2 对每个固定 $n\ge1$ 给出内层极限一，再取 $n\to\infty$。两条论证都不使用假设 3.2。$\square$
+

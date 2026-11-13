@@ -1,0 +1,63 @@
+**定理 12.2（有限历史的连续熵下界）。** 若
+
+$$
+0<\varepsilon<1/4,\qquad
+\delta_n=\frac{16\varepsilon}{d_n^2}\le\frac12,
+$$
+
+则
+
+$$
+E_n(\varepsilon)\ge
+n-h_2(\delta_n)-\delta_n\log_2(2^n-1).
+\tag{12.1}
+$$
+
+因此对每个固定整数 $n\ge1$，
+
+$$
+\lim_{\varepsilon\downarrow0}E_n(\varepsilon)=n.
+\tag{12.2}
+$$
+
+该结论不使用假设 3.2 的谱隙，也不把平均恢复加强为逐种子或逐历史恢复。
+
+证明。任取一个成功方案。在其实际联合分布 (2.1) 上，对同一组基向量 $f_1,f_2$ 分别使用命题 4.2，取得可测单位中心 $c^{(a)}_{Y,S}$，满足
+
+$$
+\mathbb E\|F_{\mathsf H_n}f_a-c^{(a)}_{Y,S}\|^2
+\le2\varepsilon\qquad(a=1,2).
+$$
+
+把两列中心组成线性算子 $\widehat F_{Y,S}$，其定义为 $\widehat F_{Y,S}f_a=c^{(a)}_{Y,S}$。它不必酉，但
+
+$$
+\mathbb E\|F_{\mathsf H_n}-\widehat F_{Y,S}\|_{\mathrm F}^2
+\le4\varepsilon.
+\tag{12.3}
+$$
+
+按一个固定的历史顺序解决并列最近点，令 $\widehat{\mathsf H}_n(Y,S)$ 是有限集合 $\{F_h\}$ 中距 $\widehat F_{Y,S}$ 最近的标签。有限次可测比较保证这个猜测可测。若它猜错，则最近点性质和三角不等式给
+
+$$
+d_n\le
+\|F_{\mathsf H_n}-F_{\widehat{\mathsf H}_n}\|_{\mathrm F}
+\le2\|F_{\mathsf H_n}-\widehat F_{Y,S}\|_{\mathrm F}.
+$$
+
+所以错误概率 $p$ 满足 $p\le16\varepsilon/d_n^2=\delta_n$。以错误指示位分解条件熵：给定 $(Y,S)$ 且猜对时历史唯一，猜错时至多有 $2^n-1$ 个历史。因此标准 Fano 估计在同一联合分布上给出
+
+$$
+H(\mathsf H_n\mid Y,S)
+\le h_2(p)+p\log_2(2^n-1).
+$$
+
+此处不要求 $S$ 离散：先条件于完整视图，再用二元熵的凹性平均即可。可数 $Y$ 和标准 Borel 种子均由定义 2.1 允许。由于 $S$ 独立于公平实际历史，$H(\mathsf H_n\mid S)=n$，故
+
+$$
+H(Y\mid S)\ge I(\mathsf H_n;Y\mid S)
+\ge n-h_2(p)-p\log_2(2^n-1).
+$$
+
+若左侧无限，不等式直接成立；有限时是普通条件互信息恒等式。函数 $h_2(p)+p\log_2(2^n-1)$ 在 $[0,1/2]$ 上不减，可以用 $\delta_n$ 代替 $p$。对任意成功方案取下确界得到 (12.1)，不要求最优方案存在。固定 $n$ 后 $d_n>0$，下界随 $\varepsilon\downarrow0$ 趋于 $n$；完整历史方案给 $E_n(\varepsilon)\le n$，从而得到 (12.2)。$\square$
+
