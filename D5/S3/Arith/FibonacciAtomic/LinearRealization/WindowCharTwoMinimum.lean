@@ -119,10 +119,25 @@ theorem result [CharP K 2] :
         4 ≤ Module.finrank K V) := by
   classical
   have htwo : (2 : K) = 0 := CharP.cast_eq_zero K 2
-  have clock_second (x : ℤ × ℤ) :
-      (Int.cast ((clock (m := 0) x).2 : ℤ) : K) = (x.2 : K) := by
-    simp only [clock, step, Int.cast_add]
-    linear_combination ((x.1 : K) + (x.2 : K)) * htwo
+  have cast_zero : (Int.cast (0 : ZMod 0) : K) = 0 := Int.cast_zero
+  have cast_one : (Int.cast (1 : ZMod 0) : K) = 1 := Int.cast_one
+  have clock_second (x : ZMod 0 × ZMod 0) :
+      (Int.cast ((clock x).2 : ℤ) : K) = Int.cast (x.2 : ℤ) := by
+    let a : ℤ := x.1
+    let b : ℤ := x.2
+    change (Int.cast ((a + b) + (b + (a + b))) : K) = Int.cast b
+    push_cast
+    linear_combination ((a : K) + (b : K)) * htwo
+  have cast_add (a b : ZMod 0) : (Int.cast (a + b : ℤ) : K) =
+      Int.cast (a : ℤ) + Int.cast (b : ℤ) := by
+    exact Int.cast_add _ _
+  have quantity_cast (x : ZMod 0 × ZMod 0) :
+      (Int.cast (quantity x : ℤ) : K) = Int.cast (x.2 : ℤ) := by
+    let a : ℤ := x.1
+    let b : ℤ := x.2
+    change (Int.cast (2 * a + 3 * b) : K) = Int.cast b
+    push_cast
+    linear_combination ((a : K) + (b : K)) * htwo
   have commute (q : RawState 0) (b : Window) :
       blockTransition K b (embed K q) = embed K (rawTransition q b) := by
     cases q with
@@ -132,7 +147,7 @@ theorem result [CharP K 2] :
       rcases q with ⟨s, a, c⟩
       cases s <;> cases b <;> ext i <;> fin_cases i <;>
         simp [blockTransition, blockUpdate, embed, rawTransition, first, last,
-          displacement, clock_second]
+          displacement, cast_add, clock_second, cast_one]
   have simulation (w : List Window) (q : RawState 0) :
       wordMap (blockTransition K) w (embed K q) =
         embed K ((rawMachine 0).toDFA.evalFrom q w) := by
@@ -154,17 +169,19 @@ theorem result [CharP K 2] :
     | none => simp [blockOutput, embed, rawOutput]
     | some q =>
       rcases q with ⟨s, a, c⟩
-      cases s <;> simp [blockOutput, embed, rawOutput, quantity, Int.cast_add,
-        Int.cast_mul, htwo]
-      all_goals linear_combination (c : K) * htwo
+      cases s <;> simp [blockOutput, embed, rawOutput] <;>
+        exact (quantity_cast (a, c)).symm
   have upper (w : List Window) :
       wordBehavior (fourDimensional K) w = integerFieldTask K w := by
+    have initial : (fourDimensional K).initial = embed K (some (false, (0, 0))) := by
+      simp [fourDimensional, embed, cast_zero]
     change blockOutput K
-      (wordMap (blockTransition K) w (embed K (some (false, (0, 0))))) = _
+      (wordMap (blockTransition K) w (fourDimensional K).initial) = _
+    rw [initial]
     rw [simulation, observe]
-    change (match task 0 w with
+    change ((match task 0 w with
       | none => (0, 0)
-      | some z => (1, Int.cast (z : ℤ))) = _
+      | some z => (1, Int.cast (z : ℤ))) : K × K) = _
     cases h : task 0 w <;> simp [integerFieldTask, integerTask, h]
   have residual_factor (u : List Window) :
       jointResidual K (integerFieldTask K) u =
@@ -183,7 +200,7 @@ theorem result [CharP K 2] :
       (residual_factor u).symm⟩
   have finite : FiniteDimensional K (jointHankelSpace K (integerFieldTask K)) :=
     Submodule.finiteDimensional_of_le contained
-  haveI := finite
+  have := finite
   have dimension_upper : Module.finrank K (jointHankelSpace K (integerFieldTask K)) ≤ 4 := by
     calc
       _ ≤ Module.finrank K (LinearMap.range (futureObservation K (fourDimensional K))) :=
@@ -199,7 +216,8 @@ theorem result [CharP K 2] :
         blockUpdate, blockOutput] <;> exact htwo
   have detValue : (responseMinor K).det = 1 := by
     rw [minor]
-    norm_num [Matrix.det_succ_row_zero, Matrix.det_fin_three, Fin.sum_univ_succ]
+    norm_num [Matrix.det_succ_row_zero, Matrix.det_fin_three, Fin.sum_univ_succ,
+      Fin.succAbove]
   have columns : LinearIndependent K (responseMinor K).col :=
     Matrix.linearIndependent_cols_of_det_ne_zero (by rw [detValue]; exact one_ne_zero)
   let sample : ((List Window × Fin 2) → K) →ₗ[K] (Fin 4 → K) :=
