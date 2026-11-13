@@ -46,6 +46,10 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA181082Integrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna181082` (proved) by `D5/S1/Recurrence/Algebraic/HannaA181082Integrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna181082","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaA181082Integrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2010). *OEIS A181082 integrality conjecture*. URL: <https://oeis.org/A181082>.
@@ -64,7 +68,7 @@ If p divides b, Nat.padicValNat_lt_self gives a<n and hence a+1<=t. Both b^t and
 
 Finite diagonal equality: in degree m only n<=m and n+k=m contribute. HannaA181070Integrality.literalBounded identifies exactly the source sum with L F82. When k>n, Nat.choose(n,k)=0 and n+k>0; the term vanishes. The n=0 convention is zero. At m=0 the logarithm has coefficient zero, so the ordinary exponential has constant coefficient 1. There is no analytic convergence premise or infinite-sum rearrangement.
 
-Per-declaration shape: div82, exponent_congruence, cong82 and result are bind-only, with no escape witness. Each private helper has the live consumer named above. logarithm, A, claim and F82 are definitions, not proof credit. The direct frozen provider is D5/S1/Recurrence/Algebraic/HannaA181070Integrality with statement_id sha256:3092db66acc6fd1d6f4354d8aefb1d52c3e934f2a8cbf9e86d1bed30e823810b. The proposed admission basis for the sole public result is open-problem-resolution; no global novelty or delivered-resolution claim follows from this exposition.
+Per-declaration shape: div82, exponent_congruence, cong82 and result are bind-only, with no escape witness. Each private helper has the live consumer named above. logarithm, A, claim and F82 are definitions, not proof credit. The direct frozen provider is D5/S1/Recurrence/Algebraic/HannaA181070Integrality with statement_id sha256:3092db66acc6fd1d6f4354d8aefb1d52c3e934f2a8cbf9e86d1bed30e823810b. The admission basis for the sole public result is open-problem-resolution; no global novelty or priority claim follows from this exposition.
 
 ## References
 
