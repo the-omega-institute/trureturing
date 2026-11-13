@@ -108,3 +108,17 @@ The exact transcribed abelian table follows. These entries are source reports; n
 | C2^4 | 16 | 1 | 67 | 66 |
 
 Rendered superscripts/subscripts resolve the extraction artifacts C32 and C42 as C2^3 and C2^4. Values are transcribed source reports, not newly computed results.
+
+## Verified locator
+
+- DOI: `10.5281/zenodo.23375144`.
+- Canonical URL: https://doi.org/10.5281/zenodo.23375144
+- Source landing: https://zenodo.org/records/23375144
+- Deposit metadata: https://zenodo.org/api/records/23375144
+
+The canonical URL resolves to the revised preprint's Zenodo record. Its metadata
+identifies the title above, resource type Preprint and license CC-BY-4.0. This
+locator identifies the revision, separately from the original version's DOI
+`10.5281/zenodo.23360588`; the two PDF identities and hashes remain as stated
+above. The metadata license and the PDFs' lack of a printed license statement
+remain distinct. A public preprint deposit does not establish journal acceptance.
