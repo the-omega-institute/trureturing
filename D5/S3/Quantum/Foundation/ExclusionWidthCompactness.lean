@@ -35,6 +35,7 @@ def oscillation (F : Set V) (f : V →L[ℝ] ℝ) : ℝ :=
 def width (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (F : Set V) : ℝ :=
   sSup (oscillation F '' effects C u)
 
+omit [FiniteDimensional ℝ V] in
 private theorem unit_proper (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) : proper C u u := by
   intro x hx
   refine ⟨?_, le_rfl⟩
@@ -43,7 +44,7 @@ private theorem unit_proper (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x) : proper C u
   · exact (hs x hx hz).le
 
 /-- The minimum over every original confirmer is attained, also at mixed inputs. -/
-theorem comparison_attained
+private theorem comparison_attained
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u) (x : V) :
     ∃ f : V →L[ℝ] ℝ, f ∈ confirmingEffects C u p ∧ comparison C u p x = f x := by
@@ -64,7 +65,7 @@ theorem comparison_attained
     exact ⟨g.toLinearMap, ⟨hg.1, hg.2⟩, hgr⟩
 
 /-- The original minimum definition agrees with existential exclusion on all of K. -/
-theorem comparison_zero_iff
+private theorem comparison_zero_iff
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u)
     {x : V} (hx : x ∈ base C u) :
@@ -81,13 +82,14 @@ theorem comparison_zero_iff
     · rw [he]
       exact (hf.1 x hx.1).1
 
+omit [FiniteDimensional ℝ V] in
 private theorem oscillation_continuous {F : Set V} (hF : IsCompact F) :
     Continuous (oscillation F) :=
   (hF.continuous_sSup (show Continuous (fun t : (V →L[ℝ] ℝ) × V => t.1 t.2) by
     fun_prop)).sub (hF.continuous_sInf (by fun_prop))
 
 /-- Both effect and endpoint extrema are attained on the whole compact set. -/
-theorem width_attained
+private theorem width_attained
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     {F : Set V} (hF : IsCompact F) (hne : F.Nonempty) :
@@ -96,7 +98,9 @@ theorem width_attained
       (∀ g ∈ effects C u, oscillation F g ≤ width C u F) ∧
       (∀ a ∈ F, f z ≤ f a ∧ f a ≤ f y) := by
   have hE := effects_compact hs hg
-  have hEne : (effects C u).Nonempty := ⟨0, by intro x hx; simp [effects, proper, unit_proper hs x hx]⟩
+  have hEne : (effects C u).Nonempty := ⟨0, by
+    intro x hx
+    exact ⟨by simp, by simpa using (unit_proper hs x hx).1⟩⟩
   obtain ⟨f, hf, hw, hmax⟩ := hE.exists_sSup_image_eq_and_ge hEne
     (oscillation_continuous hF).continuousOn
   obtain ⟨y, hy, hsup, htop⟩ := hF.exists_sSup_image_eq_and_ge hne f.continuous.continuousOn
@@ -161,7 +165,7 @@ private theorem common_zero_pure_of_unique
   exact hxp ▸ hpP
 
 /-- Two distinct common zeros force a confirmed state to be pure when labels are faithful. -/
-theorem common_zero_pure
+private theorem common_zero_pure
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (hInj : Function.Injective (fun p : pure C u => exclusion C u p))
@@ -235,7 +239,7 @@ private theorem effects_separate
   linarith
 
 /-- Every entire positive-dimensional original exclusion ball has positive width at most one. -/
-theorem exclusion_width_pos_le_one
+private theorem exclusion_width_pos_le_one
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p : pure C u) : 0 < width C u (exclusion C u p) ∧ width C u (exclusion C u p) ≤ 1 := by
@@ -282,7 +286,7 @@ private theorem saturated_endpoint_pure
 
 /-- A full original effect reaching both zero and one on a ball forces its label to be unique.
 No global injectivity is used. -/
-theorem saturated_label_unique
+private theorem saturated_label_unique
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p q : pure C u) (hpq : exclusion C u p = exclusion C u q)
@@ -385,6 +389,18 @@ private theorem certificate_iff_width
     exact ⟨(p, y, z, b, e.toContinuousLinearMap),
       ⟨⟨pure_mem p, hy.1, hz.1, hb, he.1⟩, he.2, hey, hez, hw ▸ ha⟩, rfl⟩
 
+private theorem attaining_certificate
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) : ∃ t ∈ endpointCertificates C u 0,
+      t.1 = p ∧ t.2.2.2.1 t.2.1 - t.2.2.2.1 t.2.2.1 = width C u (exclusion C u p) := by
+  have g := (exclusion_ball_faces hc hs hg hB).1 p
+  obtain ⟨b, hb, y, hy, z, hz, hw, _, _⟩ := width_attained hs hg g.2.1 g.1.nonempty
+  obtain ⟨e, he, hzero⟩ := g.2.2.2.2.2.2
+  exact ⟨(p, y, z, b, e.toContinuousLinearMap),
+    ⟨⟨pure_mem p, hy.1, hz.1, hb, he.1⟩, he.2, (hzero ▸ hy).2, (hzero ▸ hz).2,
+      hw ▸ (exclusion_width_pos_le_one hc hs hg hB p).1.le⟩, rfl, hw.symm⟩
+
 /-- Width on the relative pure carrier is upper semicontinuous under EB alone. -/
 theorem width_upperSemicontinuous
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -447,6 +463,7 @@ theorem original_exclusion_width
   obtain ⟨f, hf, y, hy, z, hz, hw, _, _⟩ := width_attained hs hg g.2.1 g.1.nonempty
   exact ⟨f, hf, y, hy, z, hz, hw⟩
 
+omit [FiniteDimensional ℝ V] in
 private theorem certificate_saturated {t : EndpointData V}
     (ht : t ∈ endpointCertificates C u 1) :
     t.2.2.2.1 t.2.1 = 1 ∧ t.2.2.2.1 t.2.2.1 = 0 := by
@@ -597,8 +614,8 @@ theorem width_global_maximum [Nontrivial V]
     rw [him]
     exact positive_width_layer_compact hc hs hg hB hInj ha
   obtain ⟨p, hp, hmax⟩ := UpperSemicontinuousOn.exists_isMaxOn
-    (show L.Nonempty from ⟨q', le_rfl⟩) hL
-    (width_upperSemicontinuous hc hs hg hB).upperSemicontinuousOn
+    (show L.Nonempty from ⟨q', (le_rfl : a ≤ a)⟩) hL
+    ((width_upperSemicontinuous hc hs hg hB).upperSemicontinuousOn L)
   have hall (r : pure C u) : width C u (exclusion C u r) ≤ width C u (exclusion C u p) := by
     by_cases hr : a ≤ width C u (exclusion C u r)
     · exact hmax hr
@@ -609,5 +626,73 @@ theorem width_global_maximum [Nontrivial V]
   · exact csSup_le (by exact ⟨_, p, mem_univ p, rfl⟩) (by rintro _ ⟨r, _, rfl⟩; exact hall r)
   · exact le_csSup ⟨1, by rintro _ ⟨r, _, rfl⟩; exact (exclusion_width_pos_le_one hc hs hg hB r).2⟩
       ⟨p, mem_univ p, rfl⟩
+
+/-- Every near-saturated sequence has a strictly indexed subsequence converging to saturation. -/
+theorem near_saturation_subsequence
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : ℕ → pure C u)
+    (hw : Tendsto (fun n => width C u (exclusion C u (p n))) atTop (𝓝 1)) :
+    ∃ q : pure C u, width C u (exclusion C u q) = 1 ∧
+      ∃ φ : ℕ → ℕ, StrictMono φ ∧ Tendsto (fun n => (p (φ n) : V)) atTop (𝓝 (q : V)) := by
+  choose T hT hTp hTw using fun n => attaining_certificate hc hs hg hB (p n)
+  obtain ⟨t, ht, φ, hφ, hlim⟩ := (certificates_compact hc hs hg 0).tendsto_subseq hT
+  have hd : t.2.2.2.1 t.2.1 - t.2.2.2.1 t.2.2.1 = 1 := by
+    apply tendsto_nhds_unique
+      (((show Continuous (fun t : EndpointData V =>
+        t.2.2.2.1 t.2.1 - t.2.2.2.1 t.2.2.1) by fun_prop).tendsto t).comp hlim)
+    exact (hw.comp hφ.tendsto_atTop).congr'
+      (Eventually.of_forall fun n => (hTw (φ n)).symm)
+  have ht1 : t ∈ endpointCertificates C u 1 :=
+    ⟨ht.1, ht.2.1, ht.2.2.1, ht.2.2.2.1, hd.ge⟩
+  obtain ⟨hby, hbz⟩ := certificate_saturated ht1
+  have hp := saturated_common_zero_pure hc hs hg hB ht.1.1 ht.1.2.1 ht.1.2.2.1
+    ht.1.2.2.2.2 ht.1.2.2.2.1 ht.2.1 ht.2.2.1 ht.2.2.2.1 hby hbz
+  refine ⟨⟨t.1, hp⟩, le_antisymm (exclusion_width_pos_le_one hc hs hg hB ⟨t.1, hp⟩).2
+    ((certificate_iff_width hc hs hg hB ⟨t.1, hp⟩ 1).mp ⟨t, ht1, rfl⟩), φ, hφ, ?_⟩
+  have hfirst := continuous_fst.tendsto t |>.comp hlim
+  exact hfirst.congr' (Eventually.of_forall fun n => hTp (φ n))
+
+/-- Absence of saturation forces a uniform strict upper gap under EB alone. -/
+theorem no_saturation_uniform_gap
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hno : ∀ p : pure C u, width C u (exclusion C u p) ≠ 1) :
+    sSup ((fun p : pure C u => width C u (exclusion C u p)) '' univ) < 1 := by
+  by_cases hP : Nonempty (pure C u)
+  · obtain ⟨p⟩ := hP
+    obtain ⟨t0, ht0, _, _⟩ := attaining_certificate hc hs hg hB p
+    let d : EndpointData V → ℝ := fun t => t.2.2.2.1 t.2.1 - t.2.2.2.1 t.2.2.1
+    obtain ⟨t, ht, hmax⟩ := (certificates_compact hc hs hg 0).exists_isMaxOn
+      ⟨t0, ht0⟩ (show Continuous d from by dsimp [d]; fun_prop).continuousOn
+    have htop : t.2.2.2.1 t.2.1 ≤ 1 := by
+      simpa [ht.1.2.1.2] using (ht.1.2.2.2.1 t.2.1 ht.1.2.1.1).2
+    have hbot : 0 ≤ t.2.2.2.1 t.2.2.1 := (ht.1.2.2.2.1 t.2.2.1 ht.1.2.2.1.1).1
+    have hdle : d t ≤ 1 := by dsimp [d]; linarith
+    have hdlt : d t < 1 := lt_of_le_of_ne hdle (by
+      intro heq
+      have ht1 : t ∈ endpointCertificates C u 1 :=
+        ⟨ht.1, ht.2.1, ht.2.2.1, ht.2.2.2.1, heq.ge⟩
+      obtain ⟨hby, hbz⟩ := certificate_saturated ht1
+      have hp := saturated_common_zero_pure hc hs hg hB ht.1.1 ht.1.2.1 ht.1.2.2.1
+        ht.1.2.2.2.2 ht.1.2.2.2.1 ht.2.1 ht.2.2.1 ht.2.2.2.1 hby hbz
+      apply hno ⟨t.1, hp⟩
+      exact le_antisymm (exclusion_width_pos_le_one hc hs hg hB ⟨t.1, hp⟩).2
+        ((certificate_iff_width hc hs hg hB ⟨t.1, hp⟩ 1).mp ⟨t, ht1, rfl⟩))
+    apply lt_of_le_of_lt _ hdlt
+    apply csSup_le (by exact ⟨_, p, mem_univ p, rfl⟩)
+    rintro _ ⟨q, _, rfl⟩
+    obtain ⟨s, hs', _, hsw⟩ := attaining_certificate hc hs hg hB q
+    calc
+      width C u (exclusion C u q) = d s := hsw.symm
+      _ ≤ d t := hmax hs'
+  · have hem : ((fun p : pure C u => width C u (exclusion C u p)) '' univ) = ∅ := by
+      ext x
+      constructor
+      · rintro ⟨p, _, _⟩
+        exact (hP ⟨p⟩).elim
+      · simp
+    rw [hem, Real.sSup_empty]
+    norm_num
 
 end D5.S3.Quantum.Foundation.ExclusionWidthCompactness
