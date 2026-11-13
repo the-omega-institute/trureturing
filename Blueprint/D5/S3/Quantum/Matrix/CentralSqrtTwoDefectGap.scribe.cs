@@ -36,16 +36,18 @@ internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinitio
                 + "fixed central-sqrt(2) defect matrix from the source event after the "
                 + "threshold identification.",
                 DescribeRole.Definition),
-            Entry("centralEdges_ne_zero", "Nonzero edge coefficients",
-                "Every entry of centralEdges(n) is nonzero for n>=1.", DescribeRole.Theorem),
-            Entry("centralDefect_simple", "Simple spectrum of the actual defect matrix",
-                "For every n>=1, centralDefect(n) has simple algebraic spectrum. "
-                + "This is the direct application of the existing endpoint-uniqueness "
-                + "Jacobi theorem and retains the complete matrix dimension.", DescribeRole.Theorem),
-            Paragraph(Text("The quantitative endpoint estimate, source quantization and "
+            Entry("recurrence_endpoint_observability", "Uniform endpoint observability",
+                "Let n>=1 and y(0)=0. Suppose y(j+2)=t*y(j+1)-y(j) for j+2<=n+1 "
+                + "and y(n+1)=b*y(n). Then the sum of y(j)^2 over 1<=j<=n is at most "
+                + "(1+|b|)^2*n^3*y(n)^2. The estimate holds for every real t, including "
+                + "both band edges and the exterior regimes. Inside |t|<=2, the finite "
+                + "continuant formula and the Chebyshev bound |U_k(x)|<=k+1 control the "
+                + "backward recurrence. Outside the band, the forward coordinate magnitudes "
+                + "are nondecreasing.", DescribeRole.Theorem),
+            Paragraph(Text("The matrix-to-recurrence identification, source quantization and "
                 + "adjacent-sector alternation needed for the complete uniform inverse-cubic "
                 + "event remain separate obligations. This module records the compiled "
-                + "rank-one bridge and the actual fixed matrix family.")))));
+                + "rank-one bridge, finite-recurrence endpoint estimate and fixed matrix family.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("central-sqrt-two-defect-gap-" + name.Replace('_', '-').ToLowerInvariant()),

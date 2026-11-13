@@ -7,6 +7,8 @@
    digest: Quantitative rank-one sector separation and simple spectrum for the central sqrt-two defect family. -/
 
 import D5.S3.Quantum.Matrix.GibbsStochasticSimpleSpectrum
+import D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Chebyshev.RootsExtrema
 
 noncomputable section
 
@@ -101,19 +103,120 @@ def centralDefect (n : ℕ) (hn : 1 ≤ n) :
   D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix
     (2 * n - 1) 0 (centralEdges n hn)
 
-theorem centralEdges_ne_zero (n : ℕ) (hn : 1 ≤ n) (i : Fin (2 * n - 1 + 1)) :
-    centralEdges n hn i ≠ 0 := by
-  dsimp [centralEdges]
-  split_ifs
-  · exact (Real.sqrt_pos.2 (by norm_num)).ne'
-  · norm_num
+private theorem chebyshev_u_band_bound (k : ℕ) (x : ℝ) (hx : |x| ≤ 1) :
+    |(Polynomial.Chebyshev.U ℝ (k : ℤ)).eval x| ≤ k + 1 := by
+  have ht (j : ℤ) := Polynomial.Chebyshev.abs_eval_T_real_le_one j hx
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [Nat.cast_succ, Polynomial.Chebyshev.U_eq_X_mul_U_add_T]
+    simp only [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_X]
+    calc
+      |x * (Polynomial.Chebyshev.U ℝ (k : ℤ)).eval x +
+          (Polynomial.Chebyshev.T ℝ ((k : ℤ) + 1)).eval x| ≤
+          |x| * |(Polynomial.Chebyshev.U ℝ (k : ℤ)).eval x| + 1 := by
+        exact (abs_add_le _ _).trans (by rw [abs_mul]; exact add_le_add_left (ht _) _)
+      _ ≤ (k : ℝ) + 1 + 1 := by
+        have hh := mul_le_mul hx ih (abs_nonneg _) (by norm_num : (0 : ℝ) ≤ 1)
+        simpa using hh
+      _ = _ := by push_cast; ring
 
-theorem centralDefect_simple (n : ℕ) (hn : 1 ≤ n) :
-    D5.S3.Quantum.Matrix.GibbsStochasticSimpleSpectrum.HasSimpleEigenvalues
-      (centralDefect n hn) := by
-  apply D5.S3.Quantum.Matrix.GibbsStochasticSimpleSpectrum.jacobi_simple
-    (2 * n - 1) 0 (centralEdges n hn)
-  intro t
-  exact centralEdges_ne_zero n hn t.castSucc
+private theorem chebyshev_s_band_bound (k : ℕ) (t : ℝ) (ht : |t| ≤ 2) :
+    |(Polynomial.Chebyshev.S ℝ (k : ℤ)).eval t| ≤ k + 1 := by
+  rw [Polynomial.Chebyshev.S_eq_U_comp_half_mul_X]
+  simpa [Polynomial.eval_comp, div_eq_mul_inv, mul_comm] using
+    chebyshev_u_band_bound k (t / 2) (by rw [abs_div]; norm_num; linarith)
+
+/-- A finite free Jacobi recurrence with a Robin endpoint has a uniform cubic
+endpoint observability bound, including both exterior regimes. -/
+theorem recurrence_endpoint_observability (n : ℕ) (hn : 1 ≤ n)
+    (t b : ℝ) (y : ℕ → ℝ) (hzero : y 0 = 0)
+    (hrec : ∀ j, j + 2 ≤ n + 1 → y (j + 2) = t * y (j + 1) - y j)
+    (hboundary : y (n + 1) = b * y n) :
+    (∑ j ∈ Finset.range n, y (j + 1) ^ 2) ≤
+      (1 + |b|) ^ 2 * (n : ℝ) ^ 3 * y n ^ 2 := by
+  have hnR : (1 : ℝ) ≤ n := by exact_mod_cast hn
+  have hpoint : ∀ j, 1 ≤ j → j ≤ n → |y j| ≤ (1 + |b|) * n * |y n| := by
+    by_cases ht : |t| ≤ 2
+    · let z : ℕ → ℝ := fun k => y (n + 1 - k)
+      have hzrec : ∀ k, k + 2 ≤ n → z (k + 2) = t * z (k + 1) - z k := by
+        intro k hk
+        have hr := hrec (n - 1 - k) (by omega)
+        have h0 : n - 1 - k + 2 = n + 1 - k := by omega
+        have h1 : n - 1 - k + 1 = n + 1 - (k + 1) := by omega
+        have h2 : n - 1 - k = n + 1 - (k + 2) := by omega
+        dsimp [z]
+        rw [h0, h1, h2] at hr
+        linarith
+      intro j hj hjn
+      let k := n + 1 - j
+      have hk : 1 ≤ k := by dsimp [k]; omega
+      have hkn : k ≤ n := by dsimp [k]; omega
+      have hz := D5.S3.Combinatorics.SpectralGraph.TwinFreeThetaRecurrence.bounded_continuant_endpoint
+        k hk t z (fun l hl => hzrec l (hl.trans hkn))
+      have hz0 : z 0 = b * y n := by simpa [z] using hboundary
+      have hz1 : z 1 = y n := by simp [z]
+      have hzk : z k = y j := by dsimp [z, k]; congr 1; omega
+      rw [hz0, hz1, hzk] at hz
+      have hfirst : |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 1)).eval t| ≤ k := by
+        have hb := chebyshev_s_band_bound (k - 1) t ht
+        convert hb using 1 <;> push_cast [Nat.cast_sub hk] <;> ring
+      have hsecond : |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 2)).eval t| ≤ k := by
+        by_cases hk1 : k = 1
+        · subst k; norm_num
+        · have htwo : 2 ≤ k := by omega
+          have hb := chebyshev_s_band_bound (k - 2) t ht
+          have heq : ((k - 2 : ℕ) : ℤ) = (k : ℤ) - 2 := by omega
+          rw [heq] at hb
+          exact hb.trans (by push_cast [Nat.cast_sub htwo]; linarith)
+      rw [hz]
+      calc
+        |_ - _| ≤ |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 1)).eval t| * |y n| +
+            |(Polynomial.Chebyshev.S ℝ ((k : ℤ) - 2)).eval t| * (|b| * |y n|) := by
+          simpa [abs_mul] using abs_sub_le
+            ((Polynomial.Chebyshev.S ℝ ((k : ℤ) - 1)).eval t * y n)
+            ((Polynomial.Chebyshev.S ℝ ((k : ℤ) - 2)).eval t * (b * y n))
+        _ ≤ (k : ℝ) * |y n| + k * (|b| * |y n|) :=
+          add_le_add (mul_le_mul_of_nonneg_right hfirst (abs_nonneg _))
+            (mul_le_mul_of_nonneg_right hsecond (mul_nonneg (abs_nonneg _) (abs_nonneg _)))
+        _ = (1 + |b|) * k * |y n| := by ring
+        _ ≤ (1 + |b|) * n * |y n| := by gcongr; exact_mod_cast hkn
+    · have ht' : 2 ≤ |t| := le_of_lt (lt_of_not_ge ht)
+      have hm : ∀ k, k + 1 ≤ n → |y k| ≤ |y (k + 1)| := by
+        intro k
+        induction k with
+        | zero => intro _; rw [hzero, abs_zero]; exact abs_nonneg _
+        | succ k ih =>
+          intro hk
+          have hp := ih (by omega)
+          have hr := hrec k (by omega)
+          have ha := abs_add_le (y (k + 2)) (y k)
+          have he : y (k + 2) + y k = t * y (k + 1) := by linarith [hr]
+          rw [he, abs_mul] at ha
+          have hmul := mul_le_mul_of_nonneg_right ht' (abs_nonneg (y (k + 1)))
+          have hh : |y (k + 1)| ≤ |y (k + 2)| := by linarith
+          simpa [Nat.succ_eq_add_one] using hh
+      have hmono : ∀ i j, i ≤ j → j ≤ n → |y i| ≤ |y j| := by
+        intro i j hij hj
+        induction hij with
+        | refl => exact le_rfl
+        | @step j hij ih => exact (ih (by omega)).trans (hm j (by omega))
+      intro j hj hjn
+      calc
+        |y j| ≤ |y n| := hmono j n hjn le_rfl
+        _ ≤ (1 + |b|) * n * |y n| := by
+          have hfac : (1 : ℝ) ≤ (1 + |b|) * n := by nlinarith [abs_nonneg b]
+          simpa using mul_le_mul_of_nonneg_right hfac (abs_nonneg (y n))
+  calc
+    (∑ j ∈ Finset.range n, y (j + 1) ^ 2) ≤
+        ∑ j ∈ Finset.range n, ((1 + |b|) * n * |y n|) ^ 2 := by
+      apply Finset.sum_le_sum
+      intro j hj
+      have hb := hpoint (j + 1) (by omega) (by simpa using Finset.mem_range.mp hj)
+      nlinarith [sq_abs (y (j + 1)), sq_abs (y n)]
+    _ = (1 + |b|) ^ 2 * (n : ℝ) ^ 3 * y n ^ 2 := by
+      simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+      rw [mul_pow, mul_pow, sq_abs]
+      ring
 
 end D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap
