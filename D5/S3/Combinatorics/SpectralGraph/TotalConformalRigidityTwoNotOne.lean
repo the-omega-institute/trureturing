@@ -1,0 +1,423 @@
+/- GID: D5/S3/Combinatorics/SpectralGraph/TotalConformalRigidityTwoNotOne
+   generality: I
+   mirror-B: D5/B/S3/Combinatorics/SpectralGraph/TotalConformalRigidityTwoNotOne
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: A two-conformally rigid graph need not be one-conformally rigid. -/
+
+/- Judgement form.
+   admission_basis: open-problem-resolution (#26026; Proved)
+   escape_witness: none. All theorem proofs are bind-only under the inlining rule.
+   Direct frozen dependencies: RHLinalg.vonNeumann_trace_ineq,
+   declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7;
+   RHLinalg.eigEquiv,
+   declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96;
+   RHLinalg.eigenvalues_eigEquiv,
+   declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1;
+   RHLinalg.sum_eigenvalues_reindex,
+   declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478.
+   The source edge representatives, Laplacian and eigenvalue order are stated directly;
+   the Hermitian proof in eigenvalue is supplied by lap_hermitian.
+   The sum ranges over one representative of each undirected edge, including zero weights.
+   Edge: proof_shape: bind-only; escape_witness: none; consumers: instFintypeEdge, edgeVector, laplacian, lap_hermitian, uniform, ValidWeight, eigenvalue, smallestSum, largestSum, KConformallyRigid, edgeAt, edgeEquiv, edge_card, lap_psd, lap_matrix, lap_trace, lap_X_trace, orbitWeight, all_weights_bounds.
+   instFintypeEdge: proof_shape: bind-only; escape_witness: none; consumers: settling result.
+   edgeVector: proof_shape: bind-only; escape_witness: none; consumers: laplacian, lap_psd, lap_matrix.
+   laplacian: proof_shape: bind-only; escape_witness: none; consumers: lap_hermitian, eigenvalue, lap_psd, lap_matrix, lap_trace, lap_X_trace, orbit_lap, orbit_diagonalized, uniform_eigenvalues, perturbed_eigenvalues, all_weights_bounds.
+   lap_hermitian: proof_shape: bind-only; escape_witness: none; consumers: eigenvalue, uniform_eigenvalues, perturbed_eigenvalues, all_weights_bounds.
+   uniform: proof_shape: bind-only; escape_witness: none; consumers: lap_hermitian, largestSum, KConformallyRigid, uniform_orbit, uniform_eigenvalues, graph_two_rigid, graph_not_one_rigid.
+   ValidWeight: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, perturbed_valid, all_weights_bounds, graph_not_one_rigid.
+   eigenvalue: proof_shape: bind-only; escape_witness: none; consumers: smallestSum, largestSum, uniform_eigenvalues, perturbed_eigenvalues, all_weights_bounds.
+   smallestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_two_rigid, graph_not_one_rigid.
+   largestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_two_rigid.
+   KConformallyRigid: proof_shape: bind-only; escape_witness: none; consumers: claim, graph_two_rigid, graph_not_one_rigid.
+   claim: proof_shape: bind-only; escape_witness: none; consumers: result.
+   graph: proof_shape: bind-only; escape_witness: none; consumers: edgeAt, edgeEquiv, graph_connected, edge_card, lap_matrix, lap_trace, lap_X_trace, orbitWeight, orbit_lap, orbit_diagonalized, uniform_orbit, uniform_eigenvalues, perturbed_valid, perturbed_eigenvalues, all_weights_bounds, graph_two_rigid, graph_not_one_rigid, result.
+   edgeAt: proof_shape: bind-only; escape_witness: none; consumers: edgeEquiv, lap_matrix, lap_trace, lap_X_trace, orbit_lap, perturbed_valid.
+   edgeEquiv: proof_shape: bind-only; escape_witness: none; consumers: edge_card, lap_matrix, lap_trace, lap_X_trace, perturbed_valid.
+   graph_connected: proof_shape: bind-only; escape_witness: none; consumers: result.
+   edge_card: proof_shape: bind-only; escape_witness: none; consumers: perturbed_valid, all_weights_bounds.
+   lap_psd: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   diagonalized_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, uniform_eigenvalues, perturbed_eigenvalues.
+   P: proof_shape: bind-only; escape_witness: none; consumers: diagonalized_eigenvalues, PR_identity, X_diagonalized, X_eigenvalues, orbit_diagonalized, uniform_eigenvalues, perturbed_eigenvalues.
+   R: proof_shape: bind-only; escape_witness: none; consumers: diagonalized_eigenvalues, PR_identity, X_eigenvalues, uniform_eigenvalues, perturbed_eigenvalues.
+   X: proof_shape: bind-only; escape_witness: none; consumers: diagonalized_eigenvalues, X_hermitian, X_diagonalized, X_eigenvalues, lap_X_trace, trace_certificate_bound, all_weights_bounds.
+   PR_identity: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, uniform_eigenvalues, perturbed_eigenvalues.
+   X_hermitian: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, trace_certificate_bound.
+   X_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues.
+   X_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: trace_certificate_bound.
+   lap_matrix: proof_shape: bind-only; escape_witness: none; consumers: lap_trace, lap_X_trace, orbit_lap.
+   lap_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   lap_X_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   orbitWeight: proof_shape: bind-only; escape_witness: none; consumers: orbit_lap, orbit_diagonalized, uniform_orbit, perturbed_valid, perturbed_eigenvalues, graph_not_one_rigid.
+   orbit_lap: proof_shape: bind-only; escape_witness: none; consumers: orbit_diagonalized.
+   orbit_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: uniform_eigenvalues, perturbed_eigenvalues.
+   uniform_orbit: proof_shape: bind-only; escape_witness: none; consumers: uniform_eigenvalues.
+   uniform_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_two_rigid, graph_not_one_rigid.
+   perturbed_valid: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
+   perturbed_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
+   trace_five: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   trace_certificate_bound: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
+   all_weights_bounds: proof_shape: bind-only; escape_witness: none; consumers: graph_two_rigid.
+   graph_two_rigid: proof_shape: bind-only; escape_witness: none; consumers: result.
+   graph_not_one_rigid: proof_shape: bind-only; escape_witness: none; consumers: result.
+   result: proof_shape: bind-only; escape_witness: none; consumers: settling result.
+-/
+
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Tactic.Ring
+
+import D5.S3.Weil.ZetaLinear.VonNeumann
+import D5.S3.Weil.ZetaLinear.PosIndex
+import Mathlib.Algebra.Order.Star.Real
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Linarith
+import Lean.Elab.Tactic.LibrarySearch
+
+namespace D5.S3.Combinatorics.SpectralGraph.TotalConformalRigidityTwoNotOne
+
+noncomputable section
+open scoped BigOperators
+
+/-- One representative (a,b), a < b, for each undirected edge. -/
+abbrev Edge {n : ℕ} (G : SimpleGraph (Fin n)) :=
+  {e : Fin n × Fin n // e.1 < e.2 ∧ G.Adj e.1 e.2}
+
+private noncomputable instance instFintypeEdge {n : ℕ} (G : SimpleGraph (Fin n)) : Fintype (Edge G) :=
+  Fintype.ofFinite _
+
+/-- The source vector z_ab = e_a - e_b. -/
+def edgeVector {n : ℕ} {G : SimpleGraph (Fin n)} (e : Edge G) (v : Fin n) : ℝ :=
+  (if v = e.val.1 then 1 else 0) - (if v = e.val.2 then 1 else 0)
+
+/-- Equation (1): sum over undirected edges, each counted once. -/
+def laplacian {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
+    Matrix (Fin n) (Fin n) ℝ :=
+  fun a b => ∑ e : Edge G, w e * edgeVector e a * edgeVector e b
+
+private theorem lap_hermitian {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
+    (laplacian G w).IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro a b
+  simp only [laplacian, star_trivial]
+  apply Finset.sum_congr rfl
+  intro e _
+  ring
+
+/-- The uniform edge weighting. -/
+def uniform {n : ℕ} (G : SimpleGraph (Fin n)) : Edge G → ℝ := fun _ => 1
+
+/-- The source simplex Delta_E, allowing zero weights. -/
+def ValidWeight {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) : Prop :=
+  (∀ e : Edge G, 0 ≤ w e) ∧ ∑ e : Edge G, w e = (Fintype.card (Edge G) : ℝ)
+
+/-- The source's eigenvalues in increasing order, with zero-based indices.
+The inline proof establishes only that the defining matrix is Hermitian. -/
+def eigenvalue {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) (i : Fin n) : ℝ :=
+  let h : (laplacian G w).IsHermitian := lap_hermitian G w
+  h.eigenvalues₀ (Fin.cast (Fintype.card_fin n).symm i.rev)
+
+/-- s_k: the k smallest nontrivial eigenvalues, lambda_2 through lambda_(k+1). -/
+def smallestSum {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) (k : ℕ) : ℝ :=
+  ∑ i : Fin n, if 0 < i.val ∧ i.val ≤ k then eigenvalue G w i else 0
+
+/-- S_k: the k largest eigenvalues; k < n excludes the mandatory zero. -/
+def largestSum {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) (k : ℕ) : ℝ :=
+  ∑ i : Fin n, if n ≤ i.val + k then eigenvalue G w i else 0
+
+/-- Definition 1.2: the same uniform weighting attains both required extremes. -/
+def KConformallyRigid {n : ℕ} (G : SimpleGraph (Fin n)) (k : ℕ) : Prop :=
+  1 ≤ k ∧ k < n ∧
+    ∀ (w : Edge G → ℝ) (u : Edge G → ℝ),
+      ValidWeight G w → ValidWeight G u →
+        smallestSum G w k ≤ smallestSum G (uniform G) k ∧
+          largestSum G (uniform G) k ≤ largestSum G u k
+
+/-- Section 9, printed p.20: affirmative answer to the unnumbered existence question. -/
+def claim : Prop :=
+  ∃ n : ℕ, ∃ G : SimpleGraph (Fin n),
+    G.Connected ∧ (∃ a : Fin n, ∃ b : Fin n, G.Adj a b) ∧
+      KConformallyRigid G 2 ∧ ¬ KConformallyRigid G 1
+
+end
+end D5.S3.Combinatorics.SpectralGraph.TotalConformalRigidityTwoNotOne
+
+namespace D5.S3.Combinatorics.SpectralGraph.TotalConformalRigidityTwoNotOne
+noncomputable section
+open scoped BigOperators
+open Matrix
+set_option maxHeartbeats 300000
+set_option maxRecDepth 4096
+
+@[reducible] private def graph : SimpleGraph (Fin 5) :=
+  SimpleGraph.fromRel fun a b => 2 ≤ a.val ∨ 2 ≤ b.val
+
+@[reducible] private def edgeAt : Fin 9 → Edge graph :=
+  ![⟨(0,2), by decide⟩, ⟨(0,3), by decide⟩, ⟨(0,4), by decide⟩,
+    ⟨(1,2), by decide⟩, ⟨(1,3), by decide⟩, ⟨(1,4), by decide⟩,
+    ⟨(2,3), by decide⟩, ⟨(2,4), by decide⟩, ⟨(3,4), by decide⟩]
+
+private def edgeEquiv : Fin 9 ≃ Edge graph where
+  toFun := edgeAt
+  invFun e := if e.val.1 = 0 then ⟨e.val.2.val-2, by omega⟩
+    else if e.val.1 = 1 then ⟨e.val.2.val+1, by omega⟩
+    else if e.val.2 = 3 then 6 else if e.val.1 = 2 then 7 else 8
+  left_inv := by intro i; fin_cases i <;> norm_num [edgeAt]
+  right_inv := by
+    rintro ⟨⟨a,b⟩,h⟩
+    fin_cases a <;> fin_cases b <;>
+      norm_num [graph, SimpleGraph.fromRel_adj, edgeAt] at h <;> rfl
+
+private theorem graph_connected : graph.Connected := by
+  apply SimpleGraph.Connected.of_isUniversal (v := 2)
+  intro w hw
+  simp [graph, SimpleGraph.fromRel_adj, hw]
+
+private theorem edge_card : Fintype.card (Edge graph) = 9 := by
+  exact (Fintype.card_congr edgeEquiv).symm.trans (Fintype.card_fin 9)
+
+private theorem lap_psd {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ)
+    (hw : ∀ e, 0 ≤ w e) : (laplacian G w).PosSemidef := by
+  have hform : laplacian G w =
+      ∑ e : Edge G, w e • Matrix.vecMulVec (edgeVector e) (edgeVector e) := by
+    ext a b
+    simp only [laplacian, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      Matrix.vecMulVec_apply]
+    apply Finset.sum_congr rfl
+    intro e _
+    ring
+  rw [hform]
+  apply Matrix.posSemidef_sum
+  intro e _
+  simpa only [star_trivial] using
+    (Matrix.posSemidef_vecMulVec_self_star (edgeVector e)).smul (hw e)
+
+private theorem diagonalized_eigenvalues {n : ℕ} (A P R : Matrix (Fin n) (Fin n) ℝ)
+    (d : Fin n → ℝ) (hA : A.IsHermitian) (hPR : P * R = 1)
+    (hAP : A * P = P * diagonal d) (hd : Antitone d) :
+    ∀ i : Fin n, hA.eigenvalues₀ (Fin.cast (Fintype.card_fin n).symm i) = d i := by
+  have hchar : A.charpoly = ∏ i, (Polynomial.X - Polynomial.C (d i)) := by
+    rw [Matrix.charpoly_eq_of_mul_eq_mul (Matrix.det_ne_zero_of_right_inverse hPR) hAP,
+      Matrix.charpoly_diagonal]
+  have hroots : A.charpoly.roots = Multiset.map d Finset.univ.val := by
+    rw [hchar, Polynomial.roots_prod _ _ (by
+      simp [Finset.prod_ne_zero_iff, Polynomial.X_sub_C_ne_zero])]
+    simp
+  have hlist : List.ofFn hA.eigenvalues₀ = List.ofFn d := by
+    rw [← hA.sort_roots_charpoly_eq_eigenvalues₀]
+    simp_rw [hroots, Fin.univ_val_map, Multiset.map_coe, List.map_ofFn,
+      Function.comp_def, RCLike.re_to_real, Multiset.coe_sort]
+    convert! List.mergeSort_of_pairwise ?_
+    simp_rw [decide_eq_true_eq, ← List.sortedGE_iff_pairwise]
+    exact hd.sortedGE_ofFn
+  intro i
+  have hi := congrArg (fun l => l[i.val]?) hlist
+  simpa [i.isLt] using hi
+
+
+@[reducible] private def P : Matrix (Fin 5) (Fin 5) ℝ :=
+  !![3,0,0,1,1; 3,0,0,-1,1; -2,1,1,0,1; -2,-1,1,0,1; -2,0,-2,0,1]
+@[reducible] private def R : Matrix (Fin 5) (Fin 5) ℝ :=
+  !![1/10,1/10,-1/15,-1/15,-1/15; 0,0,1/2,-1/2,0;
+     0,0,1/6,1/6,-1/3; 1/2,-1/2,0,0,0; 1/5,1/5,1/5,1/5,1/5]
+@[reducible] private def X : Matrix (Fin 5) (Fin 5) ℝ :=
+  !![12/45,12/45,-8/45,-8/45,-8/45;
+     12/45,12/45,-8/45,-8/45,-8/45;
+     -8/45,-8/45,22/45,-3/45,-3/45;
+     -8/45,-8/45,-3/45,22/45,-3/45;
+     -8/45,-8/45,-3/45,-3/45,22/45]
+
+private theorem PR_identity : P * R = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [P,R, Matrix.mul_apply, Fin.sum_univ_succ]
+
+private theorem X_hermitian : X.IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro i j
+  fin_cases i <;> fin_cases j <;> norm_num [X]
+
+private theorem X_diagonalized : X * P = P * diagonal ![8/9,5/9,5/9,0,0] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [X,P,Matrix.mul_apply, Fin.sum_univ_succ, Matrix.diagonal_apply]
+
+private theorem X_eigenvalues (i : Fin 5) :
+    X_hermitian.eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm i) =
+      (![8/9,5/9,5/9,0,0] : Fin 5 → ℝ) i := by
+  apply diagonalized_eigenvalues X P R _ X_hermitian PR_identity X_diagonalized
+  intro i j hij
+  fin_cases i <;> fin_cases j <;> norm_num at *
+
+private theorem lap_matrix (w : Edge graph → ℝ) :
+    laplacian graph w = !![w (edgeAt 0) + w (edgeAt 1) + w (edgeAt 2), 0, -w (edgeAt 0), -w (edgeAt 1), -w (edgeAt 2);
+      0, w (edgeAt 3) + w (edgeAt 4) + w (edgeAt 5), -w (edgeAt 3), -w (edgeAt 4), -w (edgeAt 5);
+      -w (edgeAt 0), -w (edgeAt 3), w (edgeAt 0) + w (edgeAt 3) + w (edgeAt 6) + w (edgeAt 7), -w (edgeAt 6), -w (edgeAt 7);
+      -w (edgeAt 1), -w (edgeAt 4), -w (edgeAt 6), w (edgeAt 1) + w (edgeAt 4) + w (edgeAt 6) + w (edgeAt 8), -w (edgeAt 8);
+      -w (edgeAt 2), -w (edgeAt 5), -w (edgeAt 7), -w (edgeAt 8), w (edgeAt 2) + w (edgeAt 5) + w (edgeAt 7) + w (edgeAt 8)] := by
+  ext a b
+  change (∑ e : Edge graph, w e * edgeVector e a * edgeVector e b) = _
+  rw [← edgeEquiv.sum_comp]
+  fin_cases a <;> fin_cases b <;>
+    norm_num [edgeEquiv, edgeAt, edgeVector, Fin.sum_univ_succ] <;> ring
+
+private theorem lap_trace (w : Edge graph → ℝ) :
+    (laplacian graph w).trace = 2 * ∑ e : Edge graph, w e := by
+  rw [lap_matrix, ← edgeEquiv.sum_comp]
+  norm_num [Matrix.trace, Matrix.diag, edgeEquiv, edgeAt, Fin.sum_univ_succ]
+  ring
+
+private theorem lap_X_trace (w : Edge graph → ℝ) :
+    (laplacian graph w * X).trace = (10/9) * ∑ e : Edge graph, w e := by
+  rw [lap_matrix, ← edgeEquiv.sum_comp]
+  norm_num [X, Matrix.trace, Matrix.diag, Matrix.mul_apply,
+    edgeEquiv, edgeAt, Fin.sum_univ_succ]
+  ring
+
+@[reducible] private def orbitWeight (a b : ℝ) : Edge graph → ℝ :=
+  fun e => if e.val.1.val < 2 then a else b
+
+private theorem orbit_lap (a b : ℝ) :
+    laplacian graph (orbitWeight a b) =
+      !![3*a,0,-a,-a,-a; 0,3*a,-a,-a,-a;
+         -a,-a,2*a+2*b,-b,-b; -a,-a,-b,2*a+2*b,-b;
+         -a,-a,-b,-b,2*a+2*b] := by
+  rw [lap_matrix]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [orbitWeight, edgeAt] <;> ring
+
+private theorem orbit_diagonalized (a b : ℝ) :
+    laplacian graph (orbitWeight a b) * P =
+      P * diagonal ![5*a,2*a+3*b,2*a+3*b,3*a,0] := by
+  rw [orbit_lap]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [P,Matrix.mul_apply, Fin.sum_univ_succ, Matrix.diagonal_apply] <;> ring
+
+
+private theorem uniform_orbit : uniform graph = orbitWeight 1 1 := by
+  funext e
+  simp only [uniform, orbitWeight, ite_self]
+
+private theorem uniform_eigenvalues (i : Fin 5) :
+    eigenvalue graph (uniform graph) i = (![0,3,5,5,5] : Fin 5 → ℝ) i := by
+  have hdiag : laplacian graph (uniform graph) * P =
+      P * diagonal (![5,5,5,3,0] : Fin 5 → ℝ) := by
+    rw [uniform_orbit]
+    convert orbit_diagonalized 1 1 using 1 <;> norm_num
+  have hd : Antitone (![5,5,5,3,0] : Fin 5 → ℝ) := by
+    intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at *
+  have h := diagonalized_eigenvalues _ P R _ (lap_hermitian _ _) PR_identity hdiag hd i.rev
+  change (lap_hermitian _ _).eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm i.rev) = _
+  rw [h]
+  fin_cases i <;> norm_num
+
+private theorem perturbed_valid : ValidWeight graph (orbitWeight (6/5) (3/5)) := by
+  constructor
+  · intro e
+    obtain ⟨i,rfl⟩ := edgeEquiv.surjective e
+    fin_cases i <;> norm_num [edgeEquiv, edgeAt, orbitWeight]
+  · rw [edge_card, ← edgeEquiv.sum_comp]
+    norm_num [edgeEquiv, edgeAt, orbitWeight, Fin.sum_univ_succ]
+
+private theorem perturbed_eigenvalues (i : Fin 5) :
+    eigenvalue graph (orbitWeight (6/5) (3/5)) i =
+      (![0,18/5,21/5,21/5,6] : Fin 5 → ℝ) i := by
+  have hdiag : laplacian graph (orbitWeight (6/5) (3/5)) * P =
+      P * diagonal (![6,21/5,21/5,18/5,0] : Fin 5 → ℝ) := by
+    convert orbit_diagonalized (6/5) (3/5) using 1 <;> norm_num
+  have hd : Antitone (![6,21/5,21/5,18/5,0] : Fin 5 → ℝ) := by
+    intro i j hij
+    fin_cases i <;> fin_cases j <;> norm_num at *
+  have h := diagonalized_eigenvalues _ P R _ (lap_hermitian _ _) PR_identity hdiag hd i.rev
+  change (lap_hermitian _ _).eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm i.rev) = _
+  rw [h]
+  fin_cases i <;> norm_num
+
+private theorem trace_five (A : Matrix (Fin 5) (Fin 5) ℝ) (hA : A.IsHermitian) :
+    A.trace = ∑ i : Fin 5, hA.eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm i) := by
+  rw [hA.trace_eq_sum_eigenvalues]
+  simp only [RCLike.ofReal_real_eq_id, id_eq]
+  trans ∑ i : Fin (Fintype.card (Fin 5)), hA.eigenvalues₀ i
+  · exact RHLinalg.sum_eigenvalues_reindex hA id
+  · exact ((finCongr (Fintype.card_fin 5)).symm.sum_comp hA.eigenvalues₀).symm
+
+private theorem trace_certificate_bound (A : Matrix (Fin 5) (Fin 5) ℝ)
+    (hA : A.IsHermitian) :
+    (A * X).trace ≤
+      hA.eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm 0) +
+        hA.eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm 1) := by
+  have h := RHLinalg.vonNeumann_trace_ineq hA X_hermitian
+  have hx (i : Fin (Fintype.card (Fin 5))) :
+      X_hermitian.eigenvalues₀ i =
+        (![8/9,5/9,5/9,0,0] : Fin 5 → ℝ) (Fin.cast (Fintype.card_fin 5) i) := by
+    simpa using X_eigenvalues (Fin.cast (Fintype.card_fin 5) i)
+  simp_rw [hx] at h
+  rw [← (finCongr (Fintype.card_fin 5)).symm.sum_comp] at h
+  norm_num [Fin.sum_univ_succ] at h
+  have h02 := hA.eigenvalues₀_antitone
+    (show (Fin.cast (Fintype.card_fin 5).symm 0) ≤
+      Fin.cast (Fintype.card_fin 5).symm 2 by decide)
+  have h12 := hA.eigenvalues₀_antitone
+    (show (Fin.cast (Fintype.card_fin 5).symm 1) ≤
+      Fin.cast (Fintype.card_fin 5).symm 2 by decide)
+  have hz : Fin.cast (Fintype.card_fin 5).symm (0 : Fin 5) =
+      (0 : Fin (Fintype.card (Fin 5))) := by
+    exact Fin.cast_zero (Fintype.card_fin 5).symm
+  rw [hz] at h02 ⊢
+  linarith
+
+private theorem all_weights_bounds (w : Edge graph → ℝ) (hw : ValidWeight graph w) :
+    smallestSum graph w 2 ≤ 8 ∧ 10 ≤ largestSum graph w 2 := by
+  have hs : ∑ e : Edge graph, w e = 9 := by
+    simpa only [edge_card, Nat.cast_ofNat] using hw.2
+  have ht : (laplacian graph w).trace = 18 := by rw [lap_trace, hs]; norm_num
+  have hx : (laplacian graph w * X).trace = 10 := by rw [lap_X_trace, hs]; norm_num
+  have hb := trace_certificate_bound _ (lap_hermitian graph w)
+  rw [hx] at hb
+  have he0 : 0 ≤ eigenvalue graph w 0 := by
+    have hp := (lap_psd graph w hw.1).eigenvalues_nonneg
+      (RHLinalg.eigEquiv (n := Fin 5) (Fin.cast (Fintype.card_fin 5).symm (0 : Fin 5).rev))
+    simpa only [eigenvalue, RHLinalg.eigenvalues_eigEquiv] using hp
+  have ht' := trace_five _ (lap_hermitian graph w)
+  rw [ht] at ht'
+  have he (i : Fin 5) :
+      (lap_hermitian graph w).eigenvalues₀ (Fin.cast (Fintype.card_fin 5).symm i) =
+        eigenvalue graph w i.rev := by simp only [eigenvalue, Fin.rev_rev]
+  simp_rw [he] at hb ht'
+  norm_num [Fin.sum_univ_succ] at ht'
+  norm_num [Fin.rev] at hb
+  constructor
+  · norm_num [smallestSum, Fin.sum_univ_succ]
+    linarith
+  · norm_num [largestSum, Fin.sum_univ_succ]
+    linarith
+
+private theorem graph_two_rigid : KConformallyRigid graph 2 := by
+  refine ⟨by norm_num, by norm_num, ?_⟩
+  intro w u hw hu
+  have h := (all_weights_bounds w hw).1
+  have h' := (all_weights_bounds u hu).2
+  have hu : smallestSum graph (uniform graph) 2 = 8 := by
+    norm_num [smallestSum, uniform_eigenvalues, Fin.sum_univ_succ]
+  have hu' : largestSum graph (uniform graph) 2 = 10 := by
+    norm_num [largestSum, uniform_eigenvalues, Fin.sum_univ_succ]
+  exact ⟨hu.symm ▸ h, hu'.symm ▸ h'⟩
+
+private theorem graph_not_one_rigid : ¬ KConformallyRigid graph 1 := by
+  intro h
+  have hu : ValidWeight graph (uniform graph) := by simp [ValidWeight, uniform]
+  have hn := (h.2.2 (orbitWeight (6/5) (3/5)) (uniform graph) perturbed_valid hu).1
+  norm_num [smallestSum, uniform_eigenvalues, perturbed_eigenvalues, Fin.sum_univ_succ] at hn
+
+theorem result : claim := by
+  exact ⟨5,graph,graph_connected,⟨0,2,by decide⟩,graph_two_rigid,graph_not_one_rigid⟩
+
+
+end
+end D5.S3.Combinatorics.SpectralGraph.TotalConformalRigidityTwoNotOne
