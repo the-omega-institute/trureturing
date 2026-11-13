@@ -48,6 +48,6 @@ internal sealed class DanskinDocument : IScribeDocumentDefinition
                         + "conclusion, and both generic compact-subtype affine applications compile to the "
                         + "literal right maximum and minimum little-o expansions with the stated premises. "
                         + "Upstream acceptance alone is not the retirement condition. "
-                        + "Independent proof-shape, live-consumer and first-freeze admission remain separate obligations."))),
+                        + "Escape registration is unfinished under https://github.com/the-omega-institute/trureturing/issues/29945. Independent proof-shape, live-consumer and first-freeze admission remain separate obligations."))),
                 DescribeRole.Theorem))));
 }
