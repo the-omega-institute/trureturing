@@ -49,6 +49,14 @@ CHUNK_BYTES = 1610612736
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
 RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
+# Asset transfer has its own wall-clock owner.  It must not consume the
+# metadata/install budget, but a direct script invocation still needs a finite
+# fail-closed bound for a hung `gh` child.
+RELEASE_ASSET_TRANSFER_TIMEOUT_SECONDS = 21600
+RELEASE_ASSET_TRANSFER_TIMEOUT_MAX_SECONDS = 21600
+# prune() retains the five newest complete snapshots per partition.  Keep the
+# same finite recovery window even when older releases remain on GitHub.
+RELEASE_FETCH_MAX_ATTEMPTS = 5
 
 LOG = None
 LOG_LAST = {}
@@ -71,6 +79,17 @@ def operation_deadline():
             raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}") from None
         if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_MAX_SECONDS:
             raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
+    return time.monotonic() + seconds
+
+
+def asset_transfer_deadline():
+    variable = "STRATALINT_LEAN_CACHE_RELEASE_TRANSFER_TIMEOUT_SECONDS"
+    raw = os.environ.get(variable, str(RELEASE_ASSET_TRANSFER_TIMEOUT_SECONDS))
+    if not re.fullmatch(r"[0-9]+", raw):
+        raise ValueError(f"{variable} must be 1..{RELEASE_ASSET_TRANSFER_TIMEOUT_MAX_SECONDS}")
+    seconds = int(raw)
+    if not 0 < seconds <= RELEASE_ASSET_TRANSFER_TIMEOUT_MAX_SECONDS:
+        raise ValueError(f"{variable} must be 1..{RELEASE_ASSET_TRANSFER_TIMEOUT_MAX_SECONDS}")
     return time.monotonic() + seconds
 
 
@@ -754,7 +773,7 @@ def clone_local_parts(local_assets, stage, parts, deadline):
 
 def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False, *,
                      cache_key, approved_producer=None, require_compatible_seed=False, on_installed=None,
-                     local_assets=None):
+                     local_assets=None, transfer_deadline=None):
     with observed_phase("manifest"):
         metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
             expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
@@ -767,7 +786,9 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
             # duration depends on the link and must not consume the bounded
             # metadata/install operation budget. Integrity and attribution are
             # checked after the transfer before any cache bytes are installed.
-            gh(None, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
+            if transfer_deadline is None:
+                transfer_deadline = asset_transfer_deadline()
+            gh(transfer_deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
                *(argument for part in parts for argument in ("--pattern", part["name"])))
         else:
             clone_local_parts(local_assets, stage, parts, None)
@@ -1035,14 +1056,19 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
             candidates = [(source, approved_tag)]
         else:
             candidates = snapshot_candidates(root, partition, deadline, cache_key)
+        transfer_deadline = None if local_assets is not None else asset_transfer_deadline()
+        attempts = 0
         for source, tag in candidates:
+            if attempts >= RELEASE_FETCH_MAX_ATTEMPTS:
+                break
+            attempts += 1
             remaining(deadline)
             try:
                 temporary = tempfile.TemporaryDirectory(prefix="lean-fetch-")
                 try:
                     restore_snapshot(root, source, tag, pathlib.Path(temporary.name), deadline,
                         refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer,
-                        local_assets=local_assets)
+                        local_assets=local_assets, transfer_deadline=transfer_deadline)
                 finally:
                     try:
                         temporary.cleanup()

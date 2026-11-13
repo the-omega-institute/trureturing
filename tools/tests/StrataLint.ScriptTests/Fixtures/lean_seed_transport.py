@@ -357,7 +357,7 @@ make -C "$2" lean
 ''', "optional-fetch", str(self.publisher), str(self.root)], text=True, capture_output=True,
             env=self.transport_environment(**{"GITHUB_ACTIONS": "false", **extra}))
 
-    def deadline_probe(self, seconds=None, step=0):
+    def deadline_probe(self, seconds=None, step=0, transfer_seconds=1):
         # Keep subprocess's own wait clock real. Only the operation's monotonic
         # clock advances at completed gh calls, independently of machine speed.
         write(self.bin / "sitecustomize.py", '''
@@ -414,6 +414,7 @@ subprocess.run = run
        if seconds is None else ""))
         (self.root / "gh-budgets").unlink(missing_ok=True)
         environment = {"PYTHONPATH": str(self.bin), "FAKE_CLOCK_STEP": str(step)}
+        environment["STRATALINT_LEAN_CACHE_RELEASE_TRANSFER_TIMEOUT_SECONDS"] = str(transfer_seconds)
         if seconds is not None:
             environment["STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS"] = str(seconds)
         return environment
@@ -669,7 +670,7 @@ pathlib.Path.open = open_path
     def test_release_asset_transfer_has_no_whole_operation_deadline(self):
         self.assertEqual(0, self.transport("publish").returncode)
         shutil.rmtree(self.root / ".lake/build")
-        environment = self.deadline_probe(1)
+        environment = self.deadline_probe(1, transfer_seconds=5)
         with (self.bin / "sitecustomize.py").open("a") as probe:
             probe.write('''
 import subprocess
@@ -690,7 +691,20 @@ subprocess.run = transfer_run
                      and any(value == "lean-build.tgz" or value.startswith("lean-build.tgz.part-")
                              for value in call["args"])]
         self.assertEqual(1, len(transfers))
-        self.assertIsNone(transfers[0]["timeout"])
+        self.assertEqual(5, transfers[0]["timeout"])
+
+    def test_asset_transfer_attempts_share_a_finite_window(self):
+        for run in range(501, 508):
+            self.assertEqual(0, self.transport("publish", str(run)).returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.transport("fetch", FAKE_FAIL_ASSET="1", **self.deadline_probe(transfer_seconds=5))
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        transfers = [call for call in self.gh_budgets()
+                     if call["args"][:2] == ["release", "download"]
+                     and any(value.startswith("lean-build.tgz") for value in call["args"])]
+        self.assertEqual(5, len(transfers))
+        self.assertEqual([5] * len(transfers), [call["timeout"] for call in transfers])
+        self.assertFalse((self.root / ".lake/build").exists())
 
     def preparation_deadline_probe(self, phase):
         # Small incompressible material reaches archive hashing and multipart
@@ -842,6 +856,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertIn('"status":"failed"', published.stdout)
                 self.assertEqual(19, self.transport("publish", **environment, FAKE_BUILD_EXIT="19").returncode)
                 self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_invalid_asset_transfer_budget_is_explicit_and_optional_fetch_recovers(self):
+        variable = "STRATALINT_LEAN_CACHE_RELEASE_TRANSFER_TIMEOUT_SECONDS"
+        for value in ("0", "-1", "nan", "1.5", "21601", "999999999999999999999"):
+            with self.subTest(budget=value):
+                fetched = self.fetch_then_build(**{variable: value})
+                self.assertEqual(0, fetched.returncode, fetched.stdout + fetched.stderr)
+                self.assertIn(variable, fetched.stdout)
 
     def test_release_budget_accepts_values_up_to_the_ceiling(self):
         for value in ("1", "600", "1800", "1801", "21600"):
