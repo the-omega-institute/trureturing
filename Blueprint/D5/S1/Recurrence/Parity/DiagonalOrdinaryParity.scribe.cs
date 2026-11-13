@@ -8,7 +8,7 @@ internal sealed class DiagonalOrdinaryParityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.";
     private static readonly LibraryNoteRef ParitySource =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2026a177775");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/hanna2026a177775");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The normalized diagonal-constraint series has odd ordinary coefficients exactly at powers of two.",

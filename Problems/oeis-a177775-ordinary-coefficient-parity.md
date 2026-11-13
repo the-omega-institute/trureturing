@@ -20,7 +20,7 @@ The [immutable source](https://raw.githubusercontent.com/oeis/oeisdata/501c6189f
 has SHA-256 `adff5528b1f3f6030f713ec4603f243ddb0a3442ccdf02a08880f0f180403eac`.
 The conjecture comment is from May 19, 2026, in approved revision 10 of May 20,
 2026. The entry's May 13, 2010 author date does not date this conjecture.
-The citation-only [source note](../Library/RecurrenceComposition/hanna2026a177775.md)
+The citation-only [source note](../Library/RecurrenceAlgebraic/hanna2026a177775.md)
 retains the source locators and normalization; [preregistration #30066](https://github.com/the-omega-institute/trureturing/issues/30066)
 fixes the complete target.
 
