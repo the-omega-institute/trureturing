@@ -120,7 +120,7 @@ def slope {p : V} (a : ExclusionChart C u p) :
 def slopeBody {p : V} (a : ExclusionChart C u p) : Set (EuclideanSpace ℝ (Fin a.dim)) :=
   slope a '' normalBody C p (a.param 0)
 
-private theorem slope_formula {p : V} (a : ExclusionChart C u p)
+theorem slope_formula {p : V} (a : ExclusionChart C u p)
     (b : V →L[ℝ] ℝ) (z) : b (a.param z) = b (a.param 0) + ⟪slope a b, z⟫ := by
   rw [show ⟪slope a b, z⟫ = b (a.param.linear z) from
     by
@@ -263,7 +263,7 @@ private theorem slope_eq_of_formula {p : V} (a : ExclusionChart C u p)
   linarith [slope_formula a b z, h z]
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_mem {p : V} (a : ExclusionChart C u p)
+theorem chart_mem {p : V} (a : ExclusionChart C u p)
     {z} (hz : ‖z‖ ≤ 1) : a.param z ∈ exclusion C u p :=
   a.whole ▸ mem_image_of_mem a.param (by simpa using hz)
 
@@ -474,7 +474,7 @@ private theorem slope_confirmer (hc : IsClosed (C : Set V))
       real_inner_self_eq_norm_sq, hn]
     ring
 
-private theorem comparison_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+theorem comparison_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u) (x : V) :
     ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = comparison C u p x := by
   let F : Set (V →L[ℝ] ℝ) := {f | proper C u f.toLinearMap ∧ f p = 1}
