@@ -1,6 +1,8 @@
 import Reg.Support.DependentFamily
 import D5.S3.Quantum.Algebra.AuricActualOcticSupport
 
+/-! Source-bound operator readout and complete support-connectivity telescope. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -37,7 +39,8 @@ structure Parameters where
   hW : finrank F W = 4
   hE : {c : D | ∀ z ∈ W, c * z ∈ W} = Set.range (algebraMap F D)
 
-attribute [instance] Parameters.fieldF Parameters.fieldD Parameters.fieldK Parameters.fieldL Parameters.algebraKL
+attribute [instance] Parameters.fieldF Parameters.fieldD Parameters.fieldK
+  Parameters.fieldL Parameters.algebraKL
   Parameters.algebraFD Parameters.algebraFK Parameters.algebraDK Parameters.tower
   Parameters.finiteD Parameters.zeroCharacteristic Parameters.finiteK Parameters.normalK
 
@@ -57,7 +60,7 @@ def actual : Realization signature.{u, v, w, z} := realize signature
   (fun e => nomatch e)
 
 /-- Exact source postcondition, with only the original operator occurrence abstracted. -/
-def conclusion (p : Parameters.{u, v, w, z}) (a : p.D)
+def conclusion (p : Parameters.{u, v, w, z})
     (op : p.D →ₗ[p.F] p.D) : Prop :=
     ∃ e : p.K ⊗[p.F] p.D ≃ₐ[p.K] ((p.D →ₐ[p.F] p.K) → p.K),
       (∀ (c : p.K) (d : p.D) (σ : p.D →ₐ[p.F] p.K), e (c ⊗ₜ[p.F] d) σ = c * σ d) ∧
@@ -69,7 +72,7 @@ def conclusion (p : Parameters.{u, v, w, z}) (a : p.D)
 abbrev arena : Arena where
   signature := signature.{u, v, w, z}
   Law R := ∀ (p : Parameters.{u, v, w, z}) (a : signature.State p),
-    conclusion p a.val (R.readout () p a)
+    conclusion p (R.readout () p a)
 
 /-- The complete telescope is reconstructed without a conditional matrix replacement. -/
 theorem full_telescope_bridge :

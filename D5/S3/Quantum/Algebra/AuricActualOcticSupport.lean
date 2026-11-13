@@ -77,12 +77,12 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
     have hs : S.Nonempty := ⟨τ, (hmem τ).mpr .refl⟩
     have ht : Sᶜ.Nonempty := ⟨σ, Finset.mem_compl.mpr (by simpa [hmem] using hnot)⟩
     have hz : N.submatrix (fun i : ↥(Sᶜ) => (i : D →ₐ[F] K))
-        (fun j : S => (j : D →ₐ[F] K)) = 0 := by
+        (fun j : ↥(Sᶜᶜ) => (j : D →ₐ[F] K)) = 0 := by
       ext i j
       change N i j = 0
       by_contra hij
       exact (Finset.mem_compl.mp i.property) ((hmem i).mpr
-        (Relation.ReflTransGen.head hij ((hmem j).mp j.property)))
+        (Relation.ReflTransGen.head hij ((hmem j).mp (by simpa using j.property))))
     have hh := hcross Sᶜ ht (by simpa using hs)
     rw [hz, Matrix.rank_zero] at hh
     omega
