@@ -37,7 +37,7 @@ theorem real_root_adjoint_surjective_of_positive_pairing
 Let mu = bilinear D alpha beta > 0. The proof obtains a pointwise killing bound K with E^K c = 0. If K = 0, then c = 0 and it returns d = 0 in Fib (beta-alpha). If K = N+1, it takes exactly d = ∑ n ∈ Finset.range (N+1), a_n • F^(n+1)(E^n c), with the actual ladderCoefficient above. E^n c need not be primitive. The general commutator and its diagonal specialization give E(F^(n+1)E^n c) = F^(n+1)E^(n+1)c + (n+1)(mu+n) • F^n E^n c. Positivity of integral mu makes the coefficient denominators nonzero. The delivered finite_ladder_telescope proves E d = c + a_N • F^(N+1)(E^(N+1)c); the final term vanishes by the chosen bound. iterate_mem_fiber first at alpha and then at -alpha gives every summand the literal original charge beta + n • alpha + (n+1) • (-alpha) = beta-alpha. Submodule sum and scalar closure put d in the actual Fib (beta-alpha). Only this finite coefficient telescope is used, with no duality or finite-dimensional whole-image argument."))), DescribeRole.Theorem),
             Paragraph(Text(@"The mathematics is classical sl2 representation theory. Mathlib.Algebra.Lie.Sl2 supplies the primitive-vector and raising-weight formulas (Oliver Nash and Mathlib contributors). The delivered source proves and consumes its general nonprimitive commutator and finite telescope on the actual physical carrier. Original lattice/VOA/BRST suppliers retain Bakalov--Kac, Scott Carnahan, Kalle Kytölä, Becchi--Rouet--Stora--Tyutin, Kato--Ogawa and Lian--Zuckerman attribution. Batteries supplies exact private-declaration access. No accepted Pro answer is relied upon. These two ladder statements do not claim Monster/Borcherds recognition, a denominator identity, or complete Monster/VOA/CFT/anomaly/fusion/string/AdS mathematics.")),
             Paragraph(Text(@"SOURCE_ONLY_UNCOMPILED. This is canonical Scribe SOURCE integration only. Source-specific typed Reg audit, native C# compilation, Scribe rendering and enrollment, native Lean elaboration/kernel/axiom validation of the unchanged candidate and its pending suppliers, required repository checks, PR and publication remain pending. The document structure follows the two sealed tracked template snapshots; this source check supplies no native acceptance receipt. The full goal remains ACTIVE INCOMPLETE.")),
-            Paragraph(Text(@"Complete unchanged sealed Lean source follows; this literal is an unchanged supplier, not a new proof or native validation:
+            Paragraph(Text(@"Complete current Lean source follows; native acceptance is recorded separately:
 /- GID: D5/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTRealRootLadder
    generality: I
    mirror-B: D5/B/S3/VertexAlgebra/Lattice/PhysicalLie/LatticeBRSTRealRootLadder
@@ -79,7 +79,7 @@ The full Monster/VOA/CFT/anomaly/fusion/string/AdS goal is ACTIVE INCOMPLETE.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -207,7 +207,8 @@ private theorem finite_ladder_telescope (c : L) (mu : ℤ) (hmu : 0 < mu)
       have hd : ⁅e, (F ^ 1) c⁆ = (F ^ 1) ((E ^ 1) c) + (mu : ℂ) • c := by
         simpa only [Nat.cast_zero, zero_add, add_zero, one_mul,
           pow_zero, Module.End.one_apply] using diagonal_commutator t c mu hc 0
-      simp only [Finset.sum_range_one, pow_zero, Module.End.one_apply]
+      simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
+        pow_zero, Module.End.one_apply]
       rw [lie_smul, hd, smul_add, smul_smul]
       have ha : ladderCoefficient mu 0 * (mu : ℂ) = 1 := inv_mul_cancel₀ hm
       rw [ha, one_smul]
@@ -236,12 +237,14 @@ local notation ""Fib"" => physicalChargeFiber D H h26 hHG hGH
 section Root
 
 variable (alpha : Charge D) (hα : chargeEnergy D alpha = 1)
-  (e : Ph) (he : (e : C) ∈ Fib alpha) (he0 : e ≠ 0)
+  (e : physicalImage D H h26 hHG hGH)
+  (he : (e : Cohomology D H h26 hHG hGH) ∈
+    physicalChargeFiber D H h26 hHG hGH alpha) (he0 : e ≠ 0)
 
 local notation ""fα"" => normalizedOpposite D H h26 hHG hGH alpha hα e he he0
 local notation ""hαC"" => cartanPhysicalImage D H h26 hHG hGH (fun i => (alpha i : ℂ))
 
-include hα he he0
+include D H h26 hHG hGH alpha hα e he he0
 
 private theorem physical_sl2 : IsSl2Triple hαC e fα := by
   have hh : hαC ≠ 0 := by
@@ -249,7 +252,11 @@ private theorem physical_sl2 : IsSl2Triple hαC e fα := by
     have hz : (2 : ℂ) • e = 0 := by
       simpa only [hh, zero_lie] using
         (sl2_he D H h26 hHG hGH alpha hα e he he0).symm
-    exact he0 ((smul_eq_zero.mp hz).resolve_left (by norm_num))
+    apply he0
+    calc
+      e = (2 : ℂ)⁻¹ • ((2 : ℂ) • e) := by
+        rw [smul_smul, inv_mul_cancel₀ (by norm_num : (2 : ℂ) ≠ 0), one_smul]
+      _ = 0 := by rw [hz, smul_zero]
   exact
     { h_ne_zero := hh
       lie_e_f := sl2_ef D H h26 hHG hGH alpha hα e he he0

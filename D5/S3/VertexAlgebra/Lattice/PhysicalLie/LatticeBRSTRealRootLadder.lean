@@ -39,7 +39,7 @@ The full Monster/VOA/CFT/anomaly/fusion/string/AdS goal is ACTIVE INCOMPLETE.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -167,7 +167,8 @@ private theorem finite_ladder_telescope (c : L) (mu : ℤ) (hmu : 0 < mu)
       have hd : ⁅e, (F ^ 1) c⁆ = (F ^ 1) ((E ^ 1) c) + (mu : ℂ) • c := by
         simpa only [Nat.cast_zero, zero_add, add_zero, one_mul,
           pow_zero, Module.End.one_apply] using diagonal_commutator t c mu hc 0
-      simp only [Finset.sum_range_one, pow_zero, Module.End.one_apply]
+      simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add,
+        pow_zero, Module.End.one_apply]
       rw [lie_smul, hd, smul_add, smul_smul]
       have ha : ladderCoefficient mu 0 * (mu : ℂ) = 1 := inv_mul_cancel₀ hm
       rw [ha, one_smul]
@@ -196,12 +197,14 @@ local notation "Fib" => physicalChargeFiber D H h26 hHG hGH
 section Root
 
 variable (alpha : Charge D) (hα : chargeEnergy D alpha = 1)
-  (e : Ph) (he : (e : C) ∈ Fib alpha) (he0 : e ≠ 0)
+  (e : physicalImage D H h26 hHG hGH)
+  (he : (e : Cohomology D H h26 hHG hGH) ∈
+    physicalChargeFiber D H h26 hHG hGH alpha) (he0 : e ≠ 0)
 
 local notation "fα" => normalizedOpposite D H h26 hHG hGH alpha hα e he he0
 local notation "hαC" => cartanPhysicalImage D H h26 hHG hGH (fun i => (alpha i : ℂ))
 
-include hα he he0
+include D H h26 hHG hGH alpha hα e he he0
 
 private theorem physical_sl2 : IsSl2Triple hαC e fα := by
   have hh : hαC ≠ 0 := by
@@ -209,7 +212,11 @@ private theorem physical_sl2 : IsSl2Triple hαC e fα := by
     have hz : (2 : ℂ) • e = 0 := by
       simpa only [hh, zero_lie] using
         (sl2_he D H h26 hHG hGH alpha hα e he he0).symm
-    exact he0 ((smul_eq_zero.mp hz).resolve_left (by norm_num))
+    apply he0
+    calc
+      e = (2 : ℂ)⁻¹ • ((2 : ℂ) • e) := by
+        rw [smul_smul, inv_mul_cancel₀ (by norm_num : (2 : ℂ) ≠ 0), one_smul]
+      _ = 0 := by rw [hz, smul_zero]
   exact
     { h_ne_zero := hh
       lie_e_f := sl2_ef D H h26 hHG hGH alpha hα e he he0

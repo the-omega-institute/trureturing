@@ -41,7 +41,7 @@ ACTIVE INCOMPLETE.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -278,7 +278,8 @@ theorem physical_charge_support_real_root_string
     · intro hzW
       apply hz0
       apply W.injective
-      simpa only [map_zero] using hzW
+      change W z = W 0
+      exact hzW.trans W.toLinearEquiv.map_zero.symm
   -- The reverse implication uses only involutivity of the integer index,
   -- never W squared equals the identity on the physical Lie image.
   have hreflect_iff (n : ℤ) : S n ↔ S (-b - n) := by
