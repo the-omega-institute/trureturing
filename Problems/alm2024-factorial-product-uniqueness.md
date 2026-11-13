@@ -81,13 +81,13 @@ $2,3,5,7,11,13,17,19,23,47$, and no other prime occurs in the adjacent factors. 
 $$\frac{2^{1150}7^{44}}
 {3^{326}5^{42}11^{10}13^{38}17^{16}19^{18}23^{22}47^{46}}.$$
 
-These are the finite supplied certificate facts accompanying the existing kernel proof; this dossier does not claim a fresh checker run.
+The exponent table and support explain the adjacent-pair certificate; the original refutation proof checks the factorial products directly.
 
 For every finite $C$ disjoint from $A\cup B$, adjoining $C$ to both sides preserves the actual products and distinctness, gives equal sums
-$965+\sum_{c\in C}c$, and leaves the symmetric difference equal to $A\cup B$ of cardinality 36. Choosing $|C|=k-18$ gives distinct $k$-element representations for every $k\ge18$. For $k>18$ the two extensions share $C$; they are not asserted to be disjoint.
+$965+\sum_{c\in C}c$, and leaves the symmetric difference equal to $A\cup B$ of cardinality 36. When the representations are required to have parameters greater than one, impose that condition on C as well. The explicit choice $C=\{142,\ldots,141+(k-18)\}$, empty at $k=18$, gives distinct $k$-element representations for every $k\ge18$. For $k>18$ the two extensions share $C$; they are not asserted to be disjoint.
 
-For each fixed $k\ge19$, choose $|D|=k-19$ outside $A\cup B$ and vary $c$ above every element of $A\cup B\cup D$. The two $k$-element representations have equal sums within each pair and common positive rational value
-$F(A)F(D)f(c)$. Positivity and strict decrease of $f$ on positive arguments make these values pairwise different. Their sums may vary with $c$; no fixed-sum infinitude statement is made.
+For each fixed $k\ge19$, choose $|D|=k-19$ outside $A\cup B$ and vary $c$ above every element of $A\cup B\cup D$. One explicit choice is $D=\{142,\ldots,141+(k-19)\}$, empty at $k=19$. The two $k$-element representations have equal sums within each pair and common positive rational value
+$F(A)F(D)f(c)$. Positivity and strict decrease of $f$ on positive arguments make these values pairwise different. The positive constant $F(A)F(D)$ preserves strict decrease, so this map from an infinite integer tail is injective and its image is infinite. Their sums may vary with $c$; no fixed-sum infinitude statement is made.
 
 For strictly increasing equal-length lists of integers greater than one with $a_i\le b_i$ coordinatewise, the product at the $a$ list is at least the product at the $b$ list, with equality exactly when all coordinates agree. The empty-list boundary is the empty product 1 when length zero is admitted. Strictness is restricted to the positive domain: the total orbit weight has value 1 at both 0 and 1.
 
@@ -99,7 +99,7 @@ The associated decreasing-vector comparison is only a finite incomparability che
 
 The result and its claim are in `D5/S3/FiniteGroups/FactorialProductNonunique.lean`; their corresponding formulas and mathematical exposition are in its Blueprint Scribe. The original factorial factor remains defined in `TransversalProbabilityMonotone`, and is directly reused.
 
-The reusable weight owner supplies the adjacent-ratio/antitone comparison chain used by the application. Its strict conclusion is used only for positive indices; the total definition has orbitWeight 0 = orbitWeight 1 = 1. The finite extensions and the fixed-cardinality infinite family are written compositions of the displayed witness, finite-set operations, and this positivity/strictness argument; no new Lean declaration is retained for a bind-only application.
+The reusable weight owner supplies the adjacent-ratio/antitone comparison chain used by the application. Strictness additionally follows because for positive n the adjacent ratio is a nonzero power of a rational strictly between zero and one; chaining the strict adjacent drops covers every pair of positive indices. All weights are positive by positivity of the factorial and denominator, with the zero case evaluated separately; the total definition has orbitWeight 0 = orbitWeight 1 = 1. The finite extensions and the fixed-cardinality infinite family are written compositions of the displayed witness, finite-set operations, and this positivity/strictness argument; no new Lean declaration is retained for a bind-only application.
 
 Admission basis: `open-problem-resolution`, preregistration [#27274](https://github.com/the-omega-institute/trureturing/issues/27274). The finite rational normalization is classified `proof_shape: bind-only`; its named external-problem conclusion supplies the stated admission basis. Utility is `certified-instance` with `refutes=claim`. The only new public theorem is the designated literal refutation result and is exempt from four-slot escape registration.
 
@@ -107,7 +107,7 @@ Admission basis: `open-problem-resolution`, preregistration [#27274](https://git
 
 ### What the settlement shows
 
-The exact finite counterexample refutes the unrestricted assertion through a ternary-coefficient multiplicative relation among adjacent ratios, which yields parameters without repetition. The prime-only theorem survives. Minimum cardinality, minimum maximum parameter and an all-composite restriction remain unresolved here. The asymptotic smooth-pair route is unnecessary for this finite refutation and is not asserted as a formal theorem.
+The exact finite counterexample refutes the unrestricted assertion through a ternary-coefficient multiplicative relation among adjacent ratios, which yields parameters without repetition. The theorem requiring distinct primes on one side survives. Minimum cardinality, minimum maximum parameter and an all-composite restriction remain unresolved here. The asymptotic smooth-pair route is unnecessary for this finite refutation and is not asserted as a formal theorem.
 
 ## ASSUMED-UNVERIFIED
 

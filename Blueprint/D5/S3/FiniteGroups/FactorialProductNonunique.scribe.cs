@@ -52,7 +52,7 @@ internal sealed class FactorialProductNonuniqueDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "This refutes the full unrestricted uniqueness assertion, including "
                         + "the interpretation requiring all parameters on both sides to be "
-                        + "distinct. It does not refute Theorem 4.6, whose parameters are primes. "
+                        + "distinct. It does not refute Theorem 4.6, which requires distinct primes on one side and allows arbitrary integer parameters on the other side. "
                         + "No minimality, composite-only strengthening or worldwide priority "
                         + "claim is asserted.")),
                     Paragraph(Text(
@@ -60,7 +60,7 @@ internal sealed class FactorialProductNonuniqueDocument : IScribeDocumentDefinit
                         + "and V={10,24,38,46,48,56,68,80,84}. These are disjoint sets of nine even starts, "
                         + "and A=V union (U+1), B=U union (V+1). The eighteen adjacent pairs are therefore disjoint, "
                         + "so both A and B have cardinality 18, A and B are disjoint, and each parameter is greater than one. "
-                        + "The two sides select opposite endpoints from the same pairs, giving sums 965. "
+                        + "Each side selects nine upper and nine lower endpoints from the same pairs, giving sum 956+9=965. "
                         + "For each of the ten primes 2,3,5,7,11,13,17,19,23,47, the exponent "
                         + "sum n times (v_p(n)-v_p(n+1)) agrees for U and V; no other prime occurs in the displayed adjacent factors. "
                         + "The resulting rational certificate is 2^1150 7^44 divided by "
@@ -69,17 +69,17 @@ internal sealed class FactorialProductNonuniqueDocument : IScribeDocumentDefinit
                         "The same equality extends along every finite common extension. If C is finite and disjoint from A union B, "
                         + "then A union C and B union C remain distinct, have equal actual factorial-weight products, and have equal sums "
                         + "965 plus the sum of the elements of C. Their symmetric difference is still A union B and has cardinality 36. "
-                        + "Taking C of cardinality k-18 gives the assertion for every k at least 18. When k is greater than 18 the two extensions share C; "
+                        + "For representations by integers greater than one, require every member of C to exceed one. For example C={142,...,141+(k-18)} is disjoint from A union B and has cardinality k-18, giving every k at least 18, including empty C at k=18. When k is greater than 18 the two extensions share C; "
                         + "the extension is not claimed to be disjoint.")),
                     Paragraph(Text(
                         "For every fixed k at least 19, choose a finite D disjoint from A union B with cardinality k-19 and then choose each integer c "
                         + "above every member of A union B union D. The two k-element sets A union D union {c} and B union D union {c} have equal sums within each pair "
-                        + "and common positive rational product F(A)F(D)orbitWeight(c). The adjacent-ratio identity gives positivity and strict decrease "
+                        + "and common positive rational product F(A)F(D)orbitWeight(c). Choose D={142,...,141+(k-19)}, with D empty at k=19. Its finite product and F(A) are positive. For positive c the adjacent ratio lies strictly between zero and one; multiplication by the fixed positive F(A)F(D) preserves strict decrease. Thus the map from the unbounded integer tail to these product values is injective, and its image is infinite. The adjacent-ratio identity gives positivity and strict decrease "
                         + "on the positive domain, so these values are pairwise different as c varies. The sums may vary with c; no fixed-sum infinitude claim is made.")),
                     Paragraph(Text(
                         "The same identity gives the complete coordinate comparison: for strictly increasing integer lists a and b of equal length, "
                         + "with every entry greater than one and a_i less than or equal to b_i, the product of the weights at a is at least the product at b, "
-                        + "with equality exactly when all coordinates agree. The empty-list boundary is the empty product 1 when the formal domain admits length zero. "
+                        + "with equality exactly when all coordinates agree. The empty-list boundary is the empty product 1 at length zero, where both products are 1 and coordinate equality is vacuous. "
                         + "Strict decrease is asserted only for positive arguments: orbitWeight 0 and orbitWeight 1 are both 1, so a global strictness claim is false.")),
                     Paragraph(Text(
                         "The decreasing-vector witness is incomparable in weak majorisation: its first partial sums are 141 greater than 140, while its ninth partial sums are 714 less than 715. "

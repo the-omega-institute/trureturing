@@ -36,10 +36,10 @@ internal sealed class TransversalProbabilityMonotoneDocument : IScribeDocumentDe
                 "For every natural number n, orbitWeight n is the rational number n!/n^n. "
                 + "For positive n this is the factor f(n) appearing in Proposition 3.2 "
                 + "and Problem 5.6. The definition also fixes a total value at zero. "
-                + "Using orbitWeight (n+1)=orbitWeight n*((n:Q)/(n+1))^n, positivity and strict decrease hold on positive arguments. "
+                + "The numerator n! is positive and the denominator n^n is positive for n>0, giving positive weights; at zero the definition gives 1. For n>0, 0<n/(n+1)<1 and n is a nonzero exponent, so the existing adjacent identity orbitWeight (n+1)=orbitWeight n*((n:Q)/(n+1))^n gives a strict drop. Chaining consecutive drops proves strict decrease on positive indices. "
                 + "The total function is not globally strict because orbitWeight 0=orbitWeight 1=1. "
                 + "Consequently, for coordinate-comparable increasing lists of integers greater than one, the product is antitone coordinatewise "
-                + "and equality occurs exactly when every coordinate agrees; the empty product is 1 at length zero."),
+                + "and equality occurs exactly when every coordinate agrees. Indeed the smaller-index weight dominates each corresponding positive factor, and one strict coordinate forces a strict product inequality; this works without an ordering assumption within either list. For length zero both products are 1 and coordinate equality is vacuous."),
             Node("P", "The probability for one specified subgroup", PFormula(),
                 AssessedProvenance.FromLiterature(Source),
                 "Definition 3.1(ii), printed p. 8: “If H = K, we let P_G(H) ≔ "
