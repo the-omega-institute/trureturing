@@ -1,0 +1,33 @@
+**定义 86.5（精确 PRE 后的原 H13）。** 只有 (86.3) 恢复精确 PRE 后，才由 66.3 读取原中心因子 $A_i$、单位 $c_i$、秩 $n_i$ 及 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$、中心投影 $\pi_{ik}$。定义
+
+$$
+\alpha_{ik}:A_i\to D_{ik},\quad a\mapsto F(a,c_k),\qquad
+\beta_{ik}:A_k\to D_{ik},\quad b\mapsto F(c_i,b),\qquad
+\mathcal I=\{(i,k):n_i,n_k\ge2\}.
+$$
+
+伴随全用原规范迹，严格保留 72.3 的资格：
+
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal I,\ x=\pi_{ik}\rho,\quad
+\alpha_{ik}\alpha_{ik}^*x-x\not\succeq0
+\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0\}.
+\tag{86.6}
+$$
+
+$\not\succeq0$ 表示有严格负方向，不要求负定、两差都违例或纯性。铺回使用未归一化单位；活跃块严格正质量由资格推出，非活跃块任取正元含零，只受同一个原总迹一约束。$\mathcal I=\varnothing$ 时取 $\mathcal H(F)=K_D$。资格只读第一接口、原序和迹，不由输出反选。
+
+此后 $\widetilde M$ 已可逆，才定义
+
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\qquad
+I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}:D\to E,
+\qquad\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+,
+$$
+$$
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\quad I^{\rm raw}\rho\in E_+.
+\tag{86.7}
+$$
+
+它检测同一个合格原混态的整个原输出，保留全部中心块，不换态、换 $p$、换参考或只看总迹。72.7 给资格非空，72.8 给每个合格原态的全输出正性与 C13 等价，包括空活跃集。
+

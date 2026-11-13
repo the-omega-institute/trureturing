@@ -1,0 +1,17 @@
+**Assumption 2.3 (Credited moments).** G, Assumption 2.3, supplies
+
+$$
+Z_i(e^{-s})=9!s^{-10}(1+O_H(s)),\qquad
+\mu_i(e^{-s})=10/s+O_H(1),\qquad
+\beta_i(e^{-s})=11/(2s)+O_H(1).
+\tag{2.7}
+$$
+
+Constants concern only the fixed $H_c$. Choose a source-only $s_H>0$ so that
+
+$$
+Z_0(e^{-s})\ge(9!/2)s^{-10},\qquad
+\mu_0(e^{-s})\ge5/s\quad(0<s<s_H).
+\tag{2.8}
+$$
+

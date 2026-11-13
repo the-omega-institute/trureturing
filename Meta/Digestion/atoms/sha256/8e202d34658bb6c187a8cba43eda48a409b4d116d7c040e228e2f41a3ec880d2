@@ -1,0 +1,42 @@
+**命题 31.3（同原域、同二元最小值的严格三元分离）。** 取实正根 $\alpha^{15}=2$，令
+
+$$
+F=\mathbb Q,\quad L=\mathbb Q(\alpha),\quad
+\beta=\alpha^3,\quad A=\mathbb Q(\beta),\quad
+B=\ker\operatorname{Tr}_{A/\mathbb Q},\quad
+W=B\oplus A\alpha,\quad V=\langle 1,\alpha,\ldots,\alpha^8\rangle_{\mathbb Q}.
+\tag{31.12}
+$$
+
+两个窗口的 $(m,N,e)$ 都是 $(9,15,1)$，且 $\delta_2(W)=\delta_2(V)=3$、$\delta_3(W)=2$、$\delta_3(V)=1$。令 $u=\beta+\alpha$、$v=\beta^2+\alpha$、$w=\beta^3+\alpha$。取等的原标签和精确交空间为
+
+$$
+\begin{aligned}
+W\cap(u/v)W &= u\langle1,\beta,\beta^2\rangle_{\mathbb Q},&
+W\cap(u/v)W\cap(u/w)W &= u\langle1,\beta\rangle_{\mathbb Q},\\
+V\cap\alpha^6 V &= \langle\alpha^6,\alpha^7,\alpha^8\rangle_{\mathbb Q},&
+V\cap\alpha^6 V\cap\alpha^8 V &= \mathbb Q\alpha^8.
+\end{aligned}
+\tag{31.13}
+$$
+
+逐原标签的二元函数并不相同，例如标签 $\beta$ 在 $W$、$V$ 上的交维分别为八和六。
+
+证明。$x^{15}-2$ 和 $x^5-2$ 在素数二处满足 Eisenstein 判据，故原 $L$、$A$ 的次数分别为十五和五，$1,\alpha,\alpha^2$ 是 $L/A$ 的基。对 $1\le j\le4$，在 $A$ 的幂基中乘 $\beta^j$ 将每个基向量送到不同幂次的方向（用 $\beta^5=2$ 降幂），故迹为零；$\operatorname{Tr}_{A/\mathbb Q}(1)=5$。所以 $B=\langle\beta,\beta^2,\beta^3,\beta^4\rangle_{\mathbb Q}$。$W$、$V$ 都是九维，$AW=A\oplus A\alpha=:Z$ 是十维。$W/W$ 含 $(\beta\alpha)/\alpha=\beta$ 和 $\alpha/\beta$，故 $D_W=L$；$V/V$ 含 $\alpha/1$，故 $D_V=L$。$W$ 的稳定子次数整除九和十（它稳定 $AW$），所以 $E_W=\mathbb Q$。对 $V$，若 $cV\subseteq V$，由 $1\in V$ 可写 $c=\sum_{j=0}^8 c_j\alpha^j$。若有最高非零正次 $k\in[1,8]$，则 $c\alpha^{9-k}$ 的最高次为九，未经降幂，故不在 $V$，而 $\alpha^{9-k}\in V$。矛盾，故 $c\in\mathbb Q$，证明 $E_V=\mathbb Q$。
+
+任意原 $r\in L^\times$ 下，$W,rW$ 和 $V,rV$ 分别是十五维空间中的两个九维子空间，二元交维都至少为三。对任意正原三元标签 $(r,s)$，$W$ 的交维由 (31.4) 取 $A$ 至少为二；$V$ 的交维至少为一。下面计算 (31.13)，以同一原域中的实际取等结算这些下界。
+
+对 $W$，$u,v,w$ 都在 $W\setminus\{0\}$。$u/v\notin A$，因为若 $u=cv$ 且 $c\in A$，比较 $\alpha$ 的系数得到 $c=1$，再比较常数项就得到 $\beta=\beta^2$，与五次幂基矛盾。$Z$ 在原 $L$ 内的稳定子恰是 $A$：若 $cZ\subseteq Z$，由 $1\in Z$ 写 $c=c_0+c_1\alpha$，再用 $c\alpha\in Z$ 及 $1,\alpha,\alpha^2$ 的独立性得 $c_1=0$。因此 $Z$ 与 $(u/v)Z$ 是不同的 $A$-二维空间，且共同含 $u$，所以交空间恰是 $Au$。同一个 $Au$ 也在 $(u/w)Z$ 中，因为 $(u/w)w=u$。
+
+在 $Au$ 上写元素为 $a u$，$a=\sum_{j=0}^4 a_j\beta^j\in A$。落在 $W$ 等价于 $a\beta\in B$；落在 $(u/v)W$ 等价于 $av\in W$，即 $a\beta^2\in B$；落在 $(u/w)W$ 等价于 $aw\in W$，即 $a\beta^3\in B$。从 $B$ 的迹计算及 $\beta^5=2$，
+
+$$
+\operatorname{Tr}_{A/\mathbb Q}(a\beta)=10a_4,\qquad
+\operatorname{Tr}_{A/\mathbb Q}(a\beta^2)=10a_3,\qquad
+\operatorname{Tr}_{A/\mathbb Q}(a\beta^3)=10a_2.
+$$
+
+前两个条件切出 $\langle1,\beta,\beta^2\rangle_{\mathbb Q}$，三个同时切出 $\langle1,\beta\rangle_{\mathbb Q}$，得 (31.13) 第一行。
+
+对 $V$，$\alpha^6 V$ 的幂基范围为六至十四，与 $V$ 共同的幂次为六、七、八。$\alpha^8 V$ 则由八至十四次幂及 $1,\alpha$ 张成，因为十五、十六次幂分别等于 $2,2\alpha$。因此三者仅共有八次幂方向，得 (31.13) 第二行。最后，$\beta W=\beta B\oplus A\alpha$，而 $B\cap\beta B=\langle\beta^2,\beta^3,\beta^4\rangle_{\mathbb Q}$，故在标签 $\beta$ 的交维为 $3+5=8$；$\beta V=\alpha^3V$ 与 $V$ 共有三至八次幂，交维为六。相等的是二元最小正值，不是两条逐标签函数。$\square$
+

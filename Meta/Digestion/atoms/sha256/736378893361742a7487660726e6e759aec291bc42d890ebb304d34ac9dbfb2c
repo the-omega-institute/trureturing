@@ -1,0 +1,53 @@
+**Proposition 31.2 (held uniform, cemetery uniform and $J_1$).** Use
+$d_E=\min(1,d_{\max})$ on the held cylinder and distance $2$ from it
+to the isolated cemetery. For every fixed $\eta$, almost surely on
+$\{\tau\le T\}$,
+
+$$
+\sup_{t\le T}d_E(q_\eta^\dagger(t),q^{\lambda,\dagger}(t))=2.
+\tag{31.4}
+$$
+
+Nevertheless along every deterministic $\eta_n\to0$ the actual killed
+paths converge almost surely in $J_1$ on $D([0,T],E)$. If
+$0<\tau<\tau+\delta<T$, a comparison homeomorphism has displacement
+at most $\delta$ and state error at most
+$\eta+\omega_{\bar q^\lambda}(\delta)$, where the latter is the
+modulus of continuity in $d_{\max}$ of the complete held target.
+
+Proof. At time $\tau\le T$ the target is already at $\dagger$ but
+the native height is strictly interior, and its own death is later
+than $\tau$ or absent on the horizon. Their distance there is $2$,
+which is maximal. This proves (31.4), consistently with Corollary
+22.1. It also proves failure of same-clock uniform convergence in
+probability for any countable sequence, because $\mathbb P(\tau\le T)>0$.
+It has no implication against the held uniform estimate (26.2).
+
+For $0<\tau<\tau+\delta<T$, take the increasing piecewise linear
+homeomorphism $\Lambda:[0,T]\to[0,T]$ sending
+$(0,\tau,T)$ to $(0,\tau+\delta,T)$. Then
+$\|\Lambda-\mathrm{id}\|_\infty\le\delta$. For $t<\tau$ both
+killed paths at their compared times are alive, and (26.2) gives
+
+$$
+\begin{aligned}
+d_E(q_\eta^\dagger(\Lambda(t)),q^{\lambda,\dagger}(t))
+&\le d_{\max}(\bar q_\eta(\Lambda(t)),\bar q^\lambda(\Lambda(t)))
+       +d_{\max}(\bar q^\lambda(\Lambda(t)),\bar q^\lambda(t))\\
+&\le\eta+\omega_{\bar q^\lambda}(\delta).
+\end{aligned}
+\tag{31.5}
+$$
+
+At and after $\tau$ the compared paths are both at $\dagger$.
+When $\tau<T$, for all sufficiently small $\eta_n$ the strict
+inequalities needed for this homeomorphism hold. When $\tau>T$ no
+path dies and the identity suffices, with the held tube. The case
+$\tau=T$ is null. For any fixed stage a coincidence
+$\tau+\delta=T$ is also null, by the atomlessness already shown
+(or is impossible if $\delta=T$). Thus continuity of the held target
+and $\delta_n\to0$ prove $J_1$ convergence. The homeomorphism is a
+comparison in path space only. All controls, chronological integrals
+and energy calculations keep their original execution times.
+$\square$
+

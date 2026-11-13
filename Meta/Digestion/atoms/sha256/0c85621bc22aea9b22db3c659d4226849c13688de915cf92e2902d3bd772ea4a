@@ -1,0 +1,44 @@
+**定义 101.1（固定确认点的 $\mathrm G_k$）。** 使用VI89.1、VII99.1的同一个有限维原 $V,C,u,K,P$ 和全部原 proper 仿射效应，保留严格正单位及整个原混态域。记
+
+$$
+\begin{gathered}
+m=\dim\operatorname{aff}K=\dim V-1,\qquad
+F_p=\{f\in[0,u]_{C^*}:f(p)=1\},\\
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\qquad E_p=P\cap D_p.
+\end{gathered}
+\tag{VII101.1}
+$$
+
+这里 $p\in P$；$m$ 始终是仿射维数，不是矩阵环境余维。除构造101.6外，不限制整个 $P$ 的基数、闭性、光滑性或可数性，不预设ROG、PSD表示、内积、谱性或局部效应延拓。$\mathrm B$、$\mathrm A$、$S$ 仍取VI89.1—89.4的定义；只在明写 $\mathrm B$ 的结论中使用球形二纯面。
+
+对整数 $k\ge0$，定义
+
+$$
+\mathrm G_k:\quad
+\forall p\in P\ \forall Q\subseteq E_p,\ |Q|\le k,
+\quad\exists f\in F_p\quad\forall q\in Q,\ f(q)=0.
+\tag{VII101.2}
+$$
+
+$Q$ 是至多 $k$ 个不同原纯目标组成的有限集；允许空集，空集由 $u$ 确认。$p\notin D_p$，所以固定确认的纯点 $p$ 是额外一个标签：$\mathrm G_2$ 最多涉及三个纯标签，$\mathrm G_3$ 最多涉及四个。$\mathrm G_1$ 在本定义下自动成立，因为 $E_p$ 中每个点本来就可由某张 $F_p$ 效应排除；$\mathrm G_0$ 也为空要求。
+
+区别在于
+
+$$
+\forall q\in Q\ \exists f_q\in F_p:\ f_q(q)=0
+\quad\text{与}\quad
+\exists f\in F_p\ \forall q\in Q:\ f(q)=0.
+\tag{VII101.3}
+$$
+
+前者是分别排除，后者是同一效应共同排除，不能交换量词。目标之间不要求能被一张多结果测量彼此区分。原混态条件仍准确为
+
+$$
+\mathrm{Z0}:\quad
+\forall p\in P\ \forall x,y\in D_p,\quad (x+y)/2\in D_p.
+\tag{VII101.4}
+$$
+
+本章不把(VII101.4)预放入 $\mathrm G_k$ 的前提。
+

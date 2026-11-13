@@ -146,7 +146,7 @@ private lemma descent_persists {f : ℕ → ℝ} {N a : ℕ}
       have he := next_decreases hp hl (by omega : b + 2 ≤ N) hprev
       exact ⟨he.le, fun _ => he⟩
 
-private lemma increasing_before_max {f : ℕ → ℝ} {N m : ℕ}
+lemma increasing_before_max {f : ℕ → ℝ} {N m : ℕ}
     (hp : ∀ i, i ≤ N → 0 < f i)
     (hl : ∀ i, i + 2 ≤ N → f i * f (i + 2) < f (i + 1) ^ 2)
     (hm : m ≤ N) (hmax : ∀ i, i ≤ N → f i ≤ f m) :
@@ -166,7 +166,7 @@ private lemma increasing_before_max {f : ℕ → ℝ} {N m : ℕ}
   have h := hbound m (by omega) hm
   exact (not_lt_of_ge (hmax (a + 1) (by omega))) h
 
-private lemma decreasing_after_max {f : ℕ → ℝ} {N m : ℕ}
+lemma decreasing_after_max {f : ℕ → ℝ} {N m : ℕ}
     (hp : ∀ i, i ≤ N → 0 < f i)
     (hl : ∀ i, i + 2 ≤ N → f i * f (i + 2) < f (i + 1) ^ 2)
     (hm : m ≤ N) (hmax : ∀ i, i ≤ N → f i ≤ f m) :
