@@ -8,7 +8,8 @@
 
 import D5.S1.Recurrence.Algebraic.HannaA181074Integrality
 import D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality
-import Mathlib.FieldTheory.Finite.Basic
+
+/-! The source logarithm has a locally finite diagonal in every degree. -/
 
 namespace D5.S1.Recurrence.Algebraic.HannaA181076Integrality
 
@@ -37,13 +38,13 @@ private def F (n k : ℕ) : ℕ :=
 theorem result : claim := by
   have hF : ∀ n k, n ≠ 0 → n ∣ k * F n k := by
     intro n k hn
-    simpa only [F, if_neg hn, Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hn)] using
+    simpa only [F, ite_eq_right hn, Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hn)] using
       divPower (fun n k => (n + k - 1).choose k) (fun n _ => n - 1)
         HannaA181074Integrality.negbinomDiv n k hn
   have hcong : ∀ p : ℕ, p.Prime → ∀ n k : ℕ, n ≠ 0 →
       (p : ℤ) ^ (padicValNat p n + 1) ∣ (F (p * n) (p * k) : ℤ) - F n k := by
     intro p hp n k hn
-    letI : Fact p.Prime := ⟨hp⟩
+    let : Fact p.Prime := ⟨hp⟩
     let b : ℤ := ((n + k - 1).choose k : ℕ)
     have hc := Nat.modEq_iff_dvd.mp
       ((HannaA181074Integrality.negbinomCong p n k hp hn).pow (p * n)).symm
@@ -56,7 +57,7 @@ theorem result : claim := by
         (((p * n + p * k - 1).choose (p * k) : ℕ) : ℤ) ^ (p * n) - b ^ (p * n) := by
       simpa only [Nat.cast_pow, b] using hc
     have h := dvd_add hc' he
-    simpa only [F, if_neg hn, if_neg (Nat.mul_ne_zero hp.ne_zero hn), Nat.cast_pow,
+    simpa only [F, ite_eq_right hn, ite_eq_right (Nat.mul_ne_zero hp.ne_zero hn), Nat.cast_pow,
       b, sub_add_sub_cancel] using h
   have hl : logarithm = L F := by
     ext m
@@ -67,7 +68,7 @@ theorem result : claim := by
     apply Finset.sum_congr rfl
     intro k _
     split_ifs with h
-    · simp only [F, if_neg (Nat.ne_of_gt h.1), Nat.cast_pow]
+    · simp only [F, ite_eq_right (Nat.ne_of_gt h.1), Nat.cast_pow]
     · rfl
   have hi : HannaLogarithmicPowerClosure.IntegralSeries A := by
     unfold A
@@ -77,8 +78,8 @@ theorem result : claim := by
     rw [← coeff_zero_eq_constantCoeff_apply]
     simp [logarithm]
   have ha : coeff 0 A = 1 := by
-    rw [coeff_zero_eq_constantCoeff_apply, A,
-      constantCoeff_subst_of_constantCoeff_zero hz, constantCoeff_exp]
+    change MvPowerSeries.constantCoeff (PowerSeries.subst logarithm (PowerSeries.exp ℚ)) = 1
+    rw [constantCoeff_subst_of_constantCoeff_zero hz, constantCoeff_exp]
     simp
   intro m
   cases m with

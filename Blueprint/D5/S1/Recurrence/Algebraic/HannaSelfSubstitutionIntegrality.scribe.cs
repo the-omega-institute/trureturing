@@ -56,6 +56,9 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                     + "a finite degree bound.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst"), ResolutionKind.Proved)),
+            Node("power_lift", "Divisibility lifting for powers", Disp(PowerLiftFormula()),
+                "In any commutative ring R, if p divides U-V, then p^(padicValNat(p,m)+1) divides U^m-V^m for every natural m. Here p is any natural number. Ideal congruence power lifting and the divisibility of m by p^padicValNat(p,m) give the conclusion. No unit or coprimality hypothesis is required. This supplies the exponent-changing step for HannaA181076Integrality.",
+                DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("geometric_input", "Geometric exponential inputs",
                 Disp(All("a", Int(), Integral(Exponential(Call("logSum",
                     Lambda("n", Nat(), App(Q("PowerSeries", "C"),
@@ -91,6 +94,16 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
             Parenthesized(Equal(V("G"), Exponential(Call("logSum", Lambda("n", Nat(),
                 Pow(App(Q("PowerSeries", "rescale"), App(V("L"), V("n")), V("G")),
                     V("n")))))))))));
+
+    private static Formula PowerLiftFormula() => All("R", Call("Type"),
+        Seq(OpenBracket, Call("CommRing", V("R")), CloseBracket, Sp,
+            All("p", Nat(), All("U", V("R"), All("V", V("R"),
+                Imp(Divides(Cast(V("p"), V("R")), Subtract(V("U"), V("V"))),
+                    All("m", Nat(), Divides(Pow(Cast(V("p"), V("R")),
+                            new Formula.Binary(Call("padicValNat", V("p"), V("m")), FormulaBinaryOperator.Add, D(1))),
+                        Subtract(Pow(V("U"), V("m")), Pow(V("V"), V("m"))))))))));
+    private static Formula Divides(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Divides, b);
+    private static Formula Subtract(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
 
     private static Formula ClaimBody() => All("L", Seq(Nat(), Sp, To, Sp, Rat()),
         Imp(Integral(Exponential(Call("logSum", Lambda("n", Nat(),
