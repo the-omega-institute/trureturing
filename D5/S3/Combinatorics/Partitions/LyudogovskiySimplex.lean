@@ -12,6 +12,8 @@ import Mathlib.Data.Finset.Powerset
 import Mathlib.Tactic
 import D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts
 
+/-! Exact simplex thresholds and first-occurrence families on native integer partitions. -/
+
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
@@ -38,8 +40,8 @@ private theorem transfer_symm {n : ℕ} {p q : Nat.Partition n}
 /-- The source simple graph on all integer partitions of n. -/
 def graph (n : ℕ) : SimpleGraph (Nat.Partition n) where
   Adj := UnitTransfer
-  symm := fun _ _ h => transfer_symm h
-  loopless := fun _ h => h.1 rfl
+  symm := ⟨fun _ _ h => transfer_symm h⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
 
 /-- All actual finite cliques, including singletons and the empty clique. -/
 def cliques (n : ℕ) : Finset (Finset (Nat.Partition n)) := by
@@ -66,8 +68,8 @@ def triangular (r : ℕ) : ℕ := r * (r + 1) / 2
 def staircase (r : ℕ) : YoungDiagram where
   cells := ((Finset.range r).product (Finset.range r)).filter (fun c => c.1 + c.2 < r)
   isLowerSet := by
-    intro x y hxy hy
-    simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product, Finset.mem_range] at *
+    rintro ⟨i,j⟩ ⟨a,b⟩ hxy hy
+    simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product, Finset.mem_range] at hy ⊢
     exact ⟨⟨lt_of_le_of_lt hxy.1 hy.1.1, lt_of_le_of_lt hxy.2 hy.1.2⟩,
       lt_of_le_of_lt (Nat.add_le_add hxy.1 hxy.2) hy.2⟩
 
@@ -100,9 +102,11 @@ private theorem column_count (d : YoungDiagram) (j : ℕ) :
     · exact And.right
     · intro hi
       exact ⟨lt_of_lt_of_le hi (d.colLen_anti 0 j (Nat.zero_le j)), hi⟩
+  change ((List.range (d.colLen 0)).map d.rowLen).countP (fun k => decide (j < k)) = _
+  rw [List.countP_map, List.countP_eq_length_filter]
   have hc := congrArg Finset.card hf
-  simpa [YoungDiagram.rowLens, Multiset.countP_map, Multiset.countP_eq_card_filter,
-    Finset.filter_val, Finset.range_val] using hc
+  simpa only [Finset.card, Finset.filter_val, Finset.range_val, Multiset.range,
+    Multiset.filter_coe, Multiset.coe_card] using hc
 
 private theorem partition_column_count {n : ℕ} (p : Nat.Partition n) (j : ℕ) :
     p.parts.countP (fun k => j < k) = (YoungDiagram.ofPartition p).colLen j := by
@@ -115,11 +119,11 @@ private theorem part_sum (k : ℕ) : (part k).sum = k := by
 private theorem part_count (k j : ℕ) :
     (part k).countP (fun x => j < x) = if j < k then 1 else 0 := by
   by_cases h : k = 0 <;> by_cases hj : j < k <;>
-    simp [part, h, Multiset.countP_eq_card_filter, hj]
+    simp [part, h, Multiset.countP_eq_card_filter, Multiset.filter_singleton, hj] <;> omega
 
 private theorem singleton_count (k j : ℕ) :
     ({k} : Multiset ℕ).countP (fun x => j < x) = if j < k then 1 else 0 := by
-  by_cases h : j < k <;> simp [Multiset.countP_eq_card_filter, h]
+  by_cases h : j < k <;> simp [Multiset.countP_eq_card_filter, Multiset.filter_singleton, h] <;> omega
 
 private theorem part_positive {k x : ℕ} (h : x ∈ part k) : 0 < x := by
   by_cases hk : k = 0
@@ -204,7 +208,8 @@ private theorem transfer_intersection {n : ℕ} {p q : Nat.Partition n}
       exact (YoungDiagram.mem_inf.mp this).2
     exact h.1 (diagram_eq_of_le hpq)
   have hhi := Finset.card_lt_card hstrict
-  change (YoungDiagram.ofPartition m).card ≤ _ at hlo
+  change (YoungDiagram.ofPartition m).card ≤
+    (YoungDiagram.ofPartition p ⊓ YoungDiagram.ofPartition q).card at hlo
   change _ < (YoungDiagram.ofPartition p).card at hhi
   simp only [YoungDiagram.card_ofPartition] at hlo hhi
   omega
@@ -230,7 +235,7 @@ private theorem row_parts (d : YoungDiagram) (H : ℕ) (hH : d.colLen 0 ≤ H) :
     _ = _ := by
       rw [Finset.sum_eq_multiset_sum]
       simpa only [Multiset.map_map, Function.comp_def, Finset.range_val,
-        Multiset.range, Multiset.map_coe, YoungDiagram.rowLens] using
+        Multiset.range, Multiset.map_coe, List.map_map, Function.comp_def, YoungDiagram.rowLens] using
         Multiset.sum_map_singleton ((Finset.range (d.colLen 0)).val.map d.rowLen)
 
 private theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
@@ -246,7 +251,8 @@ private theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
       exact hc.2 (B.up_left_mem le_rfl (by omega) hb)
     have : (c.1, c.2 + 1) ∈ A.cells \ B.cells := Finset.mem_sdiff.mpr ⟨hh,hB⟩
     rw [h] at this
-    simp only [Finset.mem_singleton, Prod.mk.injEq] at this
+    have he := congrArg Prod.snd (Finset.mem_singleton.mp this)
+    simp only [Prod.snd] at he
     omega
   rw [YoungDiagram.mem_iff_lt_rowLen] at hn
   omega
@@ -358,10 +364,10 @@ private theorem intersection_transfer {n : ℕ} (hn : 0 < n) (p q : Nat.Partitio
   refine ⟨hnq, s, c.2, d.2, ?_, ?_⟩
   · have hh := row_parts_split A H c.1 d.1 hAH hci hdi hcd
     rw [one_cell_row hc, one_cell_lower_row hd] at hh
-    simpa [A, part] using hh
+    simpa [A, part, s] using hh
   · have hh := row_parts_split B H c.1 d.1 hBH hci hdi hcd
     rw [one_cell_lower_row hc, one_cell_row hd, ← hs] at hh
-    simpa [B, part] using hh
+    simpa [B, part, s] using hh
 
 /-- Reordering and repeated row blocks preserve the literal unit-transfer graph. -/
 theorem transfer_iff_intersection {n : ℕ} (hn : 0 < n) (p q : Nat.Partition n) :
@@ -435,7 +441,9 @@ private theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
         change (YoungDiagram.ofPartition v).card ≤ _
         rw [YoungDiagram.card_ofPartition, hsize]
       intro y hy
-      exact Finset.mem_of_mem_erase (he.symm ▸ hy)
+      have hy' : y ∈ (YoungDiagram.ofPartition v).cells := hy
+      rw [← he] at hy'
+      exact Finset.mem_of_mem_erase hy' 
   by_cases hstar : ∀ p ∈ C, X ≤ YoungDiagram.ofPartition p
   · exact Or.inl ⟨X,hX,hstar⟩
   · right
@@ -453,7 +461,7 @@ private theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
     have hxy := Finset.card_le_one.mp (clique_difference hn hC hv hd)
       x (Finset.mem_sdiff.mpr ⟨hvX hx,hxd⟩)
       y (Finset.mem_sdiff.mpr ⟨hy,fun hyd => hyU (hdU hyd)⟩)
-    have hxU : x ∈ U := le_sup_of_le_left inf_le_left hx
+    have hxU : x ∈ U := YoungDiagram.mem_sup.mpr (Or.inl ((YoungDiagram.mem_inf.mp hx).1))
     exact hyU (hxy ▸ hxU)
 
 private theorem grid_enumeration (A : Finset (ℕ × ℕ))
@@ -466,7 +474,7 @@ private theorem grid_enumeration (A : Finset (ℕ × ℕ))
     by_contra hne
     rcases le_total x.2 y.2 with hs | hs
     · exact hA x hx y hy hne ⟨le_of_eq he,hs⟩
-    · exact hA y hy x hx hne.symm ⟨le_of_eq he.symm,hs⟩
+    · exact hA y hy x hx (fun h => hne h.symm) ⟨le_of_eq he.symm,hs⟩
   let rows := A.image Prod.fst
   have hr : rows.card = A.card := Finset.card_image_of_injOn hinj
   let e := rows.orderEmbOfFin hr
@@ -476,6 +484,7 @@ private theorem grid_enumeration (A : Finset (ℕ × ℕ))
   have hc (i : Fin A.card) : c i ∈ A ∧ (c i).1 = e i := Classical.choose_spec (hm i)
   refine ⟨c, fun i => (hc i).1, ?_, ?_⟩
   · intro i j hij
+    change (c i).1 < (c j).1
     rw [(hc i).2, (hc j).2]
     exact e.strictMono hij
   · intro i j hij
@@ -506,7 +515,7 @@ private theorem antichain_staircase (d : YoungDiagram) (A : Finset (ℕ × ℕ))
     (hbelow : ∀ c ∈ A, ∀ x : ℕ × ℕ, x ≤ c → x ≠ c → x ∈ d) :
     staircase (A.card - 1) ≤ d := by
   obtain ⟨c,hc,hfirst,hsecond⟩ := grid_enumeration A hA
-  have hlast : StrictMono (fun i => (c i.rev).2) := by
+  have hlast : StrictMono (fun i : Fin A.card => (c i.rev).2) := by
     intro i j hij
     exact hsecond (Fin.rev_lt_rev.mpr hij)
   intro x hx
@@ -514,7 +523,7 @@ private theorem antichain_staircase (d : YoungDiagram) (A : Finset (ℕ × ℕ))
   have hi : x.1 < A.card := by omega
   let i : Fin A.card := ⟨x.1,hi⟩
   have hrow := strict_mono_index (fun i => (c i).1) hfirst i
-  have hcol := strict_mono_index (fun i => (c i.rev).2) hlast i.rev
+  have hcol := strict_mono_index (fun i : Fin A.card => (c i.rev).2) hlast i.rev
   simp only [Fin.rev_rev, Fin.val_rev] at hcol
   apply hbelow (c i) (hc i) x
   · constructor <;> dsimp [i] at * <;> omega
@@ -527,7 +536,7 @@ private theorem maximal_antichain_staircase (d : YoungDiagram) (A : Finset (ℕ 
     (hA : ∀ x ∈ A, ∀ y ∈ A, x ≠ y → ¬ x ≤ y)
     (hmem : ∀ c ∈ A, c ∈ d) : staircase A.card ≤ d := by
   obtain ⟨c,hc,hfirst,hsecond⟩ := grid_enumeration A hA
-  have hlast : StrictMono (fun i => (c i.rev).2) := by
+  have hlast : StrictMono (fun i : Fin A.card => (c i.rev).2) := by
     intro i j hij
     exact hsecond (Fin.rev_lt_rev.mpr hij)
   intro x hx
@@ -535,7 +544,7 @@ private theorem maximal_antichain_staircase (d : YoungDiagram) (A : Finset (ℕ 
   have hi : x.1 < A.card := by omega
   let i : Fin A.card := ⟨x.1,hi⟩
   have hrow := strict_mono_index (fun i => (c i).1) hfirst i
-  have hcol := strict_mono_index (fun i => (c i.rev).2) hlast i.rev
+  have hcol := strict_mono_index (fun i : Fin A.card => (c i.rev).2) hlast i.rev
   simp only [Fin.rev_rev, Fin.val_rev] at hcol
   apply d.isLowerSet (b := c i) ?_ (hmem (c i) (hc i))
   constructor <;> dsimp [i] at * <;> omega
@@ -543,11 +552,18 @@ private theorem maximal_antichain_staircase (d : YoungDiagram) (A : Finset (ℕ 
 private theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
     (hsub : X ≤ d) (hdiff : d.cells \ X.cells = {c}) : d.cells = insert c X.cells := by
   ext x
-  have hh := Finset.ext_iff.mp hdiff x
-  simp only [Finset.mem_sdiff, Finset.mem_singleton] at hh
-  simp only [Finset.mem_insert]
-  have hx := @hsub x
-  aesop
+  constructor
+  · intro hx
+    by_cases hxX : x ∈ X.cells
+    · exact Finset.mem_insert.mpr (Or.inr hxX)
+    · have hh := Finset.mem_sdiff.mpr ⟨hx,hxX⟩
+      rw [hdiff] at hh
+      exact Finset.mem_insert.mpr (Or.inl (Finset.mem_singleton.mp hh))
+  · intro hx
+    rcases Finset.mem_insert.mp hx with rfl | hx
+    · have hh : c ∈ d.cells \ X.cells := by rw [hdiff]; simp
+      exact (Finset.mem_sdiff.mp hh).1
+    · exact hsub hx
 
 private theorem star_contains_staircase {n : ℕ} (hn : 0 < n)
     (C : Finset (Nat.Partition n)) (X : YoungDiagram) (hsize : X.card = n - 1)
@@ -600,11 +616,18 @@ private theorem star_contains_staircase {n : ℕ} (hn : 0 < n)
 private theorem single_removal_cells {U d : YoungDiagram} {c : ℕ × ℕ}
     (hsub : d ≤ U) (hdiff : U.cells \ d.cells = {c}) : d.cells = U.cells.erase c := by
   ext x
-  have hh := Finset.ext_iff.mp hdiff x
-  simp only [Finset.mem_sdiff, Finset.mem_singleton] at hh
-  simp only [Finset.mem_erase]
-  have hx := @hsub x
-  aesop
+  constructor
+  · intro hx
+    refine Finset.mem_erase.mpr ⟨?_,hsub hx⟩
+    intro he
+    have hh : c ∈ U.cells \ d.cells := by rw [hdiff]; simp
+    exact (Finset.mem_sdiff.mp hh).2 (he ▸ hx)
+  · intro hx
+    obtain ⟨hne,hxU⟩ := Finset.mem_erase.mp hx
+    by_contra hxd
+    have hh := Finset.mem_sdiff.mpr ⟨hxU,hxd⟩
+    rw [hdiff] at hh
+    exact hne (Finset.mem_singleton.mp hh)
 
 private theorem top_contains_staircase {n : ℕ}
     (C : Finset (Nat.Partition n)) (U : YoungDiagram) (hsize : U.card = n + 1)
@@ -656,7 +679,7 @@ private theorem staircase_rowLen (r i : ℕ) : (staircase r).rowLen i = r - i :=
       Finset.mem_range]
     omega
   have h0 := hm 0
-  have h1 := hm (staircase r).rowLen i
+  have h1 := hm ((staircase r).rowLen i)
   have h2 := hm (r - i)
   omega
 
@@ -664,7 +687,7 @@ private theorem staircase_height (r : ℕ) : (staircase r).colLen 0 = r := by
   have hm (i : ℕ) : i < (staircase r).colLen 0 ↔ i < r := by
     rw [← YoungDiagram.mem_iff_lt_colLen, YoungDiagram.mem_iff_lt_rowLen, staircase_rowLen]
     omega
-  have h1 := hm (staircase r).colLen 0
+  have h1 := hm ((staircase r).colLen 0)
   have h2 := hm r
   omega
 
@@ -673,13 +696,13 @@ private theorem triangular_step (r : ℕ) : triangular (r + 1) = triangular r + 
   have he : (r + 1) * (r + 1 + 1) = r * (r + 1) + 2 * (r + 1) := by ring
   omega
 
-private theorem triangle_sum (r : ℕ) : (∑ i ∈ Finset.range r, r - i) = triangular r := by
+private theorem triangle_sum (r : ℕ) : (∑ i ∈ Finset.range r, (r - i)) = triangular r := by
   induction r with
   | zero => simp [triangular]
   | succ r ih =>
     rw [Finset.sum_range_succ]
-    have he : (∑ i ∈ Finset.range r, r + 1 - i) =
-        (∑ i ∈ Finset.range r, r - i) + r := by
+    have he : (∑ i ∈ Finset.range r, (r + 1 - i)) =
+        (∑ i ∈ Finset.range r, (r - i)) + r := by
       calc
         _ = ∑ i ∈ Finset.range r, (r - i + 1) := by
           apply Finset.sum_congr rfl
@@ -697,7 +720,7 @@ private theorem staircase_card (r : ℕ) : (staircase r).card = triangular r := 
       congrArg Multiset.sum (row_parts (staircase r) r (by rw [staircase_height])).symm
     _ = ∑ i ∈ Finset.range r, (part ((staircase r).rowLen i)).sum := by
       exact map_sum Multiset.sumAddMonoidHom _ _
-    _ = ∑ i ∈ Finset.range r, r - i := by simp only [part_sum, staircase_rowLen]
+    _ = ∑ i ∈ Finset.range r, (r - i) := by simp only [part_sum, staircase_rowLen]
     _ = triangular r := triangle_sum r
 
 private theorem triangular_mono : Monotone triangular := by
@@ -707,7 +730,7 @@ private theorem triangular_mono : Monotone triangular := by
 private theorem triangular_ge (r : ℕ) : r ≤ triangular r := by
   induction r with
   | zero => simp [triangular]
-  | succ r ih => rw [Nat.succ_eq_add_one, triangular_step]; omega
+  | succ r ih => rw [triangular_step]; omega
 
 private theorem clique_bound {n : ℕ} (hn : 0 < n) (C : Finset (Nat.Partition n))
     (hC : (graph n).IsClique (C : Set (Nat.Partition n))) :
@@ -726,7 +749,7 @@ private theorem clique_bound {n : ℕ} (hn : 0 < n) (C : Finset (Nat.Partition n
       rw [he] at hs
       omega
   · have he : C.card - 1 = 0 := by omega
-    simpa [he, triangular] using hn
+    simpa [he, triangular] using (Nat.succ_le_iff.mpr hn)
 
 private theorem local_realized {n : ℕ} (p : Nat.Partition n) :
     ∃ C : Finset (Nat.Partition n), (graph n).IsClique (C : Set (Nat.Partition n)) ∧
@@ -758,7 +781,7 @@ private theorem maximum_bound {n : ℕ} (hn : 0 < n) :
 private def expandedStaircase (r e : ℕ) : YoungDiagram where
   cells := (staircase r).cells ∪ ({0} ×ˢ Finset.range (r + e))
   isLowerSet := by
-    intro x y hxy hy
+    rintro ⟨i,j⟩ ⟨a,b⟩ hxy hy
     rcases Finset.mem_union.mp hy with hy | hy
     · exact Finset.mem_union.mpr (Or.inl ((staircase r).isLowerSet hxy hy))
     · obtain ⟨hy0,hylen⟩ := Finset.mem_product.mp hy
@@ -822,7 +845,7 @@ private theorem corner_below (r e : ℕ) (i : Fin (r + 1)) (x : ℕ × ℕ)
 private def cornerExtension (r e : ℕ) (i : Fin (r + 1)) : YoungDiagram where
   cells := insert (extensionCorner r e i) (expandedStaircase r e).cells
   isLowerSet := by
-    intro x y hxy hy
+    intro y x hxy hy
     rcases Finset.mem_insert.mp hy with hy | hy
     · subst y
       by_cases he : x = extensionCorner r e i
@@ -832,7 +855,7 @@ private def cornerExtension (r e : ℕ) (i : Fin (r + 1)) : YoungDiagram where
 
 private theorem cornerExtension_card (r e : ℕ) (i : Fin (r + 1)) :
     (cornerExtension r e i).card = triangular r + e + 1 := by
-  change (insert _ _).card = _
+  change (insert (extensionCorner r e i) (expandedStaircase r e).cells).card = _
   rw [Finset.card_insert_of_notMem (corner_not_mem r e i)]
   exact congrArg (· + 1) (expanded_card r e)
 
@@ -886,7 +909,7 @@ private theorem cornerPartitions_clique (r e : ℕ) :
 
 private theorem exists_clique (r e : ℕ) :
     ∃ C : Finset (Nat.Partition (triangular r + e + 1)),
-      (graph _).IsClique (C : Set _) ∧ C.card = r + 1 := by
+      (graph (triangular r + e + 1)).IsClique (C : Set (Nat.Partition (triangular r + e + 1))) ∧ C.card = r + 1 := by
   classical
   refine ⟨Finset.univ.image (cornerPartition r e), cornerPartitions_clique r e, ?_⟩
   rw [Finset.card_image_of_injective _ (cornerPartition_injective r e)]
@@ -896,8 +919,9 @@ private theorem clique_le_local {n : ℕ} (C : Finset (Nat.Partition n))
     (hC : (graph n).IsClique (C : Set _)) (p : Nat.Partition n) (hp : p ∈ C) :
     C.card - 1 ≤ localDimension p := by
   classical
-  apply Finset.le_sup
-  simp [cliques, hC, hp]
+  unfold localDimension
+  exact Finset.le_sup (f := fun s : Finset (Nat.Partition n) => s.card - 1)
+    (by simp [cliques, hC, hp])
 
 private theorem local_le_maximum {n : ℕ} (p : Nat.Partition n) :
     localDimension p ≤ maxDimension n := Finset.le_sup (Finset.mem_univ p)
@@ -919,7 +943,7 @@ private theorem lower_maximum (n r : ℕ) (hr : triangular r + 1 ≤ n) :
 private theorem maximum_formula (n : ℕ) (hn : 0 < n) : maxDimension n =
     ((Finset.range (n + 1)).filter (fun r => triangular r + 1 ≤ n)).sup id := by
   apply le_antisymm
-  · apply Finset.le_sup
+  · apply Finset.le_sup (f := id) (b := maxDimension n)
     apply Finset.mem_filter.mpr
     have hh := maximum_bound hn
     have hl := triangular_ge (maxDimension n)
