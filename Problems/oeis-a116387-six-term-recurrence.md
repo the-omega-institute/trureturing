@@ -37,17 +37,21 @@ agrees with ordinary subtraction on this domain. The immutable source,
 attribution and license are in
 `Library/RecurrenceAlgebraic/mathar2011a116387.md`.
 
-## Motivation and gap
+## Motivation
 
 The problem concerns one particular six-term recurrence for the exact
 native generating function. Existing sequence computation and generic
-holonomic methods do not alone answer this assertion. The bounded
+holonomic methods do not alone answer this assertion.
+
+## Gap
+
+The bounded
 source and prior comparison is in
 https://github.com/the-omega-institute/trureturing/issues/30173.
 It makes no claim of global priority or exhaustive absence of earlier
 proofs.
 
-## Mathematical mechanism
+## Route
 
 Construct $M=c(x^2/(1-x)^2)/(1-x)$ using the native Catalan series.
 Its constant coefficient is one, and the Catalan quadratic gives
@@ -92,14 +96,16 @@ $[x^n](x^jP_j(\theta+j)F)=P_j(n)a_{n-j}$ for each $j=0,\ldots,5$.
 The coefficient equation is exactly the six printed terms, including
 the boundary index $n=5$.
 
-## Falsifier and evidence scope
+## Falsifier
 
 A nonzero printed left side for this exact native coefficient sequence
 at any $n\ge5$ refutes the assertion. Finite-prefix agreement cannot
 prove the universal statement. A different generating function, root
 branch, recurrence or eventual onset is a different target.
 
-The Lean address is
+## Evidence
+
+The candidate Lean address is
 `D5/S1/Recurrence/Algebraic/MatharA116387SixTermRecurrence.result`.
 Its claim includes the explicit native source specification and the
 unbounded recurrence. Its helpers provide only the source construction,
@@ -107,13 +113,29 @@ normalization, bridge, differential equation and operator equation
 required by this result. Classical power-series identities and
 polynomial normalization are not separate open-problem resolutions.
 
+The retained sources are an unverified proof candidate. Current Lean
+compilation, accepted axiom closure, source-bound Reg evidence and the
+canonical rendered projection are unavailable. The original target
+remains unsettled as a formal delivery. The unfinished audit of `result`
+is associated with issue #30173; no validated binding is asserted.
+
 ## Triage
 
 | Assertion | Mechanism and boundary |
 | --- | --- |
-| Native source | Explicit construction, quadratic uniqueness, normalized-root uniqueness and unit inverse |
-| Exact six-term event | Differential certificate and all six coefficient shifts; the formal target covers every $n\ge5$ |
-| Finite computations | No finite-prefix experiment substitutes for the universal theorem |
+| Native source | Open as a compiled result: the candidate gives construction, quadratic uniqueness, normalized-root uniqueness and unit inverse |
+| Exact six-term event | Open as a compiled result: the candidate differential certificate and six shifts target every $n\ge5$ |
+| Polynomial certificate | Computed symbolically: the three ordered operator residuals and forcing residual are zero; this is not Lean evidence |
+| Finite coefficients | No finite-prefix experiment substitutes for the universal theorem |
 | General algebraic recurrences | Classical supporting method, with no separate open-problem claim |
 | Other assertions in A116387 | Asymptotics, the inverse Motzkin transform and double-binomial representation are outside this theorem |
 | Priority | Universal absence of a prior proof remains unverified; the literature comparison is bounded |
+
+## ASSUMED-UNVERIFIED
+
+The candidate's Lean elaboration, proof terms, standard-three axiom
+closure and source-bound registration have not been verified. The build
+blocker and missing evidence are recorded in issue #30173. Source
+structure and symbolic polynomial checks do not establish
+the universal recurrence. No theorem settlement or publication is
+claimed by this dossier.
