@@ -44,6 +44,15 @@ internal sealed class RegularAnchorContactCriterionDocument : IScribeDocumentDef
             OpenBracket,C("NormedSpace",r,space),CloseBracket,Sp,
             OpenBracket,C("FiniteDimensional",r,space),CloseBracket,Sp,
             All("C",C("PointedCone",r,space),All("u",dual,hypotheses))));
+        Formula definition=All("V",V("Type"),Seq(
+            OpenBracket,C("NormedAddCommGroup",space),CloseBracket,Sp,
+            OpenBracket,C("NormedSpace",r,space),CloseBracket,Sp,
+            OpenBracket,C("FiniteDimensional",r,space),CloseBracket,Sp,
+            All("C",C("PointedCone",r,space),All("u",dual,
+                All("p",C("pure",cone,unit),All("e",dual,
+                    All("a",C("FullBall3Chart",cone,unit,p),
+                        All("n",C("NativeChart",cone,unit,p,e,a),
+                            Iff(C("ContactCriterion",n),criterion)))))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "The original regular-anchor system satisfies the complete width, minimum and actual shell-contact equivalence, with positive strict-scale distance.",
             H("Regular-anchor contact and shell scale"),Blocks(
@@ -55,7 +64,7 @@ internal sealed class RegularAnchorContactCriterionDocument : IScribeDocumentDef
                 Paragraph(Text("The definitions width(a), minimum(n), shell(n) and boundaryDistance(n) are the original W(D_p), delta, S and set distance, respectively. Width takes the supremum of the entire original effect interval; width_attained proves that this is a maximum and supplies an actual effect and two antipodal chart states. The directional supremum is finite and Lipschitz. minimum_attained proves that its sphere infimum is a minimum and that delta>=1. boundaryDistance is the real infimum of dist(x,y) over the whole closed unit ball and the whole shell frontier; both sets are nonempty. The formula below uses smul for scalar multiplication of the whole set, intersection for set intersection and subset for set inclusion.")),
                 Describe.Lean(DescribeId.Create("contact-criterion"),DeclarationHandle.Create(Owner+"ContactCriterion"),
                     H("All contact and strict-scale clauses"),StatementSource.FromAuthor(Disp(
-                        Iff(C("ContactCriterion",n),criterion))),AssessedProvenance.FromRepo(),Blocks(
+                        definition)),AssessedProvenance.FromRepo(),Blocks(
                         Paragraph(Text("Here n is the derived normal chart for the same C,u,p,e,a. The displayed conjunction means width one if and only if minimum one, minimum one if and only if the closed unit ball meets the boundary of its actual shell, and the complete strict-delta conclusion. By transitivity it includes both directions between every pair of the three contact conditions. All boundaries and interiors are ambient in the actual coordinate space EuclideanSpace(R,Fin(3))."))),DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("original-contact"),DeclarationHandle.Create(Owner+"regular_anchor_contact_criterion"),
                     H("Complete criterion on the original telescope"),StatementSource.FromAuthor(Disp(statement)),AssessedProvenance.FromRepo(),Blocks(
