@@ -72,15 +72,24 @@ internal sealed class IntervalSOSCompletionDocument : IScribeDocumentDefinition
         Rel(Call("d", V("A")), Leq, Seq(D(2), V("k"))),
         All("x", V("I"), Rel(D(0), Leq, Call("A", V("x"))))),
         Ex("B", Poly(), Ex("C", Poly(), ScalarData(V("A")))))));
-    private static Formula FieldStatement() => All("k", Nat(), All("p", Poly(), Imp(And(
-        Rel(Call("d", V("p")), Leq, V("k")), Call("par", V("p"), V("k")),
-        All("x", V("I"), Rel(Sq(Call("p", V("x"))), Leq, D(1)))),
-        Ex("B", Poly(), Ex("C", Poly(), Ex("U", Seq(V("A"), Underscore, Grp(D(2))), And(
+    private static Formula FieldStatement()
+    {
+        var hypotheses = And(
+            Rel(Call("d", V("p")), Leq, V("k")),
+            Call("par", V("p"), V("k")),
+            All("x", V("I"), Rel(Sq(Call("p", V("x"))), Leq, D(1))));
+        var readout = All("t", V("T"),
+            Rel(Call("Re", Call("entry", Call("U", V("t")), D(0), D(0))), Eq,
+                Call("p", Call("Re", Call("z", V("t"))))));
+        var conclusion = And(
             ScalarData(Seq(D(1), Minus, Sq(V("p")))),
             Rel(V("U"), Eq, Call("F", V("p"), V("B"), V("C"))),
             Rel(Seq(Call("star", V("U")), V("U")), Eq, D(1)),
             Rel(Seq(V("U"), Call("star", V("U"))), Eq, D(1)),
             All("t", V("T"), Rel(Call("det", Call("U", V("t"))), Eq, D(1))),
-            All("t", V("T"), Rel(Call("Re", Call("entry", Call("U", V("t")), D(0), D(0))), Eq,
-                Call("p", Call("Re", Call("z", V("t"))))))))))));
+            readout);
+        var witnesses = Ex("B", Poly(), Ex("C", Poly(),
+            Ex("U", Seq(V("A"), Underscore, Grp(D(2))), conclusion)));
+        return All("k", Nat(), All("p", Poly(), Imp(hypotheses, witnesses)));
+    }
 }
