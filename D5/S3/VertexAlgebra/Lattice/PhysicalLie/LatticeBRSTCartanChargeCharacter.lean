@@ -166,14 +166,12 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
         physicalClass D H h26 hHG hGH (xp p)) = (c : C)
       rw [← map_sum, representative_sum, hx]
     let P (p : Charge D) : C →ₗ[ℂ] C :=
-      { toFun := fun z => inclusion D H h26 hHG hGH p
-          (projection D H h26 hHG hGH p z)
-        map_add' := by
-          intro z w
-          rw [map_add, map_add]
-        map_smul' := by
-          intro t z
-          rw [map_smul, map_smul] }
+      LinearMap.comp (R₁ := ℂ) (R₂ := ℂ) (R₃ := ℂ)
+        (M₁ := C)
+        (M₂ := LatticeBRSTChargeCohomology.SectorCohomology D H h26 hHG hGH p)
+        (M₃ := C)
+        (σ₁₂ := RingHom.id ℂ) (σ₂₃ := RingHom.id ℂ) (σ₁₃ := RingHom.id ℂ)
+        (inclusion D H h26 hHG hGH p) (projection D H h26 hHG hGH p)
     have project_c (p : Charge D) : P p (c : C) = (component p).val := by
       rw [← hx]
       rfl
