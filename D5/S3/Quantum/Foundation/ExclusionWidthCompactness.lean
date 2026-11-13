@@ -591,16 +591,22 @@ theorem width_global_maximum [Nontrivial V]
       (∀ q : pure C u, width C u (exclusion C u q) ≤ width C u (exclusion C u p)) ∧
       sSup ((fun q : pure C u => width C u (exclusion C u q)) '' univ) =
         width C u (exclusion C u p) := by
-  have hPn : (pure C u).Nonempty := by
-    by_contra hn
-    have he : pure C u = ∅ := Set.not_nonempty_iff_eq_empty.mp hn
-    have hh := pure_span (base_compact hc hs) hs hg
-    rw [he, Submodule.span_empty] at hh
-    exact (bot_ne_top : (⊥ : Submodule ℝ V) ≠ ⊤) hh
-  obtain ⟨q, hq⟩ := hPn
-  let q' : pure C u := ⟨q, hq⟩
-  let a := width C u (exclusion C u q')
-  have ha : 0 < a := (exclusion_width_pos_le_one hc hs hg hB q').1
+  have original_bounds (r : pure C u) :
+      0 < width C u (exclusion C u r) ∧ width C u (exclusion C u r) ≤ 1 := by
+    have hF : {x | x ∈ base C u ∧ comparison C u r x = 0} = exclusion C u r := by
+      ext x
+      constructor
+      · rintro ⟨hx, hz⟩
+        exact (comparison_zero_iff hs hg r hx).mp hz
+      · intro hx
+        exact ⟨hx.1, (comparison_zero_iff hs hg r hx.1).mpr hx⟩
+    simpa only [hF] using (original_exclusion_width hc hs hg hB r).1
+  obtain ⟨q⟩ := OriginalFacePolarity.pure_nonempty hc hs hg
+  have hq := (Set.ext_iff.mp (pure_eq_countable_width_layers hc hs hg hB) (q : V)).mp
+    q.property
+  obtain ⟨n, _, hqn⟩ := mem_iUnion.mp hq
+  let a : ℝ := 1 / (n + 1 : ℝ)
+  have ha : 0 < a := by dsimp [a]; positivity
   let L : Set (pure C u) := {p | a ≤ width C u (exclusion C u p)}
   have hL : IsCompact L := by
     apply Subtype.isCompact_iff.mpr
@@ -614,17 +620,16 @@ theorem width_global_maximum [Nontrivial V]
     rw [him]
     exact positive_width_layer_compact hc hs hg hB hInj ha
   obtain ⟨p, hp, hmax⟩ := UpperSemicontinuousOn.exists_isMaxOn
-    (show L.Nonempty from ⟨q', (le_rfl : a ≤ a)⟩) hL
+    (show L.Nonempty from ⟨q, hqn⟩) hL
     ((width_upperSemicontinuous hc hs hg hB).upperSemicontinuousOn L)
   have hall (r : pure C u) : width C u (exclusion C u r) ≤ width C u (exclusion C u p) := by
     by_cases hr : a ≤ width C u (exclusion C u r)
     · exact hmax hr
     · exact (le_of_lt (lt_of_not_ge hr)).trans hp
-  refine ⟨p, (exclusion_width_pos_le_one hc hs hg hB p).1,
-    (exclusion_width_pos_le_one hc hs hg hB p).2, hall, ?_⟩
+  refine ⟨p, (original_bounds p).1, (original_bounds p).2, hall, ?_⟩
   apply le_antisymm
   · exact csSup_le (by exact ⟨_, p, mem_univ p, rfl⟩) (by rintro _ ⟨r, _, rfl⟩; exact hall r)
-  · exact le_csSup ⟨1, by rintro _ ⟨r, _, rfl⟩; exact (exclusion_width_pos_le_one hc hs hg hB r).2⟩
+  · exact le_csSup ⟨1, by rintro _ ⟨r, _, rfl⟩; exact (original_bounds r).2⟩
       ⟨p, mem_univ p, rfl⟩
 
 /-- Every near-saturated sequence has a strictly indexed subsequence converging to saturation. -/
