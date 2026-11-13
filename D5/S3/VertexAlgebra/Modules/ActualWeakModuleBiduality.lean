@@ -96,25 +96,21 @@ private theorem linear_inverse_left (c : Discriminant D)
     (x : Multiplicity A c) :
     r ((dualMultiplicityEquiv A hD c).dualMap.symm
       (kappa (DualMultiplicity (dualModule A)) c (bidualFamily A hD c x))) = x := by
-  have hf : bidualFamily A hD c x =
-      iota (DualMultiplicity (dualModule A)) c
-        ((dualMultiplicityEquiv A hD c).dualMap
-          (Module.Dual.eval ℂ (Multiplicity A c) x)) :=
-    (LinearMap.comp_apply (iota (DualMultiplicity (dualModule A)) c)
-      ((dualMultiplicityEquiv A hD c).dualMap.toLinearMap.comp
-        (Module.Dual.eval ℂ (Multiplicity A c))) x).trans
-      (congrArg (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun
-        (LinearMap.comp_apply (dualMultiplicityEquiv A hD c).dualMap.toLinearMap
-          (Module.Dual.eval ℂ (Multiplicity A c)) x))
-  have hk := (congrArg (kappa (DualMultiplicity (dualModule A)) c).toAddHom.toFun hf).trans
-    (kappa_iota (DualMultiplicity (dualModule A)) c
-      ((dualMultiplicityEquiv A hD c).dualMap
-        (Module.Dual.eval ℂ (Multiplicity A c) x)))
-  exact (congrArg (fun t : DualMultiplicity (dualModule A) c =>
-    r ((dualMultiplicityEquiv A hD c).dualMap.symm t)) hk).trans
-      ((congrArg r.toAddHom.toFun
-        ((dualMultiplicityEquiv A hD c).dualMap.symm_apply_apply
-          (Module.Dual.eval ℂ (Multiplicity A c) x))).trans (hr x))
+  have cancel {M N P Q : Type u} (e : N ≃ P) (i : P → Q) (k : Q → P)
+      (hki : ∀ p, k (i p) = p) (ev : M → N) (r : N → M)
+      (hr : ∀ m, r (ev m) = m) (m : M) :
+      r (e.symm (k (i (e (ev m))))) = m := by
+    exact (congrArg (fun p : P => r (e.symm p)) (hki (e (ev m)))).trans
+      ((congrArg r (e.symm_apply_apply (ev m))).trans (hr m))
+  exact @cancel (Multiplicity A c)
+    (Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)))
+    (DualMultiplicity (dualModule A) c)
+    (Multiplicity (dualModule (dualModule A)) c)
+    (dualMultiplicityEquiv A hD c).dualMap.toEquiv
+    (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun
+    (kappa (DualMultiplicity (dualModule A)) c).toAddHom.toFun
+    (kappa_iota (DualMultiplicity (dualModule A)) c)
+    (Module.Dual.eval ℂ (Multiplicity A c)).toAddHom.toFun r.toAddHom.toFun hr x
 
 
 end Canonical
@@ -164,43 +160,25 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
   let eA := (dualMultiplicityEquiv A hD c).dualMap
   let eB := (dualMultiplicityEquiv B hD c).dualMap
   let y := Module.Dual.eval ℂ (Multiplicity A c) x
-  have hf : bidualFamily A hD c x =
-      iota (DualMultiplicity (dualModule A)) c (eA y) :=
-    (LinearMap.comp_apply (iota (DualMultiplicity (dualModule A)) c)
-      (eA.toLinearMap.comp (Module.Dual.eval ℂ (Multiplicity A c))) x).trans
-      (congrArg (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun
-        (LinearMap.comp_apply eA.toLinearMap (Module.Dual.eval ℂ (Multiplicity A c)) x))
-  have hk : kappa (DualMultiplicity (dualModule A)) c
-      (bidualFamily A hD c x) = eA y :=
-    (congrArg (kappa (DualMultiplicity (dualModule A)) c).toAddHom.toFun hf).trans
-      (kappa_iota (DualMultiplicity (dualModule A)) c (eA y))
   have he : (restrict (dualHom hD f) (-c)).dualMap (eA y) =
       eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x)) := by
     apply LinearMap.ext
     intro q
     exact LinearMap.congr_fun (hdn q) x
-  have hd : dualDualFamily hD f c (bidualFamily A hD c x) =
-      iota (DualMultiplicity (dualModule B)) c
-        ((restrict (dualHom hD f) (-c)).dualMap
-          (kappa (DualMultiplicity (dualModule A)) c (bidualFamily A hD c x))) :=
-    (LinearMap.comp_apply (iota (DualMultiplicity (dualModule B)) c)
-      ((restrict (dualHom hD f) (-c)).dualMap.comp
-        (kappa (DualMultiplicity (dualModule A)) c)) (bidualFamily A hD c x)).trans
-      (congrArg (iota (DualMultiplicity (dualModule B)) c).toAddHom.toFun
-        (LinearMap.comp_apply (restrict (dualHom hD f) (-c)).dualMap
-          (kappa (DualMultiplicity (dualModule A)) c) (bidualFamily A hD c x)))
-  have hb : bidualFamily B hD c (restrict f c x) =
-      iota (DualMultiplicity (dualModule B)) c
-        (eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x))) :=
-    (LinearMap.comp_apply (iota (DualMultiplicity (dualModule B)) c)
-      (eB.toLinearMap.comp (Module.Dual.eval ℂ (Multiplicity B c))) (restrict f c x)).trans
-      (congrArg (iota (DualMultiplicity (dualModule B)) c).toAddHom.toFun
-        (LinearMap.comp_apply eB.toLinearMap (Module.Dual.eval ℂ (Multiplicity B c))
-          (restrict f c x)))
-  exact hd.trans (((congrArg (fun t : DualMultiplicity (dualModule A) c =>
-    iota (DualMultiplicity (dualModule B)) c
-      ((restrict (dualHom hD f) (-c)).dualMap t)) hk).trans
-    (congrArg (iota (DualMultiplicity (dualModule B)) c).toAddHom.toFun he)).trans hb.symm)
+  have cancel {P Q : Type u} {R S : Type v} (i : P → Q) (k : Q → P)
+      (hki : ∀ p, k (i p) = p) (g : P → R) (j : R → S)
+      (p : P) (r : R) (h : g p = r) : j (g (k (i p))) = j r := by
+    exact (congrArg (fun t : P => j (g t)) (hki p)).trans (congrArg j h)
+  exact @cancel (DualMultiplicity (dualModule A) c)
+    (Multiplicity (dualModule (dualModule A)) c)
+    (DualMultiplicity (dualModule B) c)
+    (Multiplicity (dualModule (dualModule B)) c)
+    (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun
+    (kappa (DualMultiplicity (dualModule A)) c).toAddHom.toFun
+    (kappa_iota (DualMultiplicity (dualModule A)) c)
+    (restrict (dualHom hD f) (-c)).dualMap.toAddHom.toFun
+    (iota (DualMultiplicity (dualModule B)) c).toAddHom.toFun
+    (eA y) (eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x))) he
 
 
 theorem bidualHom_natural (f : ModuleHom A B) :
@@ -257,35 +235,21 @@ private theorem bidualInverseFamily_left (c : Discriminant D)
 private theorem bidualInverseFamily_right (c : Discriminant D)
     (z : Multiplicity (dualModule (dualModule A)) c) :
     bidualFamily A hD c (bidualInverseFamily A hD c z) = z := by
-  have hf : bidualFamily A hD c (bidualInverseFamily A hD c z) =
-      iota (DualMultiplicity (dualModule A)) c
-        ((dualMultiplicityEquiv A hD c).dualMap
-          (Module.Dual.eval ℂ (Multiplicity A c) (bidualInverseFamily A hD c z))) :=
-    (LinearMap.comp_apply (iota (DualMultiplicity (dualModule A)) c)
-      ((dualMultiplicityEquiv A hD c).dualMap.toLinearMap.comp
-        (Module.Dual.eval ℂ (Multiplicity A c))) (bidualInverseFamily A hD c z)).trans
-      (congrArg (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun
-        (LinearMap.comp_apply (dualMultiplicityEquiv A hD c).dualMap.toLinearMap
-          (Module.Dual.eval ℂ (Multiplicity A c)) (bidualInverseFamily A hD c z)))
-  have hg : bidualInverseFamily A hD c z =
-      (Module.evalEquiv ℂ (Multiplicity A c)).symm
-        ((dualMultiplicityEquiv A hD c).dualMap.symm
-          (kappa (DualMultiplicity (dualModule A)) c z)) :=
-    (LinearMap.comp_apply (Module.evalEquiv ℂ (Multiplicity A c)).symm.toLinearMap
-      ((dualMultiplicityEquiv A hD c).dualMap.symm.toLinearMap.comp
-        (kappa (DualMultiplicity (dualModule A)) c)) z).trans
-      (congrArg (Module.evalEquiv ℂ (Multiplicity A c)).symm.toEquiv
-        (LinearMap.comp_apply (dualMultiplicityEquiv A hD c).dualMap.symm.toLinearMap
-          (kappa (DualMultiplicity (dualModule A)) c) z))
-  have he := (congrArg (Module.Dual.eval ℂ (Multiplicity A c)).toAddHom.toFun hg).trans
-    ((Module.evalEquiv ℂ (Multiplicity A c)).apply_symm_apply
-      ((dualMultiplicityEquiv A hD c).dualMap.symm
-        (kappa (DualMultiplicity (dualModule A)) c z)))
-  have ht := (congrArg (dualMultiplicityEquiv A hD c).dualMap.toEquiv he).trans
-    ((dualMultiplicityEquiv A hD c).dualMap.apply_symm_apply
-      (kappa (DualMultiplicity (dualModule A)) c z))
-  exact hf.trans ((congrArg (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun ht).trans
-    ((multiplicityEquiv (DualMultiplicity (dualModule A)) hD c).symm_apply_apply z))
+  have cancel {M N P Q : Type u} (e : M ≃ N) (f : N ≃ P)
+      (i : P → Q) (k : Q → P) (hik : ∀ q, i (k q) = q) (q : Q) :
+      i (f (e (e.symm (f.symm (k q))))) = q := by
+    exact (congrArg (fun n : N => i (f n))
+      (e.apply_symm_apply (f.symm (k q)))).trans
+        ((congrArg i (f.apply_symm_apply (k q))).trans (hik q))
+  exact @cancel (Multiplicity A c)
+    (Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)))
+    (DualMultiplicity (dualModule A) c)
+    (Multiplicity (dualModule (dualModule A)) c)
+    (Module.evalEquiv ℂ (Multiplicity A c)).toEquiv
+    (dualMultiplicityEquiv A hD c).dualMap.toEquiv
+    (iota (DualMultiplicity (dualModule A)) c).toAddHom.toFun
+    (kappa (DualMultiplicity (dualModule A)) c).toAddHom.toFun
+    (multiplicityEquiv (DualMultiplicity (dualModule A)) hD c).symm_apply_apply z
 
 
 def bidualInverseHom : ModuleHom (dualModule (dualModule A)) A :=

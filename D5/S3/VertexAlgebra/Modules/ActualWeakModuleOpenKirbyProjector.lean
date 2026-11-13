@@ -289,7 +289,15 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
     have ht : TensorProduct.map (restrict (ModuleHom.id A) a)
         (restrict (coevaluation B hD) 0) (x ⊗ₜ[ℂ] eta0 hD) =
         x ⊗ₜ[ℂ] cupVector B hD := by
-      rw [TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
+      have hi : restrict (ModuleHom.id A) a x = x := restrict_identity (A := A) a x
+      have he : restrict (coevaluation B hD) 0 (eta0 hD) = cupVector B hD :=
+        coevaluation_eta0 B hD
+      exact (TensorProduct.map_tmul (restrict (ModuleHom.id A) a)
+        (restrict (coevaluation B hD) 0) x (eta0 hD)).trans
+          ((congrArg (fun t : Multiplicity A a =>
+            t ⊗ₜ[ℂ] restrict (coevaluation B hD) 0 (eta0 hD)) hi).trans
+              (congrArg (fun t : Multiplicity (targetModule B (dualModule B)) 0 =>
+                x ⊗ₜ[ℂ] t) he))
     have hc : C (normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v) =
         input (cupVector B hD) :=
       (normalizedPair_input hD (ModuleHom.id A) (coevaluation B hD)
