@@ -132,4 +132,50 @@ theorem label_erased_negative_of_input (P : Inputs.{v})
   have hu := congrArg P.unit hp0
   exact zero_ne_one (by simpa only [map_zero, (pure_mem p).2] using hu)
 
+namespace PositiveInterior
+
+structure Inputs where
+  V : Type v
+  [add : NormedAddCommGroup V]
+  [space : NormedSpace ℝ V]
+  cone : PointedCone ℝ V
+  unit : V →ₗ[ℝ] ℝ
+
+attribute [instance] Inputs.add Inputs.space
+
+abbrev signature : Signature where
+  Params := Inputs.{v}
+  State P := pure P.cone P.unit
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := Set P.V
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{v} :=
+  realize signature (fun _ P p => exclusion P.cone P.unit p) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{v}
+  Law O := ∀ P : Inputs.{v}, exclusionBalls P.cone P.unit →
+    ∀ (p : pure P.cone P.unit) (f : P.V →ₗ[ℝ] ℝ),
+    (∀ z ∈ P.cone, 0 ≤ f z) → ∀ {x : P.V},
+    x ∈ intrinsicInterior ℝ (O.readout () P p) → f x = 0 →
+    ∀ z ∈ O.readout () P p, f z = 0
+
+abbrev sourceScope : Prop := type_of% (@zero_on_exclusion_of_zero_interior.{v})
+
+theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
+  constructor
+  · intro h P hB p f hpos x hx hfx
+    exact @h P.V P.add P.space P.cone P.unit hB p f hpos x hx hfx
+  · intro h V add space C u hB p f hpos x hx hfx
+    exact h (@Inputs.mk V add space C u) hB p f hpos hx hfx
+
+theorem actual_positive : arena.{v}.Law actual.{v} :=
+  source_bridge.mp (@zero_on_exclusion_of_zero_interior.{v})
+
+end PositiveInterior
+
 end Reg.D5.S3.Quantum.Foundation.UniqueConfirmationDensity
