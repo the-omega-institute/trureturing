@@ -13,7 +13,7 @@ internal sealed class RealRogFailureQuantitativeDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/RealRogFailureQuantitative.mass_cap_compact"),
                 H("The whole original mass cap is compact"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For any real normed carrier, pointed cone C and strictly positive original unit u, compactness of the entire normalized base implies compactness of every full cap {x in C : u(x)<=R} for nonnegative R. The zero vector and empty-base case are retained. The original primal theorem and UnitPreservingLiftImage.minimum_lift and closed_lift_image consume this original statement. Its proof is unchanged."))), DescribeRole.Theorem),
+                    Paragraph(Text("For any real normed carrier, pointed cone C and strictly positive original unit u, compactness of the entire normalized base implies compactness of every full cap {x in C : u(x)<=R} for nonnegative R. The zero vector and empty-base case are retained. The original primal theorem and UnitPreservingLiftImage.minimum_lift and closed_lift_image consume this original statement."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-primal-attainment"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment"),
                 H("An attained primal on the original cone with its original unit"),
