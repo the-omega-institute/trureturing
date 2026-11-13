@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Foundation/FrobeniusDerivation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.Adjoint, mathlib/module/Mathlib.Analysis.InnerProductSpace.Trace]
+   anchors: []
    utility: none
-   digest: Every derivation of a finite positive commutative unital Frobenius multiplication is skew adjoint. -/
+   digest: Derivations of finite positive unital Frobenius comparisons are skew adjoint. -/
 
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.Trace
@@ -15,7 +15,7 @@ The trace pairing first forces a derivation to annihilate every element whose
 left multiplication commutes with all left multiplications. -/
 
 noncomputable section
-open scoped RealInnerProductSpace BigOperators
+open scoped InnerProductSpace RealInnerProductSpace BigOperators
 
 namespace D5.S3.Quantum.Foundation.FrobeniusDerivation
 
@@ -43,14 +43,19 @@ private theorem derivation_kills_central_multiplier
       _ = 0 := by simp [Ring.lie_def, (central (d c)).eq, C]
   let b := stdOrthonormalBasis ℝ V
   have hsum : ∑ i, ⟪C (b i), C (b i)⟫_ℝ = 0 := by
-    simpa only [LinearMap.trace_eq_sum_inner _ b, Module.End.mul_apply,
-      ← frob (d c)] using htrace
+    calc
+      _ = ∑ i, ⟪b i, C (C (b i))⟫_ℝ := by
+        apply Finset.sum_congr rfl
+        intro i _
+        exact frob (d c) (b i) (C (b i))
+      _ = 0 := by
+        simpa only [LinearMap.trace_eq_sum_inner _ b, Module.End.mul_apply] using htrace
   have hzero : C = 0 := by
     apply b.toBasis.ext
     intro i
     apply (inner_self_eq_zero (𝕜 := ℝ)).mp
     exact (Finset.sum_eq_zero_iff_of_nonneg
-      (fun j _ => real_inner_self_nonneg (C (b j)))).mp hsum i (Finset.mem_univ i)
+      (fun j _ => real_inner_self_nonneg)).mp hsum i (Finset.mem_univ i)
   have he := congrArg (fun T : V →ₗ[ℝ] V => T e) hzero
   simpa only [C, comm (d c) e, unit, LinearMap.zero_apply] using he
 
@@ -73,7 +78,7 @@ theorem derivation_skew_adjoint
     apply ext_inner_right ℝ
     intro w
     simp only [LinearMap.adjoint_inner_left, inner_sub_left, frob]
-    rw [LinearMap.adjoint_inner_left, der, inner_add_right]
+    rw [der, inner_add_right]
     ring
   let H := d + d.adjoint
   have hH (a z : V) : H (S a z) = S a (H z) := by
