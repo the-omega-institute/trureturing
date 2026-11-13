@@ -244,14 +244,14 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                 + "To see the support estimates, idempotence fixes x under C(P,Q); "
                 + "closeness and the associator bound give "
                 + "p(mu(P,x)-x)<=24354r p(x). The four contributions have "
-                + "coefficients 4*4866,16,8,4866, summing to 24354. Star reversal "
+                + "coefficients 4·4866,16,8,4866, summing to 24354. Star reversal "
                 + "gives p(mu(y,R)-y)<=24354r p(y). At this radius "
                 + "p(mu(a,b))<=2p(a)p(b).")),
             Paragraph(Text("Telescope from C(P,R)mu(x,y) through "
                 + "mu(P,mu(mu(x,y),R)), mu(P,mu(x,mu(y,R))), "
                 + "mu(P,mu(x,y)), mu(mu(P,x),y), and finally mu(x,y). "
                 + "In units of r p(x)p(y), the five errors are bounded respectively "
-                + "by 9732, 8, 8*24354, 2, and 2*24354. Their sum is "
+                + "by 9732, 8, 8·24354, 2, and 2·24354. Their sum is "
                 + "253282<=260000. The numerical constant is independent of M; "
                 + "M remains explicitly in r=tau+M delta.")),
             Paragraph(Text("If additionally 520000rM^2<=1, then for every allowed P,Q "
@@ -271,7 +271,7 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                 + "no rescaling. The estimates give p(t-Q)<=9737r, "
                 + "p(C(Q,Q)Z)<=5p(Z) for every Z in H, and "
                 + "p(C(Q,Q)mu(t,X)-X)<=219140r p(X) for every X in S_QQ. "
-                + "Here 219140=5*(2*9737+24354), and the additional radius implies "
+                + "Here 219140=5·(2·9737+24354), and the additional radius implies "
                 + "219140r<1. If t were zero this action estimate would force all "
                 + "of S_QQ to be zero, contradicting dimension one. Thus t!=0, "
                 + "and star covariance gives star t=t.")),
