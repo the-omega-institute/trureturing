@@ -119,6 +119,42 @@ theorem diagonal_full_telescope_bridge :
       nontrivial := nontrivialInst }
     exact h p N hN
 
+theorem diagonal_rejected_law : ¬ diagonalArena.{u, v}.Law rejected := by
+  intro law
+  have h := law probe (fun _ _ => 1)
+    (fun _ _ => Relation.ReflTransGen.single one_ne_zero)
+  change Irreducible (diagonalMatrix (0 : Matrix probe.I probe.I probe.k)).det at h
+  have hp : (∏ i : probe.I, MvPolynomial.X i : MvPolynomial probe.I probe.k) =
+      MvPolynomial.X (ULift.up (0 : Fin 2)) * MvPolynomial.X (ULift.up (1 : Fin 2)) := by
+    have hh := Fintype.prod_equiv (Equiv.ulift : probe.I ≃ Fin 2)
+      (fun i => (MvPolynomial.X i : MvPolynomial probe.I probe.k))
+      (fun j => MvPolynomial.X (ULift.up j)) (fun _ => rfl)
+    simpa [Fin.prod_univ_two] using hh
+  have hd : (diagonalMatrix (0 : Matrix probe.I probe.I probe.k)).det =
+      MvPolynomial.X (ULift.up (0 : Fin 2)) * MvPolynomial.X (ULift.up (1 : Fin 2)) := by
+    simpa [diagonalMatrix, Matrix.det_diagonal] using hp
+  have hn (i : probe.I) : ¬ IsUnit (MvPolynomial.X i : MvPolynomial probe.I probe.k) := by
+    intro hu
+    have hh := hu.map (MvPolynomial.eval (fun _ => (0 : probe.k)))
+    simpa using hh
+  rcases h.isUnit_or_isUnit hd with hi | hj
+  · exact hn _ hi
+  · exact hn _ hj
+
+def diagonal_source_registration : Registration diagonalArena.{u, v}
+    (type_of% (@diagonal_determinant_irreducible.{u, v})) where
+  actual := actual
+  bridge := diagonal_full_telescope_bridge
+  variation := ⟨diagonal_full_telescope_bridge.mp (@diagonal_determinant_irreducible.{u, v}),
+    rejected, diagonal_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, diagonal_rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
 universe w
 
 structure ReciprocalParameters where

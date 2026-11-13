@@ -49,7 +49,7 @@ internal sealed class FixedDiagonalDeterminantDocument : IScribeDocumentDefiniti
                 Call("eval", V("f"), Call("inverseValues", V("x")), Call("det", Diagonal)))))))), false);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Irreducibility for the row-parameter determinant of a fixed matrix.",
+        "Irreducibility for the row and diagonal parameter determinants of a fixed matrix.",
         H("Fixed coefficients and diagonal parameters"), Blocks(
             Paragraph(Text("K is any field and Omega is a finite label type. Every entry of N is fixed. "
                 + "The variables are indexed only by Omega; neither matrix entries nor support edges "

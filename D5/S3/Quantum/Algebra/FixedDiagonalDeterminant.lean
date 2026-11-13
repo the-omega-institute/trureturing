@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-fixed-matrix)
    anchors: []
    utility: none
-   digest: Adjugate support for a fixed matrix with independent diagonal parameters. -/
+   digest: Fixed-matrix irreducibility and reciprocal unit-coordinate determinants. -/
 
 module
 
