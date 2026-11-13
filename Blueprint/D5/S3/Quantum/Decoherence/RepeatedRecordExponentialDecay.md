@@ -26,6 +26,14 @@ The equality classes contain identical amplitude vectors, not rays modulo phase.
 
 This application replaces a demand for exact orthogonality by a quantitative sufficient condition for small residual coherence. Normalization, the overlap bound and the repeated-channel description remain model premises. Their applicability to a particular experiment requires separate physical evidence; the mathematical estimate does not establish those premises.
 
+A phase-adjusted application groups normalized records by their complex rays. Choose one unit representative for each ray, and repeat that representative at every system address in its class. Each original record is its representative multiplied by a scalar of unit modulus. Equality in Cauchy--Schwarz characterizes proportional unit vectors, so representatives of distinct rays have overlap magnitude strictly below one. Taking the maximum over the finitely many cross-ray pairs gives a uniform strict bound; if there are no such pairs, zero is a valid bound.
+
+The phase correspondence must also be carried through the dynamics. The original Gram coefficient is the representative Gram coefficient times the first address's phase and the conjugate of the second address's phase. Entrywise multiplication therefore commutes with the associated diagonal phase action. At repetition count N, the original iterate is the representative-channel iterate conjugated by the diagonal matrix of the address phases raised to N. This preserves the original channel; replacing each record by its rank-one density matrix would instead change the Gram coefficient to its squared magnitude and would not give this identity.
+
+Apply the stated theorem to these representative records. Their equal-vector pinching retains exactly the original same-ray entries. Diagonal conjugation by unit phases preserves the Frobenius norm, so the same decay rate bounds the distance from the original iterate to the conjugated ray pinching. The comparison is a moving coherent-block orbit: within a ray, an entry is multiplied by the two addresses' relative phase to N and need not approach a stationary value. The bound covers arbitrary complex system matrices and N equal to zero; empty finite system carriers are retained.
+
+In this ray formulation the strict separation follows from finite unit-record geometry, whereas normalization, the specified controlled coupling and repeated application of one reduced channel remain premises of the physical model. The conditional phases belong to the coupling: the individual environment density matrices alone do not determine them. A rotating reference frame consequently needs the coupling or a phase calibration. This application does not establish a correlated-environment evolution, experimental support, or complete stationary dephasing.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay`
