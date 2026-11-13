@@ -30,7 +30,7 @@ For every original E:C.Face, ambientDual(E) equals the Minkowski sum of ambientD
 
 **Theorem 1.3 (Every original cone face is an exact support-zero section).**
 
-$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\operatorname{Nice}\left(C\right) \Rightarrow \left(\forall F \in \operatorname{Face}\left(C\right),\; \exists a \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \left(\forall x \in V,\; x\in C \Rightarrow 0 \le \operatorname{apply}\left(a, x\right)\right) \land F = \left\{x \mid x \in x\in C \land \operatorname{apply}\left(a, x\right) = 0\right\}\right)\right)$$
+$$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\operatorname{Nice}\left(C\right) \Rightarrow \left(\forall F \in \operatorname{Face}\left(C\right),\; \exists a \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \left(\forall x \in V,\; x\in C \Rightarrow 0 \le \operatorname{apply}\left(a, x\right)\right) \land F = \left\{x \mid x \in C \land \operatorname{apply}\left(a, x\right) = 0\right\}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/NiceConeFaces.every_face_exposed` (`✓ std3`). ∎
 
