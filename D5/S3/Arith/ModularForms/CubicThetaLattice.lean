@@ -201,7 +201,7 @@ theorem norm_mod_three (p : ℤ × ℤ) :
   interval_cases hx : p.1 % 3 <;> interval_cases hy : p.2 % 3 <;>
     norm_num [eisensteinNorm, pow_two, Int.add_emod, Int.mul_emod, hx, hy]
 
-private def normTripling (p : ℤ × ℤ) : ℤ × ℤ := (p.1 - p.2, p.1 + 2 * p.2)
+def normTripling (p : ℤ × ℤ) : ℤ × ℤ := (p.1 - p.2, p.1 + 2 * p.2)
 
 private def normThird (p : ℤ × ℤ) : ℤ × ℤ :=
   ((2 * p.1 + p.2) / 3, (p.2 - p.1) / 3)

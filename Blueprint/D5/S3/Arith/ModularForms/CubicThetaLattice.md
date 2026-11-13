@@ -262,7 +262,23 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.hasSum_lattice_theta
 
 For every topology on the rational coefficient field, both fibre series are the coefficientwise sums of all lattice monomials at their nonnegative integral exponents.
 
-**Definition 1.17 (Norm-tripling equivalence).**
+**Definition 1.17 (Norm-tripling map).**
+
+$$\forall p : \mathbb{Z} \times \mathbb{Z}, \operatorname{normTripling} p = (p.1 - p.2, p.1 + 2 \cdot p.2)$$
+
+*Formalization.* `D5/S3/Arith/ModularForms/CubicThetaLattice.normTripling` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Zeyu Huang, Timothy Huber, James McLaughlin, Pengjun Wang, Yan Xu and Dongxi Ye (2025). *Sign-patterns of Certain Infinite Products*. DOI: [10.48550/arXiv.2507.16644](https://doi.org/10.48550/arXiv.2507.16644). URL: <https://arxiv.org/abs/2507.16644v1>.
+
+*Acknowledgement.* Kathrin Bringmann, Guoniu Han, Bernhard Heim and Ben Kane (2024). *Periodic sign changes for weakly holomorphic eta-quotients*. DOI: [10.48550/arXiv.2409.07164](https://doi.org/10.48550/arXiv.2409.07164). URL: <https://arxiv.org/abs/2409.07164v1>.
+
+*Commentary.*
+
+The integer map sends (x,y) to (x-y,x+2y).
+
+**Definition 1.18 (Norm-tripling equivalence).**
 
 Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTripleEquiv`
 
@@ -278,7 +294,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTripleEquiv`
 
 The map (x,y) to (x-y,x+2y) identifies norm-n and norm-3n fibres. The inverse uses the exact integer divisions (2u+v)/3 and (v-u)/3.
 
-**Definition 1.18 (Six rotated core fibres).**
+**Definition 1.19 (Six rotated core fibres).**
 
 Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv`
 
@@ -294,7 +310,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv`
 
 All norm-(3n+1) points are uniquely obtained by one of six rotations of (3x-1,3y), with e(x,y)=n. Coordinate residues make the six images disjoint and exhaustive.
 
-**Theorem 1.19 (All-index residue counts).**
+**Theorem 1.20 (All-index residue counts).**
 
 Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_fiber_residue_counts`
 
@@ -310,7 +326,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_fiber_residue_c
 
 The norm-fibre counts at 3n, 3n+1 and 3n+2 are respectively the norm-n count, six times the shifted-n count, and zero. The variable n is unrestricted.
 
-**Theorem 1.20 (Cubic lattice dissection).**
+**Theorem 1.21 (Cubic lattice dissection).**
 
 Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_theta_dissection`
 
@@ -326,7 +342,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_theta_dissectio
 
 The complete formal power-series identity A(X)=A(X^3)+6X T_lattice(X^3) follows from the fibre equivalences and exact PowerSeries.expand coefficients. It includes degree zero.
 
-**Theorem 1.21 (Norm residues).**
+**Theorem 1.22 (Norm residues).**
 
 Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_mod_three`
 
@@ -342,7 +358,7 @@ Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_mod_three`
 
 The Eisenstein norm has only residues zero and one modulo three, detected by the coordinate difference.
 
-**Theorem 1.22 (Cubic phases of the six cosets).**
+**Theorem 1.23 (Cubic phases of the six cosets).**
 
 Lean statement: `D5/S3/Arith/ModularForms/CubicThetaLattice.normCoreEquiv_coordinate_residue`
 
@@ -378,6 +394,7 @@ This module supplies complete lattice counts. CubicThetaCoreProduct identifies t
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normFiber_finite`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTheta`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTripleEquiv`
+- Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.normTripling`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_coercive`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_fiber_residue_counts`
 - Truth anchor: `D5/S3/Arith/ModularForms/CubicThetaLattice.norm_mod_three`
