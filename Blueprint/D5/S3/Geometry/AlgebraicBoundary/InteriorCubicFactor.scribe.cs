@@ -6,6 +6,7 @@ internal sealed class InteriorCubicFactorDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Cubic entire-boundary equations on compact convex bodies.",
+        H("Cubic entire-boundary equations on compact convex bodies."),
         Blocks(
             Paragraph(Text("Let B be a compact convex subset of a finite real coordinate space, let a be an interior point, and let p be a nonzero real multivariate polynomial of total degree at most three. Suppose p vanishes at every point of the entire boundary and also at a. Then the actual Frechet derivative L=Dp(a) is nonzero. There is a nonzero polynomial g such that p(x)=L(x-a)g(x) for every x, with deg(g)+1=deg(p), and g vanishes on the entire boundary.")),
             Paragraph(Text("For every nonzero vector v, the translated convex gauge constructs two actual boundary points a+alpha v and a+beta v with alpha<0<beta. The polynomial obtained by substituting a+tv has degree at most deg(p), and its linear coefficient is L(v). When L(v)=0, its zero constant and linear coefficients give a double zero at t=0. The two distinct nonzero boundary roots then force the restriction to vanish identically. The zero direction is included separately. Thus p vanishes on the entire affine hyperplane L(x-a)=0. If L were zero, p would vanish everywhere, contrary to polynomial function extensionality and p being nonzero.")),
