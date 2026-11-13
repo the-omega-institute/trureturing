@@ -6,9 +6,9 @@ The six-digit repeating-decimal shift and quotient certificate for one seventh.
 
 **Theorem 1.1 (Six-digit shift and period quotient).**
 
-Lean statement: `D5/S3/Arith/RepeatingDecimalQuotient.repeating_decimal_142857_shift_quotient`
+Lean statement: `D5/S3/Arith/RepeatingDecimal/RepeatingDecimalQuotient.repeating_decimal_142857_shift_quotient`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/RepeatingDecimalQuotient.repeating_decimal_142857_shift_quotient` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/RepeatingDecimal/RepeatingDecimalQuotient.repeating_decimal_142857_shift_quotient` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -18,4 +18,4 @@ Over the rationals, shifting the generator 1/7 by six decimal places gives 14285
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/RepeatingDecimalQuotient.repeating_decimal_142857_shift_quotient`
+- Truth anchor: `D5/S3/Arith/RepeatingDecimal/RepeatingDecimalQuotient.repeating_decimal_142857_shift_quotient`

@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.RepeatingDecimal;
 
 internal sealed class RepeatingDecimalQuotientDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/RepeatingDecimalQuotient.";
+    private const string Prefix = "D5/S3/Arith/RepeatingDecimal/RepeatingDecimalQuotient.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The six-digit repeating-decimal shift and quotient certificate for one seventh.",

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/RepeatingDecimalQuotient
+/- GID: D5/S3/Arith/RepeatingDecimal/RepeatingDecimalQuotient
    generality: I
-   mirror-B: D5/B/S3/Arith/RepeatingDecimalQuotient
+   mirror-B: D5/B/S3/Arith/RepeatingDecimal/RepeatingDecimalQuotient
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -9,7 +9,7 @@
 import Mathlib.Data.Rat.Defs
 import Mathlib.Tactic.NormNum
 
-namespace D5.S3.Arith.RepeatingDecimalQuotient
+namespace D5.S3.Arith.RepeatingDecimal.RepeatingDecimalQuotient
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -27,4 +27,4 @@ theorem repeating_decimal_142857_shift_quotient :
 
 #print axioms repeating_decimal_142857_shift_quotient
 
-end D5.S3.Arith.RepeatingDecimalQuotient
+end D5.S3.Arith.RepeatingDecimal.RepeatingDecimalQuotient
