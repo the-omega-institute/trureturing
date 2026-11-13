@@ -2109,7 +2109,12 @@ invented label.
 This is a representation predicate, not an assertion that every source
 contract exposes the chain to an observer. A seed is called chain-readable
 only when all of the backing in this definition, including the initial
-token, is available under the actual current rights.
+token, is available under the actual current rights and the existing
+enrollment fact remains separately available. The enrollment fact controls
+whether a first post-epoch edit is admitted; it is not reconstructed from
+the derived alpha/beta value. If the direct installation uses the label
+record's existence as its only enrollment marker, that marker is retained
+and no independent label payload is removed.
 
 **Lemma 17.2 (first root event determines the old tag).** On every lawful
 finite execution satisfying Definition 17.1,
@@ -2147,7 +2152,9 @@ finite serialized schedule satisfying the existing reservation,
 quiescence and progress conditions, replace ReadEpoch by the finite
 procedure computing (V.17). The two installations have identical:
 
-1. epoch values, header identities and epoch acquisition version $v_0$;
+1. epoch values, header identities and the exact acquisition-version field
+   required by V6.2 (the initial token $v_0$ is used only as the chain
+   terminus);
 2. enabled, refused, denied, endpoint and wrong-phase behavior;
 3. original and current operand replies, old typed samples, version
    checks, Next choices and source successors; and
@@ -2179,8 +2186,9 @@ each seed header, so independent bilateral preparation order is unused.
 $\square$
 
 **Proposition 17.4 (the exact positive coordinate).** Let $R$ be the set
-of chain-readable seeds whose epoch value is not already the payload of a
-mandatory immutable old-sample record. A direct installation and the
+of chain-readable seeds whose enrollment fact has separate backing and
+whose epoch value is not already the payload of a mandatory immutable
+old-sample record. A direct installation and the
 derived installation differ by exactly one independent conditional epoch
 value for each $h\in R$:
 
