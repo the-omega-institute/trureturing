@@ -52,7 +52,6 @@ it does not establish the binomial-strength bound or the distinct-edge variant.
 
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Data.Fin.Tuple.Basic
 
 namespace D5.S3.Combinatorics.Hypergraphs.LeeHhanChoKwonChromaticIndexTail
 
