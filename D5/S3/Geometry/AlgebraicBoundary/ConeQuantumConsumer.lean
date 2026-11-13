@@ -34,8 +34,11 @@ private theorem original_quantum_consumer {E : Type*} [NormedAddCommGroup E]
           f x ≤ g x := by
   have hg : Submodule.span ℝ (C : Set E) = ⊤ := by
     have ha := C.convex.interior_nonempty_iff_affineSpan_eq_top.mp hfull
-    rwa [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.toPointedCone.zero_mem),
-      Submodule.toAffineSubspace_eq_top] at ha
+    apply top_unique
+    intro x hx
+    have hx' : x ∈ affineSpan ℝ (C : Set E) := by rw [ha]; trivial
+    rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.toPointedCone.zero_mem)] at hx'
+    exact hx'
   have he := effects_compact hu hg
   refine ⟨base_compact C.isClosed hu, he, ?_, ?_⟩
   · intro p
