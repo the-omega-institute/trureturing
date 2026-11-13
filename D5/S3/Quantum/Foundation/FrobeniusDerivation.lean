@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.InnerProductSpace.Adjoint
 import Mathlib.Analysis.InnerProductSpace.Trace
+import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Tactic
 
 /-! Derivations preserve the positive Frobenius pairing without associativity.
@@ -42,20 +43,17 @@ private theorem derivation_kills_central_multiplier
       _ = LinearMap.trace ℝ V (d * ⁅S c, C⁆) := LinearMap.trace_lie_mul_eq d (S c) C
       _ = 0 := by simp [Ring.lie_def, (central (d c)).eq, C]
   let b := stdOrthonormalBasis ℝ V
-  have hsum : ∑ i, ⟪C (b i), C (b i)⟫_ℝ = 0 := by
-    calc
-      _ = ∑ i, ⟪b i, C (C (b i))⟫_ℝ := by
-        apply Finset.sum_congr rfl
-        intro i _
-        exact frob (d c) (b i) (C (b i))
-      _ = 0 := by
-        simpa only [LinearMap.trace_eq_sum_inner _ b, Module.End.mul_apply] using htrace
+  have symC : C.IsSymmetric := frob (d c)
+  have matrix_adjoint : (C.toMatrix b.toBasis b.toBasis).conjTranspose =
+      C.toMatrix b.toBasis b.toBasis := by
+    rw [← LinearMap.toMatrix_adjoint b b, symC.adjoint_eq]
   have hzero : C = 0 := by
-    apply b.toBasis.ext
-    intro i
-    apply (inner_self_eq_zero (𝕜 := ℝ)).mp
-    exact (Finset.sum_eq_zero_iff_of_nonneg
-      (fun j _ => real_inner_self_nonneg)).mp hsum i (Finset.mem_univ i)
+    apply (LinearMap.toMatrix b.toBasis b.toBasis).injective
+    rw [map_zero]
+    apply Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp
+    rw [matrix_adjoint, ← LinearMap.toMatrix_mul,
+      ← LinearMap.trace_eq_matrix_trace ℝ b.toBasis]
+    exact htrace
   have he := congrArg (fun T : V →ₗ[ℝ] V => T e) hzero
   simpa only [C, comm (d c) e, unit, LinearMap.zero_apply] using he
 
