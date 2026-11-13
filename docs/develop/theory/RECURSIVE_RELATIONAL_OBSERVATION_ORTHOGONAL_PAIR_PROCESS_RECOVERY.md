@@ -315,3 +315,755 @@ $$
 [WH]: https://arxiv.org/pdf/quant-ph/0203003v1 "Werner and Holevo, Counterexample to an additivity conjecture for output purity of quantum channels；§II (6)—(7)，含转置的通道。"
 
 ## 追加锚（本行以下为增补区）
+
+## 5. 同一双份消费者的受控扰动合同
+
+**定义 5.1（逐输入迹距离与联合目标）。** 保留定义 1.1—1.2 的全部原域与 $\mathsf Q_1$：原闭尖生成锥、严格正单位、整个紧基、全部纯点、全部原效应，以及每个完整排除球上的量词均不改变。同锥、同单位的 $\Phi$ 及其纯点、效应和关联对应仍是 [IX116.17—116.18][QIX] 的对应，不以裸 EB3 或忠实标签前提代替它。矩阵部分固定 $H=\mathbb C^3$、假设 1.3 的已识别寄存器及
+
+$$
+\mathfrak F=\{(P,Q):P,Q\text{ 为复秩一投影},\ PQ=0\},
+\qquad R=I-P-Q.
+$$
+
+输入仍是实际供给的一个未知产品样本 $P_A\otimes Q_B=\mathrm E_2(p,q)$，指定目标仍是原 Quantum116 消费者的 $\mathrm E_2(\tau(p,q))=P_A\otimes R_B$。竞争过程仍是一张与 $(P,Q)$ 无关、定义于整个矩阵代数的固定复线性 CPTP 通道 $\mathcal N:AB\to AB$；只吸收与准备无关的辅助态、随机性和固定自适应仪器。不输入依赖准备的描述、框架、程序或 oracle，不给第三样本。仪器全部分支计入无条件通道，不作成功分支选择或再归一。
+
+用下列有误差合同替代 (1.1) 的精确保留要求：
+
+$$
+\begin{aligned}
+\rho_A^{\mathcal N}(P,Q)&=\operatorname{Tr}_B\mathcal N(P\otimes Q),\\
+d_{\mathcal N}(P,Q)&=\frac12\|\rho_A^{\mathcal N}(P,Q)-P\|_1,\\
+D(\mathcal N)&=\sup_{(P,Q)\in\mathfrak F}d_{\mathcal N}(P,Q),\\
+s_{\mathcal N}(P,Q)&=\operatorname{Tr}[(P\otimes R)\mathcal N(P\otimes Q)],\\
+F(\varepsilon)&=\max_{\mathcal N\ {\rm CPTP},\ D(\mathcal N)\le\varepsilon}
+                 \inf_{(P,Q)\in\mathfrak F}s_{\mathcal N}(P,Q),
+\qquad 0\le\varepsilon\le1.
+\end{aligned}
+\tag{5.1}
+$$
+
+迹距离的效应变分公式给出
+
+$$
+d_{\mathcal N}(P,Q)=\max_{0\preceq M\preceq I}
+ \left|\operatorname{Tr}[M(\rho_A^{\mathcal N}(P,Q)-P)]\right|.
+\tag{5.2}
+$$
+
+所以预算约束覆盖每个承诺输入和全部第一寄存器效应。$s_{\mathcal N}$ 是同一个联合目标投影的重叠；若另供给该验证测量，它是测试接受概率，不是带标志的精确制备成功概率。这里没有以第一寄存器平均保真度或某个单输出分数替代联合目标。[Banaszek，式 (4)—(5)][BALANCE] 的单输入操作／经典估计均值，以及 [Fiurášek—Iblisdir—Massar—Cerf，式 (4)、(15)][ORTHOCLONE] 的正交 qubit 输入单克隆均值，分别使用不同的输入、消费者和分数。
+
+以下横线表示同一个 Haar 有序正交标架 $(P,Q,R)$ 的归一化平均。另置
+
+$$
+\ell_{\mathcal N}(P,Q)=1-\operatorname{Tr}[(P\otimes I)\mathcal N(P\otimes Q)],
+\qquad
+G(\varepsilon)=\max_{\mathcal N\ {\rm CPTP},\ \bar\ell_{\mathcal N}\le\varepsilon}
+                    \bar s_{\mathcal N}.
+\tag{5.3}
+$$
+
+$\ell$ 是第一输出离开 $P$ 的概率，尚未将它等同于一般通道的迹距离。
+
+**定理 5.2（Haar 约束与最坏保证的双向等价）。** 对全部 $0\le\varepsilon\le1$，
+
+$$
+F(\varepsilon)=G(\varepsilon).
+\tag{5.4}
+$$
+
+两个最大值都存在，而且可由满足
+
+$$
+\mathcal N( (U\otimes U)Y(U\otimes U)^\dagger)
+ =(U\otimes U)\mathcal N(Y)(U\otimes U)^\dagger
+\quad(U\in U(3))
+\tag{5.5}
+$$
+
+的通道达到。对这样的通道，$s$、$\ell$ 和 $d$ 在 $\mathfrak F$ 上恒定，并有 $d=\ell$。
+
+证明。对任意通道，(5.2) 中取效应 $P$ 得 $0\le\ell_{\mathcal N}\le d_{\mathcal N}$。于是 $D(\mathcal N)\le\varepsilon$ 蕴含 $\bar\ell_{\mathcal N}\le\varepsilon$，同时 $\inf s_{\mathcal N}\le\bar s_{\mathcal N}$；故 $F\le G$。
+
+反向任取 $G$ 的可行通道，记 $V_U=U\otimes U$，并取固定的群平均
+
+$$
+\widetilde{\mathcal N}(Y)=\int_{U(3)}
+ V_U^\dagger\mathcal N(V_UYV_U^\dagger)V_U\,dU.
+\tag{5.6}
+$$
+
+这是固定 CPTP 通道，平均分布不依赖未知输入；有限维下亦可用有限凸组合表示这个平均通道。Haar 不变性给出 (5.5)。由于 $U(3)$ 在全部有序复正交射线对上传递，直接代入积分可得，对每个 $(P,Q)$，
+
+$$
+s_{\widetilde{\mathcal N}}(P,Q)=\bar s_{\mathcal N},
+\qquad
+\ell_{\widetilde{\mathcal N}}(P,Q)=\bar\ell_{\mathcal N}.
+\tag{5.7}
+$$
+
+取参考标架 $P=|0\rangle\langle0|$、$Q=|1\rangle\langle1|$、$R=|2\rangle\langle2|$。对三个射线分别加任意相位的对角酉算子固定输入密度矩阵。协变性使第一输出边缘与所有这些酉算子对易，故
+
+$$
+\rho_A^{\widetilde{\mathcal N}}=aP+bQ+cR,
+\qquad a,b,c\ge0,\quad a+b+c=1.
+$$
+
+因此 $d=(|a-1|+b+c)/2=b+c=\ell$。该等式经协变性覆盖全部 $\mathfrak F$，所以 $D(\widetilde{\mathcal N})=\bar\ell_{\mathcal N}\le\varepsilon$，且其最坏分数为 $\bar s_{\mathcal N}$。这证明 $G\le F$，没有预先把最坏迹距离任务改成平均任务。
+
+在未归一化 Choi 坐标下，CPTP 集为 $J\succeq0$、$\operatorname{Tr}_{\rm out}J=I_{\rm in}$ 的紧集；$\mathfrak F$ 亦紧。迹距离和分数连续，其关于紧参数集的最大、最小仍连续。两个可行集闭且非空，故最大值存在。群平均保持 $\bar s$ 与 $\bar\ell$，上述反向构造也给出协变最优者。Choi 的正性、部分迹约束及线性平均分数是标准工具，参见 [Fiurášek，§II 式 (3)—(8)、§III 式 (16)—(19)][CPMAP]；这里的双向等价还使用了本承诺族的传递性和稳定子计算。证毕。
+
+**定理 5.3（局部最优系数及全误差上界）。** 对定义 5.1 的同一合同，
+
+$$
+F(0)=\frac38,
+\qquad
+F(\varepsilon)=\frac38+\sqrt{\frac{17}{112}}\sqrt\varepsilon+O(\varepsilon)
+\quad(\varepsilon\downarrow0).
+\tag{5.8}
+$$
+
+特别地，
+
+$$
+\lim_{\varepsilon\downarrow0}
+ \frac{F(\varepsilon)-3/8}{\sqrt\varepsilon}
+ =\sqrt{\frac{17}{112}}=\frac{\sqrt{119}}{28}.
+\tag{5.9}
+$$
+
+在整个 $0\le\varepsilon\le1$ 上还成立
+
+$$
+F(\varepsilon)\le
+\min\left\{1,
+\frac{\bigl(\sqrt{17\varepsilon/42}
+       +\sqrt{3/2+17\varepsilon/42}\bigr)^2}{4}
++\frac{20}{7}\varepsilon\right\}.
+\tag{5.10}
+$$
+
+式 (5.10) 是非锐的有限误差上界。定理 8.2—9.2 的固定八 Kraus 通道在每个承诺输入上达到 (5.8) 的同一首项系数，其自身展开为
+
+$$
+s=\frac38+\frac{\sqrt{119}}{28}\sqrt\varepsilon
+             -\frac{1157}{2856}\varepsilon+O(\varepsilon^{3/2}).
+\tag{5.11}
+$$
+
+式 (5.11) 的二阶系数只属于这族通道，不断言为 $F$ 的最优系数。
+
+证明。$D=0$ 与 (1.1) 完全等价，故定理 2.1 给出整个代数上的 $\mathcal N=\operatorname{id}\otimes\Lambda$，推论 3.1 给出 $F(0)=3/8$，端点直接复用 (3.5) 及 [Rungta 等，§II.D][NOT]。有误差情形的全扇区上界由定理 6.2、7.1—7.2 推出；同系数下界、(5.11) 及误差参数的局部可逆性由定理 8.2、9.1—9.2 推出。其上下估计夹出 (5.8)—(5.9)。以下给出这些推导。证毕。
+
+## 6. 完整协变分解与伴随块的泄漏形式
+
+**定义 6.1（Choi 坐标与四个嵌入）。** 固定一个与输入无关的基。输出寄存器记为 $A,B$，Choi 的共轭输入寄存器记为 $C,D$；横杠在本节以后也用于矩阵的逐项共轭，积分上的横线仍表示 (5.3) 的平均。向量化约定为
+
+$$
+|K\rangle\!\rangle=\sum_{a,b,c,d}K_{ab,cd}|a,b,c,d\rangle,
+\qquad
+J_{\mathcal N}=\sum_\nu|K_\nu\rangle\!\rangle\langle\!\langle K_\nu|.
+\tag{6.1}
+$$
+
+于是 $\operatorname{Tr}_{AB}J_{\mathcal N}=I_{CD}$，且对任意输入 $X$、输出效应 $Y$，
+
+$$
+\operatorname{Tr}[Y\mathcal N(X)]
+ =\operatorname{Tr}[J_{\mathcal N}(Y\otimes X^{\mathsf T})].
+\tag{6.2}
+$$
+
+这是 [CPMAP，式 (3)—(8)、(16)—(19)][CPMAP] 的通常正 Choi／Kraus 表示，采用输出在前的次序，不另作归一化。
+
+令 $S$ 为 $H\otimes H$ 上的交换，取全部无迹复矩阵空间的一组 Hilbert—Schmidt 正交归一基 $T_1,\ldots,T_8$。这组基不必由 Hermitian 矩阵组成。记
+
+$$
+\begin{aligned}
+E_0(T)&=I\otimes T,&E_1(T)&=T\otimes I,\\
+E_2(T)&=(I\otimes T)S,&E_3(T)&=(T\otimes I)S.
+\end{aligned}
+\tag{6.3}
+$$
+
+它们都把 $T\mapsto UTU^\dagger$ 交织为 $K\mapsto V_UKV_U^\dagger$。正交归一性的完整性恒等式为
+
+$$
+\sum_{a=1}^8(T_a)_{ij}\overline{(T_a)_{kl}}
+ =\delta_{ik}\delta_{jl}-\frac13\delta_{ij}\delta_{kl},
+\qquad
+\sum_aT_a^\dagger T_a=\sum_aT_aT_a^\dagger=\frac83I.
+\tag{6.4}
+$$
+
+**定理 6.2（全部复重数块及伴随块估计）。** 每个满足 (5.5) 的 CPTP 通道都有正 Choi 分解
+
+$$
+J=J_{\bf1}+J_{\bf8}+J_{\rm rest},
+\qquad
+J_{\rm rest}=\lambda_{10}\Pi_{10}
+ +\lambda_{\overline{10}}\Pi_{\overline{10}}+\lambda_{27}\Pi_{27},
+\quad \lambda_\mu\ge0,
+\tag{6.5}
+$$
+
+其中等型分解完整地为
+
+$$
+\operatorname{End}(H\otimes H)
+ \cong 2\cdot{\bf1}\ \oplus\ 4\cdot{\bf8}\ \oplus\ {\bf10}
+             \ \oplus\ \overline{\bf10}\ \oplus\ {\bf27}.
+\tag{6.6}
+$$
+
+$\Pi_\mu$ 是相应不可约子空间的正交投影。标量块允许 $I,S$ 间的任意复正重数矩阵；伴随块允许四个 (6.3) 间的任意复正重数矩阵。因此可以分别选 Kraus 族 $a_rI+b_rS$ 及
+
+$$
+K_{r,a}=x_rE_0(T_a)+y_rE_1(T_a)+z_rE_2(T_a)+w_rE_3(T_a),
+\qquad x_r,y_r,z_r,w_r\in\mathbb C.
+\tag{6.7}
+$$
+
+系数只受整个 $J$ 的保迹约束，不假定它们实数、对角或秩一。对参考输入 $|01\rangle$ 和目标 $|02\rangle$，设
+
+$$
+X=\sum_r|x_r|^2,\qquad v_r=(y_r,z_r,w_r)^{\mathsf T},\qquad
+\mathsf Q=\begin{pmatrix}
+2&1&0\\
+1&8/3&-1/3\\
+0&-1/3&5/3
+\end{pmatrix}.
+\tag{6.8}
+$$
+
+伴随块贡献的分数和泄漏恰为
+
+$$
+s_{\bf8}=X,\qquad
+\delta_{\bf8}=\sum_r v_r^\dagger\mathsf Qv_r,
+\tag{6.9}
+$$
+
+且总保迹性蕴含
+
+$$
+X-\frac38\le
+ \operatorname{Re}\sum_r\overline{x_r}\left(\frac{y_r}{4}-\frac{3w_r}{4}\right)
+ \le\sqrt{\frac{17}{42}X\delta_{\bf8}}.
+\tag{6.10}
+$$
+
+证明。由向量化约定，(5.5) 等价于
+
+$$
+[J,V_U\otimes\bar V_U]=0\qquad(U\in U(3));
+$$
+
+这里 $V_U\otimes\bar V_U$ 在算子空间上的作用就是 $K\mapsto V_UKV_U^\dagger$。先作这个表示的完整分解。对 $SU(3)$，
+
+$$
+H\otimes H=\operatorname{Sym}^2H\oplus\bigwedge^2H
+            ={\bf6}\oplus\overline{\bf3}.
+$$
+
+通常的张量对称化、收缩和 Young 分解给出
+
+$$
+\begin{aligned}
+\operatorname{End}({\bf6})&={\bf1}\oplus{\bf8}\oplus{\bf27},\\
+\operatorname{End}(\overline{\bf3})&={\bf1}\oplus{\bf8},\\
+\operatorname{Hom}(\overline{\bf3},{\bf6})
+ &={\bf6}\otimes{\bf3}=\operatorname{Sym}^3H\oplus{\bf8}
+   ={\bf10}\oplus{\bf8},\\
+\operatorname{Hom}({\bf6},\overline{\bf3})
+ &=\overline{\bf10}\oplus{\bf8}.
+\end{aligned}
+\tag{6.11}
+$$
+
+具体地，${\bf6}\otimes\overline{\bf6}$ 的标量、一次无迹收缩和完全无迹部分的最高权分别是 $(0,0),(1,1),(2,2)$；$\operatorname{Sym}^2H\otimes H$ 的全对称部分与 Young 形 $(2,1)$ 的最高权分别是 $(3,0),(1,1)$。标准维数式 $\dim(a,b)=(a+1)(b+1)(a+b+2)/2$ 分别给出 $1,8,27,10,8$。故 (6.11) 的维数总和为 $2+32+10+10+27=81$，没有剩余扇区。对 $U(3)$，${\bf10},\overline{\bf10}$ 的记号带有使中心作用平凡的行列式扭转；其 $SU(3)$ 限制及互不等价性不变。
+
+这是标准 Schur 分块的应用，Schur 与群平均方法参见 [Harrow，定理 5、命题 6][HAAR]，量子通道中的正 Choi 和 Schur 平均应用参见 [Fiurášek—Filip—Cerf，式 (5)—(10)][ASYM]。这里须保留本问题的全部重数。标量空间由 $I,S$ 张成，其 Gram 矩阵是 $\left(\begin{smallmatrix}9&3\\3&9\end{smallmatrix}\right)$。对无迹矩阵 $T,U$，(6.3) 的 Hilbert—Schmidt 内积满足
+
+$$
+\operatorname{Tr}[E_i(T)^\dagger E_j(U)]
+ =\mathsf G_{ij}\operatorname{Tr}(T^\dagger U),
+\qquad
+\mathsf G=\begin{pmatrix}
+3&0&1&1\\
+0&3&1&1\\
+1&1&3&0\\
+1&1&0&3
+\end{pmatrix}.
+\tag{6.12}
+$$
+
+$\mathsf G$ 的本征值为 $5,3,3,1$。四个嵌入因而独立，恰好填满四份伴随空间；它们并非正交坐标。
+
+令 $\mathcal B:\mathbb C^4\otimes\mathbb C^8\to\mathcal H_{\bf8}$ 将标准基送到 $|E_i(T_a)\rangle\!\rangle$。则 $\mathcal B^\dagger\mathcal B=\mathsf G\otimes I_8$，且 $\mathcal B$ 可逆。Schur 引理及正性给出
+
+$$
+J_{\bf8}=\mathcal B(\mathsf C\otimes I_8)\mathcal B^\dagger
+ =\sum_{i,j=0}^3\mathsf C_{ij}
+       \sum_{a=1}^8|E_i(T_a)\rangle\!\rangle\langle\!\langle E_j(T_a)|,
+\qquad \mathsf C=\mathsf C^\dagger\succeq0.
+\tag{6.13}
+$$
+
+这里正性是可逆合同变换下的正性，不能把 $\mathsf G$ 当成单位阵，也不能将 $\mathsf C$ 限为实矩阵。任意复正矩阵的分解 $\mathsf C=\sum_r c_rc_r^\dagger$ 给出 (6.7)。对标量块作同样的二维可逆合同变换。具体地，记 $B_0=I,B_1=S$，则
+
+$$
+J_{\bf1}=\sum_{i,j=0}^1\mathsf C^{(0)}_{ij}
+ |B_i\rangle\!\rangle\langle\!\langle B_j|,
+\qquad \mathsf C^{(0)}=(\mathsf C^{(0)})^\dagger\succeq0.
+$$
+
+所以任意复 Hermitian 正重数矩阵及全部 $I,S$ 相干都已保留。其余三种表示的重数为一，故为 (6.5)；互不等价扇区间没有 Choi 交叉项。反过来，这些正块的和只要满足 $\operatorname{Tr}_{AB}J=I_{CD}$ 就给出一个协变 CPTP 通道，不能省略这条整体约束。
+
+下面计算伴随块。四个输出向量依次是
+
+$$
+\begin{aligned}
+b_{0,a}&=|0\rangle\otimes T_a|1\rangle,&
+b_{1,a}&=T_a|0\rangle\otimes|1\rangle,\\
+b_{2,a}&=|1\rangle\otimes T_a|0\rangle,&
+b_{3,a}&=T_a|1\rangle\otimes|0\rangle.
+\end{aligned}
+\tag{6.14}
+$$
+
+目标振幅仅来自 $b_{0,a}$，为 $(T_a)_{21}$，其模平方之和由 (6.4) 等于一。故 $s_{\bf8}=X$。再次用 (6.4) 求内积和，以及在第一寄存器投影到 $I-|0\rangle\langle0|$ 后的内积和，得到两个完整的 Hermitian 形式
+
+$$
+\sum_a(\langle b_{i,a},b_{j,a}\rangle)_{ij}
+ =\mathsf H=\begin{pmatrix}
+8/3&-1/3&0&1\\
+-1/3&8/3&1&0\\
+0&1&8/3&-1/3\\
+1&0&-1/3&8/3
+\end{pmatrix},
+\qquad
+\sum_a(\langle b_{i,a},[(I-P)\otimes I]b_{j,a}\rangle)_{ij}
+ =\begin{pmatrix}0&0\\0&\mathsf Q\end{pmatrix}.
+\tag{6.15}
+$$
+
+因此这些等式对全部复系数成立，而不限于实参数方向。伴随块的总输出迹为
+
+$$
+\frac83X+2\operatorname{Re}\sum_r\overline{x_r}(w_r-y_r/3)+q_0,
+\qquad
+q_0=\sum_{r,a}\|y_rb_{1,a}+z_rb_{2,a}+w_rb_{3,a}\|^2\ge0.
+\tag{6.16}
+$$
+
+其余各正 Choi 块在这个输入上亦贡献非负输出迹。全通道的迹为一，于是 (6.16) 蕴含 (6.10) 的第一个不等式，没有舍弃可相消的扇区交叉项。
+
+$\mathsf Q$ 的顺序主子式为 $2,13/3,7$，故严格正定。置 $h=(1/4,0,-3/4)^{\mathsf T}$，直接求解得
+
+$$
+\mathsf Q^{-1}h=\left(\frac4{21},-\frac{11}{84},-\frac{10}{21}\right)^{\mathsf T},
+\qquad h^\dagger\mathsf Q^{-1}h=\frac{17}{42}.
+\tag{6.17}
+$$
+
+在 $\mathsf Q$ 内积中应用复 Cauchy—Schwarz，再对 $r$ 求和，即有
+
+$$
+\left|\sum_r\overline{x_r}h^\dagger v_r\right|
+ \le\sqrt{\sum_r|x_r|^2}
+       \sqrt{(h^\dagger\mathsf Q^{-1}h)\sum_rv_r^\dagger\mathsf Qv_r}.
+$$
+
+这给出 (6.10) 的第二个不等式。证毕。
+
+## 7. Haar 泄漏谱与全部扇区的上界
+
+**定理 7.1（正交对承诺的泄漏算子及其完整谱）。** 在 (6.1) 的次序下，定义
+
+$$
+\begin{aligned}
+\mathscr D&=\int (I-P)_A\otimes I_B\otimes\bar P_C\otimes\bar Q_D\,d(P,Q),\\
+\mathscr T&=\int P_A\otimes R_B\otimes\bar P_C\otimes\bar Q_D\,d(P,Q).
+\end{aligned}
+\tag{7.1}
+$$
+
+则 $\bar\ell_{\mathcal N}=\operatorname{Tr}(J_{\mathcal N}\mathscr D)$，$\bar s_{\mathcal N}=\operatorname{Tr}(J_{\mathcal N}\mathscr T)$。将旁观输出 $B$ 移到最前后，$\mathscr D=I_B\otimes D_0$，其中在 $A,C,D$ 次序下
+
+$$
+D_0=\frac12\int (I-P)_A\otimes\bar P_C\otimes(I-\bar P)_D\,dP.
+\tag{7.2}
+$$
+
+令 $F_{CD}$ 交换 $C,D$，以下简记为 $F_c$；令
+
+$$
+|\Omega\rangle_{AC}=\sum_{j=0}^2|j,j\rangle,
+\qquad E=|\Omega\rangle\langle\Omega|_{AC}\otimes I_D,
+\qquad E'=F_cEF_c.
+$$
+
+则
+
+$$
+120D_0=11I-4F_c-4E+E'+EF_c+F_cE.
+\tag{7.3}
+$$
+
+$D_0$ 的谱为 $0,1/8,7/120$，重数分别为 $3,9,15$；$\mathscr D$ 的对应重数为 $9,27,45$。特别地，
+
+$$
+\ker\mathscr D=\{|I_A\otimes B\rangle\!\rangle:B\in\operatorname{End}(H)\}.
+\tag{7.4}
+$$
+
+这个核只有一份标量和一份伴随表示。因此在 (6.5) 的全部剩余扇区上
+
+$$
+\mathscr D\big|_{\mathcal H_{10}\oplus\mathcal H_{\overline{10}}\oplus\mathcal H_{27}}
+ \succeq\frac7{120}I.
+\tag{7.5}
+$$
+
+证明。给定 $P$，同一标架内 $Q$ 在 $P^\perp$ 上均匀，故 $\mathbb E[Q\mid P]=(I-P)/2$，这先给出 (7.2)。下面只复用归一化复 Haar 矩公式 [Harrow，命题 6 式 (7)][HAAR]：
+
+$$
+\int P^{\otimes n}\,dP
+ =\frac{\sum_{\pi\in S_n}U_\pi}{3\cdot4\cdots(3+n-1)}.
+\tag{7.6}
+$$
+
+对二阶矩作适当的共轭或部分转置，分别得到 $(I+F_c)/12$ 和 $(I+E)/12$；三阶矩先整体共轭，再在 $A$ 因子部分转置，得到
+
+$$
+\int P_A\otimes\bar P_C\otimes\bar P_D\,dP
+ =\frac{I+F_c+E+E'+EF_c+F_cE}{60}.
+\tag{7.7}
+$$
+
+展开 (7.2) 的四项，便有
+
+$$
+D_0=\frac12\left[
+ \frac I3-\frac{I+F_c}{12}-\frac{I+E}{12}
+ +\frac{I+F_c+E+E'+EF_c+F_cE}{60}\right],
+$$
+
+即 (7.3)。这里的部分转置仅用于矩恒等式的代数计算，不是允许通道中的物理操作。
+
+为完整求谱，对 $v\in H$ 记
+
+$$
+k(v)=|\Omega\rangle_{AC}\otimes v_D,
+\qquad l(v)=F_ck(v).
+$$
+
+这些映射满足
+
+$$
+k^\dagger k=l^\dagger l=3I,
+\qquad k^\dagger l=I.
+\tag{7.8}
+$$
+
+所以 $\mathcal W=\operatorname{ran}k+\operatorname{ran}l$ 是六维空间。由定义有 $F_ck=l$、$F_cl=k$、$Ek=3k$、$El=k$、$E'k=l$、$E'l=3l$，代入 (7.3) 得
+
+$$
+D_0k(v)=0,
+\qquad D_0l(v)=\frac{3l(v)-k(v)}{24}.
+\tag{7.9}
+$$
+
+于是 $\operatorname{ran}k$ 是三维零空间，$\{l(v)-k(v)/3:v\in H\}$ 是与它正交的三维 $1/8$ 本征空间。
+
+$F_c$ 保持 $\mathcal W$ 及 $\mathcal W^\perp$。后者上 $E=E'=0$，并且 $EF_c=F_cE=0$，故 $D_0=(11I-4F_c)/120$。整个 $A,C,D$ 空间上 $F_c=+1,-1$ 的维数分别为 $3\cdot6=18$、$3\cdot3=9$；$\mathcal W$ 内 $k+l$ 和 $k-l$ 分别占去三维。因此 $\mathcal W^\perp$ 的正、负交换空间维数为 $15,6$，给出 $7/120$ 的十五重数和 $1/8$ 的另六重数。连同 (7.9)，这穷尽全部二十七维；亦有 $\operatorname{Tr}D_0=2$。
+
+乘上三维旁观因子 $B$ 后即得 $\mathscr D$ 的重数。在 $A,B,C,D$ 次序中，$|I_A\otimes B\rangle\!\rangle$ 恰好是 $|\Omega\rangle_{AC}$ 与任意 $B,D$ 向量的张量积，故谱计算给出 (7.4)，不只有核的包含关系。共轭作用在这个核上就是 $B\mapsto UBU^\dagger$，故分解为 ${\bf1}\oplus{\bf8}$。所有 $10,\overline{10},27$ 扇区都与核正交，而全部正本征值至少为 $7/120$，所以 (7.5) 覆盖它们全部。证毕。
+
+**定理 7.2（全部协变通道的统一估计）。** 定理 5.3 的上界 (5.10) 成立；其右侧第二项的局部展开为
+
+$$
+\frac38+\frac{\sqrt{119}}{28}\sqrt\varepsilon
+          +\frac{257}{84}\varepsilon+O(\varepsilon^{3/2}).
+\tag{7.10}
+$$
+
+证明。由定理 5.2，只需考虑协变通道，但仍保留 (6.5) 的每个正块。先逐点用 $0\preceq P\otimes R\preceq I_{AB}$，张量乘上正输入因子再平均，得到
+
+$$
+0\preceq\mathscr T\preceq I_{AB}\otimes M_{CD},
+\qquad
+M=\int\bar P\otimes\bar Q\,d(P,Q)
+ =\frac12\left[\frac I3-\frac{I+S_{CD}}{12}\right]
+ =\frac{I-S_{CD}/3}{8}.
+\tag{7.11}
+$$
+
+$M$ 在六维对称输入空间上的本征值为 $1/12$，在三维反对称空间上为 $1/6$，故 $\mathscr T\preceq I/6$。令 $\delta_{\rm rest}=\operatorname{Tr}(J_{\rm rest}\mathscr D)$、$s_{\rm rest}=\operatorname{Tr}(J_{\rm rest}\mathscr T)$。由 (7.5) 及 (7.11)，
+
+$$
+\delta_{\rm rest}\ge\frac7{120}\operatorname{Tr}J_{\rm rest},
+\qquad
+s_{\rm rest}\le\frac16\operatorname{Tr}J_{\rm rest}
+                  \le\frac{20}{7}\delta_{\rm rest}.
+\tag{7.12}
+$$
+
+标准 Choi 谱上界的使用参见 [CPMAP，式 (15)][CPMAP]；本处的常数还使用了 (7.3)—(7.5) 的承诺特定泄漏谱。
+
+任何标量 Kraus 算子 $aI+bS$ 把 $|01\rangle$ 送到 $a|01\rangle+b|10\rangle$，其 $|02\rangle$ 振幅为零。故任意复标量重数块的目标分数均为零。伴随分数由 (6.9) 为 $X$，没有扇区间交叉项。总泄漏 $\delta=\operatorname{Tr}(J\mathscr D)\le\varepsilon$ 是各正块泄漏之和，于是
+
+$$
+\bar s\le X+\frac{20}{7}\varepsilon,
+\qquad
+X-\frac38\le\sqrt{\frac{17}{42}X\varepsilon}.
+\tag{7.13}
+$$
+
+令 $z=\sqrt X\ge0$、$a=\sqrt{17\varepsilon/42}$。第二式直接变成 $z^2-az-3/8\le0$，从而
+
+$$
+X\le\frac{(a+\sqrt{a^2+3/2})^2}{4}.
+$$
+
+这个解法对 $X<3/8$ 同样有效，不对符号未定的不等式贸然平方。与 $\bar s\le1$ 合并即得 (5.10)。展开该根式，$\sqrt\varepsilon$ 系数为 $\sqrt{17/112}$，一次项为 $17/84+20/7=257/84$，得到 (7.10)。对其余扇区及整体保迹的估计只用于上界，不声称有限误差时同时取等。证毕。
+
+## 8. 全代数保迹的有理八 Kraus 通道族
+
+**定义 8.1（固定的有理变形）。** 使用定义 6.1 的任意固定无迹正交归一基及交换 $S$。对 $0\le t\le1/1000$，置
+
+$$
+u_t=16t,\qquad v_t=-11t,\qquad
+w_t=\frac{-40t+176t^2}{1-95t},
+\tag{8.1}
+$$
+
+以下涉及此族的公式简写 $u=u_t,v=v_t,w=w_t$。令
+
+$$
+\begin{aligned}
+L_a(t)&=E_0(T_a)+uE_1(T_a)+vE_2(T_a)+wE_3(T_a),\\
+A(t)&=\frac83(1+u^2+v^2+w^2)+2w-\frac23wv-\frac23u+2uv,\\
+f(t)&=1-224t+14502t^2-98336t^3+2196121t^4,\\
+K_a(t)&=A(t)^{-1/2}L_a(t),\qquad
+\mathcal N_t(Y)=\sum_{a=1}^8K_a(t)YK_a(t)^\dagger.
+\end{aligned}
+\tag{8.2}
+$$
+
+通道只依赖固定的 $t$ 和基，不依赖未知的 $(P,Q)$。$u_t$ 是变形参数，与定义 1.1 的原单位泛函 $u$ 无关。
+
+**定理 8.2（所述区间上的正性、全保迹与协变性）。** 对全部 $0\le t\le1/1000$，(8.2) 定义整个 $\mathcal L(H\otimes H)$ 上的 CPTP 通道，并满足 (5.5)。其正归一化为
+
+$$
+A(t)=\frac{8f(t)}{3(1-95t)^2}>0.
+\tag{8.3}
+$$
+
+在 $t=0$ 它恰好是 (3.5) 的 $\operatorname{id}\otimes\Lambda_*$。
+
+证明。由 (6.4)，在整个 $H\otimes H$ 上有下列算子矩阵恒等式，其中第 $i,j$ 项是 $\sum_aE_i(T_a)^\dagger E_j(T_a)$：
+
+$$
+\begin{pmatrix}
+\frac83I&S-\frac13I&\frac83S&I-\frac13S\\
+S-\frac13I&\frac83I&I-\frac13S&\frac83S\\
+\frac83S&I-\frac13S&\frac83I&S-\frac13I\\
+I-\frac13S&\frac83S&S-\frac13I&\frac83I
+\end{pmatrix}.
+\tag{8.4}
+$$
+
+例如，$\sum_aT_a\otimes T_a^\dagger=S-I/3$ 由 (6.4) 逐项得出；再右乘 $S$ 即给出 $I-S/3$，其余项使用 $S^2=I$ 及两条伴随乘积完整性恒等式。这不是仅在承诺输入上检查迹。
+
+对任意实 $u,v,w$，(8.4) 给出
+
+$$
+\sum_aL_a^\dagger L_a=A I+\beta S,
+\qquad
+\beta=\frac23(-w+8wu+3wv+3u+8v-uv).
+\tag{8.5}
+$$
+
+当 $1-8u-3v\ne0$ 时，使交换项严格消失的解为
+
+$$
+w=\frac{3u+8v-uv}{1-8u-3v}.
+\tag{8.6}
+$$
+
+代入 $u=16t,v=-11t$，分母恰为 $1-95t$，得到 (8.1)；所以 $\beta$ 在整个参数区间恒为零，而非只在一阶为零。代入 $A$ 并通分得到 (8.3)。区间上
+
+$$
+1-95t\ge\frac{905}{1000}>0,
+\qquad
+f(t)\ge1-\frac{224}{1000}-\frac{98336}{10^9}
+       =\frac{24246927}{31250000}>0.
+\tag{8.7}
+$$
+
+其中只舍去了非负的二次和四次项。因此 $A^{-1/2}$ 有定义，(8.5) 给出 $\sum_aK_a^\dagger K_a=I$。Kraus 形式给出完全正性，这个算子恒等式给出全代数保迹性，包括承诺族外输入及带参考系统的使用；表示原理复用 [CPMAP，§III][CPMAP]。
+
+任意 $U$ 的共轭在无迹矩阵空间上是酉变换，故存在酉矩阵 $D(U)$ 使 $UT_aU^\dagger=\sum_bD(U)_{ba}T_b$。四个 $E_i$ 都按同一个 $D(U)$ 变换，因为 $S$ 与 $U\otimes U$ 对易。于是整族 $L_a$、$K_a$ 同样只作一个 Kraus 指标的酉变换，求和后得到 (5.5)。这不需要输入相关的基或控制。
+
+最后 $t=0$ 时 $A=8/3$、$L_a=I\otimes T_a$。由 (6.4) 的另一个等价式 $\sum_aT_aYT_a^\dagger=\operatorname{Tr}(Y)I-Y/3$，第二因子通道是
+
+$$
+\frac38\sum_aT_aYT_a^\dagger
+ =\frac{3\operatorname{Tr}(Y)I-Y}{8}=\Lambda_*(Y).
+$$
+
+这就是已知无转置 universal-NOT 端点 [NOT，式 (2.37)][NOT] 在本问题中的原应用，不另作为新反演定理。证毕。
+
+## 9. 精确扰动、误差反解与首项取等
+
+**定理 9.1（通道族的实际边缘与联合分数）。** 对每个 $0\le t\le1/1000$ 和每个 $(P,Q)\in\mathfrak F$，(8.2) 的第一输出为
+
+$$
+\rho_A^{\mathcal N_t}(P,Q)=\frac{a_0P+a_1Q+a_2R}{A},
+\tag{9.1}
+$$
+
+其中
+
+$$
+\begin{aligned}
+a_0&=\frac83-\frac23u+\frac23u^2+2w+w^2,\\
+a_1&=u^2+2uv+\frac83v^2-\frac23vw+\frac23w^2,\\
+a_2&=u^2+w^2.
+\end{aligned}
+\tag{9.2}
+$$
+
+这些量非负且 $a_0+a_1+a_2=A$。实际迹距离和联合分数恰为
+
+$$
+\begin{aligned}
+D(\mathcal N_t)=d_{\mathcal N_t}(P,Q)
+ &=\varepsilon(t)=\frac{9t^2(119-3584t+178545t^2)}{f(t)},\\
+s_{\mathcal N_t}(P,Q)&=s(t)=\frac{3(1-95t)^2}{8f(t)}.
+\end{aligned}
+\tag{9.3}
+$$
+
+证明。在参考对 $|01\rangle$ 上，未归一化输出为 $\sum_a|L_a01\rangle\langle L_a01|$。由 (6.14) 及 (6.4) 对第二输出作部分迹，三个对角项正是 (9.2)；非对角项为零。也可先用定理 8.2 的协变性与参考对的独立相位稳定子消去非对角项，再逐项计算对角项。它们是正算子的对角元，故非负；求和给出 (8.2) 中的 $A$。因此迹距离不是仅被泄漏估计，而是精确等于
+
+$$
+\frac{|a_0/A-1|+a_1/A+a_2/A}{2}
+ =\frac{a_1+a_2}{A}
+ =\frac{(u,v,w)\mathsf Q(u,v,w)^{\mathsf T}}{A}.
+\tag{9.4}
+$$
+
+另一方面，$|02\rangle$ 的未归一化目标振幅平方和仅来自 $E_0$，由 (6.4) 恰为一，故联合分数是 $1/A$。代入 (8.1)、(8.3) 并通分，即得到 (9.3)。协变性把参考对的这个精确计算搬到每个有序复正交对，故它们同时是最坏迹距离与最坏分数，而非平均或特定实标架上的数值。证毕。
+
+**定理 9.2（局部反解、匹配系数与二阶边界）。** $\varepsilon(t)$ 在 $[0,1/1000]$ 上严格递增。故每个 $0\le\varepsilon\le\varepsilon(1/1000)$ 都有唯一的该族参数，使实际最坏扰动等于 $\varepsilon$，且该通道的分数满足 (5.11)。结合 (5.10)，它给出 (5.8)—(5.9)，但不确定 $F$ 的最优二阶系数。
+
+证明。由 (9.3) 的有理式在零点展开，得
+
+$$
+\begin{aligned}
+\varepsilon(t)&=1071t^2+207648t^3+32588415t^4+O(t^5),\\
+s(t)&=\frac38+\frac{51}{4}t+\frac{6417}{8}t^2
+                         +\frac{63303}{2}t^3+O(t^4).
+\end{aligned}
+\tag{9.5}
+$$
+
+为覆盖所述整个区间，直接微分得到
+
+$$
+\varepsilon'(t)=\frac{18t\,g(t)}{f(t)^2},
+\quad
+\begin{aligned}
+g(t)={}&119-18704t+1159906t^2-80127712t^3\\
+       &+2327921191t^4-4843251728t^5.
+\end{aligned}
+\tag{9.6}
+$$
+
+在该区间，
+
+$$
+g(t)\ge119-\frac{18704}{1000}-\frac{80127712}{10^9}
+                    -\frac{4843251728}{10^{15}}
+       =\frac{6263491715296767}{62500000000000}>100.
+\tag{9.7}
+$$
+
+由 (8.7)，$f>0$，故 $\varepsilon'(t)>0$ 对 $t>0$ 成立。连续性和 $\varepsilon(0)=0$ 给出整个误差区间上的存在唯一性。
+
+虽然 $\varepsilon'(0)=0$，可以对有符号平方根参数应用通常的解析反函数定理。具体地，在零点邻域定义实解析函数
+
+$$
+r(t)=3t\sqrt{\frac{119-3584t+178545t^2}{f(t)}}.
+\tag{9.8}
+$$
+
+根号内在零点为正，故可取正的解析支；$r'(0)=\sqrt{1071}>0$，而 $t\ge0$ 时 $r(t)=\sqrt{\varepsilon(t)}$。因此 $r$ 有解析局部逆。令 $q=\sqrt\varepsilon$，(9.5) 给出
+
+$$
+t=\frac{q}{\sqrt{1071}}
+       -\frac{207648}{2\cdot1071^2}q^2+O(q^3).
+\tag{9.9}
+$$
+
+代回 $s(t)$，首项和次项分别为
+
+$$
+\frac{51}{4\sqrt{1071}}=\frac{\sqrt{119}}{28},
+\qquad
+\frac{6417}{8\cdot1071}
+ -\frac{(51/4)207648}{2\cdot1071^2}=-\frac{1157}{2856}.
+\tag{9.10}
+$$
+
+这证明 (5.11) 对每个足够小的实际预算成立，而非只对一列参数成立。
+
+首项取等的几何方向也直接由 (6.17) 看出：
+
+$$
+(u,v,w)=t(16,-11,-40)+O(t^2),
+\quad
+(16,-11,-40)^{\mathsf T}=84\mathsf Q^{-1}h,
+\quad
+(16,-11,-40)\mathsf Q(16,-11,-40)^{\mathsf T}=2856.
+\tag{9.11}
+$$
+
+它使伴随块的对偶范数估计在首阶取等，(8.6) 则把该方向修正为严格保迹的有理族。于是 $F(\varepsilon)\ge s(t(\sqrt\varepsilon))$ 与 (7.10) 具有相同的 $\sqrt\varepsilon$ 系数，双方余项均为 $O(\varepsilon)$，推出 (5.8)—(5.9)。上下界的一次项不同，不能由此把 $-1157/2856$ 或 $257/84$ 指认为最优二阶系数；精确有限误差前沿、全局最优通道及最优二阶项仍待确定。证毕。
+
+**定理 9.3（一个严格正扰动的精确取值）。** 参数 $t=1/1000$ 的固定通道在每个承诺输入上同时具有
+
+$$
+D(\mathcal N_{1/1000})=\frac{1040350905}{790405860121},
+\qquad
+s_{\mathcal N_{1/1000}}=\frac{307134375000}{790405860121}>\frac38.
+\tag{9.12}
+$$
+
+证明。将 $t=1/1000$ 代入 (9.3) 并约分即得两式。严格不等式等价于
+
+$$
+8\cdot307134375000-3\cdot790405860121=85857419637>0.
+$$
+
+其保迹性和全部分支的无条件计数由定理 8.2 保证。这个取值证明同一未知双份合同内可同时达到严格改善，不附加精确第三态的成功标志。证毕。
+
+## 10. 原关联的有误差应用与保留的操作前提
+
+**定理 10.1（同原 $\tau$ 的单步受控保证）。** 在定义 1.1—1.2 的完整 $\mathsf Q_1$ 原域、同锥同单位 $\Phi$ 对应及假设 1.3 的实际 $\mathrm E_2$ 产品准备下，若允许的改变恰为 (5.1) 的第一边缘最坏迹距离预算，则原 Quantum116 消费者 $\tau$ 的最佳保证联合目标重叠就是 $F(\varepsilon)$，并满足定理 5.3。这个结论不增加 $\mathrm E_3$ 准备，不给出近似输出上的精确关联字作用，也不蕴含应用 4.1 中另外的 Native/AA 来源、操作、授权、返回和全部切口合同。
+
+证明。原关联与 $\mathfrak F$ 的双向对应、目标 $\mathrm E_2(\tau(p,q))=P\otimes R$ 已由定义 1.2 给定；这里两者及同一产品输入均未改变。整个原效应区间与全部矩阵效应相对应，故 (5.2) 的第一输出效应概率误差也在原对应下逐项解释。定理 5.2—9.2 因而直接给出该消费者的单步最坏保证。
+
+该对应本身不准备 $P\otimes Q$，也不供应所需的固定辅助系统、通道控制或验证测量；实际准备、控制、物理实现与全部资源费用仍是独立前提。联合重叠只评价目标测试，不产生可辨识的精确 $P\otimes R$ 输出分支。对于 $\varepsilon>0$ 的构造，输出通常不再是承诺的精确正交产品，因此 (4.1) 对精确 $\mathrm E_3$ 的逐字复合证明不能直接应用于这些近似输出；本定理没有提供相应的迭代误差合同或精确有限字恢复。
+
+Quantum116 的 $\sigma,\tau$ 与 Fibonacci 的 $\alpha,\beta$ 没有由此取得操作认同。Native/AA 的实际原来源、同一待执行消费者、当前授权、取得与返回，以及全部切口、有限请求森林、记录、backing 和费用前提，完整保留应用 4.1 的范围；本定理不提供量子到 Native 的新对应。它也不比较跨编码的最少样本、全局最少关系或总资源优势。证毕。
+
+[CPMAP]: https://arxiv.org/html/quant-ph/0105124 "Jaromír Fiurášek, Extremal equation for optimal completely-positive maps；§II (3)—(8)、(15)，§III (16)—(19)：正 Choi、保迹、线性平均分数、谱上界及 Kraus 表示。"
+[HAAR]: https://arxiv.org/html/1308.6595v1 "Aram W. Harrow, The Church of the Symmetric Subspace；Theorem 5、Proposition 6 (7)：复对称张量空间、Schur 引理与归一化复 Haar 矩。"
+[ASYM]: https://arxiv.org/html/quant-ph/0505212v1 "Jaromír Fiurášek, Radim Filip and Nicolas J. Cerf, Highly asymmetric quantum cloning in arbitrary dimension；(5)—(10)：正 Choi、偏迹约束及 Schur 平均方法；其克隆目标不同于本卷。"
+[BALANCE]: https://arxiv.org/pdf/quant-ph/0003123v2 "Konrad Banaszek, Fidelity balance in quantum operations；(4)—(5)：单输入操作与经典估计的 Haar 平均分数。"
+[ORTHOCLONE]: https://arxiv.org/pdf/quant-ph/0110016v1 "Jaromír Fiurášek, Sofyan Iblisdir, Serge Massar and Nicolas J. Cerf, Quantum cloning of orthogonal qubits；(4)、(15)—(16)：正交 qubit 输入与单克隆平均保真度。"
+
+## 追加锚（本行以下为增补区）
