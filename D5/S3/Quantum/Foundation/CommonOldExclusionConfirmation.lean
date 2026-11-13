@@ -159,7 +159,7 @@ private theorem kappa_sandwich
     rw [hfc]
     exact effect_le_two_center hsub hsym hf.1 hy
 
-private theorem minimizer_has_zero
+theorem minimizer_has_zero
     (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (a : pure C u) {x : V} (hx : x ∈ base C u)

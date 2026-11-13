@@ -8,12 +8,12 @@
 
 import D5.S3.Quantum.Foundation.OriginalBallScale
 import D5.S3.Quantum.Foundation.OriginalNormalFamily
+import D5.S3.Quantum.Foundation.CommonOldExclusionConfirmation
 
-/-! The fixed-edge row is an explicit unjoined protected-producer dependency.
-This module does not assert that an actual collapse supplies it. -/
+/-! Actual whole-exclusion collapse supplies the full fixed-edge pure row. -/
 
 noncomputable section
-open Set
+open Set Filter Topology TopologicalSpace
 open scoped RealInnerProductSpace
 
 namespace D5.S3.Quantum.Foundation.OriginalRowSaturation
@@ -28,6 +28,87 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 def PureEdgeRow (p q : pure C u) : Prop :=
   ∀ s : pure C u, ∃ e : V →ₗ[ℝ] ℝ,
     confirms C u p e ∧ e q = 0 ∧ e s = comparison C u p s
+
+/-- Actual whole-ball collapse supplies every pure input of the original edge row.
+The same minimizing effect carries its actual zero into the singleton limit. -/
+theorem actual_collapse_pure_edge_row
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (h3 : ReciprocalExclusionLimits.threeBallExclusions C u)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (p q : pure C u) (pn : ℕ → pure C u) (hp : Tendsto pn atTop (𝓝 p))
+    (hcollapse : Tendsto (fun n => Metric.hausdorffDist
+      (exclusion C u (pn n)) {(q : V)}) atTop (𝓝 0)) : PureEdgeRow p q := by
+  classical
+  have hB : exclusionBalls C u := by
+    intro s
+    obtain ⟨f, hi, hw⟩ := h3 s
+    exact ⟨⟨3, by norm_num, f, hi, hw⟩⟩
+  have hpV := continuous_subtype_val.tendsto p |>.comp hp
+  have hqD : (q : V) ∈ exclusion C u p :=
+    (exclusion_limit_labels hc hs hg hB pn hpV ({(q : V)} : NonemptyCompacts V)
+      hcollapse).2 p.property (mem_singleton (q : V))
+  have hcommon := CommonOldExclusionConfirmation.common_old_exclusion_confirmation hc hs hg h3 hPR
+  let M := CommonOldExclusionConfirmation.effectNormBound C u
+  have hM : 0 ≤ M := hcommon.1.1
+  intro s
+  by_cases hsp : s = p
+  · subst s
+    obtain ⟨e, he, heq⟩ := comparison_attained hs hg p q
+    have heq0 : e q = 0 := heq.symm.trans ((comparison_zero_iff hs hg p (pure_mem q)).mpr hqD)
+    obtain ⟨f, hf, hself⟩ := comparison_attained hs hg p p
+    exact ⟨e.toLinearMap, he, heq0, he.2.trans (hself.trans hf.2).symm⟩
+  have hstrict : comparison C u p s < 1 := by
+    obtain ⟨h, _, _, hf, hsingle, _⟩ :=
+      ReciprocalEndpointExposure.reciprocal_endpoint_exposure hc hs hg p (fun t => (hPR p t).le)
+    have hle : comparison C u p s ≤ (u-h) s :=
+      csInf_le ⟨0, by rintro z ⟨f, hf', rfl⟩; exact (hf'.1 s (pure_mem s).1).1⟩ ⟨_, hf, rfl⟩
+    apply hle.trans_lt
+    apply lt_of_le_of_ne (by simpa [(pure_mem s).2] using (hf.1 s (pure_mem s).1).2)
+    intro heq
+    have hsP : (s : V) ∈ ({(p : V)} : Set V) := hsingle ▸ ⟨pure_mem s, heq.symm⟩
+    exact hsp (Subtype.ext hsP)
+  have hpK : Tendsto (fun n => (⟨(pn n : V), pure_mem (pn n)⟩ : base C u))
+      atTop (𝓝 (⟨(p : V), pure_mem p⟩ : base C u)) := hpV.subtype_mk _
+  have ht : Tendsto (fun n => comparison C u (pn n) s) atTop (𝓝 (comparison C u p s)) := by
+    have h := ((hcommon.2.1 s).continuous.tendsto (⟨(p : V), pure_mem p⟩ : base C u)).comp hpK
+    simpa only [hPR s] using h
+  choose e he heval using fun n => comparison_attained hs hg (pn n) s
+  have hsmall : ∀ᶠ n in atTop, e n s < 1 := by
+    simpa only [heval] using ht.eventually (gt_mem_nhds hstrict)
+  obtain ⟨f, hf, φ, hφ, hflim⟩ := (effects_compact hs hg).tendsto_subseq (fun n => (he n).1)
+  have hev : Continuous (fun z : (V →L[ℝ] ℝ) × V => z.1 z.2) := by fun_prop
+  have hfp : f p = 1 := tendsto_nhds_unique
+    ((hev.tendsto (f, (p : V))).comp (hflim.prodMk_nhds (hpV.comp hφ.tendsto_atTop)))
+    (by
+      have hones (n : ℕ) : e (φ n) (pn (φ n)) = 1 := (he (φ n)).2
+      simpa only [hones] using (tendsto_const_nhds : Tendsto (fun _ : ℕ => (1 : ℝ)) atTop (𝓝 1)))
+  have hfs : f s = comparison C u p s := tendsto_nhds_unique
+    ((show Continuous (fun g : V →L[ℝ] ℝ => g s) by fun_prop).tendsto f |>.comp hflim)
+    (by simpa only [heval] using ht.comp hφ.tendsto_atTop)
+  have hbound : ∀ᶠ n in atTop, e n q ≤ M * Metric.hausdorffDist (exclusion C u (pn n)) {(q : V)} := by
+    filter_upwards [hsmall] with n hn
+    obtain ⟨z, hz, hez⟩ := CommonOldExclusionConfirmation.minimizer_has_zero hc hs (pn n)
+      (pure_mem s) (he n) (heval n) hn
+    have hzD : z ∈ exclusion C u (pn n) := ⟨hz, (e n).toLinearMap, he n, hez⟩
+    have hd : ‖(q : V)-z‖ ≤ Metric.hausdorffDist (exclusion C u (pn n)) {(q : V)} := by
+      have h := Metric.infDist_le_hausdorffDist_of_mem hzD
+        (Metric.hausdorffEDist_ne_top_of_nonempty_of_bounded
+          ((exclusion_ball_faces hc hs hg hB).1 (pn n)).1.nonempty (singleton_nonempty (q : V))
+          ((exclusion_ball_faces hc hs hg hB).1 (pn n)).2.1.isBounded isCompact_singleton.isBounded)
+      simpa [Metric.infDist_singleton, dist_eq_norm, norm_sub_rev] using h
+    calc
+      e n q = e n ((q : V)-z) := by rw [map_sub, hez, sub_zero]
+      _ ≤ ‖e n‖ * ‖(q : V)-z‖ := (le_abs_self _).trans ((e n).le_opNorm _)
+      _ ≤ M * ‖(q : V)-z‖ := mul_le_mul_of_nonneg_right (hcommon.1.2.2 (e n) (he n).1) (norm_nonneg _)
+      _ ≤ _ := mul_le_mul_of_nonneg_left hd hM
+  have hfq : f q = 0 := le_antisymm
+    (le_of_tendsto_of_tendsto
+      ((show Continuous (fun g : V →L[ℝ] ℝ => g q) by fun_prop).tendsto f |>.comp hflim)
+      (by simpa using (hcollapse.const_mul M).comp hφ.tendsto_atTop)
+      (hφ.tendsto_atTop.eventually hbound))
+    ((hf q (pure_mem q).1).1)
+  exact ⟨f.toLinearMap, ⟨hf, hfp⟩, hfq, hfs⟩
 
 /-- From the exact fixed-edge pure row, both actual original exclusions saturate
 and the same ep is least on every original mixed state and the entire cone. -/
