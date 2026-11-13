@@ -1,0 +1,15 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.AlgebraicBoundary;
+
+internal sealed class ConeRadialGeometryDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Exact radial coordinates and quantitative estimates on entire relative cone sections.",
+        H("Radial coordinates for the original normalization"),
+        Blocks(
+            Paragraph(Text("Let C be a closed convex cone in a finite-dimensional real normed space and let u be any continuous linear functional strictly positive on every nonzero cone vector. Keep the entire affine hyperplane H={u=1} and its original section K=C intersect H. For every a in the interior of K relative to H, put A={v in ker(u): a+v belongs to C}. The translation v to a+v is a homeomorphism from ker(u) to H and identifies A with K, including their interiors and their entire frontiers. Compactness of the original section follows from strict positivity and closedness. Thus A is a compact convex neighborhood of zero.")),
+            Paragraph(Text("There exist real radii 0<r<R with the closed ball of radius r contained in A and A contained in the closed ball of radius R. For every v in ker(u), its gauge mu satisfies norm(v)/R <= mu(v) <= norm(v)/r. For every v and w, abs(mu(v)-mu(w)) <= norm(v-w)/r. These are the gauge comparison and Lipschitz theorems for the actual inscribed and circumscribed balls. Symmetry of A is unnecessary; convexity controls both ordered differences separately.")),
+            Paragraph(Text("Apply gaugeRescaleHomeomorph from the closed unit ball to A. Its closure image is exactly A. A homeomorphism takes the frontier of a set to the frontier of its image, so its restriction gives a homeomorphism from the entire unit sphere to the entire frontier of A. The unit-ball gauge equals the norm and hence equals one on every unit direction v. The restricted map is therefore exactly v to v/mu(v). Composing with translation into H gives the homeomorphism v to a+v/mu(v) onto the entire relative frontier of K. This includes all unit directions and every relative interior center; neither smoothness nor strict convexity is required. When ker(u) has dimension one its sphere has both directions. When the original carrier is a ray, ker(u) and the relative section have dimension zero and both boundary spaces are empty.")),
+            Paragraph(Text("The same map has a quantitative distance estimate. On the unit sphere, mu(v) and mu(w) are at least 1/R, so their reciprocals are at most R. The identity 1/mu(v)-1/mu(w)=(mu(w)-mu(v))/(mu(v)mu(w)) bounds the absolute reciprocal difference by R squared times norm(v-w)/r. Decompose the difference of the radial endpoints as (v-w)/mu(v)+(1/mu(v)-1/mu(w))w. The triangle inequality and norm(w)=1 then give endpoint distance at most (R+R squared/r) times direction distance. Translation by a preserves this estimate on the actual relative frontier.")))));
+}

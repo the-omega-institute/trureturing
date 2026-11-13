@@ -8,6 +8,8 @@
 
 import D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 import D5.S3.Geometry.AlgebraicBoundary.BoundaryPrincipalIdeal
+import D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
+import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 
 noncomputable section
 
@@ -18,6 +20,12 @@ namespace D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch
 
 open private minimum_boundary_ideal
   from D5.S3.Geometry.AlgebraicBoundary.BoundaryPrincipalIdeal
+
+open private section_radial_geometry
+  from D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
+
+open private comparison_attained
+  from D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 
 open private exists_full_compact_base base_chart_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
@@ -446,6 +454,33 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
           (C : Set E) →
         ∃ r : MvPolynomial ι ℝ, r ≠ 0 ∧ r.totalDegree = h.totalDegree ∧
           ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ∧
+      (∀ (u : E →L[ℝ] ℝ), (∀ x ∈ C, x ≠ 0 → 0 < u x) →
+        ∀ a : {x : E | u x = 1},
+          a ∈ interior {x : {y : E | u y = 1} | (x : E) ∈ C} →
+          let A : Set u.ker := {v | (a : E) + (v : E) ∈ C}
+          ∃ r R : ℝ, 0 < r ∧ r < R ∧
+            Metric.closedBall (0 : u.ker) r ⊆ A ∧ A ⊆ Metric.closedBall 0 R ∧
+            (∀ v : u.ker, ‖v‖ / R ≤ gauge A v ∧ gauge A v ≤ ‖v‖ / r) ∧
+            (∀ v w : u.ker, |gauge A v - gauge A w| ≤ ‖v - w‖ / r) ∧
+            ∃ h : Metric.sphere (0 : u.ker) 1 ≃ₜ
+                frontier {x : {y : E | u y = 1} | (x : E) ∈ C},
+              (∀ v, ((h v : {y : E | u y = 1}) : E) =
+                (a : E) + ((gauge A (v : u.ker))⁻¹ • ((v : u.ker) : E))) ∧
+              ∀ v w, dist ((h v : {y : E | u y = 1}) : E)
+                  ((h w : {y : E | u y = 1}) : E) ≤
+                (R + R ^ 2 / r) * dist (v : u.ker) (w : u.ker)) ∧
+      (∀ (u : E →ₗ[ℝ] ℝ), (∀ x ∈ C, x ≠ 0 → 0 < u x) →
+        let K := D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base C.toPointedCone u
+        let P := D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.pure C.toPointedCone u
+        let F := D5.S3.Quantum.Foundation.ExclusionWidthCompactness.confirmingEffects C.toPointedCone u
+        let T := D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.comparison C.toPointedCone u
+        IsCompact K ∧
+          IsCompact (D5.S3.Quantum.Foundation.ContinuousFrameSum.effects C.toPointedCone u) ∧
+          ∀ p : P, IsCompact (F p) ∧
+            (∀ x : E, ∃ f ∈ F p, T p x = f x ∧
+              (x ∈ C → 0 ≤ T p x ∧ T p x ≤ u x)) ∧
+            ∀ x ∈ K, T p x = 0 ↔
+              x ∈ D5.S3.Quantum.Foundation.FacetZeroGluing.exclusion C.toPointedCone u p) ∧
       ∀ e ∈ interior (C : Set E),
         (∀ x : E, (linePolynomial q (-c x) (c e)).natDegree = d ∧
           (linePolynomial q (-c x) (c e)).Splits ∧
@@ -458,6 +493,7 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
         closure (connectedComponentIn {x : E | MvPolynomial.eval (c x) q ≠ 0} e) =
           (C : Set E) := by
   classical
+  letI : FiniteDimensional ℝ E := c.toLinearEquiv.finiteDimensional
   letI : Nontrivial (ι → ℝ) := c.toEquiv.symm.nontrivial
   let D := C.comap c.symm.toContinuousLinearMap
   have hi : interior (D : Set (ι → ℝ)) = c.symm ⁻¹' interior (C : Set E) :=
@@ -512,7 +548,7 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
     intro y hy
     exact hqpos (c y) (by simpa [hi] using hy)
   refine ⟨d, q, hdpos, hdp, hq, hqhom,
-    minimum_equation_squarefree _ q hq hqv hqm, hqvo, ?_, ?_, hqpo, ?_, ?_, ?_, ?_⟩
+    minimum_equation_squarefree _ q hq hqv hqm, hqvo, ?_, ?_, hqpo, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro r hr hrv
     exact hqm r hr ((hboundary r).mp hrv)
   · intro r
@@ -527,6 +563,26 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
     refine ⟨h, ?_, rfl, whole_branch_boundary_vanishing c C h hhom he hhe hbranch⟩
     intro hz
     exact hhe (by rw [hz, map_zero])
+  · intro u hu a ha
+    exact section_radial_geometry C u hu a ha
+  · intro u hu
+    dsimp only
+    have hspan : Submodule.span ℝ (C : Set E) = ⊤ := by
+      have hh := C.convex.interior_nonempty_iff_affineSpan_eq_top.mp hfull
+      rwa [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.toPointedCone.zero_mem)] at hh
+    have hEc := D5.S3.Quantum.Foundation.ContinuousFrameSum.effects_compact hu hspan
+    refine ⟨D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base_compact C.isClosed hu,
+      hEc, ?_⟩
+    intro p
+    refine ⟨hEc.inter_right (isClosed_eq (by fun_prop) continuous_const), ?_, ?_⟩
+    · intro x
+      obtain ⟨f, hf, he⟩ := comparison_attained hu hspan p x
+      refine ⟨f, hf, he, ?_⟩
+      intro hx
+      rw [he]
+      exact hf.1 x hx
+    · intro x hx
+      exact D5.S3.Quantum.Foundation.ExclusionWidthCompactness.comparison_zero_iff hu hspan p hx
   · intro e he
     obtain ⟨hline, hbranch⟩ := cone_line_roots_and_branch c C hs q hqhom (hdp.trans hd)
       hdpos hqvo (fun y hy => (hqpo y hy).ne') he
