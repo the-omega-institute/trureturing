@@ -12,6 +12,14 @@ license: Apache-2.0 source
 triage: anchor
 ---
 
+## Verified locator
+
+Source: https://github.com/danlyng/Econlib/blob/d7bd9477476cade1c6695c8891746048ceddc52f/Econlib/Math/Analysis/Danskin.lean
+
+`Danskin.hasRightDirDeriv_iSup` and its consumed support closure occupy
+lines 239–439. The original conclusion includes an attaining optimizer and
+domination of the directional derivative at every optimizer.
+
 ## Source and scope
 
 The proof supplier is Daniel Lyng's `Danskin.hasRightDirDeriv_iSup` in
