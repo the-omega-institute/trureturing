@@ -23,10 +23,10 @@ namespace D5.S3.Quantum.Algebra.Approximate.RegularCompression
 
 open scoped InnerProductSpace
 
-attribute [local instance] FiniteDimensional.complete
-
 variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   [FiniteDimensional ℂ H] [StarAddMonoid H] [StarModule ℂ H]
+
+local instance : CompleteSpace H := FiniteDimensional.complete ℂ H
 
 /-- The original Hilbert-space product, strict unit, adjoint law and associator bound. -/
 structure Product (H : Type*) [NormedAddCommGroup H] [InnerProductSpace ℂ H]
@@ -51,22 +51,21 @@ variable {M δ : ℝ} (D : Product H M δ)
 /-- The norm is the original Hilbert operator norm of the actual left action. -/
 def p (x : H) : ℝ := ‖D.mul x‖
 
-private theorem mul_injective : Function.Injective D.mul := by
-  intro x y h
-  have := congrArg (fun f : H →L[ℂ] H => f D.unit) h
-  simpa only [D.right_unit] using this
-
 /-- An isometric realization of the regular norm as a subspace of Hilbert operators. -/
 abbrev RegularSpace := LinearMap.range D.mul.toLinearMap
 
 /-- This equivalence changes neither the underlying product nor the Hilbert norm on `H`. -/
 def regularEquiv : H ≃L[ℂ] D.RegularSpace :=
-  (LinearEquiv.ofInjective D.mul.toLinearMap D.mul_injective).toContinuousLinearEquiv
+    (LinearEquiv.ofInjective D.mul.toLinearMap (by
+    intro x y h
+    have := congrArg (fun f : H →L[ℂ] H => f D.unit) h
+    change D.mul x D.unit = D.mul y D.unit at this
+    simpa only [D.right_unit] using this)).toContinuousLinearEquiv
 
 private theorem regularEquiv_norm (x : H) : ‖D.regularEquiv x‖ = D.p x := rfl
 
 private theorem norm_le_p (x : H) : ‖x‖ ≤ D.p x := by
-  simpa only [D.right_unit, D.unit_norm, mul_one] using (D.mul x).le_opNorm D.unit
+  simpa only [p, D.right_unit, D.unit_norm, mul_one] using (D.mul x).le_opNorm D.unit
 
 private theorem p_le (x : H) : D.p x ≤ M * ‖x‖ :=
   (D.mul.le_opNorm x).trans (mul_le_mul_of_nonneg_right D.mul_norm (norm_nonneg x))
@@ -79,17 +78,17 @@ private theorem p_star (x : H) : D.p (star x) = D.p x := by
 private theorem action_defect (x y : H) :
     ‖D.mul (D.mul x y) - D.mul x * D.mul y‖ ≤ δ * ‖x‖ * ‖y‖ := by
   apply ContinuousLinearMap.opNorm_le_bound
-  · positivity
+  · exact mul_nonneg (mul_nonneg D.delta_nonneg (norm_nonneg x)) (norm_nonneg y)
   · intro z
     exact D.assoc_bound x y z
 
 private theorem p_mul (x y : H) : D.p (D.mul x y) ≤ (1 + δ) * D.p x * D.p y := by
-  have h := norm_le_norm_add (D.mul (D.mul x y) - D.mul x * D.mul y) (D.mul x * D.mul y)
-  have ha := D.action_defect x y
+  have h := norm_add_le (D.mul (D.mul x y) - D.mul x * D.mul y) (D.mul x * D.mul y)
+  have ha := action_defect D x y
   have hb := norm_mul_le (D.mul x) (D.mul y)
   have hc : δ * ‖x‖ * ‖y‖ ≤ δ * D.p x * D.p y :=
-    mul_le_mul (mul_le_mul_of_nonneg_left (D.norm_le_p x) D.delta_nonneg)
-      (D.norm_le_p y) (norm_nonneg y) (by positivity [p])
+    mul_le_mul (mul_le_mul_of_nonneg_left (norm_le_p D x) D.delta_nonneg)
+      (norm_le_p D y) (norm_nonneg y) (mul_nonneg D.delta_nonneg (norm_nonneg (D.mul x)))
   simp only [sub_add_cancel] at h
   change ‖D.mul (D.mul x y)‖ ≤ _
   calc
@@ -101,13 +100,18 @@ private theorem p_assoc (x y z : H) :
     D.p (D.mul (D.mul x y) z - D.mul x (D.mul y z)) ≤
       (M * δ) * D.p x * D.p y * D.p z := by
   calc
-    _ ≤ M * ‖D.mul (D.mul x y) z - D.mul x (D.mul y z)‖ := D.p_le _
+    _ ≤ M * ‖D.mul (D.mul x y) z - D.mul x (D.mul y z)‖ := p_le D _
     _ ≤ M * (δ * ‖x‖ * ‖y‖ * ‖z‖) :=
       mul_le_mul_of_nonneg_left (D.assoc_bound x y z) (by linarith [D.one_le_M])
     _ ≤ _ := by
-      have hxyz := mul_le_mul (mul_le_mul (D.norm_le_p x) (D.norm_le_p y)
-        (norm_nonneg _) (norm_nonneg _)) (D.norm_le_p z) (norm_nonneg _) (by positivity [p])
-      nlinarith [mul_le_mul_of_nonneg_left hxyz (mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg)]
+      have hxy : ‖x‖ * ‖y‖ ≤ D.p x * D.p y :=
+        mul_le_mul (norm_le_p D x) (norm_le_p D y) (norm_nonneg y) (norm_nonneg _)
+      have hxyz : ‖x‖ * ‖y‖ * ‖z‖ ≤ D.p x * D.p y * D.p z :=
+        mul_le_mul hxy (norm_le_p D z) (norm_nonneg z)
+          (mul_nonneg (norm_nonneg (D.mul x)) (norm_nonneg (D.mul y)))
+      simpa only [mul_assoc] using mul_le_mul_of_nonneg_left hxyz
+        (mul_nonneg (le_trans zero_le_one D.one_le_M) D.delta_nonneg)
+
 
 /-- Actual left multiplication, transported to the regular-action norm. -/
 def left (x : H) : D.RegularSpace →L[ℂ] D.RegularSpace :=
@@ -124,6 +128,241 @@ private theorem left_apply (x y : H) : D.left x (D.regularEquiv y) =
 
 private theorem right_apply (x y : H) : D.right x (D.regularEquiv y) =
     D.regularEquiv (D.mul y x) := by simp [right]
+
+private theorem p_add (x y : H) : D.p (x + y) ≤ D.p x + D.p y := by
+  simpa only [p, map_add] using norm_add_le (D.mul x) (D.mul y)
+
+private theorem p_neg (x : H) : D.p (-x) = D.p x := by simp only [p, map_neg, norm_neg]
+
+private theorem projection_norm_le_two (P : H) (hP : star P = P) {τ : ℝ}
+    (hτ : τ ≤ 1 / 4) (hδ : δ ≤ 1 / 4) (hPP : D.p (D.mul P P - P) ≤ τ) :
+    D.p P ≤ 2 := by
+  have hself : ‖D.mul P * D.mul P‖ = D.p P ^ 2 := by
+    have h := ContinuousLinearMap.norm_adjoint_comp_self (D.mul P)
+    simpa only [D.adjoint_mul, hP, p, pow_two, ContinuousLinearMap.mul_def] using h
+  have hdef := action_defect D P P
+  rw [norm_sub_rev] at hdef
+  have hprod : D.p (D.mul P P) ≤ τ + D.p P := by
+    have h := p_add D (D.mul P P - P) P
+    simpa only [sub_add_cancel] using h.trans (add_le_add hPP le_rfl)
+  have htri := norm_add_le
+    (D.mul P * D.mul P - D.mul (D.mul P P)) (D.mul (D.mul P P))
+  rw [sub_add_cancel, hself] at htri
+  have hdelta : δ * ‖P‖ * ‖P‖ ≤ δ * D.p P ^ 2 := by
+    have hsq := mul_self_le_mul_self (norm_nonneg P) (norm_le_p D P)
+    nlinarith [mul_le_mul_of_nonneg_left hsq D.delta_nonneg]
+  change D.p P ^ 2 ≤ ‖D.mul P * D.mul P - D.mul (D.mul P P)‖ + D.p (D.mul P P) at htri
+  have ht : D.p P ^ 2 ≤ δ * D.p P ^ 2 + τ + D.p P := by
+    nlinarith [hdef, hprod, htri]
+  have hx := norm_nonneg (D.mul P)
+  by_contra h
+  have hx2 : 2 < D.p P := lt_of_not_ge h
+  nlinarith [sq_nonneg (D.p P - 2)]
+
+private theorem left_norm (x : H) : ‖D.left x‖ ≤ (1 + δ) * D.p x := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · exact mul_nonneg (by linarith [D.delta_nonneg]) (norm_nonneg _)
+  · intro y
+    obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
+    rw [left_apply, regularEquiv_norm, regularEquiv_norm]
+    exact p_mul D x z
+
+private theorem right_norm (x : H) : ‖D.right x‖ ≤ (1 + δ) * D.p x := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · exact mul_nonneg (by linarith [D.delta_nonneg]) (norm_nonneg _)
+  · intro y
+    obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
+    rw [right_apply, regularEquiv_norm, regularEquiv_norm]
+    simpa only [mul_assoc, mul_comm (D.p z) (D.p x)] using p_mul D z x
+
+private theorem left_square_defect (P : H) {τ : ℝ}
+    (hτ : 0 ≤ τ) (hPP : D.p (D.mul P P - P) ≤ τ) :
+    ‖D.left P * D.left P - D.left P‖ ≤ M * δ * D.p P ^ 2 + (1 + δ) * τ := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · have hM := le_trans zero_le_one D.one_le_M
+    have hp : 0 ≤ D.p P := norm_nonneg _
+    positivity [D.delta_nonneg]
+  · intro y
+    obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
+    simp only [sub_apply, mul_apply_eq_comp, left_apply,
+      ]
+    rw [← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm]
+    have heq : D.mul P (D.mul P z) - D.mul P z =
+        -(D.mul (D.mul P P) z - D.mul P (D.mul P z)) + D.mul (D.mul P P - P) z := by
+      simp only [map_sub, sub_apply]
+      abel
+    rw [heq]
+    calc
+      _ ≤ D.p (-(D.mul (D.mul P P) z - D.mul P (D.mul P z))) +
+          D.p (D.mul (D.mul P P - P) z) := p_add D _ _
+      _ = D.p (D.mul (D.mul P P) z - D.mul P (D.mul P z)) +
+          D.p (D.mul (D.mul P P - P) z) := by rw [p_neg]
+      _ ≤ M * δ * D.p P * D.p P * D.p z + (1 + δ) * τ * D.p z := by
+        apply add_le_add (p_assoc D P P z)
+        exact (p_mul D _ z).trans
+          (mul_le_mul_of_nonneg_right
+            (mul_le_mul_of_nonneg_left hPP (by linarith [D.delta_nonneg])) (norm_nonneg _))
+      _ = _ := by ring
+
+private theorem right_square_defect (Q : H) {τ : ℝ}
+    (hτ : 0 ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) :
+    ‖D.right Q * D.right Q - D.right Q‖ ≤ M * δ * D.p Q ^ 2 + (1 + δ) * τ := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · have hM := le_trans zero_le_one D.one_le_M
+    have hq : 0 ≤ D.p Q := norm_nonneg _
+    positivity [D.delta_nonneg]
+  · intro y
+    obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
+    simp only [sub_apply, mul_apply_eq_comp, right_apply,
+      ]
+    rw [← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm]
+    have heq : D.mul (D.mul z Q) Q - D.mul z Q =
+        (D.mul (D.mul z Q) Q - D.mul z (D.mul Q Q)) + D.mul z (D.mul Q Q - Q) := by
+      simp only [map_sub]
+      abel
+    rw [heq]
+    calc
+      _ ≤ D.p (D.mul (D.mul z Q) Q - D.mul z (D.mul Q Q)) +
+          D.p (D.mul z (D.mul Q Q - Q)) := p_add D _ _
+      _ ≤ M * δ * D.p z * D.p Q * D.p Q + (1 + δ) * D.p z * τ := by
+        apply add_le_add (p_assoc D z Q Q)
+        exact (p_mul D z _).trans
+          (mul_le_mul_of_nonneg_left hQQ
+            (mul_nonneg (by linarith [D.delta_nonneg]) (norm_nonneg _)))
+      _ = _ := by ring
+
+private theorem left_right_defect (P Q : H) :
+    ‖D.left P * D.right Q - D.right Q * D.left P‖ ≤ M * δ * D.p P * D.p Q := by
+  apply ContinuousLinearMap.opNorm_le_bound
+  · have hM := le_trans zero_le_one D.one_le_M
+    have hp : 0 ≤ D.p P := norm_nonneg _
+    have hq : 0 ≤ D.p Q := norm_nonneg _
+    positivity [D.delta_nonneg]
+  · intro y
+    obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
+    simp only [sub_apply, mul_apply_eq_comp, left_apply,
+      right_apply]
+    rw [← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm]
+    have h := p_assoc D P z Q
+    have he : D.p (D.mul P (D.mul z Q) - D.mul (D.mul P z) Q) =
+        D.p (D.mul (D.mul P z) Q - D.mul P (D.mul z Q)) := by
+      simp only [p, map_sub, norm_sub_rev]
+    rw [he]
+    convert h using 1 <;> ring
+
+private theorem symmetrized_defect {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
+    [NormOneClass A] (a b : A) (r : ℝ) (hr : 0 ≤ r) (hr1 : r ≤ 1)
+    (ha : ‖a‖ ≤ 3) (hb : ‖b‖ ≤ 3)
+    (haa : ‖a * a - a‖ ≤ 4 * r) (hbb : ‖b * b - b‖ ≤ 4 * r)
+    (hab : ‖a * b - b * a‖ ≤ 4 * r) :
+    ‖(a * b + b * a - 1) ^ 2 - 1‖ ≤ 512 * r := by
+  let s := a * b
+  let e := b * a - a * b
+  let t := s + s - 1
+  have he : ‖e‖ ≤ 4 * r := by simpa only [e, norm_sub_rev] using hab
+  have hs : ‖s‖ ≤ 9 := (norm_mul_le a b).trans (by nlinarith [norm_nonneg a, norm_nonneg b])
+  have ht : ‖t‖ ≤ 19 := by
+    calc
+      _ ≤ ‖s + s‖ + ‖(1 : A)‖ := norm_sub_le _ _
+      _ ≤ (‖s‖ + ‖s‖) + 1 := by rw [norm_one]; gcongr; exact norm_add_le _ _
+      _ ≤ 19 := by linarith
+  have hid : s * s - s = a * e * b + (a * a - a) * (b * b) + a * (b * b - b) := by
+    dsimp [s, e]
+    noncomm_ring
+  have hss : ‖s * s - s‖ ≤ 84 * r := by
+    rw [hid]
+    calc
+      _ ≤ (‖a‖ * ‖e‖ * ‖b‖) + ‖a * a - a‖ * (‖b‖ * ‖b‖) +
+          ‖a‖ * ‖b * b - b‖ := by
+        grw [norm_add_le, norm_add_le, norm_mul_le, norm_mul_le, norm_mul_le,
+          norm_mul_le, norm_mul_le]
+      _ ≤ 3 * (4 * r) * 3 + (4 * r) * (3 * 3) + 3 * (4 * r) := by gcongr
+      _ = 84 * r := by ring
+  have htaylor : (a * b + b * a - 1) ^ 2 - 1 =
+      (4 : ℝ) • (s * s - s) + t * e + e * t + e * e := by
+    have hfour : (4 : ℝ) • (s * s - s) =
+        (s * s - s) + (s * s - s) + (s * s - s) + (s * s - s) := by module
+    rw [hfour]
+    dsimp [s, t, e]
+    noncomm_ring
+  rw [htaylor]
+  calc
+    _ ≤ (4 * ‖s * s - s‖) + ‖t‖ * ‖e‖ + ‖e‖ * ‖t‖ + ‖e‖ * ‖e‖ := by
+      grw [norm_add_le, norm_add_le, norm_add_le, norm_smul, norm_mul_le,
+        norm_mul_le, norm_mul_le]
+      norm_num
+    _ ≤ 4 * (84 * r) + 19 * (4 * r) + (4 * r) * 19 + (4 * r) * (4 * r) := by gcongr
+    _ ≤ 512 * r := by nlinarith [mul_nonneg hr (sub_nonneg.mpr hr1)]
+
+/-- The almost involution built from the two actual regular actions. -/
+def cornerInvolution (P Q : H) : D.RegularSpace →L[ℂ] D.RegularSpace :=
+  D.left P * D.right Q + D.right Q * D.left P - 1
+
+private theorem cornerInvolution_defect (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
+    [Nontrivial D.RegularSpace] :
+    ‖D.cornerInvolution P Q ^ 2 - 1‖ ≤ 512 * (τ + M * δ) := by
+  have hM : 0 ≤ M := le_trans zero_le_one D.one_le_M
+  have heps : 0 ≤ M * δ := mul_nonneg hM D.delta_nonneg
+  have hδeps : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
+  have hδ : δ ≤ 1 / 4 := by linarith
+  have hτ1 : τ ≤ 1 / 4 := by linarith
+  have hp := projection_norm_le_two D P hP hτ1 hδ hPP
+  have hq := projection_norm_le_two D Q hQ hτ1 hδ hQQ
+  have hp0 : 0 ≤ D.p P := norm_nonneg _
+  have hq0 : 0 ≤ D.p Q := norm_nonneg _
+  have hl : ‖D.left P‖ ≤ 3 := (left_norm D P).trans (by nlinarith)
+  have hr : ‖D.right Q‖ ≤ 3 := (right_norm D Q).trans (by nlinarith)
+  have hll : ‖D.left P * D.left P - D.left P‖ ≤ 4 * (τ + M * δ) := by
+    apply (left_square_defect D P hτ hPP).trans
+    have hpsq : D.p P ^ 2 ≤ 4 := by nlinarith
+    nlinarith [mul_le_mul_of_nonneg_left hpsq heps, mul_nonneg hτ (sub_nonneg.mpr hδ)]
+  have hrr : ‖D.right Q * D.right Q - D.right Q‖ ≤ 4 * (τ + M * δ) := by
+    apply (right_square_defect D Q hτ hQQ).trans
+    have hqsq : D.p Q ^ 2 ≤ 4 := by nlinarith
+    nlinarith [mul_le_mul_of_nonneg_left hqsq heps, mul_nonneg hτ (sub_nonneg.mpr hδ)]
+  have hlr : ‖D.left P * D.right Q - D.right Q * D.left P‖ ≤ 4 * (τ + M * δ) := by
+    apply (left_right_defect D P Q).trans
+    have hpq : D.p P * D.p Q ≤ 4 := by nlinarith [mul_nonneg (sub_nonneg.mpr hp) (sub_nonneg.mpr hq)]
+    nlinarith [mul_le_mul_of_nonneg_left hpq heps]
+  exact symmetrized_defect (D.left P) (D.right Q) (τ + M * δ)
+    (add_nonneg hτ heps) (by linarith) hl hr hll hrr hlr
+
+/-- The Taylor compression in the Banach space with norm `p`. -/
+def regularCompression (P Q : H) : D.RegularSpace →L[ℂ] D.RegularSpace :=
+  Compression.correction (D.cornerInvolution P Q)
+
+/-- The same compression, acting on the original Hilbert space. -/
+def compression (P Q : H) : H →L[ℂ] H :=
+  D.regularEquiv.symm.toContinuousLinearMap ∘L D.regularCompression P Q ∘L
+    D.regularEquiv.toContinuousLinearMap
+
+/-- The actual mixed corner is the range of the corrected original-product compression. -/
+def corner (P Q : H) : Submodule ℂ H := LinearMap.range (D.compression P Q).toLinearMap
+
+/-- The original-product compression is exactly idempotent at a universal small-error scale. -/
+theorem compression_idempotent (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) :
+    D.compression P Q * D.compression P Q = D.compression P Q := by
+  have he0 : D.unit ≠ 0 := by
+    intro h
+    have := D.unit_norm
+    simp only [h, norm_zero] at this
+    norm_num at this
+  letI : Nontrivial D.RegularSpace := ⟨⟨D.regularEquiv D.unit, D.regularEquiv 0, by
+    intro h
+    exact he0 (D.regularEquiv.injective h)⟩⟩
+  have hdef := cornerInvolution_defect D P Q hP hQ hτ hsmall hPP hQQ
+  have hlt : ‖D.cornerInvolution P Q ^ 2 - 1‖ < 1 := by linarith
+  have hc := Compression.correction_idempotent (D.cornerInvolution P Q) hlt
+  change D.regularCompression P Q * D.regularCompression P Q = D.regularCompression P Q at hc
+  ext x
+  have hx := congrArg (fun f : D.RegularSpace →L[ℂ] D.RegularSpace =>
+    D.regularEquiv.symm (f (D.regularEquiv x))) hc
+  simpa only [compression, mul_apply_eq_comp, ContinuousLinearMap.comp_apply,
+    ContinuousLinearEquiv.coe_coe, ContinuousLinearEquiv.apply_symm_apply] using hx
 
 end Product
 
