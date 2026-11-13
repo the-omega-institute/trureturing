@@ -126,10 +126,12 @@ theorem diagonal_rejected_law : ¬ diagonalArena.{u, v}.Law rejected := by
   change Irreducible (diagonalMatrix (0 : Matrix probe.I probe.I probe.k)).det at h
   have hp : (∏ i : probe.I, MvPolynomial.X i : MvPolynomial probe.I probe.k) =
       MvPolynomial.X (ULift.up (0 : Fin 2)) * MvPolynomial.X (ULift.up (1 : Fin 2)) := by
-    have hh := Fintype.prod_equiv (Equiv.ulift : probe.I ≃ Fin 2)
-      (fun i => (MvPolynomial.X i : MvPolynomial probe.I probe.k))
-      (fun j => MvPolynomial.X (ULift.up j)) (fun _ => rfl)
-    simpa [Fin.prod_univ_two] using hh
+    calc
+      _ = ∏ j : Fin 2, (MvPolynomial.X (ULift.up j) : MvPolynomial probe.I probe.k) :=
+        Fintype.prod_equiv (Equiv.ulift : probe.I ≃ Fin 2) _ _ (fun _ => rfl)
+      _ = _ := by
+        rw [Fin.prod_univ_two]
+        rfl
   have hd : (diagonalMatrix (0 : Matrix probe.I probe.I probe.k)).det =
       MvPolynomial.X (ULift.up (0 : Fin 2)) * MvPolynomial.X (ULift.up (1 : Fin 2)) := by
     simpa [diagonalMatrix, Matrix.det_diagonal] using hp
