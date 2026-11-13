@@ -172,11 +172,86 @@ theorem derivation_not_inner : ¬ IsInner (AlgHom.id ℤ O4) tau derivation := b
   norm_num [gaussianD, Zsqrtd.sqrtd, Zsqrtd.re_mul] at hr
   omega
 
+private theorem b_repr (a c : ℤ) (i : Fin 2) :
+    b.repr (gaussianEquiv ⟨a,c⟩) i = ![a,c] i := by
+  have h : gaussianEquiv ⟨a,c⟩ = a • b 0 + c • b 1 := by
+    simp [gaussianEquiv_apply, b_apply, zsmul_eq_mul]
+  rw [h, map_add, map_smul, map_smul]
+  fin_cases i <;> simp
+
+/-- The existing integral power basis, with its proved dimension made explicit. -/
+private def orderedPb : PowerBasis ℤ O4 where
+  gen := z
+  dim := 2
+  basis := b
+  basis_eq_pow := b_apply
+
+private theorem actual_matrix :
+    Algebra.leftMulMatrix b (tau z - z) = !![(0 : ℤ),2;-2,0] := by
+  have ht : tau z = -z := by
+    rw [counterinstance_root_values.2, pow_succ, pow_two, z_sq]
+    ring
+  have hd : tau z - z = gaussianEquiv ⟨0,-2⟩ := by
+    rw [ht, gaussianEquiv_apply]
+    simp
+    ring
+  have hd1 : (tau z-z)*z = gaussianEquiv ⟨2,0⟩ := by
+    rw [ht, gaussianEquiv_apply]
+    simp only [Int.cast_ofNat, Int.cast_zero, zero_mul, add_zero]
+    calc
+      (-z-z)*z = -(z*z) - z*z := by ring
+      _ = 2 := by rw [z_sq]; ring
+  ext i j
+  rw [Algebra.leftMulMatrix_eq_repr_mul, b_apply]
+  fin_cases j <;> simp only [Fin.val_zero, Fin.val_one, pow_zero, pow_one, mul_one]
+  · rw [hd, b_repr]
+    fin_cases i <;> rfl
+  · rw [hd1, b_repr]
+    fin_cases i <;> rfl
+
+private theorem actual_vector (i : Fin 2) : b.repr (derivation z) i = ![1,0] i := by
+  rw [counterinstance_root_values.1, ← gaussianEquiv.map_one]
+  exact b_repr 1 0 i
+
+private theorem printed_test : PrintedIntegralTest 2 1
+    (Algebra.leftMulMatrix orderedPb.basis (tau z-z))
+    (fun i => orderedPb.basis.repr (derivation z) i) := by
+  change PrintedIntegralTest 2 1 (Algebra.leftMulMatrix b (tau z-z))
+    (fun i => b.repr (derivation z) i)
+  rw [actual_matrix]
+  refine ⟨![0,1], ?_⟩
+  intro i
+  simp only [actual_vector, Matrix.adjugate_fin_two_of]
+  fin_cases i <;> norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_two, Matrix.map_apply]
+
+/-- The complete printed Conjecture 4.4 is false on its actual cyclotomic domain. -/
+theorem result : ¬ claim := by
+  intro h
+  have hne : (AlgHom.id ℤ O4) ≠ tau := by
+    intro heq
+    have hz : z = -z := by
+      calc
+        z = tau z := by rw [← heq]; rfl
+        _ = -z := by rw [counterinstance_root_values.2, pow_succ, pow_two, z_sq]; ring
+    have hi : (Zsqrtd.sqrtd : GaussianInt) = -Zsqrtd.sqrtd := by
+      apply gaussianEquiv.injective
+      simpa [gaussianEquiv_i] using hz
+    have him := congrArg Zsqrtd.im hi
+    norm_num [Zsqrtd.sqrtd] at him
+  letI : IsCyclotomicExtension {2 ^ 2} ℚ K4 := by
+    norm_num
+    exact CyclotomicField.isCyclotomicExtension 4 ℚ
+  have hc := h 2 2 (by decide) (by decide) (by decide)
+    K4 root root_primitive orderedPb rfl (by decide)
+    (AlgHom.id ℤ O4) tau hne
+    1 3 1 1 (by decide) (by decide) (by decide) (by decide) (by decide)
+    (by simp) counterinstance_root_values.2 (by decide) (by decide) (by decide)
+    derivation (by simpa using derivation_twisted)
+  exact derivation_not_inner (hc.1.mpr printed_test)
+
 #print axioms claim
 #print axioms gaussianEquiv
-#print axioms derivation_twisted
-#print axioms counterinstance_root_values
-#print axioms derivation_not_inner
+#print axioms result
 
 end
 end D5.S3.Arith.TwistedDerivations.ManjuSharmaConjectureFourFour
