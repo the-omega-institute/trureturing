@@ -8,13 +8,15 @@
 
 import D5.S3.Quantum.Algebra.AuricActualOcticWindow
 
+/-! Directed support of the original inverse-obstruction operator over coefficient extensions. -/
+
 set_option autoImplicit false
 noncomputable section
 
 namespace D5.S3.Quantum.Algebra.AuricActualOcticWindow
 
 open Module LinearMap
-open scoped TensorProduct Classical
+open scoped TensorProduct
 
 variable {F D : Type*} [Field F] [Field D] [Algebra F D]
 
@@ -24,6 +26,7 @@ variable (K : Type*) [Field K] [Algebra F K]
 variable [FiniteDimensional F D] [CharZero F] [FiniteDimensional F K] [Normal F K]
 variable [Algebra D K] [IsScalarTower F D K]
 
+open Classical in
 /-- The same actual inverse-obstruction matrix has strongly connected nonzero support,
 including after extension of its coefficients to any field. -/
 theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
@@ -81,13 +84,15 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
       exact (Finset.mem_compl.mp i.property) ((hmem i).mpr
         (Relation.ReflTransGen.head hij ((hmem j).mp j.property)))
     have hh := hcross Sᶜ ht (by simpa using hs)
-    simp only [compl_compl] at hh
     rw [hz, Matrix.rank_zero] at hh
     omega
   refine ⟨e, he, hreach, ?_⟩
   intro σ τ
-  exact (hreach σ τ).mono (fun i j hij => by
-    exact fun hz => hij ((algebraMap K L).injective (by simpa using hz)))
+  have hedge : (fun i j => N i j ≠ 0) ≤
+      (fun i j => algebraMap K L (N i j) ≠ 0) := by
+    intro i j hij hz
+    exact hij ((algebraMap K L).injective (by simpa using hz))
+  exact Relation.ReflTransGen.mono hedge σ τ (hreach σ τ)
 
 end ActualSupport
 
