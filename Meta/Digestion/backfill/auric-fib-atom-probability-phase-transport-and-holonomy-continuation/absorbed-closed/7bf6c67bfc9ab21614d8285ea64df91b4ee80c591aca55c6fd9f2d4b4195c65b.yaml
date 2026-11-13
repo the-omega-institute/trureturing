@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7bf6c67bfc9ab21614d8285ea64df91b4ee80c591aca55c6fd9f2d4b4195c65b
   normalized_sha256: sha256:7bf6c67bfc9ab21614d8285ea64df91b4ee80c591aca55c6fd9f2d4b4195c65b
 cas_ref: sha256:7bf6c67bfc9ab21614d8285ea64df91b4ee80c591aca55c6fd9f2d4b4195c65b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Matrix/CartesianVariance.psd_entry_bound
+    target_statement_id: sha256:029989c48264702a7ddb2f7963b30fbc3260f0c293862ce2cf6561a7a358a67e
 receipts:
   unresolved_subitems: []
