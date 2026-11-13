@@ -335,19 +335,80 @@ private def parameterEquiv (n : ℕ) : ValidCuts n ≃ Parameters n where
     rintro ⟨t, d, x⟩
     have ht := t.isLt
     have hd := d.isLt
-    have hx := x.isLt
-    apply Sigma.ext
-    · apply Fin.ext
-      change n - (n - t.val) = t.val
-      omega
-    · apply heq_of_eq
-      apply Sigma.ext
-      · apply Fin.ext
-        change n - (n - d.val) = d.val
-        omega
-      · apply heq_of_eq
-        apply Fin.ext
-        change d.val + x.val - (n - (n - d.val)) = x.val
-        omega
+    have hnt : n - (n - t.val) = t.val := by omega
+    have hnd : n - (n - d.val) = d.val := by omega
+    dsimp [cutsToParams, paramsToCuts]
+    simp only [hnt, hnd, Nat.add_sub_cancel_left]
+
+/-- Cardinality is transported from actual matrices through both genuine equivalences. -/
+private theorem card_arrays (n : ℕ) : a n =
+    ∑ t : Fin (n / 2 + 1), ∑ d : Fin (t.val + 1),
+      (n - t.val - d.val + if d.val = t.val then 1 else 0) := by
+  unfold a
+  rw [Nat.card_congr (arrayEquiv n), Nat.card_congr (parameterEquiv n)]
+  simp only [Nat.card_sigma, Nat.card_fin]
+
+/-- Exact evaluation of the inner interval count, with no division or rounding. -/
+private theorem inner_double (n t : ℕ) (ht : 2 * t ≤ n) :
+    2 * ((∑ d : Fin (t + 1), (n - t - d.val + if d.val = t then 1 else 0) : ℕ) : ℤ) =
+      2 * ((t : ℤ) + 1) * ((n : ℤ) - t) - (t : ℤ) * (t + 1) + 2 := by
+  have hcast (d : Fin (t + 1)) :
+      ((n - t - d.val + if d.val = t then 1 else 0 : ℕ) : ℤ) =
+        ((n : ℤ) - t - d.val) + if d.val = t then 1 else 0 := by
+    have hd := d.isLt
+    rw [Nat.cast_add, Nat.cast_sub (by omega : d.val ≤ n - t),
+      Nat.cast_sub (by omega : t ≤ n)]
+    split_ifs <;> norm_num
+  have he : (∑ d : Fin (t + 1), (if d.val = t then 1 else 0 : ℤ)) = 1 := by
+    simp [Fin.sum_univ_eq_sum_range]
+  have hid : (∑ d : Fin (t + 1), (d.val : ℤ)) * 2 = (t : ℤ) * (t + 1) := by
+    have hnat : (∑ d : Fin (t + 1), d.val) * 2 = t * (t + 1) := by
+      simpa [Fin.sum_univ_eq_sum_range, Nat.mul_comm] using sum_range_id_mul_two (t + 1)
+    exact_mod_cast hnat
+  rw [Nat.cast_sum]
+  simp_rw [hcast]
+  rw [sum_add_distrib, he]
+  simp only [sum_sub_distrib, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+  push_cast
+  nlinarith [hid]
+
+/-- Summation of the interval fibers through an arbitrary admissible top parameter. -/
+private theorem total_double (n m : ℕ) (hm : 2 * m ≤ n) :
+    2 * (∑ t : Fin (m + 1),
+      ((∑ d : Fin (t.val + 1),
+        (n - t.val - d.val + if d.val = t.val then 1 else 0) : ℕ) : ℤ)) =
+      2 * ((m : ℤ) + 1) + ((n : ℤ) - m) * (m + 1) * (m + 2) := by
+  induction m with
+  | zero =>
+    simpa [Fin.sum_univ_one, mul_comm, add_comm] using inner_double n 0 (by omega)
+  | succ m ih =>
+    have hprev := ih (by omega)
+    have hlast := inner_double n (m + 1) hm
+    rw [Fin.sum_univ_castSucc]
+    simp only [Fin.val_castSucc, Fin.val_last]
+    push_cast at hlast ⊢
+    nlinarith [hprev, hlast]
+
+/-- The evaluated count retains floor(n/2), before separating the two parities. -/
+private theorem a_double (n : ℕ) :
+    2 * (a n : ℤ) = 2 * ((n / 2 : ℕ) + 1 : ℤ) +
+      ((n : ℤ) - (n / 2 : ℕ)) * ((n / 2 : ℕ) + 1) * ((n / 2 : ℕ) + 2) := by
+  rw [card_arrays, Nat.cast_sum]
+  exact total_double n (n / 2) (by omega)
+
+/-- Etienne's complete formula counts the original literal matrices at every positive height. -/
+theorem result : claim := by
+  intro n _
+  have h := a_double n
+  have hp : n = 2 * (n / 2) ∨ n = 2 * (n / 2) + 1 := by omega
+  rcases hp with hp | hp
+  · have hs : (-1 : ℤ) ^ n = 1 := by rw [hp, pow_mul]; norm_num
+    have hn : (n : ℤ) = 2 * (n / 2 : ℕ) := by exact_mod_cast hp
+    rw [hs, hn] at *
+    linear_combination 16 * h
+  · have hs : (-1 : ℤ) ^ n = -1 := by rw [hp, pow_add, pow_mul]; norm_num
+    have hn : (n : ℤ) = 2 * (n / 2 : ℕ) + 1 := by exact_mod_cast hp
+    rw [hs, hn] at *
+    linear_combination 16 * h
 
 end D5.S3.Combinatorics.PermutationArrays.EtiennePrefixCount
