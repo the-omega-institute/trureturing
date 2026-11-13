@@ -73,7 +73,7 @@ private theorem proper_iff (E : HermitianMat d ℂ) :
 private theorem base_iff (X : HermitianMat d ℂ) :
     X ∈ CircuitBalancedConfirmation.base cone unit ↔ 0 ≤ X ∧ X.trace = 1 := by
   simp only [CircuitBalancedConfirmation.base, Set.mem_ofPred_eq,
-    PointedCone.mem_positive, unit_apply]
+    cone, HermitianExclusionKernel.cone, PointedCone.mem_positive, unit_apply]
 
 private theorem rank_one_confirms (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1) :
     confirms cone unit (rankOne v) (effect (rankOne v)) := by

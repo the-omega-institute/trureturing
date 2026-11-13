@@ -86,7 +86,6 @@ namespace Reg.D5.S3.Quantum.Foundation.RegularAnchorWidthAntipode
 open _root_.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 open _root_.D5.S3.Quantum.Foundation.FacetZeroGluing
 open _root_.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
-open _root_.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 structure Inputs where
@@ -160,7 +159,6 @@ end Reg.D5.S3.Quantum.Foundation.RegularAnchorWidthAntipode
 
 namespace Reg.D5.S3.Quantum.Foundation.RegularAnchorShell
 
-open _root_.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 open _root_.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -282,7 +280,6 @@ namespace Reg.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 open _root_.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 open _root_.D5.S3.Quantum.Foundation.FacetZeroGluing
 open _root_.D5.S3.Quantum.Foundation.OrthogonalJointCompletion
-open _root_.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 open _root_.D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 

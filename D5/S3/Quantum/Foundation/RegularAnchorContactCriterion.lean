@@ -14,9 +14,11 @@ import D5.S3.Quantum.Foundation.OriginalWidthContact
 import Mathlib.Analysis.LocallyConvex.Separation
 import Mathlib.Analysis.Normed.Module.Ball.Pointwise
 
+/-! Full original normal coordinates, actual ratios and shell contact geometry. -/
+
 noncomputable section
 open Set
-open scoped RealInnerProductSpace
+open scoped RealInnerProductSpace Pointwise
 
 namespace D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
 
@@ -153,12 +155,12 @@ theorem regular_anchor_native
   have hp : SingleLabel C u p := fun q hq => hinj hq
   have huniq : ∀ f, common C u p f → f = e := fun f hf => hreg.unique hf he
   let S := NormalSpan C u p
-  let R := (coordinates (nativeChart a)).comp S.subtype
   let T : (V →ₗ[ℝ] ℝ) ≃ₗ[ℝ] (V →L[ℝ] ℝ) := LinearMap.toContinuousLinearMap
   let N : Set (V →L[ℝ] ℝ) := {f | (∀ x ∈ C, 0 ≤ f x) ∧ f p = 0}
   let L := Submodule.span ℝ N
   have hmap : S.map T.toLinearMap = L := by
-    rw [S, NormalSpan, Submodule.map_span]
+    change (Submodule.span ℝ (zeroPositive C u p)).map T.toLinearMap = Submodule.span ℝ N
+    rw [Submodule.map_span]
     congr 1
     ext f
     constructor
@@ -172,7 +174,7 @@ theorem regular_anchor_native
       (fun q => by obtain ⟨b⟩ := h3 q; exact ⟨nativeChart b, rfl⟩)
       (fun q r h => hinj h) p (nativeChart a) rfl
   obtain ⟨g, E0, _, _, _, hE0, _, _⟩ :=
-    hrestriction e (fun f => ⟨huniq f, fun h => h ▸ he⟩)
+    hrestriction e (fun f => ⟨huniq f, fun h => h.symm ▸ he⟩)
   let E : S ≃ₗ[ℝ] (ThreeSpace →ᵃ[ℝ] ℝ) := J.trans E0
   have hE (f : S) : E f = restriction (nativeChart a) f := by
     have hh := LinearMap.congr_fun hE0 (J f)
