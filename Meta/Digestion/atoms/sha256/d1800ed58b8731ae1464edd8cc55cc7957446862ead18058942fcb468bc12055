@@ -1,0 +1,37 @@
+**Definition 11.2 (executed costs).** For the commands in Definition
+11.1 write
+
+$$
+\begin{aligned}
+V_n^a&=\operatorname{TV}_{[0,T]}(a_n)=\int_0^{S_n}|\dot a_n^\circ|\,dt,
+&V_n^b&=\mathsf V_{\chi,n}
+       =\operatorname{TV}_{[0,T]}(b_n)=\int_0^{S_n}|\dot b_n^\circ|\,dt,\\
+L_n&=\int_0^{S_n}\sqrt{(\dot a_n^\circ)^2+(\dot b_n^\circ)^2}\,dt,
+&E_n&=\int_0^{S_n}\bigl((\dot a_n^\circ)^2+(\dot b_n^\circ)^2\bigr)\,dt.
+\end{aligned}
+\tag{11.4}
+$$
+
+The energy is allowed to be $+\infty$ for an absolutely continuous
+command; finite piecewise linear commands have finite costs. Length and
+energy use the additional identity metric of N, (10.3), without a factor
+$1/2$ in energy. The original phase variation is N, (10.4), namely
+variation of $b$, not of the displayed coordinate $\alpha=b/2+\alpha_0$.
+A planned linear leg of duration $d$ and increment $(A,B)$, executed
+for a fraction $\theta$, contributes respectively
+$\theta|A|$, $\theta|B|$, $\theta\sqrt{A^2+B^2}$ and
+$\theta(A^2+B^2)/d$. Its velocity remains $(A,B)/d$ until cutoff.
+All later velocities are zero. Thus (11.4) charges neither an unexecuted
+extension, a sped-up replacement of the final partial leg, nor a
+cemetery jump. Direct integration, the triangle inequality in
+$\mathbb R^2$, and Cauchy–Schwarz give
+
+$$
+L_n\ge\sqrt{(V_n^a)^2+(V_n^b)^2},\qquad
+L_n^2\le S_n E_n\le T E_n.
+\tag{11.5}
+$$
+
+These are command costs on the declared clock. Acquisition, analytic
+amplitude preparation and physical energy require other definitions.
+

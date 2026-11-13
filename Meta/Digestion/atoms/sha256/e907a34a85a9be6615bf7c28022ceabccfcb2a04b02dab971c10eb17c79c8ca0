@@ -1,0 +1,31 @@
+**定理 116.8（有限选尺的内半径与维数）。** $L_p$ 紧凸，存在 $0<\rho_p\le1$ 使
+
+$$
+\rho_pB^{d_p}\subseteq L_p\subseteq B^{d_p},\qquad
+\delta_p(q)\le\frac{1-\rho_p}{1+\rho_p}<1,\qquad
+\delta_p(q)=0\ \Longleftrightarrow\ n\in L_p,\qquad \dim V\ge d_p+d_q+1.
+\tag{IX116.13}
+$$
+
+因此若全部完整 $D_p\simeq B^3$，仅EB便无条件给 $\dim V\ge7$，这里没有九维结论。
+证明。对非零正 $b$ 且 $b(p)=0$，最大面每个纯点 $s$ 都由 $b/\max_Kb$ 确认，
+故 $s\perp p$、$s\in D_p$，从而 $\max_Kb=\max_{D_p}b$。
+$b\in\mathcal N_p$ 的球上非负性给斜率范数至多一，进而 $0\le b\le2u$；故 $\mathcal N_p,L_p$ 紧凸。
+取 $e_p\in\mathcal A_p$，$u-e_p$ 给 $0\in L_p$。116.6末段给每个 $D_q$ 单标签。
+任取 $e_q\in\mathcal A_q$，因 $p\in D_q$，有 $e_q(p)=0$；其在 $D_p$ 上为
+$1-\lambda+\lambda n\cdot z$，$0\le\lambda\le1/2$。
+若 $\lambda=0$，它确认整个 $D_p$，对所有 $s\in S(D_p)$ 给 $D_q\subseteq D_s$，
+极大性给 $D_q=D_s$，违反单标签。故 $\lambda>0$，$e_q/e_q(c_p)$ 给 $L_p$ 的正射线点。
+仅在有限方向 $\pm e_i$ 各选一次，取所得半径的最小值 $\eta>0$；凸性给
+$L_p\supseteq\operatorname{conv}\{\pm\eta e_i\}\supseteq(\eta/\sqrt{d_p})B^{d_p}$。
+可取 $\rho_p=\eta/\sqrt{d_p}$，无需连续选择确认尺。斜率 $\rho_p n$ 的正 $b$ 的全域最大值是
+$1+\rho_p$，故 $b/(1+\rho_p)$ 为原合法确认效应，在 $r$ 取 $(1-\rho_p)/(1+\rho_p)$。
+这给缺口上界；$n\in L_p$ 时半径一给 $\delta_p(q)=0$。反之零缺口给 $r\in D_q$，
+任意 $e_q\in\mathcal A_q$ 在 $q,r$ 取一、零且在 $p$ 取零，所以 $2e_q\in\mathcal N_p$、斜率为 $n$。
+
+上述内球使正泛函中满足 $b(p)=0$ 者的线性张成，限制到 $D_p$ 后张成常数和全部 $d_p$ 个方向，
+故维数至少 $d_p+1$。另一方面 $p\in S(D_q)$，每个这样的正 $b$ 在球 $D_q$ 的 $p$ 处取最小值，
+所以消去其 $d_q-1$ 维切空间，也消去向量 $p$；$u(p)=1$、切向量在 $\ker u$，这共给
+$d_q$ 个独立消去方向。故 $d_p+1\le\dim V-d_q$。116.6已提供这样的 $p$，所以全三球时得七维。
+$\rho_p>0$ 不推出 $\rho_p=1$ 或 $L_p=B^{d_p}$，更不推出所有方向缺口为零。证毕。
+
