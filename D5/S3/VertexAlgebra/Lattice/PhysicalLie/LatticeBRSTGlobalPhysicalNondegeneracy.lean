@@ -48,7 +48,7 @@ ACTIVE INCOMPLETE.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -61,6 +61,8 @@ open private physicalComponent physicalComponent_mem_fiber physical_sum_componen
   D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPositiveRootIntegrability
 open private fiberInclusion from
   D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalChargeFiber
+open private cartanClass_mem from
+  D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTNeutralPhysicalCartan
 
 namespace D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTGlobalPhysicalNondegeneracy
 
@@ -218,7 +220,8 @@ theorem physicalBilinearForm_nondegenerate
             _ = 0 := by
               rw [hv]
               exact htest (cartanPhysicalImage D H h26 hHG hGH w)
-                (by simpa only [neg_zero] using (E w).property)
+                (by simpa only [neg_zero] using
+                  (cartanClass_mem D H h26 hHG hGH w))
             _ = gamma D w 0 * (0 : ℂ) := by simp
         have hv0 : v = 0 := by
           simpa using coordinates_of_tests D H hGH 0 0 v htests
@@ -233,7 +236,7 @@ theorem physicalBilinearForm_nondegenerate
           (nonzeroChargeDuality D H h26 hHG hGH a ha0).injective
             (by rw [hdual, map_zero])
         apply Subtype.ext
-        exact congrArg Subtype.val hca
+        exact congrArg (fun z : Fib a => (z : C)) hca
     rw [hsum]
     exact Finset.sum_eq_zero hzero
   · intro y hy
@@ -284,7 +287,8 @@ theorem physicalBilinearForm_nondegenerate
             _ = 0 := by
               rw [hw]
               exact htest (cartanPhysicalImage D H h26 hHG hGH v)
-                (by simpa only [neg_zero] using (E v).property)
+                (by simpa only [neg_zero] using
+                  (cartanClass_mem D H h26 hHG hGH v))
             _ = gamma D v 0 * (0 : ℂ) := by simp
         have hw0 : w = 0 := by
           simpa using coordinates_of_tests D H hGH 0 0 w htests
@@ -305,7 +309,7 @@ theorem physicalBilinearForm_nondegenerate
             f cb = B (fiberInclusion D H h26 hHG hGH (-b) z) (c b) := heval.symm
             _ = 0 := htest (fiberInclusion D H h26 hHG hGH (-b) z) z.property)
         apply Subtype.ext
-        exact congrArg Subtype.val hcb
+        exact congrArg (fun z : Fib b => (z : C)) hcb
     rw [hsum]
     exact Finset.sum_eq_zero hzero
 

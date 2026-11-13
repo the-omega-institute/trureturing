@@ -308,13 +308,11 @@ private theorem iterate_sum {L : Type*} [LieRing L] [LieAlgebra ℂ L]
 
 -- Checking this proof unfolds the original global BRST quotient through its actual adjoint.
 set_option maxHeartbeats 2000000 in
-set_option diagnostics true in
 theorem positive_root_adjoint_locally_nilpotent
     (alpha : Charge D) (hα : 0 < chargeEnergy D alpha)
     (x : Phys) (hx : (x : C) ∈ Fib alpha) (y : Phys) :
     ∃ N : ℕ, ((fun z : Phys => ⁅x, z⁆)^[N]) y = 0 := by
   classical
-  run_tac Lean.logInfo "integrability-stage-start"
   obtain ⟨ys, hys⟩ := y.property
   let S : Finset (Charge D) := chargeSupport D (ys : State D)
   let N : ℕ := S.sup (fun p => rootBound D alpha p)
@@ -324,35 +322,27 @@ theorem positive_root_adjoint_locally_nilpotent
         apply Subtype.ext
         exact hys.symm
       _ = _ := physical_sum_components D H h26 hHG hGH ys
-  run_tac Lean.logInfo "integrability-stage-decomposition"
   refine ⟨N, ?_⟩
   rw [hdecomp, iterate_sum D x N S
     (physicalComponent D H h26 hHG hGH ys)]
   apply Finset.sum_eq_zero
   intro p hp
-  run_tac Lean.logInfo "integrability-stage-sum"
   have hk := iterate_component_zero D H h26 hHG hGH alpha hα p
     x hx (physicalComponent D H h26 hHG hGH ys p)
     (physicalComponent_mem_fiber D H h26 hHG hGH ys p)
   have hle : rootBound D alpha p ≤ N :=
     Finset.le_sup (f := fun q => rootBound D alpha q) hp
-  run_tac Lean.logInfo "integrability-stage-component-bound"
   -- Pad the actual linear adjoint power using the existing endomorphism law.
   let A : Module.End ℂ Phys := LieModule.toEnd ℂ Phys Phys x
-  run_tac Lean.logInfo "integrability-stage-adjoint"
   have hA : (A : Phys → Phys) = (fun w : Phys => ⁅x, w⁆) := by
     funext w
     exact LieModule.toEnd_apply_apply ℂ Phys Phys x w
-  run_tac Lean.logInfo "integrability-stage-function-equality"
   have hkA : (A ^ rootBound D alpha p)
       (physicalComponent D H h26 hHG hGH ys p) = 0 := by
     rw [Module.End.pow_apply, hA]
     exact hk
-  run_tac Lean.logInfo "integrability-stage-killing-power"
   have hN := Module.End.pow_map_zero_of_le hle hkA
-  run_tac Lean.logInfo "integrability-stage-padded-power"
   rw [Module.End.pow_apply, hA] at hN
-  run_tac Lean.logInfo "integrability-stage-final"
   exact hN
 
 end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPositiveRootIntegrability

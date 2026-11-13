@@ -38,7 +38,7 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -170,7 +170,7 @@ private theorem opposite_functional_ne_zero
       oppositePairing D H h26 hHG hGH alpha 0
     simpa only [map_zero] using hz
   apply he0
-  exact Subtype.ext (congrArg Subtype.val heq)
+  exact Subtype.ext (congrArg (fun z : Fib alpha => (z : C)) heq)
 
 private theorem exists_opposite_pairing_ne_zero
     (alpha : Charge D) (hα0 : alpha ≠ 0)
