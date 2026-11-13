@@ -4,7 +4,7 @@
 
 The scalar three-halves error recurrence and fivefold length growth yield the exact logarithmic exponent log(5)/log(3/2).
 
-These scalar and logarithmic proofs are Apache-2.0 reuse from Zayn Blore's CSD SolovayKitaevStep and SolovayKitaevCount at commit 9b2d2c17e926ae13795119c5f2f62e85ea240c2d. Their exact original file and declaration references appear in the Lean source. The full license is docs/reports/qmutualinfo/csd-lean4-LICENSE.txt. They bound scalar sequences and level counts; the ordinary-word theorem separately supplies one actual list satisfying error and length together.
+These scalar and logarithmic proofs are Apache-2.0 reuse from Zayn Blore's CSD SolovayKitaevStep and SolovayKitaevCount at commit 9b2d2c17e926ae13795119c5f2f62e85ea240c2d. Their exact original file and declaration references appear in the Lean source. The full license is docs/reports/qmutualinfo/csd-lean4-LICENSE.txt. The scalar sequence is skErr(e,0)=e and skErr(e,n+1)=33*skErr(e,n)^(3/2). They bound scalar sequences and level counts; the ordinary-word theorem separately supplies one actual list satisfying error and length together.
 
 **Theorem 1.1 (Closed scalar error bound).**
 
