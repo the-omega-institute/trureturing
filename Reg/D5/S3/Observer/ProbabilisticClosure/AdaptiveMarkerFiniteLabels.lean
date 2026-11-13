@@ -140,10 +140,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   signature := signature
   Law R := ∀ {Seed : Type u} [MeasurableSpace Seed]
     (p : Policy Seed) (seed : Seed) (w : Word)
-    (ht : terminalFirstTrue w) (hp : policyConformity p seed w) (z : Labels w)
+    (_ht : terminalFirstTrue w) (_hp : policyConformity p seed w) (z : Labels w)
     (qL qR : unitInterval)
-    (hL : 0 < (qL : ℝ) ∧ (qL : ℝ) < 1)
-    (hR : 0 < (qR : ℝ) ∧ (qR : ℝ) < 1),
+    (_hL : 0 < (qL : ℝ) ∧ (qL : ℝ) < 1)
+    (_hR : 0 < (qR : ℝ) ∧ (qR : ℝ) < 1),
     (∀ side : Side,
       0 < Original.First.Q (if side then qR else qL) ∧
       0 < 1 - Original.First.Q (if side then qR else qL)) ∧
@@ -176,7 +176,7 @@ private theorem original_rejected_law : ¬ originalArena.{u}.Law rejected := by
       ([(false,true)] : Word).length = (⟨()⟩, [(false,true)])} = ∅ := by
     ext v
     simp [Original.First.acquiredRecord, Original.originalSource, Original.Z,
-      Original.step, actualRun, markerResponse, endpoint, arm, p,
+      Original.step, actualRun, markerResponse, endpoint, arm, sideCount, p,
       rejected, realize]
   rw [he, MeasureTheory.measure_empty] at h
   exact (lt_irrefl 0) h
@@ -218,7 +218,15 @@ def originalAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     owner := `D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels
     definition := none
     coordinates := #[4]
-    readouts := #[] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "arg", "fn",
+        "arg", "arg", "arg", "arg", "body", "fn", "arg",
+        "fn", "arg", "fn", "arg", "arg"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

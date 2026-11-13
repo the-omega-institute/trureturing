@@ -1016,7 +1016,7 @@ theorem finite_label_original_realization
     unfold Original.First.acquiredRecord
     rw [← hlen, hr.2.2.2.1]
     congr 1
-    simp only [← List.map_reverse, List.zip_map', Prod.eta, List.map_id, List.reverse_reverse]
+    simp only [← List.map_reverse, List.zip_map', Prod.eta, List.map_id', List.reverse_reverse]
   have hdecoder : Original.First.D p (u, n + 1) = (u, w) :=
     ((Original.First.first_record_iff p u (completion z) n).mp hstop).symm.trans hrecord
   let before := zeroReplay p u n
@@ -1039,8 +1039,8 @@ theorem finite_label_original_realization
       (1 - Original.First.Q (if side then qR else qL)) else 0
     rw [ite_eq_left hbranch]
     exact ENNReal.mul_pos_iff.mpr ⟨ENNReal.mul_pos_iff.mpr
-      ⟨ENNReal.pow_pos (factors false).1.ne' _,
-       ENNReal.pow_pos (factors true).1.ne' _⟩, (factors side).2⟩
+      ⟨ENNReal.pow_pos (factors false).1 _,
+       ENNReal.pow_pos (factors true).1 _⟩, (factors side).2⟩
   rw [hdecoder, ← hlen] at hmass
   have hpos : 0 < Original.noiseLaw {v : Original.Noise |
       Original.First.acquiredRecord p u
