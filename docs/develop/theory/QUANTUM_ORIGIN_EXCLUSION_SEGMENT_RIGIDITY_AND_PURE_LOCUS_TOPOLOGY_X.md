@@ -3868,3 +3868,175 @@ $(u-X)/2$ 的整个原零面为 $\iota(F)$，$(u+X)/2$ 的整个原零面为 $\i
 [Q129BP]: https://arxiv.org/abs/2103.08446 "J.-B. Bru and W. de Siqueira Pedra, Weak* Hypertopologies with Application to Genericity of Convex Sets，§4.3开头的有限维Straszewicz陈述；全文：https://ar5iv.labs.arxiv.org/html/2103.08446。"
 
 ## 追加锚（本行以下为增补区）
+
+## 130. 原零图的两步覆盖、连通边界与完整静态复三能级
+
+**定义 130.1（完整原域与两步条件）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{X130.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是全部原效应；不取截面、所选纯点或测试子菜单代替它们。对 $p,q\in P$ 定义
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0.
+\tag{X130.2}
+$$
+
+补效应给对称性，且 $p\not\perp p$。沿用[VII103.1—103.2][Q130VII]的 $\mathrm{EB}_{\ge2}$：对每个原 $p$，整个 $D_p$ 仿射同构于某个完整闭球 $B^{d_p}$，$d_p\ge2$，允许维数随标签改变；$\mathrm{EB3}$ 表示全部 $d_p=3$。在此域记
+
+$$
+\begin{aligned}
+\mathsf D_2(p):&\quad
+\forall q\in P:\ p\perp q\ \lor
+\exists r\in P:\ p\perp r\ \land\ q\perp r,\\
+\mathsf D_2:&\quad\forall p\in P\ \mathsf D_2(p).
+\end{aligned}
+\tag{X130.3}
+$$
+
+每个存在量词中的 $r$ 是同一原纯点，两条边均由原全域效应见证。$D_p$ 有纯球缘，故 $q=p$ 时的共同邻点自动存在。因此 $\mathsf D_2$ 正是原简单零图直径至多二，也等价于每对不同且不相邻的原纯点有共同邻点。它不要求一条已经指定的边有共同邻点。
+
+**定理 130.2（固定纯点的两步覆盖迫真实三角）。** 在定义130.1的完整 $\mathrm{EB}_{\ge2}$ 域内，固定 $p\in P$。若 $\mathsf D_2(p)$ 成立，则存在 $q,r\in P$，使
+
+$$
+p\perp q,\qquad p\perp r,\qquad q\perp r.
+\tag{X130.4}
+$$
+
+等价地，若 $p$ 不属于任何真实零三角，则存在原 $s\in P\setminus\{p\}$，满足
+
+$$
+p\not\perp s,\qquad
+\nexists r\in P:\ p\perp r\ \land\ s\perp r.
+\tag{X130.5}
+$$
+
+特别地，$\mathsf D_2$ 使每个原纯点属于一个真实三角。
+
+证明。只复用[VII103.2及IX116.1][Q130VII][Q130IX]的裸EB面接口：每个 $D_a$ 是非点紧暴露极大真面；全部非空真面只有原纯单点和完整 $D_a$；且
+
+$$
+S_a:=P\cap D_a=\partial_{\rm rel}D_a,\qquad
+D_a=\operatorname{conv}S_a.
+\tag{X130.6}
+$$
+
+这里的原面不预先要求闭。$S_a\cong S^{d_a-1}$ 是紧连通集；用到的紧性只属于各个固定球缘，不属于整个 $P$。假设 $p$ 没有三角，置
+
+$$
+A=D_p,\qquad B=\bigcup_{r\in S_p}D_r,\qquad
+S=\partial_{\rm rel}K.
+\tag{X130.7}
+$$
+
+$A$ 紧。$B$ 也紧：它是紧集
+
+$$
+\{(r,x,f)\in S_p\times K\times\mathcal E:
+f(r)=1,\ f(x)=0\}
+\tag{X130.8}
+$$
+
+在 $K$ 上的投影。这里直接使用[SAME_READBACK126.1][Q130SR]的原零关联紧投影构造；该构造只要求 $K,\mathcal E$ 紧及评价连续，不依赖该章随后针对EB3的纤维结论。两集均在 $S$ 内，$A\ne\varnothing$，且任取 $r\in S_p$，零对称给 $p\in D_r\subset B$，所以 $B\ne\varnothing$。
+
+先证 $A\cap B=\varnothing$。否则存在 $r\in S_p$ 使 $A\cap D_r\ne\varnothing$。这个交是非空紧原面，故有一个原纯点 $t$。于是 $r,t\in S_p$ 且 $t\in D_r$，得到 $p,r,t$ 的真实三角，矛盾。交中的原纯点来自原面的极点，不是把任意混态交点当作纯点；这里复用[IX116.1式(IX116.3)][Q130IX]在可变球维数域中的取交点步骤。[SAME_READBACK126.2][Q130SR]在EB3域给出相应的关系平方表述，不将其额外纤维结论用于本条的可变维数域。
+
+$\mathsf D_2(p)$ 给 $P\subset A\cup B$：与 $p$ 相邻的纯点在 $A$ 中；其余纯点由同一个共同邻点 $r\in S_p$ 落入 $D_r\subset B$。现检查每一张完整原球 $D_s$。若 $s\in A$，纯性给 $s\in S_p$，所以 $D_s\subset B$。若 $s\notin A$，则 $s\in B$；可取 $r\in S_p$ 使 $s\in D_r$，零对称给
+
+$$
+r\in S_s\cap A.
+\tag{X130.9}
+$$
+
+连通集 $S_s$ 被其两个不交相对闭子集 $S_s\cap A$ 与 $S_s\cap B$ 覆盖，且前者非空，故 $S_s\subset A$。取凸包得 $D_s\subset A$；极大真面性使 $D_s=A$。这一步逐张使用所有原球的连通纯边界；没有从 $S_s\subset B$ 擅自推出非凸并集 $B$ 包含其凸包，也没有输入标签单射。
+
+由此，每张完整球都包含于 $A$ 或 $B$；原纯单点亦已被覆盖。任意 $x\in S$ 都有一个相对支撑超平面，其接触集是含 $x$ 的非空原真面。完整面穷尽遂给
+
+$$
+S=A\sqcup B.
+\tag{X130.10}
+$$
+
+另一方面，$D_p$ 是维数至少二的真暴露面，故 $n=\dim\operatorname{aff}K\ge3$。有限维凸体从一个相对内点作径向投影，其整个相对边界同胚于 $S^{n-1}$，因而连通。这与(X130.10)的两个非空不交闭集覆盖矛盾，证明(X130.4)。否定 $\mathsf D_2(p)$ 就是(X130.5)；$s=p$ 已由非空 $S_p$ 排除。
+
+维数下界的控制直接复用[正五边形的完整原模型，OP2—OP3][Q130Pent]及[X122.7][Q130PentX]：$D_{p_i}=[p_{i+2},p_{i+3}]$，指标模五，且满足EB1与PR。其纯零图的边差是 $\pm2$，故为五圈，直径二且无三角。此时每条原排除边的纯边界为不连通的 $S^0$，恰好不能作上述连通推断；无须重算多边形的原锥、全效应或比较函数。
+
+本条的原域两步覆盖到整边界分离矛盾是 `repo-derived` 推导；紧投影、原面接口、零对称及凸体边界的球面拓扑均是复用的中间事实，不是新的紧性或分类定理。该归属不主张文献穷尽或历史优先权。证毕。
+
+**定理 130.3（两步候选的同原完整静态字典及反向）。** 在(X130.1)的整个原域，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathsf D_2,\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{X130.11}
+$$
+
+其正向新增桥是定理130.2；静态分类及全字典直接消费[IX120.4—120.5、IX116.17—116.18][Q130IX]。原域的全部对应为
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v^*v=1\}\cong\mathbb{CP}^2,\\
+\mathcal E=\{f_E:f_E(\Phi X)=\operatorname{Tr}(EX),\ 0\preceq E\preceq I_3\},\\
+T_{\Phi(vv^*)}(\Phi\rho)=\operatorname{Tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2,\\
+D_{\Phi(vv^*)}
+=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,\ \rho v=0\},
+\qquad v^*v=w^*w=1.
+\end{gathered}
+\tag{X130.12}
+$$
+
+所有原凸混合被保持；全部有限数学测量 $f_j\ge0,\sum_jf_j=u$ 恰对应全部有限POVM $E_j\succeq0,\sum_jE_j=I_3$。谱分解、原joint、迹尺、中心及Jordan乘法分别取既有同一表示中的矩阵谱、正交投影组、$\operatorname{Tr}(XY)$、$\Phi(I_3/3)$ 及运输的 $(XY+YX)/2$。PR、Inj、$P$ 紧、全Pair和每条指定原零边的唯一第三点均为此后结论。局部排除球的实维数是三，整个 $K$ 的实仿射维数是八。
+
+证明。130.2给全部原纯点属于三角，故[IX120.4][Q130IX]给每个完整 $D_p$ 的宽度为一。此时才由IX120.5调用IX116.17取得(X130.11)的同锥同单位表示，并复用其整个原静态字典。三条各自真实的零一边在130.2中没有被当作一台共同仪器；全域三结果共同效应及指定边完成由上述既有分类链供应。
+
+反向在整个标准模型中核对。对任意单位 $v$，IX116.17的完整确认计算给全部 $vv^*\oplus B$，$0\preceq B\preceq I_{v^\perp}$，因此(X130.12)对所有原混态成立。全部支撑于 $v^\perp\cong\mathbb C^2$ 的密度矩阵由Pauli坐标组成完整闭三球，所以EB3成立。对任意两个原纯点 $`vv^*,ww^*`$，包括相同端点，因 $\dim_{\mathbb C}\operatorname{span}\{v,w\}\le2$，可取单位
+
+$$
+z\in\operatorname{span}\{v,w\}^{\perp},\qquad r=zz^*.
+\tag{X130.13}
+$$
+
+原全域效应 $`f_{vv^*},f_{ww^*}`$ 分别见证 $vv^*\perp r$ 与 $ww^*\perp r$，得到全部 $\mathsf D_2$ 量词。同一个 $\Phi$ 运输整个锥、单位、效应及全部 $D_p$，并非只运输选定基。证毕。
+
+**定义 130.4（候选及原问题的保留范围）。** 完整静态候选定义为(X130.1)的同一有限维全域、全部原EB3及 $\mathsf D_2$。白话是：每个纯态的所有原零比较对象，包括混态，合成一整颗实心三球；任意两张不相邻的原纯标签，都能找到同一个原纯标签，与它们各有真实零一边。130.2把两步可达接到每点真实三角，130.3再接到全部复三能级静态态与效应。候选不输入PR、Inj、纯点紧性、CS、球族连续、滤子或Jordan结构。
+
+原PR仍指 $T_p(q)=T_q(p)$ 对全部原纯对成立；UF仍指[IX115.8及X124.9—124.13][Q130UF]的原全锥正延拓预算 $\sup_p\beta_{D_p}<\infty$。保留未决问题
+
+$$
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathsf D_2,
+\qquad
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathrm{UF}.
+\tag{X130.14}
+$$
+
+[X125.5][Q130CS]的CS与UF等价仍限于其完整EB3+PR域。BILATERAL VIII121.5的局部两步四维纯点片另有Inj前件，且不提供任意原纯对的两步覆盖[Q130BV]。130.2的直接结论是每点有三角，不是给每条指定边补第三点；后者在EB3中由130.3的既有分类取得。五边形与X129的无限一球模型都不是EB3+PR反模型。这里没有断言 $\mathsf D_2$ 独立、候选逻辑上严格更弱或物理公理数最少。
+
+单体静态字典的适用范围按[IX116.23及VIII113.11][Q130IX][Q130VIII]保留：实际来源、制备与操作、全部有限 $N$ 的共同复合及纠缠准备、全旁观正性与CP/Kraus、逐输入预算、同族事件仪器与记录、Lüders校准、原物理钟、连续动力学来源、Hamiltonian及数值 $\hbar$ 各有独立前件。数学POVM不等于可调用的实际仪器，单体几何不供应这些联合或时间合同。
+
+[Q130VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.1—103.2：完整原域、可变球维数、共同暴露及全部原真面穷尽。"
+[Q130IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1及式(IX116.3)：完整面与纯交点；IX120.4—120.5：三角、宽度及条件静态应用；IX116.17—116.18：成熟分类及同原完整静态字典；IX116.23：原过程边界。"
+[Q130SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "126.1：原零关联的紧闭投影；126.2：关系平方与同处原真面。"
+[Q130Pent]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md "OP2—OP3：整个原奇多边形排除边及PR；文献载体与全效应取Janotta—Gogolin—Barrett—Brunner §3.1式(5)、(6)、(8)及补效应。"
+[Q130PentX]: #1226-完整-eb1-五边形的准确方法控制 "X122.7：完整原五边形的一维控制。"
+[Q130UF]: #124-极端对偶零面的整球塌缩障碍与互易非塌缩重构 "X124.9—124.13：原UF预算、条件静态表示及自动UF未决项；预算原义见IX115.8。"
+[Q130CS]: #125-旧完整球的共同近零确认与固定球心的真零稳定性 "X125.5：仅在完整EB3+PR域的CS与UF等价。"
+[Q130BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "121.5：EB3+Inj的局部两步四维片；121.7：没有任意标签到种子的两步覆盖。"
+[Q130VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.11及所引112.9：全部原操作、全有限复合、CP、仪器、记录与时间合同。"
+
+## 追加锚（本行以下为增补区）
