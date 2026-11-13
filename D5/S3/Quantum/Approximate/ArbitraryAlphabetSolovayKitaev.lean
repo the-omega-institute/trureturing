@@ -201,9 +201,6 @@ def evalGamma {m : ℕ} (Gamma : Fin m → Mat2) : List (Fin m) → Mat2
   | [] => 1
   | i :: w => Gamma i * evalGamma Gamma w
 
-@[simp] theorem evalGamma_nil {m : ℕ} (Gamma : Fin m → Mat2) :
-    evalGamma Gamma [] = 1 := rfl
-
 @[simp] theorem evalGamma_cons {m : ℕ} (Gamma : Fin m → Mat2) (i : Fin m) (w : List (Fin m)) :
     evalGamma Gamma (i :: w) = Gamma i * evalGamma Gamma w := rfl
 

@@ -4,7 +4,7 @@
 
 A determinant-one two-dimensional unitary is exactly a commutator of determinant-one unitaries at square-root distance from identity.
 
-Mat denotes complex 2 by 2 matrices with the Euclidean L2 operator norm. SU(U) means unitarity and determinant one. star is the matrix adjoint, so VW star(V) star(W) is the group commutator. All statements and proofs in this support module are Apache-2.0 reuse of Zayn Blore's CSD SU2Rotation and CommutatorDecomposition at commit 9b2d2c17e926ae13795119c5f2f62e85ea240c2d. Original file and declaration references are in the Lean source; the full license is docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
+Mat denotes complex 2 by 2 matrices with the Euclidean L2 operator norm. SU(U) means unitarity and determinant one. suTwo(w,x,y,z) denotes the quaternion matrix su2(w,x,y,z). star is the matrix adjoint, so VW star(V) star(W) is the group commutator. All statements and proofs in this support module are Apache-2.0 reuse of Zayn Blore's CSD SU2Rotation and CommutatorDecomposition at commit 9b2d2c17e926ae13795119c5f2f62e85ea240c2d. Original file and declaration references are in the Lean source; the full license is docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
 
 **Theorem 1.1 (Distance of a unit quaternion matrix).**
 
