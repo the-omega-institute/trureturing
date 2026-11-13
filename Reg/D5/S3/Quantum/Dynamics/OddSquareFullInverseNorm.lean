@@ -90,7 +90,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     coordinates := #[1, 2, 3]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "arg", "arg", "fn", "arg"]
+        "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
@@ -100,19 +100,6 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   options := #[]
 
 #print axioms registration
-
-run_cmd do
-  let ty := (← getEnv).find? ``full_inverse_unit_amplification
-  let some ci := ty | throwError "missing source"
-  let rec visit (e : Expr) (p : Array String) : CommandElabM Unit := do
-    if e.getAppFn.constName? == some ``Inv.inv then
-      logInfo m!"INVERSE_SOURCE_PATH {p}"
-    match e with
-    | .forallE _ _ b _ => visit b (p.push "body")
-    | .lam _ _ b _ => visit b (p.push "body")
-    | .app f x => visit f (p.push "fn"); visit x (p.push "arg")
-    | _ => pure ()
-  visit ci.type #[]
 
 end
 end Reg.D5.S3.Quantum.Dynamics.OddSquareFullInverseNorm
