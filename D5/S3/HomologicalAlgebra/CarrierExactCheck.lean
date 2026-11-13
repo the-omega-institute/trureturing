@@ -1,5 +1,6 @@
 import D5.S3.HomologicalAlgebra.AcyclicCarrier
 import Mathlib.Data.ZMod.Basic
+import Mathlib.LinearAlgebra.Basis.Basic
 noncomputable section
 open CategoryTheory Module
 open D5.S3.HomologicalAlgebra.AcyclicCarrier
@@ -66,3 +67,42 @@ set_option pp.universes true in
 #print axioms D5.S3.HomologicalAlgebra.AcyclicCarrier.exists_sequence
 #print axioms D5.S3.HomologicalAlgebra.AcyclicCarrier.CarrierData.exists_carried_homotopy
 #print axioms D5.S3.HomologicalAlgebra.AcyclicCarrier.exists_homotopy
+
+namespace NonzeroFixture
+open CategoryTheory Module
+abbrev delta (n : ℕ) : ModuleCat.of (ZMod 2) (ZMod 2) ⟶ ModuleCat.of (ZMod 2) (ZMod 2) :=
+  if n % 2 = 0 then 𝟙 _ else 0
+abbrev disk : ChainComplex (ModuleCat (ZMod 2)) ℕ :=
+  ChainComplex.of (fun _ => ModuleCat.of (ZMod 2) (ZMod 2)) delta (by
+    intro n
+    by_cases h : n % 2 = 0
+    · have hn : (n + 1) % 2 ≠ 0 := by omega
+      simp [delta, h, hn]
+    · simp [delta, h])
+abbrev beta (n : ℕ) : Basis Unit (ZMod 2) (disk.X n) := Basis.singleton Unit (ZMod 2)
+example : ∃ H : Homotopy (𝟙 disk) (0 : disk ⟶ disk),
+    (∀ n b, (H.hom n (n+1)).hom (beta n b) ∈ (⊤ : Submodule (ZMod 2) (disk.X (n+1)))) ∧
+    H.hom 0 1 ≠ 0 := by
+  obtain ⟨H, hH⟩ := exists_homotopy (B := beta)
+    (fun _ _ _ => ⊤) (by intros; trivial) (by intros; exact le_rfl)
+    (0 : disk.X 0 →ₗ[ZMod 2] ZMod 2) (by simp)
+    (by
+      intro n b z hz he
+      exact ⟨z, by trivial, by simp [disk, ChainComplex.of.d, delta]⟩)
+    (by
+      intro n b m z hz hc
+      by_cases hm : m % 2 = 0
+      · have hz0 : z = 0 := by simpa [disk, delta, hm] using hc
+        exact ⟨0, by trivial, by simp [hz0]⟩
+      · have hm' : (m+1) % 2 = 0 := by omega
+        exact ⟨z, by trivial, by simpa [disk, ChainComplex.of.d, delta, hm']⟩)
+    (𝟙 disk) 0 (by simp) (by intros; trivial) (by intros; trivial)
+  refine ⟨H, hH, ?_⟩
+  intro hzero
+  have he := H.comm 0
+  rw [Homotopy.dNext_zero_chainComplex (P := disk) (Q := disk) H.hom,
+    Homotopy.prevD_chainComplex (P := disk) (Q := disk) H.hom 0] at he
+  rw [hzero] at he
+  have hbad := congrArg (fun k : disk.X 0 ⟶ disk.X 0 => k.hom (1 : ZMod 2)) he
+  simpa using hbad
+end NonzeroFixture
