@@ -50,7 +50,7 @@ private theorem affine_zero_inside_ball {E : Type*} [NormedAddCommGroup E]
   rw [hv, hv0, hvan, inner_zero_left, add_zero]
 
 omit [FiniteDimensional ℝ V] in
-private theorem zero_on_exclusion_of_zero_interior
+theorem zero_on_exclusion_of_zero_interior
     (hB : exclusionBalls C u) (p : pure C u) (f : V →ₗ[ℝ] ℝ)
     (hpos : ∀ z ∈ C, 0 ≤ f z) {x : V}
     (hx : x ∈ intrinsicInterior ℝ (exclusion C u p)) (hfx : f x = 0) :
