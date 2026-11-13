@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:71f04c487d566c202b50b912fda1688ae4225c35adbf356ca9d65657a358339d
   normalized_sha256: sha256:71f04c487d566c202b50b912fda1688ae4225c35adbf356ca9d65657a358339d
 cas_ref: sha256:71f04c487d566c202b50b912fda1688ae4225c35adbf356ca9d65657a358339d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.common_positive_source_obstruction
+    target_statement_id: sha256:56815213f7594683dfeecfbf534d5ae47a0a882a9c26a3ce8686d37d674cfcb6
 receipts:
   unresolved_subitems: []
