@@ -1,13 +1,14 @@
-import D5.S1.Recurrence.Parity.DiagonalIterateEven
+import D5.S1.Recurrence.Parity.DiagonalOrdinaryParity
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
 open PowerSeries
 open _root_.D5.S1.Recurrence.Parity.DiagonalIterateEven
+open _root_.D5.S1.Recurrence.Parity.DiagonalOrdinaryParity
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace Reg.D5.S1.Recurrence.Parity.DiagonalIterateEven
+namespace Reg.D5.S1.Recurrence.Parity.DiagonalOrdinaryParity
 noncomputable section
 
 abbrev signature : Signature :=
@@ -44,8 +45,8 @@ def family : Registration arena (type_of% @result) where
 
 def result_audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Unit Unit where
-  unitName := `Reg.D5.S1.Recurrence.Parity.DiagonalIterateEven.resultUnit
-  realizationName := `Reg.D5.S1.Recurrence.Parity.DiagonalIterateEven.family
+  unitName := `Reg.D5.S1.Recurrence.Parity.DiagonalOrdinaryParity.resultUnit
+  realizationName := `Reg.D5.S1.Recurrence.Parity.DiagonalOrdinaryParity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -62,7 +63,7 @@ def result_audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S1.Recurrence.Parity.DiagonalIterateEven
+    owner := `D5.S1.Recurrence.Parity.DiagonalOrdinaryParity
     definition := none
     coordinates := #[]
     readouts := #[
@@ -76,4 +77,4 @@ def result_audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms result_audit
 
 end
-end Reg.D5.S1.Recurrence.Parity.DiagonalIterateEven
+end Reg.D5.S1.Recurrence.Parity.DiagonalOrdinaryParity

@@ -4,10 +4,9 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Diagonal iteration determines an integer series with dyadic odd coefficients and even diagonal coefficients. -/
+   digest: Diagonal iteration determines an integer series with even diagonal coefficients. -/
 
 import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
-import D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.FieldTheory.Finite.Basic
 
@@ -305,12 +304,12 @@ private instance : CharP (PowerSeries (ZMod 2)) 2 :=
 private theorem quadratic_unit : IsUnit (coeff 1 quadratic) := by
   simp [quadratic, coeff_X_pow]
 
-private noncomputable def H : PowerSeries (ZMod 2) :=
+noncomputable def H : PowerSeries (ZMod 2) :=
   quadratic.substInvOfIsUnit quadratic_unit
 
-private theorem H_zero : constantCoeff H = 0 := constantCoeff_substInvOfIsUnit _ _
+theorem H_zero : constantCoeff H = 0 := constantCoeff_substInvOfIsUnit _ _
 
-private theorem H_quadratic : H + H ^ 2 = X := by
+theorem H_quadratic : H + H ^ 2 = X := by
   have he := subst_substInvOfIsUnit_right quadratic (by simp [quadratic]) quadratic_unit
   change quadratic.subst H = X at he
   simpa only [quadratic, subst_add (.of_constantCoeff_zero H_zero),
@@ -459,7 +458,7 @@ private theorem map_iterate {S : Type*} [CommRing S] (hom : R →+* S)
     rw [map_subst (.of_constantCoeff_zero hf), ih]
     rfl
 
-private theorem mod_two_identity : generatingSeries.map (Int.castRingHom (ZMod 2)) = H := by
+theorem mod_two_identity : generatingSeries.map (Int.castRingHom (ZMod 2)) = H := by
   let hom := Int.castRingHom (ZMod 2)
   have hg := generating_equation
   have hz : constantCoeff (generatingSeries.map hom) = 0 := by
@@ -478,29 +477,6 @@ theorem hanna_conjecture (n : ℕ) (hn : 2 ≤ n) : 2 ∣ a n := by
     coeff_map] at hc
   exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hc
 
-theorem result (n : ℕ) (_hn : 1 ≤ n) :
-    Odd (coeff n generatingSeries) ↔ ∃ k : ℕ, n = 2 ^ k := by
-  classical
-  let P := D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.powerTwoSeries
-  have hp : P + P ^ 2 = (X : PowerSeries (ZMod 2)) := by
-    have h := D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.thue_series_equation.1
-    have hz : (2 : PowerSeries (ZMod 2)) = 0 := by
-      simpa only [map_ofNat, map_zero] using
-        congrArg (C (R := ZMod 2)) (show (2 : ZMod 2) = 0 by decide)
-    change P = X + P ^ 2 at h
-    linear_combination h + P ^ 2 * hz
-  have hh : H = P :=
-    D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.quadratic_unique
-      H_zero D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.power_two_zero
-      (H_quadratic.trans hp.symm)
-  have hc := congrArg (coeff n) (mod_two_identity.trans hh)
-  rw [coeff_map] at hc
-  change ((coeff n generatingSeries : ℤ) : ZMod 2) = coeff n P at hc
-  rw [← ZMod.intCast_eq_one_iff_odd, hc]
-  simp only [P, D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.powerTwoSeries,
-    coeff_mk, ite_eq_left_iff, zero_ne_one, imp_false, not_not]
-
-#print axioms result
 #print axioms hanna_conjecture
 #print axioms generating_equation
 #print axioms generating_unique

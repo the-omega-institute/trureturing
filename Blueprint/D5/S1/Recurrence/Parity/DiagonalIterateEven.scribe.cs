@@ -9,28 +9,16 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Recurrence/Parity/DiagonalIterateEven.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2026a395842");
-    private static readonly LibraryNoteRef ParitySource =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2026a177775");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The normalized compositional series has odd ordinary coefficients exactly at powers of two, and even diagonal coefficients from index two.",
-        H("Ordinary and Diagonal Coefficients of Compositional Iterates"),
+        "The implicitly determined compositional series has even diagonal coefficients at every index at least two.",
+        H("Even Diagonal Coefficients of Compositional Iterates"),
         Blocks(
             Paragraph(Text("OEIS A395842 conjectures that every term after the initial term is even. "
                 + "Here iterate(f,0)=X and iterate(f,m+1) substitutes f into iterate(f,m). "
                 + "The imported iterate definition is used throughout; iteration is composition. "
                 + "All indices are natural numbers, and subtraction of indices is truncated at zero. "
                 + "Coefficients and divisibility in the final theorem are over the integers.")),
-            Paragraph(Text("OEIS A177775 is the ordinary coefficient sequence of the same "
-                + "generatingSeries G. The initial values are G(0)=0 and coeff(1,G)=coeff(2,G)=1; "
-                + "they are specified by the original recursive program and by the revised "
-                + "seed [0,1,1]. The NAME's adjacent-iterate condition holds for every n>2. "
-                + "The construction and uniqueness below identify this normalized source "
-                + "without assuming existence or integrality. Its ordinary coefficients "
-                + "are coeff(n,G); a(n) below denotes the different diagonal sequence A395842. "
-                + "The second OEIS offset component 3 adds no initial condition. "
-                + "The A177775 conclusion includes every n≥1, both implications, and n=1=2^0. "
-                + "The PARI programs themselves are not formalized.")),
             Node("generatingSeries", "Construction of the integer series",
                 Disp(Equal(G(), Call("limitSeries", Integers()))),
                 "The auxiliary approximation starts with X+X². At stage j it subtracts "
@@ -57,6 +45,28 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
                 "Strong induction compares coefficients of two solutions. Degrees zero, "
                 + "one and two are prescribed. At every later degree, equality of the "
                 + "lower coefficients and vanishing residuals force equality of the next coefficient."),
+            Node("H", "The characteristic-two inverse series",
+                Disp(Equal(Call("H"), Call("substInvOfIsUnit",
+                    Seq(F.Id("X"), Sp, Plus, Sp, new Formula.Power(F.Id("X"), D(2))),
+                    Call("quadratic_unit")))),
+                "Over ZMod(2), quadratic is X+X² and quadratic_unit proves that its "
+                + "linear coefficient is a unit. H is its substInvOfIsUnit compositional "
+                + "inverse. The inverse construction supplies zero constant coefficient.",
+                DescribeRole.Definition),
+            Node("H_zero", "The inverse has zero constant coefficient",
+                Disp(Equal(Call("constantCoeff", Call("H")), D(0))),
+                "The constant coefficient of the characteristic-two inverse series H is zero."),
+            Node("H_quadratic", "The inverse satisfies the quadratic equation",
+                Disp(Equal(Seq(Call("H"), Sp, Plus, Sp, new Formula.Power(Call("H"), D(2))),
+                    F.Id("X"))),
+                "Composing X+X² with H gives X. Substitution distributes over addition "
+                + "and powers, yielding H+H²=X in the power-series ring over ZMod(2)."),
+            Node("mod_two_identity", "Reduction of the integer series is the inverse",
+                Disp(Equal(Call("map", G(), Call("Int.castRingHom", Call("ZMod", D(2)))),
+                    Call("H"))),
+                "The coefficientwise map along the integer cast to ZMod(2) takes "
+                + "generatingSeries to H. Both satisfy the normalized adjacent-iterate "
+                + "constraints, and diagonal uniqueness identifies them."),
             Node("hanna_conjecture", "Every diagonal coefficient from index two is even",
                 Disp(Seq(Bound("n", Naturals()), Implication(Seq(D(2), Sp, Le, Sp, N()),
                     Seq(D(2), Sp, Mid, Sp, Call("a", N()))))),
@@ -68,29 +78,13 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
                 + "by induction on degree and iteration count. These facts prove the diagonal "
                 + "constraints and vanishing diagonal for H. Reduction of the integer solution "
                 + "commutes with iteration; uniqueness identifies it with H. Its zero diagonal "
-                + "coefficients in ZMod(2) are exactly integer divisibility by two."),
-            Node("result", "The full A177775 ordinary-coefficient parity characterization",
-                Disp(Seq(Bound("n", Naturals()), Implication(Seq(D(1), Sp, Le, Sp, N()),
-                    Parens(Seq(Call("Odd", Coeff(N(), G())), Sp, Iff, Sp,
-                        Parens(Seq(Exists, Sp, F.Id("k"), Colon, Sp, Naturals(), Comma, Sp,
-                            Equal(N(), new Formula.Power(D(2), F.Id("k")))))))))),
-                "Let P be CubicFifteenSubstitutionParity.powerTwoSeries over ZMod(2). "
-                + "Its coefficient at n is the indicator of existence of a natural k with n=2^k. "
-                + "The first component of thue_series_equation and characteristic two give "
-                + "P+P²=X. The existing H satisfies H+H²=X, and both constant coefficients "
-                + "are zero. CubicFifteenSubstitutionParity.quadratic_unique therefore gives "
-                + "H=P. The existing mod_two_identity identifies the coefficientwise reduction "
-                + "of G with H. Applying coeff(n) and ZMod.intCast_eq_one_iff_odd proves "
-                + "the displayed equivalence in both directions for every positive n. "
-                + "The zeroth exponent k=0 supplies n=1. This uses ordinary integer coefficients "
-                + "of G and imposes no parity assumption on its construction.",
-                provenance: AssessedProvenance.FromRepo(ParitySource)))));
+                + "coefficients in ZMod(2) are exactly integer divisibility by two."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create("diagonal-iterate-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance ?? AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
