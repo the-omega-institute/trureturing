@@ -1,0 +1,26 @@
+**命题 126.5（全局商失闭的唯一通道）。** 若
+
+$$
+ x_n,y_n\in F_n,\quad F_n\in\mathfrak B_{\mathrm r},\quad
+ x_n\to x,\ y_n\to y,\quad x\ne y,\ (x,y)\notin Q,
+ \tag{Q126.15}
+$$
+
+则存在单标签完整球 $H$ 及其唯一标签 $p_H$，使
+
+$$
+ x,y\in H,\qquad
+ \sup_{z\in F_n}d(z,H)\longrightarrow0,\qquad
+ d_{\mathrm H}(\tau F_n,\{p_H\})\longrightarrow0.
+ \tag{Q126.16}
+$$
+
+证明。令 $v_n=(x_n+y_n)/2\to v=(x+y)/2$。由
+$(v_n,x_n),(v_n,y_n)\in\mathscr B_S$，极限 $v$ 属于唯一完整球 $H$ 的相对内点，且
+$x,y\in H$。任意 $z_n\in F_n$ 的聚点 $z$ 满足
+$(v,z)\in\mathscr B_S$，故 $z\in H$；紧性遂给第二个结论。对任意
+$w_n\in\tau F_n=\mathcal Z(v_n)$，闭关联给
+$w\in\mathcal Z(v)$ 对所有聚点成立。如果 $H$ 重复，则 $x,y\in H$ 使
+$(x,y)\in Q$，矛盾。因此 $H$ 单标签，$\mathcal Z(v)=\{p_H\}$，所有
+$\tau F_n$ 的聚点都等于 $p_H$，这正是第三个结论。证毕。
+

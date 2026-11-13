@@ -1,0 +1,17 @@
+**命题 123.2（完整零效应稳定所给的整球与任取完整确认稳定）。** 若 $p\in P_{\rm reg}$、$p_n\in P$、$p_n\to p$，则
+
+$$
+d_H(D_{p_n},D_p)\to0,\qquad
+\sup_{e\in\mathcal A_{p_n}}\|e-e_p\|_K\to0,\qquad
+\mathcal A_p=\{e_p\}.
+\tag{Q123.3}
+$$
+
+证明。先固定任意 $s\in S(D_p)=P\cap D_p$ 及任意 $h_s\in\mathcal A_s$。有 $h_s(p)=0$，故 $h_s\in\mathcal B(p)$。完整零效应稳定允许在每个 $\mathcal B(p_n)$ 取 $b_n\to h_s$。置 $M_n=\max_Kb_n$；由一致收敛有 $M_n\to\max_Kh_s=1$。所以只有有限初项可能 $M_n=0$，这些初项在各完整球面任取 $s_n$。在其余项，最大面非空紧，选其原纯点 $s_n$；$b_n/M_n\in\mathcal E$，确认 $s_n$、零于 $p_n$，因而 $s_n\in S(D_{p_n})$。同时 $h_s(s_n)\to1$。紧 $K$ 中任一聚点都在 $h_s$ 的完整原一值面 $\{s\}$，所以 $s_n\to s$。没有预设这些极点聚点仍纯，纯性是由同一原一值面最后取得。
+
+每个 $x\in D_p$ 是有限个 $S(D_p)$ 点的凸组合；以相同系数混合对应 $s_n$，得到 $x_n\in D_{p_n}$、$x_n\to x$。这一步保留整个原球的全部混态。若下Hausdorff包含不成立，在紧 $D_p$ 中选违反者及其聚点，再用该聚点的上述逼近就矛盾。上Hausdorff包含来自原关联的闭图：$p_n\to p\in P$、$x_n\in D_{p_n}$、$x_n\to x$ 时，取真实确认零见证并在紧 $\mathcal E$ 中取极限，得到 $x\in D_p$。两侧合起来给整球Hausdorff收敛。
+
+最后，任取 $e_n\in\mathcal A_{p_n}$ 的收敛子列 $e_n\to e$。原评价给 $e(p)=1$。对每个 $x\in D_p$，刚证整球逼近给 $x_n\in D_{p_n}$、$x_n\to x$，于是 $e(x)=\lim e_n(x_n)=0$。故 $e\in\mathcal A_p=\{e_p\}$。紧效应区间上的反证法将此升级为(Q123.3)中对任取完整确认的统一断言。证毕。
+
+这是IX118.10—118.11及THREE_COPY第七卷121的完整稳定接口在同一正规锚点的应用，不是新的分类，也不把全域WZ或全标签球连续性当作已得结果。
+
