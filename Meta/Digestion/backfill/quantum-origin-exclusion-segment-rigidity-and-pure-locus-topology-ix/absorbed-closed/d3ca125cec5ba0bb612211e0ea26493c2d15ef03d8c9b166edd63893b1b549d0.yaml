@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d3ca125cec5ba0bb612211e0ea26493c2d15ef03d8c9b166edd63893b1b549d0
   normalized_sha256: sha256:d3ca125cec5ba0bb612211e0ea26493c2d15ef03d8c9b166edd63893b1b549d0
 cas_ref: sha256:d3ca125cec5ba0bb612211e0ea26493c2d15ef03d8c9b166edd63893b1b549d0
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalBallScale.original_ball_scale
+    target_statement_id: sha256:68547f9a043ad5c3d310cdca03db22a8ee08946899ba16800ca011461a8bd0d0
 receipts:
   unresolved_subitems: []
