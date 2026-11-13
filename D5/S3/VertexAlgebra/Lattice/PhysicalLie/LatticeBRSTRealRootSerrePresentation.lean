@@ -103,7 +103,7 @@ theorem real_root_serre
   rw [physicalChargeFiber_eq_bot_of_level_neg D H h26 hHG hGH
     (beta + (n : ℤ) • alpha) hcharge hlevel] at hmem
   have hz : (((fun z : Ph => ⁅x, z⁆)^[n]) y : C) = 0 :=
-    (Submodule.mem_bot ℂ).mp hmem
+    (Submodule.mem_bot ℂ (M := C)).mp hmem
   apply Subtype.ext
   exact hz
 
@@ -174,7 +174,7 @@ theorem exists_realRootSerreRepresentation {I : Type u}
     rw [physicalChargeFiber_eq_bot_of_level_neg D H h26 hHG hGH
       (alpha i + -alpha j) hcharge hlevel] at hmem
     apply Subtype.ext
-    exact (Submodule.mem_bot ℂ).mp hmem
+    exact (Submodule.mem_bot ℂ (M := C)).mp hmem
   have hHE (i j : I) : ⁅h i, e j⁆ = (CM i j : ℂ) • e j := by
     simpa only [gamma_charge] using
       (cartan_adjoint D H h26 hHG hGH (fun k => (alpha i k : ℂ))

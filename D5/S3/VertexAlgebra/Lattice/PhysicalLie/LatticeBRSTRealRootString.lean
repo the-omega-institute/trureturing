@@ -154,7 +154,7 @@ private theorem nonzero_fiber_energy_le_one (gamma : Charge D)
   rw [hbot] at hc
   apply hc0
   apply Subtype.ext
-  exact (Submodule.mem_bot ℂ).mp hc
+  exact (Submodule.mem_bot ℂ (M := C)).mp hc
 
 private theorem pairing_add_zsmul (alpha beta : Charge D)
     (hα : chargeEnergy D alpha = 1) (n : ℤ) :
