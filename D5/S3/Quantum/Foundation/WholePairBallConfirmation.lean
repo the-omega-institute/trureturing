@@ -91,7 +91,7 @@ private theorem affine_riesz {E : Type*} [NormedAddCommGroup E] [InnerProductSpa
   rw [InnerProductSpace.toDual_symm_apply]
   simpa [L, add_comm] using congrFun f.decomp s
 
-private theorem affine_nonneg_bound {E : Type*} [NormedAddCommGroup E]
+theorem affine_nonneg_bound {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] {a : ℝ} {v : E}
     (h : ∀ s : E, ‖s‖ ≤ 1 → 0 ≤ a + ⟪v, s⟫) : ‖v‖ ≤ a := by
   by_cases hv : v = 0
