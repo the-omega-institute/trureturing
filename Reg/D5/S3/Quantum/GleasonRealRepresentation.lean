@@ -47,7 +47,6 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, 0, EuclideanSpace.single 0 (1 : ℝ), ?_⟩
-  change (0 : ℝ) ≠ _
   simp [actual, realize, dotProduct]
 
 def source_registration : Registration arena (type_of% @frameFunction_regular_sphere) where
