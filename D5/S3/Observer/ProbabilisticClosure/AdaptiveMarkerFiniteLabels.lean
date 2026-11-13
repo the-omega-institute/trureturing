@@ -534,7 +534,6 @@ abbrev Noise := (Bool × ℕ+) → unitInterval
 def armNoiseLaw : Measure ArmNoise := Measure.infinitePi fun _ => (volume : Measure unitInterval)
 def noiseLaw : Measure Noise := Measure.infinitePi fun _ => (volume : Measure unitInterval)
 instance : IsProbabilityMeasure armNoiseLaw := by unfold armNoiseLaw; infer_instance
-instance : IsProbabilityMeasure noiseLaw := by unfold noiseLaw; infer_instance
 def step (q : unitInterval) (b : Bool) (v : unitInterval) : Bool :=
   if b then false else if v < q then true else false
 def Z (q : unitInterval) (x : Bool) (v : ArmNoise) : ℕ → Bool
