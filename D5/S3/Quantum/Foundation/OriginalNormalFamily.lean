@@ -417,7 +417,7 @@ theorem pure_row_positive_bridge
   obtain ⟨M, hM, hdom⟩ := direction_domination k
   let ε := 1 / (2 * M)
   have hε : 0 < ε := by dsimp [ε]; positivity
-  have hεM : ε * M = 1 / 2 := by dsimp [ε]; field_simp; ring
+  have hεM : ε * M = 1 / 2 := by dsimp [ε]; field_simp <;> ring
   have hpos : ∀ x ∈ C, 0 ≤ normalForm k 1 v x := by
     apply nonneg_on_cone (base_compact hc hs) hs
     intro s
@@ -442,10 +442,11 @@ theorem pure_row_positive_bridge
       intro x hx
       have hd := hdom w hw x hx
       have hd' := neg_abs_le ((directionLift k w).val x)
-      have heps := mul_le_mul_of_nonneg_left (hd'.trans (neg_le_neg hd)) hε.le
+      have heps := mul_le_mul_of_nonneg_left ((neg_le_neg hd).trans hd') hε.le
       change 0 ≤ 1 * k.g.val x + (directionLift k (ε • w)).val x
       simp only [map_smul, Submodule.coe_smul, ContinuousLinearMap.smul_apply,
         smul_eq_mul]
+      have hhalf : ε * (M * k.g.val x) = k.g.val x / 2 := by rw [← mul_assoc, hεM]; ring
       nlinarith [hg0 x hx]
     have hmax := (normal_maximum hc hs hg p hep k 1 (ε • w) hn0).1
     let f : V →ₗ[ℝ] ℝ := (1 + ε)⁻¹ • n
@@ -475,6 +476,8 @@ theorem pure_row_positive_bridge
       · rw [max_eq_left he] at hh
         exact False.elim (not_lt_of_ge hh hfs)
     rw [hform s] at hneq
+    have hgap : 0 < L * (k.g.val s - (directionLift k v).val s) :=
+      mul_pos hL (by linarith [hg0 s (pure_mem s).1])
     nlinarith
   let b := (1 / 2 : ℝ) • normalForm k 1 v
   have hb : proper C u b := by
@@ -488,7 +491,7 @@ theorem pure_row_positive_bridge
   have hbp : b p = 0 := by simp [b, normalForm, span_vanishes]
   have hbq : b q = 1 := by
     rw [← hq]
-    simp [b, normalForm_chart hep k, real_inner_self_eq_norm_sq, hv]
+    norm_num [b, normalForm_chart hep k, real_inner_self_eq_norm_sq, hv]
   have hbr : b (a.param (-v)) = 0 := by
     simp [b, normalForm_chart hep k, inner_neg_right, real_inner_self_eq_norm_sq, hv]
   exact ⟨hb, hbp, hbq, hbr,
