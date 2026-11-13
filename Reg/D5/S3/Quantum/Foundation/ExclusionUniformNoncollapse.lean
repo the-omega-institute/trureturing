@@ -22,10 +22,11 @@ structure Inputs where
   [add : NormedAddCommGroup V]
   [space : NormedSpace ℝ V]
   [finite : FiniteDimensional ℝ V]
+  [nontrivial : Nontrivial V]
   cone : PointedCone ℝ V
   unit : V →ₗ[ℝ] ℝ
 
-attribute [instance] Inputs.add Inputs.space Inputs.finite
+attribute [instance] Inputs.add Inputs.space Inputs.finite Inputs.nontrivial
 
 abbrev signature : Signature where
   Params := Inputs.{v}
@@ -59,9 +60,9 @@ abbrev sourceScope : Prop := type_of%
 theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
   constructor
   · intro h P
-    exact @h P.V P.add P.space P.finite P.cone P.unit
-  · intro h V add space finite C u
-    exact h (@Inputs.mk V add space finite C u)
+    exact @h P.V P.add P.space P.finite P.nontrivial P.cone P.unit
+  · intro h V add space finite nontrivial C u
+    exact h (@Inputs.mk V add space finite nontrivial C u)
 
 theorem actual_positive : arena.{v}.Law actual.{v} :=
   source_bridge.mp

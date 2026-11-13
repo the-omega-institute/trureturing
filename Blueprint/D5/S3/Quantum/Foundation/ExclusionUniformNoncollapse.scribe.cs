@@ -9,7 +9,7 @@ internal sealed class ExclusionUniformNoncollapseDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "All original pure labels and all whole three-ball exclusion charts share one positive lower bound on every linear direction.",
         H("Uniform noncollapse of entire original exclusion balls"), Blocks(
-        Paragraph(Text("Let V be a finite dimensional real normed space, C a closed pointed generating convex cone, and u a real-linear functional strictly positive on every nonzero cone vector. K is the entire base cut out by u equal to one. P consists of all extreme points of K. The effects are the entire interval from zero to u on the original cone. At each p in P the entire original exclusion has an injective affine parametrization by the closed Euclidean three-ball, and its width over all original effects equals one.")),
+        Paragraph(Text("Let V be a nonzero finite dimensional real normed space, C a closed pointed generating convex cone, and u a real-linear functional strictly positive on every nonzero cone vector. K is the entire base cut out by u equal to one. P consists of all extreme points of K. The effects are the entire interval from zero to u on the original cone. At each p in P the entire original exclusion has an injective affine parametrization by the closed Euclidean three-ball, and its width over all original effects equals one.")),
         Describe.Lean(DescribeId.Create("alllabeluniformnoncollapse"),
             DeclarationHandle.Create(Owner + "all_label_uniform_noncollapse"),
             H("all_label_uniform_noncollapse"), StatementSource.WithoutFormula(),

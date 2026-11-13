@@ -158,9 +158,10 @@ private theorem compact_ball_maps_lower_bound
 
 
 /-- One positive constant controls every axis of every three-ball chart at every
-original pure label. Neither pure closedness nor a continuous chart choice is a premise. -/
+original pure label in a nonzero finite-dimensional real space. Neither pure closedness
+nor a continuous chart choice is a premise. -/
 theorem all_label_uniform_noncollapse
-    [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    [FiniteDimensional ℝ V] [Nontrivial V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     (hEB3 : ∀ p : pure C u, ∃ a : ExclusionChart C u p, a.dim = 3)
