@@ -79,7 +79,8 @@ theorem result (T : AddSubmonoid ℕ) (hT : (↑T : Set ℕ)ᶜ.Finite) :
   have hd2 : S.gcd id ∣ M - (c + 1) := Finset.gcd_dvd hsc1
   have hone : S.gcd id ∣ 1 := by
     have hb := hbound (c + 1) hc1
-    convert Nat.dvd_sub hd1 hd2 using 1 <;> omega
+    convert Nat.dvd_sub hd1 hd2 using 1
+    omega
   refine ⟨M, S, by omega, ⟨M, hMS⟩, (fun s hs => (hS s hs).1), hsup,
     Nat.dvd_one.mp hone, ?_⟩
   apply le_antisymm
@@ -111,7 +112,5 @@ theorem result (T : AddSubmonoid ℕ) (hT : (↑T : Set ℕ)ᶜ.Finite) :
     refine ⟨M - a, haS, ?_⟩
     exact Nat.sub_sub_self (Nat.le_of_lt (hbound a haG))
 
-#check @result
-#print axioms result
 
 end D5.S3.Arith.Additive.NumericalSemigroupRealizability
