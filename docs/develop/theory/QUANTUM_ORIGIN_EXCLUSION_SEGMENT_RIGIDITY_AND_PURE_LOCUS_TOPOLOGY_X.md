@@ -3260,3 +3260,783 @@ NC 与直径趋零矛盾，故两侧所有球缘点都进入第二种情况。�
 [QX127LP]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "131.1—131.3：指定坏对径内点的原局部纯极限问题；132—133见其共同正提升续卷。"
 
 ## 追加锚（本行以下为增补区）
+
+## 128. 完整球中心关系的有限代数障碍与有界闭包恢复
+
+**定义 128.1（全部原纯点的形式关系空间）。** 沿用126.1的完整原域及 EB3+PR，保留同一个 $V,C,u$、全部 $K,P$ 和整个 $\mathcal E=[0,u]$，记 $k(p,s)=T_p(s)=T_s(p)$。PR 仅交换两个纯端点。令
+
+$$
+\mathcal F_0=\mathbb R^{(P)},\qquad
+J_0:\mathcal F_0\longrightarrow V,\qquad
+J_0\left(\sum_p\alpha_p[p]\right)=\sum_p\alpha_pp.
+\tag{X128.1}
+$$
+
+这里 $[p]$ 是形式基元，系数只有有限支撑；$\ker J_0$ 是全部真实原线性关系。对每张实际完整排除球 $F=D_r$，取任一仿射同构 $b_F:\overline B^3\to F$，定义
+
+$$
+\begin{aligned}
+c_{F,v,w}&=[b_F(v)]+[b_F(-v)]-[b_F(w)]-[b_F(-w)],\\
+R_{\mathrm{cent}}&=\operatorname{span}_{\mathbb R}
+\{c_{F,v,w}:F=D_r,\ r\in P,\ v,w\in S^2\}.
+\end{aligned}
+\tag{X128.2}
+$$
+
+球面点都是原纯点。每条直径的中点都是同一实际球心，故 $R_{\mathrm{cent}}\subseteq\ker J_0$。定义遍历全部原排除球及全部直径，不依赖球图的选择。任意函数 $h:P\to\mathbb R$ 都在形式空间上定义实线性泛函 $L_h(\sum\alpha_p[p])=\sum\alpha_ph(p)$；消灭 $R_{\mathrm{cent}}$ 恰指保持全部球中心关系。
+
+全关系到原全域 least 确认及 fullMixture 的下降，直接复用 [CircuitBalancedConfirmation 的两个既有结论][Q128C]：在126.1的闭生成原锥与严格正单位上，每个核行消灭全部 $\ker J_0$，即满足其全部原 circuit 的 balance 前件，从而取得同原锥上的 reciprocalLeast 与 fullMixture。此处只检验中心关系能否供应这个前件，不另立或重证该下降定理。
+
+**定理 128.2（标准复三能级中，代数生成严格不足而 $\ell^1$ 闭包完整）。** 专取实际模型
+
+$$
+V=H_3(\mathbb C),\qquad C=H_3(\mathbb C)_+,\qquad
+u=\operatorname{Tr},\qquad
+P=\{zz^{\ast}:z\in\mathbb C^3,\ z^{\ast}z=1\}.
+\tag{X128.3}
+$$
+
+沿用定义128.1，$\mathcal F_0$ 自然嵌入实 Banach 空间 $\ell^1(P)$。将 $J_0$ 连续延拓为 $J_1:\ell^1(P)\to H_3(\mathbb C)$。则
+
+$$
+R_{\mathrm{cent}}\subsetneq\ker J_0,
+\qquad
+\overline{R_{\mathrm{cent}}}^{\,\ell^1(P)}=\ker J_1.
+\tag{X128.4}
+$$
+
+对应的连续消灭子精确为
+
+$$
+R_{\mathrm{cent}}^{\perp}
+=\{P\longmapsto\operatorname{Tr}(HP):H\in H_3(\mathbb C)\}
+=(\ker J_1)^{\perp}\quad\text{于 }\ell^{\infty}(P).
+\tag{X128.5}
+$$
+
+特别地，每个有界且保持全部中心关系的实函数有唯一的 Hermitian 迹表示；这一步使用 [Gleason 定理3.5][Q128G]，不是新的框架函数表示定理。
+
+证明。首先核对这是原完整域中的真实检验模型。124.10的完整反向字典给出全部密度态、全部秩一投影、整个矩阵效应区间 $0\preceq E\preceq I_3$，以及
+
+$$
+T_R(\rho)=\operatorname{Tr}(R\rho),\qquad
+D_R=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \operatorname{supp}\rho\subseteq R^{\perp}\}.
+\tag{X128.6}
+$$
+
+因此模型满足完整 EB3 和纯端点 PR。每个复二维平面 $W\subset\mathbb C^3$ 都恰由 $R=\Pi_{W^{\perp}}$ 给出一张完整球 $F_W=D_R$，其中心为 $\Pi_W/2$。在 $W$ 上的 Bloch 坐标为 $\rho=(I_W+x\cdot\sigma)/2$、$\|x\|\le1$。所以任意一组对径纯点满足 $P+Q=\Pi_W$；反之 $Q=\Pi_W-P$ 是 $W$ 中与 $P$ 正交的秩一投影，故每组正交基给出一条直径。这覆盖所有实际完整排除球，不只一张坐标球。
+
+先证严格包含。取无理数 $t\in(0,1)$。$1,t$ 在 $\mathbb Q$ 上线性无关；由包含它们的 Hamel 基，指定并延拓得到
+
+$$
+A:\mathbb R\longrightarrow\mathbb R\quad\text{为 }\mathbb Q\text{-线性},
+\qquad A(1)=0,\quad A(t)=1.
+\tag{X128.7}
+$$
+
+在全部 $P$ 上置 $f(P)=A(P_{11})$。对每个 $W$ 及其中任意两组对径纯点，
+
+$$
+f(P)+f(Q)=A((\Pi_W)_{11})=f(P')+f(Q').
+\tag{X128.8}
+$$
+
+这里只有系数 $1,-1$，$A$ 的加性足够。因此形式基上的实线性 $L_f$ 消灭全部 $R_{\mathrm{cent}}$。这不声称 $A\circ J_0$ 是实线性的。
+
+令 $P_j=e_je_j^{\ast}$，并取实际单位向量及投影
+
+$$
+v_{\pm}=\sqrt t\,e_1\pm\sqrt{1-t}\,e_2,\qquad
+P_{\pm}=v_{\pm}v_{\pm}^{\ast}.
+$$
+
+两个非对角项相消，故
+
+$$
+\begin{gathered}
+P_++P_-=2tP_1+2(1-t)P_2,\\
+z=[P_+]+[P_-]-2t[P_1]-2(1-t)[P_2]\in\ker J_0,\\
+L_f(z)=1+1-2t\,A(1)-2(1-t)A(0)=2.
+\end{gathered}
+\tag{X128.9}
+$$
+
+所以 $z\notin R_{\mathrm{cent}}$，尽管 $L_f$ 消灭所有球的中心关系。除以二后，首式也是两个不同纯分解表达同一个真实密度态的关系。
+
+函数 $f$ 无界。否则因 $P_{11}$ 遍历整个 $[0,1]$，$A$ 在该区间有绝对界 $B$。加性使它在 $[-1,1]$ 同样有界；当 $|x|\le1/n$ 时，$|A(x)|=|A(nx)|/n\le B/n$，所以 $A$ 在零连续，进而由有理逼近有 $A(x)=xA(1)=0$，与 $A(t)=1$ 矛盾。故 $f$ 不是原效应，也不是值域在 $[0,1]$ 的原核行；它只分离两个代数子空间，不构成 EB3+PR 的坏物理模型。以不连续加法函数复合产生无界框架函数的机制，已由 Gleason 原文第886页明确指出。
+
+再确定有界消灭子。设 $h\in\ell^{\infty}(P)$ 消灭 $R_{\mathrm{cent}}$。同一复二维平面中替换一组酉正交基，$h$ 的两个值之和不变。任意两个三维酉正交基都可由有限次这样的二坐标变换及相位变换连接：对非零列对 $(a,b)$，酉块
+
+$$
+\frac1{\sqrt{|a|^2+|b|^2}}
+\begin{pmatrix}\overline a&\overline b\\-b&a\end{pmatrix}
+\begin{pmatrix}a\\b\end{pmatrix}
+=\begin{pmatrix}\sqrt{|a|^2+|b|^2}\\0\end{pmatrix}
+$$
+
+其中块矩阵的两行范数为一且彼此正交，故确为酉矩阵；所列乘积消去一个分量，零列对跳过。对酉矩阵依次消去对角线下的分量，得到上三角酉矩阵，而列正交性使后者为对角相位矩阵。逆转这些有限步就把原矩阵写成嵌入 $U(2)$ 的块及相位矩阵的乘积。按此乘积分解对当前基右乘，每步只替换当前两个基向量，其余向量不变；所涉二维平面各自都是上段列出的实际 $W$。相位不改变秩一投影。因此
+
+$$
+h(z_1z_1^{\ast})+h(z_2z_2^{\ast})+h(z_3z_3^{\ast})=w
+\tag{X128.10}
+$$
+
+对 $\mathbb C^3$ 的所有酉正交基有同一个实常数 $w$；这一步不以路径连续性代替有限连接。
+
+在全部单位向量上定义 $g(z)=h(zz^{\ast})+B$，其中 $B=\|h\|_{\infty}$。这是非负实函数，对每个完整正交基的和都是 $w+3B$，并且相位不变。其域为完整 $\mathbb C^3$ 的单位球面，复维数为三且有限维空间可分，恰满足 Gleason 第886页的 frame function 定义及第892页定理3.5的前件；不要求预先连续或可测。按该定理及其 regular 定义，存在自伴 $T$ 使 $g(z)=z^{\ast}Tz$。减去常数得 $H=T-BI_3$，于是
+
+$$
+h(P)=\operatorname{Tr}(HP)\quad(P\in P).
+\tag{X128.11}
+$$
+
+若两个 Hermitian 矩阵给出相同值，其差在每个单位向量上的二次型为零；在差矩阵的单位特征向量上评价便使全部特征值为零，故 $H$ 唯一。反向迹函数有界，且由 $P+Q=\Pi_W$ 保持每个中心关系。这证明 (X128.5) 中关于 $R_{\mathrm{cent}}^{\perp}$ 的描述。
+
+最后处理闭包及不可数纯集。这里
+
+$$
+\ell^1(P)=\{\alpha:P\to\mathbb R:\sum_P|\alpha_P|<\infty\},
+\qquad J_1\alpha=\sum_P\alpha_PP.
+$$
+
+非负和按有限子集和的上确界定义。每个集合 $\{P:|\alpha_P|\ge1/n\}$ 有限，故每个 $\alpha$ 的支撑至多可数；有限支撑向量稠密。用矩阵迹范数 $\|P\|_1=1$ 得绝对收敛和 $\|J_1\alpha\|_1\le\|\alpha\|_{\ell^1}$，所以延拓存在且 $\ker J_1$ 闭。这里不把不可数 $P$ 换成一个选定的可数菜单。
+
+标准实对偶 $\ell^1(P)^{\ast}=\ell^{\infty}(P)$ 的配对为 $L_h(\alpha)=\sum_P\alpha_Ph(P)$：连续泛函在单位基元上的值一致有界，且由有限支撑稠密性确定其全部值；反向由绝对收敛直接给连续泛函。每个迹函数还满足
+
+$$
+L_h(\alpha)=\operatorname{Tr}(H J_1\alpha),
+$$
+
+因此消灭 $\ker J_1$。又 $R_{\mathrm{cent}}\subseteq\ker J_1$，得到 (X128.5) 的另一等号。
+
+令 $M=\overline{R_{\mathrm{cent}}}^{\ell^1}\subseteq\ker J_1$。若存在 $\alpha\in\ker J_1\setminus M$，实 Hahn–Banach 分离给连续 $L$，使 $L|_M=0$ 而 $L(\alpha)\ne0$。它对应一个有界中心函数，故由 (X128.11) 为迹函数，于是 $L(\alpha)=\operatorname{Tr}(H J_1\alpha)=0$，矛盾。得到 (X128.4) 的闭包等式。证毕。
+
+所以即使是有限支撑的真实关系，也可能只能由中心关系的有限线性组合在 $\ell^1$ 范数下逼近，不能用某一次有限组合精确拼出。这个结论不提供逼近速率、系数预算或实际操作程序。无界 $L_f$ 不连续，故不妨碍闭包等式。
+
+**定义及应用 128.3（原域的有界行、未付接口与完整候选）。** 回到126.1的任意完整 EB3+PR 域，不预先把 $P$ 识别为 $\mathbb {CP}^2$。由原紧效应区间及既有固定标签估计，置 $L=\max_{e\in\mathcal E}\|e\|_{\ast}<\infty$，则
+
+$$
+0\le k(p,s)\le1,\qquad
+|k(p,s)-k(p',s')|\le L\bigl(\|p-p'\|+\|s-s'\|\bigr).
+\tag{X128.12}
+$$
+
+这使用 PR 将变化标签转为固定 $T_s$ 的输入，再用126.1所引的共同 Lipschitz 界；不是新增连续性公理。尚未支付的第一项是对所有外部纯测试也保持同球中心：
+
+$$
+\forall s,r\in P\ \forall v,w\in S^2:\quad
+k(b_{D_r}(v),s)+k(b_{D_r}(-v),s)
+=k(b_{D_r}(w),s)+k(b_{D_r}(-w),s).
+\tag{X128.13}
+$$
+
+即使取得此式，还须在同一个原球关联几何上证明这些有界核行消灭全部 $\ker J_0$。一个足够的分析桥是原 $\ell^1(P)$ 中相应的闭包等式；原 $P\subset K$ 有界，故原 $J_0$ 同样具有连续延拓。若该桥及 (X128.13) 均成立，有界行的连续性就使其消灭全关系，随后直接接入定义128.1引用的成熟下降结论。定理128.2只在已经明确指定的标准量子模型中支付这个分析桥；它既未证明一般原域的 (X128.13)，也未证明其在该域中足以推出全关系或 UF。不能先输入 Hilbert 识别、全 Pair 或 Jordan 结构，再把该识别算作从裸 EB3+PR 得出的结果。
+
+白话上，同一个球心可以由任意一对对径纯态各半表达。要求球外比较也不随这对端点的选择改变，仍不同于交换两个纯比较端点。标准量子模型表明：全部球心等式还不能靠有限代数拼接给出所有混合等式；但对始终有界的读数，球与球之间的全部 Hilbert 关联使这些等式在分析意义下已经足够。一般原域的读数有界性已具备，仍缺上述中心兼容及其跨球推广；病态辅助函数不是缺少物理连续性的证据。
+
+完整条件候选仍是：在同一有限维原锥及严格正单位上保留全部纯态、全部混态和全部零一效应；每个纯态可完全排除的全部态恰成一整颗实心仿射三球（EB3）；交换两个纯比较端点，最优确认读数不变（PR）；另要求纯标签趋近时，新完整排除球到固定旧球心的距离趋零，即
+
+$$
+\mathrm{CS}:\quad
+p_i\to p\text{ 于 }P\Longrightarrow
+\operatorname{dist}(c_p,D_{p_i})\to0
+\quad\text{对每个 }p\text{ 及每条原纯列成立}.
+\tag{X128.14}
+$$
+
+按125.5，CS 与 UF 在本域中等价；只有另付此条件，才由124.10取得同原 $C/u$ 的静态复三能级表示。全部原对象及原混态最优确认的对应直接沿用124.10、125.7及126.8，不缩为纯态菜单。本章没有去掉 CS，也没有独立公理数减少或同域坏模型的结论。排除球的实仿射维数三不是物理空间维数；条件静态模型的归一化态空间实维数为八。
+
+同一个原 $\Omega$、全部实际合法门序列、中间切口及记录后的条件未来仍由原操作合同供应；数学效应存在不供应制备、调用或共同仪器。事件分支、更新、TP/TNI 预算与零质量分支，任意有限复合的整个联合态锥、产品及纠缠输入、共同单位和接线，全旁观者兼容与 CP，以及动力学、物理钟、Hamiltonian、能量单位和 $\hbar$，均保留126.8的独立接口边界。
+
+本章承重增量为 `repo-derived` 的具体关系空间应用：针对全部实际完整排除球建立代数严格包含的分离关系，并在同一完整标准模型中用有界消灭子确定精确闭包。Hamel 基与无界加法函数、有限酉消元、Gleason 表示、$\ell^1$ 对偶及 Hahn–Banach 分离都是成熟中间工具，不单列为新发现。原尺度的 Hamel 障碍亦已用于 [V49命题13.5][Q128H49]、[V79第9.2节][Q128H79]及 [C140第4.2节][Q128H140]；它们不替代本章对全部实际排除球的关系检验。Gleason原文第886页给无界机制与 regular 定义，第892页定理3.5给非负框架函数表示；仓内有限复投影表示 [GleasonComplexRepresentation][Q128GR] 亦为既有结果。本章不认领新的 Gleason 定理、全球原创、历史优先权或裸 EB3+PR 的自动 UF。
+
+[Q128C]: ../../../D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.lean "circuit_balance_least_confirmation 与 full_mixture_iff_circuit_balance：同原闭生成锥、严格正单位、全纯域和全效应区间上的既有下降；此处不重证。"
+[Q128G]: https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1957/6/56050/pdf "A. M. Gleason, Measures on the Closed Subspaces of a Hilbert Space；第886页的定义与无界例，第892页Theorem 3.5；DOI 10.1512/iumj.1957.6.56050。"
+[Q128GR]: ../../../D5/S3/Quantum/GleasonComplexRepresentation.lean "Gleason.ProjectionPackage.gleason_representation：有限复维数至少三，所有投影上的非负、归一与正交可加；不直接供应原中心关系到全部框架的映射。"
+[Q128H49]: AURIC_SUM_PRODUCT_POWERS_QUADRATIC_RELATION_CLOSURE_AND_NORMALIZED_LIFTING_V49.md "13.5：Hamel 权重通过有限标定而非平方，及未归一全域有界性的边界。"
+[Q128H79]: AURIC_BINARY_REVERSAL_COMPATIBILITY_FINITE_PHASE_CERTIFICATES_AND_QUANTUM_READOUT_RECONSTRUCTION_V79.md "9.2：非连续加法平方与共同范数上界的不同作用。"
+[Q128H140]: AURIC_C140_COMMON_SOURCE_THREE_PATH_BALANCE_AND_QUANTUM_GEOMETRY.md "4.2：有理配比与原实配比的 Hamel 障碍。"
+
+## 追加锚（本行以下为增补区）
+
+## 129. 交错法向无限多边形的完整 EB1 与平坦重复球
+
+### 129.1 同一个原锥、全部纯点与完整支撑面
+
+**定义 129.1（有理半平面载体）。** 对 $r>0$ 定义单位向量
+
+$$
+N(r)=\left(\frac{1-r^2}{1+r^2},\frac{2r}{1+r^2}\right),
+\qquad r_n=2^n,\quad \nu_n=N(r_n),\quad
+\mu_n=N(3r_n/2)\quad(n\in\mathbb Z).
+\tag{X129.1}
+$$
+
+在同一个平面中取全部半平面的交
+
+$$
+L=\left\{z=(x,y):
+\begin{array}{l}
+-1\le x\le1,\\
+\nu_n\cdot z\le1+(\nu_n)_2\quad\text{对所有 }n\in\mathbb Z,\\
+-\mu_n\cdot z\le1+(\mu_n)_2\quad\text{对所有 }n\in\mathbb Z
+\end{array}\right\}.
+\tag{X129.2}
+$$
+
+取 $V=\mathbb R\times\mathbb R^2$，质量坐标在前，定义
+
+$$
+\begin{gathered}
+\iota(z)=(1,z),\qquad
+C=\{\lambda\iota(z):\lambda\ge0,\ z\in L\},\\
+u(t,x,y)=t,\qquad X(t,x,y)=x,\qquad Y(t,x,y)=y,\\
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{e\in\mathcal E:e(p)=1\},\qquad
+D_p=\{z\in K:\exists e\in\mathcal F_p,\ e(z)=0\}.
+\end{gathered}
+\tag{X129.3}
+$$
+
+效应区间始终是在整个 $C$ 上的全部实线性零一效应。以下平面集合用于 $D,I,N$ 等原对象时均经 $\iota$ 提升；不另选纯态或混态子集。辅助距离取 $V$ 的通常欧氏距离，其在质量一平面上的限制就是平面距离。
+
+定义两条双向无限顶点链及其相邻闭边：
+
+$$
+\begin{aligned}
+v_n&=\left(\frac{1-2r_n^2}{1+2r_n^2},
+                 1+\frac{3r_n}{1+2r_n^2}\right),\\
+w_n&=\left(\frac{9r_n^2-2}{9r_n^2+2},
+                -1-\frac{9r_n}{9r_n^2+2}\right),\\
+A_n&=[v_{n-1},v_n],\qquad B_n=[w_{n-1},w_n],\\
+R_\pm&=(1,\pm1),\qquad L_\pm=(-1,\pm1),\\
+F&=[R_-,R_+],\qquad G=[L_-,L_+].
+\end{aligned}
+\tag{X129.4}
+$$
+
+对 $\alpha\in[0,2\pi)$，令 $d_\alpha=(\cos\alpha,\sin\alpha)$，$H(\alpha)=\operatorname{argmax}_{z\in L}d_\alpha\cdot z$。记
+
+$$
+\theta_n=2\arctan r_n,\qquad
+\phi_n=2\arctan(3r_n/2).
+\tag{X129.5}
+$$
+
+**定理 129.2（完整基、全部支撑面及四个非暴露极限纯点）。** $L$ 是有内部的紧凸集，$C$ 是闭尖生成凸锥，$u$ 在 $C\setminus\{0\}$ 上严格正，且整个归一化基恰为 $K=\iota(L)$。其完整支撑面表为
+
+| 支撑方向角 | 整个 $H(\alpha)$ |
+| --- | --- |
+| $0$ | $F$ |
+| $\pi$ | $G$ |
+| $\theta_n$ | $A_n$ |
+| $\theta_n<\alpha<\theta_{n+1}$ | $\{v_n\}$ |
+| $\pi+\phi_n$ | $B_n$ |
+| $\pi+\phi_n<\alpha<\pi+\phi_{n+1}$ | $\{w_n\}$ |
+
+这里 $n$ 遍历全部 $\mathbb Z$，各行合起来穷尽整个方向圆。全部原纯点为
+
+$$
+P=\iota\bigl(\{v_n,w_n:n\in\mathbb Z\}
+                  \cup\{R_+,R_-,L_+,L_-\}\bigr).
+\tag{X129.6}
+$$
+
+$P$ 紧。所有 $v_n,w_n$ 都在整个 $L$ 中暴露，四个 $R_\pm,L_\pm$ 都极端但非暴露。
+
+证明。令 $S=\overline B^2+[-1,1](0,1)$ 为竖直线段与闭单位圆盘的 Minkowski 和。单位方向 $d$ 在 $S$ 上的支撑值为 $\|d\|+|d_2|$。因此 $S\subset L$，特别地 $L$ 有内部，四个所列角点均在 $L$。$L$ 是闭凸集；$\nu_0=(0,1)$ 给 $y\le2$，而 $\mu_0=(-5/13,12/13)$ 的下侧约束给
+
+$$
+5x-12y\le25,\qquad y\ge(5x-25)/12\ge-5/2.
+\tag{X129.7}
+$$
+
+结合 $|x|\le1$，得到 $L$ 紧。
+
+凸性使 $C$ 对加法及非负数乘封闭。若 $\lambda_j\iota(z_j)$ 收敛，则其质量 $\lambda_j$ 收敛到 $\lambda\ge0$。$\lambda>0$ 时，空间坐标除以质量收敛到 $L$ 中一点；$\lambda=0$ 时，$L$ 有界使空间坐标也趋零。因此 $C$ 闭，且质量为零的锥向量只有 $0$。这同时给严格正性与尖性。$L$ 含单位圆盘，故 $\iota(0),\iota(1/2,0),\iota(0,1/2)$ 线性无关，$C-C=V$。由质量坐标直接得到 $K=\iota(L)$，包括整个原混态域。
+
+下面计算边界，不以有限截断代替 (X129.2)。对任意 $0<s<t$，两条直线 $N(s)\cdot z=N(t)\cdot z=1$ 的唯一交点是
+
+$$
+T(s,t)=\left(\frac{1-st}{1+st},\frac{s+t}{1+st}\right),
+\qquad
+N(\rho)\cdot T(s,t)-1
+=-\frac{2(\rho-s)(\rho-t)}{(1+\rho^2)(1+st)}.
+\tag{X129.8}
+$$
+
+第二式对每个 $\rho>0$ 成立。若 $\rho\notin(s,t)$，其右侧非正，且只在 $\rho=s,t$ 取零。取 $s=r_n,t=2r_n$，就有 $v_n=(0,1)+T(s,t)$。双向几何数列在这两个相邻参数之间没有别项，所以 $v_n$ 满足全部上侧约束，并且只在指标 $n,n+1$ 取等。它满足 $|x|<1,y>1$；因每个 $(\mu_j)_2>0$，
+
+$$
+-\mu_j\cdot v_n
+<|(\mu_j)_1|-(\mu_j)_2
+\le1-(\mu_j)_2<1+(\mu_j)_2.
+\tag{X129.9}
+$$
+
+故全部下侧约束也满足。取 $s=3r_n/2,t=3r_n$ 并作 $z\mapsto-z+(0,-1)$，同理得到 $w_n$ 满足全部约束，只在下侧指标 $n,n+1$ 取等，且 $|x|<1,y<-1$。
+
+在上侧第 $n$ 条支撑直线上，相邻约束 $n-1,n+1$ 分别切出端点 $v_{n-1},v_n$。相邻法向的夹角严格介于 $0,\pi$，故它们在该直线上的可行半线相反，交恰为这两点间的线段。两端点已被证明满足所有约束，其间线段也可行。因此该直线与整个 $L$ 的交恰为 $A_n$。下侧同理恰为 $B_n$。这些端点互异：$v_n$ 的第一坐标随 $r_n$ 严格下降，$w_n$ 的第一坐标严格上升。
+
+竖直边也没有额外端点。记 $s=3r_j/2$；在 $x=1$ 与 $x=-1$ 上，约束分别化出
+
+$$
+\begin{array}{c|cc}
+&\text{全部上侧约束}&\text{全部下侧约束}\\ \hline
+x=1&y\le1+r_j&y\ge-1-1/s\\
+x=-1&y\le1+1/r_j&y\ge-1-s .
+\end{array}
+\tag{X129.10}
+$$
+
+令相应参数趋于 $0$ 或 $\infty$，得到两处都必须 $-1\le y\le1$；反向由 $S\subset L$ 得到整个 $F,G$ 可行。
+
+还须排除未列出的边界弧。固定 $z=(x,y)\in L$ 且 $|x|<1$，两族约束的余量为
+
+$$
+a_j(z)=1+(\nu_j)_2-\nu_j\cdot z,\qquad
+b_j(z)=1+(\mu_j)_2+\mu_j\cdot z.
+\tag{X129.11}
+$$
+
+当 $j\to-\infty$ 时，它们分别趋 $1-x,1+x$；当 $j\to+\infty$ 时，分别趋 $1+x,1-x$。四个极限都严格正。因此两端尾部的余量有共同正下界。若其余有限多个余量也全严格正，则它们与 $1-|x|$ 的最小值严格正；法向长度为一，使足够小的整个邻域仍满足全部约束，$z$ 就是内点。故任何 $|x|<1$ 的边界点都属于某个 $A_j$ 或 $B_j$。结合 (X129.10)，边界恰为所列全部闭边及其端点。
+
+由 $r_n<3r_n/2<2r_n$，
+
+$$
+0<\theta_n<\phi_n<\theta_{n+1}<\pi,\qquad
+\lim_{n\to-\infty}\theta_n=\lim_{n\to-\infty}\phi_n=0,\qquad
+\lim_{n\to+\infty}\theta_n=\lim_{n\to+\infty}\phi_n=\pi.
+\tag{X129.12}
+$$
+
+每个严格位于相邻上侧法向之间的单位方向，都是这两个法向的严格正线性组合。具体地，对 $\gamma<\alpha<\beta$、$\beta-\gamma<\pi$，其系数为 $\sin(\beta-\alpha)/\sin(\beta-\gamma)$ 与 $\sin(\alpha-\gamma)/\sin(\beta-\gamma)$。支撑取等就迫使两个相邻约束同时取等，因而唯一最大点为 $v_n$。下侧给 $w_n$。边法向与水平法向的支撑面已求出；(X129.12) 保证表中没有遗漏方向。这是成熟支撑面交运算在当前全部半平面上的应用。
+
+单点暴露使所有链顶点极端。$F,G$ 是整个 $L$ 的暴露面，其各端点也在 $L$ 中极端；边的相对内点与 $L$ 的内点都不极端，故纯点恰为 (X129.6)。对 $q=(\sigma,\varepsilon)$，其中 $\sigma,\varepsilon\in\{-1,1\}$，若非零方向 $d=(a,b)$ 在 $L$ 上最大于 $q$，则在子集 $S$ 上也最大于 $q$，于是
+
+$$
+\sigma a+\varepsilon b=\sqrt{a^2+b^2}+|b|.
+\tag{X129.13}
+$$
+
+由 $\sigma a\le\sqrt{a^2+b^2}$、$\varepsilon b\le|b|$，取等迫使 $b=0,\ \sigma a>0$。这样的整个支撑面是 $F$ 或 $G$，不是单点。四个角点因此均非暴露。
+
+最后，有理坐标直接给出全部尾极限：
+
+$$
+\begin{array}{c|cc}
+&n\to-\infty&n\to+\infty\\ \hline
+v_n&R_+&L_+\\
+w_n&L_-&R_-
+\end{array}
+\tag{X129.14}
+$$
+
+任一整数指标序列若无界，就有趋于其中一个尾部的子列；有界指标只有有限个值。因此这些是两条链唯一可能的新聚点，它们全已列入 $P$，所以 $P$ 闭且紧。特别地，全局暴露点 $\{\iota(v_n),\iota(w_n)\}$ 在 $P$ 中稠密，仍有这四个非暴露原纯点。证毕。
+
+### 129.2 全部原效应的完整排除表与精确纤维
+
+**定理 129.3（全部标签、全部效应及全部混态的 EB1）。** 对每个 $n\in\mathbb Z$，完整原排除集合恰为
+
+$$
+\begin{aligned}
+D_{\iota(v_n)}&=\iota(B_n),&
+D_{\iota(w_n)}&=\iota(A_{n+1}),\\
+D_{\iota(R_+)}=D_{\iota(R_-)}&=\iota(G),&
+D_{\iota(L_+)}=D_{\iota(L_-)}&=\iota(F).
+\end{aligned}
+\tag{X129.15}
+$$
+
+每张集合都是整个非退化仿射闭一球，故 (X129.3) 满足全局 EB1，尤其属于原 $\mathrm{EB}_{\ge1}$ 域。
+
+证明。先将成熟的完整仿射效应归一化用于本实例，保留任意原效应而非选定测试。对 $d\in\mathbb R^2$ 记
+
+$$
+m(d)=\min_{z\in L}d\cdot z,\qquad
+M(d)=\max_{z\in L}d\cdot z,\qquad W(d)=M(d)-m(d).
+\tag{X129.16}
+$$
+
+任一实线性泛函唯一写为 $e(t,z)=a t+d\cdot z$。整个效应区间的精确条件是
+
+$$
+e\in\mathcal E\quad\Longleftrightarrow\quad
+-m(d)\le a\le1-M(d).
+\tag{X129.17}
+$$
+
+确实，在 $\lambda\iota(z)$ 上的读数为 $\lambda(a+d\cdot z)$，所以全 $L$ 上的零一界等价于全 $C$ 上的 $0\le e\le u$；$\lambda=0$ 时两边读数都为零。$d=0$ 恰给 $e=a u,\ 0\le a\le1$。$L$ 含单位圆盘，还使 (X129.17) 给 $0\le a\le1$、$2\|d\|\le1$，所以 $\mathcal E$ 闭且有界，原确认纤维紧，定义中的存在零值也等价于原最小值为零。
+
+对任意 $e\in\mathcal E$，若 $a+m(d)>0$，则整个原零面为空；若 $d\ne0$ 且 $a+m(d)=0$，则整个零面恰为 $\iota(\operatorname{argmin}_L d\cdot z)$，由定理129.2的表穷尽。常数效应中，$e=0$ 的零面为整个 $K$，$e=a u,\ a>0$ 的零面为空。零效应不能确认任何原纯点，所以其全 $K$ 零面不会加入某个 $D_p$。
+
+若 $d\ne0$，则 $W(d)>0$。这样的 $e$ 确认 $\iota(p)$ 时，必有 $p\in\operatorname{argmax}_L d\cdot z$ 且 $a=1-M(d)$。它的全 $K$ 最小值为 $1-W(d)\ge0$；零面非空当且仅当 $W(d)=1$，此时整个零面恰为 $\iota(\operatorname{argmin}_L d\cdot z)$。最小值严格正的确认不添加任何排除点，常数确认 $u$ 也不添加。
+
+反向，对任何非零支撑方向 $d$，不论原始宽度是多少，
+
+$$
+e_d(t,z)=\frac{d\cdot z-m(d)t}{W(d)}
+\tag{X129.18}
+$$
+
+都是同一原效应区间中的实际效应。它确认该方向的每个最大点，并零于整个最小面，包括面内的全部混态。故精确地
+
+$$
+D_{\iota(p)}
+=\bigcup_{\substack{d\ne0\\p\in\operatorname{argmax}_L d\cdot z}}
+  \iota(\operatorname{argmin}_L d\cdot z).
+\tag{X129.19}
+$$
+
+这一步只是完整效应域的归一化与支撑面演算，不是另加的操作或正提升假设。
+
+由定理129.2，$v_n$ 的非零支撑方向角恰为 $[\theta_n,\theta_{n+1}]$。利用更精确的交错
+
+$$
+\phi_{n-1}<\theta_n<\phi_n<\theta_{n+1}<\phi_{n+1},
+\tag{X129.20}
+$$
+
+这些方向的反向支撑面依次是 $\{w_{n-1}\},B_n,\{w_n\}$：恰在反向角 $\pi+\phi_n$ 处取得整条 $B_n$，两旁各为一个端点。因此它们的并恰为整条 $B_n$。特别地，$d=\mu_n$ 的 (X129.18) 就给同时零于全部 $B_n$ 的同一原确认。
+
+$w_n$ 的支撑方向角恰为 $[\pi+\phi_n,\pi+\phi_{n+1}]$；反向落在 $[\phi_n,\phi_{n+1}]$，其中恰有一个上侧边法向 $\theta_{n+1}$。其最小面依次为 $\{v_n\},A_{n+1},\{v_{n+1}\}$，并恰为 $A_{n+1}$；可取 $d=-\nu_{n+1}$ 取得整条零边。四个角点只有定理129.2求出的水平支撑方向，遂分别给 $G,F$，实际确认可取 $(u+X)/2,(u-X)/2$。这证明 (X129.15) 对所有原效应与所有原混态精确成立。
+
+每条 $A_n,B_n$ 的两端点不同，$F,G$ 的两端点也不同。任一这样的边 $[a,b]$ 有单射仿射图
+
+$$
+s\longmapsto\iota\left(\frac{a+b}{2}
+                         +s\frac{a-b}{2}\right),\qquad s\in\mathbb R,
+\tag{X129.21}
+$$
+
+将整个闭单位一球 $[-1,1]$ 映到整条边。故没有退化球，也没有删去边内混态。证毕。
+
+**定理 129.4（实际孤立重复球及完整正法向纤维）。** 对完整球 $H$ 记 $I(H)=\{p\in P:D_p=H\}$、$S(H)=P\cap H$。在提升记号下，全部标签纤维为
+
+$$
+\begin{aligned}
+I(A_n)&=\{w_{n-1}\},& I(B_n)&=\{v_n\},\\
+I(F)&=\{L_+,L_-\}=S(G),&
+I(G)&=\{R_+,R_-\}=S(F).
+\end{aligned}
+\tag{X129.22}
+$$
+
+$F,G$ 不相交，且各自都不与任何第三张不同完整排除球相交。令
+
+$$
+\begin{aligned}
+h_n^+&=(1+(\nu_n)_2)u-(\nu_n)_1X-(\nu_n)_2Y,\\
+h_n^-&=(1+(\mu_n)_2)u+(\mu_n)_1X+(\mu_n)_2Y.
+\end{aligned}
+\tag{X129.23}
+$$
+
+对 $z\in L$ 记 $N_z=\{h\in C^\ast:h(\iota(z))=0\}$，并记 $\mathcal N_H=\{h\in C^\ast:h|_{\iota(H)}=0\}$。它们的完整值为
+
+$$
+\begin{aligned}
+N_{v_n}&=\operatorname{cone}\{h_n^+,h_{n+1}^+\},&
+N_{w_n}&=\operatorname{cone}\{h_n^-,h_{n+1}^-\},\\
+N_z&=\mathbb R_+h_n^+&& (z\in\operatorname{ri}A_n),\\
+N_z&=\mathbb R_+h_n^-&& (z\in\operatorname{ri}B_n),\\
+N_z&=\mathcal N_F=\mathbb R_+(u-X)&& (z\in F),\\
+N_z&=\mathcal N_G=\mathbb R_+(u+X)&& (z\in G),\\
+N_z&=\{0\}&& (z\in\operatorname{int}L).
+\end{aligned}
+\tag{X129.24}
+$$
+
+特别地，在 $R_+,R_-$ 的每一个原确认都恒为一于整个 $F$；在 $L_+,L_-$ 的每一个原确认都恒为一于整个 $G$。精确确认纤维为
+
+$$
+\begin{aligned}
+\mathcal F_{\iota(R_\pm)}
+ &=\{(1-b)u+bX:0\le b\le1/2\},\\
+\mathcal F_{\iota(L_\pm)}
+ &=\{(1-b)u-bX:0\le b\le1/2\}.
+\end{aligned}
+\tag{X129.25}
+$$
+
+因此，即使额外要求 $P$ 闭，裸 EB1 也不推出 Inj 或 PE，且不能排除 X127.5 的精确平坦分支。
+
+证明。全部上侧边的点满足 $|x|<1,y>1$，全部下侧边的点满足 $|x|<1,y<-1$，所以没有一条碰到 $F$ 或 $G$。同侧不同边的支撑法向不同，不可能是同一条边；异侧边与竖直边也不同。于是 (X129.22) 由完整表 (X129.15) 逐项读出，给出 [IX116.2][Q129IX] 的实际孤立重复球对。“孤立”在这里指完整球的交叠关系；它不声称其他球的 Hausdorff 极限避开 $F,G$。
+
+任一非零正泛函 $h=a u+d\cdot(X,Y)$ 若零于 $\iota(z)$，则 $d\ne0$、$a=-d\cdot z=-m(d)$，所以 $-d$ 是 $L$ 在 $z$ 的全局支撑方向。支撑面表使链顶点的这些方向恰为两个相邻边法向的非负锥；因它们在该顶点取等，常数项也按同一非负系数组合，得到 (X129.24) 的首行。边的相对内点只允许自己的边法向。四个角点只允许水平法向，$F,G$ 的内点也如此；内点没有非零零法向。这证明全部所列正法向都是在整个原锥上的法向，而非球内限制的局部法向。零质量向量的法向集合另为 $\{h\in C^\ast:h(0_V)=0\}=C^\ast$，而质量一基点 $\iota(0,0)$ 的正零法向为 $\{0\}$。
+
+对任一右端点，$e\in\mathcal F_{\iota(R_\pm)}$ 当且仅当 $u-e\in N_{R_\pm}$ 且 $e\ge0$。由 (X129.24)，$u-e=b(u-X)$、$b\ge0$；在全 $L$ 上其最小值为 $1-2b$，所以精确地 $0\le b\le1/2$。左端点相同。这证明 (X129.25) 及整边恒一性。非零 $N_{R_\pm}$ 中每个泛函的整个零面都是 $F$，左侧都是 $G$，所以四点无单点正零面，PE 失败；两对不同标签共用完整球，Inj 失败。定理129.2又给 $P$ 紧及暴露点在 $P$ 中稠密。这些额外性质与精确平坦分支同时存在。证毕。
+
+### 129.3 全部坏对径的 LP 与四个联合塌缩尾部
+
+**定理 129.5（真实坏见证存在，而本模型处处满足原 LP）。** 本模型每张完整排除一球的两个端点都不可由一个原效应读成一、零；故每个纯标签都确有 [131.1][Q129LP] 的坏对径见证。对每个这样的见证 $(p,q,\bar q)$，原指定点 $y=(3q+\bar q)/4$ 都满足
+
+$$
+\operatorname{dist}(y,P)>0,\qquad \mathsf{LP}_{p,y}.
+\tag{X129.26}
+$$
+
+特别地，可以实际取
+
+$$
+p=(1,-1,1),\qquad q=(1,1,1),\qquad
+\bar q=(1,1,-1),\qquad y=(1,1,1/2),
+\tag{X129.27}
+$$
+
+此时 $D_p=\iota(F)$，且
+
+$$
+\operatorname{dist}(y,P)=1/2.
+\tag{X129.28}
+$$
+
+证明。闭一球的对径端点就是其两个线段端点，换用单射仿射球图也不改变它们。$A_n$ 的两端点同在上侧链，而任一上侧链纯点的完整排除集在下侧；所以一端不属于另一端的完整排除集，不能被确认为一而使另一端为零。$B_n$ 同理。$F$ 的两端点的排除集均为不相交的 $G$，$G$ 的两端点亦然。因此所列全部对径都是坏对径，且 (X129.27) 是实际原见证，不是形式上的球内点对。
+
+任意这样的 $y$ 是一条所列边的严格内点，而全部纯点在这条边上的交恰为两端点。故 $y\notin P$。由定理129.2的紧性，$\operatorname{dist}(y,P)$ 达到且严格正，因而不存在原纯点列收敛到 $y$，得到 (X129.26)。对 (X129.27)，全部上侧纯点的平面第二坐标至少为 $1$，全部下侧纯点的第二坐标至多为 $-1$；所以它们与 $(1,1/2)$ 的距离均至少 $1/2$。$R_+$ 达到 $1/2$，证明精确距离。
+
+依 [131.2—131.3][Q129LP] 的既有等价，每个固定坏见证也各有某个正误差阈值下的稳健原框架距离；这不限制框架大小。这里没有全见证统一的正距离：例如取 $A_n$ 的有序端点，指定点到其中一个端点的距离为 $\|v_n-v_{n-1}\|/4$，当 $n\to-\infty$ 时趋零。逐见证 LP 与统一下界必须区分。证毕。
+
+**定理 129.6（同锥、同标签、同确认的四个整球塌缩极限）。** 全部四个尾部都有实际完整排除球塌缩。其联合极限为
+
+| 整球 | 实际原标签 | 指标尾部 | 整球的 Hausdorff 极限 | 标签极限 | 极限标签的完整排除球 |
+| --- | --- | --- | --- | --- | --- |
+| $A_n$ | $w_{n-1}$ | $n\to-\infty$ | $\{R_+\}$ | $L_-$ | $F$ |
+| $A_n$ | $w_{n-1}$ | $n\to+\infty$ | $\{L_+\}$ | $R_-$ | $G$ |
+| $B_n$ | $v_n$ | $n\to-\infty$ | $\{L_-\}$ | $R_+$ | $G$ |
+| $B_n$ | $v_n$ | $n\to+\infty$ | $\{R_-\}$ | $L_+$ | $F$ |
+
+表内全部点、球与标签按 $\iota$ 提升。所有单项球仍非退化，但 $\inf_{p\in P}\operatorname{diam}D_p=0$，所以 NC 失败。极限确认的整个零面始终是表中最后一列的非退化球，不是塌缩单点。
+
+证明。由 (X129.15)，$A_n=D_{w_{n-1}}$、$B_n=D_{v_n}$ 是实际标签的完整排除集。由 (X129.14)，每个线段的两端点在相应尾部都趋于表中同一点，故整个线段的 Hausdorff 距离趋零；标签也由同一显式公式收敛到表中实际原纯点。这同时处理了全部正、负整数尾部。
+
+还可以将这些几何极限与同一原效应区间内的完整确认保持联合。取 (X129.23) 的正泛函，定义
+
+$$
+\begin{aligned}
+M_n^+&=\max_Kh_n^+=h_n^+(\iota(w_{n-1})),&
+f_n^+&=h_n^+/M_n^+,\\
+M_n^-&=\max_Kh_n^-=h_n^-(\iota(v_n)),&
+f_n^-&=h_n^-/M_n^-.
+\end{aligned}
+\tag{X129.29}
+$$
+
+最大点等式由完整支撑表直接得到：$\phi_{n-1}<\theta_n<\phi_n$ 使 $-\nu_n$ 的唯一最大点为 $w_{n-1}$；$\theta_n<\phi_n<\theta_{n+1}$ 使 $\mu_n$ 的唯一最大点为 $v_n$。$M_n^\pm>0$，各值均是 (X129.1)、(X129.4) 的有限有理表达式。于是
+
+$$
+\begin{gathered}
+f_n^\pm\in\mathcal E,\qquad
+f_n^+(\iota(w_{n-1}))=f_n^-(\iota(v_n))=1,\\
+Z_K(f_n^+)=\iota(A_n),\qquad
+Z_K(f_n^-)=\iota(B_n).
+\end{gathered}
+\tag{X129.30}
+$$
+
+这些等式指整个原零面，包括全部边内混态；它们不是任意局部函数的正延拓。
+
+由于 $\nu_n,\mu_n$ 在两个尾部分别趋于 $(1,0),(-1,0)$，并且实际最大标签也按表收敛，(X129.29) 给两端均有 $M_n^\pm\to2$，且在整个 $V^\ast$ 中
+
+$$
+\begin{array}{c|cc}
+&n\to-\infty&n\to+\infty\\ \hline
+f_n^+&(u-X)/2&(u+X)/2\\
+f_n^-&(u+X)/2&(u-X)/2 .
+\end{array}
+\tag{X129.31}
+$$
+
+$(u-X)/2$ 的整个原零面为 $\iota(F)$，$(u+X)/2$ 的整个原零面为 $\iota(G)$。因此实际零边可以整体塌缩，而极限正泛函的零面扩大为一整条竖直边。尤其第一行的负尾部同时满足 $w_{n-1}\to L_-$、$D_{w_{n-1}}\to\{R_+\}$、$f_n^+\to(u-X)/2$，但 $D_{L_-}=Z_K((u-X)/2)=F$。四个极限球缘点的全部非零正零法向均已由 (X129.24) 求出，不存在以它们为单点零面的极限法向。
+
+直径随端点差趋零，所以 NC 失败。这种塌缩与 X127.5 的平坦分支相容：该分支排除的是在旧球上非恒定的原确认，未排除由其他机制产生的塌缩。表中塌缩点全是原纯球缘，不能换作定理129.5的指定混态内点。证毕。
+
+**约定 129.7（数学归属、文献重叠与剩余原问题）。** 本章承重增量为 repo-derived 的完整原域实例：有理半平面交给出同一个闭尖生成锥及严格正单位，完整支撑表给出全部原纯标签，全部原效应的归一化给出 (X129.15) 的整混态排除表，并实现四个非暴露纯标签的孤立平坦重复块。有限维支撑面演算、紧基齐次化、仿射零一归一化与闭集距离都是成熟中间工具，不另列为新增一般定理。
+
+[Janotta—Hinrichsen][Q129JH] 的式(16)—(18)给出全效应区间 $V_+^\ast\cap(u-V_+^\ast)$ 及其 no-restriction 含义，§3.5介绍有限正多边形状态空间；这里复用这套凸状态—全效应语言，不借用其复合或物理实现结论。[原五边形的完整排除应用][Q129Pent]已计算有限 EB1+Inj，全部顶点均暴露；它不供应这里的双向无限链及四个非暴露极限标签。全局暴露点在极点中稠密是成熟有限维 Straszewicz 结论，明确陈述见 [Bru—de Siqueira Pedra §4.3][Q129BP]；定理129.2直接计算本实例的全部聚点，稠密性不被重计为新增定理，也不能把稠密性升级为 PE。这里只限定这两份文献的所引范围及上述仓内重叠，不主张全球原创或历史优先权。
+
+本实例支付了 [X127.5][Q129Flat] 所保留平坦分支的完整原域存在性，否定从裸 EB、甚至从裸 EB 加 $P$ 闭与原暴露点稠密性消灭全部这类分支的路线。定理129.5同时证明本实例的全部坏见证满足 LP，故它不是普适原 LP 的反模型。一般原域仍须处理纯点能否积累到指定坏对径的混态内点，以及该积累与同一原锥全部 EB 条件的相容性；共同正提升也未由这份实例供应。
+
+本实例所有排除球维数恰为一，且不满足 NC，因此不提供 EB3、EB3+PR 或加入 NC 的原域反例。X128.2的标准复三能级中心关系闭包及 X128.3的 EB3+PR 未付接口保留其原适用范围，不承担本实例的供应，也不由本实例解决。这里仅构造有序实空间及其全效应区间，没有定义动力学、仪器、复合或物理实现。
+
+[Q129IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "116.1—116.2：变维完整面与孤立重复球二分；本章直接实现其中的平坦重复块。"
+[Q129LP]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "131.1—131.3：实际坏对径、指定四分点、原LP及稳健框架距离等价；本章仅结算所构造模型中的全部见证。"
+[Q129Flat]: #127-裸排除球域中的重复球对比度与实际整球塌缩 "127.5：全部原确认恒一、整球零法向相等的非暴露平坦分支；该分支不禁止其他机制的塌缩。"
+[Q129Pent]: ../../../Blueprint/D5/S3/Quantum/Foundation/OriginalWidthContact.md "Application: the original regular pentagon and all five complete exclusions；有限EB1+Inj及完整仿射效应归一化。"
+[Q129JH]: https://arxiv.org/abs/1402.6562 "J. Janotta and H. Hinrichsen, Generalized probability theories: what determines the structure of quantum theory? 式(16)—(18)与§3.5；全文：https://ar5iv.labs.arxiv.org/html/1402.6562。"
+[Q129BP]: https://arxiv.org/abs/2103.08446 "J.-B. Bru and W. de Siqueira Pedra, Weak* Hypertopologies with Application to Genericity of Convex Sets，§4.3开头的有限维Straszewicz陈述；全文：https://ar5iv.labs.arxiv.org/html/2103.08446。"
+
+## 追加锚（本行以下为增补区）
+
+## 130. 原零图的两步覆盖、连通边界与完整静态复三能级
+
+**定义 130.1（完整原域与两步条件）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。始终保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\}.
+\end{gathered}
+\tag{X130.1}
+$$
+
+$K$ 是整个原紧基，$P$ 是全部原纯点，$\mathcal E$ 是全部原效应；不取截面、所选纯点或测试子菜单代替它们。对 $p,q\in P$ 定义
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0.
+\tag{X130.2}
+$$
+
+补效应给对称性，且 $p\not\perp p$。沿用[VII103.1—103.2][Q130VII]的 $\mathrm{EB}_{\ge2}$：对每个原 $p$，整个 $D_p$ 仿射同构于某个完整闭球 $B^{d_p}$，$d_p\ge2$，允许维数随标签改变；$\mathrm{EB3}$ 表示全部 $d_p=3$。在此域记
+
+$$
+\begin{aligned}
+\mathsf D_2(p):&\quad
+\forall q\in P:\ p\perp q\ \lor
+\exists r\in P:\ p\perp r\ \land\ q\perp r,\\
+\mathsf D_2:&\quad\forall p\in P\ \mathsf D_2(p).
+\end{aligned}
+\tag{X130.3}
+$$
+
+每个存在量词中的 $r$ 是同一原纯点，两条边均由原全域效应见证。$D_p$ 有纯球缘，故 $q=p$ 时的共同邻点自动存在。因此 $\mathsf D_2$ 正是原简单零图直径至多二，也等价于每对不同且不相邻的原纯点有共同邻点。它不要求一条已经指定的边有共同邻点。
+
+**定理 130.2（固定纯点的两步覆盖迫真实三角）。** 在定义130.1的完整 $\mathrm{EB}_{\ge2}$ 域内，固定 $p\in P$。若 $\mathsf D_2(p)$ 成立，则存在 $q,r\in P$，使
+
+$$
+p\perp q,\qquad p\perp r,\qquad q\perp r.
+\tag{X130.4}
+$$
+
+等价地，若 $p$ 不属于任何真实零三角，则存在原 $s\in P\setminus\{p\}$，满足
+
+$$
+p\not\perp s,\qquad
+\nexists r\in P:\ p\perp r\ \land\ s\perp r.
+\tag{X130.5}
+$$
+
+特别地，$\mathsf D_2$ 使每个原纯点属于一个真实三角。
+
+证明。只复用[VII103.2及IX116.1][Q130VII][Q130IX]的裸EB面接口：每个 $D_a$ 是非点紧暴露极大真面；全部非空真面只有原纯单点和完整 $D_a$；且
+
+$$
+S_a:=P\cap D_a=\partial_{\rm rel}D_a,\qquad
+D_a=\operatorname{conv}S_a.
+\tag{X130.6}
+$$
+
+这里的原面不预先要求闭。$S_a\cong S^{d_a-1}$ 是紧连通集；用到的紧性只属于各个固定球缘，不属于整个 $P$。假设 $p$ 没有三角，置
+
+$$
+A=D_p,\qquad B=\bigcup_{r\in S_p}D_r,\qquad
+S=\partial_{\rm rel}K.
+\tag{X130.7}
+$$
+
+$A$ 紧。$B$ 也紧：它是紧集
+
+$$
+\{(r,x,f)\in S_p\times K\times\mathcal E:
+f(r)=1,\ f(x)=0\}
+\tag{X130.8}
+$$
+
+在 $K$ 上的投影。这里直接使用[SAME_READBACK126.1][Q130SR]的原零关联紧投影构造；该构造只要求 $K,\mathcal E$ 紧及评价连续，不依赖该章随后针对EB3的纤维结论。两集均在 $S$ 内，$A\ne\varnothing$，且任取 $r\in S_p$，零对称给 $p\in D_r\subset B$，所以 $B\ne\varnothing$。
+
+先证 $A\cap B=\varnothing$。否则存在 $r\in S_p$ 使 $A\cap D_r\ne\varnothing$。这个交是非空紧原面，故有一个原纯点 $t$。于是 $r,t\in S_p$ 且 $t\in D_r$，得到 $p,r,t$ 的真实三角，矛盾。交中的原纯点来自原面的极点，不是把任意混态交点当作纯点；这里复用[IX116.1式(IX116.3)][Q130IX]在可变球维数域中的取交点步骤。[SAME_READBACK126.2][Q130SR]在EB3域给出相应的关系平方表述，不将其额外纤维结论用于本条的可变维数域。
+
+$\mathsf D_2(p)$ 给 $P\subset A\cup B$：与 $p$ 相邻的纯点在 $A$ 中；其余纯点由同一个共同邻点 $r\in S_p$ 落入 $D_r\subset B$。现检查每一张完整原球 $D_s$。若 $s\in A$，纯性给 $s\in S_p$，所以 $D_s\subset B$。若 $s\notin A$，则 $s\in B$；可取 $r\in S_p$ 使 $s\in D_r$，零对称给
+
+$$
+r\in S_s\cap A.
+\tag{X130.9}
+$$
+
+连通集 $S_s$ 被其两个不交相对闭子集 $S_s\cap A$ 与 $S_s\cap B$ 覆盖，且前者非空，故 $S_s\subset A$。取凸包得 $D_s\subset A$；极大真面性使 $D_s=A$。这一步逐张使用所有原球的连通纯边界；没有从 $S_s\subset B$ 擅自推出非凸并集 $B$ 包含其凸包，也没有输入标签单射。
+
+由此，每张完整球都包含于 $A$ 或 $B$；原纯单点亦已被覆盖。任意 $x\in S$ 都有一个相对支撑超平面，其接触集是含 $x$ 的非空原真面。完整面穷尽遂给
+
+$$
+S=A\sqcup B.
+\tag{X130.10}
+$$
+
+另一方面，$D_p$ 是维数至少二的真暴露面，故 $n=\dim\operatorname{aff}K\ge3$。有限维凸体从一个相对内点作径向投影，其整个相对边界同胚于 $S^{n-1}$，因而连通。这与(X130.10)的两个非空不交闭集覆盖矛盾，证明(X130.4)。否定 $\mathsf D_2(p)$ 就是(X130.5)；$s=p$ 已由非空 $S_p$ 排除。
+
+维数下界的控制直接复用[正五边形的完整原模型，OP2—OP3][Q130Pent]及[X122.7][Q130PentX]：$D_{p_i}=[p_{i+2},p_{i+3}]$，指标模五，且满足EB1与PR。其纯零图的边差是 $\pm2$，故为五圈，直径二且无三角。此时每条原排除边的纯边界为不连通的 $S^0$，恰好不能作上述连通推断；无须重算多边形的原锥、全效应或比较函数。
+
+本条的原域两步覆盖到整边界分离矛盾是 `repo-derived` 推导；紧投影、原面接口、零对称及凸体边界的球面拓扑均是复用的中间事实，不是新的紧性或分类定理。该归属不主张文献穷尽或历史优先权。证毕。
+
+**定理 130.3（两步候选的同原完整静态字典及反向）。** 在(X130.1)的整个原域，下列条件等价：
+
+$$
+\begin{gathered}
+\mathrm{EB3}+\mathsf D_2,\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V
+\text{ 实线性双射},\qquad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr}.
+\end{gathered}
+\tag{X130.11}
+$$
+
+其正向新增桥是定理130.2；静态分类及全字典直接消费[IX120.4—120.5、IX116.17—116.18][Q130IX]。原域的全部对应为
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v^*v=1\}\cong\mathbb{CP}^2,\\
+\mathcal E=\{f_E:f_E(\Phi X)=\operatorname{Tr}(EX),\ 0\preceq E\preceq I_3\},\\
+T_{\Phi(vv^*)}(\Phi\rho)=\operatorname{Tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2,\\
+D_{\Phi(vv^*)}
+=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,\ \rho v=0\},
+\qquad v^*v=w^*w=1.
+\end{gathered}
+\tag{X130.12}
+$$
+
+所有原凸混合被保持；全部有限数学测量 $f_j\ge0,\sum_jf_j=u$ 恰对应全部有限POVM $E_j\succeq0,\sum_jE_j=I_3$。谱分解、原joint、迹尺、中心及Jordan乘法分别取既有同一表示中的矩阵谱、正交投影组、$\operatorname{Tr}(XY)$、$\Phi(I_3/3)$ 及运输的 $(XY+YX)/2$。PR、Inj、$P$ 紧、全Pair和每条指定原零边的唯一第三点均为此后结论。局部排除球的实维数是三，整个 $K$ 的实仿射维数是八。
+
+证明。130.2给全部原纯点属于三角，故[IX120.4][Q130IX]给每个完整 $D_p$ 的宽度为一。此时才由IX120.5调用IX116.17取得(X130.11)的同锥同单位表示，并复用其整个原静态字典。三条各自真实的零一边在130.2中没有被当作一台共同仪器；全域三结果共同效应及指定边完成由上述既有分类链供应。
+
+反向在整个标准模型中核对。对任意单位 $v$，IX116.17的完整确认计算给全部 $vv^*\oplus B$，$0\preceq B\preceq I_{v^\perp}$，因此(X130.12)对所有原混态成立。全部支撑于 $v^\perp\cong\mathbb C^2$ 的密度矩阵由Pauli坐标组成完整闭三球，所以EB3成立。对任意两个原纯点 $`vv^*,ww^*`$，包括相同端点，因 $\dim_{\mathbb C}\operatorname{span}\{v,w\}\le2$，可取单位
+
+$$
+z\in\operatorname{span}\{v,w\}^{\perp},\qquad r=zz^*.
+\tag{X130.13}
+$$
+
+原全域效应 $`f_{vv^*},f_{ww^*}`$ 分别见证 $vv^*\perp r$ 与 $ww^*\perp r$，得到全部 $\mathsf D_2$ 量词。同一个 $\Phi$ 运输整个锥、单位、效应及全部 $D_p$，并非只运输选定基。证毕。
+
+**定义 130.4（候选及原问题的保留范围）。** 完整静态候选定义为(X130.1)的同一有限维全域、全部原EB3及 $\mathsf D_2$。白话是：每个纯态的所有原零比较对象，包括混态，合成一整颗实心三球；任意两张不相邻的原纯标签，都能找到同一个原纯标签，与它们各有真实零一边。130.2把两步可达接到每点真实三角，130.3再接到全部复三能级静态态与效应。候选不输入PR、Inj、纯点紧性、CS、球族连续、滤子或Jordan结构。
+
+原PR仍指 $T_p(q)=T_q(p)$ 对全部原纯对成立；UF仍指[IX115.8及X124.9—124.13][Q130UF]的原全锥正延拓预算 $\sup_p\beta_{D_p}<\infty$。保留未决问题
+
+$$
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathsf D_2,
+\qquad
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathrm{UF}.
+\tag{X130.14}
+$$
+
+[X125.5][Q130CS]的CS与UF等价仍限于其完整EB3+PR域。BILATERAL VIII121.5的局部两步四维纯点片另有Inj前件，且不提供任意原纯对的两步覆盖[Q130BV]。130.2的直接结论是每点有三角，不是给每条指定边补第三点；后者在EB3中由130.3的既有分类取得。五边形与X129的无限一球模型都不是EB3+PR反模型。这里没有断言 $\mathsf D_2$ 独立、候选逻辑上严格更弱或物理公理数最少。
+
+单体静态字典的适用范围按[IX116.23及VIII113.11][Q130IX][Q130VIII]保留：实际来源、制备与操作、全部有限 $N$ 的共同复合及纠缠准备、全旁观正性与CP/Kraus、逐输入预算、同族事件仪器与记录、Lüders校准、原物理钟、连续动力学来源、Hamiltonian及数值 $\hbar$ 各有独立前件。数学POVM不等于可调用的实际仪器，单体几何不供应这些联合或时间合同。
+
+[Q130VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.1—103.2：完整原域、可变球维数、共同暴露及全部原真面穷尽。"
+[Q130IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1及式(IX116.3)：完整面与纯交点；IX120.4—120.5：三角、宽度及条件静态应用；IX116.17—116.18：成熟分类及同原完整静态字典；IX116.23：原过程边界。"
+[Q130SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "126.1：原零关联的紧闭投影；126.2：关系平方与同处原真面。"
+[Q130Pent]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md "OP2—OP3：整个原奇多边形排除边及PR；文献载体与全效应取Janotta—Gogolin—Barrett—Brunner §3.1式(5)、(6)、(8)及补效应。"
+[Q130PentX]: #1226-完整-eb1-五边形的准确方法控制 "X122.7：完整原五边形的一维控制。"
+[Q130UF]: #124-极端对偶零面的整球塌缩障碍与互易非塌缩重构 "X124.9—124.13：原UF预算、条件静态表示及自动UF未决项；预算原义见IX115.8。"
+[Q130CS]: #125-旧完整球的共同近零确认与固定球心的真零稳定性 "X125.5：仅在完整EB3+PR域的CS与UF等价。"
+[Q130BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "121.5：EB3+Inj的局部两步四维片；121.7：没有任意标签到种子的两步覆盖。"
+[Q130VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.11及所引112.9：全部原操作、全有限复合、CP、仪器、记录与时间合同。"
+
+## 追加锚（本行以下为增补区）
