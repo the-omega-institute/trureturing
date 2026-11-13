@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:23d9961174e50fe1aacb7015916c7a3b489faea379125adac571f03ff160d4b6
+  normalized_sha256: sha256:23d9961174e50fe1aacb7015916c7a3b489faea379125adac571f03ff160d4b6
+cas_ref: sha256:23d9961174e50fe1aacb7015916c7a3b489faea379125adac571f03ff160d4b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Conditional inference in the literal proof of source Lemma 5.1 only. Assume its finite actual prior, X in [0,4], beta>0, and the closed small-ball premise P_n(X<=u)<=8u^(3/2)+b_n for 0<u<=1/4; use P_n(X<=u)<=1 above 1/4. This receipt does not prove Theorem 3.4 or derive that premise from Assumption 3.2, and neither the parent nor its statement child is closed. Pinned Mathlib MeasureTheory.lintegral_lintegral_swap and MeasureTheory.lintegral_mono give nonnegative layercake exchange and domination; Real.integral_exp_mul_Ioi gives the indispensable exp(-beta/4) tail. Real.integral_rpow_mul_exp_neg_mul_Ioi, Real.Gamma_add_one, and Real.Gamma_one_half_eq give Gamma(5/2)=3*sqrt(pi)/4 and coefficient 6*sqrt(pi). Probability normalization gives L<=1. Therefore the conditional bound is min(1,6*sqrt(pi)*beta^(-3/2)+10*rho^floor(n/3)+exp(-beta/4)) for every beta>0 and every n>=0, including n=0 and zero-distance atoms. These are upstream instantiations and normalization, with no usable project frozen GID for this whole conditional layercake inference; no new Lean declaration or first freeze is supplied.
+    previous_atom_id: 4a694426034737e97bf259ed571c5ec3cbfc518ca918534e8e36885dbb8a085c
+    next_atom_id: 76e2d1ccdc34a0295a828f76b0eeab6c7ff25079ea9de790f610f8025d751b21
