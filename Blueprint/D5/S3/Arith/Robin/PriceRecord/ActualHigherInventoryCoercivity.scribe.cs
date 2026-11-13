@@ -12,8 +12,13 @@ internal sealed class ActualHigherInventoryCoercivityDocument : IScribeDocumentD
                 DescribeId.Create("actual-higher-inventory-complete-coercivity"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherInventoryCoercivity.actual_complete_higher_inventory_coercivity"),
                 H("A bound on every missing and excess higher coordinate"),
-                StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
+                    Paragraph(Text("Complete Lean statement: theorem actual_complete_higher_inventory_coercivity "
+                        + "{X : ℝ} (hX : exp 2 ≤ X) (n : ℕ) (hn : 1 ≤ n) : "
+                        + "let R := actualDefect X n - completeFirstLayerLoss X n; "
+                        + "0 ≤ R ∧ higherInventoryMismatch X n ≤ "
+                        + "1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R + X * log X * R + log X ^ 2)")),
                     Paragraph(Text("For every real X >= exp(2) and every natural n >= 1, "
                         + "R is exactly actualDefect(X,n)-completeFirstLayerLoss(X,n). "
                         + "The theorem proves both nonnegativity of R and the displayed bound. "
