@@ -102,7 +102,7 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
         var exponent = new Formula.Binary(Call("padicValNat", p, m), FormulaBinaryOperator.Add, D(1));
         var conclusion = All("m", Nat(), Divides(Pow(Cast(p, r), exponent), Subtract(Pow(u, m), Pow(v, m))));
         var body = All("p", Nat(), All("U", r, All("V", r, Imp(premise, conclusion))));
-        return All("R", Call("Type"), Seq(OpenBracket, Call("CommRing", r), CloseBracket, Sp, body));
+        return All("R", V("Type"), Seq(OpenBracket, Call("CommRing", r), CloseBracket, Sp, body));
     }
     private static Formula Divides(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Divides, b);
     private static Formula Subtract(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
