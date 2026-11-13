@@ -8,7 +8,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Quantum/Routing/ReversibleQram.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Quantum/arunachalam2015robustness");
+        LibraryNoteRef.Create("D5/L/QuantumRouting/arunachalam2015robustness");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A reversible Boolean routing network selects one memory leaf, restores its workspace, "
