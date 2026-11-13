@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_nonunit
 
 *Commentary.*
 
-Under the same original EB3, pure PR, Inj and singleton A(p) hypotheses, if an arbitrary complete three-chart a has extensionBudget(a,v)>1 at any unit v, then the whole-exclusion map is Hausdorff continuous at p. There is an open neighborhood U of p in all P and a finite positive B bounding extensionBudget in every complete chart and every unit direction at every s in U. Every discontinuity supplies an actual collapse, whose saturation contradicts the nonunit budget. The neighborhood conclusion consumes the actual all-P local-budget equivalence and never restricts U to P0.
+Under the same original EB3, pure PR, Inj and singleton A(p) hypotheses, if an arbitrary complete three-chart a has extensionBudget(a,v)>1 at any unit v, then the whole-exclusion map is Hausdorff continuous at p. There is an open neighborhood U of p in all P and a finite positive B bounding extensionBudget in every complete chart and every unit direction at every s in U. Every discontinuity supplies an actual collapse, whose saturation contradicts the nonunit budget. The neighborhood conclusion consumes OriginalComparisonTopology.original_common_continuity_sets, converts its actual scalar bound to every attained chart budget, and never restricts U to P0.
 
 **Theorem 1.4 (Both Sigma branches and every actual endpoint refinement).**
 

@@ -42,6 +42,8 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalBallScale.original_full_face_b
 
 For the same original hypotheses and an arbitrary full chart, one common t gives the directional attained optimum. Every affine h on the coordinate space that is nonnegative on the closed unit ball has an actual linear extension g nonnegative on the entire C. If h is also at most one on that ball, this same g is at most u/(2t) on all C. Conversely every real B that supplies such bounded positive lifts for every affine face effect must satisfy 1/(2t)<=B. The Riesz representation h=c+inner(b,z), c>=norm(b), produces the lift (c-norm(b))u+2 norm(b)g(b/norm(b)); constant h is treated separately. The directional face effects give sharpness. No simultaneous joint instrument or unital positive linear extension operator is asserted.
 
+The literal individual-optimum formulation uses H, all affine h between zero and one on the entire closed coordinate ball. For each h, let J(h) be the infimum, over all original positive linear extensions g of h, of max over x in K of g(x). Then sup over h in H of J(h) equals 1/(2t). Compactness of K makes each maximum finite and attained. The common bounded lifts give J(h)<=1/(2t) for every h. For an actual directional face effect h(z)=(1+inner(v,z))/2, every positive extension has maximum at least 1/(2t), because that maximum is an admissible directional budget; the supplied sharp extension attains equality. Thus the family supremum and this individual optimum are both attained. This is an application of the sharp full-family theorem, with no additional retained binding declaration.
+
 **Theorem 1.4 (Intrinsic optimality under arbitrary charts).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalBallScale.original_chart_independence`

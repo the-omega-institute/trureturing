@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalExclusionLimits.original_regul
 
 *Commentary.*
 
-For every original pure p, p belongs to R if and only if the actual whole-exclusion map is Hausdorff continuous at p. On an interior diameter layer an actual singleton collapse would contradict the positive lower bound and continuity of diameter. Conversely continuity at a nondegenerate old ball gives a positive diameter bound in an open neighborhood in all P. Equality with the continuity sets of the scalar coefficient a and actual optimal budget beta, and their whole-P semicontinuity, are additional obligations.
+For every original pure p, p belongs to R if and only if the actual whole-exclusion map is Hausdorff continuous at p. On an interior diameter layer an actual singleton collapse would contradict the positive lower bound and continuity of diameter. Conversely continuity at a nondegenerate old ball gives a positive diameter bound in an open neighborhood in all P. OriginalComparisonTopology.original_common_continuity_sets identifies this same R with both actual scalar continuity sets, and its two semicontinuity theorems cover all P.
 
 ## References
 
