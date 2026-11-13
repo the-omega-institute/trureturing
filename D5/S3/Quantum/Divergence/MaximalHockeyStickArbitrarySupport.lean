@@ -148,13 +148,13 @@ private theorem square_le_scalar_residual
     congr 1
     field_simp <;> ring
   have hfirst : ∑ b, r b • E b = D := by
-    have hm : -c * (2 * c)⁻¹ = -(1 / 2 : ℝ) := by field_simp; ring
+    have hm : -c * (2 * c)⁻¹ = -(1 / 2 : ℝ) := by field_simp
     have hp : c * (2 * c)⁻¹ = (1 / 2 : ℝ) := by field_simp
     simp only [Fintype.sum_bool, r, E, Bool.false_eq_true, ↓reduceIte, smul_smul]
     rw [hm, hp]
     module
   have hsecond : ∑ b, (r b) ^ 2 • E b = c • R := by
-    have hp : c ^ 2 * (2 * c)⁻¹ = c / 2 := by field_simp; ring
+    have hp : c ^ 2 * (2 * c)⁻¹ = c / 2 := by field_simp
     simp only [Fintype.sum_bool, r, E, Bool.false_eq_true, ↓reduceIte,
       neg_sq, smul_smul]
     simp_rw [hp]
@@ -183,11 +183,11 @@ private theorem positive_overlap_unique (A B U V : Matrix n n ℂ)
   have hXA : X ≤ A := by
     have h := smul_le_smul_of_nonneg_left (add_le_add hU.2.1 hV.2.1)
       (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    convert h using 1 <;> dsimp [X] <;> module
+    convert h using 1 <;> module
   have hXB : X ≤ B := by
     have h := smul_le_smul_of_nonneg_left (add_le_add hU.2.2 hV.2.2)
       (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    convert h using 1 <;> dsimp [X] <;> module
+    convert h using 1 <;> module
   have hXt : X.trace.re = overlapValue A B := by
     dsimp [X]
     simp only [Matrix.trace_smul, Matrix.trace_add, Complex.real_smul,
@@ -501,7 +501,7 @@ theorem original_eq_implies_finiteLoewnerSlopes
       simp only [ht0, prepared_zero, optimalOverlap_zero]
       exact tendsto_const_nhds
     · have hpos : 0 < t i := by
-        have hii : (0 : Fin (m + 1)) < i := by omega
+        have hii : (0 : Fin (m + 1)) < i := Fin.pos_iff_ne_zero.mpr hi
         simpa only [ht0] using htmono hii
       exact prepared_overlap_tendsto_of_gap A B hA hB tests ⟨t i, hpos⟩
         (hpoint ⟨t i, hpos⟩ (htsupport i hpos))
@@ -551,7 +551,8 @@ private theorem finite_summation_by_parts {m : ℕ}
         (w i.succ - w i.castSucc) • d i.castSucc -
           (w i.succ • d i.succ - w i.castSucc • d i.castSucc) := by module
   simp_rw [hterm]
-  rw [Finset.sum_sub_distrib, sum_successor_sub]
+  rw [Finset.sum_sub_distrib]
+  rw [sum_successor_sub (F := fun i => w i • d i)]
 
 private theorem sum_clipped_differences {m : ℕ}
     (X : Fin (m + 1) → Matrix n n ℂ) (j : Fin (m + 1)) :
@@ -607,7 +608,7 @@ theorem finite_test_interpolating_slopes
       _ = d 0 := by rw [sum_successor_sub, hdlast, zero_sub, neg_neg]
   have hGmoment : ∑ i, t i.succ • G i = X (Fin.last m) := by
     rw [show (∑ i, t i.succ • G i) =
-      (∑ i, (t i.succ - t i.castSucc) • d i.castSucc) -
+      (∑ i : Fin m, (t i.succ - t i.castSucc) • d i.castSucc) -
         (t (Fin.last m) • d (Fin.last m) - t 0 • d 0) from
       finite_summation_by_parts t d]
     simp_rw [hstep]
@@ -630,7 +631,7 @@ theorem finite_test_interpolating_slopes
         have hs : j ≤ i.succ := hp.trans i.castSucc_le_succ
         rw [min_eq_left (htmono.monotone hs), min_eq_left (htmono.monotone hp),
           sub_self, zero_smul, if_neg hi]
-    change (∑ i, min (t j) (t i.succ) • (d i.castSucc - d i.succ)) = X j
+    change (∑ i : Fin m, min (t j) (t i.succ) • (d i.castSucc - d i.succ)) = X j
     rw [hsum, hdlast, hw0, smul_zero, zero_smul, sub_self, sub_zero]
     simp_rw [hterm]
     rw [sum_clipped_differences, hX0, sub_zero]
@@ -665,19 +666,22 @@ theorem finite_test_interpolating_slopes
       · cases z <;> norm_num [b]
       · norm_num [b]
     have hleft : (∑ z, a z • W z) = A := by
-      simp only [Fintype.sum_sum_type, Fintype.sum_bool, a, W, zero_smul,
-        one_smul, add_zero]
+      simp [l, Fintype.sum_sum_type, Fintype.sum_bool, a, W]
       rw [hGmoment]
       abel
     have hright : (∑ z, b z • W z) = B := by
-      simp only [Fintype.sum_sum_type, Fintype.sum_bool, b, W, zero_smul,
-        one_smul, zero_add]
+      simp [l, Fintype.sum_sum_type, Fintype.sum_bool, b, W]
       rw [hGsum]
       abel
     obtain ⟨R, hR⟩ :=
       D5.S3.Quantum.Divergence.MaximalHockeyStickComponents.reverse_test_from_weighted_components
         (fun _ : l => Classical.choice hn) W hW a b ha hb
-    rw [hleft, hright] at R hR
+    have hR' : ∃ R : ReverseTest A B (Fintype.card l),
+        ∀ t : ℝ, R.hockey t =
+          ∑ i, max (a i - t * b i) 0 * (W i).trace.re := by
+      rw [← hleft, ← hright]
+      exact ⟨R, hR⟩
+    obtain ⟨R, hR⟩ := hR'
     have htrA : A.trace.re = ∑ z, a z * (W z).trace.re := by
       rw [← hleft]
       simp only [Matrix.trace_sum, Matrix.trace_smul, Complex.re_sum,
@@ -706,7 +710,7 @@ theorem finite_test_interpolating_slopes
       rw [htr]
       have hs : (∑ z : l, min (a z) (t j * b z) * (W z).trace.re) =
           (∑ i : Fin m, min (t j) (t i.succ) • G i).trace.re := by
-        simp only [Fintype.sum_sum_type, Fintype.sum_bool, a, b, W,
+        simp only [l, Fintype.sum_sum_type, Fintype.sum_bool, a, b, W,
           mul_zero, mul_one, min_eq_left htj, min_eq_right zero_le_one,
           zero_mul, zero_add, Matrix.trace_sum, Matrix.trace_smul,
           Complex.re_sum, Complex.real_smul, Complex.mul_re,
@@ -830,7 +834,7 @@ private theorem prepared_trace_scaled_lower {A B : Matrix n n ℂ} {k : ℕ}
   · calc
       _ ≤ (t / r) * (r * R.q i) :=
         mul_le_mul_of_nonneg_left (min_le_right _ _) hα
-      _ = t * R.q i := by field_simp; ring
+      _ = t * R.q i := by field_simp
 
 /-- A finite witness is linear below an anchor below all its positive p/q
 ratios. Labels p=0 are retained. -/
@@ -925,15 +929,13 @@ private theorem actual_test_kernel_trace {A B : Matrix n n ℂ} {k : ℕ}
   change (∑ i, if (t : ℝ) ≤ 1 then max ((t : ℝ) * R.q i - R.p i) 0
       else max (R.p i - (t : ℝ) * R.q i) 0) = _
   split_ifs with ht
-  · simp only [if_pos ht]
-    rw [trace_prepared, right_mass R, Finset.mul_sum, ← Finset.sum_sub_distrib]
+  · rw [trace_prepared, right_mass R, Finset.mul_sum, ← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
     intro i _
     rcases le_total (R.p i) ((t : ℝ) * R.q i) with h | h
     · rw [min_eq_left h, max_eq_left (sub_nonneg.mpr h)]
     · rw [min_eq_right h, sub_self, max_eq_right (sub_nonpos.mpr h)]
-  · simp only [if_neg ht]
-    exact hockey_eq_trace_sub R t
+  · exact hockey_eq_trace_sub R t
 
 private theorem actual_kernel_gap {A B : Matrix n n ℂ} {k : ℕ}
     (R : ReverseTest A B k) (t : PositiveThreshold) :
@@ -992,9 +994,9 @@ private theorem actual_hockey_real
     apply le_add_of_nonneg_right
     positivity
   have htop : hockeyValue hf A B ≠ ⊤ :=
-    ne_top_of_le_ne_top EReal.coe_ne_top hupper
+    ne_top_of_le_ne_top (EReal.coe_ne_top c) hupper
   have hbot : hockeyValue hf A B ≠ ⊥ :=
-    ne_bot_of_le_ne_bot EReal.coe_ne_bot hlower
+    ne_bot_of_le_ne_bot (EReal.coe_ne_bot (affineMass f A B)) hlower
   exact ⟨(hockeyValue hf A B).toReal, (EReal.coe_toReal htop hbot).symm⟩
 
 /-- The original finite closed-perspective representation gives both
@@ -1014,7 +1016,7 @@ private theorem integrable_test_kernel_iff_finite_cost
         ← ofReal_integral_eq_lintegral_ofReal hi hn, EReal.coe_ennreal_ofReal,
         max_eq_left (integral_nonneg_of_ae hn), ← EReal.coe_add]
     rw [he]
-    exact EReal.coe_ne_top
+    exact EReal.coe_ne_top _
   · intro hfin
     have hlin : (∫⁻ t, ENNReal.ofReal (testKernel R t) ∂curvature hf) ≠ ⊤ := by
       intro h
@@ -1114,20 +1116,25 @@ private theorem realizes_finite_set
     ∃ k : ℕ, ∃ R : ReverseTest A B k,
       ∀ t ∈ S, R.preparedOverlap t = optimalOverlap A B hA hB t := by
   classical
-  let P : Finset ℝ := S.image (fun t => (t : ℝ))
+  let P : Finset ℝ := S.image Subtype.val
   let T : Finset ℝ := insert 0 P
   have hzero : (0 : ℝ) ∉ P := by
     rintro hz
-    obtain ⟨x, hx, hx0⟩ := Finset.mem_image.1 hz
+    change (0 : ℝ) ∈ S.image Subtype.val at hz
+    obtain ⟨x, hx, hx0⟩ : ∃ x : PositiveThreshold, x ∈ S ∧ (x : ℝ) = 0 :=
+      Finset.mem_image.1 hz
     exact (ne_of_gt x.2) hx0
   have hcard : T.card = P.card + 1 := Finset.card_insert_of_notMem hzero
   let t : Fin (P.card + 1) ↪o ℝ := T.orderEmbOfFin hcard
   have htmem (i : Fin (P.card + 1)) : t i ∈ T := T.orderEmbOfFin_mem hcard i
   have htrange : Set.range t = (T : Set ℝ) := T.range_orderEmbOfFin hcard
   have hnonneg (i : Fin (P.card + 1)) : 0 ≤ t i := by
-    rcases Finset.mem_insert.1 (htmem i) with hi | hi
+    have hiT : t i ∈ insert 0 (S.image Subtype.val) := by
+      simpa [T, P] using htmem i
+    rcases Finset.mem_insert.1 hiT with hi | hi
     · rw [hi]
-    · obtain ⟨s, hs, hsi⟩ := Finset.mem_image.1 hi
+    · obtain ⟨s, hs, hsi⟩ : ∃ s : PositiveThreshold, s ∈ S ∧ (s : ℝ) = t i :=
+        Finset.mem_image.1 hi
       exact hsi ▸ s.2.le
   have ht0 : t 0 = 0 := by
     have hz : (0 : ℝ) ∈ Set.range t := by rw [htrange]; exact Finset.mem_insert_self _ _
@@ -1135,9 +1142,12 @@ private theorem realizes_finite_set
     exact le_antisymm (by simpa only [hi] using t.monotone (Fin.zero_le i)) (hnonneg 0)
   have htK (i : Fin (P.card + 1)) (hi : 0 < t i) :
       (⟨t i, hi⟩ : PositiveThreshold) ∈ K := by
-    rcases Finset.mem_insert.1 (htmem i) with hz | hp
+    have hiT : t i ∈ insert 0 (S.image Subtype.val) := by
+      simpa [T, P] using htmem i
+    rcases Finset.mem_insert.1 hiT with hz | hp
     · exact False.elim ((ne_of_gt hi) hz)
-    · obtain ⟨s, hs, hsi⟩ := Finset.mem_image.1 hp
+    · obtain ⟨s, hs, hsi⟩ : ∃ s : PositiveThreshold, s ∈ S ∧ (s : ℝ) = t i :=
+        Finset.mem_image.1 hp
       have he : (⟨t i, hi⟩ : PositiveThreshold) = s := Subtype.ext hsi.symm
       rw [he]
       exact hSK s hs
@@ -1147,7 +1157,10 @@ private theorem realizes_finite_set
   intro s hs
   have hsrange : (s : ℝ) ∈ Set.range t := by
     rw [htrange]
-    exact Finset.mem_insert_of_mem (Finset.mem_image.2 ⟨s, hs, rfl⟩)
+    apply Finset.mem_insert_of_mem
+    have hmem : (s : ℝ) ∈ S.image Subtype.val :=
+      Finset.mem_image.2 ⟨s, hs, rfl⟩
+    simpa [P] using hmem
   obtain ⟨i, hi⟩ := hsrange
   simpa only [hi] using hR i
 
@@ -1329,7 +1342,11 @@ private theorem finiteLoewnerSlopes_implies_integrated_eq
   · have hμ : curvature hf = 0 := Measure.support_eq_empty_iff.1 hKempty
     have hg := finite_cost_gap hf W hA hB hWfin
     have hcost : finiteCost hf W = hockeyValue hf A B := by
-      simpa only [hμ, integral_zero_measure, EReal.coe_zero, add_zero] using hg.2
+      calc
+        finiteCost hf W = hockeyValue hf A B +
+            (∫ t, gap W t ∂curvature hf : ℝ) := hg.2
+        _ = hockeyValue hf A B := by
+          rw [hμ, integral_zero_measure, EReal.coe_zero, add_zero]
     have hMW : maximalValue hf A B ≤ finiteCost hf W := sInf_le ⟨(near 0).1, W, rfl⟩
     exact le_antisymm (hMW.trans_eq hcost) hHM
   · have hKne : (curvature hf).support.Nonempty := Set.nonempty_iff_ne_empty.2 hKempty
@@ -1345,25 +1362,33 @@ private theorem finiteLoewnerSlopes_implies_integrated_eq
         ext x
         constructor
         · rintro ⟨y, ⟨i, rfl⟩, rfl⟩
-          exact ⟨i, rfl⟩
+          exact ⟨i, by simp [q]⟩
         · rintro ⟨i, rfl⟩
-          exact ⟨qK i, ⟨i, rfl⟩, rfl⟩
+          exact ⟨qK i, ⟨i, rfl⟩, by simp [q]⟩
       rwa [himage] at hd'
     obtain ⟨a, b, ha1, hb1, haratio, hbratio, haleft, hbright⟩ :=
       witness_support_endpoints W (curvature hf).support
-    let F : Finset PositiveThreshold := {a, b}.filter (fun t => t ∈ (curvature hf).support)
+    let F : Finset PositiveThreshold :=
+      Finset.filter (fun t : PositiveThreshold => t ∈ (curvature hf).support)
+        ({a, b} : Finset PositiveThreshold)
     have hFK : ∀ t ∈ F, t ∈ (curvature hf).support := by
       intro t ht
+      change t ∈ ({a, b} : Finset PositiveThreshold).filter
+        (fun t => t ∈ (curvature hf).support) at ht
       exact (Finset.mem_filter.1 ht).2
     obtain ⟨tests, hRF, hRq⟩ := finite_knot_exhaustion A B hA hB
       (curvature hf).support hC F hFK q hqmem
     have hRa (haK : a ∈ (curvature hf).support) (j : ℕ) :
         (tests j).2.preparedOverlap a = optimalOverlap A B hA hB a := by
       apply hRF j a
+      change a ∈ ({a, b} : Finset PositiveThreshold).filter
+        (fun t => t ∈ (curvature hf).support)
       exact Finset.mem_filter.2 ⟨by simp, haK⟩
     have hRb (hbK : b ∈ (curvature hf).support) (j : ℕ) :
         (tests j).2.preparedOverlap b = optimalOverlap A B hA hB b := by
       apply hRF j b
+      change b ∈ ({a, b} : Finset PositiveThreshold).filter
+        (fun t => t ∈ (curvature hf).support)
       exact Finset.mem_filter.2 ⟨by simp, hbK⟩
     obtain ⟨E, hE, hE0, hEkernel, hEgap⟩ := witness_dominated_kernels hf A B hA hB
       W hW a b ha1 hb1 haratio hbratio haleft hbright tests hRa hRb
@@ -1388,6 +1413,8 @@ private theorem finiteLoewnerSlopes_implies_integrated_eq
           Tendsto (fun j => gap (tests j).2 t) atTop (𝓝 ((fun _ => (0 : ℝ)) t)) := by
         filter_upwards [Measure.support_mem_ae (μ := curvature hf)] with t ht
         exact hpoint t ht
+      change Tendsto (fun j => ∫ t : PositiveThreshold, gap (tests j).2 t ∂curvature hf)
+        atTop (𝓝 0)
       simpa only [integral_zero] using tendsto_integral_of_dominated_convergence E
         (fun j => (hg j).1.aestronglyMeasurable) hE hEgap hae
     have hineq (j : ℕ) : c ≤ H + ∫ t, gap (tests j).2 t ∂curvature hf := by
