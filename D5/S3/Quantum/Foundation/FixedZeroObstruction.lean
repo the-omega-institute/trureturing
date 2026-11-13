@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Topology.ContinuousMap.Compact
 
+/-! Full original effects and state body; no closed pure locus or least effects are assumed. -/
+
 noncomputable section
 
 namespace D5.S3.Quantum.Foundation.FixedZeroObstruction
@@ -98,10 +100,16 @@ theorem full_zero_one_face
     constructor
     · intro hx
       exact ⟨hx.1, le_antisymm
-        (by simpa [(pure_mem s).2] using (hh.1.1 x hx.1.1).2)
-        (by simpa [hh.1.2] using hx.2 s (pure_mem s))⟩
+        (by simpa [hx.1.2] using (hh.1.1 x hx.1.1).2)
+        (by
+          have hb := hx.2 s (pure_mem s)
+          change h s ≤ h x at hb
+          simpa [hh.1.2] using hb)⟩
     · rintro ⟨hx, hx1⟩
-      exact ⟨hx, fun y hy => by simpa [hx1, hy.2] using (hh.1.1 y hy.1).2⟩
+      refine ⟨hx, fun y hy => ?_⟩
+      change h y ≤ h x
+      rw [hx1]
+      simpa [hy.2] using (hh.1.1 y hy.1).2
   have hpoints : F.extremePoints ℝ ⊆ {(s : V)} := by
     intro v hv
     have hvp := hex.isExtreme.extremePoints_subset_extremePoints hv
