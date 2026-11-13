@@ -1,0 +1,16 @@
+### 129.7 复用、新增范围与成熟来源
+
+本章归属为 `repo-derived` 的纸面综合，不主张全球原创、优先权、Lean核验、完整量子起源完成或独立公理最少。实际复用边界是：IX119.10的全部法向维数与沿边冗余、IX120.9的 $P_0$ 稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 与非塌缩层确认闭图、原宽度紧层、125的种子配对、127的实际效应与接触等价、127.8—127.11的全原条件静态链，均不是新增成果。127.10已经包含种子对径的加权求和身份；本章只把其使用局限到一个三次零压缩标签，避免提前输入全部球圆性。
+
+实质增量是：在同一未支付PC1的入口内，把三颗种子球的原对偶界用于固定八维内球；取得每个原纯标签的外球饱和、三零、实际完整球触该内球和原 $f(w)=1$ 的准确点态等价；将中心化联合界推广并严格加强到每个非单位纯点；最后只以既有稠密性把完整几何候选的量词压到原 $P_0$。没有需要额外消费的“极端确认效应同时逼近”结论，因此不另加入一个比稠密性更强的近似定理。
+
+[Kimura][Q129Kimura]在 $N$ 维复密度矩阵这一已指定载体上，用 $\rho=I_N/N+(1/2)\sum_i\lambda_i\widehat\lambda_i$、$\operatorname{Tr}(\widehat\lambda_i\widehat\lambda_j)=2\delta_{ij}$ 的约定，§2C式(17)—(18)给Bloch外球。$N=3$ 时 $\|\rho-I_3/3\|_{\rm HS}^2=|\lambda|^2/2\le2/3$；§3式(23)、(27)还保留额外PSD条件，外球本身不等于全部量子态。这是已知矩阵几何的背景，不提供未知原 $\mathsf E_0$ 模型的PC1或把一般原效应归一到 $f(w)=1$。本章内球及接触等价已在实际原域独立展开，不靠将原锥先认作PSD。
+
+[Barnum—Müller—Ududec][Q129BMU] Theorem 16的准确前件仍是有限维、projectivity、对称跃迁概率以及相应全部滤子保纯。三个种子正压缩或一个固定内球没有支付这些全域条件；分类只经127.11所消费的完整满宽桥调用。原锥分离、Lorentz球的支持等号、有限凸组合和Cauchy—Schwarz是成熟工具，不另作新分类原理。文献查阅范围不构成文献穷尽或不存在其他表述的证据。
+
+[Q129IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX119.10：法向维数及冗余；IX120.9：P0标签稠密；IX120.4及IX118：原宽度与紧层；IX116.17：条件静态重构。"
+[Q129VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII111.3：较强W域的两侧种子范数界；不输入111.4的全纯框架完成与全域取等。"
+[Q129TCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "定理121.6：P0稠密Gdelta与非塌缩层完整确认闭图；不另证稠密或紧层。"
+[Q129Kimura]: https://arxiv.org/pdf/quant-ph/0301152v2 "Gen Kimura, The Bloch Vector for N-Level Systems, Physics Letters A 314, 339—349, DOI 10.1016/S0375-9601(03)00941-1；§2C式(17)—(18)、§3式(23)、(27)。"
+[Q129BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16：projectivity、对称跃迁概率及滤子保纯。"
+
