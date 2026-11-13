@@ -51,7 +51,7 @@ private theorem exclusion_boundary
   rw [← closure_sdiff_intrinsicInterior, hK.closure_eq]
   refine ⟨hx.1, ?_⟩
   rintro ⟨a, ha, he⟩
-  letI : Nonempty (affineSpan ℝ (base C u)) := ⟨a⟩
+  let : Nonempty (affineSpan ℝ (base C u)) := ⟨a⟩
   let b : affineSpan ℝ (base C u) := ⟨p, subset_affineSpan ℝ _ (pure_mem p)⟩
   have hcont : Continuous (fun t : ℝ => AffineMap.lineMap (k := ℝ) b a t) :=
     AffineMap.lineMap_continuous
@@ -62,8 +62,9 @@ private theorem exclusion_boundary
   have hval : f ((AffineMap.lineMap (k := ℝ) b a t : affineSpan ℝ (base C u)) : V) =
       1 - t := by
     rw [AffineMap.lineMap_apply]
-    change f ((1 - t) • (p : V) + t • (a : V)) = 1 - t
-    simp only [map_add, map_smul, smul_eq_mul, he, hfx, hf.2, mul_one, mul_zero, add_zero]
+    change f (t • ((a : V) - (p : V)) + (p : V)) = 1 - t
+    simp only [map_add, map_sub, map_smul, smul_eq_mul, he, hfx, hf.2]
+    ring
   rw [hval] at hbound
   linarith
 
@@ -170,7 +171,8 @@ private theorem repeated_ball_isolated
   apply Set.disjoint_left.mpr
   intro x hxp hxq
   have hsingle : exclusion C u p ∩ exclusion C u q = {x} := by
-    apply Set.Subsingleton.eq_singleton_of_mem _ ⟨hxp, hxq⟩
+    apply Set.Subsingleton.eq_singleton_of_mem (s := exclusion C u p ∩ exclusion C u q)
+      _ (show x ∈ exclusion C u p ∩ exclusion C u q from ⟨hxp, hxq⟩)
     intro a ha b hb
     by_contra hab
     exact he (two p q ha hb hab)

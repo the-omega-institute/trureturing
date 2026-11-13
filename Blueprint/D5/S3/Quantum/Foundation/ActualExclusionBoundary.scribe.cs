@@ -41,6 +41,34 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Imp(assumptions, And(cover, midpoint))))));
     }
 
+    private static Formula QuotientStatement()
+    {
+        var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
+        var K = Call("base", C, u); var P = Call("pure", C, u);
+        var S = Call("intrinsicFrontier", real, K); var r = Id("r");
+        var x = Id("x"); var y = Id("y"); var p = Id("p"); var q = Id("s");
+        Formula D(Formula a) => Call("exclusion", C, u, a);
+        var repeated = All("p", P, Ex("s", P, And(
+            new Formula.Rel(p, FormulaRelationOperator.NotEqual, q),
+            new Formula.Rel(D(q), FormulaRelationOperator.Equal, D(p)))));
+        var Q = Call("Quotient", r); var projection = Call("QuotientMk", r);
+        var data = And(All("x", S, All("y", S,
+                new Formula.Logic(Call("r", x, y), FormulaLogicOperator.Iff,
+                    Mem(Call("midpoint", real, x, y), S)))),
+            And(All("x", S, All("y", S,
+                new Formula.Logic(Call("r", x, y), FormulaLogicOperator.Iff,
+                    Ex("p", P, And(Mem(x, D(p)), Mem(y, D(p))))))),
+                And(Call("IsClosed", Call("RelationGraph", r)),
+                    And(Call("CompactSpace", Q), And(Call("TTwoSpace", Q),
+                        And(Call("Continuous", projection),
+                            And(Call("Surjective", projection), Call("IsClosedMap", projection))))))));
+        return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
+            Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V),
+            All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
+                Imp(And(Call("OriginalEBDomain", C, u), repeated),
+                    Ex("r", Call("Setoid", S), data))))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Whole original exclusions cover the actual relative boundary and detect its boundary midpoints.",
         H("The actual boundary and common whole exclusions"),
@@ -56,5 +84,16 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Paragraph(Text("Each whole exclusion lies in the actual relative boundary. Its common original confirming effect vanishes there but equals one at its confirming pure point. A relative interior point could be extended slightly away from that pure point along the same affine line while remaining in K; linearity would give a negative proper-effect value, which is impossible.")),
                 Paragraph(Text("If the midpoint of two points of K is on the boundary, coverage puts that midpoint in one whole exclusion. The extreme-set property forces both endpoints into that same exclusion. Conversely, convexity keeps the midpoint in any common exclusion, hence on the actual boundary. Equal endpoints and the degenerate ambient space remain in scope.")),
                 Paragraph(Text("This is the original-boundary midpoint bridge needed for IX116.6. It uses neither Pair properness nor injectivity, orthogonality axioms, common centers or global singleton labels. To obtain the all-repeated contradiction one must still prove repeated-block isolation, use that isolation to establish transitivity of the common-ball relation, construct its actual compact Hausdorff quotient, construct the common rational slice and convex neighborhood controls, and complete the radial homotopy obstruction. Existence of a singleton-labelled ball, its propagation and continuum multiplicity are not conclusions here. No originality claim is made."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-all-repeated-boundary-quotient"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_boundary_quotient"),
+            H("The literal all-repeated boundary quotient"),
+            StatementSource.FromAuthor(F.Disp(QuotientStatement())), AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("OriginalEBDomain abbreviates exactly the closedness, strict positivity, generating span and whole positive-dimensional exclusion-ball hypotheses in the preceding statement, with the same V, C and u. The extra assumption says that every original pure label p has a distinct original pure label s with the same entire exclusion set. This is the all-repeated contradiction branch, not an extra assumption on the eventual EB-only existence theorem.")),
+                Paragraph(Text("RelationGraph(r) is the set of boundary pairs (x,y) with r(x,y). Setoid means an equivalence relation; QuotientMk is its canonical projection onto its actual quotient. The theorem constructs r as the literal boundary-midpoint predicate and proves that its classes are exactly the whole exclusion blocks through the second displayed equivalence.")),
+                Paragraph(Text("To prove isolation, two shared distinct points force two whole exclusion balls to coincide, by applying the existing strict ball-face theorem to their intersection. If a repeated ball meets another different ball, their singleton intersection is pure. The two distinct labels of the repeated ball then force every pure point of that ball to have one common exclusion. Zero symmetry puts all those pure points in the other ball. Compact convex hull generation and maximality force equality, a contradiction. Thus different whole balls are disjoint in this branch, and the midpoint criterion makes the literal relation transitive.")),
+                Paragraph(Text("The actual boundary is a closed subset of compact K. The midpoint map is continuous, so its inverse image of that boundary is a closed relation graph. The saturation of a closed boundary subset is the projection of the intersection of this graph with a compact product. It is closed, proving that the actual quotient projection is closed. Its fibers are compact by the same graph argument. The proper-map product theorem then makes the product projection a quotient map; the closed graph descends to the closed diagonal, proving the actual quotient Hausdorff. Compactness descends from the compact actual boundary.")),
+                Paragraph(Text("This construction places no ENR, metrizability, finite dimension, fibration or local contractibility hypothesis on the quotient. The common rational Baire slice, ray-avoiding finite-neighborhood data, radial homotopy and sphere contradiction are further obligations. The full original theorem is not settled by construction of this quotient."))),
             DescribeRole.Theorem))));
 }

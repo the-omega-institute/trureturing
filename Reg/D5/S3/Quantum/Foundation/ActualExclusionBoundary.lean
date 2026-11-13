@@ -67,4 +67,52 @@ theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
 theorem actual_positive : arena.{u}.Law actual :=
   source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_boundary_cover_and_midpoint
 
+namespace QuotientAudit
+
+structure Inputs extends ActualExclusionBoundary.Inputs.{u} where
+  repeated : ∀ p : pure C unit, ∃ s : pure C unit,
+    p ≠ s ∧ exclusion C unit s = exclusion C unit p
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := Setoid (intrinsicFrontier ℝ (base P.C P.unit))
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := Setoid (intrinsicFrontier ℝ (base P.C P.unit))
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ r => r) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ P : Inputs.{u}, ∃ r : Setoid (intrinsicFrontier ℝ (base P.C P.unit)),
+    let a := R.readout () P r
+    (∀ x y, a x y ↔ midpoint ℝ (x : P.V) (y : P.V) ∈ intrinsicFrontier ℝ (base P.C P.unit)) ∧
+    (∀ x y, a x y ↔ ∃ p : pure P.C P.unit, (x : P.V) ∈ exclusion P.C P.unit p ∧
+      (y : P.V) ∈ exclusion P.C P.unit p) ∧
+    IsClosed {z : intrinsicFrontier ℝ (base P.C P.unit) × intrinsicFrontier ℝ (base P.C P.unit) |
+      a z.1 z.2} ∧
+    CompactSpace (Quotient a) ∧ T2Space (Quotient a) ∧
+    Continuous (Quotient.mk a) ∧ Function.Surjective (Quotient.mk a) ∧
+    IsClosedMap (Quotient.mk a)
+
+abbrev source_scope := type_of%
+  (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_boundary_quotient.{u})
+
+theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h P
+    exact @h P.V P.normed P.scalar P.finite P.C P.unit
+      P.closed P.strict P.generating P.balls P.repeated
+  · intro h V normed scalar finite C unit closed strict generating balls repeated
+    exact h ⟨⟨V, normed, scalar, finite, C, unit, closed, strict, generating, balls⟩, repeated⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_boundary_quotient
+
+end QuotientAudit
+
 end Reg.D5.S3.Quantum.Foundation.ActualExclusionBoundary
