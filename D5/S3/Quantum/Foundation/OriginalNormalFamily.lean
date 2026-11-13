@@ -220,9 +220,11 @@ theorem original_neighbor_support
     have hh := hform y
     rw [heq.2 _ hy] at hh
     nlinarith
+  have hneSet : ((fun x : V => -(directionLift k v).val x / k.g.val x) '' (base C u \ {(p : V)})).Nonempty := by
+    exact ⟨_, y, ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
   have hrho : rho k v = A := by
     apply le_antisymm
-    · apply csSup_le ⟨_, y, ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
+    · apply csSup_le hneSet
       rintro _ ⟨x, hx, rfl⟩
       have hgx : 0 < k.g.val x := by
         rw [k.g_value]
@@ -234,9 +236,10 @@ theorem original_neighbor_support
     · rw [← hratio]
       exact le_csSup (ratio_bound k v hv) ⟨y,
         ⟨pure_mem y, fun h => hyp (Subtype.val_injective h)⟩, rfl⟩
+  have hApos : 0 < A := div_pos (by linarith) hlam
   have hlamrho : lam = 1 / (1 + rho k v) := by
     rw [hrho]
-    apply (eq_div_iff (by dsimp [A]; positivity : 1 + A ≠ 0)).mpr
+    apply (eq_div_iff (by positivity : 1 + A ≠ 0)).mpr
     nlinarith
   have hr : eq (a.param (-v)) = 1 - 2 * lam := by dsimp [lam]; ring
   have hrhof := (rho_positive_iff hc hs hg hB hInj p hep k v hv).1
@@ -259,6 +262,121 @@ theorem original_neighbor_support
       rw [hr, hlamrho, hrho1]
       norm_num
 
-#print axioms original_neighbor_support
+private def coordinateEval {p : pure C u} {a : ExclusionChart C u p}
+    {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) (x : V) : chartSpace a →ₗ[ℝ] ℝ where
+  toFun v := (directionLift k v).val x
+  map_add' v w := by simp
+  map_smul' t v := by simp
+
+/-- The actual original linear map H, reconstructed from the inverse restriction. -/
+def coordinateMap {p : pure C u} {a : ExclusionChart C u p}
+    {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) : V →ₗ[ℝ] chartSpace a where
+  toFun x := (InnerProductSpace.toDual ℝ (chartSpace a)).symm (coordinateEval k x).toContinuousLinearMap
+  map_add' x y := by
+    apply (InnerProductSpace.toDual ℝ (chartSpace a)).injective
+    ext v
+    simp [coordinateEval]
+  map_smul' t x := by
+    apply (InnerProductSpace.toDual ℝ (chartSpace a)).injective
+    ext v
+    simp [coordinateEval]
+
+private theorem coordinateMap_inner {p : pure C u} {a : ExclusionChart C u p}
+    {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) (v : chartSpace a) (x : V) :
+    ⟪v, coordinateMap k x⟫ = (directionLift k v).val x := by
+  rw [show ⟪v, coordinateMap k x⟫ = ⟪coordinateMap k x, v⟫ from real_inner_comm _ _]
+  exact InnerProductSpace.toDual_symm_apply
+
+/-- Coordinate reconstruction is on every point of the entire affine chart and on p. -/
+theorem original_coordinate_map {p : pure C u} {a : ExclusionChart C u p}
+    {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) :
+    coordinateMap k p = 0 ∧ ∀ z : chartSpace a, coordinateMap k (a.param z) = z := by
+  constructor
+  · apply ext_inner_left ℝ
+    intro v
+    rw [coordinateMap_inner, span_vanishes (directionLift k v), inner_zero_right]
+  · intro z
+    apply ext_inner_left ℝ
+    intro v
+    rw [coordinateMap_inner, directionLift_value]
+
+/-- The whole original edge consists of the full interval of original functionals.
+The interval parameter is an actual convex coefficient, on all of V. -/
+theorem original_whole_edge
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hInj : Function.Injective (fun q : pure C u => exclusion C u q))
+    (p : pure C u) {a : ExclusionChart C u p} {ep : V →ₗ[ℝ] ℝ}
+    (hep : ep ∈ fullZeroConfirmers C u p) (k : Coordinates p a ep)
+    (q : pure C u) (v : chartSpace a) (hv : ‖v‖ = 1) (hq : a.param v = q) :
+    ∃ eq : V →ₗ[ℝ] ℝ, (∀ e, e ∈ fullZeroConfirmers C u q ↔ e = eq) ∧
+      ∀ b : V →ₗ[ℝ] ℝ, (proper C u b ∧ b p = 0 ∧ b q = 1) ↔
+        ∃ s : ℝ, s ∈ Icc (0 : ℝ) 1 ∧ b = (1 - s) • (u - ep) + s • eq := by
+  obtain ⟨eq, hqunique, hlam, hlamhalf, heqform, hanti, horth⟩ :=
+    original_neighbor_support hc hs hg hB hInj p hep k q v hv hq
+  have heq : eq ∈ fullZeroConfirmers C u q := (hqunique eq).mpr rfl
+  have hqD : (q : V) ∈ exclusion C u p := hq ▸ SingleLabelNormalBody.chart_mem a hv.le
+  have hpD := (exclusion_symmetric p q).mp hqD
+  let L := 1 / (1 + rho k v)
+  have hL : 0 < L := hlam
+  have hG : proper C u (u - ep) := by
+    intro x hx
+    have hh := hep.1.1 x hx
+    constructor <;> change _ ≤ _ <;> simp only [LinearMap.sub_apply] <;> linarith
+  obtain ⟨y₁, y₂, hy₁, hy₂, hne⟩ := pure_pair_in_ball hc hs hg hB q
+  have hex : ∃ y : pure C u, (y : V) ∈ exclusion C u q ∧ y ≠ p := by
+    by_cases h : y₁ = p
+    · exact ⟨y₂, hy₂, fun hh => hne (h.trans hh.symm)⟩
+    · exact ⟨y₁, hy₁, h⟩
+  obtain ⟨y, hy, hyp⟩ := hex
+  have hgy : 0 < k.g.val y := by
+    rw [k.g_value]
+    exact g_positive hc hs hg hB hInj p hep (pure_mem y)
+      (fun h => hyp (Subtype.val_injective h))
+  refine ⟨eq, hqunique, ?_⟩
+  intro b
+  constructor
+  · rintro ⟨hb, hbp, hbq⟩
+    let μ := (1 - b (a.param (-v))) / 2
+    have hμ : 0 ≤ μ := by
+      have hh := (hb _ (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1.1).2
+      rw [chart_unit a] at hh
+      dsimp [μ]; linarith
+    have hbform := peak_lift hep k b hb hbp v hv (hq ▸ hbq)
+    have hby := congrArg (fun f : V →L[ℝ] ℝ => f y) hbform
+    change b y = k.g.val y + μ * ((directionLift k v).val y - k.g.val y) at hby
+    have heqy := heqform y
+    rw [heq.2 _ hy] at heqy
+    have hby0 := (hb y (pure_mem y).1).1
+    have hμL : μ ≤ L := by
+      change 0 = (1 - L) * k.g.val y + L * (directionLift k v).val y at heqy
+      nlinarith
+    refine ⟨μ / L, ⟨div_nonneg hμ hL.le, (div_le_one hL).mpr hμL⟩, ?_⟩
+    ext x
+    have hh := congrArg (fun f : V →L[ℝ] ℝ => f x) hbform
+    change b x = k.g.val x + μ * ((directionLift k v).val x - k.g.val x) at hh
+    change b x = (1 - μ / L) * (u x - ep x) + (μ / L) * eq x
+    rw [heqform x]
+    have hgx : u x - ep x = k.g.val x := by rw [k.g_value]; rfl
+    rw [hgx, hh]
+    change _ = (1 - μ / L) * k.g.val x + (μ / L) *
+      ((1 - L) * k.g.val x + L * (directionLift k v).val x)
+    field_simp
+    <;> ring
+  · rintro ⟨s, hs', rfl⟩
+    refine ⟨?_, ?_, ?_⟩
+    · intro x hx
+      have hgx := hG x hx
+      have heqx := heq.1.1 x hx
+      change 0 ≤ (1 - s) * (u x - ep x) + s * eq x ∧
+        (1 - s) * (u x - ep x) + s * eq x ≤ u x
+      constructor
+      · exact add_nonneg (mul_nonneg (by linarith [hs'.2]) hgx.1) (mul_nonneg hs'.1 heqx.1)
+      · nlinarith [mul_le_mul_of_nonneg_left hgx.2 (show 0 ≤ 1 - s by linarith [hs'.2]),
+          mul_le_mul_of_nonneg_left heqx.2 hs'.1]
+    · simp [hep.1.2, heq.2 _ hpD, (pure_mem p).2]
+    · simp [hep.2 _ hqD, heq.1.2, (pure_mem q).2]
+
+#print axioms original_whole_edge
 
 end D5.S3.Quantum.Foundation.OriginalNormalFamily
