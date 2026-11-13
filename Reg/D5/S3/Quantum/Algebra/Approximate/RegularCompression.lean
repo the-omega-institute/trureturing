@@ -1,6 +1,8 @@
 import D5.S3.Quantum.Algebra.Approximate.RegularCompression
 import Reg.Support.DependentFamily
 
+/-! The full original-product telescope and its actual compression readout. -/
+
 set_option autoImplicit false
 noncomputable section
 universe u
