@@ -171,8 +171,11 @@ internal sealed class HannSpatialQramDocument : IScribeDocumentDefinition
         }
         return Seq(Operatorname, Grp(Seq([.. items])));
     }
-    private static Formula Call(string name, params Formula[] args) =>
-        At(Q("D5", "S3", "Quantum", "Routing", "HannSpatialQram", name), args);
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var nameFormula = Q("D5", "S3", "Quantum", "Routing", "HannSpatialQram", name);
+        return args.Length == 0 ? nameFormula : At(nameFormula, args);
+    }
     private static Formula At(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
     private static Formula Rows(Formula[] clauses) => new Formula.Aligned([
         .. System.Linq.Enumerable.Select(clauses, (clause, index) => index == 0
