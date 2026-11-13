@@ -49,10 +49,18 @@ theorem low_count (a : ℝ) (ha : 4 ≤ a) (i : Fin 4) :
   fin_cases i <;> norm_num [gaps]
   all_goals apply (upper_criterion _ _ _ _ (by linarith) (by linarith)
     (by linarith) (by norm_num) (by linarith) ?_).1
-  · linarith only [h12,ha]
-  · linarith only [h13,ha]
-  · linarith only [h23,ha]
-  · linarith only [h34,ha]
+  · apply sub_neg.mp
+    rw [h12]
+    linarith only [ha]
+  · apply sub_neg.mp
+    rw [h13]
+    linarith only [ha]
+  · apply sub_neg.mp
+    rw [h23]
+    linarith only [ha]
+  · apply sub_neg.mp
+    rw [h34]
+    linarith only [ha]
 
 private theorem real_endpoints (a : ℕ) (ha : 4 ≤ a) (i : Fin 4) :
     h (a : ℝ) (a+(gaps i).1) (a+(gaps i).2) 1 ≠ 0 ∧
