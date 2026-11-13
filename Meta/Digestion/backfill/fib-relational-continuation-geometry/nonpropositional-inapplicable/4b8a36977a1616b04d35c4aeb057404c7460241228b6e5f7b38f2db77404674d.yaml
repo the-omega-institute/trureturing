@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b8a36977a1616b04d35c4aeb057404c7460241228b6e5f7b38f2db77404674d
+  normalized_sha256: sha256:4b8a36977a1616b04d35c4aeb057404c7460241228b6e5f7b38f2db77404674d
+cas_ref: sha256:4b8a36977a1616b04d35c4aeb057404c7460241228b6e5f7b38f2db77404674d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source-level all-bind-only reuse of the existing Theorem 8.4 upstream route, recorded at atom b7ac8829f1282255ded1e77e3bb15d3f878d9a56a40ba68fad01c9fb63c23c67; no module is restored. For any field K of characteristic two, and in particular ZMod 2, normalize S=[[1,2],[2,3]] to I and q=(2,3) to (0,1). Retain coordinates (b0,c0,b1,c1), initial (0,1,0,0), and output (c0+c1,b0+b1). Writing h_s=(b_s,c_s), the legal update is (b,c)->(b+d_b*c,c), with d_b=0,0,1,1,1 for null,[2],[3],[25],[5]; route the same allowed source blocks to the same target seam as Definition 7.1, discard forbidden blocks, and add incoming blocks. List.foldl_hom on the original guarded raw reader gives integerFieldTask K on every word, so finrank K (Fin 4 -> K)=4 gives the upper bound. Prefixes [],[3],[2],[3][2] give P=diag([[0,1],[1,1]],[[0,1],[1,1]]) with determinant 1. Test the legality and quantity after [5] and after null[5]; B=[[0,1],[1,1]] and O=[[B,0],[B,B]] have determinant 1. The actual response minor O*P is [[1,1,0,0],[1,0,0,0],[1,1,1,1],[1,0,1,0]], also determinant 1. For an arbitrary competing finite-dimensional realization, instantiate observe and reach exactly as in the six-coordinate clause; Matrix.linearIndependent_cols_of_det_ne_zero, LinearIndependent.of_comp and LinearIndependent.fintype_card_le_finrank give dimension at least four. The joint Hankel span has the same bounds using span_le and finrank_range_le. CharP simplification, determinant expansion, ring normalization and the pinned fold/dimension lemmas supply the entire route. It retains the zero unit bit, original guard, invalid absorption, empty word, padding, chronology, both outputs and all words. The rational parity lift has different coefficients and is not used as a proof of this characteristic-two clause or of the exact rational task.
+    previous_atom_id: 463869c8e191a8876943379166e0d287c955054942af17e4a420f0d4f9096bbb
+    next_atom_id: 9a7da2daa28dfbff997d871e70171f9ada4ba18900aa74d896ec9701efb29dbc
