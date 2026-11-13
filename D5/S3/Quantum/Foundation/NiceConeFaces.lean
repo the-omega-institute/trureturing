@@ -95,7 +95,8 @@ theorem every_face_exposed {C : PointedCone ℝ V}
     change q ∈ (ambientDual (E : Set V) : Set (V →ₗ[ℝ] ℝ)) at hqpos
     rw [hnice E] at hqpos
     obtain ⟨b, hb, d, hd, hbd⟩ := hqpos
-    have hd0 (x : W) : d x = 0 := hd x.property
+    have hd0 (x : W) : d x = 0 :=
+      (Submodule.mem_dualAnnihilator d).mp hd x x.property
     have hbq (x : W) : b x = g x := by
       have hh := LinearMap.congr_fun hbd x
       have hhq := LinearMap.congr_fun hq x
