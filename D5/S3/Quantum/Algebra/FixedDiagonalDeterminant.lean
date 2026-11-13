@@ -140,7 +140,7 @@ private lemma adjugate_edge (N : Matrix ι ι k) {i j : ι} (hij : i ≠ j)
 
 /-- Every route in the nonzero support of the fixed coefficients gives a nonzero
 entry of the adjugate of the row-parameter matrix. -/
-theorem adjugate_nonzero_of_reachable (N : Matrix ι ι k) {i j : ι}
+private theorem adjugate_nonzero_of_reachable (N : Matrix ι ι k) {i j : ι}
     (h : Relation.ReflTransGen (fun a b => N a b ≠ 0) i j) :
     (rowMatrix N).adjugate i j ≠ 0 := by
   have hd (a : ι) : (rowMatrix N).adjugate a a ≠ 0 := by
@@ -202,10 +202,9 @@ private lemma determinant_derivative (N : Matrix ι ι k) (i : ι) :
   rw [derivative_mul, row_derivative] at h
   have hz : (M * derivativeMatrix i M.adjugate) i i = 0 := by
     simp [Matrix.mul_apply, derivativeMatrix, M, adjugate_column_derivative]
-  change (diagonal (Pi.single i 1) * N.map (C : k →+* MvPolynomial ι k) * M.adjugate) i i +
-    (M * derivativeMatrix i M.adjugate) i i = pderiv i M.det at h
+  simp only [Matrix.add_apply] at h
   rw [hz, add_zero, Matrix.mul_assoc, Matrix.diagonal_mul] at h
-  simpa only [Pi.single_eq_same, one_mul] using h.symm
+  simpa [derivativeMatrix] using h.symm
 
 private lemma determinant_ne_zero (N : Matrix ι ι k) : (rowMatrix N).det ≠ 0 := by
   intro hz
@@ -217,7 +216,7 @@ private lemma determinant_ne_zero (N : Matrix ι ι k) : (rowMatrix N).det ≠ 0
 
 /-- The Rayleigh difference for two distinct parameters is nonzero whenever the
 fixed nonzero support connects both directions. -/
-theorem rayleigh_nonzero (N : Matrix ι ι k) {i j : ι} (hij : i ≠ j)
+private theorem rayleigh_nonzero (N : Matrix ι ι k) {i j : ι} (hij : i ≠ j)
     (hijN : Relation.ReflTransGen (fun a b => N a b ≠ 0) i j)
     (hjiN : Relation.ReflTransGen (fun a b => N a b ≠ 0) j i) :
     pderiv i (rowMatrix N).det * pderiv j (rowMatrix N).det -
@@ -243,10 +242,14 @@ theorem rayleigh_nonzero (N : Matrix ι ι k) {i j : ι} (hij : i ≠ j)
   have h := congrArg (fun B : Matrix ι ι (MvPolynomial ι k) => B j j) hmat
   have hform : (A * G) j i * (A * G) i j +
       M.det * pderiv i ((A * G) j j) = pderiv i M.det * (A * G) j j := by
+    let B := A * G
+    have hs : ((B * diagonal (Pi.single i 1) * B) : Matrix ι ι (MvPolynomial ι k)) j j =
+        B j i * B i j := by
+      simp [Matrix.mul_apply, Matrix.diagonal_apply, Pi.single_apply, Finset.mul_sum]
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul] at h
     rw [← hdAG] at h
-    simpa [Matrix.add_apply, Matrix.smul_apply, derivativeMatrix,
-      Matrix.mul_apply, Matrix.diagonal_apply, Pi.single_apply,
-      Finset.mul_sum, Finset.sum_mul, mul_assoc] using h
+    rw [hs] at h
+    exact h
   have hdiag : ∀ t, pderiv t M.det = (A * G) t t := determinant_derivative N
   have he (a b : ι) (hab : a ≠ b) : X a * (A * G) a b = - G a b := by
     have hh := congrArg (fun B : Matrix ι ι (MvPolynomial ι k) => B a b)
@@ -277,7 +280,7 @@ theorem rayleigh_nonzero (N : Matrix ι ι k) {i j : ι} (hij : i ≠ j)
 private lemma row_multiaffine (N : Matrix ι ι k) (i : ι) :
     (rowMatrix N).det.degreeOf i ≤ 1 := by
   have he (a b : ι) : (rowMatrix N a b).degreeOf i ≤ if a = i then 1 else 0 := by
-    change degreeOf i ((1 : Matrix ι ι (MvPolynomial ι k)) a b + X a * C (N a b)) ≤ _
+    simp only [rowMatrix, Matrix.add_apply, Matrix.diagonal_mul, Matrix.map_apply]
     apply (degreeOf_add_le _ _ _).trans
     apply max_le
     · by_cases hab : a = b <;> simp [Matrix.one_apply, hab]

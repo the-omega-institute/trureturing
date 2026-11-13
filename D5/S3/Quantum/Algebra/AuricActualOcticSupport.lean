@@ -7,6 +7,7 @@
    digest: Strong connectivity of the same actual octic inverse-obstruction matrix. -/
 
 import D5.S3.Quantum.Algebra.AuricActualOcticWindow
+import D5.S3.Quantum.Algebra.FixedDiagonalDeterminant
 
 /-! Directed support of the original inverse-obstruction operator over coefficient extensions. -/
 
@@ -38,7 +39,8 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
       let n := e.toLinearMap ∘ₗ (actualOperator W hD hW a ha).baseChange K ∘ₗ e.symm.toLinearMap
       let N := LinearMap.toMatrix' n
       (∀ σ τ, Relation.ReflTransGen (fun i j => N i j ≠ 0) σ τ) ∧
-      (∀ σ τ, Relation.ReflTransGen (fun i j => algebraMap K L (N i j) ≠ 0) σ τ) := by
+      (∀ σ τ, Relation.ReflTransGen (fun i j => algebraMap K L (N i j) ≠ 0) σ τ) ∧
+      Irreducible (FixedDiagonalDeterminant.rowMatrix (N.map (algebraMap K L))).det := by
   classical
   obtain ⟨_, e, he, hn⟩ := general43_2_cut_free K W hD hW hE a ha
   let U := (W.baseChange K).map e.toLinearMap
@@ -86,13 +88,17 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
     have hh := hcross Sᶜ ht (by simpa using hs)
     rw [hz, Matrix.rank_zero] at hh
     omega
-  refine ⟨e, he, hreach, ?_⟩
-  intro σ τ
-  have hedge : (fun i j => N i j ≠ 0) ≤
-      (fun i j => algebraMap K L (N i j) ≠ 0) := by
-    intro i j hij hz
-    exact hij ((algebraMap K L).injective (by simpa using hz))
-  exact Relation.ReflTransGen.mono hedge σ τ (hreach σ τ)
+  have hreachL : ∀ σ τ,
+      Relation.ReflTransGen (fun i j => algebraMap K L (N i j) ≠ 0) σ τ := by
+    intro σ τ
+    have hedge : (fun i j => N i j ≠ 0) ≤
+        (fun i j => algebraMap K L (N i j) ≠ 0) := by
+      intro i j hij hz
+      exact hij ((algebraMap K L).injective (by simpa using hz))
+    exact Relation.ReflTransGen.mono hedge σ τ (hreach σ τ)
+  refine ⟨e, he, hreach, hreachL, ?_⟩
+  haveI : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  exact FixedDiagonalDeterminant.row_determinant_irreducible _ hreachL
 
 end ActualSupport
 

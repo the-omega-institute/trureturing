@@ -34,7 +34,8 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
         var omega = Call("AlgHom", f, d, k);
         var coordinates = Call("Map", omega, k);
         var support = And(Call("StronglyConnected", Call("nonzeroSupport", m)),
-            Call("StronglyConnected", Call("nonzeroSupport", Call("map", Call("algebraMap", k, l), m))));
+            Call("StronglyConnected", Call("nonzeroSupport", Call("map", Call("algebraMap", k, l), m))),
+            Call("Irreducible", Call("det", Call("rowMatrix", Call("map", Call("algebraMap", k, l), m)))));
         var definitions = All("n", Call("LinearMap", k, coordinates, coordinates),
             Imp(Equal(n, Call("compose", Call("linear", e), Call("baseChange", k, Call("actualOperator", w, a)),
                 Call("linear", Call("inverse", e)))),
@@ -56,7 +57,7 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
     }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Directed support of the actual octic window operator.", H("Actual octic support connectivity"),
+        "Directed support and row-parameter determinant of the actual octic window operator.", H("Actual octic support connectivity"),
         Blocks(
             Paragraph(Text(
                 "F has characteristic zero, D/F has degree eight, and W is an arbitrary four dimensional "
@@ -72,7 +73,7 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
                 + "the let bindings defining the original inverse-obstruction matrix.")),
             Describe.Lean(DescribeId.Create("actual-general43-2-support"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/AuricActualOcticSupport.general43_2_support"),
-                H("Strong connectivity over every coefficient extension"),
+                H("Strong connectivity and irreducibility over every coefficient extension"),
                 StatementSource.FromAuthor(Disp(Statement())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The canonical evaluation splitting sends c tensor d to the function sigma maps to "
@@ -85,7 +86,11 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
                     + "since a nonzero entry would extend a path to tau. This contradicts the positive "
                     + "crossing rank for S complement. Finally the coefficient embedding is injective, "
                     + "so every edge and every finite path remains present over L. "
-                    + "This establishes the support condition for the same actual N. Irreducibility of "
-                    + "its determinantal polynomial and the normalized original equation are separate claims."))),
+                    + "The fixed-matrix row-parameter theorem now proves irreducibility of the determinant "
+                    + "of I plus diag(x) times the coefficient image of this same actual N over L. "
+                    + "No connectivity hypothesis is added to the original window telescope. The theorem "
+                    + "does not identify this polynomial with the original multiplication obstruction "
+                    + "in its chosen original basis; that normalization and coordinate bridge remain separate. "
+                    + "The diagonal-plus-N determinant and its Laurent inversion bridge also remain separate."))),
                 DescribeRole.Theorem))));
 }
