@@ -278,24 +278,32 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
       (rightUnit hD A).toLinearMap.comp
         ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
           (openMonodromy A B hD).linearMap)
-    let C := (productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
-    unfold openPartialTrace
-    dsimp only [ModuleHom.comp, LinearMap.comp, ModuleIso.hom, ModuleIso.inv, rightUnitIso]
-    change L (C ((rightUnit hD A).symm (classified hD A a x v))) =
-      γ⁻¹ • q (cupVector B hD)
+    let C : P A (I D) →ₗ[ℂ] P A (targetModule B (dualModule B)) :=
+      (productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
         normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v := by
       simp only [normalizedPair, LinearMap.comp_apply, LinearMap.flip_apply,
         TensorProduct.mk_apply, add_zero, carry_zero_right]
+    have ht : TensorProduct.map (restrict (ModuleHom.id A) a)
+        (restrict (coevaluation B hD) 0) (x ⊗ₜ[ℂ] eta0 hD) =
+        x ⊗ₜ[ℂ] cupVector B hD := by
+      rw [TensorProduct.map_tmul, restrict_identity, LinearMap.id_apply, coevaluation_eta0]
     have hc : C (normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v) =
-        input (cupVector B hD) := by
-      exact (normalizedPair_input hD (ModuleHom.id A) (coevaluation B hD)
-        a 0 (x ⊗ₜ[ℂ] eta0 hD) v).trans (by
-          rw [TensorProduct.map_tmul, restrict_identity, coevaluation_eta0] <;> rfl)
-    rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x,
-      C.map_smul, hp, hc, L.map_smul] <;> rfl
+        input (cupVector B hD) :=
+      (normalizedPair_input hD (ModuleHom.id A) (coevaluation B hD)
+        a 0 (x ⊗ₜ[ℂ] eta0 hD) v).trans
+        (congrArg (fun t : PairMultiplicity A (targetModule B (dualModule B)) (a,0) =>
+          normalizedPair A (targetModule B (dualModule B)) hD a 0 t v) ht)
+    have hu : (rightUnit hD A).symm (classified hD A a x v) =
+        γ⁻¹ • normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v :=
+      (rightUnit_inverse_elementary (hD := hD) (A := A) a v x).trans
+        (congrArg (fun t : P A (I D) => γ⁻¹ • t) hp)
+    exact (congrArg (fun t : P A (I D) => L (C t)) hu).trans
+      ((congrArg L (C.map_smul γ⁻¹ _)).trans
+        ((congrArg (fun t : P A (targetModule B (dualModule B)) => L (γ⁻¹ • t)) hc).trans
+          (L.map_smul γ⁻¹ (input (cupVector B hD)))))
   have hdim (c : Discriminant D) :
       (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
         (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
