@@ -57,19 +57,21 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
             All("W", Call("Submodule", f, d), All("a", d, Imp(premises, splitting)))));
     }
 
-    private static Formula OriginalPolynomialStatement()
+    private static Formula OriginalPolynomialStatement(bool overOriginalField)
     {
         var f = V("F"); var d = V("D"); var k = V("K"); var l = V("L");
         var w = V("W"); var a = V("a");
         var assumptions = And(Equal(Call("finrank", f, d), D(8)), Equal(Call("finrank", f, w), D(4)),
             Equal(Call("Idealizer", f, d, w), Call("range", Call("algebraMap", f, d))),
             Seq(Neg, Sp, Rel(a, FormulaRelationOperator.MemberOf, Call("quotientSet", w))));
-        var result = Call("Irreducible", Call("map", Call("compose", Call("algebraMap", k, l),
-            Call("algebraMap", f, k)), Call("obstructionPolynomial", w, V("bD"), V("bW"), V("bQ"))));
+        var coefficientMap = overOriginalField ? Call("algebraMap", f, l)
+            : Call("compose", Call("algebraMap", k, l), Call("algebraMap", f, k));
+        var result = Call("Irreducible", Call("map", coefficientMap,
+            Call("obstructionPolynomial", w, V("bD"), V("bW"), V("bQ"))));
         return All("F D K L", V("Type"), Seq(
             Instance("Field", f), Instance("Field", d), Instance("Field", k), Instance("Field", l),
             Instance("Algebra", f, d), Instance("Algebra", f, k), Instance("Algebra", d, k),
-            Instance("Algebra", k, l), Instance("IsScalarTower", f, d, k),
+            Instance("Algebra", overOriginalField ? f : k, l), Instance("IsScalarTower", f, d, k),
             Instance("FiniteDimensional", f, d), Instance("CharZero", f),
             Instance("FiniteDimensional", f, k), Instance("Normal", f, k),
             All("W", Call("Submodule", f, d), All("bD", Call("Basis", Call("Fin", D(8)), f, d),
@@ -121,7 +123,7 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
             Describe.Lean(DescribeId.Create("actual-original-polynomial-irreducible"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/AuricActualOcticSupport.general43_2_original_polynomial"),
                 H("The original obstruction polynomial over every L/K"),
-                StatementSource.FromAuthor(Disp(OriginalPolynomialStatement())), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Disp(OriginalPolynomialStatement(false))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The polynomial is the original determinant in the arbitrary bases bD, bW and bQ, "
                     + "not a polynomial with independent matrix entries. The normalization theorem uses "
@@ -130,8 +132,25 @@ internal sealed class AuricActualOcticSupportDocument : IScribeDocumentDefinitio
                     + "Its image of the original polynomial is a nonzero constant times the fixed row "
                     + "determinant, using the determinant identity to exchange the two product orders. "
                     + "Irreducibility therefore transfers back to the original polynomial over L. "
-                    + "This theorem quantifies over extensions of K. A statement over every extension of "
-                    + "the original F additionally requires a common overfield and descent bridge. "
+                    + "This theorem quantifies over extensions of K and supplies the common-overfield "
+                    + "step in the original-field geometric irreducibility theorem below. "
                     + "The source atom also retains its separate quotient-density and classification clauses."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-original-polynomial-geometric-irreducibility"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/AuricActualOcticSupport.general43_2_original_geometric_irreducibility"),
+                H("The original obstruction polynomial over every L/F"),
+                StatementSource.FromAuthor(Disp(OriginalPolynomialStatement(true))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "L is an arbitrary field extension of F; no embedding of K into L is assumed. "
+                    + "Embed the finite algebraic extension K/F into an algebraic closure A of L as an "
+                    + "F algebra. The F to K to A and F to L to A coefficient maps agree with the same "
+                    + "F algebra structure on A. Apply the preceding theorem over A, retaining its same "
+                    + "actual splitting, matrix, original bases and polynomial. A unit polynomial over A "
+                    + "has a unit constant coefficient and nilpotent other coefficients. Coefficient "
+                    + "injectivity reflects both conditions to L, so the polynomial coefficient map "
+                    + "reflects units. Mathlib's Irreducible.of_map then descends irreducibility to L. "
+                    + "This proves geometric irreducibility of the original f_W, without identifying "
+                    + "an arbitrary L/F with an extension of K. Quotient density and the remaining "
+                    + "classification clauses are separate obligations."))),
                 DescribeRole.Theorem))));
 }

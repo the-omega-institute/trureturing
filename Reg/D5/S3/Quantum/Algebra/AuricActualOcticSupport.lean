@@ -134,4 +134,77 @@ theorem full_telescope_bridge :
 
 end OriginalPolynomial
 
+namespace GeometricPolynomial
+
+/-- The arbitrary original-base extension has no K-algebra premise. -/
+structure Parameters where
+  F : Type u
+  D : Type v
+  K : Type w
+  L : Type z
+  [fieldF : Field F]
+  [fieldD : Field D]
+  [fieldK : Field K]
+  [fieldL : Field L]
+  [algebraFD : Algebra F D]
+  [algebraFK : Algebra F K]
+  [algebraDK : Algebra D K]
+  [algebraFL : Algebra F L]
+  [tower : IsScalarTower F D K]
+  [finiteD : FiniteDimensional F D]
+  [zeroCharacteristic : CharZero F]
+  [finiteK : FiniteDimensional F K]
+  [normalK : Normal F K]
+  W : Submodule F D
+  hD : finrank F D = 8
+  hW : finrank F W = 4
+  hE : {c : D | ∀ x ∈ W, c * x ∈ W} = Set.range (algebraMap F D)
+
+attribute [instance] Parameters.fieldF Parameters.fieldD Parameters.fieldK
+  Parameters.fieldL Parameters.algebraFD Parameters.algebraFK Parameters.algebraDK
+  Parameters.algebraFL Parameters.tower Parameters.finiteD Parameters.zeroCharacteristic
+  Parameters.finiteK Parameters.normalK
+
+structure State (p : Parameters.{u, v, w, z}) where
+  bD : Basis (Fin 8) p.F p.D
+  bW : Basis (Fin 4) p.F p.W
+  bQ : Basis (Fin 4) p.F (p.D ⧸ p.W)
+  a : p.D
+  ha : a ∉ quotientSet p.W
+
+abbrev signature : Signature where
+  Params := Parameters.{u, v, w, z}
+  State := State
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := MvPolynomial (Fin 8) p.F
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+/-- The readout remains the original F-polynomial, before either coefficient extension. -/
+def actual : Realization signature.{u, v, w, z} := realize signature
+  (fun _ p s => obstructionPolynomial p.W s.bD s.bW s.bQ)
+  (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u, v, w, z}
+  Law R := ∀ (p : Parameters.{u, v, w, z}) (s : State p),
+    Irreducible (MvPolynomial.map (algebraMap p.F p.L) (R.readout () p s))
+
+/-- Every original hypothesis and arbitrary F-extension is reconstructed exactly. -/
+theorem full_telescope_bridge :
+    (type_of% (@general43_2_original_geometric_irreducibility.{u, v, w, z})) ↔
+      arena.{u, v, w, z}.Law actual := by
+  constructor
+  · intro h p s
+    exact @h p.F p.D p.fieldF p.fieldD p.algebraFD p.K p.fieldK p.algebraFK
+      p.finiteD p.zeroCharacteristic p.finiteK p.normalK p.algebraDK p.tower
+      p.L p.fieldL p.algebraFL p.W p.hD p.hW p.hE s.bD s.bW s.bQ s.a s.ha
+  · intro h F D _ _ _ K _ _ _ _ _ _ _ _ L _ _ W hD hW hE bD bW bQ a ha
+    exact h { F := F, D := D, K := K, L := L, W := W, hD := hD, hW := hW, hE := hE }
+      { bD := bD, bW := bW, bQ := bQ, a := a, ha := ha }
+
+end GeometricPolynomial
+
 end Reg.D5.S3.Quantum.Algebra.AuricActualOcticSupport
