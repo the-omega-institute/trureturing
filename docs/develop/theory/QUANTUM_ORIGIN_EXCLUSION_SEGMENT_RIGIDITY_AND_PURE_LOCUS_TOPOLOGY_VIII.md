@@ -4478,3 +4478,227 @@ Alexander对偶读出的唯一次数正是整体边界维数减去这张球的�
 [Q113H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology, Theorem 2.20 p119; Corollary 3.45 pp255–256, comparison discussion p257; Appendix A.7–A.8."
 
 ## 追加锚（本行以下为增补区）
+
+## 114. 完整厚排除球的四纯态失败证书与端点剖面
+
+**命题 114.1（EB下的有限原支撑与零维或整球端点）。** 取[IX定义114.1](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md#114-纯端点互惠的严格暴露排除三球刻度与有限正延拓预算)的同一个非零有限维实空间 $V$、
+闭尖生成凸锥 $C$、严格正单位 $u$、整个归一基 $K$、全部原纯点 $P=\operatorname{ext}K$
+及整个原效应区间 $\mathcal E=[0,u]_{C^{\ast}}$。只要求完整厚球条件
+
+$$
+\forall s\in P\ \exists d_s\in\mathbb N,\ d_s\ge2:\qquad
+D_s\simeq_{\mathrm{aff}}B^{d_s}.
+\tag{VIII114.1}
+$$
+
+各球的维数可以不同；$D_s$ 始终是对整个原 $K$、用整个原确认族定义的排除集。
+本命题不附加PR、$\mathrm{Pair}_{\perp}$ 或任意不同纯对的最小面均为球的条件 $\mathrm B$。
+固定 $p\in P$ 及 $F=D_p$，写
+
+$$
+\begin{gathered}
+F=c+B_F,\qquad L(F)=\operatorname{lin}(F-F),\qquad
+B_F=\{v\in L(F):|v|_F\le1\},\\
+d=\dim F,\qquad m=\dim\ker u=\dim V-1.
+\end{gathered}
+\tag{VIII114.2}
+$$
+
+这里 $|\cdot|_F$ 是这张完整仿射球的内在欧氏范数。
+令 $\mathrm A(F)$ 表示每个 $|n|_F=1$ 的对径 $c+n,c-n$
+都能由某张原 $h\in\mathcal E$ 分别取一和零。
+若 $\mathrm A(F)$ 失败，则可在同一个 $F$ 中重新选取原纯对径 $q_*,r_*$，
+以及 $\lambda>1$、$a,b\in K$ 和同一张 $e\in\mathcal E$，满足
+
+$$
+\lambda(q_*-r_*)=a-b,\qquad e(a)=1,\qquad e(b)=0.
+\tag{VIII114.3}
+$$
+
+记 $G(a),G(b)$ 为 $a,b$ 在原 $K$ 中的最小面，并记
+$L(a)=\operatorname{lin}(G(a)-G(a))$、$L(b)=\operatorname{lin}(G(b)-G(b))$。
+可以同时保证
+
+$$
+\begin{gathered}
+a\in\operatorname{ri}G(a),\quad b\in\operatorname{ri}G(b),\quad
+e|_{G(a)}=1,\quad e|_{G(b)}=0,\\
+L(F)\oplus L(a)\oplus L(b)\subseteq\ker u.
+\end{gathered}
+\tag{VIII114.4}
+$$
+
+每个端点的最小面只有下列准确选择：若端点纯，则为该原纯单点、维数零；
+若端点混，则为某张完整原排除球 $D_s$，端点在其相对内部，维数为该球的整个 $d_s\ge2$。
+因此存在 $x_1,x_2,y_1,y_2\in P$ 及 $\alpha,\beta\in[0,1]$，使
+
+$$
+\begin{aligned}
+a&=\alpha x_1+(1-\alpha)x_2,\qquad
+b=\beta y_1+(1-\beta)y_2,\\
+\lambda(q_*-r_*)&=
+\alpha x_1+(1-\alpha)x_2-\beta y_1-(1-\beta)y_2.
+\end{aligned}
+\tag{VIII114.5}
+$$
+
+同一个原全单位效应 $e$ 在每个正权 $x_i$ 上取一，在每个正权 $y_j$ 上取零。
+允许重复纯点与零权项；零权项不承担读数要求。
+“至多四个”仅计 $a,b$ 的纯分解支撑，不把标签 $p,q_*,r_*$ 算入这个数。
+
+若 $h_+=\dim G(a)$、$h_-=\dim G(b)$，则
+
+$$
+m\ge d+h_++h_-.
+\tag{VIII114.6}
+$$
+
+特别地，若所有完整排除球均为三球，则
+
+$$
+(h_+,h_-)\in\{(0,0),(0,3),(3,0),(3,3)\},\qquad
+m\ge3+h_++h_-,
+\tag{VIII114.7}
+$$
+
+因而在所选实现中两端均混蕴含 $m\ge9$，即 $\dim V\ge10$。
+纯端点分支仍保留，这个条件维数界没有把两端均混作为EB的后果。
+
+反之，对同一原球 $F$ 的任意对径 $q,r$，只要存在 $\lambda>1$ 及(VIII114.5)形状的
+原纯态凸分解恒等式，就不存在原 $h\in\mathcal E$ 在 $q,r$ 分别取一和零。
+这个反向障碍不另需假定分解支撑已具有共同饱和效应。
+
+证明。先明确所复用的前件范围。
+[VII103.2，式(VII103.4)—(VII103.5)][Q114FaceExhaustion]仅用完整 $\mathrm{EB}_{\ge1}$，
+便给所有非空原真面恰为纯单点或整张 $D_s$，且每张 $D_s$ 为非点紧暴露极大真面。
+本处(VIII114.1)满足这一前件，毋须各 $d_s$ 相同。
+于是 $\operatorname{ext}F=P\cap F$，球内对径均为原纯点。
+[VII104.2的证明][Q114LocalBall]还说明，任意两个不同的球面点在原 $K$ 中的最小面恰为 $F$；
+这只使用 $F$ 的面性质与球的严格凸性，不需要任意纯对的 $\mathrm B$。
+VII104.4的局部极性与校准比较另有 $\mathrm{Pair}_{\perp}$ 前件，此处不使用它们。
+
+以下最大方向和极端纤维的选择，以及两层扰动，复用
+[VII98.3，式(VII98.10)—(VII98.15)][Q114ExtremeFibre]的证明核心。
+其中原范数、达到性与共同支撑使用[VI90.9，式(90.16)—(90.17)][Q114BaseNorm]，
+原截面判据与斜率预算分别见
+[VII98.4的证明及VII98.5，式(VII98.17)—(VII98.20)][Q114SectionBudget]。
+这些步骤只需要原紧基、全效应与当前这张完整球。
+不能移用VII98.3中由VII98.2取得的“两个端点均混”及其正维数下界：
+VII98.2正是在排除纯 $a$ 时，调用 $\mathrm B$ 使任意纯对生成的 $H(r,a)$ 为球。
+(VIII114.1)只描述各个完整 $D_s$，没有给这个额外前件。
+
+具体地，令 $\gamma$ 为原差体 $K-K$ 在 $\ker u$ 上的Minkowski泛函。
+[VII98.1，式(VII98.4)—(VII98.5)][Q114NormInterface]的同单位接口为
+
+$$
+\gamma(z)=\tfrac12\|z\|_C
+=\max_{f\in\mathcal E}f(z)
+=\min\{t\ge0:z=t(x-y),\ x,y\in K\},\qquad z\in\ker u,
+\tag{VIII114.8}
+$$
+
+最大值、最小值均达到。其成熟基范数／序单位对偶来源为
+[Lami–Palazuelos–Winter，§II.1 Definitions 1—2、Lemma 3][Q114LPW]，
+正是有限维原锥与完整 $[0,u]$ 的接口；不使用该文的双系统或受限测量条件。
+这里系数 $1/2$ 来自 $u(z)=0$ 时正负质量相等。
+
+由VI90.9，失败的某个对径 $q,r$ 满足 $\gamma(q-r)<1$。
+达到的最小实现给 $q-r=t(x-y)$，其中 $0<t<1$，故
+
+$$
+Q=(K-K)\cap L(F),\qquad R=\max_{w\in Q}|w|_F>2.
+\tag{VIII114.9}
+$$
+
+$Q$ 紧凸且包含 $F-F=2B_F$。选达到 $R$ 的 $w$；平方内在范数的严格凸性使
+$w\in\operatorname{ext}Q$，否则严格凸组合的平方范数小于 $R^2$。
+在非空紧凸纤维
+
+$$
+M_w=\{(x,y)\in K\times K:x-y=w\}
+\tag{VIII114.10}
+$$
+
+中选一个极点 $(a,b)$。有 $\gamma(w)\le1$；若严格小于一，
+(VIII114.8)给 $w=s(x-y)$、$0<s<1$，使 $w/s\in Q$ 的长度大于 $R$，矛盾。
+所以 $\gamma(w)=1$。取同一对偶极大效应 $e\in\mathcal E$，则
+$1=e(w)=e(a)-e(b)$，原零一界迫 $e(a)=1$、$e(b)=0$。
+置
+
+$$
+q_*=c+\frac wR,\qquad r_*=c-\frac wR,\qquad \lambda=\frac R2>1,
+\tag{VIII114.11}
+$$
+
+便得同一 $F$ 中的原纯对径和(VIII114.3)。
+
+最小面相对内部性质给 $a\in\operatorname{ri}G(a)$、$b\in\operatorname{ri}G(b)$。
+包含 $a,b$ 的原暴露面 $K\cap\{e=1\}$、$K\cap\{e=0\}$
+分别包含其最小面，因此 $e$ 在两面恒一、恒零；两面都是真面。
+前述VII103.2分类现在给出恰好纯单点或整张原排除球的选择。
+端点非纯时，其最小面不是单点，故为整球且端点在球的相对内部。
+这一步保留了零维分支，没有以混合性填入额外假设。
+
+为得到(VIII114.4)，取 $v_+\in L(a)$、$v_-\in L(b)$，并假设
+$v_+-v_-\in L(F)$。相对内部使充分小的同一个 $\varepsilon>0$ 满足
+$a\pm\varepsilon v_+\in G(a)$、$b\pm\varepsilon v_-\in G(b)$。
+两对同步扰动的差为 $w\pm\varepsilon(v_+-v_-)$，均在 $Q$ 中且中点为 $w$。
+第一层极端性 $w\in\operatorname{ext}Q$ 迫 $v_+-v_-=0$。
+两对扰动于是仍属于同一个 $M_w$，其中点为 $(a,b)$；
+第二层极端性 $(a,b)\in\operatorname{ext}M_w$ 再迫 $v_+=v_-=0$。
+故映射
+
+$$
+L(a)\times L(b)\longrightarrow\ker u/L(F),\qquad
+(v_+,v_-)\longmapsto[v_+-v_-]
+\tag{VIII114.12}
+$$
+
+单射。将第二个方向换号即得所述直和，维数给(VIII114.6)。
+第一层消去差分移动，第二层才消去共同平移；二者针对同一个原实现。
+在全三球情形，混端点最小面的维数恰为三，纯端点为零，遂得(VIII114.7)及两端均混时的界。
+它们只约束重新选出的最大方向与极端纤维端点，不是对每个失败方向或每种端点实现的断言。
+
+最后在各端点的原最小面内作纯分解。
+若 $a$ 纯，取 $x_1=x_2=a$、$\alpha=1$。
+若 $G(a)=D_s=c_++A_+(B^{d_s})$，写 $a=c_++A_+(t n)$，
+其中 $0\le t<1$、$\|n\|=1$；$t=0$ 时任选一个单位方向。
+取
+
+$$
+x_1=c_++A_+n,\qquad x_2=c_+-A_+n,\qquad
+\alpha=\frac{1+t}{2}.
+\tag{VIII114.13}
+$$
+
+球面极点是原 $P$ 中的点，且这两个原纯点的凸组合正是 $a$。
+对 $b$ 用同样构造，得到 $y_1,y_2,\beta$，从而得到(VIII114.5)。
+这些支撑都取自各自的原最小面，故由(VIII114.4)已具有同一个 $e$ 的饱和读数。
+等价地，$e(a)=1$ 的凸平均与 $e(x_i)\le1$ 迫每个正权项取一，
+$e(b)=0$ 与 $e(y_j)\ge0$ 迫每个正权项取零；零权项不参与这个推论。
+
+反向若有(VIII114.5)形状的恒等式，并有原 $h(q)=1$、$h(r)=0$，则原仿射性给
+
+$$
+\lambda
+=\alpha h(x_1)+(1-\alpha)h(x_2)
+ -\beta h(y_1)-(1-\beta)h(y_2)
+\le1,
+\tag{VIII114.14}
+$$
+
+与 $\lambda>1$ 矛盾，反向障碍成立。
+
+排除这类失败仍须在同一个原模型中证明 $Q\subseteq2B_F$。
+共同效应在 $F$ 上的零一预算仅给VII98.5的 $1\le R/2$，没有给所缺的 $R\le2$。
+有限证书自身也不构造满足全部完整排除球条件的反模型。证毕。
+
+[Q114NormInterface]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md#981-原全效应载体与整个二纯面的最小维数 "VII98.1，式(VII98.4)—(VII98.5)：原基范数、同单位对偶及共同支撑。"
+[Q114ExtremeFibre]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md#983-最大伸长与同差纤维的两层极点 "VII98.3，式(VII98.10)—(VII98.15)：最大方向、极端同差纤维及两层扰动；不移用VII98.2的B依赖混合端点结论。"
+[Q114SectionBudget]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md#984-严格维数域的原接触与全部局部效应延拓 "VII98.4的截面等价证明及VII98.5的斜率边界(VII98.20)；临界维数结论保留其额外前件。"
+[Q114FaceExhaustion]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md#1032-从整个排除球到全部原真面 "VII103.2，式(VII103.4)—(VII103.5)：仅EB所需的共同暴露、原真面穷尽与完整球。"
+[Q114LocalBall]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md#1042-局部pair恰好恢复每张已有球的全部对径 "VII104.2证明中已有整球的最小面与局部几何；VII104.4的极性和校准比较另需Pair_perp。"
+[Q114BaseNorm]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md#90-稀疏实psd的零拼合传递性与一般效应延拓缺口 "VI90.9，式(90.16)—(90.17)：全效应排除、带质量捷径及达到的对偶。"
+[Q114LPW]: https://arxiv.org/html/1703.03392v2#S2.SS1 "L. Lami, C. Palazuelos, A. Winter, Ultimate data hiding in quantum mechanics and beyond，§II.1 Definitions 1—2、Lemma 3：有限维基范数／序单位对偶；此处只用其原锥全效应接口。"
+
+## 追加锚（本行以下为增补区）
