@@ -93,8 +93,13 @@ The existing suppliers expose only their original private declarations;
 their original types and proofs are retained. Their visibility change is
 canonically repinned. The unfinished full-telescope `quadratic_unique`
 source-role audit is disclosed in [#30076](https://github.com/the-omega-institute/trureturing/issues/30076);
-it is not `declared_validated`. Audit evidence and mathematical proof remain
-distinct.
+it is not `declared_validated`. The three closed supplier equalities
+`H_zero`, `H_quadratic` and `mod_two_identity` have compiled typed attempts in
+`Reg/D5/S1/Recurrence/Parity/DiagonalIterateEven.lean`. Their exact Laws,
+source-equivalence bridges, variation, sensitivity and dependence compile;
+their source selections remain missing and their audits remain
+`declared_unresolved`, also under #30076. `H` is a definition rather than a
+theorem audit target. Audit evidence and mathematical proof remain distinct.
 
 ## Triage
 
