@@ -495,6 +495,7 @@ example (n : ℕ) (_hn : 1 ≤ n) :
       (H_quadratic.trans hp.symm)
   have hc := congrArg (coeff n) (mod_two_identity.trans hh)
   rw [coeff_map] at hc
+  change ((coeff n generatingSeries : ℤ) : ZMod 2) = coeff n P at hc
   rw [← ZMod.intCast_eq_one_iff_odd, hc]
   simp only [P, D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.powerTwoSeries,
     coeff_mk, ite_eq_left_iff, zero_ne_one, imp_false, not_not]
