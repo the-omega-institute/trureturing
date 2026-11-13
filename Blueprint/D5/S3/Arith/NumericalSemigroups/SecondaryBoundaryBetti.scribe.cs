@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.NumericalSemigroups;
 
@@ -13,6 +15,7 @@ internal sealed class SecondaryBoundaryBettiDocument : IScribeDocumentDefinition
             Paragraph(Text("The definitions follow Kazimierz Chomicz, The type and cardinality of minimal presentations of numerical semigroups with embedding dimension four, arXiv:2609.04000v1, Sections 2 and 3. The question after Lemma 3.13 asks whether both b_22*d_2 and b_33*d_3 are Betti elements. The arithmetic argument is reused from public issue 28454, attributed there to producer 07b67e50-10a4-41b3-9622-660f37c654a5 and its research contributor; no new discovery is attributed here.")),
             Paragraph(Text("The printed chain definition at main.tex:469 places intermediates in ambient N^4. Here chains remain in the fixed factorization fiber. Unrestricted ambient chains connect any two nonzero vectors through their sum and therefore cannot describe the intended classes. The source immediately discusses classes of a fixed fiber, invokes the minimal-presentation theorem at lines 476-480, constructs fixed-degree chains in Lemma 3.13, and calls positive critical degrees Betti at line 1050. These uses justify the explicit fiber-local interpretation; they do not establish equivalence with the unrestricted printed relation.")),
             Paragraph(Text("The statement retains positivity, minimal generation, gcd one, all four exact critical fibers, and every choice of least data and relation witnesses. It imposes no generator, degree, or fiber bound. The gcd criterion and complete component alternatives strengthen the two literal boundary questions.")),
+            Paragraph(Text("In the formulas, I = Fin 4, N denotes the natural numbers, Generators = Factorization = CriticalCoefficients = (I -> N), and PositiveCriticalCoefficients = (I -> I -> N). Free variables in definitions have these types: d is a generator tuple, a is critical data, b is positive critical data, z and w are factorization vectors, indices lie in I, and n, k, A, B are natural numbers. Graph vertices and the arguments of RRelated belong to the fixed fiber Factorizations(d,n); their underlying vectors are used in coordinate expressions. Definition formulas are universally quantified over these free variables. closure means additive submonoid closure; range and image have their set meanings; coordinate(v,j) means v(j). ConnectedComponent, supp, Reachable and Connected refer to the displayed simple graph. Division is natural-number division. Threshold(d,x,y,c) abbreviates gcd(d(x),d(y))/gcd(gcd(d(x),d(y)),d(c)); it imposes no representation hypothesis.")),
             Node("semigroup", "The generated additive submonoid",
                 "Finite nonnegative combinations of the four displayed generators.", DescribeRole.Definition),
             Node("eval", "The factorization morphism",
@@ -72,6 +75,127 @@ internal sealed class SecondaryBoundaryBettiDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.FromAuthor(Disp(Statement(name))), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula N => Seq(Mathbb, Grp(V("N")));
+    private static Formula I => V("I");
+    private static Formula C(string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
+    private static Formula At(string name, Formula i) => new Formula.Apply(V(name), [i]);
+    private static Formula Dv(int i) => At("d", new Formula.Number(i));
+    private static Formula Z(int i) => At("z", new Formula.Number(i));
+    private static Formula B(Formula m, Formula i) => new Formula.Apply(V("b"), [m, i]);
+    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
+    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
+    private static Formula Rel(Formula x, FormulaRelationOperator op, Formula y) => new Formula.Relation(x, op, y);
+    private static Formula Equal(Formula x, Formula y) => Rel(x, FormulaRelationOperator.Equal, y);
+    private static Formula Ne(Formula x, Formula y) => Rel(x, FormulaRelationOperator.NotEqual, y);
+    private static Formula Pos(Formula x) => Rel(D(0), FormulaRelationOperator.LessThan, x);
+    private static Formula And(params Formula[] xs) => xs.Aggregate((x, y) => new Formula.Logic(x, FormulaLogicOperator.And, y));
+    private static Formula Or(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Or, y);
+    private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
+    private static Formula IffF(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Iff, y);
+    private static Formula Bind(FormulaQuantifier q, Formula body, params (string Name, Formula Domain)[] vars) =>
+        new Formula.BindMany(q, [.. vars.Select(v => new Formula.BoundVariable(FormulaIdentifier.Create(v.Name), v.Domain))], body);
+    private static Formula All(Formula body, params (string Name, Formula Domain)[] vars) => Bind(FormulaQuantifier.ForAll, body, vars);
+    private static Formula Ex(Formula body, params (string Name, Formula Domain)[] vars) => Bind(FormulaQuantifier.Exists, body, vars);
+    private static Formula Set(string name, Formula domain, Formula predicate) =>
+        Seq(OpenBrace, V(name), Sp, InMacro, Sp, domain,
+            Sp, Mid, Sp, predicate, CloseBrace);
+    private static Formula Ev(Formula z) => C("eval", V("d"), z);
+    private static Formula Pure(Formula i, Formula k) => C("pure", i, k);
+    private static Formula Fiber(Formula n) => C("factorizations", V("d"), n);
+    private static Formula Graph(Formula n) => C("factorizationGraph", V("d"), n);
+    private static Formula Threshold(Formula x, Formula y, Formula c) => Seq(
+        C("gcd", At("d", x), At("d", y)), Slash,
+        C("gcd", C("gcd", At("d", x), At("d", y)), At("d", c)));
+    private static Formula Ordered => C("IsOrderedSecondary", V("d"), V("a"), V("b"));
+    private static Formula RightIndex => Or(Equal(V("i"), D(2)), Equal(V("i"), D(3)));
+    private static Formula PositiveTuple => All(Pos(At("d", V("j"))), ("j", I));
+    private static Formula Boundary => B(D(0), V("i"));
+    private static Formula Degree => Mul(Boundary, At("d", V("i")));
+    private static Formula BoundThreshold => Threshold(D(0), D(1), V("i"));
+    private static Formula DataExists => All(Imp(C("IsNumericalGeneratingTuple", V("d")),
+        Ex(And(C("IsCriticalData", V("d"), V("a")), C("IsPositiveCriticalData", V("d"), V("b"))),
+            ("a", V("CriticalCoefficients")), ("b", V("PositiveCriticalCoefficients")))), ("d", V("Generators")));
+    private static Formula FullClaim => And(DataExists,
+        All(Imp(Ordered, All(Imp(RightIndex, And(
+            IffF(Rel(Degree, FormulaRelationOperator.MemberOf, C("Betti", V("d"))), Equal(Boundary, BoundThreshold)),
+            Imp(Equal(Boundary, BoundThreshold), C("HasExactlyPairComponents", V("d"), Degree)),
+            Imp(Ne(Boundary, BoundThreshold), C("Connected", Graph(Degree))))), ("i", I))),
+            ("d", V("Generators")), ("a", V("CriticalCoefficients")), ("b", V("PositiveCriticalCoefficients"))));
+
+    private static Formula Statement(string name) => name switch
+    {
+        "semigroup" => Equal(C(name, V("d")), C("closure", C("range", V("d")))),
+        "eval" => Equal(Ev(V("z")), Seq(Sum, Underscore, Grp(V("i"), Sp, InMacro, Sp, I), Sp, Mul(At("z", V("i")), At("d", V("i"))))),
+        "factorizations" => Equal(Fiber(V("n")), Set("z", V("Factorization"), Equal(Ev(V("z")), V("n")))),
+        "support" => Equal(C(name, V("z")), Set("i", I, Pos(At("z", V("i"))))),
+        "factorizationGraph" => All(IffF(C("Adj", Graph(V("n")), V("z"), V("w")), And(Ne(V("z"), V("w")),
+            Ex(And(Pos(At("z", V("i"))), Pos(At("w", V("i")))), ("i", I)))),
+            ("z", C("Factorizations", V("d"), V("n"))), ("w", C("Factorizations", V("d"), V("n")))),
+        "RRelated" => IffF(C(name, V("d"), V("n"), V("z"), V("w")), C("Reachable", Graph(V("n")), V("z"), V("w"))),
+        "Betti" => IffF(Rel(V("n"), FormulaRelationOperator.MemberOf, C(name, V("d"))), And(
+            Rel(V("n"), FormulaRelationOperator.MemberOf, C("semigroup", V("d"))),
+            Ex(new Formula.Not(C("RRelated", V("d"), V("n"), V("z"), V("w"))),
+                ("z", C("Factorizations", V("d"), V("n"))), ("w", C("Factorizations", V("d"), V("n")))))),
+        "IsNumericalGeneratingTuple" => IffF(C(name, V("d")), And(PositiveTuple,
+            Equal(C("gcd", C("gcd", Dv(0), Dv(1)), C("gcd", Dv(2), Dv(3))), D(1)),
+            All(new Formula.Not(Rel(At("d", V("i")), FormulaRelationOperator.MemberOf,
+                C("closure", C("image", V("d"), Set("j", I, Ne(V("j"), V("i"))))))), ("i", I)))),
+        "IsCriticalCoefficient" => IffF(C(name, V("d"), V("i"), V("k")), C("IsLeast",
+            Set("n", N, And(Pos(V("n")), Ex(And(Equal(At("z", V("i")), D(0)),
+                Equal(Ev(V("z")), Mul(V("n"), At("d", V("i"))))), ("z", V("Factorization"))))), V("k"))),
+        "IsCriticalData" => IffF(C(name, V("d"), V("a")), All(C("IsCriticalCoefficient", V("d"), V("i"), At("a", V("i"))), ("i", I))),
+        "IsPositiveCriticalCoefficient" => IffF(C(name, V("d"), V("m"), V("i"), V("k")), C("IsLeast",
+            Set("n", N, And(Pos(V("n")), Ex(And(Equal(At("z", V("i")), D(0)), Pos(At("z", V("m"))),
+                Equal(Ev(V("z")), Mul(V("n"), At("d", V("i"))))), ("z", V("Factorization"))))), V("k"))),
+        "IsPositiveCriticalData" => IffF(C(name, V("d"), V("b")), And(All(Equal(B(V("m"), V("m")), D(0)), ("m", I)),
+            All(Imp(Ne(V("i"), V("m")), C("IsPositiveCriticalCoefficient", V("d"), V("m"), V("i"), B(V("m"), V("i")))), ("m", I), ("i", I)))),
+        "IsMinimalRelation" => IffF(C(name, V("d"), V("i"), V("k"), V("z")), And(C("IsCriticalCoefficient", V("d"), V("i"), V("k")),
+            Equal(At("z", V("i")), D(0)), Equal(Ev(V("z")), Mul(V("k"), At("d", V("i")))))),
+        "IsPositiveMinimalRelation" => IffF(C(name, V("d"), V("m"), V("i"), V("k"), V("z")), And(Ne(V("i"), V("m")),
+            C("IsPositiveCriticalCoefficient", V("d"), V("m"), V("i"), V("k")), Equal(At("z", V("i")), D(0)),
+            Pos(At("z", V("m"))), Equal(Ev(V("z")), Mul(V("k"), At("d", V("i")))))),
+        "boundaryCoefficient" => Equal(C(name, V("b"), V("i")), Boundary),
+        "IsPrimary" => IffF(C(name, V("a"), V("b")), Ex(And(Ne(V("i"), V("m")), Ne(V("j"), V("m")), Ne(V("i"), V("j")),
+            Equal(At("a", V("i")), B(V("m"), V("i"))), Equal(At("a", V("j")), B(V("m"), V("j")))), ("m", I), ("i", I), ("j", I))),
+        "pure" => All(And(Imp(Equal(V("j"), V("i")), Equal(C("coordinate", Pure(V("i"), V("k")), V("j")), V("k"))),
+            Imp(Ne(V("j"), V("i")), Equal(C("coordinate", Pure(V("i"), V("k")), V("j")), D(0)))), ("j", I)),
+        "HasSecondaryOrdering" => IffF(C(name, V("d"), V("a")), And(Ne(Mul(At("a", D(0)), Dv(0)), Mul(At("a", D(2)), Dv(2))),
+            PairFiber(0, 0, 1), PairFiber(1, 0, 1), PairFiber(2, 2, 3), PairFiber(3, 2, 3))),
+        "IsOrderedSecondary" => IffF(Ordered, And(C("IsNumericalGeneratingTuple", V("d")), C("IsCriticalData", V("d"), V("a")),
+            C("IsPositiveCriticalData", V("d"), V("b")), new Formula.Not(C("IsPrimary", V("a"), V("b"))), C("HasSecondaryOrdering", V("d"), V("a")))),
+        "leftPair" => Equal(C(name, V("d"), V("n")), Set("z", C("Factorizations", V("d"), V("n")), And(Equal(Z(2), D(0)), Equal(Z(3), D(0))))),
+        "rightPair" => Equal(C(name, V("d"), V("n")), Set("z", C("Factorizations", V("d"), V("n")), And(Equal(Z(0), D(0)), Equal(Z(1), D(0))))),
+        "HasExactlyPairComponents" => IffF(C(name, V("d"), V("n")), Ex(And(Ne(V("c0"), V("c1")),
+            Equal(C("supp", V("c0")), C("leftPair", V("d"), V("n"))), Equal(C("supp", V("c1")), C("rightPair", V("d"), V("n"))),
+            All(Or(Equal(V("c"), V("c0")), Equal(V("c"), V("c1"))), ("c", C("ConnectedComponent", Graph(V("n")))))),
+            ("c0", C("ConnectedComponent", Graph(V("n")))), ("c1", C("ConnectedComponent", Graph(V("n")))))),
+        "claim" => IffF(V("claim"), FullClaim),
+        "positive_minimum_excludes_coordinate" => All(Imp(And(PositiveTuple, Ne(V("i"), V("m")),
+            C("IsPositiveCriticalCoefficient", V("d"), V("m"), V("i"), V("k")), Equal(Ev(V("z")), Mul(V("k"), At("d", V("i")))),
+            Pos(At("z", V("m")))), Equal(At("z", V("i")), D(0))), ("d", V("Generators")), ("m", I), ("i", I), ("k", N), ("z", V("Factorization"))),
+        "critical_pair_positive_representation" => All(Imp(And(PositiveTuple, Ne(V("x"), V("y")), Ne(V("c"), V("x")), Ne(V("c"), V("y")),
+            C("IsCriticalCoefficient", V("d"), V("x"), V("A")), Equal(Fiber(Mul(V("A"), At("d", V("x")))),
+                new Formula.SetLiteral([Pure(V("x"), V("A")), Pure(V("y"), V("B"))]))),
+            Ex(And(Pos(V("u")), Pos(V("v")), Equal(Mul(Threshold(V("x"), V("y"), V("c")), At("d", V("c"))),
+                Add(Mul(V("u"), At("d", V("x"))), Mul(V("v"), At("d", V("y")))))), ("u", N), ("v", N))),
+            ("d", V("Generators")), ("x", I), ("y", I), ("c", I), ("A", N), ("B", N)),
+        "secondary_boundary_bounds" => All(Imp(And(Ordered, RightIndex), And(Rel(At("a", V("i")), FormulaRelationOperator.LessThan, Boundary),
+            Rel(Boundary, FormulaRelationOperator.LessThanOrEqual, BoundThreshold))),
+            ("d", V("Generators")), ("a", V("CriticalCoefficients")), ("b", V("PositiveCriticalCoefficients")), ("i", I)),
+        "equality_excludes_mixed" => All(Imp(And(Ordered, RightIndex, Equal(Boundary, BoundThreshold), Equal(Ev(V("z")), Degree)),
+            Or(And(Equal(Z(0), D(0)), Equal(Z(1), D(0))), And(Equal(Z(2), D(0)), Equal(Z(3), D(0))))),
+            ("d", V("Generators")), ("a", V("CriticalCoefficients")), ("b", V("PositiveCriticalCoefficients")), ("i", I), ("z", V("Factorization"))),
+        "result" => FullClaim,
+        _ => throw new System.ArgumentException("Unknown mathematical statement.", nameof(name))
+    };
+
+    private static Formula PairFiber(int degree, int x, int y) => Equal(
+        Fiber(Mul(At("a", new Formula.Number(degree)), Dv(degree))),
+        new Formula.SetLiteral([Pure(new Formula.Number(x), At("a", new Formula.Number(x))),
+            Pure(new Formula.Number(y), At("a", new Formula.Number(y)))]));
 }
