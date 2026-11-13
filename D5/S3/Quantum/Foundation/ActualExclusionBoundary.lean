@@ -7,6 +7,7 @@
    digest: Whole exclusions cover the actual boundary and detect its boundary midpoints. -/
 
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
+import D5.S3.Quantum.Foundation.OriginalFacePolarity
 import D5.S3.Topology.FiniteConvexFiberMap
 import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
@@ -154,6 +155,24 @@ theorem original_boundary_cover_and_midpoint
     exact exclusion_boundary hclosed hstrict hgen hB p
       ((all.1 p).2.2.1.midpoint_mem hp hq)
 
+private theorem original_whole_balls_eq_of_two
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (a b : pure C u) {x y : V}
+    (hx : x ∈ exclusion C u a ∩ exclusion C u b)
+    (hy : y ∈ exclusion C u a ∩ exclusion C u b) (hxy : x ≠ y) :
+    exclusion C u a = exclusion C u b := by
+  have all := exclusion_ball_faces hclosed hstrict hgen hB
+  have hc := (all.1 a).2.2.1.inter (all.1 b).2.2.1
+  have hf := (all.1 a).2.2.2.2.1.inter (all.1 b).2.2.2.2.1
+  have hn : (exclusion C u a ∩ exclusion C u b).Nontrivial := ⟨x, hx, y, hy, hxy⟩
+  have ha := chart_face_eq (hB a).some hc
+    (hf.mono (all.1 a).2.2.2.2.1.subset inter_subset_left) hn
+  have hb := chart_face_eq (hB b).some hc
+    (hf.mono (all.1 b).2.2.2.2.1.subset inter_subset_right) hn
+  exact ha.symm.trans hb
+
 private theorem repeated_ball_isolated
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -163,18 +182,7 @@ private theorem repeated_ball_isolated
     exclusion C u p = exclusion C u q ∨ Disjoint (exclusion C u p) (exclusion C u q) := by
   classical
   have all := exclusion_ball_faces hclosed hstrict hgen hB
-  have two (a b : pure C u) {x y : V}
-      (hx : x ∈ exclusion C u a ∩ exclusion C u b)
-      (hy : y ∈ exclusion C u a ∩ exclusion C u b) (hxy : x ≠ y) :
-      exclusion C u a = exclusion C u b := by
-    have hc := (all.1 a).2.2.1.inter (all.1 b).2.2.1
-    have hf := (all.1 a).2.2.2.2.1.inter (all.1 b).2.2.2.2.1
-    have hn : (exclusion C u a ∩ exclusion C u b).Nontrivial := ⟨x, hx, y, hy, hxy⟩
-    have ha := chart_face_eq (hB a).some hc
-      (hf.mono (all.1 a).2.2.2.2.1.subset inter_subset_left) hn
-    have hb := chart_face_eq (hB b).some hc
-      (hf.mono (all.1 b).2.2.2.2.1.subset inter_subset_right) hn
-    exact ha.symm.trans hb
+  have two := original_whole_balls_eq_of_two hclosed hstrict hgen hB
   by_cases he : exclusion C u p = exclusion C u q
   · exact Or.inl he
   right
@@ -791,7 +799,7 @@ theorem original_singleton_label_exists [Nontrivial V]
   by_contra hn
   have hrepeated : ∀ p : pure C u, ∃ s : pure C u,
       p ≠ s ∧ exclusion C u s = exclusion C u p := by
-    push_neg at hn
+    push Not at hn
     intro p
     obtain ⟨s, hs, hsp⟩ := hn p
     exact ⟨s, Ne.symm hsp, hs⟩
@@ -819,6 +827,7 @@ theorem original_singleton_label_exists [Nontrivial V]
     rw [← e.preimage_interior]
     obtain ⟨b, hb, hbc⟩ := mem_intrinsicInterior.mp hc
     have he : e 0 = b := by apply Subtype.ext; simpa [e, cB] using hbc.symm
+    change e 0 ∈ interior (Subtype.val ⁻¹' K : Set B)
     exact he.symm ▸ hb
   let ball : Set E := Metric.closedBall 0 1
   let g : E ≃ₜ E := gaugeRescaleHomeomorph T ball hTconvex
@@ -865,13 +874,14 @@ theorem original_singleton_label_exists [Nontrivial V]
     change NormedSpace.normalize (F (0, x)) = (x : E)
     have he : F (0, x) = (x : E) := by
       rw [show F (0, x) = g (H (0, J.symm x)) from rfl]
-      rw [← Jval (J.symm x), J.apply_symm_apply]
-      apply congrArg g
-      apply Subtype.ext
-      exact H0 _
+      have hh : H (0, J.symm x) = ⟨(J.symm x : V) - c,
+          B.vsub_mem_direction (subset_affineSpan ℝ K
+            (intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed
+              (J.symm x).property)) hca⟩ := Subtype.ext (H0 _)
+      rw [hh, ← Jval (J.symm x), J.apply_symm_apply]
     rw [he]
     exact NormedSpace.normalize_eq_self_of_norm_eq_one
-      (Metric.mem_sphere_zero_iff_norm.mp x.property)
+      (mem_sphere_zero_iff_norm.mp x.property)
   have hone (x : Metric.sphere (0 : E) 1) : Hsphere (1, x) = endpoint := by
     apply Subtype.ext
     change NormedSpace.normalize (g (H (1, J.symm x))) =
@@ -881,7 +891,101 @@ theorem original_singleton_label_exists [Nontrivial V]
     rw [he]
   apply TauCeti.not_contractibleSpace_sphere (E := E)
   apply (contractible_iff_id_nullhomotopic _).mpr
-  exact ⟨endpoint, ⟨{ toContinuousMap := Hsphere,
-    map_zero_left := hzero, map_one_left := hone }⟩⟩
+  exact ⟨endpoint, ⟨{
+    toContinuousMap := Hsphere
+    map_zero_left := hzero
+    map_one_left := hone }⟩⟩
+
+
+/-- Every original pure boundary point of a singleton-label whole ball is itself
+a singleton label, with uniqueness tested against all original pure labels. -/
+theorem original_singleton_label_propagation
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u)
+    (hp : ∀ s : pure C u, exclusion C u s = exclusion C u p → s = p)
+    (q : pure C u) (hq : (q : V) ∈ exclusion C u p) :
+    ∀ s : pure C u, exclusion C u s = exclusion C u q → s = q := by
+  classical
+  intro s hs
+  by_contra hsq
+  have all := exclusion_ball_faces hclosed hstrict hgen hB
+  have hpq : (p : V) ∈ exclusion C u q := (exclusion_symmetric p q).mp hq
+  have hps : (p : V) ∈ exclusion C u s := hs.symm ▸ hpq
+  have hsp : (s : V) ∈ exclusion C u p := (exclusion_symmetric p s).mpr hps
+  have hext : (exclusion C u q).extremePoints ℝ ⊆ {(p : V)} := by
+    intro z hz
+    have hzP : z ∈ pure C u := (all.1 q).2.2.2.2.1.extremePoints_subset_extremePoints hz
+    let a : pure C u := ⟨z, hzP⟩
+    have hqa : (q : V) ∈ exclusion C u a := (exclusion_symmetric q a).mp hz.1
+    have hsa : (s : V) ∈ exclusion C u a :=
+      (exclusion_symmetric s a).mp (hs.symm ▸ hz.1)
+    have he := original_whole_balls_eq_of_two hclosed hstrict hgen hB a p
+      ⟨hqa, hq⟩ ⟨hsa, hsp⟩ (fun h => hsq (Subtype.ext h.symm))
+    exact congrArg Subtype.val (hp a he)
+  have hsub : exclusion C u q ⊆ {(p : V)} := by
+    rw [← closure_convexHull_extremePoints (all.1 q).2.1 (all.1 q).2.2.1]
+    exact closure_minimal (convexHull_min hext (convex_singleton _)) isClosed_singleton
+  obtain ⟨x, hx, y, hy, hxy⟩ := (all.1 q).1
+  exact hxy ((mem_singleton_iff.mp (hsub hx)).trans (mem_singleton_iff.mp (hsub hy)).symm)
+
+
+/-- The original global singleton-label theorem, including propagation over the
+entire selected ball boundary and continuum many distinct whole balls when all
+original ball dimensions are at least two. -/
+theorem original_singleton_label_family [Nontrivial V]
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u) :
+    ∃ p : pure C u,
+      (∀ s : pure C u, exclusion C u s = exclusion C u p → s = p) ∧
+      (∀ q : pure C u, (q : V) ∈ exclusion C u p →
+        ∀ s : pure C u, exclusion C u s = exclusion C u q → s = q) ∧
+      ((∀ q : pure C u, ∃ b : ExclusionChart C u q, 2 ≤ b.dim) →
+        ∃ labels : ℝ ↪ pure C u,
+          (∀ t, (labels t : V) ∈ exclusion C u p) ∧
+          Function.Injective (fun t => exclusion C u (labels t)) ∧
+          ∀ t, ∀ s : pure C u,
+            exclusion C u s = exclusion C u (labels t) → s = labels t) := by
+  classical
+  obtain ⟨p, hp⟩ := original_singleton_label_exists hclosed hstrict hgen hB
+  have hprop := original_singleton_label_propagation hclosed hstrict hgen hB p hp
+  refine ⟨p, hp, hprop, ?_⟩
+  intro hthick
+  obtain ⟨b, hb⟩ := hthick p
+  let i₀ : Fin b.dim := ⟨0, by omega⟩
+  let i₁ : Fin b.dim := ⟨1, by omega⟩
+  let w (t : ℝ) : EuclideanSpace ℝ (Fin b.dim) :=
+    WithLp.toLp 2 (fun i => if i = i₀ then 1 else if i = i₁ then t else 0)
+  have wi₀ (t : ℝ) : w t i₀ = 1 := by simp [w]
+  have wi₁ (t : ℝ) : w t i₁ = t := by simp [w, i₀, i₁]
+  have wnz (t : ℝ) : w t ≠ 0 := by
+    intro hz
+    have he := congrArg (fun z : EuclideanSpace ℝ (Fin b.dim) => z i₀) hz
+    exact one_ne_zero (by simpa only [wi₀, PiLp.zero_apply] using he)
+  let point (t : ℝ) := NormedSpace.normalize (w t)
+  have hsphere (t : ℝ) : point t ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin b.dim)) 1 :=
+    mem_sphere_zero_iff_norm.mpr (NormedSpace.norm_normalize (wnz t))
+  have hpoint (t : ℝ) : b.param (point t) ∈ exclusion C u p ∩ pure C u := by
+    rw [OriginalFacePolarity.chart_boundary hclosed hstrict hgen hB p b]
+    exact ⟨point t, hsphere t, rfl⟩
+  let labels : ℝ → pure C u := fun t => ⟨b.param (point t), (hpoint t).2⟩
+  have hinj : Function.Injective labels := by
+    intro t s he
+    have hn : point t = point s := b.injective (congrArg Subtype.val he)
+    have hray : SameRay ℝ (w t) (w s) :=
+      (sameRay_iff_inv_norm_smul_eq_of_ne (wnz t) (wnz s)).mpr hn
+    obtain ⟨a, _, ha⟩ := hray.exists_pos_left (wnz t) (wnz s)
+    have ha1 : a = 1 := by
+      simpa only [PiLp.smul_apply, wi₀, smul_eq_mul, mul_one] using
+        congrArg (fun z : EuclideanSpace ℝ (Fin b.dim) => z i₀) ha
+    have hts := congrArg (fun z : EuclideanSpace ℝ (Fin b.dim) => z i₁) ha
+    simpa only [ha1, one_smul, wi₁] using hts
+  refine ⟨⟨labels, hinj⟩, (fun t => (hpoint t).1), ?_, ?_⟩
+  · intro t s he
+    exact hinj (hprop (labels s) (hpoint s).1 (labels t) he)
+  · intro t s hs
+    exact hprop (labels t) (hpoint t).1 s hs
 
 end D5.S3.Quantum.Foundation.ActualExclusionBoundary

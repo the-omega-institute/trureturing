@@ -134,6 +134,67 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                     Ex("r", Call("Setoid", S), And(properties, slice)))))));
     }
 
+    private static Formula HomotopyStatement()
+    {
+        var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
+        var K = Call("base", C, u); var S = Call("intrinsicFrontier", real, K);
+        var E = Call("direction", Call("affineSpan", real, K));
+        var c = Id("c"); var v = Id("v"); var Hm = Id("H"); var x = Id("x"); var z = Id("z");
+        Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+        var conclusion = Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, K)), Ex("v", S,
+            And(Call("Nontrivial", E), Ex("H", Call("ContinuousMaps", Call("Product", Id("UnitInterval"), S), E),
+                Conj(All("x", S, Eq(Call("H", Call("Pair", F.D(0), x)), Call("Subtract", x, c))),
+                    All("x", S, Eq(Call("H", Call("Pair", F.D(1), x)), Call("Subtract", c, v))),
+                    All("z", Call("Product", Id("UnitInterval"), S),
+                        new Formula.Relation(Call("H", z), FormulaRelationOperator.NotEqual, F.D(0))))))));
+        return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
+            Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V), Inst("Nontrivial", V),
+            All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
+                Imp(And(Call("OriginalEBDomain", C, u), Call("AllRepeated", C, u)), conclusion)))));
+    }
+
+    private static Formula SingletonStatement(bool propagation)
+    {
+        var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
+        var P = Call("pure", C, u); var p = Id("p"); var q = Id("q"); var t = Id("s");
+        Formula Unique(Formula a) => All("s", P, Imp(
+            new Formula.Relation(Call("exclusion", C, u, t), FormulaRelationOperator.Equal,
+                Call("exclusion", C, u, a)),
+            new Formula.Relation(t, FormulaRelationOperator.Equal, a)));
+        var conclusion = propagation
+            ? All("p", P, Imp(Unique(p), All("q", P,
+                Imp(Mem(q, Call("exclusion", C, u, p)), Unique(q)))))
+            : Ex("p", P, Unique(p));
+        return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
+            Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V),
+            propagation ? F.Seq() : Inst("Nontrivial", V),
+            All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
+                Imp(Call("OriginalEBDomain", C, u), conclusion)))));
+    }
+
+    private static Formula FamilyStatement()
+    {
+        var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
+        var P = Call("pure", C, u); var p = Id("p"); var q = Id("q"); var t = Id("s");
+        var labels = Id("labels"); var a = Id("a"); var b = Id("b");
+        Formula Unique(Formula x) => All("s", P, Imp(
+            new Formula.Relation(Call("exclusion", C, u, t), FormulaRelationOperator.Equal,
+                Call("exclusion", C, u, x)),
+            new Formula.Relation(t, FormulaRelationOperator.Equal, x)));
+        var thick = All("q", P, Ex("b", Call("ExclusionChart", C, u, q),
+            new Formula.Relation(F.D(2), FormulaRelationOperator.LessThanOrEqual, Call("dim", b))));
+        var family = Ex("labels", Call("Embeddings", real, P), Conj(
+            All("a", real, Mem(Call("labels", a), Call("exclusion", C, u, p))),
+            Call("Injective", Call("WholeBallFamily", C, u, labels)),
+            All("a", real, Unique(Call("labels", a)))));
+        var conclusion = Ex("p", P, Conj(Unique(p),
+            All("q", P, Imp(Mem(q, Call("exclusion", C, u, p)), Unique(q))), Imp(thick, family)));
+        return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
+            Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V), Inst("Nontrivial", V),
+            All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
+                Imp(Call("OriginalEBDomain", C, u), conclusion)))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Whole original exclusions cover the actual relative boundary and detect its boundary midpoints.",
         H("The actual boundary and common whole exclusions"),
@@ -159,7 +220,7 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Paragraph(Text("RelationGraph(r) is the set of boundary pairs (x,y) with r(x,y). Setoid means an equivalence relation; QuotientMk is its canonical projection onto its actual quotient. The theorem constructs r as the literal boundary-midpoint predicate and proves that its classes are exactly the whole exclusion blocks through the second displayed equivalence.")),
                 Paragraph(Text("To prove isolation, two shared distinct points force two whole exclusion balls to coincide, by applying the existing strict ball-face theorem to their intersection. If a repeated ball meets another different ball, their singleton intersection is pure. The two distinct labels of the repeated ball then force every pure point of that ball to have one common exclusion. Zero symmetry puts all those pure points in the other ball. Compact convex hull generation and maximality force equality, a contradiction. Thus different whole balls are disjoint in this branch, and the midpoint criterion makes the literal relation transitive.")),
                 Paragraph(Text("The actual boundary is a closed subset of compact K. The midpoint map is continuous, so its inverse image of that boundary is a closed relation graph. The saturation of a closed boundary subset is the projection of the intersection of this graph with a compact product. It is closed, proving that the actual quotient projection is closed. Its fibers are compact by the same graph argument. The proper-map product theorem then makes the product projection a quotient map; the closed graph descends to the closed diagonal, proving the actual quotient Hausdorff. Compactness descends from the compact actual boundary. For each actual quotient point b, the ambient image of its entire projection fiber equals one whole original exclusion D(p); AmbientImage and Fiber denote precisely that image and inverse image of the singleton b. No convex subset or selected smaller ball replaces the full fiber.")),
-                Paragraph(Text("This construction places no ENR, metrizability, finite dimension, fibration or local contractibility hypothesis on the quotient. The common rational Baire slice, ray-avoiding finite-neighborhood data, radial homotopy and sphere contradiction are further obligations. The full original theorem is not settled by construction of this quotient."))),
+                Paragraph(Text("This construction places no ENR, metrizability, finite dimension, fibration or local contractibility hypothesis on the quotient. The following results construct the common rational Baire slice, whole-fiber averaging, actual radial homotopy and sphere contradiction; the quotient assertion alone states none of those conclusions."))),
             DescribeRole.Theorem),
         Describe.Lean(DescribeId.Create("original-all-repeated-rational-slice"),
             DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_rational_slice"),
@@ -170,6 +231,30 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Paragraph(Text("Choose a finite linear coordinate basis of the original V and restrict its coordinates to aff(K). Distinct points in each positive-dimensional whole fiber differ in some coordinate. Two rational heights strictly between their values give a countable family indexed by a finite coordinate and two rationals. Its closed set is the intersection of the projection images of the actual boundary halfspaces below the lower height and above the upper height. Both images are compact and closed; every actual quotient point belongs to one such crossing set.")),
                 Paragraph(Text("Apply the pinned compact Hausdorff Baire theorem to this countable closed cover. Some crossing set has nonempty interior O. Let t be the rational midpoint of its heights and f the selected actual coordinate. Every b in O has actual boundary representatives x and y in its same whole fiber with f(x)<t<f(y). In particular the preimage of O contains actual points outside the slice. Convexity of each entire original fiber supplies a representative at the same level t, proving O is contained in the projection image of that one boundary slice. BoundaryLevelSet(f,t) denotes exactly the boundary subtype points x with f(x)=RealCast(t); no independent slice or supplier is assumed.")),
                 Paragraph(Text("The same level genuinely meets ri(K). Choose an actual relative interior point c. If f(c)=t it suffices. Otherwise use the straddling endpoint on the opposite side; the open segment from c to that endpoint lies in ri(K), and its linear image contains t. The displayed interior-level witness therefore follows from the original K. The two strict inequalities also force f to be nonzero. With this actual c as origin, each entire shifted fiber is compact and convex and avoids zero. A sufficiently small open metric thickening is a convex neighborhood still avoiding zero. Closedness of the actual quotient projection gives an open label neighborhood on which every entire shifted fiber lies in that same convex neighborhood. Compactness of the actual quotient gives a finite subcover W indexed by Fin(n), with convex controls N avoiding zero. The displayed control applies to every boundary point x in every whole fiber over W(j), not just to selected representatives. Choose an actual boundary point v over O with f(v)>t. The positive ray R through v-c is closed. A ray from c meets the actual boundary only once: a smaller positive multiple is on an open segment from c to a boundary point, hence is in ri(K); a larger multiple gives the same contradiction with the roles reversed. Thus every whole fiber over a label outside O avoids R. For such labels, choose its convex thickening disjoint from both zero and R; for labels in O, intersect the label neighborhood with O. This supplies the displayed exceptional-label/ray-avoidance alternative for the actual finite controls. Subtract(x,c) is the ambient vector x-c and NotMember is nonmembership. RealCast is the rational-to-real coercion; AmbientImage and Fiber retain the meanings in the preceding statement.")),
-                Paragraph(Text("The source conclusion also instantiates FiniteConvexFiberMap.exists_continuous_ray_avoiding_fiber_map on this actual quotient and these whole original fibers shifted by c. For each label in O choose its representative in the same level slice; elsewhere choose any actual quotient representative. With L the kernel of f, L intersect R is contained in the zero singleton because f(v-c)>0. The resulting continuous A takes values in TranslatedBase(C,u,c), avoids R and has zero-free segments from every point of every whole shifted fiber. PositiveRay(w) is exactly the set of z with SameRay(real,w,z), including zero; NotSameRay is its negation. TranslatedBase is exactly the image of the entire original K under z mapped to z-c, and ContinuousMaps means continuous maps. No normalized replacement or independent fiber supplier enters this instantiation. The radial homotopy and transport to the existing sphere noncontractibility theorem remain further obligations. Singleton-label existence, boundary propagation and continuum multiplicity are not conclusions here. Four-slot source registration remains unfinished under issue 29762. This is an application of existing convex geometry and Baire theory, with no originality claim."))),
+                Paragraph(Text("The source conclusion also instantiates FiniteConvexFiberMap.exists_continuous_ray_avoiding_fiber_map on this actual quotient and these whole original fibers shifted by c. For each label in O choose its representative in the same level slice; elsewhere choose any actual quotient representative. With L the kernel of f, L intersect R is contained in the zero singleton because f(v-c)>0. The resulting continuous A takes values in TranslatedBase(C,u,c), avoids R and has zero-free segments from every point of every whole shifted fiber. PositiveRay(w) is exactly the set of z with SameRay(real,w,z), including zero; NotSameRay is its negation. TranslatedBase is exactly the image of the entire original K under z mapped to z-c, and ContinuousMaps means continuous maps. No normalized replacement or independent fiber supplier enters this instantiation. The following results construct the radial homotopy and transport it to the existing sphere noncontractibility theorem. This rational-slice assertion alone does not state singleton-label existence, boundary propagation or continuum multiplicity. This is an application of existing convex geometry and Baire theory, with no originality claim."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-all-repeated-zero-free-homotopy"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_zero_free_homotopy"),
+            H("A zero-free homotopy in the actual affine direction space"),
+            StatementSource.FromAuthor(F.Disp(HomotopyStatement())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Let E be the direction of aff(K). The origin c belongs to the relative interior of the entire original K, and v belongs to its entire relative boundary S. Every vector x-c and every actual average A(pi(x)) lies in E because both endpoints lie in aff(K). Join x-c to A(pi(x)) by the first straight homotopy. Its zero avoidance is precisely the already established entire-fiber segment condition. Join A(pi(x)) to c-v by a second straight homotopy. If this second segment met zero, its endpoints would give SameRay(v-c,A(pi(x))), contrary to the actual positive-ray avoidance. Both are homotopies in the punctured E; their concatenation has the displayed endpoints. Since c is a relative interior point and v is a relative boundary point, v-c is nonzero, proving E nontrivial from the original geometry. The all-repeated premise belongs only to this contradiction branch. Product, Pair, UnitInterval and direction have their literal Cartesian-product, ordered-pair, closed unit-interval and affine-direction meanings; ambient coercions at the two endpoints are implicit."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-singleton-label-exists"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_singleton_label_exists"),
+            H("Existence of an original singleton-label whole exclusion"),
+            StatementSource.FromAuthor(F.Disp(SingletonStatement(false))), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Suppose every original label had another label with the same whole exclusion. The preceding actual zero-free homotopy is then available. Translate aff(K) by its actual relative interior point c, identifying its direction E with aff(K), and let T be the preimage of the entire K. T is compact and convex, with zero in its interior. Apply the pinned gaugeRescaleHomeomorph from T to the closed unit ball. Its closure and interior image formulas give its frontier image formula, so restriction yields an actual homeomorphism J from the entire original relative boundary to the unit sphere of E. The gauge map fixes zero. Consequently applying it to the actual nowhere-zero homotopy, then normalizing and precomposing with J inverse, gives a sphere homotopy from its identity to a constant. Its initial endpoint follows from the exact translated-boundary formula for J, and its terminal endpoint is independent of the boundary input. This contradicts the existing TauCeti noncontractibility theorem in the nontrivial finite-dimensional real normed space E. Thus an original singleton label exists. No new homology theorem, quotient regularity, equal ball dimensions, common fiber center or Pair premise is used."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-singleton-label-propagation"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_singleton_label_propagation"),
+            H("Propagation over every original pure boundary point"),
+            StatementSource.FromAuthor(F.Disp(SingletonStatement(true))), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("Fix any whole exclusion D(p) whose label fiber in all original P is the singleton p, and take any original pure q in D(p). These are exactly its entire ball boundary points. If s distinct from q had D(s)=D(q), complementary original effects would place both q and s in D(p). For every extreme point z of D(q), the same effect symmetry puts q and s in D(z). Two original whole exclusion balls with two distinct common points coincide: their intersection is a nontrivial convex face, so the existing chart-face rigidity applies to both balls. Hence D(z)=D(p), forcing z=p by the original global singleton premise. Compact convex hull generation would now put the entire positive-dimensional D(q) in the singleton p, contradicting its nontriviality. Therefore q has no other label in the entire original P. This proof uses no all-repeated assumption or quotient."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-singleton-label-family"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_singleton_label_family"),
+            H("The original global singleton-label family and continuum multiplicity"),
+            StatementSource.FromAuthor(F.Disp(FamilyStatement())), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("There exists an original pure p whose entire whole exclusion has the singleton label p. Every original pure q in that entire ball, equivalently every point of its entire ball boundary, is globally a singleton label. If every original label admits a whole-ball chart of dimension at least two, the selected chart b has two distinct coordinate indices. For each real parameter a form the Euclidean vector with coordinates 1, a and zeros, and normalize it to the unit sphere. Its zeroth coordinate before normalization is one, so it is nonzero. If two normalized vectors coincide, they lie on the same positive ray; comparison of the zeroth coordinates forces the ray scalar to be one, and comparison of the first coordinates forces the real parameters equal. The injective affine chart maps this sphere family to actual original pure boundary points of D(p). The propagation theorem makes each of these labels globally unique. Thus two of their entire exclusions can agree only when the labels, and hence the real parameters, agree. The resulting real-indexed embedding provides a subfamily of exactly continuum many original labels and pairwise distinct entire original balls. Embeddings means injective functions; WholeBallFamily(C,u,labels) is exactly the function a mapped to exclusion(C,u,labels(a)). The extra thickness premise quantifies over every original pure label and asks for a whole chart of dimension at least two; it assumes no equality of dimensions. The conclusion uses the entire original base, pure set and original effects throughout. This is a mathematical consequence within the stated model; it makes no physical realization or originality claim."))),
             DescribeRole.Theorem))));
 }

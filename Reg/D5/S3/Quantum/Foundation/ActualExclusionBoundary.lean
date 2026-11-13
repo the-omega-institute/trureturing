@@ -183,4 +183,154 @@ theorem actual_positive : arena.{u}.Law actual :=
 
 end RationalSliceAudit
 
+
+namespace HomotopyAudit
+
+abbrev Inputs := RationalSliceAudit.Inputs
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := C(unitInterval × intrinsicFrontier ℝ (base P.C P.unit),
+    (affineSpan ℝ (base P.C P.unit)).direction)
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := C(unitInterval × intrinsicFrontier ℝ (base P.C P.unit),
+    (affineSpan ℝ (base P.C P.unit)).direction)
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ H => H) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ P : Inputs.{u},
+    let E := (affineSpan ℝ (base P.C P.unit)).direction
+    ∃ c ∈ intrinsicInterior ℝ (base P.C P.unit),
+      ∃ v : intrinsicFrontier ℝ (base P.C P.unit),
+        Nontrivial E ∧ ∃ H : C(unitInterval × intrinsicFrontier ℝ (base P.C P.unit), E),
+          (∀ x, (R.readout () P H (0, x) : P.V) = (x : P.V) - c) ∧
+          (∀ x, (R.readout () P H (1, x) : P.V) = c - (v : P.V)) ∧
+          ∀ z, R.readout () P H z ≠ 0
+
+abbrev source_scope := type_of%
+  (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_zero_free_homotopy.{u})
+
+theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h P
+    exact @h P.V P.normed P.scalar P.finite P.C P.unit P.nontrivial
+      P.closed P.strict P.generating P.balls P.repeated
+  · intro h V normed scalar finite C unit nontrivial closed strict generating balls repeated
+    exact h ⟨⟨⟨V, normed, scalar, finite, C, unit, closed, strict, generating, balls⟩, repeated⟩,
+      nontrivial⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_zero_free_homotopy
+
+end HomotopyAudit
+
+namespace SingletonAudit
+
+structure Inputs extends ActualExclusionBoundary.Inputs.{u} where
+  nontrivial : Nontrivial V
+
+attribute [instance] Inputs.nontrivial
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := pure P.C P.unit
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := Set P.V
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ P p => exclusion P.C P.unit p) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ P : Inputs.{u}, ∃ p : pure P.C P.unit,
+    ∀ q : pure P.C P.unit, R.readout () P q = R.readout () P p → q = p
+
+abbrev source_scope := type_of%
+  (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_singleton_label_exists.{u})
+
+theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h P
+    exact @h P.V P.normed P.scalar P.finite P.C P.unit P.nontrivial
+      P.closed P.strict P.generating P.balls
+  · intro h V normed scalar finite C unit nontrivial closed strict generating balls
+    exact h ⟨⟨V, normed, scalar, finite, C, unit, closed, strict, generating, balls⟩, nontrivial⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_singleton_label_exists
+
+end SingletonAudit
+
+namespace PropagationAudit
+
+abbrev signature := ActualExclusionBoundary.signature.{u}
+abbrev actual := ActualExclusionBoundary.actual.{u}
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ P : ActualExclusionBoundary.Inputs.{u}, ∀ p : pure P.C P.unit,
+    (∀ s : pure P.C P.unit, R.readout () P s = R.readout () P p → s = p) →
+    ∀ q : pure P.C P.unit, (q : P.V) ∈ R.readout () P p →
+      ∀ s : pure P.C P.unit, R.readout () P s = R.readout () P q → s = q
+
+abbrev source_scope := type_of%
+  (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_singleton_label_propagation.{u})
+
+theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h P
+    exact @h P.V P.normed P.scalar P.finite P.C P.unit P.closed P.strict P.generating P.balls
+  · intro h V normed scalar finite C unit closed strict generating balls
+    exact h ⟨V, normed, scalar, finite, C, unit, closed, strict, generating, balls⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_singleton_label_propagation
+
+end PropagationAudit
+
+namespace FamilyAudit
+
+abbrev signature := SingletonAudit.signature.{u}
+abbrev actual := SingletonAudit.actual.{u}
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ P : SingletonAudit.Inputs.{u}, ∃ p : pure P.C P.unit,
+    (∀ s : pure P.C P.unit, R.readout () P s = R.readout () P p → s = p) ∧
+    (∀ q : pure P.C P.unit, (q : P.V) ∈ R.readout () P p →
+      ∀ s : pure P.C P.unit, R.readout () P s = R.readout () P q → s = q) ∧
+    ((∀ q : pure P.C P.unit, ∃ b : ExclusionChart P.C P.unit q, 2 ≤ b.dim) →
+      ∃ labels : ℝ ↪ pure P.C P.unit,
+        (∀ t, (labels t : P.V) ∈ R.readout () P p) ∧
+        Function.Injective (fun t => R.readout () P (labels t)) ∧
+        ∀ t, ∀ s : pure P.C P.unit,
+          R.readout () P s = R.readout () P (labels t) → s = labels t)
+
+abbrev source_scope := type_of%
+  (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_singleton_label_family.{u})
+
+theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h P
+    exact @h P.V P.normed P.scalar P.finite P.C P.unit P.nontrivial
+      P.closed P.strict P.generating P.balls
+  · intro h V normed scalar finite C unit nontrivial closed strict generating balls
+    exact h ⟨⟨V, normed, scalar, finite, C, unit, closed, strict, generating, balls⟩, nontrivial⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_singleton_label_family
+
+end FamilyAudit
+
 end Reg.D5.S3.Quantum.Foundation.ActualExclusionBoundary
