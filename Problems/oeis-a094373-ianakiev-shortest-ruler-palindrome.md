@@ -112,9 +112,16 @@ certificate or a claim of audit completion.
 ## Triage
 
 `theorem`: the single complete two-clause event is the resolution target.
-The sharp bound comes from spacing of odd quotients after extracting
+
+### What the settlement shows
+
+Proved by `D5/S1/Words/Palindromes/IanakievShortestRulerPalindrome.result`:
+both source clauses hold for the literal factorial runs and the stated
+positive-index convention. The sharp bound comes from spacing of odd quotients after extracting
 the common dyadic factor, and it is attained by reflection about a
-center of strictly larger valuation. All later P-values are at least
+center of strictly larger valuation. The consumed `p_formula` proves
+the exact minimum P(i)=2^(v2(i-1)+1)+1 for every i>=2, so every lower
+bound in this argument is attained. All later P-values are at least
 three, separating the stipulated initial first occurrence. These are
 consequences of this same proof, not additional external settlements.
 
@@ -123,7 +130,9 @@ are classical support and earn no separate open-problem credit. A
 different prime, a different zero convention, or a different palindrome
 statistic would require a separate statement and proof. No such extension
 is asserted here. No additional dependent conjecture is settled by the
-inspected source comment.
+inspected source comment; its two conjectural clauses are now consequences
+of the theorem. Other primes, conventions and palindrome statistics remain
+outside this statement and are not claimed as extensions.
 
 ## ASSUMED-UNVERIFIED
 
