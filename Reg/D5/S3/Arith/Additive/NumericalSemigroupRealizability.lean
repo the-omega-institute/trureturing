@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Additive.NumericalSemigroupRealizability
 import Reg.Support.DependentFamily
 
+/-! Source-bound closure readout for complete numerical-semigroup realizability. -/
+
 namespace Reg.D5.S3.Arith.Additive.NumericalSemigroupRealizability
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -43,7 +45,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hm : (1 : ℕ) ∈ (⊥ : AddSubmonoid ℕ) := by
     rw [show (⊥ : AddSubmonoid ℕ) = ⊤ from he]
     trivial
-  simpa using hm
+  simp at hm
 
 theorem dependence : ObservationalDependence signature actual := by
   intro _
@@ -54,7 +56,17 @@ theorem dependence : ObservationalDependence signature actual := by
     AddSubmonoid.closure
     ({0} ∪ (fun s : ℕ => 0 - s) '' (↑({1} : Finset ℕ) : Set ℕ) ∪
       (fun s : ℕ => 0 + s) '' (↑({1} : Finset ℕ) : Set ℕ))
-  simp
+  simp only [Finset.coe_empty, Finset.coe_singleton, Set.image_empty,
+    Set.union_empty, Set.image_singleton, Nat.sub_self, zero_add, Nat.zero_sub]
+  intro h
+  have hz : AddSubmonoid.closure ({0} : Set ℕ) ≤ (⊥ : AddSubmonoid ℕ) :=
+    AddSubmonoid.closure_le.mpr (by simp)
+  have ho : (1 : ℕ) ∈ AddSubmonoid.closure
+      ({0} ∪ {0} ∪ {1} : Set ℕ) :=
+    AddSubmonoid.subset_closure (by simp)
+  rw [← h] at ho
+  have hf := hz ho
+  simp at hf
 
 def registration : Registration arena
     (type_of% _root_.D5.S3.Arith.Additive.NumericalSemigroupRealizability.result) where
