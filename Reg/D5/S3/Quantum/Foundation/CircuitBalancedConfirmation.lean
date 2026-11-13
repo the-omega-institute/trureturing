@@ -106,4 +106,60 @@ theorem equivalence_source_bridge :
 theorem equivalence_actual_positive : equivalenceArena.{u}.Law actual.{u} :=
   equivalence_source_bridge.mp (@full_mixture_iff_circuit_balance.{u})
 
+namespace Normalization
+
+/-- The normalization theorem does not require a finite dimensional carrier. -/
+structure Inputs where
+  A : Type u
+  [add : NormedAddCommGroup A]
+  [space : NormedSpace ℝ A]
+  cone : PointedCone ℝ A
+  unit : A →ₗ[ℝ] ℝ
+
+attribute [instance] Inputs.add Inputs.space
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := P.A
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := P.A
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ P x => (P.unit x)⁻¹ • x) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law O := ∀ P : Inputs.{u},
+    (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
+    ∀ x : P.A, x ∈ P.cone → x ≠ 0 →
+      O.readout () P x ∈ base P.cone P.unit
+
+abbrev sourceScope : Prop := type_of% (@normalized_mem.{u})
+
+theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P hu x hx hne
+    exact @h P.A P.add P.space P.cone P.unit hu x hx hne
+  · intro h A add space C u hu x hx hne
+    exact h (@Inputs.mk A add space C u) hu x hx hne
+
+theorem actual_positive : arena.{u}.Law actual.{u} :=
+  source_bridge.mp (@normalized_mem.{u})
+
+end Normalization
+
+/-- Exact original telescopes of the exposed convex-geometric owners. These
+checks do not supply four-slot variation or source-coordinate evidence. -/
+abbrev compactSourceScope : Prop := type_of% (@base_compact.{u})
+abbrev nonnegativeSourceScope : Prop := type_of% (@nonneg_on_cone.{u})
+abbrev boundSourceScope : Prop := type_of% (@cone_bound.{u})
+
+theorem compact_source_exact : compactSourceScope.{u} := @base_compact.{u}
+theorem nonnegative_source_exact : nonnegativeSourceScope.{u} := @nonneg_on_cone.{u}
+theorem bound_source_exact : boundSourceScope.{u} := @cone_bound.{u}
+
 end Reg.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation

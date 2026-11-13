@@ -1,0 +1,10 @@
+**Continuation.** Sections 42–49 are in
+[Paid-point observation tracking](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md).
+The section, theorem and equation numbering continues there: the
+[Read converse](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#42-a-read-converse-for-the-complete-predictable-gap-class),
+[chance resource floors](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#43-chance-class-floors-for-actual-native-execution),
+[paid-polling construction](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#45-one-finite-command-policy-using-only-paid-polling),
+[full held accuracy](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#47-missed-excursions-local-branches-and-complete-held-accuracy),
+and [joint orders and lifetime behavior](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md#48-joint-fixed-risk-optimum-and-coupled-own-death-behavior)
+use the interface and class of Definition 41.1 above.
+

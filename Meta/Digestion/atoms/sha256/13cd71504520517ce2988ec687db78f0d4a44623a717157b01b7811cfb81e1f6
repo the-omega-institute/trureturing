@@ -1,0 +1,126 @@
+**定理 57.2（实际低代价层的严格分离及全域极小极大式）。**
+令 $K_0=K_+(0)=K_-(0)$。在整个 $\Omega$ 中有
+
+$$
+\begin{gathered}
+U\le K_0\quad\Longrightarrow\quad
+H:=8+\frac{2s(5x-3)}{3d}>0\quad\hbox{且}\quad V_s<0,\\
+U=K_0\quad\Longrightarrow\quad V\ge K_0,\qquad
+U<K_0\quad\Longrightarrow\quad V>K_0,\\
+\min_{\Omega}\max(U,V)=K_0,\qquad
+\operatorname*{argmin}_{\Omega}\max(U,V)
+=\{U=V=K_0\}=\iota(\mathcal M_0).
+\end{gathered}
+\tag{57.2}
+$$
+
+最后一个等式包括全部全局极小接触，不选择某个根或局部分支。
+
+**证明。** 先固定 $y,s$。由 (57.1)，
+
+$$
+\begin{gathered}
+m:=b_x=\frac{(2x-1)s+6d}{y},\qquad a_x=-\frac12,\qquad
+\frac{(c_{\rm cost})_x}{c_{\rm cost}}=-\frac1{xd},\\
+U_x=-\frac{c_{\rm cost}}{xd}N_{\rm cost},\\
+N_{\rm cost}=W+xd\,a-2xd\,b m
+=a^2-(xdm)^2+(b-xdm)^2+xd\,a>0.
+\end{gathered}
+\tag{57.3}
+$$
+
+严格性只需 $xd\le1/4$、$|2x-1|<1$、$d<1$、$y>1$ 所给的
+$|xdm|<s/4+3/2<a$。所以 $U_x<0$。
+当 $x\downarrow0$，$W\ge a^2$ 保持正下界而 $c_{\rm cost}\to\infty$；
+当 $x\uparrow1$，$W$ 有限而 $c_{\rm cost}\to0$。
+故对每个 $K>0$，同一条射线上恰有一个点 $x=X(K,y,s)$ 使 $U=K$。
+
+每个 $\widehat P=0$ 的点都有 $t>1/4$，并由 (46.8) 及前卷定理 43.2
+重构原来源的完整不利接触，其原代价为 $U$。
+因此 $x>X(K_0,y,s)$ 上不可能有 $\widehat P=0$，否则产生代价低于 $K_0$
+的实际接触。另一方面，固定同一 $y,s$ 令 $x\uparrow1$，直接由 (57.1) 得
+
+$$
+d^2(2tW)\longrightarrow0,\qquad
+dG\longrightarrow-(1-iy)s\left(\frac13+\frac{i}{y}\right)\ne0.
+\tag{57.4}
+$$
+
+所以 $\widehat P$ 在该射线的右端为负；连续性与无零点性使它在
+$x>X(K_0,y,s)$ 上处处为负。在 $x=X(K_0,y,s)$ 上于是
+$\widehat P\le0$，由 (57.1) 得 $V\ge K_0$。
+这里的 $x$ 导数和右端极限均固定 $y,s$，没有用固定 $t$ 导数替代。
+
+现在证明低代价层的实际括号严格正。若 $H\le0$，则
+$12d+s(5x-3)\le0$，即 $(5s-12)d\ge2s$。
+因 $d<1$，必有
+
+$$
+s>4,\qquad \frac d x\ge\frac{2s}{3(s-4)}.
+\tag{57.5}
+$$
+
+置 $p=s-5/2>0$、$h_{\rm aux}=d(3d+xs)$。
+由 $h_{\rm aux}\le3+s/4$ 和 $a\ge s+3/2$，得到
+
+$$
+\begin{aligned}
+a^2-2p h_{\rm aux}
+&\ge \frac{s^2}{2}-\frac{7s}{4}+\frac{69}{4}
+=16+\frac{(2s-5)(s-1)}4>16,\\
+W&=a^2+p^2y^2-2p h_{\rm aux}+\frac{h_{\rm aux}^2}{y^2}
+>16+p^2y^2\ge8py,\\
+U&>\frac{4dp}{xs}
+\ge\frac{8(s-5/2)}{3(s-4)}>\frac83.
+\end{aligned}
+\tag{57.6}
+$$
+
+第二行的非严格不等式是 $(py-4)^2\ge0$；第三行还使用
+$y^2/(y^2-1)>1$。前卷定理 41.4 给 $K_0\le85/72<8/3$，
+故 $U\le K_0$ 时 $H\le0$ 不可能，且排除覆盖整个该子水平集。
+
+为得到第二代价的方向，固定 $x,y$，置
+
+$$
+\begin{gathered}
+\chi=\frac1{4t-1}=\frac{3d}{2xs},\qquad
+A=8\chi+5-\frac3x=\chi H,\qquad
+j=\frac{3(x+1)}y,\\
+\gamma=\frac{y[(2-x)^2+y^2]}{24(y^2-1)}>0,\qquad
+V=\gamma\frac{A^2+j^2(1+2\chi)^2}{1+\chi}.
+\end{gathered}
+\tag{57.7}
+$$
+
+复用 (56.18) 的微分平方因式，或直接对末式微分，有
+
+$$
+\frac{(1+\chi)^2}{\gamma}V_\chi
+=A\left(11+\frac3x+8\chi\right)
+ +j^2(1+2\chi)(3+2\chi)>0\qquad(U\le K_0).
+\tag{57.8}
+$$
+
+这里 $A=\chi H>0$，且 $\chi_s=-\chi/s<0$，所以 $V_s<0$。
+使用的是面外也成立的微分因式；(56.17)、(56.19) 将其认作价格导数的
+步骤仍只在它们原定的 $N=N_q=0$ 条件下适用。
+
+任取 $U(x,y,s_0)<K_0$。固定此 $x,y$ 增加 $s$ 时，
+$U\ge yd\,s/[2x(y^2-1)]\to\infty$。
+所以存在第一个 $s_*>s_0$ 使 $U(x,y,s_*)=K_0$，在
+$[s_0,s_*)$ 内始终 $U<K_0$；这里不假设 $U$ 关于 $s$ 全域单调。
+沿这段区间 $V_s<0$，且已证的边界不等式给
+
+$$
+V(x,y,s_0)>V(x,y,s_*)\ge K_0.
+\tag{57.9}
+$$
+
+于是 $U<K_0$、$U=K_0$、$U>K_0$ 三种情形给
+$\max(U,V)\ge K_0$，等号恰在 $U=V=K_0$ 成立。
+等号点由实际重构属于 $\iota(\mathcal M_0)$；反之，定理 56.3 的每个
+全局极小接触都在 $\Omega$ 内并满足 $U=V=K_0$。
+该集合非空，故下确界确实取到。这是同一实际模型的全域分离证明，
+没有交换极小与极大，也没有使用凸对偶充分性。∎
+
