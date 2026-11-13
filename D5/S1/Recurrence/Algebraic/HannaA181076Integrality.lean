@@ -78,8 +78,8 @@ theorem result : claim := by
     rw [← coeff_zero_eq_constantCoeff_apply]
     simp [logarithm]
   have ha : coeff 0 A = 1 := by
-    change MvPowerSeries.constantCoeff (PowerSeries.subst logarithm (PowerSeries.exp ℚ)) = 1
-    rw [constantCoeff_subst_of_constantCoeff_zero hz, constantCoeff_exp]
+    rw [coeff_zero_eq_constantCoeff_apply, A, constantCoeff_eq,
+      constantCoeff_subst_of_constantCoeff_zero hz, constantCoeff_exp]
     simp
   intro m
   cases m with
