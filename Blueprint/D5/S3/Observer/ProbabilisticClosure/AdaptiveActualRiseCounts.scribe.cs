@@ -61,7 +61,7 @@ internal sealed class AdaptiveActualRiseCountsDocument : IScribeDocumentDefiniti
             Forall, Sp, source, Colon, F.Id("Source"), Comma, Sp,
             Forall, Sp, n, InMacro, naturals, Comma,
             RowBreak, Grp(),
-            Open, Call("noAdjacentOnes", source), Land,
+            Open, Call("noAdjacentOnes", source), Land, Sp,
             n, Lt, Call("stoppingTime", policy, seed, source), Close, Rightarrow,
             RowBreak, Grp(),
             Open, Open, Forall, Sp, side, Colon, F.Id("Bool"), Comma, Sp,
