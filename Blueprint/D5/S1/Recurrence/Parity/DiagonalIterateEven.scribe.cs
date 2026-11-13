@@ -47,8 +47,7 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
                 + "lower coefficients and vanishing residuals force equality of the next coefficient."),
             Node("H", "The characteristic-two inverse series",
                 Disp(Equal(Call("H"), Call("substInvOfIsUnit",
-                    Seq(F.Id("X"), Sp, Plus, Sp, new Formula.Power(F.Id("X"), D(2))),
-                    Call("quadratic_unit")))),
+                    Seq(F.Id("X"), Sp, Plus, Sp, new Formula.Power(F.Id("X"), D(2)))))),
                 "Over ZMod(2), quadratic is X+X² and quadratic_unit proves that its "
                 + "linear coefficient is a unit. H is its substInvOfIsUnit compositional "
                 + "inverse. The inverse construction supplies zero constant coefficient.",
@@ -62,7 +61,8 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
                 "Composing X+X² with H gives X. Substitution distributes over addition "
                 + "and powers, yielding H+H²=X in the power-series ring over ZMod(2)."),
             Node("mod_two_identity", "Reduction of the integer series is the inverse",
-                Disp(Equal(Call("map", G(), Call("Int.castRingHom", Call("ZMod", D(2)))),
+                Disp(Equal(Call("map", G(), new Formula.Apply(Seq(Operatorname, Grp(F.Id("Int")), Dot,
+                    Operatorname, Grp(F.Id("castRingHom"))), [Call("ZMod", D(2))])),
                     Call("H"))),
                 "The coefficientwise map along the integer cast to ZMod(2) takes "
                 + "generatingSeries to H. Both satisfy the normalized adjacent-iterate "

@@ -14,8 +14,8 @@ internal sealed class DiagonalOrdinaryParityDocument : IScribeDocumentDefinition
         "The normalized diagonal-constraint series has odd ordinary coefficients exactly at powers of two.",
         H("Ordinary Coefficient Parity of the Diagonal-Constraint Series"),
         Blocks(
-            Paragraph(Text("OEIS A177775 is the ordinary coefficient sequence of the same "
-                + "generatingSeries G. The initial values are G(0)=0 and coeff(1,G)=coeff(2,G)=1; "
+            Paragraph(Text("OEIS A177775 is the ordinary coefficient sequence of "
+                + "DiagonalIterateEven.generatingSeries G. The initial values are G(0)=0 and coeff(1,G)=coeff(2,G)=1; "
                 + "they are specified by the original recursive program and by the revised "
                 + "seed [0,1,1]. The NAME's adjacent-iterate condition holds for every n>2. "
                 + "The construction and uniqueness in DiagonalIterateEven identify this normalized source "
@@ -49,7 +49,7 @@ internal sealed class DiagonalOrdinaryParityDocument : IScribeDocumentDefinition
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula N() => F.Id("n");
-    private static Formula G() => Call("DiagonalIterateEven.generatingSeries");
+    private static Formula G() => Call("generatingSeries");
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
     private static Formula Coeff(Formula n, Formula f) => Call("coeff", n, f);
