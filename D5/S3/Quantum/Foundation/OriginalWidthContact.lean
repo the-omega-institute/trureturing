@@ -27,7 +27,7 @@ Together with an attained contrast M this expresses W(F)=M. -/
 def WidthBound (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (F : Set V) (M : ℝ) : Prop :=
   ∀ f : V →ₗ[ℝ] ℝ, proper C u f → ∀ x ∈ F, ∀ y ∈ F, f x - f y ≤ M
 
-private theorem normalized_effect {C : PointedCone ℝ V} {u h : V →ₗ[ℝ] ℝ}
+theorem normalized_effect {C : PointedCone ℝ V} {u h : V →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u)) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     {a z : V}
     (hmin : ∀ x ∈ base C u, h a ≤ h x) (hmax : ∀ x ∈ base C u, h x ≤ h z)
@@ -144,7 +144,7 @@ theorem top_subsingleton_of_zero_exclusion
     exact closure_minimal (convexHull_min hext (convex_singleton _)) isClosed_singleton
   exact fun x hx y hy => (hsub hx).trans (hsub hy).symm
 
-private theorem contact_face_subsingleton
+theorem contact_face_subsingleton
     {C : PointedCone ℝ V} {u f : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
