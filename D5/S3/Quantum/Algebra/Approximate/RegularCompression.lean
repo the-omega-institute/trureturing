@@ -104,13 +104,13 @@ local instance regularMap_normOneClass :
 
 private theorem regularEquiv_norm (x : H) : ‖D.regularEquiv x‖ = D.p x := rfl
 
-private theorem norm_le_p (x : H) : ‖x‖ ≤ D.p x := by
+theorem norm_le_p (x : H) : ‖x‖ ≤ D.p x := by
   simpa only [p, D.right_unit, D.unit_norm, mul_one] using (D.mul x).le_opNorm D.unit
 
-private theorem p_le (x : H) : D.p x ≤ M * ‖x‖ :=
+theorem p_le (x : H) : D.p x ≤ M * ‖x‖ :=
   (D.mul.le_opNorm x).trans (mul_le_mul_of_nonneg_right D.mul_norm (norm_nonneg x))
 
-private theorem p_star (x : H) : D.p (star x) = D.p x := by
+theorem p_star (x : H) : D.p (star x) = D.p x := by
   unfold p
   rw [← D.adjoint_mul]
   exact ContinuousLinearMap.adjoint.norm_map _
@@ -120,14 +120,14 @@ theorem p_star_mul_rev (x y : H) :
     D.p (D.mul (star y) (star x)) = D.p (D.mul x y) := by
   rw [← D.star_mul, p_star]
 
-private theorem action_defect (x y : H) :
+theorem action_defect (x y : H) :
     ‖D.mul (D.mul x y) - D.mul x * D.mul y‖ ≤ δ * ‖x‖ * ‖y‖ := by
   apply ContinuousLinearMap.opNorm_le_bound
   · exact mul_nonneg (mul_nonneg D.delta_nonneg (norm_nonneg x)) (norm_nonneg y)
   · intro z
     exact D.assoc_bound x y z
 
-private theorem p_mul (x y : H) : D.p (D.mul x y) ≤ (1 + δ) * D.p x * D.p y := by
+theorem p_mul (x y : H) : D.p (D.mul x y) ≤ (1 + δ) * D.p x * D.p y := by
   have h := norm_add_le (D.mul (D.mul x y) - D.mul x * D.mul y) (D.mul x * D.mul y)
   have ha := action_defect D x y
   have hb := norm_mul_le (D.mul x) (D.mul y)
@@ -174,12 +174,12 @@ private theorem left_apply (x y : H) : D.left x (D.regularEquiv y) =
 private theorem right_apply (x y : H) : D.right x (D.regularEquiv y) =
     D.regularEquiv (D.mul y x) := by simp [right]
 
-private theorem p_add (x y : H) : D.p (x + y) ≤ D.p x + D.p y := by
+theorem p_add (x y : H) : D.p (x + y) ≤ D.p x + D.p y := by
   simpa only [p, map_add] using norm_add_le (D.mul x) (D.mul y)
 
 private theorem p_neg (x : H) : D.p (-x) = D.p x := by simp only [p, map_neg, norm_neg]
 
-private theorem projection_norm_le_two (P : H) (hP : star P = P) {τ : ℝ}
+theorem projection_norm_le_two (P : H) (hP : star P = P) {τ : ℝ}
     (hτ : τ ≤ 1 / 4) (hδ : δ ≤ 1 / 4) (hPP : D.p (D.mul P P - P) ≤ τ) :
     D.p P ≤ 2 := by
   have hself : ‖D.mul P * D.mul P‖ = D.p P ^ 2 := by
@@ -685,7 +685,7 @@ theorem compression_idempotent (P Q : H) (hP : star P = P) (hQ : star Q = Q)
   simpa only [compression, mul_apply_eq_comp, ContinuousLinearMap.comp_apply,
     ContinuousLinearEquiv.coe_coe, ContinuousLinearEquiv.apply_symm_apply] using hx
 
-private theorem compression_eq_self_of_mem (P Q : H) (hP : star P = P)
+theorem compression_eq_self_of_mem (P Q : H) (hP : star P = P)
     (hQ : star Q = Q) {τ : ℝ} (hτ : 0 ≤ τ)
     (hsmall : τ + M * δ ≤ 1 / 1024)
     (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
@@ -717,7 +717,7 @@ private theorem p_assoc_error {τ : ℝ} (hτ : 0 ≤ τ) (x y z : H) :
   nlinarith
 
 /-- Range membership gives actual left support, up to a uniform regular-norm error. -/
-private theorem corner_left_support (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+theorem corner_left_support (P Q : H) (hP : star P = P) (hQ : star Q = Q)
     {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
     (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ)
     {x : H} (hx : x ∈ D.corner P Q) :
