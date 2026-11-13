@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Fourier/GoldenModelSetFibreBridge
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=terminal=gid:D5/S3/Fourier/GoldenModelSetFibreBridge.golden_modelSet_fiber_witness
+   utility: none
    digest: Floor-selected fibres connect the golden model set to its mechanical word. -/
 
 import D5.S0.Carrier.Euclidean
