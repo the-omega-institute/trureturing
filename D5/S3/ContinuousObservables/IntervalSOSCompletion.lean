@@ -195,9 +195,9 @@ private theorem HasParity.add_two {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) : 
   ⟨fun hn => hP.1 ((Nat.even_add.mp hn).mpr even_two),
     fun hn => hP.2 ((Nat.odd_add.mp hn).mpr even_two)⟩
 
-private noncomputable def evenRoot (P : ℂ[X]) : ℂ[X] := contract 2 P
+noncomputable def evenRoot (P : ℂ[X]) : ℂ[X] := contract 2 P
 
-private noncomputable def oddRoot (P : ℂ[X]) : ℂ[X] := contract 2 P.divX
+noncomputable def oddRoot (P : ℂ[X]) : ℂ[X] := contract 2 P.divX
 
 @[simp]
 private theorem coeff_evenRoot (P : ℂ[X]) (k : ℕ) : (evenRoot P).coeff k = P.coeff (2 * k) := by
@@ -244,7 +244,7 @@ private theorem IsOdd.eq_X_mul_expand_oddRoot {P : ℂ[X]} (h : IsOdd P) :
     · rw [Nat.mul_div_cancel' hm]
     · exact h (m + 1) (Nat.even_add_one.mpr fun he => hm (even_iff_two_dvd.mp he))
 
-private theorem IsOdd.eq_X_mul_oddRoot_comp {P : ℂ[X]} (h : IsOdd P) :
+theorem IsOdd.eq_X_mul_oddRoot_comp {P : ℂ[X]} (h : IsOdd P) :
     P = X * (oddRoot P).comp (X ^ 2) := by
   rw [← expand_eq_comp_X_pow]
   exact h.eq_X_mul_expand_oddRoot
@@ -256,7 +256,7 @@ private theorem isOdd_iff_exists_X_mul_comp_X_sq {P : ℂ[X]} :
     IsOdd P ↔ ∃ R : ℂ[X], P = X * R.comp (X ^ 2) :=
   ⟨fun h => ⟨_, h.eq_X_mul_oddRoot_comp⟩, fun ⟨R, hR⟩ => hR ▸ isOdd_X_mul_comp_X_sq R⟩
 
-private theorem IsEven.eval_eq {P : ℂ[X]} (h : IsEven P) (x : ℂ) :
+theorem IsEven.eval_eq {P : ℂ[X]} (h : IsEven P) (x : ℂ) :
     P.eval x = (evenRoot P).eval (x ^ 2) := by
   conv_lhs => rw [h.eq_expand_evenRoot]
   rw [expand_eval]
