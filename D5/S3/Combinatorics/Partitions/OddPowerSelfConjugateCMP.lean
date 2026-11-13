@@ -31,9 +31,11 @@
 import Mathlib.Algebra.Ring.Int.Parity
 import D5.S1.Words.Compositions.StrictFirstSumsGapfreeOddParts
 
-/-! Binding conventions for Dietz–Flowers–Lockard, arXiv:2609.08799v1,
-Question 5.14. `YoungDiagram` is the finite Ferrers diagram, `transpose` is
-reflection in its main diagonal, and `card` is the partitioned integer.
+/-! Binding conventions for Dietz–Flowers–Lockard, J. Algebra Comb. Discrete
+Struct. Appl. 13(3) (2026), 385–407, publisher PDF page 20 of 23,
+Question 5.14 (also labelled V.20 in arXiv:2609.08799v1 HTML).
+`YoungDiagram` is the finite Ferrers diagram, `transpose` is reflection in
+its main diagonal, and `card` is the partitioned integer.
 Only positive row lengths are parts; absent rows have length zero. -/
 
 namespace D5.S3.Combinatorics.Partitions.OddPowerSelfConjugateCMP

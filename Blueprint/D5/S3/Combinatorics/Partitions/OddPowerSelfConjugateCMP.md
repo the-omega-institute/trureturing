@@ -10,7 +10,7 @@ $$\forall m \in \mathbb{N},\; (\forall mu \in \operatorname{YoungDiagram},\; (\o
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.IsMAry` (`✓ std3`).
 
-*Citation.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://arxiv.org/abs/2609.08799v1>.
+*Citation.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall m \in \mathbb{N},\; (\forall mu \in \operatorname{YoungDiagram},\; (\f
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.multiplicity` (`✓ std3`).
 
-*Citation.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://arxiv.org/abs/2609.08799v1>.
+*Citation.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall m \in \mathbb{N},\; (\forall mu \in \operatorname{YoungDiagram},\; (\o
 
 *Formalization.* `D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.IsCMP` (`✓ std3`).
 
-*Citation.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://arxiv.org/abs/2609.08799v1>.
+*Citation.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304>.
 
 *Commentary.*
 
@@ -48,11 +48,11 @@ $$\operatorname{claim} = \left(\forall m \in \mathbb{N},\; ((2 \le m) \Rightarro
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://arxiv.org/abs/2609.08799v1>.
+*Acknowledgement.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304>.
 
 *Commentary.*
 
-Question 5.14, printed page 404: “When m is odd, are there any self-conjugate CMPs of odd powers of m?” The displayed proposition is its negative answer, with m ≥ 2, Odd m, exponent 2s+1, literal YoungDiagram equality for self-conjugacy, and the two m-ary conditions.
+Question 5.14, printed page 404 (publisher PDF page 20 of 23; arXiv HTML label V.20): “When m is odd, are there any self-conjugate CMPs of odd powers of m?” The displayed proposition is its negative answer, with m ≥ 2, Odd m, exponent 2s+1, literal YoungDiagram equality for self-conjugacy, and the two m-ary conditions.
 
 **Theorem 1.5 (Negative answer).**
 
@@ -66,7 +66,7 @@ $$\forall m \in \mathbb{N},\; ((2 \le m) \Rightarrow ((\operatorname{Odd}\left(m
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://arxiv.org/abs/2609.08799v1>.
+*Acknowledgement.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304>.
 
 *Commentary.*
 

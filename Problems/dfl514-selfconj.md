@@ -2,7 +2,7 @@
 slug: dfl514-selfconj
 bibkey: dietzflowerslockard2026cmp
 doi: 10.13069/jacodesmath.v13i3.393
-url: https://arxiv.org/abs/2609.08799v1
+url: https://jacodesmath.com/index.php/jacodesmath/article/download/393/304
 triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.result
@@ -12,9 +12,11 @@ motivation_gids:
 
 ## Problem
 
-Dietz, Flowers and Lockard, *A study of m-ary partitions whose conjugates are q-ary*, arXiv:2609.08799v1, Question 5.14, printed page 404, asks:
+Dietz, Flowers and Lockard, *A study of m-ary partitions whose conjugates are q-ary*, J. Algebra Comb. Discrete Struct. Appl. 13(3) (2026), 385–407, Question 5.14 on printed page 404 (publisher PDF page 20 of 23), asks:
 
 > When $m$ is odd, are there any self-conjugate CMPs of odd powers of $m$?
+
+Publisher PDF: <https://jacodesmath.com/index.php/jacodesmath/article/download/393/304> (SHA-256 `8cfd13c27c0efe648465ae9cfa871008125649d5fd4bb6ac6dacdbd284be9511`). The HTML version is arXiv:2609.08799v1, where the same question is labelled `V.20`.
 
 The answer is no. For every odd natural base $m\ge2$, every natural $s$, and every finite Ferrers diagram $\mu$ with $|\mu|=m^{2s+1}$, if $\mu$ and its transpose are both $m$-ary, then $\mu^\mathsf T\ne\mu$. No primality assumption or finite cutoff is imposed. The source's introductory scope is bases at least two. The exponent $s=0$ is included.
 
