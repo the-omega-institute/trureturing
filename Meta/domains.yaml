@@ -185,6 +185,9 @@ domains:
   QuantumContext:
     stratum: S3
     definition: Finite-dimensional quantum contextuality witnesses and context-dependent quantities.
+  QuantumRouting:
+    stratum: S3
+    definition: Quantum memory address routing and coherent lookup circuits.
   QuantumStates:
     stratum: S3
     definition: Finite-dimensional quantum states and their positive normalized expectation functionals.
