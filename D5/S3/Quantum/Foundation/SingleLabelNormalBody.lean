@@ -34,7 +34,7 @@ variable (hc : IsClosed (C : Set V))
   (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
 
 include hc hs hg hB in
-private theorem equal_of_two_points (p q : pure C u) {x y : V}
+theorem equal_of_two_points (p q : pure C u) {x y : V}
     (hxy : x ≠ y) (hx : x ∈ exclusion C u p ∩ exclusion C u q)
     (hy : y ∈ exclusion C u p ∩ exclusion C u q) :
     exclusion C u p = exclusion C u q := by

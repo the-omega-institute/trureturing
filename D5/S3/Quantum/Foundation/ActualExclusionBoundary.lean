@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import D5.S3.Quantum.Foundation.OriginalFacePolarity
+import D5.S3.Quantum.Foundation.SingleLabelNormalBody
 import D5.S3.Topology.FiniteConvexFiberMap
 import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
@@ -163,15 +164,7 @@ private theorem original_whole_balls_eq_of_two
     (hx : x ∈ exclusion C u a ∩ exclusion C u b)
     (hy : y ∈ exclusion C u a ∩ exclusion C u b) (hxy : x ≠ y) :
     exclusion C u a = exclusion C u b := by
-  have all := exclusion_ball_faces hclosed hstrict hgen hB
-  have hc := (all.1 a).2.2.1.inter (all.1 b).2.2.1
-  have hf := (all.1 a).2.2.2.2.1.inter (all.1 b).2.2.2.2.1
-  have hn : (exclusion C u a ∩ exclusion C u b).Nontrivial := ⟨x, hx, y, hy, hxy⟩
-  have ha := chart_face_eq (hB a).some hc
-    (hf.mono (all.1 a).2.2.2.2.1.subset inter_subset_left) hn
-  have hb := chart_face_eq (hB b).some hc
-    (hf.mono (all.1 b).2.2.2.2.1.subset inter_subset_right) hn
-  exact ha.symm.trans hb
+  exact SingleLabelNormalBody.equal_of_two_points hclosed hstrict hgen hB a b hxy hx hy
 
 private theorem repeated_ball_isolated
     (hclosed : IsClosed (C : Set V))
@@ -907,28 +900,7 @@ theorem original_singleton_label_propagation
     (hp : ∀ s : pure C u, exclusion C u s = exclusion C u p → s = p)
     (q : pure C u) (hq : (q : V) ∈ exclusion C u p) :
     ∀ s : pure C u, exclusion C u s = exclusion C u q → s = q := by
-  classical
-  intro s hs
-  by_contra hsq
-  have all := exclusion_ball_faces hclosed hstrict hgen hB
-  have hpq : (p : V) ∈ exclusion C u q := (exclusion_symmetric p q).mp hq
-  have hps : (p : V) ∈ exclusion C u s := hs.symm ▸ hpq
-  have hsp : (s : V) ∈ exclusion C u p := (exclusion_symmetric p s).mpr hps
-  have hext : (exclusion C u q).extremePoints ℝ ⊆ {(p : V)} := by
-    intro z hz
-    have hzP : z ∈ pure C u := (all.1 q).2.2.2.2.1.extremePoints_subset_extremePoints hz
-    let a : pure C u := ⟨z, hzP⟩
-    have hqa : (q : V) ∈ exclusion C u a := (exclusion_symmetric q a).mp hz.1
-    have hsa : (s : V) ∈ exclusion C u a :=
-      (exclusion_symmetric s a).mp (hs.symm ▸ hz.1)
-    have he := original_whole_balls_eq_of_two hclosed hstrict hgen hB a p
-      ⟨hqa, hq⟩ ⟨hsa, hsp⟩ (fun h => hsq (Subtype.ext h.symm))
-    exact congrArg Subtype.val (hp a he)
-  have hsub : exclusion C u q ⊆ {(p : V)} := by
-    rw [← closure_convexHull_extremePoints (all.1 q).2.1 (all.1 q).2.2.1]
-    exact closure_minimal (convexHull_min hext (convex_singleton _)) isClosed_singleton
-  obtain ⟨x, hx, y, hy, hxy⟩ := (all.1 q).1
-  exact hxy ((mem_singleton_iff.mp (hsub hx)).trans (mem_singleton_iff.mp (hsub hy)).symm)
+  exact SingleLabelNormalBody.single_label_neighbor hclosed hstrict hgen hB p q hp hq
 
 
 /-- The original global singleton-label theorem, including propagation over the
