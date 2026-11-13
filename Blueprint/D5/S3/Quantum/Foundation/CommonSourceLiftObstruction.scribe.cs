@@ -51,30 +51,42 @@ internal sealed class CommonSourceLiftObstructionDocument : IScribeDocumentDefin
     public DocumentDefinition Create()
     {
         Formula p=V("p"), t=V("t"), b=V("b"), a=V("a"), h=V("h"), m=V("m"), i=V("i"), n=V("n"), ell=V("ell"), eps=V("epsilon"), delta=V("delta"), tau=V("tau"), y=V("y"), r=V("r"), A=V("A");
-        Formula control = Context(All("p", P, Ex("A", R, And(Lt(D(0), A), And(
-            All("b", Dual, Le(C("dualNorm",b), C("mul",A,Norm(b)))), And(
-            C("Tendsto", C("upperDisplacementAt",p), C("nhds",p), C("nhds",D(0))),
-            All("t",P,Imp(Lt(C("mul",A,Alpha(p,t)),D(1)),All("b",Dual,Imp(Pos(b),Imp(Eq(App(b,t),D(0)),
-                Le(B(b),C("div",C("faceMaximum",p,b),C("sub",D(1),C("mul",A,Alpha(p,t)))))))))))))));
+        Formula controlBound = Le(B(b), C("div", C("faceMaximum",p,b),
+            C("sub",D(1),C("mul",A,Alpha(p,t)))));
+        controlBound = All("t",P,Imp(Lt(C("mul",A,Alpha(p,t)),D(1)),
+            All("b",Dual,Imp(Pos(b),Imp(Eq(App(b,t),D(0)),controlBound)))));
+        Formula control = And(Lt(D(0),A),And(
+            All("b",Dual,Le(C("dualNorm",b),C("mul",A,Norm(b)))),And(
+            C("Tendsto",C("upperDisplacementAt",p),C("nhds",p),C("nhds",D(0))),controlBound)));
+        control = Context(All("p",P,Ex("A",R,control)));
         Formula bn=App(b,n), tn=App(t,n), fn=Normal(bn);
-        Formula normalization=Context(All("p",P,All("t",Fn(N,P),Imp(Limit(t,p),All("b",Fn(N,Dual),
-            Imp(All("n",N,Pos(bn)),Imp(All("n",N,Eq(App(bn,tn),D(0))),All("ell",Fn(Dp(p),R),
-            Imp(All("x",Dp(p),And(Le(D(0),App(ell,V("x"))),Le(App(ell,V("x")),D(1)))),
-            Imp(Uniform(C("restrictions",p,b),ell),And(
-                All("n",N,And(Proper(fn),Eq(App(fn,tn),D(0)))),And(
-                Limit(C("normalizationGaps",V("C"),V("u"),b),D(0)),And(
-                Uniform(C("normalizedRestrictions",p,b),ell),
-                Imp(Eq(C("sSup",C("range",ell)),D(1)),Limit(C("baseMaxima",V("C"),V("u"),b),D(1))))))))))))))));
-        Formula shrinking=Local(All("r",Fn(N,P),Imp(Limit(C("values",r),y),All("epsilon",R,Imp(Lt(D(0),eps),
-            C("Eventually",C("atTop"),new Formula.Lambda(FormulaIdentifier.Create("n"),N,
-                All("x",V("V"),Imp(In(V("x"),Dp(App(r,n))),Lt(DiffNorm(V("x"),p),eps))))))))));
-        Formula nearby=All("r",P,Imp(Lt(DiffNorm(r,y),eps),All("t",P,Imp(In(t,Dp(r)),Or(
-            Le(C("add",Dim(p),D(1)),Dim(t)),Ex("i",Fin(m),Le(delta,Distance(p,t,App(h,i)))))))));
-        Formula vanish=All("tau",R,Imp(Lt(D(0),tau),Ex("epsilon",R,And(Lt(D(0),eps),
-            All("r",P,Imp(Lt(DiffNorm(r,y),eps),All("t",P,Imp(In(t,Dp(r)),All("i",Fin(m),Le(App(App(h,i),t),tau))))))))));
-        Formula obstruction=Local(Ex("m",N,And(Lt(D(0),m),Ex("a",Fn(Fin(m),P),Ex("h",Fn(Fin(m),Dual),And(
-            All("i",Fin(m),And(In(App(a,i),Dp(p)),In(App(h,i),C("fullZeroConfirmers",V("C"),V("u"),App(a,i))))),And(
-            Ex("epsilon",R,Ex("delta",R,And(Lt(D(0),eps),And(Lt(D(0),delta),nearby)))),vanish))))))));
+        Formula normalization = And(All("n",N,And(Proper(fn),Eq(App(fn,tn),D(0)))),And(
+            Limit(C("normalizationGaps",V("C"),V("u"),b),D(0)),And(
+            Uniform(C("normalizedRestrictions",p,b),ell),
+            Imp(Eq(C("sSup",C("range",ell)),D(1)),
+                Limit(C("baseMaxima",V("C"),V("u"),b),D(1))))));
+        normalization = Imp(Uniform(C("restrictions",p,b),ell),normalization);
+        normalization = All("ell",Fn(Dp(p),R),Imp(
+            All("x",Dp(p),And(Le(D(0),App(ell,V("x"))),Le(App(ell,V("x")),D(1)))),normalization));
+        normalization = Imp(All("n",N,Eq(App(bn,tn),D(0))),normalization);
+        normalization = Imp(All("n",N,Pos(bn)),normalization);
+        normalization = Context(All("p",P,All("t",Fn(N,P),Imp(Limit(t,p),All("b",Fn(N,Dual),normalization)))));
+        Formula shrinking = All("x",V("V"),Imp(In(V("x"),Dp(App(r,n))),Lt(DiffNorm(V("x"),p),eps)));
+        shrinking = Ex("j",N,All("n",N,Imp(Le(V("j"),n),shrinking)));
+        shrinking = Local(All("r",Fn(N,P),Imp(Limit(C("values",r),y),
+            All("epsilon",R,Imp(Lt(D(0),eps),shrinking)))));
+        Formula nearby = Or(Le(C("add",Dim(p),D(1)),Dim(t)),
+            Ex("i",Fin(m),Le(delta,Distance(p,t,App(h,i)))));
+        nearby = All("r",P,Imp(Lt(DiffNorm(r,y),eps),All("t",P,Imp(In(t,Dp(r)),nearby))));
+        Formula vanish = All("r",P,Imp(Lt(DiffNorm(r,y),eps),All("t",P,Imp(In(t,Dp(r)),
+            All("i",Fin(m),Le(App(App(h,i),t),tau))))));
+        vanish = All("tau",R,Imp(Lt(D(0),tau),Ex("epsilon",R,And(Lt(D(0),eps),vanish))));
+        Formula family = All("i",Fin(m),And(In(App(a,i),Dp(p)),
+            In(App(h,i),C("fullZeroConfirmers",V("C"),V("u"),App(a,i)))));
+        Formula obstruction = And(family,And(
+            Ex("epsilon",R,Ex("delta",R,And(Lt(D(0),eps),And(Lt(D(0),delta),nearby)))),vanish));
+        obstruction = Local(Ex("m",N,And(Lt(D(0),m),
+            Ex("a",Fn(Fin(m),P),Ex("h",Fn(Fin(m),Dual),obstruction)))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Finite common source tests force an original positive-lift error or an increase of the return ball's intrinsic affine dimension.",
             H("Finite common source tests on the whole original positive cone"), Blocks(
