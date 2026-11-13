@@ -72,6 +72,10 @@ Lean statement: `D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.resul
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/banerjee-chaudhury-2025-conjecture-1-1-refutation` (refuted) by `D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"banerjee-chaudhury-2025-conjecture-1-1-refutation","declaration_gid":"D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

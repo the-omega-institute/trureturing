@@ -127,5 +127,8 @@ internal sealed class BanerjeeChaudhuryStabilityRefutationDocument : IScribeDocu
                         + "This contradicts the first stability conjunct of claim and negates the "
                         + "full assertion. The argument asserts no instability of R and gives no "
                         + "classification of the broader stability problem."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("banerjee-chaudhury-2025-conjecture-1-1-refutation"),
+                    ResolutionKind.Refuted)))));
 }
