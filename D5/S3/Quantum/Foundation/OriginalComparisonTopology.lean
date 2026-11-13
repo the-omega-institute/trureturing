@@ -194,6 +194,7 @@ private theorem chart_diameter_axis {p : pure C u} (a : ExclusionChart C u p) :
   exact (norm_sub_le _ _).trans (by linarith [hbound z hz1, hbound w hw1])
 
 set_option maxHeartbeats 800000 in
+-- Compact minimization elaborates the full dependent pure-pair comparison domain.
 private theorem uniform_pure_gap
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
@@ -275,7 +276,7 @@ theorem original_noncollapse_bounded_budget
   let q : pure C u := ⟨a.param v, hqpure⟩
   let r : pure C u := ⟨a.param (-v), hrpure⟩
   obtain ⟨t, ht, _, hscale⟩ := original_common_chart_scale hc hs hg hB hPR p a
-  obtain ⟨_, _, hcomp⟩ := (hscale a v hv).2 q rfl
+  obtain ⟨_, _, _, hcomp⟩ := (hscale a v hv).2 q rfl
   have hgap' := hgap q r ((hdiam p hp).trans hd)
   have hcomp' := hcomp (-v) (by simpa using hv.le)
   have hγt : γ ≤ 2*t := by
