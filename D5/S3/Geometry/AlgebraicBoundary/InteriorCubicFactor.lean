@@ -7,6 +7,9 @@
    digest: Interior zeros of cubic boundary equations force removable hyperplane factors. -/
 
 import D5.S3.Geometry.AlgebraicBoundary.InteriorFactorDeletion
+import D5.S3.Geometry.AlgebraicBoundary.ConeLineEndpoints
+import Mathlib.Algebra.Polynomial.Splits
+import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Algebra.MvPolynomial.NoZeroDivisors
 import Mathlib.Algebra.MvPolynomial.Polynomial
@@ -25,7 +28,7 @@ import Mathlib.Topology.Order.IntermediateValue
 noncomputable section
 
 open Set Filter
-open scoped Topology
+open scoped Topology Pointwise
 
 namespace D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 
@@ -379,5 +382,266 @@ private theorem exists_positive_minimum_on_original {E : Type*} [NormedAddCommGr
           hcont.continuousOn ⟨hneg.le, hx0⟩
         exact hnf z hz hz0
       simpa using neg_pos.mpr hxneg
+
+private theorem homogeneous_eval_smul (p : MvPolynomial ι ℝ) {d : ℕ}
+    (hp : p.IsHomogeneous d) (r : ℝ) (x : ι → ℝ) :
+    MvPolynomial.eval (r • x) p = r ^ d * MvPolynomial.eval x p := by
+  classical
+  rw [MvPolynomial.eval_eq, MvPolynomial.eval_eq, Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro m hm
+  rw [hp.degree_eq_sum_deg_support hm]
+  simp only [Pi.smul_apply, smul_eq_mul, mul_pow, Finset.prod_mul_distrib,
+    Finset.prod_pow_eq_pow_sum]
+  ring
+
+private theorem coeff_prod_top {κ : Type*} (s : Finset κ)
+    (f : κ → Polynomial ℝ) (n : κ → ℕ) (hn : ∀ i ∈ s, (f i).natDegree ≤ n i) :
+    (∏ i ∈ s, f i).coeff (∑ i ∈ s, n i) = ∏ i ∈ s, (f i).coeff (n i) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp
+  | @insert i s hi ih =>
+      simp only [Finset.prod_insert hi, Finset.sum_insert hi]
+      rw [Polynomial.coeff_mul_add_eq_of_natDegree_le (hn i (by simp))
+        ((Polynomial.natDegree_prod_le _ _).trans
+          (Finset.sum_le_sum (fun j hj => hn j (by simp [hj]))))]
+      rw [ih (fun j hj => hn j (by simp [hj]))]
+
+private theorem linePolynomial_top_coeff (p : MvPolynomial ι ℝ) {d : ℕ}
+    (hp : p.IsHomogeneous d) (a v : ι → ℝ) :
+    (linePolynomial p a v).coeff d = MvPolynomial.eval v p := by
+  classical
+  rw [linePolynomial, MvPolynomial.eval₂_eq, MvPolynomial.eval_eq]
+  simp only [Polynomial.finsetSum_coeff, Polynomial.coeff_C_mul]
+  apply Finset.sum_congr rfl
+  intro m hm
+  congr 1
+  rw [hp.degree_eq_sum_deg_support hm]
+  have hlin (i : ι) :
+      (Polynomial.C (a i) + Polynomial.C (v i) * Polynomial.X).natDegree ≤ 1 := by
+    apply (Polynomial.natDegree_add_le _ _).trans
+    exact max_le (by simp) (Polynomial.natDegree_mul_le.trans (by simp))
+  rw [coeff_prod_top m.support _ (fun i => m i)
+    (fun i hi => by simpa using Polynomial.natDegree_pow_le_of_le (m i) (hlin i))]
+  apply Finset.prod_congr rfl
+  intro i hi
+  simpa using Polynomial.coeff_pow_of_natDegree_le (m := m i) (hlin i)
+
+private theorem cubic_splits_of_two_roots {q : Polynomial ℝ} (hd : q.natDegree ≤ 3)
+    {a b : ℝ} (hab : a ≠ b) (ha : q.eval a = 0) (hb : q.eval b = 0) : q.Splits := by
+  let r := q /ₘ (Polynomial.X - Polynomial.C a)
+  have hfac : (Polynomial.X - Polynomial.C a) * r = q :=
+    Polynomial.mul_divByMonic_eq_iff_isRoot.mpr ha
+  have hr : r.natDegree ≤ 2 := by
+    dsimp [r]
+    rw [Polynomial.natDegree_divByMonic _ (Polynomial.monic_X_sub_C a),
+      Polynomial.natDegree_X_sub_C]
+    omega
+  have hrb : r.eval b = 0 := by
+    rw [← hfac, Polynomial.eval_mul] at hb
+    exact (mul_eq_zero.mp hb).resolve_left (by simpa using sub_ne_zero.mpr hab.symm)
+  rw [← hfac]
+  apply (Polynomial.Splits.X_sub_C a).mul
+  by_cases h : r.natDegree = 2
+  · exact Polynomial.Splits.of_natDegree_eq_two h hrb
+  · exact Polynomial.Splits.of_natDegree_le_one (by omega)
+
+private theorem cone_line_splits_on_original {E : Type*} [NormedAddCommGroup E]
+    [NormedSpace ℝ E] (c : E ≃L[ℝ] (ι → ℝ)) (C : ConvexCone ℝ E)
+    (hclosed : IsClosed (C : Set E)) (hs : C.Salient)
+    (p : MvPolynomial ι ℝ) {d : ℕ} (hp : p.IsHomogeneous d) (hd : d ≤ 3)
+    (hvan : ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) p = 0)
+    {e : E} (he : e ∈ interior (C : Set E)) (hpe : MvPolynomial.eval (c e) p ≠ 0)
+    (x : E) :
+    (linePolynomial p (-c x) (c e)).natDegree = d ∧
+      (linePolynomial p (-c x) (c e)).Splits ∧
+      (∀ s : ℝ, x = s • e → linePolynomial p (-c x) (c e) =
+        Polynomial.C (MvPolynomial.eval (c e) p) * (Polynomial.X - Polynomial.C s) ^ d) := by
+  have hdegree : (linePolynomial p (-c x) (c e)).natDegree = d := by
+    apply Polynomial.natDegree_eq_of_le_of_coeff_ne_zero
+    · exact (linePolynomial_degree p _ _).trans hp.totalDegree_le
+    · rwa [linePolynomial_top_coeff p hp]
+  have haxis : ∀ s : ℝ, x = s • e → linePolynomial p (-c x) (c e) =
+      Polynomial.C (MvPolynomial.eval (c e) p) * (Polynomial.X - Polynomial.C s) ^ d := by
+    intro s hx
+    apply Polynomial.funext
+    intro t
+    rw [eval_linePolynomial]
+    have hy : -c x + t • c e = (t - s) • c e := by
+      rw [hx, map_smul]
+      module
+    rw [hy, homogeneous_eval_smul p hp]
+    simp [mul_comm]
+  refine ⟨hdegree, ?_, haxis⟩
+  by_cases hx : ∃ s : ℝ, x = s • e
+  · obtain ⟨s, hs⟩ := hx
+    rw [haxis s hs]
+    exact ((Polynomial.Splits.X_sub_C s).pow d).C_mul _
+  · have hxa : ∀ s : ℝ, x ≠ s • e := by simpa using hx
+    obtain ⟨a, b, hab, _, _, haf, hbf⟩ :=
+      ConeLineEndpoints.off_axis_closed_rays C hclosed hs he hxa
+    apply cubic_splits_of_two_roots (hdegree ▸ hd) hab.ne
+    · rw [eval_linePolynomial]
+      have hzero := hvan _ haf
+      have hneg := homogeneous_eval_smul p hp (-1) (c (a • e - x))
+      have hcz : c (-(a • e - x)) = (-1 : ℝ) • c (a • e - x) := by simp
+      rw [hcz, hneg] at hzero
+      have hroot := (mul_eq_zero.mp hzero).resolve_left (pow_ne_zero _ (by norm_num))
+      simpa [map_sub, map_smul, sub_eq_add_neg, add_comm] using hroot
+    · rw [eval_linePolynomial]
+      simpa [map_sub, map_smul, sub_eq_add_neg, add_comm] using hvan _ hbf
+
+private theorem cone_interior_add_positive {E : Type*} [NormedAddCommGroup E]
+    [NormedSpace ℝ E] (C : ProperCone ℝ E)
+    {e x : E} (he : e ∈ interior (C : Set E)) (hx : x ∈ C)
+    {r : ℝ} (hr : 0 < r) : x + r • e ∈ interior (C : Set E) := by
+  have hsub : r • (C : Set E) ⊆ (C : Set E) := by
+    rintro _ ⟨y, hy, rfl⟩
+    exact C.smul_mem hy hr.le
+  have hri : r • e ∈ interior (C : Set E) := by
+    apply interior_mono hsub
+    rw [interior_smul₀ hr.ne']
+    exact ⟨e, he, rfl⟩
+  apply interior_mono (show (C : Set E) + (C : Set E) ⊆ (C : Set E) from ?_)
+    (subset_interior_add_right ⟨x, hx, r • e, hri, rfl⟩)
+  rintro _ ⟨y, hy, z, hz, rfl⟩
+  exact C.add_mem hy hz
+
+/-- Conditional analytic assembly: the homogeneous equation and its absence of
+interior zeros must still be obtained from the arbitrary original equation. -/
+private theorem cone_line_roots_and_branch {E : Type*} [NormedAddCommGroup E]
+    [NormedSpace ℝ E] (c : E ≃L[ℝ] (ι → ℝ)) (C : ProperCone ℝ E)
+    (hs : (C : ConvexCone ℝ E).Salient) (p : MvPolynomial ι ℝ) {d : ℕ}
+    (hp : p.IsHomogeneous d) (hd : d ≤ 3) (hdpos : 0 < d)
+    (hvan : ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) p = 0)
+    (hno : ∀ y ∈ interior (C : Set E), MvPolynomial.eval (c y) p ≠ 0)
+    {e : E} (he : e ∈ interior (C : Set E)) :
+    (∀ x : E, (linePolynomial p (-c x) (c e)).natDegree = d ∧
+      (linePolynomial p (-c x) (c e)).Splits ∧
+      (∀ s : ℝ, x = s • e → linePolynomial p (-c x) (c e) =
+        Polynomial.C (MvPolynomial.eval (c e) p) * (Polynomial.X - Polynomial.C s) ^ d)) ∧
+    {x : E | ∀ t : ℝ, (linePolynomial p (-c x) (c e)).eval t = 0 → 0 ≤ t} =
+      (C : Set E) := by
+  have hlines := cone_line_splits_on_original c (C : ConvexCone ℝ E)
+    C.isClosed hs p hp hd hvan he (hno e he)
+  refine ⟨hlines, Set.ext fun x => ?_⟩
+  constructor
+  · intro hx
+    by_contra hxC
+    by_cases haxis : ∃ s : ℝ, x = s • e
+    · obtain ⟨s, hsx⟩ := haxis
+      have hsneg : s < 0 := by
+        by_contra! h
+        apply hxC
+        rw [hsx]
+        exact C.smul_mem (interior_subset he) h
+      have hroot : (linePolynomial p (-c x) (c e)).eval s = 0 := by
+        rw [(hlines x).2.2 s hsx]
+        simp [hdpos.ne']
+      exact (not_le_of_gt hsneg) (hx s hroot)
+    · have hxa : ∀ s : ℝ, x ≠ s • e := by simpa using haxis
+      obtain ⟨a, b, hab, haray, _, haf, _⟩ :=
+        ConeLineEndpoints.off_axis_closed_rays (C : ConvexCone ℝ E) C.isClosed hs he hxa
+      have haneg : a < 0 := by
+        by_contra! ha
+        have hzero : (0 : ℝ) ∈ {t : ℝ | -(t • e - x) ∈ (C : ConvexCone ℝ E)} := by
+          rw [haray]
+          exact ha
+        exact hxC (by simpa using hzero)
+      have hroot : (linePolynomial p (-c x) (c e)).eval a = 0 := by
+        rw [eval_linePolynomial]
+        have hzero := hvan _ haf
+        have hneg := homogeneous_eval_smul p hp (-1) (c (a • e - x))
+        have hcz : c (-(a • e - x)) = (-1 : ℝ) • c (a • e - x) := by simp
+        rw [hcz, hneg] at hzero
+        have hroot := (mul_eq_zero.mp hzero).resolve_left (pow_ne_zero _ (by norm_num))
+        simpa [map_sub, map_smul, sub_eq_add_neg, add_comm] using hroot
+      exact (not_le_of_gt haneg) (hx a hroot)
+  · intro hx t ht
+    by_contra! htneg
+    have hz := cone_interior_add_positive C he hx (neg_pos.mpr htneg)
+    have hnon := hno (x + (-t) • e) hz
+    have hline : -c x + t • c e = (-1 : ℝ) • c (x + (-t) • e) := by
+      simp [map_add, map_smul]
+    rw [eval_linePolynomial, hline, homogeneous_eval_smul p hp] at ht
+    exact (mul_ne_zero (pow_ne_zero _ (by norm_num)) hnon) ht
+
+private theorem cone_boundary_homogeneous_equation {E : Type*} [NormedAddCommGroup E]
+    [NormedSpace ℝ E] [Nontrivial E] (c : E ≃L[ℝ] (ι → ℝ))
+    (C : ProperCone ℝ E) (hs : (C : ConvexCone ℝ E).Salient)
+    (p : MvPolynomial ι ℝ) (hp : p ≠ 0)
+    (hvan : ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) p = 0) :
+    ∃ (d : ℕ) (q : MvPolynomial ι ℝ), 0 < d ∧ d ≤ p.totalDegree ∧ q ≠ 0 ∧
+      q.IsHomogeneous d ∧
+      ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) q = 0 := by
+  classical
+  have hscale : ∀ r : ℝ, 0 < r → r • (C : Set E) = (C : Set E) := by
+    intro r hr
+    apply Set.Subset.antisymm
+    · rintro _ ⟨y, hy, rfl⟩
+      exact C.smul_mem hy hr.le
+    · intro y hy
+      refine ⟨r⁻¹ • y, C.smul_mem hy (inv_nonneg.mpr hr.le), ?_⟩
+      simp [smul_smul, hr.ne']
+  have hfront : ∀ r : ℝ, 0 < r → ∀ y ∈ frontier (C : Set E),
+      r • y ∈ frontier (C : Set E) := by
+    intro r hr y hy
+    have hf := (Homeomorph.smulOfNeZero r hr.ne' : E ≃ₜ E).image_frontier (C : Set E)
+    have heq : r • frontier (C : Set E) = frontier (C : Set E) := by
+      simpa [hscale r hr] using hf
+    rw [← heq]
+    exact ⟨y, hy, rfl⟩
+  have hcomp : ∀ d : ℕ, ∀ y ∈ frontier (C : Set E),
+      MvPolynomial.eval (c y) (MvPolynomial.homogeneousComponent d p) = 0 := by
+    intro d y hy
+    by_cases hd : p.totalDegree < d
+    · rw [MvPolynomial.homogeneousComponent_eq_zero d p hd, map_zero]
+    let Q : Polynomial ℝ := ∑ k ∈ Finset.range (p.totalDegree + 1),
+      Polynomial.monomial k (MvPolynomial.eval (c y) (MvPolynomial.homogeneousComponent k p))
+    have hQ : Q = 0 := by
+      apply Polynomial.eq_zero_of_infinite_isRoot
+      apply (Set.Ioi_infinite (0 : ℝ)).mono
+      intro r hr
+      change Q.eval r = 0
+      have hh := hvan (r • y) (hfront r hr y hy)
+      rw [← MvPolynomial.sum_homogeneousComponent p, map_sum] at hh
+      simpa only [Q, Polynomial.eval_finset_sum, Polynomial.eval_monomial,
+        map_smul, homogeneous_eval_smul _ (MvPolynomial.homogeneousComponent_isHomogeneous _ _),
+        mul_comm] using hh
+    have hc := congrArg (fun f : Polynomial ℝ => f.coeff d) hQ
+    simpa [Q, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial,
+      Finset.sum_ite_eq', Finset.mem_range, Nat.lt_succ_of_le (le_of_not_gt hd)] using hc
+  obtain ⟨d, hd, hq⟩ : ∃ d ∈ Finset.range (p.totalDegree + 1),
+      MvPolynomial.homogeneousComponent d p ≠ 0 := by
+    by_contra! h
+    apply hp
+    rw [← MvPolynomial.sum_homogeneousComponent p]
+    exact Finset.sum_eq_zero h
+  have hz : (0 : E) ∈ frontier (C : Set E) := by
+    rw [C.isClosed.frontier_eq]
+    refine ⟨C.toPointedCone.zero_mem, ?_⟩
+    intro hzero
+    obtain ⟨z, hz⟩ := exists_ne (0 : E)
+    obtain ⟨y, hy⟩ : ∃ y : E, y ∉ C := by
+      by_cases hzc : z ∈ C
+      · exact ⟨-z, hs z hzc hz⟩
+      · exact ⟨z, hzc⟩
+    have htend : Tendsto (fun t : ℝ => t⁻¹ • y) atTop (𝓝 (0 : E)) := by
+      simpa using (tendsto_inv_atTop_zero : Tendsto (fun t : ℝ => t⁻¹) atTop (𝓝 0)).smul_const y
+    have hm := htend.eventually (mem_interior_iff_mem_nhds.mp hzero)
+    obtain ⟨t, ht, hty⟩ := ((eventually_gt_atTop (0 : ℝ)).and hm).exists
+    apply hy
+    simpa [smul_smul, ht.ne'] using C.smul_mem hty ht.le
+  have hdpos : 0 < d := by
+    by_contra! hd0
+    have hd0 : d = 0 := Nat.eq_zero_of_le_zero hd0
+    subst d
+    have hc := hcomp 0 0 hz
+    simp only [map_zero, MvPolynomial.homogeneousComponent_zero, MvPolynomial.eval_C] at hc
+    exact hq (by simp [hc])
+  exact ⟨d, MvPolynomial.homogeneousComponent d p, hdpos,
+    Nat.le_of_lt_succ (Finset.mem_range.mp hd), hq,
+    MvPolynomial.homogeneousComponent_isHomogeneous d p, hcomp d⟩
 
 end D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
