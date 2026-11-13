@@ -1,0 +1,29 @@
+**引理 120.7（六轴满射及纯点法向维数）。** 固定 $F=D_p=c+B\mathbb B^3$，其中 $B:\mathbb R^3\to\ker u$ 单射。限制映射
+
+$$
+R_p:\operatorname{span}N_p\longrightarrow\operatorname{Aff}(F),\qquad h\longmapsto h|_F
+\tag{IX120.10}
+$$
+
+满射。因此每个原纯点都满足 $\dim\operatorname{span}N_p\ge4$。此外，常数一切片 $\{h\in N_p:h|_F=1\}$ 遇到 $\operatorname{ri}N_p$。
+
+证明。取 $q_i^\pm=c\pm B\varepsilon_i$，在每个点选一次 $a_i^\pm\in\mathcal A_{q_i^\pm}$。零对称给 $p\in D_{q_i^\pm}$，所以 $a_i^\pm\in N_p$。其一值面只有 $q_i^\pm$，故球上限制必为
+
+$$
+a_i^\pm(c+Bw)=\alpha_i^\pm\pm\beta_i^\pm w_i,
+\qquad \beta_i^\pm>0.
+\tag{IX120.11}
+$$
+
+确实，球上仿射函数在 $\pm\varepsilon_i$ 达到最大值，斜率必须沿该方向；斜率为零会使它在整个 $F$ 为一，违反一值面是单点。另一方面，任取 $a\in\mathcal A_p$，$u-a\in N_p$ 且在 $F$ 上恒为一。由常数与三个独立斜率，得到满射和维数下界。此处未使用 $\dim N_p=\dim_{\rm aff}\mathcal A_p+4$ 一类维数公式。
+
+取 $h\in\operatorname{ri}N_p$，写 $h(c+Bw)=\alpha+t\cdot w$。用(IX120.11)的六个非负倍数消去 $t$ 的三个分量，得到
+
+$$
+h'=h+\sum_{i,\pm}s_i^\pm a_i^\pm,
+\quad s_i^\pm\ge0,
+\quad h'|_F=\alpha'\text{ 为常数}.
+$$
+
+相对内部加锥仍在相对内部：$h$ 在 $\operatorname{span}N_p$ 中的一个相对开球包含于 $N_p$，平移任一锥元素后仍如此。$h'$ 非零且正，(IX120.4)给 $\alpha'=\max_Kh'>0$。因此 $h'/\alpha'\in\operatorname{ri}N_p$ 且在 $F$ 上恒一。证毕。
+
