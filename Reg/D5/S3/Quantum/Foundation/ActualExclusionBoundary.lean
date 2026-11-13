@@ -119,7 +119,7 @@ end QuotientAudit
 
 namespace RationalSliceAudit
 
-structure Inputs extends QuotientAudit.Inputs.{u} where
+structure Inputs extends toQuotientInputs : QuotientAudit.Inputs.{u} where
   nontrivial : Nontrivial V
 
 attribute [instance] Inputs.nontrivial

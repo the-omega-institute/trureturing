@@ -11,6 +11,7 @@ import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
 import Mathlib.Topology.Baire.Lemmas
 import Mathlib.Topology.Baire.LocallyCompactRegular
+import Mathlib.Analysis.Normed.Module.Convex
 
 /-! Relative-boundary geometry of the entire original normalized cone base. -/
 
@@ -329,6 +330,78 @@ private theorem intrinsic_level_of_straddling {K : Set V} (hK : Convex ℝ K)
     exact ⟨z, hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior
       hc (subset_intrinsicClosure hx) hz, he⟩
 
+private theorem finite_shifted_fiber_controls
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (r : Setoid (intrinsicFrontier ℝ (base C u)))
+    [CompactSpace (Quotient r)] [T2Space (Quotient r)]
+    (hq : Continuous (Quotient.mk r)) (hqc : IsClosedMap (Quotient.mk r))
+    (hfib : ∀ b : Quotient r, ∃ p : pure C u,
+      Subtype.val '' ((Quotient.mk r) ⁻¹' {b}) = exclusion C u p)
+    {c : V} (hc : c ∈ intrinsicInterior ℝ (base C u)) :
+    ∃ (n : ℕ) (W : Fin n → Set (Quotient r)) (N : Fin n → Set V),
+      (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
+      (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : V) ∉ N j) ∧
+      ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base C u),
+        Quotient.mk r x = b → (x : V) - c ∈ N j := by
+  classical
+  let S := intrinsicFrontier ℝ (base C u)
+  let q : S → Quotient r := Quotient.mk r
+  let shift : V →ᵃ[ℝ] V := (AffineEquiv.constVSub ℝ c).toAffineMap
+  let B (b : Quotient r) : Set V := shift '' (Subtype.val '' (q ⁻¹' {b}))
+  have hSclosed : IsClosed S :=
+    isClosed_intrinsicFrontier (affineSpan ℝ (base C u)).closed_of_finiteDimensional
+  have hSK : S ⊆ base C u := intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed
+  let : CompactSpace S := isCompact_iff_compactSpace.mp
+    ((base_compact hclosed hstrict).of_isClosed_subset hSclosed hSK)
+  have hBcompact (b) : IsCompact (B b) := by
+    exact (((isClosed_singleton.preimage hq).isCompact).image continuous_subtype_val).image
+      shift.continuous_of_finiteDimensional
+  have hBconvex (b) : Convex ℝ (B b) := by
+    obtain ⟨p, hp⟩ := hfib b
+    dsimp [B]
+    rw [hp]
+    exact ((exclusion_ball_faces hclosed hstrict hgen hB).1 p).2.2.1.affine_image shift
+  have hBzero (b) : (0 : V) ∉ B b := by
+    rintro ⟨z, ⟨x, hx, rfl⟩, he⟩
+    have he' : (x : V) = c := sub_eq_zero.mp he
+    have hxS : c ∈ S := he' ▸ x.property
+    rw [← (base_compact hclosed hstrict).isClosed.closure_eq,
+      closure_sdiff_intrinsicInterior] at hxS
+    exact hxS.2 hc
+  have neighborhoods (b : Quotient r) : ∃ N : Set V,
+      IsOpen N ∧ Convex ℝ N ∧ (0 : V) ∉ N ∧ B b ⊆ N := by
+    obtain ⟨δ, hδ, hsub⟩ := (hBcompact b).exists_thickening_subset_open
+      isClosed_singleton.isOpen_compl (by intro z hz he; exact hBzero b (he ▸ hz))
+    exact ⟨Metric.thickening δ (B b), Metric.isOpen_thickening,
+      (hBconvex b).thickening δ, fun hz => hsub hz rfl,
+      Metric.self_subset_thickening hδ _⟩
+  choose N hNo hNc hNz hBN using neighborhoods
+  let W (b : Quotient r) : Set (Quotient r) :=
+    (q '' {x : S | shift x ∉ N b})ᶜ
+  have hWo (b) : IsOpen (W b) :=
+    (hqc _ ((hNo b).preimage
+      (shift.continuous_of_finiteDimensional.comp continuous_subtype_val)).isClosed_compl).isOpen_compl
+  have hWcontrol (b d : Quotient r) (hd : d ∈ W b) (x : S) (hx : q x = d) :
+      shift x ∈ N b := by
+    by_contra hn
+    exact hd ⟨x, hn, hx⟩
+  have hWself (b) : b ∈ W b := by
+    rintro ⟨x,hx,hxb⟩
+    exact hx (hBN b ⟨x,⟨x,hxb,rfl⟩,rfl⟩)
+  obtain ⟨s, hs⟩ := isCompact_univ.elim_finite_subcover W hWo
+    (by intro b _; exact mem_iUnion.mpr ⟨b,hWself b⟩)
+  let e := (Fintype.equivFin s).symm
+  refine ⟨Fintype.card s, (fun j => W (e j)), (fun j => N (e j)),
+    (fun j => hWo _), ?_, (fun j => hNc _), (fun j => hNz _), ?_⟩
+  · intro b
+    obtain ⟨d, hd⟩ := mem_iUnion.mp (hs (mem_univ b))
+    obtain ⟨hd,hbd⟩ := mem_iUnion.mp hd
+    exact ⟨e.symm ⟨d,hd⟩, by simpa [e] using hbd⟩
+  · intro j b hb x hx
+    exact hWcontrol _ _ hb x hx
+
 /-- Actual rational slices of the original boundary quotient. The open set is
 chosen within closed crossing sets, so every one of its whole fibers has points
 on both sides of the very same slice. -/
@@ -346,7 +419,12 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
         Subtype.val '' ((Quotient.mk r) ⁻¹' {b}) = exclusion C u p) ∧
       ∃ (f : V →ₗ[ℝ] ℝ) (t : ℚ) (O : Set (Quotient r)),
         f ≠ 0 ∧ IsOpen O ∧ O.Nonempty ∧
-        (∃ c ∈ intrinsicInterior ℝ (base C u), f c = (t : ℝ)) ∧
+        (∃ c ∈ intrinsicInterior ℝ (base C u), f c = (t : ℝ) ∧
+          ∃ (n : ℕ) (W : Fin n → Set (Quotient r)) (N : Fin n → Set V),
+            (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
+            (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : V) ∉ N j) ∧
+            ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base C u),
+              Quotient.mk r x = b → (x : V) - c ∈ N j) ∧
         O ⊆ (Quotient.mk r) '' {x | f (x : V) = (t : ℝ)} ∧
         ∀ b ∈ O, ∃ x y : intrinsicFrontier ℝ (base C u),
           Quotient.mk r x = b ∧ Quotient.mk r y = b ∧
@@ -440,8 +518,9 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     rw [he] at hx' hy'
     simp only [LinearMap.zero_apply] at hx' hy'
     linarith
-  · exact intrinsic_level_of_straddling (base_convex C u) (f j.1)
+  · obtain ⟨c, hc, hct⟩ := intrinsic_level_of_straddling (base_convex C u) (f j.1)
       (hSK x.property) (hSK y.property) hx hy
+    exact ⟨c, hc, hct, finite_shifted_fiber_controls hclosed hstrict hgen hB r hq hqc hfib hc⟩
   · intro b hb
     obtain ⟨x,y,hxb,hyb,hx,hy⟩ := across b hb
     obtain ⟨p,hp⟩ := hfib b

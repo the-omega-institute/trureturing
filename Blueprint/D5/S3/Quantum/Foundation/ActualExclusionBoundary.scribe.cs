@@ -72,6 +72,13 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                     Ex("r", Call("Setoid", S), data))))));
     }
 
+    private static Formula Conj(params Formula[] xs)
+    {
+        var result = xs[^1];
+        for (var i = xs.Length - 2; i >= 0; i--) result = And(xs[i], result);
+        return result;
+    }
+
     private static Formula RationalSliceStatement()
     {
         var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
@@ -81,24 +88,23 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
         var x = Id("x"); var y = Id("y"); var p = Id("p"); var c = Id("c");
         Formula Eq(Formula a, Formula d) => new Formula.Relation(a, FormulaRelationOperator.Equal, d);
         Formula Lt(Formula a, Formula d) => new Formula.Relation(a, FormulaRelationOperator.LessThan, d);
-        var properties = And(All("x", S, All("y", S,
-            new Formula.Logic(Call("r", x, y), FormulaLogicOperator.Iff,
+        var properties = Conj(
+            All("x", S, All("y", S, new Formula.Logic(Call("r", x, y), FormulaLogicOperator.Iff,
                 Mem(Call("midpoint", real, x, y), S)))),
-            And(Call("CompactSpace", Q), And(Call("TTwoSpace", Q),
-                And(Call("Continuous", projection), And(Call("IsClosedMap", projection),
-                    All("b", Q, Ex("p", Call("pure", C, u),
-                        Eq(Call("AmbientImage", Call("Fiber", projection, b)), Call("exclusion", C, u, p))))))));
+            Call("CompactSpace", Q), Call("TTwoSpace", Q), Call("Continuous", projection),
+            Call("IsClosedMap", projection),
+            All("b", Q, Ex("p", Call("pure", C, u),
+                Eq(Call("AmbientImage", Call("Fiber", projection, b)), Call("exclusion", C, u, p)))));
+        var crossing = All("b", Q, Imp(Mem(b, O), Ex("x", S, Ex("y", S, Conj(
+            Eq(Call("QuotientMk", r, x), b), Eq(Call("QuotientMk", r, y), b),
+            Lt(Call("f", x), Call("RealCast", t)), Lt(Call("RealCast", t), Call("f", y)))))));
+        var level = Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, Call("base", C, u))),
+            Eq(Call("f", c), Call("RealCast", t))));
         var slice = Ex("f", Call("LinearMaps", real, V, real), Ex("t", Id("Rationals"),
-            Ex("O", Call("Sets", Q), And(new Formula.Relation(f, FormulaRelationOperator.NotEqual, F.D(0)),
-                And(Call("IsOpen", O), And(Call("Nonempty", O),
-                    And(Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, Call("base", C, u))),
-                        Eq(Call("f", c), Call("RealCast", t)))),
-                        And(Call("Subset", O, Call("Image", projection, Call("BoundaryLevelSet", f, t))),
-                            All("b", Q, Imp(Mem(b, O), Ex("x", S, Ex("y", S,
-                                And(Eq(Call("QuotientMk", r, x), b),
-                                    And(Eq(Call("QuotientMk", r, y), b),
-                                        And(Lt(Call("f", x), Call("RealCast", t)),
-                                            Lt(Call("RealCast", t), Call("f", y)))))))))))))));
+            Ex("O", Call("Sets", Q), Conj(
+                new Formula.Relation(f, FormulaRelationOperator.NotEqual, F.D(0)),
+                Call("IsOpen", O), Call("Nonempty", O), level,
+                Call("Subset", O, Call("Image", projection, Call("BoundaryLevelSet", f, t))), crossing))));
         return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
             Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V), Inst("Nontrivial", V),
             All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
