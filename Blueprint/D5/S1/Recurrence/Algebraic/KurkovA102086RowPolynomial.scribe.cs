@@ -52,7 +52,7 @@ internal sealed class KurkovA102086RowPolynomialDocument : IScribeDocumentDefini
     private static Formula TriangleFormula()
     {
         Formula n = F.Id("n"), k = F.Id("k"), j = F.Id("j");
-        Formula interval = Call("Finset.Ico", k, n);
+        Formula interval = new Formula.Apply(Seq(Named("Finset"), Dot, Named("Ico")), [k, n]);
         Formula rhs = Sum(Seq(j, Sp, InMacro, Sp, interval), Mul(V("T", Sub(n, D(1)), j), V("T", j, k)));
         Formula body = And(All("n", N(), All("k", N(), Imp(Lt(n, k), Eq(V("T", n, k), D(0))))),
             And(All("n", N(), Eq(V("T", n, n), Add(n, D(1)))),
@@ -76,7 +76,7 @@ internal sealed class KurkovA102086RowPolynomialDocument : IScribeDocumentDefini
     private static Formula ClaimBody()
     {
         Formula n = F.Id("n"), k = F.Id("k");
-        Formula row = Sum(Seq(k, Sp, InMacro, Sp, Call("Finset.range", Add(n, D(1)))),
+        Formula row = Sum(Seq(k, Sp, InMacro, Sp, new Formula.Apply(Seq(Named("Finset"), Dot, Named("range")), [Add(n, D(1))])),
             Mul(Call("C", V("T", n, k)), Pow(F.Id("X"), k)));
         return And(Ex("T", TType(), Call("IsSourceTriangle", F.Id("T"))),
             And(Ex("P", PType(), Call("IsSourcePolynomialTable", F.Id("P"))),

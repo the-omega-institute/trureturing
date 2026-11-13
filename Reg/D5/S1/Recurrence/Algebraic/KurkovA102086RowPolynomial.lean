@@ -51,9 +51,11 @@ def family : Registration arena (type_of% @result) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨((fun _ k => (k : ℤ)), 0), 0, 1, ?_⟩
-    change (0 : ℤ) ≠ 1
-    exact zero_ne_one
+    obtain ⟨T, hT⟩ := result.1
+    refine ⟨(T, 0), 0, 1, ?_⟩
+    change T 0 0 ≠ T 0 1
+    rw [hT.2.1 0, hT.1 0 1 (by omega)]
+    norm_num
 
 /-- Typed audit attempt. Exact scoped source-occurrence reconstruction remains unresolved. -/
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
