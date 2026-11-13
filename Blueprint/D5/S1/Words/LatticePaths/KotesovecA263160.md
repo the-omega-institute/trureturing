@@ -80,7 +80,7 @@ The displayed formula specifies the objects and their ordered finite counts.
 
 **Theorem 1.7 (A finite path-length budget).**
 
-$$\forall d \in \mathbb{N},\; \forall h \in \mathbb{N},\; \forall w \in \operatorname{List}\left(\operatorname{Step}\left(d\right)\right),\; (\operatorname{FirstZero}\left(h, w\right)) \Rightarrow (\operatorname{List}.\operatorname{length}\left(w\right) \le d \cdot h)$$
+$$\forall d \in \mathbb{N},\; \forall h \in \mathbb{N},\; \forall w \in \operatorname{List}\left(\operatorname{Step}\left(d\right)\right),\; (\operatorname{FirstZero}\left(h, w\right)) \Rightarrow (\operatorname{List}.\operatorname{length}\left(w\right) \le d \cdot \left(h - 1\right) + 1)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/LatticePaths/KotesovecA263160.first_zero_length_bound` (`✓ std3`). ∎
 
@@ -88,7 +88,7 @@ $$\forall d \in \mathbb{N},\; \forall h \in \mathbb{N},\; \forall w \in \operato
 
 *Commentary.*
 
-Every step uses at least one coordinate. Before the last step, each coordinate has been used at most one less than the initial height. This bounds the length and makes the finite count exhaustive.
+Every step uses at least one coordinate. Before the last step, each coordinate has been used at most h minus one times, so the length is at most d times (h minus one), plus one. This is the cutoff in the terminal-word sum. Height zero or dimension zero still admits only the empty path; for positive height and dimension the cutoff is at most d times h, making the finite count exhaustive.
 
 **Theorem 1.8 (Transposing rows and inserting empty columns).**
 
