@@ -263,7 +263,7 @@ private theorem IsEven.eval_eq {P : ℂ[X]} (h : IsEven P) (x : ℂ) :
 
 end Poly
 
-open Poly Complex Topology Filter
+open D5.S3.ContinuousObservables.IntervalSOSCompletion.Poly Complex Topology Filter
 
 private noncomputable def conjP (P : ℂ[X]) : ℂ[X] := P.map (starRingEnd ℂ)
 
@@ -281,7 +281,7 @@ private theorem HasParity.one_sub_X_sq_mul {P : ℂ[X]} {n : ℕ} (hP : HasParit
 
 end Poly
 
-open Poly Complex Topology Filter
+open D5.S3.ContinuousObservables.IntervalSOSCompletion.Poly Complex Topology Filter
 
 @[simp]
 private theorem coeff_conjP (P : ℂ[X]) (m : ℕ) : (conjP P).coeff m = (starRingEnd ℂ) (P.coeff m) :=
@@ -356,7 +356,7 @@ private theorem IsEven.eval_neg {P : ℂ[X]} (hP : IsEven P) (z : ℂ) : P.eval 
 
 end Poly
 
-open Poly Complex Topology Filter
+open D5.S3.ContinuousObservables.IntervalSOSCompletion.Poly Complex Topology Filter
 
 private theorem conjP_map_algebraMap (P : ℝ[X]) :
     conjP (P.map (algebraMap ℝ ℂ)) = P.map (algebraMap ℝ ℂ) := by
@@ -851,5 +851,111 @@ theorem exists_sumsq_decomposition (k : ℕ) (A : ℝ[X]) (hAe : IsEven (A.map (
   obtain ⟨hC', hC0⟩ := natDegree_le_pred_of_X_mul hC
   exact ⟨B, C, hABC, hB, hC', hC0, pB,
     hasParity_pred_of_X_mul pC fun hk => by rw [hC0 hk, Polynomial.map_zero]⟩
+
+open D5.S3.ContinuousObservables.CentralWinding
+
+private def completionMatrix (a b c : ℝ) : Matrix (ZMod 2) (ZMod 2) ℂ :=
+  fun i j => if i = 0 then
+    if j = 0 then (a : ℂ) + Complex.I * (b : ℂ) else Complex.I * (c : ℂ)
+  else if j = 0 then Complex.I * (c : ℂ) else (a : ℂ) - Complex.I * (b : ℂ)
+
+/-- Signed-circle completion: the off-diagonal uses `Im z`, not its absolute value. -/
+noncomputable def phaseCompletion (p B C : ℝ[X]) : CyclicObservable 2 :=
+  ⟨fun t => completionMatrix (p.eval (windingPhase t).re)
+      (B.eval (windingPhase t).re) ((windingPhase t).im * C.eval (windingPhase t).re), by
+    have hx := Complex.continuous_re.comp windingPhase.continuous
+    have hy := Complex.continuous_im.comp windingPhase.continuous
+    have hp := Complex.continuous_ofReal.comp (p.continuous.comp hx)
+    have hB := Complex.continuous_ofReal.comp (B.continuous.comp hx)
+    have hC := Complex.continuous_ofReal.comp (hy.mul (C.continuous.comp hx))
+    apply continuous_matrix
+    intro i j
+    simp only [completionMatrix]
+    split_ifs <;> fun_prop⟩
+
+private theorem completion_matrix_laws (a b c : ℝ) (h : a ^ 2 + b ^ 2 + c ^ 2 = 1) :
+    let M := completionMatrix a b c
+    star M * M = 1 ∧ M * star M = 1 ∧ M.det = 1 ∧ (M 0 0).re = a := by
+  have hu : (Finset.univ : Finset (ZMod 2)) = {0, 1} := by decide
+  have cases2 (i : ZMod 2) : i = 0 ∨ i = 1 := by
+    fin_cases i
+    · exact Or.inl rfl
+    · exact Or.inr rfl
+  dsimp only
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · apply Matrix.ext
+    intro i j
+    simp only [Matrix.star_eq_conjTranspose, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Matrix.one_apply]
+    rcases cases2 i with rfl | rfl <;> rcases cases2 j with rfl | rfl <;>
+      simp [hu, completionMatrix] <;> apply Complex.ext <;> norm_num <;> nlinarith [h]
+  · apply Matrix.ext
+    intro i j
+    simp only [Matrix.star_eq_conjTranspose, Matrix.mul_apply,
+      Matrix.conjTranspose_apply, Matrix.one_apply]
+    rcases cases2 i with rfl | rfl <;> rcases cases2 j with rfl | rfl <;>
+      simp [hu, completionMatrix] <;> apply Complex.ext <;> norm_num <;> nlinarith [h]
+  · have hm : (completionMatrix a b c).submatrix
+        (ZMod.finEquiv 2).toEquiv (ZMod.finEquiv 2).toEquiv =
+        !![(a : ℂ) + Complex.I * (b : ℂ), Complex.I * (c : ℂ);
+           Complex.I * (c : ℂ), (a : ℂ) - Complex.I * (b : ℂ)] := by
+      have e0 : (ZMod.finEquiv 2).toEquiv 0 = 0 := rfl
+      have e1 : (ZMod.finEquiv 2).toEquiv 1 = 1 := rfl
+      ext i j
+      fin_cases i <;> fin_cases j <;> simp [Matrix.submatrix_apply, e0, e1, completionMatrix]
+    rw [← Matrix.det_submatrix_equiv_self (ZMod.finEquiv 2).toEquiv, hm, Matrix.det_fin_two]
+    apply Complex.ext <;> norm_num <;> nlinarith [h]
+  · simp [completionMatrix]
+
+/-- Every bounded parity polynomial admits a native continuous SU(2) completion,
+with all scalar SOS degree, parity and zero-degree endpoint data retained. -/
+theorem exists_phase_unitary_completion (k : ℕ) (p : ℝ[X]) (hp : p.natDegree ≤ k)
+    (hpar : HasParity (p.map (algebraMap ℝ ℂ)) k)
+    (hbound : ∀ x ∈ Set.Icc (-1 : ℝ) 1, p.eval x ^ 2 ≤ 1) :
+    ∃ (B C : ℝ[X]) (U : CyclicObservable 2),
+      1 - p ^ 2 = B ^ 2 + (1 - X ^ 2) * C ^ 2 ∧
+      B.natDegree ≤ k ∧ C.natDegree ≤ k - 1 ∧ (k = 0 → C = 0) ∧
+      HasParity (B.map (algebraMap ℝ ℂ)) k ∧
+      HasParity (C.map (algebraMap ℝ ℂ)) (k - 1) ∧
+      U = phaseCompletion p B C ∧ star U * U = 1 ∧ U * star U = 1 ∧
+      (∀ t, (U t).det = 1) ∧ (∀ t, (U t 0 0).re = p.eval (windingPhase t).re) := by
+  have he : IsEven ((1 - p ^ 2).map (algebraMap ℝ ℂ)) := by
+    rw [Polynomial.map_sub, Polynomial.map_one, Polynomial.map_pow, sq]
+    apply IsEven.sub
+    · simpa using (isEven_C (1 : ℂ))
+    · exact (hpar.mul hpar).1 ⟨k, rfl⟩
+  have hd : (1 - p ^ 2).natDegree ≤ 2 * k := by
+    refine (natDegree_sub_le _ _).trans (max_le (by rw [natDegree_one]; omega) ?_)
+    exact natDegree_pow_le.trans (by omega)
+  have hn : ∀ x ∈ Set.Icc (-1 : ℝ) 1, 0 ≤ (1 - p ^ 2).eval x := by
+    intro x hx
+    simp only [eval_sub, eval_one, eval_pow]
+    linarith [hbound x hx]
+  obtain ⟨B, C, h, hB, hC, hC0, hBp, hCp⟩ :=
+    exists_sumsq_decomposition k (1 - p ^ 2) he hd hn
+  have laws (t : AddCircle (1 : ℝ)) := by
+    have hc : (windingPhase t).re ^ 2 + (windingPhase t).im ^ 2 = 1 := by
+      have hz : ‖windingPhase t‖ = 1 := by simp [windingPhase]
+      rw [sq, sq, ← Complex.normSq_apply, Complex.normSq_eq_norm_sq, hz]
+      norm_num
+    have hx : (windingPhase t).re ∈ Set.Icc (-1 : ℝ) 1 := by
+      constructor <;> nlinarith [sq_nonneg (windingPhase t).im]
+    have heval := congrArg (Polynomial.eval (windingPhase t).re) h
+    simp only [eval_sub, eval_one, eval_pow, eval_add, eval_mul, eval_X] at heval
+    have hs : (p.eval (windingPhase t).re) ^ 2 + (B.eval (windingPhase t).re) ^ 2 +
+        ((windingPhase t).im * C.eval (windingPhase t).re) ^ 2 = 1 := by
+      nlinarith [sq_nonneg (C.eval (windingPhase t).re)]
+    exact completion_matrix_laws _ _ _ hs
+  refine ⟨B, C, phaseCompletion p B C, h, hB, hC, hC0, hBp, hCp, rfl, ?_, ?_, ?_, ?_⟩
+  · apply ContinuousMap.ext
+    intro t
+    simpa [phaseCompletion] using (laws t).1
+  · apply ContinuousMap.ext
+    intro t
+    simpa [phaseCompletion] using (laws t).2.1
+  · intro t
+    simpa [phaseCompletion] using (laws t).2.2.1
+  · intro t
+    simpa [phaseCompletion] using (laws t).2.2.2
 
 end D5.S3.ContinuousObservables.IntervalSOSCompletion
