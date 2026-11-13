@@ -14,6 +14,11 @@ import Mathlib.Topology.Baire.Lemmas
 import Mathlib.Topology.Baire.LocallyCompactRegular
 import Mathlib.Analysis.Normed.Module.Convex
 import Mathlib.Analysis.Normed.Module.Ray
+import Mathlib.Topology.Homotopy.Basic
+import Mathlib.Analysis.Convex.GaugeRescale
+import Mathlib.Analysis.Normed.Module.Normalize
+import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Contractible
+import D5.S3.Topology.TauCeti.Analysis.Normed.Module.Normalize
 
 /-! Relative-boundary geometry of the entire original normalized cone base. -/
 
@@ -664,5 +669,219 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     have hzD := ((exclusion_ball_faces hclosed hstrict hgen hB).1 p).2.2.1.segment_subset hxD hyD hz
     obtain ⟨a,ha,haz⟩ := hp.symm ▸ hzD
     exact ⟨a, by simpa [haz] using hzt, ha⟩
+
+
+/-- In the all-repeated branch the entire original boundary admits a zero-free
+homotopy in its actual affine direction space, from its translate by an actual
+relative interior point to the opposite of an actual boundary direction. -/
+theorem original_all_repeated_zero_free_homotopy [Nontrivial V]
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hrepeated : ∀ p : pure C u, ∃ s : pure C u,
+      p ≠ s ∧ exclusion C u s = exclusion C u p) :
+    let E := (affineSpan ℝ (base C u)).direction
+    ∃ c ∈ intrinsicInterior ℝ (base C u),
+      ∃ v : intrinsicFrontier ℝ (base C u),
+        Nontrivial E ∧ ∃ H : C(unitInterval × intrinsicFrontier ℝ (base C u), E),
+          (∀ x, (H (0, x) : V) = (x : V) - c) ∧
+          (∀ x, (H (1, x) : V) = c - (v : V)) ∧
+          ∀ z, H z ≠ 0 := by
+  classical
+  obtain ⟨r, _, _, _, hq, _, _, f, t, O, _, _, _,
+    ⟨c, hc, _, v, _, _, n, W, N, _, _, _, _, _, _, A, hAK, hAR, hseg⟩, _, _⟩ :=
+    original_all_repeated_rational_slice hclosed hstrict hgen hB hrepeated
+  let K := base C u
+  let S := intrinsicFrontier ℝ K
+  let E := (affineSpan ℝ K).direction
+  have hKclosed : IsClosed K := (base_compact hclosed hstrict).isClosed
+  have hSK : S ⊆ K := intrinsicFrontier_subset hKclosed
+  have hcK : c ∈ K := intrinsicInterior_subset hc
+  have hca : c ∈ affineSpan ℝ K := subset_affineSpan ℝ K hcK
+  have hnz (x : S) : (x : V) - c ≠ 0 := by
+    intro heq
+    have hx : (x : V) = c := sub_eq_zero.mp heq
+    have hdis := intrinsicClosure_sdiff_intrinsicInterior (𝕜 := ℝ) K
+    have hb : c ∈ intrinsicFrontier ℝ K := hx ▸ x.property
+    rw [← hdis] at hb
+    exact hb.2 hc
+  let d : S → E := fun x => ⟨(x : V) - c,
+    (affineSpan ℝ K).vsub_mem_direction (subset_affineSpan ℝ K (hSK x.property)) hca⟩
+  have hd : Continuous d := (continuous_subtype_val.sub continuous_const).subtype_mk _
+  let a : S → E := fun x => ⟨A (Quotient.mk r x), by
+    obtain ⟨y, hy, he⟩ := hAK (Quotient.mk r x)
+    rw [← he]
+    exact (affineSpan ℝ K).vsub_mem_direction (subset_affineSpan ℝ K hy) hca⟩
+  have ha : Continuous a := (A.continuous.comp hq).subtype_mk _
+  let w : E := -d v
+  have hw : w ≠ 0 := by
+    intro hh
+    have he := congrArg (fun z : E => (z : V)) hh
+    exact hnz v (sub_eq_zero.mpr (sub_eq_zero.mp (by simpa [w, d] using he)).symm)
+  have ha0 (x : S) : a x ≠ 0 := by
+    intro hh
+    apply hAR (Quotient.mk r x)
+    have he := congrArg (fun z : E => (z : V)) hh
+    change A (Quotient.mk r x) = 0 at he
+    rw [he]
+    exact SameRay.zero_right _
+  have hsecond (x : S) : (0 : V) ∉ segment ℝ (a x : V) (w : V) := by
+    intro hh
+    have hray := (mem_segment_iff_sameRay.mp hh).symm
+    apply hAR (Quotient.mk r x)
+    simpa only [zero_sub, sub_zero, w, d, Submodule.coe_neg,
+      Submodule.coe_mk, sameRay_neg_iff] using hray
+  let P := {z : E // z ≠ 0}
+  let dP : C(S, P) := ⟨fun x => ⟨d x, fun h => hnz x (congrArg Subtype.val h)⟩,
+    hd.subtype_mk _⟩
+  let aP : C(S, P) := ⟨fun x => ⟨a x, ha0 x⟩, ha.subtype_mk _⟩
+  let wP : P := ⟨w, hw⟩
+  let line (b e : S → E) (z : unitInterval × S) : E :=
+    (1 - (z.1 : ℝ)) • b z.2 + (z.1 : ℝ) • e z.2
+  have hline (b e : S → E) (hb : Continuous b) (he : Continuous e) :
+      Continuous (line b e) := by dsimp [line]; fun_prop
+  have hfirst0 (z : unitInterval × S) : line d a z ≠ 0 := by
+    intro hh
+    apply hseg z.2
+    have he := congrArg (fun z : E => (z : V)) hh
+    simp only [Submodule.coe_zero] at he
+    rw [← he]
+    exact ⟨1 - (z.1 : ℝ), (z.1 : ℝ), sub_nonneg.mpr z.1.property.2,
+      z.1.property.1, sub_add_cancel _ _, rfl⟩
+  have hsecond0 (z : unitInterval × S) : line a (fun _ => w) z ≠ 0 := by
+    intro hh
+    apply hsecond z.2
+    have he := congrArg (fun z : E => (z : V)) hh
+    simp only [Submodule.coe_zero] at he
+    rw [← he]
+    exact ⟨1 - (z.1 : ℝ), (z.1 : ℝ), sub_nonneg.mpr z.1.property.2,
+      z.1.property.1, sub_add_cancel _ _, rfl⟩
+  let H₁ : dP.Homotopy aP :=
+    { toFun := fun z => ⟨line d a z, hfirst0 z⟩
+      continuous_toFun := (hline d a hd ha).subtype_mk _
+      map_zero_left := by intro x; apply Subtype.ext; simp [line, dP, aP]
+      map_one_left := by intro x; apply Subtype.ext; simp [line, dP, aP] }
+  let H₂ : aP.Homotopy (ContinuousMap.const S wP) :=
+    { toFun := fun z => ⟨line a (fun _ => w) z, hsecond0 z⟩
+      continuous_toFun := (hline a (fun _ => w) ha continuous_const).subtype_mk _
+      map_zero_left := by intro x; apply Subtype.ext; simp [line, aP]
+      map_one_left := by intro x; apply Subtype.ext; simp [line, wP] }
+  let H := H₁.trans H₂
+  have hnontrivial : Nontrivial E := ⟨⟨w, 0, hw⟩⟩
+  refine ⟨c, hc, v, hnontrivial,
+    ⟨fun z => (H z : E), continuous_subtype_val.comp H.continuous⟩, ?_, ?_, ?_⟩
+  · intro x
+    have hh := congrArg (fun z : P => ((z : E) : V)) (H.map_zero_left x)
+    exact hh
+  · intro x
+    have hh := congrArg (fun z : P => ((z : E) : V)) (H.map_one_left x)
+    simpa [wP, w, d] using hh
+  · intro z
+    exact (H z).property
+
+
+/-- Some original whole exclusion has exactly one label in the entire original
+pure-state domain. -/
+theorem original_singleton_label_exists [Nontrivial V]
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u) :
+    ∃ p : pure C u, ∀ q : pure C u, exclusion C u q = exclusion C u p → q = p := by
+  classical
+  by_contra hn
+  have hrepeated : ∀ p : pure C u, ∃ s : pure C u,
+      p ≠ s ∧ exclusion C u s = exclusion C u p := by
+    push_neg at hn
+    intro p
+    obtain ⟨s, hs, hsp⟩ := hn p
+    exact ⟨s, Ne.symm hsp, hs⟩
+  obtain ⟨c, hc, v, hnontrivial, H, H0, H1, Hnz⟩ :=
+    original_all_repeated_zero_free_homotopy hclosed hstrict hgen hB hrepeated
+  let K := base C u
+  let B := affineSpan ℝ K
+  let E := B.direction
+  letI : Nontrivial E := hnontrivial
+  let S := intrinsicFrontier ℝ K
+  have hca : c ∈ B := subset_affineSpan ℝ K (intrinsicInterior_subset hc)
+  let cB : B := ⟨c, hca⟩
+  letI : Nonempty B := ⟨cB⟩
+  let e : E ≃ₜ B := Homeomorph.vaddConst cB
+  let T : Set E := e ⁻¹' (Subtype.val ⁻¹' K)
+  have hTconvex : Convex ℝ T :=
+    (base_convex C u).affine_preimage
+      (B.subtype.comp (AffineEquiv.vaddConst ℝ cB).toAffineMap)
+  have hTcompact : IsCompact T := e.isCompact_preimage.mpr
+    (Topology.IsEmbedding.subtypeVal.isInducing.isCompact_preimage'
+      (base_compact hclosed hstrict) (by
+        intro x hx
+        exact ⟨⟨x, subset_affineSpan ℝ K hx⟩, rfl⟩))
+  have hTinterior : (0 : E) ∈ interior T := by
+    rw [← e.preimage_interior]
+    obtain ⟨b, hb, hbc⟩ := mem_intrinsicInterior.mp hc
+    have he : e 0 = b := by apply Subtype.ext; simpa [e, cB] using hbc.symm
+    exact he.symm ▸ hb
+  let ball : Set E := Metric.closedBall 0 1
+  let g : E ≃ₜ E := gaugeRescaleHomeomorph T ball hTconvex
+    (mem_interior_iff_mem_nhds.mp hTinterior)
+    (NormedSpace.isVonNBounded_of_isBounded ℝ hTcompact.isBounded)
+    (convex_closedBall 0 1) (Metric.closedBall_mem_nhds 0 one_pos)
+    (NormedSpace.isVonNBounded_closedBall ℝ E 1)
+  have g0 : g 0 = 0 := gaugeRescale_zero T ball
+  have gfront : g '' frontier T = Metric.sphere 0 1 := by
+    rw [← closure_sdiff_interior, image_sdiff g.injective]
+    rw [image_gaugeRescaleHomeomorph_closure, image_gaugeRescaleHomeomorph_interior]
+    exact closure_sdiff_interior ball |>.trans (by simp [ball, frontier_closedBall, one_ne_zero])
+  let eA : frontier (Subtype.val ⁻¹' K : Set B) ≃ₜ S :=
+    Topology.IsEmbedding.subtypeVal.homeomorphImage _
+  have ef : e '' frontier T = frontier (Subtype.val ⁻¹' K : Set B) := by
+    rw [← e.preimage_frontier, e.image_preimage]
+  let eB : frontier T ≃ₜ S := ((e.image _).trans (Homeomorph.setCongr ef)).trans eA
+  let eG : frontier T ≃ₜ Metric.sphere (0 : E) 1 :=
+    (g.image _).trans (Homeomorph.setCongr gfront)
+  let J : S ≃ₜ Metric.sphere (0 : E) 1 := eB.symm.trans eG
+  have eBval (x : frontier T) : (eB x : V) = (x : E) + c := by
+    rfl
+  have Jval (x : S) : (J x : E) = g ⟨(x : V) - c,
+      B.vsub_mem_direction (subset_affineSpan ℝ K
+        (intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed x.property)) hca⟩ := by
+    change g (eB.symm x : E) = g _
+    apply congrArg g
+    apply Subtype.ext
+    have he := eBval (eB.symm x)
+    rw [eB.apply_symm_apply] at he
+    exact eq_sub_iff_add_eq.mpr he.symm
+  let F : unitInterval × Metric.sphere (0 : E) 1 → E :=
+    fun z => g (H (z.1, J.symm z.2))
+  have hF : Continuous F :=
+    g.continuous.comp (H.continuous.comp
+      (continuous_fst.prodMk (J.symm.continuous.comp continuous_snd)))
+  have hF0 (z) : F z ≠ 0 := by
+    intro hz
+    exact Hnz _ (g.injective (hz.trans g0.symm))
+  let Hsphere := TauCeti.normalizeToSphere F hF hF0
+  let endpoint : Metric.sphere (0 : E) 1 := Hsphere (1, J v)
+  have hzero (x : Metric.sphere (0 : E) 1) : Hsphere (0, x) = x := by
+    apply Subtype.ext
+    change NormedSpace.normalize (F (0, x)) = (x : E)
+    have he : F (0, x) = (x : E) := by
+      rw [show F (0, x) = g (H (0, J.symm x)) from rfl]
+      rw [← Jval (J.symm x), J.apply_symm_apply]
+      apply congrArg g
+      apply Subtype.ext
+      exact H0 _
+    rw [he]
+    exact NormedSpace.normalize_eq_self_of_norm_eq_one
+      (Metric.mem_sphere_zero_iff_norm.mp x.property)
+  have hone (x : Metric.sphere (0 : E) 1) : Hsphere (1, x) = endpoint := by
+    apply Subtype.ext
+    change NormedSpace.normalize (g (H (1, J.symm x))) =
+      NormedSpace.normalize (g (H (1, J.symm (J v))))
+    have he : H (1, J.symm x) = H (1, J.symm (J v)) :=
+      Subtype.ext ((H1 _).trans (H1 _).symm)
+    rw [he]
+  apply TauCeti.not_contractibleSpace_sphere (E := E)
+  apply (contractible_iff_id_nullhomotopic _).mpr
+  exact ⟨endpoint, ⟨{ toContinuousMap := Hsphere,
+    map_zero_left := hzero, map_one_left := hone }⟩⟩
 
 end D5.S3.Quantum.Foundation.ActualExclusionBoundary
