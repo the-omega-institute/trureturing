@@ -1,0 +1,19 @@
+### 124.10 复用与原始文献的准确条件
+
+IX118.4的纯／混标签判据、118.10的零效应最大值与唯一一值面、118.12的固定零测试失稳，121的Baire与残余稳定、122的实际纤维与影壳光滑、123的全空间确认公式、正规正高度、严格凸完整影像与原单位费用均为已付前置。全域非塌缩／开放关系到维数九、全Pair及同原静态重构，已由IX116.12—116.17与IX118.3—118.8承担，不重新计为本章分类。
+
+本章的原域综合是124.1—124.3的全部效应聚点线段、反向读数下半连续、严格高度下降与互补确认及第二层整球塌缩，以及124.3—124.5的跨真实远端确认估计、连续费用边界的常值刚性和反向缺口的局部常值后果。凸Bregman余差、紧性、上／下半连续、Baire、支撑函数一阶可微与单调差商原理都只作成熟中间工具。这里的文献状态为repo-derived的原对象联合推导，不声称全球原创，也不将纸面证明称为kernel核验。
+
+[Alfsen–Shultz][Q124AS]印刷页160的Hilbert ball property量化每一对原极点生成的最小面，要求它是norm-exposed且仿射同构Hilbert球，不只量化已给的排除球。印刷页188 Corollary 7.5对有限维紧凸集准确要求(i) Hilbert ball property与(iii)每个norm-exposed face projective；strong spectrality不是该推论另列的第三个前件。印刷页158在其order-unit／base-norm对偶中的P-projection是弱星连续正压缩投影，须存在同类quasicomplement；两投影在原空间及其对偶上均须满足正核／正像互补。上述两个几何前件和P-projection没有由EB3+Inj、费用连续或(Q124.20)自动取得，所以这个成熟Jordan接口仍为条件接口。
+
+[Kramer][Q124K] §6.3.5要求局部紧、有限覆盖维ANR，才把相应整数局部同调群条件识别为广义流形。§6.4.1要求同一个 $\mathcal I\to P,\mathcal I\to L$ 的实际局部平凡束，纤维分别为同伦 $m'$、$m$ 球；纤维与底须局部紧、有限维ANR，$P,L,\mathcal I$ 须分别为维数 $r-m',r-m,r$ 的广义流形，且同一双映射柱为同调 $(r+1)$ 球。集合论纤维逐个球形、单个固定锚点的连续费用或反向缺口都不自动支付这些量词。
+
+[Labardini-Fragoso–Neumann-Coto–Takane][Q124L] Lemma 2的固定秩面Hausdorff紧性要求面格modular，Lemma 3还要求irreducible，Theorem 1从projective面格出发。未得全Pair或相应面格结构时，不能用这些结论提前封住本章的混态聚点或球塌缩。原MixedExclusionGeometry和PositiveComplementaryProjections的weakPair前件也继续保留，不由名称“互补确认”代付。
+
+[Q124VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、104.1—104.3；完整排除面接口。"
+[Q124IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116、118、120；原域、全域分类、零测试失稳与准确原边区间。"
+[Q124T]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "121—122；中点接触、残余稳定、实际影像与支撑纤维。"
+[Q124AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140, DOI 10.1007/BF02392307；印刷页158、160、187—188。"
+[Q124K]: https://arxiv.org/pdf/math/0104064 "Linus Kramer, Compact polygons；§6.3.5与§6.4.1的ANR、广义流形、真实局部平凡束和双映射柱条件。"
+[Q124L]: https://arxiv.org/pdf/0903.0643v1 "Daniel Labardini-Fragoso, Max Neumann-Coto and Martha Takane, Cones and convex bodies with modular face lattices；Lemmas 2、3与Theorem 1。"
+

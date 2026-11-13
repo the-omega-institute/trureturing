@@ -1,0 +1,90 @@
+**约定 128.1（完整原域与固定入口）。** 本章使用127.1的同一组原对象，不缩小状态、纯标签或效应域：
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x),\qquad
+D_p=\{x\in K:\mathcal T_p(x)=0\},\\
+\mathcal A_p=\{f\in\mathcal E:f(p)=1,\ f|_{D_p}=0\},\qquad
+N_p=\{h\in C^*:h(p)=0\},\qquad
+N_{D_p}=\{h\in C^*:h|_{D_p}=0\}.
+\end{gathered}
+\tag{Q128.1}
+$$
+
+其中 $V$ 是非零有限维实空间，$C$ 闭、尖、生成，$u$ 在 $C\setminus\{0\}$ 上严格正；$K$ 是整个紧基。原纯边仍为
+
+$$
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0.
+$$
+
+补效应使边对称，且 $p\perp q\Longleftrightarrow q\in D_p$。记 $P_0=\{p:\mathcal A_p\text{ 为单点}\}$。固定入口
+
+$$
+\mathsf E_0:=\mathsf{Ent}_\triangle
+$$
+
+逐项就是127.1的完整入口：EB3规定每个完整 $D_p$ 仿射同构于闭三球；原标签Inj规定 $D_p=D_q\Rightarrow p=q$；给一组实际原正交三角 $\triangle=(p_1,p_2,p_3)$，其中至少一个顶点在 $P_0$；同一三角满足全部原零效应的联合分离 $\mathsf J_\triangle$；125.6按全部零法向读数唯一确定的三个规范线性 $T_i:V\to M_i=\operatorname{span}D_{p_i}$，均在整个原锥上为正。联合分离和规范映射的量词为
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+[\forall i\ \forall h\in\mathcal E,\ h(p_i)=0\Rightarrow h(x)=h(y)]
+\Rightarrow x=y,\\
+h(T_i x)=h(x)\quad
+(h\in\operatorname{span}N_{p_i},\ x\in V),\qquad T_i(C)\subseteq C.
+\end{gathered}
+\tag{Q128.2}
+$$
+
+本章除另有说明外均在 $\mathsf E_0$ 下推导，不把全原PC1放进入口。由125.3—125.6与127.2，已有 $\dim V=9$、$W=\ker u$ 八维、$\operatorname{aff}K=\{u=1\}$ 八维。记
+
+$$
+S=\partial_{\rm rel}K,\quad D_i=D_{p_i},\quad
+w=p_1+p_2+p_3,\quad \eta=w/3\in\operatorname{ri}K.
+$$
+
+共同正定型 $B$、实际球度量及三个齐次二次型 $\Delta_i$ 完全采用127.2的刻度：$B(p_i,p_j)=\delta_{ij}$，横向块上 $B=g_i/2$，$B(w,x)=u(x)$，且
+
+$$
+B(x,x)=u(x)^2-2\sum_{i=1}^3\Delta_i(x)\quad(x\in V),
+\qquad \Delta_i(x)\ge0\quad(x\in C).
+\tag{Q128.3}
+$$
+
+每个 $T_i$ 是 $B$ 正交投影，$C_i=\operatorname{cone}D_i$ 是其四维空间中的实际Lorentz锥。其 $B$ 自对偶性只涉及 $C_i\subset M_i$，不预设 $C=C^{*B}$。完整的种子效应接口127.3及接触接口127.4a给
+
+$$
+\begin{gathered}
+q\in P\cap D_i\ \Longrightarrow\ q\in P_0,\qquad
+ e_q=B(q,\cdot)\in\mathcal A_q,\\
+\Delta_i(p)=0\ \Longleftrightarrow\ D_p\cap D_i\ne\varnothing
+\ \Longleftrightarrow\ (p+p_i)/2\in S\quad(p\in P).
+\end{gathered}
+\tag{Q128.4}
+$$
+
+这些是同一个实际种子及整个原域上的接口。特别地，$\Delta_i=0$ 包括零压缩和球相等，不只包括非零极射线。
+
+为避免与VIII114、IX115中的球内斜率 $a(p)$ 混淆，本章记确认冗余为
+
+$$
+\nu_p=\dim_{\rm aff}\mathcal A_p.
+$$
+
+[IX119.10][Q128IX]已经证明，锥维数按线性张成计算时，
+
+$$
+\dim\operatorname{span}N_p=\nu_p+4,\qquad
+N_{D_p}=\operatorname{cone}\mathcal A_p,\qquad
+\dim\operatorname{span}N_{D_p}=\nu_p+1,
+\tag{Q128.5}
+$$
+
+且 $q\in P\cap D_p\Rightarrow\nu_q=\nu_p$，并至少有一个实际 $P_0$ 标签。这里直接复用公式及有限原边传播，不把它们计为新内容。
+
+同样复用VII103.2、104.1、IX119.1与125.1的全部原面接口：每个 $D_p$ 是非点紧暴露极大真面；全部非空真面只有纯单点或完整排除球；$P\cap D_p=\partial_{\rm rel}D_p$；不同完整球至多交于一个原纯点。$\mathcal A_p$ 非空紧凸，每张 $f\in\mathcal A_p$ 的整个零面恰为 $D_p$，整个一值面恰为 $\{p\}$。紧性来自有限维全效应区间的紧性及闭线性条件，不要求 $P$ 闭。以下没有输入纯域闭性、球族连续性、图连通、全域自对偶、全二纯球面、全域projectivity、对偶面暴露性、ENR或球丛。
+
