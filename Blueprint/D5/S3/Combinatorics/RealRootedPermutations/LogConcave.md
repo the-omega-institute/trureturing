@@ -4,7 +4,31 @@
 
 Strict log concavity restricts every coefficient-sorting permutation.
 
-**Theorem 1.1 (Every weak coefficient sorting is unimodal).**
+**Theorem 1.1 (Strict increase before a selected maximum).**
+
+Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.increasing_before_max`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.increasing_before_max` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let f be a real sequence positive at every natural index through N. Suppose f(i)f(i+2) is strictly less than f(i+1) squared whenever i+2 is at most N. If m is at most N and f(i) is at most f(m) throughout that interval, then f(a) is strictly less than f(a+1) for every natural a with a+1 less than m. The step immediately into m follows weakly from maximality.
+
+**Theorem 1.2 (Strict decrease after a selected maximum).**
+
+Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.decreasing_after_max`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.decreasing_after_max` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same explicit positivity, strict log-concavity and maximality assumptions on a real sequence, f(a+1) is strictly less than f(a) whenever m is less than a and a+1 is at most N. The step immediately out of m follows weakly from maximality; two adjacent maximal values are allowed.
+
+**Theorem 1.3 (Every weak coefficient sorting is unimodal).**
 
 Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.unimodal_of_arises`
 
@@ -22,5 +46,7 @@ For a positive strictly log-concave sequence, a weak decrease forces the next de
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.decreasing_after_max`
+- Truth anchor: `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.increasing_before_max`
 - Truth anchor: `D5/S3/Combinatorics/RealRootedPermutations/LogConcave.unimodal_of_arises`
 - Dependency: [D5/S3/Combinatorics/RealRootedPermutations/Defs](Defs.md)

@@ -1,0 +1,15 @@
+**定理 116.5（存在方向足以消重复并给纯点闭性）。** 若另加 $\forall F\in\mathscr B,W(F)=1$，
+则 $p\mapsto D_p$ 是全部纯点到全部非点真面的双射，且 $P$ 在 $K$ 中闭。
+证明。116.4排除重复，既有面穷尽给满射。若 $p_j\in P$、$p_j\to x\in K$，
+在 $D_{p_j}$ 选饱和对径 $y_j,z_j$、效应 $b_j$，并选 $e_j\in\mathcal A_{p_j}$。
+$K,\mathcal E$ 紧使同一子列有 $y_j\to y,z_j\to z,b_j\to b,e_j\to e$，且
+
+$$
+e(x)=1,\qquad e(y)=e(z)=0,\qquad b(y)=1,\quad b(z)=0.
+\tag{IX116.8}
+$$
+
+因此 $y\ne z$，无需预证极限纯。作有限正权纯分解 $x=\sum_i\lambda_i s_i$；
+$e(x)=1$ 迫所有 $e(s_i)=1$，于是 $y,z\in D_{s_i}$。这些面含两个不同点，必相同，
+已证单射迫所有 $s_i$ 相同，所以 $x$ 纯。有限维中序列闭即闭。证毕。
+
