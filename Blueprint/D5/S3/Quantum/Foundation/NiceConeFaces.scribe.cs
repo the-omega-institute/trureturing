@@ -14,6 +14,9 @@ internal sealed class NiceConeFacesDocument : IScribeDocumentDefinition
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula In(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
+    private static DocumentBlock Def(string name, string title, StatementSource statement, string text) =>
+        Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create("D5/S3/Quantum/Foundation/NiceConeFaces." + name),
+            H(title), statement, AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), DescribeRole.Definition);
 
     public DocumentDefinition Create()
     {
