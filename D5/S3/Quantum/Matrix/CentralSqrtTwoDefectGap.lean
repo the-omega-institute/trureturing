@@ -689,6 +689,7 @@ private theorem central_charpoly (n : ℕ) :
       by_cases hij : i = j <;> simp_all <;> ring
   have hw : W * ((1 / 2 : ℝ) • W) = 1 := by
     simp [W, Matrix.fromBlocks_multiply, Matrix.fromBlocks_smul, ← add_smul]
+    norm_num <;> rfl
   have hconj : H * W = W * D := by
     simp [H, W, D, hp, hm, Matrix.fromBlocks_multiply, sub_eq_add_neg, add_comm]
   have hH : H = W * D * ((1 / 2 : ℝ) • W) := by
@@ -701,9 +702,13 @@ private theorem central_charpoly (n : ℕ) :
   have hfold : H.charpoly = (centralDefect (n + 1) (by omega)).charpoly := by
     rw [show H = (centralDefect (n + 1) (by omega)).submatrix (folding n) (folding n) from
       (folded_defect n).symm]
-    exact Matrix.charpoly_reindex (folding n).symm _
+    simpa only [Matrix.reindex_apply, Equiv.symm_symm] using
+      Matrix.charpoly_reindex (folding n).symm (centralDefect (n + 1) (by omega))
   rw [← hfold, hc]
   exact Matrix.charpoly_fromBlocks_zero₁₂
+    (M₁₁ := sectorMatrix n (Real.sqrt 2))
+    (M₂₁ := (0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℝ))
+    (M₂₂ := sectorMatrix n (-Real.sqrt 2))
 
 /-- The actual defect characteristic roots are precisely the complete sector union. -/
 private theorem central_roots (n : ℕ) :
@@ -717,7 +722,10 @@ private theorem central_roots (n : ℕ) :
     (sector_hermitian n (-Real.sqrt 2)).roots_charpoly_eq_eigenvalues]
   simp only [RCLike.ofReal_real_eq_id, id_eq, Function.comp_def]
   rw [← Finset.univ_disjSum_univ]
-  simp [Finset.disjSum, Multiset.map_add, Multiset.map_map, sectorSpectrum, add_comm]
+  rw [Finset.val_disjSum, Multiset.map_disjSum]
+  simpa only [sectorSpectrum, Sum.elim_inl, Sum.elim_inr] using
+    (add_comm (Finset.univ.val.map (sector_hermitian n (Real.sqrt 2)).eigenvalues)
+      (Finset.univ.val.map (sector_hermitian n (-Real.sqrt 2)).eigenvalues))
 
 /-- Every enumeration of all algebraic eigenvalues of the actual defect matrix
 obeys the same pairwise inverse-cubic bound. -/
@@ -738,11 +746,13 @@ theorem central_spectral_gap (n : ℕ)
     rw [hkl, sub_self, abs_zero] at hg
     exact (not_le_of_gt hd) hg
   have hroot : (Finset.univ.val.map (sectorSpectrum n)).Nodup :=
-    Finset.nodup_map_univ_iff_injective.mpr hinj
+    Finset.univ.nodup.map hinj
   have hlist : Finset.univ.val.map lambda =
       Finset.univ.val.map (sectorSpectrum n) := hlambda.trans (central_roots n)
-  have hlinj : Function.Injective lambda :=
-    Finset.nodup_map_univ_iff_injective.mp (by rw [hlist]; exact hroot)
+  have hlnodup : (Finset.univ.val.map lambda).Nodup := by rw [hlist]; exact hroot
+  have hlinj : Function.Injective lambda := by
+    intro i j hij
+    exact Multiset.inj_on_of_nodup_map hlnodup i (by simp) j (by simp) hij
   have hm (k : Fin (2 * (n + 1) - 1 + 1)) :
       ∃ l, sectorSpectrum n l = lambda k := by
     have hmem : lambda k ∈ Finset.univ.val.map lambda := Multiset.mem_map.mpr ⟨k, by simp, rfl⟩
@@ -775,5 +785,13 @@ theorem uniform_inverse_cubic_gap :
     intro lambda hlambda i j hij
     simpa only [Nat.succ_eq_add_one, Nat.cast_add, Nat.cast_one] using
       central_spectral_gap m lambda hlambda i j hij
+
+example : (∑ i : Fin 1, (1 : ℝ) ^ 2) ≤
+    (1 + |(3 : ℝ)|) ^ 2 * (0 + 1 : ℝ) ^ 3 * (1 : ℝ) ^ 2 := by
+  apply sector_endpoint_observability 0 3 3 (1 : Fin 1 → ℝ)
+  ext i
+  fin_cases i
+  simp [sectorMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix,
+    D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.upperBand, Matrix.mulVec, dotProduct]
 
 end D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap

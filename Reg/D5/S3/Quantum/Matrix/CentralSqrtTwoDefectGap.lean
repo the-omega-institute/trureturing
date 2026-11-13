@@ -56,7 +56,7 @@ abbrev law (R : Realization signature) : Prop :=
     R.readout () () ((mu - lam) * (u ⬝ᵥ v)) = c * u q * v q
 private theorem bad : ¬ law oneReadout := by
   intro h
-  have hh := @h Unit inferInstance inferInstance 0 0 () 0 (by simp) (by simp)
+  have hh := @h (ULift.{u} Unit) inferInstance inferInstance 0 0 ⟨()⟩ 0 (by simp) (by simp)
     0 0 0 0 (by simp) (by simp)
   norm_num [oneReadout, realize] at hh
 
@@ -74,8 +74,8 @@ abbrev law (R : Realization signature) : Prop :=
     c / K ≤ R.readout () () |lam - mu|
 private theorem bad : ¬ law zeroReadout := by
   intro h
-  have hh := @h Unit inferInstance inferInstance 0 1 () 1 1 (by norm_num) (by norm_num)
-    (by simp) (by ext i j; cases i; cases j; simp [Matrix.vecMulVec])
+  have hh := @h (ULift.{u} Unit) inferInstance inferInstance 0 1 ⟨()⟩ 1 1 (by norm_num) (by norm_num)
+    (by simp) (by ext i j; cases i; cases j; cases i_down; cases j_down; simp [Matrix.vecMulVec])
     1 1 0 1 (by simp) (by simp) (by norm_num) (by norm_num) (by simp [dotProduct])
   norm_num [zeroReadout, realize] at hh
 
@@ -154,6 +154,56 @@ private theorem bad : ¬ law zeroReadout := by
 def family : Registration ⟨signature, law⟩ (type_of% @sector_spectral_gap) :=
   sourceFamily law _ Iff.rfl (@sector_spectral_gap) zeroReadout bad
 end SectorGap
+
+namespace CentralGap
+abbrev law (R : Realization signature) : Prop :=
+  ∀ (n : ℕ) (lambda : Fin (2 * (n + 1) - 1 + 1) → ℝ),
+    Finset.univ.val.map lambda = (centralDefect (n + 1) (by omega)).charpoly.roots →
+    ∀ (i j : Fin (2 * (n + 1) - 1 + 1)), i ≠ j →
+    (2 * Real.sqrt 2 / (1 + Real.sqrt 2) ^ 2) / (n + 1 : ℝ) ^ 3 ≤
+      R.readout () () |lambda i - lambda j|
+private theorem bad : ¬ law zeroReadout := by
+  intro h
+  have hH : (centralDefect 1 (by omega)).IsHermitian := by
+    unfold centralDefect _root_.D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix
+    simpa only [add_assoc, Matrix.conjTranspose_eq_transpose_of_trivial] using
+      (Matrix.isHermitian_diagonal (0 : Fin 2 → ℝ)).add
+        (Matrix.isHermitian_add_transpose_self
+          (_root_.D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.upperBand 1 (centralEdges 1 (by omega))))
+  have hr : Finset.univ.val.map hH.eigenvalues = (centralDefect 1 (by omega)).charpoly.roots := by
+    simpa only [Function.comp_def, RCLike.ofReal_real_eq_id, id_eq] using hH.roots_charpoly_eq_eigenvalues.symm
+  have hh := h 0 hH.eigenvalues hr 0 1 (by decide)
+  have hp : 0 < 2 * Real.sqrt 2 / (1 + Real.sqrt 2) ^ 2 := by positivity
+  norm_num [zeroReadout, realize] at hh
+  linarith
+
+def family : Registration ⟨signature, law⟩ (type_of% @central_spectral_gap) :=
+  sourceFamily law _ Iff.rfl (@central_spectral_gap) zeroReadout bad
+end CentralGap
+
+namespace UniformGap
+abbrev law (R : Realization signature) : Prop :=
+  ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, 1 ≤ N ∧
+    ∀ (n : ℕ) (hn : 1 ≤ n), N ≤ n → (centralDefect n hn).IsHermitian ∧
+      ∀ (lambda : Fin (2 * n - 1 + 1) → ℝ),
+        Finset.univ.val.map lambda = (centralDefect n hn).charpoly.roots →
+        ∀ i j, i ≠ j → c / (n : ℝ) ^ 3 ≤ R.readout () () |lambda i - lambda j|
+private theorem bad : ¬ law zeroReadout := by
+  rintro ⟨c, hc, N, hN, h⟩
+  obtain ⟨hH, hh⟩ := h N hN le_rfl
+  have hr : Finset.univ.val.map hH.eigenvalues = (centralDefect N hN).charpoly.roots := by
+    simpa only [Function.comp_def, RCLike.ofReal_real_eq_id, id_eq] using hH.roots_charpoly_eq_eigenvalues.symm
+  let i : Fin (2 * N - 1 + 1) := ⟨0, by omega⟩
+  let j : Fin (2 * N - 1 + 1) := ⟨1, by omega⟩
+  have hg := hh hH.eigenvalues hr i j (by intro he; have := congrArg Fin.val he; dsimp [i, j] at this; omega)
+  have hNR : (0 : ℝ) < N := by exact_mod_cast (by omega : 0 < N)
+  have hp : 0 < c / (N : ℝ) ^ 3 := by positivity
+  norm_num [zeroReadout, realize] at hg
+  linarith
+
+def family : Registration ⟨signature, law⟩ (type_of% @uniform_inverse_cubic_gap) :=
+  sourceFamily law _ Iff.rfl (@uniform_inverse_cubic_gap) zeroReadout bad
+end UniformGap
 
 namespace ScalarGap
 def audit : Contract.Registration (@rank_one_gap_from_identity) (Realization signature) Type Unit where
@@ -357,5 +407,59 @@ def audit : Contract.Registration (@sector_spectral_gap) (Realization signature)
   familyRecord := none
   options := #[]
 end SectorGap
+
+namespace CentralGap
+def audit : Contract.Registration (@central_spectral_gap) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap.CentralGap.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap.CentralGap.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨⟨signature, law⟩⟩
+  objectArena := .source ⟨⟨signature, law⟩⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source ⟨signature, law⟩ ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℝ
+  sourceSelection := some { owner := `D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap,
+    definition := none, coordinates := #[],
+    readouts := #[{ path := #[], stateBinder := 0,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end CentralGap
+
+namespace UniformGap
+def audit : Contract.Registration (@uniform_inverse_cubic_gap) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap.UniformGap.unit
+  realizationName := `Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap.UniformGap.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨⟨signature, law⟩⟩
+  objectArena := .source ⟨⟨signature, law⟩⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source ⟨signature, law⟩ ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x => x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℝ
+  sourceSelection := some { owner := `D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap,
+    definition := none, coordinates := #[],
+    readouts := #[{ path := #[], stateBinder := 0,
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end UniformGap
 
 end Reg.D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap
