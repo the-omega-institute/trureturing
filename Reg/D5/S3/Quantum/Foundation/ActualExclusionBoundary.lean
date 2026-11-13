@@ -97,7 +97,9 @@ abbrev arena : Arena where
       a z.1 z.2} ∧
     CompactSpace (Quotient a) ∧ T2Space (Quotient a) ∧
     Continuous (Quotient.mk a) ∧ Function.Surjective (Quotient.mk a) ∧
-    IsClosedMap (Quotient.mk a)
+    IsClosedMap (Quotient.mk a) ∧
+    ∀ b : Quotient a, ∃ p : pure P.C P.unit,
+      Subtype.val '' ((Quotient.mk a) ⁻¹' {b}) = exclusion P.C P.unit p
 
 abbrev source_scope := type_of%
   (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_boundary_quotient.{u})

@@ -218,7 +218,9 @@ theorem original_all_repeated_boundary_quotient
         r z.1 z.2} ∧
       CompactSpace (Quotient r) ∧ T2Space (Quotient r) ∧
       Continuous (Quotient.mk r) ∧ Function.Surjective (Quotient.mk r) ∧
-      IsClosedMap (Quotient.mk r) := by
+      IsClosedMap (Quotient.mk r) ∧
+      ∀ b : Quotient r, ∃ p : pure C u,
+        Subtype.val '' ((Quotient.mk r) ⁻¹' {b}) = exclusion C u p := by
   classical
   let S := intrinsicFrontier ℝ (base C u)
   have hSclosed : IsClosed S :=
@@ -282,8 +284,26 @@ theorem original_all_repeated_boundary_quotient
     ext z
     exact Quotient.eq
   refine ⟨r, (by intros; rfl), ?_, hgraph, inferInstance, hT2,
-    hq.continuous, hq.surjective, hqclosed⟩
-  intro x y
-  exact crit x (hSK x.property) y (hSK y.property)
+    hq.continuous, hq.surjective, hqclosed, ?_⟩
+  · intro x y
+    exact crit x (hSK x.property) y (hSK y.property)
+  · intro b
+    obtain ⟨x, rfl⟩ := Quotient.exists_rep b
+    obtain ⟨p, hxp⟩ := (original_boundary_cover_and_midpoint hclosed hstrict hgen hB).1
+      x x.property
+    refine ⟨p, ?_⟩
+    ext y
+    constructor
+    · rintro ⟨z, hz, rfl⟩
+      have hxz : r x z := Quotient.exact (mem_singleton_iff.mp hz).symm
+      obtain ⟨a, hxa, hza⟩ := (crit x (hSK x.property) z (hSK z.property)).mp hxz
+      obtain ⟨s, hps, hs⟩ := hrepeated p
+      rcases repeated_ball_isolated hclosed hstrict hgen hB p s hps hs a with he | hd
+      · exact he.symm ▸ hza
+      · exact ((Set.disjoint_left.mp hd) hxp hxa).elim
+    · intro hy
+      let z : S := ⟨y, exclusion_boundary hclosed hstrict hgen hB p hy⟩
+      have hxz : r x z := (crit x (hSK x.property) z (hSK z.property)).mpr ⟨p, hxp, hy⟩
+      exact ⟨z, (Quotient.sound hxz).symm, rfl⟩
 
 end D5.S3.Quantum.Foundation.ActualExclusionBoundary
