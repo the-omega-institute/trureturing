@@ -20,6 +20,14 @@ functions*, arXiv:2404.14439v1 (19 April 2024), published in *Ars Combinatoria*
 primary statement locator; the journal version labels the same pointwise
 assertion Conjecture 3.16.
 
+## Verified locator
+
+The fixed original source is https://arxiv.org/abs/2404.14439v1:
+Conjecture 20, Definitions 7, 12 and 13, and Lemma 19. The journal version,
+https://doi.org/10.61091/ars162-14, labels the same pointwise assertion
+Conjecture 3.16. This scope covers the pointwise identity, its source
+definitions and its map; the following generating-function equality is separate.
+
 ## Original source and license
 
 - Immutable version record: https://arxiv.org/abs/2404.14439v1
