@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:754d08c9396ca17b3789ded39570c62ca16b21bc4360868e3c47cf18a56a904e
   normalized_sha256: sha256:754d08c9396ca17b3789ded39570c62ca16b21bc4360868e3c47cf18a56a904e
 cas_ref: sha256:754d08c9396ca17b3789ded39570c62ca16b21bc4360868e3c47cf18a56a904e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalStateCover.original_state_cover
+    target_statement_id: sha256:dc9644ca2fc3d3d277c416194d156468a1ee29bbbfb3804439b5adcbe8036c05
 receipts:
   unresolved_subitems: []
