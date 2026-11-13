@@ -125,7 +125,7 @@ private theorem exclusion_injective :
   exact not_self r (heq ▸ hrmem.1)
 
 include hclosed hstrict hgen hB in
-private theorem pure_pair_in_ball (p : pure C u) :
+theorem pure_pair_in_ball (p : pure C u) :
     ∃ a b : pure C u, (a : V) ∈ exclusion C u p ∧ (b : V) ∈ exclusion C u p ∧ a ≠ b := by
   classical
   have g := (exclusion_ball_faces hclosed hstrict hgen hB).1 p
