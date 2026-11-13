@@ -89,7 +89,7 @@ private theorem oscillation_continuous {F : Set V} (hF : IsCompact F) :
     fun_prop)).sub (hF.continuous_sInf (by fun_prop))
 
 /-- Both effect and endpoint extrema are attained on the whole compact set. -/
-private theorem width_attained
+theorem width_attained
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     {F : Set V} (hF : IsCompact F) (hne : F.Nonempty) :
@@ -175,7 +175,7 @@ theorem common_zero_pure
   common_zero_pure_of_unique hc hs hg hB hx hy hz hyz he hex hey hez
     (fun _ _ _ _ heq => hInj heq)
 
-private theorem effect_difference_le_width
+theorem effect_difference_le_width
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     {F : Set V} (hF : IsCompact F) {f : V →L[ℝ] ℝ} (hf : f ∈ effects C u)

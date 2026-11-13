@@ -114,7 +114,7 @@ $$\forall F \in Type,\; \forall J \in Type,\; [\operatorname{RCLike}\left(F\righ
 
 For every RCLike field F, finite index type J with decidable equality, and native Euclidean vector v of norm one, the real trace inner product of rankOne(v) with itself is one. The original rankOne_self declaration supplies the accepting value of the proper functional paired with rankOne(v) in HermitianExclusionKernel.exclusion_iff_kernel.
 
-**Theorem 1.10 (A unit rank one reading determines a normalized positive matrix).**
+**Theorem 1.10 (A unit projection exposes exactly itself).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique`
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique`
 
 *Commentary.*
 
-For every native real or complex unit vector v and every PSD Hermitian X with trace one, the equality <rankOne(v),X>=1 implies X=rankOne(v). The original proof bounds the squared norm of X-rankOne(v) by zero. The whole-effect state-cover model uses this original declaration to identify every pure label, without assuming the label has rank one.
+For every original native unit vector v and Hermitian X, if X is PSD, trace(X)=1 and the real trace pairing of rankOne(v) against X equals one, then X=rankOne(v). The whole native matrix base and its original field are retained. This original helper is consumed by the native full-common-effect uniqueness and mixed-exclusion injectivity proofs.
 
 **Theorem 1.11 (Extreme points equal the entire rank one family).**
 

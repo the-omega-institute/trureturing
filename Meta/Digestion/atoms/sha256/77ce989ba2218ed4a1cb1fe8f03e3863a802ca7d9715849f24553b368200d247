@@ -1,0 +1,30 @@
+**定义 102.5（高阶向量坐标与原旁观正性）。** 对全部 $N$ 仅作实线性识别
+
+$$
+\theta^{\otimes N}:W_N\longrightarrow
+\bigoplus_{s\in I^N}\operatorname{Herm}(\mathcal H_s),\qquad
+\mathcal H_s=\bigotimes_{t=1}^N\mathbb C^{n_{s_t}},\quad
+D_s=\prod_t n_{s_t}.
+\tag{102.10}
+$$
+
+把运输后的原锥仍记为 $C_N$；原 $u_N$ 此时是各块迹之和，
+原配对在向量空间上是实迹配对。记标准块 PSD 锥为
+$\mathsf D_N=\bigoplus_{s\in I^N}\operatorname{Herm}_+(\mathcal H_s)$。
+B1—B3 已给 $C_q=\mathsf D_q$，$q\le3$。
+对 $N\ge4$，(102.10)暂不对原锥作任何 PSD 判断。
+同一个 $\theta$ 使原置换仍是普通因子置换，全部(102.2)—(102.3)保持。
+
+一个实线性 $F:W_m\to W_n$ 称为原旁观正的，若
+
+$$
+(\mathrm{id}_{W_r}\otimes F)(C_{r+m})\subseteq C_{r+n}
+\quad\text{对每个整数 }r\ge0.
+\tag{102.11}
+$$
+
+这只测试本层级自己的旁观系统。$F$ 在整个 Hermitian 空间的作用确定其唯一
+复线性保 Hermitian 扩张，矩阵单位公式均使用此扩张。
+若 $u_nF=u_m$，称其保质量；若它和逆均原旁观正并保质量，称其为原数学保质量自同构。
+这些是正锥的数学映射定义，不指定物理事件菜单。
+
