@@ -3,6 +3,8 @@ fingerprints:
   normalized_sha256: sha256:33c4d8b00002cce633952cb81607cfb39a4d78d83991a7a1b475b5c726004039
 cas_ref: sha256:33c4d8b00002cce633952cb81607cfb39a4d78d83991a7a1b475b5c726004039
 coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/AuricActualOcticWindow.general43_2_cut_free
+    target_statement_id: sha256:f1b724765316e0952edf9a326973411c54859175d00c1a26ee89306626a579ff
   - gid: D5/S3/Quantum/Algebra/AuricOcticRanks.cut_free_of_actual_ranks
     target_statement_id: sha256:d12b8a1c3e99d5031a1e800732aed31220d175c8bd583e63fb4f2b09a4aa1b95
 receipts:
