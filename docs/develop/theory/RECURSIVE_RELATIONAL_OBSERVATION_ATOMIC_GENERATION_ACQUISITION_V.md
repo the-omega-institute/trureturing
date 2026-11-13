@@ -1352,3 +1352,371 @@ a nonquiescent progress contract. No such reduction is assumed in the
 positive result. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Source-derived boundary descriptors
+
+**Definition 13.1 (the canonical boundary descriptor).** Keep the same actual
+source, seed headers, epoch records, native tapes, version tokens, grants and
+returned phases as in §§1, 5 and 7. A compact observer does not retain a second
+frontier list. It represents a current cut by one of the following typed
+values:
+
+$$
+B ::= \mathsf{leftEnd}\\mid\mathsf{rightEnd}\mid
+      \mathsf{seed}(\kappa)\mid\mathsf{mid}(v).
+\tag{V.12}
+$$
+
+Here $\kappa$ is the actual boundary reference supplied by a source-owned seed
+header (in the finite entrance it is the boundary field of the retained epoch
+header record), and $v$ is the actual source-vertex reference of a logical
+binary branch. The finite endpoint constructors are bound to the actual
+entrance and are not integers. A unary beta marker is never a $v$ in
+$\mathsf{mid}(v)$. Every reference equality below is equality of the supplied
+references, with the source binding included in the comparison.
+
+For a returned current source, define $\partial(c)$ as follows. If the cut
+$c$ separates the two logical children of a binary node $v$, put
+$\partial(c)=\mathsf{mid}(v)$. If it separates two adjacent epoch seed roots,
+put $\partial(c)=\mathsf{seed}(\kappa)$ for their shared source boundary. The
+left and right finite exterior cuts are $\mathsf{leftEnd}$ and
+$\mathsf{rightEnd}$. In the bilateral entrance the shared $\kappa$ is the
+source-owned adjacency supplied with the headers; in the finite entrance the
+first and last header records carry the two actual endpoints. Thus the
+observer pays for the header or vertex reference it reads, but allocates no
+observer cut object for it.
+
+**Lemma 13.2 (boundary representation and equality).** At every returned cut
+of a finite known-alpha execution, and at every cut in a finite touched
+interval of a bilateral execution, $\partial$ is a bijection between current
+frontier cuts and the descriptors in (V.12) that are present at that state.
+Descriptor equality is exactly cut equality. A successful $P$ or $S$ event
+never invalidates an existing descriptor; a split creates exactly one new
+possible descriptor, $\mathsf{mid}(v)$ for its newly binary source vertex.
+
+Proof. A finite ordered source tree has a unique least common ancestor for two
+adjacent logical leaves. If they lie in one seed component, that ancestor is a
+binary node and its two children determine the cut, giving $\mathsf{mid}(v)$.
+If they lie in different seed components, the source-owned seed adjacency
+uniquely determines $\kappa$. There are no other cases, and the two endpoint
+cuts are distinguished by the actual finite entrance. The typed constructors
+and reference equality therefore give injectivity; the preceding cases give
+surjectivity.
+
+A promotion changes only the tag and the retained native tape at one logical
+root. A split leaves every ancestor and every exterior seed boundary in place,
+while adding the two actual child roots below the split vertex. Hence an old
+midpoint, seed boundary, or endpoint denotes the same cut after either event.
+The new internal cut is the midpoint of that split vertex. No source vertex is
+deleted or reallocated, so its reference remains the identity of that
+midpoint. Induction over the finite native history proves the claim. This is a
+source-tree statement; it does not identify a rank, bitstring, or old cell
+reference with a source object. $\square$
+
+**Definition 13.3 (on-demand source navigation).** For a descriptor $B$, let
+$\mathsf{Right}(B)$ and $\mathsf{Left}(B)$ be partial procedures using only the
+actual source fields, source-owned seed links, reference equality, null tests,
+and currently granted read rights.
+
+* $\mathsf{Right}(\mathsf{mid}(v))$ descends through the actual right child of
+  $v$ and then through logical left children until the first current logical
+  leaf. $\mathsf{Right}(\mathsf{seed}(\kappa))$ follows the actual seed header
+  on the right of $\kappa$ and makes the same left descent. The right endpoint
+  returns Endpoint.
+* $\mathsf{Left}$ is the symmetric descent through the left child or the seed
+  header on the left. The left endpoint returns Endpoint.
+* From a resolved logical leaf $x$, $\mathsf{NextCut}(x)$ follows actual
+  parent fields until the first ancestor at which the path arrived from its
+  left child; it returns that ancestor's $\mathsf{mid}$ descriptor. If no such
+  ancestor exists, it returns the actual next seed boundary or the right
+  endpoint. $\mathsf{PrevCut}$ is the symmetric operation.
+
+At every visited source vertex the procedure first reads actual arity. A beta
+unary marker is a terminal logical leaf, and its physical marker child is not
+followed. Each child or parent step, arity read, equality test, boundary-field
+read, tag read, pending bit, and scratch cell is an actual charged primitive.
+The procedures do not materialize a complete frontier, rank table, or address
+to reference conversion. Their output is a descriptor and, when requested,
+the actual leaf reference.
+
+**Proposition 13.4 (finite navigation).** If a descriptor and its requested
+neighbor lie in a finite current source interval, $\mathsf{Right}$,
+$\mathsf{Left}$, $\mathsf{NextCut}$ and $\mathsf{PrevCut}$ terminate. They
+return the same leaf or endpoint as the incidence walk of Theorem 5.4.
+
+Proof. A source descent visits a strictly smaller logical subtree at each
+binary step, and an ascent visits a strictly smaller remaining parent chain.
+Both are finite in the finite entrance and in every finitely touched bilateral
+interval. Theorem 5.4 identifies the source tree with the current ordered
+frontier, so the first or last leaf reached by the descent is exactly the
+incidence neighbor. The first ancestor reached from a left child is exactly
+the next cut in the ordered frontier; if there is no such ancestor, the next
+seed boundary or the finite endpoint is forced by the retained seed links.
+The left argument is identical. $\square$
+
+## 14. Cache-erasure correspondence and the unchanged consumers
+
+**Definition 14.1 (compact retained state).** From an AAV returned state
+$\sigma$, erase the observer-owned current and retired frontier cells, all
+cut-incidence fields, and the logical-node association list. Replace each
+parked cut in $c_L,c_R$, each saved return cut, and each observation-record
+cut field by its descriptor $\partial(c)$. Keep the actual source and native
+tapes, seed-header records and epoch bits, version chain, original observation
+records, latch, parser, grants, rights, pending phase, root binding and all
+request/output backing. A compact state is one obtained this way and whose
+source descriptors satisfy Lemma 13.2.
+
+An observation record may therefore contain a descriptor and the resolved
+source operands instead of a private cut-cell reference. The correspondence
+retains the source binding, version, direction, tested tags, refusal or
+Endpoint result, cursor successor, and optional return behavior. It does not
+assert byte identity or reference identity for the erased private cells.
+
+**Theorem 14.2 (same-source compact simulation).** On both the finite
+known-alpha entrance and the supplied bilateral entrance, every finite
+quiescent episode and every finite interleaving of original requests and
+observer operations has a compact execution with the same original/current
+reply words, refusal distinctions, marker outcomes, retained records, version
+provenance, cursor meanings, and native continuation as the AAV execution.
+The compact execution uses no observer-owned dynamic frontier cell, cut
+incidence, or logical-node association entry.
+
+Proof. Map an AAV returned state to its compact state by Definition 14.1.
+For a current marker comparison, resolve the right leaf and its successor by
+Definition 13.3, read the same two actual tags, append the same source,
+version, operand and descriptor fields, and set the same latch. Theorem 5.4
+and Proposition 13.4 show that these are exactly the two cells selected by the
+AAV incidence walk. At an endpoint both executions return Endpoint without a
+movement or comparison. Resume, refusal, disabled, denial, wrong phase, pending, and rejected
+entry retain the same fields because the compact operation does not alter the
+latch or any source record.
+
+ReadCurrent uses the same source arity test on the leaf returned by
+$\mathsf{Right}$ or $\mathsf{Left}$. ReadEpoch reads the same protected bit
+from the retained seed header; an unenrolled seed performs the same first
+actual Tag and enrollment. A current acquisition repeatedly applies
+$\mathsf{NextCut}$ or $\mathsf{PrevCut}$ and reads the same actual operands and
+tags. Original acquisition follows the same source-owned next or previous
+seed links and the same descendant walks. Thus its seed identities, old
+versions, current tags, brackets, and optional return are unchanged.
+
+Original Tag, $P$, $S$, HasPromotion, HasSplit, FetchGrowth and Next use the
+native source and ancestral tapes directly. The compact state leaves those
+objects and their rights untouched. In particular FetchGrowth still returns
+the literal old event and address, and Next still descends from that address
+to the current leaf and executes the actual enabled operation. A descriptor is
+never used as an address and never supplies a native operand by notation.
+
+For a successful $P$, the source leaf keeps its identity and every descriptor
+keeps its cut. For a successful $S$, the new midpoint is obtained only when a
+later resolver reads the newly created branch; all old descriptors remain
+valid by Lemma 13.2. This covers edits before, at, inside, and after either
+cursor, edits in another seed component, and cross-seed movement. The native
+source-template writes, ancestral tape appends, version-token allocation and
+publication occur in the same serialized order as in Definition 5.3; the
+compact observer performs no cache maintenance during that busy interval.
+
+Induct on completed transactions. The induction hypothesis gives equal
+returned source, records, descriptors/cuts, versions and rights. Proposition
+13.4 gives equal next observations, while the preceding paragraph gives equal
+native transitions and original replies. Therefore the states remain related
+at the next returned cut. The induction includes every finite shuffle of the
+seven original requests with marker, read, Walk, Seek, acquisition and Resume
+operations. This is a concrete same-source correspondence, not a generic
+simulation definition: every transition is tied to the actual AAV source
+fields and its existing native contract. $\square$
+
+**Theorem 14.3 (termination and output preservation).** Under the stated
+quiescence and serialization conditions, compact current and epoch
+acquisition terminate on their separate domains with the AAV conditions and
+outputs. A current acquisition of $h$ sites performs the same $h$ actual tag
+reads and reaches the same optional return cut; it returns the same
+$\mathcal C_h$ or versioned current-tree result with its original task type.
+An original acquisition of
+$H$ seeds performs the same epoch-header reads and the same inter-seed current
+walk count (V.10), and emits the same original wire and $\rho$ brackets.
+Seek to a retained descriptor terminates with the same bound of
+$2D(D+1)$ frontier moves when the current cut distance is $D$.
+
+Proof. In a quiescent invocation no edit can change the finite source between
+one resolver and its successor. Each successful Walk moves to the next
+canonical descriptor, and every attempted excursion either reaches the
+retained target or returns along the same finite sequence of descriptors.
+Thus the existing Seek argument applies, with each incidence step replaced
+by Proposition 13.4. The finite known-alpha source has real endpoints;
+a bilateral invocation touches only finitely many seed headers and finite
+subtrees, so the same argument applies to its selected finite interval.
+
+The tag and epoch reads are the same reads as in Theorem 8.2. Resolver work
+changes how a leaf is reached, not which leaf is reached. The original
+acquisition therefore crosses exactly the descendant frontiers in (V.10),
+and its retained source tags, versions, brackets, refusals, output bits and
+return transaction are unchanged, including the original
+$\mathcal R_H(e)$ output and its authentic ordered brackets. The bound counts
+moves, not their source field work; that work is charged in Proposition 15.3. $\square$
+
+## 15. Strict retained-cache reduction and charged work
+
+**Definition 15.1 (declared cache coordinates).** For a returned state with
+$L\ge1$ enrolled epoch seeds and $b$ successful post-epoch splits, let
+
+$$
+K=(C,F_{\rm cur},F_{\rm ret},I,N)
+$$
+
+count respectively observer-owned persistent cut objects, current frontier
+cells, retired frontier cells, neighbor-incidence records/fields, and
+logical-node association entries. Source vertices, native tape headers and
+cells, seed-header/epoch records, version tokens, parked cursor slots,
+observation records, request/output backing and work capacity are separate
+coordinates; they are not silently deleted from the comparison.
+
+The AAV installation has
+
+$$
+K_{\rm AAV}=(L+1+b,\;L+b,\;b,\;I_{\rm AAV}(L,b),\;2L-1+2b),
+\tag{V.13}
+$$
+
+where $I_{\rm AAV}(L,b)$ is its explicitly allocated incidence material and
+is positive for $L\ge1$. The compact installation has
+
+$$
+K_{\rm compact}=(0,0,0,0,0).
+\tag{V.14}
+$$
+
+The source-owned seed boundaries or the boundary fields in the already
+required epoch-header records are not counted in $K$; they remain supplied
+source/seed material. Two parked cursor descriptors and at most one saved
+return descriptor remain, with their actual reference widths and rights.
+
+**Proposition 15.2 (strict coordinate reduction).** For every finite known-
+alpha returned state and every finite nonempty bilateral touched interval,
+$K_{\rm compact}$ is strictly smaller than $K_{\rm AAV}$ in the displayed
+vector order: $C$, $F_{\rm cur}$, $N$ and $I$ are strictly reduced, while
+$F_{\rm ret}$ is reduced whenever $b>0$ and is equal only in the
+zero-split case. The compact installation retains the same source vertices,
+native tape material, epoch records and bits, version tokens
+$1+a+b$, observation-record count, request/output wire and cursor-slot count.
+
+Proof. The finite entrance and every selected bilateral interval contain at
+least one enrolled seed, so $L\ge1$. Equation (V.13) gives positive values
+for $C$, $F_{\rm cur}$, $N$ and the incidence material; $F_{\rm ret}=b$ is
+positive exactly when a split has occurred. Equation (V.14) sets all five
+observer-cache coordinates
+to zero. Definition 14.1 preserves every coordinate listed as equal. A
+source-owned seed header is not duplicated into a frontier cell, and a
+source vertex is not counted as a node-association entry. Therefore the
+coordinatewise reduction is strict without claiming a reduction in source
+material, retained evidence, reference width, or total bit volume. $\square$
+
+**Proposition 15.3 (the work and material ledger).** Let a compact run use
+$\mathcal W$ source navigation calls. For its $j$th call, let $d_j$ be the
+number of logical child or parent edges traversed by the resolver and
+successor computation, and let $e_j$ be the number of arity, null, equality,
+and boundary-field tests. Then the added source-navigation charge is exactly
+
+$$
+N_{\rm link}=\sum_{j\in\mathcal W}d_j,\qquad
+N_{\rm test}=\sum_{j\in\mathcal W}e_j,
+\tag{V.15}
+$$
+
+in addition to the same tag, version, record, grant, output, acknowledgement
+and return charges as AAV. Each $d_j,e_j$ is a finite actual primitive count;
+no unit-cost rank or tree snapshot is included. If the largest call in a
+quiescent Seek has $d_j\le d_{\max}$ and $e_j\le e_{\max}$, its existing
+$2D(D+1)$ move bound gives the explicit upper bounds
+$2D(D+1)d_{\max}$ and $2D(D+1)e_{\max}$ for the navigation part.
+
+A current acquisition adds one such call for its initial resolution and one
+for each moved site. An original acquisition keeps the exact header and
+inter-seed counts in (V.10), but each current move contributes its measured
+$(d_j,e_j)$. A descriptor walk stores only its currently traversed path,
+side bits, pending successor and comparison references. Its peak and any
+retained cleared capacity are charged as scratch; clearing does not
+Deallocate it. Source/epoch initialization still performs the finite arity
+traversal and header enrollment of §5, or reads the supplied bilateral
+headers, and then retains the same seed identities and rights.
+
+At every successful $P$ or $S$, native source fields, ancestral tape appends,
+required source material, version-token allocation, original reply and
+serialization are unchanged. The compact cache contributes zero cut, cell,
+incidence, association allocation or maintenance writes, and it never retires
+an observer cell. Observation records and an optional return retain the same
+logical facts through the descriptor correspondence of Definition 14.1; their
+actual reference fields, widths, writes and output remain charged. Hence the
+reduction is strict in the declared retained and maintenance coordinates, at
+the possible cost of additional source traversal, tests and scratch.
+
+No total-cost, runtime, bit-volume, physical-energy, Pareto, or globally
+minimal claim follows. A workload may make the paid traversals more expensive
+than the eliminated cache, and reference widths or retained capacity may
+reverse a different scalar comparison. The result is a strict structural
+reduction for the same task and source domain.
+
+## 16. Supplier scope and remaining boundaries
+
+**Definition 16.1 (literature and repository scope).** Huet's *The Zipper*,
+Journal of Functional Programming 7(5), 549--554 (1997), §§1.1--1.3 and 2.2,
+is a primary literature supplier for a focus represented by a subtree and an
+incoming context and for local binary navigation. The present descriptor is
+source-specific: its midpoint is an actual retained LAB vertex, its seed
+boundary is an actual header adjacency, and its navigation uses paid native
+parent/child fields. Huet's applicative focus/context representation does not
+supply this source's rights, arbitrary native edits, epoch provenance, seven
+request wire, or serialized transaction contract.
+
+Bille and Gørtz, *Random Access in Persistent Strings*, ISAAC 2020,
+LIPIcs 181, Article 48, DOI 10.4230/LIPIcs.ISAAC.2020.48, §1, is a primary
+supplier for access in a given complete version tree with indexed edits. Its
+version-tree and access assumptions do not acquire this source's actual
+operands, grants, brackets, or native continuation, so no cost bound from that
+model is transferred here.
+
+AA §§17--23 supply the retained parent/left/right source fields, birth typing,
+logical-versus-unary distinction, ancestral tapes and complete original
+consumer. AAIV §§40--51 and AAV §§5--10 supply the source-owned seed
+attachment, native records, cursor/latch behavior, versioned reads, finite
+acquisition and quiescent transaction conditions used above. Theorem 5.4 is
+used only to prove that the on-demand source traversal selects the same
+current frontier as the erased cache. Existing geometry and storage atlases
+remain suppliers on their stated domains; no generic zipper, quotient,
+complete table, reset, phase oracle, or stronger source port is introduced.
+
+**Proposition 16.2 (exact residual limits).** The compact result does not
+install a bilateral source from finite native material, remove the need for
+actual source and seed-header rights, make arbitrary nonquiescent acquisition
+terminate, minimize epoch-label bits, or prove a total-cost optimum. It also
+does not recover unrecorded request order, physical elapsed time, or old
+operands after the source binding and records have been revoked.
+
+Proof. Descriptor resolution is conditional on the same actual source fields,
+header adjacencies, grants, finite material and serialization as AAV. Without
+quiescence an edit may occur between two required source reads, so the
+common-version condition of Proposition 9.1 remains necessary. The compact
+construction retains every epoch bit and every original/native record, so no
+epoch-bit minimization is claimed. Proposition 11.3's distinctions between
+recorded order, waiting duration and rights continue to apply. The only
+changed coordinate is the duplicated dynamic frontier cache, and
+Proposition 15.3 explicitly leaves its traversal and scratch charges open to
+workload comparison. $\square$
+
+**Proposition 16.3 (attained increment).** On the two separately declared
+entrance domains, the compact source-derived representation is a strict
+retained-material and per-edit-maintenance reduction for the same original
+seven-request service, current and epoch finite consumers, marker records,
+returned cursors and lawful native continuation. Its remaining comparison is
+structural and coordinatewise; the stronger global relational-recovery goal
+remains open.
+
+Proof. Lemma 13.2 supplies the canonical cut correspondence, Theorem 14.2
+supplies the same-source consumer correspondence through arbitrary finite
+interleavings, and Theorem 14.3 supplies the stated quiescent termination and
+outputs. Proposition 15.2 proves strict reduction in the declared cache
+coordinates, while Proposition 15.3 accounts for the added source work,
+scratch and unchanged charges. Proposition 16.2 records the conditions and
+unresolved stronger tasks. $\square$
+
+## 追加锚（本行以下为增补区）
