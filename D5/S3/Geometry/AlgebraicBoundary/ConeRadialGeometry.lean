@@ -9,7 +9,6 @@
 import D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
 import Mathlib.Analysis.Convex.GaugeRescale
 import Mathlib.Tactic
-import Batteries.Tactic.OpenPrivate
 
 /-! Quantitative gauge coordinates on entire compact cone sections. -/
 
@@ -19,8 +18,6 @@ open Set Metric Filter
 open scoped Topology
 
 namespace D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
-
-open private base_chart_geometry from D5.S3.Geometry.AlgebraicBoundary.ConeCompactBase
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 
@@ -35,8 +32,8 @@ private theorem gauge_bounds {A : Set E} (hA : Convex ℝ A) {r R : ℝ}
     (le_div_iff₀ hr).mpr (by simpa [mul_comm] using mul_gauge_le_norm (x := v) hball)⟩, ?_⟩
   intro v w
   have hh := (hA.lipschitzWith_gauge (r := ⟨r, hr.le⟩) hr hball).dist_le_mul v w
-  simpa only [Real.dist_eq, dist_eq_norm, NNReal.coe_inv, NNReal.coe_mk,
-    div_eq_mul_inv, mul_comm] using hh
+  change dist (gauge A v) (gauge A w) ≤ r⁻¹ * dist v w at hh
+  simpa only [Real.dist_eq, dist_eq_norm, Real.norm_eq_abs, div_eq_inv_mul] using hh
 
 /-- The normalized endpoints obey a uniform estimate even for nonsymmetric bodies. -/
 private theorem radial_distance_bound {A : Set E} (hA : Convex ℝ A) {r R : ℝ}
@@ -121,7 +118,10 @@ private theorem body_radial_geometry {A : Set E} (hA : Convex ℝ A) (hAc : IsCl
 private def sectionChart (u : E →L[ℝ] ℝ) (a : E) (ha : u a = 1) :
     u.ker ≃ₜ {x : E | u x = 1} where
   toFun v := ⟨a + (v : E), by simp [ha, v.property]⟩
-  invFun x := ⟨(x : E) - a, by simp [x.property, ha]⟩
+  invFun x := ⟨(x : E) - a, by
+    change u ((x : E) - a) = 0
+    rw [map_sub, ha]
+    exact sub_eq_zero.mpr x.property⟩
   left_inv v := by apply Subtype.ext; simp
   right_inv x := by apply Subtype.ext; simp
   continuous_toFun := (continuous_const.add continuous_subtype_val).subtype_mk _
@@ -158,7 +158,8 @@ private theorem section_radial_geometry [FiniteDimensional ℝ E]
   have hAv : Convex ℝ A :=
     (C.convex.translate_preimage_right (a : E)).linear_preimage u.ker.subtype
   have hKc : IsCompact K := by
-    have he := (isClosed_eq u.continuous continuous_const).isClosedEmbedding_subtypeVal
+    have he := (isClosed_eq u.continuous
+      (continuous_const : Continuous (fun _ : E => (1 : ℝ)))).isClosedEmbedding_subtypeVal
     have hh := he.isCompact_preimage
       (D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base_compact C.isClosed hu)
     convert hh using 1
