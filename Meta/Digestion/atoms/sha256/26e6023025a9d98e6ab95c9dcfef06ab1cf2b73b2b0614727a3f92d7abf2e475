@@ -1,0 +1,61 @@
+**条件应用 125.9（沿既有桥保留的完整候选）。** 定义
+
+$$
+\begin{gathered}
+\mathcal T_{\rm mid}=
+\{b\in P:\exists x\in D_b, (b+x)/2\in\partial_{\rm rel}K\},\\
+\mathsf{DC}:\ \overline{\mathcal T_{\rm mid}}^{\,P}=P,
+\qquad \mathsf{MC}:\ \mathcal T_{\rm mid}=P,\\
+W(D_b)=\max_{f\in\mathcal E}\bigl(\max_{D_b}f-\min_{D_b}f\bigr).
+\end{gathered}
+\tag{Q125.31}
+$$
+
+它们从整个原域定义，允许接触端起初为混态。对 $p\in P_{\rm reg}$，沿123定义 $g_p,H_p,q_w$，并令 $a_w$ 为 $p$ 在完整 $D_{q_w}$ 内的对径端。完整有限相容性为
+
+$$
+\mathsf F(p):\quad
+\forall k\ge1\ \forall w_1,\ldots,w_k\in S^2\quad
+\exists v\in S^2\ \forall i\le k:\quad
+v\cdot H_p(a_{w_i})\le g_p(a_{w_i}).
+\tag{Q125.32}
+$$
+
+准确保留124.6的同一模型类：
+
+$$
+\begin{array}{c}
+\mathrm{EB3}+\mathrm{Inj}+
+\overline{\{p\in P_{\rm reg}:\mathsf F(p)\}}^{\,P}=P\\
+\Updownarrow\\
+\mathrm{EB3}+\mathsf{DC}
+\Longleftrightarrow\mathrm{EB3}+\mathsf{MC}
+\Longleftrightarrow\mathrm{EB3}+\forall b\in P: W(D_b)=1\\
+\Updownarrow\\
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V
+\text{ 实线性},\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\end{array}
+\tag{Q125.33}
+$$
+
+证明与反向全模型计算。121.2使中点接触逐标签等价于满宽，且接触端必纯；IX120.4使满宽标签集相对闭；122.2、123.10及123.15给稠密接触与正规F稠密的对应。取得全部原标签满宽后，才消费IX116.17及VIII113的完整条件重构。这里不把存在一个种子、$\dim V=9$ 或 $\mathsf J_\triangle$ 替换入等价链。
+
+反向取整个矩阵实现 $V=\operatorname{Herm}_3(\mathbb C)$、$C=\mathrm{PSD}_3$、$u=\operatorname{Tr}$。对每个非零 $z$，$p=zz^*/(z^*z)$ 是原纯点，全部确认矩阵恰为 $p\oplus A$、$0\preceq A\preceq I_{z^\perp}$。对每个迹一正矩阵 $\rho$，
+
+$$
+T_p(\rho)=\operatorname{Tr}(p\rho),\qquad
+D_p=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho z=0\}.
+\tag{Q125.34}
+$$
+
+这是整个 $z^\perp\cong\mathbb C^2$ 上的全部密度矩阵，Pauli坐标给完整三球；不同纯标签给不同正交补，故Inj成立。每条原球直径由一对正交秩一投影给满幅效应，所以每个标签满宽，且每条边都完成三角。每个 $x\in P\cap D_p$ 使 $(p+x)/2$ 秩二，确在原相对边界，故MC成立。
+
+每个 $\mathcal A_p$ 单点。对任意纯序列 $p_n\to p$ 和任意 $0\preceq A\preceq I$、$\operatorname{Tr}(Ap)=0$，正性给 $Ap=0$；令 $Q_n=I-p_n$，$Q_nAQ_n$ 是零于 $p_n$ 的原效应，且
+
+$$
+\|Q_nAQ_n-A\|_{\rm op}\le2\|p_n-p\|_{\rm op}\to0.
+\tag{Q125.35}
+$$
+
+此估计统一量化全部 $A$；另一Hausdorff包含由紧性与评价给出。因此 $P=P_{\rm reg}$。原球图中 $g=\operatorname{Tr}((I-p)\,\cdot)$，$H/g$ 属于单位球，且 $a_w=q_{-w}$、$g(a_w)=1$。于是任意有限批都满足(Q125.32)，因为单位 $v$ 对单位球点均有 $v\cdot H(a_w)\le1$。所有公式经同一个 $\Phi$ 运输，完成全部原纯、混态、效应及单位的反向量词。证毕。
+

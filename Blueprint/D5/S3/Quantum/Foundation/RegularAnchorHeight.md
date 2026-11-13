@@ -1,0 +1,92 @@
+# Original regular anchors and uniform separation height
+
+## Abstract
+
+Continuity of the entire original zero-effect fiber controls arbitrary full confirming effects and gives a common positive height for labels with a fixed positive exclusion readout.
+
+V is any finite dimensional real normed space, C its closed generating pointed cone, and u an original linear functional strictly positive on every nonzero cone vector. K is the entire base C intersect {u=1}, P is its entire extreme-point set, and E consists of all original real-linear effects between zero and u on C. Every full exclusion D(p) has an injective affine chart by a closed Euclidean ball of positive dimension, with dimensions allowed to vary. Equality of full exclusions implies equality of their original pure labels. In particular the statements apply to the original EB3 and Inj hypotheses; no inner product on V, closed P, pair-face premise or joint measurement is assumed.
+
+**Definition 1.1 (zeroReadouts).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorHeight.zeroReadouts`
+
+*Formalization.* `D5/S3/Quantum/Foundation/RegularAnchorHeight.zeroReadouts` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every C,u and p in the entire original P, zeroReadouts(C,u,p) is the image under FixedZeroObstruction.stateReadout of the entire zeroEffects(C,u,p). Its elements are continuous functions on all of K, with value f(x) at every original normalized state x. It includes the zero effect. The continuous-map supremum metric is exactly the original full-state effect metric.
+
+**Definition 1.2 (ZeroContinuousAt).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorHeight.ZeroContinuousAt`
+
+*Formalization.* `D5/S3/Quantum/Foundation/RegularAnchorHeight.ZeroContinuousAt` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every closed C, strictly positive u and original p in P, ZeroContinuousAt(hc,hs,p) means that for every sequence pn in the entire P tending to p in V, hausdorffDist(zeroReadouts(C,u,pn(n)),zeroReadouts(C,u,p)) tends to zero. The compact-space instance on K is supplied by base_compact(hc,hs). Both full zero-effect sets are nonempty and bounded, so this real Hausdorff distance is finite. This is the original Cont(B) condition; the pure sequences are not restricted to a selected ball or residual subset.
+
+**Definition 1.3 (RegularAnchor).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorHeight.RegularAnchor`
+
+*Formalization.* `D5/S3/Quantum/Foundation/RegularAnchorHeight.RegularAnchor` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every closed C, strictly positive u and original p in P, RegularAnchor(hc,hs,p) is the conjunction of ZeroContinuousAt(hc,hs,p) and existence of one original linear ep such that, for every original linear e, membership e in fullZeroConfirmers(C,u,p) is equivalent to e=ep. Thus the domain is exactly P0 intersect Cont(B), with the full original confirming fiber.
+
+**Theorem 1.4 (Every full confirmer converges at a regular anchor).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorHeight.regular_confirmation_tendsto`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/RegularAnchorHeight.regular_confirmation_tendsto` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every V,C,u with the hypotheses above, every original pure p, and every original linear ep, assume that for every original linear e, e belongs to fullZeroConfirmers(C,u,p) if and only if e=ep, and assume ZeroContinuousAt(hc,hs,p). For every sequence pn of original pure points tending to p in V and every sequence en of original linear effects with en(n) in fullZeroConfirmers(C,u,pn(n)) at every index, the corresponding continuous linear maps en(n) tend to ep in the operator norm on the full original dual. The en sequence is arbitrary; no continuous selector or uniqueness at pn(n) is required.
+
+Fix an original pure s in D(p) and one full zero confirmer h of s. Original zero symmetry makes h a zero effect at p. Hausdorff approximation of the whole zero-effect fibers supplies b(n) zero at pn(n) converging to h uniformly on K. The existing zero_effect_maximizer supplies original pure global maximizers s(n) of b(n), lying in the entire D(pn(n)). Their h readings tend to one. Compactness of K and the exact singleton one-face full_zero_faces force s(n) to tend to s. All mixed limit states are treated in K before this singleton identity identifies the limit.
+
+Compactness of the full effect interval supplies an arbitrary convergent subsequence of en. Moving evaluation shows its limit confirms p and vanishes at every original pure s in D(p), using the same-index approximants above. The original chart_boundary and the convex hull of the entire sphere extend vanishing to all mixed states in D(p). Unique full confirmation identifies the limit as ep. The subsequence criterion then yields convergence of the entire arbitrary en sequence.
+
+**Theorem 1.5 (Uniform original height from a fixed positive exclusion reading).**
+
+Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorHeight.regular_anchor_uniform_height`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/RegularAnchorHeight.regular_anchor_uniform_height` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every V,C,u with the same closedness, strict positivity, generation, whole-ball and injective-label hypotheses, every p in the entire original P, every original linear ep in fullZeroConfirmers(C,u,p), and every RegularAnchor(hc,hs,p), the following holds for every real epsilon>0. There exists one real sigma>0 such that for every original pure a and every original linear ea in fullZeroConfirmers(C,u,a), if there exists z in the entire D(p) with epsilon<=ea(z), then sigma<=(u-ep)(a). The same sigma applies to all a,ea and all possible moving z. No sigma or uniform reverse comparison gap is assumed.
+
+If the conclusion fails, choose heights below 1/(n+1). Nonnegativity gives height convergence to zero. Every cluster point in compact K lies in the zero face of u-ep, equivalently the original one-face of ep, which is exactly {p}. Hence the entire pure sequence converges to p. The preceding arbitrary-confirmer theorem forces ea(n) to ep in the full dual. A bound R on the norm of every original state gives epsilon<=norm(ea(n)-ep)R at the moving z(n) in D(p), contradicting convergence to zero.
+
+A complete native application takes V=HermitianMat(Fin 3,Complex), C the entire positive semidefinite cone and u the original trace. K includes every density matrix, P every original pure state, and the effects are all real-linear functionals between zero and trace on the full cone. The whole-pure-carrier result identifies every p with a rank-one projection; it does not replace P by a chosen frame. Riesz representation and HermitianMat.nonneg_iff_inner_nonneg identify every proper effect with X↦Tr(AX), 0<=A<=I. The rank-one effect X↦Tr(pX) is a full confirmer of p. For any full confirmer e=Tr(A·), the state (I-p)/2 belongs to the entire original D(p), so e(I-p)=0 and e(p)=1 give Tr(A)=1. Thus A is an original mixed state in the one-face of the rank-one effect. FixedZeroObstruction.full_zero_faces identifies this whole one-face as {p}, giving A=p. Consequently the entire full confirming fiber at every original p is exactly {Tr(p·)}.
+
+For Q=I-p, the entire zero-effect readout fiber is exactly {stateReadout(Tr(QAQ·)): 0<=A<=I}. In one direction compression preserves positivity, QAQ<=Q<=I, and its reading at p is zero. Conversely every original zero effect has a positive representing matrix A with Tr(Ap)=0; HermitianMat.inner_zero_iff gives support(p) contained in ker(A), hence Ap=pA=0 and QAQ=A. This proves equality of whole fibers, including all original mixed-state inputs, rather than approximation of a selected effect family. The fixed interval [0,I] is compact. The map (p,A)↦stateReadout(Tr((I-p)A(I-p)·)) is jointly continuous into the continuous maps on compact K with the supremum metric. Continuous.nonemptyCompacts_map' and NonemptyCompacts.dist_eq turn this fixed compact-image representation into Hausdorff continuity of the whole zero-effect fiber along every original pure sequence tending to any p. The topology used is the one inherited from the original normed carrier. Thus every original pure p satisfies RegularAnchor, and the existing standard edge supplies actual points in this domain.
+
+With these derived native premises, regular_confirmation_tendsto applies to every original p, every full ep at p, every original pure sequence tending to p and every arbitrary full confirmer along that sequence. Likewise regular_anchor_uniform_height applies to every p and every positive epsilon, uniformly over every original a, full ea and possible z in the complete D(p) with epsilon<=ea(z). No regular-anchor hypothesis is left assumed in this entire matrix application. The parameter maps and deductions use the original PSD cone, trace unit, full effect interval and whole-state readouts; they imply no physical implementation or literature priority.
+
+The actual endpoint construction uses the same entire V,C,u and any original complete three-ball chart D(p)={c+Bv: norm(v)<=1}, with B injective. For every unit v, chart_boundary makes q(v)=c+Bv an original pure point. Original exclusion symmetry puts p in D(q(v)); chart_boundary in a complete chart b of that ball gives a unit s with b(s)=p. Its opposite endpoint a(v)=b(-s) is pure, lies in the entire D(q(v)), and differs from p by injectivity. The full exclusion-ball theorem supplies an actual original full confirmer ea(v), without a uniqueness premise at a(v). Positivity of g=u-ep and its exact zero face {p} give g(a(v))>0. Applying WholePairBallConfirmation.affine_zero_antipode on this same b gives g(b(w))=g(a(v))/2 times (1+inner(-s,w)); Cauchy-Schwarz therefore proves g(x)<=g(a(v)) for every mixed x in the complete D(q(v)). This applies simultaneously to all directions, without identifying a(v) with the different point q(-v) in D(p).
+
+The remaining uniform endpoint application requires the full original-space confirmation identity ea(v)=d(v)ep+gamma(v)(g-v dot H) from the two actual ball charts, and ea(v)(q(-v))=2 gamma(v)>=2/(1+R(p))>0 for one finite R(p), uniformly in v. The endpoint maximum just derived supplies neither this reading nor the neighbor P0 propagation needed to use restriction injectivity on the second ball. Once those original identities and the finite bound are obtained, epsilon=2/(1+R(p)) and regular_anchor_uniform_height give one sigma for every direction at the same regular p. The present result leaves this part of source123.4 open; it supplies no support or cost regularity, boundary homeomorphism, five equivalent boundary continuity conditions, or uniform lower bound on 1-d(v). The separate source124.4 rigidity argument is not part of this result.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/RegularAnchorHeight.RegularAnchor`
+- Truth anchor: `D5/S3/Quantum/Foundation/RegularAnchorHeight.ZeroContinuousAt`
+- Truth anchor: `D5/S3/Quantum/Foundation/RegularAnchorHeight.regular_anchor_uniform_height`
+- Truth anchor: `D5/S3/Quantum/Foundation/RegularAnchorHeight.regular_confirmation_tendsto`
+- Truth anchor: `D5/S3/Quantum/Foundation/RegularAnchorHeight.zeroReadouts`
+- Dependency: [D5/S3/Quantum/Foundation/FixedZeroObstruction](FixedZeroObstruction.md)
