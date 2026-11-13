@@ -64,6 +64,8 @@ open private pairing_add pairing_neg pairing_symm character_orthogonality
 universe u v
 variable {D : LatticeData}
 attribute [local instance] Classical.propDecidable
+attribute [local reducible] dualModule DualMultiplicity
+attribute [local reducible] targetModule
 
 section OpenDiagram
 variable {X : Type u} {Y : Type v}
@@ -274,16 +276,21 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         ((openMonodromy A B hD).linearMap.comp input))
   have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
       γ⁻¹ • q (cupVector B hD) := by
+    have hforward (z : P A (I D)) :
+        (rightUnitIso hD A).hom.linearMap z = rightUnit hD A z := by
+      rfl
+    have hinverse (z : X) :
+        (rightUnitIso hD A).inv.linearMap z = (rightUnit hD A).symm z := by
+      rfl
     unfold openPartialTrace
-    dsimp only [ModuleHom.comp, LinearMap.comp_apply, ModuleIso.hom,
-      ModuleIso.inv, rightUnitIso]
-    simp only [LinearEquiv.coe_coe]
+    dsimp only [ModuleHom.comp, LinearMap.comp_apply]
+    rw [hforward]
     conv_lhs =>
       arg -1
       arg -1
       arg -1
       arg -1
-      rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
+      rw [hinverse, rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
@@ -292,6 +299,8 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         TensorProduct.mk_apply, add_zero, carry_zero_right]
     simp only [hp, map_smul, normalizedPair_input,
       TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
+    simp only [γ, q, input, normalizedPair, LinearMap.coe_comp, Function.comp_apply,
+      LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.flip_apply, TensorProduct.mk_apply]
     rfl
   have hdim (c : Discriminant D) :
       (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),

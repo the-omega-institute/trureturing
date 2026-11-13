@@ -7,7 +7,7 @@ import D5.S3.VertexAlgebra.Modules.ActualWeakModuleDualitySnakes
 import Mathlib.LinearAlgebra.Dual.Lemmas
 
 set_option autoImplicit false
-set_option backward.isDefEq.respectTransparency true
+set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 4000000
 set_option maxRecDepth 4096
@@ -40,6 +40,13 @@ open private unitCharacter_square from
 universe u v u' v'
 variable {D : LatticeData}
 attribute [local instance] Classical.propDecidable
+attribute [local reducible] dualModule DualMultiplicity
+attribute [local reducible] targetModule
+
+-- Keep the supplied literal `by abel` headers, with exact group cancellation
+-- tried before the normalization procedure that left a residual zsmul term.
+local macro "abel" : tactic =>
+  `(tactic| first | exact neg_add_cancel_left _ _ | abel1!)
 
 section Scalar
 variable (hD : (gramReal D).PosDef)
@@ -357,7 +364,8 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
   refine he.trans ?_
   refine (dualTensorFamily_jAt A B hD (-(c+d)) i w).trans ?_
   simp [i, w, readFunctional, Xi, fiberRead, reverseFiber, dualIota, DualMultiplicity,
-    kappa_iota, neg_neg]
+    LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.cast_apply, kappa_iota, neg_neg]
 
 /-- The actual five-arrow cap composite; the associator direction is explicit. -/
 def nestedEvaluation :
@@ -418,36 +426,88 @@ theorem nestedEvaluation_matching (c d : Discriminant D) (v : Carrier D)
           (dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ) ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y)) v) =
       (unitCharacter D hD (-(c+d)) * k hD c d * φ x * ψ y) •
         transport D 0 (zeroCarry D hD) v := by
+  let f0 := (associatorIso (dualModule B) (dualModule A) (targetModule A B) hD).hom.linearMap
+  let f1 := (productHom hD (ModuleHom.id (dualModule B))
+    (associatorIso (dualModule A) A B hD).inv).linearMap
+  let f2 := (productHom hD (ModuleHom.id (dualModule B))
+    (productHom hD (evaluation A hD) (ModuleHom.id B))).linearMap
+  let f3 := (productHom hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom).linearMap
+  let f4 := (evaluation B hD).linearMap
+  let z0 := normalizedPair (targetModule (dualModule B) (dualModule A)) (targetModule A B)
+    hD (-(c+d)) (c+d)
+    (jAt (dualModule B) (dualModule A) hD (-(c+d)) ⟨(-d,-c),by abel⟩
+      (dualIota B d ψ ⊗ₜ[ℂ] dualIota A c φ) ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y)) v
+  let z1 := normalizedPair (dualModule B) (targetModule (dualModule A) (targetModule A B))
+    hD (-d) d
+    (dualIota B d ψ ⊗ₜ[ℂ]
+      jAt (dualModule A) (targetModule A B) hD d ⟨(-c,c+d),by abel⟩
+        (dualIota A c φ ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y))) v
+  let z2 := normalizedPair (dualModule B) (targetModule (targetModule (dualModule A) A) B)
+    hD (-d) d
+    (dualIota B d ψ ⊗ₜ[ℂ]
+      jAt (targetModule (dualModule A) A) B hD d ⟨(0,d),zero_add d⟩
+        (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+          (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)) v
+  let z3 := normalizedPair (dualModule B) (targetModule (I D) B) hD (-d) d
+    (dualIota B d ψ ⊗ₜ[ℂ]
+      jAt (I D) B hD d ⟨(0,d),zero_add d⟩ (eta0 hD ⊗ₜ[ℂ] y)) v
+  let z4 := normalizedPair (dualModule B) B hD (-d) d
+    (dualIota B d ψ ⊗ₜ[ℂ] y) v
+  let z5 := transport D 0 (zeroCarry D hD) v
+  have h0 : f0 z0 = F hD (-d) (-c) (c+d) • z1 := by
+    change alpha (dualModule B) (dualModule A) (targetModule A B) hD z0 = _
+    exact alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
+      (-d) (-c) (c+d) (-(c+d)) d (by abel) (by abel)
+        v (dualIota B d ψ) (dualIota A c φ) (j A B hD c d (x ⊗ₜ[ℂ] y))
+  have h1 : f1 z1 = (F hD (-c) c d)⁻¹ • z2 := by
+    dsimp only [f1, z1, z2]
+    simpa only [TensorProduct.map_tmul, restrict_identity,
+      restrict_inverse_cap_associator, TensorProduct.tmul_smul, normalizedPair_smul] using
+      (normalizedPair_input hD (ModuleHom.id (dualModule B))
+        (associatorIso (dualModule A) A B hD).inv (-d) d
+        (dualIota B d ψ ⊗ₜ[ℂ]
+          jAt (dualModule A) (targetModule A B) hD d ⟨(-c,c+d),by abel⟩
+            (dualIota A c φ ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y))) v)
+  have h2 : f2 z2 = (unitCharacter D hD (-c) * φ x) • z3 := by
+    dsimp only [f2, z2, z3]
+    simpa only [TensorProduct.map_tmul, restrict_identity, jAt_natural,
+      evaluation_jAt, ← TensorProduct.smul_tmul', map_smul, TensorProduct.tmul_smul,
+      normalizedPair_smul] using
+      (normalizedPair_input hD (ModuleHom.id (dualModule B))
+        (productHom hD (evaluation A hD) (ModuleHom.id B)) (-d) d
+        (dualIota B d ψ ⊗ₜ[ℂ]
+          jAt (targetModule (dualModule A) A) B hD d ⟨(0,d),zero_add d⟩
+            (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+              (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)) v)
+  have h3 : f3 z3 = z4 := by
+    dsimp only [f3, z3, z4]
+    simpa only [TensorProduct.map_tmul, restrict_identity, restrict_leftUnit_jAt] using
+      (normalizedPair_input hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom
+        (-d) d (dualIota B d ψ ⊗ₜ[ℂ]
+          jAt (I D) B hD d ⟨(0,d),zero_add d⟩ (eta0 hD ⊗ₜ[ℂ] y)) v)
+  have h4 : f4 z4 = (unitCharacter D hD (-d) * ψ y) • z5 := by
+    exact evaluation_normalized hD B d ψ y v
+  have hcalc {V0 : Type*} {V1 : Type*} {V2 : Type*}
+      {V3 : Type*} {V4 : Type*} {V5 : Type*}
+      [AddCommGroup V0] [Module ℂ V0] [AddCommGroup V1] [Module ℂ V1]
+      [AddCommGroup V2] [Module ℂ V2] [AddCommGroup V3] [Module ℂ V3]
+      [AddCommGroup V4] [Module ℂ V4] [AddCommGroup V5] [Module ℂ V5]
+      (g0 : V0 →ₗ[ℂ] V1) (g1 : V1 →ₗ[ℂ] V2) (g2 : V2 →ₗ[ℂ] V3)
+      (g3 : V3 →ₗ[ℂ] V4) (g4 : V4 →ₗ[ℂ] V5)
+      (v0 : V0) (v1 : V1) (v2 : V2) (v3 : V3) (v4 : V4) (v5 : V5)
+      (a0 a1 a2 a4 : ℂ)
+      (q0 : g0 v0 = a0 • v1) (q1 : g1 v1 = a1 • v2)
+      (q2 : g2 v2 = a2 • v3) (q3 : g3 v3 = v4) (q4 : g4 v4 = a4 • v5) :
+      g4 (g3 (g2 (g1 (g0 v0)))) = (a0 * a1 * a2 * a4) • v5 := by
+    simp only [q0, q1, q2, q3, q4, map_smul, smul_smul]
+    congr 1 <;> ring
   unfold nestedEvaluation
   dsimp only [ModuleHom.comp, LinearMap.comp_apply]
-  have hα := alpha_normalized_fibers (dualModule B) (dualModule A) (targetModule A B) hD
-    (-d) (-c) (c+d) (-(c+d)) d (by abel) (by abel)
-      v (dualIota B d ψ) (dualIota A c φ) (j A B hD c d (x ⊗ₜ[ℂ] y))
-  have hproj (z : LeftP (dualModule B) (dualModule A) (targetModule A B)) :
-      (associatorIso (dualModule B) (dualModule A) (targetModule A B) hD).hom.linearMap z =
-        alpha (dualModule B) (dualModule A) (targetModule A B) hD z := by
-    rfl
-  conv_lhs =>
-    arg -1
-    arg -1
-    arg -1
-    arg -1
-    rw [hproj, hα]
-  simp only [map_smul]
-  rw [normalizedPair_input, TensorProduct.map_tmul]
-  simp only [restrict_identity]
-  rw [restrict_inverse_cap_associator, TensorProduct.tmul_smul, normalizedPair_smul]
-  simp only [map_smul]
-  rw [normalizedPair_input, TensorProduct.map_tmul,
-    jAt_natural, TensorProduct.map_tmul, evaluation_jAt]
-  simp only [restrict_identity]
-  rw [← TensorProduct.smul_tmul', map_smul, TensorProduct.tmul_smul, normalizedPair_smul]
-  simp only [map_smul]
-  rw [normalizedPair_input, TensorProduct.map_tmul, restrict_leftUnit_jAt]
-  simp only [restrict_identity]
-  rw [evaluation_normalized]
-  simp only [smul_smul]
-  congr 1
+  refine (hcalc f0 f1 f2 f3 f4 z0 z1 z2 z3 z4 z5
+    (F hD (-d) (-c) (c+d)) ((F hD (-c) c d)⁻¹)
+    (unitCharacter D hD (-c) * φ x) (unitCharacter D hD (-d) * ψ y)
+    h0 h1 h2 h3 h4).trans ?_
+  apply congrArg (fun a : ℂ => a • z5)
   rw [k_cap_coefficient]
   ring
 
@@ -564,8 +624,24 @@ theorem dualTensorHom_natural (f : ModuleHom A A') (g : ModuleHom B B') :
       ((productHom hD (dualHom hD g) (dualHom hD f)).linearMap
         (DirectSum.lof ℂ _ (PairSector (dualModule B') (dualModule A')) (r,t)
           (v ⊗ₜ[ℂ] w)))
-  rw [dualTensorHom_pair, map_smul, dualHom_carrier, productHom_pair,
-    dualTensorHom_pair, readFunctional_natural]
+  let T := transport D (representative D (r+t)) (carry D hD r t) v
+  let w0 := w
+  let M := (dualHom hD (productHom hD f g)).linearMap
+  let N := (dualTensorHom A B hD).linearMap
+  have hl := congrArg M.toAddHom.toFun (dualTensorHom_pair A' B' hD r t v w0)
+  have hl' := (M.map_smul (k hD (-t) (-r)) _).trans
+    (congrArg (fun z => k hD (-t) (-r) • z)
+      (dualHom_carrier hD (productHom hD f g) (r+t) T
+        (readFunctional A' B' hD (r+t) ⟨(r,t),rfl⟩ w0)))
+  have hr := congrArg N.toAddHom.toFun
+    (productHom_pair hD (dualHom hD g) (dualHom hD f) r t v w0)
+  have hr' := dualTensorHom_pair A B hD r t v
+    (TensorProduct.map (restrict (dualHom hD g) r) (restrict (dualHom hD f) t) w0)
+  have hn := readFunctional_natural hD f g (r+t) ⟨(r,t),rfl⟩ w0
+  exact (hl.trans hl').trans ((hr.trans hr').trans
+    (congrArg (fun φ => k hD (-t) (-r) •
+      DirectSum.lof ℂ _ (fun s => Carrier D ⊗[ℂ] DualMultiplicity (targetModule A B) s)
+        (r+t) (T ⊗ₜ[ℂ] φ)) hn)).symm
 
 end Naturality
 
