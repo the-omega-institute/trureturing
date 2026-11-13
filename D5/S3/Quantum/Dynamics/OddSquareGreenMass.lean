@@ -28,7 +28,7 @@ def greenEntry (t : ℕ → ℝ) (l : ℕ) : ℕ → ℝ
   | 0 => 1 / t (2 * l)
   | d + 1 => greenEntry t l d * t (2 * (l + d) + 1) / t (2 * (l + d + 1))
 
-private theorem entry_pos (t : ℕ → ℝ) (ht : ∀ i, 0 < t i) (l d : ℕ) :
+theorem entry_pos (t : ℕ → ℝ) (ht : ∀ i, 0 < t i) (l d : ℕ) :
     0 < greenEntry t l d := by
   induction d with
   | zero => exact one_div_pos.mpr (ht _)
@@ -39,10 +39,10 @@ def lowerBlock (t : ℕ → ℝ) (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
   diagonal (fun i : Fin n => t (2 * i.val)) -
     Matrix.of (fun i j : Fin n => if j.val + 1 = i.val then t (2 * j.val + 1) else 0)
 
-private def greenMatrix (t : ℕ → ℝ) (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
+def greenMatrix (t : ℕ → ℝ) (n : ℕ) : Matrix (Fin n) (Fin n) ℝ :=
   fun i j => if j.val ≤ i.val then greenEntry t j.val (i.val - j.val) else 0
 
-private theorem block_inverse (t : ℕ → ℝ) (ht : ∀ i, 0 < t i) (n : ℕ) :
+theorem block_inverse (t : ℕ → ℝ) (ht : ∀ i, 0 < t i) (n : ℕ) :
     (lowerBlock t n)⁻¹ = greenMatrix t n := by
   apply Matrix.inv_eq_right_inv
   ext i j
