@@ -52,7 +52,7 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Commentary.*
 
-Every ordinary coefficient of the displayed formal exponential is an integer, without a degree cutoff, factorial scaling, positivity or extra hypotheses. The source is Paul D. Hanna's A181082 integrality conjecture, preregistration #30033. The fixed OEIS source is revision 6 at commit de48538e52019dc132e250666b0d677b40045ceb; its SHA256 is c188a5d690604f08247757259908274b40830107aae8998171b674dc76ee1da5. Global literature completeness, priority and originality are unverified. This statement is an external-resolution admission candidate; the resolution claim and Problems dossier are separate downstream obligations.
+Every ordinary coefficient of the displayed formal exponential is an integer, without a degree cutoff, factorial scaling, positivity or extra hypotheses. The source is Paul D. Hanna's A181082 integrality conjecture, preregistration #30033. The fixed OEIS source is revision 6 at commit de48538e52019dc132e250666b0d677b40045ceb; its SHA256 is c188a5d690604f08247757259908274b40830107aae8998171b674dc76ee1da5. Global literature completeness, priority and originality are unverified.
 
 Parameter correspondence: define F82(0,k)=0 and F82(n,k)=Nat.choose(n,k)^(n+k) for n>0. Apply HannaA181070Integrality.integralGeneric to F82. Its conclusion is coefficientwise integrality of PowerSeries.subst (L F82) (PowerSeries.exp Q), using the existing DoldExponentialIntegrality criterion and existing AINTLIB port. No provider is reproved and no third-party code is copied; the port's provenance and license are in Library/RecurrenceComposition/aintlib2026dieudonnedwork.md.
 
