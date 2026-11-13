@@ -1,0 +1,102 @@
+**定理 125.2（同一原确认效应在整块旧混态球上趋零）。** 在定义125.1的完整 EB3+PR 域中，任取 $p\in P$ 及原纯列 $a_i\to p$，置 $G=D_p$。则
+
+$$
+T_a(c)\le\kappa_G(a)\le2T_a(c)
+\quad(a\in P)
+\tag{X125.4}
+$$
+
+对定义125.1中的任意中心对称 $G$ 成立；对上述固定完整 $G=D_p$，有
+
+$$
+\kappa_{D_p}(a_i)\longrightarrow0,
+\qquad T_{a_i}(c_p)\longrightarrow0,
+\qquad \sup_{x\in D_p}T_{a_i}(x)\longrightarrow0.
+\tag{X125.5}
+$$
+
+具体地，若实际完整球 $G_i=D_{a_i}$ 趋于 $G$，则
+
+$$
+\kappa_G(a_i)\le M d_H(G_i,G).
+\tag{X125.6}
+$$
+
+若实际完整球塌缩为 $G_i\to\{q\}$，则 $q\in P\cap G$。记 $\delta_i=d_H(G_i,\{q\})$，对充分大的 $i$，存在同一张 $e_i\in F_{a_i}$，使
+
+$$
+\begin{gathered}
+\max_{x\in G}e_i(x)
+\le M\bigl(\|a_i-p\|+\delta_i\bigr),\\
+e_i(c_p)\le\frac M2\bigl(\|a_i-p\|+\delta_i\bigr).
+\end{gathered}
+\tag{X125.7}
+$$
+
+这些结论不以 NC、UF、Inj 或全域 least 为前提；尤其不要求对旧球的不同输入更换效应。
+
+证明。先记录推导中使用的两个初等仿射步骤，它们不作为独立的新分类结果。对任何原纯 $a$、原混态 $x$，若 $t=T_a(x)<1$，则每个达到此最小值的 $e\in F_a$ 都满足 $\min_K e=0$。否则令 $m=\min_K e>0$。有 $m\le t<1$，且
+
+$$
+\widetilde e=\frac{e-mu}{1-m}\in\mathcal E,
+\qquad\widetilde e(a)=1,
+\qquad\widetilde e(x)=\frac{t-m}{1-m}<t,
+\tag{X125.8}
+$$
+
+矛盾。效应资格在整个原 $K$ 上由 $0\le e-m\le1-m$ 给出，再经同一 $u$ 齐次化到整个 $C$；没有调用面效应延拓。
+
+其次，若 $G$ 关于 $c$ 对称，则 $x\in G$ 时 $2c-x\in G$。每张原效应非负且仿射，因而
+
+$$
+0\le e(x)\le e(x)+e(2c-x)=2e(c).
+\tag{X125.9}
+$$
+
+因为 $c\in G$，先对每张 $e$ 使用 $e(c)\le\max_Ge$ 再取最小值得 (X125.4) 的左侧；取达到 $T_a(c)$ 的效应并用 (X125.9)，得右侧。此处没有交换极小与极大，也没有使用 minimax 等式。
+
+若 $G_i\to G$，从 IX114.2 取原 $h_i\in F_{a_i}$，使 $h_i|_{G_i}=0$。对每个 $x\in G$，取 $y\in G_i$ 达到到 $G_i$ 的距离。全效应的统一范数界给
+
+$$
+0\le h_i(x)=h_i(x)-h_i(y)
+\le M\|x-y\|\le M d_H(G_i,G).
+$$
+
+同一 $h_i$ 对整个 $G$ 有效，得到 (X125.6)。
+
+现在设实际 $G_i\to\{q\}$。由 [IX115.4—115.5][Q125IX]，$q\in P\cap G$。在旧完整球取对径纯点 $r=2c_p-q\in P\cap G$。PR 只用于这个纯点 $r$ 与 $a_i,p$，并结合固定 $T_r$ 在整个 $K$ 上的 Lipschitz 界，给
+
+$$
+0\le T_{a_i}(r)=T_r(a_i)
+\le M\|a_i-p\|,
+\qquad T_r(p)=T_p(r)=0.
+\tag{X125.10}
+$$
+
+右端趋零，所以充分大时 $T_{a_i}(r)<1$。取 $e_i\in F_{a_i}$ 达到该最小值。由 (X125.8) 的论证，存在 $z_i\in K$ 使 $e_i(z_i)=0$；因为它确认 $a_i$，有 $z_i\in G_i$。于是
+
+$$
+\|z_i-q\|\le\delta_i,
+\qquad0\le e_i(q)\le M\delta_i,
+\qquad e_i(r)=T_{a_i}(r)\le M\|a_i-p\|.
+\tag{X125.11}
+$$
+
+用 $q+r=2c_p$ 及 (X125.9)，得到
+
+$$
+\max_Ge_i\le2e_i(c_p)=e_i(q)+e_i(r)
+\le M\bigl(\delta_i+\|a_i-p\|\bigr),
+$$
+
+即 (X125.7)。这里只知道 $Z(e_i)$ 是原 $K$ 的一个非空真面，且包含于 $G_i$；它可以是原纯单点。如它含两个点，原面分类与完整球极大性才使它等于 $G_i$，不能事先作此替换。
+
+最后处理任意 $a_i\to p$。非空紧子集的 Hausdorff 紧性使任一子列的 $G_i\subset K$ 可再取收敛子列。IX115.5 准确给该极限只有 $G$ 或 $\{q\}$ 两种。前者由 (X125.6)，后者由 (X125.7)，都使 $\kappa_G(a_i)\to0$。若原序列的 $\kappa_G$ 不趋零，取有统一正下界的子列就与这两种情况矛盾。因此第一个极限成立。再用
+
+$$
+0\le T_{a_i}(c_p)\le\kappa_G(a_i),
+\qquad0\le\sup_{x\in G}T_{a_i}(x)\le\kappa_G(a_i)
+$$
+
+得到其余极限。第二个不等式来自同一张达到 $\kappa_G$ 的原效应，而不是将 PR 外推成混态互易或把 $T_a$ 当作仿射函数。证毕。
+

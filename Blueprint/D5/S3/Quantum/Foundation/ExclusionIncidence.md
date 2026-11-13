@@ -6,6 +6,10 @@ Upper association of the entire original exclusion fibers at pure limiting label
 
 V is an arbitrary finite dimensional real normed vector space. C is the original pointed cone, closed and generating, and the original real linear unit u is strictly positive on nonzero cone vectors. K is the entire base C intersect {u=1}, P is all of ext(K) with its actual subspace topology, proper effects are all real linear f with 0<=f<=u on C, and D_p is the entire original exclusion set. The hypotheses do not supply a physical inner product, compactness or closedness of P, label injectivity, Pair, least effects, spectrality or a Jordan representation.
 
+The complete original-domain application X126.2-X126.4 is developed in CommonOldExclusionConfirmation. Its input is an actual pure p_i tending to pure p with the entire original D_(p_i) tending to {q}, under the same closed pointed generating cone, strictly positive original unit, EB3 and pure-endpoint PR. ReciprocalExclusionLimits.exclusion_limit_dichotomy gives q in P intersect D_p; CommonOldExclusionConfirmation supplies the full fixed-comparison Lipschitz bound and its existing same-optimizer zero result. No Inj, Pair, weakPair, mixed PR or collapse-existence assumption is added.
+
+The upper-limit theorem below retains moving confirmation and moving zero evaluations. To obtain the entire fixed pure row, the complete application selects actual optimizers, uses minimizer_has_zero on those same effects, and retains their prescribed comparison value on one compact subsequence. It includes s=p separately and permits arbitrary initial p_i=s. The resulting one-effect-per-entire-ball conclusion, reverse triples, whole-K singleton zero set and whole-moving-face slope bounds are stated and derived together in that owning exposition.
+
 **Theorem 1.1 (Limits of actual original exclusions).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ExclusionIncidence.exclusion_upper_limit`
@@ -108,7 +112,33 @@ For every original finite dimensional real normed V, closed generating cone C, s
 
 For O-to-open, lift the second endpoints along a convergent sequence of first endpoints outside an open image; convergence in the actual product subtype contradicts avoidance of that open set. Conversely apply the pinned lower-hemicontinuity sequential selection theorem to the actual first-projection fibers. Its eventual lift is repaired at every exceptional index using an actual pure point of that full original exclusion face; no selected surrogate relation is used. Original effect-complement zero symmetry constructs incidenceSwap as a homeomorphism of the actual incidence, with secondProjection=firstProjection composed with incidenceSwap. OriginalFacePolarity.chart_boundary identifies every entire chart sphere with D_p intersect P. The pinned affine-image convex-hull theorem and convexHull_sphere_eq_closedBall identify all D_p as the convex hull of these actual original pure points. The set of points admitting convergent whole-fiber lifts along the fixed pn is convex: lift two points along that same pn and preserve their scalar coefficients. Original (O) puts every boundary point in this set. Convex-hull minimality therefore supplies a whole-fiber lift of every mixed point. Compactness of D_p supplies a finite epsilon/2 net. Only finitely many lift estimates must hold simultaneously, so the lower approximation is uniform on all D_p. Combining it with exclusion_upper_eventually bounds the whole Hausdorff distance. No new continuous chart, common metric, fixed dimension, compact P, or effect supplier is assumed.
 
-**Theorem 1.9 (Intrinsic boundaries of full rank ball limits).**
+**Definition 1.9 (The whole affine closed ball).**
+
+Lean statement: `D5/S3/Quantum/Foundation/ExclusionIncidence.ballImage`
+
+*Formalization.* `D5/S3/Quantum/Foundation/ExclusionIncidence.ballImage` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite dimensional real normed target V and source E, every center c in V and continuous real linear L from E to V, ballImage(c,L) is the nonempty compact image of the entire closed unit ball of E under x mapped to c+L(x). The image includes all interior states. No injectivity, positive rank, strict convexity or nontriviality of E is required, so a point or any rank deficient affine ball is included.
+
+**Theorem 1.10 (Actual affine parameters have a common limit subsequence).**
+
+Lean statement: `D5/S3/Quantum/Foundation/ExclusionIncidence.parameter_subsequence`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/ExclusionIncidence.parameter_subsequence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite dimensional real normed target V and source E, every sequence c(n) of actual centers, every sequence L(n) of continuous real linear operators from E to V, and every nonempty compact F in V, convergence of ballImage(c(n),L(n)) to F in the native nonempty compact topology supplies one pair a in V times the operator space and one strictly increasing map phi from natural numbers to natural numbers. Along that same phi, the pairs (c(phi(n)),L(phi(n))) tend to a, and the entire limiting ballImage(a.first,a.second) equals F. No injectivity or rank assumption is imposed on any operator or on the limit.
+
+The convergent sequence and its limit form a compact family of whole ball images, whose union is compact in V. A bound for that union bounds each center by evaluation at zero. Subtracting the center from each unit sphere evaluation bounds the operator norms. Compactness in the finite dimensional product gives one convergent subsequence of the actual pairs. Continuity of the entire compact image under those parameters identifies its image with the given F.
+
+**Theorem 1.11 (Intrinsic boundaries of full rank ball limits).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ExclusionIncidence.affine_ball_boundary_limit`
 
@@ -122,7 +152,7 @@ Let E be a nontrivial finite dimensional strictly convex real normed space and V
 
 Convergence in the native nonempty compact hyperspace makes the union of the whole ball images compact. Its norm bound controls the centers and, by the unit-sphere operator-norm bound, the arbitrary linear parts. Finite dimensionality supplies a convergent parameter subsequence inside every index subsequence. Joint continuous evaluation gives convergence of compact ball and sphere images. Equality of the limiting ball image with the injective limiting chart puts the latter linear range inside the limiting operator range; rank-nullity forces the limiting operator to be injective. CircuitBalancedConfirmation.affine_extreme_image transports extreme points of the convex closed unit ball through the actual injective affine chart, and WholePairBallConfirmation.affine_extreme_preimage supplies the reverse direction. The strict-convexity sphere identity then makes the two limiting sphere images agree. The subsequence criterion gives convergence of the entire sphere-image sequence. Restriction to the actual affine range, an affine equivalence onto that range and its isometric subtype inclusion transport intrinsic frontiers. The full-rank limiting chart is essential: the three-ball images under diag(1,1,1/n) tend to a disk, while their sphere images tend to the entire disk.
 
-**Theorem 1.10 (Open original incidence and continuous whole exclusions).**
+**Theorem 1.12 (Open original incidence and continuous whole exclusions).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ExclusionIncidence.original_open_incidence_iff_whole_continuous`
 
@@ -139,6 +169,7 @@ The forward direction and the actual projection equivalence reuse original_open_
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.affine_ball_boundary_limit`
+- Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.ballImage`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.edgeLifting`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.exclusion_upper_eventually`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.exclusion_upper_limit`
@@ -147,6 +178,7 @@ The forward direction and the actual projection equivalence reuse original_open_
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.incidenceSwap`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.original_open_incidence_iff_whole_continuous`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.original_open_incidence_whole_limit`
+- Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.parameter_subsequence`
 - Truth anchor: `D5/S3/Quantum/Foundation/ExclusionIncidence.secondProjection`
 - Dependency: [D5/S3/Quantum/Foundation/ContinuousFrameSum](ContinuousFrameSum.md)
 - Dependency: [D5/S3/Quantum/Foundation/ExclusionWidthCompactness](ExclusionWidthCompactness.md)

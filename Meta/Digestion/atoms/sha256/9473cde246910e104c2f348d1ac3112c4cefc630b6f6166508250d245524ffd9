@@ -1,0 +1,33 @@
+**定义 127.1（原域、球缘及整球零法向面）。** 保留定义124.1的同一个有限维实空间 $V\ne0$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$，始终使用整个
+
+$$
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\qquad
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+D_p=\{x\in K:\min_{f\in F_p}f(x)=0\}.
+\tag{X127.1}
+$$
+
+唯一全局几何前件是 $\mathrm{EB}_{\ge1}$：对每个原纯 $p$，完整 $D_p$ 仿射同构于某个正维闭欧氏球；球维数允许随标签改变。所有混态均留在 $K$，最小化遍历全部原确认效应。固定辅助欧氏范数及 $x_0\in\operatorname{int}C$，沿用引理124.3的紧对偶基
+
+$$
+B^{\ast}=\{h\in C^{\ast}:h(x_0)=1\}.
+\tag{X127.2}
+$$
+
+对完整球 $F$，记
+
+$$
+\begin{gathered}
+S(F)=P\cap F=\partial_{\mathrm{rel}}F,\qquad
+I(F)=\{a\in P:D_a=F\},\qquad c_F=\text{$F$ 的中心},\\
+Z(h)=K\cap\ker h,\qquad
+N_t=\{h\in C^{\ast}:h(t)=0\},\qquad
+\mathcal N_F=\{h\in C^{\ast}:h|_F=0\},\\
+\mathcal A_a=\{e\in F_a:e|_{D_a}=0\}.
+\end{gathered}
+\tag{X127.3}
+$$
+
+本章引用 [IX116.1—116.2][QX127IX] 的完整原面分类、完整零确认、零对称及孤立重复球二分；这些接口适用于允许变维的上述域。特别地，$\mathcal A_a\ne\varnothing$，其中每张效应的整个原零面都是 $D_a$。不输入 PE、PR、Inj、$P$ 闭、共同正延拓、谱性、框架数上界或 NC。以下“暴露点”对 $B^{\ast}$ 指在整个 $B^{\ast}$ 上暴露，不是只在某个 $N_t$ 的切片内暴露。
+
