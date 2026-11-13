@@ -78,10 +78,12 @@ $$
 选择完整图
 
 $$
-D_p=c+B\overline{\mathbb B}^{,3},\qquad
+D_p=c+B\overline{\mathbb B}^{3},\qquad
 q=c+Bv_0,\quad r=c-Bv_0,\quad \|v_0\|=1.
 \tag{X121.4}
 $$
+
+这里 $\overline{\mathbb B}^{3}=\{w\in\mathbb R^3:\|w\|\le1\}$ 是整个闭单位三球。
 
 令 $g=u-e_p$，取原线性读数 $H:V\to\mathbb R^3$，使
 
@@ -142,7 +144,7 @@ $$
 $v\ne\pm v_0$，$-1<\tau<1$。
 $k_+,k_-$ 是有符号候选，未被称为原效应。
 
-[校准卷 125.4、125.7](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+[校准卷 125.3、125.4、125.7](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
 给出整个 $V$ 上的种子恒等式与完整球支撑式
 
 $$
@@ -150,8 +152,8 @@ $$
 e_p+e_q+e_r=u,\qquad
 e_q=\frac{g+v_0\cdot H}{2},\quad
 e_r=\frac{g-v_0\cdot H}{2},\\
-h|_{D_q}=h(p)e_p+h(r)e_r\quad(h\in S_q),\\
-h|_{D_r}=h(p)e_p+h(q)e_q\quad(h\in S_r),\\
+h|_{D_q}=h(p)e_p+h(r)e_r\quad(h\in\mathbb R e_p+S_p),\\
+h|_{D_r}=h(p)e_p+h(q)e_q\quad(h\in\mathbb R e_p+S_p),\\
 e_s|_{D_q}=e_s(r)e_r,\qquad
 e_s|_{D_r}=e_s(q)e_q.
 \end{gathered}
@@ -159,6 +161,8 @@ e_s|_{D_r}=e_s(q)e_q.
 $$
 
 这些不是只在三个取样点成立的式子。
+其中跨球支撑先由校准卷 125.3 的唯一球支撑式对 $N_p$ 成立，
+取 span 延至 $S_p$，再加入 $e_p$ 方向，给所列 $\mathbb R e_p+S_p$ 范围。
 有实际 $P_0$ 种子且 $\dim V=9$ 时，
 [校准卷 125.3—125.5](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
 已给 $U_\triangle=V$、$\mathcal S_\triangle=V^*$ 和联合分离 $\mathsf J_\triangle$。
@@ -484,7 +488,7 @@ L_{\rm ax}\subset S_p+S_s,\\
 \tag{X121.31}
 $$
 
-在实际 $D_x=c_x+B_x\overline{\mathbb B}^{,3}$ 中令
+在实际 $D_x=c_x+B_x\overline{\mathbb B}^{3}$ 中令
 $b=c_x+B_xn_x$、$y=c_x-B_xn_x$、$\|n_x\|=1$，并取原读数 $H_x$。
 置 $R_b=\rho_x(n_x)$、$R_y=\rho_x(-n_x)$，则整个 $V$ 上有
 
@@ -656,7 +660,7 @@ $$
 固定这份实际数据，并研究其条件分支
 
 $$
-F=D_p=c+B\overline{\mathbb B}^{,3}_F,\qquad
+F=D_p=c+B\overline{\mathbb B}^{3}_F,\qquad
 M=W(F)=\max_{t\in P}W(D_t),\qquad 0<M<1.
 \tag{X122.2}
 $$
@@ -683,7 +687,7 @@ $$
 令
 
 $$
-G=D_s=c_s+A\overline{\mathbb B}^{,3}_G,\qquad
+G=D_s=c_s+A\overline{\mathbb B}^{3}_G,\qquad
 y=c_s+A\eta,\quad \|\eta\|_G\le1,\qquad m_s=W(G).
 \tag{X122.4}
 $$
@@ -1237,5 +1241,699 @@ $T_s$ 只控制斜率，不控制中心值；它不是保持原单位的正态�
 [UnitPreservingLiftImage](../../../Blueprint/D5/S3/Quantum/Foundation/UnitPreservingLiftImage.md)
 保留原单位的闭像／最小成本结果也没有提供正线性 section、成本一接触或这里的上升证书。
 全原 $\Omega$、合法字、未来读出及 X121.7 的全部原生、复合、过程和时间合同仍保留。
+
+## 追加锚（本行以下为增补区）
+
+## 123. 实际过载法向的规范横向平面与六整球测试边界
+
+### 123.0 同一过载配置、实际轴标签与测试锥
+
+**定义 123.1（完整原域上的横向数据）。**
+本章沿用 X121 的同一原实现和全部前件：EB3、全局 Inj、实际含 $P_0$ 顶点的种子三角、
+$\dim V=9$，以及原纯单位方向邻点 $s=c+Bv$、$\|v\|=1$、$d_+>0$。
+使用同一实际 $p,q,r,s,b,x,y$ 和它们的整个排除球；
+不是分别实现各颗球后拼接边缘数据。
+保留 X121 的全部参数
+
+$$
+\begin{gathered}
+R_+,R_->1,\quad 0<d_+,d_-,a,t,\lambda<1,\quad
+\frac1{1+R_-}<\gamma<\frac12,\\
+0<M_A<1,\quad \lambda<B_0\le D<1,\qquad
+g_x=u-e_x,\quad G_0=1-2\gamma>0.
+\end{gathered}
+\tag{X123.1}
+$$
+
+$G_0$ 是标量，与 X122 的完整球 $G=D_s$ 无关。
+在 X121 的实际 $D_x$ 图中，$b$ 位于 $n_x$，$y$ 位于 $-n_x$，
+保留 $R_b=\rho_x(n_x)$、$R_y=\rho_x(-n_x)$。
+从 (X121.32) 有
+
+$$
+D=e_b(y)=\frac{R_b-1}{R_b+1}>0.
+\tag{X123.2}
+$$
+
+故 $R_b>1$；旧相反接触等价再给 $R_y>1$。
+置
+
+$$
+\Delta=e_y(b)=\frac{R_y-1}{R_y+1},\qquad 0<\Delta<1.
+\tag{X123.3}
+$$
+
+两个已有原确认式消去同一轴读数，给整个 $V$ 上的系数库存
+
+$$
+\begin{gathered}
+e_y=A_0g_x-B_1e_b,\qquad
+A_0=\frac{R_b+R_y}{1+R_y}>0,\qquad
+B_1=\frac{1+R_b}{1+R_y}>0,\\
+e_y(p)=A_0(1-a)>0.
+\end{gathered}
+\tag{X123.4}
+$$
+
+这只是 (X121.32) 的同一轴恒等式，不另立法向定理。
+记 $\sigma_y=e_y(s)$。
+原纯零关系对称及 (X121.27) 给
+
+$$
+\begin{aligned}
+\sigma_y>0&\Longleftrightarrow D>B_0,\\
+\sigma_y=0&\Longleftrightarrow D=B_0
+\Longleftrightarrow s\in D_y.
+\end{aligned}
+\tag{X123.5}
+$$
+
+定义完整原球的线性张成与消去空间
+
+$$
+\begin{gathered}
+M_p=\operatorname{span}D_p,\qquad M_y=\operatorname{span}D_y,\\
+\operatorname{ann}(M)=\{h\in V^*:h|_M=0\},\\
+T_y=\{h\in S_x:h|_{D_y}=0\},\qquad
+Z_y=\{h\in T_y:h(y)=0\},\\
+A_{\rm ax}=\operatorname{span}\{g_x,e_y\}
+=S_x\cap L_{\rm ax}.
+\end{gathered}
+\tag{X123.6}
+$$
+
+最后一个等号由 X121 的二维原轴截面及 (X123.4) 给出。
+设
+
+$$
+\begin{gathered}
+U_4=D_p\cup D_q\cup D_r\cup D_x,\qquad
+U_6=U_4\cup D_b\cup D_y,\\
+Q_j=\{h\in S_x:h(z)\ge0\text{ 对每个 }z\in U_j\},\quad j=4,6,\\
+\|h\|_K=\max_{\xi\in K}|h(\xi)|,\qquad
+h_z=e_y+z\quad(z\in Z_y).
+\end{gathered}
+\tag{X123.7}
+$$
+
+$K$ 张成 $V$，故 $\|\cdot\|_K$ 是线性泛函空间上的范数。
+$Q_4,Q_6$ 是辅助测试锥；原全局正性仍为
+
+$$
+N_x=C^*\cap S_x\subseteq Q_6\subseteq Q_4.
+\tag{X123.8}
+$$
+
+每个 $D$ 都是整个原闭球，包括所有混合点。
+在完整 $D_p=c+B\overline{\mathbb B}^{3}$ 上，把 $z\in Z_y$ 的有符号限制写成
+$z(c+Bw)=\alpha_z+\beta_z\cdot w$，定义
+
+$$
+\Theta:Z_y\longrightarrow v^\perp,\qquad
+\Theta(z)=\operatorname{proj}_{v^\perp}\beta_z.
+\tag{X123.9}
+$$
+
+目标是 Dp 图中的二维欧氏平面；这只是有符号限制映射。
+定义原评价映射
+
+$$
+\pi_x:V\longrightarrow S_x^*,\qquad
+\pi_x(\xi)(h)=h(\xi).
+\tag{X123.10}
+$$
+
+本章使用 $\dim S_x=4$ 和 X121 的实际轴截面。
+环境九维与已支付的 $\mathsf J_\triangle$ 不被用于推定 $\operatorname{rank}\Theta=2$，
+也没有正种子读回、E0、PC1、Pair、正则锚、球族连续性或原生仪器前件。
+
+### 123.1 规范横向代表与原正切片的唯一点
+
+**命题 123.2（A：由整个 $D_y$ 定义的规范二维补）。**
+有
+
+$$
+\dim T_y=3,\qquad \dim Z_y=2,\qquad
+S_x=A_{\rm ax}\oplus Z_y.
+\tag{X123.11}
+$$
+
+所以 $Z_y$ 自然映到商 $S_x/(S_x\cap L_{\rm ax})$ 为线性同构。
+原正锥满足
+
+$$
+C^*\cap\operatorname{ann}(M_y)=\mathbb R_{\ge0}e_y,
+\qquad
+N_x\cap(e_y+Z_y)=\{e_y\}.
+\tag{X123.12}
+$$
+
+证明。
+实际边 $x\perp y$ 使 $x$ 位于完整 $D_y$ 的球面。
+每个实际 $k\in N_x$ 在该整个球非负且在 $x$ 为零。
+若在某个单位三球图中该限制为 $\alpha+\ell\cdot w$，
+非负性给 $\alpha\ge\|\ell\|$；
+在球面点 $w_x$ 取零，给 $\ell\cdot w_x=-\alpha$，
+所以 $\alpha=\|\ell\|$ 且 $\ell=-\alpha w_x$。
+包括 $\alpha=0$ 在内，这些限制都在同一支撑仿射射线上。
+取线性张成后，整个 $S_x$ 的限制像维数至多一。
+
+$g_x$ 在 $D_y$ 非零：它在 $x$ 为零，且原一值面 $\{x\}$
+使 $g_x$ 在该球其余每点严格正。
+完整球正维，故确有其余点；限制像秩准确为一。
+因此 $\dim T_y=4-1=3$。
+$e_y\in T_y$ 且 $e_y(y)=1$，所以 $\operatorname{ev}_y|_{T_y}$ 非零，
+其核 $Z_y$ 为二维。
+在 $A_{\rm ax}=\operatorname{span}\{g_x,e_y\}$ 中，
+限制到 Dy 先除去非零的 $g_x$ 方向，只剩 $\mathbb R e_y$；
+再在 y 评价除去最后这条线。
+故 $A_{\rm ax}\cap Z_y=0$，维数相加为四，得到规范直和。
+
+为使用原面与唯一确认接口，取非零 $k\in C^*\cap\operatorname{ann}(M_y)$。
+原生成性使 $m=\max_Kk>0$。
+在紧的原最大面取一个原纯最大点 $w$。
+则 $k/m\in\mathcal E$，在 $w$ 为一，在整个 $D_y$ 为零，故
+$D_y\subseteq D_w$。
+完整排除球的真面最大性给 $D_y=D_w$，Inj 给 $w=y$。
+因此 $m=k(y)$，且 $k/m\in\mathcal A_y=\{e_y\}$，
+从而 $k=k(y)e_y$。
+$k=0$ 另给该射线的零端点；反向 $e_y\ge0$ 且消去 $M_y$，所以第一式成立。
+
+每个 $e_y+z$，$z\in Z_y$，都在全部 Dy 为零且在 y 为一。
+若它在原整个 C 非负，刚用的原正射线强迫它等于 $e_y$。
+$e_y\in N_x$，所以第二式成立。证毕。
+
+正消去射线是已有完整面归一及唯一确认的应用，
+不是新增正提升或极端性原理。
+本组合识别的是由整个 Dy 定义的规范商代表，未给任何正逆。
+
+### 123.2 严格关联分支中的整二维六球测试缺口
+
+**命题 123.3（B：穿孔二维邻域通过全部六颗完整球）。**
+另设同一配置满足 $D>B_0$，即 $\sigma_y>0$。
+存在 $\epsilon>0$，使每个 $z\in Z_y$、$\|z\|_K<\epsilon$ 都满足
+
+$$
+\begin{gathered}
+h_z>0\text{ 于全部 }U_4,\qquad h_z|_{D_y}=0,\\
+h_z\ge0\text{ 于全部 }D_b,\qquad
+\{\xi\in D_b:h_z(\xi)=0\}=\{x\}.
+\end{gathered}
+\tag{X123.13}
+$$
+
+其中 $z=0$ 给原正 $e_y$；每个非零这种 $z$ 则有
+
+$$
+h_z\in Q_6\setminus N_x.
+\tag{X123.14}
+$$
+
+这是整个二维横向平面中一个穿孔邻域，不是只沿一条轴线。
+
+证明。
+在完整 Dx，原反向确认式给 $\min_{D_x}e_y=\Delta>0$。
+$e_y\in L_{\rm ax}$，而 (X123.4)、(X121.11) 和 (X121.9)
+说明它在 Dp 的限制只依赖 $v\cdot w$。
+在直径两端 b、s 的值分别是 $\Delta,\sigma_y$，所以
+
+$$
+e_y(c+Bw)=\frac{\Delta+\sigma_y}{2}
++\frac{\sigma_y-\Delta}{2}v\cdot w.
+\tag{X123.15}
+$$
+
+严格分支使它在整个 Dp 的最小值 $\min\{\Delta,\sigma_y\}>0$。
+在两颗其余种子球上，原全球支撑式给
+
+$$
+\begin{aligned}
+e_y|_{D_q}&=e_y(p)e_p+e_y(r)e_r,\qquad e_p+e_r=1,\\
+e_y|_{D_r}&=e_y(p)e_p+e_y(q)e_q,\qquad e_p+e_q=1.
+\end{aligned}
+\tag{X123.16}
+$$
+
+这些式子可把 $e_y$ 在 $L_{\rm ax}=\operatorname{span}\{u,e_p,e_b\}$ 中逐项限制而得，
+其中 $e_b$ 的跨球支撑由校准卷 125.7 给出；不是仅从端点插值猜测全高维球。
+$e_y(p)>0$ 已由 (X123.4) 支付。
+由 $v\ne\pm v_0$，$q,r$ 均不同于 Dp 的可能零端点 s，
+所以 (X123.15) 给 $e_y(q),e_y(r)>0$；严格分支下整个 Dp 本已严格正。
+因此 (X123.16) 在整个 Dq、Dr 各有正下界。
+
+置
+
+$$
+\mu=\min\{\Delta,\sigma_y,e_y(p),e_y(q),e_y(r)\}>0.
+\tag{X123.17}
+$$
+
+以上整球式给 $e_y\ge\mu$ 于有限紧并 $U_4$。
+取 $0<\epsilon<\mu/2$；则 $\|z\|_K<\epsilon$ 使
+$h_z=e_y+z>\mu/2$ 于全部 U4，也使 $h_z(p)>0$。
+根据 $Z_y$ 定义，$h_z$ 在整个 Dy 恒零。
+
+还需整颗 Db，不能只检查它的端点。
+同一实际球 Db 含球面点 x 及另一点 p，且 $g_x(p)=1-a>0$。
+对每个正法向 $k\in N_x$，唯一球支撑论证使其在 Db 的限制与 $g_x$ 成比例。
+取 span 后对每个有符号 $k\in S_x$ 仍有
+
+$$
+k|_{D_b}=\frac{k(p)}{g_x(p)}g_x|_{D_b}.
+\tag{X123.18}
+$$
+
+对当前 $h_z$，系数正，且 $g_x$ 在 Db 仅于 x 为零。
+因此 (X123.13) 的最后两项对整个混合球成立。
+若 $z\ne0$，命题 123.2 的原全局正切片唯一性给 $h_z\notin C^*$；
+它属于 $S_x$，从而正好是 (X123.14)。
+当 $z=0$ 则 $h_0=e_y\in N_x$，不在负见证分支。证毕。
+
+本结论条件于严格分支，没有证明该分支有一个全签名实现，也没有排除它。
+它准确说明这六颗整球上的必要非负测试不足以支付原全局正性。
+
+### 123.3 接触分支中的切向核与完整局部判据
+
+**命题 123.4（C：同一接触下六球测试准确留下切向核）。**
+另设同一配置满足 $D=B_0$，即 $s\in D_y$、$\sigma_y=0$。
+存在 $\epsilon>0$，使对每个 $z\in Z_y$、$\|z\|_K<\epsilon$，
+
+$$
+h_z\in Q_4
+\quad\Longleftrightarrow\quad \Theta(z)=0
+\quad\Longleftrightarrow\quad h_z\in Q_6.
+\tag{X123.19}
+$$
+
+这是一张局部仿射切片上的充要条件。
+核具有不依赖补空间选择的描述
+
+$$
+\ker\Theta\simeq S_x\cap\operatorname{ann}(M_p+M_y),
+\qquad
+\dim\ker\Theta=2-\operatorname{rank}\Theta.
+\tag{X123.20}
+$$
+
+秩 $0,1,2$ 分别留下二维、一维、零维局部候选空间。
+若核非零，每个充分小的非零核向量都给 $Q_6\setminus N_x$ 中的 $h_z$。
+若核为零，该邻域中唯一通过测试的 $h_z$ 是 $e_y$。
+
+证明。
+由 (X123.15) 及接触前件，整个 Dp 上有
+
+$$
+e_y(c+Bw)=\frac{\Delta}{2}(1-v\cdot w).
+\tag{X123.21}
+$$
+
+而 $s\in D_y$ 使每个 $z\in Z_y$ 都满足 $z(s)=0$。
+写 $z(c+Bw)=\alpha_z+\beta_z\cdot w$，则
+$\alpha_z+\beta_z\cdot v=0$。
+因此 $h_z$ 在 Dp 的中心值为 $\Delta/2+\alpha_z$，
+其沿 v 的斜率为该数的相反数，切向斜率为 $\Theta(z)$。
+完整球上的准确最小值是
+
+$$
+\min_{D_p}h_z
+=\frac{\Delta}{2}+\alpha_z
+-\sqrt{\left(\frac{\Delta}{2}+\alpha_z\right)^2
+       +\|\Theta(z)\|^2}.
+\tag{X123.22}
+$$
+
+只要 $\Theta(z)\ne0$，根号严格大于中心值的绝对值，
+所以该最小值严格负。
+这检验的是整颗球，不只是接触点 s 与反端点 b。
+等价的球支撑表述是：一个在整球非负且在球面 s 为零的仿射函数，
+其切向斜率必须为零。
+
+若 $\Theta(z)=0$，$\beta_z$ 平行 v，且 $z(s)=0$，
+故整球限制准确为
+
+$$
+z|_{D_p}=\frac{z(b)}{\Delta}e_y|_{D_p},
+\qquad
+h_z|_{D_p}=\left(1+\frac{z(b)}{\Delta}\right)e_y|_{D_p}.
+\tag{X123.23}
+$$
+
+取 $\epsilon<\Delta/2$，即可使右侧系数严格正。
+在 Dq、Dr，(X123.16) 仍成立。
+尽管 $e_y(s)=0$，$q,r\ne s$，(X123.21) 仍给
+$e_y(q),e_y(r)>0$；再加 $e_y(p)>0$，两颗整球都有正余量。
+Dx 的余量仍是 $\Delta>0$。
+将 $\epsilon$ 再缩至小于这些正余量的一半，
+使当前 $h_z$ 在整个 Dq、Dr、Dx 严格正。
+Dy 上恒零由定义给出；Db 上沿用 (X123.18)，
+并用 $h_z(p)>0$，得到其仅在 x 为零、其余严格正。
+因此一个共同邻域内，$\Theta(z)=0$ 充分保证 $h_z\in Q_6$。
+反向 $Q_6\subseteq Q_4$，而 (X123.22) 给 $Q_4$ 的必要性，
+故 (X123.19) 的两个方向均成立。
+
+为证明 (X123.20)，对 $z\in\ker\Theta$ 定义
+
+$$
+\Phi(z)=z-\frac{z(b)}{\Delta}e_y.
+\tag{X123.24}
+$$
+
+(X123.23) 使它消去整个 Dp；$z,e_y$ 都消去整个 Dy，
+故 $\Phi(z)\in S_x\cap\operatorname{ann}(M_p+M_y)$。
+反向对该空间中任一 $k$，定义
+
+$$
+\Psi(k)=k-k(y)e_y.
+\tag{X123.25}
+$$
+
+它消去 Dy 且在 y 为零，所以属于 $Z_y$。
+在 Dp，$k=0$，而 $e_y$ 没有切向斜率，因此 $\Theta(\Psi(k))=0$。
+这两式互逆可在同一原点逐项核对：
+对 $k=\Phi(z)$，$z(y)=0$、$e_y(y)=1$ 给
+$k(y)=-z(b)/\Delta$，所以 $\Psi(\Phi(z))=z$。
+对 $z=\Psi(k)$，$k(b)=0$、$e_y(b)=\Delta$ 给
+$z(b)=-k(y)\Delta$，所以 $\Phi(\Psi(k))=k$。
+两映射均线性，故为所称同构。
+秩—零化度公式结合 $\dim Z_y=2$ 给维数式。
+
+最后，任何通过局部测试的非零 $z$ 仍受 (X123.12) 约束：
+$h_z$ 不可能原全局正，故属于 $Q_6\setminus N_x$。
+零核情形没有这种非零局部候选，$z=0$ 给原正 $e_y$。证毕。
+
+没有从 $\dim V=9$、$\mathsf J_\triangle$ 或二维轴正锥推定 $\Theta$ 的秩。
+(X123.20) 只把未付的切向核改写成原完整球张成的共同消去空间。
+零核时的局部切片唯一性也不等于 $Q_6=N_x$。
+
+### 123.4 实际正法向的横向界与秩二圆盘
+
+**命题 123.5（D：对同一个实际法向成立的必要界）。**
+对每个非零实际 $h\in N_x$，不论两种关联分支，均有
+
+$$
+h(y)>0,\qquad h(b)>0.
+\tag{X123.26}
+$$
+
+将该同一 $h$ 正归一化为 $h(y)=1$ 后，存在唯一 $r\in\mathbb R$、
+$z\in Z_y$，使
+
+$$
+h=e_y+r(g_x-e_y)+z,\qquad r\ge0.
+\tag{X123.27}
+$$
+
+以下进一步条件于接触 $D=B_0$。
+置 $w_\Theta=\Theta(z)$，则
+
+$$
+\begin{gathered}
+h(s)=rG_0,\qquad
+h(b)=\Delta+(1-\Delta)r+z(b)>0,\\
+\|w_\Theta\|^2
+\le rG_0\bigl[\Delta+(1-\Delta)r+z(b)\bigr].
+\end{gathered}
+\tag{X123.28}
+$$
+
+若再明确加入 $\operatorname{rank}\Theta=2$，则存在唯一
+$c_\Theta\in v^\perp$ 使 $z(b)=c_\Theta\cdot\Theta(z)$，
+而同一必要界等价于平面圆盘条件
+
+$$
+\left\|w_\Theta-\frac{rG_0}{2}c_\Theta\right\|^2
+\le rG_0\Delta
++r^2\left[G_0(1-\Delta)
++\frac{G_0^2}{4}\|c_\Theta\|^2\right].
+\tag{X123.29}
+$$
+
+对于满足前述实际正法向前件的 h，(X123.28) 等号当且仅当
+其在整个 Dp 有且仅有一个球面零点；此时每个内部点严格正。
+严格不等号当且仅当该整球最小值严格正。
+$r=0$ 的实际正分支只给 $h=e_y$、$z=0$；
+零法向 $h=0$ 不进入归一化，另行保留。
+
+证明。
+先证严格读数。
+若非零 $h\in N_x$ 还满足 $h(y)=0$，
+取原纯最大点 $w$ 及 $m=\max_Kh>0$，则 $h/m\in\mathcal E$ 在 w 为一，
+在 x、y 都为零。
+所以 $x,y\in D_w$；原纯零关系对称给 $w\in D_x\cap D_y$。
+但 $\min_{D_x}e_y=\Delta>0$，而 $e_y|_{D_y}=0$，两颗完整球不交。
+这矛盾证明 $h(y)>0$。
+同理，若 $h(b)=0$，纯最大点会属于 $D_x\cap D_b$。
+然而 $\min_{D_x}e_b=D>0$，而 $e_b|_{D_b}=0$，仍矛盾。
+这证明 (X123.26)，且没有把 signed 候选当作实际正法向。
+
+由规范直和 (X123.11)，每个 $h\in S_x$ 唯一写为
+$\alpha g_x+\beta e_y+z$，$z\in Z_y$。
+在 y 处 $g_x(y)=e_y(y)=1$、$z(y)=0$，
+故归一化使 $\alpha+\beta=1$。
+令 $r=\alpha$，得到 (X123.27) 的唯一性。
+其在完整 Dy 的限制是 $r g_x$，因为 $e_y,z$ 在那里恒零。
+$g_x$ 在 Dy 的非 x 点严格正，实际 $h\ge0$ 强迫 $r\ge0$。
+
+现在使用接触前件。
+已有 $g_x(s)=1-e_x(s)=1-2\gamma=G_0>0$，
+$e_y(s)=z(s)=0$，从而 $h(s)=rG_0$。
+另一端 b 上，$g_x(b)=1$、$e_y(b)=\Delta$，给 (X123.28) 的第二式。
+$g_x$ 和 $e_y$ 在 Dp 都没有切向斜率，因此 h 的切向斜率准确为 $w_\Theta$。
+以直径两端 s、b 分解完整球图，得到准确最小值
+
+$$
+\min_{D_p}h
+=\frac{h(s)+h(b)}2
+-\sqrt{\left(\frac{h(s)-h(b)}2\right)^2+\|w_\Theta\|^2}.
+\tag{X123.30}
+$$
+
+$h(s)\ge0$、$h(b)>0$ 已由实际正前件支付，中心值严格正。
+因此最小值非负等价于平方后的判据
+
+$$
+\|w_\Theta\|^2\le h(s)h(b),
+\tag{X123.31}
+$$
+
+代入两端读数就是 (X123.28)。
+它是同一实际 h 在整个 Dp 的必要正性条件，
+没有将一组分别可达的边缘界拼为共同实现，
+也没有声称它充分刻画整个 $N_x$。
+
+若 $r=0$，实际归一化 h 属于 $e_y+Z_y$，
+(X123.12) 使它只能为 $e_y$，所以 $z=0$。
+仅要求 Dp 上非负时，(X123.31) 只给 $\Theta(z)=0$，
+不消去命题 123.4 的可能非零核。
+
+若 $\operatorname{rank}\Theta=2$，二维定义域与二维目标使 $\Theta$ 为同构。
+$z\mapsto z(b)$ 因而成为目标平面上的线性泛函，
+欧氏表示唯一给 $c_\Theta$。
+代入 $z(b)=c_\Theta\cdot w_\Theta$ 后，(X123.28) 为
+
+$$
+\|w_\Theta\|^2-rG_0c_\Theta\cdot w_\Theta
+\le rG_0\Delta+r^2G_0(1-\Delta).
+\tag{X123.32}
+$$
+
+两边加 $r^2G_0^2\|c_\Theta\|^2/4$ 即得 (X123.29)。
+对于 $r>0$，右侧严格正；$r=0$ 时圆盘退化为原点。
+圆盘描述每个固定 r 的必要横向范围，不是原全局正锥的一张已付参数化。
+秩零或一时没有使用不存在的平面逆，也不套用 (X123.29)。
+
+最后，实际 h 在 Dp 的中心值严格正。
+若 (X123.31) 为等号，(X123.30) 的中心值等于斜率范数且非零，
+球上非负仿射函数的零点唯一，是斜率反向的球面点；内部严格正。
+若严格不等，中心值严格大于斜率范数，整个闭球最小值严格正。
+反向分别由最小值公式成立。
+零法向在整个 C 上非负，但 $h(y)=0$，故不能除以其读数，
+它作为 $N_x$ 的零元保留。证毕。
+
+所有严格常数都来自同一非退化源配置：
+$\Delta,G_0,a,t>0$，$a,t,\lambda,M_A<1$，$\lambda,M_A>0$，
+$R_+>1$、$d_+>0$。
+没有把 $\Delta=0$、$G_0=0$、$a=0$、$t=0$、
+$\lambda\in\{0,1\}$、$M_A\in\{0,1\}$ 或 $R_+=1$ 的端点补入这些证明。
+接触等号、零法向和秩退化的处理不授权取消这些源严格前件。
+
+### 123.5 原完整域中的实际纯负见证
+
+**命题 123.6（E：每个通过六球测试的非零小候选有原纯外部见证）。**
+取命题 123.3 严格分支的任一充分小非零 $z$，
+或命题 123.4 接触分支的任一充分小非零 $z\in\ker\Theta$。
+对同一个 $h_z=e_y+z$，存在原纯点 $a_{n_\ell}$，使
+
+$$
+\begin{gathered}
+h_z(a_{n_\ell})<0,\qquad
+a_{n_\ell}\notin U_6,\\
+\pi_x(a_{n_\ell})\notin
+\overline{\operatorname{cone}(\pi_x(U_6))}.
+\end{gathered}
+\tag{X123.33}
+$$
+
+该见证由同一个 signed h 的原方向和实际两边路径
+$x-q_{n_\ell}-a_{n_\ell}$ 给出，
+并具有准确读数式 (X123.37)。
+接触零核时不存在本命题的非零局部候选；$z=0$ 为原正 $e_y$，
+没有负见证结论。
+
+证明。
+两种分支都已逐颗证明 $h_z\ge0$ 于全部六颗完整球，
+并由 (X123.12) 给 $h_z\notin C^*$。
+x 是实际 P0 锚，故已有原法向限制同构允许唯一写成
+
+$$
+h_z=\alpha g_x+\ell\cdot H_x.
+\tag{X123.34}
+$$
+
+这里 $H_x$ 是完整 Dx 的原三维法向坐标；
+它与 Dp 图中的 $\Theta$ 目标不混同。
+若 $\ell=0$，在 y 处 $h_z(y)=1$、$g_x(y)=1$ 使 $\alpha=1$，
+所以 $h_z=g_x\in C^*$，矛盾。
+故 $\ell\ne0$。
+已有准确原全局方向判据随原 P0 限制同构给
+
+$$
+\alpha<\rho_x(\ell),\qquad
+n_\ell=\frac{\ell}{\|\ell\|},\qquad
+\rho_x(\ell)=\|\ell\|\rho_x(n_\ell).
+\tag{X123.35}
+$$
+
+这里 $\rho_x$ 是原全局法向体的方向阈值，
+不是只在六球测试域求出的阈值。
+调用位置是
+[校准卷 123.9、定理 123.12](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+与
+[THREE_COPY VII122.2–122.3、定理 122.4](QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md)。
+这些已有接口把正性阈值与实际完整原排除球的读数联系，
+并非本章新设的正延拓假设。
+
+令 $q_{n_\ell}$ 为 Dx 球面上方向 $n_\ell$ 的实际原纯邻点。
+在完整原 $D_{q_{n_\ell}}$ 内，取 x 的实际反端点 $a_{n_\ell}$。
+该点原纯，且两条实际边的 P0 传播使所需锚都保持 P0。
+实际远端取得不依赖正则锚或球族连续性，见
+[EXCLUSION IX120.11–120.13 的实际远端接口](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)。
+完整球的原邻点确认式为
+
+$$
+e_{q_{n_\ell}}
+=\frac{\rho_x(n_\ell)g_x+n_\ell\cdot H_x}
+       {1+\rho_x(n_\ell)}.
+\tag{X123.36}
+$$
+
+该确认式在整个 $D_{q_{n_\ell}}$ 为零，
+所以那里有 $n_\ell\cdot H_x=-\rho_x(n_\ell)g_x$。
+实际反端点不同于 x，原一值面 $\{x\}$ 使 $g_x(a_{n_\ell})>0$。
+代入同一 $h_z$，得到
+
+$$
+\begin{aligned}
+h_z(a_{n_\ell})
+&=g_x(a_{n_\ell})
+  \left[\alpha-\|\ell\|\rho_x(n_\ell)\right]\\
+&=g_x(a_{n_\ell})[\alpha-\rho_x(\ell)]<0.
+\end{aligned}
+\tag{X123.37}
+$$
+
+这直接给实际原纯负见证，
+而不是只用分离定理给出一个未标记的抽象点。
+同一个 $h_z$ 在整个 $U_6$ 非负，故该原纯点不属于其中任何一颗完整球。
+
+最后，在有限维 $S_x^*$ 上，评价于固定 $h_z$ 是连续线性泛函。
+它在每个 $\pi_x(\xi)$、$\xi\in U_6$ 非负，
+所以在这些评价像的锥包及其闭包非负。
+而在 $\pi_x(a_{n_\ell})$ 上，它等于 (X123.37) 的严格负数，
+故后者不在该闭锥包，证明 (X123.33)。证毕。
+
+这里没有假设或推出 $\pi_x(C)$ 闭，
+没有据此判任何锥为 nice 或 non-nice，
+也没有把另一个锥和的闭性偷换为当前评价像的闭性。
+原路径中的每个点和完整排除球都在同一 K 内；
+存在该有限关系路径没有提供一条实现它的原合法门词。
+$h_z$ 是 signed 线性候选，非负测试失败不等于物理负概率，
+本章从未将其宣称为效果或可实施读回。
+
+### 123.6 横向结论的适用范围与现有来源边界
+
+**约定 123.7（原域、所有权与仍缺的桥梁）。**
+X123 的新组合是：用同一实际 Dy 定义规范横向代表，
+把严格关联与接触两分支中的六整球测试逐一算清，
+再对同一实际正法向推导必要横向界，
+并将每个已通过局部测试但不全局正的非零候选回接到原纯远端。
+每条结论都保留 X121 的原 EB3、全标签 Inj、实际 P0 种子、
+给定九维、实际纯 s 与 $d_+>0$；没有把它们换成更小域或更弱对象。
+
+严格分支的穿孔二维缺口不证明严格分支有全签名实现，
+也不证明该分支不可能。
+接触分支保留全部 $\operatorname{rank}\Theta=0,1,2$ 情形；
+共同消去空间是否为零、实际正锥横向非线性边界怎样闭合，均未支付。
+秩二圆盘条件只在该附加秩前件下约束每个同一 h，
+不供给全局正性、有限六球充分性、正校准读回或 $d_+=0$。
+三步旧种子框架的 $\mathsf J_\triangle$ 已由实际 P0 种子与九维支付，
+但个别规范种子读回的原全局正性仍按校准卷 125.6 单列。
+
+现有来源的数学所有权保持如下区分。
+
+1. [校准卷 123–125](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   与 [EXCLUSION IX119–120](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+   拥有完整确认菜单、实际全局法向体、P0 限制同构、原球面纯点、
+   实际边传播、反端点取得与种子维数接口。
+   本卷仅在这些接口上形成 X121–X123 的已列组合，
+   不复制旧接口的证明或把它们重命名为新原理。
+2. [校准卷 128](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   的弱分支给 $\nu_p\le1$，无需本卷实际种子；
+   其 E0 下的迹与球内界保留额外 E0 前件。
+   两种作用域既不相互替换，也不为本卷供给 E0。
+3. [校准卷 129](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   拥有 E0 下固定状态体的内球与 IC0 对校准间隙的条件描述。
+   固定状态体、局部法向限制与本卷整球测试缺口是不同对象，
+   不能把其内球当作本卷的共同正延拓或 PC1。
+4. [校准卷 130](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+   区分几何覆盖与原反端点/正交实现，
+   其中 Pair 型接口保留自身 $\mathrm{Pair}_{\perp}$ 前件。
+   本卷不借几何覆盖插入 Pair、IC0、全原域同时实现或额外物理源。
+5. [OriginalNormalRestriction](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalNormalRestriction.md)
+   拥有原法向限制的满射、实际常一读数的相对内部点及 P0 下的限制同构。
+   满射不是任意原标签的单射；本卷 X122 的一般核消去不改这一边界。
+6. [ExclusionIncidence](../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionIncidence.md)
+   拥有其精确前件下关联 O、开性及 Hausdorff 球空间之间的条件等价。
+   条件等价不提供 O；X121、X123 的具体两分支均未被该接口自动排除。
+7. [FixedZeroObstruction](../../../Blueprint/D5/S3/Quantum/Foundation/FixedZeroObstruction.md)
+   拥有原全局最大、准确面与稳定零集推出 O 或坍缩的条件接口。
+   稳定零集存在和适用前件仍须实际供给，不能从名称或条件结论倒推。
+8. [UnitPreservingLiftImage](../../../Blueprint/D5/S3/Quantum/Foundation/UnitPreservingLiftImage.md)
+   拥有原单位图像闭性与最小成本接口。
+   该闭图像不供给当前带共同接触的正截面、仪器或球族实现。
+9. [ActualExclusionBoundary](../../../Blueprint/D5/S3/Quantum/Foundation/ActualExclusionBoundary.md)
+   的原单例标签存在、沿实际边传播及连续统多不同整球，
+   仍只说标签纤维为单例。
+   它既不替代全标签 Inj，也不等于单例确认 P0，
+   更不推出纯点传递性或正种子读回。
+
+上述来源均为已有结果；没有在本卷另立它们的证明或新增准入记录。
+凸几何术语中的闭投影背景只按
+[校准卷 123.14 的 Pataki 边界](QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)
+使用。
+当前 $C+S_x^\perp$ 的闭性、正截面或相关 niceness 条件未支付，
+未调用任何要求这些前件的分类结论。
+同样，若与射影面分类、滤子或自对偶文献比较，
+其原复合、滤子、转置与对称性前件必须分别保留，
+本卷没有补成这些前件。
+
+所有推导仍位于同一原 Omega、全部原合法门序列及完整未来读出域。
+既未删去混合点、符号、条件未来或中间切口，
+也未把辅助 $Q_4,Q_6$ 的测试域换为新的物理状态体。
+本卷没有提供原物理源、实际共同操作、原生事件或仪器、任意复合与旁观者兼容，
+没有提供时钟、动力学、Hamiltonian、能量或 $\hbar$。
+EB1 五边形仅为方法控制，未冒充 EB3 全签名反例；
+全部条件几何结果也不构成独立性、最小性或量子起源完备性证明。
+完整量子起源目标保持 active/incomplete。
 
 ## 追加锚（本行以下为增补区）
