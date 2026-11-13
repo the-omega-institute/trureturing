@@ -75,7 +75,7 @@ abbrev law (R : Realization signature) : Prop :=
 private theorem bad : ¬ law zeroReadout := by
   intro h
   have hh := @h (ULift.{u} Unit) inferInstance inferInstance 0 1 ⟨()⟩ 1 1 (by norm_num) (by norm_num)
-    (by simp) (by ext i j; cases i; cases j; cases i_down; cases j_down; simp [Matrix.vecMulVec])
+    (by simp) (by ext i j; rcases i with ⟨⟨⟩⟩; rcases j with ⟨⟨⟩⟩; simp [Matrix.vecMulVec])
     1 1 0 1 (by simp) (by simp) (by norm_num) (by norm_num) (by simp [dotProduct])
   norm_num [zeroReadout, realize] at hh
 
@@ -428,7 +428,7 @@ def audit : Contract.Registration (@central_spectral_gap) (Realization signature
   escapeFrom := some ℝ
   sourceSelection := some { owner := `D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #[], stateBinder := 0,
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -455,7 +455,7 @@ def audit : Contract.Registration (@uniform_inverse_cubic_gap) (Realization sign
   escapeFrom := some ℝ
   sourceSelection := some { owner := `D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #[], stateBinder := 0,
+    readouts := #[{ path := #["arg", "body", "arg", "arg", "body", "arg", "body", "body", "body", "arg", "body", "body", "body", "body", "body", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

@@ -4,6 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
 
 internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinition
 {
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/QuantumStates/childs2003gluedtrees");
+
     private const string Module = "D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -92,6 +94,6 @@ internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinitio
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("central-sqrt-two-defect-gap-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Module + "." + name), H(title),
-            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(text))), role);
 }

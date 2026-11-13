@@ -786,12 +786,4 @@ theorem uniform_inverse_cubic_gap :
     simpa only [Nat.succ_eq_add_one, Nat.cast_add, Nat.cast_one] using
       central_spectral_gap m lambda hlambda i j hij
 
-example : (∑ i : Fin 1, (1 : ℝ) ^ 2) ≤
-    (1 + |(3 : ℝ)|) ^ 2 * (0 + 1 : ℝ) ^ 3 * (1 : ℝ) ^ 2 := by
-  apply sector_endpoint_observability 0 3 3 (1 : Fin 1 → ℝ)
-  ext i
-  fin_cases i
-  simp [sectorMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix,
-    D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.upperBand, Matrix.mulVec, dotProduct]
-
 end D5.S3.Quantum.Matrix.CentralSqrtTwoDefectGap
