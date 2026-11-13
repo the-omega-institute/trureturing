@@ -1,0 +1,148 @@
+**Lemma 27.3 (finite completion, geometric conservation and conditional
+energy).** Conditional on $\mathcal F_s$, the unrestricted rule has
+only finitely many attempts almost surely. It finishes strictly before
+the next analytic mesh point $t_{i+1}$. It traverses the connector
+exactly once, in order, and satisfies
+
+$$
+\mathbb E(E_i^{\rm full}\mid\mathcal F_{t_i})
+ \le48/c_\lambda.
+\tag{27.7}
+$$
+
+This bound is uniform over all past connector data satisfying (27.1).
+All its numerical choices are measurable at issuance and all its
+interruptions are stopping times. Each actually executed prefix has
+its original-velocity cost; none is revalued by a later issuance.
+
+Proof. First apply strong Markov at a finite $r_j$, in the independently
+enlarged Brownian filtration of Definition 26.1. If
+$V_u=W_{r_j+u}-W_{r_j}$, stochastic integration after a stopping time
+gives
+
+$$
+C_{r_j,r_j+u}=\int_0^u V^1_v\,dV^2_v+\lambda u.
+$$
+
+One can obtain this identity first for simple predictable integrands
+on the shifted filtration and then by Itô isometry, stopping where
+the coordinates are bounded. Removing these bounds gives the
+continuous integral identity on every finite interval. Strong Markov
+makes the entire future path $V$ an independent covariance-$2$
+Brownian pair. Its stochastic integral is a measurable limit of its
+own simple-integrand sums, so the joint future enhancement in this
+display has the fresh enhanced Brownian law as well. Thus no
+independent area process or future area observation has been added.
+Scaling space by $\epsilon_j$ and time by $\epsilon_j^2$ leaves the
+normalized area drift equal to $\lambda$. The normalized planned time
+is independent of $j$:
+
+$$
+w=\frac{h_j}{\epsilon_j^2}=16c_\lambda
+ =\frac1{64(1+|\lambda|)}.
+\tag{27.8}
+$$
+
+It is at most $1/[2(1+|\lambda|)]$ and less than $1$. The classical
+reflection and exponential-martingale estimate (18.3), with exactly
+these coordinates and relative integral, therefore gives
+
+$$
+\mathbb P(\theta_j<h_j\mid\mathcal F_{r_j})
+ \le8e^{-1/(4w)}+2e^{-1/(16w)}
+ \le8e^{-16}+2e^{-4}=:q<1/16.
+\tag{27.9}
+$$
+
+For example $e^4>40$ already proves the last strict inequality.
+The estimate stops the area martingale at first-level exit, where its
+quadratic variation is at most $2w$; the drift on this time interval
+has magnitude at most $|\lambda|w<1/2$. Thus the bounded-variation
+area drift has not been discarded in using (18.3). The classical
+strong Markov and reflection suppliers are those specified in
+Definitions 20.1 and 25.1; their covariance has been rescaled explicitly.
+
+Let $A_j$ be the event that attempt $j$ is reached in this unrestricted
+construction. It means that all previous attempts were interrupted,
+and is measurable at $r_j$. Successive conditioning in (27.9) gives
+
+$$
+\mathbb P(A_j\mid\mathcal F_s)\le q^j.
+\tag{27.10}
+$$
+
+This is not an assertion that the surviving attempts or terminal cells
+are independent. At every finite attempt the threshold delay is
+strictly positive, by continuity at zero and its positive thresholds.
+Conditional probability of infinitely many attempts is bounded by
+$\lim_jq^j=0$. Thus a last attempt completes the path almost surely.
+The sum of all elapsed attempt times through completion is at most
+$\sum_{j\ge0}h_j=4c_\lambda\rho^2/3<\rho^2$.
+
+We must also verify that the target mesh cannot overtake this service.
+On each executed attempt its target increments, including the final
+endpoint, have first-level magnitudes at most $\epsilon_j$ and
+relative chronological magnitude at most $\epsilon_j^2$. For any
+prefix through finitely many attempts, Chen's identity (16.9) gives
+
+$$
+\begin{aligned}
+|W^m_t-W^m_s|&\le\sum_{j\ge0}\epsilon_j=\rho/2\quad(m=1,2),\\
+|C_{s,t}|&\le\sum_j\epsilon_j^2+
+                  \sum_{j<j'}\epsilon_j\epsilon_{j'}
+ =\tfrac12\left((\sum_j\epsilon_j)^2+\sum_j\epsilon_j^2\right)
+ =\rho^2/6.
+\end{aligned}
+\tag{27.11}
+$$
+
+For a partial last attempt use its corresponding threshold bounds;
+the infinite sums only enlarge the finite ones. The same inequalities
+hold at completion by continuity. Their bounds are strictly below the
+mesh thresholds $\rho,\rho,\rho^2$, and the elapsed time is strictly
+below its cap $\rho^2$. Hence $t_{i+1}$ is strictly after completion.
+This verifies the service schedule rather than assuming that a short
+next cell allows completion at a fixed speed.
+
+During attempt $j$, progress in (27.5) increases affinely from $v_j$
+at speed $(1-v_j)/h_j$. If that attempt were run to its planned end,
+its quadratic energy would be
+
+$$
+\frac{1-v_j}{h_j}\int_{v_j}^1|g_i'(v)|^2\,dv
+ \le\frac{36\rho^2}{h_j}=
+       \frac{36}{c_\lambda}4^j.
+\tag{27.12}
+$$
+
+An interrupted prefix has no greater energy, since its integrand is
+nonnegative and its velocity is still the one in (27.5). Tonelli and
+(27.10) now yield
+
+$$
+\mathbb E(E_i^{\rm full}\mid\mathcal F_s)
+ \le\frac{36}{c_\lambda}\sum_{j\ge0}(4q)^j
+ \le\frac{48}{c_\lambda},
+\tag{27.13}
+$$
+
+proving (27.7). Progress never decreases and is continuous at every
+interruption; the final attempt reaches $1$. Thus its sequence of
+suffixes describes the original geometric path once, without repeated
+legs. Variation, length and the relative chronological integral are
+unchanged by these increasing piecewise linear parametrizations.
+In particular (27.3) bounds their total, regardless of the retry count.
+
+Finally the threshold processes in (27.6) are continuous and adapted
+after a stopping time. Their first hitting times, and their minima
+with the known planned completion times, are stopping times in the
+usual filtration. The past $g_i$, current $v_j$, issue time and
+$h_j$ determine the entire continuous function (27.5) measurably.
+Evaluation at a stopping time and the finite arithmetic/interpolation
+operations used here are measurable; a profile's values at rational
+elapsed times determine its Borel law in the uniform continuous-path
+space. On each finite-count event this is a finite recursion. These
+observations apply to $\mathcal K$ before target death, when the needed
+target history is supplied. Strong Markov was used in the larger
+Brownian filtration only to bound that recursion. $\square$
+

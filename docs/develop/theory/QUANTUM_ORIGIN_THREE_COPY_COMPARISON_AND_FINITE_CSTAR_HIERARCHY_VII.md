@@ -2117,3 +2117,606 @@ Choi／Kraus、共同基 Frobenius／Schur 恒等式及精确酉生成是既有�
 二维种子的较大块融合边界按命题104.13保留。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 105. 实际混合角的互反端点与全有限通道夹逼
+
+### 105.1 原模型、码角与坐标
+
+**假设 105.1（全有限原层级、低二份供应与二维种子）。** 取定义102.1的整个模型域：
+非零有限维实空间 $V$，每个整数 $N\ge1$ 的原空间
+$W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成凸锥 $C_N$，以及在非零正向量上严格为正的
+原张量单位 $u_N=u^{\otimes N}$。归一基、纯极点和 proper 效应始终分别是整个
+$K_N$、$P_N=\operatorname{ext}K_N$ 和 $\mathcal E_N=[0,u_N]_{C_N^*}$。
+每个实际分块 $a+b=N$ 都满足(102.2)的 min/max 双界；
+所有原位置置换及其逆均正，重括号为同一实张量空间的规范识别，
+产品配对和单位为(102.3)，不改用另一个联合实现。
+
+普遍比较条件只取整个 $S_2$：对每个原 $p\in P_2$、每个有限原纯准备族
+$q_\ell\in P_2$ 和全部 $a_\ell\ge0$、$\sum_\ell a_\ell=1$，要求
+
+$$
+T_p^{(2)}\!\left(\sum_\ell a_\ell q_\ell\right)
+ =\sum_\ell a_\ell T_{q_\ell}^{(2)}(p).
+\tag{105.1}
+$$
+
+这里包括原纠缠二份纯态、零权和重复标签；$T$ 仍由整个原 proper 区间的
+(102.4)定义。三项条件 PAPER 供应均按假设103.1、104.1的完整输入使用：
+在原 $q=1,2$ 的整个基和全效应上，由 least confirmation、互反、谱性、
+正面投影及其保纯性到保迹 Jordan 表示，其中 $S_1$ 由纯旁观下降取得；
+在实际 $(W_1,W_1,W_2)$ 上，由正态／效应产品、原单位与配对及局部层析，
+使用原中心扇区限制、框架秩乘法和实维乘法的自复合复型选择；
+在所选复型的每个实际二因子扇区上，使用产品正规形的固定输出酉和固定输入转置分类，
+保留标量因子边界。各桥的来源和全部中间条件仍是103.1所列的具名接口，
+不将整条桥归给其中任一成熟分类定理。
+
+设 $L=3$，故保留全部 $n_i\in\{1,2,3\}$ 的实际块，包括所有标量块与二维块。
+联合给定一个实际 $\mathsf F_{r,2}$ 种子，向量基含相位。
+在定理104.7对齐后的同一个局部坐标中，
+$A=\bigoplus_iM_{n_i}(\mathbb C)$，$C_1=\mathsf D_1$、$C_2=\mathsf D_2$，
+原单位为各块迹之和。对高阶空间只采用同一坐标的张量幂，不假定 $N\ge3$ 的原锥为 PSD。
+定理104.7的一体矩形合同、全部原旁观提升和质量预算，
+命题104.11的全有限种子 qubit 寄存器、全对偶及寄存器之间 CP 映射的真正零扩张，
+以及引理104.6的原杯、帽与全局自身 Choi 判据，均按原陈述复用。
+本章不假定任意实际 qutrit 与 qubit 寄存器之间的通常 CP 映射已原旁观正，
+也不使用 $S_3$。
+
+**定义 105.2（实际 $3\times3$ 混合角）。** 固定一个实际最大块 $s$，
+$H_s=\mathbb C^3$，并在其选定基中写 $e_0,e_1,e_2$。
+令 $Q=\mathbb C^2\otimes\mathbb C^2$ 是两条实际种子角腿组成的寄存器。
+取实等距嵌入
+
+$$
+c:\mathbb C^3\longrightarrow Q,\qquad
+ce_0=|00\rangle,\quad ce_1=|01\rangle,\quad ce_2=|10\rangle,
+\qquad c^*|11\rangle=0.
+\tag{105.2}
+$$
+
+码投影为 $cc^*$；它不是 $Q$ 的恒等，余字 $11$ 被压缩为零。
+令 $j_2$ 为(104.10)在这两条原种子腿上的嵌入，$\iota_s$ 为最后一条原腿的块嵌入，定义
+
+$$
+\begin{aligned}
+i_s&=(j_2\operatorname{Ad}_c)\otimes\iota_s:
+ \operatorname{Herm}(\mathbb C^3\otimes\mathbb C^3)\longrightarrow W_3,\\
+q_s&=i_s^*,\qquad \mathsf p_s=i_sq_s,\qquad
+D_s=i_s^{-1}(C_3).
+\end{aligned}
+\tag{105.3}
+$$
+
+伴随用实迹内积，故 $i_s$ 等距、$q_si_s=\mathrm{id}$，
+$\mathsf p_s$ 为该实子空间的正交投影。$D_s$ 表示实际原锥的角交，不是另选的诊断锥。
+本章在此角内记
+
+$$
+\begin{aligned}
+\eta&=\sum_{a=0}^2e_a\otimes e_a,& R&=|\eta\rangle\langle\eta|,& P&=R/3,\\
+\tau_F&=\frac{1-F}{8}(I-P)+FP\quad(F\in\mathbb R),&
+W_\lambda&=I-\lambda R,&
+t_s&=\max_{x\in D_s,\ \operatorname{Tr}x=1}\operatorname{Tr}(Px).
+\end{aligned}
+\tag{105.4}
+$$
+
+$I$ 是这个九维 Hilbert 角的恒等，不是整个 $W_3$ 的单位矩阵；
+$R$ 是角内 dyad，原全杯总质量仍为 $\sum_i n_i$。
+$i_s(R)$ 的向量代表恰为
+$|00\rangle|0\rangle_s+|01\rangle|1\rangle_s+|10\rangle|2\rangle_s$，
+所以 $R\in D_s$ 正是定义104.12的 $\mathsf{Fusion}_3$。
+定义中的 $F$ 允许为负，此时 $\tau_F$ 不在通常 PSD 锥。
+记 $\mathsf T$ 为这两个固定计算因子的同时全转置，$\mathsf T_N$ 为全部 $N$ 条原腿的转置；
+它们不是部分转置，也不先假定它们在原锥上正。
+
+### 105.2 实际对偶中的各向同性分离
+
+**命题 105.3（实际角的全对偶与合法分离正规形）。** 在假设105.1下，
+$D_s$ 闭、尖、生成，迹严格正，且
+
+$$
+\begin{aligned}
+i_s(D_s)&=\mathsf p_s(C_3)=C_3\cap\operatorname{im}i_s,\\
+q_s(C_3)&=D_s,\qquad i_s^*(C_3^*)=D_s^*,\\
+i_s(D_s^*)&=C_3^*\cap\operatorname{im}i_s,\qquad D_s^*=\mathsf T(D_s).
+\end{aligned}
+\tag{105.5}
+$$
+
+所有 Schmidt 秩至多二的 dyad，针对同一个“码参考 $\mathbb C^3$｜实际块 $H_s$”切口，
+都属于 $D_s$ 和 $D_s^*$。
+若 $R\notin D_s$，则从实际整个原对偶中的分离泛函出发，
+可以得到 $W_\lambda\in D_s^*$ 及其正原零扩张，其中
+$1/3<\lambda\le1/2$。所用平均在 $D_s$ 和其整个对偶上正。
+
+**证明。** 码投影共轭是 $Q$ 上的寄存器 CP 映射，
+其真正零扩张由命题104.11在所有原纠缠旁观者上正；
+最后一条腿的中心投影由定理104.7具有同样正性。
+两者交换，其乘积正是实自伴幂等 $\mathsf p_s$。
+码投影满足 $cc^*\preceq I_Q$，所以其 proper 效应预算也由104.11延拓；
+与末腿中心投影合成后，对 $z\in C_3$ 有
+$0\le u_3(\mathsf p_sz)\le u_3(z)$。
+因此角交、正像和(105.5)前两行的原锥等式成立。
+闭性由交子空间给出，尖性由 $i_s$ 单射给出；
+码与实际块之间的所有正乘积 dyad 均为原正，且实张成整个角 Hermitian 空间，故生成。
+$u_3i_s=\operatorname{Tr}$ 使迹在角内非零正向量上严格正。
+
+若 $f\in D_s^*$，则 $fq_s$ 对全部 $C_3$ 正，且沿 $i_s$ 的限制为 $f$。
+反向限制任何原正泛函也正。以迹内积表示时，$fq_s$ 的向量就是 $i_s(f)$，
+因为 $q_s=i_s^*$；这给正零扩张等式及全对偶等式。
+此处没有把选定效应菜单当成整个对偶。
+
+全转置极性可直接从已取得的原杯帽推出。对任意整数 $N\ge1$，
+将 $N$ 个原杯按“全部参考、全部输入”重排为 $\Omega_N\in C_{2N}$。
+对 $f\in C_N^*$ 在一组 $N$ 腿上切片，矩阵单位式(102.16)给
+$\mathsf T_Nf\in C_N$。另一方面，对 $x,y\in C_N$，
+其原乘积在 $C_{2N}$，$N$ 对原正帽的收缩给
+$\operatorname{Tr}((\mathsf T_Nx)y)\ge0$，所以 $\mathsf T_Nx\in C_N^*$。
+结合 $\mathsf T_N^2=\mathrm{id}$ 得
+
+$$
+C_N^*=\mathsf T_N(C_N)\qquad(N\ge1).
+\tag{105.6}
+$$
+
+这里使用全有限分块与重排来供应 $C_{2N}$ 中的杯乘积和输入乘积，
+不从低阶对象外推高阶自对偶。
+实码投影及实际中心投影与全转置交换，故(105.5)的角交与零扩张等式
+将(105.6)限制为 $D_s^*=\mathsf T(D_s)$。
+这不蕴含 $D_s=\mathsf T(D_s)$，也不假定 $D_s=\mathrm{PSD}$。
+
+对任意 $U\in U(3)$，在寄存器 $Q$ 上把 $cUc^*$ 扩为
+$cUc^*+(I_Q-cc^*)$，即码上的 $U$ 加余字上的恒等。
+它及其逆的真正寄存器零扩张由104.11给出。
+在实际块 $s$ 上的 $\overline U$ 共轭及其逆由104.7给出。
+于是 $U\otimes\overline U$ 共轭在实际混合角上是锥自同构，其迹伴随也保持整个 $D_s^*$。
+标准 Haar 平均因此在两个闭凸锥上均正，且
+
+$$
+\mathcal A(x)=\int_{U(3)}\operatorname{Ad}_{U\otimes\overline U}(x)\,dU
+ =\frac{\operatorname{Tr}x-\operatorname{Tr}(Px)}8(I-P)
+    +\operatorname{Tr}(Px)P.
+\tag{105.7}
+$$
+
+这里复用 Terhal–Horodecki，
+[*A Schmidt number for density matrices*, quant-ph/9911117v4](https://arxiv.org/abs/quant-ph/9911117v4)，
+式(6)、(9)的各向同性平均及其固定空间 $\operatorname{span}_{\mathbb R}\{I,P\}$；
+线性公式作用于全部 Hermitian 矩阵，不限于 PSD。
+平均是有限维闭凸锥内的数学投影，不断言一个连续物理随机化事件存在。
+
+为支付整个秩二族，写任意 Schmidt 秩至多二向量为
+$\varphi=u_0\otimes v_0+u_1\otimes v_1$，允许某项为零。
+从两个实际种子角之间的未归一 Bell dyad 开始，
+在第一条腿使用寄存器 Kraus 算子 $A:\mathbb C^2\to Q$，$A|j\rangle=cu_j$；
+在第二条腿使用一体矩形算子，令其种子二维基的像为 $v_j\in H_s$，角外送零。
+第一映射由104.11、第二映射由104.7具有全部原旁观正性。
+输出恰为 $i_s(|\varphi\rangle\langle\varphi|)$。
+对共轭向量作同样构造，再用 $D_s^*=\mathsf T(D_s)$，得该 dyad 也在对偶。
+这是单个实际输出腿的完整秩二族，尚未涉及多条实际 qutrit 的全局二维子空间。
+
+若 $R$ 不在闭凸锥 $D_s$，有限维锥分离给 $h\in D_s^*$、$\operatorname{Tr}(hR)<0$。
+原 $C_3$ 中的任意分离泛函也可先经 $\mathsf p_s$ 压缩，
+保留对 $i_s(R)$ 的负读数和原正性，再用(105.5)限制。
+平均固定 $R$，所以 $\mathcal A(h)=aI+bR$ 仍分离 $R$。
+在正乘积向量 $|01\rangle$ 上读数为 $a$，故 $a\ge0$；
+若 $a=0$，负 $R$ 读数迫使 $b<0$，却在正乘积 $|00\rangle$ 上为负。
+因此 $a>0$，可除以 $a$ 写为 $W_\lambda$。
+由 $\operatorname{Tr}(PW_\lambda)=1-3\lambda<0$ 得 $\lambda>1/3$。
+在归一秩二 Bell 向量 $(|00\rangle+|11\rangle)/\sqrt2$ 上的读数为
+$1-2\lambda$，故 $\lambda\le1/2$。
+该归一族与其通常 Schmidt 数阈值是上述 Terhal–Horodecki 引理1、2及定理2的标准背景；
+在这里将它用于实际全对偶的根据是前面的原映射构造。
+最后由(105.5)把 $W_\lambda$ 正零扩张到原 $C_3^*$。
+全程没有借用另一个有限诊断锥的对偶。∎
+
+### 105.3 实际极值、互反系数与 proper 预算
+
+**定理 105.4（实际角的精确互反端点）。** 在假设105.1及定义105.2下，
+最大值 $t=t_s$ 确实取得。令
+
+$$
+\frac23\le t\le1,\qquad
+\ell=\frac{t-1}{9t-1},\qquad \lambda_* =\frac1{3t}.
+\tag{105.8}
+$$
+
+则整个归一实际角的 $P$ 坐标恰遍历 $[\ell,t]$，两个端点均取得，且
+
+$$
+\begin{aligned}
+D_s\cap\operatorname{span}_{\mathbb R}\{I,P\}
+ &=\operatorname{cone}\{\tau_\ell,\tau_t\},\\
+\lambda\ge0:\quad W_\lambda\in D_s
+ &\ \Longleftrightarrow\ W_\lambda\in D_s^*
+ \ \Longleftrightarrow\ \lambda\le\lambda_*,\\
+\mathsf{Fusion}_3&\ \Longleftrightarrow\ t=1
+ \ \Longleftrightarrow\ \lambda_*=1/3.
+\end{aligned}
+\tag{105.9}
+$$
+
+若融合不成立，则 $-1/15\le\ell<0$、$1/3<\lambda_*\le1/2$，
+命题105.3中各向同性分离系数的准确范围是 $1/3<\lambda\le\lambda_*$。
+所有实际大小三的输出块具有同一个 $t$；码基和输出基的酉改变也保持此参数。
+
+**证明。** 有限维闭尖锥上的严格正迹给紧的迹一基。
+该基非空，因为它包含归一正乘积态，所以 $t$ 有限并取得。
+归一秩二 Bell dyad 在 $D_s$ 中，$P$ 读数为 $2/3$，故 $t\ge2/3$。
+平均一个最大元，由(105.7)得 $\tau_t\in D_s$。
+正乘积 dyad $|01\rangle\langle01|\in D_s^*$ 在其上读数为 $(1-t)/8$，
+故 $t\le1$。这个上界不假定整个实际角是 PSD。
+
+对整个迹一实际角任意 $x$，记 $F=\operatorname{Tr}(Px)$。
+对 $\lambda\ge0$ 有
+
+$$
+\operatorname{Tr}(W_\lambda x)=1-3\lambda F,\qquad
+W_\lambda\in D_s^*\ \Longleftrightarrow\ 1-3\lambda t\ge0.
+\tag{105.10}
+$$
+
+严格正迹允许把每个非零正向量缩为迹一，所以这真是整个对偶的判据。
+特别地，它遍历可能不是通常 PSD 的全部原角状态。
+$W_\lambda$ 固定于全转置，(105.5)于是使其原、对偶成员条件相同，给(105.9)第二行。
+因此 $W_{\lambda_*}$ 同时为原角和对偶角的正元素。
+其迹为 $9-3\lambda_*>0$，归一后的 $P$ 读数为
+
+$$
+\frac{1-3\lambda_*}{9-3\lambda_*}
+ =\frac{t-1}{9t-1}=\ell,\qquad
+\frac{W_{\lambda_*}}{9-3\lambda_*}=\tau_\ell.
+\tag{105.11}
+$$
+
+另一方面，$\tau_t$ 也是实矩阵，因此由全转置极性属于 $D_s^*$。
+对任意上述 $x$，其非负读数给
+
+$$
+0\le\operatorname{Tr}(\tau_t x)
+ =tF+\frac{1-t}{8}(1-F)
+ =\frac{(9t-1)F+1-t}{8}.
+\tag{105.12}
+$$
+
+$9t-1>0$，所以 $F\ge\ell$；(105.11)给等号，最大端点由 $\tau_t$ 给出。
+两端点的所有凸组合恰为 $\tau_F$，$F\in[\ell,t]$，所以所有这些坐标确实取得。
+固定空间内每个正迹向量唯一写成正倍数的某个 $\tau_F$；
+严格正迹排除非零迹零正向量，得(105.9)第一行的整锥等式。
+
+若 $t=1$，则 $\tau_t=P\in D_s$，故 $R\in D_s$。
+反向若 $R\in D_s$，其归一化 $P$ 的坐标为一，结合上界得到 $t=1$。
+这就是所给实际最大块上的融合条件，而不是另一个抽象参考的条件。
+命题104.13此时给 $\mathsf F_{\max}$，定理104.10再给全部有限原锥的标准 PSD 层级；
+这一步不使用 $S_3$。将 $t\in[2/3,1)$ 代入(105.8)给所述分离范围与负端点范围。
+
+两个大小三的实际块之间的等距矩形一体映射和反向映射，
+由104.7在全部原旁观者上正。
+把输出基逐个对应，它们在两个实际混合角之间互逆、保迹并保持 $P$ 坐标，
+所以 $t_s$ 与块标签无关。
+码上的酉由 $U\oplus1$ 寄存器酉实现，输出基的酉由一体映射实现；
+它们把相应基下的 $P$ 连同整个实际角一同运输，故保持极值。
+
+同一端点计算的参数形式如下：令 $d,k$ 为正整数，$d\ge2$、$1\le k\le d$。
+对 $\operatorname{Herm}(\mathbb C^d\otimes\mathbb C^d)$ 中任一闭尖生成锥 $D$，
+若迹严格正、$D^*=\mathsf T(D)$、$U\otimes\overline U$ 共轭保持 $D$，
+且全部 Schmidt 秩至多 $k$ 的 dyad 在 $D$ 中，取
+$P_d=|I_d\rangle\langle I_d|/d$，并在迹一基上最大化 $P_d$ 得 $t$。
+共轭向量与全转置极性先给全部这些 dyad 的对偶成员关系。
+向量 $v_k=k^{-1/2}\sum_{j=0}^{k-1}e_j\otimes e_j$ 定义良好、范数一、
+Schmidt 秩恰为 $k$，且 $\operatorname{Tr}(P_d|v_k\rangle\langle v_k|)=k/d$。
+正交乘积向量给 $t\le1$。
+把上述证明的 $3,8,9$ 分别换为 $d,d^2-1,d^2$，即得
+
+$$
+\frac{k}{d}\le t\le1,\qquad
+\ell_d=\frac{t-1}{d^2t-1},\qquad
+\lambda_{*,d}=\frac1{dt}\in\left[\frac1d,\frac1k\right].
+\tag{105.13}
+$$
+
+固定空间的迹一向量为
+$(1-F)(I-P_d)/(d^2-1)+FP_d$，其角锥端点为 $\ell_d,t$，
+而 $I-\lambda|I_d\rangle\langle I_d|$ 的原／对偶非负系数阈值为 $\lambda_{*,d}$。
+这里 $d^2t-1\ge dk-1>0$；秩参数 $k$ 的整数条件不可删除。
+本章实际参数对应恰为 $d=3,k=2$。
+标准平均和 Schmidt 秩估计沿命题105.3所引文献复用；
+(105.8)—(105.12)是在实际原角及其整个对偶上的应用关系。∎
+
+**命题 105.5（条件性的实际非 PSD 态与精确分离效应）。** 若 $t<1$，令
+
+$$
+\rho_- =\frac{i_s(W_{\lambda_*})}{9-3\lambda_*},\qquad
+M=1-\frac\ell t
+ =\frac{9t^2-2t+1}{t(9t-1)},\qquad
+E(z)=\frac{\operatorname{Tr}(i_s(W_{\lambda_*})z)}{M}.
+\tag{105.14}
+$$
+
+则 $\rho_-\in K_3$ 是一个在通常矩阵坐标中非 PSD 的实际原态，
+$E\in\mathcal E_3$ 是整个原三份锥上的 proper 效应，且
+
+$$
+E(i_s(P))=\frac{1-3\lambda_*}{M}<0.
+\tag{105.15}
+$$
+
+此负读数的输入是该条件下被排除的融合候选，不是一个实际态。
+
+**证明。** 定理105.4和(105.5)把 $i_s(W_{\lambda_*})$ 同时放入
+原 $C_3$ 与原 $C_3^*$。它在 $\eta$ 方向的本征值为 $1-3\lambda_*<0$，
+在其余八个角方向的本征值为一，角外为零。
+迹为正，故(105.14)的归一化确属原 $K_3$，同时不是通常 PSD。
+这不是构造一个满足假设105.1而 $t<1$ 的层级；它是该条件在实际角内强制的态。
+
+对整个归一角，(105.10)与 $F\in[\ell,t]$ 给
+
+$$
+0\le\operatorname{Tr}(W_{\lambda_*}x)\le1-3\lambda_*\ell=M,
+\tag{105.16}
+$$
+
+下界在 $\tau_t$ 取得，上界在 $\tau_\ell$ 取得。
+对任意原 $z\in K_3$，令 $a=u_3(\mathsf p_sz)\in[0,1]$。
+若 $a=0$，严格正单位给 $\mathsf p_sz=0$；若 $a>0$，则
+$q_sz/a\in D_s$ 且迹一。因为 $i_s(W_{\lambda_*})$ 位于投影像内，
+(105.16)给
+
+$$
+0\le\operatorname{Tr}(i_s(W_{\lambda_*})z)\le aM\le M.
+\tag{105.17}
+$$
+
+任意非零原正向量可按质量归一，故(105.17)在全原锥上证明 $0\le E\le u_3$。
+角内 $\tau_\ell$ 的原嵌入使上界取得，因此这里的归一预算恰为实际最大读数。
+代入 $P$ 得(105.15)。没有把未缩放的 $I-R/2$ 诊断效应当成原 proper 效应，
+也没有确定实际参数 $t$ 的数值。∎
+
+### 105.4 双向实际通道与每个有限张量次数
+
+**命题 105.6（互反噪声参数的原全旁观通道夹逼）。** 令
+
+$$
+p=\frac{9t-1}{8},\qquad r=-\frac1{9t-1},\qquad
+\mathcal D_a(X)=aX+(1-a)\operatorname{Tr}(X)I_3/3.
+\tag{105.18}
+$$
+
+则 $5/8\le p\le1$、$-1/5\le r\le-1/8$、$pr=-1/8$。
+对每个 $a\in\{p,r\}$，$\mathcal D_a$ 都有从实际码到实际块 $s$，
+以及从实际块 $s$ 到实际码的真正零扩张；两者对每个原纠缠旁观者正且不增质量，
+在所接受的码或块上保迹。
+令 $C_{s^n}$ 是 $C_n$ 在全部标签为 $s$ 的实际扇区中的角锥，
+用该扇区的矩阵坐标表示。对每个整数 $n\ge1$，有
+
+$$
+\mathcal D_a^{\otimes n}\bigl(\operatorname{Herm}_+( (\mathbb C^3)^{\otimes n})\bigr)
+ \ \subseteq\ C_{s^n}
+ \ \subseteq\
+ (\mathcal D_a^{\otimes n})^{-1}
+ \bigl(\operatorname{Herm}_+((\mathbb C^3)^{\otimes n})\bigr).
+\tag{105.19}
+$$
+
+**证明。** 采用原杯的“参考、输出”Choi 约定，在 $3\times3$ 码坐标中，
+矩阵单位计算给
+
+$$
+\begin{aligned}
+J(\mathcal D_a)&=aR+\frac{1-a}{3}I,\\
+J(\mathcal D_p)&=3\tau_t,\qquad
+J(\mathcal D_r)=\frac{W_{\lambda_*}}{3-\lambda_*}.
+\end{aligned}
+\tag{105.20}
+$$
+
+两者已由定理105.4属于实际 $D_s$，并非以通常 Choi 正性替代原 Choi 成员关系。
+更明确地，令 $q_2$ 为(104.10)的原两种子角压缩，$\pi_s=\iota_s^*$ 为块提取，定义
+
+$$
+\begin{aligned}
+A_a^0:W_2\to W_1,&\qquad
+ A_a^0(z)=\iota_s\mathcal D_a(c^*q_2(z)c),\\
+B_a^0:W_1\to W_2,&\qquad
+ B_a^0(y)=j_2\bigl(c\mathcal D_a(\pi_s y)c^*\bigr).
+\end{aligned}
+\tag{105.21}
+$$
+
+$A_a^0$ 消去余字 $11$、码与余字的交叉元及其他输入扇区；
+$B_a^0$ 消去其他实际输入块，输出只在码内。
+直接对完整原杯展开，得 $J(A_a^0)=i_s(J(\mathcal D_a))\in C_3$。
+对反向映射，$\mathcal D_a$ 为实且迹自伴，
+其普通 $3\times3$ Choi 矩阵(105.20)在交换参考与输出后不变。
+所以 $J(B_a^0)$ 正是同一个三原腿元素的置换，次序为“一条实际块参考、两条码输出”。
+原置换正，故 $J(B_a^0)\in C_3$。
+引理104.6的全局原 Choi 当且仅当分别给两条映射在全部原旁观系统上的正性，
+包括任意纠缠输入。这里没有先假定通常 qutrit–寄存器 CP 许可，
+也没有仅从其中一个方向正而推断另一个方向正。
+
+$\operatorname{Tr}\mathcal D_a(X)=\operatorname{Tr}X$。
+因此 $u_1A_a^0$ 恰为两种子腿上的码接受效应，
+$u_2B_a^0$ 恰为实际 $s$ 块的接受效应。
+前者由104.11的全 proper 延拓、后者由104.7的中心预算给
+$0\le u_1A_a^0\le u_2$、$0\le u_2B_a^0\le u_1$。
+把各正差与任意旁观单位相乘，原最大界将不增质量提升到所有原纠缠旁观者。
+这给完整输入预算，而不是只比较 Choi 元素的总迹。
+这些断言是数学映射及其预算，不增加物理事件菜单或饱和选择。
+
+任取 $(\mathbb C^3)^{\otimes n}$ 上的通常 PSD 矩阵。
+用 $c^{\otimes n}$ 把它放进实际 $2n$ 条种子角寄存器的码子空间，
+104.11的整个寄存器锥已为 PSD，所以该嵌入是原正。
+逐个作用 $n$ 条 $A_a^0$，每次把全部其余腿作为原旁观者；
+用原置换重排，即得到第一包含。
+反向从实际 $C_{s^n}$ 的任意元素出发，逐个作用 $B_a^0$，
+得到原 $2n$ 条种子角寄存器中的正元素。
+由104.11它必为通常 PSD，坐标恰为
+$c^{\otimes n}\mathcal D_a^{\otimes n}(x)(c^*)^{\otimes n}$，
+等距压回给(105.19)第二包含。
+两参数都非零，$\mathcal D_a$ 在标量方向为恒等、在无迹方向乘以 $a$，
+所以可逆；式中右侧仍是集合的逆像，并未授予逆映射原正性。
+所有 $n$ 的包含是未知原锥必须满足的关系，不定义这些锥，也不构造负例层级。
+
+直接复合给 $\mathcal D_b\mathcal D_a=\mathcal D_{ab}$，因而
+
+$$
+\mathcal D_r\mathcal D_p=\mathcal D_p\mathcal D_r=\mathcal D_{-1/8},
+\qquad J(\mathcal D_{-1/8})=\frac{3I-R}{8}.
+\tag{105.22}
+$$
+
+这正位于通常 qutrit CP 的边界：在 $\eta$ 方向本征值为零，正交方向为 $3/8$。
+因此两条原接口的这一直接复合与已知的一体／寄存器 CP 操作相容，
+并不把 $t$ 的端点提高到一。
+若 $t<1$，则 $0<p<1$。对任意码内单位向量 $v$，
+
+$$
+\mathcal D_p^{-1}(|v\rangle\langle v|)
+ =p^{-1}|v\rangle\langle v|+(1-p^{-1})I_3/3
+\tag{105.23}
+$$
+
+在两个正交方向上的本征值为 $(1-p^{-1})/3<0$。
+故把它作为码内寄存器逆操作时，它甚至不保持通常秩一 PSD；
+正向原接口不授权用这个逆取消噪声。
+两参数的数值范围与(105.22)来自(105.8)、(105.18)的直接代入。
+这里保留的是实际原 Choi 所给的双向接口及全有限夹逼，
+通常矩形 Choi/Kraus 表示的来源仍沿命题102.13所引 Watrous 定理2.22、2.26复用。∎
+
+### 105.5 局部压缩、集体二维支撑与不变截面
+
+**命题 105.7（逐输出压缩检验的准确范围）。** 对每个
+$1/3<\lambda\le1/2$，通常约化映射
+$\mathcal L_\lambda(X)=\operatorname{Tr}(X)I_3-\lambda X$
+不是通常 CP，却是通常完全余正，其所有张量幂保持通常 PSD。
+对任意等距 $E:\mathbb C^2\to\mathbb C^3$，$W_\lambda$ 压缩实际输出到此二维平面后为 PSD；
+逐个压缩每条输出后的任意有限张量积，接续寄存器 CP 映射及 PSD 寄存器效应，读数仍非负。
+这个检验族不包含所有“参考｜多条实际 qutrit”全局 Schmidt 秩二向量的检验。
+
+**证明。** $J(\mathcal L_\lambda)=W_\lambda$，它在 $\eta$ 方向的本征值
+$1-3\lambda<0$，所以不是通常 CP。仅作普通矩阵计算，在一个因子上部分转置得
+
+$$
+W_\lambda^{\Gamma_2}=I-\lambda S,
+\tag{105.24}
+$$
+
+$S$ 是交换算子，本征值为 $+1,-1$；当 $0\le\lambda\le1$ 时右侧为 PSD。
+因此 $\mathcal L_\lambda=\Psi_\lambda\circ T$，其中 $\Psi_\lambda$ 通常 CP，
+$T$ 是普通矩阵转置。
+每个张量幂为 $\Psi_\lambda^{\otimes n}\circ T_{\rm all}$：
+先作整个输入的同时转置，再作 CP 张量幂，两步都保持通常 PSD，故得普通张量稳定正性。
+这复用 Terhal–Horodecki，
+[quant-ph/9911117v4](https://arxiv.org/abs/quant-ph/9911117v4)，引理2的约化族，
+以及 Müller-Hermes–Reeb–Wolf，
+[*Positivity of Linear Maps under Tensor Powers*, arXiv:1502.05630v2](https://arxiv.org/abs/1502.05630v2)，
+Example I.1 中完全正／完全余正的平凡张量稳定类。
+(105.24)没有宣称部分转置是一个合法原操作，
+也没有把普通张量幂正性等同于(102.11)对全部原旁观者的正性。
+
+在较小的压缩空间 $\mathbb C^3\otimes\mathbb C^2$ 中，写
+$\eta_E=(I_3\otimes E^*)\eta$，则
+
+$$
+(I_3\otimes E^*)W_\lambda(I_3\otimes E)
+ =I_3\otimes I_2-\lambda|\eta_E\rangle\langle\eta_E|,
+\qquad \|\eta_E\|^2=2.
+\tag{105.25}
+$$
+
+所以它当且仅当 $\lambda\le1/2$ 时为 PSD。
+若重新嵌回原输出空间，其向量为 $(I_3\otimes EE^*)\eta$，
+不可把不同空间中的 $\eta_E$ 直接当作此嵌入向量。
+任意单站秩至多二的 Kraus 算子都通过这样一个二维平面压缩分解；
+对秩一或零算子可补成二维平面。
+对每个有限次数，将(105.25)逐站张量后仍为 PSD。
+随后通常寄存器 CP 处理保持 PSD，PSD 寄存器效应给非负迹配对。
+相应寄存器处理的原正性可由104.11取得；
+这只证明先逐站压缩的这个检验族不排除上述 $\lambda$。
+
+为区分全局二维支撑，在两个实际 qutrit 上取
+
+$$
+b_0=\frac{|00\rangle+|11\rangle+|22\rangle}{\sqrt3},\qquad
+b_1=\frac{|01\rangle+|12\rangle+|20\rangle}{\sqrt3}.
+\tag{105.26}
+$$
+
+两向量正交、范数一，各自每个局部约化矩阵均为 $I_3/3$。
+故它们的二维联合支撑在每个实际站上都有完整三维局部支撑，
+不可能包含在任意 $E_1(\mathbb C^2)\otimes E_2(\mathbb C^2)$ 中。
+若 $a_0,a_1$ 是正交参考向量，则
+
+$$
+\psi=\frac{a_0\otimes b_0+a_1\otimes b_1}{\sqrt2}
+\tag{105.27}
+$$
+
+在“参考｜两个实际 qutrit”切口上 Schmidt 秩恰为二，
+却不能通过对每个实际输出先固定二维支撑来涵盖。
+通常集体 Kraus 算子
+$H=|0\rangle\langle b_0|+|1\rangle\langle b_1|$
+可读出此联合支撑，但其从两条实际 qutrit 到一条种子角腿的真正原零扩张，
+仍须证明其混合原 Choi 元素属于原 $C_3$。
+通常 CP 性和已知两实际输入腿的 PSD 性没有支付这一全原旁观条件。
+命题105.3所给秩二族的实际输出只有一条腿，不提供这个集体许可。
+
+上述区分不排除其他已合法网络、辅助实际系统的复用或其他原分块约束产生更强结论。
+Müller-Hermes–Reeb–Wolf 附录A给通常各向同性／Werner 平均，
+引理9对某些 block-positive 矩阵施加指定符号条件后才得到正平均；
+该引理不把任意原混合锥或这里的 $W_\lambda$ 自动变成 Werner 态模型。
+这里的约化映射属于该论文明确的平凡完全余正类，
+故不能用关于非平凡张量稳定正映射的结论代替剩余融合桥。
+这些计算没有建立 $\mathsf{Fusion}_3$ 与 Werner 不可蒸馏性、NPPT 问题或全局秩二检验的等价。∎
+
+**命题 105.8（不变二维截面的连续端点族）。** 对每个数值
+$t\in[2/3,1]$，取 $\ell=(t-1)/(9t-1)$，则
+
+$$
+\mathcal K_t=\operatorname{cone}\{\tau_\ell,\tau_t\}
+ \ \subset\operatorname{span}_{\mathbb R}\{I,P\}
+\tag{105.28}
+$$
+
+在该二维实迹内积空间中闭、尖、生成、迹严格正且自对偶，
+并包含所有归一 Schmidt 秩至多二 PSD dyad 的各向同性平均。
+这些不变截面条件因而允许连续的数值 $t$，不单独强制 $t=1$。
+
+**证明。** 两生成元的迹均为一，且
+
+$$
+\operatorname{Tr}(\tau_f\tau_g)
+ =fg+\frac{(1-f)(1-g)}8,
+\qquad \operatorname{Tr}(\tau_\ell\tau_t)=0.
+\tag{105.29}
+$$
+
+两生成元的迹内积范数平方 $\operatorname{Tr}(\tau_\ell^2),\operatorname{Tr}(\tau_t^2)$
+严格正，且 $\ell<t$，故它们是二维空间中两条正交的非零射线。
+它们生成的正象限与其迹对偶相等；任意非零非负线性组合的迹为正。
+这也给闭性、尖性和生成性。
+对归一 Schmidt 秩至多二 PSD dyad，普通 $P$ 重叠在 $[0,2/3]$ 中，
+上界是命题105.3所引 Terhal–Horodecki 引理1的情形 $k=2,N=3$，下界为 PSD 读数。
+$\ell\le0$、$t\ge2/3$，故其平均 $\tau_F$ 都在 $\mathcal K_t$ 中。
+
+这只是固定空间内的二维例族，不是完整 $D_s$、实际混合角反例或全有限原层级。
+不变空间外的一体滤波、所有原分块和整个对偶的相容性仍须分别满足。
+它也不提供一个预设 proper PSD 三份局部锥的全有限扩张。
+本章的端点、proper 预算与(105.19)是标准分离、平均、Choi 和迹计算在实际原模型中的推导应用，
+不把这些成熟结果另认作新的分类或表示定理。
+
+在假设105.1的原条件下，剩余融合命题准确等价于证明实际参数 $t=1$，
+即排除所有 $\lambda>1/3$ 的实际 $W_\lambda\in D_s^*$；
+另一方向须构造并核对一个具有 $t<1$ 的完整原全有限层级，
+保留原 $S_2$、三项供应、种子、全部原纯态与全对偶，二维截面本身不构成此构造。
+若一条有限原网络能从实际 $\tau_t$、$W_{1/(3t)}$、已合法寄存器操作、
+一体 qutrit 映射、杯帽与原分块，在每个 $t<1$ 时产生实际 $\tau_f$、$f>t$，
+或产生已标准种子寄存器中的非 PSD 正元素，就分别与最大值定义或104.11矛盾，迫使 $t=1$。
+其中每条集体实际 qutrit–寄存器操作都须先支付自己的原 Choi 成员关系；
+(105.22)、(105.23)及逐输出压缩族尚未给出这样的网络。
+
+全部结论只涉及原有限锥、数学映射与所写预算。
+物理事件饱和、实际来源及其仪器、时间作用、物理钟校准和数值 $\hbar$，
+仍按命题104.15保留各自条件，不从上述平均、同一矩阵表示或保迹关系取得。∎
+
+## 追加锚（本行以下为增补区）
