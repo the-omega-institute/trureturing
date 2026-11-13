@@ -166,7 +166,7 @@ private theorem IsOdd.one_sub_X_sq_mul {P : ℂ[X]} (hP : IsOdd P) : IsOdd ((1 -
   rw [h]
   exact hP.sub hP.X_mul.X_mul
 
-private theorem hasParity_zero (n : ℕ) : HasParity (0 : ℂ[X]) n :=
+theorem hasParity_zero (n : ℕ) : HasParity (0 : ℂ[X]) n :=
   ⟨fun _ => isEven_zero, fun _ => isOdd_zero⟩
 
 private theorem hasParity_C (a : ℂ) : HasParity (C a) 0 :=
@@ -175,19 +175,19 @@ private theorem hasParity_C (a : ℂ) : HasParity (C a) 0 :=
 private theorem hasParity_X : HasParity (X : ℂ[X]) 1 :=
   isOdd_X.hasParity odd_one
 
-private theorem HasParity.add {P Q : ℂ[X]} {n : ℕ} (hP : HasParity P n) (hQ : HasParity Q n) :
+theorem HasParity.add {P Q : ℂ[X]} {n : ℕ} (hP : HasParity P n) (hQ : HasParity Q n) :
     HasParity (P + Q) n :=
   ⟨fun hn => (hP.1 hn).add (hQ.1 hn), fun hn => (hP.2 hn).add (hQ.2 hn)⟩
 
-private theorem HasParity.sub {P Q : ℂ[X]} {n : ℕ} (hP : HasParity P n) (hQ : HasParity Q n) :
+theorem HasParity.sub {P Q : ℂ[X]} {n : ℕ} (hP : HasParity P n) (hQ : HasParity Q n) :
     HasParity (P - Q) n :=
   ⟨fun hn => (hP.1 hn).sub (hQ.1 hn), fun hn => (hP.2 hn).sub (hQ.2 hn)⟩
 
-private theorem HasParity.C_mul {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) (a : ℂ) :
+theorem HasParity.C_mul {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) (a : ℂ) :
     HasParity (C a * P) n :=
   ⟨fun hn => (hP.1 hn).C_mul a, fun hn => (hP.2 hn).C_mul a⟩
 
-private theorem HasParity.X_mul {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) : HasParity (X * P) (n + 1) :=
+theorem HasParity.X_mul {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) : HasParity (X * P) (n + 1) :=
   ⟨fun hn => (hP.2 (Nat.not_even_iff_odd.mp (Nat.even_add_one.mp hn))).X_mul,
     fun hn => (hP.1 (Nat.not_odd_iff_even.mp (Nat.odd_add_one.mp hn))).X_mul⟩
 
@@ -265,9 +265,9 @@ end Poly
 
 open D5.S3.ContinuousObservables.IntervalSOSCompletion.Poly Complex Topology Filter
 
-private noncomputable def conjP (P : ℂ[X]) : ℂ[X] := P.map (starRingEnd ℂ)
+noncomputable def conjP (P : ℂ[X]) : ℂ[X] := P.map (starRingEnd ℂ)
 
-private theorem eval_conjP (P : ℂ[X]) (z : ℂ) :
+theorem eval_conjP (P : ℂ[X]) (z : ℂ) :
     (conjP P).eval z = (starRingEnd ℂ) (P.eval ((starRingEnd ℂ) z)) := by
   rw [conjP, Polynomial.eval_map]
   conv_lhs => rw [← Complex.conj_conj z]
@@ -275,7 +275,7 @@ private theorem eval_conjP (P : ℂ[X]) (z : ℂ) :
 
 namespace Poly
 
-private theorem HasParity.one_sub_X_sq_mul {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) :
+theorem HasParity.one_sub_X_sq_mul {P : ℂ[X]} {n : ℕ} (hP : HasParity P n) :
     HasParity ((1 - X ^ 2) * P) n :=
   ⟨fun hn => (hP.1 hn).one_sub_X_sq_mul, fun hn => (hP.2 hn).one_sub_X_sq_mul⟩
 
@@ -284,7 +284,7 @@ end Poly
 open D5.S3.ContinuousObservables.IntervalSOSCompletion.Poly Complex Topology Filter
 
 @[simp]
-private theorem coeff_conjP (P : ℂ[X]) (m : ℕ) : (conjP P).coeff m = (starRingEnd ℂ) (P.coeff m) :=
+theorem coeff_conjP (P : ℂ[X]) (m : ℕ) : (conjP P).coeff m = (starRingEnd ℂ) (P.coeff m) :=
   Polynomial.coeff_map _ _
 
 namespace Poly
@@ -358,12 +358,12 @@ end Poly
 
 open D5.S3.ContinuousObservables.IntervalSOSCompletion.Poly Complex Topology Filter
 
-private theorem conjP_map_algebraMap (P : ℝ[X]) :
+theorem conjP_map_algebraMap (P : ℝ[X]) :
     conjP (P.map (algebraMap ℝ ℂ)) = P.map (algebraMap ℝ ℂ) := by
   ext k
   rw [coeff_conjP, coeff_map, Complex.coe_algebraMap, Complex.conj_ofReal]
 
-private theorem eval_map_algebraMap_ofReal (P : ℝ[X]) (x : ℝ) :
+theorem eval_map_algebraMap_ofReal (P : ℝ[X]) (x : ℝ) :
     (P.map (algebraMap ℝ ℂ)).eval (x : ℂ) = ((P.eval x : ℝ) : ℂ) := by
   change (P.map (algebraMap ℝ ℂ)).eval (algebraMap ℝ ℂ x) = algebraMap ℝ ℂ (P.eval x)
   rw [eval_map, eval₂_at_apply]
