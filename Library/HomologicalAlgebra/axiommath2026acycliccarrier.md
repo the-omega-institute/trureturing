@@ -15,7 +15,7 @@ triage: anchor
 
 The classical ancestor is James R. Munkres, *Elements of Algebraic
 Topology*, §13, Theorem 13.4, the acyclic carrier theorem for augmented
-simplicial chain complexes. This identifies the classical construction;
+free abelian chain complexes. This identifies the classical construction;
 it is not an attestation that Munkres states the exact arbitrary-ring,
 ordinary-module-basis telescope used here.
 
@@ -23,8 +23,9 @@ ordinary-module-basis telescope used here.
 
 The source is `AxiomMath/TernaryPoly` at
 `28679d7cad438a91a732422d4ab1b184ae17e532`, specifically
-`BoundaryComparison/FacePairingFull/CapCompat/Carriers.lean` and
-`BoundaryComparison/FacePairingFull/CapCompat/Cells.lean`.
+`TernaryPeriodPolynomials/BoundaryComparison/FacePairingFull/CapCompat/Carriers.lean`
+and
+`TernaryPeriodPolynomials/BoundaryComparison/FacePairingFull/CapCompat/Cells.lean`.
 Its `CarrierData.exists_carried_homotopy` supplies a rational equivariant
 component induction. The receiving
 `D5/S3/HomologicalAlgebra/AcyclicCarrier.lean` retains that mechanism,
@@ -47,9 +48,10 @@ a target basis, global acyclicity nor a chosen homotopy or contraction.
 This is an interface generalization of known mathematics, with no
 originality or external open-problem resolution claim.
 
-The source pins Lean `v4.35.0-rc3` and Mathlib revision beginning `c55e`;
+The source pins Lean `v4.35.0-rc3` and Mathlib revision
+`c55e6e786f49471c72fbddbec5415808896aec1e`;
 the receiving repository pins Lean `v4.35.0` and Mathlib revision
-beginning `56a`. This is a source port, not a claim of binary or package
+`56a005855ea17e0b0958f73ec801ae140b0a1679`. This is a source port, not a claim of binary or package
 compatibility across these pins. Replace the port by direct library use
 only when the receiving repository's current pinned Mathlib supplies an
 equivalent full theorem including all basis-local carrier bounds.

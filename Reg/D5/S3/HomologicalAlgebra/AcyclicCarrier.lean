@@ -3,6 +3,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.HomologicalAlgebra.AcyclicCarrier
 
+/-! Dependent-family realization of the primitive-choice sequence law. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.S3.HomologicalAlgebra.AcyclicCarrier
 noncomputable section
@@ -76,6 +78,7 @@ noncomputable def sequence_contract : LeanInformationAudit.Contract.Registration
   arena := .source ⟨sequenceArena.{s}⟩
   objectArena := .source ⟨sequenceArena.{s}⟩
   catalog := Lean.Name.anonymous
+  options := #[]
   localNames := false
   realization := .source sequenceArena.{s} ⟨sequenceRegistration.{s}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
@@ -89,9 +92,16 @@ noncomputable def sequence_contract : LeanInformationAudit.Contract.Registration
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.HomologicalAlgebra.AcyclicCarrier
+    definition := none
     coordinates := #[0,1,2]
-    readouts := #[{path := #["body","body","body","body","body","arg","body"], stateBinder := 5}] }
+    readouts := #[{
+      path := #["body","body","body","body","body","arg","body"]
+      stateBinder := 5
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
 }
+end
 end Reg.D5.S3.HomologicalAlgebra.AcyclicCarrier
