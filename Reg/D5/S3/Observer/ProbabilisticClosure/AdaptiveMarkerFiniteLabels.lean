@@ -135,4 +135,92 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[]
 
+
+@[reducible] def originalArena : Arena where
+  signature := signature
+  Law R := ∀ {Seed : Type u} [MeasurableSpace Seed]
+    (p : Policy Seed) (seed : Seed) (w : Word)
+    (ht : terminalFirstTrue w) (hp : policyConformity p seed w) (z : Labels w)
+    (qL qR : unitInterval)
+    (hL : 0 < (qL : ℝ) ∧ (qL : ℝ) < 1)
+    (hR : 0 < (qR : ℝ) ∧ (qR : ℝ) < 1),
+    (∀ side : Side,
+      0 < Original.First.Q (if side then qR else qL) ∧
+      0 < 1 - Original.First.Q (if side then qR else qL)) ∧
+    (0 < Original.noiseLaw {v : Original.Noise |
+      Original.First.acquiredRecord p seed
+        (Original.originalSource qL qR (R.readout () w z).1 v) w.length = (seed, w)}) ∧
+    (∃ v : Original.Noise,
+      Original.First.acquiredRecord p seed
+        (Original.originalSource qL qR (R.readout () w z).1 v) w.length = (seed, w))
+
+private theorem original_rejected_law : ¬ originalArena.{u}.Law rejected := by
+  intro law
+  let p : Policy (ULift.{u} Unit) :=
+    ⟨fun _ _ _ => false, fun _ _ => measurable_const⟩
+  have ht : terminalFirstTrue [(false, true)] := by
+    constructor
+    · decide
+    · intro k
+      fin_cases k
+      rfl
+  have hp : policyConformity p ⟨()⟩ [(false, true)] := by
+    intro k
+    fin_cases k
+    rfl
+  let q : unitInterval := ⟨1/2, by constructor <;> norm_num⟩
+  have hq : 0 < (q : ℝ) ∧ (q : ℝ) < 1 := by norm_num [q]
+  have h := (law p ⟨()⟩ [(false,true)] ht hp singletonLabels q q hq hq).2.1
+  have he : {v : Original.Noise | Original.First.acquiredRecord p ⟨()⟩
+      (Original.originalSource q q (rejected.readout () [(false,true)] singletonLabels).1 v)
+      ([(false,true)] : Word).length = (⟨()⟩, [(false,true)])} = ∅ := by
+    ext v
+    simp [Original.First.acquiredRecord, Original.originalSource, Original.Z,
+      Original.step, actualRun, markerResponse, endpoint, arm, p,
+      rejected, realize]
+  rw [he, MeasureTheory.measure_empty] at h
+  exact (lt_irrefl 0) h
+
+def originalFamily : Registration originalArena.{u}
+    (type_of% (@finite_label_original_realization.{u})) where
+  actual := realize signature (fun _ _ z => completion z) Empty.elim
+  bridge := Iff.rfl
+  variation := ⟨@finite_label_original_realization.{u}, rejected, original_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, original_rejected_law⟩
+      intro j hj
+      exact (hj (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def originalAudit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+    (@finite_label_original_realization.{u}) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels.originalUnit
+  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels.originalFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨originalArena.{u}⟩
+  objectArena := .source ⟨originalArena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source originalArena.{u} ⟨originalFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ z => completion z) Empty.elim)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels
+    definition := none
+    coordinates := #[4]
+    readouts := #[] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels

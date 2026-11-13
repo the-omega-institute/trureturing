@@ -191,6 +191,9 @@ Source: https://github.com/TauCetiProject/TauCeti/blob/da527980caecf7e72838e069c
 Modified for pinned Lean 4.35.0 / Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679:
 independent uniform-noise simulation and its original-source first-record law.
 The consumed simulation and first-record proofs supply finite-label realizability.
+The pinned upstream Git tree contains no NOTICE file.
+Retirement: when the Mathlib revision adopted by this repository supplies an
+equivalent simulation theorem, replace this port by its direct application.
 The following is the complete upstream Apache-2.0 license.
                                  Apache License
                            Version 2.0, January 2004
@@ -995,7 +998,9 @@ theorem finite_label_original_realization
     have hone : unitInterval.toNNReal q < (1 : ℝ≥0) := by exact_mod_cast hq.2
     constructor
     · exact ENNReal.coe_pos.mpr hzero
-    · exact tsub_pos_iff_lt.mpr (by exact_mod_cast hone)
+    · apply tsub_pos_iff_lt.mpr
+      change (unitInterval.toNNReal q : ℝ≥0∞) < 1
+      exact_mod_cast hone
   have factors (side : Side) :
       0 < Original.First.Q (if side then qR else qL) ∧
       0 < 1 - Original.First.Q (if side then qR else qL) := by
@@ -1004,6 +1009,7 @@ theorem finite_label_original_realization
     · exact factor qR hR
   have hr := finite_label_realization p u w ht hp z
   obtain ⟨n, hlen⟩ := Nat.exists_eq_succ_of_ne_zero (by have := ht.1; omega : w.length ≠ 0)
+  change w.length = n + 1 at hlen
   have hstop : stoppingTime p u (completion z) = ((n + 1 : ℕ) : WithTop ℕ) := by
     simpa [hlen] using hr.2.2.2.2.2
   have hrecord : Original.First.acquiredRecord p u (completion z) (n + 1) = (u, w) := by
@@ -1031,9 +1037,10 @@ theorem finite_label_original_realization
       Original.First.Q qL ^ Original.First.e (completion z).1 (sideCount before false) *
       Original.First.Q qR ^ Original.First.e (completion z).1 (sideCount before true) *
       (1 - Original.First.Q (if side then qR else qL)) else 0
-    rw [if_pos hbranch]
-    exact mul_pos (mul_pos (pow_pos (factors false).1 _) (pow_pos (factors true).1 _))
-      (factors side).2
+    rw [ite_eq_left hbranch]
+    exact ENNReal.mul_pos_iff.mpr ⟨ENNReal.mul_pos_iff.mpr
+      ⟨ENNReal.pow_pos (factors false).1.ne' _,
+       ENNReal.pow_pos (factors true).1.ne' _⟩, (factors side).2⟩
   rw [hdecoder, ← hlen] at hmass
   have hpos : 0 < Original.noiseLaw {v : Original.Noise |
       Original.First.acquiredRecord p u

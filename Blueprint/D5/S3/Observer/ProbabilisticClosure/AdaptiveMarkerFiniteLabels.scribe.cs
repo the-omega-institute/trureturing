@@ -55,6 +55,35 @@ internal sealed class AdaptiveMarkerFiniteLabelsDocument : IScribeDocumentDefini
                                 Call("policyConformity", policy, seed, word), Rightarrow,
                                 All(labels, Call("Labels", word), conclusion))))))));
 
+        Formula qL = F.Id("qL");
+        Formula qR = F.Id("qR");
+        Formula noise = F.Id("v");
+        Formula interval = Seq(OpenBracket, D(0), Comma, D(1), CloseBracket);
+        Formula record = Call("acquiredRecord", policy, seed,
+            Call("originalSource", qL, qR, Call("fst", source), noise), length);
+        Formula recordEquality = Seq(record, Eq, Open, seed, Comma, word, Close);
+        Formula recordEvent = Seq(OpenBrace, noise, Colon, F.Id("Noise"), Mid,
+            recordEquality, CloseBrace);
+        Formula positiveFactors = All(side, F.Id("Bool"),
+            Seq(Open, D(0), Lt, Call("Q", Call("if", side, qR, qL)), Close,
+                Land, Open, D(0), Lt, D(1), Minus,
+                Call("Q", Call("if", side, qR, qL)), Close));
+        Formula originalConclusion = Seq(Begin, Grp(F.Id("gathered")),
+            Open, positiveFactors, Close, Land, RowBreak, Grp(),
+            Open, D(0), Lt, Call("noiseLaw", recordEvent), Close,
+            Land, RowBreak, Grp(),
+            Open, Exists, Sp, noise, Colon, F.Id("Noise"), Comma, Sp,
+                recordEquality, Close, End, Grp(F.Id("gathered")));
+        Formula originalStatement = Disp(All(seedType, F.Id("Type"),
+            Seq(OpenBracket, Call("MeasurableSpace", seedType), CloseBracket, Rightarrow,
+                All(policy, Call("Policy", seedType), All(seed, seedType,
+                All(word, F.Id("Word"), Seq(Call("terminalFirstTrue", word), Rightarrow,
+                Call("policyConformity", policy, seed, word), Rightarrow,
+                All(labels, Call("Labels", word), All(qL, interval, All(qR, interval,
+                Seq(Open, D(0), Lt, qL, Lt, D(1), Close, Rightarrow,
+                    Open, D(0), Lt, qR, Lt, D(1), Close, Rightarrow,
+                    originalConclusion)))))))))));
+
         return DocumentDefinition.Create(ScribeNode.Create(
             "Finite compatible two-arm labels realize a chronological stopped archive with its original seed.",
             H("Finite labels and causal acquired-prefix realization"),
@@ -113,6 +142,67 @@ internal sealed class AdaptiveMarkerFiniteLabelsDocument : IScribeDocumentDefini
                             + "an inverse normal form, opportunity enumeration, positive Markov cylinder mass, "
                             + "likelihood or posterior formulas, almost-sure termination, or measurability "
                             + "of the archive maps. Those require separate results."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("finite-label-original-realization"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_original_realization"),
+                    H("Strictly positive original-noise mass and a literal realization"),
+                    StatementSource.FromAuthor(originalStatement),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(
+                        Paragraph(Text(
+                            "For every original seed space, policy p, fixed original seed u, chronological "
+                            + "word w, terminalFirstTrue and policyConformity witnesses, every Labels(w) "
+                            + "witness z, and every fixed pair qL,qR in the open square, all three conjuncts "
+                            + "hold with that same pair and the same common label-root fst(completion(z)). "
+                            + "The parameters may be distinct or equal. Q(q) is the extended nonnegative "
+                            + "real image of q. Both Q(q) and 1-Q(q) are strictly positive on the open interval; "
+                            + "the standard finite-product and natural-power positivity lemmas therefore "
+                            + "give positivity of every finite product of these success and failure factors.")),
+                        Paragraph(Text(
+                            "Noise is the original carrier (Bool times positive naturals) to the closed "
+                            + "unit interval. noiseLaw is its product of uniform interval volumes. "
+                            + "For each arm, Z starts at the common root. At a true current bit its next bit "
+                            + "is false; at a false current bit it is true exactly when that arm's next "
+                            + "noise coordinate is strictly below its fixed parameter. originalSource "
+                            + "retains the common root and these two outward Z tails. Noise coordinates "
+                            + "at zero and one remain in the carrier. acquiredRecord is the original seed "
+                            + "paired with the chronological reversal of the actual acquired action/reply zip.")),
+                        Paragraph(Text(
+                            "The causal finite-label theorem first derives the stopping time and actual "
+                            + "record of completion(z). The source first-record equivalence then derives "
+                            + "D(p,(u,T))=(u,w); this equation and the first-hit condition are conclusions "
+                            + "of the proof, not hypotheses. Forbidden 11 and absence of an earlier 00 "
+                            + "force alternation up to the last queried endpoint. The final 00 forces "
+                            + "that endpoint to be false. The exact original-source first-record mass is "
+                            + "therefore the product of two positive Q powers and the positive final "
+                            + "1-Q factor. A positive measure set is nonempty, yielding an actual original "
+                            + "noise realization for this same fixed seed, pair, root and word.")),
+                        Paragraph(Text(
+                            "The original-noise simulation proofs are a source-preserving adaptation of "
+                            + "TauCeti/Probability/MarkovChain/Simulation.lean and "
+                            + "TauCeti/Probability/Kernel/Randomization.lean at pinned revision "
+                            + "da527980caecf7e72838e069c01f4a7e7633eca3. Their attribution and complete "
+                            + "Apache-2.0 license are retained in the owning Lean source. The finite-label "
+                            + "causal completion and its composition with the original record law are "
+                            + "repository-derived. The imported Markov prefix-mass result remains its "
+                            + "existing source of truth.")),
+                        Paragraph(Text(
+                            "For a legal finite canonical replay, terminalFirstTrue is precisely its "
+                            + "nonempty final-only marker convention; policyConformity restricts its "
+                            + "original-seed history-based choices. Each arm's freshly queried edges give "
+                            + "the chronological occurrence counts. Restricting its compatible path labels "
+                            + "through the two finite arm counts supplies Labels, including the common "
+                            + "root, forbidden 11 and local 00 response. No execution, first-hit, decoder "
+                            + "equality, terminal parity, positive singleton-seed mass, standard Borel seed, "
+                            + "parameter prior, new observed root or independent auxiliary noise is assumed.")),
+                        Paragraph(Text(
+                            "This establishes the positivity and original-source realizability sentence "
+                            + "for these finite inputs. It does not prove that every source produces a "
+                            + "finite replay, nor the sibling opportunity or totality clause, full CPI7.2, "
+                            + "inverse normal form, actual-rise counts, opportunity ranks, likelihood-density "
+                            + "identification or prior integration."))),
                     DescribeRole.Theorem))));
     }
 
