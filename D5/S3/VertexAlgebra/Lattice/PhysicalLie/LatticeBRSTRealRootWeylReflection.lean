@@ -6,7 +6,7 @@
    utility: none
    digest: Actual physical real-root Weyl automorphism and full charge-fiber equivalence. -/
 
-/-!
+/-
 SOURCE_ONLY_UNCOMPILED. All proof bodies below are authored candidates, not
 native elaboration or kernel evidence. The separately implemented exact
 localExpLieEquiv interface is a PENDING dependency, not an axiom in this file.

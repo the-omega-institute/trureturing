@@ -4,8 +4,7 @@
    mirror-E: none(waiver:source-only-positive-root-integrability)
    anchors: []
    utility: none
-   digest: Every positive-charge homogeneous physical-image adjoint is pointwise locally nilpotent.
--/
+   digest: Every positive-charge homogeneous physical-image adjoint is pointwise locally nilpotent. -/
 
 /-
 SOURCE_ONLY_UNCOMPILED.  This module keeps the original lattice, both inverse
@@ -32,6 +31,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
+set_option maxHeartbeats 2000000
 
 noncomputable section
 open scoped BigOperators TensorProduct
@@ -85,6 +85,7 @@ private theorem bilinear_zsmul_right (u v : Charge D) (n : ℤ) :
   rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro j _
+  simp only [Int.cast_id]
   ring
 
 private theorem bilinear_add_left (u v w : Charge D) :
@@ -198,7 +199,7 @@ private theorem fixed_physical_class_mem_fiber (p : Charge D)
 
 private theorem bracket_mem_fiber (alpha beta : Charge D)
     (x z : Phys) (hx : (x : C) ∈ Fib alpha) (hz : (z : C) ∈ Fib beta) :
-    (⁅x, z⁆ : C) ∈ Fib (alpha + beta) := by
+    ((⁅x, z⁆ : Phys) : C) ∈ Fib (alpha + beta) := by
   -- Fib is literally physicalImage ⊓ range inclusion, not a fixed-point premise.
   obtain ⟨ux, hux, hcx⟩ := physical_charge_representative D H h26 hHG hGH
     alpha (x : C) hx.1 hx.2
@@ -208,7 +209,7 @@ private theorem bracket_mem_fiber (alpha beta : Charge D)
     ⟨descentCurrent D ux uz, physicalStates_current D H hHG hGH ux uz⟩
   have hw : (w : State D) ∈ fixedMomentum D (alpha + beta) :=
     current_charge D alpha beta (ux : State D) (uz : State D) hux huz
-  have hclass : physicalClass D H h26 hHG hGH w = (⁅x, z⁆ : C) := by
+  have hclass : physicalClass D H h26 hHG hGH w = ((⁅x, z⁆ : Phys) : C) := by
     change physicalClass D H h26 hHG hGH w =
       cohomologyCurrent D H h26 hHG hGH (x : C) (z : C)
     rw [← hcx, ← hcz]
@@ -252,7 +253,7 @@ private theorem iterate_component_zero (alpha : Charge D) (hα : 0 < chargeEnerg
     (beta + (rootBound D alpha beta : ℤ) • alpha) hq0 hlevel
   rw [hbot] at hmem
   have hzero : (((fun v : Phys => ⁅x, v⁆)^[rootBound D alpha beta]) z : C) = 0 := by
-    exact (Submodule.mem_bot ℂ).mp hmem
+    exact (Submodule.mem_bot ℂ (M := C)).mp hmem
   apply Subtype.ext
   exact hzero
 
@@ -311,7 +312,8 @@ private theorem iterate_sum (x : Phys) (n : ℕ) (s : Finset (Charge D))
   induction s using Finset.induction_on with
   | empty =>
       simpa only [Finset.sum_empty] using
-        (Function.iterate_fixed (show ⁅x, (0 : Phys)⁆ = 0 from lie_zero x) n)
+        (Function.iterate_fixed
+          (show ⁅x, (0 : Phys)⁆ = 0 from lie_zero (M := Phys) x) n)
   | @insert p s hp ih =>
       simp only [Finset.sum_insert hp]
       rw [iterate_add D H h26 hHG hGH x n (g p) (∑ q ∈ s, g q), ih]
@@ -355,6 +357,7 @@ theorem positive_root_adjoint_locally_nilpotent
         (physicalComponent D H h26 hHG hGH ys p)
     _ = ((fun z : Phys => ⁅x, z⁆)^[N - rootBound D alpha p]) 0 := by rw [hk]
     _ = 0 := Function.iterate_fixed
-      (show ⁅x, (0 : Phys)⁆ = 0 from lie_zero x) (N - rootBound D alpha p)
+      (show ⁅x, (0 : Phys)⁆ = 0 from lie_zero (M := Phys) x)
+      (N - rootBound D alpha p)
 
 end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPositiveRootIntegrability

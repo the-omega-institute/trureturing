@@ -6,7 +6,7 @@
    utility: none
    digest: Exact original physical real-root Serre relations and their actual Mathlib quotient representation. -/
 
-/-!
+/-
 SOURCE_ONLY_UNCOMPILED. These are complete authored proof candidates, with no
 native elaboration, kernel, axiom-closure, C# or registration acceptance claimed.
 The full Monster/VOA/CFT/anomaly/fusion/string/AdS goal remains ACTIVE INCOMPLETE.

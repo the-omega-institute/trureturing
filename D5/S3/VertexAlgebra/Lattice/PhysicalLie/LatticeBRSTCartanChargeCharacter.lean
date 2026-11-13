@@ -38,6 +38,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
+set_option maxHeartbeats 2000000
 
 noncomputable section
 open scoped BigOperators
@@ -141,7 +142,7 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
     let component (p : Charge D) : Ph :=
       ⟨physicalClass D H h26 hHG hGH (xp p), ⟨xp p, rfl⟩⟩
     have component_range (p : Charge D) :
-        (component p : C) ∈ LinearMap.range (inclusion D H h26 hHG hGH p) := by
+        (component p).val ∈ LinearMap.range (inclusion D H h26 hHG hGH p) := by
       refine ⟨projection D H h26 hHG hGH p
         (physicalClass D H h26 hHG hGH x), ?_⟩
       rfl
@@ -155,22 +156,22 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
       rw [map_sum]
       exact sum_chargeProject D (x : State D)
     have component_sum :
-        (∑ p ∈ chargeSupport D (x : State D), (component p : C)) = (c : C) := by
+        (∑ p ∈ chargeSupport D (x : State D), (component p).val) = (c : C) := by
       change (∑ p ∈ chargeSupport D (x : State D),
         physicalClass D H h26 hHG hGH (xp p)) = (c : C)
       rw [← map_sum, representative_sum, hx]
     let P (p : Charge D) : C →ₗ[ℂ] C :=
       (inclusion D H h26 hHG hGH p).comp (projection D H h26 hHG hGH p)
-    have project_c (p : Charge D) : P p (c : C) = (component p : C) := by
+    have project_c (p : Charge D) : P p (c : C) = (component p).val := by
       rw [← hx]
       rfl
     have project_component (p q : Charge D) :
-        P p (component q : C) = if q = p then (component q : C) else 0 := by
+        P p (component q).val = if q = p then (component q).val else 0 := by
       exact chargeProjection_physicalClass D H h26 hHG hGH p q (xp q)
         (chargeProject_mem D q (x : State D))
     have component_eigen (v : Fin D.rank → ℂ) (q : Charge D) :
-        J (cartanClass D H h26 hHG hGH v) (component q : C) =
-          gamma D v q • (component q : C) := by
+        J (cartanClass D H h26 hHG hGH v) (component q).val =
+          gamma D v q • (component q).val := by
       exact congrArg (fun z : Ph => (z : C))
         (cartan_adjoint D H h26 hHG hGH v q (component q) (component_range q))
     -- This is a finite calculation with the original quotient maps, not an
@@ -178,15 +179,15 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
     have project_adjoint (p : Charge D)
         (hp : p ∈ chargeSupport D (x : State D)) (v : Fin D.rank → ℂ) :
         P p (J (cartanClass D H h26 hHG hGH v) (c : C)) =
-          gamma D v p • (component p : C) := by
+          gamma D v p • (component p).val := by
       calc
         _ = ∑ q ∈ chargeSupport D (x : State D),
-            gamma D v q • P p (component q : C) := by
+            gamma D v q • P p (component q).val := by
               rw [← component_sum, map_sum, map_sum]
               apply Finset.sum_congr rfl
               intro q _
               rw [component_eigen v q, map_smul]
-        _ = gamma D v p • (component p : C) := by
+        _ = gamma D v p • (component p).val := by
               rw [Finset.sum_eq_single p]
               · rw [project_component p p, if_pos rfl]
               · intro q _ hqp
@@ -195,14 +196,14 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
                 exact (hpnot hp).elim
     have component_charge (p : Charge D)
         (hp : p ∈ chargeSupport D (x : State D))
-        (hn : (component p : C) ≠ 0) : p = beta := by
+        (hn : (component p).val ≠ 0) : p = beta := by
       apply gamma_separates_charges D H hHG p beta
       intro v
       have heq := congrArg (fun z : Ph => P p (z : C)) (heigen v)
       change P p (J (cartanClass D H h26 hHG hGH v) (c : C)) =
         P p (gamma D v beta • (c : C)) at heq
       rw [project_adjoint p hp v, map_smul, project_c p] at heq
-      have hz : (gamma D v p - gamma D v beta) • (component p : C) = 0 := by
+      have hz : (gamma D v p - gamma D v beta) • (component p).val = 0 := by
         rw [sub_smul, heq, sub_self]
       exact sub_eq_zero.mp ((smul_eq_zero.mp hz).resolve_right hn)
     -- Every off-beta component is zero. The remaining finite sum belongs to
@@ -210,7 +211,7 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
     rw [← component_sum]
     apply (physicalChargeFiber D H h26 hHG hGH beta).sum_mem
     intro p hp
-    by_cases hz : (component p : C) = 0
+    by_cases hz : (component p).val = 0
     · rw [hz]
       exact (physicalChargeFiber D H h26 hHG hGH beta).zero_mem
     · have hpb := component_charge p hp hz

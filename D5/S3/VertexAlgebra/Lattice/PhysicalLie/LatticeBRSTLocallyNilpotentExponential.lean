@@ -6,7 +6,7 @@
    utility: none
    digest: pointwise locally nilpotent Lie exponentials on the entire carrier. -/
 
-/-!
+/-
 SOURCE_ONLY_UNCOMPILED. All proofs below are authored proofs, pending native
 elaboration, kernel and assumption checks. The ambient derivation need only be
 pointwise locally nilpotent. No finite-dimensionality or uniform exponent is used.
@@ -48,7 +48,7 @@ private abbrev complexRatModule (V : Type*) [AddCommGroup V] [Module ℂ V] : Mo
 
 attribute [local instance] complexRatModule
 
-variable {L : Type*} [AddCommGroup L] [LieRing L] [Module ℂ L] [LieAlgebra ℂ L]
+variable {L : Type*} [LieRing L] [LieAlgebra ℂ L]
 
 private def truncatedExp (A : Module.End ℂ L) (t : ℂ) (N : ℕ) : Module.End ℂ L :=
   ∑ n ∈ Finset.range N, ((n.factorial : ℂ)⁻¹ * t ^ n) • A ^ n
@@ -104,7 +104,9 @@ private theorem kernelExp_coe (A : Module.End ℂ L) (N : ℕ) (t : ℂ)
   apply Finset.sum_congr rfl
   intro n hn
   rw [LinearMap.smul_apply, map_rat_smul, smul_pow, LinearMap.smul_apply,
-    map_smul, kernelEnd_pow_coe, ← Rat.cast_smul_eq_qsmul ℂ, smul_smul]
+    map_smul]
+  change (n.factorial : ℚ)⁻¹ • (t ^ n • ((kernelEnd A N ^ n) u : L)) = _
+  rw [kernelEnd_pow_coe, ← Rat.cast_smul_eq_qsmul ℂ, smul_smul]
   norm_cast
 
 private def kernelInclusion (A : Module.End ℂ L) (N K : ℕ) (hNK : N ≤ K) :
@@ -291,14 +293,14 @@ private theorem sum_antidiagonal_rectangle (F : ℕ × ℕ → L) (N M : ℕ)
     have hs : q.1 + q.2 = s := Finset.mem_antidiagonal.mp (Finset.mem_sigma.mp hb).2
     cases hpq
     have hrs : r = s := hr.symm.trans hs
-    subst s
-    rfl
+    exact Sigma.ext hrs (HEq.refl p)
   · intro p hp hne
     have hi : p.1 < N := Finset.mem_range.mp (Finset.mem_product.mp hp).1
     have hj : p.2 < M := Finset.mem_range.mp (Finset.mem_product.mp hp).2
     refine ⟨⟨p.1 + p.2, p⟩, ?_, hne, rfl⟩
     exact Finset.mem_sigma.mpr
-      ⟨Finset.mem_range.mpr (by omega), Finset.mem_antidiagonal.mpr rfl⟩
+      ⟨Finset.mem_range.mpr (show p.1 + p.2 < N + M by omega),
+        Finset.mem_antidiagonal.mpr rfl⟩
   · intro rp hrp hne
     rfl
 
