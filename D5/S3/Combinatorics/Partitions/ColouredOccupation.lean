@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Partitions/ColouredOccupation
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/ColouredOccupation
    mirror-E: none(waiver:algebraic-inference)
    anchors: []
@@ -7,7 +7,7 @@
    digest: Ordinary positive-mode occupations are the existing coloured partitions. -/
 
 import D5.S3.Combinatorics.Partitions.ColouredEulerLedger
-import D5.S3.VertexAlgebra.PolynomialFockCharacter
+import D5.S3.Combinatorics.Partitions.PositiveEnergyPartition
 
 /-!
 Frequencies are k+1, including every positive integer. Forgetting colours
