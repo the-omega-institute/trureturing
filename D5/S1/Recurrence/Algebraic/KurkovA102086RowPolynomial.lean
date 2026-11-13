@@ -10,7 +10,11 @@ import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Tactic.NormNum
 
+/-! The complete polynomial-table and matrix-square identity of OEIS A102086. -/
+
 namespace D5.S1.Recurrence.Algebraic.KurkovA102086RowPolynomial
+
+noncomputable section
 
 open Polynomial
 open scoped BigOperators
@@ -25,8 +29,8 @@ def IsSourceTriangle (T : ℕ → ℕ → ℤ) : Prop :=
 def IsSourcePolynomialTable (P : ℕ → ℤ → Polynomial ℤ) : Prop :=
   (∀ n, P n (n : ℤ) = X ^ n) ∧
   (∀ n, P n 0 = 1) ∧
-  (∀ n k, k < 0 ∨ (n : ℤ) < k → P n k = 0) ∧
-  (∀ n k, 0 < k → k < (n : ℤ) →
+  (∀ (n : ℕ) (k : ℤ), k < 0 ∨ (n : ℤ) < k → P n k = 0) ∧
+  (∀ (n : ℕ) (k : ℤ), 0 < k → k < (n : ℤ) →
     P n k = P n (k - 1) + C (k + 1) * P (n - 1) k)
 
 /-- Both source tables exist, and the conjecture holds for every such pair, at every row. -/
@@ -49,17 +53,17 @@ private theorem naturalP_zero (a : ℕ) : naturalP a 0 = 1 := by
 private theorem naturalP_diag (a : ℕ) : naturalP a a = X ^ a := by
   by_cases ha : a = 0
   · subst a; simp [naturalP_zero]
-  · rw [naturalP, if_neg ha, if_pos rfl]
+  · rw [naturalP, ite_eq_right ha, ite_eq_left rfl]
 
 private theorem naturalP_above (a b : ℕ) (h : a < b) : naturalP a b = 0 := by
-  rw [naturalP, if_neg (by omega), if_neg (by omega), if_pos h]
+  rw [naturalP, ite_eq_right (by omega), ite_eq_right (by omega), ite_eq_left h]
 
 private theorem naturalP_step (a b : ℕ) (h0 : 0 < b) (h : b < a) :
     naturalP a b = naturalP a (b - 1) + C ((b : ℤ) + 1) * naturalP (a - 1) b := by
-  rw [naturalP, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
+  rw [naturalP, ite_eq_right (by omega), ite_eq_right (by omega), ite_eq_right (by omega)]
 
 /-- An independently constructed source table; no matrix coefficients enter its definition. -/
-def polynomialTable (a : ℕ) (b : ℤ) : Polynomial ℤ :=
+private def polynomialTable (a : ℕ) (b : ℤ) : Polynomial ℤ :=
   if b < 0 then 0 else naturalP a b.toNat
 
 private theorem polynomialTable_source : IsSourcePolynomialTable polynomialTable := by
@@ -71,13 +75,13 @@ private theorem polynomialTable_source : IsSourcePolynomialTable polynomialTable
     · simp [polynomialTable, hb]
     · by_cases hneg : b < 0
       · simp [polynomialTable, hneg]
-      · simp only [polynomialTable, if_neg hneg]
+      · simp only [polynomialTable, ite_eq_right hneg]
         exact naturalP_above a b.toNat (by omega)
   · intro a b h0 hba
     have hcast : (b.toNat : ℤ) = b := Int.toNat_of_nonneg (by omega)
     have hsub : (b - 1).toNat = b.toNat - 1 := by omega
-    simp only [polynomialTable, if_neg (show ¬ b < 0 by omega),
-      if_neg (show ¬ b - 1 < 0 by omega), hsub]
+    simp only [polynomialTable, ite_eq_right (show ¬ b < 0 by omega),
+      ite_eq_right (show ¬ b - 1 < 0 by omega), hsub]
     rw [naturalP_step a b.toNat (by omega) (by omega), hcast]
 
 private theorem polynomial_unique {P Q : ℕ → ℤ → Polynomial ℤ}
@@ -95,9 +99,9 @@ private theorem polynomial_unique {P Q : ℕ → ℤ → Polynomial ℤ}
       | succ b ihb =>
         intro hb
         by_cases hd : b + 1 = a + 1
-        · subst b; exact (hP.1 (a + 1)).trans (hQ.1 (a + 1)).symm
-        · rw [hP.2.2.2 (a + 1) (b + 1) (by omega) (by omega),
-            hQ.2.2.2 (a + 1) (b + 1) (by omega) (by omega)]
+        · rw [hd]; exact (hP.1 (a + 1)).trans (hQ.1 (a + 1)).symm
+        · rw [hP.2.2.2 (a + 1) ((b + 1 : ℕ) : ℤ) (by omega) (by omega),
+            hQ.2.2.2 (a + 1) ((b + 1 : ℕ) : ℤ) (by omega) (by omega)]
           simpa using congrArg₂ (fun p q : Polynomial ℤ => p + C ((b : ℤ) + 1 + 1) * q)
             (ihb (by omega)) (ih (b + 1) (by omega))
   funext a b
@@ -113,14 +117,14 @@ private theorem coeff_above {P : ℕ → ℤ → Polynomial ℤ}
   induction a generalizing b k with
   | zero =>
     have : b = 0 := by omega
-    subst b; rw [Nat.cast_zero, hP.2.1]; simp [show k ≠ 0 by omega]
+    subst b; rw [Nat.cast_zero, hP.2.1]; simp [show k ≠ 0 by omega, show 0 ≠ k by omega]
   | succ a ih =>
     induction b generalizing k with
-    | zero => rw [Nat.cast_zero, hP.2.1]; simp [show k ≠ 0 by omega]
+    | zero => rw [Nat.cast_zero, hP.2.1]; simp [show k ≠ 0 by omega, show 0 ≠ k by omega]
     | succ b ihb =>
       by_cases hd : b + 1 = a + 1
-      · subst b; rw [hP.1]; simp [show a + 1 ≠ k by omega]
-      · rw [hP.2.2.2 (a + 1) (b + 1) (by omega) (by omega)]
+      · rw [hd, hP.1]; simp [show k ≠ a + 1 by omega]
+      · rw [hP.2.2.2 (a + 1) ((b + 1 : ℕ) : ℤ) (by omega) (by omega)]
         have hsub : ((b + 1 : ℕ) : ℤ) - 1 = b := by omega
         simp only [hsub, Nat.add_sub_cancel, coeff_add, coeff_C_mul]
         rw [ihb k (by omega) (by omega), ih (b + 1) k (by omega) hk]
@@ -132,7 +136,8 @@ private noncomputable def shift (P : ℕ → ℤ → Polynomial ℤ) :
 
 private theorem shift_monomial (P : ℕ → ℤ → Polynomial ℤ) (j : ℕ) (c : ℤ) :
     shift P (C c * X ^ j) = C c * P (j + 1) (j : ℤ) := by
-  simp [shift, lsum_apply, C_mul_X_pow_eq_monomial, smul_eq_C_mul]
+  change (C c * X ^ j).sum (fun i d => d • P (i + 1) (i : ℤ)) = _
+  rw [C_mul_X_pow_eq_monomial, sum_monomial_index _ _ (by simp), smul_eq_C_mul]
 
 private theorem shift_table {P : ℕ → ℤ → Polynomial ℤ}
     (hP : IsSourcePolynomialTable P) (a b : ℕ) (hba : b ≤ a) :
@@ -142,7 +147,7 @@ private theorem shift_table {P : ℕ → ℤ → Polynomial ℤ}
     have : b = 0 := by omega
     subst b
     rw [Nat.cast_zero, hP.2.1, hP.2.1]
-    simpa using shift_monomial P 0 1
+    simpa [hP.2.1] using shift_monomial P 0 1
   | succ a ih =>
     induction b with
     | zero =>
@@ -150,11 +155,11 @@ private theorem shift_table {P : ℕ → ℤ → Polynomial ℤ}
       simpa [hP.2.1] using shift_monomial P 0 1
     | succ b ihb =>
       by_cases hd : b + 1 = a + 1
-      · subst b; rw [hP.1]
+      · rw [hd, hP.1]
         simpa using shift_monomial P (a + 1) 1
-      · rw [hP.2.2.2 (a + 1) (b + 1) (by omega) (by omega),
+      · rw [hP.2.2.2 (a + 1) ((b + 1 : ℕ) : ℤ) (by omega) (by omega),
           map_add, ← smul_eq_C_mul, map_smul, smul_eq_C_mul,
-          hP.2.2.2 (a + 1 + 1) (b + 1) (by omega) (by omega)]
+          hP.2.2.2 (a + 1 + 1) ((b + 1 : ℕ) : ℤ) (by omega) (by omega)]
         have hsub : ((b + 1 : ℕ) : ℤ) - 1 = b := by omega
         simp only [hsub, Nat.add_sub_cancel]
         rw [ihb (by omega), ih (b + 1) (by omega)]
@@ -164,7 +169,7 @@ private theorem row_expand {P : ℕ → ℤ → Polynomial ℤ}
     P (n + 1) (n : ℤ) = ∑ j ∈ Finset.range (n + 1),
       C ((P (n + 1) (n : ℤ)).coeff j) * X ^ j := by
   classical
-  rw [← sum_C_mul_X_pow_eq (P (n + 1) (n : ℤ))]
+  conv_lhs => rw [← sum_C_mul_X_pow_eq (P (n + 1) (n : ℤ))]
   apply sum_eq_of_subset _ (fun j => by simp)
   intro j hj
   simp only [mem_support_iff] at hj
@@ -181,14 +186,14 @@ private theorem row_step {P : ℕ → ℤ → Polynomial ℤ}
   have he := shift_table hP (n + 1) n (by omega)
   rw [row_expand hP n, map_sum] at he
   simp only [shift_monomial] at he
-  rw [hP.2.2.2 (n + 2) (n + 1) (by omega) (by omega)]
+  rw [hP.2.2.2 (n + 2) ((n + 1 : ℕ) : ℤ) (by omega) (by omega)]
   have hs : ((n + 1 : ℕ) : ℤ) - 1 = n := by omega
   simp only [hs, Nat.add_sub_cancel]
   rw [← he, hP.1]
   congr 2 <;> push_cast <;> ring
 
 /-- Coefficients of the independently defined polynomial rows. -/
-def coefficientTriangle (P : ℕ → ℤ → Polynomial ℤ) (n k : ℕ) : ℤ :=
+private def coefficientTriangle (P : ℕ → ℤ → Polynomial ℤ) (n k : ℕ) : ℤ :=
   (P (n + 1) (n : ℤ)).coeff k
 
 private theorem coefficientTriangle_source {P : ℕ → ℤ → Polynomial ℤ}
@@ -214,7 +219,7 @@ private theorem coefficientTriangle_source {P : ℕ → ℤ → Polynomial ℤ}
     obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
     simp only [coefficientTriangle, Nat.add_sub_cancel, row_step hP, coeff_add,
       finsetSum_coeff, coeff_C_mul]
-    rw [coeff_X_pow, if_neg (by omega), mul_zero, add_zero]
+    rw [coeff_X_pow, ite_eq_right (by omega), mul_zero, add_zero]
     rw [← Finset.sum_range_add_sum_Ico _ (show k ≤ m + 1 by omega)]
     have hz : ∑ j ∈ Finset.range k,
         (P (m + 1) (m : ℤ)).coeff j * (P (j + 1) (j : ℤ)).coeff k = 0 := by
@@ -223,6 +228,7 @@ private theorem coefficientTriangle_source {P : ℕ → ℤ → Polynomial ℤ}
       rw [coeff_above hP (j + 1) j k (by omega)
         (by simpa only [Finset.mem_range] using hj), mul_zero]
     rw [hz, zero_add]
+    simp only [Nat.succ_sub_one, Nat.succ_eq_add_one]
 
 private theorem triangle_unique {T U : ℕ → ℕ → ℤ}
     (hT : IsSourceTriangle T) (hU : IsSourceTriangle U) : T = U := by
@@ -252,4 +258,5 @@ theorem result : claim := by
   subst T
   exact (row_expand hP n).symm
 
+end
 end D5.S1.Recurrence.Algebraic.KurkovA102086RowPolynomial
