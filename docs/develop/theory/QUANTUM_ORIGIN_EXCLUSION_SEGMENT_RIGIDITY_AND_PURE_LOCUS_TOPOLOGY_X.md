@@ -2643,3 +2643,406 @@ $$
 [Q125J]: https://arxiv.org/html/1012.1215v3 "P. Janotta, C. Gogolin, J. Barrett and N. Brunner, Limits on non-local correlations from the structure of the local state space, §2.1及§3.1；New J. Phys. 13 (2011), 063024，DOI 10.1088/1367-2630/13/6/063024。"
 
 ## 追加锚（本行以下为增补区）
+
+## 126. 实际整球塌缩的固定边整行约束与唯一确认分支的单位饱和
+
+**定义 126.1（完整原域、实际塌缩及固定边面）。** 设 $V\ne0$ 为有限维实空间，$C\subset V$ 为闭、尖、生成凸锥，$u\in V^{\ast}$ 在 $C\setminus\{0\}$ 上严格正。保留同一个原载体上的全部对象
+
+$$
+\begin{gathered}
+C^{\ast}=\{h\in V^{\ast}:h|_C\ge0\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\\
+F_p=\{e\in\mathcal E:e(p)=1\},\qquad
+T_p(x)=\min_{e\in F_p}e(x)\quad(p\in P,\ x\in K),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{X126.1}
+$$
+
+第二变量遍历所有原混态；效应和确认族均不缩减。始终假设
+
+$$
+\mathrm{EB3}:\quad D_p\simeq_{\rm aff}\overline B^3\quad(p\in P),
+\qquad
+\mathrm{PR}:\quad T_p(s)=T_s(p)\quad(p,s\in P).
+\tag{X126.2}
+$$
+
+PR 仅交换两个纯比较端点。固定一个辅助欧氏范数，记其 Hausdorff 距离为 $d_H$，并置 $M=\max_{e\in\mathcal E}\|e\|_{\ast}$。该范数只用于拓扑与估计，不指定共同物理内积。称
+
+$$
+p_i\in P,\qquad p_i\longrightarrow p\in P,\qquad
+D_{p_i}\longrightarrow\{q\}
+\tag{X126.3}
+$$
+
+为一次实际整球塌缩。按 [IX115.4—115.5][Q126IX]，必有 $q\in P\cap D_p$、$q\ne p$。对这条固定原正交边定义
+
+$$
+J(p,q)=\{e\in\mathcal E:e(p)=1,\ e(q)=0\}.
+\tag{X126.4}
+$$
+
+它是原效应区间的非空紧凸面。非空性来自 $q\in D_p$ 及原最小值达到。
+
+以下只复用既有接口。[IX114.1—114.4][Q126IX] 给 $K,P,\mathcal E$ 紧、最小值达到，以及每个原纯点 $s$ 都有仅在 $s$ 取一的原确认效应；后者不要求 Inj。固定 $T_s$ 在整个 $K$ 上为 $M$-Lipschitz。完整面接口给每个 $D_s$ 为暴露极大真面，$\mathcal A_s\ne\varnothing$，且任一完整球 $H$ 的球面恰为 $P\cap H$；不同完整球至多交于一个原纯点。其全效应原合同见 [ExclusionBallFaces.exclusion_ball_faces][Q126Faces]，这里只使用共同暴露与全部真面分类两项，不使用另带全 Pair 前件的末项。
+
+[IX114.5—114.6][Q126IX] 给每个实际完整球 $H$ 唯一的共同系数和原正延拓预算：对任意完整球图 $b_H:\overline B^3\to H$，
+
+$$
+\begin{gathered}
+0<a_H\le\tfrac12,\qquad \beta_H=\frac1{2a_H},\\
+T_{b_H(w)}(b_H(z))=1-a_H+a_Hw\cdot z
+\quad(w\in S^2,\ z\in\overline B^3).
+\end{gathered}
+\tag{X126.5}
+$$
+
+此式包括整个球内部的混态，但不宣称 $T_{b_H(w)}$ 在全 $K$ 仿射。
+
+**定理 126.2（实际塌缩迫使全部纯输入的固定边达到）。** 在定义126.1的完整 EB3+PR 域中，若发生 (X126.3)，则对每个原纯点 $s\in P$，
+
+$$
+T_p(s)=\min_{e\in J(p,q)}e(s).
+\tag{X126.6}
+$$
+
+即 $\forall s\in P\ \exists e_s\in J(p,q)$ 达到该读数；不要求一个效应同时达到所有纯输入。
+
+证明。因 $J(p,q)\subseteq F_p$，右侧不小于左侧。先固定 $s\ne p$。严格暴露给 $T_p(s)<1$。PR 和固定 $T_s$ 的连续性给
+
+$$
+T_{p_i}(s)=T_s(p_i)\longrightarrow T_s(p)=T_p(s)<1.
+\tag{X126.7}
+$$
+
+故充分大的 $i$ 有 $t_i:=T_{p_i}(s)<1$。取达到此最小值的原 $e_i\in F_{p_i}$。
+
+使用 [125.2证明中的全域归一化步骤][Q126X]：若 $m_i:=\min_K e_i>0$，则 $m_i\le t_i<1$，且
+
+$$
+\widetilde e_i=\frac{e_i-m_i u}{1-m_i}\in F_{p_i},\qquad
+\widetilde e_i(s)=\frac{t_i-m_i}{1-m_i}<t_i,
+\tag{X126.8}
+$$
+
+矛盾。因此 $m_i=0$，存在真实 $z_i\in K$ 使 $e_i(z_i)=0$。因 $e_i$ 确认 $p_i$，这个同一零点属于实际完整 $D_{p_i}$。整球塌缩因而给 $z_i\to q$，不是只给某个局部球片上的近零点。
+
+紧 $\mathcal E$ 中取子列 $e_i\to e_s$。由 $e_i(p_i)=1$、$e_i(z_i)=0$ 及 (X126.7)，得到
+
+$$
+e_s(p)=1,\qquad e_s(q)=0,\qquad e_s(s)=T_p(s).
+$$
+
+故 $e_s\in J(p,q)$ 并给出反向不等式。
+
+当 $s=p$，直接用 $J(p,q)\ne\varnothing$：其中每张效应在 $p$ 的读数都是 $1=T_p(p)$。这里无需把趋于一的值误当作严格小于一。对 $s\ne p$，收敛 $p_i\to p$ 本身保证尾部 $p_i\ne s$；即使初始有限多个指标满足 $p_i=s$，也不进入上述严格小于一的尾部。整个序列恒等于某个 $s\ne p$ 与标签收敛不相容。证明没有加入标签互异条件或 Inj。证毕。
+
+(X126.6) 是全部纯输入的行约束。一般混态上的两个下包络是否相同，不由逐纯点各自的达到自动推出；不同纯点的最优效应可以不同。
+
+**定理 126.3（每张包含极限标签的完整球上的同效应达到与反向三点刻度）。** 在定理126.2的前件下，任一实际完整球 $H$ 若包含 $p$，则存在一张原效应 $e_H\in J(p,q)$，使
+
+$$
+e_H(x)=T_p(x)\quad(x\in H).
+\tag{X126.9}
+$$
+
+特别地，$p\in D_q$。在完整球图 $b_H$ 中取 $H=D_q$、$p=b_H(w)$、$r=b_H(-w)$，$\|w\|=1$。可取 $h=u-e_H$，满足
+
+$$
+\begin{gathered}
+h\in J(q,p),\qquad
+h(b_H(z))=a_H(1-w\cdot z)\quad(z\in\overline B^3),\\
+(h(q),h(p),h(r))=(1,0,2a_H),\qquad
+(e_H(p),e_H(q),e_H(r))=(1,0,1-2a_H),\\
+Z_K(h):=K\cap\ker h=\{p\},\qquad
+\max_{k\in J(q,p)}k(r)=2a_{D_q}.
+\end{gathered}
+\tag{X126.10}
+$$
+
+此处 $a_H=a_{D_q}$，不能以 $a_{D_p}$ 替换。
+
+证明。因 $p$ 是原纯点并属于面 $H$，它在该完整球的球面。写 $p=b_H(w)$，令 $r_H=b_H(-w)$ 为同一球的实际对径原纯点。由定理126.2，在 $r_H$ 选 $e_H\in J(p,q)$ 达到 $T_p(r_H)$。在整个 $H$，$e_H\ge T_p$；由 (X126.5)，后者在这张球上仿射。因此
+
+$$
+d(z)=e_H(b_H(z))-(1-a_H+a_Hw\cdot z)
+$$
+
+是闭单位球上的非负仿射函数，且在 $w,-w$ 均为零。它在中点 $0$ 为零。写 $d(z)=c+t\cdot z$，则 $c=0$，在 $z,-z$ 均非负迫使 $t=0$。故 $d\equiv0$，得到包括所有混态的 (X126.9)。每张 $H$ 可使用自己的 $e_H$，没有全局共用效应的断言。
+
+由 $q\in D_p$，原补效应的零一对称性给 $p\in D_q$。取 $H=D_q$ 并按前段选 $e_H$。因 $e_H(p)=1$、$e_H(q)=0$，其补 $h$ 确认 $q$ 并零于 $p$。(X126.9) 与 (X126.5) 立即给球上的仿射式及两组三点读数。$h\in F_q$ 使它在全 $K$ 的零集包含于完整 $D_q=H$，而所列球上仿射式只在 $z=w$ 为零，因为 $a_H>0$。所以 $Z_K(h)=\{p\}$；这里不需 Inj，也没有把球上零集未经检验地外推到全 $K$。
+
+任一 $k\in J(q,p)$ 的补效应属于 $J(p,q)\subseteq F_p$，故
+
+$$
+1-k(r)\ge T_p(r)=1-2a_H.
+$$
+
+于是 $k(r)\le2a_H$，而上述 $h$ 达到等号。紧性保证这里确为最大值。证毕。
+
+**定理 126.4（整个移动确认面的统一旧球斜率约束）。** 在定义126.1及实际塌缩 (X126.3) 下，固定旧完整球
+
+$$
+G=D_p=b(\overline B^3),\qquad q=b(v),\quad \|v\|=1,\qquad
+\delta_i=d_H(D_{p_i},\{q\}).
+$$
+
+对每个 $i$、每张原 $f\in F_{p_i}$，令 $m=\min_K f$，并唯一写
+
+$$
+(f-mu)(b(z))=\alpha+t\cdot z.
+\tag{X126.11}
+$$
+
+则统一有
+
+$$
+\begin{gathered}
+0\le\|t\|\le\alpha\le1,\qquad
+\alpha+\|t\|\le1-m,\\
+0\le\alpha+t\cdot v\le M\delta_i,\qquad
+\|t+\alpha v\|^2\le2M\delta_i.
+\end{gathered}
+\tag{X126.12}
+$$
+
+因此对整个移动确认面同时有
+
+$$
+\sup_{f\in F_{p_i}}\ \sup_{\|z\|\le1}
+\left|f(b(z))-[m+\alpha(1-v\cdot z)]\right|
+\le\sqrt{2M\delta_i},
+\tag{X126.13}
+$$
+
+其中 $m,\alpha$ 随该同一 $f$ 取值；$M$ 不随 $i,f$ 变化。不需要 Inj 或 $p\in P_0$。
+
+证明。若 $f$ 在 $K$ 恒定，因 $f(p_i)=1$ 及 $K$ 张成 $V$，有 $f=u$。此时 $m=1$、$\alpha=t=0$，全部式子成立。
+
+若 $f$ 非恒定，则 $0\le m<1$，因为其全 $K$ 最大值在 $p_i$ 达到一。原效应
+
+$$
+\widehat f=\frac{f-mu}{1-m}\in F_{p_i}
+$$
+
+在某个真实 $z_i\in K$ 取零，所以 $z_i\in D_{p_i}$，且 $f(z_i)=m$。因此
+
+$$
+0\le f(q)-m=f(q)-f(z_i)
+\le\|f\|_{\ast}\|q-z_i\|\le M\delta_i.
+\tag{X126.14}
+$$
+
+在整颗旧球上，$0\le f-m\le1-m$。仿射式 (X126.11) 的球上最小、最大值分别为 $\alpha-\|t\|$、$\alpha+\|t\|$，给第一行约束；在 $q=b(v)$ 评价给第二行首式。最后
+
+$$
+\begin{aligned}
+\|t+\alpha v\|^2
+&=\|t\|^2+2\alpha\,t\cdot v+\alpha^2\\
+&\le2\alpha(\alpha+t\cdot v)\le2M\delta_i,
+\end{aligned}
+\tag{X126.15}
+$$
+
+使用 $\alpha\ge0$ 及 $\alpha\le1$。仿射式与 $m+\alpha(1-v\cdot z)$ 的差正是 $(t+\alpha v)\cdot z$，Cauchy–Schwarz 给 (X126.13)。估计对每张 $f$ 成立且右端相同，故可取整个确认面的上确界。证毕。
+
+这约束同一个移动标签的所有实际确认效应在同一旧球上的限制。若从逐面延拓取得两个确认效应列，其旧球斜率分别收敛到 $t_1,t_2$，则 (X126.12) 迫使两者都属于 $\mathbb R_{\le0}v$；两个非零极限斜率若不在同一射线上，就排除这次塌缩。只有当那些原延拓确实还满足 $f(p_i)=1$ 时才能应用此检验，正延拓本身不供应这项资格。
+
+**定义 126.5（唯一完整零确认分支及原法向坐标）。** 以下另加
+
+$$
+\mathrm{Inj}:\quad D_s=D_t\Longrightarrow s=t,
+\qquad
+p\in P_0:=\{s\in P:\mathcal A_s\text{ 为单点}\}.
+\tag{X126.16}
+$$
+
+写 $\mathcal A_p=\{e_p\}$、$g=u-e_p$，并选完整旧球图 $G=D_p=b(\overline B^3)$。这不是 $F_p=\{e_p\}$：整个 $F_p$ 始终保留，且包含 $u$。
+
+按 [IX120.2、120.8、120.10—120.13][Q126IX]，令 $N_p=\{n\in C^{\ast}:n(p)=0\}$，则限制 $\operatorname{span}N_p\to\operatorname{Aff}(G)$ 是同构，$g\in\operatorname{ri}N_p$，$g>0$ 于 $K\setminus\{p\}$。存在唯一原线性 $H:V\to\mathbb R^3$，其各分量属于 $\operatorname{span}N_p$，且
+
+$$
+H(p)=0,\qquad H(b(z))=z,\qquad g(b(z))=1.
+\tag{X126.17}
+$$
+
+对每个已经属于原正锥的 $n=\alpha g+t\cdot H\in N_p$，准确最大值为
+
+$$
+\max_K n=\alpha+\|t\|.
+\tag{X126.18}
+$$
+
+正性必须先支付，不能仅凭右端不大于一就把一个有符号泛函称为效应。对 $v\in S^2$，置
+
+$$
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}\frac{-v\cdot H(x)}{g(x)}\ge1.
+\tag{X126.19}
+$$
+
+该函数有限。若 $q=b(v)$，则 $q\in P_0$，记 $\mathcal A_q=\{e_q\}$；既有全空间公式及完整原边区间为
+
+$$
+\begin{gathered}
+e_q=(1-\lambda)g+\lambda v\cdot H,\qquad
+\lambda=\frac1{1+\rho_p(v)}\in(0,\tfrac12],\\
+\{n\in\mathcal E:n(p)=0,\ n(q)=1\}=[g,e_q],\qquad
+J(p,q)=[e_p,u-e_q].
+\end{gathered}
+\tag{X126.20}
+$$
+
+区间在整个 $V^{\ast}$ 中，不只是旧球上的限制。其末式由前式取补得到。相对内部、全域正性、边传播及区间公式均按上述来源使用，不另列为新的分类结果。
+
+**定理 126.6（唯一完整确认标签处的塌缩迫使两球单位饱和及全混态 least）。** 在定义126.1、126.5的完整原域中，若发生实际塌缩 (X126.3)，则
+
+$$
+\begin{gathered}
+a_{D_p}=a_{D_q}=\tfrac12,\qquad
+\beta_{D_p}=\beta_{D_q}=1,\\
+T_p(x)=e_p(x)\quad(x\in K),\qquad
+e_p\le_{C^{\ast}} f\quad(f\in F_p).
+\end{gathered}
+\tag{X126.21}
+$$
+
+证明。定理126.2与完整边区间 (X126.20) 给全部纯输入
+
+$$
+T_p(s)=\min\{e_p(s),1-e_q(s)\}\quad(s\in P).
+\tag{X126.22}
+$$
+
+令 $\mathcal B_p=\{n\in\mathcal E:n(p)=0\}$。取补将整个 $F_p$ 双射到 $\mathcal B_p$，故同一纯域公式等价于
+
+$$
+\max_{n\in\mathcal B_p}n(s)=\max\{g(s),e_q(s)\}
+\quad(s\in P).
+\tag{X126.23}
+$$
+
+先只排除反方向越界。固定 $s\in P\setminus\{p\}$，令 $Y=H(s)/g(s)$。若 $\|Y\|>1$，取 $t=Y/\|Y\|$。因为 $g\in\operatorname{ri}N_p$ 且 $t\cdot H\in\operatorname{span}N_p$，可取充分小的 $\varepsilon>0$ 使 $g+\varepsilon t\cdot H\in N_p$。在这项全域正性已经成立之后，(X126.18) 给其原全域最大值 $1+\varepsilon$。于是
+
+$$
+n_{\varepsilon}=\frac{g+\varepsilon t\cdot H}{1+\varepsilon}
+\in\mathcal B_p,\qquad
+n_{\varepsilon}(s)=g(s)\frac{1+\varepsilon\|Y\|}{1+\varepsilon}>g(s).
+\tag{X126.24}
+$$
+
+由 (X126.23)，必有 $e_q(s)>g(s)$。再用 $\lambda>0$ 及 (X126.20)，得到
+
+$$
+\|Y\|>1\quad\Longrightarrow\quad v\cdot Y>1.
+\tag{X126.25}
+$$
+
+此时不能声称所有 $\|Y\|>1$ 都已被排除。但如果 $v\cdot Y<-1$，则 $\|Y\|>1$，(X126.25) 又迫 $v\cdot Y>1$，矛盾。所以每个上述原纯点满足 $g(s)+v\cdot H(s)\ge0$；在 $s=p$ 两项都为零。因为 $K=\operatorname{conv}P$，线性读数的非负性延到全部 $K$，再按 $C=\mathbb R_{\ge0}K$ 延到整个原锥。因此
+
+$$
+k=\frac{g+v\cdot H}{2}\in N_p.
+$$
+
+原最大值公式给 $\max_Kk=1$，故 $k\in\mathcal E$。在同一旧球上取真实对径 $r=b(-v)$，则 $k(q)=1$、$k(r)=0$，于是 $q\perp r$。旧球公式 (X126.5) 给
+
+$$
+0=T_q(r)=1-2a_{D_p},
+$$
+
+从而 $a_{D_p}=1/2$。
+
+原边对称性及 $q,r\in D_p$ 给 $p\in D_q$ 和 $p\perp r$；新取得的 $q\perp r$ 又给 $r\in D_q$。因此两个不同的原纯点 $p,r$ 同属完整 $D_q$ 且正交。在该球图中写 $p=b_{D_q}(w)$、$r=b_{D_q}(z)$，其中 $\|w\|=\|z\|=1$。准确球公式给
+
+$$
+0=T_p(r)=1-a_{D_q}+a_{D_q}w\cdot z
+\ge1-2a_{D_q}\ge0.
+\tag{X126.26}
+$$
+
+所以 $a_{D_q}=1/2$ 且 $w\cdot z=-1$，即 $z=-w$。这同时证明此处同球正交点确为该球对径，未预设任意三纯点都能组成共同仪器。
+
+已有 $a_{D_p}=1/2$，故 (X126.5) 使 $D_p$ 的每条直径两端都原正交。[IX120.13][Q126IX] 遂给 $\rho_p(t)=1$ 对全部单位方向成立。对 $x\ne p$，以 $-t$ 代入 (X126.19)，有 $t\cdot H(x)\le g(x)$ 对全部单位 $t$ 成立；取上确界并处理 $x=p$，得到
+
+$$
+\|H(x)\|\le g(x)\quad(x\in K).
+\tag{X126.27}
+$$
+
+现在才排除了全部方向越界。由 (X126.20) 得 $e_q\le g$ 于全 $K$，因而 (X126.22) 化为 $T_p(s)=e_p(s)$ 对全部原纯点成立。
+
+任一原 $f\in F_p$ 都满足 $f(s)\ge e_p(s)$ 于全部 $s\in P$。每张固定 $f-e_p$ 是线性的，$K=\operatorname{conv}P$ 因而给 $f\ge e_p$ 于所有混态；齐次化给整个 $C$ 上的序支配。又 $e_p\in F_p$，所以在每个 $x\in K$，下包络恰为 $e_p(x)$。这一步没有使用混态 PR，也没有把不同纯输入各自的最优选择直接拼成仿射函数。预算结论由 $\beta_H=1/(2a_H)$ 给出。证毕。
+
+**推论 126.7（非单位预算的唯一确认标签必为连续点及剩余塌缩集合）。** 在完整 EB3+PR+Inj 域中，若 $p\in P_0$ 且 $\beta_{D_p}>1$，则 $s\mapsto D_s$ 在 $p$ 处 Hausdorff 连续。存在 $p$ 在整个 $P$ 中的相对开邻域 $U$ 及有限 $B$，使
+
+$$
+\beta_{D_s}\le B\quad(s\in U).
+\tag{X126.28}
+$$
+
+令 $\Sigma$ 为 [IX115.1、115.6][Q126IX] 的整球映射不连续点集，则
+
+$$
+\Sigma\subseteq
+(P\setminus P_0)\ \cup\
+\{p\in P_0:\beta_{D_p}=1,\ T_p=e_p\text{ 于全部 }K\}.
+\tag{X126.29}
+$$
+
+对右侧第二分支中的实际塌缩 $D_{p_i}\to\{q\}$，还必有 $\beta_{D_q}=1$。
+
+证明。IX115.6 对每个 $p\in\Sigma$ 都供应实际纯列 $p_i\to p$ 及 $q\in P\cap D_p$，使 $D_{p_i}\to\{q\}$。若该 $p$ 又在 $P_0$，定理126.6给 $\beta_{D_p}=1$、$T_p=e_p$ 及 $\beta_{D_q}=1$，得到 (X126.29)。所以 $p\in P_0$、$\beta_{D_p}>1$ 排除 $p\in\Sigma$，即整球映射在 $p$ 连续；IX115.6 的局部预算等价恰给 (X126.28)，其邻域不局限于 $P_0$。证毕。
+
+IX120.9 的 $P_0$ 稠密性并不删除 (X126.29) 的任一分支：稠密集的补集可非空，属于该稠密集的单位预算标签也未被排除。此推论未证明实际塌缩存在，也未证明其不存在。若实际出现 $p\in P_0$ 且 $\beta_{D_p}>1$，本推论使该 $p$ 成为连续点，而 [124.11][Q126X] 所迫使的全局预算无界与塌缩发生在其他极限标签。这个条件结论不构成此类模型的存在性断言。
+
+**定义及应用 126.8（完整直观候选、静态字典与未付接口）。** 完整条件候选仍为：在同一个有限维实锥和严格正单位上，保留全部纯态、全部混态以及整个零一效应区间；确认一个纯态时可完全排除的全部态恰是一整颗实心仿射三球；任意两个纯态的最优确认读数交换端点不变；再要求纯标签趋近时，新完整排除球到固定旧球心的距离趋零。最后这一条是 [125.4—125.5][Q126X] 的 CS：
+
+$$
+\forall p\in P\ \forall(p_i)\subset P:\quad
+p_i\to p\Longrightarrow\operatorname{dist}(c_p,D_{p_i})\to0,
+\qquad c_p=\text{完整 }D_p\text{ 的中心}.
+\tag{X126.30}
+$$
+
+它在完整 EB3+PR 域中仍与 UF、NC 等价，未由定理126.2—126.7自动取得。上述塌缩结论是实际塌缩必须满足的必要关系，不是足以重构的新公理。CS 仍是既有等价重构接口，没有独立公理数减少或最小性结论。
+
+几何上，若一颗移动实心球真缩到旧球的球面点 $q$，在任何固定纯输入处最优的非平凡确认都必须带着自己的真实零点一起走向 $q$。因此整行纯读数都可在同一条固定零一边 $p\mapsto1,q\mapsto0$ 的效应面上达到。在任何另一颗包含 $p$ 的完整球上，只须在 $p$ 的对径处达到，非负仿射差就使同一效应达到整颗混态球。与此同时，移动标签的全部确认效应在旧球上的非恒定斜率，只能共同靠向与旧球中心指向 $q$ 的方向相反的射线。若原球标签另满足 Inj，且极限标签属于唯一完整零确认分支，旧球的四个原法向坐标把这条跨纯点约束转成真正的对径零一边，再由同球刻度强迫两颗相关球满刻度。没有这项唯一性，四维限制同构及原边线段不能直接输入；即使有它，单位预算极限标签处的塌缩仍未排除。
+
+只有另支付 CS，才经125.5与 [124.10][Q126X] 消费已有同原锥、同原单位静态分类，取得实线性双射
+
+$$
+\Phi:H_3(\mathbb C)\longrightarrow V,\qquad
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi X)=\operatorname{Tr}X.
+\tag{X126.31}
+$$
+
+其完整对应按原定理保留：
+
+| 原对象与关系 | 同原静态复三能级表示 |
+| --- | --- |
+| 全部 $K$、全部 $P$ | 全部三阶密度矩阵；全部秩一投影 $p=vv^{\ast}$，$v^{\ast}v=1$ |
+| 整个 $\mathcal E$、单位及补 | 全部 $0\preceq E\preceq I_3$、$I_3$ 及 $I_3-E$ |
+| 原评价与全混态最优确认 | $f_E(\Phi\rho)=\operatorname{Tr}(E\rho)$；$T_{\Phi p}(\Phi\rho)=\operatorname{Tr}(p\rho)$ |
+| 全部纯对比较与交换端点 | $|v^{\ast}w|^2=|w^{\ast}v|^2$；不要求矩阵效应或顺序仪器交换 |
+| 完整 $D_{\Phi p}$ 与球心 | $p^{\perp}$ 上全部密度矩阵三球；球心 $\Phi((I_3-p)/2)$ |
+| 共同球刻度与预算 | 全部 $a_H=1/2$、$\beta_H=1$；全部原完整球的单位预算正延拓 |
+| 有限数学测量 | 全部 $E_j\succeq0$、$\sum_jE_j=I_3$ 的 POVM，包括正交三结果 |
+
+环境实维数九和单体复 Hilbert 维数三是该条件静态表示的结论。每张排除球的实仿射维数三，并不是预先给整个状态空间一个三维物理尺。
+
+同一个原 $\Omega$、全部原合法门序列、每个中间切口与全部记录后条件未来，仍须由实际操作合同供应；数学效应存在不供应其制备、调用或共同仪器。对每个有限复合数仍需整个联合态锥、产品与纠缠输入、共同单位及相容接线；全旁观者正性需量化所有旁观系统，不能从单体正性直接取得 CP。事件分支、TP/TNI 共同预算、零质量分支、实际记录、粗粒化及更新律继续需要各自接口。动力学、连续时间群、物理钟、Hamiltonian、能量单位和数值 $\hbar$ 均未由这些静态结论决定。
+
+本章的承重内容属于 `repo-derived` 的跨合同综合：实际整球塌缩与全部纯输入的固定边达到；每颗包含极限标签的完整球上的同效应达到及反向精确刻度；整个移动确认面的统一旧球斜率；以及在 Inj、唯一完整零确认分支由原正法向扰动取得的单位饱和与全混态 least。共同零确认、严格暴露、球内刻度、原边区间、极限二择、局部预算和静态分类均保留上述原结果的假设与归属。紧性、极值达到、有限纯点凸分解、仿射归一化和球上非负仿射函数只是推导的成熟中间工具，不另立为新增分类。这里不主张全球原创、历史优先权或逻辑独立性。
+
+[Landsman §1.3][Q126L] 的完整仿射效应最小确认构造以 $p(\rho,\sigma)=T_{\sigma}(\rho)$ 对应 (X126.1) 的纯域部分，纯端点对称性对应 PR。其第2节的 uniform Poisson、two-sphere 等重构公理没有从本章前件取得。[Niestegge §3][Q126N] 的 $e_{\omega}(\zeta)$ 定义则对所有非负仿射 $a$、$a(\omega)=1$ 取下确界，未在该定义中加 $a\le1$；其性质 $(\ast\ast)$ 另要求该函数本身仿射、连续且仅在 $\omega$ 取一。本章不能把单个塌缩极限标签处的 (X126.21) 直接当作其全部标签、该更大最小化族上的性质。该文 Theorem 3 仍显式要求 Axioms 1、2、proper 效应序性质 $(\ast)$、有限信息容量和对称跃迁概率；这些前件没有由裸 EB3+PR 或局部 $P_0$ 唯一性整体支付，故不在这里调用其自对偶结论。自动 UF、剩余实际塌缩集合的排除，以及保留全部原量词的同域坏模型，仍是未解决的数学边界。
+
+[Q126IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.6完整原域、严格暴露与球刻度；IX115.4—115.6极限与连续性；IX120.2、120.8、120.10—120.13原法向、唯一完整确认及全空间原边区间。"
+[Q126X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "124.10—124.11条件静态类及偏离迫使实际塌缩；125.2全域取零归一化；125.4—125.5固定旧球心CS及其与UF、NC的等价。"
+[Q126Faces]: ../../../D5/S3/Quantum/Foundation/ExclusionBallFaces.lean "exclusion_ball_faces：完整排除球的共同暴露和全部真面分类；末项的全Pair前件不在本章输入。"
+[Q126L]: https://arxiv.org/src/quant-ph/9603005v2 "N. P. Landsman, Poisson Spaces with a Transition Probability, §1.3及第2节；Rev. Math. Phys. 9 (1997), 29–58，DOI 10.1142/S0129055X97000038；arXiv v2作者源码。"
+[Q126N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability in convex sets and self-dual cones, §2—§3及Theorem 3；Proc. R. Soc. A 480 (2024), 20230941，DOI 10.1098/rspa.2023.0941；arXiv v2。"
+
+## 追加锚（本行以下为增补区）
