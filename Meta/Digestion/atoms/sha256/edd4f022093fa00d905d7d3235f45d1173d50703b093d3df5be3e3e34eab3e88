@@ -1,0 +1,154 @@
+**例 118.16（完整效应域中的塌球，但不满足全称EB3）。** 固定单位 $a\in\mathbb R^3$，取
+
+$$
+\begin{split}
+V_0&=\mathbb R\oplus\mathbb R^3\oplus\mathbb R^3,\qquad u_0(t,Z,Y)=t,\\
+C_0&=\{(t,Z,Y):\sqrt{|Z|^2+|Y|^2}\le t,\quad |Y-ta|\le t\},\\
+K_0&=\{(z,y):|z|^2+|y|^2\le1,\quad |y-a|^2\le1\}.
+\end{split}
+\tag{IX118.29}
+$$
+
+$C_0$ 闭、凸、尖；$t=0$ 仅给零向量，故 $u_0$ 严格正。
+$(t,Z,Y)=(1,0,a/2)$ 使两不等式严格，所以锥生成整个 $V_0$。
+$K_0$ 是其整个归一基，原全部纯点准确为
+
+$$
+P_0=K_0\cap S^5.
+\tag{IX118.30}
+$$
+
+球面上的点因外部六维欧氏球严格凸而极端；外球内部点可沿 $z$ 的非零方向作小幅正负扰动，保持两约束，故不极端。
+
+全部原效应也可完整写出，而无需限制菜单。定义
+
+$$
+\begin{split}
+L_0&=\{y:|y|\le1,\ |y-a|\le1\},\\
+\sigma_0(v,w)&=\max_{y\in L_0}\bigl(|v|\sqrt{1-|y|^2}+w\cdot y\bigr).
+\end{split}
+$$
+
+任意原线性读数 $f(t,Z,Y)=\alpha t+v\cdot Z+w\cdot Y$ 属于整个 $\mathcal E_0$ 当且仅当
+
+$$
+\sigma_0(-v,-w)\le\alpha\le1-\sigma_0(v,w).
+\tag{IX118.31}
+$$
+
+这是对每个允许的 $y$ 先在整个 $z$ 球上取极值所得的精确支持函数公式；没有只列一族效应就称它为全部。
+
+全部非点真面准确为
+
+$$
+F_n=\{(z,a+n):|z|\le\sqrt{1-|a+n|^2}\},\qquad
+|n|=1,\quad a\cdot n<-\tfrac12.
+\tag{IX118.32}
+$$
+
+它们都是整个三球，其余非空真面为原纯单点。
+确实，任一非点暴露面取两不同点的中点。外球严格凸使该中点在外球内部；它仍在 $K_0$ 边界，故只能在球柱边界。
+此处支撑法向为 $(0,n)$，切出的整个面就是(IX118.32)；非点性等价于半径正。
+任意非暴露真面取相对内点的支撑面，便被包含于这样一个暴露面；三球的非点面只有整个自身，所以同样得到这份穷尽分类。
+这项面分类并不等于所有完整 $D_p$ 都是三球。
+
+取 $|n|=1,a\cdot n<-1/2$，记
+
+$$
+p_n=(0,-n),\qquad m_n=1+a\cdot n.
+$$
+
+$p_n$ 仅激活外球约束，球柱约束严格。因此全部确认效应恰为
+
+$$
+f_\tau(z,y)=1-\tau(1+n\cdot y),\qquad
+0\le\tau\le\frac1{1+m_n}.
+\tag{IX118.33}
+$$
+
+理由是确认效应在 $p_n$ 达到全域最大值，唯一外法向射线给该形式；$n\cdot y$ 的全域最大值为 $m_n$、最小值为 $-1$，非负性恰给所列上界。
+逐点最小化全部确认，得到整个
+
+$$
+T_{p_n}(z,y)=\frac{m_n-n\cdot y}{1+m_n},\qquad
+D_{p_n}=F_n.
+\tag{IX118.34}
+$$
+
+同理，在 $p_n$ 为零的全部原效应恰为
+
+$$
+Z_{p_n}=\{g_\tau(z,y)=\tau(1+n\cdot y):0\le\tau\le(1+m_n)^{-1}\}.
+\tag{IX118.35}
+$$
+
+现在取 $a,b$ 正交单位向量、$0<\varepsilon_j<1/2$、$\varepsilon_j\downarrow0$，令
+
+$$
+\begin{split}
+n_j&=(-\tfrac12-\varepsilon_j)a+
+\sqrt{1-(\tfrac12+\varepsilon_j)^2}\,b,\\
+p&=(a-\sqrt3b)/2,\qquad q=(a+\sqrt3b)/2,\\
+p^*&=(0,p),\qquad q^*=(0,q).
+\end{split}
+\tag{IX118.36}
+$$
+
+则 $|a+n_j|^2=1-2\varepsilon_j$，故
+
+$$
+\operatorname{diam}D_{p_{n_j}}=2\sqrt{2\varepsilon_j}\to0,\quad
+p_{n_j}\to p^*,\quad D_{p_{n_j}}\to\{q^*\}.
+\tag{IX118.37}
+$$
+
+不能漏算极限标签的完整 $D$。在 $p^*$，两条激活法向是 $(0,p)$ 与 $(0,-q)$。
+支撑法向为它们的非负组合：两约束有共同严格内点，其严格下降方向稠密于两半空间给出的切锥，取极锥就得到该法向锥。
+所以全部确认效应为
+
+$$
+f_{\lambda,\mu}(z,y)
+=1-\lambda(1-p\cdot y)-\mu(\tfrac12+q\cdot y),\qquad
+\lambda,\mu\ge0,\quad\lambda+\mu\le\tfrac23.
+\tag{IX118.38}
+$$
+
+$p\cdot q=-1/2$。两个括号在整个 $K_0$ 均属于 $[0,3/2]$，并且在 $q^*$ 同时等于 $3/2$；所以非负性充分必要地恰为 $\lambda+\mu\le2/3$。
+对这个完整参数单纯形取逐点最小，得到
+
+$$
+T_{p^*}(z,y)=\min\left\{\frac{1+2p\cdot y}{3},\frac{2-2q\cdot y}{3}\right\},\qquad
+D_{p^*}=\{q^*\}.
+\tag{IX118.39}
+$$
+
+第一支的零须 $p\cdot y=-1/2$，球柱的支持等号迫 $y=a-p=q$；第二支的零须 $q\cdot y=1$，外球等号同样迫 $y=q$。
+两者都使 $z=0$。交换 $p,q$ 亦得 $D_{q^*}=\{p^*\}$。
+因此全称EB3在这两个实际原纯标签处失败，尽管(IX118.34)中每颗球都是完整三球。
+
+仍有真实固定零测试的失稳。取
+
+$$
+h_0(z,y)=\frac{1+2q\cdot y}{3}\in\mathcal A_{q^*}.
+$$
+
+它在 $q^*$ 读一、在整个 $D_{q^*}$ 读零，且 $h_0(p_{n_j})\to0$。
+对原态 $w_0=(0,0),w_1=(0,a)\in K_0$，有
+
+$$
+2h_0(w_1)-h_0(w_0)=1,
+\qquad
+2g_\tau(w_1)-g_\tau(w_0)=-2\tau\varepsilon_j\le0
+\quad(g_\tau\in Z_{p_{n_j}}).
+$$
+
+由于 $|2f(w_1)-f(w_0)|\le3\|f\|_{K_0}$，可得
+
+$$
+\operatorname{dist}_{K_0}(h_0,Z_{p_{n_j}})\ge\tfrac13.
+\tag{IX118.40}
+$$
+
+所以读数趋零本身不保证全效应范数下可修复为精确零。
+该模型完整呈现这种边界现象，却不是EB3或EB3+Inj的反例；没有把极限标签的单点 $D$ 隐藏，也没有声称可将它补成满足全称EB3的模型。
+
