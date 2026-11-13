@@ -9,6 +9,8 @@
 import D5.S3.Quantum.Dynamics.OddSquareGreenMass
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
+/-! Full Euclidean inverse amplification from a repeated odd interior window. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -26,7 +28,8 @@ private theorem green_shift (t : ℕ → ℝ) (a l d : ℕ) :
   | zero => simp [greenEntry, Nat.mul_add]
   | succ d ih =>
     simp only [greenEntry, ih]
-    congr 2 <;> congr 1 <;> omega
+    rw [show 2 * a + (2 * (l + d) + 1) = 2 * (a + l + d) + 1 by omega,
+      show 2 * a + 2 * (l + d + 1) = 2 * (a + l + d + 1) by omega]
 
 private theorem inverse_shift (t : ℕ → ℝ) (ht : ∀ i, 0 < t i)
     (a m n : ℕ) (hm : a + m ≤ n) (i j : Fin m) :
@@ -41,9 +44,10 @@ private theorem inverse_shift (t : ℕ → ℝ) (ht : ∀ i, 0 < t i)
   · rfl
 
 private theorem sum_injective_nonneg {α β : Type*} [Fintype α] [Fintype β]
-    [DecidableEq β] (f : β → ℝ) (hf : ∀ i, 0 ≤ f i)
+    (f : β → ℝ) (hf : ∀ i, 0 ≤ f i)
     (e : α → β) (he : Function.Injective e) :
     (∑ i, f (e i)) ≤ ∑ j, f j := by
+  classical
   apply Finset.sum_le_sum_of_injOn e (he.injOn) (by simp)
   · intro i hi; rfl
   · intro j hj hje; exact hf j
@@ -119,7 +123,7 @@ theorem full_inverse_unit_amplification (t : ℕ → ℝ) (n a q : ℕ)
     nlinarith [norm_nonneg x]
   let v : EuclideanSpace ℝ (Fin n) := ‖x‖⁻¹ • x
   have hv : ‖v‖ = 1 := by
-    simp [v, norm_smul, Real.norm_eq_abs, abs_of_pos hxpos, hxpos.ne']
+    simp [v, norm_smul, hxpos.ne']
   refine ⟨v, hv, ?_⟩
   have hinner : (∑ j, ∑ i, G i j) = inner ℝ x (A x) := by
     rw [Finset.sum_comm]
@@ -133,7 +137,10 @@ theorem full_inverse_unit_amplification (t : ℕ → ℝ) (n a q : ℕ)
   rw [hAx] at hcs
   rw [← mul_assoc, ← pow_two, hx] at hcs
   rw [hinner] at hmass
-  exact hmass.trans (mul_le_mul_of_nonneg_left hcs (by norm_num))
+  calc
+    _ ≤ 2 * inner ℝ x (A x) := hmass
+    _ ≤ 2 * ((n : ℝ) * ‖A v‖) := mul_le_mul_of_nonneg_left hcs (by norm_num)
+    _ = _ := by ring
 
 end D5.S3.Quantum.Dynamics.OddSquareFullInverseNorm
 
