@@ -1,0 +1,18 @@
+**定义 103.2（共同基三腿资源 $\mathsf F$）。** 在(103.1)的某一个局部 Jordan 迹坐标中，
+每块选一个正交归一向量基 $(|a\rangle_i)_{a=1}^{n_i}$，包括其相位，三条腿使用同一个基。
+令
+
+$$
+g_i=\sum_{a=1}^{n_i}|a\rangle_i|a\rangle_i|a\rangle_i,
+\qquad \Delta_i=|g_i\rangle\langle g_i|,
+\qquad \Delta=\bigoplus_i\Delta_i,
+\qquad R=\sum_i n_i.
+\tag{103.3}
+$$
+
+$\Delta_i$ 支撑于原向量扇区 $(i,i,i)$，其他扇区为零。
+$\mathsf F$ 是存在上述共同坐标与共同基，使 $\Delta\in C_3$ 的条件。
+此时 $u_3(\Delta)=R$，所以 $\Delta/R\in K_3$。
+这个条件只指定一个锥元素，不指定物理制备事件；
+$\Delta_i$ 的矩阵秩一暂不意味着它是原 $K_3$ 的纯极点。
+
