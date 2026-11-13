@@ -32,7 +32,7 @@ $$\forall (H: \operatorname{FiniteComplexHilbertSpace}()), \forall (E: \operator
 
 *Commentary.*
 
-The scalar premise is required for every real x in [0,1], for an arbitrary complex polynomial R. Evaluation R(G) is Polynomial.aeval. The Gram operator restricts to the input range; its symmetric spectral theorem supplies a complete orthonormal basis there, with eigenvalues sigma squared in [0,1]. The singular-pair action on each basis vector and polynomial evaluation at its eigenvalue give the two equalities. Both sides vanish on the input complement; in the odd case this uses commutation of Pi with G and every polynomial in G.
+In the formula I=[0,1]. The scalar premise is required for every real x in [0,1], for an arbitrary complex polynomial R. Evaluation R(G) is Polynomial.aeval. The Gram operator restricts to the input range; its symmetric spectral theorem supplies a complete orthonormal basis there, with eigenvalues sigma squared in [0,1]. The singular-pair action on each basis vector and polynomial evaluation at its eigenvalue give the two equalities. Both sides vanish on the input complement; in the odd case this uses commutation of Pi with G and every polynomial in G.
 
 The input basis includes every zero eigenvalue, even when the output projection has smaller rank. Consequently the even action on an input vector in ker(A) is R(0) times that vector. The empty list is included and gives the input projection for R=1. No full-rank assumption, rank equality, nonzero singular-value assumption or Hermitian restriction on A occurs. The scalar premise can constrain only values on the singular spectrum, but the theorem assumes the stated identity on the whole interval.
 
