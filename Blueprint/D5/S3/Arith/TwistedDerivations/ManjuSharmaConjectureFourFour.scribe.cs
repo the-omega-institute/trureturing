@@ -19,9 +19,10 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
-    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    private static Formula Par(Formula a) => Seq(Open, a, Close);
+    private static Formula And(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
+    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
+    private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a), FormulaLogicOperator.Iff, Par(b));
     private static Formula All(string a, Formula t, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(a), t, body);
     private static Formula Ex(string a, Formula t, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(a), t, body);
     private static Formula Call(string name, params Formula[] a) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. a]);
@@ -101,7 +102,9 @@ internal sealed class ManjuSharmaConjectureFourFourDocument : IScribeDocumentDef
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
         DescribeId.Create("manjusharma" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromLiterature(Source),
+        StatementSource.FromAuthor(Disp(formula)),
+        name is "IsInner" or "PrintedIntegralTest" or "claim"
+            ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static DocumentBlock ResultNode() => Describe.Lean(

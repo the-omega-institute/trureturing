@@ -17,8 +17,6 @@ namespace D5.S3.Arith.TwistedDerivations.ManjuSharmaConjectureFourFour
 
 noncomputable section
 
-set_option maxHeartbeats 40000
-
 open NumberField Matrix
 
 /-- Integral innerness, with the generator required to belong to the actual integer ring. -/
@@ -120,7 +118,7 @@ private def gaussianD : GaussianInt →ₗ[ℤ] GaussianInt :=
 private theorem gaussianD_law (x y : GaussianInt) :
     gaussianD (x * y) = gaussianD x * star y + x * gaussianD y := by
   change ((x * y).im : GaussianInt) = (x.im : GaussianInt) * star y + x * (y.im : GaussianInt)
-  ext <;> (simp; ring)
+  ext <;> simp <;> ring
 
 /-- Conjugation transported along the proved pointed integer-ring equivalence. -/
 def tau : O4 →ₐ[ℤ] O4 :=
