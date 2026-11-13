@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:b8169b95618d5167e46006782a5074c07dfedc6d9b4bf79943d92cdef2798f86
+  normalized_sha256: sha256:b8169b95618d5167e46006782a5074c07dfedc6d9b4bf79943d92cdef2798f86
+cas_ref: sha256:b8169b95618d5167e46006782a5074c07dfedc6d9b4bf79943d92cdef2798f86
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry
+    target_statement_id: sha256:4788fda704d1194f8a5bde2ab1145d8e251a3dab3778b671874f5829488f6faa
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+  - gid: D5/S3/Quantum/Foundation/FiniteStateChannel.comp_apply
+    target_statement_id: sha256:4e1c8c8bda8cf4802106fdcc5975ffee567c0842840c30a82b6f349674240663
+  - gid: D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.identity_action
+    target_statement_id: sha256:4cff88a65059e745a319205bf0195a33d6dee32bc227eccd89e6474022aa3852
+  - gid: D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.referenceChannel
+    target_statement_id: sha256:6950008075f12fdd8403fc7a7938f14425aa9104d5786b7676f5c56c7eb566d5
+  - gid: D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reference_comp
+    target_statement_id: sha256:e1cbc8be8876a77fae0b4aabfe9de887ab8cefaee3ff5ab6026d46e39744b1cd
+  - gid: D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.reference_error_le_diamond
+    target_statement_id: sha256:b5304ba8ad9f10c25779627cfbc2bd518fd5ad26c684d2615165b4d4b5e193af
+  - gid: D5/S3/QuantumChannels/SchurChannelMixedUnitaryDistance.trace_contract_rectangular
+    target_statement_id: sha256:c07bfb9dee36e70ed84573547b8f52e9ae2ab5ad29e545df93c4bace5313802c
+receipts:
+  unresolved_subitems: []

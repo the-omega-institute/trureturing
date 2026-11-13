@@ -1,0 +1,7 @@
+**引理 5.2（有限历史后验的 Gibbs 不等式）。** 设 $a$ 为有限历史集上的任意概率分布，$c\in S^3$，$d(h)=\|F_ht-c\|$。以自然对数定义相对熵 $D(a\|P_n)$。则
+
+$$
+D(a\|P_n)\ge-\beta\mathbb E_a d^2-\ln B_n(\beta)\qquad(\beta>0).
+\tag{5.3}
+$$
+
