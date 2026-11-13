@@ -14,7 +14,7 @@ $$\forall N \in \mathit{Nat},\; \forall OP \in \operatorname{ProjectionPackage}\
 
 *Commentary.*
 
-Gleason (1957), J. Math. Mech. 6, 885, Theorems 2.8 and 3.1, is the projection-theorem source. The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
+Gleason (1957), J. Math. Mech. 6, 885–893, supplies Lemma 3.4 (two-dimensional restrictions to a global bounded form), Theorem 3.5 (nonnegative frame-function regularity in dimension at least three), and Theorem 4.1 (closed-subspace measure trace-class representation). The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
 
 For every natural dimension N at least three and every projection package OP on complex N by N matrices, there is exactly one matrix rho that is positive semidefinite, has trace one, and satisfies OP.p(P) = Re(trace(rho P)) for every star projection P. The package is a total matrix function, constrained only by nonnegative projection values, normalization at the identity and binary additivity on orthogonal star projections.
 
