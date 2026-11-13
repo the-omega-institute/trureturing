@@ -4,6 +4,10 @@
 
 Normalized perfect subgroup codes in normal-connection sum graphs.
 
+For every group G, subgroup H and g,t in G, t inverse times g belongs to H exactly when g inverse times t belongs to H. Inversion in H exchanges these two elements. This is the membership conversion used in the transversal code construction.
+
+For every group G, subgroup H and left transversal T containing 1, any t in both T and H equals 1. Both t and 1 represent the identity H-coset, so the unique representative property identifies them. The same fact supplies the normalized square-free construction in the abelian regular-code criterion.
+
 **Definition 1.1 (Closed neighborhoods).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/PerfectCodeTransversal.IsPerfectCode`

@@ -4,7 +4,31 @@
 
 Full finite abelian regular-code criteria on actual loopless sum graphs.
 
-**Definition 1.1 (The subgroup of squares).**
+**Theorem 1.1 (The exact open degree).**
+
+Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.degree_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.degree_card` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Reza Nikandish; Wenlin Zhang (2026). *Subgroup total perfect codes in Cayley sum graphs: a missing case and its consequences*. DOI: [10.5281/zenodo.23375144](https://doi.org/10.5281/zenodo.23375144). URL: <https://doi.org/10.5281/zenodo.23375144>.
+
+*Commentary.*
+
+At g the actual neighbor set is bijective with Y minus {g squared}, by h maps to g h. Its cardinal is therefore |Y| minus one when the square lies in Y and |Y| otherwise. Self-neighbors are excluded; inverse closure of Y is unnecessary. This is the degree calculation used in correction section 3.2 and the regularity antecedents.
+
+**Theorem 1.2 (All squares or no squares).**
+
+Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.regularity_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.regularity_iff` (`✓ std3`). ∎
+
+*Citation.* Haobo Ma; Reza Nikandish; Wenlin Zhang (2026). *Subgroup total perfect codes in Cayley sum graphs: a missing case and its consequences*. DOI: [10.5281/zenodo.23375144](https://doi.org/10.5281/zenodo.23375144). URL: <https://doi.org/10.5281/zenodo.23375144>.
+
+*Commentary.*
+
+For every finite group and every conjugation-invariant connection set Y, all actual graph degrees are equal if and only if Y contains every square of G or contains none. Regularity is expressed by the neighbor cardinal at every vertex equaling that at the identity, which exists in every group. This supplies the full graph-regularity part of C7; abelian subgroup PC/TPC classifications, Frattini identities, the trivial-subgroup positive case and all reported enumeration tables remain separate obligations.
+
+**Definition 1.3 (The subgroup of squares).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squareSubgroup`
 
@@ -16,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squareSu
 
 In an abelian group the squaring homomorphism has subgroup image. This is the actual set of ambient squares, with no square premise imposed on a witness subgroup.
 
-**Theorem 1.2 (The exact square-set carrier).**
+**Theorem 1.4 (The exact square-set carrier).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squares_eq`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squares_
 
 The carrier of the squaring image equals the elementwise square set. The finite Sylow/Frattini identity Sq(G)=Phi(Q)K below gives the source correspondence with an actual odd Hall complement.
 
-**Theorem 1.3 (A normalized transversal avoiding all nonidentity squares).**
+**Theorem 1.5 (A normalized transversal avoiding all nonidentity squares).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_free_normalized`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_f
 
 If H contains an ambient nonsquare z, modify each nonidentity square representative t to tz, leaving 1 fixed. Every representative stays in its original H-coset, uniqueness is preserved, and all nonidentity representatives are ambient nonsquares. This is a construction for all cosets, not a supplied transversal premise.
 
-**Theorem 1.4 (The full regular PC criterion).**
+**Theorem 1.6 (The full regular PC criterion).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.perfect_iff`
 
@@ -52,7 +76,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.perfect_
 
 For every subgroup H of every finite abelian G, a regular sum graph with H perfect exists exactly when H is trivial, H contains an ambient nonsquare, or H equals Sq(G). The trivial subgroup is perfect in CS(G,G), the complete simple graph. Omitting that alternative would misstate the retained nontrivial-H antecedent Zhang 5.3. Witness graphs may change during normalization.
 
-**Theorem 1.5 (The corrected regular TPC criterion).**
+**Theorem 1.7 (The corrected regular TPC criterion).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.total_iff`
 
@@ -64,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.total_if
 
 A subgroup H of a finite abelian G has a regular total-code witness exactly when H contains an ambient nonsquare or Sq(G) has two elements and lies in H. In the latter necessity branch H=Sq(G) and |H|=2. Sufficiency constructs an actual square-free transversal or inserts the two ambient squares into a normalized transversal. This is the universal Proposition 3.2 argument; reported finite tables do not prove this criterion.
 
-**Theorem 1.6 (The exact square subgroup in Sylow and Hall coordinates).**
+**Theorem 1.8 (The exact square subgroup in Sylow and Hall coordinates).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_frattini_hall`
 
@@ -76,7 +100,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_f
 
 For every finite abelian group and every actual Sylow-2 subgroup Q, construct an actual complementary subgroup K of odd order and prove Sq(G)=Phi(Q)K inside G. This discharges the separate identity in Zhang 5.3 without assuming a decomposition or the desired square identity. The scoped Frattini proof adapts Qiuzhen-CFSG/CFSG at 0c6635528a02dd46f2e93e2ade0c4ac647ad1eb7, retaining its Apache-2.0 source and license; actual Schur-Zassenhaus and finite-group primitives are directly imported from the pinned Mathlib.
 
-**Theorem 1.7 (An actual nonsquare).**
+**Theorem 1.9 (An actual nonsquare).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_nonsquare`
 
@@ -88,7 +112,7 @@ Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_non
 
 Cauchy's theorem gives a nontrivial kernel element of the finite squaring map; noninjectivity implies nonsurjectivity and hence a nonsquare. The consumer is the total-code construction for even H.
 
-**Theorem 1.8 (Every even abelian subgroup has a total-code witness).**
+**Theorem 1.10 (Every even abelian subgroup has a total-code witness).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_total_exists`
 
@@ -102,9 +126,11 @@ For every even-order H in a finite abelian G, an actual H-nonsquare and an abeli
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.degree_card`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_nonsquare`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.even_total_exists`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.perfect_iff`
+- Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.regularity_iff`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.squareSubgroup`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_frattini_hall`
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.square_free_normalized`
@@ -112,4 +138,4 @@ For every even-order H in a finite abelian G, an actual H-nonsquare and an abeli
 - Truth anchor: `D5/S3/Combinatorics/CayleySumCodes/AbelianRegularCodes.total_iff`
 - Dependency: [D5/S3/Combinatorics/CayleySumCodes/NormalSubgroupCriterion](NormalSubgroupCriterion.md)
 - Dependency: [D5/S3/Combinatorics/CayleySumCodes/PerfectCodeTransversal](PerfectCodeTransversal.md)
-- Dependency: [D5/S3/Combinatorics/CayleySumCodes/Regularity](Regularity.md)
+- Dependency: [D5/S3/Combinatorics/CayleySumCodes/TotalPerfectCriterion](TotalPerfectCriterion.md)

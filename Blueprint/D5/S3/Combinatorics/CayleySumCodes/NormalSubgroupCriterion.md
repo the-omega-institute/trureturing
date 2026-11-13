@@ -4,6 +4,8 @@
 
 The corrected existential criterion for normal subgroup total perfect codes.
 
+For every finite group G, every subgroup H, every actual left transversal T of H and every g in G, the set of y in T with g inverse times y in H has cardinality one. Inversion converts the usual representative test y inverse times g in H to this test; uniqueness then gives the cardinality. No normality assumption on H is needed for this step, which also supplies the abelian regular total-code constructions.
+
 **Theorem 1.1 (The complete normal-H equivalence).**
 
 Lean statement: `D5/S3/Combinatorics/CayleySumCodes/NormalSubgroupCriterion.result`
