@@ -7,6 +7,9 @@ internal sealed class BanerjeeChaudhuryStabilityRefutationDocument : IScribeDocu
 {
     private const string Prefix = "D5/S3/Quantum/Matrix/BanerjeeChaudhuryStabilityRefutation.";
 
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/Eigenstructure/banerjeechaudhury2025stability");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A strictly positive stochastic matrix and a positive semidefinite projection violate the proposed simultaneous stability interval.",
         H("A counterexample to the Banerjee–Chaudhury stability conjecture"),
@@ -72,7 +75,7 @@ internal sealed class BanerjeeChaudhuryStabilityRefutationDocument : IScribeDocu
             Describe.Lean(
                 DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The full simultaneous stability assertion"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The proposition claim states: for every natural n greater than zero, "
                     + "every pair of real matrices W and B indexed by Fin n and every real vector pi "
