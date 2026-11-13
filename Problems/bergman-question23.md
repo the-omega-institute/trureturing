@@ -151,6 +151,12 @@ supplies `Submodule.map₂`, finite-generation closure under bilinear images,
 implementation uses multisets directly, avoiding an extra exponent-vector
 equivalence.
 
+The unfinished source-bound audit of `family` is tracked in
+[issue 30131](https://github.com/the-omega-institute/trureturing/issues/30131).
+The typed Reg proof is retained; its field-instance coordinate lacks a
+validated source-binding certificate. This audit boundary is separate from
+the mathematical declaration.
+
 ## Triage
 
 This is a Tier-1 externally named subsidiary question. The formal family is
