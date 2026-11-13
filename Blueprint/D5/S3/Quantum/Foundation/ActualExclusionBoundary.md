@@ -26,7 +26,7 @@ Each whole exclusion lies in the actual relative boundary. Its common original c
 
 If the midpoint of two points of K is on the boundary, coverage puts that midpoint in one whole exclusion. The extreme-set property forces both endpoints into that same exclusion. Conversely, convexity keeps the midpoint in any common exclusion, hence on the actual boundary. Equal endpoints and the degenerate ambient space remain in scope.
 
-This is the original-boundary midpoint bridge needed for IX116.6. It uses neither Pair properness nor injectivity, orthogonality axioms, common centers or global singleton labels. To obtain the all-repeated contradiction one must still prove repeated-block isolation, use that isolation to establish transitivity of the common-ball relation, construct its actual compact Hausdorff quotient, construct the common rational slice and convex neighborhood controls, and complete the radial homotopy obstruction. Existence of a singleton-labelled ball, its propagation and continuum multiplicity are not conclusions here. No originality claim is made.
+This is the original-boundary midpoint bridge needed for IX116.6. It uses neither Pair properness nor injectivity, orthogonality axioms, common centers or global singleton labels. The following theorem supplies repeated-block isolation, transitivity and the actual compact Hausdorff quotient in the all-repeated contradiction branch. The common rational slice, convex neighborhood controls and radial homotopy obstruction remain further obligations. Existence of a singleton-labelled ball, its propagation and continuum multiplicity are not conclusions here. No originality claim is made.
 
 **Theorem 1.2 (The literal all-repeated boundary quotient).**
 
