@@ -1,0 +1,21 @@
+**推论 120.13（真实缺口及正确球扇）。** 对单位 $v$，置 $r_v=c-Bv$。则
+
+$$
+e_{q_v}(r_v)=\frac{\rho_p(v)-1}{\rho_p(v)+1},\qquad
+\rho_p(v)=1\ \Longleftrightarrow\ q_v\perp r_v.
+\tag{IX120.19}
+$$
+
+第一式直接代入。若 $q_v\perp r_v$，则 $r_v\in D_{q_v}$，完整确认效应 $e_{q_v}$ 必在 $r_v$ 为零，给 $\rho_p(v)=1$；另一方向由同一 $e_{q_v}$ 见证。这使用完整 $D_{q_v}$ 的定义，没有把任意边见证认作唯一完整确认效应。
+
+因而 $R_p(N_p)$ 等于全部Lorentz正仿射锥 $\{\alpha+v\cdot w:\alpha\ge\|v\|\}$，恰当且仅当每个单位方向 $\rho_p(v)=1$。同一个 $p$ 只属于 $\mathcal T$ 则只要求至少一个方向为一，不能提前替换为全方向结论。
+
+对不同 $v,w\in S^2$，$D_{q_v},D_{q_w}$ 因Inj不同，且都含 $p$，故
+
+$$
+D_{q_v}\cap D_{q_w}=\{p\}.
+\tag{IX120.20}
+$$
+
+但 $p\notin D_p$，所以不能写 $D_p\cap D_{q_v}=\{p\}$。准确地，若 $D_p\cap D_{q_v}$ 非空，交点 $t$ 必被 $e_{q_v}$ 在 $D_p$ 上读零；(IX120.18)与 $\rho_p\ge1$ 使这恰在 $\rho_p(v)=1$ 时发生，且此时交点为 $r_v$。点交集也不推出两个球在 $p$ 的切空间零交。
+

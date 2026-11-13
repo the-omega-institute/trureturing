@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:59186a3d123360211095b7686c6af2a8c6038dec04731b8ca81a5fbca67200ab
+  normalized_sha256: sha256:59186a3d123360211095b7686c6af2a8c6038dec04731b8ca81a5fbca67200ab
+cas_ref: sha256:59186a3d123360211095b7686c6af2a8c6038dec04731b8ca81a5fbca67200ab
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/ReciprocalEndpointExposure.reciprocal_endpoint_exposure
+    target_statement_id: sha256:39ad79353e15f4095995c6cf78ce6b33f90723f74cb53c39740cf36bf7341da9
+receipts:
+  unresolved_subitems: []
