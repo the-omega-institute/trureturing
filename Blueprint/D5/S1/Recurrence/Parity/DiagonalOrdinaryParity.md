@@ -12,6 +12,10 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies (\operatorname{Odd}\left(\operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a177775-ordinary-coefficient-parity` (proved) by `D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a177775-ordinary-coefficient-parity","declaration_gid":"D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2026). *OEIS A177775, parity of the normalized diagonal-constraint series*. URL: <https://raw.githubusercontent.com/oeis/oeisdata/501c6189fe17530d95e5a4f90dbca228feb5713d/seq/A177/A177775.seq>.
