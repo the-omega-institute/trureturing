@@ -68,7 +68,7 @@ The displayed formula records the finite-word counting statement and its coeffic
 
 **Definition 1.6 (Finite words satisfying a predicate).**
 
-$$\forall A \in \operatorname{Type}\left(\right),\; \forall inst \in \operatorname{Fintype}\left(A\right),\; \forall n \in \mathbb{N},\; \forall P \in \operatorname{List}\left(A\right) \to \operatorname{Prop}\left(\right),\; \operatorname{count}\left(A, n, P\right) = \operatorname{Fintype}.\operatorname{card}\left(\operatorname{Subtype}\left((w: \operatorname{Fin}\left(n\right) \to A \mapsto P\left(\operatorname{List}.\operatorname{ofFn}\left(w\right)\right))\right)\right)$$
+$$\forall A \in \operatorname{Type}\left(\right),\; [\operatorname{Fintype}\left(A\right)], \forall n \in \mathbb{N},\; \forall P \in \operatorname{List}\left(A\right) \to \operatorname{Prop}\left(\right),\; \operatorname{count}\left(A, n, P\right) = \operatorname{Fintype}.\operatorname{card}\left(\operatorname{Subtype}\left((w: \operatorname{Fin}\left(n\right) \to A \mapsto P\left(\operatorname{List}.\operatorname{ofFn}\left(w\right)\right))\right)\right)$$
 
 *Formalization.* `D5/S1/Words/LatticePaths/MatharA379464Counting.count` (`✓ std3`).
 
@@ -80,7 +80,7 @@ The displayed formula records the finite-word counting statement and its coeffic
 
 **Theorem 1.7 (Inserting optional letters).**
 
-$$\forall A \in \operatorname{Type}\left(\right),\; \forall inst \in \operatorname{Fintype}\left(A\right),\; \forall n \in \mathbb{N},\; \forall P \in \operatorname{List}\left(A\right) \to \operatorname{Prop}\left(\right),\; \operatorname{count}\left(\operatorname{Option}\left(A\right), n, (l: \operatorname{List}\left(\operatorname{Option}\left(A\right)\right) \mapsto P\left(\operatorname{List}.\operatorname{filterMap}\left(\operatorname{id}\left(\right), l\right)\right))\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} \operatorname{Nat}.\operatorname{choose}\left(n, k\right) \cdot \operatorname{count}\left(A, k, P\right)$$
+$$\forall A \in \operatorname{Type}\left(\right),\; [\operatorname{Fintype}\left(A\right)], \forall n \in \mathbb{N},\; \forall P \in \operatorname{List}\left(A\right) \to \operatorname{Prop}\left(\right),\; \operatorname{count}\left(\operatorname{Option}\left(A\right), n, (l: \operatorname{List}\left(\operatorname{Option}\left(A\right)\right) \mapsto P\left(\operatorname{List}.\operatorname{filterMap}\left(\operatorname{id}\left(\right), l\right)\right))\right) = \sum_{k \in \operatorname{Finset}.\operatorname{range}\left(n + 1\right)} \operatorname{Nat}.\operatorname{choose}\left(n, k\right) \cdot \operatorname{count}\left(A, k, P\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/LatticePaths/MatharA379464Counting.insertion_formula` (`✓ std3`). ∎
 

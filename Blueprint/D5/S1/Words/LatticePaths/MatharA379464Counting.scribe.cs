@@ -113,7 +113,7 @@ internal sealed class MatharA379464CountingDocument : IScribeDocumentDefinition
         var predicateType = new Formula.TypeArrow(Call("List", alphabet), Call("Prop"));
         var carrier = Call("Subtype", Lambda("w", new Formula.TypeArrow(Fin(n), alphabet),
             new Formula.Apply(p, [Qualified("List", "ofFn", w)])));
-        return Disp(All("A", Call("Type"), All("inst", Call("Fintype", alphabet),
+        return Disp(All("A", Call("Type"), Seq(OpenBracket, Call("Fintype", alphabet), CloseBracket, Comma, Sp,
             All("n", N(), All("P", predicateType,
                 Eq(Call("count", alphabet, n, p), Qualified("Fintype", "card", carrier)))))));
     }
@@ -127,7 +127,7 @@ internal sealed class MatharA379464CountingDocument : IScribeDocumentDefinition
         var lhs = Call("count", Call("Option", alphabet), n, predicate);
         var term = Mul(Qualified("Nat", "choose", n, k), Call("count", alphabet, k, p));
         var rhs = Sum(k, Qualified("Finset", "range", Add(n, D(1))), term);
-        return Disp(All("A", Call("Type"), All("inst", Call("Fintype", alphabet),
+        return Disp(All("A", Call("Type"), Seq(OpenBracket, Call("Fintype", alphabet), CloseBracket, Comma, Sp,
             All("n", N(), All("P", predicateType, Eq(lhs, rhs))))));
     }
 
