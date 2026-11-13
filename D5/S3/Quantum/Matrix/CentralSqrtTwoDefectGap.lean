@@ -99,7 +99,7 @@ theorem rank_one_gap_of_matrices {d : Type*} [Fintype d] [DecidableEq d]
     (rank_one_cross_identity hA hupdate u v lam mu hu hv) hx hy hz
   simpa [abs_sub_comm] using h
 
-def centralEdges (n : ℕ) (hn : 1 ≤ n) : Fin (2 * n - 1 + 1) → ℝ :=
+def centralEdges (n : ℕ) (_hn : 1 ≤ n) : Fin (2 * n - 1 + 1) → ℝ :=
   fun i => if i.val = n - 1 then Real.sqrt 2 else 1
 
 def centralDefect (n : ℕ) (hn : 1 ≤ n) :
@@ -244,13 +244,16 @@ private theorem sector_row (n : ℕ) (b : ℝ) (v : Fin (n + 1) → ℝ)
       if hi : i.val < n then v ⟨i.val + 1, by omega⟩ else 0 := by
     simp only [Matrix.mulVec, dotProduct, upperBand, Pi.one_apply]
     by_cases hi : i.val < n
-    · rw [dif_pos hi, Finset.sum_eq_single (⟨i.val + 1, by omega⟩ : Fin (n + 1))]
+    · rw [dite_eq_left hi, Finset.sum_eq_single (⟨i.val + 1, by omega⟩ : Fin (n + 1))]
       · simp
       · intro j _ hj
-        have hne : i.val + 1 ≠ j.val := by intro he; apply hj; apply Fin.ext; omega
+        have hne : i.val + 1 ≠ j.val := by
+          intro he
+          apply hj
+          exact Fin.ext he.symm
         simp [hne]
       · simp
-    · rw [dif_neg hi]
+    · rw [dite_eq_right hi]
       apply Finset.sum_eq_zero
       intro j _
       have hne : i.val + 1 ≠ j.val := by omega
@@ -260,20 +263,25 @@ private theorem sector_row (n : ℕ) (b : ℝ) (v : Fin (n + 1) → ℝ)
       if hi : 0 < i.val then v ⟨i.val - 1, by omega⟩ else 0 := by
     simp only [Matrix.mulVec, dotProduct, Matrix.transpose_apply, upperBand, Pi.one_apply]
     by_cases hi : 0 < i.val
-    · rw [dif_pos hi, Finset.sum_eq_single (⟨i.val - 1, by omega⟩ : Fin (n + 1))]
+    · rw [dite_eq_left hi, Finset.sum_eq_single (⟨i.val - 1, by omega⟩ : Fin (n + 1))]
       · have he : i.val - 1 + 1 = i.val := by omega
         simp [he]
       · intro j _ hj
-        have hne : j.val + 1 ≠ i.val := by intro he; apply hj; apply Fin.ext; omega
+        have hne : j.val + 1 ≠ i.val := by
+          intro he
+          apply hj
+          apply Fin.ext
+          change j.val = i.val - 1
+          omega
         simp [hne]
       · simp
-    · rw [dif_neg hi]
+    · rw [dite_eq_right hi]
       apply Finset.sum_eq_zero
       intro j _
       have hne : j.val + 1 ≠ i.val := by omega
       simp [hne]
   simp only [sectorMatrix, D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix,
-    Matrix.add_mulVec, Matrix.diagonal_mulVec, Pi.add_apply, hup, hlow]
+    Matrix.add_mulVec, Matrix.mulVec_diagonal, Pi.add_apply, hup, hlow]
   by_cases hi : i.val < n
   · have hne : i ≠ Fin.last n := by intro he; subst i; simp at hi
     simp [hi, Pi.single_apply, hne]
@@ -289,7 +297,10 @@ theorem sector_endpoint_observability (n : ℕ) (b t : ℝ) (v : Fin (n + 1) →
     if hj : 1 ≤ j ∧ j ≤ n + 1 then v ⟨j - 1, by omega⟩
     else if j = n + 2 then b * v (Fin.last n) else 0
   have hy0 : y 0 = 0 := by simp [y]
-  have hyn : y (n + 1) = v (Fin.last n) := by simp [y]
+  have hyn : y (n + 1) = v (Fin.last n) := by
+    simp only [y, show 1 ≤ n + 1 ∧ n + 1 ≤ n + 1 by omega, dite_true,
+      Nat.add_sub_cancel]
+    rfl
   have hyb : y (n + 1 + 1) = b * y (n + 1) := by simp [y, hyn, Nat.add_assoc]
   have hrec : ∀ j, j + 2 ≤ n + 1 + 1 → y (j + 2) = t * y (j + 1) - y j := by
     intro j hj
@@ -316,11 +327,10 @@ theorem sector_endpoint_observability (n : ℕ) (b t : ℝ) (v : Fin (n + 1) →
   have hb := recurrence_endpoint_observability (n + 1) (by omega) t b y hy0 hrec hyb
   rw [hyn] at hb
   have hs : (∑ j ∈ Finset.range (n + 1), y (j + 1) ^ 2) = ∑ i, v i ^ 2 := by
-    rw [Fin.sum_univ_eq_sum_range]
+    rw [← Fin.sum_univ_eq_sum_range (fun j => y (j + 1) ^ 2)]
     apply Finset.sum_congr rfl
     intro j hj
-    simp [y, Finset.mem_range.mp hj, show j + 1 ≤ n + 1 by
-      have := Finset.mem_range.mp hj; omega]
+    simp [y, show j.val + 1 ≤ n + 1 by omega]
   rw [hs] at hb
   simpa only [Nat.cast_add, Nat.cast_one] using hb
 
@@ -335,9 +345,9 @@ theorem sector_inverse_cubic_gap (n : ℕ) (u v : Fin (n + 1) → ℝ) (lam mu :
   have hK : 0 < K := by dsimp [K]; positivity
   have hs : (sectorMatrix n (-Real.sqrt 2)).IsSymm := by
     unfold sectorMatrix D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.jacobiMatrix
-    exact (Matrix.isSymm_diagonal _).add (by
-      simpa only [add_assoc] using
-        Matrix.isSymm_add_transpose_self
+    simpa only [add_assoc] using
+      (Matrix.isSymm_diagonal (Pi.single (Fin.last n) (-Real.sqrt 2))).add
+        (Matrix.isSymm_add_transpose_self
           (D5.S3.Quantum.Algebra.ZeitlinSixJ.Recurrence.upperBand n 1))
   have hupdate : sectorMatrix n (Real.sqrt 2) = sectorMatrix n (-Real.sqrt 2) +
       (2 * Real.sqrt 2) • Matrix.vecMulVec
