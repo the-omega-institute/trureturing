@@ -16,6 +16,7 @@ coprimality or tail ordering is assumed. Passing this necessary local
 test does not assert existence of a root or integral graph spectrum. -/
 set_option autoImplicit false
 set_option maxHeartbeats 800000
+set_option maxRecDepth 8192
 namespace D5.S3.Combinatorics.SpectralGraph.PairResonanceLocal
 open PairedIdealIntersectionObstructions PairResonanceAlgebra IntegerPrimeOrder
 
@@ -79,18 +80,18 @@ theorem scaled_root_square (p e : ℕ) [hp : Fact p.Prime]
     have hq := discriminant_expansion ((P : ℚ)*H) ((U : ℚ)/(H : ℚ)^2) s
     have hb : -((P : ℚ)*H)+((P : ℚ)*H)^2*((U : ℚ)/(H : ℚ)^2) =
         -(P : ℚ)*H+(P : ℚ)^2*U := by
-      field_simp
+      field_simp [hHq]
       <;> ring
     rw [hb] at hq
     have he : ((P : ℚ)*H)^6*((s : ℚ)-1)^2*
-          localPolynomial s ((U : ℚ)/(H : ℚ)^2)+
+          localPolynomial (s : ℚ) ((U : ℚ)/(H : ℚ)^2)+
         ((P : ℚ)*H)^7*errorPolynomial ((P : ℚ)*H) ((U : ℚ)/(H : ℚ)^2) s =
         (P : ℚ)^6*(((s : ℚ)-1)^2*
           ((2*(s : ℚ)-1)^2*(H : ℚ)^2*(U : ℚ)^2+
             2*(s : ℚ)^2*(2*(s : ℚ)-1)^2*(H : ℚ)^4*U+(s : ℚ)^4*(H : ℚ)^6)+
           P*normalizedError (P : ℚ) H U s) := by
       unfold localPolynomial errorPolynomial normalizedError
-      field_simp
+      field_simp [hHq]
       <;> ring
     rw [he] at hq
     unfold discriminant tailA tailB tailC normalizedError at hq ⊢

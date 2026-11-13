@@ -197,7 +197,8 @@ private theorem fixed_profile (g : stabilizer)
       · intro ha
         exact ⟨a,ha,rfl⟩
       · rintro ⟨b,hb,hba⟩
-        exact (congrArg Prod.fst (coordinates.injective hba)) ▸ hb
+        have hba' : b = a := congrArg Prod.fst (coordinates.injective hba)
+        exact hba' ▸ hb
     rw [hk,hk]
     have hf := hg (coordinates (a,0)) ⟨a,rfl⟩
     constructor

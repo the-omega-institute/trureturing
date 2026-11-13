@@ -149,7 +149,7 @@ def rational_base (a : ℚ) : QuarticPoint a :=
   ⟨(baseB a,B a (baseB a)),by
     have h := recovery_identity a (baseB a) 0
     rw [base_zero_tail,mul_zero] at h
-    simpa only [mul_zero,zero_add] using sub_eq_zero.mp h⟩
+    simpa only [mul_zero,zero_add,sub_eq_zero] using h⟩
 
 /-- All five quartic coefficients, including the nonzero constant term. -/
 theorem quartic_coefficients {R : Type*} [CommRing R] (a b : R) :
