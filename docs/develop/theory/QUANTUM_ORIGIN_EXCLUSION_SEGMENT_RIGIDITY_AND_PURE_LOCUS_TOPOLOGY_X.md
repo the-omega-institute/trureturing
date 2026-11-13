@@ -2363,3 +2363,1098 @@ X121—X123 的实际种子、最大宽共同接触、共同法向斜率与六�
 [Q124BP]: https://arxiv.org/pdf/2103.08446v1 "J.-B. Bru and W. de Siqueira Pedra；§4.3，PDF31：有限维Straszewicz定理的明确陈述。"
 
 ## 追加锚（本行以下为增补区）
+
+## 125. 旧完整球的共同近零确认与固定球心的真零稳定性
+
+**定义 125.1（完整原域、共同读数与球心）。** 保留 [IX114.1][Q125IX] 的同一个非零有限维实空间 $V$、闭尖生成凸锥 $C$ 及在 $C\setminus\{0\}$ 上严格正的 $u\in V^{\ast}$。始终取全部
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\\
+F_a=\{e\in\mathcal E:e(a)=1\},\qquad
+T_a(x)=\min_{e\in F_a}e(x)\quad(a\in P,\ x\in K),\\
+D_a=\{x\in K:T_a(x)=0\}.
+\end{gathered}
+\tag{X125.1}
+$$
+
+这里的第二变量包括所有混态，确认族使用整个原效应区间。假设 EB3 与 PR：每个完整 $D_a$ 仿射同构于整个闭三球，且 $T_a(b)=T_b(a)$ 对全部原纯点 $a,b$ 成立。PR 只交换纯端点，不是顺序测量交换。固定辅助欧氏范数，令
+
+$$
+M=\max_{e\in\mathcal E}\|e\|_{\ast}<\infty,
+\qquad c_p=\text{完整球 }D_p\text{ 的唯一对称中心}.
+\tag{X125.2}
+$$
+
+此范数只承担距离与拓扑，不是共同物理内积。按 IX114.1、114.4，$K,P,\mathcal E$ 均紧，$F_a$ 非空紧；按 IX114.4，固定第一参数的 $T_a$ 在整个 $K$ 上有共同 Lipschitz 常数 $M$。
+
+对非空、紧、凸、中心对称的 $G\subset K$，中心记为 $c$，定义同一效应的整集最优上读数
+
+$$
+\kappa_G(a)=\min_{e\in F_a}\max_{x\in G}e(x).
+\tag{X125.3}
+$$
+
+紧性与配对连续性保证最小值、最大值均达到。另记 $Z(e)=\{x\in K:e(x)=0\}$。只复用 IX114.2 的准确原面接口：每个完整 $D_a$ 是非单点紧暴露极大真面；其球面恰为 $P\cap D_a$；存在 $h_a\in F_a$ 使 $Z(h_a)=D_a$；所有非空真面均为原纯单点或一张完整排除球。不输入该分类最后一项的全 Pair 前件，也不输入 Inj、least 确认效应或全局球族连续性。
+
+**定理 125.2（同一原确认效应在整块旧混态球上趋零）。** 在定义125.1的完整 EB3+PR 域中，任取 $p\in P$ 及原纯列 $a_i\to p$，置 $G=D_p$。则
+
+$$
+T_a(c)\le\kappa_G(a)\le2T_a(c)
+\quad(a\in P)
+\tag{X125.4}
+$$
+
+对定义125.1中的任意中心对称 $G$ 成立；对上述固定完整 $G=D_p$，有
+
+$$
+\kappa_{D_p}(a_i)\longrightarrow0,
+\qquad T_{a_i}(c_p)\longrightarrow0,
+\qquad \sup_{x\in D_p}T_{a_i}(x)\longrightarrow0.
+\tag{X125.5}
+$$
+
+具体地，若实际完整球 $G_i=D_{a_i}$ 趋于 $G$，则
+
+$$
+\kappa_G(a_i)\le M d_H(G_i,G).
+\tag{X125.6}
+$$
+
+若实际完整球塌缩为 $G_i\to\{q\}$，则 $q\in P\cap G$。记 $\delta_i=d_H(G_i,\{q\})$，对充分大的 $i$，存在同一张 $e_i\in F_{a_i}$，使
+
+$$
+\begin{gathered}
+\max_{x\in G}e_i(x)
+\le M\bigl(\|a_i-p\|+\delta_i\bigr),\\
+e_i(c_p)\le\frac M2\bigl(\|a_i-p\|+\delta_i\bigr).
+\end{gathered}
+\tag{X125.7}
+$$
+
+这些结论不以 NC、UF、Inj 或全域 least 为前提；尤其不要求对旧球的不同输入更换效应。
+
+证明。先记录推导中使用的两个初等仿射步骤，它们不作为独立的新分类结果。对任何原纯 $a$、原混态 $x$，若 $t=T_a(x)<1$，则每个达到此最小值的 $e\in F_a$ 都满足 $\min_K e=0$。否则令 $m=\min_K e>0$。有 $m\le t<1$，且
+
+$$
+\widetilde e=\frac{e-mu}{1-m}\in\mathcal E,
+\qquad\widetilde e(a)=1,
+\qquad\widetilde e(x)=\frac{t-m}{1-m}<t,
+\tag{X125.8}
+$$
+
+矛盾。效应资格在整个原 $K$ 上由 $0\le e-m\le1-m$ 给出，再经同一 $u$ 齐次化到整个 $C$；没有调用面效应延拓。
+
+其次，若 $G$ 关于 $c$ 对称，则 $x\in G$ 时 $2c-x\in G$。每张原效应非负且仿射，因而
+
+$$
+0\le e(x)\le e(x)+e(2c-x)=2e(c).
+\tag{X125.9}
+$$
+
+因为 $c\in G$，先对每张 $e$ 使用 $e(c)\le\max_Ge$ 再取最小值得 (X125.4) 的左侧；取达到 $T_a(c)$ 的效应并用 (X125.9)，得右侧。此处没有交换极小与极大，也没有使用 minimax 等式。
+
+若 $G_i\to G$，从 IX114.2 取原 $h_i\in F_{a_i}$，使 $h_i|_{G_i}=0$。对每个 $x\in G$，取 $y\in G_i$ 达到到 $G_i$ 的距离。全效应的统一范数界给
+
+$$
+0\le h_i(x)=h_i(x)-h_i(y)
+\le M\|x-y\|\le M d_H(G_i,G).
+$$
+
+同一 $h_i$ 对整个 $G$ 有效，得到 (X125.6)。
+
+现在设实际 $G_i\to\{q\}$。由 [IX115.4—115.5][Q125IX]，$q\in P\cap G$。在旧完整球取对径纯点 $r=2c_p-q\in P\cap G$。PR 只用于这个纯点 $r$ 与 $a_i,p$，并结合固定 $T_r$ 在整个 $K$ 上的 Lipschitz 界，给
+
+$$
+0\le T_{a_i}(r)=T_r(a_i)
+\le M\|a_i-p\|,
+\qquad T_r(p)=T_p(r)=0.
+\tag{X125.10}
+$$
+
+右端趋零，所以充分大时 $T_{a_i}(r)<1$。取 $e_i\in F_{a_i}$ 达到该最小值。由 (X125.8) 的论证，存在 $z_i\in K$ 使 $e_i(z_i)=0$；因为它确认 $a_i$，有 $z_i\in G_i$。于是
+
+$$
+\|z_i-q\|\le\delta_i,
+\qquad0\le e_i(q)\le M\delta_i,
+\qquad e_i(r)=T_{a_i}(r)\le M\|a_i-p\|.
+\tag{X125.11}
+$$
+
+用 $q+r=2c_p$ 及 (X125.9)，得到
+
+$$
+\max_Ge_i\le2e_i(c_p)=e_i(q)+e_i(r)
+\le M\bigl(\delta_i+\|a_i-p\|\bigr),
+$$
+
+即 (X125.7)。这里只知道 $Z(e_i)$ 是原 $K$ 的一个非空真面，且包含于 $G_i$；它可以是原纯单点。如它含两个点，原面分类与完整球极大性才使它等于 $G_i$，不能事先作此替换。
+
+最后处理任意 $a_i\to p$。非空紧子集的 Hausdorff 紧性使任一子列的 $G_i\subset K$ 可再取收敛子列。IX115.5 准确给该极限只有 $G$ 或 $\{q\}$ 两种。前者由 (X125.6)，后者由 (X125.7)，都使 $\kappa_G(a_i)\to0$。若原序列的 $\kappa_G$ 不趋零，取有统一正下界的子列就与这两种情况矛盾。因此第一个极限成立。再用
+
+$$
+0\le T_{a_i}(c_p)\le\kappa_G(a_i),
+\qquad0\le\sup_{x\in G}T_{a_i}(x)\le\kappa_G(a_i)
+$$
+
+得到其余极限。第二个不等式来自同一张达到 $\kappa_G$ 的原效应，而不是将 PR 外推成混态互易或把 $T_a$ 当作仿射函数。证毕。
+
+**推论 125.3（确认纤维极限必遇旧球完整零确认面）。** 在同一完整 EB3+PR 域中，沿用 IX120.1 的完整零确认族
+
+$$
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\tag{X125.12}
+$$
+
+它是 $F_p$ 的非空紧暴露真面，并且
+
+$$
+\mathcal A_p=\{e\in F_p:e(c_p)=0\},
+\qquad \forall e\in\mathcal A_p:\quad Z(e)=D_p.
+\tag{X125.13}
+$$
+
+若 $a_i\to p$ 且非空紧集 $F_{a_i}$ 在 $\mathcal E$ 中 Hausdorff 收敛于 $A$，则
+
+$$
+A\subseteq F_p,
+\qquad A\cap\mathcal A_p\ne\varnothing.
+\tag{X125.14}
+$$
+
+即使没有预先选定这样的极限，也有
+
+$$
+\min_{e\in F_{a_i}}\operatorname{dist}_{\ast}(e,\mathcal A_p)
+\longrightarrow0.
+\tag{X125.15}
+$$
+
+证明。IX114.2 给 $\mathcal A_p$ 非空；紧性由闭条件给出。原效应在 $D_p$ 上非负，(X125.9) 给 $e(c_p)=0$ 当且仅当在整个 $D_p$ 上为零。评价 $e\mapsto e(c_p)$ 在凸集 $F_p$ 上的最小值为零，最小面便是 $\mathcal A_p$；$u\in F_p$ 而 $u(c_p)=1$，所以它是暴露真面。对 $e\in\mathcal A_p$，$e(p)=1$ 保证 $e\ne0$，$Z(e)$ 是包含 $D_p$ 的原真面。IX114.2 的极大真面性质因而给 $Z(e)=D_p$。这里非零性、全域正性与完整球极大性均不可省略。
+
+对任意 $f\in A$，Hausdorff 收敛提供 $f_i\in F_{a_i}$ 使 $f_i\to f$。由 $f_i(a_i)=1$ 得 $f(p)=1$，故 $A\subseteq F_p$。再取 $e_i\in F_{a_i}$ 达到 $\kappa_{D_p}(a_i)$。紧 $\mathcal E$ 中任一收敛子列 $e_i\to e$，均由定理125.2 得
+
+$$
+e(p)=1,\qquad e|_{D_p}=0.
+$$
+
+所以 $e\in\mathcal A_p$；若存在指定的 Hausdorff 极限 $A$，同一子列还给 $e\in A$，证明交非空。所有这样的聚点都在紧集 $\mathcal A_p$，故这些 $e_i$ 到它的距离趋零，得到 (X125.15)。这不声称 $A=F_p$、$A\subseteq\mathcal A_p$，也不提供趋于预先指定效应的选择或连续选择。证毕。
+
+**定义 125.4（旧球心的实际零集稳定性）。** 条件 CS 为
+
+$$
+\forall p\in P\ \forall(a_i)\subset P:\quad
+ a_i\to p\ \Longrightarrow
+ \operatorname{dist}(c_p,D_{a_i})\longrightarrow0.
+\tag{X125.16}
+$$
+
+球心始终取固定旧球 $D_p$ 的 $c_p$。此处距离的对象是同标签完整 $D_{a_i}$，不是某张效应的零集。NC 保留124.1的原义 $\inf_p\operatorname{diam}D_p>0$；UF 保留 IX115.8 的原义 $\sup_p\beta_{D_p}<\infty$，其中 $\beta_{D_p}=1/(2a_{D_p})$ 是 IX114.5—114.6 的原全锥正延拓预算。
+
+**定理 125.5（CS 恰是既有 UF 的单点几何测试）。** 在同一完整 EB3+PR 域中，对每个固定 $p$，(X125.16) 中以该 $p$ 为极限的条件成立，当且仅当 $a\mapsto D_a$ 在 $p$ 处 Hausdorff 连续。因而
+
+$$
+\mathrm{CS}\quad\Longleftrightarrow\quad\mathrm{UF}
+\quad\Longleftrightarrow\quad\mathrm{NC}.
+\tag{X125.17}
+$$
+
+并且 CS 可代入124.10，得到同原锥、同原单位的完整复三能级静态表示及该定理的全部等价条件。
+
+证明。若整球映射在 $p$ 连续，由 $c_p\in D_p$ 有
+
+$$
+\operatorname{dist}(c_p,D_{a_i})\le d_H(D_p,D_{a_i})\to0.
+$$
+
+反过来，若在 $p$ 不连续，可选 $a_i\to p$，使 $d_H(D_{a_i},D_p)$ 有统一正下界；Hausdorff 紧性给收敛子列。IX115.5 排除其他极限，且上述正下界排除极限为 $D_p$，所以只能有 $D_{a_i}\to\{q\}$，$q\in P\cap D_p$。旧球正维，中心 $c_p$ 是两个不同对径纯点的中点，因而不是原纯点；特别地 $q\ne c_p$。距离对 Hausdorff 收敛连续，故
+
+$$
+\operatorname{dist}(c_p,D_{a_i})\longrightarrow\|c_p-q\|>0,
+$$
+
+与固定 $p$ 的 CS 矛盾。全域连续与 UF 的等价直接消费 IX115.8；UF 与 NC 的等价及静态表示直接消费124.10，不重证其标签单射桥、IX116.2 的重复球二分或 IX118.8 的静态分类。证毕。
+
+定理125.2无条件供应的是 $T_{a_i}(c_p)\to0$；CS 要求的是到实际完整零集的几何距离趋零。两种量不能混同。自动 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathrm{CS}$，等价地自动 UF，仍未证明；满足全部同域前件而使 CS 失败的模型亦未构造。CS 只把既有整球稳定要求化为每个固定旧球心的一点测试，没有取得独立假设数减少的结论，也不证明独立性、最小性或严格更弱的公理包。
+
+**命题 125.6（原复三能级中任意效应零面误差界的失败）。** 在完整复三能级模型中，取两两正交的秩一投影 $p,r,q$，故 $p+r+q=I_3$。对 $0<\varepsilon<1$，令
+
+$$
+A_{\varepsilon}=p+\varepsilon r,
+\qquad c=\frac{r+q}{2}.
+\tag{X125.18}
+$$
+
+以 $A_{\varepsilon}$ 同时表示原效应 $\rho\mapsto\operatorname{Tr}(A_{\varepsilon}\rho)$。则
+
+$$
+\begin{gathered}
+A_{\varepsilon}\in F_p,\qquad
+Z(A_{\varepsilon})=\{q\},\qquad
+A_{\varepsilon}(c)=\varepsilon/2,\\
+\operatorname{dist}_1(c,Z(A_{\varepsilon}))=1,\qquad
+c=c_p\in D_p,\qquad
+\max_{x\in D_p}A_{\varepsilon}(x)=\varepsilon.
+\end{gathered}
+\tag{X125.19}
+$$
+
+这里 $\|X\|_1=\operatorname{Tr}|X|$ 为未除以二的迹范数。于是不存在趋零模 $\omega(t)\to0$（$t\downarrow0$），能对原模型的所有确认效应及所有原态保证
+
+$$
+\operatorname{dist}_1(x,Z(A))
+\le\omega\bigl(\operatorname{Tr}(Ax)\bigr),
+\tag{X125.20}
+$$
+
+即使只要求 $A\in F_p$、$\min_KA=0$、$\max_KA=1$ 且固定 $x=c_p$。
+
+证明。$A_{\varepsilon}$ 的特征值为 $1,\varepsilon,0$，所以 $0\preceq A_{\varepsilon}\preceq I_3$，并确认 $p$。若正半定迹一矩阵 $\rho$ 满足 $\operatorname{Tr}(A_{\varepsilon}\rho)=0$，在 $p,r,q$ 的正交基中，$\rho_{pp}+\varepsilon\rho_{rr}=0$ 迫使两个非负对角元均为零。正半定性给 $|\rho_{jk}|^2\le\rho_{jj}\rho_{kk}$，故对应行列也全为零，余下迹一条件给 $\rho=q$。反向 $A_{\varepsilon}(q)=0$，因此零面恰为单点。
+
+旧完整 $D_p$ 是支撑在 $p^{\perp}$ 上的全部密度矩阵三球，中心为 $(r+q)/2$；这是124.10与 IX118.8 的完整反向字典。直接计算给 $A_{\varepsilon}(c)=\varepsilon/2$。矩阵 $c-q=(r-q)/2$ 的特征值为 $1/2,-1/2,0$，所以其迹范数为一。在整个 $D_p$ 上，效应值为 $\varepsilon\operatorname{Tr}(r\rho)$，最大值为 $\varepsilon$。代入 (X125.20) 便要求 $1\le\omega(\varepsilon/2)\to0$，矛盾。证毕。
+
+该例的标签始终为同一个 $p$，完整 $D_p$ 固定，且这个量子模型满足 CS、UF 与 NC。它反驳的是对任意单张效应零面所要求的统一模，不能作为 EB3+PR 的反模型，也不能反驳只涉及同标签完整 $D_a$ 的 CS。零面取零与完整排除集不可互换；把 (X125.20) 添加为目标理论的必要条件会排除目标量子模型本身。
+
+**约定 125.7（完整候选、几何与静态公理字典）。** 保留的条件候选可完整说成：在同一个有限维原态锥和原单位上，使用全部原纯态、全部混态与全部零一效应；确认一个纯态时能够完全排除的全部态恰成一颗实心三球；交换两个纯端点，最优确认读数不变；再要求纯标签靠近时，新完整排除球到固定旧球心的距离趋零。最后一项是 CS，按定理125.5仍是一项未由前两项推出的稳定要求。这与124.10的 EB3+PR+UF 候选有相同条件强度，没有每轮都减少假设的结论。
+
+几何上，塌缩分支的旧球有一对对径纯点 $q,r$。在 $r$ 处最优的确认效应必须在新完整球某点取零；新球若缩到 $q$，这张同一效应在 $q$ 与 $r$ 都近零。仿射性与非负性经球心控制整颗旧球，包括全部混态。然而该效应仍可只在新球的一个点取零，所以这幅图没有把球心放回新完整球。
+
+只有额外支付 CS，才通过定理125.5和124.10消费既有静态重构，取得实线性双射 $\Phi:H_3(\mathbb C)\to V$，满足 $\Phi(\operatorname{Herm}_+(\mathbb C^3))=C$、$u(\Phi X)=\operatorname{Tr}X$。其完整对应为：
+
+| 原对象或关系 | 同原锥、同原单位的矩阵表示 |
+| --- | --- |
+| 全部 $K$ 与全部 $P$ | 全部三阶密度矩阵 $\rho$；全部秩一投影 $p=vv^{\ast}$，$v^{\ast}v=1$ |
+| 全效应 $\mathcal E$ 与确认族 $F_{\Phi p}$ | 全部 $0\preceq E\preceq I_3$；其中 $Ep=p$ 的全部效应 |
+| 原全混态最优读数 $T_{\Phi p}(\Phi\rho)$ | $\operatorname{Tr}(p\rho)$；纯对为 $|v^{\ast}w|^2$，对端点交换对称 |
+| 完整 $D_{\Phi p}$ 与其球心 | 全部满足 $\rho p=0$ 的密度态三球；球心为 $\Phi((I_3-p)/2)$ |
+| CS，等价地 UF 或 NC | 既有全部球单位预算、Pair 及同原静态复三能级条件类 |
+| 数学共同三结果与数学 POVM | 正效应之和等于同一个 $I_3$；不自动取得实际调用这些仪器的能力 |
+
+整个环境的实维数九及单体复 Hilbert 维数三是条件重构的结果；辅助范数没有预付共同物理尺。原物理来源、实际原操作、仪器、事件和记录、任意有限复合及纠缠输入、全旁观者兼容与 CP、动力学、物理钟、能量和 $\hbar$ 仍各有未付桥梁，按124.7保留其原完整量词。
+
+**约定 125.8（数学归属与来源范围）。** 本章承重组合为 `repo-derived`：把非平凡最优确认的全域取零、旧球对径控制与 IX115.5 的准确极限二择连接，得到整块固定旧混态球的同一近零效应、确认纤维极限约束，并将剩余稳定要求准确定位为 CS。紧性、极值达到、仿射归一与中心反射只是成熟有限维工具，不作为新的独立发现。IX114.2—114.4、IX115.4—115.8、IX116.2、IX118.8 与124.10—124.11保留原假设与归属；共同完整零确认、整球连续的既有等价条件和静态分类均按原结果复用。命题125.6仅界定从效应小读数到实际零集距离的工具边界。[132章][Q125LP]研究的移动正零泛函提升与有限共同源误差障碍，保留其单标签、混极限及源半范数条件，不提供本章未付的 CS。
+
+[Landsman，§1.3][Q125L]的完整仿射效应最小确认及其对称性，提供相应成熟概念；将其 $p(\rho,\sigma)$ 对应为这里的 $T_{\sigma}(\rho)$。其第2节重构另有 uniform Poisson、two-sphere 等公理，未作为本章 EB3+PR 的后果使用。[Janotta—Gogolin—Barrett—Brunner，§2.1及§3.1][Q125J]提供完整仿射效应区间及其多边形实例；其复合与非局域结论未进入本章证明，一维排除边也不替代 EB3。本章不主张全球原创、历史优先权、独立性、最小性或完整物理重构；自动 UF 与同域坏模型仍为上述明确的未解问题。
+
+[Q125IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.4：完整域、完整面、严格暴露与纯点紧性；IX115.4—115.8：闭图、准确极限二择及UF；IX116.2与IX118.8：重复块及条件静态重构。"
+[Q125LP]: QUANTUM_ORIGIN_LOCAL_PURE_LIMIT_AND_COMMON_POSITIVE_LIFTS_CONTINUATION.md "132：移动正零泛函的单位控制与有限共同源提升障碍；其局部前件不替代CS。"
+[Q125L]: https://arxiv.org/src/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, §1.3与第2节；Rev. Math. Phys. 9 (1997), 29–58，DOI 10.1142/S0129055X97000038；所引原文为arXiv v2作者源码。"
+[Q125J]: https://arxiv.org/html/1012.1215v3 "P. Janotta, C. Gogolin, J. Barrett and N. Brunner, Limits on non-local correlations from the structure of the local state space, §2.1及§3.1；New J. Phys. 13 (2011), 063024，DOI 10.1088/1367-2630/13/6/063024。"
+
+## 追加锚（本行以下为增补区）
+
+## 126. 实际整球塌缩的固定边整行约束与唯一确认分支的单位饱和
+
+**定义 126.1（完整原域、实际塌缩及固定边面）。** 设 $V\ne0$ 为有限维实空间，$C\subset V$ 为闭、尖、生成凸锥，$u\in V^{\ast}$ 在 $C\setminus\{0\}$ 上严格正。保留同一个原载体上的全部对象
+
+$$
+\begin{gathered}
+C^{\ast}=\{h\in V^{\ast}:h|_C\ge0\},\qquad
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\\
+F_p=\{e\in\mathcal E:e(p)=1\},\qquad
+T_p(x)=\min_{e\in F_p}e(x)\quad(p\in P,\ x\in K),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{X126.1}
+$$
+
+第二变量遍历所有原混态；效应和确认族均不缩减。始终假设
+
+$$
+\mathrm{EB3}:\quad D_p\simeq_{\rm aff}\overline B^3\quad(p\in P),
+\qquad
+\mathrm{PR}:\quad T_p(s)=T_s(p)\quad(p,s\in P).
+\tag{X126.2}
+$$
+
+PR 仅交换两个纯比较端点。固定一个辅助欧氏范数，记其 Hausdorff 距离为 $d_H$，并置 $M=\max_{e\in\mathcal E}\|e\|_{\ast}$。该范数只用于拓扑与估计，不指定共同物理内积。称
+
+$$
+p_i\in P,\qquad p_i\longrightarrow p\in P,\qquad
+D_{p_i}\longrightarrow\{q\}
+\tag{X126.3}
+$$
+
+为一次实际整球塌缩。按 [IX115.4—115.5][Q126IX]，必有 $q\in P\cap D_p$、$q\ne p$。对这条固定原正交边定义
+
+$$
+J(p,q)=\{e\in\mathcal E:e(p)=1,\ e(q)=0\}.
+\tag{X126.4}
+$$
+
+它是原效应区间的非空紧凸面。非空性来自 $q\in D_p$ 及原最小值达到。
+
+以下只复用既有接口。[IX114.1—114.4][Q126IX] 给 $K,P,\mathcal E$ 紧、最小值达到，以及每个原纯点 $s$ 都有仅在 $s$ 取一的原确认效应；后者不要求 Inj。固定 $T_s$ 在整个 $K$ 上为 $M$-Lipschitz。完整面接口给每个 $D_s$ 为暴露极大真面，$\mathcal A_s\ne\varnothing$，且任一完整球 $H$ 的球面恰为 $P\cap H$；不同完整球至多交于一个原纯点。其全效应原合同见 [ExclusionBallFaces.exclusion_ball_faces][Q126Faces]，这里只使用共同暴露与全部真面分类两项，不使用另带全 Pair 前件的末项。
+
+[IX114.5—114.6][Q126IX] 给每个实际完整球 $H$ 唯一的共同系数和原正延拓预算：对任意完整球图 $b_H:\overline B^3\to H$，
+
+$$
+\begin{gathered}
+0<a_H\le\tfrac12,\qquad \beta_H=\frac1{2a_H},\\
+T_{b_H(w)}(b_H(z))=1-a_H+a_Hw\cdot z
+\quad(w\in S^2,\ z\in\overline B^3).
+\end{gathered}
+\tag{X126.5}
+$$
+
+此式包括整个球内部的混态，但不宣称 $T_{b_H(w)}$ 在全 $K$ 仿射。
+
+**定理 126.2（实际塌缩迫使全部纯输入的固定边达到）。** 在定义126.1的完整 EB3+PR 域中，若发生 (X126.3)，则对每个原纯点 $s\in P$，
+
+$$
+T_p(s)=\min_{e\in J(p,q)}e(s).
+\tag{X126.6}
+$$
+
+即 $\forall s\in P\ \exists e_s\in J(p,q)$ 达到该读数；不要求一个效应同时达到所有纯输入。
+
+证明。因 $J(p,q)\subseteq F_p$，右侧不小于左侧。先固定 $s\ne p$。严格暴露给 $T_p(s)<1$。PR 和固定 $T_s$ 的连续性给
+
+$$
+T_{p_i}(s)=T_s(p_i)\longrightarrow T_s(p)=T_p(s)<1.
+\tag{X126.7}
+$$
+
+故充分大的 $i$ 有 $t_i:=T_{p_i}(s)<1$。取达到此最小值的原 $e_i\in F_{p_i}$。
+
+使用 [125.2证明中的全域归一化步骤][Q126X]：若 $m_i:=\min_K e_i>0$，则 $m_i\le t_i<1$，且
+
+$$
+\widetilde e_i=\frac{e_i-m_i u}{1-m_i}\in F_{p_i},\qquad
+\widetilde e_i(s)=\frac{t_i-m_i}{1-m_i}<t_i,
+\tag{X126.8}
+$$
+
+矛盾。因此 $m_i=0$，存在真实 $z_i\in K$ 使 $e_i(z_i)=0$。因 $e_i$ 确认 $p_i$，这个同一零点属于实际完整 $D_{p_i}$。整球塌缩因而给 $z_i\to q$，不是只给某个局部球片上的近零点。
+
+紧 $\mathcal E$ 中取子列 $e_i\to e_s$。由 $e_i(p_i)=1$、$e_i(z_i)=0$ 及 (X126.7)，得到
+
+$$
+e_s(p)=1,\qquad e_s(q)=0,\qquad e_s(s)=T_p(s).
+$$
+
+故 $e_s\in J(p,q)$ 并给出反向不等式。
+
+当 $s=p$，直接用 $J(p,q)\ne\varnothing$：其中每张效应在 $p$ 的读数都是 $1=T_p(p)$。这里无需把趋于一的值误当作严格小于一。对 $s\ne p$，收敛 $p_i\to p$ 本身保证尾部 $p_i\ne s$；即使初始有限多个指标满足 $p_i=s$，也不进入上述严格小于一的尾部。整个序列恒等于某个 $s\ne p$ 与标签收敛不相容。证明没有加入标签互异条件或 Inj。证毕。
+
+(X126.6) 是全部纯输入的行约束。一般混态上的两个下包络是否相同，不由逐纯点各自的达到自动推出；不同纯点的最优效应可以不同。
+
+**定理 126.3（每张包含极限标签的完整球上的同效应达到与反向三点刻度）。** 在定理126.2的前件下，任一实际完整球 $H$ 若包含 $p$，则存在一张原效应 $e_H\in J(p,q)$，使
+
+$$
+e_H(x)=T_p(x)\quad(x\in H).
+\tag{X126.9}
+$$
+
+特别地，$p\in D_q$。在完整球图 $b_H$ 中取 $H=D_q$、$p=b_H(w)$、$r=b_H(-w)$，$\|w\|=1$。可取 $h=u-e_H$，满足
+
+$$
+\begin{gathered}
+h\in J(q,p),\qquad
+h(b_H(z))=a_H(1-w\cdot z)\quad(z\in\overline B^3),\\
+(h(q),h(p),h(r))=(1,0,2a_H),\qquad
+(e_H(p),e_H(q),e_H(r))=(1,0,1-2a_H),\\
+Z_K(h):=K\cap\ker h=\{p\},\qquad
+\max_{k\in J(q,p)}k(r)=2a_{D_q}.
+\end{gathered}
+\tag{X126.10}
+$$
+
+此处 $a_H=a_{D_q}$，不能以 $a_{D_p}$ 替换。
+
+证明。因 $p$ 是原纯点并属于面 $H$，它在该完整球的球面。写 $p=b_H(w)$，令 $r_H=b_H(-w)$ 为同一球的实际对径原纯点。由定理126.2，在 $r_H$ 选 $e_H\in J(p,q)$ 达到 $T_p(r_H)$。在整个 $H$，$e_H\ge T_p$；由 (X126.5)，后者在这张球上仿射。因此
+
+$$
+d(z)=e_H(b_H(z))-(1-a_H+a_Hw\cdot z)
+$$
+
+是闭单位球上的非负仿射函数，且在 $w,-w$ 均为零。它在中点 $0$ 为零。写 $d(z)=c+t\cdot z$，则 $c=0$，在 $z,-z$ 均非负迫使 $t=0$。故 $d\equiv0$，得到包括所有混态的 (X126.9)。每张 $H$ 可使用自己的 $e_H$，没有全局共用效应的断言。
+
+由 $q\in D_p$，原补效应的零一对称性给 $p\in D_q$。取 $H=D_q$ 并按前段选 $e_H$。因 $e_H(p)=1$、$e_H(q)=0$，其补 $h$ 确认 $q$ 并零于 $p$。(X126.9) 与 (X126.5) 立即给球上的仿射式及两组三点读数。$h\in F_q$ 使它在全 $K$ 的零集包含于完整 $D_q=H$，而所列球上仿射式只在 $z=w$ 为零，因为 $a_H>0$。所以 $Z_K(h)=\{p\}$；这里不需 Inj，也没有把球上零集未经检验地外推到全 $K$。
+
+任一 $k\in J(q,p)$ 的补效应属于 $J(p,q)\subseteq F_p$，故
+
+$$
+1-k(r)\ge T_p(r)=1-2a_H.
+$$
+
+于是 $k(r)\le2a_H$，而上述 $h$ 达到等号。紧性保证这里确为最大值。证毕。
+
+**定理 126.4（整个移动确认面的统一旧球斜率约束）。** 在定义126.1及实际塌缩 (X126.3) 下，固定旧完整球
+
+$$
+G=D_p=b(\overline B^3),\qquad q=b(v),\quad \|v\|=1,\qquad
+\delta_i=d_H(D_{p_i},\{q\}).
+$$
+
+对每个 $i$、每张原 $f\in F_{p_i}$，令 $m=\min_K f$，并唯一写
+
+$$
+(f-mu)(b(z))=\alpha+t\cdot z.
+\tag{X126.11}
+$$
+
+则统一有
+
+$$
+\begin{gathered}
+0\le\|t\|\le\alpha\le1,\qquad
+\alpha+\|t\|\le1-m,\\
+0\le\alpha+t\cdot v\le M\delta_i,\qquad
+\|t+\alpha v\|^2\le2M\delta_i.
+\end{gathered}
+\tag{X126.12}
+$$
+
+因此对整个移动确认面同时有
+
+$$
+\sup_{f\in F_{p_i}}\ \sup_{\|z\|\le1}
+\left|f(b(z))-[m+\alpha(1-v\cdot z)]\right|
+\le\sqrt{2M\delta_i},
+\tag{X126.13}
+$$
+
+其中 $m,\alpha$ 随该同一 $f$ 取值；$M$ 不随 $i,f$ 变化。不需要 Inj 或 $p\in P_0$。
+
+证明。若 $f$ 在 $K$ 恒定，因 $f(p_i)=1$ 及 $K$ 张成 $V$，有 $f=u$。此时 $m=1$、$\alpha=t=0$，全部式子成立。
+
+若 $f$ 非恒定，则 $0\le m<1$，因为其全 $K$ 最大值在 $p_i$ 达到一。原效应
+
+$$
+\widehat f=\frac{f-mu}{1-m}\in F_{p_i}
+$$
+
+在某个真实 $z_i\in K$ 取零，所以 $z_i\in D_{p_i}$，且 $f(z_i)=m$。因此
+
+$$
+0\le f(q)-m=f(q)-f(z_i)
+\le\|f\|_{\ast}\|q-z_i\|\le M\delta_i.
+\tag{X126.14}
+$$
+
+在整颗旧球上，$0\le f-m\le1-m$。仿射式 (X126.11) 的球上最小、最大值分别为 $\alpha-\|t\|$、$\alpha+\|t\|$，给第一行约束；在 $q=b(v)$ 评价给第二行首式。最后
+
+$$
+\begin{aligned}
+\|t+\alpha v\|^2
+&=\|t\|^2+2\alpha\,t\cdot v+\alpha^2\\
+&\le2\alpha(\alpha+t\cdot v)\le2M\delta_i,
+\end{aligned}
+\tag{X126.15}
+$$
+
+使用 $\alpha\ge0$ 及 $\alpha\le1$。仿射式与 $m+\alpha(1-v\cdot z)$ 的差正是 $(t+\alpha v)\cdot z$，Cauchy–Schwarz 给 (X126.13)。估计对每张 $f$ 成立且右端相同，故可取整个确认面的上确界。证毕。
+
+这约束同一个移动标签的所有实际确认效应在同一旧球上的限制。若从逐面延拓取得两个确认效应列，其旧球斜率分别收敛到 $t_1,t_2$，则 (X126.12) 迫使两者都属于 $\mathbb R_{\le0}v$；两个非零极限斜率若不在同一射线上，就排除这次塌缩。只有当那些原延拓确实还满足 $f(p_i)=1$ 时才能应用此检验，正延拓本身不供应这项资格。
+
+**定义 126.5（唯一完整零确认分支及原法向坐标）。** 以下另加
+
+$$
+\mathrm{Inj}:\quad D_s=D_t\Longrightarrow s=t,
+\qquad
+p\in P_0:=\{s\in P:\mathcal A_s\text{ 为单点}\}.
+\tag{X126.16}
+$$
+
+写 $\mathcal A_p=\{e_p\}$、$g=u-e_p$，并选完整旧球图 $G=D_p=b(\overline B^3)$。这不是 $F_p=\{e_p\}$：整个 $F_p$ 始终保留，且包含 $u$。
+
+按 [IX120.2、120.8、120.10—120.13][Q126IX]，令 $N_p=\{n\in C^{\ast}:n(p)=0\}$，则限制 $\operatorname{span}N_p\to\operatorname{Aff}(G)$ 是同构，$g\in\operatorname{ri}N_p$，$g>0$ 于 $K\setminus\{p\}$。存在唯一原线性 $H:V\to\mathbb R^3$，其各分量属于 $\operatorname{span}N_p$，且
+
+$$
+H(p)=0,\qquad H(b(z))=z,\qquad g(b(z))=1.
+\tag{X126.17}
+$$
+
+对每个已经属于原正锥的 $n=\alpha g+t\cdot H\in N_p$，准确最大值为
+
+$$
+\max_K n=\alpha+\|t\|.
+\tag{X126.18}
+$$
+
+正性必须先支付，不能仅凭右端不大于一就把一个有符号泛函称为效应。对 $v\in S^2$，置
+
+$$
+\rho_p(v)=\sup_{x\in K\setminus\{p\}}\frac{-v\cdot H(x)}{g(x)}\ge1.
+\tag{X126.19}
+$$
+
+该函数有限。若 $q=b(v)$，则 $q\in P_0$，记 $\mathcal A_q=\{e_q\}$；既有全空间公式及完整原边区间为
+
+$$
+\begin{gathered}
+e_q=(1-\lambda)g+\lambda v\cdot H,\qquad
+\lambda=\frac1{1+\rho_p(v)}\in(0,\tfrac12],\\
+\{n\in\mathcal E:n(p)=0,\ n(q)=1\}=[g,e_q],\qquad
+J(p,q)=[e_p,u-e_q].
+\end{gathered}
+\tag{X126.20}
+$$
+
+区间在整个 $V^{\ast}$ 中，不只是旧球上的限制。其末式由前式取补得到。相对内部、全域正性、边传播及区间公式均按上述来源使用，不另列为新的分类结果。
+
+**定理 126.6（唯一完整确认标签处的塌缩迫使两球单位饱和及全混态 least）。** 在定义126.1、126.5的完整原域中，若发生实际塌缩 (X126.3)，则
+
+$$
+\begin{gathered}
+a_{D_p}=a_{D_q}=\tfrac12,\qquad
+\beta_{D_p}=\beta_{D_q}=1,\\
+T_p(x)=e_p(x)\quad(x\in K),\qquad
+e_p\le_{C^{\ast}} f\quad(f\in F_p).
+\end{gathered}
+\tag{X126.21}
+$$
+
+证明。定理126.2与完整边区间 (X126.20) 给全部纯输入
+
+$$
+T_p(s)=\min\{e_p(s),1-e_q(s)\}\quad(s\in P).
+\tag{X126.22}
+$$
+
+令 $\mathcal B_p=\{n\in\mathcal E:n(p)=0\}$。取补将整个 $F_p$ 双射到 $\mathcal B_p$，故同一纯域公式等价于
+
+$$
+\max_{n\in\mathcal B_p}n(s)=\max\{g(s),e_q(s)\}
+\quad(s\in P).
+\tag{X126.23}
+$$
+
+先只排除反方向越界。固定 $s\in P\setminus\{p\}$，令 $Y=H(s)/g(s)$。若 $\|Y\|>1$，取 $t=Y/\|Y\|$。因为 $g\in\operatorname{ri}N_p$ 且 $t\cdot H\in\operatorname{span}N_p$，可取充分小的 $\varepsilon>0$ 使 $g+\varepsilon t\cdot H\in N_p$。在这项全域正性已经成立之后，(X126.18) 给其原全域最大值 $1+\varepsilon$。于是
+
+$$
+n_{\varepsilon}=\frac{g+\varepsilon t\cdot H}{1+\varepsilon}
+\in\mathcal B_p,\qquad
+n_{\varepsilon}(s)=g(s)\frac{1+\varepsilon\|Y\|}{1+\varepsilon}>g(s).
+\tag{X126.24}
+$$
+
+由 (X126.23)，必有 $e_q(s)>g(s)$。再用 $\lambda>0$ 及 (X126.20)，得到
+
+$$
+\|Y\|>1\quad\Longrightarrow\quad v\cdot Y>1.
+\tag{X126.25}
+$$
+
+此时不能声称所有 $\|Y\|>1$ 都已被排除。但如果 $v\cdot Y<-1$，则 $\|Y\|>1$，(X126.25) 又迫 $v\cdot Y>1$，矛盾。所以每个上述原纯点满足 $g(s)+v\cdot H(s)\ge0$；在 $s=p$ 两项都为零。因为 $K=\operatorname{conv}P$，线性读数的非负性延到全部 $K$，再按 $C=\mathbb R_{\ge0}K$ 延到整个原锥。因此
+
+$$
+k=\frac{g+v\cdot H}{2}\in N_p.
+$$
+
+原最大值公式给 $\max_Kk=1$，故 $k\in\mathcal E$。在同一旧球上取真实对径 $r=b(-v)$，则 $k(q)=1$、$k(r)=0$，于是 $q\perp r$。旧球公式 (X126.5) 给
+
+$$
+0=T_q(r)=1-2a_{D_p},
+$$
+
+从而 $a_{D_p}=1/2$。
+
+原边对称性及 $q,r\in D_p$ 给 $p\in D_q$ 和 $p\perp r$；新取得的 $q\perp r$ 又给 $r\in D_q$。因此两个不同的原纯点 $p,r$ 同属完整 $D_q$ 且正交。在该球图中写 $p=b_{D_q}(w)$、$r=b_{D_q}(z)$，其中 $\|w\|=\|z\|=1$。准确球公式给
+
+$$
+0=T_p(r)=1-a_{D_q}+a_{D_q}w\cdot z
+\ge1-2a_{D_q}\ge0.
+\tag{X126.26}
+$$
+
+所以 $a_{D_q}=1/2$ 且 $w\cdot z=-1$，即 $z=-w$。这同时证明此处同球正交点确为该球对径，未预设任意三纯点都能组成共同仪器。
+
+已有 $a_{D_p}=1/2$，故 (X126.5) 使 $D_p$ 的每条直径两端都原正交。[IX120.13][Q126IX] 遂给 $\rho_p(t)=1$ 对全部单位方向成立。对 $x\ne p$，以 $-t$ 代入 (X126.19)，有 $t\cdot H(x)\le g(x)$ 对全部单位 $t$ 成立；取上确界并处理 $x=p$，得到
+
+$$
+\|H(x)\|\le g(x)\quad(x\in K).
+\tag{X126.27}
+$$
+
+现在才排除了全部方向越界。由 (X126.20) 得 $e_q\le g$ 于全 $K$，因而 (X126.22) 化为 $T_p(s)=e_p(s)$ 对全部原纯点成立。
+
+任一原 $f\in F_p$ 都满足 $f(s)\ge e_p(s)$ 于全部 $s\in P$。每张固定 $f-e_p$ 是线性的，$K=\operatorname{conv}P$ 因而给 $f\ge e_p$ 于所有混态；齐次化给整个 $C$ 上的序支配。又 $e_p\in F_p$，所以在每个 $x\in K$，下包络恰为 $e_p(x)$。这一步没有使用混态 PR，也没有把不同纯输入各自的最优选择直接拼成仿射函数。预算结论由 $\beta_H=1/(2a_H)$ 给出。证毕。
+
+**推论 126.7（非单位预算的唯一确认标签必为连续点及剩余塌缩集合）。** 在完整 EB3+PR+Inj 域中，若 $p\in P_0$ 且 $\beta_{D_p}>1$，则 $s\mapsto D_s$ 在 $p$ 处 Hausdorff 连续。存在 $p$ 在整个 $P$ 中的相对开邻域 $U$ 及有限 $B$，使
+
+$$
+\beta_{D_s}\le B\quad(s\in U).
+\tag{X126.28}
+$$
+
+令 $\Sigma$ 为 [IX115.1、115.6][Q126IX] 的整球映射不连续点集，则
+
+$$
+\Sigma\subseteq
+(P\setminus P_0)\ \cup\
+\{p\in P_0:\beta_{D_p}=1,\ T_p=e_p\text{ 于全部 }K\}.
+\tag{X126.29}
+$$
+
+对右侧第二分支中的实际塌缩 $D_{p_i}\to\{q\}$，还必有 $\beta_{D_q}=1$。
+
+证明。IX115.6 对每个 $p\in\Sigma$ 都供应实际纯列 $p_i\to p$ 及 $q\in P\cap D_p$，使 $D_{p_i}\to\{q\}$。若该 $p$ 又在 $P_0$，定理126.6给 $\beta_{D_p}=1$、$T_p=e_p$ 及 $\beta_{D_q}=1$，得到 (X126.29)。所以 $p\in P_0$、$\beta_{D_p}>1$ 排除 $p\in\Sigma$，即整球映射在 $p$ 连续；IX115.6 的局部预算等价恰给 (X126.28)，其邻域不局限于 $P_0$。证毕。
+
+IX120.9 的 $P_0$ 稠密性并不删除 (X126.29) 的任一分支：稠密集的补集可非空，属于该稠密集的单位预算标签也未被排除。此推论未证明实际塌缩存在，也未证明其不存在。若实际出现 $p\in P_0$ 且 $\beta_{D_p}>1$，本推论使该 $p$ 成为连续点，而 [124.11][Q126X] 所迫使的全局预算无界与塌缩发生在其他极限标签。这个条件结论不构成此类模型的存在性断言。
+
+**定义及应用 126.8（完整直观候选、静态字典与未付接口）。** 完整条件候选仍为：在同一个有限维实锥和严格正单位上，保留全部纯态、全部混态以及整个零一效应区间；确认一个纯态时可完全排除的全部态恰是一整颗实心仿射三球；任意两个纯态的最优确认读数交换端点不变；再要求纯标签趋近时，新完整排除球到固定旧球心的距离趋零。最后这一条是 [125.4—125.5][Q126X] 的 CS：
+
+$$
+\forall p\in P\ \forall(p_i)\subset P:\quad
+p_i\to p\Longrightarrow\operatorname{dist}(c_p,D_{p_i})\to0,
+\qquad c_p=\text{完整 }D_p\text{ 的中心}.
+\tag{X126.30}
+$$
+
+它在完整 EB3+PR 域中仍与 UF、NC 等价，未由定理126.2—126.7自动取得。上述塌缩结论是实际塌缩必须满足的必要关系，不是足以重构的新公理。CS 仍是既有等价重构接口，没有独立公理数减少或最小性结论。
+
+几何上，若一颗移动实心球真缩到旧球的球面点 $q$，在任何固定纯输入处最优的非平凡确认都必须带着自己的真实零点一起走向 $q$。因此整行纯读数都可在同一条固定零一边 $p\mapsto1,q\mapsto0$ 的效应面上达到。在任何另一颗包含 $p$ 的完整球上，只须在 $p$ 的对径处达到，非负仿射差就使同一效应达到整颗混态球。与此同时，移动标签的全部确认效应在旧球上的非恒定斜率，只能共同靠向与旧球中心指向 $q$ 的方向相反的射线。若原球标签另满足 Inj，且极限标签属于唯一完整零确认分支，旧球的四个原法向坐标把这条跨纯点约束转成真正的对径零一边，再由同球刻度强迫两颗相关球满刻度。没有这项唯一性，四维限制同构及原边线段不能直接输入；即使有它，单位预算极限标签处的塌缩仍未排除。
+
+只有另支付 CS，才经125.5与 [124.10][Q126X] 消费已有同原锥、同原单位静态分类，取得实线性双射
+
+$$
+\Phi:H_3(\mathbb C)\longrightarrow V,\qquad
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi X)=\operatorname{Tr}X.
+\tag{X126.31}
+$$
+
+其完整对应按原定理保留：
+
+| 原对象与关系 | 同原静态复三能级表示 |
+| --- | --- |
+| 全部 $K$、全部 $P$ | 全部三阶密度矩阵；全部秩一投影 $p=vv^{\ast}$，$v^{\ast}v=1$ |
+| 整个 $\mathcal E$、单位及补 | 全部 $0\preceq E\preceq I_3$、$I_3$ 及 $I_3-E$ |
+| 原评价与全混态最优确认 | $f_E(\Phi\rho)=\operatorname{Tr}(E\rho)$；$T_{\Phi p}(\Phi\rho)=\operatorname{Tr}(p\rho)$ |
+| 全部纯对比较与交换端点 | $|v^{\ast}w|^2=|w^{\ast}v|^2$；不要求矩阵效应或顺序仪器交换 |
+| 完整 $D_{\Phi p}$ 与球心 | $p^{\perp}$ 上全部密度矩阵三球；球心 $\Phi((I_3-p)/2)$ |
+| 共同球刻度与预算 | 全部 $a_H=1/2$、$\beta_H=1$；全部原完整球的单位预算正延拓 |
+| 有限数学测量 | 全部 $E_j\succeq0$、$\sum_jE_j=I_3$ 的 POVM，包括正交三结果 |
+
+环境实维数九和单体复 Hilbert 维数三是该条件静态表示的结论。每张排除球的实仿射维数三，并不是预先给整个状态空间一个三维物理尺。
+
+同一个原 $\Omega$、全部原合法门序列、每个中间切口与全部记录后条件未来，仍须由实际操作合同供应；数学效应存在不供应其制备、调用或共同仪器。对每个有限复合数仍需整个联合态锥、产品与纠缠输入、共同单位及相容接线；全旁观者正性需量化所有旁观系统，不能从单体正性直接取得 CP。事件分支、TP/TNI 共同预算、零质量分支、实际记录、粗粒化及更新律继续需要各自接口。动力学、连续时间群、物理钟、Hamiltonian、能量单位和数值 $\hbar$ 均未由这些静态结论决定。
+
+本章的承重内容属于 `repo-derived` 的跨合同综合：实际整球塌缩与全部纯输入的固定边达到；每颗包含极限标签的完整球上的同效应达到及反向精确刻度；整个移动确认面的统一旧球斜率；以及在 Inj、唯一完整零确认分支由原正法向扰动取得的单位饱和与全混态 least。共同零确认、严格暴露、球内刻度、原边区间、极限二择、局部预算和静态分类均保留上述原结果的假设与归属。紧性、极值达到、有限纯点凸分解、仿射归一化和球上非负仿射函数只是推导的成熟中间工具，不另立为新增分类。这里不主张全球原创、历史优先权或逻辑独立性。
+
+[Landsman §1.3][Q126L] 的完整仿射效应最小确认构造以 $p(\rho,\sigma)=T_{\sigma}(\rho)$ 对应 (X126.1) 的纯域部分，纯端点对称性对应 PR。其第2节的 uniform Poisson、two-sphere 等重构公理没有从本章前件取得。[Niestegge §3][Q126N] 的 $e_{\omega}(\zeta)$ 定义则对所有非负仿射 $a$、$a(\omega)=1$ 取下确界，未在该定义中加 $a\le1$；其性质 $(\ast\ast)$ 另要求该函数本身仿射、连续且仅在 $\omega$ 取一。本章不能把单个塌缩极限标签处的 (X126.21) 直接当作其全部标签、该更大最小化族上的性质。该文 Theorem 3 仍显式要求 Axioms 1、2、proper 效应序性质 $(\ast)$、有限信息容量和对称跃迁概率；这些前件没有由裸 EB3+PR 或局部 $P_0$ 唯一性整体支付，故不在这里调用其自对偶结论。自动 UF、剩余实际塌缩集合的排除，以及保留全部原量词的同域坏模型，仍是未解决的数学边界。
+
+[Q126IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.6完整原域、严格暴露与球刻度；IX115.4—115.6极限与连续性；IX120.2、120.8、120.10—120.13原法向、唯一完整确认及全空间原边区间。"
+[Q126X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "124.10—124.11条件静态类及偏离迫使实际塌缩；125.2全域取零归一化；125.4—125.5固定旧球心CS及其与UF、NC的等价。"
+[Q126Faces]: ../../../D5/S3/Quantum/Foundation/ExclusionBallFaces.lean "exclusion_ball_faces：完整排除球的共同暴露和全部真面分类；末项的全Pair前件不在本章输入。"
+[Q126L]: https://arxiv.org/src/quant-ph/9603005v2 "N. P. Landsman, Poisson Spaces with a Transition Probability, §1.3及第2节；Rev. Math. Phys. 9 (1997), 29–58，DOI 10.1142/S0129055X97000038；arXiv v2作者源码。"
+[Q126N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability in convex sets and self-dual cones, §2—§3及Theorem 3；Proc. R. Soc. A 480 (2024), 20230941，DOI 10.1098/rspa.2023.0941；arXiv v2。"
+
+## 追加锚（本行以下为增补区）
+
+## 127. 裸排除球域中的重复球对比度与实际整球塌缩
+
+### 127.1 全局对偶暴露射线的实际完整球
+
+**定义 127.1（原域、球缘及整球零法向面）。** 保留定义124.1的同一个有限维实空间 $V\ne0$、闭尖生成凸锥 $C$ 和在 $C\setminus\{0\}$ 上严格正的原单位 $u$，始终使用整个
+
+$$
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\qquad
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+D_p=\{x\in K:\min_{f\in F_p}f(x)=0\}.
+\tag{X127.1}
+$$
+
+唯一全局几何前件是 $\mathrm{EB}_{\ge1}$：对每个原纯 $p$，完整 $D_p$ 仿射同构于某个正维闭欧氏球；球维数允许随标签改变。所有混态均留在 $K$，最小化遍历全部原确认效应。固定辅助欧氏范数及 $x_0\in\operatorname{int}C$，沿用引理124.3的紧对偶基
+
+$$
+B^{\ast}=\{h\in C^{\ast}:h(x_0)=1\}.
+\tag{X127.2}
+$$
+
+对完整球 $F$，记
+
+$$
+\begin{gathered}
+S(F)=P\cap F=\partial_{\mathrm{rel}}F,\qquad
+I(F)=\{a\in P:D_a=F\},\qquad c_F=\text{$F$ 的中心},\\
+Z(h)=K\cap\ker h,\qquad
+N_t=\{h\in C^{\ast}:h(t)=0\},\qquad
+\mathcal N_F=\{h\in C^{\ast}:h|_F=0\},\\
+\mathcal A_a=\{e\in F_a:e|_{D_a}=0\}.
+\end{gathered}
+\tag{X127.3}
+$$
+
+本章引用 [IX116.1—116.2][QX127IX] 的完整原面分类、完整零确认、零对称及孤立重复球二分；这些接口适用于允许变维的上述域。特别地，$\mathcal A_a\ne\varnothing$，其中每张效应的整个原零面都是 $D_a$。不输入 PE、PR、Inj、$P$ 闭、共同正延拓、谱性、框架数上界或 NC。以下“暴露点”对 $B^{\ast}$ 指在整个 $B^{\ast}$ 上暴露，不是只在某个 $N_t$ 的切片内暴露。
+
+**命题 127.2（裸 EB 的全局暴露射线有完整球零面）。** 若 $n\in B^{\ast}$ 是暴露点，则存在实际原纯标签 $a\in P$，使
+
+$$
+Z(n)=D_a=:F,\qquad
+c_F\in K\setminus P,\qquad
+N_{c_F}=\mathcal N_F=\mathbb R_+n.
+\tag{X127.4}
+$$
+
+并且，置 $M_n=\max_Kn>0$，对每个 $b\in I(F)$，都有
+
+$$
+n(b)=M_n,\qquad \mathcal A_b=\{n/M_n\}.
+\tag{X127.5}
+$$
+
+这里唯一的是在整个 $D_b$ 上为零的完整确认；不将 $F_b$ 的全部效应称为唯一，也不将 $n/M_n$ 断言为最小确认或正限制映射的逆。
+
+证明。复用命题124.4中不涉及 PE 的构造 (X124.8)—(X124.9)：若 $f\mapsto f(v)$ 在整个 $B^{\ast}$ 上唯一最小于 $n$，置
+
+$$
+\alpha=\min_{f\in B^{\ast}}f(v),\qquad
+x=v-\alpha x_0.
+\tag{X127.6}
+$$
+
+对任意非零 $g\in C^{\ast}$，其原基归一给
+
+$$
+g(x)=g(x_0)\left[\left(\frac{g}{g(x_0)}\right)(v)-\alpha\right]\ge0,
+\qquad g(x)=0\ \Longleftrightarrow\ g\in\mathbb R_+n.
+\tag{X127.7}
+$$
+
+有限维闭锥双对偶性给 $x\in C$；该成熟分离步骤与124.4相同。$B^{\ast}$ 至少有两个点，故 $x=0$ 会使暴露泛函恒定而矛盾。因此 $x\ne0$，$\widehat x=x/u(x)\in K$，且 $N_{\widehat x}=\mathbb R_+n$。这一构造尚未判定 $\widehat x$ 的纯混。
+
+若 $\widehat x$ 非纯，则非空真面 $Z(n)$ 含混态，原面分类直接给 $Z(n)=D_a$。
+
+若 $\widehat x=t\in P$，在实际正维球 $D_t$ 的球面取 $s\in P\cap D_t$。原补效应给零对称，所以 $t\in D_s$。取完整原零确认 $e_s\in\mathcal A_s$，有
+
+$$
+e_s\ne0,\qquad e_s(t)=0,\qquad Z(e_s)=D_s.
+\tag{X127.8}
+$$
+
+于是 $e_s\in N_t\setminus\{0\}=\mathbb R_{>0}n$，从而 $Z(n)=D_s$；取 $a=s$。这一步使用的是整个原锥正的完整效应及实际原零邻点，没有假定纯暴露态不存在。
+
+两种情形都得到完整正维球 $F=Z(n)$，且 $\widehat x\in F$。球心 $c_F$ 是两个不同原纯对径点的中点，故不纯。若 $g\in C^{\ast}$ 且 $g(c_F)=0$，对每个 $z\in F$ 使用 $2c_F-z\in F$，由两项非负及
+
+$$
+g(z)+g(2c_F-z)=2g(c_F)=0
+$$
+
+得 $g|_F=0$。所以 $N_{c_F}=\mathcal N_F\subseteq N_{\widehat x}$；而 $n$ 零于整个 $F$，反向射线包含也成立，得到 (X127.4)。由此获得的混态见证是 $c_F$，不必是最初的 $\widehat x$。
+
+最后固定 $b\in I(F)$。任取 $e\in\mathcal A_b$，有 $e\in\mathcal N_F\setminus\{0\}$，故 $e=\lambda n$，$\lambda>0$。$e(b)=1$ 与原全域上界 $e\le u$ 分别给 $\lambda n(b)=1$ 及 $\lambda M_n\le1$。又 $n(b)\le M_n$，所以 $n(b)=M_n$、$\lambda=1/M_n$。存在性由 $\mathcal A_b\ne\varnothing$ 给出，且 $M_n>0$ 来自 $n\ne0$ 及 $K$ 张成 $V$。证毕。
+
+### 127.2 单点极端零面的裸域塌缩与实际重复标签消费者
+
+**定理 127.3（无 PE 的极端单点零面塌缩）。** 在定义127.1的原域中，若 $C^{\ast}$ 有一条非零极端射线 $\mathbb R_+h$，且 $Z(h)=\{q\}$，则 $q\in P$，并存在实际原纯标签 $a_i\in P$ 和在整个 $B^{\ast}$ 上暴露的点 $n_i$，使
+
+$$
+\begin{gathered}
+n_i\longrightarrow h/h(x_0),\qquad
+Z(n_i)=D_{a_i},\qquad
+N_{c_{D_{a_i}}}=\mathbb R_+n_i,\\
+d_H(D_{a_i},\{q\})\longrightarrow0,\qquad
+\operatorname{diam}D_{a_i}\longrightarrow0.
+\end{gathered}
+\tag{X127.9}
+$$
+
+每张 $D_{a_i}$ 均是完整原正维球，中心是实际原混态。没有断言 $a_i\to q$，也没有预设原标签列有纯极限。
+
+证明。单点真面使 $q$ 为原极点。沿用124.5的射线与紧基极点对应，$n=h/h(x_0)\in\operatorname{ext}B^{\ast}$。有限维 Straszewicz 定理给整个基上的暴露点列 $n_i\to n$；所用的准确有限维陈述见 [Bru—de Siqueira Pedra §4.3，PDF第31页][Q124BP]，这里不使用其无限维推广。对每项应用命题127.2，取得完整原 $D_{a_i}=Z(n_i)$ 及实际混态球心。
+
+复用定理124.5的整零面紧性步骤，明确其量词如下。若
+
+$$
+\eta_i:=\max_{z\in Z(n_i)}\|z-q\|
+\not\longrightarrow0,
+$$
+
+则可取 $\varepsilon>0$、子列及 $z_i\in Z(n_i)$，使 $\|z_i-q\|\ge\varepsilon$。紧 $K$ 给再一子列 $z_i\to z\in K$，而 $n_i\to n$ 与有限维配对连续性给 $n(z)=0$。这迫使 $z=q$，矛盾。因此 $\eta_i\to0$。每个零面非空，故到单点的 Hausdorff 距离正是 $\eta_i$，直径至多 $2\eta_i$，证明 (X127.9)。此论证未使用 $P$ 闭或球维数固定。证毕。
+
+**定理 127.4（实际重复球缘的原确认对比度迫使整球塌缩）。** 设实际不同原纯标签共用一张完整球，取 IX116.2 给出的孤立重复球对 $F,G$，即
+
+$$
+I(F)=S(G),\qquad I(G)=S(F),\qquad F\cap G=\varnothing,
+\tag{X127.10}
+$$
+
+且两球均不与第三张不同完整球相交。若存在
+
+$$
+q\in S(F),\qquad f\in F_q,\qquad f|_F\text{ 非恒定},
+\tag{X127.11}
+$$
+
+则 $C^{\ast}$ 有一条全局极端射线，其整个原零面是 $\{q\}$；因而存在 (X127.9) 的实际完整原球列整体收缩到 $q$。交换 $F,G$ 后同样成立。$F$ 是包含球缘点 $q$ 的这一侧球，而 $q$ 自己的完整排除球是 $D_q=G$；非恒定性测试的是整个 $F$ 上的一张原确认，不是 $f|_{D_q}$。
+
+证明。令 $h=u-f$。这是整个原 $C$ 上的正泛函，且 $h(q)=0$。因 $f(q)=1$ 而 $f|_F$ 非恒定，存在 $z\in F$ 使
+
+$$
+h(z)>0.
+\tag{X127.12}
+$$
+
+特别地 $h\ne0$。使用124.7中紧对偶基的成熟有限极点分解步骤，将同一个 $h$ 写为
+
+$$
+h=\sum_{j=1}^{r}\lambda_j n_j,
+\qquad \lambda_j>0,\qquad n_j\in\operatorname{ext}B^{\ast}.
+\tag{X127.13}
+$$
+
+这是整个 $B^{\ast}$ 的有限维 Minkowski 分解；可用 Carathéodory 定理缩减项数，但证明不需要任何统一框架数或全局预算。每个 $n_j$ 都在整个原锥上非负。由 $h(q)=0$，逐项得 $n_j(q)=0$；由 (X127.12)，至少有一项 $n_j(z)>0$。固定该项。
+
+其整个零面 $Z(n_j)$ 非空且为真面，包含 $q$，却不包含 $z$。原面分类使它或者是 $\{q\}$，或者是经过 $q$ 的完整排除球。孤立重复球二分使后一张球只能为 $F$，这与 $n_j(z)>0$ 矛盾。因此 $Z(n_j)=\{q\}$。$n_j$ 是整个基的极点，故其射线在整个 $C^{\ast}$ 极端；不是仅在 $N_q$ 中极端或暴露的局部证书。定理127.3遂产生实际整球塌缩。证毕。
+
+### 127.3 精确平坦分支与非塌缩的剩余范围
+
+**推论 127.5（重复球缘的平坦法向替代与条件性非塌缩限制）。** 保留定理127.4的实际重复球对。对每个固定 $q\in S(F)$，下列两种情况恰有一种：
+
+1. 存在 $f\in F_q$ 在整个 $F$ 上非恒定，并且有实际完整排除球列整体收缩到 $q$。
+2. 全部原确认在整个 $F$ 上精确恒为一，且
+
+$$
+\forall f\in F_q:\ f|_F=1,
+\qquad N_q=\mathcal N_F.
+\tag{X127.14}
+$$
+
+第二种情况下，$q$ 不是 $K$ 的暴露点；等价地，没有 $h\in C^{\ast}\setminus\{0\}$ 以 $\{q\}$ 为整个零面。这个分支不声称排除由其他机制产生的塌缩。另一侧 $S(G)$ 有相同结论。
+
+若额外输入 NC，即 $\inf_{a\in P}\operatorname{diam}D_a>0$，则第一种情况在全部重复球缘上被排除，(X127.14) 对全部 $q\in S(F)$ 成立，另一侧亦然。特别地，在此条件分支有
+
+$$
+\begin{aligned}
+q,r\in S(F)&\ \Longrightarrow\ N_q=N_r=\mathcal N_F,
+\quad F_q=F_r,\\
+s,t\in S(G)&\ \Longrightarrow\ N_s=N_t=\mathcal N_G,
+\quad F_s=F_t.
+\end{aligned}
+\tag{X127.15}
+$$
+
+此外，裸 $\mathrm{EB}_{\ge1}+\mathrm{NC}$ 下每条非零全局极端对偶射线的整个零面都是完整排除球；此结论不需 PE。
+
+证明。若有非恒定确认，定理127.4给第一种情况。否则每个 $f\in F_q$ 在 $F$ 恒定，而 $q\in F$ 及 $f(q)=1$ 使该常数必为一。显然 $\mathcal N_F\subseteq N_q$。反向取 $0\ne h\in N_q$，令 $M=\max_Kh>0$。整个 $K$ 上 $0\le h/M\le1$，经原单位齐次化到整个 $C$，得到
+
+$$
+f=u-h/M\in\mathcal E,\qquad f(q)=1.
+\tag{X127.16}
+$$
+
+平坦性使 $h|_F=0$。零泛函也在 $\mathcal N_F$ 中，故 $N_q=\mathcal N_F$。反过来，这个法向面等式也使每个 $u-f\in N_q$ 零于 $F$，所以全部确认恒为一。两种情况按非恒定确认的存在与否互斥且穷尽。
+
+若有正泛函以 $\{q\}$ 为零面，法向面等式会迫使它零于非单点 $F$，矛盾。通常的仿射暴露定义与这里的正零面定义相同：在 $\{u=1\}$ 上的仿射暴露函数先减去其最小值，再齐次化即是整个 $C$ 上的非负线性泛函。
+
+NC 与直径趋零矛盾，故两侧所有球缘点都进入第二种情况。固定 $q,r\in S(F)$，若 $f\in F_q$，则 $f|_F=1$ 给 $f(r)=1$，所以 $F_q\subseteq F_r$；交换两点得相等。法向等式及另一侧同理，得到 (X127.15)。最后，复用引理124.6不含 PE 的零面穷尽步骤：每条非零极端对偶射线的零面是原纯单点或完整球。定理127.3和 NC 排除单点分支，得到末项。证毕。
+
+**约定 127.6（原问题及来源的适用边界）。** 本章的 `repo-derived` 增量是命题127.2的实际纯暴露态分支及其在定理127.4中的原重复球消费者：非恒定的原确认限制供应一个全局极端单点零面，继而强制实际完整球塌缩。124.3的紧对偶基、124.4的闭锥分离构造、124.5的 Straszewicz 与整零面紧性步骤、124.7的有限极点分解，以及 IX116.1—116.2 的完整面与孤立性均按原数学归属复用，不作为独立的新定理。
+
+有限维 Straszewicz 陈述采用 [Bru—de Siqueira Pedra，§4.3][Q124BP]；这里只需要紧凸集极点可被暴露点逼近。有限维闭锥双对偶性及紧凸集的有限极点分解是成熟凸分析步骤，分别用于 (X127.7) 的实际锥成员身份与 (X127.13) 的全局正分解。所有正性、效应上界、暴露和极端性均对应同一个完整原锥；没有把球内正函数或局部法向切片的证书提升为全局证书。
+
+[X125的共同近零确认][QX127X125]保留 EB3+PR 前件，只供应旧球上的小读数，不将任意单张效应零面换成完整 $D_a$；本章通过命题127.2确实取得完整 $D_{a_i}$。原五边形的完整排除边与正限制像计算见 [OriginalWidthContact 的原五边形应用][QX127Pent]，该计算属于 EB1+Inj，未提供重复球对或 EB3 坏模型；本章不以其有符号限制同构供应正延拓。
+
+没有从裸 EB 推出 NC，也没有证明实际重复球缘一定存在非恒定确认。若另给 PE，则每个重复球缘都不能进入 (X127.14)，因而恢复124.7的全部球缘塌缩；没有 PE 时，精确平坦且非暴露的法向分支必须保留，不能从 NC 单独推出 Inj。这里的塌缩点在重复球缘，未对 [131.1的指定坏对径内点][QX127LP]证明局部纯极限 $\mathsf{LP}_{p,y}$，也未证明该命题的否定。共同正提升、稳健框架分离以及满足整个裸 EB 原域的完整反模型仍未由本章构造；这些目标不由条件性塌缩或完整确认唯一性代付。
+
+[QX127IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1—116.2：允许变维的完整面分类、完整零确认、零对称及孤立重复球对。"
+[QX127X125]: #125-旧完整球的共同近零确认与固定球心的真零稳定性 "X125.2—125.6：EB3+PR中的近零确认、CS及任意效应零面误差界的边界。"
+[QX127Pent]: ../../../Blueprint/D5/S3/Quantum/Foundation/OriginalWidthContact.md "Application: the original regular pentagon and all five complete exclusions；一维完整排除边及更窄的正限制像。"
+[QX127LP]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "131.1—131.3：指定坏对径内点的原局部纯极限问题；132—133见其共同正提升续卷。"
+
+## 追加锚（本行以下为增补区）
+
+## 128. 完整球中心关系的有限代数障碍与有界闭包恢复
+
+**定义 128.1（全部原纯点的形式关系空间）。** 沿用126.1的完整原域及 EB3+PR，保留同一个 $V,C,u$、全部 $K,P$ 和整个 $\mathcal E=[0,u]$，记 $k(p,s)=T_p(s)=T_s(p)$。PR 仅交换两个纯端点。令
+
+$$
+\mathcal F_0=\mathbb R^{(P)},\qquad
+J_0:\mathcal F_0\longrightarrow V,\qquad
+J_0\left(\sum_p\alpha_p[p]\right)=\sum_p\alpha_pp.
+\tag{X128.1}
+$$
+
+这里 $[p]$ 是形式基元，系数只有有限支撑；$\ker J_0$ 是全部真实原线性关系。对每张实际完整排除球 $F=D_r$，取任一仿射同构 $b_F:\overline B^3\to F$，定义
+
+$$
+\begin{aligned}
+c_{F,v,w}&=[b_F(v)]+[b_F(-v)]-[b_F(w)]-[b_F(-w)],\\
+R_{\mathrm{cent}}&=\operatorname{span}_{\mathbb R}
+\{c_{F,v,w}:F=D_r,\ r\in P,\ v,w\in S^2\}.
+\end{aligned}
+\tag{X128.2}
+$$
+
+球面点都是原纯点。每条直径的中点都是同一实际球心，故 $R_{\mathrm{cent}}\subseteq\ker J_0$。定义遍历全部原排除球及全部直径，不依赖球图的选择。任意函数 $h:P\to\mathbb R$ 都在形式空间上定义实线性泛函 $L_h(\sum\alpha_p[p])=\sum\alpha_ph(p)$；消灭 $R_{\mathrm{cent}}$ 恰指保持全部球中心关系。
+
+全关系到原全域 least 确认及 fullMixture 的下降，直接复用 [CircuitBalancedConfirmation 的两个既有结论][Q128C]：在126.1的闭生成原锥与严格正单位上，每个核行消灭全部 $\ker J_0$，即满足其全部原 circuit 的 balance 前件，从而取得同原锥上的 reciprocalLeast 与 fullMixture。此处只检验中心关系能否供应这个前件，不另立或重证该下降定理。
+
+**定理 128.2（标准复三能级中，代数生成严格不足而 $\ell^1$ 闭包完整）。** 专取实际模型
+
+$$
+V=H_3(\mathbb C),\qquad C=H_3(\mathbb C)_+,\qquad
+u=\operatorname{Tr},\qquad
+P=\{zz^{\ast}:z\in\mathbb C^3,\ z^{\ast}z=1\}.
+\tag{X128.3}
+$$
+
+沿用定义128.1，$\mathcal F_0$ 自然嵌入实 Banach 空间 $\ell^1(P)$。将 $J_0$ 连续延拓为 $J_1:\ell^1(P)\to H_3(\mathbb C)$。则
+
+$$
+R_{\mathrm{cent}}\subsetneq\ker J_0,
+\qquad
+\overline{R_{\mathrm{cent}}}^{\,\ell^1(P)}=\ker J_1.
+\tag{X128.4}
+$$
+
+对应的连续消灭子精确为
+
+$$
+R_{\mathrm{cent}}^{\perp}
+=\{P\longmapsto\operatorname{Tr}(HP):H\in H_3(\mathbb C)\}
+=(\ker J_1)^{\perp}\quad\text{于 }\ell^{\infty}(P).
+\tag{X128.5}
+$$
+
+特别地，每个有界且保持全部中心关系的实函数有唯一的 Hermitian 迹表示；这一步使用 [Gleason 定理3.5][Q128G]，不是新的框架函数表示定理。
+
+证明。首先核对这是原完整域中的真实检验模型。124.10的完整反向字典给出全部密度态、全部秩一投影、整个矩阵效应区间 $0\preceq E\preceq I_3$，以及
+
+$$
+T_R(\rho)=\operatorname{Tr}(R\rho),\qquad
+D_R=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \operatorname{supp}\rho\subseteq R^{\perp}\}.
+\tag{X128.6}
+$$
+
+因此模型满足完整 EB3 和纯端点 PR。每个复二维平面 $W\subset\mathbb C^3$ 都恰由 $R=\Pi_{W^{\perp}}$ 给出一张完整球 $F_W=D_R$，其中心为 $\Pi_W/2$。在 $W$ 上的 Bloch 坐标为 $\rho=(I_W+x\cdot\sigma)/2$、$\|x\|\le1$。所以任意一组对径纯点满足 $P+Q=\Pi_W$；反之 $Q=\Pi_W-P$ 是 $W$ 中与 $P$ 正交的秩一投影，故每组正交基给出一条直径。这覆盖所有实际完整排除球，不只一张坐标球。
+
+先证严格包含。取无理数 $t\in(0,1)$。$1,t$ 在 $\mathbb Q$ 上线性无关；由包含它们的 Hamel 基，指定并延拓得到
+
+$$
+A:\mathbb R\longrightarrow\mathbb R\quad\text{为 }\mathbb Q\text{-线性},
+\qquad A(1)=0,\quad A(t)=1.
+\tag{X128.7}
+$$
+
+在全部 $P$ 上置 $f(P)=A(P_{11})$。对每个 $W$ 及其中任意两组对径纯点，
+
+$$
+f(P)+f(Q)=A((\Pi_W)_{11})=f(P')+f(Q').
+\tag{X128.8}
+$$
+
+这里只有系数 $1,-1$，$A$ 的加性足够。因此形式基上的实线性 $L_f$ 消灭全部 $R_{\mathrm{cent}}$。这不声称 $A\circ J_0$ 是实线性的。
+
+令 $P_j=e_je_j^{\ast}$，并取实际单位向量及投影
+
+$$
+v_{\pm}=\sqrt t\,e_1\pm\sqrt{1-t}\,e_2,\qquad
+P_{\pm}=v_{\pm}v_{\pm}^{\ast}.
+$$
+
+两个非对角项相消，故
+
+$$
+\begin{gathered}
+P_++P_-=2tP_1+2(1-t)P_2,\\
+z=[P_+]+[P_-]-2t[P_1]-2(1-t)[P_2]\in\ker J_0,\\
+L_f(z)=1+1-2t\,A(1)-2(1-t)A(0)=2.
+\end{gathered}
+\tag{X128.9}
+$$
+
+所以 $z\notin R_{\mathrm{cent}}$，尽管 $L_f$ 消灭所有球的中心关系。除以二后，首式也是两个不同纯分解表达同一个真实密度态的关系。
+
+函数 $f$ 无界。否则因 $P_{11}$ 遍历整个 $[0,1]$，$A$ 在该区间有绝对界 $B$。加性使它在 $[-1,1]$ 同样有界；当 $|x|\le1/n$ 时，$|A(x)|=|A(nx)|/n\le B/n$，所以 $A$ 在零连续，进而由有理逼近有 $A(x)=xA(1)=0$，与 $A(t)=1$ 矛盾。故 $f$ 不是原效应，也不是值域在 $[0,1]$ 的原核行；它只分离两个代数子空间，不构成 EB3+PR 的坏物理模型。以不连续加法函数复合产生无界框架函数的机制，已由 Gleason 原文第886页明确指出。
+
+再确定有界消灭子。设 $h\in\ell^{\infty}(P)$ 消灭 $R_{\mathrm{cent}}$。同一复二维平面中替换一组酉正交基，$h$ 的两个值之和不变。任意两个三维酉正交基都可由有限次这样的二坐标变换及相位变换连接：对非零列对 $(a,b)$，酉块
+
+$$
+\frac1{\sqrt{|a|^2+|b|^2}}
+\begin{pmatrix}\overline a&\overline b\\-b&a\end{pmatrix}
+\begin{pmatrix}a\\b\end{pmatrix}
+=\begin{pmatrix}\sqrt{|a|^2+|b|^2}\\0\end{pmatrix}
+$$
+
+其中块矩阵的两行范数为一且彼此正交，故确为酉矩阵；所列乘积消去一个分量，零列对跳过。对酉矩阵依次消去对角线下的分量，得到上三角酉矩阵，而列正交性使后者为对角相位矩阵。逆转这些有限步就把原矩阵写成嵌入 $U(2)$ 的块及相位矩阵的乘积。按此乘积分解对当前基右乘，每步只替换当前两个基向量，其余向量不变；所涉二维平面各自都是上段列出的实际 $W$。相位不改变秩一投影。因此
+
+$$
+h(z_1z_1^{\ast})+h(z_2z_2^{\ast})+h(z_3z_3^{\ast})=w
+\tag{X128.10}
+$$
+
+对 $\mathbb C^3$ 的所有酉正交基有同一个实常数 $w$；这一步不以路径连续性代替有限连接。
+
+在全部单位向量上定义 $g(z)=h(zz^{\ast})+B$，其中 $B=\|h\|_{\infty}$。这是非负实函数，对每个完整正交基的和都是 $w+3B$，并且相位不变。其域为完整 $\mathbb C^3$ 的单位球面，复维数为三且有限维空间可分，恰满足 Gleason 第886页的 frame function 定义及第892页定理3.5的前件；不要求预先连续或可测。按该定理及其 regular 定义，存在自伴 $T$ 使 $g(z)=z^{\ast}Tz$。减去常数得 $H=T-BI_3$，于是
+
+$$
+h(P)=\operatorname{Tr}(HP)\quad(P\in P).
+\tag{X128.11}
+$$
+
+若两个 Hermitian 矩阵给出相同值，其差在每个单位向量上的二次型为零；在差矩阵的单位特征向量上评价便使全部特征值为零，故 $H$ 唯一。反向迹函数有界，且由 $P+Q=\Pi_W$ 保持每个中心关系。这证明 (X128.5) 中关于 $R_{\mathrm{cent}}^{\perp}$ 的描述。
+
+最后处理闭包及不可数纯集。这里
+
+$$
+\ell^1(P)=\{\alpha:P\to\mathbb R:\sum_P|\alpha_P|<\infty\},
+\qquad J_1\alpha=\sum_P\alpha_PP.
+$$
+
+非负和按有限子集和的上确界定义。每个集合 $\{P:|\alpha_P|\ge1/n\}$ 有限，故每个 $\alpha$ 的支撑至多可数；有限支撑向量稠密。用矩阵迹范数 $\|P\|_1=1$ 得绝对收敛和 $\|J_1\alpha\|_1\le\|\alpha\|_{\ell^1}$，所以延拓存在且 $\ker J_1$ 闭。这里不把不可数 $P$ 换成一个选定的可数菜单。
+
+标准实对偶 $\ell^1(P)^{\ast}=\ell^{\infty}(P)$ 的配对为 $L_h(\alpha)=\sum_P\alpha_Ph(P)$：连续泛函在单位基元上的值一致有界，且由有限支撑稠密性确定其全部值；反向由绝对收敛直接给连续泛函。每个迹函数还满足
+
+$$
+L_h(\alpha)=\operatorname{Tr}(H J_1\alpha),
+$$
+
+因此消灭 $\ker J_1$。又 $R_{\mathrm{cent}}\subseteq\ker J_1$，得到 (X128.5) 的另一等号。
+
+令 $M=\overline{R_{\mathrm{cent}}}^{\ell^1}\subseteq\ker J_1$。若存在 $\alpha\in\ker J_1\setminus M$，实 Hahn–Banach 分离给连续 $L$，使 $L|_M=0$ 而 $L(\alpha)\ne0$。它对应一个有界中心函数，故由 (X128.11) 为迹函数，于是 $L(\alpha)=\operatorname{Tr}(H J_1\alpha)=0$，矛盾。得到 (X128.4) 的闭包等式。证毕。
+
+所以即使是有限支撑的真实关系，也可能只能由中心关系的有限线性组合在 $\ell^1$ 范数下逼近，不能用某一次有限组合精确拼出。这个结论不提供逼近速率、系数预算或实际操作程序。无界 $L_f$ 不连续，故不妨碍闭包等式。
+
+**定义及应用 128.3（原域的有界行、未付接口与完整候选）。** 回到126.1的任意完整 EB3+PR 域，不预先把 $P$ 识别为 $\mathbb {CP}^2$。由原紧效应区间及既有固定标签估计，置 $L=\max_{e\in\mathcal E}\|e\|_{\ast}<\infty$，则
+
+$$
+0\le k(p,s)\le1,\qquad
+|k(p,s)-k(p',s')|\le L\bigl(\|p-p'\|+\|s-s'\|\bigr).
+\tag{X128.12}
+$$
+
+这使用 PR 将变化标签转为固定 $T_s$ 的输入，再用126.1所引的共同 Lipschitz 界；不是新增连续性公理。尚未支付的第一项是对所有外部纯测试也保持同球中心：
+
+$$
+\forall s,r\in P\ \forall v,w\in S^2:\quad
+k(b_{D_r}(v),s)+k(b_{D_r}(-v),s)
+=k(b_{D_r}(w),s)+k(b_{D_r}(-w),s).
+\tag{X128.13}
+$$
+
+即使取得此式，还须在同一个原球关联几何上证明这些有界核行消灭全部 $\ker J_0$。一个足够的分析桥是原 $\ell^1(P)$ 中相应的闭包等式；原 $P\subset K$ 有界，故原 $J_0$ 同样具有连续延拓。若该桥及 (X128.13) 均成立，有界行的连续性就使其消灭全关系，随后直接接入定义128.1引用的成熟下降结论。定理128.2只在已经明确指定的标准量子模型中支付这个分析桥；它既未证明一般原域的 (X128.13)，也未证明其在该域中足以推出全关系或 UF。不能先输入 Hilbert 识别、全 Pair 或 Jordan 结构，再把该识别算作从裸 EB3+PR 得出的结果。
+
+白话上，同一个球心可以由任意一对对径纯态各半表达。要求球外比较也不随这对端点的选择改变，仍不同于交换两个纯比较端点。标准量子模型表明：全部球心等式还不能靠有限代数拼接给出所有混合等式；但对始终有界的读数，球与球之间的全部 Hilbert 关联使这些等式在分析意义下已经足够。一般原域的读数有界性已具备，仍缺上述中心兼容及其跨球推广；病态辅助函数不是缺少物理连续性的证据。
+
+完整条件候选仍是：在同一有限维原锥及严格正单位上保留全部纯态、全部混态和全部零一效应；每个纯态可完全排除的全部态恰成一整颗实心仿射三球（EB3）；交换两个纯比较端点，最优确认读数不变（PR）；另要求纯标签趋近时，新完整排除球到固定旧球心的距离趋零，即
+
+$$
+\mathrm{CS}:\quad
+p_i\to p\text{ 于 }P\Longrightarrow
+\operatorname{dist}(c_p,D_{p_i})\to0
+\quad\text{对每个 }p\text{ 及每条原纯列成立}.
+\tag{X128.14}
+$$
+
+按125.5，CS 与 UF 在本域中等价；只有另付此条件，才由124.10取得同原 $C/u$ 的静态复三能级表示。全部原对象及原混态最优确认的对应直接沿用124.10、125.7及126.8，不缩为纯态菜单。本章没有去掉 CS，也没有独立公理数减少或同域坏模型的结论。排除球的实仿射维数三不是物理空间维数；条件静态模型的归一化态空间实维数为八。
+
+同一个原 $\Omega$、全部实际合法门序列、中间切口及记录后的条件未来仍由原操作合同供应；数学效应存在不供应制备、调用或共同仪器。事件分支、更新、TP/TNI 预算与零质量分支，任意有限复合的整个联合态锥、产品及纠缠输入、共同单位和接线，全旁观者兼容与 CP，以及动力学、物理钟、Hamiltonian、能量单位和 $\hbar$，均保留126.8的独立接口边界。
+
+本章承重增量为 `repo-derived` 的具体关系空间应用：针对全部实际完整排除球建立代数严格包含的分离关系，并在同一完整标准模型中用有界消灭子确定精确闭包。Hamel 基与无界加法函数、有限酉消元、Gleason 表示、$\ell^1$ 对偶及 Hahn–Banach 分离都是成熟中间工具，不单列为新发现。原尺度的 Hamel 障碍亦已用于 [V49命题13.5][Q128H49]、[V79第9.2节][Q128H79]及 [C140第4.2节][Q128H140]；它们不替代本章对全部实际排除球的关系检验。Gleason原文第886页给无界机制与 regular 定义，第892页定理3.5给非负框架函数表示；仓内有限复投影表示 [GleasonComplexRepresentation][Q128GR] 亦为既有结果。本章不认领新的 Gleason 定理、全球原创、历史优先权或裸 EB3+PR 的自动 UF。
+
+[Q128C]: ../../../D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.lean "circuit_balance_least_confirmation 与 full_mixture_iff_circuit_balance：同原闭生成锥、严格正单位、全纯域和全效应区间上的既有下降；此处不重证。"
+[Q128G]: https://www.iumj.indiana.edu/IUMJ/FTDLOAD/1957/6/56050/pdf "A. M. Gleason, Measures on the Closed Subspaces of a Hilbert Space；第886页的定义与无界例，第892页Theorem 3.5；DOI 10.1512/iumj.1957.6.56050。"
+[Q128GR]: ../../../D5/S3/Quantum/GleasonComplexRepresentation.lean "Gleason.ProjectionPackage.gleason_representation：有限复维数至少三，所有投影上的非负、归一与正交可加；不直接供应原中心关系到全部框架的映射。"
+[Q128H49]: AURIC_SUM_PRODUCT_POWERS_QUADRATIC_RELATION_CLOSURE_AND_NORMALIZED_LIFTING_V49.md "13.5：Hamel 权重通过有限标定而非平方，及未归一全域有界性的边界。"
+[Q128H79]: AURIC_BINARY_REVERSAL_COMPATIBILITY_FINITE_PHASE_CERTIFICATES_AND_QUANTUM_READOUT_RECONSTRUCTION_V79.md "9.2：非连续加法平方与共同范数上界的不同作用。"
+[Q128H140]: AURIC_C140_COMMON_SOURCE_THREE_PATH_BALANCE_AND_QUANTUM_GEOMETRY.md "4.2：有理配比与原实配比的 Hamel 障碍。"
+
+## 追加锚（本行以下为增补区）
