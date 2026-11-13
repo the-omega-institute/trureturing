@@ -27,7 +27,7 @@ Together with an attained contrast M this expresses W(F)=M. -/
 def WidthBound (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (F : Set V) (M : ℝ) : Prop :=
   ∀ f : V →ₗ[ℝ] ℝ, proper C u f → ∀ x ∈ F, ∀ y ∈ F, f x - f y ≤ M
 
-theorem normalized_effect {C : PointedCone ℝ V} {u h : V →ₗ[ℝ] ℝ}
+private theorem normalized_effect {C : PointedCone ℝ V} {u h : V →ₗ[ℝ] ℝ}
     (hK : IsCompact (base C u)) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     {a z : V}
     (hmin : ∀ x ∈ base C u, h a ≤ h x) (hmax : ∀ x ∈ base C u, h x ≤ h z)

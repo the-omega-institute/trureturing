@@ -7,7 +7,7 @@
    digest: The original entire EB3 regular-anchor family has a native qutrit inhabitant. -/
 
 import D5.S3.Quantum.Foundation.RegularAnchorContactCriterion
-import D5.S3.Quantum.Foundation.SectionROGFrame
+import D5.S3.Quantum.Foundation.HermitianExclusionBall
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Sqrt
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Unitary
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
@@ -23,7 +23,7 @@ open scoped BigOperators Matrix InnerProductSpace RealInnerProductSpace ComplexO
 namespace D5.S3.Quantum.Foundation.NativePSDModel
 
 open CircuitBalancedConfirmation FacetZeroGluing OrthogonalJointCompletion
-open RegularAnchorNormalChart RegularAnchorContactCriterion SectionROGFrame
+open RegularAnchorContactCriterion SectionROGFrame
 open D5.S3.Quantum.Measurement.FourQubitParentConstruction
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 
@@ -31,17 +31,17 @@ variable {d : Type*} [Fintype d] [DecidableEq d]
 
 /-- The entire PSD cone on the native Hermitian real carrier. -/
 abbrev cone : PointedCone ℝ (HermitianMat d ℂ) :=
-  PointedCone.positive ℝ (HermitianMat d ℂ)
+  HermitianExclusionKernel.cone
 
 /-- The real trace unit. -/
-def unit : HermitianMat d ℂ →ₗ[ℝ] ℝ := HermitianMat.innerₗ 1
+abbrev unit : HermitianMat d ℂ →ₗ[ℝ] ℝ := HermitianExclusionKernel.unit
 
 /-- The real trace pairing, defined on the entire original carrier. -/
 def effect (E : HermitianMat d ℂ) : HermitianMat d ℂ →ₗ[ℝ] ℝ :=
   HermitianMat.innerₗ E
 
 private theorem unit_apply (X : HermitianMat d ℂ) : unit X = X.trace :=
-  HermitianMat.one_inner X
+  rfl
 
 private theorem effect_apply (E X : HermitianMat d ℂ) : effect E X = ⟪E, X⟫ := rfl
 
@@ -75,59 +75,6 @@ private theorem base_iff (X : HermitianMat d ℂ) :
   simp only [CircuitBalancedConfirmation.base, Set.mem_ofPred_eq,
     PointedCone.mem_positive, unit_apply]
 
-omit [DecidableEq d] in
-private theorem rank_one_self (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1) :
-    (rankOne v).mat * (rankOne v).mat = (rankOne v).mat := by
-  classical
-  change Matrix.vecMulVec (v : d → ℂ) (star (v : d → ℂ)) *
-    Matrix.vecMulVec (v : d → ℂ) (star (v : d → ℂ)) = _
-  rw [Matrix.vecMulVec_mul_vecMulVec]
-  have hn : star v.ofLp ⬝ᵥ v.ofLp = 1 := by
-    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
-    simp [hv]
-  rw [hn, one_smul]
-  rfl
-
-set_option backward.isDefEq.respectTransparency false in
-/-- A confirming positive contraction dominates the confirmed unit projection.
-The proof constructs its positive complementary block on the same carrier. -/
-theorem confirming_dominates (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1)
-    (E : HermitianMat d ℂ) (hE : 0 ≤ E) (hI : E ≤ 1)
-    (hconfirm : ⟪E, rankOne v⟫ = 1) : rankOne v ≤ E := by
-  let P := rankOne v
-  have hPtr : P.trace = 1 := by
-    dsimp [P]
-    rw [rankOne_trace_norm, hv]
-    norm_num
-  have hzero : ⟪1 - E, P⟫_ℝ = 0 := by
-    rw [inner_sub_left, HermitianMat.one_inner, hPtr, hconfirm]
-    ring
-  have hmul : (1 - E).mat * P.mat = 0 := by
-    have hz : P.support ≤ (1 - E).ker :=
-      (HermitianMat.inner_zero_iff (rankOne_nonneg v) (sub_nonneg.mpr hI)).mp
-        (by rw [real_inner_comm]; exact hzero)
-    change LinearMap.range (Matrix.toEuclideanLin P.mat) ≤
-      LinearMap.ker (Matrix.toEuclideanLin (1 - E).mat) at hz
-    have hh := LinearMap.range_le_ker_iff.mp hz
-    apply Matrix.toEuclideanLin.injective
-    simpa only [Matrix.toEuclideanLin, Matrix.toLpLin_mul_same, map_zero] using hh
-  have hEP : E.mat * P.mat = P.mat := by
-    exact (sub_eq_zero.mp (by simpa only [HermitianMat.mat_sub, Matrix.sub_mul,
-      HermitianMat.mat_one, Matrix.one_mul] using hmul)).symm
-  have hPE : P.mat * E.mat = P.mat := by
-    have hh := congrArg Matrix.conjTranspose hEP
-    simpa [Matrix.conjTranspose_mul] using hh
-  have hblock : E.conj (1 - P.mat) = E - P := by
-    apply HermitianMat.ext
-    change (1 - P.mat) * E.mat * (1 - P.mat).conjTranspose = E.mat - P.mat
-    simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, P.H.eq,
-      Matrix.sub_mul, Matrix.one_mul, Matrix.mul_sub, Matrix.mul_one,
-      hPE, hEP, show P.mat * P.mat = P.mat from rank_one_self v hv]
-    abel
-  have hp := HermitianMat.conj_nonneg (M := 1 - P.mat) hE
-  rw [hblock] at hp
-  exact sub_nonneg.mp hp
-
 private theorem rank_one_confirms (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1) :
     confirms cone unit (rankOne v) (effect (rankOne v)) := by
   refine ⟨(proper_iff _).2 ⟨rankOne_nonneg v, ?_⟩, rankOne_self v hv⟩
@@ -140,16 +87,18 @@ theorem whole_mixed_exclusion (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1) :
     exclusion cone unit (rankOne v) =
       {X : HermitianMat d ℂ | 0 ≤ X ∧ X.trace = 1 ∧ ⟪rankOne v, X⟫_ℝ = 0} := by
   ext X
+  rw [HermitianExclusionKernel.exclusion_iff_kernel v hv X]
   constructor
-  · rintro ⟨hX, f, hf, hfX⟩
-    obtain ⟨E, rfl⟩ := effect_surjective f
-    obtain ⟨hE, hI⟩ := (proper_iff E).mp hf.1
-    have hdom := confirming_dominates v hv E hE hI hf.2
-    have hx := (base_iff X).mp hX
-    refine ⟨hx.1, hx.2, le_antisymm ?_ (HermitianMat.inner_ge_zero (rankOne_nonneg v) hx.1)⟩
-    exact (HermitianMat.inner_mono' hx.1 hdom).trans_eq hfX
+  · rintro ⟨hX, ht, hk⟩
+    refine ⟨hX, ht, ?_⟩
+    apply RCLike.ofReal_injective (K := ℂ)
+    rw [real_inner_comm, pair_rankOne (𝕜 := ℂ) X (v : d → ℂ), hk]
+    simp
   · rintro ⟨hX, ht, hz⟩
-    exact ⟨(base_iff X).mpr ⟨hX, ht⟩, effect (rankOne v), rank_one_confirms v hv, hz⟩
+    refine ⟨hX, ht, ?_⟩
+    apply (HermitianMat.zero_le_iff.mp hX).dotProduct_mulVec_zero_iff.mp
+    rw [← pair_rankOne (𝕜 := ℂ) X (v : d → ℂ), real_inner_comm, hz]
+    simp
 
 private theorem complement_state (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1)
     (hd : 1 < Fintype.card d) :
@@ -272,233 +221,19 @@ theorem native_exclusion_injective (hd : 1 < Fintype.card d) :
   exact heq.symm
 
 
-private def blochLinear : ThreeSpace →ₗ[ℝ] HermitianMat (Fin 2) ℂ where
-  toFun r := ⟨B r, by
-    change (B r).IsHermitian
-    simpa only [scalarB, Complex.ofReal_zero, zero_smul, zero_add]
-    using scalarB_hermitian 0 r⟩
-  map_add' a b := by
-    apply HermitianMat.ext
-    change B (a + b) = B a + B b
-    simpa only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
-      using B_sum Finset.univ ![a, b]
-  map_smul' c a := by
-    apply HermitianMat.ext
-    exact B_real_smul c a
-
-private def beta : ThreeSpace →ᵃ[ℝ] HermitianMat (Fin 2) ℂ :=
-  ((1 / 2 : ℝ) • blochLinear).toAffineMap +
-    AffineMap.const ℝ ThreeSpace ((1 / 2 : ℝ) • (1 : HermitianMat (Fin 2) ℂ))
-
-private theorem beta_mat (r : ThreeSpace) : (beta r).mat = blochMatrix 1 r := by
-  change (((1 / 2 : ℝ) • blochLinear r +
-    (1 / 2 : ℝ) • (1 : HermitianMat (Fin 2) ℂ)).mat) = _
-  rw [HermitianMat.mat_add, HermitianMat.mat_smul, HermitianMat.mat_smul]
-  change (1 / 2 : ℝ) • B r + (1 / 2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) = _
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [B_formula, blochMatrix, Matrix.smul_apply, Complex.real_smul,
-      Matrix.one_apply] <;> ring
-
-private theorem beta_trace (r : ThreeSpace) : (beta r).trace = 1 := by
-  rw [HermitianMat.trace_eq_re_trace, beta_mat, blochMatrix_trace]
-  norm_num
-
-private theorem beta_positive (r : ThreeSpace) : 0 ≤ beta r ↔ ‖r‖ ≤ 1 := by
-  rw [HermitianMat.zero_le_iff]
-  have hm : (beta r).mat = (1 / 2 : ℂ) • scalarB 1 r := by
-    rw [beta_mat]
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [blochMatrix, scalarB, B_formula] <;> ring
-  rw [hm]
-  exact half_scalarB_posSemidef_iff 1 r
-
-private theorem beta_inverse (X : HermitianMat (Fin 2) ℂ) (ht : X.trace = 1) :
-    beta (bloch X.mat) = X := by
-  apply HermitianMat.ext
-  rw [beta_mat]
-  have h := (bloch_geometry_of_isHermitian X.mat X.H).1
-  change X.mat = blochMatrix (RCLike.re X.mat.trace) (bloch X.mat) at h
-  rw [← HermitianMat.trace_eq_re_trace, ht] at h
-  exact h.symm
-
-private theorem beta_injective : Function.Injective beta := by
-  intro r s h
-  have hh := congrArg (fun X : HermitianMat (Fin 2) ℂ => bloch X.mat) h
-  simpa only [beta_mat, bloch_blochMatrix] using hh
-
-private def W : Matrix (Fin 3) (Fin 2) ℂ := !![0, 0; 1, 0; 0, 1]
-
-private theorem W_isometry : W.conjTranspose * W = 1 := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [W, Matrix.mul_apply, Fin.sum_univ_three]
-
-private def compress (X : HermitianMat (Fin 3) ℂ) : HermitianMat (Fin 2) ℂ :=
-  X.conj W.conjTranspose
-
-private theorem compress_embed (X : HermitianMat (Fin 2) ℂ) :
-    compress (X.conj W) = X := by
-  rw [compress, HermitianMat.conj_conj, W_isometry, HermitianMat.conj_one]
-
-private theorem embed_trace (X : HermitianMat (Fin 2) ℂ) :
-    (X.conj W).trace = X.trace := by
-  rw [HermitianMat.trace_eq_re_trace, HermitianMat.conj_apply_mat,
-    Matrix.trace_mul_cycle, W_isometry, Matrix.one_mul,
-    ← HermitianMat.trace_eq_re_trace]
-
 def vzero : EuclideanSpace ℂ (Fin 3) := WithLp.toLp 2 ![1, 0, 0]
 
 theorem vzero_unit : ‖vzero‖ = 1 := by
   simp [vzero, EuclideanSpace.norm_eq, Fin.sum_univ_three]
 
-private theorem anchor_reading (X : HermitianMat (Fin 3) ℂ) :
-    ⟪rankOne vzero, X⟫_ℝ = (X.mat 0 0).re := by
-  rw [HermitianMat.inner_eq_re_trace]
-  change ((rankOne vzero).mat * X.mat).trace.re = _
-  simp [rankOne, vzero, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_three,
-    Matrix.vecMulVec_apply, -HermitianMat.mat_apply]
-
-private theorem embed_zero (X : HermitianMat (Fin 2) ℂ) :
-    ⟪rankOne vzero, X.conj W⟫_ℝ = 0 := by
-  rw [anchor_reading]
-  change ((W * X.mat * W.conjTranspose) 0 0).re = 0
-  simp [W, Matrix.mul_apply, Fin.sum_univ_two]
-
-private theorem reconstruct (X : HermitianMat (Fin 3) ℂ) (hX : 0 ≤ X)
-    (hz : ⟪rankOne vzero, X⟫_ℝ = 0) : (compress X).conj W = X := by
-  have h00 : X.mat 0 0 = 0 := by
-    apply Complex.ext
-    · exact (anchor_reading X).symm.trans hz
-    · exact X.complex_im_eq_zero 0
-  have hquad : star vzero.ofLp ⬝ᵥ (X.mat *ᵥ vzero.ofLp) = 0 := by
-    simpa [vzero, dotProduct, Matrix.mulVec, Fin.sum_univ_three] using h00
-  have hcol := (HermitianMat.zero_le_iff.mp hX).dotProduct_mulVec_zero_iff.mp hquad
-  have hc (i : Fin 3) : X.mat i 0 = 0 := by
-    simpa [vzero, Matrix.mulVec, dotProduct, Fin.sum_univ_three] using congrFun hcol i
-  have hr (j : Fin 3) : X.mat 0 j = 0 := by
-    calc
-      X.mat 0 j = star (X.mat j 0) := (congrFun₂ X.H.eq 0 j).symm
-      _ = 0 := by rw [hc j, star_zero]
-  apply HermitianMat.ext
-  simp only [compress, HermitianMat.conj_apply_mat,
-    Matrix.conjTranspose_conjTranspose]
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [W, Matrix.mul_apply, Matrix.vecMul, dotProduct,
-      Matrix.conjTranspose_apply, Fin.sum_univ_two, Fin.sum_univ_three,
-      hc, hr, -HermitianMat.mat_apply]
-
-/-- The chart is affine and injective on the whole three-space, and its closed
-unit ball is exactly the entire original mixed exclusion of the first projection. -/
-def anchorChart : FullBall3Chart (cone (d := Fin 3)) unit (rankOne vzero) where
-  param := (HermitianMat.conjLinear ℝ W).toAffineMap.comp beta
-  injective := by
-    intro r s h
-    apply beta_injective
-    change (beta r).conj W = (beta s).conj W at h
-    have hh := congrArg compress h
-    simpa only [compress_embed] using hh
-  whole := by
-    ext X
-    constructor
-    · rintro ⟨r, hr, rfl⟩
-      rw [whole_mixed_exclusion vzero vzero_unit]
-      change 0 ≤ (beta r).conj W ∧ ((beta r).conj W).trace = 1 ∧ _
-      refine ⟨HermitianMat.conj_nonneg W ((beta_positive r).mpr ?_), ?_, embed_zero _⟩
-      · simpa using hr
-      · rw [embed_trace, beta_trace]
-    · intro hX
-      rw [whole_mixed_exclusion vzero vzero_unit] at hX
-      have hpos : 0 ≤ compress X := HermitianMat.conj_nonneg W.conjTranspose hX.1
-      have hre := reconstruct X hX.1 hX.2.2
-      have ht : (compress X).trace = 1 := by
-        rw [← embed_trace (compress X), hre]
-        exact hX.2.1
-      refine ⟨bloch (compress X).mat, ?_, ?_⟩
-      · have hn : ‖bloch (compress X).mat‖ ≤ 1 :=
-          (beta_positive _).mp (by rw [beta_inverse _ ht]; exact hpos)
-        simpa using hn
-      · change (beta (bloch (compress X).mat)).conj W = X
-        rw [beta_inverse _ ht, hre]
-
-private theorem unitary_to (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1) :
-    ∃ U : Matrix.unitaryGroup (Fin 3) ℂ,
-      (rankOne vzero).conj U.val = rankOne v := by
-  have hsingle : Orthonormal ℂ (({0} : Set (Fin 3)).domRestrict
-      (fun _ : Fin 3 => v)) := by
-    rw [orthonormal_iff_ite]
-    intro i j
-    have hij : i = j := Subsingleton.elim _ _
-    subst j
-    simp [hv]
-  obtain ⟨b, hb⟩ := hsingle.exists_orthonormalBasis_extension_of_card_eq (by simp)
-  let a := EuclideanSpace.basisFun (Fin 3) ℂ
-  let U : Matrix.unitaryGroup (Fin 3) ℂ :=
-    ⟨a.toBasis.toMatrix b, a.toMatrix_orthonormalBasis_mem_unitary b⟩
-  refine ⟨U, ?_⟩
-  have hcol (i : Fin 3) : U.val i 0 = v i := by
-    change a.toBasis.repr (b 0) i = v i
-    rw [hb 0 (Set.mem_singleton 0)]
-    rfl
-  apply HermitianMat.ext
-  change U.val * (rankOne vzero).mat * U.val.conjTranspose = (rankOne v).mat
-  ext i j
-  simp [rankOne, vzero, Matrix.mul_apply, Fin.sum_univ_three,
-    Matrix.vecMulVec_apply, hcol, -HermitianMat.mat_apply]
-
-private theorem undo_conj (X : HermitianMat (Fin 3) ℂ)
-    (U : Matrix.unitaryGroup (Fin 3) ℂ) :
-    (X.conj U.val).conj (star U).val = X := by
-  rw [HermitianMat.conj_conj]
-  have h : (star U).val * U.val = 1 := U.property.1
-  rw [h, HermitianMat.conj_one]
-
-/-- Every original pure qutrit label has a full three-ball chart of its entire
-mixed exclusion, with an affine parameterization injective on all three-space. -/
 theorem native_EB3 : EB3 (cone (d := Fin 3)) unit := by
   intro p
-  obtain ⟨v, hv, hp⟩ := (native_pure_iff (p : HermitianMat (Fin 3) ℂ)).mp p.property
-  obtain ⟨U, hU⟩ := unitary_to v hv
-  refine ⟨{
-    param := (HermitianMat.conjLinear ℝ U.val).toAffineMap.comp anchorChart.param
-    injective := ?_
-    whole := ?_ }⟩
-  · intro r s h
-    apply anchorChart.injective
-    change (anchorChart.param r).conj U.val = (anchorChart.param s).conj U.val at h
-    have hh := congrArg (fun X : HermitianMat (Fin 3) ℂ => X.conj (star U).val) h
-    simpa only [undo_conj] using hh
-  · ext X
-    constructor
-    · rintro ⟨r, hr, rfl⟩
-      have hx : anchorChart.param r ∈ exclusion cone unit (rankOne vzero) :=
-        anchorChart.whole ▸ Set.mem_image_of_mem _ hr
-      rw [whole_mixed_exclusion vzero vzero_unit] at hx
-      rw [← hp, whole_mixed_exclusion v hv]
-      change 0 ≤ (anchorChart.param r).conj U.val ∧
-        ((anchorChart.param r).conj U.val).trace = 1 ∧ _
-      refine ⟨HermitianMat.conj_nonneg U.val hx.1,
-        (HermitianMat.trace_conj_unitary _ U).trans hx.2.1, ?_⟩
-      change ⟪rankOne v, (anchorChart.param r).conj U.val⟫_ℝ = 0
-      rw [← hU, HermitianMat.inner_conj_unitary]
-      exact hx.2.2
-    · intro hX
-      rw [← hp, whole_mixed_exclusion v hv] at hX
-      have hy : X.conj (star U).val ∈ exclusion cone unit (rankOne vzero) := by
-        rw [whole_mixed_exclusion vzero vzero_unit]
-        refine ⟨HermitianMat.conj_nonneg (star U).val hX.1,
-          (HermitianMat.trace_conj_unitary _ (star U)).trans hX.2.1, ?_⟩
-        have heq : (rankOne v).conj (star U).val = rankOne vzero := by
-          rw [← hU, undo_conj]
-        rw [← heq, HermitianMat.inner_conj_unitary]
-        exact hX.2.2
-      obtain ⟨r, hr, hre⟩ := anchorChart.whole.symm ▸ hy
-      refine ⟨r, hr, ?_⟩
-      change (anchorChart.param r).conj U.val = X
-      rw [hre]
-      simpa only [star_star] using undo_conj X (star U)
+  obtain ⟨⟨d, hd, param, hinj, hwhole⟩, rfl⟩ :=
+    HermitianExclusionBall.all_pure_charts p
+  exact ⟨⟨param, hinj, hwhole⟩⟩
+
+noncomputable def anchorChart : FullBall3Chart (cone (d := Fin 3)) unit (rankOne vzero) :=
+  (native_EB3 ⟨rankOne vzero, (native_pure_iff _).mpr ⟨vzero, vzero_unit, rfl⟩⟩).some
 
 /-- A concrete inhabitant of the complete original telescope, together with its
 application to the original contact criterion. All effects and pure labels keep
@@ -523,8 +258,7 @@ theorem original_family_inhabited :
     HermitianMat.isClosed_nonneg
   have hs : ∀ X ∈ cone (d := Fin 3), X ≠ 0 → 0 < unit X := by
     intro X hX hne
-    change 0 < ⟪(1 : HermitianMat (Fin 3) ℂ), X⟫_ℝ
-    rw [HermitianMat.one_inner]
+    change 0 < X.trace
     exact HermitianMat.trace_pos (lt_of_le_of_ne hX (Ne.symm hne))
   have hg : Submodule.span ℝ (cone (d := Fin 3) : Set (HermitianMat (Fin 3) ℂ)) = ⊤ := by
     apply top_unique
@@ -544,7 +278,6 @@ theorem original_family_inhabited :
     regular_anchor_contact_criterion hc hs hg native_EB3 hinj p e he hreg anchorChart⟩
 
 
-#print axioms confirming_dominates
 #print axioms whole_mixed_exclusion
 #print axioms whole_common_unique
 #print axioms native_pure_iff
