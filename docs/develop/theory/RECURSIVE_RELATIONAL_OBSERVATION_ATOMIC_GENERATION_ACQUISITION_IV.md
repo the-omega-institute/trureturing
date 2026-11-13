@@ -3717,8 +3717,11 @@ emits `zero` on an unmarked query and, under `Task.raw`, `rawMark` on
 the marker. A later native query emits `reject` and leaves the same
 state. Such a rejection is not a new source sample. Under
 `Task.retained`, the terminal mode is `root(recoveredRoot h)`; under
-`Task.raw`, it is merely `stopped`. Residual `Test` access to mode and
-new outputs does not grant access to the whole stored history.
+`Task.raw`, it is merely `stopped`. A residual `Test` introduced afresh
+at $h_n$ receives only the current mode and subsequent outputs, with
+no earlier trace. A `Test` initialized at $h_0$ can instead retain its
+own choices and outputs through its `Test.query` continuation branches;
+it need not read the stored `State` lists directly.
 
 **Assumption 40.4 (acquired port and readout contract).** The mathematical
 record results refer to the actual $h_n$ just defined. To apply them to
@@ -3869,19 +3872,55 @@ $$
 Irrationality makes both comparisons strict. $\square$
 
 **Proposition 41.2 (the readout domain is substantive).** The terminal
-`Task.retained` root test receives $f(e)$ by horizon five. The
-four-attempt decoder (IV.126) is not furnished by a `Task.raw` port
-that exposes only current mode and new query outputs. Neither the
-uncomplemented mechanical letters nor independent outward rays can
-replace (IV.124) in Theorem 41.1.
+`Task.retained` root test receives $f(e)$ by horizon five. A
+fresh residual `Task.raw` decoder introduced at public horizon
+four, with only `currentMode` and subsequent outputs and no earlier
+trace or controller memory, cannot uniformly identify $f(e)$, even
+after the known always-right policy. An initialized always-right raw
+controller, or a finite `Test` started at $h_0$, does recover $f(e)$
+for every $e\in\mathbb Z$ with at most four queries: on the first
+`rawMark` at query $k\le4$ return $(k-1)\bmod2$; if the first four
+outputs are `zero`, return $0$. Neither the uncomplemented mechanical
+letters nor independent outward rays can replace (IV.124) in
+Theorem 41.1.
 
 **Proof.** At a stopped state `currentMode retained` is exactly
 `root(recoveredRoot h)`; applying the read function that returns its
-root bit gives $f(e)$. Under `Task.raw`, an active fourth-horizon state
-only exposes `active`, and the terminal mode is only `stopped`.
-The parity in (IV.126) reads side counts in the actually stored history;
-that access is an additional premise of the stated decoder. Nothing
-in the theorem changes the `Test` interface.
+root bit gives $f(e)$ by Theorem 41.1.
+
+For the fresh residual impossibility, (IV.119) gives
+$f(1)f(2)f(3)=100$. Under always-right, origins $e=1$ and $e=2$
+therefore have roots $1,0$ and first marker times $2,1$, respectively.
+Both expose only `stopped` under `Task.raw` at $h_4$, and every later
+raw query rejects without changing the state. Induction on the
+`read`, `query` and `inspect` constructors gives the same result for
+every fixed fresh residual `Test` on these two states. The known
+policy and public horizon four agree as well. Thus these inputs
+cannot determine their different roots.
+
+For initialized control, before the first marker every compared right
+edge alternates, since neither $11$ nor an unreported $00$ can occur.
+At the first marker at query $k$, its inner endpoint is $0$ at distance
+$k-1$ from the root. Hence the root is $(k-1)\bmod2$. If all four
+outputs are `zero`, the active five-letter word is $01010$ by the
+proof of Theorem 41.1, and the always-right root is its first bit $0$.
+The controller returns immediately on a marker and makes no later
+query; otherwise it returns after query four. Returning after four
+zeros leaves the native state active, preserving the distinct stopping
+horizon. The counter starts at one at $h_0$ and is known from the
+controller's own query sequence, including when it stops early.
+
+Concretely, a finite `Test` uses `query` on $R$ at each of its four
+successive zero-branch depths. At depth $k$, the `rawMark` branch is
+a `read` with constant Boolean value $(k-1)\bmod2$; the `zero` branch
+continues to depth $k+1$, or to a constant-$0$ `read` at $k=4$.
+Other output branches may use any constant `read`, since they are
+unreachable on this initialized raw run. These reads ignore their mode
+argument. The continuation branches suffice without direct access to
+the stored `State` history. An initialized controller may likewise
+reconstruct its own action/reply record. All these queries use the
+same source, absorbing menu and supplied rights; this observation
+supplies no additional source query or operation right.
 
 The uncomplemented $d$ has no $00$, by the two-letter estimate in
 (IV.127). Fed directly into a $00$ marker it never marks; it also has
