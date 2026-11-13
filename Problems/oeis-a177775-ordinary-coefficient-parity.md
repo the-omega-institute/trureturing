@@ -2,7 +2,7 @@
 slug: oeis-a177775-ordinary-coefficient-parity
 bibkey: hanna2026a177775
 doi: null
-url: https://oeis.org/A177775
+url: https://raw.githubusercontent.com/oeis/oeisdata/501c6189fe17530d95e5a4f90dbca228feb5713d/seq/A177/A177775.seq
 triage: theorem
 motivation_gids:
   - D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result
@@ -12,7 +12,7 @@ motivation_gids:
 
 ## Problem
 
-Paul D. Hanna, OEIS A177775, conjecture comment:
+Paul D. Hanna, [OEIS A177775](https://oeis.org/A177775), conjecture comment:
 
 > Conjecture: a(n) is odd iff n is a power of 2.
 
@@ -107,6 +107,45 @@ The exact conjecture is proved by `result`, with `proof_shape: bind-only`
 and sole `admission_basis: open-problem-resolution` under #30066. There is
 no escape-witness credit. No corresponding theory volume or digestion atom
 is identified; the target uses `deposit-uncovered`.
+
+### What the settlement shows
+
+- **Proved — decisive structure.** The integer-to-characteristic-two identity
+  `D5/S1/Recurrence/Parity/DiagonalIterateEven.mod_two_identity` reduces the
+  problem to the zero-constant solution of $H+H^2=X$. The dyadic indicator
+  satisfies that equation, and
+  `D5/S1/Recurrence/Invariants/CubicFifteenSubstitutionParity.quadratic_unique`
+  identifies the two series. Thus
+  `D5/S1/Recurrence/Parity/DiagonalOrdinaryParity.result` determines the parity
+  of every positive ordinary coefficient, with no finite cutoff and with
+  $n=1=2^0$ included. The mechanism determines the reduction modulo two;
+  it does not determine the full integer coefficients.
+- **Proved — extent with the original normalization.**
+  `D5/S1/Recurrence/Parity/DiagonalIterateEven.generating_unique` identifies
+  every integer series satisfying the same three initial coefficients and
+  every adjacent-iterate constraint with `generatingSeries`. Together with
+  `DiagonalOrdinaryParity.result`, this transfers the parity characterization
+  to any such presentation of the source series. Existence comes from
+  `DiagonalIterateEven.generating_equation`; no extra existence, parity or
+  integrality premise is required. These statements retain the original
+  normalization and all constraints, rather than proving uniqueness for
+  changed data.
+- **Open — extensions beyond those data.** This settlement establishes no
+  corresponding characterization after changing the initial coefficients,
+  dropping adjacent-iterate constraints, or replacing parity by congruences
+  modulo higher powers of two or other primes. The present modulo-two
+  comparison supplies no full integer-coefficient formula. Such extensions
+  require separate statements and evidence; none is claimed settled here.
+- **Open — dependent-claim boundary.** The pinned source contains the parity
+  conjecture, examples of the defining iteration, and cross-references to
+  A177774, A177776 and A395842; it states no further theorem conditional on
+  the parity conjecture. No such dependent claim is identified there, so
+  no downstream theorem is discharged by this settlement. The source's
+  diagonal A395842 is a different readout: its evenness is already proved
+  separately by `D5/S1/Recurrence/Parity/DiagonalIterateEven.hanna_conjecture`, not by
+  the ordinary-coefficient iff. The cross-references alone assert no further
+  conjecture resolved here; consequences beyond the pinned source remain
+  unassessed.
 
 ## ASSUMED-UNVERIFIED
 
