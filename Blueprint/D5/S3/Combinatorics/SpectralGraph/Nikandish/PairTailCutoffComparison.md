@@ -18,19 +18,9 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffCompa
 
 The floor of d squared over four remains actual integer division. The proof establishes 128Q<R for every positive integer a and b.
 
-**Theorem 1.2 (Both exact original five/five cutoff values).**
+For the original five/five application, a=b=5 gives d=(a+1)b=30, floor(d squared/4)=225 and M=(a+1)(b+1)=36. Substitution into PairTailCandidates.cutoff gives Q=225(225+5(30-1)+25 times 5)=111375. Substitution into oldCutoff gives R=24(36+5) cubed times (3 times 36+5)=186913752. These are applications of the cutoff definitions; the uniform strict comparison and actual-graph conclusion retain their full parameter ranges.
 
-Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffComparison.cutoff_five`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffComparison.cutoff_five` (`✓ std3`). ∎
-
-*Citation.* the-omega-institute/ideal-intersection-laplacian contributors (2026). *Six-support complement quotient, global endpoint spectrum, fixed-gap expansion and integer finiteness*. URL: <https://github.com/the-omega-institute/ideal-intersection-laplacian/blob/b93becea662a746badeadba42fdc3d3eb3db9382/paper/core/body.tex>.
-
-*Commentary.*
-
-The complete values are Q=111375 and R=186913752; this arithmetic is a specialization, not a finite substitute for the uniform theorem.
-
-**Theorem 1.3 (Every actual ideal graph beyond the old cutoff is nonintegral).**
+**Theorem 1.2 (Every actual ideal graph beyond the old cutoff is nonintegral).**
 
 Lean statement: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffComparison.actual_large_tail`
 
@@ -46,5 +36,4 @@ All four distinct graph primes and every positive repeated and first-tail expone
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffComparison.actual_large_tail`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffComparison.cutoff_comparison`
-- Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCutoffComparison.cutoff_five`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailCandidates](PairTailCandidates.md)
