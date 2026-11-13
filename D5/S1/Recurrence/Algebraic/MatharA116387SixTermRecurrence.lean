@@ -137,17 +137,19 @@ private theorem source_bridge : 2 * q * y * F = y + p := by
       linear_combination -2 * (2 * M * X ^ 2 + X - 1) * hm
 
 private theorem differential_equation : D * derivative F - e * F = f := by
+  have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
+    (derivative (R := ℚ)).map_natCast n
   have hr : y ^ 2 = d := native_certificate.2.2.1.2
   have hd := congrArg (derivative (R := ℚ)) hr
   simp only [d, map_sub, derivative_pow, Derivation.leibniz, derivative_one,
-    derivative_X, Derivation.map_natCast, smul_eq_mul] at hd
+    derivative_X, Derivation.map_natCast, hnum, smul_eq_mul] at hd
   have hyr : y * derivative y = -1 - 3 * X := by
     apply (mul_left_inj' (show (2 : PowerSeries ℚ) ≠ 0 by
       intro hz; have hc := congrArg constantCoeff hz; norm_num at hc)).mp
     linear_combination hd
   have hb := source_bridge
   have h1 := congrArg (derivative (R := ℚ)) hb
-  simp only [map_add, Derivation.leibniz, Derivation.map_natCast, derivative_one,
+  simp only [map_add, Derivation.leibniz, Derivation.map_natCast, hnum, derivative_one,
     zero_mul, zero_add, smul_eq_mul] at h1
   apply (mul_left_inj' (show (2 : PowerSeries ℚ) ≠ 0 by
     intro hz; have hc := congrArg constantCoeff hz; norm_num at hc)).mp
@@ -155,7 +157,7 @@ private theorem differential_equation : D * derivative F - e * F = f := by
       2 * (D * derivative F - e * F - f) = 0 := by
     dsimp only [D, e, f, p, q, d] at hr hb h1 ⊢
     simp only [map_sub, map_add, Derivation.leibniz, derivative_pow,
-      derivative_one, derivative_X, Derivation.map_natCast,
+      derivative_one, derivative_X, Derivation.map_natCast, hnum,
       smul_eq_mul, zero_mul, mul_zero, zero_add, add_zero] at h1
     linear_combination
       (1 - X - 4 * X ^ 2) * y * h1 -
@@ -177,6 +179,8 @@ private noncomputable def H : PowerSeries ℚ := 6 * X ^ 2 * (5 * X - 36)
 
 private theorem operator_equation :
     U * (X * derivative (X * derivative F)) + V * (X * derivative F) + W * F = H := by
+  have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
+    (derivative (R := ℚ)).map_natCast n
   have h0 := differential_equation
   have h1 := congrArg (derivative (R := ℚ)) h0
   simp only [map_sub, Derivation.leibniz, smul_eq_mul] at h1
@@ -188,7 +192,7 @@ private theorem operator_equation :
       (U * (X * derivative (X * derivative F)) + V * (X * derivative F) + W * F - H) = 0 := by
     dsimp only [D, e, f, p, q, d, U, V, W, H] at h0 h1 ⊢
     simp only [map_sub, map_add, Derivation.leibniz, derivative_pow,
-      derivative_one, derivative_X, Derivation.map_natCast,
+      derivative_one, derivative_X, Derivation.map_natCast, hnum,
       smul_eq_mul, zero_mul, mul_zero, zero_add, add_zero, mul_one, one_mul] at h1 ⊢
     linear_combination 17 * X ^ 2 * (5 * X + 1) * h1 - 5 * X * (47 * X + 25) * h0
   exact sub_eq_zero.mp ((mul_eq_zero.mp hc).resolve_left hn)
