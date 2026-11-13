@@ -22,10 +22,10 @@ internal sealed class HannaA181078IntegralityDocument : IScribeDocumentDefinitio
                 "Every coefficient of the displayed formal exponential is an integer. Write s=n+k and b=Nat.choose(s-1,k). Negative-binomial power-series coefficients give n dividing k*b and b(p*n,p*k) congruent to b modulo p^(v_p(n)+1). For n+k=1, the weight is 1^0=1 and n=1. Otherwise n divides k*b^(s-1). If p does not divide b, cancellation gives p^v_p(n) dividing k and s. Euler's theorem modulo p^(v_p(n)+1) identifies b^(p*s-1) with b^(s-1). If p divides b, the identities b(1,k)=b(n,0)=1 force n>=2 and k>=1. Since v_p(n)<n, both exponents are at least v_p(n)+1, so both powers vanish modulo that prime power. These two cases give exactly the prime-scaling hypothesis of HannaA181070Integrality.integralGeneric. The identity literalUnbounded identifies its logarithm with the displayed unrestricted double sum: in degree m, n ranges from 1 to m and k=m-n, without any global upper bound on k. The n=0 term in the generic logarithm is zero by rational division by zero. Thus every ordinary coefficient is integral, including the constant coefficient 1. No analytic convergence, coefficient positivity or factorial rescaling is assumed.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
+        DescribeRole role, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("hannaa181078-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
+            provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

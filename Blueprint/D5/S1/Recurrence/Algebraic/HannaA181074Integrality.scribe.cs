@@ -18,6 +18,10 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
                 "OEIS A181074, NAME (web entry, no page number): \"Expansion of g.f.: exp( Sum_{n>=1} [ Sum_{k>=0} C(n+k-1,k)^(k+1) *x^k ] *x^n/n ).\" The exponential is formal over the rationals. PowerSeries.subst takes the inner series as its first argument.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Integer coefficients", Iffn(Call("claim"), ClaimBody()),
                 "OEIS A181074, first COMMENTS line (web entry, no page number): \"Conjecture: this sequence consists entirely of integers.\" The degree m ranges over all natural numbers, including zero; the integer z may depend on m.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("negbinomDiv", "Negative-binomial divisibility", NegativeBinomialDivisibility(),
+                "For every nonzero natural n and every natural k, n divides k times Nat.choose(n+k-1,k). The coefficient of degree k in (sum_j x^j)^n is this binomial coefficient; coefficientDivisibility supplies the divisibility.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
+            Node("negbinomCong", "Prime scaling of negative binomials", NegativeBinomialCongruence(),
+                "For every prime p, nonzero natural n and natural k, Nat.choose(p*n+p*k-1,p*k) and Nat.choose(n+k-1,k) are congruent modulo p^(padicValNat(p,n)+1). Applying coeffLift to sum_j x^j gives the congruence at the same unrestricted indices.", DescribeRole.Lemma, AssessedProvenance.FromRepo(Source)),
             Node("result", "Integrality in every degree", ClaimBody(),
                 "Every coefficient of the displayed formal exponential is an integer. The prime-scaling congruence and diagonal identity reduce the assertion to the Dold exponential integrality criterion.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna181074"), ResolutionKind.Proved)))));
@@ -65,5 +69,17 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
             new Formula.Fraction(value, Cast(n, Q())), Sp, V("else"), Sp, D(0));
         return RangeSum("n", Add(m, D(1)), RangeSum("k", Add(bounded ? n : m, D(1)), summand));
     }
+    private static Formula Implication(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Neq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula NegativeBinomialDivisibility() =>
+        All("n", N(), All("k", N(), Implication(Neq(V("n"), D(0)),
+            Seq(V("n"), Sp, Mid, Sp, Mul(V("k"), Choose(Sub(Add(V("n"), V("k")), D(1)), V("k"))))));
+    private static Formula NegativeBinomialCongruence() =>
+        All("p", N(), All("n", N(), All("k", N(), Implication(Qualified("Nat", "Prime", V("p")),
+            Implication(Neq(V("n"), D(0)), Qualified("Nat", "ModEq",
+                Pow(V("p"), Add(Call("padicValNat", V("p"), V("n")), D(1))),
+                Choose(Sub(Add(Mul(V("p"), V("n")), Mul(V("p"), V("k"))), D(1)), Mul(V("p"), V("k"))),
+                Choose(Sub(Add(V("n"), V("k")), D(1)), V("k"))))))));
     private static Formula ClaimBody() => All("m", N(), Ex("z", Z(), Eqn(Coeff(V("m"), Call("A")), Cast(V("z"), Q()))));
 }

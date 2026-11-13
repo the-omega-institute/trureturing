@@ -23,6 +23,8 @@ The logarithm retains every k >= 0; a finite diagonal is not a support restricti
 
 import D5.S1.Recurrence.Algebraic.HannaA181074Integrality
 
+/-! Integrality follows from negative-binomial congruences and the unbounded Dold criterion. -/
+
 open Finset PowerSeries
 
 namespace D5.S1.Recurrence.Algebraic.HannaA181078Integrality
@@ -53,7 +55,13 @@ private theorem weight_divisibility (n k : ℕ) (hn : n ≠ 0) :
     simp [he]
   · have hr : n + k - 1 = (n + k - 2) + 1 := by omega
     dsimp [weight]
-    rw [hr, pow_succ']
+    have hpow : ((n + k - 1).choose k) ^ (n + k - 1) =
+        (n + k - 1).choose k * ((n + k - 1).choose k) ^ (n + k - 2) := by
+      calc
+        _ = ((n + k - 1).choose k) ^ ((n + k - 2) + 1) :=
+          congrArg (fun e : ℕ => ((n + k - 1).choose k) ^ e) hr
+        _ = _ := pow_succ' _ _
+    rw [hpow]
     simpa only [← mul_assoc] using
       dvd_mul_of_dvd_left
         (HannaA181074Integrality.negbinomDiv n k hn)
@@ -63,7 +71,7 @@ private theorem exponent_congruence (p n k : ℕ) (hp : p.Prime) (hn : n ≠ 0) 
     Nat.ModEq (p ^ (padicValNat p n + 1))
       (((n + k - 1).choose k) ^ (p * n + p * k - 1))
       (((n + k - 1).choose k) ^ (n + k - 1)) := by
-  haveI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   let b := (n + k - 1).choose k
   change Nat.ModEq _ (b ^ _) (b ^ _)
   have hs : 1 ≤ n + k := by omega
