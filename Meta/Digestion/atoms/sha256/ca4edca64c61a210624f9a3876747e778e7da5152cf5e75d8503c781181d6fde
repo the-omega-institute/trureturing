@@ -1,0 +1,19 @@
+**定义 120.14（双向实际行走）。** 从 $p_0\in P_0$ 和任意 $p_1\perp p_0$ 出发。每张完整仿射球 $D_p$ 有唯一中心 $c_p$，双向定义
+
+$$
+p_{n+1}=2c_{p_n}-p_{n-1},\qquad n\in\mathbb Z.
+\tag{IX120.21}
+$$
+
+递推可逆，不要求 $p\mapsto c_p$ 连续。每一步都取同一实际球中入点的对径点，故 $p_n\in P_0$、$p_n\perp p_{n+1}$，且 $p_{n-1}\ne p_{n+1}$。记 $e_n=e_{p_n}$。
+
+在原对偶商空间置
+
+$$
+\mathscr V=V^*/\mathbb Ru,\qquad
+\|[h]\|_{\rm osc}=\max_Kh-\min_Kh.
+\tag{IX120.22}
+$$
+
+这是范数：振幅为零恰表示 $h$ 在整个 $K$ 恒定，而 $K$ 张成 $V$，故 $h\in\mathbb Ru$。它不是另设的抽象多边形模型。
+
