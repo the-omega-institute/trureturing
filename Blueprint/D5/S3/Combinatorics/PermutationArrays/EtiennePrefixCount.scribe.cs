@@ -7,10 +7,39 @@ internal sealed class EtiennePrefixCountDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/PermutationPatterns/hardin2011a183409");
 
+    private static DocumentBlock Definition(string name, string title, string explanation) =>
+        Describe.Lean(
+            DescribeId.Create("etienne-definition-" + name.ToLowerInvariant()),
+            DeclarationHandle.Create(
+                "D5/S3/Combinatorics/PermutationArrays/EtiennePrefixCount." + name),
+            H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(explanation))), DescribeRole.Definition);
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sorted binary matrices with bounded top-left rectangle sums.",
         H("Etienne's width-two prefix matrices"),
         Blocks(
+            Definition("Matrix", "Labeled binary matrices",
+                "A height-n matrix is a function from Fin n to Fin 2 to Bool."),
+            Definition("rank", "Lexicographic row rank",
+                "Twice the left bit plus the right bit orders the four rows as 00,01,10,11."),
+            Definition("ColumnsLE", "Weak column order",
+                "The column words agree everywhere, or their first unequal row has left zero and right one."),
+            Definition("cell", "Natural-indexed entries",
+                "Inside the matrix this is the bit as a natural number; outside it the value is zero."),
+            Definition("ones", "Rectangle sums",
+                "The sum counts ones at row indices below i and column indices below j."),
+            Definition("PrefixBound", "All top-left rectangle bounds",
+                "For every positive i at most n and positive j at most two, twice the rectangle sum is at most i*j."),
+            Definition("Admissible", "The literal constraints",
+                "The row-rank function is monotone, the columns are weakly lexicographically ordered, and every in-bounds prefix satisfies its bound."),
+            Definition("a", "The literal matrix count",
+                "The count is Nat.card of Arrays n, independently of any closed formula."),
+            Definition("Cuts", "Four consecutive blocks",
+                "Three natural cuts satisfy p<=q<=r<=n. Empty blocks are allowed."),
+            Definition("blockMatrix", "Reconstruction from cuts",
+                "The reconstructed matrix has rows 00 before p, 01 from p to q, 10 from q to r, and 11 thereafter."),
             Describe.Lean(
                 DescribeId.Create("literal-prefix-matrix-carrier"),
                 DeclarationHandle.Create(
