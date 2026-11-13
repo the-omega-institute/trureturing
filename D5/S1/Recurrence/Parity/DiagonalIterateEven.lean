@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Diagonal iteration determines an integer series with even diagonal coefficients. -/
+   digest: Diagonal iteration determines an integer series with dyadic odd coefficients and even diagonal coefficients. -/
 
 import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
 import D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity
@@ -478,7 +478,7 @@ theorem hanna_conjecture (n : ℕ) (hn : 2 ≤ n) : 2 ∣ a n := by
     coeff_map] at hc
   exact (ZMod.intCast_zmod_eq_zero_iff_dvd _ _).mp hc
 
-example (n : ℕ) (_hn : 1 ≤ n) :
+theorem result (n : ℕ) (_hn : 1 ≤ n) :
     Odd (coeff n generatingSeries) ↔ ∃ k : ℕ, n = 2 ^ k := by
   classical
   let P := D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.powerTwoSeries
@@ -500,6 +500,7 @@ example (n : ℕ) (_hn : 1 ≤ n) :
   simp only [P, D5.S1.Recurrence.Invariants.CubicFifteenSubstitutionParity.powerTwoSeries,
     coeff_mk, ite_eq_left_iff, zero_ne_one, imp_false, not_not]
 
+#print axioms result
 #print axioms hanna_conjecture
 #print axioms generating_equation
 #print axioms generating_unique
