@@ -1,0 +1,59 @@
+**定理 118.8（原二元开放性候选）。** 在118.1的同一完整原域，下列条件等价：
+
+1. EB3、Inj和(O)，即每个完整纤维是三球、球标签忠实、原正交关联首投影开放；
+2. EB3、Inj和 $\inf_{p\in P}\operatorname{diam}D_p>0$；
+3. $\mathsf Q_1$，即EB3且每个完整 $D_p$ 至少有一条由同一原全域效应读成一、零的直径；
+4. 存在同原锥、同原单位的实线性双射
+
+$$
+\Phi:H_3(\mathbb C)\overset{\sim}{\longrightarrow}V,\qquad
+\Phi(\operatorname{Herm}_+(\mathbb C^3))=C,\qquad
+u(\Phi X)=\operatorname{Tr}X.
+\tag{IX118.11}
+$$
+
+这些条件还给全Pair、全部原对径满刻度、原正交纯对的唯一第三点及原三结果共同效应。
+
+证明。$1\Rightarrow2$ 是118.5，$2\Rightarrow1$ 是118.6、118.3。
+$2\Rightarrow4$ 先由118.6、118.7取得全Pair，尤其 $\mathrm{Pair}_{\perp}$。
+此时才用VII104.2—104.3：对原 $p\perp q$，存在唯一原 $r$，且
+
+$$
+\begin{gathered}
+D_p\cap D_q=\{r\},\qquad H(p,q)=D_r,\qquad r=2c_p-q,\\
+\forall a_p\in\mathcal A_p\ \forall a_q\in\mathcal A_q:\quad
+ a_r=u-a_p-a_q\in\mathcal A_r,\qquad
+ a_p+a_q+a_r=u,\quad a_i(p_j)=\delta_{ij}.
+\end{gathered}
+\tag{IX118.12}
+$$
+
+原共同完成的全域非负性由其全域最小值归一证明承担，不能只凭球上和为一。
+EB3及已得 $\mathrm{Pair}_{\perp}$ 满足VIII113.8—113.9，给(IX118.11)；也可在此时使用116.17的Pair分支。
+$3\Longleftrightarrow4$ 是116.17的准确结论，W1在本路线是后果。
+
+最后直接核对 $4\Rightarrow1$ 的全部原域。
+在矩阵坐标中，$K$ 是全部三阶密度矩阵，$P$ 是全部秩一投影，$\mathcal E$ 是全部 $f_A(\rho)=\operatorname{Tr}(A\rho)$、$0\preceq A\preceq I$。
+对秩一 $p$，确认矩阵恰为 $p\oplus B$、$0\preceq B\preceq I$，从而
+
+$$
+T_p(\rho)=\operatorname{Tr}(p\rho),\qquad
+D_p=\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho p=0\}.
+\tag{IX118.13}
+$$
+
+这是 $p^\perp\cong\mathbb C^2$ 上的整个三球，其支撑确定 $p^\perp$，故EB3和Inj成立。
+若 $p\perp q$、$p_n\to p$，令 $Q_n=I-p_n$，尾项定义
+
+$$
+q_n=\frac{Q_nqQ_n}{\operatorname{Tr}(Q_nqQ_n)}.
+\tag{IX118.14}
+$$
+
+分母趋一而正，$q_n$ 是与 $p_n$ 正交的秩一投影且 $q_n\to q$；有限个初项在各完整球面任取。
+这证明全部边上的(O)，并由同一个 $\Phi$ 运输回原域。证毕。
+
+获得Pair后，116.9的有限三元提升也原样成立：在同一个 $\mathcal I$ 上令
+$\tau(p,q)=(p,2c_p-q)$、$R=\sigma\tau$，则 $R^3=\operatorname{id}$；每条边的轨道及反向恰为同一三纯框架的六条有序边。
+这不是先给全态空间的物理群作用。
+
