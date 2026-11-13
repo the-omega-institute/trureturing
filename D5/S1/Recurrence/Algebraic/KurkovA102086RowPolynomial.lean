@@ -4,7 +4,33 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Kurkov's complete A102086 row-polynomial identity, with existence of both source tables. -/
+   digest: Kurkov's full A102086 row identity, including both source tables. -/
+
+/-
+result:
+  proof_shape: content (operator shift and row induction remain after helper inlining).
+  escape_witness: shift_table, on the live path through row_step and coefficientTriangle_source.
+  admission_basis: open-problem-resolution (#23496; full nonvacuous event).
+Direct frozen D5 dependencies: none. Pinned Mathlib supplies the polynomial and linear-map APIs.
+
+Private theorem proof shapes and live consumers:
+  naturalP_zero: bind-only; naturalP_diag, polynomialTable_source.
+  naturalP_diag: bind-only; polynomialTable_source.
+  naturalP_above: bind-only; polynomialTable_source.
+  naturalP_step: bind-only; polynomialTable_source.
+  polynomialTable_source: bind-only; result.
+  polynomial_unique: content (triangular-domain induction); result.
+  coeff_above: content (row and column induction); row_expand, coefficientTriangle_source.
+  shift_monomial: bind-only; shift_table.
+  shift_table: content (operator-shift induction); row_step.
+  row_expand: content after inlining coeff_above; row_step, result.
+  row_step: content after inlining shift_table and row_expand; coefficientTriangle_source.
+  coefficientTriangle_source: content (coefficient bounds and operator shift); result.
+  triangle_unique: content (strong row induction); result.
+The bind-only helpers organize live proofs and supply no independent novelty credit.
+The definitions are symbolic source tables, not bounded enumeration, certificates,
+checker algorithms or computational reductions; utility none applies to every declaration.
+-/
 
 import Mathlib.Algebra.Polynomial.BigOperators
 import Mathlib.Order.Interval.Finset.Nat
@@ -117,10 +143,10 @@ private theorem coeff_above {P : ℕ → ℤ → Polynomial ℤ}
   induction a generalizing b k with
   | zero =>
     have : b = 0 := by omega
-    subst b; rw [Nat.cast_zero, hP.2.1]; simp [show k ≠ 0 by omega, show 0 ≠ k by omega]
+    subst b; rw [Nat.cast_zero, hP.2.1]; simp [coeff_one, show k ≠ 0 by omega]
   | succ a ih =>
     induction b generalizing k with
-    | zero => rw [Nat.cast_zero, hP.2.1]; simp [show k ≠ 0 by omega, show 0 ≠ k by omega]
+    | zero => rw [Nat.cast_zero, hP.2.1]; simp [coeff_one, show k ≠ 0 by omega]
     | succ b ihb =>
       by_cases hd : b + 1 = a + 1
       · rw [hd, hP.1]; simp [show k ≠ a + 1 by omega]
@@ -188,7 +214,7 @@ private theorem row_step {P : ℕ → ℤ → Polynomial ℤ}
   simp only [shift_monomial] at he
   rw [hP.2.2.2 (n + 2) ((n + 1 : ℕ) : ℤ) (by omega) (by omega)]
   have hs : ((n + 1 : ℕ) : ℤ) - 1 = n := by omega
-  simp only [hs, Nat.add_sub_cancel]
+  simp only [hs, show n + 2 - 1 = n + 1 by omega]
   rw [← he, hP.1]
   congr 2 <;> push_cast <;> ring
 
@@ -217,7 +243,7 @@ private theorem coefficientTriangle_source {P : ℕ → ℤ → Polynomial ℤ}
       omega
   · intro n k hkn
     obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
-    simp only [coefficientTriangle, Nat.add_sub_cancel, row_step hP, coeff_add,
+    simp only [coefficientTriangle, row_step hP, coeff_add,
       finsetSum_coeff, coeff_C_mul]
     rw [coeff_X_pow, ite_eq_right (by omega), mul_zero, add_zero]
     rw [← Finset.sum_range_add_sum_Ico _ (show k ≤ m + 1 by omega)]

@@ -29,7 +29,7 @@ internal sealed class KurkovA102086RowPolynomialDocument : IScribeDocumentDefini
             openProblemResolutionClaim: resolution);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
-    private static Formula Poly() => Seq(Z(), F.Lbrack, F.Id("X"), F.Rbrack);
+    private static Formula Poly() => Seq(Z(), F.OpenBracket, F.Id("X"), F.CloseBracket);
     private static Formula Named(string s) => Seq(Operatorname, Grp(F.Id(s)));
     private static Formula V(string s, params Formula[] xs) => new Formula.Apply(F.Id(s), [.. xs]);
     private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Named(s), [.. xs]);
