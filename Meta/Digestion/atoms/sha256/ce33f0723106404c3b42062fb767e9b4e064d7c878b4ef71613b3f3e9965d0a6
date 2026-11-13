@@ -1,0 +1,25 @@
+**定义 130.4（候选及原问题的保留范围）。** 完整静态候选定义为(X130.1)的同一有限维全域、全部原EB3及 $\mathsf D_2$。白话是：每个纯态的所有原零比较对象，包括混态，合成一整颗实心三球；任意两张不相邻的原纯标签，都能找到同一个原纯标签，与它们各有真实零一边。130.2把两步可达接到每点真实三角，130.3再接到全部复三能级静态态与效应。候选不输入PR、Inj、纯点紧性、CS、球族连续、滤子或Jordan结构。
+
+原PR仍指 $T_p(q)=T_q(p)$ 对全部原纯对成立；UF仍指[IX115.8及X124.9—124.13][Q130UF]的原全锥正延拓预算 $\sup_p\beta_{D_p}<\infty$。保留未决问题
+
+$$
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathsf D_2,
+\qquad
+\mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \mathrm{UF}.
+\tag{X130.14}
+$$
+
+[X125.5][Q130CS]的CS与UF等价仍限于其完整EB3+PR域。BILATERAL VIII121.5的局部两步四维纯点片另有Inj前件，且不提供任意原纯对的两步覆盖[Q130BV]。130.2的直接结论是每点有三角，不是给每条指定边补第三点；后者在EB3中由130.3的既有分类取得。五边形与X129的无限一球模型都不是EB3+PR反模型。这里没有断言 $\mathsf D_2$ 独立、候选逻辑上严格更弱或物理公理数最少。
+
+单体静态字典的适用范围按[IX116.23及VIII113.11][Q130IX][Q130VIII]保留：实际来源、制备与操作、全部有限 $N$ 的共同复合及纠缠准备、全旁观正性与CP/Kraus、逐输入预算、同族事件仪器与记录、Lüders校准、原物理钟、连续动力学来源、Hamiltonian及数值 $\hbar$ 各有独立前件。数学POVM不等于可调用的实际仪器，单体几何不供应这些联合或时间合同。
+
+[Q130VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.1—103.2：完整原域、可变球维数、共同暴露及全部原真面穷尽。"
+[Q130IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1及式(IX116.3)：完整面与纯交点；IX120.4—120.5：三角、宽度及条件静态应用；IX116.17—116.18：成熟分类及同原完整静态字典；IX116.23：原过程边界。"
+[Q130SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "126.1：原零关联的紧闭投影；126.2：关系平方与同处原真面。"
+[Q130Pent]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md "OP2—OP3：整个原奇多边形排除边及PR；文献载体与全效应取Janotta—Gogolin—Barrett—Brunner §3.1式(5)、(6)、(8)及补效应。"
+[Q130PentX]: #1226-完整-eb1-五边形的准确方法控制 "X122.7：完整原五边形的一维控制。"
+[Q130UF]: #124-极端对偶零面的整球塌缩障碍与互易非塌缩重构 "X124.9—124.13：原UF预算、条件静态表示及自动UF未决项；预算原义见IX115.8。"
+[Q130CS]: #125-旧完整球的共同近零确认与固定球心的真零稳定性 "X125.5：仅在完整EB3+PR域的CS与UF等价。"
+[Q130BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "121.5：EB3+Inj的局部两步四维片；121.7：没有任意标签到种子的两步覆盖。"
+[Q130VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.11及所引112.9：全部原操作、全有限复合、CP、仪器、记录与时间合同。"
+

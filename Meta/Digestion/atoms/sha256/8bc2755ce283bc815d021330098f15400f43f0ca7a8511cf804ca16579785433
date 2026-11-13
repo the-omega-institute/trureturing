@@ -1,0 +1,61 @@
+**定义 129.1（有理半平面载体）。** 对 $r>0$ 定义单位向量
+
+$$
+N(r)=\left(\frac{1-r^2}{1+r^2},\frac{2r}{1+r^2}\right),
+\qquad r_n=2^n,\quad \nu_n=N(r_n),\quad
+\mu_n=N(3r_n/2)\quad(n\in\mathbb Z).
+\tag{X129.1}
+$$
+
+在同一个平面中取全部半平面的交
+
+$$
+L=\left\{z=(x,y):
+\begin{array}{l}
+-1\le x\le1,\\
+\nu_n\cdot z\le1+(\nu_n)_2\quad\text{对所有 }n\in\mathbb Z,\\
+-\mu_n\cdot z\le1+(\mu_n)_2\quad\text{对所有 }n\in\mathbb Z
+\end{array}\right\}.
+\tag{X129.2}
+$$
+
+取 $V=\mathbb R\times\mathbb R^2$，质量坐标在前，定义
+
+$$
+\begin{gathered}
+\iota(z)=(1,z),\qquad
+C=\{\lambda\iota(z):\lambda\ge0,\ z\in L\},\\
+u(t,x,y)=t,\qquad X(t,x,y)=x,\qquad Y(t,x,y)=y,\\
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^\ast},\\
+\mathcal F_p=\{e\in\mathcal E:e(p)=1\},\qquad
+D_p=\{z\in K:\exists e\in\mathcal F_p,\ e(z)=0\}.
+\end{gathered}
+\tag{X129.3}
+$$
+
+效应区间始终是在整个 $C$ 上的全部实线性零一效应。以下平面集合用于 $D,I,N$ 等原对象时均经 $\iota$ 提升；不另选纯态或混态子集。辅助距离取 $V$ 的通常欧氏距离，其在质量一平面上的限制就是平面距离。
+
+定义两条双向无限顶点链及其相邻闭边：
+
+$$
+\begin{aligned}
+v_n&=\left(\frac{1-2r_n^2}{1+2r_n^2},
+                 1+\frac{3r_n}{1+2r_n^2}\right),\\
+w_n&=\left(\frac{9r_n^2-2}{9r_n^2+2},
+                -1-\frac{9r_n}{9r_n^2+2}\right),\\
+A_n&=[v_{n-1},v_n],\qquad B_n=[w_{n-1},w_n],\\
+R_\pm&=(1,\pm1),\qquad L_\pm=(-1,\pm1),\\
+F&=[R_-,R_+],\qquad G=[L_-,L_+].
+\end{aligned}
+\tag{X129.4}
+$$
+
+对 $\alpha\in[0,2\pi)$，令 $d_\alpha=(\cos\alpha,\sin\alpha)$，$H(\alpha)=\operatorname{argmax}_{z\in L}d_\alpha\cdot z$。记
+
+$$
+\theta_n=2\arctan r_n,\qquad
+\phi_n=2\arctan(3r_n/2).
+\tag{X129.5}
+$$
+

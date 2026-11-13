@@ -1,0 +1,148 @@
+**Theorem 2.1 (Exact family spectrum and endpoints).** Under (1.2),
+
+$$
+\operatorname{spec}(M)=\{0,\lambda,-\lambda\},\qquad
+\rho(M)=\lambda,
+\tag{2.1}
+$$
+
+and $M$ is diagonalizable over $\mathbb R$. There is exactly one
+positive real number $r$ satisfying
+
+$$
+r^6=c\,r^2+d.
+\tag{2.2}
+$$
+
+For the nine-dimensional history operator in (1.3),
+
+$$
+\det(zI_9-B)=z^3(z^6-cz^2+d),\qquad \rho(B)=r.
+\tag{2.3}
+$$
+
+Consequently,
+
+$$
+\begin{aligned}
+\rho(B)<1&\iff c<\frac{1+\lambda^2}{2},\\
+\rho(B)=1&\iff c=\frac{1+\lambda^2}{2},\\
+\rho(B)>1&\iff c>\frac{1+\lambda^2}{2}.
+\end{aligned}
+\tag{2.4}
+$$
+
+If $c>\lambda^2$, the only eigenvalues of modulus $r$ are $ir$ and
+$-ir$, each of algebraic multiplicity one. At the boundary in (2.4)
+they are $i$ and $-i$. At $c=\lambda^2$, instead,
+$r=\sqrt\lambda$ and the peripheral eigenvalues are the four simple
+values $r,-r,ir,-ir$. Enlarging the history from two preceding iterates
+to any $K\ge2$ only adds zero eigenvalues, with multiplicity $3(K-2)$.
+
+**Proof.** Expanding the determinant along the first row gives
+
+$$
+\det(zI_3-M)=z\bigl(z^2-c+d\bigr)
+           =z(z-\lambda)(z+\lambda).
+$$
+
+The three roots are distinct. More explicitly, $(0,1,-1)^{\mathsf T}$
+is a zero eigenvector, and, for $s\in\{\lambda,-\lambda\}$,
+$(s,c,-d)^{\mathsf T}$ is an eigenvector with eigenvalue $s$:
+its image is $(c-d,cs,-ds)^{\mathsf T}$ and $s^2=c-d$.
+Eigenvectors for distinct eigenvalues are linearly independent,
+so they form a real eigenbasis and prove (2.1).
+
+In the order $(x(t),x(t-1),x(t-2))$, (1.4) gives
+
+$$
+B=\begin{pmatrix}0&P&Q\\I_3&0&0\\0&I_3&0\end{pmatrix},\qquad
+P=\begin{pmatrix}0&1&0\\c&0&0\\0&0&0\end{pmatrix},\qquad
+Q=\begin{pmatrix}0&0&1\\0&0&0\\-d&0&0\end{pmatrix}.
+\tag{2.5}
+$$
+
+For $z\ne0$, eliminate the last two block rows in $zI_9-B$.
+Their diagonal block determinant is $z^6$, and the Schur complement is
+$zI_3-z^{-1}P-z^{-2}Q$. Hence
+
+$$
+\begin{aligned}
+\det(zI_9-B)
+ &=z^6\det\begin{pmatrix}
+ z&-z^{-1}&-z^{-2}\\
+ -cz^{-1}&z&0\\
+ dz^{-2}&0&z
+ \end{pmatrix}\\
+ &=z^6\bigl(z^3-cz^{-1}+dz^{-3}\bigr)
+  =z^3(z^6-cz^2+d).
+\end{aligned}
+\tag{2.6}
+$$
+
+Both sides are polynomials, so agreement for every nonzero $z$ proves
+the identity also at zero. This includes the zero eigenvalues rather
+than dividing them out of the spectral assertion.
+
+For $s>0$ put $g(s)=s^4-c-d/s^2$. It is continuous and strictly
+increasing: $g'(s)=4s^3+2d/s^3>0$. Its limit at infinity is positive
+infinity; its limit at zero is $-\infty$ when $d>0$ and $-c<0$ when
+$d=0$. Here $c\ge\lambda^2>0$. The intermediate value theorem and
+strict increase give exactly one positive root $r$. Multiplication
+by $r^2$ gives (2.2). For every positive $s$,
+
+$$
+s\le r\iff s^6-cs^2-d\le0,
+\tag{2.7}
+$$
+
+and the strict and equality versions follow from the same strict increase.
+
+If $z\ne0$ is a root of the sextic in (2.6), then
+
+$$
+|z|^6=|cz^2-d|\le c|z|^2+d,
+$$
+
+so (2.7) implies $|z|\le r$. On the other hand, (2.2) gives
+$(ir)^6-c(ir)^2+d=-r^6+cr^2+d=0$. Thus $ir$ and $-ir$ are
+eigenvalues, and every eigenvalue, including zero, has modulus at most
+$r$. This proves the exact radius assertion. Since
+$g(1)=1-c-d=1-2c+\lambda^2$, comparison with the unique zero of $g$
+proves all three cases of (2.4).
+
+Suppose $d>0$ and $|z|=r$ for a sextic root. Equality is necessary in
+the triangle inequality above. One can express it without a phase
+convention by squaring:
+
+$$
+(c|z|^2+d)^2-|cz^2-d|^2
+ =2cd\bigl(|z|^2+\operatorname{Re}(z^2)\bigr).
+$$
+
+As $c,d>0$, equality forces $\operatorname{Re}(z^2)=-|z|^2$.
+The complex number $z^2$ has modulus $|z|^2$, so it must equal the
+negative real number $-r^2$. Hence $z=ir$ or $z=-ir$.
+For $p(z)=z^6-cz^2+d$,
+
+$$
+p'(\pm ir)=2(\pm ir)(3r^4-c)\ne0,
+$$
+
+because (2.2) gives $r^4=c+d/r^2\ge c>0$.
+The factor $z^3$ is nonzero there, proving algebraic simplicity.
+The boundary value $c=(1+\lambda^2)/2$ has
+$d=(1-\lambda^2)/2>0$, so this conclusion applies at the boundary.
+If $d=0$, then $c=\lambda^2$ and (2.6) becomes
+$z^5(z^4-c)$. Its four nonzero roots are exactly the four listed values,
+all simple, with modulus $c^{1/4}=\sqrt\lambda$.
+
+Finally, split an enlarged history into slots $0,1,2$ and the remaining
+slots. No remaining slot enters the new update or any of the first
+three slots. The enlarged matrix is therefore
+$\begin{pmatrix}B&0\\E&N\end{pmatrix}$, where $N$ is a nilpotent shift
+on $3(K-2)$ coordinates. Its characteristic polynomial is
+$z^{3(K-2)}\det(zI_9-B)$. This is the exact zero-eigenvalue qualification
+of the history-length invariance used in the cited Lemma `L:spectra`.
+$\square$
+
