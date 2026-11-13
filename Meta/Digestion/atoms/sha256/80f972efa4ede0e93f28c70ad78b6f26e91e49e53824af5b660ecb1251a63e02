@@ -1,0 +1,46 @@
+**命题 132.2（移动正零泛函的原单位控制）。** 不要求 $I(F)$ 单点。对 $t\in P$，置
+
+$$
+\alpha_p(t)=\max_{x\in D_t}\operatorname{dist}(x,F).
+\tag{Q132.3}
+$$
+
+则 $t\to p$ 于原 $P$ 时 $\alpha_p(t)\to0$。当 $A\alpha_p(t)<1$ 时，每个 $b\in N_t$ 满足
+
+$$
+\max_K b\le
+\frac{\max_F b}{1-A\alpha_p(t)}.
+\tag{Q132.4}
+$$
+
+特别地，若 $t_n\to p$、$b_n\in N_{t_n}$，且 $b_n|_F$ 一致趋于某个 $\ell:F\to[0,1]$，则置
+
+$$
+B_n=\max_K b_n,\qquad
+f_n=\frac{b_n}{\max\{1,B_n\}},
+\tag{Q132.5}
+$$
+
+有 $f_n\in\mathcal E$、$f_n(t_n)=0$、$f_n|_F\to\ell$ 一致，且 $\|f_n-b_n\|_K\to0$。若 $\max_F\ell=1$，还有 $B_n\to1$。
+
+证明。纯极限标签处的整球上关联直接复用[IX118.3的(IX118.4)][Q132IX]，其证明不消费Inj或固定球维数。若(Q132.3)不趋零，选 $t_n\to p$ 及 $x_n\in D_{t_n}$，使 $x_n$ 到 $F$ 的距离有正下界；紧 $K$ 中的收敛子列及该上关联给极限在 $F$，矛盾。
+
+对非零 $b\in N_t$，复用原正零泛函的最大值结论[positive_annihilator_maximum][Q132SN]：$B:=\max_Kb=\max_{D_t}b>0$。对每个 $x\in D_t$，取 $z\in F$ 达到到 $F$ 的距离；同一个 $b$ 满足
+
+$$
+b(x)\le b(z)+\|b\|_*\|x-z\|
+\le\max_Fb+AB\alpha_p(t).
+\tag{Q132.6}
+$$
+
+取 $D_t$ 上最大值得(Q132.4)。$b=0$ 时同式直接成立。这里最大值原理与(Q132.2)只作既有前置使用；新增控制是对趋近 $p$ 的全部正零泛函统一的(Q132.4)，并未要求它们预先有单位上界。
+
+现在 $m_n:=\max_Fb_n\to\max_F\ell\le1$，且 $0\le m_n\le B_n$。式(Q132.4)给 $\limsup B_n\le1$。原锥上的非负性与 $\max_Kf_n\le1$ 经同一个 $u$ 齐次化给 $0\le f_n\le u$ 于全部 $C$。又有
+
+$$
+\|f_n-b_n\|_K=(B_n-1)_+\longrightarrow0.
+\tag{Q132.7}
+$$
+
+这同时给整个 $F$ 上的收敛；$\max_F\ell=1$ 时由 $m_n\le B_n$ 得 $B_n\to1$。证毕。
+
