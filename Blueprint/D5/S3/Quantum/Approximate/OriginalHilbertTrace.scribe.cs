@@ -31,20 +31,21 @@ internal sealed class OriginalHilbertTraceDocument : IScribeDocumentDefinition
         Formula tr(Formula z) => Call("t",z);
         Formula star(Formula z) => Call("star",z);
         Formula norm(Formula z) => new Formula.Norm(z);
+        Formula eq(Formula l,Formula r) => new Formula.Relation(l,FormulaRelationOperator.Equal,r);
         Formula le(Formula l,Formula r) => new Formula.Relation(l,FormulaRelationOperator.LessThanOrEqual,r);
         Formula and(Formula l,Formula r) => new Formula.Logic(l,FormulaLogicOperator.And,r);
         Formula all(string n,Formula typ,Formula body) => new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(n),typ,body);
         Formula ex(string n,Formula typ,Formula body) => new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create(n),typ,body);
-        Formula one=F.D(1);
-        Formula result=and(Eq(tr(one),one),and(
-            all("x",a,all("y",a,Eq(tr(Multiply(x,y)),tr(Multiply(y,x))))),and(
-            all("x",a,Eq(tr(star(x)),star(tr(x)))),and(
-            all("x",a,le(norm(Subtract(tr(x),Call("B",one,x))),Multiply(Multiply(Multiply(F.D(8),m),q),p(x)))),and(
-            all("x",a,all("y",a,Eq(Call("Bt",x,y),tr(Multiply(star(x),y))))),and(
-            Eq(Call("Bt",one,one),one),and(
+        Formula one=new Formula.Number(1);
+        Formula result=and(eq(tr(one),one),and(
+            all("x",a,all("y",a,eq(tr(Multiply(x,y)),tr(Multiply(y,x))))),and(
+            all("x",a,eq(tr(star(x)),star(tr(x)))),and(
+            all("x",a,le(norm(Subtract(tr(x),Call("B",one,x))),Multiply(Multiply(Multiply(new Formula.Number(8),m),q),p(x)))),and(
+            all("x",a,all("y",a,eq(Call("Bt",x,y),tr(Multiply(star(x),y))))),and(
+            eq(Call("Bt",one,one),one),and(
             all("x",a,all("y",a,le(norm(Subtract(Call("Bt",x,y),Call("B",x,y))),
-                Multiply(Multiply(Multiply(Multiply(F.D(17),Power(m,F.D(2))),q),p(x)),p(y))))),
-            all("a",a,all("x",a,all("y",a,Eq(Call("Bt",Multiply(F.Id("a"),x),y),Call("Bt",x,Multiply(star(F.Id("a")),y)))))))))))));
+                Multiply(Multiply(Multiply(Multiply(new Formula.Number(17),Multiply(m,m)),q),p(x)),p(y))))),
+            all("a",a,all("x",a,all("y",a,eq(Call("Bt",Multiply(F.Id("a"),x),y),Call("Bt",x,Multiply(star(F.Id("a")),y)))))))))))));
         Formula hypotheses=Call("OriginalHilbertProductBounds",a,b,mu,m,q,d);
         Formula conclusion=ex("t",Call("ComplexLinearFunctional",a),ex("Bt",Call("PositiveHermitianCore",a),result));
         Formula statement=new Formula.Logic(hypotheses,FormulaLogicOperator.Implies,conclusion);
