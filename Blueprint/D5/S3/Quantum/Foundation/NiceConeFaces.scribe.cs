@@ -20,7 +20,7 @@ internal sealed class NiceConeFacesDocument : IScribeDocumentDefinition
         Formula r = Seq(Mathbb, Grp(V("R"))), space = V("V"), cone = V("C"), face = V("F"), a = V("a"), x = V("x");
         Formula dual = C("LinearMap", r, space, r);
         Formula pos = All("x", space, Imp(In(x, cone), new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, C("apply", a, x))));
-        Formula section = C("setOf", All("x", space, And(In(x, cone), Eq(C("apply", a, x), D(0)))));
+        Formula section = new Formula.SetBuilder(x, x, And(In(x, cone), Eq(C("apply", a, x), D(0))));
         Formula body = All("C", C("PointedCone", r, space), Imp(C("IsClosed", cone), Imp(C("Nice", cone),
             All("F", C("Face", cone), Ex("a", dual, And(pos, Eq(face, section)))))));
         Formula statement = All("V", V("Type"), Seq(

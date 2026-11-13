@@ -92,6 +92,7 @@ theorem every_face_exposed {C : PointedCone ℝ V}
       intro x hx
       have hh := LinearMap.congr_fun hq (⟨x, Submodule.subset_span hx⟩ : W)
       exact hh ▸ hgpos _ hx
+    change q ∈ (ambientDual (E : Set V) : Set (V →ₗ[ℝ] ℝ)) at hqpos
     rw [hnice E] at hqpos
     obtain ⟨b, hb, d, hd, hbd⟩ := hqpos
     have hd0 (x : W) : d x = 0 := hd x.property
