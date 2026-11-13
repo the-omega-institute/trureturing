@@ -14,7 +14,7 @@ abbrev Input := Σ n : ℕ, Fin (n + 1) → Fin 6
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Input) (fun _ => Prop)
 def actual : Realization signature :=
-  realize signature (fun _ _ x => Normal x.2) (fun e => nomatch e)
+  realize signature (fun _ _ x => _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Normal x.2) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
@@ -25,22 +25,22 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hn : Normal (fun _ : Fin 1 => (0 : Fin 6)) := by
-    simp [Normal, _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good,
+  have hn : _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Normal (fun _ : Fin 1 => (0 : Fin 6)) := by
+    simp [_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Normal, _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good,
       _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed]
-  exact ((h 0 (fun _ => 0)).mpr ((normal_iff _).mp hn))
+  exact ((h 0 (fun _ => 0)).mpr ((_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.normal_iff _).mp hn))
 
-def family : Registration arena (type_of% @normal_iff) where
+def family : Registration arena (type_of% @_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.normal_iff) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨normal_iff, rejected, rejected_law⟩
+  variation := ⟨by intro n f; exact _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.normal_iff f, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
     refine ⟨(), ⟨0, fun _ => 0⟩, ⟨0, fun _ => 1⟩, ?_⟩
-    change Normal (fun _ : Fin 1 => (0 : Fin 6)) ≠ Normal (fun _ : Fin 1 => (1 : Fin 6))
-    simp [Normal, _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good,
+    change _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Normal (fun _ : Fin 1 => (0 : Fin 6)) ≠ _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Normal (fun _ : Fin 1 => (1 : Fin 6))
+    simp [_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Normal, _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good,
       _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed]
 end Scanner
 
@@ -77,7 +77,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 def family : Registration arena (type_of% @result) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨result, rejected, rejected_law⟩
+  variation := ⟨by intro n G p hp; exact result G p hp, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -91,7 +91,7 @@ end Fibers
 
 /-- Typed family evidence; exact raw source selection remains unspecified. -/
 def scannerAudit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@normal_iff) (Realization Scanner.signature) Type Unit where
+    (@_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.normal_iff) (Realization Scanner.signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.scannerUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization.Scanner.family
   realizationSource := none

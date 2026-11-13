@@ -83,7 +83,7 @@ theorem normal_iff {n : ℕ} (f : Fin (n + 1) → Fin 6) :
       have h2 := (hn i).2
       have hb0 : i ≠ 0 → beta (f i) ≠ 0 := by
         intro hi he
-        exact hf 0 (Fin.pos_iff_ne_zero.mpr hi) (by simp [Function.comp_def, h0, beta] using he.symm)
+        exact hf 0 (Fin.pos_iff_ne_zero.mpr hi) (by simpa [Function.comp_def, h0, beta] using he.symm)
       generalize hc : f i = c at h1 h2 hb0 ⊢
       fin_cases c <;> norm_num [beta] at *
       · obtain ⟨j, hj, hcj⟩ := h2
