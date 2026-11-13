@@ -10,6 +10,7 @@ import D5.S3.Quantum.Foundation.ContinuousFrameSum
 import D5.S3.Quantum.Foundation.OriginalFacePolarity
 import Mathlib.Topology.Sequences
 import Mathlib.Topology.MetricSpace.HausdorffDistance
+import Mathlib.Topology.Semicontinuity.Hemicontinuity
 
 /-! The original-domain upper association needed by IX118.3. -/
 
@@ -20,16 +21,69 @@ namespace D5.S3.Quantum.Foundation.ExclusionIncidence
 open Set Filter Topology
 open CircuitBalancedConfirmation FacetZeroGluing ContinuousFrameSum
 open ExclusionBallFaces OriginalFacePolarity
+open WeightedRelationConfirmation
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V]
 
 /-- IX118.1(O), on every actual original edge and every index of each label sequence. -/
 def edgeLifting (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
-  ∀ (p q : pure C u), (q : V) ∈ exclusion C u p →
+  ∀ (p q : pure C u), comparison C u p q = 0 →
     ∀ pn : ℕ → pure C u, Tendsto pn atTop (𝓝 p) →
       ∃ qn : ℕ → pure C u,
-        (∀ n, (qn n : V) ∈ exclusion C u (pn n)) ∧ Tendsto qn atTop (𝓝 q)
+        (∀ n, comparison C u (pn n) (qn n) = 0) ∧ Tendsto qn atTop (𝓝 q)
+
+/-- The actual original incidence, with its inherited product-subspace topology. -/
+abbrev incidence (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) :=
+  {z : pure C u × pure C u // (z.2 : V) ∈ exclusion C u z.1}
+
+/-- The first actual incidence projection. -/
+def firstProjection (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) :
+    incidence C u → pure C u := fun z => z.1.1
+
+/-- The second actual incidence projection. -/
+def secondProjection (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) :
+    incidence C u → pure C u := fun z => z.1.2
+
+/-- Original full-effect zero symmetry makes the actual swap a homeomorphism. -/
+def incidenceSwap (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) :
+    incidence C u ≃ₜ incidence C u where
+  toFun z := ⟨(z.1.2, z.1.1), (exclusion_symmetric z.1.1 z.1.2).mp z.2⟩
+  invFun z := ⟨(z.1.2, z.1.1), (exclusion_symmetric z.1.1 z.1.2).mp z.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  continuous_toFun := by fun_prop
+  continuous_invFun := by fun_prop
+
+private theorem comparison_zero_iff_exclusion
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (p : pure C u) {x : V} (hx : x ∈ base C u) :
+    comparison C u p x = 0 ↔ x ∈ exclusion C u p := by
+  constructor
+  · intro hzero
+    let F : Set (V →L[ℝ] ℝ) := {f | f ∈ effects C u ∧ f p = 1}
+    have hcompact : IsCompact F := (effects_compact hs hg).inter_right
+      (isClosed_eq (by fun_prop) continuous_const)
+    have hunit : u.toContinuousLinearMap ∈ F := by
+      refine ⟨?_, (pure_mem p).2⟩
+      intro y hy
+      refine ⟨?_, le_rfl⟩
+      by_cases he : y = 0
+      · simp [he]
+      · exact (hs y hy he).le
+    obtain ⟨f, hf, hmin⟩ := hcompact.exists_isMinOn ⟨_, hunit⟩
+      (show ContinuousOn (fun g : V →L[ℝ] ℝ => g x) F by fun_prop)
+    have heq : comparison C u p x = f x :=
+      attained_comparison hx.1 f.toLinearMap hf
+        (fun g hg => hmin (show g.toContinuousLinearMap ∈ F from hg))
+    exact ⟨hx, f.toLinearMap, hf, heq.symm.trans hzero⟩
+  · rintro ⟨_, f, hf, hfx⟩
+    have heq := attained_comparison hx.1 f hf (fun g hg => by
+      rw [hfx]
+      exact (hg.1 x hx.1).1)
+    exact heq.trans hfx
 
 /-- A pure limiting label retains every limit of actual mixed exclusion states.
 The effect interval and base compactness are derived on the original normed space. -/
@@ -83,7 +137,7 @@ theorem exclusion_upper_eventually {C : PointedCone ℝ V} {u : V →ₗ[ℝ] �
       ∀ z ∈ exclusion C u p, ε ≤ dist y z := by
     apply (not_eventually.mp h).mono
     intro n hn
-    push_neg at hn
+    push Not at hn
     exact hn
   obtain ⟨φ, hφ, hbad⟩ := extraction_of_frequently_atTop hb
   choose y hy hfar using hbad
@@ -116,8 +170,11 @@ private theorem exclusion_lower_sequence {C : PointedCone ℝ V} {u : V →ₗ[�
     · exact (hta.const_smul r).add (htb.const_smul s)
   have hboundary : exclusion C u p ∩ pure C u ⊆ L := by
     intro q hq
-    obtain ⟨qn, hqn, ht⟩ := hO p ⟨q, hq.2⟩ hq.1 pn hp
-    exact ⟨fun n => (qn n : V), hqn, continuous_subtype_val.tendsto _ |>.comp ht⟩
+    obtain ⟨qn, hqn, ht⟩ := hO p ⟨q, hq.2⟩
+      ((comparison_zero_iff_exclusion hs hg p hq.1.1).mpr hq.1) pn hp
+    exact ⟨fun n => (qn n : V),
+      fun n => (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mp (hqn n),
+      continuous_subtype_val.tendsto _ |>.comp ht⟩
   have hhull : exclusion C u p = convexHull ℝ (exclusion C u p ∩ pure C u) := by
     obtain ⟨b⟩ := hB p
     haveI : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
@@ -137,7 +194,7 @@ private theorem exclusion_lower_eventually {C : PointedCone ℝ V} {u : V →ₗ
       ∃ y ∈ exclusion C u (pn n), dist x y < ε := by
   classical
   have hcompact := ((exclusion_ball_faces hc hs hg hB).1 p).2.1
-  obtain ⟨s, hsD, hcover⟩ := hcompact.finite_cover_balls (half_pos hε)
+  obtain ⟨s, hsD, hsfin, hcover⟩ := hcompact.finite_cover_balls (half_pos hε)
   have hlower (x : V) (hx : x ∈ s) :
       ∀ᶠ n in atTop, ∃ y ∈ exclusion C u (pn n), dist x y < ε / 2 := by
     obtain ⟨xn, hxn, ht⟩ := exclusion_lower_sequence hc hs hg hB hO hp (hsD hx)
@@ -145,7 +202,7 @@ private theorem exclusion_lower_eventually {C : PointedCone ℝ V} {u : V →ₗ
     exact ⟨xn n, hxn n, by simpa [dist_comm] using hn⟩
   have hall : ∀ᶠ n in atTop, ∀ x ∈ s,
       ∃ y ∈ exclusion C u (pn n), dist x y < ε / 2 :=
-    (eventually_all_finset s).mpr hlower
+    (hsfin.eventually_all).mpr hlower
   filter_upwards [hall] with n hn x hx
   obtain ⟨a, ha, hxa⟩ := Set.mem_iUnion₂.mp (hcover hx)
   obtain ⟨y, hy, hay⟩ := hn a ha
@@ -155,7 +212,7 @@ private theorem exclusion_lower_eventually {C : PointedCone ℝ V} {u : V →ₗ
 
 /-- Original edge lifting forces Hausdorff convergence of the entire original
 exclusions. The forward implication holds for all positive ball dimensions. -/
-theorem whole_exclusions_tendsto_of_edge_lifting
+private theorem whole_exclusions_tendsto_of_edge_lifting
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V))
     (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -175,8 +232,79 @@ theorem whole_exclusions_tendsto_of_edge_lifting
   simpa only [Real.dist_eq, sub_zero, abs_of_nonneg Metric.hausdorffDist_nonneg] using
     hbound.trans_lt (half_lt_self hε)
 
+private theorem edge_lifting_iff_projection_open
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u) :
+    edgeLifting C u ↔ IsOpenMap (firstProjection C u) := by
+  classical
+  constructor
+  · intro hO W hW
+    apply isClosed_compl_iff.mp
+    apply isSeqClosed_iff_isClosed.mp
+    intro pn p hn hp
+    by_contra hnot
+    have hmem : p ∈ firstProjection C u '' W := by simpa using hnot
+    obtain ⟨z, hz, rfl⟩ := hmem
+    obtain ⟨qn, hqn, ht⟩ := hO z.1.1 z.1.2
+      ((comparison_zero_iff_exclusion hs hg z.1.1 (pure_mem z.1.2)).mpr z.2) pn hp
+    let zn : ℕ → incidence C u := fun n => ⟨(pn n, qn n),
+      (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mp (hqn n)⟩
+    have hzt : Tendsto zn atTop (𝓝 z) :=
+      tendsto_subtype_rng.mpr (hp.prodMk_nhds ht)
+    obtain ⟨n, hzn⟩ := (hzt.eventually (hW.mem_nhds hz)).exists
+    exact hn n ⟨zn n, hzn, rfl⟩
+  · intro hopen p q hq pn hp
+    let z : incidence C u := ⟨(p, q),
+      (comparison_zero_iff_exclusion hs hg p (pure_mem q)).mp hq⟩
+    have hlower : LowerHemicontinuousAt
+        (fun r => (firstProjection C u) ⁻¹' {r}) p :=
+      (isOpenMap_iff_lowerHemicontinuous.mp hopen) p
+    obtain ⟨zn, hzn, ht⟩ := hlower.exists_seq_tendsto hp
+      (show z ∈ (firstProjection C u) ⁻¹' {p} from rfl)
+    have hnonempty (r : pure C u) : ∃ s : pure C u, (s : V) ∈ exclusion C u r := by
+      have g := (exclusion_ball_faces hc hs hg hB).1 r
+      obtain ⟨s, hs'⟩ := g.2.1.extremePoints_nonempty g.1.nonempty
+      exact ⟨⟨s, g.2.2.2.2.1.extremePoints_subset_extremePoints hs'⟩, hs'.1⟩
+    choose fallback hfallback using hnonempty
+    let qn (n : ℕ) : pure C u :=
+      if firstProjection C u (zn n) = pn n then (zn n).1.2 else fallback (pn n)
+    have hqmem (n : ℕ) : (qn n : V) ∈ exclusion C u (pn n) := by
+      dsimp [qn]
+      split_ifs with he
+      · simpa only [firstProjection] using he ▸ (zn n).2
+      · exact hfallback (pn n)
+    refine ⟨qn, fun n =>
+      (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mpr (hqmem n), ?_⟩
+    have hsecond : Tendsto (fun n => (zn n).1.2) atTop (𝓝 q) :=
+      (continuous_snd.comp continuous_subtype_val).tendsto z |>.comp ht
+    apply hsecond.congr'
+    filter_upwards [hzn] with n hn
+    change firstProjection C u (zn n) = pn n at hn
+    simp only [qn, if_pos hn]
+
+/-- On the complete original domain, edge lifting is equivalent to openness
+of the actual incidence projection and implies whole-exclusion Hausdorff limits. -/
+theorem original_open_incidence_whole_limit
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u) :
+    (edgeLifting C u ↔ IsOpenMap (firstProjection C u)) ∧
+    (edgeLifting C u → IsOpenMap (secondProjection C u) ∧
+      ∀ (p : pure C u) (pn : ℕ → pure C u),
+      Tendsto pn atTop (𝓝 p) →
+      Tendsto (fun n => Metric.hausdorffDist (exclusion C u (pn n)) (exclusion C u p))
+        atTop (𝓝 0)) := by
+  refine ⟨edge_lifting_iff_projection_open hc hs hg hB, ?_⟩
+  intro hO
+  refine ⟨?_, fun p pn hp => whole_exclusions_tendsto_of_edge_lifting hc hs hg hB hO hp⟩
+  exact ((edge_lifting_iff_projection_open hc hs hg hB).mp hO).comp
+    (incidenceSwap C u).isOpenMap
+
 #print axioms exclusion_upper_limit
 #print axioms exclusion_upper_eventually
-#print axioms whole_exclusions_tendsto_of_edge_lifting
+#print axioms original_open_incidence_whole_limit
 
 end D5.S3.Quantum.Foundation.ExclusionIncidence
