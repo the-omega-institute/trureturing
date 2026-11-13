@@ -307,6 +307,73 @@ theorem original_nonunit_continuity
   have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hp q w hw1 hwq pn hpn hcollapse
   exact (ne_of_gt hbudget) (hsat.1 v hv).symm
 
+/-- The original P0 condition concerns A(p), while all of F(p) remains available. -/
+def uniqueFullZero (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Set (pure C u) :=
+  {p | ∃ ep : V →ₗ[ℝ] ℝ, ∀ e, e ∈ fullZeroConfirmers C u p ↔ e = ep}
+
+/-- Both residual discontinuity branches retain the entire original pure domain.
+In the unique-full-zero branch the same ep is least on all C, and every actual
+collapse endpoint has unit budget in every whole chart. -/
+theorem original_discontinuity_branches
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (hEB3 : ∀ s : pure C u, ∃ b : ExclusionChart C u s, b.dim = 3)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (hInj : Function.Injective (fun s : pure C u => exclusion C u s))
+    (p : pure C u) (hSigma : p ∉ OriginalExclusionLimits.regularRegion C u) :
+    p ∉ uniqueFullZero C u ∨
+      ∃ ep : V →ₗ[ℝ] ℝ, (∀ e, e ∈ fullZeroConfirmers C u p ↔ e = ep) ∧
+        (∀ b : ExclusionChart C u p, ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w = 1) ∧
+        (∀ x ∈ base C u, comparison C u p x = ep x) ∧
+        (∀ f : V →ₗ[ℝ] ℝ, confirms C u p f → ∀ x ∈ C, ep x ≤ f x) ∧
+        (∀ (q : pure C u) (pn : ℕ → pure C u), Tendsto pn atTop (𝓝 p) →
+          Tendsto (fun n => Metric.hausdorffDist (exclusion C u (pn n)) {(q : V)}) atTop (𝓝 0) →
+          ∀ b : ExclusionChart C u q, ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w = 1) := by
+  classical
+  by_cases hp0 : p ∈ uniqueFullZero C u
+  · right
+    obtain ⟨ep, hep⟩ := hp0
+    obtain ⟨a, ha⟩ := hEB3 p
+    have hB : exclusionBalls C u := fun s => ⟨(hEB3 s).choose⟩
+    have h3 : ReciprocalExclusionLimits.threeBallExclusions C u := by
+      intro s
+      obtain ⟨⟨d, hd, f, hi, hw⟩, heq⟩ := hEB3 s
+      dsimp at heq
+      subst d
+      exact ⟨f, hi, hw⟩
+    have hdisc : ¬ ContinuousAt (OriginalExclusionLimits.wholeExclusion hc hs hg hB) p :=
+      fun h => hSigma ((OriginalExclusionLimits.original_regular_iff_continuous hc hs hg h3 hPR p).mpr h)
+    obtain ⟨pn, hpn, q, hq, hcollapse⟩ :=
+      OriginalExclusionLimits.original_discontinuity_collapse hc hs hg h3 hPR p hdisc
+    have apply_collapse (q : pure C u) (pn : ℕ → pure C u) (hpn : Tendsto pn atTop (𝓝 p))
+        (ht : Tendsto (fun n => Metric.hausdorffDist (exclusion C u (pn n)) {(q : V)}) atTop (𝓝 0)) :
+        (∀ w : chartSpace a, ‖w‖ = 1 → extensionBudget a w = 1) ∧
+        (∀ b : ExclusionChart C u q, ∀ w : chartSpace b, ‖w‖ = 1 → extensionBudget b w = 1) ∧
+        (∀ x ∈ base C u, comparison C u p x = ep x) ∧
+        (∀ f : V →ₗ[ℝ] ℝ, confirms C u p f → ∀ x ∈ C, ep x ≤ f x) := by
+      have hqD : (q : V) ∈ exclusion C u p :=
+        (exclusion_limit_labels hc hs hg hB pn (continuous_subtype_val.tendsto p |>.comp hpn)
+          ({(q : V)} : NonemptyCompacts V) ht).2 p.property (mem_singleton _)
+      have hqS : (q : V) ∈ a.param '' Metric.sphere 0 1 := by
+        rw [← chart_boundary hc hs hg hB p a]
+        exact ⟨hqD, q.property⟩
+      obtain ⟨v, hv, hvq⟩ := hqS
+      have hv1 : ‖v‖ = 1 := by simpa using hv
+      have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hep q v hv1 hvq pn hpn ht
+      exact ⟨hsat.1, hsat.2.1, hsat.2.2.1, hsat.2.2.2.1⟩
+    have hsat := apply_collapse q pn hpn hcollapse
+    refine ⟨ep, hep, ?_, hsat.2.2.1, hsat.2.2.2, ?_⟩
+    · intro b w hw
+      obtain ⟨t, _, _, hba, hbb⟩ := original_chart_independence hc hs hg hB hPR p a b
+      letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
+      obtain ⟨v, hv⟩ := exists_norm_eq (EuclideanSpace ℝ (Fin a.dim)) (by norm_num : (0 : ℝ) ≤ 1)
+      exact (hbb w hw).trans ((hba v hv).symm.trans (hsat.1 v hv))
+    · intro q pn hpn ht
+      exact (apply_collapse q pn hpn ht).2.1
+  · exact Or.inl hp0
+
+#print axioms original_discontinuity_branches
+
 #print axioms actual_collapse_pure_edge_row
 #print axioms original_nonunit_continuity
 
