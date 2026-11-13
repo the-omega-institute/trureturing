@@ -118,7 +118,7 @@ this asserts neither undecidability nor an inexhaustible residual.
 | Necessary spectral data for reconstruction | Unresolved; the other clause of the source sentence |
 | Smaller families of congruence restrictions | Unresolved; the separate preceding source direction |
 | Literature novelty | Suspected only in the inspected scope recorded by the Library note; not a global priority claim |
-| Delivery | Candidate for independent pre-freeze review; no frozen/publication or solved-problem KPI claim |
+| Theorem status | The complete variable-maximum statement is proved in Lean; spectral reconstruction and prescribed-M classification remain unresolved |
 
 ## ASSUMED-UNVERIFIED
 

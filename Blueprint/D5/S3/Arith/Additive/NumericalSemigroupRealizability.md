@@ -28,7 +28,7 @@ Mathlib's Nat.addSubmonoid_fg supplies a finite generating set H for T. Choose a
 
 For the forward inclusion, M and all M+s lie above N and belong to T. The minus generators are either zero, when s=M, or an original a∈G, since M−(M−a)=a. For the reverse inclusion, each a∈H is precisely the minus generator associated to s=M−a, so the generated monoid contains T. No properness condition was used. For T=ℕ the complement is empty and the same construction applies, including the two consecutive tail elements; this boundary is part of the universal theorem.
 
-The public surface is one result, with no companion theorems. The conservative proof_shape is bind-only: finite generation, a bound on the complement, and arithmetic normalization supply the construction. The proposed admission basis is open-problem-resolution under preregistration #29915, rather than escape-witness. This is an unbounded existence theorem, not finite enumeration or a certified finite instance. The necessary spectral data, reconstruction from smaller congruence families, and classification for a prescribed M remain unresolved. The literature screen is scoped; global novelty and absence of every earlier solution are not established.
+This is an unbounded existence theorem, not finite enumeration or a certified finite instance. The necessary spectral data, reconstruction from smaller congruence families, and classification for a prescribed M remain unresolved. The literature screen is scoped; global novelty and absence of every earlier solution are not established.
 
 ## References
 
