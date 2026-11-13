@@ -1,0 +1,21 @@
+**全部有限联合层级。** 对每个有限 $N\ge1$，保留实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、完整 $K_N$、全部 $P_N=\operatorname{ext}K_N$ 与整个原效应区间。对每个实际分块 $a+b=N$，保留
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+\tag{Q121.47}
+$$
+
+同时保留同一产品配对、严格张量单位、全部原因子置换及其逆的正性、规范重括号，以及指定运输下的不连续位置分块。比较条件仍是整个 $S_2$：对每个纠缠或产品纯点 $p\in P_2$、每个有限纯准备族 $q_\ell\in P_2$、全部 $t_\ell\ge0$、$\sum_\ell t_\ell=1$，包括零权和重复标签，保留VIII111.35；不能缩成产品态测试。
+
+三项具名供应分别仍为原低二份Jordan桥、唯一实际自复合 $(W_1,W_1,W_2)$ 的复型选择、同一实际两因子的产品正规形。非经典分支还保留同一最大块的 $\mathsf F_{\max}$：同一含相位正交基给
+
+$$
+g_r=\sum_a|a\rangle_r|a\rangle_r|a\rangle_r,
+\qquad\Delta_r=|g_r\rangle\langle g_r|\in C_3,
+\qquad u_3(\Delta_r)=L,
+\tag{Q121.48}
+$$
+
+其余扇区零，原归一源为 $\Delta_r/L$。这里不预付三份纯性或实际制备。单体候选不制造 $S_2$、叉口资源或任意纠缠准备；复三能级二、三份的秩为九、二十七，高阶载体不再被要求满足单体EB3或秩三W。
+

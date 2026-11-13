@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:98163810c3f8b1fb20313d5737c5cde6a213263ce35565fb4cf28c6a295ea5de
+  normalized_sha256: sha256:98163810c3f8b1fb20313d5737c5cde6a213263ce35565fb4cf28c6a295ea5de
+cas_ref: sha256:98163810c3f8b1fb20313d5737c5cde6a213263ce35565fb4cf28c6a295ea5de
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/AuricActualOcticSupport.general43_2_original_geometric_irreducibility
+    target_statement_id: sha256:a2ac7727129f3a5195b2430e9600cfcff9ec1fa4f023c708e77e024f477ff97b
+  - gid: D5/S3/Quantum/Algebra/AuricActualOcticSupport.general43_2_support
+    target_statement_id: sha256:90503a17ea77c1ec8aaa58fbebb36e6574cd6baede8dda90a86051d52e8080d3
+  - gid: D5/S3/Quantum/Algebra/AuricActualOcticWindow.original_polynomial_normalization
+    target_statement_id: sha256:9444ba344b9b765bfdb1701131eafaa2533ef4c4b5ffca44568b02628c49aae4
+  - gid: D5/S3/Quantum/Algebra/FixedDiagonalDeterminant.row_determinant_irreducible
+    target_statement_id: sha256:501c0a42b2db1c4ed6d007c07aaaab76ee04222319a6c7aeb41d9764ea540399
+receipts:
+  unresolved_subitems: []
