@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation
    generality: I
    mirror-B: D5/B/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation
-   mirror-E: none(waiver:kernel-checked-refutation-probe)
+   mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation.claim; result=D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation.result; claim=D5/S3/Combinatorics/QStirling/AcharyyaConjectureTwentyRefutation.claim
    digest: Complement followed by full standardization need not satisfy the pointwise identity. -/
@@ -26,27 +26,35 @@ index. Standardization orients every nonzero pair and then sorts all pairs by
 their absolute minimum, retaining the zero block.
 -/
 
+/-!
+`result` has proof_shape: bind-only and admission_basis: open-problem-resolution
+under issue #30070. It uses one original-domain counterexample and is the
+designated Reg-exempt refutation result; no escape witness is asserted.
+The private definitions are consumed by `claim` and the live proof of `result`.
+General preservation and involution of `f` are not separately proved here.
+-/
+
 set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.QStirling.AcharyyaConjectureTwentyRefutation
 
 /-- An ordered list of signed blocks; admissibility is imposed by `Standard`. -/
-abbrev Blocks := List (Finset ℤ)
+private abbrev Blocks := List (Finset ℤ)
 
 /-- Zero-based block access, with an empty default outside the list. -/
-def block (pi : Blocks) (i : ℕ) : Finset ℤ := pi[i]?.getD ∅
+private def block (pi : Blocks) (i : ℕ) : Finset ℤ := pi[i]?.getD ∅
 
 /-- The minimum of the absolute values; the empty-set default is irrelevant. -/
-def minAbs (S : Finset ℤ) : ℕ := (S.image Int.natAbs).min.untopD 0
+private def minAbs (S : Finset ℤ) : ℕ := (S.image Int.natAbs).min.untopD 0
 
 /-- The maximum of the absolute values. -/
-def maxAbs (S : Finset ℤ) : ℕ := S.sup Int.natAbs
+private def maxAbs (S : Finset ℤ) : ℕ := S.sup Int.natAbs
 
 /-- Negate every signed letter of a block. -/
-def negate (S : Finset ℤ) : Finset ℤ := S.image fun z => -z
+private def negate (S : Finset ℤ) : Finset ℤ := S.image fun z => -z
 
 /-- All source conditions for membership in S_B(<n>,k), including standard order. -/
-def Standard (n k : ℕ) (pi : Blocks) : Prop :=
+private def Standard (n k : ℕ) (pi : Blocks) : Prop :=
   pi.length = 2 * k + 1 ∧
   (∀ i ∈ Finset.range pi.length, (block pi i).Nonempty) ∧
   (∀ i ∈ Finset.range pi.length, ∀ j ∈ Finset.range pi.length,
@@ -61,48 +69,48 @@ def Standard (n k : ℕ) (pi : Blocks) : Prop :=
     minAbs (block pi (2 * r)) < minAbs (block pi (2 * t)))
 
 /-- Definition 13: signed complement fixes zero and preserves the sign. -/
-def complementLetter (n : ℕ) (z : ℤ) : ℤ :=
+private def complementLetter (n : ℕ) (z : ℤ) : ℤ :=
   if z = 0 then 0 else if 0 < z then (n : ℤ) + 1 - z else -((n : ℤ) + 1 + z)
 
 /-- Complement every letter, retaining the original block order. -/
-def complement (n : ℕ) (pi : Blocks) : Blocks :=
+private def complement (n : ℕ) (pi : Blocks) : Blocks :=
   pi.map fun S => S.image (complementLetter n)
 
 /-- Orient a paired odd/even block so that its positive absolute minimum is even. -/
-def orient (A B : Finset ℤ) : Finset ℤ × Finset ℤ :=
+private def orient (A B : Finset ℤ) : Finset ℤ × Finset ℤ :=
   if (minAbs A : ℤ) ∈ A then (B, A) else (A, B)
 
 /-- Full standardization: orient every pair, then sort pairs by their common minimum. -/
-def standardize (k : ℕ) (pi : Blocks) : Blocks :=
+private def standardize (k : ℕ) (pi : Blocks) : Blocks :=
   let pairs := (List.range k).map fun r =>
     orient (block pi (2 * r + 1)) (block pi (2 * r + 2))
   let ordered := pairs.mergeSort fun p q => minAbs p.2 ≤ minAbs q.2
   block pi 0 :: ordered.flatMap (fun p => [p.1, p.2])
 
 /-- Lemma 19's map on the entire original domain, with no witness-specific branch. -/
-def f (n k : ℕ) (pi : Blocks) : Blocks := standardize k (complement n pi)
+private def f (n k : ℕ) (pi : Blocks) : Blocks := standardize k (complement n pi)
 
 /-- Every possible (signed letter, target-block index) pair. -/
-def candidates (pi : Blocks) : Finset (ℤ × ℕ) :=
+private def candidates (pi : Blocks) : Finset (ℤ × ℕ) :=
   ((Finset.range pi.length).biUnion (block pi)).product (Finset.range pi.length)
 
 /-- Definition 12(1), with a signed comparison and the inclusive lower bound. -/
-def rosPairs (pi : Blocks) : Finset (ℤ × ℕ) :=
+private def rosPairs (pi : Blocks) : Finset (ℤ × ℕ) :=
   (candidates pi).filter fun p =>
     (∃ i ∈ Finset.range p.2, p.1 ∈ block pi i) ∧
       (minAbs (block pi p.2) : ℤ) ≤ p.1
 
 /-- Definition 12(4), including positivity and the inclusive upper bound. -/
-def rcbPairs (pi : Blocks) : Finset (ℤ × ℕ) :=
+private def rcbPairs (pi : Blocks) : Finset (ℤ × ℕ) :=
   (candidates pi).filter fun p =>
     (∃ i ∈ Finset.range p.2, p.1 ∈ block pi i) ∧
       0 < p.1 ∧ p.1 ≤ (maxAbs (block pi p.2) : ℤ)
 
 /-- The source right-opener-smaller statistic. -/
-def ros (pi : Blocks) : ℕ := (rosPairs pi).card
+private def ros (pi : Blocks) : ℕ := (rosPairs pi).card
 
 /-- The source right-closer-bigger statistic. -/
-def rcb (pi : Blocks) : ℕ := (rcbPairs pi).card
+private def rcb (pi : Blocks) : ℕ := (rcbPairs pi).card
 
 /-- The full original universal pointwise assertion, over all source parameters. -/
 def claim : Prop :=
@@ -110,7 +118,7 @@ def claim : Prop :=
     rcb (f n k pi) = ros pi + k * (k - 1)
 
 /-- The original-domain partition 0 / (-1,2,3) / (1,-2,-3). -/
-def witness : Blocks := [{0}, {-1, 2, 3}, {1, -2, -3}]
+private def witness : Blocks := [{0}, {-1, 2, 3}, {1, -2, -3}]
 
 /-- The full universal identity is contradicted inside its original domain. -/
 theorem result : ¬ claim := by
