@@ -9,6 +9,7 @@
 import D5.S3.Geometry.AlgebraicBoundary.ConeBoundaryEquation
 import D5.S3.Geometry.AlgebraicBoundary.BoundaryPrincipalIdeal
 import D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
+import D5.S3.Geometry.AlgebraicBoundary.BoundaryComponentRecovery
 import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
 
 noncomputable section
@@ -23,6 +24,9 @@ open private minimum_boundary_ideal
 
 open private section_radial_geometry
   from D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
+
+open private boundary_component_recovery
+  from D5.S3.Geometry.AlgebraicBoundary.BoundaryComponentRecovery
 
 open private comparison_attained
   from D5.S3.Quantum.Foundation.ExclusionWidthCompactness
@@ -454,6 +458,9 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
           (C : Set E) →
         ∃ r : MvPolynomial ι ℝ, r ≠ 0 ∧ r.totalDegree = h.totalDegree ∧
           ∀ y ∈ frontier (C : Set E), MvPolynomial.eval (c y) r = 0) ∧
+      (let U : Set E := {x | MvPolynomial.eval (c x) p ≠ 0}
+        closure (⋃₀ {D ∈ connectedComponentIn U '' U | D ⊆ interior (C : Set E)}) =
+          (C : Set E)) ∧
       (∀ (u : E →L[ℝ] ℝ), (∀ x ∈ C, x ≠ 0 → 0 < u x) →
         ∀ a : {x : E | u x = 1},
           a ∈ interior {x : {y : E | u y = 1} | (x : E) ∈ C} →
@@ -493,7 +500,7 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
         closure (connectedComponentIn {x : E | MvPolynomial.eval (c x) q ≠ 0} e) =
           (C : Set E) := by
   classical
-  letI : FiniteDimensional ℝ E := c.toLinearEquiv.finiteDimensional
+  letI : FiniteDimensional ℝ E := c.symm.toLinearEquiv.finiteDimensional
   letI : Nontrivial (ι → ℝ) := c.toEquiv.symm.nontrivial
   let D := C.comap c.symm.toContinuousLinearMap
   have hi : interior (D : Set (ι → ℝ)) = c.symm ⁻¹' interior (C : Set E) :=
@@ -548,7 +555,7 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
     intro y hy
     exact hqpos (c y) (by simpa [hi] using hy)
   refine ⟨d, q, hdpos, hdp, hq, hqhom,
-    minimum_equation_squarefree _ q hq hqv hqm, hqvo, ?_, ?_, hqpo, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    minimum_equation_squarefree _ q hq hqv hqm, hqvo, ?_, ?_, hqpo, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro r hr hrv
     exact hqm r hr ((hboundary r).mp hrv)
   · intro r
@@ -563,13 +570,15 @@ private theorem original_minimum_roots_and_branch {E : Type*} [NormedAddCommGrou
     refine ⟨h, ?_, rfl, whole_branch_boundary_vanishing c C h hhom he hhe hbranch⟩
     intro hz
     exact hhe (by rw [hz, map_zero])
+  · exact boundary_component_recovery c C hfull p hp hvan
   · intro u hu a ha
     exact section_radial_geometry C u hu a ha
   · intro u hu
     dsimp only
     have hspan : Submodule.span ℝ (C : Set E) = ⊤ := by
       have hh := C.convex.interior_nonempty_iff_affineSpan_eq_top.mp hfull
-      rwa [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.toPointedCone.zero_mem)] at hh
+      rw [affineSpan_eq_span_of_zero_mem (subset_affineSpan ℝ _ C.toPointedCone.zero_mem)] at hh
+      simpa using congrArg AffineSubspace.direction hh
     have hEc := D5.S3.Quantum.Foundation.ContinuousFrameSum.effects_compact hu hspan
     refine ⟨D5.S3.Quantum.Foundation.CircuitBalancedConfirmation.base_compact C.isClosed hu,
       hEc, ?_⟩
