@@ -1,0 +1,78 @@
+**定理 126.6（唯一完整确认标签处的塌缩迫使两球单位饱和及全混态 least）。** 在定义126.1、126.5的完整原域中，若发生实际塌缩 (X126.3)，则
+
+$$
+\begin{gathered}
+a_{D_p}=a_{D_q}=\tfrac12,\qquad
+\beta_{D_p}=\beta_{D_q}=1,\\
+T_p(x)=e_p(x)\quad(x\in K),\qquad
+e_p\le_{C^{\ast}} f\quad(f\in F_p).
+\end{gathered}
+\tag{X126.21}
+$$
+
+证明。定理126.2与完整边区间 (X126.20) 给全部纯输入
+
+$$
+T_p(s)=\min\{e_p(s),1-e_q(s)\}\quad(s\in P).
+\tag{X126.22}
+$$
+
+令 $\mathcal B_p=\{n\in\mathcal E:n(p)=0\}$。取补将整个 $F_p$ 双射到 $\mathcal B_p$，故同一纯域公式等价于
+
+$$
+\max_{n\in\mathcal B_p}n(s)=\max\{g(s),e_q(s)\}
+\quad(s\in P).
+\tag{X126.23}
+$$
+
+先只排除反方向越界。固定 $s\in P\setminus\{p\}$，令 $Y=H(s)/g(s)$。若 $\|Y\|>1$，取 $t=Y/\|Y\|$。因为 $g\in\operatorname{ri}N_p$ 且 $t\cdot H\in\operatorname{span}N_p$，可取充分小的 $\varepsilon>0$ 使 $g+\varepsilon t\cdot H\in N_p$。在这项全域正性已经成立之后，(X126.18) 给其原全域最大值 $1+\varepsilon$。于是
+
+$$
+n_{\varepsilon}=\frac{g+\varepsilon t\cdot H}{1+\varepsilon}
+\in\mathcal B_p,\qquad
+n_{\varepsilon}(s)=g(s)\frac{1+\varepsilon\|Y\|}{1+\varepsilon}>g(s).
+\tag{X126.24}
+$$
+
+由 (X126.23)，必有 $e_q(s)>g(s)$。再用 $\lambda>0$ 及 (X126.20)，得到
+
+$$
+\|Y\|>1\quad\Longrightarrow\quad v\cdot Y>1.
+\tag{X126.25}
+$$
+
+此时不能声称所有 $\|Y\|>1$ 都已被排除。但如果 $v\cdot Y<-1$，则 $\|Y\|>1$，(X126.25) 又迫 $v\cdot Y>1$，矛盾。所以每个上述原纯点满足 $g(s)+v\cdot H(s)\ge0$；在 $s=p$ 两项都为零。因为 $K=\operatorname{conv}P$，线性读数的非负性延到全部 $K$，再按 $C=\mathbb R_{\ge0}K$ 延到整个原锥。因此
+
+$$
+k=\frac{g+v\cdot H}{2}\in N_p.
+$$
+
+原最大值公式给 $\max_Kk=1$，故 $k\in\mathcal E$。在同一旧球上取真实对径 $r=b(-v)$，则 $k(q)=1$、$k(r)=0$，于是 $q\perp r$。旧球公式 (X126.5) 给
+
+$$
+0=T_q(r)=1-2a_{D_p},
+$$
+
+从而 $a_{D_p}=1/2$。
+
+原边对称性及 $q,r\in D_p$ 给 $p\in D_q$ 和 $p\perp r$；新取得的 $q\perp r$ 又给 $r\in D_q$。因此两个不同的原纯点 $p,r$ 同属完整 $D_q$ 且正交。在该球图中写 $p=b_{D_q}(w)$、$r=b_{D_q}(z)$，其中 $\|w\|=\|z\|=1$。准确球公式给
+
+$$
+0=T_p(r)=1-a_{D_q}+a_{D_q}w\cdot z
+\ge1-2a_{D_q}\ge0.
+\tag{X126.26}
+$$
+
+所以 $a_{D_q}=1/2$ 且 $w\cdot z=-1$，即 $z=-w$。这同时证明此处同球正交点确为该球对径，未预设任意三纯点都能组成共同仪器。
+
+已有 $a_{D_p}=1/2$，故 (X126.5) 使 $D_p$ 的每条直径两端都原正交。[IX120.13][Q126IX] 遂给 $\rho_p(t)=1$ 对全部单位方向成立。对 $x\ne p$，以 $-t$ 代入 (X126.19)，有 $t\cdot H(x)\le g(x)$ 对全部单位 $t$ 成立；取上确界并处理 $x=p$，得到
+
+$$
+\|H(x)\|\le g(x)\quad(x\in K).
+\tag{X126.27}
+$$
+
+现在才排除了全部方向越界。由 (X126.20) 得 $e_q\le g$ 于全 $K$，因而 (X126.22) 化为 $T_p(s)=e_p(s)$ 对全部原纯点成立。
+
+任一原 $f\in F_p$ 都满足 $f(s)\ge e_p(s)$ 于全部 $s\in P$。每张固定 $f-e_p$ 是线性的，$K=\operatorname{conv}P$ 因而给 $f\ge e_p$ 于所有混态；齐次化给整个 $C$ 上的序支配。又 $e_p\in F_p$，所以在每个 $x\in K$，下包络恰为 $e_p(x)$。这一步没有使用混态 PR，也没有把不同纯输入各自的最优选择直接拼成仿射函数。预算结论由 $\beta_H=1/(2a_H)$ 给出。证毕。
+

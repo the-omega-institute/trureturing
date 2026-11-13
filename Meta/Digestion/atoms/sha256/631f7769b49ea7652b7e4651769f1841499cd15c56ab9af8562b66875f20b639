@@ -1,0 +1,57 @@
+**命题 127.2（裸 EB 的全局暴露射线有完整球零面）。** 若 $n\in B^{\ast}$ 是暴露点，则存在实际原纯标签 $a\in P$，使
+
+$$
+Z(n)=D_a=:F,\qquad
+c_F\in K\setminus P,\qquad
+N_{c_F}=\mathcal N_F=\mathbb R_+n.
+\tag{X127.4}
+$$
+
+并且，置 $M_n=\max_Kn>0$，对每个 $b\in I(F)$，都有
+
+$$
+n(b)=M_n,\qquad \mathcal A_b=\{n/M_n\}.
+\tag{X127.5}
+$$
+
+这里唯一的是在整个 $D_b$ 上为零的完整确认；不将 $F_b$ 的全部效应称为唯一，也不将 $n/M_n$ 断言为最小确认或正限制映射的逆。
+
+证明。复用命题124.4中不涉及 PE 的构造 (X124.8)—(X124.9)：若 $f\mapsto f(v)$ 在整个 $B^{\ast}$ 上唯一最小于 $n$，置
+
+$$
+\alpha=\min_{f\in B^{\ast}}f(v),\qquad
+x=v-\alpha x_0.
+\tag{X127.6}
+$$
+
+对任意非零 $g\in C^{\ast}$，其原基归一给
+
+$$
+g(x)=g(x_0)\left[\left(\frac{g}{g(x_0)}\right)(v)-\alpha\right]\ge0,
+\qquad g(x)=0\ \Longleftrightarrow\ g\in\mathbb R_+n.
+\tag{X127.7}
+$$
+
+有限维闭锥双对偶性给 $x\in C$；该成熟分离步骤与124.4相同。$B^{\ast}$ 至少有两个点，故 $x=0$ 会使暴露泛函恒定而矛盾。因此 $x\ne0$，$\widehat x=x/u(x)\in K$，且 $N_{\widehat x}=\mathbb R_+n$。这一构造尚未判定 $\widehat x$ 的纯混。
+
+若 $\widehat x$ 非纯，则非空真面 $Z(n)$ 含混态，原面分类直接给 $Z(n)=D_a$。
+
+若 $\widehat x=t\in P$，在实际正维球 $D_t$ 的球面取 $s\in P\cap D_t$。原补效应给零对称，所以 $t\in D_s$。取完整原零确认 $e_s\in\mathcal A_s$，有
+
+$$
+e_s\ne0,\qquad e_s(t)=0,\qquad Z(e_s)=D_s.
+\tag{X127.8}
+$$
+
+于是 $e_s\in N_t\setminus\{0\}=\mathbb R_{>0}n$，从而 $Z(n)=D_s$；取 $a=s$。这一步使用的是整个原锥正的完整效应及实际原零邻点，没有假定纯暴露态不存在。
+
+两种情形都得到完整正维球 $F=Z(n)$，且 $\widehat x\in F$。球心 $c_F$ 是两个不同原纯对径点的中点，故不纯。若 $g\in C^{\ast}$ 且 $g(c_F)=0$，对每个 $z\in F$ 使用 $2c_F-z\in F$，由两项非负及
+
+$$
+g(z)+g(2c_F-z)=2g(c_F)=0
+$$
+
+得 $g|_F=0$。所以 $N_{c_F}=\mathcal N_F\subseteq N_{\widehat x}$；而 $n$ 零于整个 $F$，反向射线包含也成立，得到 (X127.4)。由此获得的混态见证是 $c_F$，不必是最初的 $\widehat x$。
+
+最后固定 $b\in I(F)$。任取 $e\in\mathcal A_b$，有 $e\in\mathcal N_F\setminus\{0\}$，故 $e=\lambda n$，$\lambda>0$。$e(b)=1$ 与原全域上界 $e\le u$ 分别给 $\lambda n(b)=1$ 及 $\lambda M_n\le1$。又 $n(b)\le M_n$，所以 $n(b)=M_n$、$\lambda=1/M_n$。存在性由 $\mathcal A_b\ne\varnothing$ 给出，且 $M_n>0$ 来自 $n\ne0$ 及 $K$ 张成 $V$。证毕。
+
