@@ -289,7 +289,7 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
     have ht : TensorProduct.map (restrict (ModuleHom.id A) a)
         (restrict (coevaluation B hD) 0) (x ⊗ₜ[ℂ] eta0 hD) =
         x ⊗ₜ[ℂ] cupVector B hD := by
-      rw [TensorProduct.map_tmul, restrict_identity, LinearMap.id_apply, coevaluation_eta0]
+      rw [TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
     have hc : C (normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v) =
         input (cupVector B hD) :=
       (normalizedPair_input hD (ModuleHom.id A) (coevaluation B hD)
