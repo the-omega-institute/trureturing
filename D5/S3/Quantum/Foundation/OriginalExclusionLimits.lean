@@ -23,7 +23,7 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
 
 /-- The original EB3 data supplies the full positive-dimensional ball condition. -/
-def ballHyp (h3 : threeBallExclusions C u) : exclusionBalls C u := fun s =>
+theorem ballHyp (h3 : threeBallExclusions C u) : exclusionBalls C u := fun s =>
   ⟨⟨3, by norm_num, (h3 s).choose, (h3 s).choose_spec.1, (h3 s).choose_spec.2⟩⟩
 
 /-- The actual whole exclusion as a nonempty compact set. -/
@@ -98,6 +98,7 @@ private theorem compact_diameter_lipschitz :
   apply LipschitzWith.of_dist_le_mul
   intro S T
   rw [Real.dist_eq]
+  change |Metric.diam (S : Set V) - Metric.diam (T : Set V)| ≤ 2 * dist S T
   apply abs_le.mpr
   constructor
   · have h := compact_diameter_control T S
@@ -121,8 +122,8 @@ theorem original_diameter_upperSemicontinuous
     (NonemptyCompacts.isCompact_subsets_of_isCompact (base_compact hc hs)).tendsto_subseq
       (fun n => (show (D (pn n) : Set V) ⊆ base C u from fun x hx => hx.1))
   have hdi := (compact_diameter_lipschitz.continuous.tendsto Q).comp hlim
-  have ha : a ≤ Metric.diam (Q : Set V) := le_of_tendsto hdi
-    (Eventually.of_forall fun n => hpn (φ n))
+  have ha : a ≤ Metric.diam (Q : Set V) := ge_of_tendsto hdi
+    (Eventually.of_forall fun n => (show a ≤ Metric.diam (D (pn (φ n)) : Set V) from hpn (φ n)))
   have hsub : (Q : Set V) ⊆ exclusion C u p := by
     rcases exclusion_limit_dichotomy hc hs hg h3 hPR (hp.comp hφ.tendsto_atTop)
         (fun n => D (pn (φ n))) Q (fun _ => rfl) hlim with heq | ⟨q, hq, heq⟩
@@ -139,7 +140,8 @@ theorem original_baire_regular_region
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (h3 : threeBallExclusions C u)
     (hPR : ∀ p q : pure C u, comparison C u p q = comparison C u q p) :
-    IsOpen (regularRegion C u) ∧ Dense (regularRegion C u) := by
+    IsOpen (regularRegion C u) ∧ Dense (regularRegion C u) ∧
+      IsClosed (regularRegion C u)ᶜ ∧ interior (closure (regularRegion C u)ᶜ) = ∅ := by
   letI : CompactSpace (pure C u) := isCompact_iff_compactSpace.mp
     (ReciprocalPureCompactness.reciprocal_pure_compact hc hs hg hPR)
   have hclosed (j : ℕ) : IsClosed {p : pure C u |
@@ -153,7 +155,11 @@ theorem original_baire_regular_region
     have hd : 0 < Metric.diam (exclusion C u p) := Metric.diam_pos hgeom.1 hgeom.2.1.isBounded
     obtain ⟨j, hj⟩ := exists_nat_one_div_lt hd
     exact mem_iUnion.mpr ⟨j, hj.le⟩
-  exact ⟨isOpen_iUnion fun _ => isOpen_interior, dense_iUnion_interior_of_closed hclosed hcover⟩
+  have hopen : IsOpen (regularRegion C u) := isOpen_iUnion fun _ => isOpen_interior
+  have hdense : Dense (regularRegion C u) := dense_iUnion_interior_of_closed hclosed hcover
+  refine ⟨hopen, hdense, hopen.isClosed_compl, ?_⟩
+  rw [hopen.isClosed_compl.closure_eq]
+  exact hdense.interior_compl
 
 /-- The regular region is exactly the whole Hausdorff continuity set. -/
 theorem original_regular_iff_continuous
@@ -174,9 +180,10 @@ theorem original_regular_iff_continuous
       ({(q : V)} : NonemptyCompacts V)).comp ht
     have hsmall : ∀ᶠ n in atTop,
         1 / (j + 1 : ℝ) ≤ Metric.diam (D (pn n) : Set V) :=
-      (hpn.eventually (isOpen_interior.mem_nhds hj)).mono fun _ h => interior_subset h
+      (hpn.eventually (isOpen_interior.mem_nhds hj)).mono fun n h =>
+        (show 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u (pn n)) from interior_subset h)
     have hbad : 1 / (j + 1 : ℝ) ≤ 0 := by
-      simpa using le_of_tendsto hd hsmall
+      simpa using ge_of_tendsto hd hsmall
     exact (one_div_pos.mpr (by positivity : 0 < (j + 1 : ℝ))).not_ge hbad
   · intro hcont
     have hgeom := (exclusion_ball_faces hc hs hg (ballHyp h3)).1 p
@@ -186,7 +193,9 @@ theorem original_regular_iff_continuous
     have hn : {s : pure C u | 1 / (j + 1 : ℝ) < Metric.diam (D s : Set V)} ∈ 𝓝 p :=
       hdi.preimage_mem_nhds (Ioi_mem_nhds hj)
     exact mem_iUnion.mpr ⟨j, mem_interior_iff_mem_nhds.mpr
-      (mem_of_superset hn fun _ h => h.le)⟩
+      (mem_of_superset hn fun x h =>
+        (show 1 / (j + 1 : ℝ) ≤ Metric.diam (exclusion C u x) from
+          (show 1 / (j + 1 : ℝ) < Metric.diam (D x : Set V) from h).le))⟩
 
 #print axioms original_discontinuity_collapse
 
