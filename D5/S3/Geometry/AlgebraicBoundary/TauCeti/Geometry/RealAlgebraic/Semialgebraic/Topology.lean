@@ -23,7 +23,7 @@ module
 
 public import D5.S3.Geometry.AlgebraicBoundary.TauCeti.Geometry.RealAlgebraic.CAD.Existence
 public import D5.S3.Geometry.AlgebraicBoundary.TauCeti.Geometry.RealAlgebraic.Semialgebraic.Image
-public import Mathlib.Topology.MetricSpace.Pi
+public import Mathlib.Topology.MetricSpace.Pseudo.Pi
 
 public section
 open Function MvPolynomial Set

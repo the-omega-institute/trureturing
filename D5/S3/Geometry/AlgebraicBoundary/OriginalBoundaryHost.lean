@@ -10,6 +10,7 @@ import D5.S3.Geometry.AlgebraicBoundary.ConeFiniteBoundary
 import D5.S3.Geometry.AlgebraicBoundary.ConeMinimumBranch
 import D5.S3.Geometry.AlgebraicBoundary.ConeRadialGeometry
 import D5.S3.Geometry.AlgebraicBoundary.ConeQuantumConsumer
+import D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary
 
 noncomputable section
 open Set Metric
@@ -29,6 +30,9 @@ open private original_quantum_consumer
 open private linePolynomial affineLinearPolynomial interior_zero_factor
   from D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
 
+open private original_section_boundary
+  from D5.S3.Geometry.AlgebraicBoundary.ConeSectionBoundary
+
 variable {ι : Type*} [Fintype ι]
 
 /-- Original ambient and quantum domains, finite-degree ideal, and every low-degree direction. -/
@@ -37,6 +41,11 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
     (c : E ≃L[ℝ] (ι → ℝ)) (C : ProperCone ℝ E)
     (hs : (C : ConvexCone ℝ E).Salient) (hfull : (interior (C : Set E)).Nonempty)
     (u : E →L[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) :
+    (    let K : Set {x : E | u x = 1} := {x | (x : E) ∈ C}
+    IsCompact K ∧ (interior K).Nonempty ∧
+      (∀ x : {y : E | u y = 1}, x ∈ frontier K ↔ (x : E) ∈ frontier (C : Set E)) ∧
+      (∀ x : E, x ∈ frontier (C : Set E) ∧ x ≠ 0 ↔
+        ∃ (r : ℝ) (b : {y : E | u y = 1}), 0 < r ∧ b ∈ frontier K ∧ x = r • (b : E))) ∧
     (IsCompact (base C.toPointedCone u.toLinearMap) ∧
     IsCompact (effects C.toPointedCone u.toLinearMap) ∧
     (∀ p : pure C.toPointedCone u.toLinearMap,
@@ -127,7 +136,8 @@ theorem original_entire_boundary_host {E : Type*} [NormedAddCommGroup E]
       L ≠ 0 ∧ ∃ g : MvPolynomial κ ℝ, g ≠ 0 ∧ f = affineLinearPolynomial a L * g ∧
         g.totalDegree + 1 = f.totalDegree ∧
         ∀ x ∈ frontier B, MvPolynomial.eval x g = 0) := by
-  refine ⟨original_quantum_consumer C hfull u hu, ?_, ?_, ?_, ?_⟩
+  refine ⟨original_section_boundary C hs hfull u hu,
+    original_quantum_consumer C hfull u hu, ?_, ?_, ?_, ?_⟩
   · intro a ha
     exact section_radial_geometry C u hu a ha
   · intro p hp hvan
