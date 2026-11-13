@@ -88,7 +88,7 @@ $$\forall d \in \mathbb{N},\; \forall h \in \mathbb{N},\; \forall w \in \operato
 
 *Commentary.*
 
-Every step uses at least one coordinate. Before the last step, each coordinate has been used at most one less than the initial height. This bounds the length and makes the displayed finite count exhaustive.
+Every step uses at least one coordinate. Before the last step, each coordinate has been used at most one less than the initial height. This bounds the length and makes the finite count exhaustive.
 
 **Theorem 1.8 (Transposing rows and inserting empty columns).**
 
@@ -112,7 +112,7 @@ $$\forall d \in \mathbb{N},\; \forall m \in \mathbb{N},\; \operatorname{HasSum}\
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+The length budget truncates the insertion polynomial at d times m. Each geometric binomial column has sum two. Exchanging the finite sum with the convergent series gives twice the internal-word count.
 
 **Theorem 1.10 (The literal terminal count).**
 
@@ -124,7 +124,7 @@ $$\forall d \in \mathbb{N},\; \forall m \in \mathbb{N},\; (0 < d) \Rightarrow (\
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+Appending a nonempty coordinate subset to an internal word either remains internal or reaches its first zero. These cases partition words, including simultaneous first zeros. Summing over lengths cancels the nonempty internal words and retains the unique empty word.
 
 **Theorem 1.11 (A uniform factorial upper bound).**
 
@@ -136,7 +136,7 @@ $$\forall d \in \mathbb{N},\; \forall m \in \mathbb{N},\; 2 \cdot \sum_{t \in \o
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+Vandermonde and the factorial binomial bound dominate each row polynomial by the shifted degree-m monomial divided by m factorial. A shift by m reduces the geometric moment to Mathlib's sum-integral and Gamma estimate. The polynomial and exponential are compared as separate monotone factors.
 
 **Theorem 1.12 (A one-term lower bound).**
 
@@ -148,7 +148,7 @@ $$\forall d \in \mathbb{N},\; \forall m \in \mathbb{N},\; \forall k \in \mathbb{
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+Every term of the positive series is at most its sum. The lower factorial bound for the binomial coefficient supplies the displayed term. Subtraction inside the natural-number cast is truncated natural subtraction.
 
 **Theorem 1.13 (Logarithmic factorial bounds).**
 
@@ -160,7 +160,7 @@ $$\forall d \in \mathbb{N},\; \forall m \in \mathbb{N},\; (0 < d) \Rightarrow ((
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+For the lower estimate take k equal to the ceiling of m times d divided by log two, plus m. The ceiling error costs at most one exponential step. Taking logarithms of that term and of the uniform upper bound gives the sandwich.
 
 **Theorem 1.14 (A quantitative diagonal error).**
 
@@ -172,7 +172,7 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\left|\operatorname{Real}.\
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+Set d to n and m to n minus one. Mathlib's factorial-log bounds cancel the main factorial terms. The terminal-count comparison contributes only a linear error; the displayed bound is at most a constant times n log n.
 
 **Theorem 1.15 (The complete diagonal real-root limit).**
 
@@ -184,7 +184,7 @@ $$\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac{\operatorname{Real}.\
 
 *Commentary.*
 
-The displayed formula specifies the objects and their ordered finite counts.
+Divide the quantitative logarithmic error by n squared and use log n divided by n tending to zero. Positivity of the finite count allows conversion of the real power to an exponential. Continuity of the exponential yields one divided by log two along every natural index.
 
 ## References
 
