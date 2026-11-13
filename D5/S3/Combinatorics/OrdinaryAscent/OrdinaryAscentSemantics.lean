@@ -6,7 +6,7 @@
    utility: none
    digest: Literal vincular avoidance, ordinary ascent sequences and their one-letter extensions. -/
 
-import D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation
+import D5.S3.Combinatorics.Permutation.WordAscents
 import D5.S3.Combinatorics.InversionSeq.InversionSeqDefs
 import Mathlib.Data.Set.Finite.List
 import Mathlib.Tactic
@@ -21,7 +21,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.OrdinaryAscent.OrdinaryAscentSemantics
 
-open D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation (asc)
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 open D5.S3.Combinatorics.InversionSeq.InversionSeqDefs (IsInversionSeq)
 
 /-- All reduced length-three patterns with the first two positions adjacent. -/

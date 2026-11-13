@@ -217,4 +217,4 @@ At every finite length and for every finite forbidden-pattern set, the actual or
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentSemantics.contains_append_iff`
 - Truth anchor: `D5/S3/Combinatorics/OrdinaryAscent/OrdinaryAscentSemantics.entry_le_asc`
 - Dependency: [D5/S3/Combinatorics/InversionSeq/InversionSeqDefs](../InversionSeq/InversionSeqDefs.md)
-- Dependency: [D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation](../Permutation/MultisetRookEulerianInterlacingRefutation.md)
+- Dependency: [D5/S3/Combinatorics/Permutation/WordAscents](../Permutation/WordAscents.md)

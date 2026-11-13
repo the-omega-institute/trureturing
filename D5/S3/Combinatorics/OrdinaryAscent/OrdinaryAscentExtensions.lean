@@ -18,7 +18,7 @@ set_option autoImplicit false
 namespace D5.S3.Combinatorics.OrdinaryAscent.OrdinaryAscentExtensions
 
 open OrdinaryAscentSemantics
-open D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation (asc)
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 
 /-- The exact ascent bound and all new literal occurrences at the appended letter. -/
 def CanAppend (B : Finset Pattern) (w : List ℕ) (x : ℕ) : Prop :=

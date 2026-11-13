@@ -21,7 +21,7 @@ noncomputable section
 namespace D5.S3.Combinatorics.OrdinaryAscent.OrdinaryAscentCatalanPolynomial
 
 open OrdinaryAscentSemantics OrdinaryAscentCatalanRank OrdinaryAscentCatalanStatistics
-open D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation (asc)
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 open Polynomial
 
 /-- Sum the complementary-ascent monomial over actual ordinary literal avoiders. -/

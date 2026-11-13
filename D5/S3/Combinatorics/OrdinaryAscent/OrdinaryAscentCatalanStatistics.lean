@@ -19,7 +19,7 @@ noncomputable section
 namespace D5.S3.Combinatorics.OrdinaryAscent.OrdinaryAscentCatalanStatistics
 
 open OrdinaryAscentSemantics OrdinaryAscentCatalanSites OrdinaryAscentCatalanRank
-open D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation (asc)
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 open D5.S3.Combinatorics.InversionSeq.InversionSeq152Dyck (dyckSteps)
 open DyckStep
 

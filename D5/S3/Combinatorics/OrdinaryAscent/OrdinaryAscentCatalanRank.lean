@@ -20,7 +20,7 @@ noncomputable section
 namespace D5.S3.Combinatorics.OrdinaryAscent.OrdinaryAscentCatalanRank
 
 open OrdinaryAscentSemantics OrdinaryAscentCatalanSites
-open D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation (asc)
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 
 /-- The last letter and the fresh bound are the two largest sites. -/
 theorem sites_shape (w : List ℕ) (hw : CatalanWord w) (hne : w ≠ []) :

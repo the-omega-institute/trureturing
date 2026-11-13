@@ -21,7 +21,7 @@ noncomputable section
 namespace D5.S3.Combinatorics.OrdinaryAscent.OrdinaryAscentCatalanSites
 
 open OrdinaryAscentSemantics
-open D5.S3.Combinatorics.Permutation.MultisetRookEulerianInterlacingRefutation (asc)
+open D5.S3.Combinatorics.Permutation.WordAscents (asc)
 
 /-- Actual ordinary ascent words avoiding the indicated two literal patterns. -/
 def CatalanWord (w : List ℕ) : Prop :=
