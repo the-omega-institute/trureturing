@@ -136,8 +136,8 @@ row deletion, not an executable interpretation of the extracted Algorithm
 ## Triage
 
 This is an unrestricted analytic refutation of the stated surjectivity
-event. Its admissibility basis is the external open-problem-resolution
-exception, not a new general image-classification theorem. The auxiliary
+event. Its sole admissibility basis is `escape-witness`, through the uniform
+retained-row construction consumed by the terminal refutation. The auxiliary
 binding lemmas are consumed by the content proof; the retained-row
 construction and uniform omission invariant carry the argument. No
 corresponding theory volume is present, so the applicable first-freeze
