@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:b20451bd53becb335c20a4e22786358cdbd95df2ed752ebebdf16f4a7d55160e
   normalized_sha256: sha256:b20451bd53becb335c20a4e22786358cdbd95df2ed752ebebdf16f4a7d55160e
 cas_ref: sha256:b20451bd53becb335c20a4e22786358cdbd95df2ed752ebebdf16f4a7d55160e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Divergence/GrandmotherTheorem.kl_divergence_nonneg
+    target_statement_id: sha256:2811f2905b53f8e74c7c7d666dc0dbc01e24ea1c0f503af4120dd64befc22259
 receipts:
   unresolved_subitems: []
