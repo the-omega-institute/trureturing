@@ -4,10 +4,15 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.NumberTheory.Padics.PadicVal.Basic]
    utility: none
-   digest: Literal factorial runs have the shortest palindromes and first occurrences conjectured by Ianakiev. -/
+   digest: Ianakiev's shortest-palindrome and first-occurrence laws for literal factorial runs. -/
 
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
+
+/-! Binary factorial plateaus and their shortest contiguous palindromes. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -17,7 +22,8 @@ namespace D5.S1.Words.Palindromes.IanakievShortestRulerPalindrome
 noncomputable section
 
 private theorem factorial_witness (m : ℕ) : ∃ h : ℕ, 1 ≤ h ∧ 2 ^ m ∣ h.factorial :=
-  ⟨2 ^ m, by positivity, Nat.dvd_factorial (by positivity) le_rfl⟩
+  ⟨2 ^ m, by have := Nat.two_pow_pos m; omega,
+    Nat.dvd_factorial (by positivity) le_rfl⟩
 
 /-- A007843, including the positive factorial-index convention at exponent zero. -/
 def F (m : ℕ) : ℕ := Nat.find (factorial_witness m)
@@ -134,14 +140,19 @@ def Pal (i L : ℕ) : Prop := ∀ t : ℕ, t < L → B (i + t) = B (i + L - 1 - 
 private theorem odd_decomposition (a : ℕ) (ha : 0 < a) :
     ∃ u : ℕ, 0 < u ∧ u % 2 = 1 ∧ a = 2 ^ padicValNat 2 a * u := by
   obtain ⟨u, hu⟩ := (pow_padicValNat_dvd (p := 2) (n := a))
-  have hu0 : 0 < u := by nlinarith
+  have hu0 : 0 < u := by
+    by_contra h
+    have hz : u = 0 := by omega
+    simp [hz] at hu
+    omega
   have hodd : ¬ 2 ∣ u := by
     intro hd
     apply pow_succ_padicValNat_not_dvd (p := 2) ha.ne'
     obtain ⟨v, hv⟩ := hd
     refine ⟨v, ?_⟩
-    rw [hu, hv, pow_succ]
-    ring
+    calc
+      a = 2 ^ padicValNat 2 a * u := hu
+      _ = 2 ^ (padicValNat 2 a + 1) * v := by rw [hv, pow_succ]; ring
   exact ⟨u, hu0, by omega, hu⟩
 
 private theorem endpoint_spacing (a b : ℕ) (ha : 0 < a) (hab : a < b)
@@ -195,8 +206,10 @@ private theorem palindrome_attainment (i : ℕ) (hi : 2 ≤ i) :
     obtain ⟨v, hv⟩ := heven
     refine ⟨v, ?_⟩
     change j + q = 2 ^ (k + 1) * v
-    rw [hju, pow_succ]
-    nlinarith
+    calc
+      j + q = q * (u + 1) := by rw [hju]; ring
+      _ = q * (2 * v) := by rw [hv]
+      _ = 2 ^ (k + 1) * v := by dsimp [q]; rw [pow_succ]; ring
   have reflect (s : ℕ) (hs : s ≤ q) :
       padicValNat 2 (c - s) = padicValNat 2 (c + s) := by
     by_cases hz : s = 0
@@ -252,13 +265,13 @@ def P (i : ℕ) : ℕ := by
 
 private theorem p_spec (i : ℕ) (hi : 2 ≤ i) : 2 ≤ P i ∧ Pal i (P i) := by
   classical
-  simpa only [P, dif_pos hi] using Nat.find_spec (palindrome_witness i hi)
+  simpa only [P, dite_eq_left hi] using Nat.find_spec (palindrome_witness i hi)
 
 private theorem p_formula (i : ℕ) (hi : 2 ≤ i) :
     P i = 2 ^ (padicValNat 2 (i - 1) + 1) + 1 := by
   classical
   apply le_antisymm
-  · simp only [P, dif_pos hi]
+  · simp only [P, dite_eq_left hi]
     exact Nat.find_min' (palindrome_witness i hi)
       ⟨by have := Nat.two_pow_pos (padicValNat 2 (i - 1) + 1); omega,
         palindrome_attainment i hi⟩
@@ -352,7 +365,7 @@ def claim : Prop :=
   (∀ i : ℕ, 1 ≤ i → (First i ↔ ∃ m : ℕ, i = A m)) ∧
   (∀ m : ℕ, 2 ≤ m → P (A (m - 1)) = A m)
 
-/-- All minima exist, and the complete increasing first-occurrence list and position identity hold. -/
+/-- All minima exist; the full first-occurrence list and position identity hold. -/
 theorem result : claim := by
   classical
   refine ⟨?_, rfl, ?_, p_one, ?_, a_strict, first_iff, position_identity⟩
@@ -363,7 +376,7 @@ theorem result : claim := by
   · intro i hi
     refine ⟨p_spec i hi, ?_⟩
     intro L hL
-    simp only [P, dif_pos hi]
+    simp only [P, dite_eq_left hi]
     exact Nat.find_min' (palindrome_witness i hi) hL
 
 #print axioms result
