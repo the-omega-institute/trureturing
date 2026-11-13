@@ -1,0 +1,11 @@
+**推论 124.8（非塌缩自动支付标签单射）。** 在允许变维的 $\mathrm{EB}_{\ge1}$ 原域中，
+
+$$
+\mathrm{PE}+\mathrm{NC}\quad\Longrightarrow\quad\mathrm{Inj}.
+\tag{X124.16}
+$$
+
+特别地，$\mathrm{EB3}+\mathrm{PR}+\mathrm{NC}$ 推出 Inj，主前件中不需要另列标签唯一性。
+
+证明。若 Inj 失败，定理124.7给直径趋零的实际原球列，直接违反 NC。主特例的 PE 由 IX114.3 的原纯端点严格暴露供应。证毕。
+

@@ -4377,3 +4377,524 @@ $$
 [SM127J]: https://arxiv.org/pdf/2205.05110v2 "N. Johnston, S. Moein, R. Pereira and S. Plosker, Absolutely k-Incoherent Quantum States and Spectral Inequalities for Factor Width of a Matrix, Physical Review A 106, 052417, DOI 10.1103/PhysRevA.106.052417；Definition 1、Theorems 1、7。"
 
 ## 追加锚（本行以下为增补区）
+
+## 128. 原纯标签的一阶锥约化、共同正提升与完整条件桥
+
+### 128.A 完整原域、全标签限制同构与种子特例
+
+**约定 128.1（原对象与附加前件）。** 本章属于本卷 BILATERAL VIII。SAME_READBACK 指[同读回卷][SC128SR]，EXCLUSION IX、X、VIII 分别指[排除拓扑第九卷][SC128IX]、[第十卷][SC128X]、[第八卷][SC128EVIII]；132、133专指[局部纯极限与共同正提升续篇][SC128LP]，不指 SAME_READBACK 同号章节。
+
+固定 SAME_READBACK127.1、129.1及本卷126.1的完整入口 $\mathsf E_0$。始终使用非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$、在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$，以及
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_q=\{f\in\mathcal E:f(q)=1\},\qquad
+\mathcal T_q(x)=\min_{f\in\mathcal F_q}f(x),\qquad D_q=\{x\in K:\mathcal T_q(x)=0\},\\
+\mathcal A_q=\{f\in\mathcal F_q:f|_{D_q}=0\},\quad
+P_0=\{q\in P:\mathcal A_q\text{ 为单点}\},\quad
+N_x=C^*\cap\{b:b(x)=0\}\quad(x\in C).
+\end{gathered}
+\tag{SC128.1}
+$$
+
+$K,\mathcal E$ 紧，确认最小值达到。$D_q$ 保留最低定义中的全部零比较对象，包括其中的全部混态；$N_x$ 是整个原锥的正零法向锥。对原纯点，$q\perp r$ 表示存在同一原效应在 $q,r$ 分别取一、零，等价于 $r\in D_q$；补效应使其对称。
+
+$\mathsf E_0$ 逐项包含：全部原纯标签的整个 $D_q$ 均为仿射闭三球的 EB3；$D_q=D_r\Rightarrow q=r$ 的 Inj；一组至少有一个 $P_0$ 顶点的实际原正交三角 $(p_1,p_2,p_3)$；同一三角全部原零效应的联合分离；三个规范线性压缩的全锥正性。后两项为
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)]\Rightarrow x=y,\\
+M_i=\operatorname{span}D_{p_i},\quad T_i:V\to M_i,\quad
+bT_i=b\ (b\in\operatorname{span}N_{p_i}),\quad T_i(C)\subseteq C.
+\end{gathered}
+\tag{SC128.2}
+$$
+
+标量最低函数 $\mathcal T_q$ 与线性 $T_i$ 不同型。PC1、IC0、纯点闭性、全域自对偶及下述约化均不在入口中。
+
+直接复用 SAME_READBACK127.1—127.4a、129及本卷121、126：$\dim V=9$；每个 $D_q$ 是暴露极大真面；全部非空真面只有原纯单点或完整排除球；不同完整球至多交于一个原纯点；$P\cap D_q=\partial_{\rm rel}D_q$。并且
+
+$$
+P=P_0,\quad \mathcal A_q=\{e_q\},\quad
+\dim\operatorname{span}N_q=4,\quad
+C^*\cap\{b:b|_{D_q}=0\}=\mathbb R_+e_q.
+\tag{SC128.3}
+$$
+
+每个 $e_q$ 的整个原一值面为 $\{q\}$，零面为 $D_q$。完整确认的唯一性尚不保证它是全部 $\mathcal F_q$ 中的 least，不能据此写 $\mathcal T_q=e_q$。
+
+本章还使用 EXCLUSION IX120.7—120.8的准确全标签接口：对每个 $p\in P=P_0$，
+
+$$
+R_p:\operatorname{span}N_p\overset\sim\longrightarrow\operatorname{Aff}(D_p),\quad
+R_pb=b|_{D_p},\qquad
+g_p=u-e_p\in\operatorname{ri}N_p,\quad R_pg_p=1.
+\tag{SC128.4}
+$$
+
+固定**任意**这样的原纯 $p$，写
+
+$$
+\begin{gathered}
+F=D_p=c_F+L\overline B^3,\quad L:\mathbb R^3\to\ker u\text{ 单射},\quad
+\mathcal H=\operatorname{Aff}(F)\cong\mathbb R\oplus\mathbb R^3,\\
+\ell(c_F+Lz)=a+\langle g,z\rangle,\qquad
+\mathcal L_F=\{(a,g):a\ge\|g\|\},\qquad
+\mathcal K_p=R_p(N_p)\subseteq\mathcal L_F.
+\end{gathered}
+\tag{SC128.5}
+$$
+
+记 $R:V^*\to\mathcal H$ 为整个限制映射，其在 $\operatorname{span}N_p$ 上就是 $R_p$。由(SC128.4)，$1=(1,0)\in\operatorname{int}_{\mathcal H}\mathcal K_p$。这里不预付 $\mathcal K_p=\mathcal L_F$，也不预付任意 $N_p$ 为 Lorentz 锥。
+
+若 $p=p_s$ 是实际种子，SAME_READBACK(Q127.12)及本卷126.2另给更强的整个锥同构
+
+$$
+N_p=\{\ell T_s:\ell\in C_s^*\}=B(C_s,\cdot),\qquad
+C_s=\operatorname{cone}D_p,\qquad R_p(N_p)=\mathcal L_F,
+\tag{SC128.6}
+$$
+
+其中 $C_s$ 是嵌入的四维 Lorentz／复 $\mathrm{PSD}_2$ 锥。这是种子特例；(SC128.4)只是一条线性同构和一张内部常数尺。
+
+EXCLUSION IX119的有限增益共同正回缩、投影暴露、amenability、原 $C$ 的 niceness／facial dual completeness及面上正延拓均已付。它们没有支付保原单位且在另一指定标签精确取零的延拓，也未支付 $C^*$ 的 niceness。
+
+### 128.B 一阶逆像与一般尖锥的完整法向
+
+**定义 128.2（整个原锥在 $p$ 的 $C^1$ 锥约化）。** 另假设有环境开邻域 $U\ni p$、有限维实空间 $W$、尖闭凸锥 $Q\subset W$ 及 $C^1$ 映射 $h:U\to W$，满足
+
+$$
+h(p)=0,\qquad Dh(p):V\to W\text{ 满射},\qquad
+C\cap U=\{x\in U:h(x)\in Q\}.
+\tag{SC128.7}
+$$
+
+这作用于整个原 $C$，不是仅作用于某个面或外夹锥。记 $A_x=Dh(x)$、$A_x^*:W^*\to V^*$，且 $Q^*=\{\lambda:\lambda(q)\ge0\ (q\in Q)\}$。切锥采用 $T_C(x)=\overline{\operatorname{cone}(C-x)}$，法向采用切锥的正极。
+
+**定理 128.3（固定法向张成迫使所有邻近纯点落在约化锥顶）。** 在定义128.2下可缩小 $U$，使 $A_x$ 对每个 $x\in U$ 满射，并有
+
+$$
+N_x=A_x^*\bigl(Q^*\cap h(x)^\perp\bigr)\quad(x\in C\cap U),
+\qquad h(x)^\perp=\{\lambda:\lambda(h(x))=0\}.
+\tag{SC128.8}
+$$
+
+在当前完整 $\mathsf E_0$ 中，$\dim W=4$，且对所有 $t\in P\cap U$，
+
+$$
+h(t)=0,\qquad N_t=A_t^*Q^*,\qquad
+A_t^*:Q^*\overset\sim\longrightarrow N_t.
+\tag{SC128.9}
+$$
+
+这里无需对 $Q$ 或 $N_p$ 作 Lorentz 分类。
+
+证明。满射性是有限维开条件，先收小 $U$。固定 $x\in C\cap U$，选投影 $\pi_x:V\to\ker A_x$，使其核与 $\ker A_x$ 互补。映射
+
+$$
+\Psi_x(v)=(h(v),\pi_x(v-x))
+\tag{SC128.10}
+$$
+
+在 $x$ 的导数为线性同构。$C^1$ 逆函数定理使其成为局部 $C^1$ 坐标，且可行集在此坐标内恰是 $Q\times\ker A_x$ 与一个开集的交。
+
+详细说明这一阶坐标的切向结论。对闭凸集，$v\in T_C(x)$ 等价于有 $\tau_j\downarrow0$、$v_j\to v$ 使 $x+\tau_jv_j\in C$；从闭包锥定义出发可用凸性把各割线缩短到任意小尺度。对这些点作 $\Psi_x$ 的一阶展开，得到 $A_xv\in T_Q(h(x))$。反过来，若 $A_xv\in T_Q(h(x))$，取 $q_j\in Q$、$\tau_j\downarrow0$，使 $(q_j-h(x))/\tau_j\to A_xv$。点 $(q_j,\tau_j\pi_xv)$ 充分近于 $(h(x),0)$，其逆像属于 $C$；对 $\Psi_x^{-1}$ 作一阶展开，逆像与 $x$ 的差除以 $\tau_j$ 趋于 $v$。故
+
+$$
+T_C(x)=\{v:A_xv\in T_Q(h(x))\}.
+\tag{SC128.11}
+$$
+
+若 $b$ 在此切锥上非负，$\ker A_x$ 的正反方向使 $b$ 消灭 $\ker A_x$，从而唯一写为 $b=A_x^*\lambda$。满射性使其切锥非负等价于 $\lambda$ 在 $T_Q(h(x))$ 上非负。对任意 $q\in Q$，方向 $q,-q$ 及全部 $z-q$（$z\in Q$）表明这个正极恰为 $Q^*\cap q^\perp$。
+
+同理，$T_C(x)$ 的正极恰为整个 $N_x$：方向 $x,-x$ 迫 $b(x)=0$，全部 $z-x$（$z\in C$）迫 $b\in C^*$。这里凸性把邻域中的支撑结论传播至全部原锥：$x+\varepsilon(z-x)\in C\cap U$ 对充分小的 $\varepsilon>0$ 成立。因而(SC128.8)确有全域正性，一般可行 $x$ 处的 $h(x)^\perp$ 不能删去。
+
+在 $p$ 处，$N_p=A_p^*Q^*$，而 $A_p^*$ 单射。尖性使 $\operatorname{span}Q^*=W^*$：否则存在非零 $v$ 被全部 $Q^*$ 消灭，双极定理给 $v,-v\in Q$，矛盾。因此
+
+$$
+\dim W=\dim\operatorname{span}N_p=4.
+\tag{SC128.12}
+$$
+
+现取 $t\in P\cap U$。若 $h(t)\ne0$，其消灭空间是四维 $W^*$ 的真超平面，故 $Q^*\cap h(t)^\perp$ 的张成维数至多三。经单射 $A_t^*$ 后仍至多三，与(SC128.3)的四维相矛盾。于是 $h(t)=0$，(SC128.8)立即给(SC128.9)。这个维数论证不使用非零边界法向为射线，也不使用约化锥的自对偶性。证毕。
+
+**种子形状推论。** 若当前 $p=p_s$，(SC128.6)和 $N_p=A_p^*Q^*$ 使 $Q^*$ 与四维 Lorentz 锥线性同构；对偶及双极再使 $Q$ 同型。(SC128.9)还使该邻域内全部原纯 $t$ 的完整 $N_t$ 同型。此结论保留种子约化的较强形状信息，但不是上面一般纯标签论证的前件。
+
+### 128.C 完整零效应连续、严格源函数的共同提升与原预算
+
+**定理 128.4（完整零法向运输与零效应的 Hausdorff 连续）。** 在定理128.3的邻域内，若 $t_n,t\in P\cap U$、$t_n\to t$，则每个 $b\in N_t$ 都有 $b_n\in N_{t_n}$ 趋于 $b$。置 $Z_t=\mathcal E\cap N_t$，则 $Z_{t_n}\to Z_t$ 为 Hausdorff 收敛，可用任意固定范数度量。
+
+证明。唯一写 $b=A_t^*\lambda$、$\lambda\in Q^*$，取 $b_n=A_{t_n}^*\lambda$。连续的 $Dh$ 及(SC128.9)同时给全原正性、精确零值和 $b_n\to b$，包括边界法向。
+
+还须保留原效应预算。函数 $M(b)=\max_Kb$ 在 $V^*$ 上连续。若 $b\in Z_t$，则
+
+$$
+\widehat b_n=\frac{b_n}{\max\{1,M(b_n)\}}\in Z_{t_n},\qquad
+\widehat b_n\longrightarrow b,
+\tag{SC128.13}
+$$
+
+因为 $M(b)\le1$，分母趋一。对任意 $0\ne v\in C$ 写 $v=u(v)x$、$x\in K$，便知 $0\le\widehat b_n\le u$ 于全部 $C$。
+
+反向若 $c_n\in Z_{t_n}$ 且 $c_n\to c$，闭 $C^*$、闭效应区间和连续评价给 $c\in Z_t$。紧 $\mathcal E$ 使所有这类序列有聚点，排除单侧 Hausdorff 距离不趋零；另一侧由紧 $Z_t$ 的有限网和逐点逼近(SC128.13)一致化。故两侧距离都趋零。没有假设 $P$ 闭；极限标签在本条中明确属于 $P\cap U$。证毕。
+
+**定理 128.5（一个严格子锥内全部源方向的同标签精确提升）。** 对任意原纯 $p$，有一个 $0<\rho_p<1$，使下述结论对所有 $0<\rho\le\rho_p$ 成立。更一般地，任取满足
+
+$$
+\mathcal T_\rho=\{(1,g):\|g\|\le\rho\}\subset\operatorname{int}\mathcal K_p,
+\qquad
+\mathcal L_{F,\rho}=\{(a,g):a\ge0,\ \|g\|\le\rho a\}
+\tag{SC128.14}
+$$
+
+的 $0<\rho<1$。若原 $C$ 在 $p$ 满足定义128.2，则有共同邻域 $U_\rho\ni p$、连续依赖环境 $x$ 的线性 $J_x:\mathcal H\to V^*$ 和有限 $B_\rho>0$，使
+
+$$
+RJ_x=\operatorname{id},\qquad
+J_t(\mathcal L_{F,\rho})\subseteq N_t\quad(t\in P\cap U_\rho).
+\tag{SC128.15}
+$$
+
+尤其对**同一个** $t\in P\cap U_\rho$ 及**所有** $\eta\in S^2$ 同时有
+
+$$
+\begin{gathered}
+b_{t,\eta}=J_t(1,\rho\eta)\in N_t,\qquad
+f_{t,\eta}=b_{t,\eta}/B_\rho\in\mathcal E,\qquad f_{t,\eta}(t)=0,\\
+f_{t,\eta}(c_F+Lz)=\frac{1+\rho\langle\eta,z\rangle}{B_\rho},\qquad
+f_{t,\eta}(c_F+L\eta)-f_{t,\eta}(c_F-L\eta)=\frac{2\rho}{B_\rho}.
+\end{gathered}
+\tag{SC128.16}
+$$
+
+同一预算还满足 $J_t(a,g)/(aB_\rho)\in\mathcal E\cap N_t$，对所有 $(a,g)\in\mathcal L_{F,\rho}$、$a>0$ 成立。若 $p$ 是实际种子，所有 $0<\rho<1$ 均可使用；每个 $\rho$ 有自己的邻域和预算。
+
+证明。由内部常数尺(SC128.4)，$1\in\operatorname{int}\mathcal K_p$，故可选 $\rho_p\in(0,1)$ 使紧 $\mathcal T_{\rho_p}$ 包含于该内部。令
+
+$$
+S_x=RA_x^*:W^*\to\mathcal H,\qquad J_x=A_x^*S_x^{-1}.
+\tag{SC128.17}
+$$
+
+$A_p^*$ 将 $W^*$ 同构到 $\operatorname{span}N_p$，而 $R_p$ 同构，故 $S_p$ 可逆；并且 $S_p(Q^*)=\mathcal K_p$。收小邻域，$S_x$ 全部可逆，逆映射连续。紧集 $S_p^{-1}\mathcal T_\rho$ 位于 $\operatorname{int}Q^*$；连续性与有限覆盖给共同邻域，使全部 $S_x^{-1}\mathcal T_\rho$ 仍落在 $Q^*$。正缩放给整个 $\mathcal L_{F,\rho}$，零切片只有零。再用(SC128.9)即得全锥正性及精确零值，$RJ_x=\operatorname{id}$ 给精确源读数。
+
+选闭包包含于上述邻域的环境小球。$J_x$ 的算子范数在其紧闭包上一致有界；$K$ 和 $\mathcal T_\rho$ 紧，因此可选一个正 $B_\rho$ 控制全部 $\max_K|J_x(1,g)|$、$\|g\|\le\rho$。在纯 $t$ 上 $b_{t,\eta}\in C^*$，故这个上界给 $0\le b_{t,\eta}/B_\rho\le u$ 于整个 $C$。这证明(SC128.16)，并且预算先于全部 $t,\eta$ 选定。紧性没有用在 $P\cap U_\rho$ 上。
+
+种子处(SC128.6)给 $\mathcal K_p=\mathcal L_F$，故每个 $\rho<1$ 的紧切片都在其内部。一般标签没有预先给这个等式，只保证一个足够小的正 $\rho_p$。证毕。
+
+**实际最大值预算。** 仍在续篇133的同一辅助欧氏尺中，选 $A>0$ 使 $\|b\|_*\le A\max_K|b|$。这是可能的，因为 $K$ 张成 $V$。对原纯 $t$ 置
+
+$$
+M(b)=\max_Kb\quad(b\in C^*),\qquad
+\alpha_F(t)=\max_{x\in D_t}\operatorname{dist}(x,F).
+\tag{SC128.18}
+$$
+
+续篇132.2及 EXCLUSION IX119.1的最大值接口给：若 $b\in N_t$ 且 $A\alpha_F(t)<1$，则
+
+$$
+M(b)=\max_{D_t}b\le\frac{\max_Fb}{1-A\alpha_F(t)}.
+\tag{SC128.19}
+$$
+
+确实，对 $x\in D_t$ 取最近 $z\in F$，有 $b(x)\le\max_Fb+A M(b)\alpha_F(t)$，取最大值移项即可。特别地，$M(b_{t,\eta})\le(1+\rho)/(1-A\alpha_F(t))$。这是复用的预算控制，只消费已经存在的正零提升，不创造提升。
+
+定理128.4运输完整法向锥，包括其边界；定理128.5保持指定严格源函数的准确限制。这两件事不同。前者没有保证每个固定 $\ell\in\partial\mathcal L_F$ 在所有邻标签都能准确匹配；即使在种子，每个 $\rho<1$ 的邻域也未被证明能对 $\rho\uparrow1$ 统一。
+
+### 128.D 同一实际返回上的局部纯输入排除
+
+以下固定任意原纯 $p$，另加原 $C$ 在该点的定义128.2，使用定理128.5允许的一个 $\rho>0$。若只在实际种子加此假设，就只得到该种子的结论。
+
+复用续篇132.3：Inj 使源球标签纤维 $I(F)=\{q\in P:D_q=F\}$ 为 $\{p\}$，所用源球面点 $a$ 亦满足 $I(D_a)=\{a\}$。故对 $y\in\operatorname{ri}F$、任意实际原纯列 $r_n\to y$，
+
+$$
+\max_{x\in D_{r_n}}\|x-p\|\longrightarrow0.
+\tag{SC128.20}
+$$
+
+它定位的是整个原返回球及其中全部纯返回，没有先断言这样的输入纯列存在。
+
+既有一值面接口还给较一般的见证定位：若 $r_n,t_n\in K$、$r_n\to y\in\operatorname{ri}F$，且有原 $f_n\in\mathcal E$ 满足 $f_n(r_n)=1,f_n(t_n)=0$，则 $t_n\to p$。证明只需紧性：对任意共同子列极限 $t,f$，有 $f(y)=1,f(t)=0$。非负 $u-f$ 在 $F$ 的相对内点为零，故在整个 $F$ 为零；(SC128.3)给 $u-f=\lambda e_p$。在 $p,t$ 取值给 $0\le\lambda\le1$ 及 $1=\lambda e_p(t)\le\lambda\le1$，故 $e_p(t)=1$、$t=p$。所有聚点如此即得结论。这仍是已付定位接口的紧性推论。
+
+对固定 $y\in\operatorname{ri}F$，仅量化实际返回，定义空集上确界为零的模量
+
+$$
+\begin{aligned}
+\omega_y(\delta)&=\sup_{\substack{r\in P,\ \|r-y\|<\delta\\t\in P\cap D_r}}\|t-p\|,\\
+a_y(\delta)&=\sup_{\substack{r\in P,\ \|r-y\|<\delta\\t\in P\cap D_r}}\alpha_F(t).
+\end{aligned}
+\tag{SC128.21}
+$$
+
+(SC128.20)的序列反证给 $\omega_y(\delta)\to0$；续篇133.2证明中的(Q133.7)给 $a_y(\delta)\to0$。后一式无需标签单点，前一式在当前定位中消费源 Inj。二者不要求 $P$ 闭，不供给幂率，也不供给输入纯列的存在性。
+
+**定理 128.6（一般受控纯标签的完整球内点排除）。** 给定 $y=c_F+L\xi\in\operatorname{ri}F$，按133.1选 $v_0,v_1,v_2,v_3\in S^2$，使 $a_i=c_F+Lv_i$ 仿射无关且 $y$ 在其单纯形相对内部。取133.2对这些固定数据及 $k=3$ 给出的 $\varepsilon_0,\theta,H>0$。若
+
+$$
+r\in P,\quad\|r-y\|<\varepsilon_0,\quad
+ t\in P\cap D_r\cap U_\rho,\quad\dim\operatorname{aff}D_t\le3,
+\tag{SC128.22}
+$$
+
+则
+
+$$
+\alpha_F(t)\ge\frac{\rho}{HB_\rho},\qquad
+\alpha_F(t)\ge c_\rho:=\frac{\rho}{A\rho+H(1+\rho)}>0.
+\tag{SC128.23}
+$$
+
+因此有 $\varepsilon>0$ 使 $P\cap B(y,\varepsilon)=\varnothing$。特别地，$\operatorname{ri}D_p\cap\overline P=\varnothing$，每个非空紧 $L_0\subset\operatorname{ri}D_p$ 都有 $\operatorname{dist}(L_0,P)>0$。实际种子可取 $\rho=1/2$，此时 $c_\rho=1/(A+3H)$。
+
+证明。133.2针对真正的纯输入 $r$ 和真正的纯返回 $t\in D_r$，给一个可依赖 $r,t$ 的指标 $i$，使同一 $N_t$ 内的全部非零 $b$ 满足
+
+$$
+g_b\ne0,\quad\left\|\frac{g_b}{\|g_b\|}-v_i\right\|<\theta
+\quad\Longrightarrow\quad
+\|g_b\|\le H M(b)\alpha_F(t),\qquad M(b)=\max_Kb.
+\tag{SC128.24}
+$$
+
+在这个**同一实际返回 $t$** 取 $b=b_{t,v_i}=J_t(1,\rho v_i)$。所有方向已在返回及指标选定之前共同供应，所以 $g_b=\rho v_i$，扇区偏差为零，且
+
+$$
+\rho\le H M(b)\alpha_F(t)\le HB_\rho\alpha_F(t).
+\tag{SC128.25}
+$$
+
+这给第一个下界，也可对原效应 $b/B_\rho$ 使用完全相同的实际最大值预算。若 $A\alpha_F(t)<1$，(SC128.19)和 $\max_Fb=1+\rho$ 给 $\rho\le H(1+\rho)\alpha_F(t)/(1-A\alpha_F(t))$，移项即得第二个界；若 $A\alpha_F(t)\ge1$，则 $\alpha_F(t)\ge1/A>c_\rho$，结论同样成立。
+
+取 $d_\rho>0$ 使 $B(p,d_\rho)\subset U_\rho$。由(SC128.21)可选 $0<\varepsilon\le\varepsilon_0$ 满足 $\omega_y(\varepsilon)<d_\rho$、$a_y(\varepsilon)<c_\rho$。若有原纯 $r\in B(y,\varepsilon)$，完整三球 $D_r$ 的球缘含原纯点，取其中任意一个作为 $t$。第一条模量使 $t\in U_\rho$；全标签 EB3 使 $\dim\operatorname{aff}D_t=3$；第二条使 $\alpha_F(t)<c_\rho$，与(SC128.23)矛盾。
+
+逐个 $y$ 应用得到闭包排除；紧 $L_0$ 的有限个减半开球覆盖给共同正距离。这里紧的是 $L_0$，没有假设整个 $P$ 紧。证毕。
+
+一般变维 EB 域中的133.2仍只约束满足 $\dim\operatorname{aff}D_t\le k$ 的实际返回，高维返回是133.3保留的分支。本条是在完整 E0 中用全标签 EB3 消掉该分支。全 Inj 支付源球及所用球面标签的忠实性；局部球图不能代替它。
+
+**命题 128.7（消费者的四张稳定测试接口）。** 在完整 E0 中，取消本节的约化前件，改为只另加四张预定严格源测试的下连续，仍足以得到定理128.6的纯输入排除结论。具体地，按(SC128.4)的正内部选一个允许的 $\rho$，在 $p$ 定义 $J_p=R_p^{-1}$，并取
+
+$$
+b_i^0=\frac{J_p(1,\rho v_i)}{1+\rho}\in Z_p,\qquad
+\gamma=\frac{\rho}{1+\rho}.
+\tag{SC128.26}
+$$
+
+若额外有 $\operatorname{dist}_K(b_i^0,Z_t)\to0$ 当 $t\in P,t\to p$，$i=0,1,2,3$，则仍有 $P\cap B(y,\varepsilon)=\varnothing$。
+
+证明。种子形状在此不必使用；允许的 $\rho$ 已使 $J_p(1,\rho v_i)\in N_p$，最大值公式给其 $M=1+\rho$，故(SC128.26)确属原效应。对每个邻近纯 $t$ 在紧 $Z_t$ 选逼近 $b_i^0$ 的效应。它们的源梯度趋于 $\gamma v_i$；有限个指标给共同邻域，使长度至少 $\gamma/2$、方向偏差小于 $\theta$，且实际 $M\le1$。133.2对同一个 $t$ 选出的扇区遂给 $\alpha_F(t)\ge\gamma/(2H)$；(SC128.21)及全 EB3 如上排除输入纯点。证毕。
+
+这只是充分接口，不断言它必要或与约化严格分离。定义128.2经定理128.4确实支付该接口，并额外支付完整法向运输与精确源匹配。四维张成、唯一完整确认、固定面的有限增益回缩、原 $C$ 的 niceness 或本卷126的全效应补吸收，均尚未单独证明这四张移动零测试存在；补吸收消费原有零尺而不创造它们。
+
+### 128.E 全纯标签的一阶约化支付原 WZ
+
+**定理 128.8（全标签约化到固定完整零见证的原域桥）。** 记 $\mathsf{CR}^1_P$ 为：对每个原纯 $r\in P$，整个原 $C$ 在 $r$ 分别满足定义128.2。各点可有不同邻域、约化映射及尖锥，不要求统一选择。在完整 E0 中，$\mathsf{CR}^1_P$ 推出 EXCLUSION IX118.9的原条件
+
+$$
+\begin{split}
+\mathsf{WZ}:\quad&\forall s,r\in P\ (r\in D_s)\quad\exists h\in\mathcal A_s:\\
+&\quad\forall(t_n)\subset P\ (t_n\to r)\quad\exists(f_n)\subset\mathcal E:\\
+&\qquad f_n(t_n)=0\ (\forall n),\qquad\|f_n-h\|_K\to0,
+\end{split}
+\tag{SC128.27}
+$$
+
+其中 $\|b\|_K=\max_K|b|$，且可在全部趋近序列之前固定 $h=e_s$。
+
+证明。先固定任意原边 $s,r$。由(SC128.3)，$\mathcal A_s=\{e_s\}$；$r\in D_s$ 使 $e_s(r)=0$，所以 $e_s\in N_r\cap\mathcal E$。在 $r$ 使用其自身约化，定理128.3给 $N_r=A_r^*Q_r^*$，故存在唯一 $\lambda_{s,r}\in Q_r^*$ 使 $e_s=A_r^*\lambda_{s,r}$。该乘子在趋近序列之前固定。
+
+现任取原纯列 $t_n\to r$。尾项全部落在 $r$ 的约化邻域；以下 $A_{t_n}$ 均取自这个固定的 $r$ 约化图，置
+
+$$
+c_n=A_{t_n}^*\lambda_{s,r}\in N_{t_n},\qquad
+f_n=\frac{c_n}{\max\{1,\max_Kc_n\}}\in\mathcal E\cap N_{t_n}.
+\tag{SC128.28}
+$$
+
+连续的导数给 $c_n\to e_s$，而 $\max_Kc_n\to\max_Ke_s=1$，故 $f_n\to e_s$，在 $\|\cdot\|_K$ 中亦然。每个 $c_n$ 属于整个闭 $C^*$，除法保留精确零值；最大值归一在全部原 $K$ 上给不超过一，再由齐次性给原 $[0,u]$ 预算。有限个初项置 $f_n=0$ 即可。这证明(SC128.27)的全部量词，没有把完整确认的唯一性当成 least，也未只取得读数趋零。证毕。
+
+这条桥消费所有原纯标签各自的正则性；仅在一个标签约化，只支付终点为该标签的边及定理128.6的局部结论。它不把一个受控邻域传播到全部 $P$。证明 WZ 本身也不需要先假定输入纯列实际存在；它满足每一条确有的趋近序列。
+
+**命题 128.9（同原矩阵表示的全标签光滑反向）。** 若有实线性双射 $\Phi:\operatorname{Herm}_3(\mathbb C)\to V$，$\Phi(\mathrm{PSD}_3)=C$、$u\Phi=\operatorname{Tr}$，则整个原 $C$ 在每个原纯点都光滑锥约化，特别满足 $\mathsf{CR}^1_P$。
+
+证明。先在标准模型的 $p=\operatorname{diag}(1,0,0)$ 附近取 $a>0$，写
+
+$$
+X=\begin{pmatrix}a&z^*\\z&Z\end{pmatrix},\qquad
+h(X)=Z-zz^*/a\in W=\operatorname{Herm}_2(\mathbb C),\qquad Q=\mathrm{PSD}_2.
+\tag{SC128.29}
+$$
+
+$Q$ 尖闭凸，$h$ 光滑，$h(p)=0$，$Dh(p)$ 是取右下块的满射。而
+
+$$
+X=\begin{pmatrix}1&0\\z/a&I_2\end{pmatrix}
+\begin{pmatrix}a&0\\0&h(X)\end{pmatrix}
+\begin{pmatrix}1&z^*/a\\0&I_2\end{pmatrix}
+\tag{SC128.30}
+$$
+
+是可逆合同分解，故整个邻域内 $X\succeq0$ 当且仅当 $h(X)\succeq0$。任意秩一迹一投影由酉共轭移到该 $p$，共轭运输上述约化；同原 $\Phi$ 再运输到任意原纯标签。导数满射、锥顶零和整个局部逆像都被保持。证毕。
+
+### 128.F 原始文献与本章连接的范围
+
+[Ding–Sun–Zhang][SC128DSZ]作者预印本 arXiv:1601.07418v2 第6—7页的 Definition 6要求闭凸集、基点映至零、约化锥尖闭凸、约化映射 $C^2$ 且导数满射。Lemma 8、式(15)在充分近的可行点给通常外法向的伴随导数公式及唯一乘子。该文在 Euclidean 识别中写伴随；本章保留 $W^*\to V^*$ 的类型，以正号法向写成(SC128.8)。其期刊条目为 SIAM Journal on Optimization 27(1), 67–90，DOI 10.1137/16M1058753。
+
+本章没有把该文称为已发表的 $C^1$ 定理。所需一阶充分性已由定理128.3的逆函数、切向双包含及正极论证完整证明，未调用二阶切集、sigma项或 KKT 稳定性。其他原文献沿既有章节使用，不另声称查核其原件。
+
+本章的原域条件推导（repo-derived）是：一般尖锥的真超平面维数障碍迫出全部邻近纯标签的锥顶条件；内部常数尺与限制同构给小严格子锥的共同精确提升；全纯标签分别约化又给固定完整零见证的 WZ。一般法向链、逆函数定理、Schur 补是成熟工具；法向四维、限制同构、返回定位、实际最大值预算、133.2扇区界及静态分类均为复用。局部结论允许的 $\rho$ 范围和种子较强范围明确分开；这里不作历史优先权或文献穷尽断言。
+
+### 128.G 两个完整静态候选与准确条件公理字典
+
+保留本卷126.7及 SAME_READBACK127、129、130.5的原候选。共同种子给 $w=p_1+p_2+p_3$、正定型 $B$，其尺度为 $B(p_i,p_j)=\delta_{ij}$、$B(w,x)=u(x)$。定义
+
+$$
+\begin{gathered}
+I=\left\{w/3+v:v\in\ker u,\ B(v,v)\le1/6\right\},\quad
+\mathsf{IC}_0:\ \forall q\in P_0, D_q\cap I\ne\varnothing,\\
+\mathsf{PC1}:\ \forall q\in P\ \exists i:\Delta_i(q)=0,\qquad
+\Delta_i(q)=a_ja_k-|z_{jk}|^2,\quad a_i=e_i(q),\quad\{i,j,k\}=\{1,2,3\}.
+\end{gathered}
+\tag{SC128.31}
+$$
+
+$I$ 是同一个固定八维内球；$1/6$ 是仿射中心 $w/3$ 下的半径平方。$P_0=P$ 已付。点态接触等价于该点三个 $\Delta_i$ 全零，是点态PC3；点态PC1只要求其中一个零。全原PC1到全原PC3的升级使用全部原纯标签，不能缩成孤立标签的一次接触。
+
+另一个完整静态候选直接作用于(SC128.1)的整个原二元零图。取 EB3，加上
+
+$$
+\mathsf D_2:\quad\forall p,q\in P:\quad
+p\perp q\ \lor\ \exists r\in P:\ p\perp r\ \land\ q\perp r.
+\tag{SC128.32}
+$$
+
+存在量词中的 $r$ 是同一个原纯点，两条边各有原全域效应见证。因 $p\not\perp p$，且球缘给共同邻点，$q=p$ 的量词也成立；该条件正是原简单零图直径至多二，即每对不同且不相邻的纯点有共同邻点。它不预付指定相邻对的共同邻点，也不预付一台共同仪器。
+
+**定理 128.10（全标签正则性桥与两步候选的同原闭合）。** 在固定完整 $\mathsf E_0$ 内，下列条件等价：$\mathsf{CR}^1_P$；原 WZ；原边开放(O)；$\mathsf{NC}:\inf_{p\in P}\operatorname{diam}D_p>0$；$\mathsf D_2$；IC0；全原PC1；全原PC3；全部完整原球满宽；原状态谱性；同原锥同单位的完整静态复三能级表示。$\mathsf{CR}^1_P$ 亦可换成全纯标签的 $C^2$ 或光滑约化。
+
+此外，在只固定(SC128.1)有限维完整原域的模型类上，$\mathrm{EB3}+\mathsf D_2$ 本身与同原锥同单位的完整静态复三能级表示等价；这是 EXCLUSION X130.3的已付候选，不需要额外输入 $\mathsf E_0$ 的种子结构。
+
+证明。定理128.8给 $\mathsf{CR}^1_P\Rightarrow\mathsf{WZ}$。当前 E0 含 EB3+Inj，故 EXCLUSION IX118.11、118.13及118.8的准确前件全部满足；直接复用它们给 WZ、(O)、NC及同原静态表示的等价，同时取得 $P$ 紧、完整球的 Hausdorff 连续及原关系开放。反向由命题128.9的光滑约化支付；光滑蕴涵 $C^2$，$C^2$ 蕴涵 $C^1$，闭合这三种全标签版本。
+
+IC0、全原PC1、全原PC3、全宽及状态谱性与同原静态表示的等价，直接消费 SAME_READBACK127.11、129.8、130.5及本卷121.7、126.7。本卷125接入的整个边界最低三次条件保持其既有等价；W下秩三EJA、G、全Pair、数值互易、自对偶及谱性直接取 EXCLUSION VIII113.7—113.9，不另作分类。
+
+对两步候选，只调用已经成立的 EXCLUSION X130.2—130.3：在完整 EB$_{\ge2}$ 域，固定点 $p$ 的两步覆盖迫出实际有限三元提升
+
+$$
+\exists q,r\in P:\quad p\perp q,\quad p\perp r,\quad q\perp r.
+\tag{SC128.33}
+$$
+
+该结论使用完整球的连通纯边界；本章不重证其拓扑论证。在 EB3 中全 $\mathsf D_2$ 给每点真实三角，再由 IX120.4—120.5的三角、宽度及既有分类取得同原完整静态表示。三条边并未在提升时被合成为共同仪器；分类后才取得每条指定边的唯一第三点和三结果共同效应。反向及全部 $p,q$ 的量词由 X130.3的原标准模型计算支付，包括相同端点，并由同一个表示运输回原域。故 $\mathrm{EB3}+\mathsf D_2$ 与表示等价；限制到固定 E0 后，它也与上述所有条件等价。证毕。
+
+这里(O)使用原纯标签的相对拓扑，准确地说：对每条原边 $(p,q)$ 和每个 $p_n\in P,p_n\to p$，存在 $q_n\in P\cap D_{p_n}$ 使 $q_n\to q$。它不是仅在一个种子上的连续性。定理128.10没有把一处正则性提升为全标签正则性。
+
+两个候选的输入不同：固定 E0+IC0保留已选实际种子和全部压缩合同；完整 EB3+$\mathsf D_2$ 只输入完整排除球及原零图的两步覆盖。它们在固定 E0 中通过已有表示等价，但句法缩短不证明独立性、严格强弱或物理公理最小。一般 E0尚未被证明自动给 $\mathsf{CR}^1_P$、WZ、$\mathsf D_2$ 或PC1／IC0，也未在这里产生完整同域反模型。X130保留的 $\mathrm{EB3}+\mathrm{PR}\stackrel{?}{\Rightarrow}\mathsf D_2$ 同样开放，PR指所有原纯对的 $\mathcal T_p(q)=\mathcal T_q(p)$；本章没有用两步候选反向支付这些未决蕴含。
+
+在上述等价条件成立后，才有同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\quad
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr},\quad
+\Phi(I_3)=w,\quad B(\Phi X,\Phi Y)=\operatorname{Tr}(XY).
+\tag{SC128.34}
+$$
+
+后两项是固定 E0 中同一种子的相容字典；裸 EB3+$\mathsf D_2$ 的候选不需先给 $B,w$。全部静态对应复用本卷126.7、SAME_READBACK127.9及 X130.3：
+
+| 通常静态量子对象 | 同一原实现内的全部对象及准确对应 |
+| --- | --- |
+| 复三维Hilbert纯射线 | $p_z=\Phi(zz^*/(z^*z))$，$z\ne0$，恰覆盖全部 $P\cong\mathbb{CP}^2$ |
+| 混态、质量与混合 | 全部 $K$ 是迹一PSD像；整个 $C$ 包括零、全部非负质量及有限非负组合 |
+| 原单位、效应与Born概率 | 整个 $\mathcal E$ 恰为全部 $0\preceq A\preceq I_3$，$f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$，保持零、单位、补及全部混态评价 |
+| 全确认、least与最低定义 | 对单位 $z$，全确认是 $zz^*\oplus A_\perp$、$0\preceq A_\perp\preceq I_{z^\perp}$；least为 $zz^*$，$\mathcal T_{p_z}(\Phi\rho)=z^*\rho z$ |
+| 整个排除球与原正交 | $D_{p_z}$ 为 $z^\perp$ 上全部密度矩阵；纯比较为归一复内积模方，原正交为复正交 |
+| 完备框架与数学有限测量 | 每条原正交纯边有唯一第三点，三秩一效应和为 $u$；全部有限原效应族和为 $u$ 恰对应全部有限POVM |
+| 谱、实可观测量与Jordan结构 | 全态有允许零权及重复谱的三项正交谱分解；全部实线性可观测量对应Hermitian矩阵，Jordan积由 $(XY+YX)/2$ 运输 |
+| 共同中心、球心与数学滤子 | 中心为 $w/3$，原排除球中心为 $(w-p)/2$、$B$ 半径平方为 $1/2$；原规范 $T_i$ 是同一表示中的角压缩 |
+
+同一个 $\Phi$ 运输全部对象和全域范数；不能为不同方向改换表示。单点约化、局部纯输入排除、四维线性张成都不提前支付 least、Born全域公式或整个原锥自对偶。
+
+### 128.H SECTION127.10及全部继承物理合同
+
+这里的 SAME_READBACK SECTION127.10 是第127.10节，不是定理127.10。完整继承本卷126.7所保留的该节及全部传递引用：到同卷125.11、124.9、123.13，再到 EXCLUSION VIII命题113.11及112.9、EXCLUSION IX120.11、[THREE_COPY VII][SC128TCVII]121.12与122.14，并继续到 [INTRINSIC_POLAR VI][SC128PolarVI]定义89.7、全部两尺度式(89.13)、89.8—89.10、V88.6与87章、[原生续卷VII][SC128NativeVII]和III的来源、过程、全未来及动态合同。每一引用取整个原文前件、原对象、作用域与量词；操作／来源的 INTRINSIC_POLAR VI 与整球 BILATERAL VI 不混同。
+
+共同来源及原装饰元组 $\mathcal O$ 不变：全部中点实现、概率像紧性、全测试表及闭性、零／单位／补／有界倍增、重复标签与每种同中点实现，全部非负质量及零／次归一／不等质量，过程与参考各自完整的相关联合输入域均保留。原 $L,p,\omega,K,M$、两次使用同一读回、两实张成、全实关系、完整(83.8)、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$、精确PRE后的整个H13及每个原资格态、活跃块严格负方向、共享总迹一、非活跃零质量和空活跃集均保持原定义；操作映射 $p$ 不与原纯标签混型。
+
+设备／事件／来源绑定、全部菜单分支、实际参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、全部合法未来与每个中间切口，连同原生与细化消费者、terminal futures、联合有符号关系、细标签粗归组、记录后条件未来、source-adoption及资源合同均不删减。局部静态法向几何不产生这些实际来源。
+
+对每个有限 $N\ge1$，仍须供应实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$ 和完整原效应区间。每个实际分块 $a+b=N$ 仍须有
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+\tag{SC128.37}
+$$
+
+同一产品配对、严格张量单位、全部原因子置换及逆的正性、规范重括号和指定运输下不连续位置分块不变。完整实际二份比较 $S_2$ 仍量化任意产品或纠缠纯点 $p,q_\ell\in P_2$、任意有限族、全部非负权及零权、重复标签，要求
+
+$$
+\mathcal T_p^{(2)}\!\left(\sum_\ell t_\ell q_\ell\right)
+=\sum_\ell t_\ell\mathcal T_{q_\ell}^{(2)}(p),\qquad
+\mathcal T_p^{(2)}(x)=
+\inf_{\substack{f\in[0,u_2]_{C_2^*}\\f(p)=1}}f(x),
+\quad\sum_\ell t_\ell=1.
+\tag{SC128.38}
+$$
+
+仅产品态比较不能支付该合同。原低二份 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥、唯一实际自复合 $(W_1,W_1,W_2)$ 的直和扇区限制与秩和实维乘法的复型选择、同一实际两因子的产品正规形，仍是既有全有限层级分别使用的三项供应。
+
+非经典支路 $\mathsf F_{\max}$ 仍要求同一最大复块 $n_r=L\ge2$、同一含相位正交基，且
+
+$$
+g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r,
+\quad \Delta_r=|g_r\rangle\langle g_r|\in C_3,
+\quad u_3(\Delta_r)=L.
+\tag{SC128.39}
+$$
+
+其余扇区零，归一原源为 $\Delta_r/L$，不预付三份纯性或实际制备；全经典 $L=1$ 支路按原定理免除此资源。单体条件复三能级支路为 $L=3$，二、三份秩为九、二十七，不再要求高阶整个排除集满足单体EB3。仅在全部联合前件和三项供应齐备以后才调用既有全有限层级结论；写出矩阵不供应实际三份正性资源。
+
+数学全旁观正性仍量化每个 $b\ge0$ 以及任意含纠缠的同一共同输入，要求
+
+$$
+(\operatorname{id}_{W_b}\otimes F)(C_{b+m})\subseteq C_{b+n}.
+\tag{SC128.40}
+$$
+
+全有限层级及共同表示已供应后，才沿原Choi桥识别通常CP、矩形跨扇区Kraus及逐输入TP／TNI预算。同一实际事件还需完整提升、实际探针及相容核；全部数学CP-TNI分支实际可用仍需事件饱和选择。同族仪器保留共同输入预算、接线、记录、粗粒化和校准。仅严格正质量分支作条件归一，零质量分支不强定归一条件态；Lüders更新另需同一分支的锐效应、接受态中性和输出校准。数学POVM、三张效应和为单位与可执行同族仪器仍有各自合同。
+
+原钟、实际动态来源、连续齐次可逆时间群及单位仍须另外供应。另给同载体上的全实时间连续线性群 $A_t$、$A_0=I$、$A_{s+t}=A_sA_t$、$A_t(C)=C$、$uA_t=u$，才有该额外供应的有限维生成元；重构复块再给保迹酉时间族后，才写
+
+$$
+U_t=\exp(-\mathrm itH/\hbar),\qquad
+\rho_t=U_t\rho U_t^*,\qquad
+\mathcal L(\rho)=-\mathrm i[H,\rho]/\hbar,\qquad H=H^*.
+\tag{SC128.41}
+$$
+
+量词仍覆盖该时间族的全部原输入和全部实际时间。$H$ 的标量平移不改变态作用，时间重标改变生成元尺度而不改变静态几何；实际Hamiltonian、能量识别及标定、数值 $\hbar$、时空和物理空间维数均未由局部锥约化或静态 IC0 条件表示选出。
+
+### 128.I 完整几何图景与仍缺的自动性
+
+每个原纯标签的完整零法向锥都有四维张成；限制到它背后的整颗三球后，常数和三个方向可以唯一反解。这里的正尺库却可能只占球上非负函数锥的一部分。已付的另一项关键信息是：恒为一的尺在这个正尺库的内部，所以所有方向中，只要斜率共同缩得足够小，整片严格正函数就已在库内。种子处正尺库恰好是全部非负函数，因而保留每个 $\rho<1$ 的较强范围。
+
+整个原锥的一阶约化把附近实体写成同一固定尖锥的逆像。基点的法向张成先把约化空间固定为四维。附近纯标签若映到非零点，它的法向就只能藏在一个至多三维的超平面中；这与每个纯标签都必须有四维完整法向冲突。因此附近纯标签全都映到锥顶，同一个连续变化的伴随导数能够携带整个正零法向锥。这不需要猜测任意标签的锥长成 Lorentz 形状。
+
+反解限制映射后，全部允许的小斜率源函数可以在同一个邻近纯标签上准确读回，又在该标签精确读零，并有对所有方向共同的原效应预算。若纯输入趋近源球内点，已付定位迫使所有实际返回靠近受控标签；133.2却要求同一个低维返回上的至少一个预定方向越来越平。共同正提升给那个方向固定正对比，实际 $\max_K b$ 预算使两者矛盾。全标签 EB3保证返回维数仍是三，因此源球内点附近没有原纯输入。源收缩估计只约束确有的返回，并未凭空产生输入纯列。
+
+若每个原纯标签分别有这种一阶约化，就能处理每条原边：先固定完整确认 $e_s$，在边的另一端运输它，保持精确零值，再按整个原紧基的真实最大值放回 $[0,u]$。这正好支付全原 WZ的固定见证和全部序列量词，随后已有重构定理给PC1、IC0及完整静态复三能级；标准矩阵锥在所有纯点的 Schur 补又支付反向。新桥是全标签正则性到原零见证稳定，不是重新证明量子分类。
+
+零图的另一条已付路线更直接：完整三球加两步覆盖，经 X130的连通边界论证给每个纯点一个真实三角，再由 IX120的宽度与分类接到同一静态字典。两步覆盖不假定指定边已有第三点，三条真实边也不先被当成一台仪器。这条候选与固定 E0+IC0在 E0域内等价，而原 E0为何自动具备两步覆盖、全标签约化或IC0，仍是未证明的自动性。这些等价写法不构成独立公理数减少的证明；完整来源、全部有限复合、纠缠资源、实际事件仪器、记录及合法未来、原钟和Hamiltonian／能量／数值 $\hbar$ 继续逐项承担128.H的原合同。
+
+[SC128SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "127.1—127.4a：完整原入口与种子完整法向；127.11、129、130.5：PC1／IC0及状态谱性条件链；SECTION127.10：全部传递物理合同。"
+[SC128IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "118.9—118.13：原WZ及其准确量词、归一和条件重构；119：原C有限增益正回缩及最大值；120.4—120.5：三角、宽度与既有分类；120.7—120.8：全标签限制同构与内部常数尺。"
+[SC128X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X130.2—130.3：固定点两步覆盖迫实际三角，完整EB3+D2与同原锥同单位复三能级静态表示；X130.4：自动两步覆盖及全部物理合同边界。"
+[SC128EVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "113.7—113.9：W下秩三EJA、G、Pair与谱性；112.9及113.11：完整继承合同。"
+[SC128LP]: QUANTUM_ORIGIN_LOCAL_PURE_LIMIT_AND_COMMON_POSITIVE_LIFTS_CONTINUATION.md "132.2：移动正零泛函预算；132.3：单标签球内点的整个原回返定位；132.4及132.5：已付条件障碍与未付纯极限存在性；133.1—133.3：实际返回、M(b)=max_K b、低维扇区界及高维分支。"
+[SC128TCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "121.12与122.14：同一来源、全部有限层级、事件仪器、记录及连续时间的完整合同。"
+[SC128PolarVI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "定义89.7、全部式(89.13)、89.8—89.10及其全部传递引用：同一原装饰元组、质量、两尺度、原生与细化、全原字和terminal futures、记录后条件未来及来源消费者。"
+[SC128NativeVII]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md "INTRINSIC_POLAR VI89.9—89.10所引原生与细化路线，连同III150.4、III174—175及其完整原合同；来源和source-adoption不由局部静态几何代付。"
+[SC128DSZ]: https://arxiv.org/pdf/1601.07418v2 "Chao Ding, Defeng Sun, Liwei Zhang, Characterization of the Robust Isolated Calmness for a Class of Conic Programming Problems，Definition 6、Lemma 8、式(15)；期刊DOI 10.1137/16M1058753。"
+
+## 追加锚（本行以下为增补区）
