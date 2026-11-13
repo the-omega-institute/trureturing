@@ -2052,3 +2052,314 @@ eliminates their hypotheses; Proposition 9.1 and the distinctions of
 §11 continue to apply. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Native version chains as an epoch-label factor
+
+**本批导航。** This increment adds §17's native-chain decoder, §18's
+timing ambiguity and conditional necessity result, and §19's exact record
+and resource account. It does not alter the preceding frontier reduction;
+it makes its epoch-label boundary explicit.
+
+**Definition 17.1 (the replayable epoch backing).** Fix one enrolled seed
+header $h$ in either entrance of Definition 1.2 or Definition 1.3. At the
+epoch, $h$ binds an actual one-atom root reference $r_h$ and a cut. Let
+$v_0$ be the immutable initial version token for that epoch and let
+
+$$
+V_h=(v_0,v_1,\ldots,v_n)
+$$
+
+be the retained predecessor chain of the same actual source at a returned
+cut. Each successful post-epoch token records its predecessor, its actual
+edited operand reference and its event kind $P$ or $S$, as in Definition
+5.2. Queries, refusals, and source-only reads do not add a token. Current
+source Tag/arity, the root binding, the header binding and the version
+chain are read under their existing source rights; no numerical reference
+cast or boundary-to-header inverse is added.
+
+The root binding is the retained logical component identity of
+Definitions 5.2–5.4: after $P$ or $S$, the source entry for that component
+still names the same root binding while its descendants and arity fields
+change. Token operand references are compared with this binding using the
+same acquired reference-equality primitive as the existing service.
+
+Let $E_h(V_h)$ be the chronological subsequence of successful tokens whose
+edited operand is the actual root reference $r_h$. The chronological order
+is obtained by following predecessor links to $v_0$ and reversing the
+finite result. Define the derived epoch value
+
+$$
+\operatorname{Epoch}^{\mathrm{chain}}_h=
+\begin{cases}
+\operatorname{Tag}(r_h),&E_h(V_h)=\varnothing,\\
+\alpha,&\text{the first token of }E_h(V_h)\text{ has kind }P,\\
+\beta,&\text{the first token of }E_h(V_h)\text{ has kind }S.
+\end{cases}
+\tag{V.17}
+$$
+
+The first case reads the current tag of the still-atomic root. The second
+and third cases use the actual guarded native operation: $P$ is enabled at
+an alpha leaf and $S$ is enabled at a beta leaf. If the root is a branch,
+the finite entrance and the bilateral entrance both guarantee that
+$E_h(V_h)$ is nonempty, because each epoch seed was one atom and there is
+no unrecorded writer. A malformed record chain is a refusal, not an
+invented label.
+
+This is a representation predicate, not an assertion that every source
+contract exposes the chain to an observer. A seed is called chain-readable
+only when all of the backing in this definition, including the initial
+token, is available under the actual current rights.
+
+**Lemma 17.2 (first root event determines the old tag).** On every lawful
+finite execution satisfying Definition 17.1,
+
+$$
+\operatorname{Epoch}^{\mathrm{chain}}_h
+=\operatorname{Epoch}_h,
+\tag{V.18}
+$$
+
+where the right side is the protected value that the original ReadEpoch
+would return.
+
+**Proof.** At the epoch the root named by $h$ is an atom. If no post-epoch
+event edits that root, no descendant can be edited either, since a
+descendant does not exist before the first root split. The root therefore
+remains the same atom and its current Tag is its epoch tag.
+
+Otherwise take the first post-epoch event at that root. The native guard
+for $P$ accepts only an alpha leaf, so the root's epoch tag was alpha. The
+native guard for $S$ accepts only a beta leaf, so the root's epoch tag was
+beta. Later events cannot change this first-event conclusion. The token
+chain contains every successful post-epoch root event and no query or
+refusal, so the event selected in (V.17) is exactly this first event.
+Both directions use the actual root reference and not a path that might
+have changed after a split. Hence (V.18) holds. $\square$
+
+**Theorem 17.3 (same-service replacement by native chain decoding).**
+Consider the direct installation of Definitions 5.1–6.2 with its
+protected epoch-label field, and a derived installation that omits an
+independent copy of that field for every chain-readable seed but retains
+the same source, headers, initial token, complete version chain, old
+samples, tapes, records, rights, pending phases and output backing. In a
+finite serialized schedule satisfying the existing reservation,
+quiescence and progress conditions, replace ReadEpoch by the finite
+procedure computing (V.17). The two installations have identical:
+
+1. epoch values, header identities and epoch acquisition version $v_0$;
+2. enabled, refused, denied, endpoint and wrong-phase behavior;
+3. original and current operand replies, old typed samples, version
+   checks, Next choices and source successors; and
+4. Print, End, local acknowledgement, Return and scratch-clear behavior.
+
+This holds for the finite known-alpha entrance and for every bilateral
+component whose seed root is an admitted one-atom entrance. It does not
+require a global order on bilateral preparations.
+
+**Proof.** Follow the predecessor links to $v_0$, retain the finite list
+of token kinds and operand references, and compare each reference with
+$r_h$. The procedure terminates because the returned execution has a
+finite post-epoch chain. Lemma 17.2 gives the same epoch value as the
+protected field; the initial token and header binding are returned
+unchanged. The version chain itself is never modified by this read.
+
+Every other request sees the same source vertices, ancestral tapes,
+records, current-token field, grants and old samples. Thus its guards,
+operand paths, native edits, version publication and original seven
+requests are the same. In particular, an internal Next call consumes the
+same retained history and descends to the same current leaf. The decoder's
+token reads are source-only reads; under V11.3 they need not become a new
+immutable observation sample. If a particular contract records every such
+read as an observation, those records are retained and charged rather than
+silently discarded. The finite output, ACK, Return and clearing phases
+are then exactly those of Theorems 7.2 and 14.4. Induction over completed
+requests proves equality for every finite schedule. The proof is local to
+each seed header, so independent bilateral preparation order is unused.
+$\square$
+
+**Proposition 17.4 (the exact positive coordinate).** Let $R$ be the set
+of chain-readable seeds whose epoch value is not already the payload of a
+mandatory immutable old-sample record. A direct installation and the
+derived installation differ by exactly one independent conditional epoch
+value for each $h\in R$:
+
+$$
+\Delta K_{\mathrm{independent\ epoch\ payload}}=-|R|\text{ bits},
+\tag{V.19}
+$$
+
+with zero difference when $R=\varnothing$. The source vertices, ancestral
+tapes, seed headers, version tokens, predecessor links, event fields,
+old samples, references, rights, output records and cleared capacity are
+common retained material. The derived installation adds the paid decoder
+work: if $q_h$ predecessor tokens are inspected for seed $h$, its chain
+read uses $q_h$ token/reference tests, one current Tag read only in the
+empty-event case, finite reversal or an equivalent backed scan, and the
+ordinary request/output/ACK fields. Repeated ReadEpoch calls repeat this
+work unless a new retained cache is allocated.
+
+Equation (V.19) is therefore a conditional representation saving, not a
+total bit, time, energy or Pareto claim. V1.2 and V5.1 permit the actual
+enrollment Tag and its protected label to be one shared immutable payload;
+when they are shared, that payload is in the mandatory-sample set and the
+correct value of (V.19) is zero. No duplicate enrollment record is inserted
+merely to make the subtraction positive. Conversely, an existing direct
+installation is not physically shortened by this correspondence: its
+label field, old samples, cleared buffers and references remain allocated
+without an explicit reclamation right, exactly as in Proposition 15.5.
+
+## 18. Timing ambiguity and a sharp conditional necessity
+
+**Definition 18.1 (the chain-omitting observation).** For a seed root,
+write $B_h^{-}$ for the retained current source/root/header binding,
+ancestral tapes and ordinary non-version records after deleting both the
+protected epoch distinction and the post-epoch version-chain/epoch-
+checkpoint distinction. The current-token handle, if present, is opaque
+and carries no predecessor or epoch relation in this interface. $B_h^{-}$
+may still contain the current Tag and all source fields. It is a
+diagnostic interface, not the full service contract of Theorem 17.3.
+
+**Proposition 18.2 (lawful pre-epoch/post-epoch collision).** There are
+two lawful finite known-alpha executions with the same $B_h^{-}$ and
+different ReadEpoch answers. Start with a known alpha root and one actual
+$P$ at that root. In execution $A$, choose the epoch before $P$ and make
+$P$ the first post-epoch event. In execution $B$, perform the same $P$
+before choosing the epoch, and choose the resulting beta root as the
+epoch. At the returned cut both executions have the same current unary
+source root, source/tape fields, root and header references, current Tag,
+boundary incidences, current rights and ordinary records. Their epoch
+answers are respectively alpha and beta. Their distinction is precisely
+whether the $P$ token is after the epoch token.
+
+The same construction can be made independently in each finite seed
+component of a bilateral entrance. The absence of a global preparation
+order makes the componentwise product lawful; it does not identify the
+two local epoch placements.
+
+**Proof.** A known alpha root admits $P$, and native vertices and tapes are
+retained rather than deleted. Moving the epoch cut across that one
+successful event changes no current source field, tape cell, reference,
+boundary or right. It changes only the event's relation to the initial
+epoch token, which $B_h^{-}$ omits. In $A$, the epoch atom was alpha; in
+$B$, the epoch atom is the beta unary marker. ReadEpoch therefore returns
+different values. The bilateral construction uses independent one-atom
+seed roots and the permitted local preparations; no cross-component
+chronology is introduced. $\square$
+
+**Theorem 18.3 (conditional necessity of a retained epoch distinction).
+** Any deterministic observer that must implement ReadEpoch on the
+collision family of Proposition 18.2 must retain or acquire a distinction
+that separates the two epoch placements. If the post-epoch chain is not
+available and no old immutable Tag sample is retained, current source
+Tag, brackets, boundaries, ordinary tapes and current rights alone are
+insufficient. For $m$ independent collision components with no shared
+timing record, the conditional observation image has at least $2^m$
+states and therefore needs at least $m$ conditional bits in any binary
+encoding.
+
+This is a lower bound on the explicitly omitted interface. It is not a
+universal physical lower bound for the richer source-plus-chain interface,
+and it does not count a shared source record twice.
+
+**Proof.** Proposition 18.2 gives two sources with identical $B_h^{-}$
+but different required outputs, so a single-valued decoder on $B_h^{-}$
+cannot implement ReadEpoch. For $m$ independent components, choose the
+pre-epoch or post-epoch placement independently. The common visible
+fields remain fixed while the required epoch vector ranges over
+$\{\alpha,\beta\}^m$. A binary retained state with fewer than $2^m$
+values identifies two vectors and returns the same output for them, which
+fails one component. Thus its conditional content is at least
+$\lceil\log_2 2^m\rceil=m$ bits. A shared version chain or an equivalent
+checkpoint is outside $B_h^{-}$ and can carry this distinction once for
+the actual source; the bound must not be charged again to each reference.
+$\square$
+
+**Corollary 18.4 (what the native chain actually replaces).** Under the
+full AAV contract, the chain is the needed retained timing distinction,
+and Theorem 17.3 may replace an independently duplicated epoch payload by
+paid access to that chain. Under a contract that exposes neither the chain
+nor a mandatory old Tag sample, the one-bit-per-independent-component
+distinction of Theorem 18.3 remains necessary. A current Tag read is
+enough only when no post-epoch root event occurred; it cannot identify
+which side of the epoch cut a retained root event occupies.
+
+This separates three cases that have different physical accounts: a
+shared mandatory sample, an independently stored label, and a retained
+native timing chain. They must not be collapsed into a single $L$-bit
+claim.
+
+## 19. Record accounting, source subtraction and boundaries
+
+**Proposition 19.1 (complete resource comparison for chain decoding).**
+For each decoded seed, charge separately:
+
+| Coordinate | Direct protected-label installation | Native-chain installation |
+| --- | --- | --- |
+| Conditional value payload | One protected epoch value unless it is the mandatory old sample | Omitted only for the set $R$ of Proposition 17.4 |
+| Source and tapes | Same actual source vertices, root bindings and ancestral tapes | Same |
+| Epoch/version backing | Seed header, label field, initial token and all version tokens | Seed header, initial token and all version tokens; no label field for $R$ |
+| Identity and widths | Actual header/root/reference fields and widths | The same fields, plus every chain reference comparison |
+| Access work | Protected-record read | Predecessor traversal, operand-reference tests, event-kind read and current Tag read when needed |
+| Records and samples | All immutable old samples and their versions | The same records; decoder reads are unrecorded only where V11.3 permits |
+| Scratch and capacity | Existing parser, counters, output and cleared capacity | Finite chain scan/reversal scratch and the same parser, counters, output and cleared capacity |
+| Rights and continuation | Existing source/record rights, phases, Print/End/ACK/Return | The same rights, phases, Print/End/ACK/Return |
+
+The chain scan has finite work bounded by the number of retained tokens
+from the returned current token back to $v_0$; a per-seed scan may inspect
+tokens belonging to other components. A shared one-pass index could reduce
+that work only by retaining another index, whose fields and references
+must be charged. No coordinate in this table is silently converted into a
+uniform constant-width physical cost.
+
+**Proof.** Theorem 17.3 preserves every consumer and every retained
+record. The only omitted field is the independent label in $R$; every
+other difference is an actual read, comparison, counter or temporary
+binding used by (V.17). Proposition 17.2 supplies termination and exact
+value. The mandatory old-sample case keeps its payload in both columns,
+so no duplicated value is subtracted. $\square$
+
+**Definition 19.2 (supplier subtraction and literature scope).** AA
+§§17–23 and AA19.2 supply the actual source grammar, full ancestral
+history, retained records and native request/Next service. AAV §§1–12
+and §§13–16 supply the epoch headers, one-bit protected labels, source
+version chain, ReadEpoch interface, source rights, finite schedules and
+frontier reduction. AA20.2 and AA21.1 supply request/output scratch
+reuse, the semantic service boundary and the absence of a request
+archive; V11.3 supplies the permitted unrecorded source-only query.
+Those results are reused with their exact scopes. The new deductions are
+the first-root-event factor (V.17)–(V.18), the two actual epoch-placement
+witnesses, and their same-service/resource consequences.
+
+Driscoll, Sarnak, Sleator and Tarjan, *Making Data Structures Persistent*,
+JCSS 38 (1989), §2.1, is `literature-attested` for retaining operations
+and rebuilding a version. Bille and Gørtz, *Random Access in Persistent
+Strings*, ISAAC 2020, Article 48, is `literature-attested` for indexed
+access to a supplied version tree. Neither source supplies this native
+root-reference guard, the epoch-placement witness, the actual rights, or
+the paid record account; no persistence bit bound is imported from them.
+
+**Proposition 19.3 (settled boundary).** The native chain result leaves
+the following obligations open: a total or Pareto optimum over payload,
+references, source/tape material, access work, scratch and energy; a
+physical reclamation of an already allocated label; an epoch decoder while
+the source is concurrently changing; and recovery of a bilateral global
+preparation order that the source never supplied. It also does not turn a
+source-only query into an immutable old sample, or erase one when V14.1
+requires it.
+
+**Proof.** The positive replacement is finite and serialized by Theorem
+17.3, while Proposition 19.1 retains every stated material and work
+coordinate. Proposition 18.2 shows why dropping both the chain and the
+protected distinction fails. The existing nonquiescent and physical-cost
+boundaries therefore remain unchanged. $\square$
+
+**本批不主张的。** This append does not claim a universal $L$-bit saving,
+global minimality, a new history inverse, a complete bilateral
+preparation chronology, Lean verification, digestion coverage, physical
+time calibration, retroactive deallocation, or completion of the enduring
+minimal common relational-structure goal. It records a conditional native
+chain factor and a sharp obstruction for the interface that omits that
+factor.
+
+## 追加锚（本行以下为增补区）
