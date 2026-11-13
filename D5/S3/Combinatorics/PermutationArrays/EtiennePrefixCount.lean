@@ -113,7 +113,7 @@ private theorem block_extract {n : ℕ} (M : Matrix n)
   change rank (M i) < 3 ↔ i.val < (extractCuts M).r at h3
   fin_cases j <;> cases h0 : M i 0 <;> cases h4 : M i 1 <;>
     simp only [rank, h0, h4, Bool.toNat_false, Bool.toNat_true] at h1 h2 h3 <;>
-    simp_all [blockMatrix] <;> omega
+    simp_all [blockMatrix]
 
 /-- Every four-block matrix has the required weak row order. -/
 private theorem block_sorted {n : ℕ} (u : Cuts n) :
@@ -125,9 +125,7 @@ private theorem block_sorted {n : ℕ} (u : Cuts n) :
   by_cases hpi : u.p ≤ i.val <;> by_cases hqi : u.q ≤ i.val <;>
     by_cases hri : u.r ≤ i.val <;> by_cases hpj : u.p ≤ j.val <;>
     by_cases hqj : u.q ≤ j.val <;> by_cases hrj : u.r ≤ j.val <;>
-    simp [rank, blockMatrix, hpi, hqi, hri, hpj, hqj, hrj,
-      show (i.val < u.q) ↔ ¬ u.q ≤ i.val from Nat.lt_iff_not_ge,
-      show (j.val < u.q) ↔ ¬ u.q ≤ j.val from Nat.lt_iff_not_ge] <;> omega
+    simp [rank, blockMatrix, ← Nat.not_le, hpi, hqi, hri, hpj, hqj, hrj] <;> omega
 
 /-- The first unequal columns have row 01 exactly when its block is nonempty. -/
 private theorem columns_block_iff {n : ℕ} (u : Cuts n) :
@@ -272,5 +270,84 @@ private theorem assemble_bijective (n : ℕ) : Function.Bijective (assemble n) :
 
 private noncomputable def arrayEquiv (n : ℕ) : Arrays n ≃ ValidCuts n :=
   (Equiv.ofBijective (assemble n) (assemble_bijective n)).symm
+
+/-- Here t=C+D, d=D and the last coordinate is A-d. The extra endpoint occurs only at d=t. -/
+private abbrev Parameters (n : ℕ) :=
+  (t : Fin (n / 2 + 1)) × (d : Fin (t.val + 1)) ×
+    Fin (n - t.val - d.val + if d.val = t.val then 1 else 0)
+
+private def paramsToCuts (n : ℕ) (z : Parameters n) : ValidCuts n := by
+  obtain ⟨t, d, x⟩ := z
+  have ht := t.isLt
+  have hd := d.isLt
+  have hx := x.isLt
+  have hpq : d.val + x.val ≤ n - t.val := by split_ifs at hx <;> omega
+  have hqr : n - t.val ≤ n - d.val := by omega
+  have hrn : n - d.val ≤ n := by omega
+  refine ⟨⟨d.val + x.val, n - t.val, n - d.val, hpq, hqr, hrn⟩, ?_, ?_, ?_⟩
+  · change d.val + x.val < n - t.val ∨ n - t.val = n - d.val
+    split_ifs at hx <;> omega
+  · change n - (n - t.val) ≤ n - t.val
+    omega
+  · change n - (n - d.val) ≤ d.val + x.val
+    omega
+
+private def cutsToParams (n : ℕ) (u : ValidCuts n) : Parameters n := by
+  let t := n - u.1.q
+  let d := n - u.1.r
+  have hpq := u.1.pq
+  have hqr := u.1.qr
+  have hrn := u.1.rn
+  have hc := u.2.1
+  have hq := u.2.2.1
+  have hp := u.2.2.2
+  refine ⟨⟨t, by dsimp [t]; omega⟩, ⟨d, by dsimp [d, t]; omega⟩,
+    ⟨u.1.p - d, ?_⟩⟩
+  dsimp [d, t]
+  split_ifs <;> omega
+
+/-- The interval parameterization retains its strict endpoint and its sole extra inclusive endpoint. -/
+private def parameterEquiv (n : ℕ) : ValidCuts n ≃ Parameters n where
+  toFun := cutsToParams n
+  invFun := paramsToCuts n
+  left_inv := by
+    intro u
+    apply Subtype.ext
+    have hpq := u.1.pq
+    have hqr := u.1.qr
+    have hrn := u.1.rn
+    have hp := u.2.2.2
+    have hq := u.2.2.1
+    have hp' : (paramsToCuts n (cutsToParams n u)).1.p = u.1.p := by
+      change (n - u.1.r) + (u.1.p - (n - u.1.r)) = u.1.p
+      omega
+    have hq' : (paramsToCuts n (cutsToParams n u)).1.q = u.1.q := by
+      change n - (n - u.1.q) = u.1.q
+      omega
+    have hr' : (paramsToCuts n (cutsToParams n u)).1.r = u.1.r := by
+      change n - (n - u.1.r) = u.1.r
+      omega
+    generalize hv : (paramsToCuts n (cutsToParams n u)).val = v at hp' hq' hr' ⊢
+    obtain ⟨p, q, r, hpqv, hqrv, hrnv⟩ := v
+    obtain ⟨⟨p', q', r', hpqu, hqru, hrnu⟩, hu⟩ := u
+    simp_all
+  right_inv := by
+    rintro ⟨t, d, x⟩
+    have ht := t.isLt
+    have hd := d.isLt
+    have hx := x.isLt
+    apply Sigma.ext
+    · apply Fin.ext
+      change n - (n - t.val) = t.val
+      omega
+    · apply heq_of_eq
+      apply Sigma.ext
+      · apply Fin.ext
+        change n - (n - d.val) = d.val
+        omega
+      · apply heq_of_eq
+        apply Fin.ext
+        change d.val + x.val - (n - (n - d.val)) = x.val
+        omega
 
 end D5.S3.Combinatorics.PermutationArrays.EtiennePrefixCount
