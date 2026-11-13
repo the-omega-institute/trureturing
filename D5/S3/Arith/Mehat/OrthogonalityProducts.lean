@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/Mehat/OrthogonalityProducts
    generality: G
    mirror-B: D5/B/S3/Arith/Mehat/OrthogonalityProducts
-   mirror-E: none
+   mirror-E: none(waiver:all-positive-k-symbolic-existence-proof-without-numerical-experiment)
    anchors: [mathlib/module/Mathlib.Algebra.MvPolynomial.Funext]
    utility: none
    digest: Integer quaternion factors with distinct indexed squared-entry products. -/
