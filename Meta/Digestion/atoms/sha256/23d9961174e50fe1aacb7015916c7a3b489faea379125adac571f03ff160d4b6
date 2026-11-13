@@ -1,0 +1,21 @@
+证明。令实际有限先验下的 $X=\|F_{\mathsf H_n}t-c\|^2\in[0,4]$。由点态恒等式和非负积分交换，
+
+$$
+e^{-\beta X}=\int_X^\infty\beta e^{-\beta u}\,du,
+\qquad
+L_{n,t,c}(\beta)=\int_0^\infty\beta e^{-\beta u}P_n(X\le u)\,du.
+$$
+
+对 $0<u\le1/4$，小球半径 $\sqrt u\le1/2$，所以 (3.3) 给出 $P_n(X\le u)\le8u^{3/2}+b_n$；对 $u>1/4$ 仅用概率至多一。因此
+
+$$
+\begin{aligned}
+L_{n,t,c}(\beta)
+&\le\int_0^{1/4}\beta e^{-\beta u}(8u^{3/2}+b_n)\,du+e^{-\beta/4}\\
+&\le8\Gamma(5/2)\beta^{-3/2}+b_n+e^{-\beta/4}\\
+&=6\sqrt\pi\,\beta^{-3/2}+b_n+e^{-\beta/4}.
+\end{aligned}
+$$
+
+第二行只扩大非负积分范围；代换 $v=\beta u$ 并分部积分两次给出 $\Gamma(5/2)=3\sqrt\pi/4$。另外 $L\le1$，取较小上界得到 (5.2)。零距离原子不影响分层积分，$u=0$ 的单点也不要求一个未给出的零半径估计。整个推导只在小半径范围使用 (3.3)，并明确支付大半径尾项；(5.2) 中的先验始终是实际 $2^{-n}$。$\square$
+
