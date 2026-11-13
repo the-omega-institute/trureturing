@@ -95,13 +95,15 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                 Pow(App(Q("PowerSeries", "rescale"), App(V("L"), V("n")), V("G")),
                     V("n")))))))))));
 
-    private static Formula PowerLiftFormula() => All("R", Call("Type"),
-        Seq(OpenBracket, Call("CommRing", V("R")), CloseBracket, Sp,
-            All("p", Nat(), All("U", V("R"), All("V", V("R"),
-                Imp(Divides(Cast(V("p"), V("R")), Subtract(V("U"), V("V"))),
-                    All("m", Nat(), Divides(Pow(Cast(V("p"), V("R")),
-                            new Formula.Binary(Call("padicValNat", V("p"), V("m")), FormulaBinaryOperator.Add, D(1))),
-                        Subtract(Pow(V("U"), V("m")), Pow(V("V"), V("m"))))))))));
+    private static Formula PowerLiftFormula()
+    {
+        var r = V("R"); var p = V("p"); var u = V("U"); var v = V("V"); var m = V("m");
+        var premise = Divides(Cast(p, r), Subtract(u, v));
+        var exponent = new Formula.Binary(Call("padicValNat", p, m), FormulaBinaryOperator.Add, D(1));
+        var conclusion = All("m", Nat(), Divides(Pow(Cast(p, r), exponent), Subtract(Pow(u, m), Pow(v, m))));
+        var body = All("p", Nat(), All("U", r, All("V", r, Imp(premise, conclusion))));
+        return All("R", Call("Type"), Seq(OpenBracket, Call("CommRing", r), CloseBracket, Sp, body));
+    }
     private static Formula Divides(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Divides, b);
     private static Formula Subtract(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
 
