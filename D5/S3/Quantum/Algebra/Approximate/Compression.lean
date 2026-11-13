@@ -6,13 +6,13 @@
    utility: none
    digest: Taylor correction in the associative endomorphism algebra of a nonassociative product. -/
 
-module
 
-public import Mathlib.Analysis.Analytic.Binomial
-public import Mathlib.Analysis.Normed.Ring.InfiniteSum
-public import Mathlib.Analysis.InnerProductSpace.Adjoint
-public import Mathlib.Analysis.Normed.Module.FiniteDimension
-public import Mathlib.Tactic
+import Mathlib.Analysis.Analytic.Binomial
+import Mathlib.Analysis.Normed.Ring.InfiniteSum
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Tactic
+import D5.S3.Analytic.OriginalHalfBinomialIntegral
 
 /-! The correction is the Taylor construction of Kitaev,
 *Almost-idempotent quantum channels and approximate C*-algebras*,
@@ -20,7 +20,6 @@ arXiv:2405.02434v2, equations (3.4)--(3.6) and (7.1).
 The associative algebra in the correction is an algebra of operators;
 no associative multiplication on the underlying target is required. -/
 
-@[expose] public section
 
 noncomputable section
 
@@ -44,6 +43,57 @@ private theorem binomial_summable_norm {A : Type*} [NormedRing A]
   exact Summable.of_nonneg_of_le (fun _ => norm_nonneg _) (fun n => by
     rw [norm_smul]
     exact mul_le_mul_of_nonneg_left (norm_pow_le d n) (norm_nonneg _)) hs
+
+private theorem inverseSqrt_tail_bound {A : Type*} [NormedRing A]
+    [NormedAlgebra ℝ A] [CompleteSpace A] [NormOneClass A]
+    (d : A) (hd : ‖d‖ < 1) :
+    ‖inverseSqrt d - 1‖ ≤ 1 / Real.sqrt (1 - ‖d‖) - 1 := by
+  let b := D5.S3.Analytic.OriginalHalfBinomialIntegral.b
+  have hs := D5.S3.Analytic.OriginalHalfBinomialIntegral.binomial_hasSum
+    ‖d‖ (norm_nonneg d) hd
+  have htail : HasSum (fun n : ℕ => b (n + 1) * ‖d‖ ^ (n + 1))
+      (1 / Real.sqrt (1 - ‖d‖) - 1) := by
+    simpa [b, D5.S3.Analytic.OriginalHalfBinomialIntegral.b] using
+      (hasSum_nat_add_iff' 1).2 hs
+  have hseries : HasSum (fun n : ℕ => Ring.choose (-1 / 2 : ℝ) n • d ^ n)
+      (inverseSqrt d) := (binomial_summable_norm d hd _).of_norm.hasSum
+  have hshift : HasSum (fun n : ℕ => Ring.choose (-1 / 2 : ℝ) (n + 1) • d ^ (n + 1))
+      (inverseSqrt d - 1) := by
+    simpa using (hasSum_nat_add_iff' 1).2 hseries
+  rw [← hshift.tsum_eq]
+  apply tsum_of_norm_bounded htail
+  intro n
+  rw [norm_smul]
+  have hc : ‖Ring.choose (-1 / 2 : ℝ) (n + 1)‖ = b (n + 1) := by
+    rw [show (-1 / 2 : ℝ) = -(1 / 2 : ℝ) by ring, Ring.choose_neg',
+      D5.S3.Analytic.OriginalHalfBinomialIntegral.b_multichoose]
+    simp only [Units.smul_def, zsmul_eq_mul, Int.cast_negOnePow_natCast, norm_mul,
+      norm_pow, norm_neg, norm_one, one_pow, one_mul]
+    exact Real.norm_of_nonneg
+      (D5.S3.Analytic.OriginalHalfBinomialIntegral.b_nonneg _)
+  rw [hc]
+  exact mul_le_mul_of_nonneg_left (norm_pow_le d _)
+    (D5.S3.Analytic.OriginalHalfBinomialIntegral.b_nonneg _)
+
+theorem inverseSqrt_tail_linear {A : Type*} [NormedRing A]
+    [NormedAlgebra ℝ A] [CompleteSpace A] [NormOneClass A]
+    (d : A) (hd : ‖d‖ ≤ 1 / 2) : ‖inverseSqrt d - 1‖ ≤ ‖d‖ := by
+  apply (inverseSqrt_tail_bound d (by linarith)).trans
+  have hu := norm_nonneg d
+  have hs : 0 < Real.sqrt (1 - ‖d‖) := Real.sqrt_pos.2 (by linarith)
+  have hs2 := Real.sq_sqrt (show 0 ≤ 1 - ‖d‖ by linarith)
+  have hp : 1 ≤ (1 + ‖d‖) * Real.sqrt (1 - ‖d‖) := by
+    have hpoly : 0 ≤ ‖d‖ * (1 - ‖d‖ - ‖d‖ ^ 2) := by
+      apply mul_nonneg hu
+      nlinarith
+    have heq : ((1 + ‖d‖) * Real.sqrt (1 - ‖d‖)) ^ 2 =
+        1 + ‖d‖ * (1 - ‖d‖ - ‖d‖ ^ 2) := by
+      rw [mul_pow, hs2]
+      ring
+    have hprod : 0 ≤ (1 + ‖d‖) * Real.sqrt (1 - ‖d‖) := by positivity
+    nlinarith
+  have := (div_le_iff₀ hs).2 hp
+  linarith
 
 private theorem binomial_mul {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
     [CompleteSpace A] [NormOneClass A] (d : A) (hd : ‖d‖ < 1) (a b : ℝ) :

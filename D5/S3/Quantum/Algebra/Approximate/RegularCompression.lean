@@ -6,15 +6,13 @@
    utility: none
    digest: Regular-action compression for a complex bilinear nonassociative Hilbert-space product. -/
 
-module
 
-public import D5.S3.Quantum.Algebra.Approximate.Compression
+import D5.S3.Quantum.Algebra.Approximate.Compression
 
 /-! The product and Hilbert norm are retained throughout. The auxiliary regular
 range carries exactly `p(x) = ‖L_x‖`, without installing a multiplication instance
 on the target. The compression follows Kitaev, arXiv:2405.02434v2, §7. -/
 
-@[expose] public section
 
 noncomputable section
 set_option autoImplicit false
@@ -462,12 +460,83 @@ theorem regularCompression_closeness (P Q : H) (hP : star P = P) (hQ : star Q = 
   nlinarith [ht, htail]
 
 /-- The same compression, acting on the original Hilbert space. -/
+private theorem regularCompression_bracketing_bound (P Q : H)
+    (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) :
+    ‖D.regularCompression P Q - D.left P * D.right Q‖ ≤ 4866 * (τ + M * δ) ∧
+    ‖D.regularCompression P Q - D.right Q * D.left P‖ ≤ 4866 * (τ + M * δ) := by
+  have heps : 0 ≤ M * δ := mul_nonneg (by linarith [D.one_le_M]) D.delta_nonneg
+  have hδeps : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
+  have hp := projection_norm_le_two D P hP (by linarith : τ ≤ 1 / 4)
+    (by linarith : δ ≤ 1 / 4) hPP
+  have hq := projection_norm_le_two D Q hQ (by linarith : τ ≤ 1 / 4)
+    (by linarith : δ ≤ 1 / 4) hQQ
+  have hpq : D.p P * D.p Q ≤ 4 := by
+    nlinarith [norm_nonneg (D.mul P), norm_nonneg (D.mul Q),
+      mul_nonneg (sub_nonneg.mpr hp) (sub_nonneg.mpr hq)]
+  have hcomm : ‖D.left P * D.right Q - D.right Q * D.left P‖ ≤
+      4 * (τ + M * δ) := by
+    apply (left_right_defect D P Q).trans
+    nlinarith [mul_le_mul_of_nonneg_left hpq heps]
+  have hdef := cornerInvolution_defect D P Q hP hQ hτ hsmall hPP hQQ
+  have htail := Compression.inverseSqrt_tail_linear (D.cornerInvolution P Q ^ 2 - 1)
+    (by linarith : ‖D.cornerInvolution P Q ^ 2 - 1‖ ≤ 1 / 2)
+  have hmid : ‖D.regularCompression P Q -
+      (1 / 2 : ℝ) • (1 + D.cornerInvolution P Q)‖ ≤ 4864 * (τ + M * δ) := by
+    have hc := regularCompression_closeness D P Q hP hQ hτ hsmall hPP hQQ
+    nlinarith
+  have hid : (1 / 2 : ℝ) • (1 + D.cornerInvolution P Q) =
+      (1 / 2 : ℝ) • (D.left P * D.right Q + D.right Q * D.left P) := by
+    congr 1
+    simp only [cornerInvolution]
+    abel
+  have hhalf (a b : D.RegularSpace →L[ℂ] D.RegularSpace) :
+      (1 / 2 : ℝ) • (a + b) - a = (1 / 2 : ℝ) • (b - a) := by module
+  have hl : ‖(1 / 2 : ℝ) • (1 + D.cornerInvolution P Q) -
+      D.left P * D.right Q‖ ≤ 2 * (τ + M * δ) := by
+    rw [hid, hhalf, norm_smul, norm_sub_rev]
+    norm_num only [Real.norm_eq_abs, abs_of_pos (by norm_num : (0 : ℝ) < 1 / 2)]
+    linarith
+  have hr : ‖(1 / 2 : ℝ) • (1 + D.cornerInvolution P Q) -
+      D.right Q * D.left P‖ ≤ 2 * (τ + M * δ) := by
+    rw [hid, add_comm (D.left P * D.right Q), hhalf, norm_smul]
+    norm_num only [Real.norm_eq_abs, abs_of_pos (by norm_num : (0 : ℝ) < 1 / 2)]
+    linarith
+  constructor
+  · exact (norm_sub_le_norm_sub_add_norm_sub _ _ _).trans (by linarith)
+  · exact (norm_sub_le_norm_sub_add_norm_sub _ _ _).trans (by linarith)
+
+/-- The same compression, acting on the original Hilbert space. -/
 def compression (P Q : H) : H →L[ℂ] H :=
   D.regularEquiv.symm.toContinuousLinearMap ∘L D.regularCompression P Q ∘L
     D.regularEquiv.toContinuousLinearMap
 
 /-- The actual mixed corner is the range of the corrected original-product compression. -/
 def corner (P Q : H) : Submodule ℂ H := LinearMap.range (D.compression P Q).toLinearMap
+
+/-- Both bracketings are the actual original product. The estimates use the
+regular norm `p`, uniformly in the input vector. -/
+theorem compression_closeness (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) (x : H) :
+    D.p (D.compression P Q x - D.mul P (D.mul x Q)) ≤
+      4866 * (τ + M * δ) * D.p x ∧
+    D.p (D.compression P Q x - D.mul (D.mul P x) Q) ≤
+      4866 * (τ + M * δ) * D.p x := by
+  have hc := regularCompression_bracketing_bound D P Q hP hQ hτ hsmall hPP hQQ
+  have hid : D.regularEquiv (D.compression P Q x) =
+      D.regularCompression P Q (D.regularEquiv x) := by simp [compression]
+  have hl := (D.regularCompression P Q - D.left P * D.right Q).le_opNorm
+    (D.regularEquiv x)
+  have hr := (D.regularCompression P Q - D.right Q * D.left P).le_opNorm
+    (D.regularEquiv x)
+  rw [← hid, sub_apply, mul_apply_eq_comp, left_apply, right_apply,
+    ← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm] at hl
+  rw [← hid, sub_apply, mul_apply_eq_comp, right_apply, left_apply,
+    ← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm] at hr
+  exact ⟨hl.trans (mul_le_mul_of_nonneg_right hc.1 (norm_nonneg _)),
+    hr.trans (mul_le_mul_of_nonneg_right hc.2 (norm_nonneg _))⟩
 
 /-- The original-product compression is exactly idempotent at a universal small-error scale. -/
 theorem compression_idempotent (P Q : H) (hP : star P = P) (hQ : star Q = Q)
