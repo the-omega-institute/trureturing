@@ -16,7 +16,6 @@ open _root_.D5.S3.Quantum.Foundation.FacetZeroGluing
 open _root_.D5.S3.Quantum.Foundation.ExclusionBallFaces
 open _root_.D5.S3.Quantum.Foundation.OriginalFacePolarity
 open _root_.D5.S3.Quantum.Foundation.OriginalBallScale
-open _root_.D5.S3.Quantum.Foundation.OriginalNormalFamily
 open _root_.D5.S3.Quantum.Foundation.OriginalComparisonTopology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open Reg.D5.S3.Quantum.Foundation.RegularAnchorHeight

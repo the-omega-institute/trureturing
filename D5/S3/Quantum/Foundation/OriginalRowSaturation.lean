@@ -311,7 +311,7 @@ theorem original_nonunit_continuity
     obtain ⟨w, hw, hwq⟩ := hqS
     have hw1 : ‖w‖ = 1 := by simpa using hw
     have hsat := original_row_saturation hc hs hg hEB3 hPR hInj p a ha ep hp q w hw1 hwq pn hpn hcollapse
-    exact (ne_of_gt hbudget) (hsat.1 v hv).symm
+    exact (ne_of_gt hbudget) (hsat.1 v hv)
   exact ⟨hcont, (OriginalComparisonTopology.original_local_budget_iff hc hs hg h3 hPR p).mp hcont⟩
 
 /-- The original P0 condition concerns A(p), while all of F(p) remains available. -/
