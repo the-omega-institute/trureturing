@@ -9,7 +9,20 @@
 import Mathlib.NumberTheory.FrobeniusNumber
 import Mathlib.Algebra.GCDMonoid.Finset
 import Mathlib.Data.Set.Finite.Lattice
-import Mathlib.Tactic.Omega
+import Lean.Elab.Tactic.Omega
+
+/-! # Numerical semigroups from primitive finite jump sets -/
+
+/-
+result:
+  proof_shape: bind-only
+  escape_witness: none
+  admission_basis: open-problem-resolution (#29915)
+  Direct frozen dependencies: none.
+The construction uses finite generation, a bound on the finite complement, and
+two consecutive elements above that bound. Finset.sup id expresses the maximum
+of the nonempty natural-number set. No properness premise excludes the full monoid.
+-/
 
 set_option autoImplicit false
 
@@ -29,7 +42,7 @@ theorem result (T : AddSubmonoid ℕ) (hT : (↑T : Set ℕ)ᶜ.Finite) :
   have htail (a : ℕ) (ha : N < a) : a ∈ T := by
     by_contra h
     exact (not_le_of_gt ha) (hN h)
-  obtain ⟨H, hH⟩ := Nat.addSubmonoid_fg T
+  obtain ⟨H, hH⟩ := AddSubmonoid.isAddFG_iff.mp (Nat.addSubmonoid_fg T)
   let c := N + 1
   let G := insert c (insert (c + 1) H)
   let M := G.sup id + 1
@@ -66,7 +79,7 @@ theorem result (T : AddSubmonoid ℕ) (hT : (↑T : Set ℕ)ᶜ.Finite) :
   have hd2 : S.gcd id ∣ M - (c + 1) := Finset.gcd_dvd hsc1
   have hone : S.gcd id ∣ 1 := by
     have hb := hbound (c + 1) hc1
-    convert Nat.dvd_sub' hd1 hd2 using 1 <;> omega
+    convert Nat.dvd_sub hd1 hd2 using 1 <;> omega
   refine ⟨M, S, by omega, ⟨M, hMS⟩, (fun s hs => (hS s hs).1), hsup,
     Nat.dvd_one.mp hone, ?_⟩
   apply le_antisymm
@@ -93,6 +106,7 @@ theorem result (T : AddSubmonoid ℕ) (hT : (↑T : Set ℕ)ᶜ.Finite) :
     refine ⟨M - a, haS, ?_⟩
     exact Nat.sub_sub_self (Nat.le_of_lt (hbound a haG))
 
+#check @result
 #print axioms result
 
 end D5.S3.Arith.Additive.NumericalSemigroupRealizability
