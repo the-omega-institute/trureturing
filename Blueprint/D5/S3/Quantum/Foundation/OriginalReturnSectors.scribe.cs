@@ -10,12 +10,8 @@ internal sealed class OriginalReturnSectorsDocument : IScribeDocumentDefinition
         "Uniform sectors and intrinsic singular-tail mass for whole original returns.",
         H("Original return sectors and singular tails"), Blocks(
         Paragraph(Text("V is the original finite dimensional real space, C is its closed pointed generating cone, and u is strictly positive on every nonzero cone vector. K is the entire normalized base C intersected with u=1, P consists of all its extreme points, and effects range over the entire interval [0,u]. Every original exclusion D(p) is the image of a whole closed Euclidean unit ball under an injective affine chart of positive dimension. Dimensions may vary and may equal one. Fix any source F=D(p), any y in ri(F), and any whole injective source chart. No singleton-label, injective-label, distinguishable-frame, Pair, closed-pure-locus or common-dimension assumption is imposed.")),
-        Describe.Lean(DescribeId.Create("leakage"), DeclarationHandle.Create(Owner + "leakage"),
-            H("Entire return leakage"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("alpha_F(t) is the supremum of dist(x,F) over every x in D(t). Compactness makes it an attained maximum. The same auxiliary norm is used throughout. No selected subset of a return face is substituted."))), DescribeRole.Definition),
-        Describe.Lean(DescribeId.Create("base-maximum"), DeclarationHandle.Create(Owner + "baseMaximum"),
-            H("Actual original maximum"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("M(b) is the supremum of b on the entire original K. For every nonzero original positive annihilator of an actual pure label, M(b)>0 and one fixed A>0 gives norm(b)<=A M(b). Normalize by the positive global maximum, apply the old full-cone bound to obtain an original effect, then use compactness of the entire effect interval in the original dual. M(b) has no imposed upper budget."))), DescribeRole.Definition),
+
+
         Describe.Lean(DescribeId.Create("whole-return-leakage"), DeclarationHandle.Create(Owner + "whole_return_leakage"),
             H("Uniform leakage for all actual returns"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(
@@ -27,9 +23,7 @@ internal sealed class OriginalReturnSectorsDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text("The supplied source chart yields an actual xi with a(xi)=y and norm(xi)<1. There are dim(a)+1 unit parameter vertices forming an affine basis, with every barycentric coordinate of xi strictly positive. Their actual images are affinely independent. The chart dimension equals the affine dimension of F, and its linear range lies in ker(u). The old chart_boundary theorem identifies the unit contacts as original pure points under the full original hypotheses.")),
                 Paragraph(Text("Place a small affine simplex around xi inside the open unit ball. Every vertex differs from xi, since all its barycentric coordinates at xi are positive. Continuity along each outward ray supplies a unit-sphere point. Divide the old positive weights by their positive radial factors and normalize their sum. These weights reconstruct xi from the new sphere points. Their affine span contains xi and each old basis vertex, so it is full; the exact number of vertices gives affine independence. The construction includes segment balls and xi=0."))), DescribeRole.Theorem),
-        Describe.Lean(DescribeId.Create("sector-violation"), DeclarationHandle.Create(Owner + "sectorViolation"),
-            H("Additional common-sector condition"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("Every one of the fixed dim(a)+1 source sectors has a nonzero original normal b, nonnegative on all of C and vanishing at the same actual t, with nonzero actual source slope, direction within theta of that sector, and norm(g_b)>H M(b) alpha_F(t). This is Q133.14 at one index. Its eventual sequence version is an extra antecedent and is not derived from exclusion balls, positive lifts or local pure-limit density. Normalized contrast is allowed to tend to zero."))), DescribeRole.Definition),
+
         Describe.Lean(DescribeId.Create("uniform-return-sectors"), DeclarationHandle.Create(Owner + "uniform_return_sectors"),
             H("One sector for every original normal"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(
@@ -42,9 +36,7 @@ internal sealed class OriginalReturnSectorsDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create("projected-linear"), DeclarationHandle.Create(Owner + "projectedLinear"),
             H("Actual projected return operator"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("For any whole return chart c+L closedBall(d), A is proj_U composed with L, with codomain restricted to U. Its kernel J is the kernel of this actual projected operator. J is not identified with ker(L), because the original L is injective."))), DescribeRole.Definition),
-        Describe.Lean(DescribeId.Create("singular-tail"), DeclarationHandle.Create(Owner + "singularTail"),
-            H("Ordered right singular tail"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text("For an actual real return operator L, use the pinned native orthonormal eigenbasis of L adjoint composed with L, ordered by decreasing eigenvalue. W is the span of directions with zero-based index at least k. It equals the orthogonal complement of the first k directions. Within tied eigenspaces the native basis makes a choice; every estimate uses only sorted spectral inequalities, so it remains valid at ties. The definition exists for every early dimension: when k>=d the tail is zero, without asserting that the eventual bounds already hold."))), DescribeRole.Definition),
+
         Describe.Lean(DescribeId.Create("original-return-geometry"), DeclarationHandle.Create(Owner + "original_return_geometry"),
             H("Dimension escape and positive intrinsic singular-tail mass"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(

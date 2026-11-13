@@ -6,31 +6,7 @@ Uniform sectors and intrinsic singular-tail mass for whole original returns.
 
 V is the original finite dimensional real space, C is its closed pointed generating cone, and u is strictly positive on every nonzero cone vector. K is the entire normalized base C intersected with u=1, P consists of all its extreme points, and effects range over the entire interval [0,u]. Every original exclusion D(p) is the image of a whole closed Euclidean unit ball under an injective affine chart of positive dimension. Dimensions may vary and may equal one. Fix any source F=D(p), any y in ri(F), and any whole injective source chart. No singleton-label, injective-label, distinguishable-frame, Pair, closed-pure-locus or common-dimension assumption is imposed.
 
-**Definition 1.1 (Entire return leakage).**
-
-Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.leakage`
-
-*Formalization.* `D5/S3/Quantum/Foundation/OriginalReturnSectors.leakage` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-alpha_F(t) is the supremum of dist(x,F) over every x in D(t). Compactness makes it an attained maximum. The same auxiliary norm is used throughout. No selected subset of a return face is substituted.
-
-**Definition 1.2 (Actual original maximum).**
-
-Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.baseMaximum`
-
-*Formalization.* `D5/S3/Quantum/Foundation/OriginalReturnSectors.baseMaximum` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-M(b) is the supremum of b on the entire original K. For every nonzero original positive annihilator of an actual pure label, M(b)>0 and one fixed A>0 gives norm(b)<=A M(b). Normalize by the positive global maximum, apply the old full-cone bound to obtain an original effect, then use compactness of the entire effect interval in the original dual. M(b) has no imposed upper budget.
-
-**Theorem 1.3 (Uniform leakage for all actual returns).**
+**Theorem 1.1 (Uniform leakage for all actual returns).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.whole_return_leakage`
 
@@ -46,7 +22,7 @@ A contrary sequence supplies actual r_n tending to y, t_n in D(r_n), x_n in D(t_
 
 The open source ball maps exactly onto ri(F). Nonnegativity of e on the entire source ball and its zero at an interior parameter force its restriction slope to vanish. Thus F lies in the zero face of e. This face is proper because e(t)=1. The old classification of all original proper faces and whole-ball facial rigidity identify it with F, so x belongs to F, contradicting the distance bound. No purity or uniqueness of a limiting label is used.
 
-**Theorem 1.4 (Actual contacts around every source interior point).**
+**Theorem 1.2 (Actual contacts around every source interior point).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.source_contact_simplex`
 
@@ -60,19 +36,7 @@ The supplied source chart yields an actual xi with a(xi)=y and norm(xi)<1. There
 
 Place a small affine simplex around xi inside the open unit ball. Every vertex differs from xi, since all its barycentric coordinates at xi are positive. Continuity along each outward ray supplies a unit-sphere point. Divide the old positive weights by their positive radial factors and normalize their sum. These weights reconstruct xi from the new sphere points. Their affine span contains xi and each old basis vertex, so it is full; the exact number of vertices gives affine independence. The construction includes segment balls and xi=0.
 
-**Definition 1.5 (Additional common-sector condition).**
-
-Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.sectorViolation`
-
-*Formalization.* `D5/S3/Quantum/Foundation/OriginalReturnSectors.sectorViolation` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Every one of the fixed dim(a)+1 source sectors has a nonzero original normal b, nonnegative on all of C and vanishing at the same actual t, with nonzero actual source slope, direction within theta of that sector, and norm(g_b)>H M(b) alpha_F(t). This is Q133.14 at one index. Its eventual sequence version is an extra antecedent and is not derived from exclusion balls, positive lifts or local pure-limit density. Normalized contrast is allowed to tend to zero.
-
-**Theorem 1.6 (One sector for every original normal).**
+**Theorem 1.3 (One sector for every original normal).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.uniform_return_sectors`
 
@@ -88,7 +52,7 @@ The old positive_annihilator_maximum supplies a pure global maximizer x in the s
 
 Positive barycentric reconstruction is stable for perturbed contacts and a nearby returned point in one common affine space of dimension at most dim(a). A fixed affine left inverse of the source chart reduces the perturbation to a fixed parameter space. Invert the perturbed affine interpolation map, obtain positive coordinates, prove actual reconstruction, and use rank counting to identify the common affine space. If every sector failed, pure maximizers in the same D(t) would be close to all source contacts and reconstruct r with strictly positive weights. Since dim(a)>=1, affine independence and extremality of r contradict this. All constants are fixed before the return and normal families.
 
-**Definition 1.7 (Orthogonal projection onto the source affine space).**
+**Definition 1.4 (Orthogonal projection onto the source affine space).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.sourceProjection`
 
@@ -100,7 +64,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.sourceProjection
 
 In any chosen Euclidean metric on V, this is the affine orthogonal projection onto aff(F), expressed using the source center and the orthogonal projection onto U=direction(aff(F)). It fixes aff(F), maps every point into aff(F), and contracts distances to every point of aff(F).
 
-**Definition 1.8 (Actual projected return operator).**
+**Definition 1.5 (Actual projected return operator).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.projectedLinear`
 
@@ -112,19 +76,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.projectedLinear`
 
 For any whole return chart c+L closedBall(d), A is proj_U composed with L, with codomain restricted to U. Its kernel J is the kernel of this actual projected operator. J is not identified with ker(L), because the original L is injective.
 
-**Definition 1.9 (Ordered right singular tail).**
-
-Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.singularTail`
-
-*Formalization.* `D5/S3/Quantum/Foundation/OriginalReturnSectors.singularTail` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For an actual real return operator L, use the pinned native orthonormal eigenbasis of L adjoint composed with L, ordered by decreasing eigenvalue. W is the span of directions with zero-based index at least k. It equals the orthogonal complement of the first k directions. Within tied eigenspaces the native basis makes a choice; every estimate uses only sorted spectral inequalities, so it remains valid at ties. The definition exists for every early dimension: when k>=d the tail is zero, without asserting that the eventual bounds already hold.
-
-**Theorem 1.10 (Dimension escape and positive intrinsic singular-tail mass).**
+**Theorem 1.6 (Dimension escape and positive intrinsic singular-tail mass).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalReturnSectors.original_return_geometry`
 
@@ -148,15 +100,11 @@ No actual pure sequence satisfying the common-sector condition is constructed. T
 
 ## References
 
-- Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.baseMaximum`
-- Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.leakage`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.original_return_geometry`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.projectedLinear`
-- Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.sectorViolation`
-- Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.singularTail`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.sourceProjection`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.source_contact_simplex`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.uniform_return_sectors`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalReturnSectors.whole_return_leakage`
-- Dependency: [D5/S3/Quantum/Foundation/MixedExclusionGeometry](MixedExclusionGeometry.md)
-- Dependency: [D5/S3/Quantum/Foundation/SingleLabelNormalBody](SingleLabelNormalBody.md)
+- Dependency: [D5/S3/Quantum/Foundation/OriginalReturnSectors/Contacts](OriginalReturnSectors/Contacts.md)
+- Dependency: [D5/S3/Quantum/Foundation/OriginalReturnSectors/LinearGeometry](OriginalReturnSectors/LinearGeometry.md)
