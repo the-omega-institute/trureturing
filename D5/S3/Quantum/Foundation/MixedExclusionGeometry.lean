@@ -215,7 +215,7 @@ private theorem chart_mixed (p : pure C u) (b : ExclusionChart C u p)
     linarith
 
 omit [FiniteDimensional ℝ V] [Nontrivial V] in
-private theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
+theorem chart_intrinsic (p : pure C u) (b : ExclusionChart C u p) :
     intrinsicInterior ℝ (exclusion C u p) = b.param '' Metric.ball 0 1 := by
   let E := EuclideanSpace ℝ (Fin b.dim)
   let A : AffineSubspace ℝ V := (⊤ : AffineSubspace ℝ E).map b.param
