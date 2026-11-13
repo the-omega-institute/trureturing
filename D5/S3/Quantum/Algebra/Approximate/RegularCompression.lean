@@ -459,7 +459,7 @@ theorem regularCompression_closeness (P Q : H) (hP : star P = P) (hQ : star Q = 
     (Compression.inverseSqrt (D.cornerInvolution P Q ^ 2 - 1) - 1)
   nlinarith [ht, htail]
 
-/-- The same compression, acting on the original Hilbert space. -/
+/-- Uniform operator bounds for both actual bracketings. -/
 private theorem regularCompression_bracketing_bound (P Q : H)
     (hP : star P = P) (hQ : star Q = Q)
     {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
@@ -473,8 +473,9 @@ private theorem regularCompression_bracketing_bound (P Q : H)
   have hq := projection_norm_le_two D Q hQ (by linarith : τ ≤ 1 / 4)
     (by linarith : δ ≤ 1 / 4) hQQ
   have hpq : D.p P * D.p Q ≤ 4 := by
-    nlinarith [norm_nonneg (D.mul P), norm_nonneg (D.mul Q),
-      mul_nonneg (sub_nonneg.mpr hp) (sub_nonneg.mpr hq)]
+    have hp0 : 0 ≤ D.p P := norm_nonneg _
+    have hq0 : 0 ≤ D.p Q := norm_nonneg _
+    nlinarith [mul_nonneg (sub_nonneg.mpr hp) (sub_nonneg.mpr hq)]
   have hcomm : ‖D.left P * D.right Q - D.right Q * D.left P‖ ≤
       4 * (τ + M * δ) := by
     apply (left_right_defect D P Q).trans
@@ -531,9 +532,9 @@ theorem compression_closeness (P Q : H) (hP : star P = P) (hQ : star Q = Q)
     (D.regularEquiv x)
   have hr := (D.regularCompression P Q - D.right Q * D.left P).le_opNorm
     (D.regularEquiv x)
-  rw [← hid, sub_apply, mul_apply_eq_comp, left_apply, right_apply,
+  rw [sub_apply, mul_apply_eq_comp, right_apply, left_apply, ← hid,
     ← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm] at hl
-  rw [← hid, sub_apply, mul_apply_eq_comp, right_apply, left_apply,
+  rw [sub_apply, mul_apply_eq_comp, left_apply, right_apply, ← hid,
     ← D.regularEquiv.map_sub, regularEquiv_norm, regularEquiv_norm] at hr
   exact ⟨hl.trans (mul_le_mul_of_nonneg_right hc.1 (norm_nonneg _)),
     hr.trans (mul_le_mul_of_nonneg_right hc.2 (norm_nonneg _))⟩
@@ -550,12 +551,14 @@ theorem compression_closeness_hilbert (P Q : H) (hP : star P = P) (hQ : star Q =
   have hc0 : 0 ≤ 4866 * (τ + M * δ) := by
     positivity [D.delta_nonneg, le_trans zero_le_one D.one_le_M]
   constructor
-  · apply ContinuousLinearMap.opNorm_le_bound (mul_nonneg hc0 (by linarith [D.one_le_M]))
+  · apply ContinuousLinearMap.opNorm_le_bound
+    · exact mul_nonneg hc0 (by linarith [D.one_le_M])
     intro x
     have h := (compression_closeness D P Q hP hQ hτ hsmall hPP hQQ x).1
     exact (norm_le_p D _).trans (h.trans (by
       simpa only [mul_assoc] using mul_le_mul_of_nonneg_left (p_le D x) hc0))
-  · apply ContinuousLinearMap.opNorm_le_bound (mul_nonneg hc0 (by linarith [D.one_le_M]))
+  · apply ContinuousLinearMap.opNorm_le_bound
+    · exact mul_nonneg hc0 (by linarith [D.one_le_M])
     intro x
     have h := (compression_closeness D P Q hP hQ hτ hsmall hPP hQQ x).2
     exact (norm_le_p D _).trans (h.trans (by
@@ -574,7 +577,14 @@ private def regularStar : D.RegularSpace →L[ℝ] D.RegularSpace :=
   LinearMap.mkContinuous
     { toFun := fun y => D.regularEquiv (star (D.regularEquiv.symm y))
       map_add' := by intro x y; simp
-      map_smul' := by intro r x; simp [map_smul_of_tower] }
+      map_smul' := by
+        intro r x
+        change D.regularEquiv.toContinuousLinearMap
+          (star (D.regularEquiv.symm.toContinuousLinearMap (r • x))) =
+            r • D.regularEquiv.toContinuousLinearMap (star (D.regularEquiv.symm x))
+        rw [ContinuousLinearMap.map_smul_of_tower, star_smul, star_trivial,
+          ContinuousLinearMap.map_smul_of_tower]
+        rfl }
     1 (by
       intro y
       change D.p (star (D.regularEquiv.symm y)) ≤ 1 * ‖y‖
@@ -597,6 +607,11 @@ theorem compression_star (P Q : H) (hP : star P = P) (hQ : star Q = Q)
     simp only [cornerInvolution, sub_apply, add_apply, mul_apply_eq_comp,
       one_apply, left_apply, right_apply, map_sub, map_add,
       regularStar_apply, D.star_mul, hP, hQ]
+    change D.regularEquiv (D.mul (D.mul Q (star z)) P) +
+        D.regularEquiv (D.mul Q (D.mul (star z) P)) - D.regularStar (D.regularEquiv z) =
+      D.regularEquiv (D.mul Q (D.mul (star z) P)) +
+        D.regularEquiv (D.mul (D.mul Q (star z)) P) - D.regularEquiv (star z)
+    rw [regularStar_apply]
     abel
   have ht : ‖D.cornerInvolution P Q ^ 2 - 1‖ < 1 :=
     lt_of_le_of_lt (cornerInvolution_defect D P Q hP hQ hτ hsmall hPP hQQ)

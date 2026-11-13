@@ -155,6 +155,7 @@ theorem correction_intertwines {E F : Type*}
   have hd (y : E) : s (a y) = b (s y) := by
     dsimp [a, b]
     simp only [pow_two, sub_apply, mul_apply_eq_comp, one_apply, map_sub, h]
+    rfl
   have hp (n : ℕ) (y : E) :
       s ((a ^ n : E →L[ℂ] E) y) = (b ^ n : F →L[ℂ] F) (s y) := by
     induction n with
@@ -167,7 +168,7 @@ theorem correction_intertwines {E F : Type*}
     have h₁ := s.hasSum ((ContinuousLinearMap.apply ℂ E y).hasSum hst)
     have h₂ := (ContinuousLinearMap.apply ℂ F (s y)).hasSum hsu
     apply HasSum.unique _ h₂
-    simpa only [ContinuousLinearMap.apply_apply, smul_apply, map_smul, hp] using h₁
+    simpa only [ContinuousLinearMap.apply_apply, smul_apply, map_smul, hp, inverseSqrt] using h₁
   change s ((1 / 2 : ℝ) • (x + t ((inverseSqrt a : E →L[ℂ] E) x))) =
     (1 / 2 : ℝ) • (s x + u ((inverseSqrt b : F →L[ℂ] F) (s x)))
   rw [map_smul, map_add, h, hs]

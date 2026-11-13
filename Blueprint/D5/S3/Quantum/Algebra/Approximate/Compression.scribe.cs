@@ -57,8 +57,8 @@ internal sealed class CompressionDocument : IScribeDocumentDefinition
                 DescribeId.Create("taylor-intertwines"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/Compression.correction_intertwines"),
                 H("Taylor correction preserves real intertwiners"),
-                StatementSource.FromAuthor(Disp(Seq(Call("s", Call("correction", F.Id("T")), F.Id("x")), Eq, Call("correction", F.Id("U"), Call("s", F.Id("x")))))),
+                StatementSource.FromAuthor(Disp(Seq(Call("s", Call("correction", F.Id("T"), F.Id("x"))), Eq, Call("correction", F.Id("U"), Call("s", F.Id("x")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let E and F be complete nontrivial complex normed spaces, s a continuous real-linear map from E to F, and T and U continuous complex-linear endomorphisms. If s(Tx)=U(sx) for every x, and both square defects have norm strictly less than one, then the same intertwining identity holds for their Taylor corrections. The proof transports the convergent series term by term; it applies to the actual conjugate-linear star symmetry without imposing an associative algebra structure on H."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }
