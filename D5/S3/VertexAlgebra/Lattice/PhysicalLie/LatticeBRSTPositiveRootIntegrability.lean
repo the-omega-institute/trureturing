@@ -295,29 +295,20 @@ private theorem physical_sum_components (y : physicalStates D H) :
     ∑ p ∈ chargeSupport D (y : State D), physicalClass D H h26 hHG hGH (yp p)
   rw [← map_sum, hsum]
 
-private theorem iterate_add (x : Phys) (n : ℕ) (u v : Phys) :
-    ((fun w : Phys => ⁅x, w⁆)^[n]) (u + v) =
-      ((fun w : Phys => ⁅x, w⁆)^[n]) u +
-        ((fun w : Phys => ⁅x, w⁆)^[n]) v := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-      simp only [Function.iterate_succ_apply', ih, lie_add]
-
-private theorem iterate_sum (x : Phys) (n : ℕ) (s : Finset (Charge D))
-    (g : Charge D → Phys) :
-    ((fun w : Phys => ⁅x, w⁆)^[n]) (∑ p ∈ s, g p) =
-      ∑ p ∈ s, ((fun w : Phys => ⁅x, w⁆)^[n]) (g p) := by
+private theorem iterate_sum {L : Type*} [LieRing L] [LieAlgebra ℂ L]
+    (x : L) (n : ℕ) (s : Finset (Charge D)) (g : Charge D → L) :
+    ((fun w : L => ⁅x, w⁆)^[n]) (∑ p ∈ s, g p) =
+      ∑ p ∈ s, ((fun w : L => ⁅x, w⁆)^[n]) (g p) := by
   classical
-  induction s using Finset.induction_on with
-  | empty =>
-      simpa only [Finset.sum_empty] using
-        (Function.iterate_fixed
-          (show ⁅x, (0 : Phys)⁆ = 0 from lie_zero (M := Phys) x) n)
-  | @insert p s hp ih =>
-      simp only [Finset.sum_insert hp]
-      rw [iterate_add D H h26 hHG hGH x n (g p) (∑ q ∈ s, g q), ih]
+  have hA : (LieModule.toEnd ℂ L L x : L → L) = (fun w : L => ⁅x, w⁆) := by
+    funext w
+    exact LieModule.toEnd_apply_apply ℂ L L x w
+  simpa only [Module.End.pow_apply, hA] using
+    (map_sum ((LieModule.toEnd ℂ L L x) ^ n) g s)
 
+-- Checking this proof unfolds the original global BRST quotient through its actual adjoint.
+set_option maxHeartbeats 8000000 in
+set_option diagnostics true in
 theorem positive_root_adjoint_locally_nilpotent
     (alpha : Charge D) (hα : 0 < chargeEnergy D alpha)
     (x : Phys) (hx : (x : C) ∈ Fib alpha) (y : Phys) :
@@ -333,7 +324,7 @@ theorem positive_root_adjoint_locally_nilpotent
         exact hys.symm
       _ = _ := physical_sum_components D H h26 hHG hGH ys
   refine ⟨N, ?_⟩
-  rw [hdecomp, iterate_sum D H h26 hHG hGH x N S
+  rw [hdecomp, iterate_sum D x N S
     (physicalComponent D H h26 hHG hGH ys)]
   apply Finset.sum_eq_zero
   intro p hp
@@ -342,22 +333,17 @@ theorem positive_root_adjoint_locally_nilpotent
     (physicalComponent_mem_fiber D H h26 hHG hGH ys p)
   have hle : rootBound D alpha p ≤ N :=
     Finset.le_sup (f := fun q => rootBound D alpha q) hp
-  -- Pad on the LEFT: f^(N-k+k) z = f^(N-k) (f^k z).
-  -- iterate_fixed uses f 0 = 0 and includes the zero-iterate case.
-  calc
-    ((fun z : Phys => ⁅x, z⁆)^[N]) (physicalComponent D H h26 hHG hGH ys p) =
-        ((fun z : Phys => ⁅x, z⁆)^[N - rootBound D alpha p + rootBound D alpha p])
-          (physicalComponent D H h26 hHG hGH ys p) := by
-      rw [Nat.sub_add_cancel hle]
-    _ = ((fun z : Phys => ⁅x, z⁆)^[N - rootBound D alpha p])
-        (((fun z : Phys => ⁅x, z⁆)^[rootBound D alpha p])
-          (physicalComponent D H h26 hHG hGH ys p)) :=
-      Function.iterate_add_apply (fun z : Phys => ⁅x, z⁆)
-        (N - rootBound D alpha p) (rootBound D alpha p)
-        (physicalComponent D H h26 hHG hGH ys p)
-    _ = ((fun z : Phys => ⁅x, z⁆)^[N - rootBound D alpha p]) 0 := by rw [hk]
-    _ = 0 := Function.iterate_fixed
-      (show ⁅x, (0 : Phys)⁆ = 0 from lie_zero (M := Phys) x)
-      (N - rootBound D alpha p)
+  -- Pad the actual linear adjoint power using the existing endomorphism law.
+  let A : Module.End ℂ Phys := LieModule.toEnd ℂ Phys Phys x
+  have hA : (A : Phys → Phys) = (fun w : Phys => ⁅x, w⁆) := by
+    funext w
+    exact LieModule.toEnd_apply_apply ℂ Phys Phys x w
+  have hkA : (A ^ rootBound D alpha p)
+      (physicalComponent D H h26 hHG hGH ys p) = 0 := by
+    rw [Module.End.pow_apply, hA]
+    exact hk
+  have hN := Module.End.pow_map_zero_of_le hle hkA
+  rw [Module.End.pow_apply, hA] at hN
+  exact hN
 
 end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPositiveRootIntegrability

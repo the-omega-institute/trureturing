@@ -107,7 +107,7 @@ private theorem kernelExp_coe (A : Module.End ℂ L) (N : ℕ) (t : ℂ)
     map_smul]
   change (n.factorial : ℚ)⁻¹ • (t ^ n • ((kernelEnd A N ^ n) u : L)) = _
   rw [kernelEnd_pow_coe, ← Rat.cast_smul_eq_qsmul ℂ, smul_smul]
-  norm_cast
+  simp only [Rat.cast_inv_nat]
 
 private def kernelInclusion (A : Module.End ℂ L) (N K : ℕ) (hNK : N ≤ K) :
     boundedKernel A N →ₗ[ℂ] boundedKernel A K where
@@ -338,6 +338,7 @@ private theorem truncatedExp_lie (A : LieDerivation ℂ L L) (t : ℂ) (x y : L)
       apply Finset.sum_congr rfl
       intro j hj
       simp only [F, smul_lie, lie_smul, smul_smul]
+      rw [mul_comm ((i.factorial : ℂ)⁻¹ * t ^ i) ((j.factorial : ℂ)⁻¹ * t ^ j)]
 
 /-- The exponential of a pointwise locally nilpotent complex Lie derivation,
 acting on the entire original Lie algebra. Its inverse is the exponential at -t. -/

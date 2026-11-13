@@ -142,9 +142,14 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
     let component (p : Charge D) : Ph :=
       ⟨physicalClass D H h26 hHG hGH (xp p), ⟨xp p, rfl⟩⟩
     have component_range (p : Charge D) :
-        (component p).val ∈ LinearMap.range (inclusion D H h26 hHG hGH p) := by
-      refine ⟨projection D H h26 hHG hGH p
-        (physicalClass D H h26 hHG hGH x), ?_⟩
+        ∃ a : LatticeBRSTChargeCohomology.SectorCohomology D H h26 hHG hGH p,
+          inclusion D H h26 hHG hGH p a = (component p).val := by
+      let a : LatticeBRSTChargeCohomology.sectorCycles D H p :=
+        ⟨⟨chargeProject p (x : State D), chargeProject_mem D p (x : State D)⟩, by
+          apply Subtype.ext
+          exact (xp p).property.1⟩
+      refine ⟨LatticeBRSTChargeCohomology.sectorClassOf D H h26 hHG hGH p a, ?_⟩
+      rw [LatticeBRSTChargeCohomology.inclusion_sectorClassOf]
       rfl
     -- Reconstruction is first proved INSIDE physicalStates by its actual
     -- subtype map, then passed through the existing linear physicalClass.
@@ -161,7 +166,14 @@ theorem mem_physicalChargeFiber_iff_cartan_adjoint (beta : Charge D) (c : Ph) :
         physicalClass D H h26 hHG hGH (xp p)) = (c : C)
       rw [← map_sum, representative_sum, hx]
     let P (p : Charge D) : C →ₗ[ℂ] C :=
-      (inclusion D H h26 hHG hGH p).comp (projection D H h26 hHG hGH p)
+      { toFun := fun z => inclusion D H h26 hHG hGH p
+          (projection D H h26 hHG hGH p z)
+        map_add' := by
+          intro z w
+          rw [map_add, map_add]
+        map_smul' := by
+          intro t z
+          rw [map_smul, map_smul] }
     have project_c (p : Charge D) : P p (c : C) = (component p).val := by
       rw [← hx]
       rfl
