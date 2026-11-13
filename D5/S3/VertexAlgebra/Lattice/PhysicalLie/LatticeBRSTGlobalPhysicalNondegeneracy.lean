@@ -81,7 +81,7 @@ open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTGlobalPhysicalBilinear
 open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalBilinearInvariant
   (physicalBilinearForm_invariant)
 open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTNeutralPhysicalCartan
-  (neutralPhysicalImage neutralCartanEquiv cartanPhysicalImage cartan_adjoint gamma)
+  (neutralPhysicalImage neutralCartanEquiv cartanClass cartanPhysicalImage cartan_adjoint gamma)
 open D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTPhysicalDuality
   (nonzeroChargeDuality)
 
@@ -220,8 +220,10 @@ theorem physicalBilinearForm_nondegenerate
             _ = 0 := by
               rw [hv]
               exact htest (cartanPhysicalImage D H h26 hHG hGH w)
-                (by simpa only [neg_zero] using
-                  (cartanClass_mem D H h26 hHG hGH w))
+                (by
+                  change cartanClass D H h26 hHG hGH w ∈
+                    neutralPhysicalImage D H h26 hHG hGH
+                  exact cartanClass_mem D H h26 hHG hGH w)
             _ = gamma D w 0 * (0 : ℂ) := by simp
         have hv0 : v = 0 := by
           simpa using coordinates_of_tests D H hGH 0 0 v htests
@@ -234,7 +236,11 @@ theorem physicalBilinearForm_nondegenerate
           exact htest (fiberInclusion D H h26 hHG hGH (-a) z) z.property
         have hca : ca = 0 :=
           (nonzeroChargeDuality D H h26 hHG hGH a ha0).injective
-            (by rw [hdual, map_zero])
+            (by
+              change oppositePairing D H h26 hHG hGH a ca =
+                oppositePairing D H h26 hHG hGH a 0
+              rw [map_zero]
+              exact hdual)
         apply Subtype.ext
         exact congrArg (fun z : Fib a => (z : C)) hca
     rw [hsum]
@@ -287,29 +293,28 @@ theorem physicalBilinearForm_nondegenerate
             _ = 0 := by
               rw [hw]
               exact htest (cartanPhysicalImage D H h26 hHG hGH v)
-                (by simpa only [neg_zero] using
-                  (cartanClass_mem D H h26 hHG hGH v))
+                (by
+                  change cartanClass D H h26 hHG hGH v ∈
+                    neutralPhysicalImage D H h26 hHG hGH
+                  exact cartanClass_mem D H h26 hHG hGH v)
             _ = gamma D v 0 * (0 : ℂ) := by simp
         have hw0 : w = 0 := by
           simpa using coordinates_of_tests D H hGH 0 0 w htests
         rw [← hw, hw0, map_zero]
-      · let cb : Fib b := ⟨(c b : C), hc b⟩
+      · let cb : Fib (- -b) := ⟨(c b : C), by simpa only [neg_neg] using hc b⟩
         have hcb : cb = 0 := (Module.forall_dual_apply_eq_zero_iff ℂ cb).mp (by
           intro f
-          -- Surjectivity at -b, not injectivity at b. Rewrite -(-b) to b
-          -- in the actual forward map before applying it to f : Dual(Fib b).
-          have honto := (nonzeroChargeDuality D H h26 hHG hGH
-            (-b) (neg_ne_zero.mpr hb0)).surjective
-          change Function.Surjective (oppositePairing D H h26 hHG hGH (-b)) at honto
-          simp only [oppositePairing, neg_neg] at honto
-          obtain ⟨z, hz⟩ := honto f
+          -- Keep the exact codomain of duality at -b. Its tested vector
+          -- has the original value c b; neg_neg supplies its membership.
+          obtain ⟨z, hz⟩ := (nonzeroChargeDuality D H h26 hHG hGH
+            (-b) (neg_ne_zero.mpr hb0)).surjective f
           have heval := LinearMap.congr_fun hz cb
           change B (fiberInclusion D H h26 hHG hGH (-b) z) (c b) = f cb at heval
           calc
             f cb = B (fiberInclusion D H h26 hHG hGH (-b) z) (c b) := heval.symm
             _ = 0 := htest (fiberInclusion D H h26 hHG hGH (-b) z) z.property)
         apply Subtype.ext
-        exact congrArg (fun z : Fib b => (z : C)) hcb
+        exact congrArg (fun z : Fib (- -b) => (z : C)) hcb
     rw [hsum]
     exact Finset.sum_eq_zero hzero
 

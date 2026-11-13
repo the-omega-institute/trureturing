@@ -301,7 +301,9 @@ private theorem exp_bound_three (A : LieDerivation ℂ Ph Ph)
 section Root
 
 variable (alpha : Charge D) (hα : chargeEnergy D alpha = 1)
-  (e : Ph) (he : (e : C) ∈ Fib alpha) (he0 : e ≠ 0)
+  (e : physicalImage D H h26 hHG hGH)
+  (he : (e : Cohomology D H h26 hHG hGH) ∈
+    physicalChargeFiber D H h26 hHG hGH alpha) (he0 : e ≠ 0)
 
 local notation "fα" => normalizedOpposite D H h26 hHG hGH alpha hα e he he0
 local notation "hαC" => hC (fun i => (alpha i : ℂ))
@@ -318,7 +320,7 @@ private theorem opposite_positive : 0 < chargeEnergy D (-alpha) := by
   rw [opposite_energy_one D alpha hα]
   norm_num
 
-include hα he he0
+include D H h26 hHG hGH alpha hα e he he0
 
 private theorem sl2_ef : ⁅e, fα⁆ = hαC := by
   have hp := normalizedOpposite_pairing D H h26 hHG hGH alpha hα e he he0
@@ -370,7 +372,7 @@ private theorem exp_e_h : Eα hαC = hαC - (2 : ℂ) • e := by
       ((leftAdjoint D H h26 hHG hGH e) hαC) = 0 := by
     simp only [leftAdjoint_apply, sl2_eh D H h26 hHG hGH alpha hα e he he0,
       lie_smul, lie_self, smul_zero]
-  rw [exp_bound_two _ _ 1 hαC hz,
+  rw [exp_bound_two D H h26 hHG hGH _ _ 1 hαC hz,
     leftAdjoint_apply, sl2_eh D H h26 hHG hGH alpha hα e he he0]
   module
 
@@ -380,7 +382,7 @@ private theorem exp_f_h : Fα hαC = hαC - (2 : ℂ) • fα := by
       ((leftAdjoint D H h26 hHG hGH fα) hαC) = 0 := by
     simp only [leftAdjoint_apply, sl2_fh D H h26 hHG hGH alpha hα e he he0,
       lie_smul, lie_self, smul_zero]
-  rw [exp_bound_two _ _ (-1) hαC hz,
+  rw [exp_bound_two D H h26 hHG hGH _ _ (-1) hαC hz,
     leftAdjoint_apply, sl2_fh D H h26 hHG hGH alpha hα e he he0]
   module
 
@@ -392,7 +394,7 @@ private theorem exp_e_f : Eα fα = fα + hαC - e := by
     simp only [leftAdjoint_apply, sl2_ef D H h26 hHG hGH alpha hα e he he0,
       sl2_eh D H h26 hHG hGH alpha hα e he he0,
       lie_smul, lie_self, smul_zero]
-  rw [exp_bound_three _ _ 1 fα hz]
+  rw [exp_bound_three D H h26 hHG hGH _ _ 1 fα hz]
   simp only [leftAdjoint_apply, sl2_ef D H h26 hHG hGH alpha hα e he he0,
     sl2_eh D H h26 hHG hGH alpha hα e he he0]
   module
@@ -405,7 +407,7 @@ private theorem exp_f_e : Fα e = e + hαC - fα := by
     simp only [leftAdjoint_apply, sl2_fe D H h26 hHG hGH alpha hα e he he0,
       lie_neg, sl2_fh D H h26 hHG hGH alpha hα e he he0,
       lie_smul, lie_self, smul_zero, neg_zero]
-  rw [exp_bound_three _ _ (-1) e hz]
+  rw [exp_bound_three D H h26 hHG hGH _ _ (-1) e hz]
   simp only [leftAdjoint_apply, sl2_fe D H h26 hHG hGH alpha hα e he he0,
     lie_neg, sl2_fh D H h26 hHG hGH alpha hα e he he0]
   module
@@ -419,7 +421,7 @@ private theorem exp_e_cartan (v : Fin D.rank → ℂ) :
   have hz : (leftAdjoint D H h26 hHG hGH e)
       ((leftAdjoint D H h26 hHG hGH e) (hC v)) = 0 := by
     simp only [leftAdjoint_apply, had, lie_smul, lie_self, smul_zero]
-  rw [exp_bound_two _ _ 1 (hC v) hz, leftAdjoint_apply, had]
+  rw [exp_bound_two D H h26 hHG hGH _ _ 1 (hC v) hz, leftAdjoint_apply, had]
   module
 
 private theorem exp_f_cartan (v : Fin D.rank → ℂ) :
@@ -432,22 +434,26 @@ private theorem exp_f_cartan (v : Fin D.rank → ℂ) :
   have hz : (leftAdjoint D H h26 hHG hGH fα)
       ((leftAdjoint D H h26 hHG hGH fα) (hC v)) = 0 := by
     simp only [leftAdjoint_apply, had, lie_smul, lie_self, smul_zero]
-  rw [exp_bound_two _ _ (-1) (hC v) hz, leftAdjoint_apply, had]
+  rw [exp_bound_two D H h26 hHG hGH _ _ (-1) (hC v) hz, leftAdjoint_apply, had]
   module
 
 /-- On the ENTIRE original physical Lie image, with no extra local-nilpotence
 premise. Trans acts first by its left factor, so the displayed product acts as
 Exp(ad e) (Exp(-ad f) (Exp(ad e) c)). -/
 def WeylAlpha : Ph ≃ₗ⁅ℂ⁆ Ph :=
-  Eα.trans (Fα.trans Eα)
+  (Eα).trans ((Fα).trans Eα)
 
 /-- The actual root e is taken to the negative normalized opposite root. -/
 theorem WeylAlpha_root_e :
     WeylAlpha D H h26 hHG hGH alpha hα e he he0 e = -fα := by
+  have hsub (x y : Ph) : Eα (x - y) = Eα x - Eα y :=
+    map_sub (Eα).toLieHom.toLinearMap x y
+  have hadd (x y : Ph) : Eα (x + y) = Eα x + Eα y :=
+    map_add (Eα).toLieHom.toLinearMap x y
   change Eα (Fα (Eα e)) = -fα
   rw [exp_e_e D H h26 hHG hGH alpha hα e he he0,
     exp_f_e D H h26 hHG hGH alpha hα e he he0,
-    map_sub, map_add, exp_e_e D H h26 hHG hGH alpha hα e he he0,
+    hsub, hadd, exp_e_e D H h26 hHG hGH alpha hα e he he0,
     exp_e_h D H h26 hHG hGH alpha hα e he he0,
     exp_e_f D H h26 hHG hGH alpha hα e he he0]
   module
@@ -455,26 +461,40 @@ theorem WeylAlpha_root_e :
 /-- The normalized actual opposite root is taken to -e. -/
 theorem WeylAlpha_root_f :
     WeylAlpha D H h26 hHG hGH alpha hα e he he0 fα = -e := by
+  have hsub (x y : Ph) : Fα (x - y) = Fα x - Fα y :=
+    map_sub (Fα).toLieHom.toLinearMap x y
+  have hadd (x y : Ph) : Fα (x + y) = Fα x + Fα y :=
+    map_add (Fα).toLieHom.toLinearMap x y
+  have hneg (x : Ph) : Eα (-x) = -Eα x :=
+    map_neg (Eα).toLieHom.toLinearMap x
   change Eα (Fα (Eα fα)) = -e
   rw [exp_e_f D H h26 hHG hGH alpha hα e he he0,
-    map_sub, map_add, exp_f_f D H h26 hHG hGH alpha hα e he he0,
+    hsub, hadd, exp_f_f D H h26 hHG hGH alpha hα e he he0,
     exp_f_h D H h26 hHG hGH alpha hα e he he0,
     exp_f_e D H h26 hHG hGH alpha hα e he he0]
   have hz : fα + (hαC - (2 : ℂ) • fα) - (e + hαC - fα) = -e := by module
-  rw [hz, map_neg, exp_e_e D H h26 hHG hGH alpha hα e he he0]
+  rw [hz, hneg, exp_e_e D H h26 hHG hGH alpha hα e he he0]
 
 /-- Conjugation on EVERY complex Cartan vector, not only the root coroot. -/
 theorem WeylAlpha_cartan (v : Fin D.rank → ℂ) :
     WeylAlpha D H h26 hHG hGH alpha hα e he he0 (hC v) =
       hC (cartanReflection D alpha v) := by
+  have hFsub (x y : Ph) : Fα (x - y) = Fα x - Fα y :=
+    map_sub (Fα).toLieHom.toLinearMap x y
+  have hFsmul (t : ℂ) (x : Ph) : Fα (t • x) = t • Fα x :=
+    (Fα).toLieHom.toLinearMap.map_smul t x
+  have hEsub (x y : Ph) : Eα (x - y) = Eα x - Eα y :=
+    map_sub (Eα).toLieHom.toLinearMap x y
+  have hEsmul (t : ℂ) (x : Ph) : Eα (t • x) = t • Eα x :=
+    (Eα).toLieHom.toLinearMap.map_smul t x
   change Eα (Fα (Eα (hC v))) = _
   rw [exp_e_cartan D H h26 hHG hGH alpha hα e he he0 v,
-    map_sub, map_smul, exp_f_cartan D H h26 hHG hGH alpha hα e he he0 v,
+    hFsub, hFsmul, exp_f_cartan D H h26 hHG hGH alpha hα e he he0 v,
     exp_f_e D H h26 hHG hGH alpha hα e he he0]
   have hz : hC v - gamma D v alpha • fα -
       gamma D v alpha • (e + hαC - fα) =
       hC v - gamma D v alpha • e - gamma D v alpha • hαC := by module
-  rw [hz, map_sub, map_sub, map_smul, map_smul,
+  rw [hz, hEsub, hEsub, hEsmul, hEsmul,
     exp_e_cartan D H h26 hHG hGH alpha hα e he he0 v,
     exp_e_e D H h26 hHG hGH alpha hα e he he0,
     exp_e_h D H h26 hHG hGH alpha hα e he he0]
@@ -484,7 +504,8 @@ theorem WeylAlpha_cartan (v : Fin D.rank → ℂ) :
 private theorem WeylAlpha_cartan_reflected (v : Fin D.rank → ℂ) :
     WeylAlpha D H h26 hHG hGH alpha hα e he he0
       (hC (cartanReflection D alpha v)) = hC v := by
-  rw [WeylAlpha_cartan, cartanReflection_involutive D alpha hα v]
+  rw [WeylAlpha_cartan D H h26 hHG hGH alpha hα e he he0
+    (cartanReflection D alpha v), cartanReflection_involutive D alpha hα v]
 
 /-- Full original charge-fiber equivalence for EVERY beta, including beta=0,
 and every c in the literal global physical image. No assertion W²=id is used. -/
@@ -492,6 +513,8 @@ theorem WeylAlpha_mem_fiber_iff (beta : Charge D) (c : Ph) :
     (WeylAlpha D H h26 hHG hGH alpha hα e he he0 c : C) ∈
         Fib (chargeReflection D alpha beta) ↔ (c : C) ∈ Fib beta := by
   let W := WeylAlpha D H h26 hHG hGH alpha hα e he he0
+  have hWsmul (t : ℂ) (x : Ph) : W (t • x) = t • W x :=
+    W.toLieHom.toLinearMap.map_smul t x
   have hW (v : Fin D.rank → ℂ) :
       W (hC (cartanReflection D alpha v)) = hC v :=
     WeylAlpha_cartan_reflected D H h26 hHG hGH alpha hα e he he0 v
@@ -505,8 +528,9 @@ theorem WeylAlpha_mem_fiber_iff (beta : Charge D) (c : Ph) :
   · intro hc
     apply (mem_physicalChargeFiber_iff_cartan_adjoint D H h26 hHG hGH beta c).mpr
     intro v
-    apply W.injective
-    rw [W.map_lie, W.map_smul]
+    apply W.toLinearEquiv.injective
+    change W ⁅hC v, c⁆ = W (gamma D v beta • c)
+    rw [LieEquiv.map_lie W, hWsmul]
     change ⁅W (hC v), W c⁆ = gamma D v beta • W c
     rw [hWv v]
     have hev := (mem_physicalChargeFiber_iff_cartan_adjoint D H h26 hHG hGH
@@ -520,12 +544,12 @@ theorem WeylAlpha_mem_fiber_iff (beta : Charge D) (c : Ph) :
     intro v
     calc
       ⁅hC v, W c⁆ = W ⁅hC (cartanReflection D alpha v), c⁆ := by
-        rw [W.map_lie, hW v]
+        rw [LieEquiv.map_lie W, hW v]
       _ = W (gamma D (cartanReflection D alpha v) beta • c) := by
         rw [(mem_physicalChargeFiber_iff_cartan_adjoint D H h26 hHG hGH beta c).mp
           hc (cartanReflection D alpha v)]
       _ = gamma D v (chargeReflection D alpha beta) • W c := by
-        rw [W.map_smul, hchar v]
+        rw [hWsmul, hchar v]
 
 end Root
 end D5.S3.VertexAlgebra.Lattice.PhysicalLie.LatticeBRSTRealRootWeylReflection
