@@ -51,7 +51,7 @@ lemma colMatrix_mul_conjTranspose_of_orthonormalBasis
 lemma sum_vecMulVec_eq_colMatrix_mul (e : Fin k → EuclideanSpace 𝕜 (Fin N)) :
     ∑ i, vecMulVec (⇑(e i)) (star ⇑(e i)) = colMatrix e * (colMatrix e)ᴴ := by
   ext a c
-  simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.vecMulVec_apply]
+  simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.vecMulVec_apply, colMatrix]
 end Gram
 variable {N : ℕ}
 def rankOne (v : EuclideanSpace ℂ (Fin N)) : Matrix (Fin N) (Fin N) ℂ :=
