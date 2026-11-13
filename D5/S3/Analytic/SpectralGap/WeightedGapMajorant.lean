@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/SpectralGap/WeightedGapMajorant
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; premises=D5/S3/Analytic/SpectralGap/WeightedGapMajorant.polynomial_sign1,D5/S3/Analytic/SpectralGap/WeightedGapMajorant.a_bound1,D5/S3/Analytic/SpectralGap/WeightedGapMajorant.b_bound1
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; premises=D5/S3/Analytic/SpectralGap/WeightedGapMajorant.Endpoint1.polynomial_sign1,D5/S3/Analytic/SpectralGap/WeightedGapMajorant.Endpoint1.a_bound1,D5/S3/Analytic/SpectralGap/WeightedGapMajorant.Endpoint1.b_bound1
    digest: Weighted Dirichlet spectral gap comparison. -/
 /-
 admission_basis: escape-witness: coefficient_weighted_bound

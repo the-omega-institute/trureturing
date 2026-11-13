@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/SpectralGap/WeightedGapVolterra
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; premises=D5/S3/Analytic/SpectralGap/WeightedGapVolterra.polynomial_sign6,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.a_bound6,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.b_bound6,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.polynomial_sign7,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.a_bound7,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.b_bound7
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; premises=D5/S3/Analytic/SpectralGap/WeightedGapVolterra.Endpoint6.polynomial_sign6,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.Endpoint6.a_bound6,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.Endpoint6.b_bound6,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.Endpoint7.polynomial_sign7,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.Endpoint7.a_bound7,D5/S3/Analytic/SpectralGap/WeightedGapVolterra.Endpoint7.b_bound7
    digest: Weighted Dirichlet spectral gap comparison. -/
 /-
 admission_basis: escape-witness: solution_volterra

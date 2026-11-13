@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/SpectralGap/WeightedGapDeterminant
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; premises=D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.polynomial_sign4,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.a_bound4,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.b_bound4,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.polynomial_sign5,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.a_bound5,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.b_bound5
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; premises=D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.Endpoint4.polynomial_sign4,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.Endpoint4.a_bound4,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.Endpoint4.b_bound4,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.Endpoint5.polynomial_sign5,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.Endpoint5.a_bound5,D5/S3/Analytic/SpectralGap/WeightedGapDeterminant.Endpoint5.b_bound5
    digest: Weighted Dirichlet spectral gap comparison. -/
 /-
 admission_basis: escape-witness: coefficient_continuous

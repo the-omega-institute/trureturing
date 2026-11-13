@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/SpectralGap/WeightedGapPolynomialCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; instance=D5/S3/Analytic/SpectralGap/WeightedGapPolynomialCertificate.polynomial_sign0
+   utility: kind=checker; basis=consumer=D5/S3/Analytic/SpectralGap/WeightedConvexPotentialRefutation.result; instance=D5/S3/Analytic/SpectralGap/WeightedGapPolynomialCertificate.Endpoint0.polynomial_sign0
    digest: Weighted Dirichlet spectral gap comparison. -/
 /-
 admission_basis: escape-witness: checked_state
