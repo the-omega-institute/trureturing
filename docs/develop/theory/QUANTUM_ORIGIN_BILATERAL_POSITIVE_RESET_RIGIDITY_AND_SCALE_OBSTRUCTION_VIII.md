@@ -3836,3 +3836,544 @@ $$
 [SZ126J]: https://arxiv.org/html/2205.05110v2 "N. Johnston, S. Moein, R. Pereira and S. Plosker, Absolutely k-Incoherent Quantum States and Spectral Inequalities for Factor Width of a Matrix, Physical Review A 106, 052417 (2022), DOI 10.1103/PhysRevA.106.052417；Definition 1、Theorems 1、7。"
 
 ## 追加锚（本行以下为增补区）
+
+## 127. 原全效应的复相位边界、严格种子余量与同返回零法向桥
+
+### 127.1 完整原域、两种坐标及已付种子锥
+
+**约定 127.1（固定模型及类型）。** 沿用126.1的同一个完整原模型：$V\ne0$ 是有限维实空间，$C\subset V$ 为闭尖生成凸锥，原单位 $u\in V^*$ 在 $C\setminus\{0\}$ 上严格正。始终保留
+
+$$
+\begin{gathered}
+C^*=\{h\in V^*:h(C)\ge0\},\quad
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(p\in P,\ x\in C),\\
+D_p=\{x\in K:\mathcal T_p(x)=0\},\quad
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\\
+N_t=\{h\in C^*:h(t)=0\}\quad(t\in K),\qquad
+P_0=\{p\in P:\mathcal A_p\text{ 为单点}\}.
+\end{gathered}
+\tag{SM127.1}
+$$
+
+$D_p$ 是遍历全部原确认效应取得的最低零集，包含全部混态。$\mathcal A_p$ 的成员称完整确认效应；任意确认效应、完整确认效应和全锥序最小确认效应是不同概念。原纯正交 $p\perp q$ 指存在同一 $f\in\mathcal E$ 满足 $f(p)=1,f(q)=0$，由补效应对称。标量函数 $\mathcal T_p$ 与线性种子压缩 $T_i$ 不混型。
+
+$K$ 紧：在任意辅助单位球面与 $C$ 的交上，$u$ 有正的最小值，故其高度一截面有界且闭。$\mathcal E$ 也紧：它闭，且在从 $K$ 选出的有限线性基上的评价均在 $[0,1]$ 内，因而有界。$\mathcal F_p$ 含 $u$ 且紧，所写最小值达到。有限维紧凸分解给 $K=\operatorname{conv}P$，每点有有限纯分解；这里不假定 $P$ 闭。
+
+入口 $\mathsf E_0$ 仍完整取[SAME_READBACK127.1、129.1][SM127SR]：每个原 $D_p$ 为整个仿射闭三球（EB3）；$D_p=D_q\Rightarrow p=q$（Inj）；一组至少含一个 $P_0$ 顶点的实际原正交种子三角 $(p_1,p_2,p_3)$；同一三角的全部原零效应联合分离 $K$，即
+
+$$
+\forall x,y\in K:\quad
+\bigl[\forall i\ \forall f\in\mathcal E,
+\ f(p_i)=0\Rightarrow f(x)=f(y)\bigr]\Rightarrow x=y;
+\tag{SM127.2}
+$$
+
+以及由全部 $\operatorname{span}N_{p_i}$ 读数唯一规定、值域为 $M_i=\operatorname{span}D_{p_i}$ 的规范 $T_i$ 的全原锥正性。准确地，$hT_i=h$ 对每个 $h\in\operatorname{span}N_{p_i}$ 成立，且 $T_i(C)\subseteq C$。入口没有IC0、全局PSD等式或移动零法向供应。
+
+直接复用126.1及SAME_READBACK127.2—127.4：令 $D_i=D_{p_i}$、$C_i=\operatorname{cone}D_i$，则 $\dim V=9$，有共同正定型 $B$、$w=p_1+p_2+p_3\in\operatorname{int}C$，$B(w,x)=u(x)$。固定状态坐标
+
+$$
+\Psi_{\rm coord}:V\overset\sim\longrightarrow H=\operatorname{Herm}_3(\mathbb C),\quad
+B(x,y)=\operatorname{Tr}(\Psi_{\rm coord}x\,\Psi_{\rm coord}y),\quad
+u(x)=\operatorname{Tr}(\Psi_{\rm coord}x),
+\tag{SM127.3}
+$$
+
+它将 $p_i,w,T_i$ 分别送为 $E_{ii},I,X\mapsto Q_iXQ_i$，其中 $Q_i=I-E_{ii}$。另定义**对偶系数映射** $\Upsilon:V^*\to H$，使
+
+$$
+f(x)=\operatorname{Tr}\bigl(\Upsilon(f)\Psi_{\rm coord}x\bigr),\qquad
+\Upsilon(u)=I.
+\tag{SM127.4}
+$$
+
+这是两张不同定义域的映射；记 $\mathcal C=\Psi_{\rm coord}(C)$，则 $\Upsilon(C^*)=\mathcal C^*$，星号在 $H$ 中指实迹配对对偶。设
+
+$$
+\begin{gathered}
+\mathscr B_i=\{Y\succeq0:Y=Q_iYQ_i\},\quad
+F_2=\mathscr B_1+\mathscr B_2+\mathscr B_3,\quad
+Q_2=\{X\in H:Q_iXQ_i\succeq0\ (\forall i)\},\\
+C_i^*=\{\ell\in M_i^*: \ell(C_i)\ge0\},\quad
+\Lambda_i=\{\ell T_i:\ell\in C_i^*\},\quad
+\Sigma=\Lambda_1+\Lambda_2+\Lambda_3,\quad
+\mathcal E_H=\Upsilon(\mathcal E).
+\end{gathered}
+\tag{SM127.5}
+$$
+
+126.2、126.5的闭性、同标签零分解及126所用的复Hermitian对偶直接给
+
+$$
+\begin{gathered}
+\Lambda_i=N_{p_i},\quad \Upsilon(\Lambda_i)=\mathscr B_i,\quad
+\Upsilon(\Sigma)=F_2,\quad F_2^*=Q_2,\quad Q_2^*=F_2,\\
+F_2\subseteq\mathcal C\subseteq Q_2,\quad
+F_2\subseteq\mathcal C^*\subseteq Q_2,\quad
+\mathcal E_H=\{A\in\mathcal C^*:I-A\in\mathcal C^*\}.
+\end{gathered}
+\tag{SM127.6}
+$$
+
+$F_2,Q_2,\Sigma$ 均闭；两个矩阵锥均尖且生成。它们与原 $C,C^*$ 的类型和作用不同，不能把夹逼改成相等。特别地，每个实际效应只保证 $A,I-A\in Q_2$，不保证它们全局PSD。
+
+以下反复使用 $X\in Q_2$ 的局部条件
+
+$$
+x_{ii}\ge0,\qquad |x_{ij}|^2\le x_{ii}x_{jj}.
+\tag{SM127.7}
+$$
+
+所以 $\operatorname{Tr}X=0$ 迫使 $X=0$，$I$ 对每个非零 $X\in Q_2$ 严格正，故 $I\in\operatorname{int}F_2$。所用闭满维锥的内部判据为：与每个非零对偶向量配对严格正，当且仅当在内部。充分性由对偶锥单位球面上的正最小值给出内部小球；必要性由沿零见证反向作小扰动得到。这里仅说明后续所需判据，不重复126的距离／分离理论。
+
+EB3的已付完整面分类给：所有非空真面只有原纯单点和整个暴露极大真面 $D_p$；不同球至多交于一个原纯点；$P\cap D_p$ 是该球的整个相对球面。完整确认的零面恰为 $D_p$，一值面恰为 $\{p\}$。本卷121.6又已给
+
+$$
+P=P_0,\qquad \mathcal A_p=\{e_p\},\qquad
+\dim\operatorname{span}N_p=4\quad(p\in P).
+\tag{SM127.8}
+$$
+
+唯一性不自动给 $e_p(w)=1$ 或least。原 $C$ 的有限增益正回缩、投影暴露、amenability、niceness／facial dual completeness及面上正函数正延拓已由[EXCLUSION IX119.1—119.3][SM127IX]支付；不将它们重列为缺口。
+
+### 127.2 三分之二补吸收的全部复相位边界
+
+**定理 127.2（完整边界分类）。** 对任意闭夹逼锥 $F_2\subseteq\mathcal C\subseteq Q_2$、迹单位及其整个效应区间中的每个 $A\in\mathcal E_H$，126已付的 $S=I-(2/3)A\in F_2$ 满足准确等价
+
+$$
+S\in\partial F_2
+\quad\Longleftrightarrow\quad
+A_{11}=A_{22}=A_{33}=\frac12,\qquad
+|A_{12}|=|A_{13}|=|A_{23}|=\frac12.
+\tag{SM127.9}
+$$
+
+反向允许三条复边任意独立相位；只要该矩阵确属实际效应区间，就构成边界情形，不加相位相容条件。
+
+**证明。** 记 $a_i=A_{ii}$。由 $A,I-A\in Q_2$ 得两组完整局部效应界
+
+$$
+0\le a_i\le1,\qquad
+|A_{ij}|^2\le m_{ij}:=\min\{a_ia_j,(1-a_i)(1-a_j)\}.
+\tag{SM127.10}
+$$
+
+为识别等号，展开126补吸收分块中的差。对 $a,b\in[0,1]$、$s=a+b$，有
+
+$$
+\begin{aligned}
+&(3-2a)(3-2b)-16\min\{ab,(1-a)(1-b)\}\\
+&=\begin{cases}
+3(1-s)(s+3)+3(a-b)^2,&s\le1,\\
+(s-1)(7-3s)+3(a-b)^2,&s\ge1.
+\end{cases}
+\end{aligned}
+\tag{SM127.11}
+$$
+
+两支均非负；第二支有 $1\le s\le2$，故 $7-3s\ge1$。两支的等号均恰为 $a=b=1/2$，包括共同端点 $s=1$。
+
+对每个 $i<j$，取只支撑于该坐标对的块 $B_{ij}$，其主角块为
+
+$$
+\begin{pmatrix}
+(3-2a_i)/6&-(2/3)A_{ij}\\
+-(2/3)\overline{A_{ij}}&(3-2a_j)/6
+\end{pmatrix}.
+\tag{SM127.12}
+$$
+
+对角元至少 $1/6$，行列式为
+$\bigl((3-2a_i)(3-2a_j)-16|A_{ij}|^2\bigr)/36\ge0$，故每块PSD，且 $\sum_{i<j}B_{ij}=S$。由(SM127.10)—(SM127.11)，该块奇异当且仅当
+$a_i=a_j=1/2$ 且 $|A_{ij}|=1/2$。
+
+若某块如 $B_{12}$ 正定，设 $X\in Q_2$ 且 $\operatorname{Tr}(SX)=0$。三个块配对均非负，故各自为零；正定 $B_{12}$ 与PSD的 $12$ 主角块配对为零，迫使该主角块全零。于是 $x_{11}=x_{22}=0$，(SM127.7)清去全部非对角项。仅可能余下 $x_{33}\ge0$；另外两块的 $33$ 对角元严格正，又迫使 $x_{33}=0$。因此无非零对偶零见证，内部判据给 $S\in\operatorname{int}F_2$。这一步覆盖了缺失坐标，不能只由一块正定就略去它。
+
+所以 $S$ 在边界时三块必须全部奇异，正好得到(SM127.9)。反向，在该条件下写 $A_{ij}=\zeta_{ij}/2$、$|\zeta_{ij}|=1$，令 $X=2A$。其各主角块与对应 $B_{ij}$ 分别为
+
+$$
+\begin{pmatrix}1&\zeta_{ij}\\\overline\zeta_{ij}&1\end{pmatrix},
+\qquad
+\frac13\begin{pmatrix}1&-\zeta_{ij}\\-\overline\zeta_{ij}&1\end{pmatrix}.
+\tag{SM127.13}
+$$
+
+前者PSD，故非零 $X\in Q_2$；两块乘积为零，故 $\operatorname{Tr}(SX)=0$。结合 $S\in F_2$ 得 $S\in\partial F_2$。三个相位完全不需对齐；这里没有断言 $X=2A$ 全局PSD。证毕。
+
+### 127.3 实际原效应的整零面与整一面障碍
+
+**引理 127.3（EB3与Inj排除双重非单点面）。** 在整个原EB3+Inj模型中，一张原效应 $f\in\mathcal E$ 不可能同时具有非单点零面 $Z=K\cap\{f=0\}$ 和非单点一面 $W=K\cap\{f=1\}$。
+
+**证明。** 假设两面均非单点。零值与一值同时存在，故两者是非空紧真面。面内有限纯分解给
+$Z=\operatorname{conv}(P\cap Z)$、$W=\operatorname{conv}(P\cap W)$；尤其 $W$ 含两个不同原纯点 $q,q'$。完整面分类使非单点 $Z$ 等于某个整个 $D_s$，因而是极大真面。
+
+对每个 $x\in Z$，同一张 $f\in\mathcal F_q$ 给
+$0\le\mathcal T_q(x)\le f(x)=0$，所以 $Z\subseteq D_q\subsetneq K$。由**被包含面 $Z$** 的极大性，$Z=D_q$。同理 $Z=D_{q'}$，Inj迫使 $q=q'$，矛盾。这里没有预设 $f$ 为完整确认，而是从全部最低定义导出整个排除集合相等；包含关系和分解都保留全部混态。证毕。
+
+在实际 $\mathsf E_0$ 中，若某 $A=\Upsilon(f)$ 满足(SM127.9)，对每个 $j<k$ 取
+
+$$
+q_{jk}^{\pm}=\Psi_{\rm coord}^{-1}\!\left(
+\frac{E_{jj}+E_{kk}\ \pm\zeta_{jk}E_{jk}\ \pm\overline\zeta_{jk}E_{kj}}2
+\right).
+\tag{SM127.14}
+$$
+
+这些是缺失坐标 $i$ 对应的**整个实际种子球** $D_i$ 的秩一迹一端点，故属于 $P\cap D_i$。由迹配对，$f(q_{jk}^+)=1$、$f(q_{jk}^-)=0$。不同坐标对的端点有不同的两元素对角支撑，因而不同。于是同一张原 $f$ 的零面、一面都非单点，与引理127.3矛盾。此排除对全部复相位成立，使用的是实际原端点与实际原效应；一般夹逼锥没有被擅加EB3或Inj。
+
+### 127.4 全效应共同严格余量、达到性及严格上界
+
+固定种子及规范压缩后，定义
+
+$$
+\mathcal R(C)=\{c\ge0:\ \forall f\in\mathcal E,\ u-cf\in\Sigma\},
+\qquad \rho(C)=\sup\mathcal R(C).
+\tag{SM127.15}
+$$
+
+记号 $\rho(C)$ 始终包含这份固定模型的单位与种子数据，不暗示已证明它不依赖种子选择。
+
+**定理 127.4（逐模型严格全区间定理）。** 任意上述完整夹逼模型都有
+$\mathcal R(C)=[0,\rho(C)]$、$2/3\le\rho(C)\le1$，上端达到。每个固定的实际 $\mathsf E_0$ 模型则满足
+
+$$
+\boxed{\quad \frac23<\rho(C)<1.\quad}
+\tag{SM127.16}
+$$
+
+更具体地，存在同一个 $2/3<c_0<1$，使 $u-c_0f\in\operatorname{int}\Sigma$ 对全部原效应 $f\in\mathcal E$ 同时成立。
+
+**证明：闭区间及达到。** $F_2$ 闭，故对每个固定 $A\in\mathcal E_H$，条件 $I-cA\in F_2$ 在 $c$ 上闭；遍及全部效应取交仍闭。126的补吸收给 $2/3\in\mathcal R(C)$。若 $c>0$ 可容许且 $0\le d\le c$，则
+
+$$
+I-dA=\frac dc(I-cA)+\left(1-\frac dc\right)I\in F_2.
+\tag{SM127.17}
+$$
+
+所以容许集向下闭，且含零。测试实际效应 $f=u$：$c>1$ 时 $(1-c)I$ 迹为负，不能属于 $F_2$。容许集非空、闭、有界，故上确界属于其中，准确等于所述闭区间。
+
+**证明：严格共同下界。** 127.3已对全部实际效应排除定理127.2的边界条件。因此
+$\mathscr S=\{I-(2/3)A:A\in\mathcal E_H\}$ 是内部 $\operatorname{int}F_2$ 中的紧集。取Frobenius范数，并令
+
+$$
+\begin{gathered}
+\delta=\operatorname{dist}\bigl(\mathscr S,
+H\setminus\operatorname{int}F_2\bigr)>0,\qquad
+M=\max_{A\in\mathcal E_H}\|A\|_F>0,\\
+\varepsilon=\min\{\delta/(2M),1/6\}>0,\qquad
+c_0=2/3+\varepsilon\le5/6<1.
+\end{gathered}
+\tag{SM127.18}
+$$
+
+$M>0$ 因 $I\in\mathcal E_H$；也可由(SM127.10)取粗界 $M^2\le9/2$。扰动 $-\varepsilon A$ 的范数至多 $\delta/2$，所以所有 $I-c_0A$ 仍在内部。由对偶系数同构运输，所有 $u-c_0f\in\operatorname{int}\Sigma$。共同余量来自**整个效应区间紧性**，没有使用纯点集闭性。
+
+**证明：严格上界。** 从某张实际种子球面取非顶点纯态 $t\notin\{p_1,p_2,p_3\}$。令 $\Sigma_t=\Sigma\cap N_t$。正项在同一 $t$ 的值之和为零，当且仅当每项都在那里为零，所以
+
+$$
+\Sigma_t=\sum_{i=1}^3(\Lambda_i\cap N_t).
+\tag{SM127.19}
+$$
+
+对每个 $i$，$T_it\ne0$：若其补坐标主角块为零，(SM127.7)清去所有与零对角相连的项，只余 $p_i$ 射线；归一后就有 $t=p_i$，矛盾。第 $i$ 个和项的系数是支持在补角上的PSD矩阵 $Y$，满足
+$\operatorname{Tr}(Y\Psi_{\rm coord}T_it)=0$。非零PSD二阶角块 $\Psi_{\rm coord}T_it$ 秩为二时，这迫使 $Y=0$；秩为一时，$Y$ 只能支撑于其一维核，构成单条射线。具体地，零迹使PSD矩阵
+$Y^{1/2}(\Psi_{\rm coord}T_it)Y^{1/2}$ 为零，从而得此支撑限制。因此
+
+$$
+\dim\operatorname{span}\Sigma_t\le3<4
+=\dim\operatorname{span}N_t.
+\tag{SM127.20}
+$$
+
+这是126.2的同标签结构在此上界中的应用；全 $N_t$ 仍为四维张成。
+
+若 $\rho(C)=1$，达到性给 $u-f\in\Sigma$ 对所有 $f\in\mathcal E$ 成立。补映射 $f\mapsto u-f$ 是**整个** $\mathcal E$ 的双射，故 $\mathcal E\subseteq\Sigma$。任意非零 $h\in C^*$ 有
+$0<M(h):=\max_Kh<\infty$，因为 $K$ 张成 $V$；又 $h/M(h)\in\mathcal E$，其补正性由全 $C=\operatorname{cone}K$ 上的齐次性得到。于是 $C^*\subseteq\Sigma$，结合原包含得 $C^*=\Sigma$，与(SM127.20)矛盾。所以 $\rho(C)<1$，并且 $\Sigma\subsetneq C^*$。证毕。
+
+量词为 $\forall\text{固定E0模型}\ \exists c_0>2/3\ \forall f\in\mathcal E$。它既未建立、也未否定跨模型的统一数值改进。若按126.5的全E0模型类记普适系数为 $\kappa$，既有结论仍是 $2/3\le\kappa\le3/4$；逐模型严格性不能把这个下界自动变成严格下界，也未给一般E0逐模型 $\rho(C)\le3/4$。
+
+### 127.5 准确归一对偶最大值
+
+**推论 127.5（全效应与全部局部PSD探针的共同极值）。** 定义
+
+$$
+\mathscr Q=\{X\in Q_2:\operatorname{Tr}X=1\},\qquad
+H_{\mathcal E}=\max_{A\in\mathcal E_H,\ X\in\mathscr Q}
+\operatorname{Tr}(AX).
+\tag{SM127.21}
+$$
+
+最大值达到，且
+
+$$
+\boxed{\quad\rho(C)=\frac1{H_{\mathcal E}},\qquad
+1<H_{\mathcal E}<\frac32\quad\text{在E0中}.\quad}
+\tag{SM127.22}
+$$
+
+因此每个实际效应与每个 $X\in Q_2$ 均满足
+$\operatorname{Tr}(AX)\le H_{\mathcal E}\operatorname{Tr}X$；探针不局限于原状态锥 $\mathcal C$。对定理127.4的同一个 $c_0$，还有
+
+$$
+M(h)u-c_0h\in\operatorname{int}\Sigma
+\qquad(0\ne h\in C^*).
+\tag{SM127.23}
+$$
+
+**证明。** (SM127.7)使 $\mathscr Q$ 的对角元属于 $[0,1]$，非对角模长也有界，故它是紧集；它非空，且每个非零 $Q_2$ 元有正迹，能唯一缩放到其中。$\mathcal E_H$ 紧，故连续配对的最大值达到。取 $A=I\in\mathcal E_H$ 给 $H_{\mathcal E}\ge1$。
+
+闭锥对偶给，对 $c\ge0$，所有 $I-cA\in F_2$ 当且仅当
+
+$$
+1-c\operatorname{Tr}(AX)\ge0
+\quad(\forall A\in\mathcal E_H,\ \forall X\in\mathscr Q),
+\quad\Longleftrightarrow\quad cH_{\mathcal E}\le1.
+\tag{SM127.24}
+$$
+
+所以 $\rho(C)=1/H_{\mathcal E}$，由(SM127.16)得到两个严格界。对任意非零探针缩放即得齐次不等式，零探针平凡。(SM127.23)将严格内部吸收用于 $h/M(h)\in\mathcal E$ 后作正缩放得到。证毕。
+
+### 127.6 既有尖锐类别及保留的整面见证
+
+126.5已证明整个夹逼类别的 $2/3$ 最优性和标准复PSD三能级的 $3/4$ 比较；本章直接复用，不重复证明或重计为新增结果。准确范围是
+
+$$
+\begin{array}{c|c|c}
+\text{完整原锥及迹单位}&\text{整个效应区间}&\rho\\ \hline
+C=F_2& A,I-A\in Q_2&2/3\\
+C=\mathrm{PSD}_3(\mathbb C)&0\preceq A\preceq I&3/4
+\end{array}
+\tag{SM127.25}
+$$
+
+前一行的 $A=J/2$、$J\in Q_2$ 给
+$\operatorname{Tr}(J(I-cJ/2))=3-(9/2)c$；后一行的 $X=2I-J\in Q_2$ 与真实PSD效应 $A=I-J/3$ 给
+$\operatorname{Tr}(X(I-cA))=3-4c$，其中 $J$ 为全一矩阵。相应全区间下界及谱证明均已在126给出。$X$ 的局部PSD不要求全局PSD；把一般原效应换成PSD效应会改变第一行的问题。
+
+$C=F_2$ 是完整有序锥模型，保留整个迹一基、纯点和效应区间。其纯点恰为支撑不超过两个坐标的秩一迹一投影：基是这些投影的紧并的凸包，每个投影在全PSD迹一基中已极端；反之，有限分解使任意极点必须为其中一个。对种子 $E_{ii}$，全确认系数恰为 $E_{ii}\oplus H_i$、$0\preceq H_i\preceq I_2$：$I-A$ 的零 $ii$ 对角清去邻边，余角条件就是该区间。因此最低值为 $x_{ii}$，整个种子 $D_i$ 是补角PSD二阶密度三球，完整确认唯一为 $E_{ii}$。规范角压缩正；种子零锥恰为补角PSD锥，三者张满 $H$，缩放入原效应后联合分离全部原基。这些局部供应仍不使该模型成为E0。
+
+**命题 127.6（夹逼尖锐模型的附加排除集与零面见证）。** 在这个完整 $C=F_2$ 模型中，取实际纯点
+
+$$
+p=\frac{E_{11}+E_{22}-E_{12}-E_{21}}2,\qquad
+r_{j3}(\zeta)=\frac{E_{jj}+E_{33}+\zeta E_{j3}+\overline\zeta E_{3j}}2
+\quad(j=1,2,\ |\zeta|=1).
+\tag{SM127.26}
+$$
+
+最低定义的同一个 $D_p$ 含这两条完整赤道圆，其仿射张成至少五维，故违反全纯EB3。效应 $J/2$ 的整个零面恰为三角形
+
+$$
+\operatorname{conv}\left\{
+\frac{(\mathbf e_j-\mathbf e_k)(\mathbf e_j-\mathbf e_k)^*}{2}:
+1\le j<k\le3\right\}.
+\tag{SM127.27}
+$$
+
+**证明。** 对 $r_{13}(\zeta)$，取全对角为 $1/2$、$G_{12}=-1/2$、$G_{13}=-\zeta/2$、$G_{23}=0$ 的Hermitian系数 $G$。它及 $I-G$ 的每个二阶主角块都PSD，所以是整个原区间中的效应，且 $\operatorname{Tr}(Gp)=1$、$\operatorname{Tr}(Gr_{13}(\zeta))=0$。故此点在最低定义的 $D_p$，不只是某个另选模型的零集。同理取 $G_{13}=0,G_{23}=-\zeta/2$ 得整个 $r_{23}$ 圆也在 $D_p$。两圆各有两个独立实非对角方向，四个方向互相独立；圆心差为 $(E_{11}-E_{22})/2$，与它们独立，故仿射维数至少五。此证明不使用Inj。
+
+对(SM127.27)，在任意上述稀疏纯投影 $vv^*$ 上，$J/2$ 的值为 $|v_1+v_2+v_3|^2/2$。单坐标支撑不能为零；两坐标支撑时，零值迫使两个振幅等模反号，所得投影正是列出的三个。任意原基点作有限稀疏纯分解，正项值的和为零迫使全部正权分量为零纯点，故整个零面恰为其凸包。三个投影的对角向量仿射独立，所以确为三角形。证毕。
+
+这些是完整夹逼类别的见证，明确在全EB3及E0之外。126已有的其他失败见证不在此重复。EXCLUSION X129的闭纯集塌缩例是EB1并失败Inj／PE，也不是E0失败IC0的反模型。标准PSD的 $3/4$ 值只有在相同单位、种子锥与 $T_i$ 被条件表示共同保持时，才可运输到原 $\rho(C)$，见127.8；任意初始复边定向不必使 $\Psi_{\rm coord}(C)$ 恰为标准PSD。
+
+### 127.7 全区间内部与同一实际返回的精确零
+
+127.4的严格上界重用了126.2的准确生成零切片。对每个非种子原纯点，$\Sigma_t$ 至多三条生成射线，而全 $N_t$ 张成四维。在实际点
+
+$$
+t=\Psi_{\rm coord}^{-1}\!\left(
+\frac{E_{22}+E_{33}+E_{23}+E_{32}}2\right),
+\tag{SM127.28}
+$$
+
+三角压缩的核直接给 $\Upsilon(\Sigma_t)$ 恰由 $E_{11}$ 和
+$(E_{22}+E_{33}-E_{23}-E_{32})/2$ 两条射线生成：两个含第一坐标的角各只留下 $E_{11}$，$23$ 角留下其对径射线。若某个原纯点假设性地失败PC1，即三个压缩行列式 $\Delta_i(t)>0$，则三个角都正定，故
+
+$$
+\Sigma_t=\{0\},\qquad \dim\operatorname{span}N_t=4.
+\tag{SM127.29}
+$$
+
+后一句是条件结构，没有构造这种E0失败模型。
+
+对定理127.4中的同一个 $c_0<1$，每张吸收后的尺在**所有原态**上反而满足
+
+$$
+(u-c_0f)(x)\ge1-c_0>0\qquad(x\in K,\ f\in\mathcal E).
+\tag{SM127.30}
+$$
+
+所以这些泛函本身没有指定返回标签的精确零。内部正分解和归一对偶界虽约束整个区间，本章尚无从它们取得缺失零方向及其整球对比的构造。
+
+实际消费者取自另一卷[LOCAL_PURE_LIMIT132、133][SM127LP]，不是SAME_READBACK。固定**整个原源球**
+$F=D_p=c_F+A_F\overline{\mathbb B^k}$，其中 $A_F$ 单射；固定
+$y=c_F+A_F\xi\in\operatorname{ri}F$、$\|\xi\|<1$，及 $V$ 上辅助欧氏距离。先固定单位方向 $v_0,\ldots,v_k$，使原球面点 $c_F+A_Fv_i$ 的单纯形相对内部含 $y$。随后才量化实际返回
+
+$$
+\begin{gathered}
+r\in P,\quad r\longrightarrow y,\qquad t\in P\cap D_r,\qquad
+\alpha_F(t)=\max_{x\in D_t}\operatorname{dist}(x,F),\\
+0\ne b\in N_t,\quad M(b)=\max_Kb,\qquad
+b(c_F+A_Fz)=b(c_F)+\langle g_b,z\rangle,\quad
+w_b=g_b/\|g_b\|\ (g_b\ne0).
+\end{gathered}
+\tag{SM127.31}
+$$
+
+该卷133.2已给先于所有 $r,t,b$ 固定的 $\varepsilon,\theta,H>0$：每个满足 $\|r-y\|<\varepsilon$、$t\in P\cap D_r$、$\dim\operatorname{aff}D_t\le k$ 的实际返回，都有一个可依赖 $r,t$、却不依赖该扇区中 $b$ 的指标 $i$，使
+
+$$
+\forall b\in N_t\setminus\{0\}:\quad
+\bigl[g_b\ne0,\ \|w_b-v_i\|<\theta\bigr]
+\ \Longrightarrow\ 
+\|g_b\|\le H M(b)\alpha_F(t).
+\tag{SM127.32}
+$$
+
+同一来源给实际返回上的单侧泄漏 $\alpha_F(t)\to0$ 的统一控制。E0中 $k=3$，所有返回排除球维数都是三。这里 $b$ 的斜率在**整个源球**上定义，$M(b)$ 用整个原 $K$，零值在同一实际 $t$ 上准确成立。
+
+若要与(SM127.32)矛盾，须在**同一个选定实际返回 $t$** 上，同时供应每个预定扇区中的原正尺 $b_i\in N_t\setminus\{0\}$，满足
+
+$$
+g_{b_i}\ne0,\quad\|w_{b_i}-v_i\|<\theta,\qquad
+\|g_{b_i}\|>H M(b_i)\alpha_F(t)\quad(i=0,\ldots,k).
+\tag{SM127.33}
+$$
+
+不同方向各用一个不同返回不满足这个联合量词。也不能将全 $N_t$ 换成 $\Sigma_t$，或将闭切锥方向换成存在有限步长的原可行直线。126.2已明确这两个切向概念的差别；本章不重复其距离／分离结果。
+
+该卷132.2在**整源正提升及共同精确零已经供应**后给原单位预算控制，不给提升的存在性；132.4的有限测试障碍仍保留。[相应既有形式化接口的数学陈述][SM127LPC]覆盖132.2—132.4，明确不含LP、正提升存在性、132.5或133；本章只据其所列陈述区分已付控制与未付存在性。原 $C$ 的共同有限增益正回缩也不是免费零化：其将 $p$ 送为 $\kappa_F c_F$（$\kappa_F>0$ 为相应增益系数），不将 $p$ 送为零，且不保原单位。仍待证明的对象包括对偶 $C^*$ 的niceness、移动精确零纤维的下关联，以及(SM127.33)所需实际同返回方向供应；本章没有给它们的否定证明。
+
+为准确回接已有拓扑桥，NC指在固定辅助范数下 $\inf_{p\in P}\operatorname{diam}D_p>0$；(O)指每条实际纯边 $q\in P\cap D_p$ 对每个纯序列 $p_n\to p$ 都有纯 $q_n\in D_{p_n}$ 趋于 $q$。令 $Z_t=\{g\in\mathcal E:g(t)=0\}$，WZ为
+
+$$
+\begin{gathered}
+\forall s,r\in P\ (r\in D_s)\quad\exists h\in\mathcal A_s\quad
+\forall t_n\in P\ (t_n\to r)\quad
+\exists g_n\in Z_{t_n}:\ \|g_n-h\|_K\to0,\\
+\|h\|_K=\max_K|h|.
+\end{gathered}
+\tag{SM127.34}
+$$
+
+固定 $h$ 先于所有趋近序列。[EXCLUSION IX118.1—118.13][SM127IX]在完整EB3+Inj中已给
+NC $\Longleftrightarrow$ (O) $\Longleftrightarrow$ WZ $\Longleftrightarrow$ 同原锥同原单位PSD三能级表示。127.4既没有证明这些条件，也没有证明其失败；没有合法完整反模型时，不将本章方法尚未供应它们写成逻辑非蕴含。
+
+### 127.8 原E0加IC0候选、静态公理字典及完整物理合同
+
+完整静态候选仍为 $\mathsf E_0+\mathsf{IC}_0$，其中固定内球与接触为
+
+$$
+I_0=\{w/3+v:u(v)=0,\ B(v,v)\le1/6\},\qquad
+\mathsf{IC}_0:\quad\forall p\in P_0,\ D_p\cap I_0\ne\varnothing.
+\tag{SM127.35}
+$$
+
+SAME_READBACK127.11、129、130及本卷121.7、125.10已在同一个完整E0中给出条件链
+
+$$
+\begin{aligned}
+\mathsf{IC}_0
+&\Longleftrightarrow\ \forall p\in P,\ e_p(w)=1
+\Longleftrightarrow\ \forall p\in P,\ B(p,p)=1\\
+&\Longleftrightarrow\ \text{全原PC1}
+\Longleftrightarrow\ \text{全原PC3}
+\Longleftrightarrow\ \text{全宽W}
+\Longleftrightarrow\ \text{原状态谱性}\\
+&\Longleftrightarrow\ \text{同原锥同原单位的完整复PSD三能级表示}.
+\end{aligned}
+\tag{SM127.36}
+$$
+
+这里 $\Delta_i(p)$ 是 $\Psi_{\rm coord}p$ 的第 $i$ 个补角行列式；全PC1为每个原纯点至少一个 $\Delta_i=0$，全PC3为每个原纯点三个全零。由至少一项为零到三项全零的既有升级使用全部原标签及完整实际球面，不能当作孤立标签的一次接触结论。本卷125还将**整个边界的最低总次数至多三**接入同一条件链，成立时最低次数恰为三；并未证明一般E0自动代数化。123—124的三线性／立方族分类继续守各自完整族前件。
+
+成立时有同一个 $\Phi:H\overset\sim\to V$，满足
+
+$$
+\Phi(\mathrm{PSD}_3)=C,\quad u\Phi=\operatorname{Tr},\quad
+\Phi(I)=w,\quad B(\Phi X,\Phi Y)=\operatorname{Tr}(XY).
+\tag{SM127.37}
+$$
+
+本章**完整承接126.7静态对应表的全部行、条件与对象**：全部 $P$ 是 $\Phi(zz^*/(z^*z))$ 的复Hilbert射线 $\mathbb{CP}^2$；整个 $K,C$ 为全部密度矩阵及零、次归一和任意非负质量的PSD像；整个效应区间为 $0\preceq A\preceq I$，原概率为 $\operatorname{Tr}(A\rho)$。对单位 $z$，全确认族为 $zz^*\oplus A_\perp$、$0\preceq A_\perp\preceq I_{z^\perp}$，least为 $zz^*$，最低值为 $z^*\rho z$；整个 $D_{p_z}$ 为 $z^\perp$ 上的全部密度三球，原纯正交为复正交，纯比较为归一内积模方。每条原正交纯边有唯一第三点，三秩一效应和为 $u$；全部有限效应单位分解恰是全部有限数学POVM。全态具有允许零权及重复谱的三项正交谱分解；实可观测量为Hermitian矩阵，Jordan积由 $(XY+YX)/2$ 运输。中心为 $w/3$，排除球中心为 $(w-p)/2$、$B$ 半径平方为 $1/2$，规范 $T_i$ 为共同表示中的角压缩。这些条件字典是复用，W到秩三EJA、G、Pair及谱性的桥已由[EXCLUSION VIII113.7][SM127VIII]支付，不另列未付分类。
+
+该条件表示还按SAME_READBACK(Q127.33)—(Q127.34)保持共同 $B,w$、实际种子及原 $T_i$，从而将原 $\Sigma$ 送到同一PSD表示中的 $F_2$。因此在IC0成立时，126的比较准确运输为 $\rho(C)=3/4$。这不要求任意初选 $\Psi_{\rm coord}$ 就把整个 $C$ 写成标准PSD。新不等式(SM127.16)是E0的后果，不能免费替代IC0，也未构成已完成的更小公理系统；E0到PC1／IC0的原目标在此仍未解决，也未给完整E0失败模型。
+
+**完整继承范围。** 126.7的完整物理合同在本章逐项原样生效；其承重点是[SAME_READBACK的第127.10节（SECTION127.10）][SM127SR]，不是数学定理127.10。完整引用链为：该节至同卷125.11、124.9、123.13；[EXCLUSION VIII命题113.11、112.9、111.10、109.13][SM127VIII]；[FINITE_PURE VII106.16][SM127FP]；[EXCLUSION IX120.11][SM127IX]；[THREE_COPY VII的121.12、122.14及102.1、102.13—102.15、103.10—103.12、104.1—104.2、104.10][SM127HIER]；[INTRINSIC_POLAR VI定义89.7、全部两尺度式(89.13)、89.8—89.10][SM127VI]；[BILATERAL V87及88.6—88.8][SM127V]；并沿这些原文继续保留[原生续卷VII][SM127Native]及其III等原来源、过程、全未来与动态消费者。本章继承这些完整原文的所有前件、作用域和量词，不以以下便读展开替换原合同。
+
+同一原装饰元组 $\mathcal O$ 与共同来源域保留：**原概率像自身**的有限维紧性、全部中点实现、整个原测试表及其闭性、零／单位／中点／补／有界倍增、重复标签和每种同中点实现。全部非负质量，包括零、次归一、不等质量，以及每个过程与参考各自完整的相关联合输入域均保留；不以概率完成或当前概率相等识别原历史及未来。
+
+原 $L,p,\omega,K,M$、两次使用同一个读回 $p$、两实张成、全部实关系 $Z$、完整(83.8)、VI(89.13)全部两尺度等式、C2、整个向量等式 $G=1_E$ 均保留。只有精确PRE之后，才在同一个原资格态及其**整个输出**上读H13；每个原资格参数、活跃块严格负方向、共享总迹一、非活跃零质量和空活跃集分支都保留。原单位、迹、伴随、内积、二次表示和中心因子必须共同运输；一般忠实EJA桥及复型／Born的两个精确原接口各守完整前件。这里操作读回 $p$ 与纯标签 $p$ 的作用域不同。
+
+全部设备／事件／来源绑定、所有菜单与分支、实际参考／副本／相关联合、记录／权限／控制／钟／单位、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、旧固定支撑、每个中间切口和全部合法未来均保留。原生及细化消费者保留terminal futures、全部联合有符号关系、细标签粗归组、记录后条件未来、source-adoption和资源合同。有限预测秩路线与不预付独立容量的路线各守其原条件；全未来终端Born／完成PSD／共同POVM的已得成果照原域复用，但闭凸完成不供应每一点的实际准备或原菜单，也不供应记录后七地址条件未来、analyzer接受接头或active-ready接头。终端与记录后条件过程、同边缘与同联合律均不合并。
+
+对每个有限 $N\ge1$，仍须实际供应 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N$、全部 $P_N$ 与完整 $\mathcal E_N$。每个实际分块保持
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b,
+\tag{SM127.38}
+$$
+
+连同同一产品评价、严格张量单位、全部原因子置换及正逆、规范重括号、指定运输下不连续位置分块。整个 $S_2$ 保留：对每个产品或纠缠纯点 $p,q_\ell\in P_2$、每个有限概率族（含零权、重复标签），要求
+
+$$
+\mathcal T_p^{(2)}\!\left(\sum_\ell t_\ell q_\ell\right)
+=\sum_\ell t_\ell\mathcal T_{q_\ell}^{(2)}(p),\qquad
+\mathcal T_p^{(2)}(x)=
+\inf_{\substack{f\in[0,u_2]_{C_2^*}\\f(p)=1}}f(x),
+\quad t_\ell\ge0,\ \sum_\ell t_\ell=1.
+\tag{SM127.39}
+$$
+
+不能缩成产品态测试。低 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥、唯一实际自复合的扇区／秩／实维限制所作的复型选择、同一实际两因子的产品正规形，仍是分别使用的三项条件供应。
+
+非经典分支 $\mathsf F_{\max}$ 仍要求同一最大复块 $L\ge2$、同一含相位正交基、$g=\sum_{a=1}^L|aaa\rangle$、实际 $\Delta=gg^*\in C_3$、$u_3(\Delta)=L$、其余扇区为零，及原归一源 $\Delta/L$；不预付三份纯性或实际制备。全经典 $L=1$ 例外保留。复三能级分支 $L=3$，二、三份秩为九、二十七，高阶整个载体不被要求满足单体EB3。只有全部联合前件及具名供应齐备后才消费全有限层级定理。
+
+数学全旁观正性保持每个 $b\ge0$ 及全部含纠缠共同输入的量词
+
+$$
+(\operatorname{id}_{W_b}\otimes F)(C_{b+m})\subseteq C_{b+n}.
+\tag{SM127.40}
+$$
+
+仅在共同全层级表示后，才识别通常CP、Choi、矩形跨扇区Kraus及逐输入TP／TNI预算。同一实际事件的CP保留完整提升、实际探针及完整复线性相容核，或其完整递归参考路线；零腿权、不等维、标量转移均允许，HP提升的全锥正性不能预付。全部数学CP-TNI分支成为实际事件仍需额外事件饱和。同族仪器保持共同输入预算、接线、记录、粗粒化、校准和共同重置的输入行一致；未标准校准时局部与旁观两预算都保留。输入质量正才取条件概率，分支质量正才取后态，零分支记录及全部未来照留。Lüders另需同一CP分支的锐效应、对全部确定接受态逐点中性及输出校准；数学POVM或数学锥自同构不供应实际仪器。
+
+原钟、实际动态来源、单位、连续齐次可逆全实时间群仍分别给定。另给 $A_0=I$、$A_{s+t}=A_sA_t$、$A_t(C)=C$、$uA_t=u$ 的连续线性群，才描述其有限维生成元；复块再给相应酉时间族与时间／能量单位及共同正 $\hbar$ 后，才写
+
+$$
+U_t=\exp(-\mathrm itH/\hbar),\quad
+\rho_t=U_t\rho U_t^*,\quad
+\mathcal L(\rho)=-\mathrm i[H,\rho]/\hbar,\quad H=H^*.
+\tag{SM127.41}
+$$
+
+公式覆盖该已给时间族的全部输入与全部时间。$H$ 加标量和时间重标保留静态数据；静态余量不选择实际Hamiltonian、能量识别及标定、数值 $\hbar$、时空或物理空间维数。无限维正常性、生成元域及收敛仍在本有限维结果之外。
+
+### 127.9 完整直观图景与来源归属
+
+把全部原状态看成一块完整实体，原效应是一把在整块实体上读零到一的尺。三颗实际种子球各提供一族正尺，只准非负倍数相加就得到 $\Sigma$。126已经说明，每把原尺缩成三分之二后从单位尺扣除，都进得了这个工具箱。本章问它什么时候恰好擦着工具箱边缘：答案要求三条边的每个对角高度都是一半、每条复边幅度也都是一半，相位却可以任意。每张实际种子球于是各给这同一把原尺一个零点和一个一值点。完整面分类把多个零点所在的整零面认成一颗完整极大排除球，而两个不同的一值纯点又都必须拥有这同一颗排除球；原标签单射性不容许这件事，所以实际E0效应不能擦边。全部原效应的紧性再把逐把尺的内部余地变成这个固定模型对所有尺共用的一份严格余量，全程不需先把纯点集宣布为闭集。余量却到不了一：若能完整取补，工具箱便包含每张原正尺；而在同一非种子纯点处，它最多只有三根精确零射线，全原法向却张成四维，矛盾。归一对偶最大值恰好是最佳吸收系数的倒数，给出同一约束的另一种读法。但这些从单位尺扣除所得的新尺，在每个原态仍严格为正，自己没有移动返回点的精确零；要压倒整球泄漏，仍须在同一个实际返回上同时找到各个扇区的原正零尺。这个缺口关乎共同零值、方向和全源球对比的联合存在，不能由不同返回各取一尺、改用生成零锥或画出闭切向来填补。故新余量是原E0的一条全效应后果，完整候选依然带IC0，来源、纠缠复合、事件、记录、全部合法未来与真实物理时间也依然各守原合同。
+
+本章新增的纸面连接是：(SM127.9)的全部复相位边界分类；以完整原零／一面和Inj排除实际边界；以整个效应区间紧性取得逐模型共同内部余量；以达到性、补双射和同标签维数冲突取得 $\rho<1$；以及准确对偶极值(SM127.22)。命题127.6保留夹逼尖锐模型中两条整赤道圆及整零三角的附加见证，不把它们误作E0反模型。种子夹逼、$\Sigma$ 闭性与同标签零分解、完整面分类、全纯完整确认唯一、四维法向、原锥niceness及有限增益回缩、条件PSD字典、低次数／族内分类、$2/3$ 全夹逼尖锐性与标准PSD的 $3/4$ 均为126或更早结果的复用／应用。
+
+复Hermitian factor-width-two的闭性与迹对偶已有[公开源码][SM127FW]中的 `block_closed`、`block_separation`、`fw2_duality` 及[相应数学陈述][SM127FWB]。它们是既有来源，本章不提出新的形式化。[Ringbauer等][SM127R]的Theorems 1—2及Supplement A.6给复Hermitian比较矩阵／二级相干与局部PSD对偶的背景；[Johnston—Moein—Pereira—Plosker][SM127J]的Definition 1、Theorem 1、Theorem 7分别给同类局部PSD对偶、负本征值数界及绝对二级相干的纯度判据（三维时为充要）。标准 $3/4$ 比较是这些成熟谱／相干结果的应用范围，已由126完整展开。Boman等的实对称factor-width范围（DOI `10.1016/j.laa.2005.03.029`）不承担本章复相位证明。新增归属在原E0与整效应边界的连接，不作历史优先权或文献穷尽声明。
+
+[SM127SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "127.1—127.4、127.9、SECTION127.10及完整继承链、127.11、129—130：同一原E0、条件静态表示与完整物理合同。"
+[SM127IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "118.1—118.13：NC／(O)／WZ条件链；119.1—119.3：有限增益回缩及原C的凸分析性质；定理119.10：法向维数；120.11：物理合同。"
+[SM127VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "113.7：已付W到秩三EJA／G／Pair／谱性；109.13、111.10、112.9、113.11：完整物理接口。"
+[SM127LP]: QUANTUM_ORIGIN_LOCAL_PURE_LIMIT_AND_COMMON_POSITIVE_LIFTS_CONTINUATION.md "独立续卷132.1—132.5、133.1—133.4：整源共同正提升、原单位预算及实际同返回扇区／泄漏消费者。"
+[SM127LPC]: https://github.com/the-omega-institute/trureturing/blob/635446ecb396cf67c6df41a7aa48e29198171e09/Blueprint/D5/S3/Quantum/Foundation/FixedZeroObstruction/LocalPureLimit.md "132.2—132.4对应的原单位预算与有限测试控制陈述；不含LP／正提升存在性、132.5或133。"
+[SM127FP]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "106.16及原引用：完整静态字典与来源、联合、事件和动态边界。"
+[SM127HIER]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "102.1、102.13—102.15、103.10—103.12、104.1—104.2、104.10及121.12、122.14：全有限原联合与全部消费者合同。"
+[SM127VI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "定义89.7、全部式(89.13)、89.8—89.10及原继承：同装饰数据、完整来源与原生／细化合同。"
+[SM127V]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md "87、88.6—88.8：原概率像、全中点实现、全测试表、忠实运输及全部量子消费者。"
+[SM127Native]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md "13—21、22、24—28及其III等原引用：有限秩与无独立容量路线、终端全未来、联合细化、source-adoption及实际过程边界。"
+[SM127FW]: https://github.com/the-omega-institute/trureturing/blob/c2cf5cc9b370045ab279a47443f199a5ba83078d/D5/S3/Quantum/Measurement/FactorWidthTwoCone.lean "既有复Hermitian块闭性、分离与fw2_duality源码。"
+[SM127FWB]: https://github.com/the-omega-institute/trureturing/blob/c2cf5cc9b370045ab279a47443f199a5ba83078d/Blueprint/D5/S3/Quantum/Measurement/FactorWidthTwoCone.md "既有factor-width-two数学陈述。"
+[SM127R]: https://arxiv.org/pdf/1707.05282 "M. Ringbauer et al., Certification and Quantification of Multilevel Quantum Coherence, Physical Review X 8, 041007, DOI 10.1103/PhysRevX.8.041007；Theorems 1—2、Supplement A.6。"
+[SM127J]: https://arxiv.org/pdf/2205.05110v2 "N. Johnston, S. Moein, R. Pereira and S. Plosker, Absolutely k-Incoherent Quantum States and Spectral Inequalities for Factor Width of a Matrix, Physical Review A 106, 052417, DOI 10.1103/PhysRevA.106.052417；Definition 1、Theorems 1、7。"
+
+## 追加锚（本行以下为增补区）
