@@ -25,6 +25,8 @@ coverage_gids:
     target_statement_id: sha256:25ecc3a2462b6bdfa25e7acd241924d4b10444044b4aad205e979fbe4a726791
   - gid: D5/S3/Quantum/Foundation/OriginalFacePolarity.chart_boundary
     target_statement_id: sha256:e674c21245bdd878fc7aae554ecaca6685d6428a6507fae65b457c5ec96fabfe
+  - gid: D5/S3/Quantum/Foundation/OriginalStateCover.original_state_cover
+    target_statement_id: sha256:dc9644ca2fc3d3d277c416194d156468a1ee29bbbfb3804439b5adcbe8036c05
 receipts:
   unresolved_subitems: []
   chain_atoms:
