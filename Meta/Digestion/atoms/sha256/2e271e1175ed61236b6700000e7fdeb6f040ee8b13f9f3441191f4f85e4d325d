@@ -1,0 +1,31 @@
+**Theorem 48.1 (uniform nine-atom recovery).** After the initial
+always-right marker and exactly one successful Resume followed by
+the next actual marker, the complete canonical record determines
+$(a_e,\ldots,a_{e+8})$ and $\mathcal R_9(e)$ for every $e\in\mathbb Z$.
+It uses $K+D_1\le10$ comparisons in total. In addition to its acquired
+prefix, the decoder uses the fixed source promise to infer some letters
+beyond its current cursor; these are not extra source queries.
+
+**Proof.** Two consecutive distance-three returns would contain
+$B_3B_3 00=00100100$. That length-eight block has two ones, but
+(IV.127) gives at least $8-\lceil8s\rceil=3$ ones in every such block,
+since $4<8s<5$. Hence $3,3$ is impossible. At any marker the prefix
+$0010$ is forced by the exclusions $000$ and $11$. If $D_1=5$,
+the nine-letter word from $p_0$ is the concatenation of $B_5$ and
+$0010$, namely $001010010$.
+If $D_1=3$, the following mathematical return exists by the same
+source stopping argument and must be five; the nine-letter word is
+the first nine letters of $B_3B_5 00$, namely $001001010$.
+This use of an unqueried return is a consequence of the source promise,
+not a second Resume. Thus in the two cases form respectively
+
+$$
+U_K\,001010010,\qquad U_K\,001001010,
+\tag{IV.150}
+$$
+
+and take the first nine letters. They start at the original $e$,
+because $|U_K|=K-1=p_0-e$. Applying (IV.121) gives the required
+ordered output tuple with every beta-output bracket retained. The
+comparison bound is $K+D_1\le5+5$. $\square$
+

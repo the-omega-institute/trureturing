@@ -1,0 +1,20 @@
+**Definition 43.1 (a relative chart with its boundary).** At the first
+stopped state let $l,r$ be the total left/right counts and $K=l+r$.
+For $-l\le j\le r$ write $b_j=f(e+j)$. The rooted oriented chart has
+vertices at relative positions
+
+$$
+Q(0)=0,\qquad Q(j+1)-Q(j)=\varphi^2-b_j
+\quad(-l\le j\le r).
+\tag{IV.137}
+$$
+
+It includes all $K+1$ visited gap tiles, their $K+2$ endpoints
+$Q(-l),\ldots,Q(r+1)$, the root tile $[Q(0),Q(1)]$ and the two end
+boundary points. In the selected realization
+$Q(j)=P(e+j)-P(e)$. The boundary alone consists only of the two end
+points with the indicated orientation; it is a coarser observation
+than this full chart. No absolute translation is part of the chart.
+The event spine is the chronological side word obtained by reversing
+the stored action list.
+

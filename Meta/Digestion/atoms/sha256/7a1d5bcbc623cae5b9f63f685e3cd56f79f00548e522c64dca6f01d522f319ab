@@ -1,0 +1,39 @@
+**Proposition 44.1 (the exact closed-window defect).** Let
+$\Lambda_{\rm cl}$ be the physical `modelSet goldenWindow` of
+[GoldenModelSetDelone](../../../D5/S3/Fourier/GoldenModelSetDelone.lean),
+with internal coordinate $a-bs$ and its supplied **closed** window
+$[s-1,s]$. Then
+
+$$
+\Lambda_{\rm cl}=\Lambda_{\rm sel}\ \sqcup\ \{-1-\varphi\}.
+\tag{IV.139}
+$$
+
+The additional point splits one selected $\varphi^2$ gap into gaps
+$\varphi$ and $1$. Thus the complete closed-set nearest-neighbour
+geometry is not globally the selected two-length chain of (IV.120).
+
+**Proof.** At integer coefficient $b$, membership requires
+
+$$
+(b+1)s-1\le a\le(b+1)s,\qquad a\in\mathbb Z.
+\tag{IV.140}
+$$
+
+Unless $(b+1)s$ is integral, this unit interval contains exactly
+$A(b)=\lfloor(b+1)s\rfloor$. Irrationality of $s$ makes its integral
+case exactly $b=-1$. At that fibre the two integers are $0$ and $-1$.
+The first is selected and gives $P(-1)=-\varphi$; the other gives
+$-1-\varphi$. Irrationality of $\varphi$ makes the representation
+$a+b\varphi$ injective on $\mathbb Z^2$, so the extra point cannot be
+selected at another fibre. It lies strictly between
+$P(-2)=-1-2\varphi$ and $P(-1)=-\varphi$. Their distances to it are
+$\varphi$ and $1$, while their selected separation was $\varphi^2$.
+This proves (IV.139). In particular a port on all closed-set neighbours
+does not satisfy Assumption 40.4 just by having the same window name.
+An actual selection service, an explicit other endpoint convention or
+a proved restricted-patch correspondence is needed. The distinct set
+named `goldenModelSet = range betaGolden` in
+[GoldenModelSetSelfSimilar](../../../D5/S1/Deficit/ModelSet/GoldenModelSetSelfSimilar.lean)
+is not identified here with either side of (IV.139). $\square$
+

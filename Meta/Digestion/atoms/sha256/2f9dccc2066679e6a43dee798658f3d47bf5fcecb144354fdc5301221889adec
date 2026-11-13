@@ -1,0 +1,88 @@
+**Theorem 46.1 (same-cursor return correspondence).** Under Definitions
+45.1 and Assumption 45.2, suppose a returned stopped cursor is $p+1$
+and its marked edge is $f(p)f(p+1)=00$. After one successful Resume,
+the next actual marker is reached in exactly $D$ right comparisons,
+where $D\in\{3,5\}$. Its inner start is $p+D$, its returned cursor
+is $p+D+1$, and its actual reply word is $0^{D-1}1$. The intervening
+half-open source block and the newly acquired letters are respectively
+
+$$
+B_3=001,\quad B_5=00101,\qquad
+f[p,p+D)=B_D,\qquad
+f[p+2,p+D+2)=
+\begin{cases}100&D=3,\\10100&D=5.\end{cases}
+\tag{IV.146}
+$$
+
+Here $f[u,v)$ lists the letters at all integer indices $u\le i<v$.
+The theorem is pointwise for every integer $p$ in its marked domain.
+
+**Proof.** First fix the supplier correspondence, including its domain.
+On natural positions, `goldenWord` true represents $d(i)=1-f(i)$:
+the finite-prefix identity in
+[GoldenWord](../../../D5/S1/Words/GoldenWord.lean) and
+`fibWord_eq_beatty_floor` in
+[ZeckendorfBeattyBridge](../../../D5/S1/Words/ZeckendorfBeattyBridge.lean)
+give exactly the $i+1$ shift of (IV.119). Thus true-true corresponds
+to $00$, and increasing natural indices correspond to increasing
+right source indices, with no reversal. The existing
+[`golden_return_words_two_true_true`](../../../D5/S1/Words/ReturnWords/GoldenReturnWordsExact.lean)
+supplies true-true-false and true-true-false-true-false. Complementing
+their names gives $B_3,B_5$. Its adjacent-occurrence definition in
+[GoldenReturnWords](../../../D5/S1/Words/ReturnWords/GoldenReturnWords.lean)
+includes both marked starts and the absence of any intervening start.
+The length injectivity in
+[GoldenReturnItinerary](../../../D5/S1/Words/ReturnWords/GoldenReturnItinerary.lean)
+ensures that an observed return length identifies its word, rather
+than merely its composition.
+
+To use this natural-index supplier at every integer origin, take any
+finite block of $N$ letters starting at $u\in\mathbb Z$ and put
+$x=\{(u+1)s\}$. For $0\le j<N$ its uncomplemented letters are
+
+$$
+d(u+j)=\lfloor x+(j+1)s\rfloor-\lfloor x+js\rfloor.
+\tag{IV.147}
+$$
+
+The finitely many floors at $j=0,\ldots,N$ are constant on a common
+sufficiently short interval $[x,x+\epsilon)$, with $x+\epsilon<1$.
+This uses right continuity at an integral floor endpoint as well;
+it never replaces a lower floor by an upper floor. The positive
+irrational rotation orbit $\{\{(n+1)s\}:n\ge0\}$ is dense, so some
+nonnegative $n$ has its phase in $(x,x+\epsilon)$. Equation (IV.147)
+then gives exactly the same finite block at $n$. In particular transfer
+the entire block $f[p,p+D+2)$ when comparing two adjacent $00$ starts.
+Both two-letter endpoint occurrences and every intermediate candidate
+start survive the transfer. The supplier therefore classifies these
+integer return blocks too. This is the classical mechanical coding
+argument of [Berstel, §3.1](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf),
+used here only to transport this finite adjacent-marker certificate.
+
+It remains to obtain a next marker with the actual interface. Let
+$c=p+1-e$ be the count at the stopped cut. For the $j$th query after
+Resume, $j\ge1$, (IV.145) compares $f(p+j),f(p+j+1)$. These are
+exactly the replies of the original always-right run mathematically
+rooted at $p+1$, at its $j$th query, until its first mark. Induction
+on $j$ proves this response correspondence using $c+j-1$ as the
+unchanged original count plus the new queries. Theorem 41.1 applied
+to $S_{p+1}$ supplies a first mark within five comparisons. This
+application is an equality of suffix responses, not a new physical
+preparation or an operation moving the original anchor.
+
+Let its marked start be $p+D$. All starts $p+1,\ldots,p+D-1$
+were actually compared and unmarked. Thus it is the next adjacent
+start after $p$, so the transferred supplier gives $D=3$ or $5$ and
+$f[p,p+D)=B_D$. Exactly $D$ comparisons have occurred, because the
+first new inner endpoint was $p+1$, not $p$. Appending the final $00$
+to $B_D$ and deleting its already known initial two letters gives
+$100$ or $10100$. The emitted replies, count and outer cursor follow
+from (IV.145). Finite progress and return are Assumption 45.2's
+premises; word classification alone supplies neither. $\square$
+
+The adjacent-start convention and derived-word factorization are
+classical; see [Justin–Vuillon, §1.2](https://www.numdam.org/item/ITA_2000__34_5_343_0.pdf)
+and [Durand, §2.3](https://arxiv.org/pdf/0807.3322v1). The additional
+correspondence here is between their half-open block and this paid
+operation's outer cursor, actual comparisons and original anchored source.
+

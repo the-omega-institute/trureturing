@@ -1,0 +1,63 @@
+**Proposition 41.2 (the readout domain is substantive).** The terminal
+`Task.retained` root test receives $f(e)$ by horizon five. A
+fresh residual `Task.raw` decoder introduced at public horizon
+four, with only `currentMode` and subsequent outputs and no earlier
+trace or controller memory, cannot uniformly identify $f(e)$, even
+after the known always-right policy. An initialized always-right raw
+controller, or a finite `Test` started at $h_0$, does recover $f(e)$
+for every $e\in\mathbb Z$ with at most four queries: on the first
+`rawMark` at query $k\le4$ return $(k-1)\bmod2$; if the first four
+outputs are `zero`, return $0$. Neither the uncomplemented mechanical
+letters nor independent outward rays can replace (IV.124) in
+Theorem 41.1.
+
+**Proof.** At a stopped state `currentMode retained` is exactly
+`root(recoveredRoot h)`; applying the read function that returns its
+root bit gives $f(e)$ by Theorem 41.1.
+
+For the fresh residual impossibility, (IV.119) gives
+$f(1)f(2)f(3)=100$. Under always-right, origins $e=1$ and $e=2$
+therefore have roots $1,0$ and first marker times $2,1$, respectively.
+Both expose only `stopped` under `Task.raw` at $h_4$, and every later
+raw query rejects without changing the state. Induction on the
+`read`, `query` and `inspect` constructors gives the same result for
+every fixed fresh residual `Test` on these two states. The known
+policy and public horizon four agree as well. Thus these inputs
+cannot determine their different roots.
+
+For initialized control, before the first marker every compared right
+edge alternates, since neither $11$ nor an unreported $00$ can occur.
+At the first marker at query $k$, its inner endpoint is $0$ at distance
+$k-1$ from the root. Hence the root is $(k-1)\bmod2$. If all four
+outputs are `zero`, the active five-letter word is $01010$ by the
+proof of Theorem 41.1, and the always-right root is its first bit $0$.
+The controller returns immediately on a marker and makes no later
+query; otherwise it returns after query four. Returning after four
+zeros leaves the native state active, preserving the distinct stopping
+horizon. The counter starts at one at $h_0$ and is known from the
+controller's own query sequence, including when it stops early.
+
+Concretely, a finite `Test` uses `query` on $R$ at each of its four
+successive zero-branch depths. At depth $k$, the `rawMark` branch is
+a `read` with constant Boolean value $(k-1)\bmod2$; the `zero` branch
+continues to depth $k+1$, or to a constant-$0$ `read` at $k=4$.
+Other output branches may use any constant `read`, since they are
+unreachable on this initialized raw run. These reads ignore their mode
+argument. The continuation branches suffice without direct access to
+the stored `State` history. An initialized controller may likewise
+reconstruct its own action/reply record. All these queries use the
+same source, absorbing menu and supplied rights; this observation
+supplies no additional source query or operation right.
+
+The uncomplemented $d$ has no $00$, by the two-letter estimate in
+(IV.127). Fed directly into a $00$ marker it never marks; it also has
+$11$, for instance $d(2)=d(3)=1$, so the no-$11$ premise fails.
+For a different common-root carrier, copy the one-sided root word
+$f(3)f(4)\cdots=010100\cdots$ outward on **both** arms. Each ray
+individually is a genuine golden continuation with no $11$. Four
+queries on one ray followed by four on the other all reply $0$; query
+nine marks. These are not opposite rays of (IV.119). If merely no-$11$
+is assumed, two endlessly alternating outward rays never mark at all.
+Thus neither marginal word constraints nor conditional stopped-root
+recovery supply the common-source stopping theorem. $\square$
+
