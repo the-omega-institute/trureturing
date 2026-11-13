@@ -96,9 +96,10 @@ gap, not a graph counterexample.
 ## Evidence
 
 The D5 source, matching typed Scribe and shared source note carry the
-mathematical statement and its correspondence. Kernel and axiom evidence
-must cover the complete result and its actual import closure. The
-unrestricted theorem cannot be replaced by finite checks.
+mathematical statement and its correspondence. The scoped Lean report covers the complete result, the original lower-support
+supplier, the existing C4 consumer and their reported import closure, with
+only Classical.choice, Quot.sound and propext. The canonical Scribe renders
+the full quantified inequality and its ordinary-spectrum conventions.
 
 The four-slot registration is unfinished under the linked-issue
 exception in [#26564](https://github.com/the-omega-institute/trureturing/issues/26564).
@@ -111,7 +112,7 @@ requires its source-owner registration disposition.
 
 ## Triage
 
-The contribution sought is settlement of the full named inequality.
+The theorem treats the full named inequality.
 Centroids, graph cuts, real spectral theory, the trace argument and
 stronger classical tree bounds have prior art; they are not claimed as
 new discoveries. Zhang's survey, arXiv:1111.2897v1, Theorem 4.1, attests

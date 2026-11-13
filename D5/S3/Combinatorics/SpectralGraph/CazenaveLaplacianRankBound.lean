@@ -9,15 +9,14 @@
 /-
 admission_basis: open-problem-resolution (#26564; Proved).
 escape_witness: none.
-Every helper below has proof_shape: bind-only. Their consumer edges are:
-lap_eigen_nonneg -> lap_second_le_edges, lap_second_order_two;
-lap_eigen_antitone, lap_eigen_sum -> lap_second_le_edges;
-pair_energy_le -> partition_energy_le;
-second_le_of_hyperplane, partition_energy_le, bridge_side_card_two ->
-  internal_bridge_second;
-lap_second_le_edges, lap_second_order_two, full_rank_internal_edge,
-  internal_bridge_second -> result.
-Here each arrow runs from prerequisite to consumer.
+Every helper below has proof_shape: bind-only. The consumer-to-prerequisite edges are:
+lap_second_le_edges -> lap_eigen_nonneg, lap_eigen_antitone, lap_eigen_sum;
+lap_second_order_two -> lap_eigen_nonneg;
+partition_energy_le -> pair_energy_le;
+internal_bridge_second -> second_le_of_hyperplane, partition_energy_le,
+  bridge_side_card_two;
+result -> lap_second_le_edges, lap_second_order_two, full_rank_internal_edge,
+  internal_bridge_second.
 result: proof_shape: bind-only; external settlement #26564.
 The scalar estimates, finite-dimensional spectral argument, cut facts and
 rank interfaces are reused and normalized; no independent escape content is claimed.

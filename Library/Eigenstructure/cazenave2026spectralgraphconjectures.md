@@ -13,7 +13,7 @@ license: citation-only
 triage: anchor
 ---
 
-# Cazenave's adjacency–Randić–Laplacian inequality
+# Cazenave's spectral graph inequalities
 
 ## Verified locator
 
