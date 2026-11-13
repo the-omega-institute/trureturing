@@ -8,11 +8,11 @@
 
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE
+Released under Apache 2.0 license; receiver notice retained in docs/reports/licenses/tauceti-sphere-port-LICENSE.txt
 Authors: The Tau Ceti contributors; Kim Morrison; Lean FRO, LLC
 This owner receives the arbitrary-neighborhood-cover fundamental-groupoid gluing theorem and
 its ordinary finite-intersection Cech colimit consumer from the Tau Ceti source at the
-immutable source revision recorded in docs/reports/licenses/tauceti-sphere-port-LICENSE.txt.
+immutable source Git commit recorded in the Library literature note.
 -/
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.Basic
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.InducedMaps

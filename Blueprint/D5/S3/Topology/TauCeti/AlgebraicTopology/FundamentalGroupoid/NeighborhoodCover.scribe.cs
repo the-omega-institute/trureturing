@@ -43,12 +43,11 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
 
     private static Formula ExtensionStatement()
     {
-        var X = V("X"); var I = V("I"); var D = V("D"); var U = V("U"); var Fm = V("F");
+        var X = V("X"); var I = V("I"); var D = V("D"); var U = V("U");
         var i = V("i"); var j = V("j"); var x = V("x"); var G = V("G");
         var setX = Call("Set", X);
         var fund = (Formula a) => Call("FundamentalGroupoid", a);
         var functor = (Formula a, Formula b) => Call("Functor", a, b);
-        var subtype = (Formula a) => Call("Subtype", a);
         var inclusion = (Formula a, Formula b) => Call("inclusion", a, b);
         var map = (Formula f) => Call("map", f);
         var comp = (Formula a, Formula b) => Call("comp", a, b);
@@ -62,9 +61,11 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
         var unique = Seq(Exists, Bang, Sp, Parenthesized(Seq(G, Colon, Sp,
             functor(fund(X), D))), Comma, Sp, conclusion);
         var body = Implies(Parenthesized(hU), Implies(Parenthesized(hF), unique));
-        body = All("F", Call("ForallFunctor", I, setX, D), body);
+        var localFamilyType = Parenthesized(All("i", I, functor(fund(Call("U", i)), D)));
+        body = All("F", localFamilyType, body);
         body = All("U", new Formula.TypeArrow(I, setX), body);
-        body = All("D", Call("Type", V("w")), Bracket(Call("Category", D)), body);
+        body = All("D", Call("Type", V("w")), Bracket(Call("Category", V("z"), D)), body);
+        body = All("z", V("UniverseLevel"), body);
         body = All("I", Call("Type", V("v")), body);
         body = All("X", Call("Type", V("u")), Bracket(Call("TopologicalSpace", X)), body);
         return body;
