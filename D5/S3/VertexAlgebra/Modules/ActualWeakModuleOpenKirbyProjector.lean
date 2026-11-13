@@ -255,114 +255,86 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
       (∑ c ∈ discriminantSupport hD,
         phase (pairing D a c) * (Module.finrank ℂ (Multiplicity B c) : ℂ)) •
           classified hD A a x v := by
-  classical
-  let γ := LatticeChargedQuotientScalar.unitCharacter D hD a
-  have hγ : γ ≠ 0 := LatticeChargedQuotientScalar.unitCharacter_nonzero D hD a
-  let input : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ]
-      P A (targetModule B (dualModule B)) :=
-    (DirectSum.lof ℂ _ (PairSector A (targetModule B (dualModule B))) (a,0)).comp
-      ((TensorProduct.mk ℂ (Carrier D)
-          (PairMultiplicity A (targetModule B (dualModule B)) (a,0))
-        (transportInverse D (representative D (a+0))
-          (LatticeChargedQuotientScalar.carry D hD a 0) v)).comp
-        (TensorProduct.mk ℂ (Multiplicity A a)
-          (Multiplicity (targetModule B (dualModule B)) 0) x))
-  let q : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ] X :=
-    (rightUnit hD A).toLinearMap.comp
-      ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
-        ((openMonodromy A B hD).linearMap.comp input))
-  have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
-      γ⁻¹ • q (cupVector B hD) := by
-    have hforward (z : P A (I D)) :
-        (rightUnitIso hD A).hom.linearMap z = rightUnit hD A z := by
+  set_option maxHeartbeats 8000000 in
+    classical
+    let γ := LatticeChargedQuotientScalar.unitCharacter D hD a
+    have hγ : γ ≠ 0 := LatticeChargedQuotientScalar.unitCharacter_nonzero D hD a
+    let input : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ]
+        P A (targetModule B (dualModule B)) :=
+      (DirectSum.lof ℂ _ (PairSector A (targetModule B (dualModule B))) (a,0)).comp
+        ((TensorProduct.mk ℂ (Carrier D)
+            (PairMultiplicity A (targetModule B (dualModule B)) (a,0))
+          (transportInverse D (representative D (a+0))
+            (LatticeChargedQuotientScalar.carry D hD a 0) v)).comp
+          (TensorProduct.mk ℂ (Multiplicity A a)
+            (Multiplicity (targetModule B (dualModule B)) 0) x))
+    let q : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ] X :=
+      (rightUnit hD A).toLinearMap.comp
+        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
+          ((openMonodromy A B hD).linearMap.comp input))
+    have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
+        γ⁻¹ • q (cupVector B hD) := by
+      unfold openPartialTrace
+      dsimp only [ModuleHom.comp, LinearMap.comp_apply, ModuleIso.hom,
+        ModuleIso.inv, rightUnitIso]
+      conv_lhs =>
+        arg -1
+        arg -1
+        arg -1
+        arg -1
+        rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
+      have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
+          (transportInverse D (representative D a)
+            (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
+          normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v := by
+        simp only [normalizedPair, LinearMap.comp_apply, LinearMap.flip_apply,
+          TensorProduct.mk_apply, add_zero, carry_zero_right]
+      rw [hp, map_smul, map_smul, map_smul, map_smul, normalizedPair_input,
+        TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
       rfl
-    have hinverse (z : X) :
-        (rightUnitIso hD A).inv.linearMap z = (rightUnit hD A).symm z := by
-      rfl
-    have hcompose
-        {M₀ : Type _} {M₁ : Type _} {M₂ : Type _}
-        {M₃ : Type _} {M₄ : Type _} {M₅ : Type _}
-        [AddCommGroup M₀] [Module ℂ M₀] [AddCommGroup M₁] [Module ℂ M₁]
-        [AddCommGroup M₂] [Module ℂ M₂] [AddCommGroup M₃] [Module ℂ M₃]
-        [AddCommGroup M₄] [Module ℂ M₄] [AddCommGroup M₅] [Module ℂ M₅]
-        {J₀ : FullJacobiLatticeModule D M₀} {J₁ : FullJacobiLatticeModule D M₁}
-        {J₂ : FullJacobiLatticeModule D M₂} {J₃ : FullJacobiLatticeModule D M₃}
-        {J₄ : FullJacobiLatticeModule D M₄} {J₅ : FullJacobiLatticeModule D M₅}
-        (f₀ : ModuleHom J₀ J₁) (f₁ : ModuleHom J₁ J₂) (f₂ : ModuleHom J₂ J₃)
-        (f₃ : ModuleHom J₃ J₄) (f₄ : ModuleHom J₄ J₅) (z : M₀) :
-        (f₄.comp (f₃.comp (f₂.comp (f₁.comp f₀)))).linearMap z =
-          f₄.linearMap (f₃.linearMap (f₂.linearMap (f₁.linearMap (f₀.linearMap z)))) := by
-      rfl
-    have hcomposition := hcompose (rightUnitIso hD A).inv
-      (productHom hD (ModuleHom.id A) (coevaluation B hD)) (openMonodromy A B hD)
-      (productHom hD (ModuleHom.id A) (ribbonCap B hD)) (rightUnitIso hD A).hom
-      (classified hD A a x v)
-    refine hcomposition.trans ?_
-    refine (hforward
-      ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
-        ((openMonodromy A B hD).linearMap
-          ((productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
-            ((rightUnitIso hD A).inv.linearMap (classified hD A a x v)))))).trans ?_
-    have hbegin := congrArg
-      (fun z : P A (I D) => rightUnit hD A
-        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap
-          ((openMonodromy A B hD).linearMap
-            ((productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap z))))
-      ((hinverse (classified hD A a x v)).trans
-        (rightUnit_inverse_elementary (hD := hD) (A := A) a v x))
-    refine hbegin.trans ?_
-    have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
-        (transportInverse D (representative D a)
-          (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
-        normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v := by
-      simp only [normalizedPair, LinearMap.comp_apply, LinearMap.flip_apply,
-        TensorProduct.mk_apply, add_zero, carry_zero_right]
-    rw [hp, map_smul, map_smul, map_smul, map_smul, normalizedPair_input,
-      TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
-    rfl
-  have hdim (c : Discriminant D) :
-      (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
-        (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
-          (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i)) =
-        (Module.finrank ℂ (Multiplicity B c) : ℂ) := by
-    rw [← LinearMap.trace_id]
-    rw [LinearMap.trace_eq_matrix_trace ℂ (Module.Basis.ofVectorSpace ℂ (Multiplicity B c))]
-    simp only [Matrix.trace, Matrix.diag_apply, LinearMap.toMatrix_apply,
-      LinearMap.id_apply, Module.Basis.coord_apply]
-  rw [hstart, cupVector_expansion]
-  simp only [map_sum, map_smul]
-  calc
-    _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
-        ∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
-          (phase (pairing D a c) *
-            (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
-              (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i) * γ) •
-                classified hD A a x v := by
-      congr 1
-      apply Finset.sum_congr rfl
-      intro c hc
-      rw [cupTensor_basis]
-      simp only [map_sum, Finset.smul_sum]
-      apply Finset.sum_congr rfl
-      intro i hi
-      exact open_summand A B hD a c x _ _ v
-    _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
-        (phase (pairing D a c) * (Module.finrank ℂ (Multiplicity B c) : ℂ) * γ) •
-          classified hD A a x v := by
-      congr 1
-      apply Finset.sum_congr rfl
-      intro c hc
-      rw [← Finset.sum_smul, ← Finset.sum_mul, ← Finset.mul_sum, hdim]
-    _ = _ := by
-      rw [Finset.smul_sum, Finset.sum_smul]
-      apply Finset.sum_congr rfl
-      intro c hc
-      rw [smul_smul]
-      congr 1
-      calc
-        _ = (γ⁻¹ * γ) * (phase (pairing D a c) *
-            (Module.finrank ℂ (Multiplicity B c) : ℂ)) := by ring
-        _ = _ := by rw [inv_mul_cancel₀ hγ, one_mul]
+    have hdim (c : Discriminant D) :
+        (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
+          (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
+            (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i)) =
+          (Module.finrank ℂ (Multiplicity B c) : ℂ) := by
+      rw [← LinearMap.trace_id]
+      rw [LinearMap.trace_eq_matrix_trace ℂ (Module.Basis.ofVectorSpace ℂ (Multiplicity B c))]
+      simp only [Matrix.trace, Matrix.diag_apply, LinearMap.toMatrix_apply,
+        LinearMap.id_apply, Module.Basis.coord_apply]
+    rw [hstart, cupVector_expansion]
+    simp only [map_sum, map_smul]
+    calc
+      _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
+          ∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
+            (phase (pairing D a c) *
+              (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
+                (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i) * γ) •
+                  classified hD A a x v := by
+        congr 1
+        apply Finset.sum_congr rfl
+        intro c hc
+        rw [cupTensor_basis]
+        simp only [map_sum, Finset.smul_sum]
+        apply Finset.sum_congr rfl
+        intro i hi
+        exact open_summand A B hD a c x _ _ v
+      _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
+          (phase (pairing D a c) * (Module.finrank ℂ (Multiplicity B c) : ℂ) * γ) •
+            classified hD A a x v := by
+        congr 1
+        apply Finset.sum_congr rfl
+        intro c hc
+        rw [← Finset.sum_smul, ← Finset.sum_mul, ← Finset.mul_sum, hdim]
+      _ = _ := by
+        rw [Finset.smul_sum, Finset.sum_smul]
+        apply Finset.sum_congr rfl
+        intro c hc
+        rw [smul_smul]
+        congr 1
+        calc
+          _ = (γ⁻¹ * γ) * (phase (pairing D a c) *
+              (Module.finrank ℂ (Multiplicity B c) : ℂ)) := by ring
+          _ = _ := by rw [inv_mul_cancel₀ hγ, one_mul]
 
 end OpenDiagram
 
@@ -400,8 +372,12 @@ theorem loop_restrict (b a : Discriminant D) :
   apply Subtype.ext
   change (loop A hD b).linearMap x.val.val = phase (pairing D a b) • x.val.val
   have h := loop_classified A hD b a x (Finsupp.single 0 (1 : Oscillator D))
-  simpa only [classified, LinearMap.comp_apply, LinearMap.flip_apply,
-    TensorProduct.mk_apply, classification_normalization] using h
+  have hn : classified hD A a x (Finsupp.single 0 (1 : Oscillator D)) = x.val.val := by
+    dsimp only [classified, LinearMap.comp_apply, LinearMap.flip_apply,
+      TensorProduct.mk_apply]
+    exact classification_normalization A hD a x
+  rw [hn] at h
+  exact h
 
 /-- The weighted finite sum is formed from the actual loop LINEAR MAPS.
 The original all-state/all-integer-mode intertwining is proved directly;
@@ -434,7 +410,7 @@ theorem kirbyProjector_eq_extend (t : Discriminant D) :
   apply (recordEquiv A A).injective
   apply (homMultiplicityEquiv A A hD).injective
   change restrict (kirbyProjector A hD t) = restrict (extend hD _)
-  rw [restrict_extend]
+  erw [restrict_extend]
   funext a
   have hs : (∑ b ∈ discriminantSupport hD,
       phase (-pairing D t b) * phase (pairing D a b)) =
@@ -465,7 +441,7 @@ theorem kirbyProjector_eq_extend (t : Discriminant D) :
   rw [← Finset.sum_smul, hs]
   by_cases hat : a = t
   · simp only [if_pos hat, LinearMap.id_apply, smul_smul, inv_mul_cancel₀ hn, one_smul]
-  · simp only [if_neg hat, zero_smul, LinearMap.zero_apply, Submodule.coe_zero]
+  · simp only [if_neg hat, zero_smul, smul_zero, LinearMap.zero_apply, Submodule.coe_zero]
 
 /-- Orthogonal composition of the ACTUAL ModuleHoms; s=t is idempotence.
 No nonzero-fiber or faithful-action premise is introduced. -/
@@ -475,7 +451,8 @@ theorem kirbyProjector_comp (s t : Discriminant D) :
   classical
   have hk (r a : Discriminant D) (x : Multiplicity A a) :
       restrict (kirbyProjector A hD r) a x = if a = r then x else 0 := by
-    rw [kirbyProjector_eq_extend, restrict_extend]
+    rw [kirbyProjector_eq_extend]
+    erw [restrict_extend]
     by_cases h : a = r <;> simp [h]
   have hz (a : Discriminant D) (x : Multiplicity A a) :
       restrict (ModuleHom.zero A A) a x = 0 := by
@@ -485,6 +462,7 @@ theorem kirbyProjector_comp (s t : Discriminant D) :
   apply (recordEquiv A A).injective
   apply (homMultiplicityEquiv A A hD).injective
   change restrict ((kirbyProjector A hD s).comp (kirbyProjector A hD t)) = restrict _
+  simp only [Equiv.symm_apply_apply]
   funext a
   apply LinearMap.ext
   intro x
@@ -497,7 +475,7 @@ theorem kirbyProjector_comp (s t : Discriminant D) :
   by_cases hst : s = t
   · subst s
     simp only [if_pos rfl, hk]
-    split_ifs <;> simp
+    split_ifs <;> rfl
   · rw [if_neg hst, hz]
     by_cases hat : a = t
     · subst a
@@ -517,7 +495,8 @@ theorem kirbyProjector_resolution :
         (fun a => if a = t then
           (LinearMap.id : Multiplicity A a →ₗ[ℂ] Multiplicity A a) else 0) := by
     change restrict (kirbyProjector A hD t) = _
-    rw [kirbyProjector_eq_extend, restrict_extend]
+    rw [kirbyProjector_eq_extend]
+    erw [restrict_extend]
   simp_rw [hk]
   funext a
   apply LinearMap.ext
