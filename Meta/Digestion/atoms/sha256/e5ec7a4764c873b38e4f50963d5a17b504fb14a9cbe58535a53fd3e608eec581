@@ -1,0 +1,15 @@
+**Remark 3.2 (increments and sufficiency).** The triple determines every
+interval's chronological increment through
+
+$$
+J_{s,t}^{\mathrm{rel}}=J_t-J_s-a_s(b_t-b_s).
+\tag{3.2}
+$$
+
+There are no missing higher integrals for (2.5). Uniform convergence of
+this triple is sufficient for this specific triangular equation, not
+a general theorem for arbitrary controlled differential equations.
+Conversely (2.6) describes the information needed to distinguish complete
+lifted native paths, up to the stated phase lifting convention. These
+claims do not characterize the weakest possible probabilistic topology.
+

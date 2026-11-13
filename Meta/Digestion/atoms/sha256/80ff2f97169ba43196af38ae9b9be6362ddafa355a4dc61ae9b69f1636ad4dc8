@@ -1,0 +1,25 @@
+**Definition 5.2 (actual command from a specified start).** Compute from
+the finite sampled polygon
+
+$$
+\tau_n=\inf\{t\in[0,T]:k+a_n(t)\notin I\},\qquad
+S_n=\tau_n\wedge T.
+\tag{5.3}
+$$
+
+Prescribe the actual command
+
+$$
+\widehat a_n(t)=a_n(t\wedge S_n),\qquad
+\widehat b_n^\lambda(t)=b_n^\lambda(t\wedge S_n).
+\tag{5.4}
+$$
+
+The cutoff can be calculated before execution from the specified starting
+height and the finite list of legs. No online measurement of an unknown
+height is asserted. Once prescribed, (5.4) is one numerical relative
+command; its domain at any other starting height is still (2.4), without
+recomputing a state-dependent cutoff. Existence for every specified
+starting state is not existence of one Brownian-like command lawful on
+the entire source. N's full-domain restriction $a\equiv0$ remains.
+
