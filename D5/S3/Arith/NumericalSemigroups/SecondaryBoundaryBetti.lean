@@ -421,7 +421,7 @@ private theorem move_left (d : Generators) (a : CriticalCoefficients)
   have hz0 : z 0 = 0 := by omega
   have hz1 : 0 < z 1 := hl.resolve_left h0
   have hdright : Nat.gcd (d 2) (d 3) ∣ z 2 * d 2 + z 3 * d 3 :=
-    dvd_add (dvd_mul_of_dvd_right (Nat.gcd_dvd_left _ _) _) 
+    dvd_add (dvd_mul_of_dvd_right (Nat.gcd_dvd_left _ _) _)
       (dvd_mul_of_dvd_right (Nat.gcd_dvd_right _ _) _)
   have hq1 : Nat.gcd (d 2) (d 3) ∣ z 1 * d 1 := by
     have hn : n = z 1 * d 1 + (z 2 * d 2 + z 3 * d 3) := by
