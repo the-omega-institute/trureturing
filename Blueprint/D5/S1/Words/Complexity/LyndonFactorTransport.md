@@ -196,7 +196,7 @@ $$\forall w,1\in w\Rightarrow\operatorname{card}\left(\operatorname{factorScan}\
 
 For every binary list w containing the letter 1, the lambda image has at least one more distinct Lyndon factor. Every input Lyndon factor maps injectively to an actual output factor, while [1] occurs and is outside the image because every nonempty lambda image starts with 0. This is a proved lower bound, not the still-open exact factor-set identity or exact count increment.
 
-Open boundaries: general block factor sets/counts, rho and arbitrary composite transport, original h and its factor-count +8 identity, and exact nested sets remain unproved here. Scan correctness does not certify the retained 220-row data, CF/word correspondence, Fibonacci family, arbitrary-alphabet minima, or the 9082 comparison. Saari's equality/length obligations, GSS's specific Christoffel domain, and the unavailable Glen2018 proof boundary remain unchanged. The theorem-specific unfinished registration disclosure is linked under issue 29680; no declared_validated registration is claimed.
+Open boundaries: general block factor sets/counts, rho and arbitrary composite transport, original h and its factor-count +8 identity, and exact nested sets remain unproved here. Scan correctness does not certify the retained 220-row data, CF/word correspondence, Fibonacci family, arbitrary-alphabet minima, or the 9082 comparison. Saari's equality/length obligations, GSS's specific Christoffel domain, and the unavailable Glen2018 proof boundary remain unchanged.
 
 ## References
 
