@@ -25,7 +25,10 @@ internal sealed class AcharyyaConjectureTwentyRefutationDocument : IScribeDocume
                 H("The universal identity is false"),
                 StatementSource.FromAuthor(Disp(new Formula.Not(X("claim")))),
                 AssessedProvenance.FromRepo(Source),
-                Counterexample(), DescribeRole.Theorem))));
+                Counterexample(), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("acharyya-2024-conjecture-20-pointwise-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static BlockSequence Context() => Blocks(
         Paragraph(Text("Amrita Acharyya, arXiv:2404.14439v1, Conjecture 20: "),
