@@ -24,14 +24,8 @@ Private theorem consumers:
 * feasible_not_fair: result.
 -/
 import Mathlib.Combinatorics.Matroid.Map
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Finset.Basic
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Combinatorics.Matroid.Basic
 import Mathlib.Data.ENat.Lattice
-import Mathlib.Data.Finset.Union
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
 import Mathlib.Basic.NNReal.Defs
 
 /-!

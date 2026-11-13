@@ -99,7 +99,7 @@ internal sealed class AnholcerEpistemicEF1RefutationDocument : IScribeDocumentDe
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
-    private static Formula NatInfinity => Seq(Nat, Infty);
+    private static Formula NatInfinity => new Formula.Power(Nat, Infty);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Matroid(Formula m) => Call("Matroid", Fin(m));
     private static Formula Bundles(Formula m, Formula n) => Arrow(Fin(n), Call("Finset", Fin(m)));
