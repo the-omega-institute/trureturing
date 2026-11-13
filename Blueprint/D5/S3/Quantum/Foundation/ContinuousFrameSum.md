@@ -4,7 +4,7 @@
 
 Original EB and common centers force weakPair and interior; original W supplies compact pure points and continuous frame sums.
 
-**Theorem 1.1 (Compact full original effect interval).**
+**Theorem 1.1 (Compactness of the full original effect interval).**
 
 Lean statement: `D5/S3/Quantum/Foundation/ContinuousFrameSum.effects_compact`
 
@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Quantum/Foundation/ContinuousFrameSum.effects_compact`
 
 *Commentary.*
 
-For a strictly positive unit on a finite dimensional generating cone, the entire continuous-dual interval zero<=f<=u is compact. This includes every original real-linear effect, since linear maps in finite dimension are continuous.
+For every finite dimensional real normed V, original pointed cone C and linear unit u, strict positivity of u on nonzero cone vectors and span(C)=top imply compactness of the entire original interval effects(C,u)={f : V toL R : proper(C,u,f)}. The original proof and telescope are unchanged. ExclusionIncidence.exclusion_upper_limit directly consumes this fact to obtain a subsequential limit of actual full-interval confirming effects. Neither Pair nor closedness of the pure carrier is needed.
 
 The original carrier is any nonzero finite-dimensional real V, with closed generating cone C and the same strictly positive unit u. K is the whole normalized base, P is ALL its extreme points and [0,u] is the entire original proper-effect interval. No finite carrier, selected menu, assumed compact P, closed orthogonality, common intersection or positive-extension premise is used.
 

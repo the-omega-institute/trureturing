@@ -1,0 +1,36 @@
+**引理 127.3（原效应与双侧零核）。** 固定 $i$，取 $q\in P\cap D_i$，令 $r$ 为 $q$ 在实际球 $D_i$ 内的对径。设 $g_q$ 是这张球上在 $q,r$ 分别取一、零的仿射效应，并将其唯一线性延至 $M_i$。则
+
+$$
+e_q=g_qT_i=B(q,\cdot)\in\mathcal A_q,\qquad
+Z_K(e_q)=D_q,\qquad
+N_{D_q}=\mathbb R_+e_q,\qquad q\in P_0.
+\tag{Q127.10}
+$$
+
+这里 $Z_K(h)=\{x\in K:h(x)=0\}$；$C_i^*$ 表示在 $M_i$ 上对 $C_i$ 非负的全部线性泛函。
+
+证明。先核对球内刻度。写 $q=c_i+v$、$r=c_i-v$，$g_i(v,v)=1$。对 $y=c_i+h\in D_i$，
+
+$$
+g_q(y)=\frac{1+g_i(v,h)}2=B(q,y).
+$$
+
+因为 $B(c_i,c_i)=1/2$、$B(c_i,W_i)=0$ 和 $B|_{W_i}=g_i/2$。这也给其在整个 $C_i$ 上 $0\le g_q\le u|_{M_i}$。故在原整个锥上
+
+$$
+0\le g_qT_i\le uT_i=u-e_i\le u.
+\tag{Q127.11}
+$$
+
+它确为原效应，在 $q$ 取一，在不同的原纯点 $p_i,r$ 取零。其零面是包含这两点的非点真面，原面分类使它为极大真面。该零面包含于完整 $D_q$，所以等于 $D_q$；从而 $g_qT_i\in\mathcal A_q$。$T_i$ 按(Q127.3)是 $B$ 正交投影，$q\in M_i$，所以全 $V$ 上 $g_qT_i=B(q,\cdot)$。
+
+再说明唯一性所用的原对偶接口。对每个 $h\in N_{p_i}$，规范压缩的定义给 $hT_i=h$；其在 $C_i$ 上的限制非负。反之，任意 $h_i\in C_i^*$ 与正 $T_i$ 复合，均在原 $C^*$ 中且零于 $p_i$。因此
+
+$$
+N_{p_i}=\{h_iT_i:h_i\in C_i^*\},\qquad
+C\cap\ker T_i=\mathbb R_+p_i.
+\tag{Q127.12}
+$$
+
+第二式由 $uT_i=u-e_i$ 及 $e_i$ 的整个一值面为 $\{p_i\}$ 得到。若 $h\in N_{D_q}$，则 $h(p_i)=h(r)=0$。第一式使 $h=h_iT_i$；Lorentz球锥在极射线 $\mathbb R_+r$ 上只有一条正支撑法向：在单位球图中，非负函数 $\alpha+b\cdot v$ 满足 $\alpha\ge|b|$，若在单位端点 $v_r$ 为零，则 $b=-\alpha v_r$，故它是该端点支撑函数的非负倍数。因此 $h_i$ 是 $g_q$ 的非负倍数，得到 $N_{D_q}=\mathbb R_+e_q$。由(Q127.2)，或直接将完整确认效应按在 $q$ 取一归一，$\mathcal A_q=\{e_q\}$。证毕。
+
