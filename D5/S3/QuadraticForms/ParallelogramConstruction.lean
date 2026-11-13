@@ -15,6 +15,7 @@ Authors: The Tau Ceti contributors
 module
 
 public import Mathlib.LinearAlgebra.QuadraticForm.Basic
+public import Mathlib.Tactic.LinearCombination.Lemmas
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Module
 
