@@ -3,6 +3,7 @@ bibkey: banerjeechaudhury2025stability
 authors: Debraj Banerjee; Kunal N. Chaudhury
 year: 2025
 title: "On the Schur Stability of Some Image Reconstruction Operators"
+doi: null
 url: https://arxiv.org/abs/2509.06715v1
 claim: "Conjecture 1.1 proposes simultaneous Schur stability of W(I-tB) and I-W+(I+tB)^(-1)(2W-I) for every 0<t<2/rho(B), under primitivity, stochasticity, positive semidefiniteness, Be<=rho(B)e and pi^T Be>0."
 strata_touched:
