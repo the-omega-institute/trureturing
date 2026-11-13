@@ -103,5 +103,8 @@ internal sealed class EtiennePrefixCountDocument : IScribeDocumentDefinition
                         + "where m=floor(n/2). The two possibilities n=2*m and n=2*m+1 "
                         + "then give the signed formula. In particular, the sole equal-column "
                         + "matrix at each t is retained. The boundary n=1 and the even endpoint "
-                        + "t=n/2 require no separate exclusion."))), DescribeRole.Theorem))));
+                        + "t=n/2 require no separate exclusion."))), DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a183409-etienne-prefix-count"),
+                    ResolutionKind.Proved)))));
 }
