@@ -29,6 +29,12 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
                 "The support equals the first k positive odd numbers. The equivalence in "
                 + "the formula requires both absence of other parts and presence of every "
                 + "listed part. The witness k=0 gives the empty multiset.", DescribeRole.Definition),
+            Node("height_bounds", "Bounds on column heights", HeightBoundsFormula(),
+                "Every column height occurring in the transpose row-length list is positive "
+                + "and at most the height of the first column.", DescribeRole.Theorem),
+            Node("rowLen_zero", "Rows beyond the first-column height", RowLenZeroFormula(),
+                "A row indexed at or beyond the height of the first column has length zero.",
+                DescribeRole.Theorem),
             Node("card_strictFirstSums_eq_gapfreeOdd", "The weight-preserving restriction", CountFormula(),
                 "Reuse the frozen sibling's firstOddEquiv, its inverse and its sum theorem. "
                 + "A column of height h exists exactly when row lengths drop strictly from "
@@ -82,6 +88,15 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
     private static Formula CountFormula() => Disp(All(V("n"), Nat(), Seq(
         Count(Call("IsStrictFirstSums", Call("sort", Call("parts", V("p")), Relation(Le)))),
         Sp, Eq, Sp, Count(Call("GapfreeOdd", Call("parts", V("p")))))));
+    private static Formula HeightBoundsFormula() => Disp(
+        All(V("d"), Seq(Operatorname, Grp(V("YoungDiagram"))), All(V("h"), Nat(), Seq(
+            V("h"), Sp, InMacro, Sp, Call("rowLens", Call("transpose", V("d"))),
+            Sp, Implies, Sp, Par(Seq(D(0), Sp, Lt, Sp, V("h"), Sp, Land, Sp,
+                V("h"), Sp, Le, Sp, Call("colLen", V("d"), D(0))))))));
+    private static Formula RowLenZeroFormula() => Disp(
+        All(V("d"), Seq(Operatorname, Grp(V("YoungDiagram"))),
+            All(V("i"), Nat(), Seq(Call("colLen", V("d"), D(0)), Sp, Le, Sp, V("i"),
+                Sp, Implies, Sp, Call("rowLen", V("d"), V("i")), Sp, Eq, Sp, D(0)))));
     private static Formula Count(Formula predicate) => Call("card", Call("filter",
         Par(Seq(V("p"), Sp, Mapsto, Sp, predicate)),
         Par(Seq(Call("univ"), Colon, Sp, Call("Finset", Call("Partition", V("n")))))));
