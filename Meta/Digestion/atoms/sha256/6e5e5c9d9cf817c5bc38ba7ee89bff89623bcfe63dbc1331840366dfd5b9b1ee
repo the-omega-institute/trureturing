@@ -1,0 +1,45 @@
+**引理 116.14（最高次反向及偶数 $m$）。** 取有理系数，令
+$A_i=H^{2i}(P;\mathbb Q)$、$B_i=H^{2i}(\mathcal I;\mathbb Q)$。
+真实交换 $\sigma$ 在 $B_{m+1}$ 上作用为 $-1$。
+算子 $\mathcal T=\pi_{1!}\pi_2^*:A_i\to A_{i-1}$ 在 $1\le i\le m$ 均为非零同构，
+且对 $a\in A_i,b\in A_j,i+j=m+1$，有
+
+$$
+\int_P b\,\mathcal T(a)=-\int_P a\,\mathcal T(b).
+\tag{IX116.32}
+$$
+
+因此 $m$ 为偶数，特别地 $m\ge2$。
+
+证明。$1\le i\le m$ 时，116.13的直和分解被 $\sigma^*$ 交换，故迹为零。
+零次迹为一，顶次迹为 $\varepsilon\in\{1,-1\}$，奇次群为零。
+$\mathcal I$ 是紧ENR，Hatcher [A.8、2C.3][Q116H]的Lefschetz定理适用。
+$\sigma$ 无固定点，故 $0=L(\sigma)=1+\varepsilon$，即 $\varepsilon=-1$。
+此处的作用只是原二元位置交换，尚无第三投影或三元置换群的输入。
+
+在 $1\le i\le m$，$\ker\pi_{1!}=\pi_1^*A_i$；
+$\pi_2^*A_i$ 是与之独立的一维补空间，所以 $\mathcal T$ 为非零同构。
+给 $P$ 定向，给 $\xi$ 定向，并给 $\mathcal I=S(\xi)$ 取相容的底—纤维定向。
+Thom的杯、帽积相容性给
+$\int_P b\,\pi_{1!}c=\int_{\mathcal I}\pi_1^*b\,c$；
+该构造只用同调方向类，不要求普通切丛。于是
+
+$$
+\begin{aligned}
+\int_P b\,\mathcal T(a)
+&=\int_{\mathcal I}\pi_1^*b\,\pi_2^*a\\
+&=-\int_{\mathcal I}\pi_2^*b\,\pi_1^*a
+=-\int_P a\,\mathcal T(b).
+\end{aligned}
+\tag{IX116.33}
+$$
+
+中间负号恰来自 $\deg\sigma=-1$，所有类为偶次，换序没有额外符号。
+这里 $P$ 的有理Poincaré配对非退化，准确使用AFP [Lemma 3.1][Q116AFP]：
+116.12已供应局部紧、第二可数、局部可缩、有限维的可定向同调流形，
+紧ENR又保证有限生成；不使用光滑版本。
+若 $m$ 奇，取 $0\ne a\in A_{(m+1)/2}$。
+$\mathcal T(a)\ne0$，且与 $a$ 的次数互补；两群均一维，非退化性使
+$\int_P a\,\mathcal T(a)\ne0$，但(IX116.32)令 $b=a$ 迫它为零，矛盾。
+这也单独排除了最低情形 $m=1$，以下才可使用 $a_2$。证毕。
+

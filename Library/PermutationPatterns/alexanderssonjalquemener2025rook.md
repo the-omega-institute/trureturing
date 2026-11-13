@@ -7,6 +7,7 @@ doi: 10.48550/arXiv.2502.05939
 url: https://arxiv.org/abs/2502.05939v1
 claim: "Conjecture 28: Ferrers-board multiset rook-Eulerian real-rootedness and pairwise interlacing of the decreasing first-letter refinements."
 strata_touched:
+  - D5/S3/Combinatorics/Permutation/WordAscents
   - D5/S3/Combinatorics/Permutation/MultisetRookEulerianInterlacingRefutation
   - D5/S3/Combinatorics/Permutation/MultisetRookEulerianRealRootednessRefutation
 license: citation-only
@@ -74,7 +75,7 @@ $$
 $$
 
 The real-rootedness-refutation module connects a remaining-content recurrence
-to the original `W`, `asc` and `R`, counting each distinct word once. The first
+to the original `W` and `R` and the shared `WordAscents.asc`, counting each distinct word once. The first
 19 rows exclude sixes. The remaining 101 positions contain 100 sixes and one
 smaller letter, whose endpoint and internal placements give the exact tail
 polynomial. An induction for that tail and a 664-state prefix certificate

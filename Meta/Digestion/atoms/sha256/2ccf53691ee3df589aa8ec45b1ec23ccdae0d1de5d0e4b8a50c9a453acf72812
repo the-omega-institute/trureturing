@@ -1,0 +1,40 @@
+**Definition 20.3 (source legality, cutoff and the two lifetime records).**
+Every actually executed profile prefix must obey N's whole-height guard.
+There is no loss for the present killed task in prescribing a profile's
+constant continuation from its first hit of $l$ or $u$: the current
+native height and the entire numerical profile are known at issuance,
+so this cutoff is computed from the issued profile, not from future
+target data. It leaves every prefix before own death unchanged.
+Profiles already lawful on their full stated duration need no such
+replacement. The executed held controls satisfy
+
+$$
+J^{\rm N}_t=\int_0^t A_s\,dB_s,\qquad
+D_{A,B}=(-\min_{[0,T]}A,\ H-\max_{[0,T]}A),
+\tag{20.3}
+$$
+
+and their heights lie in $[l,u]\Subset(0,H)$. Consequently
+$k+\min A\ge l>0$ and $k+\max A\le u<H$. The actual native path is
+precisely (11.3), with $(a_n,b_n,J_n)$ replaced by
+$(A,B,J^{\rm N})$. This follows by N, Theorems 9.2–9.3, on each
+prefix and by its concatenation rule; the chronological cross terms
+are already included in the single integral in (20.3). Finite
+concatenation with continuous joins is AC. The original probabilities,
+arbitrary preparation rotations, signs and periods are therefore
+preserved, including at a killing boundary, which is interior to the
+original source. For a different promised starting interval
+$[k_-,k_+]$, the same realized numerical history is lawful exactly when
+$k_-+\min A>0$ and $k_++\max A<H$. Re-running a policy with another
+start is not the same numerical command and is not used to enlarge
+this domain.
+
+Write $\zeta^{\rm N}=\tau^{\rm N}$ for the native censored death record
+and retain $\zeta$ from (11.6): both take values in
+$[0,T]\sqcup\{\infty\}$, where $\infty$ means no death on this horizon.
+The horizon-only cutoffs are
+$S^{\rm N}=\tau^{\rm N}\wedge T$ and $S=\tau\wedge T$.
+A command interruption and these horizon cutoffs are not death marks.
+In particular $S^{\rm N}=T$ does not distinguish death exactly at $T$
+from survival beyond $T$, whereas $\zeta^{\rm N}$ does.
+

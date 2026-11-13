@@ -1,0 +1,41 @@
+证明。固定任意成功方案。对 $q_s(y)>0$ 定义同一实际联合分布的后验
+
+$$
+a_{y,s}(h)=\frac{2^{-n}p_s(y\mid h)}{q_s(y)}.
+$$
+
+在引理 5.2 中取命题 4.2 的同一个中心 $c_{y,s}$。定义以 nat 为单位的条件互信息
+
+$$
+I_{\mathrm{nat}}(\mathsf H_n;Y\mid S)
+=\int P_S(ds)\sum_{y:q_s(y)>0}q_s(y)D(a_{y,s}\|P_n).
+$$
+
+均匀有限先验保证 $0\le D(a\|P_n)\le n\ln2$，所以此式总是有定义且有限，即使 $H(Y\mid S)=+\infty$。先对所有 $(S,Y)$ 平均后才应用 (4.1)，得到
+
+$$
+I_{\mathrm{nat}}(\mathsf H_n;Y\mid S)
+\ge-\beta\Delta-\ln B_n(\beta)
+\ge-2\beta\varepsilon-\ln B_n(\beta).
+\tag{5.5}
+$$
+
+还需要真正的熵比较。在后验支持上，$p_s(y\mid h)>0$，并且
+
+$$
+D(a_{y,s}\|P_n)
+=\sum_h a_{y,s}(h)\ln p_s(y\mid h)-\ln q_s(y)
+\le-\ln q_s(y),
+$$
+
+因为每个核值至多一。左端非负；乘 $q_s(y)$，对可数 $y$ 求和并对 $S$ 积分，直接得到
+
+$$
+I_{\mathrm{nat}}(\mathsf H_n;Y\mid S)\le(\ln2)H(Y\mid S).
+\tag{5.6}
+$$
+
+此证明不减去任何无穷熵，也不假设字母表均匀或近均匀。种子零测集可任意补定义；依种子而变的可数标签按定义 2.1 的可测索引处理。独立种子只通过保持条件实际先验为 $P_n$ 以及可测积分进入推导，不需要把它离散化。
+
+合并 (5.5)—(5.6)，每个成功方案对所有 $\beta>0$ 均满足 $H(Y\mid S)\ge[-2\beta\varepsilon-\ln B_n(\beta)]/\ln2$。取非负截断、上确界，再对成功方案取下确界，得到 (5.4)。无需熵最小值被取到。熵下界先由后验相对熵建立，没有从 $\log M$ 的下界倒推。$\square$
+

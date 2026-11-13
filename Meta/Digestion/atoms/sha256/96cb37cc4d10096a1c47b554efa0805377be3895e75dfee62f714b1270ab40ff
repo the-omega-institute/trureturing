@@ -1,0 +1,47 @@
+**Theorem 7.1 (the selected law and its area variant).** Before death,
+the limiting state of the actual commands in Corollary 6.2 is
+
+$$
+\begin{aligned}
+K_t&=k+W^1_t,\\
+\widetilde\alpha_t&=\alpha_0+W^2_t/2,\\
+\widetilde\beta_t^\lambda
+ &=\beta_0+c_0W^2_t-\frac1rJ^0_t-\frac\lambda r t
+  =\beta_0+\int_0^t\left(\frac12-\frac{K_s}{r}\right)dW^2_s
+          -\frac\lambda r t.
+\end{aligned}
+\tag{7.1}
+$$
+
+Wrap both phases modulo $2\pi$ and kill at the same $\tau$.
+For $\lambda=0$ this is exactly N's $\rho=1,A=I_2$ horizontal
+Friedrichs process on $I\times\mathbb T^2$ in its original clock.
+For general $\lambda$ its interior generator is
+
+$$
+\mathcal G_\lambda=P^2+Q^2-\frac\lambda r\partial_\beta,
+\qquad
+P=\partial_k,\qquad
+Q=\frac12\partial_\alpha+
+        \left(\frac12-\frac{k}{r}\right)\partial_\beta.
+\tag{7.2}
+$$
+
+Proof. Substitute the established joint limit into (2.5). The integration
+identity in (7.1) uses $K=k+W^1$. Itô's formula gives (7.2), since each
+driver has quadratic variation $2dt$ and their mutual quadratic
+variation is zero. In particular $Qk=0$ and the derivative of $Q$ in
+its own direction is zero. The Itô–Stratonovich correction for these
+fields and this covariance is zero. Since
+$[P,Q]=-r^{-1}\partial_\beta$, the extra term is
+$\lambda[P,Q]$. It is a different drift and law; it cannot be removed
+by calling the same equation Stratonovich instead of Itô.
+
+For $\lambda=0$, put $W^j=\sqrt2B^j$ in N, (10.21)–(10.22).
+This matches every coefficient, the unnormalized measure
+$dk\,d\alpha\,d\beta$, both circle periods and the height-only exit.
+N, Definition 10.6 and Theorem 10.7 supply the identification with the
+Dirichlet Friedrichs realization of $-(P^2+Q^2)$. Neither a new
+boundary realization nor a new clock is inferred from convergence.
+$\square$
+

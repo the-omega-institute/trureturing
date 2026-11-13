@@ -1,0 +1,29 @@
+**Proposition 8.2 (finite costs do not furnish a uniform limit budget).**
+Under the dyadic Brownian coupling, the actual lengths and declared
+energies in (8.1) tend to infinity almost surely as $n\to\infty$.
+The actual original phase variations do also, for every fixed
+$\lambda$, including zero.
+
+Proof. Almost surely $\tau>0$ and $\tau_n\to\tau$. Choose a positive
+dyadic time $t_0<\min(\tau,T)$. For all sufficiently large stages,
+all cells up to $t_0$ are completely executed. Their horizontal
+rectangles alone contribute $2t_0/\sqrt\delta$ to length and
+$16t_0/\delta$ to energy. For $\lambda\ne0$, their phase legs give
+at least $2|\lambda|t_0/\sqrt\delta$ of phase variation.
+
+For $\lambda=0$, the executed chords up to $t_0$ give the dyadic
+variation sums of $W^2$. They diverge almost surely. To see the needed
+fact directly, their sums of squared increments converge to $2t_0$
+almost surely along dyadic partitions: the variance of that sum is
+$8t_0\delta$, so summability and Borel–Cantelli suffice. Their largest
+absolute increment tends to zero by continuity. Since
+$\sum|\Delta_i^2|\ge\sum(\Delta_i^2)^2/\max_i|\Delta_i^2|$,
+the absolute sums diverge. The property holds simultaneously for the
+countably many possible dyadic $t_0$, so choosing one below the random
+exit is legitimate. This proves the assertion for the executed prefixes,
+not merely for an unexecuted extension. $\square$
+
+No uniform bounded-cost approximation, optimal-rate assertion, acquisition
+budget or cost of stochastic sampling follows. Retiming a fixed command
+can change its energy but would not preserve the clock required here.
+

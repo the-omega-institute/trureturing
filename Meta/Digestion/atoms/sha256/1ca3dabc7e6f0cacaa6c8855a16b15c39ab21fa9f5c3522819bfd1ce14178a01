@@ -1,0 +1,32 @@
+**全部有限联合载体。** 每个有限 $N\ge1$ 仍须提供实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$ 以及完整原效应区间。对每个实际分块 $a+b=N$ 保留
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+\tag{Q127.35}
+$$
+
+同一产品配对、严格张量单位、全部原因子置换及逆的正性、规范重括号和指定运输下的不连续位置分块，不能由单体表示替代。二份比较仍是整个实际联合 $S_2$：对任意产品或纠缠纯点 $p,q_\ell\in P_2$、任意有限族、全部 $t_\ell\ge0$ 且 $\sum_\ell t_\ell=1$，含零权和重复标签，要求
+
+$$
+\begin{gathered}
+\mathcal T_p^{(2)}\!\left(\sum_\ell t_\ell q_\ell\right)
+=\sum_\ell t_\ell\mathcal T_{q_\ell}^{(2)}(p),\\
+\mathcal T_p^{(2)}(x)=
+\inf_{\substack{f\in[0,u_2]_{C_2^*}\\ f(p)=1}}f(x).
+\end{gathered}
+\tag{Q127.36}
+$$
+
+仅产品态上的比较不支付这个合同。原低二份 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥，唯一实际自复合 $(W_1,W_1,W_2)$ 的直和扇区限制、秩和实维乘法的复型选择，同一实际两因子的产品正规形，仍是既有全有限层级定理分别使用的三项供应。
+
+原 $\mathsf F_{\max}$ 继续要求同一最大复块 $n_r=L\ge2$、同一含相位正交基上的
+
+$$
+g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r,\qquad
+\Delta_r=|g_r\rangle\langle g_r|\in C_3,\qquad u_3(\Delta_r)=L,
+\tag{Q127.37}
+$$
+
+其余三份扇区为零，归一原源为 $\Delta_r/L$，不预付三份纯性或实际制备；全经典 $L=1$ 支路仍按原定理免除此资源。在本章的单体复三能级支路，该最大块为 $L=3$。该三份正性资源不能由写出矩阵 $|g_r\rangle\langle g_r|$ 就取得。只在全部联合前件及三项供应齐备后调用已有全有限层级结论；二、三份的秩为九、二十七，不再要求高阶整个排除集合继续满足单体EB3。
+

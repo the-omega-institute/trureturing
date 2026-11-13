@@ -125,7 +125,7 @@ private theorem exclusion_injective :
   exact not_self r (heq ▸ hrmem.1)
 
 include hclosed hstrict hgen hB in
-private theorem pure_pair_in_ball (p : pure C u) :
+theorem pure_pair_in_ball (p : pure C u) :
     ∃ a b : pure C u, (a : V) ∈ exclusion C u p ∧ (b : V) ∈ exclusion C u p ∧ a ≠ b := by
   classical
   have g := (exclusion_ball_faces hclosed hstrict hgen hB).1 p
@@ -162,7 +162,7 @@ private theorem ball_complement (p : pure C u) :
     exact ⟨pure_mem p, fun q hq => (exclusion_symmetric p q).mp hq⟩
 
 include hclosed hstrict hgen hB in
-private theorem chart_boundary (p : pure C u) (b : ExclusionChart C u p) :
+theorem chart_boundary (p : pure C u) (b : ExclusionChart C u p) :
     exclusion C u p ∩ pure C u = b.param '' Metric.sphere 0 1 := by
   haveI : Nonempty (Fin b.dim) := ⟨⟨0, b.dim_pos⟩⟩
   have g := (exclusion_ball_faces hclosed hstrict hgen hB).1 p
@@ -203,7 +203,7 @@ private theorem complement_singleton (p : pure C u) :
     exact he.symm ▸ hx
 
 include hclosed hstrict hgen in
-private theorem pure_nonempty [Nontrivial V] : Nonempty (pure C u) := by
+theorem pure_nonempty [Nontrivial V] : Nonempty (pure C u) := by
   by_contra hn
   have he : pure C u = ∅ := Set.eq_empty_iff_forall_notMem.mpr
     (fun x hx => hn ⟨⟨x, hx⟩⟩)

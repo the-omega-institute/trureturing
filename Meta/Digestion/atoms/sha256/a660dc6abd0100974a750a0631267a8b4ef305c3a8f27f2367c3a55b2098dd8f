@@ -1,0 +1,79 @@
+**Proposition 28.2 (finite policy, chronology and guards).** This policy
+belongs to $\mathcal C_T$. It is almost surely a finite concatenation
+of numerical piecewise linear profiles, and its whole original guard is
+
+$$
+k+\min_{[0,T]}a_\eta\ge l>0,\qquad
+k+\max_{[0,T]}a_\eta\le u<H.
+\tag{28.2}
+$$
+
+Its own lifetime and exit face satisfy (26.3). In particular it never
+dies before target death. All chronological integrals are those of its
+actual controls, including every interrupted prefix.
+
+Proof. Proposition 16.3 gives finitely many analytic knots before $S$.
+For each knot Lemma 27.3 has only finitely many attempts almost surely;
+a countable intersection over knot indices suffices. The same lemma
+puts completion before the next knot unless target death or the
+horizon interrupts. Initially the native triple is $z_0=(0,0,0)$.
+Inductively, just before the normal connector issued at $t_i$, the
+native triple is exactly $z_{t_{i-1}}$. Indeed the preceding connector
+completed before $t_i$ and held thereafter. The connector endpoint is
+$z_{t_i}$ because its ordinary relative integral is $C_i$ and the
+translated integral is $W^1_{t_{i-1}}Y_i+C_i$, as in (17.6).
+This proves the invariant at every next knot. The initial hold handles
+$i=1$. Arbitrary changes of suffix speed preserve these chronological
+integrals, since they traverse exactly the same geometric prefixes.
+There is no resetting of $J$, height, phase, or controls at an issuance.
+
+The inward excursions in each normal connector are strictly interior,
+and its last height leg joins two interior target heights. Hence all
+native heights are interior before the terminal connector. This remains
+true at a target death that interrupts a leg: the current numerical
+normal path has interior endpoints at its issuing knot. The initial
+height is also interior. Thus $h_0\in I$ in (28.1).
+The terminal inward rectangle and phase leg stay in $I$, since
+$\rho\le(u-l)/8$. Its final height leg joins $h_0$ to
+$k+W^1_\tau\in\{l,u\}$. Every point before the end of this final
+leg is interior. Its endpoint is the same exit face as the target's.
+The native first exit is therefore exactly $\tau+\delta$ if that time
+is at most $T$, and there is no native exit on the horizon otherwise.
+At a death at $T$ the same endpoint rule applies. The formula for
+$S_\eta$ and $0\le S_\eta-S\le\delta$ follow directly. If the
+terminal connector completes, (28.1) also gives precisely the target
+triple $z_\tau$, which is then held.
+
+All executed heights lie in $[l,u]\Subset(0,H)$, proving (28.2).
+N, Theorems 9.2–9.3 apply to every actual prefix, with its negative
+phase convention and original preparation. Their formula is exactly
+(11.3), with $J_\eta=\int a_\eta\,db_\eta$. The numerical domain
+of this same realized command remains
+$(-\min a_\eta,H-\max a_\eta)$; for another starting-height promise
+it must satisfy (2.4). The inward choice does not enlarge that domain.
+
+There is one initial issuance, finitely many normal attempts, and at
+most one terminal issuance. Each attempt has at most six nonconstant
+linear pieces and its prescribed hold. Its interruptions do not create
+jumps, and the terminal join is continuous. Consequently the actual
+histories have finite piece and issuance counts, are zero-start AC
+and piecewise $C^1$, and have finite variation and energy almost surely.
+The possibly unbounded speeds are finite on each of these finitely
+many pieces. All normal observations are before target death, and
+the terminal profile is a measurable function of the stopped data
+and the policy's known past controls. In particular its $J_0$ is
+computable from its finite issued profiles and their elapsed prefixes.
+An issuance at the zero remaining horizon moves no state. These facts
+verify all operation and information requirements of $\mathcal C_T$.
+More explicitly, on each event specifying finite knot and attempt
+counts, the actual path evaluations are finite compositions of
+measurable stopping-time evaluations, arithmetic and interpolation.
+These countably many events exhaust probability one. Rational-time
+evaluations generate the Borel sigma algebra of the continuous-path
+space, and each chronological value is a finite ordinary leg integral.
+Thus the complete executed controls and their chronological paths are
+measurable random continuous paths. Choices on the exceptional null
+set can be fixed arbitrarily in the usual completions; all operational
+requirements and estimates here are almost sure statements.
+$\square$
+

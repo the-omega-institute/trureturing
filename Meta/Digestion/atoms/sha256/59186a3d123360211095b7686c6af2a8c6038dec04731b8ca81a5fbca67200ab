@@ -1,0 +1,107 @@
+**定理 114.3（单侧端点互惠迫使原纯点严格暴露）。** 不要求任何 $\mathrm{EB}_m$。
+固定 $p\in P$，若
+
+$$
+\forall x\in P:\qquad T_x(p)\ge T_p(x),
+\tag{IX114.4}
+$$
+
+则存在 $h\in\mathcal E$，使 $K\cap\ker h=\{p\}$。
+因此 $p$ 在整个原 $K$ 中暴露，$u-h$ 是仅在 $p$ 取值一的原确认效应。
+特别地，PR使全部原纯点暴露。
+
+证明。若 $K=\{p\}$，零泛函已在 $K$ 上暴露这个唯一点，结论直接成立。
+以下设 $K$ 非单点。定义正锥及其原零效应截面
+
+$$
+\mathcal N_p=\{g\in C^{\ast}:g(p)=0\},\qquad
+G_p=\mathcal N_p\cap\mathcal E.
+\tag{IX114.5}
+$$
+
+$p$ 是相对边界点，支撑泛函经常数平移和齐次化后表明 $\mathcal N_p\ne\{0\}$。
+取 $h\in\operatorname{ri}\mathcal N_p$，并重标定为 $\max_Kh=1$。
+于是 $h(p)=0$、$0\le_C h\le_Cu$。
+令 $U_p=\operatorname{span}\mathcal N_p$，在这个有限维空间选辅助范数。
+相对内部给出 $\varepsilon>0$，使
+
+$$
+h+B_{U_p}(0,\varepsilon)\subseteq\mathcal N_p.
+$$
+
+$G_p$ 紧，故存在 $R<\infty$ 使 $\|g\|\le R$ 对全部 $g\in G_p$ 成立。
+取 $c>R/\varepsilon$，便有 $h-g/c\in\mathcal N_p$，因此
+
+$$
+g\le_C ch\quad(g\in G_p),\qquad
+1-T_p(y)=\max_{g\in G_p}g(y)\le ch(y)\quad(y\in K).
+\tag{IX114.6}
+$$
+
+第二式使用了 $f\mapsto u-f$ 从 $F_p$ 到 $G_p$ 的双射。
+这只是对所有零效应的统一标量控制；$ch$ 不必属于 $\mathcal E$，
+没有由此取得一张least确认效应。
+
+设 $Z=K\cap\ker h$ 非单点。选择仿射泛函 $\ell$，使
+
+$$
+\alpha=\max_Z\ell>\ell(p),\qquad \delta=\alpha-\ell(p)>0.
+\tag{IX114.7}
+$$
+
+对每个正整数 $t$，令 $m_t=\max_K(\ell-th)$，
+并在这个非空紧最大面中选择一个原纯点 $x_t$。
+因为 $h|_Z=0$，有 $m_t\ge\alpha$，所以
+
+$$
+0\le t h(x_t)=\ell(x_t)-m_t\le\ell(x_t)-\alpha.
+\tag{IX114.8}
+$$
+
+$\ell$ 有界先给 $h(x_t)\to0$。由 $K$ 紧，任意聚点都属于 $Z$。
+式(IX114.8)又给 $\ell(x_t)\ge\alpha$，而每个聚点在 $Z$ 上的 $\ell$ 值不超过 $\alpha$。
+若 $\ell(x_t)$ 不趋于 $\alpha$，可取一个始终偏离 $\alpha$ 的子列，
+再取收敛子列，其聚点便违反这个上界。故
+
+$$
+\ell(x_t)\longrightarrow\alpha,\qquad
+t h(x_t)\longrightarrow0.
+\tag{IX114.9}
+$$
+
+这里的聚点无需是纯点，亦未使用 $P$ 闭或 $T$ 第一参数的连续性。
+
+令 $n_t=\min_K(\ell-th)$、$\Delta_t=m_t-n_t$。
+$\ell|_Z$ 非恒定，所以 $\Delta_t>0$。实际原效应
+
+$$
+e_t=\frac{\ell-th-n_tu}{\Delta_t}\in\mathcal E,\qquad
+e_t(x_t)=1
+\tag{IX114.10}
+$$
+
+确实属于 $F_{x_t}$，没有调用面上的未证延拓。
+设 $A=\max_K\ell-\min_K\ell$。由 $0\le h\le1$，
+
+$$
+\Delta_t\le A+t,\qquad
+1-e_t(p)=\frac{m_t-\ell(p)}{\Delta_t}\ge\frac{\delta}{\Delta_t}.
+\tag{IX114.11}
+$$
+
+单侧假设只用于原纯点 $x_t$，给
+$e_t(p)\ge T_{x_t}(p)\ge T_p(x_t)$。结合(IX114.6)、(IX114.9)—(IX114.11)，
+
+$$
+\begin{aligned}
+0<\delta
+&\le\Delta_t(1-e_t(p))\\
+&\le\Delta_t(1-T_p(x_t))\\
+&\le c\Delta_t h(x_t)
+\le c(A+t)h(x_t)\longrightarrow0.
+\end{aligned}
+\tag{IX114.12}
+$$
+
+矛盾。因此 $Z=\{p\}$，而 $u-h$ 的值一集合恰为 $\{p\}$。证毕。
+

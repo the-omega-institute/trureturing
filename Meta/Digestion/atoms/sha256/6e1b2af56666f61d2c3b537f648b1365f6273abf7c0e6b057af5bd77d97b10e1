@@ -1,0 +1,9 @@
+**既有原面接口。** 直接复用[VII103.2、VII104.1][Q120VII]及[IX116.1][Q120IX]：仅由完整EB条件，每个 $D_p$ 都是非点紧暴露极大真面，$\mathcal A_p\ne\varnothing$；全部非空真面只有纯单点和这些完整球。每张球 $F$ 满足
+
+$$
+S(F):=P\cap F=\partial_{\rm rel}F,\qquad F=\operatorname{conv}S(F).
+\tag{IX120.3}
+$$
+
+不同完整球若相交，只交于一个原纯点。每个 $e\in\mathcal A_p$ 的零面恰为 $D_p$；这还直接来自 $D_p$ 的定义。后文使用的“面”始终指整个原面，不是截面、所选球片或局部控制载体。
+

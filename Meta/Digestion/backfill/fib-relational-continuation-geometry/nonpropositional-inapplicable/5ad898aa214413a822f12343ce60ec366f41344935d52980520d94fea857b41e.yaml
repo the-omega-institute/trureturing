@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5ad898aa214413a822f12343ce60ec366f41344935d52980520d94fea857b41e
+  normalized_sha256: sha256:5ad898aa214413a822f12343ce60ec366f41344935d52980520d94fea857b41e
+cas_ref: sha256:5ad898aa214413a822f12343ce60ec366f41344935d52980520d94fea857b41e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Source-level all-bind-only reuse, not a new Lean theorem. Use the existing ImmediateWindowStateCapacity.task and ParityLiftRationalMinimum.integerTask/integerFieldTask definitions. For every prime p, install the usual Field (ZMod p) from primality. Set E_p(None)=(0,0), E_p(Some r)=(1,r), and D_p(a,b)=Some b when a=1, None otherwise. E_p is injective because 0 != 1 and equality of second coordinates recovers r; D_p(E_p y)=y. Map RawState 0 to RawState p by preserving None and the Bool seam and casting each integer composition coordinate. The five displacements are (0,0),(1,0),(0,1),(2,1),(1,1); step(a,b)=(b,a+b), clock=step^[3], and quantity=2*a+3*b. Ring-hom cast identities and case normalization give castState(rawTransition_0 q sigma)=rawTransition_p(castState q) sigma, with the identical guard seam && last sigma. List.foldl_hom at q=Some(false,(0,0)) therefore gives integerFieldTask (ZMod p) w=E_p(task p w) for every finite word w. Injectivity reflects as well as preserves every continuation response at w++v. The decoder and encoder change only the output map, so state counts transfer in both directions. Preserve chronological high-to-low windows, printed low-to-high bits, zero unit bit, empty word, arbitrary high null padding, legal zero output (1,0), absorbing invalid output (0,0), both output channels and all continuations; no End, nonzero-leading guard or one-hot output is added. This uses pinned List.foldl_hom, DFA evaluation definitions, cast laws and normalization only.
+    previous_atom_id: b7ac8829f1282255ded1e77e3bb15d3f878d9a56a40ba68fad01c9fb63c23c67
+    next_atom_id: cd62c9a43db065021ea4de7688dd614db8be3f2b05b628923214685c6b4d7370
