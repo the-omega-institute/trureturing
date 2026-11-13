@@ -11,6 +11,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 open Set
+open scoped BigOperators
 open _root_.D5.S3.Geometry.FiniteSimplexBoundarySphere
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -104,7 +105,14 @@ theorem bridge_attempt :
 
 private abbrev testΛ : Type u := ULift.{u} (Fin 2)
 
-private def testBarycenter : Simplex testΛ := barycenterPoint
+private def testBarycenter : Simplex testΛ :=
+  ⟨barycenter testΛ, by
+    constructor
+    · intro i
+      exact inv_nonneg.mpr (cardR_pos (Λ := testΛ)).le
+    · change (∑ _ : testΛ, (cardR testΛ)⁻¹) = 1
+      simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+      exact mul_inv_cancel₀ (cardR_ne (Λ := testΛ))⟩
 
 private def testVertex : Simplex testΛ :=
   ⟨WithLp.toLp 2 (Pi.single (⟨0⟩ : testΛ) (1 : ℝ)), by

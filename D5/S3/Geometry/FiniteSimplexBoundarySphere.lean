@@ -129,9 +129,6 @@ private theorem barycenter_data :
     simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
     exact mul_inv_cancel₀ (cardR_ne (Λ := Λ))
 
-/-- A literal barycenter representative, not an assumed sphere preimage. -/
-def barycenterPoint : Simplex Λ := ⟨barycenter Λ, barycenter_data⟩
-
 private theorem displacement_sum_zero (x : Simplex Λ) :
     (∑ i, displacement x i) = 0 := by
   simp only [displacement, PiLp.sub_apply, Finset.sum_sub_distrib,
@@ -180,8 +177,9 @@ private theorem denominator_scalar_bound {m s a : ℝ} (hm : 0 < m)
     <;> ring
   linarith
 
-private theorem denominator_lower_bound (x : Simplex Λ) :
-    1 / ((cardR Λ) ^ 2 + 1) ≤ psiDenominator x := by
+/-- The stated uniform lower bound (in fact valid for every nonempty label type). -/
+theorem psiDenominator_lower_bound (x : Simplex Λ) :
+    1 / ((Fintype.card Λ : ℝ) ^ 2 + 1) ≤ psiDenominator x := by
   obtain ⟨j, hj⟩ := minCoord_attained x
   have hjz : cardR Λ * displacement x j = sigma x - 1 := by
     simp only [displacement, PiLp.sub_apply, barycenter, PiLp.toLp_apply, hj, sigma]
@@ -197,13 +195,8 @@ private theorem denominator_lower_bound (x : Simplex Λ) :
   rw [← mul_pow, hjz] at hmul
   exact hmul
 
-/-- The stated uniform lower bound (in fact valid for every nonempty label type). -/
-theorem psiDenominator_lower_bound (x : Simplex Λ) :
-    1 / ((Fintype.card Λ : ℝ) ^ 2 + 1) ≤ psiDenominator x :=
-  denominator_lower_bound x
-
 private theorem denominator_pos (x : Simplex Λ) : 0 < psiDenominator x :=
-  lt_of_lt_of_le (by positivity) (denominator_lower_bound x)
+  lt_of_lt_of_le (by positivity) (psiDenominator_lower_bound x)
 
 private theorem psiRaw_split (x : Simplex Λ) : psiRaw x =
     (2 * sigma x / psiDenominator x) • displacement x +
@@ -224,7 +217,6 @@ theorem psiRaw_norm_sq (x : Simplex Λ) : ‖psiRaw x‖ ^ 2 = 1 := by
 
 abbrev Sphere (Λ : Type*) [Fintype Λ] := EuclideanSphereJoin.UnitSphere (E Λ)
 
-def north : Sphere Λ := ⟨pole Λ, mem_sphere_zero_iff_norm.mpr pole_norm⟩
 def south : Sphere Λ := ⟨-pole Λ, mem_sphere_zero_iff_norm.mpr (by rw [norm_neg, pole_norm])⟩
 
 def psi (x : Simplex Λ) : Sphere Λ :=
