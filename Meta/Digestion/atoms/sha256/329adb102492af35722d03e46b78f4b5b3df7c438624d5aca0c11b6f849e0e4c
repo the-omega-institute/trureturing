@@ -1,0 +1,18 @@
+### 125.10 全部静态QM对象的同一对应
+
+以下仅在(Q125.33)的完整条件成立后，复用124.8及既有静态字典。125.3—125.7单独不供应此表。
+
+| 静态数学对象 | 同一原实现的全部量词 |
+| --- | --- |
+| 复射线与纯态 | 全部 $z\ne0$ 给 $p_z=\Phi(zz^*/(z^*z))$，恰为整个 $P\cong\mathbb{CP}^2$ |
+| 混态、概率混合与质量 | 整个 $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$，$C=\Phi(\mathrm{PSD}_3)$ 含零与全部非负质量，保持全部有限凸组合，$\dim_{\mathbb R}V=9$ |
+| 单位、全部效应和Born评价 | $u\Phi=\operatorname{Tr}$；整个 $\mathcal E$ 恰为 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$、$0\preceq A\preceq I_3$，含全部混态输入及零、单位、补 |
+| least确认与完整排除球 | $T_{p_z}(\Phi\rho)=\operatorname{Tr}(zz^*\rho)/(z^*z)$；least效应为相应秩一投影，完整 $D_{p_z}$ 为 $z^\perp$ 上全部密度矩阵 |
+| 纯比较与原二元边 | $T_{p_z}(p_w)=|z^*w|^2/((z^*z)(w^*w))$，零恰为复内积正交 |
+| 正交完备基和数学三结果 | 每条原边有唯一第三纯点，三秩一投影之和为 $I_3$，三原非负效应之和为 $u$，读数为Kronecker值，容量为三 |
+| 全部有限数学POVM | 对每个有限结果数，全部原 $f_j\ge0,\sum_jf_j=u$ 恰对应全部 $A_j\succeq0,\sum_jA_j=I_3$ |
+| 谱和全部实可观测量 | 每个混态有三项正交谱分解，允许零权与重复谱；全部实线性可观测量对应全部Hermitian矩阵并有实谱分解 |
+| 派生共同几何 | 中心为 $\Phi(I_3/3)$，共同内积为 $B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$，Jordan积为 $\Phi((XY+YX)/2)$ |
+
+复射线中的叠加是该数学模型的一部分；实际相干准备、相位参考和可调用门仍按各自原来源与操作合同供应。数学POVM和三个种子效应均不自动成为实际共同仪器。
+
