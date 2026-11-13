@@ -1,0 +1,20 @@
+**定义 118.1（忠实标签与原边开放性）。** 置
+
+$$
+\begin{gathered}
+\mathrm{Inj}:\quad D_p=D_s\Longrightarrow p=s\qquad(p,s\in P),\\
+\mathcal I=\{(p,q)\in P^2:q\in S(D_p)\},\qquad
+\pi_1(p,q)=p,\quad\pi_2(p,q)=q,\quad\sigma(p,q)=(q,p),\\
+\mathrm{(O)}:\quad
+\forall(p,q)\in\mathcal I\ \forall(p_n)\subset P\ (p_n\to p)\quad
+\exists(q_n)\subset P:\ (p_n,q_n)\in\mathcal I\ (\forall n),\quad q_n\to q.
+\end{gathered}
+\tag{IX118.2}
+$$
+
+主候选是EB3、Inj和(O)。它只要求：移动一条实际正交边的第一端时，能用邻近的实际第二端保持正交。
+下一节证明(O)恰为 $\pi_1:\mathcal I\to P$ 开放；原零对称使 $\sigma$ 为真实交换，两投影因而同时开放。
+这不是要求整个 $\mathcal I$ 在 $P^2$ 中开，也不是先给一个 $S^2$ 丛。
+它不输入法向面之间的距离、修复率、连续选择、共同中心、PR、least、谱性、Pair或矩阵表示。
+所有纯点、所有实际正交边和每个完整纤维均保留，不能以有限菜单代替其量词。
+

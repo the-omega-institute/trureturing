@@ -1,0 +1,18 @@
+**定义 Q97.1（原比较乘法的完整平方锥）。** 在定义 8.1 的实空间上记 $e=1$、$\|x\|=g(x,x)^{1/2}$，对任意双线性映射 $F$ 记
+
+$$
+\|F\|_{\rm bil}=\sup_{\|x\|=\|y\|=1}\|F(x,y)\|.
+$$
+
+三线性映射的范数同样在三个单位输入上取上确界。对交换含幺正 Frobenius 乘法 $S$，定义
+
+$$
+\begin{aligned}
+\mathcal C_S&=\overline{\operatorname{cone}\{S(x,x):x\in J\}},\\
+E_S&=\mathcal C_S\cap(e-\mathcal C_S),\\
+\Omega_S&=\{u\in J:g(u,e)=1,\ g(u,x)\ge0\text{ 对全部 }x\in\mathcal C_S\}.
+\end{aligned}\tag{Q97.1}
+$$
+
+闭包、对偶及 Hausdorff 距离 $d_H$ 均取原来的 $g$；$d_H$ 初始允许值为 $+\infty$。这些集合使用全部平方，不限制到定义 8.3 的探针，也不预设为矩阵正锥。
+

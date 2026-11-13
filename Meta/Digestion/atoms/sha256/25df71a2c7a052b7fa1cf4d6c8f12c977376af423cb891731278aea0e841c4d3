@@ -1,0 +1,94 @@
+### Q97.6 严格单位、忠实正泛函和邻近迹
+
+在 $F$ 上取任意状态 $f$，置
+
+$$
+r=e-v(1),\qquad w(a)=v(a)+f(a)r.
+$$
+
+$r$ 自伴，故 $w$ 严格 $*$ 线性且 $w(1)=e$。由 $\|f\|=1$ 得
+
+$$
+p(w(a)-v(a))\le d\|a\|_F,\qquad
+(1-2d)\|a\|_F\le p(w(a))\le(1+2d)\|a\|_F.
+\tag{Q97.22}
+$$
+
+$d\le1/8$ 时 $w$ 单射；源和目标维数相同，所以它为双射。将 $w=v+fr$ 的两个乘法因子展开，再用 (Q97.21) 和 $p(\mu(x,y))\le(1+\varepsilon)p(x)p(y)$，给
+
+$$
+\begin{aligned}
+p(\mu(w(a),w(b))-w(ab))
+&\le\bigl[2d+2(1+\varepsilon)(1+d)d+(1+\varepsilon)d^2\bigr]
+\|a\|_F\|b\|_F\\
+&\le8d\|a\|_F\|b\|_F
+\end{aligned}\tag{Q97.23}
+$$
+
+当 $\varepsilon\le1$、$d\le1/8$。其中 $2d$ 分别来自 $v$ 的乘法误差和 $f(ab)r$；两个交叉项及二次项给其余三项。
+
+拉回真正的乘法，记
+
+$$
+\nu(x,y)=w\bigl(w^{-1}(x)w^{-1}(y)\bigr),\qquad
+n(x)=\|w^{-1}(x)\|_F.
+$$
+
+$\nu$ 严格结合，单位为 $e$，对合仍为原共轭，而 $n$ 是其 $C^*$ 范数。注意 (Q97.22) 是
+
+$$
+(1-2d)n(x)\le p(x)\le(1+2d)n(x).
+$$
+
+将 (Q97.23) 的输入改成 $w^{-1}(x),w^{-1}(y)$，再用 (Q97.19)，得到原 Hilbert 双线性范数中的估计
+
+$$
+\|\nu-\mu\|_{{\rm bil},H}
+\le\frac{8dM^2}{(1-2d)^2}\le16M^2d=:q
+=16aM^3\delta.
+\tag{Q97.24}
+$$
+
+特别地 $\|\nu\|_{{\rm bil},H}\le M+q$。每个 $\nu$-酉元 $u$ 满足 $n(u)=1$，故 $\|u\|\le p(u)\le1+2d$。
+
+令 $\tau(x)=\langle e,x\rangle$。由 (Q97.16) 及原单位，
+
+$$
+\tau(\mu(x^*,y))=\langle x,y\rangle,\qquad
+\tau(\mu(x,y))=\tau(\mu(y,x)).
+$$
+
+第二式也可由 $\tau(\mu(x,y))=\langle x^*,y\rangle$ 的对称复双线性直接得到。因而
+
+$$
+\begin{aligned}
+|\tau(\nu(x,y)-\nu(y,x))|&\le2q\|x\|\|y\|,\\
+\tau(\nu(x^*,x))&\ge(1-q)\|x\|^2.
+\end{aligned}\tag{Q97.25}
+$$
+
+$q<1$ 时，$\tau$ 是真正 $C^*$ 代数 $(H,\nu,*)$ 上忠实正的含幺泛函。此后才使用该真正代数的紧酉群 $\mathcal U$ 及其归一 Haar 测度，定义
+
+$$
+t(x)=\int_{\mathcal U}\tau\bigl(\nu(u^*,\nu(x,u))\bigr)\,du.
+\tag{Q97.26}
+$$
+
+每个被积泛函忠实正且含幺，所以 $t$ 也如此。Haar 不变性使 $t$ 对酉共轭不变；对自伴 $a$ 的 $\exp(isa)$ 在 $s=0$ 求导给 $t(ax-xa)=0$，再复线性扩展 $a$，得到 $t$ 为迹。这里的指数和乘积全部在已经结合的 $\nu$ 中。
+
+为量化 $t-\tau$，在 (Q97.25) 中取 $u^*$ 和 $\nu(x,u)$；结合性及 $\nu(u,u^*)=e$ 给
+
+$$
+\nu(\nu(x,u),u^*)=x.
+$$
+
+于是
+
+$$
+\|t-\tau\|_{H^*}
+\le2q(M+q)(1+2d)^2\le8Mq
+\tag{Q97.27}
+$$
+
+当 $q\le1$、$d\le1/8$。这一步只在真正代数上平均，不对原来的非结合乘法假设酉群结构。
+
