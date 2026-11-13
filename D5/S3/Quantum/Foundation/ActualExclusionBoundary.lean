@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import D5.S3.Quantum.Foundation.OriginalFacePolarity
 import D5.S3.Quantum.Foundation.SingleLabelNormalBody
+import D5.S3.Quantum.Foundation.MixedExclusionGeometry
 import D5.S3.Topology.FiniteConvexFiberMap
 import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
@@ -57,28 +58,7 @@ private theorem exclusion_boundary
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
     (p : pure C u) : exclusion C u p ⊆ intrinsicFrontier ℝ (base C u) := by
-  have hK := (base_compact hclosed hstrict).isClosed
-  obtain ⟨f, hf, hzero⟩ := (exclusion_ball_faces hclosed hstrict hgen hB).1 p |>.2.2.2.2.2.2
-  intro x hx
-  rw [← closure_sdiff_intrinsicInterior, hK.closure_eq]
-  refine ⟨hx.1, ?_⟩
-  rintro ⟨a, ha, he⟩
-  let : Nonempty (affineSpan ℝ (base C u)) := ⟨a⟩
-  let b : affineSpan ℝ (base C u) := ⟨p, subset_affineSpan ℝ _ (pure_mem p)⟩
-  have hcont : Continuous (fun t : ℝ => AffineMap.lineMap (k := ℝ) b a t) :=
-    AffineMap.lineMap_continuous
-  obtain ⟨t, ht, hz⟩ := hcont.tendsto' 1 a (AffineMap.lineMap_apply_one b a) |>.eventually_mem
-    (mem_interior_iff_mem_nhds.mp ha) |>.exists_gt
-  have hfx : f x = 0 := (hzero ▸ hx).2
-  have hbound := (hf.1 _ hz.1).1
-  have hval : f ((AffineMap.lineMap (k := ℝ) b a t : affineSpan ℝ (base C u)) : V) =
-      1 - t := by
-    rw [AffineMap.lineMap_apply]
-    change f (t • ((a : V) - (p : V)) + (p : V)) = 1 - t
-    simp only [map_add, map_sub, map_smul, smul_eq_mul, he, hfx, hf.2]
-    ring
-  rw [hval] at hbound
-  linarith
+  exact MixedExclusionGeometry.exclusion_frontier hclosed hstrict hgen hB p
 
 private theorem boundary_support_face
     (hclosed : IsClosed (C : Set V))
@@ -135,14 +115,7 @@ theorem original_boundary_cover_and_midpoint
   have hcover : ∀ x ∈ intrinsicFrontier ℝ (base C u),
       ∃ p : pure C u, x ∈ exclusion C u p := by
     intro x hx
-    obtain ⟨F, hxF, hconv, hface, hproper⟩ := boundary_support_face hclosed hstrict hgen hx
-    rcases all.2.1 F ⟨x, hxF⟩ hconv hface hproper with ⟨p, hp⟩ | ⟨p, hp⟩
-    · have hxp : x = p := by simpa [hp] using hxF
-      have g := all.1 p
-      obtain ⟨q, hq⟩ := g.2.1.extremePoints_nonempty g.1.nonempty
-      have hqP : q ∈ pure C u := g.2.2.2.2.1.extremePoints_subset_extremePoints hq
-      exact ⟨⟨q, hqP⟩, hxp ▸ (exclusion_symmetric p ⟨q, hqP⟩).mp hq.1⟩
-    · exact ⟨p, hp ▸ hxF⟩
+    exact MixedExclusionGeometry.frontier_covered hclosed hstrict hgen hx
   refine ⟨hcover, ?_⟩
   intro x hx y hy
   constructor
