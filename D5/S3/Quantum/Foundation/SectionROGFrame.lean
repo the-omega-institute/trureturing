@@ -50,7 +50,7 @@ def ROG (L : Submodule ℝ (HermitianMat ι 𝕜)) : Prop :=
 def pureRanks (L : Submodule ℝ (HermitianMat ι 𝕜)) : Set (HermitianMat ι 𝕜) :=
   {X | ∃ v : EuclideanSpace 𝕜 ι, ‖v‖ = 1 ∧ rankOne v = X ∧ X ∈ L}
 
-private lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
+lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
     rankOne (r • v) = (r * r) • rankOne v := by
   apply HermitianMat.ext
   change Matrix.vecMulVec (r • v) (star (r • v)) =

@@ -1,0 +1,19 @@
+**引理 9.1（固定长度单射的独立来源条件）。** 采用 [OWN] 定理 8.2、AOM 第 5 节的固定长度字单射接口。其代数证明如下，因而零误差比较与近似熵证明所用的谱接口彼此分开。
+
+在 $T$ 的整数基 $b_1=(1,0,-1)^{\mathsf T}$、$b_2=(0,1,-1)^{\mathsf T}$ 中，令 $\tau=i\sqrt3$、$P_j=-2i\widehat V_j$，则
+
+$$
+P_0=\begin{pmatrix}-\tau&1\\\tau-1&\tau-1\end{pmatrix},\quad
+P_1=\begin{pmatrix}1&-\tau\\\tau-1&\tau-1\end{pmatrix}=P_0\widehat W,
+\quad\widehat W=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+证明。环同态 $\phi:\mathbb Z[\tau]\to\mathbb F_2$ 定为 $\phi(a+b\tau)=a+b\pmod2$；因 $\tau^2=-3$，此映射保持乘法。两个 $P_j$ 都约化为
+
+$$
+E=\begin{pmatrix}1&1\\0&0\end{pmatrix},\qquad E^2=E,
+\qquad\phi(\widehat W)E\ne E.
+$$
+
+$\det P_j=\pm4\ne0$，故可在 $\mathbb Q(\tau)$ 中消去相同的最左字母。若两个不同固定长度字相等，消去共同前导后，第一个不同字母可写成 $P_0X=P_1Y=P_0\widehat WY$，即 $X=\widehat WY$。等长非空尾字都约化为 $E$，矛盾；空尾字则要求 $I=\widehat W$，亦矛盾。矩阵乘积的先后次序为命题 1.3 所定的实际顺序，此消去只作用于其最左端。固定长度全三能级字若只相差投影标量，作用于 $\xi$ 的共同非零特征值 $\lambda^n$ 迫使该标量为一。所以不同历史的 $Q_h$ 不相等，且不同投影类。$\square$
+
