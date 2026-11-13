@@ -30,8 +30,6 @@ public import D5.S3.Quantum.GleasonRealRepresentation
 public import D5.S3.QuadraticForms.ParallelogramConstruction
 public import Mathlib.Analysis.InnerProductSpace.LinearMap
 
-set_option backward.isDefEq.respectTransparency false
-
 @[expose] public section
 
 open Matrix
@@ -225,11 +223,11 @@ theorem matrix_eq_zero_of_quadForm_zero {D : Matrix (Fin N) (Fin N) ℂ}
     (hQ : ∀ x : Fin N → ℂ, star x ⬝ᵥ (D *ᵥ x) = 0) : D = 0 := by
   have hlin : Matrix.toEuclideanLin D = 0 :=
     (_root_.inner_map_self_eq_zero (Matrix.toEuclideanLin D)).mp (fun x => by
-      rw [inner_conj_symm]
+      apply inner_eq_zero_symm.mp
       have hx : inner ℂ x (Matrix.toEuclideanLin D x) = 0 := by
         simpa only [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin,
           Matrix.toLpLin_apply, dotProduct_comm] using hQ (⇑x)
-      rw [hx, map_zero])
+      exact hx)
   exact Matrix.toEuclideanLin.injective (by simpa using hlin)
 theorem trace_mul_vecMulVec (R : Matrix (Fin N) (Fin N) ℂ) (v : EuclideanSpace ℂ (Fin N)) :
     (R * Matrix.vecMulVec (⇑v) (star ⇑v)).trace = star (⇑v) ⬝ᵥ (R *ᵥ (⇑v)) := by

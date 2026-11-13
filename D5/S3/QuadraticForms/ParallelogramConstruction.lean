@@ -104,7 +104,7 @@ include htwo hf
 
 /-- **A function satisfying the parallelogram law is a quadratic form.** Its companion bilinear
 map is `QuadraticMap.polarBilin` of it, which is the polarisation. -/
-def ofParallelogram : _root_.QuadraticMap ℤ M N := by
+@[expose] def ofParallelogram : _root_.QuadraticMap ℤ M N := by
   have hzero : f 0 = 0 := by
     apply htwo
     apply add_left_cancel (a := 2 • f 0)
