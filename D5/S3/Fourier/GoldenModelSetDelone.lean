@@ -10,7 +10,6 @@ import D5.S0.Carrier.Euclidean
 import D5.S3.Fourier.GoldenCutProjectSchemeAdapter
 import D5.S3.Fourier.DeloneModelSetCertificate
 import D5.S1.Deficit.ModelSet.GoldenModelSetSelfSimilar
-import D5.S1.Words.GoldenMechanicalWord
 
 /-!
 The complete golden window model set has packing radius 1/2 and covering
@@ -30,7 +29,6 @@ namespace D5.S3.Fourier.GoldenModelSetDelone
 
 open D5.S0.Carrier D5.S1.Scale
 open D5.S1.Deficit.GoldenModelSetSelfSimilar
-open D5.S1.Words
 open GoldenCutProjectSchemeAdapter DeloneModelSetCertificate
 open scoped NNReal
 
@@ -57,64 +55,6 @@ theorem goldenWindow_eq :
   rw [hi]
   congr 1
   nlinarith
-
-/-- The canonical floor-selected lift in the fibre with internal coordinate `b`. -/
-noncomputable def goldenWindowFiberLift (b : ℤ) : GoldenInt :=
-  ⟨⌊Real.goldenRatio - 1 - (b : ℝ) * (1 - Real.goldenRatio)⌋, b⟩
-
-/-- Every integer fibre has an explicit lift in the closed golden window. -/
-theorem golden_window_fiber_lift_mem (b : ℤ) :
-    embedding (conj (goldenWindowFiberLift b)) ∈ goldenWindow := by
-  let a : ℤ := ⌊Real.goldenRatio - 1 - (b : ℝ) * (1 - Real.goldenRatio)⌋
-  let u : GoldenInt := ⟨a, b⟩
-  have ha₀ := Int.floor_le
-    (Real.goldenRatio - 1 - (b : ℝ) * (1 - Real.goldenRatio))
-  have ha₁ := Int.lt_floor_add_one
-    (Real.goldenRatio - 1 - (b : ℝ) * (1 - Real.goldenRatio))
-  have hc : embedding (conj u) = (a : ℝ) + (b : ℝ) * (1 - Real.goldenRatio) := by
-    simp [u, embedding_apply, conj]
-    ring
-  have hlow : Real.goldenRatio - 2 ≤ embedding (conj u) := by
-    rw [hc]
-    change (a : ℝ) ≤ _ at ha₀
-    change _ < (a : ℝ) + 1 at ha₁
-    linarith
-  have hupp : embedding (conj u) ≤ Real.goldenRatio - 1 := by
-    rw [hc]
-    change (a : ℝ) ≤ _ at ha₀
-    linarith
-  have hu : u = goldenWindowFiberLift b := by
-    simp [u, a, goldenWindowFiberLift]
-  rw [goldenWindow_eq]
-  simpa [hu] using (show Real.goldenRatio - 2 ≤ embedding (conj u) ∧
-    embedding (conj u) ≤ Real.goldenRatio - 1 from ⟨hlow, hupp⟩)
-
-/-- The floor-selected lift gives a point of the physical golden model set. -/
-theorem golden_modelSet_fiber_witness (b : ℤ) :
-    embedding (goldenWindowFiberLift b) ∈ modelSet goldenWindow := by
-  exact ⟨goldenWindowFiberLift b, rfl, golden_window_fiber_lift_mem b⟩
-
-/-- On nonnegative fibres the selected integral coordinate is a Beatty floor. -/
-theorem golden_window_fiber_lift_a_nat (n : ℕ) :
-    (goldenWindowFiberLift (n : ℤ)).a =
-      ⌊((n + 1 : ℕ) : ℝ) * goldenMechanicalSlope⌋ := by
-  have hslope : goldenMechanicalSlope = Real.goldenRatio - 1 := by
-    rw [goldenMechanicalSlope, Real.inv_goldenRatio, ← Real.one_sub_goldenConj]
-    ring
-  change ⌊Real.goldenRatio - 1 - (n : ℝ) * (1 - Real.goldenRatio)⌋ =
-    ⌊((n + 1 : ℕ) : ℝ) * goldenMechanicalSlope⌋
-  rw [hslope]
-  congr 1
-  push_cast
-  ring
-
-/-- Consecutive natural fibres change by exactly the corresponding mechanical letter. -/
-theorem golden_window_fiber_step (n : ℕ) :
-    (goldenWindowFiberLift ((n + 1 : ℕ) : ℤ)).a -
-        (goldenWindowFiberLift (n : ℤ)).a =
-      goldenMechanicalLetter (n + 1) := by
-  rw [golden_window_fiber_lift_a_nat, golden_window_fiber_lift_a_nat]
-  simp only [goldenMechanicalLetter, add_assoc]
 
 /-- Distinct points of the closed golden window model set are at least one apart. -/
 theorem golden_modelSet_dist_ge_one {x y : ℝ}
