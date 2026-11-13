@@ -77,6 +77,18 @@ def staircase (r : ℕ) : YoungDiagram where
     · exact Finset.mem_range.mpr (lt_of_le_of_lt hxy.2 (Finset.mem_range.mp hij.2))
     · exact lt_of_le_of_lt (Nat.add_le_add hxy.1 hxy.2) hy'.2
 
+private theorem mem_staircase (r : ℕ) (c : ℕ × ℕ) :
+    c ∈ staircase r ↔ c.1 + c.2 < r := by
+  rcases c with ⟨i,j⟩
+  change (i,j) ∈ ((Finset.range r).product (Finset.range r)).filter
+    (fun c => c.1 + c.2 < r) ↔ i + j < r
+  constructor
+  · intro h
+    exact (Finset.mem_filter.mp h).2
+  · intro h
+    exact Finset.mem_filter.mpr ⟨Finset.mem_product.mpr
+      ⟨Finset.mem_range.mpr (by omega), Finset.mem_range.mpr (by omega)⟩, h⟩
+
 /-- A genuine one-cell Young extension of the staircase. -/
 def firstFamily (r n : ℕ) : Finset (Nat.Partition n) :=
   Finset.univ.filter (fun p => (staircase r).cells ⊆ (YoungDiagram.ofPartition p).cells ∧
@@ -123,11 +135,11 @@ private theorem part_sum (k : ℕ) : (part k).sum = k := by
 private theorem part_count (k j : ℕ) :
     (part k).countP (fun x => j < x) = if j < k then 1 else 0 := by
   by_cases h : k = 0 <;> by_cases hj : j < k <;>
-    simp [part, h, Multiset.countP_eq_card_filter, Multiset.filter_singleton, hj] <;> omega
+    simp [part, h, Multiset.countP_eq_card_filter, Multiset.filter_singleton, hj]
 
 private theorem singleton_count (k j : ℕ) :
     ({k} : Multiset ℕ).countP (fun x => j < x) = if j < k then 1 else 0 := by
-  by_cases h : j < k <;> simp [Multiset.countP_eq_card_filter, Multiset.filter_singleton, h] <;> omega
+  by_cases h : j < k <;> simp [Multiset.countP_eq_card_filter, Multiset.filter_singleton, h]
 
 private theorem part_positive {k x : ℕ} (h : x ∈ part k) : 0 < x := by
   by_cases hk : k = 0
@@ -257,7 +269,6 @@ private theorem one_cell_row {A B : YoungDiagram} {c : ℕ × ℕ}
     have : (c.1, c.2 + 1) ∈ A.cells \ B.cells := Finset.mem_sdiff.mpr ⟨hh,hB⟩
     rw [h] at this
     have he := congrArg Prod.snd (Finset.mem_singleton.mp this)
-    simp only [Prod.snd] at he
     omega
   rw [YoungDiagram.mem_iff_lt_rowLen] at hn
   omega
@@ -452,7 +463,7 @@ private theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
   by_cases hstar : ∀ p ∈ C, X ≤ YoungDiagram.ofPartition p
   · exact Or.inl ⟨X,hX,hstar⟩
   · right
-    push_neg at hstar
+    push Not at hstar
     obtain ⟨d,hd,hdX⟩ := hstar
     have hdU := (hdich d hd).resolve_left hdX
     change ¬ X.cells ⊆ (YoungDiagram.ofPartition d).cells at hdX
@@ -679,10 +690,7 @@ private theorem top_contains_staircase {n : ℕ}
 
 private theorem staircase_rowLen (r i : ℕ) : (staircase r).rowLen i = r - i := by
   have hm (j : ℕ) : j < (staircase r).rowLen i ↔ i + j < r := by
-    rw [← YoungDiagram.mem_iff_lt_rowLen]
-    simp only [staircase, YoungDiagram.mem_mk, Finset.mem_filter, Finset.mem_product,
-      Finset.mem_range]
-    omega
+    rw [← YoungDiagram.mem_iff_lt_rowLen, mem_staircase]
   have h0 := hm 0
   have h1 := hm ((staircase r).rowLen i)
   have h2 := hm (r - i)
@@ -807,8 +815,11 @@ private theorem expanded_card (r e : ℕ) : (expandedStaircase r e).card = trian
   have hi : (staircase r).cells ∩ ({0} ×ˢ Finset.range (r + e)) =
       {0} ×ˢ Finset.range r := by
     ext ⟨i,j⟩
-    simp only [Finset.mem_inter, Finset.mem_product, Finset.mem_singleton,
-      Finset.mem_range, staircase, YoungDiagram.mem_mk, Finset.mem_filter]
+    rw [Finset.mem_inter]
+    change ((i,j) ∈ staircase r ∧ (i,j) ∈ ({0} ×ˢ Finset.range (r + e))) ↔
+      (i,j) ∈ ({0} ×ˢ Finset.range r)
+    rw [mem_staircase]
+    simp only [Finset.mem_product, Finset.mem_singleton, Finset.mem_range]
     omega
   have hc := Finset.card_inter_add_card_union (staircase r).cells
     ({0} ×ˢ Finset.range (r + e))
@@ -833,20 +844,23 @@ private theorem corner_below (r e : ℕ) (i : Fin (r + 1)) (x : ℕ × ℕ)
     x ∈ expandedStaircase r e := by
   rcases x with ⟨a,b⟩
   have hi := i.isLt
-  simp only [extensionCorner, Prod.mk_le_mk] at hx
+  have ha : a ≤ i.val := hx.1
+  have hb : b ≤ if i.val = 0 then r + e else r - i.val := hx.2
+  have hneq : a ≠ i.val ∨ b ≠ (if i.val = 0 then r + e else r - i.val) := by
+    by_cases ha : a = i.val
+    · right
+      intro hb
+      exact hne (Prod.ext ha hb)
+    · exact Or.inl ha
+  change (a,b) ∈ (staircase r).cells ∪ ({0} ×ˢ Finset.range (r + e))
+  rw [Finset.mem_union]
+  change (a,b) ∈ staircase r ∨ (a,b) ∈ ({0} ×ˢ Finset.range (r + e))
+  rw [mem_staircase]
+  simp only [Finset.mem_product, Finset.mem_singleton, Finset.mem_range]
   by_cases hz : i.val = 0
-  · apply Finset.mem_union.mpr
-    right
-    simp only [Finset.mem_product, Finset.mem_singleton, Finset.mem_range]
-    simp only [hz, ite_true] at hx
-    simp only [extensionCorner, hz, ite_true, Prod.mk.injEq] at hne
+  · simp only [hz, ite_true] at ha hb hneq
     omega
-  · apply Finset.mem_union.mpr
-    left
-    simp only [staircase, YoungDiagram.mem_mk, Finset.mem_filter, Finset.mem_product,
-      Finset.mem_range]
-    simp only [hz, ite_false] at hx
-    simp only [extensionCorner, hz, ite_false, Prod.mk.injEq] at hne
+  · simp only [hz, ite_false] at hb hneq
     omega
 
 private def cornerExtension (r e : ℕ) (i : Fin (r + 1)) : YoungDiagram where
@@ -992,8 +1006,13 @@ theorem threshold_result : ThresholdClaim :=
 private theorem expanded_zero (r : ℕ) : expandedStaircase r 0 = staircase r := by
   apply YoungDiagram.ext
   ext ⟨i,j⟩
-  simp only [expandedStaircase, Finset.mem_union, Finset.mem_product, Finset.mem_singleton,
-    Finset.mem_range, Nat.add_zero, staircase, YoungDiagram.mem_mk, Finset.mem_filter]
+  change ((i,j) ∈ (staircase r).cells ∪ ({0} ×ˢ Finset.range (r + 0))) ↔
+    (i,j) ∈ (staircase r).cells
+  rw [Finset.mem_union]
+  change ((i,j) ∈ staircase r ∨ (i,j) ∈ ({0} ×ˢ Finset.range (r + 0))) ↔
+    (i,j) ∈ staircase r
+  rw [mem_staircase]
+  simp only [Finset.mem_product, Finset.mem_singleton, Finset.mem_range, Nat.add_zero]
   omega
 
 private theorem family_eq_image (r : ℕ) : firstFamily r (triangular r + 1) =
@@ -1016,8 +1035,7 @@ private theorem family_eq_image (r : ℕ) : firstFamily r (triangular r + 1) =
       exact hne (Finset.mem_singleton.mp hh)
     have hlow : r ≤ c.1 + c.2 := by
       have hn := hcm.2
-      simp only [staircase, YoungDiagram.mem_mk, Finset.mem_filter, Finset.mem_product,
-        Finset.mem_range] at hn
+      rw [mem_staircase] at hn
       omega
     have hsum : c.1 + c.2 = r := by
       by_contra he
