@@ -18,7 +18,8 @@ internal sealed class RepeatingDecimalQuotientDocument : IScribeDocumentDefiniti
                 "For natural b, p, q, start with r(0)=p and repeatedly multiply by b and take "
                 + "the remainder modulo q. The definition is total, including q=0.", false),
             Entry("long-division-digit", "digit", "Quotient digit", DigitFormula(),
-                "The digit at position n is natural division of b times the current remainder by q. "
+                "The operator div is natural-number division: the digit at position n is the quotient "
+                + "of b times the current remainder by q. "
                 + "Under b>1 and p<q, every remainder is less than q and every digit is less than b. "
                 + "The latter bound supplies Mathlib's finite digit alphabet in the summability proof.", false),
             Entry("long-division-prefix", "longDivisionPrefix", "Positional integer prefix", PrefixFormula(),
@@ -89,7 +90,7 @@ internal sealed class RepeatingDecimalQuotientDocument : IScribeDocumentDefiniti
             App("mod", Seq(V("b"), At("remainder", V("n"))), V("q")))))));
     private static Formula DigitFormula() => Disp(Parameters(All("n", Seq(
         At("digit", V("n")), Eq, Sp,
-        new Formula.Fraction(Seq(V("b"), At("remainder", V("n"))), V("q"))))));
+        App("div", Seq(V("b"), At("remainder", V("n"))), V("q"))))));
     private static Formula PrefixFormula() => Disp(Parameters(Seq(
         At("longDivisionPrefix", D(0)), Eq, Sp, D(0), Land, Sp,
         All("n", Seq(At("longDivisionPrefix", Succ(V("n"))), Eq, Sp,

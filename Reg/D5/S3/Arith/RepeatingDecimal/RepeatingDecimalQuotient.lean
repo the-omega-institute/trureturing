@@ -12,7 +12,7 @@ namespace Reg.D5.S3.Arith.RepeatingDecimal.RepeatingDecimalQuotient
 open _root_.D5.S3.Arith.RepeatingDecimal.RepeatingDecimalQuotient
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-abbrev signature := Reg.Support.SingleDependentReadout.signature (ℕ × ℕ × ℕ)
+abbrev signature := Reg.Support.SingleDependentReadout.signature (Σ _ : ℕ, Σ _ : ℕ, ℕ)
   (fun _ => ℕ) (fun _ => ℕ)
 
 def actual : Realization signature :=
@@ -24,7 +24,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ b p q n : ℕ,
-    q * R.readout () (b,p,q) n + remainder b p q n = b ^ n * p
+    q * R.readout () ⟨b,p,q⟩ n + remainder b p q n = b ^ n * p
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -33,7 +33,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(2,1,3), 0, 2, ?_⟩
+  refine ⟨⟨2,1,3⟩, 0, 2, ?_⟩
   change longDivisionPrefix 2 1 3 0 ≠ longDivisionPrefix 2 1 3 2
   decide
 
@@ -87,7 +87,7 @@ abbrev valueArena : Arena where
   signature := signature
   Law R := ∀ {b p q : ℕ}, 1 < b → p < q →
     HasSum (fun n => (digit b p q n : ℝ) / (b : ℝ) ^ (n + 1)) ((p : ℝ) / q) ∧
-    Filter.Tendsto (fun n => (R.readout () (b,p,q) n : ℝ) / (b : ℝ) ^ n)
+    Filter.Tendsto (fun n => (R.readout () ⟨b,p,q⟩ n : ℝ) / (b : ℝ) ^ n)
       Filter.atTop (nhds ((p : ℝ) / q))
 
 private theorem value_rejected_law : ¬ valueArena.Law rejectedZero := by
@@ -111,7 +111,7 @@ abbrev periodArena : Arena where
   signature := signature
   Law R := ∀ {b p q : ℕ}, 1 < b → p < q → ∀ L : ℕ, q ∣ b ^ L - 1 →
     Function.Periodic (digit b p q) L ∧
-      ((b : ℝ) ^ L - 1) * ((p : ℝ) / q) = (R.readout () (b,p,q) L : ℝ)
+      ((b : ℝ) ^ L - 1) * ((p : ℝ) / q) = (R.readout () ⟨b,p,q⟩ L : ℝ)
 
 private theorem period_rejected_law : ¬ periodArena.Law rejected := by
   intro h
