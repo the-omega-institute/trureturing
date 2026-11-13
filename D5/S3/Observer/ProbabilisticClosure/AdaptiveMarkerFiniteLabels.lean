@@ -5,55 +5,37 @@
    anchors: []
    utility: none
    digest: Finite compatible labels causally realize every acquired marker prefix. -/
-
 import D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerStoppingTails
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelCEvent
 import Mathlib.MeasureTheory.Constructions.UnitInterval
 import Mathlib.Probability.Independence.InfinitePi
 import Mathlib.Probability.Kernel.CompProdEqIff
-
-
 /-! Finite path compatibility gives causal realization with the original seed. -/
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels
-
 open AdaptiveMarkerStoppingTails
-
 /-- An archive word is chronological; it stores no root or source. -/
 abbrev Word := List (Side × Bool)
-
 def actions (w : Word) (k : ℕ) : List Side := (w.take k).map Prod.fst
-
 def replies (w : Word) (k : ℕ) : List Bool := (w.take k).map Prod.snd
-
 def sideTotal (w : Word) (s : Side) : ℕ := (w.map Prod.fst).count s
-
 def occurrences (w : Word) (s : Side) (k : ℕ) : ℕ := (actions w k).count s
-
 private theorem occurrences_le (w : Word) (s : Side) (k : ℕ) :
-    occurrences w s k ≤ sideTotal w s := by
-  exact ((List.take_sublist k w).map Prod.fst).count_le s
-
+    occurrences w s k ≤ sideTotal w s := by exact ((List.take_sublist k w).map Prod.fst).count_le s
 private theorem occurrences_next_le (w : Word) (k : Fin w.length) :
     occurrences w w[k].1 k + 1 ≤ sideTotal w w[k].1 := by
   have h := occurrences_le w w[k].1 (k + 1)
   change ((w.take (k.val + 1)).map Prod.fst).count w[k].1 ≤ sideTotal w w[k].1 at h
   rw [List.take_succ_eq_append_getElem k.isLt, List.map_append, List.count_append] at h
   simpa [occurrences, actions] using h
-
 /-- The first true reply is the final reply, and the word is nonempty. -/
 def terminalFirstTrue (w : Word) : Prop :=
   0 < w.length ∧ ∀ k : Fin w.length, w[k].2 = decide (k.val + 1 = w.length)
-
 /-- The original seed selects each action from its reversed acquired prefix. -/
 def policyConformity {Seed : Type*} [MeasurableSpace Seed]
-    (p : Policy Seed) (u : Seed) (w : Word) : Prop :=
-  ∀ k : Fin w.length,
+    (p : Policy Seed) (u : Seed) (w : Word) : Prop := ∀ k : Fin w.length,
     w[k].1 = p.choose u (actions w k).reverse (replies w k).reverse
-
 /-- Auxiliary finite labels, not part of the archive. The two arms share their
 initial label, avoid 11, and produce each acquired reply by their local 00 test. -/
 structure Labels (w : Word) where
@@ -67,19 +49,13 @@ structure Labels (w : Word) where
           have := occurrences_next_le w k; omega⟩ = false ∧
        bit w[k].1 ⟨occurrences w w[k].1 k + 1, by
           have := occurrences_next_le w k; omega⟩ = false)
-
 /-- Extend each finite label sequence by false beyond its last acquired vertex. -/
 def extended {w : Word} (z : Labels w) (s : Side) (i : ℕ) : Bool :=
   if h : i ≤ sideTotal w s then z.bit s ⟨i, by omega⟩ else false
-
-def completion {w : Word} (z : Labels w) : Source :=
-  (z.bit false ⟨0, Nat.zero_lt_succ _⟩,
+def completion {w : Word} (z : Labels w) : Source := (z.bit false ⟨0, Nat.zero_lt_succ _⟩,
     (fun i => extended z false (i + 1), fun i => extended z true (i + 1)))
-
 private theorem arm_completion {w : Word} (z : Labels w) (s : Side) (i : ℕ) :
-    arm (completion z) s i = extended z s (i + 1) := by
-  cases s <;> rfl
-
+    arm (completion z) s i = extended z s (i + 1) := by cases s <;> rfl
 private theorem endpoint_completion {w : Word} (z : Labels w) (s : Side) (i : ℕ) :
     endpoint (completion z) s i = extended z s i := by
   cases i with
@@ -88,7 +64,6 @@ private theorem endpoint_completion {w : Word} (z : Labels w) (s : Side) (i : �
     · simp [endpoint, completion, extended]
     · simpa [endpoint, completion, extended] using z.root
   | succ i => exact arm_completion z s i
-
 private theorem completion_support {w : Word} (z : Labels w) :
     noAdjacentOnes (completion z) := by
   intro s i
@@ -97,7 +72,6 @@ private theorem completion_support {w : Word} (z : Labels w) :
   · simpa [extended, show i ≤ sideTotal w s by omega,
       show i + 1 ≤ sideTotal w s by omega] using z.no11 s i hi
   · simp [extended, show ¬i + 1 ≤ sideTotal w s by omega]
-
 private theorem completion_response {w : Word} (z : Labels w) (k : Fin w.length) :
     markerResponse (completion z) w[k].1 (occurrences w w[k].1 k) = w[k].2 := by
   have hb := occurrences_next_le w k
@@ -106,7 +80,6 @@ private theorem completion_response {w : Word} (z : Labels w) (k : Fin w.length)
     dite_eq_left (show occurrences w w[k].1 k ≤ sideTotal w w[k].1 by omega),
     dite_eq_left (show occurrences w w[k].1 k + 1 ≤ sideTotal w w[k].1 by omega)] using
       (z.response k).symm
-
 /-- Causal induction: the already reconstructed acquired prefix is the next
 policy input. No execution or inverse equation is assumed in Labels. -/
 private theorem prefix_realization {Seed : Type*} [MeasurableSpace Seed]
@@ -137,14 +110,12 @@ private theorem prefix_realization {Seed : Type*} [MeasurableSpace Seed]
     rw [← hpolicy]
     simp only [sideCount, List.count_reverse]
     change State.mk (w[k].1 :: (actions w k).reverse)
-      (markerResponse (completion z) w[k].1 (occurrences w w[k].1 k) ::
-        (replies w k).reverse)
+      (markerResponse (completion z) w[k].1 (occurrences w w[k].1 k) :: (replies w k).reverse)
       (markerResponse (completion z) w[k].1 (occurrences w w[k].1 k)) = _
     rw [hresponse, hterminal]
     simp only [actions, replies, List.take_succ_eq_append_getElem hklt,
       List.map_append, List.map_singleton, List.reverse_append,
       List.reverse_singleton, List.singleton_append, hterminal]
-
 /-- Every compatible finite-label witness gives one supported zero-tail source
 realizing all acquired prefixes and stopping for the first time at word length. -/
 theorem finite_label_realization {Seed : Type*} [MeasurableSpace Seed]
@@ -179,8 +150,6 @@ theorem finite_label_realization {Seed : Type*} [MeasurableSpace Seed]
         rw [hprefix k (by omega)]
         simp [Nat.ne_of_lt hk]
     simp [stoppingTime, hex, hfind]
-
-
 /-
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
 Authors: The Tau Ceti contributors; simulation source author Codex.
@@ -398,17 +367,14 @@ The following is the complete upstream Apache-2.0 license.
    limitations under the License.
 
 -/
-
 noncomputable section
 set_option maxHeartbeats 800000
 open Finset MeasureTheory Preorder ProbabilityTheory Function Filter
 open scoped ENNReal NNReal BigOperators Topology
-
 namespace Original
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelFiniteProducts
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelKilledPaths
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.NativeBorelCEvent
-
 namespace Port
 variable {α : Type*} [MeasurableSpace α]
 private theorem map_prod_eq_compProd_of_map
@@ -423,12 +389,10 @@ private theorem map_prod_eq_compProd_of_map
   congr with b
   rw [← hmap b, Measure.map_apply hf.of_uncurry_left (measurable_prodMk_left hs)]
   rfl
-
 private theorem map_prodMk_eq_compProd_of_map
     {β Ω ξ : Type*} [MeasurableSpace β] [MeasurableSpace Ω] [MeasurableSpace ξ]
     {P : Measure Ω} [IsFiniteMeasure P] {W : Ω → β} {U : Ω → ξ}
-    (hindep : IndepFun W U P) (hW : AEMeasurable W P)
-    {ρ : Measure ξ} (hlaw : HasLaw U ρ P)
+    (hindep : IndepFun W U P) (hW : AEMeasurable W P) {ρ : Measure ξ} (hlaw : HasLaw U ρ P)
     (κ : Kernel β α) [IsMarkovKernel κ] (f : β → ξ → α)
     (hf : Measurable (uncurry f)) (hmap : ∀ w, ρ.map (f w) = κ w) :
     P.map (fun ω => (W ω, f (W ω) (U ω))) = (P.map W) ⊗ₘ κ := by
@@ -441,7 +405,6 @@ private theorem map_prodMk_eq_compProd_of_map
         (hW.prodMk hlaw.aemeasurable)]
       rfl
     _ = _ := map_prod_eq_compProd_of_map κ ρ f hf hmap
-
 def randomizedChain {ξ : Type*} (g : ξ → α) (f : α → ξ → α) (u : ℕ → ξ) : ℕ → α
   | 0 => g (u 0)
   | n + 1 => f (randomizedChain g f u n) (u (n + 1))
@@ -468,8 +431,7 @@ private theorem indepFun_randomizedChain_prefix {g : ξ → α} {f : α → ξ �
     (hU : ∀ i, Measurable (U i)) (hindep : iIndepFun U P) (n : ℕ) :
     IndepFun (fun ω (i : Fin (n+1)) => randomizedChain g f (fun j => U j ω) i)
       (U (n+1)) P := by
-  let extend (v : Set.Iic n → ξ) (j : ℕ) : ξ :=
-    if h : j ≤ n then v ⟨j,h⟩ else v ⟨0,Nat.zero_le n⟩
+  let extend (v : Set.Iic n → ξ) (j : ℕ) : ξ := if h : j ≤ n then v ⟨j,h⟩ else v ⟨0,Nat.zero_le n⟩
   have hext : Measurable extend := by
     apply measurable_pi_iff.mpr
     intro j
@@ -528,7 +490,6 @@ private theorem hasLaw_randomizedChain {g : ξ → α} {f : α → ξ → α}
         · simp [W]
       _ = _ := by rw [hp, show P.map W = _ from ih]; rfl
 end Port
-
 abbrev ArmNoise := ℕ+ → unitInterval
 abbrev Noise := (Bool × ℕ+) → unitInterval
 def armNoiseLaw : Measure ArmNoise := Measure.infinitePi fun _ => (volume : Measure unitInterval)
@@ -653,13 +614,11 @@ private lemma measurable_originalSource (qL qR : unitInterval) (x : Bool) :
   exact (measurable_pi_iff.mpr fun n =>
     ((measurable_pi_apply (n+1)).comp (measurable_Z qL x)).comp
       (show Measurable (fun v : Noise => fun k : ℕ+ => v (false,k)) by fun_prop)).prodMk
-    (measurable_pi_iff.mpr fun n =>
-    ((measurable_pi_apply (n+1)).comp (measurable_Z qR x)).comp
+    (measurable_pi_iff.mpr fun n => ((measurable_pi_apply (n+1)).comp (measurable_Z qR x)).comp
       (show Measurable (fun v : Noise => fun k : ℕ+ => v (true,k)) by fun_prop))
 private theorem originalSource_law (qL qR : unitInterval) (x : Bool) :
     noiseLaw.map (originalSource qL qR x) = reference qL qR x := by
-  let splitNoise (v : Noise) : ArmNoise × ArmNoise :=
-    (fun k => v (false,k), fun k => v (true,k))
+  let splitNoise (v : Noise) : ArmNoise × ArmNoise := (fun k => v (false,k), fun k => v (true,k))
   have hs : Measurable splitNoise := by fun_prop
   have hc : noiseLaw.map (MeasurableEquiv.curry Bool ℕ+ unitInterval) =
       Measure.infinitePi (fun _ : Bool => armNoiseLaw) :=
@@ -681,7 +640,6 @@ private theorem originalSource_law (qL qR : unitInterval) (x : Bool) :
     exact ((measurable_Z qL x).comp (by fun_prop)).prodMk
       ((measurable_Z qR x).comp (by fun_prop)))]
   rfl
-
 namespace First
 def Q (q : unitInterval) : ℝ≥0∞ := unitInterval.toNNReal q
 def e (x : Bool) (c : ℕ) : ℕ := if x then c / 2 else (c + 1) / 2
@@ -822,7 +780,6 @@ private theorem first_mass {Seed : Type*} [MeasurableSpace Seed]
       (b := 1) (c := Q (if policy.choose seed (zeroReplay policy seed n)
         (List.replicate n false) then qR else qL)) (by intro _ _; exact hf)).symm
   · simp only [ite_eq_right h, mul_one, tsub_self]
-
 private theorem first_local_iff {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (seed : Seed) (s : Source) (n : ℕ) :
     stoppingTime policy seed s = ((n + 1 : ℕ) : WithTop ℕ) ↔
@@ -844,8 +801,7 @@ def decodedState {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
     (seed : Seed) (t : ℕ) : State :=
   ⟨zeroReplay policy seed t, true :: List.replicate (t - 1) false, true⟩
 def D {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
-    (u : Seed × ℕ) : Seed × List (Side × Bool) :=
-  (u.1, ((zeroReplay policy u.1 u.2).zip
+    (u : Seed × ℕ) : Seed × List (Side × Bool) := (u.1, ((zeroReplay policy u.1 u.2).zip
     (true :: List.replicate (u.2 - 1) false)).reverse)
 def acquiredRecord {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
     (seed : Seed) (s : Source) (t : ℕ) : Seed × List (Side × Bool) :=
@@ -945,7 +901,6 @@ private theorem first_record_measurable_set {Seed : Type*} [MeasurableSpace Seed
   rw [he, first_event, tail_event, tail_event]
   exact (measurable_set_no_marker_cylinder _ _).diff (measurable_set_no_marker_cylinder _ _)
 end First
-
 abbrev Parameters := unitInterval × unitInterval
 variable {Seed : Type*} [MeasurableSpace Seed]
 def likelihood (policy : Policy Seed) (u : Seed) (θ : Parameters) (root : Bool) (n : ℕ) : ℝ≥0∞ :=
@@ -955,7 +910,6 @@ def likelihood (policy : Policy Seed) (u : Seed) (θ : Parameters) (root : Bool)
     First.Q θ.1 ^ First.e root (sideCount w false) *
       First.Q θ.2 ^ First.e root (sideCount w true) *
         (1 - First.Q (if j then θ.2 else θ.1)) else 0
-
 private theorem original_first_record_mass (policy : Policy Seed) (u : Seed)
     (qL qR : unitInterval) (root : Bool) (n : ℕ) :
     noiseLaw {v | First.acquiredRecord policy u (originalSource qL qR root v) (n+1) =
@@ -968,19 +922,13 @@ private theorem original_first_record_mass (policy : Policy Seed) (u : Seed)
     _ = _ := by
       rw [originalSource_law]
       exact First.first_record_mass policy u qL qR root n
-
-
 end Original
-
 /-- Every legal finite label replay has strictly positive original-noise mass
 at its fixed original seed, fixed common root, and fixed open-square parameters. -/
 theorem finite_label_original_realization
-    {Seed : Type*} [MeasurableSpace Seed]
-    (p : Policy Seed) (u : Seed) (w : Word)
-    (ht : terminalFirstTrue w) (hp : policyConformity p u w) (z : Labels w)
-    (qL qR : unitInterval)
-    (hL : 0 < (qL : ℝ) ∧ (qL : ℝ) < 1)
-    (hR : 0 < (qR : ℝ) ∧ (qR : ℝ) < 1) :
+    {Seed : Type*} [MeasurableSpace Seed] (p : Policy Seed) (u : Seed) (w : Word)
+    (ht : terminalFirstTrue w) (hp : policyConformity p u w) (z : Labels w) (qL qR : unitInterval)
+    (hL : 0 < (qL : ℝ) ∧ (qL : ℝ) < 1) (hR : 0 < (qR : ℝ) ∧ (qR : ℝ) < 1) :
     (∀ side : Side,
       0 < Original.First.Q (if side then qR else qL) ∧
       0 < 1 - Original.First.Q (if side then qR else qL)) ∧
@@ -1047,7 +995,5 @@ theorem finite_label_original_realization
     rw [hmass]
     exact hpositive
   exact ⟨factors, hpos, nonempty_of_measure_ne_zero hpos.ne'⟩
-
 end
-
 end D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerFiniteLabels
