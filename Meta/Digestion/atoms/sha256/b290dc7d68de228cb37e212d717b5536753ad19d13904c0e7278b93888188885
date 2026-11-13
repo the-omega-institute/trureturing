@@ -1,0 +1,6 @@
+**命题 123.1（已付残余接口的准确取域）。** 在EB3+Inj中，$P_{\rm reg}$ 是整个原 $P$ 中的稠密 $G_\delta$。
+
+证明。THREE_COPY第七卷121.5—121.7已给 $P$ 的Baire性质、$P_0$ 稠密 $G_\delta$，以及包含于 $\operatorname{Cont}(\mathcal B)$ 的稠密 $G_\delta$。对任意度量空间到度量空间的映射，连续点集本身是 $G_\delta$：令 $U_j$ 为所有存在开邻域、其像的直径小于 $1/j$ 的点之并，则连续点集恰为 $\bigcap_jU_j$。将值域取为 $\mathcal E$ 的非空紧子集所成Hausdorff度量空间，得到 $\operatorname{Cont}(\mathcal B)$ 是 $G_\delta$，又含已有稠密集，故稠密。与 $P_0$ 相交仍含THREE_COPY第七卷121.7的同一稠密 $G_\delta$，完成断言。证毕。
+
+这里量化的是从整个 $P$ 趋近锚点的全部纯序列，没有把残余集限制到某颗 $S(D_p)\cong S^2$ 来取得密度。
+
