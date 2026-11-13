@@ -1,0 +1,33 @@
+**定理 126.3（正尺度重复层是紧的）。** 每个 $R_\delta$ 是 $S$ 中的紧集，因而
+$R$ 是 $F_\sigma$ 集。
+
+证明。取 $x_n\in R_\delta$、$x_n\to x$，并选择重复对
+$F_n,\ G_n=\tau F_n$ 使 $x_n\in F_n$。取
+$a_n,b_n\in F_n$、$c_n,d_n\in G_n$ 满足
+
+$$
+ \|a_n-b_n\|\ge\delta,\qquad \|c_n-d_n\|\ge\delta.
+$$
+
+由 $K$ 紧性取子列，使 $x_n,a_n,b_n,c_n,d_n$ 分别收敛于
+$x,a,b,c,d$。于是 $a\ne b,\ c\ne d$。令
+$v_n=(a_n+b_n)/2\to v=(a+b)/2$。关系
+$(v_n,x_n),(a_n,b_n)\in\mathscr B_S$ 的闭性给出
+$(v,x),(a,b)\in\mathscr B_S$。因 $a\ne b$，$v$ 是唯一完整球 $H$ 的相对内点；由
+(Q126.9)，$x,a,b\in H$，故 $\operatorname{diam}H\ge\delta$。
+
+另一方面 $c_n,d_n\in\mathcal Z(v_n)$，而 $\mathscr Z$ 闭，故
+$c,d\in\mathcal Z(v)$。因 $c\ne d$，式(Q126.5)排除 $H$ 为单标签球，于是
+$H$ 重复且 $c,d\in\tau H$，故 $\operatorname{diam}\tau H\ge\delta$。因此
+$x\in R_\delta$。有限维紧空间中的序列闭性给出 $R_\delta$ 紧。重复球是正维球，故每个重复
+$F$ 与某个 $R_{1/n}$ 相交于它本身，得到(Q126.11)第二式。证毕。
+
+在 $R$ 上定义
+
+$$
+ x\sim_R y
+ \Longleftrightarrow
+ x,y\text{ 属于同一颗重复球}.
+ \tag{Q126.12}
+$$
+

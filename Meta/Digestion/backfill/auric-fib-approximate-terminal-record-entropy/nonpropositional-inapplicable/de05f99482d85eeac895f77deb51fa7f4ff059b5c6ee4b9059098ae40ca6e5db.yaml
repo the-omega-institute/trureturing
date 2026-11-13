@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de05f99482d85eeac895f77deb51fa7f4ff059b5c6ee4b9059098ae40ca6e5db
+  normalized_sha256: sha256:de05f99482d85eeac895f77deb51fa7f4ff059b5c6ee4b9059098ae40ca6e5db
+cas_ref: sha256:de05f99482d85eeac895f77deb51fa7f4ff059b5c6ee4b9059098ae40ca6e5db
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This clause is closed solely by pinned Mathlib and finite normalization, with no suitable project GID: List.prod_nil gives the correctly sized square empty-history identities (the rectangular encoded branch is B); Real.sq_sqrt and finite inner-product expansion show xi,f1,f2 are a complete orthonormal basis; direct finite expansion of S-adjoint Vj S gives the stated g0 and g1=g0 J in precisely the ordered f1,f2 basis; finite 2-by-2 determinant expansion yields det(g0)=-1 and det(g1)=1. These are normalization consequences of the exact Definition 1.2 matrices. This settlement supplies neither the all-history/reference clause nor permission to remove the relative phase; those remain separately covered obligations.'
+    previous_atom_id: 7aa6870502e0187d7765b38cb88221d3b9893f08920d51275cd99d4cb4db17a5
+    next_atom_id: 3b9374ca45b3c846736e54a52e0372ce3f8bac15d674264dbd98e330321c4914

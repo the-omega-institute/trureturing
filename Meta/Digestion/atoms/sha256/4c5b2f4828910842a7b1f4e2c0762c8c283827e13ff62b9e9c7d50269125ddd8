@@ -1,0 +1,25 @@
+### 119.1 完整原域与两种不同的回缩问题
+
+保留IX116.1的同一个非零有限维实空间 $V$、闭尖生成凸锥 $C$、
+在 $C\setminus\{0\}$ 上严格正的原单位 $u$，以及整个
+$K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和全部
+$\mathcal E=[0,u]_{C^*}$。定义仍是
+
+$$
+F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(x)=\min_{f\in F_p}f(x),\quad D_p=\{x\in K:T_p(x)=0\},\quad
+\mathcal A_p=\{a\in F_p:a|_{D_p}=0\}.
+\tag{IX119.1}
+$$
+
+EB3表示每一个完整 $D_p$ 都仿射同构于整个闭三球；Inj表示
+$D_p=D_q\Rightarrow p=q$。本章有限增益与法向定理使用EB3+Inj；
+119.9的主候选只输入EB3和整个状态体的仿射回缩，不输入Inj。
+所有量词始终作用于这些原对象，没有删态、删效应或更换单位。
+
+直接复用[VII103.2][Q119VII]、IX116.1的完整面接口：
+$\mathcal A_p\ne\varnothing$，每个 $D_p$ 是暴露极大真面；
+全部非空真面只有原纯单点或整个 $D_p$；不同球若相交，交仅为一个原纯点；
+$P\cap D_p$ 恰是球边，原排除关系在纯端点上对称。
+这里不消费全Pair、$\mathrm{Pair}_\perp$、PR、纯点紧性、共同中心或Jordan结构。
+

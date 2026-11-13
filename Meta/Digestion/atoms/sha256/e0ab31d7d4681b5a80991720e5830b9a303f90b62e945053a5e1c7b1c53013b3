@@ -1,0 +1,87 @@
+### Q97.7 恢复同一个原 Hilbert 内积
+
+迹给正定 Hermitian 形式
+
+$$
+h(x,y)=t(\nu(x^*,y)),\qquad h(e,e)=1.
+$$
+
+由 (Q97.24)、(Q97.27)，它与原内积之差在单位二元组上至多
+
+$$
+q+8Mq(M+q)\le17M^2q=:r_0.
+\tag{Q97.28}
+$$
+
+令 $h(x,y)=\langle x,H_0y\rangle$，则 $H_0>0$、$\|H_0-I\|\le r_0$。迹性给 $h(x^*,y^*)=h(y,x)$，故 $H_0$ 与原共轭对易。$z=H_0^{1/2}e$ 是实单位向量，因为 $\|z\|^2=h(e,e)=1$。在 $e,z$ 的实平面内取正交旋转 $Qe=z$，在正交补取恒等；$z=e$ 时直接取 $Q=I$。由于二者接近，
+
+$$
+\|Q-I\|=\|z-e\|\le r_0.
+$$
+
+置
+
+$$
+T=H_0^{-1/2}Q.
+\tag{Q97.29}
+$$
+
+则 $Te=e$，$T$ 与共轭对易，且 $h(Tx,Ty)=\langle x,y\rangle$。当 $r_0\le1/16$ 时，在谱区间 $[1-r_0,1+r_0]$ 上使用平方根和逆平方根的标量估计，有
+
+$$
+\begin{gathered}
+\|H_0^{1/2}-I\|,\|H_0^{-1/2}-I\|\le r_0,\\
+\|T-I\|\le3r_0,\qquad \|T^{-1}-I\|\le2r_0,
+\qquad \|T\|,\|T^{-1}\|\le2.
+\end{gathered}\tag{Q97.30}
+$$
+
+定义
+
+$$
+\widehat\nu(x,y)=T^{-1}\nu(Tx,Ty).
+\tag{Q97.31}
+$$
+
+它仍严格结合，单位仍为 $e$，对合仍为原共轭。迹形式满足
+
+$$
+h(\nu(a,x),y)=h(x,\nu(a^*,y)),
+$$
+
+故经 (Q97.29) 的等距运输后，在原来的内积中严格成立
+
+$$
+(L_x^{\widehat\nu})^\dagger=L_{x^*}^{\widehat\nu}.
+\tag{Q97.32}
+$$
+
+为保留运输常数，将 (Q97.31) 与 $\nu(x,y)$ 相减，分为 $T^{-1}-I$ 的项和两个输入变化项。(Q97.30) 给
+
+$$
+\begin{aligned}
+\|\widehat\nu-\nu\|_{{\rm bil},H}
+&\le(M+q)\bigl(2r_0\cdot4+3r_0\cdot2+3r_0\bigr)\\
+&=17(M+q)r_0\le34Mr_0.
+\end{aligned}
+$$
+
+合并 (Q97.24)、(Q97.28)，得到
+
+$$
+\|\widehat\nu-\mu\|_{{\rm bil},H}
+\le q+34Mr_0\le579M^3q
+\le9264aM^6\delta\le A\delta.
+\tag{Q97.33}
+$$
+
+所有使用的小量条件均由 (Q97.5) 保证。具体地，$\delta\le1/A$ 给
+
+$$
+d\le\frac1{10000M^5},\qquad
+q\le\frac{16}{10000M^3},\qquad
+r_0\le\frac{272}{10000M}<\frac1{16},
+$$
+
+从而 $d\le1/8$、$q<1$；而 $\delta\le\varepsilon_*/M$ 给 $\varepsilon\le\varepsilon_*\le1$。当 $\delta=0$ 时，原 $\mu$ 已严格结合，直接取 $\widehat\nu=\mu$ 即可。由 (Q97.32)，$\widehat\nu$ 的原 Hilbert 左正则表示为严格 $*$ 表示，且单位保证其忠实性。
+

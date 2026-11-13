@@ -53,7 +53,7 @@ private theorem face_eq_of_interior {E : Type*} [NormedAddCommGroup E]
   rw [← image_openSegment]
   exact ⟨1, Ioo_subset_openSegment ⟨zero_lt_one, ht⟩, AffineMap.lineMap_apply_one y x⟩
 
-private theorem proper_cone_face_support {C : PointedCone ℝ V}
+theorem proper_cone_face_support {C : PointedCone ℝ V}
     (hgen : Submodule.span ℝ (C : Set V) = ⊤) (F : C.Face)
     (hproper : F.toPointedCone ≠ C) :
     ∃ g : V →ₗ[ℝ] ℝ, g ≠ 0 ∧ (∀ x ∈ C, 0 ≤ g x) ∧ ∀ x ∈ F, g x = 0 := by
@@ -87,7 +87,7 @@ private theorem proper_cone_face_support {C : PointedCone ℝ V}
     change -(f x) = 0
     linarith
 
-private theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤)

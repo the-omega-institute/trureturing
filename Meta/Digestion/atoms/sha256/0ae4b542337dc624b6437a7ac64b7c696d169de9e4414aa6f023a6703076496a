@@ -1,0 +1,68 @@
+**约定 114.12（有限预算、校准与静态字典的准确范围）。** 在EB3加PR下，
+114.3—114.7已给全域暴露的原纯点、紧的全部原纯集、所有面的暴露与niceness，
+以及每张完整排除三球上严格正的共同刻度和实际达到的有限正延拓预算。
+剩余义务准确为
+
+$$
+\boxed{\quad
+\mathrm{EB3}+\mathrm{PR}
+\ \stackrel{?}{\Longrightarrow}\
+\forall p\in P:\ \beta_{D_p}=1
+\quad}
+\tag{IX114.43}
+$$
+
+其中 $\beta_F\ge1$ 已由114.6证明。这一蕴含及其否定均未在上述推导中取得；
+等价的 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathrm{Pair}_{\perp}$ 仍待证明或同域反例。
+条件性的两个数值区域是
+
+$$
+\begin{array}{c|c|c}
+\text{球刻度}&\text{球内最小确认读数}&\text{锐正延拓预算}\\ \hline
+0<a_F<1/2&1-2a_F>0&1<\beta_F<\infty\\
+a_F=1/2&0&\beta_F=1
+\end{array}
+\tag{IX114.44}
+$$
+
+这只是参数判据，不是第一行有原锥实现的存在性证明。
+$a_F=0$ 或 $\beta_F=\infty$ 已被114.3与114.5排除，不能再列为该前件下的可容许分支。
+无facet及矩阵例子分别排除具体路线，未排除所有高余维的有限超预算实现。
+
+[Landsman，quant-ph/9603005v2，Definition 6，PDF p.10／印刷p.10][Q114L]
+的two-sphere性质已包含校准核 $(1+\cos\theta)/2$，
+并置于其well-behaved转移概率框架中；
+§1.3式(1.4)—(1.9)（PDF p.5／印刷p.5）用于这里的核、补效应零对称及概率一分离的对应。
+不能仅从未校准的(IX114.14)输入该校准条件，
+也没有从PR获得其极大正交集的概率和规则。
+114.3的单侧暴露蕴含与114.5—114.8的原球预算推导，是这里给出证明的凸几何推导，
+不归为该文已经陈述的定理。
+
+[Pataki，arXiv:1202.4043v4][Q114P]供应114.7所用的nice／面正限制术语和一般关系，
+不供应单位预算；[Sierpiński原文][Q114Si]的连续统定理由114.10实际消费。
+原[多边形应用][Q114Polygon]中的OP4及一维边界计算按其既有证明复用。
+上述组合推导是普通有限维数学，不宣称文献原创、内核验证或独立公理的最小性。
+只有(IX114.43)的饱和条件另行成立后，才有114.9所述同原域完整静态复三能级字典；
+全有限复合、仪器和物理动力学仍按112.9各自的原合同承担。
+
+上述结论的中文图景是：互惠首先使每个纯点都有一项原效应测试，只有在该点，通过概率才为一。
+其它原态的通过概率严格小于一，但仍可能通过；这不表示一次测试就能完全区分该点与其它态。
+每张完整排除三球上的所有方向又共用一把刻度尺；
+确认北极的最优原比较在北极为一，在南极为 $1-2a_F$，
+其中 $0<a_F\le1/2$，这把尺不能完全失去刻度。
+球内任何合法的非负仿射按钮，都能逐个接回整个原锥并保持正性；
+对全部零一面效应，共同且锐的有限代价是 $\beta_F=1/(2a_F)$。
+尚缺的是让这些按钮仍守住原来的零到一单位预算。
+预算恰为一时，南极读数才恰为零，原正交纯对才得到唯一第三个共同正交纯点；
+此后进入W与全三球支路，112.8才供应完整静态量子字典。
+这里的互惠始终只比较纯端点，完整球与原单位的校准条件不能从图景中删去。
+
+[Q114Faces]: ../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionBallFaces.md "完整排除球的共同暴露与全部原真凸面分类，定理1.6前两项；最后一项另需每对不同原纯点均生成真最小面。"
+[Q114OP4]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md#4-a-convex-exclusion-set-has-a-common-original-zero-confirmer "原全效应凸排除集的共同零确认结论，OP4。"
+[Q114Polygon]: ../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md#odd-polygons-reciprocal-comparisons-original-faces-and-extension-budgets "奇多边形的原全域应用，OP2—OP8；一维球不代表三球。"
+[Q114Si]: https://www.jstage.jst.go.jp/article/tmj1911/13/0/13_0_300/_article "W. Sierpiński, Un théorème sur les continus, Tohoku Mathematical Journal, First Series 13 (1918), 300–303；定理在印刷p.300／扫描第1页。"
+[Q114P]: https://arxiv.org/pdf/1202.4043v4 "Gábor Pataki, On the connection of facially exposed and nice cones, arXiv:1202.4043v4；Theorem 2 PDF pp.8–9，Theorem 3 p.10，Corollary 1 p.11；J. Math. Anal. Appl. 400 (2013), 211–221，DOI 10.1016/j.jmaa.2012.10.033。"
+[Q114L]: https://arxiv.org/pdf/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, arXiv:quant-ph/9603005v2；§1.3 (1.4)–(1.9) PDF p.5／印刷p.5，Definition 6 PDF p.10／印刷p.10；Rev. Math. Phys. 9 (1997), 29–58，DOI 10.1142/S0129055X97000038。"
+
+[Q114VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "原全态全效应域及107—113章的条件重构。"
+

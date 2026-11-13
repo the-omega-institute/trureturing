@@ -1,0 +1,30 @@
+**命题 122.5（D：同一纯接触方向被共同横向因子消去）。**
+在本章入口之外，另设同一 $y$ 是原纯点。
+则 $\|\eta\|_G=1$ 且
+
+$$
+L\eta=0.
+\tag{X122.19}
+$$
+
+证明。
+[OriginalFacePolarity 的 chart_boundary](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalFacePolarity.md)
+把原纯 $y\in G$ 识别为这个完整图的球面点，故 $\|\eta\|_G=1$。
+全局 Inj 给锚 $s$ 的 singleton exclusion-label 条件，即 SingleLabel。
+[SingleLabelNormalBody 的 positive_ray](../../../Blueprint/D5/S3/Quantum/Foundation/SingleLabelNormalBody.md)
+在这个前件下提供实际 $t_{\rm ray}>0$，使 $t_{\rm ray}\eta\in\mathcal B_s$。
+其成员身份带有原 $N_s$ 中的正见证；没有从球上的局部正性制造它。
+在 (X122.18) 取 $v=t_{\rm ray}\eta$，则
+
+$$
+1+\eta\cdot v=1+t_{\rm ray}=1+\|v\|_G.
+$$
+
+二次界只剩 $4\|L(t_{\rm ray}\eta)\|_F^2/M^2\le0$，
+故 $L(t_{\rm ray}\eta)=0$，线性及 $t_{\rm ray}>0$ 给结论。证毕。
+
+若同一 $y$ 混合，它在 $\operatorname{ri}G$，所以 $\|\eta\|_G<1$。
+上述两个平方项的抵消不成立。
+这里没有提供第二接触纯性，也没有把另一个纯点换成同一 $y$。
+positive_ray 的 SingleLabel 不等于 $\mathcal A_s$ 单点，未偷加 $s\in P_0$。
+

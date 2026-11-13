@@ -1,0 +1,55 @@
+**定义 117.1（实际框架、闭包与锚）。** 令 $d\ge2$，在同一个 $A=\operatorname{Herm}_d(\mathbb C)$ 中取三套有标签的完整秩一投影框架
+
+$$
+E=(E_i)_{i=1}^d,\qquad F=(F_j)_{j=1}^d,\qquad G=(G_k)_{k=1}^d.
+$$
+
+每套的不同成员正交、每个成员迹一，且每套之和都是同一个 $I_d$。内积约定为 $\langle v,w\rangle=v^*w$，第一变量共轭线性。定义
+
+$$
+\begin{aligned}
+X\circ Y&=\tfrac12(XY+YX),&
+q(P,Q)&=\operatorname{Tr}(PQ),\\
+b(P,Q,R)&=\operatorname{Tr}(PQR),&
+j(P,Q,R)&=\operatorname{Re}b(P,Q,R)
+             =\operatorname{Tr}((P\circ Q)R).
+\end{aligned}
+\tag{IX117.1}
+$$
+
+这里的 $P,Q,R$ 是所取实际投影，不是从若干互不相干的实现拼出的表。置
+
+$$
+\begin{aligned}
+S&=\operatorname{span}_{\mathbb R}\{E_i,F_j,G_k\},\\
+J&=\bigcap\{L\subseteq A:L\text{ 是实线性子空间，含全部 }E_i,F_j,G_k,
+                    \ L\circ L\subseteq L\}.
+\end{aligned}
+\tag{IX117.2}
+$$
+
+$J$ 是实际最小实 Jordan 闭包；$S$ 只是初始线性张成。以下充分锚条件允许其余跨框架配对为零：
+
+$$
+\begin{gathered}
+q(E_i,F_1)>0,\quad q(E_i,G_1)>0\quad(1\le i\le d),\\
+q(F_j,G_1)>0\quad(1\le j\le d),\qquad
+q(F_1,G_k)>0\quad(1\le k\le d).
+\end{gathered}
+\tag{IX117.3}
+$$
+
+定义两张复锚片及其重合列
+
+$$
+M_{ij}=b(E_i,F_j,G_1),\qquad N_{ik}=b(E_i,F_1,G_k),\qquad M_{i1}=N_{i1}.
+\tag{IX117.4}
+$$
+
+对每个三元位置定义实残量
+
+$$
+\Delta_{ijk}=q(E_i,F_j)q(F_j,G_k)q(G_k,E_i)-j(E_i,F_j,G_k)^2.
+\tag{IX117.5}
+$$
+

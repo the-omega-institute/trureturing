@@ -1,0 +1,12 @@
+### 129.6 同原完整静态字典与全部物理合同
+
+只在定理129.8的等价条件成立以后，127.9的同一个 $\Phi$ 给以下完整静态对象；它们不是新的分类成果：
+
+| 原对象 | 同一个表示下的全部对应 |
+| --- | --- |
+| 全纯态、混态与质量 | $P=\{\Phi(zz^*/(z^*z)):z\ne0\}\cong\mathbb{CP}^2$；$K=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1\}$；整个 $C=\Phi(\mathrm{PSD}_3)$，含零及全部非负质量与有限凸组合 |
+| 原单位、全部效应和Born | $u\Phi=\operatorname{Tr}$；全部原效应恰对应 $0\preceq A\preceq I_3$，对每个原混态 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$，保持零、单位及补 |
+| 全确认、least与排除 | 对归一 $z$，全部确认效应是 $zz^*\oplus A$、$0\preceq A\preceq I_{z^\perp}$，least是 $zz^*$；$\mathcal T_{p_z}(\Phi\rho)=\operatorname{Tr}(zz^*\rho)$；整个 $D_{p_z}$ 是 $z^\perp$ 上全部密度矩阵 |
+| 二元比较、正交与三元框架 | 纯比较为 $|z^*v|^2/((z^*z)(v^*v))$；原正交恰为复内积正交；每条原正交纯边有唯一第三点，三张秩一原效应和为 $u$，容量为三 |
+| 全部有限数学POVM与谱 | 任意有限 $f_j\ge0,\sum_jf_j=u$ 恰对应全部有限 $A_j\succeq0,\sum_jA_j=I_3$；每张原混态有含零权和重复谱的三项正交谱分解，全部实可观测量对应全部Hermitian矩阵 |
+| Jordan、共同尺与完整圆球 | 运输 $(XY+YX)/2$ 得Jordan结构；$B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$、$w=\Phi(I_3)$；全部 $D_p$ 才具有中心 $(w-p)/2$、平方半径 $1/2$ 及与方向空间正交的球心 |
