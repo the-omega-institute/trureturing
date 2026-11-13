@@ -115,9 +115,14 @@ def witness : Blocks := [{0}, {-1, 2, 3}, {1, -2, -3}]
 /-- The full universal identity is contradicted inside its original domain. -/
 theorem result : ¬ claim := by
   intro h
-  have hp : Standard 3 1 witness := by decide +kernel
+  have hp : Standard 3 1 witness := by
+    unfold Standard
+    decide +kernel
+  have hf : f 3 1 witness = [{0}, {3, -2, -1}, {-3, 2, 1}] := by decide +kernel
   have hros : rosPairs witness = {(2, 2), (3, 2)} := by decide +kernel
-  have hrcb : rcbPairs (f 3 1 witness) = {(3, 2)} := by decide +kernel
+  have hrcb : rcbPairs (f 3 1 witness) = {(3, 2)} := by
+    rw [hf]
+    decide +kernel
   have hh := h 3 1 witness hp
   change (rcbPairs (f 3 1 witness)).card = (rosPairs witness).card + 1 * (1 - 1) at hh
   rw [hros, hrcb] at hh
