@@ -94,3 +94,56 @@ are displayed explicitly.
 
 The research line is
 https://github.com/the-omega-institute/trureturing/issues/29622.
+
+## Motivation
+
+The frozen declaration
+`D5/S3/Combinatorics/Graph/Roommates/OpenCertificates.count_submultiplicative`
+supplies the upper counting relation for open ranking words. Connecting that
+relation to six-site completion and actual cyclic profiles yields a probability
+estimate for Mertens's d=1,r=2 specialization: one common q for every labelled
+cycle size N>=7, including both parities. Each vertex independently samples one
+of the 24 strict rankings of its four neighbors. Stable partial matchings allow
+singles, and each successful preference profile contributes once.
+
+## Gap
+
+`GrowthTransfer.result` closes the unconditional same-q two-sided exponential
+bound for `SourceModel.solutionProbability`, with N=n+5 and n>=2. The open-word
+and cyclic injections supply its counting comparisons; no completion or
+perfect-matching hypothesis remains. The general d,r conjecture, sharp values
+of q and the constants, and worldwide literature novelty or priority are not
+established by this specialization.
+
+## Falsifier
+
+A fidelity claim fails if the model excludes singles, omits either parity or
+any N>=7, changes the independent uniform distribution on the 24 four-neighbor
+rankings, counts certificate or matching witnesses instead of successful
+profiles, or uses different exponential bases for odd and even sizes. A source
+comparison must preserve the signed offsets ±1,±2 and the blocking rule with
+single endpoints. These checks concern the exact specialized claim, not the
+unproved general d,r conjecture.
+
+## Evidence
+
+The five frozen proof hosts are `BufferLayout`, `OpenCertificates`,
+`PaddedCompletion`, `CyclicClosure` and `GrowthTransfer` under
+`D5/S3/Combinatorics/Graph/Roommates/`; their corresponding typed Scribes and
+generated statements are under `Blueprint/D5/S3/Combinatorics/Graph/Roommates/`.
+`Library/Entropy/mertens2005stable.md` records the source locator and scope.
+The consumed `SourceModel.lean` compatibility port attributes the Formal
+Conjectures Authors at `bocowgill/formal-conjectures` revision
+`dc0fa7334537d8733edceaba09fd88163eeb7cef`; its Apache-2.0 license is retained at
+`docs/reports/licenses/formal-conjectures-mertens/LICENSE.txt`.
+The unfinished information-escape registration is tracked in
+https://github.com/the-omega-institute/trureturing/issues/29645.
+
+## ASSUMED-UNVERIFIED
+
+The bounded literature search does not certify worldwide openness, novelty or
+first priority. The general d,r problem and sharp constants remain outside the
+proved conclusion. Source-selection and occurrence bindings in the Reg audit
+remain unfinished under issue #29645; those records are not
+`declared_validated`. These are limits of source qualification and audit
+evidence, not additional mathematical assumptions of `GrowthTransfer.result`.
