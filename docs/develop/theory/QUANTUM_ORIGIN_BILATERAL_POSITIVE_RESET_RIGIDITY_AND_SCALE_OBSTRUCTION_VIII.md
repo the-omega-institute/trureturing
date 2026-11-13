@@ -1779,3 +1779,446 @@ $$
 这些合同与原先裸EB3到Inj、实际种子、联合分离及三个全锥正压缩的入口桥均保持各自范围。本章结算的是一个明确三元耦合形变为何在完整二元排除处失败，而非完整量子物理的自动完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 123. 收缩实三线性三次族的整排除面与有限方向刚性
+
+### 123.1 三条实边平面与完整原域
+
+**定义 123.1（收缩三线性族）。** 令 $L_1,L_2,L_3$ 为三个带指定欧氏内积的实二维空间，$V=\mathbb R^3\oplus L_1\oplus L_2\oplus L_3$。写 $x=(a_1,a_2,a_3;z_1,z_2,z_3)$，其中 $z_i$ 对应补指标 $jk$ 的边。取任意实三线性型 $\tau:L_1\times L_2\times L_3\to\mathbb R$，要求
+
+$$
+|\tau(z_1,z_2,z_3)|\le |z_1||z_2||z_3|
+\quad(z_i\in L_i).
+\tag{123.1}
+$$
+
+不要求 $\tau$ 对称。令
+
+$$
+\begin{gathered}
+u(x)=a_1+a_2+a_3,\qquad
+p_i=(\delta_{i1},\delta_{i2},\delta_{i3};0,0,0),\qquad
+w=p_1+p_2+p_3,\\
+\Delta_i(x)=a_ja_k-|z_i|^2\quad(\{i,j,k\}=\{1,2,3\}),\\
+d_\tau(x)=a_1a_2a_3-\sum_i a_i|z_i|^2+2\tau(z_1,z_2,z_3),\\
+C_\tau=\{x:a_i\ge0,\ \Delta_i(x)\ge0\ (i=1,2,3),\ d_\tau(x)\ge0\}.
+\end{gathered}
+\tag{123.2}
+$$
+
+始终使用整个 $C_\tau$，以及
+
+$$
+\begin{gathered}
+K_\tau=C_\tau\cap\{u=1\},\qquad P_\tau=\operatorname{ext}K_\tau,
+\qquad \mathcal E_\tau=[0,u]_{C_\tau^*},\\
+\mathcal F_p=\{f\in\mathcal E_\tau:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(x\in C_\tau),\\
+D_p=\{x\in K_\tau:\mathcal T_p(x)=0\},\qquad
+\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\},\qquad
+P_0=\{p\in P_\tau:\mathcal A_p\text{ 为单点}\},\\
+N_p=\{h\in C_\tau^*:h(p)=0\},\qquad
+p\perp q\ \Longleftrightarrow\ \exists f\in\mathcal E_\tau:
+f(p)=1,\ f(q)=0.
+\end{gathered}
+\tag{123.3}
+$$
+
+最后一行用于纯端点；补效应给其对称性。标量最低函数 $\mathcal T_p$ 与线性种子压缩 $T_i$ 不同型。EB3表示每个原纯标签的整个 $D_p$ 仿射同构于整个闭实三球；EB$_{\ge1}$ 允许各标签有不同的正整数球维数。二者都不把所选效应的零面预先等同于 $D_p$。这里不输入矩阵表示、Pair、least、全纯互易或任何效应子菜单。
+
+本章所称125—131及127.10均指[SAME_READBACK][Q123SR]；本卷121指[完整确认章节][Q123BV]；VII103.2指[完整排除面第七卷][Q123VII]。这些公开定义和条件结果按各自原前件复用。122的标量定义是(123.1)的一条子族；以下涉及一般 $\tau$ 的承重步骤均在本章证明。
+
+### 123.2 整个集合的合法性与不变的二元窗口
+
+**定理 123.2（整个闭双曲锥）。** 对每个满足(123.1)的 $\tau$，$d_\tau$ 关于向量 $w$ 双曲，整个 $C_\tau$ 恰为该方向的闭双曲锥。因此 $C_\tau$ 闭、凸、尖且生成 $V$，$w\in\operatorname{int}C_\tau$，$u$ 在非零锥元上严格正。$K_\tau$ 为紧凸基，$\mathcal E_\tau$ 紧，(123.3)中的最小值达到。
+
+证明。固定任意 $x\in V$，置 $r_i=|z_i|$。若 $r_1r_2r_3>0$，由(123.1)选实数 $\theta$，使 $r_1r_2r_3\cos\theta=\tau(z_1,z_2,z_3)$。选择模长分别为 $r_i$ 的三个复数 $\xi_i$，使其乘积为 $r_1r_2r_3e^{\mathrm i\theta}$。若某个 $r_i=0$，三线性使 $\tau=0$，任取相应模长的 $\xi_i$ 即可。对这个固定 $x$ 令
+
+$$
+H_x=\begin{pmatrix}
+a_1&\xi_3&\overline{\xi_2}\\
+\overline{\xi_3}&a_2&\xi_1\\
+\xi_2&\overline{\xi_1}&a_3
+\end{pmatrix}.
+\tag{123.4}
+$$
+
+行列式展开给出整个单变量恒等式
+
+$$
+d_\tau(x+tw)=\det(H_x+tI_3)\quad(t\in\mathbb R).
+\tag{123.5}
+$$
+
+Hermitian矩阵的本征值为实数，故右侧全部根为实数；$d_\tau(w)=1$。这里的双曲方向是 $w\in V$，不是泛函 $u\in V^*$。所选 $H_x$ 可随 $x$ 改变；(123.5)没有提供关于 $x$ 的共同线性矩阵表示。
+
+采用[Renegar §2][Q123R]的记号，闭双曲锥 $\Lambda_+$ 由(123.5)的根全不正刻画，等价于 $H_x\succeq0$。Hermitian矩阵全部主子式非负的成熟判据，在此恰为三个 $a_i\ge0$、三个 $\Delta_i\ge0$ 和 $d_\tau\ge0$。因此 $\Lambda_+=C_\tau$，不是整个 $\{d_\tau\ge0\}$。Renegar Proposition 1定位含 $w$ 的开分支，Theorem 2及其闭包结论给凸性；Theorem 3保证换为同一开锥中的方向时分支不变。这里只消费成熟双曲性工具，不另作一般行列式表示推断。
+
+齐次不等式给闭锥；全部不等式在 $w$ 处严格，故其满维并生成 $V$。若 $x\in C_\tau$ 且 $u(x)=0$，非负的三个 $a_i$ 全零，二阶条件再使全部 $z_i=0$。故 $u$ 严格正；同一观察证明锥尖。归一后 $0\le a_i\le1$ 且 $|z_i|^2\le a_ja_k\le1/4$，所以基底紧。取 $K_\tau$ 中一组张成 $V$ 的向量，任一 $f\in[0,u]$ 在这组向量上的读数都在零一之间，因此完整效应区间闭且有界。$\mathcal F_p$ 是其中含 $u$ 的闭子集，最小值达到。零质量情形只有零向量，亦被上述论证覆盖。证毕。
+
+**定理 123.3（三个对角种子的全部确认与正压缩）。** 对任意(123.1)，三个 $p_i$ 都是原纯点。令 $\pi_i x=(a_j,a_k,z_i)$，并把
+
+$$
+\mathscr L_i=\{(b,c,z):b,c\ge0,\ |z|^2\le bc\},\qquad
+\upsilon_i(b,c,z)=b+c
+\tag{123.6}
+$$
+
+零延拓嵌入 $M_i=\{a_i=0,z_j=z_k=0\}\subset V$。则
+
+$$
+\begin{gathered}
+N_{p_i}=\pi_i^*(\mathscr L_i^*),\qquad
+\operatorname{span}N_{p_i}=\pi_i^*((\mathbb R^2\oplus L_i)^*),\\
+\mathcal F_{p_i}=
+\{a_i+h\circ\pi_i:h\in[0,\upsilon_i]_{\mathscr L_i^*}\},\qquad
+\mathcal T_{p_i}(x)=a_i(x)\quad(x\in C_\tau),\\
+D_{p_i}=\{x\in K_\tau:a_i=0\}
+=\{a_i=0,z_j=z_k=0,a_j+a_k=1,\ |z_i|^2\le a_ja_k\},\\
+\mathcal A_{p_i}=\{a_i\}.
+\end{gathered}
+\tag{123.7}
+$$
+
+每个 $D_{p_i}$ 是完整三球。将 $a_i,z_j,z_k$ 置零、保留余下块的映射 $T_i$，是取值于 $M_i$ 且满足 $h(T_i x)=h(x)$（$h\in N_{p_i},\ x\in V$）的唯一实线性映射。其像恰为 $M_i$，$T_i^2=T_i$，且 $T_i(C_\tau)\subset C_\tau$、$uT_i=u-a_i$。三个种子的全部原零效应联合分离 $V$，三个效应 $a_i$ 和为 $u$。
+
+证明。对角坐标非负，故 $p_i$ 的任何归一凸分解都迫使其余两对角坐标为零；二阶条件再清零全部边，得到纯性。下面直接核对一般 $\tau$ 所需的全部确认公式。若 $h\in N_{p_1}$，其 $a_1$ 系数为零。对任意单位 $\eta\in L_3$，整个曲线
+
+$$
+(1,t^2,0;0,0,t\eta)\in C_\tau\quad(t\in\mathbb R)
+\tag{123.8}
+$$
+
+成立，因为至少两条边为零，三次式为零。$h\ge0$ 对正负小 $t$ 同时成立，故 $h$ 的 $z_3$ 系数为零。曲线 $(1,0,t^2;0,t\eta,0)$ 同理清零 $z_2$ 系数。因此 $h$ 只读 $\pi_1$。整个 $C_\tau$ 的 $\pi_1$ 像是 $\mathscr L_1$，且每个块的零延拓都属于 $C_\tau$；正性遂等价于块正性，给出法向公式。其线性张成是整个四维块对偶。其余指标同理，不要求 $\tau$ 具有置换对称性。
+
+对 $f\in\mathcal F_{p_i}$，$u-f$ 在 $N_{p_i}$ 中，故 $f=a_i+h\pi_i$。在完整零延拓块上检查 $f\ge0$、$u-f\ge0$，恰给 $0\le h\le\upsilon_i$。反向，这两个块不等式也在整个 $C_\tau$ 上保证效应资格。$h=0$ 已可取，全部其他 $h\pi_i$ 非负，所以 $a_i$ 是全确认族的least，得到最低函数和整个 $D_{p_i}$。$a_i=0$ 时，二阶条件清零另两条边；坐标 $(a_j-a_k,2z_i)$ 把归一零面仿射双射到整个单位三球。它是 $K_\tau$ 的暴露面，其球面全部是原纯点。确认效应还要在整个球上读零，就须 $h=0$，得 $\mathcal A_{p_i}$。
+
+记块零延拓为 $\iota_i:\mathbb R^2\oplus L_i\to M_i$，则 $T_i=\iota_i\pi_i$ 且 $\pi_i\iota_i=I$，故其像恰为 $M_i$，并在 $M_i$ 上恒等，得到投影性质。$h\in N_{p_i}$ 只读保留块，所以 $hT_i=h$。若另一实线性映射 $S:V\to M_i$ 也保持全部这些读数，则 $Sx-T_i x\in M_i$ 被 $\operatorname{span}N_{p_i}$ 中每个泛函读成零；(123.7)的四维块对偶在 $M_i$ 上分离向量，故 $Sx=T_i x$ 对所有 $x\in V$ 成立。这证明的是指定像空间内的唯一性。投影的像块仍属 $\mathscr L_i$，零延拓正性给全锥正性；保留对角坐标之和给 $uT_i=u-a_i$。三个法向张成合起来是 $V^*$；任一非零正法向除以其在紧基底上的正最大值即成为原零效应，所以联合分离确实使用原效应。证毕。
+
+### 123.3 边缘标签的准确零面与点态整球识别
+
+**定理 123.4（饱和子空间决定暴露面的球维数）。** 对 $L_1$ 中任意单位向量 $v$，定义两个实际种子球面纯点
+
+$$
+q_v=(0,1/2,1/2;v/2,0,0),\qquad
+r_v=(0,1/2,1/2;-v/2,0,0).
+\tag{123.9}
+$$
+
+唯一实线性矩阵束 $M_v:L_3\to L_2$ 由
+
+$$
+\tau(v,z_2,z_3)=\langle z_2,M_vz_3\rangle
+\tag{123.10}
+$$
+
+定义，且 $v\mapsto M_v$ 实线性、$\|M_v\|\le|v|$。置 $E_v=\ker(I-M_v^{\mathsf T}M_v)$、$m_v=\dim E_v$。原确认效应
+
+$$
+e_{q_v}(x)=\frac{a_2+a_3}{2}+\langle v,z_1\rangle
+\tag{123.11}
+$$
+
+的整个归一零面 $F_v=K_\tau\cap\ker e_{q_v}$ 恰为
+
+$$
+\begin{gathered}
+a_1=a\ge0,\quad a_2=a_3=b\ge0,\quad a+2b=1,\quad z_1=-bv,\\
+z_3=z\in E_v,\qquad z_2=-M_vz,\qquad |z|^2\le ab.
+\end{gathered}
+\tag{123.12}
+$$
+
+它包含不同的原纯点 $p_1,r_v$，是非点暴露真面，仿射同构于整个闭 $B^{1+m_v}$，且总有 $F_v\subseteq D_{q_v}$。若仅对这个指定的 $q_v$ 另外知道整个 $D_{q_v}$ 是某个正维仿射闭球，则已经有
+
+$$
+D_{q_v}=F_v,\qquad \dim_{\rm aff}D_{q_v}=1+m_v.
+\tag{123.13}
+$$
+
+此识别不需要其他标签的EB条件，也不需要Pair、Inj、PR或least。
+
+证明。由(123.1)对 $z_2$ 取单位球上的上确界，得到 $\|M_vz_3\|\le|v||z_3|$；三线性和有限维Riesz配对给唯一性与实线性。二阶条件保证
+
+$$
+\frac{a_2+a_3}{2}\ge\sqrt{a_2a_3}\ge|z_1|
+\ge-\langle v,z_1\rangle.
+\tag{123.14}
+$$
+
+同时 $|\langle v,z_1\rangle|\le(a_2+a_3)/2$，所以 $0\le e_{q_v}\le a_2+a_3\le u$ 于整个锥。它在 $q_v$ 取一，确属整个原确认族。其零集迫使(123.14)全部取等，得到 $a_2=a_3=b$、$z_1=-bv$。代入三次式得
+
+$$
+\begin{aligned}
+d_\tau(x)&=-b\bigl(|z_2|^2+|z_3|^2
+                         +2\langle z_2,M_vz_3\rangle\bigr),\\
+|z_2|^2+|z_3|^2+2\langle z_2,M_vz_3\rangle
+&=|z_2+M_vz_3|^2
+ +\langle z_3,(I-M_v^{\mathsf T}M_v)z_3\rangle\ge0.
+\end{aligned}
+\tag{123.15}
+$$
+
+若 $b>0$，$d_\tau\ge0$ 迫使两个非负项全零，所以 $z_3\in E_v$、$z_2=-M_vz_3$。此时二者等长，另外两条二阶条件恰为 $|z_3|^2\le ab$。若 $b=0$，二阶条件直接给 $z_2=z_3=0$，仍是(123.12)。若 $a=0$，同一条件也直接给 $z=0$，不需要除以 $a$。反向将(123.12)逐项代回，全部约束成立。去掉 $a+2b=1$ 即得到整个锥零面的同一参数式；零质量迫使 $a=b=0,z=0$，没有遗失零锥元。
+
+归一后 $a=1-2b$，故
+
+$$
+|z|^2+2(b-1/4)^2\le1/8.
+\tag{123.16}
+$$
+
+参数到 $V$ 的映射在 $\mathbb R\oplus E_v$ 上单射，且该椭球有相对内部。因此仿射维数准确为 $1+m_v$：$m_v=0,1,2$ 分别给线段、二维圆盘和三球。由于 $e_{q_v}$ 是确认候选，$0\le\mathcal T_{q_v}\le e_{q_v}$，得 $F_v\subset D_{q_v}$；这一步没有把 $e_{q_v}$ 称为least。
+
+最后说明(123.13)为何只需点态前件。[VII103.2][Q123VII]证明的第一段在单个标签上就有效：若整个 $D_p$ 是球，取其自身中心 $c_p$，由 $\mathcal T_p(c_p)=0$ 选 $f\in\mathcal F_p$ 使 $f(c_p)=0$。对每个 $y\in D_p$，反射 $2c_p-y$ 仍在 $D_p$，非负性给
+
+$$
+0=2f(c_p)=f(y)+f(2c_p-y),
+\qquad f(y)=0.
+\tag{123.17}
+$$
+
+反向，$f(y)=0$ 自身就是 $y\in D_p$ 的原见证，所以 $D_p=K_\tau\cap\ker f$。因此这个指定的 $D_p$ 已是原暴露真面。现在 $F_v$ 是包含于 $D_{q_v}$ 的原非点面，也是该球的面；严格凸球的非空真面只有单点，包括一维球情形。故 $F_v=D_{q_v}$。反射中心始终是该球自己的中心，未假设共同球心或与固定内球接触。
+
+若采用全局EB$_{\ge1}$下的另一条既有论证，VII103.2先将非点真面 $F_v$ 写成某个 $D_s$。极大的是这个被包含的 $F_v=D_s$；由 $F_v\subseteq D_{q_v}\subsetneq K_\tau$ 才得到相等。不能仅用包含它的 $D_{q_v}$ 极大来反推相等。点态论证已经免去这项全局面分类前件。证毕。
+
+### 123.4 两个独立边缘方向已经足够
+
+**定理 123.5（完整三球的有限检测与全族正规形）。** 固定 $L_1$ 的正交单位基 $e_1,e_2$，令 $e_+=(e_1+e_2)/\sqrt2$。在定义123.1的整个族中，以下六项等价：
+
+1. 两个完整排除集 $D_{q_{e_1}},D_{q_{e_2}}$ 都是仿射闭三球。
+2. 三个完整排除集 $D_{q_{e_1}},D_{q_{e_2}},D_{q_{e_+}}$ 都是仿射闭三球。
+3. 每个单位 $v\in L_1$ 都有 $M_v^{\mathsf T}M_v=I$。
+4. 存在三个正交同构 $O_i:\mathbb R^2\to L_i$，把标准平面识别为 $\mathbb C$ 后满足
+
+$$
+\tau(O_1\xi_1,O_2\xi_2,O_3\xi_3)
+=\operatorname{Re}(\xi_1\xi_2\xi_3)
+\quad(\xi_i\in\mathbb C).
+\tag{123.18}
+$$
+
+5. 存在实线性双射 $\Psi:V\to\operatorname{Herm}_3(\mathbb C)$，满足 $\Psi(C_\tau)=\mathrm{PSD}_3$、$\operatorname{Tr}\Psi=u$、$\Psi(w)=I_3$。
+6. 全局EB3。
+
+第1项还可换成任意两个线性无关单位向量 $v_1,v_2$ 的相同完整三球检验。这些标签都是同一颗 $D_{p_1}$ 的边缘纯点，不是三个对角种子 $p_1,p_2,p_3$。
+
+证明。先证第1项到第3项，并同时说明两个任意独立方向的版本。由定理123.4，两个完整三球分别迫使 $m_{v_i}=2$，即 $M_{v_i}^{\mathsf T}M_{v_i}=I$。对任意固定 $z\in L_3$，考虑 $L_1$ 上的二次型
+
+$$
+Q_z(v)=|v|^2|z|^2-|M_vz|^2\ge0.
+\tag{123.19}
+$$
+
+非负性正是全方向收缩(123.1)的后果；它不是新增的球面前件。$Q_z(v_1)=Q_z(v_2)=0$。在基 $v_1,v_2$ 中写成 $Q_z(sv_1+tv_2)$，两个平方项均为零，只剩 $2cst$；对所有实 $s,t$ 非负迫使 $c=0$。因此 $Q_z$ 恒零。$z$ 任意，故
+
+$$
+M_v^{\mathsf T}M_v=|v|^2I\quad(v\in L_1).
+\tag{123.20}
+$$
+
+这就证明第3项。特别地，第2项中的第三个检测在已给全方向收缩的本族内可以省去。若直接使用三个方向，置 $A=M_{e_1}$、$B=M_{e_2}$，三次饱和也立即给
+
+$$
+A^{\mathsf T}A=B^{\mathsf T}B=I,\qquad
+A^{\mathsf T}B+B^{\mathsf T}A=0.
+\tag{123.21}
+$$
+
+两次检测的证明则先用(123.19)支付最后一式。这里有限性来自一个已知次数的实线性矩阵束和全方向范数界，不能移植成任意原模型的有限检测原则。
+
+现给第3项到第4项的显式二维代数。任选 $L_2,L_3$ 的正交坐标，$A,B$ 均为二阶实正交矩阵。令 $C=A^{\mathsf T}B$；由(123.21)，$C$ 同时正交且斜对称，故
+
+$$
+J=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\qquad
+C=\varepsilon J\quad(\varepsilon\in\{-1,1\}),\qquad
+M_{(x,y)}=A(xI+\varepsilon yJ).
+\tag{123.22}
+$$
+
+理由只是二阶斜对称矩阵具有 $cJ$ 形式，正交性迫使 $c^2=1$。令
+
+$$
+K=\operatorname{diag}(1,-1),\qquad
+O_1=\operatorname{diag}(1,-\varepsilon),\qquad O_2=A,\qquad O_3=K.
+\tag{123.23}
+$$
+
+这些矩阵与前面任选的正交坐标复合，给三个原平面上的所需同构。新矩阵束为
+
+$$
+O_2^{\mathsf T}M_{O_1(x,y)}O_3=(xI-yJ)K.
+\tag{123.24}
+$$
+
+若 $\xi_1=x+\mathrm iy$、$\xi_2=s+\mathrm it$、$\xi_3=h+\mathrm ik$，右侧与 $\xi_2$ 的实内积是 $s(xh-yk)+t(-yh-xk)=\operatorname{Re}(\xi_1\xi_2\xi_3)$，得到(123.18)。这是成熟 $[2,2,2]$ 正交乘法事实的直接二维展开，不调用更高维Hurwitz分类。
+
+为证第4项到第5项，令 $L_O(a;\xi)=(a;O_1\xi_1,O_2\xi_2,O_3\xi_3)$，并定义
+
+$$
+H(a;\xi)=\begin{pmatrix}
+a_1&\xi_3&\overline{\xi_2}\\
+\overline{\xi_3}&a_2&\xi_1\\
+\xi_2&\overline{\xi_1}&a_3
+\end{pmatrix},\qquad
+\Psi_O=H\circ L_O^{-1},\qquad \Phi_O=\Psi_O^{-1}.
+\tag{123.25}
+$$
+
+这一次 $H$ 是共同的实线性双射。正交变换保持全部边长，(123.18)保持整个三次式，故(123.2)的全部不等式恰对应 $H$ 的全部主子式非负。于是 $\Psi_O(C_\tau)=\mathrm{PSD}_3$、$\operatorname{Tr}\Psi_O=u$、$\Psi_O(w)=I_3$，得到第5项。它在原态空间上是保基锥同构，其对偶是保持原效应单位的序同构。
+
+第5项到第6项：任取第5项给出的 $\Psi$，令 $\Phi=\Psi^{-1}$。定理123.6的(123.26)—(123.27)仅以这三个同构恒等式为前件，对这个任意给定的 $\Psi$ 运输整个对偶效应区间和全部确认候选的最小值，得到每个原纯标签的完整 $D_p$ 为三球，故有第6项；这一步不要求 $\Psi$ 采用(123.25)的坐标构造。第6项立即给第2项，第2项给第1项，等价链闭合。整个证明的非成熟消费者是原完整排除球到(123.20)的有限检测；其余正交乘法和PSD端点均按成熟工具复用。证毕。
+
+### 123.5 同一个映射保留全部纯射线、效应与最低值
+
+**定理 123.6（全域运输的准确静态后果）。** 设给定任意实线性双射 $\Psi:V\to\operatorname{Herm}_3(\mathbb C)$，满足 $\Psi(C_\tau)=\mathrm{PSD}_3$、$\operatorname{Tr}\Psi=u$、$\Psi(w)=I_3$，令 $\Phi=\Psi^{-1}$。则对这个给定的同构有
+
+$$
+\begin{gathered}
+C_\tau=\Phi(\mathrm{PSD}_3),\qquad
+K_\tau=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\},\\
+P_\tau=\{p_\psi=\Phi(\psi\psi^*/(\psi^*\psi)):
+\psi\in\mathbb C^3\setminus\{0\}\}\cong\mathbb{CP}^2,\\
+\mathcal E_\tau=\{f_A:0\preceq A\preceq I_3\},\qquad
+f_A(\Phi X)=\operatorname{Tr}(AX).
+\end{gathered}
+\tag{123.26}
+$$
+
+全部非零纯锥射线是 $\mathbb R_+\Phi(\psi\psi^*)$。对单位 $\psi$，记 $P_\psi=\psi\psi^*$，则全部确认矩阵和原最低值为
+
+$$
+\begin{gathered}
+\mathcal F_{p_\psi}\longleftrightarrow
+\{P_\psi\oplus A_\perp:0\preceq A_\perp\preceq I_{\psi^\perp}\},\\
+\mathcal T_{p_\psi}(\Phi X)=\operatorname{Tr}(P_\psi X)
+\quad(X\succeq0),\\
+D_{p_\psi}=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1,
+\rho\psi=0\},\qquad
+\mathcal A_{p_\psi}=\{f_{P_\psi}\}.
+\end{gathered}
+\tag{123.27}
+$$
+
+因而每个完整 $D_p$ 是三球，Inj成立。全部原纯比较是归一复内积模方，原正交恰为复正交。整个静态字典继续沿127.9、129.8和VIII113.7—113.9复用，包括全部有限数学POVM、谱、Jordan乘积与数学压缩，不重立这些成熟端点为新的量子分类。
+
+关于指定种子的坐标字典另作条件陈述：若给定满足(123.18)的三个正交同构 $O_i$，则(123.25)的 $\Psi_O,\Phi_O$ 还满足(123.28)及下述角压缩公式。这项坐标陈述与任意给定 $\Psi$ 的(123.26)—(123.27)分别按各自前件证明。
+
+证明。由所给同构，$u\Phi=\operatorname{Tr}$、$\Phi(I_3)=w$。保基实线性锥同构仿射双射整个归一基并保留极点。PSD基底的极点恰为秩一投影：两个正本征值允许相反小扰动，秩至少二者不极端；秩一投影的凸分解则由正交补上的零二次型迫使全部正项支撑于同一复线。因此(123.26)覆盖全部原纯点与纯射线。
+
+对任意原实线性泛函 $f$，$f\Phi$ 在全部Hermitian空间上由唯一矩阵 $A$ 作迹配对。反向定义 $f_A(x)=\operatorname{Tr}(A\Psi x)$（$x\in V$），得到全部Hermitian矩阵与整个 $V^*$ 的实线性双射。因为 $\Psi(C_\tau)=\mathrm{PSD}_3$，$f_A\in C_\tau^*$ 当且仅当 $\operatorname{Tr}(AX)\ge0$ 对每个 $X\succeq0$ 成立；用全部 $X=\eta\eta^*$ 检查，这又当且仅当 $A\succeq0$。故这个双射是整个对偶锥的序同构，且 $f_{I_3}=u$，于是 $0\le f_A\le u$ 当且仅当 $0\preceq A\preceq I_3$。它保持评价、零、单位、补和所有有限非负和，给出(123.26)的完整效应区间。
+
+现在取任意原纯点 $p=p_\psi$、单位 $\psi$，以及任意原锥输入 $x=\Phi X$、$X\succeq0$。全部确认候选恰对应 $0\preceq A\preceq I_3$ 且 $\psi^*A\psi=1$，所以原定义的最小值准确为
+
+$$
+\mathcal T_{p_\psi}(\Phi X)
+=\min_{\substack{0\preceq A\preceq I_3\\ \psi^*A\psi=1}}
+\operatorname{Tr}(AX).
+$$
+
+这里候选集是整个原 $\mathcal F_{p_\psi}$ 的双射像；其最小值达到，也可直接由矩阵区间的紧性得到。
+
+成熟PSD事实还给出显式最低公式：若 $0\preceq A\preceq I_3$ 且 $\psi^*A\psi=1$，则 $(I_3-A)\psi=0$，所以 $A=P_\psi\oplus A_\perp$。反向每个这样的块矩阵都确认该纯点，且 $A_\perp=0$ 可取。所有这些 $A-P_\psi$ 都为PSD，故 $\operatorname{Tr}(AX)\ge\operatorname{Tr}(P_\psi X)$ 对所有 $X\succeq0$ 成立；$A=P_\psi$ 同时达到下界。因此 $f_{P_\psi}$ 是原全确认族的least，并得到(123.27)的最低公式。$X\succeq0$ 时 $\psi^*X\psi=0$ 等价于 $X\psi=0$，所以最低定义的整个 $D_{p_\psi}$ 恰为 $\psi^\perp$ 上全部密度矩阵的 $\Phi$ 像，包括其混态内部。这是整个二维复密度矩阵闭三球，故对所有原纯标签得到EB3。完整确认还要在这个整球上全零，迫使 $A_\perp=0$，给最后一个单点公式。补空间唯一决定原复线，故Inj成立。以上全纯点、全效应和完整排除公式对任意给定的 $\Psi$ 均成立，且线性运输保持所有有限凸组合、所有非负质量及零输入。
+
+对种子坐标的条件陈述，使用所给满足(123.18)的 $O_i$ 和(123.25)的指定构造 $\Psi_O=H\circ L_O^{-1}$、$\Phi_O=\Psi_O^{-1}$。该构造逐坐标满足本定理的三个同构恒等式，所以上述(123.26)—(123.27)同样适用于这对映射。它们还满足 $\Psi_O(p_i)=E_{ii}$，并由保留各对角坐标和各边内积得到种子定义的共同型
+
+$$
+B(x,y)=\sum_i a_i b_i+2\sum_i\langle z_i,\zeta_i\rangle,
+\qquad B(\Phi_O X,\Phi_O Y)=\operatorname{Tr}(XY).
+\tag{123.28}
+$$
+
+因此在这同一对 $\Psi_O,\Phi_O$ 下，原效应空间、全确认最低函数、纯边、完整排除球及共同尺相容。特别是对所有 $X\in\operatorname{Herm}_3(\mathbb C)$，$\Psi_O T_i\Phi_O(X)=Q_iXQ_i$，$Q_i=I_3-E_{ii}$，因为(123.25)把 $T_i$ 的坐标置零恰变为把矩阵第 $i$ 行及第 $i$ 列置零；单位、共同三框架、数学POVM和Jordan结构可直接使用所引端点字典。由正交同构保持各 $a_i,|z_i|$，矩阵秩一时三个 $\Delta_i$ 全零，故同一种子的全原PC3及PC1成立。这里没有把任何数学POVM、正压缩或锥同构识别成实际仪器。证毕。
+
+### 123.6 标量子族与三个对角种子的准确区别
+
+**推论 123.7（标量族的一次边缘三球检测）。** 对 $\tau_\lambda=\lambda\operatorname{Re}(z_1z_2z_3)$、$|\lambda|\le1$，任意固定单位 $v\in L_1$ 都满足
+
+$$
+M_v^{\mathsf T}M_v=\lambda^2I,\qquad
+m_v=\begin{cases}0,&|\lambda|<1,\\2,&|\lambda|=1.\end{cases}
+\tag{123.29}
+$$
+
+因此在此子族，单个指定边缘标签的整个 $D_{q_v}$ 为三球，当且仅当 $|\lambda|=1$；内参数的每个相应暴露面 $F_v$ 都是 $[p_1,r_v]$。与此同时，整个一般族中三个对角种子的完整 $D_{p_i}$ 始终都是三球，故只检测它们不足以得到正规形。
+
+证明。标准坐标中 $M_{(x,y)}=\lambda(xI-yJ)K$；对单位 $v$ 得(123.29)，再用定理123.4。如果内参数的指定 $D_{q_v}$ 是三球，点态识别便把它等于一维 $F_v$，矛盾。端点由定理123.5—123.6给整个三球。一般族的对角种子结论已由定理123.3独立证明；例如 $\tau=0$ 的这些种子全部通过检验，而所有 $M_v=0$，故不能满足定理123.5的正规形。
+
+这里对内参数只取得边缘完整三球条件的失败。若只假设指定 $D_{q_v}$ 是某个正维球，(123.13)允许它是线段，不能以维数矛盾排除。故此简短消费者没有加强122.5—122.6所述内参数EB$_{\ge1}$排除结论；那里更强的单点排除依赖其完整确认计算，本章一般 $\tau$ 的证明不以该计算为前提。也没有在不满足点态球前件时声称 $D_{q_v}=[p_1,r_v]$。证毕。
+
+### 123.7 文献归属与有限域的新增消费者
+
+**约定 123.8（成熟工具及本章的范围）。** 本章采用 `repo-derived` 的纸面综合归属。三次双曲锥、二维正交乘法及PSD量子字典都已有成熟来源；新增消费者是把这个收缩实三线性族的整个原效应域接到准确零面(123.12)，只在指定标签的整球前件下识别完整最低排除，再由两个独立边缘标签得到整个族的正规形。两个方向到全部方向使用非负二次型(123.19)，不把有限采样当作一般无限条件的替代。
+
+| 来源 | 准确使用范围 |
+| --- | --- |
+| Renegar，*Hyperbolic Programs, and Their Derivative Relaxations*，原始稿§2，Proposition 1、Theorems 2—3 [Q123R] | 含双曲方向的连通分支、闭包、凸性及内方向不变性；不提供本章全效应排除或共同线性三阶Hermitian表示 |
+| Saunderson，*Certifying polynomial non-negativity via hyperbolic optimization*，arXiv:1904.00491v2，§5.1、Proposition 5.1 [Q123S] | 对准确正规式 $s^3-3s|y|^2+2q(y)$，关于 $e_0$ 的双曲性等价于 $\max_{|y|=1}|q(y)|\le1$；说明有界三次型与双曲性的关系已有先例，不供应完整 $D_p$ 或有限边缘检测 |
+| Chi—Wang，*Orthogonal multiplications of type $[3,4,p],p\le12$*，arXiv:1705.04762v1，Introduction及§2 [Q123CW] | 正交乘法是满足 $|F(x,y)|=|x||y|$ 的双线性映射，采用定义域和值域正交等价；其引言明确回溯Hurwitz的 $[l,l,l]$ 分类。本章只用已展开的 $[2,2,2]$ 情形，不将复数乘法分类计为新成果 |
+| VII103.2 [Q123VII] | 中心反射给原完整排除面的暴露性；本章只抽取该证明对指定标签有效的部分，再消费精确 $F_v$；不输入Pair |
+| SAME_READBACK125—131、本卷121及VIII113.7—113.9 [Q123SR] [Q123BV] [Q123EVIII] | 固定完整入口中的种子、共同尺、确认唯一、PC1／IC0／W条件链及全部静态字典；既有密度、法向层和状态谱不重证、不计新成果 |
+
+限定于这些原文及有关三次双曲型、实三线性耦合、正交乘法的有界来源范围，未见与(123.12)—(123.20)这个全效应有限检测消费者精确相同的条目；这不构成全球新颖性或历史优先权判断。VII106.12已经在其W及相应等价条件下得到原效应侧的内生三次双曲分支；它不表示任意原E0锥具有(123.2)的坐标，亦未给本章的任意收缩 $\tau$ 族。这里从明定族出发，与那个已付W的恢复结果保持各自前件。
+
+[Q123R]: https://optimization-online.org/wp-content/uploads/2004/03/844.pdf "James Renegar, Hyperbolic Programs, and Their Derivative Relaxations, §2, Proposition 1, Theorems 2—3；Foundations of Computational Mathematics 6 (2006), 59—79，DOI 10.1007/s10208-004-0136-z。使用所引原始稿的准确命题。"
+[Q123S]: https://arxiv.org/html/1904.00491v2#S5.SS1 "James Saunderson, Certifying polynomial non-negativity via hyperbolic optimization, §5.1, Proposition 5.1；所用条件只涉及准确正规式及球面三次界。"
+[Q123CW]: https://arxiv.org/html/1705.04762v1 "Quo-Shin Chi and Haiyang Wang, Orthogonal multiplications of type [3,4,p], p≤12, Introduction, §2；只复用正交乘法定义、正交等价与Hurwitz背景。"
+
+### 123.8 原E0加IC0候选与仍然准确的全局缺口
+
+**定义 123.9（不限定三次坐标的原条件候选）。** 对一般原模型，$\mathsf E_0$ 始终逐项取127.1、129.1：有限维闭尖生成原锥和严格正原单位，整个 $K,P,\mathcal E$ 及最低定义；全部原纯标签的EB3；Inj；一组含 $P_0$ 顶点的实际原正交种子三角；该三角全部原零效应的联合分离 $\mathsf J_\triangle$；按125.6取值于 $M_i=\operatorname{span}D_{p_i}$ 并保留全部原法向读数而唯一确定的三个规范线性投影 $T_i$ 的全锥正性。PC1和IC0不在这个入口中。共同 $B,w,c,I$ 由同一实际种子按127.2、129.2定义：
+
+$$
+\begin{gathered}
+c=w/3,\qquad I=\{c+h:u(h)=0,\ B(h,h)\le1/6\}\subset K,\\
+\mathsf{PC1}:\quad\forall p\in P\ \exists i:\Delta_i(p)=0,\qquad
+\mathsf{IC}_0:\quad\forall p\in P_0:\ D_p\cap I\ne\varnothing,\\
+\text{完整条件候选}=\mathsf E_0+\mathsf{IC}_0
+\quad\text{连同127.10全部原合同及其完整引用链}.
+\end{gathered}
+\tag{123.30}
+$$
+
+$1/6$ 是以 $c$ 为中心的仿射半径平方；在 $u=1$ 上相应原点范数平方为 $1/2$。已有127.11、129.8、130.5及本卷121.6—121.7在同一 $\mathsf E_0$ 内给出 $P=P_0$，并给条件等价
+
+$$
+\mathsf{IC}_0\ \Longleftrightarrow\ \mathsf{PC1}
+\ \Longleftrightarrow\ \text{全原PC3}
+\ \Longleftrightarrow\ \mathsf W
+\ \Longleftrightarrow\ \text{同原全锥、同单位的PSD}_3\text{静态字典}.
+\tag{123.31}
+$$
+
+在每个指定标签上，接触等价于 $e_p(w)=1$、$B(p,p)=1$ 及三个 $\Delta_i(p)$ 全零，是点态PC3；点态PC1只要求其中一个为零，全域升级仍取原全称量词。IX120.9的 $P_0$ 稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 与非塌缩层闭图、原宽度紧层、本卷121的确认唯一均直接复用。整个W下的G、Jordan分类、状态谱及谱唯一直接复用VIII113.7—113.9；130.2在尚无W的EB加Inj域给全态覆盖，130.3—130.4及131保留原非中心边界谱性和近似闭包条件，不在这里重计。
+
+定理123.5只在已先给(123.1)—(123.2)的族内把有限边缘检验、EB3和PSD正规形接通；定理123.3与123.6保证正规形分支满足同一种子的整个 $\mathsf E_0$ 以及PC1／IC0。它没有为任意 $\mathsf E_0$ 模型取得这个三次表示。因而一般 $\mathsf E_0\Rightarrow\mathsf{PC1}/\mathsf{IC}_0$ 仍未由本章证明，也未构造完整同域反模型。把族表示加作前提再套用定理123.5，不能算作该全局蕴含的证明。
+
+[X125][Q123X]在EB3+PR域所给旧整球共同近零确认，仍仅是近零读数结论；其CS／UF／NC稳定入口也保持原义。它不自动给真实接触或从任意单张效应的小读数到其零集的距离界。本章的点态识别来自准确取零与整球反射，未消费该未付稳定桥；同样未从本章有限检测推出裸EB3的Inj、种子、联合分离或正压缩自动性。谓词缩短不表示独立公理更少。
+
+### 123.9 全来源、操作、有限复合、记录与时间的保留合同
+
+**约定 123.10（127.10及其引用链的原量词）。** 式(123.30)完整保留127.10，并沿其原引用链继承125.11、124.9、123.13、VIII113.11、VIII112.9、IX120.11、THREE_COPY第七卷121.12及122.14。VI(89.13)指[原极商第六卷][Q123PolarVI]的全部两尺度式。以下范围仍由这些原合同承担，定理123.5—123.6只支付单体静态部分。
+
+1. 同一原装饰元组 $\mathcal O$、共同来源域、全部中点实现、原概率像紧性、全测试表及闭性、零／单位／补／有界倍增、重复标签与每种同中点实现，全部非负质量及零／次归一／不等质量，过程与参考各自完整相关联合输入均保留。原 $L,p,\omega,K,M$、两次使用同一读回、两实张成、全实关系、完整(83.8)、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$、精确PRE之后整个H13及每个原资格态、活跃块严格负方向、共享总迹一、非活跃零质量与空活跃集均保持原义。操作映射 $p$ 不与纯标签混型。
+2. 设备／事件／来源绑定、全部菜单分支、实际参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、全部合法未来及每个中间切口全部保留。原生与细化消费者、terminal futures、联合有符号关系、细标签粗归组、记录后的条件未来、source-adoption与资源合同仍各按原消费者承担。
+3. 对每个有限 $N\ge1$，仍需实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N$、全部 $P_N$ 和整个效应区间。每个实际分块的最小／最大张量夹逼、产品配对、严格张量单位、因子置换及逆的正性、规范重括号与不连续位置分块的指定运输均按(Q127.35)。整个实际 $S_2$ 按(Q127.36)覆盖任意产品或纠缠纯点、任意有限凸族、全部非负权、零权和重复标签。低二份 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥、唯一实际自复合的直和扇区和秩／实维乘法限制、同一实际两因子的产品正规形，仍是全有限层级原定理的各项供应。
+4. 三份资源 $\mathsf F_{\max}$ 仍精确要求(Q127.37)：同一最大复块 $L\ge2$、同一含相位正交基，$g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r$，实际 $\Delta_r=|g_r\rangle\langle g_r|\in C_3$、$u_3(\Delta_r)=L$、其余扇区零，以及归一原源 $\Delta_r/L$。不预付三份纯性或实际制备；全经典 $L=1$ 分支按原定理处理。复三能级支路中 $L=3$，二、三份秩九、二十七及全部更高有限次数均保留，不将单体EB3复制为高阶整个排除条件。
+5. 全旁观正性(Q127.38)量化每个 $b\ge0$、任意含纠缠的共同输入。只有完整有限层级和共同表示已给，才沿原Choi桥识别通常CP、矩形跨扇区Kraus及逐输入TP／TNI预算。实际事件仍需完整提升、实际探针与相容核；事件饱和另行供应。共同输入预算、接线、记录、粗粒化与校准负责同族仪器。严格正质量分支才条件归一，零质量分支不强定归一条件态；Lüders另需同一分支的锐效应、接受态中性与输出校准。数学效应、正压缩和全部数学POVM不能替代这些条件。
+6. 物理钟、实际动态来源、连续齐次可逆时间群和单位仍分别供应。另给同载体上全实时间连续保单位锥自同构群，才有该供应的有限维生成元；重构复块另给保迹酉时间族后，才沿(Q127.39)使用 $U_t=\exp(-\mathrm itH/\hbar)$、共轭演化与 $-\mathrm i[H,\rho]/\hbar$。量词覆盖全部原输入及全部实际时间，$H$ 的标量平移、时间重标和生成元尺度边界均保留。实际Hamiltonian、能量识别与标定、数值 $\hbar$、时空及物理空间维数未由本章静态定理产生。
+
+这些条件与通常量子公理的对应仍是有条件的：正锥上的归一态和全部效应给密度矩阵及Born评价，数学框架给投影测量的概率结构，完整有限联合合同负责实际复合，旁观合同负责CP，事件和仪器合同负责分支实现与更新，时钟和动态来源负责物理演化。单体静态正规形不把后五类供应变成几何定理。
+
+### 123.10 二元窗口与三元兼容的几何含义
+
+三个对角种子像三扇固定的二能级窗口：每扇都能看到一整颗实心三球，边界上的每个点都是原纯点，投向窗口的规范压缩始终为正。只改变三个窗口共同参与的三线性耦合，不会改变这些窗口自身。因此只检查三个对角顶点，无法看见三元拼接是否相容。沿第一扇窗口的边缘选方向 $v$，实际确认尺(123.11)在窗口对面的原面上读零。三次约束把另外两条边锁成 $z_2=-M_vz_3$，而允许自由通过的方向恰是 $M_v$ 不损失长度的子空间。再加上一条对角方向，这个准确暴露面的维数就是 $1+m_v$。只有另知该标签背后的整个排除集合是球时，才由它自身的中心反射和严格凸性把这个面识别为整颗球。
+
+若两条线性无关边缘方向的完整排除都必须是三球，每个方向就必须让二维横向空间完整通过，不能损失长度。全方向收缩把任何可能的损失写成一个非负二次型；它在两条独立线上全为零，只能处处为零。这就把连续的方向兼容缩成有限的精确代数条件，而二维正交矩阵束随后只能给复数乘法的实部。指定的第三条斜方向当然也相容；它在这个已知三线性且全方向收缩的族内是冗余检测。整个推导只需二阶实矩阵、两个平方项和一个非负二次型，不需要在七维切空间研究Hessian。得到的是明确族内的复三能级静态几何；一般原E0为什么必有接触，以及完整物理所需的实际来源、任意有限复合、操作、记录和时间，仍按(123.30)与上述原合同保留。
+
+[Q123SR]: https://github.com/the-omega-institute/trureturing/blob/18995bad7b93a8ca351c75862c415d5161171e52/docs/develop/theory/QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "125—131：原完整定义、固定E0、PC1／IC0条件链、静态字典；SECTION127.10及其完整引用链：全部物理合同。"
+[Q123BV]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VIII.md "121.6—121.8：九维EB3+Inj的唯一完整确认、未付接触与完整物理范围。"
+[Q123VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "103.2：EB≥1下完整暴露与真面穷尽；其第一段为点态中心反射，Pair不参与此段。106.12保留其W及原等价条件。"
+[Q123EVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "113.7—113.9：整个W下的G、秩三Jordan分类、状态谱、谱唯一和准确复三能级字典。"
+[Q123X]: https://github.com/the-omega-institute/trureturing/blob/18995bad7b93a8ca351c75862c415d5161171e52/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "125：完整EB3+PR中的共同近零确认及CS／UF／NC条件链；没有自动接触。"
+[Q123PolarVI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "89.7及(89.13)：同一原装饰元组与全部两尺度、原质量和整个输出合同；完整链沿SAME_READBACK127.10继承。"
+
+## 追加锚（本行以下为增补区）
