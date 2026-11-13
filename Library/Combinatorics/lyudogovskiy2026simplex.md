@@ -37,7 +37,9 @@ Problems 8.1 and 8.2, restates the same questions.
 The bounded source comparison found no complete answer in the inspected
 target-relevant portions of the author's sixteen indexed papers. This does
 not establish worldwide priority or exhaustive absence of an equivalent
-result. The two questions remain unproved by the formal source here.
+result. The formal endpoints `LyudogovskiySimplex.threshold_result` and
+`LyudogovskiySimplex.first_occurrence_result` cover the two full questions.
+The classical support facts and later aliases are not additional settlements.
 
 ## Verified locator
 

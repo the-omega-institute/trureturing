@@ -3,9 +3,9 @@ slug: lyudogovskiy-2026-simplex-threshold
 bibkey: lyudogovskiy2026simplex
 doi: null
 url: https://arxiv.org/html/2603.23228v1
-triage: open
+triage: theorem
 motivation_gids:
-  - D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.ThresholdClaim
+  - D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.threshold_result
 ---
 
 # Lyudogovskiy's simplex threshold question
@@ -26,9 +26,16 @@ explicit. The global maximum formula is a separate conjunct for every
 positive n, without a spectrum-contiguity assumption. The endpoints are
 $\tau(0)=1$ and $\Delta(1)=0$.
 
-The unresolved proof requires the triangular bound for every clique,
-an attaining predecessor at every positive size, finite attainment of
-local maxima, and exact-layer existence and positive leastness.
+The theorem proves the triangular bound for every actual clique, constructs
+an attaining predecessor at every feasible positive size, and uses finite
+attainment to obtain exact-layer existence and positive leastness.
+
+| Source clause | Formal counterpart | Scope |
+| --- | --- | --- |
+| Every partition of positive n | `Nat.Partition n`, `graph` | Repeated occurrences and the virtual zero recipient are retained. |
+| Exact local layer | `localDimension`, `layer` | Maximum actual clique dimension through the vertex, then equality to r. |
+| Least positive occurrence | `threshold`, `threshold_result` | Every r, including r=0; existence and `IsLeast` are explicit. |
+| Global maximum formula | `maxDimension`, `threshold_result` | Every positive n, including n=1; no spectrum-contiguity assumption. |
 
 ## Motivation
 
@@ -41,10 +48,10 @@ actual clique cardinality through the vertex minus one.
 
 ## Gap
 
-`ThresholdClaim` specifies the complete question as a proposition. The source
-includes proof terms for both full claims, but they have not been verified
-by Lean. Neither a claim definition nor an uncompiled proof term supplies
-a kernel-verified settlement.
+`ThresholdClaim` specifies the complete question. The public theorem
+`D5.S3.Combinatorics.Partitions.LyudogovskiySimplex.threshold_result` proves it.
+The graph is independently defined by actual multiset transfers; the
+conclusion is not built into the carrier, adjacency, or clique definitions.
 
 ## Route
 
@@ -54,10 +61,14 @@ a kernel-verified settlement.
 `staircase` is the finite ideal of cells (i,j) with i+j<r;
 `firstFamily` consists of genuine one-cell Young extensions.
 
-The route uses the two-direction transfer/intersection bridge, the
-classical star/top classification, corner counts, the triangular support
-bound and its staircase equality case, a sharp attaining predecessor,
-and exact finite extrema. The classical tools are attributed in the
+The two-direction transfer/intersection bridge relates the source graph to
+Young ideals. The classical star/top classification reduces a clique to
+addable or removable corners. Sorting their row coordinates gives an
+antichain whose lower ideal contains the appropriate staircase; its
+triangular size bounds the clique. Enlarging the first row of a staircase
+constructs sharp actual cliques at every feasible size. At the first size,
+equality forces the predecessor to be the staircase itself. Finite extrema
+and injective addable extensions yield the exact thresholds and full families. The classical tools are attributed in the
 [source note](../Library/Combinatorics/lyudogovskiy2026simplex.md).
 They supply no independent external-problem credit.
 
@@ -72,12 +83,13 @@ The source carrier, virtual zero row and multiplicities must be preserved.
 
 [Formal source](../D5/S3/Combinatorics/Partitions/LyudogovskiySimplex.lean).
 [Prospective full-question registration](https://github.com/the-omega-institute/trureturing/issues/30163).
-No completed full-question Lean proof, semantic admission, freeze,
-reviewed merge or external-problem credit is asserted.
+The named theorem covers the complete quoted question. Independent semantic
+admission and reviewed delivery remain separate obligations. Classical
+support lemmas and aliases receive no separate external-problem credit.
 
 ## Triage
 
-Open. arXiv:2603.29988v1 Problem 8.1 is an alias of the same
+The full statement is proved in the formal source. arXiv:2603.29988v1 Problem 8.1 is an alias of the same
 source event, rather than a second settlement target.
 
 ## ASSUMED-UNVERIFIED

@@ -75,12 +75,17 @@ internal sealed class LyudogovskiySimplexDocument : IScribeDocumentDefinition
                 Describe.Lean(DescribeId.Create("lyudogovskiy-threshold-result"),
                     DeclarationHandle.Create(Prefix + "threshold_result"), H("The complete threshold formula"),
                     StatementSource.FromAuthor(Disp(threshold)), AssessedProvenance.FromRepo(Source),
-                    Blocks(Paragraph(Text("For every r, the positive size triangular(r)+1 has a nonempty exact layer and is its least positive occurrence. Separately, every positive n has the displayed maximum. The proof bounds every actual clique through the star/top alternatives, constructs r+1 genuine extensions of an enlarged staircase at every feasible size, and uses finite attainment. No assumption that the local-dimension spectrum is contiguous is used."))), DescribeRole.Theorem),
+                    Blocks(Paragraph(Text("For every r, the positive size triangular(r)+1 has a nonempty exact layer and is its least positive occurrence. Separately, every positive n has the displayed maximum. The proof bounds every actual clique through the star/top alternatives, constructs r+1 genuine extensions of an enlarged staircase at every feasible size, and uses finite attainment. No assumption that the local-dimension spectrum is contiguous is used."))), DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("lyudogovskiy-2026-simplex-threshold"), ResolutionKind.Proved)),
                 Describe.Lean(DescribeId.Create("lyudogovskiy-first-occurrence-result"),
                     DeclarationHandle.Create(Prefix + "first_occurrence_result"), H("The entire first-occurrence family"),
                     StatementSource.FromAuthor(Disp(All("r", V("Nat"), Imp(Le(D(2), r), first)))),
                     AssessedProvenance.FromRepo(Source),
-                    Blocks(Paragraph(Text("For every r at least two, a clique of dimension r at the first size cannot be a top: its containing diagram would require triangular(r+1) cells but has only triangular(r)+2. A star predecessor contains the size-triangular(r) staircase and therefore equals it. Conversely every addable staircase extension lies in the full r+1-member star; the sharp maximum forces exact local dimension r. Distinct addable cells give distinct partitions. The threshold identity connects this full set equality to the literal threshold argument."))), DescribeRole.Theorem))));
+                    Blocks(Paragraph(Text("For every r at least two, a clique of dimension r at the first size cannot be a top: its containing diagram would require triangular(r+1) cells but has only triangular(r)+2. A star predecessor contains the size-triangular(r) staircase and therefore equals it. Conversely every addable staircase extension lies in the full r+1-member star; the sharp maximum forces exact local dimension r. Distinct addable cells give distinct partitions. The threshold identity connects this full set equality to the literal threshold argument."))), DescribeRole.Theorem,
+                    new OpenProblemResolutionClaim(
+                        ProblemSlugRef.Create("lyudogovskiy-2026-first-occurrence-family"), ResolutionKind.Proved)))));
+
     }
 
     private static Formula TransferFormula()

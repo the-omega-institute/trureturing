@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.Partitions.LyudogovskiySimplex
 
+/-! Source-bound audits retain the complete transfer and whole-question laws. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -46,8 +48,8 @@ private def ones : Nat.Partition 2 where
 private theorem edge : UnitTransfer two ones := by
   refine ⟨?_, 0, 1, 0, ?_, ?_⟩
   · intro h
-    have hh := congrArg Nat.Partition.parts h
-    norm_num [two, ones, Nat.Partition.indiscrete, Nat.Partition.ofSums] at hh
+    have hh := congrArg (fun p : Nat.Partition 2 => p.parts.card) h
+    norm_num [two, ones] at hh
   · simp [two, Nat.Partition.indiscrete, Nat.Partition.ofSums, part]
   · simp [ones, part]
 
@@ -156,7 +158,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   change maxDimension 1 ≠ maxDimension 2
   have h1 := threshold_result.2 1 (by decide)
   have h2 := threshold_result.2 2 (by decide)
-  norm_num [Finset.range_succ, triangular] at h1 h2
+  norm_num [Finset.range_add_one, triangular] at h1 h2
   omega
 
 def familyRegistration : Registration arena (type_of% threshold_result) where
@@ -255,7 +257,7 @@ private theorem dependence : ObservationalDependence signature actual := by
     apply Finset.eq_empty_iff_forall_notMem.mpr
     intro p hp
     have hc := (Finset.mem_filter.mp hp).2.2
-    simp only [staircase, Finset.range_zero, Finset.empty_product,
+    simp only [staircase, Finset.range_zero, Finset.product_eq_sprod, Finset.empty_product,
       Finset.filter_empty, Finset.sdiff_empty] at hc
     change (YoungDiagram.ofPartition p).card = 1 at hc
     rw [YoungDiagram.card_ofPartition] at hc
