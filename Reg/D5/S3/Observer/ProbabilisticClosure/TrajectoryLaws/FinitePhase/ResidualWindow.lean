@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FinitePhase.ResidualWindow
 import Reg.Support.DependentFamily
 
+/-! Complete source families for the two complex-modulus observations. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -35,7 +37,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
 
 namespace Core
 
-def arena : Arena where
+@[reducible] def arena : Arena where
   signature := signature
   Law R := ∀ {I : Type u} [Fintype I] [DecidableEq I] [Nonempty I]
     (P : Matrix I I ℝ), P ∈ Matrix.rowStochastic ℝ I →
@@ -55,7 +57,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     norm_num at this
   have ht := h (1 : Matrix X X ℝ) (Matrix.rowStochastic ℝ X).one_mem
     1 (by norm_num) (fun _ => 1) hv
-  norm_num [rejected, realize] at ht
+  norm_num [rejected, realize, complexMatrix] at ht
 
 def evidence : Registration arena.{u} (type_of% (@phase_residual.{u})) where
   actual := actual
@@ -102,7 +104,7 @@ end Core
 
 namespace Window
 
-def arena : Arena where
+@[reducible] def arena : Arena where
   signature := signature
   Law R := ∀ {I : Type u} [Fintype I] [DecidableEq I] [Nonempty I]
     (P : Matrix I I ℝ), P ∈ Matrix.rowStochastic ℝ I →
