@@ -15,10 +15,6 @@ internal sealed class TotalConformalRigidityTwoNotOneDocument : IScribeDocumentD
         Blocks(
             Node("Edge", "Undirected edges counted once", EdgeFormula(),
                 "The Introduction, printed page 1, states: “Let G = (V,E) be a simple, connected, undirected graph on n vertices with at least one edge, and let A := A(G) denote its adjacency matrix.” Vertices are Fin n; each undirected edge is represented by its two endpoints in strictly increasing order. The subtype retains exactly the adjacent pairs.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("laplacian", "The weighted Laplacian", GraphWeightBinders(All("a", Vertices(), All("b", Vertices(),
-                Eqn(Call("laplacian", V("G"), V("w"), V("a"), V("b")), SumOver("e", Edges(),
-                    Mul(Mul(App(V("w"), V("e")), EndpointDifference("a")), EndpointDifference("b"))))))),
-                "The Introduction, printed page 1, states: “For an edge ab ∈ E, we define z_ab := e_a − e_b, where e_a ∈ ℝ^V denotes the a-th canonical basis vector, and we also let L_ab := z_ab z_ab^T.” Equation (1) is ℒ(w) := ∑_{ab∈E} w_ab L_ab = ∑_{ab∈E} w_ab z_ab z_ab^T. The displayed entry expands both endpoint indicator differences. Each undirected edge is counted once.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("uniform", "Uniform edge weights", GraphBinders(All("e", Edges(), Eqn(Call("uniform", V("G"), V("e")), D(1)))),
                 "The Introduction, printed page 2, states: “For the remainder of the text, we shall use 1 to denote the all-ones vector with the appropriate dimension, which will be clear from the context.” Every edge has weight one.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ValidWeight", "The closed simplex of admissible weights", GraphWeightBinders(Iff(Call("ValidWeight", V("G"), V("w")),
@@ -26,7 +22,7 @@ internal sealed class TotalConformalRigidityTwoNotOneDocument : IScribeDocumentD
                     Seq(Open, QCall("Fintype", "card", Edges()), Sp, Colon, Sp, Real(), Close))))),
                 "The Introduction, printed page 2, states: “The simplex of valid edge weights is thus defined as Δ_E := {w ∈ ℝ^E: w ≥ 0, 1^T w = |E|}.” Zero edge weights are included. The natural edge cardinality is coerced to Real.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("eigenvalue", "Increasing eigenvalues of the real Laplacian", EigenvalueFormula(),
-                "The Introduction, printed page 2, states: “We shall order the eigenvalues of ℒ(w) as 0 = λ₁(w) ≤ λ₂(w) ≤ … ≤ λₙ(w).” The formula reverses the nonincreasing eigenvalues₀ order and uses zero-based indices. The proof h states that the real matrix is Hermitian; e identifies the two finite index sizes. Proof irrelevance makes their choices immaterial. Nonnegative normalized weights are required when using the source's positivity and zero-eigenvalue assertions.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+                "The Introduction, printed page 1, states: “For an edge ab ∈ E, we define z_ab := e_a − e_b, where e_a ∈ ℝ^V denotes the a-th canonical basis vector, and we also let L_ab := z_ab z_ab^T.” Equation (1) is ℒ(w) := ∑_{ab∈E} w_ab L_ab = ∑_{ab∈E} w_ab z_ab z_ab^T. Both endpoint differences are expanded in the matrix entries. The Introduction, printed page 2, states: “We shall order the eigenvalues of ℒ(w) as 0 = λ₁(w) ≤ λ₂(w) ≤ … ≤ λₙ(w).” The formula reverses the nonincreasing eigenvalues₀ order and uses zero-based indices. The proof h states that the real matrix is Hermitian; e identifies the two finite index sizes. Proof irrelevance makes their choices immaterial. Nonnegative normalized weights are required when using the source's positivity and zero-eigenvalue assertions.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("smallestSum", "The smallest nontrivial eigenvalue sum", SumFormula(false),
                 "Definition 1.2, printed pages 2–3, states: “Let S_k(w) and s_k(w) denote the sum of the k largest and k smallest nontrivial eigenvalues of ℒ(w), respectively, for some k ∈ [n−1].” The Introduction specifies: “By the nontrivial eigenvalues of ℒ(w), we shall mean λ₂(w),…,λₙ(w).” Thus indices 1 through k are included, retaining any additional zero eigenvalues.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("largestSum", "The largest eigenvalue sum", SumFormula(true),
@@ -79,7 +75,10 @@ internal sealed class TotalConformalRigidityTwoNotOneDocument : IScribeDocumentD
     private static Formula Mul(Formula left, Formula right) => new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
     private static Formula EigenvalueFormula()
     {
-        Formula matrix = Call("laplacian", V("G"), V("w"));
+        Formula matrix = QCall("Matrix", "of", Parenthesized(Seq(LambdaLower, Sp,
+            Parenthesized(Seq(V("row"), Sp, Colon, Sp, Vertices())), Sp,
+            Parenthesized(Seq(V("col"), Sp, Colon, Sp, Vertices())), Sp, Mapsto, Sp,
+            SumOver("e", Edges(), Mul(Mul(App(V("w"), V("e")), EndpointDifference("row")), EndpointDifference("col"))))));
         Formula htype = QCall("Matrix", "IsHermitian", matrix);
         Formula esize = Eqn(V("n"), QCall("Fintype", "card", Vertices()));
         Formula index = QCall("Fin", "cast", V("e"), Seq(V("i"), Dot, Op("rev")));

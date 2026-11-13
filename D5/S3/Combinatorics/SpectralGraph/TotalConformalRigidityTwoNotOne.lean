@@ -8,139 +8,17 @@
 
 /- Judgement form.
    admission_basis: open-problem-resolution (#26026; Proved)
-   escape_witness: none. All theorem proofs are bind-only under the inlining rule.
-   The source endpoint differences are expanded in laplacian; laplacian_owner connects
-   them to the existing signedIncidence construction used in lap_psd.
-   Each undirected edge is counted once, and zero weights are permitted.
-   Edge: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, ValidWeight, all_weights_bounds, edgeAt, edgeEquiv, edge_card, eigenvalue, graph_not_one_rigid, graph_two_rigid, instFintypeEdge, lap_X_trace, lap_hermitian, lap_matrix, lap_psd, lap_trace, laplacian, laplacian_owner, largestSum, orbitWeight, perturbed_valid, smallestSum, uniform, uniform_eigenvalues, uniform_orbit.
-   Direct frozen dependencies: none.
-   instFintypeEdge: proof_shape: bind-only; escape_witness: none; consumers: ValidWeight, all_weights_bounds, edge_card, graph_not_one_rigid, lap_X_trace, lap_hermitian, lap_matrix, lap_psd, lap_trace, laplacian, laplacian_owner, perturbed_valid.
-   Direct frozen dependencies: none.
-   laplacian: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, eigenvalue, lap_X_trace, lap_hermitian, lap_matrix, lap_psd, lap_trace, laplacian_owner, orbit_diagonalized, orbit_lap, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   laplacian_owner: proof_shape: bind-only; escape_witness: none; consumers: lap_psd.
-   Direct frozen dependencies:
-     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
-     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
-   lap_hermitian: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, eigenvalue, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   uniform: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, graph_not_one_rigid, graph_two_rigid, uniform_eigenvalues, uniform_orbit.
-   Direct frozen dependencies: none.
-   ValidWeight: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_not_one_rigid, graph_two_rigid, perturbed_valid.
-   Direct frozen dependencies: none.
-   eigenvalue: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, graph_not_one_rigid, graph_two_rigid, largestSum, perturbed_eigenvalues, smallestSum, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   smallestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_not_one_rigid, graph_two_rigid.
-   Direct frozen dependencies: none.
-   largestSum: proof_shape: bind-only; escape_witness: none; consumers: KConformallyRigid, all_weights_bounds, graph_not_one_rigid, graph_two_rigid.
-   Direct frozen dependencies: none.
-   KConformallyRigid: proof_shape: bind-only; escape_witness: none; consumers: claim, graph_not_one_rigid, graph_two_rigid, result.
-   Direct frozen dependencies: none.
-   claim: proof_shape: bind-only; escape_witness: none; consumers: result.
-   Direct frozen dependencies: none.
-   graph: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, edgeAt, edgeEquiv, edge_card, graph_connected, graph_not_one_rigid, graph_two_rigid, lap_X_trace, lap_matrix, lap_trace, orbitWeight, orbit_diagonalized, orbit_lap, perturbed_eigenvalues, perturbed_valid, result, uniform_eigenvalues, uniform_orbit.
-   Direct frozen dependencies: none.
-   edgeAt: proof_shape: bind-only; escape_witness: none; consumers: edgeEquiv, lap_X_trace, lap_matrix, lap_trace, orbit_lap.
-   Direct frozen dependencies: none.
-   edgeEquiv: proof_shape: bind-only; escape_witness: none; consumers: edge_card, lap_X_trace, lap_matrix, lap_trace, perturbed_valid.
-   Direct frozen dependencies: none.
-   graph_connected: proof_shape: bind-only; escape_witness: none; consumers: result.
-   Direct frozen dependencies: none.
-   edge_card: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds, perturbed_valid.
-   Direct frozen dependencies: none.
-   lap_psd: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   Direct frozen dependencies:
-     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
-     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
-   diagonalized_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   P: proof_shape: bind-only; escape_witness: none; consumers: PR_identity, X_diagonalized, X_eigenvalues, orbit_diagonalized, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   R: proof_shape: bind-only; escape_witness: none; consumers: PR_identity, X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   X: proof_shape: bind-only; escape_witness: none; consumers: X_diagonalized, X_eigenvalues, X_hermitian, all_weights_bounds, lap_X_trace, trace_certificate_bound.
-   Direct frozen dependencies: none.
-   PR_identity: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   X_hermitian: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues, trace_certificate_bound.
-   Direct frozen dependencies: none.
-   X_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: X_eigenvalues.
-   Direct frozen dependencies: none.
-   X_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: trace_certificate_bound.
-   Direct frozen dependencies: none.
-   lap_matrix: proof_shape: bind-only; escape_witness: none; consumers: lap_X_trace, lap_trace, orbit_lap.
-   Direct frozen dependencies: none.
-   lap_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   Direct frozen dependencies: none.
-   lap_X_trace: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   Direct frozen dependencies: none.
-   orbitWeight: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid, orbit_diagonalized, orbit_lap, perturbed_eigenvalues, perturbed_valid, uniform_eigenvalues, uniform_orbit.
-   Direct frozen dependencies: none.
-   orbit_lap: proof_shape: bind-only; escape_witness: none; consumers: orbit_diagonalized.
-   Direct frozen dependencies: none.
-   orbit_diagonalized: proof_shape: bind-only; escape_witness: none; consumers: perturbed_eigenvalues, uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   uniform_orbit: proof_shape: bind-only; escape_witness: none; consumers: uniform_eigenvalues.
-   Direct frozen dependencies: none.
-   uniform_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid, graph_two_rigid.
-   Direct frozen dependencies: none.
-   perturbed_valid: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
-   Direct frozen dependencies: none.
-   perturbed_eigenvalues: proof_shape: bind-only; escape_witness: none; consumers: graph_not_one_rigid.
-   Direct frozen dependencies: none.
-   trace_five: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   Direct frozen dependencies:
-     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
-     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
-   trace_certificate_bound: proof_shape: bind-only; escape_witness: none; consumers: all_weights_bounds.
-   Direct frozen dependencies:
-     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
-     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
-   all_weights_bounds: proof_shape: bind-only; escape_witness: none; consumers: graph_two_rigid.
-   Direct frozen dependencies:
-     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
-     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
-     D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
-     declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
-     D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
-     declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1
-     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
-     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
-     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
-     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
-   graph_two_rigid: proof_shape: bind-only; escape_witness: none; consumers: result.
-   Direct frozen dependencies:
-     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
-     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
-     D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
-     declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
-     D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
-     declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1
-     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
-     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
-     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
-     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
-   graph_not_one_rigid: proof_shape: bind-only; escape_witness: none; consumers: result.
-   Direct frozen dependencies: none.
-   result: proof_shape: bind-only; escape_witness: none; consumers: settling result.
-   Direct frozen dependencies:
-     D5/S3/Fourier/CharacterSelection/SignedIncidenceTotalUnimodularity.signedIncidence
-     declaration statement_id: sha256:fa5e24d933ab633faec5a98b10f492ac0267ffd75bb633c0c18706f14f1c9357
-     D5/S3/Weil/ZetaLinear/PosIndex.eigEquiv
-     declaration statement_id: sha256:654ba75dc9fc8ba7043bc07f2e652d247648fdb01580c0e2815eda462b33ec96
-     D5/S3/Weil/ZetaLinear/PosIndex.eigenvalues_eigEquiv
-     declaration statement_id: sha256:3a5feeadf2e296b0d896b6b5b9cbfcf77259c1c43366cd9c038d988f06920ea1
-     D5/S3/Weil/ZetaLinear/PosIndex.sum_eigenvalues_reindex
-     declaration statement_id: sha256:6b94f504c13b3cb2a488b3b76999fcdce585f849bd38cfd344cbd8dd96c8b478
-     D5/S3/Weil/ZetaLinear/VonNeumann.vonNeumann_trace_ineq
-     declaration statement_id: sha256:e4d2e8d594a181e2ae6b690deb46229692ff71b3739f9527b63dfac987faa7d7
+   result: proof_shape: bind-only; escape_witness: none.
+   The source weighted matrix and endpoint differences are expanded directly.
+   Private correspondences reuse the existing wLap and delta constructions.
 -/
 
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 import D5.S3.Weil.ZetaLinear.VonNeumann
 import D5.S3.Weil.ZetaLinear.PosIndex
-import D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity
+import D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation
+import D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer
 import Mathlib.Algebra.Order.Star.Real
 
 namespace D5.S3.Combinatorics.SpectralGraph.TotalConformalRigidityTwoNotOne
@@ -155,37 +33,66 @@ abbrev Edge {n : ℕ} (G : SimpleGraph (Fin n)) :=
 private noncomputable instance instFintypeEdge {n : ℕ} (G : SimpleGraph (Fin n)) : Fintype (Edge G) :=
   Fintype.ofFinite _
 
-/-- Equation (1), with the two endpoint indicator differences expanded. -/
-def laplacian {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
-    Matrix (Fin n) (Fin n) ℝ :=
-  fun a b => ∑ e : Edge G, w e *
-    ((if a = e.val.1 then 1 else 0) - (if a = e.val.2 then 1 else 0)) *
-    ((if b = e.val.1 then 1 else 0) - (if b = e.val.2 then 1 else 0))
-
-private theorem laplacian_owner {n : ℕ} (G : SimpleGraph (Fin n))
-    (w : Edge G → ℝ) : laplacian G w =
+private theorem laplacian_incidence {n : ℕ} (G : SimpleGraph (Fin n))
+    (w : Edge G → ℝ) : (Matrix.of (fun row col => ∑ e : Edge G, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) =
       ∑ e : Edge G, w e • Matrix.vecMulVec
-        (fun v => (D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence
-          (fun f : Edge G => f.val.2) (fun f => f.val.1) v e : ℝ))
-        (fun v => (D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence
-          (fun f : Edge G => f.val.2) (fun f => f.val.1) v e : ℝ)) := by
+        (D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.delta e.val.1 e.val.2)
+        (D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.delta e.val.1 e.val.2) := by
   ext a b
-  simp only [laplacian, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
-    Matrix.vecMulVec_apply,
-    D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence,
-    Int.cast_sub, Int.cast_ite, Int.cast_one, Int.cast_zero]
+  simp only [Matrix.of_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, Matrix.vecMulVec_apply,
+    D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.delta,
+    Pi.sub_apply, Pi.single_apply]
+  simp only [eq_comm]
   apply Finset.sum_congr rfl
   intro e _
   ring
+
+private theorem laplacian_wLap {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
+    (Matrix.of (fun row col => ∑ e : Edge G, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) = @D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation.wLap n G (Classical.decRel G.Adj)
+      (fun p => ∑ e : Edge G, if s(e.val.1,e.val.2) = p then w e else 0) := by
+  classical
+  ext a b
+  simp only [Matrix.of_apply, D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceInvariantWeightsRefutation.wLap]
+  by_cases hab : a = b
+  · subst b
+    simp only [if_pos rfl, Finset.sum_filter]
+    trans ∑ e : Edge G, ∑ k : Fin n,
+      if G.Adj a k then (if s(e.val.1,e.val.2) = s(a,k) then w e else 0) else 0
+    · apply Finset.sum_congr rfl
+      intro e _
+      by_cases ha : a = e.val.1
+      · subst a
+        simp [Sym2.eq_iff, Prod.ext_iff, e.property.1.ne, e.property.1.ne.symm, e.property.2]
+        rw [Finset.sum_eq_single e.val.2] <;> simp_all [e.property.2, eq_comm]
+      · by_cases hb : a = e.val.2
+        · subst a
+          simp [Sym2.eq_iff, Prod.ext_iff, e.property.1.ne, e.property.1.ne.symm, G.adj_comm, e.property.2]
+          rw [Finset.sum_eq_single e.val.1] <;> simp_all [e.property.2, eq_comm]
+        · simp [Sym2.eq_iff, Prod.ext_iff, ha, hb, eq_comm]
+    · rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro k _
+      by_cases h : G.Adj a k <;> simp [h]
+  · simp only [if_neg hab]
+    by_cases hg : G.Adj a b
+    · rw [if_pos hg, ← Finset.sum_neg_distrib]
+      apply Finset.sum_congr rfl
+      intro e _
+      by_cases ha : a = e.val.1 <;> by_cases ha' : a = e.val.2 <;>
+        by_cases hb : b = e.val.1 <;> by_cases hb' : b = e.val.2 <;>
+        simp_all [Sym2.eq_iff, Prod.ext_iff, e.property.1.ne, eq_comm]
+    · rw [if_neg hg]
+      apply Finset.sum_eq_zero
+      intro e _
+      by_cases ha : a = e.val.1 <;> by_cases ha' : a = e.val.2 <;>
+        by_cases hb : b = e.val.1 <;> by_cases hb' : b = e.val.2 <;>
+        simp_all [G.adj_comm, e.property.2]
 
 private theorem lap_hermitian {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) :
-    (laplacian G w).IsHermitian := by
-  apply Matrix.IsHermitian.ext
-  intro a b
-  simp only [laplacian, star_trivial]
-  apply Finset.sum_congr rfl
-  intro e _
-  ring
+    ((Matrix.of (fun row col => ∑ e : Edge G, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0))))).IsHermitian := by
+  classical
+  rw [laplacian_wLap]
+  exact D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.lap_hermitian G _
 
 /-- The uniform edge weighting. -/
 def uniform {n : ℕ} (G : SimpleGraph (Fin n)) : Edge G → ℝ := fun _ => 1
@@ -197,7 +104,7 @@ def ValidWeight {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) : Prop 
 /-- The source's eigenvalues in increasing order, with zero-based indices.
 The inline proof establishes only that the defining matrix is Hermitian. -/
 def eigenvalue {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ) (i : Fin n) : ℝ :=
-  let h : (laplacian G w).IsHermitian := lap_hermitian G w
+  let h : ((Matrix.of (fun row col => ∑ e : Edge G, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0))))).IsHermitian := lap_hermitian G w
   h.eigenvalues₀ (Fin.cast (Fintype.card_fin n).symm i.rev)
 
 /-- s_k: the k smallest nontrivial eigenvalues, lambda_2 through lambda_(k+1). -/
@@ -260,14 +167,13 @@ private theorem edge_card : Fintype.card (Edge graph) = 9 := by
   exact (Fintype.card_congr edgeEquiv).symm.trans (Fintype.card_fin 9)
 
 private theorem lap_psd {n : ℕ} (G : SimpleGraph (Fin n)) (w : Edge G → ℝ)
-    (hw : ∀ e, 0 ≤ w e) : (laplacian G w).PosSemidef := by
-  rw [laplacian_owner]
+    (hw : ∀ e, 0 ≤ w e) : ((Matrix.of (fun row col => ∑ e : Edge G, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0))))).PosSemidef := by
+  rw [laplacian_incidence]
   apply Matrix.posSemidef_sum
   intro e _
   simpa only [star_trivial] using
     (Matrix.posSemidef_vecMulVec_self_star
-      (fun v => (D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signedIncidence
-        (fun f : Edge G => f.val.2) (fun f => f.val.1) v e : ℝ))).smul (hw e)
+      (D5.S3.Combinatorics.SpectralGraph.FiedlerResistanceK2mOptimizer.delta e.val.1 e.val.2)).smul (hw e)
 
 private theorem diagonalized_eigenvalues {n : ℕ} (A P R : Matrix (Fin n) (Fin n) ℝ)
     (d : Fin n → ℝ) (hA : A.IsHermitian) (hPR : P * R = 1)
@@ -327,7 +233,7 @@ private theorem X_eigenvalues (i : Fin 5) :
   fin_cases i <;> fin_cases j <;> norm_num at *
 
 private theorem lap_matrix (w : Edge graph → ℝ) :
-    laplacian graph w = !![w (edgeAt 0) + w (edgeAt 1) + w (edgeAt 2), 0, -w (edgeAt 0), -w (edgeAt 1), -w (edgeAt 2);
+    (Matrix.of (fun row col => ∑ e : Edge graph, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) = !![w (edgeAt 0) + w (edgeAt 1) + w (edgeAt 2), 0, -w (edgeAt 0), -w (edgeAt 1), -w (edgeAt 2);
       0, w (edgeAt 3) + w (edgeAt 4) + w (edgeAt 5), -w (edgeAt 3), -w (edgeAt 4), -w (edgeAt 5);
       -w (edgeAt 0), -w (edgeAt 3), w (edgeAt 0) + w (edgeAt 3) + w (edgeAt 6) + w (edgeAt 7), -w (edgeAt 6), -w (edgeAt 7);
       -w (edgeAt 1), -w (edgeAt 4), -w (edgeAt 6), w (edgeAt 1) + w (edgeAt 4) + w (edgeAt 6) + w (edgeAt 8), -w (edgeAt 8);
@@ -341,13 +247,13 @@ private theorem lap_matrix (w : Edge graph → ℝ) :
     norm_num [edgeEquiv, edgeAt, Fin.sum_univ_succ] <;> ring
 
 private theorem lap_trace (w : Edge graph → ℝ) :
-    (laplacian graph w).trace = 2 * ∑ e : Edge graph, w e := by
+    ((Matrix.of (fun row col => ∑ e : Edge graph, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0))))).trace = 2 * ∑ e : Edge graph, w e := by
   rw [lap_matrix, ← edgeEquiv.sum_comp]
   norm_num [Matrix.trace, Matrix.diag, edgeEquiv, edgeAt, Fin.sum_univ_succ]
   ring
 
 private theorem lap_X_trace (w : Edge graph → ℝ) :
-    (laplacian graph w * X).trace = (10/9) * ∑ e : Edge graph, w e := by
+    ((Matrix.of (fun row col => ∑ e : Edge graph, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) * X).trace = (10/9) * ∑ e : Edge graph, w e := by
   rw [lap_matrix, ← edgeEquiv.sum_comp]
   norm_num [X, Matrix.trace, Matrix.diag, Matrix.mul_apply,
     edgeEquiv, edgeAt, Fin.sum_univ_succ]
@@ -357,7 +263,7 @@ private theorem lap_X_trace (w : Edge graph → ℝ) :
   fun e => if e.val.1.val < 2 then a else b
 
 private theorem orbit_lap (a b : ℝ) :
-    laplacian graph (orbitWeight a b) =
+    (Matrix.of (fun row col => ∑ e : Edge graph, (orbitWeight a b) e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) =
       !![3*a,0,-a,-a,-a; 0,3*a,-a,-a,-a;
          -a,-a,2*a+2*b,-b,-b; -a,-a,-b,2*a+2*b,-b;
          -a,-a,-b,-b,2*a+2*b] := by
@@ -367,7 +273,7 @@ private theorem orbit_lap (a b : ℝ) :
     norm_num [orbitWeight, edgeAt] <;> ring
 
 private theorem orbit_diagonalized (a b : ℝ) :
-    laplacian graph (orbitWeight a b) * P =
+    (Matrix.of (fun row col => ∑ e : Edge graph, (orbitWeight a b) e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) * P =
       P * diagonal ![5*a,2*a+3*b,2*a+3*b,3*a,0] := by
   rw [orbit_lap]
   ext i j
@@ -381,7 +287,7 @@ private theorem uniform_orbit : uniform graph = orbitWeight 1 1 := by
 
 private theorem uniform_eigenvalues (i : Fin 5) :
     eigenvalue graph (uniform graph) i = (![0,3,5,5,5] : Fin 5 → ℝ) i := by
-  have hdiag : laplacian graph (uniform graph) * P =
+  have hdiag : (Matrix.of (fun row col => ∑ e : Edge graph, (uniform graph) e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) * P =
       P * diagonal (![5,5,5,3,0] : Fin 5 → ℝ) := by
     rw [uniform_orbit]
     convert orbit_diagonalized 1 1 using 1 <;> norm_num
@@ -404,7 +310,7 @@ private theorem perturbed_valid : ValidWeight graph (orbitWeight (6/5) (3/5)) :=
 private theorem perturbed_eigenvalues (i : Fin 5) :
     eigenvalue graph (orbitWeight (6/5) (3/5)) i =
       (![0,18/5,21/5,21/5,6] : Fin 5 → ℝ) i := by
-  have hdiag : laplacian graph (orbitWeight (6/5) (3/5)) * P =
+  have hdiag : (Matrix.of (fun row col => ∑ e : Edge graph, (orbitWeight (6/5) (3/5)) e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) * P =
       P * diagonal (![6,21/5,21/5,18/5,0] : Fin 5 → ℝ) := by
     convert orbit_diagonalized (6/5) (3/5) using 1 <;> norm_num
   have hd : Antitone (![6,21/5,21/5,18/5,0] : Fin 5 → ℝ) := by
@@ -452,8 +358,8 @@ private theorem all_weights_bounds (w : Edge graph → ℝ) (hw : ValidWeight gr
     smallestSum graph w 2 ≤ 8 ∧ 10 ≤ largestSum graph w 2 := by
   have hs : ∑ e : Edge graph, w e = 9 := by
     simpa only [edge_card, Nat.cast_ofNat] using hw.2
-  have ht : (laplacian graph w).trace = 18 := by rw [lap_trace, hs]; norm_num
-  have hx : (laplacian graph w * X).trace = 10 := by rw [lap_X_trace, hs]; norm_num
+  have ht : ((Matrix.of (fun row col => ∑ e : Edge graph, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0))))).trace = 18 := by rw [lap_trace, hs]; norm_num
+  have hx : ((Matrix.of (fun row col => ∑ e : Edge graph, w e * ((if row = e.val.1 then 1 else 0) - (if row = e.val.2 then 1 else 0)) * ((if col = e.val.1 then 1 else 0) - (if col = e.val.2 then 1 else 0)))) * X).trace = 10 := by rw [lap_X_trace, hs]; norm_num
   have hb := trace_certificate_bound _ (lap_hermitian graph w)
   rw [hx] at hb
   have he0 : 0 ≤ eigenvalue graph w 0 := by
