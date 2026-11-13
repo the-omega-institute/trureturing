@@ -1458,3 +1458,568 @@ $$
 [CRJR]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_SUPPLIER_SUBSTITUTION_II.md "Theorems 65.3、70.2、75.4：增广 Jr 的源内完整重建、全部有限有序森林／owed-action 返回与更大任务边界。"
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 同原双误差经典返回合同
+
+**定义 18.1（第一步与返回腿的两个预算）。** 完整保留定义 1.1—1.2 的 $\mathsf Q_1$、同锥同单位 $\Phi$、全部原纯点与效应及原关联的双向对应，并使用假设 1.3 实际供给的同一个未知 $\mathrm E_2(p,q)=P_A\otimes Q_B$。矩阵输入域仍是全部复正交秩一对 $\mathfrak F$，$R=I-P-Q$，第一步指定目标仍是 $P_A\otimes R_B=\mathrm E_2(\tau(p,q))$。以下不改变第一步的 $D(\mathcal N)$、$s_{\mathcal N}$ 或允许的过程类。
+
+取定义 11.1 的实际有限或可数经典仪器 $\mathcal M=(\mathcal M_c)_{c\in\mathsf C}$，其中每个 $\mathcal M_c$ 是一般 CP 分支，$\mathcal N=\sum_c\mathcal M_c$ 在整个九维矩阵代数上 CPTP。第一步完整输出仍是 $\bigoplus_c\mathcal M_c(\rho)$。返回只读取这个实际 $c$ 和保留的 $AB$，对每个 $c$ 使用一张固定、与未知准备无关的 CPTP 校正 $\mathcal D_c:AB\to AB$。置
+
+$$
+\begin{aligned}
+\mathcal T&=\sum_c\mathcal D_c\circ\mathcal M_c,\\
+E(\mathcal M,\mathcal D)&=\sup_{(P,Q)\in\mathfrak F}
+ \frac12\|\mathcal T(P\otimes Q)-P\otimes Q\|_1,\\
+F_{\rm ret}(\varepsilon,\eta)&=\sup\left\{
+ \inf_{\mathfrak F}s_{\mathcal N}(P,Q):
+ D(\mathcal N)\le\varepsilon,\ E(\mathcal M,\mathcal D)\le\eta\right\},
+ \qquad 0\le\varepsilon,\eta\le1.
+\end{aligned}
+\tag{18.1}
+$$
+
+上确界遍历上述同一仪器和校正，不预设取到；$\mathcal N$ 与 $\mathcal T$ 必须来自同一次仪器，不能分别挑选。全部成功、失败和拒绝分支均包含在和中，不条件归一或后选择；每个结果可包含完整实际经典历史。可数和采用 (11.1) 的迹范数可加性。没有额外未知样本、旗标描述、依赖准备的程序或保存输入信息的可访问相干环境。新辅助态和控制只允许与准备无关，并保留其实际供给及费用条件。
+
+由定义，$F_{\rm ret}(\varepsilon,0)$ 恰为 (11.3) 的 $F_{\rm ret}(\varepsilon)$。即使 $\eta=0$，这个合同也只返回工作寄存器；$\eta>0$ 是辅助的近似问题，不满足原精确返回承诺。
+
+为区分寄存器与保留记录的误差，另记
+
+$$
+\begin{aligned}
+p_c(\rho)&=\operatorname{Tr}\mathcal M_c(\rho),\qquad
+\mathcal T^\sharp(\rho)=\bigoplus_c\mathcal D_c\mathcal M_c(\rho),\\
+E_{\rm CQ}(\mathcal M,\mathcal D)&=
+ \sup_{\rho=P\otimes Q,\ (P,Q)\in\mathfrak F}
+ \frac12\sum_c\|\mathcal D_c\mathcal M_c(\rho)-p_c(\rho)\rho\|_1.
+\end{aligned}
+\tag{18.2}
+$$
+
+这里比较的理想记录具有同一个实际概率 $p_c(\rho)$；它不是删除记录，也不是原控制器、档案或权限的返回合同。$E$ 评价 $\mathcal T^\sharp$ 丢弃记录后的 $AB$。
+
+**约定 18.2（范数、Choi 与保真度）。** $\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}$，$\|X\|_{\rm op}$ 是算子范数；所有态距离均带 $1/2$。沿用 (6.1) 的未归一化 Choi 约定：对任意九维 CPTP 通道 $\mathcal T$，
+
+$$
+\begin{aligned}
+|I_9\rangle\!\rangle&=\sum_{j=1}^9|j,j\rangle,
+&\langle\!\langle I_9|I_9\rangle\!\rangle&=9,\\
+\Pi_I&=|I_9\rangle\!\rangle\langle\!\langle I_9|/9,
+&\operatorname{Tr}J_{\mathcal T}&=9,\\
+F_e(\mathcal T)&=\frac{\operatorname{Tr}(J_{\mathcal T}\Pi_I)}9
+ =\frac{\langle\!\langle I_9|J_{\mathcal T}|I_9\rangle\!\rangle}{81},
+&u(\mathcal N)&=\frac12\|\mathcal N(I_9/9)-I_9/9\|_1.
+\end{aligned}
+\tag{18.3}
+$$
+
+$F_e$ 是归一化最大纠缠态与其通道输出的重叠，即平方的纠缠保真度，不是根保真度。态之间的根保真度记为
+
+$$
+f_{\rm r}(\rho,\sigma)=\operatorname{Tr}\sqrt{\sqrt\rho\,\sigma\sqrt\rho}.
+\tag{18.4}
+$$
+
+$F_e$ 与第一步的 $s_{\mathcal N}$ 是不同量。Choi 参考系统和以下 Haar 平均仅用于证明，不要求实际供给纠缠探针、参考系统或连续结果仪器。
+
+## 19. 承诺泄漏提升与必要近似保单位性
+
+**定理 19.1（同一实际经典返回的定量障碍）。** 对定义 18.1 的每个仪器和校正，不要求协变性，均有
+
+$$
+\begin{aligned}
+1-F_e(\mathcal T)&\le
+ \min\left\{1,\frac{80}{21}E(\mathcal M,\mathcal D)\right\},\\
+u(\mathcal N)^2&\le1-F_e(\mathcal T)
+ \le\frac{80}{21}E(\mathcal M,\mathcal D).
+\end{aligned}
+\tag{19.1}
+$$
+
+因此 $E\le\eta$ 必须满足
+
+$$
+u(\mathcal N)\le r(\eta),\qquad
+r(\eta)=\sqrt{\min\{1,80\eta/21\}}.
+\tag{19.2}
+$$
+
+常数不声称锐；这不是从近似保单位性构造校正的充分判据。
+
+证明。先把原承诺上的联合返回误差提升到过程重叠。令 $\mathscr L_A=\mathscr D$ 为 (7.1) 的原泄漏算子，令 $W=S_{AB}\otimes S_{CD}$，并置
+
+$$
+\mathscr L_B=W\mathscr L_AW^\dagger
+ =\int I_A\otimes(I-Q)_B\otimes\bar P_C\otimes\bar Q_D\,d(P,Q).
+\tag{19.3}
+$$
+
+第二个等号使用同一归一化复 Haar 旗标分布在 $(P,Q)\mapsto(Q,P)$ 下不变。这两个算子没有除以九。由定理 7.1 的完整谱，置 $g=7/120$，有
+
+$$
+\mathscr L_A\succeq g(I-\Pi_A),\qquad
+\mathscr L_B\succeq g(I-\Pi_B),
+\tag{19.4}
+$$
+
+其中 $\Pi_A$ 投影到向量化的 $I_A\otimes\operatorname{End}(H_B)$，$\Pi_B$ 投影到 $\operatorname{End}(H_A)\otimes I_B$。将因子重排为 $AC,BD$，它们明确为
+
+$$
+\Pi_A=\frac{|\Omega_3\rangle\langle\Omega_3|_{AC}}3\otimes I_{BD},
+\qquad
+\Pi_B=I_{AC}\otimes\frac{|\Omega_3\rangle\langle\Omega_3|_{BD}}3,
+\qquad |\Omega_3\rangle=\sum_{j=0}^2|j,j\rangle.
+\tag{19.5}
+$$
+
+故两投影对易，交为 $\Pi_A\Pi_B=\Pi_I$。特别地，
+
+$$
+2I-\Pi_A-\Pi_B-(I-\Pi_I)
+ =(I-\Pi_A)(I-\Pi_B)\succeq0,
+\qquad
+\mathscr L_A+\mathscr L_B\succeq g(I-\Pi_I).
+\tag{19.6}
+$$
+
+对每个原输入 $\rho=P\otimes Q$，两个输出效应 $(I-P)\otimes I$ 和 $I\otimes(I-Q)$ 在 $\rho$ 上期望均为零，在 $\mathcal T(\rho)$ 上的期望各自不超过 $\|\mathcal T(\rho)-\rho\|_1/2\le E$。用 (6.2) 平均，再以 $J_{\mathcal T}\succeq0$ 测试 (19.6)，得到
+
+$$
+9g(1-F_e(\mathcal T))
+ =g\operatorname{Tr}[J_{\mathcal T}(I-\Pi_I)]
+ \le\operatorname{Tr}[J_{\mathcal T}(\mathscr L_A+\mathscr L_B)]
+ \le2E.
+\tag{19.7}
+$$
+
+由于 $9g=21/40$，得到第一个界；$0\le F_e\le1$ 给出截断。假设仍只在全部原正交产品上，不预置全输入或带参考的准确性。
+
+接着使用成熟经典反馈不等式，但保持实际粗记录。对每个九维 CP 分支取有限 Kraus 族 $K_{ca}$，对其实际校正取有限 Kraus 族 $R_{cb}$。于是
+
+$$
+F_e(\mathcal T)=\frac1{81}\sum_{c,a,b}
+ |\operatorname{Tr}(R_{cb}K_{ca})|^2.
+\tag{19.8}
+$$
+
+对每个 $K_{ca}=U_{ca}H_{ca}$，$H_{ca}=|K_{ca}|\succeq0$，将方阵的极分解部分等距延伸为酉 $U_{ca}$。以下是 [Gregoratti—Werner，§IV.A 命题 4，式 (17)—(21)][ARRGW04] 的逐算子 Hilbert—Schmidt Cauchy—Schwarz 步骤；同一结果亦见其 [《Quantum Lost and Found》§V 命题 8，式 (15)—(21)][ARRGW02]：
+
+$$
+\begin{aligned}
+\sum_b|\operatorname{Tr}(R_{cb}U_{ca}H_{ca})|^2
+&\le(\operatorname{Tr}H_{ca})
+ \sum_b\operatorname{Tr}\!\left[
+ H_{ca}^{1/2}U_{ca}^\dagger R_{cb}^\dagger R_{cb}U_{ca}H_{ca}^{1/2}\right]\\
+&=(\operatorname{Tr}H_{ca})^2.
+\end{aligned}
+\tag{19.9}
+$$
+
+最后一步只用 $\sum_bR_{cb}^\dagger R_{cb}=I$。同一个 $\mathcal D_c$ 作用于每个隐藏 $a$；$a$ 不是新取得的记录。由 $\sum_{c,a}\operatorname{Tr}K_{ca}^\dagger K_{ca}=9$ 和 $(\operatorname{Tr}H)^2\le9\operatorname{Tr}H^2$，
+
+$$
+F_e(\mathcal T)\le\mathcal A:=\frac1{81}
+ \sum_{c,a}(\operatorname{Tr}|K_{ca}|)^2\le1.
+\tag{19.10}
+$$
+
+不对粗记录主张上界可达，也不由代数 Kraus 细化授予环境测量权限。
+
+忽略零 $K_\alpha$，其中 $\alpha=(c,a)$，并置
+
+$$
+q_\alpha=\frac{\operatorname{Tr}K_\alpha^\dagger K_\alpha}{9},
+\qquad
+\sigma_\alpha=\frac{K_\alpha K_\alpha^\dagger}{9q_\alpha}.
+\tag{19.11}
+$$
+
+这些是数学权重和归一化态，满足 $\sum_\alpha q_\alpha=1$、$\mathcal N(I_9/9)=\sum_\alpha q_\alpha\sigma_\alpha$，且
+
+$$
+f_{\rm r}(\sigma_\alpha,I_9/9)^2
+ =\frac{(\operatorname{Tr}|K_\alpha|)^2}{81q_\alpha},
+\qquad
+\sum_\alpha q_\alpha f_{\rm r}(\sigma_\alpha,I_9/9)^2=\mathcal A.
+\tag{19.12}
+$$
+
+这里根保真度恰好平方一次。对归一化态使用 [Fuchs—van de Graaf，命题 4 式 (24)、定理 1 式 (46)][ARRFVG] 的成熟不等式，再用迹范数凸性和加权 Cauchy—Schwarz，得到
+
+$$
+\begin{aligned}
+u(\mathcal N)
+&\le\sum_\alpha q_\alpha\frac12\|\sigma_\alpha-I_9/9\|_1\\
+&\le\sum_\alpha q_\alpha\sqrt{1-f_{\rm r}(\sigma_\alpha,I_9/9)^2}
+ \le\sqrt{1-\mathcal A}\le\sqrt{1-F_e(\mathcal T)}.
+\end{aligned}
+\tag{19.13}
+$$
+
+这给出 (19.1)。$u\le1$ 因两端都是态，故有 (19.2)。
+
+可数情形中，每个分支及校正仍只有有限个 Kraus 算子，其并集可数。正输入分支和按合同在迹范数中收敛；保迹校正不改变每项的正迹，故校正和亦收敛。$J_{\mathcal T}$ 的正项和总迹为九，故也在迹范数中收敛。(19.8)—(19.12) 的标量和均非负，$\sum q_\alpha=1$；先对有限部分和应用 Cauchy—Schwarz，再取单调极限即可得到 (19.13)。没有把有限维反馈定理直接套到无限维记录空间，也没有使隐藏 Kraus 标签可观察。证毕。
+
+## 20. 两个误差共同约束原目标分数
+
+**定理 20.1（全复、全扇区的近似返回上界）。** 令
+
+$$
+\begin{aligned}
+k&=\frac{83}{304},\qquad c=\frac{87}{133},\qquad
+\beta=\frac{87}{608},\\
+B(\varepsilon,\eta)&=\frac{20}{7}\varepsilon+
+ \frac{\left(\sqrt{k\varepsilon}+
+ \sqrt{3/2+(k+4c)\varepsilon+(87/152)r(\eta)}\right)^2}{4}.
+\end{aligned}
+\tag{20.1}
+$$
+
+则定义 18.1 的整个类满足
+
+$$
+F_{\rm ret}(\varepsilon,\eta)
+ \le\min\{F(\varepsilon),1,B(\varepsilon,\eta)\}.
+\tag{20.2}
+$$
+
+可用 (5.10) 的显式右端 $B_{\rm free}(\varepsilon)$ 代替 $F(\varepsilon)$，得到完全显式的 $\min\{B_{\rm free}(\varepsilon),B(\varepsilon,\eta)\}$。这是必要非锐上界。
+
+证明。任取同一个可行 $\mathcal M,\mathcal D$，先由定理 19.1 得 $u(\mathcal N)\le r(\eta)$。仅对忽略记录通道作 (5.6) 的解析 $U\otimes U$ 平均。由 (5.7)、(13.3)，其恒定分数至少为原最坏分数，扰动不超过 $\varepsilon$。又因 $\mathcal N(I_9)-I_9$ 在平均中作酉共轭，迹范数凸性给出
+
+$$
+u(\widetilde{\mathcal N})\le u(\mathcal N)\le r(\eta).
+\tag{20.3}
+$$
+
+这里不构造平均后的返回仪器，不把 Haar 积分当成实际连续记录。
+
+协变性使 $\widetilde{\mathcal N}(I_9)-I_9$ 属于 $I_9,S$ 的实线性包，保迹性使其迹为零。因此存在实数 $a$，使
+
+$$
+\widetilde{\mathcal N}(I_9)-I_9=a(I_9-3S),
+\qquad u(\widetilde{\mathcal N})=\frac43|a|,
+\qquad |a|\le\frac34r(\eta).
+\tag{20.4}
+$$
+
+第二式来自 $S=+1,-1$ 的重数为六、三，故 $I_9-3S$ 的本征值为 $-2,4$，迹范数为 $24$；这里 $u$ 的分母为 $18$。
+
+保留 (6.5) 的所有正块、全部复重数及整体保迹。使用 (13.4) 的 $X,v_r,\delta_{\mathbf8},\delta_{\rm rest}$，令
+
+$$
+D_x=\operatorname{Re}\sum_r\overline{x_r}(z_r-w_r),
+\qquad Y=\operatorname{Re}\sum_r\overline{y_r}(z_r-w_r).
+\tag{20.5}
+$$
+
+由 (12.2)、(12.5) 及标量块缺陷为零，总缺陷恒等式为
+
+$$
+a=2(D_x-Y)+a_{\rm rest}.
+\tag{20.6}
+$$
+
+于是复用 (13.6)—(13.7) 的 $|y||z-w|\le\|v\|^2\le(12/7)v^\dagger\mathsf Qv$，得到
+
+$$
+\begin{aligned}
+|D_x|&\le\sum_r|y_r||z_r-w_r|
+       +\frac12|a_{\rm rest}|+\frac12|a|\\
+&\le\frac{12}{7}\delta_{\mathbf8}
+       +\frac57\delta_{\rm rest}+\frac38r(\eta)
+ \le\frac{12}{7}\varepsilon+\frac38r(\eta).
+\end{aligned}
+\tag{20.7}
+$$
+
+这里剩余扇区的缺陷没有删去；标量泄漏亦非负，故 $\delta_{\mathbf8}+\delta_{\rm rest}\le\varepsilon$。
+
+继续直接使用 (13.9)—(13.10) 的
+
+$$
+e=(0,1,-1)^{\mathsf T},\qquad
+\lambda=\frac{29}{76},\qquad h'=h-\lambda e,
+\qquad (h')^\dagger\mathsf Q^{-1}h'=k.
+\tag{20.8}
+$$
+
+由 (13.4) 的总迹估计，对所有复重数指标一起作 $\mathsf Q$ 内积的 Cauchy—Schwarz，得到
+
+$$
+\begin{aligned}
+X-\frac38
+&\le\left|\sum_r\overline{x_r}(h')^\dagger v_r\right|+\lambda|D_x|\\
+&\le\sqrt{kX\delta_{\mathbf8}}+
+ \lambda\left(\frac{12}{7}\varepsilon+\frac38r(\eta)\right)\\
+&\le\sqrt{kX\varepsilon}+c\varepsilon+\beta r(\eta),
+\qquad s\le X+\frac{20}{7}\varepsilon.
+\end{aligned}
+\tag{20.9}
+$$
+
+常数对应为 $\lambda(12/7)=c$、$\lambda(3/8)=\beta$。令 $z=\sqrt X\ge0$，直接解
+
+$$
+z^2-\sqrt{k\varepsilon}\,z-\left(\frac38+c\varepsilon+\beta r(\eta)\right)\le0.
+\tag{20.10}
+$$
+
+其正根给出 (20.1)，判别式中的 $4\beta=87/152$。整个推导不对符号未定的表达式平方。原最坏分数不超过这个平均分数，故逐仪器得到 $B$；另有同一第一步的 $F(\varepsilon)$ 和一的独立上界，取上确界即得 (20.2)。证毕。
+
+## 21. 精确端点、小误差尺度与完整第一步输出
+
+**推论 21.1（原精确界的延续及严格首项分离）。** 定义 18.1 满足
+
+$$
+\begin{aligned}
+F_{\rm ret}(\varepsilon,0)&=F_{\rm ret}(\varepsilon),\qquad
+\min\{1,B(\varepsilon,0)\}=U(\varepsilon),\\
+F_{\rm ret}(0,\eta)&=\frac38,\qquad
+F_{\rm ret}(\varepsilon,\eta)\ge\frac38.
+\end{aligned}
+\tag{21.1}
+$$
+
+若 $\eta(\varepsilon)=o(\varepsilon)$，则
+
+$$
+\limsup_{\varepsilon\downarrow0}
+ \frac{F_{\rm ret}(\varepsilon,\eta(\varepsilon))-3/8}{\sqrt\varepsilon}
+ \le\sqrt{\frac{249}{2432}}
+ <\sqrt{\frac{17}{112}}.
+\tag{21.2}
+$$
+
+这是上界，不断言返回类存在首项极限、取到该系数或已经求出最优前沿。
+
+证明。第一行直接比较 (18.1)、(11.3)、(20.1)、(13.1)。例 11.3 的实际 Weyl 端点在所有非负预算下仍可行，而 $F_{\rm ret}(0,\eta)\le F(0)=3/8$，得到第二行。对于同时趋零的 $\varepsilon,\eta$，把正根式写成
+
+$$
+\begin{aligned}
+B(\varepsilon,\eta)
+={}&\frac38+\beta r(\eta)
+ +\left(c+\frac{k}{2}+\frac{20}{7}\right)\varepsilon\\
+&+\frac{\sqrt{k\varepsilon}}2
+ \sqrt{3/2+(k+4c)\varepsilon+4\beta r(\eta)}\\
+={}&\frac38+\sqrt{\frac{249}{2432}}\sqrt\varepsilon
+ +\beta r(\eta)+O\!\left(\varepsilon+\sqrt\varepsilon\,r(\eta)\right).
+\end{aligned}
+\tag{21.3}
+$$
+
+第二个等号用根号在严格正数 $3/2$ 附近的有界导数，且 $3k/8=249/2432$。当 $\eta=o(\varepsilon)$ 时，$r(\eta)=o(\sqrt\varepsilon)$；代入定理 20.1 即得 (21.2)。两个正系数的平方差仍为 (14.3) 的 $841/17024>0$。条件 $\eta=o(\varepsilon)$ 在这里是充分条件，没有断言必要或最优。证毕。
+
+**推论 21.2（近似返回仪器的完整第一步距离）。** 记
+
+$$
+B_{\rm all}(\varepsilon,\eta)
+ =\min\{B_{\rm free}(\varepsilon),B(\varepsilon,\eta)\}.
+\tag{21.4}
+$$
+
+每个定义 18.1 的可行实际仪器都有一个原承诺对 $(P,Q)$，使第一步完整输出 $\Xi=\mathcal M(P\otimes Q)$ 对每个满足 $\operatorname{Tr}_{\mathsf C}\Omega=P\otimes R$ 的理想归一化联合输出同时满足
+
+$$
+\frac12\|\Xi-\Omega\|_1\ge
+ \max\{0,1-B_{\rm all}(\varepsilon,\eta)\}.
+\tag{21.5}
+$$
+
+证明。有限维 $\mathcal N$ 的连续分数在紧 $\mathfrak F$ 上取得最小值；定理 20.1 的逐仪器界及 (5.10) 使该值不超过 $B_{\rm all}$。在这个固定最小点，(16.2) 的同一个效应 $(P\otimes R)\otimes I_{\mathsf C}$ 在所有这些 $\Omega$ 上期望为一，在 $\Xi$ 上期望为 $s_{\mathcal N}(P,Q)$。迹距离效应界给出 (21.5)；可数经典输出是迹类直和，范数一的块对角效应仍适用。这个结论涉及第一步，不能用返回后的 $AB$ 误差替代。证毕。
+
+## 22. 未改通道族的双边返回误差与实际 Weyl 仪器
+
+**定理 22.1（同一 $\mathcal N_t$ 上的匹配阶）。** 保留定义 8.1 的整个有理通道族，不改变其 $\varepsilon(t)$、$s(t)$ 或输入、目标。令 $e_*(t)$ 为在全部允许的有限或可数经典仪器及其允许校正中、忽略记录通道恰为 $\mathcal N_t$ 时的 $E$ 的下确界。对 $0<t\le1/1000$，
+
+$$
+\frac7{15}a(t)^2\le e_*(t)\le\chi(t)
+ :=\frac{t^2(67-2741t)^2}{f(t)}
+ \le\min\left\{\frac92\varepsilon(t),12800t^2\right\},
+\tag{22.1}
+$$
+
+其中 $a(t)$ 为 (15.1) 的同一个正缺陷系数。下界覆盖每个实际 CP 仪器及任意允许校正，不要求隐藏 Kraus 标签可访问；上界由下述指定的实际八结果 Weyl 仪器及其极分解校正达到一个不超过该界的误差，不对所有实现主张充分性。特别地，
+
+$$
+e_*(t)=\Theta(t^2)=\Theta(\varepsilon(t))\quad(t\downarrow0),
+\qquad
+\frac{(7/15)a(t)^2}{\varepsilon(t)}\longrightarrow\frac{841}{4080}.
+\tag{22.2}
+$$
+
+最后的比值仅属于已证下界，不是最优返回系数。
+
+证明。首先，由 (15.1) 和 $\|I_9-3S\|_1=24$，$u(\mathcal N_t)=4a(t)/3$。定理 19.1 对同一个 $\mathcal N_t$ 的每个实际仪器和校正给出
+
+$$
+E(\mathcal M,\mathcal D)\ge\frac{21}{80}u(\mathcal N_t)^2
+ =\frac7{15}a(t)^2.
+\tag{22.3}
+$$
+
+$a(t)>0$ 的整个区间及正分母已由 (15.1)—(15.3) 证明，不需更换正参数族。
+
+为给出充分构造，明确指定实际结果 $j=(a,b)\in(\mathbb Z/3\mathbb Z)^2\setminus\{(0,0)\}$。使用 (3.5) 的固定 qutrit Weyl $W_j=X^aZ^b$，取 $T_j=W_j/\sqrt3$，将它们代入原 (8.2) 的 $L_j(t),K_j(t)$，实际仪器是
+
+$$
+\mathcal M_j^{\rm W}(Y)=K_j(t)YK_j(t)^\dagger,
+\qquad j\text{ 是实际保留的八值记录}.
+\tag{22.4}
+$$
+
+这些 $T_j$ 无迹且 Hilbert—Schmidt 正交归一。若另一个原定义所用基为 $T'_j=\sum_kV_{jk}T_k$，$V$ 酉，则四个 $E_i$ 的线性性给出 $K'_j=\sum_kV_{jk}K_k$，而
+
+$$
+\sum_jK'_jYK_j'^\dagger=\sum_kK_kYK_k^\dagger.
+\tag{22.5}
+$$
+
+所以忽略记录后恰是同一个已发表 $\mathcal N_t$。但是逐结果 CP 分支、记录及可用反馈可随基改变；(22.5) 不是重配一套固定装置的授权，不使每个实现都具有本构造的校正。
+
+下面直接估计最坏迹距离，不从平均保真度推断它。记
+
+$$
+d_t=1-95t,\qquad r_t=\frac1{\sqrt{3A(t)}},\qquad
+b_t=|u_t|+|v_t|+|w_t|.
+\tag{22.6}
+$$
+
+此处 $r_t$ 与 (19.2) 的 $r(\eta)$ 不同。原公式给出 $d_t\ge905/1000$，$u_t\ge0$、$v_t\le0$、$w_t\le0$，因此
+
+$$
+b_t=27t+\frac{40t-176t^2}{d_t}
+ =\frac{t(67-2741t)}{d_t}
+ \le\frac{67}{905}<1.
+\tag{22.7}
+$$
+
+每个 $W_j$ 和 $S$ 都酉，故由四个 $E_i$ 的算子范数，
+
+$$
+\|K_j(t)-r_t(I\otimes W_j)\|_{\rm op}\le r_tb_t.
+\tag{22.8}
+$$
+
+对任意单位向量应用三角不等式及其反向式，所有奇异值均在 $[r_t(1-b_t),r_t(1+b_t)]$ 内。由于 $A(t)>0$、$b_t<1$，每个 $K_j(t)$ 可逆，其极分解
+
+$$
+K_j(t)=U_j(t)H_j(t),\qquad H_j(t)=|K_j(t)|
+\tag{22.9}
+$$
+
+具有同一九维空间上的酉 $U_j(t)$，并有
+
+$$
+\|H_j(t)-r_tI_9\|_{\rm op}\le r_tb_t.
+\tag{22.10}
+$$
+
+选择实际记录条件化校正
+
+$$
+\mathcal D_j^{\rm pol}(Y)=U_j(t)^\dagger YU_j(t),\qquad
+\mathcal T_{\rm pol}(Y)=\sum_jH_j(t)YH_j(t).
+\tag{22.11}
+$$
+
+该成熟极分解反馈见 [ARRGW04，式 (19)—(20)][ARRGW04]；固定 $t$ 后所有控制均与未知 $P,Q$ 无关。正参数时结果概率无需均匀或与输入无关。
+
+由原全代数保迹性 $\sum_jH_j^2=I_9$，对任意矩阵 $Y$ 有精确恒等式
+
+$$
+\mathcal T_{\rm pol}(Y)-Y
+ =-\frac12\sum_j[H_j,[H_j,Y]]
+ =-\frac12\sum_j[Z_j,[Z_j,Y]],
+\quad Z_j=H_j-r_tI_9.
+\tag{22.12}
+$$
+
+事实上，展开双重交换子并使用 $\sum_jH_j^2=I_9$ 即得第一个等号，减去标量不改变交换子给出第二个。对任意态 $\rho$，由 $\|AXB\|_1\le\|A\|_{\rm op}\|X\|_1\|B\|_{\rm op}$，
+
+$$
+\|[Z,[Z,\rho]]\|_1
+ =\|Z^2\rho-2Z\rho Z+\rho Z^2\|_1
+ \le4\|Z\|_{\rm op}^2.
+\tag{22.13}
+$$
+
+于是 (22.10)—(22.13) 统一给出
+
+$$
+\begin{aligned}
+\frac12\|\mathcal T_{\rm pol}(\rho)-\rho\|_1
+&\le\sum_{j=1}^8\|Z_j\|_{\rm op}^2
+ \le8r_t^2b_t^2\\
+&=\frac8{3A(t)}\frac{t^2(67-2741t)^2}{d_t^2}
+ =\frac{t^2(67-2741t)^2}{f(t)}=\chi(t).
+\end{aligned}
+\tag{22.14}
+$$
+
+最后一步只代入原 $A(t)=8f(t)/(3d_t^2)$。这个估计对全部九维态成立，因而包括整个复承诺族；不假定校正后通道协变。
+
+为得到区间上的显式比较，使用 (9.3)、(8.7) 及 $67-2741t>0$：
+
+$$
+\begin{aligned}
+\frac{\chi(t)}{\varepsilon(t)}
+ &=\frac{(67-2741t)^2}{9(119-3584t+178545t^2)}\\
+ &\le\frac{4489}{9(119-3584/1000)}
+ =\frac{561125}{129843}<\frac92,\\
+\frac{\chi(t)}{t^2}
+ &\le\frac{4489\cdot31250000}{24246927}<12800.
+\end{aligned}
+\tag{22.15}
+$$
+
+所有分母均严格正。因此 (22.1) 成立。原有理式还给出
+
+$$
+a(t)=\frac{87}{4}t+O(t^2),\qquad
+\varepsilon(t)=1071t^2+O(t^3),\qquad
+\frac{(7/15)(87/4)^2}{1071}=\frac{841}{4080}>0.
+\tag{22.16}
+$$
+
+这证明 (22.2) 的正下阶；上阶由 (22.14) 或 (22.15) 给出。$t=0$ 时 $K_j(0)=I\otimes W_j/\sqrt8$，校正后为恒等通道，与例 11.3 相同。
+
+记录仍可以完整保留。为给出其准确误差含义，对任意原纯输入 $\rho$，令 $\omega_c=\mathcal D_c\mathcal M_c(\rho)$，$p_c=\operatorname{Tr}\omega_c$。忽略 $p_c=0$ 项，对 $\omega_c/p_c$ 与纯态 $\rho$ 使用 (18.4) 和 Fuchs—van de Graaf，再作加权 Cauchy—Schwarz，得到
+
+$$
+\begin{aligned}
+\frac12\sum_c\|\omega_c-p_c\rho\|_1
+&\le\sum_cp_c\sqrt{1-\operatorname{Tr}(\rho\omega_c)/p_c}\\
+&\le\sqrt{1-\operatorname{Tr}(\rho\mathcal T(\rho))}
+ \le\sqrt{\frac12\|\mathcal T(\rho)-\rho\|_1}.
+\end{aligned}
+\tag{22.17}
+$$
+
+最后一步是效应 $\rho$ 的变分界。反方向由丢弃记录的迹距离收缩性给出；取上确界即得一般的 $E\le E_{\rm CQ}\le\sqrt E$。因而本指定构造还满足 $E_{\rm CQ}\le\sqrt{\chi(t)}$，但这只给 $O(t)$，不能把 (22.1) 的 $O(t^2)$ 寄存器保证写成完整 CQ 保证或每个归一化稀有分支的保证。可数时同样由非负部分和取极限。
+
+最后，(9.3) 的第一步和分数在校正之前评价，始终未改。定理 9.2 给出严格递增的实际 $\varepsilon(t)$ 及原无返回首项，而 (22.15) 给出一个 $E=O(\varepsilon(t))$ 的真实记录仪器。故“$E\to0$”本身不能推出 (21.2) 的严格首项损失；返回误差相对于第一步扰动的速率有实质作用。这里只给同一族的非锐匹配阶，没有求 $e_*(t)$ 的首项系数、最坏分支最优校正或双误差前沿。证毕。
+
+## 23. 同原持续使用的条件应用与操作边界
+
+**应用 23.1（工作寄存器返回支付的关系）。** 在定义 1.1—1.3 的完整原来源及实际 $\mathrm E_2$ 接口下，定理 19.1—22.1 的对象均沿同一个 $\Phi$ 对应同一个未知原关联和同一个 Quantum116 的 $\tau$ 目标。其必要关系是：原第一步具有的非保单位缺陷，必须由实际经典返回腿支付至少二次的寄存器误差；在未改的 $\mathcal N_t$ 上，这个误差与其第一边缘扰动具有同阶的上下界。定理 22.1 的充分合同具体要求实际供给 (22.4) 的八结果仪器、保留并交付其真实标签，以及固定 $t$ 的 (22.11) 逆控制。它不是仅从忽略记录的 $\mathcal N_t$ 推出的装置无关可恢复性。
+
+证明。定义 1.2 的双向对应恰好覆盖全部 $\mathfrak F$，指定目标仍是 $P\otimes R$；(18.1) 的返回目标仍是同一个 $P\otimes Q$。因此这些定理的全部量词、误差和消费者可在同一原关联上解释，不需要另一个源、额外样本或准备建议。下界对每个实际允许仪器成立，上界明确给出其中一个；它们的共同对象是同一个已发表通道，而不是把两个不同通道的可达性质拼接。
+
+此条件应用只给出了 §17 近似返回问题的上述定量部分。$D(\mathcal N)$、第一步完整输出、$E$ 和 $E_{\rm CQ}$ 具有不同合同，推论 21.2 及 (22.17) 保留其区别。即使最终 $AB$ 精确返回，实际第一步、反馈、记录、流量和所耗资源也没有消失；正 $E$ 更不是原精确承诺的履行。没有由此构造在全部实际非承诺输出和记录条件化未来上共同定义的 $\sigma,\tau$ 操作，也没有给出其有限字的全部中间输出、$\tau^2,\sigma^2,(\sigma\tau)^3$ 及完整返回语义。应用 4.1 的实际 $\mathrm E_3$ 置换合同继续成立，使用的是另已供给的第三样本，不能移作本合同的免费资源。
+
+完整原来源的合法域、原守卫、接受与执行后拒绝、全部回应、记录、控制状态、谱系、backing 和当前 source-bound 权限均保留；原 Handback／Stop／INITIAL、AA／ACK／token／吸收 halt、下一入口和所欠动作语义没有由 $AB$ 接近性恢复。四份独立实际取得的完整 body、INPUT／STACK 分离，以及所选完整收到的 body 实际驱动同一 owed consumer 的返回，仍须各自合法供应。Quantum116 的对合没有被认作 Native／AA／Fibonacci 的实际生成元；同名、可编码性和末态统计不能给出这一桥。
+
+已有 [增广 $J_r$ 的定理 65.3、70.2、75.4][CRJR] 在真实完整入口、封闭 writer／输入、门、当前权限、每个请求切口的独立实际 wake、材料和进展前提下，已给出其全部声明切口、每个有限有序请求森林及原 owed-action 返回。这些条件结果继续使用；本附加合同不重新开放它们已证明的域。未增广或物理来源、更细 primitive 内部及广泛实际 $\alpha/\beta$ 到原消费者的桥仍有各自义务。GENERAL15.5／18.4 和 RG13.3 的既有受限 cross-entry／inherited original-Q 结果亦保留其范围；这里不提供其外的 changed／new-row Q、较广 mixed interiors 或 full terminal-task kernel。
+
+同样，[有限份共同源定理 123.2 及证明（六）][ARRPREFIX] 已给出任意总次数上每个 $\min(a,b)\le2$ 的产品和完整五份前缀；其式 (123.18) 的 $C_3\otimes_{\min}C_3\subseteq C_6$、一般补全新增态的同时准备与实际取得没有被此返回构造支付。固定间隙紧致性仍是存在性关系，不是当前操作权限或实际制备。
+
+上述充分合同还必须供给并计入：实际产品准备、全部正向门及辅助系统、测量、标签存储与通信、反馈与校准、执行记录、保留的两个寄存器、程序与 backing、验证和返回，以及同次运行的全部费用向量和同时峰值。八值末标签可编码为三比特，不等于完整控制器、历史或总存储只有三比特；可数标签的必要界也不给有限熵或统一比特预算。解析 Haar 平均、Kraus 细化与 Choi 参考都不供给这些资源。这里不证明全局最少关系、最少内存、最少样本或总资源优势。证毕。
+
+本附加推导的 repository-new 内容是同一正交对承诺的双边缘泄漏提升、一般实际经典分支下的近似保单位障碍、全复全扇区的双误差目标界，以及未改有理族的双边返回误差估计。定理 7.1 的谱、§12—13 的扇区恒等式、§8—9 的通道与分数和 §15 的缺陷均为既有供应。Gregoratti—Werner 的反馈／极分解工具及 Fuchs—van de Graaf 的根保真度不等式只作为这些新关系的中间步骤；没有将成熟结果另命名为新增数学内容。这里给出普通数学证明，不宣称 Lean／kernel 核验、物理实现认证或全球文献优先性；全球原创性未验证。
+
+[ARRGW04]: https://arxiv.org/pdf/quant-ph/0403092v1 "Matteo Gregoratti and Reinhard F. Werner, On quantum error-correction by classical feedback in discrete time；v1，p.7 末通道保真度定义，§IV.A Single-step channel，Proposition 4，(17)—(21)，p.8；这里只用任意有限维的单步结论，不用 qubit 多步 Proposition 5。"
+[ARRGW02]: https://arxiv.org/pdf/quant-ph/0209025v1 "Matteo Gregoratti and Reinhard F. Werner, Quantum Lost and Found；v1，§V，Proposition 8，(15)—(21)，pp.11—12；§II.C.1，Proposition 2，pp.4—5 为既有精确校正边界。"
+[ARRFVG]: https://arxiv.org/pdf/quant-ph/9712042v2 "Christopher A. Fuchs and Jeroen van de Graaf, Cryptographic Distinguishability Measures for Quantum Mechanical States；v2，§4.3 Proposition 4，(24)，p.13：根保真度；Theorem 1，(46)，p.17：半迹距离与根保真度平方的界。"
+[ARRPREFIX]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "Theorem 123.2，证明（六）—（七），(123.16)—(123.18)：同一共同源的完整五份前缀、任意 min(a,b)<=2 产品，以及第一个未付的 3+3 产品。"
+
+## 追加锚（本行以下为增补区）
