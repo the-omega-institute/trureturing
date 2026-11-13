@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Zero-diagonal and unrestricted rectangle-free extrema agree in dimension at least three. -/
+   digest: Zero-diagonal and unrestricted rectangle-free maxima agree for n at least three. -/
 
 /-
 admission_basis: open-problem-resolution (#23717; Proved).

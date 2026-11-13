@@ -10,7 +10,7 @@ internal sealed class AlekseyevA191873ZeroDiagonalDocument : IScribeDocumentDefi
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/alekseyev2022a191873");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Zero-diagonal and unrestricted rectangle-free extrema agree in dimension at least three.",
+        "Zero-diagonal and unrestricted rectangle-free maxima agree for n at least three.",
         H("Alekseyev's Zero-Diagonal Zarankiewicz Conjecture"),
         Blocks(
             Paragraph(Text("Binary matrices have entries in Fin 2. Rows and columns range independently over Fin n. "
