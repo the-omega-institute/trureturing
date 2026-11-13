@@ -632,3 +632,610 @@ $D=B_0$ 与 $D>B_0$ 都未被排除；等号没有推出校准。
 完整量子起源目标在这些原合同上仍未完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 122. 同一最大宽接触对的全确认转移与共同法向斜率
+
+### 122.0 独立的最大宽入口
+
+**定义 122.1（同一最大球、效应与接触对）。**
+本章只沿用定义 121.1 的完整原 $V,C,u,K,P,\mathcal E,D_t,\mathcal A_t,N_t,S_t$，
+并假设 EB3 和全局 Inj。
+环境维数为任意有限维；不继承 X121 的九维、实际种子、$P_0$ 或 E0 前件。
+对每个完整原球定义整个原效应区间上的宽度
+
+$$
+W(D_t)=\max_{f\in\mathcal E}\operatorname{osc}_{D_t}f,
+\qquad
+\operatorname{osc}_Af=\max_Af-\min_Af.
+\tag{X122.1}
+$$
+
+[EXCLUSION IX118.14—118.15](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+及 [ExclusionWidthCompactness](../../../Blueprint/D5/S3/Quantum/Foundation/ExclusionWidthCompactness.md)
+给出正的、实际达到的全局最大值，及达到每颗球宽度的原效应。
+固定这份实际数据，并研究其条件分支
+
+$$
+F=D_p=c+B\overline{\mathbb B}^{,3}_F,\qquad
+M=W(F)=\max_{t\in P}W(D_t),\qquad 0<M<1.
+\tag{X122.2}
+$$
+
+选定达到 $M$ 的同一原效应 $b\in\mathcal E$，其全局振幅为一。
+使用 [EXCLUSION IX 定理 120.21](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+及 [OriginalWidthContact](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalWidthContact.md)
+给出的同一唯一共同接触对。
+它的至少一个接触面是纯单点：若零面是单点，它是纯点；
+否则原真面分类使零面为某完整排除球，Inj 的一值面刚性使另一接触面为纯单点。
+必要时把同一 $b$ 换成 $u-b$，同时交换其两端和两接触，并反转球方向。
+此为同一对的定向，不是另选极值者。
+由此记
+
+$$
+\begin{gathered}
+q=c+Bn,\quad r=c-Bn,\quad \|n\|_F=1,\\
+b(s)=1,\quad b(y)=0,\quad s\in P,\qquad
+q-r=M(s-y).
+\end{gathered}
+\tag{X122.3}
+$$
+
+令
+
+$$
+G=D_s=c_s+A\overline{\mathbb B}^{,3}_G,\qquad
+y=c_s+A\eta,\quad \|\eta\|_G\le1,\qquad m_s=W(G).
+\tag{X122.4}
+$$
+
+$y\in G$ 由原 $b$ 这个零见证给出；不假设 $b$ 在全部 $G$ 为零。
+$0<m_s\le M$。第二接触 $y$ 不被假设为纯点。
+F 图与 G 图的三维坐标、内积和范数各自独立。
+下文的 $n^\perp$ 属于 F 图，不存在默认的跨球等距识别。
+只有在实际使用 $D_r$ 时才记 $m_r=W(D_r)$。
+
+### 122.1 整个完整确认纤维向同一接触对的转移
+
+**命题 122.2（A：对每个完整确认的同一接触转移）。**
+对整个 $\mathcal A_s$ 的每个 $a$，均有
+
+$$
+a(q)-a(r)=M,\qquad
+\operatorname{osc}_Fa=M,\qquad
+\operatorname{slope}_F(a)=\frac M2n.
+\tag{X122.5}
+$$
+
+其整个原一值面为 $\{s\}$，整个原零面为 $G$，
+且它在同一 $q-r$ 上的共同接触对仍是 $(s,y)$。
+唯一球上最大、最小点仍为 $q,r$。
+
+证明。
+因 $a\in\mathcal A_s$，有 $a(s)=1$ 且它在整个 $D_s$ 为零。
+已由原 $b$ 支付的同一 $y\in D_s$ 因此满足 $a(y)=0$。
+在固定原向量等式 (X122.3) 评价，得 $a(q)-a(r)=M$。
+每个原效应在完整 $F$ 的振幅至多 $M$，所以这个指定端点差达到全部振幅。
+
+写 $a(c+Bw)=a(c)+w_a\cdot w$，则完整球振幅为 $2\|w_a\|_F$，
+指定直径差为 $2n\cdot w_a$。
+于是
+
+$$
+2\|w_a\|_F=M=2n\cdot w_a.
+$$
+
+$M>0$，Cauchy–Schwarz 取等给 $w_a=(M/2)n$。
+非恒定仿射球函数的两个极值点唯一，故确为同一 $q,r$。
+
+定义已给 $G\subseteq\{z\in K:a(z)=0\}$；
+反向任一额外零点会以这个原 $a$ 成为 $s$ 的原排除见证，故也属于完整 $D_s$。
+这证明整个零面恰为 $G$，包括所有混合点。
+Inj 的旧一值面接口给整个顶面 $\{s\}$。
+同一 $s,y$ 仍满足原全幅效应的顶／底接触和指定弦等式；
+旧共同对唯一性把它们识别为当前 $a$ 的同一接触对。证毕。
+
+本命题转移的是已经存在的接触，不重新证明接触存在、唯一或第二端纯性。
+它量化整个 $\mathcal A_s$，没有挑选一个便利确认子菜单。
+
+### 122.2 一般接触标签的核包含及唯一共同斜率因子
+
+**命题 122.3（B：一般冗余法向的同接触因子）。**
+记 $H_s=S_s=\operatorname{span}N_s$。
+用完整 G 图定义线性限制及 F 斜率
+
+$$
+\begin{aligned}
+R_s:H_s&\longrightarrow\mathbb R\times\mathbb R_G^3,
+&h(c_s+Az)&=\alpha+v\cdot z,\quad R_sh=(\alpha,v),\\
+S_F:H_s&\longrightarrow\mathbb R_F^3,
+&h(c+Bw)&=h(c)+(S_Fh)\cdot w.
+\end{aligned}
+\tag{X122.6}
+$$
+
+则
+
+$$
+\ker R_s\subseteq\ker S_F.
+\tag{X122.7}
+$$
+
+有唯一线性映射 $T_s:\mathbb R\times\mathbb R_G^3\to\mathbb R_F^3$ 满足
+$S_F=T_sR_s$，以及唯一线性 $L:\mathbb R_G^3\to n^\perp$，使
+
+$$
+T_s(\alpha,v)=-\frac M2(\alpha+\eta\cdot v)n+Lv,
+\qquad T_s(1,0)=-\frac M2n.
+\tag{X122.8}
+$$
+
+核的原载体表达为
+
+$$
+\begin{gathered}
+\ker R_s=H_s\cap\operatorname{ann}(\operatorname{span}G),\\
+\ker S_F=H_s\cap\operatorname{ann}(\operatorname{lin}(F-F)),\\
+\operatorname{lin}(F-F)\subseteq\operatorname{span}G+H_s^\perp,
+\end{gathered}
+\tag{X122.9}
+$$
+
+其中 $H_s^\perp=\{x\in V:h(x)=0\text{ 对全部 }h\in H_s\}$。
+
+证明。
+[EXCLUSION IX120.7 及定理 IX119.10](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)
+已给 $R_s$ 满射和某个 $g_0\in\operatorname{ri}N_s$，其 $R_sg_0=(1,0)$。
+这里的相对内部取于实际 $H_s=\operatorname{span}N_s$。
+同一接口见 [OriginalNormalRestriction](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalNormalRestriction.md)：
+常数一的原正切片等于整个完整确认纤维的补，并与实际法向张成空间中的内部相交。
+这些输入不需要 $s\in P_0$；本命题不重立六轴满射或内部切片定理。
+
+对任一实际 $g\in N_s$ 且 $R_sg=(1,0)$，
+旧原正法向最大值公式给
+
+$$
+\max_Kg=\max_Gg=1.
+\tag{X122.10}
+$$
+
+它已在整个 $C$ 非负。
+对非零 $x\in C$ 按原 $u(x)>0$ 归一到 $K$，得 $0\le g(x)\le u(x)$；
+零向量也满足，故 $g$ 是原全锥效应。
+$u-g$ 在 $s$ 为一，在全部 $G$ 为零，因此属于整个 $\mathcal A_s$。
+命题 122.2 遂给
+
+$$
+S_Fg=-\frac M2n.
+\tag{X122.11}
+$$
+
+现在取任意 $k\in\ker R_s$。
+$g_0$ 在 $H_s$ 中相对内，所以存在可依赖于 $k$ 的 $\epsilon>0$，使
+
+$$
+g_0+\epsilon k\in N_s,\qquad g_0-\epsilon k\in N_s.
+\tag{X122.12}
+$$
+
+二者仍有同一常数一的完整 G 限制。
+(X122.11) 给它们同一 F 斜率；相减得到 $2\epsilon S_Fk=0$。
+因此 $S_Fk=0$，证明核包含。
+满射 $R_s$ 及该包含使 $T_s(\alpha,v)=S_Fh$ 对任一 $R_sh=(\alpha,v)$ 定义良好，
+且线性、唯一。
+
+对每个有符号 $h\in H_s$ 都有 $h(s)=0$。
+把它作用于固定弦，得
+
+$$
+2n\cdot S_Fh=-Mh(y)=-M(\alpha+\eta\cdot v).
+\tag{X122.13}
+$$
+
+(X122.11) 又固定 $T_s(1,0)$。
+因此取 $T_s(0,v)$ 在 $n^\perp$ 上的正交投影为 $Lv$，
+便给 (X122.8)，且没有常数坐标的横向项。
+唯一性也由投影及满射给出。
+
+限制为零恰是消去 $\operatorname{span}G$，斜率为零恰是消去 $\operatorname{lin}(F-F)$，
+给 (X122.9) 前两式。
+核包含表明每个 F 方向消去 $H_s\cap\operatorname{ann}(\operatorname{span}G)$。
+有限维双重消去律
+
+$$
+\bigl(H_s\cap\operatorname{ann}(\operatorname{span}G)\bigr)^\perp
+=H_s^\perp+\operatorname{span}G
+$$
+
+给最后的载体包含。证毕。
+
+若另外给 $s\in P_0$，旧 EXCLUSION IX120.8／定理 IX119.10
+已经使 $R_s$ 为同构；此时对任何斜率映射都自动存在 $S_FR_s^{-1}$。
+所以这个特例没有新增限制单射、四维或法向同构结论。
+一般 $s$ 下新组合是接触导致的核包含和一个共同因子的固定接触公式。
+它没有证明一般 $R_s$ 单射，没有使 $T_s$ 为正，
+也没有为任意有符号坐标给出原正提升。
+(X122.9) 只涉及方向空间，不识别中心值或跨球度量。
+
+### 122.3 仅在实际全局正法向像上的宽度约束
+
+**命题 122.4（C：同一原正法向的两个完整球约束）。**
+对每个非零实际 $h\in N_s$，写 $R_sh=(\alpha,v)$。
+则
+
+$$
+\alpha\ge\|v\|_G,\qquad
+\lambda_N=\alpha+\|v\|_G=\max_Kh>0,\qquad
+f_h=\frac h{\lambda_N}\in\mathcal E.
+\tag{X122.14}
+$$
+
+其完整球振幅准确为
+
+$$
+\operatorname{osc}_G f_h=\frac{2\|v\|_G}{\lambda_N},\qquad
+\operatorname{osc}_F f_h=\frac{2\|T_s(\alpha,v)\|_F}{\lambda_N}.
+\tag{X122.15}
+$$
+
+因而
+
+$$
+\begin{gathered}
+\alpha\ge\left(\frac2{m_s}-1\right)\|v\|_G
+\ge\left(\frac2M-1\right)\|v\|_G,\\
+4\|Lv\|_F^2\le
+M^2\left[(\alpha+\|v\|_G)^2-(\alpha+\eta\cdot v)^2\right].
+\end{gathered}
+\tag{X122.16}
+$$
+
+定义整个实际原法向像切片
+
+$$
+\mathcal B_s=\{v\in\mathbb R_G^3:\exists h\in N_s,\ R_sh=(1,v)\}.
+\tag{X122.17}
+$$
+
+对它的每个 $v$，有
+
+$$
+\begin{gathered}
+\|v\|_G\le\frac{m_s}{2-m_s}\le\frac M{2-M},\\
+(1+\eta\cdot v)^2+\frac4{M^2}\|Lv\|_F^2
+\le(1+\|v\|_G)^2.
+\end{gathered}
+\tag{X122.18}
+$$
+
+证明。
+原正性在整个 G 给仿射球函数 $\alpha+v\cdot z\ge0$，
+所以 $\alpha\ge\|v\|_G$。
+旧原正法向最大值公式给 $\max_Kh=\alpha+\|v\|_G$。
+若这最大值为零，$h$ 在全 $K$ 为零；$K$ 张成 $V$，所以 $h=0$，矛盾。
+故 $\lambda_N>0$，并且按整个 K 的最大值归一真给全 $C$ 上的原效应。
+这里没有把 $R_s$ 的有符号满射当成原正坐标满射。
+
+完整仿射球的振幅是斜率范数的两倍，得到 (X122.15)。
+第一振幅至多 $m_s$，因此
+
+$$
+2\|v\|_G\le m_s(\alpha+\|v\|_G),
+$$
+
+得第一行 (X122.16)。$m_s\le M$ 给第二个不等号。
+第二振幅至多 $M$，所以
+
+$$
+4\|T_s(\alpha,v)\|_F^2
+\le M^2(\alpha+\|v\|_G)^2.
+$$
+
+把 (X122.8) 代入，并用 $Lv\perp n$，其左边为
+$M^2(\alpha+\eta\cdot v)^2+4\|Lv\|_F^2$，得到所列二次约束。
+两个范数各在自己的图中，没有共享度量的假设。
+
+对每个 $v\in\mathcal B_s$，定义提供同一实际正 $h$ 且 $\alpha=1$。
+将其代入 (X122.16)，由 $0<m_s\le M<1$，
+$M,2-m_s,2-M$ 都严格正，合法整理便得 (X122.18)。
+$v=0$、$Lv=0$ 及其他斜率退化全部留在不等式内。
+只在归一步骤排除 $h=0$。证毕。
+
+径向界是旧全域最大值公式与宽度定义的准确改写。
+二次界是旧 F 宽度上界在命题 122.3 的同一共同因子坐标中的表达，
+不是第二个独立数值原理，也没有构造超出可行域的原正法向。
+
+### 122.4 同一第二接触纯时的核方向
+
+**命题 122.5（D：同一纯接触方向被共同横向因子消去）。**
+在本章入口之外，另设同一 $y$ 是原纯点。
+则 $\|\eta\|_G=1$ 且
+
+$$
+L\eta=0.
+\tag{X122.19}
+$$
+
+证明。
+[OriginalFacePolarity 的 chart_boundary](../../../Blueprint/D5/S3/Quantum/Foundation/OriginalFacePolarity.md)
+把原纯 $y\in G$ 识别为这个完整图的球面点，故 $\|\eta\|_G=1$。
+全局 Inj 给锚 $s$ 的 singleton exclusion-label 条件，即 SingleLabel。
+[SingleLabelNormalBody 的 positive_ray](../../../Blueprint/D5/S3/Quantum/Foundation/SingleLabelNormalBody.md)
+在这个前件下提供实际 $t_{\rm ray}>0$，使 $t_{\rm ray}\eta\in\mathcal B_s$。
+其成员身份带有原 $N_s$ 中的正见证；没有从球上的局部正性制造它。
+在 (X122.18) 取 $v=t_{\rm ray}\eta$，则
+
+$$
+1+\eta\cdot v=1+t_{\rm ray}=1+\|v\|_G.
+$$
+
+二次界只剩 $4\|L(t_{\rm ray}\eta)\|_F^2/M^2\le0$，
+故 $L(t_{\rm ray}\eta)=0$，线性及 $t_{\rm ray}>0$ 给结论。证毕。
+
+若同一 $y$ 混合，它在 $\operatorname{ri}G$，所以 $\|\eta\|_G<1$。
+上述两个平方项的抵消不成立。
+这里没有提供第二接触纯性，也没有把另一个纯点换成同一 $y$。
+positive_ray 的 SingleLabel 不等于 $\mathcal A_s$ 单点，未偷加 $s\in P_0$。
+
+### 122.5 同一两球相交时的严格宽度耦合
+
+**命题 122.6（E：完整相交球的严格双宽度界）。**
+在本章入口之外，另设同一 $F$ 与同一 $G$ 相交。
+则
+
+$$
+F\cap G=\{r\},\qquad r\in P,\qquad p,s\in D_r.
+\tag{X122.20}
+$$
+
+记 $m_r=W(D_r)$，有 $0<m_r\le M$。
+对整个 $\mathcal A_p$ 的每个 $e$，置 $t_e=e(s)=e(y)$，则
+
+$$
+0<t_e<1,\qquad
+1-m_r<t_e\le m_s,\qquad
+m_s+m_r>1,\qquad M>\frac12.
+\tag{X122.21}
+$$
+
+若同一 $y$ 是混合态，上界也严格：$t_e<m_s$。
+若 $y$ 纯，上界允许取等。
+准确的逆否命题为：$M\le1/2$ 迫使这同一最大球 F 与定向纯接触球 G 不相交。
+
+证明。
+任选 $a\in\mathcal A_s$；旧面接口保证其存在。
+命题 122.2 给它在 F 的唯一最小点为 $r$，其原零面为 G。
+如果 F 与 G 相交，最小值为零，因而整个交集恰为 $\{r\}$。
+$r$ 是完整 F 的球面端点，故原纯。
+从 $r\in D_p\cap D_s$ 及原零关系对称，得 $p,s\in D_r$。
+这一步不能用于不相交分支。
+
+旧定理 IX120.21 对每个当前 $e\in\mathcal A_p$ 给
+$0<t_e=e(s)=e(y)<1$。
+它是每个效应的两个相同接触读数；不同 $e$ 的 $t_e$ 不被当成同一常数。
+又 $r\in D_p$ 给 $e(r)=0$。
+因 $r,y\in G$，
+
+$$
+t_e=e(y)-e(r)\le\operatorname{osc}_G e\le m_s.
+\tag{X122.22}
+$$
+
+严格下界应用的是 [EXCLUSION IX 的定理 119.8](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md)，
+不是同卷的第 119.8 节。
+准确代换为：该定理的完整球取 $D_r$，球的 owner 标签取 $r$，
+相邻纯点取 $p\in P\cap D_r$，相邻完整确认取当前 $e\in\mathcal A_p$。
+再取一个完整确认 $a_r\in\mathcal A_r$。
+$a_r(r)=1$ 且 $r\in D_p$；全局 $M<1$ 给
+
+$$
+\min_{D_p}a_r\ge1-W(D_p)\ge1-M>0.
+\tag{X122.23}
+$$
+
+这正支付旧定理的一侧变分所需严格正下界。
+旧定理于是给原效应在 $D_r$ 上的严格改进，故
+
+$$
+\operatorname{osc}_{D_r}e<m_r.
+$$
+
+由于同一 $p,s\in D_r$，有
+
+$$
+1-t_e=e(p)-e(s)
+\le\operatorname{osc}_{D_r}e<m_r.
+\tag{X122.24}
+$$
+
+联合 (X122.22) 得 $1-m_r<t_e\le m_s$，于是 $m_s+m_r>1$。
+$m_s,m_r\le M$ 给 $2M>1$。
+
+若同一 $y$ 混合，它在 G 的相对内部。
+$e|_G$ 非恒定，因为 $e(r)=0<e(y)$。
+非恒定仿射函数不能在球内部达到最大值，所以
+$e(y)<\max_Ge$。
+原非负及 $e(r)=0$ 给 $\min_Ge=0$，故
+$t_e<\operatorname{osc}_Ge\le m_s$。
+纯 $y$ 没有这个内部严格性。证毕。
+
+这项新组合耦合两颗实际完整球的宽度；严格变分本身仍归旧定理 IX119.8。
+它不提供 F/G 相交，不排除 $1/2<M<1$，也不把所有接触效应的读数统一成一个 $t$。
+
+### 122.6 完整 EB1 五边形的准确方法控制
+
+**命题 122.7（维数一控制中的同一宽度与接触）。**
+取正五边形的整个原签名
+
+$$
+\begin{gathered}
+V_5=\mathbb R\times\mathbb R^2,\qquad u_5(t,z)=t,\\
+v_j=(\cos(2\pi j/5),\sin(2\pi j/5)),\qquad p_j=(1,v_j),\\
+K_5=\operatorname{conv}\{p_j:j\in\mathbb Z/5\mathbb Z\},\quad
+C_5=\operatorname{cone}K_5,\quad
+\mathcal E_5=[0,u_5]_{C_5^*}.
+\end{gathered}
+\tag{X122.25}
+$$
+
+其原闭尖生成锥、严格单位、全部纯点、全效应及完整混合排除边的证明，
+使用已有 [Janotta–Gogolin–Barrett–Brunner 多边形 note 第 1—2 节](../../../Library/FiniteGeometry/janottagogolinbarrettbrunner2011polygon.md)
+与 [Takakura 多边形 note 的完整效应及整个对边范围](../../../Library/FiniteGeometry/takakura2020polygonentropy.md)。
+前者与这里的质量坐标顺序仅差一个置换。
+具体输入是：全部纯点恰为五个 $p_j$，效应为全 K 上所有 $[0,1]$ 仿射函数的齐次化，且
+
+$$
+D_{p_j}=[p_{j+2},p_{j+3}]
+\tag{X122.26}
+$$
+
+包含整条混合边。
+这同时给 EB1 和 Inj，绝非 EB3。
+这些一般 carrier／效应／完整排除证明仍由既有 notes 承担；
+以下保留这同一签名的短准确最大宽／接触计算。
+
+置
+
+$$
+\sigma_5=\sin(2\pi/5),\quad
+\tau_5=\sin(\pi/5),\quad c_5=\cos(\pi/5),\quad
+\phi=\frac{1+\sqrt5}{2}=2c_5.
+\tag{X122.27}
+$$
+
+则全部完整排除宽度为
+
+$$
+W(D_{p_j})=M_5=\frac1\phi<1.
+\tag{X122.28}
+$$
+
+在 $F_5=D_{p_0}=[p_2,p_3]$，原效应
+
+$$
+b_5(t,z)=\frac{z_2+\sigma_5t}{2\sigma_5}
+\tag{X122.29}
+$$
+
+达到该宽度，其唯一全局顶／底接触为同一 $s=p_1,y=p_4$，满足
+
+$$
+p_2-p_3=M_5(p_1-p_4).
+\tag{X122.30}
+$$
+
+完整确认纤维 $\mathcal A_{p_0}$ 单点，其成员为
+
+$$
+e_0(t,z)=\frac{z_1+c_5t}{1+c_5},\qquad
+e_0(p_1)=e_0(p_4)=\frac1\phi.
+\tag{X122.31}
+$$
+
+且 $G_5=D_{p_1}=[p_3,p_4]$，$F_5\cap G_5=\{p_3\}$。
+两颗相关完整球的宽度都为 $M_5$，$1-M_5<M_5$。
+一维图中的法向限制已为线性同构，横向目标 $n^\perp=\{0\}$，所以 $L=0$。
+
+证明。
+全效应及完整排除事实如上述既有 notes。
+它们给出的两个排除包含方向分别保留所有确认效应可能的混合零点，
+以及在整条对边上为零的实际原效应；没有把完整确认菜单换成唯一完整确认。
+
+两个差向量的质量坐标为零，水平坐标也相消，竖直坐标分别为 $2\tau_5,2\sigma_5$。
+$\sigma_5=2\tau_5c_5$，故
+
+$$
+p_2-p_3=\frac{\tau_5}{\sigma_5}(p_1-p_4)
+=\frac1\phi(p_1-p_4).
+\tag{X122.32}
+$$
+
+对整个 $\mathcal E_5$ 的任意 $f$，$f(p_1),f(p_4)\in[0,1]$，于是
+
+$$
+|f(p_2)-f(p_3)|\le\frac1\phi.
+$$
+
+仿射函数在整条边的振幅恰是端点差的绝对值，
+所以这给全效应宽度上界，不是有限菜单的上界。
+
+竖直坐标在整个 $K_5$ 上的唯一最大、最小点为 $p_1,p_4$，值分别为 $\sigma_5,-\sigma_5$。
+故 $b_5$ 在全 $K_5$ 取值于 $[0,1]$，齐次后在全部 $C_5$ 是原效应。
+它在 F 上的端点差为 $\tau_5/\sigma_5=1/\phi$，
+达到上界，且全局顶／底面确为指定单点。
+(X122.32) 就是这同一对的弦等式。
+整五边形的旋转保留全 carrier 和整个效应区间，因而给每条完整排除边同一宽度。
+
+完整确认 $a\in\mathcal A_{p_0}$ 必须满足
+$a(p_0)=1$、$a(p_2)=a(p_3)=0$。
+三个不共线状态条件决定唯一仿射函数，解得 (X122.31)。
+其全域 proper 性及整条边为零也由原多边形接口保证。
+直接评价
+
+$$
+e_0(p_1)=e_0(p_4)
+=\frac{\cos(2\pi/5)+c_5}{1+c_5}
+=\frac1\phi.
+$$
+
+此唯一性是 $\mathcal A_{p_0}$ 的唯一性，
+不宣称 $\mathcal F_{p_0}$ 只有该效应，更不改变原排除定义。
+由 (X122.26) 立即有 $G_5=[p_3,p_4]$ 和指定单点交集。
+$M_5>1/2$ 给 $1-M_5<M_5$，此处纯 $y$ 上界取等。
+
+在 $s=p_1$ 的齐次法向 span 维数二，限制到其不共线对边的仿射函数空间也是二维同构。
+所以 B 的零核在本例自动成立；一维 F 的 $n^\perp$ 为零，故 $L=0$。
+两个原归一化及 C 的不等式由上述完整宽度直接满足；
+D 的方向消去在零横向目标中成立；E 的严格下界和纯 y 上等号如上。
+这给 A—E 的一维方法控制。证毕。
+
+原多边形 carrier 和排除结论是 literature-attested 的中间输入：
+Janotta、Gogolin、Barrett、Brunner，arXiv:1012.1215v3，第 3.1 节式 (5)、(6)、(8)，
+及 Takakura，arXiv:1803.07388v2，第 2.2 节，版本和 DOI 见两份既有 notes。
+准确的最大宽／同接触计算是这里保留的初等组合，不错误归于只证明 carrier 的 note。
+FINITE_PURE VII97.6 的定理是有理七边形；其中五边形提及不代替上述准确计算。
+已有 note 的另一个正延拓预算也不被当成这里的宽度。
+
+此控制只限制对所有正球维数都有效的方法：
+仅有接触纯性、完整法向最大值及单点接触面，仍允许一维的 $M<1$。
+每个排除面在这里仿射维数一，所以它不是原 EB3 问题的反模型，
+也不提供 EB3 饱和失败或逻辑独立性。
+
+### 122.7 剩余的全局正性、宽度与原操作桥
+
+**约定 122.8（共同因子的用途及仍缺见证）。**
+本章的 repo-derived 组合为：整个 $\mathcal A_s$ 的同接触转移，
+一般接触冗余下的核包含及唯一共同斜率公式，
+同一纯 y 条件下的核方向，以及同一 F/G 相交时的严格双宽度耦合。
+满射／内部切片、P0 同构、原全局最大值归一、径向宽度改写及严格变分均保留原归属。
+既有 [CommonPositiveExtension](../../../Blueprint/D5/S3/Quantum/Foundation/CommonPositiveExtension.md)
+的正限制双射／全正延拓另需 weakPair；
+FINITE_PURE VII105.4 的对应结论也有其 W／Pair 前件。
+全局标签 Inj 不支付这些前件。
+
+没有推出 $M=1$，没有构造完整原 EB3+Inj 反模型。
+同一 y 纯、F/G 相交和 $s\in P_0$ 都是各自明列的附加前件。
+E 的耦合不能建立相交，也不能排除 $1/2<M<1$。
+
+一个足够的实际上升证书是：有 $v\in\mathcal B_s$ 且
+$\|v\|_G>M/(2-M)$，并带有定义中的原 $h\in N_s$、$R_sh=(1,v)$。
+该同一 $h$ 给原全锥效应 $h/(1+\|v\|_G)$，在 G 的振幅为
+
+$$
+\frac{2\|v\|_G}{1+\|v\|_G}>M.
+\tag{X122.33}
+$$
+
+同理，一个实际原正法向若违反共同图二次界，会给 F 上超过 M 的原效应。
+本章未提供任一这种见证。
+旧正内半径只给小的合法斜率，不给超过宽度阈值的斜率。
+有符号满射或局部球正性不能补出全局正见证。
+
+即使以后得到 $M=1$，首先也只支付至少一颗最大排除球的饱和；
+传播至全部原球是另一条关系。
+$T_s$ 只控制斜率，不控制中心值；它不是保持原单位的正态回缩、滤波、
+逆映射、仪器、门字或实际控制。
+[UnitPreservingLiftImage](../../../Blueprint/D5/S3/Quantum/Foundation/UnitPreservingLiftImage.md)
+保留原单位的闭像／最小成本结果也没有提供正线性 section、成本一接触或这里的上升证书。
+全原 $\Omega$、合法字、未来读出及 X121.7 的全部原生、复合、过程和时间合同仍保留。
+
+## 追加锚（本行以下为增补区）
