@@ -50,10 +50,6 @@ lemma colMatrix_mul_conjTranspose_of_orthonormalBasis
     (b : OrthonormalBasis (Fin N) 𝕜 (EuclideanSpace 𝕜 (Fin N))) :
     colMatrix b * (colMatrix b)ᴴ = 1 :=
   mul_eq_one_comm.mp (conjTranspose_mul_colMatrix_of_orthonormal b.orthonormal)
-lemma colMatrix_mulVec (e : Fin k → EuclideanSpace 𝕜 (Fin N)) (c : Fin k → 𝕜) :
-    colMatrix e *ᵥ c = ⇑(∑ i, c i • e i) := by
-  ext a
-  simp [Matrix.mulVec, dotProduct, mul_comm]
 lemma sum_vecMulVec_eq_colMatrix_mul (e : Fin k → EuclideanSpace 𝕜 (Fin N)) :
     ∑ i, vecMulVec (⇑(e i)) (star ⇑(e i)) = colMatrix e * (colMatrix e)ᴴ := by
   ext a c
@@ -62,8 +58,6 @@ end Gram
 variable {N : ℕ}
 def rankOne (v : EuclideanSpace ℂ (Fin N)) : Matrix (Fin N) (Fin N) ℂ :=
   vecMulVec (⇑v) (star ⇑v)
-lemma rankOne_apply (v : EuclideanSpace ℂ (Fin N)) (a c : Fin N) :
-    rankOne v a c = v a * conj (v c) := rfl
 lemma rankOne_posSemidef (v : EuclideanSpace ℂ (Fin N)) : (rankOne v).PosSemidef :=
   Matrix.posSemidef_vecMulVec_self_star (R := ℂ) (⇑v)
 lemma rankOne_isHermitian (v : EuclideanSpace ℂ (Fin N)) : (rankOne v).IsHermitian :=
@@ -158,16 +152,9 @@ theorem p_sum_rankOne {k : ℕ} {e : Fin k → EuclideanSpace ℂ (Fin N)} (he :
 theorem sum_frame_orthonormalBasis (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) :
     ∑ i, OP.frame (b i) = 1 := by
   rw [← OP.p_sum_rankOne b.orthonormal, sum_rankOne_orthonormalBasis, OP.total_one]
-theorem isFrameFunction_frame : IsFrameFunction ℂ OP.frame 1 :=
-  OP.sum_frame_orthonormalBasis
 def realCombination {k : ℕ} (e : Fin k → EuclideanSpace ℂ (Fin N))
     (x : EuclideanSpace ℝ (Fin k)) : EuclideanSpace ℂ (Fin N) :=
   ∑ i, ((x i : ℝ) : ℂ) • e i
-lemma colMatrix_map_ofReal {k : ℕ} (b : Fin k → EuclideanSpace ℝ (Fin k)) :
-    colMatrix (fun j => WithLp.toLp 2 fun i => ((b j i : ℝ) : ℂ))
-      = (colMatrix b).map ((↑) : ℝ → ℂ) := by
-  ext a i
-  rfl
 lemma orthonormal_realCombination {k : ℕ} {e : Fin k → EuclideanSpace ℂ (Fin N)}
     (he : Orthonormal ℂ e) {b : Fin k → EuclideanSpace ℝ (Fin k)} (hb : Orthonormal ℝ b) :
     Orthonormal ℂ fun j => realCombination e (b j) := by
@@ -395,11 +382,6 @@ theorem le_weight_of_nonneg (hf : IsFrameFunction ℝ f W)
   have := h0 t ht
   have := h0 _ (norm_cross_of_orthonormal hs ht hst)
   linarith
-theorem weight_nonneg (hf : IsFrameFunction ℝ f W)
-    (h0 : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → 0 ≤ f u) : 0 ≤ W := by
-  have hs : ‖(EuclideanSpace.single 0 (1 : ℝ) : EuclideanSpace ℝ (Fin 3))‖ = 1 := by
-    rw [PiLp.norm_single]; exact norm_one
-  exact (h0 _ hs).trans (hf.le_weight_of_nonneg h0 hs)
 end IsFrameFunction
 noncomputable def sphereSup (f : EuclideanSpace ℝ (Fin 3) → ℝ) : ℝ :=
   sSup (f '' Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1)
@@ -423,19 +405,9 @@ lemma bddBelow_sphere {m : ℝ} (hm : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u�
 lemma le_sphereSup {M : ℝ} (hM : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → f u ≤ M)
     {s : EuclideanSpace ℝ (Fin 3)} (hs : ‖s‖ = 1) : f s ≤ sphereSup f :=
   le_csSup (bddAbove_sphere hM) ⟨s, mem_sphere_zero_iff_norm.mpr hs, rfl⟩
-lemma sphereSup_le {M : ℝ} (hM : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → f u ≤ M) :
-    sphereSup f ≤ M := by
-  refine csSup_le sphere_nonempty ?_
-  rintro _ ⟨u, hu, rfl⟩
-  exact hM u (mem_sphere_zero_iff_norm.mp hu)
 lemma sphereInf_le {m : ℝ} (hm : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → m ≤ f u)
     {s : EuclideanSpace ℝ (Fin 3)} (hs : ‖s‖ = 1) : sphereInf f ≤ f s :=
   csInf_le (bddBelow_sphere hm) ⟨s, mem_sphere_zero_iff_norm.mpr hs, rfl⟩
-lemma le_sphereInf {m : ℝ} (hm : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → m ≤ f u) :
-    m ≤ sphereInf f := by
-  refine le_csInf sphere_nonempty ?_
-  rintro _ ⟨u, hu, rfl⟩
-  exact hm u (mem_sphere_zero_iff_norm.mp hu)
 lemma exists_sphereSup_sub_lt {δ : ℝ} (hδ : 0 < δ) :
     ∃ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 ∧ sphereSup f - δ < f u := by
   obtain ⟨_, ⟨u, hu, rfl⟩, h⟩ := exists_lt_of_lt_csSup (sphere_nonempty (f := f))
@@ -446,12 +418,6 @@ lemma exists_lt_sphereInf_add {δ : ℝ} (hδ : 0 < δ) :
   obtain ⟨_, ⟨u, hu, rfl⟩, h⟩ := exists_lt_of_csInf_lt (sphere_nonempty (f := f))
     (show sphereInf f < sphereInf f + δ by linarith)
   exact ⟨u, mem_sphere_zero_iff_norm.mp hu, h⟩
-theorem IsFrameFunction.exists_orthogonal_lt_sphereInf_add {W M : ℝ}
-    (hf : IsFrameFunction ℝ f W) (hM : ∀ u : EuclideanSpace ℝ (Fin 3), ‖u‖ = 1 → f u ≤ M)
-    {ξ : ℝ} {s : EuclideanSpace ℝ (Fin 3)} (hs : ‖s‖ = 1) (hfs : sphereSup f - ξ < f s) :
-    ∃ t : EuclideanSpace ℝ (Fin 3), ‖t‖ = 1 ∧ ⟪s, t⟫_ℝ = 0 ∧ f t < sphereInf f + ξ :=
-  hf.exists_orthogonal_lt (fun _ hu => le_sphereSup hM hu)
-    (fun _ hδ => exists_lt_sphereInf_add hδ) hs hfs
 end SupInf
 theorem isFrameFunction_inner_sq {p₀ : EuclideanSpace ℝ (Fin 3)} (hp₀ : ‖p₀‖ = 1) :
     IsFrameFunction ℝ (fun s => ⟪p₀, s⟫_ℝ ^ 2) 1 := by
@@ -463,21 +429,6 @@ theorem isFrameFunction_inner_sq {p₀ : EuclideanSpace ℝ (Fin 3)} (hp₀ : �
   refine Finset.sum_congr rfl fun i _ => ?_
   show ⟪p₀, b i⟫_ℝ ^ 2 = ⟪p₀, b i⟫_ℝ * ⟪b i, p₀⟫_ℝ
   rw [real_inner_comm p₀ (b i), sq]
-lemma dotProduct_mulVec_eq_trace (A : Matrix (Fin 3) (Fin 3) ℝ) (s : Fin 3 → ℝ) :
-    s ⬝ᵥ (A *ᵥ s) = (A * vecMulVec s s).trace := by
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.vecMulVec_apply,
-    dotProduct, Matrix.mulVec, Finset.mul_sum]
-  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
-theorem isFrameFunction_quadForm (A : Matrix (Fin 3) (Fin 3) ℝ) :
-    IsFrameFunction ℝ (fun s : EuclideanSpace ℝ (Fin 3) => ⇑s ⬝ᵥ (A *ᵥ ⇑s)) A.trace := by
-  intro b
-  simp only [dotProduct_mulVec_eq_trace]
-  rw [← Matrix.trace_sum, ← Matrix.mul_sum]
-  have h : ∑ i, vecMulVec (⇑(b i)) (⇑(b i)) = 1 := by
-    have := sum_vecMulVec_eq_colMatrix_mul (𝕜 := ℝ) b
-    simp only [star_trivial] at this
-    rw [this, colMatrix_mul_conjTranspose_of_orthonormalBasis]
-  rw [h, Matrix.mul_one]
 end Gleason
 open Matrix Real
 open scoped Matrix InnerProductSpace ComplexConjugate
@@ -504,9 +455,6 @@ lemma mem_descent_of_equator {p s t : EuclideanSpace ℝ (Fin 3)} (ht : t ∈ eq
   rw [coldest, inner_smul_right, inner_sub_right, inner_smul_right, real_inner_comm p t, ht.2,
     hts]
   ring
-lemma self_mem_descent {p s : EuclideanSpace ℝ (Fin 3)} (hs : s ∈ northern p) :
-    s ∈ descent p s :=
-  ⟨hs, inner_coldest_self p hs.1⟩
 noncomputable def lift (p v : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
   (‖p + v‖⁻¹ : ℝ) • (p + v)
 section Lift

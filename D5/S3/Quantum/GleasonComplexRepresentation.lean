@@ -412,8 +412,6 @@ noncomputable def invSqrtTwo : ℂ := (((Real.sqrt 2)⁻¹ : ℝ) : ℂ)
 lemma invSqrtTwo_mul_self : invSqrtTwo * invSqrtTwo = 1 / 2 := by
   rw [invSqrtTwo, ← Complex.ofReal_mul, ← mul_inv, Real.mul_self_sqrt (by norm_num)]
   norm_num
-lemma norm_invSqrtTwo : ‖invSqrtTwo‖ = (Real.sqrt 2)⁻¹ := by
-  rw [invSqrtTwo, Complex.norm_real, Real.norm_eq_abs, abs_of_pos (by positivity)]
 noncomputable def crossTerm (f : EuclideanSpace ℂ (Fin N) → ℝ) (x y : EuclideanSpace ℂ (Fin N)) :
     ℝ :=
   f (invSqrtTwo • (x + y)) - (f x + f y) / 2
