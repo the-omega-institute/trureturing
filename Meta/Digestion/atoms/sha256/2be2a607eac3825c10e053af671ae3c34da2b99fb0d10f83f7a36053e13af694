@@ -1,0 +1,32 @@
+#### 命题 6.9：过程的全部自读等价类
+
+给定任意复线性 $\Phi:M_d(\mathbb C)\to M_m(\mathbb C)$，定义
+
+$$
+\Phi^\sharp(A)=\Phi(A^*)^*,\qquad
+ \Phi_h=\tfrac12(\Phi+\Phi^\sharp),\qquad
+ \Phi_a=\tfrac1{2i}(\Phi-\Phi^\sharp).
+$$
+
+二者均保星，且 $\Phi=\Phi_h+i\Phi_a$。 在标签 $(a,u)$ 的自由复空间 $W$ 上定义半双线性型
+
+$$
+B_\Phi((a,u),(b,v))=\langle u,\Phi(a^*b)v\rangle,\qquad
+ q_\Phi(w)=\Re B_\Phi(w,w).
+$$
+
+将 $W$ 作为实加法比较群，则 $q_\Phi$ 满足 C136 的非负要求，当且仅当 $\Phi_h$ 完全正。 原 $\Phi$ 本身完全正还须消去 $i\Phi_a$；若已知 $\Phi$ 保星，则非负自读恰等价于原 $\Phi$ 完全正。 对另一张同型原表 $\Psi$，$q_\Phi=q_\Psi$ 当且仅当 $\Phi_h=\Psi_h$； 所以固定全部自读后，未定部分恰为任意 $i\Lambda$，其中 $\Lambda$ 复线性且保星。
+
+**证明。**
+
+二次方程对任意半双线性型的实自读恒成立。由定义有
+
+$$
+B_{\Phi^\sharp}(f,g)=\overline{B_\Phi(g,f)},\qquad
+ q_\Phi(w)=B_{\Phi_h}(w,w).
+$$
+
+$\Phi_h$ 保星使该型 Hermitian。 取固定矩阵单位行指标的标签，其 Gram 为 $[\Phi_h(E_{ij})]_{ij}$。 型正则此 Choi 矩阵正，将其分解成秩一正和并重排列向量，即得 $\Phi_h(A)=\sum_\nu L_\nu A L_\nu^*$，故完全正。 反向完全正作用于任意正块矩阵 $[a_i^*a_j]$，再以向量族评价，给全型非负。 最后完全正必保星，故原表完全正时 $\Phi_a=0$。 Hermitian 极化从全部 $q_\Phi$ 唯一恢复 $B_{\Phi_h}$； 再取 $a=I,b=A$ 及任意 $u,v$，恢复 $\Phi_h(A)$ 的全部矩阵元，证明等价类刻画。
+
+$\square$
+

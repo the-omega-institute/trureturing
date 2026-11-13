@@ -3823,3 +3823,575 @@ $$
 想象原状态体是一整块凸的实体，每个纯态是它的一个原标签；确认这个标签的全部原测试所能读零的所有状态，仍然收成一整颗实心三球。现在把这颗球朝它的标签缩一半。新的候选只要求这颗小球至少有一点仍碰到整块实体的边界。为什么这恰好支付原来的满刻度？因为一个中点若贴在边界，支撑它的同一张平面就必须同时兜住线段两端；完整原面分类又说，这个非点边界面必须是另一个实际排除球。两颗不同原球只能共享一个纯点，所以即使接触端最初允许是混态，证明也会把它逼成实际纯点，再从同一个第三标签找到在原球内一端读一、一端读零的原测试。反过来，满刻度两端连同原标签正好给出这样的边界中点。这只是把已有条件重构画得更清楚，没有凭空减少独立假设。若接触失败，失败也不能躲成每个方向各自一点点的误差：必须用同一个内部状态、同一个严格正余量，把整颗半缩球一起放进内部，甚至在一片开标签区域内保持同一层余量。另一方面，只另加标签不重复，便能在所有原纯标签中找到同一个稠密而且在可数交下稳定的大集合；在这些锚点附近，全部原零效应作为一个整体不会突然丢失。站在其中任一锚点看所有真正经过它的邻球，每颗球面各带一个二维切平面。如果两颗邻球共享一个非零切向方向，就能沿各自真实球面走两条一阶完全重合的弧；先消掉共同的一阶位移，再用同一原零效应的稳定性比较二阶弯曲，原正性会要求一个严格负数非负，产生矛盾。因此在这些锚点上，全部邻球的切平面两两只有零交，原空间至少九维。双向原球公式还给每个切平面自己的带权欧氏尺，并保证从别的实际切平面投到它时不放大，所有这些尺能拼成一个有限半范数。现在仍没有证明这些平面填满整个剩余空间，没有共同全局内积或复结构，也没有九维上界；更没有证明这种局部扇形和那层整球内余量不能在同一原实现里共存。排除这层统一余量，才会使裸球形自动给出边界接触，再接上既有定理恢复同一原模型的全部静态量子态、效应、Born概率、POVM和谱结构。实际准备、复合、事件、仪器、物理钟、Hamiltonian和单位仍各自完整保留原合同。
 
 ## 追加锚（本行以下为增补区）
+
+## 122. 接触标签稠密、原三维影壳与整球及完整零效应塌缩
+
+**约定 122.0（原域、卷名与证据范围）。** 本章的VII103—104指[完整排除面第七卷][Q122VII]，VIII指[排除球第八卷][Q122VIII]，IX116、118、120指[排除球第九卷][Q122IX]；[121][Q122121]指本卷上一章。它们不指本卷另有的有限复合层级103—104。主候选只在裸完整EB3上要求接触标签稠密。影壳分析则明确另加Inj，并固定一个唯一完整确认标签。所有结论保留同一个原锥、原单位、整个状态体及整个效应区间。本章不主张文献穷尽或全球原创；静态对应与实际物理合同分别保留其前件。
+
+### 122.1 裸完整EB3与稠密接触候选
+
+取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。完整原对象为
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\quad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\quad
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\}.
+\end{gathered}
+\tag{Q122.1}
+$$
+
+这里 $\mathcal F_p$ 是121.1中记为 $F_p$ 的同一完整确认集合，改记号只为与邻球 $F_v$ 区分。EB3表示每个完整 $D_p$ 都是仿射闭三球；Inj表示 $D_p=D_q\Rightarrow p=q$。不先假定 $P$ 闭。原纯点之间 $p\perp q$ 表示存在同一个原全域效应在两端取一、零，补效应使关系对称；它等价于 $q\in D_p$，且 $p\notin D_p$。
+
+复用VII103.2、VII104.1：$K,\mathcal E$ 紧，每个 $D_p$ 是暴露极大真面，$\mathcal A_p$ 非空；全部非空真面只有纯单点和完整球。不同完整球若相交，只交于一个原纯点。每个完整球 $F$ 有 $P\cap F=\partial_{\rm rel}F$，且 $F=\operatorname{conv}(P\cap F)$。这些接口没有Pair前件。
+
+**定义 122.1（接触标签稠密）。** 令
+
+$$
+\begin{gathered}
+M_p=(p+D_p)/2,\qquad
+W(D_p)=\max_{f\in\mathcal E}(\max_{D_p}f-\min_{D_p}f),\\
+\mathcal R=\{p\in P:\exists x\in D_p,\ (p+x)/2\in\operatorname{relbd}K\},\\
+\mathsf{DC}:\qquad \overline{\mathcal R}^{\,P}=P.
+\end{gathered}
+\tag{Q122.2}
+$$
+
+主候选是 $\boxed{\mathrm{EB3}+\mathsf{DC}}$。稠密性取原 $P$ 的相对拓扑，端点 $x$ 起初量化整个原球，包含全部混态。它等价地要求每个非空相对开纯标签区域含一个接触标签；不是只在选定球面、有限标签集或图模型中稠密。
+
+**定理 122.2（稠密接触与全称接触的准确等价）。** 在(Q122.1)的裸完整EB3域，以下等价：$\mathsf{DC}$；121.4的 $\mathsf{MC}$；每个原标签均有 $W(D_p)=1$；存在同原锥、同原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{Q122.3}
+$$
+
+证明。121.2已经逐标签证明 $p\in\mathcal R\Longleftrightarrow W(D_p)=1$，并证明接触端必为原纯点；不重复其面分类证明。固定 $\omega\in\operatorname{ri}K$，121.3及其补充结论给非负下半连续函数
+
+$$
+\beta_\omega(p)=
+\min_{\substack{x\in D_p\\h\in C^*,\ h(\omega)=1}}
+\frac{h(p)+h(x)}2,
+\qquad \mathcal R=\{p\in P:\beta_\omega(p)=0\}.
+\tag{Q122.4}
+$$
+
+故 $P\setminus\mathcal R=\{\beta_\omega>0\}$ 相对开，$\mathcal R$ 相对闭。相对闭且稠密恰为整个 $P$，这给 $\mathsf{DC}\Longleftrightarrow\mathsf{MC}$。121.4再给其余等价，反向已经检验整个矩阵态、效应和每个纯标签。此调用先取得全W1，再取得Inj、纯点紧性和全Pair，最后才消费IX116.17及VII104.2—104.3的共同三结果接口。证毕。
+
+IX118.14还给 $\mathcal R$ 在 $K$ 中紧；这里相对闭性已经足够。三角仍只指三条各自真实的全域零一边；共同三个效应之和为 $u$ 是上述后续结论，不是稠密接触的输入。这是几何与量词压缩，没有证明独立假设更少、逻辑上严格更弱或公理数最少。裸EB3是否自动给 $\mathsf{DC}$，仍未解决。
+
+### 122.2 正规锚点与已支付的原法向图
+
+以下122.2—122.11均另取EB3+Inj，并固定
+
+$$
+p\in P_0:=\{a\in P:\mathcal A_a\text{ 是单点}\},\quad
+\mathcal A_p=\{e_p\},\quad g=u-e_p,\quad
+D_p=c+B\mathbb B^3.
+\tag{Q122.5}
+$$
+
+$B:\mathbb R^3\to\ker u$ 单射。$g(p)=0$，$g>0$ 于整个 $K\setminus\{p\}$，$g|_{D_p}=1$。令
+
+$$
+N_p=\{h\in C^*:h(p)=0\},\qquad
+H=(H_1,H_2,H_3),\quad H(c+Bw)=w,
+\quad H_i\in\operatorname{span}N_p.
+\tag{Q122.6}
+$$
+
+直接复用IX120.8—120.12：限制到 $D_p$ 是 $\operatorname{span}N_p$ 与 $\operatorname{Aff}(D_p)$ 的线性同构，$\dim\operatorname{span}N_p=4$，$g\in\operatorname{ri}N_p$。$H$ 唯一，且存在有限 $M_H$ 使 $\|H(x)\|\le M_Hg(x)$ 于整个 $K$。方向函数及完整邻球为
+
+$$
+\begin{gathered}
+\rho(v)=\rho_p(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g(x)},\quad \rho(v)\ge\|v\|,\\
+q_v=c+Bv\in P_0,\qquad F_v=D_{q_v}\quad(v\in S^2),\\
+e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)},\qquad
+N_p=\{\alpha g+v\cdot H:\alpha\ge\rho(v)\}.
+\end{gathered}
+\tag{Q122.7}
+$$
+
+$\rho$ 有限、正齐次、次可加且Lipschitz；$v\mapsto e_{q_v}$ 在这个固定原球面上Lipschitz。每个 $F_v$ 是整个实际三球，$p\in\partial_{\rm rel}F_v$；$v\ne w$ 给 $F_v\cap F_w=\{p\}$。这里绝不是 $D_p\cap F_v=\{p\}$，因为 $p\notin D_p$。
+
+还复用两个完整原接口：任意 $h\in N_a$ 有
+
+$$
+\max_Kh=\max_{D_a}h,
+\qquad
+\{b\in\mathcal E:b(p)=0,b(q_v)=1\}=[g,e_{q_v}].
+\tag{Q122.8}
+$$
+
+第一式来自IX120.2／118.10，第二式来自IX120.12。它们量化原全效应，不只是球内限制。以上未使用Pair、weakPair、TRI2、正过滤、共同内积或球族全局连续性。
+
+### 122.3 实际三维影像及其唯一真实接触
+
+**定义 122.3（实际影像与闭影壳）。** 置
+
+$$
+Z=\{H(x)/g(x):x\in K\setminus\{p\}\},\qquad S=\overline Z,
+\qquad S_v=\operatorname*{argmax}_{z\in S}(-v)\cdot z.
+\tag{Q122.9}
+$$
+
+这是同一原态的比值读数；没有用新态体替换 $K$。$S_v$ 是按方向指定的暴露支撑面，允许有正维数。“$S$ 光滑”将只表示每个边界点有唯一支撑超平面；“$S$ 严格凸”表示边界没有非平凡线段。
+
+**定理 122.4（有界凸影像、整内球与实际接触纤维）。** $Z$ 有界凸，包含整个原坐标球 $\mathbb B^3$；$S$ 是三维紧凸体。对每个 $v\in S^2$，存在唯一实际值 $z_v$，使
+
+$$
+\begin{gathered}
+h_S(-v)=\rho(v),\qquad Z\cap S_v=\{z_v\},\\
+H|_{F_v}=z_v g|_{F_v},\qquad
+\{x\in K\setminus\{p\}:H(x)/g(x)\in S_v\}=F_v\setminus\{p\}.
+\end{gathered}
+\tag{Q122.10}
+$$
+
+证明。有界性由 $\|H\|\le M_Hg$ 给出。若 $z_i=H(x_i)/g(x_i)$，$x_i\ne p$，给定 $0\le\lambda\le1$，原混态
+
+$$
+x=\frac{\lambda x_1/g(x_1)+(1-\lambda)x_2/g(x_2)}
+{\lambda/g(x_1)+(1-\lambda)/g(x_2)}\in K
+\tag{Q122.11}
+$$
+
+满足 $g(x)>0$，且其比值恰为 $\lambda z_1+(1-\lambda)z_2$。所以 $Z$ 凸。在整个 $D_p$ 上 $g=1,H(c+Bw)=w$，故整颗 $\mathbb B^3$ 属于 $Z$。取闭包不改变有限支撑函数，其定义给 $h_S(-v)=\rho(v)$。
+
+写实际邻球 $F_v=c_v+B_v\mathbb B^3$，$p=c_v+B_vs_v$，$\|s_v\|=1$。任意 $h\in N_p$ 在此球上是非负仿射函数并在 $p$ 为零。若其表达为 $\alpha+\ell\cdot w$，则 $\alpha\ge\|\ell\|$，$\alpha+\ell\cdot s_v=0$；Cauchy–Schwarz等号给
+
+$$
+h(c_v+B_vw)=\alpha(1-s_v\cdot w),\qquad \alpha\ge0.
+\tag{Q122.12}
+$$
+
+$g$ 的系数 $g(c_v)$ 严格正，因为它仅在 $p$ 为零。每个 $H_i$ 是这些原正法向的线性组合，所以其限制也是同一个 $1-s_v\cdot w$ 的倍数。令 $z_v=H(c_v)/g(c_v)$，得到 $H=z_vg$ 于整个 $F_v$，包括其所有混态。
+
+在 $F_v\setminus\{p\}$ 上代入 $e_{q_v}=0$，得 $(-v)\cdot z_v=\rho(v)$，故该值确在 $Z\cap S_v$。反之，若某个原 $x\ne p$ 的比值属于 $S_v$，(Q122.7)使 $e_{q_v}(x)=0$，其完整零面恰为 $F_v$，所以 $x\in F_v$，比值必为 $z_v$。这同时给唯一性与完整纤维等式。证毕。
+
+应区分三个对象：真实邻球 $F_v$ 有三维，实际比值接触 $Z\cap S_v$ 只有一点，而闭影壳的整个 $S_v$ 可以另含非实际极限值。本定理没有把最后一个集合也说成单点。
+
+### 122.4 严格凸四维法锥只给影壳光滑
+
+**定理 122.5（法锥边界射线暴露与影壳光滑）。** $N_p$ 在其四维张成空间内为闭尖满维严格凸锥。其每条非零边界射线恰为某个 $\mathbb R_+e_{q_v}$，并由一个实际 $x_v\in\operatorname{ri}F_v$ 的评价暴露。$S$ 的每个边界点有唯一支撑超平面。
+
+证明。$N_p$ 闭尖，满维由 $g\in\operatorname{ri}N_p$ 给出。(Q122.7)及 $\rho$ 的连续性说明非零边界恰是 $\alpha=\rho(v)$、$v\ne0$；正齐次化后正是所述射线。
+
+固定 $x_v\in\operatorname{ri}F_v$。若 $h\in N_p$ 且 $h(x_v)=0$，球上非负性迫 $h$ 零于整个 $F_v$。若 $h\ne0$，取全域正最大值 $M$ 及达到它的原纯点 $s$。$h/M$ 确认 $s$、零于 $F_v$，故 $F_v\subseteq D_s$；极大性与Inj给 $D_s=F_v$、$s=q_v$。于是 $h/M\in\mathcal A_{q_v}=\{e_{q_v}\}$。所以
+
+$$
+N_p\cap\{h:h(x_v)=0\}=\mathbb R_+e_{q_v}.
+\tag{Q122.13}
+$$
+
+每个非零边界点因而位于一条暴露极射线上。若两个非比例非零锥元素之和仍在边界，暴露该边界射线的上述评价非负且在和上为零，于两项上都必须为零；两项遂同属一条射线，矛盾。这正是锥相对于其张成空间的严格凸性。
+
+现取 $z\in\partial S$。若有两个不同单位方向 $v,w$ 的支撑超平面经过 $z$，则 $\rho(v)+v\cdot z=\rho(w)+w\cdot z=0$。非零正泛函 $\ell_z(\alpha g+a\cdot H)=\alpha+a\cdot z$ 在 $N_p$ 上非负，且在 $g$ 上为一。它在 $e_{q_v},e_{q_w}$ 上为零，故两者之和仍在边界。严格凸性迫两者成正比例；比较其 $H$ 系数和单位方向给 $v=w$，矛盾。每个边界点本来就有支撑超平面，故唯一。证毕。
+
+这是极性中“严格凸法锥对应光滑影壳”的具体证明。一个支撑超平面仍可沿一整段边界贴住光滑凸体；光滑性没有消除 $S_v$ 的平面退化。
+
+### 122.5 精确闭像判据与两个不同商
+
+**定理 122.6（闭像、实际影像闭与严格凸等价）。** 令
+
+$$
+\Pi=(g,H):V\to\mathbb R^4,\qquad
+L=(\operatorname{span}N_p)^\perp
+=\{x:h(x)=0\ (h\in\operatorname{span}N_p)\}.
+\tag{Q122.14}
+$$
+
+则 $\Pi$ 满射、$\ker\Pi=L$，并且
+
+$$
+\boxed{\quad C+L\text{ 闭}\quad\Longleftrightarrow\quad
+Z=S\quad\Longleftrightarrow\quad S\text{ 严格凸}.\quad}
+\tag{Q122.15}
+$$
+
+证明。$g,H_1,H_2,H_3$ 是 $\operatorname{span}N_p$ 的基，给满射和准确核。因为 $g\ge0$ 在原锥上且其原零面是 $\mathbb R_+p$，有
+
+$$
+\Pi(C)=\{0\}\ \cup\ \{t(1,z):t>0,\ z\in Z\},\qquad
+\Pi^{-1}(\Pi(C))=C+L.
+\tag{Q122.16}
+$$
+
+第一式的反向也成立：把实现 $z$ 的原态 $x$ 缩放为 $tx/g(x)\in C$ 即可。若 $Z$ 闭，由其有界性，任何收敛的 $t_n(1,z_n)$ 或有 $t_n\to0$ 并趋零，或有 $t_n\to t>0$ 并使 $z_n$ 收敛到 $Z$；故 $\Pi(C)$ 闭。反之，闭 $\Pi(C)$ 与切片 $t=1$ 相交就给 $Z$ 闭。闭 $\Pi(C)$ 的原像闭；若 $C+L$ 闭，取 $\Pi$ 的线性右逆 $J$，则 $\Pi(C)=J^{-1}(C+L)$ 也闭。因此前两项等价。
+
+若 $Z=S$，定理122.4给每个支撑面 $S_v$ 都是单点。任何非平凡边界线段的中点有支撑超平面；线性评价迫使整段都在该支撑面中，矛盾，所以 $S$ 严格凸。反之若 $S$ 严格凸，每个边界点 $z$ 取一个支撑方向 $v$，有 $S_v=\{z\}$。定理122.4的实际接触存在性给 $z=z_v\in Z$。故 $\partial S\subset Z$；每个内部点都在一条端点属于 $\partial S$ 的弦上，$Z$ 凸遂给整个 $S\subseteq Z$。证毕。
+
+**命题 122.7（只商去 $\mathbb Rp$ 永远非闭）。** 同一正规锚点有 $C+\mathbb Rp$ 非闭。这与(Q122.15)没有冲突。
+
+证明。在任一实际球 $F_v$ 的球面上取经过 $p$ 的光滑弧 $a(t)$，$a(0)=p$、$d=a'(0)\ne0$。因为 $u(a(t))=1$，$u(d)=0$。每个 $h\in N_p$ 在弧上于零点取局部最小，故 $h(d)=0$；特别地 $g(d)=0$、$d\in L$。对 $t>0$，
+
+$$
+\frac{a(t)-p}{t}\in C+\mathbb Rp,\qquad
+\frac{a(t)-p}{t}\longrightarrow d.
+\tag{Q122.17}
+$$
+
+若 $d=c_0+\lambda p$、$c_0\in C$，$g(d)=0$ 迫 $c_0\in\mathbb R_+p$；再用 $u(d)=0$ 得 $d=0$，矛盾。故极限不在该和中。较大的准确核 $L$ 已消去这个切向量，不能把这条非闭证据搬到 $V/L$。证毕。
+
+$N_p$ 是 $C^*$ 的暴露面。按[Pataki的Definition 1、Remark 1及Theorem 2][Q122P]，$C+(\operatorname{span}N_p)^\perp$ 闭恰是 $C^*$ 在面 $N_p$ 处的facial dual completeness条件；并非 $C$ 在某个原面处的条件。原锥即使projectionally exposed、amenable或nice，也不能由这些词本身推出这个对偶方向的闭像，且它们没有原单位预算的结论。
+
+### 122.6 平支撑面的实际旋转迫使整张原球塌缩
+
+定义实际高度
+
+$$
+m(v)=\max_{x\in F_v}g(x)>0\qquad(v\in S^2).
+\tag{Q122.18}
+$$
+
+严格正性来自每个 $F_v$ 非点且 $g$ 只零于 $p$。高度是同一原效应在整个原球上的最大值，始终 $m(v)\le1$。
+
+**定理 122.8（平面差向量给出整球塌缩）。** 若 $S_v$ 含某个 $y\ne z_v$，令
+
+$$
+n=-v,\qquad a=y-z_v,\qquad
+w_t=-\frac{n+ta}{\|n+ta\|}\quad(t>0).
+\tag{Q122.19}
+$$
+
+则 $a\ne0,n\cdot a=0$、$w_t\ne v$、$w_t\to v$，而且
+
+$$
+a\cdot z_{w_t}\ge a\cdot y
+=a\cdot z_v+\|a\|^2,
+\qquad m(w_t)\longrightarrow0,
+\qquad d_H(F_{w_t},\{p\})\longrightarrow0.
+\tag{Q122.20}
+$$
+
+证明。$z_{w_t}$ 在方向 $n+ta$ 上支撑 $S$，所以
+$(n+ta)\cdot z_{w_t}\ge(n+ta)\cdot y$。又 $n\cdot z_{w_t}\le h_S(n)=n\cdot y$；相减除以 $t>0$ 即得第一个不等式，其中固定分离量是 $\|a\|^2>0$。
+
+若 $m(w_t)$ 不趋零，存在 $t_j\downarrow0$、$\epsilon>0$ 及达到高度的 $x_j\in F_{w_{t_j}}$，使 $g(x_j)\ge\epsilon$。紧 $K$ 中取子列 $x_j\to x$。固定球面上的 $e_{q_w}$ 连续，故 $e_{q_v}(x)=0$、$x\in F_v$；又 $g(x)\ge\epsilon$，所以 $x\ne p$。比值在 $x$ 附近连续，定理122.4给
+
+$$
+z_{w_{t_j}}=H(x_j)/g(x_j)\longrightarrow H(x)/g(x)=z_v,
+\tag{Q122.21}
+$$
+
+与固定分离量矛盾。因此高度趋零。
+
+对任意 $p$ 的环境邻域 $U$，紧集 $K\setminus U$ 若非空，$g$ 在其上有严格正最小值。高度趋零使 $F_{w_t}\subset U$ 最终成立，给整球的Hausdorff上包含；每张球又都含同一个原 $p$，给下包含。于是完整三维球，而非所选纯点或某条直径，收敛到 $\{p\}$。证毕。
+
+平支撑面中缺少的实际值 $y$，由同一原实现中的真实方向旋转检测出来。此论证不需要选择 $y$ 的原态实现；恰恰因为 $y$ 只是闭影壳极限点，正高度原态聚点才会与唯一实际接触冲突。
+
+### 122.7 完整原零效应集合塌成一个明确三角形
+
+**定理 122.9（全效应双向极限、维数降落与正缺口）。** 仍用定理122.8的同一 $w_t$，定义整个
+
+$$
+\mathcal B(q)=\{h\in\mathcal E:h(q)=0\},\qquad
+\mathcal T_v=\operatorname{conv}\{0,e_p,u-e_{q_v}\}.
+\tag{Q122.22}
+$$
+
+在原效应空间的范数 $\|h\|_K=\max_K|h|$ 下，
+
+$$
+d_H(\mathcal B(q_{w_t}),\mathcal T_v)\longrightarrow0.
+\tag{Q122.23}
+$$
+
+每个 $\mathcal B(q_{w_t})$ 及 $\mathcal B(q_v)$ 的线性张成均为四维；$\mathcal T_v$ 的两个非零顶点线性独立，故极限的线性张成与仿射维数均为二。特别地
+
+$$
+\delta_v:=\max_{h\in\mathcal B(q_v)}
+\operatorname{dist}_K(h,\mathcal T_v)>0,
+\qquad
+d_H(\mathcal B(q_{w_t}),\mathcal B(q_v))\longrightarrow\delta_v.
+\tag{Q122.24}
+$$
+
+证明。先证全部上极限。任取 $t_j\downarrow0$、$h_j\in\mathcal B(q_{w_{t_j}})$。紧 $\mathcal E$ 允许取子列 $h_j\to h\in\mathcal E$。评价连续给 $h(q_v)=0$。原最大值公式与整球塌缩给
+
+$$
+\max_Kh_j=\max_{F_{w_{t_j}}}h_j\longrightarrow h(p),
+\qquad \max_Kh=h(p).
+\tag{Q122.25}
+$$
+
+这里效应收敛在紧 $K$ 上一致，故移动最大值的极限成立。若 $h=0$，已经在三角形内。否则 $a_0=h(p)=\max_Kh>0$，因为 $K$ 张成 $V$；且 $a_0\le1$。于是 $b=h/a_0$ 是原效应，$b(p)=1,b(q_v)=0$。对(Q122.8)的完整原边区间取补，准确得到
+
+$$
+\{b\in\mathcal E:b(p)=1,b(q_v)=0\}
+=[u-e_{q_v},e_p].
+\tag{Q122.26}
+$$
+
+所以 $h=a_0b\in\mathcal T_v$。任何聚点均在三角形；紧性反证遂给
+$\sup_{h\in\mathcal B(q_{w_t})}\operatorname{dist}_K(h,\mathcal T_v)\to0$，这是完整上包含。
+
+再证全部下极限。对每个 $t$，三个真实效应
+$0,e_p,u-e_{q_{w_t}}$ 均零于 $q_{w_t}$，其凸包属于整个 $\mathcal B(q_{w_t})$。前两个顶点固定，第三个依(Q122.7)趋于 $u-e_{q_v}$。对任意三角形点使用相同三个凸系数，误差至多 $\|e_{q_{w_t}}-e_{q_v}\|_K$，统一趋零。于是三角形的每一点均由实际零效应逼近，且给所需下Hausdorff包含。(Q122.23)成立。
+
+对任意 $q\in P_0$，$\mathcal B(q)$ 张成 $N_q$ 的张成空间：任一非零 $h\in N_q$ 可除以 $\max_Kh>0$ 成为 $\mathcal B(q)$ 中的效应。IX120.8给其维数四；全部 $q_w$ 已由IX120.12属于 $P_0$。
+
+$e_p$ 与 $u-e_{q_v}$ 都在 $p$ 读一。若成比例，只能相等。然而 $e_p$ 零于整个 $D_p$，$u-e_{q_v}$ 在 $K$ 中只零于 $q_v$；在 $D_p\setminus\{q_v\}$ 取点就得矛盾。故二者独立。三角形含零，故确为二维。
+
+三个顶点在 $q_v$ 也读零，所以 $\mathcal T_v\subset\mathcal B(q_v)$；四维张成不可能包含于该二维平面，存在严格正距离的效应，紧性给达到的 $\delta_v>0$。最后Hausdorff距离满足
+
+$$
+\left|d_H(\mathcal B(q_{w_t}),\mathcal B(q_v))
+-d_H(\mathcal T_v,\mathcal B(q_v))\right|
+\le d_H(\mathcal B(q_{w_t}),\mathcal T_v)\to0.
+\tag{Q122.27}
+$$
+
+包含关系使中间的固定距离等于 $\delta_v$，完成严格正的不连续缺口。证毕。
+
+这些是整个原 $\mathcal E$ 的零集合，不是确认效应的抽样极限。$\mathcal T_v$ 是效应空间中的凸三角形，其顶点不被解释为三个共同结果；$e_p$ 与 $u-e_{q_v}$ 都在 $p$ 读一，尤其不能据此把三角形装成一台三结果仪器。
+
+### 122.8 倒向原球图给出高度的精确刻度
+
+**命题 122.10（倒向高度公式）。** 对每个 $v$，在原 $q_v$ 的完整球图写
+
+$$
+F_v=c_{q_v}+B_{q_v}\mathbb B^3,\qquad
+p=c_{q_v}+B_{q_v}s_v,\quad \|s_v\|=1.
+$$
+
+以该球图定义IX120.10的 $\rho_{q_v}$，则
+
+$$
+\boxed{\qquad m(v)=\frac{2}{1+\rho_{q_v}(s_v)}.\qquad}
+\tag{Q122.28}
+$$
+
+证明。$q_v\in P_0$，故可在同一个原实现中反向使用IX120.12。令 $g_{q_v}=u-e_{q_v}$，$H^{q_v}(c_{q_v}+B_{q_v}z)=z$。原邻标签 $p$ 的唯一确认效应满足
+
+$$
+e_p=\frac{\rho_{q_v}(s_v)g_{q_v}+s_v\cdot H^{q_v}}
+{1+\rho_{q_v}(s_v)}.
+\tag{Q122.29}
+$$
+
+在整个 $F_v$ 上 $g_{q_v}=1$，所以
+$g(c_{q_v}+B_{q_v}z)=(1-s_v\cdot z)/(1+\rho_{q_v}(s_v))$。球上最大值恰在 $z=-s_v$ 达到，为(Q122.28)。证毕。
+
+因此定理122.8的平面退化迫使
+
+$$
+\rho_{q_{w_t}}(s_{w_t})\longrightarrow+\infty.
+\tag{Q122.30}
+$$
+
+每个倒向函数各自有限，与这一跨标签无界性相容。有限维不把随标签变化的Lipschitz常数、正内半径或倒向刻度变成统一界；固定 $p$ 的 $\rho_p$ 有界于 $S^2$，也不是对所有到达标签 $q_v$ 的倒向 $\rho_{q_v}$ 的统一估计。
+
+### 122.9 方向中开稠密的正高度与单点支撑
+
+**定理 122.11（高度上半连续与开稠密正规方向域）。** $m:S^2\to(0,1]$ 上半连续。令
+
+$$
+A_j=\{v\in S^2:m(v)\ge1/j\},\qquad
+\Omega_p=\bigcup_{j\ge1}\operatorname{int}_{S^2}A_j.
+\tag{Q122.31}
+$$
+
+则 $\Omega_p$ 开稠密。其每一点都有一个邻域和一个严格正常数，使整个邻域上高度不低于该常数；每个 $v\in\Omega_p$ 的 $S_v$ 都是单点。所有非单点支撑面的方向均被闭无处稠密集 $S^2\setminus\Omega_p$ 包含。
+
+证明。若 $v_n\to v$，在 $F_{v_n}$ 选达到高度的 $x_n$，并沿实现 $\limsup m(v_n)$ 的子列于紧 $K$ 中取极限 $x$。$e_{q_{v_n}}\to e_{q_v}$ 给 $x\in F_v$，故
+
+$$
+\limsup_n m(v_n)=g(x)\le m(v).
+\tag{Q122.32}
+$$
+
+于是各 $A_j$ 闭；因每个高度严格正，它们覆盖 $S^2$。若开集 $U\subset S^2$ 与全部 $\operatorname{int}A_j$ 不交，则 $A_j\cap U$ 都在Baire空间 $U$ 中闭且无处稠密，却可数覆盖 $U$，矛盾。所以其内部之并稠密。
+
+正高度邻域由定义给出。若其中一个 $v$ 有非单点 $S_v$，定理122.8的明确 $w_t\to v$ 最终在该邻域内，却有 $m(w_t)\to0$，矛盾。补集闭且内部空，完成最后断言。证毕。
+
+本定理不把上半连续误写成下半连续；也不声称 $\Omega_p=S^2$、高度在整个球面有正下界，或所有例外方向确实发生退化。开稠密结论来自这个固定原锚点的方向域，而不是把121的 $P$ 上残余集限制到一颗球面所得。
+
+### 122.10 实际接触映射的连续性恰好检测平面
+
+**定理 122.12（逐方向与全方向的准确连续性判据）。** 对固定 $p$ 定义实际接触映射 $\zeta_p:S^2\to S$，$\zeta_p(v)=z_v$。则
+
+$$
+\begin{gathered}
+\zeta_p\text{ 在 }v\text{ 连续}\quad\Longleftrightarrow\quad S_v=\{z_v\},\\
+\zeta_p\text{ 在全部 }S^2\text{ 连续}
+\quad\Longleftrightarrow\quad Z\text{ 闭}
+\quad\Longleftrightarrow\quad S\text{ 严格凸}
+\quad\Longleftrightarrow\quad C+L\text{ 闭}.
+\end{gathered}
+\tag{Q122.33}
+$$
+
+证明。若 $S_v$ 单点，任取全部方向中的序列 $w_n\to v$。紧 $S$ 中任一 $z_{w_n}$ 的聚点 $z$ 都满足
+$(-v)\cdot z=\lim\rho(w_n)=\rho(v)$，故在 $S_v$，只能等于 $z_v$。紧性使整个序列收敛，给通常连续性。反之，若 $S_v$ 非单点，定理122.8的同一 $w_t$ 有固定 $a$-方向分离量，不能趋于 $z_v$；所以不连续。全方向单点支撑等价于严格凸，再用定理122.6。证毕。
+
+由定理122.11，该映射在 $\Omega_p$ 每一点连续。这里的每个连续性都量化该固定 $S^2$ 中的全部趋近方向，而非一个特选序列。它仍不是原 $P$ 上全部邻标签、全部原零效应或全部整球的连续性。121.7在 $P$ 中的一个稠密 $G_\delta$ 上给 $\mathcal B$ 稳定；仅把这个残余集限制到固定 $\partial D_p$，不能取得相交稠密性或 $\zeta_p$ 全方向连续。一般的稠密残余集可以完全避开一个闭无处稠密子集。若要通过其他原域关系取得全方向结论，仍须另给证明，不能用这个限制步骤代替。
+
+### 122.11 单位预算恰是原内球碰到影壳
+
+**定理 122.13（正规锚点的接触与影壳刻度）。** 在本节全部原前件下，
+
+$$
+\boxed{\quad W(D_p)=1
+\ \Longleftrightarrow\ \min_{v\in S^2}\rho_p(v)=1
+\ \Longleftrightarrow\ \mathbb B^3\cap\partial S\ne\varnothing.
+\quad}
+\tag{Q122.34}
+$$
+
+若 $\delta:=\min_{S^2}\rho_p>1$，则 $\delta\mathbb B^3\subset S$，原内球严格位于影壳内部，且 $\operatorname{dist}(\mathbb B^3,\partial S)\ge\delta-1>0$。
+
+证明。连续 $\rho_p$ 在紧 $S^2$ 达到最小值，且至少为一。若宽度一，达到宽度的原效应在 $D_p$ 的两个原球面对径点 $q_v,q_{-v}$ 取一、零；所以两点原正交。IX120.13的完整确认公式给 $\rho_p(v)=1$。反之 $\rho_p(v)=1$ 时，实际 $e_{q_v}$ 在该对径上读一、零，故宽度一。这只消费已有对径接口。
+
+若 $\rho_p(v)=1$，则内球点 $-v\in Z\subset S$ 在支撑超平面 $(-v)\cdot z=1$ 上，故在 $\partial S$；定理122.4还给 $z_v=-v$。反之，若 $z\in\mathbb B^3\cap\partial S$，取单位支撑法向 $n$。包含 $\mathbb B^3\subset S$ 给
+$1\le h_S(n)=n\cdot z\le\|z\|\le1$，因此全部等号，$z=n$、$\rho_p(-n)=1$。
+
+若最小值为 $\delta>1$，对每个单位 $n$ 有 $h_S(n)\ge\delta$。闭凸体是其支撑半空间之交，故半径 $\delta$ 的球包含于 $S$。每个内球点周围半径小于 $\delta-1$ 的环境球都在 $S$ 中，于是有所述边界距离下界。证毕。
+
+结合121.2，(Q122.34)的“原球碰影壳”与同一原中点像碰到 $\operatorname{relbd}K$ 完全等价。它没有从 $S$ 光滑、严格凸或 $Z$ 闭中自动取得。仅在一般三维凸几何中，$S=r\mathbb B^3$、$r>1$ 已经光滑严格凸而不与内单位球接触；这个例子只否定上述凸几何推理，没有被构造成满足全部EB3的原锥反模型。
+
+主候选若在全部原标签上成立，(Q122.3)的静态表示还会使每个正规影壳满足 $\rho_p(v)=1$ 于全部方向，因而 $Z=S=\mathbb B^3$。这是全标签条件重构的后果，不能从一个方向接触或定理122.5的光滑性提前取得。
+
+### 122.12 与残余切扇的汇合及仍缺的原域联合桥
+
+在EB3+Inj中，直接复用121.6—121.10：存在同一个在整个原 $P$ 中稠密的 $G_\delta$ 集 $P_*\subset P_0$，使完整 $\mathcal B$ 在这些锚点对所有趋近纯标签Hausdorff连续；在每个这样的锚点，全部实际邻球在锚点的二维切平面两两零交，且 $\dim V\ge9$。121.12—121.13在每个 $P_0$ 锚点还给正确 $1/(1+\rho)$ 权重下的平面投影收缩和有限半范数。这里不重证这些已付结论。
+
+它们与本章的关系是：平支撑面若存在，定理122.9会在实际到达标签 $q_v$ 产生明确的完整零效应正不连续缺口，所以该 $q_v$ 不在121.7的任何全序列连续标签集中。但这没有矛盾，因为对锚点 $p$ 的稳定性不等于对其所有到达标签 $q_v$ 的稳定性；$P_*$ 稠密也没有供应每颗固定原球面的相交稠密性。
+
+若某个原标签不接触，121.3给一个非空相对开集 $O\subset P$ 及共同 $\omega\in\operatorname{ri}K,\epsilon>0$，使
+
+$$
+s+x-2\epsilon\omega\in C
+\qquad(s\in O,\ x\in D_s).
+\tag{Q122.35}
+$$
+
+可在同一 $O$ 中选 $p\in P_*$。此时同一原实现同时承受：整颗半缩球的共同正内余量；$\min\rho_p>1$ 的内球—影壳正间隙；原残余切扇的零交与带权收缩；以及本章开稠密方向上的正高度和单点支撑。目前没有由这些条件推出矛盾，也没有构造满足全部条件的完整EB3反模型。
+
+一个已知足够、但尚未从裸EB3支付的联合条件是IX118.9的WZ。其完整量词是
+
+$$
+\begin{split}
+&\forall s,r\in P\ (r\in D_s)\quad\exists h\in\mathcal A_s\quad
+\forall(t_n)\subset P\ (t_n\to r)\\
+&\hspace{15mm}\exists(h_n)\subset\mathcal E:\quad
+h_n(t_n)=0\ (\forall n),\qquad \|h_n-h\|_K\to0.
+\end{split}
+\tag{Q122.36}
+$$
+
+同一固定 $h$ 在全部趋近序列之前选定，序列可来自整个 $P$，不只某一固定球面。IX118.11—118.13在EB3+Inj中已经证明它等价于每条原边的开放提升(O)、全部球直径的统一正下界及同原静态矩阵表示。本章不重做这些证明，也没有从 $\zeta_p$ 在每颗固定球面的连续性推出(Q122.36)。若通过定理122.2取得全域静态表示，WZ才可作为原接口的应用：对每条 $s\perp r$ 固定秩一效应 $h=f_s$，对每条 $t_n\to r$ 取 $Q_n=I-t_n$、$h_n=f_{Q_nsQ_n}$；原估计 $\|h_n-h\|_K\le2\sqrt{\operatorname{Tr}(st_n)}\to0$ 支付全部序列。
+
+这里仍缺的是跨原标签的共同正性与单位约束足以强迫接触，或足以给WZ/(O)这类全域稳定桥的证明。逐球有限增益、局部二次范数和方向稠密正规性都尚未给出这样的联合结论。特别地，尚未证明 $\mathrm{EB3}\Rightarrow\mathrm{Inj}$、$\mathrm{EB3}\Rightarrow\mathsf{DC}$，或即使加Inj也自动接触；没有逻辑独立性或形式不可判定性结论。
+
+不能预装 $\mathrm{Pair}_{\perp}$、weakPair、TRI2、正过滤或共同内积来补此桥。维数下界九不等于上界九；两两零交的实际切平面尚未证明覆盖 $L\cap\ker u$，也未取得全方向切平面连续性、球面纤维化或Hopf结构。IX120的高奇周期／双向塌球必要像仍未被排除或完整实现。本章的影壳只解释一种原域失稳机制，不把所有塌球都反推为平支撑面。
+
+### 122.13 现有QM静态公理的准确来源与全域字典
+
+以下仅在裸EB3加 $\mathsf{DC}$ 成立后，使用定理122.2所得同一个 $\Phi$。接触稠密到全接触用121.3；全接触到W1用121.2；W1到Inj、纯点紧性、全Pair与静态重构消费IX116.17／120.4—120.5。共同三效应的全域非负性与和为 $u$ 在已得Pair后消费完整排除面VII104.2—104.3。矩阵效应字典和谱结构消费VIII113.8—113.9／IX120.11。
+
+| 现有静态QM对象或公理 | 同一原实现的准确对应 |
+| --- | --- |
+| 状态向量射线与全部纯态 | 全部 $z\in\mathbb C^3\setminus\{0\}$ 给 $p_z=\Phi(zz^*/(z^*z))$，恰为整个 $P\cong\mathbb{CP}^2$ |
+| 全部混态、概率混合和非负质量 | $K=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\}$；保留全部有限凸组合，$C$ 保留零及全部非负缩放，$\dim_{\mathbb R}V=9$ |
+| 全部效应与Born评价 | 恰为 $f_A(\Phi\rho)=\operatorname{Tr}(A\rho)$、$0\preceq A\preceq I_3$，包括零、单位、补和全部混态输入 |
+| least确认与全部原排除集合 | $T_{p_z}(\Phi\rho)=\operatorname{Tr}(zz^*\rho)/(z^*z)$，least为相应秩一投影；完整 $D_{p_z}$ 为 $z^\perp$ 上全部密度矩阵 |
+| 纯—纯概率与原零边 | $T_{p_z}(p_w)=|z^*w|^2/((z^*z)(w^*w))$，零恰为复内积正交 |
+| 正交完备基与数学三结果 | 每条原正交纯边有唯一第三纯点；三个秩一投影及对应原效应之和分别为 $I_3,u$ |
+| 全部有限数学POVM | 对每个有限结果数，原 $f_j\ge0,\sum_jf_j=u$ 恰对应全部 $A_j\succeq0,\sum_jA_j=I_3$ |
+| 状态与可观测量谱公理 | 每个原混态有三项正交谱分解，允许零权与重谱；全部实可观测量对应全部Hermitian矩阵并有实谱分解 |
+| 中心、共同内积与Jordan乘法 | 分别为 $\Phi(I_3/3)$、$B(\Phi X,\Phi Y)=\operatorname{Tr}(XY)$、$\Phi((XY+YX)/2)$，均为重构后派生结构 |
+
+这恢复整个单体数学静态模型，不只一个纯—纯概率表。确认唯一、法锥光滑、影像闭或局部半范数均不单独支付该表的前件；本章也未给独立于既有重构的Jordan分类。
+
+### 122.14 操作、全部有限复合、事件仪器及连续时间合同
+
+**原操作与共同来源。** VIII113.11及其所引VIII112.9、IX120.11、121.12的完整非几何合同全部保留：同一原装饰元组 $\mathcal O$、共同来源域、全部中点实现、原概率像紧性、全测试表及闭性、零／单位／补／有界倍增、重复标签及每种同中点实现；全部非负质量及零／次归一／不等质量，以及过程和参考各自的完整相关联合输入域。原 $L,p,\omega,K,M$、两次同一读回、两实张成、全实关系、完整(83.8)、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$、精确PRE之后的整个H13、每个原资格态、活跃块严格负方向、共享总迹一、非活跃零质量和空活跃集，仍由原消费者承担。
+
+设备／事件／来源绑定、全部菜单分支、参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、全部合法未来及每个中间切口，以及VI89.9—89.10的原生／细化消费者、terminal futures、联合有符号关系、细标签粗归组、记录后条件未来、source-adoption与资源合同完整保留。数学上的半缩球映射和比值读数不供应这些实际准备或接线。
+
+**全部有限联合层级。** 对每个有限 $N\ge1$，仍取实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$ 及整个原效应区间。对每个实际分块 $a+b=N$ 保留
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+\tag{Q122.37}
+$$
+
+同一产品配对、严格张量单位、全部原因子置换及其逆的正性、规范重括号，以及指定运输的不连续位置分块都保留。比较仍是整个 $S_2$：对每个产品或纠缠纯点 $p\in P_2$、每个有限纯准备族 $q_\ell\in P_2$、全部 $t_\ell\ge0$、$\sum_\ell t_\ell=1$，包括零权及重复标签，保留VIII111.35，不能只检验产品态。
+
+三项具名供应分别仍是原低二份 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥；唯一实际自复合 $(W_1,W_1,W_2)$ 的直和扇区限制、秩与实维乘法的复型选择；同一实际两因子的产品正规形。在同一保迹局部坐标中，非经典支路还保留同一最大块 $n_r=L\ge2$ 的 $\mathsf F_{\max}$：同一含相位正交基给
+
+$$
+g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r,
+\quad\Delta_r=|g_r\rangle\langle g_r|\in C_3,
+\quad u_3(\Delta_r)=L.
+\tag{Q122.38}
+$$
+
+其余三份扇区零，原归一源为 $\Delta_r/L$；不预付三份纯性或实际制备。全经典 $L=1$ 支路不要求该资源。只在这些联合前件与三项供应下消费既有有限层级定理；单体接触不制造 $S_2$、叉口资源或实际纠缠准备。复三能级二、三份的秩为九、二十七，高阶载体不被要求也满足单体EB3或秩三W。
+
+**全旁观正性、事件与同族仪器。** 数学全旁观正性仍量化每个 $b\ge0$ 及任意含纠缠的同一共同输入，要求
+
+$$
+(\operatorname{id}_{W_b}\otimes F)(C_{b+m})\subseteq C_{b+n}.
+\tag{Q122.39}
+$$
+
+只有全联合层级已供应后，通常CP、矩形跨扇区Kraus及逐输入TP/TNI预算才沿原Choi桥取得。同一事件的CP仍需原完整提升、实际探针及相容核；全部数学CP-TNI分支成为实际事件仍需原事件饱和选择。仪器保留同族共同输入预算、接线、记录、粗粒化及校准；仅正质量分支作条件归一，零质量分支不强定归一条件态。Lüders更新另需同一分支的锐效应、接受态中性及输出校准。三条原零一边、后续数学三效应和为 $u$、以及全部数学POVM都不能替代这些合同。
+
+**连续时间、生成元、Hamiltonian与单位。** 原钟、实际动态来源、连续齐次可逆时间群及单位、$\hbar$ 仍是独立前件，不能把方向参数 $v,t$ 或球面证明弧当成物理时间。若原过程另给同一载体上对全部实时间的连续线性群 $A_t$，满足 $A_0=I$、$A_{s+t}=A_sA_t$、$A_t(C)=C$、$uA_t=u$，其有限维生成元及其矩阵表示只描述这项额外供应；单体几何没有选择该群。在已重构的复块中，给定保迹酉时间族的通常写法为
+
+$$
+U_t=\exp(-itH/\hbar),\quad
+\rho_t=U_t\rho U_t^*,\quad
+\mathcal L(\rho)=-\frac{i}{\hbar}[H,\rho],\quad H=H^*.
+\tag{Q122.40}
+$$
+
+该式量化该已给时间族的全部输入和全部时间；它不从静态几何挑出实际 $H$ 或数值 $\hbar$。$H$ 的标量平移不改变态作用，时间重标也改变生成元刻度而保留静态数据。恒等族与非平凡Hamiltonian族有同样静态态—效应模型。因此本章不声称推出实际动力学、能量标定、时空或物理空间维数。
+
+### 122.15 复用、新综合与原始来源边界
+
+| 类别 | 本章使用或保留的结果 |
+| --- | --- |
+| 仓内复用 | VII103.2／104.1完整面；IX116.17条件静态重构；IX118.9—118.15的WZ、最大值及宽度；IX120.8—120.13原法向图、邻标签及完整边区间；121.2—121.4的中点、余量和静态等价；121.7—121.13残余切扇及局部带权收缩 |
+| 量词改写 | 定理122.2的接触标签稠密等价；它不另计分类或独立公理减少 |
+| 原域综合 | 定理122.4—122.6的实际影像、唯一实际接触、严格凸四维法锥、光滑影壳及准确闭像；定理122.8—122.9的同一旋转、整球及完整零效应双向塌缩、二维三角形与严格正缺口；122.10—122.13的倒向高度、方向正规域、实际接触连续性和单位球接触判据 |
+| 成熟中间工具 | 有限维分离及双对偶、支撑函数、极性、紧性、Hausdorff距离、Cauchy–Schwarz等号和Baire闭覆盖；均不另立为新数学内容 |
+| 待证桥 | 裸EB3的Inj与接触自动性；跨原标签的WZ/(O)或其他足够联合约束；共同二次结构、覆盖与维数上界；以及全部非几何物理供应 |
+
+所比较的既有理论限于上述完整原面／法向／稳定性接口，以及下列原始文献的指定部分；不声称未列文献不存在相近结果。
+
+[Pataki][Q122P]的Definition 1、Remark 1把niceness定义为对每个面 $F\unlhd K$ 的 $K^*+F^\perp$ 闭，Theorem 2刻画同一面处的等价条件。本章代入的是 $K=C^*,F=N_p$，所以被投影的是原 $C$。其一般线性像理论与极性是成熟工具；本章的 $Z\cap S_v$、实际 $F_v$ 及完整原效应极限需要正文另给的原域证明。不能把一般闭像定理改名当作新内容，也不能反转原锥／对偶锥的角色。
+
+[Lourenço–Roshchina–Saunderson][Q122LRS] §2.2、Proposition 2.3给projectionally exposed $\Rightarrow$ amenable $\Rightarrow$ nice $\Rightarrow$ facially exposed；投影不要求正交，误差常数允许依面变化。其Corollary 3.5与Remark 3.6之后的讨论指出 $\mathrm{CP}^4$ amenable而其copositive对偶不facially exposed，已足以阻止把这些性质不加前件地传给对偶。该文§7.1、§7.3讨论切片极体、切向与高阶切向条件；它们不供应本章移动原球的单位增益或全域连续性。IX119所得原锥性质仍只按其原方向消费。
+
+[Weis][Q122W] §2.1的Definition 2.3与Remark 2.4明确区分面、暴露面、支撑函数及法锥；§2.4讨论自对偶锥截面与投影的极性，§3.1 Proposition 3.1给固定线性投影下的面提升。其对象已有有限维C星代数及固定投影；这些面格／极性关系本身没有断言移动参数时整个面族Hausdorff连续，也不是裸EB3分类。本章比值影像及塌缩证明没有借用该文预置的矩阵自对偶结构。
+
+一般face-function半连续性的相关题录为Eifler的 *Semi-continuity of the face-function for a convex set*，DOI 10.1007/BF02567372；该文正文未核对，不引用其定理或以它承担任何结论。上述范围内的来源比较没有发现可直接替代本章全部原域接触及塌缩链的已核对陈述；这一比较只限于所列既有卷与原始文献，不构成全球新意判断。
+
+[MixedExclusionGeometry][Q122Mixed]及其调用的[weakPair定义][Q122Weak]仍显式带原正交纯对的真最小面前件。其连续标签、中心和收缩以该前件为条件，不能移入EB3+Inj。[原正互补投影定理][Q122Projections]的前件同样包含weakPair；本章未证这一前件，不由该定理输入正过滤或全域连续性。成熟Jordan分类只经IX116.17、VIII113.9的完整前置接口复用，不以法锥严格凸或某个局部半范数替代projectivity、proper least、对称跃迁概率或滤子保纯。
+
+[Q122VII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "完整排除面第七卷VII103.2、104.1—104.3；与本卷有限层级103—104不同。"
+[Q122VIII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII112.9、113.8—113.11；同原静态重构与完整联合物理合同。"
+[Q122IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.17位于116.13节；IX118.9—118.15、120.2、120.8—120.13、120.11节的原对象、法向图、全效应区间和物理合同。"
+[Q122121]: https://github.com/the-omega-institute/trureturing/blob/2f08292714e2f1a90efbe77a5c71c33048191fee/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "本卷121：中点接触、余量下半连续、原零效应残余稳定、真实切扇及带权局部范数。"
+[Q122P]: https://arxiv.org/pdf/1202.4043v4 "Gábor Pataki, On the connection of facially exposed and nice cones；Definition 1、Remark 1，Theorem 2及Remark 2；J. Math. Anal. Appl. 400, 211–221，DOI 10.1016/j.jmaa.2012.10.033。"
+[Q122LRS]: https://arxiv.org/pdf/2011.07745v2 "Bruno F. Lourenço, Vera Roshchina, James Saunderson, Amenable cones are particularly nice；§2.2 Proposition 2.3、Corollary 3.5与Remark 3.6之后的对偶讨论、§7.1及§7.3；DOI 10.1137/20M138466X。"
+[Q122W]: https://arxiv.org/pdf/1101.3098v6 "Stephan Weis, Quantum Convex Support；§2.1、§2.4、§3.1 Proposition 3.1；DOI 10.1016/j.laa.2011.06.004。"
+[Q122Mixed]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/MixedExclusionGeometry.lean "显式weakPair前件下的原混态排除几何与连续性。"
+[Q122Weak]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/OrthogonalJointCompletion.lean "weakPair量化全部原正交纯对生成真最小面；数学共同测量不声称实际菜单。"
+
+[Q122Projections]: https://github.com/the-omega-institute/trureturing/blob/1ce3f594c6084f2350b480c2850db393549065cc/D5/S3/Quantum/Foundation/PositiveComplementaryProjections.lean "whole_positive_projections的前件显式包含weakPair；其正互补投影不作为本章EB3+Inj的输入。"
+
+### 122.16 完整白话
+
+想象所有原状态共同组成一整块凸的实体，每个纯态是它的一个原标签；确认这个标签的全部原测试所能读零的所有状态，合起来仍是一整颗实心三球，所有混态和所有测试都留在同一实体里。拿一个标签，把它背后的整颗排除球朝标签缩一半。现在的候选只要求：任意一小片原纯标签中，总能找到一个标签，使这颗半缩球至少一点仍贴着整体边界。上一章已经证明这种接触恰好是原球上的满刻度，而且失败会在一片开标签区域中留下同一层严格正内余量。因此接触若稠密，就不可能有那片失败区域，每个标签都会接触，再由已有条件定理得到同一原模型的全部复三能级静态量子结构。这是把最后一个条件说得更简洁，没有证明球形本身会自动接触。 另在原球标签不重复的分支中，站到一个完整确认效应唯一的原标签上，用四个真实法向读数，把它之外的全部原态投成一幅三维比值影像。原排除球在这幅图里恰是完整单位球；所有其他原态的影像填成一个有界凸集，闭包就是包在外面的影壳。每个方向都对应一个真的邻标签和一整颗经过锚点的邻球。那整颗邻球的比值影像只有一个接触值，但外壳的支撑平面却可能还贴住别的极限点。法锥的严格凸性只保证外壳没有尖角，并不保证这张平面只贴一点。 若支撑平面上确有第二个点，就朝着这两个点的差方向轻轻转动平面。新的真实接触值被迫偏向第二点，与原接触值保持一段可证明的分离。可是在原实体里，只要新邻球还保留一点正高度，它就能取出一个不是锚点的真实极限态；那个态会把接触值拉回原来的唯一实际值，产生矛盾。因此被迫消失的是整颗邻球的高度，整张三维实心球一起缩到锚点。与此同时，到达标签的全部原零效应也一起收缩：每个移动集合本来张成四维，最终却精确变成由零效应、锚点确认效应、原到达确认的补效应围成的二维三角形。证明既排除了所有三角形之外的效应聚点，也为三角形的每个点找到了真实逼近，所以不只是画出几条选定测试。极限到达标签本身仍有四维的完整零效应集合，这给出严格正的突变缺口。倒向看同一实际邻球，这种缩球又恰好意味着反向法向刻度冲到无穷，不能拿每一点都有限冒充全族有统一上界。 固定锚点的方向球面上，已有一个开稠密区域：每点附近高度不掉到零，影壳支撑也只有一点；平面退化只能藏在一个闭无处稠密的例外方向集中。实际接触映射在某方向连续，恰好等价于那里没有平支撑面；在全方向连续，恰好等价于实际影像已经闭合、影壳严格凸。但即使整张外壳光滑又严格凸，它仍可能在一般凸几何中与内单位球隔着正间隙。对真正原模型而言，内球碰到外壳才恰是半缩球碰整体边界，才支付原单位预算；本章没有从光滑、闭像或局部正规性推出这一下接触。上一章在全部纯标签中的大残余集，也不能直接变成每颗固定球面上的稠密或全方向稳定。 还缺的是同一原实现里跨标签的联合约束：为什么整球形状、原正性、所有原测试的共同单位和相互到达关系，必定不允许那层统一内余量存在，或必定给每条原边一张能对所有邻近纯输入稳定修复的零测试。已有残余切扇和局部带权欧氏尺尚未补上这一步，没有九维上界、共同全局内积、正过滤、Hopf结构或完整同域反模型来替它结算。若未来证明这一步，全部原态、效应、Born概率、POVM和谱结构就能接回已有静态定理；全部有限复合、纠缠来源、实际事件与仪器、物理钟、生成元、Hamiltonian和数值 $\hbar$ 仍各自需要完整原合同，不能由一幅静态球影自动制造。
+
+## 追加锚（本行以下为增补区）

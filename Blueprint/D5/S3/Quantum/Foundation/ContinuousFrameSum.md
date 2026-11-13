@@ -4,9 +4,21 @@
 
 Original EB and common centers force weakPair and interior; original W supplies compact pure points and continuous frame sums.
 
+**Theorem 1.1 (Compact full original effect interval).**
+
+Lean statement: `D5/S3/Quantum/Foundation/ContinuousFrameSum.effects_compact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/ContinuousFrameSum.effects_compact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a strictly positive unit on a finite dimensional generating cone, the entire continuous-dual interval zero<=f<=u is compact. This includes every original real-linear effect, since linear maps in finite dimension are continuous.
+
 The original carrier is any nonzero finite-dimensional real V, with closed generating cone C and the same strictly positive unit u. K is the whole normalized base, P is ALL its extreme points and [0,u] is the entire original proper-effect interval. No finite carrier, selected menu, assumed compact P, closed orthogonality, common intersection or positive-extension premise is used.
 
-**Definition 1.1 (Original centers and frame carrier).**
+**Definition 1.2 (Original centers and frame carrier).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x \ne 0 \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right) \Rightarrow \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \Rightarrow \left(\forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{base}\left(C, u\right) = \operatorname{normalizedConeBase}\left(C, u\right) \land \left(\operatorname{pure}\left(C, u\right) = \operatorname{extremePoints}\left(\mathbb{R}, \operatorname{base}\left(C, u\right)\right) \land \left(\operatorname{center}\left(hB, p\right) = \operatorname{apply}\left(\operatorname{chosenExclusionChart}\left(hB, p\right), 0\right) \land \operatorname{sumVector}\left(hB, p\right) = \operatorname{add}\left(p, \operatorname{smul}\left(2, \operatorname{center}\left(hB, p\right)\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -20,7 +32,7 @@ exclusionBalls supplies, at every original pure p, an injective affine parametri
 
 effects uses continuous linear maps to represent the original full proper interval. Every real linear map on finite-dimensional V has its native continuous-linear representation, so this does not restrict the original effects. frames initially permits three arbitrary original states with three full proper effects, delta readings, and their linear-map sum exactly u. Purity of the three states is derived where needed; it is not built into that raw compact frame carrier.
 
-**Theorem 1.2 (Original W forces compactness of all pure points).**
+**Theorem 1.3 (Original W forces compactness of all pure points).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x \ne 0 \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right) \Rightarrow \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \Rightarrow \left(\forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \operatorname{weakPair}\left(C, u\right) \Rightarrow \operatorname{IsCompact}\left(\operatorname{pure}\left(C, u\right)\right)\right)\right)\right)$$
 
@@ -36,7 +48,7 @@ The full raw-frame constraints are closed in the compact product of three origin
 
 For a raw frame, consider the exposed one-value face of its first effect. Its other two states are different because another effect distinguishes them. For any two pure points in that one-value face, both other states lie in both exclusions. chart_face_eq makes those exclusions equal, and injectivity makes the two pure points equal. The existing compact-face Krein-Milman result then makes the entire one-value face a singleton, proving the first raw vertex pure. Conversely every original pure point is the first vertex of a raw frame by the original joint theorem. Thus P is precisely a continuous projection of the compact raw-frame set. The conclusion uses the derived purity of raw-frame vertices; compact projection and Krein-Milman are existing library results.
 
-**Theorem 1.3 (Continuity, all original orthogonal edges, and full Pair).**
+**Theorem 1.4 (Continuity, all original orthogonal edges, and full Pair).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x \ne 0 \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right) \Rightarrow \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \Rightarrow \left(\forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \left(\operatorname{weakPair}\left(C, u\right) \Rightarrow \left(\operatorname{IsClosed}\left(\{s:\operatorname{pure}\left(C, u\right)\times\operatorname{pure}\left(C, u\right)\mid\operatorname{excludes}\left(C, u, \operatorname{fst}\left(s\right), \operatorname{snd}\left(s\right)\right)\}\right) \land \left(\operatorname{Continuous}\left(\operatorname{sumVector}\left(hB\right)\right) \land \left(\left(\forall p \in \operatorname{pure}\left(C, u\right),\; \forall q \in \operatorname{pure}\left(C, u\right),\; \operatorname{excludes}\left(C, u, p, q\right) \Rightarrow \operatorname{sumVector}\left(hB, p\right) = \operatorname{sumVector}\left(hB, q\right)\right) \land \left(\operatorname{commonCenter}\left(hB\right) \Leftrightarrow \left(\exists U \in V,\; \forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{sumVector}\left(hB, p\right) = U\right)\right)\right)\right)\right)\right) \land \left(\operatorname{pairProper}\left(C, u\right) \Rightarrow \operatorname{commonCenter}\left(hB\right)\right)\right)\right)\right)$$
 
@@ -52,7 +64,7 @@ Restrict raw frames to those whose three vertices are original pure points. The 
 
 commonCenter is equivalent to a single vector value on ALL P; nonemptiness follows from pure_span and nontriviality. Full Pair gives weakPair because an original orthogonal pair is distinct. Under full Pair, the existing complete proper-face classifier gives H(p,q)=D_s for every distinct original pair. Original zero symmetry places s in both original exclusions, yielding two original orthogonal edges through s. Their equalities give U(p)=U(q). Thus the full-Pair implication uses an actually derived common pure point, rather than assuming a common intersection or a covering law.
 
-**Theorem 1.4 (EB plus G suffices on the original domain).**
+**Theorem 1.5 (EB plus G suffices on the original domain).**
 
 $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\operatorname{NormedSpace}\left(\mathbb{R}, V\right)] [\operatorname{FiniteDimensional}\left(\mathbb{R}, V\right)] [\operatorname{Nontrivial}\left(V\right)] \forall C \in \operatorname{PointedCone}\left(\mathbb{R}, V\right),\; \forall u \in \operatorname{LinearMap}\left(\mathbb{R}, V, \mathbb{R}\right),\; \operatorname{IsClosed}\left(C\right) \Rightarrow \left(\left(\forall x \in V,\; x\in C \Rightarrow \left(x \ne 0 \Rightarrow 0 < \operatorname{apply}\left(u, x\right)\right)\right) \Rightarrow \left(\operatorname{span}\left(\mathbb{R}, C\right) = \operatorname{top}\left(\right) \Rightarrow \left(\forall hB \in \operatorname{exclusionBalls}\left(C, u\right),\; \operatorname{commonCenter}\left(hB\right) \Rightarrow \left(\operatorname{weakPair}\left(C, u\right) \land \left(\exists U \in V,\; \left(\forall p \in \operatorname{pure}\left(C, u\right),\; \operatorname{sumVector}\left(hB, p\right) = U\right) \land \left(\operatorname{smul}\left(\operatorname{div}\left(1, 3\right), U\right)\in \operatorname{intrinsicInterior}\left(\mathbb{R}, \operatorname{base}\left(C, u\right)\right) \land U\in \operatorname{interior}\left(C\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -71,6 +83,7 @@ Together these declarations cover the full original VII105.9 statement and its e
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/ContinuousFrameSum.common_center_interior`
+- Truth anchor: `D5/S3/Quantum/Foundation/ContinuousFrameSum.effects_compact`
 - Truth anchor: `D5/S3/Quantum/Foundation/ContinuousFrameSum.original_continuous_frame_sum`
 - Truth anchor: `D5/S3/Quantum/Foundation/ContinuousFrameSum.original_pure_compact`
 - Truth anchor: `D5/S3/Quantum/Foundation/ContinuousFrameSum.sumVector`
