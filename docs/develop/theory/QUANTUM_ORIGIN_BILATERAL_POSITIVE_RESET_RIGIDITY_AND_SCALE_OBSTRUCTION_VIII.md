@@ -2681,3 +2681,563 @@ VII103.2的完整排除面与全部真面分类、X124.2的两条不同正法向
 [Q124CubicTCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY VII121.12、122.14：共同来源、全有限层级、事件仪器、记录及连续时间的完整合同。"
 
 ## 追加锚（本行以下为增补区）
+
+## 125. 整个代数边界的最低三次条件与同原量子几何入口
+
+### 125.1 整个边界理想，而非所选窗口的零方程
+
+设 $V\ne0$ 为有限维实向量空间，$C\subset V$ 为非零、闭、尖、满维凸锥。先不假定半代数、双曲、齐性、光滑性或任何矩阵表示。记 $\mathbb R[V]$ 为实系数多项式环，$\partial C$ 为相对于整个 $V$ 的欧氏边界，定义
+
+$$
+I_\partial(C)=\{q\in\mathbb R[V]:q(x)=0\ \text{对全部 }x\in\partial C\},
+\qquad
+\partial_aC=\overline{\partial C}^{\,\mathrm{Zar}}.
+\tag{MC125.1}
+$$
+
+Zariski闭包取实系数方程；也可把同一理想的零集放入复化仿射空间。这里的理想由**整个欧氏边界**确定，不由某个光滑片、某组种子面、纯态轨道或选出的有限测试确定。当 $I_\partial(C)\ne\{0\}$ 时，定义
+
+$$
+\delta(C)=\min\{\deg q:0\ne q\in I_\partial(C)\}.
+\tag{MC125.2}
+$$
+
+次数是总次数，不是不可约分量次数的最大值。没有非零边界方程时记 $\delta(C)=\infty$。本章的附加几何条件为
+
+$$
+\mathsf{AB}_{\le3}:\qquad \delta(C)\le3.
+\tag{MC125.3}
+$$
+
+下文证明有限次数时整个边界理想确为主理想，并把其约化生成元记作 $p_C$。因此(MC125.2)与“整个代数边界的约化方程之次数”一致；不是先假设存在一个具有所需性质的最小双曲多项式。
+
+对量子消费者，另外给定在 $C\setminus\{0\}$ 上严格正的原 $u\in V^*$，始终使用
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(x\in C),\\
+D_p=\{x\in K:\mathcal T_p(x)=0\}.
+\end{gathered}
+\tag{MC125.4}
+$$
+
+$K,P,\mathcal E$ 与确认族全部保留原全域；$\mathcal T_p$ 的第二变量包括全部混态及全部非负质量输入。有限维闭尖满维性与严格正单位使 $K,\mathcal E,\mathcal F_p$ 紧，且最小值达到，直接沿用124.1及VII103.2的接口。双曲方向 $e\in V$ 是向量，与归一泛函 $u$ 不同型。
+
+### 125.2 有限边界方程供应的存在性、齐次性和约化性
+
+**引理 125.1（整个边界最低方程）。** 若 $\delta(C)<\infty$，则 $C$ 为半代数集，且
+
+$$
+I_\partial(C)=(p_C),\qquad
+p_C\text{ 齐次、平方自由},\qquad
+\deg p_C=\delta(C)\ge1.
+\tag{MC125.5}
+$$
+
+$p_C$ 除非零实常数外唯一。此引理不声称 $p_C$ 在内部无零，也不声称 $C$ 已是它的双曲分支。
+
+证明。取 $0\ne q\in I_\partial(C)$，令 $Z=\{q=0\}$。非零实多项式不在任何非空开集上恒零，所以 $Z$ 无内部。半代数集 $V\setminus Z$ 只有有限个连通分量，各分量均半代数。每个分量全部落在 $\operatorname{int}C$ 或全部落在 $V\setminus C$：在避开 $\partial C$ 的分量内，这两个相对开集互补，连通性禁止二者同时非空。满维凸性给 $C=\overline{\operatorname{int}C}$；删去无内部的 $Z$ 不改变该闭包。因此 $C$ 是落在其内部的有限个上述分量之并的闭包，故半代数。这里使用半代数连通分量的有限性与闭包稳定性，正是Sinn Proposition 2.9证明中的成熟工具；并未把“边界已是超曲面”当作这一步的前提。
+
+$C$ 为真子集，因为它尖且 $V\ne0$；它及其补集均非空且regular。Sinn Definition 2.1、Lemma 2.5于是适用于整个边界；Gouveia—Ito—Lourenço Proposition 2.2的准确结论给出唯一的最低次数方程及每个边界方程的整除性，即(MC125.5)的主理想断言。这是成熟接口，不另计作新的代数边界定理。
+
+再直接核对其余性质。$\partial C$ 对正数缩放不变。把最低次数方程分为齐次部分 $p_C=\sum_jp_j$；对每个 $b\in\partial C$，恒等式 $\sum_jt^jp_j(b)=0$ 对全部 $t>0$ 成立，故每个 $p_j$ 都属于 $I_\partial(C)$。任何次数小于 $\delta(C)$ 的非零部分都会违背最低性，所以只有最高部分，$p_C$ 齐次。$0\in\partial C$ 排除非零常数，故次数至少一。
+
+若不可约分解中有重复因子，把全部正重数改为一所得乘积仍在每个实边界点为零；它非零而次数严格下降，矛盾。因此 $p_C$ 平方自由。齐次多项式的每个非恒定因子也齐次：两个因子的最低和最高非零齐次次数分别相加，乘积这两个极端部分均非零；乘积只有一个次数迫使各因子的次数范围也只有一个值。证毕。
+
+### 125.3 紧基与整个边界之间的精确次数对应
+
+**引理 125.2（基的边界、齐次化与径向连续性）。** 在 $\dim V\ge2$ 时，可选严格正线性泛函 $\ell$，使
+
+$$
+B=C\cap H,\qquad H=\{\ell=1\}
+\tag{MC125.6}
+$$
+
+为 $H$ 中有非空内部的紧凸体，且
+
+$$
+\partial C\setminus\{0\}
+=\{rb:r>0,\ b\in\partial_H B\}.
+\tag{MC125.7}
+$$
+
+$p_C|_H$ 非零，其仿射总次数恰为 $\delta(C)$，也是覆盖 $\partial_HB$ 的非零仿射多项式的最低次数。对每个 $a\in\operatorname{int}_H B$，从 $a$ 发出的径向投影给单位球面与 $\partial_HB$ 的同胚；不要求边界可微。
+
+证明。严格正 $\ell$ 的存在可由有限维强分离得到：$C$ 与辅助单位球的交紧，且其凸包不含零，否则一个正权非零锥元会同时属于 $C$ 和 $-C$。分离零点与该紧凸包，便得在全部单位锥元上有统一正下界的 $\ell$。这也使截面 $B$ 有界；闭性给紧性，满维给其仿射内部非空。若原单位 $u$ 已给，可直接取 $\ell=u$。
+
+映射 $(r,b)\mapsto rb$ 把 $(0,\infty)\times H$ 同胚到 $\{\ell>0\}$，并把 $(0,\infty)\times B$ 对应到 $C\setminus\{0\}$；比较内部与边界得到(MC125.7)。$\dim H\ge1$，故紧凸体的边界非空。齐次 $p_C$ 若在整个 $H$ 恒零，就在开集 $\{\ell>0\}$ 恒零，因而不可能。
+
+在 $H$ 选原点 $b_0$，写 $x=sb_0+v$、$v\in\ker\ell$。任意次数 $d\ge1$ 的非零仿射多项式 $g(b_0+v)$，其齐次化
+
+$$
+G(sb_0+v)=s^d g(b_0+v/s)
+\tag{MC125.8}
+$$
+
+按单项式展开为真正的次数 $d$ 齐次多项式，不在 $s=0$ 使用除法。若 $g$ 覆盖整个 $\partial_HB$，则(MC125.7)使 $G$ 在全部非零 $\partial C$ 为零，并由齐次正次数在原点为零。因此 $\delta(C)\le d$。把此结论用于 $g=p_C|_H$，结合 $\deg g\le\delta(C)$，得到次数相等及最低性。此处不存在无穷远因子或漏掉锥顶的步骤；Sinn Remark 2.10、Corollary 2.11给出相同齐次化接口的代数几何表述。
+
+最后令 $A=B-a\subset\ker\ell$，选 $0<r<R$ 使 $r\overline B_{\rm Eucl}\subseteq A\subseteq R\overline B_{\rm Eucl}$。其Minkowski泛函 $\mu$ 次可加且正齐次，并满足
+
+$$
+\frac{\|v\|}{R}\le\mu(v)\le\frac{\|v\|}{r},\qquad
+|\mu(v)-\mu(w)|\le\frac{\|v-w\|}{r}.
+\tag{MC125.9}
+$$
+
+后一式分别用 $\mu(v)\le\mu(w)+\mu(v-w)$ 及交换 $v,w$ 得到，不要求 $A$ 对称。单位方向上的唯一径向端点为 $a+v/\mu(v)$，由(MC125.9)连续。凸性及 $a$ 为内点使每条射线仅有这个边界端点；紧性和Hausdorff性使该连续双射为同胚。仿射维一时单位球面是两个离散方向，结论同样成立。证毕。
+
+### 125.4 内部零点迫使可删除的线性因子
+
+**引理 125.3（三次以内的内部零点障碍）。** 设 $B$ 是仿射维数 $m\ge1$ 的紧凸体，$0\ne f$ 为总次数不超过三的仿射多项式，且 $f|_{\partial B}=0$。若 $f(a)=0$、$a\in\operatorname{int}B$，则 $Df(a)\ne0$，并且
+
+$$
+f(x)=L(x-a)g(x),\qquad L=Df(a),\qquad
+0\ne g,\quad g|_{\partial B}=0,\quad\deg g=\deg f-1.
+\tag{MC125.10}
+$$
+
+所以最低次数边界方程不可能有内部零点。
+
+证明。任取非零方向 $v$。整条直线与 $B$ 的交为紧区间
+
+$$
+\{a+tv:\alpha(v)\le t\le\beta(v)\},\qquad
+\alpha(v)<0<\beta(v),
+\tag{MC125.11}
+$$
+
+两个端点都在整个边界。对多项式作精确Taylor分解
+
+$$
+f(a+tv)=tL(v)+t^2Q(v)+t^3R(v),
+\tag{MC125.12}
+$$
+
+缺失的高次部分记零。若 $L(v)=0$，则零点 $t=0$ 至少二重，另外还有两个不同且非零的实根 $\alpha(v),\beta(v)$。非零次数至多三的单变量多项式不可能承担这四个按重数计的根，故该限制恒零。这也包括 $Q(v)=0$、$R(v)=0$ 及限制次数下降的方向，没有用“泛方向”删掉它们。
+
+若 $L=0$，上述结论对全部非零 $v$ 成立，于是 $f$ 在整个仿射空间恒零，矛盾。因此 $L\ne0$。对 $v\in\ker L\setminus\{0\}$，同一结论给 $f(a+v)=0$；$v=0$ 已由 $f(a)=0$ 覆盖。故 $f$ 在超平面 $a+\ker L$ 上恒零。取 $L(x-a)$ 为一个仿射坐标，多项式除法或按该坐标展开即得 $f=L(x-a)g$，不要求 $\partial B$ 在任何点可微。“切超平面”在这里只指多项式在这个正则零点的超平面。
+
+还须证明这个因子可从**整个**边界方程删除。由引理125.2的径向同胚，$\partial B\cap(a+\ker L)$ 对应单位方向球面上的 $\ker L$ 赤道。$m\ge2$ 时赤道无内部，其补稠密；$m=1$ 时超平面仅为内部点 $a$，与边界不交。于是 $\partial B\setminus(a+\ker L)$ 在整个 $\partial B$ 中稠密。该补集上 $L\ne0$，所以 $g=0$；连续性给 $g$ 在整个边界为零。$f\ne0$ 保证 $g\ne0$，次数降低一。若 $f$ 最低，这便矛盾。证毕。
+
+该证明不假设内部零点已有光滑凸边界切线；它先排除零梯度，再从多项式恒等式取得线性因子，最后用实际紧凸体的径向连续性取得整个边界上的可删性。只证明局部可分解或只在一个边界片消去因子，都不足以使用最低性。
+
+### 125.5 从最低次数到全部内部方向与整个双曲分支
+
+**定理 125.4（最低三次整个边界入口）。** 对125.1的任意非零有限维闭尖满维凸锥，若 $\mathsf{AB}_{\le3}$ 成立，则可统一定向 $p_C$，使
+
+$$
+\begin{gathered}
+p_C(x)>0\quad(x\in\operatorname{int}C),\\
+\forall e\in\operatorname{int}C:\quad
+p_C\text{ 关于 }e\text{ 双曲},\qquad
+C=\Lambda_+(p_C,e).
+\end{gathered}
+\tag{MC125.13}
+$$
+
+这里 $\Lambda_+$ 取 $t\mapsto p_C(te-x)$ 全部根非负的闭分支。反向，若某个次数至多三的齐次双曲多项式具有整个闭分支 $C$，则 $\mathsf{AB}_{\le3}$ 成立。
+
+证明。先设 $n=\dim V\ge2$。在引理125.2的紧基上，$f=p_C|_H$ 为次数 $\delta(C)\le3$ 的最低边界方程。引理125.3给 $f$ 在基内部无零。每个原锥内点可写为正数乘以基内点，齐次性于是给 $p_C$ 在整个 $\operatorname{int}C$ 无零。内部凸而连通，可选一次整体符号使其处处为正。
+
+固定任意 $e\in\operatorname{int}C$，以及 $x\notin\mathbb Re$。考虑 $y(t)=te-x$。$e$ 的内部邻域保证 $t$ 足够大时 $y(t)\in\operatorname{int}C$，而 $t$ 足够负时 $y(t)\in-\operatorname{int}C$。凸性、闭性及沿 $e$ 的内部正向性给有限端点 $a,b$，使
+
+$$
+\{t:y(t)\in-C\}=(-\infty,a],\qquad
+\{t:y(t)\in C\}=[b,\infty).
+\tag{MC125.14}
+$$
+
+例如 $y(t)\in C$ 后加任意正倍 $e$ 都进内部，因此该交恰为一条闭半线；另一条同理。两端点分别属于 $-\partial C$ 和 $\partial C$。尖性给 $a<b$：若两半线相交，交点须为 $C\cap(-C)$ 中的零，迫使 $x\in\mathbb Re$，矛盾。
+
+齐次性使 $p_C$ 在 $-\partial C$ 也为零。因此 $p_C(te-x)$ 至少有两个不同实根 $a,b$，且其首项系数为 $p_C(e)>0$，次数恰为 $\delta(C)$。这先排除此维数下 $\delta(C)=1$。次数二时两个根已全部实；次数三时除去两个实线性因子，余下实一次因子，其根也实。若 $x=se$，则 $p_C(te-x)=p_C(e)(t-s)^{\delta(C)}$，包括零向量与全部重根。这证明关于所选任意内部方向的双曲性，没有遗漏零方向或限制次数下降。
+
+还需完整分支等式。由刚证的无内部零点，$\operatorname{int}C\subseteq\{p_C\ne0\}$；它在该开集中既开又闭，因为 $\overline{\operatorname{int}C}=C$，而其边界均在 $\{p_C=0\}$。其自身连通，所以恰为含 $e$ 的一个完整连通分量。此时才调用Renegar Proposition 1：双曲开分支就是这个分量，闭分支为其闭包。于是 $\Lambda_+(p_C,e)=C$。Theorems 2—3与这里的凸性及全部内部方向结论相容；它们未被倒用来预设原锥身份。
+
+若 $n=1$，闭尖满维非零锥是一条射线。取坐标使 $C=\mathbb R_+$，则 $I_\partial(C)=(t)$、$\delta=1$；$p_C=t$ 关于每个 $e>0$ 双曲且整个分支为该射线。这覆盖紧基仿射维零、不能使用两个边界端点的情形。
+
+最后，反向中双曲分支边界必在其多项式的零集中，故该多项式属于 $I_\partial(C)$，直接得到最低次数不超过三。证毕。
+
+### 125.6 低维、可约、重复因子与尖性的准确作用
+
+定理125.4不要求最低方程不可约。把约化方程按实不可约齐次因子分解，每个因子在内部不为零，可逐因子定向为在 $e$ 为正。其沿 $e$ 的单变量根是乘积根的一部分，故各因子均双曲；乘积的整个闭分支恰为各因子闭分支的交。因此全部次数分拆均被覆盖：
+
+| 最低方程的次数形状 | 不加EB时的准确分支解释 |
+| --- | --- |
+| $1$ | 只能为一维射线；较高维线性半空间有线性部分，不能尖 |
+| $1+1$ | 两个半空间的交；尖满维时恰为二维楔，线性同构于 $\mathbb R_+^2$ |
+| 不可约 $2$ | 一个二次双曲锥；尖满维时为Lorentz锥 |
+| $1+1+1$ | 三个半空间的交；最低性与尖满维性使三线性坐标独立且 $\dim V=3$，即经典正卦限 |
+| $1+2$ | 一个半空间与一个不可约二次双曲分支之交，整个交集就是原锥；此处尚不宣称为Jordan直积 |
+| 不可约 $3$ | 整个三次双曲分支；此处尚不宣称ROG、齐性或Jordan |
+
+表中二次断言可直接核对：沿 $e$ 消去交叉项，把 $q$ 写为 $a s^2-Q(v)$、$a>0$；每个方向的判别式非负给 $Q\ge0$。分支为 $\sqrt a\,s\ge\sqrt{Q(v)}$，其线性部分恰为 $\ker Q$。尖性迫使该核为零，所得即Lorentz锥；低到两变量时二次式分为两个实线性因子，归入楔分支。三个线性因子的公共核属于锥的线性部分，故尖性要求它为零，维数至多三；维一为射线、维二为楔，最低次数分别为一、二，因而最低三线性情形只能为三维独立坐标。二维楔的两条不同边界射线分别迫使两个线性因子整除全部边界方程，故最低方程确为两因子乘积。
+
+重复因子与额外因子不能被算入 $\delta$。已知的完整边界覆盖反例必须保留：
+
+$$
+C=\mathbb R_+^2,\quad e=(2,1),\quad h(x,y)=xy(x-y),\quad p_C(x,y)=xy.
+\tag{MC125.15}
+$$
+
+$h$ 平方自由，$h(e)>0$，且是三个关于 $e$ 双曲的实线性因子的乘积。其特征根为 $x/2,y,x-y$，所以
+
+$$
+\Lambda_+(h,e)=\{x\ge y\ge0\}\subsetneq C.
+\tag{MC125.16}
+$$
+
+它覆盖整个 $\partial C$，但额外因子 $x-y$ 穿过原内部，准确展示“边界覆盖加双曲”仍不足以取得整个分支。引理125.3所删除的正是这类内部线性障碍。另一个不同问题是 $\widetilde h=x^2y$：它与 $xy$ 的整个正分支相同，但两条极射线中有一条相对于 $\widetilde h$ 的秩为二。锥相同不保证指定多项式的ROG相同；平方自由约化和最低性各有实际作用。这些是已有例子的边界说明，不计作新反模型。
+
+尖性是紧基和(MC125.14)中两个不同穿越点的直接前件，但不是最终纯几何结论不可去掉的必要条件。对任意真、闭、满维凸锥，令 $L=C\cap(-C)$，选补空间 $W$，则 $C=L\oplus C_0$，其中 $C_0=C\cap W$ 在 $W$ 中闭尖满维，且 $\partial C=L\times\partial C_0$。把边界方程按 $L$ 的坐标展开，其每个系数都在 $\partial C_0$ 为零；反向也成立。因此整个边界理想为 $I_\partial(C_0)$ 的多项式环扩张，最低生成元是 $p_{C_0}$ 的拉回，次数不变。对商锥使用定理125.4后拉回，即得原含线性部分的整个分支等式。例如半空间最低次数一也满足该几何结论。全空间的边界为空，理想为全环，常数一按次数零的平凡约定处理，不属本章正次数对象。量子部分仍严格保留尖性：非零线性部分会阻止存在在全部非零锥元上严格正的归一单位。
+
+### 125.7 次数四的已知锐性边界
+
+**例 125.5（四次不能替代三次）。** 取
+
+$$
+C_4=\{(t,x,y):t\ge(x^4+y^4)^{1/4}\},\qquad
+F(t,x,y)=t^4-x^4-y^4.
+\tag{MC125.17}
+$$
+
+$C_4$ 是闭尖满维凸锥，整个边界的最低方程为 $F$，次数恰为四；它不是任何多项式的双曲锥。该例是Helton—Vinnikov §3.2.2的 $1-x^4-y^4$ 障碍之齐次化，不作为新构造。
+
+证明。$s\mapsto s^4$ 凸，故 $B_4=\{x^4+y^4\le1\}$ 为紧、平衡、含零内点的凸体，其Minkowski泛函是范数 $(x^4+y^4)^{1/4}$。范数的上图为凸锥；范数连续给闭性，$t=0$ 的正锥元只能为零给尖性，$(1,0,0)$ 为内点给满维。整个欧氏边界恰为 $t=(x^4+y^4)^{1/4}$，包括锥顶；非零边界处 $t>0$。因此 $F$ 覆盖整个边界。
+
+在 $\mathbb C[t,y][x]$ 中将 $F$ 写为 $-x^4+(t^4-y^4)$。素元 $t-y$ 整除全部非首项系数，却不以平方整除常数项，因为
+
+$$
+t^4-y^4=(t-y)(t+y)(t^2+y^2),\qquad
+[(t+y)(t^2+y^2)]_{t=y}=4y^3\ne0.
+\tag{MC125.18}
+$$
+
+Eisenstein判据及Gauss引理给 $F$ 在复多项式环中不可约，因而在实环中不可约。引理125.1的整个边界最低生成元整除 $F$，且不为常数，所以只能与 $F$ 相差非零标量。这证明全部边界的最低性，而非只检验某条曲线。
+
+但在内部方向 $e=(1,0,0)$ 和 $z=(0,1,0)$ 上，$F(se-z)=s^4-1$ 有非实根 $\pm\mathrm i$，故 $F$ 不关于 $e$ 双曲。若 $C_4$ 是某个双曲多项式 $g$ 的整个分支，Renegar Theorem 3可把其方向移到这个 $e$；其最低整个边界多项式 $F$ 整除 $g$，从而 $F$ 的每条方向限制都应只有实根，矛盾。证毕。
+
+这个例子只否定将定理125.4的三次上界改为四次。它未被证明满足完整EB，更不满足本章另未构造的全部E0合同，因此不是一般 $\mathsf E_0\Rightarrow\mathsf{PC1}/\mathsf{IC}_0$ 的同域反模型。
+
+### 125.8 完整正维排除球迫使最低次数恰为三
+
+**定理 125.6（低次数入口的完整秩三消费者）。** 在125.1的同一有限维闭尖满维原锥及严格正原单位上，下列两项等价：
+
+$$
+\begin{aligned}
+&\mathsf{AB}_{\le3}\quad\text{且}\quad
+\forall p\in P\ \exists d_p\ge1:\ D_p\simeq_{\rm aff}\overline B^{d_p};\\
+&\exists\text{有限维秩三EJA }J\ \exists\text{实线性双射 }\Psi:V\to J:\quad
+\Psi(C)=J_+,\qquad u=\operatorname{tr}_J\Psi.
+\end{aligned}
+\tag{MC125.19}
+$$
+
+只要任一项成立，$\delta(C)=3$。相对于最低 $p_C$ 的全部原纯射线秩一、全Pair、Inj、完整S及同单位静态Jordan字典均成立。一般支路仍包含全部秩三EJA，不仅包含复型。
+
+证明。先从第一项出发。定理125.4已经独立支付原锥的整个双曲分支身份。固定任意 $e\in\operatorname{int}C$，令 $\delta=\delta(C)$，显式指定
+
+$$
+h=p_C\,u^{\,3-\delta}.
+\tag{MC125.20}
+$$
+
+$h$ 是次数恰为三的齐次多项式，$h(e)>0$。线性泛函 $u$ 关于 $e$ 双曲，其闭分支为 $\{u\ge0\}$。乘积特征根是各因子根的并，按重数计，所以
+
+$$
+\Lambda_+(h,e)
+=\Lambda_+(p_C,e)\cap\{u\ge0\}=C.
+\tag{MC125.21}
+$$
+
+若 $\delta=3$，零次幂为一；若 $\delta<3$，重复的 $u$ 因子明确保留。这里并未因(MC125.21)就声称ROG相同。
+
+现在 $(V,h,e,C,u)$ 满足124.1的**全部**前件：恰三次、整个实际分支、尖、满维、原严格正单位，以及(MC125.4)的完整原对象。正维球条件也是124.3原来的全称条件。直接调用已发表定理124.3，取得相对于这个指定 $h$ 的ROG与全Pair；其证明中的PE、法向矛盾和秩二排除不重证为本章成果。
+
+Ito—Lourenço Proposition 3.5(i)要求的恰是正则且相对于指定多项式ROG，故可用于 $h$：$h$ 已是产生该整个双曲锥的最低次数多项式。可是 $p_C$ 本身也双曲且产生同一整个锥，次数为 $\delta\le3$，所以 $3\le\delta$，于是 $\delta=3$，$h=p_C$。这一步准确排除了增广因子，不将“相同锥”当作“相同秩”。也可读出其秩代价：当 $\delta<3$，任意归一原纯点 $p$ 的 $u$ 因子各贡献一个非零根，故
+
+$$
+r_h(p)=r_{p_C}(p)+(3-\delta),\qquad r_{p_C}(p)\ge1.
+\tag{MC125.22}
+$$
+
+后一不等式用Ito—Lourenço Proposition 2.4(iv)的尖锥秩零判据及 $u(p)=1$；因此低次数时不可能得到相对于 $h$ 的秩一。这与前述最低性证明完全一致。
+
+随后直接调用124.4，或等价地将已得全Pair与完整EB交给VII103.4、103.6及其完整S／Jordan桥，得到(MC125.19)第二项。所有这些分类步骤都是复用；本章新增入口已在定理125.4及(MC125.20)—(MC125.22)中支付。
+
+反向，设第二项成立。秩三EJA的三次Jordan行列式 $\det_J$ 在平方锥的整个边界为零，成熟谱定理给它关于 $1_J$ 的双曲性及整个平方锥分支。拉回 $\det_J\circ\Psi$ 是原整个边界的三次方程，故 $\mathsf{AB}_{\le3}$ 成立。VII103.6和124.4的完整同单位反向把原 $K,P,[0,u]$ 与每个全确认族、最低函数、整个Peirce-zero排除球同时运输，给全部 $d_p\ge1$。它适用于任意原严格正 $u$，其规范迹匹配已经由原同单位表示支付。前向证明再给 $\delta=3$；并且最低生成元整除同次数的 $\det_J\circ\Psi$，所以
+
+$$
+p_C=\kappa\,\det_J\circ\Psi\qquad(\kappa>0),
+\tag{MC125.23}
+$$
+
+其中符号按原内部为正归一。证毕。
+
+全部支路与尺寸直接复用124.4、VII103.7和VIII113.7：
+
+| 秩三EJA | $\dim_{\mathbb R}V$ | 全部完整 $D_p$ 的维数 |
+| --- | --- | --- |
+| $\mathbb R\oplus\operatorname{spin}_d$，$d\ge1$ | $d+2$ | 旗标为 $d$，球源为 $1$；$d=1$ 是经典三角形 |
+| $H_3(\mathbb R)$ | $6$ | 全部 $2$ |
+| $H_3(\mathbb C)$ | $9$ | 全部 $3$ |
+| $H_3(\mathbb H)$ | $15$ | 全部 $5$ |
+| $H_3(\mathbb O)$ | $27$ | 全部 $9$ |
+
+$\operatorname{spin}_d=\mathbb R\oplus\mathbb R^d$ 取秩二规范迹 $2t$。第一行穷尽非简单的秩分拆 $1+2$ 与 $1+1+1$；其完整原态为旗标与整球的join，$D_f$ 为整球、$D_{b_n}=[f,b_{-n}]$。因此不能凭“次数三”“存在一张三球”或“实维九”就删去可约支路。一般的 $1+2$ 边界交在加完整EB之后才被本定理约束为此Jordan支路；三线性最低方程则对应经典三角形。
+
+为明确一般支路的全部静态范围，写 $\Psi p=c$ 为本原幂等元，$1_J$ 为Jordan单位。用同一个 $\Psi$，全部效应和确认切片为
+
+$$
+\begin{gathered}
+f_a(x)=\operatorname{tr}_J(a\circ\Psi x),\qquad 0\le a\le1_J,\\
+\mathcal F_p=\{f_{c+b}:b\in J_0(c),\ 0\le b\le1_J-c\},\\
+\mathcal T_p(x)=\operatorname{tr}_J(c\circ\Psi x),\qquad
+D_p=\Psi^{-1}\{y\in J_+\cap J_0(c):\operatorname{tr}_Jy=1\}.
+\end{gathered}
+\tag{MC125.24}
+$$
+
+这是VII103.6的成熟Peirce及全效应字典；全确认族中的正补块使最低值由 $b=0$ 取得。它包括旗标中央质量、实与四元分支，以及Albert分支的本原幂等元；不把非结合八元向量的任意外积当作全部纯态参数。对任意 $x\in C\setminus\{0\}$，质量仍为 $u(x)=\operatorname{tr}_J\Psi x$；零向量由同一映射送到零，不作归一。有限数学测量对应全部 $a_j\ge0$、$\sum_ja_j=1_J$，实际可调用性继续由125.11的原合同承担。
+
+### 125.9 全部三球已选择完整复三能级，无须另给种子或Inj
+
+**定理 125.7（整个低次边界的复量子候选）。** 在125.1的原闭尖满维有限维锥与严格正原单位上，下列条件等价：
+
+$$
+\boxed{\begin{aligned}
+&\mathsf{AB}_{\le3}+\mathrm{EB3};\\
+&\exists\text{实线性双射 }\Psi:V\to\operatorname{Herm}_3(\mathbb C):
+\quad\Psi(C)=\operatorname{PSD}_3,\quad\operatorname{Tr}\Psi=u.
+\end{aligned}}
+\tag{MC125.25}
+$$
+
+这里EB3始终量化每个实际原纯点的**整个**最低零集。此等价不另输入Inj、固定种子、三线性参数族、九维、PR、least或全Pair；它们中适用的静态结论由同原表示供应。$\delta(C)=3$ 也是后果。
+
+证明。第一项由定理125.6给全部秩三EJA。可约支路有球源的完整线段排除集，违反全部 $d_p=3$，故被排除。四个简单支路的完整球维数分别为 $2,3,5,9$，仅 $H_3(\mathbb C)$ 留下。这里复用VII103.7的准确类型选择，不重作Jordan或射影平面分类。所得同单位表示就是第二项。反向，$\det\circ\Psi$ 覆盖原整个边界，故最低次数至多三；同一个锥同构及其对偶运输全确认族，124.8和VII103.8的完整反向给全部原 $D_p$ 为三球。证毕。
+
+**同一映射的完整静态字典。** 对(MC125.25)中的同一个 $\Psi$，令 $\rho=\Psi x$，则
+
+$$
+\begin{gathered}
+\Psi(C)=\operatorname{PSD}_3,\qquad
+\Psi(K)=\{\rho\succeq0:\operatorname{Tr}\rho=1\},\\
+\Psi(P)=\{vv^*:v\in\mathbb C^3,\ v^*v=1\},\\
+\mathcal E=\{f_A:f_A(x)=\operatorname{Tr}(A\Psi x),\quad0\preceq A\preceq I_3\}.
+\end{gathered}
+\tag{MC125.26}
+$$
+
+$\mathbb C^3$ 的全部非零向量按复相位及非零缩放识别成全部原纯射线；单位向量参数给迹一原纯点，无纯轨道缩减。对每个原 $p$，写 $\Psi p=vv^*$、$v^*v=1$，则
+
+$$
+\begin{gathered}
+\mathcal F_p=\{f_A:A=vv^*\oplus B
+\text{ 于 }\mathbb Cv\oplus v^\perp,\quad0\preceq B\preceq I_{v^\perp}\},\\
+\mathcal T_p(x)=v^*\Psi(x)v\quad(x\in C),\\
+D_p=\Psi^{-1}\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho v=0\},\\
+\mathcal T_p(q)=|v^*z|^2\quad\text{若 }\Psi q=zz^*,\ z^*z=1.
+\end{gathered}
+\tag{MC125.27}
+$$
+
+这些公式直接消费124.8的完整全效应运输，其输入只需同锥同单位表示，因此取 $C$ 替代其中的特定族 $C_\tau$ 即可。具体而言，对偶双射整个正泛函锥，保迹双射整个效应区间及其确认切片；$0\preceq I-A$ 与 $v^*(I-A)v=0$ 给 $(I-A)v=0$，从而确认族确为上述全补块。每个补块在全部PSD输入上非负，$B=0$ 可取，最低值于是恰由秩一效应取得。PSD性给 $v^*\rho v=0\Longleftrightarrow\rho v=0$，所以是整个二能级密度三球，不是所选球片或纯零图。
+
+对每个有限结果数，全部 $f_j\in C^*$、$\sum_jf_j=u$ 恰对应全部 $A_j\succeq0$、$\sum_jA_j=I_3$，原评价逐项为Born值 $f_j(x)=\operatorname{Tr}(A_j\rho)$。若 $x\ne0$，其原质量 $m=u(x)>0$，唯一归一态为 $\rho/m$；若 $x=0$，则 $\rho=0$、全部读数及最低值为零，不强定零质量的归一条件态。效应补、零效应、单位效应与全部有限凸混合均由这一映射保持。
+
+| 通常的量子公理或对象 | 该几何候选的准确对应与范围 |
+| --- | --- |
+| 复三维Hilbert空间及相位射线 | 所得同一表示中的 $\mathbb C^3$ 与全部 $\mathbb{CP}^2$ |
+| 全部密度态与混合 | 整个原 $K$ 对应全部迹一PSD矩阵，原线性凸混合原样运输 |
+| 全效应、Born规则与数学POVM | 整个 $[0,u]$ 及全部有限单位和效应族，原读数为迹配对 |
+| 确认、最低比较与完整排除 | 全确认族、秩一least、全部纯—纯模方及完整二能级密度三球 |
+| 单位、中心、谱与Jordan结构 | 原 $u$ 为迹，中心为 $\Psi^{-1}(I_3/3)$，成熟谱及Jordan积在所得完整模型中使用 |
+| 正交框架与数学面压缩 | 全部正交完备基及 $X\mapsto QXQ$；原过程中的实现另有合同 |
+| 全有限纠缠联合与全旁观CP | 单体结论未供应其原锥、产品、资源与共同表示，仍需125.11的完整输入 |
+| 实际事件、仪器、Lüders与记录 | 保留事件提升、预算、接线、饱和与校准条件；数学POVM不替代它们 |
+| 原时间、Hamiltonian、能量与 $\hbar$ | 继续由实际动态来源与单位标定承担；静态几何不选择数值或动力学 |
+
+### 125.10 在固定原E0中的双向条件链与未付自动性
+
+这里的 $\mathsf E_0$ **仍恰为**SAME_READBACK127.1、129.1的固定完整入口：非零有限维原 $V$，原闭尖生成锥 $C$，严格正的同一原 $u$，以及整个 $K,P,[0,u]$ 与原最低定义；全纯EB3；原标签Inj；一组含 $P_0$ 顶点的实际原正交三角 $(p_1,p_2,p_3)$；同一三角全部原零效应的联合分离；由其限制配对唯一确定的三个规范 $T_i$ 的全原锥正性。准确地，后两项仍为
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+\bigl[\forall i\ \forall b\in[0,u],\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]
+\Rightarrow x=y,\\
+M_i=\operatorname{span}D_{p_i},\quad T_i:V\to M_i,\quad
+h(T_i x)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\quad
+T_i(C)\subseteq C.
+\end{gathered}
+\tag{MC125.28}
+$$
+
+$P_0=\{p:\mathcal A_p\text{ 为单点}\}$，其中 $\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\}$；这些都是整个原确认族的定义，不是假定只有一张确认效应。联合分离量化全部相关零效应；规范压缩的正性量化整个 $C$。
+
+**推论 125.8（原E0内的低次边界诊断）。** 在这个固定 $\mathsf E_0$ 中，以下条件等价：
+
+$$
+\mathsf{AB}_{\le3}
+\quad\Longleftrightarrow\quad\delta(C)=3
+\quad\Longleftrightarrow\quad\mathsf{PC1}
+\quad\Longleftrightarrow\quad\mathsf{IC}_0
+\quad\Longleftrightarrow\quad\text{(MC125.25)的同原完整PSD}_3\text{表示}.
+\tag{MC125.29}
+$$
+
+证明。低次数与同原表示的等价由定理125.7，且给最低次数恰为三。其余等价直接复用SAME_READBACK定理127.11、129.8和130.5，不再证明全域纯压缩升级、原 $P_0$ 稠密性或谱分类。反向的表示将三次行列式拉回到**整个**原边界，故无需另加代数性。证毕。
+
+为保留这些复用项的实际原义，PC1仍是同一种子的
+
+$$
+\forall p\in P\ \exists i\in\{1,2,3\}:\Delta_i(p)=0,
+\tag{MC125.30}
+$$
+
+即至少一个 $T_ip$ 为原极射线向量或零；它等价于 $D_p$ 碰到至少一张完整种子球，或 $(p+p_i)/2$ 至少有一个位于原相对边界。$\Delta_i$ 与共同正定型 $B$ 均取127.2、129.1原定义，不能改成另选的环境二次式。$\mathsf{IC}_0$ 仍为
+
+$$
+\forall p\in P_0:\ D_p\cap I\ne\varnothing,\qquad
+I=\left\{\frac w3+v:v\in\ker u,\ \|v\|_B^2\le\frac16\right\},
+\quad w=p_1+p_2+p_3.
+\tag{MC125.31}
+$$
+
+$1/6$ 是同一仿射中心 $w/3$ 下的半径平方，不是接触态的原点范数平方；后者在接触处为 $1/2$。这两个数及固定内球包含、点态三零等价均按129.3—129.4复用，不从本章一般代数性另推。点态PC1与点态三次纯压缩仍不同；(MC125.29)使用的是全原量词的既有升级。IX120.9的 $P_0$ 稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 和原宽度紧层也仅沿这些原消费者使用，不重计新结果。
+
+在已得同原表示后，可按127.11的同种子反向选坐标，使 $\Psi p_i=E_{ii}$、$\Psi w=I_3$、$B(x,y)=\operatorname{Tr}(\Psi x\Psi y)$，且原规范压缩恰为角压缩。于是 $\Psi^{-1}((I_3-\Psi p)/2)$ 给每个原完整球与上述固定内球的实际接触，全部原态、效应及最小值继续使用同一个 $\Psi$。这些是既有反向的准确消费者，不把预选矩阵投影放进原入口。
+
+**仍未解决的原桥。** 本章没有证明
+
+$$
+\mathsf E_0\Longrightarrow\mathsf{AB}_{\le3},
+\qquad\text{因而没有证明}\qquad
+\mathsf E_0\Longrightarrow\mathsf{PC1}/\mathsf{IC}_0.
+\tag{MC125.32}
+$$
+
+它也未构造满足完整E0而失败这些条件的同域模型。(MC125.29)给的是一个新的全局几何诊断与有界充分入口，不改变原任务完成判据。三张种子完整三球、三元有限读回的线性代数，乃至某个选定三次式在这些窗口上为零，都未供应整个边界的三次方程。EXCLUSION X128.2的中心关系代数生成严格不足与 $\ell^1$ 闭包结论，原本就限定于已指定标准复模型；它不支付未知E0锥的代数边界，也不把一般中心相容性或CS补齐。
+
+$\mathsf{AB}_{\le3}$ 是显式附加的全局代数条件。在固定E0内它与旧条件等价，未被证明是E0的后果，也没有独立性、最少独立公理或更少物理假设的结论。完整的原量子重构目标继续包括下面全部非静态合同。
+
+### 125.11 SECTION127.10及完整传递合同的原文继承
+
+本章引用的是[SAME_READBACK的SECTION127.10][MC125SR]，即第127.10**节**，不是同卷另一个数学定理编号。其完整链为：SECTION127.10到该卷125.11、124.9、123.13，再到EXCLUSION VIII命题113.11及112.9、EXCLUSION IX120.11、THREE_COPY VII121.12与122.14，继续到[INTRINSIC_POLAR VI定义89.7、式(89.13)及89.8—89.10][MC125PolarVI]，并沿其原引用到V88.6、87章、[原生续卷VII][MC125NativeVII]及III的来源、过程、全未来和动态消费者。此处的操作／来源VI是INTRINSIC_POLAR卷，不与另一个整球BILATERAL VI混同。各传递引用取整个原文及其完整前件、对象、作用域和量词，不以以下单体入口替换任何一项。对应文件均列于本章引用。
+
+下列正文逐字引入本卷124.10的完整正文，保留来源公式编号；其中“本族”指来源第124章的族。对本章所得同原复型，所有原对象、全部有限层级及物理合同以同样完整的量词继续承担。
+
+本章完整继承[SAME_READBACK第127.10节][Q124CubicSR]及其全部传递引用，具体包括该卷125.11、124.9、123.13，[EXCLUSION VIII的命题113.11及112.9][Q124CubicEVIII]、[EXCLUSION IX120.11][Q124CubicIX]、[THREE_COPY VII121.12与122.14][Q124CubicTCVII]，以及它们继续指向的VI89.9—89.10、原来源／过程、共同输入和动态消费者。上述继承取各原文的完整前件、原对象及量词；以下对应保留其承担的内容。
+
+**共同来源、全部操作和合法未来。** 同一原装饰元组 $\mathcal O$ 的共同来源域、全部中点实现、概率像紧性、全测试表及闭性、零／单位／补／有界倍增、重复标签与每种同中点实现全部保留。质量遍历全部非负数，含零、次归一与不等质量；过程和参考各有完整相关联合输入域。原 $L,p,\omega,K,M$、两次同一读回、两实张成、全实关系、完整(83.8)、VI(89.13)全部两尺度等式、C2、整个 $G=1_E$、精确PRE后的整个H13及每个原资格态、活跃块严格负方向、共享总迹一、非活跃零质量和空活跃集，仍由原消费者承担；操作映射 $p$ 与本章纯态标签不混同。
+
+设备／事件／来源绑定、全部菜单分支、实际参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字、全部合法未来及每个中间切口均保留。原生及细化消费者、terminal futures、联合有符号关系、细标签粗归组、记录后的条件未来、source-adoption和资源合同继续在同一共同来源上承担。一个数学球、一张原效应或一个正角压缩没有因此成为可实际调用的来源或接线。
+
+**全部有限联合载体。** 对每个有限 $N\ge1$，仍须提供实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N=C_N\cap\{u_N=1\}$、全部 $P_N=\operatorname{ext}K_N$ 以及完整原效应区间。每个实际分块 $a+b=N$ 均须有
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+\subseteq C_a\otimes_{\max}C_b.
+\tag{124.27}
+$$
+
+同一产品配对、严格张量单位、全部原因子置换及其逆的正性、规范重括号、指定运输下的不连续位置分块都不删减。二份比较仍量化整个实际联合 $S_2$：每个产品或纠缠纯点 $p,q_\ell\in P_2$、每个有限族、全部非负 $t_\ell$ 且和为一，包括零权和重复标签，要求
+
+$$
+\mathcal T_p^{(2)}\!\left(\sum_\ell t_\ell q_\ell\right)
+=\sum_\ell t_\ell\mathcal T_{q_\ell}^{(2)}(p),\qquad
+\mathcal T_p^{(2)}(x)=
+\inf_{\substack{f\in[0,u_2]_{C_2^*}\\f(p)=1}}f(x).
+\tag{124.28}
+$$
+
+仅产品态上的比较不能替代它。三项具名供应仍分别是原低二份 $q=1,2$ 的least／谱性／正面投影及保纯到Jordan桥，唯一实际自复合 $(W_1,W_1,W_2)$ 的直和扇区限制、秩和实维乘法的复型选择，以及同一实际两因子的产品正规形。
+
+非经典支路的 $\mathsf F_{\max}$ 仍要求同一最大复块 $n_r=L\ge2$ 与同一含相位正交基给出
+
+$$
+g_r=\sum_{a=1}^L|a\rangle_r|a\rangle_r|a\rangle_r,\qquad
+\Delta_r=|g_r\rangle\langle g_r|\in C_3,\qquad u_3(\Delta_r)=L.
+\tag{124.29}
+$$
+
+其余扇区零，归一原源为 $\Delta_r/L$，不预付三份纯性或实际制备；全经典 $L=1$ 支路按原定理免除此资源。本族所得单体复型的 $L=3$，二、三份秩为九、二十七；高阶整个排除集合不被要求继续满足单体EB3。只有全部联合前件和三项供应齐备后，才消费既有全有限层级结论。
+
+**全旁观CP、实际事件、同族仪器与记录。** 数学全旁观正性仍量化每个 $b\ge0$ 以及任意含纠缠的同一共同输入，要求
+
+$$
+(\operatorname{id}_{W_b}\otimes F)(C_{b+m})\subseteq C_{b+n}.
+\tag{124.30}
+$$
+
+全有限层级及其共同表示已提供后，才沿原Choi桥识别通常CP、矩形跨扇区Kraus和逐输入TP／TNI预算。同一实际事件的CP还需原完整提升、实际探针及相容核；使全部数学CP-TNI分支成为实际事件另需事件饱和选择。共同输入上的预算、接线、记录、粗粒化和校准负责把分支组成同族仪器。仅严格正质量分支作条件归一，零质量分支不强定归一条件态；Lüders更新还要求同一分支的锐效应、接受态中性与输出校准。全部数学POVM、效应和为单位与可执行的共同仪器各按原合同承担。
+
+**原钟、动态来源、能量与数值 $\hbar$。** 原钟、实际动态来源、连续齐次可逆时间群与单位仍是原前件。若另给对全部实时间的连续线性群 $A_t$，满足 $A_0=I$、$A_{s+t}=A_sA_t$、$A_t(C)=C$、$uA_t=u$，生成元只描述该额外给定过程。在重构复块中另给保迹酉时间族后，通常写为
+
+$$
+U_t=\exp(-\mathrm itH/\hbar),\qquad
+\rho_t=U_t\rho U_t^*,\qquad
+\mathcal L(\rho)=-\frac{\mathrm i}{\hbar}[H,\rho],\qquad H=H^*.
+\tag{124.31}
+$$
+
+量词覆盖该已给时间族的全部原输入与全部实时间。$H$ 的标量平移不改变态作用，时间重标改变生成元尺度却保留静态几何；恒等时间族和非平凡Hamiltonian族可共享全部静态对象。因此实际 $H$、能量标定、数值 $\hbar$、时空和物理空间维数均未由立方分类选出，球面参数也没有被解释成物理时间。
+
+### 125.12 成熟来源、真正新增的入口与纸面边界
+
+| 来源 | 本章使用的准确内容及限制 |
+| --- | --- |
+| [Sinn][MC125Sinn] Definition 2.1、Lemma 2.5、Proposition 2.9、Remark 2.10、Corollary 2.11 | 整个代数边界、regular且非空的集及补集、纯余维一、有限半代数分量与锥的齐次化。半代数性和regular前件在125.2先支付；不从该文取得任意凸锥的双曲性 |
+| [Gouveia—Ito—Lourenço][MC125GIL] §§2.1—2.2 | Proposition 2.2供应整个边界最低方程及整除性；Lemmas 2.5—2.6预设已有双曲锥，不能承担本章的反向入口 |
+| [Helton—Vinnikov][MC125HV] Lemma 2.1、§3及§3.2.2 | Lemma 2.1在其algebraic-interior框架谈最低定义方程；一般定义允许内部零点。§3的rigid convexity/RZ与§3.2.2的四次体为成熟边界；不能仅凭“凸且代数”跳过125.4的可删因子证明 |
+| [Renegar][MC125Renegar] §2 Proposition 1、Theorems 2—3 | 双曲开分支是无零集的连通分量、闭包与全部内部方向。仅在125.5完成实根检验后使用分支接口 |
+| [Ito—Lourenço][MC125IL] Proposition 2.4、Definition 3.1、Remark 3.2、Proposition 3.5(i) | 秩的指定多项式依赖、尖锥秩零判据，以及正则且ROG才有的最低次数结论。锥同一性本身不支付ROG |
+| [Netzer][MC125Netzer] Introduction、§1.1 Proposition 1.1 | 讨论已有双曲三次式的正规形及部分维数中的谱面体实现；其正向前件已经是双曲性，不是任意原凸锥的最低边界入口。本章不消费其Clifford实现或以此补一般九维表示 |
+| 本卷124.1—124.4、124.8 | 正则立方整个原域中的PE／法向／ROG／Pair消费者、秩三分类与全效应运输，均保留原量词直接复用 |
+| VII103.2—103.8及其Library完整S桥；VIII113.7—113.9 | 全部真面、完整S、任意原单位的忠实Jordan分类、全部秩三支路和静态字典，均不重计为本章的新分类 |
+| SAME_READBACK127.11、129.8、130.5及SECTION127.10 | 固定E0中的PC1／IC0／同原表示条件链及完整物理合同；不从条件等价冒领E0自动性 |
+
+本章保留的 `repo-derived` 纸面连接是：先从有限边界覆盖和实际紧基精确定位最低次数；以三次以内的四根障碍迫出可删的内部超平面因子，从而排除最低方程内部零点；再由正负原锥的两个真实边界穿越取得全部实根，并用无零分量证明**整个**分支等式。随后显式增广为三次，准确消费124与ROG最低性，把整个边界低次数接为完整EB分类的入口，并在固定E0中接回旧PC1／IC0条件链。新的工作不包含重新证明旧Jordan分类、谱定理、Born字典、ROG接口或四次例子。
+
+所列原始文献中的上述命题没有以任意原凸锥的 $\mathsf{AB}_{\le3}$ 为前件给出这里的完整量子消费者；本章不据有限来源范围作全球原创、优先权、文献穷尽或公理逻辑独立主张。存在性、连通分量、分支和秩的每个接口均按其实际前件使用。本章是纸面定理、证明与条件应用；理论正文及文献都不被提升为形式内核证明。
+
+### 125.13 完整中文图景：窗口像球，不等于整座实体只有三次边界
+
+把整个原状态体想成一块实心实体，所有原效应就是能在这整块实体上合法读零到一的尺。每个纯态背后的完整排除集，是所有能被某张确认它的尺读成零的状态收齐后的集合。要求每个这样的完整集合是三球，控制的是实体上每一扇真实的二能级窗口；它不直接告诉我们整座实体的外壳由几次方程刻出。只展示三个种子窗口，或给出在这些窗口上正确的三次式，仍没有覆盖全部外壳。
+
+本章另加的条件正是全局外壳的复杂度：**整个边界的最低总次数至多三**。最低意味着每个因子都必须为整个外壳承担不可删除的部分；不能为了凑三次，在内部再插一块平板。正卦限的 $xy(x-y)$ 就插入了这样的板：它仍盖住原边界，也仍双曲，但板把原内部切开，选中的分支只剩 $x\ge y\ge0$。最低方程 $xy$ 才描述原整体分支。
+
+为什么最低三次能排除这块内部板？先把锥按一个严格正刻度切成紧凸基。假设最低方程在实体内部某点为零。从这里朝任意方向走，直线的两头还各碰一次真实外壳。若沿某方向的一阶变化也为零，内部零点便至少占两个根，加上两头边界的两个根，三次已经容不下。于是所有一阶零方向上的整条直线都必须为零，拼成一个真正的超平面因子。这个平面穿过内部，从内部看出去只遮住一圈方向，不能独自承担一块外壳；平面以外的全部外壳已由剩余因子覆盖，连续性把遗漏的一圈也补上。因此这块板可删，与最低性矛盾。这里既不要求外壳处处光滑，也不把多项式的切平面偷当成已知的凸支撑面。
+
+内部障碍排除后，从任意内部方向看原锥与其负锥，一条不穿锥轴的直线会在两侧各遇到一个不同真实边界点。二次的根到此已齐，三次只剩一个实一次因子，全部根因此为实。还要再看完整实体：其内部从未经过多项式零点，整个边界又都在零集，所以内部正好占满一个无零连通分量。这样取得的是原锥等于整个闭双曲分支，而不只是边界包含或局部形状相像。
+
+到了这个完整入口，才复用124的几何机制：正维完整排除球与暴露纯点给每条纯射线两个不同支撑方向，立方秩二层却只允许一个；纯射线只能在秩一层。全部两纯点因而留在真面，旧的完整Pair／Jordan桥可以准确消费。若最低次数原本不到三，显式乘上原单位以凑成立方后，额外因子会提高纯射线的相对秩；ROG最低性排除这种情况，所以完整正维球域的最低次数实际恰为三。这个阶段的一般模型仍可能是实、复、四元、八元或旗标加球。要求**每个完整排除集都恰为三球**，才排除所有线段和其他简单类型，留下完整复三能级。
+
+同一个忠实映射随后负责全部对象：所有密度态、所有纯射线、整个效应区间、每个Born读数、全确认族的真正最小值、每颗完整排除三球，以及零和非零质量。没有给不同读数换不同表示，也没有把归一化用于零输入。固定E0中的原种子与固定内球也由旧反向一并读回；低次数条件于是与旧PC1／IC0等价。但“原E0为什么必有这样的整个三次外壳”仍是未证明的桥。它没有被三张圆窗口、一个家族的参数分类或四次反例替代。
+
+因此这里形成了一个完整的**条件静态**量子候选：原全效应凸锥、整个边界最低三次、全部原完整排除三球。它与同原复PSD3字典双向对应；要接回完整物理理论，125.11继承的共同来源、全部操作、任意有限纠缠联合与资源、全旁观CP、事件与同族仪器、记录和全部合法未来、原钟、能量标定及数值 $\hbar$ 仍须各按原完整合同支付。
+
+[MC125Sinn]: https://doi.org/10.1186/s40687-015-0022-0 "Rainer Sinn, Algebraic boundaries of convex semi-algebraic sets；Definition 2.1、Lemma 2.5、Proposition 2.9、Remark 2.10、Corollary 2.11。"
+[MC125GIL]: https://doi.org/10.68381/jca33015 "João Gouveia, Masaru Ito and Bruno F. Lourenço, Minimal Hyperbolic Polynomials and Ranks of Homogeneous Cones；§§2.1—2.2，Proposition 2.2及Lemmas 2.5—2.6。"
+[MC125HV]: https://arxiv.org/abs/math/0306180 "J. William Helton and Victor Vinnikov, Linear Matrix Inequality Representation of Sets；Lemma 2.1、§3及§3.2.2；DOI 10.1002/cpa.20155。"
+[MC125Renegar]: https://optimization-online.org/wp-content/uploads/2004/03/844.pdf "James Renegar, Hyperbolic Programs, and Their Derivative Relaxations；§2 Proposition 1、Theorems 2—3；DOI 10.1007/s10208-004-0136-z。"
+[MC125IL]: https://arxiv.org/pdf/2207.11986v3 "Masaru Ito and Bruno F. Lourenço, Automorphisms of rank-one generated hyperbolicity cones and their derivative relaxations；Proposition 2.4、Definition 3.1、Remark 3.2、Proposition 3.5(i)；DOI 10.1137/22M1513964。"
+[MC125Netzer]: https://arxiv.org/abs/2609.12957v1 "Tim Netzer, Clifford Realizations of Hyperbolic Cubics；Introduction及§1.1 Proposition 1.1。仅用于区分已有双曲三次式的谱面体路线与本章整个边界入口。"
+[MC125SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "127.1、127.11、129.1、129.8、130.5：同一完整E0、PC1／IC0及同原静态条件链；SECTION127.10及其全部传递引用：完整原来源、过程、全有限复合、资源、事件、仪器、记录和时间合同。"
+[MC125VII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2—103.8：完整原面、Pair、完整S、同锥同单位的秩三EJA及全部支路和全效应字典。"
+[MC125VIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7—113.9：整个W域既有分类和谱字典；命题113.11与112.9：全部原联合、操作及时间合同。"
+[MC125IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX118及120.4：原宽度上半连续、饱和层与紧层；IX120.9：原P0稠密；IX120.11：全部同原静态对象与完整非静态合同。"
+[MC125X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.2：EB与PE下两条不同正法向；X128.2：仅标准复模型内中心关系的代数不足与有界闭包，不供应一般E0的三次边界。"
+[MC125TCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY VII121.6：稠密Gdelta及非塌缩层上的完整确认闭图；121.12与122.14：共同来源、全部有限复合、资源、事件仪器、记录与时间的完整合同。"
+[MC125PolarVI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "定义89.7及式(89.13)：同一原装饰元组、原质量、两尺度及整个输出；89.8—89.10：逐消费者、原生／细化、全部原字与terminal futures、联合有符号关系、细标签粗归组、记录后条件未来、source-adoption及资源合同，连同全部传递引用完整继承。"
+[MC125NativeVII]: AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md "INTRINSIC_POLAR VI89.9—89.10所引原生与细化路线：原几何、全部原字及terminal futures、联合菜单、有符号关系、回返、完整校准、source-adoption与来源边界；每条路线只按其完整原入口消费，不由本章低次边界代付。"
+[MC125SBridge]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge "VII103与124所消费的既有完整S／谱性／projectivity／滤子保纯到Jordan桥；其纸面范围保持原样。"
+[Q124CubicEVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7—113.9：成熟秩三分类与完整静态字典；命题113.11及112.9的全部原联合、操作和时间合同。"
+[Q124CubicSR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "第127.10节及完整传递引用：来源、全部有限复合、资源、CP、实际事件仪器、记录、全部合法未来及时间；125.11、124.9、123.13、127.1、129.1与PC1／IC0的原范围。"
+[Q124CubicIX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX120.11：同一原静态字典及其完整物理合同和引用链。"
+[Q124CubicTCVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "THREE_COPY VII121.12、122.14：共同来源、全有限层级、事件仪器、记录及连续时间的完整合同。"
+
+## 追加锚（本行以下为增补区）
