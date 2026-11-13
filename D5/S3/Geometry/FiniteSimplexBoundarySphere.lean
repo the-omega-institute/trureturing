@@ -7,7 +7,6 @@
    digest: Rational Psi on the literal finite simplex, its full-boundary quotient, the Euclidean unit sphere and the original supported coordinate realization. -/
 
 import D5.S3.Geometry.FiniteConeCollapse
-import D5.S3.Geometry.FiniteSimplicialJoin
 import D5.S3.Geometry.EuclideanSphereJoin
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Convex.Topology
@@ -92,7 +91,7 @@ def minCoord (x : Simplex Λ) : ℝ :=
   Finset.univ.inf' Finset.univ_nonempty (fun i => x.1 i)
 def sigma (x : Simplex Λ) : ℝ := cardR Λ * minCoord x
 private def displacementSq (x : Simplex Λ) : ℝ := ‖displacement x‖ ^ 2
-private def psiDenominator (x : Simplex Λ) : ℝ := sigma x ^ 2 + displacementSq x
+def psiDenominator (x : Simplex Λ) : ℝ := sigma x ^ 2 + displacementSq x
 private def psiNumerator (x : Simplex Λ) : E Λ :=
   (2 * sigma x) • displacement x + (sigma x ^ 2 - displacementSq x) • pole Λ
 
@@ -249,19 +248,6 @@ theorem continuous_psiRaw : Continuous (psiRaw (Λ := Λ)) := by
 private theorem continuous_psi : Continuous (psi (Λ := Λ)) :=
   continuous_psiRaw.subtype_mk _
 
-theorem barycenter_gauge : sigma (barycenterPoint (Λ := Λ)) = 1 := by
-  obtain ⟨i, hi⟩ := minCoord_attained (barycenterPoint (Λ := Λ))
-  have hmin : minCoord (barycenterPoint (Λ := Λ)) = (cardR Λ)⁻¹ := hi.symm
-  rw [sigma, hmin, mul_inv_cancel₀ (cardR_ne (Λ := Λ))]
-
-private theorem barycenter_displacement : displacement (barycenterPoint (Λ := Λ)) = 0 := sub_self _
-
-/-- Exact barycenter equation. -/
-theorem psi_barycenter : psi (barycenterPoint (Λ := Λ)) = north := by
-  apply Subtype.ext
-  simp [psi, psiRaw, psiNumerator, psiDenominator, barycenter_gauge,
-    displacementSq, barycenter_displacement, north]
-
 /-- Every full-boundary representative has the same south image. -/
 theorem psi_boundary {x : Simplex Λ} (hx : boundary x) :
     psi x = south := by
@@ -284,24 +270,6 @@ private theorem psiRaw_one_add_inner (x : Simplex Λ) :
   field_simp [(denominator_pos x).ne']
   dsimp [psiDenominator]
   ring
-
-/-- The north converse uses its pole component to force zero displacement. -/
-theorem psi_north_iff (x : Simplex Λ) :
-    psi x = north ↔ x.1 = barycenter Λ := by
-  constructor
-  · intro h
-    have hv : psiRaw x = pole Λ := congrArg Subtype.val h
-    have hc : (sigma x ^ 2 - displacementSq x) / psiDenominator x = 1 := by
-      rw [← psiRaw_inner_pole, hv, real_inner_self_eq_norm_sq, pole_norm_sq]
-    have ha : displacementSq x = 0 := by
-      have he := (div_eq_iff (denominator_pos x).ne').mp hc
-      dsimp [psiDenominator] at he
-      linarith
-    have hz : displacement x = 0 := norm_eq_zero.mp (sq_eq_zero_iff.mp ha)
-    exact sub_eq_zero.mp hz
-  · intro hx
-    have he : x = barycenterPoint := Subtype.ext hx
-    rw [he, psi_barycenter]
 
 /-- The south converse detects exactly the vanishing minimum over face labels. -/
 theorem psi_south_iff (x : Simplex Λ) :
@@ -549,19 +517,6 @@ theorem psi_nonSouthInverse
     inverse_displacement, smul_smul, ht, hp, one_smul]
   exact sub_add_cancel _ _
 
-/-- The original coordinate formula is public for later literal attachment maps. -/
-theorem nonSouthInverse_coordinate (y : Sphere Λ) (hy : y.1 ≠ -pole Λ) (i : Λ) :
-    (nonSouthInverse y hy).1 i = barycenter Λ i +
-      (y.1 i - ⟪y.1, pole Λ⟫_ℝ * pole Λ i) /
-        (1 + ⟪y.1, pole Λ⟫_ℝ + cardR Λ *
-          Finset.univ.sup' Finset.univ_nonempty
-            (fun j => -(y.1 j - ⟪y.1, pole Λ⟫_ℝ * pole Λ j))) := by
-  change (cardR Λ)⁻¹ + (kappa y.1)⁻¹ * tangent y.1 i = _
-  simp only [kappa, alpha, tangent, maxNeg, barycenter, PiLp.toLp_apply,
-    PiLp.sub_apply, PiLp.smul_apply, smul_eq_mul,
-    div_eq_mul_inv]
-  ring
-
 def vertex (i : Λ) : Simplex Λ := by
   classical
   exact ⟨WithLp.toLp 2 (Pi.single i (1 : ℝ)), by
@@ -622,19 +577,6 @@ def simplexBoundaryHomeomorph (hm : 2 ≤ Fintype.card Λ) : BoundaryQuotient Λ
   exact Continuous.homeoOfEquivCompactToT2
     (f := Equiv.ofBijective (psiQuotientMap (Λ := Λ)) hb) (continuous_psiQuotientMap)
 
-/-- Beta equation for every representative, including arbitrary boundary points. -/
-theorem simplexBoundaryHomeomorph_representative (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
-    simplexBoundaryHomeomorph hm (Quotient.mk _ x) = psi x := rfl
-
-theorem simplexBoundaryHomeomorph_barycenter (hm : 2 ≤ Fintype.card Λ) :
-    simplexBoundaryHomeomorph hm (Quotient.mk _ barycenterPoint) = north := by
-  rw [simplexBoundaryHomeomorph_representative, psi_barycenter]
-
-theorem simplexBoundaryHomeomorph_boundary (hm : 2 ≤ Fintype.card Λ)
-    (x : Simplex Λ) (hx : boundary x) :
-    simplexBoundaryHomeomorph hm (Quotient.mk _ x) = south := by
-  rw [simplexBoundaryHomeomorph_representative, psi_boundary hx]
-
 /-- Retain the isometry structure throughout sphere restriction. -/
 private def reindexLinear (e : Λ ≃ Fin ((Fintype.card Λ - 1) + 1)) :
     E Λ ≃ₗᵢ[ℝ] EuclideanSpace ℝ (Fin ((Fintype.card Λ - 1) + 1)) :=
@@ -660,20 +602,6 @@ def simplexBoundaryStdSphere (hm : 2 ≤ Fintype.card Λ) :
     BoundaryQuotient Λ ≃ₜ EuclideanSphereJoin.StdSphere (Fintype.card Λ - 1) :=
   (simplexBoundaryHomeomorph hm).trans (reindexSphere (stdIndex hm))
 
-theorem simplexBoundaryStdSphere_representative (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
-    simplexBoundaryStdSphere hm (Quotient.mk _ x) = reindexSphere (stdIndex hm) (psi x) := rfl
-
-theorem simplexBoundaryStdSphere_barycenter (hm : 2 ≤ Fintype.card Λ) :
-    simplexBoundaryStdSphere hm (Quotient.mk _ barycenterPoint) =
-      reindexSphere (stdIndex hm) north := by
-  change reindexSphere (stdIndex hm) (psi barycenterPoint) = _
-  rw [psi_barycenter]
-
-theorem simplexBoundaryStdSphere_boundary (hm : 2 ≤ Fintype.card Λ)
-    (x : Simplex Λ) (hx : boundary x) :
-    simplexBoundaryStdSphere hm (Quotient.mk _ x) = reindexSphere (stdIndex hm) south := by
-  rw [simplexBoundaryStdSphere_representative, psi_boundary hx]
-
 /-! The remaining constructions keep the original ambient ground and its ghosts.
     No extremum or boundary witness below ranges over an off-face coordinate. -/
 
@@ -686,9 +614,6 @@ abbrev AmbientFace := ↥(FiniteConeCollapse.faceSimplex face)
 
 def zeroExtend (v : E (FaceIndex G face)) : E G :=
   WithLp.toLp 2 (fun g => if hg : g ∈ face then v ⟨g, hg⟩ else 0)
-
-theorem zeroExtend_apply_inside (v : E (FaceIndex G face)) (g : G) (hg : g ∈ face) :
-    zeroExtend face v g = v ⟨g, hg⟩ := by simp [zeroExtend, hg]
 
 theorem zeroExtend_apply_ghost (v : E (FaceIndex G face)) (g : G) (hg : g ∉ face) :
     zeroExtend face v g = 0 := by simp [zeroExtend, hg]
@@ -708,27 +633,6 @@ private theorem restrict_sum (f : G → ℝ) (hf : ∀ g ∉ face, f g = 0) :
   by_cases hg : g ∈ face
   · simp [hg]
   · simp [hg, hf g hg]
-
-theorem zeroExtend_norm_sq (v : E (FaceIndex G face)) :
-    ‖zeroExtend face v‖ ^ 2 = ‖v‖ ^ 2 := by
-  rw [EuclideanSpace.real_norm_sq_eq, EuclideanSpace.real_norm_sq_eq]
-  calc
-    (∑ g, (zeroExtend face v g) ^ 2) =
-        ∑ g, if hg : g ∈ face then (v ⟨g, hg⟩) ^ 2 else 0 := by
-      apply Finset.sum_congr rfl
-      intro g _
-      by_cases hg : g ∈ face <;> simp [zeroExtend, hg]
-    _ = ∑ i, (v i) ^ 2 := sum_supported face (fun i => (v i) ^ 2)
-
-private theorem zeroExtend_add (v w : E (FaceIndex G face)) :
-    zeroExtend face (v + w) = zeroExtend face v + zeroExtend face w := by
-  ext g
-  by_cases hg : g ∈ face <;> simp [zeroExtend, hg]
-
-private theorem zeroExtend_smul (a : ℝ) (v : E (FaceIndex G face)) :
-    zeroExtend face (a • v) = a • zeroExtend face v := by
-  ext g
-  by_cases hg : g ∈ face <;> simp [zeroExtend, hg]
 
 private def extendFace (x : Simplex (FaceIndex G face)) : AmbientFace face :=
   ⟨WithLp.ofLp (zeroExtend face x.1), by
@@ -778,15 +682,6 @@ def faceCoordinateHomeomorph : Simplex (FaceIndex G face) ≃ₜ AmbientFace fac
     exact (PiLp.continuous_toLp 2 (fun _ : FaceIndex G face => ℝ)).comp
       (continuous_pi (fun i => (continuous_apply i.1).comp continuous_subtype_val))
 
-/-- Forward membership retains the original ground-label support equation. -/
-theorem zeroExtend_faceSimplex (x : ObservedSimplex (FaceIndex G face)) :
-    WithLp.ofLp (zeroExtend face (coordinateToEuclidean x).1) ∈
-      FiniteConeCollapse.faceSimplex face := (extendFace face (coordinateToEuclidean x)).2
-
-/-- Restriction is literally evaluation at the original ground label. -/
-theorem faceCoordinateHomeomorph_restrict (x : AmbientFace face) (i : FaceIndex G face) :
-    ((faceCoordinateHomeomorph face).symm x).1 i = x.1 i.1 := rfl
-
 /-- Boundary of the ambient face, with witnesses restricted to the face itself. -/
 def faceBoundary (x : AmbientFace face) : Prop := ∃ g, ∃ _ : g ∈ face, x.1 g = 0
 
@@ -825,16 +720,6 @@ private theorem restriction_boundary (x : AmbientFace face) :
 
 variable [Nonempty (FaceIndex G face)]
 
-/-- Scalar and vector operations are extended coordinatewise; extrema remain on
-    FaceIndex, never on the ambient ghosts. -/
-theorem zeroExtend_psi_formula
-    (x : Simplex (FaceIndex G face)) :
-    zeroExtend face (psiRaw x) = (psiDenominator x)⁻¹ •
-      ((2 * sigma x) • zeroExtend face (displacement x) +
-        (sigma x ^ 2 - displacementSq x) • zeroExtend face (pole (FaceIndex G face))) := by
-  rw [psiRaw, zeroExtend_smul, psiNumerator, zeroExtend_add,
-    zeroExtend_smul, zeroExtend_smul]
-
 private def ambientPsi (x : AmbientFace face) :
     Sphere (FaceIndex G face) := psi ((faceCoordinateHomeomorph face).symm x)
 
@@ -871,50 +756,6 @@ def ambientBoundaryHomeomorph (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
       rw [(faceCoordinateHomeomorph face).symm_apply_apply, hx]
   exact Continuous.homeoOfEquivCompactToT2
     (f := Equiv.ofBijective (ambientPsiQuotient face) hb) (hc.quotient_lift _)
-
-theorem ambientBoundaryHomeomorph_representative (hm : 2 ≤ Fintype.card (FaceIndex G face))
-    (x : AmbientFace face) :
-    ambientBoundaryHomeomorph face hm (Quotient.mk _ x) =
-      psi ((faceCoordinateHomeomorph face).symm x) := rfl
-
-theorem ambientBoundaryHomeomorph_barycenter (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
-    ambientBoundaryHomeomorph face hm
-      (Quotient.mk _ (faceCoordinateHomeomorph face barycenterPoint)) = north := by
-  rw [ambientBoundaryHomeomorph_representative,
-    (faceCoordinateHomeomorph face).symm_apply_apply, psi_barycenter]
-
-theorem ambientBoundaryHomeomorph_boundary (hm : 2 ≤ Fintype.card (FaceIndex G face))
-    (x : AmbientFace face) (hx : faceBoundary face x) :
-    ambientBoundaryHomeomorph face hm (Quotient.mk _ x) = south := by
-  rw [ambientBoundaryHomeomorph_representative]
-  exact psi_boundary ((restriction_boundary face x).2 hx)
-
-/-- The ambient coordinate equation for an arbitrary quotient representative. -/
-theorem ambientBoundaryHomeomorph_zeroExtend (hm : 2 ≤ Fintype.card (FaceIndex G face))
-    (x : AmbientFace face) :
-    zeroExtend face (ambientBoundaryHomeomorph face hm (Quotient.mk _ x)).1 =
-      zeroExtend face (psiRaw ((faceCoordinateHomeomorph face).symm x)) := rfl
-
-
-/-- Transported barycenter equation in the original ambient Euclidean coordinates. -/
-theorem ambientBoundaryHomeomorph_zeroExtend_barycenter
-    (hm : 2 ≤ Fintype.card (FaceIndex G face)) :
-    zeroExtend face (ambientBoundaryHomeomorph face hm
-      (Quotient.mk _ (faceCoordinateHomeomorph face barycenterPoint))).1 =
-        zeroExtend face (pole (FaceIndex G face)) := by
-  rw [ambientBoundaryHomeomorph_barycenter]
-  rfl
-
-/-- Transported boundary equation; ghost coordinates stay zero on both sides. -/
-theorem ambientBoundaryHomeomorph_zeroExtend_boundary
-    (hm : 2 ≤ Fintype.card (FaceIndex G face)) (x : AmbientFace face)
-    (hx : faceBoundary face x) :
-    zeroExtend face (ambientBoundaryHomeomorph face hm (Quotient.mk _ x)).1 =
-      -zeroExtend face (pole (FaceIndex G face)) := by
-  rw [ambientBoundaryHomeomorph_boundary face hm x hx]
-  change zeroExtend face (-pole (FaceIndex G face)) = _
-  ext g
-  by_cases hg : g ∈ face <;> simp [zeroExtend, hg]
 
 end Ambient
 end D5.S3.Geometry.FiniteSimplexBoundarySphere
