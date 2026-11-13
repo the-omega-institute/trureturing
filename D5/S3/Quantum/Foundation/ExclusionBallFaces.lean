@@ -87,7 +87,7 @@ private theorem proper_cone_face_support {C : PointedCone ℝ V}
     change -(f x) = 0
     linarith
 
-private theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤)

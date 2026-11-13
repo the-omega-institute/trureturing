@@ -1,0 +1,10 @@
+
+
+证明。取 $R^\perp$ 的正交基 $(w_a)$，$C$ 的 Kraus 算子为 $B^\dagger$ 和 $|0\rangle\langle w_a|$；平方效应之和为 $P_R+(I_5-P_R)=I_5$。$B^\dagger B=I_3$ 给出回缩。$B\otimes I_Z$ 的等距共轭保留非零奇异值，故任意复算子的迹范数不变。对于 CPTP 映射 $D$，其伴随 $D^\ast$ 为保持单位元的完全正映射；Schwarz 不等式给出
+
+$$
+D^*(A)^\dagger D^*(A)\le D^*(A^\dagger A)\le\|A\|_{\mathrm{op}}^2I.
+$$
+
+于是 $\|D^\ast(A)\|_{\mathrm{op}}\le\|A\|_{\mathrm{op}}$，再由迹范数与算子范数对偶得 $\|D(X)\|_1\le\|X\|_1$，不要求 $X$ Hermitian。对 $D\otimes\operatorname{id}_Z$ 同理，故可用于钻石范数的后复合收缩。$\square$
+

@@ -184,4 +184,117 @@ private theorem source_bridge :
 
 end counted_higher_pools
 
+
+universe u
+
+namespace subset_just_above
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ x => x) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {α : Type u} [DecidableEq α] (S : Finset α)
+    (f : α → ℝ) {t H : ℝ} (_ht : 0 ≤ t) (_hH : ∀ a ∈ S, (V.readout ()) () (f a) ≤ H)
+    (_htotal : t < ∑ a ∈ S, (V.readout ()) () (f a)),
+    ∃ D ⊆ S, t < ∑ a ∈ D, (V.readout ()) () (f a) ∧ (∑ a ∈ D, (V.readout ()) () (f a)) ≤ t + H
+
+private theorem actual_law : (arena.{u}).Law actual := by
+  exact @subset_just_above.{u}
+
+private theorem source_bridge :
+    (type_of% (@subset_just_above.{u})) ↔
+      (arena.{u}).Law actual := Iff.rfl
+
+private theorem actual_observational_dependence :
+    ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+
+end subset_just_above
+
+namespace subset_just_below
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ _ x => x) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {α : Type u} [DecidableEq α] (S : Finset α)
+    (f : α → ℝ) {t H : ℝ} (_ht : 0 < t) (_hH : ∀ a ∈ S, (V.readout ()) () (f a) ≤ H)
+    (_htotal : t ≤ ∑ a ∈ S, (V.readout ()) () (f a)),
+    ∃ U ⊆ S, (∑ a ∈ U, (V.readout ()) () (f a)) < t ∧ t ≤ (∑ a ∈ U, (V.readout ()) () (f a)) + H
+
+private theorem actual_law : (arena.{u}).Law actual := by
+  exact @subset_just_below.{u}
+
+private theorem source_bridge :
+    (type_of% (@subset_just_below.{u})) ↔
+      (arena.{u}).Law actual := Iff.rfl
+
+private theorem actual_observational_dependence :
+    ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 0, 1, by norm_num [actual, realize]⟩
+
+end subset_just_below
+
+namespace exchange_mass_bound
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature := realize signature (fun _ p a => goldenLayerMarginal p a) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {m : ℕ} {mu lambda h : ℝ}
+    (_hm : 0 < m) (_hrecord : FullRecord m mu)
+    (D U : Finset ℕ) (_hD : ∀ p ∈ D, p.Prime) (_hU : ∀ p ∈ U, p.Prime)
+    (_hDvd : ∀ p ∈ D, p ∣ m) (_hdis : Disjoint D U)
+    (_hbalance : logMass U < logMass D)
+    (_hupper : (∑ p ∈ D, (V.readout ()) p (m.factorization p) * log p) ≤
+      lambda * logMass D)
+    (_hlower : h * logMass U ≤
+      ∑ p ∈ U, (V.readout ()) p (m.factorization p + 1) * log p),
+    h * logMass U < lambda * logMass D - mu * (logMass D - logMass U)
+
+private theorem actual_law : arena.Law actual := by
+  exact @exchange_mass_bound
+
+private theorem source_bridge :
+    (type_of% (@exchange_mass_bound)) ↔
+      arena.Law actual := Iff.rfl
+
+private theorem actual_observational_dependence :
+    ObservationalDependence signature actual := by
+  intro i
+  refine ⟨2, 1, 2, ?_⟩
+  exact ne_of_gt (golden_layer_strict_decrease Nat.prime_two (by norm_num : 1 ≤ 1)
+    (by norm_num : 1 < 2))
+
+end exchange_mass_bound
+
 end Reg.D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceGeometry

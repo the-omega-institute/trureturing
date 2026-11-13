@@ -1,0 +1,25 @@
+**Counterexample 4.4 (native boundary touch without crossing).** On
+$[0,2]$ fix $k\in(l,u)$ and let $d=k-l>0$. Take
+
+$$
+\begin{aligned}
+h(t)&=l+d(t-1)^2,\\
+h_n(t)&=h(t)+\epsilon_n t(2-t)
+       =l+\epsilon_n+(d-\epsilon_n)(t-1)^2,
+\end{aligned}
+\tag{4.5}
+$$
+
+where $0<\epsilon_n<d$ and $\epsilon_n\downarrow0$. The commands
+$a=h-k$, $a_n=h_n-k$, $b=b_n=0$ start at zero, are $C^1$, and have
+$J=J_n=0$. Every one, including the limit, is a lawful original
+history on the entire horizon: all its heights lie in $[l,k]\subset(0,H)$.
+Their native extrema satisfy $k+m\ge l>0$ and $k+M=k<H$.
+The joint triples converge uniformly, yet $\tau_T(h)=1$ while
+$\tau_T(h_n)=\infty$. The limit touches only the added interior
+killing boundary and returns; it never crosses below $l$.
+Its killed path is dead after time 1, whereas every approximating
+killed path is alive throughout. Even terminal evaluation at time 2
+separates them. Thus neither original lawfulness nor joint-lift
+convergence removes the lifetime hypothesis. $\square$
+

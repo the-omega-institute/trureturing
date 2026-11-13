@@ -1,0 +1,107 @@
+**定理 109.9（不经Jordan分类的原星锥自对偶）。** 在109.8的条件及尺度下，
+
+$$
+C_{\star}^{*B}:=\{v\in V:B(v,s)\ge0\ (s\in\mathcal S_p)\}
+ =C_{\star}=C.
+\tag{VIII109.30}
+$$
+
+因此 $K=\operatorname{conv}\mathcal S_p$，全部原纯点准确为 $P=\mathcal S_p$，
+且(VIII109.27)对全部原纯点成立。
+
+证明。$\mathcal S_p\subseteq P\subseteq C$ 给 $C_{\star}\subseteq C$。
+109.8已在全原空间证明 $B(s,\cdot)=a_s\in C^*$，所以
+
+$$
+C_{\star}\subseteq C\subseteq C_{\star}^{*B}.
+\tag{VIII109.31}
+$$
+
+因为 $D_p=\operatorname{conv}(P\cap D_p)$ 且这些原纯点已在星中，
+有 $\operatorname{cone}D_p\subseteq C_{\star}$。
+只须从星自身的参数证明反向包含。写任意待判向量为
+$v=\alpha p+\beta c_p+y+z$，$y\in L_p,z\in N_p$。
+由于正倍缩放不影响星锥，(VIII109.26)中的 $A,B_0$ 可取任意非负值，
+相应 $\|z_s\|_G=2\sqrt{AB_0}$；两者全零时只给零向量。
+对固定 $x,A,B_0$，在整个切球面上最小化横向方向，得到准确读数
+
+$$
+\min_{z_s}B(Ap+B_0r(x)+z_s,v)
+ =A\alpha+B_0\frac{\beta+x\cdot y}{2}
+       -\sqrt{AB_0}\,\|P_xz\|_G.
+\tag{VIII109.32}
+$$
+
+横向项原本为 $G(z_s,z)/2$，这解释最后一项没有额外的二或二分之一。
+$P_xz=0$ 时任意允许方向都取同一横向值零。
+令 $a=\sqrt A,b_0=\sqrt{B_0}$，这是
+$\alpha a^2+h_xb_0^2-\|P_xz\|_G ab_0$，其中 $h_x=(\beta+x\cdot y)/2$。
+在 $a,b_0\ge0$ 上非负的充要条件是两端系数非负且判别式不正：
+必要性可先取一个变量为零，再最小化另一变量；充分性由配方或
+$\alpha a^2+h_xb_0^2\ge2\sqrt{\alpha h_x}ab_0$ 得到。
+因此星对偶的准确条件为
+
+$$
+\alpha\ge0,\quad h_x\ge0,\quad
+\alpha\frac{\beta+x\cdot y}{2}
+ \ge\frac{\|P_xz\|_G^2}{4}\quad(x\in S^m).
+\tag{VIII109.33}
+$$
+
+先处理 $\alpha=0$。末式迫所有 $P_xz=0$；109.7的切覆盖使 $z=0$。
+余下 $h_x\ge0$ 对全部 $x$ 等价于 $\beta\ge\|y\|_p$。
+故 $v=\beta c_p+y\in\operatorname{cone}D_p\subseteq C_{\star}$。
+这也包括 $\beta=0$ 时必有 $y=0$ 的锥顶。
+
+再处理 $\alpha>0,z=0$。条件仍恰为 $\beta\ge\|y\|_p$，
+故 $v=\alpha p+(\beta c_p+y)\in C_{\star}$。
+
+最后取 $\alpha>0,z\ne0$，令 $x_0=x(z)$，并置
+
+$$
+b=\frac{\|z\|_G^2}{4\alpha}>0.
+\tag{VIII109.34}
+$$
+
+由(VIII109.22)，(VIII109.33)的末式准确化为
+
+$$
+\begin{aligned}
+\alpha(\beta+x\cdot y)
+ &\ge \frac{1+x\cdot x_0}{4}\|z\|_G^2
+       =\alpha b(1+x\cdot x_0)\quad(x\in S^m),\\
+\beta-b&\ge\|y-bx_0\|_p.
+\end{aligned}
+\tag{VIII109.35}
+$$
+
+第一行由原式乘二而得，且与第二行等价；它也已保证 $h_x\ge0$。
+于是有同一原向量的实际正分解
+
+$$
+\begin{gathered}
+v=v_0+v_1,\qquad
+v_0=\alpha p+b r(x_0)+z,\qquad
+v_1=(\beta-b)c_p+(y-bx_0),\\
+\frac{v_0}{\alpha+b}\in\mathcal S_p,\qquad
+v_1\in\operatorname{cone}D_p.
+\end{gathered}
+\tag{VIII109.36}
+$$
+
+第一项确为星纯射线：$P_{x_0}z=z$，
+$\|z\|_G^2=4\alpha b$，除以原质量 $\alpha+b>0$ 后正好满足(VIII109.26)。
+第二项由(VIII109.35)的球锥条件得到。
+若残量系数为零，范数界也迫其方向为零，所以没有遗漏该极点情形。
+以上覆盖全部对偶向量，故 $C_{\star}^{*B}\subseteq C_{\star}$。
+结合(VIII109.31)，三个锥相等。
+
+为核对紧星和全部原pure的最后一步，有限维Carathéodory定理使
+$K_{\star}=\operatorname{conv}\mathcal S_p$ 紧，且其中每点原质量为一。
+其锥闭：若 $t_jk_j$ 收敛，原质量给 $t_j=u(t_jk_j)$ 收敛；
+取 $k_j$ 的紧子列，极限仍在该锥中，包括 $t_j\to0$ 的情形。
+锥相等与原质量一给 $K=K_{\star}$。
+若原极点 $s\in P$ 写成有限个星点的凸组合，极端性迫每个正权重星点都等于 $s$，
+故 $s\in\mathcal S_p$。反向包含已在星的定义中成立。
+这没有先用Jordan、滤子保纯、全Pair或全纯数值互易。证毕。
+

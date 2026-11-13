@@ -1,0 +1,31 @@
+**Corollary 6.2 (lawful held and killed limits).** Under the same coupling,
+let $\tau$ be the first exit of $k+W^1$ from $I$. With finite-horizon
+censoring understood as in (4.1), almost surely
+
+$$
+\begin{aligned}
+\tau_n&\longrightarrow\tau,\\
+(\widehat a_n,\widehat b_n^\lambda,\widehat J_n^\lambda)
+&\longrightarrow
+\bigl(W^1_{\cdot\wedge\tau},W^2_{\cdot\wedge\tau},
+       J^0_{\cdot\wedge\tau}+\lambda(\cdot\wedge\tau)\bigr)
+\end{aligned}
+\tag{6.8}
+$$
+
+uniformly for the held triples. Their complete held state paths converge
+uniformly and their killed paths converge in $J_1$.
+
+Proof. Proposition 4.5 verifies the hypotheses of Theorem 4.2, including
+the absence of a death-time atom at $T$. Apply it to (6.2), then use
+(5.5) and Theorem 3.1. All variants have the same $\tau_n$ and $\tau$
+on this coupling. $\square$
+
+The actual held controls have a stopped Brownian first-level limit.
+The comparison extensions have the full Brownian first-level limit with
+covariance $2I_2dt$. Before their common death these are the same
+description. Finite piecewise linear controls themselves are not
+Brownian motions and are not claimed to have Brownian quadratic
+variation. The equality being asserted is the limiting first-level law,
+with exact equality of their finite mesh Gaussian inputs.
+

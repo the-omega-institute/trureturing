@@ -1,0 +1,58 @@
+**定理 115.6（Baire正则区、全部连续点与局部预算）。** $S_j$ 闭，$\mathcal R$ 是 $P$ 的开稠密子集，$\Sigma$ 闭且无处稠密。并且 $\mathcal R$ 同时是以下三个映射的连续点集：
+
+$$
+\mathcal R
+=\operatorname{Cont}(p\mapsto D_p)
+=\operatorname{Cont}(p\mapsto a(p))
+=\operatorname{Cont}(p\mapsto\beta(p)).
+\tag{IX115.12}
+$$
+
+其中第一个映射取 Hausdorff 拓扑。对每个 $p\in P$，有局部预算的充要条件
+
+$$
+ p\in\mathcal R
+\quad\Longleftrightarrow\quad
+\exists\text{ 相对开邻域 }U\ni p,
+\exists M<\infty,
+\forall p'\in U:\ \beta(p')\le M.
+\tag{IX115.13}
+$$
+
+因此 $\beta$ 在 $\mathcal R$ 的每个紧子集上一致有界。
+此外，$a$ 在整个 $P$ 上半连续，$\beta$ 在整个 $P$ 上是下半连续的。
+
+证明。由引理115.4，$d$ 上半连续，所以每个 $S_j=\{d\ge1/j\}$ 闭。114.2给每个 $d(p)>0$，故
+
+$$
+P=\bigcup_{j\ge1}S_j.
+\tag{IX115.14}
+$$
+
+任意非空相对开集 $U\subseteq P$ 是局部紧 Hausdorff 空间，因而是 Baire 空间。闭集 $U\cap S_j$ 覆盖 $U$，所以某个 $U\cap S_j$ 在 $U$ 中有非空内点；这给出 $U\cap\operatorname{int}_P S_j\ne\varnothing$。故 $\mathcal R$ 稠密，而按定义它开；$\Sigma$ 因而闭且无处稠密。
+
+若 $p\in\mathcal R$，存在邻域 $U$ 和 $j$ 使 $d(p')\ge1/j$（$p'\in U$）。对任意 $p_n\to p$，充分大时 $p_n\in U$，定理115.5的单点极限被排除，所有 Hausdorff 子极限均为 $D_p$，故 $D_{p_n}\to D_p$。反之，若 $D$ 在 $p$ 连续，直径是 Hausdorff 距离下的连续函数，且 $d(p)>0$，所以某邻域内 $d(p')\ge d(p)/2$，即 $p\in\mathcal R$。这证明 $\mathcal R$ 是整球映射的全部连续点。
+
+在 $p\in\mathcal R$ 时，取任意 $p_n\to p$。对其中任一子列，再取中心和形状算子的收敛子列；由前段和定理115.5，极限椭球只能是 $D_p$，不能是单点。其任一固定球坐标的对径端点 $x_n,y_n$ 收敛到 $D_p$ 的一对对径纯点 $x,y$。由(IX115.2)和(IX115.6)，
+$2a(p_n)=1-T_{x_n}(y_n)\to1-T_x(y)=2a(p)$。
+所有子列的聚值都相同，故 $a(p_n)\to a(p)$；于是 $\beta(p_n)\to\beta(p)$。因此 $\mathcal R$ 包含于 $a,\beta$ 各自的连续点集。
+
+对任意 $p_n\to p$，若定理115.5的子列极限是 $D_p$，同一对径端点的论证（不需要 $p\in\mathcal R$）给出 $a(p_n)\to a(p)$；若极限是单点，则定理115.3证明中的 $2a(p_n)\le Ld(p_n)$ 给出 $a(p_n)\to0$。因此 $a(p_n)$ 的每个聚值只能是 $a(p)$ 或 $0$，因而
+$\limsup a(p_n)\le a(p)$。由 $\beta=1/(2a)$ 得
+$\liminf\beta(p_n)\ge\beta(p)$，即得所述全域上半连续性与下半连续性。
+
+若 $p\notin\mathcal R$，则对每个 $n$，$p\notin\operatorname{int}_P S_n$，可选
+$p_n\in P$ 满足 $\|p_n-p\|<1/n$ 且 $d(p_n)<1/n$。定理115.3证明中的普遍最小轴估计
+$2a(p_n)\le Ld(p_n)\to0$，所以 $a(p_n)\to0$、$\beta(p_n)\to+\infty$，而114.5—114.6给 $a(p)>0$、$\beta(p)<\infty$。故 $a$ 与 $\beta$ 在 $p$ 均不连续。
+
+最后证明异常序列的完整见证。对每个 $n$ 选 $q_n\in P\cap D_{p_n}$；紧性给子列 $q_{n_k}\to q\in P$。由于 $\operatorname{diam}D_{p_{n_k}}\to0$，有 $D_{p_{n_k}}\to\{q\}$；由闭图(IX115.9)，$q\in D_p$。删去子列下标即得
+
+$$
+\forall p\in\Sigma\ \exists p_n\to p,\ \exists q\in P\cap D_p:
+D_{p_n}\to\{q\},\quad a(p_n)\to0,\quad\beta(p_n)\to+\infty.
+\tag{IX115.15}
+$$
+
+局部预算的正向由 $a$ 在 $\mathcal R$ 连续且 $a(p)>0$ 给出。反向若 $\beta\le M$ 在邻域 $U$ 上成立，则定理115.3证明中的普遍不等式 $2a(p')\le Ld(p')$ 给出
+$ d(p')\ge1/(LM)$；于是 $p\in\operatorname{int}_P S_j$，其中取 $j>LM$。这证明(IX115.13)。在 $\mathcal R$ 上 $\beta$ 连续，故其在每个紧子集上达到有限最大值。证毕。
+

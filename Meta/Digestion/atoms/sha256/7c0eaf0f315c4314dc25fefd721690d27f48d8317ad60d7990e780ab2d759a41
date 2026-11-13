@@ -1,0 +1,16 @@
+**定理 115.8（全域有限预算、整球连续与单位饱和的分界）。** 令
+$\mathrm{UF}$ 表示存在一个有限常数 $M$ 使 $\beta(p)\le M$ 对全部 $p\in P$ 成立。则
+
+$$
+\mathrm{UF}
+\quad\Longleftrightarrow\quad
+\Sigma=\varnothing
+\quad\Longleftrightarrow\quad
+p\mapsto D_p\text{ 在整个 }P\text{ 上 Hausdorff 连续}
+\quad\Longleftrightarrow\quad
+\sup_{p\in P}\beta(p)<\infty.
+\tag{IX115.18}
+$$
+
+证明。$\mathrm{UF}$ 与最后一个条件只是同一命题的两种写法。由定理115.6，整球映射的连续点集正是 $\mathcal R$，所以它在整个 $P$ 上连续当且仅当 $\mathcal R=P$，亦即 $\Sigma=\varnothing$。若 $\mathcal R=P$，定理115.6给 $\beta$ 在紧集 $P$ 上连续，故其上确界有限；反之若上确界为有限数，则 $\beta$ 在每个相对开邻域上都一致有界，(IX115.13)给每个 $p\in P$ 属于 $\mathcal R$，于是 $\mathcal R=P$。证毕。
+
