@@ -289,3 +289,123 @@ $$
 本仓推导的是定理 2.3、推论 2.4 及注记 2.5 的分解。在所查范围（该文第 8 节把阈值问题列为 future work；Molnar arXiv:2610.12816v1；arXiv 标题检索）内未见此结论，本节不主张文献优先权。
 
 ## 追加锚（本行以下为增补区）
+
+## 3. κ-巨丰数临界值的碰撞
+
+Fan–Kobayashi–Molnar 定义 4.2 与定义 4.19 对 $\kappa>1$、$x>1$、$a\ge1$ 令
+
+$$
+F_\kappa(x,a)=\frac{1}{\kappa\log x}\log\frac{(x^{a+1}-1)^\kappa-(x^a-1)^\kappa}{(x^{a+1}-x)^\kappa-(x^a-x)^\kappa},\qquad E_p^{[\kappa]}=\{F_\kappa(p,j):j\in\mathbb Z_{>0}\}.
+$$
+
+其第 8 节提出三问：对固定素数 $p\ne q$，能否找到 $\kappa$ 使 $E_p^{[\kappa]}\cap E_q^{[\kappa]}\ne\varnothing$；对大的 $\kappa$ 是否成立；对整数 $\kappa$ 是否成立。记 $\mathcal S_{p,q}=\{\kappa>1:E_p^{[\kappa]}\cap E_q^{[\kappa]}\ne\varnothing\}$。本节证明 $\mathcal S_{p,q}$ 在 $(1,\infty)$ 中稠密、无界，且为可数零测集。对整数 $\kappa$，本节无条件地证明超越性与有限性结论，并在一个超越数论猜想下完全排除整数碰撞。
+
+**引理 3.1（首项展开）。** 固定 $x>1$ 与紧区间 $I\subset(1,\infty)$。$a\to\infty$ 时，对 $\kappa\in I$ 一致地有
+
+$$
+F_\kappa(x,a)=c_\kappa(x)\,x^{-a}+O_{x,I}(x^{-2a}),\qquad c_\kappa(x)=\frac{(x-1)(x^{\kappa-1}-1)}{(x^\kappa-1)\log x}.
+$$
+
+对 $\kappa$ 的任意固定阶导数同样成立。
+
+**证明。** 令 $t=x^{-a}\in(0,1/x]$，则
+
+$$
+F_\kappa(x,a)=\mathscr F(\kappa,t):=\frac{1}{\kappa\log x}\log\frac{N(\kappa,t)}{M(\kappa,t)},\qquad N=(x-t)^\kappa-(1-t)^\kappa,\quad M=x^\kappa(1-t)^\kappa-(1-xt)^\kappa .
+$$
+
+各项乘以 $x^{-(a+1)\kappa}$ 后约去即得此式。$N(\kappa,0)=M(\kappa,0)=x^\kappa-1>0$，$\partial_tN(\kappa,0)=\kappa(1-x^{\kappa-1})$，$\partial_tM(\kappa,0)=\kappa(x-x^\kappa)$。于是
+
+$$
+\partial_t\mathscr F(\kappa,0)=\frac{1}{\kappa\log x}\cdot\frac{\kappa(1-x^{\kappa-1})-\kappa(x-x^\kappa)}{x^\kappa-1}=c_\kappa(x).
+$$
+
+在 $I\times[0,t_0]$（$t_0$ 足够小，使各底数为正）上 $\mathscr F$ 实解析，且 $\mathscr F(\kappa,0)=0$。对 $t$ 作带余项的 Taylor 展开，余项及其各阶 $\kappa$ 导数在紧集上一致有界，即得结论。证毕。
+
+**引理 3.2（首项系数比的单调性）。** 设 $1<p<q$，$R(\kappa)=c_\kappa(p)/c_\kappa(q)$。则 $R$ 在 $(1,\infty)$ 上严格递增，且 $R(1^+)=1$，$R(\infty)=\dfrac{(p-1)q\log q}{(q-1)p\log p}>1$。
+
+**证明。** 令 $s=\log x$。则 $c_\kappa(x)=\dfrac{1-e^{-s}}{s}\cdot\dfrac{1-e^{-(\kappa-1)s}}{1-e^{-\kappa s}}$，因此
+
+$$
+\partial_\kappa\log c_\kappa(x)=\frac{s}{e^{(\kappa-1)s}-1}-\frac{s}{e^{\kappa s}-1}=\int_{\kappa-1}^{\kappa}\Bigl(\frac{s}{2\sinh(vs/2)}\Bigr)^2dv .
+$$
+
+第二个等号成立，因为 $\frac{d}{dv}\frac{s}{e^{vs}-1}=-\frac{s^2e^{vs}}{(e^{vs}-1)^2}=-\bigl(\frac{s}{2\sinh(vs/2)}\bigr)^2$。函数 $z\mapsto z/\sinh z$ 在 $(0,\infty)$ 上严格递减：其导数的分子为 $\sinh z-z\cosh z$，在 $0$ 处为 $0$，导数为 $-z\sinh z<0$。故对每个 $v>0$，被积函数 $\bigl(\frac{1}{v}\cdot\frac{vs/2}{\sinh(vs/2)}\bigr)^2$ 关于 $s$ 严格递减。由 $\log p<\log q$ 得 $\partial_\kappa\log c_\kappa(p)>\partial_\kappa\log c_\kappa(q)$，即 $(\log R)'>0$。
+
+端点值：$\kappa\to1^+$ 时 $c_\kappa(x)\sim(\kappa-1)$，与 $x$ 无关，故 $R\to1$；$\kappa\to\infty$ 时 $c_\kappa(x)\to(x-1)/(x\log x)$。最后，$x\mapsto x\log x/(x-1)$ 在 $(1,\infty)$ 上严格递增，其导数为 $(x-1-\log x)/(x-1)^2>0$，故 $R(\infty)>1$。证毕。
+
+**定理 3.3（碰撞参数的稠密性）。** 设 $p\ne q$ 为素数，$1<\alpha<\beta<\infty$，$M\ge1$。则存在整数 $i,j\ge M$ 与 $\kappa\in(\alpha,\beta)$，使 $F_\kappa(p,i)=F_\kappa(q,j)$。特别地，$\mathcal S_{p,q}$ 在 $(1,\infty)$ 中稠密且无界，每个非空开区间都含 $\mathcal S_{p,q}$ 的无穷多个点。
+
+**证明。** 不妨 $p<q$。令 $h=\log R$，由引理 3.2 有 $h(\alpha)<h(\beta)$。取开区间 $J$ 使 $\overline J\subset(h(\alpha),h(\beta))$。$\log p/\log q$ 为无理数（唯一分解），故 $\{i\log p\bmod\log q:i\ge M\}$ 在 $[0,\log q)$ 中稠密。于是存在任意大的 $i$ 与相应的整数 $j$，使 $d_{i,j}:=i\log p-j\log q\in J$；$i$ 充分大时 $j\ge M$。由引理 3.1，在 $[\alpha,\beta]$ 上一致地有
+
+$$
+\log\frac{F_\kappa(p,i)}{F_\kappa(q,j)}=h(\kappa)-d_{i,j}+O(p^{-i}+q^{-j}).
+$$
+
+$i,j$ 充分大时，右端在 $\kappa=\alpha$ 处为负、在 $\kappa=\beta$ 处为正。$F_\kappa$ 关于 $\kappa$ 连续，由介值定理即得交点。把 $(\alpha,\beta)$ 分成可数多个互不相交的开子区间并分别应用本结论，得到无穷多个点。证毕。
+
+**定理 3.4（碰撞参数集可数）。** 对素数 $p\ne q$，$\mathcal S_{p,q}$ 可数，因而 Lebesgue 测度为零。对所有素数对取并仍为可数零测集，所以对几乎每个 $\kappa>1$，各 $E_p^{[\kappa]}$ 两两不交。
+
+**证明。** 固定 $i,j$，令 $D(\kappa)=F_\kappa(p,i)-F_\kappa(q,j)$，它在 $(1,\infty)$ 上实解析。只需证 $D\not\equiv0$，此时其零点离散，而 $(i,j)$ 只有可数多对。
+
+记 $r_{x,a}=(x^a-1)/(x^{a+1}-1)$，$s_{x,a}=(x^a-x)/(x^{a+1}-x)$，有 $0\le s_{x,a}<r_{x,a}<1$。分出最大幂得
+
+$$
+F_\kappa(x,a)=F_\infty(x,a)+\frac{\log(1-r_{x,a}^\kappa)-\log(1-s_{x,a}^\kappa)}{\kappa\log x},\qquad F_\infty(x,a)=\frac{1}{\log x}\log\frac{x^{a+1}-1}{x^{a+1}-x}.
+$$
+
+因此 $\kappa\to\infty$ 时 $F_\infty(x,a)-F_\kappa(x,a)\sim r_{x,a}^\kappa/(\kappa\log x)$。若 $D\equiv0$，取极限得 $F_\infty(p,i)=F_\infty(q,j)$，于是两侧余项在 $\kappa\to\infty$ 时也相等：
+- 若 $r_{p,i}\ne r_{q,j}$，两侧指数衰减率不同，不可能相等；
+- 若 $r_{p,i}=r_{q,j}$，比较系数得 $1/\log p=1/\log q$，与 $p\ne q$ 矛盾。
+
+证毕。
+
+**命题 3.5（整数参数下临界值的超越性）。** 设整数 $k\ge2$、素数 $p$、整数 $a\ge1$。令 $S_a=(p^{a+1}-1)^k-(p^a-1)^k$（$S_0=(p-1)^k$），$R_k(p,a)=S_a/(p^kS_{a-1})\in\mathbb Q_{>1}$，则 $p^{kF_k(p,a)}=R_k(p,a)$。除 $F_2(2,1)=1/2$ 外，$F_k(p,a)$ 均为超越数。
+
+**证明。** 设 $t=kF_k(p,a)$。
+
+先证 $v_p(R_k(p,a))<0$，例外情形单列：
+- **$p$ 为奇素数。** $p\mid(p^{a+1}-1)-(p^a-1)$ 且 $p$ 不整除两底数。由提升指数引理，$v_p(S_a)=a+v_p(k)$（$a\ge1$），而 $v_p(S_0)=0$。故 $v_p(R_k(p,1))=1+v_p(k)-k$，$v_p(R_k(p,a))=1-k$（$a\ge2$），两者都为负，因为 $v_p(k)\le\log_pk<k-1$。
+- **$p=2$。** 直接计算二进赋值：$v_2(R_k(2,a))$ 在 $a\ge3$ 时为 $1-k$；在 $a=2$ 时为 $1-k$（$k$ 奇）或 $-k$（$k$ 偶）；在 $a=1$ 时为 $1-k$（$k$ 奇）或 $2+v_2(k)-k$（$k$ 偶）。这些值除 $(k,a)=(2,1)$、$(4,1)$ 外都为负。两个例外处 $R_2(2,1)=2$、$R_4(2,1)=5$。
+
+再推出超越性。若 $t=m/n$ 为既约有理数且 $p^t\in\mathbb Q$，则 $n=1$，于是 $v_p(p^t)=t>0$，与赋值为负矛盾，故 $t$ 为无理数。若 $t$ 为代数无理数，由 Gelfond–Schneider 定理 $p^t$ 为超越数，矛盾。故 $t$ 超越。
+
+两个例外：$(k,a)=(2,1)$ 时 $t=1$，即 $F_2(2,1)=1/2$；$(k,a)=(4,1)$ 时 $2^t=5$，$t=\log5/\log2$ 由 Gelfond–Schneider 定理为超越数。证毕。
+
+**定理 3.6（整数参数：条件结论、三重碰撞与有限性）。** 设整数 $k\ge2$。
+- (i) 若 Alaoglu–Erdős 猜想成立（对不同素数 $p,q$，$p^t,q^t\in\mathbb Q$ 蕴含 $t\in\mathbb Z$），则对一切不同素数 $p,q$ 有 $E_p^{[k]}\cap E_q^{[k]}=\varnothing$。四指数猜想蕴含该猜想。
+- (ii) 无条件地，不存在三个不同素数 $p,q,r$ 使 $E_p^{[k]}\cap E_q^{[k]}\cap E_r^{[k]}\ne\varnothing$。
+- (iii) 无条件地，对固定的不同素数 $p,q$，满足 $F_k(p,i)=F_k(q,j)$ 的 $(i,j)$ 只有有限多对。
+
+**证明。** 碰撞 $F_k(p,i)=F_k(q,j)=\epsilon$ 给出 $t=k\epsilon$ 使 $p^t,q^t\in\mathbb Q$。由命题 3.5，$t$ 超越；在至多一个例外 $t=1$（来自 $F_2(2,1)$）的情形，另一侧 $q^{1}$ 须等于 $R_2(q,j)$，而 $v_q(R_2(q,j))<0$，矛盾。
+
+(i) 碰撞会给出不同素数 $p,q$ 与非整数 $t$，使 $p^t,q^t\in\mathbb Q$，与猜想矛盾。若四指数猜想成立，取 $(\log p,\log q)$ 与 $(1,t)$（分别 $\mathbb Q$-线性无关），四个指数 $p,q,p^t,q^t$ 均为有理数，与猜想矛盾。
+
+(ii) 取三个 $\mathbb Q$-线性无关的数 $\log p,\log q,\log r$ 与两个线性无关的数 $1,t$。六个值 $e^{x_ry_s}$ 全为有理数，与六指数定理矛盾。
+
+(iii) 交换 $p,q$ 使 $p$ 为奇素数。$i=1$ 至多对应一个 $j$，因为 $F_k(q,\cdot)$ 严格递减（该文定理 4.3）。对 $i\ge2$ 的碰撞，记 $t=kF_k(p,i)$，有 $v_p(p^t)=c:=1-k$。若无此类碰撞，结论成立；否则固定其中一个 $t_0$。对另一个 $t$：
+- 若 $1,t_0,t$ 在 $\mathbb Q$ 上线性无关，以 $\log p,\log q$ 为两行、$1,t_0,t$ 为三列，六个值全为有理数，与六指数定理矛盾。故 $t=r+st_0$，$r,s\in\mathbb Q$。
+- 取 $N$ 使 $Nr,Ns\in\mathbb Z$，由 $p^{Nt}=p^{Nr}(p^{t_0})^{Ns}$ 比较 $p$ 进赋值得 $c=r+sc$，即 $t=c+s(t_0-c)$。
+- 令 $A=p^{t_0-c}\in\mathbb Q_{>0}\setminus\{1\}$，$d=\gcd\{|v_\ell(A)|:v_\ell(A)\ne0\}$。由 $A^s=p^{t-c}\in\mathbb Q$ 与唯一分解，$s$ 的既约分母整除 $d$。故所有碰撞的 $t$ 属于离散集 $c+\frac{t_0-c}{d}\mathbb Z$。
+- 又 $0<t\le kF_k(p,2)$，故这样的 $t$ 只有有限多个。每个 $t$ 至多对应一个 $i$ 与一个 $j$。
+
+证毕。
+
+**注记 3.7（对第 8 节三问的回答与边界）。**
+- **能否找到 κ：** 能，且碰撞参数在 $(1,\infty)$ 中稠密（定理 3.3）。
+- **大的 κ：** 存在任意大的碰撞参数；但碰撞参数集为可数零测集，不存在 $K$ 使每个 $\kappa>K$ 都碰撞，也不存在 $K$ 使每个 $\kappa>K$ 都不碰撞（定理 3.3、3.4）。
+- **整数 κ：** 在 Alaoglu–Erdős 猜想下没有碰撞；无条件地，没有三重碰撞，且固定素数对只有有限多对碰撞指数（定理 3.6）。本节未无条件地排除或构造整数碰撞。
+
+该文例 4.21（$\kappa=2.9568\ldots$ 时 $F(2,5)=F(5,2)$）给出了 $\mathcal S_{2,5}$ 的一个具体示例。
+
+**范围。** 外部输入如下：
+- 该文定义 4.2、定理 4.3（单调性）；
+- Gelfond–Schneider 定理；
+- 六指数定理；
+- 提升指数引理；
+- Alaoglu–Erdős（Trans. AMS 56 (1944)）提出的猜想；
+- 四指数猜想。
+
+本仓推导的是引理 3.1、3.2，定理 3.3、3.4、3.6 与命题 3.5。在所查范围（该文第 8 节、Molnar arXiv:2610.12816v1、arXiv 检索）内未见对这三问的解答，本节不主张文献优先权。
+
+## 追加锚（本行以下为增补区）

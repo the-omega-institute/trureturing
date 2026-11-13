@@ -4909,3 +4909,79 @@ $$
 由于 $V$ 是度量空间，$\mathsf{LP}_{p,y}$ 等价于 $y\notin\overline P$；故(Q131.4)中的两个距离条件分别等价于 $\mathsf{LP}_{p,y}$。在全局 $\mathrm{EB}_{\ge1}$ 域上，对所有这样的坏对径见证断言 $\mathsf{LP}_{p,y}$，仍是待证命题。
 
 ## 追加锚（本行以下为增补区）
+
+## 132. 接触极小面选择消去原态覆盖的 Inj 前提
+
+**定理 132.1（完整 EB 域的纯点—排除球覆盖与径向三纯项）。** 沿用130.1的同一原 $V,C,u,K,P,\mathcal E$ 和全部完整 $D_p$，仅假定 $\mathrm{EB}_{\ge1}$，则
+
+$$
+\begin{aligned}
+K&=\bigcup_{p\in P}\operatorname{conv}(\{p\}\cup D_p),\\
+x&=\lambda p+(1-\lambda)y
+ =\lambda p+(1-\lambda)\bigl(\theta q+(1-\theta)r\bigr).
+\end{aligned}
+\tag{Q132.1}
+$$
+
+第二式对每个 $x\in K$ 都有 $p\in P$、$y\in D_p$、$q,r\in P\cap D_p$ 及 $\lambda,\theta\in[0,1]$ 实现，$q,r$ 是同一完整球的对径。内部态可取 $0<\lambda<1$，并有同一全原效应 $f\in\mathcal E$ 满足 $f(p)=1,f(y)=0$。纯态、非纯边界态、球心、球面端点和零系数均包含在内。不输入 Inj、PR、$P$ 紧、光滑、连续纯点选择、Jordan、谱性或 UF。
+
+证明。固定 $x\in\operatorname{ri}K$，令 $L=K-x\subset W_0=\ker u$；EB保证其维数非零。原样复用130.2中(Q130.7)—(Q130.8)及其前后的最大反射体构造：存在、接触与支撑步骤均不使用 Inj，给出非零 $h\in W_0^*$ 及
+
+$$
+\tau=\max\{t\ge0:-tL\subseteq L\}>0,\qquad -\tau L\subseteq L,
+\qquad m=\min_Lh<0<M=\max_Lh=-\tau m.
+\tag{Q132.2}
+$$
+
+这里保留的是整个反射体包含。普通仿射直径存在的成熟背景仍取130.2所引[Bárány—Hug—Schneider][Q130BHS]及其 Soltan assertion 3.3 引文；它只作中间步骤，不另立一般凸几何新定理。
+
+接触极小面 $A=\{z\in L:h(z)=m\}$ 非空、紧且暴露。取 $z_*\in\operatorname{ext}A$，面性给 $z_*\in\operatorname{ext}L$，故 $p=x+z_*\in P$。由同一全局包含，$w=-\tau z_*\in L$ 且 $h(w)=M$。置 $y=x+w\in K$，则
+
+$$
+x=\frac{\tau}{1+\tau}p+\frac1{1+\tau}y,\qquad
+\lambda=\frac{\tau}{1+\tau}\in(0,1).
+\tag{Q132.3}
+$$
+
+这不是把任意弦端点替换为极点：$z_*$ 留在同一接触极小面，其反向点仍由(Q132.2)送入 $L$。在整个原 $V$ 上定义
+
+$$
+f(\xi)=\frac{M u(\xi)-h(\xi-u(\xi)x)}{M-m}.
+\tag{Q132.4}
+$$
+
+因 $u(x)=1$，括号属于 $W_0$ 且线性依赖 $\xi$，所以 $f$ 线性。任意非零 $c\in C$ 可写成 $c=u(c)k$、$k\in K$；由 $k-x\in L$，
+
+$$
+0\le f(c)=u(c)\frac{M-h(k-x)}{M-m}\le u(c).
+\tag{Q132.5}
+$$
+
+$c=0$ 亦满足，故 $f\in[0,u]_{C^*}=\mathcal E$；又 $f(p)=1,f(y)=0$，所以 $y$ 属于完整原 $D_p$。这支付了整个原锥上的效应界，不使用 least-effect。
+
+若 $x\in\partial_{\rm rel}K$ 非纯，取包含它的支撑真面；130.1所引VII103.2的全部真面接口使该面为某个完整 $D_p$，取 $y=x,\lambda=0$。若 $x$ 纯，取 $p=x,\lambda=1$，再任取 $y\in D_p$；$d_p\ge1$ 保证其非空。反向覆盖只用 $K$ 凸。
+
+对上述每个 $y$ 及同一个 $D_p$ 的任意球图，写 $D_p=c_p+B_p\overline B^{d_p}$、$y=c_p+B_pv$，其中 $B_p$ 单射线性。若 $v\ne0$，取 $n=v/\|v\|$、$\theta=(1+\|v\|)/2$；若 $v=0$，因 $d_p\ge1$ 可任选单位 $n$，取 $\theta=1/2$。于是
+
+$$
+q=c_p+B_pn,\qquad r=c_p-B_pn,\qquad
+y=\theta q+(1-\theta)r,\qquad r=2c_p-q.
+\tag{Q132.6}
+$$
+
+旧接口 $P\cap D_p=\partial_{\rm rel}D_p$ 保证 $q,r$ 原纯。球面时 $\theta=1$，交换两端可取 $\theta=0$；结合 $\lambda=0,1$，所有零权退化均合法。由完整 $D_p$ 及130.1的纯零对称，得到 $p\perp q,p\perp r$，没有取得 $q\perp r$。径向事实本身沿用130.2，不计为新增内容。
+
+要在全原域补齐最后一对，需要的是全局条件
+
+$$
+\forall p\in P\ \forall q\in P\cap D_p:\quad q\perp(2c_p-q),
+\tag{Q132.7}
+$$
+
+它依130.3—130.4及其VII104.2接口等价于 $\mathrm{Pair}_{\perp}$；一个选中直径的可区别性不等于该全局条件。(Q132.1)未推出谱性、共同三结果预算、最大纯权或统一 $\lambda\ge1/3$。若另付全 Pair，则在 EB3 下直接复用[VIII113.7、113.9][Q130VIII]：整个原锥与原单位对应复三能级，$C=\Phi(\mathrm{PSD}_3)$、$u\Phi=\operatorname{Tr}$，原全效应 Born 评价 $f_E(\Phi\rho)=\operatorname{Tr}(E\rho)$、纯比较内积模方与全部有限数学 POVM 字典均取旧结果，不新增分类。
+
+本条的 `repo-derived` 增益只是在130.2的覆盖及相应三纯项步骤少用 Inj，不主张严格扩大模型类或全球新颖；E0及IX119的其他 Inj 消费者仍保留原前件。PR只指比较交换两端的数值不变，不指先后测量对易；在原 EB3 域由 PR 自动推出 Pair／UF 仍未证明。原来源与实际操作、全部有限复合与纠缠、全旁观 CP、事件仪器、记录、物理钟与时间、Hamiltonian及数值 $\hbar$ 的独立合同完整沿用130.6。
+
+几何上，把指定内点移到原点，反向缩放整块状态体直到接触；在接触的最低支撑面取一个纯角点，整个反射包含保证它的反向点仍在最高支撑面。全原读数尺把两端读成一和零，余量便落在该纯点的整颗排除球内，再沿球的直径分成两个原纯端点。球内相反没有供应整个原系统区别最后两端的尺；对每颗球、每条直径都供应它，才是尚需另付的全域条件。证毕。
+
+## 追加锚（本行以下为增补区）
