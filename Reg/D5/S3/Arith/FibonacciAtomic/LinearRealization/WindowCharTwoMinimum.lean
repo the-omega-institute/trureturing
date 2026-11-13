@@ -1,16 +1,19 @@
-import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ULift
 
-/-! # Source-bound audit of the characteristic-two joint window theorem -/
+/-! # Family evidence for the characteristic-two joint window theorem
+
+The complete field-dependent law, equivalence bridge, variation, sensitivity and
+observational dependence have kernel proofs. Outer source binding remains open:
+https://github.com/the-omega-institute/trureturing/issues/29781.
+-/
 
 open _root_.D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
 open _root_.D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
   (WordRepresentation wordBehavior integerFieldTask)
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
 
@@ -77,39 +80,5 @@ def familyRegistration : Registration arena.{u,v} (type_of% (@result.{u,v})) whe
     have second := congrArg Prod.snd heq
     change (0 : ULift.{u} (ZMod 2)) = 1 at second
     exact zero_ne_one second
-
-noncomputable def registration : Contract.Registration (@result.{u,v})
-    (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum.result
-  realizationName :=
-    `Reg.D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum.familyRegistration
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u,v}⟩
-  objectArena := .source ⟨arena.{u,v}⟩
-  catalog := .anonymous
-  localNames := false
-  realization := .source arena.{u,v} ⟨familyRegistration.{u,v}⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature.{u}
-    (fun _ p w => @integerFieldTask p.1 p.2.1 w) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
-    definition := none
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "body", "arg"]
-      stateBinder := 3
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
 
 end Reg.D5.S3.Arith.FibonacciAtomic.LinearRealization.WindowCharTwoMinimum
