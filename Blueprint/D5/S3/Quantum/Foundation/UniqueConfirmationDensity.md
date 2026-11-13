@@ -18,7 +18,19 @@ Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.UniqueConfir
 
 There exists an original proper effect e confirming p and vanishing on every state of the entire exclusion D(p); every original proper confirming effect with the same whole-face zero property equals e. This is uniqueness in the effect fiber and is distinct from uniqueness of the pure label associated with D(p).
 
-**Theorem 1.2 (Convergence of the entire original label sequence).**
+**Theorem 1.2 (A positive zero at a relative interior point).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real normed space V, original pointed cone C and linear u, assume every original pure label has an injective affine chart of a positive dimensional Euclidean closed ball for its entire exclusion. For every original pure p, every linear f nonnegative on the whole cone, and every x in intrinsicInterior(real,D(p)), f(x)=0 implies f(z)=0 for every z in the whole D(p). No finite dimensionality of V, closedness or generating assumption on C, strict positivity of u, or label injectivity is required. The affine restriction to a ball is nonnegative and zero at an interior point, so its slope and constant term both vanish.
+
+**Theorem 1.3 (Convergence of the entire original label sequence).**
 
 Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_label_tendsto`
 
@@ -32,7 +44,7 @@ Fix any original pure p and x in the relative interior of its entire exclusion. 
 
 For every subsequence, compactness of the whole original base and the whole effect interval gives a common further subsequence of actual label states and actual whole-exclusion confirming effects. Its state limit s initially belongs only to K. Joint continuity of evaluation gives e(s)=1 and e(x)=0. Nonnegativity at the relative interior point forces e to vanish on the entire original D(p). The original one-value-face theorem, full-ball maximality and the given injectivity force s=p. The subsequence criterion then yields convergence of the entire label sequence; purity of a cluster point is derived from the whole one-value face.
 
-**Theorem 1.3 (Complete density with converging original labels).**
+**Theorem 1.4 (Complete density with converging original labels).**
 
 Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_unique_confirmer_density`
 
@@ -57,6 +69,7 @@ The theorem allows variable positive exclusion-ball dimensions, so its three-dim
 - Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.UniqueConfirmer`
 - Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_label_tendsto`
 - Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_unique_confirmer_density`
+- Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior`
 - Dependency: [D5/S3/Quantum/Foundation/MixedExclusionGeometry](MixedExclusionGeometry.md)
 - Dependency: [D5/S3/Quantum/Foundation/OriginalWidthContact](OriginalWidthContact.md)
 - Dependency: [D5/S3/Quantum/Foundation/SingleLabelNormalBody](SingleLabelNormalBody.md)
