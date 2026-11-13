@@ -21,7 +21,8 @@ internal sealed class ArbitraryAlphabetSolovayKitaevDocument : IScribeDocumentDe
             Entry("finite-word-net", "exists_finite_word_net", "A finite net made of actual words", FiniteNet(),
                 "Compactness of the determinant-one closed subset of the unitary group and density give finitely many actual word values. Choose one list for each net point and take the maximum of their actual lengths. The compact unitary carrier is reused from HaarTwoCopyTwirl.unitaryCompactSpace. No numerical bound on this maximum or effective net construction is required.", DescribeRole.Theorem),
             Entry("commutator-stability", "norm_groupCommutator_sub_le", "Stability gains the small factor", Stability(),
-                "For four unitary factors within a of identity and factor errors at most delta, the commutator error is at most 4*a*delta*(1+a). This is the Apache-2.0 CSD estimate of Zayn Blore, specialized to the matrix carrier. Its factorization pairs a factor difference with a small near-identity factor.", DescribeRole.Theorem),
+                "For four unitary factors within a of identity and factor errors at most delta, the commutator error is at most 4*a*delta*(1+a). This is the Apache-2.0 CSD estimate of Zayn Blore, specialized to the matrix carrier. Its factorization pairs a factor difference with a small near-identity factor.", DescribeRole.Theorem,
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/dawsonnielsen2006solovaykitaev"))),
             Entry("paired-word-invariant", "exists_word_at_level", "One list carries error and length together", Invariant(),
                 "Start with a word u from the preceding level approximating the current U. The residual is U*star(eval(Gamma,u)), whose distance from identity equals the preceding error and whose determinant remains one. BalancedSU2Commutator supplies exact factors V,W at square-root distance. Approximate both at the same preceding level and concatenate their words with inverse words and u. Stability bounds this same list's error by e(n+1)=33*e(n)^(3/2), while its actual length is bounded by 5^(n+1)*L. This alphabet-parametric construction follows the licensed CSD ordinary-word induction; the residual always uses the preceding approximation to this target.", DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("uniform-ordinary-word-bound"),
@@ -35,9 +36,9 @@ internal sealed class ArbitraryAlphabetSolovayKitaevDocument : IScribeDocumentDe
                 DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Entry(string id, string name, string title, Formula formula,
-        string body, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+        string body, DescribeRole role, AssessedProvenance? provenance = null) => Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(body))), role);
+            provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(body))), role);
 
     private static Formula Evaluation()
     {

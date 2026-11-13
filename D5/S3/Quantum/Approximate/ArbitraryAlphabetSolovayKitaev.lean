@@ -13,7 +13,7 @@ https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2
 (original QuantumInfo.SU2.ctEval, ctInvWord, skWords and
 length_le_of_mem_skWords, used as proof sources for ordinary-list operations),
 https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/CliffordTNet.lean
-(original QuantumInfo.SU2.compact_exists_finite_net),
+(original IsCompact.exists_finite_net),
 https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/Analysis/CStarAlgebra/GroupCommutator.lean
 (original CStarRing.norm_mul_sub_mul_comm_le and groupCommutator_sub_one_eq),
 https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/SolovayKitaevStep.lean
@@ -28,6 +28,13 @@ Authors: Zayn Blore.
 Full license: docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
 The compact-net and stability estimates are licensed reuse. Quaternion decomposition
 and scalar rate estimates are in the two directly imported support modules.
+Retirement condition: for each ported declaration mapped above, use the mathlib
+revision resolved by this repository's unchanged lake-manifest.json. Retire that
+ported declaration when an importable replacement in that revision accepts its
+full current telescope and direct application typechecks at every current consumer
+site, with only the standard axiom closure. Replace those uses by the mathlib
+application and delete the port; upstream acceptance alone does not trigger this.
+
 -/
 
 

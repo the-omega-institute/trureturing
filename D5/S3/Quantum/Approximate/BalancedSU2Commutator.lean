@@ -18,6 +18,13 @@ https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2
 (original declarations QuantumInfo.SU2.su2_star through exists_commutator_of_det_one).
 Full license: docs/reports/qmutualinfo/csd-lean4-LICENSE.txt.
 The parameterization, standard pair, reflection and conjugation proofs are licensed reuse.
+Retirement condition: for each ported declaration mapped above, use the mathlib
+revision resolved by this repository's unchanged lake-manifest.json. Retire that
+ported declaration when an importable replacement in that revision accepts its
+full current telescope and direct application typechecks at every current consumer
+site, with only the standard axiom closure. Replace those uses by the mathlib
+application and delete the port; upstream acceptance alone does not trigger this.
+
 -/
 
 module
