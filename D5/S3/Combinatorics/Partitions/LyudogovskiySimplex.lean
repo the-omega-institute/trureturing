@@ -42,8 +42,9 @@ def graph (n : ℕ) : SimpleGraph (Nat.Partition n) where
   loopless := fun _ h => h.1 rfl
 
 /-- All actual finite cliques, including singletons and the empty clique. -/
-def cliques (n : ℕ) : Finset (Finset (Nat.Partition n)) :=
-  Finset.univ.powerset.filter (fun s => (graph n).IsClique (s : Set (Nat.Partition n)))
+def cliques (n : ℕ) : Finset (Finset (Nat.Partition n)) := by
+  classical
+  exact Finset.univ.powerset.filter (fun s => (graph n).IsClique (s : Set (Nat.Partition n)))
 
 /-- Maximum clique cardinality containing p, minus one. -/
 def localDimension {n : ℕ} (p : Nat.Partition n) : ℕ :=
