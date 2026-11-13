@@ -39,13 +39,17 @@ internal sealed class DiagonalOrdinaryParityDocument : IScribeDocumentDefinition
                 + "the displayed equivalence in both directions for every positive n. "
                 + "The zeroth exponent k=0 supplies n=1. This uses ordinary integer coefficients "
                 + "of G and imposes no parity assumption on its construction.",
-                provenance: AssessedProvenance.FromRepo(ParitySource)))));
+                provenance: AssessedProvenance.FromRepo(ParitySource),
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a177775-ordinary-coefficient-parity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("diagonal-ordinary-parity-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance ?? AssessedProvenance.FromRepo(ParitySource), Blocks(Paragraph(Text(prose))), role);
+            provenance ?? AssessedProvenance.FromRepo(ParitySource), Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula N() => F.Id("n");
