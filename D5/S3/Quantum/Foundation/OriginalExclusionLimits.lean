@@ -93,7 +93,7 @@ private theorem compact_diameter_control (S T : NonemptyCompacts V) :
   rw [dist_comm y' y] at ht
   linarith
 
-private theorem compact_diameter_lipschitz :
+theorem compact_diameter_lipschitz :
     LipschitzWith 2 (fun S : NonemptyCompacts V => Metric.diam (S : Set V)) := by
   apply LipschitzWith.of_dist_le_mul
   intro S T
