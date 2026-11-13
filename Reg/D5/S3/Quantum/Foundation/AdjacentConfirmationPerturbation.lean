@@ -51,13 +51,13 @@ abbrev arena : Arena where
     let C := P.cone
     let u := P.unit
     ∀ (a e : V →ₗ[ℝ] ℝ)
-      (hc : IsClosed (C : Set V)) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-      (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
-      (hinj : Function.Injective (fun p : pure C u => exclusion C u p))
-      (p q : pure C u) (hq : (q : V) ∈ exclusion C u p)
-      (ha : confirms C u q a) (ha0 : ∀ x ∈ exclusion C u q, a x = 0)
-      (he : confirms C u p e) (he0 : ∀ x ∈ exclusion C u p, e x = 0)
-      (M : ℝ) (hM : M < 1) (hwidth : WidthBound C u (exclusion C u q) M),
+      (_hc : IsClosed (C : Set V)) (_hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+      (_hg : Submodule.span ℝ (C : Set V) = ⊤) (_hB : exclusionBalls C u)
+      (_hinj : Function.Injective (fun p : pure C u => exclusion C u p))
+      (p q : pure C u) (_hq : (q : V) ∈ exclusion C u p)
+      (_ha : confirms C u q a) (_ha0 : ∀ x ∈ exclusion C u q, a x = 0)
+      (_he : confirms C u p e) (_he0 : ∀ x ∈ exclusion C u p, e x = 0)
+      (M : ℝ) (_hM : M < 1) (_hwidth : WidthBound C u (exclusion C u q) M),
       ∃ t : ℝ, 0 < t ∧ ∃ lo hi : ℝ,
         (∀ x ∈ base C u, lo ≤ O.readout () P (a,e,t,x) ∧
           O.readout () P (a,e,t,x) ≤ hi) ∧
@@ -74,9 +74,8 @@ abbrev sourceScope : Prop := type_of% (@adjacent_confirmation_perturbation.{v})
 
 theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
   constructor
-  · intro h P a e hc hu hg hB hinj p q hq ha ha0 he he0 M hM hwidth
-    exact @h P.V P.add P.space P.finite P.cone P.unit a e hc hu hg hB hinj
-      p q hq ha ha0 he he0 M hM hwidth
+  · intro h P
+    exact @h P.V P.add P.space P.finite P.cone P.unit
   · intro h V add space finite C u a e hc hu hg hB hinj p q hq ha ha0 he he0 M hM hwidth
     exact h (@Inputs.mk V add space finite C u) a e hc hu hg hB hinj
       p q hq ha ha0 he he0 M hM hwidth
