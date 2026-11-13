@@ -10,7 +10,7 @@
 Attributed algebraic support: Csd@9b2d2c17e926ae13795119c5f2f62e85ea240c2d.
 Source files:
 https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/CliffordTWords.lean
-(original QuantumInfo.CliffordT.ctEval, ctInvWord, skWords and
+(original QuantumInfo.SU2.ctEval, ctInvWord, skWords and
 length_le_of_mem_skWords, used as proof sources for ordinary-list operations),
 https://github.com/zblore/csd-lean4/blob/9b2d2c17e926ae13795119c5f2f62e85ea240c2d/CsdLean4/Mathlib/QuantumInfo/CliffordTNet.lean
 (original QuantumInfo.SU2.compact_exists_finite_net),
@@ -57,7 +57,7 @@ abbrev Mat2 := Matrix (Fin 2) (Fin 2) ℂ
 /-!
 The finite-net lemma is the compactness step from the licensed CSD source
 `CsdLean4/Mathlib/QuantumInfo/CliffordTNet.lean` (Apache 2.0, Zayn Blore).
-It is retained here because the receiver has no imported generic statement.
+The net points lie in the dense set; no quantitative cardinality is asserted.
 -/
 theorem compact_exists_finite_net {X : Type*} [MetricSpace X] {K D : Set X}
     (hK : IsCompact K) (hKD : K ⊆ closure D) {ε : ℝ} (hε : 0 < ε) :
