@@ -1,0 +1,86 @@
+**Proposition 30.1 (integrable actual execution).** The four expectations
+in (26.5) hold for the construction, using precisely the original
+velocities and Wiener law. Its issuance count has finite expectation
+at each fixed $\eta$.
+
+Proof. Let $N=\#\{i:t_i<S\}$, including $i=0$. The normalized
+mesh cells have the conditional law (18.5), and $\mu_\lambda>0$
+is supplied with its full scope by (18.2)–(18.4). The start event
+$\{t_i<S\}$ is $\mathcal F_{t_i}$ measurable. The same Tonelli
+and conditional expectation calculation as (18.6) therefore gives
+
+$$
+\mathbb EN\le\frac{\mathbb ES+\rho^2}{\rho^2\mu_\lambda}.
+\tag{30.1}
+$$
+
+For clarity the pathwise sum of durations over these start events is
+the first mesh point at or after $S$, at most $S+\rho^2$; conditioning
+each full duration on its start gives mean $\rho^2\mu_\lambda$.
+No claim that a cell selected by its end or its survival has the
+unselected cell law is used.
+
+At each normal start $t_i<S$, $i\ge1$, define its full suffix service
+on the auxiliary Brownian continuation, ignoring later target death.
+It uses the connector already known at that start. Lemma 27.3 bounds
+its conditional energy by $48/c_\lambda$. The actual normal execution
+agrees with this service until $\tau$ or $T$ and executes at most
+its original prefix. Hence
+
+$$
+\begin{aligned}
+E_{\rm normal}
+ &\le\sum_{i\ge1}{\bf1}_{\{t_i<S\}}E_i^{\rm full},\\
+\mathbb E E_{\rm normal}
+ &\le\frac{48}{c_\lambda}\mathbb EN
+ \le\frac{48}{c_\lambda\mu_\lambda}
+                  (\mathbb ES/\rho^2+1).
+\end{aligned}
+\tag{30.2}
+$$
+
+The factorization is conditional on the start, before imposing any
+later interruption or survival. The continuation only defines the
+nonnegative dominating variable. Neither its future observations nor
+its unexecuted motion is charged to the actual native command.
+Normal variations and length are bounded pathwise by
+$3\rho N,3\rho N,6\rho N$, respectively, because increasing suffix
+parametrizations never repeat the geometric path.
+
+For the terminal connector (29.5) and the six equal durations give
+
+$$
+\begin{aligned}
+V^a_{\rm term}&=2\rho+|X|\le5\rho,\\
+V^b_{\rm term}&=2|q|+|Y|\le17\rho,\\
+L_{\rm term}&=V^a_{\rm term}+V^b_{\rm term}\le22\rho,\\
+E_{\rm term}&=\frac6\delta(2\rho^2+2q^2+X^2+Y^2)
+ \le6(2+98+9+9)=708.
+\end{aligned}
+\tag{30.3}
+$$
+
+These are full planned connector costs. If the horizon cuts it short,
+its actually executed costs are no greater, by integration of the
+same velocities over a smaller prefix. Combining (30.1)–(30.3)
+proves exactly (26.5). Every target-death-to-native-death motion is
+included; native post-death holds have zero velocity.
+
+More explicitly, within any issued profile a planned straight piece
+of duration $d$ and increment $(A,B)$ has fixed velocity $(A,B)/d$.
+An executed fraction $\theta$ costs
+$\theta|A|$, $\theta|B|$, $\theta\sqrt{A^2+B^2}$ and
+$\theta(A^2+B^2)/d$. When a suffix is subsequently accelerated,
+this formula for all preceding pieces remains unchanged. The new
+profile only prescribes future velocities. Thus (27.12) and (30.3)
+are bounds for actual original-time integrals, without compressing a
+past partial leg, assigning post-death bills or changing measure.
+
+Finally (27.10) bounds the conditional expected attempt count by
+$1/(1-q)\le16/15$ at each normal start. Tonelli on the same start
+events bounds the expected total issuance count by
+$2+(16/15)\mathbb EN$. The initial and terminal profiles account for
+the two additive issuances, and each successful normal attempt already
+contains its subsequent hold. There is consequently no countable
+accumulation hidden in this construction. $\square$
+

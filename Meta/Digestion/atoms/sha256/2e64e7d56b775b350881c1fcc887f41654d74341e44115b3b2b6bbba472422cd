@@ -1,0 +1,7 @@
+All indices in these sums are integers. Under label $i$, first draw $\tau$ with
+
+$$
+\mathsf P_{i,q}(\tau=b)=S_{i,q}(b)/\mu_i(q),\qquad b=0,1,\ldots.
+\tag{2.5}
+$$
+

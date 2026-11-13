@@ -1,0 +1,23 @@
+**Proposition 15.2 (weak law does not force almost-sure cost divergence
+on the original coupling).** There are lawful sequences satisfying
+both qualitative contracts, and even convergence in probability of
+the coupled held paths and lifetimes, whose executed costs are zero
+infinitely often almost surely.
+
+Proof. Use the coupled finite dyadic family of Sections 5–6 for the
+fixed $\lambda$. Independently sample Bernoulli variables $D_n$ with
+$\mathbb P(D_n=1)=1/(n+1)$. At stage $n$, prescribe the zero command
+when $D_n=1$, and the dyadic command otherwise. Each choice is a
+complete original command starting from the same specified ray; there
+is no reset within a command. The zero command has $J=0$, no death,
+full native guard and zero costs. The probability of replacing the
+dyadic command tends to zero, so the new full held/lifetime and killed
+laws have the same limits: for any bounded test their expectation
+difference is at most twice its supremum norm divided by $n+1$.
+The same probability bound gives coupled convergence in probability.
+Independence and $\sum_n1/(n+1)=\infty$ give $D_n=1$ infinitely often
+almost surely. Hence almost-sure divergence of costs fails on this
+coupling, although Theorem 14.1 still applies. This witness changes
+neither the good samples' chronology nor their own death times.
+$\square$
+

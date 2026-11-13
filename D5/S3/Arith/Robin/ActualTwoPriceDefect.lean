@@ -45,7 +45,7 @@ open D5.S3.Arith.Robin.EulerLayerPhaseSeparation
 def strictInteger (q : ℝ) : ℕ :=
   if hq : 0 < q then Classical.choose (optimal_layer_count_spec hq) else 1
 
-private theorem strictInteger_spec {q : ℝ} (hq : 0 < q) :
+theorem strictInteger_spec {q : ℝ} (hq : 0 < q) :
     1 ≤ strictInteger q ∧
     (∀ p : ℕ, (strictInteger q).factorization p = optimalLayerCount q p) ∧
     IsGoldenResourceOptimal q (strictInteger q) ∧

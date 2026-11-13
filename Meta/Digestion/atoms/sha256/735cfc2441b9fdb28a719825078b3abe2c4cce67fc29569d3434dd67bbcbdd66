@@ -1,0 +1,43 @@
+**引理 101.2（端点关系给出同一中心和全效应式）。** 在(101.1)下，所有端点中点相同，存在唯一 $c\in K$ 使
+$ p_i=c+s_i$、$q_i=c-s_i$。令 $B=K-c$，则 $B=-B$ 是某个范数 $N$ 的整个单位球。对
+$W^*$ 中的归一支撑集
+
+$$
+ J(r)=\{j\in W^*:N^*(j)=1,\ j(r)=1\}\qquad (r\in\operatorname{ext}B),
+$$
+
+有
+
+$$
+\begin{gathered}
+ C=\{tc+w:t\ge N(w)\},\\
+ \mathcal E=\{\alpha u+b:N^*(b)\le\min(\alpha,1-\alpha)\},\\
+ F_{c+r}=\{(1-\rho)u+\rho j:0\le\rho\le\tfrac12,\ j\in J(r)\},\\
+ T_{c+r}(c+w)=\frac{1+\min_{j\in J(r)}j(w)}2.
+\end{gathered}
+\tag{101.2}
+$$
+
+每个 $\mathrm E2_i$ 对的 $J(s_i)$ 是单点，记其唯一元为 $j_i$。
+
+**证明。** 取任意非恒定仿射函数并归一为效应 $h$，使 $0\le h\le1$；令 $r$ 为其最大值面中的纯点。由端点互反和 $\mathrm E2_i$，
+
+$$
+1=T_{p_i}(r)+T_{q_i}(r)=T_r(p_i)+T_r(q_i)\le h(p_i)+h(q_i).
+$$
+
+对 $u-h$ 取最小值面中的纯点 $r'$，同一式给
+$1\le (u-h)(p_i)+(u-h)(q_i)$，故反向不等式也成立。于是
+$h(p_i)+h(q_i)=1$。对任意线性高度作同样归一化，得到
+$\ell(p_i)+\ell(q_i)=\max_K\ell+\min_K\ell$；支撑函数遂给出
+$K-(p_i+q_i)/2=-(K-(p_i+q_i)/2)$。有界凸体不能有两个不同的对称中心，因为两个反射的复合是非零平移，所以中点为同一 $c$。
+
+$K-c$ 全维且对称，其 gauge 是范数 $N$。在分解 $V=\mathbb Rc\oplus W$ 中，效应写成
+$f(tc+w)=\alpha t+b(w)$；在 $B$ 上取上下界恰得
+$N^*(b)\le\alpha\le1-N^*(b)$，即全效应式。若 $f(c+r)=1$，则
+$b(r)=1-\alpha\le N^*(b)\le1-\alpha$，所以
+$\rho=1-\alpha=N^*(b)\in[0,1/2]$；$\rho>0$ 时 $b=\rho j$ 且 $j\in J(r)$，$\rho=0$ 时为 $u$。对固定 $w\in B$，表达式随 $\rho$ 在其允许区间上递减，故在 $\rho=1/2$ 和 $j(w)$ 最小时取得(101.2)的下包络。
+
+由该式，$\mathrm E2_i$ 等价于
+$\min_{j\in J(s_i)}j(w)=\max_{j\in J(s_i)}j(w)$ 对所有纯 $w$ 成立。纯点张成 $W$，所以 $J(s_i)$ 是单点。证毕。
+

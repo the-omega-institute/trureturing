@@ -1,0 +1,25 @@
+**推论 82.4（带明确迹规范的误差界）。** 设 $\epsilon\ge0$，在定义 82.1 的普通总迹规范中有
+$$
+\mathcal K_{3,\alpha}(\Phi)(\Xi)\ge-\epsilon I_E.
+$$
+令 $\delta=3n\epsilon$、$\Delta_A(X)=u_A(X)1_A$。则 $\Phi+\delta\Delta_A$ CP。若另外 $\Phi$ TP，
+$$
+\widehat\Phi=\frac{\Phi+\delta\Delta_A}{1+n\delta}\text{ 为 CPTP},\qquad
+\|\Phi-\widehat\Phi\|_\diamond\le2n\delta=6n^2\epsilon. \tag{82.9}
+$$
+$\|\cdot\|_\diamond$ 为各普通迹块直和上的完全有界迹范数；没有声称常数最优。
+
+**证明。** 对角输出的压缩给
+$$
+J(\Phi_{ii})/n\ge-\epsilon F_{n_i}^*F_{n_i}\ge-3\epsilon I.
+$$
+选择 $\alpha_\ell\ge1/3$ 的一腿，对任意非对角转移用 (82.8) 的等距压缩，得 $J(\Phi_{ji})\ge-(n/\alpha_\ell)\epsilon I\ge-3n\epsilon I$。所有块因此同有下界 $-\delta I$。$\Delta_A$ 的每个矩形 Choi 块都是 $I_{n_j}\otimes I_{n_i}$，所以相加后全为 PSD，按 Choi 定理得到 CP。
+$u_A\Delta_A=n u_A$，故 TP 时分母使 $\widehat\Phi$ 保迹。置 $\mathcal R=\Delta_A/n$，它 CPTP，并有
+$$
+\Phi=(1+n\delta)\widehat\Phi-n\delta\mathcal R,\qquad
+\Phi-\widehat\Phi=n\delta(\widehat\Phi-\mathcal R).
+$$
+CPTP 映射在该范数中为一（等价地，其每个放大的伴随为保单位 CP 映射，算子范数为一）。三角不等式给 (82.9)。$\epsilon=0$ 包括在内；未要求 $\Phi$ 本来正或遍历。证毕。
+
+这个修正是一份数学 CP 映射，不是原过程的已供应修复装置；不推断同菜单、记录或未来接头也被修复。原滤波坐标下的谱误差须另计滤波范数，不能原样使用 (82.9)。
+
