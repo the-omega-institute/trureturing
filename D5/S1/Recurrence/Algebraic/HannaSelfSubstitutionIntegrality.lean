@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#18709; Proved)
-escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation.
+escape_witness: none.
 logSum: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.SolvesHanna, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_agree, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.step_agree, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.solves_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_coeff, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_constants, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_sub, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_subst_power, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exp_logSum_integral_of_divisibility, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.integral_input_ghost, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_pow_eq, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
 SolvesHanna: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.solves_zero, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.claim.
 claim: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
@@ -21,7 +21,7 @@ step_agree: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recur
 solves_zero: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.exists_unique_solves, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
 exists_unique_solves: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
 integral_one: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.claim_of_preservation.
-claim_of_preservation: proof_shape: content; escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
+claim_of_preservation: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
 input_coeff: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.logSum_constants, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.input_pow_eq.
 integral_iff_map: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.integral_inv, D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
 logSum_constants: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.integral_input_ghost.
@@ -32,7 +32,7 @@ logSum_subst_power: proof_shape: bind-only; escape_witness: none; consumers: D5.
 exp_logSum_integral_of_divisibility: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.preserve_integer_ghost.
 preserve_integer_ghost: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
 integral_input_ghost: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.result.
-result: proof_shape: content; escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
+result: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
 integral_inv: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
 input_pow_eq: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegrality.geometric_input.
 geometric_input: proof_shape: bind-only; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
@@ -41,6 +41,13 @@ HannaDiagonalGhostPowerIntegrality.logarithmicInput through logSum_constants.
 The formal exponential is PowerSeries.subst, without a forwarding definition.
 The proof reuses the frozen private Dold suppliers through open private.
 claim_of_preservation carries the integral-iterate and coefficient-agreement induction.
+This is consumed bind-only reasoning: the frozen integer instance of
+PowerSeriesNormalizedContraction.exists_unique_fixed already supplies the
+integral fixed point under preservation, with rational uniqueness identifying
+every solution. It supplies no escape witness or new proof content.
+The public result settles the external tier-1 assertion preregistered in
+#18709 before probes; the consumed geometric_input supports the separate
+#18710 settlement. Literature completeness remains ASSUMED-UNVERIFIED.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24041.
 -/
 import Batteries.Tactic.OpenPrivate

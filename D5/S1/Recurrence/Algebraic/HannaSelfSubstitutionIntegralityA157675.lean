@@ -8,9 +8,13 @@
 
 /-
 admission_basis: open-problem-resolution (#18710; Proved)
-escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation.
+escape_witness: none.
 claim: proof_shape: definition; escape_witness: none; consumers: D5.S1.Recurrence.Algebraic.HannaSelfSubstitutionIntegralityA157675.result.
-result: proof_shape: content; escape_witness: HannaSelfSubstitutionIntegrality.claim_of_preservation; consumers: external settlement.
+result: proof_shape: bind-only; escape_witness: none; consumers: none; external assertion settled under #18710.
+The public result is a bind-only application of the main result and geometric_input.
+Its admission is the independent external tier-1 assertion preregistered in
+#18710 before probes, not an inherited escape witness.
+Literature completeness remains ASSUMED-UNVERIFIED.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/24041.
 -/
 import Batteries.Tactic.OpenPrivate

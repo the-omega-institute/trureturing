@@ -44,7 +44,16 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                     + "the exponential self-substitution operator preserves integer coefficients "
                     + "by the sufficient Dieudonne-Dwork criterion. The operator raises coefficient "
                     + "agreement by one degree. Iteration from 1 determines its unique solution, "
-                    + "and every solution coefficient equals an integer iterate coefficient.",
+                    + "and every solution coefficient equals an integer iterate coefficient. "
+                    + "The proof_shape of result, claim_of_preservation and every theorem helper "
+                    + "is bind-only; definitions have proof_shape definition. All helpers have "
+                    + "live consumers listed in the source. The frozen integer normalized "
+                    + "contraction theorem already supplies the integral fixed point under "
+                    + "preservation, so the iteration is no escape_witness. Admission is "
+                    + "open-problem-resolution of the tier-1 external assertion preregistered "
+                    + "in #18709 before probes. The preregistration attributes its OEIS and "
+                    + "literature readings; worldwide literature completeness remains "
+                    + "ASSUMED-UNVERIFIED. Escape audit #24041 remains unfinished.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst"), ResolutionKind.Proved)),
             Node("geometric_input", "Geometric exponential inputs",
@@ -53,7 +62,9 @@ internal sealed class HannaSelfSubstitutionIntegralityDocument : IScribeDocument
                         Pow(Cast(V("a"), Rat()), V("n"))))))))),
                 "For every integer a the exponential of Sum_{n>=1} a^n*x^n/n equals "
                     + "(1-a*X) inverse and has integer coefficients. The specialization a=2 "
-                    + "supplies the input for the A157675 equation.",
+                    + "supplies the input for the A157675 equation. Its proof_shape is "
+                    + "bind-only, escape_witness is none, and its live consumer is "
+                    + "HannaSelfSubstitutionIntegralityA157675.result.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

@@ -25,7 +25,14 @@ internal sealed class HannaSelfSubstitutionIntegralityA157675Document : IScribeD
             Node("result", "The A157675 series is integral", Disp(ClaimBody()),
                 "The exponential input exp(Sum_{n>=1} 2^n*x^n/n) is the integer geometric "
                     + "series (1-2X) inverse. HannaSelfSubstitutionIntegrality.result therefore "
-                    + "gives existence and integrality of every solution of the displayed equation.",
+                    + "gives existence and integrality of every solution of the displayed equation. "
+                    + "The result has proof_shape bind-only and escape_witness none; claim is a "
+                    + "definition. It has no mathematical consumer: admission is the separate "
+                    + "open-problem-resolution of the tier-1 external assertion preregistered "
+                    + "in #18710 before probes. That preregistration explicitly identifies the "
+                    + "proof as an instantiation of #18709. The source and literature readings "
+                    + "are attributed to those preregistrations; worldwide completeness remains "
+                    + "ASSUMED-UNVERIFIED. Escape audit #24041 remains unfinished.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(ProblemSlugRef.Create("hannasubst-a157675"), ResolutionKind.Proved)))));
 
