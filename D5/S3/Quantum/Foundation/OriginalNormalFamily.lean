@@ -158,8 +158,8 @@ theorem normal_maximum
       apply (hmax x hx).trans
       rw [← hzs, normalForm_chart hep k]
       have hz1 : ‖z‖ ≤ 1 := by simpa using hz
-      exact add_le_add_left ((real_inner_le_norm v z).trans
-        (by nlinarith [norm_nonneg v])) α
+      have hvz : ‖v‖ * ‖z‖ ≤ ‖v‖ := mul_le_of_le_one_right (norm_nonneg v) hz1
+      exact add_le_add_left ((real_inner_le_norm v z).trans hvz) α
   refine ⟨hupper, ?_⟩
   by_cases hv : v = 0
   · refine ⟨a.param 0, SingleLabelNormalBody.chart_mem a (by simp), ?_⟩

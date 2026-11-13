@@ -38,11 +38,14 @@ private theorem directional_attainment
   let t := (1 - e (a.param (-v))) / 2
   have her := he.1 _ (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1.1
   rw [chart_unit a] at her
+  change 0 ≤ e (a.param (-v)) ∧ e (a.param (-v)) ≤ 1 at her
   have ht : 0 ≤ t ∧ t ≤ 1 / 2 := by dsimp [t]; constructor <;> linarith
   have hpeak := peak_formula a e.toLinearMap he.1 v hv (hq ▸ he.2)
   have hform (z) : e (a.param z) = 1 - t + t * ⟪v, z⟫ := by
     dsimp [t]
-    rw [hpeak z]
+    have hh := hpeak z
+    change e (a.param z) = 1 - (1 - e (a.param (-v))) / 2 * (1 - ⟪v, z⟫) at hh
+    rw [hh]
     ring
   refine ⟨t, e.toLinearMap, ht.1, ht.2, ⟨he.1, he.2⟩, ?_, ?_⟩
   · intro z
@@ -135,7 +138,7 @@ theorem original_ball_scale
       change comparison C u (a.param v) (a.param v₀) = comparison C u (a.param v₀) (a.param v) at hh
       rw [show comparison C u (a.param v) (a.param v₀) = 1 - t + t * ⟪v, v₀⟫ from hq ▸ hcomp v₀ hv₀.le,
         hcomp₀ v hv.le, real_inner_comm v₀ v] at hh
-      rw [real_inner_comm v₀ v] at hh
+      rw [show ⟪v₀, v⟫ = ⟪v, v₀⟫ from real_inner_comm _ _] at hh
       nlinarith
   exact ⟨e, he, heq ▸ hform, heq ▸ hcomp⟩
 
