@@ -23,11 +23,7 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
             Describe.Lean(DescribeId.Create("injectivity-on-clique"),
                 DeclarationHandle.Create(Module + "InjectiveOnClique"),
                 H("Only clique coordinates are constrained"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Call("InjectiveOnClique", F.Id("C"), F.Id("U"), F.Id("q"), F.Id("r")),
-                    Sp, Iff, Sp,
-                    Call("Injective", Call("restrict", F.Id("r"),
-                        Call("intersection", F.Id("U"), F.Id("C"))))))),
+                StatementSource.FromAuthor(InjectivityFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The predicate requires injectivity of the scope tuple restricted to U "
@@ -36,12 +32,7 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
             Describe.Lean(DescribeId.Create("full-injective-clique-relation"),
                 DeclarationHandle.Create(Module + "cliqueRows"),
                 H("The full finite relation"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Call("cliqueRows", F.Id("C"), F.Id("U"), F.Id("q")), Sp, Eq, Sp,
-                    OpenBrace, F.Id("r"), Colon, Sp, F.Id("U"), Sp, To, Sp,
-                    Call("Fin", F.Id("q")), Sp, Mid, Sp,
-                    Call("InjectiveOnClique", F.Id("C"), F.Id("U"), F.Id("q"), F.Id("r")),
-                    CloseBrace))),
+                StatementSource.FromAuthor(CliqueRowsFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The defining set is converted to a finset using finiteness of V and "
@@ -86,7 +77,7 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
                             + "of the ACM 30(3), 1983, DOI 10.1145/2402.322389. The Lean proof "
                             + "supplies the indexed-scope and finite-alphabet construction explicitly. "
                             + "It treats only the nonconformal branch; the full classification "
-                            + "in issue #30141 remains unresolved."))),
+                            + "remains unresolved."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
@@ -101,47 +92,78 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
         return Seq([.. items]);
     }
 
+    private static Formula All(string variable, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(variable), Colon, Sp, type, Comma, Sp, body);
+
+    private static Formula CliqueParameters(bool finite, Formula body)
+    {
+        Formula parameters = All("C", Call("Finset", F.Id("V")),
+            All("U", Call("Set", F.Id("V")),
+                All("q", Seq(Mathbb, Grp(F.Id("N"))), body)));
+        if (finite)
+            parameters = Seq(OpenBracket, Call("Finite", F.Id("V")), CloseBracket,
+                Comma, Sp, parameters);
+        return All("V", F.Id("Type"), parameters);
+    }
+
+    private static Formula InjectivityFormula() =>
+        Disp(CliqueParameters(false,
+            All("r", Seq(F.Id("U"), Sp, To, Sp, Call("Fin", F.Id("q"))), Seq(
+                Call("InjectiveOnClique", F.Id("C"), F.Id("U"), F.Id("q"), F.Id("r")),
+                Sp, Iff, Sp,
+                Call("Injective", Call("restrict", F.Id("r"),
+                    Call("intersection", F.Id("U"), F.Id("C"))))))));
+
+    private static Formula CliqueRowsFormula() =>
+        Disp(CliqueParameters(true, Seq(
+            Call("cliqueRows", F.Id("C"), F.Id("U"), F.Id("q")), Sp, Eq, Sp,
+            Call("toFinset", Seq(
+                OpenBrace, F.Id("r"), Colon, Sp, F.Id("U"), Sp, To, Sp,
+                Call("Fin", F.Id("q")), Sp, Mid, Sp,
+                Call("InjectiveOnClique", F.Id("C"), F.Id("U"), F.Id("q"), F.Id("r")),
+                CloseBrace)))));
+
     private static Formula TheoremFormula()
     {
         Formula q = Seq(Call("card", F.Id("C")), Sp, Minus, Sp, D(1));
         Formula colors = Call("Fin", q);
         Formula scope = Call("S", F.Id("e"));
-        Formula pairCondition = Seq(
-            Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Sp, InMacro, Sp, F.Id("C"),
-            Comma, Sp, F.Id("x"), Sp, Neq, Sp, F.Id("y"), Sp, To, Sp,
-            Exists, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp,
-            F.Id("x"), Sp, InMacro, Sp, scope, Sp, Land, Sp,
-            F.Id("y"), Sp, InMacro, Sp, scope);
+        Formula pairCondition = All("x", F.Id("V"), Seq(
+            F.Id("x"), Sp, InMacro, Sp, F.Id("C"), Sp, To, Sp,
+            All("y", F.Id("V"), Seq(
+                F.Id("y"), Sp, InMacro, Sp, F.Id("C"), Sp, To, Sp,
+                F.Id("x"), Sp, Neq, Sp, F.Id("y"), Sp, To, Sp,
+                Exists, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp,
+                F.Id("x"), Sp, InMacro, Sp, scope, Sp, Land, Sp,
+                F.Id("y"), Sp, InMacro, Sp, scope))));
         Formula properCondition = Seq(
-            Forall, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp, Neg,
-            Call("Subset", F.Id("C"), scope));
+            Forall, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp, Neg, Sp,
+            Open, Call("coe", F.Id("C")), Sp, Subseteq, Sp, scope, Close);
         Formula overlap = Call("intersection", Call("S", F.Id("e")), Call("S", F.Id("f")));
-        Formula projections = Seq(
-            Forall, Sp, F.Id("e"), Comma, Sp, F.Id("f"), Colon, Sp, F.Id("E"), Comma, Sp,
+        Formula projections = All("e", F.Id("E"), All("f", F.Id("E"), Seq(
             Call("image", Call("restrict", overlap), Call("R", F.Id("e"))), Sp, Eq, Sp,
-            Call("image", Call("restrict", overlap), Call("R", F.Id("f"))));
+            Call("image", Call("restrict", overlap), Call("R", F.Id("f"))))));
         Formula noGlobal = Seq(
-            Neg, Exists, Sp, F.Id("g"), Colon, Sp, F.Id("V"), Sp, To, Sp, colors, Comma, Sp,
+            Neg, Sp, Exists, Sp, F.Id("g"), Colon, Sp, F.Id("V"), Sp, To, Sp, colors, Comma, Sp,
             Forall, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp,
             Call("restrict", F.Id("g"), scope), Sp, InMacro, Sp, Call("R", F.Id("e")));
-        return Disp(Seq(
+        Formula statement = Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, F.Id("E"), Comma, Sp, F.Id("V"), Comma, Sp,
-            Call("Finite", F.Id("V")), Comma, Sp,
-            Forall, Sp, F.Id("S"), Colon, Sp, F.Id("E"), Sp, To, Sp, Call("Set", F.Id("V")),
-            Comma, Sp, F.Id("C"), Colon, Sp, Call("Finset", F.Id("V")), Comma,
-            RowBreak, Grp(),
             Open, D(3), Sp, Leq, Sp, Call("card", F.Id("C")), Sp, Land, Sp,
             Open, pairCondition, Close, Sp, Land, Sp, Open, properCondition, Close, Close,
-            Sp, To, RowBreak, Grp(),
+            Sp, To, Sp, RowBreak, Grp(),
             Exists, Sp, F.Id("R"), Colon, Sp,
             Seq(Open, F.Id("e"), Colon, Sp, F.Id("E"), Close, Sp, To, Sp,
                 Call("Finset", Seq(scope, Sp, To, Sp, colors))),
             Comma, RowBreak, Grp(),
             Open, Forall, Sp, F.Id("e"), Colon, Sp, F.Id("E"), Comma, Sp,
-            Call("Nonempty", Call("R", F.Id("e"))), Close, Sp, Land, RowBreak, Grp(),
-            Open, projections, Close, Sp, Land, RowBreak, Grp(),
+            Call("Nonempty", Call("R", F.Id("e"))), Close, Sp, Land, Sp, RowBreak, Grp(),
+            Open, projections, Close, Sp, Land, Sp, RowBreak, Grp(),
             Open, noGlobal, Close,
-            End, Grp(F.Id("gathered"))));
+            End, Grp(F.Id("gathered")));
+        return Disp(All("E", F.Id("Type"), All("V", F.Id("Type"), Seq(
+            OpenBracket, Call("Finite", F.Id("V")), CloseBracket, Comma, Sp,
+            All("S", Seq(F.Id("E"), Sp, To, Sp, Call("Set", F.Id("V"))),
+                All("C", Call("Finset", F.Id("V")), statement))))));
     }
 }
