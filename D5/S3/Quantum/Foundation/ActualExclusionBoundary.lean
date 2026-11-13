@@ -429,7 +429,8 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     simp only [F, hab, ↓reduceIte] at hh
     obtain ⟨⟨x, hx, hxb⟩, ⟨y, hy, hyb⟩⟩ := hh
     exact ⟨x,y,hxb,hyb,hx.trans_lt hat,htb.trans_le hy⟩
-  obtain ⟨b, hb⟩ := hj.exists
+  have hjcopy := hj
+  obtain ⟨b, hb⟩ := hjcopy
   obtain ⟨x,y,_,_,hx,hy⟩ := across b hb
   refine ⟨r, hr, hcompact, ht2, hq, hqc, hfib, f j.1, t, interior (F j),
     ?_, isOpen_interior, hj, ?_, ?_, across⟩
