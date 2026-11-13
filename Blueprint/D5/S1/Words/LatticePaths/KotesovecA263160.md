@@ -10,7 +10,7 @@ The preregistered source is the historical A263160 revision 21 limit, added in h
 
 The endpoint binomial-moment representation is prior Dima/A126086, Eger arXiv:1511.00622v2 section 5.5 equation (3), page 10, and Bala/A262809. It permits arbitrary finite positive dimension and prescribed endpoints; summing endpoints over a box yields the truncated-binomial moment here. This counting representation is not a new external mathematical solution. The read GHOW1990 author PDF, pages 133–146, DOI 10.1007/BF01787724, has a fixed-k endpoint asymptotic with O_k error. The read Caughman2011 author text, DOI 10.1016/j.disc.2011.04.024, has exact endpoint formulas allowing arbitrary finite dimension. The required uniform first-zero diagonal theorem was not found in that searched scope.
 
-A262810 revision 19 already asserts a height-equals-dimension diagonal asymptotic. Its public history revision 12, March 23, 2016, was read; revision 13 is approval, not a proof. Targeted author-paper, note and history reading found no proof source or first-zero logarithmic transfer in the searched scope. This growing-dimension assertion is not excluded as fixed-dimension work. The existing full Lean proof is retained. Independent review, freeze, supplier repin and delivery remain pending; the source-bound Reg audit is unfinished under issue #29924, and no resolved-problem KPI is claimed. The Library note records current and historical source response identities.
+A262810 revision 19 already asserts a height-equals-dimension diagonal asymptotic. Its public history revision 12, March 23, 2016, was read; revision 13 is approval, not a proof. Targeted author-paper, note and history reading found no proof source or first-zero logarithmic transfer in the searched scope. This growing-dimension assertion is not excluded as fixed-dimension work. The existing full Lean proof is retained. The source-bound Reg audit is unfinished under issue #29924, and no resolved-problem KPI is claimed. The Library note records current and historical source response identities.
 
 **Definition 1.1 (Nonempty coordinate steps).**
 
@@ -185,6 +185,10 @@ Set d to n and m to n minus one. Mathlib's factorial-log bounds cancel the main 
 $$\operatorname{Tendsto}\left((n: \mathbb{N} \mapsto \frac{\operatorname{Real}.\operatorname{rpow}\left(\operatorname{Nat}.\operatorname{cast}\left(\operatorname{a}\left(n\right)\right), \frac{1}{(\operatorname{Nat}.\operatorname{cast}\left(n\right))^{2}}\right)}{\operatorname{Nat}.\operatorname{cast}\left(n\right)}), atTop, \operatorname{nhds}\left(\frac{1}{\operatorname{Real}.\operatorname{log}\left(2\right)}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/LatticePaths/KotesovecA263160.diagonal_limit` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a263160-first-zero-diagonal-limit` (proved) by `D5/S1/Words/LatticePaths/KotesovecA263160.diagonal_limit`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a263160-first-zero-diagonal-limit","declaration_gid":"D5/S1/Words/LatticePaths/KotesovecA263160.diagonal_limit","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
