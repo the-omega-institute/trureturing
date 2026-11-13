@@ -50,7 +50,7 @@ Algebras*, Example 4.3; see `Library/Certificates/stanley1978hilbert.md`.
 
 ## Gap
 
-The formal settlement must connect the actual multiplication, mixed product
+The mathematical bridge connects the actual multiplication, mixed product
 spaces and annihilator quotient. A list of Hilbert-vector entries, an
 assumed perfect pairing, or a nondegenerate map on unrelated vector spaces
 does not by itself answer the question. All-field coefficient identities
@@ -89,7 +89,7 @@ choose an occurrence i in b and multiply by `e_(b-i)`. The coefficient of
 `f_i` is exactly the coefficient of `f_b` in the original vector. Thus
 the relative annihilator is zero.
 
-Stars and bars then gives the intended formulas
+Stars and bars then gives the formulas
 
 $$
 \begin{aligned}
@@ -107,7 +107,7 @@ The corresponding V and V² dimensions are 13 and 12.
 
 All nonzero homogeneous degrees lie between one and n+2 and products add
 degrees. Hence every product of n+3 elements of R is zero. For fixed F and
-fixed n≥2, the proposed real dimension ratio satisfies
+fixed n≥2, the real dimension ratio satisfies
 
 $$
  \frac{\dim(V/\operatorname{Ann}_V(V^n))}{\dim V^n}
@@ -153,20 +153,35 @@ equivalence.
 
 ## Triage
 
-This is a Tier-1 externally named subsidiary question with a proposed
-complete counterexample family. The ordinary argument above is a
-source-faithful application of a classical construction. The Lean
-implementation is unfinished; no formal settlement, freeze, registration
-completion, merge or external-open-problem credit is asserted here.
+This is a Tier-1 externally named subsidiary question. The formal family is
+`D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.family`, and its
+application to the complete original assertion is
+`D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.result`. The
+construction is classical. Independent source, prior-resolution and
+semantic admission, freezing and publication remain separate obligations;
+no external-open-problem credit is asserted here.
 
-The mechanism concerns the loss of dimension in an interior graded layer
-despite coefficient separation through higher products. It does not refute
-Eggert's conjecture or establish minimality of the counterexample.
+### What the settlement shows
+
+The formal `family` exhibits loss of dimension in an interior graded layer
+while higher products still separate every degree-one coefficient. Thus
+zero relative annihilator does not force the product space to have at
+least the dimension of V; the failure ratio is unbounded for every fixed
+field and fixed exponent n≥2. The literal `result` refutes the original
+universal Question 23.
+
+The exponent n=1 and the restricted range `dim V^n ≤ 4` are not settled by
+this module. Bergman's remark reports a belief that he proved the latter
+range; this source remark is not a Lean result asserted here. Minimality
+of the counterexample is also not asserted. The argument concerns mixed
+product spans and the relative annihilator, and makes no inference about
+Eggert's pure-power conjecture or the source's other questions.
 
 ## ASSUMED-UNVERIFIED
 
 Worldwide absence of an earlier explicit resolution and priority remain
 unverified. A classical construction implying the answer is not itself
 evidence that an earlier author explicitly settled the named question.
-The full nominated Lean family, its axiom closure, independent semantic
-admission and exact-head required checks remain unfinished.
+Independent semantic and priority admission and exact-head required checks
+remain unfinished. The Lean declarations do not certify worldwide
+priority, freezing, publication or merge.
