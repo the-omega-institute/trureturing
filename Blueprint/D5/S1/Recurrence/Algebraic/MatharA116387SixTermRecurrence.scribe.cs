@@ -96,7 +96,7 @@ internal sealed class MatharA116387SixTermRecurrenceDocument : IScribeDocumentDe
                 + "the normalized root and its uniqueness, and the inverse equation for F.", DescribeRole.Definition),
             Node("claim", "The complete six-term assertion",
                 new Formula.Logic(F.Id("claim"), FormulaLogicOperator.Iff, And(NativeSpec(), Recurrence())),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 "Mathar's printed conjecture gives these six polynomial coefficients in this order. "
                 + "It prints no onset. The range n≥5 is the full well-formed offset-zero interpretation; "
                 + "OFFSET 0,2 does not specify a recurrence onset. The source characterization makes "

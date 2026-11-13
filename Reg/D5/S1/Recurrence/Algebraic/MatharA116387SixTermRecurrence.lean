@@ -47,6 +47,8 @@ private theorem changed_law (i : Fin 6) : ¬ arena.Law (changed i) := by
     norm_num at ha <;> linarith
 
 private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
+  have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
+    (derivative (R := ℚ)).map_natCast n
   have hm0 := result.1.1.1
   have hm := result.1.1.2
   have hy0 := result.1.2.2.1.1
@@ -57,13 +59,13 @@ private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
     exact h
   have hm1 : constantCoeff (derivative (R := ℚ) M) = 1 := by
     have h := congrArg constantCoeff (congrArg (derivative (R := ℚ)) hm)
-    norm_num [Derivation.leibniz, smul_eq_mul, hm0] at h
+    norm_num [Derivation.leibniz, hnum, smul_eq_mul, hm0] at h
     exact h
   have hy1 : constantCoeff (derivative (R := ℚ) y) = -1 := by
-    norm_num [y, Derivation.leibniz, smul_eq_mul, hm0, hm1]
+    norm_num [y, Derivation.leibniz, hnum, smul_eq_mul, hm0, hm1]
   have hf1 : constantCoeff (derivative (R := ℚ) F) = 2 := by
     have h := congrArg constantCoeff (congrArg (derivative (R := ℚ)) hf)
-    norm_num [Derivation.leibniz, smul_eq_mul, hm0, hm1, hy0, hy1, hf0] at h
+    norm_num [Derivation.leibniz, hnum, smul_eq_mul, hm0, hm1, hy0, hy1, hf0] at h
     linarith
   constructor
   · simpa only [a, coeff_zero_eq_constantCoeff] using hf0
