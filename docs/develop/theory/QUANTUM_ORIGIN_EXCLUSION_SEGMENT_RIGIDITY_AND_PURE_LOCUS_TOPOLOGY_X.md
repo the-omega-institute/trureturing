@@ -2363,3 +2363,283 @@ X121—X123 的实际种子、最大宽共同接触、共同法向斜率与六�
 [Q124BP]: https://arxiv.org/pdf/2103.08446v1 "J.-B. Bru and W. de Siqueira Pedra；§4.3，PDF31：有限维Straszewicz定理的明确陈述。"
 
 ## 追加锚（本行以下为增补区）
+
+## 125. 旧完整球的共同近零确认与固定球心的真零稳定性
+
+**定义 125.1（完整原域、共同读数与球心）。** 保留 [IX114.1][Q125IX] 的同一个非零有限维实空间 $V$、闭尖生成凸锥 $C$ 及在 $C\setminus\{0\}$ 上严格正的 $u\in V^{\ast}$。始终取全部
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^{\ast}},\\
+F_a=\{e\in\mathcal E:e(a)=1\},\qquad
+T_a(x)=\min_{e\in F_a}e(x)\quad(a\in P,\ x\in K),\\
+D_a=\{x\in K:T_a(x)=0\}.
+\end{gathered}
+\tag{X125.1}
+$$
+
+这里的第二变量包括所有混态，确认族使用整个原效应区间。假设 EB3 与 PR：每个完整 $D_a$ 仿射同构于整个闭三球，且 $T_a(b)=T_b(a)$ 对全部原纯点 $a,b$ 成立。PR 只交换纯端点，不是顺序测量交换。固定辅助欧氏范数，令
+
+$$
+M=\max_{e\in\mathcal E}\|e\|_{\ast}<\infty,
+\qquad c_p=\text{完整球 }D_p\text{ 的唯一对称中心}.
+\tag{X125.2}
+$$
+
+此范数只承担距离与拓扑，不是共同物理内积。按 IX114.1、114.4，$K,P,\mathcal E$ 均紧，$F_a$ 非空紧；按 IX114.4，固定第一参数的 $T_a$ 在整个 $K$ 上有共同 Lipschitz 常数 $M$。
+
+对非空、紧、凸、中心对称的 $G\subset K$，中心记为 $c$，定义同一效应的整集最优上读数
+
+$$
+\kappa_G(a)=\min_{e\in F_a}\max_{x\in G}e(x).
+\tag{X125.3}
+$$
+
+紧性与配对连续性保证最小值、最大值均达到。另记 $Z(e)=\{x\in K:e(x)=0\}$。只复用 IX114.2 的准确原面接口：每个完整 $D_a$ 是非单点紧暴露极大真面；其球面恰为 $P\cap D_a$；存在 $h_a\in F_a$ 使 $Z(h_a)=D_a$；所有非空真面均为原纯单点或一张完整排除球。不输入该分类最后一项的全 Pair 前件，也不输入 Inj、least 确认效应或全局球族连续性。
+
+**定理 125.2（同一原确认效应在整块旧混态球上趋零）。** 在定义125.1的完整 EB3+PR 域中，任取 $p\in P$ 及原纯列 $a_i\to p$，置 $G=D_p$。则
+
+$$
+T_a(c)\le\kappa_G(a)\le2T_a(c)
+\quad(a\in P)
+\tag{X125.4}
+$$
+
+对定义125.1中的任意中心对称 $G$ 成立；对上述固定完整 $G=D_p$，有
+
+$$
+\kappa_{D_p}(a_i)\longrightarrow0,
+\qquad T_{a_i}(c_p)\longrightarrow0,
+\qquad \sup_{x\in D_p}T_{a_i}(x)\longrightarrow0.
+\tag{X125.5}
+$$
+
+具体地，若实际完整球 $G_i=D_{a_i}$ 趋于 $G$，则
+
+$$
+\kappa_G(a_i)\le M d_H(G_i,G).
+\tag{X125.6}
+$$
+
+若实际完整球塌缩为 $G_i\to\{q\}$，则 $q\in P\cap G$。记 $\delta_i=d_H(G_i,\{q\})$，对充分大的 $i$，存在同一张 $e_i\in F_{a_i}$，使
+
+$$
+\begin{gathered}
+\max_{x\in G}e_i(x)
+\le M\bigl(\|a_i-p\|+\delta_i\bigr),\\
+e_i(c_p)\le\frac M2\bigl(\|a_i-p\|+\delta_i\bigr).
+\end{gathered}
+\tag{X125.7}
+$$
+
+这些结论不以 NC、UF、Inj 或全域 least 为前提；尤其不要求对旧球的不同输入更换效应。
+
+证明。先记录推导中使用的两个初等仿射步骤，它们不作为独立的新分类结果。对任何原纯 $a$、原混态 $x$，若 $t=T_a(x)<1$，则每个达到此最小值的 $e\in F_a$ 都满足 $\min_K e=0$。否则令 $m=\min_K e>0$。有 $m\le t<1$，且
+
+$$
+\widetilde e=\frac{e-mu}{1-m}\in\mathcal E,
+\qquad\widetilde e(a)=1,
+\qquad\widetilde e(x)=\frac{t-m}{1-m}<t,
+\tag{X125.8}
+$$
+
+矛盾。效应资格在整个原 $K$ 上由 $0\le e-m\le1-m$ 给出，再经同一 $u$ 齐次化到整个 $C$；没有调用面效应延拓。
+
+其次，若 $G$ 关于 $c$ 对称，则 $x\in G$ 时 $2c-x\in G$。每张原效应非负且仿射，因而
+
+$$
+0\le e(x)\le e(x)+e(2c-x)=2e(c).
+\tag{X125.9}
+$$
+
+因为 $c\in G$，先对每张 $e$ 使用 $e(c)\le\max_Ge$ 再取最小值得 (X125.4) 的左侧；取达到 $T_a(c)$ 的效应并用 (X125.9)，得右侧。此处没有交换极小与极大，也没有使用 minimax 等式。
+
+若 $G_i\to G$，从 IX114.2 取原 $h_i\in F_{a_i}$，使 $h_i|_{G_i}=0$。对每个 $x\in G$，取 $y\in G_i$ 达到到 $G_i$ 的距离。全效应的统一范数界给
+
+$$
+0\le h_i(x)=h_i(x)-h_i(y)
+\le M\|x-y\|\le M d_H(G_i,G).
+$$
+
+同一 $h_i$ 对整个 $G$ 有效，得到 (X125.6)。
+
+现在设实际 $G_i\to\{q\}$。由 [IX115.4—115.5][Q125IX]，$q\in P\cap G$。在旧完整球取对径纯点 $r=2c_p-q\in P\cap G$。PR 只用于这个纯点 $r$ 与 $a_i,p$，并结合固定 $T_r$ 在整个 $K$ 上的 Lipschitz 界，给
+
+$$
+0\le T_{a_i}(r)=T_r(a_i)
+\le M\|a_i-p\|,
+\qquad T_r(p)=T_p(r)=0.
+\tag{X125.10}
+$$
+
+右端趋零，所以充分大时 $T_{a_i}(r)<1$。取 $e_i\in F_{a_i}$ 达到该最小值。由 (X125.8) 的论证，存在 $z_i\in K$ 使 $e_i(z_i)=0$；因为它确认 $a_i$，有 $z_i\in G_i$。于是
+
+$$
+\|z_i-q\|\le\delta_i,
+\qquad0\le e_i(q)\le M\delta_i,
+\qquad e_i(r)=T_{a_i}(r)\le M\|a_i-p\|.
+\tag{X125.11}
+$$
+
+用 $q+r=2c_p$ 及 (X125.9)，得到
+
+$$
+\max_Ge_i\le2e_i(c_p)=e_i(q)+e_i(r)
+\le M\bigl(\delta_i+\|a_i-p\|\bigr),
+$$
+
+即 (X125.7)。这里只知道 $Z(e_i)$ 是原 $K$ 的一个非空真面，且包含于 $G_i$；它可以是原纯单点。如它含两个点，原面分类与完整球极大性才使它等于 $G_i$，不能事先作此替换。
+
+最后处理任意 $a_i\to p$。非空紧子集的 Hausdorff 紧性使任一子列的 $G_i\subset K$ 可再取收敛子列。IX115.5 准确给该极限只有 $G$ 或 $\{q\}$ 两种。前者由 (X125.6)，后者由 (X125.7)，都使 $\kappa_G(a_i)\to0$。若原序列的 $\kappa_G$ 不趋零，取有统一正下界的子列就与这两种情况矛盾。因此第一个极限成立。再用
+
+$$
+0\le T_{a_i}(c_p)\le\kappa_G(a_i),
+\qquad0\le\sup_{x\in G}T_{a_i}(x)\le\kappa_G(a_i)
+$$
+
+得到其余极限。第二个不等式来自同一张达到 $\kappa_G$ 的原效应，而不是将 PR 外推成混态互易或把 $T_a$ 当作仿射函数。证毕。
+
+**推论 125.3（确认纤维极限必遇旧球完整零确认面）。** 在同一完整 EB3+PR 域中，沿用 IX120.1 的完整零确认族
+
+$$
+\mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\tag{X125.12}
+$$
+
+它是 $F_p$ 的非空紧暴露真面，并且
+
+$$
+\mathcal A_p=\{e\in F_p:e(c_p)=0\},
+\qquad \forall e\in\mathcal A_p:\quad Z(e)=D_p.
+\tag{X125.13}
+$$
+
+若 $a_i\to p$ 且非空紧集 $F_{a_i}$ 在 $\mathcal E$ 中 Hausdorff 收敛于 $A$，则
+
+$$
+A\subseteq F_p,
+\qquad A\cap\mathcal A_p\ne\varnothing.
+\tag{X125.14}
+$$
+
+即使没有预先选定这样的极限，也有
+
+$$
+\min_{e\in F_{a_i}}\operatorname{dist}_{\ast}(e,\mathcal A_p)
+\longrightarrow0.
+\tag{X125.15}
+$$
+
+证明。IX114.2 给 $\mathcal A_p$ 非空；紧性由闭条件给出。原效应在 $D_p$ 上非负，(X125.9) 给 $e(c_p)=0$ 当且仅当在整个 $D_p$ 上为零。评价 $e\mapsto e(c_p)$ 在凸集 $F_p$ 上的最小值为零，最小面便是 $\mathcal A_p$；$u\in F_p$ 而 $u(c_p)=1$，所以它是暴露真面。对 $e\in\mathcal A_p$，$e(p)=1$ 保证 $e\ne0$，$Z(e)$ 是包含 $D_p$ 的原真面。IX114.2 的极大真面性质因而给 $Z(e)=D_p$。这里非零性、全域正性与完整球极大性均不可省略。
+
+对任意 $f\in A$，Hausdorff 收敛提供 $f_i\in F_{a_i}$ 使 $f_i\to f$。由 $f_i(a_i)=1$ 得 $f(p)=1$，故 $A\subseteq F_p$。再取 $e_i\in F_{a_i}$ 达到 $\kappa_{D_p}(a_i)$。紧 $\mathcal E$ 中任一收敛子列 $e_i\to e$，均由定理125.2 得
+
+$$
+e(p)=1,\qquad e|_{D_p}=0.
+$$
+
+所以 $e\in\mathcal A_p$；若存在指定的 Hausdorff 极限 $A$，同一子列还给 $e\in A$，证明交非空。所有这样的聚点都在紧集 $\mathcal A_p$，故这些 $e_i$ 到它的距离趋零，得到 (X125.15)。这不声称 $A=F_p$、$A\subseteq\mathcal A_p$，也不提供趋于预先指定效应的选择或连续选择。证毕。
+
+**定义 125.4（旧球心的实际零集稳定性）。** 条件 CS 为
+
+$$
+\forall p\in P\ \forall(a_i)\subset P:\quad
+ a_i\to p\ \Longrightarrow
+ \operatorname{dist}(c_p,D_{a_i})\longrightarrow0.
+\tag{X125.16}
+$$
+
+球心始终取固定旧球 $D_p$ 的 $c_p$。此处距离的对象是同标签完整 $D_{a_i}$，不是某张效应的零集。NC 保留124.1的原义 $\inf_p\operatorname{diam}D_p>0$；UF 保留 IX115.8 的原义 $\sup_p\beta_{D_p}<\infty$，其中 $\beta_{D_p}=1/(2a_{D_p})$ 是 IX114.5—114.6 的原全锥正延拓预算。
+
+**定理 125.5（CS 恰是既有 UF 的单点几何测试）。** 在同一完整 EB3+PR 域中，对每个固定 $p$，(X125.16) 中以该 $p$ 为极限的条件成立，当且仅当 $a\mapsto D_a$ 在 $p$ 处 Hausdorff 连续。因而
+
+$$
+\mathrm{CS}\quad\Longleftrightarrow\quad\mathrm{UF}
+\quad\Longleftrightarrow\quad\mathrm{NC}.
+\tag{X125.17}
+$$
+
+并且 CS 可代入124.10，得到同原锥、同原单位的完整复三能级静态表示及该定理的全部等价条件。
+
+证明。若整球映射在 $p$ 连续，由 $c_p\in D_p$ 有
+
+$$
+\operatorname{dist}(c_p,D_{a_i})\le d_H(D_p,D_{a_i})\to0.
+$$
+
+反过来，若在 $p$ 不连续，可选 $a_i\to p$，使 $d_H(D_{a_i},D_p)$ 有统一正下界；Hausdorff 紧性给收敛子列。IX115.5 排除其他极限，且上述正下界排除极限为 $D_p$，所以只能有 $D_{a_i}\to\{q\}$，$q\in P\cap D_p$。旧球正维，中心 $c_p$ 是两个不同对径纯点的中点，因而不是原纯点；特别地 $q\ne c_p$。距离对 Hausdorff 收敛连续，故
+
+$$
+\operatorname{dist}(c_p,D_{a_i})\longrightarrow\|c_p-q\|>0,
+$$
+
+与固定 $p$ 的 CS 矛盾。全域连续与 UF 的等价直接消费 IX115.8；UF 与 NC 的等价及静态表示直接消费124.10，不重证其标签单射桥、IX116.2 的重复球二分或 IX118.8 的静态分类。证毕。
+
+定理125.2无条件供应的是 $T_{a_i}(c_p)\to0$；CS 要求的是到实际完整零集的几何距离趋零。两种量不能混同。自动 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathrm{CS}$，等价地自动 UF，仍未证明；满足全部同域前件而使 CS 失败的模型亦未构造。CS 只把既有整球稳定要求化为每个固定旧球心的一点测试，没有取得独立假设数减少的结论，也不证明独立性、最小性或严格更弱的公理包。
+
+**命题 125.6（原复三能级中任意效应零面误差界的失败）。** 在完整复三能级模型中，取两两正交的秩一投影 $p,r,q$，故 $p+r+q=I_3$。对 $0<\varepsilon<1$，令
+
+$$
+A_{\varepsilon}=p+\varepsilon r,
+\qquad c=\frac{r+q}{2}.
+\tag{X125.18}
+$$
+
+以 $A_{\varepsilon}$ 同时表示原效应 $\rho\mapsto\operatorname{Tr}(A_{\varepsilon}\rho)$。则
+
+$$
+\begin{gathered}
+A_{\varepsilon}\in F_p,\qquad
+Z(A_{\varepsilon})=\{q\},\qquad
+A_{\varepsilon}(c)=\varepsilon/2,\\
+\operatorname{dist}_1(c,Z(A_{\varepsilon}))=1,\qquad
+c=c_p\in D_p,\qquad
+\max_{x\in D_p}A_{\varepsilon}(x)=\varepsilon.
+\end{gathered}
+\tag{X125.19}
+$$
+
+这里 $\|X\|_1=\operatorname{Tr}|X|$ 为未除以二的迹范数。于是不存在趋零模 $\omega(t)\to0$（$t\downarrow0$），能对原模型的所有确认效应及所有原态保证
+
+$$
+\operatorname{dist}_1(x,Z(A))
+\le\omega\bigl(\operatorname{Tr}(Ax)\bigr),
+\tag{X125.20}
+$$
+
+即使只要求 $A\in F_p$、$\min_KA=0$、$\max_KA=1$ 且固定 $x=c_p$。
+
+证明。$A_{\varepsilon}$ 的特征值为 $1,\varepsilon,0$，所以 $0\preceq A_{\varepsilon}\preceq I_3$，并确认 $p$。若正半定迹一矩阵 $\rho$ 满足 $\operatorname{Tr}(A_{\varepsilon}\rho)=0$，在 $p,r,q$ 的正交基中，$\rho_{pp}+\varepsilon\rho_{rr}=0$ 迫使两个非负对角元均为零。正半定性给 $|\rho_{jk}|^2\le\rho_{jj}\rho_{kk}$，故对应行列也全为零，余下迹一条件给 $\rho=q$。反向 $A_{\varepsilon}(q)=0$，因此零面恰为单点。
+
+旧完整 $D_p$ 是支撑在 $p^{\perp}$ 上的全部密度矩阵三球，中心为 $(r+q)/2$；这是124.10与 IX118.8 的完整反向字典。直接计算给 $A_{\varepsilon}(c)=\varepsilon/2$。矩阵 $c-q=(r-q)/2$ 的特征值为 $1/2,-1/2,0$，所以其迹范数为一。在整个 $D_p$ 上，效应值为 $\varepsilon\operatorname{Tr}(r\rho)$，最大值为 $\varepsilon$。代入 (X125.20) 便要求 $1\le\omega(\varepsilon/2)\to0$，矛盾。证毕。
+
+该例的标签始终为同一个 $p$，完整 $D_p$ 固定，且这个量子模型满足 CS、UF 与 NC。它反驳的是对任意单张效应零面所要求的统一模，不能作为 EB3+PR 的反模型，也不能反驳只涉及同标签完整 $D_a$ 的 CS。零面取零与完整排除集不可互换；把 (X125.20) 添加为目标理论的必要条件会排除目标量子模型本身。
+
+**约定 125.7（完整候选、几何与静态公理字典）。** 保留的条件候选可完整说成：在同一个有限维原态锥和原单位上，使用全部原纯态、全部混态与全部零一效应；确认一个纯态时能够完全排除的全部态恰成一颗实心三球；交换两个纯端点，最优确认读数不变；再要求纯标签靠近时，新完整排除球到固定旧球心的距离趋零。最后一项是 CS，按定理125.5仍是一项未由前两项推出的稳定要求。这与124.10的 EB3+PR+UF 候选有相同条件强度，没有每轮都减少假设的结论。
+
+几何上，塌缩分支的旧球有一对对径纯点 $q,r$。在 $r$ 处最优的确认效应必须在新完整球某点取零；新球若缩到 $q$，这张同一效应在 $q$ 与 $r$ 都近零。仿射性与非负性经球心控制整颗旧球，包括全部混态。然而该效应仍可只在新球的一个点取零，所以这幅图没有把球心放回新完整球。
+
+只有额外支付 CS，才通过定理125.5和124.10消费既有静态重构，取得实线性双射 $\Phi:H_3(\mathbb C)\to V$，满足 $\Phi(\operatorname{Herm}_+(\mathbb C^3))=C$、$u(\Phi X)=\operatorname{Tr}X$。其完整对应为：
+
+| 原对象或关系 | 同原锥、同原单位的矩阵表示 |
+| --- | --- |
+| 全部 $K$ 与全部 $P$ | 全部三阶密度矩阵 $\rho$；全部秩一投影 $p=vv^{\ast}$，$v^{\ast}v=1$ |
+| 全效应 $\mathcal E$ 与确认族 $F_{\Phi p}$ | 全部 $0\preceq E\preceq I_3$；其中 $Ep=p$ 的全部效应 |
+| 原全混态最优读数 $T_{\Phi p}(\Phi\rho)$ | $\operatorname{Tr}(p\rho)$；纯对为 $|v^{\ast}w|^2$，对端点交换对称 |
+| 完整 $D_{\Phi p}$ 与其球心 | 全部满足 $\rho p=0$ 的密度态三球；球心为 $\Phi((I_3-p)/2)$ |
+| CS，等价地 UF 或 NC | 既有全部球单位预算、Pair 及同原静态复三能级条件类 |
+| 数学共同三结果与数学 POVM | 正效应之和等于同一个 $I_3$；不自动取得实际调用这些仪器的能力 |
+
+整个环境的实维数九及单体复 Hilbert 维数三是条件重构的结果；辅助范数没有预付共同物理尺。原物理来源、实际原操作、仪器、事件和记录、任意有限复合及纠缠输入、全旁观者兼容与 CP、动力学、物理钟、能量和 $\hbar$ 仍各有未付桥梁，按124.7保留其原完整量词。
+
+**约定 125.8（数学归属与来源范围）。** 本章承重组合为 `repo-derived`：把非平凡最优确认的全域取零、旧球对径控制与 IX115.5 的准确极限二择连接，得到整块固定旧混态球的同一近零效应、确认纤维极限约束，并将剩余稳定要求准确定位为 CS。紧性、极值达到、仿射归一与中心反射只是成熟有限维工具，不作为新的独立发现。IX114.2—114.4、IX115.4—115.8、IX116.2、IX118.8 与124.10—124.11保留原假设与归属；共同完整零确认、整球连续的既有等价条件和静态分类均按原结果复用。命题125.6仅界定从效应小读数到实际零集距离的工具边界。[132章][Q125LP]研究的移动正零泛函提升与有限共同源误差障碍，保留其单标签、混极限及源半范数条件，不提供本章未付的 CS。
+
+[Landsman，§1.3][Q125L]的完整仿射效应最小确认及其对称性，提供相应成熟概念；将其 $p(\rho,\sigma)$ 对应为这里的 $T_{\sigma}(\rho)$。其第2节重构另有 uniform Poisson、two-sphere 等公理，未作为本章 EB3+PR 的后果使用。[Janotta—Gogolin—Barrett—Brunner，§2.1及§3.1][Q125J]提供完整仿射效应区间及其多边形实例；其复合与非局域结论未进入本章证明，一维排除边也不替代 EB3。本章不主张全球原创、历史优先权、独立性、最小性或完整物理重构；自动 UF 与同域坏模型仍为上述明确的未解问题。
+
+[Q125IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.4：完整域、完整面、严格暴露与纯点紧性；IX115.4—115.8：闭图、准确极限二择及UF；IX116.2与IX118.8：重复块及条件静态重构。"
+[Q125LP]: QUANTUM_ORIGIN_LOCAL_PURE_LIMIT_AND_COMMON_POSITIVE_LIFTS_CONTINUATION.md "132：移动正零泛函的单位控制与有限共同源提升障碍；其局部前件不替代CS。"
+[Q125L]: https://arxiv.org/src/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, §1.3与第2节；Rev. Math. Phys. 9 (1997), 29–58，DOI 10.1142/S0129055X97000038；所引原文为arXiv v2作者源码。"
+[Q125J]: https://arxiv.org/html/1012.1215v3 "P. Janotta, C. Gogolin, J. Barrett and N. Brunner, Limits on non-local correlations from the structure of the local state space, §2.1及§3.1；New J. Phys. 13 (2011), 063024，DOI 10.1088/1367-2630/13/6/063024。"
+
+## 追加锚（本行以下为增补区）
