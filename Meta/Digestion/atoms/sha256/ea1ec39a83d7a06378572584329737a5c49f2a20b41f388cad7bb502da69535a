@@ -1,0 +1,16 @@
+**定义 7.1（实线性四元数壳）。** 对 $q\in\mathbb R^4$ 定义
+
+$$
+\Phi(q)=\begin{pmatrix}q_0+iq_1&q_2+iq_3\\-q_2+iq_3&q_0-iq_1\end{pmatrix}.
+$$
+
+其恒等式为 $\Phi(q)^\dagger\Phi(q)=\|q\|^2I_2$，$\|\Phi(q)\|_{\mathrm{op}}=\|q\|$，$\Phi(S^3)=SU(2)$。取整数 $m\ge8$，$\delta=1/m$，定义固定有限壳
+
+$$
+\mathcal N_\delta=\{a/\|a\|:\ a\in\delta\mathbb Z^4,\quad1-2\delta\le\|a\|\le1+2\delta\}.
+$$
+
+保留的终端标签为 $Y=(d,q)\in\{0,1\}\times\mathcal N_\delta$，表示 $\widetilde G_y=J^d\Phi(q)$。
+
+给定实际历史的精确 $G_h\in\mathcal G$，先保留其行列式分支 $d$，使 $\det G_h=(-1)^d$。则 $J^dG_h\in SU(2)$，有唯一 $z\in S^3$ 使 $G_h=J^d\Phi(z)$。将每个实坐标 $z_i$ 独立随机舍入到相邻的 $\delta$ 格点，使其均值仍为 $z_i$；已经在格点上的坐标保持。写舍入向量为 $a=z+e$，最后令 $q=a/\|a\|$。这只进行一次，在所有实际测量完成之后进行。
+
