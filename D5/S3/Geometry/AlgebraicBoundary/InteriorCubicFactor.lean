@@ -18,6 +18,7 @@ import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.Topology.Order.IntermediateValue
 
 /-! Polynomial line restrictions retain their actual affine points and multiplicities. -/
 
@@ -59,7 +60,7 @@ private theorem linePolynomial_degree (p : MvPolynomial ι ℝ) (a v : ι → �
       apply Finset.sum_le_sum
       intro i hi
       have hlin : (Polynomial.C (a i) + Polynomial.C (v i) * Polynomial.X).natDegree ≤ 1 := by
-        apply le_trans Polynomial.natDegree_add_le
+        apply le_trans (Polynomial.natDegree_add_le _ _)
         exact max_le (by simp) (Polynomial.natDegree_mul_le.trans (by simp))
       simpa only [mul_one] using Polynomial.natDegree_pow_le_of_le (d i) hlin
     _ ≤ p.totalDegree := MvPolynomial.le_totalDegree hd
@@ -81,13 +82,12 @@ private theorem linePolynomial_coeff_one (p : MvPolynomial ι ℝ) (a v : ι →
   have hcomp := (eval_differentiable p a).hasFDerivAt.comp_hasDerivAt_of_eq
     0 hline (by simp)
   have hpoly := (linePolynomial p a v).hasDerivAt (0 : ℝ)
-  simp only [zero_smul, add_zero] at hcomp
   have heq : (fun t => (linePolynomial p a v).eval t) =
       (fun t : ℝ => MvPolynomial.eval (a + t • v) p) :=
     funext (eval_linePolynomial p a v)
   rw [heq] at hpoly
   simpa only [← Polynomial.coeff_zero_eq_eval_zero, Polynomial.coeff_derivative,
-    zero_add, Nat.cast_one, mul_one] using hpoly.unique hcomp
+    zero_add, Nat.cast_zero, Nat.cast_one, mul_one] using hpoly.unique hcomp
 
 private theorem compact_line_endpoints {E : Type*} [NormedAddCommGroup E]
     [NormedSpace ℝ E] {B : Set E} (hB : Convex ℝ B) (hc : IsCompact B)
@@ -248,7 +248,7 @@ private theorem hyperplane_factorization (p : MvPolynomial ι ℝ) (hp : p ≠ 0
       ext c
       simp
     change MvPolynomial.eval x (p.eval₂ MvPolynomial.C r) = MvPolynomial.eval x 0
-    rw [MvPolynomial.eval_eval₂, hcoeff, MvPolynomial.eval_zero]
+    rw [MvPolynomial.eval_eval₂, hcoeff, map_zero]
     change MvPolynomial.eval (fun i => MvPolynomial.eval x (r i)) p = 0
     rw [hr]
     apply hvan
@@ -279,7 +279,7 @@ private theorem hyperplane_factorization (p : MvPolynomial ι ℝ) (hp : p ≠ 0
   omega
 
 /-- The complete affine polynomial factor and degree drop, with deletion on the
-entire boundary. Kept private until the original cone theorem consumes it. -/
+entire boundary. -/
 private theorem interior_zero_factor {B : Set (ι → ℝ)} (hB : Convex ℝ B)
     (hc : IsCompact B) (p : MvPolynomial ι ℝ) (hp : p ≠ 0) (hd : p.totalDegree ≤ 3)
     (hvan : ∀ x ∈ frontier B, MvPolynomial.eval x p = 0)
@@ -308,6 +308,7 @@ private theorem exists_minimum_boundary_equation {B : Set (ι → ℝ)}
       (∀ q : MvPolynomial ι ℝ, q ≠ 0 →
         (∀ x ∈ frontier B, MvPolynomial.eval x q = 0) → f.totalDegree ≤ q.totalDegree) ∧
       ∀ a ∈ interior B, MvPolynomial.eval a f ≠ 0 := by
+  classical
   have hex : ∃ d : ℕ, ∃ f : MvPolynomial ι ℝ, f ≠ 0 ∧ f.totalDegree = d ∧
       ∀ x ∈ frontier B, MvPolynomial.eval x f = 0 := ⟨p.totalDegree, p, hp, rfl, hvan⟩
   obtain ⟨f, hf, hfd, hfv⟩ := Nat.find_spec hex
@@ -322,5 +323,61 @@ private theorem exists_minimum_boundary_equation {B : Set (ι → ℝ)}
   obtain ⟨_, g, hg, _, hdeg, hgv⟩ := interior_zero_factor hB hc f hf hdf hfv ha hfa
   have hh := hmin g hg hgv
   omega
+
+private theorem exists_positive_minimum_on_original {E : Type*} [NormedAddCommGroup E]
+    [NormedSpace ℝ E] (e : E ≃L[ℝ] (ι → ℝ)) {B : Set E}
+    (hB : Convex ℝ B) (hc : IsCompact B) (hne : (interior B).Nonempty)
+    (p : MvPolynomial ι ℝ) (hp : p ≠ 0) (hd : p.totalDegree ≤ 3)
+    (hvan : ∀ x ∈ frontier B, MvPolynomial.eval (e x) p = 0) :
+    ∃ f : MvPolynomial ι ℝ, f ≠ 0 ∧ f.totalDegree ≤ 3 ∧
+      (∀ x ∈ frontier B, MvPolynomial.eval (e x) f = 0) ∧
+      (∀ q : MvPolynomial ι ℝ, q ≠ 0 →
+        (∀ x ∈ frontier B, MvPolynomial.eval (e x) q = 0) → f.totalDegree ≤ q.totalDegree) ∧
+      ∀ a ∈ interior B, 0 < MvPolynomial.eval (e a) f := by
+  let A : Set (ι → ℝ) := e '' B
+  have hA : Convex ℝ A := hB.linear_image e.toLinearMap
+  have hAc : IsCompact A := hc.image e.continuous
+  have hboundary : ∀ q : MvPolynomial ι ℝ,
+      (∀ x ∈ frontier B, MvPolynomial.eval (e x) q = 0) ↔
+        ∀ y ∈ frontier A, MvPolynomial.eval y q = 0 := by
+    intro q
+    rw [show frontier A = e '' frontier B from (e.toHomeomorph.image_frontier B).symm]
+    simp only [forall_mem_image]
+  have hinterior : ∀ x, x ∈ interior B → e x ∈ interior A := by
+    intro x hx
+    rw [show interior A = e '' interior B from (e.toHomeomorph.image_interior B).symm]
+    exact ⟨x, hx, rfl⟩
+  obtain ⟨f, hf, hdf, hfv, hmin, hno⟩ :=
+    exists_minimum_boundary_equation hA hAc p hp hd ((hboundary p).mp hvan)
+  have hnf : ∀ x ∈ interior B, MvPolynomial.eval (e x) f ≠ 0 :=
+    fun x hx => hno (e x) (hinterior x hx)
+  have hmf : ∀ q : MvPolynomial ι ℝ, q ≠ 0 →
+      (∀ x ∈ frontier B, MvPolynomial.eval (e x) q = 0) → f.totalDegree ≤ q.totalDegree :=
+    fun q hq hqv => hmin q hq ((hboundary q).mp hqv)
+  have hcont : Continuous (fun x : E => MvPolynomial.eval (e x) f) :=
+    (eval_differentiable f).continuous.comp e.continuous
+  obtain ⟨a, ha⟩ := hne
+  by_cases hpos : 0 < MvPolynomial.eval (e a) f
+  · refine ⟨f, hf, hdf, (hboundary f).mpr hfv, hmf, ?_⟩
+    intro x hx
+    by_contra! hx0
+    obtain ⟨z, hz, hz0⟩ := hB.interior.isPreconnected.intermediate_value hx ha
+      hcont.continuousOn ⟨hx0, hpos.le⟩
+    exact hnf z hz hz0
+  · have hneg : MvPolynomial.eval (e a) f < 0 :=
+      lt_of_le_of_ne (le_of_not_gt hpos) (hnf a ha)
+    refine ⟨-f, neg_ne_zero.mpr hf, ?_, ?_, ?_, ?_⟩
+    · simpa using hdf
+    · intro x hx
+      simp [(hboundary f).mpr hfv x hx]
+    · intro q hq hqv
+      simpa using hmf q hq hqv
+    · intro x hx
+      have hxneg : MvPolynomial.eval (e x) f < 0 := by
+        by_contra! hx0
+        obtain ⟨z, hz, hz0⟩ := hB.interior.isPreconnected.intermediate_value ha hx
+          hcont.continuousOn ⟨hneg.le, hx0⟩
+        exact hnf z hz hz0
+      simpa using neg_pos.mpr hxneg
 
 end D5.S3.Geometry.AlgebraicBoundary.InteriorCubicFactor
