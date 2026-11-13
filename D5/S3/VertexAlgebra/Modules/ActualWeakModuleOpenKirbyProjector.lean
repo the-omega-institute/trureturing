@@ -280,6 +280,11 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
           (openMonodromy A B hD).linearMap)
     let C : P A (I D) →ₗ[ℂ] P A (targetModule B (dualModule B)) :=
       (productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
+    have hread : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
+        L (C ((rightUnit hD A).symm (classified hD A a x v))) := by
+      rfl
+    have hq : L (input (cupVector B hD)) = q (cupVector B hD) := by
+      rfl
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
@@ -308,10 +313,11 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         γ⁻¹ • normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v :=
       (rightUnit_inverse_elementary (hD := hD) (A := A) a v x).trans
         (congrArg (fun t : P A (I D) => γ⁻¹ • t) hp)
-    exact (congrArg (fun t : P A (I D) => L (C t)) hu).trans
+    exact hread.trans ((congrArg (fun t : P A (I D) => L (C t)) hu).trans
       ((congrArg L (C.map_smul γ⁻¹ _)).trans
         ((congrArg (fun t : P A (targetModule B (dualModule B)) => L (γ⁻¹ • t)) hc).trans
-          (L.map_smul γ⁻¹ (input (cupVector B hD)))))
+          ((L.map_smul γ⁻¹ (input (cupVector B hD))).trans
+            (congrArg (fun t : X => γ⁻¹ • t) hq)))))
   have hdim (c : Discriminant D) :
       (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
         (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
