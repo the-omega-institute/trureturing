@@ -6,15 +6,15 @@ namespace Reg.D5.S3.Arith.Mehat.OrthogonalityProducts
 
 open _root_.D5.S3.Arith.Mehat.OrthogonalityProducts
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
+open LeanInformationAudit Matrix
 open scoped BigOperators
 
 noncomputable section
 set_option autoImplicit false
 
 abbrev signature : Signature where
-  Params := Σ k : ℕ, Fin k → Fin 3 × Fin 3
-  State p := Fin p.1 → Matrix (Fin 3) (Fin 3) ℤ
+  Params := Σ k : ℕ, Fin k → Matrix (Fin 3) (Fin 3) ℤ
+  State p := Fin p.1 → Fin 3 × Fin 3
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -23,7 +23,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p A => ∏ i, (A i (p.2 i).1 (p.2 i).2) ^ 2)
+  realize signature (fun _ p a => ∏ i, (p.2 i (a i).1 (a i).2) ^ 2)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -34,7 +34,7 @@ abbrev arena : Arena where
   Law R := ∀ k : ℕ, 1 ≤ k →
     ∃ (A : Fin k → Matrix (Fin 3) (Fin 3) ℤ) (gamma : Fin k → ℤ),
       (∀ i, gamma i ≠ 0 ∧ A i * (A i)ᵀ = gamma i • (1 : Matrix (Fin 3) (Fin 3) ℤ)) ∧
-      Function.Injective (fun p : Fin k → Fin 3 × Fin 3 => R.readout () ⟨k,p⟩ A)
+      Function.Injective (fun p : Fin k → Fin 3 × Fin 3 => R.readout () ⟨k,A⟩ p)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -57,7 +57,8 @@ def registration : Registration arena (type_of% @problem92) where
       exact nomatch e
   dependence := by
     intro _
-    refine ⟨⟨1,fun _ => (0,0)⟩, (fun _ _ _ => 0), (fun _ _ _ => 1), ?_⟩
+    refine ⟨⟨1,fun _ => !![0,1,0; 0,0,0; 0,0,0]⟩,
+      (fun _ => (0,0)), (fun _ => (0,1)), ?_⟩
     norm_num [actual, realize, Fin.prod_univ_succ]
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
@@ -74,18 +75,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p A => ∏ i, (A i (p.2 i).1 (p.2 i).2) ^ 2) (fun e => nomatch e))
+    (fun _ p a => ∏ i, (p.2 i (a i).1 (a i).2) ^ 2) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.Mehat.OrthogonalityProducts
-    definition := some `D5.S3.Arith.Mehat.OrthogonalityProducts.Problem92
-    coordinates := #[]
+    definition := some {
+      owner := `D5.S3.Arith.Mehat.OrthogonalityProducts
+      name := `D5.S3.Arith.Mehat.OrthogonalityProducts.Problem92
+      path := #[] }
+    coordinates := #[0,2]
     readouts := #[{
       path := #["body", "body", "arg", "body", "arg", "body", "arg", "arg", "body"]
-      stateBinder := 2
+      stateBinder := 4
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }]
