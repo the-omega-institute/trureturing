@@ -44,5 +44,21 @@ internal sealed class CompressionDocument : IScribeDocumentDefinition
                     "The correction differs from the uncorrected midpoint by one half of T "
                         + "times the inverse-square-root Taylor tail. Submultiplicativity gives "
                         + "the displayed bound without adding any structure to the target space."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("taylor-tail-linear"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/Compression.inverseSqrt_tail_linear"),
+                H("A linear bound for the Taylor tail"),
+                StatementSource.FromAuthor(Disp(Seq(Call("norm", Seq(Call("inverseSqrt", F.Id("d")), Minus, D(1))), Le, Call("norm", F.Id("d"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In every complete real normed associative algebra with norm-one identity, if the norm of d is at most one half, then the norm of the inverse-square-root Taylor tail is at most the norm of d. The coefficients are identified with the already established central-binomial coefficients in OriginalHalfBinomialIntegral.b_multichoose. Its binomial_hasSum gives the scalar majorant 1/sqrt(1-norm(d))-1. This is at most norm(d) on the stated interval."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("taylor-intertwines"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/Compression.correction_intertwines"),
+                H("Taylor correction preserves real intertwiners"),
+                StatementSource.FromAuthor(Disp(Seq(Call("s", Call("correction", F.Id("T")), F.Id("x")), Eq, Call("correction", F.Id("U"), Call("s", F.Id("x")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let E and F be complete nontrivial complex normed spaces, s a continuous real-linear map from E to F, and T and U continuous complex-linear endomorphisms. If s(Tx)=U(sx) for every x, and both square defects have norm strictly less than one, then the same intertwining identity holds for their Taylor corrections. The proof transports the convergent series term by term; it applies to the actual conjugate-linear star symmetry without imposing an associative algebra structure on H."))),
+                DescribeRole.Theorem)))));
 }

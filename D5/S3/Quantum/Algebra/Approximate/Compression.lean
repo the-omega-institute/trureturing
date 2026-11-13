@@ -107,7 +107,7 @@ private theorem binomial_mul {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
   rw [Ring.add_choose_eq n (Commute.all a b), Finset.sum_smul]
   apply Finset.sum_congr rfl
   intro ij hij
-  rw [smul_mul_smul_comm, ← pow_add, Finset.mem_antidiagonal.mp hij]
+  rw [smul_mul_smul_comm, ← pow_add, Finset.HasAntidiagonal.mem_antidiagonal.mp hij]
 
 private theorem inverseSqrt_sq {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
     [CompleteSpace A] [NormOneClass A] (d : A) (hd : ‖d‖ < 1) :
@@ -140,6 +140,37 @@ private theorem corrected_involution_sq {A : Type*} [NormedRing A] [NormedAlgebr
 /-- The exact compression associated to a nearly involutive operator. -/
 def correction {A : Type*} [NormedRing A] [NormedAlgebra ℝ A] (t : A) : A :=
   (1 / 2 : ℝ) • (1 + t * inverseSqrt (t ^ 2 - 1))
+
+/-- Real-linear intertwiners are preserved by the same convergent Taylor
+correction, including conjugate-linear symmetries on complex spaces. -/
+theorem correction_intertwines {E F : Type*}
+    [NormedAddCommGroup E] [NormedSpace ℂ E] [CompleteSpace E] [Nontrivial E]
+    [NormedAddCommGroup F] [NormedSpace ℂ F] [CompleteSpace F] [Nontrivial F]
+    (s : E →L[ℝ] F) (t : E →L[ℂ] E) (u : F →L[ℂ] F)
+    (ht : ‖t ^ 2 - 1‖ < 1) (hu : ‖u ^ 2 - 1‖ < 1)
+    (h : ∀ x, s (t x) = u (s x)) (x : E) :
+    s (correction t x) = correction u (s x) := by
+  let a : E →L[ℂ] E := t ^ 2 - 1
+  let b : F →L[ℂ] F := u ^ 2 - 1
+  have hd (y : E) : s (a y) = b (s y) := by
+    dsimp [a, b]
+    simp only [pow_two, sub_apply, mul_apply_eq_comp, one_apply, map_sub, h]
+  have hp (n : ℕ) (y : E) :
+      s ((a ^ n : E →L[ℂ] E) y) = (b ^ n : F →L[ℂ] F) (s y) := by
+    induction n with
+    | zero => simp
+    | succ n ih => simp only [pow_succ', mul_apply_eq_comp, hd, ih]
+  have hst := (binomial_summable_norm a ht (-1 / 2)).of_norm.hasSum
+  have hsu := (binomial_summable_norm b hu (-1 / 2)).of_norm.hasSum
+  have hs (y : E) : s ((inverseSqrt a : E →L[ℂ] E) y) =
+      (inverseSqrt b : F →L[ℂ] F) (s y) := by
+    have h₁ := s.hasSum ((ContinuousLinearMap.apply ℂ E y).hasSum hst)
+    have h₂ := (ContinuousLinearMap.apply ℂ F (s y)).hasSum hsu
+    apply HasSum.unique _ h₂
+    simpa only [ContinuousLinearMap.apply_apply, smul_apply, map_smul, hp] using h₁
+  change s ((1 / 2 : ℝ) • (x + t ((inverseSqrt a : E →L[ℂ] E) x))) =
+    (1 / 2 : ℝ) • (s x + u ((inverseSqrt b : F →L[ℂ] F) (s x)))
+  rw [map_smul, map_add, h, hs]
 
 /-- The Taylor correction differs from the uncorrected midpoint by the tail of
 the inverse-square-root series.  The estimate is purely in the associative

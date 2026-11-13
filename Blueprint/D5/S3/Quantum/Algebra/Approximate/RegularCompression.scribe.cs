@@ -111,5 +111,37 @@ internal sealed class RegularCompressionDocument : IScribeDocumentDefinition
                         + "conditions, the norm of the actual corner involution is at most 19. "
                         + "The generic Taylor-tail estimate therefore gives the displayed "
                         + "quantitative midpoint bound for the same original-product compression."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-bracketing-closeness"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness"),
+                H("Closeness to both actual bracketings"),
+                StatementSource.FromAuthor(Disp(Seq(Call("p", Seq(Call("C", F.Id("P"), F.Id("Q"), F.Id("x")), Minus, Call("mu", F.Id("P"), Call("mu", F.Id("x"), F.Id("Q"))))), Le, Multiply(Multiply(F.Id("4866"), Seq(Tau, Plus, F.Id("M"), DeltaLower)), Call("p", F.Id("x")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let r=tau+M delta. For self-adjoint P and Q, nonnegative tau, r at most 1/1024, and actual p-projection defects at most tau, both p(C(P,Q)x-mu(P,mu(x,Q))) and p(C(P,Q)x-mu(mu(P,x),Q)) are at most 4866 r p(x), for every x. The Taylor tail is at most the square defect, hence at most 512 r. The midpoint displacement is at most 4864 r and the actual commutator contributes at most 2 r for either bracketing."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-bracketing-hilbert"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness_hilbert"),
+                H("The original Hilbert operator bounds"),
+                StatementSource.FromAuthor(Disp(Seq(Call("norm", Seq(Call("C", F.Id("P"), F.Id("Q")), Minus, Call("L", F.Id("P"), Call("R", F.Id("Q"))))), Le, Multiply(Multiply(F.Id("4866"), Seq(Tau, Plus, F.Id("M"), DeltaLower)), F.Id("M"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under exactly the same self-adjointness, nonnegative tau, r at most 1/1024 and actual p-projection-defect hypotheses, both Hilbert operator norms of C(P,Q)-L_P R_Q and C(P,Q)-R_Q L_P are at most 4866 M r. The additional M comes from norm(x) at most p(x) at most M norm(x). The regular and original Hilbert operator norms are not identified."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-compression-star"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_star"),
+                H("Star exchanges the actual corner labels"),
+                StatementSource.FromAuthor(Disp(Seq(Call("star", Call("C", F.Id("P"), F.Id("Q"), F.Id("x"))), Eq, Call("C", F.Id("Q"), F.Id("P"), Call("star", F.Id("x")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under the same hypotheses, star(C(P,Q)x)=C(Q,P)(star(x)) for every x. The actual star reversal interchanges left and right multiplication. Its p-isometry gives a bounded real-linear involution on the regular range, and the convergent Taylor correction preserves this intertwining. This is star covariance, with no assertion that a mixed compression is positive or an orthogonal projection."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-complement-two-piece"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_two_piece"),
+                H("The actual complementary two-piece decomposition"),
+                StatementSource.FromAuthor(Disp(Seq(Call("p", Seq(Call("C", F.Id("P"), F.Id("Q"), F.Id("x")), Plus, Call("C", F.Id("P"), Seq(F.Id("e"), Minus, F.Id("Q")), F.Id("x")), Minus, Call("C", F.Id("P"), F.Id("e"), F.Id("x"))))), Le, Multiply(Multiply(F.Id("14598"), Seq(Tau, Plus, F.Id("M"), DeltaLower)), Call("p", F.Id("x")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Under the same hypotheses, p(C(P,Q)x+C(P,e-Q)x-C(P,e)x) is at most 14598 r p(x), for every x. The actual unit is star fixed, e-Q has exactly the same projection defect as Q, and the uncorrected bracketings add exactly. Applying the three quantitative compression bounds gives the decomposition error. This does not identify the two corrected ranges as an exact direct sum."))),
+                DescribeRole.Theorem)))));
 }

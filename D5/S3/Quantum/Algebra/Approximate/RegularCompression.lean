@@ -538,6 +538,115 @@ theorem compression_closeness (P Q : H) (hP : star P = P) (hQ : star Q = Q)
   exact ⟨hl.trans (mul_le_mul_of_nonneg_right hc.1 (norm_nonneg _)),
     hr.trans (mul_le_mul_of_nonneg_right hc.2 (norm_nonneg _))⟩
 
+/-- Transport of the regular-norm estimate to the original Hilbert operator
+norm costs the original comparison factor `M`. -/
+theorem compression_closeness_hilbert (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) :
+    ‖D.compression P Q - (D.mul P).comp (D.mul.flip Q)‖ ≤
+      4866 * (τ + M * δ) * M ∧
+    ‖D.compression P Q - (D.mul.flip Q).comp (D.mul P)‖ ≤
+      4866 * (τ + M * δ) * M := by
+  have hc0 : 0 ≤ 4866 * (τ + M * δ) := by
+    positivity [D.delta_nonneg, le_trans zero_le_one D.one_le_M]
+  constructor
+  · apply ContinuousLinearMap.opNorm_le_bound (mul_nonneg hc0 (by linarith [D.one_le_M]))
+    intro x
+    have h := (compression_closeness D P Q hP hQ hτ hsmall hPP hQQ x).1
+    exact (norm_le_p D _).trans (h.trans (by
+      simpa only [mul_assoc] using mul_le_mul_of_nonneg_left (p_le D x) hc0))
+  · apply ContinuousLinearMap.opNorm_le_bound (mul_nonneg hc0 (by linarith [D.one_le_M]))
+    intro x
+    have h := (compression_closeness D P Q hP hQ hτ hsmall hPP hQQ x).2
+    exact (norm_le_p D _).trans (h.trans (by
+      simpa only [mul_assoc] using mul_le_mul_of_nonneg_left (p_le D x) hc0))
+
+private theorem star_unit : star D.unit = D.unit := by
+  have h := D.star_mul D.unit (star D.unit)
+  simpa only [D.left_unit, star_star] using h.symm
+
+private theorem complement_defect (Q : H) :
+    D.mul (D.unit - Q) (D.unit - Q) - (D.unit - Q) = D.mul Q Q - Q := by
+  simp only [map_sub, ContinuousLinearMap.sub_apply, D.left_unit, D.right_unit]
+  abel
+
+private def regularStar : D.RegularSpace →L[ℝ] D.RegularSpace :=
+  LinearMap.mkContinuous
+    { toFun := fun y => D.regularEquiv (star (D.regularEquiv.symm y))
+      map_add' := by intro x y; simp
+      map_smul' := by intro r x; simp [map_smul_of_tower] }
+    1 (by
+      intro y
+      change D.p (star (D.regularEquiv.symm y)) ≤ 1 * ‖y‖
+      rw [p_star, ← regularEquiv_norm, D.regularEquiv.apply_symm_apply, one_mul])
+
+private theorem regularStar_apply (x : H) :
+    D.regularStar (D.regularEquiv x) = D.regularEquiv (star x) := by
+  simp [regularStar, LinearMap.mkContinuous_apply]
+
+/-- The actual compression commutes with star after exchanging its two
+corner labels. No adjoint or positivity of the compression is assumed. -/
+theorem compression_star (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) (x : H) :
+    star (D.compression P Q x) = D.compression Q P (star x) := by
+  have hi (y : D.RegularSpace) :
+      D.regularStar (D.cornerInvolution P Q y) =
+        D.cornerInvolution Q P (D.regularStar y) := by
+    obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
+    simp only [cornerInvolution, sub_apply, add_apply, mul_apply_eq_comp,
+      one_apply, left_apply, right_apply, map_sub, map_add,
+      regularStar_apply, D.star_mul, hP, hQ]
+    abel
+  have ht : ‖D.cornerInvolution P Q ^ 2 - 1‖ < 1 :=
+    lt_of_le_of_lt (cornerInvolution_defect D P Q hP hQ hτ hsmall hPP hQQ)
+      (by linarith)
+  have hu : ‖D.cornerInvolution Q P ^ 2 - 1‖ < 1 :=
+    lt_of_le_of_lt (cornerInvolution_defect D Q P hQ hP hτ hsmall hQQ hPP)
+      (by linarith)
+  have h := Compression.correction_intertwines D.regularStar
+    (D.cornerInvolution P Q) (D.cornerInvolution Q P) ht hu hi (D.regularEquiv x)
+  have htransport (A B : H) (y : H) :
+      D.regularEquiv (D.compression A B y) =
+        D.regularCompression A B (D.regularEquiv y) := by simp [compression]
+  apply D.regularEquiv.injective
+  rw [← regularStar_apply, htransport, htransport]
+  simpa only [regularCompression, regularStar_apply] using h
+
+/-- The actual complementary compressions give a two-piece decomposition,
+with an error measured in the same regular norm as the original product. -/
+theorem compression_two_piece (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) (x : H) :
+    D.p (D.compression P Q x + D.compression P (D.unit - Q) x -
+      D.compression P D.unit x) ≤ 14598 * (τ + M * δ) * D.p x := by
+  have hQc : star (D.unit - Q) = D.unit - Q := by rw [star_sub, star_unit, hQ]
+  have hQQc : D.p (D.mul (D.unit - Q) (D.unit - Q) - (D.unit - Q)) ≤ τ := by
+    rw [complement_defect]
+    exact hQQ
+  have hee : D.p (D.mul D.unit D.unit - D.unit) ≤ τ := by
+    simpa only [D.left_unit, sub_self, p, map_zero, norm_zero] using hτ
+  have h₁ := (compression_closeness D P Q hP hQ hτ hsmall hPP hQQ x).1
+  have h₂ := (compression_closeness D P (D.unit - Q) hP hQc hτ hsmall hPP hQQc x).1
+  have h₃ := (compression_closeness D P D.unit hP (star_unit D) hτ hsmall hPP hee x).1
+  have hid : D.compression P Q x + D.compression P (D.unit - Q) x -
+      D.compression P D.unit x =
+      (D.compression P Q x - D.mul P (D.mul x Q)) +
+        (D.compression P (D.unit - Q) x - D.mul P (D.mul x (D.unit - Q))) -
+        (D.compression P D.unit x - D.mul P (D.mul x D.unit)) := by
+    simp only [map_sub, D.right_unit]
+    abel
+  rw [hid]
+  have h := p_add D
+    ((D.compression P Q x - D.mul P (D.mul x Q)) +
+      (D.compression P (D.unit - Q) x - D.mul P (D.mul x (D.unit - Q))))
+    (-(D.compression P D.unit x - D.mul P (D.mul x D.unit)))
+  rw [p_neg] at h
+  have h' := p_add D (D.compression P Q x - D.mul P (D.mul x Q))
+    (D.compression P (D.unit - Q) x - D.mul P (D.mul x (D.unit - Q)))
+  rw [sub_eq_add_neg]
+  linarith
+
 /-- The original-product compression is exactly idempotent at a universal small-error scale. -/
 theorem compression_idempotent (P Q : H) (hP : star P = P) (hQ : star Q = Q)
     {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
