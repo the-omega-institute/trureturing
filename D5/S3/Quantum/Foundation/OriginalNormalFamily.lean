@@ -380,4 +380,121 @@ theorem original_whole_edge
 
 #print axioms original_whole_edge
 
+/-- The original pure-row identity pays whole-cone positivity before any upper
+bound is used. The row premise is the protected producer's required join. -/
+theorem pure_row_positive_bridge
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (p : pure C u) {a : ExclusionChart C u p} {ep : V →ₗ[ℝ] ℝ}
+    (hep : ep ∈ fullZeroConfirmers C u p) (k : Coordinates p a ep)
+    (q : pure C u) (v : chartSpace a) (hv : ‖v‖ = 1) (hq : a.param v = q)
+    (eq : V →ₗ[ℝ] ℝ) (heq : eq ∈ fullZeroConfirmers C u q)
+    (L : ℝ) (hL : 0 < L)
+    (hform : ∀ x : V, eq x = (1 - L) * k.g.val x + L * (directionLift k v).val x)
+    (hrow : ∀ s : pure C u, comparison C u p s = min (ep s) ((u - eq) s)) :
+    let b := (1 / 2 : ℝ) • normalForm k 1 v
+    proper C u b ∧ b p = 0 ∧ b q = 1 ∧ b (a.param (-v)) = 0 ∧
+      a.param (-v) ∈ exclusion C u q := by
+  have hg0 (x : V) (hx : x ∈ C) : 0 ≤ k.g.val x :=
+    (interior_subset k.g_interior).1 x hx
+  have hnrow (n : V →ₗ[ℝ] ℝ) (hn : proper C u n) (hnp : n p = 0)
+      (s : pure C u) : n s ≤ max (k.g.val s) (eq s) := by
+    have hcomp : comparison C u p s ≤ (u - n) s :=
+      csInf_le ⟨0, by rintro r ⟨f, hf, rfl⟩; exact (hf.1 s (pure_mem s).1).1⟩
+        ⟨u - n, ⟨(by
+          intro x hx
+          have hh := hn x hx
+          constructor <;> simp only [LinearMap.sub_apply] <;> linarith),
+          by simp [hnp, (pure_mem p).2]⟩, rfl⟩
+    rw [hrow s] at hcomp
+    have hgs : k.g.val s = 1 - ep s := by rw [k.g_value]; simp [(pure_mem s).2]
+    simp only [LinearMap.sub_apply, (pure_mem s).2] at hcomp
+    rcases le_total (ep s) (1 - eq s) with hh | hh
+    · rw [min_eq_left hh] at hcomp
+      exact (show n s ≤ k.g.val s by linarith).trans (le_max_left _ _)
+    · rw [min_eq_right hh] at hcomp
+      exact (show n s ≤ eq s by linarith).trans (le_max_right _ _)
+  obtain ⟨M, hM, hdom⟩ := direction_domination k
+  let ε := 1 / (2 * M)
+  have hε : 0 < ε := by dsimp [ε]; positivity
+  have hεM : ε * M = 1 / 2 := by dsimp [ε]; field_simp; ring
+  have hpos : ∀ x ∈ C, 0 ≤ normalForm k 1 v x := by
+    apply nonneg_on_cone (base_compact hc hs) hs
+    intro s
+    by_contra hbad
+    have hbad' : k.g.val s + (directionLift k v).val s < 0 := by
+      simpa [normalForm] using lt_of_not_ge hbad
+    have hi : |(directionLift k v).val s| ≤ ‖coordinateMap k s‖ := by
+      rw [← coordinateMap_inner]
+      simpa [hv] using abs_real_inner_le_norm v (coordinateMap k s)
+    have hnorm : k.g.val s < ‖coordinateMap k s‖ := by
+      linarith [neg_le_abs ((directionLift k v).val s)]
+    have hH : 0 < ‖coordinateMap k s‖ := lt_of_le_of_lt (hg0 s (pure_mem s).1) hnorm
+    let w : chartSpace a := ‖coordinateMap k s‖⁻¹ • coordinateMap k s
+    have hw : ‖w‖ = 1 := by simp [w, norm_smul, hH.ne']
+    have hws : (directionLift k w).val s = ‖coordinateMap k s‖ := by
+      rw [← coordinateMap_inner]
+      simp only [w, inner_smul_left, starRingEnd_apply, star_trivial,
+        real_inner_self_eq_norm_sq]
+      field_simp
+    let n := normalForm k 1 (ε • w)
+    have hn0 : ∀ x ∈ C, 0 ≤ n x := by
+      intro x hx
+      have hd := hdom w hw x hx
+      have hd' := neg_abs_le ((directionLift k w).val x)
+      have heps := mul_le_mul_of_nonneg_left (hd'.trans (neg_le_neg hd)) hε.le
+      change 0 ≤ 1 * k.g.val x + (directionLift k (ε • w)).val x
+      simp only [map_smul, Submodule.coe_smul, ContinuousLinearMap.smul_apply,
+        smul_eq_mul]
+      nlinarith [hg0 x hx]
+    have hmax := (normal_maximum hc hs hg p hep k 1 (ε • w) hn0).1
+    let f : V →ₗ[ℝ] ℝ := (1 + ε)⁻¹ • n
+    have hf : proper C u f := by
+      apply cone_bound (base_compact hc hs) hs
+      intro r
+      have hr := hmax r (pure_mem r)
+      simp only [norm_smul, Real.norm_eq_abs, abs_of_pos hε, hw, mul_one] at hr
+      change 0 ≤ (1 + ε)⁻¹ * n r ∧ (1 + ε)⁻¹ * n r ≤ 1
+      constructor
+      · exact mul_nonneg (by positivity) (hn0 r (pure_mem r).1)
+      · apply (inv_mul_le_iff₀ (by positivity : 0 < 1 + ε)).mpr
+        simpa using hr
+    have hfp : f p = 0 := by simp [f, n, normalForm, span_vanishes]
+    have hfs : k.g.val s < f s := by
+      change k.g.val s < (1 + ε)⁻¹ * n s
+      apply (lt_inv_mul_iff₀ (by positivity : 0 < 1 + ε)).mpr
+      dsimp [n, normalForm]
+      simp only [LinearMap.add_apply, LinearMap.smul_apply, map_smul,
+        Submodule.coe_smul, ContinuousLinearMap.smul_apply, smul_eq_mul, one_mul]
+      rw [hws]
+      nlinarith
+    have hneq : k.g.val s < eq s := by
+      have hh := hnrow f hf hfp s
+      rcases le_total (k.g.val s) (eq s) with he | he
+      · exact lt_of_lt_of_le hfs (by simpa [max_eq_right he] using hh)
+      · rw [max_eq_left he] at hh
+        exact False.elim (not_lt_of_ge hh hfs)
+    rw [hform s] at hneq
+    nlinarith
+  let b := (1 / 2 : ℝ) • normalForm k 1 v
+  have hb : proper C u b := by
+    apply cone_bound (base_compact hc hs) hs
+    intro s
+    have hh := (normal_maximum hc hs hg p hep k 1 v hpos).1 s (pure_mem s)
+    rw [hv] at hh
+    change 0 ≤ (1 / 2 : ℝ) * normalForm k 1 v s ∧
+      (1 / 2 : ℝ) * normalForm k 1 v s ≤ 1
+    constructor <;> linarith [hpos s (pure_mem s).1]
+  have hbp : b p = 0 := by simp [b, normalForm, span_vanishes]
+  have hbq : b q = 1 := by
+    rw [← hq]
+    simp [b, normalForm_chart hep k, real_inner_self_eq_norm_sq, hv]
+  have hbr : b (a.param (-v)) = 0 := by
+    simp [b, normalForm_chart hep k, inner_neg_right, real_inner_self_eq_norm_sq, hv]
+  exact ⟨hb, hbp, hbq, hbr,
+    (SingleLabelNormalBody.chart_mem a (z := -v) (by simpa using hv.le)).1,
+    b, ⟨hb, hbq⟩, hbr⟩
+
+#print axioms pure_row_positive_bridge
+
 end D5.S3.Quantum.Foundation.OriginalNormalFamily
