@@ -28,13 +28,13 @@ internal sealed class ArbitraryAlphabetSolovayKitaevDocument : IScribeDocumentDe
                 DeclarationHandle.Create(Prefix + "ordinary_word_solovay_kitaev"),
                 H("The uniform polylogarithmic ordinary-word theorem"),
                 StatementSource.FromAuthor(EventStatement()),
-                AssessedProvenance.FromLiterature("dawsonnielsen2006solovaykitaev"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/dawsonnielsen2006solovaykitaev")),
                 Blocks(
                     Paragraph(Text("For every finite alphabet Gamma of determinant-one unitary matrices, assume inverse closure and density of its ordinary finite words in SU(2). Then K>0 and 0<epsilon0<1 can be chosen uniformly for every target U and every 0<epsilon<=epsilon0. One ordinary list w satisfies both the error and real-valued length inequalities. The exponent is exactly log(5)/log(3/2).")),
                     Paragraph(Text("A compactness net supplies the alphabet-dependent initial length. The paired word invariant gives the same list at every level; the licensed scalar and logarithmic estimates in SolovayKitaevRate eliminate the level. Zayn Blore's Apache-2.0 CSD proof is the source of the balanced decomposition, stability and rate estimates and of the fixed-alphabet word induction. The full license is docs/reports/qmutualinfo/csd-lean4-LICENSE.txt. This theorem concerns existence and ordinary list length. It asserts no effectiveness, runtime, optimality, numerical constants, physical realization, compressed length or bound uniform in growing dimension."))),
                 DescribeRole.Theorem))));
 
-    private static ScribeNode Entry(string id, string name, string title, Formula formula,
+    private static DocumentBlock.Describe Entry(string id, string name, string title, Formula formula,
         string body, DescribeRole role) => Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(body))), role);
