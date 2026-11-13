@@ -14,6 +14,8 @@ $$\forall f \in \operatorname{EuclideanSpace}\left(R, \operatorname{Fin}\left(3\
 
 *Commentary.*
 
+The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128. The extremum argument is attributed to section 6.
+
 A frame function of arbitrary real weight, bounded above by M and below by m on the unit sphere, attains its maximum at a unit vector p. Applying this statement to the negative function also gives a minimum. Neither extremum statement assumes continuity or measurability of the frame function.
 
 A maximizing sequence has a limiting pole on the compact sphere. This fact alone cannot pass the function values to the pole. Moving orthogonal frames and symmetrization instead create a family of bounded frame functions. A cluster point in the product of closed bounded intervals retains every frame equation because each equation is closed in finitely many coordinates.

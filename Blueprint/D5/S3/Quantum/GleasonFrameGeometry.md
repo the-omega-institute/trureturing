@@ -14,6 +14,8 @@ $$\forall p \in \operatorname{EuclideanSpace}\left(R, \operatorname{Fin}\left(3\
 
 *Commentary.*
 
+The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
+
 The ambient space is real Euclidean three-space. A unit pole p determines its northern closed hemisphere, the unit vectors s with nonnegative inner product with p. Latitude is the square of that inner product. A descent step stays on the great circle orthogonal to the coldest equatorial direction associated with its starting point.
 
 For two northern unit vectors distinct from the pole, strictly decreasing latitude is realized by a finite descent chain. IsDescentChain records both endpoints, membership of every indexed vector in the northern hemisphere away from the pole, and the descent relation at every successive index. The natural number n is at least one.

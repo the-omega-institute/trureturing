@@ -14,6 +14,8 @@ $$\forall f \in \operatorname{EuclideanSpace}\left(R, \operatorname{Fin}\left(3\
 
 *Commentary.*
 
+The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128. The axis choice p, r, q, target form and identities follow section 7; the original formalization uses a different endgame from the paper.
+
 Every real-valued function whose sum is W on every orthonormal basis of real three-space, and whose values are nonnegative on the entire unit sphere, is a symmetric quadratic form on that sphere. The weight W is arbitrary; the function outside the sphere is unrestricted. No continuity or measurability hypothesis occurs.
 
 Nonnegativity and the frame sum give upper bound W. Extremum attainment chooses a maximum p. Applying the minimum theorem to the sum of f and the squared inner product with p gives a minimizing direction r orthogonal to p. The cross product supplies the remaining orthogonal axis q.

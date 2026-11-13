@@ -14,6 +14,8 @@ $$\forall f \in \operatorname{EuclideanSpace}\left(R, \operatorname{Fin}\left(3\
 
 *Commentary.*
 
+The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
+
 Let f be a real frame function of arbitrary weight W on all orthonormal bases of real three-space. Suppose a unit vector p is a global maximum on the sphere and f has the constant value m on the equator perpendicular to p. Then f at every unit vector s equals m plus the difference f(p) minus m times the latitude of s.
 
 The frame identity makes equatorial points global minima. A four-point identity makes f monotone along every descent, and finite geometric descent makes it monotone in latitude. Suprema and infima along a fixed latitude can differ at only countably many latitude values.

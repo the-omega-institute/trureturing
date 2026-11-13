@@ -14,6 +14,8 @@ $$\forall N \in \mathit{Nat},\; \forall OP \in \operatorname{ProjectionPackage}\
 
 *Commentary.*
 
+Gleason (1957), J. Math. Mech. 6, 885, Theorems 2.8 and 3.1, is the projection-theorem source. The adopted elementary real core (Sphere through General) follows Cooke, Keane, Moran (1985), Math. Proc. Cambridge Philos. Soc. 98, 117–128.
+
 For every natural dimension N at least three and every projection package OP on complex N by N matrices, there is exactly one matrix rho that is positive semidefinite, has trace one, and satisfies OP.p(P) = Re(trace(rho P)) for every star projection P. The package is a total matrix function, constrained only by nonnegative projection values, normalization at the identity and binary additivity on orthogonal star projections.
 
 Restrict the rank-one frame function to every completely real orthonormal triple. The real sphere theorem gives a quadratic restriction there. Extending each real orthonormal pair to such a triple gives real-plane regularity. Comparing rotated pairs shows the cross term depends linearly on the real and imaginary parts of a unit phase.
