@@ -248,4 +248,103 @@ private lemma full_rank_internal_edge {n : ℕ} (G : SimpleGraph (Fin (n+3)))
   rw [hx] at heq
   simpa [hvw.symm] using heq
 
+open SimpleGraph
+open D5.S3.Combinatorics.Graph.Eccentric.DePatraBridge
+open D5.S3.Combinatorics.Graph.Eccentric.DePatraCounting
+
+private lemma bridge_side_card_two {V : Type} [Fintype V] [DecidableEq V]
+    (G : SimpleGraph V) [DecidableRel G.Adj] {u v : V}
+    (huv : G.Adj u v) (hu : 2 ≤ G.degree u) :
+    2 ≤ (univ.filter (fun x => x ∈ deletedSide G u v u)).card := by
+  classical
+  obtain ⟨w, hw, hwv⟩ := Finset.exists_mem_ne
+    (s := G.neighborFinset u) (by simpa using hu) v
+  have huw : G.Adj u w := by simpa using hw
+  have hd : (G.deleteEdges {s(u,v)}).Adj u w := by
+    apply deleteEdges_adj.mpr
+    refine ⟨huw, ?_⟩
+    simp only [Set.mem_singleton_iff]
+    intro he
+    rcases Sym2.eq_iff.mp he with h | h
+    · exact hwv h.2
+    · exact huv.ne h.1
+  apply Nat.succ_le_iff.mpr
+  apply Finset.one_lt_card.mpr
+  exact ⟨u, by simp [deletedSide], w, by simpa [deletedSide] using hd.reachable, huw.ne⟩
+
+private lemma internal_bridge_second {n : ℕ} (G : SimpleGraph (Fin (n+2)))
+    [DecidableRel G.Adj] (hG : G.Connected)
+    {u v : Fin (n+2)} (huv : G.Adj u v) (hb : G.IsBridge s(u,v))
+    (hu : 2 ≤ G.degree u) (hv : 2 ≤ G.degree v) :
+    lapEig G 1 ≤ (n : ℝ) := by
+  classical
+  let P : Fin (n+2) → Prop := fun x => x ∈ deletedSide G u v u
+  let s := univ.filter P
+  let t := univ.filter (fun x => ¬ P x)
+  have hd := deletedSide_disjoint hb
+  have hcover := deletedSide_cover hG u v
+  have hright (x) : ¬ P x ↔ x ∈ deletedSide G u v v := by
+    constructor
+    · intro hx
+      exact (hcover x).resolve_left hx
+    · intro hx hs
+      exact Set.disjoint_left.mp hd hs hx
+  have hS : 2 ≤ s.card := bridge_side_card_two G huv hu
+  have hT : 2 ≤ t.card := by
+    have hh := bridge_side_card_two G huv.symm hv
+    simpa only [t, P, hright, deletedSide_swap] using hh
+  have hsum : s.card + t.card = n+2 := by
+    simpa only [s, t, card_univ, Fintype.card_fin] using
+      Finset.card_filter_add_card_filter_not P (univ : Finset (Fin (n+2)))
+  have hSc : (s.card : ℝ) ≤ n := by exact_mod_cast (show s.card ≤ n by omega)
+  have hTc : (t.card : ℝ) ≤ n := by exact_mod_cast (show t.card ≤ n by omega)
+  apply second_le_of_hyperplane (G.lapMatrix ℝ) (G.isHermitian_lapMatrix ℝ) u v n
+  intro x heq
+  apply partition_energy_le G P n hSc hTc x
+  intro i j hij hne
+  by_cases hi : P i
+  · have hj : ¬ P j := by tauto
+    obtain ⟨rfl, rfl⟩ := bridge_side_cross hb hij hi hj
+    exact heq
+  · have hj : P j := by tauto
+    obtain ⟨rfl, rfl⟩ := bridge_side_cross hb hij.symm hj hi
+    exact heq.symm
+
+/-- Cazenave's full Laplacian-rank bound, with the ordinary decreasing spectrum. -/
+theorem result : claim := by
+  intro n G inst hG
+  letI := inst
+  have hr : (G.adjMatrix ℝ).rank ≤ n+2 := by
+    simpa using Matrix.rank_le_card_width (G.adjMatrix ℝ)
+  have hμ := lap_second_le_edges G
+  have hconn : n+2 ≤ G.edgeFinset.card+1 := by
+    simpa [Nat.card_eq_fintype_card, ← G.edgeFinset_card] using
+      hG.card_vert_le_card_edgeSet_add_one
+  by_cases hdense : n+2 ≤ G.edgeFinset.card
+  · have hr' : ((G.adjMatrix ℝ).rank : ℝ) ≤ G.edgeFinset.card :=
+      Nat.cast_le.mpr (hr.trans hdense)
+    linarith
+  have hm : G.edgeFinset.card+1 = n+2 := by omega
+  by_cases hlow : (G.adjMatrix ℝ).rank < n+2
+  · have hr' : ((G.adjMatrix ℝ).rank : ℝ) ≤ G.edgeFinset.card := by
+      exact_mod_cast (show (G.adjMatrix ℝ).rank ≤ G.edgeFinset.card by omega)
+    linarith
+  have hfull : (G.adjMatrix ℝ).rank = n+2 := by omega
+  cases n with
+  | zero =>
+    have hz := lap_second_order_two G
+    have hm' : (G.edgeFinset.card : ℝ) = 1 := by exact_mod_cast (show G.edgeFinset.card=1 by omega)
+    have hr' : ((G.adjMatrix ℝ).rank : ℝ) ≤ 2 := by exact_mod_cast hr
+    linarith
+  | succ k =>
+    obtain ⟨u,v,huv,hu,hv⟩ := full_rank_internal_edge G hm hfull
+    have htree : G.IsTree := SimpleGraph.isTree_iff_connected_and_card.mpr
+      ⟨hG, by simpa [Nat.card_eq_fintype_card, ← G.edgeFinset_card] using hm⟩
+    have hb := SimpleGraph.isAcyclic_iff_forall_adj_isBridge.mp htree.isAcyclic u v huv
+    have hμ' := internal_bridge_second G hG huv hb hu hv
+    have hm' : (G.edgeFinset.card : ℝ)+1 = (k+1:ℕ)+2 := by exact_mod_cast hm
+    have hr' : ((G.adjMatrix ℝ).rank : ℝ) ≤ (k+1:ℕ)+2 := by exact_mod_cast hr
+    push_cast at *
+    linarith
+
 end D5.S3.Combinatorics.SpectralGraph.CazenaveLaplacianRankBound
