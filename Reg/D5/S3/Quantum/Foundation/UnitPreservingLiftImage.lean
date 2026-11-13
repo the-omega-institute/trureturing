@@ -86,33 +86,6 @@ theorem source_bridge : source.{v,w} ↔ arena.{v,w}.Law actual.{v,w} := by
 theorem actual_positive : arena.{v,w}.Law actual.{v,w} :=
   source_bridge.mp (@unit_preserving_lift_image.{v,w})
 
-/-- A typed four-slot attempt, conditional on the still-missing whole-family
-certificate. No such certificate or actual registration is claimed. -/
-noncomputable def registrationAttempt
-    (family : Registration arena.{v,w} source.{v,w}) :
-    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@unit_preserving_lift_image.{v,w}) (Realization signature.{v,w}) Unit Unit := {
-  unitName := `D5.S3.Quantum.Foundation.UnitPreservingLiftImage.unit_preserving_lift_image.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Foundation.UnitPreservingLiftImage.actual
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{v,w}⟩
-  objectArena := .source ⟨arena.{v,w}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{v,w} ⟨family⟩
-  correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .absent
-  readout := some (realize signature.{v,w} (fun _ P p => outcome P p) (fun e => nomatch e))
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := none
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[] }
-
 #print axioms source_bridge
 #print axioms actual_positive
 
