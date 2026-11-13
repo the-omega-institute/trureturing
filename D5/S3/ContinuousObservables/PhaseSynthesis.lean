@@ -97,9 +97,9 @@ noncomputable def stepW (φ : ℝ) (PQ : ℂ[X] × ℂ[X]) : ℂ[X] × ℂ[X] :=
 noncomputable def qspPolyW (φ₀ : ℝ) (Φ : List ℝ) : ℂ[X] × ℂ[X] :=
   Φ.foldl (fun PQ φ => stepW φ PQ) (C (Complex.exp (Complex.I * φ₀)), 0)
 
-private theorem qspPolyW_nil (φ₀ : ℝ) : qspPolyW φ₀ [] = (C (Complex.exp (Complex.I * φ₀)), 0) := rfl
+theorem qspPolyW_nil (φ₀ : ℝ) : qspPolyW φ₀ [] = (C (Complex.exp (Complex.I * φ₀)), 0) := rfl
 
-private theorem qspPolyW_concat (φ₀ φ : ℝ) (Φ : List ℝ) :
+theorem qspPolyW_concat (φ₀ φ : ℝ) (Φ : List ℝ) :
     qspPolyW φ₀ (Φ ++ [φ]) = stepW φ (qspPolyW φ₀ Φ) := by
   simp only [qspPolyW, List.foldl_append, List.foldl_cons, List.foldl_nil]
 
@@ -306,7 +306,7 @@ private theorem index_two_cases (i : ZMod 2) : i = 0 ∨ i = 1 := by
   · exact Or.inr rfl
 
 /-- A two-by-two matrix in the native cyclic index type. -/
-private def matrix2 (a b c d : ℂ) : Matrix (ZMod 2) (ZMod 2) ℂ :=
+def matrix2 (a b c d : ℂ) : Matrix (ZMod 2) (ZMod 2) ℂ :=
   fun i j => if i = 0 then if j = 0 then a else b else if j = 0 then c else d
 
 /-- A constant diagonal phase in the native continuous observable algebra. -/
@@ -330,7 +330,7 @@ private theorem signal_apply (t : AddCircle (1 : ℝ)) :
   rcases index_two_cases i with rfl | rfl <;> rcases index_two_cases j with rfl | rfl <;> simp [matrix2]
 
 /-- The elementary product identity depends on y²=1−x², not on a sign of y. -/
-private theorem mul_signal_phase {x y : ℝ} (hc : x ^ 2 + y ^ 2 = 1)
+theorem mul_signal_phase {x y : ℝ} (hc : x ^ 2 + y ^ 2 = 1)
     (φ : ℝ) (a b c d : ℂ) :
     matrix2 a (I * b * (y : ℂ)) (I * c * (y : ℂ)) d *
         (matrix2 (x : ℂ) (I * (y : ℂ)) (I * (y : ℂ)) (x : ℂ) *
