@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:80f972efa4ede0e93f28c70ad78b6f26e91e49e53824af5b660ecb1251a63e02
+  normalized_sha256: sha256:80f972efa4ede0e93f28c70ad78b6f26e91e49e53824af5b660ecb1251a63e02
+cas_ref: sha256:80f972efa4ede0e93f28c70ad78b6f26e91e49e53824af5b660ecb1251a63e02
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_control
+    target_statement_id: sha256:bb70a153fd6325a87a1dba527a1a47c92f6da9430e557ca89e5543ff553e65a9
+  - gid: D5/S3/Quantum/Foundation/FixedZeroObstruction/MovingPositiveControl.moving_positive_normalization
+    target_statement_id: sha256:ecae38fd6c6ada2e578bd5ed76259de4f357cea07b9bb9b3586adfadc3ca30ab
+receipts:
+  unresolved_subitems: []
