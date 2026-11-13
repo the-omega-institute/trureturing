@@ -97,7 +97,7 @@ private theorem linear_inverse_left (c : Discriminant D)
     (x : Multiplicity A c) :
     r ((dualMultiplicityEquiv A hD c).dualMap.symm
       (kappa (DualMultiplicity (dualModule A)) c (bidualFamily A hD c x))) = x := by
-  simp only [bidualFamily, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
+  simp only [bidualFamily, LinearMap.comp_apply, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
   simpa only [kappa_iota, LinearEquiv.symm_apply_apply] using hr x
 
 
@@ -145,7 +145,7 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
       (restrict (dualHom hD f) (-c)).toAddHom.toFun
       (fun ψ : Module.Dual ℂ (Multiplicity B c) => ψ.comp (restrict f c))
       (dualHom_dualIota hD f c) q
-  simp only [dualDualFamily, bidualFamily, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
+  simp only [dualDualFamily, bidualFamily, LinearMap.comp_apply, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe]
   simp only [kappa_iota]
   apply congrArg (iota (DualMultiplicity (dualModule B)) c).toAddHom.toFun
   apply LinearMap.ext

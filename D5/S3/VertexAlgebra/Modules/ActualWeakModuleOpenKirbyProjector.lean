@@ -276,31 +276,27 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
         ((openMonodromy A B hD).linearMap.comp input))
   have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
       γ⁻¹ • q (cupVector B hD) := by
-    have hforward (z : P A (I D)) :
-        (rightUnitIso hD A).hom.linearMap z = rightUnit hD A z := by
-      rfl
-    have hinverse (z : X) :
-        (rightUnitIso hD A).inv.linearMap z = (rightUnit hD A).symm z := by
-      rfl
-    unfold openPartialTrace
-    dsimp only [ModuleHom.comp, LinearMap.comp_apply]
-    rw [hforward]
-    conv_lhs =>
-      arg -1
-      arg -1
-      arg -1
-      arg -1
-      rw [hinverse, rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
+    let L : P A (targetModule B (dualModule B)) →ₗ[ℂ] X :=
+      (rightUnit hD A).toLinearMap.comp
+        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
+          (openMonodromy A B hD).linearMap)
+    let C := (productHom hD (ModuleHom.id A) (coevaluation B hD)).linearMap
+    change L (C ((rightUnit hD A).symm (classified hD A a x v))) =
+      γ⁻¹ • q (cupVector B hD)
     have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
         (transportInverse D (representative D a)
           (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
         normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v := by
       simp only [normalizedPair, LinearMap.comp_apply, LinearMap.flip_apply,
         TensorProduct.mk_apply, add_zero, carry_zero_right]
-    simp only [hp, map_smul, normalizedPair_input,
-      TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
-    simp only [γ, q, input, normalizedPair, LinearMap.coe_comp, Function.comp_apply,
-      LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.flip_apply, TensorProduct.mk_apply]
+    have hc : C (normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v) =
+        input (cupVector B hD) := by
+      exact (normalizedPair_input hD (ModuleHom.id A) (coevaluation B hD)
+        a 0 (x ⊗ₜ[ℂ] eta0 hD) v).trans (by
+          rw [TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
+          rfl)
+    rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x,
+      C.map_smul, hp, hc, L.map_smul]
     rfl
   have hdim (c : Discriminant D) :
       (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),

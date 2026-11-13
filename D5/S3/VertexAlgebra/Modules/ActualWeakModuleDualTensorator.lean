@@ -364,7 +364,7 @@ theorem dualTensorHom_jAt (c d : Discriminant D)
   refine he.trans ?_
   refine (dualTensorFamily_jAt A B hD (-(c+d)) i w).trans ?_
   simp [i, w, readFunctional, Xi, fiberRead, reverseFiber, dualIota, DualMultiplicity,
-    LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe,
+    LinearMap.comp_apply, LinearMap.coe_comp, Function.comp_apply, LinearEquiv.coe_coe,
     LinearEquiv.cast_apply, kappa_iota, neg_neg]
 
 /-- The actual five-arrow cap composite; the associator direction is explicit. -/
@@ -470,21 +470,19 @@ theorem nestedEvaluation_matching (c d : Discriminant D) (v : Carrier D)
             (dualIota A c φ ⊗ₜ[ℂ] j A B hD c d (x ⊗ₜ[ℂ] y))) v)
   have h2 : f2 z2 = (unitCharacter D hD (-c) * φ x) • z3 := by
     dsimp only [f2, z2, z3]
-    simpa only [TensorProduct.map_tmul, restrict_identity, jAt_natural,
-      evaluation_jAt, ← TensorProduct.smul_tmul', map_smul, TensorProduct.tmul_smul,
-      normalizedPair_smul] using
-      (normalizedPair_input hD (ModuleHom.id (dualModule B))
-        (productHom hD (evaluation A hD) (ModuleHom.id B)) (-d) d
-        (dualIota B d ψ ⊗ₜ[ℂ]
-          jAt (targetModule (dualModule A) A) B hD d ⟨(0,d),zero_add d⟩
-            (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
-              (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)) v)
+    rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity]
+    have he := jAt_natural hD (evaluation A hD) (ModuleHom.id B) d
+      (⟨(0,d),zero_add d⟩ : Fiber (D := D) d)
+      (jAt (dualModule A) A hD 0 ⟨(-c,c),neg_add_cancel c⟩
+        (dualIota A c φ ⊗ₜ[ℂ] x) ⊗ₜ[ℂ] y)
+    rw [TensorProduct.map_tmul, evaluation_jAt, restrict_identity,
+      ← TensorProduct.smul_tmul', map_smul] at he
+    rw [he, TensorProduct.tmul_smul, normalizedPair_smul]
   have h3 : f3 z3 = z4 := by
     dsimp only [f3, z3, z4]
-    simpa only [TensorProduct.map_tmul, restrict_identity, restrict_leftUnit_jAt] using
-      (normalizedPair_input hD (ModuleHom.id (dualModule B)) (leftUnitIso hD B).hom
-        (-d) d (dualIota B d ψ ⊗ₜ[ℂ]
-          jAt (I D) B hD d ⟨(0,d),zero_add d⟩ (eta0 hD ⊗ₜ[ℂ] y)) v)
+    rw [normalizedPair_input, TensorProduct.map_tmul, restrict_identity]
+    have hu := restrict_leftUnit_jAt (hD := hD) (A := B) d y
+    rw [hu]
   have h4 : f4 z4 = (unitCharacter D hD (-d) * ψ y) • z5 := by
     exact evaluation_normalized hD B d ψ y v
   have hcalc {V0 : Type*} {V1 : Type*} {V2 : Type*}
