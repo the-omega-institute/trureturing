@@ -63,7 +63,7 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                     + "inequality. For d>=0 the separate intervals [x(i),x(i)+d] have disjoint "
                     + "interiors; inclusion is required only for the width-w images. Negative d "
                     + "is also allowed algebraically, and no contraction upper bound is needed "
-                    + "here. This estimate supplies short_return_width_lower_bound."))),
+                    + "here. This estimate supplies short_return_width_lower_bound_of_chain."))),
                 DescribeRole.Lemma),
             Describe.Lean(
                 DescribeId.Create("short-return-synchronization-bound"),
@@ -95,6 +95,23 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
             Describe.Lean(
                 DescribeId.Create("short-return-width-lower-bound"),
                 DeclarationHandle.Create(Prefix + "short_return_width_lower_bound"),
+                H("Arithmetic transport of a supplied packing inequality"),
+                StatementSource.FromAuthor(Disp(AllNat(new[] { "a", "b", "n", "p" },
+                    AllReal(new[] { "g", "d", "w" }, Imp(
+                        Conj(Lt(Digit(0), G), Lt(G, Digit(1)), Le(Digit(0), D),
+                            LengthHypotheses(), Lt(Digit(0), A), Lt(Digit(0), B),
+                            Le(Mul(Pow(G, Sync), D), Mul(Sub(Digit(1), Pow(G, Sync)), W))),
+                        Le(Mul(Ratio(Bound), D), W)))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "This arithmetic helper assumes packing at the actual LCM, divides by its "
+                    + "positive denominator, and applies the LCM and ratio helpers. "
+                    + "It is used by short_return_width_lower_bound_of_chain, which derives "
+                    + "the packing premise from interval inclusion and adjacent separation."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("short-return-width-lower-bound-of-chain"),
+                DeclarationHandle.Create(Prefix + "short_return_width_lower_bound_of_chain"),
                 H("Transport the accumulated packing estimate to the uniform scale"),
                 StatementSource.FromAuthor(Disp(AllNat(new[] { "a", "b", "n", "p", "k" },
                     AllReal(new[] { "g", "d", "w", "u" }, All(new[] { "x" }, StartsType, Imp(
@@ -110,7 +127,7 @@ internal sealed class ShortReturnWidthTransportDocument : IScribeDocumentDefinit
                         + "The arithmetic helpers give L<=M and decrease the ratio, yielding "
                         + "w>=k g^M d/(1-g^M). The k=1 specialization recovers the two-cylinder "
                         + "width bound. The cardinality factor retains the full chain estimate; "
-                        + "no packing inequality is assumed as a premise.")),
+                        + "no packing inequality is assumed as a premise of this chain application.")),
                     Paragraph(Text(
                         "These are abstract intervals with positive affine orientation. "
                         + "The graph/SCC existence argument, actual short returns at each basepoint, "

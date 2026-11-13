@@ -94,11 +94,33 @@ theorem contraction_ratio_antitone {g : ℝ} (hg : 0 < g) (hgone : g < 1)
   have hden : 0 < 1 - g ^ L := sub_pos.mpr (pow_lt_one₀ hg.le hgone (Nat.ne_of_gt hL))
   exact div_le_div₀ (pow_nonneg hg.le L) hpow hden (sub_le_sub_left hpow 1)
 
-/-- Conditional width bridge from an explicit chain of affine intervals at the actual
-least common multiple. Return existence, phase divisibility and the identification
-with original legal cylinders remain hypotheses or outside the statement. -/
-theorem short_return_width_lower_bound {a b n p k : ℕ} {g d w u : ℝ} (x : ℕ → ℝ)
-    (hg : 0 < g) (hgone : g < 1) (hd : 0 ≤ d) (hw : 0 ≤ w) (hp : 0 < p)
+/-- Conditional width bridge for short returns. The graph/source argument must supply
+positive lengths, phase divisibility, the short-return bounds and the packing estimate
+at their actual least common multiple. This theorem supplies none of those premises. -/
+theorem short_return_width_lower_bound {a b n p : ℕ} {g d w : ℝ}
+    (hg : 0 < g) (hgone : g < 1) (hd : 0 ≤ d) (hp : 0 < p)
+    (ha0 : 0 < a) (hb0 : 0 < b) (hpa : p ∣ a) (hpb : p ∣ b)
+    (ha : a ≤ n) (hb : b ≤ 2 * n - 1)
+    (hpacking : g ^ Nat.lcm a b * d ≤ (1 - g ^ Nat.lcm a b) * w) :
+    g ^ (p * (n / p) * ((2 * n - 1) / p)) /
+      (1 - g ^ (p * (n / p) * ((2 * n - 1) / p))) * d ≤ w := by
+  have hL : 0 < Nat.lcm a b := Nat.lcm_pos ha0 hb0
+  have hLM := synchronized_length_le_phase_bound hp hpa hpb ha hb
+  have hratio := contraction_ratio_antitone hg hgone hL hLM
+  have hden : 0 < 1 - g ^ Nat.lcm a b :=
+    sub_pos.mpr (pow_lt_one₀ hg.le hgone (Nat.ne_of_gt hL))
+  calc
+    _ ≤ (g ^ Nat.lcm a b / (1 - g ^ Nat.lcm a b)) * d :=
+      mul_le_mul_of_nonneg_right hratio hd
+    _ = (g ^ Nat.lcm a b * d) / (1 - g ^ Nat.lcm a b) := by ring
+    _ ≤ w := (div_le_iff₀ hden).2 (by simpa [mul_comm] using hpacking)
+
+
+/-- Derive the packing premise of `short_return_width_lower_bound` from a finite
+chain of affine interval images. There are `k+1` starts and `k` gaps; `k=1`
+recovers the two-cylinder bound. No actual graph return or legal cylinder is constructed. -/
+theorem short_return_width_lower_bound_of_chain {a b n p k : ℕ} {g d w u : ℝ}
+    (x : ℕ → ℝ) (hg : 0 < g) (hgone : g < 1) (hd : 0 ≤ d) (hw : 0 ≤ w) (hp : 0 < p)
     (ha0 : 0 < a) (hb0 : 0 < b) (hpa : p ∣ a) (hpb : p ∣ b)
     (ha : a ≤ n) (hb : b ≤ 2 * n - 1)
     (hinside : ∀ i ≤ k,
@@ -108,15 +130,8 @@ theorem short_return_width_lower_bound {a b n p k : ℕ} {g d w u : ℝ} (x : �
     g ^ (p * (n / p) * ((2 * n - 1) / p)) /
       (1 - g ^ (p * (n / p) * ((2 * n - 1) / p))) * ((k : ℝ) * d) ≤ w := by
   have hpacking := affine_cylinder_chain_packing x hg hw hinside hseparated
-  have hL : 0 < Nat.lcm a b := Nat.lcm_pos ha0 hb0
-  have hLM := synchronized_length_le_phase_bound hp hpa hpb ha hb
-  have hratio := contraction_ratio_antitone hg hgone hL hLM
-  have hden : 0 < 1 - g ^ Nat.lcm a b :=
-    sub_pos.mpr (pow_lt_one₀ hg.le hgone (Nat.ne_of_gt hL))
-  calc
-    _ ≤ (g ^ Nat.lcm a b / (1 - g ^ Nat.lcm a b)) * ((k : ℝ) * d) :=
-      mul_le_mul_of_nonneg_right hratio (mul_nonneg (Nat.cast_nonneg k) hd)
-    _ = (g ^ Nat.lcm a b * ((k : ℝ) * d)) / (1 - g ^ Nat.lcm a b) := by ring
-    _ ≤ w := (div_le_iff₀ hden).2 (by nlinarith [hpacking])
+  apply short_return_width_lower_bound hg hgone (mul_nonneg (Nat.cast_nonneg k) hd)
+    hp ha0 hb0 hpa hpb ha hb
+  nlinarith [hpacking]
 
 end D5.S1.Words.ReturnWords.ShortReturnWidthTransport
