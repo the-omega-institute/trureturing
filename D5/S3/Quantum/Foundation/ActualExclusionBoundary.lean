@@ -225,7 +225,7 @@ theorem original_all_repeated_boundary_quotient
     isClosed_intrinsicFrontier (affineSpan ℝ (base C u)).closed_of_finiteDimensional
   have hSK : S ⊆ base C u := intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed
   have hScompact : IsCompact S := (base_compact hclosed hstrict).of_isClosed_subset hSclosed hSK
-  letI : CompactSpace S := hScompact.compactSpace
+  let : CompactSpace S := isCompact_iff_compactSpace.mp hScompact
   have crit := (original_boundary_cover_and_midpoint hclosed hstrict hgen hB).2
   let r : Setoid S :=
     { r := fun x y => midpoint ℝ (x : V) (y : V) ∈ S
@@ -240,8 +240,12 @@ theorem original_all_repeated_boundary_quotient
           · exact (crit x (hSK x.property) z (hSK z.property)).mpr ⟨p, hxp, he.symm ▸ hzq⟩
           · exact ((Set.disjoint_left.mp hd) hyp hyq).elim⟩ }
   have hgraph : IsClosed {z : S × S | r z.1 z.2} := by
-    exact hSclosed.preimage ((continuous_subtype_val.comp continuous_fst).midpoint
-      (continuous_subtype_val.comp continuous_snd))
+    apply hSclosed.preimage
+    rw [show (fun z : S × S => midpoint ℝ (z.1 : V) (z.2 : V)) =
+      (fun z => (1 / 2 : ℝ) • ((z.1 : V) + (z.2 : V))) by
+        funext z; simp [midpoint_eq_smul_add, invOf_eq_inv]]
+    exact ((continuous_subtype_val.comp continuous_fst).add
+      (continuous_subtype_val.comp continuous_snd)).const_smul _
   let q : S → Quotient r := Quotient.mk r
   have hq : IsQuotientMap q := isQuotientMap_quotient_mk'
   have hqclosed : IsClosedMap q := by
@@ -264,7 +268,7 @@ theorem original_all_repeated_boundary_quotient
     obtain ⟨a, rfl⟩ := Quotient.exists_rep b
     have he : q ⁻¹' {q a} = {c | r a c} := by
       ext c
-      simp only [mem_preimage, mem_singleton_iff, mem_setOf_eq]
+      simp only [mem_preimage, mem_singleton_iff, mem_ofPred_eq]
       exact ⟨fun h => Quotient.exact h.symm, fun h => (Quotient.sound h).symm⟩
     rw [he]
     exact (hgraph.preimage (continuous_const.prodMk continuous_id)).isCompact
