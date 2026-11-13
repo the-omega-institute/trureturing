@@ -357,4 +357,73 @@ theorem original_full_face_budget
 
 #print axioms original_full_face_budget
 
+private theorem whole_budget_transport {p : pure C u}
+    (a b : ExclusionChart C u p) (A B : ℝ)
+    (ha : ∀ h : EuclideanSpace ℝ (Fin a.dim) →ᵃ[ℝ] ℝ,
+      (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z ∧ h z ≤ 1) →
+      ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ A * u x) ∧
+        ∀ z, ‖z‖ ≤ 1 → g (a.param z) = h z)
+    (hb : ∀ h : EuclideanSpace ℝ (Fin b.dim) →ᵃ[ℝ] ℝ,
+      (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z ∧ h z ≤ 1) →
+      ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ B * u x) ∧
+        ∀ z, ‖z‖ ≤ 1 → g (b.param z) = h z) :
+    ∀ h : EuclideanSpace ℝ (Fin a.dim) →ᵃ[ℝ] ℝ,
+      (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z ∧ h z ≤ 1) →
+      ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ B * u x) ∧
+        ∀ z, ‖z‖ ≤ 1 → g (a.param z) = h z := by
+  intro h hh
+  obtain ⟨f, _, hf⟩ := ha h hh
+  let j := f.toAffineMap.comp b.param
+  have hj (z) (hz : ‖z‖ ≤ 1) : 0 ≤ j z ∧ j z ≤ 1 := by
+    obtain ⟨w, hw, heq⟩ := a.whole.symm ▸ SingleLabelNormalBody.chart_mem b hz
+    have hw' : ‖w‖ ≤ 1 := by simpa using hw
+    change 0 ≤ f (b.param z) ∧ f (b.param z) ≤ 1
+    rw [← heq, hf w hw']
+    exact hh w hw'
+  obtain ⟨g, hg, hgj⟩ := hb j hj
+  refine ⟨g, hg, ?_⟩
+  intro z hz
+  obtain ⟨w, hw, heq⟩ := b.whole.symm ▸ SingleLabelNormalBody.chart_mem a hz
+  have hw' : ‖w‖ ≤ 1 := by simpa using hw
+  calc
+    g (a.param z) = g (b.param w) := congrArg g heq.symm
+    _ = f (b.param w) := hgj w hw'
+    _ = h z := by rw [heq, hf z hz]
+
+/-- The common scale and the actual optimal budget are independent of every
+choice of coordinates for this same full original exclusion. -/
+theorem original_chart_independence
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (p : pure C u) (a b : ExclusionChart C u p) :
+    ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
+      (∀ v : EuclideanSpace ℝ (Fin a.dim), ‖v‖ = 1 →
+        extensionBudget a v = 1 / (2 * t)) ∧
+      (∀ v : EuclideanSpace ℝ (Fin b.dim), ‖v‖ = 1 →
+        extensionBudget b v = 1 / (2 * t)) := by
+  obtain ⟨ta, hta, htah, hda, hla, hma⟩ := original_full_face_budget hc hs hg hB hPR p a
+  obtain ⟨tb, htb, htbh, hdb, hlb, hmb⟩ := original_full_face_budget hc hs hg hB hPR p b
+  have hfa : ∀ h : EuclideanSpace ℝ (Fin a.dim) →ᵃ[ℝ] ℝ,
+      (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z ∧ h z ≤ 1) →
+      ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ (1 / (2 * ta)) * u x) ∧
+        ∀ z, ‖z‖ ≤ 1 → g (a.param z) = h z := by
+    intro h hh
+    obtain ⟨g, hg0, hgz, hg1⟩ := hla h (fun z hz => (hh z hz).1)
+    exact ⟨g, fun x hx => ⟨hg0 x hx, hg1 (fun z hz => (hh z hz).2) x hx⟩, hgz⟩
+  have hfb : ∀ h : EuclideanSpace ℝ (Fin b.dim) →ᵃ[ℝ] ℝ,
+      (∀ z, ‖z‖ ≤ 1 → 0 ≤ h z ∧ h z ≤ 1) →
+      ∃ g : V →ₗ[ℝ] ℝ, (∀ x ∈ C, 0 ≤ g x ∧ g x ≤ (1 / (2 * tb)) * u x) ∧
+        ∀ z, ‖z‖ ≤ 1 → g (b.param z) = h z := by
+    intro h hh
+    obtain ⟨g, hg0, hgz, hg1⟩ := hlb h (fun z hz => (hh z hz).1)
+    exact ⟨g, fun x hx => ⟨hg0 x hx, hg1 (fun z hz => (hh z hz).2) x hx⟩, hgz⟩
+  have heq : 1 / (2 * ta) = 1 / (2 * tb) := le_antisymm
+    (hma _ (whole_budget_transport a b _ _ hfa hfb))
+    (hmb _ (whole_budget_transport b a _ _ hfb hfa))
+  exact ⟨ta, hta, htah, fun v hv => (hda v hv).2.2,
+    fun v hv => ((hdb v hv).2.2).trans heq.symm⟩
+
+#print axioms original_chart_independence
+
 end D5.S3.Quantum.Foundation.OriginalBallScale
