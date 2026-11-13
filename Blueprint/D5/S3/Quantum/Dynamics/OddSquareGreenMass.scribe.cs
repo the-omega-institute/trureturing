@@ -37,7 +37,7 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "also needs the exact word-to-hopping correspondence, sublattice spectral identification "
                 + "and initial short prefixes. No infinite-volume spectrum, localization, quasimode or "
                 + "filling hypothesis enters this theorem.", DescribeRole.Theorem),
-            H("Application: a Euclidean estimate for the full inverse"),
+            new DocumentBlock.Section(H("Application: a Euclidean estimate for the full inverse"), Blocks(
             Paragraph(Text(
                 "Let t be a positive real hopping sequence bounded above by one, and let n,a,q be "
                 + "natural numbers with q at least one and a+2q+1 at most n. Assume exactly the "
@@ -45,7 +45,7 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "on the Euclidean space R^n, x=(1,...,1) and v=x/sqrt(n). The hypotheses imply n>0. "
                 + "The quadratic mass theorem has the following consequence, without a new "
                 + "mathematical declaration:")),
-            Disp(FullInverseEstimate()),
+            new DocumentBlock.DisplayFormula(FullInverseEstimate()),
             Paragraph(Text(
                 "The forward-substitution formula transports each local inverse entry to G by "
                 + "adding a to both indices: the defining recursion has the same initial term and "
@@ -63,7 +63,7 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "sequence, reordering the physical symmetric matrix into its sublattices, "
                 + "performing the sign conjugation, relating its eigenvalues to the block's "
                 + "singular values and treating the short prefixes remain separate obligations. "
-                + "No all-prefix Tribonacci spectral rate or entropy law is asserted.")))));
+                + "No all-prefix Tribonacci spectral rate or entropy law is asserted.")))))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) => Describe.Lean(
