@@ -118,7 +118,7 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
                             + "three-state bucket-brigade construction require separate arguments."))),
                 DescribeRole.Theorem))));
 
-    private static Formula CorrectnessFormula() => Disp(new Formula.Aligned([
+    private static Formula CorrectnessFormula() => Disp(ConjoinedRows([
         All("n", Naturals(), All("a", Addresses(), All("i", Addresses(), All("e", Q("Bool"),
             Equal(Call("leaf", X("n"), Call("route", X("n"), X("a"), Clean(X("e"))), X("i")),
                 At(Q("ite"), Equal(X("i"), X("a")), X("e"), Q("Bool", "false"))))))),
@@ -144,12 +144,18 @@ internal sealed class ReversibleQramDocument : IScribeDocumentDefinition
     {
         var result = All("D", Arrow(Addresses(), X("G")), body);
         if (finite)
-            result = All("F", At(Q("Fintype"), X("G")),
-                All("E", At(Q("DecidableEq"), X("G")), result));
+            result = Instance(At(Q("Fintype"), X("G")),
+                Instance(At(Q("DecidableEq"), X("G")), result));
         return All("n", Naturals(), All("G", Q("Type"),
-            All("A", At(Q("AddCommGroup"), X("G")), result)));
+            Instance(At(Q("AddCommGroup"), X("G")), result)));
     }
 
+    private static Formula ConjoinedRows(Formula[] clauses) => new Formula.Aligned([
+        .. System.Linq.Enumerable.Select(clauses, (clause, index) => index == 0
+            ? Seq(Open, clause, Close)
+            : Seq(Land, Sp, Open, clause, Close))]);
+    private static Formula Instance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, Sp, body);
     private static Formula X(string name) => F.Id(name);
     private static Formula Q(params string[] parts)
     {
