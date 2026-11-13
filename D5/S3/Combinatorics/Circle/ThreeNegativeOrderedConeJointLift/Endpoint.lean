@@ -22,9 +22,6 @@ open private label lift_order marked_word from
 open private mask_labels mask_labels_bound mask_labels_sum labelled_permutation from
   D5.S3.Combinatorics.Circle.ThreeBitSource
 
-open private paired_chains from
-  D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
-
 open private
   list_map_cons_sum
   int_half_two_mul fresh_prefix_sum_bridge fresh_prefix_bounds
@@ -130,7 +127,8 @@ theorem actualSource_three_negative_ordered_cone_joint_lift (a b c : ℕ)
       simpa only [k] using cone_length_new a b c ha hab hbc
     exact doubled_source_zero_cast (k + 1) (1 + 2 ^ a + 2 ^ (a + b)) u hknew hseed
   obtain ⟨hu, hB, hL, hU, hV, hW, hfA, hfB, hfG, hgA, hgB, hgG, hgear⟩ :=
-    paired_chains a b c (by omega) (by omega) (by omega)
+    D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift.paired_chains a b c
+      (by omega) (by omega) (by omega)
   change (1 ≤ u ∧ u < N) at hu
   change (1 ≤ B ∧ B < N) at hB
   change (1 ≤ L ∧ L < N) at hL
