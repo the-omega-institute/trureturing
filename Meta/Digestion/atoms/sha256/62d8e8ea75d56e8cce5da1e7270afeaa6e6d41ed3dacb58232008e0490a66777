@@ -1,0 +1,41 @@
+**Definition 27.2 (prescribed suffixes and their interruptions).** Fix a
+normal connector starting at $s=t_i$. Initially its progress parameter
+is $v_0=0$ and its first issue time is $r_0=s$. On attempt $j\ge0$ put
+
+$$
+\epsilon_j=\frac\rho4\,2^{-j},\qquad
+h_j=c_\lambda\rho^2 4^{-j}.
+\tag{27.4}
+$$
+
+At the stopping time $r_j$, with current progress $v_j<1$, prescribe
+the complete zero-start numerical profile
+
+$$
+\gamma_j(u)=
+ g_i\left(v_j+(1-v_j)\min\{u/h_j,1\}\right)-g_i(v_j),
+\qquad 0\le u\le T.
+\tag{27.5}
+$$
+
+It is piecewise linear, completes the remaining geometric suffix in
+original time $h_j$, and then holds. No future observation enters
+this profile. Define the next target threshold after issuance by
+
+$$
+\theta_j=\inf\{u>0:
+ |W^1_{r_j+u}-W^1_{r_j}|\ge\epsilon_j\ \hbox{or}\
+ |W^2_{r_j+u}-W^2_{r_j}|\ge\epsilon_j\ \hbox{or}\
+ |C_{r_j,r_j+u}|\ge\epsilon_j^2\}.
+\tag{27.6}
+$$
+
+If $\theta_j<h_j$, interrupt at $r_{j+1}=r_j+\theta_j$ and set
+$v_{j+1}=v_j+(1-v_j)\theta_j/h_j$; then issue (27.5) for $j+1$.
+If $\theta_j\ge h_j$, finish at $r_j+h_j$ and retain its prescribed
+hold. Equality is treated as completion. The actual policy also
+interrupts at $\tau$ or $T$, as specified in §28. The unrestricted
+version of this suffix rule, used for estimates, ignores those two
+cutoffs and uses the auxiliary Brownian continuation. It is only a
+dominating construction, not extra observed information.
+

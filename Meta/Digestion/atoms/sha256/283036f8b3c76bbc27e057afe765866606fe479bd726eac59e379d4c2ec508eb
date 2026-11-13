@@ -1,0 +1,60 @@
+**Proposition 21.2 (endpoints, predictability and the precise obstruction).**
+The obstruction in Theorem 21.1 is compatible with predictable target
+exit and does not apply to every adapted AC history. Its operative
+conditions are: a numerical continuation fixed by the information at
+issuance; a last segment starting strictly before an actual native
+death; continuous joins with death determined by height; and the
+conditional atomlessness in (21.4).
+
+Proof. Put $d_* =\min(k-l,u-k)>0$ and $e_n=d_*2^{-n}$, and define
+
+$$
+\theta_0=0,\qquad
+\theta_n=\inf\{t\ge0:\operatorname{dist}(Y_t,\mathbb R\setminus I)
+                         \le e_n\}\quad(n\ge1).
+\tag{21.6}
+$$
+
+These are stopping times in the full target filtration. Continuity
+and $\tau<\infty$ give
+$\theta_n<\theta_{n+1}<\tau$ and $\theta_n\uparrow\tau$ almost
+surely: a finite limit below $\tau$ would have distance both positive
+and at most every $e_n$. Thus they announce $\tau$. This is
+predictability, not total inaccessibility. It does not supply a
+positive exact residual delay at any finite announcement.
+
+The proof of Theorem 21.1 uses only the four stated conditions at a
+segment causing death. In particular a class with countably many
+segments also satisfies that proof whenever every death has such a
+last segment. Merely forbidding accumulation strictly before death
+does not guarantee a last segment at death. Section 23 supplies an
+AC counterexample at precisely that boundary. A continuously
+observation-dependent velocity need not have a future profile
+measurable at any earlier issue time, so the proof does not cover
+that class either.
+
+On the stated interior-start contract there is no death at zero, and
+target death exactly at $T$ is null. If the contract were changed to
+start at $l$ or $u$, both own exits could be zero, so the strict
+interior premise cannot be dropped. The theorem concerns $T>0$;
+at a zero horizon an interior start has no observed death. Equality
+of the horizon-only cutoffs has the same probability ceiling as
+(21.2), since on $\{\tau<T\}$ it requires exact native death.
+However its equality event also allows native death at $T$ on
+target survival. This is why the death-record equality in (21.1)
+is the stated exact contract.
+
+Finally there cannot be an issuer-uniform null event by this argument.
+For every deterministic $s\in(0,T]$, the command that moves linearly
+from $k$ to $l$ over time $s$ and then holds is causal and lawful.
+Every target path with death at some $s\le T$ matches one member
+of this uncountable family. Selecting that member using the realized
+future $\tau$ is not a causal issuer. Similarly, an independent
+initial seed $R$ with the target exit-time distribution can prescribe
+this ramp with duration $R$. It matches the marginal lifetime law
+but, by Theorem 21.1, not a positive-probability coupled death event.
+Giving the actual $\tau$ at time zero would break Definition 20.1's
+information condition and would permit the ramp with duration
+$\tau$ to match lifetime. Neither construction tracks the full native
+target. $\square$
+

@@ -1,0 +1,40 @@
+**Definition 5.1 (additional finite Gaussian sampling).** Fix a real
+number $\lambda$ and $n=2^m$, with $\delta=T/n$ and $t_i=i\delta$.
+At this stage sample $n$ independent pairs
+
+$$
+(\Delta_i^1,\Delta_i^2)\sim N(0,2\delta I_2),
+\qquad i=0,\ldots,n-1.
+\tag{5.1}
+$$
+
+There is no sample rejection or reweighting. Put
+$x_i=\sum_{j<i}\Delta_j^1$, $y_i=\sum_{j<i}\Delta_j^2$.
+The following piecewise linear comparison extension
+$(a_n^\lambda,b_n^\lambda)$ is prescribed on each cell:
+
+1. In time $\delta/2$, follow the straight chord from $(x_i,y_i)$ to
+   $(x_{i+1},y_{i+1})$ at constant velocity.
+2. In the remaining time, traverse the rectangle with relative vertices
+   $(0,0),(s_n,0),(s_n,q_n),(0,q_n),(0,0)$ based at
+   $(x_{i+1},y_{i+1})$, giving each of its four legs time $\delta/8$, where
+
+$$
+s_n=\sqrt\delta,\qquad q_n=\lambda\sqrt\delta.
+\tag{5.2}
+$$
+
+Zero-length phase legs when $\lambda=0$ are simply holds. The horizontal
+out-and-back part is kept even in that case. All variants have exactly
+the same comparison height path $a_n$, the same mesh endpoints, and
+the same schedule in the original analytic time variable. Their phase
+control paths differ inside rectangles. There is no third random driver.
+
+The construction is an additional law on finite prescribed numerical
+commands. It uses finitely many Gaussian real variables at each stage;
+it asserts neither a physical Brownian actuator nor exact finite-precision
+sampling hardware. The coupling with a Brownian path used in the proof
+is a device for comparing these finite laws. Running a chord faster
+inside its cell is part of the stated finite command and its stated cost,
+not a change of the macroscopic diffusion clock.
+
