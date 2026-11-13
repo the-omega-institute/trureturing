@@ -1,0 +1,42 @@
+**命题 126.15（闭切片的双 proper 投影与 Čech 群）。** 对任一切过
+$\operatorname{ri}K$ 的仿射超平面 $L\subset A$，定义
+
+$$
+ A_L=\{x\in S:\mathcal Z(x)\cap L\ne\varnothing\},\qquad
+ \mathscr Z_L=\{(x,y)\in\mathscr Z:y\in L\}.
+ \tag{Q126.37}
+$$
+
+则 $A_L$ 与 $\mathscr Z_L$ 都紧，且两个投影
+
+$$
+ \mathscr Z_L\to A_L,\qquad
+ \mathscr Z_L\to S\cap L
+ \tag{Q126.38}
+$$
+
+都是 proper 连续满射，纤维分别为
+$\mathcal Z(x)\cap L$ 与 $\mathcal Z(y)$，均非空紧凸。对每个 $j\ge0$，有
+
+$$
+ \check H^j(A_L;\mathbb F_2)
+ \cong
+ \check H^j(S\cap L;\mathbb F_2)
+ \cong
+ \check H^j(S^{m-1};\mathbb F_2).
+ \tag{Q126.39}
+$$
+
+证明。$\mathscr Z_L=\mathscr Z\cap(K\times L)$ 是紧集，$A_L$ 是其第一投影像，故也紧。
+第一投影按定义满射，第二投影由 $\mathcal Z(y)\ne\varnothing$ 及零对称满射到 $S\cap L$。
+两目标均 Hausdorff，所以映射 proper。纤维由定义及对称性恰为所列两种紧凸集。
+对固定 $j$ 取整数 $n>j$，可缩纤维满足 Lawson Corollary 3.7 在
+$0,\ldots,n-1$ 次的逐纤维同构条件；在整个紧 Hausdorff 目标上应用该推论，
+两个拉回分别给源与各自目标的 Čech 群同构，从而得到(Q126.39)的第一个同构。
+
+因为 $L$ 切过 $\operatorname{ri}K$，$K\cap L$ 在 $L$ 中有非空相对内部。
+若其相对内点 $z$ 落在 $S$，取 $K$ 在 $z$ 处的非恒定支撑仿射函数。
+截面内点性迫使该函数在 $L$ 上恒为支撑值，这与 $L$ 含有 $K$ 的相对内点矛盾。
+因此 $S\cap L=\partial_L(K\cap L)$。从截面内点径向参数化得
+$\partial_L(K\cap L)\cong S^{m-1}$，给出第二个同构。证毕。
+
