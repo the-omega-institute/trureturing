@@ -32,6 +32,18 @@ Lean statement: `D5/S3/Quantum/Foundation/HermitianExclusionBall.all_pure_charts
 
 For every actual extreme point p of the entire positive semidefinite trace-one qutrit body, there is a native ExclusionChart of its entire original exclusion and its dimension is exactly three. There is no chosen finite family of labels and no rank assumption on excluded mixed states.
 
+**Theorem 1.3 (Rank one generation of the entire native positive cone).**
+
+Lean statement: `D5/S3/Quantum/Foundation/HermitianExclusionBall.whole_rog`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/HermitianExclusionBall.whole_rog` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite complex index type, ROG holds on the whole real Hermitian carrier. The original proof removes zero terms from the positive semidefinite sum-of-outer-products decomposition. Together with SectionROGFrame.whole_pure_carrier, this identifies every actual pure label in the whole-effect model application of the original state-cover theorem.
+
 The positive semidefinite sum-of-outer-products decomposition gives ROG on the whole Hermitian space; zero terms are removed and the remaining finite index type is reindexed without changing the sum. The existing whole_pure_carrier theorem therefore identifies all actual extreme points with unit outer products. The existing rog_frame theorem extends each such unit vector to a full complex orthonormal basis. Its two other columns form W: orthonormality gives W*W=I and the full frame sum gives WW*=I-vv*. Thus the preceding chart applies to every original pure label. Physical realization and literature priority are not asserted.
 
 The original labels are faithful as a consequence of the full kernel identity. For a unit outer product p=vv*, the trace bound for positive Hermitian matrices gives p<=I. Thus c=(I-p)/2 is positive, has trace one, and annihilates v, so c belongs to the entire original exclusion of p. If that exclusion equals the exclusion of q=ww*, the same kernel identity gives cw=0, hence pw=w and pq=q. Reversing the roles gives qp=p. Taking adjoints gives pq=p, and therefore p=q. The whole pure-carrier characterization makes this argument apply to every actual original pure point. Injectivity is derived without assuming it or reducing the allowed effects.
@@ -42,6 +54,7 @@ The positive cone is closed, and the trace is strictly positive on each nonzero 
 
 - Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionBall.all_pure_charts`
 - Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionBall.chart_of_full_frame`
+- Truth anchor: `D5/S3/Quantum/Foundation/HermitianExclusionBall.whole_rog`
 - Dependency: [D5/S3/Quantum/Foundation/ExclusionBallFaces](ExclusionBallFaces.md)
 - Dependency: [D5/S3/Quantum/Foundation/HermitianExclusionKernel](HermitianExclusionKernel.md)
 - Dependency: [D5/S3/Quantum/Measurement/FourQubitParentConstruction](../Measurement/FourQubitParentConstruction.md)

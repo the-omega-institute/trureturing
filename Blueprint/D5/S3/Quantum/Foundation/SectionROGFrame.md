@@ -114,7 +114,19 @@ $$\forall F \in Type,\; \forall J \in Type,\; [\operatorname{RCLike}\left(F\righ
 
 For every RCLike field F, finite index type J with decidable equality, and native Euclidean vector v of norm one, the real trace inner product of rankOne(v) with itself is one. The original rankOne_self declaration supplies the accepting value of the proper functional paired with rankOne(v) in HermitianExclusionKernel.exclusion_iff_kernel.
 
-**Theorem 1.10 (Extreme points equal the entire rank one family).**
+**Theorem 1.10 (A unit rank one reading determines a normalized positive matrix).**
+
+Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every native real or complex unit vector v and every PSD Hermitian X with trace one, the equality <rankOne(v),X>=1 implies X=rankOne(v). The original proof bounds the squared norm of X-rankOne(v) by zero. The whole-effect state-cover model uses this original declaration to identify every pure label, without assuming the label has rank one.
+
+**Theorem 1.11 (Extreme points equal the entire rank one family).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.whole_pure_carrier`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.whole_pure_carrier`
 
 For every real subspace L satisfying ROG(L), the real extreme points of the entire base(L) equal pureRanks(L). No assumption I in L is needed for this equality. Normalize every nonzero ROG term w(j) by its Euclidean norm and use its squared norm as the positive coefficient. The trace-one equation makes the coefficients sum to one, proving base(L)=convexHull(pureRanks(L)). Conversely a unit rank one p is extreme: the trace pairing <p,X> is at most one for every normalized PSD X, and equality forces X=p by the trace bound <X,X><=tr(X)^2 and the squared norm of X-p. A nontrivial segment decomposition of p therefore has both endpoints equal to p. This equality is consumed in rog_frame to identify every frame point as an original pure state.
 
-**Theorem 1.11 (A full orthonormal frame with the prescribed entry).**
+**Theorem 1.12 (A full orthonormal frame with the prescribed entry).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.rog_frame`
 
@@ -191,6 +203,7 @@ The full original frame and the positive-extension, finite-effect and geometry a
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.ROG`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.base`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.pair_rankOne`
+- Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.pureRanks`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_nonneg`
