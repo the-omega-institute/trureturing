@@ -307,38 +307,48 @@ private def cutsToParams (n : ℕ) (u : ValidCuts n) : Parameters n := by
   split_ifs <;> omega
 
 /-- The interval parameterization retains its strict endpoint and its sole extra inclusive endpoint. -/
-private def parameterEquiv (n : ℕ) : ValidCuts n ≃ Parameters n where
-  toFun := cutsToParams n
-  invFun := paramsToCuts n
-  left_inv := by
-    intro u
-    apply Subtype.ext
-    have hpq := u.1.pq
-    have hqr := u.1.qr
-    have hrn := u.1.rn
-    have hp := u.2.2.2
-    have hq := u.2.2.1
-    have hp' : (paramsToCuts n (cutsToParams n u)).1.p = u.1.p := by
-      change (n - u.1.r) + (u.1.p - (n - u.1.r)) = u.1.p
-      omega
-    have hq' : (paramsToCuts n (cutsToParams n u)).1.q = u.1.q := by
-      change n - (n - u.1.q) = u.1.q
-      omega
-    have hr' : (paramsToCuts n (cutsToParams n u)).1.r = u.1.r := by
-      change n - (n - u.1.r) = u.1.r
-      omega
-    generalize hv : (paramsToCuts n (cutsToParams n u)).val = v at hp' hq' hr' ⊢
-    obtain ⟨p, q, r, hpqv, hqrv, hrnv⟩ := v
-    obtain ⟨⟨p', q', r', hpqu, hqru, hrnu⟩, hu⟩ := u
-    simp_all
-  right_inv := by
-    rintro ⟨t, d, x⟩
-    have ht := t.isLt
-    have hd := d.isLt
-    have hnt : n - (n - t.val) = t.val := by omega
-    have hnd : n - (n - d.val) = d.val := by omega
-    dsimp [cutsToParams, paramsToCuts]
-    simp only [hnt, hnd, Nat.add_sub_cancel_left]
+private noncomputable def parameterEquiv (n : ℕ) : ValidCuts n ≃ Parameters n :=
+  (Equiv.ofBijective (paramsToCuts n) (by
+    constructor
+    · rintro ⟨t, d, x⟩ ⟨s, e, y⟩ h
+      have hq := congrArg (fun u : ValidCuts n => u.1.q) h
+      change n - t.val = n - s.val at hq
+      have ht := t.isLt
+      have hs := s.isLt
+      have hts : t = s := Fin.ext (by omega)
+      subst s
+      have hr := congrArg (fun u : ValidCuts n => u.1.r) h
+      change n - d.val = n - e.val at hr
+      have hd := d.isLt
+      have he := e.isLt
+      have hde : d = e := Fin.ext (by omega)
+      subst e
+      have hp := congrArg (fun u : ValidCuts n => u.1.p) h
+      change d.val + x.val = d.val + y.val at hp
+      have hxy : x = y := Fin.ext (by omega)
+      subst y
+      rfl
+    · intro u
+      refine ⟨cutsToParams n u, ?_⟩
+      apply Subtype.ext
+      have hpq := u.1.pq
+      have hqr := u.1.qr
+      have hrn := u.1.rn
+      have hp := u.2.2.2
+      have hq := u.2.2.1
+      have hp' : (paramsToCuts n (cutsToParams n u)).1.p = u.1.p := by
+        change (n - u.1.r) + (u.1.p - (n - u.1.r)) = u.1.p
+        omega
+      have hq' : (paramsToCuts n (cutsToParams n u)).1.q = u.1.q := by
+        change n - (n - u.1.q) = u.1.q
+        omega
+      have hr' : (paramsToCuts n (cutsToParams n u)).1.r = u.1.r := by
+        change n - (n - u.1.r) = u.1.r
+        omega
+      generalize hv : (paramsToCuts n (cutsToParams n u)).val = v at hp' hq' hr' ⊢
+      obtain ⟨p, q, r, hpqv, hqrv, hrnv⟩ := v
+      obtain ⟨⟨p', q', r', hpqu, hqru, hrnu⟩, hu⟩ := u
+      simp_all)).symm
 
 /-- Cardinality is transported from actual matrices through both genuine equivalences. -/
 private theorem card_arrays (n : ℕ) : a n =
@@ -360,10 +370,14 @@ private theorem inner_double (n t : ℕ) (ht : 2 * t ≤ n) :
       Nat.cast_sub (by omega : t ≤ n)]
     split_ifs <;> norm_num
   have he : (∑ d : Fin (t + 1), (if d.val = t then 1 else 0 : ℤ)) = 1 := by
-    simp [Fin.sum_univ_eq_sum_range]
+    change (∑ d : Fin (t + 1), (fun j : ℕ => if j = t then (1 : ℤ) else 0) d.val) = 1
+    rw [Fin.sum_univ_eq_sum_range]
+    simp
   have hid : (∑ d : Fin (t + 1), (d.val : ℤ)) * 2 = (t : ℤ) * (t + 1) := by
     have hnat : (∑ d : Fin (t + 1), d.val) * 2 = t * (t + 1) := by
-      simpa [Fin.sum_univ_eq_sum_range, Nat.mul_comm] using sum_range_id_mul_two (t + 1)
+      change (∑ d : Fin (t + 1), (fun j : ℕ => j) d.val) * 2 = t * (t + 1)
+      rw [Fin.sum_univ_eq_sum_range]
+      simpa [Nat.mul_comm] using sum_range_id_mul_two (t + 1)
     exact_mod_cast hnat
   rw [Nat.cast_sum]
   simp_rw [hcast]
@@ -386,7 +400,7 @@ private theorem total_double (n m : ℕ) (hm : 2 * m ≤ n) :
     have hlast := inner_double n (m + 1) hm
     rw [Fin.sum_univ_castSucc]
     simp only [Fin.val_castSucc, Fin.val_last]
-    push_cast at hlast ⊢
+    push_cast at hprev hlast ⊢
     nlinarith [hprev, hlast]
 
 /-- The evaluated count retains floor(n/2), before separating the two parities. -/
@@ -404,11 +418,13 @@ theorem result : claim := by
   rcases hp with hp | hp
   · have hs : (-1 : ℤ) ^ n = 1 := by rw [hp, pow_mul]; norm_num
     have hn : (n : ℤ) = 2 * (n / 2 : ℕ) := by exact_mod_cast hp
-    rw [hs, hn] at *
+    rw [hs]
+    rw [hn] at h ⊢
     linear_combination 16 * h
   · have hs : (-1 : ℤ) ^ n = -1 := by rw [hp, pow_add, pow_mul]; norm_num
     have hn : (n : ℤ) = 2 * (n / 2 : ℕ) + 1 := by exact_mod_cast hp
-    rw [hs, hn] at *
+    rw [hs]
+    rw [hn] at h ⊢
     linear_combination 16 * h
 
 end D5.S3.Combinatorics.PermutationArrays.EtiennePrefixCount
