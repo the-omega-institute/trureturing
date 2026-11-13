@@ -211,6 +211,71 @@ private theorem averaged_near (τ : A →L[ℂ] ℂ) (p : A → ℝ) (K : ℝ)
   simpa using norm_integral_le_of_norm_le_const
     (μ := probabilityHaar) (Filter.Eventually.of_forall hb)
 
+/-- Riesz representation in the original metric, with the quantitative bound
+kept in that metric. This helper is consumed by the joint trace construction. -/
+private theorem original_gram (B C : InnerProductSpace.Core ℂ A) (r : ℝ)
+    (hnear : ∀ x y, ‖C.inner x y - B.inner x y‖ ≤
+      r * hilbertNorm B x * hilbertNorm B y) :
+    ∃ G : A ≃ₗ[ℂ] A,
+      (∀ x y, B.inner (G x) y = C.inner x y) ∧
+      (∀ x, hilbertNorm B (G x - x) ≤ r * hilbertNorm B x) := by
+  letI := B
+  letI := B.toNormedAddCommGroup
+  letI := InnerProductSpace.ofCore B
+  letI := FiniteDimensional.completeSpace ℂ A
+  let row (x : A) : A →ₗ[ℂ] ℂ :=
+    { toFun := C.inner x
+      map_add' := by
+        letI := C
+        exact InnerProductSpace.Core.inner_add_right x
+      map_smul' := by
+        letI := C
+        intro c y
+        exact InnerProductSpace.Core.inner_smul_right x y }
+  let form : A →ₗ⋆[ℂ] A →L[ℂ] ℂ :=
+    { toFun := fun x => (row x).toContinuousLinearMap
+      map_add' := by
+        intro x y
+        ext z
+        exact C.add_left x y z
+      map_smul' := by
+        intro c x
+        ext y
+        exact C.smul_left x y c }
+  let H : A →L[ℂ] A := InnerProductSpace.continuousLinearMapOfBilin
+    ⟨form, form.continuous_of_finiteDimensional⟩
+  have hH (x y : A) : B.inner (H x) y = C.inner x y :=
+    InnerProductSpace.continuousLinearMapOfBilin_apply _ x y
+  have hinj : Function.Injective H := by
+    apply (injective_iff_map_eq_zero H).mpr
+    intro x hx
+    apply C.definite x
+    rw [← hH, hx]
+    exact InnerProductSpace.Core.inner_zero_left _
+  let G : A ≃ₗ[ℂ] A := LinearEquiv.ofBijective H.toLinearMap
+    ⟨hinj, (LinearMap.injective_iff_surjective (f := H.toLinearMap)).mp hinj⟩
+  refine ⟨G, hH, ?_⟩
+  intro x
+  let v := G x - x
+  have hv : ‖v‖ ^ 2 ≤ r * hilbertNorm B x * ‖v‖ := by
+    have hi := hnear x v
+    have he : B.inner v v = C.inner x v - B.inner x v := by
+      change B.inner (H x - x) v = _
+      rw [InnerProductSpace.Core.inner_sub_left, hH]
+    have hn : ‖B.inner v v‖ = ‖v‖ ^ 2 := by
+      simpa using (norm_inner_self v)
+    rw [← he, hn] at hi
+    exact hi
+  change ‖v‖ ≤ r * hilbertNorm B x
+  by_cases hz : v = 0
+  · have hr : 0 ≤ r := by
+      have h := hnear 1 1
+      have hp : 0 < hilbertNorm B (1 : A) := norm_pos_iff.mpr one_ne_zero
+      nlinarith [norm_nonneg (C.inner 1 1 - B.inner 1 1)]
+    simpa [hz] using mul_nonneg hr (Real.sqrt_nonneg (B.inner x x).re)
+  · have hp : 0 < ‖v‖ := norm_pos_iff.mpr hz
+    nlinarith
+
 /-- On the original finite complex vector space, an associative C-star product
 close to the original adjoint-compatible product supplies one faithful unital
 trace. Its positive Hermitian form has the original quantitative bound.
