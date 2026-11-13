@@ -1,0 +1,22 @@
+**Definition 13.1 (maximum-coordinate native path metric).** On the
+held cylinder declare
+
+$$
+\begin{aligned}
+d_{\max}((h,\alpha,\beta),(h',\alpha',\beta'))
+ &=\max\{|h-h'|,d_{\mathbb T}(\alpha,\alpha'),
+                   d_{\mathbb T}(\beta,\beta')\},\\
+d_{\mathbb T}([x],[y])&=\min_{j\in\mathbb Z}|x-y-2\pi j|,\\
+D_{\max}(q,q')&=\sup_{0\le t\le T}d_{\max}(q(t),q'(t)).
+\end{aligned}
+\tag{13.1}
+$$
+
+This is an additional, unweighted coordinate error metric, with angles
+measured in radians. It is not the horizontal path length (11.4).
+A native accuracy contract consists of
+$D_{\max}(\bar q_n,\bar q^\lambda)\le\eta_n\to0$ and
+$\zeta_n\to\zeta$ on the same coupling, with common fixed initial
+phase representatives. Errors $\eta_n>0$ may be random. The metric
+tracks the entire held path; the lifetime is retained separately.
+

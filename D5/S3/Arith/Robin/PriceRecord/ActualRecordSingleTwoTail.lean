@@ -42,7 +42,7 @@ open D5.S3.Arith.Robin.PriceRecord.ActualFiveModeSmallSlack
 /- Quantitative separation for the ACTUAL marginal. We use the existing
 beta_nat reconciliation rather than postulating a different spectrum.
 For s = powerSum j 2 > 0, the next sum is exactly 2*s+2. -/
-private theorem two_layer_halving {j : ℕ} (hj : 1 ≤ j) :
+theorem two_layer_halving {j : ℕ} (hj : 1 ≤ j) :
     2 * goldenLayerMarginal 2 (j + 1) < goldenLayerMarginal 2 j := by
   let s : ℝ := powerSum j 2
   have hs : 0 < s := powerSum_pos (by norm_num) hj
@@ -74,7 +74,7 @@ private theorem two_layer_halving {j : ℕ} (hj : 1 ≤ j) :
         (2 * log (1 + 1 / (2 * s + 2))) / log 2 := by ring
     _ < _ := div_lt_div_of_pos_right hlog (log_pos (by norm_num))
 
-private theorem marginal_antitone {i j : ℕ} (hi : 1 ≤ i) (hij : i ≤ j) :
+theorem marginal_antitone {i j : ℕ} (hi : 1 ≤ i) (hij : i ≤ j) :
     goldenLayerMarginal 2 j ≤ goldenLayerMarginal 2 i := by
   rcases eq_or_lt_of_le hij with rfl | hlt
   · exact le_rfl
@@ -175,7 +175,7 @@ private theorem record_clock_price_limits {α : Type*} {l : Filter α}
 /- One threshold before ALL (m,mu), obtained on the space of all original
 positive-price strict records. No compactness, fixed mu or record sequence
 is supplied as an extra premise. -/
-private theorem uniform_price_and_error (C : ℝ) :
+theorem uniform_price_and_error (C : ℝ) :
     ∃ T0 : ℝ, 0 < T0 ∧
       ∀ m : ℕ, 2 ≤ m → ∀ mu : ℝ, 0 < mu → FullRecord m mu →
         T0 ≤ (largestPrime m : ℝ) →

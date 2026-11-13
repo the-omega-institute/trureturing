@@ -1,0 +1,52 @@
+**定义 110.1（只使用原W的拓扑对象）。** 采用107.1及VII105.1的同一个
+非零有限维实空间 $V$、闭尖生成凸锥 $C$、在 $C\setminus\{0\}$ 上严格正的
+原泛函 $u$、整个原基 $K=C\cap\{u=1\}$、全部原纯点
+$P=\operatorname{ext}K$，以及全部原效应 $\mathcal E=[0,u]_{C^*}$。明确地，
+
+$$
+\begin{gathered}
+F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x),\qquad
+D_p=\{x\in K:T_p(x)=0\},\\
+p\perp q\ \Longleftrightarrow\
+\exists f\in\mathcal E:\ f(p)=1,\ f(q)=0,\\
+\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp},\qquad
+\mathrm{EB}_{\ge1}:\ D_p\simeq_{\rm aff}B^{d_p},\ d_p\ge1\ (p\in P),\\
+\mathrm{Pair}_{\perp}:\quad
+p,q\in P,\ p\perp q\ \Longrightarrow\ H(p,q)\ne K.
+\end{gathered}
+\tag{VIII110.1}
+$$
+
+$x$ 在最低读数与零集定义中遍历整个原 $K$，包括全部混态；
+$H(p,q)$ 是原最小面，$B^{d_p}$ 是整个闭欧氏球。
+假设始终只有 $\mathsf W$，不要求球维数相同或全部至少为二。
+记
+
+$$
+\begin{gathered}
+N=\dim V,\qquad S=\partial K,\qquad M=S\setminus P,\\
+U(p)=p+2c_p,\qquad B=\{c_p:p\in P\},\qquad c(p)=c_p,
+\end{gathered}
+\tag{VIII110.2}
+$$
+
+其中 $\partial K$ 指 $\operatorname{aff}K$ 内的相对边界，$c_p$ 是完整 $D_p$ 的球心。
+此处 $B$ 是球心集合，不是单个标准球；$U$ 是向量值函数，不是原泛函 $u$。
+不输入G、全纯互易、共同内积、对称群、纯点光滑性或纯点基数条件。
+
+直接复用VII103.2、104.2—104.7及105.9：全部非空原真面只有纯单点与
+非点暴露极大真面 $D_p$；不同的这些球若相交，交点只能是一个原纯点；
+$p\mapsto D_p$ 双射；$P$ 紧；每个纯点进入原joint三框架；
+$U$ 连续，且在原正交纯对上取相同值。若 $(p,q,r)$ 是这样的框架，则
+
+$$
+p+q+r=U(p)=U(q)=U(r),\qquad H(q,r)=D_p.
+\tag{VIII110.3}
+$$
+
+三张原效应的Kronecker读数使框架三点线性独立，故 $N\ge3$。
+$C$ 生成 $V$ 给 $\operatorname{affdim}K=N-1$，所以 $S$ 的球面维数是 $N-2$。
+VII105.2—105.5的least与数学projectivity、107的全线段刚性及108的切空间结果
+保留其各自陈述；下述收缩不以G或108中的附加覆盖条件为前件。
+

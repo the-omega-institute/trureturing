@@ -1,0 +1,43 @@
+**定义 108.1（原域、球范数与投影记号）。** 始终采用VIII107.1的同一个
+有限维实 $V$、闭尖生成锥 $C$、严格正原单位 $u$、整个
+$K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和全部
+$\mathcal E=[0,u]_{C^*}$，并假设VIII107.2的
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$。
+记 $n=\dim V$、$d_p=\operatorname{affdim}D_p\ge1$、
+$c_p$ 为完整原排除球 $D_p$ 的球心，并置
+
+$$
+L_p=\operatorname{lin}(D_p-c_p),\qquad
+D_p=c_p+\{z\in L_p:\|z\|_p\le1\}.
+\tag{VIII108.1}
+$$
+
+这里 $\|\cdot\|_p$ 是该仿射球自身给出的欧氏范数，内积记
+$\langle\cdot,\cdot\rangle_p$；没有把不同球的内积预先拼成全空间内积。
+直接复用VII104.2—104.7及VII105.2—105.5：唯一原尺 $a_p$ 是全锥序least，
+$D_p=\{x\in K:a_p(x)=0\}$，且 $a_p$ 唯一确认 $p$。
+每个正交纯对有唯一第三纯点，三张原尺共同相加为 $u$；
+在每张已有球上，原纯尺的限制是全部球直径效应。
+特别地，若 $q,r$ 是 $D_p$ 的一对对径，则 $(p,q,r)$ 是原joint框架，
+而 $p,r$ 也是 $D_q$ 的对径。
+
+使用VII105.4—105.5的共同正线性延拓及正投影
+
+$$
+\begin{gathered}
+Z_p=\{f\in C^*:f(p)=0\},\qquad
+\operatorname{res}_p:Z_p\overset{\sim}{\longrightarrow}
+                         \operatorname{Aff}(D_p)_+,\\
+\Lambda_p:\operatorname{Aff}(D_p)\longrightarrow V^*,\qquad
+\Pi_p^*=\Lambda_p\operatorname{res}_p,\qquad
+R_p(v)=a_p(v)p,\\
+M_p=\operatorname{span}(\{p\}\cup D_p),\qquad
+Q_p=R_p+\Pi_p,\qquad N_p=\ker Q_p.
+\end{gathered}
+\tag{VIII108.2}
+$$
+
+星号表示线性对偶，$\operatorname{res}_p$ 在复合式中取其整个线性限制映射。
+$\Lambda_p$ 是上述正锥双射之逆的唯一线性延伸；不能用彼此无关的逐效应延拓替代它。
+本节尚不假设共同中心 $\mathrm G$、全Pair或全纯数值互易。
+

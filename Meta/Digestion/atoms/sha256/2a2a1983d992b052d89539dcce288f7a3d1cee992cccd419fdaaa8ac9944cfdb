@@ -1,0 +1,126 @@
+**Theorem 23.1 (a lifetime-only boundary witness).** With exact continuous
+observation of the stopped target height available, there is a causal
+sequence of numerical native commands, countable and accumulating at
+$\tau$, whose executed history is absolutely continuous, has finite
+variation and obeys the original whole-height guard. Defined on
+$[0,\infty)$ and held after death, its uncensored own exit is exactly
+$\tau$; its restriction to $[0,T]$ therefore has
+$\zeta^{\rm N}=\zeta$ almost surely. Its $b$ control is identically
+zero. Thus absolute
+continuity and finite variation alone cannot replace finite issuance
+in Theorem 21.1. This witness also has almost surely finite quadratic
+control energy through death, by the separate estimate below.
+No expectation bound or deterministic energy budget is asserted.
+
+Proof. Use the announcing times $\theta_n$ of (21.6), which can be
+detected from the stopped height without any target continuation
+after death. Write
+
+$$
+d=k-l,\qquad v_n=d2^{-3n},\qquad h_n=T2^{-4n}.
+\tag{23.1}
+$$
+
+At $\theta_0=0$ start at native height $k=l+v_0$. If the current
+height at $\theta_n$ is $x_n$, issue the numerical profile
+
+$$
+x_n(s)=x_n-(x_n-l-v_{n+1})\min\{s/h_n,1\},
+\qquad b_n(s)=0,\qquad s\ge0.
+\tag{23.2}
+$$
+
+The relative height increment is $a_n(s)=x_n(s)-x_n$. At
+$\theta_{n+1}$ interrupt it continuously and issue the next profile.
+Inductively $x_n\ge l+v_n$, so every profile is nonincreasing and
+stays between its current value and the strictly interior level
+$l+v_{n+1}$. A finished ramp simply holds until the next announcement;
+that hold is already part of the issued profile. Each profile is
+piecewise linear and known at its issuance. There are finitely many
+issuances on every $[0,t]$ with $t<\tau$.
+In particular $x_n$ is measurable at $\theta_n$ by finite recursion,
+and (23.2) is a measurable choice of numerical AC profile there.
+Restricting this construction at $T$ uses no observations after $T$.
+
+It remains to prove that the actual native height tends to $l$ at
+$\tau$, rather than leaving a positive gap because too many ramps
+are interrupted early. The distance function in (21.6) is 1-Lipschitz.
+To move from its value $e_n$ to $e_{n+1}$ requires a target height
+displacement of at least $e_n/2$. Strong Markov at $\theta_n$ and
+the reflection bound for a covariance-$2$ Brownian motion give
+
+$$
+\begin{aligned}
+\mathbb P(\theta_{n+1}-\theta_n<h_n
+                 \mid\mathcal F_{\theta_n})
+&\le\mathbb P\left(\sup_{0\le s\le h_n}|W^1_s|
+                                      \ge e_n/2\right)\\
+&\le4\exp\{-e_n^2/(16h_n)\}
+ =4\exp\{-d_*^2 4^n/(16T)\}.
+\end{aligned}
+\tag{23.3}
+$$
+
+Here reflection bounds each one-sided maximum by twice a Gaussian
+tail, and a variance-$2h_n$ Gaussian has upper tail at $a>0$ at
+most $\exp(-a^2/(4h_n))$. This is the classical reflection principle
+(Mörters–Peres, the draft specified in Definition 20.1, Theorems
+2.16 and 2.18) with its variance scaled explicitly. The right side
+of (23.3) is summable. Borel–Cantelli, with no independence of these
+events required, shows that all sufficiently late ramps finish before
+the next announcement. Consequently
+$x_{n+1}=l+v_{n+1}$ for all sufficiently large $n$, and the native
+height tends to $l$ as $t\uparrow\tau$.
+
+Define its value at $\tau$ to be this limit and hold it afterwards.
+This is a continuous extension, not a height jump or a declaration
+of death. Before $\tau$ every executed piece has height strictly
+above $l$ and at most $k<u$; at $\tau$ its height is exactly $l$.
+Thus its own first exit is exactly $\tau$, including when this
+happens to coincide with the horizon. Its original native height
+always lies in $[l,k]\Subset(0,H)$, so (20.3) proves the whole-height
+guard; all source phases remain at their initial values and $J=0$.
+
+For completeness, let $f$ be the nonpositive derivative on each
+executed ramp and zero on each hold and after $\tau$. For $t<\tau$
+only finitely many intervals occur, so
+$x(t)=k+\int_0^t f(s)\,ds$. Monotonicity and the limit just proved
+give
+
+$$
+\int_0^\tau |f(s)|\,ds
+ =\sum_{n\ge0}(x_n-x_{n+1})=k-l=d.
+\tag{23.4}
+$$
+
+Passing to $t=\tau$ in this integral representation and extending by
+zero derivative proves absolute continuity on every finite horizon,
+including through the accumulation point. This excludes a hidden
+singular-variation contribution at death. It also proves total
+variation $d$ through death. Eventually consecutive ramps are both
+complete, so ramp $n$ then drops $7v_n/8$ over duration $h_n$ and has
+quadratic energy
+
+$$
+\frac{49v_n^2}{64h_n}=\frac{49d^2}{64T}\,4^{-n}.
+\tag{23.5}
+$$
+
+This tail is summable. Every earlier, possibly interrupted ramp has
+speed at most $d/h_n$ for at most $h_n$ time and thus energy at most
+$d^2/h_n<\infty$. There are almost surely only finitely many such
+earlier ramps. Therefore $\int_0^\tau |f(s)|^2\,ds<\infty$ almost
+surely, which also proves finite energy on $[0,T]$. This is an
+additional calculation, not an inference from AC or finite variation;
+it gives no expectation estimate for the random initial portion.
+The construction is defined
+almost surely, as are the Brownian target and its enhancement; its
+causal rules use only present announcements and previous commands.
+It uses infinitely many issuances when death occurs on the horizon,
+so it is outside $\mathcal C_T$ on an event of positive probability.
+
+The native endpoint is always the lower face, even if the target
+exits at the upper face, and its phases are fixed. This is exact
+lifetime attainment only, not an enhanced-path, exit-face or native
+tube construction. $\square$
+

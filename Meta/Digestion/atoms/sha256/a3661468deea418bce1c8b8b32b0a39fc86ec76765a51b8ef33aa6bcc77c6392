@@ -1,0 +1,44 @@
+**定理 113.9（一张三球在全厚域中的充分传播）。** 候选(VIII113.25)
+等价于原模型有同锥同单位的 $H_3(\mathbb C)$ 表示；
+也等价于原W加“全部完整排除球为三球”。
+所有原态、全部原效应及其原评价均由同一个表示保持。
+
+证明。候选先给完整W。113.7的经典支路全部是线段，
+旗标支路除旗标外也有线段，故全厚条件排除这两类。
+余下为整个 $P$ 连通的简单支路，113.3使球维数自动传播；
+一张完整三球于是使全体均为三球。
+这才应用112.6的成熟分类：$d=2,3,5,9$ 中仅 $d=3$ 留下 $H_3(\mathbb C)$。
+反向该复型的全部完整本原排除面都是三球，原Pair成立，故满足候选。
+没有把原有复射线和酉作用当作本章球维数分类的前件。
+
+现在112.8的全部前件已由原候选供应，直接消费其全域字典。
+具体地，同一个 $\Phi:H_3(\mathbb C)\to V$ 给
+
+$$
+\begin{gathered}
+n=9,\qquad \Phi(\operatorname{Herm}_+(\mathbb C^3))=C,
+\qquad u(\Phi X)=\operatorname{tr}X,\\
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):v^*v=1\}\cong\mathbb{CP}^2,\\
+\mathcal E=\{f_E:f_E(\Phi X)=\operatorname{tr}(EX),\quad0\preceq E\preceq I_3\},\\
+a_{\Phi(vv^*)}(\Phi\rho)=\operatorname{tr}(vv^*\rho),\qquad
+T_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2,\\
+B(\Phi X,\Phi Y)=\operatorname{tr}(XY),\qquad U=\Phi(I_3),\qquad
+U/3=\Phi(I_3/3),\qquad v^*v=w^*w=1.
+\end{gathered}
+\tag{VIII113.26}
+$$
+
+| 旧静态量子公理或对象 | 原候选所供应的对应 |
+| --- | --- |
+| 复三维Hilbert空间及相位射线 | 所得表示为 $\mathbb C^3$，原全部纯点为 $\mathbb{CP}^2$ |
+| 全部混态及凸混合 | 整个原 $K$ 为全部迹一PSD矩阵，混合保持原线性组合 |
+| 全部效应及Born概率 | 原整个 $[0,u]$ 对应全部 $0\preceq E\preceq I_3$，原评价为 $\operatorname{tr}(E\rho)$ |
+| 纯确认与纯—纯跃迁 | 原least对应 $vv^*$，原最低确认读数为模方 $|v^*w|^2$ |
+| 正交完备基与谱分解 | 原joint为三个正交秩一投影，混态谱性来自所得矩阵谱定理 |
+| 全部有限数学测量 | 原 $f_j\ge0$、$\sum_j f_j=u$ 对应全部有限POVM $E_j\succeq0$、$\sum_jE_j=I_3$ |
+| 原单位、共同中心与共同尺 | 分别为迹、$I_3/3$ 与迹配对；辅助欧氏尺没有被升级为物理输入 |
+
+全效应对应来自同锥同单位后的整个对偶锥，故包含混态概率、零事件和效应补，
+并非只匹配一份纯—纯概率表。这里减少的是维数输入，不宣称公理独立或独立公理最少。证毕。
+

@@ -61,7 +61,7 @@ private lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
     RCLike.conj_ofReal, map_mul]
   ring
 
-private lemma rankOne_trace_norm (v : EuclideanSpace 𝕜 ι) :
+lemma rankOne_trace_norm (v : EuclideanSpace 𝕜 ι) :
     (rankOne v).trace = ‖v‖ ^ 2 := by
   rw [HermitianMat.trace_eq_re_trace]
   change RCLike.re (Matrix.vecMulVec (v : ι → 𝕜) (star (v : ι → 𝕜))).trace = _

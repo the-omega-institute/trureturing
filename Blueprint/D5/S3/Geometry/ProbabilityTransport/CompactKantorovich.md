@@ -10,7 +10,7 @@ Lean statement: `D5/S3/Geometry/ProbabilityTransport/CompactKantorovich.kantorov
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/ProbabilityTransport/CompactKantorovich.kantorovich_duality_compact` (`✓ std3`). ∎
 
-*Citation.* Unattributed source file; copyright Meta Platforms, Inc. and affiliates (2026). *Finite Strassen coupling and compact Kantorovich duality in ATLAS Lean*. URL: <https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Probability/StrassenCoupling.lean>.
+*Citation.* Unattributed source file; copyright Meta Platforms, Inc. and affiliates (2026). *Strassen coupling, compact Kantorovich duality and Skorokhod representation in ATLAS Lean*. URL: <https://github.com/facebookresearch/atlas-lean/blob/a60759060b5616df0d5775b42da4d337719feb32/MathlibExt/Probability/StrassenCoupling.lean>.
 
 *Commentary.*
 
