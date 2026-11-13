@@ -438,4 +438,475 @@ an invariant subspace, not averages of supplied native operations.
 The enlargement by phases and the full stabilizers create no
 original gate, preparation or control interface.
 
+## 115. Intrinsic face centers, gauges, overlap and antipodes
+
+The following construction uses only Definition 109.1 and the actual
+face equality already proved. It precedes the construction of a
+unitary group and does not assume an inner product on the original $V$.
+
+**Definition 115.1 (Intrinsic pair overlap).** For distinct $p,q\in P$,
+let $F=F_K(p,q)$. Its solid ellipsoid has a unique center $c_F$.
+Let $L_F=\operatorname{span}_{\mathbb R}(F-c_F)$ and define its
+centered Minkowski norm by
+
+$$
+g_F(w)=\inf\{r>0:w\in r(F-c_F)\}\qquad(w\in L_F).
+\tag{115.1}
+$$
+
+Define
+
+$$
+t(p,p)=1,\qquad
+t(p,q)=g_F\left(\frac{p+q}{2}-c_F\right)^2\quad(p\ne q).
+\tag{115.2}
+$$
+
+These definitions refer to the actual original face and its entire
+centered body. They do not choose a coordinate chart on its sphere.
+
+**Proposition 115.2 (The pair gauge recovers the source overlap).**
+For distinct $Q,R\in\mathcal R_n$ and
+$S=\operatorname{ran}Q+\operatorname{ran}R$, one has
+
+$$
+c_{F_K(b(Q),b(R))}=\pi(I_S/2),\qquad
+g_F(\pi(A))^2=2\operatorname{Tr}(A^2)
+\quad\bigl(A\in\operatorname{Herm}(S),\ \operatorname{Tr}A=0\bigr).
+\tag{115.3}
+$$
+
+Consequently, for every $Q,R\in\mathcal R_n$, including $Q=R$,
+
+$$
+t(b(Q),b(R))=\operatorname{Tr}(QR).
+\tag{115.4}
+$$
+
+For distinct $Q,R$, the midpoint of $b(Q),b(R)$ is the center of
+their actual face exactly when the source rays are orthogonal.
+
+Proof. Proposition 110.2 identifies the whole face with
+$\pi(\mathcal D(S))$, whose center is $\pi(I_S/2)$. This center is
+intrinsic: two centers of a bounded centrally symmetric body would
+give a nonzero translation preserving that body, which boundedness
+excludes. The centered ellipsoid is a symmetric convex unit ball,
+so its Minkowski functional is a norm.
+
+Every traceless Hermitian $A$ on the two-plane has eigenvalues
+$a,-a$. The condition $I_S/2+A\ge0$ is $|a|\le1/2$. Thus the
+source centered gauge at $A$ is $2|a|$. The affine bijection onto
+the whole face transports the gauge, giving
+$g_F(\pi(A))^2=4a^2=2\operatorname{Tr}(A^2)$.
+
+For the pair in question put $A=(Q+R-I_S)/2$. Since $Q^2=Q$,
+$R^2=R$ and $I_SQ=Q$, $I_SR=R$,
+
+$$
+\operatorname{Tr}(A^2)=\frac12\operatorname{Tr}(QR),\qquad
+\pi(A)=\frac{b(Q)+b(R)}2-c_F.
+\tag{115.5}
+$$
+
+Equations (115.2)–(115.3) give (115.4) for distinct projectors.
+For $Q=R$ both sides are one by definition and $\operatorname{Tr}Q=1$.
+Finally injectivity on $\operatorname{Herm}(S)$ says that the
+midpoint is the center precisely when $Q+R=I_S$, equivalent to
+orthogonality of the two rank-one projectors. ∎
+
+In particular $0\le t(p,q)\le1$. Antipodes in an actual pair ball
+have $t=0$, while the diagonal has $t=1$. The construction also
+works for $n=2$, where every distinct pair spans the entire source.
+This local norm calculation assumes no global least-confirmation
+effect and uses no inaccessible face-reconstruction proposition.
+
+## 116. Original affine symmetries and all-ray Wigner implementation
+
+**Lemma 116.1 (The entire pure space and its intrinsic symmetries).**
+Under Definition 109.1, $b:\mathcal R_n\to P$ is a homeomorphism,
+$P$ is compact and connected, and $\operatorname{span}_{\mathbb R}P=V$.
+Every $h\in\operatorname{Aut}(C,u)$ induces the bijection
+
+$$
+f_h=b^{-1}\circ h\circ b:\mathcal R_n\longrightarrow\mathcal R_n,
+\tag{116.1}
+$$
+
+and it preserves $\operatorname{Tr}(QR)$ for every pair.
+
+Proof. The entire rank-one projector space $\mathcal R_n$ is compact
+and connected, as the continuous image of the complex unit sphere.
+The map $b$ is a continuous bijection to the Hausdorff subspace $P$
+of $V$, hence a homeomorphism. Rank-one projectors span
+$\operatorname{Herm}_n(\mathbb C)$ over $\mathbb R$, by the spectral
+decomposition of every Hermitian matrix. Surjectivity of $\pi$
+therefore gives the spanning assertion for $P$.
+
+The linear map $h$ restricts to an affine automorphism of $K$ and
+maps extreme points bijectively to extreme points. The image of an
+actual minimal face is the actual minimal face of the image pair:
+apply $h$ and $h^{-1}$ to the defining face inclusions. It carries
+the unique center to the unique center, and its linear restriction
+carries the entire centered ellipsoid onto the target centered
+ellipsoid. Consequently
+
+$$
+g_{hF}(hw)=g_F(w),\qquad t(hp,hq)=t(p,q).
+\tag{116.2}
+$$
+
+Together with Proposition 115.2, this proves all-pair transition
+probability preservation for (116.1). ∎
+
+**Proposition 116.2 (All-ray Wigner intertwining).** For every
+$h\in\operatorname{Aut}(C,u)$ there is a unitary or antiunitary
+$W$ on $\mathbb C^n$ such that, with
+$\Gamma_W(X)=WXW^{-1}$ on Hermitian matrices,
+
+$$
+f_h(Q)=\Gamma_W(Q)\quad(Q\in\mathcal R_n),\qquad
+\pi\Gamma_W=h\pi
+\quad\text{on all }\operatorname{Herm}_n(\mathbb C).
+\tag{116.3}
+$$
+
+In particular $\Gamma_W(N)=N$.
+
+Proof. Apply the unnumbered Wigner theorem in [Gehér, §1,
+equation (1), arXiv:1407.0527v1][Geher] to the map on **all**
+self-adjoint rank-one projectors in (116.1). It preserves every
+$\operatorname{Tr}(QR)$ by Lemma 116.1. The cited theorem supplies
+a linear or antilinear isometry on the whole Hilbert space; in
+finite dimension it is respectively unitary or antiunitary. Its
+statement needs neither bijectivity nor separability, although our
+map is bijective. This applies also when $n=2$.
+
+Conjugation by either kind of implementer is real-linear on the
+Hermitian space. Equality of $\pi\Gamma_W$ and $h\pi$ on all
+rank-one projectors extends to their real span, proving (116.3).
+This identity gives $\Gamma_W(N)\subset N$; applying the inverse
+identity gives equality. ∎
+
+No choice of $W$ here is asserted continuous or multiplicative in
+$h$. Orthogonality-only Uhlhorn theorems and their dimension-three
+restrictions are unnecessary, because (115.4) provides the full
+all-pair overlap on the entire ray space.
+
+## 117. Closed implementer graph and the full twisted extension
+
+Fix a source complex conjugation $\kappa$ and give
+
+$$
+U^{\pm}(n)=U(n)\cup U(n)\kappa
+\tag{117.1}
+$$
+
+its usual finite-dimensional compact group topology. The two components
+are the unitary and antiunitary implementers. Let $H$ be the actual
+compact subgroup in Theorem 109.3.
+
+**Theorem 117.1 (Compact graph with the exact phase kernel).** Define
+
+$$
+\mathcal L=\{(h,W)\in H\times U^{\pm}(n):\pi\Gamma_W=h\pi\}.
+\tag{117.2}
+$$
+
+Its image $\widetilde G$ under projection to $U^{\pm}(n)$ is a
+compact subgroup, and the graph gives a continuous surjection
+$\widetilde\psi:\widetilde G\to H$ with exact sequence
+
+$$
+1\longrightarrow\mathbb T\longrightarrow\widetilde G
+\overset{\widetilde\psi}{\longrightarrow}H\longrightarrow1.
+\tag{117.3}
+$$
+
+In particular $H\cong\widetilde G/\mathbb T$ as a topological group,
+faithfully embedded in
+
+$$
+U^{\pm}(n)/\mathbb T\cong PU(n)\rtimes\mathbb Z_2.
+\tag{117.4}
+$$
+
+Proof. The equation in (117.2) is closed: all maps are continuous
+in finite-dimensional matrix coordinates, and equality of linear
+maps can be checked on a fixed finite basis. Conjugation composes
+as $\Gamma_{W_1W_2}=\Gamma_{W_1}\Gamma_{W_2}$, so $\mathcal L$
+is a closed subgroup of a compact group. Projection to $H$ is onto
+by Proposition 116.2. Projection to $U^{\pm}(n)$ is injective,
+because surjectivity of $\pi$ makes $h$ uniquely determined by $W$
+in the intertwining equation. The compact-to-Hausdorff continuous
+bijection $\mathcal L\to\widetilde G$ is a homeomorphism. The
+other projection therefore defines the continuous surjective
+homomorphism $\widetilde\psi$.
+
+All scalar phases belong to its kernel. Conversely, if
+$\widetilde\psi(W)=1$, then for every $Q\in\mathcal R_n$,
+
+$$
+b(\Gamma_W(Q))=\pi\Gamma_W(Q)=\pi(Q)=b(Q).
+\tag{117.5}
+$$
+
+Since $\Gamma_W(Q)$ is again rank one, the injectivity of the
+**entire** $b$ implies $\Gamma_W(Q)=Q$. Thus $W$ fixes every ray.
+A unitary fixing every ray is scalar: coordinate rays make it
+diagonal, and the rays of sums of coordinate vectors make all
+diagonal phases equal. An antiunitary cannot fix every ray when
+$n\ge2$. On two coordinate rays write $We_j=\alpha_j e_j$;
+fixing the ray of $e_1+e_2$ forces $\alpha_1=\alpha_2$.
+Antilinearity then sends $e_1+i e_2$ to
+$\alpha_1(e_1-i e_2)$, a different ray. Hence the kernel is exactly
+$\mathbb T$.
+
+The quotient of the compact $\widetilde G$ by this closed kernel
+maps continuously and bijectively to the Hausdorff $H$, so it is
+topologically isomorphic to $H$. Inclusion in the ambient quotient
+is faithful. Fixing $\kappa$ identifies that ambient quotient with
+the semidirect product in (117.4). ∎
+
+**Proposition 117.2 (Phase action and the twisted extension).** Let
+$\sigma(W)=+1$ for unitary $W$ and $-1$ for antiunitary $W$. Then
+$\sigma$ is a continuous homomorphism and
+
+$$
+W(zI)W^{-1}=z^{\sigma(W)}I\qquad(|z|=1).
+\tag{117.6}
+$$
+
+Thus (117.3) is generally a twisted phase extension. Its kernel is
+central on the unitary restriction; if antiunitaries occur, the
+full kernel is not central.
+
+Proof. Composition multiplies the two linearity signs. The two
+components in (117.1) are open and closed, giving continuity.
+Complex linearity fixes scalar multiplication and antilinearity
+complex conjugates it. On the unit circle $\overline z=z^{-1}$,
+which is (117.6). An antiunitary therefore fails to commute with
+scalar phases other than the real ones. ∎
+
+The mature phase and sign structure is [De Nittis–Gomi, §3.1,
+equations (3.2)–(3.4), arXiv:1804.10111v2][DNG]. Here the compatible
+compact graph (117.2) is built for the original $H$ using the
+intrinsic overlap. No global continuous or homomorphic choice of
+phases, no splitting of (117.3), and no global unitary phase section
+is asserted. The semidirect product describing the ambient quotient
+does not assert a splitting for this original-$H$ extension.
+
+## 118. Original identity-component transitivity and a central lift
+
+**Lemma 118.1 (The original $H^0$ is pure transitive).** The identity
+component $H^0$ of the given compact matrix group acts transitively
+on all of $P$.
+
+Proof. By Lemma 116.1, $P$ is connected. A compact matrix Lie group
+has finitely many components, and $H^0$ is normal. For $p\in P$
+and representatives $h_i$ of $H/H^0$, transitivity of $H$ gives
+
+$$
+P=Hp=\bigcup_i H^0h_i p.
+\tag{118.1}
+$$
+
+Every orbit in this finite union is compact, hence closed. Distinct
+orbits are disjoint, so their distinct values form a finite closed
+partition of connected $P$. Each part has closed complement, and
+there can only be one. ∎
+
+**Proposition 118.2 (The compact unitary preimage supplies $G$).** With
+$\widetilde\psi$ from Theorem 117.1, put
+
+$$
+G=\widetilde\psi^{-1}(H^0).
+\tag{118.2}
+$$
+
+Then $G$ is a compact subgroup of $U(n)$, its kernel over $H^0$ is
+the central $\mathbb T$, and $G/\mathbb T\cong H^0$. It preserves
+$N$ by conjugation and acts transitively on all $\mathcal R_n$.
+
+Proof. The sign $\sigma$ is trivial on the kernel $\mathbb T$ of
+$\widetilde\psi$. It therefore descends, by the quotient topology
+in Theorem 117.1, to a continuous homomorphism
+$\overline\sigma:H\to\{\pm1\}$. Its restriction to connected
+$H^0$ is trivial. Hence all elements of (118.2) are unitary.
+This is a closed preimage in compact $\widetilde G$, and so a
+compact subgroup of $U(n)$. The kernel remains exactly $\mathbb T$,
+now central by (117.6), and the quotient identification restricts
+accordingly.
+
+Every $U\in G$ satisfies $\pi\Gamma_U=h\pi$ for
+$h=\widetilde\psi(U)$, so it preserves $N$. Given
+$Q,R\in\mathcal R_n$, Lemma 118.1 supplies $h\in H^0$ with
+$hb(Q)=b(R)$. Choose any preimage $U\in G$. Intertwining yields
+$b(UQU^*)=b(R)$, and injectivity of $b$ gives $UQU^*=R$.
+Thus $G$ is projectively transitive on the entire source ray space. ∎
+
+This argument proves only what is needed to apply Theorem 109.2.
+It does not require $G$ connected, does not require $H$ connected,
+and does not put every original continuation in $H^0$. The preimage
+construction, rather than a phase section, supplies all its lifts.
+The finite-component argument is given directly and depends on no
+uninspected Lie-group textbook passage.
+
+## 119. Intrinsic rigidity and the existing original-cone dictionary
+
+**Theorem 119.1 (Completion of Theorem 109.3).** Under Definition
+109.1 and the original compact pure-transitive $H$ of (109.7),
+$N=0$ and $\Phi=\pi^{-1}$ satisfies (109.6). On the entire original
+state, pure and effect spaces,
+
+$$
+\begin{aligned}
+\Phi(K)&=\mathcal D_n,& \Phi(P)&=\mathcal R_n,&
+\operatorname{Tr}\Phi&=u,\\
+e(x)&=\operatorname{Tr}(B\Phi(x)),&
+E&\longleftrightarrow\{B\in\operatorname{Herm}_n(\mathbb C):0\le B\le I\}.
+\end{aligned}
+\tag{119.1}
+$$
+
+Here each real-linear functional $e$ has one unique Hermitian
+representative $B$. Every supplied $h\in H$ acts, in this same
+dictionary, by some unitary or antiunitary conjugation:
+
+$$
+\Phi h\Phi^{-1}=\Gamma_W.
+\tag{119.2}
+$$
+
+Proof. Proposition 118.2 supplies precisely the compact subgroup,
+entire projective transitivity and kernel invariance required by
+Theorem 109.2. All of Definition 109.1 remains in force. Theorem
+114.1 therefore gives $N=0$ and (109.6). The whole-base and pure
+identities follow from (110.1) and (109.3).
+
+For the functional/effect identification use the already-owned
+trace-duality and dictionary part of [VI, Theorem 90.2][VI], once
+the trace-preserving cone isomorphism is available. In that dictionary
+$u$ corresponds to $I$, positivity of $e$ to $B\ge0$, and positivity
+of $u-e$ to $I-B\ge0$. This gives the exact entire interval in
+(119.1); no second Jordan reconstruction or matrix-dictionary proof
+is needed. Finally (116.3) conjugated by the inverse $\Phi$ gives
+(119.2). ∎
+
+The face equality of Proposition 110.2 already forces L3 in this
+projection framework. Thus VI's other conditional certificate
+consumers remain applicable with their own hypotheses. They are
+not extra proof premises here: neither S-to-Jordan, an equalizing
+form, the curvature certificate, nor homogeneity or pure bias was
+used to obtain $N=0$.
+
+For Theorem 109.2 with only supplied $G$, its quotient conjugation
+action is well-defined even before injectivity:
+
+$$
+h_g(\pi(X))=\pi(gXg^*)\qquad(g\in G).
+\tag{119.3}
+$$
+
+Kernel invariance makes this independent of $X$; (109.3) and the
+inverse $g^{-1}$ make it a normalized cone automorphism. After
+rigidity it becomes $h_g=\pi\Gamma_g\Phi$. Identifying this quotient
+action with any particular original legal action still requires
+that action's stated compatibility. In Theorem 119.1 the group
+$H$ is original by hypothesis and the graph enforces its compatibility.
+
+All identifications in (119.1) concern mathematical states and
+functionals of the original cone. They do not expand the legal
+preparation or measurement menu. In the original-prediction
+specialization the ready row maps to a rank-one density matrix only
+under the retained condition that this actual ready row is in $P$.
+A label for an abstract source projector does not establish that
+native-ready condition.
+
+## 120. Whole-domain suppliers and the retained quantum-origin gaps
+
+The two rigidity theorems keep the exact original $\Omega$, legal
+words, normalization column, and entire prediction/future-outcome
+domain of [VI89.2][VI]. They do not restrict the future coordinates
+to make a representation faithful. The additional suppliers are
+precisely the whole PSD trace cover, the complete rank-one-to-all-$P$
+bijection, the bound for every actual entire pair face, and either
+the compatible compact $G$ or the original compact pure-transitive
+$H$. AURIC relation normalization, EB3, bare L3 and the fact of
+having one source do not supply these hypotheses in this argument.
+
+**Proposition 120.1 (Scope of the obstruction).** Under the stated
+suppliers, a lossy whole-PSD projection with the stated trace,
+pure-label and symmetry properties is impossible. This conclusion
+does not establish rigidity for arbitrary L3 cones without that
+cover, and does not supply an original equalizer from L3 alone.
+
+Proof. Under supplied $G$ this is Theorem 109.2; under original $H$
+it is Theorem 119.1. Both begin with (109.3), so neither can remove
+it from its own hypotheses. In particular a general generic-$k=1$
+or complex-projective entry-locus assertion has not replaced the
+positive preimage proof of §111. The geometry continuation in VII
+has its own scope and is not a proof dependency here. ∎
+
+The control in [VI, Proposition 92.1][VI] has $\pi=\mathrm{id}$ and
+an available equalizing form $Q_0$, although a supplied invariant
+$Q_\varepsilon$ has unequal pair radii. It is compatible with these
+rigidity results. It must not be described as an L3 example with
+no equalizer, and no conclusion that every invariant metric
+equalizes pair radii follows here.
+
+The separate existing [complex projection Gleason owner][Gleason]
+starts, for $N\ge3$, from a full complex projection labeling and a
+`ProjectionPackage`: a total matrix function nonnegative on all
+star projections, normalized at $I$, and additive on orthogonal
+binary sums. Its existing `gleason_representation` gives the unique
+PSD trace-one representative of that supplied assignment on every
+star projection. These full labeling, noncontextuality and
+orthogonal-sum premises are substantial. That theorem supplies
+neither (109.3), nor all original pure labels, nor original frames.
+It is a downstream interface comparison, not a new Born or Gleason
+theorem in this volume. The $n=2$ result here uses the whole cover
+and the intrinsic all-pair overlap; it makes no qubit Gleason claim.
+
+The full $H$ in (117.3) can contain antiunitary implementers.
+Eliminating a transpose component of an original generator requires
+its separately supplied original path/action interface, as retained
+in [VI, Theorem 96.2][VI]. The central extension over $H^0$ does not
+establish identity-component membership of every original word.
+Neither scalar phases nor a quotient identification provide a
+global unitary phase section, a splitting, or original-word unitarity.
+
+Compact closure elements, Haar averages, convex mixtures, source
+spectral decompositions, the whole effect interval, and the auxiliary
+groups are mathematical constructions. None is by itself a native
+control, preparation, measurement, inverse, filter or Return. The
+original whole-future laws, true branch masses, archives and returned
+rows retain the interfaces of [VI §§94–96][VI]. A matched marginal
+or invertible matrix does not provide those interfaces.
+
+Joint laws, process descent, instruments, complete positivity,
+composites, tensor products, time, clocks and physical correspondence
+retain their separate original contracts. The static cone and
+symmetry identifications here do not establish those contracts or
+derive quantum foundations from the single-$\Omega$ word model.
+The full quantum-origin problem therefore retains these concrete
+unsupplied bridges.
+
+The reused ingredients are PSD support geometry, positive and negative
+spectral parts, the mature sign-rank criterion, compact unitary
+sphere-transitive classification, Haar integration, all-ray Wigner
+theory, phase extensions and trace duality. The conditional synthesis
+connects actual faces to entire positive fibers and then to a
+stabilizer obstruction; its intrinsic overlap and closed graph supply
+the compatible lift needed for the original compact action. No
+global priority, new classification or physical-origin claim is made.
+
+[V]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+[VI]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VI.md
+[Compact]: ../../../Blueprint/D5/S3/Quantum/Algebra/OriginalProbabilityCompactAction.md
+[Gleason]: ../../../Blueprint/D5/S3/Quantum/GleasonComplexRepresentation.md
+[AD]: ../../../Library/LieTheory/albertinidalessandro2001transitivity.md
+[CHST]: ../../../Library/HilbertOperators/carmeliheinosaarischultztoigo2014tasks.md
+[Geher]: ../../../Library/HilbertOperators/geher2014wigner.md
+[DNG]: ../../../Library/LieTheory/denittisgomi2018twisted.md
+
 ## 追加锚（本行以下为增补区）
