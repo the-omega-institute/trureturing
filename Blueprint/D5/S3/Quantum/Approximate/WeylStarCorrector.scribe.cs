@@ -39,11 +39,11 @@ internal sealed class WeylStarCorrectorDocument : IScribeDocumentDefinition
         Formula n=X("n"), a=X("A"), f=X("f"), d=X("d"), x=X("X");
         Formula z=Call("Fin",n), mat=Call("Matrix",z,z,Call("Complex"));
         Formula close=All("X",mat,Le(new Formula.Norm(Subtract(At(X("rho"),x),At(f,x))),
-            Multiply(Divide(Multiply(Num(8),d),Num(3)),new Formula.Norm(x))));
+            Multiply(new Formula.Fraction(Multiply(Num(8),d),Num(3)),new Formula.Norm(x))));
         Formula result=Ex("rho",Call("ComplexStarAlgHom",mat,a),close);
-        Formula hypotheses=And(Le(Num(0),d),And(Le(d,Divide(Num(1),Num(32))),
+        Formula hypotheses=And(Le(Num(0),d),And(Le(d,new Formula.Fraction(Num(1),Num(32))),
             And(Call("PreservesStar",f),And(Call("DefectBound",f,d),
-                Le(new Formula.Norm(Subtract(At(f,Num(1)),Num(1))),Divide(Num(1),Num(4)))))));
+                Le(new Formula.Norm(Subtract(At(f,Num(1)),Num(1))),new Formula.Fraction(Num(1),Num(4)))))));
         Formula statement=All("f",Call("ComplexCLM",mat,a),All("d",Call("Real"),Imp(hypotheses,result)));
         statement=All("A",Call("Type"),Inst(Call("CStarAlgebra",a),statement));
         return All("n",Call("Nat"),Inst(Call("NeZero",n),statement));

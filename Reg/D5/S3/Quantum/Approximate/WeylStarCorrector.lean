@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Approximate.WeylStarCorrector
 import Reg.D5.S3.Quantum.Approximate.FiniteStarNewton
 
+/-! Full-telescope real comparison for full-matrix star correction. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Approximate LeanInformationAudit
 open _root_.D5.S3.Quantum.Approximate.WeylStarCorrector
@@ -44,7 +46,7 @@ def family : Registration arena.{u} (type_of% (@exists_matrix_star_hom_close.{u}
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (show j = i from Subsingleton.elim _ _)).elim
+      exact (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := by

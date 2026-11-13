@@ -3,6 +3,8 @@ import D5.S3.Quantum.Approximate.FiniteStarNewton
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Reg.Support.DependentFamily
 
+/-! Full-telescope real comparison for finite-diagonal star correction. -/
+
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Quantum.Approximate LeanInformationAudit
 open scoped BigOperators TensorProduct Matrix.Norms.L2Operator
@@ -34,7 +36,7 @@ def arena : Arena where
   signature := signature
   Law R := ∀ {B : Type u} {A : Type v} {J : Type w}
     [CStarAlgebra B] [CStarAlgebra A] [Fintype J] [NormOneClass B],
-    ∀ (D : FiniteDiagonal B J) (f : B →L[ℂ] A) {d : ℝ}
+    ∀ (_D : FiniteDiagonal B J) (f : B →L[ℂ] A) {d : ℝ}
     (_hd : 0 ≤ d) (_hd' : d ≤ 1 / 32) (_hs : PreservesStar f)
     (_hg : DefectBound f d) (_hu : ‖f 1 - 1‖ ≤ 1 / 4),
     ∃ ρ : B →⋆ₐ[ℂ] A, ∀ x, R.readout () () ‖ρ x - f x‖ ((8 * d / 3) * ‖x‖)
@@ -80,7 +82,7 @@ def family : Registration arena.{u,v,w} (type_of% (@exists_star_hom_close.{u,v,w
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_law⟩
       intro j hji
-      exact (hji (show j = i from Subsingleton.elim _ _)).elim
+      exact (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
     · intro e
       exact nomatch e
   dependence := by

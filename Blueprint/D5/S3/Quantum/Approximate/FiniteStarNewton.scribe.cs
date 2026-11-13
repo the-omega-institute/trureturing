@@ -43,12 +43,12 @@ internal sealed class FiniteStarNewtonDocument : IScribeDocumentDefinition
     {
         Formula b=X("B"), a=X("A"), j=X("J"), f=X("f"), d=X("d"), x=X("x");
         Formula close=All("x",b,Le(new Formula.Norm(Subtract(At(X("rho"),x),At(f,x))),
-            Multiply(Divide(Multiply(Num(8),d),Num(3)),new Formula.Norm(x))));
+            Multiply(new Formula.Fraction(Multiply(Num(8),d),Num(3)),new Formula.Norm(x))));
         Formula result=Ex("rho",Call("ComplexStarAlgHom",b,a),close);
-        Formula assumptions=And(Le(Num(0),d),And(Le(d,Divide(Num(1),Num(32))),
+        Formula assumptions=And(Le(Num(0),d),And(Le(d,new Formula.Fraction(Num(1),Num(32))),
             And(Call("PreservesStar",f),And(Call("DefectBound",f,d),
-                Le(new Formula.Norm(Subtract(At(f,Num(1)),Num(1))),Divide(Num(1),Num(4)))))));
-        Formula statement=All("D",Call("FiniteDiagonal",b,j),
+                Le(new Formula.Norm(Subtract(At(f,Num(1)),Num(1))),new Formula.Fraction(Num(1),Num(4)))))));
+        Formula statement=new Formula.TypeArrow(Call("FiniteDiagonal",b,j),
             All("f",Call("ComplexCLM",b,a),All("d",Call("Real"),Imp(assumptions,result))));
         statement=Instances(statement,Call("CStarAlgebra",b),Call("CStarAlgebra",a),
             Call("Fintype",j),Call("NormOneClass",b));
