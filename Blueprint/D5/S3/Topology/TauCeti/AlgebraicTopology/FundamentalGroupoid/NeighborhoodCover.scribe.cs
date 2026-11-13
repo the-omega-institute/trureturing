@@ -27,7 +27,7 @@ internal sealed class NeighborhoodCoverDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/tauceti2026vankampenneighborhoodcover")),
                 Blocks(Paragraph(Text(
                     "For an arbitrary open cover, the diagram is indexed by nonempty finite subsets ordered by reverse inclusion. Its objects are the fundamental groupoids of the corresponding intersections, with geometric empty intersections retained by the diagram. The displayed cocone is an ordinary IsColimit in Grpd; no pseudocolimit or natural-isomorphism replacement is asserted."))),
-                DescribeRole.Theorem),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("cech-diagram"),
                 DeclarationHandle.Create(Prefix + "cechDiagram"),
                 H("Fundamental-groupoid Cech diagram"), StatementSource.WithoutFormula(),

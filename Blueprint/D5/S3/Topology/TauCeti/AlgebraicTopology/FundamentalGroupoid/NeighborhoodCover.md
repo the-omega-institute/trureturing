@@ -16,11 +16,11 @@ $$\forall (X: Type\left(u\right)), [TopologicalSpace\left(X\right)] \forall (I: 
 
 For every topological space X, every index type I and every family U of subsets of X whose members are neighborhoods pointwise, and every target category D, compatible functors on the subtype fundamental groupoids of the U(i) have a unique strict extension to the fundamental groupoid of X. The cover members need not be open, intersections may be empty, and no connectedness, finiteness, basepoint or nonempty-intersection premise is added.
 
-**Theorem 1.2 (The ordinary finite-intersection Cech cocone).**
+**Definition 1.2 (The ordinary finite-intersection Cech cocone).**
 
 $$\forall (X: TopCat\left(v\right)), \forall (I: Type\left(u\right)), \forall (U: I \to Opens\left(X\right)), IsOpenCover\left(U\right) \Rightarrow IsColimit\left(cechCocone\left(U\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Topology/TauCeti/AlgebraicTopology/FundamentalGroupoid/NeighborhoodCover.isColimitCechCocone` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Topology/TauCeti/AlgebraicTopology/FundamentalGroupoid/NeighborhoodCover.isColimitCechCocone` (`✓ std3`).
 
 *Citation.* The Tau Ceti contributors; Kim Morrison; Lean FRO, LLC (2026). *Fundamental-groupoid gluing for arbitrary neighborhood covers*. URL: <https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Glue.lean>.
 

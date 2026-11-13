@@ -1,98 +1,103 @@
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
 import D5.S3.Topology.TauCeti.AlgebraicTopology.FundamentalGroupoid.NeighborhoodCover
 
-/-!
-# Faithful source reception for the neighborhood-cover owner
 
-This mirror preserves the complete public theorem telescope by binding each
-retained public theorem to its receiving declaration. It deliberately stops
-before a four-slot registration: no enrolled template currently provides the
-strict arbitrary-neighborhood-cover functor family together with the live
-homotopy-invariant readout, whole-family variation, sensitivity and
-observational-dependence evidence. These source bindings are therefore an
-unfinished audit attempt, not a validated registration.
+/-
+  Faithful typed four-slot audit attempt for the complete neighborhood-cover
+  extension theorem. The source target and DependentFamily obligations are
+  compiled here; source occurrence evidence remains subject to the current
+  report and is not asserted as validated by this file.
 -/
-
-set_option autoImplicit false
-set_option relaxedAutoImplicit false
-
 namespace Reg.D5.S3.Topology.TauCeti.AlgebraicTopology.FundamentalGroupoid.NeighborhoodCover
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.TauCeti.FundamentalGroupoid
 
-abbrev lebesgue_scope.{u,v} := type_of% (@_root_.TauCeti.lebesgue_number_lemma_of_metric_of_mem_nhds.{u,v})
-theorem lebesgue_source.{u,v} : lebesgue_scope.{u,v} := @_root_.TauCeti.lebesgue_number_lemma_of_metric_of_mem_nhds.{u,v}
+abbrev sourceStatement.{a,b,c,d} : Prop :=
+  type_of% (@_root_.TauCeti.FundamentalGroupoid.existsUnique_extension.{a,b,c,d})
 
-abbrev cast_scope.{u} := type_of% (@_root_.Path.Homotopic.Quotient.cast_mem_arrows_iff.{u})
-theorem cast_source.{u} : cast_scope.{u} := @_root_.Path.Homotopic.Quotient.cast_mem_arrows_iff.{u}
+abbrev signature : Signature where
+  Params := Unit
+  State _ := Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
-abbrev injective_scope.{u,v} := type_of% (@_root_.ContinuousMap.fundamentalGroupoid_map_obj_injective.{u,v})
-theorem injective_source.{u,v} : injective_scope.{u,v} := @_root_.ContinuousMap.fundamentalGroupoid_map_obj_injective.{u,v}
+def actual : Realization signature :=
+  realize signature (fun _ _ b => b) (fun e _ => nomatch e)
 
-abbrev index_singleton_scope.{u} := type_of% (@_root_.TauCeti.TopCat.CechIndex.coe_singleton.{u})
-theorem index_singleton_source.{u} : index_singleton_scope.{u} := @_root_.TauCeti.TopCat.CechIndex.coe_singleton.{u}
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e _ => nomatch e)
 
-abbrev index_order_scope.{u} := type_of% (@_root_.TauCeti.TopCat.CechIndex.le_iff.{u})
-theorem index_order_source.{u} : index_order_scope.{u} := @_root_.TauCeti.TopCat.CechIndex.le_iff.{u}
+def arena.{a,b,c,d} : Arena where
+  signature := signature
+  Law R := sourceStatement.{a,b,c,d} ∧
+    ∀ p, R.readout () () p = p
 
-abbrev intersection_mem_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.mem_cechIntersection.{u,v})
-theorem intersection_mem_source.{u,v} : intersection_mem_scope.{u,v} := @_root_.TauCeti.TopCat.mem_cechIntersection.{u,v}
+theorem actual_bridge.{a,b,c,d} :
+    sourceStatement.{a,b,c,d} ↔ arena.{a,b,c,d}.Law actual := by
+  simp [arena, actual, realize]
 
-abbrev intersection_singleton_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechIntersection_singleton.{u,v})
-theorem intersection_singleton_source.{u,v} : intersection_singleton_scope.{u,v} := @_root_.TauCeti.TopCat.cechIntersection_singleton.{u,v}
+theorem rejected_law.{a,b,c,d} : ¬ arena.{a,b,c,d}.Law rejected := by
+  intro h
+  have hp := h.2 true
+  simpa [arena, rejected, realize] using hp
 
-abbrev intersection_mono_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechIntersection_mono.{u,v})
-theorem intersection_mono_source.{u,v} : intersection_mono_scope.{u,v} := @_root_.TauCeti.TopCat.cechIntersection_mono.{u,v}
+def source.{a,b,c,d} : Registration (arena.{a,b,c,d}) (sourceStatement.{a,b,c,d}) where
+  actual := actual
+  bridge := actual_bridge
+  variation := ⟨actual_bridge.{a,b,c,d}.mp (by exact @_root_.TauCeti.FundamentalGroupoid.existsUnique_extension.{a,b,c,d}), rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law.{a,b,c,d}⟩
+      intro j hj
+      cases i
+      cases j
+      exact (hj rfl).elim
+    · intro i
+      exact nomatch i
+  dependence := by
+    intro i
+    cases i
+    exact ⟨(), false, true, by change false ≠ true; decide⟩
 
-abbrev open_obj_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechOpenDiagram_obj.{u,v})
-theorem open_obj_source.{u,v} : open_obj_scope.{u,v} := @_root_.TauCeti.TopCat.cechOpenDiagram_obj.{u,v}
+noncomputable def registration.{a,b,c,d} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.TauCeti.FundamentalGroupoid.existsUnique_extension.{a,b,c,d})
+    (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Topology.TauCeti.AlgebraicTopology.FundamentalGroupoid.NeighborhoodCover.extension,
+  realizationName := `Reg.D5.S3.Topology.TauCeti.AlgebraicTopology.FundamentalGroupoid.NeighborhoodCover.source,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{a,b,c,d}) ⟨source.{a,b,c,d}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some actual,
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Topology.TauCeti.AlgebraicTopology.FundamentalGroupoid.NeighborhoodCover,
+    definition := none,
+    coordinates := #[],
+    readouts := #[{
+      path := #["arg", "body", "body", "body", "body", "body"],
+      stateBinder := 0,
+      functionOperand := true,
+      stateOperand := some #["fn", "arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
 
-abbrev open_map_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechOpenDiagram_map.{u,v})
-theorem open_map_source.{u,v} : open_map_scope.{u,v} := @_root_.TauCeti.TopCat.cechOpenDiagram_map.{u,v}
-
-abbrev top_obj_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechTopDiagram_obj.{u,v})
-theorem top_obj_source.{u,v} : top_obj_scope.{u,v} := @_root_.TauCeti.TopCat.cechTopDiagram_obj.{u,v}
-
-abbrev top_map_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechTopDiagram_map_apply.{u,v})
-theorem top_map_source.{u,v} : top_map_scope.{u,v} := @_root_.TauCeti.TopCat.cechTopDiagram_map_apply.{u,v}
-
-abbrev inclusion_apply_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechInclusion_apply.{u,v})
-theorem inclusion_apply_source.{u,v} : inclusion_apply_scope.{u,v} := @_root_.TauCeti.TopCat.cechInclusion_apply.{u,v}
-
-abbrev inclusion_naturality_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechTopDiagram_map_comp_inclusion.{u,v})
-theorem inclusion_naturality_source.{u,v} : inclusion_naturality_scope.{u,v} := @_root_.TauCeti.TopCat.cechTopDiagram_map_comp_inclusion.{u,v}
-
-abbrev inclusion_app_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.cechInclusionNatTrans_app.{u,v})
-theorem inclusion_app_source.{u,v} : inclusion_app_scope.{u,v} := @_root_.TauCeti.TopCat.cechInclusionNatTrans_app.{u,v}
-
-abbrev singleton_cover_scope.{u,v} := type_of% (@_root_.TauCeti.TopCat.exists_mem_cechIntersection_singleton.{u,v})
-theorem singleton_cover_source.{u,v} : singleton_cover_scope.{u,v} := @_root_.TauCeti.TopCat.exists_mem_cechIntersection_singleton.{u,v}
-
-abbrev supremum_scope.{u,v} := type_of% (@_root_.TauCeti.FundamentalGroupoid.iSup_im_map_subtypeVal_eq_top.{u,v})
-theorem supremum_source.{u,v} : supremum_scope.{u,v} := @_root_.TauCeti.FundamentalGroupoid.iSup_im_map_subtypeVal_eq_top.{u,v}
-
-abbrev functor_ext_scope.{u,v,w,z} := type_of% (@_root_.TauCeti.FundamentalGroupoid.functor_ext.{u,v,w,z})
-theorem functor_ext_source.{u,v,w,z} : functor_ext_scope.{u,v,w,z} := @_root_.TauCeti.FundamentalGroupoid.functor_ext.{u,v,w,z}
-
-abbrev glue_restriction_scope.{u,v,w,z} := type_of% (@_root_.TauCeti.FundamentalGroupoid.map_subtypeVal_comp_glue.{u,v,w,z})
-theorem glue_restriction_source.{u,v,w,z} : glue_restriction_scope.{u,v,w,z} := @_root_.TauCeti.FundamentalGroupoid.map_subtypeVal_comp_glue.{u,v,w,z}
-
-abbrev glue_unique_scope.{u,v,w,z} := type_of% (@_root_.TauCeti.FundamentalGroupoid.eq_glue.{u,v,w,z})
-theorem glue_unique_source.{u,v,w,z} : glue_unique_scope.{u,v,w,z} := @_root_.TauCeti.FundamentalGroupoid.eq_glue.{u,v,w,z}
-
-abbrev extension_scope.{u,v,w,z} := type_of% (@_root_.TauCeti.FundamentalGroupoid.existsUnique_extension.{u,v,w,z})
-theorem extension_source.{u,v,w,z} : extension_scope.{u,v,w,z} := @_root_.TauCeti.FundamentalGroupoid.existsUnique_extension.{u,v,w,z}
-
-abbrev cech_diagram_obj_scope.{u,v} := type_of% (@_root_.TauCeti.FundamentalGroupoid.cechDiagram_obj.{u,v})
-theorem cech_diagram_obj_source.{u,v} : cech_diagram_obj_scope.{u,v} := @_root_.TauCeti.FundamentalGroupoid.cechDiagram_obj.{u,v}
-
-abbrev cech_diagram_map_scope.{u,v} := type_of% (@_root_.TauCeti.FundamentalGroupoid.cechDiagram_map.{u,v})
-theorem cech_diagram_map_source.{u,v} : cech_diagram_map_scope.{u,v} := @_root_.TauCeti.FundamentalGroupoid.cechDiagram_map.{u,v}
-
-abbrev cech_pt_scope.{u,v} := type_of% (@_root_.TauCeti.FundamentalGroupoid.cechCocone_pt.{u,v})
-theorem cech_pt_source.{u,v} : cech_pt_scope.{u,v} := @_root_.TauCeti.FundamentalGroupoid.cechCocone_pt.{u,v}
-
-abbrev cech_leg_scope.{u,v} := type_of% (@_root_.TauCeti.FundamentalGroupoid.cechCocone_ι_app.{u,v})
-theorem cech_leg_source.{u,v} : cech_leg_scope.{u,v} := @_root_.TauCeti.FundamentalGroupoid.cechCocone_ι_app.{u,v}
-
-abbrev cech_subtype_scope.{u,v} := type_of% (@_root_.TauCeti.FundamentalGroupoid.map_subtypeVal_eq_cechCocone_ι_app.{u,v})
-theorem cech_subtype_source.{u,v} : cech_subtype_scope.{u,v} := @_root_.TauCeti.FundamentalGroupoid.map_subtypeVal_eq_cechCocone_ι_app.{u,v}
-
+#print axioms registration
 end Reg.D5.S3.Topology.TauCeti.AlgebraicTopology.FundamentalGroupoid.NeighborhoodCover
