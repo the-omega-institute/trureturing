@@ -117,4 +117,58 @@ theorem actual_positive : arena.{u}.Law actual :=
 
 end QuotientAudit
 
+namespace RationalSliceAudit
+
+structure Inputs extends QuotientAudit.Inputs.{u} where
+  nontrivial : Nontrivial V
+
+attribute [instance] Inputs.nontrivial
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := Setoid (intrinsicFrontier ℝ (base P.C P.unit))
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ P := Setoid (intrinsicFrontier ℝ (base P.C P.unit))
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ r => r) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ P : Inputs.{u}, ∃ r : Setoid (intrinsicFrontier ℝ (base P.C P.unit)),
+    let a := R.readout () P r
+    (∀ x y, a x y ↔ midpoint ℝ (x : P.V) (y : P.V) ∈ intrinsicFrontier ℝ (base P.C P.unit)) ∧
+    CompactSpace (Quotient a) ∧ T2Space (Quotient a) ∧
+    Continuous (Quotient.mk a) ∧ IsClosedMap (Quotient.mk a) ∧
+    (∀ b : Quotient a, ∃ p : pure P.C P.unit,
+      Subtype.val '' ((Quotient.mk a) ⁻¹' {b}) = exclusion P.C P.unit p) ∧
+    ∃ (f : P.V →ₗ[ℝ] ℝ) (t : ℚ) (O : Set (Quotient a)),
+      f ≠ 0 ∧ IsOpen O ∧ O.Nonempty ∧
+      (∃ c ∈ intrinsicInterior ℝ (base P.C P.unit), f c = (t : ℝ)) ∧
+      O ⊆ (Quotient.mk a) '' {x | f (x : P.V) = (t : ℝ)} ∧
+      ∀ b ∈ O, ∃ x y : intrinsicFrontier ℝ (base P.C P.unit),
+        Quotient.mk a x = b ∧ Quotient.mk a y = b ∧
+        f (x : P.V) < (t : ℝ) ∧ (t : ℝ) < f (y : P.V)
+
+abbrev source_scope := type_of%
+  (@_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_rational_slice.{u})
+
+theorem source_bridge : source_scope.{u} ↔ arena.{u}.Law actual := by
+  constructor
+  · intro h P
+    exact @h P.V P.normed P.scalar P.finite P.C P.unit P.nontrivial
+      P.closed P.strict P.generating P.balls P.repeated
+  · intro h V normed scalar finite C unit nontrivial closed strict generating balls repeated
+    exact h ⟨⟨⟨V, normed, scalar, finite, C, unit, closed, strict, generating, balls⟩, repeated⟩,
+      nontrivial⟩
+
+theorem actual_positive : arena.{u}.Law actual :=
+  source_bridge.mp @_root_.D5.S3.Quantum.Foundation.ActualExclusionBoundary.original_all_repeated_rational_slice
+
+end RationalSliceAudit
+
 end Reg.D5.S3.Quantum.Foundation.ActualExclusionBoundary

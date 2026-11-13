@@ -72,6 +72,40 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                     Ex("r", Call("Setoid", S), data))))));
     }
 
+    private static Formula RationalSliceStatement()
+    {
+        var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
+        var S = Call("intrinsicFrontier", real, Call("base", C, u));
+        var r = Id("r"); var Q = Call("Quotient", r); var projection = Call("QuotientMk", r);
+        var f = Id("f"); var t = Id("t"); var O = Id("O"); var b = Id("b");
+        var x = Id("x"); var y = Id("y"); var p = Id("p"); var c = Id("c");
+        Formula Eq(Formula a, Formula d) => new Formula.Relation(a, FormulaRelationOperator.Equal, d);
+        Formula Lt(Formula a, Formula d) => new Formula.Relation(a, FormulaRelationOperator.LessThan, d);
+        var properties = And(All("x", S, All("y", S,
+            new Formula.Logic(Call("r", x, y), FormulaLogicOperator.Iff,
+                Mem(Call("midpoint", real, x, y), S)))),
+            And(Call("CompactSpace", Q), And(Call("TTwoSpace", Q),
+                And(Call("Continuous", projection), And(Call("IsClosedMap", projection),
+                    All("b", Q, Ex("p", Call("pure", C, u),
+                        Eq(Call("AmbientImage", Call("Fiber", projection, b)), Call("exclusion", C, u, p))))))));
+        var slice = Ex("f", Call("LinearMaps", real, V, real), Ex("t", Id("Rationals"),
+            Ex("O", Call("Sets", Q), And(new Formula.Relation(f, FormulaRelationOperator.NotEqual, F.D(0)),
+                And(Call("IsOpen", O), And(Call("Nonempty", O),
+                    And(Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, Call("base", C, u))),
+                        Eq(Call("f", c), Call("RealCast", t)))),
+                        And(Call("Subset", O, Call("Image", projection, Call("BoundaryLevelSet", f, t))),
+                            All("b", Q, Imp(Mem(b, O), Ex("x", S, Ex("y", S,
+                                And(Eq(Call("QuotientMk", r, x), b),
+                                    And(Eq(Call("QuotientMk", r, y), b),
+                                        And(Lt(Call("f", x), Call("RealCast", t)),
+                                            Lt(Call("RealCast", t), Call("f", y)))))))))))))));
+        return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
+            Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V), Inst("Nontrivial", V),
+            All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
+                Imp(And(Call("OriginalEBDomain", C, u), Call("AllRepeated", C, u)),
+                    Ex("r", Call("Setoid", S), And(properties, slice)))))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Whole original exclusions cover the actual relative boundary and detect its boundary midpoints.",
         H("The actual boundary and common whole exclusions"),
@@ -98,5 +132,16 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
                 Paragraph(Text("To prove isolation, two shared distinct points force two whole exclusion balls to coincide, by applying the existing strict ball-face theorem to their intersection. If a repeated ball meets another different ball, their singleton intersection is pure. The two distinct labels of the repeated ball then force every pure point of that ball to have one common exclusion. Zero symmetry puts all those pure points in the other ball. Compact convex hull generation and maximality force equality, a contradiction. Thus different whole balls are disjoint in this branch, and the midpoint criterion makes the literal relation transitive.")),
                 Paragraph(Text("The actual boundary is a closed subset of compact K. The midpoint map is continuous, so its inverse image of that boundary is a closed relation graph. The saturation of a closed boundary subset is the projection of the intersection of this graph with a compact product. It is closed, proving that the actual quotient projection is closed. Its fibers are compact by the same graph argument. The proper-map product theorem then makes the product projection a quotient map; the closed graph descends to the closed diagonal, proving the actual quotient Hausdorff. Compactness descends from the compact actual boundary. For each actual quotient point b, the ambient image of its entire projection fiber equals one whole original exclusion D(p); AmbientImage and Fiber denote precisely that image and inverse image of the singleton b. No convex subset or selected smaller ball replaces the full fiber.")),
                 Paragraph(Text("This construction places no ENR, metrizability, finite dimension, fibration or local contractibility hypothesis on the quotient. The common rational Baire slice, ray-avoiding finite-neighborhood data, radial homotopy and sphere contradiction are further obligations. The full original theorem is not settled by construction of this quotient."))),
+            DescribeRole.Theorem),
+        Describe.Lean(DescribeId.Create("original-all-repeated-rational-slice"),
+            DeclarationHandle.Create("D5/S3/Quantum/Foundation/ActualExclusionBoundary.original_all_repeated_rational_slice"),
+            H("An actual rational slice with crossing whole fibers"),
+            StatementSource.FromAuthor(F.Disp(RationalSliceStatement())), AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text("OriginalEBDomain has exactly the preceding closed generating pointed cone, strict original unit and entire positive-dimensional exclusion-ball hypotheses. V is nonzero. AllRepeated says every original label has a distinct original label with the same entire exclusion; it is used only as the contradiction branch. The setoid is again the actual boundary-midpoint relation. Its quotient remains compact Hausdorff with continuous closed canonical projection and whole original exclusions as its ambient fibers.")),
+                Paragraph(Text("Choose a finite linear coordinate basis of the original V and restrict its coordinates to aff(K). Distinct points in each positive-dimensional whole fiber differ in some coordinate. Two rational heights strictly between their values give a countable family indexed by a finite coordinate and two rationals. Its closed set is the intersection of the projection images of the actual boundary halfspaces below the lower height and above the upper height. Both images are compact and closed; every actual quotient point belongs to one such crossing set.")),
+                Paragraph(Text("Apply the pinned compact Hausdorff Baire theorem to this countable closed cover. Some crossing set has nonempty interior O. Let t be the rational midpoint of its heights and f the selected actual coordinate. Every b in O has actual boundary representatives x and y in its same whole fiber with f(x)<t<f(y). In particular the preimage of O contains actual points outside the slice. Convexity of each entire original fiber supplies a representative at the same level t, proving O is contained in the projection image of that one boundary slice. BoundaryLevelSet(f,t) denotes exactly the boundary subtype points x with f(x)=RealCast(t); no independent slice or supplier is assumed.")),
+                Paragraph(Text("The same level genuinely meets ri(K). Choose an actual relative interior point c. If f(c)=t it suffices. Otherwise use the straddling endpoint on the opposite side; the open segment from c to that endpoint lies in ri(K), and its linear image contains t. The displayed interior-level witness therefore follows from the original K. The two strict inequalities also force f to be nonzero. RealCast is the rational-to-real coercion; AmbientImage and Fiber retain the meanings in the preceding statement.")),
+                Paragraph(Text("The source conclusion constructs a rational level of an actual coordinate, a common slice, a nonempty actual open label set and crossing representatives for every one of its whole fibers. It does not yet construct finite convex controlling neighborhoods, the ray-avoiding averaging map or its radial homotopy, and does not conclude singleton-label existence, boundary propagation or continuum multiplicity. Four-slot source registration remains unfinished under issue 29762. This is an application of existing convex geometry and Baire theory, with no originality claim."))),
             DescribeRole.Theorem))));
 }

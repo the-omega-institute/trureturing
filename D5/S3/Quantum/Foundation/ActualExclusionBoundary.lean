@@ -10,6 +10,7 @@ import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
 import Mathlib.Topology.Baire.Lemmas
+import Mathlib.Topology.Baire.LocallyCompactRegular
 
 /-! Relative-boundary geometry of the entire original normalized cone base. -/
 
@@ -355,12 +356,12 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     original_all_repeated_boundary_quotient hclosed hstrict hgen hB hrepeated
   let S := intrinsicFrontier ℝ (base C u)
   let q : S → Quotient r := Quotient.mk r
-  letI := hcompact
-  letI := ht2
+  let := hcompact
+  let := ht2
   have hSclosed : IsClosed S :=
     isClosed_intrinsicFrontier (affineSpan ℝ (base C u)).closed_of_finiteDimensional
   have hSK : S ⊆ base C u := intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed
-  letI : CompactSpace S := isCompact_iff_compactSpace.mp
+  let : CompactSpace S := isCompact_iff_compactSpace.mp
     ((base_compact hclosed hstrict).of_isClosed_subset hSclosed hSK)
   have hP : (pure C u).Nonempty := by
     by_contra hn
@@ -369,8 +370,8 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     exact bot_ne_top hh
   obtain ⟨p₀, hp₀⟩ := hP
   obtain ⟨z₀, hz₀⟩ := ((exclusion_ball_faces hclosed hstrict hgen hB).1 ⟨p₀, hp₀⟩).1.nonempty
-  letI : Nonempty S := ⟨⟨z₀, exclusion_boundary hclosed hstrict hgen hB ⟨p₀,hp₀⟩ hz₀⟩⟩
-  letI : Nonempty (Quotient r) := ⟨q (Classical.choice inferInstance)⟩
+  let : Nonempty S := ⟨⟨z₀, exclusion_boundary hclosed hstrict hgen hB ⟨p₀,hp₀⟩ hz₀⟩⟩
+  let : Nonempty (Quotient r) := ⟨q (Classical.choice inferInstance)⟩
   let e := (Module.finBasis ℝ V).equivFun
   let f (i : Fin (Module.finrank ℝ V)) : V →ₗ[ℝ] ℝ :=
     (LinearMap.proj i).comp e.toLinearMap
@@ -395,7 +396,7 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     obtain ⟨x, hx, y, hy, hxy⟩ := ((exclusion_ball_faces hclosed hstrict hgen hB).1 p).1
     have hcoord : ∃ i, f i x ≠ f i y := by
       by_contra hn
-      push_neg at hn
+      push Not at hn
       exact hxy (e.injective (funext hn))
     obtain ⟨i, hi⟩ := hcoord
     have across : ∃ x y : S, q x = b ∧ q y = b ∧ f i x < f i y := by
@@ -417,7 +418,7 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
   obtain ⟨j, hj⟩ := nonempty_interior_of_iUnion_of_closed hFclosed hcover
   have hab : j.2.1 < j.2.2 := by
     by_contra hn
-    simpa [F, hn] using hj
+    simp [F, hn] at hj
   have habR : (j.2.1 : ℝ) < (j.2.2 : ℝ) := by exact_mod_cast hab
   let t : ℚ := (j.2.1 + j.2.2) / 2
   have hat : (j.2.1 : ℝ) < (t : ℝ) := by dsimp [t]; push_cast; linarith
@@ -428,7 +429,7 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     simp only [F, hab, ↓reduceIte] at hh
     obtain ⟨⟨x, hx, hxb⟩, ⟨y, hy, hyb⟩⟩ := hh
     exact ⟨x,y,hxb,hyb,hx.trans_lt hat,htb.trans_le hy⟩
-  obtain ⟨b, hb⟩ := hj
+  obtain ⟨b, hb⟩ := hj.exists
   obtain ⟨x,y,_,_,hx,hy⟩ := across b hb
   refine ⟨r, hr, hcompact, ht2, hq, hqc, hfib, f j.1, t, interior (F j),
     ?_, isOpen_interior, hj, ?_, ?_, across⟩
