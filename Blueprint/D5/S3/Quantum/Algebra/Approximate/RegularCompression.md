@@ -106,6 +106,34 @@ $$\operatorname{p}\left(\operatorname{C}\left(P, Q, x\right)+\operatorname{C}\le
 
 Under the same hypotheses, p(C(P,Q)x+C(P,e-Q)x-C(P,e)x) is at most 14598 r p(x), for every x. The actual unit is star fixed, e-Q has exactly the same projection defect as Q, and the uncorrected bracketings add exactly. Applying the three quantitative compression bounds gives the decomposition error. This does not identify the two corrected ranges as an exact direct sum.
 
+**Theorem 1.9 (The actual compatible-corner product has approximate outer support).**
+
+$$\operatorname{p}\left(\operatorname{C}\left(P, R, \operatorname{mu}\left(x, y\right)\right)-\operatorname{mu}\left(x, y\right)\right)\le260000 \cdot \tau+M\delta \cdot \operatorname{p}\left(x\right) \cdot \operatorname{p}\left(y\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.corner_product_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same original finite-dimensional complex Hilbert product, let P, Q and R be self-adjoint, let tau be nonnegative, set r=tau+M delta, assume r at most 1/1024, and bound all three actual p-projection defects by tau. For every x in range C(P,Q) and y in range C(Q,R), the displayed estimate holds with the universal numerical constant 260000. No orthogonality of the labels, exact corner closure, associativity of H, scalar pairing, or saturation is assumed.
+
+Exact idempotence makes x fixed by C(P,Q). The bracketing estimate and the original associator bound imply p(mu(P,x)-x) at most 24354 r p(x). Star reversal gives the corresponding right support bound for y and R. The product estimate p(mu(a,b)) at most 2 p(a)p(b), valid at this scale, then controls the five differences through mu(P,mu(mu(x,y),R)), mu(P,mu(x,mu(y,R))), mu(P,mu(x,y)), and mu(mu(P,x),y). Their coefficients sum to 253282, bounded by 260000. M enters only through r in this regular-norm estimate. The result is approximate product support; exact closure, minimal-corner scalar pairing, positivity, dimension transfer and column saturation require further arguments.
+
+**Theorem 1.10 (The actual compressed square detects nonzero mixed-corner vectors).**
+
+$$\frac{\operatorname{norm}\left(x\right)^{2}}{2}\le\operatorname{Re}\left(\operatorname{inner}\left(e, \operatorname{C}\left(Q, Q, \operatorname{mu}\left(x^{*}, x\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.corner_square_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Retain the same original Hilbert product and all the self-adjointness, projection-defect, nonnegative-tau and r at most 1/1024 hypotheses for P and Q. If additionally 520000 r M^2 is at most one, then every x in range C(P,Q) satisfies the displayed lower bound, and C(Q,Q)mu(star(x),x)=0 if and only if x=0. The norm here is the original Hilbert norm, and e is the original strict unit of Hilbert norm one.
+
+Star reversal places star(x) in the reversed actual corner. Applying the compatible-corner support estimate bounds the p-distance of the compressed square from the original square by 260000 r p(x)^2. The original adjoint law and strict right unit give exactly inner(e,mu(star(x),x))=inner(x,x). Cauchy-Schwarz bounds the expectation error by the same regular-norm error. The comparison p(x) at most M norm(x) gives the stated half-norm lower bound at the additional scale, and hence detects zero exactly. The M^2 factor is explicit; no M-independent Hilbert positivity radius is asserted. This result does not define the scalar coefficient b(Y,X)t_Q, prove that the actual diagonal corner is one-dimensional, or establish column saturation or a block extension.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness`
@@ -113,6 +141,8 @@ Under the same hypotheses, p(C(P,Q)x+C(P,e-Q)x-C(P,e)x) is at most 14598 r p(x),
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_idempotent`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_star`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_two_piece`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.corner_product_support`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.corner_square_nondegenerate`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.p_star_mul_rev`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.regularCompression_closeness`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.two_piece_defects`
