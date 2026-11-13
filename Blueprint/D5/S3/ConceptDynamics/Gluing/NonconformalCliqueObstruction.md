@@ -36,7 +36,7 @@ $$\forall E: Type, \forall V: Type, [\operatorname{Finite}(V)], \forall S: E \to
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Gluing/NonconformalCliqueObstruction.nonconformal_clique_obstruction` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Catriel Beeri; Ronald Fagin; David Maier; Mihalis Yannakakis (1983). *On the Desirability of Acyclic Database Schemes*. DOI: [10.1145/2402.322389](https://doi.org/10.1145/2402.322389). URL: <https://s3.us.cloud-object-storage.appdomain.cloud/res-files/500-jacm83a.pdf>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ If a global tuple restricted into every R(e), any distinct x,y in C would occur 
 
 For this specific relation construction the color threshold is sharp: with card(C) colors, inject C into Fin(card(C)) and extend the assignment to V using a default color outside C. Every scope restriction belongs to its full injective-clique relation.
 
-This is a known-result formalization in the classical theory of acyclic database schemes, not a novelty claim: Beeri, Fagin, Maier, and Yannakakis, On the Desirability of Acyclic Database Schemes, Journal of the ACM 30(3), 1983, DOI 10.1145/2402.322389. The Lean proof supplies the indexed-scope and finite-alphabet construction explicitly. It treats only the nonconformal branch; the full classification remains unresolved.
+This is a known-result formalization in the classical theory of acyclic database schemes, not a novelty claim: Beeri, Fagin, Maier, and Yannakakis, On the Desirability of Acyclic Database Schemes, Journal of the ACM 30(3), 1983, DOI 10.1145/2402.322389. The Lean proof supplies the indexed-scope and finite-alphabet construction explicitly. This module establishes only the nonconformal branch and does not establish the full classification.
 
 ## References
 
