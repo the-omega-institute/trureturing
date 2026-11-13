@@ -94,6 +94,18 @@ proof's axiom closure is restricted to `propext`, `Classical.choice`, and
 This is an arbitrary-semigroup existence result rather than a finite
 enumeration, numerical reduction or certified finite instance (`utility: none`).
 
+The mirrored `Reg/D5/S3/Arith/Additive/NumericalSemigroupRealizability.lean`
+uses the enrolled `DependentFamily.realize` template. Its actual observation
+is the entire generated additive submonoid as a function of M and S, not a
+constant truth value or a finite surrogate. Its law retains the complete
+original quantifiers, finite-complement premise, and all six conclusion
+clauses. The source-equivalence bridge, actual positive law, whole-family
+variation, sensitivity and observational dependence have Lean proofs.
+The actual readout distinguishes S=∅ from S={1} at M=0; this establishes
+nonconstancy of the observation family, without imposing M=0 on the positive
+existential witnesses in the law. The continuation is explicitly unknown;
+this asserts neither undecidability nor an inexhaustible residual.
+
 ## Triage
 
 | Item | Result and boundary |
