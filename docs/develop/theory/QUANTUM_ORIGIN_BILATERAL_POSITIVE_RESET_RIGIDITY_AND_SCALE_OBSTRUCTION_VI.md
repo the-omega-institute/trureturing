@@ -482,8 +482,8 @@ Q_\varepsilon(X,Y)=\operatorname{Tr}(XY)
 $$
 
 is invariant and positive definite. Its pair-face radii are not all
-equal, and it fails (91.5), although the same carrier and group admit
-an equalizing invariant form $Q_0$.
+equal, and the curvature upper bound in (91.5) fails for this supplied
+$Q_\varepsilon$, although the same carrier and group admit an equalizer $Q_0$.
 
 Proof. For every unit vector $v$, $v\perp\Theta v$. Quaternionic
 orthonormal completion of the pair $(v,\Theta v)$ supplies a unitary
