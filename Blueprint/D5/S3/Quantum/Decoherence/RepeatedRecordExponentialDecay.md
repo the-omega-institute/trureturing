@@ -18,6 +18,14 @@ The record amplitudes construct both the Gram channel and the class projectors. 
 
 The first clause is the exact entrywise iterate. The second computes the projector sum, and the final clause is its Frobenius norm contraction under the stated cross-class Gram bound.
 
+For a repeated-collision application, each system address labels a normalized environment amplitude vector. The Gram coefficient uses the amplitude at the first address times the conjugate amplitude at the second, summed over environment coordinates. The environment_marginal_channel theorem identifies this entry multiplier with tracing out a controlled record. Repeating the same reduced channel can be realized with fresh, initially uncorrelated environment registers and the same recording map. A correlated or reused environment is not covered merely by assigning it the same one-step overlap.
+
+The error is relative to record-class pinching, in the Frobenius norm, the square root of the sum of squared entry magnitudes. It is bounded by the initial discarded coherence times the uniform cross-class overlap bound raised to the collision count. No positivity or trace-one premise is imposed on the system matrix, so density matrices are included as a special case. The estimate is not stated in trace norm or diamond norm, and does not by itself give a measurement discrimination error.
+
+The equality classes contain identical amplitude vectors, not rays modulo phase. Distinct normalized vectors differing only by a phase have overlap of unit magnitude, so the strict cross-class bound excludes them. Distinctness alone therefore does not supply the decay hypothesis. Within each equality class the coherence is retained; complete basis dephasing requires singleton classes. Orthogonal distinct classes permit a zero bound and hence exact pinching after any positive collision count.
+
+This application replaces a demand for exact orthogonality by a quantitative sufficient condition for small residual coherence. Normalization, the overlap bound and the repeated-channel description remain model premises. Their applicability to a particular experiment requires separate physical evidence; the mathematical estimate does not establish those premises.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay`

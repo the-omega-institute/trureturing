@@ -1,0 +1,58 @@
+**命题 123.2（A：由整个 $D_y$ 定义的规范二维补）。**
+有
+
+$$
+\dim T_y=3,\qquad \dim Z_y=2,\qquad
+S_x=A_{\rm ax}\oplus Z_y.
+\tag{X123.11}
+$$
+
+所以 $Z_y$ 自然映到商 $S_x/(S_x\cap L_{\rm ax})$ 为线性同构。
+原正锥满足
+
+$$
+C^*\cap\operatorname{ann}(M_y)=\mathbb R_{\ge0}e_y,
+\qquad
+N_x\cap(e_y+Z_y)=\{e_y\}.
+\tag{X123.12}
+$$
+
+证明。
+实际边 $x\perp y$ 使 $x$ 位于完整 $D_y$ 的球面。
+每个实际 $k\in N_x$ 在该整个球非负且在 $x$ 为零。
+若在某个单位三球图中该限制为 $\alpha+\ell\cdot w$，
+非负性给 $\alpha\ge\|\ell\|$；
+在球面点 $w_x$ 取零，给 $\ell\cdot w_x=-\alpha$，
+所以 $\alpha=\|\ell\|$ 且 $\ell=-\alpha w_x$。
+包括 $\alpha=0$ 在内，这些限制都在同一支撑仿射射线上。
+取线性张成后，整个 $S_x$ 的限制像维数至多一。
+
+$g_x$ 在 $D_y$ 非零：它在 $x$ 为零，且原一值面 $\{x\}$
+使 $g_x$ 在该球其余每点严格正。
+完整球正维，故确有其余点；限制像秩准确为一。
+因此 $\dim T_y=4-1=3$。
+$e_y\in T_y$ 且 $e_y(y)=1$，所以 $\operatorname{ev}_y|_{T_y}$ 非零，
+其核 $Z_y$ 为二维。
+在 $A_{\rm ax}=\operatorname{span}\{g_x,e_y\}$ 中，
+限制到 Dy 先除去非零的 $g_x$ 方向，只剩 $\mathbb R e_y$；
+再在 y 评价除去最后这条线。
+故 $A_{\rm ax}\cap Z_y=0$，维数相加为四，得到规范直和。
+
+为使用原面与唯一确认接口，取非零 $k\in C^*\cap\operatorname{ann}(M_y)$。
+原生成性使 $m=\max_Kk>0$。
+在紧的原最大面取一个原纯最大点 $w$。
+则 $k/m\in\mathcal E$，在 $w$ 为一，在整个 $D_y$ 为零，故
+$D_y\subseteq D_w$。
+完整排除球的真面最大性给 $D_y=D_w$，Inj 给 $w=y$。
+因此 $m=k(y)$，且 $k/m\in\mathcal A_y=\{e_y\}$，
+从而 $k=k(y)e_y$。
+$k=0$ 另给该射线的零端点；反向 $e_y\ge0$ 且消去 $M_y$，所以第一式成立。
+
+每个 $e_y+z$，$z\in Z_y$，都在全部 Dy 为零且在 y 为一。
+若它在原整个 C 非负，刚用的原正射线强迫它等于 $e_y$。
+$e_y\in N_x$，所以第二式成立。证毕。
+
+正消去射线是已有完整面归一及唯一确认的应用，
+不是新增正提升或极端性原理。
+本组合识别的是由整个 Dy 定义的规范商代表，未给任何正逆。
+

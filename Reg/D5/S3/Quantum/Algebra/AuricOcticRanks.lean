@@ -193,6 +193,21 @@ theorem source_bridge : (type_of% (@crossRank_matrix.{v, u})) ↔ arena.{u, v}.L
 
 end Matrix
 
+namespace CrossBound
+abbrev arena : Arena where
+  signature := crossSignature.{u, v}
+  Law R := ∀ (p : Coordinates.{u, v}) (U : Submodule p.K (p.Ω → p.K))
+    (n : (p.Ω → p.K) →ₗ[p.K] (p.Ω → p.K)), n.ker = U → n.range = U →
+    Fintype.card p.Ω = 8 → finrank p.K U = 4 → ∀ S : Finset p.Ω,
+    2 * rowRank U S ≤ S.card + R.readout () p (n, S)
+
+theorem source_bridge : (type_of% (@cross_rank_bound.{v, u})) ↔ arena.{u, v}.Law crossActual.{u, v} := by
+  constructor
+  · intro h p U n hk hr hΩ hU S; exact h U n hk hr hΩ hU S
+  · intro h Ω K _ _ _ U n hk hr hΩ hU S; exact h { K := K, Ω := Ω } U n hk hr hΩ hU S
+
+end CrossBound
+
 namespace CutFree
 abbrev arena : Arena where
   signature := actionCrossSignature.{u, v, w}

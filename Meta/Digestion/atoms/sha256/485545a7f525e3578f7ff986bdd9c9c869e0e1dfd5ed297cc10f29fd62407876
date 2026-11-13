@@ -1,0 +1,14 @@
+**定义 122.1（接触标签稠密）。** 令
+
+$$
+\begin{gathered}
+M_p=(p+D_p)/2,\qquad
+W(D_p)=\max_{f\in\mathcal E}(\max_{D_p}f-\min_{D_p}f),\\
+\mathcal R=\{p\in P:\exists x\in D_p,\ (p+x)/2\in\operatorname{relbd}K\},\\
+\mathsf{DC}:\qquad \overline{\mathcal R}^{\,P}=P.
+\end{gathered}
+\tag{Q122.2}
+$$
+
+主候选是 $\boxed{\mathrm{EB3}+\mathsf{DC}}$。稠密性取原 $P$ 的相对拓扑，端点 $x$ 起初量化整个原球，包含全部混态。它等价地要求每个非空相对开纯标签区域含一个接触标签；不是只在选定球面、有限标签集或图模型中稠密。
+
