@@ -31,7 +31,7 @@ Their full-cone spanning certificate supplies homogeneity; the given
 compact group supplies normalized pure transitivity. Whole minimal
 two-pure faces select the complex type only after Theorem 25 has supplied
 Jordan structure. The standard Jordan type and face geometry are cited
-separately to [Barnum–Hilgert](barnumhilgert2019spectral.md), rather than
+separately to [Barnum–Hilgert](../QuantumStates/barnumhilgert2019spectral.md), rather than
 attributing them or a new classification to this application.
 
 An original strictly positive normalization is transported by a positive
