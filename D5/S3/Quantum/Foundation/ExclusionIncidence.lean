@@ -77,8 +77,7 @@ theorem exclusion_upper_eventually {C : PointedCone ℝ V} {u : V →ₗ[ℝ] �
   have hz : z ∈ exclusion C u p := exclusion_upper_limit hc hs hg
     (hp.comp (hφ.comp hψ).tendsto_atTop) hyz (fun n => hy (ψ n))
   have hnear : ∀ᶠ n in atTop, dist (y (ψ n)) z < ε :=
-    (Metric.tendsto_atTop.mp hyz) ε hε |>.choose_spec |> fun hh =>
-      eventually_atTop.mpr ⟨_, hh⟩
+    (Metric.tendsto_nhds.mp hyz) ε hε
   obtain ⟨n, hn⟩ := hnear.exists
   exact (hfar (ψ n) z hz).not_gt hn
 
