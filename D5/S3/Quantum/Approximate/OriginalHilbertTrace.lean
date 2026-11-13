@@ -20,7 +20,7 @@ public import Mathlib.Tactic
 
 /-! The C-star norm and the original Hilbert norm are distinct. The latter is
 specified by a positive Hermitian core on the very same complex vector space.
-The non-binding construction is the normalized Haar average of the original
+The construction is the normalized Haar average of the original
 unit functional; its traciality and strict positivity feed the original-form
 estimate. No change of unit or construction of the associative product is made.
 -/
@@ -217,8 +217,7 @@ trace. Its positive Hermitian form has the original quantitative bound.
 All norms denoted by `hilbertNorm B` are the original Hilbert norms. -/
 theorem nearby_faithful_trace
     (B : InnerProductSpace.Core ℂ A) (μ : A →ₗ[ℂ] A →ₗ[ℂ] A)
-    (M q d : ℝ) (hM : 1 ≤ M) (hq : 0 ≤ q) (hq1 : q < 1)
-    (hd : 0 ≤ d) (hd1 : d ≤ 1 / 8)
+    (M q d : ℝ) (hM : 1 ≤ M) (hq1 : q < 1) (hd1 : d ≤ 1 / 8)
     (hone : B.inner 1 1 = 1)
     (hstar : ∀ x, hilbertNorm B (star x) = hilbertNorm B x)
     (hunit : ∀ x, μ x 1 = x)
@@ -243,6 +242,16 @@ theorem nearby_faithful_trace
   have hp (x : A) : 0 ≤ p x := Real.sqrt_nonneg _
   have hpstar (x : A) : p (star x) = p x := hstar x
   have hpone : p 1 = 1 := by simp [p, hilbertNorm, hone]
+  have hq : 0 ≤ q := by
+    have hb := hnear 1 1
+    change p (1 * 1 - μ 1 1) ≤ q * p 1 * p 1 at hb
+    simp only [hpone, mul_one] at hb
+    exact (hp _).trans hb
+  have hd : 0 ≤ d := by
+    have hb := hu 1
+    change p 1 ≤ 1 + 2 * d at hb
+    rw [hpone] at hb
+    linarith
   have hτ (x : A) : τ x = B.inner 1 x := rfl
   have hτnorm (x : A) : ‖τ x‖ ≤ p x := by
     rw [hτ]
@@ -281,7 +290,8 @@ theorem nearby_faithful_trace
     calc
       p (x * y) = p ((x * y - μ x y) + μ x y) := congrArg p he
       _ ≤ p (x * y - μ x y) + p (μ x y) :=
-        @norm_add_le A B.toNormedAddCommGroup.toSeminormedAddCommGroup _ _
+        @norm_add_le A
+          B.toNormedAddCommGroup.toSeminormedAddCommGroup.toSeminormedAddGroup _ _
       _ ≤ q * p x * p y + M * p x * p y := add_le_add (hnear x y) (hμ x y)
       _ = _ := by ring
   have hposlower (x : A) : (1 - q) * p x ^ 2 ≤ (τ (star x * x)).re := by
@@ -362,5 +372,7 @@ theorem nearby_faithful_trace
   · intro a x y
     change t (star (a * x) * y) = t (star x * (star a * y))
     simp only [star_mul, mul_assoc]
+
+#print axioms nearby_faithful_trace
 
 end D5.S3.Quantum.Approximate.OriginalHilbertTrace
