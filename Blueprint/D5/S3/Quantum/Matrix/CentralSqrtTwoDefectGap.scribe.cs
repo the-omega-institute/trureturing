@@ -57,10 +57,37 @@ internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinitio
                 + "[2*sqrt(2)/(1+sqrt(2))^2]/(n+1)^3. This bound is uniform over all "
                 + "opposite-sector pairs, including exterior modes. It does not by itself "
                 + "bound pairs belonging to the same sector.", DescribeRole.Theorem),
-            Paragraph(Text("The full-matrix reflection identification, source quantization and "
-                + "adjacent-sector alternation needed for the complete uniform inverse-cubic "
-                + "event remain separate obligations. This module records the compiled "
-                + "rank-one bridge, finite-recurrence endpoint estimate and fixed matrix family.")))));
+            Entry("sectorSpectrum", "Complete reflection-sector spectrum",
+                "sectorSpectrum(n) joins the two Hermitian eigenvalue enumerations of the "
+                + "n+1 dimensional sectors. The sum type retains every index and every "
+                + "algebraic multiplicity.", DescribeRole.Definition),
+            Entry("sector_spectral_gap", "All-pair sector-union gap",
+                "Any two distinct indices in the complete sector union have eigenvalue "
+                + "distance at least [2*sqrt(2)/(1+sqrt(2))^2]/(n+1)^3. Positive-index "
+                + "monotonicity and rank-one subadditivity constrain each threshold count "
+                + "difference to zero or one. Two same-sector indices closer than the "
+                + "cross-sector bound would force a count difference of at least two.", DescribeRole.Theorem),
+            Entry("central_spectral_gap", "Actual full-matrix algebraic gap",
+                "For every enumeration of all characteristic roots of centralDefect(n+1), "
+                + "distinct indices have distance at least [2*sqrt(2)/(1+sqrt(2))^2]/(n+1)^3. "
+                + "Folding the path at the defect gives two identical free-path blocks "
+                + "coupled at their endpoints. The sum and difference bases conjugate "
+                + "this matrix to the two Robin sectors. Characteristic-polynomial "
+                + "factorization identifies the whole algebraic root multiset with the "
+                + "sector union; injectivity follows from the quantitative gap.", DescribeRole.Theorem),
+            Entry("uniform_inverse_cubic_gap", "Uniform gap of the fixed defect family",
+                "There are c>0 and N>=1 such that for every n>=N the actual defect matrix "
+                + "is Hermitian and every algebraic eigenvalue enumeration satisfies "
+                + "|lambda(i)-lambda(j)|>=c/n^3 at distinct indices. One may take "
+                + "c=2*sqrt(2)/(1+sqrt(2))^2 and N=1. The Fin(2*n-1+1) index type has "
+                + "exactly 2*n elements under n>=1.", DescribeRole.Theorem),
+            Paragraph(Text("The fixed matrix family and spectral-separation question are from "
+                + "Childs et al., Exponential algorithmic speedup by a quantum walk, "
+                + "arXiv:quant-ph/0209131v2, Section III.4, Lemma 2. The endpoint proof "
+                + "uses every real energy and requires no asymptotic root enumeration. "
+                + "The spectral conclusion supplies no physical access model, EXIT "
+                + "algorithm, classical oracle lower bound or complete quantum/classical "
+                + "separation.")))));
 
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create("central-sqrt-two-defect-gap-" + name.Replace('_', '-').ToLowerInvariant()),
