@@ -91,6 +91,29 @@ private theorem corrected_involution_sq {A : Type*} [NormedRing A] [NormedAlgebr
 def correction {A : Type*} [NormedRing A] [NormedAlgebra ℝ A] (t : A) : A :=
   (1 / 2 : ℝ) • (1 + t * inverseSqrt (t ^ 2 - 1))
 
+/-- The Taylor correction differs from the uncorrected midpoint by the tail of
+the inverse-square-root series.  The estimate is purely in the associative
+operator algebra and is used by the original-product compression below. -/
+theorem correction_closeness {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
+    (t : A) :
+    ‖correction t - (1 / 2 : ℝ) • (1 + t)‖ ≤
+      (1 / 2 : ℝ) * ‖t‖ * ‖inverseSqrt (t ^ 2 - 1) - 1‖ := by
+  have hident : correction t - (1 / 2 : ℝ) • (1 + t) =
+      (1 / 2 : ℝ) • (t * (inverseSqrt (t ^ 2 - 1) - 1)) := by
+    unfold correction
+    rw [← smul_sub]
+    congr 1
+    noncomm_ring
+  rw [hident, norm_smul]
+  calc
+    ‖(1 / 2 : ℝ)‖ * ‖t * (inverseSqrt (t ^ 2 - 1) - 1)‖ ≤
+        (1 / 2 : ℝ) * (‖t‖ * ‖inverseSqrt (t ^ 2 - 1) - 1‖) := by
+      calc
+        _ ≤ ‖(1 / 2 : ℝ)‖ * (‖t‖ * ‖inverseSqrt (t ^ 2 - 1) - 1‖) :=
+          mul_le_mul_of_nonneg_left (norm_mul_le _ _) (norm_nonneg _)
+        _ = _ := by norm_num
+    _ = (1 / 2 : ℝ) * ‖t‖ * ‖inverseSqrt (t ^ 2 - 1) - 1‖ := by ring
+
 /-- Idempotence is established inside the associative operator algebra. -/
 theorem correction_idempotent {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
     [CompleteSpace A] [NormOneClass A] (t : A) (ht : ‖t ^ 2 - 1‖ < 1) :

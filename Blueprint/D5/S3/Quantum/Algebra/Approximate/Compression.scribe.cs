@@ -25,5 +25,24 @@ internal sealed class CompressionDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("Absolute convergence follows by comparison with the scalar binomial series. Its Cauchy product is evaluated by the Chu-Vandermonde identity, giving S squared equal to the geometric series in identity minus T squared. The geometric-series identity gives T squared times S squared equal to identity. Commutation then proves exact idempotence.")),
                     Paragraph(Text("The intended algebra A is the associative algebra of continuous linear endomorphisms. No multiplication instance is imposed on the nonassociative target space. This result supplies the analytic correction after the operator smallness estimate has been proved; it does not supply mixed-corner saturation, the corrected matrix action, or a matrix-block extension."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("taylor-compression-closeness"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/Compression.correction_closeness"),
+                H("The Taylor correction is close to the midpoint"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("T"), InMacro, Sp, F.Id("A"), Comma, Sp,
+                    Call("norm", Seq(Call("correction", F.Id("T")), Minus,
+                        Multiply(new Formula.Fraction(D(1), D(2)),
+                            Seq(Open, D(1), Plus, F.Id("T"), Close)))), Sp,
+                    Le, Sp, Multiply(Multiply(new Formula.Fraction(D(1), D(2)),
+                        Call("norm", F.Id("T"))),
+                        Call("norm", Seq(Call("inverseSqrt", Seq(F.Id("T"), Caret,
+                            Grp(D(2)), Minus, D(1))), Minus, D(1)))), Dot))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The correction differs from the uncorrected midpoint by one half of T "
+                        + "times the inverse-square-root Taylor tail. Submultiplicativity gives "
+                        + "the displayed bound without adding any structure to the target space."))),
                 DescribeRole.Theorem))));
 }

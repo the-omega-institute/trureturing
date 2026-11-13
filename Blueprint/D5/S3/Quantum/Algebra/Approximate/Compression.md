@@ -20,6 +20,19 @@ Absolute convergence follows by comparison with the scalar binomial series. Its 
 
 The intended algebra A is the associative algebra of continuous linear endomorphisms. No multiplication instance is imposed on the nonassociative target space. This result supplies the analytic correction after the operator smallness estimate has been proved; it does not supply mixed-corner saturation, the corrected matrix action, or a matrix-block extension.
 
+**Theorem 1.2 (The Taylor correction is close to the midpoint).**
+
+$$\forall T\in A, \operatorname{norm}\left(\operatorname{correction}\left(T\right)-\frac{1}{2} \cdot (1+T)\right) \le \frac{1}{2} \cdot \operatorname{norm}\left(T\right) \cdot \operatorname{norm}\left(\operatorname{inverseSqrt}\left(T^{2}-1\right)-1\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/Compression.correction_closeness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The correction differs from the uncorrected midpoint by one half of T times the inverse-square-root Taylor tail. Submultiplicativity gives the displayed bound without adding any structure to the target space.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/Compression.correction_closeness`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/Compression.correction_idempotent`

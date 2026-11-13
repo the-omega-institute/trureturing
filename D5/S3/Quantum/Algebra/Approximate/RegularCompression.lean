@@ -54,6 +54,9 @@ def p (x : H) : ℝ := ‖D.mul x‖
 /-- An isometric realization of the regular norm as a subspace of Hilbert operators. -/
 abbrev RegularSpace := LinearMap.range D.mul.toLinearMap
 
+local instance regularSpace_complete : CompleteSpace D.RegularSpace :=
+  FiniteDimensional.complete ℂ D.RegularSpace
+
 /-- This equivalence changes neither the underlying product nor the Hilbert norm on `H`. -/
 def regularEquiv : H ≃L[ℂ] D.RegularSpace :=
     (LinearEquiv.ofInjective D.mul.toLinearMap (by
@@ -61,6 +64,45 @@ def regularEquiv : H ≃L[ℂ] D.RegularSpace :=
     have := congrArg (fun f : H →L[ℂ] H => f D.unit) h
     change D.mul x D.unit = D.mul y D.unit at this
     simpa only [D.right_unit] using this)).toContinuousLinearEquiv
+
+private theorem unit_ne_zero : D.unit ≠ 0 := by
+  intro h
+  have := D.unit_norm
+  simp only [h, norm_zero] at this
+  norm_num at this
+
+local instance regularSpace_nontrivial : Nontrivial D.RegularSpace :=
+  ⟨⟨D.regularEquiv D.unit, D.regularEquiv 0, by
+    intro h
+    exact D.unit_ne_zero (D.regularEquiv.injective h)⟩⟩
+
+local instance regularSpace_nontrivialTopology : NontrivialTopology D.RegularSpace := by
+  letI : Nontrivial H := ⟨⟨D.unit, 0, by intro h; exact D.unit_ne_zero h⟩⟩
+  letI : NontrivialTopology H :=
+    (nontrivial_iff_nontrivialTopology (X := H)).mp inferInstance
+  exact (D.regularEquiv.toHomeomorph).nontrivialTopology
+
+local instance regularMap_normedRing : NormedRing (D.RegularSpace →L[ℂ] D.RegularSpace) :=
+  @ContinuousLinearMap.toNormedRing ℂ D.RegularSpace
+    D.RegularSpace.normedAddCommGroup inferInstance D.RegularSpace.normedSpace
+
+local instance regularMap_normedAlgebraComplex :
+    NormedAlgebra ℂ (D.RegularSpace →L[ℂ] D.RegularSpace) :=
+  @ContinuousLinearMap.toNormedAlgebra ℂ D.RegularSpace
+    D.RegularSpace.seminormedAddCommGroup inferInstance D.RegularSpace.normedSpace
+
+local instance regularMap_smulReal : SMul ℝ (D.RegularSpace →L[ℂ] D.RegularSpace) :=
+  ⟨fun r f => (r : ℂ) • f⟩
+
+local instance regularMap_normedAlgebraReal :
+    NormedAlgebra ℝ (D.RegularSpace →L[ℂ] D.RegularSpace) :=
+  NormedAlgebra.complexToReal
+
+local instance regularMap_normOneClass :
+    NormOneClass (D.RegularSpace →L[ℂ] D.RegularSpace) :=
+  @ContinuousLinearMap.normOneClass ℂ D.RegularSpace
+    D.RegularSpace.seminormedAddCommGroup inferInstance D.RegularSpace.normedSpace
+      inferInstance
 
 private theorem regularEquiv_norm (x : H) : ‖D.regularEquiv x‖ = D.p x := rfl
 
@@ -74,6 +116,11 @@ private theorem p_star (x : H) : D.p (star x) = D.p x := by
   unfold p
   rw [← D.adjoint_mul]
   exact ContinuousLinearMap.adjoint.norm_map _
+
+/-- The regular norm is covariant under the product's star reversal. -/
+theorem p_star_mul_rev (x y : H) :
+    D.p (D.mul (star y) (star x)) = D.p (D.mul x y) := by
+  rw [← D.star_mul, p_star]
 
 private theorem action_defect (x y : H) :
     ‖D.mul (D.mul x y) - D.mul x * D.mul y‖ ≤ δ * ‖x‖ * ‖y‖ := by
@@ -173,7 +220,9 @@ private theorem right_norm (x : H) : ‖D.right x‖ ≤ (1 + δ) * D.p x := by
   · intro y
     obtain ⟨z, rfl⟩ := D.regularEquiv.surjective y
     rw [right_apply, regularEquiv_norm, regularEquiv_norm]
-    simpa only [mul_assoc, mul_comm (D.p z) (D.p x)] using p_mul D z x
+    rw [← D.p_star_mul_rev z x]
+    simpa only [p_star, mul_assoc, mul_comm (D.p (star x)) (D.p (star z))] using
+      p_mul D (star x) (star z)
 
 private theorem left_square_defect (P : H) {τ : ℝ}
     (hτ : 0 ≤ τ) (hPP : D.p (D.mul P P - P) ≤ τ) :
@@ -250,6 +299,19 @@ private theorem left_right_defect (P Q : H) :
     rw [he]
     convert h using 1 <;> ring
 
+/-- The two transported regular actions satisfy the actual square and
+commutator estimates supplied by the same product and associator bound. -/
+theorem two_piece_defects (P Q : H) {τ : ℝ} (hτ : 0 ≤ τ)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) :
+    (‖D.left P * D.left P - D.left P‖ ≤
+      M * δ * D.p P ^ 2 + (1 + δ) * τ) ∧
+    (‖D.right Q * D.right Q - D.right Q‖ ≤
+      M * δ * D.p Q ^ 2 + (1 + δ) * τ) ∧
+    (‖D.left P * D.right Q - D.right Q * D.left P‖ ≤
+      M * δ * D.p P * D.p Q) := by
+  exact ⟨left_square_defect D P hτ hPP, right_square_defect D Q hτ hQQ,
+    left_right_defect D P Q⟩
+
 private theorem symmetrized_defect {A : Type*} [NormedRing A] [NormedAlgebra ℝ A]
     [NormOneClass A] (a b : A) (r : ℝ) (hr : 0 ≤ r) (hr1 : r ≤ 1)
     (ha : ‖a‖ ≤ 3) (hb : ‖b‖ ≤ 3)
@@ -314,16 +376,17 @@ private theorem cornerInvolution_defect (P Q : H) (hP : star P = P) (hQ : star Q
   have hq0 : 0 ≤ D.p Q := norm_nonneg _
   have hl : ‖D.left P‖ ≤ 3 := (left_norm D P).trans (by nlinarith)
   have hr : ‖D.right Q‖ ≤ 3 := (right_norm D Q).trans (by nlinarith)
+  have hpieces := two_piece_defects D P Q hτ hPP hQQ
   have hll : ‖D.left P * D.left P - D.left P‖ ≤ 4 * (τ + M * δ) := by
-    apply (left_square_defect D P hτ hPP).trans
+    apply hpieces.1.trans
     have hpsq : D.p P ^ 2 ≤ 4 := by nlinarith
     nlinarith [mul_le_mul_of_nonneg_left hpsq heps, mul_nonneg hτ (sub_nonneg.mpr hδ)]
   have hrr : ‖D.right Q * D.right Q - D.right Q‖ ≤ 4 * (τ + M * δ) := by
-    apply (right_square_defect D Q hτ hQQ).trans
+    apply hpieces.2.1.trans
     have hqsq : D.p Q ^ 2 ≤ 4 := by nlinarith
     nlinarith [mul_le_mul_of_nonneg_left hqsq heps, mul_nonneg hτ (sub_nonneg.mpr hδ)]
   have hlr : ‖D.left P * D.right Q - D.right Q * D.left P‖ ≤ 4 * (τ + M * δ) := by
-    apply (left_right_defect D P Q).trans
+    apply hpieces.2.2.trans
     have hpq : D.p P * D.p Q ≤ 4 := by nlinarith [mul_nonneg (sub_nonneg.mpr hp) (sub_nonneg.mpr hq)]
     nlinarith [mul_le_mul_of_nonneg_left hpq heps]
   exact symmetrized_defect (D.left P) (D.right Q) (τ + M * δ)
@@ -332,6 +395,71 @@ private theorem cornerInvolution_defect (P Q : H) (hP : star P = P) (hQ : star Q
 /-- The Taylor compression in the Banach space with norm `p`. -/
 def regularCompression (P Q : H) : D.RegularSpace →L[ℂ] D.RegularSpace :=
   Compression.correction (D.cornerInvolution P Q)
+
+/-- The actual regular-action compression stays close to the uncorrected
+midpoint; the only remaining term is the inverse-square-root Taylor tail. -/
+theorem regularCompression_closeness (P Q : H) (hP : star P = P) (hQ : star Q = Q)
+    {τ : ℝ} (hτ : 0 ≤ τ) (hsmall : τ + M * δ ≤ 1 / 1024)
+    (hPP : D.p (D.mul P P - P) ≤ τ) (hQQ : D.p (D.mul Q Q - Q) ≤ τ) :
+    ‖D.regularCompression P Q - (1 / 2 : ℝ) • (1 + D.cornerInvolution P Q)‖ ≤
+      (19 / 2 : ℝ) *
+        ‖Compression.inverseSqrt (D.cornerInvolution P Q ^ 2 - 1) - 1‖ := by
+  have he0 : D.unit ≠ 0 := by
+    intro h
+    have := D.unit_norm
+    simp only [h, norm_zero] at this
+    norm_num at this
+  letI : Nontrivial D.RegularSpace := ⟨⟨D.regularEquiv D.unit, D.regularEquiv 0, by
+    intro h
+    exact he0 (D.regularEquiv.injective h)⟩⟩
+  have hM : 0 ≤ M := le_trans zero_le_one D.one_le_M
+  have heps : 0 ≤ M * δ := mul_nonneg hM D.delta_nonneg
+  have hδeps : δ ≤ M * δ := by nlinarith [D.one_le_M, D.delta_nonneg]
+  have hδ : δ ≤ 1 / 4 := by linarith
+  have hτ1 : τ ≤ 1 / 4 := by linarith
+  have hp := projection_norm_le_two D P hP hτ1 hδ hPP
+  have hq := projection_norm_le_two D Q hQ hτ1 hδ hQQ
+  have h1δ : 0 ≤ 1 + δ := by linarith [D.delta_nonneg]
+  have hl0 : ‖D.left P‖ ≤ (1 + δ) * D.p P := left_norm D P
+  have hr0 : ‖D.right Q‖ ≤ (1 + δ) * D.p Q := right_norm D Q
+  have hl : ‖D.left P‖ ≤ 3 := by
+    apply hl0.trans
+    calc
+      (1 + δ) * D.p P ≤ (1 + δ) * 2 :=
+        mul_le_mul_of_nonneg_left hp h1δ
+      _ ≤ 3 := by nlinarith [hδ]
+  have hr : ‖D.right Q‖ ≤ 3 := by
+    apply hr0.trans
+    calc
+      (1 + δ) * D.p Q ≤ (1 + δ) * 2 :=
+        mul_le_mul_of_nonneg_left hq h1δ
+      _ ≤ 3 := by nlinarith [hδ]
+  have ht : ‖D.cornerInvolution P Q‖ ≤ 19 := by
+    calc
+      ‖D.left P * D.right Q + D.right Q * D.left P - 1‖ ≤
+          ‖D.left P * D.right Q + D.right Q * D.left P‖ + ‖(1 : D.RegularSpace →L[ℂ] D.RegularSpace)‖ :=
+        norm_sub_le _ _
+      _ ≤ (‖D.left P * D.right Q‖ + ‖D.right Q * D.left P‖) + 1 := by
+        rw [norm_one]
+        exact add_le_add_left
+          (norm_add_le (D.left P * D.right Q) (D.right Q * D.left P)) 1
+      _ ≤ 19 := by
+        have h₁ : ‖D.left P * D.right Q‖ ≤ 9 := by
+          have h₁' : ‖D.left P‖ * ‖D.right Q‖ ≤ (3 : ℝ) * 3 :=
+            mul_le_mul hl hr (norm_nonneg _) (by norm_num)
+          exact (norm_mul_le _ _).trans (by nlinarith [h₁'])
+        have h₂ : ‖D.right Q * D.left P‖ ≤ 9 := by
+          have h₂' : ‖D.right Q‖ * ‖D.left P‖ ≤ (3 : ℝ) * 3 :=
+            mul_le_mul hr hl (norm_nonneg _) (by norm_num)
+          exact (norm_mul_le _ _).trans (by nlinarith [h₂'])
+        linarith
+  have hc := Compression.correction_closeness (D.cornerInvolution P Q)
+  change ‖D.regularCompression P Q - (1 / 2 : ℝ) •
+      (1 + D.cornerInvolution P Q)‖ ≤ _ at hc
+  apply hc.trans
+  have htail := norm_nonneg
+    (Compression.inverseSqrt (D.cornerInvolution P Q ^ 2 - 1) - 1)
+  nlinarith [ht, htail]
 
 /-- The same compression, acting on the original Hilbert space. -/
 def compression (P Q : H) : H →L[ℂ] H :=
