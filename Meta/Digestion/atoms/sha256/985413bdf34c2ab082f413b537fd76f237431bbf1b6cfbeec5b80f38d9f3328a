@@ -1,0 +1,65 @@
+**定理 125.5（准确盲核及同一原态上的反事实）。** 在定理125.4的前件下，令
+
+$$
+R_\triangle=\mathcal S_\triangle^\perp
+=\{z\in V:f(z)=0\ (f\in\mathcal S_\triangle)\}.
+\tag{Q125.15}
+$$
+
+则有规范线性分解与投影
+
+$$
+\begin{gathered}
+V=U_\triangle\oplus R_\triangle,\qquad
+\dim R_\triangle=\dim V-9,\qquad R_\triangle\subseteq\ker u,\\
+\pi_\triangle:V\to U_\triangle,\qquad
+f(\pi_\triangle x)=f(x)\quad(f\in\mathcal S_\triangle),\qquad
+u\pi_\triangle=u.
+\end{gathered}
+\tag{Q125.16}
+$$
+
+对这个固定三角，定义原联合关系
+
+$$
+\begin{split}
+\mathsf J_\triangle:\quad
+\forall x,y\in K:\quad
+\bigl[\forall i\in\{1,2,3\}\ \forall b\in\mathcal E,
+\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]
+\Rightarrow x=y.
+\end{split}
+\tag{Q125.17}
+$$
+
+有准确等价
+
+$$
+\boxed{\quad
+\mathsf J_\triangle
+\Longleftrightarrow R_\triangle=0
+\Longleftrightarrow U_\triangle=V
+\Longleftrightarrow\mathcal S_\triangle=V^*
+\Longleftrightarrow\dim V=9.
+\quad}
+\tag{Q125.18}
+$$
+
+证明。定理125.4使 $U_\triangle$ 与 $\mathcal S_\triangle$ 非退化配对。故对每个 $x\in V$，存在唯一 $y\in U_\triangle$，使 $f(y)=f(x)$ 对全部 $f\in\mathcal S_\triangle$ 成立。于是 $x-y\in R_\triangle$，交为零，得到规范直和、投影及维数公式。由(Q125.11)，$u\in\mathcal S_\triangle$，故剩余在 $\ker u$ 内，投影保留 $u$。
+
+任一非零 $h\in N_{p_i}$ 都有 $m=\max_Kh>0$，且 $h/m\in\mathcal B(p_i)$；反向 $\mathcal B(p_i)\subset N_{p_i}$。因此这些全部原零效应张成的空间恰为 $\mathcal S_\triangle$。若 $R_\triangle=0$，两态的全部这些读数相同就使其差为零，得到 $\mathsf J_\triangle$。
+
+反之，若 $0\ne z\in R_\triangle$，用定理125.3的原内点，取充分小的 $\epsilon>0$，使
+
+$$
+x_+=\eta_\triangle+\epsilon z\in K,\qquad
+x_-=\eta_\triangle-\epsilon z\in K.
+\tag{Q125.19}
+$$
+
+两者不同，且因 $u(z)=0$ 都仍归一；三个 $\mathcal B(p_i)$ 的全部效应对它们同读，故否定 $\mathsf J_\triangle$。它们仍可被整个原效应区间分离：取 $\ell\in V^*$、$\ell(z)\ne0$，令 $M=\max_K|\ell|>0$，则 $u/2+t\ell\in\mathcal E$ 对 $0<t\le1/(2M)$ 成立，在两态上读数不同。这里的盲向量不是正态，真正反事实是(Q125.19)中的两张原混态。其余等价由直和和双方维数立即得到。证毕。
+
+**关系对应。** $\mathsf J_\triangle$ 逐字就是VIII111.1中 $\mathrm{TFD}_{3,\exists}$ 的固定框架分离子句：取否定形式，即对任意不同 $x,y\in K$，某个在一个顶点读零的原效应能区分它们。在本章 $P_0$ 种子域，对这种三角取存在量词，所得关系是同一存在式TFD关系在该域的使用，不是新命名的一条独立公设。本章未证明一般EB3+Inj域中，一个满足存在式TFD的三角必含 $P_0$ 顶点；(Q125.18)不删去其种子前件。
+
+在旧W域中，$S_i=\operatorname{im}\Pi_{p_i}^*$，所以本章 $R_\triangle$ 正是VIII109.2的 $Z_F$，$U_\triangle$ 正是VIII111.2的 $V_F$，$\pi_\triangle$ 正是其 $\pi_F$：它们有相同像、相同核。旧的无盲核到全部原纯互易及Jordan重构还使用W已经供应的全纯least、正球读回和每个纯点的框架完成；不能只凭同一个分离公式把这些强前置一并搬入本章。
+
