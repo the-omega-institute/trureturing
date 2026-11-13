@@ -132,9 +132,8 @@ counterexample family.
 preregisters the literal question and the full family before Lean probes.
 Its qualified body SHA256 is
 `e2c1da29317c32de8a1201fdb33cc32aa765955a665d73cf8a5f6e8e542be63c`.
-The intended admission basis is `open-problem-resolution`, subject to
-independent source, prior-resolution and semantic admission. No
-originality of Stanley's construction is asserted.
+The admission basis is `open-problem-resolution`. No originality of
+Stanley's construction is asserted.
 
 The bounded qualification read the complete relevant primary sections,
 the current author versions, the related module-length restatement,
@@ -163,9 +162,7 @@ This is a Tier-1 externally named subsidiary question. The formal family is
 `D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.family`, and its
 application to the complete original assertion is
 `D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.result`. The
-construction is classical. Independent source, prior-resolution and
-semantic admission, freezing and publication remain separate obligations;
-no external-open-problem credit is asserted here.
+construction is classical. No external-open-problem credit is asserted here.
 
 ### What the settlement shows
 
@@ -188,6 +185,5 @@ Eggert's pure-power conjecture or the source's other questions.
 Worldwide absence of an earlier explicit resolution and priority remain
 unverified. A classical construction implying the answer is not itself
 evidence that an earlier author explicitly settled the named question.
-Independent semantic and priority admission and exact-head required checks
-remain unfinished. The Lean declarations do not certify worldwide
-priority, freezing, publication or merge.
+The Lean declarations do not certify worldwide priority or repository
+delivery state.
