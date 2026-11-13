@@ -108,7 +108,7 @@ Under the same hypotheses, p(C(P,Q)x+C(P,e-Q)x-C(P,e)x) is at most 14598 r p(x),
 
 **Theorem 1.9 (The actual compatible-corner product has approximate outer support).**
 
-$$\operatorname{p}\left(\operatorname{C}\left(P, R, \operatorname{mu}\left(x, y\right)\right)-\operatorname{mu}\left(x, y\right)\right)\le260000 \cdot \tau+M\delta \cdot \operatorname{p}\left(x\right) \cdot \operatorname{p}\left(y\right)$$
+$$\operatorname{p}\left(\operatorname{C}\left(P, R, \operatorname{mu}\left(x, y\right)\right)-\operatorname{mu}\left(x, y\right)\right)\le260000 \cdot (\tau+M\delta) \cdot \operatorname{p}\left(x\right) \cdot \operatorname{p}\left(y\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.corner_product_support` (`✓ std3`). ∎
 

@@ -158,7 +158,7 @@ internal sealed class RegularCompressionDocument : IScribeDocumentDefinition
                         Call("mu", F.Id("x"), F.Id("y"))), Minus,
                         Call("mu", F.Id("x"), F.Id("y")))), Le,
                     Multiply(Multiply(Multiply(Seq(D(2), D(6), D(0), D(0), D(0), D(0)),
-                        Seq(Tau, Plus, F.Id("M"), DeltaLower)), Call("p", F.Id("x"))),
+                        Seq(Open, Tau, Plus, F.Id("M"), DeltaLower, Close)), Call("p", F.Id("x"))),
                         Call("p", F.Id("y")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
