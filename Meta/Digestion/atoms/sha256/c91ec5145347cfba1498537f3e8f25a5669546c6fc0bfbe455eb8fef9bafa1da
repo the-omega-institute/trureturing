@@ -1,0 +1,18 @@
+### 120.12 复用、原始来源与数学边界
+
+本章的基础原面论来自VII103.2；其证明先以球心的零见证暴露整个 $D_p$，再以真面相对内点的支撑函数证明面穷尽，不使用全Pair。正法向最大值公式是IX116.8证明中的原公式，本章120.2只将它单列为后续全域上下界接口。120.4的三角—宽度关系是IX116.4、116.9的应用；无需Inj的上半连续已在IX118.15证明末部明确，IX118.14甚至给饱和集在 $K$ 中紧。本章不把这些复用改称新原理。
+
+唯一确认标签稠密、固定球的完整原边区间、同一二维振幅商中的完整边接续与奇周期／整球塌缩二分、三周期的全域三结果恒等式及最大宽共同接触对，是本章保留的纸面推导。已有VIII108—109的切方向、Peirce／Clifford桥有其 $\mathrm{Pair}_{\perp}$、TRI2或更强前件，不用于支付本章EB3+Inj下的分析。本文不主张全球原创、Lean核验或完整物理重构。
+
+成熟分类只经既有定理116.17和VIII113.9消费。其Jordan端点的原始文献为Barnum–Müller–Ududec [Theorem 16][Q120BMU]：有限维、projectivity、对称跃迁概率及滤子保纯共同推出形式实Jordan几何。其Proposition 29在Postulates 1、2的前件下联系无三阶干涉与滤子保纯；不能把它读成裸EB3的分类。原[完整S桥][Q120S]区分proper least、数值互易、自对偶和滤子接口，并逐项连接该成熟定理。Niestegge [Theorem 3][Q120N]也明确保留Axioms 1、2、proper效应性质 $(*)$、有限信息容量和对称跃迁概率；没有一项因 $\rho_p$ 有限就自动成立。
+
+这里的宽度上半连续、标签极限、归一代表连续及最大接触变分均已给有限维紧性证明，不借一般最大值定理省去 $D_p$ 的原零关联，也不从文献中的逐面正延拓、niceness或投影暴露性推出保持原单位的回缩。平面有限周长只控制同一原商中的一条实际行走，不提供跨不同方向的球族正则性。所列来源和既有卷限定了复用边界，有限范围的词项及结构检索不构成文献穷尽或全球新意证据。
+
+[Q120VII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、VII104.2—104.3；完整原面、全对径与原joint接口。"
+[Q120VIII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.8—113.9、命题113.11及VIII112.9；同原静态字典与全部物理合同。"
+[Q120IX]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.1—116.17；尤其定理116.17位于116.13节。"
+[Q120118]: https://github.com/the-omega-institute/trureturing/blob/3b3ab5883295803c705670de0d118219db346f94/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX118.7；饱和集、正宽度紧层、无需Inj的相对上半连续与正最大值。"
+[Q120S]: ../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge "原完整S、proper效应与谱性、projective／filter桥的纸面接口及证据边界。"
+[Q120BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory；Theorem 16及Proposition 29。"
+[Q120N]: https://arxiv.org/html/2312.13213v2 "Gerd Niestegge, Quantum transition probability；Axioms 1、2，proper性质(*)及Theorem 3。"
+

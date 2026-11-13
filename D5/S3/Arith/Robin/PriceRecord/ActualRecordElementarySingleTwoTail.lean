@@ -54,7 +54,7 @@ private theorem weighted_gain_error {α : Type*} {l : Filter α}
     have hh := mul_le_mul_of_nonneg_left (normalized_gain_bounds hj hut).2.1 hXt
     nlinarith only [hh]
 
-private theorem weighted_boundary_limit {α : Type*} {l : Filter α}
+theorem weighted_boundary_limit {α : Type*} {l : Filter α}
     (m : α → ℕ) (mu : α → ℝ) (hm : ∀ t, 2 ≤ m t)
     (hmu : ∀ t, 0 < mu t) (hrecord : ∀ t, FullRecord (m t) (mu t))
     (hP : Tendsto (fun t => (largestPrime (m t) : ℝ)) l atTop) :
@@ -122,7 +122,7 @@ private theorem weighted_boundary_limit {α : Type*} {l : Filter α}
     hlogP, (log_pos hq).ne']
   ring
 
-private theorem window_fee {P Q : ℝ} {p : ℕ}
+theorem window_fee {P Q : ℝ} {p : ℕ}
     (hP : 2 ≤ P) (hQ : 4 ≤ Q) (hQP : P ≤ Q ^ 2)
     (hlog : log P / 8 ≤ log (Q / 2))
     (hp : Q < (p : ℝ)) (hpup : (p : ℝ) ≤ Q * (1 + 1 / log Q ^ 3))
@@ -189,7 +189,7 @@ private theorem window_fee {P Q : ℝ} {p : ℕ}
       mul_le_mul hfee hlogp hplog (by positivity)
     _ = _ := by rw [hcenter, abs_mul, abs_of_pos hX]; ring
 
-private theorem window_log_mass {Q : ℝ} (hQ : 1 < Q) {U : Finset ℕ}
+theorem window_log_mass {Q : ℝ} (hQ : 1 < Q) {U : Finset ℕ}
     (hcard : U.card = 2)
     (hU : ∀ p ∈ U, Q < (p : ℝ) ∧ (p : ℝ) ≤ Q * (1 + 1 / log Q ^ 3)) :
     2 * log Q < logMass U ∧ logMass U ≤ 2 * log Q + 2 / log Q ^ 3 := by
