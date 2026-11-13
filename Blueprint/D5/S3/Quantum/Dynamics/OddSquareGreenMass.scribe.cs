@@ -18,22 +18,10 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "t(2i) and negative subdiagonal −t(2i+1). The recurrence E is its positive inverse-entry "
                 + "formula, with starting column l and row displacement d. Positive hoppings make every E positive.",
                 DescribeRole.Definition),
-            Node("entry-positive", "Positivity of each Green entry", "entry_pos", PositiveFormula(),
-                "Positive hoppings keep every forward-substitution entry strictly positive at every "
-                + "column and displacement. This also supplies the nonnegativity needed when a local "
-                + "inverse region is compared with the sum over a larger finite inverse.", DescribeRole.Theorem),
             Node("lower-block", "The finite bidiagonal block", "lowerBlock", BlockFormula(),
                 "L(t,n) is a real matrix on Fin n. Its diagonal is t(2i), its subdiagonal is "
                 + "−t(2j+1), and all other entries vanish. The proof verifies its inverse by multiplication; "
                 + "no invertibility premise is supplied by the caller.", DescribeRole.Definition),
-            Node("green-matrix", "The triangular Green matrix", "greenMatrix", GreenMatrixFormula(),
-                "G(t,n) has entry E(t,j,i-j) when j is at most i and zero otherwise. The natural "
-                + "values of the finite indices are used in the recurrence.", DescribeRole.Definition),
-            Node("block-inverse", "The actual inverse formula", "block_inverse", InverseFormula(),
-                "For every finite size n and positive hopping sequence, L(t,n) inverse is G(t,n). "
-                + "The formula is verified by multiplying the matrices. It includes n=0 and the "
-                + "first and last rows, so entries in an interior window may be transported into "
-                + "the complete open inverse by shifting both indices.", DescribeRole.Theorem),
             Node("inverse-mass", "Quadratic inverse mass in an odd square", "odd_square_inverse_paired_mass",
                 MassFormula(),
                 "All indices are zero based. In the sums, l ranges over Fin q and d over Fin(q−l). "
@@ -46,15 +34,49 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
                 + "each pair has product at least one and sum at least two. There are q(q+1)/2 pairs. "
                 + "The conclusion concerns the actual finite inverse, rather than an assumed Green function. "
                 + "It does not assert the Tribonacci all-prefix spectral-gap statement: that application "
-                + "also needs the exact occurrence and parity bounds, the embedding into each chosen prefix, "
-                + "and the operator-norm and finite spectral bridges. No infinite-volume spectrum, "
-                + "localization, quasimode or filling hypothesis enters this theorem.", DescribeRole.Theorem))));
+                + "also needs the exact word-to-hopping correspondence, sublattice spectral identification "
+                + "and initial short prefixes. No infinite-volume spectrum, localization, quasimode or "
+                + "filling hypothesis enters this theorem.", DescribeRole.Theorem),
+            H("Application: a Euclidean estimate for the full inverse"),
+            Paragraph(Text(
+                "Let t be a positive real hopping sequence bounded above by one, and let n,a,q be "
+                + "natural numbers with q at least one and a+2q+1 at most n. Assume exactly the "
+                + "2q repetitions t(2a+i+2q+1)=t(2a+i), for i<2q. Set G=L(t,n) inverse, acting "
+                + "on the Euclidean space R^n, x=(1,...,1) and v=x/sqrt(n). The hypotheses imply n>0. "
+                + "The quadratic mass theorem has the following consequence, without a new "
+                + "mathematical declaration:")),
+            Disp(FullInverseEstimate()),
+            Paragraph(Text(
+                "The forward-substitution formula transports each local inverse entry to G by "
+                + "adding a to both indices: the defining recursion has the same initial term and "
+                + "step after this index translation. Thus both exterior portions of the full path "
+                + "remain present. All entries of G are nonnegative. Each of the two triangular "
+                + "regions from the mass theorem embeds injectively in the full matrix, so "
+                + "q(q+1) is at most twice the sum of all entries of G. The factor two bounds the "
+                + "regions separately and needs no disjointness premise. The sum equals the "
+                + "Euclidean inner product of x with Gx. Cauchy--Schwarz, norm(x)^2=n and "
+                + "Gx=sqrt(n)Gv give that this sum is at most n times norm(Gv), proving the estimate.")),
+            Paragraph(Text(
+                "For an even-start repeated word window, the parameter correspondence is "
+                + "m=2q+1, s=2a and N=2n. This supplies the complete-bidiagonal-inverse "
+                + "Euclidean consequence of the mass estimate. Identifying the actual hopping "
+                + "sequence, reordering the physical symmetric matrix into its sublattices, "
+                + "performing the sign conjugation, relating its eigenvalues to the block's "
+                + "singular values and treating the short prefixes remain separate obligations. "
+                + "No all-prefix Tribonacci spectral rate or entropy law is asserted.")))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
         StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula FullInverseEstimate()
+    {
+        var v=F.Id("v"); var q=F.Id("q"); var n=F.Id("n");
+        return And(Eq(new Formula.Norm(v),D(1)),
+            Le(Mul(q,Add(q,D(1))),Mul(Mul(D(2),n),new Formula.Norm(At(F.Id("G"),v)))));
+    }
 
     private static Formula EntryFormula()
     {
@@ -94,30 +116,6 @@ internal sealed class OddSquareGreenMassDocument : IScribeDocumentDefinition
             Eq(At(t,Add(i,size)),At(t,i))));
         return All("t",Arrow(N(),R()),All("q",N(),Implies(positive,
             Implies(bounded,Implies(repeated,Le(Mul(q,Add(q,D(1))),sum))))));
-    }
-
-    private static Formula PositiveFormula()
-    {
-        var t=F.Id("t"); var i=F.Id("i"); var l=F.Id("l"); var d=F.Id("d");
-        return All("t",Arrow(N(),R()),Implies(All("i",N(),Lt(D(0),At(t,i))),
-            All("l",N(),All("d",N(),Lt(D(0),E(t,l,d))))));
-    }
-
-    private static Formula GreenMatrixFormula()
-    {
-        var t=F.Id("t"); var n=F.Id("n"); var i=F.Id("i"); var j=F.Id("j");
-        var iv=Call("val",i); var jv=Call("val",j);
-        return All("t",Arrow(N(),R()),All("n",N(),All("i",Call("Fin",n),
-            All("j",Call("Fin",n),Eq(At(Call("G",t,n),i,j),
-                Call("ite",Le(jv,iv),E(t,jv,Sub(iv,jv)),D(0)))))));
-    }
-
-    private static Formula InverseFormula()
-    {
-        var t=F.Id("t"); var n=F.Id("n"); var i=F.Id("i");
-        return All("t",Arrow(N(),R()),Implies(All("i",N(),Lt(D(0),At(t,i))),
-            All("n",N(),Eq(new Formula.Power(Call("L",t,n),new Formula.Negate(D(1))),
-                Call("G",t,n)))));
     }
 
     private static Formula E(Formula t, Formula l, Formula d) => Call("E",t,l,d);
