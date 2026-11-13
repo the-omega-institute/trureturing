@@ -180,6 +180,10 @@ Lean statement: `D5/S3/Combinatorics/PermutationArrays/EtiennePrefixCount.result
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PermutationArrays/EtiennePrefixCount.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a183409-etienne-prefix-count` (proved) by `D5/S3/Combinatorics/PermutationArrays/EtiennePrefixCount.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a183409-etienne-prefix-count","declaration_gid":"D5/S3/Combinatorics/PermutationArrays/EtiennePrefixCount.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Luce Etienne (2011). *OEIS A183409, sorted binary arrays with bounded top-left rectangle sums*. URL: <https://oeis.org/A183409>.
