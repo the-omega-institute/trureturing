@@ -12,13 +12,22 @@ import Mathlib.Topology.Sequences
 import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Topology.Semicontinuity.Hemicontinuity
 
+import Mathlib.Topology.MetricSpace.Closeds
+import Mathlib.Topology.Sets.VietorisTopology
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.Normed.Operator.BoundedLinearMaps
+import Mathlib.Analysis.Convex.Strict.Extreme
+import Mathlib.Analysis.Convex.Intrinsic
+import Mathlib.LinearAlgebra.AffineSpace.Restrict
+import Mathlib.Analysis.Normed.Affine.AddTorsorBases
+
 /-! The original-domain upper association needed by IX118.3. -/
 
 noncomputable section
 
 namespace D5.S3.Quantum.Foundation.ExclusionIncidence
 
-open Set Filter Topology
+open Set Filter Topology TopologicalSpace
 open CircuitBalancedConfirmation FacetZeroGluing ContinuousFrameSum
 open ExclusionBallFaces OriginalFacePolarity
 open WeightedRelationConfirmation
@@ -303,6 +312,327 @@ theorem original_open_incidence_whole_limit
   exact ((edge_lifting_iff_projection_open hc hs hg hB).mp hO).comp
     (incidenceSwap C u).isOpenMap
 
+section AffineBallLimits
+
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [FiniteDimensional ℝ E]
+
+private def ballImage (c : V) (L : E →L[ℝ] V) : NonemptyCompacts V :=
+  (⟨⟨Metric.closedBall (0 : E) 1, isCompact_closedBall _ _⟩,
+    ⟨0, by simp⟩⟩ : NonemptyCompacts E).map (fun x => c + L x) (by fun_prop)
+
+private theorem parameter_subsequence (c : ℕ → V) (L : ℕ → (E →L[ℝ] V)) (F : NonemptyCompacts V)
+    (hF : Tendsto (fun n => ballImage (c n) (L n)) atTop (𝓝 F)) :
+    ∃ a : V × (E →L[ℝ] V), ∃ φ : ℕ → ℕ, StrictMono φ ∧
+      Tendsto (fun n => (c (φ n), L (φ n))) atTop (𝓝 a) ∧
+      ballImage a.1 a.2 = F := by
+  let S := insert F (Set.range fun n => ballImage (c n) (L n))
+  have hS : IsCompact S := hF.isCompact_insert_range
+  have hU := NonemptyCompacts.isCompact_biUnion_coe_of_isCompact hS
+  obtain ⟨R, hR, hbound⟩ := hU.isBounded.exists_pos_norm_le
+  have himage (n : ℕ) (x : E) (hx : ‖x‖ ≤ 1) : ‖c n + L n x‖ ≤ R := by
+    apply hbound
+    exact Set.mem_iUnion₂.mpr ⟨ballImage (c n) (L n),
+      Set.mem_insert_of_mem _ ⟨n, rfl⟩, ⟨x, by simpa using hx, rfl⟩⟩
+  have hc (n : ℕ) : ‖c n‖ ≤ R := by simpa using himage n 0 (by simp)
+  have hL (n : ℕ) : ‖L n‖ ≤ 2 * R := by
+    apply ContinuousLinearMap.opNorm_le_of_unit_norm (by positivity)
+    intro x hx
+    have h := norm_sub_le (c n + L n x) (c n)
+    have he : c n + L n x - c n = L n x := by abel
+    rw [he] at h
+    exact h.trans (by linarith [himage n x hx.le, hc n])
+  have hpair (n : ℕ) : (c n, L n) ∈ Metric.closedBall (0 : V × (E →L[ℝ] V)) (2 * R) := by
+    simp only [Metric.mem_closedBall, dist_zero_right, Prod.norm_def, max_le_iff]
+    exact ⟨(hc n).trans (by linarith), hL n⟩
+  obtain ⟨a, ha, φ, hφ, ht⟩ :=
+    (isCompact_closedBall (0 : V × (E →L[ℝ] V)) (2 * R)).tendsto_subseq hpair
+  refine ⟨a, φ, hφ, ht, ?_⟩
+  have hcont : Continuous (fun z : V × (E →L[ℝ] V) => ballImage z.1 z.2) :=
+    Continuous.nonemptyCompacts_map' continuous_const (by fun_prop)
+  exact tendsto_nhds_unique ((hcont.tendsto a).comp ht) (hF.comp hφ.tendsto_atTop)
+
+omit [FiniteDimensional ℝ V] in
+private theorem same_ball_injective (c d : V) (L B : E →L[ℝ] V)
+    (hB : Function.Injective B) (heq : ballImage c L = ballImage d B) :
+    Function.Injective L := by
+  have hunit (x : E) (hx : ‖x‖ ≤ 1) : B x ∈ L.toLinearMap.range := by
+    have hdx : d + B x ∈ ballImage c L := by
+      rw [heq]
+      exact ⟨x, by simpa using hx, rfl⟩
+    have hd : d ∈ ballImage c L := by
+      rw [heq]
+      exact ⟨0, by simp, by simp⟩
+    obtain ⟨y, hy, hyx⟩ := hdx
+    obtain ⟨z, hz, hzd⟩ := hd
+    dsimp only at hyx hzd
+    refine ⟨y-z, ?_⟩
+    simp only [ContinuousLinearMap.coe_coe, map_sub]
+    have : L y - L z = B x := by
+      calc
+        L y - L z = (c + L y) - (c + L z) := by abel
+        _ = (d + B x) - d := by rw [hyx, hzd]
+        _ = B x := by abel
+    exact this
+  have hrange : B.toLinearMap.range ≤ L.toLinearMap.range := by
+    rintro _ ⟨x, rfl⟩
+    by_cases hx : x = 0
+    · simp [hx]
+    have hnorm : ‖(‖x‖⁻¹ : ℝ) • x‖ ≤ 1 := by
+      simp [norm_smul, inv_mul_cancel₀ (norm_ne_zero_iff.mpr hx)]
+    have hm := (L.toLinearMap.range).smul_mem ‖x‖ (hunit _ hnorm)
+    simpa [map_smul, smul_smul, mul_inv_cancel₀ (norm_ne_zero_iff.mpr hx)] using hm
+  have hdim := Submodule.finrank_mono hrange
+  rw [LinearMap.finrank_range_of_inj hB] at hdim
+  have hnull := L.toLinearMap.finrank_range_add_finrank_ker
+  have hzero : Module.finrank ℝ L.toLinearMap.ker = 0 := by omega
+  exact LinearMap.ker_eq_bot.mp (Submodule.finrank_eq_zero.mp hzero)
+
+variable [Nontrivial E]
+private def sphereImage (c : V) (L : E →L[ℝ] V) : NonemptyCompacts V :=
+  (⟨⟨Metric.sphere (0 : E) 1, isCompact_sphere _ _⟩,
+    NormedSpace.sphere_nonempty.mpr (by norm_num)⟩ : NonemptyCompacts E).map
+      (fun x => c + L x) (by fun_prop)
+
+omit [FiniteDimensional ℝ V] in
+private theorem continuous_sphereImage :
+    Continuous (fun z : V × (E →L[ℝ] V) => sphereImage z.1 z.2) :=
+  Continuous.nonemptyCompacts_map' continuous_const (by fun_prop)
+
+omit [FiniteDimensional ℝ V] in
+private theorem sphere_eq_extreme [StrictConvexSpace ℝ E] (c : V) (L : E →L[ℝ] V)
+    (hL : Function.Injective L) :
+    (sphereImage c L : Set V) = Set.extremePoints ℝ (ballImage c L : Set V) := by
+  let a : E →ᵃ[ℝ] V := (AffineEquiv.constVAdd ℝ V c).toAffineMap.comp L.toLinearMap.toAffineMap
+  have ha : Function.Injective a := fun x y h => hL (add_left_cancel h)
+  have him : ∀ x y, a '' openSegment ℝ x y = openSegment ℝ (a x) (a y) :=
+    fun x y => image_openSegment ℝ a x y
+  have hext : a '' Set.extremePoints ℝ (Metric.closedBall (0 : E) 1) =
+      Set.extremePoints ℝ (a '' Metric.closedBall (0 : E) 1) := by
+    ext y
+    constructor
+    · rintro ⟨x, hx, rfl⟩
+      refine ⟨⟨x, hx.1, rfl⟩, ?_⟩
+      rintro _ ⟨z, hz, rfl⟩ _ ⟨w, hw, rfl⟩ hseg
+      rw [← him] at hseg
+      obtain ⟨t, ht, he⟩ := hseg
+      have htx : t = x := ha he
+      subst t
+      exact congrArg a (hx.2 hz hw ht)
+    · intro hy
+      obtain ⟨x, hx, rfl⟩ := hy.1
+      refine ⟨x, ⟨hx, ?_⟩, rfl⟩
+      intro z hz w hw hseg
+      exact ha (hy.2 ⟨z, hz, rfl⟩ ⟨w, hw, rfl⟩ ((him z w) ▸ ⟨x, hseg, rfl⟩))
+  rw [StrictConvexSpace.extremePoints_closedBall_eq_sphere] at hext
+  exact hext
+
+private theorem fullrank_sphere_limit [StrictConvexSpace ℝ E]
+    (c : ℕ → V) (L : ℕ → (E →L[ℝ] V)) (d : V) (B : E →L[ℝ] V)
+    (hB : Function.Injective B)
+    (ht : Tendsto (fun n => ballImage (c n) (L n)) atTop (𝓝 (ballImage d B))) :
+    Tendsto (fun n => sphereImage (c n) (L n)) atTop (𝓝 (sphereImage d B)) := by
+  apply tendsto_of_subseq_tendsto
+  intro ns hns
+  obtain ⟨a, ms, hms, ha, heq⟩ := parameter_subsequence
+    (c ∘ ns) (L ∘ ns) (ballImage d B) (ht.comp hns)
+  have hinj := same_ball_injective a.1 d a.2 B hB heq
+  have hs : sphereImage a.1 a.2 = sphereImage d B := by
+    apply NonemptyCompacts.ext
+    rw [sphere_eq_extreme _ _ hinj, sphere_eq_extreme _ _ hB, heq]
+  refine ⟨ms, ?_⟩
+  simpa [Function.comp_def, hs] using
+    (continuous_sphereImage.tendsto a).comp ha
+
+omit [Nontrivial E] in
+private theorem intrinsic_ball :
+    intrinsicFrontier ℝ (Metric.closedBall (0 : E) 1) = Metric.sphere 0 1 := by
+  have hspan : affineSpan ℝ (Metric.closedBall (0 : E) 1) = ⊤ := by
+    apply top_unique
+    have hb : (Metric.ball (0 : E) 1).Nonempty := ⟨0, by simp⟩
+    rw [← Metric.isOpen_ball.affineSpan_eq_top hb]
+    exact affineSpan_mono ℝ Metric.ball_subset_closedBall
+  unfold intrinsicFrontier
+  rw [hspan]
+  change (AffineSubspace.topEquiv ℝ E E : (⊤ : AffineSubspace ℝ E) ≃ᵃ[ℝ] E) ''
+    frontier ((AffineSubspace.topEquiv ℝ E E : (⊤ : AffineSubspace ℝ E) ≃ᵃ[ℝ] E) ⁻¹'
+      Metric.closedBall (0 : E) 1) = _
+  let e := (AffineSubspace.topEquiv ℝ E E).toContinuousAffineEquiv.toHomeomorph
+  change e '' frontier (e ⁻¹' Metric.closedBall (0 : E) 1) = _
+  rw [← e.preimage_frontier, e.image_preimage]
+  exact frontier_closedBall (0 : E) (by norm_num)
+
+omit [FiniteDimensional ℝ V] [Nontrivial E] in
+private theorem intrinsic_image (a : E →ᵃ[ℝ] V) (ha : Function.Injective a) (s : Set E) :
+    intrinsicFrontier ℝ (a '' s) = a '' intrinsicFrontier ℝ s := by
+  let T : AffineSubspace ℝ V := (⊤ : AffineSubspace ℝ E).map a
+  let e : E ≃ᵃ[ℝ] T := (AffineSubspace.topEquiv ℝ E E).symm.trans
+    (AffineEquiv.ofBijective (AffineMap.restrict.bijective ha))
+  have he : (fun x => T.subtypeₐᵢ (e x)) = a := rfl
+  calc
+    intrinsicFrontier ℝ (a '' s) = intrinsicFrontier ℝ (T.subtypeₐᵢ '' (e '' s)) := by
+      rw [Set.image_image]; rfl
+    _ = T.subtypeₐᵢ '' intrinsicFrontier ℝ (e '' s) := T.subtypeₐᵢ.intrinsicFrontier_image _
+    _ = T.subtypeₐᵢ '' (e '' intrinsicFrontier ℝ s) := by rw [e.intrinsicFrontier_image]
+    _ = a '' intrinsicFrontier ℝ s := by rw [Set.image_image]; rfl
+
+private theorem affine_sphere_limit [StrictConvexSpace ℝ E]
+    (a : ℕ → E →ᵃ[ℝ] V) (b : E →ᵃ[ℝ] V)
+    (hb : Function.Injective b)
+    (ht : Tendsto (fun n => Metric.hausdorffDist
+      (a n '' Metric.closedBall 0 1) (b '' Metric.closedBall 0 1)) atTop (𝓝 0)) :
+    Tendsto (fun n => Metric.hausdorffDist
+      (a n '' Metric.sphere 0 1) (b '' Metric.sphere 0 1)) atTop (𝓝 0) := by
+  let c := fun n => a n 0
+  let L := fun n => (a n).linear.toContinuousLinearMap
+  let d := b 0
+  let B := b.linear.toContinuousLinearMap
+  have hfa (n : ℕ) (x : E) : c n + L n x = a n x := by
+    simpa [c, L, add_comm] using (congrFun (a n).decomp x).symm
+  have hfb (x : E) : d + B x = b x := by
+    simpa [d, B, add_comm] using (congrFun b.decomp x).symm
+  have hball (n : ℕ) : (ballImage (c n) (L n) : Set V) = a n '' Metric.closedBall 0 1 := by
+    change (fun x => c n + L n x) '' _ = _
+    simp_rw [hfa]
+  have hballb : (ballImage d B : Set V) = b '' Metric.closedBall 0 1 := by
+    change (fun x => d + B x) '' _ = _
+    simp_rw [hfb]
+  have hsphere (n : ℕ) : (sphereImage (c n) (L n) : Set V) = a n '' Metric.sphere 0 1 := by
+    change (fun x => c n + L n x) '' _ = _
+    simp_rw [hfa]
+  have hsphereb : (sphereImage d B : Set V) = b '' Metric.sphere 0 1 := by
+    change (fun x => d + B x) '' _ = _
+    simp_rw [hfb]
+  have hn : Tendsto (fun n => ballImage (c n) (L n)) atTop (𝓝 (ballImage d B)) := by
+    apply tendsto_iff_dist_tendsto_zero.mpr
+    simpa only [NonemptyCompacts.dist_eq, hball, hballb] using ht
+  have hinj : Function.Injective B := b.linear_injective_iff.mpr hb
+  have h := tendsto_iff_dist_tendsto_zero.mp (fullrank_sphere_limit c L d B hinj hn)
+  simpa only [NonemptyCompacts.dist_eq, hsphere, hsphereb] using h
+
+theorem affine_ball_boundary_limit [StrictConvexSpace ℝ E]
+    (a : ℕ → E →ᵃ[ℝ] V) (b : E →ᵃ[ℝ] V)
+    (ha : ∀ n, Function.Injective (a n)) (hb : Function.Injective b)
+    (ht : Tendsto (fun n => Metric.hausdorffDist
+      (a n '' Metric.closedBall 0 1) (b '' Metric.closedBall 0 1)) atTop (𝓝 0)) :
+    Tendsto (fun n => Metric.hausdorffDist
+      (intrinsicFrontier ℝ (a n '' Metric.closedBall 0 1))
+      (intrinsicFrontier ℝ (b '' Metric.closedBall 0 1))) atTop (𝓝 0) ∧
+    ∀ (xn : ℕ → V) (x : V),
+      (∀ n, xn n ∈ intrinsicFrontier ℝ (a n '' Metric.closedBall 0 1)) →
+      Tendsto xn atTop (𝓝 x) → x ∈ intrinsicFrontier ℝ (b '' Metric.closedBall 0 1) := by
+  have h := affine_sphere_limit a b hb ht
+  have hconv : Tendsto (fun n => Metric.hausdorffDist
+      (intrinsicFrontier ℝ (a n '' Metric.closedBall 0 1))
+      (intrinsicFrontier ℝ (b '' Metric.closedBall 0 1))) atTop (𝓝 0) := by
+    simpa only [intrinsic_image _ (ha _), intrinsic_image _ hb, intrinsic_ball] using h
+  refine ⟨hconv, ?_⟩
+  intro xn x hxn hx
+  let M (f : E →ᵃ[ℝ] V) : NonemptyCompacts V :=
+    ⟨⟨f '' Metric.sphere 0 1, (isCompact_sphere (0 : E) 1).image
+      f.continuous_of_finiteDimensional⟩,
+      (NormedSpace.sphere_nonempty.mpr (by norm_num) :
+        (Metric.sphere (0 : E) 1).Nonempty).image f⟩
+  have hM (f : E →ᵃ[ℝ] V) (hf : Function.Injective f) :
+      (M f : Set V) = intrinsicFrontier ℝ (f '' Metric.closedBall 0 1) := by
+    rw [intrinsic_image _ hf, intrinsic_ball]
+    rfl
+  have hMt : Tendsto (fun n => M (a n)) atTop (𝓝 (M b)) := by
+    apply tendsto_iff_dist_tendsto_zero.mpr
+    simpa only [NonemptyCompacts.dist_eq, hM _ (ha _), hM _ hb] using hconv
+  have hzero (n : ℕ) : Metric.infDist (xn n) (M (a n)) = 0 :=
+    Metric.infDist_zero_of_mem ((hM _ (ha n)).symm ▸ hxn n)
+  have hi := NonemptyCompacts.lipschitz_infDist.continuous.tendsto (x, M b) |>.comp
+    (hx.prodMk_nhds hMt)
+  have heq : Metric.infDist x (M b) = 0 := tendsto_nhds_unique hi (by
+    simpa only [Function.comp_def, hzero] using
+      (tendsto_const_nhds : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 0)))
+  rw [← hM b hb]
+  exact (M b).isCompact.isClosed.mem_iff_infDist_zero (M b).nonempty |>.mpr heq
+
+end AffineBallLimits
+
+/-- The entire original incidence, whole exclusions and pure spheres have the
+claimed topology on the full rank-three domain in the original norm. -/
+theorem original_open_incidence_iff_whole_continuous
+    {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+    (hc : IsClosed (C : Set V))
+    (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤)
+    (h3 : ∀ p : pure C u, ∃ b : ExclusionChart C u p, b.dim = 3) :
+    (edgeLifting C u ↔ IsOpenMap (firstProjection C u)) ∧
+    (edgeLifting C u ↔ ∀ p : pure C u,
+      Tendsto (fun r : pure C u => Metric.hausdorffDist
+        (exclusion C u r) (exclusion C u p)) (𝓝 p) (𝓝 0)) ∧
+    (edgeLifting C u →
+      (∀ p : pure C u, Tendsto (fun r : pure C u => Metric.hausdorffDist
+        (pure C u ∩ exclusion C u r) (pure C u ∩ exclusion C u p)) (𝓝 p) (𝓝 0)) ∧
+      IsOpenMap (secondProjection C u)) := by
+  classical
+  have hB : exclusionBalls C u := fun p => ⟨(h3 p).choose⟩
+  have hcharts (p : pure C u) : ∃ a : EuclideanSpace ℝ (Fin 3) →ᵃ[ℝ] V,
+      Function.Injective a ∧ a '' Metric.closedBall 0 1 = exclusion C u p := by
+    obtain ⟨⟨d, hd, a, ha, hw⟩, he⟩ := h3 p
+    dsimp only at he
+    subst d
+    exact ⟨a, ha, hw⟩
+  choose a ha hw using hcharts
+  let b (p : pure C u) : ExclusionChart C u p := ⟨3, by decide, a p, ha p, hw p⟩
+  let S (p : pure C u) : NonemptyCompacts V :=
+    ⟨⟨a p '' Metric.sphere 0 1,
+      (isCompact_sphere (0 : EuclideanSpace ℝ (Fin 3)) 1).image
+        (a p).continuous_of_finiteDimensional⟩,
+      (NormedSpace.sphere_nonempty.mpr (by norm_num) :
+        (Metric.sphere (0 : EuclideanSpace ℝ (Fin 3)) 1).Nonempty).image (a p)⟩
+  have hS (p : pure C u) : (S p : Set V) = pure C u ∩ exclusion C u p := by
+    have h := chart_boundary hc hs hg hB p (b p)
+    simpa [S, b, Set.inter_comm] using h.symm
+  have sphere_limit (p : pure C u) (pn : ℕ → pure C u)
+      (ht : Tendsto (fun n => Metric.hausdorffDist
+        (exclusion C u (pn n)) (exclusion C u p)) atTop (𝓝 0)) :
+      Tendsto (fun n => S (pn n)) atTop (𝓝 (S p)) := by
+    have h := affine_ball_boundary_limit (fun n => a (pn n)) (a p)
+      (fun n => ha (pn n)) (ha p) (by simpa only [hw] using ht) |>.1
+    apply tendsto_iff_dist_tendsto_zero.mpr
+    simpa [intrinsic_image _ (ha _), intrinsic_ball, NonemptyCompacts.dist_eq, S] using h
+  have hforward : edgeLifting C u → ∀ p : pure C u,
+      Tendsto (fun r : pure C u => Metric.hausdorffDist
+        (exclusion C u r) (exclusion C u p)) (𝓝 p) (𝓝 0) := by
+    intro hO p
+    apply tendsto_nhds_iff_seq_tendsto.mpr
+    intro pn hp
+    exact (original_open_incidence_whole_limit hc hs hg hB).2 hO |>.2 p pn hp
+  refine ⟨(original_open_incidence_whole_limit hc hs hg hB).1, ⟨hforward, ?_⟩, ?_⟩
+  · intro hcont p q hq pn hp
+    have ht := sphere_limit p pn ((hcont p).comp hp)
+    have hqS : (q : V) ∈ S p := by
+      change (q : V) ∈ (S p : Set V)
+      rw [hS p]
+      exact ⟨q.property, (comparison_zero_iff_exclusion hs hg p (pure_mem q)).mp hq⟩
+    choose xn hxn heq using fun n =>
+      (S (pn n)).isCompact.exists_infDist_eq_dist (S (pn n)).nonempty (q : V)
+    let qn (n : ℕ) : pure C u := ⟨xn n, ((hS (pn n)) ▸ hxn n).1⟩
+    refine ⟨qn, ?_, ?_⟩
+    · intro n
+      exact (comparison_zero_iff_exclusion hs hg (pn n) (pure_mem (qn n))).mpr
+        (((hS (pn n)) ▸ hxn n).2)
+    · apply tendsto_subtype_rng.mpr
+      apply tendsto_iff_dist_tendsto_zero.mpr
+      have hi := ((NonemptyCompacts.lipschitz_infDist_const (q : V)).continuous.tendsto
+        (S p)).comp ht
+      simpa [Function.comp_def, Metric.infDist_zero_of_mem hqS, heq, qn, dist_comm] using hi
+  · intro hO
+    refine ⟨?_, (original_open_incidence_whole_limit hc hs hg hB).2 hO |>.1⟩
+    intro p
+    apply tendsto_nhds_iff_seq_tendsto.mpr
+    intro pn hp
+    have ht := tendsto_iff_dist_tendsto_zero.mp (sphere_limit p pn ((hforward hO p).comp hp))
+    simpa only [NonemptyCompacts.dist_eq, hS, Function.comp_def] using ht
+
+#print axioms original_open_incidence_iff_whole_continuous
+
+
+#print axioms affine_ball_boundary_limit
 #print axioms exclusion_upper_limit
 #print axioms exclusion_upper_eventually
 #print axioms original_open_incidence_whole_limit
