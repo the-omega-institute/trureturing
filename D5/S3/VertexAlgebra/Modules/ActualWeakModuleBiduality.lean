@@ -192,7 +192,26 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
       eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x)) := by
     apply LinearMap.ext
     intro q
-    exact LinearMap.congr_fun (hdn q) x
+    have h1 : (restrict (dualHom hD f) (-c)).dualMap (eA y) q =
+        (eA y) (restrict (dualHom hD f) (-c) q) :=
+      LinearMap.dualMap_apply (restrict (dualHom hD f) (-c)) (eA y) q
+    have h2 : (eA y) (restrict (dualHom hD f) (-c) q) =
+        y (dualMultiplicityEquiv A hD c (restrict (dualHom hD f) (-c) q)) :=
+      LinearEquiv.dualMap_apply (dualMultiplicityEquiv A hD c) y
+        (restrict (dualHom hD f) (-c) q)
+    have h3 : y (dualMultiplicityEquiv A hD c (restrict (dualHom hD f) (-c) q)) =
+        (dualMultiplicityEquiv A hD c (restrict (dualHom hD f) (-c) q)) x :=
+      Module.Dual.eval_apply ℂ (Multiplicity A c) x
+        (dualMultiplicityEquiv A hD c (restrict (dualHom hD f) (-c) q))
+    have h4 := congrArg (fun φ : Module.Dual ℂ (Multiplicity A c) => φ x) (hdn q)
+    have h5 := LinearMap.comp_apply (dualMultiplicityEquiv B hD c q) (restrict f c) x
+    have h6 : eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x)) q =
+        (dualMultiplicityEquiv B hD c q) (restrict f c x) :=
+      (LinearEquiv.dualMap_apply (dualMultiplicityEquiv B hD c)
+        (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x)) q).trans
+          (Module.Dual.eval_apply ℂ (Multiplicity B c) (restrict f c x)
+            (dualMultiplicityEquiv B hD c q))
+    exact h1.trans (h2.trans (h3.trans (h4.trans (h5.trans h6.symm))))
   let iA : DualMultiplicity (dualModule A) c →ₗ[ℂ]
       Multiplicity (dualModule (dualModule A)) c := iota (DualMultiplicity (dualModule A)) c
   let kA : Multiplicity (dualModule (dualModule A)) c →ₗ[ℂ]

@@ -390,7 +390,12 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
       congr 1
       apply Finset.sum_congr rfl
       intro c hc
-      rw [cupTensor_basis]
+      have hb := congrArg
+        (fun t : PairMultiplicity B (dualModule B) (c,-c) =>
+          F hD (-c) c (-c) •
+            q (jAt B (dualModule B) hD 0 ⟨(c,-c),add_neg_cancel c⟩ t))
+        (cupTensor_basis B c)
+      refine hb.trans ?_
       simp only [map_sum, Finset.smul_sum]
       apply Finset.sum_congr rfl
       intro i hi
