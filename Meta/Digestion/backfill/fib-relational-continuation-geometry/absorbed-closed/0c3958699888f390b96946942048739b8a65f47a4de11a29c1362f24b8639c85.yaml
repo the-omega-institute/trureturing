@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0c3958699888f390b96946942048739b8a65f47a4de11a29c1362f24b8639c85
+  normalized_sha256: sha256:0c3958699888f390b96946942048739b8a65f47a4de11a29c1362f24b8639c85
+cas_ref: sha256:0c3958699888f390b96946942048739b8a65f47a4de11a29c1362f24b8639c85
+coverage_gids:
+  - gid: D5/S1/Words/Hofstadter/OriginalHFoundation.h_characterization
+    target_statement_id: sha256:ee2ed0ffcb975ef59a288dfdd1402f8afd77350295174f37040d6444d313a64c
+  - gid: D5/S1/Words/Hofstadter/OriginalHFoundation.original_h_morphic_prefix
+    target_statement_id: sha256:b787aa48f2d92b3d525a2243f36f82c61b263996e95cb6f815e0988c8ff91f0d
+  - gid: D5/S1/Words/Hofstadter/OriginalHFoundation.word_characterization
+    target_statement_id: sha256:a3d798b50c787646a77f578eb69e5b567f92fec4427029b40bf55869582a2ba0
+receipts:
+  unresolved_subitems: []

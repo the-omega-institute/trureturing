@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:f9ed89e7f70bdda23db40db0b95ee43c978346a3fdfe29b0016d7853d82d6a5b
+  normalized_sha256: sha256:f9ed89e7f70bdda23db40db0b95ee43c978346a3fdfe29b0016d7853d82d6a5b
+cas_ref: sha256:f9ed89e7f70bdda23db40db0b95ee43c978346a3fdfe29b0016d7853d82d6a5b
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_compact
+    target_statement_id: sha256:3ad04d9bde2af3ce792ad47826c9e5a7e8c75e093f0b2eb10e47fe4a4f488531
+  - gid: D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.base_convex
+    target_statement_id: sha256:7cc29ee7e7117945545cf612693a3fc3c220217a7f4a3f812334949ed3e405f6
+  - gid: D5/S3/Quantum/Foundation/ExclusionBallFaces.exclusion_ball_faces
+    target_statement_id: sha256:1a6635bb24315801945ddd55215bbb5b6fd4f9cc0983a1c20eccd3077ec66be2
+  - gid: D5/S3/Quantum/Foundation/OriginalWidthContact.original_width_contact
+    target_statement_id: sha256:d7d7de6c7f42283ce12b05af8e08f08db1c0074682b428bdb250cfdc2dd21d79
+  - gid: D5/S3/Quantum/Foundation/OriginalWidthContact.top_exposed
+    target_statement_id: sha256:741a8397ae6b24b7110aa956b7c5b6dc832059ea16a49213a5add834317f34ec
+receipts:
+  unresolved_subitems: []

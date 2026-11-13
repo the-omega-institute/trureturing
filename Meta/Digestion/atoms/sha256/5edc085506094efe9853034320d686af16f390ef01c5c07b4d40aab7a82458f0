@@ -1,0 +1,171 @@
+**定理 116.15（环乘法迫九维）。** 在 $\mathsf Q_1$ 下，
+
+$$
+m=2,\qquad r=4,\qquad N=7,\qquad n=9,\qquad
+H^*(P;\mathbb Q)\cong\mathbb Q[x]/(x^3),\quad |x|=2.
+\tag{IX116.34}
+$$
+
+证明。全段取有理系数，$A=\bigoplus_{i=0}^m A_i,B=\bigoplus_{i=0}^{m+1}B_i$，
+指标均为实际上同调次数的一半。逐级唯一选择
+
+$$
+a_0=1,\qquad \mathcal T(a_i)=a_{i-1}\quad(1\le i\le m).
+\tag{IX116.35}
+$$
+
+这是由各一维同构递归归一，未对乘法作任何约定。
+以 $\pi_1^*$ 把 $A$ 视为 $B$ 的子环，令 $x=a_1,y=\pi_2^*a_1,\varphi=\pi_2^*$。
+因 $\pi_{1!}y=1$，投影公式及(IX116.29)给真实的分次 $A$ 模分解
+
+$$
+B=A\oplus yA,\qquad
+\varphi(a_i)=t_i a_i+y a_{i-1}\quad(1\le i\le m),\qquad t_1=0.
+\tag{IX116.36}
+$$
+
+具体地，对任意 $b\in B$，先减去 $y\pi_{1!}b$，余项恰在 $\pi_1^*A$ 中；
+若 $a+yc=0$，纤维积分先给 $c=0$，拉回单射再给 $a=0$。
+这个自由模分解包括 $B_{m+1}=yA_m$，故以后顶次比较同样有效。
+
+定义乘法系数
+
+$$
+xa_i=\lambda_i a_{i+1}\ (0\le i<m),\qquad
+\lambda_{-1}=0,\quad\lambda_0=1,
+\tag{IX116.37}
+$$
+
+并暂定义 $\lambda_m=0$ 表示 $xa_m=0$ 的顶端边界。
+$\sigma^*a_i=\varphi(a_i),\sigma^*y=x$。
+对 $2\le i\le m$，展开 $\sigma^{*2}a_i=a_i$：
+
+$$
+a_i=(t_i^2+t_{i-1}\lambda_{i-1})a_i
+       +(t_i+\lambda_{i-2})y a_{i-1}.
+\tag{IX116.38}
+$$
+
+比较自由第二项得到 $t_i=-\lambda_{i-2}$，故 $t_2=-1$。
+令 $\gamma=\lambda_1\in\mathbb Q$。$x^2=\gamma a_2$，由 $\varphi$ 保乘法，
+
+$$
+y^2=\gamma\varphi(a_2)=\gamma(xy-a_2).
+\tag{IX116.39}
+$$
+
+即使 $\gamma=0$，该等式也成立，未作非零除法。
+
+当 $1\le i<m$，比较 $\varphi(xa_i)=y\varphi(a_i)$ 的 $y a_i$ 系数，得到
+$\lambda_i=t_i+\gamma\lambda_{i-1}$。
+$i=1$ 时这只是 $\lambda_1=\gamma$，与 $t_1=0,\lambda_{-1}=0$ 一致；
+$i\ge2$ 时代入 $t_i=-\lambda_{i-2}$。
+顶端 $i=m$ 时左边为零，右边仍按(IX116.36)唯一分解，给同一递推的终止条件。
+因此精确得到
+
+$$
+\lambda_i=\gamma\lambda_{i-1}-\lambda_{i-2}\quad(1\le i\le m),
+\qquad \lambda_{-1}=0,\quad\lambda_0=1,\quad\lambda_m=0.
+\tag{IX116.40}
+$$
+
+计算中 $a_2a_{i-1}$ 只落入 $A$ 项，未假设它是 $x$ 的幂；
+顶端此项在 $A_{m+1}=0$ 中消失。
+再在非零顶类 $ya_m$ 上计算真实交换：
+
+$$
+\sigma^*(ya_m)=x(t_ma_m+ya_{m-1})
+=\lambda_{m-1}ya_m=-ya_m,
+\qquad\lambda_{m-1}=-1.
+\tag{IX116.41}
+$$
+
+$xa_m=0$ 已在这里明确使用。
+
+由(IX116.40)，$\lambda_m$ 是 $\gamma$ 的首一整系数多项式。
+有理根定理使 $\gamma\in\mathbb Z$。
+若 $\gamma\ge2$，递推从 $1,\gamma$ 起严格递增且正，不能有 $\lambda_m=0$；
+若 $\gamma\le-2$，用 $\lambda_i(-\gamma)=(-1)^i\lambda_i(\gamma)$ 归约到前者。
+故只剩 $\gamma\in\{-1,0,1\}$。
+当 $\gamma=0$，$\lambda_{2j}=(-1)^j$，与 $m$ 偶而 $\lambda_m=0$ 矛盾。
+当 $\gamma=1$，序列为 $1,1,0,-1,-1,0$ 的六周期；
+偶数 $m$ 的零值迫 $m\equiv2\pmod6$，此时 $\lambda_{m-1}=1$，违反(IX116.41)。
+所以
+
+$$
+\gamma=-1,\qquad
+\lambda_i=\begin{cases}1,&i\equiv0\pmod3,\\-1,&i\equiv1\pmod3,\\0,&i\equiv2\pmod3.\end{cases}
+\tag{IX116.42}
+$$
+
+于是 $m=3d+2$、$d\ge0$，且 $m$ 偶还给 $d$ 偶。
+$xa_2=0$ 和 $x^2=-a_2$ 给 $x^3=0$。
+这尚未排除 $d>0$：Betti串确实可能容许非二次幂产生的高次类。
+
+专为支付这一点，置
+
+$$
+R=\bigoplus_{j=0}^d A_{3j}\subset A.
+\tag{IX116.43}
+$$
+
+次数相加使它为子环，超出顶次的乘积取零。
+由(IX116.42)，$x:A_{3j}\to A_{3j+1}$ 和
+$x^2:A_{3j}\to A_{3j+2}$ 均非零，且为一维同构，包括 $j=d$。
+乘法诱导的映射因此是环同构
+
+$$
+R\otimes_{\mathbb Q}\mathbb Q[x]/(x^3)\ \overset{\sim}{\longrightarrow}\ A.
+\tag{IX116.44}
+$$
+
+它按各次数模三分解逐项为向量空间同构；保乘法来自 $R$ 是子环及 $x^3=0$，
+没有假定 $R$ 的高次生成元不存在。
+
+令 $z=yx^2\in B_3$，则 $z^2=0$。
+乘法 $z:R\to B$ 单射：先乘 $x^2$ 在每个 $A_{3j}$ 上为同构，
+再乘 $y$ 进入自由第二项。最高一项恰为
+
+$$
+z:A_{3d}\longrightarrow yA_{3d+2}=B_{m+1},
+\tag{IX116.45}
+$$
+
+仍为非零同构；不能在这里丢掉顶次。
+对 $b\in A_{3j},j\ge1$，唯一地定义 $\delta b\in A_{3j-3}$，使
+$\mathcal T(b)=x^2\delta b$；另令 $\delta1=0$，线性延拓。
+$\mathcal T$ 逐级非零，所以 $\delta:A_{3j}\to A_{3j-3}$ 非零。
+$t_{3j}=-\lambda_{3j-2}=1$ 给
+
+$$
+\sigma^*b=b+z\delta b\qquad(b\in R).
+\tag{IX116.46}
+$$
+
+此式对常数也成立。由 $\sigma^*$ 保乘法及 $z^2=0$，对 $b,c\in R$ 有
+
+$$
+z\bigl(\delta(bc)-b\delta c-c\delta b\bigr)=0.
+\tag{IX116.47}
+$$
+
+括号内属于 $R$，故由单射性得到Leibniz公式。
+这里包括超顶端的乘积：若 $b\in A_{3j},c\in A_{3k}$、$j+k=d+1$，
+则 $bc=0$，右侧括号却可能在 $A_{3d}$，(IX116.45)仍能消去 $z$；
+若 $j+k>d+1$，括号各项均已因次数为零。因而没有只在非零乘积上证明导子的缺陷。
+$\delta$ 降低实际上同调次数六，是偶次数导子。
+
+若 $d\ge1$，取 $0\ne b\in A_3$，则 $\delta b\in\mathbb Q^\times$。
+有限维正分次环的正次数元幂零，设 $h\ge2$ 是满足 $b^h=0$ 的最小整数。
+完整Leibniz公式给
+
+$$
+0=\delta(b^h)=h(\delta b)b^{h-1},
+\tag{IX116.48}
+$$
+
+与特征零、$\delta b\ne0$ 和最小性矛盾。
+所以 $d=0,m=2$，这时才有 $R=\mathbb Q$ 及(IX116.34)。
+$n=r+5$ 给九维。维数限制来自真实双投影的乘法和交换；
+未使用双映射柱有限分类，也未从Betti数直接指定射影空间或三元作用。证毕。
+

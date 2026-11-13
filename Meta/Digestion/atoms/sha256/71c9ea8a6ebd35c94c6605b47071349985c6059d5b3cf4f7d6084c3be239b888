@@ -1,0 +1,4 @@
+**约定 12.4（方法归属与次序边界）。** 最近点、平方失真转错误率和 Fano 条件熵界是标准方法；Fano 不等式及其条件形式可参见 J. Scarlett 与 V. Cevher，*An Introductory Guide to Fano's Inequality with Applications in Statistical Estimation*，[arXiv:1901.00555](https://arxiv.org/abs/1901.00555)，定理 1、3。这里的 repo-derived 内容是把命题 4.2 的全空间平均恢复失真接到同一个实际有限历史，得到 (12.1)–(12.4)，不主张新的通用 Fano 不等式或文献优先权。
+
+式 (12.4) 比较终端保留熵率，不是在线峰值宽度、实际采集次数或总物理成本。它不交换量子仪器、不改变反馈权限，也不宣告联合极限存在。式 (12.1) 的精度阈值依赖 $d_n$；未给出它对 $n$ 的统一下界，故有限时域连续性本身不决定 $\varepsilon=\varepsilon(n)$ 的全部交叉标度。
+

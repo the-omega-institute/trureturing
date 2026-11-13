@@ -87,7 +87,7 @@ private theorem primeRestriction_projective [Finite P] [CharP K p]
 end Restriction
 
 /-- The actual elementary abelian group, including rank zero, is a p-group. -/
-private theorem elementary_isPGroup (p r : ℕ) [Fact p.Prime] :
+theorem elementary_isPGroup (p r : ℕ) [Fact p.Prime] :
     IsPGroup p (Multiplicative (Fin r → ZMod p)) := by
   apply IsPGroup.of_card (n := r)
   rw [Nat.card_eq_fintype_card, Fintype.card_multiplicative,

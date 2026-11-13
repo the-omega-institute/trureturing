@@ -1,0 +1,79 @@
+**约定 124.0（原域与前置范围）。** 本章的121、122均指[THREE_COPY第七卷121、122][Q124T]，VII103—104指[完整排除面第七卷][Q124VII]，IX116、118、120指[排除球第九卷][Q124IX]。始终使用123.1的同一个有限维原实现：闭尖生成锥 $C\subset V$、严格正原单位 $u$、整个紧态基 $K=C\cap\{u=1\}$、全部原纯点 $P=\operatorname{ext}K$、全部原效应 $\mathcal E=[0,u]_{C^*}$，以及
+
+$$
+\mathcal F_b=\{f\in\mathcal E:f(b)=1\},\quad
+T_b(x)=\min_{f\in\mathcal F_b}f(x),\quad
+D_b=\{x\in K:T_b(x)=0\},\quad
+\mathcal A_b=\{e\in\mathcal F_b:e|_{D_b}=0\}.
+\tag{Q124.1}
+$$
+
+EB3要求每个完整 $D_b$ 都是整个仿射闭三球，Inj要求 $D_b=D_c\Rightarrow b=c$。原零边 $b\perp c$ 仍由同一张原效应的一、零读数定义，通过补效应对称。三条真实边、三个原非负效应在全 $V$ 上和为 $u$、同一实际三结果仪器是三个不同层次。既不输入全纯数值PR，也不输入weakPair、全Pair、正过滤、全域整球连续或 $P$ 紧性。本卷第1章的额外联合前件不属于这里的前件。
+
+除124.7中明确列出的裸EB3候选分支外，以下原域推导均假设EB3+Inj。
+
+直接复用VII103.2、104.1及IX118.10：全部非空真面只有原纯单点和完整 $D_b$；每个 $D_b$ 是暴露极大真面，$P\cap D_b=\partial_{\rm rel}D_b$；不同完整球相交时仅交于一个原纯点。在EB3+Inj中，$e\in\mathcal A_b$ 的原零面恰为 $D_b$，原一值面恰为 $\{b\}$，包括对所有原混态的一值面断言。
+
+### 124.1 同一个完整方向球面上的原对象
+
+固定任意 $p\in P_{\rm reg}$，其中 $P_{\rm reg}=P_0\cap\operatorname{Cont}(\mathcal B)$、$P_0=\{b:\mathcal A_b\text{ 为单点}\}$、$\mathcal B(b)=\{h\in\mathcal E:h(b)=0\}$，连续性量化从整个原 $P$ 趋近的全部纯序列。123.1已给 $P_{\rm reg}$ 在整个 $P$ 中稠密；这里不把它限制到一颗邻球面来取得密度。写
+
+$$
+\begin{gathered}
+\mathcal A_p=\{e_p\},\quad g=u-e_p,\quad D_p=c+B\mathbb B^3,
+\quad H(c+Bw)=w,\quad H_i\in\operatorname{span}N_p,\\
+N_p=\{h\in C^*:h(p)=0\},\qquad
+\rho(v)=\sup_{x\in K\setminus\{p\}}\frac{-v\cdot H(x)}{g(x)}.
+\end{gathered}
+\tag{Q124.2}
+$$
+
+IX120.8—120.12已经给限制同构、$\dim\operatorname{span}N_p=4$、$g\in\operatorname{ri}N_p$、$g>0$ 于 $K\setminus\{p\}$、$\|H(x)\|\le M_Hg(x)$，以及有限Lipschitz凸正齐次函数 $\rho$。对全部 $v\in S^2$ 定义
+
+$$
+\begin{gathered}
+q_v=c+Bv\in P_0,\qquad F_v=D_{q_v},\qquad
+ e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)},\\
+a_v=\text{$p$ 在整颗 $F_v$ 内的对径点}\in P_0,\qquad
+m(v)=g(a_v)=\max_{F_v}g,\qquad z_v=H(a_v)/m(v),\\
+d(v)=e_{a_v}(p),\qquad G_v=D_{a_v},\qquad
+L_v=u-e_{q_v},\qquad R_v=u-e_p-e_{q_v}.
+\end{gathered}
+\tag{Q124.3}
+$$
+
+$a_v$ 与原 $D_p$ 上的 $q_{-v}$ 不能预先等同。$R_v$ 只是全 $V$ 上的原线性泛函，尚未断言属于 $C^*$。$F_v$ 与 $G_v$ 是不同层的完整球：前者标签为 $q_v$，后者标签为 $a_v$，且 $q_v\in G_v$。
+
+复用122.4、123.3—123.7：存在同一个 $\sigma=\sigma_p>0$，使全部方向满足
+
+$$
+\begin{gathered}
+\sigma\le m(v)\le1,\qquad 0\le d(v)<1,\qquad
+H|_{F_v}=z_vg|_{F_v},\\
+Z=\{H(x)/g(x):x\in K\setminus\{p\}\}
+\text{ 紧、严格凸，含整个 }\mathbb B^3,\\
+\rho(v)=h_Z(-v),\qquad \nabla\rho(v)=-z_v\quad(v\in S^2),\qquad
+\rho\in C^1(\mathbb R^3\setminus\{0\}),\\
+\Lambda(z)=\inf\{u(y):y\in C,\ g(y)=1,\ H(y)=z\},\qquad
+\Lambda(z_v)=1/m(v),\qquad \{\Lambda=1\}=\mathbb B^3.
+\end{gathered}
+\tag{Q124.4}
+$$
+
+可行域是 $Z$，最省原单位费用达到，$1\le\Lambda\le1/\sigma$ 于 $Z$，扩展实值 $\Lambda$ 凸且下半连续。122.5还给 $\partial Z$ 每点唯一支撑超平面；123.5给 $v\mapsto z_v$ 连续。以下所有极限使用固定原范数 $\|h\|_K=\max_K|h|$，状态Hausdorff距离使用任一固定辅助有限维范数。
+
+把123.3的全原空间确认恒等式写成
+
+$$
+\boxed{\quad
+ e_{a_v}=d(v)e_p+A(v)R_v,\qquad
+ A(v)=d(v)+\frac{1-d(v)}{m(v)},\qquad
+ R_v=\frac{g-v\cdot H}{1+\rho(v)}.
+\quad}
+\tag{Q124.5}
+$$
+
+这是既有恒等式的记号整理，不另作新定理；其原证明由两个真实完整球图在全 $V$ 上消元，不从球内等式擅自延拓。123.4的统一正高度也直接复用，不再次证明。
+
+### 124.2 每个原效应聚点的完整线段与高度跳跃
+

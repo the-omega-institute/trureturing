@@ -1,0 +1,26 @@
+#### 命题 6.10：原成对读数的校准恰补回保星性
+
+对上述原过程表，令
+
+$$
+g_q(f,g)=\frac{q_\Phi(f+g)-q_\Phi(f-g)}4.
+$$
+
+全部原成对比较满足
+
+$$
+\Re B_\Phi(f,g)=g_q(f,g)\qquad(f,g\in W)
+$$
+
+当且仅当 $\Phi$ 保星。 因此，在 $q_\Phi\ge0$ 的前提下，此校准恰使原 $\Phi$ 完全正。
+
+**证明。**
+
+由前述分解，$g_q=\Re B_{\Phi_h}$。 若校准成立，差型 $A=B_\Phi-B_{\Phi_h}$ 的实部在全部成对标签上为零。 又 $A(if,g)=-iA(f,g)$，故在 $(if,g)$ 上的同一校准也使原差型的虚部为零。 于是两型相等，取 $a=I,b=A_0$ 及任意向量标签即得 $\Phi=\Phi_h$。 反向保星时 $B_\Phi$ 为 Hermitian，实极化直接给该校准。 最后使用上一命题的非负自读判据。
+
+$\square$
+
+例如 $\Phi=(1+i)\operatorname{id}$ 与恒等过程具有完全相同的全部自读， 但 $\Phi(I)=(1+i)I$ 不是正矩阵，原 $\Phi$ 不是量子通道。 甚至保单位和保迹仍不足：在二阶矩阵上令 $\Lambda(A)=\operatorname{Tr}(\sigma_z A)\sigma_z$、$\Phi=\operatorname{id}+i\Lambda$， 其中 $\sigma_z=\operatorname{diag}(1,-1)$。则 $\Lambda$ 保星、$\Lambda(I)=0$、$\operatorname{Tr}\Lambda(A)=0$， 所以 $\Phi$ 保单位且保迹，自读也等于恒等过程； 但 $\Phi(\lvert 0\rangle\langle 0\rvert)=\lvert 0\rangle\langle 0\rvert+i\sigma_z$ 非自伴。 因此从有向表退回自读时，过程层也必须保留被忘却的数据。 Choi–Kraus 的标准表示[\[12\]](#ref-watrous2018)不消除这一来源区别。
+
+命题 6.10 给出保持同一原过程表的校准条件， 无需事后用 $\Phi_h$ 替换原表。
+

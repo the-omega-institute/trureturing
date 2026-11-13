@@ -1,0 +1,9 @@
+**定理 116.8（有限选尺的内半径与维数）。** $L_p$ 紧凸，存在 $0<\rho_p\le1$ 使
+
+$$
+\rho_pB^{d_p}\subseteq L_p\subseteq B^{d_p},\qquad
+\delta_p(q)\le\frac{1-\rho_p}{1+\rho_p}<1,\qquad
+\delta_p(q)=0\ \Longleftrightarrow\ n\in L_p,\qquad \dim V\ge d_p+d_q+1.
+\tag{IX116.13}
+$$
+

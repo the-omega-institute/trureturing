@@ -1,0 +1,33 @@
+**定理 126.8（移动球与互返纤维的统一收敛）。**
+
+$$
+ \sup_{z\in H_n}d(z,F)\to0,
+ \tag{Q126.24}
+$$
+
+$$
+ \sup_{p\in I(H_n)}d(p,G)\to0,
+ \tag{Q126.25}
+$$
+
+并且
+
+$$
+ \sup_{\substack{z\in H_n\\y\in\mathcal Z(z)}}d(y,G)\to0.
+ \tag{Q126.26}
+$$
+
+证明。若(Q126.24)失败，取 $z_n\in H_n$ 距 $F$ 有固定正下界；紧性给
+$z_n\to z$ 子列。因 $x_n,z_n$ 同在 $H_n$，
+$(x_n,z_n)\in\mathscr B_S$，极限给
+$(x,z)\in\mathscr B_S$。式(Q126.9)给 $z\in F$，矛盾。
+
+若 $p_n\in I(H_n)$，则 $x_n\in D_{p_n}$，零对称给
+$p_n\in\mathcal Z(x_n)$。取收敛子列并用 $\mathscr Z$ 闭性及
+$\mathcal Z(x)=G$，得到 $p_n$ 的所有聚点在 $G$，即(Q126.25)。对(Q126.26)，任取
+$z_n\in H_n,\ y_n\in\mathcal Z(z_n)$；第一步给 $z_n$ 的聚点在 $F$，再用
+$\mathcal Z|_F\equiv G$ 及闭性，得到 $y_n$ 的聚点在 $G$。证毕。
+
+这三个结论控制的是整颗移动球、它的全部纯标签和每个点的整个零纤维；它们不要求
+$H_n$ 单标签，也不要求球半径有统一下界。
+

@@ -1,0 +1,85 @@
+**定理 114.6（达到的尖锐预算与整个面效应族的正提升）。** 在114.5的前件下，定义
+
+$$
+\begin{gathered}
+h_v(b_F(z))=\frac{1+v\cdot z}{2}\quad(v\in S^2),\\
+\beta_F(v)=
+\inf\{M\ge0:\ \exists g\in V^{\ast},\
+0\le_Cg\le_CMu,\ g|_F=h_v\}.
+\end{gathered}
+\tag{IX114.17}
+$$
+
+空集的下确界约定为 $+\infty$。则
+
+$$
+\beta_F(v)=\beta_F=\frac1{2a_F}\in[1,\infty),
+\tag{IX114.18}
+$$
+
+且下确界实际达到。每个非负仿射 $k:F\to[0,\infty)$ 都有原锥上的正线性延拓。
+对全部面效应，其共同最优预算准确为
+
+$$
+\sup_{\,k\in\operatorname{Aff}(F),\ 0\le k\le1_F}
+\ \inf_{\substack{g\in C^{\ast}\\g|_F=k}}\max_Kg
+=\beta_F<\infty.
+\tag{IX114.19}
+$$
+
+证明。先取 $g\in C^{\ast}$，$g|_F=h_v$，令 $M=\max_Kg$。
+$g(q_v)=1$，故 $M\ge1$，且 $e=u-g/M$ 是整个原 $\mathcal E$ 中的效应。
+它确认反极点 $q_{-v}$，在 $F$ 上的系数为 $1/(2M)$。
+按114.5的最大系数定义，$1/(2M)\le a_F$，所以
+
+$$
+M\ge\frac1{2a_F}.
+\tag{IX114.20}
+$$
+
+反过来，取在 $q_{-v}$ 达到系数 $a_F$ 的原确认效应 $e_{-v}$，定义
+
+$$
+g_v=\frac{u-e_{-v}}{2a_F}.
+\tag{IX114.21}
+$$
+
+它在原 $C$ 上非负，满足 $g_v|_F=h_v$，
+且 $g_v\le_Cu/(2a_F)$。结合(IX114.20)，其最大值恰为 $1/(2a_F)$；
+这证明预算有限、与方向无关且实际达到。
+
+任意非负仿射面函数可写成 $k(b_F(z))=c+b\cdot z$，其中 $c\ge t=\|b\|$。
+若 $t=0$，直接以 $cu$ 延拓。若 $t>0$，令 $v=b/t$，则
+
+$$
+k=(c-t)1_F+2t\,h_v,\qquad
+\widetilde k=(c-t)u+2t\,g_v\in C^{\ast}.
+\tag{IX114.22}
+$$
+
+因此任意非负面函数都取得实际正延拓。若进一步 $k\le1_F$，则 $c+t\le1$、
+$2t\le1$。写 $B=\beta_F\ge1$，所得延拓满足
+
+$$
+0\le_C\widetilde k
+\le_C(c-t+2tB)u,\qquad
+c-t+2tB=(c+t)+2t(B-1)\le B.
+\tag{IX114.23}
+$$
+
+故 $B$ 对整个面效应族共同可用；$h_v$ 本身要求预算 $B$，给出(IX114.19)的锐性。
+特别地，
+
+$$
+\{f|_F:f\in\mathcal E\}
+=[0,1_F]_{\operatorname{Aff}(F)}
+\quad\Longleftrightarrow\quad
+a_F=\frac12
+\quad\Longleftrightarrow\quad
+\beta_F=1.
+\tag{IX114.24}
+$$
+
+正提升逐个效应给出；尚未得到保持原单位的正线性延拓算子，
+也不能将分别取得的延拓自动视为效应和为 $u$ 的联合测量。证毕。
+

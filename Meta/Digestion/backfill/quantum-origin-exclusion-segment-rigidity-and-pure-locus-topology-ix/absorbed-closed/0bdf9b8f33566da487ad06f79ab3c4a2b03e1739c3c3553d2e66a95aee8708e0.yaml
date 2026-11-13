@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0bdf9b8f33566da487ad06f79ab3c4a2b03e1739c3c3553d2e66a95aee8708e0
+  normalized_sha256: sha256:0bdf9b8f33566da487ad06f79ab3c4a2b03e1739c3c3553d2e66a95aee8708e0
+cas_ref: sha256:0bdf9b8f33566da487ad06f79ab3c4a2b03e1739c3c3553d2e66a95aee8708e0
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/HermitianExclusionBall.all_pure_charts
+    target_statement_id: sha256:b803b0806e444f70f9c95906d2b47ff8bc389b30d6b0a99289d45a18753c95be
+receipts:
+  unresolved_subitems: []

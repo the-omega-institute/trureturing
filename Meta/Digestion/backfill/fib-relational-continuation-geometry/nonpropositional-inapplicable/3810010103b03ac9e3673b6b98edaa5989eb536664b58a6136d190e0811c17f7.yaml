@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3810010103b03ac9e3673b6b98edaa5989eb536664b58a6136d190e0811c17f7
+  normalized_sha256: sha256:3810010103b03ac9e3673b6b98edaa5989eb536664b58a6136d190e0811c17f7
+cas_ref: sha256:3810010103b03ac9e3673b6b98edaa5989eb536664b58a6136d190e0811c17f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition 42.1 fixes the five-window encoding, disjoint terminal alphabet, epsilon-free fixed NFA and complete counted-state contract, universal accepted-output soundness requirement, and original-height cofinal coverage predicate (42.6). These are definitions and assumptions, not a theorem that an arbitrary NFA satisfies them. The testable original-height identity and full-padded-H-graph consequence remain in the separate sibling and parent coverage obligations.
+    previous_atom_id: 0c3958699888f390b96946942048739b8a65f47a4de11a29c1362f24b8639c85
+    next_atom_id: 6283053e222d7e14d1de84a52d8b471f7e00fed7d6f9ef14ad30b250ff1a9679
