@@ -162,7 +162,7 @@ Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorWidthAntipode.width_one_i
 
 Width equals one if and only if an actual unit direction v satisfies rho(v)=1. If width is one, its attaining effect has actual readings one and zero at its antipodal extrema. Conversely any effect supplied by the unit-support criterion gives a full-exclusion oscillation of at least one, while every original effect has oscillation at most one. All quantifiers range over the original cone, base, effect interval and actual full chart.
 
-These results are an intermediate mathematical interface for Theorem 122.13. The minimum over the entire sphere, the closure shell and boundary criterion, strict delta containment and boundary distance require the remaining original clauses. No whole-theorem completion, matrix realization, physical operation, literature novelty or completed four-slot registration is asserted here.
+RegularAnchorShell proves the attained entire-sphere minimum, actual shell-contact criterion, scaled-ball containment and positive boundary distance. RegularAnchorContactCriterion.regular_anchor_contact_criterion derives this same normal chart from the original hypotheses and combines these results into the complete Theorem 122.13. The scope remains the declared original mathematical cone and effect system; no physical realization or literature novelty is asserted.
 
 ## References
 

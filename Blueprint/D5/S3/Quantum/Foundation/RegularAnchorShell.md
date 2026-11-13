@@ -174,7 +174,7 @@ Lean statement: `D5/S3/Quantum/Foundation/RegularAnchorShell.strict_boundary_dis
 
 For delta>1, the set distance is at least delta-1, and delta-1 is strictly positive. Nonemptiness of the distance-value set gives the ordinary real-infimum lower bound; the estimate covers every pair of actual points in the specified sets.
 
-The width equivalence uses RegularAnchorWidthAntipode.width_one_iff_rho_one together with the attained full-sphere minimum. These geometric results preserve the actual chart signs and original state and effect domains. They do not assert a physical realization or a literature novelty claim.
+RegularAnchorContactCriterion.regular_anchor_contact_criterion derives the normal chart from the original cone, unit, full EB3, exclusion injectivity and regular-anchor hypotheses. It combines width_one_iff_rho_one with the attained full-sphere minimum and the actual contact equivalence, and proves the entire strict-scale conclusion for that same derived chart. These results preserve the actual chart signs and complete original state and effect domains. They do not assert a physical realization or literature novelty.
 
 ## References
 
