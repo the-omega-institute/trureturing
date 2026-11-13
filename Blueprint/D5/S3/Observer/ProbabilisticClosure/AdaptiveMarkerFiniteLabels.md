@@ -26,7 +26,31 @@ The causal induction reconstructs the state before each next policy choice. The 
 
 This finite realization establishes a support-level component of the common-parameter stopped-archive construction. It does not assert root recovery, an inverse normal form, opportunity enumeration, positive Markov cylinder mass, likelihood or posterior formulas, almost-sure termination, or measurability of the archive maps. Those require separate results.
 
+**Theorem 1.2 (Strictly positive original-noise mass and a literal realization).**
+
+$$\forall U:Type, [\operatorname{MeasurableSpace}\left(U\right)]\Rightarrow\forall p:\operatorname{Policy}\left(U\right), \forall u:U, \forall w:Word, \operatorname{terminalFirstTrue}\left(w\right)\Rightarrow\operatorname{policyConformity}\left(p, u, w\right)\Rightarrow\forall z:\operatorname{Labels}\left(w\right), \forall qL:[0,1], \forall qR:[0,1], (0<qL<1)\Rightarrow(0<qR<1)\Rightarrow\begin{gathered}(\forall s:Bool, (0<\operatorname{Q}\left(\operatorname{if}\left(s, qR, qL\right)\right))\land(0<1-\operatorname{Q}\left(\operatorname{if}\left(s, qR, qL\right)\right)))\land\\{}(0<\operatorname{noiseLaw}\left(\{v:Noise\mid\operatorname{acquiredRecord}\left(p, u, \operatorname{originalSource}\left(qL, qR, \operatorname{fst}\left(\operatorname{completion}\left(z\right)\right), v\right), \operatorname{length}\left(w\right)\right)=(u,w)\}\right))\land\\{}(\exists v:Noise, \operatorname{acquiredRecord}\left(p, u, \operatorname{originalSource}\left(qL, qR, \operatorname{fst}\left(\operatorname{completion}\left(z\right)\right), v\right), \operatorname{length}\left(w\right)\right)=(u,w))\end{gathered}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_original_realization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original seed space, policy p, fixed original seed u, chronological word w, terminalFirstTrue and policyConformity witnesses, every Labels(w) witness z, and every fixed pair qL,qR in the open square, all three conjuncts hold with that same pair and the same common label-root fst(completion(z)). The parameters may be distinct or equal. Q(q) is the extended nonnegative real image of q. Both Q(q) and 1-Q(q) are strictly positive on the open interval; the standard finite-product and natural-power positivity lemmas therefore give positivity of every finite product of these success and failure factors.
+
+Noise is the original carrier (Bool times positive naturals) to the closed unit interval. noiseLaw is its product of uniform interval volumes. For each arm, Z starts at the common root. At a true current bit its next bit is false; at a false current bit it is true exactly when that arm's next noise coordinate is strictly below its fixed parameter. originalSource retains the common root and these two outward Z tails. Noise coordinates at zero and one remain in the carrier. acquiredRecord is the original seed paired with the chronological reversal of the actual acquired action/reply zip.
+
+The causal finite-label theorem first derives the stopping time and actual record of completion(z). The source first-record equivalence then derives D(p,(u,T))=(u,w); this equation and the first-hit condition are conclusions of the proof, not hypotheses. Forbidden 11 and absence of an earlier 00 force alternation up to the last queried endpoint. The final 00 forces that endpoint to be false. The exact original-source first-record mass is therefore the product of two positive Q powers and the positive final 1-Q factor. A positive measure set is nonempty, yielding an actual original noise realization for this same fixed seed, pair, root and word.
+
+The original-noise simulation proofs are a source-preserving adaptation of TauCeti/Probability/MarkovChain/Simulation.lean and TauCeti/Probability/Kernel/Randomization.lean at pinned revision da527980caecf7e72838e069c01f4a7e7633eca3. Their attribution and complete Apache-2.0 license are retained in the owning Lean source. The finite-label causal completion and its composition with the original record law are repository-derived. The imported Markov prefix-mass result remains its existing source of truth.
+
+For a legal finite canonical replay, terminalFirstTrue is precisely its nonempty final-only marker convention; policyConformity restricts its original-seed history-based choices. Each arm's freshly queried edges give the chronological occurrence counts. Restricting its compatible path labels through the two finite arm counts supplies Labels, including the common root, forbidden 11 and local 00 response. No execution, first-hit, decoder equality, terminal parity, positive singleton-seed mass, standard Borel seed, parameter prior, new observed root or independent auxiliary noise is assumed.
+
+This establishes the positivity and original-source realizability sentence for these finite inputs. It does not prove that every source produces a finite replay, nor the sibling opportunity or totality clause, full CPI7.2, inverse normal form, actual-rise counts, opportunity ranks, likelihood-density identification or prior integration.
+
 ## References
 
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_original_realization`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerFiniteLabels.finite_label_realization`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails](AdaptiveMarkerStoppingTails.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeBorelCEvent](TrajectoryLaws/NativeBorelCEvent.md)
