@@ -22,6 +22,8 @@ Only the SU(2) quaternion identities needed by this candidate are retained.
 
 module
 
+public import D5.S3.Quantum.Approximate.BalancedSU2Commutator
+public import D5.S3.Quantum.Approximate.SolovayKitaevRate
 public import Mathlib.Analysis.CStarAlgebra.Matrix
 public import Mathlib.Topology.Instances.Matrix
 public import Mathlib.Topology.Algebra.Star.Unitary
@@ -39,64 +41,9 @@ namespace D5.S3.Quantum.Approximate.ArbitraryAlphabetSolovayKitaev
 
 noncomputable section
 
+open BalancedSU2Commutator SolovayKitaevRate
+
 abbrev Mat2 := Matrix (Fin 2) (Fin 2) ℂ
-
-/-- The unit-quaternion matrix used by the licensed SU(2) support. -/
-noncomputable def su2 (w x y z : ℝ) : Mat2 :=
-  !![(w : ℂ) - Complex.I * z, -Complex.I * ((x : ℂ) - Complex.I * y);
-     -Complex.I * ((x : ℂ) + Complex.I * y), (w : ℂ) + Complex.I * z]
-
-/-- Quaternion multiplication in matrix form. -/
-theorem su2_mul (w x y z w' x' y' z' : ℝ) :
-    su2 w x y z * su2 w' x' y' z' =
-      su2 (w * w' - x * x' - y * y' - z * z') (w * x' + x * w' + y * z' - z * y')
-        (w * y' - x * z' + y * w' + z * x') (w * z' + x * y' - y * x' + z * w') := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [su2, Matrix.mul_apply, Fin.sum_univ_two, Complex.ext_iff] <;>
-    constructor <;> ring
-
-theorem su2_one : su2 1 0 0 0 = 1 := by
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [su2]
-
-theorem su2_det (w x y z : ℝ) :
-    (su2 w x y z).det = ((w ^ 2 + x ^ 2 + y ^ 2 + z ^ 2 : ℝ) : ℂ) := by
-  rw [su2, Matrix.det_fin_two_of]
-  push_cast
-  simp [Complex.ext_iff, ← Complex.ofReal_pow]
-  constructor <;> ring
-
-/-- Rotation by `theta` about a unit axis. -/
-noncomputable def axisRot (a b c θ : ℝ) : Mat2 :=
-  su2 (Real.cos (θ / 2)) (a * Real.sin (θ / 2))
-    (b * Real.sin (θ / 2)) (c * Real.sin (θ / 2))
-
-theorem axisRot_det {a b c : ℝ} (hu : a ^ 2 + b ^ 2 + c ^ 2 = 1) (θ : ℝ) :
-    (axisRot a b c θ).det = 1 := by
-  rw [axisRot, su2_det,
-    show Real.cos (θ / 2) ^ 2 + (a * Real.sin (θ / 2)) ^ 2
-        + (b * Real.sin (θ / 2)) ^ 2 + (c * Real.sin (θ / 2)) ^ 2 = 1 by
-      linear_combination (Real.sin (θ / 2)) ^ 2 * hu + Real.sin_sq_add_cos_sq (θ / 2)]
-  norm_num
-
-theorem su2_star (w x y z : ℝ) : star (su2 w x y z) = su2 w (-x) (-y) (-z) := by
-  ext i j
-  fin_cases i <;> fin_cases j <;> simp [su2, Matrix.star_apply, Complex.ext_iff]
-
-theorem su2_mem_unitary {w x y z : ℝ}
-    (hu : w ^ 2 + x ^ 2 + y ^ 2 + z ^ 2 = 1) : su2 w x y z ∈ unitary Mat2 := by
-  rw [Unitary.mem_iff]
-  constructor
-  · rw [su2_star, su2_mul, ← su2_one]
-    congr 1 <;> (first | linear_combination hu | linear_combination -hu | ring)
-  · rw [su2_star, su2_mul, ← su2_one]
-    congr 1 <;> (first | linear_combination hu | linear_combination -hu | ring)
-
-theorem axisRot_mem_unitary {a b c : ℝ}
-    (hu : a ^ 2 + b ^ 2 + c ^ 2 = 1) (θ : ℝ) : axisRot a b c θ ∈ unitary Mat2 := by
-  apply su2_mem_unitary
-  nlinarith [Real.sin_sq_add_cos_sq (θ / 2), hu]
 
 /-!
 The finite-net lemma is the compactness step from the licensed CSD source
@@ -145,13 +92,6 @@ theorem groupCommutator_sub_one_eq {V W : Mat2} (hV : V ∈ unitary Mat2)
       Unitary.mul_star_self_of_mem hV, mul_one, Unitary.mul_star_self_of_mem hW]
   rw [sub_mul, h1]
   noncomm_ring
-
-theorem norm_groupCommutator_sub_le_basic {V W : Mat2}
-    (hV : V ∈ unitary Mat2) (hW : W ∈ unitary Mat2) :
-    ‖V * W * star V * star W - 1‖ ≤ 2 * ‖V - 1‖ * ‖W - 1‖ := by
-  rw [groupCommutator_sub_one_eq hV hW,
-    CStarRing.norm_mul_mem_unitary _ (mul_mem (Unitary.star_mem hV) (Unitary.star_mem hW))]
-  exact norm_mul_sub_mul_comm_le V W
 
 theorem norm_mul_sub_mul_le_weighted (A B A' B' : Mat2) :
     ‖A * B - A' * B'‖ ≤ ‖A - A'‖ * ‖B‖ + ‖A'‖ * ‖B - B'‖ := by
@@ -299,9 +239,6 @@ theorem eval_balancedCommutatorWord {m : ℕ} (Gamma : Fin m → Mat2)
   simp only [balancedCommutatorWord, evalGamma_append, evalGamma_inverseWord Gamma
     inverseLetter hinverse, mul_assoc]
 
-/-- The exact exponent required by the event. -/
-noncomputable def skExponent : ℝ := Real.log 5 / Real.log (3 / 2)
-
 /-- Determinant-one unitaries in the fixed two-dimensional matrix carrier. -/
 def SU2 (U : Mat2) : Prop := U ∈ unitary Mat2 ∧ U.det = 1
 
@@ -396,6 +333,198 @@ theorem successorWord_length {m : ℕ} (inverseLetter : Fin m → Fin m)
     (successorWord inverseLetter v w u).length =
       v.length + w.length + v.length + w.length + u.length := by
   simp only [successorWord, balancedCommutatorWord, List.length_append, inverseWord_length]
+
+
+/-- Every ordinary word in determinant-one unitary generators stays in SU(2). -/
+theorem evalGamma_SU2 {m : ℕ} (Gamma : Fin m → Mat2)
+    (hGamma : ∀ i, SU2 (Gamma i)) (u : List (Fin m)) : SU2 (evalGamma Gamma u) := by
+  induction u with
+  | nil => exact ⟨one_mem _, Matrix.det_one⟩
+  | cons i u ih =>
+      exact ⟨mul_mem (hGamma i).1 ih.1, by
+        rw [evalGamma_cons, Matrix.det_mul, (hGamma i).2, ih.2, mul_one]⟩
+
+/--
+One ordinary list has both the recursive approximation error and the actual length bound.
+The construction follows the licensed CSD ordinary-word induction in
+SolovayKitaevCount.exists_mem_skWords_norm_sub_le, with an arbitrary alphabet and
+an existential inverse selector. Determinant one is preserved by every letter.
+-/
+theorem exists_word_at_level {m : ℕ} (Gamma : Fin m → Mat2)
+    (hGamma : ∀ i, SU2 (Gamma i)) (inverseLetter : Fin m → Fin m)
+    (hinverse : ∀ i, Gamma (inverseLetter i) = star (Gamma i))
+    {e : ℝ} (he : 0 ≤ e) (hsmall : Real.sqrt e ≤ 1 / 33) {L₀ : ℕ}
+    (hnet : ∀ U, SU2 U → ∃ u : List (Fin m),
+      ‖U - evalGamma Gamma u‖ ≤ e ∧ u.length ≤ L₀) (n : ℕ) :
+    ∀ U, SU2 U → ∃ u : List (Fin m),
+      ‖U - evalGamma Gamma u‖ ≤ skErr e n ∧ u.length ≤ 5 ^ n * L₀ := by
+  induction n with
+  | zero =>
+      intro U hU
+      simpa using hnet U hU
+  | succ n ih =>
+      intro U hU
+      obtain ⟨u, hdu, hlu⟩ := ih U hU
+      have hε0 : 0 ≤ skErr e n := skErr_nonneg he n
+      have hεe : skErr e n ≤ e := skErr_le_base he hsmall n
+      have hAu := evalGamma_SU2 Gamma hGamma u
+      have hΔu : residual Gamma U u ∈ unitary Mat2 :=
+        mul_mem hU.1 (Unitary.star_mem hAu.1)
+      have hΔdet : (residual Gamma U u).det = 1 := by
+        rw [residual, Matrix.det_mul, Matrix.star_eq_conjTranspose,
+          Matrix.det_conjTranspose, hU.2, hAu.2, star_one, one_mul]
+      have hΔeq1 : residual Gamma U u - 1 =
+          (U - evalGamma Gamma u) * star (evalGamma Gamma u) := by
+        rw [sub_mul, Unitary.mul_star_self_of_mem hAu.1]
+        rfl
+      have hΔnorm : ‖residual Gamma U u - 1‖ = ‖U - evalGamma Gamma u‖ := by
+        rw [hΔeq1, CStarRing.norm_mul_mem_unitary _ (Unitary.star_mem hAu.1)]
+      have hΔle : ‖residual Gamma U u - 1‖ ≤ skErr e n := by
+        rw [hΔnorm]
+        exact hdu
+      obtain ⟨V, W, hVu, hWu, hVd, hWd, hΔfactor, hVb, hWb⟩ :=
+        exists_commutator_of_det_one hΔu hΔdet
+      obtain ⟨v, hdv, hlv⟩ := ih V ⟨hVu, hVd⟩
+      obtain ⟨w, hdw, hlw⟩ := ih W ⟨hWu, hWd⟩
+      have hcvu := (evalGamma_SU2 Gamma hGamma v).1
+      have hcwu := (evalGamma_SU2 Gamma hGamma w).1
+      have hmul : Real.sqrt 2 * Real.sqrt ‖residual Gamma U u - 1‖
+          ≤ Real.sqrt 2 * Real.sqrt (skErr e n) :=
+        mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt hΔle) (Real.sqrt_nonneg 2)
+      have haV : ‖V - 1‖ ≤ Real.sqrt 2 * Real.sqrt (skErr e n) + skErr e n := by
+        linarith
+      have haW : ‖W - 1‖ ≤ Real.sqrt 2 * Real.sqrt (skErr e n) + skErr e n := by
+        linarith
+      have haV' : ‖evalGamma Gamma v - 1‖ ≤
+          Real.sqrt 2 * Real.sqrt (skErr e n) + skErr e n := by
+        calc ‖evalGamma Gamma v - 1‖
+            ≤ ‖evalGamma Gamma v - V‖ + ‖V - 1‖ := by
+              have h : evalGamma Gamma v - 1 = evalGamma Gamma v - V + (V - 1) := by abel
+              rw [h]
+              exact norm_add_le _ _
+          _ ≤ skErr e n + Real.sqrt 2 * Real.sqrt ‖residual Gamma U u - 1‖ := by
+            rw [norm_sub_rev (evalGamma Gamma v) V]
+            exact add_le_add hdv hVb
+          _ ≤ Real.sqrt 2 * Real.sqrt (skErr e n) + skErr e n := by linarith
+      have haW' : ‖evalGamma Gamma w - 1‖ ≤
+          Real.sqrt 2 * Real.sqrt (skErr e n) + skErr e n := by
+        calc ‖evalGamma Gamma w - 1‖
+            ≤ ‖evalGamma Gamma w - W‖ + ‖W - 1‖ := by
+              have h : evalGamma Gamma w - 1 = evalGamma Gamma w - W + (W - 1) := by abel
+              rw [h]
+              exact norm_add_le _ _
+          _ ≤ skErr e n + Real.sqrt 2 * Real.sqrt ‖residual Gamma U u - 1‖ := by
+            rw [norm_sub_rev (evalGamma Gamma w) W]
+            exact add_le_add hdw hWb
+          _ ≤ Real.sqrt 2 * Real.sqrt (skErr e n) + skErr e n := by linarith
+      have hcomm := norm_groupCommutator_sub_le hVu hWu hcvu hcwu
+        haV haW haV' haW' hdv hdw
+      have hUfac : U = (V * W * star V * star W) * evalGamma Gamma u := by
+        rw [← hΔfactor, residual, mul_assoc, Unitary.star_mul_self_of_mem hAu.1, mul_one]
+      refine ⟨successorWord inverseLetter v w u, ?_, ?_⟩
+      · have hsplitU : U - evalGamma Gamma (successorWord inverseLetter v w u)
+            = (V * W * star V * star W -
+                evalGamma Gamma v * evalGamma Gamma w * star (evalGamma Gamma v) *
+                  star (evalGamma Gamma w)) * evalGamma Gamma u := by
+          rw [successorWord, eval_balancedCommutatorWord Gamma inverseLetter hinverse,
+            hUfac, sub_mul]
+        rw [hsplitU, CStarRing.norm_mul_mem_unitary _ hAu.1, skErr_succ]
+        refine le_trans hcomm (step_bound hε0 ?_)
+        have h33 := le_trans (Real.sqrt_le_sqrt hεe) hsmall
+        linarith
+      · rw [successorWord_length, pow_succ]
+        nlinarith
+
+/--
+Every finite inverse-closed dense determinant-one unitary alphabet has the uniform
+ordinary-word bound, with the same list in its error and actual length inequalities.
+The error and logarithmic rate estimates are licensed CSD reuse; the word invariant
+is alphabet-parametric. This asserts existence with no effective or runtime bound.
+-/
+theorem ordinary_word_solovay_kitaev : OrdinaryWordSolovayKitaevEvent := by
+  intro m Gamma hGamma hclosed hDense
+  classical
+  choose inverseLetter hinverse using hclosed
+  let e : ℝ := 1 / 2178
+  have he0 : 0 < e := by norm_num [e]
+  have hsqrt : Real.sqrt e ≤ 1 / 33 := by
+    calc Real.sqrt e ≤ Real.sqrt (1 / 1089) := Real.sqrt_le_sqrt (by norm_num [e])
+      _ = 1 / 33 := by
+        rw [show (1 : ℝ) / 1089 = (1 / 33) ^ 2 from by norm_num,
+          Real.sqrt_sq (by norm_num)]
+  obtain ⟨F, l₀, hFlen, hFnet⟩ := exists_finite_word_net Gamma hDense he0
+  have hnet : ∀ U, SU2 U → ∃ w : List (Fin m),
+      ‖U - evalGamma Gamma w‖ ≤ e ∧ w.length ≤ l₀ := by
+    intro U hU
+    obtain ⟨w, hw, hd⟩ := hFnet U hU
+    exact ⟨w, hd.le, hFlen w hw⟩
+  obtain ⟨b, hb_eq⟩ : ∃ b : ℝ, b = 1089 * e := ⟨_, rfl⟩
+  have hb0 : 0 < b := by rw [hb_eq]; positivity
+  have hb1 : b < 1 := by rw [hb_eq]; norm_num [e]
+  have hlb : Real.log b < 0 := Real.log_neg hb0 hb1
+  have hlogb : 0 < Real.log b⁻¹ := by rw [Real.log_inv]; linarith
+  have hKpos : 0 < 5 * ((l₀ : ℝ) + 1) / (Real.log b⁻¹) ^ skExponent :=
+    div_pos (by positivity) (Real.rpow_pos_of_pos hlogb _)
+  refine ⟨5 * ((l₀ : ℝ) + 1) / (Real.log b⁻¹) ^ skExponent, e, hKpos, he0, by norm_num [e], ?_⟩
+  intro ε hε hεe U hU
+  have h1089ε : 0 < 1089 * ε := by positivity
+  have hεb : 1089 * ε ≤ b := by rw [hb_eq]; linarith
+
+  have hclosed := skError_le_rpow (show (0 : ℝ) < 33 by norm_num)
+    (skErr_nonneg he0.le) (fun k => le_of_eq (skErr_succ e k)) (skLevel b (1089 * ε))
+  have hbase : (33 : ℝ) ^ 2 * skErr e 0 = b := by rw [skErr_zero, hb_eq]; norm_num
+  rw [hbase] at hclosed
+  have hreach : b ^ ((3 / 2 : ℝ) ^ skLevel b (1089 * ε)) ≤ 1089 * ε :=
+    skLevel_rpow_le hb0 hb1 h1089ε hεb
+  have herr : skErr e (skLevel b (1089 * ε)) ≤ ε := by
+    have h1 : (1089 : ℝ) * skErr e (skLevel b (1089 * ε)) ≤ 1089 * ε := by
+      calc (1089 : ℝ) * skErr e (skLevel b (1089 * ε))
+          = (33 : ℝ) ^ 2 * skErr e (skLevel b (1089 * ε)) := by norm_num
+        _ ≤ b ^ ((3 / 2 : ℝ) ^ skLevel b (1089 * ε)) := hclosed
+        _ ≤ 1089 * ε := hreach
+    linarith
+
+  obtain ⟨u, hdu, hlu⟩ :=
+    exists_word_at_level Gamma hGamma inverseLetter hinverse he0.le hsqrt
+      hnet (skLevel b (1089 * ε)) U hU
+  refine ⟨u, le_trans hdu herr, ?_⟩
+  have hlenR : (u.length : ℝ) ≤ 5 ^ skLevel b (1089 * ε) * (l₀ : ℝ) := by
+    exact_mod_cast hlu
+  have hfive : (5 : ℝ) ^ skLevel b (1089 * ε)
+      ≤ 5 * (Real.log (1089 * ε) / Real.log b) ^ skExponent :=
+    five_pow_skLevel_le hb0 hb1 h1089ε hεb
+
+  have hinv : Real.log (1 / ε) / Real.log b⁻¹ = Real.log ε / Real.log b := by
+    simp only [one_div, Real.log_inv, neg_div_neg_eq]
+  have hratio : Real.log (1089 * ε) / Real.log b ≤ Real.log (1 / ε) / Real.log b⁻¹ := by
+    rw [hinv, Real.log_mul (by norm_num) (ne_of_gt hε)]
+    have hdiff : Real.log ε / Real.log b - (Real.log 1089 + Real.log ε) / Real.log b
+        = -Real.log 1089 / Real.log b := by
+      rw [div_sub_div_same]
+      congr 1
+      ring
+    have hnn : 0 ≤ -Real.log 1089 / Real.log b := by
+      refine div_nonneg_iff.2 (Or.inr ⟨?_, hlb.le⟩)
+      simp [Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 1089)]
+    linarith [hdiff, hnn]
+  have hr0' : 0 ≤ Real.log (1089 * ε) / Real.log b := (log_ratio_pos hb0 hb1 h1089ε hεb).le
+  have hlogεinv : 0 ≤ Real.log (1 / ε) := by
+    rw [one_div, Real.log_inv]
+    have : Real.log ε < 0 := Real.log_neg hε (by linarith)
+    linarith
+  have hpow : (Real.log (1089 * ε) / Real.log b) ^ skExponent
+      ≤ (Real.log (1 / ε)) ^ skExponent / (Real.log b⁻¹) ^ skExponent := by
+    rw [← Real.div_rpow hlogεinv hlogb.le]
+    exact Real.rpow_le_rpow hr0' hratio skExponent_pos.le
+  calc (u.length : ℝ) ≤ 5 ^ skLevel b (1089 * ε) * (l₀ : ℝ) := hlenR
+    _ ≤ (5 * (Real.log (1089 * ε) / Real.log b) ^ skExponent) * ((l₀ : ℝ) + 1) :=
+        mul_le_mul hfive (by linarith) (by positivity)
+          (mul_nonneg (by norm_num) (Real.rpow_nonneg hr0' _))
+    _ ≤ (5 * ((Real.log (1 / ε)) ^ skExponent / (Real.log b⁻¹) ^ skExponent)) * ((l₀ : ℝ) + 1) :=
+        mul_le_mul_of_nonneg_right (by linarith [hpow]) (by positivity)
+    _ = 5 * ((l₀ : ℝ) + 1) / (Real.log b⁻¹) ^ skExponent * (Real.log (1 / ε)) ^ skExponent := by
+        ring
+
 
 end
 end D5.S3.Quantum.Approximate.ArbitraryAlphabetSolovayKitaev
