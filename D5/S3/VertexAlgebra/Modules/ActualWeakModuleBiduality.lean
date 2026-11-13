@@ -104,12 +104,10 @@ private theorem linear_inverse_left (c : Discriminant D)
       Multiplicity (dualModule (dualModule A)) c := iota (DualMultiplicity (dualModule A)) c
   let k : Multiplicity (dualModule (dualModule A)) c →ₗ[ℂ]
       DualMultiplicity (dualModule A) c := kappa (DualMultiplicity (dualModule A)) c
-  have hinner : (e.toLinearMap.comp ev) x = e (ev x) :=
-    (LinearMap.comp_apply e.toLinearMap ev x).trans
-      (congrFun (LinearEquiv.coe_toLinearMap e) (ev x))
-  have hf : bidualFamily A hD c x = i (e (ev x)) :=
-    (LinearMap.comp_apply i (e.toLinearMap.comp ev) x).trans
-      (congrArg (fun t : DualMultiplicity (dualModule A) c => i t) hinner)
+  have hf : bidualFamily A hD c x = i (e (ev x)) := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
   have hk : k (bidualFamily A hD c x) = e (ev x) :=
     (congrArg (fun t : Multiplicity (dualModule (dualModule A)) c => k t) hf).trans
       (kappa_iota (DualMultiplicity (dualModule A)) c (e (ev x)))
@@ -174,19 +172,15 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
       (fun ψ : Module.Dual ℂ (Multiplicity B c) => ψ.comp (restrict f c))
       (fun ψ => dualHom_dualIota hD f c ψ) q
     have hleft (z : Multiplicity (dualModule A) (-c)) :
-        dualMultiplicityEquiv A hD c z = eLeft z :=
-      (congrFun (Equiv.coe_fn_mk
-        (fun t : Multiplicity (dualModule A) (-c) => dualMultiplicityEquiv A hD c t)
-        (fun φ : Module.Dual ℂ (Multiplicity A c) => (dualMultiplicityEquiv A hD c).symm φ)
-        (fun t => (dualMultiplicityEquiv A hD c).symm_apply_apply t)
-        (fun φ => (dualMultiplicityEquiv A hD c).apply_symm_apply φ)) z).symm
+        dualMultiplicityEquiv A hD c z = eLeft z := by
+      apply LinearMap.ext
+      intro t
+      rfl
     have hright (z : Multiplicity (dualModule B) (-c)) :
-        eRight z = dualMultiplicityEquiv B hD c z :=
-      congrFun (Equiv.coe_fn_mk
-        (fun t : Multiplicity (dualModule B) (-c) => dualMultiplicityEquiv B hD c t)
-        (fun ψ : Module.Dual ℂ (Multiplicity B c) => (dualMultiplicityEquiv B hD c).symm ψ)
-        (fun t => (dualMultiplicityEquiv B hD c).symm_apply_apply t)
-        (fun ψ => (dualMultiplicityEquiv B hD c).apply_symm_apply ψ)) z
+        eRight z = dualMultiplicityEquiv B hD c z := by
+      apply LinearMap.ext
+      intro t
+      rfl
     exact (hleft (restrict (dualHom hD f) (-c) q)).trans
       (hnatural.trans (congrArg (fun ψ : Module.Dual ℂ (Multiplicity B c) =>
         ψ.comp (restrict f c)) (hright q)))
@@ -207,25 +201,20 @@ private theorem dualDualFamily_natural (f : ModuleHom A B)
       Multiplicity (dualModule (dualModule B)) c := iota (DualMultiplicity (dualModule B)) c
   let g : DualMultiplicity (dualModule A) c →ₗ[ℂ] DualMultiplicity (dualModule B) c :=
     (restrict (dualHom hD f) (-c)).dualMap
-  have hA : bidualFamily A hD c x = iA (eA y) :=
-    (LinearMap.comp_apply iA (eA.toLinearMap.comp
-      (Module.Dual.eval ℂ (Multiplicity A c))) x).trans
-        (congrArg (fun t : DualMultiplicity (dualModule A) c => iA t)
-          ((LinearMap.comp_apply eA.toLinearMap (Module.Dual.eval ℂ (Multiplicity A c)) x).trans
-            (congrFun (LinearEquiv.coe_toLinearMap eA) y)))
+  have hA : bidualFamily A hD c x = iA (eA y) := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
   have hB : bidualFamily B hD c (restrict f c x) =
-      iB (eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x))) :=
-    (LinearMap.comp_apply iB (eB.toLinearMap.comp
-      (Module.Dual.eval ℂ (Multiplicity B c))) (restrict f c x)).trans
-        (congrArg (fun t : DualMultiplicity (dualModule B) c => iB t)
-          ((LinearMap.comp_apply eB.toLinearMap (Module.Dual.eval ℂ (Multiplicity B c))
-            (restrict f c x)).trans (congrFun (LinearEquiv.coe_toLinearMap eB)
-              (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x)))))
+      iB (eB (Module.Dual.eval ℂ (Multiplicity B c) (restrict f c x))) := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
   have hd (z : Multiplicity (dualModule (dualModule A)) c) :
-      dualDualFamily hD f c z = iB (g (kA z)) :=
-    (LinearMap.comp_apply iB (g.comp kA) z).trans
-      (congrArg (fun t : DualMultiplicity (dualModule B) c => iB t)
-        (LinearMap.comp_apply g kA z))
+      dualDualFamily hD f c z = iB (g (kA z)) := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
   exact (hd (bidualFamily A hD c x)).trans
     ((congrArg (fun z : Multiplicity (dualModule (dualModule A)) c => iB (g (kA z))) hA).trans
       ((congrArg (fun t : DualMultiplicity (dualModule A) c => iB (g t))
@@ -301,18 +290,14 @@ private theorem bidualInverseFamily_right (c : Discriminant D)
       ev (back t) = t :=
     (Module.evalEquiv_apply ℂ (Multiplicity A c) (back t)).symm.trans
       ((Module.evalEquiv ℂ (Multiplicity A c)).apply_symm_apply t)
-  have hiInner : (e.symm.toLinearMap.comp k) z = e.symm (k z) :=
-    (LinearMap.comp_apply e.symm.toLinearMap k z).trans
-      (congrFun (LinearEquiv.coe_toLinearMap e.symm) (k z))
-  have hi : bidualInverseFamily A hD c z = back (e.symm (k z)) :=
-    (LinearMap.comp_apply back.toLinearMap (e.symm.toLinearMap.comp k) z).trans
-      ((congrFun (LinearEquiv.coe_toLinearMap back) ((e.symm.toLinearMap.comp k) z)).trans
-        (congrArg (fun t : Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)) => back t) hiInner))
-  have hf (t : Multiplicity A c) : bidualFamily A hD c t = i (e (ev t)) :=
-    (LinearMap.comp_apply i (e.toLinearMap.comp ev) t).trans
-      (congrArg (fun y : DualMultiplicity (dualModule A) c => i y)
-        ((LinearMap.comp_apply e.toLinearMap ev t).trans
-          (congrFun (LinearEquiv.coe_toLinearMap e) (ev t))))
+  have hi : bidualInverseFamily A hD c z = back (e.symm (k z)) := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
+  have hf (t : Multiplicity A c) : bidualFamily A hD c t = i (e (ev t)) := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
   exact (hf (bidualInverseFamily A hD c z)).trans
     ((congrArg (fun t : Multiplicity A c => i (e (ev t))) hi).trans
       ((congrArg (fun t : Module.Dual ℂ (Module.Dual ℂ (Multiplicity A c)) => i (e t))

@@ -375,7 +375,10 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
     simp only [Module.Basis.coord_apply, Module.Basis.repr_self,
       Finsupp.single_eq_same, Finset.sum_const, Finset.card_univ,
       nsmul_eq_mul, mul_one]
-  rw [hstart, cupVector_expansion]
+  have hcup := congrArg
+    (fun t : Multiplicity (targetModule B (dualModule B)) 0 => γ⁻¹ • q t)
+    (cupVector_expansion B hD)
+  refine hstart.trans (hcup.trans ?_)
   simp only [map_sum, map_smul]
   calc
     _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
