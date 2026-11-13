@@ -41,9 +41,10 @@ actual clique cardinality through the vertex minus one.
 
 ## Gap
 
-`FirstOccurrenceClaim` specifies the complete question as a proposition. It is a
-claim definition, not a theorem asserting the proposition. Neither whole
-question has been proved by this module.
+`FirstOccurrenceClaim` specifies the complete question as a proposition. The source
+includes proof terms for both full claims, but they have not been verified
+by Lean. Neither a claim definition nor an uncompiled proof term supplies
+a kernel-verified settlement.
 
 ## Route
 
