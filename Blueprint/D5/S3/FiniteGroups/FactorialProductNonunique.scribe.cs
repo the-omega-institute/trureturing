@@ -54,7 +54,38 @@ internal sealed class FactorialProductNonuniqueDocument : IScribeDocumentDefinit
                         + "the interpretation requiring all parameters on both sides to be "
                         + "distinct. It does not refute Theorem 4.6, whose parameters are primes. "
                         + "No minimality, composite-only strengthening or worldwide priority "
-                        + "claim is asserted."))),
+                        + "claim is asserted.")),
+                    Paragraph(Text(
+                        "The displayed data have a stronger finite certificate. Let U={16,20,22,26,44,64,76,94,140} "
+                        + "and V={10,24,38,46,48,56,68,80,84}. These are disjoint sets of nine even starts, "
+                        + "and A=V union (U+1), B=U union (V+1). The eighteen adjacent pairs are therefore disjoint, "
+                        + "so both A and B have cardinality 18, A and B are disjoint, and each parameter is greater than one. "
+                        + "The two sides select opposite endpoints from the same pairs, giving sums 965. "
+                        + "For each of the ten primes 2,3,5,7,11,13,17,19,23,47, the exponent "
+                        + "sum n times (v_p(n)-v_p(n+1)) agrees for U and V; no other prime occurs in the displayed adjacent factors. "
+                        + "The resulting rational certificate is 2^1150 7^44 divided by "
+                        + "3^326 5^42 11^10 13^38 17^16 19^18 23^22 47^46.")),
+                    Paragraph(Text(
+                        "The same equality extends along every finite common extension. If C is finite and disjoint from A union B, "
+                        + "then A union C and B union C remain distinct, have equal actual factorial-weight products, and have equal sums "
+                        + "965 plus the sum of the elements of C. Their symmetric difference is still A union B and has cardinality 36. "
+                        + "Taking C of cardinality k-18 gives the assertion for every k at least 18. When k is greater than 18 the two extensions share C; "
+                        + "the extension is not claimed to be disjoint.")),
+                    Paragraph(Text(
+                        "For every fixed k at least 19, choose a finite D disjoint from A union B with cardinality k-19 and then choose each integer c "
+                        + "above every member of A union B union D. The two k-element sets A union D union {c} and B union D union {c} have equal sums within each pair "
+                        + "and common positive rational product F(A)F(D)orbitWeight(c). The adjacent-ratio identity gives positivity and strict decrease "
+                        + "on the positive domain, so these values are pairwise different as c varies. The sums may vary with c; no fixed-sum infinitude claim is made.")),
+                    Paragraph(Text(
+                        "The same identity gives the complete coordinate comparison: for strictly increasing integer lists a and b of equal length, "
+                        + "with every entry greater than one and a_i less than or equal to b_i, the product of the weights at a is at least the product at b, "
+                        + "with equality exactly when all coordinates agree. The empty-list boundary is the empty product 1 when the formal domain admits length zero. "
+                        + "Strict decrease is asserted only for positive arguments: orbitWeight 0 and orbitWeight 1 are both 1, so a global strictness claim is false.")),
+                    Paragraph(Text(
+                        "The decreasing-vector witness is incomparable in weak majorisation: its first partial sums are 141 greater than 140, while its ninth partial sums are 714 less than 715. "
+                        + "This is a finite qualification of the source comparison, not a generic majorisation theorem or a refutation of Appendix A. "
+                        + "The journal Problem 5.6, arXiv v2 Problem 5.6 and arXiv v1 Problem 12.6 are the covered source questions. "
+                        + "Problems 5.1-5.5 and 5.7-5.8, group realization, least counterexample cardinality, minimum maximum parameter, and all-composite restrictions remain outside this result."))),
                 DescribeRole.Theorem,
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("alm2024-factorial-product-uniqueness"),
