@@ -8,13 +8,18 @@
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Quantum/blore2026gleason.md. Authors: Zayn Blore.
+Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/
 
-import D5.S3.Quantum.GleasonExtremum
+module
+
+public import D5.S3.Quantum.GleasonExtremum
+
+@[expose] public section
+
 open Matrix
 open scoped Matrix InnerProductSpace
 namespace Gleason
@@ -523,3 +528,5 @@ theorem frameFunction_regular_sphere (f : EuclideanSpace ℝ (Fin 3) → ℝ) {W
     rw [← quadFrame_eq_dotProduct, ← hg]
     linarith
 end Gleason
+
+end

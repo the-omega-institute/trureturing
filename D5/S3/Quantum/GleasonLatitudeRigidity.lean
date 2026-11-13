@@ -8,20 +8,25 @@
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Quantum/blore2026gleason.md. Authors: Zayn Blore.
+Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/
 
-import Mathlib.Analysis.Real.Cardinality
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Algebra.Order.Archimedean.Basic
-import D5.S3.Quantum.GleasonFrameGeometry
-import Mathlib.Topology.Bases
-import Mathlib.Topology.Order.Basic
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Topology.Instances.RealVectorSpace
+module
+
+public import Mathlib.Analysis.Real.Cardinality
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Algebra.Order.Archimedean.Basic
+public import D5.S3.Quantum.GleasonFrameGeometry
+public import Mathlib.Topology.Bases
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Topology.Instances.RealVectorSpace
+
+@[expose] public section
+
 namespace Gleason
 theorem additive_bounded_linear (g : ℝ → ℝ) (hadd : ∀ s t : ℝ, g (s + t) = g s + g t)
     {M : ℝ} (hM : ∀ t : ℝ, |t| ≤ 1 → |g t| ≤ M) (x : ℝ) : g x = x * g 1 := by
@@ -738,3 +743,5 @@ theorem eq_add_mul_latitude (hf : IsFrameFunction ℝ f W) (hp : ‖p‖ = 1)
   ring
 end IsFrameFunction
 end Gleason
+
+end

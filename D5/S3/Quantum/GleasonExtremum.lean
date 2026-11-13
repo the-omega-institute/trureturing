@@ -8,17 +8,22 @@
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Quantum/blore2026gleason.md. Authors: Zayn Blore.
+Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/
 
-import D5.S3.Quantum.GleasonLatitudeRigidity
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Topology.Sequences
-import Mathlib.Topology.MetricSpace.ProperSpace
-import Mathlib.Analysis.SpecificLimits.Basic
+module
+
+public import D5.S3.Quantum.GleasonLatitudeRigidity
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Topology.Sequences
+public import Mathlib.Topology.MetricSpace.ProperSpace
+public import Mathlib.Analysis.SpecificLimits.Basic
+
+@[expose] public section
+
 open Matrix Real Filter Topology
 open scoped Matrix InnerProductSpace
 namespace Gleason
@@ -479,3 +484,5 @@ theorem exists_eq_sphereSup (hf : IsFrameFunction ℝ f W) {M m : ℝ}
   exact ⟨p, hp, le_antisymm (le_sphereSup hM hp) (sphereSup_le h)⟩
 end IsFrameFunction
 end Gleason
+
+end

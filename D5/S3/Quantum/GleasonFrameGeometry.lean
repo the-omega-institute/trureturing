@@ -8,21 +8,26 @@
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Quantum/blore2026gleason.md. Authors: Zayn Blore.
+Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/
 
-import Mathlib.Algebra.Star.StarProjection
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.DotProduct
-import Mathlib.LinearAlgebra.CrossProduct
-import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.Algebra.Order.Ring.Pow
+module
+
+public import Mathlib.Algebra.Star.StarProjection
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.LinearAlgebra.Matrix.DotProduct
+public import Mathlib.LinearAlgebra.CrossProduct
+public import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.Algebra.Order.Ring.Pow
+
+@[expose] public section
+
 open Matrix
 open scoped ComplexConjugate ComplexOrder InnerProductSpace
 namespace Gleason
@@ -892,8 +897,8 @@ theorem exists_descent_chain {p s t : EuclideanSpace ℝ (Fin 3)} (hp : ‖p‖ 
       rw [hρ, inv_pow, ← div_eq_mul_inv, div_le_one (pow_pos hcos n)]
       exact hpow
     have hend : z₀ * (((Real.cos (Complex.arg u / n))⁻¹ : ℝ) : ℂ) ^ n * u = (ρ : ℂ) * ζ := by
-      rw [hu, hρ]
-      field_simp
+      rw [hρ, hu]
+      field_simp [hz₀0, hy.ne']
       push_cast
       ring
     obtain ⟨c, hc0, hcn, hcmem, hcstep⟩ := spiral_reach u hu1 n hn3
@@ -929,3 +934,5 @@ theorem exists_descent_chain {p s t : EuclideanSpace ℝ (Fin 3)} (hp : ‖p‖ 
             lift_tangent_mem_descent_iff he hz'0]
           exact hstep2
 end Gleason
+
+end

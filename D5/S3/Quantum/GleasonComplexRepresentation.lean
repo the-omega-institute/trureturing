@@ -8,24 +8,29 @@
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
 Released under Apache 2.0 license; the complete license is retained in
-Library/Quantum/blore2026gleason.md. Authors: Zayn Blore.
+Library/notes/gleason1957measures.md. Authors: Zayn Blore.
 Adapted from zblore/csd-lean4 at 07e2273b0180e69b4cb8f84e9d2200faa19fe07d.
 Imports, source grouping and exact-supplier applications use the receiving Mathlib pin.
 Retire this transplant when the receiving pinned Mathlib supplies equivalent declarations.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Matrix.Hermitian
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.LinearAlgebra.Matrix.DotProduct
-import Mathlib.Analysis.Complex.Basic
-import D5.S3.Quantum.GleasonFrameGeometry
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import D5.S3.Quantum.GleasonRealRepresentation
-import D5.S3.QuadraticForms.ParallelogramConstruction
-import Mathlib.Analysis.InnerProductSpace.LinearMap
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Matrix.Hermitian
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.LinearAlgebra.Matrix.DotProduct
+public import Mathlib.Analysis.Complex.Basic
+public import D5.S3.Quantum.GleasonFrameGeometry
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Analysis.Matrix.PosDef
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import D5.S3.Quantum.GleasonRealRepresentation
+public import D5.S3.QuadraticForms.ParallelogramConstruction
+public import Mathlib.Analysis.InnerProductSpace.LinearMap
+
+@[expose] public section
+
 open Matrix
 open scoped ComplexConjugate
 namespace Gleason
@@ -902,3 +907,5 @@ theorem ProjectionPackage.gleason_representation (OP : ProjectionPackage N) (hN 
       ∀ P, IsStarProjection P → OP.p P = ((ρ * P).trace).re :=
   OP.gleason_representation_of_core coreLemma hN
 end Gleason
+
+end
