@@ -2,13 +2,13 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/PermutationArrays/EtiennePrefixCount
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Order.Interval.Finset.Fin, mathlib/module/Mathlib.SetTheory.Cardinal.Finite]
+   anchors: [mathlib/module/Mathlib.Order.Interval.Finset.Fin]
    utility: none
    digest: Literal sorted width-two binary matrices with bounded rectangle prefixes. -/
 
 import Mathlib.Order.Interval.Finset.Fin
 import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Tactic
 
 /-! # Literal width-two prefix matrices and their four consecutive row blocks -/
@@ -44,8 +44,12 @@ def PrefixBound {n : ℕ} (M : Matrix n) : Prop :=
   ∀ i, 1 ≤ i → i ≤ n → ∀ j, 1 ≤ j → j ≤ 2 → 2 * ones M i j ≤ i * j
 
 /-- Both lexicographic constraints and all rectangle-prefix constraints on actual matrices. -/
+def Admissible {n : ℕ} (M : Matrix n) : Prop :=
+  Monotone (fun i => rank (M i)) ∧ ColumnsLE M ∧ PrefixBound M
+
+/-- The literal admissible-matrix subtype. -/
 abbrev Arrays (n : ℕ) :=
-  {M : Matrix n // Monotone (fun i => rank (M i)) ∧ ColumnsLE M ∧ PrefixBound M}
+  {M : Matrix n // Admissible M}
 
 /-- The sequence is defined by its literal matrix subtype, independently of any formula. -/
 noncomputable def a (n : ℕ) : ℕ := Nat.card (Arrays n)
@@ -157,7 +161,7 @@ private theorem columns_block_iff {n : ℕ} (u : Cuts n) :
       have hr' : u.r = u.q := by omega
       left
       intro i
-      by_cases hi : u.q ≤ i.val <;> simp [blockMatrix, hp', hr', hi] <;> omega
+      by_cases hi : u.q ≤ i.val <;> simp [blockMatrix, hp', hr', hi]
 
 /-- Both literal rectangle sums have explicit formulas at every prefix height. -/
 private theorem ones_block {n : ℕ} (u : Cuts n) (i : ℕ) (hi : i ≤ n) :
@@ -174,7 +178,7 @@ private theorem ones_block {n : ℕ} (u : Cuts n) (i : ℕ) (hi : i ≤ n) :
     have hs2 : ones (blockMatrix u) (i + 1) 2 =
         ones (blockMatrix u) i 2 +
           (cell (blockMatrix u) i 0 + cell (blockMatrix u) i 1) := by
-      simp [ones, sum_range_succ, add_assoc]
+      simp [ones, sum_range_succ]
     have hc1 : cell (blockMatrix u) i 0 = if u.q ≤ i then 1 else 0 := by
       by_cases hq : u.q ≤ i <;> simp [cell, blockMatrix, hin, hq]
     have hc2 : cell (blockMatrix u) i 0 + cell (blockMatrix u) i 1 =
@@ -371,12 +375,12 @@ private theorem inner_double (n t : ℕ) (ht : 2 * t ≤ n) :
     split_ifs <;> norm_num
   have he : (∑ d : Fin (t + 1), (if d.val = t then 1 else 0 : ℤ)) = 1 := by
     change (∑ d : Fin (t + 1), (fun j : ℕ => if j = t then (1 : ℤ) else 0) d.val) = 1
-    rw [Fin.sum_univ_eq_sum_range]
+    rw [Fin.sum_univ_eq_sum_range (fun j : ℕ => if j = t then (1 : ℤ) else 0) (t + 1)]
     simp
   have hid : (∑ d : Fin (t + 1), (d.val : ℤ)) * 2 = (t : ℤ) * (t + 1) := by
     have hnat : (∑ d : Fin (t + 1), d.val) * 2 = t * (t + 1) := by
       change (∑ d : Fin (t + 1), (fun j : ℕ => j) d.val) * 2 = t * (t + 1)
-      rw [Fin.sum_univ_eq_sum_range]
+      rw [Fin.sum_univ_eq_sum_range (fun j : ℕ => j) (t + 1)]
       simpa [Nat.mul_comm] using sum_range_id_mul_two (t + 1)
     exact_mod_cast hnat
   rw [Nat.cast_sum]
