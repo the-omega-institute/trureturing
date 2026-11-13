@@ -438,4 +438,3 @@ theorem exists_homotopy
   simpa [H] using hc n b
 
 end D5.S3.HomologicalAlgebra.AcyclicCarrier
-
