@@ -4,6 +4,8 @@ import Reg.D5.S3.Quantum.Foundation.SectionROGFrame
 /-! Exact laws retain the full native carrier, real dual and original all-pure
 family. Lawful whole-family intervention and dependence evidence is unfinished. -/
 
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 universe u
 open scoped Matrix InnerProductSpace RealInnerProductSpace
@@ -97,7 +99,7 @@ def arena : Arena where
   signature := relationSignature.{u}
   Law O := ∀ {d : Type u} [Fintype d] [DecidableEq d],
     1 < Fintype.card d → ∀ p q : pure (cone (d := d)) unit,
-      exclusion cone unit p = exclusion cone unit q →
+      exclusion cone unit (p : HermitianMat d ℂ) = exclusion cone unit (q : HermitianMat d ℂ) →
       O.readout () ⟨pure (cone (d := d)) unit, Eq⟩ p q
 
 theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law relationActual := Iff.rfl
@@ -133,7 +135,7 @@ def arena : Arena where
     ∃ f : ThreeSpace →ᵃ[ℝ] HermitianMat (Fin 3) ℂ,
       Function.Injective f ∧
       O.readout () ⟨Set (HermitianMat (Fin 3) ℂ), Eq⟩
-        (f '' Metric.closedBall 0 1) (exclusion cone unit p)
+        (f '' Metric.closedBall 0 1) (exclusion cone unit (p : HermitianMat (Fin 3) ℂ))
 
 theorem source_bridge : sourceScope ↔ arena.Law relationActual := by
   constructor
@@ -158,15 +160,15 @@ def arena : Arena where
   signature := relationSignature.{0}
   Law O := ∃ (p : pure (cone (d := Fin 3)) unit)
       (e : HermitianMat (Fin 3) ℂ →ₗ[ℝ] ℝ)
-      (a : FullBall3Chart cone unit p),
+      (a : FullBall3Chart (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ)),
       IsClosed (cone (d := Fin 3) : Set (HermitianMat (Fin 3) ℂ)) ∧
       (∀ X ∈ cone (d := Fin 3), X ≠ 0 → 0 < unit X) ∧
       Submodule.span ℝ (cone (d := Fin 3) : Set (HermitianMat (Fin 3) ℂ)) = ⊤ ∧
       EB3 (cone (d := Fin 3)) unit ∧
-      Function.Injective (fun q : pure (cone (d := Fin 3)) unit => exclusion cone unit q) ∧
-      common cone unit p e ∧ Regular cone unit p ∧
-      ∃ n : NativeChart cone unit p e a,
-        O.readout () ⟨NativeChart cone unit p e a, fun x _ => ContactCriterion x⟩ n n
+      Function.Injective (fun q : pure (cone (d := Fin 3)) unit => exclusion cone unit (q : HermitianMat (Fin 3) ℂ)) ∧
+      common (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ) e ∧ Regular (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ) ∧
+      ∃ n : NativeChart (cone (d := Fin 3)) unit p e a,
+        O.readout () ⟨NativeChart (cone (d := Fin 3)) unit p e a, fun x _ => ContactCriterion x⟩ n n
 
 theorem source_bridge : sourceScope ↔ arena.Law relationActual := Iff.rfl
 

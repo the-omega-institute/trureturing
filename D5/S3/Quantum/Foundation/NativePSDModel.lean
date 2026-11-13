@@ -13,6 +13,10 @@ import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.Hermitia
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import Mathlib.Analysis.InnerProductSpace.Dual
 
+/-! Native PSD effects, entire exclusion faces and the full qutrit family. -/
+
+set_option backward.isDefEq.respectTransparency false
+
 noncomputable section
 open scoped BigOperators Matrix InnerProductSpace RealInnerProductSpace ComplexOrder
 
@@ -68,11 +72,13 @@ private theorem proper_iff (E : HermitianMat d ℂ) :
 
 private theorem base_iff (X : HermitianMat d ℂ) :
     X ∈ CircuitBalancedConfirmation.base cone unit ↔ 0 ≤ X ∧ X.trace = 1 := by
-  simp only [CircuitBalancedConfirmation.base, Set.mem_setOf_eq,
+  simp only [CircuitBalancedConfirmation.base, Set.mem_ofPred_eq,
     PointedCone.mem_positive, unit_apply]
 
+omit [DecidableEq d] in
 private theorem rank_one_self (v : EuclideanSpace ℂ d) (hv : ‖v‖ = 1) :
     (rankOne v).mat * (rankOne v).mat = (rankOne v).mat := by
+  classical
   change Matrix.vecMulVec (v : d → ℂ) (star (v : d → ℂ)) *
     Matrix.vecMulVec (v : d → ℂ) (star (v : d → ℂ)) = _
   rw [Matrix.vecMulVec_mul_vecMulVec]
@@ -228,18 +234,18 @@ theorem native_pure_iff (X : HermitianMat d ℂ) :
   have hb : CircuitBalancedConfirmation.base cone (unit (d := d)) =
       SectionROGFrame.base ⊤ := by
     ext Y
-    simp only [base_iff, SectionROGFrame.base, Set.mem_setOf_eq,
+    simp only [base_iff, SectionROGFrame.base, Set.mem_ofPred_eq,
       Submodule.mem_top, true_and]
   change X ∈ (CircuitBalancedConfirmation.base cone unit).extremePoints ℝ ↔ _
   rw [hb, whole_pure_carrier _ top_rog]
-  simp only [pureRanks, Set.mem_setOf_eq, Submodule.mem_top, and_true]
+  simp only [pureRanks, Set.mem_ofPred_eq, Submodule.mem_top, and_true]
 
 /-- The entire original mixed exclusion identifies every native pure label. -/
 theorem native_exclusion_injective (hd : 1 < Fintype.card d) :
-    Function.Injective (fun p : pure (cone (d := d)) unit => exclusion cone unit p) := by
+    Function.Injective (fun p : pure (cone (d := d)) unit => exclusion cone unit (p : HermitianMat d ℂ)) := by
   intro p q hpq
-  obtain ⟨v, hv, hp⟩ := (native_pure_iff p).mp p.property
-  obtain ⟨w, hw, hq⟩ := (native_pure_iff q).mp q.property
+  obtain ⟨v, hv, hp⟩ := (native_pure_iff (p : HermitianMat d ℂ)).mp p.property
+  obtain ⟨w, hw, hq⟩ := (native_pure_iff (q : HermitianMat d ℂ)).mp q.property
   let t : ℝ := (Fintype.card d : ℝ) - 1
   have ht : t ≠ 0 := by
     have hcard : (1 : ℝ) < Fintype.card d := by exact_mod_cast hd
@@ -264,7 +270,9 @@ theorem native_exclusion_injective (hd : 1 < Fintype.card d) :
 
 
 private def blochLinear : ThreeSpace →ₗ[ℝ] HermitianMat (Fin 2) ℂ where
-  toFun r := ⟨B r, by simpa only [scalarB, Complex.ofReal_zero, zero_smul, zero_add]
+  toFun r := ⟨B r, by
+    change (B r).IsHermitian
+    simpa only [scalarB, Complex.ofReal_zero, zero_smul, zero_add]
     using scalarB_hermitian 0 r⟩
   map_add' a b := by
     apply HermitianMat.ext
@@ -280,10 +288,14 @@ private def beta : ThreeSpace →ᵃ[ℝ] HermitianMat (Fin 2) ℂ :=
     AffineMap.const ℝ ThreeSpace ((1 / 2 : ℝ) • (1 : HermitianMat (Fin 2) ℂ))
 
 private theorem beta_mat (r : ThreeSpace) : (beta r).mat = blochMatrix 1 r := by
+  change (((1 / 2 : ℝ) • blochLinear r +
+    (1 / 2 : ℝ) • (1 : HermitianMat (Fin 2) ℂ)).mat) = _
+  rw [HermitianMat.mat_add, HermitianMat.mat_smul, HermitianMat.mat_smul]
+  change (1 / 2 : ℝ) • B r + (1 / 2 : ℝ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) = _
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [beta, blochLinear, B_formula, blochMatrix, HermitianMat.smul_apply,
-      Complex.real_smul, Matrix.one_apply] <;> ring
+    simp [B_formula, blochMatrix, Matrix.smul_apply, Complex.real_smul,
+      Matrix.one_apply] <;> ring
 
 private theorem beta_trace (r : ThreeSpace) : (beta r).trace = 1 := by
   rw [HermitianMat.trace_eq_re_trace, beta_mat, blochMatrix_trace]
@@ -304,6 +316,7 @@ private theorem beta_inverse (X : HermitianMat (Fin 2) ℂ) (ht : X.trace = 1) :
   apply HermitianMat.ext
   rw [beta_mat]
   have h := (bloch_geometry_of_isHermitian X.mat X.H).1
+  change X.mat = blochMatrix (RCLike.re X.mat.trace) (bloch X.mat) at h
   rw [← HermitianMat.trace_eq_re_trace, ht] at h
   exact h.symm
 
@@ -339,13 +352,16 @@ theorem vzero_unit : ‖vzero‖ = 1 := by
 
 private theorem anchor_reading (X : HermitianMat (Fin 3) ℂ) :
     ⟪rankOne vzero, X⟫_ℝ = (X.mat 0 0).re := by
-  simp [HermitianMat.inner_eq_re_trace, rankOne, vzero, Matrix.trace,
-    Matrix.mul_apply, Fin.sum_univ_three, Matrix.vecMulVec_apply]
+  rw [HermitianMat.inner_eq_re_trace]
+  change ((rankOne vzero).mat * X.mat).trace.re = _
+  simp [rankOne, vzero, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_three,
+    Matrix.vecMulVec_apply, -HermitianMat.mat_apply]
 
 private theorem embed_zero (X : HermitianMat (Fin 2) ℂ) :
     ⟪rankOne vzero, X.conj W⟫_ℝ = 0 := by
   rw [anchor_reading]
-  simp [HermitianMat.conj_apply_mat, W, Matrix.mul_apply, Fin.sum_univ_two]
+  change ((W * X.mat * W.conjTranspose) 0 0).re = 0
+  simp [W, Matrix.mul_apply, Fin.sum_univ_two]
 
 private theorem reconstruct (X : HermitianMat (Fin 3) ℂ) (hX : 0 ≤ X)
     (hz : ⟪rankOne vzero, X⟫_ℝ = 0) : (compress X).conj W = X := by
@@ -359,13 +375,15 @@ private theorem reconstruct (X : HermitianMat (Fin 3) ℂ) (hX : 0 ≤ X)
   have hc (i : Fin 3) : X.mat i 0 = 0 := by
     simpa [vzero, Matrix.mulVec, dotProduct, Fin.sum_univ_three] using congrFun hcol i
   have hr (j : Fin 3) : X.mat 0 j = 0 := by
-    rw [← X.H.eq]
-    simp [Matrix.conjTranspose_apply, hc]
+    calc
+      X.mat 0 j = star (X.mat j 0) := (congrFun₂ X.H.eq 0 j).symm
+      _ = 0 := by rw [hc j, star_zero]
   apply HermitianMat.ext
+  change W * (W.conjTranspose * X.mat * W) * W.conjTranspose = X.mat
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [compress, HermitianMat.conj_apply_mat, W, Matrix.mul_apply,
-      Fin.sum_univ_two, Fin.sum_univ_three, hc, hr]
+    simp [W, Matrix.mul_apply, Fin.sum_univ_two, Fin.sum_univ_three,
+      hc, hr, -HermitianMat.mat_apply]
 
 /-- The chart is affine and injective on the whole three-space, and its closed
 unit ball is exactly the entire original mixed exclusion of the first projection. -/
@@ -374,21 +392,21 @@ def anchorChart : FullBall3Chart (cone (d := Fin 3)) unit (rankOne vzero) where
   injective := by
     intro r s h
     apply beta_injective
+    change (beta r).conj W = (beta s).conj W at h
     have hh := congrArg compress h
-    simpa only [AffineMap.comp_apply, LinearMap.toAffineMap_coe,
-      HermitianMat.conjLinear_apply, compress_embed] using hh
+    simpa only [compress_embed] using hh
   whole := by
     ext X
     constructor
     · rintro ⟨r, hr, rfl⟩
       rw [whole_mixed_exclusion vzero vzero_unit]
       change 0 ≤ (beta r).conj W ∧ ((beta r).conj W).trace = 1 ∧ _
-      refine ⟨HermitianMat.conj_nonneg ((beta_positive r).mpr ?_), ?_, embed_zero _⟩
+      refine ⟨HermitianMat.conj_nonneg W ((beta_positive r).mpr ?_), ?_, embed_zero _⟩
       · simpa using hr
       · rw [embed_trace, beta_trace]
     · intro hX
       rw [whole_mixed_exclusion vzero vzero_unit] at hX
-      have hpos : 0 ≤ compress X := HermitianMat.conj_nonneg hX.1
+      have hpos : 0 ≤ compress X := HermitianMat.conj_nonneg W.conjTranspose hX.1
       have hre := reconstruct X hX.1 hX.2.2
       have ht : (compress X).trace = 1 := by
         rw [← embed_trace (compress X), hre]
@@ -421,9 +439,10 @@ private theorem unitary_to (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1) :
     rw [hb 0 (Set.mem_singleton 0)]
     rfl
   apply HermitianMat.ext
+  change U.val * (rankOne vzero).mat * U.val.conjTranspose = (rankOne v).mat
   ext i j
-  simp [HermitianMat.conj_apply_mat, rankOne, vzero, Matrix.mul_apply,
-    Fin.sum_univ_three, Matrix.vecMulVec_apply, hcol]
+  simp [rankOne, vzero, Matrix.mul_apply, Fin.sum_univ_three,
+    Matrix.vecMulVec_apply, hcol, -HermitianMat.mat_apply]
 
 private theorem undo_conj (X : HermitianMat (Fin 3) ℂ)
     (U : Matrix.unitaryGroup (Fin 3) ℂ) :
@@ -436,7 +455,7 @@ private theorem undo_conj (X : HermitianMat (Fin 3) ℂ)
 mixed exclusion, with an affine parameterization injective on all three-space. -/
 theorem native_EB3 : EB3 (cone (d := Fin 3)) unit := by
   intro p
-  obtain ⟨v, hv, hp⟩ := (native_pure_iff p).mp p.property
+  obtain ⟨v, hv, hp⟩ := (native_pure_iff (p : HermitianMat (Fin 3) ℂ)).mp p.property
   obtain ⟨U, hU⟩ := unitary_to v hv
   refine ⟨{
     param := (HermitianMat.conjLinear ℝ U.val).toAffineMap.comp anchorChart.param
@@ -444,9 +463,9 @@ theorem native_EB3 : EB3 (cone (d := Fin 3)) unit := by
     whole := ?_ }⟩
   · intro r s h
     apply anchorChart.injective
+    change (anchorChart.param r).conj U.val = (anchorChart.param s).conj U.val at h
     have hh := congrArg (fun X : HermitianMat (Fin 3) ℂ => X.conj (star U).val) h
-    simpa only [AffineMap.comp_apply, LinearMap.toAffineMap_coe,
-      HermitianMat.conjLinear_apply, undo_conj] using hh
+    simpa only [undo_conj] using hh
   · ext X
     constructor
     · rintro ⟨r, hr, rfl⟩
@@ -456,7 +475,7 @@ theorem native_EB3 : EB3 (cone (d := Fin 3)) unit := by
       rw [← hp, whole_mixed_exclusion v hv]
       change 0 ≤ (anchorChart.param r).conj U.val ∧
         ((anchorChart.param r).conj U.val).trace = 1 ∧ _
-      refine ⟨HermitianMat.conj_nonneg hx.1,
+      refine ⟨HermitianMat.conj_nonneg U.val hx.1,
         (HermitianMat.trace_conj_unitary _ U).trans hx.2.1, ?_⟩
       rw [← hU, HermitianMat.inner_conj_unitary]
       exact hx.2.2
@@ -464,7 +483,7 @@ theorem native_EB3 : EB3 (cone (d := Fin 3)) unit := by
       rw [← hp, whole_mixed_exclusion v hv] at hX
       have hy : X.conj (star U).val ∈ exclusion cone unit (rankOne vzero) := by
         rw [whole_mixed_exclusion vzero vzero_unit]
-        refine ⟨HermitianMat.conj_nonneg hX.1,
+        refine ⟨HermitianMat.conj_nonneg (star U).val hX.1,
           (HermitianMat.trace_conj_unitary _ (star U)).trans hX.2.1, ?_⟩
         have heq : (rankOne v).conj (star U).val = rankOne vzero := by
           rw [← hU, undo_conj]
@@ -474,7 +493,7 @@ theorem native_EB3 : EB3 (cone (d := Fin 3)) unit := by
       refine ⟨r, hr, ?_⟩
       change (anchorChart.param r).conj U.val = X
       rw [hre]
-      exact undo_conj X (star U)
+      simpa only [star_star] using undo_conj X (star U)
 
 /-- A concrete inhabitant of the complete original telescope, together with its
 application to the original contact criterion. All effects and pure labels keep
@@ -482,14 +501,14 @@ their original full domains. -/
 theorem original_family_inhabited :
     ∃ (p : pure (cone (d := Fin 3)) unit)
       (e : HermitianMat (Fin 3) ℂ →ₗ[ℝ] ℝ)
-      (a : FullBall3Chart cone unit p),
+      (a : FullBall3Chart (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ)),
       IsClosed (cone (d := Fin 3) : Set (HermitianMat (Fin 3) ℂ)) ∧
       (∀ X ∈ cone (d := Fin 3), X ≠ 0 → 0 < unit X) ∧
       Submodule.span ℝ (cone (d := Fin 3) : Set (HermitianMat (Fin 3) ℂ)) = ⊤ ∧
       EB3 (cone (d := Fin 3)) unit ∧
-      Function.Injective (fun q : pure (cone (d := Fin 3)) unit => exclusion cone unit q) ∧
-      common cone unit p e ∧ Regular cone unit p ∧
-      ∃ n : NativeChart cone unit p e a, ContactCriterion n := by
+      Function.Injective (fun q : pure (cone (d := Fin 3)) unit => exclusion cone unit (q : HermitianMat (Fin 3) ℂ)) ∧
+      common (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ) e ∧ Regular (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ) ∧
+      ∃ n : NativeChart (cone (d := Fin 3)) unit p e a, ContactCriterion n := by
   let p : pure (cone (d := Fin 3)) unit :=
     ⟨rankOne vzero, (native_pure_iff _).mpr ⟨vzero, vzero_unit, rfl⟩⟩
   let e := effect (rankOne vzero)
@@ -508,9 +527,9 @@ theorem original_family_inhabited :
       (Submodule.subset_span (HermitianMat.posPart_nonneg X))
       (Submodule.subset_span (HermitianMat.negPart_nonneg X))
   have hinj := native_exclusion_injective (d := Fin 3) (by decide)
-  have he : common cone unit p e :=
+  have he : common (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ) e :=
     (whole_common_unique vzero vzero_unit (by decide) e).mpr rfl
-  have hreg : Regular cone unit p := by
+  have hreg : Regular (cone (d := Fin 3)) unit (p : HermitianMat (Fin 3) ℂ) := by
     refine ⟨e, he, ?_⟩
     intro f hf
     exact (whole_common_unique vzero vzero_unit (by decide) f).mp hf
