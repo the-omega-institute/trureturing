@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3183159dfaa6619e3efbbbfdc0e935cd7a2b7172c3a15693112a523672538291
+  normalized_sha256: sha256:3183159dfaa6619e3efbbbfdc0e935cd7a2b7172c3a15693112a523672538291
+cas_ref: sha256:3183159dfaa6619e3efbbbfdc0e935cd7a2b7172c3a15693112a523672538291
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/ZeroReplayOpportunities.finite_replay_first_failure
+    target_statement_id: sha256:0788045995060dbb2b64e339373bc64ba93c4a123bb2d4188d9f44c40871dc6e
+receipts:
+  unresolved_subitems: []
