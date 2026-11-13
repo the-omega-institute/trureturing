@@ -246,6 +246,7 @@ private theorem open_summand (a c : Discriminant D)
 
 variable [∀ c : Discriminant D, Module.Finite ℂ (Multiplicity B c)]
 
+set_option maxHeartbeats 8000000 in
 /-- Actual open partial trace, including arbitrary original oscillator vectors.
 The finite basis is contracted only in Multiplicity B c. No dimension or
 trace of A, P(A,B), or their oscillator factors occurs. -/
@@ -255,86 +256,86 @@ theorem openPartialTrace_classified (a : Discriminant D) (x : Multiplicity A a)
       (∑ c ∈ discriminantSupport hD,
         phase (pairing D a c) * (Module.finrank ℂ (Multiplicity B c) : ℂ)) •
           classified hD A a x v := by
-  set_option maxHeartbeats 8000000 in
-    classical
-    let γ := LatticeChargedQuotientScalar.unitCharacter D hD a
-    have hγ : γ ≠ 0 := LatticeChargedQuotientScalar.unitCharacter_nonzero D hD a
-    let input : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ]
-        P A (targetModule B (dualModule B)) :=
-      (DirectSum.lof ℂ _ (PairSector A (targetModule B (dualModule B))) (a,0)).comp
-        ((TensorProduct.mk ℂ (Carrier D)
-            (PairMultiplicity A (targetModule B (dualModule B)) (a,0))
-          (transportInverse D (representative D (a+0))
-            (LatticeChargedQuotientScalar.carry D hD a 0) v)).comp
-          (TensorProduct.mk ℂ (Multiplicity A a)
-            (Multiplicity (targetModule B (dualModule B)) 0) x))
-    let q : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ] X :=
-      (rightUnit hD A).toLinearMap.comp
-        ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
-          ((openMonodromy A B hD).linearMap.comp input))
-    have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
-        γ⁻¹ • q (cupVector B hD) := by
-      unfold openPartialTrace
-      dsimp only [ModuleHom.comp, LinearMap.comp_apply, ModuleIso.hom,
-        ModuleIso.inv, rightUnitIso]
-      conv_lhs =>
-        arg -1
-        arg -1
-        arg -1
-        arg -1
-        rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
-      have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
-          (transportInverse D (representative D a)
-            (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
-          normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v := by
-        simp only [normalizedPair, LinearMap.comp_apply, LinearMap.flip_apply,
-          TensorProduct.mk_apply, add_zero, carry_zero_right]
-      rw [hp, map_smul, map_smul, map_smul, map_smul, normalizedPair_input,
-        TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
-      rfl
-    have hdim (c : Discriminant D) :
-        (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
-          (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
-            (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i)) =
-          (Module.finrank ℂ (Multiplicity B c) : ℂ) := by
-      rw [← LinearMap.trace_id]
-      rw [LinearMap.trace_eq_matrix_trace ℂ (Module.Basis.ofVectorSpace ℂ (Multiplicity B c))]
-      simp only [Matrix.trace, Matrix.diag_apply, LinearMap.toMatrix_apply,
-        LinearMap.id_apply, Module.Basis.coord_apply]
-    rw [hstart, cupVector_expansion]
-    simp only [map_sum, map_smul]
-    calc
-      _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
-          ∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
-            (phase (pairing D a c) *
-              (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
-                (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i) * γ) •
-                  classified hD A a x v := by
-        congr 1
-        apply Finset.sum_congr rfl
-        intro c hc
-        rw [cupTensor_basis]
-        simp only [map_sum, Finset.smul_sum]
-        apply Finset.sum_congr rfl
-        intro i hi
-        exact open_summand A B hD a c x _ _ v
-      _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
-          (phase (pairing D a c) * (Module.finrank ℂ (Multiplicity B c) : ℂ) * γ) •
-            classified hD A a x v := by
-        congr 1
-        apply Finset.sum_congr rfl
-        intro c hc
-        rw [← Finset.sum_smul, ← Finset.sum_mul, ← Finset.mul_sum, hdim]
-      _ = _ := by
-        rw [Finset.smul_sum, Finset.sum_smul]
-        apply Finset.sum_congr rfl
-        intro c hc
-        rw [smul_smul]
-        congr 1
-        calc
-          _ = (γ⁻¹ * γ) * (phase (pairing D a c) *
-              (Module.finrank ℂ (Multiplicity B c) : ℂ)) := by ring
-          _ = _ := by rw [inv_mul_cancel₀ hγ, one_mul]
+  classical
+  let γ := LatticeChargedQuotientScalar.unitCharacter D hD a
+  have hγ : γ ≠ 0 := LatticeChargedQuotientScalar.unitCharacter_nonzero D hD a
+  let input : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ]
+      P A (targetModule B (dualModule B)) :=
+    (DirectSum.lof ℂ _ (PairSector A (targetModule B (dualModule B))) (a,0)).comp
+      ((TensorProduct.mk ℂ (Carrier D)
+          (PairMultiplicity A (targetModule B (dualModule B)) (a,0))
+        (transportInverse D (representative D (a+0))
+          (LatticeChargedQuotientScalar.carry D hD a 0) v)).comp
+        (TensorProduct.mk ℂ (Multiplicity A a)
+          (Multiplicity (targetModule B (dualModule B)) 0) x))
+  let q : Multiplicity (targetModule B (dualModule B)) 0 →ₗ[ℂ] X :=
+    (rightUnit hD A).toLinearMap.comp
+      ((productHom hD (ModuleHom.id A) (ribbonCap B hD)).linearMap.comp
+        ((openMonodromy A B hD).linearMap.comp input))
+  have hstart : (openPartialTrace A B hD).linearMap (classified hD A a x v) =
+      γ⁻¹ • q (cupVector B hD) := by
+    unfold openPartialTrace
+    dsimp only [ModuleHom.comp, LinearMap.comp_apply, ModuleIso.hom,
+      ModuleIso.inv, rightUnitIso]
+    simp only [LinearEquiv.coe_coe]
+    conv_lhs =>
+      arg -1
+      arg -1
+      arg -1
+      arg -1
+      rw [rightUnit_inverse_elementary (hD := hD) (A := A) a v x]
+    have hp : DirectSum.lof ℂ _ (PairSector A (I D)) (a,0)
+        (transportInverse D (representative D a)
+          (LatticeChargedQuotientScalar.zeroCarry D hD) v ⊗ₜ[ℂ] (x ⊗ₜ[ℂ] eta0 hD)) =
+        normalizedPair A (I D) hD a 0 (x ⊗ₜ[ℂ] eta0 hD) v := by
+      simp only [normalizedPair, LinearMap.comp_apply, LinearMap.flip_apply,
+        TensorProduct.mk_apply, add_zero, carry_zero_right]
+    simp only [hp, map_smul, normalizedPair_input,
+      TensorProduct.map_tmul, restrict_identity, coevaluation_eta0]
+    rfl
+  have hdim (c : Discriminant D) :
+      (∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
+        (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
+          (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i)) =
+        (Module.finrank ℂ (Multiplicity B c) : ℂ) := by
+    rw [Module.finrank_eq_card_basis (Module.Basis.ofVectorSpace ℂ (Multiplicity B c))]
+    simp only [Module.Basis.coord_apply, Module.Basis.repr_self,
+      Finsupp.single_eq_same, Finset.sum_const, Finset.card_univ,
+      nsmul_eq_mul, mul_one]
+  rw [hstart, cupVector_expansion]
+  simp only [map_sum, map_smul]
+  calc
+    _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
+        ∑ i : Module.Basis.ofVectorSpaceIndex ℂ (Multiplicity B c),
+          (phase (pairing D a c) *
+            (Module.Basis.ofVectorSpace ℂ (Multiplicity B c)).coord i
+              (Module.Basis.ofVectorSpace ℂ (Multiplicity B c) i) * γ) •
+                classified hD A a x v := by
+      congr 1
+      apply Finset.sum_congr rfl
+      intro c hc
+      rw [cupTensor_basis]
+      simp only [map_sum, Finset.smul_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      exact open_summand A B hD a c x _ _ v
+    _ = γ⁻¹ • ∑ c ∈ discriminantSupport hD,
+        (phase (pairing D a c) * (Module.finrank ℂ (Multiplicity B c) : ℂ) * γ) •
+          classified hD A a x v := by
+      congr 1
+      apply Finset.sum_congr rfl
+      intro c hc
+      rw [← Finset.sum_smul, ← Finset.sum_mul, ← Finset.mul_sum, hdim]
+    _ = _ := by
+      rw [Finset.smul_sum, Finset.sum_smul]
+      apply Finset.sum_congr rfl
+      intro c hc
+      rw [smul_smul]
+      congr 1
+      calc
+        _ = (γ⁻¹ * γ) * (phase (pairing D a c) *
+            (Module.finrank ℂ (Multiplicity B c) : ℂ)) := by ring
+        _ = _ := by rw [inv_mul_cancel₀ hγ, one_mul]
 
 end OpenDiagram
 
@@ -475,7 +476,7 @@ theorem kirbyProjector_comp (s t : Discriminant D) :
   by_cases hst : s = t
   · subst s
     simp only [if_pos rfl, hk]
-    split_ifs <;> rfl
+    split_ifs with hat <;> simp only [hk, hat, ite_true, ite_false]
   · rw [if_neg hst, hz]
     by_cases hat : a = t
     · subst a
