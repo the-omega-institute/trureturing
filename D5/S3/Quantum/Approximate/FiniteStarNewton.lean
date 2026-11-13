@@ -366,7 +366,7 @@ private lemma orbit_invariant [NormOneClass B] (D : FiniteDiagonal B J)
 
 /-- A dimension-free exact unital star-algebra homomorphism is constructed from
 an all-input small multiplicative defect and an exact star law. -/
-theorem exists_star_hom_close [Nontrivial B] [Nontrivial A]
+theorem exists_star_hom_close [NormOneClass B]
     (D : FiniteDiagonal B J) (f : B →L[ℂ] A) {d : ℝ}
     (hd : 0 ≤ d) (hd' : d ≤ 1 / 32) (hs : PreservesStar f)
     (hg : DefectBound f d) (hu : ‖f 1 - 1‖ ≤ 1 / 4) :
