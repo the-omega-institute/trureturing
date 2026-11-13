@@ -57,11 +57,7 @@ internal sealed class PhaseSynthesisLiftingDocument : IScribeDocumentDefinition
         Rel(Call("d", V("C")), Leq, Pred()),
         Imp(Rel(V("k"), Eq, D(0)), Rel(V("C"), Eq, D(0))),
         Call("par", Call("c", V("B")), V("k")), Call("par", Call("c", V("C")), Pred()));
-    private static Formula CPoly() => Seq(Mathbb, Grp(V("C")), OpenBracket, V("X"), CloseBracket);
     private static Formula Real() => Seq(Mathbb, Grp(V("R")));
-    private static Formula Pair() => Call("pair", V("P"), V("Q"));
-    private static Formula NormIdentity() => Rel(
-        Seq(V("P"), Call("conj", V("P")), Plus, Par(Seq(D(1), Minus, Sq(V("X")))), V("Q"), Call("conj", V("Q"))), Eq, D(1));
 
     private static Formula Statement()
     {
