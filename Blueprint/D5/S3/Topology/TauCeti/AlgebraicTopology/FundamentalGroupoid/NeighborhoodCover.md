@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Topology/TauCeti/AlgebraicTopology/FundamentalGroupoid/Ne
 
 *Formalization.* `D5/S3/Topology/TauCeti/AlgebraicTopology/FundamentalGroupoid/NeighborhoodCover.cechDiagram` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* The Tau Ceti contributors; Kim Morrison; Lean FRO, LLC (2026). *Fundamental-groupoid gluing for arbitrary neighborhood covers*. URL: <https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Glue.lean>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/Topology/TauCeti/AlgebraicTopology/FundamentalGroupoid/Ne
 
 *Formalization.* `D5/S3/Topology/TauCeti/AlgebraicTopology/FundamentalGroupoid/NeighborhoodCover.cechCocone` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* The Tau Ceti contributors; Kim Morrison; Lean FRO, LLC (2026). *Fundamental-groupoid gluing for arbitrary neighborhood covers*. URL: <https://github.com/TauCetiProject/TauCeti/blob/3780371ca1bebf9f1c2bb3d753e4bb56c9526023/TauCeti/AlgebraicTopology/FundamentalGroupoid/Glue.lean>.
 
 *Commentary.*
 
