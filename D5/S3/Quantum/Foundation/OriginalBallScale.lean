@@ -426,4 +426,39 @@ theorem original_chart_independence
 
 #print axioms original_chart_independence
 
+/-- A single intrinsic scale works in every chart of the same full original
+exclusion, on all mixed inputs, with the actual attained sharp budget. -/
+theorem original_common_chart_scale
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hPR : ∀ s t : pure C u, comparison C u s t = comparison C u t s)
+    (p : pure C u) (a : ExclusionChart C u p) :
+    ∃ t : ℝ, 0 < t ∧ t ≤ 1 / 2 ∧
+      ∀ b : ExclusionChart C u p, ∀ v : EuclideanSpace ℝ (Fin b.dim), ‖v‖ = 1 →
+      (BudgetFeasible b v (1 / (2*t)) ∧
+        (∀ M, BudgetFeasible b v M → 1 / (2*t) ≤ M) ∧
+        extensionBudget b v = 1 / (2*t)) ∧
+      ∀ q : pure C u, b.param v = q → ∃ e : V →ₗ[ℝ] ℝ,
+        confirms C u q e ∧ (∀ z, e (b.param z) = 1-t+t*⟪v,z⟫) ∧
+        ∀ z, ‖z‖ ≤ 1 → comparison C u q (b.param z) = 1-t+t*⟪v,z⟫ := by
+  obtain ⟨t, ht, hth, _, hba⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p a
+  refine ⟨t, ht, hth, ?_⟩
+  intro b v hv
+  obtain ⟨tb, htb, _, hsb, hbb⟩ := original_scale_and_sharp_budget hc hs hg hB hPR p b
+  obtain ⟨t0, _, _, hca, hcb⟩ := original_chart_independence hc hs hg hB hPR p a b
+  letI : Nonempty (Fin a.dim) := ⟨⟨0, a.dim_pos⟩⟩
+  obtain ⟨v0, hv0⟩ := exists_norm_eq (EuclideanSpace ℝ (Fin a.dim)) (by norm_num : (0 : ℝ) ≤ 1)
+  have heqB : 1 / (2*tb) = 1 / (2*t) := calc
+    _ = extensionBudget b v := (hbb v hv).2.2.symm
+    _ = 1 / (2*t0) := hcb v hv
+    _ = extensionBudget a v0 := (hca v0 hv0).symm
+    _ = 1 / (2*t) := (hba v0 hv0).2.2
+  have heq : tb = t := by
+    have hh := (div_eq_div_iff (by positivity : 2*tb ≠ 0) (by positivity : 2*t ≠ 0)).mp heqB
+    nlinarith
+  subst tb
+  exact ⟨hbb v hv, hsb v hv⟩
+
+#print axioms original_common_chart_scale
+
 end D5.S3.Quantum.Foundation.OriginalBallScale

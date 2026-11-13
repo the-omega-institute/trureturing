@@ -51,7 +51,7 @@ theorem original_row_saturation
   obtain ⟨eq, hqunique, hL, hLhalf, hform, hanti, horth⟩ :=
     original_neighbor_support hc hs hg hB hInj p hep k q v hv hq
   have heq : eq ∈ fullZeroConfirmers C u q := (hqunique eq).mpr rfl
-  obtain ⟨eq', huniq', hedge⟩ := original_whole_edge hc hs hg hB hInj p hep k q v hv hq
+  obtain ⟨eq', huniq', hedge⟩ := original_fixed_edge hc hs hg hB hInj p hep k q v hv hq
   have heq' : eq' = eq := (hqunique eq').mp ((huniq' eq').mpr rfl)
   subst eq'
   have hqD : (q : V) ∈ exclusion C u p := hq ▸ SingleLabelNormalBody.chart_mem a hv.le
@@ -66,13 +66,9 @@ theorem original_row_saturation
       csInf_le ⟨0, by rintro r ⟨g, hg', rfl⟩; exact (hg'.1 s (pure_mem s).1).1⟩ ⟨f, hf, rfl⟩
     apply le_antisymm (le_min (hle ep hep.1) (hle (u - eq) hcq))
     obtain ⟨e, he, heq0, hes⟩ := hEdge s
-    have hecomp : proper C u (u - e) := by
-      intro x hx; have hh := he.1 x hx
-      constructor <;> simp only [LinearMap.sub_apply] <;> linarith
-    obtain ⟨t, ht, htform⟩ := (hedge (u - e)).mp
-      ⟨hecomp, by simp [he.2, (pure_mem p).2], by simp [heq0, (pure_mem q).2]⟩
+    obtain ⟨t, ht, htform⟩ := (hedge e).mp ⟨he.1, he.2, heq0⟩
     have hread := congrArg (fun f : V →ₗ[ℝ] ℝ => f s) htform
-    change u s - e s = (1-t) * (u s - ep s) + t * eq s at hread
+    change e s = (1-t) * ep s + t * (u s - eq s) at hread
     rw [(pure_mem s).2] at hread
     rw [← hes]
     simp only [LinearMap.sub_apply, (pure_mem s).2]

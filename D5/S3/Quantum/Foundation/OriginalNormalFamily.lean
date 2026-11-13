@@ -290,8 +290,14 @@ private theorem coordinateMap_inner {p : pure C u} {a : ExclusionChart C u p}
 /-- Coordinate reconstruction is on every point of the entire affine chart and on p. -/
 theorem original_coordinate_map {p : pure C u} {a : ExclusionChart C u p}
     {ep : V →ₗ[ℝ] ℝ} (k : Coordinates p a ep) :
-    coordinateMap k p = 0 ∧ ∀ z : chartSpace a, coordinateMap k (a.param z) = z := by
-  constructor
+    coordinateMap k p = 0 ∧
+    (∀ z : chartSpace a, coordinateMap k (a.param z) = z) ∧
+    (∀ v : chartSpace a, ∃ f : normalSpan C p,
+      ∀ x : V, ⟪v, coordinateMap k x⟫ = f.val x) ∧
+    ∀ H : V →ₗ[ℝ] chartSpace a,
+      (∀ v : chartSpace a, ∃ f : normalSpan C p, ∀ x : V, ⟪v, H x⟫ = f.val x) →
+      (∀ z : chartSpace a, H (a.param z) = z) → H = coordinateMap k := by
+  refine ⟨?_, ?_, ?_, ?_⟩
   · apply ext_inner_left ℝ
     intro v
     rw [coordinateMap_inner, span_vanishes (directionLift k v), inner_zero_right]
@@ -299,6 +305,18 @@ theorem original_coordinate_map {p : pure C u} {a : ExclusionChart C u p}
     apply ext_inner_left ℝ
     intro v
     rw [coordinateMap_inner, directionLift_value]
+  · intro v
+    exact ⟨directionLift k v, coordinateMap_inner k v⟩
+  · intro H hH hchart
+    ext x
+    apply ext_inner_left ℝ
+    intro v
+    obtain ⟨f, hf⟩ := hH v
+    have hfd : f = directionLift k v := by
+      apply k.equivalence.injective
+      ext z
+      rw [k.restriction, k.restriction, directionLift_value, ← hf (a.param z), hchart z]
+    rw [hf x, hfd, coordinateMap_inner]
 
 /-- The whole original edge consists of the full interval of original functionals.
 The interval parameter is an actual convex coefficient, on all of V. -/
@@ -379,6 +397,39 @@ theorem original_whole_edge
     · simp [hep.2 _ hqD, heq.1.2, (pure_mem q).2]
 
 #print axioms original_whole_edge
+
+/-- The complete fixed edge J(p,q), obtained by complementation on all of V. -/
+theorem original_fixed_edge
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hInj : Function.Injective (fun q : pure C u => exclusion C u q))
+    (p : pure C u) {a : ExclusionChart C u p} {ep : V →ₗ[ℝ] ℝ}
+    (hep : ep ∈ fullZeroConfirmers C u p) (k : Coordinates p a ep)
+    (q : pure C u) (v : chartSpace a) (hv : ‖v‖ = 1) (hq : a.param v = q) :
+    ∃ eq : V →ₗ[ℝ] ℝ, (∀ e, e ∈ fullZeroConfirmers C u q ↔ e = eq) ∧
+      ∀ e : V →ₗ[ℝ] ℝ, (proper C u e ∧ e p = 1 ∧ e q = 0) ↔
+        ∃ s : ℝ, s ∈ Icc (0 : ℝ) 1 ∧ e = (1-s) • ep + s • (u-eq) := by
+  obtain ⟨eq, huniq, hedge⟩ := original_whole_edge hc hs hg hB hInj p hep k q v hv hq
+  have hcompl (f : V →ₗ[ℝ] ℝ) (hf : proper C u f) : proper C u (u-f) := by
+    intro x hx
+    have hh := hf x hx
+    constructor <;> simp only [LinearMap.sub_apply] <;> linarith
+  refine ⟨eq, huniq, ?_⟩
+  intro e
+  constructor
+  · rintro ⟨he, hep1, heq0⟩
+    obtain ⟨s, hs', hform⟩ := (hedge (u-e)).mp
+      ⟨hcompl e he, by simp [hep1, (pure_mem p).2], by simp [heq0, (pure_mem q).2]⟩
+    refine ⟨s, hs', ?_⟩
+    have hh : u-(u-e) = (1-s) • ep + s • (u-eq) := by rw [hform]; module
+    simpa using hh
+  · rintro ⟨s, hs', he⟩
+    have hform : u-e = (1-s) • (u-ep) + s • eq := by rw [he]; module
+    have hh := (hedge (u-e)).mpr ⟨s, hs', hform⟩
+    refine ⟨?_, ?_, ?_⟩
+    · simpa using hcompl (u-e) hh.1
+    · have hp' := hh.2.1; simp only [LinearMap.sub_apply, (pure_mem p).2] at hp'; linarith
+    · have hq' := hh.2.2; simp only [LinearMap.sub_apply, (pure_mem q).2] at hq'; linarith
 
 /-- The original pure-row identity pays whole-cone positivity before any upper
 bound is used. The row premise is the protected producer's required join. -/
@@ -488,7 +539,10 @@ theorem pure_row_positive_bridge
     change 0 ≤ (1 / 2 : ℝ) * normalForm k 1 v s ∧
       (1 / 2 : ℝ) * normalForm k 1 v s ≤ 1
     constructor <;> linarith [hpos s (pure_mem s).1]
-  have hbp : b p = 0 := by simp [b, normalForm, span_vanishes]
+  have hbp : b p = 0 := by
+    have hvp : (directionLift k v).val p = 0 := by
+      rw [← coordinateMap_inner, (original_coordinate_map k).1, inner_zero_right]
+    simp [b, normalForm, span_vanishes, hvp]
   have hbq : b q = 1 := by
     rw [← hq]
     norm_num [b, normalForm_chart hep k, real_inner_self_eq_norm_sq, hv]
