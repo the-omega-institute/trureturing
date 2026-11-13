@@ -4,10 +4,11 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Integer-induced five-window tasks have joint Hankel rank and attained minimum dimension four in characteristic two. -/
+   digest: Joint five-window Hankel rank and minimum dimension are four in characteristic two. -/
 
 import D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+
+/-! # Characteristic-two joint rank of the integer-induced five-window task -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -58,7 +59,8 @@ def fourDimensional : WordRepresentation K Window (BlockState K) (K × K) where
 The first integer composition coordinate is discarded only in this embedding. -/
 def embed : RawState 0 → BlockState K
   | none => 0
-  | some (s, x) => if s then ![0, 0, (x.2 : K), 1] else ![(x.2 : K), 1, 0, 0]
+  | some (s, x) =>
+    if s then ![0, 0, Int.cast (x.2 : ℤ), 1] else ![Int.cast (x.2 : ℤ), 1, 0, 0]
 
 /-- Select one of the two output channels. -/
 def channel (i : Fin 2) : (K × K) →ₗ[K] K :=
@@ -117,7 +119,8 @@ theorem result [CharP K 2] :
         4 ≤ Module.finrank K V) := by
   classical
   have htwo : (2 : K) = 0 := CharP.cast_eq_zero K 2
-  have clock_second (x : ℤ × ℤ) : ((clock x).2 : K) = (x.2 : K) := by
+  have clock_second (x : ℤ × ℤ) :
+      (Int.cast ((clock (m := 0) x).2 : ℤ) : K) = (x.2 : K) := by
     simp only [clock, step, Int.cast_add]
     linear_combination ((x.1 : K) + (x.2 : K)) * htwo
   have commute (q : RawState 0) (b : Window) :
@@ -146,7 +149,7 @@ theorem result [CharP K 2] :
       blockOutput K (embed K q) =
         match rawOutput q with
         | none => (0, 0)
-        | some z => (1, (z : K)) := by
+        | some z => (1, Int.cast (z : ℤ)) := by
     cases q with
     | none => simp [blockOutput, embed, rawOutput]
     | some q =>
@@ -159,8 +162,10 @@ theorem result [CharP K 2] :
     change blockOutput K
       (wordMap (blockTransition K) w (embed K (some (false, (0, 0))))) = _
     rw [simulation, observe]
-    cases h : task 0 w <;> simp [integerFieldTask, integerTask, task,
-      DFAO.evalOutput, DFAO.eval, rawMachine] at h ⊢
+    change (match task 0 w with
+      | none => (0, 0)
+      | some z => (1, Int.cast (z : ℤ))) = _
+    cases h : task 0 w <;> simp [integerFieldTask, integerTask, h]
   have residual_factor (u : List Window) :
       jointResidual K (integerFieldTask K) u =
         futureObservation K (fourDimensional K)
@@ -178,7 +183,7 @@ theorem result [CharP K 2] :
       (residual_factor u).symm⟩
   have finite : FiniteDimensional K (jointHankelSpace K (integerFieldTask K)) :=
     Submodule.finiteDimensional_of_le contained
-  letI := finite
+  haveI := finite
   have dimension_upper : Module.finrank K (jointHankelSpace K (integerFieldTask K)) ≤ 4 := by
     calc
       _ ≤ Module.finrank K (LinearMap.range (futureObservation K (fourDimensional K))) :=
@@ -191,10 +196,10 @@ theorem result [CharP K 2] :
     fin_cases i <;> fin_cases j <;>
       norm_num [responseMinor, jointResidual, prefixes, tests, channel, ← upper,
         wordBehavior, fourDimensional, wordMap, wordOperator, blockTransition,
-        blockUpdate, blockOutput, htwo]
+        blockUpdate, blockOutput] <;> exact htwo
   have detValue : (responseMinor K).det = 1 := by
     rw [minor]
-    norm_num [Matrix.det_fin_four]
+    norm_num [Matrix.det_succ_row_zero, Matrix.det_fin_three, Fin.sum_univ_succ]
   have columns : LinearIndependent K (responseMinor K).col :=
     Matrix.linearIndependent_cols_of_det_ne_zero (by rw [detValue]; exact one_ne_zero)
   let sample : ((List Window × Fin 2) → K) →ₗ[K] (Fin 4 → K) :=
