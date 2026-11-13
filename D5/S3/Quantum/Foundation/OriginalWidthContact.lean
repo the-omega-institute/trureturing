@@ -96,7 +96,7 @@ private theorem joint_contact_exists {C : PointedCone ℝ V} {u b : V →ₗ[ℝ
   rw [hy.2] at hby
   exact ⟨x, hx, y, hy, by linarith, by linarith, hdiff⟩
 
-private theorem top_exposed {C : PointedCone ℝ V} {u f : V →ₗ[ℝ] ℝ}
+theorem top_exposed {C : PointedCone ℝ V} {u f : V →ₗ[ℝ] ℝ}
     (hf : proper C u f) : IsExposed ℝ (base C u) {x ∈ base C u | f x = 1} := by
   rintro ⟨z, hz, hfz⟩
   refine ⟨f.toContinuousLinearMap, Set.ext fun x => ?_⟩
@@ -117,7 +117,7 @@ private theorem top_convex (C : PointedCone ℝ V) (u f : V →ₗ[ℝ] ℝ) :
     Convex ℝ {x ∈ base C u | f x = 1} :=
   (base_convex C u).inter ((convex_singleton (1 : ℝ)).linear_preimage f)
 
-private theorem top_subsingleton_of_zero_exclusion
+theorem top_subsingleton_of_zero_exclusion
     {C : PointedCone ℝ V} {u f : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
