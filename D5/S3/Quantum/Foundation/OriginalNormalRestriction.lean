@@ -16,11 +16,12 @@ the entire affine chart, rather than evaluation at finitely many points. -/
 
 noncomputable section
 open Set
-open scoped RealInnerProductSpace
+open scoped RealInnerProductSpace Pointwise
 
 namespace D5.S3.Quantum.Foundation.OriginalNormalRestriction
 
-open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces SingleLabelNormalBody OrthogonalJointCompletion
+open CircuitBalancedConfirmation FacetZeroGluing ExclusionBallFaces
+open SingleLabelNormalBody OrthogonalJointCompletion
 
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   [FiniteDimensional ℝ V] {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
@@ -32,8 +33,7 @@ private theorem interior_add_closed {W : Type*} [NormedAddCommGroup W]
     rintro _ ⟨z, hz, rfl⟩
     exact hadd z hz y hy
   apply interior_mono hsub
-  rw [← (Homeomorph.addRight y).image_interior]
-  exact ⟨x, hx, rfl⟩
+  exact (Homeomorph.addRight y).isOpenMap.image_interior_subset S ⟨x, hx, rfl⟩
 
 private theorem interior_smul_closed {W : Type*} [NormedAddCommGroup W]
     [NormedSpace ℝ W] {S : Set W}
@@ -47,6 +47,7 @@ private theorem interior_smul_closed {W : Type*} [NormedAddCommGroup W]
   rw [interior_smul₀ ht.ne']
   exact ⟨x, hx, rfl⟩
 
+set_option maxHeartbeats 800000 in
 /-- The full original 120.7/8 unit.  `N` contains all original positive
 annihilators and `R` is the actual affine restriction.  The singleton premise
 concerns the whole confirming-effect fiber, independently of label injectivity.
@@ -135,7 +136,7 @@ theorem original_normal_restriction
     refine ⟨⟨b', Submodule.subset_span hbN⟩, hbN, ?_⟩
     apply AffineMap.ext_on hballspan
     intro z hz
-    simpa [R, affine, add_comm] using hformula z hz
+    simpa [R, affine, b', add_comm] using hformula z hz
   obtain ⟨b0, hb0, hb0R⟩ := hlift 0 (by simpa using hrho.le)
   have hb0val (z : E) : b0.val (a.param z) = 1 := by
     have h := congrArg (fun f : E →ᵃ[ℝ] ℝ => f z) hb0R
@@ -156,15 +157,15 @@ theorem original_normal_restriction
     refine ⟨t • b + (f 0 - t) • b0, ?_⟩
     rw [map_add, map_smul, map_smul, hbR, hb0R]
     ext z
-    have hvz : ⟪v, z⟫ = f.linear z := InnerProductSpace.toDual_symm_apply _ _
+    have hvz : ⟪v, z⟫ = f.linear z := InnerProductSpace.toDual_symm_apply
     have hfz := congrFun f.decomp z
-    simp only [AffineMap.coe_add, Pi.add_apply, AffineMap.coe_smul, Pi.smul_apply,
-      smul_eq_mul, affine, AffineMap.const_apply, AffineMap.coe_linearMap,
-      LinearMap.coe_coe, InnerProductSpace.toDual_apply, inner_smul_left,
-      inner_zero_left] at *
+    change t * (⟪t⁻¹ • v, z⟫ + 1) + (f 0 - t) * (⟪(0 : E), z⟫ + 1) = f z
+    simp only [inner_smul_left, inner_zero_left, zero_add, starRingEnd_apply, star_trivial]
     rw [hvz]
+    change f z = f.linear z + f 0 at hfz
+    rw [hfz]
     field_simp
-    linarith
+    <;> ring
   have hdim : Module.finrank ℝ (E →ᵃ[ℝ] ℝ) = 4 := by
     rw [AffineMap.finrank_eq]
     simp [E, ha]
@@ -187,6 +188,7 @@ theorem original_normal_restriction
     refine ⟨⟨?_, ?_⟩, ?_⟩
     · intro x hx
       have hx' := hproper x hx
+      change 0 ≤ f x ∧ f x ≤ u x at hx'
       change 0 ≤ u x - f x ∧ u x - f x ≤ u x
       constructor <;> linarith
     · simp [hf.2, (pure_mem p).2]
@@ -221,11 +223,11 @@ theorem original_normal_restriction
   obtain ⟨x, hx⟩ := hSconv.interior_nonempty_iff_affineSpan_eq_top.mpr haffS
   let y := x + b0
   have hy : y ∈ interior S := interior_add_closed hSadd hx hb0
-  have hyN : y ∈ S := interior_subset hy
   have hcC : a.param 0 ∈ C :=
     (show a.param 0 ∈ exclusion C u p from a.whole ▸ mem_image_of_mem a.param (by simp)).1.1
   have hyc : 0 < y.val (a.param 0) := by
     have hxc := (interior_subset hx : x ∈ S).1 _ hcC
+    change 0 ≤ x.val (a.param 0) at hxc
     change 0 < x.val (a.param 0) + b0.val (a.param 0)
     rw [hb0val]
     linarith
@@ -240,16 +242,17 @@ theorem original_normal_restriction
   have hzR : R z = AffineMap.const ℝ E alpha := by
     rw [map_add, map_smul, hbR]
     ext w
-    have hvw : ⟪v, w⟫ = (R y).linear w := InnerProductSpace.toDual_symm_apply _ _
+    have hvw : ⟪v, w⟫ = (R y).linear w := InnerProductSpace.toDual_symm_apply
     have hyw := congrFun (R y).decomp w
-    simp only [AffineMap.coe_add, Pi.add_apply, AffineMap.coe_smul, Pi.smul_apply,
-      smul_eq_mul, affine, AffineMap.const_apply, AffineMap.coe_linearMap,
-      LinearMap.coe_coe, InnerProductSpace.toDual_apply, inner_smul_left,
-      inner_neg_left] at *
+    change (R y) w + t * (⟪t⁻¹ • (-v), w⟫ + 1) = alpha
+    simp only [inner_smul_left, inner_neg_left, starRingEnd_apply, star_trivial]
     rw [hvw]
-    dsimp [alpha, R] at *
+    change (R y) w = (R y).linear w + (R y) 0 at hyw
+    rw [hyw]
+    change (R y).linear w + y.val (a.param 0) +
+      t * (t⁻¹ * -(R y).linear w + 1) = y.val (a.param 0) + t
     field_simp
-    linarith
+    <;> ring
   let g := alpha⁻¹ • z
   have hgRI : g ∈ interior S := interior_smul_closed hSsmul hz (inv_pos.mpr halpha)
   have hgR : R g = AffineMap.const ℝ E 1 := by
@@ -258,7 +261,7 @@ theorem original_normal_restriction
     simp [halpha.ne']
   refine ⟨honto, ?_, hfiber, ⟨g, hgRI, hri g hgRI, hgR⟩, ?_⟩
   · rw [← hdim]
-    exact LinearMap.finrank_le_finrank_of_surjective R honto
+    exact LinearMap.finrank_le_finrank_of_surjective honto
   · intro ep hep
     have hsingleton (f : L) (hf : f ∈ S) (hfR : R f = AffineMap.const ℝ E 1) :
         f.val = (u - ep).toContinuousLinearMap := by
@@ -273,10 +276,11 @@ theorem original_normal_restriction
     have hgval := hsingleton g (interior_subset hgRI) hgR
     have hinj : Function.Injective R := by
       apply LinearMap.ker_eq_bot.mp
-      apply Submodule.eq_bot_iff.mpr
+      apply bot_unique
       intro k hk
+      change k = 0
       have hkR : R k = 0 := hk
-      obtain ⟨epsilon, hepsilon, heball⟩ := Metric.mem_interior_iff.mp hgRI
+      obtain ⟨epsilon, hepsilon, heball⟩ := Metric.mem_nhds_iff.mp (mem_interior_iff_mem_nhds.mp hgRI)
       let t : ℝ := epsilon / (2 * (‖k‖ + 1))
       have ht : 0 < t := div_pos hepsilon (by positivity)
       have hsmall : ‖t • k‖ < epsilon := by
@@ -284,6 +288,7 @@ theorem original_normal_restriction
         dsimp [t]
         rw [div_mul_eq_mul_div]
         apply (div_lt_iff₀ (by positivity : 0 < 2 * (‖k‖ + 1))).mpr
+        change epsilon * ‖k‖ < epsilon * (2 * (‖k‖ + 1))
         nlinarith [norm_nonneg k]
       have hplus : g + t • k ∈ S := heball (by simpa [dist_eq_norm] using hsmall)
       have hminus : g - t • k ∈ S := heball (by simpa [dist_eq_norm] using hsmall)
@@ -291,12 +296,12 @@ theorem original_normal_restriction
       have hmR : R (g - t • k) = AffineMap.const ℝ E 1 := by simp [hgR, hkR]
       have hp := hsingleton _ hplus hpR
       have hm := hsingleton _ hminus hmR
+      have heq : g + t • k = g - t • k := Subtype.val_injective (hp.trans hm.symm)
       have hzero : (2 * t) • k = 0 := by
-        apply Subtype.val_injective
-        have hsub := congrArg (fun f : V →L[ℝ] ℝ => f - (g - t • k).val) hp
-        rw [← hm] at hsub
-        simpa [two_smul, add_smul, sub_eq_add_neg, add_assoc, add_left_comm, add_comm] using hsub
-      exact (smul_eq_zero.mp hzero).resolve_left (by positivity)
+        calc
+          (2 * t) • k = (g + t • k) - (g - t • k) := by module
+          _ = 0 := sub_eq_zero.mpr heq
+      exact (smul_eq_zero.mp hzero).resolve_left (ne_of_gt (mul_pos (by norm_num) ht))
     let e := LinearEquiv.ofBijective R ⟨hinj, honto⟩
     refine ⟨g, e, hgval, hgRI, hri g hgRI, rfl, ⟨hinj, honto⟩, ?_⟩
     exact e.finrank_eq.trans hdim
