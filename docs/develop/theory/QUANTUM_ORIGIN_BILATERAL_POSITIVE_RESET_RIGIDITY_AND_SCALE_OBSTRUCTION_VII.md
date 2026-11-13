@@ -1051,4 +1051,611 @@ $n\ge15$ for $N\ge4$, consistent with all the summand bounds.
 These standard representation facts are intermediate control
 calculations, not an additional classification theorem. ∎
 
+## 104. The closed affine complex orbit and secant defect
+
+**Definition 104.1 (Auxiliary algebraic carriers).** Complexify the
+original $V$ and embed its original affine chart $u=1$ in
+$\mathbb P(V_{\mathbb C})=\mathbb P^n_{\mathbb C}$. Let $Y$ be
+the reduced complex affine Zariski closure of $P$, and $X$ its
+reduced projective closure. Let $G_{\rm alg}$ be the actual
+complex algebraic image of the complexification of $J=H^0$.
+Use complex-bilinear extension in
+
+$$
+h(v)=Q_0(v-u(v)b,v-u(v)b)-R^2u(v)^2,
+\qquad h(v)=\eta(v,v).
+\tag{104.1}
+$$
+
+The real quadratic form $h$ has signature $(n,1)$. Denote the
+projective secant variety by $SX$ and set
+$\delta(X)=2m+1-\dim_{\mathbb C}SX$. None of these auxiliary
+complex points or group elements is an additional original state
+or legal control.
+
+**Theorem 104.2 (Exact real locus and boundary).** One has
+$Y=G_{\rm alg}p$, a closed smooth irreducible affine homogeneous
+variety of complex dimension $m$, and $Y(\mathbb R)=P$.
+The variety $X$ is irreducible, nondegenerate, of dimension $m$,
+with
+
+$$
+X\cap\{u\ne0\}=Y,\qquad X(\mathbb R)=P,\qquad
+\operatorname{Sing}X\subset X\cap\{u=0\}.
+\tag{104.2}
+$$
+
+Every point at infinity is nonreal; projective smoothness is not
+concluded.
+
+Proof. Reuse $J$ transitivity from VI89.3. The compact real
+algebraic action and reductive complexification are the compact-group
+facts in [Schwarz §5][Schwarz]. They give Zariski density of $J$
+in its connected complex algebraic image $G_{\rm alg}$. Extend
+the invariant real product
+$\langle tb+w,t'b+w'\rangle=tt'+Q_0(w,w')$ on $V$ to a
+Hermitian product on $V_{\mathbb C}$. For
+$A\in\operatorname{Lie}J$, both $Ap,p$ are real and $A$ is
+skew-adjoint. Thus $\langle Ap,p\rangle=0$. The moment-map
+formula $\mu(p)(A)=\langle Ap,p\rangle/(2i)$ vanishes.
+The Kempf–Ness closed-orbit criterion in
+[Losev, Theorem 4][Losev] now gives that $G_{\rm alg}p$ is closed.
+It is not a replacement by a whole invariant-quotient fiber.
+
+If a polynomial vanishes on $P=Jp$, its pullback along
+$g\mapsto gp$ vanishes on Zariski-dense $J$ and hence on
+$G_{\rm alg}$. Thus the closed orbit is exactly $Y$.
+Connectedness gives irreducibility, and characteristic-zero
+algebraic orbits are smooth. Its tangent at $p$ is
+$(\operatorname{Lie}J\,p)\otimes_{\mathbb R}\mathbb C$, so
+its complex dimension is the real orbit dimension $m$.
+
+For a real affine $x\notin P$, the compact orbits $Jx$ and $P$
+are disjoint. On their union, approximate the continuous function
+zero on $P$ and one on $Jx$ by a real polynomial within $1/4$.
+Haar-average it; averaging its finitely many coefficients still
+gives a polynomial, invariant and constant on each orbit, with
+distinct orbit values. Subtract its value on $P$. The resulting
+polynomial vanishes on $P$ and not at $x$. Consequently
+$Y(\mathbb R)=P$.
+
+The homogeneous $h$ vanishes on the pure sphere and therefore on
+$X$. A real projective point there with $u(v)=0$ would satisfy
+$Q_0(v,v)=0$, impossible for $0\ne v\in W$. Closedness of $Y$
+in the affine chart gives (104.2); smoothness of that chart places
+all possible singularities at infinity. Finally
+$\operatorname{span}_{\mathbb R}P=V$ gives projective
+nondegeneracy. The common pure-orbit radius in (104.1) has not
+equalized the different face radii. ∎
+
+**Theorem 104.3 (Exact complex secant dimension).**
+$\dim_{\mathbb C}SX=2m-1$ and $\delta(X)=2$, including the
+ambient-filling whole-three-ball case.
+
+Proof. On the smooth irreducible variety
+
+$$
+\mathcal D=((Y\times Y)\setminus\Delta)
+ \times(\mathbb C\setminus\{0,1\}),\qquad
+\beta(x,y,t)=tx+(1-t)y,
+\tag{104.3}
+$$
+
+of dimension $2m+1$, the positive real source
+$\mathcal D_+=((P\times P)\setminus\Delta)\times(0,1)$ is
+Zariski dense. Products of the dense real form remain dense,
+deleting the diagonal preserves density, and a real interval is
+dense in the complex line. At these real points $d\beta$ is the
+complexification of the real binary differential of VI91.3.
+Its maximum rank is exactly $2m-1$. Therefore
+$\bigwedge^{2m}d\beta$ vanishes identically by density, whereas
+$\bigwedge^{2m-1}d\beta$ is nonzero at a supplied maximum-rank
+point. In characteristic zero the generic differential rank equals
+the dimension of the image closure: the function-field rank is
+the transcendence degree, by separability and differentials.
+Secants from the dense affine chart, with the two endpoint values
+of the parameter deleted, are dense in $SX$. Its dimension is
+therefore $2m-1$. The same density argument shows that the positive
+binary image is Zariski dense in $SX$. This uses maximum real
+rank, not constant rank everywhere or a global fiber bundle. ∎
+
+## 105. Actual face quadrics and general complex pairs
+
+**Proposition 105.1 (Every actual face quadric).** For every original
+pair face $F$, put $A_F=\operatorname{span}_{\mathbb R}F$.
+Its dimension is four, and its whole boundary complexifies to the
+smooth irreducible quadric surface
+
+$$
+\begin{aligned}
+Q_F&=\{[v]\in\mathbb P((A_F)_{\mathbb C}):f_F(v)=0\}
+ \subset X,\\
+f_F(v)&=Q_0(v-u(v)c_F,v-u(v)c_F)-\rho_F^2u(v)^2
+ =h|_{A_F}(v).
+\end{aligned}
+\tag{105.1}
+$$
+
+Proof. Since $u(c_F)=1$, $u(L_F)=0$, one has
+$A_F=\mathbb Rc_F\oplus L_F$. The equation in these coordinates
+is a positive three-dimensional form minus $\rho_F^2$ times
+the square of the first coordinate, so has rank four. Its real
+sphere consists entirely of original pures and is Zariski dense
+in the complex quadric: at a real smooth point its local real
+form has the full real dimension two, and the holomorphic identity
+principle applies. Thus every equation of $X$ vanishes on $Q_F$.
+The orthogonality and radius identity in (97.2) give
+$h|_{A_F}=f_F$ by direct expansion. ∎
+
+**Theorem 105.2 (A genuine general-pair transfer).** A nonempty
+complex Zariski open in $(X\times X)\setminus\Delta$ consists
+of pairs lying on a smooth quadric surface contained in $X$.
+Together with Theorem 104.3 this makes $X$ an LQEL-variety of
+type two in [Russo, Definition 1.1][Russo]. It does not make $X$
+an LQEL-manifold.
+
+Proof. On $\operatorname{Gr}(4,V_{\mathbb C})$ let $\mathcal S$
+be the tautological rank-four bundle. In
+$\mathbb P(\operatorname{Sym}^2\mathcal S^*)$ take the open
+of nondegenerate quadratic forms. Containment of their quadrics
+in $X$ is a finite-type condition. In fact, choose finitely many
+homogeneous generators $g_i$ of $I(X)$. For a generator of degree
+$d_i\ge2$, divisibility of $g_i|_A$ by $f$ is the vanishing
+of its class in the quotient of the constant-rank injective
+multiplication map
+
+$$
+\operatorname{Sym}^{d_i-2}\mathcal S^*\otimes\mathcal O(-1)
+\xrightarrow{\ \cdot f\ }
+\operatorname{Sym}^{d_i}\mathcal S^*.
+\tag{105.2}
+$$
+
+These are closed conditions on the open parameter space; degree-one
+restrictions must be zero. The homogeneous ideal of a smooth
+quadric hypersurface is generated by its quadratic equation, so
+the conditions are also sufficient.
+
+Incidence with two distinct points on each allowed quadric gives
+a finite-type morphism to $(X\times X)\setminus\Delta$.
+[Chevalley's theorem, Stacks tag 054K][Stacks] makes its image
+constructible. By Proposition 105.1 it contains every distinct
+original real pure pair, a dense subset. A dense constructible
+subset of this irreducible Noetherian target contains a nonempty
+open set. This proves the general-complex-pair assertion, not just
+one real fiber. Theorem 104.3 gives the required quadric dimension
+$\delta=2$, so Russo's equivalent general-pair definition applies.
+No proper parameter map, smooth real face family or projective
+smoothness has been assumed. ∎
+
+**Proposition 105.3 (The real-visible entry component).** For every
+positive binary point $z=tp+(1-t)q$, $p\ne q$, $0<t<1$, its
+actual minimal face $F_z$ is $F(p,q)$. Its positive decomposition
+first endpoints fill $\partial F_z$, and $Q_{F_z}$ is contained
+in the reduced ordinary complex entry locus $\Sigma_z(X)$.
+On the generic equidimensional entry open it is a component.
+
+Proof. VI91.3 gives the face, its relative interior point $z$,
+and all its positive binary decompositions, with first-endpoint
+space the whole $S^2$. Their complex closure is $Q_{F_z}$.
+For a general point on this quadric, the line through $z$ meets
+it in a second distinct point, since $z$ is inside its span and
+outside its equation. Hence all of $Q_{F_z}$ is in $\Sigma_z$.
+The preliminary entry-dimension statement in [Russo §1][Russo]
+gives a nonempty open in $SX\setminus X$ with reduced entry
+loci equidimensional of dimension $\delta=2$. A closed irreducible
+surface there is a component. The positive binary image is dense
+by Theorem 104.3, so it meets that open. This is a visible-component
+statement only; identifying every component requires §106. ∎
+
+## 106. Full real entries and odd generic component count
+
+**Definition 106.1 (Ordinary entries, reflection and incidence).** Set
+
+$$
+S_2^+=\{tp+(1-t)q:p\ne q\in P,\ 0<t<1\}.
+\tag{106.1}
+$$
+
+For $z\in SX\setminus X$, let $\Sigma_z$ be the reduced Zariski
+closure of all ordinary complex secant endpoints: distinct
+$x,y\in X$ with $z$ on their projective line and different from
+both endpoints. For $h(z)\ne0$ define the linear involution
+
+$$
+R_z(v)=v-\frac{2\eta(v,z)}{h(z)}z.
+\tag{106.2}
+$$
+
+Let $T_z$ be the set of four-dimensional complex subspaces
+$A\subset V_{\mathbb C}$ with $z\in\mathbb P(A)$,
+$h|_A$ nondegenerate and
+$Q_A=\mathbb P(A)\cap\{h=0\}\subset X$. Its cardinality counts
+distinct geometric Grassmannian points, not scheme length.
+
+**Theorem 106.2 (Every positive point has its full real entry
+sphere).** For every $z\in S_2^+$,
+
+$$
+\Sigma_z(\mathbb R)=P\cap F_z=\partial F_z.
+\tag{106.3}
+$$
+
+All real projective points are normalized by the original $u=1$.
+The assertion includes real closure and tangent-limit points, not
+only the positive binary fiber.
+
+Proof. If $z=tp+(1-t)q$, direct polarization gives
+
+$$
+h(z)=-t(1-t)Q_0(p-q,p-q)<0.
+\tag{106.4}
+$$
+
+For every ordinary secant through $z$, reflection $R_z$ preserves
+$h$ and exchanges its two distinct null endpoints. Thus it sends
+every ordinary endpoint into $X$. Since $X$ is closed and $R_z$
+is a projective automorphism, it sends all of $\Sigma_z$ into
+$X$. Its fixed null divisor is $\eta(v,z)=0$. The real form $h$
+has index one and $z$ is timelike, so $z^\perp$ is positive
+definite and this divisor has no real projective point.
+
+Every real $x\in\Sigma_z$ is in $X(\mathbb R)=P$ and has
+a distinct real partner $y=R_z[x]\in X(\mathbb R)=P$.
+Neither can be at infinity, by Theorem 104.2. In the affine chart
+the point $z$ is strictly inside the common pure sphere. The real
+line through $x,y$ intersects that sphere in exactly these endpoints,
+and $z$ lies strictly between them. The actual face property
+therefore puts both in $F_z$. Conversely each boundary point of
+the whole ball $F_z$ has a distinct boundary partner along the
+chord through its interior point $z$, so it is an ordinary endpoint.
+The pure points of an actual ball face are precisely its boundary.
+This proves (106.3) for every $z$ in (106.1), including points
+arising as complex-closure limits, real tangent limits or from
+negative-weight presentations. It has not replaced the complex
+entry locus by the positive real fiber. ∎
+
+**Theorem 106.3 (Every generic component is a smooth quadric).**
+There exists a conjugation-stable nonempty complex Zariski open
+$\mathcal O\subset SX\cap\{u\ne0,h\ne0\}$ such that every
+irreducible component of $\Sigma_z$, for every $z\in\mathcal O$,
+is a smooth quadric surface $Q_A$. The correspondence
+
+$$
+T_z\longleftrightarrow\operatorname{Irr}(\Sigma_z),\qquad
+A\longmapsto Q_A
+\tag{106.5}
+$$
+
+is a bijection, and its finite cardinality $k$ is constant on
+$\mathcal O$. For every positive real $z\in\mathcal O$ the
+complex reduced $\Sigma_z$ is smooth at every real entry point.
+
+Proof. First restrict to the generic equidimensional entry open
+of Proposition 105.3 and to the smooth locus of the affine secant
+variety. On the source $\mathcal D$ of (104.3), over this smooth
+target of dimension $2m-1$, remove the images of rank-deficient
+points as follows. The rank-deficient locus has finitely many
+irreducible components. None can dominate the target: on the smooth
+locus of a dominating component, characteristic-zero separability
+would make the differential of its restricted map surjective at
+a general point, contradicting rank deficiency of $d\beta$.
+Their image closures are therefore proper. Deleting these closures
+makes the entire remaining $\beta$ fibers smooth of dimension two.
+
+Here is the exact comparison with the reduced entry locus. For
+$u(x)=u(z)=1$ put
+
+$$
+\kappa(x,z)=\frac{2\eta(x,z)}{h(z)},\quad a_0=1-\kappa,
+\qquad y=\frac{R_zx}{a_0},\quad t=\frac1\kappa.
+\tag{106.6}
+$$
+
+On the open $\kappa a_0\ne0$, these regular formulas and
+first-endpoint projection are inverse morphisms between the
+$\beta$ fiber and that open of $\Sigma_z$. Indeed
+$R_z(\Sigma_z)\subset X$ by the ordinary-endpoint reflection
+and closure argument, and (106.6) gives distinct affine endpoints
+with $z=tx+(1-t)y$, $t\notin\{0,1\}$. Conversely the reflection
+uniquely recovers the partner of any such secant. For positive
+real $z$, every real entry point lies in this open: the partner
+is real, distinct and affine by Theorem 106.2. Thus the smooth
+fiber statement gives complex smoothness at every real entry
+point. No identity of schemes with a secant-cone intersection is
+assumed.
+
+To cover every generic component, take the ordinary ordered-secant
+incidence, an open $\mathbb P^1$ bundle over
+$(X\times X)\setminus\Delta$, of dimension $2m+1$. Choose the
+nonempty good-pair open of Theorem 105.2, intersected with
+$Y\times Y$. Bad pairs, either at infinity or outside this open,
+have dimension at most $2m-1$, so their secant incidence has
+dimension at most $2m$. Images of nondominating components can
+be removed from $SX$. The dominating bad-incidence components
+have generic fibers of dimension at most one over the target of
+dimension $2m-1$; shrink again to ensure that bound.
+
+For fixed $h(z)\ne0$, the first ordinary endpoint determines its
+partner uniquely as $R_z[x]$. Ordinary endpoints are constructible
+and dense in $\Sigma_z$ by its definition as their reduced
+closure. They meet every two-dimensional component densely; the
+unique partner prevents a hidden positive-dimensional fiber of
+endpoint projection. The bad endpoints have dimension at most one,
+so cannot cover any component. In each component choose a good
+ordinary endpoint $x$ outside the other components, with partner
+$y$. The smooth quadric $Q\subset X$ through this good pair has
+$z$ in its three-dimensional projective span and outside $Q$.
+Its secants through $z$ give $Q\subset\Sigma_z$. Being an
+irreducible closed surface through $x$, it equals the chosen
+component.
+
+If $A$ is its four-dimensional span, $h|_A$ vanishes on $Q$ and
+is nonzero because $h(z)\ne0$. It is a nonzero scalar multiple
+of the defining rank-four quadratic equation of $Q$. Thus
+$Q=Q_A$ and $h|_A$ is nondegenerate. Conversely every $A\in T_z$
+gives such a quadric in $\Sigma_z$, hence a component by
+equidimensionality. Its span recovers $A$, proving (106.5) and
+finiteness of the set $T_z$.
+
+For constancy, construct the incidence over $SX$ on the Grassmannian
+open where $h|_A$ is nondegenerate, adding $z\in\mathbb P(A)$
+and $h(z)\ne0$. Containment $Q_A\subset X$ is given by the
+same finite ideal-generator divisibility and injective bundle maps
+as (105.2), now with $f=h|_A$. This is a finite-type scheme over
+$SX$. On the chosen open its fibers are finite as sets. Apply
+[Stacks, Lemma 37.27.6, direct tag 055A][Stacks] at the generic
+point of the irreducible base. It gives a further nonempty open
+with constant number of geometric irreducible components of its
+fibers. A zero-dimensional complex finite-type fiber has one such
+component for each distinct geometric point, regardless of
+nilpotents. The count is $|T_z|$, not length. Neither properness
+nor flatness was required. Intersect the finitely many opens and
+their conjugates; irreducibility preserves nonemptiness. Denote
+the result by $\mathcal O$. ∎
+
+**Theorem 106.4 (One real component and odd extras).** For every
+$z\in\mathcal O\cap S_2^+$, the unique conjugation-fixed entry
+component is $Q_{F_z}$. Every extra component has no real point
+and occurs with a distinct conjugate. Hence the constant count is
+
+$$
+k=|T_z|=1+2a,\qquad a\in\mathbb Z_{\ge0}.
+\tag{106.7}
+$$
+
+The intersection $\mathcal O\cap S_2^+$ is nonempty and Zariski
+dense. Conditional on an independently supplied generic bound
+$|T_z|\le2$, one would obtain $k=1$ and QEL type two.
+
+Proof. A conjugation-fixed component has conjugation-fixed span
+$A=(A_{\mathbb R})_{\mathbb C}$ of real dimension four. It
+contains the timelike real $z$, so $h|_{A_{\mathbb R}}$ has
+signature $(3,1)$. In $u=1$ its real null locus is an entire round
+$S^2$, bounding a three-ball $B_A$ with $z$ in its relative
+interior. By $X(\mathbb R)=P$ this whole sphere is pure, and
+$B_A\subset K$. Segment extension through $z$ and the actual
+face property give $B_A\subset F_z$. Both balls have dimension
+three and the entire boundary of $B_A$ lies in
+$P\cap F_z=\partial F_z$. In the same affine three-space,
+their sphere equations then agree, so $B_A=F_z$ and
+$Q_A=Q_{F_z}$. The latter component exists by Proposition 105.3
+and is fixed, so it is the unique fixed one.
+
+If another component had a real point, (106.3) would place that
+point also on $Q_{F_z}$. A reduced variety with two distinct
+components through a point cannot be smooth there. Theorem 106.3
+excludes this at every real entry point. The remaining components
+are therefore nonreal conjugate pairs, proving (106.7).
+Zariski density of $S_2^+$ from Theorem 104.3 gives the dense
+nonempty intersection with $\mathcal O$. An additional generic
+upper bound two, together with oddness, would force one component;
+by Theorem 106.3 that whole general entry locus would be a smooth
+quadric surface, which is Russo's QEL type-two condition.
+Such an upper bound has not been proved here. Parity does not
+exclude $k=3,5,\ldots$, prove projective smoothness at nonreal
+infinity, or give an equalizer or a PSD classification. ∎
+
+## 107. Controls on the algebraic implications
+
+**Proposition 107.1 (Smooth affine orbit does not imply smooth
+projective closure).** The weight-$(1,3)$ compact orbit
+
+$$
+a(\theta)=(\cos\theta,\sin\theta,\cos3\theta,\sin3\theta)
+\in\mathbb R^4
+\tag{107.1}
+$$
+
+has a smooth closed affine complexification and two nonreal cusps
+at projective infinity. Its whole convex hull is not an L3 body.
+Thus this example blocks an affine-to-projective smoothness
+shortcut, without being a countermodel to Definition 97.1.
+
+Proof. The first two coordinates embed the real circle. After
+an invertible complex linear change the affine orbit is
+$(z,z^{-1},z^3,z^{-3})$, $z\in\mathbb C^*$, closed and
+isomorphic to $\mathbb C^*$. The projective parametrization is
+$[1:z:z^{-1}:z^3:z^{-3}]$. At $z=0$ it becomes
+
+$$
+[z^3:z^4:z^2:z^6:1].
+\tag{107.2}
+$$
+
+The local ring is
+$\mathbb C[z^2,z^3]_{(z^2,z^3)}$, of dimension one and cotangent
+dimension two, so it is a cusp. The real structure sends
+$z$ to $1/\overline z$, exchanging this point with the other
+point at infinity; neither is real. The orbit is on a common
+Euclidean sphere and spans $\mathbb R^4$ (its four independent
+trigonometric coordinates have no linear relation). Its hull is
+centrally symmetric since $a(\theta+\pi)=-a(\theta)$, with
+interior center zero. Each orbit point is exposed by its Euclidean
+support functional: equality on the sphere forces that point.
+An antipodal pure pair has midpoint zero, so its minimal face is
+the entire four-dimensional hull, not a three-ball. ∎
+
+**Proposition 107.2 (Even smooth QEL type two is insufficient for
+the reduced matrix-embedding shortcut).** Smooth QEL type two,
+$n=2m$ and a proper secant variety alone do not characterize the
+full rank-one complex matrix embedding relevant to (97.3).
+
+Proof. Use as an intermediate published example
+[Russo, Example 2.5][Russo]: the Plücker
+$G(1,5)\subset\mathbb P^{14}$ has dimension eight and QEL
+type four. Two successive general hyperplane sections are smooth
+and irreducible by Bertini. At each step Russo's Proposition
+1.3(iii), whose manifold and positive-defect hypotheses hold,
+reduces dimension and defect by one. The resulting
+$Z\subset\mathbb P^{12}$ has
+
+$$
+\dim Z=6,\quad \delta(Z)=2,\quad
+\dim SZ=2\cdot6+1-2=11<12,\quad 12=2\dim Z.
+\tag{107.3}
+$$
+
+The full rank-one $4\times4$ matrix variety is the Segre
+$\mathbb P^3\times\mathbb P^3$, spanning $\mathbb P^{15}$,
+so this cannot be its full embedding. This application of the
+published section facts is a control on the stated reduced
+implication, not a new classification. No compact real affine
+orbit, original cone or whole L3 realization is supplied for $Z$.
+It is compatible with $k=1$ and therefore also shows why the
+conditional $k=1$ conclusion of §106 would not itself finish
+the original reconstruction. ∎
+
+**Proposition 107.3 (Every-rank complex PSD entry control).** For
+the whole complex PSD family, every $N\ge2$ and every original
+two-dimensional complex support give $k=|T_z|=1$ for all positive
+binary $z$, including the trace-zero complex points of the entry
+quadric at infinity.
+
+Proof. Take the whole $\operatorname{Herm}_N(\mathbb C)$ cone,
+$u=\operatorname{Tr}$, $b=I/N$ and HS on traceless matrices.
+Then $R^2=1-1/N$ and on the complexification $M_N(\mathbb C)$
+
+$$
+h(A)=\operatorname{Tr}(A^2)-(\operatorname{Tr}A)^2.
+\tag{107.4}
+$$
+
+The projective pure closure is the rank-one Segre variety. A
+positive binary $z$ has rank two on its actual two-support $S_0$,
+with positive eigenvalues $\lambda_1,\lambda_2$ and
+$h(z)=-2\lambda_1\lambda_2<0$.
+If it is a nontrivial sum of two distinct rank-one complex
+endpoints, rank two forces the two column lines to span
+$\operatorname{im}z$ and the two row lines to span its row space.
+Thus both endpoints lie in the corresponding full $2\times2$
+block. Conversely, on that block
+$h(A)=-2\det A$. Its rank-one determinant quadric is smooth,
+and every general point of it has a distinct partner on a secant
+through $z$. Taking the closure gives exactly the entire quadric,
+including trace-zero complex boundary points. It is the sole
+component, and its unique four-dimensional span is the sole
+element of $T_z$. For $N=2$ the block is all $M_2(\mathbb C)$
+and this is the quadric in the whole $\mathbb P^3$.
+This is an every-rank control, not a proof of an entry-count bound
+for arbitrary L3 carriers. ∎
+
+## 108. Same-carrier conditional consequences
+
+**Definition 108.1 (Metric and algebraic suppliers).** On precisely
+Definition 97.1, let $\mathsf{Moment}$ mean
+$\mathcal M\cap\operatorname{PSD}(W)=\{0\}$ for the original
+reference construction (100.1)–(100.2). Let $\mathsf{Isotropy}$
+mean existence of one invariant PD $Q$ and one anchor satisfying
+either actual certificate of Theorem 99.2. A contemplated
+$\mathsf{EntryBound}$ is an independently proved generic
+$|T_z|\le2$ for the same auxiliary $X$ and incidence of §106.
+It is not part of L3. Projective smoothness, affine transport and
+any additional hypotheses of a contemplated classification retain
+their separate meanings; none is included by renaming LQEL or QEL.
+
+**Corollary 108.2 (The exact additional moment condition).** On the
+whole original carrier,
+
+$$
+\begin{aligned}
+\mathsf{Moment}
+&\Longleftrightarrow\text{an invariant PD equalizer on all }W\\
+&\Longleftrightarrow
+\exists N\ge2,\ \Phi:V\overset\sim\longrightarrow
+\operatorname{Herm}_N(\mathbb C),\quad
+\Phi(C)=\operatorname{PSD}_N,\quad\operatorname{Tr}\Phi=u.
+\end{aligned}
+\tag{108.1}
+$$
+
+Moreover $\mathsf{Isotropy}$ is sufficient for (108.1). The
+conclusion transports the entire original $K,P,E$ and every
+mixed-state evaluation, not just the pure comparison table.
+
+Proof. The strict alternative in Theorem 100.3 gives the first
+equivalence. VI90.1–90.2 and VI96.2 give the second, including
+their original-unit homogenization and full dual interval. Theorem
+99.2 gives the stated sufficiency. The low-rank and four-dimensional
+results restrict possible nonzero original PSD obstructions; they
+do not remove rank four with nullity at least nine, nullity four
+with rank at least nine, singular rank and nullity both at least
+five, or full-rank witnesses. No such witness is constructed here.
+The empty-equation and whole-three-ball branches retain the same
+equivalence. Averaging in Proposition 102.3 preserves a supplied
+metric, rather than creating it.
+
+On the algebraic side Theorem 106.4 gives an odd count, and only
+conditional on $\mathsf{EntryBound}$ gives QEL type two. Neither
+that bound nor an implication from this algebraic condition to
+$\mathsf{Moment}$ has been established. Possible singularities at
+nonreal infinity and the control in Proposition 107.2 prevent
+replacing the original convex problem by those shorter conditions.
+An eventual algebraic reconstruction must still produce an affine
+bijection of the entire original $K$, homogenize on the same $V$
+to (97.3), and transport the entire effect interval by evaluation.
+An abstract model, projective isomorphism or face-preserving
+homeomorphism alone does not have that conclusion. ∎
+
+**Definition 108.3 (Original-source instantiation).** For the
+prediction specialization of Definition 97.2 retain the same
+$\Omega$, every original legal word and the complete fixed
+future-outcome domain. An original-source application of (108.1)
+requires those exact data to supply the finite whole carrier,
+compact pure transitivity, L3, and one of its qualifying additional
+certificates. No finite choice of moment basis or common quadrature
+is a source-completeness test or a native ensemble supplier.
+
+If a process application uses returned rows, it retains all of
+[VI95.1–95.6][VI]: already legal same-interface continuations, one
+actual joint law with true archives and complementary failures,
+unconditional success masses, every finite signed row relation,
+same-$C$ containment, and legal composition in the full original
+request domain. An undefined future is not a zero-probability
+outcome. The conditional static representation does not provide
+these rows or their suppliers. Likewise $H^0$ pure transitivity
+does not put every original generator in the identity component
+of the normalized cone group; the original-word unitary consumer
+retains the per-generator path premise cited in VI96.2.
+
+Actual preparations and measurement menus, inverses and Return,
+events and instruments, spectators and every finite composite,
+time groups, clocks, Hamiltonians, units and physical correspondence
+retain their own complete original contracts. Reflection $R_z$,
+complexification, mathematical subgroup integration and full-group
+averaging are auxiliary constructions and do not enlarge those
+legal operations.
+
+[VI]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_VI.md
+[V88]: QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md
+[EB121]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Confirm]: ../../../Blueprint/D5/S3/Quantum/Foundation/WholePairBallConfirmation.md
+[SBridge]: ../../../Library/QuantumStates/mullerududec2012selfduality.md
+[Mendes]: ../../../Library/Topology/mendes2025diameterfocal.md
+[BT]: ../../../Library/QuadraticForms/bayerteichmann2005tchakaloff.md
+[Schwarz]: ../../../Library/LieTheory/schwarz2011reducedinvariantsets.md
+[Losev]: ../../../Library/LieTheory/losev2006kempfness.md
+[Russo]: ../../../Library/QuadraticForms/russo2007quadraticentry.md
+[Stacks]: ../../../Library/Topology/stacks2026constructiblecomponents.md
+
 ## 追加锚（本行以下为增补区）
