@@ -13,7 +13,7 @@ internal sealed class DanskinDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/Convexity/Danskin.hasRightDirDeriv_iSup"),
                 H("An attaining maximal optimizer derivative"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/lyng2026danskin")),
                 Blocks(
                     Paragraph(Text(
                         "Let E be any real inner product space, Z any nonempty compact topological space, "
@@ -29,7 +29,7 @@ internal sealed class DanskinDocument : IScribeDocumentDefinition
                         + "the project header, imports and module visibility syntax are adapted. "
                         + "The original copyright and complete Apache 2.0 license are retained in "
                         + "docs/reports/licenses/econlib-Danskin-LICENSE.txt. No Optlib source is retained. "
-                        + "The provenance tag records repository integration, not mathematical novelty.")),
+                        + "The mathematical proof is attributed to the upstream author; repository integration supplies the stated adaptations.")),
                     Paragraph(Text(
                         "For continuous real b and h on a nonempty compact subset K of an arbitrary "
                         + "topological space, use the compact subtype K as Z, E equal to the reals, "
@@ -43,11 +43,28 @@ internal sealed class DanskinDocument : IScribeDocumentDefinition
                         + "These are application correspondences, not additional named declarations or an "
                         + "independent proof, and add no metric or finite-domain premise.")),
                     Paragraph(Text(
+                        "Write M(t)=max_K(b+t*h), m(t)=min_K(b+t*h), U=argmax_K b and L=argmin_K b, "
+                        + "where U and L contain every tied optimizer. On nhdsWithin 0 (Ioi 0), the remainders "
+                        + "M(t)-M(0)-t*max_U h and m(t)-m(0)-t*min_L h are little-o of t. "
+                        + "For the left side, replace only the perturbation h by -h and compose the "
+                        + "parameter with t mapped to -t. On the literal filter nhdsWithin 0 (Iio 0), "
+                        + "the corresponding coefficients are min_U h for M and max_L h for m. "
+                        + "The compact set and the unperturbed functions' full optimizer sets are unchanged.")),
+                    Paragraph(Text(
+                        "Subtract the two envelope expansions for the oscillation W(t)=M(t)-m(t). "
+                        + "Its right coefficient is max_U h-min_L h, and its left coefficient is "
+                        + "min_U h-max_L h. For any of these six expansions with coefficient c different "
+                        + "from zero, the increment divided by t tends to c. Thus eventually "
+                        + "c*(increment)>0 on the positive side and c*(increment)<0 on the negative side: "
+                        + "the increment has the coefficient's sign on the right and its opposite on the left. "
+                        + "A zero coefficient gives no strict sign conclusion; the constant family already "
+                        + "has zero remainder and zero increment. These consequences require neither a "
+                        + "unique optimizer nor any choice of a finite subset of optimizers.")),
+                    Paragraph(Text(
                         "Retire this extraction when this repository's own resolved Mathlib pin contains "
                         + "an equivalent general declaration with the full telescope and attaining/dominating "
                         + "conclusion, and both generic compact-subtype affine applications compile to the "
                         + "literal right maximum and minimum little-o expansions with the stated premises. "
-                        + "Upstream acceptance alone is not the retirement condition. "
-                        + "Escape registration is unfinished under https://github.com/the-omega-institute/trureturing/issues/29945. Independent proof-shape, live-consumer and first-freeze admission remain separate obligations."))),
+                        + "Upstream acceptance alone is not the retirement condition."))),
                 DescribeRole.Theorem))));
 }
