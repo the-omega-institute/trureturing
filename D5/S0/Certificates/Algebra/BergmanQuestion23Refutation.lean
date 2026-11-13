@@ -3,8 +3,8 @@
    mirror-B: D5/B/S0/Certificates/Algebra/BergmanQuestion23Refutation
    mirror-E: none(waiver:noncomputational)
    anchors: [D5/S0/Certificates/Algebra/BergmanQuestion15Refutation, mathlib/module/Mathlib.Data.Sym.Card, mathlib/module/Mathlib.Data.Finsupp.Multiset]
-   utility: kind=none
-   digest: Bounded monomials and their reverse-degree dual action for Question 23. -/
+   utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.claim; result=D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.result; claim=D5/S0/Certificates/Algebra/BergmanQuestion23Refutation.claim
+   digest: A generic truncated idealization refutes Bergman's Question 23. -/
 
 import D5.S0.Certificates.Algebra.BergmanQuestion15Refutation
 import Mathlib.Data.Sym.Card
@@ -13,6 +13,8 @@ import Mathlib.Algebra.Order.Monoid.Multiset
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.RingTheory.Finiteness.Bilinear
 import Mathlib.LinearAlgebra.Finsupp.Supported
+import Mathlib.Data.Nat.Choose.Sum
+import Mathlib.Algebra.Order.Archimedean.Real.Basic
 
 /-! # The truncated monomial idealization for Bergman's Question 23 -/
 
@@ -334,32 +336,6 @@ private theorem layer_mul_le {F : Type*} [Field F] {m t i j : ℕ} :
     change labelDegree (a.val * b.val) = i + j
     rw [labelDegree_mul _ _ hab, ha, hb]
 
-private theorem layer_eq_bot_of_gt {F : Type*} [Field F] {m t d : ℕ}
-    (hd : t + 1 < d) : layer F m t d = ⊥ := by
-  apply le_antisymm _ bot_le
-  intro x hx
-  apply Finsupp.ext
-  intro a
-  have hnot : a ∉ {s : {s : Model m t // s ≠ 0} | labelDegree s.val = d} := by
-    intro ha
-    have := labelDegree_le a.val
-    change labelDegree a.val = d at ha
-    omega
-  exact (Finsupp.mem_supported' F x).mp hx a hnot
-
-private theorem mixedPower_layer_le {F : Type*} [Field F] {m t : ℕ} (k : ℕ) :
-    mixedPower (product F (Model m t)) (layer F m t 1) k ≤ layer F m t (k + 1) := by
-  induction k with
-  | zero => exact le_rfl
-  | succ k ih =>
-    exact (Submodule.map₂_le_map₂ le_rfl ih).trans (by simpa [Nat.add_comm] using
-      (layer_mul_le (F := F) (m := m) (t := t) (i := 1) (j := k + 1)))
-
-private theorem mixedPower_layer_nilpotent {F : Type*} [Field F] {m t : ℕ} :
-    mixedPower (product F (Model m t)) (layer F m t 1) (t + 1) = ⊥ := by
-  apply le_antisymm _ bot_le
-  exact (mixedPower_layer_le _).trans_eq (layer_eq_bot_of_gt (by omega))
-
 private theorem delta_mul {F : Type*} [Field F] {m t : ℕ} (s r : Model m t) :
     delta F (Model m t) s * delta F (Model m t) r = delta F (Model m t) (s * r) := by
   classical
@@ -645,17 +621,271 @@ private theorem annihilator_layer_eq_bot {F : Type*} [Field F] {m n : ℕ}
       have ha : a.val.card = n := by
         have H := Multiset.card_erase_add_one hi
         dsimp [a]; omega
-      let c : DualIndex m (n + 1) := ⟨{i}, by simp; omega⟩
+      let c : DualIndex m (n + 1) := ⟨{i}, by simp⟩
       have hsum : c.val + a.val = b.val := by
         dsimp [c, a]
-        rw [Multiset.singleton_add, Multiset.cons_erase hi]
+        exact Multiset.cons_erase hi
       have H := coeff_mul_f a c (by rw [hsum]; exact b.property) x.val
       rw [hzero a ha] at H
       have hkey : fKey ⟨c.val + a.val, by rw [hsum]; exact b.property⟩ = fKey b := by
         congr 2
-        exact Subtype.ext hsum
       rw [hkey] at H
       exact H.symm
   · exact hnot hs
+
+private theorem family_power {F : Type*} [Field F] {m n : ℕ}
+    (hm : 0 < m) (hn : 2 ≤ n) :
+    mixedPower (product F (Model m (n + 1))) (layer F m (n + 1) 1) (n - 1) =
+      layer F m (n + 1) n := by
+  simpa only [Nat.sub_add_cancel (by omega : 1 ≤ n)] using
+    mixedPower_layer_eq (F := F) hm (n - 1) (by omega : n - 1 + 1 ≤ n + 1)
+
+private theorem family_annihilator {F : Type*} [Field F] {m n : ℕ}
+    (hm : 0 < m) (hn : 2 ≤ n) :
+    relativeAnnihilator (product F (Model m (n + 1))) (layer F m (n + 1) 1)
+      (mixedPower (product F (Model m (n + 1))) (layer F m (n + 1) 1) (n - 1)) = ⊥ := by
+  rw [family_power hm hn]
+  exact annihilator_layer_eq_bot hm hn
+
+private theorem family_v_dimension {F : Type*} [Field F] {m n : ℕ} :
+    Module.finrank F (layer F m (n + 1) 1) = m + (m + n).choose (n + 1) := by
+  simpa using (finrank_layer (F := F) (m := m) (t := n + 1) (d := 1) (by omega) (by omega))
+
+private theorem family_power_dimension {F : Type*} [Field F] {m n : ℕ}
+    (hm : 0 < m) (hn : 2 ≤ n) :
+    Module.finrank F
+      (mixedPower (product F (Model m (n + 1))) (layer F m (n + 1) 1) (n - 1)) =
+      (m + n - 1).choose n + (m + 1).choose 2 := by
+  rw [family_power hm hn]
+  have htwo : n + 1 + 1 - n = 2 := by omega
+  simpa only [htwo, show m + 2 - 1 = m + 1 by omega] using
+    (finrank_layer (F := F) (m := m) (t := n + 1) (d := n) (by omega) (by omega))
+
+private theorem family_quotient_dimension {F : Type*} [Field F] {m n : ℕ}
+    (hm : 0 < m) (hn : 2 ≤ n) :
+    Module.finrank F ((layer F m (n + 1) 1) ⧸
+      relativeAnnihilator (product F (Model m (n + 1))) (layer F m (n + 1) 1)
+        (mixedPower (product F (Model m (n + 1))) (layer F m (n + 1) 1) (n - 1))) =
+      m + (m + n).choose (n + 1) := by
+  rw [(Submodule.quotEquivOfEqBot _ (family_annihilator hm hn)).finrank_eq]
+  exact family_v_dimension
+
+private theorem dimension_defect {m n : ℕ} (hm : 3 ≤ m) (hn : 2 ≤ n) :
+    (m + (m + n).choose (n + 1)) - ((m + n - 1).choose n + (m + 1).choose 2) =
+      (m + n - 1).choose (n + 1) - m.choose 2 ∧
+    m.choose 3 ≤ (m + n - 1).choose (n + 1) - m.choose 2 ∧
+    ((m + n - 1).choose n + (m + 1).choose 2) < m + (m + n).choose (n + 1) := by
+  have hA : (m + 1).choose 3 ≤ (m + n - 1).choose (n + 1) := by
+    calc
+      _ = (m + 1).choose (m - 2) := Nat.choose_symm_of_eq_add (by omega)
+      _ ≤ (m + n - 1).choose (m - 2) := Nat.choose_le_choose _ (by omega)
+      _ = _ := Nat.choose_symm_of_eq_add (by omega)
+  have hP := Nat.choose_succ_succ (m + n - 1) n
+  simp only [Nat.succ_eq_add_one] at hP
+  have hsum : m + n - 1 + 1 = m + n := by omega
+  rw [hsum] at hP
+  have hB := Nat.choose_succ_succ m 1
+  have hC := Nat.choose_succ_succ m 2
+  simp only [Nat.succ_eq_add_one, Nat.choose_one_right] at hB hC
+  have hpos := Nat.choose_pos hm
+  omega
+
+private def nonzeroEquiv (m t : ℕ) :
+    {s : Model m t // s ≠ 0} ≃ PositiveIndex m t ⊕ DualIndex m t where
+  toFun := by
+    rintro ⟨s, hs⟩
+    cases s with
+    | zero => exact False.elim (hs rfl)
+    | e a => exact .inl a
+    | f b => exact .inr b
+  invFun s := s.elim eKey fKey
+  left_inv := by rintro ⟨s, hs⟩; cases s <;> first | rfl | exact False.elim (hs rfl)
+  right_inv := by intro s; cases s <;> rfl
+
+private theorem card_dual (m t : ℕ) : Fintype.card (DualIndex m t) = (m + t).choose t := by
+  calc
+    _ = Fintype.card ((k : Fin (t + 1)) × Sym (Fin m) k.val) :=
+      Fintype.card_congr (boundedEquiv m t)
+    _ = ∑ k : Fin (t + 1), m.multichoose k.val := by
+      simp only [Fintype.card_sigma, Sym.card_sym_eq_multichoose, Fintype.card_fin]
+    _ = ∑ k ∈ Finset.range (t + 1), m.multichoose k := Fin.sum_univ_eq_sum_range _ _
+    _ = (t + m).choose m := Nat.sum_range_multichoose t m
+    _ = (m + t).choose t := by
+      calc
+        _ = (m + t).choose m := by rw [Nat.add_comm]
+        _ = _ := Nat.choose_symm_add
+
+private def positiveEquiv (m t : ℕ) : PositiveIndex m t ≃
+    {b : DualIndex m t // b.val ≠ 0} where
+  toFun a := ⟨⟨a.val, a.property.2⟩, by
+    intro h
+    have := a.property.1
+    exact (Nat.ne_of_gt this) (congrArg Multiset.card h)⟩
+  invFun b := ⟨b.val.val, ⟨Multiset.card_pos.mpr b.property, b.val.property⟩⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+private theorem finrank_ambient {F : Type*} [Field F] (m t : ℕ) :
+    Module.finrank F (Ambient F m t) = 2 * (m + t).choose t - 1 := by
+  classical
+  let ez : {b : DualIndex m t // b.val = 0} ≃ Unit := {
+    toFun := fun _ => ()
+    invFun := fun _ => ⟨⟨0, by simp⟩, rfl⟩
+    left_inv := by intro b; apply Subtype.ext; exact Subtype.ext b.property.symm
+    right_inv := fun _ => rfl }
+  have hz : Fintype.card {b : DualIndex m t // b.val = 0} = 1 := by
+    simpa only [Fintype.card_unit] using Fintype.card_congr ez
+  have hp : Fintype.card (PositiveIndex m t) = (m + t).choose t - 1 := by
+    calc
+      _ = Fintype.card {b : DualIndex m t // b.val ≠ 0} :=
+        Fintype.card_congr (positiveEquiv m t)
+      _ = _ := by rw [Fintype.card_subtype_compl, hz, card_dual]
+  change Module.finrank F ({s : Model m t // s ≠ 0} →₀ F) = _
+  rw [Module.finrank_finsupp_self]
+  have hc := Fintype.card_congr (nonzeroEquiv m t)
+  simp only [Fintype.card_sum, hp, card_dual] at hc
+  rw [hc]
+  omega
+
+private def filtration (F : Type*) [Field F] (m t d : ℕ) : Submodule F (Ambient F m t) :=
+  Finsupp.supported F F {s : {s : Model m t // s ≠ 0} | d ≤ labelDegree s.val}
+
+private theorem filtration_mul_le {F : Type*} [Field F] {m t i j : ℕ} :
+    Submodule.map₂ (product F (Model m t)) (filtration F m t i) (filtration F m t j) ≤
+      filtration F m t (i + j) := by
+  classical
+  rw [filtration, filtration, Finsupp.supported_eq_span_single,
+    Finsupp.supported_eq_span_single, Submodule.map₂_span_span]
+  apply Submodule.span_le.mpr
+  rintro _ ⟨_, ⟨a, ha, rfl⟩, _, ⟨b, hb, rfl⟩, rfl⟩
+  change Finsupp.single a (1 : F) * Finsupp.single b 1 ∈ _
+  rw [single_mul]
+  by_cases hab : a.val * b.val = 0
+  · simp [hab, delta]
+  · simp only [one_mul, one_smul, delta, dif_neg hab]
+    apply Finsupp.single_mem_supported F 1
+    change i + j ≤ labelDegree (a.val * b.val)
+    rw [labelDegree_mul _ _ hab]
+    exact Nat.add_le_add ha hb
+
+private theorem ambient_nilpotent {F : Type*} [Field F] (m t : ℕ) :
+    mixedPower (product F (Model m t)) ⊤ (t + 1) = ⊥ := by
+  classical
+  have htop : (⊤ : Submodule F (Ambient F m t)) = filtration F m t 1 := by
+    apply le_antisymm _ le_top
+    intro x hx
+    exact fun s hs => labelDegree_pos s.val s.property
+  have hpow (k : ℕ) : mixedPower (product F (Model m t)) ⊤ k ≤ filtration F m t (k + 1) := by
+    induction k with
+    | zero => exact le_of_eq htop
+    | succ k ih =>
+      exact (Submodule.map₂_le_map₂ (le_of_eq htop) ih).trans
+        (by simpa [Nat.add_comm] using
+          (filtration_mul_le (F := F) (m := m) (t := t) (i := 1) (j := k + 1)))
+  apply le_antisymm _ bot_le
+  intro x hx
+  apply Finsupp.ext
+  intro a
+  have hmem := (Finsupp.mem_supported' F x).mp (hpow _ hx)
+  apply hmem a
+  change ¬ t + 1 + 1 ≤ labelDegree a.val
+  have := labelDegree_le a.val
+  omega
+
+private theorem ratio_bound {m n : ℕ} (hm : 3 ≤ m) (hn : 2 ≤ n) :
+    ((m + n : ℕ) : ℝ) / (2 * (n + 1 : ℕ)) ≤
+      ((m + (m + n).choose (n + 1) : ℕ) : ℝ) /
+        (((m + n - 1).choose n + (m + 1).choose 2 : ℕ) : ℝ) := by
+  have hEB : (m + 1).choose 2 ≤ (m + n - 1).choose n := by
+    calc
+      _ = (m + 1).choose (m - 1) := Nat.choose_symm_of_eq_add (by omega)
+      _ ≤ (m + n - 1).choose (m - 1) := Nat.choose_le_choose _ (by omega)
+      _ = _ := Nat.choose_symm_of_eq_add (by omega)
+  have hE := Nat.choose_pos (by omega : n ≤ m + n - 1)
+  have hA := Nat.add_one_mul_choose_eq (m + n - 1) n
+  have hsum : m + n - 1 + 1 = m + n := by omega
+  rw [hsum] at hA
+  have hAr : ((m + n : ℕ) : ℝ) * ((m + n - 1).choose n : ℝ) =
+      ((m + n).choose (n + 1) : ℝ) * (n + 1 : ℕ) := by exact_mod_cast hA
+  have hEr : (0 : ℝ) < ((m + n - 1).choose n : ℝ) := by exact_mod_cast hE
+  have hEBr : ((m + 1).choose 2 : ℝ) ≤ ((m + n - 1).choose n : ℝ) := by exact_mod_cast hEB
+  apply (div_le_div_iff₀ (by positivity) (by exact_mod_cast (by omega :
+    0 < (m + n - 1).choose n + (m + 1).choose 2))).mpr
+  push_cast at hAr ⊢
+  nlinarith [mul_nonneg (show (0 : ℝ) ≤ m + n by positivity) (sub_nonneg.mpr hEBr)]
+
+/-- The ratio uses the actual quotient and actual mixed product space of the model. -/
+def dimensionRatio (F : Type*) [Field F] (m n : ℕ) : ℝ :=
+  let μ := product F (Model m (n + 1))
+  let V := layer F m (n + 1) 1
+  let W := mixedPower μ V (n - 1)
+  (Module.finrank F (V ⧸ relativeAnnihilator μ V W) : ℝ) / Module.finrank F W
+
+/-- The full nominated family, including finiteness rather than a finrank fallback. -/
+def familyProperties (F : Type*) [Field F] (m n : ℕ) : Prop :=
+  let R := Ambient F m (n + 1)
+  let μ := product F (Model m (n + 1))
+  let V := layer F m (n + 1) 1
+  let W := mixedPower μ V (n - 1)
+  let A := relativeAnnihilator μ V W
+  FiniteDimensional F R ∧ FiniteDimensional F W ∧
+  W = layer F m (n + 1) n ∧ A = ⊥ ∧
+  Module.finrank F R = 2 * (m + n + 1).choose (n + 1) - 1 ∧
+  Module.finrank F V = m + (m + n).choose (n + 1) ∧
+  Module.finrank F W = (m + n - 1).choose n + (m + 1).choose 2 ∧
+  Module.finrank F (V ⧸ A) = m + (m + n).choose (n + 1) ∧
+  Module.finrank F (V ⧸ A) - Module.finrank F W =
+    (m + n - 1).choose (n + 1) - m.choose 2 ∧
+  m.choose 3 ≤ Module.finrank F (V ⧸ A) - Module.finrank F W ∧
+  Module.finrank F W < Module.finrank F (V ⧸ A) ∧
+  mixedPower μ ⊤ (n + 2) = ⊥ ∧
+  ((m + n : ℕ) : ℝ) / (2 * (n + 1 : ℕ)) ≤ dimensionRatio F m n
+
+/-- Every field and every `n≥2` have the full family and unbounded dimension ratios. -/
+theorem family (F : Type*) [Field F] (n : ℕ) (hn : 2 ≤ n) :
+    (∀ m : ℕ, 3 ≤ m → familyProperties F m n) ∧
+    (∀ C : ℝ, ∃ m : ℕ, 3 ≤ m ∧ C < dimensionRatio F m n) := by
+  have hratio (m : ℕ) (hm : 3 ≤ m) :
+      ((m + n : ℕ) : ℝ) / (2 * (n + 1 : ℕ)) ≤ dimensionRatio F m n := by
+    dsimp only [dimensionRatio]
+    rw [family_quotient_dimension (F := F) (m := m) (by omega) hn,
+      family_power_dimension (F := F) (m := m) (by omega) hn]
+    exact ratio_bound hm hn
+  constructor
+  · intro m hm
+    dsimp only [familyProperties]
+    have hQ := family_quotient_dimension (F := F) (by omega : 0 < m) hn
+    have hW := family_power_dimension (F := F) (by omega : 0 < m) hn
+    have hdef := dimension_defect hm hn
+    refine ⟨inferInstance, mixedPower_finite _ _ _, family_power (by omega) hn,
+      family_annihilator (by omega) hn, ?_, family_v_dimension, hW, hQ, ?_, ?_, ?_, ?_,
+      hratio m hm⟩
+    · simpa only [Nat.add_assoc] using finrank_ambient (F := F) m (n + 1)
+    · rw [hQ, hW]; exact hdef.1
+    · rw [hQ, hW, hdef.1]; exact hdef.2.1
+    · rw [hQ, hW]; exact hdef.2.2
+    · simpa only [Nat.add_assoc] using ambient_nilpotent (F := F) m (n + 1)
+  · intro C
+    obtain ⟨m, hm⟩ := exists_nat_gt (max 3 (2 * (n + 1 : ℕ) * C))
+    have hm3 : 3 ≤ m := by exact_mod_cast (lt_of_le_of_lt (le_max_left _ _) hm).le
+    have hmC : 2 * (n + 1 : ℕ) * C < (m : ℝ) :=
+      lt_of_le_of_lt (le_max_right _ _) hm
+    refine ⟨m, hm3, lt_of_lt_of_le ?_ (hratio m hm3)⟩
+    apply (lt_div_iff₀ (by positivity)).mpr
+    push_cast
+    push_cast at hmC
+    nlinarith
+
+/-- The literal closed negation of the complete universal Question 23. -/
+theorem result : ¬ claim := by
+  intro H
+  have hf := (family ℚ 2 (by decide)).1 3 (by decide)
+  rcases hf with ⟨hR, hW, hpower, hann, hdimR, hdimV, hdimW, hdimQ,
+    hdef, hlower, hstrict, hnil, hratio⟩
+  have h := H ℚ (Ambient ℚ 3 3) (product ℚ (Model 3 3))
+    (by intro x y z; exact mul_assoc x y z)
+    (by intro x y; exact mul_comm x y)
+    (layer ℚ 3 3 1) inferInstance 1
+  exact (Nat.not_le_of_lt hstrict) h
 
 end D5.S0.Certificates.Algebra.BergmanQuestion23Refutation

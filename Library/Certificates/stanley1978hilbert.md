@@ -41,3 +41,9 @@ The source PDF has 1,593,323 bytes and SHA256
 `4ffe574030519fc4bc540a84edfa11d06a77810c6f943b4dfd8e3b3192e91ec5`.
 Only bibliographic citation and mathematical attribution are retained; no
 source code or PDF is imported.
+
+## Verified locator
+
+- DOI: 10.1016/0001-8708(78)90045-2
+- URL: https://math.mit.edu/~rstan/pubs/pubfiles/30.pdf
+- Source locator: Example 4.3, printed pp.70–71.

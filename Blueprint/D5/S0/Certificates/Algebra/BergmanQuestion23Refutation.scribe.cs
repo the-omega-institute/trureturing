@@ -54,7 +54,54 @@ internal sealed class BergmanQuestion23RefutationDocument : IScribeDocumentDefin
                     + "t+1 minus the degree of b, so every nonzero label has positive degree."),
             Node("layers", "The actual homogeneous subspaces", "layer",
                 "The degree d subspace consists of the finitely supported coefficient "
-                    + "vectors supported on labels of degree d."))));
+                    + "vectors supported on labels of degree d."),
+            Node("dimension-ratio", "The actual quotient-to-product dimension ratio", "dimensionRatio",
+                "Use the real quotient of the actual annihilator quotient dimension by the "
+                    + "dimension of the actual n-fold mixed product span of the designated "
+                    + "degree-one subspace, in the model with truncation t=n+1."),
+            Node("family-properties", "The full family specification", "familyProperties",
+                "Let R be the positive ideal with t=n+1, V its degree-one subspace, W its "
+                    + "n-fold mixed product space and A the annihilator of W in V. The "
+                    + "specification includes finite dimensional R and W, W equal to the "
+                    + "degree-n subspace, A equal to zero, all four dimension formulas, the "
+                    + "exact positive dimension deficit, annihilation of every product of "
+                    + "n+3 ambient elements and the stated lower bound for the real ratio."),
+            Describe.Lean(DescribeId.Create("full-family"),
+                DeclarationHandle.Create(Prefix + "family"), H("The complete parameter family"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For every field F and every integer n at least two, every integer m at "
+                    + "least three satisfies the full family specification. The actual n-fold "
+                    + "mixed product space is exactly the degree-n subspace, with e labels of "
+                    + "monomial degree n and f labels of monomial degree two; its relative "
+                    + "annihilator in V is zero. R and the product space are finite dimensional.")),
+                    Paragraph(Text(
+                    "The dimensions of R, V, W and V/A are respectively two times binomial "
+                    + "(m+n+1,n+1) minus one; m plus binomial (m+n,n+1); binomial "
+                    + "(m+n-1,n) plus binomial (m+1,2); and the dimension of V. The exact "
+                    + "quotient-minus-product deficit is binomial (m+n-1,n+1) minus "
+                    + "binomial (m,2), at least binomial (m,3), and the quotient dimension "
+                    + "is strictly larger than the product dimension.")),
+                    Paragraph(Text(
+                    "Every product of n+3 elements of R is zero. The real dimension ratio "
+                    + "is at least (m+n)/(2(n+1)). For each fixed F and n, every real C "
+                    + "is exceeded by the actual ratio for some m at least three. The "
+                    + "construction is a coefficient presentation of the classical Stanley "
+                    + "idealization; see Library/Certificates/stanley1978hilbert.md. "
+                    + "The entire unital idealization has one more dimension than R."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("question-twenty-three-refuted"),
+                DeclarationHandle.Create(Prefix + "result"), H("Question 23 has a negative answer"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The complete universal assertion is false. Its literal negation follows "
+                    + "by taking F rational, n equal to two and m equal to three in the "
+                    + "full family. The actual positive ideal has dimension 39, V and its "
+                    + "annihilator quotient have dimension 13, and V squared has dimension "
+                    + "12. No extra assumption is added to the original universal claim."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("bergman-question23"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
