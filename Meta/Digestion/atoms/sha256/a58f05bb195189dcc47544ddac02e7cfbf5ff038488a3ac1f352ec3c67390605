@@ -1,0 +1,8 @@
+准确来源为Lourenço–Roshchina–Saunderson，
+[Amenable cones are particularly nice，arXiv:2011.07745v2，Proposition 2.3][Q119LRS22]
+及其证明，期刊DOI为10.1137/20M138466X。
+该文定义中的投影不要求正交，amenability常数允许依赖面。
+这里的固定面误差界还有上面的直接证明。
+nice意味着每个锥面满足 $C^*+\mathcal F^\perp=\mathcal F^*$，其中右侧使用环境对偶空间；
+它不包含保单位条件或移动法向的连续性。
+

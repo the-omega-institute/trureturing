@@ -3750,3 +3750,388 @@ $G\subseteq G^\vee$ 条件使用；基空间 $\mathbb R$ 的正定识别不同�
 物理单位和数值 $\hbar$ 的桥梁；所有这些原物理合同保持未决。
 
 ## 追加锚（本行以下为增补区）
+
+## 129. 固定 Hermitian 紧实现的通用张量自极补全障碍
+
+### 129.A 固定对象、配对与有限源生成元
+
+**定义 129.1（单对象固定紧源）。** 令 $V=\operatorname{Herm}_2$ 为复 Hermitian
+矩阵的实向量空间，$V_n=V^{\otimes_{\mathbb R}n}=\operatorname{Herm}_{2^n}$，
+其中识别固定为普通 Kronecker 产品，$V_0=\mathbb R$。取 Pauli 矩阵及归一基
+
+$$
+I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+(e,x,y,z)=\frac1{\sqrt2}(I,X,Y,Z).
+\tag{129.1}
+$$
+
+所有计算基和转置固定一次。令
+
+$$
+\begin{aligned}
+b(u,v)&=\operatorname{Tr}(u^T v),&
+J&=\operatorname{diag}(1,1,-1,1),\\
+b_n&=b^{\otimes n},&
+b_n(a,c)&=\operatorname{Tr}(a^T c),\\
+K^\vee&=\{v\in V_n:b_n(u,v)\ge0\text{ 对所有 }u\in K\},&
+b_0(r,s)&=rs.
+\end{aligned}
+\tag{129.2}
+$$
+
+$J$ 是 $b$ 在上述有序基中的矩阵；此配对非退化而非正定。
+对象 $A$ 的杯、帽分别实现为
+
+$$
+\begin{aligned}
+\eta(1)&=e\otimes e+x\otimes x-y\otimes y+z\otimes z
+       =|\Omega\rangle\langle\Omega|,\\
+|\Omega\rangle&=|00\rangle+|11\rangle,\qquad
+\varepsilon(u\otimes v)=b(u,v).
+\end{aligned}
+\tag{129.3}
+$$
+
+杯的系数矩阵为 $J^{-1}=J$，所以两条 snake 恒等式都等于 $J^2=1$。
+张量单位、位置置换及规范重括号均用相应的普通实线性实现。
+
+取由一个自对偶对象 $A$、对称杯帽及下列有限生成箭头生成的自由对称紧闭源
+$\mathcal D$：两个一入一出门、六个一腿态及一个六腿态，分别实现为
+
+$$
+\begin{aligned}
+L_X&=\operatorname{Ad}_X=\operatorname{diag}(1,1,-1,-1),\\
+L_Z&=\operatorname{Ad}_Z=\operatorname{diag}(1,-1,-1,1),\\
+u_{h,\sigma}&=e+\frac{\sigma}{100}h
+\quad(h\in\{x,y,z\},\ \sigma\in\{-1,1\}),\\
+F&=e^{\otimes6}-\frac15\sum_{j=1}^6
+ e^{\otimes(j-1)}\otimes z\otimes e^{\otimes(6-j)}.
+\end{aligned}
+\tag{129.4}
+$$
+
+这里 $\operatorname{Ad}_U(v)=UvU^*$，门的对角矩阵写在 $(e,x,y,z)$ 基下。
+两门都是 $b$ 自伴随的交换对合；沿杯帽弯折不改变其实现。
+源箭头只由上述箭头、恒等、张量、复合和对称紧结构生成，包含所有紧弯折，
+不额外加入任意实线性组合、任意 CP 映射或全部 PSD 态。
+这些数据给出一个固定的强单式紧实现 $S:\mathcal D\to\mathrm{FVec}_{\mathbb R}$，
+不要求它充满到所有实线性映射。
+
+对每个有限 $n\ge0$，定义源态锥与其全极锥
+
+$$
+B_n=\overline{\operatorname{cone}}
+ \{S(f)(1):f:\mathbf1\to A^{\otimes n}\text{ 为源箭头}\},
+\qquad A_n=B_n^\vee.
+\tag{129.5}
+$$
+
+闭凸锥称为 proper，指它尖且张成整个所在实空间。
+$K\otimes_{\min}L$ 指所有简单正张量的闭凸锥。
+一族闭凸锥 $E_n\subseteq V_n$ 的张量封闭性指每个 $m,n\ge0$ 均有
+$E_m\otimes_{\min}E_n\subseteq E_{m+n}$，使用已经固定的张量识别。
+
+### 129.B 通用障碍的完整陈述
+
+**定理 129.2（正紧源不保证固定实现上的张量自极补全）。** 定义129.1的有限源满足：
+
+(i) 每个有限闭源图的实标量值非负。图的顶点数、门字长、连通分支数均不受统一上界限制，
+允许平行边、自环、无顶点圆和任意紧弯折。
+
+(ii) 对所有有限 $n$，$B_n$ 与 $A_n$ 都是 proper，且
+
+$$
+\begin{gathered}
+B_n\subseteq A_n=B_n^\vee,\qquad B_0=A_0=\mathbb R_{\ge0},\qquad
+e^{\otimes n}\in\operatorname{int}B_n,\\
+B_m\otimes_{\min}B_n\subseteq B_{m+n},\qquad
+\operatorname{Tr}(a)=2^{n/2}b_n(e^{\otimes n},a)>0
+\quad(0\ne a\in A_n).
+\end{gathered}
+\tag{129.6}
+$$
+
+每个源箭头 $f:A^{\otimes m}\to A^{\otimes n}$ 都把 $B_m$ 映入 $B_n$，
+也把 $A_m$ 映入 $A_n$。
+
+(iii) 不存在一族闭凸锥 $E_n$ 同时满足
+
+$$
+B_n\subseteq E_n\subseteq B_n^\vee\quad(n\ge0),\qquad
+E_m\otimes_{\min}E_n\subseteq E_{m+n}\quad(m,n\ge0),\qquad
+E_1=E_1^\vee.
+\tag{129.7}
+$$
+
+这里只要求一腿自极，不要求更高 $E_n$ 自极，也未另设 $E$ 的源映射不变性。
+因此结论量化于所有中间族，而非某个预先选出的补全。
+
+### 129.C 闭图的匹配展开与统一删除归纳
+
+**证明（129.2，闭图部分）。** 先压缩任意有限闭源图中的杯帽线链及二价门。
+弯折的门仍为原门；每条剩余边携带两门的某个乘积 $L$。
+它固定 $e$，并将 $x,y,z$ 各自映到自身或其负值。
+位置置换只改变端口的连接方式。
+
+没有 $F$ 顶点的连通分支有两类。无顶点圆贡献
+
+$$
+\operatorname{tr}_{\mathbb R}(L)
+ =|\operatorname{Tr}(U)|^2\in\{0,4\},
+\qquad L=\operatorname{Ad}_U,
+\tag{129.8}
+$$
+
+其中 $U$ 是任意 Pauli 门字的酉乘积。
+连接两个一腿态的分支贡献
+
+$$
+b(u_{h,\sigma},L u_{k,\tau})
+ =1+\frac{\sigma\tau}{10000}b(h,Lk)
+ \in\left[\frac{9999}{10000},\frac{10001}{10000}\right].
+\tag{129.9}
+$$
+
+此式保留 $y$ 坐标的负配对；因为 $b(h,Lk)\in\{0,1,-1\}$，符号不会破坏该界。
+空图贡献 $1$。
+
+对含 $F$ 的部分，将每个 $F$ 展开为全 $e$ 项及六个单 $z$ 标记项。
+每个顶点至多有一个标记，其系数为 $-1/5$。
+连接两个 $F$ 端口的边若恰有一端被标记，因 $b(e,Lz)=0$ 而消失；
+若两端都被标记，其系数和边配对合为
+
+$$
+\lambda_a=\frac1{25}b(z,L_a z)\in\left\{-\frac1{25},\frac1{25}\right\}.
+\tag{129.10}
+$$
+
+自环不能携带两个标记，因为这会要求同一顶点同时标记两个端口；
+携带一个标记又为零。无标记的自环贡献 $b(e,Le)=1$。
+因此可删去这些自环，保留的双标记内部边恰形成一个无自环多重图 $G$ 的匹配。
+平行边逐条保留。每个顶点原有六个端口，所以按重数计的 $\deg_G(v)\le6$。
+
+若一个顶点未被内部匹配占用，它可以不标记，也可以把唯一标记指向某条一腿叶边。
+每条此类边在未标记时贡献 $1$，在标记时相对于该值的贡献为
+$-b(z,L u_{h,\sigma})/5$，绝对值至多 $1/500$。
+把这些互斥选择相加，得到固定的实单体权
+
+$$
+m_v=1+\sum_{\ell\text{ 为 }v\text{ 的一腿叶边}}
+ \left(-\frac15 b(z,L_\ell u_{h_\ell,\sigma_\ell})\right)
+ \ge1-\frac6{500}=\frac{247}{250}.
+\tag{129.11}
+$$
+
+除去(129.8)—(129.9)的非负因子，剩余闭图值准确等于
+
+$$
+Z(G)=\sum_{M\text{ 为 }G\text{ 的匹配}}
+ \left(\prod_{a\in M}\lambda_a\right)
+ \left(\prod_{v\notin V(M)}m_v\right),\qquad Z(\varnothing)=1.
+\tag{129.12}
+$$
+
+这里匹配把平行边视为不同选择；$V(M)$ 为匹配占用的顶点集合。
+下面的归纳允许任意实权 $m_v\ge247/250$、任意边符号和任意有限顶点数，
+不依赖这些权是否来自某个具体源图。
+
+对任意顶点删除子图 $H$，删除只移去顶点及其关联边；存活顶点的 $m_v$ 保持原值，
+不把删掉的内部边重算成叶边。按顶点 $v$ 未匹配或由边 $a=vw$ 匹配分割(129.12)，得
+
+$$
+Z(H)=m_v Z(H-v)+\sum_{a=vw\in E(H)}\lambda_a Z(H-v-w).
+\tag{129.13}
+$$
+
+这是逐条计数平行边的删除恒等式。作为成熟组合方法的先例，
+Amini，[*Spectrahedrality of Hyperbolicity Cones of Multivariate Matching Polynomials*,
+arXiv:1611.06104v1](https://arxiv.org/abs/1611.06104v1)，Lemma 2.6，
+给出其匹配多项式的顶点删除递推。此处的任意有符号边权、源图自环处理及下面的定量界
+均由(129.12)—(129.14)直接证明，不从该文的权符号约定推出。
+
+对顶点数作同时归纳，证明每个非空 $H$ 及其中每个 $v$ 都有
+
+$$
+Z(H)>0,\qquad
+\frac{Z(H)}{Z(H-v)}\ge\frac{127}{250}>\frac12.
+\tag{129.14}
+$$
+
+空图值为 $1$；单顶点的比值为 $m_v\ge247/250$。
+在归纳步中，$Z(H-v)>0$。对每条 $a=vw$，较小图 $H-v$ 的归纳结论给
+
+$$
+0<\frac{Z(H-v-w)}{Z(H-v)}\le2.
+\tag{129.15}
+$$
+
+将(129.13)除以正分母，利用每个边权绝对值为 $1/25$、度数按重数至多六，得到
+
+$$
+\frac{Z(H)}{Z(H-v)}
+ =m_v+\sum_{a=vw}\lambda_a\frac{Z(H-v-w)}{Z(H-v)}
+ \ge\frac{247}{250}-6\cdot\frac1{25}\cdot2
+ =\frac{127}{250}>\frac12.
+\tag{129.16}
+$$
+
+这也给出 $Z(H)>0$，完成同时归纳。
+没有连通性假设，所以断开的 $F$ 图同样包含在证明中。
+再乘回一腿分支与无顶点圆的因子，允许圆使总值为零，便得所有有限闭源图非负。
+该论证覆盖任意多个 $F$、任意门字及所有上述布线，不以有限枚举替代全称结论。
+
+### 129.D 所有有限字上的 proper 锥与严格迹
+
+**证明（129.2，锥部分）。** 源复合给出 $S(f)B_m\subseteq B_n$，
+源态张量给出 $B_m\otimes_{\min}B_n\subseteq B_{m+n}$；
+两者在闭包上的延伸由有限维线性与双线性连续性得到。
+紧弯折把每个源效应写成 $b_n(s,\cdot)$，其中 $s$ 为相同字上的某个源态。
+刚证明的闭图非负性及连续性因而给 $B_n\subseteq B_n^\vee$。
+若 $f$ 为源箭头，其 $b$ 伴随 $f^\flat$ 由紧弯折实现，仍为源箭头。
+对 $a\in A_m$ 和 $s\in B_n$，有
+
+$$
+b_n(s,S(f)a)=b_m(S(f^\flat)s,a)\ge0,
+\tag{129.17}
+$$
+
+故上极族也在全部源映射下不变。
+
+六个一腿态的线性张成包含 $e,x,y,z$，且
+
+$$
+\frac16\sum_{h\in\{x,y,z\}}\sum_{\sigma\in\{-1,1\}}u_{h,\sigma}=e.
+\tag{129.18}
+$$
+
+它们的 $6^n$ 个有序张量积张成整个 $V_n$，等权平均为 $e^{\otimes n}$，
+每项系数都严格正。因此 $e^{\otimes n}$ 是这些张量积所生成锥的内点：
+若有一个支持泛函在该平均值为零且在全部生成向量上非负，
+则它在每个生成向量上都为零，由张成性只能是零泛函。
+有限维闭凸锥的支持分离遂给 $e^{\otimes n}\in\operatorname{int}B_n$。
+特别地 $B_n$ 张成整个 $V_n$。
+
+由 $b_n$ 非退化，张成锥 $B_n$ 的极 $A_n$ 是尖的：
+若 $a,-a\in A_n$，则 $b_n(B_n,a)=0$，从而 $a=0$。
+由于 $B_n\subseteq A_n$，$B_n$ 也尖，而 $A_n$ 含有 $B_n$ 的内点，故也张成整个空间。
+两者按定义都闭，因而 proper。
+对非零 $a\in A_n$，非零泛函 $b_n(\cdot,a)$ 在 $B_n$ 非负，
+在其内点 $e^{\otimes n}$ 必严格为正。又 $e^{\otimes n}=I_{2^n}/2^{n/2}$，
+故得(129.6)的严格迹公式，亦适用于 $B_n\setminus\{0\}$。
+最后，所有闭源标量非负，且单位标量 $1$ 是源图值，所以 $B_0=A_0=\mathbb R_{\ge0}$。
+
+### 129.E 对每一种中间补全的强制成员矛盾
+
+**证明（129.2，不存在性部分）。** 假设存在(129.7)的一族 $E_n$。
+先不假设其源映射不变性。对 $L=L_X,L_Z$，将门弯成二腿源态
+$s_L=(\operatorname{id}\otimes L)\eta(1)\in B_2$。
+任意 $v,w\in E_1$ 的乘积属于 $E_2\subseteq B_2^\vee$，故
+
+$$
+b(w,Lv)=b_2(v\otimes w,s_L)\ge0.
+\tag{129.19}
+$$
+
+固定 $v$ 而让 $w$ 遍历整个 $E_1$，一腿自极性给 $Lv\in E_1$。
+因此两门对 $E_1$ 的不变性由二腿源态和张量封闭性强制得出。
+
+对任意 $v\in E_1$，写 $v=ae+cx+dy+qz$。
+由凸性和刚证明的门不变性，
+
+$$
+u=\frac{v+L_Zv}{2}=ae+qz\in E_1,\qquad
+L_Xu=ae-qz\in E_1.
+\tag{129.20}
+$$
+
+因为 $E_1=E_1^\vee$，两者的配对非负，且 $e\in B_1\subseteq E_1$，所以
+
+$$
+a^2-q^2=b(u,L_Xu)\ge0,\qquad a=b(e,v)\ge0.
+\tag{129.21}
+$$
+
+从而 $a\ge|q|$，并且对每个 $v\in E_1$ 都有
+
+$$
+b(e+z,v)=a+q\ge0.
+\tag{129.22}
+$$
+
+再次应用一腿自极性，得到同一个被强制的向量
+
+$$
+p=e+z=\sqrt2\,|0\rangle\langle0|\in E_1.
+\tag{129.23}
+$$
+
+张量封闭性反复应用即给 $p^{\otimes6}\in E_6\subseteq B_6^\vee$。
+然而 $F\in B_6$，且 $b(e,p)=b(z,p)=1$，故
+
+$$
+b_6(F,p^{\otimes6})=1-\frac15\sum_{j=1}^6 1
+ =1-\frac65=-\frac15<0.
+\tag{129.24}
+$$
+
+这与上极包含矛盾。证明只用 $E_1$ 自极；未用任何更高自极性，
+也未把 $E$ 的新增元素当作源箭头。
+六腿是该显式构造的有限矛盾次数，不包含最小次数断言。∎
+
+### 129.F 来源定理与原模型的适用边界
+
+**定理129.2的文献边界。** 上述显式固定实现构造及其直接推导记为 `repo-derived`；
+此分类不主张全局新颖性、优先权或解决某个外部开放问题。
+匹配删除恒等式是引于证明中的成熟中间方法，承重结论是(129.7)对所有中间族的不可能性。
+
+Netzer，[*Self-Dual Cone Systems and Tensor Products*,
+arXiv:2408.07389v1](https://arxiv.org/abs/2408.07389v1)，Theorem 2.2，
+在其 star-autonomous stem、proper 内禀锥及基空间正定识别的条件下，
+给出固定源箭头系统的自对偶扩张。
+其基空间 $X$ 的正定识别与本章对象层的非正定 $b$ 是不同数据；
+取标量基空间 $X=\mathbb R$ 不会把 $b$ 变为正定。
+该定理的固定箭头正性不额外断言(129.7)中所有指定张量识别下的产品包含。
+
+同文 Theorem 3.2 确实给出位于其最小、最大张量积之间的自对偶函子性二元张量积。
+Definition 3.1 单独的定义更宽，该文 §4 明确区分其定义与逐层 min/max 包含。
+这种二元产品的存在不等价于在本章固定全部字实现上满足(129.7)，
+也不自动提供本题预指定的结合性或一族指定产品。
+定理129.2既不否定 Theorem 2.2，也不否定 Theorem 3.2，
+其结论不是“某个任选补全失去结合性”或“min 与 max 不同”的改写。
+
+Barnum–Duncan–Wilce，
+[*Symmetry, Compact Closure and Dagger Compactness for Categories of Convex Operational Models*,
+arXiv:1004.2920v1](https://arxiv.org/abs/1004.2920v1)，Definition 20、Theorem 21，
+讨论已经单式的凸操作模型范畴中的弱自对偶与自对偶对象紧结构。
+其指定态／效应和序同构条件不等于固定 $b$ 下 $E_1$ 与整个极锥相等，
+不能从源图的紧语法单独补出本章缺失的张量自极族。
+Barker–Foran，[*Self-dual cones in Euclidean spaces*,
+Linear Algebra and its Applications 13 (1976), 147–155](https://doi.org/10.1016/0024-3795(76)90053-7)，
+Theorem 5 的单锥先例归属在此仅以 Netzer 的引述为限；本章证明不依赖该原定理。
+
+**定理129.2的模型边界。** 本章保留真实 Hermitian 实张量空间、固定全转置迹配对、
+Bell 杯帽、全部位置置换和规范重括号、精确张量迹，以及全部有限源图正性。
+它的一腿源却没有整个 qubit PSD 供应。
+事实上 $p\notin B_1$：否则 $B$ 的张量封闭性和 $B_6\subseteq B_6^\vee$
+会与(129.24)矛盾。在原模型中 $p=\sqrt2|0\rangle\langle0|$ 已由完整一腿 PSD 供应；
+因此把这个 $F$ 加入原源，会立即给出负的原闭源标量，不能形成原模型反例。
+
+本章也不包含原来的整个两腿 PSD／$S_2$ 供应、标量／qubit／qutrit 扇区族、
+全部矩形 CP 映射、共同混合 $\mathcal K$ 锚、含相位的质量二 $\mathrm{GHZ}_2$ 种子，
+或 $00/01/10$ 码、$c^*11=0$、全部实际 retract 与预算。
+故本定理不推出原模型 no-go、新的原 $t$ 界、原六份完整前缀、
+与 $N$ 无关的固定严格间隙、$\mathsf{Fusion}_3$ 或物理实现桥。
+原 allN 假设由杯帽导出的 $C_N^*=T_NC_N$（VII卷105.3，式(105.6)）仍须保留；
+在六份截断内，同一杯论证只强制至三份的极性，不据此取得 $C_4,C_5,C_6$ 的极性。
+
+123.2的 $t=2/3$ 完整五份定义前缀保持原有范围；其扩张到六份，
+以及与整个 $C_4,C_5$ 和全部普通对偶区间的相容性，仍未由本章给出。
+实际源的 Four／源乘积符号沿123.2、125.2、125.6，
+互反接口沿VII卷105.6，均不构成本章的新结论。
+原制备来源、记录／事件、仪器、时间、物理钟、Hamiltonian、能量、标定、单位及 $\hbar$
+桥梁仍属原模型的独立条件，本章有限源不实现这些物理合同。
+
+## 追加锚（本行以下为增补区）
