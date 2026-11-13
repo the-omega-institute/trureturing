@@ -27,40 +27,6 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 /-- The original closed shadow shell, without an assumed closed ratio image. -/
 def shell (n : NativeChart C u p e a) : Set ThreeSpace := closure (actualImage n)
 
-/-- The perspective of the entire original base is convex. -/
-theorem actual_image_convex (n : NativeChart C u p e a) : Convex ℝ (actualImage n) := by
-  rintro z ⟨x,hx,rfl⟩ w ⟨y,hy,rfl⟩ s t hs ht hst
-  have gx := n.gap_positive x hx.1 (by simpa using hx.2)
-  have gy := n.gap_positive y hy.1 (by simpa using hy.2)
-  let d := s / (u-e) x + t / (u-e) y
-  have hd : 0 < d := by
-    dsimp [d]
-    by_cases h : 0 < s
-    · exact add_pos_of_pos_of_nonneg (div_pos h gx) (div_nonneg ht gy.le)
-    · have hsz : s = 0 := le_antisymm (le_of_not_gt h) hs
-      have htz : t = 1 := by linarith
-      rw [hsz,htz]
-      simpa only [LinearMap.sub_apply,zero_div,one_div,zero_add] using inv_pos.mpr gy
-  let q := (s / (u-e) x / d) • x + (t / (u-e) y / d) • y
-  have hsum : s / (u-e) x / d + t / (u-e) y / d = 1 := by
-    rw [← add_div]; exact div_self hd.ne'
-  have hq : q ∈ base C u := base_convex C u hx.1 hy.1
-    (div_nonneg (div_nonneg hs gx.le) hd.le)
-    (div_nonneg (div_nonneg ht gy.le) hd.le) hsum
-  have hgap : (u-e) q = d⁻¹ := by
-    simp only [q,map_add,map_smul,smul_eq_mul]
-    field_simp
-    nlinarith [hst]
-  have hqp : q ≠ (p : V) := by
-    intro h
-    rw [h,n.gap_normal.2] at hgap
-    exact (inv_ne_zero hd.ne') hgap.symm
-  refine ⟨q,⟨hq,by simpa using hqp⟩,?_⟩
-  change ((u-e) q)⁻¹ • n.H q = _
-  rw [hgap,inv_inv]
-  simp only [q,map_add,map_smul,smul_add,smul_smul]
-  congr 1 <;> congr 1 <;> field_simp
-
 private theorem shell_geometry (n : NativeChart C u p e a) :
     IsCompact (shell n) ∧ Convex ℝ (shell n) ∧
     Metric.closedBall (0 : ThreeSpace) 1 ⊆ shell n := by

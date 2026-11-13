@@ -37,32 +37,35 @@ abbrev signature : Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := ℝ × ℝ
+  Output _ _ := Set ThreeSpace × ℝ × ℝ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{v} :=
-  realize signature (fun _ P w => (rho P.native w, width P.chart)) (fun a => nomatch a)
+  realize signature (fun _ P w => (actualImage P.native, rho P.native w, width P.chart)) (fun a => nomatch a)
 
 abbrev arena : Arena where
   signature := signature.{v}
   Law O := ∀ P : Inputs.{v},
-    IsClosed (P.cone : Set P.V) →
+    Convex ℝ (O.readout () P 0).1 ∧ (IsClosed (P.cone : Set P.V) →
     (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
     Submodule.span ℝ (P.cone : Set P.V) = ⊤ → EB3 P.cone P.unit →
     (∀ w : ThreeSpace, ‖w‖ = 1 →
-      ((O.readout () P w).1 = 1 ↔ ∃ f : P.V →ₗ[ℝ] ℝ,
+      ((O.readout () P w).2.1 = 1 ↔ ∃ f : P.V →ₗ[ℝ] ℝ,
         proper P.cone P.unit f ∧ f (P.chart.param w) = 1 ∧
           f (P.chart.param (-w)) = 0)) ∧
-    ((O.readout () P 0).2 = 1 ↔ ∃ w : ThreeSpace,
-      ‖w‖ = 1 ∧ (O.readout () P w).1 = 1)
+    ((O.readout () P 0).2.2 = 1 ↔ ∃ w : ThreeSpace,
+      ‖w‖ = 1 ∧ (O.readout () P w).2.1 = 1))
 
 abbrev sourceScope : Prop :=
+  type_of% (@actual_image_convex.{v}) ∧
   type_of% (@rho_one_iff_antipodal.{v}) ∧ type_of% (@width_one_iff_rho_one.{v})
 
 theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
   constructor
-  · rintro ⟨hR,hW⟩ P hc hs hg h3
+  · rintro ⟨hC,hR,hW⟩ P
+    refine ⟨@hC P.V P.add P.space P.finite P.cone P.unit P.p P.effect P.chart P.native, ?_⟩
+    intro hc hs hg h3
     constructor
     · intro w hw
       exact @hR P.V P.add P.space P.finite P.cone P.unit P.p P.effect P.chart
@@ -70,13 +73,15 @@ theorem source_bridge : sourceScope.{v} ↔ arena.{v}.Law actual.{v} := by
     · exact @hW P.V P.add P.space P.finite P.cone P.unit P.p P.effect P.chart
         hc hs hg h3 P.native
   · intro h
-    constructor
+    refine ⟨?_,?_,?_⟩
+    · intro V add space finite C u p e a n
+      exact (h (@Inputs.mk V add space finite C u p e a n)).1
     · intro V add space finite C u p e a hc hs hg h3 n w hw
-      exact (h (@Inputs.mk V add space finite C u p e a n) hc hs hg h3).1 w hw
+      exact (h (@Inputs.mk V add space finite C u p e a n)).2 hc hs hg h3 |>.1 w hw
     · intro V add space finite C u p e a hc hs hg h3 n
-      exact (h (@Inputs.mk V add space finite C u p e a n) hc hs hg h3).2
+      exact (h (@Inputs.mk V add space finite C u p e a n)).2 hc hs hg h3 |>.2
 
 theorem actual_positive : arena.{v}.Law actual.{v} :=
-  source_bridge.mp ⟨@rho_one_iff_antipodal.{v}, @width_one_iff_rho_one.{v}⟩
+  source_bridge.mp ⟨@actual_image_convex.{v}, @rho_one_iff_antipodal.{v}, @width_one_iff_rho_one.{v}⟩
 
 end Reg.D5.S3.Quantum.Foundation.RegularAnchorWidthAntipode

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: []
    utility: none
-   digest: Full original effect width detects actual regular-anchor antipodal contact. -/
+   digest: Convex actual ratio images and full original effect widths determine antipodal contact. -/
 
 import D5.S3.Quantum.Foundation.RegularAnchorNormalChart
 
@@ -28,6 +28,40 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 /-- Actual normalized images of every original base state other than the anchor. -/
 def actualImage (n : NativeChart C u p e a) : Set ThreeSpace :=
   (fun x : V => ((u - e) x)⁻¹ • n.H x) '' (base C u \ {(p : V)})
+
+/-- The perspective of the entire original base is convex. -/
+theorem actual_image_convex (n : NativeChart C u p e a) : Convex ℝ (actualImage n) := by
+  rintro z ⟨x,hx,rfl⟩ w ⟨y,hy,rfl⟩ s t hs ht hst
+  have gx := n.gap_positive x hx.1 (by simpa using hx.2)
+  have gy := n.gap_positive y hy.1 (by simpa using hy.2)
+  let d := s / (u-e) x + t / (u-e) y
+  have hd : 0 < d := by
+    dsimp [d]
+    by_cases h : 0 < s
+    · exact add_pos_of_pos_of_nonneg (div_pos h gx) (div_nonneg ht gy.le)
+    · have hsz : s = 0 := le_antisymm (le_of_not_gt h) hs
+      have htz : t = 1 := by linarith
+      rw [hsz,htz]
+      simpa only [LinearMap.sub_apply,zero_div,one_div,zero_add] using inv_pos.mpr gy
+  let q := (s / (u-e) x / d) • x + (t / (u-e) y / d) • y
+  have hsum : s / (u-e) x / d + t / (u-e) y / d = 1 := by
+    rw [← add_div]; exact div_self hd.ne'
+  have hq : q ∈ base C u := base_convex C u hx.1 hy.1
+    (div_nonneg (div_nonneg hs gx.le) hd.le)
+    (div_nonneg (div_nonneg ht gy.le) hd.le) hsum
+  have hgap : (u-e) q = d⁻¹ := by
+    simp only [q,map_add,map_smul,smul_eq_mul]
+    field_simp
+    nlinarith [hst]
+  have hqp : q ≠ (p : V) := by
+    intro h
+    rw [h,n.gap_normal.2] at hgap
+    exact (inv_ne_zero hd.ne') hgap.symm
+  refine ⟨q,⟨hq,by simpa using hqp⟩,?_⟩
+  change ((u-e) q)⁻¹ • n.H q = _
+  rw [hgap,inv_inv]
+  simp only [q,map_add,map_smul,smul_add,smul_smul]
+  congr 1 <;> congr 1 <;> field_simp
 
 /-- The source direction function, with the full original base in its supremum. -/
 def rho (n : NativeChart C u p e a) (v : ThreeSpace) : ℝ :=
@@ -180,32 +214,22 @@ theorem rho_one_iff_antipodal (hc : IsClosed (C : Set V))
     exact ((hh.symm ▸ (show a.param v ∈ a.param '' Metric.sphere 0 1 from
       ⟨v,by simpa using hv,rfl⟩))).2
   let q : pure C u := ⟨a.param v,hq⟩
+  have hxm := chart_mem (nativeChart a) (by simpa using hv.le : ‖-v‖ ≤ 1)
+  have hz := ExclusionWidthCompactness.comparison_zero_iff hs hg q hxm.1
   constructor
   · intro hr
     have hgap := (zero_gap_iff hc hs hg hB p (nativeChart a) v hv).mpr
       ((rho_le_one_iff_slope hc hs n v).mp hr.le)
-    obtain ⟨f,hf,hfr⟩ := comparison_attained hs hg q (a.param (-v))
-    exact ⟨f,hf.1,hf.2,hfr.trans hgap⟩
+    obtain ⟨_, f, hf, hfr⟩ := hz.mp hgap
+    exact ⟨f, hf.1, hf.2, hfr⟩
   · rintro ⟨f,hf,hfv,hfm⟩
-    have hgap : gap (nativeChart a) v = 0 := by
-      apply le_antisymm
-      · change comparison C u (a.param v) (a.param (-v)) ≤ 0
-        apply (csInf_le (a := f (a.param (-v))) ?_ (show f (a.param (-v)) ∈
-          {r | ∃ k : V →ₗ[ℝ] ℝ, confirms C u (a.param v) k ∧ k (a.param (-v)) = r} from
-          ⟨f,⟨hf,hfv⟩,rfl⟩)).trans_eq hfm
-        exact ⟨0,by rintro r ⟨k,hk,rfl⟩; exact (hk.1 _
-          (chart_mem (nativeChart a) (by simpa using hv.le : ‖-v‖ ≤ 1)).1.1).1⟩
-      · change 0 ≤ comparison C u (a.param v) (a.param (-v))
-        apply le_csInf (s := {r | ∃ k : V →ₗ[ℝ] ℝ, confirms C u (a.param v) k ∧
-          k (a.param (-v)) = r}) ⟨0,f,⟨hf,hfv⟩,hfm⟩
-        rintro r ⟨k,hk,rfl⟩
-        exact (hk.1 _ (chart_mem (nativeChart a) (by simpa using hv.le : ‖-v‖ ≤ 1)).1.1).1
+    have hgap : gap (nativeChart a) v = 0 := hz.mpr ⟨hxm.1,f,⟨hf,hfv⟩,hfm⟩
     exact le_antisymm ((rho_le_one_iff_slope hc hs n v).mpr
       ((zero_gap_iff hc hs hg hB p (nativeChart a) v hv).mp hgap)) (rho_unit_lower n hv)
 
 /-- Full oscillation on the entire original exclusion, before taking effects. -/
 def oscillation (a : FullBall3Chart C u p) (f : V →L[ℝ] ℝ) : ℝ :=
-  sSup (f '' exclusion C u p) - sInf (f '' exclusion C u p)
+  ExclusionWidthCompactness.oscillation (exclusion C u p) f
 
 /-- Width uses the whole original effect interval, including every linear effect. -/
 def width (a : FullBall3Chart C u p) : ℝ :=
@@ -252,34 +276,6 @@ private theorem chart_extrema (f : V →L[ℝ] ℝ) :
       rw [inner_neg_right, hi]
       ring
 
-private theorem oscillation_formula (f : V →L[ℝ] ℝ) :
-    oscillation a f = 2 * ‖slope (nativeChart a) f‖ := by
-  obtain ⟨v,hv,hmax,hmin,hbound⟩ := chart_extrema (a := a) f
-  have hs : sSup (f '' exclusion C u p) = f (a.param v) := by
-    apply IsGreatest.csSup_eq
-    refine ⟨⟨a.param v,chart_mem (nativeChart a) hv.le,rfl⟩,?_⟩
-    rintro r ⟨x,hx,rfl⟩
-    obtain ⟨w,hw,rfl⟩ := a.whole.symm ▸ hx
-    rw [hmax]
-    exact (hbound w (by simpa using hw)).2
-  have hi : sInf (f '' exclusion C u p) = f (a.param (-v)) := by
-    apply IsLeast.csInf_eq
-    refine ⟨⟨a.param (-v),chart_mem (nativeChart a) (by simpa using hv.le : ‖-v‖ ≤ 1),rfl⟩,?_⟩
-    rintro r ⟨x,hx,rfl⟩
-    obtain ⟨w,hw,rfl⟩ := a.whole.symm ▸ hx
-    rw [hmin]
-    exact (hbound w (by simpa using hw)).1
-  rw [oscillation, hs, hi, hmax, hmin]
-  ring
-
-private theorem width_slope : width a =
-    sSup ((fun f : V →L[ℝ] ℝ => 2 * ‖slope (nativeChart a) f‖) '' effects C u) := by
-  unfold width
-  congr 1
-  ext r
-  simp only [mem_image]
-  exact exists_congr fun f => and_congr_right fun _ => by rw [oscillation_formula]
-
 /-- A real original effect attains width, with actual unit antipodal maximizing
 and minimizing states in the whole original chart. -/
 theorem width_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -288,42 +284,28 @@ theorem width_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
       width a = f (a.param v) - f (a.param (-v)) ∧
       (∀ x ∈ exclusion C u p, f x ≤ f (a.param v)) ∧
       (∀ x ∈ exclusion C u p, f (a.param (-v)) ≤ f x) := by
-  have hne : (effects C u).Nonempty := ⟨0,fun x _ => ⟨by simp,by
-    by_cases hx : x = 0
-    · simp [hx]
-    · exact (hs x ‹x ∈ C› hx).le⟩⟩
-  have hcont : Continuous (fun f : V →L[ℝ] ℝ => 2 * ‖slope (nativeChart a) f‖) :=
-    continuous_const.mul ((slope (nativeChart a)).continuous_of_finiteDimensional.norm)
-  obtain ⟨f,hf,hfwidth⟩ := (effects_compact hs hg).exists_sSup_image_eq hne hcont.continuousOn
+  have hF : IsCompact (exclusion C u p) := by
+    rw [← a.whole]
+    exact (isCompact_closedBall (0 : ThreeSpace) 1).image a.param.continuous
+  have hne : (exclusion C u p).Nonempty := ⟨a.param 0,chart_mem (nativeChart a) (by simp)⟩
+  obtain ⟨f,hf,y,hy,z,hz,hw,_,horder⟩ :=
+    ExclusionWidthCompactness.width_attained hs hg hF hne
   obtain ⟨v,hv,hmax,hmin,hbound⟩ := chart_extrema (a := a) f
-  refine ⟨f.toLinearMap,hf,v,hv,?_,?_,?_⟩
-  · change width a = f (a.param v) - f (a.param (-v))
-    rw [width_slope, hfwidth, hmax, hmin]
-    ring
-  · intro x hx
-    obtain ⟨w,hw,rfl⟩ := a.whole.symm ▸ hx
-    change f (a.param w) ≤ f (a.param v)
-    rw [hmax]
-    exact (hbound w (by simpa using hw)).2
-  · intro x hx
-    obtain ⟨w,hw,rfl⟩ := a.whole.symm ▸ hx
-    change f (a.param (-v)) ≤ f (a.param w)
-    rw [hmin]
-    exact (hbound w (by simpa using hw)).1
-
-private theorem effect_slope_bound {f : V →L[ℝ] ℝ} (hf : proper C u f.toLinearMap) :
-    2 * ‖slope (nativeChart a) f‖ ≤ 1 := by
-  obtain ⟨v,hv,hmax,hmin,_⟩ := chart_extrema (a := a) f
   have hxp := chart_mem (nativeChart a) hv.le
   have hxm := chart_mem (nativeChart a) (by simpa using hv.le : ‖-v‖ ≤ 1)
-  have hh := (hf (a.param v) hxp.1.1).2
-  have hl := (hf (a.param (-v)) hxm.1.1).1
-  change f (a.param v) ≤ u (a.param v) at hh
-  change 0 ≤ f (a.param (-v)) at hl
-  rw [hxp.1.2] at hh
-  rw [hmax] at hh
-  rw [hmin] at hl
-  linarith
+  have htop (x) (hx : x ∈ exclusion C u p) : f x ≤ f (a.param v) := by
+    obtain ⟨w,hw,rfl⟩ := a.whole.symm ▸ hx
+    rw [hmax]
+    exact (hbound w (by simpa using hw)).2
+  have hbot (x) (hx : x ∈ exclusion C u p) : f (a.param (-v)) ≤ f x := by
+    obtain ⟨w,hw,rfl⟩ := a.whole.symm ▸ hx
+    rw [hmin]
+    exact (hbound w (by simpa using hw)).1
+  have hymax : f y = f (a.param v) := le_antisymm (htop y hy) (horder _ hxp).2
+  have hzmin : f z = f (a.param (-v)) := le_antisymm (horder _ hxm).1 (hbot z hz)
+  refine ⟨f.toLinearMap,hf,v,hv,?_,htop,hbot⟩
+  change ExclusionWidthCompactness.width C u (exclusion C u p) = _
+  rw [hw,hymax,hzmin]
 
 /-- Width one is exactly unit support in some actual original unit direction. -/
 theorem width_one_iff_rho_one (hc : IsClosed (C : Set V))
@@ -331,15 +313,16 @@ theorem width_one_iff_rho_one (hc : IsClosed (C : Set V))
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (h3 : EB3 C u)
     (n : NativeChart C u p e a) :
     width a = 1 ↔ ∃ v : ThreeSpace, ‖v‖ = 1 ∧ rho n v = 1 := by
-  have hne : (effects C u).Nonempty := ⟨0,fun x hx => ⟨by simp,by
-    by_cases hz : x = 0
-    · simp [hz]
-    · exact (hs x hx hz).le⟩⟩
+  have hB : exclusionBalls C u := fun q => (h3 q).map nativeChart
+  have hF : {x | x ∈ base C u ∧ comparison C u p x = 0} = exclusion C u p := by
+    ext x
+    exact ⟨fun hx => (ExclusionWidthCompactness.comparison_zero_iff hs hg p hx.1).mp hx.2,
+      fun hx => ⟨hx.1,(ExclusionWidthCompactness.comparison_zero_iff hs hg p hx.1).mpr hx⟩⟩
   have hwidth : width a ≤ 1 := by
-    rw [width_slope]
-    apply csSup_le (hne.image _)
-    rintro r ⟨f,hf,rfl⟩
-    exact effect_slope_bound hf
+    have hh := (ExclusionWidthCompactness.original_exclusion_width hc hs hg hB p).1.2
+    dsimp only at hh
+    rw [hF] at hh
+    exact hh
   constructor
   · intro hw
     obtain ⟨f,hf,v,hv,hwidth,_,_⟩ := width_attained hs hg a
@@ -354,19 +337,14 @@ theorem width_one_iff_rho_one (hc : IsClosed (C : Set V))
     · linarith
   · rintro ⟨v,hv,hr⟩
     obtain ⟨f,hf,hfv,hfm⟩ := (rho_one_iff_antipodal hc hs hg h3 n v hv).mp hr
-    have hb : BddAbove ((fun f : V →L[ℝ] ℝ => 2 * ‖slope (nativeChart a) f‖) '' effects C u) :=
-      ⟨1,by rintro r ⟨f,hf,rfl⟩; exact effect_slope_bound hf⟩
-    have hle : 2 * ‖slope (nativeChart a) f.toContinuousLinearMap‖ ≤ width a := by
-      rw [width_slope]
-      exact le_csSup hb ⟨f.toContinuousLinearMap,hf,rfl⟩
-    have hp := slope_formula (nativeChart a) f.toContinuousLinearMap v
-    have hm := slope_formula (nativeChart a) f.toContinuousLinearMap (-v)
-    change f (a.param v) = f (a.param 0) + _ at hp
-    change f (a.param (-v)) = f (a.param 0) + _ at hm
-    rw [hfv] at hp
-    rw [hfm,inner_neg_right] at hm
-    have hi := real_inner_le_norm (slope (nativeChart a) f.toContinuousLinearMap) v
-    rw [hv,mul_one] at hi
-    exact le_antisymm hwidth (by linarith)
+    have hcompact : IsCompact (exclusion C u p) := by
+      rw [← a.whole]
+      exact (isCompact_closedBall (0 : ThreeSpace) 1).image a.param.continuous
+    have hle := ExclusionWidthCompactness.effect_difference_le_width hs hg hcompact
+      (f := f.toContinuousLinearMap) hf (chart_mem (nativeChart a) hv.le)
+      (chart_mem (nativeChart a) (by simpa using hv.le : ‖-v‖ ≤ 1))
+    change f (a.param v) - f (a.param (-v)) ≤ width a at hle
+    rw [hfv,hfm] at hle
+    exact le_antisymm hwidth (by simpa using hle)
 
 end D5.S3.Quantum.Foundation.RegularAnchorWidthAntipode

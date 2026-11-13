@@ -8,6 +8,8 @@
 
 import D5.S3.Quantum.Foundation.SingleLabelNormalBody
 import D5.S3.Quantum.Foundation.CommonPositiveExtension
+import D5.S3.Quantum.Foundation.ExclusionWidthCompactness
+import D5.S3.Quantum.Foundation.OriginalWidthContact
 
 /-! Normal coordinates retain the entire original cone, base and effect interval.
 Regularity means uniqueness in the original common-confirmation family. -/
@@ -47,26 +49,6 @@ def Regular (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p : V) : Prop :=
 /-- Signed span of the entire original positive annihilator cone. -/
 abbrev NormalSpan (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p : V) :=
   Submodule.span ℝ (zeroPositive C u p)
-
-private theorem comparison_zero (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u)
-    {x : V} (hx : x ∈ base C u) :
-    comparison C u p x = 0 ↔ x ∈ exclusion C u p := by
-  constructor
-  · intro hz
-    obtain ⟨f, hf, he⟩ := comparison_attained hs hg p x
-    exact ⟨hx, f, hf, he.trans hz⟩
-  · rintro ⟨_, f, hf, hfz⟩
-    apply le_antisymm
-    · have hle : comparison C u p x ≤ f x := by
-        apply csInf_le
-        · exact ⟨0, by rintro r ⟨e, he, rfl⟩; exact (he.1 x hx.1).1⟩
-        · exact ⟨f, hf, rfl⟩
-      exact hle.trans_eq hfz
-    · apply le_csInf (s := {r | ∃ e : V →ₗ[ℝ] ℝ, confirms C u p e ∧ e x = r})
-        ⟨f x, f, hf, rfl⟩
-      rintro r ⟨e, he, rfl⟩
-      exact (he.1 x hx.1).1
 
 omit [FiniteDimensional ℝ V] in
 private theorem complement_normal {p : pure C u} {e : V →ₗ[ℝ] ℝ}
@@ -109,11 +91,12 @@ private theorem constant_normal
   have hqc : f q = f (a.param 0) := by rw [← hwq, hformula]
   have hpos : 0 < f (a.param 0) := hqc ▸ hqpos
   let b : V →ₗ[ℝ] ℝ := (f (a.param 0))⁻¹ • f
-  have hb : proper C u b := cone_bound (base_compact hc hs) hs (fun r => by
-    change 0 ≤ (f (a.param 0))⁻¹ * f r ∧ (f (a.param 0))⁻¹ * f r ≤ 1
-    refine ⟨mul_nonneg (inv_nonneg.mpr hpos.le) (hf.1 r (pure_mem r).1), ?_⟩
-    rw [← div_eq_inv_mul, div_le_one hpos]
-    exact (hmax r (pure_mem r)).trans_eq hqc)
+  have hb : proper C u b := by
+    have hn := OriginalWidthContact.normalized_effect (base_compact hc hs) hs
+      (a := (p : V)) (z := q)
+      (fun x hx => by simpa only [hf.2] using hf.1 x hx.1)
+      (fun x hx => hmax x hx) (by simpa only [hf.2] using hqpos)
+    simpa only [hf.2, sub_zero, zero_smul, hqc] using hn
   have hcommon : common C u p (u - b) := by
     refine ⟨⟨?_, ?_⟩, ?_⟩
     · intro x hx
@@ -254,33 +237,9 @@ private theorem common_peak_unique
     (hinj : Function.Injective (fun p : pure C u => exclusion C u p))
     (p : pure C u) (e : V →ₗ[ℝ] ℝ) (he : common C u p e) :
     ∀ x ∈ base C u, e x = 1 → x = p := by
-  let F := e.toContinuousLinearMap.toExposed (base C u)
-  have hex : IsExposed ℝ (base C u) F := ContinuousLinearMap.toExposed.isExposed
-  have hF (x : V) : x ∈ F ↔ x ∈ base C u ∧ e x = 1 := by
-    constructor
-    · rintro ⟨hx, hm⟩
-      exact ⟨hx, le_antisymm (by simpa [hx.2] using (he.1.1 x hx.1).2)
-        (by simpa [he.1.2] using hm p (pure_mem p))⟩
-    · rintro ⟨hx, hxe⟩
-      exact ⟨hx, fun y hy => by simpa [hxe, hy.2] using (he.1.1 y hy.1).2⟩
-  have geom := (exclusion_ball_faces hc hs hg hB).1
-  have hsingle : F.extremePoints ℝ ⊆ {(p : V)} := by
-    intro q hq
-    let q' : pure C u := ⟨q, hex.isExtreme.extremePoints_subset_extremePoints hq⟩
-    have hqe : e q = 1 := ((hF q).mp hq.1).2
-    have hsub : exclusion C u p ⊆ exclusion C u q' := by
-      intro x hx
-      exact ⟨hx.1, e, ⟨he.1.1, hqe⟩, he.2 x hx⟩
-    obtain ⟨bq⟩ := hB q'
-    have heq := chart_face_eq bq (geom p).2.2.1
-      ((geom p).2.2.2.2.1.mono (geom q').2.2.2.2.1.subset hsub) (geom p).1
-    exact mem_singleton_iff.mpr (congrArg Subtype.val (hinj heq)).symm
-  have hsub : F ⊆ {(p : V)} := by
-    rw [← closure_convexHull_extremePoints (hex.isCompact (base_compact hc hs))
-      (hex.convex (base_convex C u))]
-    exact closure_minimal (convexHull_min hsingle (convex_singleton (p : V))) isClosed_singleton
   intro x hx hxe
-  exact mem_singleton_iff.mp (hsub ((hF x).mpr ⟨hx, hxe⟩))
+  exact OriginalWidthContact.top_subsingleton_of_zero_exclusion hc hs hg hB hinj
+    he.1.1 p he.2 ⟨hx, hxe⟩ ⟨pure_mem p, he.1.2⟩
 
 /-- The full original affine restriction is reconstructed by constant and slope. -/
 def affineCoordinates (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]
@@ -423,7 +382,7 @@ theorem regular_anchor_native
     simpa [Module.finrank_prod, Module.finrank_self, ThreeSpace, finrank_euclideanSpace_fin] using hh
   refine ⟨⟨E, hE, H, hchart, hspan, hanchor, complement_normal he,
     complement_chart he (nativeChart a), ?_, ⟨3 * r⁻¹, by positivity, hbound⟩,
-    fun x hx => comparison_zero hs hg p hx, hsalient,
+    fun x hx => ExclusionWidthCompactness.comparison_zero_iff hs hg p hx, hsalient,
     SingleLabelNormalBody.chart_unit_linear (nativeChart a), hdim⟩⟩
   intro x hx hxp
   have hnonneg := (complement_normal he).1 x hx.1

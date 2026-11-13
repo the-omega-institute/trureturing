@@ -474,7 +474,7 @@ private theorem slope_confirmer (hc : IsClosed (C : Set V))
       real_inner_self_eq_norm_sq, hn]
     ring
 
-theorem comparison_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+private theorem comparison_attained (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (p : pure C u) (x : V) :
     ∃ f : V →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = comparison C u p x := by
   let F : Set (V →L[ℝ] ℝ) := {f | proper C u f.toLinearMap ∧ f p = 1}
