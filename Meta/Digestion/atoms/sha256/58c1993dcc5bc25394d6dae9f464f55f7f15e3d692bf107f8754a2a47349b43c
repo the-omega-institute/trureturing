@@ -1,0 +1,76 @@
+**定理 1.3（同数据的操作性校准等价）。** 在定义 1.1 的全部条件下，对任意事先固定的定义 1.2 重置，下列条件等价：
+
+$$
+\begin{aligned}
+& p\text{ 在整个 }E\text{ 上 TP，且 }R_2\text{ 在整个 }D\text{ 上 TP};\\
+& p\text{ 在整个 }E\text{ 上 TP，且 }R_3\text{ 在整个 }E\text{ 上 TP};\\
+& u_{ij}=I_j\ (\forall i,j),\qquad g_{ijk}=I_k\ (\forall i,j,k).
+\end{aligned}
+\tag{1.7}
+$$
+
+这些是同一个实际 $A,D,E,L,p$ 上的等价条件。此时另一重置也 TP，两个重置均 CPTP，且任意总迹一局部态 $a,b,c$ 都满足 $\operatorname{Tr}_E Q(a,b,c)=1$；后两项无需另设为假设。
+
+证明。首先复用 Part IV (66.8) 在全部实输入上的恒等式
+
+$$
+pQ(a,b,c)=\operatorname{Tr}_A(a)M(b,c).
+\tag{1.8}
+$$
+
+取任意迹一 $a_0$，则 $pQ(a_0,b,c)=M(b,c)$；$M$ 实张成 $D$，故实际 $p:E\to D$ 线性满射。又因 $R$ 局部保迹，(1.3)、(1.8) 在每个 $Q$ 乘积上给出
+
+$$
+\begin{aligned}
+pR_3Q(a,b,c)&=\operatorname{Tr}(a)M(Rb,Rc)\\
+&=R_2pQ(a,b,c).
+\end{aligned}
+$$
+
+由 $Q$ 实张成，得到整个空间的交换关系 $pR_3=R_2p$。若原 $p$ TP，则对每个 $X\in E$，
+
+$$
+\operatorname{Tr}_E(R_3X)-\operatorname{Tr}_EX
+=\operatorname{Tr}_D(R_2pX)-\operatorname{Tr}_D(pX).
+\tag{1.9}
+$$
+
+因此 $R_2$ TP 蕴含 $R_3$ TP；反向对任意 $Y\in D$ 由满射取 $pX=Y$，也得 $R_2$ TP。不需要正右逆，也不使用 $p$ 的 CP。这个迹下降步骤只是有限维线性满射与交换关系的直接应用。
+
+现由 $R_2$ TP 及 (1.6)，在每个有序块有 $u_{ij}=a_2I_j$。将其代入保留的 (1.1)，得 $n^2=n^2/a_2$，所以 $a_2=1$、全部 $u_{ij}=I_j$。此时实际二元公式准确地是
+
+$$
+M(b,c)_{jk}=b_j\otimes c_k^{T^{\varepsilon_{jk}}}.
+\tag{1.10}
+$$
+
+第一因子 $b_j$ 不转置。固定任意有序 $i,j,k$，令 $a,b,c$ 分别是只在这些扇区支撑的迹一正元。原 $p$ TP 及 (1.8) 给
+
+$$
+\operatorname{Tr}(g_{ijk}c_k^{T^{\delta_{ijk}}})
+=\operatorname{Tr}_EQ(a,b,c)
+=\operatorname{Tr}_DpQ(a,b,c)
+=\operatorname{Tr}_DM(b,c)=1.
+$$
+
+遍历 $k$ 块的全部密度矩阵，迹配对分离 Hermitian 矩阵，故 $g_{ijk}^{T^{\delta_{ijk}}}=I_k$，亦即 $g_{ijk}=I_k$。
+
+反向，全部 $u,g$ 为单位时，Part IV (66.15)、Part IV (66.17) 给实际 $p=p_0$，它按Part IV 命题 66.2 保迹；这只识别原有映射。转置保持迹，故 $a_2=a_3=1$、$V_2=1_D,V_3=1_E$，(1.6) 给两个重置 TP。对任意跨扇区混合的迹一 $a,b,c$，直接取 (1.2) 的总迹得
+
+$$
+\operatorname{Tr}_EQ(a,b,c)
+=\sum_{i,j,k}\operatorname{Tr}a_i\operatorname{Tr}b_j\operatorname{Tr}c_k=1.
+$$
+
+所有步骤逐块成立，不要求等维、标签互异、非标量扇区或 $\sigma$ 满秩；总维数一也包括在内。$\square$
+
+同一定义域上的既有迹分类可直接对接：按 Part IV (67.4) 记 $\delta=\operatorname{Tr}_E(H1_D)$、$\gamma=\operatorname{Tr}_D(p1_E)$，此标量 $\delta$ 与方向位 $\delta_{ijk}$ 不同。由 (1.6)、(1.1) 及Part IV 定理 67.6，
+
+$$
+R_2,R_3\text{ 均 TP}
+\ \Longleftrightarrow\ u_{ij}=I_j,\ g_{ijk}=tI_k\text{，同一 }t>0
+\ \Longleftrightarrow\ \delta\gamma=n^6.
+$$
+
+其中 $\delta=tn^3,\gamma=n^3/t$，而原 $p$ 的迹尺度为 $1/t$；原 $p$ TP 恰固定 $t=1$。由Part IV 定理 67.7，(1.7) 也恰是既有 $\delta+\gamma\le2n^3$ 的校准类。这复用已有共同尺度与联合校准分类，不另作静态分类或独立公理数的结论。
+
