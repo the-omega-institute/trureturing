@@ -292,6 +292,7 @@ theorem recover_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
   simpa only [Function.comp_def, Metric.infDist_zero_of_mem hy, heq, dist_comm] using hi
 
 omit [NormedSpace ℝ V] [FiniteDimensional ℝ V] in
+/-- A convergent selection from converging whole nonempty compacts belongs to their limit. -/
 theorem mem_compact_limit (F : ℕ → NonemptyCompacts V) (G : NonemptyCompacts V)
     (hF : Tendsto F atTop (𝓝 G)) {yn : ℕ → V} {y : V}
     (hyn : ∀ n, yn n ∈ F n) (hy : Tendsto yn atTop (𝓝 y)) : y ∈ G := by
