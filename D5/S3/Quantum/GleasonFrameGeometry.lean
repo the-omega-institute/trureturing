@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/GleasonFrameGeometry
    mirror-E: none(waiver:finite-dimensional-algebraic-proof)
    anchors: []
-   utility: none -/
+   utility: none
+   digest: Finite spherical descent and orthogonal projection frame geometry. -/
 
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.

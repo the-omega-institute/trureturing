@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/GleasonComplexRepresentation
    mirror-E: none(waiver:finite-dimensional-algebraic-proof)
    anchors: []
-   utility: none -/
+   utility: none
+   digest: Projection-only finite complex Gleason representation and uniqueness. -/
 
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
@@ -28,6 +29,8 @@ public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
 public import D5.S3.Quantum.GleasonRealRepresentation
 public import D5.S3.QuadraticForms.ParallelogramConstruction
 public import Mathlib.Analysis.InnerProductSpace.LinearMap
+
+set_option backward.isDefEq.respectTransparency false
 
 @[expose] public section
 
@@ -221,7 +224,7 @@ end IsQuadraticLike
 theorem matrix_eq_zero_of_quadForm_zero {D : Matrix (Fin N) (Fin N) ℂ}
     (hQ : ∀ x : Fin N → ℂ, star x ⬝ᵥ (D *ᵥ x) = 0) : D = 0 := by
   have hlin : Matrix.toEuclideanLin D = 0 :=
-    (LinearMap.inner_map_self_eq_zero (Matrix.toEuclideanLin D)).mp (fun x => by
+    (_root_.inner_map_self_eq_zero (Matrix.toEuclideanLin D)).mp (fun x => by
       rw [inner_conj_symm]
       have hx : inner ℂ x (Matrix.toEuclideanLin D x) = 0 := by
         simpa only [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toEuclideanLin,

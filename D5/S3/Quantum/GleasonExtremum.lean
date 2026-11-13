@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/GleasonExtremum
    mirror-E: none(waiver:finite-dimensional-algebraic-proof)
    anchors: []
-   utility: none -/
+   utility: none
+   digest: Bounded frame functions attain extrema without continuity. -/
 
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.

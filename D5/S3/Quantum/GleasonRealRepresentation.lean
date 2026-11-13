@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/GleasonRealRepresentation
    mirror-E: none(waiver:finite-dimensional-algebraic-proof)
    anchors: []
-   utility: none -/
+   utility: none
+   digest: Nonnegative real sphere frame functions are symmetric quadratic forms. -/
 
 /-
 Copyright (c) 2026 Zayn Blore. All rights reserved.
