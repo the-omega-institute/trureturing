@@ -12,6 +12,7 @@ result:
   escape_witness: shift_table, on the live path through row_step and coefficientTriangle_source.
   admission_basis: open-problem-resolution (#23496; full nonvacuous event).
 Direct frozen D5 dependencies: none. Pinned Mathlib supplies the polynomial and linear-map APIs.
+Escape audit source binding remains unfinished: https://github.com/the-omega-institute/trureturing/issues/23496.
 
 Private theorem proof shapes and live consumers:
   naturalP_zero: bind-only; naturalP_diag, polynomialTable_source.

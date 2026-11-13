@@ -89,21 +89,32 @@ cannot replace the complete proof.
 
 ## Evidence
 
-The source module and its owning Blueprint Scribe present the complete event.
-Stage A does not freeze, deposit or publish it. Compilation and registration
-status are supplied by the current machine evidence, independently of this
-mathematical exposition.
+The source module's `result : claim` and its owning Blueprint Scribe present
+the complete event. The mirrored Reg source retains the exact whole-claim Law,
+equivalence, intervention, sensitivity and observational-dependence proofs.
+Its compiler source selection remains absent, so the audit is unfinished
+under [#23496](https://github.com/the-omega-institute/trureturing/issues/23496),
+not `declared_validated`. The unknown continuation asserts no undecidability
+or inexhaustibility.
 
 ## Triage
 
-The decisive proposed structure is the finite operator shift; table existence,
-coefficient bounds and uniqueness retain the original normalization. All rows
-are in scope. Changed weights, other polynomial diagonals and scalar
-specializations are separate questions; no such extension is settled here.
-No further source theorem conditional on this conjecture is identified in
-the pinned NAME and FORMULA fields. Cross-references do not supply such a
-conditional theorem. Delivery credit requires independent semantic review,
-required checks and actual merge; Stage A earns no external-problem KPI.
+- **Proved — decisive structure.** The finite operator shift identifies every
+  polynomial row with the next row at the same column. Its diagonal and
+  zero-column boundaries determine the correction term (n+2)X^(n+1).
+  Coefficient bounds then turn linear extension into the exact finite
+  matrix-square recurrence.
+- **Proved — original scope.** Both source tables exist and are unique. The
+  identity holds for every source pair and every row, including zero,
+  with negative integer P indices zero and no reversal of coefficients.
+- **Open — extensions.** Changed weights, other polynomial diagonals and
+  scalar specializations require separate statements and evidence. The
+  operator's classical construction alone supplies no settlement credit
+  for those different questions.
+- **Open — dependent claims.** No further source theorem conditional on the
+  conjecture is identified in the pinned NAME and FORMULA fields.
+  Cross-references alone supply no such conditional theorem. No downstream
+  external conjecture is credited here.
 
 ## ASSUMED-UNVERIFIED
 

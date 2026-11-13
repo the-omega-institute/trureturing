@@ -45,7 +45,7 @@ internal sealed class KurkovA102086RowPolynomialDocument : IScribeDocumentDefini
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
     private static Formula Or(Formula a, Formula b) => Seq(Par(a), Sp, Lor, Sp, Par(b));
-    private static Formula Pow(Formula a, Formula b) => new Formula.Superscript(a, b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(a, b);
     private static Formula TType() => Arrow(N(), Arrow(N(), Z()));
     private static Formula PType() => Arrow(N(), Arrow(Z(), Poly()));
     private static Formula Sum(Formula index, Formula body) => Seq(new Formula.Subscript(F.Sum, index), Sp, Par(body));
@@ -62,11 +62,15 @@ internal sealed class KurkovA102086RowPolynomialDocument : IScribeDocumentDefini
     private static Formula TableFormula()
     {
         Formula a = F.Id("a"), b = F.Id("b");
-        Formula body = And(All("a", N(), Eq(V("P", a, a), Pow(F.Id("X"), a))),
-            And(All("a", N(), Eq(V("P", a, D(0)), D(1))),
-                And(All("a", N(), All("b", Z(), Imp(Or(Lt(b, D(0)), Lt(a, b)), Eq(V("P", a, b), D(0))))),
-                    All("a", N(), All("b", Z(), Imp(Lt(D(0), b), Imp(Lt(b, a), Eq(V("P", a, b),
-                        Add(V("P", a, Sub(b, D(1))), Mul(Call("C", Add(b, D(1))), V("P", Sub(a, D(1)), b))))))))));
+        Formula diagonal = All("a", N(), Eq(V("P", a, a), Pow(F.Id("X"), a)));
+        Formula zero = All("a", N(), Eq(V("P", a, D(0)), D(1)));
+        Formula exterior = All("a", N(), All("b", Z(),
+            Imp(Or(Lt(b, D(0)), Lt(a, b)), Eq(V("P", a, b), D(0)))));
+        Formula rhs = Add(V("P", a, Sub(b, D(1))),
+            Mul(Call("C", Add(b, D(1))), V("P", Sub(a, D(1)), b)));
+        Formula interior = All("a", N(), All("b", Z(),
+            Imp(Lt(D(0), b), Imp(Lt(b, a), Eq(V("P", a, b), rhs)))));
+        Formula body = And(diagonal, And(zero, And(exterior, interior)));
         return Disp(All("P", PType(), Seq(Call("IsSourcePolynomialTable", F.Id("P")), Sp, Iff, Sp, body)));
     }
     private static Formula ClaimBody()
