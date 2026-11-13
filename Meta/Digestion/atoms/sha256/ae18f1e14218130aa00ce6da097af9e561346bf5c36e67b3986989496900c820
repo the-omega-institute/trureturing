@@ -1,0 +1,72 @@
+**定理 116.19（同一原载体的完整恢复）。** 本节明确另用
+$\mathsf W=\mathrm{EB}_{\ge1}+\mathrm{Pair}_{\perp}$；VIII113.7在同一 $V,C,u$ 上供应秩三EJA
+$J=(V,\circ,U)$，$\operatorname{tr}=u$、$B(a,b)=\operatorname{tr}(a\circ b)$、$c=U/3$、$H=\ker u$。
+$B$ 正定、$B(U,a)=u(a)$、$B(U,U)=3$，$C$ 为平方锥。对 $x\in H$ 记
+
+$$
+Q(x)=B(x,x),\quad F(x)=\sqrt6\operatorname{tr}(x^3)=3\sqrt6\det_Jx,\quad
+N(t,x)=t^3/27-tQ(x)/6+F(x)/(3\sqrt6).
+\tag{IX116.61}
+$$
+
+幂是Jordan幂。相对于 $B|_H$ 的梯度、原乘法及原全锥由下式恢复：
+
+$$
+\begin{aligned}
+\nabla F(x)&=3\sqrt6(x^2-Q(x)U/3),& \|\nabla F(x)\|^2&=9Q(x)^2,\\
+\mu(x,y)&=\frac{\nabla F(x+y)-\nabla F(x)-\nabla F(y)}{6\sqrt6},\\
+(\alpha U+x)\circ(\beta U+y)&=(\alpha\beta+B(x,y)/3)U+\alpha y+\beta x+\mu(x,y),\\
+tc+x\in C&\ \Longleftrightarrow\ t\ge0,\quad Q(x)\le2t^2/3,\quad N(t,x)\ge0,\\
+K&=\{c+x:Q(x)\le2/3,\ N(1,x)\ge0\}.
+\end{aligned}
+\tag{IX116.62}
+$$
+
+以 $f_a(v)=B(a,v)$ 写 $a=sc+y$，全部原效应及其全部混态概率恰为
+
+$$
+\begin{gathered}
+0\le s\le3,\quad Q(y)\le\tfrac23\min\{s^2,(3-s)^2\},\quad
+N(s,y)\ge0,\quad N(3-s,-y)\ge0,\\
+f_a(c+x)=s/3+B(y,x).
+\end{gathered}
+\tag{IX116.63}
+$$
+
+原纯点即本原幂等元 $p$；记 $J_0(p)=\{z:p\circ z=0\}$，还准确恢复
+
+$$
+\begin{aligned}
+F_p&=\{f_{p+b}:b\in J_0(p),\ 0\le b\le U-p\},& T_p(\rho)&=B(p,\rho),\\
+D_p&=K\cap J_0(p)=b_p+\{y\in J_0(p)\cap H:Q(y)\le1/2\},& b_p&=(U-p)/2.
+\end{aligned}
+\tag{IX116.64}
+$$
+
+证明。以下是成熟秩三谱与Peirce计算在同一原模型中的应用。迹结合性给
+$dF_x(h)=3\sqrt6B(x^2,h)$，投影到 $H$ 给梯度；三个实谱值之和为零给
+$\sum_i\lambda_i^4=(\sum_i\lambda_i^2)^2/2$，故 $\|\nabla F\|^2=54(\operatorname{tr}x^4-Q^2/3)=9Q^2$。
+极化梯度给 $\mu(x,y)=x\circ y-B(x,y)U/3$，展开单位分量即得完整乘法；不把Albert代数当作结合矩阵代数。
+$v=tc+x$ 的三个实谱值之和为 $t$，两两乘积和为 $S_2=t^2/3-Q(x)/2$，乘积为 $N(t,x)$。
+非负谱给三个不等式；反之 $t,S_2,N\ge0$ 时，对每个 $r>0$，特征多项式满足
+$\chi_v(-r)=-(r^3+tr^2+S_2r+N)<0$，故无负根。三根均实，所以恰得到全部平方锥。
+不能只保留行列式：谱 $(-1,-1,3)$ 的迹和行列式均正，却不在原锥内。
+平方锥关于迹尺自对偶，故全效应恰为 $a\in C,U-a\in C$；分别用于 $sc+y,(3-s)c-y$ 即得(IX116.63)。
+$B(c,c)=1/3,B(c,H)=0$ 给概率式，包含全部混态、零效应及补；所有有限数学测量还准确要求 $\sum_j a_j=U$。
+
+为验证原确认而非只给概率表，若 $0\le a\le U,B(a,p)=1$，置 $k=U-a\ge0$，则 $B(k,p)=0$。
+对任意 $z\in J_{1/2}(p)$ 及实 $t$，迹自对偶性给
+$0\le B(k,(p+tz)^2)=tB(k,z)+t^2B(k,z^2)$，所以 $B(k,z)=0$。
+Peirce正交分解给 $k\in J_0(p)$，于是 $a=p+b$；在子代数 $\mathbb Rp\oplus J_0(p)$ 中取谱，
+区间条件恰为 $0\le b\le U-p$。正配对非负且可取 $b=0$，故最低确认恰为 $B(p,\rho)$。
+同一零配对论证用于 $\rho\ge0$ 给 $D_p=K\cap J_0(p)$。秩二 $J_0(p)$ 的迹零 $y$ 有谱
+$\pm\sqrt{Q(y)/2}$，$b_p$ 的两个谱值均为 $1/2$，所以正性恰为 $Q(y)\le1/2$。
+这恢复原全部确认与完整排除球，迹尺半径为 $1/\sqrt2$。
+
+全厚简单支路还给 $\Delta_HF=0$：令非对角Peirce维数为 $k\in\{1,2,4,8\}$，迹零对角正交基的平方和为
+$2U/3$；每个 $J_{ij}$ 单位向量平方为 $(e_i+e_j)/2$，故 $H$ 的全基平方和为 $(k+2/3)U$。
+于是 $\Delta_HF(x)=6\sqrt6B(x,(k+2/3)U)=0$。
+旗标支路不能如此断言：在 $\mathbb R\oplus\operatorname{spin}_d$ 写迹零元素 $(-2\beta;\beta,z)$，
+则 $Q=6\beta^2+2|z|^2$；令 $s=-\sqrt6\beta,\zeta=\sqrt2z$，得
+$F=s^3-3s|\zeta|^2$、$\Delta F=6(1-d)s\ne0$（$d\ge2$）。证毕。
+
