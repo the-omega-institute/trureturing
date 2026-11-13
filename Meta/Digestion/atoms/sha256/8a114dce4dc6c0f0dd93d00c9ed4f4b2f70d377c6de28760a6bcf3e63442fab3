@@ -1,0 +1,111 @@
+**定理 105.4（实际角的精确互反端点）。** 在假设105.1及定义105.2下，
+最大值 $t=t_s$ 确实取得。令
+
+$$
+\frac23\le t\le1,\qquad
+\ell=\frac{t-1}{9t-1},\qquad \lambda_* =\frac1{3t}.
+\tag{105.8}
+$$
+
+则整个归一实际角的 $P$ 坐标恰遍历 $[\ell,t]$，两个端点均取得，且
+
+$$
+\begin{aligned}
+D_s\cap\operatorname{span}_{\mathbb R}\{I,P\}
+ &=\operatorname{cone}\{\tau_\ell,\tau_t\},\\
+\lambda\ge0:\quad W_\lambda\in D_s
+ &\ \Longleftrightarrow\ W_\lambda\in D_s^*
+ \ \Longleftrightarrow\ \lambda\le\lambda_*,\\
+\mathsf{Fusion}_3&\ \Longleftrightarrow\ t=1
+ \ \Longleftrightarrow\ \lambda_*=1/3.
+\end{aligned}
+\tag{105.9}
+$$
+
+若融合不成立，则 $-1/15\le\ell<0$、$1/3<\lambda_*\le1/2$，
+命题105.3中各向同性分离系数的准确范围是 $1/3<\lambda\le\lambda_*$。
+所有实际大小三的输出块具有同一个 $t$；码基和输出基的酉改变也保持此参数。
+
+**证明。** 有限维闭尖锥上的严格正迹给紧的迹一基。
+该基非空，因为它包含归一正乘积态，所以 $t$ 有限并取得。
+归一秩二 Bell dyad 在 $D_s$ 中，$P$ 读数为 $2/3$，故 $t\ge2/3$。
+平均一个最大元，由(105.7)得 $\tau_t\in D_s$。
+正乘积 dyad $|01\rangle\langle01|\in D_s^*$ 在其上读数为 $(1-t)/8$，
+故 $t\le1$。这个上界不假定整个实际角是 PSD。
+
+对整个迹一实际角任意 $x$，记 $F=\operatorname{Tr}(Px)$。
+对 $\lambda\ge0$ 有
+
+$$
+\operatorname{Tr}(W_\lambda x)=1-3\lambda F,\qquad
+W_\lambda\in D_s^*\ \Longleftrightarrow\ 1-3\lambda t\ge0.
+\tag{105.10}
+$$
+
+严格正迹允许把每个非零正向量缩为迹一，所以这真是整个对偶的判据。
+特别地，它遍历可能不是通常 PSD 的全部原角状态。
+$W_\lambda$ 固定于全转置，(105.5)于是使其原、对偶成员条件相同，给(105.9)第二行。
+因此 $W_{\lambda_*}$ 同时为原角和对偶角的正元素。
+其迹为 $9-3\lambda_*>0$，归一后的 $P$ 读数为
+
+$$
+\frac{1-3\lambda_*}{9-3\lambda_*}
+ =\frac{t-1}{9t-1}=\ell,\qquad
+\frac{W_{\lambda_*}}{9-3\lambda_*}=\tau_\ell.
+\tag{105.11}
+$$
+
+另一方面，$\tau_t$ 也是实矩阵，因此由全转置极性属于 $D_s^*$。
+对任意上述 $x$，其非负读数给
+
+$$
+0\le\operatorname{Tr}(\tau_t x)
+ =tF+\frac{1-t}{8}(1-F)
+ =\frac{(9t-1)F+1-t}{8}.
+\tag{105.12}
+$$
+
+$9t-1>0$，所以 $F\ge\ell$；(105.11)给等号，最大端点由 $\tau_t$ 给出。
+两端点的所有凸组合恰为 $\tau_F$，$F\in[\ell,t]$，所以所有这些坐标确实取得。
+固定空间内每个正迹向量唯一写成正倍数的某个 $\tau_F$；
+严格正迹排除非零迹零正向量，得(105.9)第一行的整锥等式。
+
+若 $t=1$，则 $\tau_t=P\in D_s$，故 $R\in D_s$。
+反向若 $R\in D_s$，其归一化 $P$ 的坐标为一，结合上界得到 $t=1$。
+这就是所给实际最大块上的融合条件，而不是另一个抽象参考的条件。
+命题104.13此时给 $\mathsf F_{\max}$，定理104.10再给全部有限原锥的标准 PSD 层级；
+这一步不使用 $S_3$。将 $t\in[2/3,1)$ 代入(105.8)给所述分离范围与负端点范围。
+
+两个大小三的实际块之间的等距矩形一体映射和反向映射，
+由104.7在全部原旁观者上正。
+把输出基逐个对应，它们在两个实际混合角之间互逆、保迹并保持 $P$ 坐标，
+所以 $t_s$ 与块标签无关。
+码上的酉由 $U\oplus1$ 寄存器酉实现，输出基的酉由一体映射实现；
+它们把相应基下的 $P$ 连同整个实际角一同运输，故保持极值。
+
+同一端点计算的参数形式如下：令 $d,k$ 为正整数，$d\ge2$、$1\le k\le d$。
+对 $\operatorname{Herm}(\mathbb C^d\otimes\mathbb C^d)$ 中任一闭尖生成锥 $D$，
+若迹严格正、$D^*=\mathsf T(D)$、$U\otimes\overline U$ 共轭保持 $D$，
+且全部 Schmidt 秩至多 $k$ 的 dyad 在 $D$ 中，取
+$P_d=|I_d\rangle\langle I_d|/d$，并在迹一基上最大化 $P_d$ 得 $t$。
+共轭向量与全转置极性先给全部这些 dyad 的对偶成员关系。
+向量 $v_k=k^{-1/2}\sum_{j=0}^{k-1}e_j\otimes e_j$ 定义良好、范数一、
+Schmidt 秩恰为 $k$，且 $\operatorname{Tr}(P_d|v_k\rangle\langle v_k|)=k/d$。
+正交乘积向量给 $t\le1$。
+把上述证明的 $3,8,9$ 分别换为 $d,d^2-1,d^2$，即得
+
+$$
+\frac{k}{d}\le t\le1,\qquad
+\ell_d=\frac{t-1}{d^2t-1},\qquad
+\lambda_{*,d}=\frac1{dt}\in\left[\frac1d,\frac1k\right].
+\tag{105.13}
+$$
+
+固定空间的迹一向量为
+$(1-F)(I-P_d)/(d^2-1)+FP_d$，其角锥端点为 $\ell_d,t$，
+而 $I-\lambda|I_d\rangle\langle I_d|$ 的原／对偶非负系数阈值为 $\lambda_{*,d}$。
+这里 $d^2t-1\ge dk-1>0$；秩参数 $k$ 的整数条件不可删除。
+本章实际参数对应恰为 $d=3,k=2$。
+标准平均和 Schmidt 秩估计沿命题105.3所引文献复用；
+(105.8)—(105.12)是在实际原角及其整个对偶上的应用关系。∎
+

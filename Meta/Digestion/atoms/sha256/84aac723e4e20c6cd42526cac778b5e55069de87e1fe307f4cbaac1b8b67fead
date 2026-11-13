@@ -1,0 +1,67 @@
+**假设 103.1（仅在低二份调用的条件供应）。** 模型始终是定义102.1的原全有限强分块层级，
+包括每个实际分块的两个界、全部原置换、固定配对、全部原极点和完整 proper 效应。
+本章考察的比较条件仅为(102.5)在 $N=2$ 的 $S_2$，量化全部原二份纯极点及全部有限准备。
+以下具名纸面接口作为条件供应使用：
+
+| 接口 | 完整代入 | 使用的输出 |
+| --- | --- | --- |
+| 低二份 $S$ 到 Jordan | 分别代入 $(W_q,C_q,u_q,K_q,P_q,\mathcal E_q)$，$q=1,2$；$S_1$ 由命题102.3的纯旁观下降取得 | least proper 确认、互反、自对偶正定配对、同框架谱分解、正面投影及其保纯性、保迹 EJA 表示，允许直和 |
+| 一个实际自复合 | 只代入 $(W_1,W_1,W_2)$；两因子与复合的上述 Jordan 输出，正双线性态／效应产品、单位与精确配对、乘积效应分离 | 原局部简单块为复矩阵块；原二份扇区的整锥直和、秩与实维乘法，含标量块 |
+| 实际两因子产品正规形 | 对每个原扇区 $(i,j)$ 代入已选复型及维数 $n_i,n_j,n_i n_j$；原态与效应产品的正性、全域配对及效应单位 | 固定输出酉与固定输入转置的正规形；标量因子用其单因子边界 |
+
+第一接口指
+[reciprocal least confirmation and the spectrality bridge](../../../Library/QuantumStates/mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge)
+及其中
+[least confirmation forces face-filter purity](../../../Library/QuantumStates/mullerududec2012selfduality.md#least-confirmation-forces-face-filter-purity)。
+这里 $S_q$ 的单项准备先给互反，再把任意准备的等式转为 $T_p$ 的仿射性；
+完整效应区间使其线性延拓成为一个 proper 确认效应，并低于每个确认效应，故是 least。
+反之，least 性与互反给原准备等式。因此代入的是该接口的全部 $S$，不是一张互反数表。
+该接口所经的正双极、谱、projectivity 与 filter purity 桥均保留；
+Barnum–Müller–Ududec 定理16是其中被调用的成熟分类结果，并不单独断言 $S_2$ 的整条路线。
+
+第二接口指
+[sector composites without a connectedness input](../../../Library/QuantumStates/barnumhilgert2019spectral.md#sector-composites-without-a-connectedness-input)
+和
+[complex sectors from a single self-composite](../../../Library/QuantumStates/barnumhilgert2019spectral.md#complex-sectors-from-a-single-self-composite)。
+最小界供应正态产品，最大界供应正效应产品；原实张量空间和配对供应张成、分离与局部层析。
+各原中心扇区的限制继承这些输入与完整效应。简单自复合的秩平方、实维平方才供复型选择；
+不假设比较图连通、非经典块存在或预选 qubit。
+第三接口是
+[actual two-factor products after complex-type selection](../../../Library/QuantumStates/barnumhilgert2019spectral.md#actual-two-factor-products-after-complex-type-selection)，
+其中 Xu–Zheng–Fošner 的产品秩一保持分类承担正规形步骤，
+DOI [10.1017/S1446788714000603](https://doi.org/10.1017/S1446788714000603)。
+这些供应是具名条件纸面桥，不将其全链归给任一成熟论文。
+
+具体地，固定一个保迹局部 Jordan 坐标
+
+$$
+\theta:V\longrightarrow A_{\rm h},\qquad
+A=\bigoplus_{i\in I}M_{n_i}(\mathbb C),\quad
+\theta(C_1)=A_+,\quad u\theta^{-1}=\sum_i\operatorname{Tr},
+\qquad n_i\ge1.
+\tag{103.1}
+$$
+
+以后用 $\theta^{\otimes N}$ 只识别原实向量空间，把运输后的原锥仍记 $C_N$。
+记 $\mathsf D_N$ 为(102.10)中的标准块 PSD 锥。
+低二份供应在这一固定原产品坐标中的结论是
+
+$$
+C_2=\bigoplus_{i,j\in I}\Gamma_1^{\epsilon_{ij}}
+       \operatorname{Herm}_+(\mathbb C^{n_i}\otimes\mathbb C^{n_j}),
+\qquad \epsilon_{ij}\in\mathbb Z/2,
+\tag{103.2}
+$$
+
+其中 $\Gamma_1$ 只转置第一条腿，绝不表示原锥上的已知正映射。
+为核对这一输出，设实际产品在某个二份 Jordan 表示下为
+$\Phi_{ij}=\operatorname{Ad}_{U_{ij}}(T_i^r\otimes T_j^s)$。
+原固定产品坐标中的锥是 $\Phi_{ij}^{-1}(\mathrm{PSD})$。
+因为 $\operatorname{Ad}_{U_{ij}^{-1}}$ 把整个 PSD 锥送回它自身，输出酉在这个整锥拉回中消失；
+再利用全部转置保持 PSD，得到 $\epsilon_{ij}=r+s$ 的(103.2)。
+这不是把 $U_{ij}$ 宣布为高阶原对称。
+若任一因子为标量，该部分转置锥就是 PSD，不可观测的掩码一律取零。
+同一个坐标的原对偶为实迹配对；$\Gamma_1$ 是正交自逆线性映射且固定单位，故
+$C_2^*$ 也由(103.2)的相同直和锥表示，proper 上界仍是原单位。
+这里没有调用三份 Jordan 分类、B3 或普遍 $S_3$。
+

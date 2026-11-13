@@ -1,0 +1,52 @@
+**定理 121.9（无需Pair的残余原切扇）。** 在EB3+Inj下，对121.7的同一个 $P_*$，
+
+$$
+p\in P_*,\quad v,w\in S^2,\quad v\ne w
+\quad\Longrightarrow\quad E_v\cap E_w=\{0\}.
+\tag{Q121.29}
+$$
+
+特别地，EB3+Inj推出 $\dim V\ge9$。
+
+证明。固定 $p\in P_*$，反设 $0\ne d\in E_v\cap E_w$。在各球图中写 $d=B_i\delta_i$，其中 $i=v,w$、$\delta_i\perp s_i$、$\delta_i\ne0$。选实际球面圆弧
+
+$$
+a_i(t)=c_i+B_i\left(s_i\cos(\|\delta_i\|t)
+          +\frac{\delta_i}{\|\delta_i\|}\sin(\|\delta_i\|t)\right).
+\tag{Q121.30}
+$$
+
+它们对正负小参数都是原纯点，满足 $a_i(0)=p$、$a_i'(0)=d$，且为 $C^2$。设 $h=e_{q_w}$。它在整个 $F_w$ 为零，在 $F_v$ 上只在 $p$ 为零，因为其全域零面恰为 $F_w$，两球交恰为 $\{p\}$。故(Q121.28)对它在 $F_v$ 上给某个严格正的 $\alpha_v$，从而
+
+$$
+h(a_w''(0))=0,
+\qquad h(a_v''(0))=\alpha_v\|\delta_v\|^2>0.
+\tag{Q121.31}
+$$
+
+$h\in\mathcal B(p)$，而 $\mathcal B$ 在 $p$ 对全部原纯标签连续。对每个小 $t>0$，在紧 $\mathcal B(a_v(t))$ 中取距 $h$ 最近的实际原效应 $h_t$。Hausdorff连续性给 $h_t\to h$。因为 $h_t(a_v(t))=0$ 且 $a_w(t)\in K$，原全域正性给
+
+$$
+h_t(a_w(t)-a_v(t))=h_t(a_w(t))\ge0.
+\tag{Q121.32}
+$$
+
+两弧的常数项及一阶项完全相同，先在原 $V$ 中相消：
+
+$$
+a_w(t)-a_v(t)
+=\tfrac12t^2(a_w''(0)-a_v''(0))+o(t^2).
+\tag{Q121.33}
+$$
+
+除以 $t^2/2$ 再取极限，$h_t\to h$ 与 $\mathcal E$ 有界给
+
+$$
+h(a_w''(0)-a_v''(0))\ge0,
+\tag{Q121.34}
+$$
+
+与(Q121.31)矛盾。这里只需效应集合连续，没有假设 $h_t$ 可微，也没有把 $h_t-h$ 单独除以 $t^2$。
+
+$P_*$ 的定义早已一次性控制整个 $\mathcal B$，所以此论证对所有 $v\ne w$ 同时有效，不存在对不可数方向对分别取残余交的问题。取任意两个不同方向，两个二维平面在 $L_p$ 中零交，故 $\dim L_p\ge4$。由(Q121.27)，$\dim V\ge9$。证毕。
+

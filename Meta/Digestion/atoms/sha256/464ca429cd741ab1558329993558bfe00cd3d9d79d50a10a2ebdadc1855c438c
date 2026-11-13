@@ -1,0 +1,31 @@
+**命题 106.4（内部参数的准确退化情形）。** 若 $1/4<p<1$ 且 $\Phi\ne0$ CP，
+则 $J(\mathcal D_r\Phi\mathcal D_p)$ 正定，当且仅当 $\Phi$ 不是单个酉共轭的正倍数。
+在例外情形 $\Phi=\gamma\operatorname{Ad}_U$、$\gamma>0$ 时，
+Choi 核恰为 $\operatorname{span}\{|U\rangle\!\rangle\}$，维数一。
+
+**证明。** 先取非零单 Kraus $K$。此时 $c>0$、$0<\alpha<1$，
+且(106.8)中 $a+c,b+c$ 严格正，故(106.7)的六个标量全严格正。
+(106.10)的核等于
+
+$$
+\ker\bigl(3\operatorname{diag}(s_i^2)-ss^*\bigr)
+ \cap\ker(SI-ss^*).
+\tag{106.13}
+$$
+
+若非零奇异值少于三个，第一核恰为零坐标子空间：
+在 $m<3$ 个非零坐标上，(106.11)第一式可把系数三改成 $m$，故原二次型严格正。
+第二核为 $\operatorname{span}\{s\}$，二者交为零。
+若三个奇异值全非零，第一核为 $\operatorname{span}\{(1/s_i)_i\}$，
+第二核仍为 $\operatorname{span}\{s\}$。
+交非零当且仅当三个 $s_i$ 相等，即 $K$ 为酉的非零标量倍数。
+若 $K=aU$，则夹逼为 $|a|^2\operatorname{Ad}_U\mathcal D_{-1/8}$，
+由(105.22)核恰为 $\operatorname{span}\{|U\rangle\!\rangle\}$。
+
+对一般 $\Phi=\sum_\nu\operatorname{Ad}_{K_\nu}$，
+PSD 矩阵之和的核等于各核的交。
+只要有一个非零 $K_\nu$ 不是酉的标量倍数，和就正定；
+若全部非零项均为酉的倍数，不同非比例酉的向量化所张的一维核交为零。
+剩下的唯一奇异情形是所有非零 Kraus 都彼此成比例，恰给所述 $\gamma\operatorname{Ad}_U$。
+命题不将内部严格性延伸至 $p=1/4$ 或 $p=1$；这两个端点的半正性已由定理106.3覆盖。∎
+
