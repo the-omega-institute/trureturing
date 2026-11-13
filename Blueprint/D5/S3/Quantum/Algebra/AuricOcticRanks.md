@@ -78,7 +78,19 @@ $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\r
 
 crossRank(n,S) is the dimension of the image of extension by zero from S complement, followed by n and projection to S. The literal subtype-indexed matrix block represents that map; extension by zero in the target is injective. The actual cut-free endpoint uses this identity to state its conclusion using the actual matrix entries.
 
-**Theorem 1.7 (Transitive strict half-ranks exclude a cut on eight labels).**
+**Theorem 1.7 (Crossing rank bounds the projection dimension).**
+
+$$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\right)] [\operatorname{Fintype}\left(Omega\right)] [\operatorname{DecidableEq}\left(Omega\right)] \forall U \in \operatorname{Submodule}\left(K, \operatorname{Map}\left(Omega, K\right)\right),\; \forall n \in \operatorname{LinearMap}\left(K, \operatorname{Map}\left(Omega, K\right), \operatorname{Map}\left(Omega, K\right)\right),\; \forall S \in \operatorname{Finset}\left(Omega\right),\; ((\operatorname{ker}\left(n\right) = U) \land ((\operatorname{range}\left(n\right) = U) \land ((\operatorname{card}\left(Omega\right) = 8) \land (\operatorname{finrank}\left(K, U\right) = 4)))) \Rightarrow (2 \cdot \operatorname{rowRank}\left(U, S\right) \le \operatorname{card}\left(S\right) + \operatorname{crossRank}\left(n, S\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/AuricOcticRanks.cross_rank_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Rank-nullity for extension from the complementary coordinates, followed by n and projection to S, gives this bound whenever n has kernel and image U. Together with strict projection ranks it forces every nontrivial directed crossing block to be nonzero.
+
+**Theorem 1.8 (Transitive strict half-ranks exclude a cut on eight labels).**
 
 $$\forall K \in Type,\; \forall Omega \in Type,\; [\operatorname{Field}\left(K\right)] [\operatorname{Fintype}\left(Omega\right)] [\operatorname{DecidableEq}\left(Omega\right)] \forall U \in \operatorname{Submodule}\left(K, \operatorname{Map}\left(Omega, K\right)\right),\; \forall G \in Type,\; [\operatorname{Group}\left(G\right)] [\operatorname{Fintype}\left(G\right)] [\operatorname{MulAction}\left(G, Omega\right)] \forall n \in \operatorname{LinearMap}\left(K, \operatorname{Map}\left(Omega, K\right), \operatorname{Map}\left(Omega, K\right)\right),\; ((\operatorname{ker}\left(n\right) = U) \land ((\operatorname{range}\left(n\right) = U) \land ((\operatorname{card}\left(Omega\right) = 8) \land ((\operatorname{finrank}\left(K, U\right) = 4) \land ((\forall x \in Omega,\; \forall y \in Omega,\; \exists g \in G,\; \operatorname{act}\left(g, x\right) = y) \land ((\forall g \in G,\; \forall T \in \operatorname{Finset}\left(Omega\right),\; \operatorname{rowRank}\left(U, \operatorname{orbitSet}\left(T, g\right)\right) = \operatorname{rowRank}\left(U, T\right)) \land (\forall T \in \operatorname{Finset}\left(Omega\right),\; ((0 < \operatorname{card}\left(T\right)) \land (\operatorname{card}\left(T\right) < 8)) \Rightarrow (\operatorname{card}\left(T\right) + 1 \le 2 \cdot \operatorname{rowRank}\left(U, T\right))))))))) \Rightarrow (\forall S \in \operatorname{Finset}\left(Omega\right),\; ((2 \le \operatorname{card}\left(S\right)) \land (\operatorname{card}\left(S\right) \le 6)) \Rightarrow ((2 \le \operatorname{crossRank}\left(n, S\right)) \lor (2 \le \operatorname{crossRank}\left(n, \operatorname{compl}\left(S\right)\right))))$$
 
@@ -93,6 +105,7 @@ Rank-nullity bounds 2 rowRank(U,S) by card(S) plus crossRank(n,S). If both cross
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/AuricOcticRanks.crossRank_matrix`
+- Truth anchor: `D5/S3/Quantum/Algebra/AuricOcticRanks.cross_rank_bound`
 - Truth anchor: `D5/S3/Quantum/Algebra/AuricOcticRanks.cut_free_of_actual_ranks`
 - Truth anchor: `D5/S3/Quantum/Algebra/AuricOcticRanks.invariant_half_rank_strict`
 - Truth anchor: `D5/S3/Quantum/Algebra/AuricOcticRanks.mem_orbitSet`
