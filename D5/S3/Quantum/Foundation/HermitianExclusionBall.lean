@@ -152,4 +152,77 @@ theorem chart_of_full_frame (v : EuclideanSpace ℂ (Fin 3)) (hv : ‖v‖ = 1)
         (by rw [hYtr]; rfl)).symm
     rw [heq, hrestore X hXv]
 
+private theorem whole_rog {ι : Type*} [Fintype ι] [DecidableEq ι] :
+    ROG (⊤ : Submodule ℝ (HermitianMat ι ℂ)) := by
+  classical
+  intro X _ hX
+  obtain ⟨m, w, hw⟩ := Matrix.posSemidef_iff_eq_sum_vecMulVec.mp
+    (HermitianMat.zero_le_iff.mp hX)
+  let S := {j : Fin m // w j ≠ 0}
+  let e : Fin (Fintype.card S) ≃ S := (Fintype.equivFin S).symm
+  refine ⟨Fintype.card S, fun j => WithLp.toLp 2 (w (e j)), ?_, ?_⟩
+  · intro j
+    exact ⟨fun hz => (e j).property (congrArg WithLp.ofLp hz), Submodule.mem_top⟩
+  · have hfull : X = ∑ j, rankOne (w j) := by
+      apply HermitianMat.ext
+      rw [HermitianMat.mat_finset_sum]
+      exact hw
+    rw [hfull]
+    have hfilt : (∑ j : S, rankOne (w j)) = ∑ j : Fin m, rankOne (w j) := by
+      change (∑ j : {j : Fin m // w j ≠ 0}, rankOne (w j)) = _
+      rw [← Finset.sum_subtype (Finset.univ.filter (fun j => w j ≠ 0))
+        (by simp) (fun j => rankOne (w j))]
+      apply Finset.sum_subset (Finset.filter_subset _ _)
+      intro j _ hj
+      have hz : w j = 0 := by simpa using hj
+      apply HermitianMat.ext
+      change Matrix.vecMulVec (w j) (star (w j)) = 0
+      simp [hz]
+    rw [← hfilt]
+    exact (e.sum_comp (fun j : S => rankOne (w j))).symm
+
+/-- Every actual extreme point of the entire qutrit density body has a full
+three-dimensional global affine chart of its entire original exclusion. -/
+theorem all_pure_charts (p : pure (cone : PointedCone ℝ (HermitianMat (Fin 3) ℂ)) unit) :
+    ∃ a : ExclusionChart cone unit (p : HermitianMat (Fin 3) ℂ), a.dim = 3 := by
+  have hb : CircuitBalancedConfirmation.base cone unit =
+      SectionROGFrame.base (⊤ : Submodule ℝ (HermitianMat (Fin 3) ℂ)) := by
+    ext X
+    simp [CircuitBalancedConfirmation.base, SectionROGFrame.base, cone, unit]
+  have hp : (p : HermitianMat (Fin 3) ℂ) ∈ pureRanks
+      (⊤ : Submodule ℝ (HermitianMat (Fin 3) ℂ)) := by
+    rw [← whole_pure_carrier _ whole_rog, ← hb]
+    exact p.property
+  obtain ⟨v, hv, heq, _⟩ := hp
+  obtain ⟨b, hb0, _, _, hsum⟩ := rog_frame
+    (⊤ : Submodule ℝ (HermitianMat (Fin 3) ℂ)) Submodule.mem_top whole_rog v hv
+    Submodule.mem_top (0 : Fin 3)
+  let W : Matrix (Fin 3) (Fin 2) ℂ := fun i j => b j.succ i
+  have hW : W.conjTranspose * W = 1 := by
+    ext i j
+    change star (b i.succ : Fin 3 → ℂ) ⬝ᵥ (b j.succ : Fin 3 → ℂ) = _
+    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct]
+    simpa [Matrix.one_apply] using (orthonormal_iff_ite.mp b.orthonormal i.succ j.succ)
+  have hQ : W * W.conjTranspose = 1 - (rankOne v).mat := by
+    have hh := congrArg HermitianMat.mat hsum
+    change (HermitianMat.matₗ (R := ℝ) (∑ j, rankOne (b j))) = 1 at hh
+    rw [map_sum] at hh
+    have he : (rankOne (b 0)).mat + W * W.conjTranspose = 1 := by
+      calc
+        (rankOne (b 0)).mat + W * W.conjTranspose =
+            ∑ j, (rankOne (b j)).mat := by
+          change Matrix.vecMulVec (b 0 : Fin 3 → ℂ) (star (b 0 : Fin 3 → ℂ)) +
+            W * W.conjTranspose = ∑ j, Matrix.vecMulVec (b j : Fin 3 → ℂ)
+              (star (b j : Fin 3 → ℂ))
+          ext i j
+          change (b 0 i * star (b 0 j)) +
+            (∑ k : Fin 2, W i k * star (W j k)) =
+              ∑ k : Fin 3, b k i * star (b k j)
+          simp [W, Fin.sum_univ_succ]
+        _ = 1 := hh
+    rw [hb0] at he
+    exact eq_sub_of_add_eq' he
+  rw [← heq]
+  exact chart_of_full_frame v hv W hW hQ
+
 end D5.S3.Quantum.Foundation.HermitianExclusionBall
