@@ -69,9 +69,13 @@ def staircase (r : ℕ) : YoungDiagram where
   cells := ((Finset.range r).product (Finset.range r)).filter (fun c => c.1 + c.2 < r)
   isLowerSet := by
     rintro ⟨i,j⟩ ⟨a,b⟩ hxy hy
-    simp only [Finset.mem_coe, Finset.mem_filter, Finset.mem_product, Finset.mem_range] at hy ⊢
-    exact ⟨⟨lt_of_le_of_lt hxy.1 hy.1.1, lt_of_le_of_lt hxy.2 hy.1.2⟩,
-      lt_of_le_of_lt (Nat.add_le_add hxy.1 hxy.2) hy.2⟩
+    have hy' := Finset.mem_filter.mp hy
+    have hij := Finset.mem_product.mp hy'.1
+    apply Finset.mem_filter.mpr
+    refine ⟨Finset.mem_product.mpr ⟨?_, ?_⟩, ?_⟩
+    · exact Finset.mem_range.mpr (lt_of_le_of_lt hxy.1 (Finset.mem_range.mp hij.1))
+    · exact Finset.mem_range.mpr (lt_of_le_of_lt hxy.2 (Finset.mem_range.mp hij.2))
+    · exact lt_of_le_of_lt (Nat.add_le_add hxy.1 hxy.2) hy'.2
 
 /-- A genuine one-cell Young extension of the staircase. -/
 def firstFamily (r n : ℕ) : Finset (Nat.Partition n) :=
@@ -106,7 +110,7 @@ private theorem column_count (d : YoungDiagram) (j : ℕ) :
   rw [List.countP_map, List.countP_eq_length_filter]
   have hc := congrArg Finset.card hf
   simpa only [Finset.card, Finset.filter_val, Finset.range_val, Multiset.range,
-    Multiset.filter_coe, Multiset.coe_card] using hc
+    Multiset.filter_coe, Multiset.coe_card, List.length_range, Function.comp_def] using hc
 
 private theorem partition_column_count {n : ℕ} (p : Nat.Partition n) (j : ℕ) :
     p.parts.countP (fun k => j < k) = (YoungDiagram.ofPartition p).colLen j := by
@@ -210,7 +214,8 @@ private theorem transfer_intersection {n : ℕ} {p q : Nat.Partition n}
   have hhi := Finset.card_lt_card hstrict
   change (YoungDiagram.ofPartition m).card ≤
     (YoungDiagram.ofPartition p ⊓ YoungDiagram.ofPartition q).card at hlo
-  change _ < (YoungDiagram.ofPartition p).card at hhi
+  change (YoungDiagram.ofPartition p ⊓ YoungDiagram.ofPartition q).card <
+    (YoungDiagram.ofPartition p).card at hhi
   simp only [YoungDiagram.card_ofPartition] at hlo hhi
   omega
 
@@ -546,7 +551,7 @@ private theorem maximal_antichain_staircase (d : YoungDiagram) (A : Finset (ℕ 
   have hrow := strict_mono_index (fun i => (c i).1) hfirst i
   have hcol := strict_mono_index (fun i : Fin A.card => (c i.rev).2) hlast i.rev
   simp only [Fin.rev_rev, Fin.val_rev] at hcol
-  apply d.isLowerSet (b := c i) ?_ (hmem (c i) (hc i))
+  apply d.isLowerSet (show x ≤ c i from ?_) (hmem (c i) (hc i))
   constructor <;> dsimp [i] at * <;> omega
 
 private theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
@@ -560,9 +565,9 @@ private theorem single_extension_cells {X d : YoungDiagram} {c : ℕ × ℕ}
       rw [hdiff] at hh
       exact Finset.mem_insert.mpr (Or.inl (Finset.mem_singleton.mp hh))
   · intro hx
-    rcases Finset.mem_insert.mp hx with rfl | hx
+    rcases Finset.mem_insert.mp hx with hxc | hx
     · have hh : c ∈ d.cells \ X.cells := by rw [hdiff]; simp
-      exact (Finset.mem_sdiff.mp hh).1
+      exact hxc.symm ▸ (Finset.mem_sdiff.mp hh).1
     · exact hsub hx
 
 private theorem star_contains_staircase {n : ℕ} (hn : 0 < n)
@@ -782,6 +787,8 @@ private def expandedStaircase (r e : ℕ) : YoungDiagram where
   cells := (staircase r).cells ∪ ({0} ×ˢ Finset.range (r + e))
   isLowerSet := by
     rintro ⟨i,j⟩ ⟨a,b⟩ hxy hy
+    have ha := hxy.1
+    have hb := hxy.2
     rcases Finset.mem_union.mp hy with hy | hy
     · exact Finset.mem_union.mpr (Or.inl ((staircase r).isLowerSet hxy hy))
     · obtain ⟨hy0,hylen⟩ := Finset.mem_product.mp hy
