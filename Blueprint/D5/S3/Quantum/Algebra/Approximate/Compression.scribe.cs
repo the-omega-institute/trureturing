@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.Approximate;
 
@@ -13,7 +15,12 @@ internal sealed class CompressionDocument : IScribeDocumentDefinition
                 DescribeId.Create("taylor-compression-idempotent"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/Compression.correction_idempotent"),
                 H("The Taylor compression is idempotent"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("T"), InMacro, Sp, F.Id("A"), Comma, Sp,
+                    Vert, Sp, F.Id("T"), Caret, Grp(D(2)), Minus, D(1), Vert, Sp, Lt, D(1),
+                    Sp, Implies, Sp,
+                    Call("correction", F.Id("T")), Caret, Grp(D(2)), Eq,
+                    Call("correction", F.Id("T"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Absolute convergence follows by comparison with the scalar binomial series. Its Cauchy product is evaluated by the Chu-Vandermonde identity, giving S squared equal to the geometric series in identity minus T squared. The geometric-series identity gives T squared times S squared equal to identity. Commutation then proves exact idempotence.")),

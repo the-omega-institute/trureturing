@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.Approximate;
 
@@ -12,9 +14,22 @@ internal sealed class RegularCompressionDocument : IScribeDocumentDefinition
             Paragraph(Text("Define p(x) as the original Hilbert operator norm of L_x. The auxiliary Banach space is the range of x mapped to L_x, with the inherited operator norm. Evaluation at e proves injectivity and identifies H linearly and continuously with this range. Actual left and right multiplication are transported through this identification. No associative multiplication or C*-algebra instance is added to H, and the Hilbert structure on H is retained.")),
             Describe.Lean(
                 DescribeId.Create("original-regular-compression-idempotent"),
-                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/RegularCompression.Product.compression_idempotent"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_idempotent"),
                 H("Exact idempotence from the actual product defects"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("P"), Comma, F.Id("Q"), InMacro, Sp, F.Id("H"),
+                    Comma, Sp, Forall, Sp, Tau, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("R"))), Comma, Sp,
+                    F.Id("P"), Caret, Grp(Star), Eq, F.Id("P"), Comma, Sp,
+                    F.Id("Q"), Caret, Grp(Star), Eq, F.Id("Q"), Comma, Sp,
+                    D(0), Le, Sp, Tau, Comma, Sp,
+                    Tau, Plus, F.Id("M"), Sp, Delta, Sp, Le, Sp,
+                    new Formula.Fraction(D(1), Seq(D(1), D(0), D(2), D(4))), Comma, Sp,
+                    Call("p", Seq(Call("mu", F.Id("P"), F.Id("P")), Minus, F.Id("P"))),
+                    Le, Sp, Tau, Comma, Sp,
+                    Call("p", Seq(Call("mu", F.Id("Q"), F.Id("Q")), Minus, F.Id("Q"))),
+                    Le, Sp, Tau, Sp, Implies, Sp,
+                    Call("C", F.Id("P"), F.Id("Q")), Caret, Grp(D(2)), Eq,
+                    Call("C", F.Id("P"), F.Id("Q"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For self-adjoint P and Q with p(mu(P,P)-P) and p(mu(Q,Q)-Q) at most tau, assume tau is nonnegative and tau+M delta is at most 1/1024. The norm of the square of T=L_P R_Q+R_Q L_P-identity minus identity is at most 512(tau+M delta) in the auxiliary operator algebra. Thus the inverse-square-root Taylor series converges. Half of identity plus T times that series is exactly idempotent, and conjugation by the regular-range equivalence gives an exactly idempotent continuous linear map on the original H.")),
