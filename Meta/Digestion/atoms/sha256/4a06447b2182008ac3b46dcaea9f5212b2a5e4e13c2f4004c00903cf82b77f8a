@@ -1,0 +1,19 @@
+**定义38.1（完整候选而非免费物理实现）。** 令 $\Gamma(\mathfrak B)$ 表示30.1的完整模型与准确原评价。候选为
+
+$$
+\Gamma(\mathfrak B)+[\overline L=X]+\mathsf H(\mathfrak B;D)
++\mathcal C_{\rm src}(\Omega;S,D).
+\tag{38.1}
+$$
+
+它准确等价于
+
+$$
+\Gamma(\mathfrak B)+[\overline L=X]
++\exists!Q\in Z(M)_{\rm sa},\ Q^2=u,\quad D=D_Q,\quad
+\mathcal C_{\rm src}(\Omega;S,D_Q).
+\tag{38.2}
+$$
+
+来源约束的是同一个旧 $D$，不是与取向无关的自由数据。原中心、经典、不等维、无轴、静默及未被本模型选中的其他静态分支均继续存在。以下每项同时消费37章全文和固定源11–12/24/28的全部相关合取；不是用七个名称或短表替换来源。
+

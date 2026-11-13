@@ -1,0 +1,16 @@
+**推论 23.3（整载体的最小仿射复 Hilbert 几何）。**在定义 23.1 下，存在完备复 Hilbert 空间 $H_d$ 与 $F_d:M\to H_d$，满足
+
+$$
+\begin{gathered}
+F_de=0,\qquad F_d(a\cdot b)=F_da+F_db,\\
+F_d(Ua)=\omega F_da+t_d,\qquad t_d=F_d(Ue),\\
+d(a,b)=\|F_da-F_db\|^2,\qquad
+H_d=\overline{\operatorname{span}_{\mathbb C}F_d(M)}.
+\end{gathered}
+\tag{23.13}
+$$
+
+最小表示唯一到唯一的保原标签酉同构；原 $d$ 的对称性、全部有限负型及 $\sqrt d$ 的全部三角不等式随之成立。漂移不限为零，有向输入、非忠实或全零比较均保留。
+
+**证明。**定理 23.2 已在同一个原 $M,U,d$ 上供应两个普遍返回 (23.6)。将[续卷 W 定理 43.3](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#43-原核的有界轴刚性与第三标记返回下的完整仿射几何)的 $c$ 精确取为此 $d$，其全部原始前件均已满足，直接得到 (23.13) 及上述核性质。最小闭张成与唯一性复用本卷定理 1.3。这里没有以 $d+d^{\mathsf T}$、群内核或极限核替代原 $d$；不重证分类、极化、Gram 正性或 Hilbert 完成。证毕。
+

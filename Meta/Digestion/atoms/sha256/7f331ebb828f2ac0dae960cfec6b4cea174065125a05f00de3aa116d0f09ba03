@@ -1,0 +1,19 @@
+## 5. 参数对应、已付内容与未决范围
+
+定理 4.1 的 $p,q$ 正是固定输出接口中的两个实际非零正交投影，$P=S$ 是真角单位；第三坐标是 $1-P=1-S$ 的真实角外环境。向量 $\xi_p$、$\xi_q$ 是忠实表示中检验正算子铅笔的数学向量，不生产准备、菜单或响应输出。因而 (4.2) 只支付固定 P2 所蕴含的代数关系。
+
+该显式家族保留任意 $a,b\in\mathbb R$，包括零，并允许二者同时非零；$v,w$ 可为任意复数，包括零，$d\in\mathbb R\setminus\{0\}$，且仅要求 $\zeta d=v\overline w$。真正角外连线的准确判据是 $(v,w)\ne(0,0)$，不能对全部允许成员声称两个环境边均非零。$\rho,\eta$ 为标量是因为实际 $p,q$ 秩一，不是对一般算子块的额外简化公理。普通有限维完整 H／$M_3$ 分类及其原行消费者已经支付；本卷唯一新增的纸面应用是这个具体耦合族、上述参数对应及其不依赖 $D$ 或外值的固定 P2 充分性。原卷定理 41.2 的零对角、无 $S$-补块连线结果照原范围复用。
+
+$d=0$、非对角 Schur 补及一般算子值块均未由定理 4.1 处理。一般算子块还缺一条明确的张成／忠实性桥。对所有 $\lambda\in\mathbb R$、$\xi\in E_\lambda$，考虑成对块读取
+
+$$
+(r_p,r_q)\longmapsto
+\langle\pi(r_p)\pi(p)\xi,\pi(p)\xi\rangle+
+\langle\pi(r_q)\pi(q)\xi,\pi(q)\xi\rangle,
+\qquad (r_p,r_q)\in(pAp)_{\rm sa}\oplus(qAq)_{\rm sa}.
+$$
+
+要从引理 3.1 推出一般 $s_p=s_q=0$，须证明这些联合块读取的实线性张成分离上述实际算子块空间，即全部读取为零蕴含 $r_p=r_q=0$。一般 $c,t$ 是否供应该分离性是 **UNPROVED**；本卷只在 (4.2) 的两个具体纤维上完成其秩一计算。任意 $A,t$ 的固定输出／全部探针目标仍为 OPEN，没有得到一般原混合整行或完整 $\mathsf H_A(D)$ 反模型。
+
+成熟工具的归属沿承载原卷固定提交的定义 10.1、§36.3、§41.5：Peirce 块与角乘法术语见 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.6.2、Lemma 2.6.3；正泛函、正性、Gram／Cauchy–Schwarz、分离及表示背景见原卷所引 Gelfand–Naimark、Segal，亦见 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)。正 Hermitian 二表与标量参数正算子铅笔的互写、零 Gram／比例输入读取、复极化、正泛函分离以及 Schur 补矩阵消元均为成熟工具，引理 2.1、3.1 只保留为被消费的辅助证明；(4.3) 只展示该消元在实际条目上的矩阵。这些来源不被归为本卷特定 $M_3$ 家族的作者；本卷没有历史原创、文献穷尽或检索覆盖主张。
+

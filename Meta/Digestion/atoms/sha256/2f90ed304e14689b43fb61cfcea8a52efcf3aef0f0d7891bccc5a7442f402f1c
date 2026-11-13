@@ -1,0 +1,41 @@
+**Definition 12.1 (the same source and the two prediction laws).**
+Fix any original finite $a,\eta,d>0$ and any permitted Borel repair
+in Assumption 1.1. Retain its entire complex non-Friedrichs endpoint
+$A=\rho C$, maximal operator domain, full form and source trace,
+$G=H^1\times\mathbb R$, Haar measure, unit-source Green field,
+normalized zero state $h$, $m=h^2\mu$, $K$, and $P=T_d=e^{-dK}$.
+The actual source still starts at $e$, first reads at $2d$, and
+thereafter reads at the fixed gap $d$, with all four original
+emissions (1.2) and their conditionally fresh noise. In particular
+$f_3=cb$, $[b]=g_d$, $q(3)=c>0$, and $0<f_3\le1/4$.
+
+Write $Q=Q_\emptyset^\infty$, $Q_w=Q_w^\infty$ and $R_u=R_u^\infty$
+for the complete laws of (9.1), and $W_j=Y_0\cdots Y_{j-1}$ on
+their common output sequence space. Under $R_u$ these coordinates
+are the continuation after the fixed original authentic history
+$u$, rather than a new $e$-start. Then
+
+$$
+Q_{W_j}^1(3)=\frac{q(W_j3)}{q(W_j)},\qquad
+R_{uW_j}^1(3)=\frac{p(uW_j3)}{p(uW_j)}.
+\tag{12.1}
+$$
+
+The first expression uses a stationary initial comparison density
+and the whole continuation prefix. The second uses the entire
+actual history $uW_j$. They are not identified. Define
+
+$$
+\begin{gathered}
+r=1-f_3,\quad s=\sqrt r,\quad
+\mathsf A=M_sPM_s,\qquad
+S_0=1,\quad
+S_n=Q\{Y_0,\ldots,Y_{n-1}\ne3\}\quad(n\ge1),
+\end{gathered}
+\tag{12.2}
+$$
+
+where $M_s$ is multiplication by $s$. Stationarity and any two-sided
+extension below are proof comparisons only, with no preparation,
+additional trajectory, exact $q$ query or change in the source.
+

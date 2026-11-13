@@ -1,0 +1,57 @@
+**定义 40.2（原有限谱投影与固定输出）。** 任取原 $h$-偶自伴 $c\in E$，即 $[h,c]=0$，并只假定其在同一环境中的谱有限。非零原对象上写成互异实数的集合
+
+$$
+\Lambda=\sigma_{\mathcal A}(c)=\{a_1,\ldots,a_n\},\qquad n\ge1.
+$$
+
+对每个 $a\in\Lambda$ 定义实Lagrange多项式及原联合角
+
+$$
+\begin{gathered}
+f_a(t)=\prod_{\substack{b\in\Lambda\\b\ne a}}\frac{t-b}{a-b},
+\qquad p_\epsilon=\frac{u+\epsilon h}{2},\\
+q_{\epsilon,a}=p_\epsilon\circ f_a(c)
+=\frac{u+\epsilon h}{2}
+\prod_{\substack{b\in\Lambda\\b\ne a}}\frac{c-bu}{a-b},
+\qquad \epsilon\in\{1,-1\}.
+\end{gathered}
+\tag{40.3}
+$$
+
+空乘积取 $u$。单个原元的Jordan幂和交换原元的Jordan乘积均留在 $E$，故这些是原标签。有限谱的多项式演算给出自伴投影，且
+
+$$
+\begin{gathered}
+q_{\epsilon,a}q_{\delta,b}=0\quad((\epsilon,a)\ne(\delta,b)),
+\qquad \sum_{\epsilon,a}q_{\epsilon,a}=u,\\
+cq_{\epsilon,a}=a q_{\epsilon,a},\qquad
+hq_{\epsilon,a}=\epsilon q_{\epsilon,a}.
+\end{gathered}
+\tag{40.4}
+$$
+
+这里只用实际 $c$ 的有限谱多项式投影及实际 $h$ 的有限角；没有从有限读取的像取谱投影再提升为原标签。$f_a(c)$ 不必与 $e$ 交换，$q_{\epsilon,a}$ 也不要求被 $e$ 共同保持。允许零投影。
+
+任取原 $z\in E$、$hz=-zh$ 和实 $R$。完整复用原PB运输续卷118.3，固定
+
+$$
+\begin{gathered}
+x=c+z,\qquad k=hc=h\circ x,\qquad
+t=D(h,z)=iQhz,\\
+g=D(Rh,x),\qquad r=g-Rt\in E,\\
+[h,r]=0,\qquad ht=-th,\qquad z\circ t=0,\qquad k^2=c^2.
+\end{gathered}
+\tag{40.5}
+$$
+
+这是同一旧输出的定义及已付横向投影，不是将未知响应按 $c+z$ 拆和。另复用该处 (118.7) 的第一框架零行
+
+$$
+[h,y]=0\quad\Longrightarrow\quad
+D(\alpha u+\beta h,y)=0
+\qquad(\alpha,\beta\in\mathbb R,\ y\in E).
+\tag{40.6}
+$$
+
+其前件和中央续卷189–191的证明用途均由118.3明确支付，不将中央189.1较强陈述中的额外反射前件直接删去。
+

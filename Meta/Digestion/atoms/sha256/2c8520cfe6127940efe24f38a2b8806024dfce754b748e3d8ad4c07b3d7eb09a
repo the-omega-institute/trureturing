@@ -1,0 +1,31 @@
+**定理 42.2（不存在共同交换分割的有限谱背景）。** 在 $E=H_4(\mathbb C)$ 中令
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+X_0=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+h=Z\otimes I_2,\quad e=X_0\otimes I_2,\quad
+c=\operatorname{diag}(Z,X_0).
+\tag{42.1}
+$$
+
+则 $c$ 为 $h$-偶且 $\sigma(c)=\{1,-1\}$，但不存在33.1所需的任意有限共同 $h,e$ 交换投影分割及实系数，使 $c=\sum_\ell(\mu_\ell u+\lambda_\ell h)p_\ell$。
+
+证明。$c$ 与 $h$ 交换且 $c^2=u$，正负特征值都存在，故有上述谱。若投影 $p_\ell$ 同时与 $h,e$ 交换，由 $h$ 的两角分解先得它为块对角，再由 $e$ 交换上下两角得
+
+$$
+p_\ell=\operatorname{diag}(d_\ell,d_\ell),\qquad
+d_\ell^2=d_\ell=d_\ell^*,\qquad
+d_\ell d_m=0\ (\ell\ne m),\quad \sum_\ell d_\ell=I_2.
+$$
+
+假设中的背景表示于是要求
+
+$$
+Z=\sum_\ell(\mu_\ell+\lambda_\ell)d_\ell,\qquad
+X_0=\sum_\ell(\mu_\ell-\lambda_\ell)d_\ell.
+$$
+
+因此上下背景经 $e$ 的识别后属于同一个交换代数，必须彼此交换；但 $ZX_0=-X_0Z\ne0$，矛盾。∎
+
+该例只区分两种背景前件。完整原域 $H_4(\mathbb C)$ 上同一旧关系的全域识别，已由[配平三角续卷142.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#142-极分解把整个旧关系送回零输入)及其137–141前件支付；不计为41.1新增的有限矩阵重构。
+

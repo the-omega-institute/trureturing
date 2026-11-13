@@ -30,5 +30,6 @@ This restricted ordinary range is already covered by Hertlein's small-valuation 
 
 - Truth anchor: `D5/S3/Arith/Robin/GoldenCongruenceRobin.robin_of_modEq_2241`
 - Dependency: [D5/S3/Arith/Robin/ElevenSmooth](ElevenSmooth.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FiniteSieve/TotientPrimeProducts](ForwardKernel/PrimeMomentTransfer/FiniteSieve/TotientPrimeProducts.md)
 - Dependency: [D5/S3/Arith/Robin/GoldenResidualFive](GoldenResidualFive.md)
 - Dependency: [D5/S3/Arith/Robin/MertensExplicitEnvelope](MertensExplicitEnvelope.md)

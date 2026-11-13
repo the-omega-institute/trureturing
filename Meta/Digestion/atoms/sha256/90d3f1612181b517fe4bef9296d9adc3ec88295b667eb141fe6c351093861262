@@ -1,0 +1,42 @@
+**定理 70.1（全原域双向分类）。** 在66.1的已给原载体和原评价资料下，
+
+$$
+\boxed{\mathsf H_A(D)\ \Longleftrightarrow\quad
+\exists!\,\sigma\in\{\pm1\}\ \forall a,b\in A_{\rm sa},\quad
+D(a,b)=\frac{\sigma i}{2}[a,b].}
+\tag{70.1}
+$$
+
+证明。正向取68.1的共同符号和69.5的残差。AH59.3 的原 P2 正读取和交换子范数界给每个实际 $Z$ 的点值预算
+
+$$
+\|F(Z)\|\le2\|X(Z)\|\|Y(Z)\|.
+\tag{70.2}
+$$
+
+固定原 $W$，任取 $\varepsilon>0$，选有限阶段 $B\in A_n$ 满足 $\|W-B\|<\varepsilon$。有限矩阵奇异值分解包括奇异 $B$：写 $B=V\Sigma V_0^*$，补全零奇异空间的正交基，取 $U=V_0V^*\in A_n$，则 $UB\ge0$。
+
+69.2 保持的是同一份原输出残差。对真实 $Z=UW$，有
+
+$$
+F(Z)=F(W),\qquad \|X(Z)\|\le\|W\|,\qquad
+Y(Z)=Y(U(W-B)),\quad \|Y(Z)\|<\varepsilon.
+\tag{70.3}
+$$
+
+所以固定的 $\|F(W)\|\le2\|W\|\varepsilon$ 对每个正 $\varepsilon$ 成立，必为零。取 $W=a+\jmath b$ 给全部原对；非零 Pauli 交换子给符号唯一。没有以 $D(UB,0)$ 替代任何原输出，也没有让输入极限穿过 $D$。
+
+反向直接复用 AH63.1 的反向证明：该段只用含单位 C* 乘法、正评价及 $D=K_\sigma$，完全不依赖 CAR 或归纳模型。有向二表分别是通常／相反乘法的正平方 Gram，A2 是实平方 Gram，A3 是原谱序。
+
+尤其任取原 $(h;a,b)$，以同一 $K_\sigma$ 形成全部实际 $v,w$，置 $W=a+\jmath b$，则
+
+$$
+(a\pm v)+\jmath(b\pm w)=(1\pm\jmath h)W,
+\qquad
+(a\pm v)^2+(b\pm w)^2+2K_\sigma(a\pm v,b\pm w)
+=W^*(1+h^2)W.
+\tag{70.4}
+$$
+
+故两份真正外值满足完整 PB。每份原评价读取相同元素等式，所有原质量均保留，无任何正常性或正质量除法前提。∎
+

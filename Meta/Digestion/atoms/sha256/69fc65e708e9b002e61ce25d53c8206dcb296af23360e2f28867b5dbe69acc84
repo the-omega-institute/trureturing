@@ -1,0 +1,70 @@
+## 76. 同一仿射第三标签固定全部混合幅度
+
+继续证明 72.2。向量像共线时 242.1 已识别零值；两点像都纯时 62.2 已识别。只须处理向量像独立、标量部分不全为零的实际原对。
+
+先用一次实际 SO$(2)$ 将标量部分调成 $(0,\rho)$、$\rho>0$，对应向量为 $v_0,w_0$。令 $M=\|v_0\|^2+\|w_0\|^2$、$s=1/[4(1+M)]$、$c_0=\sqrt{1-s^2}$，再作实际旋转 $(a,b)=(c_0a_0+s b_0,-s a_0+c_0b_0)$。以下暂以旋转后的实际标签记 $a,b$，则其点像为 $(\alpha,v),(\beta,w)$，其中 $\alpha=s\rho>0,\beta=c_0\rho>0$。记 $h=v\cdot w$，有 $|h|\le M/2$，从而
+
+$$
+N=\beta(1+\alpha^2)+\alpha h
+\ge\rho(c_0-sM/2)>0.
+\tag{76.1}
+$$
+
+最后一步使用 $c_0\ge\sqrt{15}/4$、$sM/2<1/8$。这是已知实系数的有限选择，不是对未知 $D$ 作参数极限。
+
+由 75.3，当前旧值 $d=(0,z)$ 且 $z\perp v,w$。令
+
+$$
+q=\|v\|^2,\quad n=v\times w,\quad L=\|n\|^2>0,\quad
+\ell=qw-hv,\quad
+\gamma=-(\alpha\beta+h),\quad\tau=N/q\ne0.
+$$
+
+向量独立使 $q>0$，且 $v\cdot\ell=0,w\cdot\ell=L$。取实际第三标签
+
+$$
+c=\gamma u+\tau(a-\alpha u).
+\tag{76.2}
+$$
+
+实际仿射同轴零值给原等式 $D(a,c)=0$。该次 PB 的两对外层点像为
+
+$$
+\begin{aligned}
+P_\pm&=(\beta\mp(\alpha\gamma+\tau q),\
+ w\pm z\mp(\gamma+\alpha\tau)v),\\
+Q_\pm&=(\gamma\pm(\alpha\beta+h),\
+ (\tau\pm\beta)v\pm\alpha w).
+\end{aligned}
+\tag{76.3}
+$$
+
+所选 $\gamma,\tau$ 使正侧两份像同时纯，因为 $\beta-\alpha\gamma-\tau q=N-\tau q=0$ 且 $\gamma+\alpha\beta+h=0$。负侧无需变纯。
+
+记两份实际旧输出为 $Y_\pm$。75.3 已给它们纯且分别垂直各自两输入的向量部分。只展开已知 Jordan 乘法，PB 成为 $Y_+-Y_-=2(\tau\ell-\beta z)$，故可写
+
+$$
+Y_\pm=m\pm(\tau\ell-\beta z).
+\tag{76.4}
+$$
+
+对 $Q_\pm^0,Y_\pm$ 的正交约束分别为
+
+$$
+\begin{aligned}
+(\tau+\beta)v\cdot m+\alpha w\cdot m+\alpha\tau L&=0,\\
+(\tau-\beta)v\cdot m-\alpha w\cdot m+\alpha\tau L&=0.
+\end{aligned}
+\tag{76.5}
+$$
+
+相加并用 $\tau\ne0$，得到 $v\cdot Y_+=v\cdot m=-\alpha L$。现在才对 (76.3) 的实际正侧纯像应用 62.2：$Y_+=K(P_+^0,Q_+^0)$。普通三重积给
+
+$$
+v\cdot(P_+^0\times Q_+^0)=-\alpha z\cdot n.
+$$
+
+因此 $-\kappa\alpha z\cdot n=-\alpha L$。约去 $\alpha\ne0$，得 $z\cdot n=\kappa L$。$z\perp v,w$ 及 $L>0$ 遂使 $z=\kappa n=K(v,w)$。
+
+两次实际 SO$(2)$ 都保持同一旧 $D$，且行列式一保持已知有向面积，故可以撤销。每个正点的全部实际混合旧值均已识别。零点两输入像均为标量，242.1 给零，而交换子同样为零；逐点相等即得整个原函数等式 (72.2)。不需要输出的多项式性，也没有对原标签输入取极限。∎
+

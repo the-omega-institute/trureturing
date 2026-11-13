@@ -1,0 +1,7 @@
+**局部四阶能量假设 $(\mathrm L_4)$。** 存在 $C_4$ 与 $\varepsilon'_X\to0$，使对充分大的 $X$、一切 $X/2\le A\le B\le4X$ 与 $(4X)^\alpha\le v\le(X/2)^\beta$，
+
+$$
+\int_A^B|D_v(y)|^4\,dy\le C_4\,v^2(\log X)^2\bigl(B-A+\varepsilon'_XX\bigr).
+\tag{497.1}
+$$
+

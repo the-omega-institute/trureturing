@@ -1,0 +1,15 @@
+**定义 C-7.9（兼容矩阵与两个读口）。** 以旧位为行、新位为列，定义
+
+
+```math
+Q_{\mathrm{ex}}=
+\begin{pmatrix}1&1\\1&0\end{pmatrix},
+\quad D(t)=\mathrm{diag}(1,t),\quad
+B(t)=Q_{\mathrm{ex}}D(t)=\begin{pmatrix}1&t\\1&0\end{pmatrix}.
+```
+
+
+它只禁止 11；𝐵(𝑡) 给新位活动一次。令
+$`J_{\mathrm{swap}}=\begin{pmatrix}0&1\\1&0\end{pmatrix}`$，则
+$`Q_{\mathrm{ex}}=J_{\mathrm{swap}}MJ_{\mathrm{swap}}`$。这是坐标矩阵恒等式；𝑀 推进组成或树替换，$`Q_{\mathrm{ex}}`$ 的指标却是实际占位兼容性。
+

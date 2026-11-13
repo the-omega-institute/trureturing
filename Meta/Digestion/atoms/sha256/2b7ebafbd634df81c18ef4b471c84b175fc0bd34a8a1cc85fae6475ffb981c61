@@ -1,0 +1,27 @@
+**引理 42.3（字符连续且不等于一般实行列式）。** $\varepsilon:G_n\to\{\pm1\}$ 是连续满群同态。对转置 $\tau$，
+
+$$
+\varepsilon(\tau)=-1,\qquad
+\det_{\mathbb R}(\tau|_{H_n(\mathbb C)})=(-1)^{n(n-1)/2}.
+\tag{42.4}
+$$
+
+证明。取
+
+$$
+h=E_{11}-E_{22},\quad e=E_{12}+E_{21},\quad
+j=\kappa(h,e)=i(E_{12}-E_{21}).
+\tag{42.5}
+$$
+
+$j\ne0$，且 $\phi j=\varepsilon(\phi)\kappa(\phi h,\phi e)$。用实内积 $\langle A,B\rangle=\operatorname{Tr}(AB)$，有可连续读取的公式
+
+$$
+\varepsilon(\phi)=
+\frac{\langle\phi j,\kappa(\phi h,\phi e)\rangle}
+{\langle\phi j,\phi j\rangle}.
+\tag{42.6}
+$$
+
+分母严格正，故它连续且只取两值。恒等与转置给满性。实基由 $n$ 个 $E_{rr}$、每对 $r<s$ 的 $E_{rs}+E_{sr}$、$i(E_{rs}-E_{sr})$ 组成。转置固定前两类，准确翻转最后 $n(n-1)/2$ 根轴，给行列式公式。尤其 $n=4$ 的指数为六，$n=5$ 为十；两者普通实行列式均为正，而乘法字符仍为负。转置还准确固定同一 $h,e$、翻转同一 $j$。∎
+

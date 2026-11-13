@@ -1,0 +1,27 @@
+**命题 89.3（SM79.3的准确因子实例与唯一拼接）。** 对每个非零 $p\in\mathcal F_\tau$，向 SM79.1–79.3代入
+
+$$
+(M,E,u,C,N,S,D,\mathcal P,T)
+=(pMp,(pMp)_{\rm sa},p,(pMp)_+,\|\cdot\|,\circ,D_p,
+\{\gamma_p\}_{\gamma\in\mathcal P},\tau_p(\cdot)p).
+\tag{89.4}
+$$
+
+89.2支付完整原关系，89.1支付有限 continuous 环境和忠实正规中心值迹。因此 SM79.3的中央自伴对合恰为 $Q_p=\sigma_pp$，$\sigma_p\in\{1,-1\}$，并有
+
+$$
+D(a,b)=\frac{\sigma_pi}{2}[a,b]\qquad(a,b\in(pMp)_{\rm sa}).
+\tag{89.5}
+$$
+
+若 $0\ne p\le g\in\mathcal F_\tau$，II₁ 因子 $pMp$ 非交换，故有不交换自伴 $a,b\in pMp$。在同一个旧 $D(a,b)$ 上比较89.5，给 $\sigma_p=\sigma_g$。任意两个非零迹有限投影有共同迹有限上界 $p\vee q$，所以全部符号相同，记为 $\sigma$。存在非零迹有限投影由半有限性保证；上述不交换对也证明这个共同符号唯一。零角只含零值，无须给它另选符号。
+
+此后固定
+
+$$
+J=\sigma i1,\qquad K(a,b)=\frac J2[a,b].
+\tag{89.6}
+$$
+
+$J,K$ 仅是辅助数学记号，与96.1的 native 全词 $J_a,K$ 区分。至此只知道全部有限角内的旧值，并没有得到任意输入的压缩相容律。
+

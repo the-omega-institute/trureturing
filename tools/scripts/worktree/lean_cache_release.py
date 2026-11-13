@@ -500,7 +500,7 @@ def staging_snapshot(path, cutoff):
 def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=False, *, now):
     """Check twice and remove extraction residue under the physical lake's exclusive guard."""
     lake = pathlib.Path(lake)
-    cutoff = min(now - 24 * 3600, cutoff) if cutoff is not None else now - 24 * 3600
+    cutoff = cutoff if cutoff is not None else now - 24 * 3600
     results = []
     try:
         candidates = list(staging_candidates(lake))
@@ -535,6 +535,8 @@ def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=Fals
                 for directory, _, _ in os.walk(path):
                     os.chmod(directory, stat.S_IMODE(os.lstat(directory).st_mode) | stat.S_IRWXU)
                 shutil.rmtree(path)
+                if os.path.lexists(path):
+                    raise OSError("deletion returned with staging residue: " + str(path))
                 result["action"] = "removed"
         except BlockingIOError:
             result["reason"] = "cache_busy"
@@ -542,6 +544,8 @@ def clean_staging(lake, cutoff=None, delete=True, inspect=None, guard_owned=Fals
             result.update(action="failed" if removal_started else "kept", reason="vanished", detail=str(error))
         except (OSError, ValueError) as error:
             result.update(action="failed" if removal_started else "kept", reason="unreadable", detail=str(error))
+        if result["action"] == "failed":
+            result.update(retained_path=str(path), residue_exists=os.path.lexists(path))
     return results
 
 
@@ -550,6 +554,9 @@ def fetch_staging_cleanup(root, *, now):
     results = clean_staging(root / ".lake", now=now, guard_owned=True)
     if results:
         receipt("fetch", "staging-cleanup", items=results)
+    failed = [row for row in results if row["action"] == "failed"]
+    if failed:
+        raise OSError("staging_cleanup_failed: " + json.dumps(failed, sort_keys=True))
     return results
 
 

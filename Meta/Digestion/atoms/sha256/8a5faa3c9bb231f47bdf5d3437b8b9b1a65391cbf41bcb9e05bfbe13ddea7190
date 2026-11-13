@@ -1,0 +1,31 @@
+**定义 40.1（完整原条件与第一实际框架）。** 完整采用[原PB运输续卷118.1–118.3](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md#118-任意原偶背景第一实际框架与同一余量)的定义及其全部前件：同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、分离元素且准确决定锥的全部原正实线性评价、全部零／不等／次归一质量、全部原P2和完整原PB。$E$ 为实Archimedean序单位空间。A1的两条实际有向Hermitian二表、A2的相加三表及全部排列在整个实三空间的正性和指定零二次值、A3的单位及同一固定有理小效果窗均保留。称[《中央响应平方与径向一致续卷》](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)为中央续卷。沿同一已付忠实、含单位、等距且准确保锥的JC包含，记
+
+$$
+\begin{gathered}
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E^{\|\cdot\|}=X,\qquad \mathcal A=C^*(X),\qquad
+S(a,b)=a\circ b=(ab+ba)/2,\qquad C=E\cap\mathcal A_+,\quad N=\|\cdot\||_E,\\
+h,e,j=D(h,e)\in E,\qquad h^2=e^2=j^2=u,\qquad
+h\circ e=h\circ j=e\circ j=0,\\
+Q=ihej\in Z(\mathcal A),\qquad Q^*=Q,\qquad Q^2=u.
+\end{gathered}
+\tag{40.1}
+$$
+
+$Q$ 不要求属于 $E$。原域可以不完备、无限维、不可分，也不要求 $X=\mathcal A_{\rm sa}$。$D:E^2\to E$ 始终是同一个原总映射；不预付一般线性、第一槽齐次、连续、可测、单位平移中性、协变、商下降、完成延拓，或原域对所选环境交换子输出的闭合。七项实际来源逐项完整取43.2。
+
+为固定接线，原PB及其正读取写作
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+D(b+v,d+w)-D(b-v,d-w)=-2b\circ v-2d\circ w
+\qquad(a,b,d\in E),\\
+|\phi(D(a,b))|^2\le
+\phi(a^2)\phi(b^2)-\phi(a\circ b)^2.
+\end{gathered}
+\tag{40.2}
+$$
+
+最后一式对每个原输入对及每个数学正实线性读取 $\phi$ 成立，准确沿原PB运输续卷118.2从同一原表的正性与准确锥取得。环境正泛函的压缩限制属于这种读取，不因此成为新的实际准备；不除以读取质量。
+

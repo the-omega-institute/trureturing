@@ -1,0 +1,27 @@
+**定理 495.3（不同指数的平方正相关）。** 设 $E$ 局部有界 Borel 可测，(490.2) 与 (493.1) 分别在包含 $\theta_1$ 与 $\theta_2$ 的指数带上成立，且 $E$ 满足以某个有界可测 $C$ 为交叉核的 $(\mathrm W_{2,2})$。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}[Z_{1,X}Z_{2,X}]=0,\qquad
+\lim_{X\to\infty}\mathbb E_{\mu_X}[Z_{1,X}^2Z_{2,X}^2]=c_{2,2}\,\kappa_1\kappa_2\,Q_1Q_2 ,
+\tag{495.5}
+$$
+
+其中 $c_{2,2}=\dfrac{2^{\kappa_1+\kappa_2}-1}{(\kappa_1+\kappa_2)\log2}$；并且
+
+$$
+\lim_{X\to\infty}\Bigl(\mathbb E_{\mu_X}[Z_{1,X}^2Z_{2,X}^2]-\mathbb E_{\mu_X}Z_{1,X}^2\,\mathbb E_{\mu_X}Z_{2,X}^2\Bigr)=\kappa_1\kappa_2\,Q_1Q_2\,\bigl(c_{2,2}-c_{2,0}\,c_{0,2}\bigr),
+\tag{495.6}
+$$
+
+其中 $c_{2,0}=\frac{2^{\kappa_1}-1}{\kappa_1\log2}$、$c_{0,2}=\frac{2^{\kappa_2}-1}{\kappa_2\log2}$，且 $c_{2,2}>c_{2,0}c_{0,2}$。特别地，若 $g_1,g_2$ 都不几乎处处为零，则 (495.6) 的极限严格为正。
+
+证明。第一式由定理 495.2 的证明得到。对第二式验证 $(\mathrm J_{2,2})$(a)：由引理 493.1 的第一式（对两条指数带分别使用），与定理 494.2 的证明相同，$\sup_{i,s}\mathbb E_{\mu_X}|B_{i,X}(s)|^4\ll\max(C_4^{(1)},C_4^{(2)})$。由引理 495.1，$\lim\mathbb E[Z_{1,X}^2Z_{2,X}^2]=\int\prod g\cdot M_{2,2}$。对 (495.4) 的三项分别用 Fubini：第一项给出 $\kappa_1\kappa_2Q_1Q_2$；后两项各为 $\bigl(\iint g_1(s)g_2(t)C(s,t)\,ds\,dt\bigr)^2$。由 $(\mathrm J_{1,1})$(b) 与定理 495.2，$c_{1,1}\iint g_1g_2C=\iint g_1g_2M_{1,1}=0$，而 $c_{1,1}>0$，故后两项为零，得 (495.5) 第二式；可积性由 $C$ 有界与 $g_i\in L^1$ 给出。由定理 490.6，$\lim\mathbb EZ_{i,X}^2=\frac{(2^{\kappa_i}-1)Q_i}{\log2}=c_{2,0}\kappa_1Q_1$（$i=1$）与 $c_{0,2}\kappa_2Q_2$（$i=2$），得 (495.6)。最后，令 $U$ 在 $[1,2]$ 上有密度 $1/(u\log2)$，$U'$ 为其独立复制，$f(u)=u^{\kappa_1}$、$h(u)=u^{\kappa_2}$ 都严格递增，则
+
+$$
+c_{2,2}-c_{2,0}c_{0,2}=\mathbb E[f(U)h(U)]-\mathbb Ef(U)\,\mathbb Eh(U)=\tfrac12\,\mathbb E\bigl[(f(U)-f(U'))(h(U)-h(U'))\bigr]>0 ,
+$$
+
+因为被积函数在 $U\ne U'$ 时严格为正，而 $\mathbb P(U\ne U')=1$（Chebyshev 积分不等式的严格形式；该不等式见 Hardy–Littlewood–Pólya, Inequalities, Cambridge 1934, 定理 236）。若 $g_i$ 都不几乎处处为零，则 $Q_1,Q_2>0$（定理 490.6 的证明）。证毕。
+
+若 $g_1,g_2$ 都不几乎处处为零，则在 $(\mathrm W_{2,2})$ 与 (490.2)、(493.1) 下，两个不同指数的归一化核渐近不相关，而它们的平方渐近正相关：$Z_{1,X},Z_{2,X}$ 的二阶、四阶联合矩极限不可能是两个独立随机变量的联合矩。正相关来自两者共享的宏观尺度 $U_X=x/X$，其大小 $\kappa_1\kappa_2Q_1Q_2(c_{2,2}-c_{2,0}c_{0,2})$ 只经 $\theta_1,\theta_2$ 依赖宏观取样。
+

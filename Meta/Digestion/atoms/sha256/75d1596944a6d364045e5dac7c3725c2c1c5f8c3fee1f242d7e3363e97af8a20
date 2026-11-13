@@ -1,0 +1,47 @@
+**定理 82.8（任何固定有限严格加权 PSD 目录都不能认证 CP）。** 固定 $d\ge2$，任取有限个、事先独立于待测映射指定的 $\rho_l\ge0$ 于 $\mathbb C^d\otimes\mathbb C^d$，以及 $0<t_l<1$。允许 $\rho_l$ 纯、混合、秩亏、满秩、未归一或为零。存在引理 82.6 的正 TP、保单位、混合、标量固定效应而非 CP 映射，使
+$$
+\mathcal K_{2,t_l}(\Phi_{\eta,U})(\rho_l)\ge0\qquad\text{对每个 }l. \tag{82.15}
+$$
+严格的是平均权重，不是输入态的混合度。即使加入任意有限个纯探针，结论仍成立。
+
+**证明。** 对每个非零 $\rho_l$ 作有限谱分解，把其正特征值吸收进非零矩阵 $X$，写成若干 $|\operatorname{vec}X\rangle\langle\operatorname{vec}X|$ 之和。这只是在证明中分解给定正元，不宣布这些谱项是原准备或可调用分支。只须找同一 $U,\eta$ 使这个有限列表的每个纯分量通过其所属权重测试。
+令 $\mathsf S$ 为两因子交换酉，对列表中每个 $X$ 置
+$$
+A_X=I\otimes X^T,\qquad B_X=\mathsf S(I\otimes X),\qquad
+S_X=\operatorname{Ran}A_X+\operatorname{Ran}B_X.
+$$
+对任意 HP 映射的 Choi 矩阵 $C$，向量化和交换恒等式给纯输入的准确输出
+$$
+\mathcal K_{2,t}(\Phi)(|\operatorname{vec}X\rangle\langle\operatorname{vec}X|)
+=tA_XCA_X^*+(1-t)B_XCB_X^*. \tag{82.16}
+$$
+其中第一项来自 $\operatorname{vec}X=(I\otimes X^T)\operatorname{vec}I$；交换后的输入为 $\operatorname{vec}(X^T)$，再交换输出恰给第二项。没有转置错配或输入生成假设。
+先在 $\eta=0$ 的 CP 边界取 $C$ 的正倍数 $P=I-ww^*$。记
+$$
+\begin{aligned}
+Y_X&=tA_XPA_X^*+(1-t)B_XPB_X^*,\\
+Z_X&=tA_Xww^*A_X^*+(1-t)B_Xww^*B_X^*.
+\end{aligned} \tag{82.17}
+$$
+因为 $t,1-t>0$，
+$$
+v\in\ker Y_X\quad\Longleftrightarrow\quad
+A_X^*v\in\mathbb Cw\ \text{且}\ B_X^*v\in\mathbb Cw. \tag{82.18}
+$$
+若 $X$ 奇异，$A_X^*=I\otimes\overline X$、$B_X^*=(I\otimes X^*)\mathsf S$。这两个像空间的向量反向量化后秩都不超过 $\operatorname{rank}X<d$，而酉 $U$ 满秩，所以 $w$ 不属于任何一个像。于是 (82.18) 迫使两项都为零，恰得 $\ker Y_X=S_X^\perp$。这对每个酉 $U$ 都成立，无须一般位置假设。
+若 $X$ 可逆，则 $A_X,B_X$ 可逆。对非零 $v$，(82.18) 等价于 $w$ 是
+$$
+T_X=B_X^*(A_X^*)^{-1}
+$$
+的特征向量：先写 $v=c(A_X^*)^{-1}w$，其中 $c\ne0$，再代入第二条件。$T_X$ 不是标量；否则 $B_X$ 为 $A_X$ 的标量倍数，右乘 $I\otimes X^{-1}$ 将迫使 $\mathsf S=I\otimes R$。但 $\mathsf S(e_i\otimes e_j)=e_j\otimes e_i$，在 $i\ne j$ 时改变第一因子，而 $I\otimes R$ 不会，矛盾。
+每个非标量复矩阵的特征向量集是有限个真特征子空间的并。列表有限，引理 82.7 因而允许选择同一酉 $U$，使 $w$ 避开所有可逆 $X$ 的这些坏子空间。于是它们的 $Y_X$ 核为零；其 $S_X$ 也为全空间。结合奇异情形，所有非零分量统一满足
+$$
+\ker Y_X=S_X^\perp. \tag{82.19}
+$$
+现已固定 $U$。$Y_X$ 在非零有限维 $S_X$ 上严格正，令其最小特征值为 $\lambda_X>0$。$Y_X,Z_X$ 均自伴，像包含于 $S_X$，且消去 $S_X^\perp$，所以没有离开结构支撑的交叉项。选同一
+$$
+0<\eta<d-1,\qquad \eta\|Z_X\|<\lambda_X
+\quad\text{对所有 }Z_X\ne0\text{ 的分量}. \tag{82.20}
+$$
+有限性保证这种正 $\eta$ 存在；$Z_X=0$ 不加限制。每个 $Y_X-\eta Z_X$ 在 $S_X$ 正，在补空间为零。由 (82.13)、(82.16)—(82.17)，实际测试输出恰是 $(d/c_\eta)(Y_X-\eta Z_X)\ge0$。逐 $\rho_l$ 求这些正分量之和便得 (82.15)；零输入直接成立。若目录没有非零输入，任取酉及 $0<\eta<d-1$ 即可。引理 82.6 同时保证所需非 CP、正性、TP、保单位、混合及固定空间性质。证毕。
+

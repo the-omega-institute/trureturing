@@ -1,0 +1,17 @@
+**定理 492.5（共同指数带交叉界的近最优性）。** 设 $E_0:[1,\infty)\to\mathbb R$ 局部有界、Borel 可测，满足 (492.1)。令 $F$ 为 (492.2)。则：
+
+(i) $E_0$、$E_0+F$、$E_0-F$ 都满足 (492.1)；
+
+(ii) $F(x)\ll\sqrt x\,(\log x)^{3/2}/\sqrt{\log\log x}$；特别地，若 $E_0(x)=O(\sqrt x\log^2x)$，则 $E_0\pm F$ 也满足 $O(\sqrt x\log^2x)$；
+
+(iii) 存在固定的 $\varepsilon_*\in\{-1,0,1\}$，使 $E_*=E_0+\varepsilon_*F$ 满足
+
+$$
+\limsup_{X\to\infty}\frac{|C_{E_*}(X)|}{R_b(X)}\ge\frac{(b-a)^2}8 ;
+\tag{492.3}
+$$
+
+从而对每个固定 $\eta>0$，$C_{E_*}(X)\ne O\bigl(X^{1-b}(\log X)^{3-\eta}\bigr)$。
+
+证明。(i)、(ii) 见引理 492.2 后的论证。映射 $E\mapsto\mathcal T^E_{\theta,1}$ 是线性的。令 $B_X(E,E')=\int_X^{2X}\mathcal T^E_{a,1}\mathcal T^{E'}_{b,1}\,\frac{dx}x$，它是双线性的（不必对称），$C_E(X)=B_X(E,E)$，且 $C_{E_0\pm F}=C_{E_0}\pm B_X(E_0,F)\pm B_X(F,E_0)+C_F$；两式相加得 $C_{E_0+F}+C_{E_0-F}-2C_{E_0}=2C_F$；因而 $\max\{|C_{E_0+F}(X)|,|C_{E_0-F}(X)|,|C_{E_0}(X)|\}\ge\frac12|C_F(X)|$。对序列 $X_n$ 应用有限集合上的抽屉原理，三者中有一个固定的函数在无穷多个 $n$ 上取到这个最大值。由引理 492.4 得 (492.3)。最后，$R_b(X)/\bigl(X^{1-b}(\log X)^{3-\eta}\bigr)=(\log X)^\eta/\log\log X\to\infty$。证毕。
+

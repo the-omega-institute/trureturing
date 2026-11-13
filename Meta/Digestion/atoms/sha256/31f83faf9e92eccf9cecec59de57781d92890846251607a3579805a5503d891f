@@ -1,0 +1,16 @@
+**定义 139.1（候选复乘法与原系数星代数）。** 在原复向量空间 $E_{\mathbb C}=E\oplus iE$ 上取 $`(a+ib)^*=a-ib`$，以
+
+$$
+a\star b=a\circ b-iB_\star(a,b)\qquad(a,b\in E)
+\tag{139.1}
+$$
+
+作复双线性延拓。取 $\mathfrak b=\mathcal B_0\oplus i\mathcal B_0$，其同一乘法在实系数上为
+
+$$
+c\star d=c\circ d-i\beta(c,d).
+\tag{139.2}
+$$
+
+记所得 $E_{\mathbb C}$ 的C*完成为 $\mathcal C$，$\mathfrak b$ 的C*完成为 $\mathcal B$；它们的存在、范数及所指的具体闭包由下一定理给出。$\mathcal C$、$\mathcal B$ 分别区别于原JC环境 $\mathcal A$ 与原锥 $C$。
+

@@ -1,0 +1,14 @@
+**定义 1.2（原评价与质量）。** 固定同一原 $\Omega/\mathrm{native}$ 及原资料 $(E,C,u,N,\mathcal P,S,D)$。每个 $\gamma\in\mathcal P$ 是原正实线性评价，并要求
+
+$$
+\begin{gathered}
+x\in C\quad\Longleftrightarrow\quad
+\gamma(x)\ge0\quad\text{对全部 }\gamma\in\mathcal P,\\
+[\gamma(x)=0\quad\text{对全部 }\gamma\in\mathcal P]\Longrightarrow x=0,
+\qquad m_\gamma=\gamma(u)\ge0.
+\end{gathered}
+\tag{1.2}
+$$
+
+全部零、不等、次归一及非正常原评价与质量保持原身份。评价族无需等于全部数学正泛函，尤其无需包含 character-vector 读取。同一个 $D:E^2\to E$ 起初只是总映射；不预付可加、齐次、连续、可测、协变、中央性、中央投影下降、商下降、单位平移中性、输出小代数闭合或完成延拓。
+

@@ -1,0 +1,42 @@
+**引理 487.2（定量边界公式）。** 采用 $\widehat g(t)=\int_{\mathbb R}g(v)e^{-itv}\,dv$。对 $b>0$ 令 $K_b(v)=\dfrac{1-\cos bv}{\pi bv^2}$（$K_b(0)=b/(2\pi)$），对 $U>2b$ 令 $H_{b,U}(v)=K_b(v)(1-\cos Uv)$。二者非负、积分为 $1$，$H_{b,U}\le2K_b$，且（Fejér 核的 Fourier 对；乘以 $\cos Uv$ 对应频移）
+
+$$
+\widehat K_b(t)=\phi_b(t):=\Bigl(1-\frac{|t|}b\Bigr)_+,\qquad
+\widehat H_{b,U}(t)=\phi_b(t)-\tfrac12\phi_b(t-U)-\tfrac12\phi_b(t+U).
+\tag{487.4}
+$$
+
+设 $\kappa,C\ge0$，且 $f(u)\le\kappa\log(e+u)+C$ 对所有 $u\ge0$ 成立，或 $f(u)\ge-\kappa\log(e+u)-C$ 对所有 $u\ge0$ 成立。设 $g=K_b$ 或 $g=H_{b,U}$，$\operatorname{supp}\widehat g\subset[-M,M]$，$M\ge1$。则对 $y\ge1$，$\int_0^\infty f(u)g(y-u)\,du$ 绝对收敛，且
+
+$$
+\int_0^\infty f(u)g(y-u)\,du=-\sum_{0<\gamma\le2M}m_\gamma\widehat g(\gamma)\cos(\gamma y)
++O\Bigl(\frac{(1+b)M^2}y+\frac{N(2M)}{by}\Bigr),
+\tag{487.5}
+$$
+
+其中隐含常数与 $b,U,M,y$ 无关。
+
+证明。由 (481.3) 与 (487.2)，并用 $-\zeta'/\zeta(z)=-\xi'/\xi(z)+1/z+1/(z-1)-\tfrac12\log\pi+\tfrac12\Gamma'/\Gamma(z/2)$，
+
+$$
+\mathcal F(s)=-\frac12\sum_{\gamma>0}m_\gamma\Bigl(\frac1{s-i\gamma}+\frac1{s+i\gamma}\Bigr)+J(s),\qquad
+J(s)=R_{x_0}(s)+\frac1{2(s+1/2)}-\frac14\log\pi+\frac14\frac{\Gamma'}{\Gamma}\Bigl(\frac{s+1/2}2\Bigr).
+$$
+
+$s=1/2$ 处的两项主部互相抵消，$J$ 在 $\Re s>-1/5$ 全纯。令 $G_M(s)=\mathcal F(s)+\tfrac12\sum_{0<\gamma\le2M}m_\gamma\bigl(\frac1{s-i\gamma}+\frac1{s+i\gamma}\bigr)$。由 (487.1) 分部求和得 $\sum_{\gamma>2M}m_\gamma\gamma^{-2}\ll\log(2+M)/M$，配对项为 $2s/(s^2+\gamma^2)=O(|s|/\gamma^2)$，故在 $|\Im s|\le M+1/4$、$|\Re s|\le1/10$ 上，未减去部分为 $O(\log(2+M))$。结合命题 487.1、Cauchy 导数估计与 $\Gamma'/\Gamma$ 的条带估计，
+
+$$
+\sup_{|t|\le M}\bigl(|G_M(it)|+|G_M'(it)|\bigr)\ll M^2 .
+\tag{487.6}
+$$
+
+令 $a(u)=\kappa\log(e+u)+C$，$h=a\mp f\ge0$（符号按所设单侧界选取）。$h$ 的 Laplace 变换为 $a$ 的变换与 $\mp\mathcal F$ 之和；RH 下前者与后者沿正实轴均全纯（$s=1/2$ 处已相消），故由 Landau 关于非负函数 Laplace 变换的定理，$\int_0^\infty h(u)e^{-\sigma u}\,du<\infty$ 对每个 $\sigma>0$ 成立；由 $|f|\le h+a$，$f$ 的 Laplace 积分也对每个 $\sigma>0$ 绝对收敛。
+
+令 $p_M(u)=-\sum_{0<\gamma\le2M}m_\gamma\cos\gamma u$，其 Laplace 变换恰为 $G_M-\mathcal F$ 的相反数。对 $\sigma>0$ 由绝对 Fubini，
+
+$$
+\int_0^\infty\bigl(f(u)-p_M(u)\bigr)e^{-\sigma u}g(y-u)\,du=\frac1{2\pi}\int_{\mathbb R}\widehat g(t)G_M(\sigma+it)e^{ity}\,dt .
+$$
+
+右边被积函数在 $[-M,M]$ 上关于 $\sigma\in[0,1/10]$ 一致有界，故 $\sigma\downarrow0$ 时收敛。$p_M$ 有界，由控制收敛取极限；对 $h(u)e^{-\sigma u}g(y-u)\ge0$ 用单调收敛，得 $h*g<\infty$，进而 $f*g$ 绝对收敛且上式在 $\sigma=0$ 成立。$p_M*g$ 在全实轴上等于 $-\sum m_\gamma\widehat g(\gamma)\cos\gamma y$；改为 $[0,\infty)$ 的误差至多 $N(2M)\int_y^\infty g\ll N(2M)/(by)$，因为两类核均满足 $g(v)\ll1/(bv^2)$。最后，$\widehat g$ 连续、分段线性、支撑在 $[-M,M]$，$\|\widehat g\|_1\ll b$，$\|\widehat g'\|_1\ll1$，对正则部分分部积分一次并用 (487.6)，得 $O((1+b)M^2/y)$。证毕。
+

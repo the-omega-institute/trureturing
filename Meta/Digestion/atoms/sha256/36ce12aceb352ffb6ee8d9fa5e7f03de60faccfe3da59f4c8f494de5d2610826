@@ -1,0 +1,50 @@
+**推论 175.1（全部归一扇区读取）。** 对173.1的任意原 $x$，取任一非零
+$p=(u+\epsilon h)/2$，以及 $Y=\mathcal U_pX$ 的任意归一态 $\beta$，
+令 $\phi=\beta\circ\mathcal U_p|_E$。则
+
+$$
+\boxed{
+2|\phi(c\circ r)|\le\sqrt{2\phi(z^2)}
+\left[\sqrt{\phi((c+r/2)^2)}+
+      \sqrt{\phi((c-r/2)^2)}\right].}
+\tag{175.1}
+$$
+
+证明。原标签 $q=(h\circ r)/2=hr/2$ 与 $h$ 交换，所以174.1给
+$D(h,q)=0$。实际PB $(h,x,q)$ 的两份完整外层是
+
+$$
+\begin{aligned}
+R_+&=x+d-r/2=c+r/2+z+t,&S_+&=h(c+r/2),\\
+R_-&=x-d+r/2=c-r/2+z-t,&S_-&=-h(c-r/2).
+\end{aligned}
+\tag{175.2}
+$$
+
+没有删除任何旧外层输出。置 $C_\pm=c\pm r/2$，$Z=\phi(z^2)$，
+$V_\pm=\phi(C_\pm^2)$。扇区读取消去每个奇元素，并使偶、奇作用向量
+正交。又 $(z\pm t)^2=2z^2$，故这些实际输入的准确读数为
+
+$$
+\begin{array}{c|c|c|c}
+&\phi(R_\pm^2)&\phi(S_\pm^2)&\phi(R_\pm\circ S_\pm)\\ \hline
++&V_++2Z&V_+&\epsilon V_+\\
+-&V_-+2Z&V_-&-\epsilon V_-.
+\end{array}
+\tag{175.3}
+$$
+
+因此 $B_\phi(R_\pm,S_\pm)=2ZV_\pm$，不是零预算。
+PB右侧在原域准确为
+
+$$
+-2x\circ d+x\circ r-(hr)\circ(hc)
+=-2x\circ d+z\circ r.
+\tag{175.4}
+$$
+
+最后一步只用 $h$ 与 $c,r$ 交换。扇区读取中
+$\phi(x\circ d)=\phi(c\circ r)$，因为 $c\circ t,z\circ r$ 奇且
+$z\circ t=0$；$\phi(z\circ r)=0$。用同一 $\phi$ 对两份P2及175.4作
+三角不等式，便得175.1。没有第二次纯态插值或未知响应极限。∎
+

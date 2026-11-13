@@ -1,0 +1,4 @@
+**复用 82.1（精确有限群工具）。** B. V. Rajarama Bhat、Soumyashant Nayak、P. Shankar，[*On products of symmetries in von Neumann algebras*，arXiv:2204.00009v1](https://arxiv.org/pdf/2204.00009v1)，Theorem 3.9，印刷第8页、证明第8–9页，给出：type $\mathrm{II}_1$ von Neumann 代数中，每个酉元是该代数内六个 symmetries，即六个自伴酉元的精确乘积。
+
+该源并未把结论限于因子。其 Lemma 3.5通过 Kadison 的 MASA 切割供应与指定酉元交换的等中心迹投影；Lemmas 3.7–3.8使用二、三阶角和中心值迹。Theorem 3.9按 $T(F^{(n)})=3\cdot4^{-n}1$ 构造相互正交、与指定酉元交换的块，将相邻等中心迹角配对为 $\operatorname{diag}(B,B^*)$；四列强和给四枚实际反射，剩余强和为另两枚反射之积。强和是在已给代数中构造六个元素，最终结论是有限精确等式。这里只消费 Theorem 3.9；Theorem 3.12及其 Corollary 3.13的有限谱四反射／范数稠密结论不足以代替它。
+

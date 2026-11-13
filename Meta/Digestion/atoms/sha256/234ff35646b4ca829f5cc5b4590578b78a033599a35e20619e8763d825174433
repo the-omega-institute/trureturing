@@ -1,0 +1,28 @@
+**推论 26.3（同一 Gram 纤维内两轨道闭包处处相距二）。** 在26.1的同一空间与矩阵场上，记
+
+$$
+\mathcal O(Z)=\{UZ:U\in C(X,U(n))\},\qquad
+\mathcal O(W)=\{UW:U\in C(X,U(n))\}.
+\tag{26.14}
+$$
+
+则 $\operatorname{dist}(W,\mathcal O(Z))=2$，且任意
+
+$$
+A\in\overline{\mathcal O(Z)}^{\|\cdot\|},\quad
+B'\in\overline{\mathcal O(W)}^{\|\cdot\|}
+\quad\Longrightarrow\quad\|A-B'\|=2.
+\tag{26.15}
+$$
+
+两轨道闭包非空，距离恰为二；特别地，$W\notin\overline{\mathcal O(Z)}$，21.3的逆包含在 $L$ 稠密的一般紧中心上为假。
+
+证明。对任意连续酉场 $U_1,U_2$，酉等距与26.5给
+
+$$
+\|U_1Z-U_2W\|=\|U_2^*U_1Z-W\|=2.
+\tag{26.16}
+$$
+
+对两闭包中的给定点分别取轨道中的范数收敛序列，范数连续性保留等式二。极限仅用于已知范数和实际轨道；不涉及未知 $D$ 的输入正则性。∎
+

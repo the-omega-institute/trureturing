@@ -1,0 +1,47 @@
+**定理 C-8.7（精确端点误差）。** 写 $`\delta=\mathrm{Cov}(b_1,b_N)`$，则
+
+
+<table><tbody><tr><td>
+
+```math
+P-P^{\mathrm{ind}}
+=\delta\begin{pmatrix}1&-1\\-1&1\end{pmatrix},
+\qquad
+\mathrm{TV}(P,P^{\mathrm{ind}})=2|\delta|.
+```
+
+</td></tr></tbody></table>
+
+
+特别对定义 C-8.1 的正活动链，
+
+
+<table><tbody><tr><td>
+
+```math
+\mathrm{TV}(P_N,P_N^{\mathrm{ind}})
+=\frac{2\prod_iw_i}{𝒵_N^2};
+\qquad w_i=1,\ N\ge2:\ 
+\mathrm{TV}=\frac2{F_{N+2}^2}.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 11 格的差为 $`P_{11}-P_L(1)P_R(1)=\delta`$。差表的两行和、两列和都零，其他三格因此被强制为 -𝛿,-𝛿,𝛿。半绝对和为 2|𝛿|。代入定理 C-8.2–C-8.3。□
+
+对任何已指定端点目标 0≤ 𝑓(𝑠,𝑡)≤1，
+
+
+<table><tbody><tr><td>
+
+```math
+|𝔼_Pf-𝔼_{P^{\mathrm{ind}}}f|
+\le\mathrm{TV}(P,P^{\mathrm{ind}}).
+```
+
+</td></tr></tbody></table>
+
+
+证明是差表正质量总和等于负质量绝对值总和、均为 TV；对 𝑓∈[0,1] 积分介于负 TV 和正 TV。正差格的事件指示达到上界。若 $`\delta\gt 0`$ 选 $`\{00,11\}`$，若 $`\delta\lt 0`$ 选 $`\{01,10\}`$。已指定共同随机后处理也保持此界：把差表乘同一随机核，输出绝对和由三角不等式不增，但这不包括条件归一化的后选择。
+

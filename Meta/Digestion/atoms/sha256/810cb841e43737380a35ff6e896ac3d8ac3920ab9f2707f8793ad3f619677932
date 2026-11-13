@@ -1,0 +1,54 @@
+**定理 66.2（实际误差运输与两外层共同正读取）。** 对同一次实际 PB $(a_t,b_t,d_t)$，四个自伴外层准确为
+
+$$
+\begin{aligned}
+v_t&=D(a_t,b_t)-a_t\circ d_t,&w_t&=a_t\circ b_t+D(a_t,d_t),\\
+r_\pm^t&=b_t\pm v_t,&s_\pm^t&=d_t\pm w_t.
+\end{aligned}
+\tag{66.2}
+$$
+
+它们满足全域实际恒等式
+
+$$
+\begin{gathered}
+\mathcal Z_-^t:=r_-^t+Js_-^t=W-T_t,\qquad
+\mathcal Z_+^t:=r_+^t+Js_+^t=U_tW+T_t,\\
+F(U_tW+T_t)-F(W-T_t)=-(Z_t^*T_t+T_t^*Z_t).
+\end{gathered}
+\tag{66.3}
+$$
+
+对每个数学正实线性泛函 $\phi$，两张实际外层 P2 同时给
+
+$$
+\begin{gathered}
+\left|\phi(-2b_t\circ v_t-2d_t\circ w_t)\right|
+\le\sqrt{\Delta_\phi(r_+^t,s_+^t)}+\sqrt{\Delta_\phi(r_-^t,s_-^t)},\\
+\Delta_\phi(r,s)=\phi(r^2)\phi(s^2)-\phi(r\circ s)^2.
+\end{gathered}
+\tag{66.4}
+$$
+
+若 $s(x)=0$，则 $e_t(x)=g_t(x)=T_t(x)=0$，故 $\operatorname{supp}T_t\subset\operatorname{supp}s$。
+
+证明。只展开已知 $K$、Jordan 乘法及结合乘法，有
+
+$$
+v_t+Jw_t=Ja_tZ_t+T_t.
+\tag{66.5}
+$$
+
+因此两个实际端点分别为 $(u-Ja_t)Z_t-T_t$、$(u+Ja_t)Z_t+T_t$，得到66.3的前两式。PB 及分离性给 $q_D(\mathcal Z_+^t)=q_D(\mathcal Z_-^t)$。置 $A=Ja_t$，则 $A^*=-A$；两个端点为 $Z_t\pm(AZ_t+T_t)$，故
+
+$$
+(\mathcal Z_+^t)^*\mathcal Z_+^t-(\mathcal Z_-^t)^*\mathcal Z_-^t
+=2\{Z_t^*(AZ_t+T_t)+(AZ_t+T_t)^*Z_t\}
+=2(Z_t^*T_t+T_t^*Z_t).
+\tag{66.6}
+$$
+
+代入65.1便得缺陷恒等式，没有展开未知外层 $D$。准确锥传递31.2（Jordan 起点用43.1）允许同一个 $\phi$ 读取两张实际 P2；各自给 $|\phi D(r_\pm^t,s_\pm^t)|\le\sqrt{\Delta_\phi(r_\pm^t,s_\pm^t)}$。再以65.1取差和三角不等式，得66.4，未漏付任一侧。
+
+若 $s(x)=0$，实际首像 $a_t(x)=tQ(x)u(x)$ 为标量，OP4.2使两份实际内值在该点为零；$K$ 也为零。零点结论始终作用于原来的两对标签。∎
+

@@ -1,0 +1,19 @@
+**定义 98.1（完整正交轨道上的赋值）。** 对 $O\in O(2)$，记
+
+$$
+O\cdot(a,b)=(o_{11}a+o_{12}b,\ o_{21}a+o_{22}b),
+\qquad\mathcal O_i=\{O\cdot(a_i,b_i):O\in O(2)\}.
+\tag{98.1}
+$$
+
+五对都实线性无关，故同一轨道内的 $O$ 由所得有序对唯一确定。五个实张成平面互不相同：第零平面的对角像为 $\operatorname{span}_{\mathbb R}\{p,q\}$；另外四个依次为 $\operatorname{span}\{p-d,Q\}$、$\operatorname{span}\{p+d,Q\}$、$\operatorname{span}\{q+d,Q\}$、$\operatorname{span}\{q-d,Q\}$，其对角像分别只有 $\mathbb Rp$ 或 $\mathbb Rq$。同类正负两个平面若相同，比较其对角和 $X_{13}$ 系数便迫使 $d=0$，矛盾。因此五个轨道互不相交，下面的单一总函数良定义：
+
+$$
+\widehat D(a,b)=
+\begin{cases}
+\det(O)h_i,&(a,b)=O\cdot(a_i,b_i),\quad i=0,+,-,s+,s-,\\
+D_*(a,b)=\dfrac i2[a,b],&(a,b)\notin\bigcup_i\mathcal O_i.
+\end{cases}
+\tag{98.2}
+$$
+

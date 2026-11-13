@@ -8,7 +8,19 @@ Let X be a real normed vector space, S:X x X -> X a specified real bilinear map,
 
 Write p(a,0)=u and p(a,n+1)=S(a,p(a,n)). Write L(x) for the continuous real linear map v -> S(x,v) on all of X. Product norm domination proves its continuity. Let C(a) be the norm closure in X of the real linear span of {p(a,n): n is a natural number}. In an incomplete X this is the relative closure in X, without introducing a completion.
 
-**Theorem 1.1 (All natural powers).**
+**Theorem 1.1 (The polarized Jordan commutator identity).**
+
+$$\forall X \in RealNormedSpaces,\; \forall S \in RealBilinearMaps\left(X\right),\; \forall u \in X,\; Data\left(X, S, u\right) \Rightarrow \left(\forall a \in X,\; \forall b \in X,\; \forall c \in X,\; \forall v \in X,\; bracket\left(S, a, S\left(b, c\right), v\right) + bracket\left(S, b, S\left(c, a\right), v\right) + bracket\left(S, c, S\left(a, b\right), v\right) = 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/JBAlgebra.polarized` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Define bracket(S,a,b,v)=S(a,S(b,v))-S(b,S(a,v)), the commutator of left multiplication by a and b applied to an arbitrary ambient vector v. Mathlib's polarized Jordan identity gives twice the cyclic sum equal to zero; cancellation of the nonzero real scalar two gives the displayed identity. Only Data on the original real normed carrier is assumed.
+
+**Theorem 1.2 (All natural powers).**
 
 $$\forall X \in RealNormedSpaces,\; \forall S \in RealBilinearMaps\left(X\right),\; \forall u \in X,\; Data\left(X, S, u\right) \Rightarrow \left(\forall a \in X,\; \forall m \in Naturals,\; \forall n \in Naturals,\; S\left(p\left(a, m\right), p\left(a, n\right)\right) = p\left(a, m + n\right)\right)$$
 
@@ -20,7 +32,7 @@ $$\forall X \in RealNormedSpaces,\; \forall S \in RealBilinearMaps\left(X\right)
 
 A simultaneous induction on total degree proves power multiplication and ambient operator commutation. The induction assumes only smaller total degrees. To multiply p(a,i) by p(a,j+1), commute multiplication by p(a,i) past multiplication by a using the smaller-degree operator assertion, and then use the smaller-degree product assertion. The unit and j=0 cases are handled separately.
 
-**Theorem 1.2 (Commutation on every ambient vector).**
+**Theorem 1.3 (Commutation on every ambient vector).**
 
 $$\forall X \in RealNormedSpaces,\; \forall S \in RealBilinearMaps\left(X\right),\; \forall u \in X,\; Data\left(X, S, u\right) \Rightarrow \left(\forall a \in X,\; \forall m \in Naturals,\; \forall n \in Naturals,\; Commute\left(L\left(p\left(a, m\right)\right), L\left(p\left(a, n\right)\right)\right)\right)$$
 
@@ -32,7 +44,7 @@ $$\forall X \in RealNormedSpaces,\; \forall S \in RealBilinearMaps\left(X\right)
 
 Mathlib's polarized Jordan identity gives [L(x),L(S(y,z))]+[L(y),L(S(z,x))]+[L(z),L(S(x,y))]=0. For fixed total degree N and arbitrary ambient v, put c(k)=[L(p(a,k)),L(p(a,N-k))]v. Smaller-degree multiplication turns the identity into c(r)+c(s)+c(t)=0 whenever r,s,t are positive and sum to N. Skew symmetry gives c(N-k)=-c(k). Taking r=1 yields c(k)=k c(1) for k<N, hence N c(1)=0. Real scalar cancellation proves every c(k)=0. Degrees zero and one use the unit directly. This is a universal structural induction, rather than a finite-degree test or an associative model of X.
 
-**Theorem 1.3 (The actual closed span is an associative algebra).**
+**Theorem 1.4 (The actual closed span is an associative algebra).**
 
 $$\forall X \in RealNormedSpaces,\; \forall S \in RealBilinearMaps\left(X\right),\; \forall u \in X,\; Data\left(X, S, u\right) \Rightarrow \left(\forall a \in X,\; \left(\forall x \in X,\; mem\left(x, C\left(a\right)\right) \Rightarrow \left(\forall y \in X,\; mem\left(y, C\left(a\right)\right) \Rightarrow mem\left(S\left(x, y\right), C\left(a\right)\right)\right)\right) \land \left(\left(\forall x \in X,\; mem\left(x, C\left(a\right)\right) \Rightarrow \left(\forall y \in X,\; mem\left(y, C\left(a\right)\right) \Rightarrow \left(\forall z \in X,\; mem\left(z, C\left(a\right)\right) \Rightarrow S\left(S\left(x, y\right), z\right) = S\left(x, S\left(y, z\right)\right)\right)\right)\right) \land \left(\forall x \in X,\; mem\left(x, C\left(a\right)\right) \Rightarrow \left(\forall y \in X,\; mem\left(y, C\left(a\right)\right) \Rightarrow Commute\left(L\left(x\right), L\left(y\right)\right)\right)\right)\right)\right)$$
 
@@ -57,5 +69,6 @@ These are classical Jordan algebra facts; the local proof combines the pinned po
 ## References
 
 - Truth anchor: `D5/S3/Topology/JBAlgebra.generated_algebra`
+- Truth anchor: `D5/S3/Topology/JBAlgebra.polarized`
 - Truth anchor: `D5/S3/Topology/JBAlgebra.power_lmul_commute`
 - Truth anchor: `D5/S3/Topology/JBAlgebra.power_mul`

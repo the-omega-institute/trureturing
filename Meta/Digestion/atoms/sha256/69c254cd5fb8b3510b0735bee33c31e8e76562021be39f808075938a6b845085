@@ -1,0 +1,44 @@
+**定义 17.1（完整候选与被提取的子系统）。** 完整研究候选仍是中央续卷130.1、136.2、147.1的同一原 $\mathsf H_{\rm orig}+\mathsf{PB}$，并逐句纳入[多项式零响应卷24.1、29.2](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md)和[C139续卷155.1–155.2](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)的全部原来源及递归合同。以下另外定义一个估计子系统，只研究它丢失了什么信息；该子系统不替换完整候选。
+
+沿中央续卷123.2记 $B_\phi(v,w)=\phi(v^2)\phi(w^2)-\phi(v\circ w)^2$。固定实际原 $a,b$，记 $x=D(a,b)$、$q=a\circ b$。若某个实际 $z$ 满足
+
+$$
+a\circ z=0,\qquad D(a,tz)=tT_a z\quad(t\in\mathbb R),\qquad z\circ T_a z=0,
+\tag{17.1}
+$$
+
+则实际 $\mathsf{PB}(a;b,tz)$ 的两份外层及右端准确为
+
+$$
+\begin{gathered}
+(b+x,\ t(z+T_a z)+q),\qquad
+(b-x,\ t(z-T_a z)-q),\\
+-2b\circ x-2t z\circ q.
+\end{gathered}
+\tag{17.2}
+$$
+
+对同一个正实读取 $\phi$，两份实际P2和标量三角不等式给，当 $t\ne0$ 时，
+
+$$
+2\left|\phi(z\circ q)+\frac{\phi(b\circ x)}t\right|
+\le
+\sqrt{B_\phi(b+x,z+T_a z+q/t)}
++\sqrt{B_\phi(b-x,z-T_a z-q/t)}.
+\tag{17.3}
+$$
+
+只用了 $B_\phi(v,tw+q)=t^2B_\phi(v,w+q/t)$。对固定 $v,w,q$，$B_\phi(v,w+s q)$ 是非负实二次多项式；令 $t\to+\infty$ 只对这些已知标量式和平方根取极限，得到
+
+$$
+\boxed{
+2|\phi(z\circ q)|\le
+\sqrt{B_\phi(b+x,z+T_a z)}
++\sqrt{B_\phi(b-x,z-T_a z)}.}
+\tag{17.4}
+$$
+
+这里没有对未知旧响应取输入极限，也没有识别两份外层值。原实际三轴 $a=h,e,j$ 的全部 $z\in V_a$ 由中央续卷133.1及其同条件的循环应用供应(17.1)。这份预算推导是既有PB/P2的直接消费，本身不作为新增刚性。
+
+在一个另外指定的总映射中，若全部 Jordan 正交对的响应已知为 $T_a z$，称“全部极限面积族”为(17.4)对每个 $a,b,z$、每个 $a\circ z=0$ 及每个正实读取同时成立。以下模型甚至满足这份全首标签的较大族。它不被要求满足(17.3)的全部有限 $t$ 关系。
+

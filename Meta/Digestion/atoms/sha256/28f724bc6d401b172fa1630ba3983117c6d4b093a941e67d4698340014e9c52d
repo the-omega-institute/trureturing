@@ -1,0 +1,12 @@
+**Open problem 16.5 (the fixed rational coefficient boundary).** For the symbolic $r_\star$ above, no rational coefficient tuple satisfying the global system (16.21)–(16.22) has been established, and no exact proof that this fixed ansatz is infeasible has been established.  The exact unresolved statement is therefore
+
+$$
+\exists\,(P,S,\chi,\xi,\alpha_0,\beta_0,\lambda,\delta_B,\delta_A)
+\quad\text{over the stated rational coefficient domain such that (16.18)–(16.22) hold globally.}
+\tag{16.24}
+$$
+
+The universal quantifiers in (16.21)–(16.22) range over the full outer projections and every TV sign cell.  A violating projected descriptor would refute a proposed tuple; a projected feasible point, or failure to find a tuple, would neither provide a compatible full-law pair nor prove the original zero face empty.  Thus (16.24) is a bounded null boundary for this particular degree and event basis, not a substitute for the unrestricted same-prior alternative.
+
+The [sparse-literal-history transport results, Chapters 20–24](RECURSIVE_RELATIONAL_OBSERVATION_SPARSE_LITERAL_HISTORY_TRANSPORT.md), concern exact finite literal-tree capacity and replay.  They supply no stochastic full-flow/configuration-TV correspondence, so they do not decide (16.24) or the zero-face question.
+

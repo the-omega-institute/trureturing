@@ -1,0 +1,11 @@
+## 496. 方差带推出带宏观权的二阶接口
+
+沿用 §490 的 $E,D_v,V$ 与 §494 的 $\mu_X,U_X,B_X,\kappa$。本节 $E$ 局部有界 Borel 可测，(490.2) 在 $0<\alpha<\theta<\beta<1$ 上成立。令 $h=X^\theta$、$\mathscr N_X=Xh\log X$、$\|f\|_{X,2}^2=\mathscr N_X^{-1}\int_X^{2X}|f|^2$，以及
+
+$$
+\varepsilon_X=\sup_{\substack{X/2\le Y\le4X\\Y^\alpha\le v\le Y^\beta}}\left|\frac{V(Y,v)}{Yv\log(Y/v)}-1\right| ,
+\tag{496.1}
+$$
+
+由 (490.2)，$\varepsilon_X\to0$；本节不假设任何收敛速度。
+

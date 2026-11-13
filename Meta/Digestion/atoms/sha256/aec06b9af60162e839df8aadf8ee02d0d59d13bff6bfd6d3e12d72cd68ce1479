@@ -1,0 +1,44 @@
+**推论 77.1（标量反射首槽的真正缺陷消费者）。** 在71.1–71.2下，固定同一实际框架 $h,e,j,Q$ 和实数 $R$。任取原 $b,c$，保持带重数的实际出现表
+
+$$
+s=b+c,\qquad (s,b,c),\qquad
+c_\ell=P_h^+\ell,\quad z_\ell=P_h^-\ell\quad(\ell=s,b,c).
+\tag{77.1}
+$$
+
+若三个所需偶背景 $c_\ell$ 分别有71.3的供应，或为零背景，则对同一个原 $D$ 的三份实际输出
+
+$$
+d_s=D(Rh,s),\qquad d_b=D(Rh,b),\qquad d_c=D(Rh,c)
+\tag{77.2}
+$$
+
+有
+
+$$
+\boxed{\begin{gathered}
+\delta_{Rh}(b,c):=d_s-d_b-d_c=0,\\
+K_y\bigl(\delta_{Rh}(b,c)\bigr)=0\qquad(y\in E),\\
+K_y(w)=y^2\circ w-y\circ(y\circ w).
+\end{gathered}}
+\tag{77.3}
+$$
+
+不要求三个分割相同或共同细化，也不因标签重复而删除任一输出出现。若每个原偶背景都有供应，特别在75.1的完整有限von Neumann供应域中，本结论覆盖全部原 $b,c,y$ 和实 $R$，首槽仍限于这份实际框架的 $a=Rh$。
+
+证明。$P_h^\pm=(I\pm U_h)/2$、$U_hy=2h\circ(h\circ y)-y$ 是保持原 $E$ 的已付实线性有限Jordan算子。分别对三个实际输入调用72.1，保留每次自己的 $g,r$，得到
+
+$$
+d_\ell=RiQhP_h^-\ell\quad(\ell=s,b,c).
+\tag{77.4}
+$$
+
+已知辅助乘法和 $P_h^-$ 的实线性给
+
+$$
+d_s-d_b-d_c
+=RiQh\bigl(P_h^-s-P_h^-b-P_h^-c\bigr)=0.
+$$
+
+零标签、重复标签、相等标签及 $R=0$ 都包含；当某一 $c_\ell=0$ 时使用72.1的零背景分支。最后把同一零缺陷送进有限Jordan算子 $K_y$ 即得77.3。∎
+

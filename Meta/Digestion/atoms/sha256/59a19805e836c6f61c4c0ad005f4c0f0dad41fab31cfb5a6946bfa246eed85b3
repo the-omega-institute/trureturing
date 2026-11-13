@@ -1,0 +1,40 @@
+**定理 43.2（存在必要性及局部符号的反向拼合）。** 不要求 $L$ 稠密。若同一个总映射 $D$ 满足 $\mathsf H_{\mathfrak J}(D)$，则它确定唯一连续截面
+
+$$
+\sigma_D\in\Gamma(X,\mathcal O_{\rm alg}(\mathfrak J)).
+\tag{43.4}
+$$
+
+证明。在任意图 $O_\alpha$ 的一点附近，选开集 $V$ 和连续截断 $f$，$f=1$ 于 $V$，$\operatorname{supp}f\subset O_\alpha$。在图内取 $h_V=fh$、$e_V=fe$，图外延零。它们是同一原 $E$ 的实际全局输入。在 $V$ 上，43.1的原像公式给
+
+$$
+\theta_{\alpha,x}D(h_V,e_V)(x)=s_\alpha(x)j,
+\qquad
+s_\alpha(x)=-i\bigl(\theta_{\alpha,x}D(h_V,e_V)(x)\bigr)_{12}.
+\tag{43.5}
+$$
+
+同一个实际输出属于 $E$，所以右侧连续且仅取正负一。换锚点或截断不改变点上的共同符号，因为 OP80.2 包括所有实际代表，OP82.1 包括全部角。因此这些锚点邻域给图内连续 $s_\alpha$。
+
+在 $x\in V\cap O_\beta$，始终读取同一实际对 $(h_V,e_V)$ 和同一实际输出，记该对在 $\alpha$ 图的像为 $(h,e)$。在 $\beta$ 图的像为 $(g_{\beta\alpha}h,g_{\beta\alpha}e)$，落在变换后的同一秩二角。两次应用(43.3)得到
+
+$$
+\begin{aligned}
+\theta_{\beta,x}D(h_V,e_V)(x)
+&=g_{\beta\alpha}(s_\alpha(x)j)\\
+&=s_\alpha(x)e_{\beta\alpha}(x)
+\kappa(g_{\beta\alpha}h,g_{\beta\alpha}e)\\
+&=s_\beta(x)\kappa(g_{\beta\alpha}h,g_{\beta\alpha}e).
+\end{aligned}
+\tag{43.6}
+$$
+
+末项中的交换子非零，由42.1和 $j\ne0$ 可知，故
+
+$$
+s_\beta(x)=e_{\beta\alpha}(x)s_\alpha(x).
+\tag{43.7}
+$$
+
+反向 Jordan 坐标准确翻转符号。同一旧值的坐标变换是截面的定义，不是给 $D$ 额外假定协变性；也没有用商下降将另一对实际输入替代原对。式(43.7)就是覆盖的截面条件。每点的锚点响应非零，唯一性亦由此成立。紧性允许选有限个锚点邻域；有限的是取向见证，不是原P2/PB的输入或读取量词。证明未使用 $L$、全局矩阵单位或未知映射的输入正则性。∎
+

@@ -1,0 +1,38 @@
+**定义 41.3（全部 A1–A3/P2/PB）。** 对全部实际 $a,b\in E$、全部原评价，保留两种次序的 Hermitian 二表
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{41.4}
+$$
+
+A2 要求每个相加三表 $(a+b,a,b)$ 及其全部排列的实部在整个 $\mathbb R^3$ 上半正定；原顺序向量 $(1,-1,-1)$ 及对应排列准确给零。实部条目为 $\gamma(a_r\circ a_s)$，不把它加强为预给复三表正性。A3 保留 $u^2=u$，以及同一个固定有理 $0<\vartheta\le1$ 上的全部
+
+$$
+0\le e\le\vartheta u\Longrightarrow e^2\le e.
+\tag{41.5}
+$$
+
+对每个实际 $a,b,d\in E$，只用旧映射定义
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+r_\pm=b\pm v,\qquad s_\pm=d\pm w.
+\end{gathered}
+\tag{41.6}
+$$
+
+全部 PB 为
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-))
+\quad(\forall a,b,d,\gamma).
+\tag{41.7}
+$$
+
+零、重复、缩放、平移、嵌套调用、任意背景及实际四个外层标签都包括。记这些原条件为 $\mathsf H_{\mathfrak J}(D)$；不将实际外层标签换成同像的其他标签。
+

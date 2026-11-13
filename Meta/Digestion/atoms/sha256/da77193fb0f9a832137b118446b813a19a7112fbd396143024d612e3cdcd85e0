@@ -1,0 +1,15 @@
+**推论 168.1（任意原非交换横向系数的旧矩阵值）。** 使用140.1、142.1、153.2的同一原坐标与旧 $\widetilde D$。对任意原 $z\in\mathfrak b$ 及实 $R,\mu,\lambda$，有
+
+$$
+\boxed{
+\widetilde D\!\left(
+RH,\begin{pmatrix}(\mu+\lambda)u&z\\z^*&(\mu-\lambda)u\end{pmatrix}
+\right)
+=R\begin{pmatrix}0&iz\\-iz^*&0\end{pmatrix}.}
+\tag{168.1}
+$$
+
+证明。令 $v$ 为该矩阵的原非对角部分之逆像，它属于原 $V_h$。140.1的同一坐标把 $\mu u+\lambda h+v$ 送到所写矩阵；153.8把 $Tv$ 送到右侧的 $R=1$ 矩阵。对166.1整体施加该坐标即得结论。这里的 $u$ 为系数单位，$H=\operatorname{diag}(u,-u)$；$z$ 可以是原不完备且非交换的系数域元素，不要求标量或有限谱。∎
+
+因此153.4的 $r_+(A),r_-(A)$ 在 $a=(\mu+\lambda)u,d=(\mu-\lambda)u$ 这个实际域上都为零。所排除的是同一个旧输出的残差，不是候选 $B_\star$ 的残差；166.1也准确给 $D(Rh,x)=B_\star(Rh,x)$，因为 $B_\star(Rh,x)=iRQhv$。这种一致性只在陈述的输入域成立。
+

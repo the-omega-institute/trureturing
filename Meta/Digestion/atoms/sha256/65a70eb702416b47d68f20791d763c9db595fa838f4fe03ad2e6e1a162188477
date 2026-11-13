@@ -1,0 +1,9 @@
+**引理 54.1（圆周上的近似根障碍）。** 若 $n\ge2$、$c>0$，不存在连续 $\lambda:S^1\to\mathbb C$ 满足
+
+$$
+|\lambda(z)^n-cz|<c\qquad(\forall z\in S^1).
+\tag{54.1}
+$$
+
+证明。该不等式使 $\lambda$ 不为零，并使 $\lambda(z)^n/(cz)$ 落在圆盘 $|w-1|<1$ 内，故其辐角有单值连续选择 $\beta:S^1\to(-\pi/2,\pi/2)$。在 $0\le\theta\le2\pi$ 上选择 $\lambda(e^{i\theta})$ 的连续辐角 $\phi$，则 $n\phi(\theta)-\theta-\beta(e^{i\theta})$ 为固定整数倍 $2\pi$。两端相减得 $n(\phi(2\pi)-\phi(0))=2\pi$；另一方面 $\phi(2\pi)-\phi(0)=2\pi k$，$k\in\mathbb Z$，从而 $nk=1$，矛盾。∎
+

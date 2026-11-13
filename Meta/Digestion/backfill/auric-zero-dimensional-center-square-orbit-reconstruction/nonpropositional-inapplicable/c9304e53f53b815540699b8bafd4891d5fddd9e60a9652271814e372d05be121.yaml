@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9304e53f53b815540699b8bafd4891d5fddd9e60a9652271814e372d05be121
+  normalized_sha256: sha256:c9304e53f53b815540699b8bafd4891d5fddd9e60a9652271814e372d05be121
+cas_ref: sha256:c9304e53f53b815540699b8bafd4891d5fddd9e60a9652271814e372d05be121
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure reuse of the pinned upstream Mathlib declarations Matrix.single_mul_single_same, Matrix.single_mul_single_of_ne, Matrix.l2_opNorm_diagonal, norm_smul, and CStarRing.norm_star_mul_self, through matrix-unit normalization, scalar arithmetic and the explicit square-PB hypotheses. On the same complete Matrix(Fin n,Fin n,Complex) L2 operator-norm carrier, for every n>=3 and t>=1, the literal specified twisted response has D(A,I)=0, the displayed actual rho/sigma labels, response-level residual 2 eta V, norm 2+1/t>2 and raw square residual 4 eta V. The common relation for an arbitrary original D is only the stated conditional consequence of its two PB instances and its two zero rows, by polynomial normalization. The accepted exact joint application and raw-square identity compile with only propext, Classical.choice and Quot.sound; they are transient bind-only applications, not new canonical declarations. There is no usable frozen GID for these exact application clauses; the owning actual_outer_budget theorem has a different conditional statement and is not claimed as coverage. The source's limitations on other continuations, the unit subfamily, and 69.1 remain limitations, with no claimed resolution, physical realization or novelty. The substantive application is retained in the existing owning Blueprint Scribe. No new D5 is required.
+    previous_atom_id: 893849c5dccd3fdf0d102aba260a60aa7af6dbb788153efb042a710fc4789cd3
+    next_atom_id: d869e88691ba6ab20f5b5ab1a84221c5e41aa7adc6bf5f459305a9d4c057ed83

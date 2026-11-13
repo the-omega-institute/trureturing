@@ -1,0 +1,14 @@
+**定义 1.1（完整零维紧中心原域）。** 设 $X$ 是任意非空零维紧 Hausdorff 空间；零维指有开闭集基。固定任意有限整数 $n\ge3$，取
+
+$$
+\begin{gathered}
+A=C(X,\mathbb C),\qquad M=M_n(A)=C(X,M_n(\mathbb C)),\\
+E=M_{\rm sa},\qquad C=M_+,\qquad u=I_n,\qquad
+N(a)=\|a\|=\sup_{\omega\in X}\|a(\omega)\|,\\
+S(a,b)=a\circ b=\frac{ab+ba}{2}.
+\end{gathered}
+\tag{1.1}
+$$
+
+中心 $Z(M)$ 通过 $a\mapsto aI_n$ 认同于 $A$。结合乘法、伴随、完备范数和连续函数演算属于明确给定的复 C* 模型。原域是完整的 $M_{\rm sa}$，因此下文制造的连续自伴矩阵场都是原输入。$X$ 不要求 Stonean、可度量、可分或带有测度；不要求预对偶、正常读取、Borel 演算或每个矩阵场都有精确极分解。“原输入”仅指同一原域成员；具名物理程序能否取得它，由第11章的来源合同承担。记普通条目迹为 $\operatorname{Tr}$，另记 $T=\operatorname{Tr}/n:M\to A$；它只是数学中央值迹，不是原准备或原质量。
+

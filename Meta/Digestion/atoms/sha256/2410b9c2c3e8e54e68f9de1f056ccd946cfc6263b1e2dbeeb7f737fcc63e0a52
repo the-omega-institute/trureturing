@@ -1,0 +1,28 @@
+**定义 14.1（全项求值与有号核）。**取
+
+$$
+\omega=-\frac12+i\frac{\sqrt3}{2},\qquad
+1+\omega+\omega^2=0,\qquad\omega^3=1.
+$$
+
+在全部 $\mathcal T$ 上以结构递归定义数学求值 $F:\mathcal T\to\mathbb C$：
+
+$$
+F1=0,\qquad F(A)=F(Z)=1,\qquad
+F(s\cdot t)=Fs+Ft,\qquad F(Vs)=\omega Fs+1.
+\tag{14.1}
+$$
+
+单位规则与 $F1=0$ 相容，所以求值处处有定义且有限。不同原项可以有相同求值；不因此识别原项。特别 $F(V1)=1$，而不是零。对 $\sigma\in\{+1,-1\}$ 定义
+
+$$
+\begin{aligned}
+r(s,t)&=\operatorname{Re}((Fs-Ft)^3),\\
+d_\sigma(s,t)&=-\frac{\sigma}{6}r(s,t),\\
+Q(s,t)&=|Fs-Ft|^2.
+\end{aligned}
+\tag{14.2}
+$$
+
+有号核允许正、负实值；这种允许不改变原问题对 $C$ 的非负要求。
+

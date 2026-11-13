@@ -1,0 +1,107 @@
+**构造 22.3（自由正规模型）。**取两族彼此不同的源原子 $x_i,y_i\ (i\in\mathbb Z)$。令 $N$ 的正规形由
+
+$$
+e,\qquad x_i,y_i\ (i\in\mathbb Z),\qquad \nu(s),\qquad \langle s,t\rangle
+$$
+
+递归生成，其中 $\nu(s)$ 只在 $s$ 不是源原子时可用，$\langle s,t\rangle$ 只在 $s,t\ne e$ 时可用；所有正规形按构造子和参数严格区分。有限字符串树由可数源原子生成，故载体 $N$ 可数。定义真实单位乘法
+
+$$
+e\star s=s\star e=s,\qquad s\star t=\langle s,t\rangle\quad(s,t\ne e).
+$$
+
+定义总标记
+
+$$
+Vx_i=x_{i+1},\qquad Vy_i=y_{i+1},\qquad Vs=\nu(s)
+\qquad(s\text{ 为任意非源正规形，包括 }e).
+$$
+
+再令
+
+$$
+Ae=e,\qquad Ax_i=x_{i+1},\qquad Ay_i=y_{i+1},\qquad
+A\nu(s)=\nu(As),\qquad A\langle s,t\rangle=\langle As,At\rangle.
+$$
+
+则 $A^{-1}$ 将源指标减一，$A$ 是真实自同构，$AV=VA$；由单位、标记和乘法从 $e$ 生成的子代数逐点被 $A$ 固定。这里没有给非结合二元词增加任何结合或交换关系。
+
+取
+
+$$
+\zeta=e^{2\pi i/3},\qquad h=(1-\zeta)^{-1},\qquad \tau=(0,1)\in\mathbb C^2,
+$$
+
+并递归定义 $F:N\to\mathbb C^2$：
+
+$$
+F(e)=0,\qquad F(x_i)=(\zeta^i,h),\qquad F(y_i)=(0,h),
+$$
+
+$$
+F(\langle s,t\rangle)=F(s)+F(t),\qquad
+F(\nu(s))=\zeta F(s)+\tau.
+\tag{22.6}
+$$
+
+因 $\zeta h+1=h$，所有实际标记都满足
+
+$$
+F(Vs)=\zeta F(s)+\tau.
+$$
+
+由此三次迭代给出
+
+$$
+F(V^3s)=F(s)\qquad(s\in N).
+$$
+
+令 $p_3=V^3e=\nu^3(e)$。则
+
+$$
+F(p_3)=F(V^3e)=F(e)=0,
+$$
+
+并且对任意 $a\in N$，
+
+$$
+F(a\star p_3)=F(a)+F(p_3)=F(a),\qquad
+F(p_3\star a)=F(p_3)+F(a)=F(a).
+$$
+
+所以对任意 $a,b\in N$，
+
+$$
+d(a\star p_3,b)=d(a,b),\qquad
+d(a,b\star p_3)=d(a,b),
+$$
+
+两端的实际 $\mathrm C_3$ 返回都成立；这些是核读数等式，不是对象等式，且 $p_3=\nu^3(e)\ne e$。
+
+若 $D(z_1,z_2)=(\zeta z_1,z_2)$，则正规形归纳给 $F(As)=DF(s)$；$D$ 是酉的。令
+
+$$
+d(s,t)=\lVert F(s)-F(t)\rVert^2.
+$$
+
+这是一个可数载体上的处处有限值、非负且零对角的总关系模型。事实上对任意四个实际输入，令 $X=F(a)-F(b)$、$Y=F(u)-F(v)$。单位因子被实际乘法删除但其 $F$ 值为零，且标记漂移在差中抵消，所以
+
+$$
+F(a\star V^ku)-F(b\star V^kv)=X+\zeta^kY.
+$$
+
+于是有限 Fourier 恒等式
+
+$$
+\sum_{k=0}^2\lVert X+\zeta^kY\rVert^2
+=3\lVert X\rVert^2+3\lVert Y\rVert^2
+$$
+
+给出完整 $(R)$；同时 $d(As,At)=d(s,t)$。这里 $p_1=Ve=\nu(e)$、$p_2=V^2e$ 都有范数平方 $1$，故原单位预算
+
+$$
+B_0=\sum_{j=1}^2[d(p_j,e)+d(e,p_j)]=4,
+$$
+
+而 $F(Ve)=\tau\ne0$，所以漂移非零。另一方面 $F(V^3s)=F(s)$，因此该模型满足全局第三标记返回，返回缺陷 $\delta=0$；这不识别正规形标签，因为 $p_3=\nu^3(e)\ne e$，一般非源正规形的 $V^3s$ 也不等于 $s$。
+

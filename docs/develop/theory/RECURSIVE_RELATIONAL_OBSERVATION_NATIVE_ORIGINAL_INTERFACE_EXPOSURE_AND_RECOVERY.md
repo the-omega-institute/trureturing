@@ -2317,3 +2317,1923 @@ construction on the same installed source, with finite material at
 each finite stage and no fixed bound for the whole family.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Exact literal split domain and prefixwise native words
+
+**Definition 20.1 (birth sorts and the one-beta chain).** Use the actual
+original syntax, source occurrence and constructor map $\iota$ of
+Definition 19.1. For $s\in\{0,1\}$ write $\nu_s$ for the existing
+`NativeLocalSourceExecution.native` test on that syntax:
+
+$$
+\begin{aligned}
+\nu_0(\alpha)&=0,&\nu_0(\beta)&=1,\\
+\nu_1(\alpha)&=1,&\nu_1(\beta)&=1,\\
+\nu_s(\langle u,v\rangle)&=\nu_0(u)\land\nu_1(v).
+\end{aligned}
+\tag{20.1}
+$$
+
+Thus $\operatorname{Native}(\iota(t))$ means $\nu_0(t)=1$.
+At every branch the right child is tested at sort **one**, including
+when the whole tree is tested at sort zero. This is the birth-sort
+condition, not just membership in $\mathsf{HasBeta}$: for example
+$\langle\alpha,\beta\rangle$ has beta but fails both branch tests.
+The existing `native_execution` and its owning Scribe supply the exact
+attainment interpretation of these sorts and the native split laws.
+
+In this section put
+
+$$
+T_0=\beta,\qquad T_{r+1}=\langle T_r,\alpha\rangle
+\quad(r\ge0).
+\tag{20.2}
+$$
+
+This is the alpha-right-sibling chain, distinct from §19's all-beta
+$C_m$. Denote the literal desired split value by $\mathsf g(t)$:
+$\mathsf g(\beta)=\langle\beta,\alpha\rangle$,
+$\mathsf g(\alpha)=\alpha$, and
+$\mathsf g(\langle u,v\rangle)=\langle\mathsf g(u),v\rangle$.
+These are equations for a tree value; they add no source command.
+They give
+$\iota(\mathsf g(t))=\operatorname{splitLeft}(\iota(t))$.
+For native $t$ the existing split theorem gives a native target with
+composition $(a(t)+1,b(t))$, hence exactly one additional leaf.
+Use the existing chronological letters $F,G$ with value actions
+$F(t)=\rho t$ and $G(t)=\mathsf g(t)$. Write $t_0=t$ and
+$t_j=X_j(t_{j-1})$ for a finite word $W=X_1\cdots X_m$.
+Then $\iota(t_j)$ is exactly the existing native `run` on that prefix.
+No associativity, commutativity, quotient or replacement source is used.
+
+**Definition 20.2 (prefixwise returning realization and its supplies).**
+Fix one actually reached valid completed boundary $P$ of Definition
+19.1, with source $t$ and $\lambda(t)\le h\le K$, in Assumption 1.2's
+one preparation. A realization of the designated word $W$ consists of
+finite actual completed returning original-menu segments, concatenated
+at boundaries $P=P_0,P_1,\ldots,P_m$, such that the source $s_j$ at
+$P_j$ satisfies
+
+$$
+\iota(s_j)=\iota(t_j)
+\quad(0\le j\le m).
+\tag{20.3}
+$$
+
+Every segment has all the completions, source-writer restrictions and
+current-authority requirements of Definition 19.1. Source-preserving
+maintenance, reads, refusals, history, audit and local work may intervene;
+their actual effects remain in the segment. Every invoked source call
+completes its response, rows, dependencies, delivery, checks, ACK and
+source-token return. At an outer Ready the existing outer01 receiver,
+InnerReturn, normalization and CaptureCAP also complete before the next
+Ready, as in ARC Definitions 5.1–5.4 and Proposition 5.5. Source admission
+uses CAP Definition 4.6 and Lemmas 4.7 and 6.7. This definition supplies
+no entry from a busy overwrite or a global halt.
+
+Write $\mathcal L(P)$ for the set of words with such a realization;
+the empty word has the empty realization at $P$. Existence quantifies
+finite actually supplied canonical frames and contexts at their
+existing input sites, finite backing and workspace, and terminating
+reached local computations under Assumption 1.2. Reserve and Raise
+may increase the finite guard and reserve; each publication and return
+must actually finish. The quantifier does not range over all possible
+input streams, promise termination of a missing supply, or provide an
+autonomous chooser. A witness chosen mathematically from $(t,W)$ does
+not give an actor free access to either argument or to a class test.
+
+The letters designate the successive logical comparisons (20.3).
+They are not new physical frame tags or substitutions for original
+labels. In particular a physical Right event can realize a designated
+$G$ where its endpoint equation holds. Every original event, guard,
+epoch, row, request, token, right, receipt and acquired binding retains
+its original value. The definition requires every designated prefix;
+reaching only $t_m$ is a different predicate.
+
+**Theorem 20.3 (exact returning domain of one literal native split).**
+Under the finite-supply and local-termination premises of Definition
+20.2, at every such $P$ with $\operatorname{Native}(\iota(t))$,
+
+$$
+\begin{aligned}
+&G\in\mathcal L(P)\\
+&\quad\Longleftrightarrow\quad b(t)=1\\
+&\quad\Longleftrightarrow\quad t=T_r\text{ for a unique }r\ge0.
+\end{aligned}
+\tag{20.4}
+$$
+
+For this chain $a(T_r)=r$, $\lambda(T_r)=r+1$, and
+$\operatorname{eventIndex}(\iota(T_r))=r+1$.
+Every realization of $G$ contains exactly one accepted source-changing
+call. At $T_r$ with $r\ge1$ that call is Right$(\alpha)$.
+At $T_0=\beta$ it is either Right$(\alpha)$ or Rho.
+All other calls in the segment preserve its source at completed
+boundaries, while retaining their genuine physical records and costs.
+These assertions classify completed accepted modifications, not the
+primitive source WR occurrences or the entire physical segment.
+
+Proof. The birth-sort equations first give two useful structural facts.
+An accepted sort-zero tree has a beta: the only accepted leaf is beta,
+and at a branch its left child is again accepted at sort zero.
+An accepted sort-one tree with no beta is exactly alpha: a branch
+would have a sort-zero left child containing beta, and the only
+remaining zero-beta leaf is alpha. Consequently a native tree with
+one beta is either beta or $\langle u,\alpha\rangle$ with native $u$
+and $b(u)=1$. Induction on the finite tree gives exactly (20.2).
+Conversely every $T_r$ passes the two actual sorts and has composition
+$(r,1)$. This proves the last equivalence, uniqueness of $r$, and the
+stated counts. The index is the supplied $a+2b-1$ formula; it is not
+an original source-call count or rho epoch.
+
+Consider any alleged realization of $G$. Its final leaf count is
+$\lambda(t)+1$. At every completed boundary along it there is still
+a beta: this follows from the writer rows of Theorem 19.2, initially
+from the native test. Every accepted Rho therefore increases the leaf
+count by at least one, and every accepted graft increases it by the
+positive leaf count of its actual nonempty context. All other cases
+preserve the source. There is thus exactly one accepted source-changing
+call, with leaf increment one. Before that call the source is $t$;
+after it the source is $\mathsf g(t)$.
+
+If the call is Rho, its leaf increment forces $b(t)=1$. Its beta
+count afterward is $a(t)+b(t)$, whereas the native split leaves the
+beta count at $b(t)=1$. Hence $a(t)=0$, so $t=\beta$.
+This case has precisely the required target.
+
+If the call is a graft, its context has one leaf. Since the target
+has the same beta count as $t$, that leaf is alpha. Left$(\alpha)$
+would put alpha at the leftmost leaf and fails the native sort-zero
+test, whereas $\mathsf g(t)$ is native. The only possible call is
+Right$(\alpha)$, and its endpoint must satisfy
+
+$$
+\mathsf g(t)=\langle t,\alpha\rangle.
+\tag{20.5}
+$$
+
+On native trees this equation holds exactly on the chain (20.2).
+For beta it is its defining split equation. If $t=\langle u,v\rangle$,
+constructor equality in (20.5) forces $v=\alpha$ and
+$\mathsf g(u)=\langle u,\alpha\rangle$; the left child $u$ is native.
+Induction gives $u=T_r$ and $t=T_{r+1}$. Conversely the same recursive
+equations give $\mathsf g(T_r)=T_{r+1}=\langle T_r,\alpha\rangle$.
+This proves necessity, including the asserted writer form. When
+$b(t)>1$, the absence of Rho also follows directly from Theorem 19.2
+at leaf growth one; the argument above determines the remaining graft.
+
+For sufficiency at the actual boundary choose the finite numeral
+$J=\max\{K,\lambda(t)+1\}$. If $J>K$, actually supply and complete
+Reserve$(J)$; if $J>h$, supply and complete Raise$(J)$ afterward.
+Omit either unnecessary call. CAP Theorems 5.2–5.3 leave this same
+source and preparation intact and provide a sufficient actual guard.
+Supply Right$(\alpha)$, tag100 with its entire canonical alpha-context
+payload and the actual unary payload length of CAP Definition 4.6.
+The whole candidate $\langle T_r,\alpha\rangle$ fits that guard.
+CAP Theorem 4.5 and its complete-return lemmas, with ARC's outer01
+wrapper when at Ready, give the claimed finite accepted call and return.
+For beta the canonical Rho frame0010 is another witness.
+Every context bit and maintenance frame is actual supplied material.
+This constructs a path in the original menu, without installing a
+left-descent controller or writing a computed tree back as a source.
+The same finite Right$(\alpha)$ construction from the fixed beta boot
+also reaches each $T_r$. General $\mathsf{HasBeta}$ source reachability
+is already supplied by [Native cross-epoch relations](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md),
+Theorem 13.2; the additional condition here is the exact native split
+realization domain at each reached source. ∎
+
+The literature status of (20.4) and its accepted-writer refinement is
+`repo-derived` for the installed menu of Definition 19.1. The proof
+uses elementary induction on finite ordered trees and the existing
+completed-source writer cover. The birth-sort/attainment theorem and
+native split laws are the existing `NativeLocalSourceExecution.native_execution`,
+with the definitions and physical boundaries of its owning Scribe.
+They do not identify the two installations' guarded primitive calls.
+
+**Theorem 20.4 (exact prefix languages on the unchanged apparatus).**
+With the same premises, for every such reached $P$ with
+$\operatorname{Native}(\iota(t))$, the complete word classification is
+
+$$
+\mathcal L(P)=
+\begin{cases}
+G^*F^*,&t=T_r,\ r\ge1,\\
+F^*,&\operatorname{Native}(\iota(t)),\ t\notin\{T_r:r\ge0\},\\
+\{\varepsilon\}\ \cup\ (F\mid G)G^*F^*,&t=\beta.
+\end{cases}
+\tag{20.6}
+$$
+
+Here $`G^*F^*`$ means all finite $G^kF^\ell$ with $k,\ell\ge0$;
+$`F^*`$ means all finite $F^\ell$; and the last line means one first
+letter $F$ or $G$, followed by such a $G^kF^\ell$, as well as the empty
+word. These are languages of all successive checkpoint equalities,
+with every physical segment completed, rather than a classification
+of final-source reachability.
+
+Proof. Native is preserved by both logical actions, by the existing
+`native_execution`. The same result and the original substitution
+counts give
+
+$$
+\begin{aligned}
+b(F(u))&=a(u)+b(u)=\lambda(u),& b(G(u))&=b(u),\\
+G(T_r)&=T_{r+1},&F(\beta)&=G(\beta)=T_1.
+\end{aligned}
+\tag{20.7}
+$$
+
+For $r\ge1$ a sequence of $G$'s stays on the one-beta chain.
+At its first $F$, the current tree has at least two leaves and the
+new beta count is at least two. Thereafter $F$ cannot decrease that
+count and $G$ leaves it unchanged. By Theorem 20.3 no later $G$
+checkpoint can be realized, however its earlier segments were chosen.
+Thus every realizable word belongs to $`G^*F^*`$.
+
+A native tree outside the chain already has at least two betas by
+Theorem 20.3. The same count argument prohibits its first $G$ after
+any number of $F$'s, giving $`F^*`$. At beta both possible first
+logical letters reach $T_1$. Any nonempty realization then has a
+suffix subject to the first case, giving the third language. This
+argument applies to arbitrary original paths between checkpoints:
+only the actual source at the next checkpoint enters Theorem 20.3.
+Adaptive choices, extra acquired records and finite maintenance do
+not bypass its necessity.
+
+Conversely the empty word has its empty realization. Fix a nonempty
+word in the stated language. Its finitely many
+logical trees have a finite maximum leaf count $M$; their leaf counts
+are nondecreasing. Choose $J=\max\{K,M\}$, complete the necessary
+Reserve$(J)$ and Raise$(J)$ at $P$, and retain their actual rows and
+returns. For each $F$ supply the original complete Rho frame0010.
+Its whole candidate fits $J$. For each $G$ supply the complete
+Right$(\alpha)$ frame at its current one-beta chain source. At beta
+use that frame for an initial $G$ and Rho for an initial $F$.
+All subsequent candidates fit the same $J$. The complete-return
+induction of CAP Lemmas 4.7/6.7 and ARC Proposition 5.5 concatenates
+these actual finite fragments and gives (20.3) at every designated
+boundary. A source-preserving finite excursion can be inserted only
+with its own lawful entry, acquired operands and completed return.
+This construction retains the fixed parked-Stop client of ARC
+Definition 9.1 and GENERAL Assumption 1.2; it uses supplied runtime
+frames, not a replacement client. ∎
+
+The classification (20.6) is `repo-derived` for this original menu.
+The general finite-fragment simulation machinery is
+`literature-attested`: Lynch and Vaandrager, *Forward and Backward
+Simulations, Part I: Untimed Systems*, [primary text](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf),
+§3.2 requires related initial states and, for each source step and
+every related target state, a finite target fragment with the same
+external trace and a related endpoint. Lemma 3.8 lifts such matching
+to finite fragments; Theorem 3.10 gives trace-inclusion soundness.
+Equations (20.3) and (20.6) establish the stated source-value
+checkpoints. They supply
+no equality between an original Right label and a native addressed
+split label, nor between their row/dependency or maintenance traces.
+Consequently no full trace simulation is inferred from this domain
+classification. The actual original trace and its original $Q$
+interpretation remain intact.
+
+**Proposition 20.5 (the final-source bypass does not realize the word).**
+Let $P$ have source $T_1$. The native word $FG$ has final source
+$\langle T_2,\beta\rangle$, which is reachable by a finite completed
+original-menu path from $P$, but $FG\notin\mathcal L(P)$.
+Even successful application of the existing native inverse to this
+final syntax does not certify original prefixwise realizability.
+
+Proof. Direct calculation in the actual ordered syntax gives
+
+$$
+\begin{aligned}
+F(T_1)&=\langle T_1,\beta\rangle,\\
+G(F(T_1))&=\langle T_2,\beta\rangle,\\
+\operatorname{Right}(\alpha)(T_1)&=T_2,\\
+\operatorname{Right}(\beta)(T_2)&=\langle T_2,\beta\rangle.
+\end{aligned}
+\tag{20.8}
+$$
+
+Complete enough Reserve/Raise to have guard at least four, then
+supply those two actual full graft frames and finish each original
+return. Their endpoint is the displayed final native value. Their
+first endpoint $T_2$ is different from the designated $F$ checkpoint
+$\langle T_1,\beta\rangle$. At that required checkpoint the source
+has two betas, so Theorem 20.3 excludes every returning realization
+of its $G$. This proves the claimed failure independently of the
+choice of the preceding $F$ segment.
+
+For $z=\iota(\langle T_2,\beta\rangle)$ the already supplied
+`NativeCompletedHistoryRecovery.completed_history_recovery` gives
+$\operatorname{recover}(2,z)=\operatorname{some}(\iota(T_1),FG)$,
+because this is a genuine logical native word and the entry index is
+two. That equality concerns its native logical image. The original
+two-graft path just exhibited does not acquire a realizable original
+$FG$ history by having the same final tree. This original-menu bypass
+is `repo-derived`; its displayed inverse value is an application of
+the existing native theorem. ∎
+
+**Definition 20.6 (acquired-input restriction of the existing history
+consumer).** The domain of the existing completed native inverse as
+a consumer of Theorem 20.4 consists of the actual designated
+realizations there, with $\operatorname{Native}(\iota(t))$, together
+with the following acquired inputs and current capabilities.
+
+The recipient has actually acquired the whole final logical syntax
+$z=\iota(t_m)$ for this same source occurrence and version, under
+existing literal-read/retention/delivery rights and paid work. Any
+stationary acquisition has its actual no-interleaved-update interval,
+finite traversal, workspace, rows, checks and returns. The recipient
+also has the authenticated exact index
+$n_0=\operatorname{eventIndex}(\iota(t))>1$ bound to the actual
+designated entry $P$. It is the native alpha-origin successful-event
+index, not CAP's $q,e,j,m$ or the absolute receipt tally. A formula
+for it is not its acquisition or authentication. A permitted local
+evaluation uses the already available finite effective computation,
+actual retained arguments, workspace and output support and pays for
+all of that work. No new callable decoder or read right is included
+in this definition.
+
+On this domain the consumer is precisely the existing
+`NativeCompletedHistoryRecovery.recover`, with its existing theorem
+`completed_history_recovery` and owning Scribe. Its already proved
+success equivalence, applied to (20.3), gives
+
+$$
+\operatorname{recover}(n_0,z)
+ =\operatorname{some}(\iota(t),W),\qquad
+|W|=\operatorname{recoverySteps}(n_0,z)
+ \le\operatorname{eventIndex}(z)-n_0.
+\tag{20.9}
+$$
+
+Native attainment is supplied by `NativeLocalSourceExecution.native_execution`;
+the original beta preparation is not replaced by an alpha preparation.
+The inverse's overlap recognition, substitution-image inversion and
+termination are reused, not new inverse results. The existing
+`SourceTransportCentralizer.source_transport_centralizer` and its
+owning Scribe already give the pairing-preserving commuting-map
+classification and inverses on actual substitution images. Those
+inverses do not add a physical source undo or an original local split
+entry. The inequality in (20.9) counts the existing inverse's accepted
+predecessor transitions, not its bit work or the original elapsed time.
+
+The domain condition includes an actual prefixwise realization; it
+cannot be supplied merely by a successful evaluation of `recover`,
+as Proposition 20.5 shows. The recovered objects are the logical entry
+and chronological designated word. Arbitrary additional maintenance,
+refusals, read/query order, physical checkpoint ordinals and original
+frame labels are not recovered from these two inputs. Nor does the
+output identify the guarded native material labels or the original physical
+history. Identical logical checkpoints allow different paid original
+excursions, so those records and permissions stay separately retained.
+
+At beta the entry index is one, outside (20.9). The existing inverse
+rejects that input index. Its existing beta-fibre clauses instead say
+that final beta has only the empty logical word, and an endpoint of
+any nonempty beta-entry native $F/G$ word has a unique suffix $U$
+recovered from index two at $T_1$, with exactly the two candidate
+words $FU$ and $GU$. On the
+realizable domain of Theorem 20.4 this suffix lies in $`G^*F^*`$ and
+both candidates remain realizable. Fix a supplement map $E$ from
+finite logical words to a value set $A$. If the actual value $E(W)$
+has been acquired, the existing criterion for decoding the word on
+this fixed two-point fibre is exactly
+
+$$
+E(FU)\ne E(GU).
+\tag{20.10}
+$$
+
+Without such an actually supplied distinguishing supplement the first
+letter is not recovered. The existing `firstChoice` bit is sufficient
+only when its value has been lawfully acquired or is already present
+in an authenticated available script/record; it is not supplied by
+naming that function. Indeed the same original first Rho segment at
+beta has the endpoint required for either designation, after which
+identical suffix segments can be used. Original physical labels alone
+therefore do not automatically supply the intended first logical
+choice. No additional channel or rewritten history item is assumed.
+
+LJA Definitions 7.1 and Theorem 7.2 require an actually installed
+finite effective controller, and its full-source acquisition consumer
+has that same premise. They do not authorize installing such a
+controller into this fixed parked-Stop preparation. Likewise
+[Native entry-reference and graft order](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md),
+Definitions 9.7–9.12 and Theorem 9.13, use a different declared source,
+startup and paid acquisition/continuation capabilities. Their decoder
+is not an acquired interface of this apparatus. GENERAL §16's
+already received raw requests retain their actual information;
+GENERAL §18's correlated mixed inverse retains its specified input
+class. GENERAL §§19–20's fresh-replay charges remain applicable when
+that route is actually used. GENERAL §21's changed two-load
+initialization supplies no extra input or authority here.
+
+Every realization and every actual consumer evaluation retains all
+original costs. At an actual finite original primitive prefix the
+bill is still
+
+$$
+(n,2n,S_{\rm irreducible}+b_{\rm ctl}+8A+8n),
+$$
+
+with CAP Theorem 7.2 and the actual RCA recurrence accounting for
+boot, acquisition, finite supplied input, generation, directory and
+guard publication, reads/writes, supplied contexts and retained material,
+all old/new backing, descriptors, rows, dependencies, capture, channel
+copies, checks, ACKs, token and outer returns, retained banks, output
+and local evaluation. GENERAL's incidence foundation and structural
+tariff remain separate paid coordinates. The counts $a,b,\lambda$,
+the chosen finite $J$ and the language membership are mathematical
+parameters, not new free actor observations. There is no uniform
+future capacity or completion-time bound and no total-runtime
+improvement claimed by this domain restriction.
+
+This consumer retains the original $Q$ of Definition 1.3. It gives
+no all-$Q$ equivalence, diffusion or AURIC source identification,
+actual S-to-C assimilation or completion of their separate recovery
+obligations. Its precise positive bridge is the literal original-menu
+realization domain (20.4), its prefix languages (20.6), and the use of
+the already supplied logical inverse only on acquired admissible inputs.
+
+## 追加锚（本行以下为增补区）
+
+
+## 21. Fixed pairing codes and independent substitution ages cannot supply every native split
+
+**Definition 21.1 (fixed codes, equal-child depth and endpoint relation).**
+Use the unchanged original preparation, syntax $\mathcal T$, substitution
+$\rho$, literal map $\iota$, native split value $\mathsf g$, birth sorts
+$\nu_0,\nu_1$ and completed returning paths of Definitions 19.1 and
+20.1–20.2. In particular the initial live source is beta, the original
+Stop client remains parked, and a represented source or recovered right
+in a history bank is not a replacement of the current source or authority.
+All finite-supply, current-permission and local-termination hypotheses
+remain those of these definitions.
+
+A fixed pairing code is a total injective map $H:\mathcal T\to\mathcal T$
+satisfying
+
+$$
+H(\langle u,v\rangle)=\langle H(u),H(v)\rangle.
+\tag{21.1}
+$$
+
+Put $U=H(\beta)$ and $V=H(\alpha)$. These are arbitrary finite nonempty
+trees subject to the stated injectivity; in particular $U\ne V$.
+There is no commutation requirement between $H$ and $\rho$.
+Define the equal-child depth $d:\mathcal T\to\mathbb N$ by
+
+$$
+\begin{aligned}
+d(\alpha)&=d(\beta)=0,\\
+d(\langle u,v\rangle)&=
+ \max\{d(u),d(v)\}+\mathbf1_{u=v}.
+\end{aligned}
+\tag{21.2}
+$$
+
+Equality here is literal equality of complete ordered labelled trees.
+Equivalently, $d$ is the maximum number of nodes with two equal children
+on one root-to-leaf path. Let $p=d(U)$, $q=d(V)$, and set
+
+$$
+N_H=1+\max\{0,q-p\},
+\tag{21.3}
+$$
+
+where the difference inside the maximum is an integer difference.
+Thus $N_H$ is the least positive integer $n$ such that $n+p>q$.
+No bound or zero-depth condition is imposed on either codeword.
+
+Define the balanced beta trees and their logical split values by
+
+$$
+\begin{aligned}
+\mathsf B_0&=\beta,&
+\mathsf B_{n+1}&=\langle\mathsf B_n,\mathsf B_n\rangle,\\
+\mathsf D_0&=\langle\beta,\alpha\rangle,&
+\mathsf D_{n+1}&=\langle\mathsf D_n,\mathsf B_n\rangle.
+\end{aligned}
+\tag{21.4}
+$$
+
+For fixed $H,n$ and independently chosen $k,\ell\in\mathbb N$ put
+
+$$
+X_k=\rho^k H(\mathsf B_n),\qquad
+Y_\ell=\rho^\ell H(\mathsf D_n).
+\tag{21.5}
+$$
+
+The powers act after coding; this notation never exchanges $H$ and
+$\rho$. Write $\mathsf A(s)$ when some finite actually supplied
+completed canonical extension from the fixed first outer Ready attains
+source value $s$, with permitted finite Reserve/Raise. This is the
+source-value attainment of CROSS_EPOCH Theorem 13.2, with no assertion
+about acquisition of $s$ or a path from another attained value.
+For any logical tree $t$ and an actually reached valid completed
+boundary $P$, define the endpoint relation
+
+$$
+t\mathrel{\mathcal R_H}P
+\quad\Longleftrightarrow\quad
+\exists r\in\mathbb N\quad
+ \operatorname{source}(P)=\rho^r H(t).
+\tag{21.6}
+$$
+
+The existential exponent, $d$, $N_H$ and the mathematical source values
+are not actor observations. This relation supplies neither a read of
+its arguments nor a test, frame, epoch certificate or executable policy.
+
+**Theorem 21.2 (unbounded fixed-code obstruction with independent ages).**
+For every fixed pairing code $H$, every $n\ge N_H$, every
+$k,\ell\in\mathbb N$, and every actually reached valid input boundary
+$P$ of Definition 19.1 whose source is $X_k$, there is no finite
+completed returning original-menu continuation from $P$ with final
+source $Y_\ell$.
+
+The conclusion allows every actual source writer and return, arbitrary
+finite actual supplied contexts, adaptive use of legitimately acquired
+information, all permitted maintenance, history, journal, audit and
+local work, and intermediate sources outside the code image. It has
+no small-growth premise and no common bound on capacity, path length,
+computation or storage. It holds in particular when the input and
+requested target both fit the actual input guard and backing.
+
+The logical trees $\iota(\mathsf B_n)$ and $\iota(\mathsf D_n)$ are
+Native, and $\iota(\mathsf D_n)=\operatorname{splitLeft}
+(\iota(\mathsf B_n))$. Their native event indices are respectively
+$2^{n+1}-1>1$ and $2^{n+1}$. For these same witnesses, exact original
+source attainment and logical Native membership of the coded endpoints
+are separate conditions:
+
+$$
+\begin{aligned}
+\mathsf A(X_k)
+ &\Longleftrightarrow k>0\ \lor\ b(U)>0,\\
+\mathsf A(Y_\ell)
+ &\Longleftrightarrow \ell>0\ \lor\ b(U)+b(V)>0,\\
+\operatorname{Native}(\iota(X_k))
+ &\Longleftrightarrow k>0\ \lor\ \nu_0(U)=1,\\
+\operatorname{Native}(\iota(Y_\ell))
+ &\Longleftrightarrow \ell>0\ \lor\
+       (\nu_0(U)=1\land\nu_1(V)=1).
+\end{aligned}
+\tag{21.7}
+$$
+
+In particular all $k,\ell>0$ give attained and Native endpoints for
+arbitrary $H$. For fixed $H,n$ the targets $Y_\ell$ have unbounded leaf
+counts as $\ell$ increases, while every one remains excluded from each
+attained $X_k$ by the returning-path conclusion. Neither positive
+syntactic age nor separate endpoint attainment identifies an actual
+recorded Rho epoch or supplies a reset between endpoints.
+
+Consequently $\mathcal R_H$ cannot support a bridge realizing every
+native $G$ step by a completed returning original-menu continuation,
+even with independent choices of endpoint ages and unrestricted finite
+intermediate work. This excludes that particular source-operation
+bridge to the existing native split and completed history inverse;
+it leaves their actual acquired-input domains and positive conclusions
+intact.
+
+Proof. First establish an invariant on all the actual paths in the
+statement. The substitution is injective on $\mathcal T$, by the
+existing `SourceTransportCentralizer.source_transport_centralizer`
+and its owning Blueprint. Therefore
+
+$$
+\rho u=\rho v\quad\Longleftrightarrow\quad u=v.
+$$
+
+Structural induction in (21.2) now gives
+
+$$
+d(\rho t)=d(t),\qquad d(\rho^r t)=d(t)\quad(r\ge0).
+\tag{21.8}
+$$
+
+For the alpha leaf the image is beta, of depth zero. For the beta leaf
+the image is $\langle\beta,\alpha\rangle$, whose two children are
+unequal and have depth zero. At an old branch substitution retains the
+branch, preserves equality or disequality of its children by
+injectivity, and preserves both child depths by induction. This proves
+the first equality; finite iteration proves the second. Thus newly
+created branches contribute no equal-child node, and old such nodes
+are neither destroyed nor newly identified. The child-disequality
+mechanism is the one already used in [Native signed feasibility](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_SIGNED_FEASIBILITY.md),
+Example 11.2; no new inverse-substitution result is needed.
+
+For every finite actual context $v$ the recurrence also gives
+
+$$
+d(\langle v,t\rangle)\ge d(t),\qquad
+ d(\langle t,v\rangle)\ge d(t).
+\tag{21.9}
+$$
+
+Apply these facts to the complete source-writer cover of Definition
+19.1. At valid completed service boundaries all cases are as follows.
+
+| Completed case | Source value after the case | Effect on $d$ |
+| --- | --- | --- |
+| Accepted Rho | $\rho t$ | Equal by (21.8) |
+| Accepted Left$(v)$ | $\langle v,t\rangle$ | Nondecreasing by (21.9) |
+| Accepted Right$(v)$ | $\langle t,v\rangle$ | Nondecreasing by (21.9) |
+| ReadE, TagRead, executed source refusal | $t$ | Equal |
+| Reserve, Raise, including unchanged/refusal branches | $t$ | Equal |
+| Returning source-preserving journal, history, audit and local work | $t$ | Equal |
+
+CAP Definition 1.2 and Theorem 4.5 supply the first four rows, with
+the actual whole-candidate guard and the actually supplied nonempty
+context. Its Definition 4.6 has exactly the original five source tags
+and the two maintenance tags; Theorems 5.2–5.3 supply the fifth row.
+Its Lemmas 4.7 and 6.7 include response, counters, semantic/unified
+rows, dependencies, actual delivery/check/ACK and source-token return.
+ARC Definitions 5.1–5.4 and Proposition 5.5 include the real outer01
+entry, InnerReturn normalization and CaptureCAP before the next Ready.
+ARC's history returns and GENERAL Lemma 13.2's installed-row cover supply
+the last row: a reconstructed Step or old source in a bank remains
+represented material. Neither restores a source field or a permission
+on the live source. Busy/unauthorized attempts have their unchanged
+unexecuted `none`. Raw malformed input gains no source permission;
+any returning such work adds no source writer. The original parked
+Stop client supplies no returning overwrite through outer00; its
+global halt is outside the endpoint predicate.
+
+This is a cover of completed source effects, not a restriction to
+short paths or to some selected successful labels. Within an invoked
+service the private source packet can temporarily fail to parse.
+The actual busy token prevents another source call from treating
+that packet as a new valid input boundary. A completed returning
+path includes its full service and its actual return, so sampling
+successive valid completed boundaries covers every possible source
+change on that path. The row/channel and outer work is retained,
+including executed refusals; none is erased by this sampling.
+Finite induction on these completed cases proves, for every such
+path from source $t$ to source $s$,
+
+$$
+d(s)\ge d(t).
+\tag{21.10}
+$$
+
+One may equivalently track one distinguished occurrence of the old
+source as $C[\rho^r t]$. A graft encloses this one occurrence;
+substitution acts on all constant leaves of the finite one-hole
+context $C$ and increments $r$; the remaining cases preserve it.
+This is the single-occurrence mechanism of DAF Lemma 3.2, used here
+under Definition 19.1's actual writer/return cover. It yields the
+same inequality since every enclosing branch has depth at least
+that of either child and (21.8) preserves the distinguished tree's
+depth. The context, $r$ and every actual supplied sibling can be
+arbitrarily large. No code-image condition is used at any stage.
+
+Next compute the witness depths. The defining split equations of
+Definition 20.1 give $\mathsf g(\mathsf B_n)=\mathsf D_n$ by induction.
+Their respective compositions are $(0,2^n)$ and $(1,2^n)$, so their
+leaf counts differ by exactly one. In particular
+$\mathsf D_j\ne\mathsf B_j$ for every $j$. Since $H$ is injective,
+
+$$
+H(\mathsf D_j)\ne H(\mathsf B_j).
+\tag{21.11}
+$$
+
+Pairing preservation gives
+$d(H(\mathsf B_j))=p+j$. At the split base the children $U,V$ are
+unequal, so $d(H(\mathsf D_0))=\max\{p,q\}$. Every subsequent root
+in $H(\mathsf D_{j+1})=\langle H(\mathsf D_j),H(\mathsf B_j)\rangle$
+has unequal children by (21.11). Thus its depth is the maximum of
+the two child depths, with no additional unit. Induction gives,
+for every $n\ge1$ and every independent $k,\ell\ge0$,
+
+$$
+\begin{aligned}
+d(X_k)&=p+n,\\
+d(Y_\ell)&=\max\{p+n-1,q\}.
+\end{aligned}
+\tag{21.12}
+$$
+
+Here (21.8) is applied separately after the two applications of $H$.
+For $n\ge N_H$, the integer inequality $p+n>q$ gives
+
+$$
+d(X_k)=p+n>p+n-1=d(Y_\ell).
+\tag{21.13}
+$$
+
+This contradicts (21.10) for any alleged continuation from $P$ to
+$Y_\ell$. It proves the exclusion for every completed returning
+path, irrespective of the number of accepted substitutions or the
+size of supplied grafts. The threshold (21.3) is exactly the least
+positive depth giving strict separation in (21.12); no claim that
+it is the least possible obstruction witness for a particular $H$
+is required. Repeated equal-child branching already inside $U$ or
+$V$ is included by $p,q$ and is not discarded by the calculation.
+
+For nonvacuity, beta passes both birth sorts, and a branch is tested
+by the same left-zero/right-one rule at either root sort. Induction
+makes every $\mathsf B_n$ native. The supplied
+`NativeLocalSourceExecution.native_execution` then makes its split
+native and supplies the stated event-index formulas from their
+compositions. This reuses its attainment equivalence for the native
+alpha-origin guarded source; it does not change the original beta
+bootstrap to an alpha bootstrap.
+
+Every nonempty tree has a beta after one positive substitution:
+each of the two leaf images has a beta, and a pair retains both
+images. On the unaged coded input there are $2^n$ copies of $U$;
+on the unaged coded target there are $2^n$ copies of $U$ and one
+copy of $V$. Hence their beta counts are $2^n b(U)$ and
+$2^n b(U)+b(V)$, respectively. CROSS_EPOCH Theorem 13.2 identifies
+exactly $\mathsf{HasBeta}$ with the source-value image of the actual
+completed canonical original calls and maintenance from the fixed
+first Ready. These facts prove the first two equivalences in (21.7).
+In particular no global assumption $b(H(\beta))>0$ is appropriate.
+It is required for a zero-age input, and is unnecessary at positive
+input age.
+
+For the remaining equivalences, the supplied `native_execution`
+says that $\rho t$ is Native for every $t$. Every positive iterate
+therefore is Native. At age zero, the leftmost chain through
+$H(\mathsf B_n)$ requires $\nu_0(U)=1$, which also implies
+$\nu_1(U)=1$; these conditions suffice at every other copy of $U$.
+In $H(\mathsf D_n)$ the split base additionally tests $V$ at sort
+one, so its exact condition is
+$\nu_0(U)=1\land\nu_1(V)=1$. This proves the last two equivalences.
+Arbitrary injective pairing codes need not preserve Native at age
+zero: exchanging alpha and beta is such a code, and sends every
+$\mathsf B_n$ to a tree with only alpha leaves. Positive substitution
+removes that failure, without acquiring a representation or installing
+a corresponding native operation on CAP.
+
+When $\mathsf A(X_k)$ holds, the source construction in CROSS_EPOCH
+Theorem 13.2 reaches this very value by finite supplied ancestor grafts
+from a selected beta occurrence, with accepted-Rho epoch zero. It can
+use any chosen finite final guard/reserve
+$J\ge\max\{\lambda(X_k),\lambda(Y_\ell)\}$. Thus an authentic input
+can already have room for the target; later arbitrarily large finite
+maintenance also remains allowed in (21.10). If $U$ contains beta,
+one can alternatively construct $H(\mathsf B_n)$ first and then
+perform exactly $k$ accepted Rho calls at a sufficient guard, producing
+$X_k$ with actual epoch $k$. If $U$ has no beta that proposed initial
+construction is unattainable, while the direct graft construction
+of $X_k$ still exists for every $k>0$. Analogous statements apply
+to the target with the exact beta condition on $U,V$ in (21.7).
+These are alternative histories from the one preparation, with their
+own actual supplied inputs and records. Attaining $Y_\ell$ separately
+does not return the current $X_k$ to their common earlier boundary.
+
+For $\ell\ge1$, $Y_\ell$ contains beta. The original counting equation
+$\lambda(\rho t)=\lambda(t)+b(t)$ consequently gives
+$\lambda(Y_{\ell+1})\ge\lambda(Y_\ell)+1$. The targets are unbounded
+in size, individually attained and Native, yet (21.13) is independent
+of $\ell$. With $H$ the identity, $p=q=0$ and $N_H=1$; the smallest
+witness is the fork $\langle\beta,\beta\rangle$ and its leftmost
+split, at any independent ages. With general $H$ and $k=\ell=0$,
+the same theorem is nonvacuous exactly when $U$ contains beta; its
+output is then also attained. These are specializations of the one
+path obstruction, with the separate Native conditions of (21.7).
+
+To state its bridge consequence precisely, fix any $H$ and
+$n\ge N_H$. The fibre of $\mathcal R_H$ over $\mathsf B_n$ contains
+actual boundaries, since every positive-age input is attained.
+From every boundary in that fibre, the proved exclusion forbids
+reaching any boundary in the fibre over $\mathsf D_n$. Thus even
+the source-value matching clause for the logical step
+$\mathsf B_n\xrightarrow{G}\mathsf D_n$ fails. An adaptive choice
+of representative or of endpoint age cannot repair it; (21.13)
+covers every such pair. A proposed bridge through all native $F/G$
+histories has this necessary $G$ clause, whether or not it can match
+$F$. No commutation of $H$ with substitution has been assumed or
+inferred. The classified commuting transports in
+`SourceTransportCentralizer` are included as a subclass, rather than
+used to restrict the quantifier on $H$.
+
+On actual acquired logical inputs the existing completed native
+inverse still gives, with $n_0=2^{n+1}-1$,
+
+$$
+\operatorname{recover}(n_0,\iota(\mathsf D_n))
+ =\operatorname{some}(\iota(\mathsf B_n),[G]).
+\tag{21.14}
+$$
+
+This is a direct application of
+`NativeCompletedHistoryRecovery.completed_history_recovery`, not a
+new decoder. Its physical consumer retains Definition 20.6's actually
+acquired final logical syntax and authenticated entry index, same-source
+bindings, lawful local evaluation and actual native completion premises.
+A coded endpoint, a formula for $n_0$, or logical Native membership
+alone supplies none of these inputs or permissions. The new exclusion
+concerns the missing original-menu realization of that logical step;
+it neither refutes (21.14) nor reconstructs arbitrary physical labels,
+maintenance, refusal, request, row or return history from it. Existing
+positive native and correlated history inverses keep their own domains.
+No decoder, controller, reset or physical undo is added.
+
+The apparatus-specific invariant-to-obstruction conclusion is
+`repo-derived`: its bearing is the actual CAP/ARC writer/return cover,
+the depth computation including arbitrary fixed codewords, and the
+independently aged, reached endpoint family. The single-occurrence
+and child-disequality arguments and the native inverses cited above
+are reused mechanisms. For terminology, Engelfriet's *Tree Automata
+and Tree Grammars*, [Definition 3.62](https://arxiv.org/abs/1510.02036),
+defines tree homomorphisms by ranked-symbol templates; (21.1) is the
+injective subclass with binary template $\langle x_1,x_2\rangle$ and
+ground leaf templates $V,U$. That definition supplies the homomorphism
+background, not this operation theorem. Lynch and Vaandrager's
+*Forward and Backward Simulations, Part I: Untimed Systems*,
+[§3.2, Lemma 3.8 and Theorem 3.10](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf),
+require matching finite fragments from related states and give their
+trace-inclusion consequence. Here the necessary endpoint matching
+already fails, even before a physical trace-matching condition is
+imposed. This is no worldwide novelty claim and no impossibility
+statement for all encodings, other endpoint relations, acquired-record
+decoders or separately established operation menus.
+
+Throughout, $Q$ is exactly Definition 1.3's original partial task.
+Actual acquired raw requests, rows, distinctions and rights remain
+available under their actual contracts, as do the physical labels
+and effects of every executed action. The invariant is a mathematical
+restriction on live-source continuations, not equality of all $Q$
+responses or equivalence of physical traces. It supplies no diffusion
+or AURIC source identification, actual S-to-C assimilation or completion
+of those separate recovery obligations.
+
+All constructions and permitted continuations retain the original
+bill at each finite primitive prefix,
+
+$$
+(n_{\rm prim},2n_{\rm prim},
+ S_{\rm irreducible}+b_{\rm ctl}+8A+8n_{\rm prim}),
+$$
+
+with GENERAL's incidence foundation and structural tariff separate.
+CAP Theorem 7.2 and the actual RCA recurrence still charge the beta
+boot and stationary acquisition, every supplied context and frame,
+source generation and reads/writes, capacity construction, directory
+and guard publication, old/new backing and retained material,
+request/row/dependency copies, capture, delivery, checks, ACKs,
+source-token and outer returns, bank retention and any later permitted
+query, reconstruction, local computation and output. The integer
+$n_{\rm prim}$ is the actual native receipt tally, distinct from the
+balanced witness depth $n$. None of $H$, $p,q,N_H$, the endpoint ages,
+the selected guard, the source counts or the invariant calculations
+is a free actor observation or a free acquisition/construction step.
+The proof bounds no total physical runtime or storage and forgives
+no input, acquisition, retention or return charge. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 22. A reached original Left service excludes the fixed-root native edit supplier
+
+**Definition 22.1 (the reverse comparison and its fixed endpoints).** Write
+[RG](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_REENTRANT_GUARDED_ACQUISITION.md)
+for the reentrant-acquisition volume. Use its canonical $G_V$ of
+Definitions35.1–35.2, with its actual installation/archive correspondence
+$(E_V,\Delta_V,C_V,r_V,\mathcal B_V)$, one preparation $\xi$, beta seed,
+$H_{\rm boot}=1$, prior $\{\alpha,\beta\}$, source16 and stable $\phi_K$,
+saved original25/27, table24 and original Stop/INITIAL consumer. This is
+that original-boot installation, not an identification with
+$G_{\mathrm{gc}}$ or $G_{\mathrm H}$ from common names or port counts.
+Keep RG's actual finite-supply, exclusive-rights and reached-termination
+premises. Its tree map $E=\rho^2$ is distinct from CAP ReadE's
+Clifford-valued output. Put
+
+$$
+\begin{aligned}
+A&=E(\alpha)=\langle\beta,\alpha\rangle,\\
+B&=E(\beta)=\langle A,\beta\rangle,\\
+X&=\langle B,B\rangle,\qquad Y=\langle A,X\rangle.
+\end{aligned}
+\tag{22.1}
+$$
+
+For the proposed supplier, fix one authentic bound live root $r$ and one
+total pairing-preserving endpoint map $H:\mathcal T\to\mathcal T$ with
+finite nonempty leaf images. Thus
+$H(\langle u,v\rangle)=\langle H(u),H(v)\rangle$ throughout the comparison.
+Every fixed injective code of Definition21.1 is included; injectivity is
+not needed below. The endpoint condition is exactly
+
+$$
+t\mathrel{\mathcal S_{H,r}}P
+\quad\Longleftrightarrow\quad
+\operatorname{source}_r(P)=H(t).
+\tag{22.2}
+$$
+
+There is no independently chosen substitution age at either endpoint,
+no change of $H$, and no change of the designated live root. This is a
+necessary source-value component of the proposed service correspondence,
+not an observation, authority grant or complete task relation.
+
+Let $\mathfrak N_r$ consist of the following finite actual continuations
+on this root. At valid completed logical-source boundaries the only
+source-changing operations are successful current-leaf edits with exactly
+[`NativeLocalSourceExecution.edit`](../../../D5/S3/Arith/FibonacciAtomic/NativeLocalSourceExecution.lean)'s
+guards and replacements under Definition19.1's literal constructor map
+$\iota$, and whole
+substitution $t\mapsto\rho t$ when actually admitted. A leaf alpha may be
+promoted to beta, and a leaf beta split into
+$\langle\beta,\alpha\rangle$; a branch, absent address or wrong tag is
+not a successful edit. Whole substitution may also be implemented by
+the acquired sealed-old-frontier procedure of
+[LAB](RECURSIVE_RELATIONAL_OBSERVATION_LAB_ARITHMETIC_GROWTH.md)
+Definition9.3 and Theorem9.4. The native source's
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/NativeLocalSourceExecution.scribe.cs)
+retains the alpha/true, beta/false and left/false, right/true conventions.
+Each primitive edit, and each invoked enclosing macro,
+consumes its actual complete reply, acknowledgement and return. Reads,
+control, maintenance, computation and record/retention work may intervene
+only with their actual rights and with the live logical source unchanged.
+Their physical effects, refusal labels and charges remain present.
+
+There is no other source writer, logical branch replacement, inverse,
+source reset, second preparation, root rebinding or additional root-graft operation
+in $\mathfrak N_r$. A tree computed in scratch is not installed at $r$.
+The menu permits edits of newly born current leaves, arbitrary finite
+interleavings with substitution, and adaptive choices from actually
+acquired information. It imposes no common bound on the number of calls,
+depth, backing, retained records or local computation. It grants no
+access at a cut where that access is not already lawful. A whole value
+is required only at the declared completed boundaries; a physical partial
+packet is not assigned a fabricated tree value.
+
+For a finite logical tree $t$, let $\operatorname{Br}(t)$ be its set of
+root-relative $L/R$ addresses whose subtrees are branches, and let
+$\delta_L(t)$ be the length of its all-left path to the first leaf:
+
+$$
+\delta_L(\alpha)=\delta_L(\beta)=0,\qquad
+\delta_L(\langle u,v\rangle)=1+\delta_L(u).
+\tag{22.3}
+$$
+
+These are mathematical coordinates; they are not additional actor reads.
+In particular $\delta_L$ is not §21's equal-child depth.
+
+**Theorem 22.2 (actual reverse supplier-class separation).** In one
+canonical $G_V$ run, choose external mode01, two raw rounds with requests
+Right$(\beta)$ and Left$(\alpha)$, separately acquired reference guards
+$U(2)$ and $U(3)$, and then the actual finish choice. The selected computed
+Left$(A)$ in the second round accepts on source $X$ at original guard and
+reserve $(H_{\rm enc},K)=(8,8)$ and installs $Y$, where $H_{\rm enc}$ denotes
+RG's encoded guard, distinct from the endpoint map $H$. Its complete
+inherited original
+service body, genuine returned response/records and subsequent original
+Stop/INITIAL consumption occur on this same $\xi$ under the contracts of
+RG, with no second source or private-source copy supplied to the actor.
+
+For every fixed $H,r$ of Definition22.1, every valid supplier boundary
+with source $H(X)$, and every finite actual continuation in $\mathfrak N_r$
+from it, the final source is different from $H(Y)$. Consequently this
+supplier class cannot match even the necessary endpoint component
+(22.2) of that accepted original service. In particular
+`NativeLocalSourceExecution`'s current-leaf menu together with its
+whole-substitution realization cannot serve as the sole live-source
+update supplier for this selected $G_V$ Left leg under that contract.
+CAP's own producer-owned graft/writer supplies the leg and remains
+available. An alternative supplier must establish an additional operation
+or a different endpoint relation outside the excluded class.
+
+Proof. First locate the demanded service in one actual run. Use RG's
+canonical native-install word $E_V$ and its separately acquired matching
+public archive, with the actual boot/code/seed lineage $\mathcal B_V$.
+The boot and stationary acquisition are RG2.2/35.1–35.3's one beta
+preparation, including the saved original configuration and invocation
+transfer. They are not a fresh setup at $X$. At the prescribed69 sites
+supply mode01, round choices0,0 and finish choice1. At the two actual
+RawDispatch sites supply complete CAP frames for Right$(\beta)$ and
+Left$(\alpha)$, respectively. At their separate GuardIngress sites supply
+$U(2)$ and $U(3)$. These are canonical finite input occurrences of this
+one installed graph, with $1\le2\le3$; neither guard is read from a
+source-row guard or initialized at boot.
+
+RG7.1's returned lift first executes Reserve$(3)$, Raise$(3)$, Rho, Rho.
+The two Rhos accept with candidate counts2 then3 and leave source $B$
+at $(3,3)$. The derived reference description is still the acquired
+beta. Thereafter the actual source and maintenance calls are as follows.
+The guard column records the original encoded guard/reserve after each
+completed call, not the separate reference guard.
+
+| Round and actual call | Whole candidate or maintenance effect | Genuine outcome | Source after full return | $(H_{\rm enc},K)$ |
+| --- | --- | --- | --- | --- |
+| 1 raw Right$(\beta)$ | $\langle B,\beta\rangle$, four leaves at guard3 | Executed source refusal | $B$ | $(3,3)$ |
+| 1 computed Reserve$(6)$ | Extend the same $\phi_K$ and backing | `reserve-ok` | $B$ | $(3,6)$ |
+| 1 computed Raise$(6)$ | Publish guard6 | `raise-ok` | $B$ | $(6,6)$ |
+| 1 selected Right$(B)$ | $\langle B,B\rangle$, six leaves | Accept | $X$ | $(6,6)$ |
+| 2 raw Left$(\alpha)$ | $\langle\alpha,X\rangle$, seven leaves at guard6 | Executed source refusal | $X$ | $(6,6)$ |
+| 2 computed Reserve$(8)$ | Extend the same $\phi_K$ and backing | `reserve-ok` | $X$ | $(6,8)$ |
+| 2 computed Raise$(8)$ | Publish guard8 | `raise-ok` | $X$ | $(8,8)$ |
+| 2 selected Left$(A)$ | $\langle A,X\rangle$, eight leaves | Accept | $Y$ | $(8,8)$ |
+
+Indeed the first reference candidate is
+$\langle\beta,\beta\rangle$, of two leaves and weight6, and the second
+is $\langle\alpha,\langle\beta,\beta\rangle\rangle$, of three leaves
+and weight8. RG7.1's actual acquired-word calculation therefore selects
+both strict maintenance pairs and both accepting finals. Its finite tree
+algorithm constructs $B=E(\beta)$ from round1's acquired operand and
+$A=E(\alpha)$ from round2's acquired operand. It does not identify a
+ReadState metadata result with a source read. The derived reference
+successor is installed only after the actual selected response. RG7.2's
+round induction, re-instantiated on $G_V$ by35.5, proves every join in
+this table. No appeal to RG7.3's separately attainable raw reference
+alternative is needed to concatenate its rows.
+
+More explicitly, RG4.1–4.3/35.5 bind each raw refusal to its actual
+RawWait, old journal ends, complete three-block request and new
+semantic/unified row origins. RG3's freshly closed29 reader obtains the
+full genuine response and operand after the mandatory dependency
+delivery. These are released response fields and acquired records; the
+private coordinates of the complete joint successor are not actor copies.
+RG5 binds each separate guard occurrence $\gamma_i$ to that
+proposal and previous selected-final origin. RG6 constructs and seals
+each computed packet on27, transports it on49 into the producer's own
+21/17 material, and constructs the fresh original13 frame by paid
+Append/copy; no matching external frame is supplied for a computed call.
+Only the producer's CAP4.4 S-destination path writes source16 through
+its current $\phi_K$. The actor's acquired seed, operands, derived
+syntax and genuine responses supply no private source16 read right.
+
+Each service retains CAP's complete response, historical guard/layout,
+counter transitions, semantic mate where applicable, unified row,
+request/dependency origins, fences, delivery and receiver checks.
+Maintenance has its original no-semantic-mate case. The final full row
+ACK is followed by the source-token TOK and idle CTL with that call kind's
+installed successor; ACK alone does not restore admission. The caller
+then enters RawReturned or ComputedReturned, normalizes roles/heads,
+loans all twelve workspace tokens, reloads the protected state, checks
+the new joined ends, and installs that response before the next phase.
+RG6.3 supplies the actual next Entry after each selected final, with
+RG2's invocation still held and the dispatcher owning its source token.
+An acquired descriptor is used with current local tokens and completed
+bindings, never as present authority by itself.
+
+The original-task interpretation is exactly RG13.1–13.4's inherited
+chart, re-instantiated at these $G_V$ calls by35.3/35.5: original raw
+ingress/body rows and admitted computed service/response/counter/row/
+channel/check/ACK/source-token rows retain their actual operands,
+enabledness, labels, released outputs and complete original joint
+successors. Cells, heads, latches, control, permissions, partial records,
+meter and the actual untouched extra actor material remain in the run.
+The new packet constructors, guard/mode/choice readers, state readers
+and changed return CTLs are not asserted to be original-$Q$ rows.
+Canonical raw Supply keeps its original prefix domain; an enabled
+noncanonical bit can remain task-undefined, a missing-right attempt
+unexecuted `none`, and a source refusal an executed response. These
+types, `no-row` and terminal output are not identified. This gives an
+actual original service occurrence and its scoped full-successor chart,
+not an all-cut or cross-entry original-$Q$ equivalence.
+
+After round2's real returned-state seal, the supplied finish choice
+selects this run's Handback. RG35–37's later historical acquisition,
+four independent received bodies per selected raw cut, full checks,
+ACKs and batch return run on this same $G_V$ code and lineage. Here
+the last completed raw episode is precisely round2's refused
+Left$(\alpha)$; its selected historical cuts are not cuts of a different
+execution or current acquisition during that raw call. RG37.4 returns
+through the actual HandbackResume, original configuration/empty-waiting
+packet copies, invocation/pool transfer and unchanged Stop interpreter.
+Its output31/route49, terminal rows and joined ACK/source return,
+SEG-P1 snapshot on50, original verifier, SEG-R1 on51 and original
+consumer40/41's target43/OUT/ACK/token-return/global-halt path all
+execute. The target is the original INITIAL-$q_1(\beta)=(0,B,1)$;
+the $B$ in this original proposal is its inherited target symbol, not
+the tree $B$ of (22.1). Halt is absorbing. This is a single finite
+completion, not reentry from a terminal state.
+
+Now apply the old-branch mechanism on the proposed supplier root.
+At any successful current-leaf edit, no old branch is its target or
+strictly below its target: a logical leaf has no branch descendants.
+Every old branch and its ordered path therefore remains a branch at
+the same root-relative address. An executed rejected edit and every
+admitted source-preserving helper leave that assertion unchanged.
+Whole substitution also retains every old branch at its same address.
+This follows directly from its pairing equation, or from
+[`Observer.NativeDepthPatterns.original_present_transport`](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeDepthPatterns.lean)
+applied to
+an originally present branch subtree. That theorem transports only
+originally present subtrees; no assertion about newly born addresses
+is being added. If substitution is expanded into LAB9.3's sealed
+frontier calls, each completed edit has the same property. Thus every
+completed boundary $t\to s$ along any $\mathfrak N_r$ continuation obeys
+
+$$
+\operatorname{Br}(t)\subseteq\operatorname{Br}(s),\qquad
+\delta_L(s)\ge\delta_L(t).
+\tag{22.4}
+$$
+
+For the second inequality, all addresses $L^j$ with
+$0\le j<\delta_L(t)$ are old branches and so remain branches. Finite
+induction gives (22.4) over every completed operation, whatever earlier
+acquired information selected it. Incomplete, disabled or divergent
+work does not create a completed counterexample. The argument samples
+complete source values, while retaining the actual private microsteps,
+partial packets and bills; it does not parse those partial packets
+as additional logical operation boundaries.
+
+This is the existing old-branch persistence of
+[AAII](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md)
+Definition75.1 and Lemma76.1, and of
+[AAIII](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md)
+Theorem22.2's block comparison, used under
+the explicitly larger mixed menu here. LAB9.4 already supplies the
+full-frontier realization; LAB18.1–18.2's cohort/reset theorem keeps
+its own conditional access and logical reset restrictions. No reset
+or arbitrary busy-cut selector from that theorem is imported.
+`NativeLocalSourceExecution.native_execution` already supplies native
+attainment, the sealed frontier and current-leftmost laws. In particular
+$X$ and $Y$ themselves pass its birth-sort test, so their separate
+logical native attainment is not disputed. That result does not supply
+a continuation between them on the root now representing $X$.
+
+For the contradiction put $U=H(\beta)$, $V=H(\alpha)$ and
+$d=\delta_L(U)<\infty$. Use only pairing preservation to expand
+(22.1), without commuting $H$ with $\rho$:
+
+$$
+\begin{aligned}
+H(A)&=\langle U,V\rangle,&\delta_L(H(A))&=1+d,\\
+H(B)&=\langle\langle U,V\rangle,U\rangle,
+ &\delta_L(H(B))&=2+d,\\
+H(X)&=\langle H(B),H(B)\rangle,
+ &\delta_L(H(X))&=3+d,\\
+H(Y)&=\langle H(A),H(X)\rangle,
+ &\delta_L(H(Y))&=2+d.
+\end{aligned}
+\tag{22.5}
+$$
+
+The address $L^{d+2}$ is a branch in $H(X)$ and a leaf in $H(Y)$.
+Consequently (22.4) forbids every finite $\mathfrak N_r$ path between
+these endpoints. The fixed finite codeword $U$ may have arbitrary
+depth, and $U,V$ may even coincide; the strict difference in (22.5)
+persists. Intermediate sources need not be in the code image. Increasing
+backing, adding source-preserving retained state or selecting future
+edits adaptively cannot remove this necessary endpoint obstruction.
+
+In the actual CAP graft, the old $X$ is instead the right subtree of
+$Y$. Its old addresses are prefixed by $R$. That root-relative address
+change lies outside (22.4); it is not a proof that every physical
+implementation of Left deletes an old branch. CAP's complete guarded
+writer is expressly outside $\mathfrak N_r$, and its accepted service
+in the table supplies the demanded transition.
+
+The supplier-selection consequence follows by necessity: a realization
+of the selected original service with component (22.2) would require
+the now-excluded finite path from $H(X)$ to $H(Y)$. Complete labels,
+records and original returns are additional obligations, not repairs
+of a failed source component. This reverses §§19–21's comparison:
+those sections ask whether original CAP continuations can supply native
+$G$ steps, whereas this theorem exhibits an actual original Left step
+that the fixed-root native edit/substitution class cannot supply.
+Neither direction asserts a universal impossibility for adapters.
+
+The source-specific comparison and its reached two-round application
+are `repo-derived`; old-branch persistence, native attainment, guard
+arithmetic and RG's acquisition/return constructions are reused.
+Engelfriet, *Tree Automata and Tree Grammars*,
+[Definition3.62](https://arxiv.org/abs/1510.02036), supplies the tree
+homomorphism terminology: the binary template here is exactly
+$\langle x_1,x_2\rangle$, with fixed ground leaf templates $V,U$.
+Lynch–Vaandrager, *Forward and Backward Simulations, Part I*,
+[§3.2, Lemma3.8 and Theorem3.10](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf),
+require matching finite fragments from related states for their
+simulation and trace conclusions. Here only a necessary endpoint
+component is refuted; their full simulation hypotheses and conclusions
+are not being asserted. Neither background reference proves this
+apparatus-specific application or establishes worldwide novelty.
+
+All actual prefixes retain RG38.1–38.2/CAP7.1–7.2's occurrence bill,
+with actual primitive tally $\nu$,
+
+$$
+\bigl(\nu,2\nu,S_0+b_{\rm ctl}+8A_{\rm phys}+8\nu\bigr).
+\tag{22.6}
+$$
+
+Boot/code copies, seed acquisition, canonical input and its retention,
+operand construction, guard ingress, capacity/directory publication,
+all source construction/read/write work, records and dependencies,
+full checks, every channel/ACK, source-token/workspace/invocation return,
+historical/view acquisition and retained banks, the original terminal
+consumer and output remain charged at their actual entries. Any
+admitted supplier work keeps its own actual construction, traversal,
+record, reply and return charges; (22.4) makes none free. RG38.2's compact
+structural account, with its actual $q_V,\Pi_V$ and foundation, remains a
+separate coordinate. No measured runtime, storage saving
+or resource equivalence is claimed from the logical obstruction.
+
+The theorem supplies no current busy-cut acquisition, physical
+realization, full simulation, all-cut original-task equivalence,
+independent endpoint aging, arbitrary-code bridge, global minimality
+or fresh Lean verification. RG35–38's acquisition stays historical at
+Handback and its task-kernel theorem stays within its fixed actual raw
+entry. New-row/cross-entry original-$Q$ kernels, broader terminal kernels,
+all-cut current attainment/use of the four independent expressions and
+their wider minimality remain the full goal's unresolved interfaces.
+The old UAS $\mathcal C/M_J$, $G_{\mathrm{gc}}$, Fibonacci syntax and
+other endpoint relations keep their separate sources and domains.
+This local negative result neither completes nor weakens that goal. ∎
+
+## 追加锚（本行以下为增补区）
+
+
+## 23. An acquired pending-operand fibre at the original Plan entry
+
+**Definition 23.1 (one source, one installed continuation and the domain).**
+Use exactly the canonical $G_V$ of RG35.1–35.3 and Definition22.1:
+its original preparation $\xi$, beta seed, $H_{\rm boot}=1$, prior
+$\{\alpha,\beta\}$, original Stop table24, saved original25/27,
+proposal $q_1(\beta)=(0,B,1)$, source16, stable $\phi_K$, owners,
+code/archive binding $\mathcal B_V$, and installed native catalog
+$(\Delta_V,E_V,C_V,r_V)$. Here $B$ in the proposal is the original
+Clifford value of beta. Write
+
+$$
+E=\rho^2,\qquad
+s_\bullet=E(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle.
+\tag{23.1}
+$$
+
+Thus $E$ here is RG's tree substitution, not the ReadE output.
+The source is CAP's original free ordered, nonassociative tree with its
+original whole-candidate guard. The comparison below is between
+alternative legal input continuations of this one preparation and
+installed graph. It does not put two executions in one physical run,
+identify different preparations, or install a new source reader.
+
+Retain CAP2–7 and RG1.2's actual finite-supply, exclusive-owner,
+immutable-backing and pointwise finite-progress premises. Every cited
+completed channel has its current token, actual finite dependencies,
+checks and ACK; every cited completed local/prior computation terminates
+on its reached finite input. These premises supply neither a uniform
+runtime bound nor an arbitrary Busy-cut service. All input sites used
+below are the existing mode, choice, raw-frame and independent guard
+sites. Nothing is obtained from an unspecified external continuation.
+The final terminal assertion also requires the actual later finish bit.
+The source contracts used here are those at
+`928d8b41b1e4b4deec17ee99d3f906532cfe00d0`; their application is ordinary
+mathematics, without a new Lean verification or physical realization.
+
+As in RG1.3, installing a complete response means copying its entire
+genuine released response field and full row/dependency bindings.
+The task's full joint-successor coordinate is the actual native joint
+configuration, including its private coordinates; it is not asserted
+to have been copied into actor memory.
+
+**Definition 23.2 (equal-count shapes and the actual input branches).**
+For a binary word $w$ define actual ordered trees by
+
+$$
+\begin{aligned}
+g_0&=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,&
+g_1&=\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\\
+v_\epsilon&=\alpha,&v_{bw}&=\langle g_b,v_w\rangle
+\quad(b\in\{0,1\}).
+\end{aligned}
+\tag{23.2}
+$$
+
+Fix $k\ge1$, let $w\in\{0,1\}^k$, and put $n=3k+1$.
+Starting with Definition23.1's same boot, actually supply mode01 and
+execute RG7.1's complete lift Reserve3, Raise3, Rho, Rho. Each packet,
+service and return is its installed one. The first genuine `Entry` has
+source $s_\bullet$, encoded $H=K=3$, derived reference $t=\beta$,
+$(a,b)=(0,1)$ and previous reference guard $h_0=1$.
+Denote its actual source-event/layout/policy scalars by
+
+$$
+(q_*,g_*,e_*,j_*,m_*,r_*,p_*).
+\tag{23.3}
+$$
+
+These include the original seed-acquisition prefix and the lift;
+no counter is reset. This whole prefix is independent of $k,w$.
+At `Select` actually receive choice0, then supply the complete original
+canonical raw frame for Left$(v_w)$ at `RawDispatch`. Complete its
+actual refusal and `RawReturned` installation. Next actually supply
+$U(n+1)=1^{n+1}0$ at actor69's independent `GuardIngress` site and
+complete RG5.1's binding/export/install.
+
+Let $x_{k,w}$ be the first actual entry to `Plan` enabled by this
+completed state installation, before Plan's operand traversal. Its newest
+sealed state payload is `GuardAcquired`; the native next phase is `Plan`.
+This names a reached control boundary, not a fabricated state export
+whose payload is called Plan. Its subsequent sealed-state reload belongs
+to the actual Plan continuation. Let
+$\mathcal X_k=\{x_{k,w}:w\in\{0,1\}^k\}$.
+
+For a tree $v$, let
+$c(v)=(a(v),b(v),\operatorname{pair}(v))$ count alpha, beta and pair
+constructors, with order and brackets still retained in $v$. Define the
+following mathematical projection, with exactly these fields:
+
+$$
+\begin{aligned}
+\Pi(x_{k,w})=\big(&\xi,\mathcal B_V,\mathtt{mode01},1,
+ \mathtt{Plan},\mathtt{GuardAcquired},\\
+ &s_\bullet,3,3,\beta,(0,1),1,n+1,\mathtt{Left},\\
+ &c(v_w),c(E(v_w)),\mathtt{raw\mbox{-}refusal},\\
+ &q_*+1,g_*,e_*,j_*+1,m_*+1,r_*,p_*\big).
+\end{aligned}
+\tag{23.4}
+$$
+
+The consecutive numeric fields after $s_\bullet$ are encoded $H,K$;
+after $(0,1)$ they are previous and acquired reference guards.
+`Left` is the pending modifier kind. The last seven fields are precisely
+$q,g,e,j,m,r,p$ at this cut. Constructor counts are selected mathematical
+scalars; writing (23.4) grants no new acquisition operation for them.
+All lineage internal to $\mathcal B_V$ is the common original boot/code
+lineage. The later request, guard, state and row origins are not fields
+of (23.4).
+
+In particular (23.4) contains no complete operand, raw-frame bits,
+request/guard reference, later descriptor/address/fence numeral, full
+response binding, whole local state, private source packet, memory,
+head/latch/token configuration, receipt chain, absolute row ordinal or
+cost. Equality below is equality of this displayed projection only.
+A proposed current-source-derived record means a fixed deterministic
+function $D$ of the displayed current-source and scalar fields, possibly
+also of the common boot/code constants. It cannot silently read any of
+those omitted coordinates. A handle whose reachable value or resolved
+backing depends on an omitted coordinate is treated as supplementary
+information in Corollary23.6.
+
+**Lemma 23.3 (the cut really follows operand and guard acquisition).**
+Every $x_{k,w}$ in Definition23.2 is reached on the unchanged $G_V$.
+Its operand $v_w$ and actual guard $n+1$ are retained with their genuine
+bindings and current local permissions. Its source is $s_\bullet$ at
+$H=K=3$, its raw result is an executed refusal, and its last seven
+projection fields have exactly the values in (23.4).
+
+*Proof.* The original boot includes the actual private ingress/validation,
+seed acquisition and delivery, both paid code copies, the $r_V$ bank,
+and the original-client save before any RG append, by RG2.2/35.2–35.3.
+The original client is parked with its original table and configuration.
+Mode01 is received, written, described, sealed and imported; its invocation
+TOK enables RG while keeping the original client suspended. The four
+lift calls use actual computed packets and source admission. Reserve3
+extends the original reserve from1 to3; Raise3 changes its guard to3.
+The two Rhos accept whole candidates of sizes2 then3, giving exactly
+$s_\bullet$. All four full responses, records, dependencies and joined
+ends are delivered, checked and installed before the next lift phase.
+The final pool return, identity-role normalization, Tail13/17 and CTL
+supply the stated first `Entry`, by RG6.3/7.2. No second source is prepared.
+
+The choice0 receiver completes its own actual local descriptor, status,
+seal and import. `RawWait` retains the preceding ends and source/boot
+binding without a promised tag or operand. Its actual pool return enters
+the original raw header Base/setup graph. The canonical Left frame is
+finite because $v_w$ is a finite nonempty original context. It is
+actually received through the three header/length/payload blocks on13,
+including every matching write and completed descriptor. The raw whole
+candidate is $\langle v_w,s_\bullet\rangle$, with $n+3>3$ leaves.
+The original generator, candidate work and MUX therefore really execute
+refusal; the source is retained. Neither an unexecuted `none` nor a
+pre-input comparison supplies this result.
+
+RG4.1–4.3 and CAP6.3/6.7 then execute the full response, semantic and
+unified rows, all request/dependency deliveries, joined checks, final
+row ACK, source-token return and idle edge. `RawReturned` normalizes
+roles and Tail13/17, lends the twelve public work ports to $A$, reloads
+`RawWait`, and closes descriptor29 afresh. Its actual predecessor/count
+checks select this row and its semantic mate; its locally available
+request dependencies supply the whole original header, length and
+operand. The complete genuine response, source kind, operand and all
+actual request/dependency/row origins are installed and sealed in fresh
+state25. A raw source refusal advances $q,j,m$ once and leaves $g,e,r,p$
+unchanged. This gives exactly (23.4)'s last seven fields; a row seal is
+not another event.
+
+The source is idle while $A$ holds the borrowed workpool in GuardIngress.
+At actor69, the actual Base precedes the unary receiver. Each guard bit
+executes IN5, EX69, WR69, RD69 and MR69 with the stated terminal-zero
+test; latch5 is retained until its matching WR. The sep, zero-status,
+measured length, all ten native descriptor fields, descriptor seal and
+actual status1/seal are constructed. The fresh closed29 reader imports
+that very local block. It parses exactly $U(n+1)$ with exhaustion and
+checks $1=h_0\le n+1$; the value is not inferred from encoded guard3.
+RG.4 binds its actual local reference $\gamma_1$, $\xi$, round1,
+previous state, completed lift end and this raw proposal's actual origin.
+The whole binding and GuardAcquired state are exported and sealed before
+the state-install edge enables Plan. Thus both data acquisitions and
+their occurrence bindings precede $x_{k,w}$.
+
+At this cut RG holds its invocation, $A$ has its local read authority
+and the twelve borrowed public work tokens, the dispatcher has its
+separate source-service token, and no earlier mandatory delivery remains
+unacknowledged. The raw operand and guard are available through their
+actual local immutable backing and freshly checked descriptors. Producer
+private source16 and producer descriptor/counter rights were never lent;
+only the original producer can use its private source RD/WR authority.
+The guard export is source-free and changes none of (23.3)'s selected
+source-event scalars. Finite ingress, bounded local scans and the stated
+pointwise service progress establish every claimed finite completion. ∎
+
+**Theorem 23.4 (unbounded equal-projection acquired family).** For each
+$k\ge1$, $\mathcal X_k$ has exactly $2^k$ members, all with the same
+projection (23.4). In particular they have the same current source,
+actually acquired guard, pending opcode, operand constructor counts
+and explicitly selected source-event scalars, although their acquired
+ordered operands differ.
+
+*Proof.* Each $g_b$ has three alpha leaves and two pair constructors.
+An induction on the length of $w$ in (23.2) gives
+
+$$
+c(v_w)=(3k+1,0,3k)=(n,0,n-1).
+\tag{23.5}
+$$
+
+The two gadgets differ at their left child's constructor: a pair for
+$g_0$ and a leaf for $g_1$. Cancelling the root pair in
+$v_{bw}=v_{b'w'}$ therefore gives $b=b'$ and $v_w=v_{w'}$; induction
+cancels the remaining bits. Hence all $2^k$ operands are distinct.
+Every alpha image under $E$ is $\langle\beta,\alpha\rangle$ and the
+original pair constructors are preserved. Thus
+
+$$
+c(E(v_w))=(n,n,2n-1).
+\tag{23.6}
+$$
+
+This uses the supplied substitution/count transport, not a new
+substitution theorem or a claim that these counts specify a tree.
+Lemma23.3 supplies all the other equal fields in (23.4).
+Different complete operand dependencies and state payloads make the
+reached histories distinct, so $|\mathcal X_k|=2^k$.
+The family is unbounded in $k$, with a finite actual continuation for
+each member; it asserts no bounded-resource realization of all members
+at once. It does not assert equal full physical configurations, memory,
+absolute ordinals, receipts or costs. ∎
+
+**Theorem 23.5 (the installed consumer separates the next original source).**
+From $x_{k,w}$ the already installed Plan/Send/ComputedReturned/AfterFinal
+continuation reaches its next actual `Entry` with no additional external
+IN before that Entry. Its actual original source there is
+
+$$
+F(x_{k,w})=\langle E(v_w),s_\bullet\rangle,
+\qquad H=K=d=2n+3.
+\tag{23.7}
+$$
+
+These $2^k$ next sources, and therefore the complete actual Entry
+successors containing them, are pairwise distinct. This is a separating
+next-source task on the reached Plan family, not a claim about unequal
+INITIAL terminal answers or an original-$Q$ interpretation for new rows.
+
+*Proof.* Plan uses the installed acquired operand and RG.4 guard binding,
+retaining their actual provenance, response chain and local permissions.
+Its finite tree traversal, substitution and unary arithmetic are RG7.1's
+expanded ARC16.2 algorithms on those real words. At reference beta its
+Left candidate has
+
+$$
+\ell=n+1=h_1,\qquad d=H+w(v_w)=3+2n>3.
+\tag{23.8}
+$$
+
+The guard comparison therefore selects the accepting branch, including
+the equality case. Counting does not discard the operand: the complete
+ordered $E(v_w)$ is constructed and retained as the later context.
+
+First seal the genuine RG-CALL2 Reserve$(d)$ packet on27 and its
+ComputedWait state25. RG6.1's actual route49 places the packet on
+producer21/17, performs full tuple/availability checks and sender ACK,
+returns the workpool as prescribed, and transfers its twelve tokens to
+the producer before service entry. The producer's automatic constructor
+uses its own acquired packet to Append/copy the fresh canonical three
+blocks on13/17. It has no matching external frame IN. It takes the
+source-service token and executes the original strict Reserve: source
+$s_\bullet$ and $H=3$ remain, $K$ becomes $d$ through the actual extended
+$\phi_K$. Complete maintenance response/unified row/dependencies/checks/
+ACK/source-token/idle return precede ComputedReturned. Its normalized
+return, loan, fresh closed29 scans and full waiting-packet comparison
+install that response and new ends in sealed state25.
+
+Only AfterReserve's genuine response test emits Raise$(d)$. Its same
+actual send, canonical construction, admission and complete return path
+executes the strict raise from $(H,K)=(3,d)$ to $(d,d)$, preserving
+$s_\bullet$. Maintenance has no semantic mate; its complete unified row
+is nevertheless delivered and checked. Only the installed AfterRaise
+response then emits the original selected Left$(E(v_w))$ packet.
+Its full ordered context and binding, not its counts alone, are sent
+and checked through the same packet/channel/automatic-frame path.
+
+The source producer forms the entire original candidate
+$\langle E(v_w),s_\bullet\rangle$. Its leaf count is $2n+3=d$,
+so the original whole-candidate guard accepts and its original writer
+installs precisely that tree through the stable source-address map
+$\phi_d$. No actor source write or read right has been added. Generated
+circuit work, private fetch/seek/write, response and both genuine journal
+rows all remain actual work. The semantic mate, unified row and complete
+dependencies go through the original delivery/check/row-ACK/token/idle
+path. ComputedReturned then checks this waiting packet against its
+actual returned request, imports the full real response, semantic mate
+and origins under a new closed29 bound, and installs them before
+AfterFinal examines its accept component.
+
+Only that actual accepted response allows AfterFinal to construct the
+derived reference successor $\langle v_w,\beta\rangle$, counts $(n,1)$,
+and the completed-round state. The complete state seal, twelve reverse
+TOKs, identity-role normalization, Tail13/17 and CTL establish the genuine
+next Entry, with producer workspace, dispatcher source token and held
+RG invocation, as RG6.2–6.3 require. This is the existing caller's return,
+not a newly postulated Ready or a reentry after halt. All the cited data
+are already acquired at $x_{k,w}$; these expanded computations, copies,
+service bodies and returns contain no external IN. The next choice site
+is only after this Entry.
+
+Finally equality in (23.7) cancels the root pair and gives
+$E(v_w)=E(v_{w'})$. Reuse
+[`SourceTransportCentralizer.source_transport_centralizer`](../../../D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean)
+and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.scribe.cs):
+the actual pairing-preserving commuting substitution and its iterates
+are injective. The literal correspondence is alpha/true, beta/false,
+and ordered pairing/FreeMagma.mul; $E$ is the second iterate on that
+same algebra. This is also the supplier used by the private
+`IntrinsicSubstitutionCoordinates.substitution_injective`, not a new
+injectivity assertion. Hence $v_w=v_{w'}$, and (23.2) gives $w=w'$.
+Actual complete Entry successors with different decoded original source
+packets cannot be equal. No equality of their other coordinates was
+needed. ∎
+
+**Corollary 23.6 (exact distinguishability forced on a replacement).**
+No deterministic function of $\Pi$ and a current-source-derived record
+$D$ as in Definition23.2 computes $F$ on all of $\mathcal X_k$.
+More precisely, for any supplemental information $u$ and any function
+$f$ satisfying
+
+$$
+F(x)=f\bigl(\Pi(x),D(\Pi(x)),u(x)\bigr)
+\quad(x\in\mathcal X_k),
+\tag{23.9}
+$$
+
+$u$ takes at least $2^k$ distinct reachable values on $\mathcal X_k$.
+If $u$ is represented by one fixed $b$-bit word, then $b\ge k$.
+The same necessary count applies to exact complete next-Entry
+reconstruction, since that task contains the source coordinate.
+
+*Proof.* On this fibre $\Pi$ and therefore $D(\Pi)$ are constant.
+If $u(x_{k,w})=u(x_{k,w'})$, (23.9) gives equal next sources;
+Theorem23.5 forces $w=w'$. Thus $u$ must distinguish all $2^k$ members.
+A fixed $b$-bit word has only $2^b$ values. This is the ordinary finite
+product count and pigeonhole principle, applied to this actual family.
+The factorization criterion is credited reuse of
+[`RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel`](../../../D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean)
+and its [Scribe](../../../Blueprint/D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.scribe.cs):
+here the proposed observation kernel contains the whole fibre, whereas
+the next-source kernel on it is discrete. No new general kernel or
+minimal-state theorem is supplied.
+
+If an alleged single extra handle varies, its reachable values count
+as $u$. If its value is fixed but dereferencing it reads different
+retained backing, that backing is additional information: (23.9) is
+then false with the handle alone and must include that read information.
+The actual positive continuation retains $v_w$, its row/guard binding,
+local backing and current permissions and consumes them in Plan/Send;
+it does not obtain (23.7) from counts. The bound concerns exact
+mathematical distinguishability for this task. It supplies no physical
+storage lower bound, running-time lower bound, optimal encoding, or
+global minimality result for CAP/RG. ∎
+
+**Theorem 23.7 (the actual historical batch and common terminal scalar).**
+After each next Entry of Theorem23.5, actually supply finish choice1.
+On Definition23.1's progress domain the original $G_V$ suffix executes
+its complete historical batch, genuine HandbackResume, original Stop,
+verification, consumption and absorbing halt. Every branch has the same
+original INITIAL answer $(0,B,1)$, despite the pairwise distinct sources
+in (23.7).
+
+*Proof.* This is completed external mode01 with $N=1\ge1$. Its last
+completed raw episode is exactly the actual refused Left$(v_w)$ call;
+computed Reserve/Raise/Left frames are not raw IN episodes. Let
+$\lambda_{k,w}$ be that episode's actual canonical payload-bit length,
+in precisely RG35.4's sense. Its full header/length/payload, matching
+writes, block descriptors, response, row checks, ACK and source-token
+return have already occurred. Nothing in Theorem23.5 changes them.
+After the actual finish selection and fresh Handback loan/reload,
+OwnedInput, History, the image channel and full CheckImage execute on
+this run's actual acquired evidence. RG35.4–35.5 select exactly
+
+$$
+M_{k,w}=8+3\lambda_{k,w}
+\tag{23.10}
+$$
+
+actual historical cuts of that episode, including acquired/unwritten
+latch cuts. They are earlier cuts, not the current Plan entry.
+V_CLOSE seals and reimports its actual certificate before V_ENABLE
+releases the completed image by its ACK and availability return.
+RG36–37 then separately construct, transport, print, import, decode,
+re-encode, audit and ACK exactly $4M_{k,w}$ natural bodies. Each pair
+has its own genuine current setup, two-stage copies, local descriptors,
+read/availability/invocation tokens and completion. V_BATCH jointly
+checks exhaustion and all success records, exports/reimports the sealed
+RGV-CHECKED1 tuple on30, and V_RETURN returns once to HandbackResume.
+No new ACK is inserted at V_RETURN; all pair/image ACKs have occurred.
+
+The untouched saved original25/27, seed/table and initialization
+references give that actual restoration its current local rights.
+It copies/seals the genuine original configuration and empty waiting
+packet, positions table24, returns the pool, normalizes/Tails13/17,
+transfers RG's invocation to the original client and executes the real
+original workspace loan and interpreter entry. The original Stop writes
+and seals $(0,B,1)$ on31 and sends its complete output/instruction packet
+by route49 before terminal commitment. The terminal semantic/unified
+rows and all dependencies go through joined checks, row ACK and source
+return. Their true actual fences and ends, including all intervening
+work, are frozen in SEG-P1 and delivered with the initialization/prior/
+proposal dependencies on route50 to verifier32/33.
+
+CAP6.5's original finite initial-packet/prior enumeration, historical-
+guard replay, full row/manifest/counter/end checks and terminal-instruction
+check then produce the genuine SEG-R1. The acquired beta prefix makes
+the compatible initial fibre nonempty and excludes alpha; later
+canonical authentic rows preserve beta as its actual initial candidate.
+The verified target is INITIAL-$q_1(\beta)$, irrespective of the later
+current source. RG native source-free work is not relabeled as an
+original NativeLocal event, and the RG native code is not substituted
+for the original Turing table. Route51 delivers the genuine receipt and
+expected-task/binding material to consumer40/41. Its complete identity,
+proposal and both journal-count/end comparisons precede actual
+allocation, copy and seal of target43, OUT, ACK, token return and global
+halt. These are CAP6.5–6.7 and RG37.4's original suffix, with every step
+retained. Halt is absorbing; no invocation returns to RG afterwards.
+
+Thus the next-source task separates, while the original scalar terminal
+readout does not. The historical four-body result is used on its exact
+old selected cuts and is not replaced by (23.4), nor extended to current
+Plan acquisition. ∎
+
+## 24. The branch account and the boundary of the pending relation
+
+**Definition 24.1 (disjoint actual-row account for each branch).** Fix
+$k,w$ and the completed execution of Theorem23.7. Write $Z_{k,w}(s)$
+for its full actual configuration after $s$ primitive occurrences and
+$L_{k,w}$ for its count just after global halt. Interpret every expanded
+row by CAP7.1 and RG38.1 at its actual predecessor configuration and
+remaining supplied input, with its actual successor passed to the next
+row. Count opcode and disjoint owner/purpose classes as well as typed
+IN, ordinary cell births $A$, finite-bit births $b$, ticks, fees and
+receipt births. At row $s$, ordinary births $a_s$ and finite-bit births
+$c_s$ contribute
+
+$$
+(\Delta T,\Delta\mathrm{Fee},\Delta S)
+ =(1,2,8a_s+c_s+8).
+\tag{24.1}
+$$
+
+Every real case/while test and back edge, even an unsuccessful test,
+is charged. All bank operations, field scans, Base/Last/Tail, staging,
+status/seal, descriptor, tuple and counter work are expanded into their
+actual native leaves. A disabled attempt has no executed row; none is
+used as a successful boundary here. This is the fixed actual-row
+recurrence, not a freely chosen tariff for a whole mathematical phase.
+
+Use RG38.1's reached half-open intervals $[0,a),[a,o),[o,c),[c,u_0)$,
+$[u_j,u_{j+1})$ for the $P=4M_{k,w}$ pairs, $[u_P,v),[v,w_0)$ and
+$[w_0,L_{k,w})$. Here $a=|b_V|$, $o$ is OwnedInput after the fresh
+Handback loan/reload, $c$ is V_CLOSE after the checked30 seal, $u_0$ is
+the first pair entry after image release, $v$ is V_RETURN after batch
+reimport, and $w_0$ is HandbackResume. These symbols are boundaries of
+this branch; the word index $w$ is not a boundary. Refine the resident
+interval $[a,o)$ at its actual entries as follows:
+
+| Disjoint reached interval | Work whose actual expanded occurrences it includes |
+| --- | --- |
+| StartMode to first Entry | Both mode INs and their local acquisition; invocation and workpool transfers; lift constructors, four full service flights/returns, all state/packet exports and next-Entry normalization |
+| First Entry to RawDispatch | Loan/reload/choice0 acquisition, RawWait export, reverse loan and actual raw entry |
+| RawDispatch to GuardIngress | All raw Base/setup/IN/parser work, full failed candidate/gates/MUX, genuine refusal, response/counters/semantic and unified rows, fences/dependencies, channels/checks/row ACK/source return, RawReturned normalization/loan, fresh closed scans and acquired-operand state installation |
+| GuardIngress to $x_{k,w}$ | Full independent guard ingress, its Base/length/descriptor/status/seal, fresh import, monotonicity/exhaustion checks, RG.4 construction and GuardAcquired export/install |
+| $x_{k,w}$ to next Entry | Acquired operand traversal/substitution/counts/planning, all computed packets, each Reserve/Raise/Left admission/generation/response/record/dependency/channel/check/ACK/token return, fresh readers and installations, AfterReserve/AfterRaise/AfterFinal and final Entry normalization |
+| Next Entry to $o$ | Actual loan/reload/finish1 acquisition, HandbackPending export, pool return and fresh Handback loan/reload |
+
+The boot interval $[0,a)$ includes original boundary/control/token
+installation and actual native-code ingress, its separate public-code
+copy and delivery/comparison, private source ingress/validation,
+boot/prior/counter/directory setup, stationary seed acquisition/delivery,
+the enlarged $r_V$ empty bank, and saved original configuration/packet/
+head imports and sealed initialization. These costs are present even
+when their values and executed prefix are common across branches.
+
+The remaining intervals have exactly RG38.1's complete meanings:
+$[o,c)$ includes OwnedInput/argument70, invocation, first History replay,
+image channel, full second checker replay/readouts and checked30 export;
+$[c,u_0)$ includes certificate selection/export/reimport/enable and actual
+image ACK/availability/slot handoff. Each pair interval includes its
+fresh target replay/lift, whole body construction/export, both channel
+copies, output print, callback import, own decoder, re-encoding, separate
+full audit, success record, ACK, availability return and cursor/slot
+handoff. Split it further at its actual V_EXPORT, V_IMPORT and V_ACK
+entries to distinguish construction, publication, received checking and
+release. $[u_P,v)$ includes the entire batch scan/export/reimport;
+$[v,w_0)$ includes final binding and slot return; $[w_0,L_{k,w})$
+includes the full original restoration, Stop, terminal records/snapshot,
+verifier/prior replay, receipt/consumer, target copy/OUT/ACK/token/halt
+suffix of Theorem23.7. Equal adjacent boundaries mean an empty interval,
+not a free or duplicated join row.
+
+**Theorem 24.2 (complete original per-branch resource expression).**
+For each $k,w$, sum (24.1) and its opcode/purpose coordinates over the
+disjoint intervals of Definition24.1. With foundation storage $S_0$,
+all ordinary and finite-bit births retained, this gives exactly
+
+$$
+\operatorname{Bill}_{k,w}=
+\bigl(L_{k,w},2L_{k,w},
+ S_0+b_{k,w}(L_{k,w})+8A_{k,w}(L_{k,w})+8L_{k,w}\bigr).
+\tag{24.2}
+$$
+
+Together with the fixed program and the actual branch inputs this is an
+evaluable complete recurrence, including later historical acquisition
+and original termination. It does not equate $L,A,b$ across branches.
+More specifically, the original source/maintenance event counts and
+designated backing increments are
+
+$$
+\begin{aligned}
+\#\text{post-seed, preterminal source/maintenance flights}
+ &=4+1+1+2=8,\\
+(q,g,e,j,m,r,p)_{\rm next\ Entry}
+ &=(q_*+2,g_*+1,e_*,j_*+2,m_*+4,r_*+1,p_*+1),\\
+\Delta\text{source payload cells at Reserve3}&=4(3-1)=8,\\
+\Delta\text{source payload cells at Reserve}(d)
+ &=4(d-3)=8n.
+\end{aligned}
+\tag{24.3}
+$$
+
+The external input after $b_V$ consists of the two mode bits, choice0,
+$2\lambda_{k,w}+4$ actual raw frame bits, $n+2$ independent guard bits,
+and finish1. Thus it has $2\lambda_{k,w}+n+10$ IN occurrences at those
+sites. All computed lift/maintenance/final frame construction has zero
+matching external IN. This removes no actual input acquisition cost.
+
+*Proof.* The first equation in (24.3) is RG.10 with $N=N_{\rm raw}
+=N_{\rm accept}=1$: four lift flights, one raw refusal, one selected
+final and its two strict maintenance flights. The lift is already inside
+(23.3). From that first Entry, raw Left advances $q,j,m$ once;
+Reserve and Raise each advance $m$ once and respectively $r,p$;
+accepted selected Left advances $q,g,j,m$ once and not $e$.
+No guard, state writer, journal copy, view-body row or row seal invents
+another source event. Later terminal markers have their own actual
+original increments in the terminal interval. The original seed events
+are in the common earlier count and in (24.2), rather than removed from
+the bill. CAP7.3 gives the two designated payload increments. These
+counts exclude their real delimiters, directory entries, circuit scratch,
+address work and receipts, all of which remain in (24.2).
+
+The raw frame has three header INs, $\lambda_{k,w}+1$ unary-length
+INs and $\lambda_{k,w}$ payload INs. The independent guard word has
+$n+2$ bits, and the two choices each have one; mode has two. All their
+EX/WR/RD/MR, status and descriptor work is additional. Packet copies
+instead use actual acquired data and Append/copy, never matching IN.
+The later $G_V$ history/view suffix introduces no new external input.
+These are counts of actual declared sites, not an assumption of equal
+frame primitives or costs across shapes.
+
+For (24.2), induction over actual rows gives one tick, two fees and one
+eight-bit receipt per occurrence, plus exactly its declared ordinary
+and finite-bit births. Sequence uses the complete successor, including
+actual heads, partial words, origins and meter. Summing each entering
+count in its unique interval telescopes to (24.2). All failed raw
+candidate generation remains in RawDispatch's interval, even though
+its candidate was not installed. No retired bank, acquired operand,
+request/dependency block, guarded proposal, descriptor, row, circuit,
+mailbox, snapshot, old state, receipt or output backing is subtracted.
+In particular a handle does not make its retained backing disappear.
+An EX contributes one executed occurrence and its separate cell birth;
+these are different coordinates, not two whole-phase fees.
+
+For every actual payload length $h$, the two-stage channel copy loops
+retain their supplier subtotal $12h+6$. This includes their loop tests;
+allocation, Base/position recovery, status/descriptor preparations,
+staging, loans, checks and final row ACK are additional actual rows.
+For historical publication, copy and print likewise retain RG's
+$17h+7$ subtotal with all remaining setup/import/audit/release rows.
+Each twelve-port loan or return has twelve TOKs and its entry CTL,
+thirteen actual occurrences before further work. These subcounts are
+included in their intervals, not added a second time. All $4M_{k,w}$
+pair replays, body constructions, independent decoders/re-encoders/
+audits and releases, the batch and the original terminal suffix remain.
+Historical prefix tallies represented inside History or a received body
+are word data: their live construction/check rows are charged, but their
+represented ticks are not added as new live executions. This is exactly
+RG38.1–38.2's actual/represented distinction. All named successful
+boundaries are finite by Lemma23.3, Theorems23.5/23.7 and their original progress
+premises, so the recurrence terminates separately on each branch. ∎
+
+**Definition 24.3 (credited ingredients and the source-specific claim).**
+The new source-specific content of §§23–24 is the family of actual
+post-acquisition Plan entries, equal projection (23.4), the installed
+no-further-input continuation to the different original sources (23.7),
+and the resulting growing task-relative distinguishability requirement.
+The ingredients have the following exact scopes.
+
+| Supplier | Credited use and retained limitation |
+| --- | --- |
+| CAP2–7 and RG2–10,35–38 | Original boot/owners/rights, seven services, raw refusal and complete dependency delivery, independent guard receiver/binding, computed packets/returns, next Entry, actual historical batch, original Stop/INITIAL suffix and actual-row bill; none is supplied as new runtime machinery here |
+| ARC16.2 and RG.1–RG.7 | Existing finite tree traversal/substitution/count and selected-commit formulas, with equality accepted at the whole-candidate guard |
+| SourceTransportCentralizer and its Scribe; SourceCoordinates/IntrinsicSubstitutionCoordinates and its Scribe | Existing injectivity of the actual substitution and iterates on free ordered trees; no physical inverse or source-access authority follows |
+| RealizedImageKernelFactorization and its Scribe | Existing realized-image factorization/kernel criterion, applied to the displayed projection and next-source function; the standard finite-word count is not a new enumeration theorem |
+| UAS5.5 and Target/current recovery §§3–4 | Existing elementary finite-fibre supplement count, reused on the different acquired Plan family; no second generic information-bound theorem is claimed |
+| PredictiveMemoryMinimalQuotient and its Scribe | Existing all-future quotient requires both a factored current readout and a descended memory update; neither global premise is proved from one next-Entry family |
+| NativeFullSourceProducer and its Scribe | Existing receipt-built traversal with private `traverse`, `production_reads` and `stationary` supports acquisition in its stationary abstract domain; it grants no actor access to CAP private16 and is not a new current-acquisition bridge |
+
+The last two suppliers are
+[`PredictiveMemoryMinimalQuotient.predictive_memory_minimal_quotient`](../../../D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.lean)
+with its [Scribe](../../../Blueprint/D5/S3/ObserverMemory/RefinementClosure/PredictiveMemoryMinimalQuotient.scribe.cs),
+and [`NativeFullSourceProducer.native_source_producer`](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean)
+with its [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs).
+These citations record reused mathematics and domains, not a fresh exact
+compiled application of those declarations.
+
+The invocation/argument distinction agrees with Herlihy–Wing,
+*Linearizability: A Correctness Condition for Concurrent Objects*,
+ACM TOPLAS12(3), 463–492, [§2, pp.468–469](https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf):
+operation invocations include their arguments and matching responses;
+pending invocations are distinguished in histories. Here the raw
+operation has already returned refusal, while the controller's selected
+modifier is pending. No concurrent linearizability theorem is inferred.
+Lynch–Vaandrager, *Forward and Backward Simulations, Part I: Untimed
+Systems*, [§3.2](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf),
+requires initial-state coverage and matching finite execution fragments
+with the prescribed trace for forward simulation. Pairwise endpoint
+separation here is a necessary obstruction to the stated deterministic
+replacement, not a complete simulation/non-simulation theorem for every
+possible interface. These are bounded primary-source comparisons and
+standard factorization ingredients; no worldwide originality or new
+general minimal-state principle is asserted. The result is
+`repo-derived` at the named CAP/RG source domain.
+
+**Proposition 24.4 (relation retained and unresolved domains).**
+The relation erased by (23.4) associates this actually acquired ordered
+operand with this raw row, this independently acquired guard and this
+pending invocation. Replacing it by a record determined only by the
+current source and those scalars cannot preserve the exact next-source
+task on all the stated acquired branches. Retaining it through the
+existing Plan/Send path supplies that operation on its actual domain.
+This leaves all earlier recovery results at their stated domains and
+does not complete the sustained recovery/minimality goal.
+
+*Proof.* Lemma23.3, Theorems23.4–23.5 and Corollary23.6 give a nonconstant exact next-source map on
+one equal-projection acquired fibre, with an unbounded number $2^k$
+of distinguished members. The original existing computation consumes
+precisely the retained association and full operand; no source-derived
+relabeling of (23.4) can recover the discarded shapes. This differs from
+[Target/current recovery](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_TARGET_AND_CURRENT_RECOVERY.md)
+§3.1's undelivered-input family: here the raw request, response,
+dependencies, guard and state installation have all completed.
+It also differs from RG5.2's fixed-operand guard discriminator: here
+the acquired guards and both operand count triples agree within each
+size, and only the acquired shapes vary. The family does not reprove
+§§19–22's fixed-root supplier exclusions; it uses CAP's available original
+whole-tree service with its actual writer and continuation.
+
+The full RG36 $G_V$ four-expression bodies contain actual heads,
+control, latches, code, backing, origins and receipt-dependent structure
+beyond (23.4). They are not asserted equal. RG35.5's fixed-raw-entry
+history/original-$Q$ result and RG13's inherited source/return/terminal
+charts retain exactly their original scope. Plan, guard/state writers,
+computed packet constructors and changed return edges are new RG rows;
+(23.7) is a later actual Entry endpoint, not one original Advance at
+Plan. No broader cross-entry/new-row original-$Q$ kernel is derived.
+SOURCECALL4.6–4.7's provenance distinction between external and computed
+three-block requests likewise remains necessary.
+
+The current source projection is a mathematical selection, not an
+assertion that an internal observer has acquired the current four
+expressions. All-cut current acquisition, arbitrary Busy-cut use,
+independent current four-expression outputs and their original consumer,
+broader original-$Q$ kernels, terminal-task minimality, arbitrary
+noncanonical preparations/programs and global relation/memory
+minimality remain unresolved by this family. The positive nonhistorical
+interfaces of
+[ER](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md)
+§§20–21,
+[OA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ONLINE_ACQUISITION_ACTUATION.md)
+§13 and
+[CNA](RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_NATIVE_CUT_ACQUISITION.md)
+§22 retain their own source, runtime, owner/grant, stationarity or
+stamped-window premises. None of those extra grants, stamps, roots or
+installations has been transported to CAP here. Finite ideal sequential
+progress, (23.9)'s information bound and the actual bill do not supply a
+physical implementation, universal acquisition impossibility, or an
+optimal architecture. The distinct next sources and common original
+INITIAL answer of Theorem23.7 coexist without changing any original
+terminal semantics. ∎
+
+## 追加锚（本行以下为增补区）

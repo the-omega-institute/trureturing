@@ -1,0 +1,224 @@
+**定理 28.2（相异谱值锁定一个谱格的完整非对角行）。** 在定义 28.1 下，对每个任意实际环境输入 $t=t^*\in A$，有
+
+$$
+\boxed{\quad l\bigl(D(c,t)-K_\sigma(c,t)\bigr)(1-l)=0.\quad}
+\tag{28.8}
+$$
+
+$1-l$ 包含 $m$、同一角的全部其余部分和整个 $1-P$；两份原输入始终是完整的 $c,t$。
+
+证明。复用 AH43.1 的反对称性、零槽及数学正读取。对每个未归一的数学正实线性泛函 $\phi$，记
+
+$$
+B_\phi(X,Y)=\phi(X^2)\phi(Y^2)-\phi(X\circ Y)^2,
+\qquad |\phi D(X,Y)|\le\sqrt{B_\phi(X,Y)}.
+\tag{28.9}
+$$
+
+该读取来自同一原二表：对固定复系数 $z_1,z_2$，其二次型是原自伴元素
+
+$$
+|z_1|^2X^2+|z_2|^2Y^2
++2\operatorname{Re}(\overline z_1z_2)X\circ Y
++2\operatorname{Im}(\overline z_1z_2)D(X,Y).
+$$
+
+原评价全部读为非负，准确锥使该元素为正，故可由任意 $\phi\ge0$ 读取同一二表。Hermitian 性与分离性给反对称性，零对角及分离性给零槽，行列式给 (28.9)。这些数学读取不增添实际准备，也不改变任何原质量。
+
+固定 $c,t$ 及其同一个输出，置
+
+$$
+g=D(c,t),\qquad k=c\circ t,\qquad
+V=a\,n\circ t-n\circ k,\qquad Z=t+ak.
+\tag{28.10}
+$$
+
+对每个有限实 $T,\alpha$，真正调用 $\operatorname{PB}(c;Te+\alpha n,t)$。(28.7) 给实际内构造 $v=\lambda Tj-k$、$w=\mu Te+a\alpha n+g$；因此全部实际外层标签为
+
+$$
+\begin{aligned}
+R_+&=T(e+\lambda j)-k+\alpha n,&
+S_+&=t+g+\mu Te+a\alpha n,\\
+R_-&=T(e-\lambda j)+k+\alpha n,&
+S_-&=t-g-\mu Te-a\alpha n.
+\end{aligned}
+\tag{28.11}
+$$
+
+保留 $\alpha$ 依赖的完整 PB 右端，直接展开得
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(Te+\alpha n)\circ(\lambda Tj-k)
+  -2t\circ(\mu Te+a\alpha n+g)\\
+&=2T e\circ k-2\mu Tt\circ e-2t\circ g
+  -2\alpha(\lambda Tj+V).
+\end{aligned}
+\tag{28.12}
+$$
+
+$T^2$ 项因 $e\circ j=0$ 为零，$\alpha T$ 项使用 $n\circ j=j$。对两份未知实际外值分别应用同一个 $\phi$ 的 (28.9)，先得到
+
+$$
+\left|\phi\bigl(2T e\circ k-2\mu Tt\circ e-2t\circ g
+ -2\alpha(\lambda Tj+V)\bigr)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{28.13}
+$$
+
+以下只消元已知的标量 Gram。令 $\langle X,Y\rangle_\phi=\phi(X\circ Y)$；对固定自伴 $A_0,B_0,n$ 和实 $\theta$，置 $C_0=B_0-\theta A_0$，则
+
+$$
+\begin{aligned}
+B_\phi(A_0+\alpha n,B_0+\theta\alpha n)
+&=B_\phi(A_0+\alpha n,C_0)\\
+&=\alpha^2B_\phi(n,C_0)+B_\phi(A_0,C_0)\\
+&\quad+2\alpha\bigl\{
+\langle A_0,n\rangle_\phi\langle C_0,C_0\rangle_\phi
+-\langle A_0,C_0\rangle_\phi\langle n,C_0\rangle_\phi\bigr\}.
+\end{aligned}
+\tag{28.14}
+$$
+
+这是半内积 Gram 行列式的列消元及二次展开，退化时同样成立。正号对取
+$A_0=T(e+\lambda j)-k$、$B_0=t+g+\mu Te$、$\theta=a$；负号对取
+$A_0=T(e-\lambda j)+k$、$B_0=t-g-\mu Te$、$\theta=-a$。由 $a-\mu=\lambda$，得到准确的
+
+$$
+C_+=Z+g-\lambda Te-a\lambda Tj,
+\qquad C_-=Z-g+\lambda Te-a\lambda Tj.
+\tag{28.15}
+$$
+
+这一步消去的是标量预算中的共同中点，演员没有改变。对固定 $T,\phi$，将 (28.13) 除以 $|\alpha|$，只在 (28.14) 的标量多项式中令 $|\alpha|\to\infty$，得
+
+$$
+2|\phi(\lambda Tj+V)|
+\le\sqrt{B_\phi(n,C_+)}+\sqrt{B_\phi(n,C_-)}.
+\tag{28.16}
+$$
+
+每个 Gram 多项式非负；除以 $\alpha^2$ 后趋向其二次系数，非负平方根连续，所以首项为零时对应根号也趋零。没有除以 $a$、$b$、质量或首项 Gram。
+
+在一份忠实含单位表示 $A\subseteq B(\mathcal H)$ 内计算，内积第一槽共轭线性。由 $cl=lc=al$ 和 $n=2l$，
+
+$$
+\begin{gathered}
+V=V^*,\qquad lVl=0,\qquad(1-l)V(1-l)=0,\\
+lV(1-l)=a\,lt(1-l)-lk(1-l)
+=\tfrac12l[c,t](1-l).
+\end{gathered}
+\tag{28.17}
+$$
+
+因此 $V$ 相对 $l\oplus(1-l)$ 完全非对角，未对余块上的 $c$ 施加条件。
+
+取单位 $\xi\in(1-l)\mathcal H$。先设 $d=\|m\xi\|>0$，令
+
+$$
+\eta=j\xi/d\in l\mathcal H,\quad\|\eta\|=1,
+\qquad j\xi=d\eta,\qquad e\xi=-\jmath d\eta.
+\tag{28.18}
+$$
+
+对 $\delta>0$，用向量 $\xi_\delta=(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 作数学读取 $\phi_\delta$。在底层实 Hilbert 空间令
+$\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$。每个固定自伴 $W$ 满足
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},&
+\phi_\delta(W^2)&=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)&=
+\frac{2\delta\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle}{1+\delta^2},&
+B_{\phi_\delta}(n,W)&=
+\frac{4\delta^2}{(1+\delta^2)^2}
+\|\Pi_\eta(W\xi+\delta W\eta)\|^2.
+\end{aligned}
+\tag{28.19}
+$$
+
+$j,V$ 的非对角性又给
+
+$$
+\phi_\delta(\lambda Tj+V)=\frac{2\delta}{1+\delta^2}
+\bigl(\lambda Td+\operatorname{Re}\langle\eta,V\xi\rangle\bigr).
+\tag{28.20}
+$$
+
+代入 (28.16)，约去正因子 $2\delta/(1+\delta^2)$，在固定 $T$ 后令 $\delta\downarrow0$。因为 $\Pi_\eta(j\xi)=0$，两份 $-a\lambda Tj$ 项在此时消失。记
+
+$$
+A_\xi=\operatorname{Re}\langle\eta,V\xi\rangle,\qquad
+z_\pm=\Pi_\eta((Z\pm g)\xi),\qquad
+\nu=e\xi/d=-\jmath\eta.
+$$
+
+于是 $\|\nu\|=1$、$\operatorname{Re}\langle\eta,\nu\rangle=0$，并且
+
+$$
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\,\nu\|+\|z_-+\lambda Td\,\nu\|.
+\tag{28.21}
+$$
+
+对固定单位向量 $\nu$、固定 $z$ 及非零实 $\rho$，平方差有理化给
+
+$$
+\|\rho L\nu+z\|-|\rho|L
+=\frac{2\rho L\operatorname{Re}\langle\nu,z\rangle+\|z\|^2}
+{\|\rho L\nu+z\|+|\rho|L}
+\longrightarrow\operatorname{sgn}(\rho)\operatorname{Re}\langle\nu,z\rangle
+\quad(L\to+\infty).
+\tag{28.22}
+$$
+
+令 $\epsilon=\operatorname{sgn}\lambda$、$B_\xi=\operatorname{Re}\langle\nu,g\xi\rangle$。在 (28.21) 取 $T=L$，左右各减去 $2|\lambda|dL$，两边极限分别为
+
+$$
+2\epsilon A_\xi,\qquad
+-\epsilon\operatorname{Re}\langle\nu,z_+\rangle
++\epsilon\operatorname{Re}\langle\nu,z_-\rangle=-2\epsilon B_\xi.
+$$
+
+在 $T=-L$ 时，两边极限分别为 $-2\epsilon A_\xi$、$2\epsilon B_\xi$。实投影 $\Pi_\eta$ 不改变与 $\nu$ 的实配对，共同的 $Z$ 因此消去。两向不等式一起迫使 $A_\xi=-B_\xi$。由 $\nu=-\jmath\eta$，准确得到
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,V\xi\rangle.
+\tag{28.23}
+$$
+
+$\epsilon$ 的保留同时覆盖负 $\lambda$。
+
+再使用另一份实际伴轴 $e'=j$、$j'=\jmath(l-m)j=-e$。整个角分类给
+$D(c,e')=\lambda j'$、$c\circ e'=\mu e'$，所以刚才的全部实际 PB 推导适用。$c,t,g,k,V,Z,n,d$ 不变，$\eta'=j'\xi/d=\jmath\eta$。设
+$G=\langle\eta,g\xi\rangle$、$L_0=\langle\eta,V\xi\rangle$。第二伴轴的 (28.23) 是
+
+$$
+\operatorname{Im}(-\jmath G)=\sigma\operatorname{Re}(-\jmath L_0),
+\qquad -\sigma\operatorname{Re}G=\operatorname{Im}L_0.
+$$
+
+它与第一伴轴的 $\operatorname{Im}G=\sigma\operatorname{Re}L_0$ 合为 $G=\jmath L_0$，故
+
+$$
+\langle jm\xi,(g-\jmath V)\xi\rangle=0
+\qquad(\xi\in(1-l)\mathcal H).
+\tag{28.24}
+$$
+
+固定算子的二次齐次性把单位向量结论扩到全部 $d>0$ 的向量；$d=0$ 时左边本来为零，不定义 $\eta$、不除以 $d$。
+
+令 $M=g-\jmath V$、$r_0=1-l-m$。在 (28.24) 取 $\xi=u+z$，其中 $u\in m\mathcal H$、$z\in r_0\mathcal H$，减去 $z=0$ 的等式，得 $\langle ju,Mz\rangle=0$。$j:m\mathcal H\to l\mathcal H$ 是满等距，故 $lMr_0=0$。在 $z=0$ 时，$T_0=mjMm$ 的二次型 $Q(u)=\langle u,T_0u\rangle$ 恒零。不要求 $T_0$ 自伴，复极化给
+
+$$
+4\langle u,T_0v\rangle
+=Q(u+v)-Q(u-v)-iQ(u+iv)+iQ(u-iv)=0.
+\tag{28.25}
+$$
+
+因此 $T_0=0$，同一满等距性给 $lMm=0$。合并得到 $l(g-\jmath V)(1-l)=0$，再由 (28.17) 得到 (28.8)，忠实性将等式返回 $A$。
+
+所有极限只作用于显式标量 Gram 多项式或固定元素 $g,k,V,Z$ 的向量范数。没有对变化输入上的任何未知 $D$ 取极限。$a=0$、$b=0$、两种 $\sigma$、负 $\lambda$、首项 Gram 为零及 $d=0$ 均已包含。∎
+

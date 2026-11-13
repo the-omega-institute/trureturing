@@ -1,0 +1,36 @@
+**定理 11.2（全部不可约纤维的精确分类）。** 在 11.1 下，对每个不可约表示 $\pi$ 有如下穷尽分类。
+
+1. 若 $r=0$，则 $t=0$，且 $\pi(\mathsf A)=\pi(\mathsf X)=\pi(\mathsf Y)=0$；该纤维只有一维标量不可约表示。
+2. 若 $t=0$，则 $\pi(\mathsf X)=\pi(\mathsf Y)=0$，且纤维的不可约表示均为一维；当 $r>0$ 时 $\pi(\mathsf A)=2\sqrt r$ 或 $-2\sqrt r$，实际纤维可保留其中一个或两个符号。
+3. 若 $t>0$，则纤维不可约表示恰为二维。令
+
+   $$
+   e_1=\frac{\pi(\mathsf X)}{\sqrt t},\qquad
+   e_2=\frac{\pi(\mathsf Y)}{\sqrt t}.
+   \tag{11.3}
+   $$
+   它们是反交换的自伴酉元。若 $0<t<4r$，再令 $e_3=\pi(\mathsf A)/\sqrt s$；则
+
+   $$
+   e_1^2=e_2^2=e_3^2=I,
+   \qquad e_i e_j=-e_j e_i\ (i\ne j),
+   \tag{11.4}
+   $$
+   且取向只能有两种；实际纤维可保留其中一种或二者
+
+   $$
+   \varepsilon(\pi)=-\mathrm i e_1e_2e_3\in\{+I,-I\}.
+   \tag{11.5}
+   $$
+   适当选取二维基后，准确写成
+
+   $$
+   \pi(\mathsf X)=\sqrt t\,\sigma_z,
+   \qquad
+   \pi(\mathsf Y)=\sqrt t\,\sigma_x,
+   \qquad
+   \pi(\mathsf A)=\varepsilon\sqrt{4r-t}\,\sigma_y.
+   \tag{11.6}
+   $$
+   若 $t=4r>0$，则 $\pi(\mathsf A)=0$，而 $(\pi(\mathsf X),\pi(\mathsf Y))$ 仍是一份二维 Pauli 对；此边界没有第三轴取向。 因而任何一维标量不可约纤维必有 $t=0$。
+

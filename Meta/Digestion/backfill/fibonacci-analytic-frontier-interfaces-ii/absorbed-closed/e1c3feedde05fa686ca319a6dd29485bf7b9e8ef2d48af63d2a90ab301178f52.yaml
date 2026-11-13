@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e1c3feedde05fa686ca319a6dd29485bf7b9e8ef2d48af63d2a90ab301178f52
+  normalized_sha256: sha256:e1c3feedde05fa686ca319a6dd29485bf7b9e8ef2d48af63d2a90ab301178f52
+cas_ref: sha256:e1c3feedde05fa686ca319a6dd29485bf7b9e8ef2d48af63d2a90ab301178f52
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/WeightRemoval.profile_weight_removal_pointwise
+    target_statement_id: sha256:16f44316564d32517db6eb6fff1166c7e34e561741245e6aa4636ccfb5784fb5
+receipts:
+  unresolved_subitems: []

@@ -6,7 +6,7 @@ Actual signed occupation-word ghost fields on the full countable Fock carrier.
 
 The carrier, vacuum, occupation creators, CAR and parity are exactly those of CountableOccupationFock and BcGhostFock. An ascending occupation list gives nested divided derivatives of the physical b and c fields. A reverse-ordered normal-product half carries the sign determined by the tail length. This construction defines a linear map on every finitely supported occupation state and does not replace the carrier by a finite cutoff.
 
-The bounded-pole and normal-product arguments adapt the existing FieldNormalProduct construction, attributed there to Scott Carnahan's vertexAlg revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea. The signed half is constructed directly; ordinary plus ordering is not asserted to be fermionic normal ordering.
+The signed normal product is the vectorwise finite constructor SignedFieldNormalProductLocality.signedNormalMinusOne. Its covariance is the minus-one case of SignedFieldResidueLocality.residue_translation, using negativeResidue and the zero Hasse derivative. These generic results retain the attribution to Scott Carnahan's vertexAlg source; the occupation-word construction uses their signed reverse half.
 
 **Theorem 1.1 (All-state creation and the exact physical generators).**
 
@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Quantum/Fermionic/BcGhostStateField.stateField_translatio
 
 *Commentary.*
 
-The translation is BcGhostVirasoro.L at minus one. Its vacuum value vanishes, and its commutator with every state-field mode is the formal derivative coefficient. The proof uses the original b and c Ward identities, the integer binomial shift and the signed finite-sum telescope; no translation operator is supplied as an assumption.
+The translation is BcGhostVirasoro.L at minus one. Its vacuum value vanishes, and its commutator with every state-field mode is the formal derivative coefficient. The proof uses the original b and c Ward identities, the integer binomial shift and the generic signed residue covariance; no translation operator is supplied as an assumption.
 
 **Theorem 1.3 (Parity on the full state space).**
 
@@ -53,3 +53,4 @@ The companion BcGhostStateFieldLocality and BcGhostStateFieldIterate modules est
 - Truth anchor: `D5/S3/Quantum/Fermionic/BcGhostStateField.stateField_translation`
 - Dependency: [D5/S3/Quantum/Fermionic/BcGhostVirasoro](BcGhostVirasoro.md)
 - Dependency: [D5/S3/VertexAlgebra/FieldNormalProduct](../../VertexAlgebra/FieldNormalProduct.md)
+- Dependency: [D5/S3/VertexAlgebra/SignedFields/SignedFieldResidueLocality](../../VertexAlgebra/SignedFields/SignedFieldResidueLocality.md)

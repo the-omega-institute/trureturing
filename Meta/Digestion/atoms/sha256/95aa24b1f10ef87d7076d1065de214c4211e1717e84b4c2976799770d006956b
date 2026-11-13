@@ -1,0 +1,52 @@
+**Definition 6.1 (one original source and the stopped window).** Retain
+Assumption 1.1 in its entirety, for every finite $a,\eta,d>0$ and every
+permitted Borel repair. In particular retain $G=H^1\times\mathbb R$,
+the normalized $h$, the complete complex non-Friedrichs endpoint
+$A=\rho C$ distinct from $C=0$, the operator and form domains and source
+trace, and the conservative original process from $e$. Its first read
+is at $2d$, subsequent gaps are $d$, and its only emissions remain
+$0,1,3,B$ with fresh conditionally independent noise. No operation on
+the source is added. Write $\mathscr F_t=\sigma(Y_0,\ldots,Y_{t-1})$.
+A cut $t$ is after $t$ labels; the next read is still at $(t+2)d$.
+
+Use $P=T_d$, $g=g_{2d}=Pg_d$ and the original $F_u,p(u)$ of (1.3).
+The stationary mathematical comparison has the same transition and
+read kernels, with coefficients
+
+$$
+ q(u)=\int F_u\,dm,\qquad q(\varepsilon)=1,\qquad
+ Q_w^H(v)=\frac{q(wv)}{q(w)}\quad(|v|=H).
+ \tag{6.1}
+$$
+
+It is [OWGR, Definition 15.1]'s comparison law, not an available
+stationary preparation. All $q(u)$ and $p(u)$ are positive by the
+original strictly positive finite emission products. Both coefficient
+families are consistent under summing extensions.
+
+Fix deterministic integers $S\ge0$, $H\ge1$, $r\ge1$, $L\ge1$.
+For $k\ge1$ define
+
+$$
+ \begin{aligned}
+ U_k&=S+(k-1)L,\\
+ C_k&=\{Y_{U_k}\cdots Y_{U_k+L-1}=B^L\},\\
+ J&=\inf\{k\ge1:C_k\},\qquad T=S+LJ,\\
+ W_j&=Y_T\cdots Y_{T+j-1}\quad(0\le j\le r),\qquad W_0=\varepsilon.
+ \end{aligned}
+ \tag{6.2}
+$$
+
+For any actual cut, the target vector is
+
+$$
+ {\bf R}_t^H(v)=R_{Y_{<t}}(v)
+   =\frac{p(Y_{<t}v)}{p(Y_{<t})}\quad(|v|=H),\qquad
+ Y_{<t}=Y_0\cdots Y_{t-1}.
+ \tag{6.3}
+$$
+
+At $T+j$ this conditions on the entire prefix through that cut,
+including every actual label in $W_j$. The gate and its index are
+determined by that prefix. They supply no extra future conditioning.
+

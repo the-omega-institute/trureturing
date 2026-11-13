@@ -1,0 +1,31 @@
+**Corollary 11.6 (the unchanged finite-output contract with weaker timing).**
+In Corollary 10.6 keep the predeclared countable descriptions, acquired
+normalized finite rows, readiness by the actual gate, common acquisition
+event, allowances, earned guards and both strict tests (10.24).
+Replace only Theorem 10.5's full-label-independent completion premise
+by Definition 11.3's B-mask-adapted rule and allowed service-state/seed
+conditions. Then the common-event probability (10.25) and both
+finite-output inequalities (10.26) hold for these rules. The row
+comparison event may be taken to be $D_{J_\kappa}^\infty\le\chi_\kappa$
+on finite completion, so its marginal comparison covers all finite
+horizons simultaneously; an actual output still uses only its acquired,
+ready finite horizon $H_\kappa$.
+
+*Proof.* For each deterministic source-valid description, (11.7) and
+the first strict test (10.24) give a row-event failure below
+$\delta_{{\rm row},\kappa}$. Keep exactly §9's all-cut, all-future
+dynamic event and the second test (10.24). Intersect these events over
+the deterministic valid descriptions with $\mathcal A_\tau$. The
+countable union bound gives (10.25), without independence of calibration,
+acquisition or branch selection. The theorem applies to every allowed
+stopped state of each predeclared rule before selection. At any actual
+finite completion $C=T_\kappa+J_\kappa$, contract (11.7)'s successful
+comparison to $H_\kappa$ and use the acquired row bound (10.23),
+$\operatorname{TV}(\rho_{\rm out},\rho_\kappa)\le\xi_{\rm actual}$,
+and §9's dynamic event. The two triangle inequalities are exactly
+(10.26). Capture, retention and assimilation of every actual label
+through $C$, actual normalized output, genuinely generated
+$\xi_{\rm actual}$ and row readiness remain conjunctive premises.
+The infinite-completion branch produces no row and is not removed
+by conditioning. $\square$
+

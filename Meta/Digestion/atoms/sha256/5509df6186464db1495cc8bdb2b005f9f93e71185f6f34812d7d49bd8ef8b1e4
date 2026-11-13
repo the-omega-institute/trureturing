@@ -1,0 +1,32 @@
+**定义 15.3（不变的全部原关系）。** 记 $\mathsf H_n^{\rm cpt}(X;D)$ 为15.1–15.2上的2.1–2.2全文条件。准确地，A1及 P2要求对全部 $a,b\in E$、全部原 $\gamma$，实际有向表
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0,
+\tag{15.4}
+$$
+
+并保留反向次序。A2仍是全部相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，以及指定差向量 $(1,-1,-1)$ 及对应排列的准确零二次值。A3仍是 $S(u,u)=u$ 及同一个固定有理数 $0<\vartheta\le1$ 上的全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。不将 A2改成预给复三表正性。
+
+全部原 PB仍对每个实际 $a,b,d\in E$，以同一个旧 $D$ 定义
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+r_\pm=b\pm v,\qquad s_\pm=d\pm w,
+\end{gathered}
+\tag{15.5}
+$$
+
+并对每份原评价要求
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{15.6}
+$$
+
+零、重复、缩放、平移及所有实际嵌套输入均在原量词内；外层标签不能因在某点同像而替换。七项物理来源另取第11章全文与其纳入的全部来源合取，接续方式见24章。数学模型的选取不供应物理来源，也不删改 $\Omega$ 的其他原分支。
+

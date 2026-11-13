@@ -1,0 +1,36 @@
+**命题 8.2（精确外层缺陷、范数与右支撑边界）。** 保持定理 7.1 的任意环境输入，设 $R\ne0$，保留同一 $a,b,g,k,r$。定义两份真正外层缺陷
+
+$$
+E_+=D(a-g,k)-K_\sigma(a-g,k),\qquad
+E_-=D(a+g,-k)-K_\sigma(a+g,-k).
+\tag{8.4}
+$$
+
+则完整原 PB 给出
+
+$$
+\boxed{E_+-E_-=2Rhr,\qquad \|E_+-E_-\|=2|R|\|r\|.}
+\tag{8.5}
+$$
+
+对于这一份原输入和原输出，以下四项等价：$D(Rh,b)=K_\sigma(Rh,b)$；$r=0$；$p_+gp_+=0=p_-gp_-$；$E_+=E_-$。此外，两份复外层标签满足
+
+$$
+\begin{aligned}
+W_+&=(a-g)+\jmath k=a-r+\jmath ba,&W_+p&=W_+,\\
+W_-&=(a+g)-\jmath k=a+r-\jmath ba,&W_-p&=W_-,\\
+qW_+&=\jmath qba,&qW_-&=-\jmath qba.
+\end{aligned}
+\tag{8.6}
+$$
+
+证明。(8.2) 对一般 $b$ 仍是实际 PB。比较响应的双线性只用于已知 $K_\sigma$，直接给
+
+$$
+K_\sigma(a-g,k)-K_\sigma(a+g,-k)
+=2K_\sigma(a,k)=2a\circ K_\sigma(a,b).
+\tag{8.7}
+$$
+
+从 (8.2) 相减即得 $E_+-E_-=2a\circ r=2Rhr$。因 $r\in pAp$ 且 $h^2=p$，C* 恒等式给 $\|hr\|^2=\|rh^2r\|=\|r^2\|=\|r\|^2$，故范数等式成立。四项等价由 (7.1)–(7.2) 及 $R\ne0$ 立即得到。最后将 $g=\jmath(ab-ba)/2+r$、$k=(ab+ba)/2$ 逐项代入，得到 (8.6)。∎
+

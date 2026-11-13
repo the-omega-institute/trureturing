@@ -1,0 +1,8 @@
+**推论 497.4（§494 的三、四阶接口）。** 设 $(\mathrm L_4)$。
+
+(a) 若 $(\mathrm F_4)$ 成立，则 (494.3) 成立：对每个 $\mathbf s\in[0,1]^4$，$\mathbb E_{\mu_X}[U_X^{2\kappa}\prod_jB_X(s_j)]\to c_4\kappa^2\sum_\pi\prod_{\{i,j\}\in\pi}\min(s_i,s_j)$；且 $\sup_{s\in[0,1]}\mathbb E_{\mu_X}|B_X(s)|^4$ 对充分大的 $X$ 有界，故 $(\mathrm M_4)$ 以这一 Brownian 核成立。
+
+(b) 若 $(\mathrm F_3)$ 成立，则 $(\mathrm M_3)$ 以 $M_3\equiv0$ 成立。
+
+证明。在 $[X,2X]$ 上，$B_X(s,x)=\lambda_X(x)\,u^{-\theta/2}\,D_{h\,su^\theta}(x)/\sqrt{h\log X}$，其中 $u=x/X$、$\lambda_X(x)=\sqrt{\log X/\log x}$，$\sup_{[X,2X]}|\lambda_X^k-1|\to0$。取 $b_j(u)=s_ju^\theta$（$0\le b_j\le2$、$|b_j'|\le1$）。由引理 497.2(i)，$\mathbb E|B_X(s)|^4\le K_2$，并且把 $\prod_j\lambda_X$ 换成 $1$ 的误差至多 $\sup|\lambda_X^k-1|\cdot2^{kr}K_2^{k/4}\to0$。对 $k=4$，由定理 497.3（$w(u)=u^{2\kappa}u^{-2\theta}$），极限为 $\int_1^2u^{2\kappa-2\theta}W_4(s_1u^\theta,\dots,s_4u^\theta)\,d\nu=\kappa^2\sum_\pi\prod\min(s_i,s_j)\int_1^2u^{2\kappa}\,d\nu=c_4\kappa^2\sum_\pi\prod\min(s_i,s_j)$，因为 $W_4$ 关于其变量二次齐次。对 $k=3$，取 $w(u)=u^{3r-3\theta/2}$，由 $W_3\equiv0$ 得极限为零，且 $\sup_s\mathbb E|B_X(s)|^3\le K_2^{3/4}$，这给出 $(\mathrm M_3)$ 的 (a) 部分。证毕。
+

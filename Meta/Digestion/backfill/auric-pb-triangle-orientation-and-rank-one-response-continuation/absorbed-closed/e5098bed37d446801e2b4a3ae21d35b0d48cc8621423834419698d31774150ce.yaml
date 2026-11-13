@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e5098bed37d446801e2b4a3ae21d35b0d48cc8621423834419698d31774150ce
+  normalized_sha256: sha256:e5098bed37d446801e2b4a3ae21d35b0d48cc8621423834419698d31774150ce
+cas_ref: sha256:e5098bed37d446801e2b4a3ae21d35b0d48cc8621423834419698d31774150ce
+coverage_gids:
+  - gid: D5/S3/Topology/JBPureDeformation.pure_deformation
+    target_statement_id: sha256:1944e49644b8bb2f6785164c3873f0c2ff4bd795e4743b590b184c9b7b35b01a
+receipts:
+  unresolved_subitems: []

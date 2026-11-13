@@ -1,0 +1,33 @@
+**命题 128.10（显式同伦等价与每个纯点处的截面障碍）。** 第一投影 $\pi_1:Z\to S$ 和中点映射 $m:\mathscr T\to S$ 都是同伦等价。它们在任一原纯点的任何边界邻域上都没有连续局部截面。特别地，$m$ 的闭三球纤维不能据此视为局部平凡球丛。
+
+证明。定义从 $\eta$ 出发的径向映射
+
+$$
+\rho_K:W\setminus\{0\}\longrightarrow S,\qquad
+\rho_K(v)=\eta+t(v)v,
+$$
+
+其中 $t(v)>0$ 唯一使右侧落在边界。紧凸体有内点使此映射连续。对 $(x,y)\in Z$，置
+
+$$
+F_t(x,y)=\rho_K\bigl(x-(1-t)\eta-ty\bigr),\qquad 0\le t\le1.
+\tag{Q128.33}
+$$
+
+括号中的向量在 $W$ 且永不为零：$t<1$ 时，$(1-t)\eta+ty$ 是 $K$ 的相对内点，不等于边界上的 $x$；$t=1$ 时原零一读数使 $x\ne y$。所以这是一个连续同伦。$F_0=\pi_1$，而 $F_1=\rho_K\circ\delta$ 是同胚：$\delta$ 已是到 $\partial D$ 的同胚，两凸体边界沿相同射线径向对应也是同胚。因此 $\pi_1$ 同伦于同胚，故是同伦等价。
+
+再令 $R:\mathscr T\to Z$ 为 $R(x,y,z)=((x+z)/2,y)$，令 $J:Z\to\mathscr T$ 为 $J(c,y)=(c,y,c)$。有 $RJ=I$，(Q128.28)给 $JR\simeq I$，所以 $R$ 是同伦等价。$m=\pi_1R$，遂得 $m$ 的同伦等价。这些显式映射不调用ENR、Vietoris映射定理或任何未证局部平凡性。
+
+现固定原纯点 $p$。若 $\pi_1$ 在 $S$ 的某个包含 $p$ 的相对开邻域 $U$ 上有连续截面，其第二坐标就给连续选择 $s(c)\in\mathcal Z(c)$。在实际球 $D_p$ 的球面取两个不同原纯点 $q,r$；原边对称性给 $p\in D_q\cap D_r$。取 $c_q\in\operatorname{ri}D_q$、$c_r\in\operatorname{ri}D_r$。对充分小的 $t>0$，实际路径
+
+$$
+x_q(t)=(1-t)p+t c_q\in U\cap\operatorname{ri}D_q,
+\qquad
+x_r(t)=(1-t)p+t c_r\in U\cap\operatorname{ri}D_r
+\tag{Q128.34}
+$$
+
+全在原边界中。由(Q128.23)，$s(x_q(t))=q$、$s(x_r(t))=r$。两路径趋于同一 $p$，连续性迫使 $s(p)=q=r$，矛盾。
+
+若 $m$ 在 $U$ 有连续截面 $(a(c),b(c),d(c))$，则 $c=(a(c)+d(c))/2\in\mathcal Z(b(c))$，所以 $b(c)\in\mathcal Z(c)$。其中间坐标又给刚被排除的连续选择。因此 $m$ 同样无此截面。局部平凡球丛在每个平凡邻域内可固定一个纤维点得到截面，所以在纯点处不可能局部平凡。证毕。
+

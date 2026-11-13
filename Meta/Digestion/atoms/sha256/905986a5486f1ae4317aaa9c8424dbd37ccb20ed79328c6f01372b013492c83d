@@ -1,0 +1,28 @@
+**定义 14.1（原关系如何给出平方闭包几何）。** 起点是同一个世界已经给出的整张有方向比较表：每一对原标签都有旧答案，但没有先假定答案遵守加法、缩放、连续性或分块独立。原有两两正预算、相加三角、同一单位小窗，以及任意三标签的正反配平必须同时保留。本文把所有原标签明确放在连续复矩阵场的完整自伴空间里。每个位置都是同一个固定有限阶的矩阵世界，位置的总空间可以不可数、不可度量，也无需测度；它的特别条件是能用开闭块细分有限开覆盖。复环境和矩阵运算是模型前提，不是从空白推导出的物理事实。
+
+准确锥首先保证，原评价已经认可的二表正性，也能被任何数学正尺子读取；这不增加一份物理准备。点评价是满的普通矩阵商，已有二阶角结论因而能读取同一个旧输出。三维角交叠迫使一个矩阵块内共用正负方向。取固定两枚Pauli标签，读出它们旧答案的一个矩阵元，就得到真正连续的中央符号 $Q$；不是给每个位置另挑任意符号再假装能拼起来。随后把两个实标签写成 $Z=x+iQy$，旧响应给出一个正平方 $q_D$。目标就是证明这份旧平方等于普通的 $Z^*Z$。
+
+小连接行已经被原条件识别。原PB把这一行绑定到两份实际外层输入；选择一个真正存在于原代数的负端点逆元，就得到准确的射线相位运输。大的正负中央参数先给靠近正负半圈的相位，再用两次准确相加造出零附近的小角，有限等分后得到任意有界连续中央角。每一次都是有限原PB调用，不靠相位稠密性，也不给旧表偷加连续性。
+
+为了找到全世界可用的方向，不必连续挑出精确特征线。先在普通射影空间铺一张有限投影网。每个位置的矩阵有某条特征线，因此网里总有一根使连接很小。所有候选的小连接幅度都是连续函数；把它们够小的开集细分成有限开闭块，每块选一个常值方向和酉坐标，便拼成原代数里的真实方向。每片紧且片数有限，所以小于阈值的条件有全局严格余量。围绕这根方向的任意小普通射影片，又能选出 $n^2$ 根实张成方向。已知普通酉群的局部坐标只需这些方向，坐标准确施于 $W^*UW$，再拉回连续中央函数。统一缩小参数使所有有限前缀都仍在允许窗里，逐次PB便让旧平方在每个小酉邻域不变。
+
+每个实际连续酉矩阵场都能在有限开闭块上选避谱切口，再拼成一个真实连续自伴对数。因此酉群由范数路径连通；一个处处局部常值的旧平方沿整个左酉轨道都相同。路径仅属于已知矩阵几何，参数不是物理钟，也从未把未知比较表当作连续函数。
+
+最后的难点是奇异矩阵场未必能精确拆成酉矩阵乘正矩阵。这里不强行补一个不存在的极部分。给任意正预算，用有限开闭片把原矩阵近似成常值，再把每个常值轻微扰成可逆矩阵。只有这份近似矩阵才作真实极分解。用它的酉因子旋转原矩阵，原矩阵的虚部就小于预算；二表正性把未知响应及已知交换子的差压到预算乘一个固定范数。酉运输保证被压的始终是原起点那一个固定偏差。预算可以任意小，固定偏差只能为零。这没有把未知函数的输入极限搬过函数。比较两份平方，便认回全部旧答案 $D(x,y)=iQ[x,y]/2$；线性、连续、中央平移、商下降和同一复乘法到此才成为结论。
+
+准确几何是一份正平方，以及它的左酉轨道范数闭包。相同平方的两个场在每个位置能由普通酉矩阵接上，有限开闭拼接能把全局误差做到任意小，却未必能把误差做成恰好零。趋于零的奇偶交替矩阵场给出真实反例。因此每个平方纤维有唯一正代表，但一般只能在轨道闭包中到达；VNA另有有限补角结构时，才恢复精确轨道。奇阶偶阶共用同一分类；二阶直接使用既有丛定理，一阶只有零响应而方向不唯一，空基底则是单位等于零的单元素模型。
+
+完整量子候选仍是这些数学条件与同一世界七项来源的完整合取。它保留原native、全部共同词与空词、跨评价配对、十一端点、parent/ready、零活动和静默对象。静态入口给复Hilbert表示、有限正表、效果和全部未归一原质量；实际相干准备和全Born菜单仍须真实取得，零质量不能除法。真正相关联合、同向局部腿和重数；整台箭头连同环境、所有输出和每个合法未来；每个所需有限深度与每个正精度的实际递归参考；完整仪器、TP单位分区、正输出更新及另付射线校准的Lüders；所有历史、真遗忘、两侧和逆向真实返回、读后同一活动输入的CountRead以及无限记录的可数可加、正常性和前对偶；物理钟、能量、定义域与共同正 $\hbar$，都继续按第11–12章逐项同源支付。一个数学表示或相同矩阵不能制造这些producer。本文的简化是以有限开闭几何和固定预算替换更强的环境工具，未把模型前提、物理实现或原独立公理偷偷删去。
+
+[OP]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md
+[PT]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md
+[PB]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md
+[SM]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md
+[C]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md
+[AQ]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md
+[R3]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md
+[W]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md
+[FR]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md
+[XV]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XV.md
+[SF]: https://github.com/the-omega-institute/trureturing/blob/f24d1138a7b994da16abd9a47affedea64ea44ce/docs/develop/theory/AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md
+

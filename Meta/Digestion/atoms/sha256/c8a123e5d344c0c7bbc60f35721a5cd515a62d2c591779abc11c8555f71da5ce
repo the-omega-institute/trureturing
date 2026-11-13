@@ -1,0 +1,28 @@
+**Standing assumptions 12.1 (the original domain and four coordinates).** Use exactly the fixed source and installed finite or countable prior of Section 11.1, with positive endpoint masses, every supported target, both seeds, all paid histories, source-independent initialization, original records, same-update rules, completion and Stop. The complete countable carriers and their noncompletion outcomes, the regular law spaces $\mathcal K_p,\mathcal K_\beta$, and both descriptor-conditioned residual equations are those of Definition 11.2. A compatible pair has the common **unweighted** marginals $\nu_p,\nu_\beta$ in (11.6); its losses are the configuration-before-TV integrals in (11.9). No finite support, reversibility, irreducibility, native-mixture representation or zero acquired-return variation is assumed.
+
+Set $a=1/3$, $b=2/5$ and, for its two marginals, write
+
+$$
+m_p=\int u(Q)\,d\nu_p(Q),\qquad
+m_\beta=\int v(W)\,d\nu_\beta(W),\qquad t=m_p+m_\beta,
+$$
+
+$$
+q=\int Q(\beta\beta)\,d\nu_p(Q),\qquad
+z=\int W(\alpha\alpha)\,d\nu_\beta(W).
+\tag{12.1}
+$$
+
+These are complete raw words $w_{0,1}$ and $\alpha w_{0,0}$, with their original completion and Stop blocks supplied by $I_c$; $\alpha\alpha$ is not two further Reads after completion. Put
+
+$$
+J_p=\int(u-a)(b-u)\,d\nu_p,\qquad
+J_\beta=\int(v-a)(b-v)\,d\nu_\beta,
+$$
+
+$$
+M_B=\int(u(Q)-v(W))^2\,d\Gamma_B(Q,W),\qquad
+M_A=\int(v(W)-u(Q))^2\,d\Gamma_A(W,Q).
+\tag{12.2}
+$$
+

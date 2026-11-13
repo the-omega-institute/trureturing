@@ -1,0 +1,21 @@
+**引理 3.1（固定原二表的正性传递）。** 每个数学正实线性泛函 $\phi:E\to\mathbb R$ 都能读取同一 P2；无需将其加入 $\mathcal P$。
+
+证明。对固定 $x,y,z_1,z_2$，原元素
+
+$$
+H=|z_1|^2x^2+|z_2|^2y^2
++2\operatorname{Re}(\overline z_1z_2)x\circ y
++2\operatorname{Im}(\overline z_1z_2)D(x,y)
+\tag{3.1}
+$$
+
+被每个原评价读成 $G_\gamma(x,y)$ 的非负二次值。准确锥使 $H\in C$，故 $\phi(H)\ge0$。所有复系数都可取，正是 $G_\phi(x,y)\succeq0$，从而
+
+$$
+|\phi D(x,y)|^2\le
+\phi(x^2)\phi(y^2)-\phi(x\circ y)^2.
+\tag{3.2}
+$$
+
+这复用 PT129.1与SM79.2的准确锥机制，不要求原评价族对这些新数学读取闭合。∎
+

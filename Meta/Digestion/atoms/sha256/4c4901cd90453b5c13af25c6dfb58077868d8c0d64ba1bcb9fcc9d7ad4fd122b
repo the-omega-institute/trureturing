@@ -1,0 +1,33 @@
+**定理 15.2（任意原模型的原始平衡倍增界）。**对定义 1.1 的任意非负核 $c$，只要满足完整 (R)，就对每个有序 $x,y\in M$ 有
+
+$$
+\begin{aligned}
+&c(x\cdot x,y\cdot y)
++c(x\cdot Ux,y\cdot Uy)
++c(x\cdot U^2x,y\cdot U^2y)\\
+&\hspace{3em}=6c(x,y).
+\end{aligned}
+\tag{15.4}
+$$
+
+令 $s_0(x)=x$、$s_{n+1}(x)=s_n(x)\cdot s_n(x)$，则对所有 $n\ge0$，
+
+$$
+0\le c(s_n(x),s_n(y))\le6^n c(x,y),
+\tag{15.5}
+$$
+
+以及
+
+$$
+\begin{aligned}
+&|c(s_n(x),s_n(y))-c(s_n(y),s_n(x))|\\
+&\hspace{3em}\le6^n\max\{c(x,y),c(y,x)\}.
+\end{aligned}
+\tag{15.6}
+$$
+
+这些结论不需要 $\mathrm{UC}$、对称性、可见群或 Hilbert 表示。
+
+**证明。**在原 (R) 中精确代入 $(a,b,u,v)=(x,y,x,y)$，右侧就是 $3c(x,y)+3c(x,y)$，得到 (15.4)。左侧三项的每一项都非负，舍去 $k=1,2$ 项即得 $c(x\cdot x,y\cdot y)\le6c(x,y)$。从 $n=0$ 开始沿指定平衡项归纳，得到 (15.5)。把原有序对换为 $(y,x)$ 再作同一归纳，得到反向界。对两个非负实数 $r,s$ 有 $|r-s|\le\max(r,s)$，因此两种次序的界共同给 (15.6)。全程没有重括号或对原始 $U$ 作任何额外假设。证毕。
+

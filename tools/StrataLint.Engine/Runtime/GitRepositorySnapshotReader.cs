@@ -82,17 +82,17 @@ internal static class GitRepositorySnapshotReader
         Action<string, ReadOnlyMemory<byte>>? observeContentDigest)
     {
         var scopes = EnumerationScopes(pathspecs).ToArray();
-        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
+        var tracked = GitIndexRepositoryFiles.Read(root, scopes[0]);
         if (scopes.Length > 1)
         {
             for (var index = 1; index < scopes.Length; index++)
             {
                 var scope = scopes[index];
-                foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+                foreach (var (path, entry) in GitIndexRepositoryFiles.Read(root, scope))
                 {
-                    if (tracked.TryGetValue(path, out var previous) && previous != mode)
+                    if (tracked.TryGetValue(path, out var previous) && previous.Mode != entry.Mode)
                         throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
-                    tracked[path] = mode;
+                    tracked[path] = entry;
                 }
             }
         }
@@ -131,10 +131,10 @@ internal static class GitRepositorySnapshotReader
                         throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
                     }
 
-                    if (tracked.TryGetValue(path, out var mode) && !IsSupportedMode(mode))
+                    if (tracked.TryGetValue(path, out var indexed) && !IsSupportedMode(indexed.Mode))
                     {
                         throw new InvalidOperationException(
-                            $"non-regular repository entry {path} has git mode {mode}");
+                            $"non-regular repository entry {path} has git mode {indexed.Mode}");
                     }
 
                     FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
@@ -158,7 +158,7 @@ internal static class GitRepositorySnapshotReader
             {
                 probe.Failure?.Throw();
                 var path = probe.Path;
-                var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
+                var indexMode = tracked.TryGetValue(path, out var indexedEntry) ? indexedEntry.Mode : null;
                 if (probe.LinkTarget is { } target)
                 {
                     var linkBytes = ReadLinkBytes(root, probe.FullPath, target);
@@ -702,29 +702,6 @@ internal static class GitRepositorySnapshotReader
 
     private static InvalidOperationException InvalidBatchOutput(string objectId) =>
         new($"git cat-file --batch emitted invalid data for object {objectId}");
-
-    private static Dictionary<string, string> ParseIndex(byte[] bytes)
-    {
-        var result = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var entry in SplitNul(bytes))
-        {
-            var tab = Array.IndexOf(entry, (byte)'\t');
-            if (tab <= 0)
-            {
-                throw new InvalidOperationException("git index emitted invalid metadata");
-            }
-
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab)).Split(' ');
-            var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length != 3 || metadata[2] != "0" || !result.TryAdd(path, metadata[0]))
-            {
-                throw new InvalidOperationException(
-                    $"unmerged or duplicate repository entry: {path}");
-            }
-        }
-
-        return result;
-    }
 
     private static IEnumerable<string> ParseNulStrings(byte[] bytes) =>
         SplitNul(bytes).Select(static item => StrictUtf8.GetString(item));

@@ -1,0 +1,10 @@
+**引理 492.1（截断对数的平移能量）。** 对 $0<h<k$，令 $\ell_{h,k}(y)=\log\bigl(\min\{k,\max\{h,|y|\}\}/k\bigr)$。存在绝对常数 $C$，使对所有 $0<h<k$ 与 $u>0$，
+
+$$
+\int_{\mathbb R}\bigl|\ell_{h,k}(y+u)-\ell_{h,k}(y)\bigr|^2\,dy\le Cu .
+$$
+
+证明。$v\mapsto\min\{\log k,\max\{\log h,v\}\}$ 是 $1$-Lipschitz 的，故除 $y\in\{0,-u\}$ 外 $|\ell_{h,k}(y+u)-\ell_{h,k}(y)|\le|\log|y+u|-\log|y||$。换元 $y=uz$，右端的平方积分为 $u\int_{\mathbb R}(\log|z+1|-\log|z|)^2\,dz$；该积分有限，因为 $\log^2|z|$ 在 $0$、$-1$ 附近局部可积，而 $|z|\ge2$ 时被积函数为 $O(z^{-2})$。证毕。
+
+此界与尖峰深度 $\log(k/h)$ 无关。
+

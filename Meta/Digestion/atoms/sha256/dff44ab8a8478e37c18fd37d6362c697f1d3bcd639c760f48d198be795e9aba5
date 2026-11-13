@@ -1,0 +1,172 @@
+**定理 29.1（非零配对的实际齐次核对）。** 固定任一 $\sigma\in\{1,-1\}$，记 $\iota=\sigma i$。存在下面完全给定的有限 $X=X^*$、单位 $u\in\mathbb C^2$ 和 $w=\lambda\ell$，$\ell=(1,\sqrt2)^{\mathsf T}$，在索引
+
+$$
+\epsilon=1,\qquad
+\alpha_+=\frac2{15},\quad \alpha_-=\frac72,\qquad
+\beta_+=\frac4{15},\quad \beta_-=3
+\tag{29.1}
+$$
+
+上同时满足 (28.3) 的两个等式，而且
+
+$$
+\operatorname{Re}((w-\iota Xu)^*T_Au)>0,
+\qquad T_A=\operatorname{diag}(1,-2).
+\tag{29.2}
+$$
+
+准确构造如下。所有以下带下标的 $a_j,b_j$ 都是本构造的复数，不是 (27.23) 的系数列，也不是原演员矩阵 $B$。置
+
+$$
+\begin{gathered}
+\gamma=\frac{24+41\iota}{122},\qquad \eta=\frac\iota2,\\
+r_1=\frac{122}{81-37\iota},\qquad
+r_2=\frac{122\sqrt2}{81-98\iota},\qquad r=(r_1,r_2)^{\mathsf T},\\
+a_1=\frac{96+42\iota}{122},\quad
+b_1=\frac{-133-\iota}{122},\quad
+a_2=\frac{22+2\iota}{122},\quad
+b_2=\frac{-120+39\iota}{122},\\
+d=\frac{|r_2|^2}{5|r_1|^2}>0,\qquad
+v_1=a_1r_1,\qquad v_2=\frac{b_2r_2}{d},\qquad
+z=\frac{b_1r_1}{v_2},\\
+X=\begin{pmatrix}1&z\\\overline z&d\end{pmatrix},\qquad
+v=(v_1,v_2)^{\mathsf T},\qquad \nu=\|v\|>0,\\
+u=\frac v\nu,\qquad \lambda=\frac1\nu,\qquad w=\frac\ell\nu.
+\end{gathered}
+\tag{29.3}
+$$
+
+每个分母非零：$r_1,r_2,a_1,b_1,a_2,b_2$ 均非零，$d>0$，$v_1v_2\ne0$，故 $\nu>0$。构造只用有限复数四则运算、正范数和正平方根。
+
+证明。先在未归一化的 $v,\ell$ 上计算。定义
+
+$$
+\begin{aligned}
+p&=(\gamma I+\iota\eta C)r,&
+q&=(2\iota\eta I+(\iota-2\gamma)C)r,\\
+f_1&=\frac{-37+41\iota}{122},&
+f_2&=\frac{-98+41\iota}{122},\\
+g_1&=\frac{-170+40\iota}{122},&
+g_2&=\frac{-218+80\iota}{122}.
+\end{aligned}
+\tag{29.4}
+$$
+
+这里 $p_j=f_jr_j$、$q_j=g_jr_j$，并逐项有 $a_j=2f_j-g_j$、$b_j=g_j-f_j$。Hermitian 相容性由下面一份准确复数恒等式支付：
+
+$$
+\begin{aligned}
+a_2\overline{b_2}
+ &=\frac{-2562-1098\iota}{122^2}
+   =\frac{-366(7+3\iota)}{122^2},\\
+a_1\overline{b_1}
+ &=\frac{-12810-5490\iota}{122^2}
+   =\frac{-1830(7+3\iota)}{122^2},\\
+\frac{a_2\overline{b_2}}{a_1\overline{b_1}}&=\frac15.
+\end{aligned}
+\tag{29.5}
+$$
+
+由 (29.3)、(29.5)，
+
+$$
+\overline z
+ =\frac{d\overline{b_1}\,\overline{r_1}}
+        {\overline{b_2}\,\overline{r_2}}
+ =\frac{a_2r_2}{a_1r_1}.
+$$
+
+所以同一个 Hermitian $X$ 满足
+
+$$
+Xv=\begin{pmatrix}(a_1+b_1)r_1\\(a_2+b_2)r_2\end{pmatrix}=p,
+\qquad
+XCv=\begin{pmatrix}(a_1+2b_1)r_1\\(a_2+2b_2)r_2\end{pmatrix}=q.
+\tag{29.6}
+$$
+
+这一步同时构造两份作用，不能只指定 $Xu$ 而省去 $XCu$ 的 Hermitian 相容性。由 $r_j$ 的定义又有
+
+$$
+\ell=(I+\iota\gamma I-\eta C)r=r+\iota p.
+\tag{29.7}
+$$
+
+在本证明内记两份未归一化作用列为
+
+$$
+\mathsf R_\delta
+ =p+\frac\delta2\bigl(\iota(Cp-q)-C\ell\bigr),\qquad
+\mathsf S_\delta
+ =\ell+\frac\delta2\bigl(Cp+q+\iota C\ell\bigr).
+$$
+
+只用 (29.4)、(29.7) 和 $\iota^2=-1$，得到
+
+$$
+\begin{aligned}
+\mathsf R_\delta
+ &=p-\frac\delta2Cr-\frac{\delta\iota}2q
+   =(\gamma+\delta\eta)(I+\delta\iota C)r,\\
+\mathsf S_\delta-\iota\mathsf R_\delta
+ &=(I+\delta\iota C)r.
+\end{aligned}
+\tag{29.8}
+$$
+
+而 (29.1) 所给的两份有限复数准确为
+
+$$
+\begin{gathered}
+\zeta_+=\frac4{15}-\frac{2\iota}{15},\qquad
+\zeta_-=3+\frac{7\iota}{2},\\
+\frac1{\zeta_+-\iota}=\frac{12+51\iota}{61}=\gamma+\eta,
+\qquad
+\frac1{\zeta_--\iota}=\frac{12-10\iota}{61}=\gamma-\eta.
+\end{gathered}
+\tag{29.9}
+$$
+
+于是 (29.8) 给 $\mathsf S_\delta=\zeta_\delta\mathsf R_\delta$，两个 $\delta$ 同时成立。将两列同时除以 $\nu$，再用
+$H_\sigma(X)v=\iota(Cp-q)/2$、$J_C(X)v=(Cp+q)/2$，即是 (28.3)。此外，$\gamma\pm\eta\ne0$，$I\pm\iota C$ 可逆，$r\ne0$，所以这里两份 $\mathsf R_\delta$ 都非零，$\zeta_\delta$ 和两份 $\mathsf S_\delta$ 也非零；没有使用零列上任意指定比例的漏洞。
+
+最后 (29.7) 给 $w-\iota Xu=r/\nu$。保持同一个 $v$ 计算配对，得
+
+$$
+\begin{aligned}
+\operatorname{Re}(r^*T_Av)
+ &=\operatorname{Re}\left(a_1|r_1|^2
+                  -2b_2\frac{|r_2|^2}{d}\right)\\
+ &=|r_1|^2\operatorname{Re}(a_1-10b_2)
+   =\frac{648}{61}|r_1|^2.
+\end{aligned}
+\tag{29.10}
+$$
+
+因此 (29.2) 的准确值是
+
+$$
+F_\sigma:=\frac{648|r_1|^2}{61\nu^2}>0.
+\tag{29.11}
+$$
+
+全部等式只使用 $\iota^2=-1$ 和复共轭，因而分别对两个固定取向成立；没有把两种输出识别成同一个输出。
+
+同一构造还给出一个直接消费的加强：对任意给定 $\omega=(\omega_1,\omega_2)^{\mathsf T}$、$\omega_1\omega_2\ne0$，在 (29.3) 中改取 $r_1=122\omega_1/(81-37\iota)$、$r_2=122\omega_2/(81-98\iota)$，并把 $\ell$ 换成 $\omega$。其余 $d,v,z,X,\nu,u$ 的公式不变。(29.5) 仍给同一个实比例 $1/5$，故 (29.6) 仍成立；(29.7) 左侧成为 $\omega$，从而 (29.8)–(29.11) 仍逐式成立。这证明任一具有两个非零复坐标的给定像向量都供应同一符号索引的非零配对，包含任意相对相位；没有对 $\omega$ 施加实性或平衡前件。该构造在任一坐标为零时不作除法，也不声称其退化公式是见证。∎
+
+**符号与退化范围。** (29.1) 已否定全称 (28.22)，不要求逐索引分类所有核。若要在同一固定 $\sigma$ 上也取得 $\epsilon=-1$ 的非零配对，取
+
+$$
+\begin{gathered}
+\widetilde X=-\overline X,\qquad
+\widetilde u=\overline u,\qquad
+\widetilde w=\overline w,\\
+\widetilde\alpha_\delta=\alpha_{-\delta},\qquad
+\widetilde\beta_\delta=-\beta_{-\delta},\qquad
+\widetilde\zeta_\delta=-\overline{\zeta_{-\delta}}.
+\end{gathered}
+\tag{29.12}
+$$
+
+直接在 (28.3) 中代入，新的右括号为 $-\overline{\mathsf R_{-\delta}}/\nu$，新的左列为 $\overline{\mathsf S_{-\delta}}/\nu$，所以两个核等式仍成立；新的残量差向量为 $\overline{w-\iota Xu}$，实配对仍为 $F_\sigma$。两组 $\alpha$ 都严格正且有限。原问题的复 $\lambda$、任意复单位 $u$、两个轴、零列及奇异系数块仍在全称域中；反例只是从此原域中选择一份非轴、非零列成员，没有从全称域删去其他成员，也不推断它们的逐索引核形状。
+

@@ -1,0 +1,28 @@
+### 40.2 与通常量子代数和原 Born 菜单的准确关系
+
+定理 37.3 识别的完整原行具有
+
+$$
+S(c,t)-iD(c,t)=\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1.\end{cases}
+\tag{40.6}
+$$
+
+在整个已分类实际角上，AH64.1、75.1 的既有消费者给 $S-iD$ 的复线性延拓为通常或相反 $C^*$-乘法，保留伴随、准确正锥、原单位和范数；全部有限角内旧复 Gram 正。每份原限制评价有数学 GNS，循环向量平方范数准确为 $\gamma(P)$，零角质量给零向量。单行识别不提供未知整个环境的双线性、结合乘法或全部有限旧复 Gram。
+
+在 (40.2) 的实际 Pauli 块上，若 $m=\gamma(Q)>0$，同一原评价的限制唯一写成
+
+$$
+\gamma(\alpha Q+\rho(a))=m(\alpha+r\cdot a),\qquad |r|\le1.
+$$
+
+对 $|n|=1$ 的数学二元效果 $p_n=(Q+\rho(n))/2$，其未归一原质量准确为
+
+$$
+\gamma(p_n)=m\frac{1+r\cdot n}{2}.
+\tag{40.7}
+$$
+
+正线性读出、Bloch 球、Pauli 密度矩阵和平方半角形式直接复用 R5 §4、§12.8；不新作 Born 定理。$m=0$ 时整个限制为零，不定义 $r$、不作除法。只有这些效果确为原事件绑定的实际完整角菜单，并有原真实条件化时，$\gamma(p_n)/\gamma(Q)$ 才是相应原条件概率。数学正泛函、谱格、GNS 和 Pauli 表示不制造实际准备或实际菜单。
+
+同样，局部数学酉旋转不等于已供应物理门，数学投影夹心的 CP 不指定原仪器的唯一更新；复合正锥、真正相关联合、完整参考、原成功及失败记录的共同质量预算仍需其自身来源。Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Dynamical Correspondences、Theorem 1 的成熟相容乘法对应要求到 skew order derivations 的线性映射，不能为未知总 $D$ 补上线性或物理时间。
+

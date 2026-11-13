@@ -1,0 +1,90 @@
+**定理72.1的证明：保留同一实际网络。** 固定一个 $N$、一个符号 $\sigma$ 及不同指标 $i,j$。略去上标，置
+
+$$
+q_i=q_{\sigma,i}^{(N)},\quad q_j=q_{\sigma,j}^{(N)},\quad
+q=q_i+q_j,\quad a=a_i,\quad b=a_j,\quad \varepsilon=\varepsilon_N.
+$$
+
+零角允许；若某角为零，则该矩形角上的全部结论直接为零。准确沿56.2的原有限Jordan构造取
+
+$$
+\begin{gathered}
+p'=q_i+eq_ie,\qquad s=u-2p',\qquad H=h\circ s=hs,\\
+T=R\sigma(a+b)u+R(b-a)H,\qquad V=T-2Rhc.
+\end{gathered}
+\tag{73.1}
+$$
+
+$eq_ie=2e\circ(e\circ q_i)-q_i\in E$；它在相反 $h$ 角，且与 $q_i,q_j$ 正交。故 $p'$ 为原投影，$s^2=u$、$[s,h]=[s,e]=0$，并有
+
+$$
+Hq_i=-\sigma q_i,\qquad Hq_j=\sigma q_j.
+\tag{73.2}
+$$
+
+[中央续卷182.2](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md#182-原系数反射给出的第二份实际框架)给实际 $D(H,e)=sj$ 及 $iHeD(H,e)=Q$。其182.1参数可取背景 $s$、$\lambda=0,\nu=1,z_0=0$，只为取得新框架，未将本次 $c$ 换成 $s$。随后[中央续卷163.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md#163-正负强度均适用的仿射首标签投影)在该实际框架上给每个原 $y$ 的准确横向输出
+
+$$
+P_H^-D(T,y)=R(b-a)iQH P_H^-y.
+\tag{73.3}
+$$
+
+不借用协变性或未知首槽齐次性；$s,T$ 均无需与整个 $c$ 交换。
+
+55.6给内值 $D(Rh,T-Rhc)=0$。对原三元组 $(Rh,x,T-Rhc)$ 用同一完整PB，沿56.4保留两份实际外层：
+
+$$
+\begin{gathered}
+A_+=x+g+R^2c-RhT,\qquad A_-=x-g-R^2c+RhT,\\
+\mathcal J=-2x\circ g-2R^2z\circ c+2Rz\circ(hT),\\
+D(A_+,T)-D(A_-,V)=\mathcal J,\qquad
+O=D(V,A_-).
+\end{gathered}
+\tag{73.4}
+$$
+
+此抵消只需 $[h,c]=[h,T]=0$ 及
+$c\circ(hT)=(hcT+hTc)/2=T\circ(hc)$，不需 $[c,T]=0$。所有输入均在原 $E$；$O$ 是这张实际外表的输出，不是可自由指定的余量。
+
+两个窗均减约 $c$ 和 $T$，故也减约 $V$。由73.1–73.2，
+
+$$
+Vq_i=-2Rh(c-au)q_i,\qquad
+Vq_j=-2Rh(c-bu)q_j,
+$$
+
+从而
+
+$$
+\|Vq\|\le2|R|\varepsilon,\qquad
+qV^2q\le4R^2\varepsilon^2q.
+\tag{73.5}
+$$
+
+又因 $|a|,|b|\le C$，有
+
+$$
+\|T\|\le |R|\bigl(|a+b|+|a-b|\bigr)
+=2|R|\max(|a|,|b|)\le2|R|C,\qquad \|A_-\|\le M.
+\tag{73.6}
+$$
+
+对每个环境正泛函 $\omega$，$\phi(y)=\omega(qyq)$ 是同一原表 $(V,A_-,O)$ 的正读取。只丢去P2右端的非负均值平方项，便有
+
+$$
+|\omega(qOq)|^2\le
+\omega(qV^2q)\omega(qA_-^2q)
+\le4R^2\varepsilon^2M^2\omega(q)^2.
+\tag{73.7}
+$$
+
+没有除以 $\omega(q)$；零质量包含在式中。由于 $O=O^*$，全部正泛函的序分离给
+
+$$
+-2|R|\varepsilon Mq\le qOq\le2|R|\varepsilon Mq,
+\qquad \|qOq\|\le2|R|\varepsilon M.
+\tag{73.8}
+$$
+
+这以非零但统一的小预算取代56.4的零外表，未比较不同输入的 $D$ 值。
+

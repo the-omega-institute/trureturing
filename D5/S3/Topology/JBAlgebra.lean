@@ -47,13 +47,13 @@ def npow (S : X →ₗ[ℝ] X →ₗ[ℝ] X) (unit a : X) : ℕ → X
 def lmul (A : Data X S unit) (a : X) : X →L[ℝ] X :=
   (S a).mkContinuous ‖a‖ (fun x => A.product_norm a x)
 
-private def bracket (S : X →ₗ[ℝ] X →ₗ[ℝ] X) (a b v : X) : X :=
+def bracket (S : X →ₗ[ℝ] X →ₗ[ℝ] X) (a b v : X) : X :=
   S a (S b v) - S b (S a v)
 
 private theorem bracket_skew (a b v : X) : bracket S a b v = -bracket S b a v := by
   simp only [bracket, neg_sub]
 
-private theorem polarized (A : Data X S unit) (a b c v : X) :
+theorem polarized (A : Data X S unit) (a b c v : X) :
     bracket S a (S b c) v + bracket S b (S c a) v +
       bracket S c (S a b) v = 0 := by
   let _ : NonUnitalNonAssocCommRing X :=

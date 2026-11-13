@@ -1,0 +1,31 @@
+**定义 161.2（实际锚、原预算与同轴零行）。** 置 $n=u+h$，只用两种实际锚 $(p,q)=(e,j),(j,-e)$。前卷76.1–77.1在同一实际三轴的四维标量窗内准确给
+
+$$
+D(su+rh,tp+\alpha n)=rtq
+\qquad(s,r,t,\alpha\in\mathbb R).
+\tag{161.4}
+$$
+
+这里 $su+rh$ 和 $\alpha u+\alpha h+tp$ 都属于该四维窗；所用叉积是 $h\times p=q$。同时直接复用前卷16.2的全单位行、零输入零值、反对称性及同轴仿射零行，特别是
+
+$$
+D(su,y)=0\quad(y\in E),\qquad
+D(au+bh,cu+dh)=0\quad(a,b,c,d\in\mathbb R).
+\tag{161.5}
+$$
+
+这些是已识别的原值，未由一般输入线性性推得。对同一个数学正读取 $\phi$，完整P2与PB的元素式为
+
+$$
+\begin{gathered}
+B_\phi(a,b)=\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\qquad
+|\phi D(a,b)|^2\le B_\phi(a,b),\\
+\nu=D(a,b)-a\circ z,\quad\omega=a\circ b+D(a,z),\\
+D(b+\nu,z+\omega)-D(b-\nu,z-\omega)
+=-2b\circ\nu-2z\circ\omega.
+\end{gathered}
+\tag{161.6}
+$$
+
+前卷16.2和本卷123.2的准确锥接口允许环境数学态读取每张原P2；证明不把它们列为实际准备，也不将 $|\phi D|^2$ 换成 $\phi(D^2)$。
+

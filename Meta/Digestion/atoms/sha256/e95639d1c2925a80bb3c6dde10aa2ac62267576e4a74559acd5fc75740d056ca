@@ -1,0 +1,24 @@
+**命题 14.1（第三轴为零仍有完整残余理想）。** 只保留 2.1 的代数关系，在 $M_2(\mathbb C)$ 中取
+
+$$
+P=\sigma_z,\qquad Q=-\sigma_z,\qquad U=V=\sigma_x.
+\tag{14.1}
+$$
+
+则 $\mathsf A=0$、$\mathsf X=2\sigma_z$、$\mathsf Y=2\sigma_x$、$\mathsf R=I$、$\mathsf T=4I$。这是 $t=4r$ 的二维边界纤维；两份混合式均失败，且
+
+$$
+\mathsf C=0,\qquad z_{\rm ref}=0,\qquad
+\mathcal K=M_2(\mathbb C),\qquad
+|[\mathsf X,\mathsf Y]|=8I.
+\tag{14.1a}
+$$
+
+所以第三轴取向支撑不能代替残余理想的支撑。有限方程也允许非零残余与标量读取并存、以及连续残余向零积聚。
+
+证明。Pauli 乘法给 $P^2=Q^2$、$\mathsf X^2=\mathsf Y^2=4I$、$\mathsf X\circ\mathsf Y=P\circ\mathsf Y=0$，且 $\mathsf A=0$。故 $r=1,t=4$，而 $\mathsf X,\mathsf Y$ 生成 $M_2(\mathbb C)$；$\mathsf T=4I$ 生成整个理想，13.1 给 (14.1a)。
+
+与标量块 $P=Q=1/2,U=V=0$ 直和后，$\mathsf A=1\oplus0$，$\mathsf X=0\oplus2\sigma_z$，$\mathsf Y=0\oplus2\sigma_x$，故诊断代数为 $\mathbb C\oplus M_2(\mathbb C)$，$\mathcal K=0\oplus M_2(\mathbb C)$。其一维表示读取 $r=1/4,t=0$，二维表示读取 $r=1,t=4$，两者确实并存。
+
+另将 (14.1) 的四元组同时乘以参数 $\lambda\in[0,1]$，在 $C([0,1],M_2)$ 中生成诊断代数。固定坐标函数给 $\mathsf R(\lambda)=\lambda^2I$、$\mathsf T(\lambda)=4\lambda^2I$、$\mathsf A=0$。每个 $\lambda>0$ 的取值表示为二维，$\lambda=0$ 的像为标量；$\mathsf T$ 的谱为 $[0,4]$，所以不具有正下界。其 $z_{\rm res}$ 角仍满支撑，且每个正 $\lambda$ 的表示延伸在此角上为单位，因而该角中的谱也含向零积聚的正值。上述构造只实现有限两圆代数关系，不提供整个原 $E^2$ 上满足全部 P2 与完整 PB 的总 $D$。∎
+

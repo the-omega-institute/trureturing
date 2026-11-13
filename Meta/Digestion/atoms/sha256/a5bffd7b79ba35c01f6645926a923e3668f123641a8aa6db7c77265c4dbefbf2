@@ -1,0 +1,53 @@
+**定理 5.3（任意原背景的完整原秩一行）。** 在定理 5.2 的坐标中，对每个单位 $f\in H_0$，令 $P_f=ff^*$、$e_f=j^{-1}(P_f)\in E\cap I$，并令 $K_\varepsilon(A,B)=\varepsilon[A,B]/(2i)$。则
+
+$$
+D(te_f,a)=j^{-1}\bigl(tK_\varepsilon(P_f,\rho(a))\bigr)
+\quad(t\in\mathbb R,\ a\in E).
+\tag{5.7}
+$$
+
+右边是有原提升的有限秩元，等式在原 $E\cap I$ 中成立，包含它在别的分量上的精确零值。
+
+证明。置实际旧输出 $d=D(te_f,a)$。5.1 先使 $d\in E\cap I$，这一步消除了非本质表示的核方向，未假定商上的 $D$。[129.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#129-读取同一二表的数学正泛函) 的数学向量预算在正表示 $\rho$ 下给
+
+$$
+|\langle\xi,\rho D(x,y)\xi\rangle|^2
+\le\|\rho(x)\xi\|^2\|\rho(y)\xi\|^2
+-\bigl(\operatorname{Re}\langle\rho(x)\xi,\rho(y)\xi\rangle\bigr)^2
+\quad(x,y\in E).
+\tag{5.8}
+$$
+
+对 $\xi\perp f$，第一平方为零；固定自伴输出极化给
+
+$$
+\begin{gathered}
+j(d)=\delta P_f+H_f(w),\quad
+\delta=\langle f,j(d)f\rangle,\quad
+w=(1-P_f)j(d)f,\quad
+z=(1-P_f)\rho(a)f,\quad
+\beta=\langle f,\rho(a)f\rangle,\quad
+c_0=e_f\circ a,\quad
+j(c_0)=\beta P_f+H_f(z)/2.
+\tag{5.9}
+\end{gathered}
+$$
+
+5.2 对实际原 $d$ 和 $a$ 都适用，故 $w,z\in H_0$。所以 $e_f,d,c_0$ 全部支撑在实际原角 $e_L$，其中 $L=\operatorname{span}_{\mathbb C}\{f,z,w\}$，$\dim L\le3$；这些原元都在 $I$ 中，$j$ 对它们忠实。
+
+现在准确消费 [171.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#171-三阶外层调用在原核上识别完整秩一行)／静态重构卷 63.1 的同一次三阶外层 PB 计算：在原 ([128.6](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角)) 中取 $(a,te_f,0)$，得到
+
+$$
+D(te_f-d,tc_0)-D(te_f+d,-tc_0)=2t\,e_f\circ d.
+\tag{5.10}
+$$
+
+两次外层调用都在刚支付的原全角，由 [143.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#143-有限原-jb-完成的完整旧关系分类) 认回。[171.4](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#171-三阶外层调用在原核上识别完整秩一行) 的已知矩阵计算于是给
+
+$$
+2t\delta P_f+tH_f(w)=t^2H_f(i\varepsilon z/2).
+\tag{5.11}
+$$
+
+$t\ne0$ 时 $\delta=0,w=i\varepsilon tz/2$；$t=0$ 用原零行。由 $j$ 在 $I$ 上单射读回即为 (5.7)。此处只消费既有锁行计算，新增的接口是实际输出先落入 $I$，以及它和演员所生成的三个向量确有原角；没有把单分量完成像中的角公式当作一般原商公式。∎
+

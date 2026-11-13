@@ -1,0 +1,7 @@
+Construct the endpoints and positive integers $n_i$ successively.
+Start with $L_1=0$. Having chosen $L_i$, choose $n_i$ larger than
+the preceding $n_j$ and so large that
+$S_{n_i+L_i}/S_{n_i}>1-\theta$. Then choose finite $U_i>L_i$ with
+$S_{n_i+U_i}/S_{n_i}<\theta$. If $i<K$, set $L_{i+1}=U_i$.
+This is possible by (13.5), and finally set $H=U_K$.
+

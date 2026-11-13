@@ -1,0 +1,68 @@
+**定理 32.1（条件 S 的完整分类）。**在定义 31.1 的原始签名及完整 (R) 下，(S) 当且仅当存在复 Hilbert 空间 $H$ 与映射 $F:M\to H$，对全部 $a,b\in M$ 满足
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad
+F(Ua)=\omega Fa+t,\quad t=F(U1),\qquad
+c(a,b)=\|Fa-Fb\|^2,\quad \omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+\tag{32.1}
+$$
+
+最小空间 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 唯一到唯一的保标签酉同构；零模型、非忠实来源和任意仿射漂移均包含在内。反向可显式选
+
+$$
+C_\varepsilon=(4/\varepsilon+2)\|t\|^2.
+\tag{32.2}
+$$
+
+**证明。**先设 (S)。固定任意原三标签 $a,b,d$，允许重复，使用定理 23.2 的实际复制模型、共同相位补齐和全部自由含幺 $U$-项 $\mathcal T$。只约简双侧单位恒等式，其余实际次序和括号均保留；$U1$ 不约简为 $1$。即使原三标签含 $1$，其来源变量也不与新模型的真实单位合并。
+
+记 $s_N$ 为项 $s$ 在第 $N$ 个数组模型的实际求值。式 (23.8)–(23.9) 给每个固定项有限的、与 $N$ 无关的预算，因而每个固定项对 $s,z$ 的 $B_N(s_N,z_N)$ 有界。取定理 23.2 对全部有序项对的同一个有限值点态收敛子列 $N_\ell\to\infty$，得到 $c_\infty$。非负性、零对角、完整 (R) 及原三标签全部有向比较矩阵同时保留。
+
+令 $p_{\infty,j}=U^j1_{\mathcal T}$。对任意固定 $s,z\in\mathcal T$ 及 $j=1,2$，引理 31.2 沿上述同一子列给
+
+$$
+\Delta_{\infty,j}(s,z)\le\varepsilon B_\infty(s,z)
+\qquad(\varepsilon>0).
+\tag{32.3}
+$$
+
+这是有限个费用、加减与绝对值的极限，$C_\varepsilon/N_\ell\to0$；每个 $\varepsilon$ 的不等式都沿原子列成立，无须另换极限模型。$B_\infty(s,z)$ 有限，令 $\varepsilon\downarrow0$，得到在这个同一模型内
+
+$$
+s\cdot p_{\infty,j}\approx s\qquad(s\in\mathcal T,\ j=1,2),
+\tag{32.4}
+$$
+
+其中 $\approx$ 要求对全部 $z\in\mathcal T$ 的完整行与完整列同时相等。
+
+取 $s=1_{\mathcal T}$ 得 $p_{\infty,j}\approx1_{\mathcal T}$。在[有限正性桥引理 2.3、定理 8.2](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md)的自由实差空间与双侧根空间 $\mathcal N_\infty$ 中，(32.4) 因而给
+
+$$
+e_{p_{\infty,j}}\in\mathcal N_\infty,\qquad
+e_{s\cdot p_{\infty,j}}-e_s\in\mathcal N_\infty,\qquad
+D(s,p_{\infty,j})=e_{s\cdot p_{\infty,j}}-e_s-e_{p_{\infty,j}}\in\mathcal N_\infty.
+\tag{32.5}
+$$
+
+这正是全部 $s$、两个 $j$ 上的 $\mathrm{UC}$；直接调用所引定理 8.2，取得极限模型的完整仿射 Hilbert 表示。其平方根距离给被保留三标签的
+
+$$
+\sqrt{c(a,d)}\le\sqrt{c(a,b)}+\sqrt{c(b,d)}.
+$$
+
+原三标签任意，原核遂有 $\mathrm{DT}$。定理 14.1 及有限正性桥定理 1.3 给原模型的全部 (32.1) 与最小唯一性。这里不回拉未经证明的运算嵌入，不需要精确零费用条件的极限封闭性，也未使用 $\Omega_\infty(1)=0$ 作为推理前件。定理 14.1 内调用的[续卷 V 定理 1.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md)仍只在其真实固定单位商的适用域内复用，未将原始 $U$ 假定为保单位。
+
+反向设 (32.1)。置 $v_j=F(p_j)$，则 $v_1=t$、$v_2=(1+\omega)t$，故两个 $\|v_j\|$ 都等于 $T=\|t\|$。对任意 $a,z$，置 $x=Fa$、$y=Fz$；表示的对称性及 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+B(a,z)&=2(\|x\|^2+\|y\|^2),\\
+\Delta_j(a,z)&=2\bigl|\|x+v_j-y\|^2-\|x-y\|^2\bigr|\\
+&\le4T\|x-y\|+2T^2\le4T\sqrt{B(a,z)}+2T^2\\
+&\le\varepsilon B(a,z)+(4/\varepsilon+2)T^2.
+\end{aligned}
+\tag{32.6}
+$$
+
+最后一步是 $(\sqrt\varepsilon\sqrt B-2T/\sqrt\varepsilon)^2\ge0$。$B=0$ 时 $x=y=0$，直接有 $\Delta_j=2T^2$；$T=0$ 时两个缺陷都为零；全零模型也包含在内，均未除以费用或向量范数。若从表示出发核对 (R)，实际端点像差为 $(Fa-Fb)+\omega^k(Fu-Fv)$，漂移在差中抵消，三次求和即得完整 (R)。证毕。
+

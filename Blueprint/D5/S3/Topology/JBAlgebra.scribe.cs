@@ -11,6 +11,11 @@ internal sealed class JBAlgebraDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text("Let X be a real normed vector space, S:X x X -> X a specified real bilinear map, and u a specified unit. Data(X,S,u) consists of exactly six laws, for every x,y in X: symmetry S(x,y)=S(y,x); S(u,x)=x; the Jordan identity S(S(x,y),S(x,x))=S(x,S(y,S(x,x))); norm(S(x,y))<=norm(x)norm(y); norm(S(x,x))=norm(x)^2; and norm(S(x,x))<=norm(S(x,x)+S(y,y)). All products and norms below are these same specified operations. There is no nonzero-space, dimension, completeness, specialness or ambient associativity hypothesis.")),
             Paragraph(Text("Write p(a,0)=u and p(a,n+1)=S(a,p(a,n)). Write L(x) for the continuous real linear map v -> S(x,v) on all of X. Product norm domination proves its continuity. Let C(a) be the norm closure in X of the real linear span of {p(a,n): n is a natural number}. In an incomplete X this is the relative closure in X, without introducing a completion.")),
+            Describe.Lean(DescribeId.Create("polarized-jordan-commutator"),
+                DeclarationHandle.Create("D5/S3/Topology/JBAlgebra.polarized"),
+                H("The polarized Jordan commutator identity"), StatementSource.FromAuthor(F.Disp(PolarizedStatement())),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Define bracket(S,a,b,v)=S(a,S(b,v))-S(b,S(a,v)), the commutator of left multiplication by a and b applied to an arbitrary ambient vector v. Mathlib's polarized Jordan identity gives twice the cyclic sum equal to zero; cancellation of the nonzero real scalar two gives the displayed identity. Only Data on the original real normed carrier is assumed.")))),
             Describe.Lean(DescribeId.Create("power-multiplication"),
                 DeclarationHandle.Create("D5/S3/Topology/JBAlgebra.power_mul"),
                 H("All natural powers"), StatementSource.FromAuthor(F.Disp(PowerStatement())),
@@ -45,6 +50,10 @@ internal sealed class JBAlgebraDocument : IScribeDocumentDefinition
     private static Formula Scope(Formula body) => All("X", V("RealNormedSpaces"),
         All("S", Call("RealBilinearMaps", V("X")), All("u", V("X"),
             Imp(Call("Data", V("X"), V("S"), V("u")), All("a", V("X"), body)))));
+    private static Formula Bracket(string a, Formula b) => Call("bracket", V("S"), V(a), b, V("v"));
+    private static Formula PolarizedStatement() => Scope(All("b", V("X"), All("c", V("X"), All("v", V("X"),
+        Eq(Add(Add(Bracket("a", Product(V("b"), V("c"))), Bracket("b", Product(V("c"), V("a")))),
+            Bracket("c", Product(V("a"), V("b")))), F.D(0))))));
     private static Formula PowerStatement() => Scope(All("m", V("Naturals"), All("n", V("Naturals"),
         Eq(Product(Power(V("m")), Power(V("n"))), Power(Add(V("m"), V("n")))))));
     private static Formula CommuteStatement() => Scope(All("m", V("Naturals"), All("n", V("Naturals"),

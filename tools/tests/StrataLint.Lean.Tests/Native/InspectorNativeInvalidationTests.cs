@@ -15,4 +15,8 @@ public sealed class InspectorNativeInvalidationTests(InspectorCompilerFixture co
     [InlineData("test_native.NativeCompilerTests.test_native_facet_supplies_toolchain_environment")]
     [InlineData("test_native.NativeCompilerTests.test_public_module_report_and_private_job_is_not_a_target")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
+    [Fact]
+    public void CollectionDrainsProjectionAndPreparationRoots() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeCompilerTests.test_collection_drains_projection_and_preparation_roots");
 }

@@ -1,0 +1,25 @@
+**定义 13.2（约化控制器和返回误差）。** $H$ 的 $|+\rangle,|-\rangle$ 是固定原始标签。每次槽后在 $S,H$ 上施行同一个确定性通道 $\mathcal C$，恒等作用于 $R,E$，其 Kraus 算子为
+$$
+L_+=I_S\otimes|+\rangle\langle+|,\qquad
+L_{ab}=\frac{|a\rangle\langle b|_S}{\sqrt2}\otimes|-\rangle\langle-|_H
+\quad(a,b\in\{0,1\}),
+\tag{13.7}
+$$
+$$
+\mathcal C(X)=L_+XL_+^\dagger+\sum_{a,b}L_{ab}XL_{ab}^\dagger .
+\tag{13.8}
+$$
+五个 Kraus 项全部求和；它们的平方和为 $I_{S H}$。$H$ 的每一个原始 $b$、$E$、所有槽输出和控制器记录均留在最终口 $K$；(13.7) 的 Kraus 索引是代数求和指标，不是新原始读数。探针初态为明确供给的 $I_S/2$，没有接入不可见纯化。
+
+在 $M$ 槽后用额外的一次场重置于 $+d e_x$，在同一 $R$ 上执行终端交换
+$$
+U_{\rm term}=\exp\!\left[-\,\frac{i d\tau _0}{2j}\,J\cdot\sigma\right].
+\tag{13.9}
+$$
+该交换不计入 $M$ 个获取槽，计为一个单独的终端接触，其量子输出及其环境均属于 $K$。设同一运行的最终完整态为 $\Omega_{n,h}\in\mathsf D(R\otimes K)$，$\omega_{n,h}=\operatorname{Tr}_R\Omega_{n,h}$，并定义
+$$
+\Delta_{n,h}=D(\Omega_{n,h},\tau_h\otimes\omega_{n,h}).
+\tag{13.10}
+$$
+这里的 $K$ 是实际最终保留口；没有把未观测的 Kraus 指标或一个证明用环境追加为返回系统。
+

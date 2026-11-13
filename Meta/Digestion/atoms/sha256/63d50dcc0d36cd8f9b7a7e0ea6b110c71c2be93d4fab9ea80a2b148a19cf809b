@@ -1,0 +1,19 @@
+**引理 67.1（自伴收缩给出的全正 P2 预算）。** 对任意自伴收缩 $C_0\in M_n(\mathbb C)$，在全部自伴矩阵对上定义
+
+$$
+\widehat D_{C_0}(A,B)=\frac i2(AC_0B-BC_0A).
+\tag{67.1}
+$$
+
+该值自伴、反对称，满足每个数学正泛函的两向 P2；此结论不含 PB。
+
+证明。正泛函写作 $\phi(T)=\operatorname{Tr}(\rho T)$，$\rho\ge0$，不归一化。将 Hilbert–Schmidt 空间视为实 Hilbert 空间，置 $x=A\rho^{1/2}$、$y=B\rho^{1/2}$、$z=iC_0x$。因 $C_0=C_0^*$，$x\perp z$，且 $\|z\|\le\|x\|$。归一这两个非零正交向量后用实 Bessel 不等式，得到
+
+$$
+\langle x,y\rangle_{\mathbb R}^2+\langle z,y\rangle_{\mathbb R}^2
+\le\|x\|^2\|y\|^2.
+\tag{67.2}
+$$
+
+零向量直接处理。两内积分别为 $\phi(A\circ B)$ 和 $\operatorname{Im}\operatorname{Tr}(\rho AC_0B)=-\phi(\widehat D_{C_0}(A,B))$，而两平方范数是 $\phi(A^2),\phi(B^2)$。故67.2正是 Hermitian 二表的行列式非负；对角非负，反对称给反向表。零质量同样成立，不除以质量。∎
+

@@ -142,3 +142,64 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualLinearPeak.ActualKernelSubexponential
 end
+
+namespace Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualLinearPeak.AffineTail
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Weil.Mertens.IntegratedExplicit
+open _root_.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity
+open LeanInformationAudit
+noncomputable section
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ t => K t) (fun e => nomatch e)
+
+def zeroFamily : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ (tau a b : ℝ) (_ : 0 < tau)
+    (_ : ∀ t : ℝ, tau ≤ t → R.readout () () t ≤ a * t + b), RiemannHypothesis
+
+private theorem actual_law : arena.Law actual := actual_kernel_affine_tail_implies_rh
+
+private theorem source_reconstruction :
+    (type_of% @actual_kernel_affine_tail_implies_rh) ↔ arena.Law actual := Iff.rfl
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro role
+  obtain ⟨n, x, y, hxy⟩ :=
+    _root_.Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualKernelLocalPositivity.actual_dependence ()
+  by_contra hh
+  push Not at hh
+  apply hxy
+  ext i j
+  change (K (x i - x j) : ℂ) = (K (y i - y j) : ℂ)
+  exact congrArg Complex.ofReal (hh () (x i - x j) (y i - y j))
+
+/-- With the RH conclusion fixed, this exact single-K family can vary the law
+only if RH is false. No countermodel or four-slot registration is asserted. -/
+private theorem variation_iff_not_rh : Variation arena actual ↔ ¬ RiemannHypothesis := by
+  constructor
+  · rintro ⟨_, bad, hbad⟩ hRH
+    exact hbad (fun _ _ _ _ _ => hRH)
+  · intro hnot
+    refine ⟨actual_law, zeroFamily, ?_⟩
+    intro h
+    exact hnot (h 1 0 0 zero_lt_one (by intro t ht; simp [zeroFamily, realize]))
+
+private theorem sensitivity_implies_not_rh
+    (h : Sensitivity arena actual) : ¬ RiemannHypothesis := by
+  obtain ⟨bad, _, _, hbad⟩ := h.1 ()
+  intro hRH
+  exact hbad (fun _ _ _ _ _ => hRH)
+
+/- The source bridge and actual dependence compile. Whole-family variation
+and sensitivity are not supplied: for this faithful single-K arena they
+require a proof of not RH. No Contract.Registration is claimed. -/
+
+end
+end Reg.D5.S3.Weil.Mertens.IntegratedExplicit.ActualLinearPeak.AffineTail

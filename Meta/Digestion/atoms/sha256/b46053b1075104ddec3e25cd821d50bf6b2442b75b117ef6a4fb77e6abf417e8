@@ -1,0 +1,91 @@
+**定理119.10（法向冗余的原域公式）。**
+在EB3+Inj下，令
+$a(p)=\dim_{\rm aff}\mathcal A_p$，
+$N_F=\{h\in C^*:h|_F=0\}$，锥维数指其线性张成的维数。则
+
+$$
+\dim N_p=a(p)+4,\qquad
+N_{D_p}=\operatorname{cone}\mathcal A_p,\qquad
+\dim N_{D_p}=a(p)+1.
+\tag{IX119.23}
+$$
+
+若 $q\in S(D_p)$，则 $a(q)=a(p)$。
+至少存在一个原纯点 $p_0$，使 $\mathcal A_{p_0}$ 是单点；
+这一性质沿原正交图中从 $p_0$ 出发的所有有限边路传播。
+
+证明分四步。
+
+第一步，$h\in\operatorname{ri}N_p$ 在 $K$ 中恰于 $p$ 为零。
+对任意 $k\in N_p$，相对内部性给某个 $t>0$，使 $h-tk\in N_p$。
+若 $h(x)=0,x\in K$，则
+$0\le(h-tk)(x)=-tk(x)$，所以所有 $k(x)=0$。
+反之公共零点当然是 $h$ 的零点。
+任选 $a_p\in\mathcal A_p$，$u-a_p\in N_p$ 的零集由引理119.1恰为 $\{p\}$；
+公共零集因此恰为 $\{p\}$。
+
+第二步，常数一限制切片遇到 $\operatorname{ri}N_p$。
+取非零 $h_0\in\operatorname{ri}N_p$，写
+$h_0(c+Bw)=\alpha+v\cdot w$。
+若 $v\ne0$，在球边 $-v/\|v\|$ 取
+$f\in\mathcal A_{c-Bv/\|v\|}$，其斜率为 $-\beta v/\|v\|$、$\beta>0$；
+于是 $h_0+(\|v\|/\beta)f$ 仍在 $\operatorname{ri}N_p$，限制为正常数。
+这里使用凸锥的 $\operatorname{ri}N_p+N_p\subseteq\operatorname{ri}N_p$。
+若 $v=0$ 则无需添加；非常零性和原最大值公式保证该常数正。
+用这个常数归一，得到
+$g_c\in\operatorname{ri}N_p,\ g_c|_F=1$。
+
+限制映射
+$R:\operatorname{span}N_p\to\operatorname{Aff}(F)$ 由六张效应满射，
+因为(IX119.7)提供常数及全部三个坐标。并且有准确集合等式
+
+$$
+\mathcal A_p=u-\{g\in N_p:Rg=1_F\}.
+\tag{IX119.24}
+$$
+
+右侧中 $g\le u$ 由原最大值公式自动保证。
+切片遇相对内部，所以它的仿射维数等于
+$\dim N_p-\dim\operatorname{Aff}(F)=\dim N_p-4$，得到第一项。
+
+对非零 $h\in N_F$，在全局最大面选原纯点 $s$。
+$h/\max_Kh$ 确认 $s$ 并零于 $F$，所以 $F\subseteq D_s$，
+极大性和Inj给 $D_s=F,s=p$。
+故归一后的 $h\in\mathcal A_p$，反向包含显然。
+$\mathcal A_p$ 恰为此锥的 $h(p)=1$ 切片，得到后两项维数公式。
+
+第三步，设 $q=c+Bv,\|v\|=1$。
+所有 $b\in\mathcal A_q$ 均在 $N_p$，并且
+
+$$
+b|_F=1-\beta+\beta v\cdot w,\qquad\beta>0.
+$$
+
+在 $\operatorname{span}N_p$ 中允许 $\beta\in\mathbb R$，定义这个仿射限制族为 $L_q$。
+由 $R$ 满射，$\dim L_q=\dim\ker R+1=a(p)+1$。
+选 $k\in\operatorname{span}N_p$ 使 $Rk=v\cdot w$；
+对充分小 $t>0$，
+$h=(g_c+tk)/(1+t)$ 在 $\operatorname{ri}N_p\cap L_q$。
+取 $r\in D_q\setminus\{p\}$。
+第一步给 $h(r)>0$，但全部 $\mathcal A_q$ 在 $r$ 上为零。
+因此评价 $r$ 的零超平面在 $L_q$ 中是真超平面，
+$a(q)\le\dim L_q-1=a(p)$。
+交换两端，因 $p\in S(D_q)$，得到相反不等式，遂相等。
+
+第四步，在 $\operatorname{aff}K$ 内任选一个内点 $o$，扩大以它为心的辅助欧氏球，
+到半径 $\operatorname{dist}(o,\partial_{\rm rel}K)>0$ 第一次接触 $K$ 的边界，取接触点 $x$。
+每个在 $x$ 支持 $K$ 的超平面也支持内球，因而必须是内球在 $x$ 的唯一切超平面。
+所以正线性泛函中在 $x$ 为零者形成一条射线。
+纯点的法向锥由第一项维数至少为四，故 $x$ 不纯。
+取包含 $x$ 的最小面；有限维凸几何使 $x$ 在其相对内部。
+它非点且真，由面分类恰为某个 $D_{p_0}$。
+在相对内点为零的正泛函恰是零于整个面的正泛函，
+故 $\dim N_{D_{p_0}}=1$，从(IX119.23)得到 $a(p_0)=0$。
+$\mathcal A_{p_0}$ 非空且仿射维数零，因此是单点。
+第三步沿有限边路传播。证毕。
+
+这里的图以全部原纯点为顶点、原排除为边；
+所证的是一个实际图分支，不是预先给定的拓扑连通分量。
+Inj是球标签唯一；$a(p)=0$ 是整个完整确认效应唯一，二者不同。
+没有证明全图连通，没有证明达到 $M$ 的球属于该零冗余分支。
+

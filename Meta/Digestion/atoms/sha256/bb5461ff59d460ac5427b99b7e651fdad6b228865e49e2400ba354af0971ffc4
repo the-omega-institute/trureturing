@@ -1,0 +1,39 @@
+**定义 71.1（完整原条件与固定对象）。** 完整采用55.1–55.3和[原PB运输续卷118.1–118.3](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md#118-任意原偶背景第一实际框架与同一余量)的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确原锥、全部原P2和完整原PB。原评价及全部零、不等、次归一质量保留；PB仍对全部原三标签成立，不限于下文选用的网络。七项实际来源逐项合取61.1、69.1及其纳入的全部上游合同全文，具体消费者范围取78.2；区间窗和数学迹不替换任何原前件。沿同一个忠实、含单位、等距且准确保锥的JC包含，仍有
+
+$$
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\quad \mathcal A=C^*(X),\quad
+S(a,b)=a\circ b=(ab+ba)/2.
+\tag{71.1}
+$$
+
+此包含的原候选来源已由[配平三角续卷240–251](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#240-一般原候选的有限商障碍与无种子复载体)支付；不再另列特殊性缺口，也不把JC包含提升为 $E=\mathcal A_{\rm sa}$。原域可不完备、不可分、无原子，$X$ 不必填满环境自伴部。固定实际原框架
+
+$$
+h,e,j=D(h,e)\in E,\quad h^2=e^2=j^2=u,\quad
+h\circ e=h\circ j=e\circ j=0,\qquad
+Q=ihej\in Z(\mathcal A),\quad Q^*=Q,\quad Q^2=u.
+\tag{71.2}
+$$
+
+$Q$ 不要求是原标签。对任意原 $h$-偶 $c$、原 $h$-奇 $z$ 及实数 $R$，保留55.5的同一次实际输出：
+
+$$
+\begin{gathered}
+x=c+z,\qquad t=D(h,z)=iQhz,\qquad
+g=D(Rh,x),\qquad r=g-Rt,\qquad [h,r]=0,\quad z\circ t=0,\\
+v_c=K_c(r):=c^2\circ r-c\circ(c\circ r)\in E,\qquad
+4v_c=[c,[c,r]].
+\end{gathered}
+\tag{71.3}
+$$
+
+这些 $c,z,R,x,t,g,r,Q$ 在全部窗和全部PB调用中保持不变。$K_c$ 是显示的有限Jordan算子，区别于55.4的窗盲空间、辅助交换子和原全词合同的同名字母。下文的实数
+
+$$
+C=\|c\|,\qquad Z=\|z\|,\qquad G=\|g\|,\qquad \rho=\|r\|
+\tag{71.4}
+$$
+
+只作范数常数；71.4中的 $C$ 不表示原正锥。
+

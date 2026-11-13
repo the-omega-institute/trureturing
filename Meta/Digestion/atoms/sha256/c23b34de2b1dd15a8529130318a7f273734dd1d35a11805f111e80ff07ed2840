@@ -1,0 +1,18 @@
+证明。取 $\eta=(1-i)/\sqrt2$，明确令
+
+$$
+\begin{gathered}
+h=\operatorname{diag}(1,1,-1,-1),\qquad
+c=\operatorname{diag}(1,-1,-1,1),\qquad r=c/16,\\
+x=\begin{pmatrix}
+1&0&1&\eta\\
+0&-1&\eta&1\\
+1&\bar\eta&-1&0\\
+\bar\eta&1&0&1
+\end{pmatrix}.
+\end{gathered}
+\tag{24.3}
+$$
+
+这里的 $c$ 确为24.1的偶部分，$h,x,r$ 自伴且所需两个交换关系成立。为完整证明全部态预算，以下保留所有非交换项，给出整个实参数平面的解析正性证书。
+

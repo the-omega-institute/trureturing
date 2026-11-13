@@ -1,0 +1,40 @@
+**定理 31.2（任意次数演员的一次外层交换性）。** 在定义 31.1 的标准完整 PB 模型中，任取 $A,B\in E_n$、实 $t$。若 $\operatorname{PB}(A;B,tu)$ 的任一实际外层对 $(R,S)$ 的两个标签次数都至多一，则 $[R,S]=0$。演员 $A,B$ 不受次数限制，也不预设交换或内层零值。对外层对再作任意普通 O$(2)$ 换基，不能得到非交换的一次对。
+
+证明。记 $e_*=D_*(A,B)$、$q=A\circ B$。对 $\varepsilon\in\{1,-1\}$，实际外层的复记录准确为
+
+$$
+Z_\varepsilon=B+\varepsilon(e_*-tA)
+ +\mathrm i(tu+\varepsilon q)
+ =(u+\varepsilon\mathrm iA)(B+\mathrm itu).
+\tag{31.3}
+$$
+
+令 $Q=A(B+\mathrm itu)$。有限矩阵多项式中有
+
+$$
+Z_\varepsilon^*Z_\varepsilon=B^2+t^2u+Q^*Q.
+\tag{31.4}
+$$
+
+若 $\deg Z_\varepsilon\le1$，则 $\deg B,\deg Q\le1$。否则令两者最高次数为 $d\ge2$，右端 $x^{2d}$ 的系数是 $B_d^2+Q_d^*Q_d$，缺项按零计算。至少一项非零，正的两项之和不能为零，左端次数却至多二，矛盾。
+
+写 $B=\beta u+xB_1$、$A=\sum_{k=0}^m x^kA_k$、$A_0=\alpha u$，并记 $c=\beta+\mathrm it$。若 $c\ne0$ 且 $m\ge2$，$Q=A(cu+xB_1)$ 的最高两项给
+
+$$
+A_mB_1=0,\qquad cA_m+A_{m-1}B_1=0.
+\tag{31.5}
+$$
+
+第一式取伴随给 $B_1A_m=0$，第二式右乘 $A_m$ 给 $cA_m^2=0$，违反自伴的 $A_m\ne0$。所以 $\deg A\le1$；$Q$ 的二次项再给 $A_1B_1=B_1A_1=0$，从而 $[A,B]=0$。零多项式或常数 $A$ 直接包含。若 $c=0$，则 $\beta=t=0$，$Q=xA(x)B_1$ 次数至多一，故 $A_kB_1=B_1A_k=0$ 对全部 $k\ge1$ 成立，仍有 $[A,B]=0$。
+
+因此 (31.3) 的两个自伴分量是 $B-\varepsilon tA$ 与 $tu+\varepsilon AB$，彼此交换。最后，对任何实矩阵 $O=\begin{pmatrix}p&q\\r&s\end{pmatrix}$，
+
+$$
+[pR+qS,rR+sS]=\det(O)[R,S].
+\tag{31.6}
+$$
+
+O$(2)$ 可逆，且换基及逆换基均保持次数至多一，故结论也覆盖换基后的外层对。全证明只比较有限多项式系数，不把区间外的值当原读取，也不用逆元、完成输入或未知响应延拓。∎
+
+取通常的 Pauli 矩阵，$F=2x\sigma_z$、$G=x\sigma_x$ 满足 $[F,G]=4\mathrm ix^2\sigma_y\ne0$。所以 $(F,G)$、$(u+F,G)$ 及其全部普通 O$(2)$ 换基，都不可能是该单位第三标签族的实际外层。这只否定普遍外层覆盖步骤，不否定目标值作为内层参与其它调用而受到约束。本卷 8–11 的图只含交换演员的零内行运输；31.2 则允许任意演员和非零内层，是不同的覆盖边界。
+

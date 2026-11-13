@@ -42,6 +42,30 @@ For any two complete minimal representations, real polarization and the specifie
 
 Conversely, the norm-square identity in any representation gives the balance law: omega has modulus one and 1+omega+omega squared is zero, so all mixed inner-product terms cancel. This establishes both directions under the original additive-group hypotheses. The construction is mathematical completion and scalar extension; it asserts no native physical real-scalar operation or process implementation.
 
+### Application: recovering an overlap from three distances
+
+Let H already be a complex inner-product space, with conjugate-linear first slot, and let x,y be arbitrary vectors. Set omega=-1/2+i sqrt(3)/2 and d_k(x,y)=norm(x-omega^k y)^2 for k=0,1,2. The complex scalars and phase operations are premises of this application. Unit norms and completeness are unnecessary for the following reconstruction.
+
+$$
+\forall (x : H), \forall (y : H), \operatorname{inner}\left(x, y\right) = -\frac{1}{3} \cdot (\sum_{k \in \operatorname{Fin}\left(3\right)} \operatorname{conj}\left(omega^{k}\right) \cdot \operatorname{d}\left(k, x, y\right))
+$$
+
+Mathlib norm_sub_sq and inner_smul_right give d_k=norm(x)^2+norm(y)^2-2 Re(omega^k inner(x,y)), since each phase has modulus one. Multiplying these three equalities by conjugate(omega^k) and adding cancels the common norm terms, because 1+omega+omega^2=0. Expanding the real parts leaves -3 inner(x,y). Thus this is an application of the existing norm expansion and finite phase algebra, rather than an additional representation theorem.
+
+For original labels a,b, use one HilbertRepresentation U q from the displayed characterization. Its additive label map iota, norm-square identity q(a)=norm(iota(a))^2, and phase identity iota(Ua)=omega iota(a) give the parameter correspondence below. Existence of such a representation follows under AddCommGroup A, additive U, q nonnegative on every label, and the universal three-way balance law above; the comparison readings alone do not supply those premises.
+
+$$
+\forall (a : A), \forall (b : A), \forall (k : \operatorname{Fin}\left(3\right)), \operatorname{d}\left(k, \operatorname{iota}\left(a\right), \operatorname{iota}\left(b\right)\right) = \operatorname{q}\left(a - \operatorname{apply}\left(U^{k}, b\right)\right)
+$$
+
+If additionally norm(x)=norm(y)=1, Cauchy--Schwarz gives normSq(inner(x,y)) <= 1. This is a squared-overlap bound. A Born probability interpretation requires a separate operational rule.
+
+Endpoint reversal conjugates the inner product: inner(y,x)=conjugate(inner(x,y)). For distances the corresponding identity is d_k(x,y)=d_{-k mod 3}(y,x), so swapping endpoints also conjugates the phase. A fixed non-real phase need not give a symmetric reading: with x=1,y=i and phase i, the two squared distances are 4 and 0. These endpoint identities say nothing about reversing the order of successive physical measurements.
+
+Completing the label image to a complex Hilbert space introduces mathematical linear combinations. It does not establish that the original labels are closed under physically available superposition preparations. This application derives no preparation or effect system, Born interpretation, probability additivity, state update, tensor composition, or dynamics.
+
+白话：已经有复内积结构时，给同一对对象加上三个指定相位，测三个平方距离，就能还原它们的复重叠；对象不必先归一化。若两者均为单位范数，平方重叠就不超过 1。交换两端还必须反转相位，这不是证明先测谁后测谁都一样，也没有从比较本身推出量子物理。
+
 ## References
 
 - Truth anchor: `D5/S3/QuadraticForms/ThreeWayPositiveKernel.three_way_hilbert_characterization`

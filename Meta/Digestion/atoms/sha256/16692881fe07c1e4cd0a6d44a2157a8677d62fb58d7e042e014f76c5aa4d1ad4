@@ -1,0 +1,16 @@
+**推论 9.1（同一原 $D$ 的全部正则性成为结论）。** 在定理2.3的前件下，同一 $D$ 实双线性且有界连续，具有中央实双模律、中央平移中性、中央投影下降和 character 商下降。准确地，对 $\alpha,\beta\in A_{\rm sa}$、中央投影 $c\in A$，
+
+$$
+\begin{gathered}
+D(\alpha x,\beta y)=\alpha\beta D(x,y),\qquad
+D(x+\alpha1,y)=D(x,y),\\
+D(cx,cy)=cD(x,y),\qquad
+\pi_\chi D(x,y)=\chi(Q)\frac i2[\pi_\chi x,\pi_\chi y],\\
+\|D(x,y)-D(x',y')\|
+\le\|x-x'\|\|y\|+\|x'\|\|y-y'\|.
+\end{gathered}
+\tag{9.1}
+$$
+
+证明。全部公式现在由已经识别的2.8在已知结合代数中直接计算；最后一式用交换子范数估计。商映射在此才可作为同一旧响应的真正下降接口。∎
+

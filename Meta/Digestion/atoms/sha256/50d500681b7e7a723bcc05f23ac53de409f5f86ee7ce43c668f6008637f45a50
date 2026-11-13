@@ -1,0 +1,66 @@
+### 40.1 已有 R5 几何在实际 Pauli 块上的参数对应
+
+这里 R5 指[《有向面积与三元返回》§12](https://github.com/the-omega-institute/trureturing/blob/aef46ce7497cf8ee6bef9bb7356a4483f3bfe6f0/docs/develop/theory/AURIC_R5_022_ORIENTED_AREA_AND_TERNARY_RETURN.md)，直接身份为 `aef46ce7497cf8ee6bef9bb7356a4483f3bfe6f0`。其定义 12.1、定理 12.2 已给：任意实 $V$ 上的非零交替双线性 $D:V^2\to V$ 若对整个原 $V$ 满足
+
+$$
+D(D(a,b),d)\in\operatorname{span}_{\mathbb R}\{a,b\},
+\qquad
+D(a,D(a,b))\in\mathbb R D(a,b)\Rightarrow D(a,b)=0,
+\tag{40.1}
+$$
+
+则整个原 $V$ 三维，$g_D(a,b)=-\tfrac12\operatorname{Tr}_V(L_aL_b)$ 正定，并有精确返回和叉积描述。这个现成结果的双线性、交替性、非零性、同域闭合及两个全域条件都须支付；不从它倒推本卷一般任意总 $D$ 的双线性。
+
+具体地，在一个已经整体分类的实际 $C=PAP$ 内，取实际 Pauli 矩阵子代数 $B\cong M_2(\mathbb C)$，单位为 $Q\le P$。它可以由 §28 的实际等价谱格通道产生；$B$ 只是实际子代数，不把较大的整个 $QAQ$ 偷换成二阶矩阵代数。选通常 Pauli 轴 $\tau_1,\tau_2,\tau_3\in B$，记
+
+$$
+\rho(a)=\sum_{j=1}^3a_j\tau_j,\qquad
+V=B_{\rm sa}\cap\ker\operatorname{Tr}_2,
+\qquad a\in\mathbb R^3.
+$$
+
+整个 $C$ 的分类在 $B$ 上逐值给
+
+$$
+\rho(a)\circ\rho(b)=(a\cdot b)Q,
+\qquad
+D(\rho(a),\rho(b))=-\sigma\rho(a\times b).
+\tag{40.2}
+$$
+
+因此同一个原 $D$ 在 $V$ 上非零、闭合、交替双线性。其二次返回为
+
+$$
+D(D(\rho(a),\rho(b)),\rho(d))
+=\rho\bigl((a\cdot d)b-(b\cdot d)a\bigr),
+$$
+
+故 P 成立。若 $w=D(\rho(a),\rho(b))\ne0$，则 $w$ 与 $\rho(a)$ 正交且后者非零，$D(\rho(a),w)$ 非零且与 $w$ 正交，因而不在 $\mathbb Rw$，故 N 成立。行算符在此参数下为 $L_{\rho(a)}=-\sigma(a\times\cdot)$，准确有
+
+$$
+g_D(\rho(a),\rho(b))=a\cdot b.
+\tag{40.3}
+$$
+
+这支付 R5 §12 的每个前件，直接复用其局部几何和 §12.8 的 Pauli/Born 消费者；不另作包装定理或重复叉积分类。这里的简化是：在上述实际 Pauli 块的全部旧响应已识别后，局部取向可看成同一把尺上的两个手性，二次返回不依赖手性；§37 则在原外标签上把普通取向解释成右平方或左平方，二者由同一次 PB 比较。前者描述已付局部三维关系，后者消费实际环境中的两份原调用，量词不同。
+
+还须保持复乘法约定。R5 §4 使用 $\circ+iD$，本卷及 AH 使用 $\star_F=\circ-iD$；在同一已识别块上
+
+$$
+\star_{\rm R5}=\circ+iD=(\star_F)^{\rm op},\qquad
+x\star_F y=\begin{cases}xy,&\sigma=1,\\yx,&\sigma=-1.\end{cases}
+\tag{40.4}
+$$
+
+两者有同一 Jordan 平方、伴随、准确正锥、范数与实评价；普通乘法和相反乘法的身份不能因同一 Born 配对而混淆。
+
+全 $A_{\rm sa}$ 保留中央单位，且一般环境还可含高阶块，不能直接当作 R5 的这个无中心三维 $V$；一般 $\Omega$ 也没有自动得到同一实线性域及全域 P、N。已付 $D(\mu1,b)=0$ 不提供一般输入可加性。相对单位 $P\ne1$ 的混合行另有位置依赖：即使全域标准 $K_\sigma$，也准确有
+
+$$
+K_\sigma(c+\lambda P,t)
+=K_\sigma(c,t)+\lambda K_\sigma(P,t).
+\tag{40.5}
+$$
+
+故 $[P,t]\ne0$ 时不能使用未经修正的局部单位平移中性。若要在未知行之间运输，须另证保留标签的修正余量身份，例如比较 $D(c+\lambda P,t)-K_\sigma(c+\lambda P,t)$ 与 $D(c,t)-K_\sigma(c,t)$；这里未从完整 PB 推出这样的运输式，也不将它增加为公理。
+

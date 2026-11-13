@@ -1,0 +1,51 @@
+**定义 16.1（完整原关系与双边输入域）。** 沿用定义 6.1–6.2 的完整原候选及其引文身份。具体取任意含单位复 C* 代数 $B$、$A=M_3(B)$，原域准确为 $E=A_{\rm sa}$，$S(u,v)=u\circ v=(uv+vu)/2$、$C=A_+$、单位 $1_A$、$N=\|\cdot\|$。同一原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $C$；原 $\Omega/\mathrm{native}$、每个原标签、每份评价及全部零、不等、次归一和原表示意义下的非正常质量保持。未知量始终是同一个任意总映射 $D:E^2\to E$。
+
+完整 $\mathsf H_A(D)$ 保留全部有向 A1/P2：
+
+$$
+\begin{pmatrix}
+\gamma(u^2)&\gamma(u\circ v)-i\gamma D(u,v)\\
+\gamma(v\circ u)-i\gamma D(v,u)&\gamma(v^2)
+\end{pmatrix}\succeq0
+\quad(u,v\in E,\ \gamma\in\mathcal P),
+\tag{16.1}
+$$
+
+包括两种次序。A2 仍为全部相加三元组 $(u_1,u_2,u_3)=(u+v,u,v)$ 及其排列：实表 $(\gamma(u_i\circ u_j))_{i,j=1}^3$ 在整个 $\mathbb R^3$ 上半正定，$(1,-1,-1)$ 及相应排列给零二次值；A3 仍为 $1_A^2=1_A$，以及同一固定有理 $0<\vartheta\le1$ 下全部 $0\le u\le\vartheta1_A\Rightarrow u^2\le u$。对每个原 $c,u,v\in E$，全部实际内外层 PB 是
+
+$$
+\begin{gathered}
+V=D(c,u)-c\circ v,\qquad W=c\circ u+D(c,v),\\
+D(u+V,v+W)-D(u-V,v-W)=-2u\circ V-2v\circ W.
+\end{gathered}
+\tag{16.2}
+$$
+
+零、重复、全部实幅度、缩放、平移、背景及嵌套调用均在原量词内。不预给 $D$ 输入连续性、可测性、齐次性、可加性、协变性、压缩自然性、商下降、双对偶延拓或有限阶段输出闭合。
+
+令 $E_{ij}z$ 表示矩阵单元张量 $z\in B$，并固定
+
+$$
+\begin{gathered}
+p=E_{11}+E_{22},\quad q=E_{33},\quad
+h=E_{11}-E_{22},\quad e=E_{12}+E_{21},\\
+h^2=e^2=p,\qquad he=-eh,\qquad
+K_\sigma(u,v)=\frac{\sigma i}{2}[u,v],\quad\sigma\in\{1,-1\}.
+\end{gathered}
+\tag{16.3}
+$$
+
+对一般 $B$，明确要求同一个旧 $D$ 在**整个完成角** $pAp$ 上满足 (6.4)，普通符号为 $\sigma$。这不是仅一份 $M_2$ 子代数的分类，也不要求 $13$ 或 $23$ 角分类。对任意完成系数 $x,y\in B$，定义
+
+$$
+\begin{gathered}
+b_+(x)=E_{13}x+E_{31}x^*,\qquad
+b_-(y)=E_{23}y+E_{32}y^*,\\
+\mathcal B_{\rm bal}
+=\{b_+(x)+b_-(y):x,y\in B,\ x^*x=y^*y\}.
+\end{gathered}
+\tag{16.4}
+$$
+
+等右 Gram 是所研究的二元输入对 $(Rh,b)$ 中第二输入的限制，不是新公理。$L_a z=a\circ z$；若 $a=Rh$，则 $L_ab_+=(R/2)b_+$、$L_ab_-=-(R/2)b_-$。当 $R\ne0$ 且 $x,y\ne0$ 时，两个相反模同时存在，$b_++b_-$ 不属于单一特征空间。
+

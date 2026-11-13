@@ -1,0 +1,10 @@
+**定义 64.3（应用归属及未付边界）。** 此为 $\texttt{repo-derived}$ 的普通纸面条件模型应用：与41及49.3相比，实际删除的是独立指定局部 $H_n(\mathbb C)$ 类型；完整实 JB 截面、满点评价把247.1接到43–48。没有重新证明247、宣称新的有限类型分类或减少A1–A3/P2/PB及七来源。简单有限纤维、固定秩 $n\ge3$、局部平凡、完整原域和准确评价仍是前件，全部原值分类仍需 $L$ 稠密；一般 JB／type III、混合或退化层、非局部平凡及不完整原域的原值和成员资格不由此解决。248的一般 JC 包含只是较弱表示边界，不自动给内在 C* 自伴部、共同取向或旧响应全域识别。
+
+固定来源：[平方丛卷41–50及所纳入30–40][IFJB-JOR]与[配平续卷240.1–240.2、241–247][IFJB-PB]；248只作上述边界比较。成熟有限 JB 类型字典为 Hanche-Olsen–Størmer Theorem 2.9.6、§2.9.7、Theorem 2.9.8、Remark 2.9.9（印刷页72–74），类型排除消费247.1；平方根／序范数取62.1所列原典，乘法二分仍按42.1的7.4.8、Corollary 7.4.11有限因子前件。本文不声称 Lean 核验、物理认证、文献穷尽、历史优先权或无前提物理起源；既有条件结论与实际供应其全部来源是不同命题。
+
+[IFJB-JOR]: https://github.com/the-omega-institute/trureturing/blob/78d319ab986129f41aa442d99ce794b6c7446ef8/docs/develop/theory/AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md
+[IFJB-PB]: https://github.com/the-omega-institute/trureturing/blob/4c6487bf8619e48ce4c6fa9a45d9afdd59ca4657/docs/develop/theory/AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md
+[IFJB-HOS]: https://hanche.folk.ntnu.no/joa/joa-m.pdf
+
+白话说，起点只给每处有限简单实代数的加法、平方、正负、单位和长度，并不先告诉我们它属于复矩阵。两份输入单独过关，只能限制它们那条边的响应；两条边的响应还必须能和同一第三条边、同一组实际内外层一起配平。既有有限提升结果说明，这种共同配平不容有限球角额外添出第四根独立轴，因而坏实类型被排除，留下复 Hermitian 类型。这是第一步；第二步才问这些复型局部世界的乘法方向能否沿全空间拼合。连续旧输出必须给出相容方向，绕圈翻向的丛仍会失败；方向能拼合时可以构造响应，但要认回任意给定旧表的所有答案，还保留开闭邻域点稠密这一条件。这里的三轴属于代数角，不是物理空间三维。静态数学随后提供复 Hilbert 表示与正效果，却不制造可取得准备、真正相关共同实现、完整菜单和全质量、整台过程所有合法未来、真实返回或物理钟；七项实际来源必须在原世界逐项齐备，才能使用对应的量子条件结论。
+

@@ -1,0 +1,39 @@
+**定义 130.1（原域、实际三轴与引用范围）。** 本续卷130–136节仍取123.1的同一原 $(E,C,u,N,\mathcal P,S,D)$，其中 $E$ 是含单位实 Archimedean 序单位空间；正实线性评价族 $\mathcal P$ 分离元素并准确决定 $C$。保留全部原质量，包括零、不等与次归一质量。完整A1是全部有向Hermitian二表正性；A2是原相加三表及其排列的实部半正定与 $(1,-1,-1)$ 的零二次值；A3是 $S(u,u)=u$，以及同一个固定有理 $0<\theta\le1$ 上的 $0\le v\le\theta u\Rightarrow S(v,v)\le v$。全部原P2和完整原PB均取定义123.2及式(123.4)–(123.5)，对全部原输入成立。
+
+沿前卷16.1–16.2的同一忠实、含单位、等距且准确保锥JC包含记原元素，有
+
+$$
+S(a,b)=a\circ b=\frac{ab+ba}{2},\qquad
+E\subset X\subset\mathcal A_{\rm sa},\qquad
+\overline E=X,\quad\mathcal A=C^*(X),\quad
+C=E\cap\mathcal A_+,\quad N=\|\cdot\||_E.
+\tag{130.1}
+$$
+
+原 $E$ 是这些已识别Jordan运算的原定义域，可以不完备；不要求 $X=\mathcal A_{\rm sa}$。$D:E^2\to E$ 始终是同一原总映射，不预付一般可加、连续、可测、商下降或完成延拓。以下未标“前卷”的130–136节编号均指本续卷；前卷0–122及本续卷123–129的定义与引用保持各自原范围。
+
+固定123.1的实际原 $h,e$ 及同一旧输出 $j=D(h,e)$，故
+
+$$
+h^2=e^2=j^2=u,\qquad
+h\circ e=h\circ j=e\circ j=0,\qquad
+D(e,j)=h,\quad D(j,h)=e.
+\tag{130.2}
+$$
+
+仍记 $V_a=\{z\in E:a\circ z=0\}$、$L_a z=a\circ z$、$U_a=2L_a^2-I$、$T=[L_j,L_e]$，并记 $Gz=D(h,z)$ 对原 $z\in V_h$。对三个实际首标签另记 $F_a w=D(a,w)$，只在所用原 $w\in V_a$ 上调用。前卷100.1及本续卷127.1的原有限分量为
+
+$$
+\begin{gathered}
+E_\sigma=\{x\in E:U_ax=\sigma_a x\ (a=h,e,j)\},\qquad
+E=\bigoplus_{\sigma\in\{1,-1\}^3}E_\sigma,\\
+A_1=E_{-+-},\quad A_2=E_{--+},\quad
+M=A_0=E_{---},\quad C_{+,+}=E_{-++},\\
+V_h=A_1\oplus A_2\oplus M\oplus C_{+,+},\qquad
+\Pi=\tfrac12(I-U_eU_j)|_{V_h}.
+\end{gathered}
+\tag{130.3}
+$$
+
+三个 $U_a$ 是保持原 $E$ 的对易Jordan自同构。每个分量投影均是式(127.3)的有限原Jordan表达式。环境解释是 $U_ax=axa$，正号等价于 $ax=xa$，负号等价于 $ax=-xa$。这里尚不假设三份共轭的乘积为恒等。
+

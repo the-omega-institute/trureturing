@@ -1,0 +1,65 @@
+**定理72.1的证明：固定交换子的整个能量。** 置固定环境算子 $B=[c,r]$。它不是新的 $D$ 输入；$[h,r]=[h,c]=0$ 使相反 $h$ 符号的角为零。同号异指标角满足
+
+$$
+q_iBq_j=(a-b)X_{ij}+\delta_iX_{ij}-X_{ij}\delta_j.
+$$
+
+迹半范数中的左右乘法界及74.2给
+
+$$
+\|q_iBq_j\|_{2,\tau}
+\le2\varepsilon M\left(1+\frac{2\varepsilon}{|a-b|}\right)
+\sqrt{\min(m_i,m_j)}
+\le4\varepsilon M\sqrt{\min(m_i,m_j)}.
+\tag{74.3}
+$$
+
+最后一步用等距中心 $|a_i-a_j|=2\varepsilon|i-j|$，包括相邻窗。对角角上常数中心与压缩余量交换，故
+
+$$
+\|q_iBq_i\|_{2,\tau}\le2\varepsilon\rho\sqrt{m_i}.
+\tag{74.4}
+$$
+
+恢复全部 $2N$ 个指标。有限迹循环性与投影正交性使不同矩形角在半内积中正交；具体地，
+$\tau((q_\alpha Bq_\beta)^*q_\gamma Bq_\delta)$ 在 $\alpha\ne\gamma$ 时由中间投影为零，在 $\beta\ne\delta$ 时由循环后 $q_\delta q_\beta=0$ 为零。所以
+
+$$
+\|B\|_{2,\tau}^2
+=\sum_{\sigma,i,j}\|q_{\sigma,i}^{(N)}Bq_{\sigma,j}^{(N)}\|_{2,\tau}^2.
+\tag{74.5}
+$$
+
+每一列在同一符号下至多有 $N-1$ 个异指标行，且 $\min(m_i,m_j)\le m_j$。因此，包括全部零窗，
+
+$$
+\begin{aligned}
+\sum_{\sigma,i\ne j}\min(m_{\sigma,i},m_{\sigma,j})
+&\le(N-1)\sum_{\sigma,j}m_{\sigma,j}=(N-1)m_\tau,\\
+\sum_{\sigma,i}m_{\sigma,i}&=m_\tau.
+\end{aligned}
+\tag{74.6}
+$$
+
+将74.3–74.6相加，准确得到
+
+$$
+\|[c,r]\|_{2,\tau}^2
+\le m_\tau\varepsilon^2[4\rho^2+16(N-1)M^2].
+\tag{74.7}
+$$
+
+$N=1$ 时无异指标项。不能把 $N-1$ 丢去；此处的总平方预算是 $O(\varepsilon^2N)$，不是单个角的 $O(\varepsilon^2)$。
+
+由 $4v_c=[c,B]$ 及有限迹的左右乘法界，
+
+$$
+\|v_c\|_{2,\tau}\le\tfrac C2\|B\|_{2,\tau}.
+\tag{74.8}
+$$
+
+右乘界例如由
+$\tau((Bc)^*Bc)=\tau(B^*Bc^2)\le C^2\tau(B^*B)$ 取得；左乘界直接由 $c^2\le C^2u$ 取得。代入 $\varepsilon=C/N$ 即为72.1的两条准确平方界。对固定 $\tau$，沿无上界 $\mathcal N_c$ 的右端趋零，而 $v_c$ 始终是同一个原元素，故 $\tau(v_c^2)=0$。71.2分离正元给 $v_c^2=0$，于是 $v_c=0$。这时才将同一个 $R,c,z,x,g,r$ 送入运输续卷119.1，得到 $r=0$ 和72.3。∎
+
+整个极限只作用于固定数 $\tau(v_c^2)$ 的上界；没有 $D(c_N,\cdot)$ 或 $D(\cdot,c_N)$ 的输入极限。$\tau\mapsto\lambda\tau$、$\lambda\ge0$ 时两条平方半范数界整体乘 $\lambda$；73.7的原P2界对读取质量为二次，73.8之前的未平方输出读取界为一次。没有舍弃不等质量或次归一质量，也没有用数学迹替换原评价族。
+

@@ -1,0 +1,161 @@
+**定理 94.2（同一复ROG域内的完整分类）。** 在定义94.1的表示域内，(94.2)保原 $u$ 运输整个锥、基、纯点、最小面和全部 proper 效应，原 $\mathrm B$ 自动成立，全部不同二纯点的整个最小面为 $B^1,B^2$ 或 $B^3$。以下条件等价：
+
+1. 固定补态条件 $\mathrm{FC}$。
+2. 完整混态条件 $\mathrm{Z0}$。
+3. 在(94.2)坐标中，所有纯 $p,q$ 满足 $p\perp q\Rightarrow\operatorname{tr}(pq)=0$。
+4. 在同一坐标中，每个 $Z\in L$ 的普通Hermitian正负谱部分 $Z_+,Z_-$ 都在 $L$。
+5. 在同一坐标中，$I_n\in L$ 且 $A\circ B=(AB+BA)/2\in L$ 对全部 $A,B\in L$ 成立。
+6. 完整 $S$。
+7. 存在有限组正整数大小 $r_\alpha,s_\beta$ 及保持整个原锥、原 $u$ 的实线性同构
+   $$
+   \begin{gathered}
+   \Theta:V\longrightarrow
+   \bigoplus_{\alpha}\operatorname{Sym}_{r_\alpha}(\mathbb R)
+   \ \oplus\
+   \bigoplus_{\beta}\operatorname{Herm}_{s_\beta}(\mathbb C),\\
+   \Theta(C)=
+   \bigoplus_{\alpha}\operatorname{PSD}_{r_\alpha}(\mathbb R)
+   \ \oplus\
+   \bigoplus_{\beta}\operatorname{Herm}_{s_\beta,+}(\mathbb C),\qquad
+   u(X)=\operatorname{tr}\Theta(X).
+   \end{gathered}
+   \tag{94.5}
+   $$
+   可取 $\sum_\alpha r_\alpha+\sum_\beta s_\beta=n$；在(94.2)后，仅需酉换基及按坐标分块即得到这种形式。标量块只列一次，复块可约定 $s_\beta\ge2$。
+
+这里第7项也允许任意保原单位的整锥同构，不预先要求它来自合同变换；它的存在已足以推出其余内在条件。谱部分、Jordan乘积及下述相位矩阵单位的断言专属(94.2)坐标。
+
+证明。先证明整体归一化。全部 $L_0$ 都在 $W^\perp$ 上为零，因为 $L_0$ 由锥张成；$R$ 因而没有丢失原向量。有限个锥元的像空间张成 $W$，其和在 $W$ 上正定。严格正的 $u_W$ 给紧切片 $C_W\cap\{u_W=n\}$；正定可行点使行列式最大值严格正，所以最大点 $M\succ0$。若 $Y\in L_W\cap\ker u_W$，充分小的正负 $t$ 均使 $M+tY$ 留在该切片，一阶条件给 $\operatorname{tr}(M^{-1}Y)=0$。这使 $u_W$ 与 $\operatorname{tr}(M^{-1}\,\cdot\,)$ 成比例；在 $M$ 上二者均等于 $n$，故比例为一。得到(94.2)。正定矩阵上的 $\log\det$ 沿非零Hermitian方向的二阶导数为
+
+$$
+-\operatorname{tr}\bigl(M^{-1}YM^{-1}Y\bigr)
+=-\operatorname{tr}\bigl((M^{-1/2}YM^{-1/2})^2\bigr)<0,
+\tag{94.6}
+$$
+
+故最大点唯一。合同保持复矩阵秩及ROG；对偶拉回双射整个 $[0,u]$、确认集和排除关系。原纯点在运输后恰为
+
+$$
+P'=\{vv^*\in L:\|v\|=1\}.
+\tag{94.7}
+$$
+
+秩一PSD射线在环境锥中已极端；反向，ROG分解使任何更高秩锥元都不能生成极射线。这也证明(94.3)确是原态：$I_n-p'\in L$、$I_n-p'\succeq0$ 且迹为 $n-1$。
+
+核对整个二纯最小面，不假设任何等价条件。任意 $X\in C'$ 有
+
+$$
+\operatorname{face}_{C'}(X)=
+\{Y\in C':\operatorname{ran}Y\subseteq\operatorname{ran}X\}.
+\tag{94.8}
+$$
+
+右侧是面；若 $Y$ 在右侧，$X$ 在自身像空间正定，故有 $\varepsilon>0$ 使 $X-\varepsilon Y\in C'$，任一含 $X$ 的面都须含 $Y$。这证明等式。对不同纯 $p'=vv^*,q'=ww^*$，令 $U=(v\ w)$；它满列秩，二纯点的整个最小锥面为 $UAU^*$、$A\in\mathcal M\cap\operatorname{Herm}_{2,+}(\mathbb C)$，其中
+
+$$
+\mathcal M=\{A:UAU^*\in L\}
+=\left\{\begin{pmatrix}a&z\\\bar z&b\end{pmatrix}:
+a,b\in\mathbb R,\ z\in J\right\},\qquad
+J\le_{\mathbb R}\mathbb C.
+\tag{94.9}
+$$
+
+因为 $E_{11},E_{22}\in\mathcal M$，减去对角项即可得到这个准确分解。原归一化在这里为 $\operatorname{tr}(GA)$、$G=U^*U\succ0$。若 $J=0$，是两条独立射线的归一线段。若 $\dim_{\mathbb R}J=1$，先用二点对角酉把 $J$ 化为 $\mathbb R$；对实对称 $A$ 有 $\operatorname{tr}(GA)=\operatorname{tr}((\operatorname{Re}G)A)$，而 $\operatorname{Re}G$ 在实向量上正定，再作实合同即得标准实二阶迹一PSD圆盘。若 $J=\mathbb C$，用 $A\mapsto G^{1/2}AG^{1/2}$ 得标准复二阶迹一PSD三维球。于是整个面依次为 $B^1,B^2,B^3$，其全部仿射效应仍由整个原效应的限制来检验，未假设这些限制满射到局部全效应。这里的极射线与面工具属于 Hildebrand，[arXiv:1409.4781v2 §3.2、§9](https://arxiv.org/html/1409.4781v2#S9) 所述可推广部分；没有调用其复推广仍未建立的 Theorem 3.18。
+
+以下在(94.2)坐标中省略撇号。若 $n=1$，$L=\mathbb R$、$C=\mathbb R_+$、$K=P=\{1\}$，$F_p=\{u\}$、$D_p=\varnothing$，全部条件成立，并取一个标量块。ROG单射线的生成元必为复秩一，故原单点基也恰属此支。以下 $n>1$。
+
+完整 $\mathrm{Z0}\Rightarrow\mathrm{FC}$：投影限制效应 $h_p(X)=\operatorname{tr}(pX)$ 在整个原锥满足 $0\le h_p\le u$、$h_p(p)=1$、$h_p(a_p)=0$，所以 $p\perp a_p$，可将 $\mathrm{Z0}$ 用于 $q,a_p$。这里只验证一把原效应合法，尚未把全部原效应识别为环境正收缩。
+
+$\mathrm{FC}\Rightarrow$ 第3项：若 $p=vv^*$、$q=ww^*$ 是可排除纯对，却有 $c=\operatorname{tr}(pq)=|v^*w|^2>0$，则 $\ker a_p=\mathbb Cv$ 与 $\ker q$ 的交为零，故 $(q+a_p)/2\succ0$。正定矩阵是 $C$ 的相对内点；在此点为零的原正泛函，沿每个 $Y\in L$ 作充分小的双向扰动便被迫在 $Y$ 上为零，不能确认 $p$。这与 $\mathrm{FC}$ 矛盾。反向，若 $\operatorname{tr}(pq)=0$，$h_p$ 本身就是全域排除见证。
+
+第3项 $\Rightarrow$ 第4项复用93.2的成熟基范数极性，只核对其复域承重点。对任意 $Z\in L$，在这个有限维**实**序空间取同一个最优分解及同一个对偶极大点：
+
+$$
+\begin{gathered}
+Z=X-Y,\quad X,Y\in C,\quad -u\le b\le u,\qquad
+b(Z)=\|Z\|_C=u(X)+u(Y),\\
+f=(u+b)/2\in[0,u],\qquad f(X)=u(X),\quad f(Y)=0.
+\end{gathered}
+\tag{94.10}
+$$
+
+极值达到性与双重饱和正是90.9、(93.12)所用的基范数／序单位对偶，归 Lami–Palazuelos–Winter，*Ultimate data hiding in quantum mechanics and beyond*，arXiv:1703.03392v2 §II.1 Definition 2、Lemma 3；它不依赖实矩阵表示。ROG给 $X=\sum_i\alpha_ip_i$、$Y=\sum_j\beta_jq_j$，非零系数全正，故这个共同原效应满足 $f(p_i)=1$、$f(q_j)=0$。第3项使所有交叉 $|v_i^*w_j|^2=0$，所以 $XY=0$。Hermitian谱定理遂给 $X=Z_+$、$Y=Z_-$；一侧为零时直接成立。这是同一实现中的全部交叉项，未拼合分别最优的不同分解。
+
+第4项 $\Rightarrow$ 第5项：$I_n\in L$ 使 $(A-tI_n)_+\in L$ 对每个实 $t$ 成立。若 $A$ 的不同特征值为 $\lambda_1<\cdots<\lambda_\ell$、谱投影为 $P_j$，则
+
+$$
+(A-\lambda_iI_n)_+
+=\sum_{j>i}(\lambda_j-\lambda_i)P_j.
+\tag{94.11}
+$$
+
+从 $i=\ell-1$ 递减解出 $P_\ell,\ldots,P_2$，再用 $I_n$ 得 $P_1$；$\ell=1$ 时直接用 $I_n$。所以 $A^2\in L$，极化给 $A\circ B\in L$。反向，第5项使 $A$ 的全部实多项式在 $L$，在有限谱上插值函数 $\max(t,0)$、$\max(-t,0)$ 即得第4项。上述谱理论都是运输后普通复矩阵谱理论。
+
+第4项也给全部效应和完整 $S$。用实迹内积识别 $L^*$，令 $C^\vee=\{E\in L:\operatorname{tr}(EX)\ge0\ (\forall X\in C)\}$。若 $E\in C^\vee$，其 $E_-\in C$，于是 $0\le\operatorname{tr}(EE_-)=-\operatorname{tr}(E_-^2)$，故 $E_-=0$。所以 $C^\vee=C$，这时才有整个原效应区间的准确表示
+
+$$
+[0,u]=\{f_E:E\in L,\ 0\preceq E\preceq I_n\},\qquad
+f_E(X)=\operatorname{tr}(EX).
+\tag{94.12}
+$$
+
+若 $f_E(p)=1$、$p=vv^*$，则 $v^*(I_n-E)v=0$ 给 $Ev=v$；Hermitian性消去该方向的交叉块，故 $E=p\oplus E_\perp$、$E_\perp\succeq0$。于是 $E-p\in C$，证明 $e_p=h_p$ 是 $F_p$ 在全锥序中的least元。$\operatorname{tr}(pq)=\operatorname{tr}(qp)$ 给互反。反向在任意原载体，完整 $S$ 使 $D_p=K\cap\ker e_p$，这是凸零面，故 $S\Rightarrow\mathrm{Z0}$。至此除分块外的等价已经闭合。
+
+现由第5项直接分类相位，不使用抽象Jordan分类或表示唯一性黑箱。先从 $I_n$ 的ROG分解选一个秩一方向，归一为 $p_1\in L$。$I_n-p_1$ 是原锥内正交投影；它的ROG分解项都支撑在该投影的像中，选一个方向归一为 $p_2$，则 $p_1p_2=0$。重复减去所选单位投影，每次秩降一，得 $I_n=\sum_{i=1}^np_i$、$p_ip_j=0$。酉换基后 $p_i=E_{ii}\in L$。这只用了原复秩一生成，不将高秩primitive投影当作秩一。
+
+对有序不同指标定义
+
+$$
+H_{ij}(z)=zE_{ij}+\bar zE_{ji},\qquad
+K_{ij}=\{z\in\mathbb C:H_{ij}(z)\in L\}\le_{\mathbb R}\mathbb C.
+\tag{94.13}
+$$
+
+对每个 $A\in L$，Jordan闭合给
+$$
+4E_{jj}\circ(E_{ii}\circ A)=H_{ij}(A_{ij})\in L,\qquad
+L=\bigoplus_i\mathbb RE_{ii}\ \oplus\
+\bigoplus_{i<j}H_{ij}(K_{ij}).
+\tag{94.14}
+$$
+
+第一式逐项隔离任意非对角边；任一 $A$ 减去这些边和其对角项便为零，反向各项都属于 $L$，所以第二式是准确直和，不留下隐藏的跨边线性约束。两端共轭及三点关系为
+
+$$
+K_{ji}=\overline{K_{ij}},\qquad
+H_{ij}(z)\circ H_{jk}(w)=\tfrac12H_{ik}(zw),\qquad
+K_{ij}K_{jk}\subseteq K_{ik}\quad(i,j,k\ \text{两两不同}).
+\tag{94.15}
+$$
+
+第一式由 $H_{ji}(z)=H_{ij}(\bar z)$；第二式由 $E_{ab}E_{cd}=\delta_{bc}E_{ad}$ 直接相乘；第三式再用实线性消去 $1/2$。两点回返的公式则是 $H_{ij}(z)\circ H_{ij}(w)=\operatorname{Re}(z\bar w)(E_{ii}+E_{jj})$，并不强加 $K_{ij}K_{ji}\subseteq\mathbb R$；后一个错误条件会排除完整复二阶块。
+
+定义 $i\sim j$ 当且仅当 $i=j$ 或 $K_{ij}\ne0$。共轭给对称性；若 $i,j,k$ 不同且前两条边非零，选非零 $z,w$，复数乘积 $zw\ne0$，(94.15)给第三条边非零。故 $\sim$ 是等价关系，每个非平凡连通块已经是完全图，不同块间无条目。
+
+每条非零边的实维数只有一或二。若某块有 $K_{ij}=\mathbb C$，对任一第三点 $k$ 取 $0\ne w\in K_{jk}$，则 $\mathbb Cw\subseteq K_{ik}$ 给 $K_{ik}=\mathbb C$。再用路径 $j-i-k$ 得 $K_{jk}=\mathbb C$，所以从 $i$ 出发的全部边均为 $\mathbb C$；任意不同 $a,b\ne i$ 再用 $a-i-b$ 得 $K_{ab}=\mathbb C$。整个块因而是完整复Hermitian块。二点块若有二维边，已经是完整 $\operatorname{Herm}_2(\mathbb C)$，无需第三点传播。
+
+若没有二维边，则这个连通块的所有非零边均为一维实线。选根点 $o$，对 $i\ne o$ 写 $K_{io}=\zeta_i\mathbb R$、$|\zeta_i|=1$，置 $\zeta_o=1$。对不同 $i,j\ne o$，两端共轭与三点乘法给
+
+$$
+\zeta_i\bar\zeta_j\mathbb R
+=K_{io}K_{oj}\subseteq K_{ij};
+\qquad
+K_{ij}=\zeta_i\bar\zeta_j\mathbb R
+\quad(i\ne j).
+\tag{94.16}
+$$
+
+最后等式由两边均为非零一维实线，涉及根点的边按定义也成立。取 $D=\operatorname{diag}(\zeta_i)$，$D^*LD$ 在这个块上恰为全部实对称矩阵。其三角形相位条件准确是
+
+$$
+\theta_{ij}+\theta_{jk}-\theta_{ik}=0\pmod\pi,\qquad
+K_{ij}=e^{i\theta_{ij}}\mathbb R.
+\tag{94.17}
+$$
+
+任意闭环相位之和亦为 $0\pmod\pi$。任意选定的单位代表沿环相乘只能保证属于 $\{\pm1\}$；在同一实块的三角形上，把一条代表改号就会把环积由 $+1$ 改成 $-1$，边空间完全不变。(94.16)实际给出了相容代表 $\zeta_i\bar\zeta_j$，这些代表才沿每个环望远镜相消为 $+1$。这是实线的相位平坦性，不把模 $\pi$ 条件擅改成任意代表的模 $2\pi$ 条件。
+
+单点块为 $\mathbb R$；二点的零边给两个标量块，一维边给相位调整后的实二阶块，二维边给复二阶块。断开块由(94.14)准确分离。以上穷尽所有实线性 $K_{ij}\subseteq\mathbb C$，因此给(94.5)且总大小为 $n$。标准四元数矩阵的通常复表示中primitive投影为复秩二，重复表示 $A\mapsto A\otimes I_k$、$k>1$ 的极射线也不是复秩一；它们不满足(94.1)的ROG前件，不能成为遗漏分支。
+
+最后，第7项中的完整实／复块由普通谱理论秩一生成，并在实迹配对下自对偶；全部效应是逐块正收缩。同一确认分块计算给全锥序least及互反，即完整 $S$。任意第7项的保原 $u$ 整锥同构都对偶运输整个效应区间，故这一方向不依赖先验的合同表示。由已证明的等价再回到第5项，显式酉分类适用于所选(94.2)。因此所有方向闭合。证毕。
+

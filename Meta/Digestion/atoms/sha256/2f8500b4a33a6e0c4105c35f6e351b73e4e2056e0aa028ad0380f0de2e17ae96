@@ -1,0 +1,56 @@
+### 10.2 一个实根及同一块探针的完整定义
+
+**证明，根与可定义性。** 在(9.1)已经给定的实数模型中，令 $p$ 为
+
+$$
+H(p)=6p^3+31p^2+54p+39=0,\qquad
+-\frac{14}{5}<p<-\frac{11}{4}
+\tag{10.4}
+$$
+
+的根。这不是从纸面根构造推出实数载体。准确地，$H(-14/5)=-109/125<0$、$H(-11/4)=5/32>0$，而
+
+$$
+H'(r)=18(r+31/18)^2+11/18\ge11/18>0\qquad(r\in\mathbb R).
+$$
+
+介值定理及严格单调性给存在与唯一性，并同时保留上述严格有理端点界。
+
+先取 $\sigma=1$。定义
+
+$$
+\begin{gathered}
+b=p+iq,\quad c_0=\operatorname{diag}(1,2),\quad d_0=\operatorname{diag}(1,-2),\quad
+v=\binom1{\sqrt2},\quad w=\binom{1/2}{\sqrt2},\\
+u=\binom{\sqrt2(1+b)}{-(2+b)/2},\qquad C_j=u^*c_0^ju\quad(j=1,2,3),\\
+m=-q\lambda C_2,\quad D_b=(1-b)(2-b),\qquad
+Z=\frac{\lambda(2C_1-bC_2)-imD_b}{4p},\\
+z=-\sqrt2Z,\quad \xi=\binom{u}{z},\quad \tau=\lambda c_0u+vz,\\
+y=-i(c_0-bI_2)^{-1}c_0\tau,\qquad
+y_c=(b+2/b)y+(2i/b)\tau+i\lambda c_0^2u.
+\end{gathered}
+\tag{10.5}
+$$
+
+再置
+
+$$
+\begin{gathered}
+X=[\,y\ \ y_c\,][\,u\ \ c_0u\,]^{-1},\qquad
+a=\operatorname{diag}\left(\frac1{p-1},\frac{-2}{p-2}\right),\\
+x^{(0)}=X\oplus0,\qquad
+x=(X+\rho a)\oplus0,\qquad \phi_\xi(A_1)=\xi^*A_1\xi.
+\end{gathered}
+\tag{10.6}
+$$
+
+$p,b,1-b,2-b,p-1,p-2$ 均非零，且 $u_1u_2\ne0$，因为 $p<0$ 而 $\operatorname{Im}b=q\ne0$。所有矩阵逆具体为
+
+$$
+(c_0-bI_2)^{-1}=\operatorname{diag}((1-b)^{-1},(2-b)^{-1}),\qquad
+[\,u\ \ c_0u\,]^{-1}
+=\frac1{u_1u_2}\begin{pmatrix}2u_2&-u_1\\-u_2&u_1\end{pmatrix}.
+$$
+
+因此所有式子都是有限定义；尚须证明的是同一 $X$ 自伴以及预算的严格违反。正泛函 $\phi_\xi$ 的正性直接来自 $\xi^*A_1\xi\ge0$ 对每个 $A_1\ge0$ 成立，其质量是 $\|u\|^2+|z|^2$，其中 $u\ne0$。
+

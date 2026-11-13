@@ -1,0 +1,13 @@
+**引理 497.5（由固定长度四阶渐近推出 (493.1) 与 $(\mathrm L_4)$）。** 设存在常数 $\mathsf B$，使在 $Y^\alpha\le v\le Y^\beta$ 上一致地
+
+$$
+\int_1^Y|D_v(x)|^4\,dx=3v^2\int_1^Y\Bigl(\log\frac yv+\mathsf B\Bigr)^2dy+o\Bigl(Yv^2\log^2\frac Yv\Bigr)\qquad(Y\to\infty).
+\tag{497.6}
+$$
+
+则 (493.1) 与 $(\mathrm L_4)$ 都成立。（在所述误差精度下，把 $\mathsf B$ 换成任何其他常数只改变 $O(Yv^2\log(Y/v))$，(497.6) 保留常规的次项形式，并不确定 $\mathsf B$。）
+
+证明。由 $\log(Y/v)\ge(1-\beta)\log Y\to\infty$ 与 $\int_1^Y\log^2(y/v)\,dy=v\int_{1/v}^{Y/v}\log^2t\,dt\le Y(\log^2(Y/v)+2)+2v$，主项为 $O(Yv^2\log^2(Y/v))$，给出 (493.1)。对 $X/2\le A\le B\le4X$、$(4X)^\alpha\le v\le(X/2)^\beta$，$v$ 对 $Y=A$ 与 $Y=B$ 都在带内；两式相减，主项 $3v^2\int_A^B(\log(y/v)+\mathsf B)^2dy\le3v^2(B-A)(2\log X+|\mathsf B|)^2\le13v^2(\log X)^2(B-A)$（$X$ 充分大），误差为 $o(Xv^2\log^2X)$。证毕。
+
+于是，在 (490.2)、(497.6) 与 $(\mathrm F_4)$ 下，定理 494.2 的全部假设成立，其结论成立：二、四阶矩极限，以及 $g$ 不几乎处处为零时的超额峰度 $3(\frac a2\coth\frac a2-1)$；§494 中依赖移动长度与宏观权的四阶接口被约化为固定长度的陈述 (497.6) 与 $(\mathrm F_4)$。$(\mathrm F_3)$ 另给出三阶接口。
+

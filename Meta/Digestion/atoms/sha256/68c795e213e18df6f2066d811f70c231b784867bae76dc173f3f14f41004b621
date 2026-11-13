@@ -1,0 +1,33 @@
+**定义 23.1（同一原条件与局部谱对）。** 全部采用定义 6.1、16.1、19.1 的同一个完整 $\mathsf H_A(D)$：$A$ 为含单位复 C* 代数，原域准确为 $E=A_{\rm sa}$，$S(x,y)=x\circ y=(xy+yx)/2$，原锥为 $A_+$，原单位、范数、$\Omega/\mathrm{native}$、每个原标签、每份分离且准确决定锥的原评价及其全部零、不等、次归一和原表示意义下的非正常质量不变。全部有向 A1/P2、相加三表及全部排列和相加零方向的 A2、同一个固定有理小窗口的 A3，以及每个原三元组的全部实际内外层 PB (19.1)，均保持原量词。未知量仍为同一个任意总映射 $D:E^2\to E$；没有输入线性、齐次、正则性、协变、压缩自然性、商下降、双对偶延拓或有限阶段输出闭合前件。
+
+设实际投影 $P\in A$ 的**整个** $PAP$ 已按 (6.4) 以同一个普通符号 $\sigma\in\{\pm1\}$ 分类，记 $\jmath=\sigma i$。取实际 $c=c^*\in PAP$、正交投影 $l,m\le P$ 及实际自伴 $e\in PAP$，满足
+
+$$
+cl=lc=\lambda l,\quad cm=mc=-\lambda m,\quad
+\lambda\in\mathbb R\setminus\{0\},\qquad
+ e=(l+m)e(l+m),\quad e^2=l+m,\quad el=me.
+\tag{23.1}
+$$
+
+正 $\lambda$ 是正谱对；允许负 $\lambda$ 仅为交换两格时继续保留原演员 $c$。$c$ 在 $P-l-m$ 上任意；尤其不要求 $c^2=\lambda^2P$。定义原元素
+
+$$
+j=\jmath(l-m)e,\quad n=2l.
+\tag{23.2}
+$$
+
+直接相乘给 $j=j^*$、$j^2=e^2=l+m$、$ej=-je$、$e\circ j=0$、$n\circ j=j$。整个 $PAP$ 的分类准确支付
+
+$$
+\begin{gathered}
+D(c,e)=\lambda j,\quad D(c,j)=-\lambda e,\quad D(c,n)=0,\\
+c\circ e=c\circ j=0,
+\qquad c\circ n=\lambda n,\\
+D(c,Te+\alpha n)=\lambda Tj
+\quad(T,\alpha\in\mathbb R).
+\end{gathered}
+\tag{23.3}
+$$
+
+最后一式在已分类的整个角内逐值成立；它不是对未知环境行使用齐次或可加性。
+

@@ -1,0 +1,18 @@
+**定义 89.1（迹有限支撑与投影供应）。** 令
+
+$$
+\mathcal F_\tau=\{p\in M:p=p^*=p^2,\ \tau(p)<\infty\},
+\quad
+\mathcal I_{\rm fs,sa}=\bigcup_{p\in\mathcal F_\tau}(pMp)_{\rm sa}.
+\tag{89.1}
+$$
+
+“有限支撑”专指这个集合，不指有限维或有限秩，也不把它当作完整原域。以下只调用成熟投影工具的这些准确形式：任意因子中任意两个投影 Murray–von Neumann 可比较；有限因子中，忠实归一迹相等的投影等价；任意 von Neumann 代数中
+
+$$
+(p\vee q)-p\sim q-(p\wedge q).
+\tag{89.2}
+$$
+
+据89.2，$\mathcal F_\tau$ 对有限并有向，$\tau(p\vee q)\le\tau(p)+\tau(q)$。其上确界为1：若上确界的补 $r\ne0$，忠实半有限性给 $0\ne a\le r$ 且 $\tau(a)<\infty$；某个非零谱投影 $e=1_{[\varepsilon,\infty)}(a)\le r$ 满足 $\tau(e)\le\tau(a)/\varepsilon<\infty$，矛盾。因此所有迹有限投影按包含排序构成 $e\uparrow1$ 的强收敛网。不将网换成序列。每个非零迹有限角 $pMp$ 是 II₁ 因子，其忠实正规归一迹为 $\tau_p=\tau|_{pMp}/\tau(p)$。原 $M$ 的无限迹不用于两个无穷值之间的相减。
+

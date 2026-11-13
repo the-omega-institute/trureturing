@@ -1,0 +1,51 @@
+**定理 153.2（与整个原系数几何的真实连接）。** 使用140.1及142.1的同一原矩阵坐标，令
+
+$$
+H=\phi(h)=\begin{pmatrix}u&0\\0&-u\end{pmatrix},\qquad
+A=\phi(x)=\begin{pmatrix}a&b\\b^*&d\end{pmatrix}
+\in H_2(\mathfrak b),
+\tag{153.3}
+$$
+
+其中 $a,d\in\mathcal B_0$、$b\in\mathfrak b$；这里矩阵中的 $u$ 是系数代数的单位。则同一个旧 $\widetilde D$ 准确满足
+
+$$
+\boxed{\widetilde D(H,A)=
+\begin{pmatrix}
+r_+(A)&ib\\-ib^*&r_-(A)
+\end{pmatrix},\qquad r_\pm(A)\in\mathcal B_0.}
+\tag{153.4}
+$$
+
+同一个旧输出的全部非对角块已识别；两个对角块仍是原问题的剩余量。特别对全部 $\lambda\in\mathbb R,b\in\mathfrak b$，
+
+$$
+\widetilde D\left(H,\begin{pmatrix}\lambda u&b\\b^*&-\lambda u\end{pmatrix}\right)
+=\begin{pmatrix}0&ib\\-ib^*&0\end{pmatrix}.
+\tag{153.5}
+$$
+
+证明。$P_{\rm com}x$ 对应 $A$ 的对角部分，$P_{\rm tr}x$ 对应非对角部分。138.2的候选有准确身份
+
+$$
+B_\star(h,x)=\tfrac{iQ}{2}[h,x]=iQhv=Tv.
+\tag{153.6}
+$$
+
+因此本次150.1不是用它定义旧值，而是另外证明旧值与这份候选的差只在交换块中：142.2的同一全域残差限制到这条原行时，确有
+
+$$
+\rho(h,x)=D(h,x)-B_\star(h,x)=\rho_h(x).
+\tag{153.7}
+$$
+
+由140.3，
+
+$$
+\phi(Tv)=\tfrac i2[H,A]
+=\begin{pmatrix}0&ib\\-ib^*&0\end{pmatrix}.
+\tag{153.8}
+$$
+
+将(153.2)整体施加 $\phi$，剩余原自伴交换块 $\phi(\rho_h(x))$ 恰为两份自伴系数 $r_\pm(A)$，即(153.4)。这里从未对不要求属于 $E$ 的辅助 $Q$ 施加 $\phi$。$a=\lambda u,d=-\lambda u$ 时，152.1消去同一剩余块，得到(153.5)。矩阵系数可以非交换且不完备，$b$ 是任意原系数复化元素，不是标量窗的替代记号。∎
+

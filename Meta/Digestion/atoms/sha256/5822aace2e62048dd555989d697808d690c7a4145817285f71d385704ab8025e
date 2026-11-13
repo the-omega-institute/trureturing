@@ -1,0 +1,34 @@
+**Corollary 2.2 (Every prescribed radius and absence of a finite bound).**
+For each fixed $0<\lambda<1$, the family (1.3), with $c\ge\lambda^2$,
+attains each delayed radius $R\in[\sqrt\lambda,\infty)$ exactly once.
+The required parameter is
+
+$$
+c=\frac{R^6+\lambda^2}{R^2+1},\qquad d=c-\lambda^2.
+\tag{2.8}
+$$
+
+In particular, for this single symmetric delay array with maximum two,
+the delayed radii are unbounded at every fixed synchronous radius
+$\lambda$. No finite real upper bound depending only on $\lambda$ and
+$k$ can hold for all zero-diagonal block matrices and positive remote
+delays bounded by $k$, even at $k=2$.
+
+**Proof.** Replacing $d$ by $c-\lambda^2$ in (2.2) yields
+$r^6=c(r^2+1)-\lambda^2$, which forces (2.8) if $r=R$.
+For any $R\ge\sqrt\lambda$,
+
+$$
+c-\lambda^2
+ =\frac{R^2(R^4-\lambda^2)}{R^2+1}\ge0.
+$$
+
+Thus (2.8) satisfies the full parameter domain, and substitution gives
+$R^6=cR^2+d$. The uniqueness in Theorem 2.1 makes its delayed radius
+exactly $R$. Conversely, any family radius satisfies
+$r^4=c+d/r^2\ge\lambda^2$, and hence $r\ge\sqrt\lambda$.
+The forced formula (2.8) proves uniqueness of its parameter. Given any
+finite proposed bound $F(\lambda,2)$, choose a real
+$R>\max\{\sqrt\lambda,F(\lambda,2)\}$ and apply (2.8). The matrix and
+the unchanged array (1.3) violate that bound. $\square$
+

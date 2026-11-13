@@ -13,6 +13,14 @@ public static class DefinitionDsl
             anchors,
             Digest.Create(digest));
 
+    public static DocumentHeader GeneralHeader(string gid, string digest, string waiverReason, params Anchor[] anchors) =>
+        DocumentHeader.Create(
+            GidRef.Create(gid),
+            Generality.General,
+            new EvidenceMirror.Waiver(WaiverReason.Create(waiverReason)),
+            anchors,
+            Digest.Create(digest));
+
     public static Heading H(string value) => Heading.Create(value);
 
     public static TextRun T(string value) => TextRun.Create(value);

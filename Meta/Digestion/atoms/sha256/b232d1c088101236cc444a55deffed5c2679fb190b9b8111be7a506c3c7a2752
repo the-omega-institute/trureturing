@@ -1,0 +1,87 @@
+### 17.5. Applicability limits and the unpaid relation
+
+The directional Dirac measures of (17.4) are normalized nonnegative measures
+with common full marginals, both exact centered events, all selected
+nonpositive losses, and every A input-output residual moment zero. Their
+B moment matrix is exactly (17.12), not zero. They are thus neither a
+projected null nor a common full-law zero witness. The existing
+Chapter 15 object likewise fails a B coordinate, with its different
+normalized defect $-97339/246148875$. Its event-output exclusion is
+reused only within its published scope. Equations (17.10)--(17.18) give an
+explicit sparse full-vector evaluation and coefficient bound for a
+different law pair; no event-only exclusion is promoted to full-vector
+infeasibility.
+
+The exact fixed-template question remains whether some rational tuple in
+the original spaces, with all six required weight signs and full norm
+bound, satisfies both inequalities on the entirety of
+$Z_p\times Z_\beta$ and its reversal. Equivalently for an exact null
+assignment, the two normalized projected edge measures must match every
+potential moment, annihilate all seven-input-times-output residual
+moments in both directions, center both events, and have all six loss
+integrals nonpositive. No such evaluated tuple or null is furnished by
+(17.4). The strictly positive upper bound (17.17) does not prove that no
+positive tuple exists, and failing (17.15) refutes only the specified tuple.
+
+For the original unrestricted question the simultaneous relation still
+unpaid is
+$$
+\mathcal R_B(Q)=\mathbb E[W\mid Q],\qquad
+\mathcal R_A(W)=\mathbb E[Q\mid W],                         \tag{17.20}
+$$
+conditioned on the entire descriptors, with common unweighted full
+marginals, every complete endpoint box, the mean constraints
+$\int f=C,\int h=H$, and both supported-depth suprema of complete
+configuration losses at most their radii. The two suprema need not have
+maximizing depths. Finite projected moment agreement is weaker than
+(17.20), even when actual representing measures are supplied. Neither
+the event means nor (17.17) identifies the immediate-emission means or
+forces the synchronized endpoint chord of [PAIRED, (12.3)].
+
+The supplied identities and necessities remain jointly scoped to one
+compatible pair:
+$$
+S=2(J_p+J_\beta)+M_A+M_B,\qquad
+\mathcal J+\frac{540}{11}S\ge\frac\eta4,
+$$
+$$
+\frac{61}{11}\mathcal J+
+\frac{19}{11}\sqrt{\sqrt{M_B}+\sqrt{M_A}}\ge\frac\eta{400000}.
+$$
+They leave S and the mismatches free at zero excess. Return variation,
+complete-law dispersion, suspended-to-p mismatch and paired-event
+ranges are different quantities; none is multiplied by an independently
+attained bound or eliminated here. Sections 16.2--16.4 already derive
+the mismatch necessity from the joint own-law regeneration of
+[PAIRED, Chapter 11] and the directed crossing-flow repair of [RETURN,
+Section 9]; those arguments are not replaced by a new compactness or
+rounding principle.
+
+An original-domain realization would require both full residual equations
+and a single finite same-update table, or the complete hypotheses of
+[PAIRED, Theorems 11.4--11.8 or 13.2]. [PAID, Lemma 2.1.1] then puts its
+private row after the original third write and latch; [PAID, Lemma 14.1]
+supplies initialized paid-history rows and countable-prior domination.
+Acquired kernel rows can contain zeros and ones. Arbitrary original
+emissions can also be zero or one, with their kernels defined and their
+possible noncompletion retained; clipping to regular emissions is the
+separate comparison in [CLIP, Theorem 3.1], not a premise silently imposed
+on the full problem. Rational samplers, all installed program and numeric
+data, workspace, sampler states and persistent randomness must be charged
+to COMPLETE. A mathematical law or finite atomic measure is not an
+exact-real runtime port. Proposition 17.3 prevents invoking any of these
+realization conclusions for (17.4).
+
+The finite next exact assignment is to evaluate the original coefficient
+system subject to the necessary tests (17.15), (17.17), and (17.18), retaining all
+its domains and coefficients, or to give representing measures satisfying
+its entire projected null system. These extra tests remove no valid
+positive certificate and impose no observer restriction. A successful
+positive tuple still requires a proof on every nonempty closed TV sign
+region and every boundary; a representation-order non-hit proves nothing
+about existence. An exact projected null would settle only this ansatz;
+full-law extension, common full marginals, all supported losses and
+original realization would still be required for a zero witness.
+Exact finite common attainment, an unattained zero infimum, a positive
+unrestricted gap, and fixed-resource optima remain distinct and unresolved.
+

@@ -18,7 +18,6 @@ open private
   singleton_coordinates
   sphereVertex_face
   spherePath
-  nativeCylinder
   coordinateLinear
   coordinateLinear_at
   coordinateLinear_single
@@ -71,7 +70,7 @@ private theorem bouquetInclusion_off (ds : BouquetSpec) (i : Fin ds.length)
   exact dif_neg hv
 
 /-- The singleton complex retains a genuine point when a sphere list is empty. -/
-private def vertexComplex {V : Type*} [DecidableEq V] (v : V) :
+def vertexComplex {V : Type*} [DecidableEq V] (v : V) :
     PreAbstractSimplicialComplex V where
   faces := {{v}}
   isRelLowerSet_faces := by

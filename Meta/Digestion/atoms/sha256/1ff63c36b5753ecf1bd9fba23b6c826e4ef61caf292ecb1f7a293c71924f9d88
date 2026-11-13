@@ -1,0 +1,22 @@
+**引理 100.2（迹有限投影对全域的原整行）。** 对全部 $p\in\mathcal F_\tau$、$x\in E$，有 $D(p,x)=K(p,x)$。
+
+证明。$p=0$ 用98.5。固定其余 $p,x$ 的同一个旧值 $r=D(p,x)$，令 $k=p\circ x$。100.1使 $p,r,k$ 共同支撑于某个迹有限角 $gMg$。实际原 $\operatorname{PB}(x,p,0)$ 的位移是 $v=-r,w=k$，故
+
+$$
+D(p-r,k)-D(p+r,-k)=2p\circ r.
+\tag{100.2}
+$$
+
+四个外层标签同属 $gMg$，99.7、99.11在这一个共同角中给
+
+$$
+\begin{aligned}
+D(p-r,k)-D(p+r,-k)
+&=\frac J2\bigl([p-r,k]+[p+r,k]\bigr)\\
+&=J[p,k]=\frac J2[p,x].
+\end{aligned}
+\tag{100.3}
+$$
+
+所以 $pr+rp=J[p,x]/2$。已知 $K(p,x)$ 满足同式。置 $t=r-K(p,x)$，得 $pt+tp=0$；这杀掉 $p,p$ 块及两侧交叉块。100.1另给 $(1-p)t(1-p)=0$，故 $t=0$。展开的只有已知交换子；未知 $D$ 没有使用奇性、齐次性或相加性。∎
+

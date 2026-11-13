@@ -1,0 +1,90 @@
+## 47. 两份真实配平排除标量残余
+
+继续证明 (46.2)。反设当前点 $\delta\ne0$。第一份实际第三标签取
+
+$$
+c_1=tA,\qquad t=\delta/r^2\in\mathbb R.
+\tag{47.1}
+$$
+
+$t$ 对当前固定点是一个普通实常数；$c_1$ 是整个区间上的实际原多项式。因为 $c_1=t a-t\lambda u$，185.1 的同轴仿射零值给 $D(a,c_1)=0$。在 PB $(a,b,c_1)$ 中，(46.6) 给当前点的准确位移
+
+$$
+\nu(\xi)=v_y\sigma_y=:v,\qquad
+c_1(\xi)=\frac{v_z}{\lambda}\sigma_z=:c,\qquad
+\omega(\xi)=\lambda b(\xi).
+\tag{47.2}
+$$
+
+这里 $a\circ b=\lambda b$ 是原多项式恒等式。于是两份实际外层在该点的像为
+
+$$
+R_\pm=b(\xi)\pm v,\qquad S_\pm=c\pm\lambda b(\xi),
+\tag{47.3}
+$$
+
+它们全部无迹，PB 右端在此为零，因为 $b(\xi)\circ v=c\circ b(\xi)=0$。
+
+(46.4) 的小像条件确能统一支付。写 $d^0=d-\operatorname{tr}(d)u/2$，则
+
+$$
+\begin{gathered}
+\|v\|\le\|d(\xi)\|,\qquad
+\|c\|\le\|d(\xi)\|/|\lambda|,\\
+\|R_\pm\|\le\|b(\xi)\|+\|d(\xi)\|,\qquad
+\|S_\pm\|\le\|d(\xi)\|/|\lambda|+|\lambda|\|b(\xi)\|.
+\end{gathered}
+\tag{47.4}
+$$
+
+$b(\xi),d(\xi)\to0$，所以可在 §46 选择 $\eta$ 使两份平方和都小于一。$t$ 可以依赖当前点且无统一大小界，但原窗口只约束当前像；没有把 $t(\xi)$ 作为一个函数系数送入 $D$，也没有要求这一族原输入在上确界范数中有界。
+
+现在才用 (46.4) 识别两份实际外层。PB 与已知 $C$ 的双线性给
+
+$$
+0=C(R_+,S_+)-C(R_-,S_-)=2C(v,c).
+\tag{47.5}
+$$
+
+$\varepsilon_0\ne0$ 已约去。$\delta\ne0$ 及 (46.6) 使 $c\ne0$，而 $v\perp c$；二阶矩阵叉积的面积式遂给 $v=0$。故当前点 $d(\xi)$ 与 $A(\xi)$ 同时对角，且
+
+$$
+d(\xi)=\delta u+v_z\sigma_z,
+\qquad rv_z=\lambda\delta.
+\tag{47.6}
+$$
+
+第二份第三标签也只取同一仿射轴，但选成另一份实际原标签。令 $k=\lambda+\lambda^{-1}\ne0$，进一步缩小 $\eta$ 使 $r<|k|$。在当前点定义已知对角矩阵
+
+$$
+c'=
+\frac{(ku-A(\xi))d(\xi)}{k^2-r^2}
+=\alpha u+\beta A(\xi),\qquad
+\alpha=\frac{\delta}{\lambda(k^2-r^2)}\ne0.
+\tag{47.7}
+$$
+
+第二个等式由 (47.6) 展开得到。$\alpha,\beta$ 是普通有限实数。取真实原 $c_2=\alpha u+\beta A$，185.1 再给 $D(a,c_2)=0$。没有将 (47.7) 的矩阵逆或除式定义为原输入；实际输入只是这两个实系数的有限仿射组合。在当前点有
+
+$$
+a(\xi)\circ c'=d(\xi)-c'/\lambda.
+$$
+
+因此 PB $(a,b,c_2)$ 的位移像为 $\nu=c'/\lambda$、$\omega=\lambda b(\xi)$。两对外层像准确满足
+
+$$
+S_+=\lambda R_+,\qquad S_-=-\lambda R_-.
+\tag{47.8}
+$$
+
+点上全部向量 P2 使这两份实际外层输出像均为零，不要求外层标签在原域中比例相等。PB 遂给
+
+$$
+0=-2k\,b(\xi)\circ c'=-2k\alpha b(\xi),
+\tag{47.9}
+$$
+
+与 $k\ne0$、$\alpha\ne0$、$b(\xi)\ne0$ 矛盾。所以 $\delta=0$；(46.6) 也给 $v_z=0$，输出仅沿同时垂直 $A(\xi),b(\xi)$ 的方向。
+
+这对整个小区间成立。固定旧输出的迹、$A\circ d$、$b\circ d$ 都是矩阵多项式，故多项式恒等原理给整个原区间上的 (46.2)，包含全部退化点和两个端点。没有延拓未知 $D$，也没有预付中心平移。∎
+

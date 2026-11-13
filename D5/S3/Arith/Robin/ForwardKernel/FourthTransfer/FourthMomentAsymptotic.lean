@@ -30,20 +30,20 @@ def FourthMomentAsymptoticFor (E : ℝ → ℝ) (α β B : ℝ) : Prop :=
       3 * v ^ 2 * (∫ y in (1 : ℝ)..Y, (Real.log (y / v) + B) ^ 2)| ≤
         η * Y * v ^ 2 * Real.log (Y / v) ^ 2
 
-private lemma band_lengths {α β Y v : ℝ} (hY : 1 ≤ Y)
+lemma band_lengths {α β Y v : ℝ} (hY : 1 ≤ Y)
     (hα : 0 < α) (_hαβ : α < β) (hβ : β < 1)
     (hvα : Y ^ α ≤ v) (hvβ : v ≤ Y ^ β) : 1 ≤ v ∧ v ≤ Y := by
   exact ⟨(Real.one_le_rpow hY hα.le).trans hvα,
     hvβ.trans (by simpa using Real.rpow_le_rpow_of_exponent_le hY hβ.le)⟩
 
-private lemma band_log_lower {β Y v : ℝ} (hY : 0 < Y) (hv : 0 < v)
+lemma band_log_lower {β Y v : ℝ} (hY : 0 < Y) (hv : 0 < v)
     (hvβ : v ≤ Y ^ β) : (1 - β) * Real.log Y ≤ Real.log (Y / v) := by
   rw [Real.log_div hY.ne' hv.ne']
   have h := Real.log_le_log hv hvβ
   rw [Real.log_rpow hY] at h
   linarith
 
-private lemma log_ratio_abs_le {Y v y : ℝ} (_hY : 1 ≤ Y)
+lemma log_ratio_abs_le {Y v y : ℝ} (_hY : 1 ≤ Y)
     (hv : 1 ≤ v) (hvY : v ≤ Y) (hy : y ∈ Icc (1 : ℝ) Y) :
     |Real.log (y / v)| ≤ Real.log Y := by
   have hv0 : 0 < v := by linarith
@@ -55,7 +55,7 @@ private lemma log_ratio_abs_le {Y v y : ℝ} (_hY : 1 ≤ Y)
   have hlvY := Real.log_le_log hv0 hvY
   constructor <;> linarith
 
-private lemma log_square_integrable {a b v B : ℝ} (ha : 0 < a) (hab : a ≤ b)
+lemma log_square_integrable {a b v B : ℝ} (ha : 0 < a) (hab : a ≤ b)
     (hv : 0 < v) :
     IntervalIntegrable (fun y => (Real.log (y / v) + B) ^ 2) volume a b := by
   apply ContinuousOn.intervalIntegrable
@@ -64,7 +64,7 @@ private lemma log_square_integrable {a b v B : ℝ} (ha : 0 < a) (hab : a ≤ b)
   intro y hy
   exact ne_of_gt (div_pos (ha.trans_le ((uIcc_of_le hab ▸ hy).1)) hv)
 
-private lemma log_square_integral_le {a b v B T : ℝ} (ha : 0 < a)
+lemma log_square_integral_le {a b v B T : ℝ} (ha : 0 < a)
     (hab : a ≤ b) (hv : 0 < v) (hT : 0 ≤ T)
     (hbound : ∀ y ∈ Icc a b, |Real.log (y / v) + B| ≤ T) :
     (∫ y in a..b, (Real.log (y / v) + B) ^ 2) ≤ (b - a) * T ^ 2 := by

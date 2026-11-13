@@ -193,6 +193,120 @@ class NativePackagingTests(NativeReleaseSupport):
 
 class NativeCompilerConsumerTests:
 
+    def test_collection_drains_projection_and_preparation_roots(self):
+        # Delay real job completions, not graph registration. The event order
+        # must hold even while another collection root could start compiling.
+        config = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = config.read_text()
+        projection = '    return file\n\n/-- A native report artifact.'
+        prepared = '      return ⟨file, args, env, inputTrace, artifact?, prepareProduction, !ownInputs.isEmpty⟩'
+        self.assertEqual(source.count(projection), 1)
+        self.assertEqual(source.count(prepared), 1)
+        source = source.replace(projection, '    IO.sleep 100\n'
+            '    observePhase "test-projection" "finish" mod.name.toString\n' + projection)
+        config.write_text(source.replace(prepared, '      IO.sleep 100\n'
+            '      observePhase "test-prepared" "finish" mod.name.toString\n' + prepared))
+        phases = self.root / 'collection-phases.jsonl'
+        self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
+
+        # Distinct utility roots share a compiler dependency but are outside
+        # registered report membership. Preparation must drain these too.
+        self.write('ExternalTwo.lean', 'import ClaimSupport\ndef secondClaim : Prop := claimSupport\n')
+        package = self.root / 'lakefile.toml'
+        package.write_text(package.read_text() + '[[lean_lib]]\nname = "ExternalTwo"\n')
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(dict(pattern='ExternalTwo.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        utilities = json.loads((self.root / 'utility.json').read_text())
+        for module, selector, claim_module, claim_selector in [
+                ('D5.A', 'rejectA', 'External', 'claim'),
+                ('D5.Alone', 'rejectAlone', 'ExternalTwo', 'secondClaim')]:
+            path = module.replace('.', '/') + '.lean'
+            target = self.root / path
+            target.write_text(target.read_text() + f'\ntheorem {selector} : ¬ False := fun h => h\n')
+            utilities.append(dict(utilities[0], modulePath=path, resultModule=module,
+                resultSelector=selector, resultGid=selector, claimGid=claim_selector,
+                claimModule=claim_module, claimSelector=claim_selector,
+                claimSourcePath=claim_module + '.lean', claimSourceSha256='sha256:' +
+                    publication.digest(self.root / (claim_module + '.lean'))))
+        self.write('utility.json', json.dumps(utilities))
+        built = self.build()
+        members = {'D5.A', 'D5.Alone', 'D5.B', 'Fixture'}
+        for module in ['D5.B', 'ClaimSupport', 'External', 'ExternalTwo']:
+            self.assertEqual((built.stdout + built.stderr).count(f'Built {module} ('), 1)
+
+        def check_order():
+            observations = [json.loads(line) for line in phases.read_text().splitlines()]
+            for operation, completed_phase in [('judge-inputs-fetch', 'test-projection'),
+                                                ('prepared-report-fetch', 'test-prepared')]:
+                completed, started, previous = set(), [], None
+                for event in observations:
+                    if event['phase'] == completed_phase:
+                        completed.add(event['module'])
+                    if (event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start'
+                            and event['operation'] == operation):
+                        if previous is not None:
+                            self.assertIn(previous, completed,
+                                f'{operation} started {event["module"]} before {previous} completed')
+                        previous = event['module']
+                        started.append(previous)
+                self.assertEqual(len(started), len(members))
+                self.assertEqual(set(started), members)
+                self.assertEqual(completed, members)
+
+        check_order()
+        rows, report, material = self.report()
+        self.assertEqual({row['module'] for row in rows}, members)
+        self.assertEqual(len(rows), len(members))
+        stamps = self.stamps()
+        self.write('collection-phases.jsonl', '')
+        self.build()
+        check_order()
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(self.report()[1:], (report, material))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
+        # A utility export can fail after all projections have succeeded.
+        # No later preparation root or native production may start past it.
+        claim = self.root / 'ExternalTwo.lean'
+        original_claim = claim.read_text()
+        claim.write_text('def secondClaim : Prop := missingUtilityDependency\n')
+        self.write('utility.json', json.dumps([dict(row, claimSourceSha256='sha256:' +
+            publication.digest(claim)) if row['claimModule'] == 'ExternalTwo' else row
+            for row in utilities]))
+        self.write('collection-phases.jsonl', '')
+        failed = self.build(success=False)
+        self.assertIn('missingUtilityDependency', failed.stdout + failed.stderr)
+        observations = [json.loads(line) for line in phases.read_text().splitlines()]
+        self.assertEqual([event['module'] for event in observations if
+            event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start'
+            and event['operation'] == 'prepared-report-fetch'], ['D5.A', 'D5.Alone'])
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(self.report()[1:], (report, material))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        claim.write_text(original_claim)
+        self.write('utility.json', json.dumps(utilities))
+
+        # A shared compiler dependency failure must fail the collection before
+        # extraction or publication, retaining the last complete artifacts.
+        self.write('D5/B.lean', 'def broken : Nat := missingSharedDependency\n')
+        self.write('collection-phases.jsonl', '')
+        failed = self.build(success=False)
+        self.assertIn('missingSharedDependency', failed.stdout + failed.stderr)
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(self.report()[1:], (report, material))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        observations = [json.loads(line) for line in phases.read_text().splitlines()]
+        starts = [event['module'] for event in observations if
+            event['phase'] == 'lake-prepare-module' and event['boundary'] == 'start']
+        self.assertEqual(starts, ['D5.A'])
+        self.write('D5/B.lean', 'import D5.A\n')
+        failed = self.build(success=False)
+        self.assertIn('build cycle detected', failed.stdout + failed.stderr)
+        self.assertEqual(stamps, self.stamps())
+        self.assertEqual(self.report()[1:], (report, material))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+
     def test_native_facet_supplies_toolchain_environment(self):
         self.env.pop('LEAN_SYSROOT', None)
         result = self.run_lake('build', ':report', success=None)

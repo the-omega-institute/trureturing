@@ -1,0 +1,2 @@
+(ii) 设 $I$ 为紧区间，$p,q\in C^1(I)$，$p',q'\ge m>0$，$p(I),q(I)\subset J$，$|q-p|\le R$，且对某个 $C\ge0$，$\int_JD_v^2\le Cv$（$R\le v\le4R$）。则 $\int_I|E(q(x))-E(p(x))|^2\,dx\le20CR/m$。
+

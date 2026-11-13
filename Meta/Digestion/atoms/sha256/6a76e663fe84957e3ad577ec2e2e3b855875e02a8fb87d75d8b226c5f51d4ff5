@@ -1,0 +1,62 @@
+## 190. 固定旧输出的角内反交换关系
+
+证明189.1（续）。回到同一固定 $y,g,B,G$。对满足 $\rho(G)\ne0$ 的 $Y$ 纯态 $\rho$，在 $Y^{**}$ 取其最小支撑 $f$，置
+
+$$
+K=\frac{\mu G}{1+\mu^2},\qquad
+\tau=\rho(K)\ne0,\qquad C_0=\mathcal U_K(f)/\tau.
+\tag{190.1}
+$$
+
+原多项式卷4.8–4.9与174.8–174.10使用的同一JB支撑和Peirce计算给：$C_0$ 按 $\tau$ 符号半定，$\rho((C_0-K)^2)=0$；有界Kaplansky逼近及 $E_p$ 的范数稠密性供应实际 $v_i\in E_p$，使
+
+$$
+q_i=\operatorname{sgn}(\tau)v_i^2\in E_p,\quad
+\sup_i\|q_i\|<\infty,\quad
+\eta_i:=\rho\left(((1+\mu^2)q_i-\mu G)^2\right)^{1/2}\longrightarrow0.
+\tag{190.2}
+$$
+
+网保留不可分情形；$f,C_0$ 及其根未输入旧 $D$。每个 $q_i$ 是实际偶的有符号平方，189.6给当前角的 $\kappa D(a,q_i)=0$。另一个角因 $q_i$ 像为零，由偶输入P2给输出角像零。188.2又使 $D(a,q_i)$ 偶，两角合起来才给真正原值 $D(a,q_i)=0$。
+
+因此PB $(a,y,q_i)$ 的实际外层完整为
+
+$$
+R_\pm^{(i)}=y\pm g\mp a\circ q_i,\qquad
+S_\pm^{(i)}=q_i\pm a\circ y.
+\tag{190.3}
+$$
+
+它们均偶，像满足
+$\kappa S_+^{(i)}-\mu\kappa R_+^{(i)}
+=\kappa S_-^{(i)}+\mu\kappa R_-^{(i)}=(1+\mu^2)q_i-\mu G$。
+分别用两张实际P2及已知实Gram剪切，得到
+
+$$
+|\rho\kappa D(R_\pm^{(i)},S_\pm^{(i)})|
+\le\rho((\kappa R_\pm^{(i)})^2)^{1/2}\eta_i
+\le M_0\eta_i.
+\tag{190.4}
+$$
+
+$M_0<\infty$ 只依赖固定 $B,G,\mu$ 及190.2的一致界。PB右端角像始终为
+$-2B\circ(G-\mu q_i)-2q_i\circ\mu B=-2B\circ G$。
+故 $|\rho(B\circ G)|\le M_0\eta_i$，迫使这份固定读取为零。
+
+若纯态 $\rho(G)=\rho(G^2)=0$，Schwarz直接给同一零值；若 $\rho(G)=0$ 而 $\rho(G^2)>0$，取充分小非零实 $t$，以正锥自同构 $\mathcal U_{p+tG}$ 归一地变形纯态。它读 $G$ 为
+
+$$
+\rho_t(G)=\frac{2t\rho(G^2)+t^2\rho(G^3)}{1+t^2\rho(G^2)}\ne0,
+\qquad \rho_t\longrightarrow\rho\text{ 范数收敛}.
+\tag{190.5}
+$$
+
+已证分支使 $\rho_t(B\circ G)=0$，所以原零读取亦为零。纯态分离 $Y$，得
+
+$$
+B\circ G=0,\qquad BG=-GB\quad\text{在角环境中成立}.
+\tag{190.6}
+$$
+
+支撑、Peirce逼近及纯态变形均准确复用原多项式卷4.8–4.15和174.8–174.17；新增输入接线是每次原仿射行的实际输出确实偶。极限只估计固定 $B\circ G$，未对未知响应取输入或输出极限。
+

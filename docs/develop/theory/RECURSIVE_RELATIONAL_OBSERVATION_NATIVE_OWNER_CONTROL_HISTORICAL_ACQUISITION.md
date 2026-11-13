@@ -1378,3 +1378,234 @@ optimal resource price or completion of the sustained programme follows.
 [ST]: https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Computability/StateTransition.lean
 
 ## 追加锚（本行以下为增补区）
+
+## 13. Returned interleavings and a persistent original-field distinction
+
+**Definition 13.1 (completed blocks and erased comparison data).** Fix
+the same $\kappa\iota$, actual installed $P$, endpoints and rights of
+Assumptions 1.2/2.2. Choose an actual finite prefix $h_*$ after §8's
+initial publication, at SourceReady/RecordAvailable/RequestIdle, with
+empty pending input, completion and optional-token latches and control
+returned to the installed dispatcher. Such a boundary exists by
+Theorems 8.3/9.2. Normalization here means completing those prescribed
+returns; it adds no clear, reset or idle row. Write $N_*$ for its total
+actual row count, $E(t)$ for its current source and $R$ for its retained
+old record, still describing the original $C(p)$.
+
+Let $Q$ be one actually supplied In$(0)$ and the complete GetRecord
+execution of Definition 8.2. Let $U$ be the internally selected genuine
+Supply$(0)$ and complete Update execution of Definition 9.1. Each block
+starts and ends at the displayed dispatcher boundary. Its length
+includes ingress or internal selection, installed interpretation, all
+handler work and its prescribed restoration to that boundary. A block
+is notation for these actual rows, not a primitive action. Theorems
+8.3/9.2 admit both $h_{QU}=h_*;Q;U$ and $h_{UQ}=h_*;U;Q$.
+
+For a reached history $h$, let $A^0(h)$ be its executing original
+Advance/Supply word, and let $C^{\rm cmp}(h)$ be its original-only
+comparison state of Definition 4.1. Define $V(h)$ to retain this state
+and word, the old sealed callable $R$ with its installed request-port
+binding, the displayed source/record/request phases, empty pending
+statuses and current rights, and the separate channel words: original
+Supply bits, auxiliary In bits, original source tokens,
+and HistoricalData framing/bits with their local acknowledgement edges.
+It retains no cross-channel merged order. Put
+
+$$
+\widehat V(h)=(V(h),\mathsf{Rows}(h)).
+\tag{OC.11}
+$$
+
+These are mathematical comparison data; supplying their descriptions
+does not install readers for them. In particular $C^{\rm cmp}(h)$ is
+not the actual enlarged physical state $X(h)$. The latter includes all
+original and auxiliary fields, actual typed references, all resident,
+detached and dead backing with its current contents and initialization
+and null status, foundation/ROM/installed code, allocators, both event kinds
+in their shared chain, input/output and current rights.
+
+**Lemma 13.2 (expanded block lengths).** The two occurrences of $Q$
+have one finite length $q>0$ and those of $U$ have one finite length
+$r$. They follow the same respective instruction paths, with the same
+original-row subsequence in $U$. The number $c$ of actual $U$ rows
+strictly preceding its service-entry tail-read row is also the same.
+This matching allows different actual event references and fresh
+auxiliary references; it asserts no equality of their event payloads.
+
+Proof. Inspect the operands of the expanded program, rather than
+assuming independent rows. GetRecord retains its actual ingress zero
+through the pending-latch read/birth/link/clear subphases, selects the
+Record arm, copies the immutable sealed $R$, constructs and seals its
+tagged answer, then reads/prints DATA-Begin, the answer bits and
+DATA-End, acknowledges and restores RequestIdle/dispatch. Update
+preserves that record, its request binding and those request operands.
+Every word traversal in Definition 3.3 follows the same
+finite list shape; freshly constructed answers have corresponding
+bit/next fields. Tests therefore have the same outcomes and every
+copy/reversal, framing, output and return loop has the same iterations.
+Obsolete answer and request cells remain allocated; they are not read
+as additional input to a later handler.
+
+Conversely, a completed query writes no original non-event field,
+tally head, frozen $D$, installed endpoint or source-completion/token latch. For
+Update, internal zero selection, the installed Supply endpoint read
+and genuine Supply row are followed by every Definition 5.1 discharge:
+completion test, mark birth, tally-head assignment, completion clear,
+token-availability test, and any token read/Drain acknowledgement and
+availability clear, with all intervening phase/control rows. Tally
+increment conses onto its held head; it does not scan its accumulated
+length. Definition 9.1 then includes every installed PC-endpoint read,
+actual ReadPC and tag test, Advance-endpoint read, busy invocation and
+discharge, through the source's real visits/packet handshakes, table
+publication, Begin/body/End output, sixty-four-slot cleanup mask,
+sixteen-slot clears and Return. Its final Ready read after full discharge
+and restoration of source/request-idle dispatch belong to $U$ as well.
+
+Lemma 4.2 and OA Lemma 19.2 give the same original operands, guards,
+non-event allocations, PC path and emitted tokens. The only differing
+original data are actual chronology and its entry captures/copies;
+none is an operational branch or traversal operand. Each Drain branch
+therefore sees the same token/phase and completes the same bounded
+work. Query work cannot alter this original execution or its discharge.
+
+Finally expand interpretation itself. Definition 3.2 resets the code
+cursor and really scans the same installed finite table for each same
+label; each operand-role access traverses the same fixed slot chain.
+Thus table parsing, unary-symbol comparisons, slot reads/writes and
+micro-control edges match individually. Data cursors are initialized
+from the handler's stated operands before use; untouched dead slots
+keep their actual contents without becoming extra operands. Match
+fresh local cells by their births and retained links, without comparing
+or computing their canonical indices. Null, tag,
+bit and actually used reference-equality tests are preserved. Event
+appending and bounded completion/token coeffects belong to their
+own row; they introduce no recursive interpreter execution. Induction
+over these individual rows proves the asserted path and length
+equalities, including the dispatcher edges. No padding or reordering
+of rows inside either block has been used. Finiteness is Theorems
+8.3/9.2; the actual In row gives $q>0$. $\square$
+
+**Theorem 13.3 (equal completed comparison data, unequal actual targets).**
+The returned histories satisfy
+
+$$
+\begin{aligned}
+\widehat V(h_{QU})&=\widehat V(h_{UQ}),\\
+\mathsf{Rows}(h_{QU})=\mathsf{Events}(h_{QU})
+ &=N_*+q+r
+ =\mathsf{Rows}(h_{UQ})=\mathsf{Events}(h_{UQ}),\\
+X(h_{QU})&\ne X(h_{UQ}).
+\end{aligned}
+\tag{OC.12}
+$$
+
+More precisely let $d$ be the new original Update descriptor. It has
+the same typed original occurrence/name in both histories. Write $e_j$
+for actual event name $j$, starting at zero in the shared event arena.
+At the completed endpoints its immutable entry fields are
+
+$$
+\begin{aligned}
+X(h_{UQ})[d.\mathsf{entry}]&=e_{N_*+c-1},\\
+X(h_{QU})[d.\mathsf{entry}]&=e_{N_*+q+c-1}.
+\end{aligned}
+\tag{OC.13}
+$$
+
+Proof. Query executes no original row. Lemmas 4.2/13.2 hence give the
+same $A^0$ and complete original-only comparison state after Update,
+including that comparison's own events. Both actual sources return
+with logical value $\rho t$ and source $E(\rho t)$. Neither block
+changes $R$, its frozen $D$ or its current callable authority. The
+one query receives zero and outputs the same framed Record answer;
+the one Update supplies zero and emits the same original constructor
+stream. Their acknowledgement words agree on their respective
+channels. Their completed phases and current rights agree. This
+proves the $V$ equality without identifying comparison events with
+actual events or merging the separate output words. Lemma 13.2 and
+Definition 2.3 give the total row/event equality.
+
+OA Definition 18.1 starts the event allocator at zero; OA19.1 and
+Definition 2.3 allocate one next actual event per executing row.
+Immediately before Update's capture read, the two chains thus have
+lengths $N_*+c$ and $N_*+q+c$. Their tails are exactly the references
+in (OC.13), not the events emitted by the capture reads themselves.
+The chains are nonempty since $h_*$ already includes publication.
+The captured predecessor may be an auxiliary event; counting only
+original invocations would give the wrong shift. The name difference
+is exactly $q$, a mathematical statement about actual names, not an
+available reference-subtraction instruction.
+
+By OA12.4 the saved pre-read tail is copied into the new descriptor.
+Auxiliary rows allocate no original non-event name and Query writes
+no such field, so the descriptor birth has the same original typed
+name. OA1.3/12.2/19.1–19.2 leave that entry immutable through Return
+and every later held/retired state. Copying does not clear the saved
+slot: it retains its own value until its own overwrite/explicit clear.
+Return's prescribed clears remove scratch values, retaining their
+backing, while $d.\mathsf{entry}$ and actual event copies remain.
+Since $q>0$, the two retained references differ. This proves the
+inequality at an original field even after full cleanup and return,
+independently of differences in auxiliary garbage or event payloads.
+$\square$
+
+**Corollary 13.4 (denied decoder and finite supplements).** No function
+of $V$, even supplemented by the mathematically supplied total actual
+row/event count, returns $X$ on all these completed histories; it
+cannot even always return the indicated original descriptor.entry.
+Indeed (OC.12) gives one input and (OC.13) requires two outputs.
+This denies a decoder from the erased data, without granting an
+original heap/ordinal/entry reader beyond Definition 2.1's finite PC
+endpoint. The old callable record continues to describe $C(p)$ by
+Theorems 8.3/9.2; it was never a record of this new enlarged target.
+A caller-retained merged invocation/output schedule supplies extra
+distinguishing data and is outside this erasure.
+
+For a finite enlargement, fix $m\ge1$ genuine Updates and put the
+single $Q$ in each of the $m+1$ gaps, all at completed boundaries.
+Lemma 13.2 iterates: the $j$th Update has a fixed length $r_j$ and
+capture offset $c_j$, while $Q$ always copies the same $R$ and has
+length $q$. All these histories have the same $\widehat V$ and total
+$N_*+q+\sum_{j=1}^m r_j$. If Query follows exactly $k$ Updates,
+the $j$th retained original descriptor has entry
+
+$$
+e_{N_*+\sum_{i<j}r_i+c_j-1+q\,\mathbf1_{k<j}}.
+\tag{OC.14}
+$$
+
+For $k<l$, take $j=k+1$ to distinguish their entries. Thus this
+selected gap slice has exactly $m+1$ distinct actual endpoints;
+the larger $\widehat V$-fibre has at least $m+1$, with no exact
+cardinality asserted for that larger fibre. A supplement $Z$ making
+$(\widehat V,Z)$ determine $X$ must take at least $m+1$ values on
+the slice; a fixed-length binary supplement needs $2^b\ge m+1$.
+This is the usual finite shuffle/separation argument, as already
+used in [AIF Theorem 11.16/Corollary 11.17][AIF13], applied to this
+one-query slice; it constructs no logger or optimal physical code.
+$\square$
+
+**Definition 13.5 (scope and reused content).** This result is
+`repo-derived`. [AIF Proposition 11.14][AIF13] already separates a
+captured frontier; AIF11.16–11.17 already supplies returned chronology
+fibres and supplement bounds on its different source, including equal
+raw endpoints. [RCA Lemma 7.2][RCA] already supplies a same-count
+transient service-bit distinction. The increment here is the completed
+OC comparison-data fibre with a permanently retained original-field
+witness, the exact expanded-row shift and actual shared event names.
+It does not assert equal actual $X$ endpoints, full-$Q$ responses or
+complete future successors. OC8–9's positive old-record service and
+RCA15.2/PVC5.7/6.5's positive repeated services retain their separate
+installation, acquired-input and grant hypotheses.
+
+All original/auxiliary events and every resident object remain in $X$.
+Equal row/event totals do not equate actual reference widths, traffic,
+retained bits, storage or the full resource vector of §10. The argument
+uses only the already installed controller and current rights; it
+adds no acquisition, Connect, installer, clock, snapshot/entry reader,
+merged log or grant. It leaves §12.2's retargeting, repeated enlarged
+acquisition and general recovery questions unchanged.
+
+[AIF13]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md
+
+## 追加锚（本行以下为增补区）

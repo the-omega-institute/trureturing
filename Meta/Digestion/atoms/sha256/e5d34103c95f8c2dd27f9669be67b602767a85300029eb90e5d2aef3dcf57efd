@@ -1,0 +1,21 @@
+**定义 188.1（完整原候选与实际轴）。** 完整保持161.1、173.1–173.2、182.1的同一原 $E,C,u,N,\mathcal P,S,D$。A1是全部原有向Hermitian二表正性；A2是原相加三表及其排列的实部正性和 $(1,-1,-1)$ 零二次值；A3是原单位平方及同一固定有理小窗口。准确锥、全部正评价与零、不等、次归一质量不变。仍为含单位稠密实Jordan包含 $E\subset X\subset\mathcal A_{\rm sa}$、$\mathcal A=C^*(X)$，$S=\circ$；$X$ 不必填满环境，原域可以不完备、不可分。同一个未知总映射只另取全部原P2和完整PB：
+
+$$
+\begin{gathered}
+|\phi D(a,b)|^2\le\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\\
+v=D(a,b)-a\circ c,\qquad w=a\circ b+D(a,c),\\
+D(b+v,c+w)-D(b-v,c-w)=-2b\circ v-2c\circ w.
+\end{gathered}
+\tag{188.1}
+$$
+
+不预付旧 $D$ 的一般可加、齐次、连续、可测、单位平移、协变、商下降或完成延拓。实际原框架仍为 $h,e,j=D(h,e)$、$h^2=e^2=j^2=u$、两两Jordan正交，$Q=ihej$ 是既有辅助中央自伴对合，$T_hz=iQhz$ 在原 $h$-奇域由有限Jordan式给出。163.1已经识别
+
+$$
+P_h^-D(\alpha u+\beta h,y)=\beta T_hP_h^-y,\qquad
+U_hy=hyh,\quad P_h^\pm=(I\pm U_h)/2.
+\tag{188.2}
+$$
+
+以下先识别这条原仿射行的交换零值，再将其用于182.1的第二实际框架。不把188.2的投影等式当成完整旧值。
+

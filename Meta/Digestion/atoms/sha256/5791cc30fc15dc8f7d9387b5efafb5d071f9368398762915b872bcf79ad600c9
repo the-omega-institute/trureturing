@@ -1,0 +1,33 @@
+**命题 29.3（同一十六次域内的同参数分离）。** 取 $\alpha^{16}=2$，$F=\mathbb Q$、$L=\mathbb Q(\alpha)$，令 $\beta=\alpha^4$、$A=\mathbb Q(\beta)$。设
+
+$$
+B=\ker\operatorname{Tr}_{A/\mathbb Q},\qquad
+W=B\oplus A\alpha,\qquad
+V=\langle 1,\alpha,\ldots,\alpha^6\rangle_{\mathbb Q}.
+\tag{29.10}
+$$
+
+两者的 $(m,N,e)$ 都是 $(7,16,1)$，但 $\delta_W=2$、$\delta_V=1$。所有原正交叠标签分别满足 $d_W(r)\ge2$ 和 $d_V(r)\ge1$，且两个界都在 $L^\times$ 中取到。具体地，
+
+$$
+r_0=\frac{\alpha^4}{\alpha^8+\alpha},\qquad
+W\cap r_0W=\langle\alpha^4,\alpha^8\rangle_{\mathbb Q},
+\qquad
+V\cap\alpha^6V=\mathbb Q\alpha^6 .
+\tag{29.11}
+$$
+
+**证明。** $x^{16}-2$ 和 $x^4-2$ 在素数二处满足 Eisenstein 判据，故 $[L:\mathbb Q]=16$、$[A:\mathbb Q]=4$，$[L:A]=4$。在 $A$ 的幂基 $1,\beta,\beta^2,\beta^3$ 中，乘 $\beta^j$（$1\le j\le3$）的矩阵对角线全为零，因为 $\beta^4=2$ 且指数模四移位；乘 $1$ 的迹为四。故 $B=\langle\beta,\beta^2,\beta^3\rangle_{\mathbb Q}$。$1,\alpha,\alpha^2,\alpha^3$ 在 $A$ 上独立，因而 $W$ 为直和，维数七，$AW=A\oplus A\alpha$ 的 $\mathbb Q$-维数八。$V$ 的七个幂向量亦独立。
+
+$W$ 的比值域含 $\alpha^5/\alpha=\beta$ 和 $\alpha/\beta$，因为 $\alpha,\alpha^5\in A\alpha$ 且 $\beta\in B$，故含 $\alpha$；$V$ 的比值域也含 $\alpha/1$。两者都等于原 $L$。由 $e\mid m$ 与 $e\mid N$，两稳定子均为 $\mathbb Q$。对于每个原 $r$，若 $W\cap rW\ne\{0\}$，在 (29.5) 取这个 $A$ 给出 $d_W(r)\ge4-2(8-7)=2$。而 $V$ 的每个非零交维至少为一。
+
+对 $W$，设 $q_0=\beta^2+\alpha\in W\setminus\{0\}$，则 $r_0=\beta/q_0\in L^\times$，且对任一 $x=b+c\alpha\in W$（$b\in B,c\in A$），$x\in r_0W$ 等价于 $q_0x\in\beta W$。展开得
+
+$$
+q_0 x=\beta^2 b+(b+\beta^2 c)\alpha+c\alpha^2,\qquad
+\beta W=\beta B\oplus A\alpha .
+\tag{29.12}
+$$
+
+由 $1,\alpha,\alpha^2$ 在 $A$ 上独立，条件等价于 $c=0$ 且 $\beta b\in B$。在 $B$ 的基 $\beta,\beta^2,\beta^3$ 中，只有最后一个方向乘 $\beta$ 会产生非零常数项，故 $b\in\langle\beta,\beta^2\rangle_{\mathbb Q}$。这证明 (29.11) 的第一个交叠等式。对 $V$，$\alpha^6V=\langle\alpha^6,\ldots,\alpha^{12}\rangle_{\mathbb Q}$，原域的十六个幂基向量中两组只共用 $\alpha^6$，故得第二个等式。两者各自达到全体正标签的下界。$\square$
+

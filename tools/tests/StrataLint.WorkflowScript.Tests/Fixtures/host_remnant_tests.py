@@ -28,6 +28,106 @@ class HostRemnantTests(unittest.TestCase):
     clean_remnant = fixtures.HostReclaimTests.clean_remnant
     run_sweep = fixtures.HostReclaimTests.run_sweep
 
+    def test_realistic_generated_caches_are_reclaimed_without_package_source_or_blueprint_loss(self):
+        target = self.remnant(blueprint=False)
+        package = target / ".lake/packages/mathlib"
+        self.git(self.main, "clone", "--no-hardlinks", self.main, package)
+        (package / "lakefile.toml").write_text('name = "fixture"\n')
+        build = package / ".lake/build/lib/lean"
+        build.mkdir(parents=True)
+        (build / "Fixture.olean").write_bytes(b"generated")
+        config = target / ".lake/config/0"
+        config.mkdir(parents=True)
+        for name in ("lakefile.olean", "lakefile.olean.trace", "lakefile.olean.lock"):
+            (config / name).write_bytes(b"generated config")
+        unique = target / "Blueprint/Unique.scribe.cs"
+        unique.parent.mkdir()
+        unique.write_text("unrecoverable Blueprint source")
+        unknown = target / ".lake/private-notes"
+        unknown.write_text("retain unknown bytes")
+        self.age(target)
+        rows = self.run_sweep(delete=False)
+        self.assertTrue(build.exists())
+        self.assertTrue(config.exists())
+        self.assertIn((str(package / ".lake/build"), "would_remove"),
+                      {(row.get("path"), row.get("action")) for row in rows})
+        with fixtures.release.cache_guard(package):
+            rows = self.run_sweep()
+        self.assertTrue(build.exists(), "physical package cache guard must retain its build")
+        self.assertIn((str(package / ".lake/build"), "cache_busy"),
+                      {(row.get("path"), row.get("reason")) for row in rows})
+        # Cache removal updates its parent; age the retained remnant for a
+        # separate ordinary sweep, without weakening normal retention.
+        self.age(target)
+        rows = self.run_sweep()
+        self.assertFalse((target / ".lake/build").exists(), rows)
+        self.assertFalse((package / ".lake/build").exists(), rows)
+        self.assertFalse(config.exists(), rows)
+        self.assertTrue((package / ".git").is_dir())
+        self.assertEqual("retained\n", (package / "source").read_text())
+        self.assertEqual("retain unknown bytes", unknown.read_text())
+        self.assertEqual("unrecoverable Blueprint source", unique.read_text())
+
+    def test_partial_remnant_cache_reclamation_preserves_boundaries(self):
+        for boundary in ("git", "symlink", "recent", "mount", "root-mount", "activity", "top-source"):
+            with self.subTest(boundary=boundary):
+                target = self.remnant(boundary, blueprint=False)
+                build = target / ".lake/build"
+                (target / ".lake/private-notes").write_text("keep unknown")
+                if boundary == "git":
+                    (build / ".git").write_text("gitdir: elsewhere")
+                elif boundary == "symlink":
+                    (build / "outside").symlink_to(self.main)
+                elif boundary == "top-source":
+                    (target / "source").write_text("not a qualified remnant")
+                self.age(target)
+                if boundary == "recent":
+                    os.utime(build / "object", (self.cutoff + 1, self.cutoff + 1))
+                lstat = Path.lstat
+                def mounted(path):
+                    info = lstat(path)
+                    selected = ((boundary == "mount" and path == build / "object")
+                                or boundary == "root-mount" and (path == build or build in path.parents))
+                    if not selected:
+                        return info
+                    fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
+                    return types.SimpleNamespace(**dict(fields, st_dev=info.st_dev + 1))
+                with patch.object(Path, "lstat", mounted):
+                    self.run_sweep(active={build / "object"} if boundary == "activity" else ())
+                self.assertTrue((build / "object").exists())
+                self.assertTrue((target / ".lake/private-notes").exists())
+                self.assertEqual("retained\n", (self.main / "source").read_text())
+
+    def test_generated_cache_names_do_not_admit_source_shaped_entries(self):
+        target = self.remnant(blueprint=False)
+        shutil.rmtree(target / ".lake/build")
+        (target / ".lake/build").write_text("not a generated build directory")
+        config = target / ".lake/config/0/lakefile.olean"
+        config.mkdir(parents=True)
+        (config / "source").write_text("not a compiled configuration file")
+        self.age(target)
+        self.run_sweep()
+        self.assertEqual("not a generated build directory", (target / ".lake/build").read_text())
+        self.assertEqual("not a compiled configuration file", (config / "source").read_text())
+
+    def test_package_cache_respects_outer_workspace_guard_and_fresh_activity(self):
+        target = self.remnant(blueprint=False)
+        (target / ".lake/unknown").write_text("retain")
+        package = target / ".lake/packages/package"
+        build = package / ".lake/build"
+        build.mkdir(parents=True)
+        (package / "lakefile.toml").write_text('name = "package"\n')
+        (build / "payload").write_text("generated")
+        self.age(target)
+        with fixtures.release.cache_guard(target):
+            self.run_sweep()
+        self.assertTrue((build / "payload").exists(), "outer workspace guard must protect package build")
+        def activity(*args, **kwargs):
+            return {target} if len(args) > 1 else set()
+        with patch.object(cleanup, "active_paths", side_effect=activity):
+            self.run_sweep(active=None)
+        self.assertTrue((build / "payload").exists(), "fresh workspace cwd must protect package build")
+
     def test_remnant_shape_and_unique_bytes_are_retained(self):
         for name, relative, content, reason in (
                 ("source", "D5/Unique.lean", b"unique", "unknown_top_level"),

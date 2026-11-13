@@ -3015,3 +3015,935 @@ them. These are ordinary conditional proofs without a newly
 performed numerical instance or Lean verification.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 19. Generated finite forward states and their actual-label successors
+
+**Definition 19.1 (the reference state and its original-source meaning).**
+Retain Definition 1.1, Theorem 14.1 and precisely its paid computation,
+retention and overrun contracts. All finite steps, boxes, integrations
+and raw names in this section are in the fixed reference member
+$(a,\eta)=(1,1)$. Write $\bar h,\bar m,\bar H,\bar K$ for its
+normalized zero state, probability measure, full endpoint and transformed
+operator, and $\bar S_t=e^{-t\bar H}$, $\bar T_t=e^{-t\bar K}$.
+Its time is the acquired invariant $\tau=a^2d/\eta$, not an additional
+original-parameter input. Valid brackets and calibration intervals are
+those of Theorem 14.1 on $\mathcal G_\tau$; denote their allocated
+failure budget by $\alpha_{\rm cal}$.
+
+For the mathematical correspondence only, put
+$\sigma^2=\eta/a$, $\kappa=\eta/a^2$ and use the already proved
+[W, Theorem 5.2] maps
+
+$$
+\begin{gathered}
+\mathcal U_\sigma u=\sigma^{5/2}u\circ\delta_\sigma,
+\qquad \mathcal W_\sigma v=v\circ\delta_\sigma,
+\qquad \bar m=(\delta_{1/\sigma})_*m,\\
+\bar h=\mathcal U_\sigma h,\qquad
+J_{\bar h}\mathcal W_\sigma=\mathcal U_\sigma J_h,
+\qquad \bar H=\kappa\mathcal U_\sigma H\mathcal U_\sigma^{-1},\\
+D(\bar S_{\min}^*)=\mathcal U_\sigma D(S_{\min}^*),\quad
+D(\bar H)=\mathcal U_\sigma D(H),\quad
+D(\bar F)=\mathcal U_\sigma D(F),\\
+\bar C(\mathcal U_\sigma u)=\sigma C(u),\qquad
+\bar A(\mathcal U_\sigma u)
+ =\sigma\bigl(A(u)-(\log\sigma)C(u)\bigr),\\
+\bar{\mathscr V}=\mathcal W_\sigma\mathscr V,\qquad
+\bar{\mathscr E}[\mathcal W_\sigma v,\mathcal W_\sigma w]
+ =\kappa\mathscr E[v,w],\qquad
+\overline{\operatorname{tr}}(\mathcal W_\sigma v)
+ =\operatorname{tr}v .
+\end{gathered}
+\tag{19.1}
+$$
+
+These are the full complex domains, forms and source trace. In
+particular they select the given non-Friedrichs endpoint, rather than
+merely matching its expression off the source. Their entrance and
+emission consequences are
+
+$$
+\begin{gathered}
+\bar T_\tau\mathcal W_\sigma=\mathcal W_\sigma T_d,
+\qquad \bar g_{2\tau}=\mathcal W_\sigma g_{2d},\qquad
+\bar f_y=\mathcal W_\sigma f_y,\qquad \bar c=c,\\
+\bar L_y=\bar T_\tau M_{\bar f_y},\qquad
+\bar z_\varepsilon=\bar g_{2\tau},\qquad
+\bar z_{uy}=\bar L_y\bar z_u=\mathcal W_\sigma z_{uy},\\
+\bar F_v=\mathcal W_\sigma F_v,\qquad
+p(uv)=\langle\bar z_u,\bar F_v\rangle_{\bar m},\qquad
+p(u)=\langle\bar z_u,1\rangle_{\bar m},\\
+\|\bar z_u-s\|_{\bar m}
+ =\|z_u-\mathcal W_\sigma^{-1}s\|_m
+ =\|\bar h\bar z_u-\bar h s\|_2 .
+\end{gathered}
+\tag{19.2}
+$$
+
+Here $z_u$ is the original forward density of [OPPM, Theorem 2.1],
+including its $e$-start and next-read convention. To obtain (19.2),
+apply the entrance statement in (19.1) at $2\tau$, the heat
+intertwining at $\tau$, and multiplication by the transported emissions;
+then induct on the actual word $u$. Unitarity gives both pairings and
+the error identity. Thus the original first read remains $2d$ and
+later gaps remain $d$. The same acquired labels and conditional fresh
+noise are used. No value of $\sigma$ or $\kappa$ is computed, and
+$\mathcal W_\sigma^{-1}s$ is a semantic correspondent, not an
+original-coordinate box supplied to a numerical routine.
+
+A finite step $s$ below is real, nonnegative, rational, supported on
+finitely many bounded rational boxes whose closures avoid $e$; its
+boxes may be partitioned into disjoint interiors. Put
+$M_s=\|s\|_\infty$, an exactly known rational. The stored forward
+state is $s$, a rational radius $\Delta_u$, its consumed prefix $u$
+and the finite data supporting
+$\|\bar z_u-s\|_{\bar m}\le\Delta_u$. It contains evaluated box
+coefficients, not an unevaluated exact density. A state is
+**action ready** when four computed steps $s_y$ and rational radii
+$\varepsilon_y$ certify
+$\|\bar L_y s-s_y\|_{\bar m}\le\varepsilon_y$.
+**Readout ready at horizon $H$** additionally requires the completed
+row and strict tests in Theorem 19.4. These are different requirements.
+
+**Theorem 19.2 (generated composite-action and initialization budgets).**
+For a valid $J=[L,U]$, choose rational $t_0\in J$ and
+$c_0\in[c_-,c_+]$, with $c_->0$, and use Theorem 5.1's clipped
+reference surrogates. Set
+
+$$
+\begin{gathered}
+\Delta_J=U-L,\qquad \Delta_c=c_+-c_-,\qquad
+e_H=\Delta_J/L,\qquad
+e_f=c_+C_0(L)\Delta_J+G_0(L)\Delta_c,\\
+\ell_3=\ell_B=1/4,\quad \ell_0=\ell_1=3/8,\quad \ell=3/8,\\
+e_3=e_f,\quad e_B=0,\quad e_0=e_1=e_f/2 .
+\end{gathered}
+\tag{19.3}
+$$
+
+The rational $Z_0,G_0(L),C_0(L)$ are exactly (3.5), with upward
+rational enclosures where necessary. All actual and surrogate emissions
+are bounded by their respective $\ell_y$.
+
+Compute a real raw step $H_*$ with
+$\|H_*-\bar h\|_2\le\gamma$. For any candidate $s$, compute an
+upper rational square-root enclosure $[\|H_*s\|_2]^+$ and put
+
+$$
+ Q_s=\min\{M_s,[\|H_*s\|_2]^++M_s\gamma\}.
+\tag{19.4}
+$$
+
+Then $\|s\|_{\bar m}\le Q_s$. Compute raw steps $K_y$ with
+$\|K_y-\bar h\widetilde f_y\|_2\le\alpha_y$ using (5.5)
+and its affine $0,1,B$ formulas. For example, raw errors $a_h,a_w$
+for $\bar h,w_{t_0}$ give the error
+$|c_0|a_w+a_h/4$ for
+$\min(\max(c_0w_{t_0},0),\bar h/4)$; subsequent affine errors
+add with their absolute coefficients. Thus one can request all four
+$\alpha_y\le a$ by taking
+$a_h\le a/4$, $a_w\le a/[4(1+|c_0|)]$.
+This is the clipped-vector construction, without a numerical supremum
+of $g_{t_0}$ or an exact-calibration service.
+
+For each $y$, apply the existing reference heat computation to the
+finite raw input $sK_y$, obtaining a raw step $V_y$ with
+$\|V_y-\bar S_{t_0}(sK_y)\|_2\le\beta_y$.
+For a candidate successor step $s_y$, evaluate
+$r_y=[\|V_y-H_*s_y\|_2]^+$ and define
+
+$$
+\begin{aligned}
+\varepsilon_y^{\rm par}
+ &=\ell_y e_H Q_s+M_s e_y,\\
+\varepsilon_y^{\rm num}
+ &=M_s\alpha_y+\beta_y+M_{s_y}\gamma+r_y,\\
+\varepsilon_y&=\varepsilon_y^{\rm par}
+                         +\varepsilon_y^{\rm num}.
+\end{aligned}
+\tag{19.5}
+$$
+
+These generated rationals certify
+$\|\bar L_y s-s_y\|_{\bar m}\le\varepsilon_y$ for all four
+actual labels. In particular the heat-time bound is for the required
+multiplied input; it does not assume that heat commutes with emission.
+
+For initialization, compute a raw step $W_0$ with
+$\|W_0-w_{2t_0}\|_2\le\alpha_0$, choose $s_0$ and evaluate
+$r_0=[\|W_0-H_*s_0\|_2]^+$. The initial radius is
+
+$$
+\varepsilon_0
+ =2C_0(2L)\Delta_J+\alpha_0+M_{s_0}\gamma+r_0,
+\qquad
+\|\bar g_{2\tau}-s_0\|_{\bar m}\le\varepsilon_0.
+\tag{19.6}
+$$
+
+Every norm here is a global norm of finite raw steps, with its stated
+raw errors. Near-source and exterior errors are included.
+
+*Proof.* Since $\bar m(G)=1$,
+$\|s\|_{\bar m}\le M_s$; comparison of $\bar hs$ and $H_*s$
+gives the other upper bound in (19.4). In raw coordinates split the
+actual and trial actions as
+
+$$
+\begin{aligned}
+&\bar S_\tau(\bar h\bar f_y s)
+                    -\bar S_{t_0}(\bar h\widetilde f_y s)\\
+&\quad=\bar S_\tau\bigl(\bar h(\bar f_y-\widetilde f_y)s\bigr)
+       +(\bar S_\tau-\bar S_{t_0})
+                                      (\bar h\widetilde f_y s).
+\end{aligned}
+\tag{19.7}
+$$
+
+The first term is at most $M_s e_y$ by Theorem 5.1 and the affine
+identities. The second is at most
+$e_H\|\bar h\widetilde f_y s\|_2\le e_H\ell_y Q_s$ by the
+operator-norm heat bound (3.6). This proves the parameter part for
+the composite action. The raw $K_y$ error is multiplied by $M_s$,
+heat is a contraction, and comparison of $H_*s_y$ with $\bar h s_y$
+costs $M_{s_y}\gamma$. Adding the evaluated residual proves (19.5).
+The numerical heat acts on the explicit rational step $sK_y$ and is
+therefore an authorized query at rational reference time $t_0$.
+
+The exact initial raw vector is $w_{2\tau}$, by the source identity
+(3.1), not $\bar h$ or a stationary density. On $[2L,2U]$, (3.6)
+gives
+$\|w_{2\tau}-w_{2t_0}\|_2\le2C_0(2L)\Delta_J$.
+Adding the three displayed numerical errors proves (19.6), including
+the factor $2$ for the original lead-in.
+
+For later use, fix finitely many candidate steps and let valid brackets
+shrink to $\tau$, $c$ while all requested raw and norm-enclosure
+errors tend to zero. Then $L$ stays bounded away from zero,
+$G_0(L),C_0(L),C_0(2L)$ stay bounded, and the parameter parts tend
+to zero. The computed $Q_s$ stay bounded by the fixed $M_s$.
+Moreover $r_y$ tends to
+$\|\bar h(\bar L_y s-s_y)\|_2$, and $r_0$ tends to
+$\|\bar h(\bar g_{2\tau}-s_0)\|_2$, by (19.7) and the triangle
+inequality. This is refinement for a fixed finite tuple. It invokes
+no lower Gram bound and no assertion about conditioning of changing
+bases. $\square$
+
+**Lemma 19.3 (evaluated successor on the label actually acquired).**
+Suppose the state for $u$ and all four actions were computed as above.
+After the original source actually returns $y$, select the already
+computed $s_y$, append that original label to the retained prefix,
+and set
+
+$$
+ s^{\rm new}=s_y,\qquad
+ \Delta_{uy}=\ell_y\Delta_u+\varepsilon_y.
+\tag{19.8}
+$$
+
+On $\mathcal G_\tau$ this is a finite numerical forward state for
+the same original prefix $uy$. In a replay of
+$u=y_0\cdots y_{t-1}$ with $s_{j+1}=s_{j,y_j}$, its actual
+accumulated certificate is
+
+$$
+\begin{gathered}
+\Delta_0=\varepsilon_0,\qquad
+\Delta_{j+1}=\ell_{y_j}\Delta_j+\varepsilon_{j,y_j},\qquad
+\|\bar z_{y_0\cdots y_{j-1}}-s_j\|_{\bar m}\le\Delta_j,\\
+\Delta_t\le\varepsilon_0+
+                    \sum_{j=0}^{t-1}\varepsilon_{j,y_j}.
+\end{gathered}
+\tag{19.9}
+$$
+
+*Proof.* The true action has norm at most $\ell_y$ because its
+emission is bounded by $\ell_y$ and heat is a contraction. Hence
+
+$$
+\|\bar L_y\bar z_u-s_y\|_{\bar m}
+ \le\ell_y\|\bar z_u-s\|_{\bar m}
+          +\|\bar L_y s-s_y\|_{\bar m}.
+$$
+
+This proves (19.8) and induction proves (19.9). Only an actually
+acquired label selects a child. Computing four candidate steps does
+not assert that any of their labels occurred. Their certificates come
+from Theorem 19.2, not from an acquired posterior row. After selection,
+Theorem 19.2 applies again to the explicit retained step $s_y$ to
+prepare its four outgoing actions. A requested smaller total radius
+can instead trigger refinement and replay from the same original
+$e$-start. All such work is charged. $\square$
+
+**Theorem 19.4 (evaluated mass, word errors and normalized readout).**
+Let the consumed prefix be $u$, with stored $s=s_t$ and radius
+$\Delta_t$, and let $H\ge1$ be a finite integer. For each marked
+word $w\in\{3,B\}^H$, the raw-word construction in the proof of
+Theorem 5.1 produces a finite raw step $V_w$ satisfying
+
+$$
+\|V_w-\bar h\widetilde F_w\|_2\le\nu_w,
+\qquad
+\|\bar F_w-\widetilde F_w\|_{\bar m}\le E_w,
+\tag{19.10}
+$$
+
+where $E_w$ is exactly (5.2). This is a finite composition of the
+existing clipped multiplications and heat computations, not a new
+word oracle. For each $v\in\mathcal L^H$, expand every $0$ or $1$
+by $f_0=f_1=(3/2)f_B-(1/2)f_3$. Write the resulting finite identity
+as $F_v=\sum_w a_{v,w}F_w$, with zero coefficients omitted, and set
+
+$$
+\begin{gathered}
+A_v=\sum_w|a_{v,w}|=2^{k(v)},\qquad
+V_v=\sum_w a_{v,w}V_w,\qquad
+W_v=\sum_w|a_{v,w}|(E_w+\nu_w),\\
+\|\bar h\bar F_v-V_v\|_2\le W_v,\qquad
+N_v=[\|V_v\|_2]^+,\qquad
+k(v)=\#\{i:v_i\in\{0,1\}\}.
+\end{gathered}
+\tag{19.11}
+$$
+
+No cancellation is presumed in $W_v$. For example, for
+$\nu=\max_w\nu_w$,
+
+$$
+ W_v\le A_v\left[H4^{-(H-1)}(e_H/4+e_f)+\nu\right],
+ \qquad \sum_{v\in\mathcal L^H}A_v=6^H.
+\tag{19.12}
+$$
+
+Thus the original four-label expansion, including all its amplification,
+is retained.
+
+With $H_*,\gamma,Q_s$ as in (19.4), compute the rational integrals
+
+$$
+\begin{gathered}
+\widehat a=\int sH_*^2\,d\mu,\qquad
+\widehat b(v)=\int (H_*s)V_v\,d\mu,\\
+\mu_s=M_s\gamma(2+\gamma),\qquad
+\chi_{s,v}=Q_sW_v+M_s\gamma N_v,\\
+d=\Delta_t+\mu_s,\qquad e_v=\ell^H\Delta_t+\chi_{s,v}.
+\end{gathered}
+\tag{19.13}
+$$
+
+Products of rational box steps have exact rational integrals; an
+implementation choosing additional outward rounding adds its displayed
+radii to $\mu_s,\chi_{s,v}$. In particular, the word-vector error
+is multiplied by the computed state-norm bound $Q_s$.
+On $\mathcal G_\tau$ the generated budgets imply
+
+$$
+ |p(u)-\widehat a|\le d,\qquad
+ |p(uv)-\widehat b(v)|\le e_v.
+\tag{19.14}
+$$
+
+Accept a readout only if the rational strict guards
+
+$$
+ a^-:=\widehat a-d>0,\qquad
+ E^H:=\sum_{v\in\mathcal L^H}\frac{e_v+d}{a^-}<1/2
+\tag{19.15}
+$$
+
+pass. Then the finite rational row
+
+$$
+ \widetilde q(v)=\widehat b(v)/\widehat a,\qquad
+ \rho_u^H(v)=\frac{\max\{\widetilde q(v),0\}}
+                   {\sum_{w\in\mathcal L^H}\max\{\widetilde q(w),0\}}
+\tag{19.16}
+$$
+
+is defined, normalized and satisfies
+
+$$
+ \operatorname{TV}(\rho_u^H,R_u^H)\le E^H,
+ \qquad R_u^H(v)=p(uv)/p(u).
+\tag{19.17}
+$$
+
+*Proof.* Multilinearity of the word recursion gives the expansion in
+(19.11); a $0$ or $1$ contributes absolute coefficient sum $2$.
+Induction in (5.2) gives
+$E_w\le H4^{-(H-1)}(e_H/4+e_f)$, proving (19.12).
+All raw linear combinations are evaluated with their absolute error
+sums. Their supports and coefficients are finite.
+
+For the mass, $\|\bar h\|_2=1$ and
+$\|H_*\|_2\le1+\gamma$ give
+
+$$
+\left|\int s(\bar h^2-H_*^2)\,d\mu\right|
+ \le M_s\|\bar h-H_*\|_2\|\bar h+H_*\|_2
+ \le\mu_s.
+$$
+
+For the numerator, split its error at $\langle\bar hs,V_v\rangle$:
+
+$$
+\begin{aligned}
+|\langle s,\bar F_v\rangle_{\bar m}-\widehat b(v)|
+ &\le\|\bar hs\|_2\|\bar h\bar F_v-V_v\|_2
+       +\|\bar hs-H_*s\|_2\|V_v\|_2\\
+ &\le Q_sW_v+M_s\gamma N_v=\chi_{s,v}.
+\end{aligned}
+$$
+
+Since $\|1\|_{\bar m}=1$ and
+$0\le\bar F_v\le\ell^H$, (19.2) and the state radius give
+(19.14). There is no unknown norm of the exact state in these budgets.
+
+Put $a=p(u)>0$, $b=p(uv)$ and $q=b/a\in[0,1]$. The guards give
+$\widehat a\ge a^->0$, and
+
+$$
+ \left|q-\frac{\widehat b(v)}{\widehat a}\right|
+ =\frac{|q(\widehat a-a)+(b-\widehat b(v))|}{\widehat a}
+ \le\frac{d+e_v}{a^-}.
+$$
+
+Summing gives $\|q-\widetilde q\|_1\le E^H$. Positive-part
+clipping cannot increase distance to the nonnegative $q$. Its sum
+$s_+=\sum_v\widetilde q(v)^+$ obeys $|s_+-1|\le E^H<1/2$,
+so it is strictly positive. Normalization adds at most $|s_+-1|$
+to the $\ell^1$ error. Dividing by two proves (19.17). No likelihood
+floor uniform in $u$ has been inserted. $\square$
+
+**Theorem 19.5 (finite generation for every acquired finite task).**
+Fix a finite actually acquired original prefix $u$, an integer $H\ge1$
+and a positive rational $\delta$. Under precisely the paid contracts
+of Theorem 14.1, on $\mathcal G_\tau$ there is a terminating
+numerical construction with the following outputs: a replayed finite
+state for that exact $u$, its actual accumulated certificate (19.9)
+with $\Delta_{|u|}<\delta$, four generated outgoing action
+certificates with $\varepsilon_y<\delta$, and a completed normalized horizon-$H$ row with
+$E^H<\min\{\delta,1/2\}$. Every state, action and readout has
+its finite reference-coordinate representation, parameter error and
+global numerical residual. The construction takes no reached-history
+row, exact law, finite successful catalogue or supplied success
+certificate as input.
+
+*Proof.* Here is a total finite-precision search, followed by a separate
+proof of a successful finite tuple. Put $t=|u|$. For $k=1,2,\ldots$
+set $q_k=2^{-k}$. At each search level $n$ for this $k$, use Theorem
+14.1's prebudgeted schedule to obtain valid intervals with
+$\Delta_J,\Delta_c<2^{-n}$ and $c_->0$. Inconclusive packet or
+bracket attempts are retained in the bill. Their sourcewise finite
+success on $\mathcal G_\tau$ is the already proved Theorem 14.1.
+Choose rational interior $t_0,c_0$.
+
+Enumerate all well-formed finite step tuples of total binary description
+length at most $n$ consisting of $s_0$ and $s_{j,y}$ for
+$0\le j\le t$, $y\in\mathcal L$. Their main path is defined by
+$s_{j+1}=s_{j,y_j}$ for $j<t$. Nonnegative coefficients, rational
+box bounds and separation from $e$ are finite rational tests. There
+are at most $2^{n+1}$ binary descriptions to inspect. For each tuple,
+compute every budget in (19.3)--(19.13), with all requested raw errors
+and outward norm-enclosure widths at most $2^{-n}$; the raw $K_y$
+subrequests use the explicit allocations in Theorem 19.2.
+Each trial is finite: total reference names are queried only at
+positive rational times and errors. Every comparison is made on the
+returned rational upper bounds, and an unresolved strict test is
+inconclusive. No trial waits on equality.
+
+At this $k$, accept the first tuple satisfying
+
+$$
+ \varepsilon_0<q_k,\qquad
+ \varepsilon_{j,y}<q_k\ (0\le j\le t,\ y\in\mathcal L),
+ \qquad \mu_{s_t}<q_k,\qquad
+ \chi_{s_t,v}<q_k\ (v\in\mathcal L^H).
+\tag{19.18}
+$$
+
+Compute (19.9) and (19.15). Stop the entire task only if
+$q_k<\delta$, $\Delta_t<\delta$ and (19.15) holds with
+$E^H<\min\{\delta,1/2\}$. Otherwise increase $k$ and repeat.
+The archive is always the same source record. If the calibration
+refinement consumes later original labels, all of them are retained
+and charged; the computed result still has tag $u$.
+
+To prove finite success of (19.18), fix $k$. Nonnegative rational
+punctured box steps are dense in the nonnegative cone of
+$L^2(\bar m)$. Indeed, $\bar m=\bar h^2\mu$ is a finite Borel
+measure, the exceptional point is null, and truncation of the support
+and value followed by rational simple-step approximation is dense;
+positive-part clipping preserves the error bound. Equivalently use
+the dense $\bar hs$ search in Theorem 5.1 and clip $s$ at zero.
+The raw residual to a named vector is evaluated from the existing
+names, so no effective tail or pointwise lower bound for $\bar h$
+is presumed by this density statement.
+
+Choose once, for this proof, steps $s_j$ satisfying
+$\|\bar z_{y_0\cdots y_{j-1}}-s_j\|_{\bar m}<q_k/16$
+for $0\le j\le t$. For each $j<t$, set its actual-label child
+to this chosen $s_{j+1}$. Contraction gives
+
+$$
+ \|\bar L_{y_j}s_j-s_{j+1}\|_{\bar m}
+ <(1+\ell)q_k/16<q_k/8.
+\tag{19.19}
+$$
+
+Choose every other child, including all four children at $j=t$,
+to approximate the nonnegative vector $\bar L_y s_j$ within
+$q_k/8$. These are finitely many fixed vectors and finitely many
+fixed approximants. No child of a terminal child is required in this
+finite replay. All their $M_s$ are finite constants for this fixed
+tuple. There is no common-basis closure requirement.
+
+Keep this tuple fixed. By Theorem 19.2, as brackets and numerical
+errors shrink, its computed initialization radius tends to a number
+less than $q_k/16$ and each computed action radius tends to a number
+less than $q_k/8$. Each $Q_s$ remains bounded. For the fixed finite
+$H$, (19.11)--(19.12) give $W_v\to0$ with all affine amplification
+included. The finitely many $N_v$ stay bounded, so
+$\mu_{s_t},\chi_{s_t,v}\to0$. Consequently (19.18) holds with
+strict slack at sufficiently large $n$. The description of this fixed
+tuple is eventually included. The finite-precision search therefore
+recognizes a successful tuple at a finite level. This proves existence
+before using search fairness; no assertion is made that shrinking
+unweighted residuals controls coefficients of a changing basis.
+
+Every accepted tuple, regardless of its amplitudes or dimension,
+satisfies $\Delta_t<(t+1)q_k$ by the actual recurrence (19.9).
+Equations (19.13) and (19.18) imply
+$d<(t+2)q_k$ and $e_v<(t+2)q_k$. For the fixed positive number
+$a=p(u)$, (19.14) gives
+$a^-\ge a-2d>a/2$ as soon as $(t+2)q_k<a/4$.
+Then
+
+$$
+ E^H<4^{H+1}(t+2)q_k/a .
+\tag{19.20}
+$$
+
+Thus for sufficiently large finite $k$, the state and readout guards
+all pass with strict slack. The proof uses $a>0$ only to establish
+termination; neither $a$ nor a lower bound for it is an input.
+Each earlier $k$ has only finitely many trials by the preceding
+argument. This proves finite generation of the actual accumulated
+certificate and of the normalized readout.
+
+The same construction applies after any finite actually acquired
+extension of $u$, with the new full prefix and desired tolerance.
+A previously action-ready state advances by (19.8) without a new row
+query; generating further actions or sharpening its radius uses the
+explicit reference computations, or replay if necessary. More precisely,
+to prepare a successor with state error below a positive rational $\beta$
+before knowing the next label, run this theorem at a rational
+$\delta'<\beta/(1+\ell)$. Both the parent radius and its four
+local action radii are then below $\delta'$, so (19.8) gives
+$\Delta_{uy}<(1+\ell)\delta'<\beta$ for whichever label is
+actually acquired. This is a generated four-action successor guarantee.
+A normalized child readout still needs its own completed tests; for
+any reached child they terminate by the theorem just proved. An increasing
+sequence of finite tasks need not have bounded total work, bounded
+state size or a finite time at which all tasks are complete. $\square$
+
+**Definition 19.6 (finite representations and cost coordinates).**
+Use exactly the bit/service model of [W, Definition 21.1 and
+Proposition 21.2]. In particular source reads, arithmetic, storage,
+numerical-service work and completion latency remain distinct.
+An explicit representation of a real rational $p/q$, $q>0$, contains
+its sign and self-delimiting binary integers $|p|,q-1$; write
+$\lambda(p/q)$ for that length. If
+$g(n)=2\lfloor\log_2(n+1)\rfloor+1$ is the length of the
+positive gamma code of $n+1$, one choice is
+$\lambda(p/q)=1+g(|p|)+g(q-1)$. Reduction is optional.
+For a step $s=\sum_{i=1}^r a_i1_{B_i}$ in four coordinates, its
+finite representation length is
+
+$$
+ \mathsf b(s)=g(r)+\sum_{i=1}^r
+ \left[\lambda(a_i)+\sum_{j=1}^4
+       \bigl(\lambda(l_{ij})+\lambda(u_{ij})\bigr)\right],
+ \qquad B_i=\prod_{j=1}^4[l_{ij},u_{ij}].
+\tag{19.21}
+$$
+
+Overlapping raw-step lists are allowed, with the same formula. A box
+intersection and its volume use finitely many rational comparisons,
+subtractions and multiplications. A raw squared norm of a list of
+$r$ boxes is the $r^2$-term pair-intersection sum. An integral of
+$h\le3$ step factors has at most the product of their list lengths
+terms. Thus (19.4)--(19.18) specify actual finite-dimensional
+representations and arithmetic, without a Gram matrix or solve.
+
+The accepted replay can retain $1+4(t+1)$ step slots with main-path
+slots shared, their scalar budgets, the four final successor slots
+and the $4^H$ rational readout entries. The current state itself has
+$r_{s_t}$ rational box coefficients; its four successor slots have
+$\sum_y r_{s_{t,y}}$ coefficients. All box endpoints, precisions,
+errors and reference-query replies are included in their storage.
+Names retain their total-query meaning; an infinite name is not
+charged as a finite string. Count each genuinely shared backing once
+and each distinct retained copy separately.
+
+**Theorem 19.7 (generated finite work and storage accounting).**
+The finite task of Theorem 19.5 has a finite work certificate in the
+inherited bit/service model. The following explicit accounting is one
+such certificate; it is not a bound on a processor rate or on expected
+work.
+
+Index every reached tuple trial by $a$, including trials at rejected
+$k,n$ and failed strict tests. Also include each arithmetic block of a
+composite routine outside its original paid query boundaries, including
+each dense multiplication search trial and calibration guard. For a
+block without replay or readout take $t=H=0$ in the cost formulas.
+Each block is charged once. For each block let $L_a$ be the total
+length of its finite input descriptions and numerical replies, and
+let $r(F)$ be the actual box-list length of each finite raw or weighted
+step $F$ used in it. All the following finite collections are determined
+by the displayed formulas, their list lengths and reached loop limits:
+$\mathcal N_a$, the norm computations;
+$\mathcal I_a$, the step-product integrations;
+$\mathcal P_a$, the raw step products;
+$\mathcal C_a$, the pointwise min/max partitions;
+and $\mathcal A_a$, the affine word combinations. Include syntax,
+nonnegativity, disjointness and puncture tests for every candidate.
+For a norm of $r$ terms use the pair sum above. For a min/max of a
+total of $r$ box terms, sort all coordinate endpoints, partition their
+bounded enclosing box into at most $(2r+1)^4$ cells, and evaluate its
+finite rational value on each cell. Quadratic sorting is sufficient.
+No spatial quadrature oracle is used.
+
+For a square root of a nonnegative rational $x$ to upper-enclosure
+width $\epsilon$, bisection of $[0,1+x]$ uses at most
+
+$$
+ j(x,\epsilon)=\min\{j\ge0:(1+x)2^{-j}<\epsilon\}+1
+\tag{19.22}
+$$
+
+rational tests and updates, up to a fixed factor. Include the integer
+doubling search computing this $j$. A sufficiently generous explicit
+upper bound for the non-service rational/list operations in trial $a$
+is
+
+$$
+\begin{aligned}
+D_a=2^{16}\biggl[&1+t+4^H+L_a+\sum_F(1+r(F))^2
+ +\sum_{N\in\mathcal N_a}(1+r(N))^2\\
+ &+\sum_{I\in\mathcal I_a}\prod_{F\text{ in }I}(1+r(F))
+ +\sum_{(F,G)\in\mathcal P_a}(1+r(F))(1+r(G))\\
+ &+\sum_{C\in\mathcal C_a}(1+r(C))(2r(C)+1)^4
+ +\sum_{A\in\mathcal A_a}(1+\#A)\\
+ &+\sum_{(x,\epsilon)\text{ in norm enclosures}}
+                         (1+j(x,\epsilon))\biggr].
+\end{aligned}
+\tag{19.23}
+$$
+
+Here $r(N)$ is the length of the list whose norm is requested;
+for example, the initial residual has
+$r(W_0)+r(H_*)r(s_0)$ terms and an action residual has
+$r(V_{j,y})+r(H_*)r(s_{j,y})$ terms. The mass integral has at
+most $r(s_t)r(H_*)^2$ terms; readout $v$ has at most
+$r(s_t)r(H_*)r(V_v)$ terms. An unmerged affine output has
+$r(V_v)\le\sum_{w:a_{v,w}\ne0}r(V_w)$ terms. In particular it
+has at most $2^{k(v)}\max_w r(V_w)$ terms and the sum of these
+bounds over all $v$ is $6^H\max_w r(V_w)$.
+These are bounds using reached dimensions, not a fixed-dimensional
+or coefficient-norm proxy for work.
+
+Let $b_a$ bound numerator and denominator bit lengths of the rational
+subexpressions in this finite evaluation, and $w_a$ bound its integer
+indices. Such integers are generated structurally from actual input
+and reply lengths: addition of two rationals replaces the two length
+bounds by their sum plus two, multiplication or nonzero division by
+their sum plus one; take maxima over branches and iterate these rules
+for the reached finite loop limits. This also counts the errors,
+parameter budgets, norm bisections, residuals, denominators and final
+normalization. No trace-retention or execution-recording service is
+required. Schoolbook integer arithmetic then bounds all of these
+non-service operations by
+$2^{16}D_a(b_a+w_a+1)^2$ bit operations. Encoding the certificate
+by the same finite integer/rational operations is included, with
+unused slack in this bound.
+
+At level $(k,n)$ let $T_{k,n}$ be the number of well-formed tuples
+actually tested; $T_{k,n}\le2^{n+1}$. Enumerating and parsing all
+binary descriptions through length $n$ costs at most
+$2^{16}(n+1)^2 2^{n+1}$ bit operations in addition to trial work.
+All levels through the successful one are included in the finite set
+$\mathcal L$. A replay reads $t$ archive labels per trial, paying at
+most $2^{16}(t+1)(\lceil\log_2(t+2)\rceil+1)^2$ bit work; include
+this even if some reads could be shared.
+
+For calibration, let $\mathcal B$ be all reached startup or packet
+scans of Theorem 14.1, including unsuccessful ones. Scan $s$ has
+actual prefix length $R_s$, counter count $K_s$, maximum window
+length $T_s+1$ and counter width
+$b_s=\lceil\log_2(R_s+2)\rceil$. A direct retained-prefix scan
+that updates every declared counter costs at most
+$2^{16}K_s(T_s+1)(R_s+1)b_s^2$ bit operations and uses at most
+$K_s b_s+2(T_s+1)+2^{16}b_s$ counting bits, in addition to the
+retained prefix. For the adequate $T=3$ packets $K_s=4^4=256$;
+startup marker blocks have their actual smaller counters. Include
+rational packet guards and every failed bracket comparison among
+the same finite arithmetic blocks as (19.23).
+
+Finally expand composite raw-word and calibration computations into
+the original paid raw-name, heat, resolvent, source and defect queries
+$q\in\mathcal Q$ and the arithmetic blocks just specified. Their
+internal dense-search trials, polynomial degrees, resolvent powers,
+precision queries and failed tests are therefore included. One may
+instead charge an existing composite's full bill once, omitting its
+subcalls and arithmetic blocks from the separate sums. For each reached
+query its input/precision description and reply length are finite data.
+For example, an unshared full tuple trial uses one $w_{2t_0}$
+computation, the $\bar h$ precision queries, four clipped-vector
+computations and $4(t+1)$ forward heat computations. Computing the
+$2^H$ marked words separately uses at most $H2^H$ further heats and
+$H2^H$ bounded multiplications, with every internal multiplication
+search charged as above. The $4^H$ affine outputs and their integrals
+are ordinary finite arithmetic. Reused queries are counted once only
+when their actual input and certified precision suffice; refined or
+repeated calls remain separate charges.
+Write $C_q,M_q,B_q$ for precisely its inherited bit-work, scratch-space
+and retained-representation charges. These are the service coordinates
+of [W, Definition 21.1], not an assumed uniform bound or a new cost
+oracle. The finite work certificate is the reached integer/list data
+above together with the finite sum of these existing charges. One
+valid upper bound for numerical and archive work is
+
+$$
+\begin{aligned}
+\mathsf C_{\rm task}\le{}&\sum_{q\in\mathcal Q}C_q
+ +2^{16}\sum_aD_a(b_a+w_a+1)^2\\
+ &+2^{16}\sum_{(k,n)\in\mathcal L}(n+1)^2 2^{n+1}
+ +2^{16}\sum_{s\in\mathcal B}
+                  K_s(T_s+1)(R_s+1)b_s^2\\
+ &+2^{16}\sum_a(t+1)(\lceil\log_2(t+2)\rceil+1)^2 .
+\end{aligned}
+\tag{19.24}
+$$
+
+Service terms stay in their original charged units; a symbolic finite
+sum of opaque service charges is not reported as a numerical runtime
+prediction for those services. All non-service terms are generated
+finite integers. No finite name-answer cost is inferred from label
+counts or from the magnitude of a state coefficient.
+
+Let $R_*$ be the greatest original prefix acquired for this task,
+including calibration, and let $J\ge0$ additional labels have arrived
+by the actual declared completion cut. There are $R_*+J$ physical
+reads from the same $e$-start, with last indexed read at
+$(R_*+J+1)d$. Archive payload is exactly $2(R_*+J)$ bits for one
+backing; every additional complete copy of length $r$ adds $2r$.
+Each pending arrival is included even if not yet assimilated. Capture
+and indexing add at most
+$2^{16}(R_*+J+1)(\lceil\log_2(R_*+J+2)\rceil+1)^2$ bit work
+under the inherited lawful-capture contract. Any later replay of those
+labels is a further trial/update charge, not free assimilation.
+Writing $B_{\rm out}$ for the actual encoded row and tag length,
+copying $B_{\rm copies}$ additional archive/buffer bits and serializing
+that row add at most
+
+$$
+ 2^{16}(B_{\rm copies}+B_{\rm out}+1)
+ \bigl(\lceil\log_2(R_*+J+B_{\rm copies}+B_{\rm out}+2)\rceil+1\bigr)^2
+$$
+
+bit work by direct bit copying and indexing, in addition to the
+capture term and (19.24). Here $B_{\rm copies}$ counts distinct label
+backings beyond the shared archive. Any separately charged lawful
+output-port service retains its original charge. These terms together
+give the total work accounting for a delivered row, conditional on
+those existing capture and output contracts.
+
+For a sequential evaluation, a finite peak-space bound is
+
+$$
+\begin{aligned}
+\mathsf M_{\rm task}\le{}&2(R_*+J)+B_{\rm copies}+B_{\rm old}
+ +B_{\rm kept}+\sum_{q\text{ retained}}B_q\\
+ &+\max_a\bigl[2^{16}(L_a+D_a)(b_a+w_a+1)
+                                      +\max_{q\text{ used in }a}M_q\bigr]\\
+ &+\max_{s\in\mathcal B}
+       [K_s b_s+2(T_s+1)+2^{16}b_s+M_{{\rm ref},s}] .
+\end{aligned}
+\tag{19.25}
+$$
+
+Here $B_{\rm old}$ retains every previously acquired menu, row,
+permission and record; $B_{\rm copies}$ counts distinct label buffers
+and copies beyond the shared archive; $B_{\rm kept}$ is the sum of
+(19.21) for retained steps, the actual encoded scalar certificates,
+all $4^H$ output entries and their tags. Reference scratch in packet
+$s$ is $M_{{\rm ref},s}$. Failed trial scratch can be released after
+its charge is included. If more replies or trials are retained, add
+their actual representation lengths. Actual serialization adds its
+encoded output length and ordinary bit-copy work, unless an already
+accepted backed-representation contract supplies that output instead.
+
+*Proof.* Pairwise box intersections compute each raw squared norm;
+triple intersections compute the mass integrals. Endpoint sorting and
+cell evaluation give the stated min/max partition bound. The finite
+sum of their rational operations, list operations, bisections and
+strict tests is bounded by (19.23); each intersection involves four
+coordinates and a fixed number of scalar operations, below the
+chosen constant. Rational comparison uses cross multiplication, and
+schoolbook multiplication and division on the generated bit bounds
+cost at most a fixed quadratic multiple. Parsing, enumeration and
+archive scans have the stated explicit loop lengths. Counter values
+are at most $R_s$, giving the displayed widths and packet scan bound.
+These observations prove (19.24) by adding every reached block,
+including failures, and its original service bill once. The algorithms
+for reference names have finite executed degrees and searches at each
+reached precision by their owning theorems; their costs are included
+in $\mathcal Q$, without presuming a response-time rate.
+
+Theorem 19.5 makes the numbers of levels and trials finite, each
+representation and query finite, and each inherited service bill
+finite on the stated event. The retained representation and maximum
+scratch accounting proves (19.25). Overrun payload and read indexing
+are exactly the original chronological contract of [W, §21]. If an
+actual finite completion cut is supplied, its $J$ is finite; no rate
+relative to $d$ is required for this conditional accounting. Conversely
+these sums do not prove that a physical device catches up or that
+such a cut occurs. The state tag in Theorem 19.5 is still $u$ even
+when $R_*+J>|u|$. $\square$
+
+**Corollary 19.8 (the ready same-cut input for the existing OPPM consumer).**
+Retain [OPPM, Corollary 9.4 and Definition 9.5], including its
+predeclared descriptions and dynamic failure budgets
+$\delta_\kappa$. Let its original acquisition validity event have
+failure at most $\alpha_{\rm old}$. Incorporate the calibration
+packets of Theorem 14.1 into that acquisition event, with total
+failure allocation $\alpha_{\rm acq}$: one can use the same
+prebudgeted packets if they already supply both contracts, or use
+the intersection with
+$\alpha_{\rm acq}=\alpha_{\rm old}+\alpha_{\rm cal}$.
+Then the common original-law event
+
+$$
+ \mathcal G^{\rm all}=\mathcal A_{\rm old}\cap\mathcal G_\tau
+      \cap\bigcap_{\kappa\text{ deterministically valid}}\mathcal D_\kappa,
+ \qquad
+ \mathbb P_e(\mathcal G^{\rm all})
+ \ge1-\alpha_{\rm acq}-\sum_\kappa\delta_\kappa
+\tag{19.26}
+$$
+
+supports both this numerical supplier and OPPM9's all-later-cut
+comparison. No independence of packets, calibration, stopping or
+comparison events is assumed.
+
+Suppose the existing lawful executor conditions actually hold at a
+finite causal cut $C\ge T_\kappa$: all labels through $C$ have
+been captured, retained and assimilated, the calibration used has
+actually become available, and the completed state and horizon-$H$
+readout of Theorems 19.2--19.5 for exactly $u=Y_{<C}$ are actually
+available there. Include its four outgoing action certificates if
+further continuation is requested. Readout readiness requires the
+$4^H$ entries, normalization and guards; action readiness alone is
+insufficient. Suppose also that lawful output is completed at that
+cut, with any serialization/rounding error at most $\omega_C$ in TV.
+On $\mathcal G^{\rm all}$ the supplied row then obeys
+
+$$
+\begin{gathered}
+\operatorname{TV}(\rho_C^{\rm out},{\bf R}_C^H)
+                          \le E_C^H+\omega_C,\\
+\operatorname{TV}(\rho_C^{\rm out},
+                    Q_{W_{\kappa,C-T_\kappa}}^H)
+               \le E_C^H+\epsilon_\kappa+\omega_C .
+\end{gathered}
+\tag{19.27}
+$$
+
+Consequently it earns an actual numerical instance of [OPPM, (9.24)]
+with $\zeta_C=E_C^H$ and
+$\xi_C=\epsilon_\kappa+\omega_C$, independently of any
+suffix-row catalogue. Using the old consumer verbatim gives the
+conservative bound
+
+$$
+ \operatorname{TV}({\bf R}_C^H,\rho_C^{\rm out})
+        \le 2\epsilon_\kappa+E_C^H+\omega_C .
+\tag{19.28}
+$$
+
+The stronger first inequality of (19.27) is available directly.
+The extra comparison error in (19.28) is explicit.
+
+*Proof.* Include the calibration event before applying the countable
+union bound in [OPPM, (9.26)]. Deterministic numerical tests add no
+further random event, but do require that calibration event. This
+proves (19.26). At the actually ready cut, (19.17) and output error
+give the first bound in (19.27). OPPM9 supplies
+$\operatorname{TV}({\bf R}_C^H,
+Q_{W_{\kappa,C-T_\kappa}}^H)\le\epsilon_\kappa$ on this same
+event, so the triangle inequality gives its second bound and then
+(19.28) by the old consumer. A deterministic calculation for a fixed
+consumed prefix can finish later; it remains a row for that prefix.
+If labels arrive during its calculation or output, obtaining a row
+current at the later completion cut requires their lawful capture,
+retention, assimilation and a completed corresponding readout.
+The theorem asserts no coincidence of these cuts from numerical
+termination alone. $\square$
+
+**Definition 19.9 (scope, reuse and literature boundary).** The new
+supplier is the evaluated reference step state, generated four-action
+residuals (19.5), finite successful replay for their actual accumulated
+certificate (19.18)--(19.20), and the generated readout/work/consumer
+interface (19.13)--(19.28). Its source-specific composite estimate
+uses the earned $\tau,c$ intervals and bounded clipped source
+vectors, including heat after multiplication. FEA5/14 already supply
+the calibration event, clipped finite reference words and total raw
+computations; [OPPM, §§2 and 7] already supply exact filtering and
+finite acquired catalogues. Those results are reused, not counted
+as new. Neither finite-word computability nor exact Bayes recursion
+alone supplies the generated finite state and its action-residual
+refinement proof above. No exact finite invariant span, uniform lower
+Gram bound or uniform likelihood floor is assumed.
+
+The source correspondence uses the full endpoint, forms and entrance
+in [W, Theorem 5.2], and the exact-source raw identity in
+[R, Theorems 12.2--12.4]. Real finite steps do not replace the full
+complex endpoint. The retained source is the same original diffusion,
+with all four labels, the original full history and all acquired
+menus, references, permissions and costs. Reference coordinates
+supply no original hidden point, original box mass, physical clock,
+reset, control, new sensor or parameter name.
+
+The argument is `repo-derived` for these source contracts and this
+consumer. Dense simple-step approximation, contraction residual
+estimates, spectral heat continuity, positive-part normalization and
+schoolbook arithmetic are established methods used inside its proof.
+For the numerical-name convention see Klaus Weihrauch, *Computable
+Analysis*, DOI [10.1007/978-3-642-56999-9](https://doi.org/10.1007/978-3-642-56999-9);
+for elementary integer arithmetic see Richard P. Brent and Paul
+Zimmermann, *Modern Computer Arithmetic*, §§1.1--1.4,
+DOI [10.1017/CBO9780511921698](https://doi.org/10.1017/CBO9780511921698).
+No general theorem from these references is asserted to install an
+original-source service. The estimates used here are proved above;
+worldwide novelty and new Lean verification are not claimed.
+
+Theorem 19.5 is sourcewise finite mathematics for each fixed acquired
+finite prefix, horizon and positive tolerance under the existing paid
+contracts. It is not confined to prefixes from a supplied finite
+catalogue. Its tolerance quantifier concerns these fixed-prefix numerical
+tasks with paid calibration refinement; it does not assert that every
+tolerance can be delivered as a current forecast on a fixed running
+source. It gives no uniform dimension, likelihood floor, runtime,
+throughput, deadline, finite expected bill, or fixed finite memory.
+Capture, retention, assimilation of every arriving label, completed
+readout, lawful output and actual finite executor completion retain
+their distinct inherited conditions. A past-prefix row never becomes
+current merely by finishing later. No native/diffusion/AURIC bridge,
+full mutual recovery or termination of the persistent objective
+follows from this supplier.
+
+[OPPM]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_PASSIVE_PREDICTIVE_MEMORY.md
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,73 @@
+**引理 162.1（不删除交换块的仿射预算）。** 固定任意原 $x\in E$ 及实 $s,r$，记
+
+$$
+\begin{gathered}
+a=su+rh,\quad g=D(a,x),\quad
+v=P_{\rm tr}x,\quad k=h\circ x,\quad\theta=s+r,\\
+Z=(1+s\theta)x+r\theta k,\\
+W_+=Z+g-rtp-r\theta tq,\qquad
+W_-=Z-g+rtp-r\theta tq.
+\end{gathered}
+\tag{162.1}
+$$
+
+对161.2的任一锚、每个有限实 $t$ 及同一个数学正读取 $\phi$，有
+
+$$
+\boxed{2|r|\,|\phi(tq+v)|
+\le\sqrt{B_\phi(n,W_+)}+\sqrt{B_\phi(n,W_-)}.}
+\tag{162.2}
+$$
+
+$Z,g,W_\pm$ 的全部交换块均保留。
+
+证明。对每个有限实 $t,\alpha$，在原PB中准确取 $(a,b,z)=(su+rh,tp+\alpha n,x)$。由(161.4)，内值为 $rtq,g$。两份位移和完整外层输入准确为
+
+$$
+\begin{aligned}
+\nu&=rtq-sx-rk,&\omega&=stp+\theta\alpha n+g,\\
+R_+&=t(p+rq)-sx-rk+\alpha n,&
+S_+&=x+g+stp+\theta\alpha n,\\
+R_-&=t(p-rq)+sx+rk+\alpha n,&
+S_-&=x-g-stp-\theta\alpha n.
+\end{aligned}
+\tag{162.3}
+$$
+
+所有标签仍在原 $E$。若 $c=P_{\rm com}x$，则 $k=hc$，$n\circ x=c+hc+v$、$n\circ k=c+hc$；另有 $p\circ q=0,n\circ q=q$。因此完整PB的右端是
+
+$$
+\begin{aligned}
+-2(tp+\alpha n)\circ(rtq-sx-rk)
+-2x\circ(stp+\theta\alpha n+g)
+=2rt\,p\circ k-2x\circ g-2\alpha r(tq+v).
+\end{aligned}
+\tag{162.4}
+$$
+
+其中 $2st\,p\circ x$ 与 $-2st\,x\circ p$ 相消；含 $\alpha$ 的其余项为 $-2\alpha r\{tq+n\circ x-n\circ k\}$。没有删除任何未知旧值。两份外层分别用同一个 $\phi$ 的原P2，给
+
+$$
+\left|\phi(2rt\,p\circ k-2x\circ g)-2\alpha r\phi(tq+v)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{162.5}
+$$
+
+为处理任意实斜率，包括 $\theta=0$，对固定自伴 $A,B,n$、任意实 $\vartheta$ 作实Gram展开：
+
+$$
+\begin{aligned}
+B_\phi(A+\alpha n,B+\vartheta\alpha n)
+&=B_\phi(A,B)+2\alpha C_\vartheta
++\alpha^2B_\phi(n,B-\vartheta A),\\
+C_\vartheta
+&=\vartheta\phi(A^2)\phi(n\circ B)+\phi(n\circ A)\phi(B^2)\\
+&\quad-\phi(A\circ B)\{\phi(n\circ B)+\vartheta\phi(n\circ A)\}.
+\end{aligned}
+\tag{162.6}
+$$
+
+确实，两份平方读取的系数依次为 $(\phi(A^2),2\phi(n\circ A),\phi(n^2))$ 和 $(\phi(B^2),2\vartheta\phi(n\circ B),\vartheta^2\phi(n^2))$；交叠读取的系数是 $(\phi(A\circ B),\phi(n\circ B)+\vartheta\phi(n\circ A),\vartheta\phi(n^2))$。相乘再减平方，三、四次项各自抵消，二次项恰为所写的Gram式。
+
+正外层取 $A=t(p+rq)-sx-rk,B=x+g+stp,\vartheta=\theta$，所以 $B-\vartheta A=W_+$；负外层取 $A=t(p-rq)+sx+rk,B=x-g-stp,\vartheta=-\theta$，所以 $B-\vartheta A=W_-$。将(162.5)除以 $|\alpha|$，只在这两个显式标量二次式中令 $|\alpha|\to\infty$，得到(162.2)。二次系数为零的根号除后也趋于零，故包括全部退化情形。这不是旧 $D$ 的输入极限。∎
+

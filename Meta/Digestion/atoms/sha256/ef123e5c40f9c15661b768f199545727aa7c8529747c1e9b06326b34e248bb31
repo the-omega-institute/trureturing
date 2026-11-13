@@ -1,0 +1,20 @@
+**引理 48.3（有限而有截断的相位）。** 设 $s(x)$ 是46.1的局部秩一投影，$0\le f\le1$、$f\in C_c(U)$、$f(x_0)=1$，$\theta\in[-\pi,\pi]$。两次相同实际演员
+
+$$
+r(x)=\sigma\tan(\theta f(x)/4)s(x)\quad(x\in U),
+\qquad r=0\text{ 于图外},
+\tag{48.7}
+$$
+
+各有范数不超过一。其Cayley因子在图内为 $\exp(i\theta f s/2)$，两次的乘积为 $\exp(i\theta f s)$。
+
+证明。$jr=i\tan(\theta f/4)s$，所以秩一线上
+
+$$
+\frac{1+i\tan(\theta f/4)}{1-i\tan(\theta f/4)}
+=e^{i\theta f/2},
+\tag{48.8}
+$$
+
+补空间上为一。$\sigma$ 在48.7中不可删去；$j=\sigma i$ 时这正是实现普通相位 $e^{i\theta}$ 的符号。分母不为零，参数在全截断带有限。能否把这些实际因子用于 $F_\sigma$，仍须每次独立支付48.4。∎
+

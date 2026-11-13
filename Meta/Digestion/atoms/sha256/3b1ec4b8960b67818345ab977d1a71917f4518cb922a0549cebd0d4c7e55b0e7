@@ -1,0 +1,26 @@
+### 8.2 广义特征向量的刚性分支
+
+令 $u_1,u_2$ 是 $A$ 的正交归一特征向量，$Au_j=\lambda_j u_j$。相应的原空间向量为
+
+$$
+\xi_j=\begin{pmatrix}C^{-1/2}u_j\\-D^{-1}V^*C^{-1/2}u_j\end{pmatrix},\qquad
+(t-\lambda_j c)\xi_j=0.
+\tag{8.4}
+$$
+
+由本卷引理 3.1，$0=\xi_j^*s\xi_j=u_j^*S_0u_j$，其中
+
+$$
+S_0=C^{-1/2}\operatorname{diag}(s_1,s_2)C^{-1/2}=\operatorname{diag}(s_1/c_1,s_2/c_2).
+$$
+
+若 $\lambda_1\ne\lambda_2$，置 $a_j=|(u_j)_1|^2$。两个零对角条件是
+
+$$
+\begin{pmatrix}a_1&1-a_1\\a_2&1-a_2\end{pmatrix}\begin{pmatrix}s_1/c_1\\s_2/c_2\end{pmatrix}=0,\qquad
+\det=a_1-a_2=\frac{A_{11}-A_{22}}{\lambda_1-\lambda_2}.
+\tag{8.5}
+$$
+
+所以 $A_{11}\ne A_{22}$ 时两行确实可逆，严格得到 $s_1=s_2=0$；这不是“泛型”说法。若 $A_{12}=0$，坐标向量本身就是广义特征向量，分别给出 $s_1=s_2=0$。若特征值重复，则 $A$ 是标量矩阵，从而已经落入 $A_{12}=0$ 的分支。$s=0$ 时 (2.2) 直接是 $X^*X$，故反向蕴含也成立。
+

@@ -1,0 +1,16 @@
+**Lemma 11.3 (compact feasible domain and attained analytic minimum).** $\mathfrak C$ is nonempty, convex and compact for weak convergence of its two measures. The minimum in (11.9) exists and lies in $[0,1]$.
+
+**Proof.** Borel probability measures on a compact metric space are weakly sequentially compact. One elementary proof uses nested finite Borel partitions of diameter tending to zero. From any sequence select a subsequence with convergent masses on all cells of all partitions. These limiting masses are nonnegative, normalized and consistent under refinement. Subdivide the unit interval recursively according to these masses. Away from the countably many subdivision endpoints, each interval point selects a nested sequence of cells. The closures of those nonempty cells are nested compact sets with diameter tending to zero and hence specify a unique space point. Its distribution is a Borel probability measure. Uniform continuity shows that integrals of each continuous function along the subsequence converge to its integral against this distribution. This proves the stated compactness fact with normalized limits.
+
+Apply this fact to the two compact products in Definition 11.2 and take one joint subsequence. Equalities of marginals are weakly closed, by testing continuous functions on each factor. Every integrand in (11.7) is continuous and bounded, by Lemma 11.1 and continuity of atom evaluation. Thus all the residual constraints are weakly closed. They are linear, as are (11.6), so $\mathfrak C$ is convex and compact.
+
+For nonemptiness take the own complete laws of one singleton regular generator with $u=v=a$, and use point masses on its two ordered law pairs. Its return probability is $(1-a)a\le\lambda$, so those laws lie in (11.2); its recursions give (11.7). This is only a feasible law pair, with no zero-excess assertion.
+
+For each fixed supported target, the function $Q\mapsto\operatorname{TV}(Q,P_{p,r_k})$ is bounded continuous; the suspended function is likewise. The supremum of these weakly continuous integrals is lower semicontinuous, even for countable support. Hence $\mathcal J$ attains its minimum on $\mathfrak C$. Integrating the endpoint triangle inequality gives
+
+$$
+\mathcal L_s(P_{s,a})+\mathcal L_s(P_{s,b})\ge2\rho_s,
+$$
+
+so each phase supremum is at least $\rho_s$ and $\mathcal J\ge0$. Every TV is at most one, giving the stated upper bound. Compactness and an attained analytic minimum supply neither the value $j_c$ nor a finite observer. $\square$
+

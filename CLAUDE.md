@@ -10,6 +10,8 @@
 
 仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条）。常用命令速查表见 SPEC §11.28（CLAUDE.md 常用命令速查）。
 
+Git 性能与跨机器初始化遵守第 6.1.1 条；本机 Git 配置、缓存与监视进程不随 clone 同步。
+
 常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
 ## 1. 权威、本体与不可逆真值 DAG
@@ -498,6 +500,17 @@ Initialization uses ordinary Git registration and native errors. Creation uses `
 Normal lifecycle retention and eviction use one policy. A registered linked tree is reusable when its current HEAD committer age is `>14400` seconds or its branch stale marker equals that full HEAD OID. A tree is removed before allocation when age is `>21600` seconds; exactly 14400 and 21600 seconds remain ineligible for the respective rule. Dirty or unfinished bytes may be discarded by forced native removal, including an expired same-task tree, and committed branch refs remain. No idle branch namespace, capacity quota, allocation ledger, reflog age, activity scan, process check, OS scope, intentional-lock veto or snapshot commit participates. Future HEAD timestamps never qualify by age alone; unreadable timestamps are retained. Main protection and native failures remain. Disk shortage always triggers the immediate cleanup rule above and is not subject to normal retention eligibility.
 
 Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, join task writers/build jobs when publication requires it. For compatible follow-up work, keep the tree and start the next task branch from freshly fetched `origin/dev` under the continuation rule above; otherwise mark the branch stale with `make worktree-stale` or `make worktree-return` as soon as the work is saved. Return has no PR, merge, remote, join, clean or branch-switch prerequisite. `make pr` and `pr-watch` report checks only; neither is a merge certificate. Independent review follows section 5.6, except that a pure digestion delivery has none (section 1.2), and integration follows sections 8.12-8.14.
+
+### 6.1.1 Git 性能与跨机器初始化
+
+**每台机器、每个克隆就地初始化，按实际能力启用增量扫描。** agent 或开发环境首次使用克隆、创建或复用 worktree 时，确认本地 Git 配置与监视状态；已生效者复用，不反复初始化。`.git/config`、索引缓存、监视 socket 与宿主服务均为本机状态，不能靠提交或 clone 分发，也不在机器间复制。本节是操作约定，不宣称现有 worktree 入口已自动执行这些步骤；使用现役 Git 命令完成，未实现的入口不得报为已有能力。
+
+- **能力检测**：核对命令行、IDE 与 agent 实际使用的 Git 版本及文件系统。支持内建监视时，在本克隆启用 `core.fsmonitor=true`，实际启动并用 `git fsmonitor--daemon status` 核对；布尔配置要求所有相关 Git 客户端均能正确解释。缺少内建支持时，可使用已安装且经验证的 Watchman 后端；无可用后端或启动失败时保留全量扫描，并说明未启用的原因。`core.untrackedCache` 仅在目录修改时间语义适用时启用。
+- **配置与进程范围**：仓库级设置写入 Git common directory 的本地配置，监视进程按 worktree 管理。宿主会回收脱离任务的进程时，使用宿主支持的服务管理机制；明确其当前会话或登录启动范围。worktree 回收时同步注销本任务安装的服务，进程归属仍遵守第 8.6 条。首次预热后再量重复查询，不把预热或配置成功当作缓存已持续命中。
+- **对象库维护**：多个 pack 的对象库可用 `git multi-pack-index write` 建立统一索引，并对新索引运行 `git multi-pack-index verify`。长期克隆按需用 `git maintenance start` 注册原生后台维护，同一 common directory 只注册一次；短期 CI 检出不安装长期宿主服务。已生效的配置与调度直接复用，不在每次查询或每个 worktree 重建共享索引、重装调度或重复启动全库维护。
+- **调用与验收**：后台调用尊重本地配置，不无条件传入 `core.fsmonitor=false`；合并同轮重复的 `status` / `diff` 查询，写入后重新读取。用相同命令比较预热后的耗时、累计 CPU 与必要的内存读数，并对照全量扫描核对新增、修改、重命名和删除的识别。`core.preloadIndex` 等并行设置按目标机器实测选择；局部调整只写对应 worktree 配置，不把单棵工作树的结果推广为所有机器的默认值。优化须保留变更识别语义，不以隐藏未提交内容换取性能。
+
+〔守护：**软**·跨机器操作纪律；支持情况、配置与服务生效范围、性能及变更识别以目标机器实测为准，本条不新增自动初始化器或机器门。〕
 
 ### 6.2 PR 层序、delta 门与债务收缩
 

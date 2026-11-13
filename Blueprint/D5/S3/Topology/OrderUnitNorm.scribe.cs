@@ -11,6 +11,18 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text("Let E be any real normed vector space. Its auxiliary norm supplies the topology only. The exponential and generator statements below separately require finite dimension. The data A consist of a convex cone C containing zero, a closedness proof, salience, and a specified vector u in its interior. Salience means that a vector and its negative can both belong to C only when the vector vanishes. No inner product, lattice, Jordan product, self-duality or nonzero-dimension assumption is used.")),
             Paragraph(Text("Put B equal to the vectors v for which u-v and u+v belong to C. For each v, let S(v) be the nonnegative real radii r for which r u-v and r u+v belong to C, and let n(v) be inf S(v). In particular, zero is retained among the radii. The order relation is exactly w-v in C.")),
+            Exposed("norm-attained", "norm_attained", "The infimum radius is attained",
+                "For every original vector v, the orderNorm infimum is itself a nonnegative radius in the original cone."),
+            Exposed("norm-nonneg", "norm_nonneg", "The original order norm is nonnegative",
+                "Every original vector has nonnegative orderNorm."),
+            Exposed("norm-le-iff", "norm_le_iff", "Order-norm bounds are radius membership",
+                "For every original vector v and real r, orderNorm(v) <= r exactly when r is an original nonnegative radius for v."),
+            Exposed("norm-zero-iff", "norm_zero_iff", "The order norm is definite",
+                "For every original vector v, orderNorm(v)=0 exactly when v=0, using salience of the original cone."),
+            Exposed("positive-bound", "positive_bound", "Positive functionals obey the order-norm bound",
+                "A real-linear functional nonnegative on the original cone satisfies abs(beta(v)) <= beta(unit) * orderNorm(v) for every original v."),
+            Exposed("boundary-support", "boundary_support", "Boundary points have positive support",
+                "An original cone boundary point has a continuous positive functional vanishing there and with strictly positive mass at the original unit."),
             Describe.Lean(
                 DescribeId.Create("constructed-order-norm-core"),
                 DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm.norm_core"),
@@ -77,6 +89,12 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                     Paragraph(Text("The order-unit bounds put every v in the linear span of C, so its affine span is the whole space. The pinned finite-dimensional convex-set theorem gives nonempty interior, including dimension zero. If v is an interior point and r u-v is in C for r>0, cone addition makes r u interior, and positive inverse scaling makes u interior. For v in the closure of C, adding epsilon u puts v+epsilon u in C: addition of an open interior set absorbs closure. The original Archimedean condition then puts v in C. Thus C is closed.")),
                     Paragraph(Text("The map toData preserves C and u literally and supplies only these proved topology properties. The operator H, preparation set P, all functionals, the ordinary dual closure, and the actual exponential remain the original ones. The norm, square-operator coefficient, same-K extension, exact scaling and complementary minimum are precisely those in the preceding quantified criterion. This is the source's complete mathematical Theorem 68.1. The correlated execution-map extension of Section 69.2 is a separate statement and is not a consequence claimed here.")))))));
 
+
+    private static DocumentBlock.Describe Exposed(string id, string declaration, string heading, string prose) =>
+        Describe.Lean(DescribeId.Create("order-unit-norm-" + id),
+            DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm." + declaration), H(heading),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula CoreStatement()
     {

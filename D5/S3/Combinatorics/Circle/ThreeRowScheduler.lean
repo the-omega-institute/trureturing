@@ -8,7 +8,7 @@
 module
 import all D5.S3.Combinatorics.Circle.ThreeRowParameters
 import D5.S3.Combinatorics.Circle.SourceWidth
-import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

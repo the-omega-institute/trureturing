@@ -499,23 +499,29 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
   try observePhase "lake-prepare-register" "start" catch _ => pure ()
-  -- Start every compiler projection before awaiting classifications below.
-  -- This keeps compilation parallel while shared graph registration is serial.
-  reportState.graphFetch.atomically fun _ => do
-    for name in names do
-      let some mod := (← getWorkspace).findModule? name.toName
-        | error s!"registered report module is not in the Lake workspace: {name}"
-      unless alreadyStarted.contains mod.name do
-        observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
-        discard <| fetch <| mod.facet `judgeInputs
-        observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
+  -- Complete each projection before starting the next collection root. Lake
+  -- still owns and may parallelize its transitive compiler dependencies.
+  for name in names do
+    let some mod := (← getWorkspace).findModule? name.toName
+      | error s!"registered report module is not in the Lake workspace: {name}"
+    unless alreadyStarted.contains mod.name do
+      observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
+      let projection ← reportState.graphFetch.atomically fun _ =>
+        fetch <| mod.facet `judgeInputs
+      -- A continuation may reenter graphFetch; never hold it while awaiting.
+      discard <| projection.await
+      observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
       observePhase "lake-prepare-module" "start" name "prepared-report-fetch"
-      prepared := prepared.push (← preparedModuleReport mod)
+      let job ← preparedModuleReport mod
+      -- Preparation also fetches utility claims and late judge dependencies.
+      -- Drain those before registering another root, outside graphFetch.
+      discard <| job.await
+      prepared := prepared.push job
       observePhase "lake-prepare-module" "finish" name "prepared-report-fetch"
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
@@ -524,7 +530,7 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
     let requests := (artifacts.filter fun request =>
       request.artifact?.isNone && request.args[6]!.isEmpty).qsort fun a b => a.args[1]! < b.args[1]!
     -- Keep bounded native batches, committing each successful chunk before
-    -- starting the next. Compiler/projection jobs above remain asynchronous.
+    -- starting the next. Compiler/projection preparation above is complete.
     let mut start := 0
     while start < requests.size do
       let chunk := requests.extract start (min (start + 100) requests.size)

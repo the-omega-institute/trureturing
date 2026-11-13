@@ -90,11 +90,11 @@ peak resident set of 1.7 GiB including imports (seat-reported).
 2. **Proved (kernel-checked), internal:** the alternating vector is
    annihilated by every join and scaled by $v^{L-1}(v+q)$ by the vertical
    product.
-3. **Open:** the square-lattice companion conjecture (5.18) of the same
-   section, that every toroidal square strip has the degree-$(L-1)$
-   eigenvalue $x$ (Potts form $v^{L-1}(v+q)$). The same alternating vector is
-   a candidate: the square transfer matrix uses one join layer per step
-   instead of two.
+3. **Proved (kernel-checked):** the square-lattice companion conjecture
+   (5.18), for every width $L\ge2$, by
+   `D5.S3.StatisticalMechanics.Potts.ChangShrockToroidalSquare.result`.
+   It reuses the same alternating vector and one full cyclic join layer
+   per transfer step, with Potts eigenvalue $v^{L-1}(v+q)$.
 4. **Open:** the multiplicities and amplitudes of this eigenvalue in the
    partition function.
 
@@ -104,9 +104,8 @@ The eigenvalue comes from a fully antisymmetric vector in the all-singleton
 part of the degree-$(L-1)$ block. Antisymmetry kills every bond that would
 merge the unmarked site with a marked one, so the honeycomb bonds act as the
 identity, and only the detach step, which closes the unmarked site's
-component, contributes. The mechanism uses only the structure of joins along
-bonds, not the honeycomb geometry, which is why item 3 is the natural next
-target.
+component, contributes. The mechanism uses the structure of joins along
+bonds and also supplies the square-lattice result in item 3.
 
 ## ASSUMED-UNVERIFIED
 

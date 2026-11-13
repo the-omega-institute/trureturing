@@ -21,12 +21,10 @@ open private
   twoPoints_singleton
   twoPoint
   twoPoints_exhaust
-  nativeCylinder
   coordinateLinear_single
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 open private
-  vertexComplex
   bouquetVertex_face
   bouquetPath
   glueLeft
@@ -35,7 +33,6 @@ open private
 
 open private
   wedgeSubsingletonHomeomorph
-  finiteConeCover
   join_left_vertex
   join_right_vertex
   join_mono_left

@@ -1,0 +1,11 @@
+## 493. 第四矩驱动的双侧正比例振荡
+
+沿用 §490 的 $E,D_u,V,w,\rho_x,\mathcal T_{\theta,g},Q(g)$ 与 (490.2)。固定 $0<\alpha<\theta<\beta<1$。除 (490.2) 外，本节使用第四矩上界：存在常数 $C_4$，使对所有充分大的 $Y$，
+
+$$
+\sup_{Y^\alpha\le u\le Y^\beta}\frac{\int_1^Y|D_u(x)|^4\,dx}{Yu^2\log^2(Y/u)}\le C_4 .
+\tag{493.1}
+$$
+
+由 Cauchy–Schwarz，$\int_1^YD_u^4\ge\frac1YV(Y,u)^2$，故在 (490.2) 下 (493.1) 只能在 $C_4\ge1$ 时成立。令 $h=X^\theta$、$f_s(x)=D_{sx^\theta}(x)$、$S_X=X^{1-\theta}\log X$，并在 $[X,2X]$ 上取概率测度 $d\mu_X=dx/(x\log2)$ 与 $Z_X=\mathcal T_{\theta,g}/\sqrt{S_X}$。
+

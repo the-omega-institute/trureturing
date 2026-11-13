@@ -1,0 +1,21 @@
+**定理 494.1（矩传递）。** 设 $E$ 局部有界 Borel 可测且满足 $(\mathrm M_k)$，$g\in L^1(0,1)$ 实值。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}Z_X^k=\int_{[0,1]^k}\Bigl(\prod_{j=1}^kg(s_j)\Bigr)M_k(\mathbf s)\,d\mathbf s .
+\tag{494.2}
+$$
+
+证明。由 (490.1)，
+
+$$
+Z_X(x)=U_X(x)^r\,L_X(x)\int_0^1g(s)B_X(s,x)\rho_x(sx^\theta)\,ds,\qquad L_X(x)=\sqrt{\frac{\log x}{\log X}} .
+$$
+
+在 $[X,2X]$ 上 $1\le L_X\le\sqrt{1+\log2/\log X}$；由 §481 的显式 $w$，$1-4u/x\le\rho_x(u)\le1$（$0\le u\le x^\theta$，$x$ 充分大），故 $\eta_X=\sup_{x,s}\bigl|L_X(x)\rho_x(sx^\theta)-1\bigr|\to0$。展开 $k$ 次方并对 $(s_1,\dots,s_k)$ 用 Fubini，
+
+$$
+\mathbb E_{\mu_X}Z_X^k=\int_{[0,1]^k}\Bigl(\prod_jg(s_j)\Bigr)\,\mathbb E_{\mu_X}\Bigl[U_X^{kr}\prod_j\bigl(L_X\rho_x(s_jx^\theta)\bigr)B_X(s_j)\Bigr]d\mathbf s ,
+$$
+
+Fubini 的合法性由 $\int_{[0,1]^k}\prod_j|g(s_j)|\,\mathbb E_{\mu_X}\bigl[U_X^{kr}\prod_j|L_X\rho_x(s_jx^\theta)|\,|B_X(s_j)|\bigr]d\mathbf s\le2^{kr}(1+\eta_X)^kC_k\|g\|_1^k<\infty$ 给出（Hölder 不等式同上）。把每个因子 $L_X\rho_x(s_jx^\theta)$ 换成 $1$ 的误差逐点至多 $\bigl((1+\eta_X)^k-1\bigr)U_X^{kr}\prod_j|B_X(s_j)|$，积分后至多 $\bigl((1+\eta_X)^k-1\bigr)2^{kr}C_k\|g\|_1^k\to0$。余下 $\int\prod_jg(s_j)\,\mathbb E_{\mu_X}[U_X^{kr}\prod_jB_X(s_j)]\,d\mathbf s$：被积函数逐点收敛到 $\prod_jg(s_j)M_k(\mathbf s)$，且受可积函数 $2^{kr}C_k\prod_j|g(s_j)|$ 控制；由控制收敛定理得 (494.2)。证毕。
+

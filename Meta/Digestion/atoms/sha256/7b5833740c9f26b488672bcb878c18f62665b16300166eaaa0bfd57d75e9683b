@@ -1,0 +1,6 @@
+**定义 16.1（成熟工具与原响应的对应）。** 2.1 及三角卷 212.1–213.1 给等平方差两圆关系和半定消去；三角卷 190.1–190.3、219.1 给已归一固定三轴及局部体积元。中央卷 88–91 的仿射陪集和核差公式与 94–99 的核匹配按 14.3 一并使用。任意弱 JC 包含下的固定原对由这些实际两圆关系得到 (10.5)，而 (13.2) 进一步将其未归一化误差与整个诊断代数的闭交换子理想、最大交换商及 (13.5) 的支撑连接。
+
+Lundholm–Svensson，[*Clifford algebra, geometric algebra, and applications*](https://www.math.lmu.de/~lundholm/clifford.pdf)，§2.1–§2.3、Example 5.2、Theorem 8.4 分别供应反交换关系、Pauli 实现和有限维复 Clifford 不可约分类。Landsman，[*Lecture Notes on C*-Algebras, Hilbert C*-modules, and Quantum Mechanics*](https://arxiv.org/abs/math-ph/9807030)，§2.5 的连续函数演算、Theorems 2.7.2–2.7.3 的近似单位与闭理想商、Theorem 2.12.4 的纯态 GNS 不可约性及 Theorems 2.12.10–2.12.11 的极点和谱值支撑，分别用于 13.1 的理想计算和 13.2 的紧面分离。它们均是原响应定理内的中间工具。
+
+[小窗口单位桥卷](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md) 70.1–70.2 已有具体连续矩阵代数的闭交换子理想与乘子取向；75.2–77.1 讨论原有限词的代数理想和最小取向载体。13.1 的 $\mathcal K$ 则是同一对实际 PB 响应误差生成的诊断 C* 代数内的范数闭理想；不将它认作原有限词代数理想，不以闭包论证替代原域成员关系，也不把它认作全域旧 $D$ 的最小取向载体。
+

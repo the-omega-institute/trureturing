@@ -1,0 +1,23 @@
+**推论 5.1（仿射比例像与逐理想约束）。** 在定义 4.1 下，对任意原 $a,b$ 及实 $\kappa,\mu$，有
+
+$$
+q(a)=\kappa q(b)+\mu1_Y\quad\Longrightarrow\quad qD(a,b)=0.
+\tag{5.1}
+$$
+
+特别，对任意闭 Jordan 理想 $I\lhd X$，
+
+$$
+a-\kappa b-\mu u\in I\quad\Longrightarrow\quad D(a,b)\in I.
+\tag{5.2}
+$$
+
+若 $I_{\kappa,\mu}$ 是由 $a-\kappa b-\mu u$ 生成的最小闭 Jordan 理想，则
+
+$$
+D(a,b)\in\bigcap_{\kappa,\mu\in\mathbb R}I_{\kappa,\mu}.
+\tag{5.3}
+$$
+
+证明。对真正的原标签作配平主卷定义 185.1 已付的 SO$(2)$ 旋转，取 $\cos\theta=(1+\kappa^2)^{-1/2}$、$\sin\theta=\kappa(1+\kappa^2)^{-1/2}$。旋转后的第一标签像为 $\mu(1+\kappa^2)^{-1/2}1_Y$，同一个实际旧响应由旋转保持，故定理 4.2 给 (5.1)。这没有使用未知 $D$ 的齐次性。对真商 $q_I:X\to X/I$ 应用 (5.1) 即得 (5.2)；闭商为 JB 的准确来源是 Hanche-Olsen–Størmer Theorem 3.4.2（页 85）。$I=X$ 时结论直接成立。逐个取 $I=I_{\kappa,\mu}$ 得 (5.3)。这些是任意原代表的受限相容性，并非一般商纤维不变性。∎
+

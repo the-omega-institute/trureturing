@@ -1,0 +1,31 @@
+**引理 92.2（实际有限角内的酉扩充）。** 若92.1成立，则存在 $U_e\in\mathcal U_{\rm fs}$，按全部 $e\in\mathcal F_\tau$ 排序，使
+
+$$
+U_e e=we,\qquad U_e\longrightarrow w\text{ 强收敛},\qquad
+U_e^*Y\longrightarrow A\text{ 强*收敛}.
+\tag{92.2}
+$$
+
+证明。取 $f_e=e\vee wew^*$。迹性和89.2给 $\tau(f_e)\le2\tau(e)<\infty$。部分等距 $we$ 的初末投影为 $e,wew^*$，在有限因子 $f_eMf_e$ 内二者等迹，两个补投影 $f_e-e,f_e-wew^*$ 也等迹。有限角内的忠实归一迹比较给部分等距 $s_e$，
+
+$$
+s_e^*s_e=f_e-e,\qquad s_es_e^*=f_e-wew^*.
+$$
+
+于是 $u_e=we+s_e$ 是这个角内的酉元，$U_e=u_e+(1-f_e)$ 是原 $M$ 内的有限支撑酉元。零角时取 $U_0=1$。对每个表示向量 $\xi$，
+
+$$
+\|(U_e-w)\xi\|\le2\|(1-e)\xi\|\longrightarrow0.
+\tag{92.3}
+$$
+
+再置 $\delta_e=U_e^*w-1$，则 $\|\delta_e\|\le2$、$\delta_e e=\delta_e^*e=0$，且
+
+$$
+\|(U_e^*w-1)\xi\|=\|(w-U_e)\xi\|,
+\quad
+\|(w^*U_e-1)\xi\|\le\|(U_e-w)\xi\|.
+$$
+
+故 $U_e^*w\to1$ 强*收敛，乘固定有界 $A$ 得92.2。没有声称 $U_e^*\to w^*$ 强收敛；也没有把原 $M$ 换成其矩阵放大。∎
+

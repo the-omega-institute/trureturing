@@ -1,0 +1,36 @@
+**定义 99.1（迹有限网与规范角结构）。** 记
+
+$$
+\mathcal F_\tau=\{p=p^*=p^2\in M:\tau(p)<\infty\},\qquad
+\mathcal I_{\rm fs,sa}=\bigcup_{p\in\mathcal F_\tau}(pMp)_{\rm sa},
+\qquad z_p=c_M(p).
+\tag{99.1}
+$$
+
+有限支撑指99.1，既不指有限维，也不替换全域。成熟投影公式
+
+$$
+(p\vee q)-p\sim q-(p\wedge q)
+\tag{99.2}
+$$
+
+给 $\tau(p\vee q)\le\tau(p)+\tau(q)$，故 $\mathcal F_\tau$ 对有限并有向。其上确界为1：若非零余投影 $r$ 存在，忠实半有限性给 $0\ne a\le r$、$\tau(a)<\infty$；某个非零谱投影 $e=1_{[\varepsilon,\infty)}(a)$ 满足 $e\le r$、$\tau(e)\le\tau(a)/\varepsilon<\infty$，矛盾。因此按包含排序的全部迹有限投影构成 $e\uparrow1$ 的强收敛网，且 $z_e\uparrow1$。不将此网换成序列。
+
+对非零 $p\in\mathcal F_\tau$，$\tau_p=\tau|_{pMp}/\tau(p)$ 是忠实正规 tracial state，故 $pMp$ 有规范忠实正规中心值迹
+
+$$
+T_p:pMp\longrightarrow Z(pMp),\qquad T_p(p)=p.
+\tag{99.3}
+$$
+
+它是中心双模线性的正含单位映射，满足 $T_p(XY)=T_p(YX)$。这是有限角自己的规范迹，不把 $T_p$ 的值域或单位改成 $Z(z_pM)$ 或 $z_p$。有限性也由 $\tau_p$ 保证：角内真等距会违反有限忠实迹。无 type I 中央项等价于没有非零交换投影角；其性质传给 $pMp$，因为 $r\le p$ 时 $r(pMp)r=rMr$。所以每个非零迹有限角都是完整有限 continuous 代数，正好属于 SM79.1 的环境。
+
+另有规范中心同构
+
+$$
+\rho_p:Z(z_pM)\xrightarrow{\ \cong\ }Z(pMp),\qquad c\longmapsto cp.
+\tag{99.4}
+$$
+
+其满射性是成熟角中心定理：若投影 $f\in Z(pMp)$，则 $(p-f)Mf=0$，中央载体性质给 $f=c_M(f)p$；再对中央自伴元作谱演算即得 $Z(pMp)=Z(M)p$。核在 $z_pZ(M)$ 上为零，因为中央元 $c$ 若 $cp=0$，其谱支撑与 $z_p$ 正交，故 $cz_p=0$。这一区分只涉及已给代数，不涉及 $D$。
+

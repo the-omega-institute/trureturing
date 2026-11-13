@@ -1,0 +1,195 @@
+**命题 23.2（原生条件后果与放宽类的无统一常数反例）。** 有以下两个结论。
+
+1. 若 (23.1) 对原始全部有限控制器成立，则每个原始成功控制器满足
+
+$$
+\sup_{n,h}\Delta_{n,h}
+\ge\frac{\log(1/(8e))-B}{A D_e e^2}.
+\tag{23.2}
+$$
+
+因此该候选关系足以推出 (19.12) 的正分支，且相应下极限至少为 $1/A$。
+
+2. (23.1) 在定义 23.1 的直接访问放宽类中不成立。事实上，存在只用两个非平凡实际辅助量子位、一次直接访问门、零次原生槽、一次场重置及恰一次规定终端的等距族 $\mathcal U_e$，以及原球冠旋转族内的方向对 $h_e,h'_e$，使
+
+$$
+\begin{aligned}
+\delta_*(\mathcal U_e)
+&\le\frac{\pi/(16e)+2d}{\sqrt m}
+ <\frac1{e\sqrt m},\\
+0<F(\omega_{h_e},\omega_{h'_e})^2
+&\le4\exp\left(-\frac{49}{2}me^2\right),\\
+\frac{-\log F(\omega_{h_e},\omega_{h'_e})^2}
+ {D_e e^2\delta_*(\mathcal U_e)+1}
+&\longrightarrow+\infty
+\quad(e\downarrow0,\ e\in\mathbb Q_{>0}).
+\end{aligned}
+\tag{23.3}
+$$
+
+这些态是实际完整输出的态及其自身的实际边缘；反例不依赖丢弃环境或供应初始纯化。
+
+证明。先核对原始解码消费者。由 (19.2)，$D_h(n_*)=(h_y/2,-h_x/4,0,h_y/2)$。对 $h\in C$ 及 $\theta=32e\le0.32$，
+
+$$
+\begin{aligned}
+(\rho_\theta h)_y-h_y
+&\ge\tfrac12\sin\theta-(1-\cos\theta)\\
+&\ge\tfrac\theta2-\tfrac{\theta^3}{12}-\tfrac{\theta^2}{2}
+ >\tfrac\theta4.
+\end{aligned}
+$$
+
+因此第一目标坐标相差大于 $\theta/8=4e$，两个闭 $e$ 成功球不交。取同一实际解码输出落入 $D_h(n_*)$ 的闭 $e$ 球这一效果 $E_h$。原成功条件给出
+
+$$
+\operatorname{Tr}(E_h\omega_h)\ge1-e,\qquad
+\operatorname{Tr}(E_h\omega_{h'})\le e.
+\tag{23.4}
+$$
+
+这个效果只用于证明二元测试；控制器和解码器没有依赖未知 $h$。对任意两态 $\rho,\sigma$ 和效果 $0\le E\le I$，插入 $E+(I-E)=I$，再用迹范数三角不等式及 Schatten 范数的 Cauchy–Schwarz 不等式，得到
+
+$$
+F(\rho,\sigma)
+\le\sqrt{\operatorname{Tr}(E\rho)\operatorname{Tr}(E\sigma)}
+ +\sqrt{\operatorname{Tr}((I-E)\rho)\operatorname{Tr}((I-E)\sigma)}.
+\tag{23.5}
+$$
+
+例如第一项的算子因式分解为
+$\sqrt\rho\sqrt E\,\sqrt E\sqrt\sigma$，其迹范数不超过两个 Hilbert–Schmidt 范数的乘积。由 (23.4)–(23.5)，同一实际 $K$ 上有 $F(\omega_h,\omega_{h'})^2\le4e\le8e$。若 (23.1) 成立，移项即给 $\delta_*(\mathcal C)\ge[\log(1/(8e))-B]/(A D_e e^2)$；再用 $\sup_{n,h}\Delta_{n,h}\ge\delta_*(\mathcal C)$，对原成功类取下确界，得到 (23.2)。除以 $\log(1/e)/(D_e e^2)$ 并取正有理下极限即得第一项。
+
+以下构造只属于直接访问放宽类。令
+
+$$
+A_y=\frac{J_y}{j},\qquad
+ g_e(x)=
+ \begin{cases}
+ 0,&x\le-8e,\\
+ \displaystyle\frac{\pi(x+8e)}{32e},&-8e<x<8e,\\
+ \pi/2,&x\ge8e,
+ \end{cases}
+\qquad
+ |t_e(x)\rangle=\cos g_e(x)|0\rangle+\sin g_e(x)|1\rangle.
+\tag{23.6}
+$$
+
+$g_e$ 在 $[-1,1]$ 上的 Lipschitz 常数为 $L_g=\pi/(32e)$。独立准备 $T$ 为 $|0\rangle$，直接访问门明确取为
+
+$$
+W_e=\exp[-i g_e(A_y)\otimes Y_T].
+\tag{23.7}
+$$
+
+它在 $A_y$ 的每个本征值 $a$ 上将 $|0\rangle_T$ 送到 $|t_e(a)\rangle_T$，是有限维、确定性且与实际 $n,h$ 无关的一个酉门。随后从原场源独立重置令牌 $S_t$，其态为 $\rho_n(+d e_x)$，施行恰一次规定的
+$U_{\rm term}=\exp[-idJ\cdot\sigma/m]$。全部实际非参考量子系统就是 $K=T\otimes S_t$；如显式携带固定程序、计数和路由因子，则将它们以相同的 $h$ 无关状态张量到 $K$。没有原生槽，因而没有生成任何原生 $H,E$；两个酉门没有被约化掉的实际环境。一次重置不超过 $Q_e$，零次原生槽不超过 $L_e$。额外门 (23.7) 正是本构造超出原菜单的地方。
+
+先证明对全部方向的完整返回上界。相干态可在数学上写成 $|h\rangle^{\otimes m}$。仅为计算谱分布，令 $X_1,\ldots,X_m$ 是独立的 $\pm1$ 变量，其均值为 $h_y$。$A_y$ 在 $\tau_h$ 中的谱律就是 $m^{-1}\sum_iX_i$ 的律，因此
+
+$$
+\langle A_y\rangle_{\tau_h}=h_y,\qquad
+\langle(A_y-h_y)^2\rangle_{\tau_h}=\frac{1-h_y^2}{m}.
+\tag{23.8}
+$$
+
+这里没有将参考拆分为可访问的 $m$ 个量子位，也没有产生这组经典变量的实际读数。由 (23.6) 的 Lipschitz 界及 $A_y$ 各谱空间的正交性，
+
+$$
+\begin{aligned}
+&\left\|W_e(|j,h\rangle|0\rangle)
+ -|j,h\rangle|t_e(h_y)\rangle\right\|^2\\
+&\qquad=\mathbb E\left\||t_e(m^{-1}\textstyle\sum_iX_i)\rangle
+                         -|t_e(h_y)\rangle\right\|^2
+ \le L_g^2\frac{1-h_y^2}{m}
+ \le\frac{L_g^2}{m}.
+\end{aligned}
+\tag{23.9}
+$$
+
+纯态迹距离不超过这里的向量距离。规定终端的参考透明比较，取只用于证明的
+$U_h^0=I_R\otimes u_h$，其中 $u_h=\exp[-id h\cdot\sigma/2]$。对任意 $S_t$ 向量 $\psi$，
+
+$$
+\left\|\left(\frac{J\cdot\sigma}{m}
+          -I_R\otimes\frac{h\cdot\sigma}{2}\right)
+             (|j,h\rangle\otimes\psi)\right\|
+\le\frac{\|\psi\|}{\sqrt m}.
+\tag{23.10}
+$$
+
+在 $h=z$ 的证明坐标，差算子作用于最高权向量时仅剩
+$m^{-1/2}|j,j-1\rangle\otimes\sigma_+\psi$；共同旋转给任意 $h$。Duhamel 公式中理想演化始终保持这个最高权参考，故终端的向量误差至多为 $d/\sqrt m$。结合 (23.9)、迹距离收缩性及三角不等式，真实终态与乘积态
+
+$$
+\Gamma_h=\tau_h\otimes|t_e(h_y)\rangle\langle t_e(h_y)|
+             \otimes u_h\rho_n(+d e_x)u_h^\dagger
+$$
+
+的迹距离不超过 $(L_g+d)/\sqrt m$。偏迹给实际 $\omega_h$ 与 $\Gamma_h$ 的 $K$ 边缘同一距离界。因此再用一次三角不等式，
+
+$$
+\Delta_h\le\frac{2(L_g+d)}{\sqrt m}
+ =\frac{\pi/(16e)+2d}{\sqrt m}
+ <\frac1{e\sqrt m}.
+\tag{23.11}
+$$
+
+这对每个 $h$ 及每个允许场的终端令牌都成立；取固定 $n_*$ 的方向上确界即得 (23.3) 第一式。比较态 (23.11) 的第二因子已经是实际边缘，不是 $\Gamma_h$ 的理想边缘。
+
+再取原球冠旋转族内的精确一对
+
+$$
+h_e=(\cos(16e),-\sin(16e),0),\qquad
+h'_e=\rho_{32e}h_e=(\cos(16e),\sin(16e),0).
+\tag{23.12}
+$$
+
+$e\le1/100$ 保证 $h_e\in C$。置 $s=\sin(16e)$，由 $\sin x\ge x-x^3/6$ 得 $s\ge15e$。对均值为 $-s$ 的方向，在 $A_y\le-8e$ 的全部谱空间上，$T$ 准确为 $|0\rangle$；对均值为 $s$ 的方向，在 $A_y\ge8e$ 的全部谱空间上，$T$ 准确为 $|1\rangle$。独立 $\pm1$ 平均的单侧 Hoeffding 界于是给
+
+$$
+\Pr_{h_e}(T=1),\quad\Pr_{h'_e}(T=0)
+\le\exp\left[-\frac m2(s-8e)^2\right]
+\le\exp\left[-\frac{49}{2}me^2\right]=:\varepsilon_e.
+\tag{23.13}
+$$
+
+这里的概率指最终实际 $T$ 的计算基效果。终端只作用于 $RS_t$，精确保留这个边缘。为核对所用尾界，对任意 $\pm1$ 变量 $X$，函数
+$\phi(t)=\log\mathbb E\exp[t(X-\mathbb EX)]$ 满足
+$\phi(0)=\phi'(0)=0$、$\phi''(t)=\operatorname{Var}_t(X)\le1$，所以 $\phi(t)\le t^2/2$。独立相乘并以 Markov 不等式优化 $t$，得到平均偏离均值至少 $a>0$ 的单侧概率不超过 $\exp(-ma^2/2)$。故 (23.13) 包括端点谱空间且无需任何近似或实际选支。
+
+将 (23.5) 直接用于完整实际 $K$ 上的效果 $|0\rangle\langle0|_T\otimes I_{S_t}$，得到
+$F(\omega_{h_e},\omega_{h'_e})\le2\sqrt{\varepsilon_e}$，即 (23.3) 第二式的上界。同一纯辅助、同一个 $W_e$ 和同一个实际终端保持全态向量的内积，而偏迹不能降低根保真度，故
+
+$$
+F(\omega_{h_e},\omega_{h'_e})
+\ge|\langle j,h_e|j,h'_e\rangle|
+ =\cos(16e)^m>0.
+\tag{23.14}
+$$
+
+因此这些对数都是有限的，没有利用零支撑的约定制造无穷大。
+
+最后，由 (19.1)，$D\ge9k_e/e\ge2$ 且 $m=D-1\ge D/2$，所以
+
+$$
+me^2\ge\frac92 k_e e
+ \ge9216 e^{-1}\log(18/e)\longrightarrow+\infty.
+$$
+
+置 $z_e=e\sqrt m\to+\infty$。由 (23.11)、$D=m+1\le2m$ 及 (23.13)，对所有充分小的正有理 $e$，
+
+$$
+\frac{-\log F(\omega_{h_e},\omega_{h'_e})^2}
+ {D_e e^2\delta_*(\mathcal U_e)+1}
+\ge\frac{(49/2)z_e^2-\log4}{2z_e+1}
+\longrightarrow+\infty.
+\tag{23.15}
+$$
+
+若存在统一 $A,B$ 使放宽后的 (23.1) 成立，左端反而至多为 $\max\{A,B\}$，矛盾。这排除所有统一常数及任何充分小精度窗口，证明第二项。$\square$
+
+(23.3)–(23.15) 的承重内容是同一原球冠方向对、Lipschitz 谱读出、全部方向上的完整乘积返回和规定终端的联合反例。相干态及原目标复用 §§13、19；谱演算、Hoeffding 尾界、保真度的效果上界、偏迹单调性和 Duhamel 比较是中间成熟工具。此处给出仓内推导，不主张历史新颖性。静态 Hilbert、PB、CAR 条件或算术层和均不提供 (23.7) 的原生实现。
+
+该反例表明：即使保留全部等距输出、唯一初始方向源、原资源曲线、全方向统一返回和规定终端，单凭这些最终态性质也不能推出 (23.1)。未补的对应恰是：能否在至多 $L_e$ 个原生 $V$、至多 $Q_e$ 次场重置及全部实际记录约束下，获得满足相同保真度与返回估计的合法实现；或者原生全历史约束能否证明 (23.1)。门 (23.7) 直接耦合 $R$，不能因其为有限酉门或 CPTP 而取得原生实现许可。本反例未提供上述实现，也未提供全部场及方向上的原成功解码器。因此它只否定直接访问放宽后的关系；原生候选关系 (23.1) 及原始 (19.12) 均仍未解决。
+

@@ -4660,3 +4660,236 @@ that whole objective.
 [GRAPH-BASE]: https://github.com/the-omega-institute/trureturing/tree/fee3e2b8ff28d5048af2e03cfd83ef522a30365b
 
 ## 追加锚（本行以下为增补区）
+
+## 33. The full guarded two-record fork and its original sources
+
+**Definition 33.1 (fork input and unchanged output).** Work in the finite free ordered trees $\mathcal T$ of Definition 1.1, with $\rho\alpha=\beta$, $\rho\beta=\langle\beta,\alpha\rangle$ and $\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$. A reply is one of $\alpha,\beta,\mathsf{branch},\mathsf{absent}$. Keep the old cut $P=\{L,R\}$, concrete context $C=\langle\square_1,\square_2\rangle$ and partition $\pi=\{\{1\},\{2\}\}$, so the two old class values must be different. Retain the two guarded records
+
+$$
+e_0=(0,L,1,R,=),\qquad e_1=(0,RLR,1,RRL,=),\qquad H_{\rm rel}=(e_0,e_1).
+\tag{ARH.33.1}
+$$
+
+Thus $e_0$ requires both $L\in\operatorname{Pos}(u)$ and $R\in\operatorname{Pos}(\rho u)$ and equates their whole subtrees; $e_1$ requires $RLR\in\operatorname{Pos}(u)$ and $RRL\in\operatorname{Pos}(\rho u)$ and equates their whole subtrees. These are recorded-epoch guards. In particular $RRL\in\operatorname{Pos}(u)$ is not required. Let $H_0$ be any finite list of mixed-epoch literal records, preserving each occurrence, repetition and absent reply, and let $Q$ be any finite prefix-free set of original addresses. Define $U_{\rm fork}(H_0)=\mathcal U_R(H_0,(e_0,e_1))$ by (ARH.1.4), with this entire old row and both guarded records. The required value is the entire $R_Q(u)$: its concrete exterior, exactly its reached original holes in lexicographic numbering, and the complete equality partition of their whole subtrees. Empty, root and absent cuts are included.
+
+Use $s\equiv_h t$ for equality of replies at every address of length strictly less than $h$, including absence; tuples agree coordinatewise. A depth-$d$ pattern specifies each constructor below depth $d$, stops at a concrete leaf, and has distinct independent variables at its reached depth-$d$ frontier. Its cylinder $\mathcal C(p)$ consists only of finite fillings. A leaf has height zero. Write $T_k=\rho^k\alpha$, $\mathcal O=\{T_k:k\ge0\}$ and $w(t)=\#L(t)+2\#R(t)$; for nonempty $t$, $t^-$ deletes its last letter. These conventions agree with §§4, 19 and 27.
+
+**Supplied source correspondence (reused normalization).** The exact disjoint parameterization of this fork is
+
+$$
+\begin{aligned}
+F(y)&=\langle\rho(y),y\rangle,\\
+G(a,c,b)&=F(y_G),& y_G&=\langle A,D\rangle,& A&=\langle a,\rho(c)\rangle,&D&=\langle c,b\rangle,\\
+B(a)&=F(y_B),&y_B&=\langle E,\beta\rangle,&E&=\langle a,\beta\rangle.
+\end{aligned}
+\tag{ARH.33.2}
+$$
+
+Before imposing $H_0$, $a,c,b$ in $G$ and $a$ in $B$ range independently over all finite trees. Here is the full correspondence with the guards, to specify exactly the reused normalization. The first record and old row give $u=F(y)$, as in Theorem 8.2; the old disequality holds because the clock satisfies $\kappa(\rho y)=\kappa(y)+1$. The original endpoint $RLR$ of $e_1$ forces $y=\langle\langle a,z\rangle,D\rangle$. Its other endpoint exists exactly when $\rho(D)$ is a pair, and the equality says $z=(\rho D)|_L$. If $D=\alpha$, $\rho D=\beta$ is a leaf and that guard fails. If $D=\beta$, its image is $\langle\beta,\alpha\rangle$, so $z=\beta$ and the source is exactly $B(a)$. If $D=\langle c,b\rangle$, the equality gives $z=\rho(c)$ and the source is exactly $G(a,c,b)$. This proves the inclusion from every original guarded source into the displayed sectors.
+
+Conversely every displayed $G$ or $B$ has the required old row, both recorded endpoints of each equality exist, and both equalities hold by direct substitution. Intersecting with every occurrence in $H_0$ therefore gives exactly $U_{\rm fork}(H_0)$ in both directions. The sectors are disjoint: the original reply at $RR$ is branch in $G$ and $\beta$ in $B$. In $G$, $a,c,b$ are recovered uniquely at original $RLL,RRL,RRR$; in $B$, $a$ is recovered at $RLL$. In $B$, original $RRL$ is absent although the epoch-one endpoint is born and reached. No original reach guard at that address, or at a child of $c$, is added. Repeated occurrences in the reconstructed source always refer to these same parameters. The normalization, representatives and clock argument are reused supply, not the new stopping theorem.
+
+## 34. Literal cylinders, bounded selectors and the whole exterior
+
+Put
+
+$$
+d=1+\max\bigl(\{0\}\cup\{|p|:(n,p,c)\text{ occurs in }H_0\}\cup\{|q|:q\in Q\}\bigr).
+\tag{ARH.34.1}
+$$
+
+**Lemma 34.1 (exact fork cylinders and selectors).** Enumerate all triples of depth-$d$ parameter patterns for $G$ and all single depth-$d$ patterns for $B$. Fill every frontier variable by $\alpha$ and retain precisely those charts whose reconstructed original source passes every literal occurrence in $H_0$. Each retained chart contains all its finite fillings, without residual conditions; the resulting disjoint union maps bijectively to $U_{\rm fork}(H_0)$. There are no retained charts exactly when the fiber is empty. Agreement $u\equiv_{3+d}v$ in the fiber selects the same sector and the same chart. Within that chart, source agreement $u\equiv_{3+j}v$ implies primitive-parameter agreement $\equiv_j$, and primitive agreement $\equiv_j$ implies source agreement $\equiv_j$.
+
+Proof. There are finitely many depth-$d$ patterns. Two fillings of one pattern tuple agree below depth $d$ in each primitive. Pairing and every fixed $\rho$ power preserve this agreement by Lemma 19.2. For a reply at epoch $n$ and address $p$, follow $p$ in the original source until its first leaf. Pairing persists before that leaf; thereafter the reply, including birth or absence, is computed in the known finite image of that leaf under $\rho^n$. If no original leaf has been encountered, the reply is branch. Thus the reply depends only on original replies at prefixes of $p$, as in (SLH.74.7). Since $|p|<d$, every recorded literal is constant on a chart, regardless of its finite epoch. Testing the $\alpha$ completion is therefore exact on all fillings. Incompatible repetitions reject a chart, and absence is tested as absence.
+
+Every finite primitive tuple has a unique pattern tuple and frontier valuation. The two inclusions of (ARH.33.2), followed by literal constancy, prove both inclusions for the chart list and uniqueness. A ground chart has its single empty valuation; every other chart has finite fillings too. The reply at $RR$ separates sectors. The original representatives of length three then read each primitive pattern below depth $d$; hence distinct charts cannot agree below $3+d$. The same representatives prove the inverse prefix implication with $3+j$. The forward implication is nonexpansivity of the full templates, including all copies of $c$ and $\rho(c)$. These are mathematical reconstruction maps, not access ports. $\square$
+
+**Lemma 34.2 (exact exterior and equality-bit reduction).** In each retained chart, normalize the source template by distributing powers through explicit pairs and evaluating concrete leaf images. Navigation of $Q$ gives a fixed reached set $J$, its lexicographic numbering, an exterior $E_Q$, and exact entire-hole expressions. If $V_{\rm ext}$ is the set of frontier variables actually occurring in the exterior, including decorated occurrences, then
+
+$$
+E_Q[v]=E_Q[v']\quad\Longleftrightarrow\quad v(x)=v'(x)\text{ for every }x\in V_{\rm ext}.
+\tag{ARH.34.2}
+$$
+
+If $V_{\rm ext}\ne\varnothing$, the row has finite counterpairs within this chart at every requested strict source depth. If $V_{\rm ext}=\varnothing$, the whole exterior is constant, and preservation of every reached-hole equality bit is exactly preservation of the remaining full partition.
+
+Proof. An unresolved frontier occurrence is deeper than $d$ in the source, whereas every cut has length less than $d$. Thus navigation never makes a reach decision on an unresolved constructor. Crossing a known leaf in a decorated copy is evaluated in its finite known image. This determines both reached and absent cuts. Cancel the identical finite pair-and-numbered-hole skeleton in two exteriors. At each surviving occurrence, injectivity cancels the fixed power of $\rho$, proving (ARH.34.2), including repeated variables. If a variable is visible, fill it in one valuation by a sufficiently tall perfect binary tree with $\alpha$ leaves, and in another change one leaf deeper than the requested depth to $\beta$. Fill every other variable identically. The two parameter tuples, and hence sources, agree to the requested depth; they stay in the same chart and their exteriors differ. Both sources are finite. If no variable is visible, every exterior symbol is fixed. The pairwise equality bits determine the complete equivalence relation on the fixed numbered set $J$, so the assertion concerns the whole partition, not a chosen collection of separate equality witnesses. $\square$
+
+## 35. Exact finite-coordinate tests and finite completion maps
+
+**Supplier interface 35.1 (the synchronous test with its actual domain).** The finite automata used below are precisely the fixed-power construction of Lemma 21.1 and the productive diagonal-prefix stopping construction of Theorem 13.1 and Lemma 21.4. Their hypotheses are finite tree coordinates with valid padding, Boolean combinations of atoms $\rho^i(x)=\rho^j(y)$ and ground atoms, and finite coordinate-prefix conditions. For a bit $e$ on such a domain $D$, the tested relation is always
+
+$$
+\operatorname{Bad}_e(v,v')=D(v)\land D(v')\land\bigl(e(v)\mathbin{\mathrm{xor}}e(v')\bigr).
+\tag{ARH.35.1}
+$$
+
+For completeness, cancel common powers in a fixed-power atom. The graph $x=\rho^r(y)$ has a recursive pair/pair production with two graph children, and the two complete ground productions $(\rho^r\alpha,\alpha)$ and $(\rho^r\beta,\beta)$. Structural induction on finite $y$ proves both inclusions. Expanding those finite ground productions gives finite bottom-up automata. Padding validity is checked locally: a pair coordinate has present children, whereas a leaf or padding coordinate has padded children. Products and complementation relative to valid convolutions implement the Boolean operations; fixed coordinate prefixes have finite automata. These are the supplied constructions, not an appeal to a decision theorem for arbitrary contextual equations.
+
+In the automaton for (ARH.35.1), let $Z_0$ be its productive states. Form $Z_{j+1}$ from diagonal nullary transitions and diagonal binary transitions whose two child states belong to $Z_j$; diagonality compares each coordinate with its corresponding primed coordinate, including padding. Induction identifies $Z_j$ with finite run witnesses having $j$ initial diagonal levels, with a short finite branch completed diagonally when it ends earlier. The sequence decreases and stabilizes on the finite state set. If the stable set misses the final states, its computed stabilization depth $j$ is a sufficient coordinate-prefix bound for $e$. Otherwise, for every requested $j$, unfold $j$ diagonal levels and attach productive finite completions to obtain an accepted finite witness of (ARH.35.1). This is an all-depth finite witness construction, not an infinite-run compactness substitute. The exact $D$ and $e$ are specified at each use below.
+
+**Completion interface 35.2 (product cylinders and both prefix directions).** Subtrees at incomparable positions of one linear pattern, together with subtrees in different independent primitives, range over exactly the product of their induced cylinders. Indeed, remove the selected subpatterns, insert any prescribed finite fillings there, and fill all remaining frontier positions by $\alpha$. Conversely each primitive filling projects into those induced cylinders. This proves both inclusions and supplies finite completion maps. Two local tuples agreeing $\equiv_j$ can use the same remaining context and therefore give whole primitive tuples agreeing $\equiv_j$. In the other direction, full primitive agreement below $M+j$, where $M$ is the maximum selected position length, implies each local agreement below $j$. Consequently the test of interface 35.1 transfers either its sufficient local depth $j$ to parameter depth $M+j$, or its all-depth finite witnesses to whole primitive tuples. Every source copy of $c$ is then recomputed from this one completed $c$; copies are never independent coordinates. This is the exact extension of the completion argument of Lemma 28.1 used here.
+
+**Ground interface 35.3 (finite matching bound).** Equality of a normalized hole expression to a known finite tree $g$ has an effective finite parameter-prefix bound. Recursively cancel pair heads and test decorated variables against the corresponding finite ground subtree using the effective partial inverse of Lemma 19.2 on its actual image. A failure is false; a success leaves finitely many requirements $z|_p=g_p$ with known finite $g_p$. Such a requirement is decided below primitive depth $|p|+\operatorname{ht}(g_p)+1$: the read concrete leaves and their ancestors force the entire finite subtree. Intersect every requirement, including repetitions of one primitive. Taking the maximum of these depths gives a bound, with zero for a constant bit. All recursion and inversions concern known finite expressions and ground trees. No unknown-source inverse operation is supplied.
+
+## 36. Primitive comparisons with the fork's exponent-two occurrences
+
+A primitive tag means $\rho^i(z|_p)$, with $p$ originally reached throughout the chart. In $G$, $z=a,b$ allows $i\in\{0,1\}$, and $z=c$ allows $i\in\{0,1,2\}$; in $B$ only $a$ occurs, with $i\in\{0,1\}$. Navigation beyond an original parameter leaf gives a known ground value or absence, already handled above. Thus every non-ground tag has a reached induced subpattern.
+
+**Lemma 36.1 (all primitive-tag comparisons).** Every equality between two such tags has a terminating decision between a sufficient primitive-prefix depth and finite same-chart counterpairs at every requested depth. For nested positions $p,pt$, $t\ne\varepsilon$, the only nonconstant positive cases reduce exactly to
+
+$$
+i<j,\quad \delta=j-i=w(t),\quad z|_p=T_k,\quad k\ge k_0=w(t^-)+2.
+\tag{ARH.36.1}
+$$
+
+For $\delta\le2$, the possible $(t,\delta,k_0)$ are $(L,1,2)$, $(R,2,2)$ and $(LL,2,3)$.
+
+Proof. Different primitive parameters, or incomparable positions in one primitive, have exactly the independent induced-cylinder domain of interface 35.2. Apply (ARH.35.1) with $e(X,Y)=[\rho^i X=\rho^j Y]$ and $D$ that product. The completion maps give both the positive bound and finite negative witnesses. At equal positions, equal exponents give true; unequal exponents give false by the clock. For nested positions put $v=z|_p$. If $i\ge j$, cancellation reduces equality to $\rho^{i-j}v=v|_t$. A proper subtree has fewer nodes, while $\rho$ does not decrease finite node count, so this is impossible.
+
+If $i<j$, cancellation gives $v=\rho^\delta(v|_t)$. Since $t$ is originally reached, transport gives $v=(\rho^\delta v)|_t$. Apply Theorem 4.2 to this exact guarded whole-root/proper-descendant predicate. It says $\delta=w(t)$ and $v=T_k$, with its recorded-epoch lower bound $k\ge1$ if $t$ ends in $L$, and $k\ge0$ otherwise. Our original reach hypothesis is additional and remains: (ARH.4.3) makes it exactly $k\ge w(t^-)+2$. Conversely, this bound and $\delta=w(t)$ give $v|_t=T_{k-w(t)}$, hence the equality. Positive letter weights give the three displayed cases. This is the exponent-two extension of Lemma 29.1 under the same actual root-certificate hypotheses; the certificate does not assert that every fork source is atomic.
+
+It remains to decide the atomic-membership bit on the induced depth-$m$ pattern of $v$. Put $K=\max(k_0,2m+2)$. For $k\ge K$, every address of length less than $m$ in $T_k$ is reached and branch, by (ARH.4.3) and $w(q)\le2|q|$. If the pattern contains a concrete leaf, only the finite list $T_k$, $k_0\le k<K$, can be positive; test this list exactly against the pattern. Membership in the surviving finite set has the finite ground-matching bound of interface 35.3. An empty list gives constant false.
+
+If the pattern has no concrete leaf, it is the complete branch pattern of depth $m$ and every sufficiently large $T_k$ fills it. For any requested depth choose such a finite $T_k$ sufficiently large and change a leaf outside the $t$-cone, deeper than both the specified pattern and the requested depth. Such a leaf exists in the sibling of the first edge of $t$: that sibling is an atomic tree with height tending to infinity as $k$ grows. The $t$-subtree stays unchanged while $v$ changes, so $v=\rho^\delta(v|_t)$ changes from true to false. Both values remain in the induced cylinder and agree to the requested depth. Complete the rest of the primitive context identically and reconstruct the entire $G$ or $B$. This gives finite original-source counterpairs in one retained chart at every requested depth. The concrete-leaf/no-leaf alternative is decidable, so this procedure terminates. $\square$
+
+## 37. Joint orbit-and-power stopping on one realization
+
+**Lemma 37.1 (linked atomic pair on product cylinders).** Let $X,Y$ be different independent primitive parameters in depth-pattern cylinders $\mathcal C(p),\mathcal C(q)$. For fixed integers $r\ge1$ and $k_0\ge0$, the bit
+
+$$
+L_{(r,k_0)}(X,Y)=\bigl[\exists k\ge k_0:\ Y=T_k\ \land\ X=T_{k+r}\bigr]
+\tag{ARH.37.1}
+$$
+
+has an effective sufficient-prefix-depth/all-depth-finite-counterpair alternative on this product. The counterpairs concern the joint predicate on the same tuple and remain valid after full fork reconstruction.
+
+Proof. Let $D$ be the larger pattern depth and put $K=\max(k_0,2D+2)$. For $k\ge K$, both $T_k$ and $T_{k+r}$ are branch at all specified positions. If either pattern contains a concrete leaf, no such $k$ can occur. Test the finite list $k_0\le k<K$ and keep exactly those concrete ordered pairs that fill both patterns. The bit is membership in this finite set, decided below one plus the maximum height of its coordinates; if the set is empty it is constantly false. This is an effective sufficient depth on the full product, including zero-variable patterns.
+
+If neither pattern contains a leaf, both are complete branch patterns, and every $k\ge K$ is positive. For a requested $h$, choose $k$ sufficiently large that $X=T_{k+r}$ has a leaf deeper than $h$ and $D$. Keep $Y=T_k$ fixed and change just that leaf of $X$. The changed pair fills the same patterns and agrees $\equiv_h$ with the original pair, but $X=\rho^r(Y)$ is now false. Since the distinct $T_k$ give a unique index for the fixed $Y$, the existential joint predicate is false too. Choosing $k$ and a leaf by the finite atomic recurrence is effective; increasing $k$ until these explicit finite inequalities hold terminates by unbounded height. All other primitive parameters can be filled identically. Reconstruct every occurrence of the changed parameters, including all copies involving the shared $c$, through (ARH.33.2). Nonexpansivity and Lemma 34.1 give finite original sources in the same retained fiber with the requested agreement. This proves the alternative and its finite lifting. $\square$
+
+The consumers below are $L_{(2,0)}(a,c)$, $L_{(1,0)}(c,b)$ and $L_{(1,1)}(c,b)$. This joint lemma does not infer simultaneous feasibility from separate feasible marginals or combine two independently unbounded predicates. Its positive and negative tuples obey the orbit and power relation on one common finite realization. That relation is the additional stopping bridge needed for the correlated fork.
+
+## 38. Exhaustive whole-hole comparison in both sectors
+
+**Theorem 38.1 (complete fork comparison table).** In any retained chart, every reached-hole equality bit admits an effective sufficient primitive-prefix bound or an effective finite same-chart counterpair construction for each requested depth. The cases below exhaust all pairs of entire holes. Ground values are handled first by interface 35.3. Apart from the singleton root-cut case, the non-ground hole types in $G$ are exactly
+
+$$
+\rho^i(y_G),\quad\rho^i(A),\quad\rho^i(D)\quad(i\in\{0,1\}),\qquad\text{and the primitive tags of §36}.
+\tag{ARH.38.1}
+$$
+
+Proof. Navigate the three-level skeleton (ARH.33.2). At the first level there is $y_G$ or its image; at the second there is an $A$ or $D$ block or its image; below a primitive entry the expression is a tag. Any navigation crossing a known original leaf has a ground result or is absent. Distributing powers gives exactly the primitive exponent ranges in §36, including exponent two on $c$. No further type is possible.
+
+First, $y_G$ is never atomic. If $y_G=T_k$, its right child $D$ is branch, forcing $k\ge4$. That right child gives $c=T_{k-3}$, while the right child of $A$ gives $\rho(c)=T_{k-3}$, contradicting the clock. A whole first-level hole excludes other holes on its own side of $F$ by prefix-freeness of $Q$. On the other side a non-ground hole is the corresponding $y_G|_p$ or $\rho(y_G|_p)$ with $p$ originally reached, or a whole first-level hole. An equality $y_G=\rho(y_G|_p)$ with nonempty $p$ would require $p=L$ and $y_G$ atomic by Lemma 36.1's argument. The reverse $\rho(y_G)=y_G|_p$ is excluded by size. For $p=\varepsilon$, the clock excludes equality. Thus every comparison involving a whole first-level non-ground hole and another hole is false, with ground comparisons already separated.
+
+For $A/A$ or $D/D$, equal powers give true and different powers false. Cross-block equality is exactly
+
+$$
+\rho^i(A)=\rho^j(D)\quad\Longleftrightarrow\quad
+\rho^i(a)=\rho^j(c)\ \land\ \rho^{i+1}(c)=\rho^j(b).
+\tag{ARH.38.2}
+$$
+
+Use interface 35.1 with $D$ the full product of the three primitive cylinders and $e$ this entire conjunction; its Bad relation has two full primitive tuples. This keeps both conjuncts and the shared $c$ joint. Primitive/primitive pairs use Lemma 36.1. For block/primitive pairs the complete table is as follows. Here $s$ is originally reached in the displayed primitive, $i\in\{0,1\}$, and $e$ has that primitive's actual range from §36; set $\delta=e-i$.
+
+| Entire comparison | Exact reduction on its chart |
+| --- | --- |
+| $\rho^i(A)=\rho^e(a\vert_s)$ | False except $i=0,e=1,s=\varepsilon$; then $L_{(2,0)}(a,c)$ |
+| $\rho^i(D)=\rho^e(b\vert_s)$ | False |
+| $\rho^i(A)=\rho^e(c\vert_s)$ | False |
+| $\rho^i(D)=\rho^e(c\vert_s)$ | $L_{(1,0)}(c,b)$ if $\delta=1,s=\varepsilon$; $L_{(1,1)}(c,b)$ if $\delta=2,s=L$; false otherwise |
+| $\rho^i(A)=\rho^e(b\vert_s)$ | Independent-block test (ARH.38.3) |
+| $\rho^i(D)=\rho^e(a\vert_s)$ | Independent-block test (ARH.38.4) |
+
+For the first two rows, the primitive position inside its own block is respectively $Ls$ or $Rs$. The nested certificate argument of Lemma 36.1, now on that finite block, leaves only $A=\rho(a)$ with $s=\varepsilon$. The certificate on $a=(\rho a)|_L$ gives $a=T_j$, $j\ge1$. Its other child requires $\rho(c)=T_{j-1}$, possible exactly for $j\ge2$ with $c=T_{j-2}$. This is precisely $L_{(2,0)}(a,c)$, and the atomic recurrence proves its converse. For $D$, the proper position $Rs$ has weight at least two, whereas the available positive power difference is at most one. Hence that row is false. Original reach of $Ls$ or $Rs$ is used where the nested argument requires it.
+
+For the third row, $e\le i$ is excluded by size after cancellation. If $e-i=1$, $\rho(c|_s)$ is a subtree of $\rho(c)$, itself a proper child of $A$, again excluding equality by size. Only $A=\rho^2(c|_s)$ remains. Put $z=c|_s$. If $z=\alpha$, the right child of $\rho^2 z$ is $\alpha$, which is not a $\rho$-image, contradicting the right child $\rho(c)$ of $A$. If $z=\beta$, that right child is $\beta$, forcing $c=\alpha$ by injectivity, incompatible with $c|_s=\beta$. If $z$ is a pair, right-child cancellation gives $c=\rho(c|_{sR})$. This descendant is originally reached, and its weight is at least two, contradicting the power-one root-certificate condition. These three root constructors exhaust finite $z$.
+
+For the fourth row, $e\le i$ is again excluded by size. Otherwise $D=\rho^\delta(c|_s)$. Taking its left child gives the actual guarded equation $c=(\rho^\delta c)|_{sL}$. Its endpoint is reached because equality identifies it with the left child of the pair $D$; original $c|_{sL}$ is not assumed reached. Theorem 4.2 forces $\delta=w(sL)$ and $c$ atomic. Since $\delta\le2$, the only possibilities are $s=\varepsilon,\delta=1$, or $s=L,\delta=2$. In the first, $c=T_k$, $k\ge1$, and $b=T_{k-1}$, exactly $L_{(1,0)}(c,b)$. In the second, original reach of the tag's $c|_L$ further requires $k\ge2$; again $b=T_{k-1}$, giving $L_{(1,1)}(c,b)$. The atomic recurrence proves both converses. In particular the first case allows $c=\beta$ and a born later child. No original child guard on $c$ is introduced. Lemma 37.1 supplies the stopping alternative for these three linked bits.
+
+For the last two rows, the tagged primitive $z$ does not occur in the block: $z=b$ for $A$, and $z=a$ for $D$. Its exponent is at most one and its root at $s$ is fixed by the chart, since the cut is shallower than $d$. If that root is a leaf, the tag is ground. Otherwise write $z|_s=\langle z_L,z_R\rangle$ and cancel only this already selected pair. The equalities become respectively
+
+$$
+\rho^i(a)=\rho^e(z_L)\ \land\ \rho^{i+1}(c)=\rho^e(z_R),
+\tag{ARH.38.3}
+$$
+
+$$
+\rho^i(c)=\rho^e(z_L)\ \land\ \rho^i(b)=\rho^e(z_R).
+\tag{ARH.38.4}
+$$
+
+The two whole block parameters and the two incomparable children of the third parameter have exactly the product of their induced cylinders by interface 35.2. Apply (ARH.35.1) to that product and the entire displayed conjunction, then complete both tuples in common remaining contexts. A sufficient local bound $j$ transfers to primitive depth $|s|+1+j$; every finite negative witness transfers in the other direction. This split uses a fixed constructor selector, not unknown equality, and includes every cross-case pair. For $A$, the $a,c$ rows and independent $b$ row cover all primitives; for $D$, the $c,b$ rows and independent $a$ row do likewise. Together with ground, primitive/primitive, block/block and whole-first-level pairs, this is exhaustive in $G$.
+
+In $B$, the only non-ground types are $\rho^i(y_B)$, $\rho^i(E)$ and $\rho^i(a|_s)$ for $i\in\{0,1\}$. Every other reached hole is ground. The tree $y_B$ is never atomic: its right child $\beta$ would force $y_B=T_3$, but $T_3$ has left child $T_2=\langle\beta,\alpha\rangle$, whereas $E$ has right child $\beta$. Therefore whole-first-level comparisons are false by the same prefix-free and nested argument. Equal-power $E/E$ is true and unequal-power $E/E$ false by the clock. The block/tag nested argument allows only $E=\rho(a)$, $s=\varepsilon$, with power difference one. It forces $a=T_j$, $j\ge1$, and the right-child equation $\beta=T_{j-1}$, hence exactly $a=T_2$. Conversely this finite value satisfies the equality. This bit has a ground-matching bound. Primitive pairs use Lemma 36.1, and ground pairs use interface 35.3. This exhausts $B$ too, proving the theorem. No failure of an eligibility recognizer is classified as a negative answer. $\square$
+
+**Proposition 38.2 (an actual original-row consumer of the linked bit).** For $H_0=\varnothing$ and $Q=\{LLL,LLR,LR,RL,RR\}$, the $G$-sector whole-hole comparison between original $LLL$ and $RL$ is exactly $L_{(2,0)}(a,c)$. It has finite full-source counterpairs agreeing to every requested depth.
+
+Proof. This $Q$ is prefix-free, and the indicated whole values are $\rho(a)$ and $A$. Take $c=T_k$, $a=T_{k+2}$ and $b=\alpha$; the equality holds by the first table row. Given a depth, take $k$ large and change a deeper leaf of $a$, keeping $c,b$ fixed. Lemma 37.1 makes the linked bit false. Reconstruct the whole $G$ in both cases, including the changed $a$ in $A$ and its image in $\rho(A)$. Both original sources still satisfy the entire old row and both guarded records, and they agree to the requested depth. The reached cuts and numbering are unchanged, while that equality bit of their full partition differs. Hence their complete original rows differ. $\square$
+
+## 39. A total decision for every literal refinement and original cut
+
+**Theorem 39.1 (full-fork stopping decision with finite original witnesses).** There is a total effective procedure which, for every finite $H_0$ and every finite prefix-free original $Q$ of Definition 33.1, returns exactly one of the following sound alternatives:
+
+$$
+\begin{aligned}
+\mathsf{YES}(h):\quad&h\in\mathbb N,\quad\forall u,v\in U_{\rm fork}(H_0),\quad u\equiv_hv\ \Longrightarrow\ R_Q(u)=R_Q(v);\\
+\mathsf{NO}:\quad&\text{an effective map }h\longmapsto(u_h,v_h)\in U_{\rm fork}(H_0)^2,\\
+&u_h\equiv_hv_h,\qquad R_Q(u_h)\ne R_Q(v_h),\qquad h\in\mathbb N.
+\end{aligned}
+\tag{ARH.39.1}
+$$
+
+Every counterpair consists of finite original sources in this same full fiber. Empty fibers return $\mathsf{YES}(0)$. No target eligibility, original $RRL$ reach, or other extra promise is required.
+
+Proof. If $Q$ contains the root, prefix-freeness gives $Q=\{\varepsilon\}$; return $\mathsf{YES}(0)$ for the constant single-hole row. Otherwise compute the retained charts of Lemma 34.1. If the list is empty, return $\mathsf{YES}(0)$. In each chart compute the exact reached set, exterior and entire-hole descriptions. If an exterior variable is visible, return $\mathsf{NO}$ with Lemma 34.2's construction. Otherwise decide every reached-hole equality bit by Theorem 38.1. If any bit returns its negative construction, return $\mathsf{NO}$ using that chart. If all bits return positive, let $j_{\eta,qr}$ denote their sufficient primitive-parameter depths in chart $\eta$, taking zero for a constant bit. Return
+
+$$
+h=\max\bigl(\{3+d\}\cup\{3+j_{\eta,qr}:\eta\text{ retained},\ q,r\text{ reached holes in }\eta\}\bigr).
+\tag{ARH.39.2}
+$$
+
+The algorithm terminates. There are finitely many patterns and hole pairs. Normalization, navigation and actual-image ground inverse tests recurse on finite expressions. The exact synchronous Bad tests stabilize on finite state sets. The nested and linked orbit tests inspect a finite list or the decidable leaf-free alternative. The type table is exhaustive, so no unresolved case leads to an unbounded search for a positive certificate. The finite leaf choices in a returned negative generator terminate for each requested depth by the explicit height growth used in §§36–37. This proves totality of the decision and of every promised witness generator without a tree-size oracle.
+
+For positive soundness, two actual sources agreeing below (ARH.39.2) select the same sector and chart by Lemma 34.1. Their parameters agree to every required $j_{\eta,qr}$ by the length-three representatives. The reached holes and canonical numbering coincide. The exterior is constant in this chart, and all equality bits coincide by their computed bounds. Therefore the entire partition and concrete exterior coincide, giving equal complete rows. Sources in different charts or sectors cannot agree below $3+d$; thus cross-chart pairs have not been omitted.
+
+For negative soundness, each returned branch supplies finite tuples in one retained chart at every requested depth. Exterior changes use the explicit deep finite leaf; independent-subtree cases use both inclusions of the product-cylinder completion; automaton cases use productive finite accepted completions; nested and linked cases use the stated finite atomic trees and leaf change. Complete all unchanged parameter context identically, and reconstruct the full $G$ or $B$ after each change. In particular every repeated $c$ and every $\rho(c)$ is recomputed from one common completed $c$. Nonexpansivity gives original $\equiv_h$ agreement. The exact chart correspondence gives both sources in $U_{\rm fork}(H_0)$, with every old disequality, every recorded-epoch endpoint guard and every literal occurrence. The exterior or a reached-hole equality bit differs, so their entire rows differ. This excludes every determining depth on that input. Finite witnesses, rather than rational trees, infinite limits or independently chosen marginal solutions, establish the negative alternative. Positive and negative alternatives are incompatible, completing the proof. $\square$
+
+**Proposition 39.2 (degenerate cases).** Empty and zero-variable charts need no additional operation. An absent cut creates no hole; its absence is fixed within a chart, and charts in which it is reached are separated by the bounded selector. The root cut has its constant row even on an empty fiber. For $Q=\varnothing$, the decision is positive exactly when every retained chart is ground, equivalently when $U_{\rm fork}(H_0)$ is finite, including empty.
+
+Proof. The first assertions follow directly from the finite chart construction and exact navigation. For the empty cut, $R_\varnothing(u)$ is the entire concrete $u$. A non-ground chart exposes a variable in that exterior and Lemma 34.2 supplies all-depth counterpairs. Conversely finitely many ground charts form a finite fiber, and a maximum of finitely many concrete heights plus one determines its members. Any chart with a variable has infinitely many distinct finite fillings, since an original representative recovers its value; thus the fiber is finite exactly when every retained chart is ground. $\square$
+
+## 40. Paid same-register service: the stopping result and the inherited conversion
+
+**Corollary 40.1 (service on the unchanged complete access contract).** Suppose Assumption 1.3 holds for Definition 33.1, the fiber is nonempty, and the same actual original-root register has reached certified $N\ge\max(\{1\}\cup\operatorname{epochs}(H_0))$. A positive answer $\mathsf{YES}(h)$ of Theorem 39.1 supplies a static paid whole-row service, hence a permitted real serial service, with sufficient raw bound
+
+$$
+K=2(2^h-1),\qquad h>0:\quad\max\text{ physical address length}\le h-1+\lceil N/2\rceil.
+\tag{ARH.40.1}
+$$
+
+A negative answer excludes a uniformly raw-bounded serial service under precisely that access contract.
+
+Proof. For $h>0$, use inclusive original depth $H=h-1$ in the paid literal decoder of [SLH, Theorem 2.2][SLH]. There are $2^h-1$ original addresses of length less than $h$, each requiring at most two paid raw calls, with maximum physical length $h-1+\lceil N/2\rceil$. All requests are from the same original root at the certified epoch on the actual register. For $h=0$ no prefix reads are needed. Enumerate finite original trees, testing on each the entire old row, both equalities with their recorded-epoch endpoint guards, every occurrence of $H_0$, and the decoded original prefix. Each candidate test is finite; a candidate exists because the actual source is finite. Output its entire computed $R_Q$. It agrees with the actual source below $h$, so Theorem 39.1 makes its row the required whole row. Local candidate enumeration is computation on known finite descriptions; it neither observes a hidden parameter nor asserts the candidate is the actual source. The root-cut output uses zero calls. Empty-fiber correctness is vacuous and does not assert an actual entry there.
+
+The consumer performs zero post-entry updates, a permitted special case of real serial $\mathsf{ApplyRho}$. Conversely the finite same-fiber counterpairs for every strict depth rule out any finite original determining depth. Apply the inherited equivalence (ARH.2.3), with its inclusive convention converted by $H=h-1$, to exclude a uniformly raw-bounded serial service. Its locality and deterministic-access hypotheses are exactly Assumption 1.3; extra accessible source-bearing state would change the fiber and cannot be ignored. $\square$
+
+The conversion from an already given determining depth to a paid service is reused from §§1–3 and §31. Theorem 39.1 supplies the additional uniform stopping decision that computes such a depth or constructs the all-depth obstruction; that computation is not an assumption of this corollary. The same original finite source and original recut remain the target throughout. There is no reset, clone, reroot, unknown whole-tree or subtree-equality port, identity service, source-membership test or unknown-source inverse. Mathematical coordinates and candidate descriptions do not install physical access to the parameters.
+
+All raw calls, address generation and transmission, actual physical lengths and radius, local work, working storage, installation, acquisition, entry, retained records, certified versions and epochs, updates, archives, outputs, clocks, precision, labels, bits, fees, field and reference resources remain separately charged. The displayed bounds are sufficient raw and address bounds, not sharp prices or joint optima; candidate enumeration has no asserted uniform time bound. Output does not erase the old row, relations, literals, replies or accessible control fields. A complete-successor retention operation and another entry after absorbing halt require their own supplied correspondence and payment. No physical erasure or execution conclusion follows from the theorem.
+
+## 41. Supplier hypotheses and the scope of the fork result
+
+The algebraic supply is Lemma 19.2: injectivity, an effective finite partial inverse only on the actual image, and preservation of strict prefixes under fixed normalized templates. The clock and atomic recurrence are (ARH.4.2). Theorem 4.2 is used only for the derived guarded whole-root/proper-descendant equalities, with its born-endpoint bounds; original reach, when separately present, is imposed by (ARH.4.3). Its stability classification is the first conjunct of [SourceTransportCentralizer, `source_transport_centralizer`][CENTRALIZER]. The source and original-reply conventions are Definitions 1.1–1.2, not a code-domain or infinite-tree reinterpretation. The normalization (ARH.33.2) is credited reuse, with both original-source inclusions written out in §33.
+
+The finite-coordinate machinery is exactly Theorem 13.1 and Lemmas 21.1 and 21.4 under the domains and two-copy xor formulas in §35. It is used only after the required product-cylinder and finite completion correspondence is proved. Sections 27–32 already supply the arbitrary-cut one-record graph theorem, its literal-cylinder and exterior method, the incomparable-subtree construction and the exponent-one nested classification. Their unrestricted graph counterpairs cannot simply be restricted to the fork subfiber. The new relation is the exhaustive full-fork whole-hole reduction of §38 and its joint orbit-and-power finite-source stopping bridge in §37, together with the exponent-two original-guard treatment in §36. Proposition 38.2 gives an original-cut consumer of $L_{(2,0)}(a,c)$. This increment preserves shared-source correlations in both directions and does not count normalized coordinates, renamed graph results or the paid service conversion as new mathematics.
+
+The bounded source comparison for these interfaces is the immutable revision [d5f42f893c5f4ec991f91fb1eda6fa80ac9d110c][FORK-PIN], including this volume through §32, [SLH, §§1–2 and (SLH.74.7)][SLH], the named centralizer theorem, and the born-endpoint/interface distinctions in [NativeCrossEpochRelations, §7][FORK-NATIVE]. The finite ranked-tree automata background remains the [TATA results cited in §32][GRAPH-TATA]; its exact interpreted graphs and stopping interface here are the repository suppliers, not a new general automata theorem. No external term-power language decision is invoked to decide an unproved native contextual presentation. This is a source-relative mathematical construction, without a global novelty, priority or literature-completeness claim.
+
+The conclusion is an ordinary mathematical total procedure for this full guarded two-record fork with every finite mixed literal refinement and every finite original cut. It is not an implemented solver, a Lean or kernel certification, physical execution, a sharp resource theorem, a uniform-time theorem, an extra access or erasure capability, or a complete solution for general coupled relational histories. The independent original-source, control, native, continuum, quantum, field, reference and resource obligations of the sustained research goal keep their stated scopes. This finite theorem does not replace that continuing goal.
+
+[FORK-PIN]: https://github.com/the-omega-institute/trureturing/tree/d5f42f893c5f4ec991f91fb1eda6fa80ac9d110c
+[FORK-NATIVE]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md
+
+## 追加锚（本行以下为增补区）

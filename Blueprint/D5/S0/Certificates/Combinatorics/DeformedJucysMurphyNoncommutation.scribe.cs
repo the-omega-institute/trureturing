@@ -39,7 +39,9 @@ internal sealed class DeformedJucysMurphyNoncommutationDocument : IScribeDocumen
 
     private static DocumentBlock Node(string id, string title, Formula formula,
         string prose, string declaration, bool literature, DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("coulter-" + id), DeclarationHandle.Create(Prefix + declaration),
+        Describe.Lean(DescribeId.Create("coulter-" + id), DeclarationHandle.Create(declaration is "P" or "e"
+            ? "D5/S0/Certificates/Combinatorics/NormalizedPfaffian." + declaration
+            : Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);

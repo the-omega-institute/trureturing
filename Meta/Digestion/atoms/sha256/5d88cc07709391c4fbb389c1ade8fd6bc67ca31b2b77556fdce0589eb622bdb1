@@ -1,0 +1,15 @@
+**引理 497.1（$L^4$ 移动端点估计）。** 设 $(\mathrm L_4)$，$R$ 满足 (496.2)，$I$ 为紧区间，$p,q\in C^1(I)$，$p',q'\ge m>0$，$p(I),q(I)\subset J\subset[X/2,4X]$，$|q-p|\le R$。则
+
+$$
+\int_I|E(q(x))-E(p(x))|^4\,dx\le\frac{656}{3}\cdot\frac{C_4}m\,R^2(\log X)^2\bigl(|J|+\varepsilon'_XX\bigr).
+\tag{497.3}
+$$
+
+证明。令 $\delta=q-p$。对 $v\in[2R,3R]$，$E(q)-E(p)=D_v(p)-D_{v-\delta}(q)$ 且 $v-\delta\in[R,4R]$。由 $|a-b|^4\le8(|a|^4+|b|^4)$，对 $v\in[2R,3R]$ 取平均并对 $x\in I$ 积分；与引理 496.1(ii) 的证明相同地换元与使用 Tonelli，得
+
+$$
+\int_I|E(q)-E(p)|^4\le\frac8{mR}\Bigl(\int_{2R}^{3R}\!\!\int_J|D_v|^4+\int_R^{4R}\!\!\int_J|D_w|^4\Bigr)\le\frac{8C_4}{mR}(\log X)^2\bigl(|J|+\varepsilon'_XX\bigr)\Bigl(\int_{2R}^{3R}v^2dv+\int_R^{4R}v^2dv\Bigr),
+$$
+
+而 $\int_{2R}^{3R}v^2+\int_R^{4R}v^2=\bigl(\frac{19}3+21\bigr)R^3=\frac{82}3R^3$。证毕。
+

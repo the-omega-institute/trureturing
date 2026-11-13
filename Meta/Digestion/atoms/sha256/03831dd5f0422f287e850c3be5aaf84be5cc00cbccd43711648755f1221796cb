@@ -1,0 +1,35 @@
+**定义 173.1（同一原域、实际框架与固定旧值）。** 完整保持130.1、137.1、
+147.1和157.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确锥、
+全部原正P2和完整原PB。原 $E$ 可以不完备、无限维、不可分且有非交换系数；
+旧 $D:E^2\to E$ 始终是同一个总映射。只沿已付的忠实含单位JC包含
+$E\subset X\subset\mathcal A_{\rm sa}$ 计算已知乘法，$\overline E=X$，
+不要求 $X=\mathcal A_{\rm sa}$。固定实际原框架 $h,e,j=D(h,e)$，
+$h^2=e^2=j^2=u$，三轴两两Jordan正交；134.1的辅助
+$Q=ihej$ 中央、自伴且 $Q^2=u$。不增加别的实际轴。
+
+本节以下以 $\mathcal U_a=2L_a^2-L_{a^2}$ 表示一般Jordan二次表示，
+避免与147.3只对单位平方轴写的 $U_h=2L_h^2-I$ 混淆。
+在原JC环境中 $\mathcal U_a(y)=aya$。对每个原 $x$ 固定
+
+$$
+\begin{gathered}
+P_h^\pm=\tfrac12(I\pm U_h),\qquad
+c=P_h^+x,\quad z=P_h^-x,\quad x=c+z,\\
+t=[L_j,L_e]z=iQhz,\qquad d=D(h,x),\qquad r=d-t,\qquad
+k=h\circ x=h\circ c=hc.
+\end{gathered}
+\tag{173.1}
+$$
+
+133.1与150.1供应
+
+$$
+[h,c]=[h,r]=0,\quad hz=-zh,\quad ht=-th,\quad
+D(h,z)=t,\quad t^2=z^2,\quad z\circ t=0,\quad k^2=c^2.
+\tag{173.2}
+$$
+
+$c,z,t,d,r,k$ 都是原有限Jordan表达式或真正的旧输出；环境式中的
+$Q$ 本身不取得原标签身份。尤其 $r=\rho_h(x)$ 是153.1的同一残差。
+不先给旧 $D$ 可加、一般齐次、连续、可测、商下降或完成延拓。
+

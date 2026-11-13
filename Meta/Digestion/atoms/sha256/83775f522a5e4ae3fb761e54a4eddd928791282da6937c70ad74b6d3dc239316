@@ -1,0 +1,15 @@
+**定义 22.1（原预算差额与共同接触）。** 沿用定义 17.1 的完整有限矩阵输入、(1.1)–(1.2) 及承载卷[§41.1](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md#411-原完整问题与较弱的固定输出接口)。特别地，$C=\operatorname{diag}(1,2)$，$c=C\oplus0_m$，$P=I_2\oplus0_m$，$D_{\rm env}$ 是给定 $t$ 的任意有限 Hermitian 环境块。每个取向 $\sigma$ 分别解释，$S_\pm$ 仍为原 $t\pm(r+g_\sigma)$。对同一个实际 $x=x^*=PxP$ 和同一个正复线性泛函 $\phi$，定义
+
+$$
+\begin{gathered}
+\mathcal A_\pm(x,\phi)=\sqrt{B_\phi(R_\pm,S_\pm)},\qquad
+\mathcal G_\sigma(x,\phi)=|\phi(L)|-\mathcal A_+(x,\phi)-\mathcal A_-(x,\phi),\\
+\mathcal Z_\sigma(x)=\{\phi\ge0:\mathcal A_+(x,\phi)=\mathcal A_-(x,\phi)=0\}.
+\end{gathered}
+\tag{22.1}
+$$
+
+称 $\mathcal Z_\sigma(x)$ 中的泛函为该探针的共同零预算接触。任意正泛函唯一写成 $\phi(A)=\operatorname{Tr}(\Theta A)$，$\Theta\ge0$；其支撑为 $\operatorname{ran}\Theta$，质量为 $\operatorname{Tr}\Theta$。零密度及任意有限质量均保留。
+
+这里的 $B_\phi$ 使用未中心化的原二阶矩。对质量 $\mu>0$，中心化方差另为 $\phi(A^2)/\mu-(\phi(A)/\mu)^2$。[Tóth–Fröwis, arXiv:2109.06893v5, §§II、IV](https://arxiv.org/html/2109.06893v5) 的 Robertson–Schrödinger 与密度分解讨论，以及 [Szymański–Życzkowski, arXiv:1804.06191v2, §§2–4](https://arxiv.org/html/1804.06191v2) 的方差联合范围，均使用其各自的中心化量；这些量不替换 (22.1) 的原预算。以下只在推导内部使用成熟的实 Gram、Cauchy–Schwarz、正交投影与有限正密度谱分解；混合泛函的共同提升直接引用本卷 (17.14)–(17.15)。
+

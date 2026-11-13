@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:1fa7a7b7ba661cff6b9024f066cfed18e7b8e7cbc1819d945dce4d3792e3f981
+  normalized_sha256: sha256:1fa7a7b7ba661cff6b9024f066cfed18e7b8e7cbc1819d945dce4d3792e3f981
+cas_ref: sha256:1fa7a7b7ba661cff6b9024f066cfed18e7b8e7cbc1819d945dce4d3792e3f981
+coverage_gids:
+  - gid: D5/S3/Quantum/Matrix/CommutatorGap.exists_unitary_first_column
+    target_statement_id: sha256:4d453330f059091ba7429349413539bdc2ba09c761a7c73bc3ec4d242140a99e
+  - gid: D5/S3/Quantum/Measurement/QubitIncompatibilityRadialReduction.meridian_change_lintegral
+    target_statement_id: sha256:0b4c09cd5fcc5ca35ffe85cc967ed1f0eaf0756c408af28374a5bf47cc0e7ec6
+  - gid: D5/S3/Quantum/Measurement/QubitIncompatibilityRadialReduction.norm_lintegral_three
+    target_statement_id: sha256:c82347d04354e48f181081d07e968a5f5df0e3c070197d97707dad23f825177c
+  - gid: D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl.unitaryCompactSpace
+    target_statement_id: sha256:2cec9c00a5ea65c8a268bcfb410af53b86bea819b3619fe6453185aea736e95d
+receipts:
+  unresolved_subitems: []

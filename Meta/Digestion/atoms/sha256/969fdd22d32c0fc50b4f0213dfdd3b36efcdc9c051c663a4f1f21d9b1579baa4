@@ -1,0 +1,23 @@
+**定义 157.1（同一原资料与已识别的投影）。** 本节及158–160完整保持
+130.1、137.1及147.1的同一原 $(E,C,u,N,\mathcal P,S,D)$、准确锥、
+全部A1–A3、全部原P2及完整原PB。固定同一实际原三轴
+$h^2=e^2=u$、$h\circ e=0$、$j=D(h,e)$，沿用134.1的辅助中央自伴对合
+$Q=ihej$、147.3的有限原投影和153.1的同一旧输出残差 $\rho_h$。记
+
+$$
+\begin{gathered}
+\widehat T_h=[L_j,L_e],\qquad
+P_a^-=\tfrac12(I-U_a),\qquad U_a=2L_a^2-I\quad(a=h,e,j),\\
+\widehat T_hx=\tfrac i2Q[h,x]=T P_{\rm tr}x,\qquad
+\rho_h(x)=D(h,x)-\widehat T_hx\in\operatorname{Com}_h
+\quad(x\in E).
+\end{gathered}
+\tag{157.1}
+$$
+
+环境恒等式沿用153.6及136.1的JC交换子对应；最后一式直接消费150.1和
+153.1–153.2，不另证明任意原输入的奇块识别。原 $E$ 仍可不完备，旧
+$D:E^2\to E$ 仍是原总映射，不添加一般齐次、可加、连续、可测、单位或中央
+平移、商下降、完成延拓、任意原轴存在或物理来源前件。方括号仍只指原
+环境交换子，$\widehat T_h$ 和138.2的 $B_\star$ 均不重定义旧 $D$。
+

@@ -1,0 +1,26 @@
+**命题 180.2（正标量化不保持原平方）。** 在标准完整模型
+$E=H_2(M_2(\mathbb C))$、$D(A,B)=i[A,B]/2$ 中，存在保单位正映射
+$\Psi:E\to H_2(\mathbb C)$ 和实际原 $A,B$，使
+
+$$
+\Psi(A)=\Psi(B)=0,\qquad
+\Psi(D(A,B))\ne0,\qquad\Psi(A^2)\ne\Psi(A)^2.
+\tag{180.6}
+$$
+
+证明。取系数向量态 $\chi$ 满足 $\chi(Z)=1,\chi(X)=\chi(Y)=0$，
+令 $\Psi=\operatorname{id}_2\otimes\chi$，
+$A=I\otimes X,B=Z\otimes Y$。则
+
+$$
+D(A,B)=-Z\otimes Z,\quad
+\Psi D(A,B)=-Z,\quad \Psi(A^2)=I,\quad\Psi(A)^2=0.
+\tag{180.7}
+$$
+
+$\Psi$ 甚至完全正，但不是Jordan同态。标准模型满足原全部静态条件和
+全部PB，准确复用静态卷35.1–35.2的 $\kappa=1$。
+所以不能把任意正系数读取当作有限Jordan商，不能以读取后的输入平方
+替换真实平方对角，更不能据其零像给一般旧响应商下降。此模型的 $D$
+本来就是目标交换子，命题反驳的是迁移规则，不是重构。∎
+

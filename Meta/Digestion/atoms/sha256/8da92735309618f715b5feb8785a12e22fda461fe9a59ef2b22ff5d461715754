@@ -1,0 +1,67 @@
+**定义 37.2（有限谱固定行与完整原外标签）。** 固定实际投影 $P$，并假定同一 $D$ 在整个实际角 $C=PAP$ 上已按 (28.3) 分类为
+
+$$
+D(x,y)=K_\sigma(x,y),\qquad
+K_\sigma(x,y)=\frac{\jmath}{2}[x,y],\qquad
+\jmath=\sigma i,\quad\sigma\in\{1,-1\},\quad x,y\in C_{\rm sa}.
+$$
+
+W119.2–119.3 和 W 式 (120.2) 的整个实际角支撑与完整继承直接复用：角单位为 $P$，锥、范数准确继承，原评价标签限制后仍逐份保留，质量为 $\gamma(P)$；同值限制不合并、零限制不删除、质量不归一。
+
+令 $c=c^*\in C$ 具有有限谱，实际非零谱支撑为 $S\le P$。对固定任意 $t=t^*\in A$，使用如下已经取得的余量资料：
+
+$$
+g=D(c,t)=K_\sigma(c,t)+s,\qquad
+s=s^*\in SAS,\qquad[c,s]=0.
+\tag{37.3}
+$$
+
+定理 29.1 的实际有限匹配是这些资料的一个充分来源；定理 30.1 的内在 UHF 条件还给逐谱格实标量余量，以下不需要这一加强。这里允许一般交换块余量，不预设 $p_i s p_i$ 是标量。写
+
+$$
+c=\sum_{i=1}^r\lambda_i p_i,\qquad
+S=\sum_i p_i,\qquad
+c_S^{-1}=\sum_i\lambda_i^{-1}p_i\in SAS,
+\tag{37.4}
+$$
+
+其中非零谱值 $\lambda_i$ 两两不同；$P-S$ 可有内部零谱格。$S=0$ 时约定 $c=s=c_S^{-1}=0$。
+
+保留原 $\operatorname{PB}(t;c,0)$ 真正生成的整对外输入，定义
+
+$$
+\begin{gathered}
+k=c\circ t,\qquad a_+=c-g,\qquad a_-=c+g,\\
+E_+=D(a_+,k)-K_\sigma(a_+,k),\qquad
+E_-=D(a_-,-k)-K_\sigma(a_-,-k).
+\end{gathered}
+\tag{37.5}
+$$
+
+原命题 31.1 的计算只使用 (37.3)、反对称性、零槽及这个 PB，故直接给
+
+$$
+E_+-E_-=2cs.
+\tag{37.6}
+$$
+
+同一 PB 也给 $D(a_+,k)-D(a_-,-k)=2c\circ g$。由于 $a_+^2-a_-^2=-4c\circ g$，准确有
+
+$$
+M_+:=a_+^2+k^2+2D(a_+,k)
+=a_-^2+k^2+2D(a_-,-k)=:M_-.
+\tag{37.7}
+$$
+
+对应复标签始终是原标签
+
+$$
+\begin{aligned}
+W_+&=a_++\jmath k=c-s+\jmath tc,&W_+S&=W_+,\\
+W_-&=a_--\jmath k=c+s-\jmath tc,&W_-S&=W_-.
+\end{aligned}
+\tag{37.8}
+$$
+
+这里没有压缩外输入、拆分未知 $D$ 的输入或重新放置标签。
+

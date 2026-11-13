@@ -1,0 +1,38 @@
+**命题 97.2（96.2的五个指定旧值均满足全部P2）。** 对96.2的全部五行及每个正实线性评价 $\phi$，有
+
+$$
+|\phi(h_i)|^2
+\le\phi(a_i^2)\phi(b_i^2)-\phi(a_i\circ b_i)^2.
+\tag{97.2}
+$$
+
+证明。先取任意未归一向量 $\xi=(x,y,z)$。对第一行，准确的未中心化实Gram预算为
+
+$$
+\begin{aligned}
+\|p\xi\|^2\|A\xi\|^2
+ -\bigl(\operatorname{Re}\langle p\xi,A\xi\rangle\bigr)^2
+ &=|x|^2\bigl(|2x+y|^2+|z|^2\bigr)
+   +4\bigl(\operatorname{Im}(\bar x y)\bigr)^2,\\
+|\xi^*d\xi|^2
+ &=4\varepsilon^2\bigl(\operatorname{Re}(\bar xz)\bigr)^2
+ \le |x|^2|z|^2.
+\end{aligned}
+\tag{97.3}
+$$
+
+故第一行满足P2。对第二行取 $K=E_{21}-E_{12}$，它斜伴随且范数为一。直接计算
+
+$$
+\begin{aligned}
+a_+\xi&=(x-\varepsilon z,0,-\varepsilon x),&
+b_+\xi&=(y,x,0),\\
+\operatorname{Re}\langle a_+\xi,Kb_+\xi\rangle
+ &=-|x|^2+\varepsilon\operatorname{Re}(\bar xz)
+ =\xi^*h_+\xi.
+\end{aligned}
+\tag{97.4}
+$$
+
+对第三行取 $-K$，同样得到 $\operatorname{Re}\langle a_-\xi,(-K)b_-\xi\rangle=\xi^*h_-\xi$。97.1给两行全部向量P2。对最后两行直接以 $K_0$ 应用97.1，因为 $\xi^*H_{K_0}(a,b)\xi=\operatorname{Re}\langle a\xi,K_0b\xi\rangle$。每个对应二表的对角元非负，故这些向量读取的Hermitian二表均为半正定；有限维任一正泛函是向量读取的非负和，其二表仍为半正定。因此97.2对全部正泛函、零质量、不等和次归一质量同时成立。没有把逐向量数值界直接相加成行列式界。∎
+

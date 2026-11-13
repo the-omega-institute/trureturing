@@ -1,0 +1,29 @@
+**定义 2.1（A1–A3及全部 P2）。** 对全部原标签置
+
+$$
+g_\gamma(a,b)=\gamma(S(a,b))-i\gamma(D(a,b)).
+\tag{2.1}
+$$
+
+A1要求全部有序二标签及反向次序的实际 Hermitian 二表半正定。准确的 P2 为对每个 $a,b\in E$、每个原 $\gamma\in\mathcal P$，
+
+$$
+G_\gamma(a,b)=
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{2.2}
+$$
+
+其 Hermitian 性与原评价分离性给 $D(b,a)=-D(a,b)$。所有零、重复、缩放和平移后的原标签仍在全量词内；没有将某个子族当作全部二表。
+
+A2要求每个相加三表 $(a+b,a,b)$ 及其全部排列的实部在整个 $\mathbb R^3$ 上半正定；原顺序的指定向量 $(1,-1,-1)$ 和排列后的对应向量给准确零二次值。实部条目是 $\gamma(S(t_r,t_s))$。这项条件不被改写成预给的复三表正性。
+
+A3保留 $S(u,u)=u$，以及同一个固定有理数 $0<\vartheta\le1$ 上的全部小效果条件
+
+$$
+0\le e\le\vartheta u\quad\Longrightarrow\quad S(e,e)\le e.
+\tag{2.3}
+$$
+

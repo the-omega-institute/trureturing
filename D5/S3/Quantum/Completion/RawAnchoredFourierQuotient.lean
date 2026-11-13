@@ -175,7 +175,7 @@ private theorem form_single_single {M : Type*} [MulOneClass M]
 def anchoredSpan (M : Type*) [MulOneClass M] : Submodule ℝ (E M) :=
   Submodule.span ℝ (Set.range (e : M → E M))
 
-private theorem single_one_radical {M : Type*} [MulOneClass M]
+theorem single_one_radical {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (h11 : c 1 1 = 0) :
     Finsupp.single (1 : M) (1 : ℝ) ∈ radical c := by
   constructor
@@ -202,7 +202,7 @@ private theorem mkQ_single {M : Type*} [MulOneClass M]
   rw [he, map_add, map_smul, map_smul, hz, smul_zero, add_zero]
   rfl
 
-private theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
+theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (h11 : c 1 1 = 0) :
     Submodule.map (radical c).mkQ (anchoredSpan M) = ⊤ := by
   apply top_unique
@@ -216,7 +216,7 @@ private theorem anchoredSpan_quotient {M : Type*} [MulOneClass M]
         (Submodule.smul_mem _ t
           ⟨e a, Submodule.subset_span (Set.mem_range_self a), rfl⟩) (ih trivial)
 
-private theorem beta_span {M : Type*} [MulOneClass M]
+theorem beta_span {M : Type*} [MulOneClass M]
     (c : M → M → ℝ) (h11 : c 1 1 = 0) :
     Submodule.span ℝ (Set.range (beta c)) = ⊤ := by
   have he : Submodule.map (radical c).mkQ (anchoredSpan M) =

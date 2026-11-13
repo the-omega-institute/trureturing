@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5781e97fc7d0e1983d8db1daca2996c05d8de7e5af542ab9f7e5a57d0b1101cf
+  normalized_sha256: sha256:5781e97fc7d0e1983d8db1daca2996c05d8de7e5af542ab9f7e5a57d0b1101cf
+cas_ref: sha256:5781e97fc7d0e1983d8db1daca2996c05d8de7e5af542ab9f7e5a57d0b1101cf
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/PBAffineFirstBudget.actual_affine_first_budget
+    target_statement_id: sha256:6c39b7293bbf27adb136cb6e3322ba8536e0c621308dd195feed7a35377f5ba7
+receipts:
+  unresolved_subitems: []

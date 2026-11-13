@@ -1,0 +1,56 @@
+**Definition 1.3 (the distinct finite representation requirements).**
+An autonomous $r$-dimensional linear realization over
+$\mathbb F=\mathbb R$ or $\mathbb C$ consists of fixed vectors and
+label matrices with
+
+$$
+p(w)=\alpha A_{w_0}\cdots A_{w_{n-1}}\beta
+\quad\text{for every }w\in\mathcal L^n\text{ and every }n\ge0.
+\tag{1.5}
+$$
+
+An $r$-state autonomous HMM is the nonnegative subclass with an
+initial probability row, nonnegative label kernels $M_y$, stochastic
+sum $\sum_yM_y$, and terminal column $\mathbf1$. Emission followed by
+transition is an equivalent convention since the last stochastic
+transition acts on $\mathbf1$.
+
+A clock-assisted linear boundary of dimension at most $r$ is allowed
+arbitrary time-dependent updates and readouts, but at every cut $t$
+its unnormalized future responses must factor as
+
+$$
+p(uv)=a_t(u)b_t(v),\qquad
+a_t(u)\in\mathbb F^{1\times r_t},\quad
+b_t(v)\in\mathbb F^{r_t\times1},\quad r_t\le r,
+\quad |u|=t.
+\tag{1.6}
+$$
+
+The same future column at that cut serves every history. This includes
+time-inhomogeneous HMMs with uniformly at most $r$ hidden states and
+time-dependent finite linear generators. It even permits the dimension
+to vary with the clock subject to the stated bound.
+
+A deterministic exact predictive memory assigns a reached state
+$s(u)$, updates it after each observed label, and determines every
+$R_u(v)$. An autonomous memory has state-dependent rules; a
+clock-assisted memory may additionally use the cut $t$. Its cardinality
+is distinct from the dimension of the linear span of responses. A
+nonlinear state in $\mathbb R^r$ with unlimited precision is a further,
+different requirement. A state stored in at most $b$ bits has at most
+$2^b$ possible retained values at a given clock cut.
+All history-dependent retained context belongs to the state; only the
+supplied clock is exempt in the clock-assisted versions.
+
+The generic linear notions are those of
+[WordHankelRealization, `residualSpace`, `MatrixRealization` and
+`finite_hankel_realization`][WORD]. The corresponding classical
+finite-rank equivalence is [Balle--Panangaden--Precup, Theorem 2][WFA],
+for arbitrary functions on finite-alphabet words. Its later
+absolute-summability and Hankel-SVD hypotheses are not used here:
+$\sum_{|w|=n}p(w)=1$ at every length, so $p$ is not summable over
+all finite words. The conditional-history matrix is also the
+uncontrolled system-dynamics matrix of [Singh--James--Rudary,
+§§2--3][PSR], with observation alphabet $\mathcal L$ and no actions.
+

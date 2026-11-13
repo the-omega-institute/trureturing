@@ -13,7 +13,7 @@
     "scratch/briefs/codex-search-a-r1.md": "59b72b70245e235d150a13813fc93764e7ed85166157e01651a9d72cb3a37e35"
   },
   "continuation_head.py": {
-    "out.md": "617d544f0679680fec2edb19b4f00633f6107de4c7f01978bca574b6174e818f"
+    "out.md": "57b4b28708f70c3715cedeb0dc4dd8698aec3d32e88a22e13406cd34ea705dcf"
   },
   "exclusions_compact.py": {
     "scratch/briefs/search-exclusions-compact.md": "70ea1a17aed008fefe9a66880acb1432b2e09301ea1803fb08d3f9a32816434f"
@@ -73,10 +73,10 @@
     "scratch/briefs/review-sample-tests.md": "136acea6d8c16d3066d0d9e3e1943c71e65bfb22d347d5282aca4db272191d3f"
   },
   "rework_brief.py": {
-    "scratch/briefs/rework-sample.md": "b2221c890753779b8a999ece118d060625f78327a41f298b5a271adf6186b0dc"
+    "scratch/briefs/rework-sample.md": "ca0a6888191d8321ac59cb81a4bd5d9c0d6fec5578225c62a4a0be11abf7a3f2"
   },
   "stageb_prep.sh": {
-    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "819c6e2ebebda133a8cd01b2e5ebaa14736c8675536cc298b151059a2be34ce5"
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "e5de4ae9f9ed19daa2a05e4c0887041a95d89c0325cd841a5dc94efd73edc150"
   },
   "stages.sh": {
     "scratch/briefs/mirror-check-sample.md": "e47408206734d24608ceca7b872196f205d25c7dcaa0273d73c15c98a80fc2bb",
@@ -98,9 +98,9 @@
     "scratch/briefs/impl-op-w1-sample.stageB.md": "9413aae7de9f606035c3fb4c8c71d48784e8c5f96ce988714fe8b5d3b7700394",
     "scratch/briefs/impl-op-w1-sample.stageA.md": "d5a615a12f5d90b67a962350e3a290436c6b70d932c51f7595119927a6dbe1a9",
     "scratch/briefs/impl-op-w1-sample.md": "c5853afb17ed10ab1c873bafabff6433c8184538aec8150d0f5e4360f3eeec00",
-    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "d4572b6acab504e20cfb77bd1a8abaec3909d583a69a2ca429ed25fd42c1e2a9"
+    "scratch/briefs/impl-op-w1-sample.stageB.filled.md": "001ef4e39b83c364ecde4269f10c444b8fb9096de12120ce58b5721f969e9c45"
   },
   "rework_brief.py:defaults": {
-    "scratch/briefs/rework-sample.md": "b2221c890753779b8a999ece118d060625f78327a41f298b5a271adf6186b0dc"
+    "scratch/briefs/rework-sample.md": "ca0a6888191d8321ac59cb81a4bd5d9c0d6fec5578225c62a4a0be11abf7a3f2"
   }
 }

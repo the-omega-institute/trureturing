@@ -1,0 +1,14 @@
+**引理 491.2（移动短增量的平均）。** 设 $h$ 与 $M$ 满足 (491.1)，$h\ll M=o(X)$，令 $\mathscr A_Mu(x)=\frac1M\int_0^Mu(x+r)\,dr$。则对 $s\in[0,1]$ 一致地，
+
+$$
+\|\mathscr A_Mf_s\|_2\ll\frac hM\,A_X\sqrt M .
+$$
+
+证明。令 $L(x)=sx^a$、$\phi(x)=x+L(x)$、$\xi=\phi^{-1}$、$q=\xi'$。在放大区间上 $L\ll h$、$0\le L'\ll h/X$、$|q-1|\ll h/X$。固定 $x$，令 $P=\phi(x)$、$Q=\phi(x+M)$、$Q_0=x+M+L(x)$、$\delta=Q-Q_0$，则 $0\le\delta\ll hM/X$。由 $\int_0^ME(\phi(x+r))\,dr=\int_P^QE(y)q(y)\,dy$，得恒等式
+
+$$
+M\,\mathscr A_Mf_s(x)=\int_0^{L(x)}D_M(x+r)\,dr+\int_P^Q(q(y)-1)\bigl(E(y)-E(x)\bigr)\,dy+\int_{Q_0}^Q\bigl(E(y)-E(x)\bigr)\,dy ,
+$$
+
+其中减去 $E(x)$ 合法，因为 $\int_P^Q(q-1)\,dy+\delta=M-(M+\delta)+\delta=0$。第一项由 Minkowski 不等式与 (491.1) 的 $L^2$ 范数为 $O(hA_X\sqrt M)$。第二项中令 $y=x+u$，$u$ 的范围放大到 $[0,CM]$，由引理 491.1，其范数为 $O\bigl(\frac{hM}XA_X\sqrt M\bigr)$。第三项中令 $y=Q_0(x)+v$，插入示性函数 $\mathbf 1_{v\le\delta(x)}$ 并对 $0\le v\le ChM/X$ 积分；对每个固定的 $v$，端点映射 $x$ 与 $x+M+L(x)+v$ 满足引理 491.1 的条件，故由 Minkowski 不等式得同一界。除以 $M$ 并用 $M=o(X)$。证毕。
+

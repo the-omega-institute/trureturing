@@ -1,0 +1,45 @@
+**定理 32.2（单位子族的准确反模型）。** 定义 32.1 的总映射满足原 A1–A3/P2、反对称性、每槽奇性、全部普通 SO$(2)$ 输入对不变性、全部单位零行、范数界，以及
+
+$$
+\widetilde D(p(A),q(A))=0\quad(p,q\in\mathbb R[T]),
+\qquad \widetilde D(A,B)=0\Longleftrightarrow[A,B]=0.
+\tag{32.4}
+$$
+
+对全部原 $A\circ B=0$，还有
+
+$$
+A\circ\widetilde D(A,B)=B\circ\widetilde D(A,B)=0,
+\qquad \widetilde D(A,B)^2=A^2B^2.
+\tag{32.5}
+$$
+
+全部实际原 $A,B$ 和全部实 $t$ 均满足 (31.2)，但同一原映射的加性缺陷
+
+$$
+\delta_F(G,G)=\widetilde D(F,2G)-2\widetilde D(F,G)
+=-8x^2\sigma_y
+\tag{32.6}
+$$
+
+不是 $X_2$ 的 Jordan 中心元。本定理是所列子系统的反模型，不是完整 PB 候选或全部已付 PB 后果的反模型。
+
+证明。对每一固定输入对，实际 P2 表是标准正表或它的复共轭，两者都半正定；原评价不必归一。A2 的完整实相加三表保持原样，其指定实向量 $(1,-1,-1)$ 的虚部二次值因反对称性成对抵消，实部仍为零；各排列同理。A3 完全不变。因此没有把逐对正性误升为三标签复正性。
+
+$\mathcal S$ 对交换两槽、任一槽反号及整个 O$(2)$ 封闭。交替双线性的 $D_*$ 在这类换基下乘以 $\det O$，故 (32.3) 保留反对称、每槽奇性和 SO$(2)$ 不变性。逐对反号保留范数界及完整零集；单位行、仿射同轴行和 (32.4) 随之成立。若 $A\circ B=0$，则 $AB=-BA$，标准值 $D_*(A,B)=\mathrm iAB$ 与两输入反交换，且其平方为 $A^2B^2$；反号也保留这些身份，得到 (32.5)。
+
+为证明整个 (31.2)，先取 $(A,B)\notin\mathcal S$。内层值未变，两个外层就是标准单位第三标签 PB 的实际外层。由定理 31.2，它们不能进入 $\mathcal S$：否则它们既是一次对又非交换，矛盾。因此两外层值也未变，原式就是标准模型的 PB。
+
+再取 $(A,B)\in\mathcal S$。两输入在 $\operatorname{span}_{\mathbb R}\{F,G\}$ 内，Pauli 乘法给 $q=A\circ B=\lambda x^2u$（$\lambda\in\mathbb R$），且 $B\circ e=0$，其中 $e=\widetilde D(A,B)$。两份真实外层的第二标签 $tu\pm q$ 都是原中心元，与任何第一标签交换；由 (32.3) 或其完整零集，两份响应均为零。(31.2) 的右端也为零。两分支覆盖全部原 $A,B,t$；未删除单位项或拆分未知响应。
+
+O$(2)$ 保持已知平方和。轨道内各对的平方和为 $F^2+G^2=5x^2u$，但 $F^2+(2G)^2=8x^2u$，所以 $(F,2G)\notin\mathcal S$。于是 $\widetilde D(F,2G)=2e_*$、$\widetilde D(F,G)=-e_*$，给 (32.6)。为直接核对 Jordan 中心而不只诉诸矩阵直觉，令 $\delta=-8x^2\sigma_y$；则 $\delta\circ F=0$，并且
+
+$$
+[L_\delta,L_F]F
+=\delta\circ F^2-F\circ(\delta\circ F)
+=-32x^4\sigma_y\ne0.
+\tag{32.7}
+$$
+
+故 $\delta\notin Z(X_2)$。∎
+

@@ -1,0 +1,6 @@
+**定义 63.2（完整原前件）。** 固定 SM50.1、OP80.1 与 PB128.1 的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$，完整保留：
+
+- A1：全部原有向 Hermitian 二表正性；
+- A2：每份相加三表 $(a+b,a,b)$ 及其排列的实部在整个 $\mathbb R^3$ 上半正定，并保留指定相加零向量 $(1,-1,-1)$ 的零二次值；
+- A3：$S(u,u)=u$，并对同一个固定有理数 $0<\theta\le1$ 要求 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。
+

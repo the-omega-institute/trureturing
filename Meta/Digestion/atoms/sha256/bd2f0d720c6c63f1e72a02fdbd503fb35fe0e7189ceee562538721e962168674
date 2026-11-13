@@ -1,0 +1,16 @@
+**定理 24.1（四阶全态预算的非零余量）。** 在 $M_4(\mathbb C)$ 中存在自伴 $h,x,r$，$h^2=I$，取中央自伴对合 $Q=I$ 并按原式定义
+
+$$
+c=(x+hxh)/2,\quad z=(x-hxh)/2,\quad
+k=h\circ x=hc,\quad t=i[h,x]/2=ihz,\quad g=t+r,
+\tag{24.1}
+$$
+
+使 $[h,r]=[c,r]=0$，且每个归一数学态 $\varphi$ 均满足
+
+$$
+\varphi(g)^2+\varphi(k)^2<\varphi(x^2),\qquad
+r^2=(z\circ r)^2=I/256.
+\tag{24.2}
+$$
+

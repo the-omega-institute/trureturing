@@ -8,7 +8,7 @@
 module
 public import D5.S3.Combinatorics.Circle.ExpandingSourcePath
 public import Mathlib.Data.List.Perm.Basic
-public import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+public import D5.S3.Combinatorics.Circle.Orbit.ZeroSumSubsets
 
 /-! Native source candidate. This file contains no minimizer or C3.1 completion
 claim. No energy inequality, strip-legal replacement, partition, or availability

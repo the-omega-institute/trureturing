@@ -1,0 +1,19 @@
+**Corollary 4.2 (joint completion criterion on prescribed acquired kernels).** Given the same acquired circulation and arbitrary arrays $F\in[0,M_f]^X$, $J\in[h_-,h_+]^Y$, let $(U_{F,J},v_{F,J})$ be the unique fixed point of $\Pi\Psi_{F,J}$ in $\mathcal C$. These arrays are the two event readouts of one regular same-update table on the prescribed $B,A$ if and only if
+
+$$
+\Psi_{F,J}(U_{F,J},v_{F,J})=(U_{F,J},v_{F,J}).
+\tag{4.12}
+$$
+
+If so, that table's emissions and complete laws are unique. This is an exact mathematical criterion, not a finite-time decision algorithm for arbitrary real data or a claim that the table meets any minimax risk budget.
+
+**Proof.** The projected map has a unique fixed point for all the specified data by the contraction proof above. A realizing table is fixed under the unprojected map by Lemma 3.1, hence under the projected map, proving necessity and uniqueness.
+
+Conversely assume (4.12), set $u=1-U_{F,J}$, and generate the complete laws by (3.2) on the prescribed acquired kernels. They normalize by (3.3). With $g=\operatorname{diag}(U)B(1-v)$, the second unprojected equation gives $J=1-v+VAg$. Thus $v+J-1=VAg$, and the first unprojected equation becomes
+
+$$
+F=\operatorname{diag}(U)BJ+L^2g=g+Lg+L^2g.
+$$
+
+Equations (3.4) show that these generated laws have exactly the requested two readout arrays. No separately chosen phase decoder is spliced into this law pair. If an original-domain comparison is wanted, retain $C_0$ and its current-record renderer, use the original source-independent latch initialization $\pi$ after the third record write, and use precisely $B,A$ on the noncompleting acquired letters and in synthetic generation. This is the supplied product realization used in Proposition 7.1. The unweighted rows remain $\pi,\tau$ on every positive fourth-segment history, while every full tail comes from that same installed table. Mathematical real entries alone do not supply effective samplers; an effective implementation requires a separately charged finite representation and sampling procedure. $\square$
+

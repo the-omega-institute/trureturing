@@ -1,0 +1,53 @@
+**定理 142.1（原P2、PB与未识别旧值的同域改坐标）。** 令 $\phi=\Phi|_E:E\to H_2(\mathfrak b)$。定义
+
+$$
+\begin{gathered}
+\widetilde D(A,B)=\phi\bigl(D(\phi^{-1}A,\phi^{-1}B)\bigr),\qquad
+\widetilde\alpha=\alpha\circ\phi^{-1},\\
+A\circ_m B=\tfrac12(AB+BA),\qquad
+\widetilde C=H_2(\mathfrak b)\cap M_2(\mathcal B)_+.
+\end{gathered}
+\tag{142.1}
+$$
+
+则 $\widetilde D$ 是定义在全部原矩阵域 $H_2(\mathfrak b)^2$ 上、值仍在该域中的同一个旧总映射的精确运输。全部原评价、质量、范数、A1–A3、原P2与完整原PB同时运输。其中原二表为
+
+$$
+\left[
+\widetilde\alpha(A_r\circ_m A_s)
+-i\widetilde\alpha(\widetilde D(A_r,A_s))
+\right]_{r,s=1}^2\succeq0,
+\tag{142.2}
+$$
+
+完整PB为：对全部 $A,B,T\in H_2(\mathfrak b)$，置
+
+$$
+\nu=\widetilde D(A,B)-A\circ_m T,\qquad
+\omega=A\circ_m B+\widetilde D(A,T),
+\tag{142.3}
+$$
+
+则
+
+$$
+\widetilde D(B+\nu,T+\omega)-\widetilde D(B-\nu,T-\omega)
+=-2B\circ_m\nu-2T\circ_m\omega.
+\tag{142.4}
+$$
+
+只在已经支付的三条原横向单位行上认回候选：
+
+$$
+\begin{gathered}
+D(s_r,z)=B_\star(s_r,z)\quad(z\in V_{s_r},\ r=1,2,3),\\
+\widetilde D(\phi(s_r),Z)=\tfrac i2[\phi(s_r),Z]
+\quad(\phi(s_r)\circ_m Z=0).
+\end{gathered}
+\tag{142.5}
+$$
+
+证明。140.1给 $\phi$ 对原域的实线性双射、Jordan同构、等距与准确一级保锥，故(142.1)只改变每个原输入和输出的坐标。评价分离、准确锥和所有质量随双射保持。将原两标签代入(142.2)，每个复数项逐项等于原二表；A1–A3中的所有相加、零值、单位和同一个有理小窗口同样逐项保持。把原(123.5)整体施加 $\phi$，得到(142.3)–(142.4)。这里没有展开任何未知旧响应的和，也没有把 $\widetilde D$ 延到 $M_2(\mathcal B)_{\rm sa}$。
+
+对 $r=1$，134.3与 $[h,z]=2hz$ 给(142.5)。将130.2的循环三元组 $(e,j,h)$、$(j,h,e)$ 分别代入已经完整成立的133.1–134.1，得到另两条横向行；循环置换的 $i s_1s_2s_3$ 仍是同一个 $Q$。再用(140.3)得到矩阵式。这里只消费这三条完整定理，不另假定125.1的循环中间结论。∎
+

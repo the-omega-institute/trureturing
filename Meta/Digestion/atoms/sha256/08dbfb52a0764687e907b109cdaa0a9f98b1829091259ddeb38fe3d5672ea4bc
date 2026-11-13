@@ -1,0 +1,14 @@
+(iii) 在 (i) 及 (ii) 关于 $I,p,q,m$ 的条件下，$\int_I|E(q)-E(p)|^2\le\frac{20R}m\log X\,\bigl(3|J|+16\varepsilon_XX\bigr)$。
+
+证明。(i) 由 (496.2)，对 $Y\in[X/2,4X]$ 与 $v\in[R,4R]$ 有 $Y^\alpha\le v\le Y^\beta$。于是 $\int_A^BD_v^2=V(B,v)-V(A,v)\le v\bigl(B\log\frac Bv-A\log\frac Av\bigr)+\varepsilon_Xv\bigl(B\log\frac Bv+A\log\frac Av\bigr)$。函数 $y\mapsto y\log(y/v)$ 的导数 $\log(y/v)+1\le\log(4X)+1\le3\log X$，故第一项至多 $3v(B-A)\log X$；又 $A+B\le8X$、$0<\log(A/v),\log(B/v)\le\log(4X)\le2\log X$，故第二项至多 $16\varepsilon_XXv\log X$。
+
+(ii) 令 $\delta=q-p$。对 $v\in[2R,3R]$ 有恒等式 $E(q(x))-E(p(x))=D_v(p(x))-D_{v-\delta(x)}(q(x))$（两个增量的终点都是 $p(x)+v$），且 $v-\delta(x)\in[R,4R]$。平方、用 $|a-b|^2\le2a^2+2b^2$、对 $v\in[2R,3R]$ 取平均并对 $x\in I$ 积分：第一项换元 $y=p(x)$，逆 Jacobian 至多 $1/m$；第二项对固定 $x$ 作平移 $w=v-\delta(x)$，把范围放大到 $[R,4R]$，再由 Tonelli 与换元 $y=q(x)$。得
+
+$$
+\int_I|E(q)-E(p)|^2\le\frac2{mR}\Bigl(\int_{2R}^{3R}\!\!\int_JD_v^2+\int_R^{4R}\!\!\int_JD_w^2\Bigr)\le\frac{2C}{mR}\Bigl(\frac52+\frac{15}2\Bigr)R^2=\frac{20CR}m .
+$$
+
+局部有界性使所有积分有限，Borel 可测性使换序合法。(iii) 把 (i) 代入 (ii)。证毕。
+
+(iii) 保留了因子 $|J|$，而不是把它放大成 $X$；下面把 $[X,2X]$ 分成 $n$ 块时，正是这一点使冻结误差为 $O(1/n)$。
+

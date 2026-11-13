@@ -1,0 +1,9 @@
+**引理 91.4（不预付奇性的方向交换）。** 置 $\mathcal T(Z)=JZ^*$。若 $Z=b+Jd$，则 $\mathcal T(Z)=d+Jb$，所以仅由原反对称性，
+
+$$
+\boxed{\mathfrak F(\mathcal T(Z))=-\mathfrak F(Z).}
+\tag{91.5}
+$$
+
+此式不借用 $\mathfrak F(Z^*)=-\mathfrak F(Z)$ 或 $\mathfrak F(JZ)=\mathfrak F(Z)$；91.4只需要实际有限支撑酉元，而标量 $J1$ 通常不在该族。
+

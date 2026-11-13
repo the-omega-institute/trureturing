@@ -1,0 +1,21 @@
+**定义 33.1（同原比值域上的剖面逆问题）。** 设 $F$ 为特征零域，$L/F$ 为有限扩张，$0\ne X\le_F L$。沿用 (32.1) 的 $m=\dim_F X$、$D_X=F(X/X)$、$E_X=\{c\in L:cX\subseteq X\}$、$N=[D_X:F]$、$e=[E_X:F]$ 及最小正共同交维 $\delta_j(X)$。对每个实际中间域 $F\subseteq A\subseteq D_X$，定义函数
+
+$$
+\mathcal T_X(A)=t_X(A)=\dim_F AX-m,
+\qquad AX=\operatorname{span}_A X\subseteq L.
+\tag{33.1}
+$$
+
+比较 $W,V$ 时，要求 $D_W=D_V=D$ 为原 $L$ 中同一个子域，并有相同的 $m,N,e$。剖面相等指对每一个实际 $A\subseteq D$ 逐项相等；只比较子域次数不构成这项条件。问题是全部序列 $(\delta_j)_{j\ge1}$ 相等能否强制 $\mathcal T_W=\mathcal T_V$。规模按先 $m$ 后 $N$ 的字典序比较。
+
+任取 $x\in X\setminus\{0\}$，已有的归一化给出 $U=x^{-1}X\subseteq D_X$、$1\in U$、$F(U)=D_X$；整体缩放不改变上述维数或稳定子。若原共同交空间 $I_j=X\cap r_2X\cap\cdots\cap r_jX$ 非零，则从同一个 $z\in I_j\setminus\{0\}$ 得 $r_i=z/(z/r_i)\in D_X$，所以这些空间全在同一个 $xD_X$ 中。以下只消费 (31.4)、(32.3) 已有的全正元组下界：对每个实际 $A\subseteq D_X$、$a=[A:F]$，
+
+$$
+\dim_F I_j\ge
+\max\{e,\,jm-(j-1)N,\,a-jt_X(A)\}
+\quad\text{只要 }I_j\ne\{0\}.
+\tag{33.2}
+$$
+
+其中第三项来自同一条 $Az$ 上的映射 $Az\longrightarrow\bigoplus_{i=1}^j r_iAX/r_iX$，$r_1=1$：其核为 $Az\cap I_j$，各商空间维数均为 $t_X(A)$。前两项分别来自 $E_X$-线性与 $xD_X$ 中的余维和。域外标签的交空间为零。这是已有共同见证的维数机制，不另提出秩公式。
+

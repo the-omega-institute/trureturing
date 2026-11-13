@@ -1,0 +1,53 @@
+**定理 135.1（全部原横向对的准确缺陷式）。** 对任意原 $y,z\in V_h$，定义同一实际输出及原Jordan多项式
+
+$$
+\begin{gathered}
+j_y=D(h,y),\qquad G_0=y^2=j_y^2,\\
+\mathcal U_a(v)=2a\circ(a\circ v)-a^2\circ v,\\
+\Delta_y(z)=\mathcal U_y(\mathcal U_{j_y}(z))+G_0^2\circ z\in E,
+\qquad \Xi_y(z)=\Delta_y(z)\circ z\in E.
+\end{gathered}
+\tag{135.1}
+$$
+
+辅助环境元 $F_y=iyj_y$、$H_y=hF_y$ 满足
+
+$$
+F_y=QhG_0,\qquad H_y=QG_0,
+\qquad [H_y,z]=Q[G_0,z].
+\tag{135.2}
+$$
+
+对这些全部原输入，有准确环境表达
+
+$$
+\boxed{\Delta_y(z)=\frac12[G_0,[G_0,z]].}
+\tag{135.3}
+$$
+
+不要求 $G_0$ 全局中央，也不要求任何平方可逆或具有有限谱。双交换子右侧沿(135.3)等于原域内的多项式，未被添加为新的响应输入。
+
+证明。由(134.3)，$j_y=iQhy$；$hy=-yh$ 且 $Q$ 中央，所以
+
+$$
+F_y=iy(iQhy)=Qhy^2=QhG_0,\qquad H_y=QG_0.
+$$
+
+$G_0$ 与 $h$ 交换，故 $F_y,H_y$ 自伴，且 $F_y^2=G_0^2$。中央性给(135.2)的交换子式。成熟的JC二次表示恒等式是 $\mathcal U_a(v)=ava$；只将它用在已有原Jordan表达式上。由 $yj_y=-j_yy$，
+
+$$
+\mathcal U_y(\mathcal U_{j_y}(z))
+=yj_yzj_yy=F_yzF_y
+=QhG_0zQhG_0=-G_0zG_0.
+\tag{135.4}
+$$
+
+最后一步只用 $Q^2=u$、$Q$ 中央、$hG_0=G_0h$ 及 $hz=-zh$，没有令 $G_0$ 与 $z$ 交换。因而
+
+$$
+\Delta_y(z)=-G_0zG_0+\tfrac12(G_0^2z+zG_0^2)
+=\tfrac12[G_0,[G_0,z]],
+$$
+
+即得(135.3)。$\Delta_y(z)$ 与 $\Xi_y(z)$ 属于原 $E$，由(135.1)的有限Jordan表达式保证。这里没有断言任意 $y,z$ 的 $\Xi_y(z)$ 都非负；前卷114.2的正性只在其标量平方差定义域使用。∎
+

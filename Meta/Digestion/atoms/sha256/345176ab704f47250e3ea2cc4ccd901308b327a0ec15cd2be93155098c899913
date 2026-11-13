@@ -1,0 +1,74 @@
+**Definition 20.1 (complete laws, residuals and partition tests).** Write
+
+$$
+w_{n,0}=(\beta\alpha)^n\alpha,\qquad
+w_{n,1}=(\beta\alpha)^n\beta\beta\qquad(n\ge0),
+$$
+
+$$
+\Omega_p=\{w_{n,i}:n\ge0,\ i=0,1\}\cup\{\infty_p\},\qquad
+\Omega_\beta=\{\beta\}\cup\{\alpha w_{n,i}:n\ge0,\ i=0,1\}\cup\{\infty_\beta\}.
+$$
+
+These countable carriers have all subsets measurable, and $\operatorname{TV}(D,D')=\tfrac12\sum_\omega|D(\omega)-D'(\omega)|$. With $\lambda=4/15$, let
+
+$$
+\begin{aligned}
+T_p(j)&=\{w_{n,i}:n\ge j,\ i=0,1\}\cup\{\infty_p\},\\
+T_\beta(j)&=\{\alpha w_{n,i}:n\ge j,\ i=0,1\}\cup\{\infty_\beta\},\\
+\mathcal K_p&=\{Q\in\operatorname{Prob}(\Omega_p):
+ a\le Q(\alpha)\le b,\ Q(T_p(j))\le\lambda^j\text{ for all }j\ge0\},\\
+\mathcal K_\beta&=\{W\in\operatorname{Prob}(\Omega_\beta):
+ a\le1-W(\beta)\le b,\ W(T_\beta(j))\le b\lambda^j\text{ for all }j\ge0\}.
+\end{aligned}
+\tag{20.1}
+$$
+
+These are precisely the normalized spaces (11.2), with the complete-law TV topology. The uniform tail bounds make them compact metric spaces: coordinatewise subsequences converge in TV because the mass outside the increasing finite completed-word sets tends uniformly to zero. They also force the infinite coordinates to have mass zero, without deleting those coordinates. Original unrestricted observers may have zero or unit emissions and positive noncompletion mass; regularity in (20.1) belongs to this supplied compatible-law representation and is not an added premise on every original observer.
+
+Set $u(Q)=Q(\alpha)$, $U(Q)=1-u(Q)$ and $v(W)=1-W(\beta)$. Prefixing maps the complete opposite carrier bijectively onto the noncompleting cylinder, including its infinite outcome. Thus
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},\qquad
+\mathcal R_A(W)(F)=\frac{W(\alpha F)}{v(W)}
+\tag{20.2}
+$$
+
+are normalized laws on $\Omega_\beta$ and $\Omega_p$, respectively. Their denominators satisfy $U\ge3/5$ and $v\ge1/3$. Lemma 11.1 gives their TV continuity. For an arbitrary descriptor its residual need not lie in the opposite constrained space $\mathcal K_s$.
+
+Fix once and for all the explicit enumerations
+
+$$
+\begin{aligned}
+\omega^p_0&=\infty_p,&
+\omega^p_{2n+1}&=w_{n,0},& \omega^p_{2n+2}&=w_{n,1},\\
+\omega^\beta_0&=\infty_\beta,& \omega^\beta_1&=\beta,&
+\omega^\beta_{2n+2}&=\alpha w_{n,0},\quad
+\omega^\beta_{2n+3}=\alpha w_{n,1}\qquad(n\ge0).
+\end{aligned}
+$$
+
+For $s=p,\beta$ and $\ell\ge1$, put
+
+$$
+\Pi^s_\ell=
+\bigl\{\{\omega^s_0\},\ldots,\{\omega^s_{\ell-1}\},
+ \Omega_s\setminus\{\omega^s_0,\ldots,\omega^s_{\ell-1}\}\bigr\},\qquad
+p^s_\ell(D)=(D(C))_{C\in\Pi^s_\ell}.
+\tag{20.3}
+$$
+
+The single paired family $(\Pi^p_\ell,\Pi^\beta_\ell)_{\ell\ge1}$ is refining and exhaustive: every complete atom eventually becomes a singleton, and infinity is a singleton already at the first level. The remainder cell is always retained.
+
+For probability distributions $\xi,\zeta$ on one of these finite-dimensional simplices, write $\xi\preceq_{\mathrm{cx}}\zeta$ if their vector barycentres agree and $\int f\,d\xi\le\int f\,d\zeta$ for every continuous convex real function $f$ on the simplex. Affine functions of both signs are among the tests. This is vector convex order; separate scalar orders for individual coordinates do not constitute this test. Define
+
+$$
+\begin{aligned}
+X^B_\ell(Q)&=p^\beta_\ell(\mathcal R_B(Q)),&
+Y^\beta_\ell(W)&=p^\beta_\ell(W),\\
+X^A_\ell(W)&=p^p_\ell(\mathcal R_A(W)),&
+Y^p_\ell(Q)&=p^p_\ell(Q).
+\end{aligned}
+\tag{20.4}
+$$
+

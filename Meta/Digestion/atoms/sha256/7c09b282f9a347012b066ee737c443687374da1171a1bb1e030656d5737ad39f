@@ -1,0 +1,48 @@
+**Definition 13.7 (mathematical suppliers and attribution).**
+The unchanged original source, strict positivity and full-history
+meaning are §§1–2; the actual/stationary B-prefix bridge is
+(4.4); the survival limits are Theorem 12.2; the marked original
+conditional identity is [DPCR, §8]; and the generated finite rows,
+common-event acquisition and chronological resource interfaces
+are §§7–8, Theorem 12.5, [SRO, §§21–22] and [OWGR, §21].
+They are suppliers, not additional results of §13. The finite
+word-Hankel results [WORD] concern exact algebraic realization.
+The separate five-mode source in
+[Finite-start predictive memory, §§1–3][FSM] has its own actual
+posterior family and approximation geometry; its shared label
+alphabet gives no source correspondence to the present diffusion.
+The finite binary edge-emission presentations of the repository's
+`MarkedPredictiveQuotient` and the perfect quantum discrimination
+bound `FiniteMemoryHistoryCapacity.finite_memory_history_capacity`
+likewise do not instantiate this original source or its approximate
+classical-bank claim. Source inspection is not a Lean check.
+
+The residual-waiting viewpoint has a primary-literature antecedent
+in Marzen–Crutchfield, [*Informational and Causal Architecture of
+Discrete-Time Renewal Processes*, §III and Appendix A][REN].
+Their renewal-source assumption makes successive interevent counts
+iid, and their causal-state classification concerns that source.
+No such iid gap structure or age-only predictive sufficiency is
+assumed here; (13.7) keeps the full-word distinctions. Their result
+is background, not a substitute proof of (13.9).
+Marzen–Crutchfield's [*Circumventing the Curse of Dimensionality
+in Prediction: Causal Rate-Distortion for Infinite-Order Markov
+Processes*, §§II and IV][CRD] supplies the established lossy
+predictive-feature and stochastic-encoding context. Its
+source-weighted rate/distortion objectives are distinct from
+the worst-history finite-horizon supremum in (13.12). No numerical
+rate-distortion value or theorem about this diffusion is imported.
+
+Finite conditioning, convex decomposition, normalization,
+event-TV bounds, stochastic-channel counting and summable union
+bounds are mature intermediate arguments. The same-source
+common-cut packing, its arbitrary-bank consequence and its
+acquired actual-row certificate are `repo-derived` ordinary
+theory deductions with the hypotheses and limits above. They
+carry no worldwide originality claim, fresh Lean verification,
+implemented physical executor or finite-completion claim.
+
+[FSM]: RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md
+[REN]: https://doi.org/10.3390/e17074891
+[CRD]: https://arxiv.org/abs/1412.2859
+

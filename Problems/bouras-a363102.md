@@ -40,11 +40,19 @@ constraints, reverse-root theorem and root-pair theorems exported by
 
 ## Gap
 
-The screen recorded in #18627 found no settlement in the OEIS entry,
-Adamczewski's arXiv:2608.11941, the Epoch OEIS Open list, or the named Google
-DeepMind formal-conjecture and AlphaProof result collections. The source's
-prime-value Conjecture 1 is already literature-attested; it is not a dependency
-of this module. Literature completeness is `ASSUMED-UNVERIFIED`.
+[Antonio Gracia Llorente, *Factorial Cancellation in Polynomial Continued Fractions*](../Library/Factorization/gracia2026factorial.md),
+Theorem 5.12, equation (36), p. 16, is an earlier prose proof, present in the
+original Zenodo version published 2026-10-20, DOI
+[10.5281/zenodo.23506866](https://doi.org/10.5281/zenodo.23506866).
+It gives zero occurrences outside $p\equiv1,7\pmod8$ and, in those residue
+classes, exactly two occurrences plus one precisely when $2p^2+2$ is a square.
+It also identifies the third-occurrence criterion with prime members of the
+Newman–Shanks–Williams sequence. The paper's rejection of the literal claim
+about all primes does not contradict this dossier's restriction to occurring
+primes. The deposited result precedes the repository module's first addition in
+[`235becf77fbe7f7697e467acf792ff263a9ab6dc`](https://github.com/the-omega-institute/trureturing/commit/235becf77fbe7f7697e467acf792ff263a9ab6dc)
+(2026-10-29). The Lean declaration formalizes the count claim, with the
+necessary Pell condition; it does not formalize the full criterion.
 
 ## Route
 
@@ -98,8 +106,9 @@ No `declared_validated` registration is claimed.
   used to construct the pair or triple in the settling proof.
 - **Computed:** the exact finite distributions and third-index pairs are the
   experiment readings in Evidence, within its stated ranges.
-- **Open here:** the converse from a prime Pell solution to a third occurrence
-  and the complete Newman–Shanks–Williams equivalence are not formalized.
+- **Not formalized here:** the converse from a prime Pell solution to a third
+  occurrence and the complete Newman–Shanks–Williams equivalence are given in
+  Gracia Llorente, Theorem 5.12, but are not formalized by this declaration.
 - **Open:** infinitude of primes with a third occurrence.
 - The common negative-tail denominator identity, the A363347 root pairing,
   the finite distributions of both sequences, and the open gcd-pairing and
@@ -114,6 +123,7 @@ conjectures.
 
 ## ASSUMED-UNVERIFIED
 
-Literature completeness and priority remain unverified beyond the recorded
-screen. The experiment has only finite scope. Escape registration is unfinished
+Literature completeness and priority over all other sources remain unverified;
+the earlier deposited reference above is established. The experiment has only
+finite scope. Escape registration is unfinished
 under #21990 and is distinct from the kernel-checked occurrence theorem.

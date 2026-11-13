@@ -1,0 +1,58 @@
+**引理 17.3（局部大参数与准确负端点）。** 固定上述 $U,\chi,p$ 和任意实际 $W\in M$。若
+
+$$
+c=\|(1-p)Wp\|_U<4,\qquad d=\|(1-p)W^*p\|_U,
+\tag{17.6}
+$$
+
+可选有限 $T>0$，使每个实 $|t|>T$ 都给
+
+$$
+F\bigl(L_\chi(e^{2i\arctan(t)p})W\bigr)=F(W),\qquad
+L_\chi(V)=\chi V+(1-\chi)I_n.
+\tag{17.7}
+$$
+
+证明。选 $T$ 满足 $c+d/\sqrt{1+T^2}<4$，令
+
+$$
+\begin{gathered}
+r=t\chi Qp\in E,\qquad Jr=it\chi p,\qquad \alpha_t=(1-it)^{-1},\\
+A_t=(1-Jr)^{-1}=1+\chi(\alpha_t-1)p,\qquad
+Z_0=A_tW=x_0+Jy_0.
+\end{gathered}
+\tag{17.8}
+$$
+
+$Jr=it\chi p$ 是全域恒等式，使用 $Q^2=1$；实际逆元是 $(1-Jr)^{-1}$。式17.8的显式乘法给左右逆，全部条目连续，所以 $Z_0,x_0,y_0$ 是真实原对象。无需 $W$ 可逆，也不需要 $Q$ 在 $U$ 上同号。
+
+在 $U$ 内令 $v_0=(1-p)Wp$、$w_0=(1-p)W^*p$，直接分块得
+
+$$
+\begin{aligned}
+(1-p)Z_0p&=v_0,&(1-p)Z_0^*p&=\overline\alpha_t w_0,\\
+(1-p)x_0p&=(v_0+\overline\alpha_t w_0)/2,
+&(1-p)y_0p&=-J(v_0-\overline\alpha_t w_0)/2.
+\end{aligned}
+\tag{17.9}
+$$
+
+两连接的 $U$ 上范数都不超过 $(c+|\alpha_t|d)/2<2$。17.1分别用于同一个实际演员 $r=t\chi Qp$ 和两份实际输入 $x_0,y_0$，支付17.3的两个全域等式。在 $U$ 内由 OP83.1支付，在其外由 P2零预算支付，未省略任何点。
+
+17.2遂适用。其负端点在全域准确为
+
+$$
+(1-Jr)Z_0=W,
+\tag{17.10}
+$$
+
+正端点为 $L_\chi(C_t)W$，其中普通矩阵
+
+$$
+C_t=(1+itp)(1-itp)^{-1}
+=(1-p)+\frac{1+it}{1-it}p=e^{2i\arctan(t)p}.
+\tag{17.11}
+$$
+
+所以得到17.7。重基是选择一组新的实际 PB输入，不是从未知平方中提出因子。∎
+

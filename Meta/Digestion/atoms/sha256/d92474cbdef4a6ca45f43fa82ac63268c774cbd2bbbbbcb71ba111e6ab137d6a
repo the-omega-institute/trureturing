@@ -1,0 +1,29 @@
+**定义 96.1（完整候选与所检验的子系统）。** 完整量子候选仍为89.1的同一原A1–A3/P2与全部原PB，95.1及87.1的七项物理来源合同保持。本节另构造一个不满足全部PB的数学总映射，只检验以下推断是否成立：原二表正性、共同二阶角取向、原多项式零值、普通槽旋转以及两个演员方向的零第三项PB，能否把93.1的必要预算严格加强。这里不撤销任何完整候选的前件，也不把子系统模型冒认成完整PB模型。
+
+取 $E=X=H_3(\mathbb C)$、$u=I_3$，锥、算子范数及全部正实线性评价均为标准者，质量不作归一要求。记矩阵单位为 $E_{ij}$，并置
+
+$$
+\begin{gathered}
+p=E_{11},\quad q=E_{22}+E_{33},\quad
+X_{ij}=E_{ij}+E_{ji}\quad(i<j),\\
+A=2X_{12}+q,\qquad r=p,\qquad
+0<\varepsilon\le1/\sqrt5,\qquad d=\varepsilon X_{13}.
+\end{gathered}
+\tag{96.1}
+$$
+
+固定 $S(a,b)=a\circ b$；以下只改变同一个未知有向响应。令 $Q=X_{12}$、$K_0=-\varepsilon(2(E_{31}-E_{13})+E_{32}-E_{23})$，并记 $H_K(a,b)=(aKb-bKa)/2$。$K_0^*=-K_0$；$K_0^*K_0$ 的谱为 $\{0,5\varepsilon^2,5\varepsilon^2\}$，故 $\|K_0\|=\sqrt5\varepsilon\le1$。给五对实际矩阵及其拟赋的旧值：
+
+$$
+\begin{array}{c|c|c}
+a_i&b_i&h_i\\ \hline
+p&A&d\\
+p-d&X_{12}&-p+d/2\\
+p+d&-X_{12}&-p-d/2\\
+A+d&Q&H_{K_0}(A+d,Q)\\
+A-d&-Q&H_{K_0}(A-d,-Q)
+\end{array}
+\qquad(i=0,+,-,s+,s-).
+\tag{96.2}
+$$
+

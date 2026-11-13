@@ -1,0 +1,35 @@
+**定义 36.1（同一原域与未知旧值）。** 取本卷 31.1 的 $n=2$ 标量端点域，但不指定响应为标准交换子：
+
+$$
+\begin{aligned}
+E&=\left\{\lambda u+\sum_{k=1}^m x^kA_k:
+ \lambda\in\mathbb R,\ A_k\in H_2(\mathbb C),\ m<\infty\right\},
+ &u&=I_2,\quad 0\le x\le1,\\
+X&=\{a\in C([0,1],H_2(\mathbb C)):a(0)\in\mathbb Ru\},
+ &S(a,b)&=a\circ b=\tfrac12(ab+ba).
+\end{aligned}
+\tag{36.1}
+$$
+
+$C=E\cap X_+$、$N=\|\cdot\|_\infty|_E$，原正评价分离并准确决定这个原锥，保留全部原质量。$X$ 是已知逐点 Jordan 乘法的含单位 JB 代数。Weierstrass 逼近各实坐标，再修正近似多项式在零处的非标量常数项，给 $\overline E=X$；修正量随逼近误差趋零。这个已知完成不延拓未知响应。
+
+同一个总映射 $D:E^2\to E$ 只取原 $\mathsf H_{\rm orig}$ 和全部 PB：即静态重构卷 1.1、1.2 的前三项及 22.1 的无 R 入口，准确锥、全部二表 P2、完整实相加三角及小效果关系均保留。对每个实际原 $a,b,c$，写
+
+$$
+\begin{gathered}
+\nu=D(a,b)-a\circ c,\qquad \omega=a\circ b+D(a,c),\\
+D(b+\nu,c+\omega)-D(b-\nu,c-\omega)
+=-2b\circ\nu-2c\circ\omega.
+\end{gathered}
+\tag{36.2}
+$$
+
+全部原读取和来源量词同本卷 24.1、29.2、34.2。不另付 $D$ 的可加、齐次、正则性、跨轴中心平移、商下降、原 R 或完成延拓。定义实线性子空间
+
+$$
+E_0=\{a\in E:\operatorname{tr}a(x)=0\text{ 对所有 }x\in[0,1]\}.
+\tag{36.3}
+$$
+
+$E_0$ 不含单位，也不是 Jordan 子代数；例如 $(x\sigma_z)^2=x^2u\notin E_0$。因此不能对 $E_0$ 独立套用含单位重构定理。
+

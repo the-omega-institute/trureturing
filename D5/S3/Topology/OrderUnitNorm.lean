@@ -125,10 +125,10 @@ private lemma radii_closed (v : E) : IsClosed (A.radii v) := by
     ((A.closed.preimage ((continuous_id.smul continuous_const).sub continuous_const)).inter
       (A.closed.preimage ((continuous_id.smul continuous_const).add continuous_const)))
 
-private lemma norm_attained (v : E) : A.orderNorm v ∈ A.radii v :=
+lemma norm_attained (v : E) : A.orderNorm v ∈ A.radii v :=
   (A.radii_closed v).csInf_mem (A.radii_nonempty v) (A.radii_bdd v)
 
-private lemma norm_nonneg (v : E) : 0 ≤ A.orderNorm v := (A.norm_attained v).1
+lemma norm_nonneg (v : E) : 0 ≤ A.orderNorm v := (A.norm_attained v).1
 
 private lemma cone_smul_nonneg {r : ℝ} (hr : 0 ≤ r) {v : E} (hv : v ∈ A.cone) :
     r • v ∈ A.cone := by
@@ -147,7 +147,7 @@ private lemma radii_upward {v : E} {r s : ℝ} (hr : r ∈ A.radii v) (hrs : r �
     rw [he]
     exact A.cone.add_mem hr.2.2 hd
 
-private lemma norm_le_iff (v : E) (r : ℝ) :
+lemma norm_le_iff (v : E) (r : ℝ) :
     A.orderNorm v ≤ r ↔ r ∈ A.radii v := by
   constructor
   · exact A.radii_upward (A.norm_attained v)
@@ -166,7 +166,7 @@ private lemma norm_eq_gauge (v : E) : A.orderNorm v = gauge A.interval v := by
     exact (gauge_le_of_mem hr.le ((A.smul_interval_iff hr v).mpr hv.2)).trans_lt
       (by linarith)
 
-private lemma norm_zero_iff (v : E) : A.orderNorm v = 0 ↔ v = 0 := by
+lemma norm_zero_iff (v : E) : A.orderNorm v = 0 ↔ v = 0 := by
   constructor
   · intro h
     have hv := A.norm_attained v
@@ -228,7 +228,7 @@ def bridge [FiniteDimensional ℝ E] : E ≃L[ℝ] A.Space :=
 def operator [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) : A.Space →L[ℝ] A.Space :=
   LinearMap.toContinuousLinearMap (A.wrap.toLinearMap ∘ₗ H ∘ₗ A.wrap.symm.toLinearMap)
 
-private lemma positive_bound (β : E →ₗ[ℝ] ℝ)
+lemma positive_bound (β : E →ₗ[ℝ] ℝ)
     (hβ : ∀ v ∈ A.cone, 0 ≤ β v) (v : E) :
     |β v| ≤ β A.unit * A.orderNorm v := by
   have hv := A.norm_attained v
@@ -538,7 +538,7 @@ private lemma add_unit_interior (y : E) (hy : y ∈ A.cone) (ε : ℝ) (hε : 0 
     exact A.cone.add_mem hz hw
   · exact subset_interior_add_right ⟨y, hy, ε • A.unit, hscale, rfl⟩
 
-private lemma boundary_support (z : E) (hz : z ∈ A.cone)
+lemma boundary_support (z : E) (hz : z ∈ A.cone)
     (hzi : z ∉ interior (A.cone : Set E)) :
     ∃ β : E →L[ℝ] ℝ, (∀ v ∈ A.cone, 0 ≤ β v) ∧ β z = 0 ∧ 0 < β A.unit := by
   obtain ⟨f, hfne, hf⟩ := geometric_hahn_banach_of_nonempty_interior_point
@@ -563,6 +563,7 @@ private lemma boundary_support (z : E) (hz : z ∈ A.cone)
     exact congrArg (fun l : E →ₗ[ℝ] ℝ => l v) hzβ
   apply hfne
   simpa [β] using congrArg Neg.neg hβ0
+
 
 private lemma perturbed_interior [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
     (hcp : ∀ z ∈ A.cone, ∀ β : E →ₗ[ℝ] ℝ,

@@ -1,0 +1,27 @@
+#### 引理 8.1：复根的单调参数函数
+
+对 $y>0$ 定义
+
+$$
+a(y)=\frac{y}{\sinh y},\qquad
+ b(y)=\sqrt{1-a(y)^2},\qquad
+ \beta(y)=\arcsin a(y),\qquad
+ G(y)=b(y)\cosh y+\beta(y).
+$$
+
+则 $0<a<1$、$b>0$、$0<\beta<\pi/2$， 且 $G$ 严格递增，值域恰为 $(\pi/2,\infty)$。
+
+**证明。**
+
+$\sinh y>y$ 给出 $0<a<1$。 由 $\tanh y<y$ 得 $a'(y)<0$， 并有 $a(y)\cosh y=y\coth y>1$。 直接微分得
+
+$$
+G'(y)
+ =b(y)\sinh y+
+ \frac{a'(y)}{b(y)}\bigl(1-a(y)\cosh y\bigr)>0.
+$$
+
+当 $y\downarrow0$ 时，$a\to1$、$b\to0$、$\beta\to\pi/2$， 故 $G\to\pi/2$。当 $y\to\infty$ 时，$a\to0$、$b\to1$、 $\cosh y\to\infty$，故 $G\to\infty$。 连续性与严格单调性给出值域。
+
+$\square$
+

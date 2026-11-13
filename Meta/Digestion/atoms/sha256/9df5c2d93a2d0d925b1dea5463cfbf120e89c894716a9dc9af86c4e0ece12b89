@@ -1,0 +1,94 @@
+**命题 178.1（一个局部旧值候选的准确排除）。** 在允许的有限特例
+$E=H_4(\mathbb C)=H_2(M_2(\mathbb C))$ 中，令 $X,Y,Z$ 为标准Pauli矩阵，
+$I=I_2$，取标准实际框架
+
+$$
+h=Z\otimes I,\qquad e=X\otimes I,\qquad j=-Y\otimes I,\qquad Q=I_4.
+$$
+
+固定普通实数 $s,v>0$ 且 $s+v\le1$，取实际标签及一个待检验的单表输出
+
+$$
+\begin{gathered}
+c=I\otimes Z,\qquad z=sX\otimes I,\qquad x=c+z,\\
+t=-sY\otimes I,\qquad r=vI\otimes Y,\qquad d=t+r.
+\end{gathered}
+\tag{178.1}
+$$
+
+这份指定 $(h,x,d)$ 表满足每个正读取的P2，且
+$[h,r]=0,[c,z]=0,c\circ r=0,r\ne0$；175.1的所有扇区预算亦成立。
+但若同时保留已付的 $D(h,hc)=0$ 及零输入值，两次相关PB
+$(h,x,hc)$、$(z+d,2hc,0)$ 不可能都成立。
+这是一份局部表信息的诊断，不是完整PB的总映射反模型。
+
+证明。第一输入平方是 $I_4$。记
+
+$$
+P=Z\otimes Z=h\circ x,\qquad
+T=Y\otimes I,\qquad V=X\otimes Z,\qquad J=Y\otimes Y.
+$$
+
+直接乘法给
+
+$$
+x^2=(1+s^2)I_4+2sV,\qquad d=(-s+vJ)T.
+\tag{178.2}
+$$
+
+$J$ 与 $P,T,V,d$ 交换；$P,T,V$ 两两反交换且平方均为 $I_4$。
+在任一非零 $J$-谱扇区 $\eta=\pm1$，对任意态置
+$p_0=\phi(P),q_0=\phi(T),w_0=\phi(V)$。因为
+$(aP+bT+cV)^2=(a^2+b^2+c^2)I_4$，态范数界给
+
+$$
+p_0^2+q_0^2+w_0^2\le1.
+\tag{178.3}
+$$
+
+$|-s+\eta v|\le s+v\le1$，故
+
+$$
+p_0^2+(-s+\eta v)^2q_0^2
+\le1-w_0^2
+\le1+s^2+2sw_0,
+\tag{178.4}
+$$
+
+最后一差恰为 $(w_0+s)^2$。这正是这份原二表的行列式不等式
+$|\phi(d)|^2+\phi(h\circ x)^2\le\phi(h^2)\phi(x^2)$。
+表的全部元素都与 $J$ 交换，任意态在它们上的读取为两个扇区态读取的
+凸组合。数值Hermitian半正定二表的凸性因此给所有态的P2；
+一般正泛函按质量缩放，零质量直接为零。这里未使用输出第二矩。
+$c\circ r=0$ 使175.1左侧为零，右侧非负，所以该预算不排除本表。
+另外 $[r,x]=2ivI\otimes X\ne0$。
+
+若第一份实际PB成立，177.2–177.3强迫同一个原输出
+
+$$
+\begin{gathered}
+a=z+d=s(X-Y)\otimes I+vI\otimes Y,\qquad b=2Z\otimes Z,\\
+K=D(a,b)=2s\bigl[(X+Y)\otimes Z-vX\otimes Y\bigr].
+\end{gathered}
+\tag{178.5}
+$$
+
+Pauli乘法 $XY=iZ,YZ=iX,ZX=iY$ 直接给
+
+$$
+a\circ b=0,\qquad b\circ K=-4svY\otimes X\ne0.
+\tag{178.6}
+$$
+
+第二份真正PB $(a,b,0)$ 的两份完整外层因而是
+
+$$
+D(b+K,0)-D(b-K,0)=-2b\circ K=8svY\otimes X.
+\tag{178.7}
+$$
+
+P2使左侧两个输出都为零，右侧非零，矛盾。这两次调用须消费同一个
+178.5的 $K$，不能分别挑选独立可达的输出预算。
+因此178.1证明的是较弱局部数据不足，并被具名的相关PB排除；
+没有给出违反重构而满足完整全部PB的候选总映射。∎
+

@@ -1,0 +1,20 @@
+**定义 15.1（任意紧中心中的同一完整原域）。** 设 $X$ 是非空紧 Hausdorff 空间，固定有限整数 $n\ge3$。仍取
+
+$$
+A=C(X,\mathbb C),\quad M=M_n(A),\quad E=M_{\rm sa},\quad
+C=M_+,\quad u=I_n,\quad N(a)=\sup_{\xi\in X}\|a(\xi)\|,
+\qquad S(a,b)=a\circ b=(ab+ba)/2.
+\tag{15.1}
+$$
+
+结合乘法、伴随、连续函数演算和完整原域都是明确模型前件。除底空间条件外，原对象与1.1–1.2相同：同一原 $\Omega/\mathrm{native}$、每份原正实线性评价 $\gamma\in\mathcal P$、原质量 $m_\gamma=\gamma(u)$，并有
+
+$$
+a\in C\iff(\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,
+\qquad
+[(\forall\gamma\in\mathcal P)\ \gamma(a)=0]\Longrightarrow a=0.
+\tag{15.2}
+$$
+
+全部零、不等、次归一及非正常原评价保持身份。数学点评价和向量读取无需属于原准备族。未知 $D:E^2\to E$ 仍只是同一个总映射；不假定可加、齐次、输入连续、可测、酉协变、中央局部性、商下降、单位平移中性或输出小代数闭合。对一份固定输入，$D$ 的输出属于 $E$，是连续矩阵场；这与 $D$ 作为二元映射的输入连续性不同。
+

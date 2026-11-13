@@ -1,0 +1,12 @@
+**定义 123.14（有限实际相容性）。** 对固定 $p\in P_0$，$\mathsf F(p)$ 表示
+
+$$
+\boxed{\quad
+\forall m\ge1\ \forall w_1,\ldots,w_m\in S^2\quad
+\exists v\in S^2\ \forall i\le m:\quad
+v\cdot H_p(a_{w_i})\le g_p(a_{w_i}).\quad}
+\tag{Q123.45}
+$$
+
+重复方向允许，所有点都由同一原 $p$ 的真实邻球定义。按(Q123.32)，它恰要求每个有限批有一个单位方向，其第三候选在整批原点上均非负；$v$ 必须对该有限批共同，不能逐点选择。
+

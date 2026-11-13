@@ -1,0 +1,34 @@
+**定理 491.6（跨指数渐近正交）。** 设 $E$ 局部有界 Borel 可测，$0<a<b<1$，$g_1,g_2\in L^1(0,1)$ 实值。
+
+(i) **两条指数带。** 设 (490.2) 分别在 $0<\alpha_1<a<\beta_1<1$ 与 $0<\alpha_2<b<\beta_2<1$ 上成立。任取固定的 $a<\mu<\nu<\min(\beta_1,b)$，令 $\eta_0=\frac12\min\{\mu-a,\nu-\mu,b-\nu\}$。则
+
+$$
+\Bigl|\int_X^{2X}\mathcal T_{a,g_1}(x)\mathcal T_{b,g_2}(x)\,\frac{dx}x\Bigr|\ll\|g_1\|_1\|g_2\|_1\,N_X\,X^{-\eta_0}.
+\tag{491.6}
+$$
+
+(ii) **共同指数带。** 设 (490.2) 在 $0<\alpha<a<b<\beta<1$ 上成立。则
+
+$$
+\Bigl|\int_X^{2X}\mathcal T_{a,g_1}(x)\mathcal T_{b,g_2}(x)\,\frac{dx}x\Bigr|\ll\|g_1\|_1\|g_2\|_1\,X^{1-b}\log X\,\bigl(1+(b-a)\log X\bigr)^2 ,
+\tag{491.7}
+$$
+
+即相对于 $N_X$ 为 $O\bigl(\|g_1\|_1\|g_2\|_1X^{-(b-a)/2}(\log X)^2\bigr)$。
+
+两处常数只依赖 $E$、指数带与 $a,b$，对剖面的依赖只经 $\|g_1\|_1\|g_2\|_1$。
+
+证明。令 $r_{\theta,s}(x)=\rho_x(sx^\theta)$、$W_{s,t}(x)=x^{-a-b}r_{a,s}(x)r_{b,t}(x)$，则
+
+$$
+\int_X^{2X}\mathcal T_{a,g_1}\mathcal T_{b,g_2}\frac{dx}x=\int_0^1\!\!\int_0^1g_1(s)g_2(t)\int_X^{2X}W_{s,t}(x)f_s(x)z_t(x)\,dx\,ds\,dt ;
+$$
+
+对固定的 $X$，所用 $E$ 的值都在一个紧区间内，局部有界性给出对 $|g_1(s)g_2(t)|\,ds\,dt\,dx$ 的绝对可积性，Fubini 成立。令 $\ell=\log w$。由 §481 的显式公式，$\ell'(x)=O(x^{-1})$、$\ell''(x)=O(x^{-2})$；由 $\frac d{dx}\log r_{\theta,s}=\ell'(x+sx^\theta)(1+s\theta x^{\theta-1})-\ell'(x)$，对 $s\in[0,1]$ 一致地 $r_{\theta,s}=O(1)$、$r_{\theta,s}'=O(X^{\theta-2})$（$X\le x\le2X$）。于是 $|W_{s,t}(2X)|+\int_X^{2X}|W_{s,t}'|\ll X^{-a-b}$。令 $F_{s,t}(y)=\int_X^yf_sz_t$；分部积分给出
+
+$$
+\Bigl|\int_X^{2X}W_{s,t}f_sz_t\,dx\Bigr|\le\sup_{y\in[X,2X]}|F_{s,t}(y)|\Bigl(|W_{s,t}(2X)|+\int_X^{2X}|W_{s,t}'|\Bigr).
+$$
+
+(i) 取 $M=X^\mu$、$T=X^\nu$。尺度 $h,M,T$ 落在第一条带内，$k$ 落在第二条带内，故都满足 (491.1)。由引理 491.3，$\sup_y|F_{s,t}(y)|\ll A_X^2\sqrt{hk}\,X^{-\eta_0}$，乘以 $X^{-a-b}$ 得 $N_XX^{-\eta_0}$，再对 $|g_1(s)g_2(t)|$ 积分。(ii) 由引理 491.5，$\sup_y|F_{s,t}(y)|\ll Xh\log X(1+\log(k/h))^2$，乘以 $X^{-a-b}$ 得 $X^{1-b}\log X(1+(b-a)\log X)^2$。证毕。
+

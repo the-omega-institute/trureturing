@@ -1,0 +1,34 @@
+**定理 5.4（全部有界中央相位的精确不变性）。** 在5.3的严格连接条件下，对任意 $\theta\in A_{\rm sa}$，
+
+$$
+\boxed{q_D(e^{J\theta p}Z)=q_D(Z).}
+\tag{5.9}
+$$
+
+证明。先考虑 $\phi$ 的谱紧含于
+$(2\arctan T,\pi)$ 或 $(-\pi,-2\arctan T)$。连续演算给有界自伴 $t=\tan(\phi/2)$，其谱的绝对值大于 $T$，且在同一代数中
+
+$$
+(1+Jtp)(1-Jtp)^{-1}=e^{J\phi p}.
+\tag{5.10}
+$$
+
+可在 $Q=\pm1$ 的两个中央部分分别用普通标量恒等式核对5.10，再合并已知等式；没有对未知响应中央下降。式(5.4)给这些相位的不变性。
+
+令 $\delta=\pi-2\arctan T>0$，取 $\varepsilon>0$ 使 $3\varepsilon/2<\delta$。若 $\|\theta\|<\varepsilon$，置
+
+$$
+\phi_1=\pi-\varepsilon+\theta/2,\qquad
+\phi_2=-\pi+\varepsilon+\theta/2.
+\tag{5.11}
+$$
+
+两谱分别落在上述正、负区间，且与 $\pm\pi$ 的距离至少 $\varepsilon/2$，故两份正切确为有界中央元素。先作用 $\phi_1$，再作用 $\phi_2$；5.8使第二次仍可用同一个 $T$。两相位相加恰为 $\theta$，所以
+
+$$
+q_D(e^{J\phi_2p}e^{J\phi_1p}Z)=q_D(Z),\qquad
+ e^{J\phi_2p}e^{J\phi_1p}=e^{J\theta p}.
+$$
+
+这已支付全部小中央 $\theta$。任意有界中央自伴 $\theta$ 选有限整数 $N$ 使 $\|\theta/N\|<\varepsilon$，准确作用 $N$ 次；5.8逐次保持允许性，得到5.9。整个论证只有有限个实际 PB 调用，不用相位稠密性，也不对 $D$ 的输入取极限。∎
+

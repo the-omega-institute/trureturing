@@ -1,0 +1,64 @@
+**推论 42.3（非负插入残差与端点均值缺陷）。**在定义 42.1 下，置 $\delta=c-STc$。对每个实际标签对都有
+
+$$
+\begin{aligned}
+0&\le STc\le c,&\delta&\ge0,\\
+(Sc-c)+(Tc-c)&=2\delta,\\
+|Sc-c|^2&\le9c\delta,&|Tc-c|^2&\le9c\delta.
+\end{aligned}
+\tag{42.13}
+$$
+
+这里的乘积、绝对值和不等式均逐点取值。特别，对每个指定 $(x,y)$，有
+
+$$
+\delta(x,y)=0
+\quad\Longleftrightarrow\quad
+(Sc)(x,y)=c(x,y)=(Tc)(x,y).
+\tag{42.14}
+$$
+
+这不把一个标签对处的等式提升为全域等式。
+
+**证明。**在 $K$ 上写 $t=rs$。曲线方程先给 $0\le r,s\le4$，又给
+
+$$
+4-2t=r+s\ge2\sqrt t.
+\tag{42.15}
+$$
+
+令 $z=\sqrt t\ge0$，则 $z^2+z\le2$，所以 $0\le t\le1$。由同一曲线方程还得到
+
+$$
+\begin{aligned}
+(r-1)^2&=(1+2r)(1-t)\le9(1-t),\\
+(s-1)^2&=(1+2s)(1-t)\le9(1-t).
+\end{aligned}
+\tag{42.16}
+$$
+
+例如 $(1+2r)s=4-r$，故 $(1+2r)rs=r(4-r)$，直接展开即得第一条恒等式；第二条交换 $r,s$。区间端点 $t=0,1$ 与 $r,s=0,4$ 都包含在这些非严格不等式内。
+
+固定 $(x,y)$ 并简写 $\Lambda=\Lambda_{xy}$。定理 42.2 应用于 $t$、$1-t$ 及 (42.16) 的两边之差，给
+
+$$
+\begin{aligned}
+0\le\Lambda(t)&=(STc)(x,y)\le\Lambda(1)=c(x,y),\\
+\Lambda((r-1)^2)&\le9\Lambda(1-t)=9\delta(x,y),\\
+\Lambda((s-1)^2)&\le9\delta(x,y).
+\end{aligned}
+\tag{42.17}
+$$
+
+为支付所需的 Cauchy–Schwarz 步骤，对 $q=r-1$ 或 $q=s-1$，每个实 $\alpha,\beta$ 都有
+
+$$
+0\le\Lambda((\alpha+\beta q)^2)
+=\alpha^2\Lambda(1)+2\alpha\beta\Lambda(q)+\beta^2\Lambda(q^2).
+\tag{42.18}
+$$
+
+若 $\Lambda(1)>0$，取 $\beta=1$、$\alpha=-\Lambda(q)/\Lambda(1)$，得到 $|\Lambda(q)|^2\le\Lambda(1)\Lambda(q^2)$。若 $\Lambda(1)=c(x,y)=0$，定理 42.2 的证明已给 $\Lambda=0$，同一不等式仍成立，未除以零质量。把 (42.17) 代入，且用 $\Lambda(r-1)=(Sc-c)(x,y)$、$\Lambda(s-1)=(Tc-c)(x,y)$，即得平方估计。这只使用指定标量矩泛函上的多项式平方正性，没有使用任意原始 Gram 矩阵正性。
+
+(42.8) 的最后一式给 $Sc+Tc-2c=2(c-STc)=2\delta$。若 $\delta(x,y)=0$，两个平方估计迫两个均值缺陷同时为零；若两个均值缺陷都为零，和式反过来给 $\delta(x,y)=0$。证毕。
+

@@ -1,0 +1,41 @@
+**定理 6.2（任意小连接的实际有限方向选择）。** 对任意 $Z\in M$、任意实数 $\varepsilon>0$，存在有限个常值秩一投影 $P_j=v_jv_j^*\in M_n(\mathbb C)$、开闭中央分割 $z_j=1_{C_j}\in A$、常值酉矩阵 $W_j\in U(n)$，满足
+
+$$
+\begin{gathered}
+\sum_jz_j=1,\quad z_jz_k=0\ (j\ne k),\quad
+W_jE_{11}W_j^*=P_j,\\
+W=\sum_jz_jW_j\in\mathcal U(M),\qquad
+p=WE_{11}W^*=\sum_jz_jP_j,\\
+\operatorname{Tr}(p)=1_A,\qquad
+\|(1-p)Zp\|\le t=\varepsilon/2<\varepsilon.
+\end{gathered}
+\tag{6.1}
+$$
+
+证明。写 $R=\|Z\|$、$\delta=\varepsilon/(8(R+1))$。普通秩一投影空间 $\mathbb {CP}^{n-1}$ 在投影算子范数下紧；取有限 $\delta$-网 $P_j=v_jv_j^*$、$\|v_j\|=1$。网是投影网，不是选择单位向量相位的网。固定任意 $\omega\in X$，普通复矩阵 $Z(\omega)$ 有单位特征向量 $v$。置 $P_0=vv^*$，则 $(1-P_0)Z(\omega)P_0=0$。某个 $P_j$ 满足 $\|P_j-P_0\|\le\delta$，并有
+
+$$
+\begin{aligned}
+(1-P_j)Z(\omega)P_j
+&=(1-P_j)Z(\omega)(P_j-P_0)+(P_0-P_j)Z(\omega)P_0,\\
+\|(1-P_j)Z(\omega)P_j\|&\le2R\|P_j-P_0\|\le2R\delta<\varepsilon/4.
+\end{aligned}
+\tag{6.2}
+$$
+
+只为建立这一有限覆盖使用该点某条特征线，不要求其随点变化。定义实际连续中央元
+
+$$
+g_j^2=v_j^*Z^*(1-P_j)Zv_j\in A_+,\qquad
+g_j=(g_j^2)^{1/2}\in A_+.
+\tag{6.3}
+$$
+
+明确地，$g_j(\omega)=\|(1-P_j)Z(\omega)P_j\|$。因此 $O_j=\{\omega:g_j(\omega)<t\}$ 是有限开覆盖。用6.1细化并合并同标号片，得 $C_j\subset O_j$ 的有限开闭分割。每个非空 $C_j$ 紧，连续 $g_j$ 在其上取得严格小于 $t$ 的最大值；有限个最大值仍严格小于 $t$。将各常值 $v_j$ 补为正交规范基给 $W_j$，中央正交性给 $W^*W=WW^*=1$ 及迹一。逐片有
+
+$$
+(1-p)Zp\big|_{C_j}=(1-P_j)ZP_j\big|_{C_j},
+$$
+
+故实际范数严格小于 $t$，特别满足6.1的 $\le t<\varepsilon$。零矩阵、重根、非正规或奇异矩阵都没有被排除。∎
+

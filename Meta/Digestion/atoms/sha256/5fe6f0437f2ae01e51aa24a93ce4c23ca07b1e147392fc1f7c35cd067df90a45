@@ -1,0 +1,14 @@
+**定义 66.1（两条实际内误差）。** 固定任意实际 $W\in M$、$s=s^*\in M$，令 $m=\|s\|$，取任意有限实 $t>m$。全部乘法均在65.1的同一 C* 丛中，置
+
+$$
+\begin{gathered}
+a_t=Q(tu+s),\quad B_t=(u-Ja_t)^{-1}=(u-i(tu+s))^{-1},\quad
+Z_t=B_tW=b_t+Jd_t,\\
+U_t=(u+Ja_t)B_t,\quad e_t=D(a_t,b_t)-K(a_t,b_t),\quad
+g_t=D(a_t,d_t)-K(a_t,d_t),\quad T_t=e_t+Jg_t.
+\end{gathered}
+\tag{66.1}
+$$
+
+自伴演算给实际逆元及酉 $U_t$；$a_t,b_t,d_t,e_t,g_t\in E$。特别允许 $s=fp$ 在某合法图内、图外延零，其中 $p$ 是连续秩一投影场，$f$ 实连续且支撑在该图。不将 $D(a_t,\cdot)$ 拆成中央项与非中央项。
+

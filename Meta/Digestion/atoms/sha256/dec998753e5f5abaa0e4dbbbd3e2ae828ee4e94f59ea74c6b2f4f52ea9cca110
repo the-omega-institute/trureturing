@@ -1,0 +1,19 @@
+**定义 49.1（实际消费者与尚未固定的幅度）。** 取 $A=x\sigma_z$。$V_A$ 的全部元素恰为 $x f\sigma_x+x g\sigma_y$，$f,g\in\mathbb R[x]$。由 (46.2)，可用实际旧值定义实多项式 $h_\lambda$：
+
+$$
+D(\lambda u+x\sigma_z,x\sigma_x)=h_\lambda\sigma_y.
+$$
+
+(46.3) 给完整平面行的公式
+
+$$
+\boxed{D(\lambda u+x\sigma_z,
+ xf\sigma_x+xg\sigma_y)
+=h_\lambda(f\sigma_y-g\sigma_x).}
+\tag{49.1}
+$$
+
+具体地，设另一基输入的输出为 $\ell_\lambda\sigma_x$。将 (46.3) 用于两个基输入之和，再用 (46.2) 的自身正交，得到 $h_\lambda+\ell_\lambda=0$，故有 (49.1)。43.1 对这份实际锚输出给 $h_\lambda\in x^2\mathbb R[x]$；36.2 给 $h_0=-\varepsilon_0x^2$。没有对非零 $\lambda$ 证明 $h_\lambda=-\varepsilon_0x^2$，也没有假定 $\lambda\mapsto h_\lambda$ 连续、可测或多项式。
+
+因此整个无限横向输入族已由一份实际锚多项式控制；它的方向、横向相加和所有实多项式权重运输都被识别，幅度仍待识别。一般 $D(\lambda u+A,b)$ 中的非横向 $b$、两个输入都带标量的比较、非恒定标量偏置 $fu$、全域双线性、原 R 及同一结合乘法仍待证。$\lambda=0$ 的成熟消费者不另计新内容。
+

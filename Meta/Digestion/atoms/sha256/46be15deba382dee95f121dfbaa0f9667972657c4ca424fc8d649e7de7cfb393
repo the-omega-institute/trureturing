@@ -1,0 +1,66 @@
+**定理 1.2（全 PB 图上的线性轮廓精确分量）。** 取任意 $n\ge2$、任意自伴常矩阵 $A,B\in M_n(\mathbb C)_{\rm sa}$，只要求
+
+$$
+Z_0=A+\mathrm iB\ne0.
+\tag{1.3}
+$$
+
+则在全 PB 图中
+
+$$
+\boxed{
+\operatorname{Comp}_{\mathcal H_n}(tA,tB)=
+\left\{\bigl(t(cA-sB),\ t(sA+cB)\bigr):c,s\in\mathbb R,\ c^2+s^2=1\right\}.}
+\tag{1.4}
+$$
+
+不要求 $A^2+B^2$ 可逆，亦不要求 $A,B$ 或任何外层标签彼此通勤。除半周外的每个整体转角由一条边实现，半周由两条边实现。
+
+证明。设一条全 PB 边与 $(tA,tB)$ 相邻。按需要交换边的两个端点，存在 $\varepsilon\in\{1,-1\}$、$p\in E_n$ 及 $Z=q+\mathrm i r$，使
+
+$$
+ (I_n+\varepsilon\mathrm i p)Z=tZ_0.
+\tag{1.5}
+$$
+
+写 $p(0)=\lambda I_n$。由 (0.1) 的零点条件，(1.5) 在 $t=0$ 给 $Z(0)=0$，故 $Z=tW$；这里 $W$ 只是系数恒等式中的复矩阵多项式，不是送回原 $D$ 的新输入。区间上的等式因此给出多项式恒等式
+
+$$
+(I_n+\varepsilon\mathrm i p)W=Z_0.
+\tag{1.6}
+$$
+
+对每一个实数 $s$，$p(s)$ 是 Hermitian，故其谱值为实数，且
+
+$$
+\left\|(I_n+\varepsilon\mathrm i p(s))^{-1}\right\|_{\rm op}
+=\max_j(1+\lambda_j(p(s))^2)^{-1/2}\le1.
+\tag{1.7}
+$$
+
+由 (1.6) 得 $\|W(s)\|_{\rm op}\le\|Z_0\|_{\rm op}$ 在整条实轴成立。每个矩阵元是有界复系数多项式，遂为常数；记该常矩阵为 $C$。在零点取 (1.6) 得
+
+$$
+C=(1+\varepsilon\mathrm i\lambda)^{-1}Z_0.
+\tag{1.8}
+$$
+
+同一条边的另一端编码为
+
+$$
+(I_n-\varepsilon\mathrm i p)tC
+ =t(2C-Z_0)
+ =t\frac{1-\varepsilon\mathrm i\lambda}{1+\varepsilon\mathrm i\lambda}Z_0.
+\tag{1.9}
+$$
+
+这个商是模一复数。注意 (1.9) 只使用 $pC$ 已由 (1.6) 固定；不需要从 $C$ 可逆推出 $p$ 是标量。因此第一步的任意演员即使非通勤、非标量、带有非零内层响应，其外层仍只留下同一个整体相位。相位倍乘保持 (1.3)，对路径长度归纳得到 (1.4) 的左包含。
+
+反向取任意 $\rho\in\mathbb C$ 且 $|\rho|=1$。当 $\rho\ne-1$ 时存在 $\mu\in\mathbb R$ 使 $\rho=(1-\mathrm i\mu)/(1+\mathrm i\mu)$。取原演员 $p=\mu I_n$，并以
+
+$$
+Z=\frac{t}{1+\mathrm i\mu}Z_0
+$$
+
+的 Hermitian 实部和虚部分别作 $q,r$。因 $t$ 在零点消失，$q,r\in E_n$；(1.2) 的两端正是 $tZ_0$ 与 $\rho tZ_0$。当 $\rho=-1$ 时连续取两条 $\mu=1$ 的边。恒等转角取长度零，故右包含成立。∎
+

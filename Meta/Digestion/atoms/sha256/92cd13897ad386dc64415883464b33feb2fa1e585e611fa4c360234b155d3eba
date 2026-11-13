@@ -1,0 +1,152 @@
+**Theorem 13.2 (exact finite realization from one finite marginal).** Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ have
+
+$$
+\nu_p=\sum_{i=1}^N\pi_i\delta_{Q_i},\qquad
+\pi_i>0,\qquad \sum_i\pi_i=1,
+\tag{13.1}
+$$
+
+where the complete laws $Q_i$ are distinct. Let $f_1,\ldots,f_q$ be any specified finite list of bounded Borel real functions on $\mathcal K_\beta$, allowing $q=0$. Let $G\subset\mathcal K_\beta$ be any Borel set of full $\nu_\beta$ measure. There is a finite regular stationary table with p labels $1,\ldots,N$, p row exactly $\pi$, p own laws exactly $Q_i$, and suspended labels $1,\ldots,m$ satisfying
+
+$$
+1\le m\le N^2+2N+q-1.
+\tag{13.2}
+$$
+
+Its suspended own laws $W_\ell$ belong to $G$, and its positive suspended row $\tau$ satisfies
+
+$$
+\pi B=\tau,\qquad \tau A=\pi,\qquad
+\sum_{\ell=1}^m\tau_\ell f_t(W_\ell)
+ =\int f_t(W)\,d\nu_\beta(W)\quad(1\le t\le q).
+\tag{13.3}
+$$
+
+The table satisfies both full complete-law residual equations. It preserves the entire p marginal, hence the p configuration loss against every complete target. In particular, choosing $f_t(W)=\operatorname{TV}(W,T_t)$ preserves each specified suspended complete configuration loss exactly. Taking $G$ to be the full endpoint coordinate box preserves that box at every new suspended law whenever it held almost surely in the input.
+
+There is a symmetric statement with $\nu_\beta=\sum_{i=1}^N\tau_i\delta_{W_i}$: keep that entire marginal and every suspended target loss, and replace the p marginal by at most $N^2+2N+q-1$ labels while preserving any $q$ specified bounded Borel p integrals and any full-measure Borel p constraint.
+
+These are abstract finite stochastic rules with real entries. The new opposite-phase marginal and both joint flow measures can differ from the input. No preservation of the original three-stage return coupling is asserted.
+
+**Proof, p-finite direction.** Disintegrate $\Gamma_A$ over its entire input $W$. Its other marginal is supported on the $Q_i$, so there are Borel functions $\theta_i:\mathcal K_\beta\to[0,1]$ such that, on a Borel full-measure set,
+
+$$
+\sum_{j=1}^N\theta_j(W)=1,\qquad
+\mathcal R_A(W)=\sum_{j=1}^N\theta_j(W)Q_j,\qquad
+\int\theta_j(W)\,d\nu_\beta(W)=\pi_j.
+\tag{13.4}
+$$
+
+Indeed $\theta_j(W)$ is the conditional mass at $Q_j$; the marginal identity gives the last equality. Equation (11.8) gives the middle equality atomwise. The complete carrier is countable, so intersecting its atomwise full-measure sets gives one Borel set on which it holds as an equality of full normalized measures. Extend the $\theta_j$ off this set by any fixed probability row. On this set (11.4) gives
+
+$$
+W=(1-v(W))\delta_\beta
+   +v(W)\alpha\sum_{j=1}^N\theta_j(W)Q_j.
+\tag{13.5}
+$$
+
+Push $\Gamma_B$ to the measure $\xi$ on $\{1,\ldots,N\}\times\mathcal K_\beta$ by replacing $Q_i$ with its index $i$. Its marginals are $\pi,\nu_\beta$. Write $e_i(I,W)=\mathbf1_{\{I=i\}}$. Consider, on this one probability space, the following finite list of bounded Borel functions:
+
+$$
+\begin{array}{ll}
+e_i & (1\le i\le N),\\
+\theta_j(W) & (1\le j<N),\\
+e_i v(W)\theta_j(W) & (1\le i,j\le N),\\
+f_t(W) & (1\le t\le q).
+\end{array}
+\tag{13.6}
+$$
+
+There are $d=N+(N-1)+N^2+q$ coordinates. Apply [Bayer–Teichmann, Corollary 2](https://arxiv.org/html/math/0502473v2) to their joint map into $\mathbb R^d$ and to the $\xi$-full Borel set where (13.4)–(13.5) hold and $W\in G$. The measure is positive and finite; boundedness gives integrability of the Euclidean norm of this map. That corollary allows nodes in the specified full-measure set and gives $m\le d$ nodes $(i_\ell,W_\ell)$ with positive weights $t_\ell$, matching all the listed integrals. Since $\sum_i e_i=1$ everywhere, their matched integrals give $\sum_\ell t_\ell=1$ without an extra constant coordinate. For $N=1$ the second list is empty.
+
+Set
+
+$$
+\tau_\ell=t_\ell,\qquad
+B_{i\ell}=\frac{t_\ell}{\pi_i}\mathbf1_{\{i_\ell=i\}},
+\qquad A_{\ell j}=\theta_j(W_\ell),\qquad
+u_i=Q_i(\alpha),\quad v_\ell=v(W_\ell).
+\tag{13.7}
+$$
+
+Matching the $e_i$ makes $B$ row-stochastic and gives $\pi B=\tau$. Each row of $A$ sums to one. Matching the unweighted $\theta_j$ gives $\tau A=\pi$ for $j<N$; normalization gives its last coordinate, including when $N=1$. Thus both actual-flow balances are exact, with no synthetic continuation weight.
+
+It remains to prove that these finitely many matched quantities close the entire other residual, rather than a finite projection. Put
+
+$$
+M_{ij}=\int e_i v(W)\theta_j(W)\,d\xi(I,W).
+$$
+
+The first full residual equation and (13.5) imply, as complete measures on $\Omega_\beta$,
+
+$$
+\begin{aligned}
+\pi_i\mathcal R_B(Q_i)
+ &=\int e_iW\,d\xi\\
+ &=\left(\pi_i-\sum_jM_{ij}\right)\delta_\beta
+      +\alpha\sum_jM_{ij}Q_j.
+\end{aligned}
+\tag{13.8}
+$$
+
+The node rule matches $\pi_i$ and every $M_{ij}$. Expanding each selected $W_\ell$ by (13.5) therefore gives exactly
+
+$$
+\sum_\ell B_{i\ell}W_\ell=\mathcal R_B(Q_i),\qquad
+\sum_j A_{\ell j}Q_j=\mathcal R_A(W_\ell).
+\tag{13.9}
+$$
+
+All completed words and the infinite outcome are included in (13.8)–(13.9). Together with (11.4) these are the table's own same-update recursions
+
+$$
+Q_i=u_i\delta_\alpha+(1-u_i)\beta\sum_\ell B_{i\ell}W_\ell,
+\qquad
+W_\ell=(1-v_\ell)\delta_\beta+v_\ell\alpha\sum_jA_{\ell j}Q_j.
+\tag{13.10}
+$$
+
+The emissions belong to $[1/3,2/5]$. Synthetic survival through $L$ complete returns is at most $(4/15)^L$ from p and $(2/5)(4/15)^L$ from suspension. The finite generator thus has normalized own complete laws, with noncompletion present at mass zero. Two normalized solutions of (13.10), with maximal phase TV distances $z_p,z_\beta$, obey
+
+$$
+z_p\le(2/3)z_\beta,\qquad z_\beta\le(2/5)z_p,
+$$
+
+so both distances vanish. Hence the selected descriptors are the actual generated complete laws, not fitted decoding laws. Repeated selected $W_\ell$ may be kept as distinct finite labels; pushing their flows to descriptors still satisfies (11.7). Matching $f_t$ proves (13.3). The unchanged p marginal proves its all-target loss assertion. This proves (13.2) and the p-finite direction.
+
+**Proof, suspended-finite direction.** Now write the finite suspended marginal as $\sum_i\tau_i\delta_{W_i}$. Disintegrate $\Gamma_B$ over the whole $Q$, obtaining Borel $\theta_j(Q)$ with
+
+$$
+\sum_j\theta_j(Q)=1,\quad
+\mathcal R_B(Q)=\sum_j\theta_j(Q)W_j,\quad
+\int\theta_j(Q)\,d\nu_p(Q)=\tau_j.
+$$
+
+On one full-measure Borel set put $U(Q)=1-Q(\alpha)$; then
+
+$$
+Q=(1-U(Q))\delta_\alpha+U(Q)\beta\sum_j\theta_j(Q)W_j.
+$$
+
+Push $\Gamma_A$ to $\xi$ on $\{1,\ldots,N\}\times\mathcal K_p$, with marginals $\tau,\nu_p$. Match the $N$ indicators $e_i$, the $N-1$ functions $\theta_j(Q)$, the $N^2$ functions $e_iU(Q)\theta_j(Q)$, and the $q$ specified p functions. The same corollary supplies at most $d$ nodes $(i_\ell,Q_\ell)$ in the prescribed full-measure set with weights $t_\ell$. Define
+
+$$
+\pi_\ell=t_\ell,\qquad
+A_{i\ell}=\frac{t_\ell}{\tau_i}\mathbf1_{\{i_\ell=i\}},
+\qquad B_{\ell j}=\theta_j(Q_\ell).
+\tag{13.11}
+$$
+
+The indicator and unweighted moments give $\tau A=\pi$, $\pi B=\tau$. For $M_{ij}=\int e_iU(Q)\theta_j(Q)\,d\xi$, the whole residual identity is
+
+$$
+\tau_i\mathcal R_A(W_i)
+ =\left(\tau_i-\sum_jM_{ij}\right)\delta_\alpha
+       +\beta\sum_jM_{ij}W_j.
+\tag{13.12}
+$$
+
+Matching these moments gives $\sum_\ell A_{i\ell}Q_\ell=\mathcal R_A(W_i)$; the node identity gives $\sum_jB_{\ell j}W_j=\mathcal R_B(Q_\ell)$. With emissions $Q_\ell(\alpha),1-W_i(\beta)$, the same normalization and contraction proof establishes the two own-law recursions on the full carriers. This proves the symmetric statement. $\square$
+
+The two types of moments in (13.6) have distinct roles: the unweighted $\theta_j$ preserve the actual return marginal, whereas $e_iv\theta_j$ close the synthetic complete-law residual. Equation (13.8) is a finite-dimensional closure of an infinite complete-law equality because the opposite residual is a mixture of the fixed finitely many $Q_j$. No tail truncation or replacement of the full law by its first moments occurs.
+

@@ -1,0 +1,6 @@
+谱演算、正泛函分离、迹循环性、矩形角半内积、Sylvester算子形式和超有限模型都是 $\texttt{literature-attested}$ 的成熟中间工具，不分别列为本组新增定理。其准确数学引文与当前用途如下：
+
+- J. Dixmier，[*Les anneaux d’opérateurs de classe finie*](https://www.numdam.org/item/ASENS_1949_3_66__209_0/)，*Annales scientifiques de l’É.N.S.*，3e série **66** (1949)，209–261，Théorème 10，印刷页249–250；引言页211明确不要求Hilbert空间可分。该定理的中心值映射固定中心、复线性、循环、正且在正元上忠实。75.1只用它与中心态复合取得分离有限正迹族，不从中取得原 $E$ 的投影或任何 $D$ 正则性。
+- B. Blackadar，[*Operator Algebras: Theory of C*-Algebras and von Neumann Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，II.6.8.1–II.6.8.3的迹与矩阵放大，III.2.5.6–III.2.5.8的忠实中心值迹及分离标量迹，III.3.1.4与III.3.4.2(ii)的超有限二阶张量积，III.3.4.7的迹二范数；自伴谱演算仍沿60.2所引I.4.1、I.6.1。这里只作成熟工具的参数对应；有限角正交及72.1全部常数在73–74中直接给出。
+- Q. Fang、C. E. Shin、Q. Sun，[*On Sylvester Equations in Banach Subalgebras*](https://arxiv.org/abs/2407.09752v2)，arXiv:2407.09752v2，Theorems 2.1–2.2。2.1要求逆闭Banach子代数及不交谱，2.2另要求正规算子和可控逆，估计依赖谱距离倒数与算子范数。任意不完备原 $E$ 没有这些自动资格；该文不供应原窗、不供应PB预算，也不为这里的 $1/|a-b|$ 常数背书。74.1的特殊有限迹平方身份已直接证明，无需一般双算子积分或Schur乘子定理。
+

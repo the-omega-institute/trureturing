@@ -1,0 +1,9 @@
+**固定尺度假设 $(\mathrm F_k)$（$k=3,4$）。** 对每个 $M>0$、$\mathbf c\in[0,M]^k$ 与 $1\le u<v\le2$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[\mathbf 1_{[u,v]}(U_X)\prod_{j=1}^k\widetilde B_X(c_j)\Bigr]=\nu([u,v])\,W_k(\mathbf c).
+\tag{497.2}
+$$
+
+$(\mathrm F_4)$ 是固定长度 $c_1h,\dots,c_4h$ 的联合四阶矩的 Wick 渐近，带有宏观位置的区间权，是下面证明直接使用的形式；$(\mathrm F_3)$ 是相应三阶混合矩的消失。单一长度的四阶矩渐近不决定 $(\mathrm F_4)$：边际矩不决定混合矩。
+

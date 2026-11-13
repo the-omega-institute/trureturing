@@ -1,0 +1,236 @@
+**定理 95.1（非零原缺陷必有正的线性上极限）。** 在94.1的同一完整原背景中，$\mathsf{SL}$ 蕴含全部原输入上的同一个 $D$ 实双线性、完整原 $\mathsf P_3$、全部有限原复 Gram 正性和原 R。因此，在固定 $\mathsf H_{\rm orig}+\mathsf{PB}$ 的背景中，$\mathsf{SL}$、90.1的 $\mathsf{BD}$、原分别可加、原实双线性、原 $\mathsf P_3$、全有限正性及原 R 彼此等价。其逆否结论为
+
+$$
+\bigl(\exists a,b,c\in E:\delta_a(b,c)\ne0\bigr)
+\quad\Longrightarrow\quad
+\limsup_{R\to\infty}\frac{A(R)}R>0.
+\tag{95.1}
+$$
+
+上极限允许为 $+\infty$；这里不声称正的下极限或共同正增长常数。
+
+证明。零空间时所有量均为零。以下 $E\ne0$，范数均取同一 $X$ 的范数。首先，原 P2 对 $(a,ta)$ 的行列式给
+
+$$
+|\alpha(D(a,ta))|^2
+\le\alpha(a^2)\alpha(t^2a^2)-\alpha(ta^2)^2=0
+\quad(\alpha\in\mathcal P,t\in\mathbb R).
+\tag{95.2}
+$$
+
+这里用的齐次性仅属于已知的 $S$。原族分离，所以 $D(a,ta)=0$，并未使用未知 $D$ 的齐次性。
+
+先构造证明用双线性影子。对任意 $R>0$，(94.3)的有限项有限；其尾部因(94.2)被一个常数倍的 $\sum2^{-n}R$ 控制，故收敛。逐项非负及 $A$ 非减使 $H$ 非减。更准确地，若 $A(s)\le\varepsilon s$ 对全部 $s\ge T_\varepsilon$ 成立，则
+
+$$
+R\ge T_\varepsilon/2
+\quad\Longrightarrow\quad
+H(R)\le\frac34\sum_{n\ge0}4^{-n}\varepsilon2^{n+1}R
+=3\varepsilon R.
+\tag{95.3}
+$$
+
+因此 $H(R)=o(R)$，包括任意固定 $L>0$ 时的 $H(Lt)/t\to0$ 与 $H(Lt^2)/t^2\to0$。
+
+对原 $x,y$，令 $r=\max\{N(x),N(y)\}$。第二槽缺陷及反对称性分别控制
+
+$$
+\begin{aligned}
+D(2x,2y)-4D(x,y)
+={}&D(2x,2y)-2D(2x,y)\\
+&+2\{D(2x,y)-2D(x,y)\},\\
+\|D(2x,2y)-4D(x,y)\|
+\le{}&A(2r)+2A(r)\le3A(2r).
+\end{aligned}
+\tag{95.4}
+$$
+
+令 $B_n(a,b)=4^{-n}D(2^na,2^nb)$。当 $N(a),N(b)\le R$ 时，
+
+$$
+\|B_{n+1}(a,b)-B_n(a,b)\|
+\le\frac34\,4^{-n}A(2^{n+1}R).
+\tag{95.5}
+$$
+
+尾和趋零，故完备的 $X$ 中存在极限 $B(a,b)$，且
+
+$$
+\sup_{N(a),N(b)\le R}\|D(a,b)-B(a,b)\|\le H(R).
+\tag{95.6}
+$$
+
+这是双槽稳定性构造的具体应用，成熟来源及其一般控制函数条件见97.1；该中间构造不单列为新稳定性定理。只对原输入写
+
+$$
+e(a,b)=D(a,b)-B(a,b)\in X.
+\tag{95.7}
+$$
+
+此时 $B$ 的值未必在 $E$ 中，$e$ 也没有原域外的定义。
+
+若 $N(a),N(b),N(c)\le R$，则
+
+$$
+\|B_n(a,b+c)-B_n(a,b)-B_n(a,c)\|
+\le4^{-n}A(2^nR)\longrightarrow0.
+\tag{95.8}
+$$
+
+于是 $B$ 第二槽可加；每个 $B_n$ 反对称，故 $B$ 反对称且第一槽可加。原范数界取极限给 $\|B(a,b)\|\le N(a)N(b)$。每个可加行因此连续，有理齐次性经有理逼近成为实齐次性。到这时才将有界实双线性 $B:E^2\to X$ 唯一连续延拓为 $B:X^2\to X$；范数界和反对称性不变。没有延拓旧 $D$。
+
+下面供应辅助资料的全部 P2。对任一 $X$ 上的数学正实线性泛函 $\varphi$，以及两个原标签 $x_1,x_2$ 和任意 $z\in\mathbb C^2$，原二表的二次值为原实元素
+
+$$
+q_z=\sum_{j,k=1}^2\overline z_jz_k
+       \{x_j\circ x_k-\mathrm iD(x_j,x_k)\}\in E.
+\tag{95.9}
+$$
+
+这里在原复化中书写后，反对称性使虚部抵消，所以确为 $E$ 中元素。每个原 $\alpha$ 读它非负；原族准确决定 $C$，故 $q_z\in C\subset X_+$，再由 $\varphi$ 读取非负。这正是91.1已用的准确锥桥，不增加全态 P2 前提，更不将数学态变为实际准备。正泛函自动连续，质量为零时恒零。将此二表用于真正原输入 $(2^na,2^nb)$，整表乘以 $4^{-n}$ 后取极限，得
+
+$$
+\begin{pmatrix}
+\varphi(a^2)&\varphi(a\circ b)-\mathrm i\varphi(B(a,b))\\
+\varphi(a\circ b)+\mathrm i\varphi(B(a,b))&\varphi(b^2)
+\end{pmatrix}\succeq0.
+\tag{95.10}
+$$
+
+连续性再将它延至 $X^2$；全程没有单独替换某一原内值。
+
+现在沿原三元组传递完整 PB。固定原 $a,b,c$，置
+
+$$
+\begin{gathered}
+v=B(a,b)-a\circ c,\qquad w=a\circ b+B(a,c),\\
+r_1(t)=e(ta,tb),\qquad r_2(t)=e(ta,tc),\qquad t\ge1.
+\end{gathered}
+\tag{95.11}
+$$
+
+若 $R_0=\max\{N(a),N(b),N(c)\}>0$，则 $\|r_i(t)\|\le H(tR_0)=o(t)$。全零三元组直接成立。原 PB 在 $(ta,tb,tc)$ 上的实际内输出准确为
+
+$$
+\nu_t=D(ta,tb)-(ta)\circ(tc)=t^2v+r_1(t),\qquad
+\omega_t=(ta)\circ(tb)+D(ta,tc)=t^2w+r_2(t).
+\tag{95.12}
+$$
+
+$\nu_t,\omega_t$ 以及 $tb\pm\nu_t,tc\pm\omega_t$ 都属于原 $E$，虽然分解中的 $v,w,r_i$ 只在 $X$ 中。取固定常数
+
+$$
+C_0=1+N(b)+N(c)+N(a)(N(b)+N(c)).
+$$
+
+原 $D$ 及 Jordan 范数界直接给两对外层标签的最大范数不超过 $C_0t^2$。因此真正外层余项差
+
+$$
+\sigma_t=e(tb+\nu_t,tc+\omega_t)-e(tb-\nu_t,tc-\omega_t)
+\quad\text{满足}\quad
+\|\sigma_t\|\le2H(C_0t^2)=o(t^2).
+\tag{95.13}
+$$
+
+由22.3展开已知 $S$ 的平方，再用原评价分离，原 PB 的元素形式是外层两个 $D$ 之差等于 $-2(tb)\circ\nu_t-2(tc)\circ\omega_t$。仅将这些真正外层 $D$ 写成 $B+e$，仅展开双线性 $B$，除以 $2t^3$，准确得到
+
+$$
+\begin{aligned}
+&B(b,w)+B(v,c)+b\circ v+c\circ w\\
+&=-t^{-2}\{B(b,r_2(t))+B(r_1(t),c)
+                 +b\circ r_1(t)+c\circ r_2(t)\}
+  -\frac{\sigma_t}{2t^3}.
+\end{aligned}
+\tag{95.14}
+$$
+
+右侧范数不超过
+
+$$
+\frac{2(N(b)+N(c))H(tR_0)}{t^2}
++\frac{H(C_0t^2)}{t^3}\longrightarrow0.
+\tag{95.15}
+$$
+
+量词也可直接读出：若 $H(s)\le\varepsilon s$ 对 $s\ge T$ 成立，则当 $tR_0\ge T$、$C_0t^2\ge T$ 时，上式至多 $\varepsilon\{2(N(b)+N(c))R_0+C_0\}/t$。于是左侧为零。双线性 $B$ 将其改写成
+
+$$
+B(b+v,c+w)-B(b-v,c-w)=-2b\circ v-2c\circ w.
+\tag{95.16}
+$$
+
+这就是辅助 $B$ 的精确 PB，连续性将其延至 $X^3$。没有把完成中的标签送给旧 $D$。
+
+此时对辅助证明对象精确取 $(E',C',u',N',S',D',\mathcal P')=(X,X_+,u,\|\cdot\|,\circ,B,\{\text{全部数学正实线性泛函}\})$。它的准确锥与序单位范数由 JB 结构给出，正泛函分离；(95.10)给全部复二表。实相加三角的 PSD 是 $\varphi((\sum t_jx_j)^2)\ge0$，相加差零平方由 $S'$ 双线性及 $B$ 反对称给出；$u^2=u$ 和同一 $0<\theta\le1$ 小窗口内 $e^2\le e$ 由 JB 单元素函数演算给出。因此准确 $\mathsf H_{\rm orig}$ 的每项辅助前件齐备。先由32.2及 $B$ 已付双线性得完整 $\mathsf P_3$ 和全有限正性，再以(95.16)和23.1取得辅助 R、结合乘法及6.3的兼容含单位复 C* 代数
+
+$$
+\mathfrak B=X+\mathrm iX,\qquad x\star y=x\circ y-\mathrm iB(x,y),\qquad
+B(x,y)=\frac{\mathrm i}{2}(x\star y-y\star x).
+\tag{95.17}
+$$
+
+其自伴部、正锥和实范数准确为同一 $X,X_+,\|\cdot\|$。上述参数只实例化32.2、23.1、6.3的静态数学断言，不赋予辅助 $X$ 任何实际来源。这只是证明用乘法；原 $D$ 尚未识别，未预付原 R 或 $B(E,E)\subset E$。
+
+最后认回旧值。对固定原 $a,b,c$，记真正原内输出
+
+$$
+\nu_D=D(a,b)-a\circ c,\qquad\omega_D=a\circ b+D(a,c),
+$$
+
+以及真正原外层标签上的余项差
+
+$$
+\rho(a,b,c)=e(b+\nu_D,c+\omega_D)-e(b-\nu_D,c-\omega_D).
+\tag{95.18}
+$$
+
+从原 PB 减去辅助 PB；只展开 $B$，如91.11的代数消元，得
+
+$$
+2B(b,e(a,c))+2B(e(a,b),c)+\rho(a,b,c)
+=-2b\circ e(a,b)-2c\circ e(a,c).
+\tag{95.19}
+$$
+
+取 $c=ta$，(95.2)及辅助反对称双线性给 $e(a,ta)=0$。这里实际是
+
+$$
+\nu_D=D(a,b)-ta^2,\qquad\omega_D=a\circ b,
+\qquad(b\pm(D(a,b)-ta^2),\ ta\pm a\circ b).
+\tag{95.20}
+$$
+
+两对外层标签一般都随 $t$ 增长。对 $t\ge1$，取
+$C_1=1+N(b)+N(D(a,b))+N(a^2)+N(a)+N(a\circ b)$，它们的最大范数不超过 $C_1t$，所以 $\|\rho(a,b,ta)\|\le2H(C_1t)=o(t)$。(95.19)准确成为
+
+$$
+2tB(e(a,b),a)+\rho(a,b,ta)=-2b\circ e(a,b).
+\tag{95.21}
+$$
+
+于是
+
+$$
+\|B(e(a,b),a)\|
+\le\frac{N(b)\|e(a,b)\|}{t}+\frac{H(C_1t)}t\longrightarrow0.
+\tag{95.22}
+$$
+
+具体给定 $\eta>0$，先使 $H(s)\le\eta s/(2C_1)$ 对 $s\ge T$ 成立，再取 $t\ge\max\{1,T/C_1,2N(b)\|e(a,b)\|/\eta\}$，即得上界不超过 $\eta$。交换原 $a,b$，利用 $e$ 反对称，同理得
+
+$$
+B(e(a,b),a)=B(e(a,b),b)=0.
+\tag{95.23}
+$$
+
+对 $r=e(a,b)$，这在辅助乘法中正是 $[r,a]_\star=[r,b]_\star=0$。现在准确复用91.13–91.14的中央字符／态正延拓／5.7接口：$\mathcal B_0=C^*(u,a,b,r)\subset\mathfrak B$ 中 $r$ 中央，$Z=C^*(u,r)$ 为含单位中央子代数。对每个 $\chi\in\widehat Z$，令 $I_\chi$ 为 $z-\chi(z)u$（$z\in Z$）生成的闭理想，取 $\mathcal B_\chi=\mathcal B_0/I_\chi$。字符的态正延拓及其 GNS 使 $I_\chi$ 落在一个非零含单位表示的核中：每份中央关系先消去循环向量，再因中央性消去整个稠密轨道。因此该商非零且含单位。记 $p,q$ 为 $a,b$ 的商像，$s=\chi(r)\in\mathbb R$，同一个实际原输出的像为
+
+$$
+d_\chi=\frac{\mathrm i}{2}(pq-qp)+s1.
+\tag{95.24}
+$$
+
+任一商态先拉回 $\mathcal B_0$，再正延拓到 $\mathfrak B$；其在原 $E$ 上的限制由(95.9)读原 P2，因而对 $(p,q,d_\chi)$ 给5.7要求的全部态二表。5.7令 $s=0$；全部字符分离 $Z$，所以 $r=0$。这里只对固定原输出作商读取，从未令一般旧 $D$ 在商上下降；态正延拓只要求保持正性，不附加 von Neumann 正常性。
+
+原 $a,b$ 任意，故 $D(a,b)=B(a,b)$ 在整个原 $E^2$ 上逐值相同。此时才有 $B(E,E)\subset E$，以及原 $D$ 的实双线性。对原对象重新使用32.2得原 $\mathsf P_3$ 和全部有限原复 Gram 正性，再以原完整 PB 和23.1取得原 R；6.3接回同一原乘法。反向，双线性给 $A\equiv0$；其余等价由32.2、23.1和91.1直接复用。若存在非零缺陷而上极限为零，非负函数 $A(R)/R$ 必趋零，与已证结论矛盾，故(95.1)成立。∎
+

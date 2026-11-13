@@ -1,0 +1,6 @@
+**定义 1.1（原对象与外卷引用）。** 称 [《配平三角的共同取向与秩一响应续卷》](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md) 为配平主卷，称 [《任意维小窗口单位桥》](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md) 为单位桥卷，称 [《任意维静态量子重构》](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md) 为静态重构卷。本卷的编号为 §§1–3；配平主卷的 128–234、单位桥卷及静态重构卷的编号均只指相应外卷条目。
+
+取配平主卷定义 128.1、183.1 的同一原实 Archimedean 序单位空间 $(E,C,u,N)$、原正实线性评价族 $\mathcal P$ 及总映射 $S,D:E^2\to E$。原 A1 要求全部原有向 Hermitian 二表正性；原 A2 要求相加三表 $(a+b,a,b)$ 及其排列的实部半正定，且指定向量 $(1,-1,-1)$ 的二次值为零；原 A3 为 $S(u,u)=u$，并对同一固定有理 $0<\theta\le1$ 要求 $0\le e\le\theta u\Rightarrow S(e,e)\le e$。消费其既有无 $R$ 的 Jordan 接口 $S(a,b)=a\circ b$。$E$ 是任意含单位实 JB 完成 $X$ 中含单位、范数稠密的实 Jordan 子代数，$C=E\cap X_+$，$N=\|\cdot\|_X|_E$。原评价分离 $E$ 并准确决定 $C$，质量为 $m_\alpha=\alpha(u)$。原 P2、完整 PB 及其元素式准确取配平主卷式 (128.3)、(128.4)、(128.6)，保留全部原输入、原评价和零／不等／次归一质量；数学正读取不自动成为实际准备。
+
+$\mathsf T$、$\mathsf F$ 与 $R$ 分别指配平主卷式 (185.2)、(178.2)、(128.5)。$\mathsf F$ 及其与双线性的等价只在配平主卷定义 178.1 的完整复 C* 自伴载体前件下使用。除 §2 明确给定的交换模型外，不预设一般 JB 的特殊表示，亦不预设未知 $D$ 的可加、齐次、连续、可测、协变或完成延拓。原全单位行与标签对称性按配平主卷 §§183–185 复用，实际来源与全部量子消费者的未付条件保持原量词。
+

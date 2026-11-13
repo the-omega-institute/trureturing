@@ -1,0 +1,17 @@
+**引理 46.1（变维与不可分纤维的有限框架）。** 设 $J\triangleleft A$ 连续迹，$X=\operatorname{Prim}J$。每个 $x_0\in X$ 附近可以采用连续Hilbert场 $(H_x)$，使相应局部理想为这些纤维的紧算子连续场。给定 $H_{x_0}$ 中任意有限正交组，可以缩小邻域并延成局部连续正交单位截面。其矩阵单位乘 $C_c$ 截断函数后延零，都是 $J$ 中的实际元素。若已有单位截面 $e$，可要求新增有限组始终垂直 $e$。
+
+证明。连续迹给局部紧Hausdorff谱及Fell条件；精确所用成熟结构是Blackadar IV.1.4.16–19、IV.1.7.4–8，以及Dixmier–Douady的Lemma 16、Theorem 7。后一原定理把Fell条件等价为局部来自连续Hilbert场的紧算子场，未给固定Hilbert空间的局部平凡化。
+
+指定纤维值可精确取得，而不止稠密逼近：在Blackadar IV.1.7.8的紧邻域 $Z$ 上取满Hilbert $C(Z)$-模 $\mathcal E$，$J_Z\cong K(\mathcal E)$。IV.1.7.4的纤维是完备商 $\mathcal E/\mathcal E I_x$，所以评价满射。等价地，在局部秩一投影 $p$ 的构造中，模为 $J_Zp$，$J_Z$ 的评价满到 $K(H_x)$，故模评价满到 $K(H_x)p_x\cong H_x$。选局部连续截面 $v_1,\ldots,v_m$ 取得给定值。
+
+令 $G(x)=(\langle v_i(x),v_j(x)\rangle)_{ij}$。它连续且 $G(x_0)=I_m$，在较小邻域正定。以有限矩阵连续函数演算形成
+
+$$
+e_k(x)=\sum_l v_l(x)(G(x)^{-1/2})_{lk}.
+\tag{46.1}
+$$
+
+所得截面正交且保留指定点值。若须垂直已有 $e$，先将 $v_l$ 换成 $v_l-e\langle e,v_l\rangle$，再作46.1。维数可能在其他点变化；Gram可逆仅保证这有限组在所选邻域存在。
+
+连续Hilbert模的秩一算子 $\theta_{e_k,e_l}$ 是局部连续紧算子截面。任取实或复 $f\in C_c(U)$，$f\theta_{e_k,e_l}$ 范数有界、在边界消失，延零属于 $J_U\subset J$。$J_U$ 也是 $A$ 的理想：$J$ 的任意闭理想对 $A$ 不变，可用 $J$ 的近似单位将 $a l$ 写成 $(a e_\nu)l$ 的范数极限证明。这里用连续性的是已知Hilbert场、函数演算及实际C*乘法，不是 $D$ 的输入作用。∎
+

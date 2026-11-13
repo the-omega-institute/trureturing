@@ -1,0 +1,14 @@
+**定义 104.3（原来源核对与准确复用）。** 以下工具只在列明条件内使用；它们的名称不替代前件。
+
+| 原来源 | 原条件及本组的实际对应 |
+| --- | --- |
+| 固定 dev23dae 的 SM79.1–84.1，尤其79.3 | 任意完整有限 continuous 自伴原域，给定忠实正规中心值迹，全部原关系及评价质量。99.6用完整 $pMp$、角单位 $p$、规范 $T_p$ 和同一 $D_p$ 精确代入。有限谱窗、完整有限分类及其六反射消费者都是复用，不重新认领。 |
+| 固定 dev23dae 的 A50.2、A51.1及其 W108.2–108.3固定源 | 原 P2给同角旧输出闭合；完整原关系和PB逐层限制。99.2只消费这一接口；不新增一般JB Peirce保正性证明，不把同角闭合变成任意压缩律。 |
+| 固定公开efef304的 SF89.4；SF90的式(90.1)–(90.6)；SF91.1–91.4及式(91.5)；SF92.2–92.3及式(92.2)–(92.8)；SF93–94、SF96.1 | 块支撑、实际投影PB和有限首行残差方程、实际Cayley、bounded $H/4$ 两步及normal-square预算是已完成纸面工具。100–102逐项核对 $J=iQ$ 的中央性、反自伴性、酉性和平方；100.10替换因子中心排零，102.2替换因子补角比较，102.1、102.15替换全局二选一。没有复制整套II∞运输另计新结果。 |
+| Claire Anantharaman、Sorin Popa，[*An introduction to II₁ factors*，作者全文](https://www.math.ucla.edu/~popa/Books/IIunV15.pdf)，Propositions 2.2.1、2.2.4，Theorem 2.4.1，Proposition 2.4.5，Lemmas 2.4.6–2.4.7，Theorem 2.4.8，Proposition 4.2.1，Theorem 5.5.7 | 原文在任意Hilbert空间上的von Neumann代数中给Borel演算、极分解、任意有向网、99.2、中央载体、任意代数的中央投影比较及角中心。99.4与102.2均消费实际代数中的投影。102.1用2.4.8的中央两分，不套因子Corollary 2.4.9。 |
+| 同一作者书 Theorem 9.1.2、Proposition 9.1.6、Proposition 9.1.8 | 这些节的前件是具有忠实正规tracial state的代数，不要求因子。每个非零迹有限角已有 $\tau_p$，所以取得其含单位规范中心值迹及等中心迹投影等价。102.5先由实际 $we$ 取得等价，再以中心值迹比较补角；不以等标量迹代替非因子等价。未使用该书§9.2明列的可分中心值权表示，也不需要全局中心值半有限权。 |
+| 同一作者书 Definition 2.5.1、Theorem 2.5.5及C*正泛函Cauchy–Schwarz | 正规性针对有界递增网；102.12只读取已知正预算，102.13用中央酉 $J$ 核对两次平方。辅助正规正泛函分离自伴元，不要求原评价正规、存在忠实正规状态或序列穷尽。 |
+| Shavkat Ayupov、Farkhad Arzikulov，[*2-local derivations on semi-finite von Neumann algebras*，原文](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0017089512000870)，DOI 10.1017/S0017089512000870，§§2–3 | 原文的半有限工具包括给定忠实正规半有限迹、 $\mathfrak m_\tau$ 双侧理想、合法可积乘积的循环律和迹有限投影网。99.1、103.3只消费这些工具。其主定理另需每对输入同一导子同时实现的2-local前件；本组不借用该主定理生产未知 $D$ 的线性。 |
+| Bhat–Nayak–Shankar，[*On products of symmetries in von Neumann algebras*，arXiv:2204.00009v1](https://arxiv.org/pdf/2204.00009v1)，Lemmas 3.5、3.7–3.8、Theorem 3.9 | 原文3.9给type II₁代数内六个symmetries的精确乘积，不限因子。它属于已给SM79–84的有限分类供应；101只消费实际Cayley及有界对数，不把六反射工具重新当半有限全域运输或FR证明。 |
+| 固定dev23dae的 A6.3、A7–8、A14.2、A23.1、A25.1、A32.2、A53.1，R3 8.1–8.5、80.1及105所列来源 | 103–104识别原 $D$ 后才接同一个原乘法、有限Gram、R、表示及七项条件消费者。全部实际合同及其原适用域保持；数学迹与正规读数不供应它们。 |
+

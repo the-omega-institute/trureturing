@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ef81b56f159fbf2237813e0efa9ee1cd44631d2d049e2ef765d5ad175556b844
+  normalized_sha256: sha256:ef81b56f159fbf2237813e0efa9ee1cd44631d2d049e2ef765d5ad175556b844
+cas_ref: sha256:ef81b56f159fbf2237813e0efa9ee1cd44631d2d049e2ef765d5ad175556b844
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/MovingLengthVariance.shorter_increment_square_bound
+    target_statement_id: sha256:2634003ef3bada881353f3e39d5e936e84da53c184f6acc72fe31a8cbfdff206
+receipts:
+  unresolved_subitems: []

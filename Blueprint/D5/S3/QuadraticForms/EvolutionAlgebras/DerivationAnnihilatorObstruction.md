@@ -68,7 +68,21 @@ $$\forall (k : \operatorname{Type}), ([\operatorname{Field}\left(k\right)] \fora
 
 For a finite-dimensional commutative bilinear algebra with semisimple derivations, either the annihilator is zero or every vector belongs to the square space. A nonzero annihilator together with a proper square space produces an abelian ideal or an annihilator action of trace one.
 
-**Theorem 1.6 (semisimple natural squares ne zero).**
+**Theorem 1.6 (A zero natural square lies in the annihilator).**
+
+$$\forall (k : \operatorname{Type}), ([\operatorname{Field}\left(k\right)] \forall (V : \operatorname{Type}), ([\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(k, V\right)] \forall (\mu : \operatorname{LinearMap}\left(k, V, \operatorname{LinearMap}\left(k, V, V\right)\right)), (\forall (\iota : \operatorname{Type}), (\forall (b : \operatorname{Module}.\operatorname{Basis}\left(\iota, k, V\right)), ((\forall (i : \iota), (\forall (j : \iota), ((i \ne j) \Rightarrow (\mu\left(b\left(i\right), b\left(j\right)\right) = (0))))) \Rightarrow (\forall (i : \iota), ((\mu\left(b\left(i\right), b\left(i\right)\right) = (0)) \Rightarrow (b\left(i\right) \in \operatorname{LinearMap}.\operatorname{ker}\left(\mu\right)))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/DerivationAnnihilatorObstruction.zero_square_mem_ann` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Ivan Kaygorodov; Cándido Martín González; Antonio Viruel (2026). *Evolution algebras: a survey of results and a list of open problems*. DOI: [10.48550/arXiv.2610.22248](https://doi.org/10.48550/arXiv.2610.22248). URL: <https://arxiv.org/abs/2610.22248v1>.
+
+*Commentary.*
+
+For any natural basis, a basis vector with zero square multiplies every basis vector to zero and hence lies in the actual annihilator. This existing proof is exposed unchanged for the arbitrary zero-annihilator radical-quotient theorem; it needs no finite-dimensionality or semisimplicity assumption. The consuming KMV result retains the supplied Haobo Ma then Wenlin Zhang attribution.
+
+**Theorem 1.7 (semisimple natural squares ne zero).**
 
 $$\forall (k : \operatorname{Type}), ([\operatorname{Field}\left(k\right)] \forall (V : \operatorname{Type}), ([\operatorname{AddCommGroup}\left(V\right)] [\operatorname{Module}\left(k, V\right)] \forall (\mu : \operatorname{LinearMap}\left(k, V, \operatorname{LinearMap}\left(k, V, V\right)\right)), ((\forall (x : V), (\forall (y : V), (\mu\left(x, y\right) = (\mu\left(y, x\right))))) \Rightarrow (\forall (\iota : \operatorname{Type}), (\forall (b : \operatorname{Module}.\operatorname{Basis}\left(\iota, k, V\right)), ((\forall (i : \iota), (\forall (j : \iota), ((i \ne j) \Rightarrow (\mu\left(b\left(i\right), b\left(j\right)\right) = (0))))) \Rightarrow ([\operatorname{FiniteDimensional}\left(k, V\right)] [\operatorname{LieAlgebra}.\operatorname{IsSemisimple}\left(k, \operatorname{derivations}\left(\mu\right)\right)] \forall (i : \iota), (\mu\left(b\left(i\right), b\left(i\right)\right) \ne 0))))))))$$
 
@@ -90,3 +104,4 @@ Every vector of a natural basis has nonzero square. A zero square makes the squa
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/DerivationAnnihilatorObstruction.semisimple_natural_squares_ne_zero`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/DerivationAnnihilatorObstruction.semisimple_perfect`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/DerivationAnnihilatorObstruction.square`
+- Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/DerivationAnnihilatorObstruction.zero_square_mem_ann`
