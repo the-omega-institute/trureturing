@@ -80,7 +80,7 @@ theorem effects_compact {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     exact (div_le_iff₀ hδ).mpr (by nlinarith)
   · exact (le_div_iff₀ hδ).mpr (by nlinarith)
 
-private theorem exclusion_injective [Nontrivial V]
+theorem exclusion_injective [Nontrivial V]
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
