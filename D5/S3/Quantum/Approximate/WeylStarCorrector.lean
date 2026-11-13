@@ -145,11 +145,9 @@ private lemma diagonal_central (X : Matrix (ZMod n) (ZMod n) ℂ) :
   · simp [L, R, Matrix.mul_apply, Matrix.single_apply, ite_and, hjk]
 
 private lemma word_norm (p : ZMod n × ZMod n) : ‖displacement n p.1 p.2‖ = 1 := by
-  have h := displacement_unitary_pair p.1 p.2
-  have hn := CStarRing.norm_star_mul_self (x := displacement n p.1 p.2)
-  change ‖star (displacement n p.1 p.2) * displacement n p.1 p.2‖ = _ at hn
-  rw [Matrix.star_eq_conjTranspose, h.1, norm_one] at hn
-  nlinarith [norm_nonneg (displacement n p.1 p.2)]
+  apply CStarRing.norm_of_mem_unitary
+  simpa only [Unitary.mem_iff, Matrix.star_eq_conjTranspose] using
+    displacement_unitary_pair p.1 p.2
 
 /-- The full Weyl packet satisfies the product, tensor centrality and norm budget. -/
 def diagonal : FiniteDiagonal (Matrix (ZMod n) (ZMod n) ℂ) (ZMod n × ZMod n) where
