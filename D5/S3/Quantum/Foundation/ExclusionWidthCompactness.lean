@@ -602,8 +602,8 @@ theorem width_global_maximum [Nontrivial V]
         exact ⟨hx.1, (comparison_zero_iff hs hg r hx.1).mpr hx⟩
     simpa only [hF] using (original_exclusion_width hc hs hg hB r).1
   obtain ⟨q⟩ := OriginalFacePolarity.pure_nonempty hc hs hg
-  have hq := q.property
-  rw [pure_eq_countable_width_layers hc hs hg hB] at hq
+  have hq := (Set.ext_iff.mp (pure_eq_countable_width_layers hc hs hg hB) (q : V)).mp
+    q.property
   obtain ⟨n, _, hqn⟩ := mem_iUnion.mp hq
   let a : ℝ := 1 / (n + 1 : ℝ)
   have ha : 0 < a := by dsimp [a]; positivity
