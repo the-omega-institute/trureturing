@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Gluing;
 internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/ConceptDynamics/Gluing/NonconformalCliqueObstruction.";
+    private static readonly LibraryNoteRef BeeriFaginMaierYannakakis =
+        LibraryNoteRef.Create("D5/L/ConceptDynamics/beeri1983acyclic");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every finite nonconformal clique yields finite nonempty relations whose complete "
@@ -43,7 +45,7 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
                 DeclarationHandle.Create(Module + "nonconformal_clique_obstruction"),
                 H("Complete pairwise consistency without a global tuple"),
                 StatementSource.FromAuthor(TheoremFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(BeeriFaginMaierYannakakis),
                 Blocks(
                     Paragraph(Text(
                         "For each scope choose the relation R(e) = cliqueRows(C,S(e),q). "
@@ -76,8 +78,8 @@ internal sealed class NonconformalCliqueObstructionDocument : IScribeDocumentDef
                             + "Yannakakis, On the Desirability of Acyclic Database Schemes, Journal "
                             + "of the ACM 30(3), 1983, DOI 10.1145/2402.322389. The Lean proof "
                             + "supplies the indexed-scope and finite-alphabet construction explicitly. "
-                            + "It treats only the nonconformal branch; the full classification "
-                            + "remains unresolved."))),
+                            + "This module establishes only the nonconformal branch and does not "
+                            + "establish the full classification."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments)
