@@ -10,6 +10,9 @@ internal sealed class BergmanQuestion23RefutationDocument : IScribeDocumentDefin
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Certificates/bergman2014eggert");
 
+    private static readonly LibraryNoteRef Stanley =
+        LibraryNoteRef.Create("D5/L/Certificates/stanley1978hilbert");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A coefficient model for the positive ideal of a truncated monomial idealization.",
         H("Bergman's Question 23: the monomial model"),
@@ -68,7 +71,7 @@ internal sealed class BergmanQuestion23RefutationDocument : IScribeDocumentDefin
                     + "n+3 ambient elements and the stated lower bound for the real ratio."),
             Describe.Lean(DescribeId.Create("full-family"),
                 DeclarationHandle.Create(Prefix + "family"), H("The complete parameter family"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source, Stanley),
                 Blocks(Paragraph(Text(
                     "For every field F and every integer n at least two, every integer m at "
                     + "least three satisfies the full family specification. The actual n-fold "
@@ -92,7 +95,7 @@ internal sealed class BergmanQuestion23RefutationDocument : IScribeDocumentDefin
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("question-twenty-three-refuted"),
                 DeclarationHandle.Create(Prefix + "result"), H("Question 23 has a negative answer"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source, Stanley),
                 Blocks(Paragraph(Text(
                     "The complete universal assertion is false. Its literal negation follows "
                     + "by taking F rational, n equal to two and m equal to three in the "
@@ -105,6 +108,6 @@ internal sealed class BergmanQuestion23RefutationDocument : IScribeDocumentDefin
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source, Stanley),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }
