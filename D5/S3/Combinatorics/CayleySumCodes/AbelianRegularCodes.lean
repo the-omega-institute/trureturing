@@ -24,6 +24,8 @@ set_option autoImplicit false
 
 namespace D5.S3.Combinatorics.CayleySumCodes.AbelianRegularCodes
 
+open scoped Classical
+
 open D5.S3.Combinatorics.CayleySumCodes.TotalPerfectCriterion
 open D5.S3.Combinatorics.CayleySumCodes.PerfectCodeTransversal
 
