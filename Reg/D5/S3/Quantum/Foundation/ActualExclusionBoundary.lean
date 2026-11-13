@@ -148,7 +148,12 @@ abbrev arena : Arena where
       Subtype.val '' ((Quotient.mk a) ⁻¹' {b}) = exclusion P.C P.unit p) ∧
     ∃ (f : P.V →ₗ[ℝ] ℝ) (t : ℚ) (O : Set (Quotient a)),
       f ≠ 0 ∧ IsOpen O ∧ O.Nonempty ∧
-      (∃ c ∈ intrinsicInterior ℝ (base P.C P.unit), f c = (t : ℝ)) ∧
+      (∃ c ∈ intrinsicInterior ℝ (base P.C P.unit), f c = (t : ℝ) ∧
+        ∃ (n : ℕ) (W : Fin n → Set (Quotient a)) (N : Fin n → Set P.V),
+          (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
+          (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : P.V) ∉ N j) ∧
+          ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base P.C P.unit),
+            Quotient.mk a x = b → (x : P.V) - c ∈ N j) ∧
       O ⊆ (Quotient.mk a) '' {x | f (x : P.V) = (t : ℝ)} ∧
       ∀ b ∈ O, ∃ x y : intrinsicFrontier ℝ (base P.C P.unit),
         Quotient.mk a x = b ∧ Quotient.mk a y = b ∧

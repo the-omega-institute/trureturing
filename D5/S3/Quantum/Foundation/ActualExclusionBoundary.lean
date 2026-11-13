@@ -12,6 +12,7 @@ import Mathlib.Topology.Maps.Proper.Basic
 import Mathlib.Topology.Baire.Lemmas
 import Mathlib.Topology.Baire.LocallyCompactRegular
 import Mathlib.Analysis.Normed.Module.Convex
+import Mathlib.Analysis.Normed.Module.Ray
 
 /-! Relative-boundary geometry of the entire original normalized cone base. -/
 
@@ -330,6 +331,39 @@ private theorem intrinsic_level_of_straddling {K : Set V} (hK : Convex ℝ K)
     exact ⟨z, hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior
       hc (subset_intrinsicClosure hx) hz, he⟩
 
+private theorem boundary_ray_unique {K : Set V} (hK : Convex ℝ K) (hclosed : IsClosed K)
+    {c x y : V} (hc : c ∈ intrinsicInterior ℝ K)
+    (hx : x ∈ intrinsicFrontier ℝ K) (hy : y ∈ intrinsicFrontier ℝ K)
+    (hxy : SameRay ℝ (x - c) (y - c)) : x = y := by
+  have hn (z : V) (hz : z ∈ intrinsicFrontier ℝ K) : z ≠ c := by
+    intro he
+    rw [← closure_sdiff_intrinsicInterior] at hz
+    exact hz.2 (he ▸ hc)
+  obtain ⟨a, ha, he⟩ := hxy.exists_pos_left (sub_ne_zero.mpr (hn x hx))
+    (sub_ne_zero.mpr (hn y hy))
+  have hnot (z : V) (hz : z ∈ intrinsicFrontier ℝ K) : z ∉ intrinsicInterior ℝ K := by
+    rw [← closure_sdiff_intrinsicInterior] at hz
+    exact hz.2
+  rcases lt_trichotomy a 1 with ha1 | ha1 | h1a
+  · have hyline : y = AffineMap.lineMap c x a := by
+      rw [AffineMap.lineMap_apply_module', he]
+      abel
+    apply (hnot y hy).elim
+    apply hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior hc
+      (subset_intrinsicClosure (intrinsicFrontier_subset hclosed hx))
+    rw [hyline]
+    exact lineMap_mem_openSegment _ _ ⟨ha,ha1⟩
+  · rw [ha1, one_smul] at he
+    exact sub_right_injective he
+  · have hxline : x = AffineMap.lineMap c y a⁻¹ := by
+      rw [AffineMap.lineMap_apply_module', ← he, smul_smul, inv_mul_cancel₀ ha.ne', one_smul]
+      abel
+    apply (hnot x hx).elim
+    apply hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior hc
+      (subset_intrinsicClosure (intrinsicFrontier_subset hclosed hy))
+    rw [hxline]
+    exact lineMap_mem_openSegment _ _ ⟨inv_pos.mpr ha, inv_lt_one_of_one_lt₀ h1a⟩
+
 private theorem finite_shifted_fiber_controls
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -339,16 +373,20 @@ private theorem finite_shifted_fiber_controls
     (hq : Continuous (Quotient.mk r)) (hqc : IsClosedMap (Quotient.mk r))
     (hfib : ∀ b : Quotient r, ∃ p : pure C u,
       Subtype.val '' ((Quotient.mk r) ⁻¹' {b}) = exclusion C u p)
-    {c : V} (hc : c ∈ intrinsicInterior ℝ (base C u)) :
+    {c : V} (hc : c ∈ intrinsicInterior ℝ (base C u))
+    (O : Set (Quotient r)) (hOo : IsOpen O) (R : Set V) (hR : IsClosed R)
+    (hBR : ∀ b, b ∉ O → Disjoint
+      ((fun z : V => z - c) '' (Subtype.val '' ((Quotient.mk r) ⁻¹' {b}))) R) :
     ∃ (n : ℕ) (W : Fin n → Set (Quotient r)) (N : Fin n → Set V),
       (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
       (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : V) ∉ N j) ∧
+      (∀ j, Disjoint (N j) R ∨ W j ⊆ O) ∧
       ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base C u),
         Quotient.mk r x = b → (x : V) - c ∈ N j := by
   classical
   let S := intrinsicFrontier ℝ (base C u)
   let q : S → Quotient r := Quotient.mk r
-  let shift : V →ᵃ[ℝ] V := (AffineEquiv.constVSub ℝ c).toAffineMap
+  let shift : V →ᵃ[ℝ] V := (AffineEquiv.vaddConst ℝ c).symm.toAffineMap
   let B (b : Quotient r) : Set V := shift '' (Subtype.val '' (q ⁻¹' {b}))
   have hSclosed : IsClosed S :=
     isClosed_intrinsicFrontier (affineSpan ℝ (base C u)).closed_of_finiteDimensional
@@ -367,38 +405,62 @@ private theorem finite_shifted_fiber_controls
     rintro ⟨z, ⟨x, hx, rfl⟩, he⟩
     have he' : (x : V) = c := sub_eq_zero.mp he
     have hxS : c ∈ S := he' ▸ x.property
-    rw [← (base_compact hclosed hstrict).isClosed.closure_eq,
-      closure_sdiff_intrinsicInterior] at hxS
+    change c ∈ intrinsicFrontier ℝ (base C u) at hxS
+    rw [← closure_sdiff_intrinsicInterior] at hxS
     exact hxS.2 hc
+  let T (b : Quotient r) : Set V := if b ∈ O then {0} else {0} ∪ R
   have neighborhoods (b : Quotient r) : ∃ N : Set V,
-      IsOpen N ∧ Convex ℝ N ∧ (0 : V) ∉ N ∧ B b ⊆ N := by
+      IsOpen N ∧ Convex ℝ N ∧ Disjoint N (T b) ∧ B b ⊆ N := by
+    have hT : IsClosed (T b) := by
+      dsimp [T]
+      split_ifs
+      · exact isClosed_singleton
+      · exact isClosed_singleton.union hR
+    have hdis : Disjoint (B b) (T b) := by
+      dsimp [T]
+      split_ifs with hb
+      · exact disjoint_singleton_right.mpr (hBzero b)
+      · exact (disjoint_union_right).mpr
+          ⟨disjoint_singleton_right.mpr (hBzero b), hBR b hb⟩
     obtain ⟨δ, hδ, hsub⟩ := (hBcompact b).exists_thickening_subset_open
-      isClosed_singleton.isOpen_compl (by intro z hz he; exact hBzero b (he ▸ hz))
+      hT.isOpen_compl hdis.subset_compl_right
     exact ⟨Metric.thickening δ (B b), Metric.isOpen_thickening,
-      (hBconvex b).thickening δ, fun hz => hsub hz rfl,
+      (hBconvex b).thickening δ, disjoint_compl_right_iff_subset.mp hsub,
       Metric.self_subset_thickening hδ _⟩
-  choose N hNo hNc hNz hBN using neighborhoods
+  choose N hNo hNc hNT hBN using neighborhoods
+  have hNz (b) : (0 : V) ∉ N b := by
+    intro hz
+    apply Set.disjoint_left.mp (hNT b) hz
+    simp [T]
   let W (b : Quotient r) : Set (Quotient r) :=
-    (q '' {x : S | shift x ∉ N b})ᶜ
-  have hWo (b) : IsOpen (W b) :=
-    (hqc _ ((hNo b).preimage
-      (shift.continuous_of_finiteDimensional.comp continuous_subtype_val)).isClosed_compl).isOpen_compl
+    (q '' {x : S | shift x ∉ N b})ᶜ ∩ (if b ∈ O then O else univ)
+  have hWo (b) : IsOpen (W b) := by
+    refine ((hqc _ ((hNo b).preimage
+      (shift.continuous_of_finiteDimensional.comp continuous_subtype_val)).isClosed_compl).isOpen_compl).inter ?_
+    split_ifs
+    · exact hOo
+    · exact isOpen_univ
   have hWcontrol (b d : Quotient r) (hd : d ∈ W b) (x : S) (hx : q x = d) :
       shift x ∈ N b := by
     by_contra hn
-    exact hd ⟨x, hn, hx⟩
+    exact hd.1 ⟨x, hn, hx⟩
   have hWself (b) : b ∈ W b := by
+    refine ⟨?_, by split_ifs with hb; exact hb; trivial⟩
     rintro ⟨x,hx,hxb⟩
     exact hx (hBN b ⟨x,⟨x,hxb,rfl⟩,rfl⟩)
   obtain ⟨s, hs⟩ := isCompact_univ.elim_finite_subcover W hWo
     (by intro b _; exact mem_iUnion.mpr ⟨b,hWself b⟩)
   let e := (Fintype.equivFin s).symm
   refine ⟨Fintype.card s, (fun j => W (e j)), (fun j => N (e j)),
-    (fun j => hWo _), ?_, (fun j => hNc _), (fun j => hNz _), ?_⟩
+    (fun j => hWo _), ?_, (fun j => hNc _), (fun j => hNz _), ?_, ?_⟩
   · intro b
     obtain ⟨d, hd⟩ := mem_iUnion.mp (hs (mem_univ b))
     obtain ⟨hd,hbd⟩ := mem_iUnion.mp hd
     exact ⟨e.symm ⟨d,hd⟩, by simpa [e] using hbd⟩
+  · intro j
+    by_cases hb : (e j : Quotient r) ∈ O
+    · exact Or.inr (fun d hd => by simpa [hb] using hd.2)
+    · exact Or.inl ((hNT _).mono_right (by intro z hz; simp [T,hb,hz]))
   · intro j b hb x hx
     exact hWcontrol _ _ hb x hx
 
@@ -420,9 +482,11 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
       ∃ (f : V →ₗ[ℝ] ℝ) (t : ℚ) (O : Set (Quotient r)),
         f ≠ 0 ∧ IsOpen O ∧ O.Nonempty ∧
         (∃ c ∈ intrinsicInterior ℝ (base C u), f c = (t : ℝ) ∧
+          ∃ v : intrinsicFrontier ℝ (base C u), Quotient.mk r v ∈ O ∧ (t : ℝ) < f v ∧
           ∃ (n : ℕ) (W : Fin n → Set (Quotient r)) (N : Fin n → Set V),
             (∀ j, IsOpen (W j)) ∧ (∀ b, ∃ j, b ∈ W j) ∧
             (∀ j, Convex ℝ (N j)) ∧ (∀ j, (0 : V) ∉ N j) ∧
+            (∀ j, Disjoint (N j) {z | SameRay ℝ ((v : V) - c) z} ∨ W j ⊆ O) ∧
             ∀ j b, b ∈ W j → ∀ x : intrinsicFrontier ℝ (base C u),
               Quotient.mk r x = b → (x : V) - c ∈ N j) ∧
         O ⊆ (Quotient.mk r) '' {x | f (x : V) = (t : ℝ)} ∧
@@ -509,7 +573,7 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     exact ⟨x,y,hxb,hyb,hx.trans_lt hat,htb.trans_le hy⟩
   have hjcopy := hj
   obtain ⟨b, hb⟩ := hjcopy
-  obtain ⟨x,y,_,_,hx,hy⟩ := across b hb
+  obtain ⟨x,y,hxb,hyb,hx,hy⟩ := across b hb
   refine ⟨r, hr, hcompact, ht2, hq, hqc, hfib, f j.1, t, interior (F j),
     ?_, isOpen_interior, hj, ?_, ?_, across⟩
   · intro he
@@ -520,7 +584,23 @@ theorem original_all_repeated_rational_slice [Nontrivial V]
     linarith
   · obtain ⟨c, hc, hct⟩ := intrinsic_level_of_straddling (base_convex C u) (f j.1)
       (hSK x.property) (hSK y.property) hx hy
-    exact ⟨c, hc, hct, finite_shifted_fiber_controls hclosed hstrict hgen hB r hq hqc hfib hc⟩
+    let R : Set V := {z | SameRay ℝ ((y : V) - c) z}
+    have hR : IsClosed R := by
+      simp only [R, sameRay_iff_norm_smul_eq]
+      exact isClosed_eq (continuous_const.smul continuous_id) (continuous_norm.smul continuous_const)
+    have hBR (d : Quotient r) (hd : d ∉ interior (F j)) : Disjoint
+        ((fun z : V => z - c) '' (Subtype.val '' (q ⁻¹' {d}))) R := by
+      apply Set.disjoint_left.mpr
+      rintro z ⟨w,⟨a,ha,rfl⟩,rfl⟩ hz
+      have he : (y : V) = (a : V) := boundary_ray_unique (base_convex C u)
+        (base_compact hclosed hstrict).isClosed hc y.property a.property hz
+      have hea : y = a := Subtype.ext he
+      apply hd
+      have hda : d = b := by simpa [hea,hyb] using ha.symm
+      exact hda.symm ▸ hb
+    exact ⟨c, hc, hct, y, hyb.symm ▸ hb, hy,
+      finite_shifted_fiber_controls hclosed hstrict hgen hB r hq hqc hfib hc
+        (interior (F j)) isOpen_interior R hR hBR⟩
   · intro b hb
     obtain ⟨x,y,hxb,hyb,hx,hy⟩ := across b hb
     obtain ⟨p,hp⟩ := hfib b
