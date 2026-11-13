@@ -34,7 +34,7 @@ $$\forall V \in Type,\; [\operatorname{NormedAddCommGroup}\left(V\right)] [\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/NiceConeFaces.every_face_exposed` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Bruno F. Lourenço, Vera Roshchina and James Saunderson (2022). *Amenable cones are particularly nice*. DOI: [10.1137/20M138466X](https://doi.org/10.1137/20M138466X). URL: <https://arxiv.org/html/2011.07745v2>.
 
 *Commentary.*
 
@@ -42,7 +42,7 @@ For every finite-dimensional real normed V, every closed PointedCone C, and ever
 
 Choose a nonnegative a annihilating F whose support-zero section has least span dimension. Let E be that section. If F is proper in E, restrict both cones to span(E), where E generates. The original ExclusionBallFaces.proper_cone_face_support provides a functional nonzero on this relative ambient space, positive on E and zero on F. Extend it linearly to V. The nice identity at this same original E splits the extension into b positive on C and a term annihilating span(E). Thus b agrees with the relative support on E and is nonzero somewhere in E. The positive functional a+b still vanishes on F, while its zero section has strictly smaller span dimension, a contradiction. This proves equality with F rather than mere containment.
 
-This is the nice-to-facially-exposed consequence in the existing IX119.12 chain. The mature attribution is Lourenco, Roshchina and Saunderson, arXiv:2011.07745v2, Proposition 2.3, and Pataki, arXiv:1202.4043v4, Theorem 3(1). No literature originality is claimed. It proves neither the other arrows in that chain nor all of Corollary 119.3. It supplies no unit-preserving projection, uniform error-bound constant, moving-face regularity or quantum realization. In the maximizing convention of IsExposed the corresponding exposing functional is -a.
+This is the nice-to-facially-exposed consequence in the existing IX119.12 chain. Proposition 2.3, implication (iii) to (iv), of the cited source states this known result; the Library note gives the exact version and original Theorem 3(1) attribution. No literature originality is claimed. It proves neither the other arrows in that chain nor all of Corollary 119.3. It supplies no unit-preserving projection, uniform error-bound constant, moving-face regularity or quantum realization. In the maximizing convention of IsExposed the corresponding exposing functional is -a.
 
 ## References
 
