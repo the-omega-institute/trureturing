@@ -50,10 +50,6 @@ theorem exclusion_iff_kernel (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1)
     (X : HermitianMat ι ℂ) :
     X ∈ exclusion cone unit (rankOne v) ↔
       0 ≤ X ∧ X.trace = 1 ∧ X.mat *ᵥ (v : ι → ℂ) = 0 := by
-  have hnorm : star (v : ι → ℂ) ⬝ᵥ (v : ι → ℂ) = 1 := by
-    rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct,
-      inner_self_eq_norm_sq_to_K, hv]
-    simp
   constructor
   · rintro ⟨hX, f, ⟨hf, hfp⟩, hfX⟩
     obtain ⟨A, hA, hrep⟩ := positive_representative f (fun Y hY => (hf Y hY).1)
@@ -94,11 +90,7 @@ theorem exclusion_iff_kernel (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1)
         HermitianMat.one_inner] using
         HermitianMat.inner_le_mul_trace (rankOne_nonneg v) hY
     · change ⟪rankOne v, rankOne v⟫_ℝ = 1
-      apply RCLike.ofReal_injective (K := ℂ)
-      rw [pair_rankOne (𝕜 := ℂ) (rankOne (v : ι → ℂ)) (v : ι → ℂ)]
-      change star (v : ι → ℂ) ⬝ᵥ
-        (Matrix.vecMulVec (v : ι → ℂ) (star (v : ι → ℂ)) *ᵥ (v : ι → ℂ)) = _
-      simp [Matrix.vecMulVec_mulVec, hnorm]
+      exact SectionROGFrame.rankOne_self v hv
     · change ⟪rankOne v, X⟫_ℝ = 0
       apply RCLike.ofReal_injective (K := ℂ)
       rw [real_inner_comm, pair_rankOne (𝕜 := ℂ) X (v : ι → ℂ), hXv]
