@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-support-connectivity)
    anchors: []
    utility: none
-   digest: Strong connectivity of the same actual octic inverse-obstruction matrix. -/
+   digest: Strong connectivity and row-determinant irreducibility for the actual octic operator. -/
 
 import D5.S3.Quantum.Algebra.AuricActualOcticWindow
 import D5.S3.Quantum.Algebra.FixedDiagonalDeterminant
@@ -97,7 +97,8 @@ theorem general43_2_support (L : Type*) [Field L] [Algebra K L]
       exact hij ((algebraMap K L).injective (by simpa using hz))
     exact Relation.ReflTransGen.mono hedge σ τ (hreach σ τ)
   refine ⟨e, he, hreach, hreachL, ?_⟩
-  haveI : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  have hcard : 1 < Fintype.card (D →ₐ[F] K) := by rw [hΩ]; decide
+  haveI : Nontrivial (D →ₐ[F] K) := Fintype.one_lt_card_iff_nontrivial.mp hcard
   exact FixedDiagonalDeterminant.row_determinant_irreducible _ hreachL
 
 end ActualSupport
