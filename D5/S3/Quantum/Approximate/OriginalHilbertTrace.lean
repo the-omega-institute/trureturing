@@ -37,7 +37,8 @@ namespace D5.S3.Quantum.Approximate.OriginalHilbertTrace
 variable {A : Type*} [CStarAlgebra A] [FiniteDimensional ℂ A] [Nontrivial A]
 
 /-- The original Hilbert norm, independently of the C-star norm on `A`. -/
-def hilbertNorm (B : InnerProductSpace.Core ℂ A) (x : A) : ℝ :=
+def hilbertNorm {V : Type*} [AddCommGroup V] [Module ℂ V]
+    (B : InnerProductSpace.Core ℂ V) (x : V) : ℝ :=
   Real.sqrt (B.inner x x).re
 
 private def unitFunctional (B : InnerProductSpace.Core ℂ A) : A →L[ℂ] ℂ :=
@@ -212,18 +213,20 @@ private theorem averaged_near (τ : A →L[ℂ] ℂ) (p : A → ℝ) (K : ℝ)
     (μ := probabilityHaar) (Filter.Eventually.of_forall hb)
 
 /-- Riesz representation in the original metric, with the quantitative bound
-kept in that metric. This helper is consumed by the joint trace construction. -/
-private theorem original_gram (B C : InnerProductSpace.Core ℂ A) (r : ℝ)
+kept in that metric. This bind-only auxiliary is consumed on the live proof path
+of `nearby_faithful_trace`. -/
+private theorem original_gram {V : Type*} [AddCommGroup V] [Module ℂ V]
+    [FiniteDimensional ℂ V] (B C : InnerProductSpace.Core ℂ V) (r : ℝ) (hr : 0 ≤ r)
     (hnear : ∀ x y, ‖C.inner x y - B.inner x y‖ ≤
       r * hilbertNorm B x * hilbertNorm B y) :
-    ∃ G : A ≃ₗ[ℂ] A,
+    ∃ G : V ≃ₗ[ℂ] V,
       (∀ x y, B.inner (G x) y = C.inner x y) ∧
       (∀ x, hilbertNorm B (G x - x) ≤ r * hilbertNorm B x) := by
   letI := B
   letI := B.toNormedAddCommGroup
-  letI := InnerProductSpace.ofCore B
-  letI := FiniteDimensional.completeSpace ℂ A
-  let row (x : A) : A →ₗ[ℂ] ℂ :=
+  letI := InnerProductSpace.ofCore (inferInstance : PreInnerProductSpace.Core ℂ V)
+  letI := FiniteDimensional.complete ℂ V
+  let row (x : V) : V →ₗ[ℂ] ℂ :=
     { toFun := C.inner x
       map_add' := by
         letI := C
@@ -232,7 +235,7 @@ private theorem original_gram (B C : InnerProductSpace.Core ℂ A) (r : ℝ)
         letI := C
         intro c y
         exact InnerProductSpace.Core.inner_smul_right x y }
-  let form : A →ₗ⋆[ℂ] A →L[ℂ] ℂ :=
+  let form : V →ₗ⋆[ℂ] V →L[ℂ] ℂ :=
     { toFun := fun x => (row x).toContinuousLinearMap
       map_add' := by
         intro x y
@@ -242,9 +245,19 @@ private theorem original_gram (B C : InnerProductSpace.Core ℂ A) (r : ℝ)
         intro c x
         ext y
         exact C.smul_left x y c }
-  let H : A →L[ℂ] A := InnerProductSpace.continuousLinearMapOfBilin
-    ⟨form, form.continuous_of_finiteDimensional⟩
-  have hH (x y : A) : B.inner (H x) y = C.inner x y :=
+  have hbound (x : V) : ‖form x‖ ≤ (r + 1) * ‖x‖ := by
+    apply (form x).opNorm_le_bound (by positivity)
+    intro y
+    change ‖C.inner x y‖ ≤ (r + 1) * ‖x‖ * ‖y‖
+    calc
+      _ = ‖(C.inner x y - B.inner x y) + B.inner x y‖ := by rw [sub_add_cancel]
+      _ ≤ ‖C.inner x y - B.inner x y‖ + ‖B.inner x y‖ := norm_add_le _ _
+      _ ≤ r * hilbertNorm B x * hilbertNorm B y + ‖x‖ * ‖y‖ :=
+        add_le_add (hnear x y) (norm_inner_le_norm x y)
+      _ = _ := by change r * ‖x‖ * ‖y‖ + ‖x‖ * ‖y‖ = _; ring
+  let H : V →L[ℂ] V := InnerProductSpace.continuousLinearMapOfBilin
+    (form.mkContinuous (r + 1) hbound)
+  have hH (x y : V) : B.inner (H x) y = C.inner x y :=
     InnerProductSpace.continuousLinearMapOfBilin_apply _ x y
   have hinj : Function.Injective H := by
     apply (injective_iff_map_eq_zero H).mpr
@@ -252,7 +265,7 @@ private theorem original_gram (B C : InnerProductSpace.Core ℂ A) (r : ℝ)
     apply C.definite x
     rw [← hH, hx]
     exact InnerProductSpace.Core.inner_zero_left _
-  let G : A ≃ₗ[ℂ] A := LinearEquiv.ofBijective H.toLinearMap
+  let G : V ≃ₗ[ℂ] V := LinearEquiv.ofBijective H.toLinearMap
     ⟨hinj, (LinearMap.injective_iff_surjective (f := H.toLinearMap)).mp hinj⟩
   refine ⟨G, hH, ?_⟩
   intro x
@@ -263,22 +276,21 @@ private theorem original_gram (B C : InnerProductSpace.Core ℂ A) (r : ℝ)
       change B.inner (H x - x) v = _
       rw [InnerProductSpace.Core.inner_sub_left, hH]
     have hn : ‖B.inner v v‖ = ‖v‖ ^ 2 := by
-      simpa using (norm_inner_self v)
+      exact (inner_self_re_eq_norm (𝕜 := ℂ) v).symm.trans
+        (inner_self_eq_norm_sq (𝕜 := ℂ) v)
     rw [← he, hn] at hi
     exact hi
   change ‖v‖ ≤ r * hilbertNorm B x
   by_cases hz : v = 0
-  · have hr : 0 ≤ r := by
-      have h := hnear 1 1
-      have hp : 0 < hilbertNorm B (1 : A) := norm_pos_iff.mpr one_ne_zero
-      nlinarith [norm_nonneg (C.inner 1 1 - B.inner 1 1)]
-    simpa [hz] using mul_nonneg hr (Real.sqrt_nonneg (B.inner x x).re)
+  · simpa only [hz, norm_zero] using
+      mul_nonneg hr (show 0 ≤ hilbertNorm B x from Real.sqrt_nonneg _)
   · have hp : 0 < ‖v‖ := norm_pos_iff.mpr hz
     nlinarith
 
 /-- On the original finite complex vector space, an associative C-star product
 close to the original adjoint-compatible product supplies one faithful unital
-trace. Its positive Hermitian form has the original quantitative bound.
+trace. Its positive Hermitian form and invertible positive Riesz operator have
+the original quantitative bounds and the original conjugation symmetry.
 All norms denoted by `hilbertNorm B` are the original Hilbert norms. -/
 theorem nearby_faithful_trace
     (B : InnerProductSpace.Core ℂ A) (μ : A →ₗ[ℂ] A →ₗ[ℂ] A)
@@ -300,7 +312,13 @@ theorem nearby_faithful_trace
       Bt.inner 1 1 = 1 ∧
       (∀ x y, ‖Bt.inner x y - B.inner x y‖ ≤
         17 * M ^ 2 * q * hilbertNorm B x * hilbertNorm B y) ∧
-      (∀ a x y, Bt.inner (a * x) y = Bt.inner x (star a * y)) := by
+      (∀ a x y, Bt.inner (a * x) y = Bt.inner x (star a * y)) ∧
+      ∃ G : A ≃ₗ[ℂ] A,
+        (∀ x y, B.inner x (G y) = Bt.inner x y) ∧
+        (∀ x y, B.inner (G x) y = B.inner x (G y)) ∧
+        (∀ x, x ≠ 0 → 0 < (B.inner x (G x)).re) ∧
+        (∀ x, G (star x) = star (G x)) ∧
+        (∀ x, hilbertNorm B (G x - x) ≤ 17 * M ^ 2 * q * hilbertNorm B x) := by
   letI := B
   let p := hilbertNorm B
   let τ := unitFunctional B
@@ -405,11 +423,8 @@ theorem nearby_faithful_trace
         have hf := htfaith x hn
         rw [hx] at hf
         exact (lt_irrefl 0) hf }
-  refine ⟨t, Bt, averaged_unital τ hτone, averaged_trace τ, htstar,
-    htnear, fun _ _ => rfl, ?_, ?_, ?_⟩
-  · change t (star 1 * 1) = 1
-    simpa using averaged_unital τ hτone
-  · intro x y
+  have hBtnear (x y : A) : ‖Bt.inner x y - B.inner x y‖ ≤
+      17 * M ^ 2 * q * hilbertNorm B x * hilbertNorm B y := by
     change ‖t (star x * y) - B.inner x y‖ ≤ _
     have he : t (star x * y) - B.inner x y =
         (t (star x * y) - τ (star x * y)) +
@@ -434,9 +449,39 @@ theorem nearby_faithful_trace
         nlinarith [mul_nonneg (sub_nonneg.mpr hC)
             h8,
           mul_nonneg (sub_nonneg.mpr hM2) hxy]
+  obtain ⟨G, hG, hGn⟩ := original_gram B Bt (17 * M ^ 2 * q) (by positivity) hBtnear
+  have hGright (x y : A) : B.inner x (G y) = Bt.inner x y := by
+    calc
+      _ = star (B.inner (G y) x) := (B.conj_inner_symm x (G y)).symm
+      _ = star (Bt.inner y x) := congrArg star (hG y x)
+      _ = _ := Bt.conj_inner_symm x y
+  have hBtstar (x y : A) : Bt.inner (star x) (star y) = Bt.inner y x := by
+    change t (star (star x) * star y) = t (star y * x)
+    rw [star_star]
+    exact averaged_trace τ x (star y)
+  have hGstar (x : A) : G (star x) = star (G x) := by
+    have he (y : A) : B.inner y (G (star x)) = B.inner y (star (G x)) := by
+      calc
+        _ = Bt.inner y (star x) := hGright _ _
+        _ = Bt.inner x (star y) := by simpa only [star_star] using hBtstar (star y) x
+        _ = B.inner (G x) (star y) := (hG _ _).symm
+        _ = B.inner y (star (G x)) := by
+          simpa only [star_star] using (core_star B hstar (star y) (G x)).symm
+    exact sub_eq_zero.mp (B.definite _ <| by
+      change B.inner (G (star x) - star (G x)) (G (star x) - star (G x)) = 0
+      exact (InnerProductSpace.Core.inner_sub_right (c := B.toCore) _ _ _).trans (sub_eq_zero.mpr (he _)))
+  refine ⟨t, Bt, averaged_unital τ hτone, averaged_trace τ, htstar,
+    htnear, fun _ _ => rfl, ?_, hBtnear, ?_, G, hGright, ?_, ?_, hGstar, hGn⟩
+  · change t (star 1 * 1) = 1
+    simpa using averaged_unital τ hτone
   · intro a x y
     change t (star (a * x) * y) = t (star x * (star a * y))
     simp only [star_mul, mul_assoc]
+  · intro x y
+    exact (hG x y).trans (hGright x y).symm
+  · intro x hx
+    rw [hGright]
+    exact htfaith x hx
 
 #print axioms nearby_faithful_trace
 
