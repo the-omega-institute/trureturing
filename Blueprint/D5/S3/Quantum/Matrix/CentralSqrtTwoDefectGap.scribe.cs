@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Matrix;
 
 internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinition
 {
-    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/QuantumStates/childs2003gluedtrees");
+    private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Eigenstructure/childs2003gluedtrees");
 
     private const string Module = "D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap";
 
@@ -18,8 +18,9 @@ internal sealed class CentralSqrtTwoDefectGapDocument : IScribeDocumentDefinitio
                 + "This is the quantitative inverse-cubic bridge once K is the endpoint "
                 + "control constant.", DescribeRole.Theorem),
             Entry("rank_one_cross_identity", "Rank-one cross-sector identity",
-                "If A is real symmetric, B=A+c vv^T with v the coordinate vector at q, "
-                + "and Au=lambda u, Bv=mu v, then (mu-lambda)<u,v> "
+                "Let e_q be the fixed coordinate vector at q. If A is real symmetric, "
+                + "B=A+c e_q e_q^T, and u,v are arbitrary vectors satisfying "
+                + "Au=lambda u and Bv=mu v, then (mu-lambda)<u,v> "
                 + "=c*u(q)*v(q). The identity is proved by the matrix update and symmetry.",
                 DescribeRole.Theorem),
             Entry("rank_one_gap_of_matrices", "Rank-one cross-sector gap",

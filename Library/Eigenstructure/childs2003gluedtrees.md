@@ -14,9 +14,14 @@ triage: anchor
 
 # Central defect spectral separation
 
+## Locator
+
 Childs et al., *Exponential algorithmic speedup by a quantum walk*,
 [arXiv:quant-ph/0209131v2](https://arxiv.org/abs/quant-ph/0209131v2),
 Section III.4, Lemma 2, equations (42), (50) and (64).
+DOI: [10.48550/arXiv.quant-ph/0209131](https://doi.org/10.48550/arXiv.quant-ph/0209131).
+
+## Spectral scope
 
 The receiving matrix is the real symmetric path on $2n$ vertices with zero
 diagonal, unit nearest-neighbour entries except for the central edge of

@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Matrix/CentralSqrtTwoDefectGap
-   generality: G
+   generality: I
    mirror-B: none(waiver:evidence-not-specified-by-formal-manifest)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
