@@ -139,7 +139,6 @@ internal sealed class PairedIdealIntersectionDeterminantsDocument : IScribeDocum
 
     private static Formula V(string value) => F.Id(value);
     private static Formula Power(Formula value, Formula exponent) => new Formula.Power(value, exponent);
-    private static Formula Divide(Formula numerator, Formula denominator) => new Formula.Fraction(numerator, denominator);
     private static DocumentBlock Show(Formula value) => new DocumentBlock.DisplayFormula(value);
     private static DocumentBlock Node(string name,string title,string prose,DescribeRole role)=>
         Describe.Lean(DescribeId.Create("nik-"+name.Replace('_','-').ToLowerInvariant()),
