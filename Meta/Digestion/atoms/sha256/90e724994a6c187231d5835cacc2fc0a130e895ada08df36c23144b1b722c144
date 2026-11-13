@@ -1,0 +1,26 @@
+**定理 125.5（CS 恰是既有 UF 的单点几何测试）。** 在同一完整 EB3+PR 域中，对每个固定 $p$，(X125.16) 中以该 $p$ 为极限的条件成立，当且仅当 $a\mapsto D_a$ 在 $p$ 处 Hausdorff 连续。因而
+
+$$
+\mathrm{CS}\quad\Longleftrightarrow\quad\mathrm{UF}
+\quad\Longleftrightarrow\quad\mathrm{NC}.
+\tag{X125.17}
+$$
+
+并且 CS 可代入124.10，得到同原锥、同原单位的完整复三能级静态表示及该定理的全部等价条件。
+
+证明。若整球映射在 $p$ 连续，由 $c_p\in D_p$ 有
+
+$$
+\operatorname{dist}(c_p,D_{a_i})\le d_H(D_p,D_{a_i})\to0.
+$$
+
+反过来，若在 $p$ 不连续，可选 $a_i\to p$，使 $d_H(D_{a_i},D_p)$ 有统一正下界；Hausdorff 紧性给收敛子列。IX115.5 排除其他极限，且上述正下界排除极限为 $D_p$，所以只能有 $D_{a_i}\to\{q\}$，$q\in P\cap D_p$。旧球正维，中心 $c_p$ 是两个不同对径纯点的中点，因而不是原纯点；特别地 $q\ne c_p$。距离对 Hausdorff 收敛连续，故
+
+$$
+\operatorname{dist}(c_p,D_{a_i})\longrightarrow\|c_p-q\|>0,
+$$
+
+与固定 $p$ 的 CS 矛盾。全域连续与 UF 的等价直接消费 IX115.8；UF 与 NC 的等价及静态表示直接消费124.10，不重证其标签单射桥、IX116.2 的重复球二分或 IX118.8 的静态分类。证毕。
+
+定理125.2无条件供应的是 $T_{a_i}(c_p)\to0$；CS 要求的是到实际完整零集的几何距离趋零。两种量不能混同。自动 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathrm{CS}$，等价地自动 UF，仍未证明；满足全部同域前件而使 CS 失败的模型亦未构造。CS 只把既有整球稳定要求化为每个固定旧球心的一点测试，没有取得独立假设数减少的结论，也不证明独立性、最小性或严格更弱的公理包。
+
