@@ -58,9 +58,61 @@ $$\forall P, Q\in H, \forall \tau \in \mathbb{R}, P^{*}=P, Q^{*}=Q, 0\le \tau, \
 
 Under the stated self-adjointness, p-defect, nonnegativity and smallness conditions, the norm of the actual corner involution is at most 19. The generic Taylor-tail estimate therefore gives the displayed quantitative midpoint bound for the same original-product compression.
 
+**Theorem 1.5 (Closeness to both actual bracketings).**
+
+$$\operatorname{p}\left(\operatorname{C}\left(P, Q, x\right)-\operatorname{mu}\left(P, \operatorname{mu}\left(x, Q\right)\right)\right)\le4866 \cdot \tau+M\delta \cdot \operatorname{p}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let r=tau+M delta. For self-adjoint P and Q, nonnegative tau, r at most 1/1024, and actual p-projection defects at most tau, both p(C(P,Q)x-mu(P,mu(x,Q))) and p(C(P,Q)x-mu(mu(P,x),Q)) are at most 4866 r p(x), for every x. The Taylor tail is at most the square defect, hence at most 512 r. The midpoint displacement is at most 4864 r and the actual commutator contributes at most 2 r for either bracketing.
+
+**Theorem 1.6 (The original Hilbert operator bounds).**
+
+$$\operatorname{norm}\left(\operatorname{C}\left(P, Q\right)-\operatorname{L}\left(P\right) \cdot \operatorname{R}\left(Q\right)\right)\le4866 \cdot \tau+M\delta \cdot M$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness_hilbert` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under exactly the same self-adjointness, nonnegative tau, r at most 1/1024 and actual p-projection-defect hypotheses, both Hilbert operator norms of C(P,Q)-L_P R_Q and C(P,Q)-R_Q L_P are at most 4866 M r. The additional M comes from norm(x) at most p(x) at most M norm(x). The regular and original Hilbert operator norms are not identified.
+
+**Theorem 1.7 (Star exchanges the actual corner labels).**
+
+$$\operatorname{star}\left(\operatorname{C}\left(P, Q, x\right)\right)=\operatorname{C}\left(Q, P, \operatorname{star}\left(x\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_star` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same hypotheses, star(C(P,Q)x)=C(Q,P)(star(x)) for every x. The actual star reversal interchanges left and right multiplication. Its p-isometry gives a bounded real-linear involution on the regular range, and the convergent Taylor correction preserves this intertwining. This is star covariance, with no assertion that a mixed compression is positive or an orthogonal projection.
+
+**Theorem 1.8 (The actual complementary two-piece decomposition).**
+
+$$\operatorname{p}\left(\operatorname{C}\left(P, Q, x\right)+\operatorname{C}\left(P, e-Q, x\right)-\operatorname{C}\left(P, e, x\right)\right)\le14598 \cdot \tau+M\delta \cdot \operatorname{p}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_two_piece` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the same hypotheses, p(C(P,Q)x+C(P,e-Q)x-C(P,e)x) is at most 14598 r p(x), for every x. The actual unit is star fixed, e-Q has exactly the same projection defect as Q, and the uncorrected bracketings add exactly. Applying the three quantitative compression bounds gives the decomposition error. This does not identify the two corrected ranges as an exact direct sum.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_closeness_hilbert`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_idempotent`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_star`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.compression_two_piece`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.p_star_mul_rev`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.regularCompression_closeness`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/RegularCompression.two_piece_defects`

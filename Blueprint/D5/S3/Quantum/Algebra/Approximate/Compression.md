@@ -32,7 +32,34 @@ $$\forall T\in A, \operatorname{norm}\left(\operatorname{correction}\left(T\righ
 
 The correction differs from the uncorrected midpoint by one half of T times the inverse-square-root Taylor tail. Submultiplicativity gives the displayed bound without adding any structure to the target space.
 
+**Theorem 1.3 (A linear bound for the Taylor tail).**
+
+$$\operatorname{norm}\left(\operatorname{inverseSqrt}\left(d\right)-1\right)\le\operatorname{norm}\left(d\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/Compression.inverseSqrt_tail_linear` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In every complete real normed associative algebra with norm-one identity, if the norm of d is at most one half, then the norm of the inverse-square-root Taylor tail is at most the norm of d. The coefficients are identified with the already established central-binomial coefficients in OriginalHalfBinomialIntegral.b_multichoose. Its binomial_hasSum gives the scalar majorant 1/sqrt(1-norm(d))-1. This is at most norm(d) on the stated interval.
+
+**Theorem 1.4 (Taylor correction preserves real intertwiners).**
+
+$$\operatorname{s}\left(\operatorname{correction}\left(T, x\right)\right)=\operatorname{correction}\left(U, \operatorname{s}\left(x\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Approximate/Compression.correction_intertwines` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let E and F be complete nontrivial complex normed spaces, s a continuous real-linear map from E to F, and T and U continuous complex-linear endomorphisms. If s(Tx)=U(sx) for every x, and both square defects have norm strictly less than one, then the same intertwining identity holds for their Taylor corrections. The proof transports the convergent series term by term; it applies to the actual conjugate-linear star symmetry without imposing an associative algebra structure on H.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/Compression.correction_closeness`
 - Truth anchor: `D5/S3/Quantum/Algebra/Approximate/Compression.correction_idempotent`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/Compression.correction_intertwines`
+- Truth anchor: `D5/S3/Quantum/Algebra/Approximate/Compression.inverseSqrt_tail_linear`
+- Dependency: [D5/S3/Analytic/OriginalHalfBinomialIntegral](../../../Analytic/OriginalHalfBinomialIntegral.md)
