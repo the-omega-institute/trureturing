@@ -139,14 +139,16 @@ internal sealed class ActualExclusionBoundaryDocument : IScribeDocumentDefinitio
         var V = Id("V"); var C = Id("C"); var u = Id("u"); var real = Id("Real");
         var K = Call("base", C, u); var S = Call("intrinsicFrontier", real, K);
         var E = Call("direction", Call("affineSpan", real, K));
-        var c = Id("c"); var v = Id("v"); var Hm = Id("H"); var x = Id("x"); var z = Id("z");
+        var c = Id("c"); var v = Id("v"); var x = Id("x"); var z = Id("z");
         Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-        var conclusion = Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, K)), Ex("v", S,
-            And(Call("Nontrivial", E), Ex("H", Call("ContinuousMaps", Call("Product", Id("UnitInterval"), S), E),
-                Conj(All("x", S, Eq(Call("H", Call("Pair", F.D(0), x)), Call("Subtract", x, c))),
-                    All("x", S, Eq(Call("H", Call("Pair", F.D(1), x)), Call("Subtract", c, v))),
-                    All("z", Call("Product", Id("UnitInterval"), S),
-                        new Formula.Relation(Call("H", z), FormulaRelationOperator.NotEqual, F.D(0))))))));
+        var endpoints = Conj(
+            All("x", S, Eq(Call("H", Call("Pair", F.D(0), x)), Call("Subtract", x, c))),
+            All("x", S, Eq(Call("H", Call("Pair", F.D(1), x)), Call("Subtract", c, v))),
+            All("z", Call("Product", Id("UnitInterval"), S),
+                new Formula.Relation(Call("H", z), FormulaRelationOperator.NotEqual, F.D(0))));
+        var maps = Ex("H", Call("ContinuousMaps", Call("Product", Id("UnitInterval"), S), E), endpoints);
+        var withBoundary = Ex("v", S, And(Call("Nontrivial", E), maps));
+        var conclusion = Ex("c", V, And(Mem(c, Call("intrinsicInterior", real, K)), withBoundary));
         return All("V", Id("Types"), F.Seq(Inst("NormedAddCommGroup", V),
             Inst("NormedSpace", real, V), Inst("FiniteDimensional", real, V), Inst("Nontrivial", V),
             All("C", Call("PointedCone", real, V), All("u", Call("LinearMaps", real, V, real),
