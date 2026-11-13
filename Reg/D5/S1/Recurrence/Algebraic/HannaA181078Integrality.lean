@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.Algebraic.HannaA181078Integrality
 import Reg.Support.SingleDependentReadout
 
+/-! The coefficient readout preserves the full natural-degree and integer-witness family. -/
+
 namespace Reg.D5.S1.Recurrence.Algebraic.HannaA181078Integrality
 open _root_.D5.S1.Recurrence.Algebraic.HannaA181078Integrality
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -59,7 +61,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some A
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.Algebraic.HannaA181078Integrality
     definition := some {

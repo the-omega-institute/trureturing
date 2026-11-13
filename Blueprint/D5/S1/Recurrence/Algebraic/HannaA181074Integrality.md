@@ -10,7 +10,7 @@ $$\operatorname{logarithm} = \operatorname{PowerSeries.mk}\left((fun m: \mathbb{
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.logarithm` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\operatorname{A} = \operatorname{PowerSeries.subst}\left(\operatorname{logarit
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.A` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -34,13 +34,41 @@ $$(\operatorname{claim}) \iff (\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \op
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.claim` (`✓ std3`).
 
-*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Citation.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
 OEIS A181074, first COMMENTS line (web entry, no page number): "Conjecture: this sequence consists entirely of integers." The degree m ranges over all natural numbers, including zero; the integer z may depend on m.
 
-**Theorem 1.4 (Integrality in every degree).**
+**Lemma 1.4 (Negative-binomial divisibility).**
+
+$$\forall n: \mathbb{N}, \forall k: \mathbb{N}, n \ne 0 \Rightarrow n \mid k \cdot \operatorname{Nat.choose}\left(n + k - 1, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomDiv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+
+*Commentary.*
+
+For every nonzero natural n and every natural k, n divides k times Nat.choose(n+k-1,k). The coefficient of degree k in (sum_j x^j)^n is this binomial coefficient; coefficientDivisibility supplies the divisibility.
+
+**Lemma 1.5 (Prime scaling of negative binomials).**
+
+$$\forall p: \mathbb{N}, \forall n: \mathbb{N}, \forall k: \mathbb{N}, \operatorname{Nat.Prime}\left(p\right) \Rightarrow \left(n \ne 0 \Rightarrow \operatorname{Nat.ModEq}\left(p^{\operatorname{padicValNat}\left(p, n\right) + 1}, \operatorname{Nat.choose}\left(p \cdot n + p \cdot k - 1, p \cdot k\right), \operatorname{Nat.choose}\left(n + k - 1, k\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomCong` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+
+*Commentary.*
+
+For every prime p, nonzero natural n and natural k, Nat.choose(p*n+p*k-1,p*k) and Nat.choose(n+k-1,k) are congruent modulo p^(padicValNat(p,n)+1). Applying coeffLift to sum_j x^j gives the congruence at the same unrestricted indices.
+
+**Theorem 1.6 (Integrality in every degree).**
 
 $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}\left(m, \operatorname{A}\right) = (z: \mathbb{Q})$$
 
@@ -52,7 +80,7 @@ $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074, A181078 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
 
 *Commentary.*
 
@@ -63,5 +91,7 @@ Every coefficient of the displayed formal exponential is an integer. The prime-s
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.A`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.claim`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.logarithm`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomCong`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomDiv`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.result`
 - Dependency: [D5/S1/Recurrence/Algebraic/HannaA181070Integrality](HannaA181070Integrality.md)

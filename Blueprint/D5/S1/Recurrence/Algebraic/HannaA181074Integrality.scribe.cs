@@ -72,14 +72,22 @@ internal sealed class HannaA181074IntegralityDocument : IScribeDocumentDefinitio
     private static Formula Implication(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Neq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula NegativeBinomialDivisibility() =>
-        All("n", N(), All("k", N(), Implication(Neq(V("n"), D(0)),
-            Seq(V("n"), Sp, Mid, Sp, Mul(V("k"), Choose(Sub(Add(V("n"), V("k")), D(1)), V("k"))))));
-    private static Formula NegativeBinomialCongruence() =>
-        All("p", N(), All("n", N(), All("k", N(), Implication(Qualified("Nat", "Prime", V("p")),
-            Implication(Neq(V("n"), D(0)), Qualified("Nat", "ModEq",
-                Pow(V("p"), Add(Call("padicValNat", V("p"), V("n")), D(1))),
-                Choose(Sub(Add(Mul(V("p"), V("n")), Mul(V("p"), V("k"))), D(1)), Mul(V("p"), V("k"))),
-                Choose(Sub(Add(V("n"), V("k")), D(1)), V("k"))))))));
+    private static Formula NegativeBinomialDivisibility()
+    {
+        var n = V("n"); var k = V("k");
+        var b = Choose(Sub(Add(n, k), D(1)), k);
+        var divides = new Formula.Relation(n, FormulaRelationOperator.Divides, Mul(k, b));
+        return All("n", N(), All("k", N(), Implication(Neq(n, D(0)), divides)));
+    }
+    private static Formula NegativeBinomialCongruence()
+    {
+        var p = V("p"); var n = V("n"); var k = V("k");
+        var b = Choose(Sub(Add(n, k), D(1)), k);
+        var scaled = Choose(Sub(Add(Mul(p, n), Mul(p, k)), D(1)), Mul(p, k));
+        var modulus = Pow(p, Add(Call("padicValNat", p, n), D(1)));
+        var congruence = Qualified("Nat", "ModEq", modulus, scaled, b);
+        return All("p", N(), All("n", N(), All("k", N(),
+            Implication(Qualified("Nat", "Prime", p), Implication(Neq(n, D(0)), congruence)))));
+    }
     private static Formula ClaimBody() => All("m", N(), Ex("z", Z(), Eqn(Coeff(V("m"), Call("A")), Cast(V("z"), Q()))));
 }

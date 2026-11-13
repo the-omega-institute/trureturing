@@ -5,7 +5,7 @@ year: 2010
 title: OEIS A181070, A181074, A181078 and A181080 integrality conjectures
 doi: null
 url: https://oeis.org/A181070
-claim: All coefficients of the four specified formal exponential generating functions are integers.
+claim: All coefficients of the four specified formal ordinary exponentials are integers.
 strata_touched:
   - D5/S1/Recurrence/Algebraic/HannaA181070Integrality
   - D5/S1/Recurrence/Algebraic/HannaA181074Integrality
@@ -19,7 +19,7 @@ triage: anchor
 
 Source: https://oeis.org/A181070
 
-Companion entries: https://oeis.org/A181074 and https://oeis.org/A181080.
+Companion entries: https://oeis.org/A181074, https://oeis.org/A181078 and https://oeis.org/A181080.
 The entries have no page numbers. The source is OEIS; it has no arXiv identifier.
 
 ## Source statements
