@@ -142,11 +142,14 @@ theorem exceptional_fiber_unique (a b c d : ℤ) (ha : 2≤a) (hb : 0<b)
 
 def baseB {R : Type*} [CommRing R] (a : R) : R := (a-1)*(2*a-1)
 
-def rational_base (a : ℚ) : QuarticPoint a :=
-  ⟨(baseB a,B a (baseB a)),by simp [quartic,C₀,baseB]⟩
-
 theorem base_zero_tail {R : Type*} [CommRing R] (a : R) :
     equation a (baseB a) 0=0 := by simp [equation,C₀,baseB]
+
+def rational_base (a : ℚ) : QuarticPoint a :=
+  ⟨(baseB a,B a (baseB a)),by
+    have h := recovery_identity a (baseB a) 0
+    rw [base_zero_tail,mul_zero] at h
+    simpa only [mul_zero,zero_add] using sub_eq_zero.mp h⟩
 
 /-- All five quartic coefficients, including the nonzero constant term. -/
 theorem quartic_coefficients {R : Type*} [CommRing R] (a b : R) :

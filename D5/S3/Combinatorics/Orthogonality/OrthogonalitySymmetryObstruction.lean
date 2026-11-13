@@ -186,16 +186,27 @@ private theorem fixed_profile (g : stabilizer)
       K (act g U).val = K U.val ∧ H (act g U).val = H U.val := by
   refine ⟨(g.val.submoduleMap U.val).finrank_eq.symm,?_,?_⟩
   · ext a
-    change coordinates (a,0) ∈ U.val.map g.val.toLinearMap ↔
-      coordinates (a,0) ∈ U.val
+    have hk (W : Submodule F V) :
+        a ∈ K W ↔ coordinates (a,0) ∈ W ⊓ T := by
+      have hh := congrArg (fun L : Submodule F V => coordinates (a,0) ∈ L)
+        (K_source W)
+      change (∃ b ∈ K W, coordinates (b,0) = coordinates (a,0)) =
+        (coordinates (a,0) ∈ W ⊓ T) at hh
+      rw [← hh]
+      constructor
+      · intro ha
+        exact ⟨a,ha,rfl⟩
+      · rintro ⟨b,hb,hba⟩
+        exact (congrArg Prod.fst (coordinates.injective hba)) ▸ hb
+    rw [hk,hk]
     have hf := hg (coordinates (a,0)) ⟨a,rfl⟩
     constructor
-    · rintro ⟨u,hu,he⟩
+    · rintro ⟨⟨u,hu,he⟩,hT⟩
       change g.val u = coordinates (a,0) at he
       have hu' : u = coordinates (a,0) := g.val.injective (he.trans hf.symm)
-      exact hu' ▸ hu
-    · intro ha
-      exact ⟨coordinates (a,0),ha,hf⟩
+      exact ⟨hu' ▸ hu,hT⟩
+    · rintro ⟨ha,hT⟩
+      exact ⟨⟨coordinates (a,0),ha,hf⟩,hT⟩
   · ext a
     rw [H_mem,H_mem]
     have hf := hg (coordinates (a,0)) ⟨a,rfl⟩

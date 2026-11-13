@@ -69,6 +69,32 @@ theorem scaled_root_square (p e : ℕ) [hp : Fact p.Prime]
       omega
     exact hw.trans (congrArg (fun x : ℤ => x*w) hpow)
   have hn : P ≠ 0 := pow_ne_zero _ (Int.natCast_ne_zero.mpr hp.out.ne_zero)
+  have hHn : H ≠ 0 := by
+    intro hz
+    exact hH (hz ▸ dvd_zero _)
+  have hHq : (H : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hHn
+  have hexp : discriminant (s-1+P*H) (-P*H+P^2*U) s = P^6*
+      ((s-1)^2*((2*s-1)^2*H^2*U^2+2*s^2*(2*s-1)^2*H^4*U+s^4*H^6)+
+        P*normalizedError P H U s) := by
+    have hq := discriminant_expansion ((P : ℚ)*H) ((U : ℚ)/(H : ℚ)^2) s
+    have hb : -((P : ℚ)*H)+((P : ℚ)*H)^2*((U : ℚ)/(H : ℚ)^2) =
+        -(P : ℚ)*H+(P : ℚ)^2*U := by
+      field_simp
+      <;> ring
+    rw [hb] at hq
+    have he : ((P : ℚ)*H)^6*((s : ℚ)-1)^2*
+          localPolynomial s ((U : ℚ)/(H : ℚ)^2)+
+        ((P : ℚ)*H)^7*errorPolynomial ((P : ℚ)*H) ((U : ℚ)/(H : ℚ)^2) s =
+        (P : ℚ)^6*(((s : ℚ)-1)^2*
+          ((2*(s : ℚ)-1)^2*(H : ℚ)^2*(U : ℚ)^2+
+            2*(s : ℚ)^2*(2*(s : ℚ)-1)^2*(H : ℚ)^4*U+(s : ℚ)^4*(H : ℚ)^6)+
+          P*normalizedError (P : ℚ) H U s) := by
+      unfold localPolynomial errorPolynomial normalizedError
+      field_simp
+      <;> ring
+    rw [he] at hq
+    unfold discriminant tailA tailB tailC normalizedError at hq ⊢
+    exact_mod_cast hq
   have heq : w^2=(s-1)^2*((2*s-1)^2*H^2*U^2+
       2*s^2*(2*s-1)^2*H^4*U+s^4*H^6)+P*normalizedError P H U s := by
     apply mul_left_cancel₀ (pow_ne_zero 6 hn)
@@ -76,7 +102,7 @@ theorem scaled_root_square (p e : ℕ) [hp : Fact p.Prime]
       P^6*w^2 = (P^3*w)^2 := by ring
       _ = W^2 := by rw [hwp]
       _ = discriminant (s-1+P*H) (-P*H+P^2*U) s := hd.symm
-      _ = _ := normalized_expansion P H U s
+      _ = _ := hexp
   have hP : (P : ZMod p)=0 := by
     apply (ZMod.intCast_zmod_eq_zero_iff_dvd P p).mpr
     simpa only [pow_one] using lower_power p 1 e P he (dvd_refl _)

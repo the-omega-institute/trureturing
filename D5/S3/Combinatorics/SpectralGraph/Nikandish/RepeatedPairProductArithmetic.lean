@@ -37,7 +37,13 @@ theorem uniform_tail (a b c : ℝ) (ha : 2 ≤ a)
   have he : b*c-((a^2-1)*(b+c)+(a-1)*(2*a-1)) =
       (b-(2*a^2-1))*(c-(2*a^2-1))+
       a^2*((b-(2*a^2-1))+(c-(2*a^2-1)))+3*a-2 := by ring
-  linarith
+  have hproduct : (a^2-1)*(b+1)*(c+1)+(a-1)*(a-2) < a^2*b*c := by
+    nlinarith only [he,h1,h2,ha]
+  apply lt_of_le_of_ne ((four_criterion a b c).mp hproduct.le)
+  intro heq
+  have heq' : (a^2-1)*(b+1)*(c+1)+(a-1)*(a-2) = a^2*b*c := by
+    nlinarith only [heq]
+  exact hproduct.ne heq'
 
 /-- The unbounded exact equality family, not a finite boundary sample. -/
 theorem equality_family (a : ℝ) (ha : 2 ≤ a) :

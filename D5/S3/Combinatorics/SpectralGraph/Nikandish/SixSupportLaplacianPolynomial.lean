@@ -639,12 +639,22 @@ theorem planePolynomial_totalDegree : planePolynomial.totalDegree = 7 := by
   have hlower := MvPolynomial.le_totalDegree hmem
   norm_num at hlower
   exact Nat.le_antisymm hupper hlower
+/-- The bivariate model is the same polynomial, with a as the outer variable. -/
+def planeToIterated : MvPolynomial (Fin 2) ℚ →+* Polynomial (Polynomial ℚ) :=
+  MvPolynomial.eval₂Hom (Polynomial.C.comp Polynomial.C)
+    ![Polynomial.X, Polynomial.C Polynomial.X]
+
+theorem plane_to_iterated : planeToIterated planePolynomial = curvePolynomial := by
+  simp [planeToIterated,planePolynomial,curvePolynomial,endpointG,endpointR,
+    endpointT,endpointA,endpointB,endpointC₀]
+
 /-- Evaluation in the two coefficient variables is the actual endpoint expression. -/
 theorem curvePolynomial_evaluate {S : Type*} [CommRing S] [Algebra ℚ S] (a b : S) :
     Polynomial.eval₂ (Polynomial.eval₂RingHom (algebraMap ℚ S) b) a
       curvePolynomial = endpointG a b := by
-  simp [curvePolynomial,endpointG,endpointR,endpointT,endpointA,endpointB,endpointC₀,
-    Polynomial.eval₂_pow,Polynomial.eval₂_mul]
+  rw [←plane_to_iterated]
+  simp [planeToIterated,planePolynomial,endpointG,endpointR,endpointT,endpointA,
+    endpointB,endpointC₀,Polynomial.eval₂_pow,Polynomial.eval₂_mul]
 
 /-- Identify the literal previously checked tower polynomial, rather than assuming a bridge. -/
 theorem curvePolynomial_eq_actualQuartic :
@@ -659,15 +669,6 @@ theorem actual_curve_geometric_irreducibility :
     Irreducible (curvePolynomial.map (NikandishE3.pk (AlgebraicClosure ℚ))) := by
   rw [curvePolynomial_eq_actualQuartic]
   exact NikandishE3.actual_geometric_irreducibility
-
-/-- The bivariate model is the same polynomial, with a as the outer variable. -/
-def planeToIterated : MvPolynomial (Fin 2) ℚ →+* Polynomial (Polynomial ℚ) :=
-  MvPolynomial.eval₂Hom (Polynomial.C.comp Polynomial.C)
-    ![Polynomial.X, Polynomial.C Polynomial.X]
-
-theorem plane_to_iterated : planeToIterated planePolynomial = curvePolynomial := by
-  simp [planeToIterated,planePolynomial,curvePolynomial,endpointG,endpointR,
-    endpointT,endpointA,endpointB,endpointC₀]
 
 def planeEndpointSubstitution : Universal →+* MvPolynomial (Fin 2) ℚ :=
   specialize (MvPolynomial.X 0) (MvPolynomial.X 1)

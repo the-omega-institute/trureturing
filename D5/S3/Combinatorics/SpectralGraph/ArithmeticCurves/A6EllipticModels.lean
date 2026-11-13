@@ -163,17 +163,27 @@ theorem sqrtD_integral : IsIntegral ℤ sqrtD := by
   rw [sqrtD_sq]
   exact isIntegral_algebraMap
 
+/-- Full exact coefficient reconstruction in the actual quadratic field.
+All four identities are checked; neither W sign is selected. -/
+theorem coefficient_reconstruction (U V : K) (b W : ℚ) :
+    (U=polynomialU b W ∧ V=polynomialV b W) ↔
+      U.re=2*43645*b^2+1152400*b ∧ U.im=2*W ∧
+      V.re=(4*43645*b+1152400)*W ∧
+      V.im=4*43645*b^3+3*1152400*b^2+2*6640150*b+4524000 := by
+  simp only [QuadraticAlgebra.ext_iff,polynomialU,polynomialV]
+  tauto
+
 theorem polynomial_coordinates_integral (b W : ℤ) :
     IsIntegral ℤ (polynomialU (b:ℚ) (W:ℚ)) ∧
       IsIntegral ℤ (polynomialV (b:ℚ) (W:ℚ)) := by
-  have hU : polynomialU (b:ℚ) (W:ℚ)=
-      (2*43645*(b:K)^2+1152400*(b:K))+2*(W:K)*sqrtD := by
-    ext <;> simp [polynomialU,sqrtD,pow_succ,QuadraticAlgebra.re_ofNat,QuadraticAlgebra.im_ofNat] <;> ring
-  have hV : polynomialV (b:ℚ) (W:ℚ)=
-      (4*43645*(b:K)+1152400)*(W:K)+
-      (4*43645*(b:K)^3+3*1152400*(b:K)^2+2*6640150*(b:K)+4524000)*sqrtD := by
-    ext <;> simp [polynomialV,sqrtD,pow_succ,QuadraticAlgebra.re_ofNat,QuadraticAlgebra.im_ofNat] <;> ring
-  rw [hU,hV]
+  have hcoords := (coefficient_reconstruction
+    ((2*43645*(b:K)^2+1152400*(b:K))+2*(W:K)*sqrtD)
+    ((4*43645*(b:K)+1152400)*(W:K)+
+      (4*43645*(b:K)^3+3*1152400*(b:K)^2+2*6640150*(b:K)+4524000)*sqrtD)
+    (b:ℚ) (W:ℚ)).mpr (by
+      simp [sqrtD,pow_succ,QuadraticAlgebra.re_ofNat,QuadraticAlgebra.im_ofNat]
+      <;> ring)
+  rw [←hcoords.1,←hcoords.2]
   have hb : IsIntegral ℤ (b:K) := isIntegral_algebraMap
   have hW : IsIntegral ℤ (W:K) := isIntegral_algebraMap
   constructor
@@ -186,16 +196,6 @@ theorem polynomial_coordinates_integral (b W : ℤ) :
           ((isIntegral_algebraMap.mul isIntegral_algebraMap).mul (hb.pow 2))).add
           ((isIntegral_algebraMap.mul isIntegral_algebraMap).mul hb)).add
           isIntegral_algebraMap |>.mul sqrtD_integral)
-
-/-- Full exact coefficient reconstruction in the actual quadratic field.
-All four identities are checked; neither W sign is selected. -/
-theorem coefficient_reconstruction (U V : K) (b W : ℚ) :
-    (U=polynomialU b W ∧ V=polynomialV b W) ↔
-      U.re=2*43645*b^2+1152400*b ∧ U.im=2*W ∧
-      V.re=(4*43645*b+1152400)*W ∧
-      V.im=4*43645*b^3+3*1152400*b^2+2*6640150*b+4524000 := by
-  simp only [QuadraticAlgebra.ext_iff,polynomialU,polynomialV]
-  tauto
 
 /-- The original integer-tail filter is exactly equivalent to the
 root-two equation; it is not a graph-spectrum sufficiency criterion. -/

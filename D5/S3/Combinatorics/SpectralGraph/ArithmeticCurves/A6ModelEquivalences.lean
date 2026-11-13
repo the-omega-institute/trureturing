@@ -289,7 +289,11 @@ instance : (Ed.baseChange K).IsElliptic := by
 /-- Original short-model rational control, not a positive integer graph example. -/
 def shortS : E.toAffine.Point := .mk (by
   apply (equation_iff _ _).mpr
-  norm_num [E] : E.toAffine.Equation (19517052/121) (6328630035/1331))
+  have hsource : (234393705000/1331 : ℚ)^2 =
+      (-50963250/121 : ℚ)^3+6640150*(-50963250/121 : ℚ)^2+
+        5047497487500*(-50963250/121 : ℚ)+1053718156603125000 := by norm_num
+  have hscaled := (short_model_scaling (-50963250/121) (234393705000/1331)).mp hsource
+  convert hscaled using 1 <;> norm_num [E] : E.toAffine.Equation (19517052/121) (6328630035/1331))
 
 /-- Original rational point on the full actual43645 twist. -/
 def twistWitness : Ed.toAffine.Point := .mk (by

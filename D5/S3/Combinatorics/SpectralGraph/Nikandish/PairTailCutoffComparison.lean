@@ -65,10 +65,6 @@ theorem cutoff_comparison (a b : ℤ) (ha : 0 < a) (hb : 0 < b) :
     nlinarith
   exact hQ8.trans hR
 
-/-- The two full source numerical cutoffs, with exact floor arithmetic. -/
-theorem cutoff_five : cutoff 5 5=111375 ∧ oldCutoff 5 5=186913752 := by
-  norm_num [cutoff,oldCutoff]
-
 /-- The earlier uniform large-tail obstruction follows on every actual
 graph from the stronger cutoff, without any ordering of a and b. -/
 theorem actual_large_tail (p : Fin 4 → ℕ) (hp : ∀ i, Nat.Prime (p i))

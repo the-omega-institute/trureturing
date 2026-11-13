@@ -487,15 +487,16 @@ theorem geometry_two (a b : ℝ) (ha : 8≤a) (hab : a≤b) :
     obtain ⟨v,hv,hr,hd,hu⟩:=positive_shift_root (U2 a b) (T2 a b) (S2 a b)
       (L2 a b*R2 a b) hU hT hC
     refine ⟨b+v,by linarith,?_,?_,?_⟩
-    · rw [two_shift]
-      linear_combination hr
+    · rw [←two_eval]
+      simpa only [twoPolynomial,eval_comp,eval_add,eval_mul,eval_C,eval_pow,
+        eval_X,eval_sub,show b+v-b=v by ring] using hr
     · rw [two_deriv,show b+v-b=v by ring]
       exact hd.ne'
     · intro d hbd hd0
       have hw : U2 a b*(d-b)^3+T2 a b*(d-b)^2+S2 a b*(d-b)+L2 a b*R2 a b=0:=by
-        have he:=two_shift a b (d-b)
-        rw [show b+(d-b)=d by ring,hd0] at he
-        linear_combination -he
+        rw [←two_eval] at hd0
+        simpa only [twoPolynomial,eval_comp,eval_add,eval_mul,eval_C,eval_pow,
+          eval_X,eval_sub] using hd0
       have huniq:=hu (d-b) (by linarith) hw
       linarith
   have hnecessary (c : ℝ) (hbc : b<c) (hc : h a b c 2=0) : 0<R2 a b:=by

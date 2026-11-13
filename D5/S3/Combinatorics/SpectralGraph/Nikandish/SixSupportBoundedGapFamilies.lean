@@ -45,10 +45,14 @@ theorem inertia_differences (a : ℝ) :
 /-- Exactly two positive roots below3 in each original full gap family. -/
 theorem low_count (a : ℝ) (ha : 4 ≤ a) (i : Fin 4) :
     positiveBelow a (a+(gaps i).1) (a+(gaps i).2) 3 = 2 := by
+  obtain ⟨h12,h13,h23,h34⟩ := inertia_differences a
   fin_cases i <;> norm_num [gaps]
   all_goals apply (upper_criterion _ _ _ _ (by linarith) (by linarith)
     (by linarith) (by norm_num) (by linarith) ?_).1
-  all_goals nlinarith
+  · linarith only [h12,ha]
+  · linarith only [h13,ha]
+  · linarith only [h23,ha]
+  · linarith only [h34,ha]
 
 private theorem real_endpoints (a : ℕ) (ha : 4 ≤ a) (i : Fin 4) :
     h (a : ℝ) (a+(gaps i).1) (a+(gaps i).2) 1 ≠ 0 ∧
