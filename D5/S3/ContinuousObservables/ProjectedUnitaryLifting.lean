@@ -72,19 +72,11 @@ namespace IsProjective
 
 variable {P : L ℋ}
 
-private theorem isIdempotentElem (h : IsProjective P) : IsIdempotentElem P := h.2
-
-private theorem isStarProjection (h : IsProjective P) : IsStarProjection P :=
-  isProjective_iff_isStarProjection.mp h
-
 private theorem isSelfAdjoint (h : IsProjective P) : IsSelfAdjoint P := h.1.isSelfAdjoint
 
 private theorem adjoint_eq (h : IsProjective P) : P† = P := h.isSelfAdjoint.star_eq
 
 private theorem mul_self (h : IsProjective P) : P * P = P := h.2.eq
-
-private theorem one_sub (h : IsProjective P) : IsProjective (1 - P) :=
-  isProjective_iff_isStarProjection.mpr h.isStarProjection.one_sub
 
 private theorem mul_one_sub (h : IsProjective P) : P * (1 - P) = 0 := h.2.mul_one_sub_self
 
@@ -125,8 +117,6 @@ def encoded : L ℋ := E.P' * E.U * E.P
 @[simp] private theorem U_adjoint_mul_U : E.U† * E.U = 1 := Unitary.star_mul_self_of_mem E.hU
 
 @[simp] private theorem U_mul_U_adjoint : E.U * E.U† = 1 := Unitary.mul_star_self_of_mem E.hU
-
-private theorem hU' : E.U† * E.U = 1 ∧ E.U * E.U† = 1 := ⟨E.U_adjoint_mul_U, E.U_mul_U_adjoint⟩
 
 private theorem U_adjoint_mem_unitary : E.U† ∈ unitary (L ℋ) := Unitary.star_mem E.hU
 
