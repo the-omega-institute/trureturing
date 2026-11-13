@@ -54,7 +54,55 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slopeBody`
 
 The image is taken over the entire normalized positive annihilator body, without selecting a finite effect menu or replacing its convex body.
 
-**Definition 1.5 (Original antipodal all-effect gap).**
+**Theorem 1.5 (Full affine slope formula).**
+
+Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_formula`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_formula` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every coordinate vector z, the original functional at a(z) equals its value at a(0) plus the inner product of its slope with z.
+
+**Theorem 1.6 (Entire ball membership).**
+
+Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chart_mem`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chart_mem` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every vector of norm at most one maps into the entire original exclusion D(p).
+
+**Theorem 1.7 (An original confirming effect attains comparison).**
+
+Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.comparison_attained`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SingleLabelNormalBody.comparison_attained` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original base state x, compactness of the entire confirming-effect fiber supplies an original confirmer whose value at x is the comparison infimum.
+
+**Theorem 1.8 (Chart directions lie in the unit kernel).**
+
+Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chart_unit_linear`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chart_unit_linear` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original unit annihilates the chart's linear direction map on the whole coordinate space, because it is constant one on the affinely spanning closed unit ball.
+
+**Definition 1.9 (Original antipodal all-effect gap).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.gap`
 
@@ -66,7 +114,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.gap`
 
 For any chart vector n, the gap is the original comparison at a(n),a(-n). Comparison is the infimum over every original proper effect confirming a(n). The theorem restricts n to unit vectors, so both endpoints are original pure states.
 
-**Theorem 1.6 (Local propagation of singleton labels).**
+**Theorem 1.10 (Local propagation of singleton labels).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.single_label_neighbor`
 
@@ -78,7 +126,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.single_label_nei
 
 Assume only the original closed generating cone, strictly positive unit and entire positive-dimensional exclusion-ball charts. If p has a singleton label fiber, every pure q in D(p) also has a singleton label fiber. If another label shared D(q), two-point ball-face rigidity would collapse all pure boundary points of D(q) to p, contradicting its positive dimension. No global existence or topological premise is used.
 
-**Theorem 1.7 (Global maxima lie on the original exclusion face).**
+**Theorem 1.11 (Global maxima lie on the original exclusion face).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.positive_annihilator_maximum`
 
@@ -90,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.positive_annihil
 
 Every nonzero positive functional b with b(p)=0 has a strictly positive global maximum at an original pure state in D(p). A compact exposed maximum face supplies a pure maximizer; its normalized functional confirms that maximizer and vanishes at p. Original zero symmetry then places the maximizer in D(p).
 
-**Theorem 1.8 (Global bound by twice the original unit).**
+**Theorem 1.12 (Global bound by twice the original unit).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.normal_body_bound`
 
@@ -102,7 +150,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.normal_body_boun
 
 For every member of the entire normalized body, positivity on the whole chart ball bounds its slope norm by one. The global maximum identity transfers the resulting bound of two from D(p) to the entire base and hence gives zero <= b <= 2u on the whole cone.
 
-**Theorem 1.9 (Compactness in the original dual).**
+**Theorem 1.13 (Compactness in the original dual).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.normal_body_compact`
 
@@ -114,7 +162,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.normal_body_comp
 
 The whole normalized body is closed in the finite dimensional original dual. Its global bound places it inside the compact interval of all effects for the strictly positive unit 2u. No compactness of the pure-state carrier is assumed.
 
-**Theorem 1.10 (Exact original full-ball slope definition).**
+**Theorem 1.14 (Exact original full-ball slope definition).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_original`
 
@@ -126,7 +174,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_origi
 
 Membership v in the whole image is equivalent to existence of an original real-linear b positive on C, annihilating p, normalized at a(0), with b(a(z))=1+inner(v,z) for every z of the whole closed unit ball. The full ball has full affine span, so the affine formula uniquely determines the restriction slope.
 
-**Theorem 1.11 (Compact convex whole slope body).**
+**Theorem 1.15 (Compact convex whole slope body).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_geometry`
 
@@ -138,7 +186,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_geome
 
 The full slope map is linear and continuous, so the image of the compact convex original body is compact and convex. Its exact original affine formula and positivity on the whole unit ball give containment in the closed unit ball.
 
-**Theorem 1.12 (Actual positive slope on every unit ray).**
+**Theorem 1.16 (Actual positive slope on every unit ray).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.positive_ray`
 
@@ -150,7 +198,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.positive_ray`
 
 For every unit direction n, the actual boundary state q=a(n) has a singleton label by local propagation. A common original confirmer of q vanishing on all of D(q) has restriction 1-lambda+lambda inner(n,z) on D(p), with zero < lambda <= 1/2. A zero lambda would make all pure states of D(p) share D(q). Normalizing this actual confirmer at a(0) gives a member of the entire original body with slope t n, where zero < t <= 1.
 
-**Theorem 1.13 (Finite directional selection gives a uniform inner ball).**
+**Theorem 1.17 (Finite directional selection gives a uniform inner ball).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_inradius`
 
@@ -162,7 +210,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_inrad
 
 Choose an actual positive ray point for each of the finitely many signed coordinate directions. Their positive minimum eta and convexity give all signed eta-axis points. Averaging d coordinate points proves containment of the Euclidean ball of radius eta/d, which is positive and at most one. This sufficient radius need not be optimal; the body remains the whole image.
 
-**Theorem 1.14 (Exact zero gap locus).**
+**Theorem 1.18 (Exact zero gap locus).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.zero_gap_iff`
 
@@ -174,7 +222,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.zero_gap_iff`
 
 For every original unit direction, the original all-effect gap vanishes exactly when that unit direction belongs to the whole slope body. A unit slope yields the legal original confirming effect b/2. Conversely compactness of the entire confirming-effect fiber gives an attained zero, hence the antipode belongs to D(q). A common original confirmer vanishes there and at p, and doubling it realizes the exact unit slope. This equivalence does not require the singleton-label hypothesis.
 
-**Theorem 1.15 (Uniform bound over all original unit directions).**
+**Theorem 1.19 (Uniform bound over all original unit directions).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.uniform_original_gap`
 
@@ -186,7 +234,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.uniform_original
 
 For each fixed singleton-label p and every full chart, one radius zero < rho <= 1 satisfies rho-ball containment. For every unit n the original gap is at most (1-rho)/(1+rho), which is strictly below one, and its zero locus is exactly membership of n in the whole slope body. A positive annihilator of slope rho n has global maximum 1+rho, so dividing by that value gives a legal effect in the entire original interval.
 
-**Theorem 1.16 (Dimension bound in the original carrier).**
+**Theorem 1.20 (Dimension bound in the original carrier).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.native_dimension`
 
@@ -203,6 +251,9 @@ The local theorem fixes a singleton-label p and proves neighbor propagation with
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.SingleLabel`
+- Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chart_mem`
+- Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.chart_unit_linear`
+- Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.comparison_attained`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.gap`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.native_dimension`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.normalBody`
@@ -216,6 +267,7 @@ The local theorem fixes a singleton-label p and proves neighbor propagation with
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_geometry`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_inradius`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_body_original`
+- Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.slope_formula`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.uniform_original_gap`
 - Truth anchor: `D5/S3/Quantum/Foundation/SingleLabelNormalBody.zero_gap_iff`
 - Dependency: [D5/S3/Quantum/Foundation/ContinuousFrameSum](ContinuousFrameSum.md)

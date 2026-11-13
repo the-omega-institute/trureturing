@@ -565,7 +565,7 @@ theorem uniform_original_gap (hc : IsClosed (C : Set V))
     (div_lt_one (by linarith : 0 < 1 + rho)).mpr (by linarith),
     zero_gap_iff hc hs hg hB p a n hn⟩
 
-private theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
+theorem chart_unit_linear {p : V} (a : ExclusionChart C u p) (z) :
     u (a.param.linear z) = 0 := by
   have hspan : affineSpan ℝ (Metric.closedBall (0 : EuclideanSpace ℝ (Fin a.dim)) 1) = ⊤ := by
     apply (convex_closedBall _ _).interior_nonempty_iff_affineSpan_eq_top.mp

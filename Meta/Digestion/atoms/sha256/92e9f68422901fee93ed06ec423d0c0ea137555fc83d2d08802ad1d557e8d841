@@ -1,0 +1,34 @@
+### 122.15 复用、新综合与原始来源边界
+
+| 类别 | 本章使用或保留的结果 |
+| --- | --- |
+| 仓内复用 | VII103.2／104.1完整面；IX116.17条件静态重构；IX118.9—118.15的WZ、最大值及宽度；IX120.8—120.13原法向图、邻标签及完整边区间；121.2—121.4的中点、余量和静态等价；121.7—121.13残余切扇及局部带权收缩 |
+| 量词改写 | 定理122.2的接触标签稠密等价；它不另计分类或独立公理减少 |
+| 原域综合 | 定理122.4—122.6的实际影像、唯一实际接触、严格凸四维法锥、光滑影壳及准确闭像；定理122.8—122.9的同一旋转、整球及完整零效应双向塌缩、二维三角形与严格正缺口；122.10—122.13的倒向高度、方向正规域、实际接触连续性和单位球接触判据 |
+| 成熟中间工具 | 有限维分离及双对偶、支撑函数、极性、紧性、Hausdorff距离、Cauchy–Schwarz等号和Baire闭覆盖；均不另立为新数学内容 |
+| 待证桥 | 裸EB3的Inj与接触自动性；跨原标签的WZ/(O)或其他足够联合约束；共同二次结构、覆盖与维数上界；以及全部非几何物理供应 |
+
+所比较的既有理论限于上述完整原面／法向／稳定性接口，以及下列原始文献的指定部分；不声称未列文献不存在相近结果。
+
+[Pataki][Q122P]的Definition 1、Remark 1把niceness定义为对每个面 $F\unlhd K$ 的 $K^*+F^\perp$ 闭，Theorem 2刻画同一面处的等价条件。本章代入的是 $K=C^*,F=N_p$，所以被投影的是原 $C$。其一般线性像理论与极性是成熟工具；本章的 $Z\cap S_v$、实际 $F_v$ 及完整原效应极限需要正文另给的原域证明。不能把一般闭像定理改名当作新内容，也不能反转原锥／对偶锥的角色。
+
+[Lourenço–Roshchina–Saunderson][Q122LRS] §2.2、Proposition 2.3给projectionally exposed $\Rightarrow$ amenable $\Rightarrow$ nice $\Rightarrow$ facially exposed；投影不要求正交，误差常数允许依面变化。其Corollary 3.5与Remark 3.6之后的讨论指出 $\mathrm{CP}^4$ amenable而其copositive对偶不facially exposed，已足以阻止把这些性质不加前件地传给对偶。该文§7.1、§7.3讨论切片极体、切向与高阶切向条件；它们不供应本章移动原球的单位增益或全域连续性。IX119所得原锥性质仍只按其原方向消费。
+
+[Weis][Q122W] §2.1的Definition 2.3与Remark 2.4明确区分面、暴露面、支撑函数及法锥；§2.4讨论自对偶锥截面与投影的极性，§3.1 Proposition 3.1给固定线性投影下的面提升。其对象已有有限维C星代数及固定投影；这些面格／极性关系本身没有断言移动参数时整个面族Hausdorff连续，也不是裸EB3分类。本章比值影像及塌缩证明没有借用该文预置的矩阵自对偶结构。
+
+一般face-function半连续性的相关题录为Eifler的 *Semi-continuity of the face-function for a convex set*，DOI 10.1007/BF02567372；该文正文未核对，不引用其定理或以它承担任何结论。上述范围内的来源比较没有发现可直接替代本章全部原域接触及塌缩链的已核对陈述；这一比较只限于所列既有卷与原始文献，不构成全球新意判断。
+
+[MixedExclusionGeometry][Q122Mixed]及其调用的[weakPair定义][Q122Weak]仍显式带原正交纯对的真最小面前件。其连续标签、中心和收缩以该前件为条件，不能移入EB3+Inj。[原正互补投影定理][Q122Projections]的前件同样包含weakPair；本章未证这一前件，不由该定理输入正过滤或全域连续性。成熟Jordan分类只经IX116.17、VIII113.9的完整前置接口复用，不以法锥严格凸或某个局部半范数替代projectivity、proper least、对称跃迁概率或滤子保纯。
+
+[Q122VII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "完整排除面第七卷VII103.2、104.1—104.3；与本卷有限层级103—104不同。"
+[Q122VIII]: https://github.com/the-omega-institute/trureturing/blob/5f749ade652957c89e6b8b8d7799e7e5e4947903/docs/develop/theory/QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII112.9、113.8—113.11；同原静态重构与完整联合物理合同。"
+[Q122IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX116.17位于116.13节；IX118.9—118.15、120.2、120.8—120.13、120.11节的原对象、法向图、全效应区间和物理合同。"
+[Q122121]: https://github.com/the-omega-institute/trureturing/blob/2f08292714e2f1a90efbe77a5c71c33048191fee/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "本卷121：中点接触、余量下半连续、原零效应残余稳定、真实切扇及带权局部范数。"
+[Q122P]: https://arxiv.org/pdf/1202.4043v4 "Gábor Pataki, On the connection of facially exposed and nice cones；Definition 1、Remark 1，Theorem 2及Remark 2；J. Math. Anal. Appl. 400, 211–221，DOI 10.1016/j.jmaa.2012.10.033。"
+[Q122LRS]: https://arxiv.org/pdf/2011.07745v2 "Bruno F. Lourenço, Vera Roshchina, James Saunderson, Amenable cones are particularly nice；§2.2 Proposition 2.3、Corollary 3.5与Remark 3.6之后的对偶讨论、§7.1及§7.3；DOI 10.1137/20M138466X。"
+[Q122W]: https://arxiv.org/pdf/1101.3098v6 "Stephan Weis, Quantum Convex Support；§2.1、§2.4、§3.1 Proposition 3.1；DOI 10.1016/j.laa.2011.06.004。"
+[Q122Mixed]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/MixedExclusionGeometry.lean "显式weakPair前件下的原混态排除几何与连续性。"
+[Q122Weak]: https://github.com/the-omega-institute/trureturing/blob/817dee4ff1398b8a0cedf20bd54e6836d71708b3/D5/S3/Quantum/Foundation/OrthogonalJointCompletion.lean "weakPair量化全部原正交纯对生成真最小面；数学共同测量不声称实际菜单。"
+
+[Q122Projections]: https://github.com/the-omega-institute/trureturing/blob/1ce3f594c6084f2350b480c2850db393549065cc/D5/S3/Quantum/Foundation/PositiveComplementaryProjections.lean "whole_positive_projections的前件显式包含weakPair；其正互补投影不作为本章EB3+Inj的输入。"
+

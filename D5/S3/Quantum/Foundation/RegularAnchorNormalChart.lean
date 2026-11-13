@@ -37,7 +37,7 @@ def EB3 (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Prop :=
   ∀ p : pure C u, Nonempty (FullBall3Chart C u p)
 
 /-- The same chart in the existing native chart carrier. -/
-def FullBall3Chart.native {p : V} (a : FullBall3Chart C u p) : ExclusionChart C u p :=
+def nativeChart {p : V} (a : FullBall3Chart C u p) : ExclusionChart C u p :=
   ⟨3, by decide, a.param, a.injective, a.whole⟩
 
 /-- The original regular-anchor condition is uniqueness of the full family A_p. -/
@@ -58,17 +58,23 @@ private theorem comparison_zero (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     exact ⟨hx, f, hf, he.trans hz⟩
   · rintro ⟨_, f, hf, hfz⟩
     apply le_antisymm
-    · exact (csInf_le ⟨0, by rintro r ⟨e, he, rfl⟩; exact (he.1 x hx.1).1⟩
-        ⟨f, hf, rfl⟩).trans_eq hfz
-    · apply le_csInf ⟨f x, f, hf, rfl⟩
+    · have hle : comparison C u p x ≤ f x := by
+        apply csInf_le
+        · exact ⟨0, by rintro r ⟨e, he, rfl⟩; exact (he.1 x hx.1).1⟩
+        · exact ⟨f, hf, rfl⟩
+      exact hle.trans_eq hfz
+    · apply le_csInf (s := {r | ∃ e : V →ₗ[ℝ] ℝ, confirms C u p e ∧ e x = r})
+        ⟨f x, f, hf, rfl⟩
       rintro r ⟨e, he, rfl⟩
       exact (he.1 x hx.1).1
 
+omit [FiniteDimensional ℝ V] in
 private theorem complement_normal {p : pure C u} {e : V →ₗ[ℝ] ℝ}
     (he : common C u p e) : u - e ∈ zeroPositive C u p := by
   refine ⟨fun x hx => sub_nonneg.mpr (he.1.1 x hx).2, ?_⟩
   simp [LinearMap.sub_apply, (pure_mem p).2, he.1.2]
 
+omit [FiniteDimensional ℝ V] in
 private theorem complement_chart {p : pure C u} {e : V →ₗ[ℝ] ℝ}
     (he : common C u p e) (a : ExclusionChart C u p) (w) :
     (u - e) (a.param w) = 1 := by
@@ -89,7 +95,7 @@ private theorem constant_normal
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hg : Submodule.span ℝ (C : Set V) = ⊤)
     (p : pure C u) (a : ExclusionChart C u p)
-    (e : V →ₗ[ℝ] ℝ) (he : common C u p e)
+    (e : V →ₗ[ℝ] ℝ) (_he : common C u p e)
     (huniq : ∀ f, common C u p f → f = e)
     (f : V →ₗ[ℝ] ℝ) (hf : f ∈ zeroPositive C u p)
     (hzero : slope a f.toContinuousLinearMap = 0) :
@@ -118,7 +124,7 @@ private theorem constant_normal
     · intro x hx
       obtain ⟨z, hz, rfl⟩ := a.whole.symm ▸ hx
       change u (a.param z) - (f (a.param 0))⁻¹ * f (a.param z) = 0
-      rw [(chart_mem a (by simpa using hz)).1.2, hformula, inv_mul_cancel₀ hpos.ne']
+      rw [(chart_mem a (by simpa using hz)).1.2, hformula z, inv_mul_cancel₀ hpos.ne']
       ring
   have heq := huniq _ hcommon
   ext x
@@ -135,11 +141,11 @@ def coordinates {p : V} (a : ExclusionChart C u p) :
   map_add' f g := by
     apply Prod.ext
     · rfl
-    · exact (slope a).map_add _ _
+    · simp only [map_add, Prod.snd_add]
   map_smul' t f := by
     apply Prod.ext
     · rfl
-    · exact (slope a).map_smul t _
+    · simp only [map_smul, Prod.smul_snd, RingHom.id_apply]
 
 private theorem complement_coordinates {p : pure C u} {e : V →ₗ[ℝ] ℝ}
     (he : common C u p e) (a : ExclusionChart C u p) :
@@ -149,8 +155,11 @@ private theorem complement_coordinates {p : pure C u} {e : V →ₗ[ℝ] ℝ}
   · apply ext_inner_right ℝ
     intro z
     have hh := slope_formula a (u - e).toContinuousLinearMap z
+    change (u - e) (a.param z) = (u - e) (a.param 0) + _ at hh
     rw [complement_chart he a z, complement_chart he a 0] at hh
-    simpa using hh.symm
+    change ⟪slope a (u - e).toContinuousLinearMap, z⟫ = ⟪(0 : EuclideanSpace ℝ (Fin a.dim)), z⟫
+    simp only [inner_zero_left]
+    linarith
 
 private theorem positive_coordinates_injective
     (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
@@ -164,13 +173,12 @@ private theorem positive_coordinates_injective
   let v := slope a f.toContinuousLinearMap
   let t := r / (1 + ‖v‖)
   have ht : 0 < t := div_pos hr (by positivity)
-  have hnorm : ‖-t • v‖ ≤ r := by
-    rw [norm_smul, Real.norm_eq_abs, abs_of_neg (neg_neg_of_pos ht)]
-    change t * ‖v‖ ≤ r
+  have hnorm : ‖(-t) • v‖ ≤ r := by
+    rw [norm_smul, Real.norm_eq_abs, abs_of_neg (neg_neg_of_pos ht), neg_neg]
     dsimp [t]
     rw [div_mul_eq_mul_div, div_le_iff₀ (by positivity : 0 < 1 + ‖v‖)]
     nlinarith
-  obtain ⟨b, hb, hbv⟩ := hball (by simpa using hnorm)
+  obtain ⟨b, hb, hbv⟩ := hball (show (-t) • v ∈ Metric.closedBall 0 r by simpa using hnorm)
   let d : V →ₗ[ℝ] ℝ := t⁻¹ • b.toLinearMap
   have hd : d ∈ zeroPositive C u p :=
     ⟨fun x hx => mul_nonneg (inv_nonneg.mpr ht.le) (hb.1 x hx), by simp [d, hb.2.1]⟩
@@ -179,16 +187,15 @@ private theorem positive_coordinates_injective
   have hkadd : k + d ∈ zeroPositive C u p :=
     ⟨fun x hx => add_nonneg (hk.1 x hx) (hd.1 x hx), by simp [hk.2, hd.2]⟩
   have hfslope : slope a (f + d).toContinuousLinearMap = 0 := by
-    change slope a (f.toContinuousLinearMap + t⁻¹ • b) = 0
-    rw [map_add, map_smul, hbv, smul_smul]
+    simp only [d, map_add, map_smul]
+    change slope a f.toContinuousLinearMap + t⁻¹ • slope a b = 0
+    rw [hbv, smul_smul]
     change v + (t⁻¹ * -t) • v = 0
     simp [ht.ne']
   have hkslope : slope a (k + d).toContinuousLinearMap = 0 := by
     have hv := congrArg Prod.snd heq
     change slope a f.toContinuousLinearMap = slope a k.toContinuousLinearMap at hv
-    change slope a (k.toContinuousLinearMap + t⁻¹ • b) = 0
-    rw [map_add, ← hv]
-    exact hfslope
+    simpa only [map_add, ← hv] using hfslope
   have hfconst := constant_normal hc hs hg p a e he huniq (f + d) hfadd hfslope
   have hkconst := constant_normal hc hs hg p a e he huniq (k + d) hkadd hkslope
   have hcenter := congrArg Prod.fst heq
@@ -196,5 +203,236 @@ private theorem positive_coordinates_injective
   apply add_right_cancel (b := d)
   rw [hfconst, hkconst]
   simp only [LinearMap.add_apply, hcenter]
+
+private theorem coordinates_bijective
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (p : pure C u) (hp : SingleLabel C u p) (a : ExclusionChart C u p)
+    (e : V →ₗ[ℝ] ℝ) (he : common C u p e)
+    (huniq : ∀ f, common C u p f → f = e) :
+    Function.Bijective ((coordinates a).comp (NormalSpan C u p).subtype) := by
+  let S := NormalSpan C u p
+  let R := (coordinates a).comp S.subtype
+  have hgS : u - e ∈ S := Submodule.subset_span (complement_normal he)
+  have hgin := complement_coordinates he a
+  constructor
+  · intro f k hfk
+    obtain ⟨b, hb, d, hd, hbd⟩ := positive_span_difference (S.sub_mem f.property k.property)
+    have hco : coordinates a b = coordinates a d := by
+      apply sub_eq_zero.mp
+      rw [← map_sub, ← hbd]
+      change R (f - k) = 0
+      rw [map_sub, hfk, sub_self]
+    have heq := positive_coordinates_injective hc hs hg hB p hp a e he huniq hb hd hco
+    apply Subtype.ext
+    apply sub_eq_zero.mp
+    rw [hbd, heq, sub_self]
+  · rintro ⟨s, v⟩
+    obtain ⟨r, hr, _, hball⟩ := slope_body_inradius hc hs hg hB p hp a
+    let t := r / (1 + ‖v‖)
+    have ht : 0 < t := div_pos hr (by positivity)
+    have hnorm : ‖t • v‖ ≤ r := by
+      rw [norm_smul, Real.norm_eq_abs, abs_of_pos ht]
+      dsimp [t]
+      rw [div_mul_eq_mul_div, div_le_iff₀ (by positivity : 0 < 1 + ‖v‖)]
+      nlinarith
+    obtain ⟨b, hb, hbv⟩ := hball (show t • v ∈ Metric.closedBall 0 r by simpa using hnorm)
+    have hbS : b.toLinearMap ∈ S := Submodule.subset_span ⟨hb.1, hb.2.1⟩
+    have hbco : coordinates a b.toLinearMap = (1, t • v) :=
+      Prod.ext hb.2.2 hbv
+    refine ⟨⟨t⁻¹ • b.toLinearMap + (s - t⁻¹) • (u - e),
+      S.add_mem (S.smul_mem _ hbS) (S.smul_mem _ hgS)⟩, ?_⟩
+    change coordinates a (t⁻¹ • b.toLinearMap + (s - t⁻¹) • (u - e)) = (s, v)
+    rw [map_add, map_smul, map_smul, hbco, hgin]
+    apply Prod.ext
+    · simp
+    · simp [smul_smul, ht.ne']
+
+private theorem common_peak_unique
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hinj : Function.Injective (fun p : pure C u => exclusion C u p))
+    (p : pure C u) (e : V →ₗ[ℝ] ℝ) (he : common C u p e) :
+    ∀ x ∈ base C u, e x = 1 → x = p := by
+  let F := e.toContinuousLinearMap.toExposed (base C u)
+  have hex : IsExposed ℝ (base C u) F := ContinuousLinearMap.toExposed.isExposed
+  have hF (x : V) : x ∈ F ↔ x ∈ base C u ∧ e x = 1 := by
+    constructor
+    · rintro ⟨hx, hm⟩
+      exact ⟨hx, le_antisymm (by simpa [hx.2] using (he.1.1 x hx.1).2)
+        (by simpa [he.1.2] using hm p (pure_mem p))⟩
+    · rintro ⟨hx, hxe⟩
+      exact ⟨hx, fun y hy => by simpa [hxe, hy.2] using (he.1.1 y hy.1).2⟩
+  have geom := (exclusion_ball_faces hc hs hg hB).1
+  have hsingle : F.extremePoints ℝ ⊆ {(p : V)} := by
+    intro q hq
+    let q' : pure C u := ⟨q, hex.isExtreme.extremePoints_subset_extremePoints hq⟩
+    have hqe : e q = 1 := ((hF q).mp hq.1).2
+    have hsub : exclusion C u p ⊆ exclusion C u q' := by
+      intro x hx
+      exact ⟨hx.1, e, ⟨he.1.1, hqe⟩, he.2 x hx⟩
+    obtain ⟨bq⟩ := hB q'
+    have heq := chart_face_eq bq (geom p).2.2.1
+      ((geom p).2.2.2.2.1.mono (geom q').2.2.2.2.1.subset hsub) (geom p).1
+    exact mem_singleton_iff.mpr (congrArg Subtype.val (hinj heq)).symm
+  have hsub : F ⊆ {(p : V)} := by
+    rw [← closure_convexHull_extremePoints (hex.isCompact (base_compact hc hs))
+      (hex.convex (base_convex C u))]
+    exact closure_minimal (convexHull_min hsingle (convex_singleton (p : V))) isClosed_singleton
+  intro x hx hxe
+  exact mem_singleton_iff.mp (hsub ((hF x).mpr ⟨hx, hxe⟩))
+
+/-- The full original affine restriction is reconstructed by constant and slope. -/
+def affineCoordinates (E : Type*) [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    [FiniteDimensional ℝ E] : (E →ᵃ[ℝ] ℝ) ≃ₗ[ℝ] (ℝ × E) :=
+  (AffineMap.toConstProdLinearMap ℝ).trans
+    (LinearEquiv.prodCongr (LinearEquiv.refl ℝ ℝ)
+      (LinearMap.toContinuousLinearMap.trans (InnerProductSpace.toDual ℝ E).symm.toLinearEquiv))
+
+/-- Proved original-domain data for the actual three-dimensional normal chart. -/
+structure NativeChart (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
+    (p : pure C u) (e : V →ₗ[ℝ] ℝ) (a : FullBall3Chart C u p) where
+  restrictEquiv : NormalSpan C u p ≃ₗ[ℝ] (ThreeSpace →ᵃ[ℝ] ℝ)
+  restrict_eq : ∀ f, restrictEquiv f = restriction (nativeChart a) f
+  H : V →ₗ[ℝ] ThreeSpace
+  chart_eq : ∀ w, H (a.param w) = w
+  coordinate_mem : ∀ i : Fin 3, (PiLp.proj 2 (fun _ : Fin 3 => ℝ) i).toLinearMap.comp H ∈
+    NormalSpan C u p
+  at_anchor : H p = 0
+  gap_normal : u - e ∈ zeroPositive C u p
+  gap_chart : ∀ w, (u - e) (a.param w) = 1
+  gap_positive : ∀ x ∈ base C u, x ≠ (p : V) → 0 < (u - e) x
+  uniform_bound : ∃ M : ℝ, 0 < M ∧ ∀ x ∈ C, ‖H x‖ ≤ M * (u - e) x
+  zero_comparison : ∀ x ∈ base C u, comparison C u p x = 0 ↔ x ∈ exclusion C u p
+  cone_salient : C.toConvexCone.Salient
+  chart_unit_linear : ∀ w, u (a.param.linear w) = 0
+  normal_dimension : Module.finrank ℝ (NormalSpan C u p) = 4
+
+
+/-- EB3, exclusion-label injectivity and actual regularity derive the entire native
+normal chart and a finite bound on the whole original cone. -/
+theorem regular_anchor_native
+    (hc : IsClosed (C : Set V)) (hs : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hg : Submodule.span ℝ (C : Set V) = ⊤) (h3 : EB3 C u)
+    (hinj : Function.Injective (fun p : pure C u => exclusion C u p))
+    (p : pure C u) (e : V →ₗ[ℝ] ℝ) (he : common C u p e)
+    (hreg : Regular C u p) (a : FullBall3Chart C u p) :
+    Nonempty (NativeChart C u p e a) := by
+  classical
+  have hB : exclusionBalls C u := fun q => by
+    obtain ⟨b⟩ := h3 q
+    exact ⟨(nativeChart b)⟩
+  have hp : SingleLabel C u p := fun q hq => hinj hq
+  have huniq : ∀ f, common C u p f → f = e := fun f hf => hreg.unique hf he
+  let S := NormalSpan C u p
+  let R := (coordinates (nativeChart a)).comp S.subtype
+  let Q : S ≃ₗ[ℝ] (ℝ × ThreeSpace) := LinearEquiv.ofBijective R
+    (coordinates_bijective hc hs hg hB p hp (nativeChart a) e he huniq)
+  let A := affineCoordinates ThreeSpace
+  let E : S ≃ₗ[ℝ] (ThreeSpace →ᵃ[ℝ] ℝ) := Q.trans A.symm
+  have hE (f : S) : E f = restriction (nativeChart a) f := by
+    apply A.injective
+    change A (A.symm (Q f)) = A (restriction (nativeChart a) f)
+    rw [A.apply_symm_apply]
+    rfl
+  let k : Fin 3 → S := fun i => Q.symm (0, EuclideanSpace.single i 1)
+  have hk (i : Fin 3) : coordinates (nativeChart a) (k i) = (0, EuclideanSpace.single i 1) :=
+    Q.apply_symm_apply _
+  let H : V →ₗ[ℝ] ThreeSpace :=
+    (WithLp.linearEquiv 2 ℝ (Fin 3 → ℝ)).symm.toLinearMap.comp
+      (LinearMap.pi (fun i => (k i : V →ₗ[ℝ] ℝ)))
+  have hHi (x : V) (i : Fin 3) : H x i = (k i : V →ₗ[ℝ] ℝ) x := rfl
+  have hchart (w : ThreeSpace) : H (a.param w) = w := by
+    ext i
+    rw [hHi]
+    have hh := slope_formula (nativeChart a) (k i : V →ₗ[ℝ] ℝ).toContinuousLinearMap w
+    change (k i : V →ₗ[ℝ] ℝ) (a.param w) =
+      (coordinates (nativeChart a) (k i)).1 + ⟪(coordinates (nativeChart a) (k i)).2, w⟫ at hh
+    rw [hk] at hh
+    change (k i : V →ₗ[ℝ] ℝ) (a.param w) =
+      0 + ⟪(EuclideanSpace.single i (1 : ℝ) : ThreeSpace), w⟫ at hh
+    simpa only [EuclideanSpace.inner_single_left, conj_trivial, one_mul, zero_add] using hh
+  have hspan (i : Fin 3) : (PiLp.proj 2 (fun _ : Fin 3 => ℝ) i).toLinearMap.comp H ∈ S := by
+    exact (k i).property
+  have hanchor : H p = 0 := by
+    ext i
+    obtain ⟨b, hb, d, hd, hbd⟩ := positive_span_difference (k i).property
+    change (k i : V →ₗ[ℝ] ℝ) p = 0
+    rw [hbd]
+    simp [hb.2, hd.2]
+  obtain ⟨r, hr, _, hball⟩ := slope_body_inradius hc hs hg hB p hp (nativeChart a)
+  have hgS : u - e ∈ S := Submodule.subset_span (complement_normal he)
+  have hpositive (i : Fin 3) (t : ℝ) (ht : |t| ≤ r) :
+      u - e + t • (k i : V →ₗ[ℝ] ℝ) ∈ zeroPositive C u p := by
+    have hnorm : ‖t • EuclideanSpace.single i (1 : ℝ)‖ ≤ r := by
+      simpa [norm_smul, EuclideanSpace.single] using ht
+    have hbmem : t • EuclideanSpace.single i (1 : ℝ) ∈
+        Metric.closedBall (0 : ThreeSpace) r := by
+      rwa [Metric.mem_closedBall, dist_zero_right]
+    obtain ⟨b, hb, hbco⟩ := hball hbmem
+    change (slope (nativeChart a) b : ThreeSpace) =
+      t • (EuclideanSpace.single i 1 : ThreeSpace) at hbco
+    have hbS : b.toLinearMap ∈ S := Submodule.subset_span ⟨hb.1, hb.2.1⟩
+    have heq : u - e + t • (k i : V →ₗ[ℝ] ℝ) = b.toLinearMap := by
+      have hh : (⟨u - e + t • (k i : V →ₗ[ℝ] ℝ),
+          S.add_mem hgS (S.smul_mem t (k i).property)⟩ : S) = ⟨b.toLinearMap, hbS⟩ := by
+        apply Q.injective
+        change coordinates (nativeChart a) (u - e + t • (k i : V →ₗ[ℝ] ℝ)) =
+          coordinates (nativeChart a) b.toLinearMap
+        rw [map_add, map_smul, complement_coordinates he, hk]
+        apply Prod.ext
+        · change 1 + t * 0 = b ((nativeChart a).param 0)
+          simpa using hb.2.2.symm
+        · change (0 : ThreeSpace) + t • (EuclideanSpace.single i 1 : ThreeSpace) =
+            (slope (nativeChart a) b : ThreeSpace)
+          rw [zero_add]
+          exact hbco.symm
+      exact congrArg Subtype.val hh
+    rw [heq]
+    exact ⟨hb.1, hb.2.1⟩
+  have hcoord (x : V) (hx : x ∈ C) (i : Fin 3) : |H x i| ≤ r⁻¹ * (u - e) x := by
+    have hp' := (hpositive i r (by rw [abs_of_pos hr])).1 x hx
+    have hm' := (hpositive i (-r) (by rw [abs_neg, abs_of_pos hr])).1 x hx
+    change 0 ≤ (u - e) x + r * H x i at hp'
+    change 0 ≤ (u - e) x + -r * H x i at hm'
+    rw [abs_le]
+    constructor
+    · have hh : -(H x i) ≤ r⁻¹ * (u - e) x :=
+        (le_inv_mul_iff₀ hr).mpr (by linarith)
+      linarith
+    · exact (le_inv_mul_iff₀ hr).mpr (by linarith)
+  have hbound : ∀ x ∈ C, ‖H x‖ ≤ (3 * r⁻¹) * (u - e) x := by
+    intro x hx
+    have heq : H x = ∑ i : Fin 3, EuclideanSpace.single i (H x i) := by
+      ext j
+      simp [EuclideanSpace.single, Finset.sum_apply]
+    calc
+      ‖H x‖ = ‖∑ i : Fin 3, EuclideanSpace.single i (H x i)‖ := congrArg norm heq
+      _ ≤ ∑ i : Fin 3, ‖EuclideanSpace.single i (H x i)‖ := norm_sum_le _ _
+      _ = ∑ i : Fin 3, |H x i| := by simp [EuclideanSpace.single]
+      _ ≤ ∑ _i : Fin 3, r⁻¹ * (u - e) x := Finset.sum_le_sum (fun i _ => hcoord x hx i)
+      _ = (3 * r⁻¹) * (u - e) x := by simp; ring
+  have hsalient : C.toConvexCone.Salient := by
+    intro x hx hx0 hneg
+    have hpx := hs x hx hx0
+    have hnx := hs (-x) hneg (neg_ne_zero.mpr hx0)
+    rw [map_neg] at hnx
+    linarith
+  have hdim : Module.finrank ℝ S = 4 := by
+    have hh := Q.finrank_eq
+    simpa [Module.finrank_prod, Module.finrank_self, ThreeSpace, finrank_euclideanSpace_fin] using hh
+  refine ⟨⟨E, hE, H, hchart, hspan, hanchor, complement_normal he,
+    complement_chart he (nativeChart a), ?_, ⟨3 * r⁻¹, by positivity, hbound⟩,
+    fun x hx => comparison_zero hs hg p hx, hsalient,
+    SingleLabelNormalBody.chart_unit_linear (nativeChart a), hdim⟩⟩
+  intro x hx hxp
+  have hnonneg := (complement_normal he).1 x hx.1
+  apply lt_of_le_of_ne hnonneg
+  intro hz
+  have heone : e x = 1 := by
+    change 0 = u x - e x at hz
+    rw [hx.2] at hz
+    linarith
+  exact hxp (common_peak_unique hc hs hg hB hinj p e he x hx heone)
 
 end D5.S3.Quantum.Foundation.RegularAnchorNormalChart
