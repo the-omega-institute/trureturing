@@ -1,0 +1,29 @@
+**定义 123.9（不限定三次坐标的原条件候选）。** 对一般原模型，$\mathsf E_0$ 始终逐项取127.1、129.1：有限维闭尖生成原锥和严格正原单位，整个 $K,P,\mathcal E$ 及最低定义；全部原纯标签的EB3；Inj；一组含 $P_0$ 顶点的实际原正交种子三角；该三角全部原零效应的联合分离 $\mathsf J_\triangle$；按125.6取值于 $M_i=\operatorname{span}D_{p_i}$ 并保留全部原法向读数而唯一确定的三个规范线性投影 $T_i$ 的全锥正性。PC1和IC0不在这个入口中。共同 $B,w,c,I$ 由同一实际种子按127.2、129.2定义：
+
+$$
+\begin{gathered}
+c=w/3,\qquad I=\{c+h:u(h)=0,\ B(h,h)\le1/6\}\subset K,\\
+\mathsf{PC1}:\quad\forall p\in P\ \exists i:\Delta_i(p)=0,\qquad
+\mathsf{IC}_0:\quad\forall p\in P_0:\ D_p\cap I\ne\varnothing,\\
+\text{完整条件候选}=\mathsf E_0+\mathsf{IC}_0
+\quad\text{连同127.10全部原合同及其完整引用链}.
+\end{gathered}
+\tag{123.30}
+$$
+
+$1/6$ 是以 $c$ 为中心的仿射半径平方；在 $u=1$ 上相应原点范数平方为 $1/2$。已有127.11、129.8、130.5及本卷121.6—121.7在同一 $\mathsf E_0$ 内给出 $P=P_0$，并给条件等价
+
+$$
+\mathsf{IC}_0\ \Longleftrightarrow\ \mathsf{PC1}
+\ \Longleftrightarrow\ \text{全原PC3}
+\ \Longleftrightarrow\ \mathsf W
+\ \Longleftrightarrow\ \text{同原全锥、同单位的PSD}_3\text{静态字典}.
+\tag{123.31}
+$$
+
+在每个指定标签上，接触等价于 $e_p(w)=1$、$B(p,p)=1$ 及三个 $\Delta_i(p)$ 全零，是点态PC3；点态PC1只要求其中一个为零，全域升级仍取原全称量词。IX120.9的 $P_0$ 稠密、THREE_COPY VII121.6的稠密 $G_\delta$ 与非塌缩层闭图、原宽度紧层、本卷121的确认唯一均直接复用。整个W下的G、Jordan分类、状态谱及谱唯一直接复用VIII113.7—113.9；130.2在尚无W的EB加Inj域给全态覆盖，130.3—130.4及131保留原非中心边界谱性和近似闭包条件，不在这里重计。
+
+定理123.5只在已先给(123.1)—(123.2)的族内把有限边缘检验、EB3和PSD正规形接通；定理123.3与123.6保证正规形分支满足同一种子的整个 $\mathsf E_0$ 以及PC1／IC0。它没有为任意 $\mathsf E_0$ 模型取得这个三次表示。因而一般 $\mathsf E_0\Rightarrow\mathsf{PC1}/\mathsf{IC}_0$ 仍未由本章证明，也未构造完整同域反模型。把族表示加作前提再套用定理123.5，不能算作该全局蕴含的证明。
+
+[X125][Q123X]在EB3+PR域所给旧整球共同近零确认，仍仅是近零读数结论；其CS／UF／NC稳定入口也保持原义。它不自动给真实接触或从任意单张效应的小读数到其零集的距离界。本章的点态识别来自准确取零与整球反射，未消费该未付稳定桥；同样未从本章有限检测推出裸EB3的Inj、种子、联合分离或正压缩自动性。谓词缩短不表示独立公理更少。
+

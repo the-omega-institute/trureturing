@@ -1,0 +1,37 @@
+**定理 122.2（全参数的闭双曲锥）。** 对每个 $|\lambda|\le1$，$d_\lambda$ 关于 $w$ 双曲，且(122.1)的整个 $C_\lambda$ 恰为该方向的闭双曲锥。因而它是闭、尖、生成的凸锥，$w\in\operatorname{int}C_\lambda$，$u$ 在非零锥元上严格正，$K_\lambda$ 为紧凸基底，$\mathcal E_\lambda$ 为紧的完整效应区间，(122.2)中的最小值确实达到。实线性对合
+
+$$
+R(a_1,a_2,a_3;z_1,z_2,z_3)
+ =(a_1,a_2,a_3;-z_1,-z_2,-z_3)
+\tag{122.3}
+$$
+
+保持 $u,w$，且 $R(C_\lambda)=C_{-\lambda}$。
+
+证明。固定任意实向量 $x$，置 $P=z_1z_2z_3$、$r=|P|$。若 $r>0$，由 $|\lambda\operatorname{Re}P|\le r$，可以选取模长分别为 $|z_i|$ 的三个复数 $\widetilde z_i$，使
+$\operatorname{Re}(\widetilde z_1\widetilde z_2\widetilde z_3)=\lambda\operatorname{Re}P$；例如先指定乘积的相位，再分配给三个因子。若 $r=0$，保留原 $z_i$ 即可。令
+
+$$
+H_x=\begin{pmatrix}
+a_1&\widetilde z_3&\overline{\widetilde z_2}\\
+\overline{\widetilde z_3}&a_2&\widetilde z_1\\
+\widetilde z_2&\overline{\widetilde z_1}&a_3
+\end{pmatrix}.
+\tag{122.4}
+$$
+
+对每个实 $\tau$，行列式展开给
+
+$$
+d_\lambda(x+\tau w)=\det(H_x+\tau I_3).
+\tag{122.5}
+$$
+
+$H_x$ 为Hermitian矩阵，故此单变量多项式全部根为实数；又 $d_\lambda(w)=1$，所以双曲性成立。这里的 $H_x$ 只是对每个固定 $x$ 的选择，不要求也没有取得关于 $x$ 的线性选择。
+
+按Renegar §2在Theorem 2之前的闭锥定义，闭双曲锥由 $\tau\mapsto d_\lambda(x+\tau w)$ 的根全不正刻画。由(122.5)，这恰等价于 $H_x\succeq0$。成熟的Hermitian判据说，所有主子式非负恰等价于PSD；在(122.4)中，七个非空主子式分别就是 $a_i$、$\Delta_i(x)$ 和 $d_\lambda(x)$。因此这个闭锥恰是(122.1)，双向包含同时成立。Renegar Theorem 2的Gårding凸性及其闭包结论遂给整个 $C_\lambda$ 的凸性；此处不需要借相位选择构造线性矩阵表示。
+
+显式不等式连续，故锥闭；它们在 $w$ 处全部严格，故 $w$ 是内点，锥满维并生成 $V$。若 $x\in C_\lambda$ 且 $u(x)=0$，三个非负 $a_i$ 全零，三个二阶条件再迫使全部 $z_i=0$。所以 $u$ 严格正；同时 $x,-x\in C_\lambda$ 只能发生于零，故锥尖。归一截面中 $0\le a_i\le1$、$|z_i|^2\le a_ja_k\le1/4$，所以 $K_\lambda$ 闭且有界，确为紧基底。
+
+效应区间闭。若其中一列 $f_n$ 的任一辅助对偶范数无界，取 $f_n/\|f_n\|$ 的单位极限 $h$。对每个 $x\in K_\lambda$，$0\le f_n(x)\le1$ 迫使 $h(x)=0$，而 $K_\lambda$ 线性张成 $V$，矛盾。因此效应区间紧。$\mathcal F_p$ 是含 $u$ 的闭子集，最低值达到。最后，直接代入得 $d_{-\lambda}(Rx)=d_\lambda(x)$，而 $R$ 不改变 $a_i,\Delta_i,u,w$；由于 $R^2=I$，得到(122.3)的全部断言。证毕。
+

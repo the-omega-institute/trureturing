@@ -1,0 +1,41 @@
+**定义 122.1（整个三次族及最低确认）。** 令 $V=\mathbb R^3\oplus\mathbb C^3$ 为实九维空间，写 $x=(a_1,a_2,a_3;z_1,z_2,z_3)$；$z_i$ 对应补指标组成的边 $jk$。固定
+
+$$
+\begin{gathered}
+u(x)=a_1+a_2+a_3,\qquad
+p_1=(1,0,0;0,0,0),\quad p_2=(0,1,0;0,0,0),\quad
+p_3=(0,0,1;0,0,0),\qquad w=p_1+p_2+p_3,\\
+\Delta_i(x)=a_ja_k-|z_i|^2\quad(\{i,j,k\}=\{1,2,3\}),\\
+d_\lambda(x)=a_1a_2a_3-\sum_{i=1}^3a_i|z_i|^2
+                    +2\lambda\operatorname{Re}(z_1z_2z_3),\\
+C_\lambda=\{x:a_i\ge0,\ \Delta_i(x)\ge0\ (i=1,2,3),\ d_\lambda(x)\ge0\},
+\qquad -1\le\lambda\le1.
+\end{gathered}
+\tag{122.1}
+$$
+
+对每个参数均取整个 $K_\lambda=C_\lambda\cap\{u=1\}$、$P_\lambda=\operatorname{ext}K_\lambda$ 和 $\mathcal E_\lambda=[0,u]_{C_\lambda^*}$。沿用原最低定义，标量函数与线性压缩分别记为 $\mathcal T_p$ 和 $T_i$：
+
+$$
+\begin{gathered}
+\mathcal F_p=\{f\in\mathcal E_\lambda:f(p)=1\},\qquad
+\mathcal T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(x\in C_\lambda),\\
+D_p=\{x\in K_\lambda:\mathcal T_p(x)=0\},\qquad
+\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\},\qquad
+P_0=\{p\in P_\lambda:\mathcal A_p\text{ 为单点}\},\\
+N_p=\{h\in C_\lambda^*:h(p)=0\},\qquad
+N_{D_p}=\{h\in C_\lambda^*:h|_{D_p}=0\},\\
+p\perp q\quad\Longleftrightarrow\quad
+\exists f\in\mathcal E_\lambda:\ f(p)=1,\ f(q)=0
+\quad\Longleftrightarrow\quad q\in D_p\qquad(p,q\in P_\lambda).
+\end{gathered}
+\tag{122.2}
+$$
+
+EB$_{\ge1}$ 表示每个原纯点的完整 $D_p$ 仿射同构于某个整数维数至少为一的整个闭球，维数可随标签改变；EB3把该维数固定为三。Inj表示 $D_p=D_q\Rightarrow p=q$。本章先不假设其中任何一项，也不假设全纯least确认、全局自对偶或实际仪器。二能级密度球的实仿射维数是三，其非归一Lorentz锥的实线性维数是四。
+
+本章所称125、127—130及其子条目均指[SAME_READBACK][Q122SR]，其中“127.10原合同”专指该卷第127.10节及其完整引用链，并非该卷定理127.10。关于一般原模型的条件结果直接复用这些条目及本卷121.6—121.8；本章新增的消费者仅是显式族(122.1)的全效应结算与族内反模型排除，归属为 `repo-derived`。双曲锥的分支、闭包和凸性采用[Renegar原始稿][Q122Renegar] §2、Proposition 1、Theorem 2及Theorem 3，属于成熟Gårding理论的中间复用；Hermitian主子式判据及端点的矩阵量子事实也只作为下列证明的成熟中间事实。这里不作历史优先权或全球新颖性判断，所给有限文献范围不构成这种判断的依据。
+
+[Q122SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "第125、127—130章：完整原域、规范种子、PC1、IC0、条件静态字典；第127.10节及其引用链：全部原合同。"
+[Q122Renegar]: https://optimization-online.org/wp-content/uploads/2004/03/844.pdf "James Renegar, Hyperbolic Programs, and Their Derivative Relaxations, §2, Proposition 1、Theorems 2—3；2004年原始稿。发表于 Foundations of Computational Mathematics 6 (2006), 59—79, DOI 10.1007/s10208-004-0136-z；本文仅使用所引原始稿中的准确命题。"
+

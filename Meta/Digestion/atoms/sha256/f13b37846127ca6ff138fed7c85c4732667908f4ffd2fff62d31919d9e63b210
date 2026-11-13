@@ -1,0 +1,18 @@
+### 125.10 在固定原E0中的双向条件链与未付自动性
+
+这里的 $\mathsf E_0$ **仍恰为**SAME_READBACK127.1、129.1的固定完整入口：非零有限维原 $V$，原闭尖生成锥 $C$，严格正的同一原 $u$，以及整个 $K,P,[0,u]$ 与原最低定义；全纯EB3；原标签Inj；一组含 $P_0$ 顶点的实际原正交三角 $(p_1,p_2,p_3)$；同一三角全部原零效应的联合分离；由其限制配对唯一确定的三个规范 $T_i$ 的全原锥正性。准确地，后两项仍为
+
+$$
+\begin{gathered}
+\forall x,y\in K:\quad
+\bigl[\forall i\ \forall b\in[0,u],\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]
+\Rightarrow x=y,\\
+M_i=\operatorname{span}D_{p_i},\quad T_i:V\to M_i,\quad
+h(T_i x)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\quad
+T_i(C)\subseteq C.
+\end{gathered}
+\tag{MC125.28}
+$$
+
+$P_0=\{p:\mathcal A_p\text{ 为单点}\}$，其中 $\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\}$；这些都是整个原确认族的定义，不是假定只有一张确认效应。联合分离量化全部相关零效应；规范压缩的正性量化整个 $C$。
+

@@ -1,0 +1,59 @@
+**定理 123.6（全域运输的准确静态后果）。** 设给定任意实线性双射 $\Psi:V\to\operatorname{Herm}_3(\mathbb C)$，满足 $\Psi(C_\tau)=\mathrm{PSD}_3$、$\operatorname{Tr}\Psi=u$、$\Psi(w)=I_3$，令 $\Phi=\Psi^{-1}$。则对这个给定的同构有
+
+$$
+\begin{gathered}
+C_\tau=\Phi(\mathrm{PSD}_3),\qquad
+K_\tau=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1\},\\
+P_\tau=\{p_\psi=\Phi(\psi\psi^*/(\psi^*\psi)):
+\psi\in\mathbb C^3\setminus\{0\}\}\cong\mathbb{CP}^2,\\
+\mathcal E_\tau=\{f_A:0\preceq A\preceq I_3\},\qquad
+f_A(\Phi X)=\operatorname{Tr}(AX).
+\end{gathered}
+\tag{123.26}
+$$
+
+全部非零纯锥射线是 $\mathbb R_+\Phi(\psi\psi^*)$。对单位 $\psi$，记 $P_\psi=\psi\psi^*$，则全部确认矩阵和原最低值为
+
+$$
+\begin{gathered}
+\mathcal F_{p_\psi}\longleftrightarrow
+\{P_\psi\oplus A_\perp:0\preceq A_\perp\preceq I_{\psi^\perp}\},\\
+\mathcal T_{p_\psi}(\Phi X)=\operatorname{Tr}(P_\psi X)
+\quad(X\succeq0),\\
+D_{p_\psi}=\{\Phi\rho:\rho\succeq0,\operatorname{Tr}\rho=1,
+\rho\psi=0\},\qquad
+\mathcal A_{p_\psi}=\{f_{P_\psi}\}.
+\end{gathered}
+\tag{123.27}
+$$
+
+因而每个完整 $D_p$ 是三球，Inj成立。全部原纯比较是归一复内积模方，原正交恰为复正交。整个静态字典继续沿127.9、129.8和VIII113.7—113.9复用，包括全部有限数学POVM、谱、Jordan乘积与数学压缩，不重立这些成熟端点为新的量子分类。
+
+关于指定种子的坐标字典另作条件陈述：若给定满足(123.18)的三个正交同构 $O_i$，则(123.25)的 $\Psi_O,\Phi_O$ 还满足(123.28)及下述角压缩公式。这项坐标陈述与任意给定 $\Psi$ 的(123.26)—(123.27)分别按各自前件证明。
+
+证明。由所给同构，$u\Phi=\operatorname{Tr}$、$\Phi(I_3)=w$。保基实线性锥同构仿射双射整个归一基并保留极点。PSD基底的极点恰为秩一投影：两个正本征值允许相反小扰动，秩至少二者不极端；秩一投影的凸分解则由正交补上的零二次型迫使全部正项支撑于同一复线。因此(123.26)覆盖全部原纯点与纯射线。
+
+对任意原实线性泛函 $f$，$f\Phi$ 在全部Hermitian空间上由唯一矩阵 $A$ 作迹配对。反向定义 $f_A(x)=\operatorname{Tr}(A\Psi x)$（$x\in V$），得到全部Hermitian矩阵与整个 $V^*$ 的实线性双射。因为 $\Psi(C_\tau)=\mathrm{PSD}_3$，$f_A\in C_\tau^*$ 当且仅当 $\operatorname{Tr}(AX)\ge0$ 对每个 $X\succeq0$ 成立；用全部 $X=\eta\eta^*$ 检查，这又当且仅当 $A\succeq0$。故这个双射是整个对偶锥的序同构，且 $f_{I_3}=u$，于是 $0\le f_A\le u$ 当且仅当 $0\preceq A\preceq I_3$。它保持评价、零、单位、补和所有有限非负和，给出(123.26)的完整效应区间。
+
+现在取任意原纯点 $p=p_\psi$、单位 $\psi$，以及任意原锥输入 $x=\Phi X$、$X\succeq0$。全部确认候选恰对应 $0\preceq A\preceq I_3$ 且 $\psi^*A\psi=1$，所以原定义的最小值准确为
+
+$$
+\mathcal T_{p_\psi}(\Phi X)
+=\min_{\substack{0\preceq A\preceq I_3\\ \psi^*A\psi=1}}
+\operatorname{Tr}(AX).
+$$
+
+这里候选集是整个原 $\mathcal F_{p_\psi}$ 的双射像；其最小值达到，也可直接由矩阵区间的紧性得到。
+
+成熟PSD事实还给出显式最低公式：若 $0\preceq A\preceq I_3$ 且 $\psi^*A\psi=1$，则 $(I_3-A)\psi=0$，所以 $A=P_\psi\oplus A_\perp$。反向每个这样的块矩阵都确认该纯点，且 $A_\perp=0$ 可取。所有这些 $A-P_\psi$ 都为PSD，故 $\operatorname{Tr}(AX)\ge\operatorname{Tr}(P_\psi X)$ 对所有 $X\succeq0$ 成立；$A=P_\psi$ 同时达到下界。因此 $f_{P_\psi}$ 是原全确认族的least，并得到(123.27)的最低公式。$X\succeq0$ 时 $\psi^*X\psi=0$ 等价于 $X\psi=0$，所以最低定义的整个 $D_{p_\psi}$ 恰为 $\psi^\perp$ 上全部密度矩阵的 $\Phi$ 像，包括其混态内部。这是整个二维复密度矩阵闭三球，故对所有原纯标签得到EB3。完整确认还要在这个整球上全零，迫使 $A_\perp=0$，给最后一个单点公式。补空间唯一决定原复线，故Inj成立。以上全纯点、全效应和完整排除公式对任意给定的 $\Psi$ 均成立，且线性运输保持所有有限凸组合、所有非负质量及零输入。
+
+对种子坐标的条件陈述，使用所给满足(123.18)的 $O_i$ 和(123.25)的指定构造 $\Psi_O=H\circ L_O^{-1}$、$\Phi_O=\Psi_O^{-1}$。该构造逐坐标满足本定理的三个同构恒等式，所以上述(123.26)—(123.27)同样适用于这对映射。它们还满足 $\Psi_O(p_i)=E_{ii}$，并由保留各对角坐标和各边内积得到种子定义的共同型
+
+$$
+B(x,y)=\sum_i a_i b_i+2\sum_i\langle z_i,\zeta_i\rangle,
+\qquad B(\Phi_O X,\Phi_O Y)=\operatorname{Tr}(XY).
+\tag{123.28}
+$$
+
+因此在这同一对 $\Psi_O,\Phi_O$ 下，原效应空间、全确认最低函数、纯边、完整排除球及共同尺相容。特别是对所有 $X\in\operatorname{Herm}_3(\mathbb C)$，$\Psi_O T_i\Phi_O(X)=Q_iXQ_i$，$Q_i=I_3-E_{ii}$，因为(123.25)把 $T_i$ 的坐标置零恰变为把矩阵第 $i$ 行及第 $i$ 列置零；单位、共同三框架、数学POVM和Jordan结构可直接使用所引端点字典。由正交同构保持各 $a_i,|z_i|$，矩阵秩一时三个 $\Delta_i$ 全零，故同一种子的全原PC3及PC1成立。这里没有把任何数学POVM、正压缩或锥同构识别成实际仪器。证毕。
+

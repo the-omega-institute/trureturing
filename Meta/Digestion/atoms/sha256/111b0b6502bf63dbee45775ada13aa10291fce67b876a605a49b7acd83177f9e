@@ -1,0 +1,28 @@
+**Proposition 117.2 (Phase action and the twisted extension).** Let
+$\sigma(W)=+1$ for unitary $W$ and $-1$ for antiunitary $W$. Then
+$\sigma$ is a continuous homomorphism and
+
+$$
+W(zI)W^{-1}=z^{\sigma(W)}I\qquad(|z|=1).
+\tag{117.6}
+$$
+
+Thus (117.3) is generally a twisted phase extension. Its kernel is
+central on the unitary restriction; if antiunitaries occur, the
+full kernel is not central.
+
+Proof. Composition multiplies the two linearity signs. The two
+components in (117.1) are open and closed, giving continuity.
+Complex linearity fixes scalar multiplication and antilinearity
+complex conjugates it. On the unit circle $\overline z=z^{-1}$,
+which is (117.6). An antiunitary therefore fails to commute with
+scalar phases other than the real ones. ∎
+
+The mature phase and sign structure is [De Nittis–Gomi, §3.1,
+equations (3.2)–(3.4), arXiv:1804.10111v2][DNG]. Here the compatible
+compact graph (117.2) is built for the original $H$ using the
+intrinsic overlap. No global continuous or homomorphic choice of
+phases, no splitting of (117.3), and no global unitary phase section
+is asserted. The semidirect product describing the ambient quotient
+does not assert a splitting for this original-$H$ extension.
+

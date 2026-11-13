@@ -1,0 +1,23 @@
+### 121.9 复用边界与成熟来源
+
+本章归属为 `repo-derived` 纸面综合，不主张全球原创、历史优先权、Lean核验或经验验证。新增消费者是：在一张指定原球面中，以九个采样纯标签各自的第二层非塌缩见证构造闭层；由九点评估秩取得局部整球连续；用两步实际原边产生四维紧纯点片；最后将该片接入已证八维法向层紧投影覆盖，消去全部确认冗余。九点二次插值、紧性、Baire、支撑函数、正半定平方根与区域不变性均为成熟工具，不另称新的一般插值或凸分析定理。
+
+直接复用的承重结果是：VII103.2、VII104.1的面分类；IX119.1、IX120.2的准确零面与一值面；IX119.10的法向维数及沿边常数；128.2的可数紧覆盖和单射Lipschitz投影逆；128.3、128.5所给旧分支及联合约束；IX120.9和THREE_COPY VII121.6的稠密与闭层；125.3—125.6的九维原配对；127的共同种子尺和完整条件重构；129的同心内外球、逐点等价与严格联合界；130的原态覆盖及谱性反向消费者；VIII113.7—113.9的整个W分类、G和谱字典。它们不作为本章新增成果重计。
+
+[Alberti原文][Alberti] Definition 1.7明确定义单位外法向集合，并说明其Hausdorff维数为法向锥维数减一；Theorem 3给闭全维凸集相应奇异层的 $h-k-1$ 维可数 $C^2$ 可求长性，按其Definition 1.1允许该维Hausdorff零测例外。本章仅核对成熟来源和索引，实际证明用128.2已展开的全点紧层投影，不从一条“几乎处处”结论自行删去例外集。
+
+区域不变性使用[Hatcher《Algebraic Topology》][Hatcher] §2.B、Theorem 2B.3、印刷页172的准确形式：$O\subset\mathbb R^d$ 开、$f:O\to\mathbb R^d$ 连续单射，则 $f(O)$ 开。121.6先把投影靶 $\mathbb R^3$ 线性放入 $\mathbb R^4$，才在同维四的源靶上应用此定理；没有把不同维的映射直接代入。两次Baire分别作用于实际球面的紧二盘和拉回的紧四立方体，二者都是明确的完备度量空间。
+
+[Alfsen—Shultz][AS]的Hilbert ball property仍要求每对极点生成的整个最小面为norm-exposed Hilbert球，其有限维分类还保留相应projectivity。[Barnum—Müller—Ududec][BMU] Theorem 16仍要求projectivity、跃迁概率对称及全部相应滤子保纯。本章的唯一完整确认、一个局部连续球族和三张正种子压缩没有支付这些全域前件；条件静态分类仍按127和VIII113的既有完整桥消费。文献核对不构成穷尽搜索或全球新颖性证书。
+
+[SameReadback]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "第125、127—130章：原种子配对、完整E0、法向紧层、内球接触和谱性条件消费者；第127.10节：全部原来源、有限复合、资源、事件、仪器、记录与时间合同。"
+[PolarVI]: QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md "定义89.7及式(89.13)：同一原装饰元组与全部两尺度、原质量及整个输出合同；不同于整球卷VI。"
+[FacetVII]: QUANTUM_ORIGIN_FINITE_PURE_POINT_AND_FACET_OBSTRUCTIONS_VII.md "VII103.2、104.1：完整原面；104.2—104.3：取得Pair_perp以后已有的全部对径与共同三结果。"
+[ExclusionIX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX119.1、119.10：准确原端面、法向维数及沿边冗余；119.8：线性限制与原单位费用的区别；IX120.8—120.9：限制同构及P0稠密。"
+[ThreeCopyVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "定理121.6：既有非塌缩层完整确认闭图及P0稠密Gdelta。"
+[ExclusionVIII]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_VIII.md "VIII113.7—113.9：整个W的同锥同单位分类、G、Jordan、状态谱及复三能级字典。"
+[Alberti]: https://people.dm.unipi.it/alberti/ricerca/1989-91/convex.pdf "Giovanni Alberti, On the structure of singular sets of convex functions, Calculus of Variations and Partial Differential Equations 2 (1994), 17—27, DOI 10.1007/BF01234313；Definition 1.1、Definition 1.7及Theorem 3。"
+[Hatcher]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology, §2.B, Theorem 2B.3, p.172：区域不变性。"
+[AS]: https://archive.ymsc.tsinghua.edu.cn/pacm_download/117/6236-11511_2006_Article_BF02392307.pdf "E. M. Alfsen and F. W. Shultz, State spaces of Jordan algebras, Acta Mathematica 140 (1978), 155—190；条件范围按127.11、129.7和130.7复用。"
+[BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16；条件范围按127.11复用。"
+

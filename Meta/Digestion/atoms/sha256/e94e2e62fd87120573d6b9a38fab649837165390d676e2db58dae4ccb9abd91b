@@ -1,0 +1,69 @@
+**Theorem 119.1 (Completion of Theorem 109.3).** Under Definition
+109.1 and the original compact pure-transitive $H$ of (109.7),
+$N=0$ and $\Phi=\pi^{-1}$ satisfies (109.6). On the entire original
+state, pure and effect spaces,
+
+$$
+\begin{aligned}
+\Phi(K)&=\mathcal D_n,& \Phi(P)&=\mathcal R_n,&
+\operatorname{Tr}\Phi&=u,\\
+e(x)&=\operatorname{Tr}(B\Phi(x)),&
+E&\longleftrightarrow\{B\in\operatorname{Herm}_n(\mathbb C):0\le B\le I\}.
+\end{aligned}
+\tag{119.1}
+$$
+
+Here each real-linear functional $e$ has one unique Hermitian
+representative $B$. Every supplied $h\in H$ acts, in this same
+dictionary, by some unitary or antiunitary conjugation:
+
+$$
+\Phi h\Phi^{-1}=\Gamma_W.
+\tag{119.2}
+$$
+
+Proof. Proposition 118.2 supplies precisely the compact subgroup,
+entire projective transitivity and kernel invariance required by
+Theorem 109.2. All of Definition 109.1 remains in force. Theorem
+114.1 therefore gives $N=0$ and (109.6). The whole-base and pure
+identities follow from (110.1) and (109.3).
+
+For the functional/effect identification use the already-owned
+trace-duality and dictionary part of [VI, Theorem 90.2][VI], once
+the trace-preserving cone isomorphism is available. In that dictionary
+$u$ corresponds to $I$, positivity of $e$ to $B\ge0$, and positivity
+of $u-e$ to $I-B\ge0$. This gives the exact entire interval in
+(119.1); no second Jordan reconstruction or matrix-dictionary proof
+is needed. Finally (116.3) conjugated by the inverse $\Phi$ gives
+(119.2). ∎
+
+The face equality of Proposition 110.2 already forces L3 in this
+projection framework. Thus VI's other conditional certificate
+consumers remain applicable with their own hypotheses. They are
+not extra proof premises here: neither S-to-Jordan, an equalizing
+form, the curvature certificate, nor homogeneity or pure bias was
+used to obtain $N=0$.
+
+For Theorem 109.2 with only supplied $G$, its quotient conjugation
+action is well-defined even before injectivity:
+
+$$
+h_g(\pi(X))=\pi(gXg^*)\qquad(g\in G).
+\tag{119.3}
+$$
+
+Kernel invariance makes this independent of $X$; (109.3) and the
+inverse $g^{-1}$ make it a normalized cone automorphism. After
+rigidity it becomes $h_g=\pi\Gamma_g\Phi$. Identifying this quotient
+action with any particular original legal action still requires
+that action's stated compatibility. In Theorem 119.1 the group
+$H$ is original by hypothesis and the graph enforces its compatibility.
+
+All identifications in (119.1) concern mathematical states and
+functionals of the original cone. They do not expand the legal
+preparation or measurement menu. In the original-prediction
+specialization the ready row maps to a rank-one density matrix only
+under the retained condition that this actual ready row is in $P$.
+A label for an abstract source projector does not establish that
+native-ready condition.
+

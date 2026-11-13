@@ -1,0 +1,58 @@
+**Definition 109.1 (Whole PSD projection datum).** Fix $n\ge2$. Let
+$V$ be a finite-dimensional real vector space, $C\subset V$ a closed,
+pointed, generating convex cone, and $u\in V^*$ strictly positive on
+$C\setminus\{0\}$. Retain the entire original objects
+
+$$
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad E=[0,u]_{C^*}.
+\tag{109.1}
+$$
+
+Write $\operatorname{Herm}_n(\mathbb C)$ for the real space of Hermitian
+matrices, $\operatorname{PSD}_n$ for its positive cone, and
+
+$$
+\mathcal D_n=\{\rho\ge0:\operatorname{Tr}\rho=1\},\qquad
+\mathcal R_n=\{Q\in\mathcal D_n:\operatorname{rank}Q=1\}.
+\tag{109.2}
+$$
+
+The additional projection data are a surjective real-linear map $\pi$
+and the following whole-domain identities:
+
+$$
+\begin{aligned}
+\pi &: \operatorname{Herm}_n(\mathbb C)\longrightarrow V,\qquad
+N=\ker\pi,\\
+\pi(\operatorname{PSD}_n)&=C,\qquad
+u(\pi(X))=\operatorname{Tr}X
+\quad(X\in\operatorname{Herm}_n(\mathbb C)),\\
+b=\pi|_{\mathcal R_n}&:\mathcal R_n\overset{\sim}{\longrightarrow}P.
+\end{aligned}
+\tag{109.3}
+$$
+
+In particular $b$ is bijective onto **all** original pure points.
+For every distinct $p,q\in P$, let $F_K(p,q)$ be their entire actual
+minimal face in $K$. Assume
+
+$$
+\dim_{\mathrm{aff}}F_K(p,q)\le3\qquad(p\ne q\in P).
+\tag{109.4}
+$$
+
+The stronger L3 condition that every such face is affinely isomorphic
+to the whole closed real three-ball implies (109.4). No assertion that
+a linear image of a source face is a face is included in the datum.
+No selected pure orbit, generic pair, section, or restricted set of
+positive preimages can replace a whole-domain clause of (109.3)–(109.4).
+
+For the original prediction specialization, $V,C,u,K,P,E$ are exactly
+those of [VI, Definition 89.2][VI]: the same $\Omega$, original legal
+words, normalization column, and complete original terminal-future or
+future-outcome coordinates. Nothing here replaces that carrier by a
+quotient of selected predictions. Its original compact-continuation
+frontend is [OriginalProbabilityCompactAction][Compact], under that
+frontend's full-row, reversibility, prefix and normalization premises.
+Neither frontend supplies (109.3) or (109.4).
+

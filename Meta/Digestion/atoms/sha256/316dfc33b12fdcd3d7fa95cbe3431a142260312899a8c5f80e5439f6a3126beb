@@ -1,0 +1,89 @@
+**命题 122.4（完整支持面的两个纯单点）。** 固定 $-1<\lambda<1$。令 $s=s_\lambda$ 是
+
+$$
+1-3s^2+2\lambda s^3=0
+\tag{122.11}
+$$
+
+在 $(1/2,1)$ 中的唯一根，令 $t=s_{-\lambda}$，并置
+
+$$
+X=\frac{(1,1,1;s,s,s)}3,\qquad
+Y=\frac{(1,1,1;-t,-t,-t)}3,\qquad
+S(x)=\sum_{i=1}^3\operatorname{Re}z_i.
+\tag{122.12}
+$$
+
+则 $X,Y\in P_\lambda$，并且对整个 $K_\lambda$ 有
+
+$$
+-t\le S(x)\le s,\qquad
+\{x\in K_\lambda:S(x)=s\}=\{X\},\qquad
+\{x\in K_\lambda:S(x)=-t\}=\{Y\}.
+\tag{122.13}
+$$
+
+证明。$F_\lambda(r)=1-3r^2+2\lambda r^3$ 在 $r=1/2$ 的值为 $(1+\lambda)/4>0$，在 $r=1$ 的值为 $2(\lambda-1)<0$，而在该区间导数 $6r(\lambda r-1)<0$。所以 $s$ 存在且唯一；对 $-\lambda$ 同理得 $t$。未归一的 $x_0=3X$ 满足 $a_i=1$、$\Delta_i=1-s^2>0$、$d_\lambda(x_0)=0$，故 $X\in K_\lambda$。$Y=R X_{-\lambda}$ 同样属于 $K_\lambda$。
+
+根式给出三个精确恒等式
+
+$$
+\begin{gathered}
+1-\lambda s=\frac{1-s^2}{2s^2}>0,\\
+1+\lambda s-2s^2=\frac{(1-s^2)(4s^2-1)}{2s^2}>0,\qquad
+1+2\lambda s=\frac{4s^2-1}{s^2}>0.
+\end{gathered}
+\tag{122.14}
+$$
+
+在 $x_0$ 处的一阶微分为
+
+$$
+Dd_\lambda(x_0)
+=(1-s^2)u-2s(1-\lambda s)S
+=c_s(su-S),\qquad c_s=2s(1-\lambda s)>0.
+\tag{122.15}
+$$
+
+对任意 $y\in C_\lambda$，锥的凸性给 $x_0+\tau y\in C_\lambda$ 对 $\tau\ge0$ 成立。在 $\tau=0$ 的非负右导数遂给 $Dd_\lambda(x_0)[y]\ge0$。所以 $su-S$ 是整个锥上的正泛函，特别在全部归一态上 $S\le s$。
+
+为证明等号唯一，写实变分
+$v=(b_1,b_2,b_3;\xi_1+\mathrm i\eta_1,\xi_2+\mathrm i\eta_2,\xi_3+\mathrm i\eta_3)$，并限制到
+
+$$
+u(v)=0,\qquad S(v)=0,
+\quad\text{即}\quad \sum_i b_i=\sum_i\xi_i=0.
+\tag{122.16}
+$$
+
+三次式的二阶微分在这整个七维空间上为
+
+$$
+\begin{aligned}
+Q(v):=D^2d_\lambda(x_0)[v,v]
+={}&-\sum_i b_i^2-4s\sum_i b_i\xi_i
+-2(1+\lambda s)\sum_i\xi_i^2\\
+&-2(1-\lambda s)\sum_i\eta_i^2
+-2\lambda s\Bigl(\sum_i\eta_i\Bigr)^2.
+\end{aligned}
+\tag{122.17}
+$$
+
+令 $m=\sum_i\eta_i$、$\eta^\perp=\eta-(m/3)(1,1,1)$，配方得到
+
+$$
+\begin{aligned}
+-Q(v)={}&\sum_i(b_i+2s\xi_i)^2
++2(1+\lambda s-2s^2)\sum_i\xi_i^2\\
+&+2(1-\lambda s)\|\eta^\perp\|^2
++\frac23(1+2\lambda s)m^2.
+\end{aligned}
+\tag{122.18}
+$$
+
+由(122.14)，它对每个非零 $v$ 严格为正。这是直接在完整切空间上的配方，不另借一般曲率定理。
+
+若 $q\in K_\lambda$ 且 $S(q)=s$，令 $v=3(q-X)$。它满足(122.16)。对 $0\le\varepsilon\le1$，$x_0+\varepsilon v=3((1-\varepsilon)X+\varepsilon q)$ 属于 $C_\lambda$。若 $q\ne X$，常数项和一次项为零、二次项为 $Q(v)/2<0$，从而对充分小的正 $\varepsilon$，$d_\lambda(x_0+\varepsilon v)<0$，矛盾。因此等号点只有 $X$。一个线性泛函的唯一最大点是暴露极点：若其为两张态的严格凸组合，两张态都必须达到同一最大值，故都等于它。这证明 $X$ 的实际纯性。
+
+把刚才整段论证用于参数 $-\lambda$，再沿 $R:C_\lambda\to C_{-\lambda}$ 运输。由于 $S(Rx)=-S(x)$，便得整个 $K_\lambda$ 上的下界 $-t$、唯一等号点 $Y$ 及其纯性，完成(122.13)。证毕。
+

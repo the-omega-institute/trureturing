@@ -1,0 +1,32 @@
+**引理 121.3（控制每个采样标签的第二层球）。** 对整数 $m\ge1$，令 $Q_m\subset Q$ 由以下存在条件定义：存在
+
+$$
+\begin{gathered}
+x_1,\ldots,x_9\in S_q,\qquad
+\Gamma(x_1,\ldots,x_9)\ge1/m,\\
+g_j\in\mathcal A_{x_j},\qquad
+ y_{j0},y_{j1},y_{j2},y_{j3}\in D_{x_j},\qquad
+\tau(y_{j0},y_{j1},y_{j2},y_{j3})\ge1/m
+\quad(1\le j\le9).
+\end{gathered}
+\tag{121.8}
+$$
+
+则每个 $Q_m$ 在 $Q$ 中闭，且 $Q=\bigcup_{m\ge1}Q_m$。
+
+证明覆盖性。对每个固定 $q$，引理121.2在实际 $S_q$ 上提供 $\Gamma>0$ 的九点。对每个这样的纯点 $x_j$，完整三球 $D_{x_j}$ 含四个仿射无关点，并有 $g_j\in\mathcal A_{x_j}$。只有有限个严格正数，取充分大的同一个 $m$ 即满足全部下界。此处没有作连续选择。
+
+证明闭性。设 $q_n\in Q_m$、$q_n\to q\in Q$。将(121.8)中全部有限见证，连同任取的 $e_n\in\mathcal A_{q_n}$，一起放在紧的 $K$ 和 $\mathcal E$ 的有限乘积中取共同收敛子列，极限分别记 $x_j,y_{jk},g_j,e$。固定 $Q\subset S_p$ 保证 $q$ 已是原纯点。连续评价给
+
+$$
+e(q)=1,\qquad e(x_j)=0,\qquad
+ g_j(x_j)=1,\qquad g_j(y_{jk})=0.
+\tag{121.9}
+$$
+
+由第一对等式及 $e\in\mathcal E$，先得 $x_j\in D_q$，尚不假定 $x_j$ 纯。每个极限四点仍有 $\tau\ge1/m$，所以 $g_j$ 的零面是含三维四面体的非空真面；它不可能是单点，原面分类使它恰为某个 $D_z$。又 $g_j\in N_{D_z}=\operatorname{cone}\mathcal A_z$，且 $g_j(x_j)=1$、$0\le g_j\le u$，故其全域最大值为一。$\mathcal A_z$ 中每张效应的全域最大值也是一，归一迫使 $g_j\in\mathcal A_z$。原一值面接口遂给 $x_j=z\in P$。
+
+因而 $x_j\in P\cap D_q=S_q$，$g_j\in\mathcal A_{x_j}$，全部 $y_{jk}\in D_{x_j}$。连续性还保留 $\Gamma\ge1/m$ 与所有 $\tau\ge1/m$。极限见证因此仍满足(121.8)，即 $q\in Q_m$。序列闭性在紧度量 $Q$ 中就是闭性。证毕。
+
+这一步只在原紧基中取极限，再用同一极限效应的一值面证明标签仍纯；没有假定 $P$ 闭。只控制移动 $D_q$ 自己的直径或体积，不能代替对九个 $D_{x_j}$ 各自的非塌缩控制。
+

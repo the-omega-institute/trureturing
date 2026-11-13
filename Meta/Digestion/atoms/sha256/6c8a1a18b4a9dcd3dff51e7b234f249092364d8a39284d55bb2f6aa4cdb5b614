@@ -1,0 +1,43 @@
+**推论 124.8（原全效应最小值和完整排除的运输）。** 只要有定理124.6第二项的保迹锥同构 $\Psi$，就有以下全域运输；124.7还给该同一映射的 $\Psi(w)=I_3$。令 $\rho=\Psi x$，整个原静态字典为
+
+$$
+\begin{gathered}
+\Psi(C_\tau)=\operatorname{PSD}_3,\quad
+\Psi(K_\tau)=\{\rho\succeq0:\operatorname{Tr}\rho=1\},\quad
+\Psi(w)=I_3,\\
+\Psi(P_\tau)=\{vv^*:v^*v=1\},\qquad
+\mathcal E_\tau=\{f_A:f_A(x)=\operatorname{Tr}(A\Psi x),\ 0\preceq A\preceq I_3\}.
+\end{gathered}
+\tag{124.25}
+$$
+
+这覆盖全部原密度态、原纯射线、效应补与凸混合。对任意原纯点 $p$，写 $\Psi p=vv^*$、$v^*v=1$，则整个确认族、最低确认函数和整个排除集分别为
+
+$$
+\begin{gathered}
+\mathcal F_p=\{f_A:A=vv^*\oplus B\text{ 于 }\mathbb Cv\oplus v^\perp,
+\ 0\preceq B\preceq I_{v^\perp}\},\\
+\mathcal T_p(x)=v^*\Psi(x)v\quad(x\in C_\tau),\\
+D_p=\Psi^{-1}\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho v=0\}
+\simeq_{\rm aff}\overline B^3,\\
+\mathcal T_p(q)=|v^*z|^2\quad\text{若 }\Psi q=zz^*,\ z^*z=1.
+\end{gathered}
+\tag{124.26}
+$$
+
+证明。锥同构的对偶双射全部正泛函，保迹恒等式再双射整个零一效应区间，因此确认切片也被完整双射。若 $0\preceq A\preceq I$ 且 $v^*Av=1$，正矩阵 $I-A$ 的 $v$ 二次型为零，故 $(I-A)v=0$。Hermitian性清零跨块，得到所列全确认族。对任意PSD输入，补块项非负且 $B=0$ 可取，故全族最小值恰为 $v^*\rho v$，并由秩一投影取得。这同时证明同一原least的存在，而非先把确认族缩成一个投影。
+
+正性使 $v^*\rho v=0\Longleftrightarrow\rho v=0$，所以整个最低零集是完整二能级密度体。其仿射三球是支撑在 $v^\perp$ 上的全部迹一PSD矩阵，不是一份纯零关系图或所选截面。纯—纯模方由秩一迹计算得到。以上对任意保迹锥同构都成立，不依赖124.7的坐标正规形，故也完成124.6中第二项到第三项的证明。
+
+有限数学效应族 $f_j\ge0$、$\sum_jf_j=u$ 恰对应全部有限POVM $A_j\succeq0$、$\sum_jA_j=I_3$，每个原读数正是Born评价 $\operatorname{Tr}(A_j\rho)$。在非归一正输入上质量仍为原 $u(x)=\operatorname{Tr}\rho$；零输入对应零矩阵，全部读数为零，不为它强定归一条件态。证毕。
+
+| 通常的单体量子对象或公理 | 本族完整几何候选所给的准确对应 |
+| --- | --- |
+| 复三维Hilbert空间与纯射线 | 所得同一表示中的 $\mathbb C^3$ 及全部 $\mathbb{CP}^2$ |
+| 混态与准备混合 | 全部迹一PSD矩阵及原线性凸组合 |
+| 全部效应与Born规则 | 整个 $[0,u]$ 对应全部 $0\preceq A\preceq I_3$，原评价为迹配对 |
+| 确认与排除 | 全确认族的真实最小值为秩一评价，完整排除为其整个二能级密度三球 |
+| 原单位与三元完备框架 | $u$ 对应迹，$w$ 对应 $I_3$，三个种子对应同一正交完备基 |
+| 谱、Jordan与数学面滤子 | 所得完整PSD模型的成熟谱定理、Jordan积及支撑角压缩 |
+| 数学有限测量 | 全部效应和为单位的有限POVM；实际共同仪器另有合同 |
+

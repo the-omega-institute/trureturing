@@ -1,0 +1,34 @@
+**定理 125.4（最低三次整个边界入口）。** 对125.1的任意非零有限维闭尖满维凸锥，若 $\mathsf{AB}_{\le3}$ 成立，则可统一定向 $p_C$，使
+
+$$
+\begin{gathered}
+p_C(x)>0\quad(x\in\operatorname{int}C),\\
+\forall e\in\operatorname{int}C:\quad
+p_C\text{ 关于 }e\text{ 双曲},\qquad
+C=\Lambda_+(p_C,e).
+\end{gathered}
+\tag{MC125.13}
+$$
+
+这里 $\Lambda_+$ 取 $t\mapsto p_C(te-x)$ 全部根非负的闭分支。反向，若某个次数至多三的齐次双曲多项式具有整个闭分支 $C$，则 $\mathsf{AB}_{\le3}$ 成立。
+
+证明。先设 $n=\dim V\ge2$。在引理125.2的紧基上，$f=p_C|_H$ 为次数 $\delta(C)\le3$ 的最低边界方程。引理125.3给 $f$ 在基内部无零。每个原锥内点可写为正数乘以基内点，齐次性于是给 $p_C$ 在整个 $\operatorname{int}C$ 无零。内部凸而连通，可选一次整体符号使其处处为正。
+
+固定任意 $e\in\operatorname{int}C$，以及 $x\notin\mathbb Re$。考虑 $y(t)=te-x$。$e$ 的内部邻域保证 $t$ 足够大时 $y(t)\in\operatorname{int}C$，而 $t$ 足够负时 $y(t)\in-\operatorname{int}C$。凸性、闭性及沿 $e$ 的内部正向性给有限端点 $a,b$，使
+
+$$
+\{t:y(t)\in-C\}=(-\infty,a],\qquad
+\{t:y(t)\in C\}=[b,\infty).
+\tag{MC125.14}
+$$
+
+例如 $y(t)\in C$ 后加任意正倍 $e$ 都进内部，因此该交恰为一条闭半线；另一条同理。两端点分别属于 $-\partial C$ 和 $\partial C$。尖性给 $a<b$：若两半线相交，交点须为 $C\cap(-C)$ 中的零，迫使 $x\in\mathbb Re$，矛盾。
+
+齐次性使 $p_C$ 在 $-\partial C$ 也为零。因此 $p_C(te-x)$ 至少有两个不同实根 $a,b$，且其首项系数为 $p_C(e)>0$，次数恰为 $\delta(C)$。这先排除此维数下 $\delta(C)=1$。次数二时两个根已全部实；次数三时除去两个实线性因子，余下实一次因子，其根也实。若 $x=se$，则 $p_C(te-x)=p_C(e)(t-s)^{\delta(C)}$，包括零向量与全部重根。这证明关于所选任意内部方向的双曲性，没有遗漏零方向或限制次数下降。
+
+还需完整分支等式。由刚证的无内部零点，$\operatorname{int}C\subseteq\{p_C\ne0\}$；它在该开集中既开又闭，因为 $\overline{\operatorname{int}C}=C$，而其边界均在 $\{p_C=0\}$。其自身连通，所以恰为含 $e$ 的一个完整连通分量。此时才调用Renegar Proposition 1：双曲开分支就是这个分量，闭分支为其闭包。于是 $\Lambda_+(p_C,e)=C$。Theorems 2—3与这里的凸性及全部内部方向结论相容；它们未被倒用来预设原锥身份。
+
+若 $n=1$，闭尖满维非零锥是一条射线。取坐标使 $C=\mathbb R_+$，则 $I_\partial(C)=(t)$、$\delta=1$；$p_C=t$ 关于每个 $e>0$ 双曲且整个分支为该射线。这覆盖紧基仿射维零、不能使用两个边界端点的情形。
+
+最后，反向中双曲分支边界必在其多项式的零集中，故该多项式属于 $I_\partial(C)$，直接得到最低次数不超过三。证毕。
+
