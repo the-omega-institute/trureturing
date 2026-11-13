@@ -9,6 +9,7 @@
 import D5.S3.Quantum.Foundation.ExclusionBallFaces
 import Mathlib.Analysis.Convex.Intrinsic
 import Mathlib.Topology.Maps.Proper.Basic
+import Mathlib.Topology.Baire.Lemmas
 
 /-! Relative-boundary geometry of the entire original normalized cone base. -/
 
@@ -305,5 +306,151 @@ theorem original_all_repeated_boundary_quotient
       let z : S := ⟨y, exclusion_boundary hclosed hstrict hgen hB p hy⟩
       have hxz : r x z := (crit x (hSK x.property) z (hSK z.property)).mpr ⟨p, hxp, hy⟩
       exact ⟨z, (Quotient.sound hxz).symm, rfl⟩
+
+private theorem intrinsic_level_of_straddling {K : Set V} (hK : Convex ℝ K)
+    (f : V →ₗ[ℝ] ℝ) {x y : V} (hx : x ∈ K) (hy : y ∈ K)
+    {t : ℝ} (hxt : f x < t) (hty : t < f y) :
+    ∃ z ∈ intrinsicInterior ℝ K, f z = t := by
+  obtain ⟨c, hc⟩ := Set.Nonempty.intrinsicInterior hK ⟨x, hx⟩
+  rcases lt_trichotomy (f c) t with hct | hct | htc
+  · have ht : t ∈ f.toAffineMap '' openSegment ℝ c y := by
+      rw [image_openSegment]
+      exact Ioo_subset_openSegment ⟨hct, hty⟩
+    obtain ⟨z, hz, he⟩ := ht
+    exact ⟨z, hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior
+      hc (subset_intrinsicClosure hy) hz, he⟩
+  · exact ⟨c, hc, hct⟩
+  · have ht : t ∈ f.toAffineMap '' openSegment ℝ x c := by
+      rw [image_openSegment]
+      exact Ioo_subset_openSegment ⟨hxt, htc⟩
+    obtain ⟨z, hz, he⟩ := ht
+    rw [openSegment_symm] at hz
+    exact ⟨z, hK.openSegment_intrinsicInterior_intrinsicClosure_subset_intrinsicInterior
+      hc (subset_intrinsicClosure hx) hz, he⟩
+
+/-- Actual rational slices of the original boundary quotient. The open set is
+chosen within closed crossing sets, so every one of its whole fibers has points
+on both sides of the very same slice. -/
+theorem original_all_repeated_rational_slice [Nontrivial V]
+    (hclosed : IsClosed (C : Set V))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hgen : Submodule.span ℝ (C : Set V) = ⊤) (hB : exclusionBalls C u)
+    (hrepeated : ∀ p : pure C u, ∃ s : pure C u,
+      p ≠ s ∧ exclusion C u s = exclusion C u p) :
+    ∃ r : Setoid (intrinsicFrontier ℝ (base C u)),
+      (∀ x y, r x y ↔ midpoint ℝ (x : V) (y : V) ∈ intrinsicFrontier ℝ (base C u)) ∧
+      CompactSpace (Quotient r) ∧ T2Space (Quotient r) ∧
+      Continuous (Quotient.mk r) ∧ IsClosedMap (Quotient.mk r) ∧
+      (∀ b : Quotient r, ∃ p : pure C u,
+        Subtype.val '' ((Quotient.mk r) ⁻¹' {b}) = exclusion C u p) ∧
+      ∃ (f : V →ₗ[ℝ] ℝ) (t : ℚ) (O : Set (Quotient r)),
+        f ≠ 0 ∧ IsOpen O ∧ O.Nonempty ∧
+        (∃ c ∈ intrinsicInterior ℝ (base C u), f c = (t : ℝ)) ∧
+        O ⊆ (Quotient.mk r) '' {x | f (x : V) = (t : ℝ)} ∧
+        ∀ b ∈ O, ∃ x y : intrinsicFrontier ℝ (base C u),
+          Quotient.mk r x = b ∧ Quotient.mk r y = b ∧
+          f (x : V) < (t : ℝ) ∧ (t : ℝ) < f (y : V) := by
+  classical
+  obtain ⟨r, hr, _, _, hcompact, ht2, hq, _, hqc, hfib⟩ :=
+    original_all_repeated_boundary_quotient hclosed hstrict hgen hB hrepeated
+  let S := intrinsicFrontier ℝ (base C u)
+  let q : S → Quotient r := Quotient.mk r
+  letI := hcompact
+  letI := ht2
+  have hSclosed : IsClosed S :=
+    isClosed_intrinsicFrontier (affineSpan ℝ (base C u)).closed_of_finiteDimensional
+  have hSK : S ⊆ base C u := intrinsicFrontier_subset (base_compact hclosed hstrict).isClosed
+  letI : CompactSpace S := isCompact_iff_compactSpace.mp
+    ((base_compact hclosed hstrict).of_isClosed_subset hSclosed hSK)
+  have hP : (pure C u).Nonempty := by
+    by_contra hn
+    have hh := pure_span (base_compact hclosed hstrict) hstrict hgen
+    rw [Set.not_nonempty_iff_eq_empty.mp hn, Submodule.span_empty] at hh
+    exact bot_ne_top hh
+  obtain ⟨p₀, hp₀⟩ := hP
+  obtain ⟨z₀, hz₀⟩ := ((exclusion_ball_faces hclosed hstrict hgen hB).1 ⟨p₀, hp₀⟩).1.nonempty
+  letI : Nonempty S := ⟨⟨z₀, exclusion_boundary hclosed hstrict hgen hB ⟨p₀,hp₀⟩ hz₀⟩⟩
+  letI : Nonempty (Quotient r) := ⟨q (Classical.choice inferInstance)⟩
+  let e := (Module.finBasis ℝ V).equivFun
+  let f (i : Fin (Module.finrank ℝ V)) : V →ₗ[ℝ] ℝ :=
+    (LinearMap.proj i).comp e.toLinearMap
+  let J := Fin (Module.finrank ℝ V) × ℚ × ℚ
+  let F (j : J) : Set (Quotient r) :=
+    if j.2.1 < j.2.2 then
+      q '' {x : S | f j.1 x ≤ (j.2.1 : ℝ)} ∩
+      q '' {x : S | (j.2.2 : ℝ) ≤ f j.1 x}
+    else ∅
+  have hFclosed (j : J) : IsClosed (F j) := by
+    dsimp [F]
+    split_ifs
+    · exact (hqc _ (isClosed_le
+        ((f j.1).continuous_of_finiteDimensional.comp continuous_subtype_val) continuous_const)).inter
+        (hqc _ (isClosed_le continuous_const
+        ((f j.1).continuous_of_finiteDimensional.comp continuous_subtype_val)))
+    · exact isClosed_empty
+  have hcover : ⋃ j, F j = univ := by
+    apply eq_univ_of_forall
+    intro b
+    obtain ⟨p, hp⟩ := hfib b
+    obtain ⟨x, hx, y, hy, hxy⟩ := ((exclusion_ball_faces hclosed hstrict hgen hB).1 p).1
+    have hcoord : ∃ i, f i x ≠ f i y := by
+      by_contra hn
+      push_neg at hn
+      exact hxy (e.injective (funext hn))
+    obtain ⟨i, hi⟩ := hcoord
+    have across : ∃ x y : S, q x = b ∧ q y = b ∧ f i x < f i y := by
+      obtain ⟨a, ha, hax⟩ := hp.symm ▸ hx
+      obtain ⟨c, hc, hcy⟩ := hp.symm ▸ hy
+      have ha' : q a = b := ha
+      have hc' : q c = b := hc
+      rcases lt_or_gt_of_ne hi with hlt | hgt
+      · exact ⟨a, c, ha', hc', by simpa [hax, hcy] using hlt⟩
+      · exact ⟨c, a, hc', ha', by simpa [hax, hcy] using hgt⟩
+    obtain ⟨a, c, ha, hc, hac⟩ := across
+    obtain ⟨v, hav, hvc⟩ := exists_rat_btwn hac
+    obtain ⟨w, hvw, hwc⟩ := exists_rat_btwn hvc
+    have hvw' : v < w := by exact_mod_cast hvw
+    apply mem_iUnion.mpr
+    refine ⟨(i,v,w), ?_⟩
+    simp only [F, hvw', ↓reduceIte]
+    exact ⟨⟨a, hav.le, ha⟩, ⟨c, hwc.le, hc⟩⟩
+  obtain ⟨j, hj⟩ := nonempty_interior_of_iUnion_of_closed hFclosed hcover
+  have hab : j.2.1 < j.2.2 := by
+    by_contra hn
+    simpa [F, hn] using hj
+  have habR : (j.2.1 : ℝ) < (j.2.2 : ℝ) := by exact_mod_cast hab
+  let t : ℚ := (j.2.1 + j.2.2) / 2
+  have hat : (j.2.1 : ℝ) < (t : ℝ) := by dsimp [t]; push_cast; linarith
+  have htb : (t : ℝ) < (j.2.2 : ℝ) := by dsimp [t]; push_cast; linarith
+  have across (b : Quotient r) (hb : b ∈ interior (F j)) :
+      ∃ x y : S, q x = b ∧ q y = b ∧ f j.1 x < (t : ℝ) ∧ (t : ℝ) < f j.1 y := by
+    have hh := interior_subset hb
+    simp only [F, hab, ↓reduceIte] at hh
+    obtain ⟨⟨x, hx, hxb⟩, ⟨y, hy, hyb⟩⟩ := hh
+    exact ⟨x,y,hxb,hyb,hx.trans_lt hat,htb.trans_le hy⟩
+  obtain ⟨b, hb⟩ := hj
+  obtain ⟨x,y,_,_,hx,hy⟩ := across b hb
+  refine ⟨r, hr, hcompact, ht2, hq, hqc, hfib, f j.1, t, interior (F j),
+    ?_, isOpen_interior, hj, ?_, ?_, across⟩
+  · intro he
+    have hx' := hx
+    have hy' := hy
+    rw [he] at hx' hy'
+    simp only [LinearMap.zero_apply] at hx' hy'
+    linarith
+  · exact intrinsic_level_of_straddling (base_convex C u) (f j.1)
+      (hSK x.property) (hSK y.property) hx hy
+  · intro b hb
+    obtain ⟨x,y,hxb,hyb,hx,hy⟩ := across b hb
+    obtain ⟨p,hp⟩ := hfib b
+    have hxD : (x : V) ∈ exclusion C u p := hp ▸ ⟨x,hxb,rfl⟩
+    have hyD : (y : V) ∈ exclusion C u p := hp ▸ ⟨y,hyb,rfl⟩
+    have ht : (t : ℝ) ∈ (f j.1).toAffineMap '' segment ℝ (x : V) (y : V) := by
+      rw [image_segment]
+      exact Icc_subset_segment ⟨hx.le,hy.le⟩
+    obtain ⟨z,hz,hzt⟩ := ht
+    have hzD := ((exclusion_ball_faces hclosed hstrict hgen hB).1 p).2.2.1.segment_subset hxD hyD hz
+    obtain ⟨a,ha,haz⟩ := hp.symm ▸ hzD
+    exact ⟨a, by simpa [haz] using hzt, ha⟩
 
 end D5.S3.Quantum.Foundation.ActualExclusionBoundary
