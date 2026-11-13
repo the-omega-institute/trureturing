@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.RepeatingDecimal.RepeatingDecimalQuotient
 import Reg.Support.SingleDependentReadout
 
+/-! Source-faithful dependent-family audits of the long-division statements. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -90,9 +92,10 @@ abbrev valueArena : Arena where
 
 private theorem value_rejected_law : ¬ valueArena.Law rejectedZero := by
   intro h
-  have hi := (h (b := 2) (p := 1) (q := 2) (by decide) (by decide)).2
-  change Filter.Tendsto (fun n : ℕ => (0 : ℝ) / 2 ^ n) Filter.atTop (nhds (1 / 2)) at hi
-  simp only [zero_div] at hi
+  have hi : Filter.Tendsto (fun _ : ℕ => (0 : ℝ))
+      Filter.atTop (nhds (1 / 2)) := by
+    simpa [rejectedZero, realize] using
+      (h (b := 2) (p := 1) (q := 2) (by decide) (by decide)).2
   have he := tendsto_nhds_unique (tendsto_const_nhds (x := (0 : ℝ))) hi
   norm_num at he
 

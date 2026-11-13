@@ -50,8 +50,8 @@ internal sealed class RepeatingDecimalQuotientDocument : IScribeDocumentDefiniti
                 + "Long division generates 1,4,2,8,5,7, with P(6)=142857; 7 divides 10^6-1. "
                 + "Periodicity and the first six digits identify the infinite stream as "
                 + "0.overline{142857}; its convergent series is 1/7. The block identity is "
-                + "10^6 x-x=142857, hence x=142857/999999=1/7. This application is exposition, "
-                + "with a transient compiled specialization, and introduces no finite-certificate theorem.")),
+                + "10^6 x-x=142857, hence x=142857/999999=1/7. These values specialize "
+                + "the general long-division theorems.")),
             Paragraph(Text("These are classical long-division and repeating-decimal facts. "
                 + "The cited MathWorld entry attests the classical context; the arbitrary-base "
                 + "integer-state-to-real-series connection is the formal bridge proved here. "

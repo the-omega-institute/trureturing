@@ -87,7 +87,8 @@ private theorem normalized_remainder {b p q : ℕ} (hb : 0 < b) (hp : p < q) (n 
 the same value is the limit of the normalized integer prefixes. -/
 theorem long_division_value {b p q : ℕ} (hb : 1 < b) (hp : p < q) :
     HasSum (fun n => (digit b p q n : ℝ) / (b : ℝ) ^ (n + 1)) ((p : ℝ) / q) ∧
-      Tendsto (fun n => (longDivisionPrefix b p q n : ℝ) / (b : ℝ) ^ n) atTop (𝓝 ((p : ℝ) / q)) := by
+      Tendsto (fun n => (longDivisionPrefix b p q n : ℝ) / (b : ℝ) ^ n)
+        atTop (𝓝 ((p : ℝ) / q)) := by
   have hbpos : 0 < b := Nat.zero_lt_of_lt hb
   have hbR : (1 : ℝ) < b := by exact_mod_cast hb
   have hqpos : (0 : ℝ) < q := by exact_mod_cast Nat.zero_lt_of_lt hp
