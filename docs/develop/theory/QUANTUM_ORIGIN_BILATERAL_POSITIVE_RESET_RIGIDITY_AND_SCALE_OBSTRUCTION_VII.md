@@ -163,7 +163,8 @@ is zero on that whole ball: its values at each pair of antipodes
 have average the center value. This proves the second identity.
 
 If $F$ is proper and exposed, normalize an exposing positive
-functional into $E$ with zero face exactly $F$. Equation (98.4)+makes it vanish on $G$, so $G\subset F$. A face of a face is a
+functional into $E$ with zero face exactly $F$. Equation (98.4)
+makes it vanish on $G$, so $G\subset F$. A face of a face is a
 face, and a strictly convex three-ball has no positive-dimensional
 proper face. Thus $G=F$. The same strict-convexity argument applies
 directly if $F=K$. Without exposure the proved conclusion is equality
@@ -620,5 +621,434 @@ Thus that product and its adjoint vanish, giving $AD=DA=0$ without
 assuming commutativity. A singular PSD $A$ can induce a PD form
 on a quotient by its kernel, but that changes the carrier and does
 not satisfy (100.4) on all original $W$. ∎
+
+## 102. Four-dimensional invariant summands
+
+**Theorem 102.1 (The complementary-dimension bound).** In the domain
+of Definition 97.1, every four-dimensional $J=H^0$-invariant
+subspace $U\subset W$ forces $n\ge13$. In particular this holds
+for every four-dimensional $H$-invariant subspace. Throughout this
+statement the obstruction space remains the original $H$ space
+$\mathcal M$ of (100.2).
+
+Proof. VI89.3 makes $J$ pure-transitive on the same $P$, so
+Theorem 101.2 applies with $J$ and the same $Q_0$. It follows that
+$U$ is $J$-irreducible: a nontrivial decomposition would contain a
+subspace of dimension at most three, and the whole-three-ball
+alternative cannot contain $U$. We give the actual face and
+representation arguments, including every complement of dimension
+at most eight.
+
+First, two geometric tests will be used. A face containing a relative
+interior point of a convex subset of $K$ contains that whole subset,
+by the segment-extension argument in the proof of Theorem 99.2.
+If an actual group element acts as $-I$ on $W$, the midpoint of
+$p$ and its image is the interior point $b$. Their actual face is
+$K$, so L3 would give $n=3$.
+
+Next suppose an actual $\operatorname{SU}(2)$ subgroup acts on
+$W$ with only trivial modules and quaternionic fundamental modules.
+Write a pure displacement as $f+(a_1,\ldots,a_k)$, where $f$ is
+fixed and the $a_i\in\mathbb H$ transform by left multiplication.
+If the tuple is nonzero, the real-linear map
+$t\mapsto(ta_1,\ldots,ta_k)$ is injective on $\mathbb H$.
+Invariance gives constant norm for unit $t$, and scaling gives norm
+$|t|$ times that constant for all $t$. Its orbit is therefore a
+whole round $S^3$ in an affine four-space, with its four-ball hull
+inside $K$. Antipodal orbit points are original pures and their
+actual three-ball face contains the relative interior center of
+this four-ball. It would contain the four-ball, a contradiction.
+The tuple is nonzero for some pure point whenever the action on
+$W$ is nontrivial, by centered spanning. Thus such a nontrivial
+fundamental-plus-trivial actual action is impossible.
+
+Consider the image algebra $\mathfrak k\subset\mathfrak{so}(U)
+\simeq\mathfrak{su}(2)_L\oplus\mathfrak{su}(2)_R$. It contains
+an axis ideal $\mathfrak{su}(2)$. Here the compact-algebra facts
+can be checked directly. The invariant positive product
+$-\operatorname{tr}(XY)$ splits an ideal and its orthogonal
+complement into commuting ideals. An abelian ideal is central:
+its brackets with the algebra lie in it and, by invariance, are
+orthogonal to it. Repeated splitting gives a center and simple
+ideals. A commuting skew family on $\mathbb R^4$ preserves a real
+two-plane and cannot act irreducibly. In the cross-product model
+of $\mathfrak{su}(2)$, a two-plane is not a subalgebra, so a
+nonabelian subalgebra is all $\mathfrak{su}(2)$. A simple ideal
+of $\mathfrak k$ therefore projects isomorphically onto one axis,
+or is a graph of an automorphism between both. Such automorphisms
+are orientation-preserving isometries of the cross-product algebra
+and are inner. A graph is conjugate to the diagonal; its quaternion
+action fixes the real line through $1$, and its centralizer in
+$\mathfrak{so}(4)$ is zero. It cannot yield an irreducible image,
+even after adding commuting ideals. An axis ideal follows.
+
+This ideal acts in the actual $J$, not merely a quotient. For the
+kernel of $\operatorname{Lie}J\to\mathfrak k$, an invariant
+positive product supplies a commuting complementary ideal mapping
+isomorphically onto $\mathfrak k$. Lift the axis there. Its
+finite-dimensional compact $\mathfrak{su}(2)$ representation
+integrates to the simply connected $\operatorname{SU}(2)$; its
+image lies in $J$, since every element of $\operatorname{SU}(2)$
+is an exponential and the image exponential is that of the lifted
+ideal in the closed matrix group $J$. On $U$ this is the faithful
+quaternionic fundamental action. Its central element $-1$ has image
+$\tau$, a genuine involution on all $W$, acting as $-I$ on $U$.
+It commutes with the lifted ideal and every complementary ideal,
+hence with connected $J$, which is generated by exponentials.
+
+Decompose $W=W_+\oplus W_-$ under $\tau$. Since $U\subset W_-$,
+the minus part is nonzero. The plus part is also nonzero by the
+actual $-I$ test. Projection compression gives positive constant
+pure radii $r_+,r_-$ for both parts. For $p=b+x_++x_-$ consider
+the actual $F=F(p,\tau p)$. It is $\tau$-invariant and its
+unique affine center is $\tau$-fixed. Projection of its direction
+$L_F$ to $U$ is nonzero, since the projected endpoint difference
+is $2\Pi_U(p-b)\ne0$. Lemma 101.1 makes this projection injective.
+But $(\tau+I)L_F\subset L_F$ projects to zero in $U$, so
+$L_F\subset W_-$. Therefore
+
+$$
+c_F=b+x_+,\qquad p,\tau p\text{ are antipodes},\qquad
+\rho_F=r_-.
+\tag{102.1}
+$$
+
+The entire pure projection fiber over $x_+$ is exactly $\partial F$.
+Indeed any other pure point with this plus projection gives a face
+with the same center $b+x_+$. Two faces having that common relative
+interior point contain each other, by the face property, so agree.
+Conversely the whole boundary of $F$ has this projection. This also
+identifies the whole $K$ fiber and proves its exposure. For
+$w=x_+$, the original linear effect
+
+$$
+e_w(y)=\frac{u(y)}2+
+\frac{Q_0(w,\Pi_+(y-u(y)b))}{2r_+^2}
+\tag{102.2}
+$$
+
+is in $[0,u]$. Every point of $\Pi_+(K-b)$ lies in the closed
+radius-$r_+$ ball. Equality $e_w(y)=1$ on $K$ holds exactly when
+$\Pi_+(y-b)=w$, by Cauchy–Schwarz and $|w|=r_+$.
+In a finite pure decomposition of such a $y$, every positive-weight
+term also has effect value one and hence lies in $\partial F$.
+Consequently
+
+$$
+K\cap\{\Pi_+(y-b)=w\}=K\cap\{e_w=1\}=F.
+\tag{102.3}
+$$
+
+Only these derived central faces have been proved exposed.
+
+The covariance is compatible with this same pure ensemble. The
+$H$ orbit probability is $J$-invariant and is the unique invariant
+probability on the transitive compact $J$-space $P$. Its mean and
+covariance therefore equal the $J$ mean and covariance, namely the
+original $b,S$. Since $\tau$ is central, $S$ is block diagonal.
+For the actual face in (102.1), its auxiliary $J$-twirled moments
+satisfy
+
+$$
+B_F^J=S\Pi_-,\qquad Z_F^J=S\Pi_+.
+\tag{102.4}
+$$
+
+Indeed they twirl $x_-x_-^*$ and $x_+x_+^*$ respectively, which
+are exactly the two covariance blocks. These are auxiliary moments
+of the same ensemble; (100.2), defined by the original $H$ twirl,
+has not been replaced by a new moment obstruction space.
+
+Now the full fiber and transitivity, not the covariance identity
+alone, supply isotropy. If two pures have plus projection $w$,
+$J$ transitivity sends one to the other and equivariance forces
+the sending element into $J_w$. Thus $J_w$ is transitive on the
+entire $S^2$ fiber (102.3). Its identity component is transitive
+too: its finitely many compact component orbits are open and closed
+in that connected sphere. Projection to $U$ identifies the fiber
+equivariantly with the whole sphere in the three-plane
+$A=\Pi_UL_F\subset U$, centered at zero by (102.1).
+The connected image preserves $A$ and fixes its normal line. A
+proper connected compact subgroup of $SO(3)$ has algebra of
+dimension at most one and cannot be sphere-transitive. Hence this
+image contains the standard block $\mathfrak{so}(3)$ in
+$\mathfrak{so}(4)$. Its complement is the irreducible standard
+three-dimensional $\mathfrak{so}(3)$ module. Any strictly larger
+subalgebra is therefore all $\mathfrak{so}(4)$; equality with the
+block algebra would fix a line and contradict irreducibility of
+$U$. Thus $\mathfrak k=\mathfrak{so}(4)$. Surjectivity on the
+fiber's $SO(3)$, and injectivity of its projection to $U$, also
+give its point stabilizer the corresponding $SO(2)$ rotations.
+These are rotations of these actual faces, not arbitrary face
+rotations granted as a premise.
+
+Lift this full algebra as before to commuting axis ideals in
+$\operatorname{Lie}J$, integrating to actual commuting
+$\operatorname{SU}(2)_L,\operatorname{SU}(2)_R$ images. Both act
+fundamentally on $U$. Put $N=U^\perp$. To rule out
+$\dim N\le8$, the following elementary compact representation
+facts are used inside this argument. In an irreducible complex
+$\mathfrak{sl}_2$ module a highest-weight vector $v$ of weight
+$a$ obeys
+
+$$
+EF^jv=j(a-j+1)F^{j-1}v.
+\tag{102.5}
+$$
+
+The last nonzero element of this finite chain forces $a$ to be its
+nonnegative integral length. The chain spans the irreducible module,
+of dimension $a+1$, namely $V_a=\operatorname{Sym}^a\mathbb C^2$.
+For two factors the irreducibles are $V_a\otimes V_c$, by decomposing
+for one factor and using its multiplicity space for the other.
+The standard equivariant antilinear map on $\mathbb C^2$ squares
+to $-1$. On $V_a\otimes V_c$ its square is $(-1)^{a+c}$.
+Schur's lemma fixes this sign up to a positive scalar. All these
+modules are self-conjugate. Even $a+c$ gives a real form of real
+dimension $(a+1)(c+1)$; odd $a+c$ gives quaternionic type and real
+irreducible dimension $2(a+1)(c+1)$. To see that no smaller real
+form is missed in the latter case, a real structure on $k$ complex
+copies requires a multiplicity matrix $B$ with $B\overline B=-I$;
+its determinant forces $k$ even. The symmetric powers integrate
+these representations into the actual unit-quaternion group,
+justifying also the integration used above.
+
+On any $J$-irreducible real summand, restriction to either axis
+ideal or their sum is real-isotypic. Its distinct isotypic components
+would otherwise be preserved by that ideal and its commuting
+complement, hence by connected $J$. If both factors act nontrivially
+on an irreducible $N$ of dimension at most eight, both highest
+weights are positive. Both even weights need at least $3\cdot3=9$
+real dimensions; opposite parity needs at least $2\cdot2\cdot3=12$.
+Thus both must be odd, and both central elements act as $-I$
+throughout $N$, as they do on $U$. This contradicts the actual
+$-I$ test. If one factor is trivial on $N$, that factor acts on
+the whole $W$ as fundamental $U$ plus trivial modules, contradicting
+the four-ball orbit test.
+
+The cases are exhaustive. Dimension zero is excluded by the
+$-I$ action on $U$; dimensions one through three by Theorem 101.2.
+In dimensions four through eight, complete reducibility and the
+minimum nonzero irreducible dimension four leave either irreducible
+$N$, just treated, or exactly two four-dimensional irreducibles.
+For one $\operatorname{SU}(2)$ the real irreducibles of dimension
+at most four have dimensions $1,3,4$, the last fundamental.
+Real-isotypy on a four-dimensional $J$ summand therefore permits
+only trivial copies or one fundamental, not a three-plus-one
+restriction. Thus in the two-summand case the whole $W$ restricts
+to the left factor as fundamentals plus trivial modules, again
+contradicting the actual four-ball test. Hence $\dim N\ge9$ and
+$n\ge13$. ∎
+
+**Corollary 102.2 (Original moment rank and nullity).** For
+$0\ne D\in\mathcal M$, $D\succeq0$, rank four implies nullity
+at least nine, and nullity four implies rank at least nine. At
+$n=8$ or $9$, every such obstruction, if present, is full rank.
+
+Proof. The range and kernel of the original $H$-invariant
+self-adjoint $D$ are $J$-invariant in the same $W$. Apply Theorem
+102.1 to a four-dimensional range or kernel. By Corollary 101.3
+a nonzero singular obstruction has rank and nullity at least four.
+If their sum is eight or nine, at least one is four, now impossible.
+This does not assert existence or sharpness. Rank four with
+nullity at least nine, nullity four with rank at least nine,
+singular witnesses with both dimensions at least five, and full-rank
+witnesses, including scalar possibilities, remain unexcluded. The
+signed laws and common $H$ quadrature of §100 remain unchanged. ∎
+
+**Proposition 102.3 (Averaging a supplied equalizer).** Existence of
+an $H$-invariant equalizer is equivalent to existence of a
+$G_{\rm full}=\operatorname{Aut}(C,u)$-invariant equalizer. Averaging
+a supplied equalizer over $G_{\rm full}$ preserves its common radius.
+
+Proof. Compactness of this full normalized group and its preservation
+of the centroid are proved in VI90.2 and VI89.3. Let $Q$ be a
+supplied equalizer of common radius $r>0$. For a fixed actual $F$
+and any boundary displacement $v$, every $g\in G_{\rm full}$ sends
+$F$ to the corresponding actual pair face and its unique affine
+center to that face's center. Therefore $Q(gv,gv)=r^2$ for every
+$g$. Haar averaging $Q(gx,gy)$ stays positive definite on all $W$
+and gives the same $r^2$ for every such $v$, for all faces. The
+average is $G_{\rm full}$-invariant. The converse uses
+$H\subset G_{\rm full}$. This preserves a supplied equalizer;
+it does not construct one or supply legal full-group controls. ∎
+
+## 103. Whole Hermitian controls and the reference-sensitive trace
+
+**Proposition 103.1 (All two-weight radii on the Herm4/Sp2 carrier).**
+Use precisely the whole $\operatorname{Herm}_4(\mathbb C)$,
+$\operatorname{PSD}_4$, trace, density base, pure projectors, full
+effect interval and actual conjugation image
+$H\simeq\operatorname{PSp}(2)$ of [VI92.1][VI]. Its fixed
+antiunitary is $\Theta^2=-I$; put
+$\tau_\Theta(X)=\Theta X\Theta^{-1}$ and
+$X_\pm=(X\pm\tau_\Theta X)/2$. For every $\alpha,\beta>0$,
+
+$$
+Q_{\alpha,\beta}(X,X)=\alpha\operatorname{Tr}(X_+^2)
+ +\beta\operatorname{Tr}(X_-^2)
+\tag{103.1}
+$$
+
+is invariant and PD on all traceless Hermitian matrices. For every
+pure point $R^2=\alpha/4+\beta/2$. Every actual two-support face,
+on a complex plane $S_0$, has squared radius
+
+$$
+\rho_{S_0}^2=
+\frac{\alpha+\beta+(\beta-\alpha)\kappa^2}{4},\qquad
+\kappa=|\langle\Theta\psi,\phi\rangle|\in[0,1],
+\tag{103.2}
+$$
+
+where $\psi,\phi$ is any orthonormal basis of $S_0$.
+Here $\kappa=1$ exactly for $\Theta$-invariant planes, and
+$\kappa=0$ exactly for $S_0\perp\Theta S_0$; both occur. Thus
+
+$$
+D_Q^2=
+\begin{cases}2\beta,&\beta\ge\alpha,\\
+\alpha+\beta,&\beta\le\alpha.
+\end{cases}
+\tag{103.3}
+$$
+
+If $\alpha=\beta$, every squared radius is $\alpha/2$.
+If $\beta>\alpha$, each pure point lies on a unique maximum face,
+and the one-vector rank supplier of Theorem 99.2 fails at every
+nonzero vector of its tangent plane.
+
+Proof. The whole model, actual image group and pure transitivity are
+VI92.1. Distinct, including nonorthogonal, pure projectors generate
+exactly the full density body on their two-dimensional complex
+support; conversely every two-plane occurs. Thus the entire L3
+domain, rather than selected chords, is retained.
+The involution $\tau_\Theta$ is real-linear, trace preserving,
+HS orthogonal and commutes with $H$, so (103.1) is invariant and
+PD. At $p=P_\psi$, $b=I/4$, one has
+$\psi\perp\Theta\psi$ and, with $X=p-b$,
+
+$$
+\operatorname{Tr}X^2=3/4,\quad
+\operatorname{Tr}(X\tau_\Theta X)=-1/4,\quad
+\operatorname{Tr}X_+^2=1/4,\quad
+\operatorname{Tr}X_-^2=1/2.
+\tag{103.4}
+$$
+
+This proves the common pure-radius formula.
+The alternating form $(z,w)\mapsto\langle\Theta z,w\rangle$
+on a two-plane has just one independent coefficient. Under a
+unitary change of orthonormal basis it changes by a unit-modulus
+determinant, proving basis independence of $\kappa$. For
+$d=(P_\psi-P_\phi)/2$,
+
+$$
+\operatorname{Tr}d^2=1/2,\qquad
+\operatorname{Tr}(d\tau_\Theta d)=-\kappa^2/2,
+\qquad
+\operatorname{Tr}d_\pm^2=(1\mp\kappa^2)/4.
+\tag{103.5}
+$$
+
+Every traceless Hermitian displacement supported on $S_0$ diagonalizes
+in an orthonormal basis of that same plane with eigenvalues
+$\lambda,-\lambda$. The same basis-independent coefficient gives
+$\operatorname{Tr}(X\tau_\Theta X)=-\kappa^2\operatorname{Tr}X^2$
+throughout its whole three-dimensional direction space. Therefore
+there (103.1) equals
+$[\alpha+\beta+(\beta-\alpha)\kappa^2]\operatorname{Tr}X^2/2$.
+The entire PSD2 trace-one ball about $P_{S_0}/2$ has HS squared
+radius $1/2$, proving (103.2) for the whole face.
+
+The endpoint cases follow from the alternating form: $\kappa=1$
+means $\Theta\psi$ lies in the plane, which is then invariant;
+$\kappa=0$ means its whole pairing with its $\Theta$ image
+vanishes. In a symplectic orthonormal basis
+$\psi,\Theta\psi,\eta,\Theta\eta$, the planes
+$\langle\psi,\Theta\psi\rangle$ and
+$\langle\psi,\eta\rangle$ realize both endpoints. Every pure
+chord is in its actual pair ball, and every such ball supplies
+antipodal pures. Thus $D_Q$ is twice the maximum face radius,
+giving both weight orderings in (103.3).
+
+For $\beta>\alpha$ a maximum requires $\kappa=1$. Through
+$p=P_\psi$ its only such support is
+$S_p=\langle\psi,\Theta\psi\rangle$. The actual isotropy $H_p$
+preserves this support and its entire face. It preserves the tangent
+plane $E_F$, hence $Av\in E_F$ for every $A\in\mathfrak h_p$
+and $v\in E_F$. Consequently
+$E_F+\mathfrak h_pv=E_F$ has dimension two, whereas
+$\dim T_pP=\dim_{\mathbb R}\mathbb{CP}^3=6$.
+
+The zero-effect set is locally Lipschitz by Lemma 98.1 (also by
+local unitary transport of positive contractions annihilating
+$\psi$), despite these unequal fixed-metric radii. This disproves
+automatic rank supply and every-prescribed-metric equalization,
+not existential equalization: $\alpha=\beta$ is HS. The earlier
+$Q_\varepsilon$ of VI92.1 is
+$\alpha=1+\varepsilon,\beta=1-\varepsilon$; (103.2) also retains
+the other weight ordering and its uniqueness conclusion. ∎
+
+**Proposition 103.2 (The exact trace pairing and module controls).**
+In this same whole carrier, construct $\mathcal M$ with any original
+invariant reference $Q_0$. Let $A_{\rm HS}>0$ be defined by
+$Q_{\rm HS}(x,y)=Q_0(A_{\rm HS}x,y)$. Then
+
+$$
+\operatorname{tr}(A_{\rm HS}D)=0\qquad(D\in\mathcal M).
+\tag{103.6}
+$$
+
+In particular $\mathcal M$ has no nonzero PSD element. Ordinary
+$\operatorname{tr}D=0$ holds when HS is the moment reference, and
+does not follow by changing coordinates of the same arbitrary-$Q_0$
+operator. Indeed for $Q_0=Q_{1,2}$ the actual difference
+$D=B_{\kappa=1}-B_{\kappa=0}$ has $\operatorname{tr}D=1/4$.
+The traceless $\tau_\Theta$ modules have irreducible dimensions
+five and ten, so this control contains no hidden four-dimensional
+summand. The whole complex quantum family for every $N\ge2$
+likewise satisfies the bounds of §§101–102.
+
+Proof. HS gives squared radius $1/2$ on every actual face.
+Lemma 100.2 applied to its representing PD operator gives (103.6),
+and strict PSD trace duality excludes a nonzero PSD $D$. If HS is
+the reference, $A_{\rm HS}=I$. For $Q_{1,2}$, traces of its
+moments are their $Q_{1,2}$ squared radii, so (103.2) gives
+$\operatorname{tr}D=1-3/4=1/4$. Trace of a fixed endomorphism
+is basis independent; reference change changes its moment
+construction, not just its matrix coordinates. This difference
+is not a PSD witness.
+
+For the module statement, the plus Hermitian space is quaternionic
+$\operatorname{Herm}_2(\mathbb H)$, of real dimension six.
+Its traceless part consists of
+$\left(\begin{smallmatrix}t&q\\\overline q&-t\end{smallmatrix}\right)$,
+whose square is $(t^2+|q|^2)I$. Quaternionic orthonormal
+diagonalization makes the group transitive on its unit sphere,
+proving irreducibility of the five-space. The ten-dimensional
+minus space is $i\mathfrak{sp}(2)$, with the adjoint action.
+To check simplicity here, split $\mathfrak{sp}(2)$ under
+$\operatorname{Sp}(1)\times\operatorname{Sp}(1)$ into its two
+diagonal $\operatorname{Im}\mathbb H$ blocks and off-diagonal
+$\mathbb H$ block. These are irreducible inequivalent modules.
+An ideal meeting either diagonal block has nonzero brackets with
+the off-diagonal block; brackets of that block span both diagonal
+blocks. Every nonzero ideal is therefore the whole algebra.
+This proves adjoint irreducibility and the $5+10$ claim.
+
+For all $N\ge2$ retain the whole Hermitian cone, full trace-one
+body and all positive contractions. The support of the average of
+two distinct pures is their complex two-plane; its entire actual
+face is the PSD2 density ball. Full unitary conjugation is
+pure-transitive. An invariant traceless-Hermitian subspace gives,
+after multiplication by $i$ and differentiation, an ideal of
+$\mathfrak{su}(N)$. Its complexification is an ideal of
+$\mathfrak{sl}_N(\mathbb C)$; diagonal and matrix-unit commutators
+prove simplicity, so the real representation is irreducible.
+The dimensions are $n=3$ for $N=2$, $n=8$ for $N=3$, and
+$n\ge15$ for $N\ge4$, consistent with all the summand bounds.
+These standard representation facts are intermediate control
+calculations, not an additional classification theorem. ∎
 
 ## 追加锚（本行以下为增补区）
