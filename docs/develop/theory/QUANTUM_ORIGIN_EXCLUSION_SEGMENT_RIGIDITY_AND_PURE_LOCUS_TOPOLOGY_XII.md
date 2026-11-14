@@ -2657,6 +2657,6 @@ $$
 
 [Q153IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.4：全部真面、严格纯暴露与原纯紧性；IX115.3—115.5：原效应界、整球上半连续与准确极限二择。"
 [Q153T]: https://arxiv.org/html/1311.5122v1 "A. Björn, J. Björn, N. Shanmugalingam, The Mazurkiewicz distance and sets that are finitely connected at the boundary，§2：完备度量空间中 Mazurkiewicz–Moore–Menger 局部道路连通推论。"
-[Q153L]: https://arxiv.org/html/2611.02575v1 "J. Luan, T.-Y. Tam, Planar numerical ranges of isotropy representations，§2：two-piece property 的半平面表述及其另需光滑流形前件的消费者。"
+[Q153L]: https://arxiv.org/html/2611.02575v1 "Y. Luan, T.-Y. Tam, Planar Convexity of Isotropy Orbits via Cohomology and Common Zeros，§2：two-piece property 的半平面表述及其另需光滑流形前件的消费者。"
 
 ## 追加锚（本行以下为增补区）
