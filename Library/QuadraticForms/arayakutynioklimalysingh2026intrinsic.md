@@ -27,31 +27,45 @@ identify the mathematical statements.
 
 Page 5, random affine planes:
 
-> Equivalently, $\calU$ is obtained by taking the column space of a $p\times d$ matrix with i.i.d. $\calN(0,1)$ entries or the kernel of a $(p-d)\times p$ matrix with i.i.d. $\calN(0,1)$ entries.
+```tex
+Equivalently, $\calU$ is obtained by taking the column space of a $p\times d$ matrix with i.i.d. $\calN(0,1)$ entries or the kernel of a $(p-d)\times p$ matrix with i.i.d. $\calN(0,1)$ entries.
+```
 
-> If $d = p$, we set $\calV = \R^p$ a.s.
+```tex
+If $d = p$, we set $\calV = \R^p$ a.s.
+```
 
 Page 5, equation (3):
 
-> We define the \emph{intrinsic dimension}
+```tex
+We define the \emph{intrinsic dimension}
+```
 
-$$
+```tex
 \dint(\Theta) := \inf \Big\{ d \ge 0 \colon \Pr[ \calV \cap \Theta \neq \emptyset ] = 1, \text{ for $\calV \sim \nu_d \times \calN(\0,\id_{p-d})$} \Big\}.
-$$
+```
 
 Page 21, Section 4.1:
 
-> We say $h\colon \R^{M_0}\to \R$ is a function implemented by an $L$-layer \emph{deep linear network} with architecture $\bm=(M_0,\dots,M_L) \in \mathbb N^{L+1}$ if there are weight matrices $\bW_\ell \in \R^{M_\ell\times M_{\ell-1}}$ and an ouput projection $\ba \in \R^{M_L}$, for $\ell\in [L]$, such that $h(\bx)= \ba^T \bW_L \bW_{L-1} \cdots \bW_1\bx$.
+```tex
+We say $h\colon \R^{M_0}\to \R$ is a function implemented by an $L$-layer \emph{deep linear network} with architecture $\bm=(M_0,\dots,M_L) \in \mathbb N^{L+1}$ if there are weight matrices $\bW_\ell \in \R^{M_\ell\times M_{\ell-1}}$ and an ouput projection $\ba \in \R^{M_L}$, for $\ell\in [L]$, such that $h(\bx)= \ba^T \bW_L \bW_{L-1} \cdots \bW_1\bx$.
+```
 
 Page 22, equation (20), the displayed polynomial fiber:
 
-$$
+```tex
 \Theta=\{(\bb{W}_1, \dots, \bb{W}_L, \ba) \colon \bb{W}_1^T\bb{W}_2^T\cdots \bb{W}_L^T \ba = \bu_\star\}.
-$$
+```
 
 Page 23, the exact-value prediction:
 
-> As we will see in Section \ref{sec:Numerics}, numerical experiments suggest that $\dint(\Theta)=D$ in the deep linear case independently of the width and depth of the network.
+```tex
+As we will see in Section \ref{sec:Numerics}, numerical experiments suggest that $\dint(\Theta)=D$ in the deep linear case independently of the width and depth of the network.
+```
+
+The PDF sentence on page 23 reads:
+
+> As we will see in Section 7, numerical experiments suggest that $d_{\mathsf{int}}(\Theta)=D$ in the deep linear case independently of the width and depth of the network.
 
 The mathematical notation in these excerpts is defined in the source. In ordinary
 notation the last assertion is $d_{\mathsf{int}}(\Theta)=D$.

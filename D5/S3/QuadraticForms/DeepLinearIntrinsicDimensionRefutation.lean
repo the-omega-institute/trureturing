@@ -26,19 +26,7 @@ The scalar instance excludes dimensions zero and one. No general-width bound is 
 -/
 module
 
-public import Mathlib.MeasureTheory.Measure.Prod
-public import Mathlib.MeasureTheory.Measure.OpenPos
-public import Mathlib.Tactic.FunProp
-public import Mathlib.Tactic.NormNum
-public import Mathlib.Tactic.Linarith
-public import Mathlib.Tactic.IntervalCases
-public import Mathlib.Algebra.QuadraticDiscriminant
-import Lean.Elab.Tactic.LibrarySearch
 public import Mathlib.Probability.Distributions.Gaussian.Multivariate
-public import Mathlib.MeasureTheory.Constructions.Pi
-public import Mathlib.Data.ENat.Lattice
-public import Mathlib.LinearAlgebra.Span.Basic
-public import Mathlib.Data.Matrix.Mul
 
 /-! Random affine intersections of ordered deep-linear polynomial fibers. -/
 
@@ -65,22 +53,26 @@ def intrinsicDimension {ι : Type} [Fintype ι] (Θ : Set (EuclideanSpace ℝ ι
     sampleLaw ι d {z | (affinePlane d z ∩ Θ).Nonempty} = 1}
 
 /-- W_(l+1), with zero only at unused indices l >= L. -/
-def weight {L : ℕ} {m : ℕ → ℕ} (θ : EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) (l : ℕ)
+def weight {L : ℕ} {m : ℕ → ℕ}
+    (θ : EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) (l : ℕ)
     : Matrix (Fin (m (l + 1))) (Fin (m l)) ℝ :=
   fun i j => if h : l < L then θ (Sum.inl ⟨⟨l, h⟩, (i, j)⟩) else 0
 
 /-- W_l ... W_1, with the identity at l = 0. -/
-def weightProduct {L : ℕ} {m : ℕ → ℕ} (θ : EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) :
+def weightProduct {L : ℕ} {m : ℕ → ℕ}
+    (θ : EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) :
     (l : ℕ) → Matrix (Fin (m l)) (Fin (m 0)) ℝ
   | 0 => 1
   | l + 1 => weight θ l * weightProduct θ l
 
 /-- W_1^T ... W_L^T a, using the transpose of the ordered matrix product. -/
-def realization {L : ℕ} {m : ℕ → ℕ} (θ : EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) : Fin (m 0) → ℝ :=
+def realization {L : ℕ} {m : ℕ → ℕ}
+    (θ : EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) : Fin (m 0) → ℝ :=
   (weightProduct θ L).transpose.mulVec (fun i => θ (Sum.inr i))
 
 /-- Equation (20), as an explicit polynomial fiber. -/
-def solutionSet {L : ℕ} {m : ℕ → ℕ} (u : Fin (m 0) → ℝ) : Set (EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) :=
+def solutionSet {L : ℕ} {m : ℕ → ℕ} (u : Fin (m 0) → ℝ) :
+    Set (EuclideanSpace ℝ ((Σ l : Fin L, Fin (m (l.val + 1)) × Fin (m l.val)) ⊕ Fin (m L))) :=
   {θ | realization θ = u}
 
 /-- The source's equality for every positive depth, input dimension and hidden widths. -/
@@ -97,13 +89,19 @@ private theorem gaussian_open_support (ι : Type) [Fintype ι] :
   let : (gaussianReal 0 1).IsOpenPosMeasure :=
     (gaussianReal_absolutelyContinuous' 0 one_ne_zero).isOpenPosMeasure
   rw [← map_pi_eq_stdGaussian]
-  exact (PiLp.continuous_toLp 2 (fun _ : ι => ℝ)).isOpenPosMeasure_map (Equiv.surjective (WithLp.equiv 2 (ι → ℝ)).symm)
+  exact (PiLp.continuous_toLp 2 (fun _ : ι => ℝ)).isOpenPosMeasure_map
+    (Equiv.surjective (WithLp.equiv 2 (ι → ℝ)).symm)
 
 private def w : ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) := Sum.inl ⟨0, (0, 0)⟩
 private def a : ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) := Sum.inr 0
 
-private def missZero : Set ((Fin 0 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) × EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) := {z | z.2 w * z.2 a < 1}
-private def missOne : Set ((Fin 1 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) × EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) :=
+private def missZero :
+    Set ((Fin 0 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) ×
+      EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) :=
+  {z | z.2 w * z.2 a < 1}
+private def missOne :
+    Set ((Fin 1 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) ×
+      EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) :=
   {z | z.1 0 w * z.1 0 a < 0 ∧
     discrim (z.1 0 w * z.1 0 a)
       (z.2 w * z.1 0 a + z.1 0 w * z.2 a) (z.2 w * z.2 a - 1) < 0}
@@ -120,10 +118,13 @@ private theorem miss_zero_open : IsOpen missZero := by
 
 private theorem miss_one_open : IsOpen missOne := by
   exact (isOpen_lt
-    (by fun_prop : Continuous (fun z : (Fin 1 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) × EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) => z.1 0 w * z.1 0 a))
+    (by fun_prop : Continuous
+      (fun z : (Fin 1 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) ×
+      EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) => z.1 0 w * z.1 0 a))
     continuous_const).inter
     (isOpen_lt (by unfold discrim; fun_prop : Continuous
-      (fun z : (Fin 1 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) × EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) => discrim (z.1 0 w * z.1 0 a)
+      (fun z : (Fin 1 → EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)) ×
+      EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) => discrim (z.1 0 w * z.1 0 a)
         (z.2 w * z.1 0 a + z.1 0 w * z.2 a) (z.2 w * z.2 a - 1)))
       continuous_const)
 
@@ -131,7 +132,9 @@ private theorem miss_zero_nonempty : missZero.Nonempty := by
   exact ⟨(0, 0), by norm_num [missZero]⟩
 
 private theorem miss_one_nonempty : missOne.Nonempty := by
-  refine ⟨(fun _ => WithLp.toLp 2 (fun i : ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) => Sum.elim (fun _ => (1 : ℝ)) (fun _ => -1) i), 0), ?_⟩
+  refine ⟨(fun _ => WithLp.toLp 2
+    (fun i : ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) =>
+      Sum.elim (fun _ => (1 : ℝ)) (fun _ => -1) i), 0), ?_⟩
   norm_num [missOne, discrim, w, a]
 
 private theorem miss_zero_disjoint :
@@ -169,32 +172,34 @@ private theorem miss_one_disjoint :
 private theorem hit_zero_lt_one :
     sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 0 {z | (affinePlane 0 z ∩
       solutionSet (L := 1) (m := fun _ => 1) (fun _ => 1)).Nonempty} < 1 := by
-  letI hGauss : (stdGaussian (EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1))).IsOpenPosMeasure := gaussian_open_support ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)
-  letI : (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 0).IsOpenPosMeasure := by
-    dsimp only [sampleLaw, Function.const]
+  let hGauss : (stdGaussian (EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1))).IsOpenPosMeasure := gaussian_open_support ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)
+  let : (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 0).IsOpenPosMeasure := by
+    unfold sampleLaw
     infer_instance
-  letI : IsProbabilityMeasure (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 0) := by
-    dsimp only [sampleLaw, Function.const]
+  let : IsProbabilityMeasure (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 0) := by
+    unfold sampleLaw
     infer_instance
   have hp := miss_zero_open.measure_pos (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 0) miss_zero_nonempty
   have hc := prob_compl_lt_one_sub_of_lt_prob hp miss_zero_open.measurableSet
   simp only [tsub_zero] at hc
-  exact lt_of_le_of_lt (measure_mono (fun z hz hm => Set.disjoint_left.mp miss_zero_disjoint hm hz)) hc
+  exact lt_of_le_of_lt
+    (measure_mono (fun z hz hm => Set.disjoint_left.mp miss_zero_disjoint hm hz)) hc
 
 private theorem hit_one_lt_one :
     sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 1 {z | (affinePlane 1 z ∩
       solutionSet (L := 1) (m := fun _ => 1) (fun _ => 1)).Nonempty} < 1 := by
-  letI hGauss : (stdGaussian (EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1))).IsOpenPosMeasure := gaussian_open_support ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)
-  letI : (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 1).IsOpenPosMeasure := by
-    dsimp only [sampleLaw, Function.const]
+  let hGauss : (stdGaussian (EuclideanSpace ℝ ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1))).IsOpenPosMeasure := gaussian_open_support ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1)
+  let : (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 1).IsOpenPosMeasure := by
+    unfold sampleLaw
     infer_instance
-  letI : IsProbabilityMeasure (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 1) := by
-    dsimp only [sampleLaw, Function.const]
+  let : IsProbabilityMeasure (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 1) := by
+    unfold sampleLaw
     infer_instance
   have hp := miss_one_open.measure_pos (sampleLaw ((Σ _ : Fin 1, Fin 1 × Fin 1) ⊕ Fin 1) 1) miss_one_nonempty
   have hc := prob_compl_lt_one_sub_of_lt_prob hp miss_one_open.measurableSet
   simp only [tsub_zero] at hc
-  exact lt_of_le_of_lt (measure_mono (fun z hz hm => Set.disjoint_left.mp miss_one_disjoint hm hz)) hc
+  exact lt_of_le_of_lt
+    (measure_mono (fun z hz hm => Set.disjoint_left.mp miss_one_disjoint hm hz)) hc
 
 theorem result : ¬ claim := by
   intro h

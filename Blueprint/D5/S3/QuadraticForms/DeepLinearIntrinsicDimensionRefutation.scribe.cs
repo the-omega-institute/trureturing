@@ -48,8 +48,11 @@ internal sealed class DeepLinearIntrinsicDimensionRefutationDocument : IScribeDo
         Product(Fin(Width(Add(Call("val", X("l")), D(1)))), Fin(Width(Call("val", X("l"))))))), Fin(Width(L)));
     private static Formula ParameterSpace => Space(Coordinates);
     private static Formula Architecture(Formula body) => All("L", NN, All("m", Arrow(NN, NN), body));
-    private static Formula Indexed(Formula body) => All("iota", Call("Type"), Seq(
+    private static Formula Indexed(Formula body) => All("iota", X("Type"), Seq(
         OpenBracket, Call("Fintype", I), CloseBracket, Comma, Sp, body));
+    private static Formula Named(string name, Formula value) =>
+        Parenthesized(Seq(X(name), Sp, Colon, Eq, Sp, value));
+    private static Formula Solution(Formula u) => Call("solutionSet", Named("L", L), Named("m", X("m")), u);
     private static Formula Gaussian => Call("stdGaussian", Space(I));
     private static Formula First(Formula x) => Seq(x, Dot, D(1));
     private static Formula Second(Formula x) => Seq(x, Dot, D(2));
@@ -59,7 +62,7 @@ internal sealed class DeepLinearIntrinsicDimensionRefutationDocument : IScribeDo
     private static Formula ClaimBody() => Architecture(Imp(Leq(D(1), L),
         Imp(All("l", NN, Imp(Leq(X("l"), L), Leq(D(1), Width(X("l"))))),
             All("u", Arrow(Fin(Width(D(0))), RR), Imp(NotEqual(X("u"), D(0)),
-                Equal(Call("intrinsicDimension", Call("solutionSet", X("u"))), Typed(Width(D(0)), ENN)))))));
+                Equal(Call("intrinsicDimension", Solution(X("u"))), Typed(Width(D(0)), ENN)))))));
 
     private static DocumentBlock.Describe Definition(string name, Formula formula, string prose) => Describe.Lean(
         DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(name),
@@ -83,8 +86,8 @@ internal sealed class DeepLinearIntrinsicDimensionRefutationDocument : IScribeDo
                 And(Equal(X("n"), Typed(d, ENN)), Equal(App(Call("sampleLaw", I, d), Hit(d, thetaSet)), D(1))))))))));
         var weightEntry = Fn("i", Fin(Width(Add(X("l"), D(1)))), Fn("j", Fin(Width(X("l"))),
             Seq(X("if"), Sp, X("h"), Sp, Colon, Sp, Lt(X("l"), L), Sp, X("then"), Sp,
-                Call("theta", App(Qualified("Sum", "inl"), Seq(Langle,
-                    Seq(Langle, X("l"), Comma, Sp, X("h"), Rangle), Comma, Sp, Pair(X("i"), X("j")), Rangle))),
+                Call("theta", App(Qualified("Sum", "inl"), Seq(Langle, Sp,
+                    Seq(Langle, Sp, X("l"), Comma, Sp, X("h"), Rangle), Comma, Sp, Pair(X("i"), X("j")), Rangle))),
                 Sp, X("else"), Sp, D(0))));
         var weight = Architecture(All("theta", ParameterSpace, All("l", NN,
             Equal(Call("weight", T, X("l")), weightEntry))));
@@ -95,13 +98,13 @@ internal sealed class DeepLinearIntrinsicDimensionRefutationDocument : IScribeDo
         var realization = Architecture(All("theta", ParameterSpace, Equal(Call("realization", T),
             App(Qualified("Matrix", "mulVec"), App(Qualified("Matrix", "transpose"), Call("weightProduct", T, L)),
                 Fn("i", Fin(Width(L)), Call("theta", App(Qualified("Sum", "inr"), X("i"))))))));
-        var solution = Architecture(All("u", Arrow(Fin(Width(D(0))), RR), Equal(Call("solutionSet", X("u")),
+        var solution = Architecture(All("u", Arrow(Fin(Width(D(0))), RR), Equal(Solution(X("u")),
             SetOf("theta", ParameterSpace, Equal(Call("realization", T), X("u"))))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Gaussian affine lines can miss the scalar deep-linear solution fiber.",
             H("The exact deep-linear intrinsic-dimension prediction fails"), Blocks(
                 Definition("sampleLaw", sampleLaw,
-                    "Definition 1, page 5: “Equivalently, U is obtained by taking the column space of a p × d matrix with i.i.d. N (0, 1) entries or the kernel of a (p − d) × p matrix with i.i.d. N (0, 1) entries.” Each column and the offset are independent standard Gaussian vectors. The product includes the empty family at d = 0. The finite type iota indexes ambient coordinates."),
+                    "Definition 1, page 5: “Equivalently, U is obtained by taking the column space of a p × d matrix with i.i.d. N (0, 1) entries or the kernel of a (p − d) × p matrix with i.i.d. N (0, 1) entries.” Each column and the offset are independent standard Gaussian vectors. The product includes the empty family at d = 0. The finite type iota indexes ambient coordinates. Function.const displays the constant Gaussian family indexed by Fin d."),
                 Definition("affinePlane", affine,
                     "Definition 1, page 5: “If d = p, we set V = Rᵖ a.s.” Otherwise the set consists of x for which x minus the independent offset lies in the real span of the sampled columns. Translating by g or its orthogonal projection gives the same affine set."),
                 Definition("intrinsicDimension", intrinsic,
@@ -120,6 +123,6 @@ internal sealed class DeepLinearIntrinsicDimensionRefutationDocument : IScribeDo
                     H("Negation of the complete exact-value prediction"),
                     StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(ClaimBody())))),
                     AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
-                        "Take L = 1, every width equal to one, and target u = 1. The fiber is the hyperbola wa = 1. A sampled point with wa < 1 misses it. For a sampled line g + tv, its intersection equation has coefficients A = vwv a, B = gwv a + vwg a, and C = gwg a − 1. The open region A < 0 with negative discriminant contains v = (1, −1), g = 0, so Gaussian full support gives it positive measure. The quadratic equation has no real root there. Hence neither dimension zero nor dimension one has intersection probability one. The infimum is at least two, contradicting the asserted value one. This argument proves a global affine-intersection obstruction; it does not evaluate general widths or depths."))), DescribeRole.Theorem))));
+                        "Take L = 1, every width equal to one, and target u = 1. The fiber is the hyperbola wa = 1. A sampled point with wa < 1 misses it. For a sampled line g + tv, its intersection equation has coefficients A = v₁v₂, B = g₁v₂ + v₁g₂, and C = g₁g₂ − 1. The open region A < 0 with negative discriminant contains v = (1, −1), g = 0, so Gaussian full support gives it positive measure. The quadratic equation has no real root there. Hence neither dimension zero nor dimension one has intersection probability one. The infimum is at least two, contradicting the asserted value one. This argument proves a global affine-intersection obstruction; it does not evaluate general widths or depths."))), DescribeRole.Theorem))));
     }
 }
