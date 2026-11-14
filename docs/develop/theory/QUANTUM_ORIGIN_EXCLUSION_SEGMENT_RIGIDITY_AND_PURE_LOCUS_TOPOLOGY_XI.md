@@ -615,11 +615,132 @@ $\mathsf{MC}$ 是否由裸 EB3、或由 EB3 加纯比较互易 PR 自动推出�
 
 ## 追加锚（本行以下为增补区）
 
-## 136. 完整零球的真实标签返回与固定根严格高段
+## 136. 一张全效应的纯态判别与排除球全轴间隙
 
-### 136.1 全部原对象与显式根合同
+**定义 136.1（原球心图及完全分离关系）。** 保留135.1的同一有限维原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$。本章先允许每个完整 $D_p$ 是任意正维实心仿射欧氏闭球，维数可以随 $p$ 变化，仍记其中心为 $c_p$。另外假定实际存在连续仿射映射 $R:K\to K$，满足 $R(p)=c_p$，并满足原球标签单射
 
-**定义 136.1（完整原域、真实零确认与固定根）。** 取非零有限维实空间 $V$、闭尖生成凸锥
+$$
+D_p=D_q\ \Longrightarrow\ p=q\qquad(p,q\in P).
+\tag{XI136.1}
+$$
+
+这里仿射性遍历全部原态和实权重，不是只在某个球内的仿射性。完整 EB3 加135.1的 $\mathsf{MC}$ 已由135.2—135.4中纯点闭性论证之前的部分供应这两个条件；本章不使用135.4的纯点紧性结论或135.5的矩阵分类。
+
+定义同一原效应的完全分离关系及其最大间隙：
+
+$$
+\begin{aligned}
+\Gamma_R&=\{(x,f)\in K\times\mathcal E:f(x)=1,\ f(Rx)=0\},\\
+d_R(x)&=\max_{f\in\mathcal E}\bigl(f(x)-f(Rx)\bigr).
+\end{aligned}
+\tag{XI136.2}
+$$
+
+全效应区间在有限维中紧，故最大值达到。$R$ 在此是原几何上的静态仿射图，不预设为可执行操作。
+
+**定理 136.2（纯态是闭的全效应分离关系）。** 在定义136.1的原域，
+
+$$
+\boxed{
+P=\operatorname{pr}_K\Gamma_R=d_R^{-1}(\{1\}).
+}
+\tag{XI136.3}
+$$
+
+因此原全部纯态集合 $P$ 紧。并且 $d_R:K\to[0,1]$ 连续；对每个 $\eta>0$，存在 $\varepsilon>0$，使全部原态满足
+
+$$
+d_R(x)>1-\varepsilon
+\quad\Longrightarrow\quad
+\operatorname{dist}(x,P)<\eta.
+\tag{XI136.4}
+$$
+
+距离使用任意固定辅助欧氏范数；不声称存在与原模型无关的数值模量。
+
+证明。先记录将要实际使用的原共同零面接口。任取 $p\in P$，若 $f\in\mathcal F_p$ 且 $f(c_p)=0$，则对 $y\in D_p$，中心反射给 $y'=2c_p-y\in D_p$。原效应非负，故
+
+$$
+0=f(c_p)=\frac{f(y)+f(y')}{2}
+\quad\Longrightarrow\quad f(y)=0.
+$$
+
+反向，$y\in K$ 且 $f(y)=0$ 时，同一 $f\in\mathcal F_p$ 见证 $T_p(y)=0$。因此
+
+$$
+D_p=K\cap\ker f.
+\tag{XI136.5}
+$$
+
+$c_p\in D_p$ 以及原 minimum 达到，总能供应这样的 $f$。这是 [FINITE_PURE VII103.2][XI135FP] 已有的共同零确认步骤；此处只重述被消费的等式，不使用全部真面分类。它同时保证 $D_p$ 是原面。因为球正维，$c_p$ 不是原纯点。
+
+若 $x=p\in P$，取上述共同零确认效应就有 $f(x)=1,f(Rx)=f(c_p)=0$，所以 $P\subseteq\operatorname{pr}_K\Gamma_R$。
+
+反之，设 $(x,f)\in\Gamma_R$。有限维紧凸集的有限极点分解定理给出
+
+$$
+x=\sum_{i=1}^m\lambda_i p_i,\qquad
+p_i\in P,\quad\lambda_i>0,\quad\sum_i\lambda_i=1.
+$$
+
+仿射性、全域效应界及两端饱和给
+
+$$
+1=\sum_i\lambda_i f(p_i),\qquad
+0=\sum_i\lambda_i f(c_{p_i}),\qquad
+f(p_i)\le1,\quad f(c_{p_i})\ge0.
+$$
+
+因所有权重正，逐项必有 $f(p_i)=1$ 及 $f(c_{p_i})=0$。于是(XI136.5)使全部 $D_{p_i}$ 都等于同一个 $K\cap\ker f$；标签单射再使全部 $p_i$ 相同。因此 $x$ 纯，得到第一个等式。这里既未从“不同标签”直接推“不同效应”，也未在混合分解前假定 $P$ 闭。
+
+$\Gamma_R$ 是紧 $K\times\mathcal E$ 的闭子集，其投影紧；故 $P$ 紧。这个步骤没有选取任何排除球的 Hausdorff 极限，也未调用 IX118.4 的极限标签定理。
+
+由于 $0\le f(x),f(Rx)\le1$，间隙不超过一；零效应使最大间隙非负。最大值达到时，$f(x)-f(Rx)=1$ 恰好等价于 $f(x)=1,f(Rx)=0$，得到第二个等式。
+
+在 $\operatorname{aff}K$ 的平移空间上，令 $A$ 为 $x\mapsto x-Rx$ 的线性部分，并令 $M=\max_{f\in\mathcal E}\|f\|$。对 $x,y\in K$，
+
+$$
+|d_R(x)-d_R(y)|\le M\|A\|\,\|x-y\|.
+\tag{XI136.6}
+$$
+
+这由每张原效应的相同界取最大直接得到，故 $d_R$ 连续。对给定 $\eta>0$，集合 $H_\eta=\{x\in K:\operatorname{dist}(x,P)\ge\eta\}$ 紧且不交 $P$。若它非空，取 $\varepsilon=1-\max_{H_\eta}d_R>0$；若为空，任取 $\varepsilon>0$。由(XI136.3)即得(XI136.4)。证毕。
+
+**定理 136.3（每颗完整球的全部半轴统一非退化）。** 在定义136.1的原域，固定任意辅助欧氏范数，令 $L_p=\operatorname{lin}(D_p-c_p)$。则
+
+$$
+\delta=\operatorname{dist}(P,R(P))>0,\qquad
+c_p+\delta\,\overline B_{L_p}\subseteq D_p
+\quad(p\in P).
+\tag{XI136.7}
+$$
+
+特别地，每颗完整排除椭球在该辅助尺下的全部半轴都至少为 $\delta$，并有 $\operatorname{diam}D_p\ge2\delta$。
+
+证明。定理136.2给紧 $P$，连续性给紧 $R(P)$。每个 $R(p)=c_p$ 都是正维原面 $D_p$ 的中心，因而非纯，所以两紧集不交，得到严格正距离。仿射球的每个相对边界点 $q$ 都是该球的极点；$D_p$ 是原面，故 $q\in P$。因此
+
+$$
+\|q-c_p\|\ge\delta
+\qquad(q\in\partial_{\rm rel}D_p).
+$$
+
+对 $L_p$ 的每条单位方向 $v$，沿射线 $c_p+t v$ 首次遇到的边界点距离至少为 $\delta$；由凸性，$0\le t\le\delta$ 的整段都在 $D_p$。遍历所有方向便得内球包含式。中心反射再给直径界。本证明允许不同球在辅助环境尺下为不同椭球，未输入共同物理内积。证毕。
+
+**条件应用 136.4（完整候选的短桥及量词边界）。** 在135.1的完整 EB3 加 $\mathsf{MC}$ 下，先消费135.2—135.4中线性下降、满秩及标签单射的部分，再应用136.2—136.3，即得到 IX118.8第二项需要的原球统一正直径下界。这样，纯点紧性及非塌缩入口的证明不再选取极限球；135.5的同原锥、同原单位复三能级表示与135.6的全部静态字典仍消费 IX118.8，包括该分类已有的极限球依赖。
+
+证明。$\mathsf{MC}$ 使纯生成元的球心替换在全部原混合上良定义；135.3的中心张成使其线性延拓满秩，从而取得定义136.1的实际仿射 $R$ 和原标签单射。136.2—136.3正好供应剩余的非塌缩前件，之后直接应用既有 IX118.8，不重证其拓扑或 Jordan 分类。反向与矩阵字典直接复用135.5—135.6，不作为本章新增分类。证毕。
+
+**约定 136.5（新增连接及关系图景）。** 本章采用 `repo-derived` 归属；新增承重连接是(XI136.3)在分类前以同一全效应关系识别全部原纯点，并由此直接推出紧性及(XI136.7)的全轴间隙。紧投影、有限极点分解、最大值连续性与紧集间正距离是成熟中间工具。量子端的 $X\mapsto(\operatorname{Tr}(X)I-X)/2$ 属于既有 universal state inversion／reduction map；参见 [Rungta等，Universal state inversion and concurrence in arbitrary dimensions](https://doi.org/10.1103/PhysRevA.64.042315) 及 [Horodecki—Horodecki，Reduction criterion of separability and limits for a class of distillation protocols](https://doi.org/10.1103/PhysRevA.59.4206)。这些文献不被当作本章抽象纯域判别的证明，亦不据有限检索声称全球原创。
+
+完整静态候选仍是 $\mathrm{EB3}+\mathsf{MC}$，本章缩短其推导，不声称删去了独立假设。其关系图景是：同一个态可有不同纯混合配方，取每个纯分量的排除球心后仍须得到同一态；若一张原尺能把替换前后完全分开，所有配方分量就必须指向同一颗排除球，标签单射迫使它们本来就是同一纯点。纯态因而由这项闭的二元分离关系完整刻画，球心与纯点之间出现统一正间隙，任何排除球的细轴也不能趋于零。只检验两项混合是否足以替代全部有限混合、裸 EB3 或 EB3加纯比较互易是否推出 $\mathsf{MC}$，仍不由本章解决。实际操作、复合系统、测量更新与时间演化继续保留135.7的原合同；交换比较端点不等于交换连续测量的次序。
+
+## 追加锚（本行以下为增补区）
+
+## 137. 完整零球的真实标签返回与固定根严格高段
+
+### 137.1 全部原对象与显式根合同
+
+**定义 137.1（完整原域、真实零确认与固定根）。** 取非零有限维实空间 $V$、闭尖生成凸锥
 $C\subset V$，以及在 $C\setminus\{0\}$ 上严格正的 $u\in V^\ast$。始终使用
 
 $$
@@ -631,11 +752,11 @@ C^\ast=\{f\in V^\ast:f(C)\subseteq\mathbb R_+\},\qquad
 T_p(z)=\min_{f\in\mathcal F_p}f(z),\qquad
 D_p=\{z\in K:T_p(z)=0\},\qquad S_p=P\cap D_p.
 \end{gathered}
-\tag{XI136.1}
+\tag{XI137.1}
 $$
 
 标签 $p$ 遍历全部 $P$，第二端点 $z$ 遍历整个 $K$。$K,\mathcal E,\mathcal F_p$ 的紧性与 minimum 达到沿用
-[IX114.1—114.2][Q136IX]、[X133.1][Q136X]；确认族不缩成某个预选效应族。
+[IX114.1—114.2][Q137IX]、[X133.1][Q137X]；确认族不缩成某个预选效应族。
 以下 EB3 总指对每个原 $p\in P$，整个 $D_p$ 都仿射等价于完整闭三球。
 纯零关系 $p\perp r\Longleftrightarrow T_p(r)=0$ 由补效应对称，且反自反。
 纯 PR 则另指全部纯对的 $T_p(r)=T_r(p)$，不交换混态上的正读数。
@@ -647,7 +768,7 @@ $S_p=\partial_{\rm rel}D_p\cong S^2$，$D_p=\operatorname{conv}S_p$；
 
 $$
 \mathcal A_p=\{e\in\mathcal F_p:K\cap\ker e=D_p\}.
-\tag{XI136.2}
+\tag{XI137.2}
 $$
 
 此族非空。具体地，在 $c_p$ 取一张达到 $T_p(c_p)=0$ 的原效应 $e$；对任意
@@ -661,12 +782,12 @@ $0=e(c_p)=(e(z)+e(z'))/2$ 使 $e$ 零于整个球。反向由 $0\le T_p\le e$ �
 $$
 A=D_o,\qquad S=S_o,\qquad B=\bigcup_{s\in S}D_s,\qquad
 w=o+2c_o.
-\tag{XI136.3}
+\tag{XI137.3}
 $$
 
 这里 $w\in V$ 且 $u(w)=3$，不是归一状态；$B$ 收齐每个末球的全部混态。
 
-**定义 136.2（根合同、局部带与关联的合法域）。** 显式根合同 $R_o$ 包含以下条件：
+**定义 137.2（根合同、局部带与关联的合法域）。** 显式根合同 $R_o$ 包含以下条件：
 对每个 $s\in S$ 有原纯点 $a_s$，使 $(o,s,a_s)$ 是真实零三角；
 $I(A)=\{o\}$ 且 $I(D_s)=\{s\}$ 对每个 $s\in S$ 成立；
 $B$ 紧，$o\in B$ 且 $S\subseteq B$。三角的每条边均由同一完整原菜单内的效应见证。
@@ -680,7 +801,7 @@ $$
 \{\pi_o(x)\}=A\cap D_x
 =\{s\in S:o\perp s,\ x\perp s\}.
 \end{gathered}
-\tag{XI136.4}
+\tag{XI137.4}
 $$
 
 确实，$x\in B$ 给共同邻点存在；$x\ne o$ 与 $I(A)=\{o\}$ 给 $D_x\ne A$，
@@ -695,19 +816,19 @@ $$
 \forall z\in P:\quad 0<T_o(z)<\varepsilon\ \Longrightarrow\\
 \exists s\in P:\ T_o(s)=T_z(s)=0.
 \end{gathered}
-\tag{XI136.5}
+\tag{XI137.5}
 $$
 
 它经零对称恰给该小正带的纯目标进入 $B$，不预付其余目标。
 $L_\varepsilon(o)$ 单列供根合同的来源与高段消费者使用；下面的返回计算只用 $R_o$。
 
-### 136.2 两球效应计算、原对径回送与分离裕量消去
+### 137.2 两球效应计算、原对径回送与分离裕量消去
 
-**定理 136.3（保留邻边完成的单对真实标签返回）。** 在完整 EB3 与 $R_o$ 下，取
+**定理 137.3（保留邻边完成的单对真实标签返回）。** 在完整 EB3 与 $R_o$ 下，取
 
 $$
 q\in P\setminus(A\cup\{o\}),\qquad S_q\subseteq B.
-\tag{XI136.6}
+\tag{XI137.6}
 $$
 
 此时 $h_q=\pi_o|_{S_q}:S_q\to S$ 是同胚；记 $x_s=h_q^{-1}(s)$。
@@ -716,14 +837,14 @@ $$
 $$
 C_q:\quad \forall s\in S\ \exists y_s\in P:
 \quad (s,x_s,y_s)\text{ 是真实零三角}.
-\tag{XI136.7}
+\tag{XI137.7}
 $$
 
 若有一对满足反向纯比较
 
 $$
 \exists s_\ast\in S:\quad T_q(s_\ast)\le T_{s_\ast}(q),
-\tag{XI136.8}
+\tag{XI137.8}
 $$
 
 则对任意真实 $e_o\in\mathcal A_o$、$e_q\in\mathcal A_q$，都有
@@ -731,25 +852,25 @@ $$
 $$
 e_q(w)=1,\qquad q+2c_q=w,\qquad e_q(o)=e_o(q),\qquad
 \min_{z\in A}e_q(z)=0,\qquad D_q\cap A\ne\varnothing,\qquad q\in B.
-\tag{XI136.9}
+\tag{XI137.9}
 $$
 
 仅有根边 $(o,s)$ 的完成不能删除 $C_q$；后者完成的是另一条实际边 $(s,x_s)$。
 
 证明。先说明复用 X133.5 的关联步骤在当前域内合法。
-由 $q\notin A$ 及零对称，$o\notin S_q$；(XI136.6) 因而让整个 $S_q$ 落在
-(XI136.4) 的定义域内。紧集
+由 $q\notin A$ 及零对称，$o\notin S_q$；(XI137.6) 因而让整个 $S_q$ 落在
+(XI137.4) 的定义域内。紧集
 
 $$
 \{(x,s,f)\in S_q\times S\times\mathcal E:f(s)=1,\ f(x)=0\}
-\tag{XI136.10}
+\tag{XI137.10}
 $$
 
 在 $S_q\times S$ 上的投影正是 $h_q$ 的单值图。该图到 $S_q$ 是紧到 Hausdorff 的连续双射，
 故 $h_q$ 连续。若两点同映到 $s$，它们都在 $D_q\cap D_s$；
 $I(D_s)=\{s\}$ 与 $q\notin A$ 排除 $D_q=D_s$，点交接口遂给单射。
 两端都是完整、紧、无边界的二维球面。区域不变性使连续单射的像开，紧性使像闭，
-目标连通使其满射，所以为同胚。这是 [Hatcher，印刷页172，Theorem 2B.3、Corollary 2B.4][Q136H]
+目标连通使其满射，所以为同胚。这是 [Hatcher，印刷页172，Theorem 2B.3、Corollary 2B.4][Q137H]
 及 X133.5 的同一应用。它只支付完整极值范围，不直接支付两球相交。
 
 固定上述真实 $e_o,e_q$，记
@@ -757,7 +878,7 @@ $I(D_s)=\{s\}$ 与 $q\notin A$ 排除 $D_q=D_s$，点交接口遂给单射。
 $$
 \alpha=e_q(w),\qquad r=e_q(o),\qquad d=e_o(q),\qquad
 t_s=e_q(s),\qquad b_s=e_o(x_s).
-\tag{XI136.11}
+\tag{XI137.11}
 $$
 
 $q\notin A$ 给 $d>0$；若 $r=0$，则 $o\in D_q$，零对称会给 $q\in A$，故 $r>0$。
@@ -767,7 +888,7 @@ $s+a_s=2c_o$、$o+a_s=2c_s$。再用 $C_q$ 中的三角，得到
 $$
 s+2c_s=w,\qquad x_s+y_s=2c_s,\qquad s+y_s=2c_{x_s},\qquad
 x_s+2c_{x_s}=w.
-\tag{XI136.12}
+\tag{XI137.12}
 $$
 
 最后一个等式尚未涉及 $q$ 的球心，不能以 $q+2c_q=w$ 代替它。
@@ -781,14 +902,14 @@ $$
 e_q(c_s+L_s z)=\frac{\alpha-t_s}{2}(1-z_s\cdot z),\qquad
 b_s=\frac{1+v_s\cdot z_s}{2},\qquad
 r=(\alpha-t_s)(1-b_s).
-\tag{XI136.13}
+\tag{XI137.13}
 $$
 
 这里 $L_s$ 是该球图的线性部分；$\alpha-t_s>0$ 且 $1-b_s>0$，由 $r>0$ 保证。
 这一步用整个 $D_s$ 上的原效应界，未以任意横截球替代 $D_q$。
 
 真实零关系 $x_s\in D_q$ 经零对称使 $q\in D_{x_s}$，从而进入第二张完整球
-$G_s=D_{x_s}$。$s$ 也在该球内。其中心满足 (XI136.12)，故 $e_q$ 的中心值为
+$G_s=D_{x_s}$。$s$ 也在该球内。其中心满足 (XI137.12)，故 $e_q$ 的中心值为
 $\alpha/2$；$q$ 是其取值一的球面点，因而整个球的最小值是 $\alpha-1$。
 效应界给 $1\le\alpha\le2$。令 $\widehat q,\widehat s$ 为在这张球内的单位坐标，便有
 
@@ -800,7 +921,7 @@ e_o(c_{x_s}+L_{x_s}z)
  &=\frac{1-b_s}{2}(1-\widehat s\cdot z),\\
 (2-\alpha)d&=(1-t_s)(1-b_s).
 \end{aligned}
-\tag{XI136.14}
+\tag{XI137.14}
 $$
 
 第二式使用 $e_o(s)=0$、$e_o(w)=1$ 及 $b_s<1$；第三式在同一球内分别于 $s,q$ 评价得到。
@@ -811,31 +932,31 @@ $r=\alpha-2e_q(c_o)=0$，矛盾。因此
 $$
 1\le\alpha<2,\qquad
 r(1-t_s)=(2-\alpha)d(\alpha-t_s)\quad(s\in S).
-\tag{XI136.15}
+\tag{XI137.15}
 $$
 
 在使用反向比较之前，可准确看出正分离障碍：若 $t_s$ 取两个不同值，比较最后一个一次等式的系数与
 常数项，得到 $r=(2-\alpha)d=\alpha(2-\alpha)d$，故 $\alpha=1$。
-若 $\alpha>1$，只能有 $e_q|_A\equiv m$。第一式 (XI136.13) 及 $h_q$ 满射还给
+若 $\alpha>1$，只能有 $e_q|_A\equiv m$。第一式 (XI137.13) 及 $h_q$ 满射还给
 $e_o|_{D_q}\equiv m/(\alpha-m)$，并有
 
 $$
 r=\alpha-2m>0,\qquad \alpha-1<m<\frac\alpha2,\qquad D_q\cap A=\varnothing.
-\tag{XI136.16}
+\tag{XI137.16}
 $$
 
-其中 $m\ge\alpha-1$ 来自 $s\in G_s$ 与 (XI136.14) 的最小值。
+其中 $m\ge\alpha-1$ 来自 $s\in G_s$ 与 (XI137.14) 的最小值。
 若等号成立，$s$ 是 $q$ 在 $G_s$ 内的对径；$C_q$ 又使 $y_s$ 是 $s$ 在同一球的对径，
 所以 $q=y_s\perp s$，与 $e_q(s)=m=\alpha-1>0$ 矛盾。
 这些是正数分支的必要关系，不是满足整个原域的反模型。
 
-现在由 (XI136.8) 排除该障碍。对任一完整球 $G$ 与其中的原纯点 $z$，
+现在由 (XI137.8) 排除该障碍。对任一完整球 $G$ 与其中的原纯点 $z$，
 IX114.5 的证明中不使用 PR 的 (IX114.15)—(IX114.16) 给出
 
 $$
 T_z(c_G+L_G v)=1-\kappa_G(z)(1-\widehat z\cdot v),\qquad
 0\le\kappa_G(z)\le\frac12.
-\tag{XI136.17}
+\tag{XI137.17}
 $$
 
 原因是每张确认 $z$ 的原效应在整个球上必形如
@@ -849,19 +970,19 @@ $$
 T_q(s_\ast)-T_{s_\ast}(q)
 =\left(\frac12-\kappa_{G_{s_\ast}}(q)\right)
 (1-\widehat q\cdot\widehat{s_\ast})\ge0.
-\tag{XI136.18}
+\tag{XI137.18}
 $$
 
 反向不等式使其为零，后一因子严格正，故 $\kappa_{G_{s_\ast}}(q)=1/2$。
 $q$ 的这张球内对径因而有原最低值零，属于真实 $D_q$；
-在它上面，(XI136.14) 的真实 $e_q$ 取值 $\alpha-1$，准确零集迫 $\alpha=1$。
-(XI136.13)—(XI136.14) 随即给 $d=r$，因为 $1-t_s>0$：若 $t_s=1$，第一式将给 $r=0$。
+在它上面，(XI137.14) 的真实 $e_q$ 取值 $\alpha-1$，准确零集迫 $\alpha=1$。
+(XI137.13)—(XI137.14) 随即给 $d=r$，因为 $1-t_s>0$：若 $t_s=1$，第一式将给 $r=0$。
 
 对任意 $s\in S$，此时才取
 
 $$
 q_s^-=2c_{x_s}-q=w-x_s-q.
-\tag{XI136.19}
+\tag{XI137.19}
 $$
 
 它是 $G_s$ 的原纯对径点，且 $e_q(q_s^-)=\alpha-1=0$。
@@ -870,7 +991,7 @@ $$
 
 $$
 2c_q=x_s+q_s^-=w-q.
-\tag{XI136.20}
+\tag{XI137.20}
 $$
 
 这是真实标签的回送：球心关系是零值与原正交推出的结论，不是输入。
@@ -881,16 +1002,16 @@ $A=c_o+L_A\overline{\mathbb B}^{\,3}$，置
 $$
 m=e_q(c_o),\qquad v=\|e_q\circ L_A\|_2,\qquad
 0\le v\le m<\frac12,\qquad r=1-2m.
-\tag{XI136.21}
+\tag{XI137.21}
 $$
 
-非负性给 $v\le m$，$r>0$ 给严格上界。由 (XI136.20)、$e_o(w)=1$ 及 $d=r$，
+非负性给 $v\le m$，$r>0$ 给严格上界。由 (XI137.20)、$e_o(w)=1$ 及 $d=r$，
 $e_o(c_q)=(1-d)/2=m$。$s$ 遍历完整 $S$ 时，$t_s$ 遍历整个区间
 $[m-v,m+v]$；第一球恒等式给
 
 $$
 b_s=1-\frac r{1-t_s}.
-\tag{XI136.22}
+\tag{XI137.22}
 $$
 
 此函数随 $t_s$ 严格递减。$m+v\le2m<1$ 保证全部分母严格正；
@@ -899,7 +1020,7 @@ $s\mapsto x_s$ 遍历完整 $S_q$，所以 $e_o$ 在整个 $D_q$ 上的两个极
 $$
 \min_{D_q}e_o=\frac{m-v}{1-m-v},\qquad
 \max_{D_q}e_o=\frac{m+v}{1-m+v}.
-\tag{XI136.23}
+\tag{XI137.23}
 $$
 
 这里满射只用于保证真实球面的两个极值都被取遍。
@@ -908,26 +1029,26 @@ $$
 $$
 \frac{m-v}{1-m-v}+\frac{m+v}{1-m+v}=2m,
 \qquad 2(1-m)(m^2-v^2)=0.
-\tag{XI136.24}
+\tag{XI137.24}
 $$
 
 第二式是第一式乘以正数 $(1-m)^2-v^2$ 后的结果。
 $m\ge v\ge0$、$m<1/2$ 迫 $m=v$，于是 $\min_Ae_q=m-v=0$。
 最小值在紧 $A$ 达到，真实零集给 $D_q\cap A\ne\varnothing$。
 $I(A)=\{o\}$ 与 $q\ne o$ 排除 $D_q=A$，故交恰为原纯点 $s\in S$。
-零对称将 $s\in D_q$ 送回 $q\in D_s\subseteq B$，完成 (XI136.9)。证毕。
+零对称将 $s\in D_q$ 送回 $q\in D_s\subseteq B$，完成 (XI137.9)。证毕。
 
-### 136.3 完整纯 PR 的逐项供应与同阈值高段
+### 137.3 完整纯 PR 的逐项供应与同阈值高段
 
-**推论 136.4（固定根小正条件下的条件返回及严格高段）。** 在定义136.1的整个原域中，假设
+**推论 137.4（固定根小正条件下的条件返回及严格高段）。** 在定义137.1的整个原域中，假设
 完整 EB3、完整纯 PR，以及对事先固定的同一个 $o$ 成立的 $L_\varepsilon(o)$。
-则 $R_o$ 成立；对每个满足 (XI136.6) 的目标，$C_q$ 与 (XI136.8) 均成立，
-因而具有定理136.3的全部真实标签返回结论。特别地，
+则 $R_o$ 成立；对每个满足 (XI137.6) 的目标，$C_q$ 与 (XI137.8) 均成立，
+因而具有定理137.3的全部真实标签返回结论。特别地，
 
 $$
 \{q\in P:0<T_o(q)<\varepsilon\}\ \cup\ S\ \cup
 \{q\in P:T_o(q)>1-\varepsilon\}\ \subseteq B.
-\tag{XI136.25}
+\tag{XI137.25}
 $$
 
 这里高段使用的正是 $L_\varepsilon(o)$ 的阈值，不另选更有利的阈值。
@@ -938,7 +1059,7 @@ $$
 $$
 B=\operatorname{pr}_K
 \{(s,z,f)\in S\times K\times\mathcal E:f(s)=1,\ f(z)=0\}
-\tag{XI136.26}
+\tag{XI137.26}
 $$
 
 紧闭。零对称给 $o\in D_s$ 对任意 $s\in S$ 成立，故 $o\in B$。
@@ -957,8 +1078,8 @@ $0<T_o(z)<\min\{\mu,\varepsilon\}$；但 $L_\varepsilon(o)$ 又给 $z\in B$，�
 故所有纯方向的共同系数都是 $1/2$。对每个 $s\in S$，原球内对径
 $a_s=2c_o-s$ 遂满足 $T_s(a_s)=0$，从而 $(o,s,a_s)$ 是实际根三角。
 X133.2 给每个 $I(D_s)=\{s\}$；同时 $s\in D_{a_s}\subseteq B$，故 $S\subseteq B$。
-连同 (XI136.26) 与 $o\in B$，这逐项支付了 $R_o$。
-关联的合法域与目标上完整球面的同胚性，已在 (XI136.4)、(XI136.10) 按这些根条件证明。
+连同 (XI137.26) 与 $o\in B$，这逐项支付了 $R_o$。
+关联的合法域与目标上完整球面的同胚性，已在 (XI137.4)、(XI137.10) 按这些根条件证明。
 整个论证不需要给未覆盖目标定义 $\pi_o(q)$。
 
 接着支付 $C_q$。对每个 $s\in S$，刚取得的根三角在 $D_s$ 上给 $o,a_s$ 的满刻度直径。
@@ -966,8 +1087,8 @@ X133.2 给每个 $I(D_s)=\{s\}$；同时 $s\in D_{a_s}\subseteq B$，故 $S\subs
 于是对每个 $x\in S_s$，其同一完整球内对径 $y=2c_s-x$ 满足 $T_x(y)=0$。
 三点 $(s,x,y)$ 因而是原纯零三角。对实际的 $x=x_s$ 使用它，就给全部 $C_q$；
 这一步并非把根三角本身改称邻边三角。
-完整纯 PR 还对任一 $q,s$ 给 $T_q(s)=T_s(q)$，故任取一个 $s$ 即满足 (XI136.8)。
-定理136.3现在给所有满足 $S_q\subseteq B$ 的上述目标返回。
+完整纯 PR 还对任一 $q,s$ 给 $T_q(s)=T_s(q)$，故任取一个 $s$ 即满足 (XI137.8)。
+定理137.3现在给所有满足 $S_q\subseteq B$ 的上述目标返回。
 
 最后只对严格高段支付该前件。若 $q=o$，已由 $o\in B$ 处理。
 其余取 $q\in P$ 且 $T_o(q)>1-\varepsilon$，因 $\varepsilon<1$，有 $q\notin A$。
@@ -977,49 +1098,52 @@ $u-f\in\mathcal F_x$。在同一个原纯根 $o$ 上评价，并且只对纯对�
 $$
 T_o(q)+T_o(x)=T_q(o)+T_x(o)
 \le f(o)+(u-f)(o)=1.
-\tag{XI136.27}
+\tag{XI137.27}
 $$
 
 于是 $0\le T_o(x)<\varepsilon$。若为零，则 $x\in S\subseteq B$；若严格正，则
 $L_\varepsilon(o)$ 给 $x\in B$。这对整个真实 $S_q$ 的每一点成立，所以 $S_q\subseteq B$，
-定理136.3使 $q\in B$。小正带与 $S$ 的包含已逐项证明，得到 (XI136.25)。证毕。
+定理137.3使 $q\in B$。小正带与 $S$ 的包含已逐项证明，得到 (XI137.25)。证毕。
 
-### 136.4 适用边界与数学来源
+### 137.4 适用边界与数学来源
 
-**约定 136.5（未付区域、原菜单与复用范围）。** (XI136.25) 只包含所写的开比较带。
-在 $T_o(q)=1-\varepsilon$ 时，(XI136.27) 只给 $T_o(x)\le\varepsilon$，
+**约定 137.5（未付区域、原菜单与复用范围）。** (XI137.25) 只包含所写的开比较带。
+在 $T_o(q)=1-\varepsilon$ 时，(XI137.27) 只给 $T_o(x)\le\varepsilon$，
 不能调用要求严格小于 $\varepsilon$ 的局部条件；等号点只有另行落在已付区域时才被覆盖。
-未由 (XI136.25) 支付的中间读数只在 $0<\varepsilon\le1/2$ 时出现，其范围为
+未由 (XI137.25) 支付的中间读数只在 $0<\varepsilon\le1/2$ 时出现，其范围为
 $[\varepsilon,1-\varepsilon]$；$\varepsilon>1/2$ 时两条开带重叠，中间范围为空。
-在非空中间区，本章没有逐点支付整个 $S_q\subseteq B$，但另有该前件的目标仍可用定理136.3。
+在非空中间区，本章没有逐点支付整个 $S_q\subseteq B$，但另有该前件的目标仍可用定理137.3。
 这些包含关系始终以同一固定根的 $L_\varepsilon(o)$ 为条件；没有证明 PR 自动供应
 $L_\varepsilon(o)$、全 $\mathsf L$、一个全覆盖根、全 Pair 或原静态重构目标。
-单对版本的 (XI136.8) 也不单独供应 $C_q$；(XI136.16) 不被宣称为完整原域反例。
+单对版本的 (XI137.8) 也不单独供应 $C_q$；(XI137.16) 不被宣称为完整原域反例。
 
 XI134 的控制模型具有根与根邻完整球、横截球面满射，却在真实标签处出现球加纯弧的完整零集，
 并失败全域 EB3 与 PR。因此它不在本章前件内；不能将其横截球面用作 $S_q$，
 也不能用其控制结论取代这里真实标签 $q\in D_{x_s}$ 的步骤。
-[THREE_COPY VIII131.3、131.5—131.6][Q136TC] 已有裸 EB3 的第三实心带紧性、
+[THREE_COPY VIII131.3、131.5—131.6][Q137TC] 已有裸 EB3 的第三实心带紧性、
 R3 条件下的三／五步奇返回，以及紧部分域 $E_q=S_q\cap B_2$ 上的真实连续单射。
-这些结论不供应 $E_q=S_q$；本章的 (XI136.6) 仍明确要求整个原球面已落入 $B$。
-[SAME_READBACK132.1][Q136SR] 的无 Inj 凸／径向全态覆盖，也不供应该前件或全 Pair。
+这些结论不供应 $E_q=S_q$；本章的 (XI137.6) 仍明确要求整个原球面已落入 $B$。
+[SAME_READBACK132.1][Q137SR] 的无 Inj 凸／径向全态覆盖，也不供应该前件或全 Pair。
 
 第135章的 $\mathsf{MC}$ 要求同一原态的所有有限纯混合表达在球心替换后仍相等，
 定理135.5以完整 EB3 加该全域混合相容条件取得同原静态分类。
-这里既未假设 $\mathsf{MC}$，也未由局部返回推出它；该条件分类不替代定理136.3的局部推导。
+这里既未假设 $\mathsf{MC}$，也未由局部返回推出它；该条件分类不替代定理137.3的局部推导。
+第136章在实际连续仿射球心图与原球标签单射的额外前件下，以一张全效应的完全分离关系刻画全部原纯点，
+并取得紧性及完整球的全轴统一间隙。其额外前件在本章未予假设；这里仍显式保留整个 $S_q\subseteq B$
+与目标邻边完成 $C_q$，并在所列局部前件下进行保留真实标签的两球返回计算。
 裸 EB3、EB3 加纯 PR、以及 X133.9 的完整 $\mathsf E_0$ 自动产生全覆盖根的问题，
 仍按 (X133.32) 保留各自的全部原对象、前件与量词；$L_\varepsilon(o)$ 不被当作这些域的已知后果。
 
-本章的承重推导是 (XI136.13)—(XI136.24)：真实原标签进入第二球，单对反向比较迫出原零对径，
-先回送球心，再以完整极值范围消去正分离裕量；(XI136.27) 是其严格高段消费者。
+本章的承重推导是 (XI137.13)—(XI137.24)：真实原标签进入第二球，单对反向比较迫出原零对径，
+先回送球心，再以完整极值范围消去正分离裕量；(XI137.27) 是其严格高段消费者。
 采用 `repo-derived` 的纸面归属，不主张全球原创或文献穷尽。
 原面分类、真实零确认、IX114.5 的球内刻度与其满刻度传播、X132.2及132.4的固定根证明、
 X133.2的标签排重、X133.5的关联拓扑均为明确复用，不另计为新定理。
 IX114.4 已在不要求 EB3 的完整 PR 域给 $P$ 紧；这里的固定紧球面论证不重新证明它。
 IX120.12—120.13 的 $P_0$ 分支另有 Inj，不被借来替代根合同或 $C_q$。
 
-成熟外部工具限于球上线性函数的极值与 [Hatcher][Q136H] 的区域不变性／同维紧流形嵌入满射。
-后者的全部前件只在 (XI136.10) 的两张完整二维球面上使用。
+成熟外部工具限于球上线性函数的极值与 [Hatcher][Q137H] 的区域不变性／同维紧流形嵌入满射。
+后者的全部前件只在 (XI137.10) 的两张完整二维球面上使用。
 原确认构造与完整效应区间的文献背景沿用 IX114.1 的
 [Landsman §1.3，式(1.4)—(1.9)](https://arxiv.org/pdf/quant-ph/9603005v2)；
 这里没有从对称跃迁概率另取 least、混态互易、自对偶或额外分类公理。
@@ -1027,10 +1151,10 @@ IX120.12—120.13 的 $P_0$ 分支另有 Inj，不被借来替代根合同或 $C
 全旁观正性、记录与全部未来、物理钟、Hamiltonian 及数值 $\hbar$，
 继续保留 X133.10 的每个原对象、前件与完整量词，不由这条返回补出。
 
-[Q136IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.2：原全域、真实零确认与原面；114.4：PR下纯紧性；114.5及(IX114.15)—(IX114.16)：整球刻度；IX120.1、120.4—120.5：原面、三角与既有分类；120.12—120.13：另有Inj的P0分支。"
-[Q136X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X132.2—132.4：原小正无隙、局部带与逐点三角反证；X133.1—133.5：完整原面、三角标签、紧投影、已付域上的唯一共同邻点与整球面拓扑；X133.6、133.9：全覆盖根及未付自动性；133.10：完整物理合同。"
-[Q136TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII131全文，特别是131.3的裸EB3第三实心带紧性、131.5的R3奇返回及131.6的部分关联域与未付全载体。"
-[Q136SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "132.1：完整EB域的无Inj纯点—排除球凸覆盖、径向三纯项及未付最后一对正交。"
-[Q136H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology，印刷页172，Theorem 2B.3、Corollary 2B.4：区域不变性及紧n流形嵌入连通n流形的满射性；这里只用n=2。"
+[Q137IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.2：原全域、真实零确认与原面；114.4：PR下纯紧性；114.5及(IX114.15)—(IX114.16)：整球刻度；IX120.1、120.4—120.5：原面、三角与既有分类；120.12—120.13：另有Inj的P0分支。"
+[Q137X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X132.2—132.4：原小正无隙、局部带与逐点三角反证；X133.1—133.5：完整原面、三角标签、紧投影、已付域上的唯一共同邻点与整球面拓扑；X133.6、133.9：全覆盖根及未付自动性；133.10：完整物理合同。"
+[Q137TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII131全文，特别是131.3的裸EB3第三实心带紧性、131.5的R3奇返回及131.6的部分关联域与未付全载体。"
+[Q137SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "132.1：完整EB域的无Inj纯点—排除球凸覆盖、径向三纯项及未付最后一对正交。"
+[Q137H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology，印刷页172，Theorem 2B.3、Corollary 2B.4：区域不变性及紧n流形嵌入连通n流形的满射性；这里只用n=2。"
 
 ## 追加锚（本行以下为增补区）
