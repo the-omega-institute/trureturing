@@ -76,7 +76,7 @@ def membershipRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S1.Digit.EqualBinaryRunBridge
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "arg", "arg", "arg", "arg", "body", "arg", "arg", "arg"]
       stateBinder := 2
