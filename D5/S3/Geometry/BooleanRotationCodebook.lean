@@ -209,4 +209,100 @@ theorem signed_orthant_volume (p q : ℕ) {ε : ℝ} (hε : 0 < ε) :
   simp [signedScale, LinearMap.det_toLin', Matrix.det_diagonal,
     Fintype.prod_sum_type, abs_mul, abs_pow, abs_of_pos hε, pow_add]
 
+private def coordinateChamber {ι : Type*} [Fintype ι] (s : Finset ι) (ε : ℝ) :
+    Set (ι → ℝ) :=
+  {a | signedBody ε a ∧ (∀ i ∈ s, 0 ≤ a i) ∧ ∀ i ∉ s, a i ≤ 0}
+
+private lemma chamber_measurable {ι : Type*} [Fintype ι] (s : Finset ι) (ε : ℝ) :
+    MeasurableSet (coordinateChamber s ε) := by
+  have hp : Continuous (fun a : ι → ℝ => ∑ i, max (a i) 0) :=
+    continuous_finsetSum _ (fun i _ => (continuous_apply i).max continuous_const)
+  have hn : Continuous (fun a : ι → ℝ => ∑ i, max (-a i) 0) :=
+    continuous_finsetSum _ (fun i _ => (continuous_apply i).neg.max continuous_const)
+  exact ((hp.isClosed_preimage _ isClosed_Iic).inter
+    ((hn.isClosed_preimage _ isClosed_Iic).inter
+      ((isClosed_biInter fun i _ => isClosed_le continuous_const (continuous_apply i)).inter
+        (isClosed_biInter fun i _ => isClosed_le (continuous_apply i) continuous_const)))).measurableSet
+
+private lemma chamber_union {ι : Type*} [Fintype ι] [DecidableEq ι] (ε : ℝ) :
+    {a : ι → ℝ | signedBody ε a} = ⋃ s : Finset ι, coordinateChamber s ε := by
+  classical
+  ext a
+  constructor
+  · intro ha
+    refine Set.mem_iUnion.mpr ⟨Finset.univ.filter (fun i => 0 ≤ a i), ha, ?_, ?_⟩
+    · intro i hi
+      exact (Finset.mem_filter.mp hi).2
+    · intro i hi
+      exact le_of_not_ge (by simpa using hi)
+  · intro ha
+    obtain ⟨s, hs⟩ := Set.mem_iUnion.mp ha
+    exact hs.1
+
+private lemma chamber_aedisjoint {ι : Type*} [Fintype ι] [DecidableEq ι] (ε : ℝ) :
+    Pairwise (fun s t : Finset ι => AEDisjoint volume
+      (coordinateChamber s ε) (coordinateChamber t ε)) := by
+  intro s t hst
+  obtain ⟨i, hi⟩ := Finset.ext_iff.not.mp hst
+  apply measure_mono_null (t := {a : ι → ℝ | a i = 0})
+  · intro a ha
+    have hs := ha.1
+    have ht := ha.2
+    by_cases his : i ∈ s
+    · have hit : i ∉ t := fun h => hi (iff_of_true his h)
+      exact le_antisymm (ht.2.2 i hit) (hs.2.1 i his)
+    · have hit : i ∈ t := by tauto
+      exact le_antisymm (hs.2.2 i his) (ht.2.1 i hit)
+  · exact pi_hyperplane (fun _ : ι => (volume : Measure ℝ)) i 0
+
+private lemma chamber_volume_sum {ι : Type*} [Fintype ι] [DecidableEq ι] (ε : ℝ) :
+    volume {a : ι → ℝ | signedBody ε a} =
+      ∑ s : Finset ι, volume (coordinateChamber s ε) := by
+  rw [chamber_union, measure_iUnion₀ (chamber_aedisjoint ε)
+    (fun s => (chamber_measurable s ε).nullMeasurableSet), tsum_fintype]
+
+private def chamberEquiv {ι : Type*} [Fintype ι] [DecidableEq ι] (s : Finset ι) :
+    (Fin s.card ⊕ Fin sᶜ.card) ≃ ι :=
+  (Equiv.sumCongr s.equivFin.symm sᶜ.equivFin.symm).trans
+    ((Equiv.sumCongr (Equiv.refl _) (Equiv.subtypeEquivRight (fun i => Finset.mem_compl))).trans
+      (Equiv.sumCompl (fun i => i ∈ s)))
+
+private lemma coordinate_chamber_volume {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (s : Finset ι) {ε : ℝ} (hε : 0 < ε) :
+    volume (coordinateChamber s ε) =
+      ENNReal.ofReal (ε ^ Fintype.card ι) *
+        ((s.card.factorial : ℝ≥0∞)⁻¹ * (sᶜ.card.factorial : ℝ≥0∞)⁻¹) := by
+  let e := chamberEquiv s
+  let E := MeasurableEquiv.piCongrLeft (fun _ : ι => ℝ) e
+  have hm := volume_measurePreserving_piCongrLeft (fun _ : ι => ℝ) e
+  have hsum (a : (Fin s.card ⊕ Fin sᶜ.card) → ℝ) (f : ℝ → ℝ) :
+      (∑ i, f (E a i)) = ∑ j, f (a j) := by
+    exact (e.sum_comp (fun i => f (E a i))).symm.trans
+      (Finset.sum_congr rfl (fun j _ => by simp [E]))
+  have heq : E ⁻¹' coordinateChamber s ε = signedOrthant s.card sᶜ.card ε := by
+    ext a
+    have hb : signedBody ε (E a) ↔ signedBody ε a := by
+      simp only [signedBody, hsum]
+    simp only [Set.mem_preimage, coordinateChamber, signedOrthant, Set.mem_setOf_eq, hb]
+    constructor
+    · rintro ⟨ha, hp, hn⟩
+      refine ⟨ha, ?_, ?_⟩
+      · intro i
+        have h := hp (e (.inl i)) (by simp [e, chamberEquiv])
+        simpa [E] using h
+      · intro i
+        have h := hn (e (.inr i)) (by simp [e, chamberEquiv])
+        simpa [E] using h
+    · rintro ⟨ha, hp, hn⟩
+      refine ⟨ha, ?_, ?_⟩
+      · intro i hi
+        obtain ⟨j, rfl⟩ := s.equivFin.symm.surjective ⟨i, hi⟩
+        simpa [E, e, chamberEquiv] using hp j
+      · intro i hi
+        obtain ⟨j, hj⟩ := sᶜ.equivFin.symm.surjective ⟨i, by simpa using hi⟩
+        have h := hn j
+        simpa [E, e, chamberEquiv, hj] using h
+  rw [← hm.measure_preimage (chamber_measurable s ε).nullMeasurableSet, heq,
+    signed_orthant_volume _ _ hε, Finset.card_add_card_compl]
+
 end D5.S3.Geometry.BooleanRotationCodebook
