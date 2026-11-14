@@ -148,4 +148,178 @@ def conditionalCoefficient {a b : Type} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (D : FiniteDivergence) (N : QuantumChannel a b) : ℝ :=
   sSup (insert 0 (conditionalRatios D N))
 
+private def weight (y x : Fin 2) : ℝ := if y = x then 3 / 4 else 1 / 4
+
+private def amplitude (y x : Fin 2) : ℂ := (Real.sqrt (weight y x) : ℂ)
+
+private def kraus (p : Fin 2 × Fin 2) : Matrix (Fin 2) (Fin 2) ℂ :=
+  Matrix.single p.1 p.2 (amplitude p.1 p.2)
+
+private theorem amplitude_square (y x : Fin 2) :
+    amplitude y x * star (amplitude y x) = (weight y x : ℂ) := by
+  have hw : 0 ≤ weight y x := by unfold weight; split_ifs <;> norm_num
+  simp only [amplitude, Complex.star_def, Complex.conj_ofReal, ← Complex.ofReal_mul,
+    Real.mul_self_sqrt hw]
+
+private theorem kraus_complete : (∑ p, (kraus p)ᴴ * kraus p) = 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [kraus, Matrix.mul_apply, Matrix.single, Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, mul_comm, amplitude_square, weight]
+    <;> norm_num
+
+private def binaryChannel : QuantumChannel (Fin 2) (Fin 2) :=
+  Classical.choose (D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
+    kraus kraus_complete)
+
+private theorem binary_action (X : Matrix (Fin 2) (Fin 2) ℂ) :
+    act binaryChannel X = Matrix.diagonal
+      (fun y => (weight y 0 : ℂ) * X 0 0 + (weight y 1 : ℂ) * X 1 1) := by
+  have h := Classical.choose_spec
+    (D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
+      kraus kraus_complete) X
+  change act binaryChannel X = _ at h
+  rw [h]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [kraus, Matrix.mul_apply, Matrix.single, Matrix.conjTranspose_apply,
+      Fintype.sum_prod_type, Fin.sum_univ_two, Matrix.diagonal_apply,
+      mul_assoc, mul_left_comm, mul_comm, amplitude_square]
+
+private def phase {r : Type*} [DecidableEq r] :
+    Matrix (r × Fin 2) (r × Fin 2) ℂ :=
+  Matrix.diagonal (fun p => if p.2 = 0 then 1 else -1)
+
+private theorem phase_isometry {r : Type*} [Fintype r] [DecidableEq r] :
+    (phase (r := r))ᴴ * phase = 1 := by
+  rw [phase, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
+  ext p q
+  simp only [Matrix.diagonal_apply, Matrix.one_apply, Pi.star_apply]
+  split_ifs <;> simp_all
+
+private def pinch {r : Type*} [Fintype r] [DecidableEq r]
+    (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) : Matrix (r × Fin 2) (r × Fin 2) ℂ :=
+  (1 / 2 : ℂ) • (X + phase * X * phaseᴴ)
+
+private theorem pinch_entry {r : Type*} [Fintype r] [DecidableEq r]
+    (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) (i j : r) (a b : Fin 2) :
+    pinch X (i, a) (j, b) = if a = b then X (i, a) (j, b) else 0 := by
+  fin_cases a <;> fin_cases b <;>
+    simp [pinch, phase, Matrix.diagonal_mul, Matrix.mul_diagonal,
+      Matrix.diagonal_conjTranspose, Matrix.smul_apply, Matrix.add_apply]
+    <;> ring
+
+private theorem pinch_contract {r : Type*} [Fintype r] [DecidableEq r]
+    (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) : traceNorm (pinch X) ≤ traceNorm X := by
+  unfold pinch
+  rw [show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by norm_num,
+    traceNorm_smul_nonneg _ _ (by norm_num)]
+  have h := traceNorm_add_le X (phase * X * phaseᴴ)
+  rw [traceNorm_isometry phase phase_isometry] at h
+  linarith
+
+private theorem equal_marginal_action {r : Type*} [Fintype r] [DecidableEq r]
+    (X : Matrix (r × Fin 2) (r × Fin 2) ℂ) (hX : partialTraceRight X = 0) :
+    amp binaryChannel X = (1 / 2 : ℂ) • pinch X := by
+  ext ⟨i, a⟩ ⟨j, b⟩
+  have hz := congrFun (congrFun hX i) j
+  change (∑ c : Fin 2, X (i, c) (j, c)) = 0 at hz
+  rw [Fin.sum_univ_two] at hz
+  rw [amp_entry, binary_action]
+  simp only [Matrix.diagonal_apply, Matrix.smul_apply, smul_eq_mul, pinch_entry]
+  fin_cases a <;> fin_cases b <;> norm_num [weight] at * <;> linear_combination hz / 4
+
+private theorem reference_contract {a b r : Type*}
+    [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
+    [Fintype r] [DecidableEq r] (N : QuantumChannel a b)
+    (ρ σ : DensityState (r × a)) :
+    traceDistance (referenceState N ρ) (referenceState N σ) ≤ traceDistance ρ σ := by
+  let f : Matrix (r × a) (r × a) ℂ →ₗ[ℂ] Matrix (r × b) (r × b) ℂ :=
+    CStarMatrix.ofMatrixₗ.symm.toLinearMap.comp
+      ((referenceLinear N).comp CStarMatrix.ofMatrixₗ.toLinearMap)
+  have hp : ∀ X, 0 ≤ X → 0 ≤ f X := by
+    intro X hX
+    let Y := (blockEquiv r a).symm (CStarMatrix.ofMatrix X)
+    have hY : 0 ≤ Y := map_nonneg (blockEquiv r a).symm
+      (map_nonneg CStarMatrix.ofMatrixStarAlgEquiv hX)
+    exact map_nonneg CStarMatrix.ofMatrixStarAlgEquiv.symm
+      (map_nonneg (blockEquiv r b)
+        (N.toCompletelyPositiveMap.map_cstarMatrix_nonneg Y hY))
+  have ht : ∀ X, Matrix.trace (f X) = Matrix.trace X := by
+    intro X
+    change Matrix.trace (amp N X) = Matrix.trace X
+    rw [← trace_partialTraceRight (amp N X)]
+    have he : partialTraceRight (amp N X) = partialTraceRight X := ptr_amp N X
+    rw [he, trace_partialTraceRight]
+  have h := positive_trace_contraction f hp ht
+    (CStarMatrix.ofMatrix.symm ρ.1 - CStarMatrix.ofMatrix.symm σ.1)
+    ((state_hermitian ρ).sub (state_hermitian σ))
+  have he : f (CStarMatrix.ofMatrix.symm ρ.1 - CStarMatrix.ofMatrix.symm σ.1) =
+      CStarMatrix.ofMatrix.symm (referenceState N ρ).1 -
+        CStarMatrix.ofMatrix.symm (referenceState N σ).1 := by
+    rw [map_sub]
+    rfl
+  rw [he] at h
+  exact div_le_div_of_nonneg_right h (by norm_num)
+
+private theorem complete_pair_bound {r : Type} [Fintype r] [DecidableEq r]
+    (ρ σ : DensityState (r × Fin 2)) (hm : marginalRight ρ = marginalRight σ) :
+    squareTrace.value (referenceState binaryChannel ρ) (referenceState binaryChannel σ) ≤
+      (1 / 4 : ℝ) * squareTrace.value ρ σ := by
+  let X := CStarMatrix.ofMatrix.symm ρ.1 - CStarMatrix.ofMatrix.symm σ.1
+  have hz : partialTraceRight X = 0 := by
+    ext i j
+    have h := congrArg (fun τ => τ.1 i j) hm
+    change (∑ c, ρ.1 (i,c) (j,c)) = ∑ c, σ.1 (i,c) (j,c) at h
+    simpa [X, partialTraceRight, Finset.sum_sub_distrib] using sub_eq_zero.mpr h
+  have he : CStarMatrix.ofMatrix.symm (referenceState binaryChannel ρ).1 -
+      CStarMatrix.ofMatrix.symm (referenceState binaryChannel σ).1 =
+      amp binaryChannel X := by
+    change _ = CStarMatrix.ofMatrix.symm (referenceLinear binaryChannel
+      (CStarMatrix.ofMatrix X))
+    simp only [X, map_sub]
+    rfl
+  have hb := pinch_contract X
+  have hnorm : traceNorm (amp binaryChannel X) ≤ (1 / 2 : ℝ) * traceNorm X := by
+    rw [equal_marginal_action X hz,
+      show (1 / 2 : ℂ) = ((1 / 2 : ℝ) : ℂ) by norm_num,
+      traceNorm_smul_nonneg _ _ (by norm_num)]
+    linarith
+  have ht : traceDistance (referenceState binaryChannel ρ)
+      (referenceState binaryChannel σ) ≤ (1 / 2 : ℝ) * traceDistance ρ σ := by
+    unfold traceDistance
+    rw [he]
+    change traceNorm (amp binaryChannel X) / 2 ≤ 1 / 2 * (traceNorm X / 2)
+    linarith
+  change traceDistance _ _ ^ 2 ≤ 1 / 4 * traceDistance ρ σ ^ 2
+  have h1 := traceDistance_nonneg (referenceState binaryChannel ρ)
+    (referenceState binaryChannel σ)
+  have h2 := traceDistance_nonneg ρ σ
+  nlinarith [mul_nonneg (sub_nonneg.mpr ht)
+    (add_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 1 / 2) h2) h1)]
+
+private theorem complete_upper : completeCoefficient squareTrace binaryChannel ≤ 1 / 4 := by
+  apply csSup_le (by simp)
+  intro x hx
+  rcases Set.mem_insert_iff.mp hx with rfl | hx
+  · norm_num
+  · rcases hx with ⟨r, fr, dr, ρ, σ, hm, hd, rfl⟩
+    letI := fr
+    letI := dr
+    exact (div_le_iff₀ hd).mpr (complete_pair_bound ρ σ hm)
+
+private theorem conditional_bounded : BddAbove (insert 0 (conditionalRatios squareTrace binaryChannel)) := by
+  refine ⟨1, ?_⟩
+  intro x hx
+  rcases Set.mem_insert_iff.mp hx with rfl | hx
+  · norm_num
+  · rcases hx with ⟨r, fr, dr, ρ, σ, hd, rfl⟩
+    letI := fr
+    letI := dr
+    apply (div_le_one hd).mpr
+    have h := reference_contract binaryChannel ρ σ
+    have hs := pow_le_pow_left₀ (traceDistance_nonneg _ _) h 2
+    change traceDistance _ _ ^ 2 - _ ≤ traceDistance _ _ ^ 2 - _
+    exact sub_le_sub_right hs _
+
 end D5.S3.Quantum.Divergence.FaithfulConditionalGap
