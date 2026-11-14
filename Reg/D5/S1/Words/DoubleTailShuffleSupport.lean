@@ -233,8 +233,9 @@ def family : Registration arena (type_of% (@_root_.D5.S1.Words.DoubleTailShuffle
   dependence := by
     intro i
     refine ⟨(), (0 : Nat), (1 : Nat), ?_⟩
-    change Nat.ofDigits 2 (List.replicate 0 1) ≠ Nat.ofDigits 2 (List.replicate 1 1)
-    decide
+    change Nat.ofDigits (2 : Nat) (List.replicate 0 1) ≠
+      Nat.ofDigits (2 : Nat) (List.replicate 1 1)
+    norm_num [List.replicate, Nat.ofDigits]
 noncomputable def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Words.DoubleTailShuffleSupport.ones_value) (type_of% actual) Unit Unit where
   unitName := `D5.S1.Words.DoubleTailShuffleSupport.ones_value.__information_unit

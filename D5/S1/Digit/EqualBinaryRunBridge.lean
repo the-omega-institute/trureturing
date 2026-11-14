@@ -435,7 +435,6 @@ private theorem value_cons (k : ℕ) (ks : List ℕ) :
     (D5.S1.Words.DoubleTailShuffleSupport.ones_value k)
   push_cast at hon
   have hones : Nat.ofDigits (2 : ℤ) (List.replicate k 1) = 2 ^ k - 1 := by
-    rw [← Nat.coe_ofDigits]
     linarith
   unfold value decode
   simp only [word_cons, List.reverse_append, List.reverse_replicate]
