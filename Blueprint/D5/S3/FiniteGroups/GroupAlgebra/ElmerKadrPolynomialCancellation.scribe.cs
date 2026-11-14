@@ -19,7 +19,7 @@ internal sealed class ElmerKadrPolynomialCancellationDocument : IScribeDocumentD
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Over any field K and any group G, let tau be a representation on M and let rho,sigma,rho',sigma' be representations on U,V,W,Z. Given f:rho->sigma with RelativeFactors tau f, l:sigma->sigma' and r:rho'->rho, the composite (l f) r satisfies RelativeFactors tau ((l f) r). K, G and M may have independent universes; U,V,W,Z lie in K's universe as in the original relative definitions. Neither finiteness of K nor a characteristic assumption is needed.")),
-                    Paragraph(Text("If f=b a through P, use the identical P, its identical relative-projectivity witness, and the maps a r and l b. This is a bind-only auxiliary closure lemma, consumed by polynomial_summand_cancellation when compressing the two inverse errors. It is not an independent research result."))),
+                    Paragraph(Text("If f=b a through P, use the identical P, its identical relative-projectivity witness, and the maps a r and l b. The cancellation proof uses this closure property to compress the two inverse errors through the same relative factor."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("elmer-kadr-polynomial-summand-cancellation"),
