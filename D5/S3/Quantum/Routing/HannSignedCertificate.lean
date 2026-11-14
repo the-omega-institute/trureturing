@@ -801,11 +801,6 @@ private theorem recursion_complete (n : ℕ) (q : Router n → ℝ)
       (ih _ (fun w => hq (some (true, w))) (fun w => hq' (some (true, w))))
       hq (hq' none)
 
-private theorem address_card (n : ℕ) : Fintype.card (Address n) = 2 ^ n := by
-  induction n with
-  | zero => simp [Address]
-  | succ n ih => simpa [Address, Fintype.card_prod, pow_succ, mul_comm] using ih
-
 private theorem list_get_independent (n : ℕ) (L : List (Coeff n))
     (h : ListIndependent n L) : LinearIndependent ℂ L.get := by
   exact h.2.comp (fun i => ⟨L.get i, List.get_mem L i⟩)
@@ -843,7 +838,7 @@ private theorem coefficient_certificate (n : ℕ) (q : Router n → ℝ)
     rw [hker, ← list_get_range]
     simpa only [Fintype.card_fin] using finrank_span_eq_card hli
   have hdim : Module.finrank ℂ (Coeff n) = 2 ^ n := by
-    simpa only [Module.finrank_pi] using address_card n
+    simpa only [Module.finrank_pi] using HannRouterDephasing.address_card n
   have hrank := (synthesis n q bus).finrank_range_add_finrank_ker
   rw [hdimker, hdim] at hrank
   have hcount := hs.count

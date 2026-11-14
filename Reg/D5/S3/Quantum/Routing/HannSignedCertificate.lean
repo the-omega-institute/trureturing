@@ -89,7 +89,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Routing.HannSignedCertificate
     definition := none
-    coordinates := #[0, 1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
