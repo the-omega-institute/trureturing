@@ -4,7 +4,49 @@
 
 Dimitrov's reciprocal-product Conjectures 4 and 5 hold for every n ≥ 2 and k ≥ 1.
 
-**Definition 1.1 (Dimitrov Conjecture 4).**
+**Theorem 1.1 (Dedekind psi exceeds n).**
+
+$$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (n + 1 \le \operatorname{psi}\left(n\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.psi_ge` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Dimitrov (2026). *Lower bounds on expressions depending on the functions φ(n), ψ(n) and σ(n), III*. URL: <https://arxiv.org/abs/2606.12484v1>.
+
+*Commentary.*
+
+For every n ≥ 2, the prime-factor product gives n+1 ≤ psi(n).
+
+**Theorem 1.2 (The divisor sum dominates Dedekind psi).**
+
+$$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\operatorname{psi}\left(n\right) \le \operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.sigma_ge_psi` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Dimitrov (2026). *Lower bounds on expressions depending on the functions φ(n), ψ(n) and σ(n), III*. URL: <https://arxiv.org/abs/2606.12484v1>.
+
+*Commentary.*
+
+Each prime-power divisor sum dominates the corresponding Dedekind factor.
+
+**Theorem 1.3 (Mixed-power ordering and ratio bound).**
+
+$$\forall a \in \mathbb{R},\; \forall b \in \mathbb{R},\; \forall c \in \mathbb{R},\; \forall q \in \mathbb{R},\; \forall m \in \mathbb{N},\; (0 < a) \Rightarrow ((a \le b) \Rightarrow ((b \le c) \Rightarrow ((1 \le m) \Rightarrow ((1 \le q) \Rightarrow ((q \le \frac{b}{a}) \Rightarrow (((a)^{m} \cdot \left(b + c\right) \le (b)^{m} \cdot \left(a + c\right)) \land (((b)^{m} \cdot \left(a + c\right) \le (c)^{m} \cdot \left(a + b\right)) \land (\frac{(q)^{m - 1} \cdot \left(1 + q\right)}{2} \le \frac{(b)^{m} \cdot \left(a + c\right)}{(a)^{m} \cdot \left(b + c\right)}))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.mixed_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* S. I. Dimitrov (2026). *Lower bounds on expressions depending on the functions φ(n), ψ(n) and σ(n), III*. URL: <https://arxiv.org/abs/2606.12484v1>.
+
+*Commentary.*
+
+For positive ordered a ≤ b ≤ c, exponent m ≥ 1 and 1 ≤ q ≤ b/a, the three mixed-power terms are ordered. The second-to-first ratio is at least q^(m−1)(1+q)/2. This same estimate applies to the reciprocal-product and Nesbitt expressions.
+
+**Definition 1.4 (Dimitrov Conjecture 4).**
 
 $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\; (1 \le k) \Rightarrow (\left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{psi}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right) + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right) + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{psi}\left(n\right): \mathbb{R})\right)\right) \cdot \left(\frac{1}{((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{psi}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right)} + \frac{1}{((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right)} + \frac{1}{((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{psi}\left(n\right): \mathbb{R})\right)}\right) \ge \frac{5 \cdot (n: \mathbb{R}) \cdot ((n: \mathbb{R}) + 1)^{k - 1} \cdot ((n: \mathbb{R}) - 1)^{k} + 2 \cdot ((n: \mathbb{R}) - 1)^{2 \cdot k} + 2 \cdot ((n: \mathbb{R}))^{2} \cdot ((n: \mathbb{R}) + 1)^{2 \cdot k - 2}}{(n: \mathbb{R}) \cdot ((n: \mathbb{R}) + 1)^{k - 1} \cdot ((n: \mathbb{R}) - 1)^{k}}))$$
 
@@ -16,7 +58,7 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\;
 
 The source is arXiv:2606.12484v1, §2, PDF page 4. The variables are integers n ≥ 2 and k ≥ 1. Nat.totient is Euler's φ, psi is the local Dedekind ψ definition, and ArithmeticFunction.sigma 1 is the positive-divisor sum. Every exponent k is a pointwise power of a function value, and all three displayed reciprocal denominators are retained.
 
-**Definition 1.2 (Dimitrov Conjecture 5).**
+**Definition 1.5 (Dimitrov Conjecture 5).**
 
 $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\; (1 \le k) \Rightarrow (\left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right) + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right) + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k}\right)\right) \cdot \left(\frac{1}{((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right)} + \frac{1}{((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right)} + \frac{1}{((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k}\right)}\right) \ge \frac{10 \cdot ((n: \mathbb{R}) - 1)^{2 \cdot k} + 7 \cdot (((n: \mathbb{R}))^{2} - 1)^{k} + ((n: \mathbb{R}) + 1)^{2 \cdot k}}{((n: \mathbb{R}) - 1)^{2 \cdot k} + (((n: \mathbb{R}))^{2} - 1)^{k}}))$$
 
@@ -28,7 +70,7 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\;
 
 The source's fifth conjecture uses the pointwise k-th powers in every mixed sum and denominator. Its quantifiers and native function meanings are unchanged from Conjecture 4.
 
-**Theorem 1.3 (The complete Conjecture 4 inequality).**
+**Theorem 1.6 (The complete Conjecture 4 inequality).**
 
 $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\; (1 \le k) \Rightarrow (\left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{psi}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right) + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right) + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{psi}\left(n\right): \mathbb{R})\right)\right) \cdot \left(\frac{1}{((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{psi}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right)} + \frac{1}{((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R})\right)} + \frac{1}{((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}) + (\operatorname{psi}\left(n\right): \mathbb{R})\right)}\right) \ge \frac{5 \cdot (n: \mathbb{R}) \cdot ((n: \mathbb{R}) + 1)^{k - 1} \cdot ((n: \mathbb{R}) - 1)^{k} + 2 \cdot ((n: \mathbb{R}) - 1)^{2 \cdot k} + 2 \cdot ((n: \mathbb{R}))^{2} \cdot ((n: \mathbb{R}) + 1)^{2 \cdot k - 2}}{(n: \mathbb{R}) \cdot ((n: \mathbb{R}) + 1)^{k - 1} \cdot ((n: \mathbb{R}) - 1)^{k}}))$$
 
@@ -46,7 +88,7 @@ $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\;
 
 The native ordering 0 < φ(n) ≤ n−1 < n+1 ≤ ψ(n) ≤ σ(n) and the ordered reciprocal-product ratio lemma give the exact ratio n(n+1)^(k−1)/(n−1)^k. Mixed-power ordering supplies the required lower ratio, and exact field normalization produces every source numerator and denominator term. The analytic supplier is a modified Apache-2.0 source port from pro20541/dimitrov-conjectures-lean at 95809b59deefd8dfad81e398250aedd7e1aea3b3: FrontierMathLean.add_inv_mono_on_one → normalized_three_variable_inequality → three_term_ratio_inequality. The first is h_mono here; the latter two are local proofs inside ordered_reciprocal_bound. Michael Mazur is the upstream author/maintainer, with substantive OpenAI Codex generation disclosed under his direction. Local names/visibility, proof packaging and reciprocal notation are adapted; the source note supplies immutable URLs, hashes, the complete license location and the receiver-pin retirement condition. No new mathematical content is claimed for this port.
 
-**Theorem 1.4 (The complete Conjecture 5 inequality).**
+**Theorem 1.7 (The complete Conjecture 5 inequality).**
 
 $$\forall n \in \mathbb{N},\; (2 \le n) \Rightarrow (\forall k \in \mathbb{N},\; (1 \le k) \Rightarrow (\left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right) + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right) + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k}\right)\right) \cdot \left(\frac{1}{((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right)} + \frac{1}{((\operatorname{psi}\left(n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k}\right)} + \frac{1}{((\operatorname{ArithmeticFunction}.\operatorname{sigma}\left(1, n\right): \mathbb{R}))^{k} \cdot \left(((\operatorname{Nat}.\operatorname{totient}\left(n\right): \mathbb{R}))^{k} + ((\operatorname{psi}\left(n\right): \mathbb{R}))^{k}\right)}\right) \ge \frac{10 \cdot ((n: \mathbb{R}) - 1)^{2 \cdot k} + 7 \cdot (((n: \mathbb{R}))^{2} - 1)^{k} + ((n: \mathbb{R}) + 1)^{2 \cdot k}}{((n: \mathbb{R}) - 1)^{2 \cdot k} + (((n: \mathbb{R}))^{2} - 1)^{k}}))$$
 
@@ -68,6 +110,9 @@ Apply the same ordered bound to φ(n)^k, ψ(n)^k and σ(n)^k. With q=((n+1)/(n�
 
 - Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.claim4`
 - Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.claim5`
+- Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.mixed_bound`
+- Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.psi_ge`
 - Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.result4`
 - Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.result5`
+- Truth anchor: `D5/S3/Arith/Divisors/DimitrovLowerBoundsC4C5.sigma_ge_psi`
 - Dependency: [D5/S3/Arith/Divisors/OeisA344695GcdSigmaPsiPrimes](OeisA344695GcdSigmaPsiPrimes.md)

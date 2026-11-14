@@ -1,0 +1,82 @@
+**Corollary 13.1 (Exceptional19: an integral quotient and a rigid physical action).**
+For every $r\in\mathbb N$, including $r=0$, put
+$d=18r+12$, $B=2^d$, $I=\operatorname{Fin}(3d)$, and retain all original
+physical labels. The actual integer weights and their primitive normalization are
+
+$$
+w_i=\operatorname{SourceWidth.actualSource}(3d,(B-1)(2B-3),i)
+   =g v_i,\qquad g=19(B-1)>0,\qquad
+v_i=\operatorname{primitive}(r,i).
+$$
+
+Let $S_k=\operatorname{selectedMask}(r,k)$, $k\in\operatorname{UpperIndex}(r)$,
+be the archived selected family. Its $3d-1$ literal $0/1$ indicators form
+an integer basis of $\ker\Phi_w=\ker\Psi$, where $\Psi(e_i)=v_i$;
+each $S_k$ is an actual integer-zero subset. Hence
+$L=\langle r_{S_k}\rangle_{\mathbb Z}=\ker\Psi$. Moreover, with
+$\operatorname{place}(p,j)=pd+j$,
+
+$$
+-3v_{\operatorname{place}(0,0)}+2v_{\operatorname{place}(2,0)}=1,
+\qquad U\xrightarrow[\ u_i\mapsto v_i\ ]{\sim}\mathbb Z,
+\qquad \operatorname{im}\Phi_w=g\mathbb Z.
+$$
+
+Thus the primitive comparison is onto $\mathbb Z$; the actual comparison
+$U\to\mathbb Z$ is multiplication by $g$ under this identification and
+is an isomorphism onto $g\mathbb Z$, a proper subgroup of $\mathbb Z$.
+For every abelian group $C$ (Lean: `AddCommGroup`) and every $X:I\to C$
+annihilating the selected masks, reconstruction is
+
+$$
+X(i)=v_i c,\qquad
+c=-3X(\operatorname{place}(0,0))+2X(\operatorname{place}(2,0)).
+$$
+
+This is integer scalar multiplication in $C$, with no torsion restriction;
+the displayed unit relation makes $c$ unique. Conversely every such assignment
+annihilates all actual integer-zero subsets. The verified weights are injective
+and have no opposite pair $w_i=-w_j$, so the normalized weights are distinct
+and their support is not negation-invariant. All four hypotheses of
+Proposition 13 are therefore discharged here. In (4), every fiber $I_v$ is
+a singleton and $K=1$, giving $G=1$ for the full original physical action.
+
+The stronger verified endpoint says, for every $p\in\operatorname{Sym}(I)$,
+
+$$
+\left(\forall k\in\operatorname{UpperIndex}(r),\quad
+       \sum_{i\in p(S_k)}w_i=0\right)\quad\Longleftrightarrow\quad p=1.
+$$
+
+Only these $3d-1$ image tests are required; $p$ need not permute the selected
+family. This is a sufficiency statement, with no minimality claim. To see
+the proof mechanism, apply reconstruction over $\mathbb Q$ to
+$X(i)=w_{p(i)}$ and divide by the nonzero scale $g$, obtaining
+$w_{p(i)}=a w_i$. Permutation invariance of the positive sum
+$\sum_i w_i^2$ gives $a^2=1$. The no-opposite-pair result excludes
+$a=-1$, and weight injectivity turns $a=1$ into $p=1$. A symmetry of the
+full integer-zero family satisfies these tests, giving the full endpoint.
+
+*Pinned formal inputs and scope.* In namespace
+`D5.S3.Combinatorics.Circle.MersenneExceptional19UpperBasis`, the inputs are
+`actual_selected_upper_integer_basis` and `actual_selected_upper_span_eq_kernel`
+in module [UpperBasis.Result][4], `actual_selected_upper_reconstruction` in
+[UpperBasis.Reconstruction][5], and `card_upperIndex`, `selected_literal_zero`
+in [UpperBasis.Family][6]. They are preserved from
+`391268a84ffb37c55416046d7bcb50da25958f88` in the verified archive at
+`debf516d5b45bd4a64f5098da774c34cad005c02`. The scale identity
+`D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroLattice.source_eq_scale_primitive`
+is in [ZeroLattice.Weights][7]. At the latter pin, module
+[PermutationStabilizer][8] proves
+`D5.S3.Combinatorics.Circle.MersenneExceptional19PermutationStabilizer.actual_zero_family_perm_iff`
+and, in the same namespace, `actual_selected_image_zero_perm_iff`;
+[PermutationStabilizer.WeightSeparation][9] supplies its private lemmas
+`actual_weights_injective` and `actual_weights_no_negative_pair`.
+The links specify the full module paths at that immutable pin; source and
+compiled-endpoint hashes are recorded in the companion source manifest.
+These are kernel-verified formal inputs; the quotient/fiber interpretation
+above is ordinary mathematical exposition, not a new formal verification.
+This integral corollary neither
+classifies the modular symmetry group nor proves unrestricted four-gap $J$;
+the literature and attribution boundaries above remain unchanged.
+
