@@ -6,5 +6,5 @@ internal sealed class OriginalComparisonTopologyDocument : IScribeDocumentDefini
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original scalar-topology import compatibility", H("Original scalar-topology import compatibility"), Blocks(
-            Paragraph(Text("This module imports OriginalNormalFamily. The original OriginalComparisonTopology namespace, exact scalar branches, semicontinuity statements, common continuity sets and all-P local optimal-budget results are available through that import. Their mathematical statements and exposition belong to OriginalNormalFamily. This import module owns no mathematical declaration.")))));
+            Paragraph(Text("This module imports OriginalNormalFamily. The original OriginalComparisonTopology namespace, common scalar definitions, complete common continuity-set theorem and both directions of the all-P local optimal-budget equivalence are available through that import. The whole-ball, singleton, subsequence and discontinuity scalar applications are derived inside the existing complete aggregate proof and explained in the owning OriginalNormalFamily exposition. This import module owns no mathematical declaration.")))));
 }
