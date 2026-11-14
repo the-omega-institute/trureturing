@@ -624,7 +624,7 @@ private theorem finite_readouts_vanishing {ι : Type*} [Finite ι]
   exact (hball (by simpa [Metric.mem_ball, dist_eq_norm] using hnear r hr t ht) i).le
 
 omit [FiniteDimensional ℝ V] in
-private theorem intrinsic_interior_image
+theorem intrinsic_interior_image
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
     (a : E →ᵃ[ℝ] V) (ha : Function.Injective a) (s : Set E) :
     intrinsicInterior ℝ (a '' s) = a '' intrinsicInterior ℝ s := by
