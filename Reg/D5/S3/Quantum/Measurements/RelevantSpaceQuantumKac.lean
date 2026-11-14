@@ -236,7 +236,7 @@ def arena : Arena where
     let F := weightedCP (fun a => (1 - P) * K a) (fun _ => 1)
     let p := fun k => (P * E (F^[k] P)).trace.re
     HasSum (fun k => F^[k] P) (R.readout () n PiC) ∧ (∀ k, 0 ≤ p k) ∧
-      HasSum p 1 ∧ HasSum (fun k => (k + 1 : ℝ) * p k)
+      HasSum p 1 ∧ HasSum (fun k : ℕ => (k + 1 : ℝ) * p k)
         (Module.finrank ℂ (reachableSpace K P) : ℝ)
 
 private theorem actual_law : arena.{u}.Law actual := by

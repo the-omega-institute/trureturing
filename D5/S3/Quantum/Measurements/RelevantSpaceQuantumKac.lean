@@ -301,7 +301,7 @@ theorem relevant_projection_hasSum (K : α → Matrix n n ℂ) [Fintype α]
 private theorem survival_difference_moments (s : ℕ → ℝ) (a : ℝ)
     (hs : HasSum s a) (hanti : Antitone s) :
     HasSum (fun k => s k - s (k + 1)) (s 0) ∧
-      HasSum (fun k => (k + 1 : ℝ) * (s k - s (k + 1))) a := by
+      HasSum (fun k : ℕ => (k + 1 : ℝ) * (s k - s (k + 1))) a := by
   classical
   let p : ℕ → ℝ := fun k => s k - s (k + 1)
   have hp : ∀ k, 0 ≤ p k := fun k => sub_nonneg.mpr (hanti (Nat.le_succ k))
@@ -363,9 +363,9 @@ private theorem projection_trace (C : Submodule ℂ (EuclideanSpace ℂ n))
     rw [Matrix.toEuclideanLin_eq_toLin_orthonormal]
     exact PiC.trace_toLin_eq _
   rw [← ht, hPiC]
-  have hi := C.isIdempotentElem_starProjection.toLinearMap.isProj_range.trace
-  have hr : LinearMap.range C.starProjection.toLinearMap = C := C.range_starProjection
-  simpa only [hr] using hi
+  have hproj : LinearMap.IsProj C C.starProjection.toLinearMap :=
+    ⟨C.starProjection_apply_mem, fun x hx => C.starProjection_eq_self_iff.mpr hx⟩
+  exact hproj.trace
 
 /-- Quantum Kac for the actual monitored Kraus history. The dimension is that
 of the original reachable space, and the channel need only fix its projection. -/
@@ -379,7 +379,7 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
     let F := weightedCP (fun a => (1 - P) * K a) (fun _ => 1)
     let p := fun k => (P * E (F^[k] P)).trace.re
     HasSum (fun k => F^[k] P) PiC ∧ (∀ k, 0 ≤ p k) ∧
-      HasSum p 1 ∧ HasSum (fun k => (k + 1 : ℝ) * p k)
+      HasSum p 1 ∧ HasSum (fun k : ℕ => (k + 1 : ℝ) * p k)
         (Module.finrank ℂ (reachableSpace K P) : ℝ) := by
   classical
   dsimp only
@@ -395,10 +395,13 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
   have htp (X : Matrix n n ℂ) : (E X).trace = X.trace := by
     simp only [E, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
       Complex.ofReal_one, one_smul, Matrix.trace_sum]
-    simp_rw [Matrix.trace_mul_cycle]
-    rw [← Matrix.trace_sum, ← Matrix.sum_mul, hTP, Matrix.one_mul]
+    calc
+      _ = (∑ a, (K a)ᴴ * K a * X).trace := by
+        rw [Matrix.trace_sum]
+        exact Finset.sum_congr rfl (fun a _ => Matrix.trace_mul_cycle (K a) X (K a)ᴴ)
+      _ = _ := by rw [← Matrix.sum_mul, hTP, Matrix.one_mul]
   have hQ : (1 - P) * (1 - P) = 1 - P := by
-    rw [mul_sub, sub_mul, mul_one, one_mul, hPP]
+    simp only [mul_sub, sub_mul, mul_one, one_mul, hPP]
     abel
   have hloss (k : ℕ) : (P * E (F^[k] P)).trace.re = s k - s (k + 1) := by
     have ht : (F (F^[k] P)).trace = (E (F^[k] P)).trace -
@@ -406,7 +409,8 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
       rw [hmon, Matrix.trace_mul_cycle, hQ,
         Matrix.sub_mul, Matrix.one_mul, Matrix.trace_sub]
     rw [htp] at ht
-    dsimp [s]
+    change (P * E (F^[k] P)).trace.re =
+      (F^[k] P).trace.re - (F^[k + 1] P).trace.re
     rw [Function.iterate_succ_apply', ht, Complex.sub_re]
     ring
   have hpos (k : ℕ) : (F^[k] P).PosSemidef := by
