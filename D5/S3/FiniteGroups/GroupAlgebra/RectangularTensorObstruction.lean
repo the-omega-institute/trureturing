@@ -1,19 +1,18 @@
-/-
-UNCOMPILED SOURCE DRAFT -- no Lean/kernel or project acceptance is claimed.
-Intended path: D5/S3/FiniteGroups/GroupAlgebra/RectangularTensorObstruction.lean
-
-The import below is the public source of pending PR30445, frozen input head
-6cbd3539694ccfe551315617e259e0213d7222bf. It is not asserted to be on dev.
-Its Primal, DualPower, primalAction, dualAction and dualBasis are reused.
-Its private coefficient/trace lemmas are NOT referenced: the necessary
-parameterized replacements below are proved from their mathematical bodies.
-
-Only the rectangular all-morphism obstruction is addressed here. In particular
-there is no relative-stable negative theorem, no positive construction and no
-new claim of a completed corrected criterion.
--/
-
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
+
+/-!
+# Rectangular polynomial tensor trace obstruction
+
+For the original Elmer--Kadr polynomial contragredients, finite-field power sums
+recover unsigned Hasse coefficients from the actual action at parameter `-a`.
+Under `n + m + 2 ≤ card K`, every equivariant composite between `V_(n+m+1)`
+and `V_(n+1) ⊗ V_(m+1)` has zero trace when `choose (n+m) n` vanishes in K.
+The rectangular generator uses no parity assumption on either index.
+
+Source: Elmer--Kadr, DOI 10.1007/s13366-026-00855-9, Conjecture 3.7(a).
+The polynomial modules, actions and bases are those of
+`ElmerKadrTensorCounterexample`; their signed coefficient convention is not used.
+-/
 
 set_option autoImplicit false
 
@@ -185,7 +184,7 @@ private theorem coefficient_top_coordinate_zero (n m : ℕ)
   apply Finset.sum_eq_zero
   intro i _
   by_cases hi : i.val = n
-  · rw [if_pos (by simp only [Fin.val_last]; omega), hi, hchoose, mul_zero]
+  · rw [if_pos (by simp only [Fin.val_last]; omega), Fin.val_last, hi, hchoose, mul_zero]
   · rw [if_neg (by simp only [Fin.val_last]; omega), mul_zero]
 
 end PolynomialCoefficients
@@ -355,7 +354,7 @@ private theorem tensor_coefficient_top (n m : ℕ) :
       TensorProduct.map (coefficient K (n + 1) n) (coefficient K (m + 1) m) := by
   classical
   rw [tensorCoefficient, Finset.sum_eq_single (Fin.last n, Fin.last m)]
-  · simp [tensorDegree]
+  · simp [tensorDegree, Fin.ext_iff]
   · rintro ⟨u, v⟩ _ hne
     have hd : tensorDegree n m (u, v) ≠ Fin.last (n + m) := by
       intro he
@@ -384,7 +383,7 @@ private theorem tensor_coefficient_top_range (n m : ℕ) (z : TensorSpace K n m)
     refine ⟨x (Polynomial.degreeLT.basis K (n + 1) 0) *
       y (Polynomial.degreeLT.basis K (m + 1) 0), ?_⟩
     simp only [TensorProduct.map_tmul, coefficient_top, TensorProduct.smul_tmul,
-      TensorProduct.tmul_smul, smul_smul]
+      TensorProduct.tmul_smul, smul_smul, mul_comm]
   | add x y hx hy =>
     obtain ⟨c, hc⟩ := hx
     obtain ⟨d, hd⟩ := hy
@@ -411,7 +410,8 @@ private theorem tensor_coefficient_middle_generator (n m : ℕ) :
   have hleft : coefficient K (n + 1) 0 (dualBasis K (n + 1) (Fin.last n)) =
       dualBasis K (n + 1) (Fin.last n) := by
     rw [coefficient_basis_of_lt K (n + 1) 0 (Fin.last n) (by simp)]
-    simp
+    simp only [Fin.val_last, Nat.add_zero, Nat.choose_self, Nat.cast_one, one_smul]
+    rfl
   have hright : coefficient K (m + 1) m (dualBasis K (m + 1) 0) =
       dualBasis K (m + 1) (Fin.last m) := by
     simpa only [Fin.val_last] using coefficient_cyclic K m (Fin.last m)
@@ -505,6 +505,8 @@ theorem composition_top_coordinate_zero (n m : ℕ)
     rw [hgline, LinearMap.smul_apply] at hz
     simp only [dualBasis, Module.Basis.dualBasis_apply_self, ite_true,
       smul_eq_mul, mul_one] at hz
+    change g (dualBasis K (n + 1) 0 ⊗ₜ[K] dualBasis K (m + 1) 0)
+      (Polynomial.degreeLT.basis K (n + m + 1) 0) = 0 at hz
     rw [hgline, hz, zero_smul]
   have hf : f (dualBasis K (n + m + 1) (Fin.last (n + m))) =
       tensorCoefficient K n m (Fin.last (n + m))
@@ -526,23 +528,6 @@ theorem composition_top_coordinate_zero (n m : ℕ)
   change tensorCoefficient K n m (Fin.last (n + m))
     (f (dualBasis K (n + m + 1) 0)) = c • w at hc
   rw [hf, hc, map_smul, hgw, smul_zero, LinearMap.zero_apply]
-
-/-- The vanishing binomial prevents ANY ordinary equivariant split copy. -/
-theorem no_split_copy (n m : ℕ)
-    (hsize : n + m + 2 ≤ Fintype.card K)
-    (hchoose : ((n + m).choose n : K) = 0) :
-    ¬ ∃ (f : (dualAction K (n + m + 1)).IntertwiningMap (tensorAction K n m))
-      (g : (tensorAction K n m).IntertwiningMap (dualAction K (n + m + 1))),
-        g.comp f = .id (dualAction K (n + m + 1)) := by
-  rintro ⟨f, g, hgf⟩
-  have hz := composition_top_coordinate_zero n m hsize hchoose f g
-  have hid := congrArg (fun h : (dualAction K (n + m + 1)).IntertwiningMap
-      (dualAction K (n + m + 1)) => h (dualBasis K (n + m + 1) (Fin.last (n + m)))) hgf
-  change g (f (dualBasis K (n + m + 1) (Fin.last (n + m)))) =
-    dualBasis K (n + m + 1) (Fin.last (n + m)) at hid
-  rw [hid] at hz
-  simp only [dualBasis, Module.Basis.dualBasis_apply_self, ite_true] at hz
-  exact one_ne_zero hz
 
 /-- ALL actual equivariant endomorphisms have constant diagonal in the original
 dual monomial basis. No binomial vanishing is needed for this assertion. -/
@@ -605,27 +590,5 @@ theorem composition_trace_zero (n m : ℕ)
   rw [ht, composition_top_coordinate_zero n m hsize hchoose f g, mul_zero]
 
 end AllMorphisms
-
-/-
-Scope boundary / deliberately missing later bridge:
-
-For the original general relative module M with its actual action τ, one must
-CONSTRUCT an actual order-p subgroup embedding ι and a norm-one endomorphism.
-The required witness has type (for p prime, CharP K p, with τ and ι fixed):
-
-  ∃ t : Module.End K M,
-    (∑ c : Multiplicative (ZMod p),
-      (τ (ι c)).comp (t.comp (τ (ι c⁻¹)))) = LinearMap.id
-
-This must be proved for the original M, then used with its RelativeFactors and
-RelativeStableIso definitions and the nonzero dimension trace in the intended
-arithmetic subfamily. It is not an extra hypothesis of a substitute criterion.
-No coefficient operator on an arbitrary intermediate tensor factor can supply
-this actual finite-subgroup norm argument. This draft makes no such claim.
-
-Boundary n=0 or m=0: nothing above divides by n,m or assumes they are positive.
-The binomial-zero premise then contradicts choose(n,0)=choose(n,n)=1.
-All source scripts, including these boundary cases, remain UNCOMPILED.
--/
 
 end D5.S3.FiniteGroups.GroupAlgebra.RectangularTensorObstruction

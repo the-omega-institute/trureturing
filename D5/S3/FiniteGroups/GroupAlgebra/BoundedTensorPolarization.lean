@@ -7,6 +7,8 @@
    digest: Bounded polynomial tensor multiplication, difference injection and polarization. -/
 
 import D5.S3.FiniteGroups.GroupAlgebra.PolynomialKernelPolarization
+import Mathlib.LinearAlgebra.Contraction
+import Mathlib.LinearAlgebra.Dual.Basis
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
@@ -397,6 +399,124 @@ theorem equivariant_section {K : Type u} [Field K] (n m : ℕ)
       inv_mul_cancel₀ hbinom, one_smul]
   · intro a
     rw [LinearMap.comp_smul, LinearMap.smul_comp, boundedPolarization_translate]
+
+section Dualization
+
+variable {K : Type u} [Field K]
+
+/-- The polynomial basis gives a concrete finite-dimensional dual model for each
+bounded factor.  This is the coordinate bridge used before identifying the
+dual model with the external `V_d` action. -/
+def truncBasis (n : ℕ) :
+    Module.Basis (Fin (n + 1)) K (Trunc K n) :=
+  Polynomial.degreeLT.basis K (n + 1)
+
+noncomputable def truncToDualEquiv (n : ℕ) :
+    Trunc K n ≃ₗ[K] Module.Dual K (Trunc K n) :=
+  (truncBasis (K := K) n).toDualEquiv
+
+@[simp] theorem truncToDualEquiv_apply (n : ℕ) (f : Trunc K n) :
+    truncToDualEquiv (K := K) n f =
+      (truncBasis (K := K) n).toDual f := by
+  rfl
+
+/-- A section of multiplication dualizes to a retraction.  The order of the
+dual maps is the essential contravariant step and is proved by the kernel API,
+not by an informal finite-dimensional dimension count. -/
+theorem dual_section_retraction {n m : ℕ}
+    (σ : Trunc K (n + m) →ₗ[K] Trunc K n ⊗[K] Trunc K m)
+    (hσ : (multiplication (R := K) n m).comp σ = LinearMap.id) :
+    σ.dualMap.comp (multiplication (R := K) n m).dualMap = LinearMap.id := by
+  rw [LinearMap.dualMap_comp_dualMap, hσ, LinearMap.dualMap_id]
+
+/-- The finite dual of a tensor factor is canonically the tensor of the two
+finite duals.  The local basis instances are explicit so this theorem records
+exactly the finite-projective hypotheses used by `dualDistribEquiv`. -/
+noncomputable def tensorDualEquiv (n m : ℕ) :
+    Module.Dual K (Trunc K n) ⊗[K] Module.Dual K (Trunc K m) ≃ₗ[K]
+      Module.Dual K (Trunc K n ⊗[K] Trunc K m) := by
+  letI : Module.Finite K (Trunc K n) :=
+    Module.Finite.of_basis (truncBasis (K := K) n)
+  letI : Module.Finite K (Trunc K m) :=
+    Module.Finite.of_basis (truncBasis (K := K) m)
+  letI : Module.Projective K (Trunc K n) :=
+    Module.Projective.of_basis (truncBasis (K := K) n)
+  letI : Module.Projective K (Trunc K m) :=
+    Module.Projective.of_basis (truncBasis (K := K) m)
+  exact TensorProduct.dualDistribEquiv K (Trunc K n) (Trunc K m)
+
+@[simp] theorem tensorDualEquiv_tmul_apply (n m : ℕ)
+    (f : Module.Dual K (Trunc K n)) (g : Module.Dual K (Trunc K m))
+    (x : Trunc K n) (y : Trunc K m) :
+    tensorDualEquiv (K := K) n m (f ⊗ₜ[K] g) (x ⊗ₜ[K] y) = g y * f x := by
+  letI : Module.Finite K (Trunc K n) :=
+    Module.Finite.of_basis (truncBasis (K := K) n)
+  letI : Module.Finite K (Trunc K m) :=
+    Module.Finite.of_basis (truncBasis (K := K) m)
+  letI : Module.Projective K (Trunc K n) :=
+    Module.Projective.of_basis (truncBasis (K := K) n)
+  letI : Module.Projective K (Trunc K m) :=
+    Module.Projective.of_basis (truncBasis (K := K) m)
+  simp [tensorDualEquiv]
+
+/-- Transport the dualized multiplication map through the tensor-dual
+equivalence, so its codomain is the product of the two factor duals. -/
+noncomputable def dualMultiplicationTensor (n m : ℕ) :
+    Module.Dual K (Trunc K (n + m)) →ₗ[K]
+      Module.Dual K (Trunc K n) ⊗[K] Module.Dual K (Trunc K m) := by
+  letI : Module.Finite K (Trunc K n) :=
+    Module.Finite.of_basis (truncBasis (K := K) n)
+  letI : Module.Finite K (Trunc K m) :=
+    Module.Finite.of_basis (truncBasis (K := K) m)
+  letI : Module.Projective K (Trunc K n) :=
+    Module.Projective.of_basis (truncBasis (K := K) n)
+  letI : Module.Projective K (Trunc K m) :=
+    Module.Projective.of_basis (truncBasis (K := K) m)
+  exact (tensorDualEquiv (K := K) n m).symm.toLinearMap.comp
+    (multiplication (R := K) n m).dualMap
+
+/-- The dualized section is transported to the tensor of the two factor duals. -/
+noncomputable def dualSectionTensor
+    {n m : ℕ} (σ : Trunc K (n + m) →ₗ[K] Trunc K n ⊗[K] Trunc K m) :
+    Module.Dual K (Trunc K n) ⊗[K] Module.Dual K (Trunc K m) →ₗ[K]
+      Module.Dual K (Trunc K (n + m)) := by
+  letI : Module.Finite K (Trunc K n) :=
+    Module.Finite.of_basis (truncBasis (K := K) n)
+  letI : Module.Finite K (Trunc K m) :=
+    Module.Finite.of_basis (truncBasis (K := K) m)
+  letI : Module.Projective K (Trunc K n) :=
+    Module.Projective.of_basis (truncBasis (K := K) n)
+  letI : Module.Projective K (Trunc K m) :=
+    Module.Projective.of_basis (truncBasis (K := K) m)
+  exact σ.dualMap.comp (tensorDualEquiv (K := K) n m).toLinearMap
+
+theorem dualSectionTensor_retraction {n m : ℕ}
+    (σ : Trunc K (n + m) →ₗ[K] Trunc K n ⊗[K] Trunc K m)
+    (hσ : (multiplication (R := K) n m).comp σ = LinearMap.id) :
+    (dualSectionTensor (K := K) σ).comp
+        (dualMultiplicationTensor (K := K) n m) = LinearMap.id := by
+  letI : Module.Finite K (Trunc K n) :=
+    Module.Finite.of_basis (truncBasis (K := K) n)
+  letI : Module.Finite K (Trunc K m) :=
+    Module.Finite.of_basis (truncBasis (K := K) m)
+  letI : Module.Projective K (Trunc K n) :=
+    Module.Projective.of_basis (truncBasis (K := K) n)
+  letI : Module.Projective K (Trunc K m) :=
+    Module.Projective.of_basis (truncBasis (K := K) m)
+  apply LinearMap.ext
+  intro φ
+  apply LinearMap.ext
+  intro x
+  simp only [LinearMap.comp_apply, dualSectionTensor, dualMultiplicationTensor]
+  change σ.dualMap
+      ((tensorDualEquiv (K := K) n m)
+        ((tensorDualEquiv (K := K) n m).symm
+          ((multiplication (R := K) n m).dualMap φ))) x = φ x
+  rw [LinearEquiv.apply_symm_apply]
+  exact congrArg (fun ψ : Module.Dual K (Trunc K (n + m)) => ψ x)
+    (LinearMap.congr_fun (dual_section_retraction (K := K) σ hσ) φ)
+
+end Dualization
 
 /-
 The continuation to the corrected external criterion remains unfinished:

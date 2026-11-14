@@ -1,25 +1,25 @@
-/-
-SOURCE ONLY: this file has not been elaborated or kernel checked.
-Intended path: D5/S3/FiniteGroups/GroupAlgebra/PrimeCyclicRelativeTrace.lean.
-The first import is the pending public ElmerKadrTensorCounterexample source,
-head 6cbd3539694ccfe551315617e259e0213d7222bf, frozen source SHA256
- a9450ce20a3b226cc832301e664dde3dee29d21f50a0dc0408c4d92aea0211ca.
-
-Source conventions: Elmer--Kadr, DOI 10.1007/s13366-026-00855-9,
-Section 2.2 and Lemma 2.1. Primal, DualPower, both actions, and
-RelativeFactors below are the ORIGINAL public definitions at that import.
-The remainder and trace/retract arguments generalize the private proofs in
-that frozen source; they are repeated here because private declarations
-cannot be imported. This is preparation for the same corrected criterion,
-not a proof of that criterion or a claim of mathematical novelty.
--/
-
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Algebra.Polynomial.Coeff
 import Mathlib.Algebra.Polynomial.RingDivision
 import Mathlib.Algebra.Group.Equiv.Basic
 import Mathlib.Algebra.Group.TypeTags.Finite
+
+/-!
+# Prime cyclic norms for the original relative polynomial module
+
+For every prime p and field of characteristic p, monic remainder modulo
+`(X^p-X)^r` supplies an explicit conjugation-norm witness on the original
+polynomial module of dimension p*r. Transpose and direct sum give the witness
+on the original contragredient relative module with arbitrary summand count.
+The norm statements include p = 2, r = 0 and the empty direct sum.
+
+Only the target is traced in the relative-factor argument: the existential
+modules X and P in the original `RelativeFactors` have no finiteness restriction.
+The remainder and retract arguments extend the corresponding proofs in
+`ElmerKadrTensorCounterexample`, using its public modules and actions unchanged.
+Source: Elmer--Kadr, DOI 10.1007/s13366-026-00855-9, Section 2.2 and Lemma 2.1.
+-/
 
 set_option autoImplicit false
 
@@ -46,23 +46,23 @@ def primeSubgroup : Multiplicative (ZMod p) →* Multiplicative K where
   map_one' := by simp
   map_mul' c d := by simp
 
-theorem primeSubgroup_injective :
+private theorem primeSubgroup_injective :
     Function.Injective (primeSubgroup (K := K) (p := p)) := by
   intro c d h
   exact (ZMod.castHom_injective K) h
 
-theorem primeSubgroup_card_zero :
+private theorem primeSubgroup_card_zero :
     (Fintype.card (Multiplicative (ZMod p)) : K) = 0 := by
   rw [Fintype.card_multiplicative, ZMod.card]
   exact CharP.cast_eq_zero K p
 
-theorem primeCast_pow (a : ZMod p) :
+private theorem primeCast_pow (a : ZMod p) :
     primeCast (K := K) a ^ p = primeCast a := by
   simpa only [map_pow] using
     congrArg (primeCast (K := K) (p := p)) (ZMod.pow_card a)
 
 -- In particular this includes exponent zero: the sum is p = 0 in K.
-theorem primeField_power_sum_lt (n : ℕ) (hn : n < p - 1) :
+private theorem primeField_power_sum_lt (n : ℕ) (hn : n < p - 1) :
     (∑ a : ZMod p, primeCast (K := K) a ^ n) = 0 := by
   have h : (∑ a : ZMod p, a ^ n) = 0 :=
     FiniteField.sum_pow_lt_card_sub_one (ZMod p) n
@@ -92,13 +92,13 @@ private theorem primeField_top_power_sum :
       rw [FiniteField.sum_pow_units (ZMod p) (p - 1), ZMod.card,
         if_pos (dvd_refl (p - 1))]
 
-theorem primeField_power_sum_top :
+private theorem primeField_power_sum_top :
     (∑ a : ZMod p, primeCast (K := K) a ^ (p - 1)) = -1 := by
   simpa only [map_sum, map_pow, map_neg, map_one] using
     congrArg (primeCast (K := K) (p := p)) (primeField_top_power_sum (p := p))
 
 /-- The polynomial identity supplying the norm witness, including p = 2. -/
-theorem primeField_translate_sum :
+private theorem primeField_translate_sum :
     -(∑ a : ZMod p, ((X : K[X]) + C (primeCast a)) ^ (p - 1)) = 1 := by
   classical
   apply Polynomial.ext
@@ -117,7 +117,7 @@ theorem primeField_translate_sum :
     · rw [Nat.choose_eq_zero_of_lt (by omega : p - 1 < k),
         Nat.cast_zero, mul_zero, neg_zero]
 
-theorem primeField_taylor_sum :
+private theorem primeField_taylor_sum :
     (∑ a : ZMod p, Polynomial.taylor (primeCast (K := K) a)
       (-((X : K[X]) ^ (p - 1)))) = 1 := by
   simpa only [map_neg, Polynomial.taylor_X_pow, Finset.sum_neg_distrib] using
@@ -143,7 +143,7 @@ def remainderMul {m : ℕ} (q : K[X]) (hq : q.Monic)
       Polynomial.smul_modByMonic]
 
 /-- Translation commutes with remainder when the monic modulus is fixed. -/
-theorem taylor_modByMonic (q : K[X]) (hq : q.Monic) (a : K)
+private theorem taylor_modByMonic (q : K[X]) (hq : q.Monic) (a : K)
     (ha : Polynomial.taylor a q = q) (f : K[X]) :
     Polynomial.taylor a (f %ₘ q) = Polynomial.taylor a f %ₘ q := by
   have hdvd : q ∣ Polynomial.taylor a (f %ₘ q) - Polynomial.taylor a f := by
@@ -158,7 +158,7 @@ theorem taylor_modByMonic (q : K[X]) (hq : q.Monic) (a : K)
     _ = _ := Polynomial.modByMonic_eq_of_dvd_sub hq hdvd
 
 /-- Actual conjugation of the remainder operator by polynomial translation. -/
-theorem remainderMul_conjugate {m : ℕ} (q : K[X]) (hq : q.Monic)
+private theorem remainderMul_conjugate {m : ℕ} (q : K[X]) (hq : q.Monic)
     (hd : q.degree = m) (b : K[X]) (a : K)
     (ha : Polynomial.taylor a q = q) (f : Primal K m) :
     ((primalAction K m (Multiplicative.ofAdd a))
@@ -179,53 +179,60 @@ variable {K : Type uK} [Field K] {p : ℕ} [Fact p.Prime] [CharP K p]
 /-- Q_r = (X^p - X)^r; no positivity assumption on r. -/
 def invariantModulus (r : ℕ) : K[X] := (X ^ p - X) ^ r
 
-theorem invariantModulus_monic (r : ℕ) :
+private theorem invariantModulus_monic (r : ℕ) :
     (invariantModulus (K := K) (p := p) r).Monic := by
   apply Polynomial.Monic.pow
   apply Polynomial.monic_X_pow_sub
   simp only [Polynomial.degree_X]
   exact_mod_cast (Fact.out : p.Prime).one_lt
 
-theorem invariantModulus_degree (r : ℕ) :
-    (invariantModulus (K := K) (p := p) r).degree = p * r := by
-  have hb : ((X : K[X]) ^ p - X).degree = p := by
+private theorem invariantModulus_degree (r : ℕ) :
+    (invariantModulus (K := K) (p := p) r).degree = ((p * r : ℕ) : WithBot ℕ) := by
+  have hb : ((X : K[X]) ^ p - X).degree = (p : WithBot ℕ) := by
     rw [Polynomial.degree_sub_eq_left_of_degree_lt]
     · exact Polynomial.degree_X_pow p
     · simp only [Polynomial.degree_X, Polynomial.degree_X_pow]
       exact_mod_cast (Fact.out : p.Prime).one_lt
   simp [invariantModulus, Polynomial.degree_pow, hb, nsmul_eq_mul, mul_comm]
 
-theorem invariantModulus_translate (r : ℕ) (a : K) (ha : a ^ p = a) :
+private theorem invariantModulus_translate (r : ℕ) (a : K) (ha : a ^ p = a) :
     Polynomial.taylor a (invariantModulus (K := K) (p := p) r) =
-      invariantModulus r := by
+      invariantModulus (p := p) r := by
   have hb : Polynomial.taylor a ((X : K[X]) ^ p - X) = X ^ p - X := by
     rw [map_sub, Polynomial.taylor_X_pow, Polynomial.taylor_X,
       add_pow_char _ _ p, ← Polynomial.C_pow, ha]
     ring
   simpa only [invariantModulus, Polynomial.taylor_pow, hb]
 
-theorem invariantModulus_prime_translate (r : ℕ) (a : ZMod p) :
+private theorem invariantModulus_prime_translate (r : ℕ) (a : ZMod p) :
     Polynomial.taylor (primeCast (K := K) a) (invariantModulus (p := p) r) =
-      invariantModulus r :=
+      invariantModulus (p := p) r :=
   invariantModulus_translate r _ (primeCast_pow a)
 
 /-- t_r(f) = (-X^(p-1) f) mod Q_r on the actual primal module. -/
 def primalNormWitness (r : ℕ) : Module.End K (Primal K (p * r)) :=
-  remainderMul (invariantModulus r) (invariantModulus_monic r)
+  remainderMul (m := p * r) (invariantModulus (p := p) r) (invariantModulus_monic r)
     (invariantModulus_degree r) (-X ^ (p - 1))
 
-theorem primalNormWitness_apply (r : ℕ) (f : Primal K (p * r)) :
+private theorem primalNormWitness_apply (r : ℕ) (f : Primal K (p * r)) :
     (primalNormWitness (p := p) r f : K[X]) =
-      (-X ^ (p - 1) * (f : K[X])) %ₘ invariantModulus r := rfl
+      (-X ^ (p - 1) * (f : K[X])) %ₘ invariantModulus (p := p) r := rfl
 
-theorem primalNormWitness_conjugate (r : ℕ) (c : Multiplicative (ZMod p))
+private theorem primalNormWitness_conjugate (r : ℕ) (c : Multiplicative (ZMod p))
     (f : Primal K (p * r)) :
     ((primalAction K (p * r) (primeSubgroup c))
       (primalNormWitness r (primalAction K (p * r) (primeSubgroup c⁻¹) f)) : K[X]) =
       (Polynomial.taylor (primeCast (Multiplicative.toAdd c)) (-X ^ (p - 1)) *
-        (f : K[X])) %ₘ invariantModulus r := by
-  simpa only [primeSubgroup, primalNormWitness, toAdd_inv, map_neg] using
-    (remainderMul_conjugate (invariantModulus (K := K) (p := p) r)
+        (f : K[X])) %ₘ invariantModulus (p := p) r := by
+  change ((primalAction K (p * r)
+    (Multiplicative.ofAdd (primeCast (Multiplicative.toAdd c))))
+      (remainderMul (m := p * r) (invariantModulus (p := p) r)
+        (invariantModulus_monic r) (invariantModulus_degree r) (-X ^ (p - 1))
+        (primalAction K (p * r)
+          (Multiplicative.ofAdd (primeCast (Multiplicative.toAdd c⁻¹))) f)) : K[X]) = _
+  rw [toAdd_inv, map_neg]
+  exact (remainderMul_conjugate (m := p * r)
+      (invariantModulus (K := K) (p := p) r)
       (invariantModulus_monic r) (invariantModulus_degree r) (-X ^ (p - 1))
       (primeCast (Multiplicative.toAdd c))
       (invariantModulus_prime_translate r (Multiplicative.toAdd c)) f)
@@ -253,36 +260,16 @@ theorem primal_norm (r : ℕ) :
   calc
     (∑ c : Multiplicative (ZMod p),
         (Polynomial.taylor (primeCast (Multiplicative.toAdd c)) (-X ^ (p - 1)) *
-          (f : K[X])) %ₘ invariantModulus r) =
+          (f : K[X])) %ₘ invariantModulus (p := p) r) =
       ((∑ c : Multiplicative (ZMod p),
         Polynomial.taylor (primeCast (Multiplicative.toAdd c)) (-X ^ (p - 1)) *
-          (f : K[X])) %ₘ invariantModulus r) := by
-        exact (map_sum (Polynomial.modByMonicHom (invariantModulus r)) _ _).symm
-    _ = (f : K[X]) %ₘ invariantModulus r := by rw [← sum_mul, hs, one_mul]
+          (f : K[X])) %ₘ invariantModulus (p := p) r) := by
+        exact (map_sum (Polynomial.modByMonicHom (invariantModulus (p := p) r)) _ _).symm
+    _ = (f : K[X]) %ₘ invariantModulus (p := p) r := by rw [← sum_mul, hs, one_mul]
     _ = (f : K[X]) := (Polynomial.modByMonic_eq_self_iff
       (invariantModulus_monic r)).mpr
         (invariantModulus_degree (K := K) (p := p) r ▸
           Polynomial.mem_degreeLT.mp f.property)
-
-/-- The zero truncation really is the zero module. -/
-theorem primal_zero (f : Primal K 0) : f = 0 := by
-  apply Subtype.ext
-  apply Polynomial.ext
-  intro n
-  change (f : K[X]).coeff n = 0
-  exact (Polynomial.degree_lt_iff_coeff_zero (f : K[X]) 0).mp
-    (Polynomial.mem_degreeLT.mp f.property) n (Nat.zero_le n)
-
-/-- r = 0 really gives modulus 1, not an excluded degenerate case. -/
-theorem invariantModulus_zero :
-    invariantModulus (K := K) (p := p) 0 = 1 := pow_zero _
-
-theorem primalNormWitness_zero :
-    primalNormWitness (K := K) (p := p) 0 = 0 := by
-  apply LinearMap.ext
-  intro f
-  apply Subtype.ext
-  simp [primalNormWitness, remainderMul, invariantModulus]
 
 end PrimeNorm
 
@@ -293,7 +280,7 @@ variable {K : Type uK} [Field K]
   {V : Type uV} [AddCommGroup V] [Module K V]
 
 /-- The inverse indexing is a genuine finite-group permutation. -/
-theorem inverse_conjugation_sum (ι : C →* G) (ρ : Representation K G V)
+private theorem inverse_conjugation_sum (ι : C →* G) (ρ : Representation K G V)
     (t : Module.End K V) :
     (∑ c : C, (ρ (ι c⁻¹)).comp (t.comp (ρ (ι c)))) =
       ∑ c : C, (ρ (ι c)).comp (t.comp (ρ (ι c⁻¹))) := by
@@ -323,8 +310,9 @@ theorem dual_norm (r : ℕ) :
       (primalAction K (p * r) (primeSubgroup c⁻¹)).comp
         ((primalNormWitness r).comp (primalAction K (p * r) (primeSubgroup c)))) =
         LinearMap.id :=
-    (inverse_conjugation_sum primeSubgroup (primalAction K (p * r))
-      (primalNormWitness r)).trans (primal_norm r)
+    (inverse_conjugation_sum (primeSubgroup (K := K) (p := p))
+      (primalAction K (p * r))
+      (primalNormWitness (p := p) r)).trans (primal_norm (p := p) r)
   have hdInv : (∑ c : Multiplicative (ZMod p),
       (dualAction K (p * r) (primeSubgroup c⁻¹)).comp
         ((dualNormWitness r).comp (dualAction K (p * r) (primeSubgroup c)))) =
@@ -339,8 +327,8 @@ theorem dual_norm (r : ℕ) :
     simpa only [LinearMap.sum_apply, LinearMap.comp_apply, LinearMap.id_apply,
       dualAction, Representation.dual_apply, dualNormWitness,
       Module.Dual.transpose_apply, map_inv, inv_inv] using hq
-  exact (inverse_conjugation_sum primeSubgroup (dualAction K (p * r))
-    (dualNormWitness r)).symm.trans hdInv
+  exact (inverse_conjugation_sum (primeSubgroup (K := K) (p := p))
+    (dualAction K (p * r)) (dualNormWitness (p := p) r)).symm.trans hdInv
 
 /-- The original finite relative module, with arbitrary number of summands. -/
 abbrev RelativeSpace (K : Type uK) [Field K] (p s : ℕ) :=
@@ -382,7 +370,7 @@ variable {K : Type uK} [Field K]
 
 -- The following two arguments reproduce the frozen private RelativeTrace
 -- mathematics. No dimension, basis, projectivity or trace is required on X/M.
-theorem trace_conjugate (ρ : Representation K G V)
+private theorem trace_conjugate (ρ : Representation K G V)
     (t : Module.End K V) (g : G) :
     LinearMap.trace K V ((ρ g).comp (t.comp (ρ g⁻¹))) =
       LinearMap.trace K V t := by
@@ -391,7 +379,7 @@ theorem trace_conjugate (ρ : Representation K G V)
   rw [← mul_assoc, ← map_mul, inv_mul_cancel, map_one, one_mul]
 
 /-- Only V is traced; X and M are arbitrary modules in independent universes. -/
-theorem trace_tensor_factorization
+private theorem trace_tensor_factorization
     (ι : C →* G) (ρ : Representation K G V)
     (σ : Representation K G X) (τ : Representation K G M)
     (t : Module.End K M)
@@ -439,7 +427,7 @@ variable {U : Type uK} [AddCommGroup U] [Module K U]
 No finiteness hypothesis on P, X or M and no trace on those factors occurs.
 LinearMap.trace is defined for arbitrary U; in particular this gives the usual
 trace statement for every finite-dimensional target U. -/
-theorem trace_original_relative_factor
+private theorem trace_original_relative_factor
     (ι : C →* G) (τ : Representation K G M) (t : Module.End K M)
     (ht : (∑ c : C, (τ (ι c)).comp (t.comp (τ (ι c⁻¹)))) = LinearMap.id)
     (hcard : (Fintype.card C : K) = 0)
@@ -471,8 +459,10 @@ theorem trace_relativeFactors (s : ℕ)
     (ρ : Representation K (Multiplicative K) U) (h : ρ.IntertwiningMap ρ)
     (hh : RelativeFactors (relativeAction (K := K) (p := p) s) h) :
     LinearMap.trace K U h.toLinearMap = 0 :=
-  trace_original_relative_factor primeSubgroup (relativeAction s)
-    (relativeNormWitness s) (relative_norm s) primeSubgroup_card_zero ρ h hh
+  trace_original_relative_factor (primeSubgroup (K := K) (p := p))
+    (relativeAction (K := K) (p := p) s)
+    (relativeNormWitness (K := K) (p := p) s) (relative_norm (p := p) s)
+    (primeSubgroup_card_zero (K := K) (p := p)) ρ h hh
 
 end ActualRelativeModule
 
