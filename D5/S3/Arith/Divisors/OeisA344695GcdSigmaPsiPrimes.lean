@@ -55,7 +55,7 @@ def claim : Prop := ∀ q : ℕ, q.Prime → ((∃ n : ℕ, 1 ≤ n ∧ a n = q)
 
 open Finset ArithmeticFunction
 
-private theorem psi_prod {n : ℕ} (hn : n ≠ 0) :
+theorem psi_prod {n : ℕ} (hn : n ≠ 0) :
     psi n = ∏ p ∈ n.primeFactors, p ^ (n.factorization p - 1) * (p + 1) := by
   classical
   have hrad : 0 < ∏ p ∈ n.primeFactors, p :=
