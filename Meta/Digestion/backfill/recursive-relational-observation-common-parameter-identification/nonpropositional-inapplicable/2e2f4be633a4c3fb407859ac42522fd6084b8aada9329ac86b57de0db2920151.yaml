@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e2f4be633a4c3fb407859ac42522fd6084b8aada9329ac86b57de0db2920151
+  normalized_sha256: sha256:2e2f4be633a4c3fb407859ac42522fd6084b8aada9329ac86b57de0db2920151
+cas_ref: sha256:2e2f4be633a4c3fb407859ac42522fd6084b8aada9329ac86b57de0db2920151
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Definition of the vertex placement and common root of the two paths, with no additional mathematical proposition.
+    previous_atom_id: 242883a4b39b6be314e1c0e6b2228b551bcbd7bfa6cbdd10e938091fc7ca6014
+    next_atom_id: dbccdb5514d2e8fff7bd8cdba31e7d70ceff1cfbeea7d76b6fce7ddc697f6a99
