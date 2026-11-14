@@ -39,9 +39,10 @@ internal sealed class MatharA186335FiveTermRecurrenceDocument : IScribeDocumentD
             FormulaRelationOperator.LessThanOrEqual, n), FormulaLogicOperator.Implies, equation));
     }
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("a186335-" + name), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The independent source double sum A186335 satisfies Mathar's five-term recurrence.",
@@ -72,5 +73,7 @@ internal sealed class MatharA186335FiveTermRecurrenceDocument : IScribeDocumentD
                 + "A308815DFiniteRecurrence.euler_coeff and four coefficient shifts yield exactly the displayed "
                 + "integer recurrence. No assumed generating function, finite-prefix check or recurrence-defined "
                 + "substitute is used. This unit makes no claim about another Mathar sequence, global novelty "
-                + "or sibling conjectures.", DescribeRole.Theorem))));
+                + "or sibling conjectures.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("mathar-a186335-five-term-recurrence"),
+                    ResolutionKind.Proved)))));
 }
