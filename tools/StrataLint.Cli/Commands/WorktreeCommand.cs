@@ -178,6 +178,8 @@ internal static class WorktreeCommand
                 return prepared;
             }
             using var preparation = JsonDocument.Parse(prepared.Output);
+            var maintenance = preparation.RootElement.TryGetProperty("maintenance", out var notice)
+                ? (JsonElement?)notice.Clone() : null;
             removedWorktrees = preparation.RootElement.GetProperty("removed_worktrees")
                 .EnumerateArray().Select(path => path.GetString()!).ToArray();
             if (preparation.RootElement.GetProperty("status").GetString() != "no_reusable")
@@ -266,6 +268,7 @@ internal static class WorktreeCommand
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                maintenance,
             }) + "\n";
             MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
             return new CommandResult(true, summary, agentWarning + RenderDonorWarning(options, donor));

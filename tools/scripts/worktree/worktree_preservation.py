@@ -94,6 +94,12 @@ def _removal_state(source, path):
 
 
 def remove_registered(source, path, timeout=1800):
+    from worktree_maintenance import lease
+    with lease(source):
+        return _remove_registered_locked(source, path, timeout)
+
+
+def _remove_registered_locked(source, path, timeout=1800):
     """Remove qualified payload first, then let Git remove its pointer/registration.
 
     Payload and final native removal share the caller's bound. None disables
