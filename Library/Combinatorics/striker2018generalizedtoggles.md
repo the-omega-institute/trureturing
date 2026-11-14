@@ -31,3 +31,9 @@ x < z < t. The singleton {t} is order-convex, x is minimal, y is maximal,
 and x is covered by y, but adjoining x to {t} is not order-convex because z
 is absent. Guard invariance is the property used by the Lean proof; it
 does not require unconditional flips.
+
+## Verified locator
+
+- DOI: https://doi.org/10.23638/dmtcs-20-1-17
+- Version: https://arxiv.org/abs/1601.03710v5
+- Lemma 3.17, pp. 14–15.
