@@ -4742,3 +4742,142 @@ $$
 [Q149BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory，Theorem 16的全部前件。"
 
 ## 追加锚（本行以下为增补区）
+
+## 150. 纯端点读数互易、双球有限消元与完整量子几何
+
+### 150.1 由原域唯一确定的比较尺
+
+**定义 150.1（全纯整球零确认互易）。** 保留149.1的整个原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$，以及完整 EB3+$\mathsf{Conn}$。特别是每个 $T_p$ 仍在全部原混输入上对整个原确认菜单取已达 minimum。由(XI149.2)，$e_p$ 是其中唯一在整个 $D_p$ 上归零的确认尺，$c_p$ 是该完整三球的中心。定义
+
+$$
+\boxed{\qquad
+\mathsf{ER}:\quad e_p(q)=e_q(p)\qquad(p,q\in P).
+\qquad}
+\tag{XI150.1}
+$$
+
+其白话含义是：用两端各自唯一的整球零确认尺读取对方，交换两端不改变读数。$e_p$ 的选择由原域锁定；互易是这些内生对象之间新增的约束。这里既不输入 $e_p\le f$ 对所有 $f\in\mathcal F_p$，也不定义 $T_p=e_p$。最低确认互易
+
+$$
+\mathsf{PR}:\quad T_p(q)=T_q(p)\qquad(p,q\in P)
+\tag{XI150.2}
+$$
+
+保留原来的独立含义，不能在证明前与 $\mathsf{ER}$ 互换。
+
+### 150.2 交换纯端点直接校准真实邻球
+
+**定理 150.2（纯互易到球心互易的有限消元）。** 在150.1的完整原前件和 $\mathsf{ER}$ 下，对任意原根 $p$，在(XI149.5)的同一球图中，存在 $R_p\ge1$，使
+
+$$
+\begin{gathered}
+\rho_p(v)=R_p\quad(v\in S^2),\qquad
+z_v=-R_pv,\qquad
+m(v)=\frac{2}{1+R_p},\\
+e_p(c_{q_v})=\frac{R_p}{1+R_p}=e_{q_v}(c_p).
+\end{gathered}
+\tag{XI150.3}
+$$
+
+因而 $\mathsf{CR}_c$ 成立。这条桥不使用 ZC、正高度输入、跨球连续性、支撑函数微分或 Bregman估计。
+
+证明。先准确复用[THREE_COPY VII定理122.4][Q150TC]和[SAME_READBACK §123.2、定理123.3][Q150SR]的 $P_0$ 接口；全部原根及所用纯端点属于 $P_0$ 已由(XI149.2)支付。固定 $p$，简记 $\rho=\rho_p$、$g=g_p$。对 $v,w\in S^2$、$s=v\cdot w$，完整原空间上的邻确认公式给
+
+$$
+e_{q_v}(q_w)=\frac{\rho(v)+s}{1+\rho(v)},\qquad
+e_{q_w}(q_v)=\frac{\rho(w)+s}{1+\rho(w)}.
+\tag{XI150.4}
+$$
+
+若 $v\ne w$，则 $s<1$。$\mathsf{ER}$ 与交叉相乘给
+$(1-s)(\rho(v)-\rho(w))=0$，故所有单位方向的 $\rho$ 同值 $R_p\ge1$。正齐次性给 $\rho(b)=R_p\|b\|$。原实际影像 $Z=\{H(x)/g(x):x\in K\setminus\{p\}\}$ 的闭包有支撑函数
+$h_{\overline Z}(n)=\rho(-n)=R_p\|n\|$，故是半径 $R_p$ 的闭球。其法向 $-v$ 的完整支撑面只有 $-R_pv$；定理122.4已保证实际接触 $z_v$ 存在，所以 $z_v=-R_pv$。这里先辨认闭影壳再辨认实际接触，不把两种唯一性混同；无需先证 $Z$ 闭合。
+
+令 $q=q_v$、$a=a_v=2c_q-p$、$m=g(a)\in(0,1]$。$a$ 是真实邻球 $D_q$ 内与 $p$ 对径的原纯点，$q_{-v}$ 则在原 $D_p$ 内与 $q_v$ 对径，二者未被预先认同。$\mathsf{ER}$ 用于原纯对 $(p,a)$，给
+
+$$
+d:=e_a(p)=e_p(a)=1-m.
+\tag{XI150.5}
+$$
+
+定理123.3在整个原 $V$ 上给出的精确恒等式因而成为
+
+$$
+e_a=d e_p+\gamma(g-v\cdot H),\qquad
+\gamma=\frac{1-d(1-m)}{m(1+R_p)}
+=\frac{2-m}{1+R_p}.
+\tag{XI150.6}
+$$
+
+在实际原点 $q_{-v}$ 上，$e_p=0$、$g=1$、$H=-v$，所以
+
+$$
+e_a(q_{-v})=\frac{2(2-m)}{1+R_p}.
+\tag{XI150.7}
+$$
+
+另一方面，$H(a)=mz_v=-mR_pv$；同一根 $p$ 的原邻确认公式在整个原 $V$ 成立，故
+
+$$
+e_{q_{-v}}(a)
+=\frac{R_pg(a)-v\cdot H(a)}{1+R_p}
+=\frac{2mR_p}{1+R_p}.
+\tag{XI150.8}
+$$
+
+现在才将 $\mathsf{ER}$ 用于原纯对 $(a,q_{-v})$。这一步使用全部原纯对的互易，没有未经证明地将它缩为共处某颗排斥球的纯对。两式相等给 $2-m=mR_p$，即 $m=2/(1+R_p)$。最后由 $2c_q=p+a$ 及原邻确认公式，
+
+$$
+e_p(c_q)=1-\frac m2
+=\frac{R_p}{1+R_p}=e_q(c_p).
+\tag{XI150.9}
+$$
+
+$v$ 和原根 $p$ 任意，所以得到全部原零边上的 $\mathsf{CR}_c$。证毕。
+
+### 150.3 一个二元互易条件的同原静态重构
+
+**定理 150.3（互易、同值与完整三能级原域等价）。** 在150.1的完整 EB3+$\mathsf{Conn}$ 及全部原量词下，下列条件逐模型等价：$\mathsf{ER}$；$\mathsf{CR}_c$；144.1的原全域 $\mathsf{UC}$；存在同一原锥和原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI150.10}
+$$
+
+这时 $e_p$ 才成为整个原确认菜单的 least，并在全部原混输入上等于 $T_p$；不要求矩阵、九维上界、ZC、Seed或全纯域连续性作为额外输入。
+
+证明。150.2给 $\mathsf{ER}\Rightarrow\mathsf{CR}_c$，其余等价可直接消费149.4；表示到 $\mathsf{ER}$ 由
+$e_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2$
+对称得到。为明确从本候选出发的路线无需调用149.2—149.3的微分步骤，也可直接支付原 UC入口。记 $h_p=R_p/(1+R_p)\in[1/2,1)$；(XI150.9)在每条原零边给 $h_p=h_q$。全部原纯标签的有限零路连通使 $h_p=h$ 对同一个 $h<1$ 成立。任意 $a\in P$、$x\in S_a$ 及其完整原球内对径 $\bar x=2c_a-x$ 满足
+
+$$
+e_a(c_x)+e_a(c_{\bar x})=2h=:\kappa<2.
+\tag{XI150.11}
+$$
+
+这正是144.1的全标签、同一严格余量的 UC。直接消费144.5即得(XI150.10)；分类链中的面覆盖、least、自对偶、谱性及成熟 Jordan分类均取其已付清的完整前件，不把对称性本身当作这些前件。完整原菜单和全混态 minimum的读回，直接用149.5及其来源145.9在同一个 $\Phi$ 下的字典。因此原 $e_p$ 是 least、$T_p=e_p$ 于全部 $K$、$\mathsf{PR}$ 成立；这些是结论。证毕。
+
+**定理 150.4（球内刻度、整体几何与候选的准确边界）。** 在150.3的等价条件下，每个原根的 $R_p=1$，其任一完整原球上的纯端点满足
+
+$$
+e_{q_v}(q_w)=T_{q_v}(q_w)
+=\frac{1+v\cdot w}{2}
+=\cos^2\!\frac{\theta(v,w)}2.
+\tag{XI150.12}
+$$
+
+整体原纯域是 $\mathbb{CP}^2$，每颗完整排斥球的球缘是其中的 $\mathbb{CP}^1\cong S^2$，实心是其全部二阶密度态。确认尺、全部效应、完整确认菜单、每个混态的 Born最低读数及数学有限 POVM，均为149.5的同原对象。原球心仍由 $c_p=(U-p)/2$、$U=\Phi(I_3)$ 给出。
+
+证明。150.3供给149.4—149.5的同原表示，所以 $R_p=1$；代入(XI150.4)得第一式，最后一步是 $v\cdot w=\cos\theta$ 的半角恒等式。其余直接消费149.5的完整字典，不重建或缩减其原域。
+
+因此在这组完整前件下，若原静态模型不是(XI150.10)，必有一对原纯端点的内生整球零确认读数不互易。这是150.3的逆否；它不供应裸 EB3+$\mathsf{Conn}$ 的非量子实现，也不证明仅 $\mathsf{PR}$ 能推出 $\mathsf{ER}$ 或 $\mathsf{CR}_c$。该最低菜单到唯一整球零尺的连接仍未由本章支付。本候选与球心互易在此域中等价，不声称严格更弱或公理数最少。
+
+交换两个比较端点也不等于先后测量交换；149.5在同一个满足全部上述条件的模型中已有双成功概率 $1/2$ 与 $1/4$ 的明确数学反例。实际可调用仪器、任意有限复合及纠缠、全旁观 CP、逐输入预算、记录、全部未来与切口、物理钟、Hamiltonian、能量和数值 $\hbar$，仍保留145.9及其传递来源的完整原合同。
+
+本章新增承重桥采用 repo-derived 综合推导归属：同一原球内的纯端点互易先固定支撑刻度，随后两个真实球的全原空间确认恒等式和另外两组原纯对互易直接固定邻球高度，得到原球心互易与 UC。唯一整球零尺、完整法向图、实际接触纤维和双球消元分别复用145.3、THREE_COPY VII122及 SAME_READBACK123；分类和全域字典复用144.5、145.9和149。已有的 BILATERAL V77.16将最低确认的仿射性连接到 least与纯互易，但包含 least前件，不代替本章的无least入口。[Barnum—Müller—Ududec Theorem 16][Q149BMU]所用 projectivity、对称跃迁及保纯滤子也只经既有分类链消费。本章不声明文献优先权。证毕。
+
+[Q150TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "定理122.4：P0接口下的有界实际影像、闭影壳支撑函数、唯一实际接触及完整原纤维关系。"
+[Q150SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "§123.2式(Q123.4)—(Q123.8)及定理123.3式(Q123.9)：P0接口下真实双球与整个原V上的确认恒等式，不要求P_reg。"
+
+## 追加锚（本行以下为增补区）
