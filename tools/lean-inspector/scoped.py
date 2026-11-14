@@ -216,6 +216,7 @@ class Entry:
     def guarded(self, *arguments):
         # Scope discovery and report production each admit/provision their cache
         # through this guard; standalone ensure also requests archive refresh.
+        self.environment['STRATALINT_LEAN_CACHE_SCOPE'] = 'scoped'
         return ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-run.sh'),
                 self.lake, '-d', str(self.root / 'tools/lean-inspector-reg'), *arguments]
 

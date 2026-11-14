@@ -2,6 +2,7 @@ using StrataLint.Runtime;
 using StrataLint.Engine;
 using System.Diagnostics;
 using System.Globalization;
+using System.Collections;
 
 namespace StrataLint.EngineeringScope;
 
@@ -38,8 +39,20 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
     LeanCacheCommandObservation? observation = null,
     IReadOnlyDictionary<string, string>? environment = null) : IWorktreeProcessRunner
 {
-    internal ProductionWorktreeProcessRunner WithEnvironment(IReadOnlyDictionary<string, string> variables) =>
-        new(cancellationToken, observation, variables);
+    internal ProductionWorktreeProcessRunner WithEnvironment(IReadOnlyDictionary<string, string> variables)
+    {
+        ArgumentNullException.ThrowIfNull(variables);
+        // BoundedProcessRunner treats a non-null environment as a complete
+        // environment.  Keep the normal process environment and overlay only
+        // the routing variables selected by the cache wrapper.
+        var merged = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (DictionaryEntry entry in Environment.GetEnvironmentVariables())
+            if (entry.Key is string name && entry.Value is string value)
+                merged[name] = value;
+        foreach (var (name, value) in variables)
+            merged[name] = value;
+        return new(cancellationToken, observation, merged);
+    }
 
     public ProcessOutput Run(
         string fileName, IReadOnlyList<string> arguments, string workingDirectory, TimeSpan timeout,

@@ -181,7 +181,13 @@ def acquire(query, no_build):
                    str(source), str(destination)]
         if not no_build:
             command = ["/bin/bash", str(ROOT / "tools/scripts/worktree/lean-cache-run.sh"), *command]
-        read = subprocess.run(command, cwd=ROOT, stdout=sys.stderr, stderr=sys.stderr)
+        read_environment = os.environ.copy()
+        # The readout consumes the closure compiled immediately above.  It must
+        # not re-enter the generic whole-cache ensure path when its local Lake
+        # tree has no producer stamp.
+        read_environment["STRATALINT_LEAN_CACHE_SCOPE"] = "targeted"
+        read = subprocess.run(command, cwd=ROOT, env=read_environment,
+                              stdout=sys.stderr, stderr=sys.stderr)
         acquisition["reader_exit"] = read.returncode
         if read.returncode or not destination.is_file():
             acquisition["status"] = "reader_failed"

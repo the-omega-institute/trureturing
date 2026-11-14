@@ -7,6 +7,9 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class LeanCacheEnsureCommand
 {
+    private const string ScopedCacheScopeVariable = "STRATALINT_LEAN_CACHE_SCOPE";
+    private const string LakeArtifactCacheVariable = "LAKE_ARTIFACT_CACHE";
+
     internal static CommandResult RunWithWriter(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
@@ -60,6 +63,17 @@ internal static partial class LeanCacheEnsureCommand
                 pins.Sha256,
                 "canonical cache writer guard is busy");
         }
+
+        // Explicit target builds and scoped reports use Lake's content-addressed
+        // artifact cache directly.  They still validate pins, acquire the local
+        // writer reservation, and run the requested command under the canonical
+        // process runner, but must not promote a target miss into whole-cache
+        // ensure/donor/archive preparation.
+        var location = GitWorktreeInventory.Locate(root, runner);
+        var routedRunner = RouteArtifactCache(runner, location.IsLinked);
+        if (IsScopedCacheRequest(readEnvironment))
+            return RunScopedCommand(root, command, routedRunner, guard, location.IsLinked,
+                standardOutput, standardError);
 
         var ensured = EnsureLocked(
             root,
@@ -157,6 +171,77 @@ internal static partial class LeanCacheEnsureCommand
         catch (Exception exception)
         {
             return new CommandResult(false, standardOutput is null ? receipt : string.Empty, exception.Message + "\n");
+        }
+    }
+
+    private static bool IsScopedCacheRequest(Func<string, string?> readEnvironment) =>
+        string.Equals(readEnvironment(ScopedCacheScopeVariable), "targeted", StringComparison.Ordinal)
+        || string.Equals(readEnvironment(ScopedCacheScopeVariable), "scoped", StringComparison.Ordinal);
+
+    private static IWorktreeProcessRunner RouteArtifactCache(
+        IWorktreeProcessRunner runner, bool linked)
+    {
+        if (runner is not ProductionWorktreeProcessRunner production)
+            return runner;
+
+        // An empty value is intentional: Lake treats it as an unset boolean,
+        // retaining its package default (readable, non-writable).  `false`
+        // would disable artifact reads as well.
+        return production.WithEnvironment(new Dictionary<string, string>
+        {
+            [LakeArtifactCacheVariable] = linked ? string.Empty : "1",
+        });
+    }
+
+    private static CommandResult RunScopedCommand(
+        string root,
+        IReadOnlyList<string> command,
+        IWorktreeProcessRunner runner,
+        LeanCacheWriterGuard guard,
+        bool linked,
+        Stream? standardOutput,
+        Stream? standardError)
+    {
+        if (RetireRootJudgeOutputs(root, guard))
+        {
+            // Retiring obsolete root owners is part of the existing writer
+            // admission contract and remains safe when `.lake` is initially
+            // absent.  Lake itself will create only the requested closure.
+        }
+
+        var receipt = "LEAN_CACHE " + JsonSerializer.Serialize(new
+        {
+            status = "scoped",
+            worktree = root,
+            donor = (string?)null,
+            method = "lake-artifact-cache",
+            reason = linked
+                ? "linked worktree: target closure only; artifact cache reads enabled and writes disabled"
+                : "main checkout: target closure only; official artifact cache reads and writes enabled",
+            scope = "targeted",
+            archive_status = "not_attempted",
+        }) + "\n";
+        try
+        {
+            if (standardOutput is not null)
+            {
+                standardOutput.Write(Encoding.UTF8.GetBytes(receipt));
+                standardOutput.Flush();
+            }
+            var invoked = runner.Run(
+                command[0], command.Skip(1).ToArray(), root,
+                LeanCacheProvisioner.LeanCommandBudget, standardOutput, standardError);
+            return new CommandResult(
+                invoked.ExitCode == 0,
+                standardOutput is null ? receipt + Encoding.UTF8.GetString(invoked.StandardOutput) : string.Empty,
+                standardError is null ? Encoding.UTF8.GetString(invoked.StandardError) : string.Empty,
+                invoked.ExitCode);
+        }
+        catch (OperationCanceledException) { throw; }
+        catch (Exception exception)
+        {
+            return new CommandResult(false, standardOutput is null ? receipt : string.Empty,
+                exception.Message + "\n");
         }
     }
 

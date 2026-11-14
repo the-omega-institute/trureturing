@@ -15,6 +15,9 @@ while [[ $# -gt 0 ]]; do
 done
 [[ "$TARGETS" =~ [^[:space:]] && -n "$OUTPUT" ]] \
   || { echo 'lean-report-scoped: explicit nonempty --targets are required' >&2; exit 2; }
+# Both discovery and module-report production are scoped Lake closures.  The
+# native wrapper preserves this marker through the supervisor boundary.
+export STRATALINT_LEAN_CACHE_SCOPE=scoped
 ARGS=(produce --repository "$ROOT" --report "$OUTPUT" --targets "$TARGETS")
 [[ -z "$LOG_DIR" ]] || ARGS+=(--log-dir "$LOG_DIR")
 exec "$ROOT/tools/scripts/report/report-supervisor.sh" --role lean-producer --lean-slot -- \
