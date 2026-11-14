@@ -21,7 +21,7 @@ namespace D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-variable {n : Type*} {α : Type} [Fintype n] [DecidableEq n] [Fintype α]
+variable {n : Type*} {α : Type} [Fintype n] [DecidableEq n]
 
 private theorem reachable_le_of_invariant (K : α → Matrix n n ℂ)
     (ρ : Matrix n n ℂ) (S : Submodule ℂ (EuclideanSpace ℂ n))

@@ -1,0 +1,128 @@
+import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
+import Reg.Support.DependentFamily
+
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
+open _root_.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
+open LeanInformationAudit Matrix
+open scoped BigOperators ComplexOrder MatrixOrder InnerProductSpace
+
+noncomputable section
+namespace Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
+universe u
+
+@[reducible] def signature : Signature where
+  Params := Type u
+  State n := Matrix n n ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ n := Matrix n n ℂ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ S => S) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {n : Type u} {α : Type} [Fintype n] [DecidableEq n]
+    (K : α → Matrix n n ℂ) (P : Matrix n n ℂ), P.IsHermitian →
+    reachableSpace (fun a => (1 - P) * K a) P = reachableSpace K (R.readout () n P)
+
+private theorem actual_law : arena.{u}.Law actual := by
+  exact @monitored_reachable_space_eq.{u}
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let n := ULift.{u} (Fin 1)
+  let K : Unit → Matrix n n ℂ := fun _ => 0
+  have heq := h K (1 : Matrix n n ℂ) Matrix.isHermitian_one
+  change reachableSpace (fun a => (1 - (1 : Matrix n n ℂ)) * K a) 1 =
+    reachableSpace K 0 at heq
+  have hzero : reachableSpace K 0 = ⊥ := by
+    apply le_antisymm _ bot_le
+    apply iSup_le
+    intro l
+    apply Submodule.span_le.mpr
+    rintro y ⟨w, _hw, v, hv, rfl⟩
+    have hv0 : v = 0 := by simpa [matrixSupport] using hv
+    simp [hv0]
+  rw [hzero] at heq
+  let v : EuclideanSpace ℂ n := WithLp.toLp 2 (fun _ => (1 : ℂ))
+  have hv : v ∈ matrixSupport (1 : Matrix n n ℂ) := by
+    simp [matrixSupport, Matrix.toEuclideanLin, Matrix.toLpLin_one]
+  have hmem : v ∈ reachableSpace (fun a => (1 - (1 : Matrix n n ℂ)) * K a) 1 := by
+    apply (le_iSup (wordSpan (fun a => (1 - (1 : Matrix n n ℂ)) * K a) 1) 0)
+    exact Submodule.subset_span ⟨[], by simp, v, hv,
+      by simp [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]⟩
+  rw [heq, Submodule.mem_bot] at hmem
+  have hz := congrArg (fun x : EuclideanSpace ℂ n => WithLp.ofLp x ⟨0⟩) hmem
+  simpa [v] using hz
+
+private theorem sensitivity : Sensitivity arena.{u} actual := by
+  constructor
+  · intro i
+    refine ⟨rejected, ?_, rfl, rejected_law⟩
+    intro j hji
+    cases i
+    cases j
+    exact (hji rfl).elim
+  · intro i
+    exact nomatch i
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  cases i
+  refine ⟨ULift.{u} (Fin 1), 0, 1, ?_⟩
+  change (0 : Matrix (ULift.{u} (Fin 1)) (ULift.{u} (Fin 1)) ℂ) ≠ 1
+  exact zero_ne_one
+
+def reconstruction : Registration arena.{u} (arena.Law actual) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := sensitivity
+  dependence := dependence
+
+noncomputable def registration : LeanInformationAudit.Contract.Registration
+    (@_root_.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.monitored_reachable_space_eq.{u})
+    (type_of% (realize signature (fun _ _ S => S) (fun e => nomatch e))) Unit Unit := {
+  unitName := `quantumKacMonitoredReachableSpace,
+  realizationName := `Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac.reconstruction,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena⟩,
+  objectArena := .source ⟨arena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena ⟨reconstruction⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature (fun _ _ S => S) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac,
+    definition := none,
+    coordinates := #[0],
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg"],
+      stateBinder := 5,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[] }
+
+#print axioms reconstruction
+#print axioms registration
+
+end Reg.D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac

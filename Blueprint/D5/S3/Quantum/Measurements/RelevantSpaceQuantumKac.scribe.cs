@@ -10,7 +10,7 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
         "Projection monitoring preserves the Kraus word reachable space of a Hermitian initial matrix.",
         H("The Actual Relevant Space under Projection Monitoring"),
         Blocks(
-            Paragraph(Text("For a finite complex coordinate carrier n and a finite Kraus index set A, "
+            Paragraph(Text("For a finite complex coordinate carrier n and an arbitrary branch index set A, "
                 + "write C(K,P) for the span of all original Kraus words applied to the support of P, "
                 + "including the empty word. The support is the orthogonal complement of the kernel. "
                 + "For Hermitian P it equals the range of P.")),
@@ -48,8 +48,7 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, n, Comma, Sp, a, Colon, Sp, F.Id("Type"), Comma),
             Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
-                OpenBracket, Call("DecidableEq", n), CloseBracket, Sp,
-                OpenBracket, Call("Fintype", a), CloseBracket, Comma),
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Comma),
             Seq(Forall, Sp, k, Colon, Sp, a, Sp, To, Sp, matrix, Comma, Sp,
                 Forall, Sp, p, Colon, Sp, matrix, Comma),
             Seq(Call("IsHermitian", p), Sp, Rightarrow, Sp,
@@ -59,5 +58,6 @@ internal sealed class RelevantSpaceQuantumKacDocument : IScribeDocumentDefinitio
     }
 
     private static Formula Call(string name, params Formula[] args) =>
-        Seq(Operatorname, Grp(F.Id(name)), Open, Join(Seq(Comma, Sp), args), Close);
+        Seq(Operatorname, Grp(F.Id(name)), Open,
+            Seq(args.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()), Close);
 }
