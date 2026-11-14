@@ -40,7 +40,7 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
                 + "Normalized means the complete address/bus normSq sum is one. kernel is one on the "
                 + "diagonal and q to the power 2(n-ell)-1 otherwise. minimumFidelity is "
                 + "(1 + sum over j in range n of 2^j q^(2j+1))/2^n. Reindexing j to j+1 gives the "
-                + "registered sum from 1 through n. uniformInput has bus false and amplitude the positive "
+                + "sum from 1 through n. uniformInput has bus false and amplitude the positive "
                 + "inverse square root of 2^n; the theorem also identifies it with 2^(-n/2)."),
             Describe.Lean(DescribeId.Create("physical-router-output-and-exact-minimum"),
                 DeclarationHandle.Create("D5/S3/Quantum/Routing/HannRouterDephasing.result"),
@@ -52,8 +52,8 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
                     + "and minimumFidelity is one. Off-span entries vanish. The minimum proof splits address "
                     + "weights by the first bit; the nonnegative remainder is proportional to the squared "
                     + "difference of the two branch masses. Constant kernel row sums give uniform attainment. "
-                    + "The geometry count supplies the physical kernel on the live matrix-entry proof path. "
-                    + "These are model-conditional mathematical claims; no literature-priority claim is made."))),
+                    + "The router mismatch formula determines the exponent in each clean-output matrix entry. "
+                    + "The result assumes this single router hold and ideal remaining gates."))),
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Def(string id, string name, string title, string text) =>
