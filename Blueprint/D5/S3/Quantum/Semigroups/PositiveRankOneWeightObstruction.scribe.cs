@@ -76,9 +76,7 @@ internal sealed class PositiveRankOneWeightObstructionDocument : IScribeDocument
                 + "is nonnegative. The existing integral-zero criterion and x>0 almost everywhere give w=Pw=cx almost everywhere. "
                 + "Boundedness of g gives w a positive essential lower bound epsilon. For arbitrary real c and epsilon>0 the proof constructs "
                 + "delta=min(1/2,epsilon/(2(|c|+1)))>0. The interval (0,delta) has positive mu measure and satisfies cx<epsilon throughout, "
-                + "contradicting that lower bound. This explicit positive-measure construction is the consumed non-bind escape witness. "
-                + "The faithful-functional rigidity helper is private and consumed by the obstruction; it is not delivered as a standalone wrapper. "
-                + "The remaining helpers organize direct applications of pinned Mathlib and are consumed by this result. "
+                + "contradicting that lower bound. "
                 + "The proof uses complex inputs throughout the claim, testing a real positive input only for the contradiction. "
                 + "The positivity restriction is not a separately numbered conjecture in the source. Novelty and priority outside the checked "
                 + "sources remain ASSUMED-UNVERIFIED. The existing damped rotating counterexample retains its separate attribution.", true))));
