@@ -754,6 +754,7 @@ raise SystemExit(cleanup.main(arguments[1:]))
                 destination = self.root / ("refused " + reason)
                 env = None if reason == "branch" else {
                     "PATH": str(self.bin) + os.pathsep + os.environ["PATH"],
+                    "FRONTDOOR_DOTNET": self.env["FRONTDOOR_DOTNET"],
                     "EXPIRY_TEST_PYTHON": shutil.which("python3"), "WORKTREE_REQUIRE_DISK_CHECK": "1"}
                 failed = self.cli("worktree", "--kind", "governance", "--name", name,
                                   "--path", destination, "--base", self.base, "--skip-restore",
