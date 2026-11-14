@@ -12,6 +12,7 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Order.WellFounded
 import D5.S3.Combinatorics.PerfectMatchings.FiniteEndpointPairing
 import Mathlib.GroupTheory.Perm.Centralizer
+import D5.S0.Diagonal.Probability.EquivariantEscape
 
 /-! Exhaustive endpoint classification for actual permutation extensions. -/
 
@@ -402,7 +403,99 @@ private theorem full_cycle_card [Finite V] (hV : 2 ≤ Nat.card V) :
   rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_subtype]
   simpa using Perm.card_of_cycleType_singleton hn (le_refl (Fintype.card V))
 
-/-- The complete structural contraction, nonemptiness and exact completion count.
+open D5.S0.Diagonal.Probability.EquivariantEscape (uniformPmf)
+open scoped ENNReal BigOperators
+
+private theorem uniform_equiv {A B : Type*} [Fintype A] [Nonempty A] [Fintype B] [Nonempty B]
+    (e : A ≃ B) : (uniformPmf A).map e = uniformPmf B := by
+  classical
+  apply PMF.ext
+  intro b
+  simp only [PMF.map_apply, uniformPmf, PMF.ofFintype_apply, ← e.symm_apply_eq]
+  simp [Fintype.card_congr e]
+
+private theorem uniform_filter {A : Type*} [Fintype A] [Nonempty A] (p : A → Prop)
+    [Fintype {a // p a}] [Nonempty {a // p a}]
+    (hs : ∃ a ∈ {a | p a}, a ∈ (uniformPmf A).support) :
+    (uniformPmf A).filter {a | p a} hs =
+      (uniformPmf {a // p a}).map Subtype.val := by
+  classical
+  have hsum : (∑' a, ({a | p a}.indicator (uniformPmf A)) a) =
+      (Fintype.card {a // p a} : ENNReal) * (Fintype.card A : ENNReal)⁻¹ := by
+    rw [tsum_fintype]
+    simp only [uniformPmf, PMF.ofFintype_apply, Set.indicator_apply]
+    rw [← Finset.sum_filter]
+    simp [Fintype.card_subtype, nsmul_eq_mul]
+  apply PMF.ext
+  intro a
+  rw [PMF.filter_apply, hsum]
+  by_cases ha : p a
+  · have he (b : {a // p a}) : a = b.1 ↔ (⟨a, ha⟩ : {a // p a}) = b :=
+      ⟨fun h => Subtype.ext h, fun h => congrArg Subtype.val h⟩
+    rw [Set.indicator_of_mem (show a ∈ {a | p a} from ha)]
+    simp only [uniformPmf, PMF.ofFintype_apply, PMF.map_apply, he, tsum_ite_eq']
+    rw [ENNReal.mul_inv (by left; exact_mod_cast Fintype.card_ne_zero)
+      (by left; exact ENNReal.natCast_ne_top _), inv_inv]
+    calc
+      (Fintype.card A : ENNReal)⁻¹ *
+          ((Fintype.card {a // p a} : ENNReal)⁻¹ * Fintype.card A) =
+          (Fintype.card {a // p a} : ENNReal)⁻¹ *
+            ((Fintype.card A : ENNReal)⁻¹ * Fintype.card A) := by ac_rfl
+      _ = _ := by
+        rw [ENNReal.inv_mul_cancel (by exact_mod_cast Fintype.card_ne_zero)
+          (ENNReal.natCast_ne_top _), mul_one]
+  · have he (b : {a // p a}) : a ≠ b.1 := fun h => ha (h ▸ b.2)
+    simp [PMF.map_apply, he, ha]
+
+/-- Uniform actual full cycles conditioned on extension give the uniform completion law,
+which the component equivalence pushes to the uniform full-cycle law. -/
+def UniformCompletionLaw {V : Type*} (E : V → V → Prop)
+    (Φ : CycleCompletion E ≃ FullCycle (Component E)) : Prop :=
+  ∃ (μ₀ : PMF (FullCycle V)) (μE : PMF (CycleCompletion E)),
+    (∀ σ, μ₀ σ = (Nat.card (FullCycle V) : ENNReal)⁻¹) ∧
+    (∀ σ, μE σ = (Nat.card (CycleCompletion E) : ENNReal)⁻¹) ∧
+    (∃ hs : ∃ σ ∈ {σ : FullCycle V | ∀ x y, E x y → σ.1 x = y}, σ ∈ μ₀.support,
+      μ₀.filter {σ : FullCycle V | ∀ x y, E x y → σ.1 x = y} hs =
+        μE.map (fun σ => (⟨σ.1, σ.2.1⟩ : FullCycle V))) ∧
+    (∀ ρ, μE.map Φ ρ = (Nat.card (FullCycle (Component E)) : ENNReal)⁻¹)
+
+private theorem joint_law {V : Type*} [Finite V] (E : V → V → Prop)
+    (Φ : CycleCompletion E ≃ FullCycle (Component E))
+    (hne : Nonempty (CycleCompletion E)) : UniformCompletionLaw E Φ := by
+  classical
+  let : Nonempty (CycleCompletion E) := hne
+  let : Nonempty (FullCycle V) := hne.map (fun σ => ⟨σ.1, σ.2.1⟩)
+  let : Nonempty (FullCycle (Component E)) := hne.map Φ
+  let : Fintype (CycleCompletion E) := Fintype.ofFinite _
+  let : Fintype (FullCycle V) := Fintype.ofFinite _
+  let : Fintype (FullCycle (Component E)) := Fintype.ofFinite _
+  let C := {σ : FullCycle V // ∀ x y, E x y → σ.1 x = y}
+  let e : CycleCompletion E ≃ C := {
+    toFun := fun σ => ⟨⟨σ.1, σ.2.1⟩, σ.2.2⟩
+    invFun := fun σ => ⟨σ.1.1, σ.1.2, σ.2⟩
+    left_inv := fun _ => rfl
+    right_inv := fun _ => rfl }
+  let : Nonempty C := hne.map e
+  let : Fintype C := Fintype.ofFinite _
+  have hs : ∃ σ ∈ {σ : FullCycle V | ∀ x y, E x y → σ.1 x = y},
+      σ ∈ (uniformPmf (FullCycle V)).support := by
+    obtain ⟨σ⟩ := hne
+    refine ⟨⟨σ.1, σ.2.1⟩, σ.2.2, ?_⟩
+    simp [uniformPmf]
+  have hf := uniform_filter (fun σ : FullCycle V => ∀ x y, E x y → σ.1 x = y) hs
+  have he := uniform_equiv e
+  rw [← he, PMF.map_comp] at hf
+  have hΦ := uniform_equiv Φ
+  refine ⟨uniformPmf (FullCycle V), uniformPmf (CycleCompletion E), ?_, ?_, ⟨hs, hf⟩, ?_⟩
+  · intro σ
+    simp [uniformPmf, PMF.ofFintype_apply, Nat.card_eq_fintype_card]
+  · intro σ
+    simp [uniformPmf, PMF.ofFintype_apply, Nat.card_eq_fintype_card]
+  · intro ρ
+    rw [hΦ]
+    simp [uniformPmf, PMF.ofFintype_apply, Nat.card_eq_fintype_card]
+
+/-- Actual cycle contraction with its exact conditional uniform law and count.
 All components and endpoint predicates are derived from the original relation. -/
 theorem directed_forest_completion [Finite V] (E : V → V → Prop)
     (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
@@ -413,10 +506,12 @@ theorem directed_forest_completion [Finite V] (E : V → V → Prop)
       (∀ A, Quotient.mk (EqvGen.setoid E) (h A).1 = A) ∧
       (∀ σ A, σ.1 (q A) = h ((Φ σ).1 A)) ∧
       Nonempty (CycleCompletion E) ∧
-      Nat.card (CycleCompletion E) = (Nat.card (Component E) - 1).factorial := by
+      Nat.card (CycleCompletion E) = (Nat.card (Component E) - 1).factorial ∧
+      UniformCompletionLaw E Φ := by
   obtain ⟨q, h, Φ, hq, hh, hΦ⟩ := full_cycle_completion_equiv E hout hin ha
   have hcard := (Nat.card_congr Φ).trans (full_cycle_card hc)
-  refine ⟨q, h, Φ, hq, hh, hΦ, ?_, hcard⟩
-  exact (Nat.card_pos_iff.mp (by rw [hcard]; exact Nat.factorial_pos _)).1
+  have hne : Nonempty (CycleCompletion E) :=
+    (Nat.card_pos_iff.mp (by rw [hcard]; exact Nat.factorial_pos _)).1
+  exact ⟨q, h, Φ, hq, hh, hΦ, hne, hcard, joint_law E Φ hne⟩
 
 end D5.S3.Combinatorics.Graph.LinearForests.DirectedForestCompletion

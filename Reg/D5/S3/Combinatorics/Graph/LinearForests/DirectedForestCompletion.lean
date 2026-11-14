@@ -38,7 +38,8 @@ abbrev arena : Arena where
       (∀ A, Quotient.mk (EqvGen.setoid E) (h A).1 = A) ∧
       (∀ σ A, R.readout () ⟨V, E⟩ σ (q A) = h ((Φ σ).1 A)) ∧
       Nonempty (CycleCompletion E) ∧
-      Nat.card (CycleCompletion E) = (Nat.card (Component E) - 1).factorial
+      Nat.card (CycleCompletion E) = (Nat.card (Component E) - 1).factorial ∧
+      UniformCompletionLaw E Φ
 
 private theorem source_bridge :
     (type_of% @directed_forest_completion.{u}) ↔ arena.{u}.Law actual := Iff.rfl
@@ -71,7 +72,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hc : 2 ≤ Nat.card (Component E) := by
     rw [Nat.card_congr e]
     simp [V]
-  obtain ⟨q, h, Φ, hq, hh, hΦ, hne, _⟩ := law E
+  obtain ⟨q, h, Φ, hq, hh, hΦ, hne, _, _⟩ := law E
     (fun _ _ _ h => h.elim) (fun _ _ _ h => h.elim) (empty_acyclic V) hc
   let : Nontrivial (Component E) := e.nontrivial_congr.mpr inferInstance
   let σ : CycleCompletion E := Classical.choice hne
@@ -88,7 +89,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   have hc : 2 ≤ Nat.card (Component E) := by
     rw [Nat.card_congr (emptyComponentEquiv V)]
     simp [V]
-  obtain ⟨_, _, _, _, _, _, _, hcard⟩ := directed_forest_completion E
+  obtain ⟨_, _, _, _, _, _, _, hcard, _⟩ := directed_forest_completion E
     (fun _ _ _ h => h.elim) (fun _ _ _ h => h.elim) (empty_acyclic V) hc
   have htwo : Nat.card (CycleCompletion E) = 2 := by
     rw [hcard, Nat.card_congr (emptyComponentEquiv V)]
