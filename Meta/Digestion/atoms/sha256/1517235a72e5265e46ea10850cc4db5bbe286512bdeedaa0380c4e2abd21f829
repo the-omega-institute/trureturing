@@ -1,0 +1,21 @@
+### 137.3 同一个根的实际法向截面
+
+记 $A=D_o$、$S=S_o$、$N=N_o$、$L=L_o$、$g=g_o$、$B=B_2(o)$、$Q=Q(o)$。定义
+
+$$
+\begin{gathered}
+J:V\longrightarrow L^*,\qquad J(x)(h)=h(x),\\
+N^\vee=\{\lambda\in L^*: \lambda(h)\ge0\ \forall h\in N\},\qquad
+H=\{\lambda\in L^*: \lambda(g)=1\},\qquad \Omega=N^\vee\cap H,\\
+j(x)=\frac{J(x)}{g(x)}\quad(x\in K\setminus\{o\}),\qquad
+\iota:A\longrightarrow H,\quad \iota(x)=J(x).
+\end{gathered}
+\tag{XI137.7}
+$$
+
+$N^\vee$ 是四维空间 $L^*$ 中的对偶锥，不是整个原 $C$。由(XI137.6)，$g(x)>0$ 对所有 $x\in K\setminus\{o\}$ 成立，所以 $j$ 在上述全部混态端点上有定义，且 $j(x)\in\Omega$。
+
+$N$ 在 $L$ 中闭、尖、满维。尖性来自 $C^\ast$ 的尖性，满维来自 $L=\operatorname{span}N$；$g\in\operatorname{int}_L N$。因此每个非零 $\lambda\in N^\vee$ 都有 $\lambda(g)>0$：否则在 $g$ 的双侧小邻域上非负会迫 $\lambda=0$。在单位球与 $N^\vee$ 的紧交上，此值有严格正下界，故 $\Omega$ 紧。对偶锥有内点，归一后给 $\Omega$ 在 $H$ 中的内点；所以 $\Omega$ 是三维紧凸体。由内点径向投影，其相对边界 $\partial_H\Omega$ 同胚于 $S^2$。
+
+又 $g|_A=1$，$R_o$ 的同构使 $L$ 在 $A$ 上给出全部仿射读数，故 $\iota$ 是仿射嵌入，$\iota(A)\subseteq\Omega$。内层 $\iota(A)$ 本来就是三维椭球；此时尚未知道外层 $\Omega$ 的形状，更没有认定两者相等。
+

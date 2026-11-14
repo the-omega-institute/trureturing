@@ -1,0 +1,36 @@
+**二、在整个原对偶边界建立开区域。** $C$ 生成 $V$ 使 $K$ 在 $A$ 中满仿射维，且 $z\in\operatorname{ri}K$ 蕴含 $z\in\operatorname{int}C$：近 $z$ 的向量仍有正质量，其除以质量后的归一向量仍在 $K$ 的相对内邻域中。故某个 $\varepsilon>0$ 满足 $z\pm\varepsilon v\in C$ 对所有单位 $v\in V$ 成立。对 $h\in K^*$，
+
+$$
+0\le h(z\pm\varepsilon v)=1\pm\varepsilon h(v),
+$$
+
+给出对偶范数有界；$K^*$ 闭，故紧。原严格正 $u$ 属于 $\operatorname{int}C^*$，且 $u(z)=1$，所以 $K^*$ 是 $H_z$ 中有非空相对内部的 $n-1$ 维凸体。这里 $u\in\operatorname{int}C^*$ 也可直接由 $u$ 在 $C$ 与单位球的紧交上的正最小值取得。
+
+每个非零 $h\in C^*$ 在 $z$ 严格正。归一截面与正径向变量给 $C^*\setminus\{0\}$ 的乘积参数，故 $\partial_{H_z}K^*=H_z\cap\partial C^*$。对 $h\in K^*$，还有准确等价
+
+$$
+h\in\partial_{H_z}K^*\quad\Longleftrightarrow\quad
+\min_{x\in K}h(x)=0.
+\tag{XI141.8}
+$$
+
+若最小值正，全 $K$ 的有界性保证小对偶扰动仍在 $C^*$；若有零点，该原非零锥元给一个支持超平面，排除 $C^*$ 内部性。$h(z)=1$ 又排除零面等于 $K$。所以每个实际边界点都有非空真原零面。
+
+原 $g_o$ 仅在 $o$ 为零，且 $g_o(z)>0$；故(XI141.4)中的 $h_o$ 确属边界。因 $D_o\cap U_0=\varnothing$，$K\setminus W$ 非空。其紧性和 $h_o$ 的唯一零点给
+
+$$
+m:=\min_{x\in K\setminus W}h_o(x)>0,\qquad
+O:=\{h\in\partial_{H_z}K^*:\|h-h_o\|_K<m/2\},\qquad
+\|b\|_K=\max_{x\in K}|b(x)|.
+\tag{XI141.9}
+$$
+
+$K$ 张成 $V$，故 $\|\cdot\|_K$ 是有限维对偶空间上的范数；$O$ 是包含 $h_o$ 的实际相对开集。对每个 $h\in O$，在整个 $K\setminus W$ 上 $h>m/2$，因此 $\varnothing\ne Z(h)\subset W$。该零面是真原面；面分类只允许纯单点或完整球。第一步已排除完整球，遂有
+
+$$
+Z(h)=\{\pi(h)\},\qquad \pi(h)\in W\cap P\subseteq Q.
+\tag{XI141.10}
+$$
+
+这是在整个原对偶基边界上的开放结论，并非先选一个较小的法向集合再赋予它相对开性。
+

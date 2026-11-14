@@ -1,0 +1,24 @@
+**一、完整载体不能缩入小根邻域。** 对 $q\in U_0\cap P$，任选 $s\in S_q$；EB3 保证非空。零对称给 $q\in S_s$，故 $q\in Q(q)=Q$，从而 $U_0\cap P\subseteq Q$。又 $S_o\subseteq\Lambda$，因为 $a\in S_o$ 时 $S_a\subseteq Q(o)$，所以 $\Lambda$ 非空。
+
+对任意非空紧集 $F,G$，三角不等式给
+
+$$
+|\operatorname{diam}F-\operatorname{diam}G|\le2d_H(F,G).
+$$
+
+整球连续性和紧 $\Lambda$ 因而给出实际正数
+
+$$
+\delta:=\min_{a\in\Lambda}\operatorname{diam}D_a>0.
+\tag{XI141.6}
+$$
+
+严格正性使用每个完整球均非退化；这里没有声称控制 $\Lambda$ 外的球。取以 $o$ 为心的环境开球 $W$，使 $\overline W\subset U_0$ 且 $\operatorname{diam}W<\delta$。若某个原完整球 $D_a\subset W$，在其完整球缘取 $q\in S_a$。则 $q\in U_0\cap P$，而原零对称给
+
+$$
+q\in S_a\quad\Longrightarrow\quad a\in S_q\subseteq\Lambda.
+\tag{XI141.7}
+$$
+
+于是 $\delta\le\operatorname{diam}D_a\le\operatorname{diam}W<\delta$，矛盾。因此没有任何原完整球包含于 $W$。捕获的是球标签 $a$；没有使用 $S_a\subseteq Q\Rightarrow a\in Q$ 这种未有接口。
+
