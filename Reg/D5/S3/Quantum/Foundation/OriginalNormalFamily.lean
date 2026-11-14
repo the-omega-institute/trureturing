@@ -1,4 +1,4 @@
-import D5.S3.Quantum.Foundation.OriginalComparisonTopology
+import D5.S3.Quantum.Foundation.OriginalRowSaturation
 import Reg.D5.S3.Quantum.Foundation.RegularAnchorHeight
 import Reg.D5.S3.Quantum.Foundation.ReciprocalPureCompactness
 
