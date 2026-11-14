@@ -7,12 +7,18 @@
    digest: Literal internal router localization and active-profile separation. -/
 
 import D5.S3.Quantum.Routing.HannSpatialQram
+import D5.S3.Quantum.Routing.HannRouterDephasing
+import Mathlib.LinearAlgebra.Matrix.Rank
+import Mathlib.Analysis.Complex.Order
+import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
 
 /-! Observations of loaded internal routers and their active address profiles. -/
 
 set_option autoImplicit false
 
 noncomputable section
+
+open scoped BigOperators ComplexConjugate ComplexOrder Matrix
 
 namespace D5.S3.Quantum.Routing.HannRouterProfiles
 
@@ -162,6 +168,286 @@ theorem profile_separation_iff (n : ℕ) (q : Router (n + 1) → ℝ) :
     have hb : b = b' := encode_injective he
     subst b'
     rfl
+
+instance routerFintype : (n : ℕ) → Fintype (Router n)
+  | 0 => inferInstanceAs (Fintype Empty)
+  | n + 1 => letI := routerFintype n
+             inferInstanceAs (Fintype (Option (Bool × Router n)))
+
+/-- One independent common/W/0/1 environment coordinate at each actual router. -/
+abbrev Environment (n : ℕ) := Router n → Option Qutrit
+
+instance environmentFintype (n : ℕ) : Fintype (Environment n) := by
+  classical
+  unfold Environment
+  infer_instance
+
+/-- The physical tensor record for an arbitrary spatial tree. -/
+def treeRecord (n : ℕ) (q : Router n → ℝ) (t : Tree n) (e : Environment n) : ℂ :=
+  ∏ v, HannRouterDephasing.localRecord (q v) (routerLabel n t v) (e v)
+
+/-- The record of the actual completely loaded tree; the bus is unobserved. -/
+def record (n : ℕ) (q : Router n → ℝ) (a : Address n) (e : Environment n) : ℂ :=
+  ∏ v, HannRouterDephasing.localRecord (q v) (loadedLabel n a Qutrit.wait v) (e v)
+
+/-- Realized active profiles, so no unrealized label assignment is counted. -/
+def Profile (n : ℕ) (q : Router n → ℝ) : Type :=
+  ↥(Set.range (fun a : Address n => fun v : {v : Router n // q v < 1} =>
+    loadedLabel n a Qutrit.wait v.1))
+
+instance profileFintype (n : ℕ) (q : Router n → ℝ) : Fintype (Profile n q) := by
+  classical
+  unfold Profile
+  infer_instance
+
+instance profileDecidableEq (n : ℕ) (q : Router n → ℝ) : DecidableEq (Profile n q) :=
+  Classical.decEq _
+
+/-- The surjective physical class map. -/
+def profile (n : ℕ) (q : Router n → ℝ) (a : Address n) : Profile n q :=
+  ⟨fun v => loadedLabel n a Qutrit.wait v.1, a, rfl⟩
+
+private theorem profile_surjective (n : ℕ) (q : Router n → ℝ) :
+    Function.Surjective (profile n q) := by
+  rintro ⟨c, a, rfl⟩
+  exact ⟨a, rfl⟩
+
+private theorem profile_eq_iff (n : ℕ) (q : Router n → ℝ)
+    (a b : Address n) (bus bus' : Qutrit) :
+    profile n q a = profile n q b ↔ SameProfile n q a b bus bus' := by
+  constructor
+  · intro h v hv
+    have he := congrFun (congrArg Subtype.val h) ⟨v, hv⟩
+    simpa only [profile, loaded_label] using he
+  · intro h
+    apply Subtype.ext
+    funext v
+    simpa only [profile, loaded_label] using h v.1 v.2
+
+private theorem record_loaded (n : ℕ) (q : Router n → ℝ) (a : Address n)
+    (bus : Qutrit) :
+    treeRecord n q ((load n n) (loading n a bus 0)).2.2 = record n q a := by
+  funext e
+  apply Finset.prod_congr rfl
+  intro v _
+  change HannRouterDephasing.localRecord (q v) (loadedLabel n a bus v) (e v) = _
+  rw [loaded_label, loaded_label]
+
+private theorem record_conj (n : ℕ) (q : Router n → ℝ) (a : Address n)
+    (e : Environment n) : conj (record n q a e) = record n q a e := by
+  classical
+  simp only [record, map_prod]
+  apply Finset.prod_congr rfl
+  intro v _
+  cases e v with
+  | none => simp [HannRouterDephasing.localRecord]
+  | some s =>
+      by_cases h : s = loadedLabel n a Qutrit.wait v <;>
+        simp [HannRouterDephasing.localRecord, h]
+
+private theorem record_profile (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1)
+    (a b : Address n) (h : profile n q a = profile n q b) :
+    record n q a = record n q b := by
+  classical
+  funext e
+  apply Finset.prod_congr rfl
+  intro v _
+  by_cases hv : q v < 1
+  · rw [(profile_eq_iff n q a b _ _).mp h v hv]
+  · have he : q v = 1 := le_antisymm (hq v) (le_of_not_gt hv)
+    cases e v <;> simp [HannRouterDephasing.localRecord, he]
+
+/-- The record of a realized class, independent of the selected representative. -/
+def classRecord (n : ℕ) (q : Router n → ℝ) (c : Profile n q) : Environment n → ℂ :=
+  record n q (Classical.choose c.2)
+
+private theorem representative_profile (n : ℕ) (q : Router n → ℝ) (c : Profile n q) :
+    profile n q (Classical.choose c.2) = c := by
+  apply Subtype.ext
+  exact Classical.choose_spec c.2
+
+private theorem class_record_profile (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, q v ≤ 1) (a : Address n) :
+    classRecord n q (profile n q a) = record n q a := by
+  apply record_profile n q hq
+  exact representative_profile n q _
+
+private def sample (n : ℕ) (q : Router n → ℝ) (c : Profile n q) : Environment n := by
+  classical
+  exact fun v => if hv : q v < 1 then some (c.1 ⟨v, hv⟩) else none
+
+private def diagonal (n : ℕ) (q : Router n → ℝ) : ℂ := by
+  classical
+  exact ∏ v, if q v < 1 then (Real.sqrt (1 - q v) : ℂ) else 1
+
+private theorem diagonal_ne_zero (n : ℕ) (q : Router n → ℝ) : diagonal n q ≠ 0 := by
+  classical
+  apply Finset.prod_ne_zero_iff.mpr
+  intro v _
+  split_ifs with h
+  · exact Complex.ofReal_ne_zero.mpr (ne_of_gt (Real.sqrt_pos.2 (sub_pos.2 h)))
+  · exact one_ne_zero
+
+private theorem record_sample (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1)
+    (a : Address n) (c : Profile n q) :
+    record n q a (sample n q c) = if profile n q a = c then diagonal n q else 0 := by
+  classical
+  by_cases h : profile n q a = c
+  · rw [if_pos h]
+    apply Finset.prod_congr rfl
+    intro v _
+    by_cases hv : q v < 1
+    · have he := congrFun (congrArg Subtype.val h) ⟨v, hv⟩
+      simp only [profile] at he
+      simp [sample, hv, HannRouterDephasing.localRecord, he, diagonal]
+    · have he : q v = 1 := le_antisymm (hq v) (le_of_not_gt hv)
+      simp [sample, hv, HannRouterDephasing.localRecord, he]
+  · rw [if_neg h]
+    obtain ⟨v, hv⟩ : ∃ v, loadedLabel n a Qutrit.wait v.1 ≠ c.1 v := by
+      by_contra hn
+      apply h
+      apply Subtype.ext
+      funext v
+      exact not_ne_iff.mp (not_exists.mp hn v)
+    apply Finset.prod_eq_zero (Finset.mem_univ v.1)
+    simp [sample, v.2, HannRouterDephasing.localRecord, Ne.symm hv]
+
+private theorem class_record_sample (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1)
+    (c d : Profile n q) :
+    classRecord n q c (sample n q d) = if c = d then diagonal n q else 0 := by
+  simpa only [classRecord, representative_profile] using
+    record_sample n q hq (Classical.choose c.2) d
+
+private theorem class_records_independent (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, q v ≤ 1) : LinearIndependent ℂ (classRecord n q) := by
+  classical
+  rw [linearIndependent_iff_injective_fintypeLinearCombination]
+  intro x y h
+  funext c
+  have he := congrFun h (sample n q c)
+  simp only [Fintype.linearCombination_apply, Finset.sum_apply, Pi.smul_apply,
+    smul_eq_mul, class_record_sample n q hq] at he
+  simp only [mul_ite, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true] at he
+  exact mul_right_cancel₀ (diagonal_ne_zero n q) he
+
+/-- Physical complex Gram, with the density-matrix convention of the event. -/
+def gram (n : ℕ) (q : Router n → ℝ) : Matrix (Address n) (Address n) ℂ :=
+  fun a b => ∑ e, record n q a e * conj (record n q b e)
+
+private def recordMatrix (n : ℕ) (q : Router n → ℝ) :
+    Matrix (Environment n) (Address n) ℂ := fun e a => record n q a e
+
+private theorem gram_factor (n : ℕ) (q : Router n → ℝ) :
+    gram n q = (recordMatrix n q)ᴴ * recordMatrix n q := by
+  ext a b
+  change (∑ e, record n q a e * conj (record n q b e)) =
+    ∑ e, conj (record n q a e) * record n q b e
+  simp only [record_conj]
+
+private theorem record_rank (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1) :
+    (recordMatrix n q).rank = Fintype.card (Profile n q) := by
+  rw [Matrix.rank_eq_finrank_span_cols]
+  have hr : Set.range (recordMatrix n q).col = Set.range (classRecord n q) := by
+    ext x
+    constructor
+    · rintro ⟨a, rfl⟩
+      exact ⟨profile n q a, class_record_profile n q hq a⟩
+    · rintro ⟨c, rfl⟩
+      exact ⟨Classical.choose c.2, rfl⟩
+  rw [hr]
+  exact (linearIndependent_iff_card_eq_finrank_span.mp
+    (class_records_independent n q hq)).symm
+
+/-- Coefficients pushed forward to their actual profile classes. -/
+def classSum {R : Type} [AddCommMonoid R] (n : ℕ) (q : Router n → ℝ)
+    (x : Address n → R) (c : Profile n q) : R := by
+  classical
+  exact ∑ a, if profile n q a = c then x a else 0
+
+private theorem record_combination (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, q v ≤ 1) (x : Address n → ℂ) (e : Environment n) :
+    (∑ a, x a * record n q a e) =
+      ∑ c, classSum n q x c * classRecord n q c e := by
+  classical
+  simp only [classSum, Finset.sum_mul, ite_mul, zero_mul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro a _
+  simp [class_record_profile n q hq]
+
+private theorem record_kernel (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1)
+    (x : Address n → ℂ) :
+    (recordMatrix n q).mulVec x = 0 ↔ ∀ c, classSum n q x c = 0 := by
+  classical
+  constructor
+  · intro h c
+    have he := congrFun h (sample n q c)
+    change (∑ a, record n q a (sample n q c) * x a) = 0 at he
+    simp only [record_sample n q hq, ite_mul, zero_mul] at he
+    have he' : diagonal n q * classSum n q x c = 0 := by
+      simpa only [classSum, Finset.mul_sum, mul_ite, mul_zero] using he
+    exact (mul_eq_zero.mp he').resolve_left (diagonal_ne_zero n q)
+  · intro h
+    funext e
+    change (∑ a, record n q a e * x a) = 0
+    simp_rw [mul_comm (record n q _ e)]
+    rw [record_combination n q hq]
+    simp [h]
+
+private theorem gram_kernel (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1)
+    (x : Address n → ℂ) :
+    (gram n q).mulVec x = 0 ↔ ∀ c, classSum n q x c = 0 := by
+  rw [gram_factor]
+  have hk := Matrix.ker_mulVecLin_conjTranspose_mul_self (recordMatrix n q)
+  have he : ((recordMatrix n q)ᴴ * recordMatrix n q).mulVec x = 0 ↔
+      (recordMatrix n q).mulVec x = 0 := by
+    change x ∈ LinearMap.ker ((recordMatrix n q)ᴴ * recordMatrix n q).mulVecLin ↔
+      x ∈ LinearMap.ker (recordMatrix n q).mulVecLin
+    rw [hk]
+  exact he.trans (record_kernel n q hq x)
+
+private theorem gram_rank (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v ≤ 1) :
+    (gram n q).rank = Fintype.card (Profile n q) := by
+  rw [gram_factor, Matrix.rank_conjTranspose_mul_self, record_rank n q hq]
+
+private theorem address_card (n : ℕ) : Fintype.card (Address n) = 2 ^ n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [Address, Fintype.card_prod, ih, pow_succ, Nat.mul_comm]
+
+private theorem full_rank_iff (n : ℕ) (q : Router (n + 1) → ℝ)
+    (hq : ∀ v, q v ≤ 1) :
+    (gram (n + 1) q).rank = 2 ^ (n + 1) ↔ ∀ u, q (deepest n u) < 1 := by
+  rw [gram_rank (n + 1) q hq, ← address_card]
+  have hc : Fintype.card (Profile (n + 1) q) = Fintype.card (Address (n + 1)) ↔
+      Function.Injective (profile (n + 1) q) := by
+    constructor
+    · intro h
+      exact ((Fintype.bijective_iff_surjective_and_card _).2
+        ⟨profile_surjective _ q, h.symm⟩).1
+    · intro h
+      exact (Fintype.card_of_bijective ⟨h, profile_surjective _ q⟩).symm
+  rw [hc, ← profile_separation_iff]
+  constructor
+  · intro h a b bus bus' hab
+    exact h ((profile_eq_iff _ q a b bus bus').mpr hab)
+  · intro h a b hab
+    exact h a b Qutrit.wait Qutrit.wait
+      ((profile_eq_iff _ q a b _ _).mp hab)
+
+private theorem zero_rank (q : Router 0 → ℝ) : (gram 0 q).rank = 1 := by
+  have he : gram 0 q = (1 : Matrix (Address 0) (Address 0) ℂ) := by
+    ext a b
+    have hab : a = b := Subsingleton.elim _ _
+    subst b
+    simp [gram, record, Router]
+  rw [he, Matrix.rank_one]
+  rfl
+
+#print axioms gram_rank
+#print axioms gram_kernel
+#print axioms full_rank_iff
+#print axioms zero_rank
 
 #print axioms profile_separation_iff
 
