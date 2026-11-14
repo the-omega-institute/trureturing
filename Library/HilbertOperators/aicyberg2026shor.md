@@ -5,9 +5,11 @@ year: 2026
 title: Finite-register phase estimation and spectral Shor order finding
 doi: null
 url: https://github.com/solanaqubits/leanbook/tree/9b742770a2a5dbcf30cf9abc44e711194e957a00
-claim: Actual computational-input modular phase-estimation marginal, normalization and circular nearest-grid pointwise lower bound.
+claim: Actual computational-input modular phase-estimation marginal, circular nearest-grid bound, finite rational convergent correspondence and conditional Shor candidate membership.
 strata_touched:
   - D5/S3/Quantum/ShorCountingMarginal
+  - D5/S1/Depth/ContinuedFractions/FiniteRationalConvergents
+  - D5/S3/Quantum/ShorContinuedFractions
 license: Apache-2.0
 triage: anchor
 ---
@@ -17,7 +19,8 @@ triage: anchor
 The immutable supplier is `solanaqubits/leanbook` at commit
 `9b742770a2a5dbcf30cf9abc44e711194e957a00`. Its sources
 `Verification/QuantumPhaseEstimationGeneral.lean` and
-`Verification/QuantumShorOrderFindingCore.lean` supply the retained live proof
+`Verification/QuantumShorOrderFindingCore.lean`, and
+`Verification/QuantumShorContinuedFractions.lean` supply the retained live proof
 slice. Copyright (c) 2026 aicyberg. All rights reserved. Authors: aicyberg.
 The published source tree has no NOTICE file.
 
@@ -37,9 +40,19 @@ It sums to one. Each circular nearest-grid point for a selected phase has
 marginal at least one over the period times four over pi squared.
 No divisibility between period and control dimension is assumed.
 
-This source supplies neither an aggregate-event success bound nor continued
-fractions, factoring, gate complexity, hardware claims, arbitrary control
-dimensions or a bound for every conditioned posterior comb.
+The rational continued-fraction slice computes a finite Euclidean list and proves
+that its entries are exactly Mathlib's totalized real convergents. The candidate
+list uses only the measured integer y, control dimension Q and modulus N,
+filtering by reduced denominator less than N. For Q equal to two to the control
+width and N squared at most Q, a circular nearest sample for s/r places the
+reduced fraction in that list, with denominator r/gcd(s,r); coprimality places r
+among its denominators. This is conditional membership, with no certified
+observable selector. A modular exponentiation check alone certifies an order
+multiple. The transplanted slice includes neither an aggregate quantum success
+bound, random coprimality rate, factoring reduction, full bit or gate complexity,
+hardware claims, arbitrary control dimensions nor a bound for every conditioned
+posterior comb. Length bounds, checked-list machinery and suite packaging from
+the supplier are outside this slice.
 
 Retire each transplanted slice when equivalent declarations occur in the
 Mathlib revision actually pinned by this repository, replacing that slice
@@ -52,7 +65,8 @@ https://github.com/solanaqubits/leanbook/tree/9b742770a2a5dbcf30cf9abc44e711194e
 
 The retained proof slice comes from
 `Verification/QuantumPhaseEstimationGeneral.lean` and
-`Verification/QuantumShorOrderFindingCore.lean` at this revision.
+`Verification/QuantumShorOrderFindingCore.lean`, and
+`Verification/QuantumShorContinuedFractions.lean` at this revision.
 
 ## Complete upstream license
 

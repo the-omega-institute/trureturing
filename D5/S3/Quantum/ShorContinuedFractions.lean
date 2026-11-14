@@ -18,6 +18,7 @@ Mathlib, replacing the slice with direct imports at that repository pin.
 
 import D5.S1.Depth.ContinuedFractions.FiniteRationalConvergents
 import D5.S3.Quantum.ShorCountingMarginal
+import Mathlib.RingTheory.Fintype
 import Mathlib.Tactic.FieldSimp
 
 namespace QuantumShorContinuedFractions
