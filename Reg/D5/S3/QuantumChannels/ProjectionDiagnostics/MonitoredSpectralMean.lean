@@ -110,7 +110,7 @@ def family : Registration arena.{u} (type_of% (@monitored_spectral_mean.{u})) wh
   dependence := dependence
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@monitored_spectral_mean.{u}) (Realization signature.{u}) (Type) Unit where
+    (@monitored_spectral_mean.{u}) (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredSpectralMean.unit
   realizationName := `Reg.D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredSpectralMean.family
   realizationSource := none
@@ -127,7 +127,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredSpectralMean
     definition := none
