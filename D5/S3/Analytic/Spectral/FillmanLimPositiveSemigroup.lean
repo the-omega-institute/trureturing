@@ -16,7 +16,6 @@ F2: D5/S0/Observation/MatrixTracePowerSum.trace_pow_add_two @ sha256:c3a059dba6d
 Per-declaration classification; definitions specify objects rather than theorem assertions.
 Consumed bind-only helpers organize proofs and supply no independent escape witness.
 cayley_two: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1; consumers: elliptic_complex_structure,unipotent_square_zero
-circleRep: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: circle_rep_continuous,circle_rep_inverse_closure,elliptic_adjugate_in_closure,elliptic_complex_structure
 circle_rep_continuous: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: circle_rep_inverse_closure
 circle_rep_inverse_closure: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: elliptic_adjugate_in_closure
 elliptic_complex_structure: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F1; consumers: elliptic_adjugate_in_closure
@@ -56,32 +55,24 @@ private theorem cayley_two (A : (Matrix (Fin 2) (Fin 2) ℝ)) :
   rw [h]
   module
 
-private def circleRep (J : (Matrix (Fin 2) (Fin 2) ℝ)) (hJ : J * J = -1) : Circle →* (Matrix (Fin 2) (Fin 2) ℝ) where
-  toFun z := (z : ℂ).re • (1 : (Matrix (Fin 2) (Fin 2) ℝ)) + (z : ℂ).im • J
-  map_one' := by simp
-  map_mul' z w := by
-    simp only [Circle.coe_mul, Complex.mul_re, Complex.mul_im]
-    simp only [add_mul, mul_add, smul_mul_assoc, mul_smul_comm, one_mul, mul_one,
-      smul_smul, hJ, smul_neg, sub_smul, add_smul]
-    module
-
 private theorem circle_rep_continuous (J : (Matrix (Fin 2) (Fin 2) ℝ)) (hJ : J * J = -1) :
-    Continuous (circleRep J hJ) := by
+    Continuous (fun z : Circle => Complex.liftAux J hJ (z : ℂ)) := by
+  simp only [Complex.liftAux_apply, Algebra.algebraMap_eq_smul_one]
   change Continuous (fun z : Circle => (z : ℂ).re • (1 : (Matrix (Fin 2) (Fin 2) ℝ)) + (z : ℂ).im • J)
   fun_prop
 
 private theorem circle_rep_inverse_closure (J : (Matrix (Fin 2) (Fin 2) ℝ)) (hJ : J * J = -1) (z : Circle) :
-    circleRep J hJ z⁻¹ ∈ closure (range fun n : ℕ => (circleRep J hJ z)^n) := by
+    Complex.liftAux J hJ ((z⁻¹ : Circle) : ℂ) ∈ closure (range fun n : ℕ => (Complex.liftAux J hJ (z : ℂ))^n) := by
   have hz : z⁻¹ ∈ closure (range fun n : ℕ => z^n) := by
     rw [← closure_range_zpow_eq_pow]
     exact subset_closure ⟨(-1 : ℤ), by simp⟩
   have hm := mem_closure_image (circle_rep_continuous J hJ).continuousAt hz
-  simpa only [← Set.range_comp, Function.comp_def, map_pow] using hm
+  simpa only [← Set.range_comp, Function.comp_def, Circle.coe_pow, map_pow] using hm
 
 private theorem elliptic_complex_structure (A : (Matrix (Fin 2) (Fin 2) ℝ)) (hd : Matrix.det A = 1)
     (ht : |Matrix.trace A| < 2) :
     ∃ (J : (Matrix (Fin 2) (Fin 2) ℝ)) (hJ : J * J = -1) (z : Circle),
-      circleRep J hJ z = A ∧ circleRep J hJ z⁻¹ = Matrix.adjugate A := by
+      Complex.liftAux J hJ (z : ℂ) = A ∧ Complex.liftAux J hJ ((z⁻¹ : Circle) : ℂ) = Matrix.adjugate A := by
   let a : ℝ := Matrix.trace A / 2
   let b : ℝ := Real.sqrt (1-a^2)
   have ha : -1 < a ∧ a < 1 := by
@@ -114,6 +105,7 @@ private theorem elliptic_complex_structure (A : (Matrix (Fin 2) (Fin 2) ℝ)) (h
     simp only [Complex.normSq_apply, one_pow]
     nlinarith [hbsq]⟩
   refine ⟨J,hJ,z,?_,?_⟩
+  all_goals simp only [Complex.liftAux_apply, Algebra.algebraMap_eq_smul_one]
   · change a • (1 : (Matrix (Fin 2) (Fin 2) ℝ)) + b • (b⁻¹ • (A-a • (1 : (Matrix (Fin 2) (Fin 2) ℝ)))) = A
     rw [smul_smul, mul_inv_cancel₀ (ne_of_gt hb), one_smul]
     module

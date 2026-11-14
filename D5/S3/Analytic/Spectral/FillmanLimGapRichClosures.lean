@@ -19,9 +19,9 @@ F5: D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.elli
 Per-declaration classification; definitions specify objects rather than theorem assertions.
 Consumed bind-only helpers organize proofs and supply no independent escape witness.
 claim: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: result
-lBlock: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: LX,l_distance_sq,l_gap_rich,l_lipschitz,l_relative_trace,l_transfer_resonance,sumCenter,sum_center_member,sum_near_resonance,sum_transfer_resonance
-uBlock: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: UX,cancellation_resonance,productCenter,product_center_member,product_near_resonance,u_distance_sq,u_gap_rich,u_lipschitz,u_relative_trace,u_transfer_resonance,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
-vBlock: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: VX,cancellation_resonance,productCenter,product_center_member,product_near_resonance,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound,v_distance_sq,v_gap_rich,v_lipschitz,v_relative_trace,v_transfer_resonance
+lBlock: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: l_distance_sq,l_gap_rich,l_lipschitz,l_relative_trace,l_transfer_resonance,result,sumCenter,sum_center_member,sum_near_resonance,sum_not_gap_rich,sum_transfer_resonance
+uBlock: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: cancellation_resonance,productCenter,product_center_member,product_near_resonance,product_not_gap_rich,result,u_distance_sq,u_gap_rich,u_lipschitz,u_relative_trace,u_transfer_resonance,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
+vBlock: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: cancellation_resonance,productCenter,product_center_member,product_near_resonance,product_not_gap_rich,result,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound,v_distance_sq,v_gap_rich,v_lipschitz,v_relative_trace,v_transfer_resonance
 j_square: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: F3,F4,F5; consumers: neg_j_trace_bound
 transfer_det: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: block_transfer_determinant,cancellation_resonance,l_gap_rich,u_gap_rich,union_word_bound,v_gap_rich
 l_transfer_resonance: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: l_gap_rich
@@ -36,7 +36,7 @@ fold_determinant: proof_shape: bind-only; escape_witness: none; Direct frozen de
 fold_constant: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: gap_rich_components,product_not_gap_rich,sum_not_gap_rich
 relative_prefix_suffix: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: gap_rich_components
 interval_perturb: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: gap_rich_components
-componentAlphabet: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: LX,UX,VX,gap_rich_components,l_gap_rich,u_gap_rich,v_gap_rich
+componentAlphabet: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: gap_rich_components,l_gap_rich,product_center_member,product_near_resonance,product_not_gap_rich,result,sum_center_member,sum_near_resonance,sum_not_gap_rich,u_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound,v_gap_rich
 gap_rich_components: proof_shape: content; escape_witness: none; Direct frozen dependencies: F1,F2; consumers: l_gap_rich,u_gap_rich,v_gap_rich
 block_transfer_determinant: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: l_gap_rich,u_gap_rich,v_gap_rich
 l_distance_sq: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: l_lipschitz
@@ -48,10 +48,10 @@ v_lipschitz: proof_shape: bind-only; escape_witness: none; Direct frozen depende
 l_gap_rich: proof_shape: content; escape_witness: none; Direct frozen dependencies: F1,F2; consumers: result
 u_gap_rich: proof_shape: content; escape_witness: none; Direct frozen dependencies: F1,F2; consumers: result
 v_gap_rich: proof_shape: content; escape_witness: none; Direct frozen dependencies: F1,F2; consumers: result
-qSeq: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: LX,UX,VX,not_discrete_scaled_resonances,productCenter,product_center_member,product_near_resonance,product_not_gap_rich,q_bounds,q_subsequence,q_zero,result,sumCenter,sum_center_member,sum_near_resonance,sum_not_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
+qSeq: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: not_discrete_scaled_resonances,productCenter,product_center_member,product_near_resonance,product_not_gap_rich,q_bounds,q_subsequence,q_zero,result,sumCenter,sum_center_member,sum_near_resonance,sum_not_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
 rSeq: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: hi,interval_nonempty,isolate_component,isolate_sum_components,lo,mid,midpoint_member,product_near_resonance,product_not_gap_rich,radius_le_one,radius_positive,radius_separation,sum_near_resonance,sum_not_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
-lo: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: LX,UX,VX,interval_nonempty,isolate_component,isolate_sum_components,midpoint_member,product_center_member,product_near_resonance,result,sum_center_member,sum_near_resonance,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich
-hi: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: LX,UX,VX,interval_nonempty,isolate_component,isolate_sum_components,midpoint_member,product_center_member,product_near_resonance,result,sum_center_member,sum_near_resonance,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich
+lo: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: interval_nonempty,isolate_component,isolate_sum_components,midpoint_member,product_center_member,product_near_resonance,product_not_gap_rich,result,sum_center_member,sum_near_resonance,sum_not_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
+hi: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: interval_nonempty,isolate_component,isolate_sum_components,midpoint_member,product_center_member,product_near_resonance,product_not_gap_rich,result,sum_center_member,sum_near_resonance,sum_not_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
 mid: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: isolate_sum_components,midpoint_member,productCenter,product_center_member,product_near_resonance,sumCenter,sum_center_member,sum_near_resonance,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
 radius_positive: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: interval_nonempty,isolate_component,isolate_sum_components,midpoint_member,product_not_gap_rich,sum_not_gap_rich,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich
 radius_le_one: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: union_near_u_resonance,union_near_v_resonance
@@ -73,9 +73,6 @@ neg_j_trace_bound: proof_shape: bind-only; escape_witness: none; Direct frozen d
 single_word_close: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: product_not_gap_rich,sum_not_gap_rich
 pair_word_periodic: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: union_word_bound
 not_gap_rich_of_obstructions: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: product_not_gap_rich,sum_not_gap_rich,union_not_gap_rich
-LX: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: result,sum_center_member,sum_near_resonance,sum_not_gap_rich
-UX: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: product_center_member,product_near_resonance,product_not_gap_rich,result,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
-VX: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: product_center_member,product_near_resonance,product_not_gap_rich,result,union_near_u_resonance,union_near_v_resonance,union_not_gap_rich,union_word_bound
 sumCenter: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: sum_center_member,sum_near_resonance,sum_not_gap_rich
 productCenter: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: product_center_member,product_near_resonance,product_not_gap_rich
 sum_center_member: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none; consumers: sum_not_gap_rich
@@ -592,20 +589,17 @@ private theorem not_gap_rich_of_obstructions {k : ℕ} (X : Set ((EuclideanSpace
   obtain ⟨y,hy,hclose,hhyp⟩ := hGR E hES x hx ε hε
   exact (not_lt_of_ge (hbound y hy hclose)) hhyp
 
-private def LX (h : ℝ) : Set ((EuclideanSpace ℝ (Fin 3))) := componentAlphabet (lBlock h) qSeq lo hi
-private def UX (h : ℝ) : Set ((EuclideanSpace ℝ (Fin 5))) := componentAlphabet (uBlock h) qSeq lo hi
-private def VX (h : ℝ) : Set ((EuclideanSpace ℝ (Fin 5))) := componentAlphabet (vBlock h) qSeq lo hi
 private def sumCenter (h : ℝ) (n : ℕ) : (EuclideanSpace ℝ (Fin 3)) :=
   lBlock h (qSeq n) (mid n)+lBlock (-h) (qSeq n) (mid n)
 private def productCenter (h : ℝ) (n : ℕ) : (EuclideanSpace ℝ (Fin 10)) :=
   orderedPair (uBlock h (qSeq n) (mid n)) (vBlock h (qSeq n) (mid n))
 
-private theorem sum_center_member (h : ℝ) (n : ℕ) : sumCenter h n ∈ LX h+LX (-h) := by
+private theorem sum_center_member (h : ℝ) (n : ℕ) : sumCenter h n ∈ (componentAlphabet (lBlock h) qSeq lo hi)+(componentAlphabet (lBlock (-h)) qSeq lo hi) := by
   exact Set.mem_add.mpr ⟨lBlock h (qSeq n) (mid n),⟨n,mid n,midpoint_member n,rfl⟩,
     lBlock (-h) (qSeq n) (mid n),⟨n,mid n,midpoint_member n,rfl⟩,rfl⟩
 
 private theorem sum_near_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace ℝ (Fin 3)))
-    (hz : z∈LX h+LX (-h)) (hd : dist (sumCenter h n) z<rSeq n/4) :
+    (hz : z∈(componentAlphabet (lBlock h) qSeq lo hi)+(componentAlphabet (lBlock (-h)) qSeq lo hi)) (hd : dist (sumCenter h n) z<rSeq n/4) :
     blockTransfer z (2*qSeq n)=-(transfer 0 0) := by
   obtain ⟨x,hx,y,hy,rfl⟩ := Set.mem_add.mp hz
   obtain ⟨m,s,hs,rfl⟩ := hx
@@ -618,7 +612,7 @@ private theorem sum_near_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace ℝ 
   subst m k
   exact sum_transfer_resonance h (qSeq n) s t
 
-private theorem sum_not_gap_rich (h : ℝ) : ¬ GapRich (LX h+LX (-h)) := by
+private theorem sum_not_gap_rich (h : ℝ) : ¬ GapRich ((componentAlphabet (lBlock h) qSeq lo hi)+(componentAlphabet (lBlock (-h)) qSeq lo hi)) := by
   apply not_gap_rich_of_obstructions _ (Set.range fun n => 2*qSeq n)
     (not_discrete_scaled_resonances 2 (by norm_num))
   rintro E ⟨n,rfl⟩
@@ -634,12 +628,12 @@ private theorem sum_not_gap_rich (h : ℝ) : ¬ GapRich (LX h+LX (-h)) := by
   exact neg_j_trace_bound _
 
 private theorem product_center_member (h : ℝ) (n : ℕ) :
-    productCenter h n ∈ cartesianProduct (UX h) (VX h) := by
+    productCenter h n ∈ cartesianProduct ((componentAlphabet (uBlock h) qSeq lo hi)) ((componentAlphabet (vBlock h) qSeq lo hi)) := by
   exact ⟨uBlock h (qSeq n) (mid n),⟨n,mid n,midpoint_member n,rfl⟩,
     vBlock h (qSeq n) (mid n),⟨n,mid n,midpoint_member n,rfl⟩,rfl⟩
 
 private theorem product_near_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace ℝ (Fin 10)))
-    (hz : z∈cartesianProduct (UX h) (VX h)) (hd : dist (productCenter h n) z<rSeq n/4) :
+    (hz : z∈cartesianProduct ((componentAlphabet (uBlock h) qSeq lo hi)) ((componentAlphabet (vBlock h) qSeq lo hi))) (hd : dist (productCenter h n) z<rSeq n/4) :
     blockTransfer z (qSeq n)=-(1 : (Matrix (Fin 2) (Fin 2) ℝ)) := by
   obtain ⟨x,hx,y,hy,rfl⟩ := hz
   obtain ⟨m,s,hs,rfl⟩ := hx
@@ -660,7 +654,7 @@ private theorem product_near_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace 
     block_transfer_append]
   exact cancellation_resonance h (qSeq n) s t
 
-private theorem product_not_gap_rich (h : ℝ) : ¬ GapRich (cartesianProduct (UX h) (VX h)) := by
+private theorem product_not_gap_rich (h : ℝ) : ¬ GapRich (cartesianProduct ((componentAlphabet (uBlock h) qSeq lo hi)) ((componentAlphabet (vBlock h) qSeq lo hi))) := by
   apply not_gap_rich_of_obstructions _ (Set.range qSeq)
     (by simpa using not_discrete_scaled_resonances 1 (by norm_num))
   rintro E ⟨n,rfl⟩
@@ -680,7 +674,7 @@ set_option maxRecDepth 4096
 set_option maxHeartbeats 800000
 
 private theorem union_near_u_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace ℝ (Fin 5)))
-    (hz : z∈UX h ∪ VX h) (hd : dist (uBlock h (qSeq n) (mid n)) z<rSeq n/4) :
+    (hz : z∈(componentAlphabet (uBlock h) qSeq lo hi) ∪ (componentAlphabet (vBlock h) qSeq lo hi)) (hd : dist (uBlock h (qSeq n) (mid n)) z<rSeq n/4) :
     blockTransfer z (qSeq n)=transfer 0 h := by
   rcases hz with hz | hz
   · obtain ⟨m,t,ht,rfl⟩ := hz
@@ -702,7 +696,7 @@ private theorem union_near_u_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace 
     linarith
 
 private theorem union_near_v_resonance (h : ℝ) (n : ℕ) (z : (EuclideanSpace ℝ (Fin 5)))
-    (hz : z∈UX h ∪ VX h) (hd : dist (vBlock h (qSeq n) (mid n)) z<rSeq n/4) :
+    (hz : z∈(componentAlphabet (uBlock h) qSeq lo hi) ∪ (componentAlphabet (vBlock h) qSeq lo hi)) (hd : dist (vBlock h (qSeq n) (mid n)) z<rSeq n/4) :
     blockTransfer z (qSeq n)=-(Matrix.adjugate (transfer 0 h)) := by
   rcases hz with hz | hz
   · obtain ⟨m,t,ht,rfl⟩ := hz
@@ -750,7 +744,7 @@ private theorem alternating_even_fold (m : ℕ) (hm : m%2=0) (A B : (Matrix (Fin
   rw [alternating_list,pairs_fold]
 
 private theorem union_word_bound (h : ℝ) (hh : 2<h) (n : ℕ) (y : Word ((EuclideanSpace ℝ (Fin 5))))
-    (hy : WordOver (UX h ∪ VX h) y)
+    (hy : WordOver ((componentAlphabet (uBlock h) qSeq lo hi) ∪ (componentAlphabet (vBlock h) qSeq lo hi)) y)
     (hd : wordDistance (pairWord (uBlock h (qSeq n) (mid n))
       (vBlock h (qSeq n) (mid n))) y<rSeq n/4) :
     |Matrix.trace (extend blockTransfer y (qSeq n))|≤2 := by
@@ -801,7 +795,7 @@ private theorem union_word_bound (h : ℝ) (hh : 2<h) (n : ℕ) (y : Word ((Eucl
   rw [hmatrix]
   exact neg_identity_trace_bound _
 
-private theorem union_not_gap_rich (h : ℝ) (hh : 2<h) : ¬ GapRich (UX h ∪ VX h) := by
+private theorem union_not_gap_rich (h : ℝ) (hh : 2<h) : ¬ GapRich ((componentAlphabet (uBlock h) qSeq lo hi) ∪ (componentAlphabet (vBlock h) qSeq lo hi)) := by
   apply not_gap_rich_of_obstructions _ (Set.range qSeq)
     (by simpa using not_discrete_scaled_resonances 1 (by norm_num))
   rintro E ⟨n,rfl⟩
@@ -817,15 +811,15 @@ theorem result : ¬ claim := by
   intro h
   rcases h with h | h | h
   · exact union_not_gap_rich 3 (by norm_num)
-      (h 5 (by norm_num) (UX 3) (VX 3)
+      (h 5 (by norm_num) ((componentAlphabet (uBlock 3) qSeq lo hi)) ((componentAlphabet (vBlock 3) qSeq lo hi))
         (u_gap_rich 3 (by norm_num) qSeq lo hi interval_nonempty)
         (v_gap_rich 3 (by norm_num) qSeq lo hi interval_nonempty))
   · exact sum_not_gap_rich 3
-      (h 3 (by norm_num) (LX 3) (LX (-3))
+      (h 3 (by norm_num) ((componentAlphabet (lBlock 3) qSeq lo hi)) ((componentAlphabet (lBlock (-3)) qSeq lo hi))
         (l_gap_rich 3 (by norm_num) qSeq lo hi interval_nonempty)
         (l_gap_rich (-3) (by norm_num) qSeq lo hi interval_nonempty))
   · exact product_not_gap_rich 3
-      (h 5 5 (by norm_num) (by norm_num) (UX 3) (VX 3)
+      (h 5 5 (by norm_num) (by norm_num) ((componentAlphabet (uBlock 3) qSeq lo hi)) ((componentAlphabet (vBlock 3) qSeq lo hi))
         (u_gap_rich 3 (by norm_num) qSeq lo hi interval_nonempty)
         (v_gap_rich 3 (by norm_num) qSeq lo hi interval_nonempty))
 
