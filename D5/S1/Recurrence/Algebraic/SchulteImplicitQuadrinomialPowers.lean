@@ -140,4 +140,6 @@ theorem result : ∀ n : ℕ, 1 ≤ n →
   exact ⟨native_exists_unique n, fun P hP m hm k => coefficient_formula n m k hn hm P hP⟩
 
 
+#print axioms result
+
 end D5.S1.Recurrence.Algebraic.SchulteImplicitQuadrinomialPowers
