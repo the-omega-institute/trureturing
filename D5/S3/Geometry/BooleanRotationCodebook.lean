@@ -8,6 +8,7 @@
 import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic
+import D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound
 
 noncomputable section
 open scoped BigOperators
@@ -122,5 +123,87 @@ theorem exact_error_fiber {ι : Type*} [Fintype ι] [DecidableEq ι]
       exact abs_le.mpr ⟨by linarith, upper⟩
     exact (show circularError L (∑ i ∈ s, a i) ≤ |∑ i ∈ s, a i| from
       QuotientAddGroup.norm_mk_le_norm).trans hab
+
+open MeasureTheory Set
+open D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound (simplexCoords simplex_volume)
+
+/-- The closed sign chamber with `p` positive and `q` negative coordinates. -/
+def signedOrthant (p q : ℕ) (ε : ℝ) : Set ((Fin p ⊕ Fin q) → ℝ) :=
+  {a | signedBody ε a ∧ (∀ i, 0 ≤ a (.inl i)) ∧ ∀ j, a (.inr j) ≤ 0}
+
+private def splitSimplex (p q : ℕ) : Set ((Fin p ⊕ Fin q) → ℝ) :=
+  {a | (∀ i, 0 ≤ a (.inl i)) ∧ (∑ i, a (.inl i)) ≤ 1 ∧
+    (∀ j, 0 ≤ a (.inr j)) ∧ (∑ j, a (.inr j)) ≤ 1}
+
+private lemma split_simplex_volume (p q : ℕ) :
+    volume (splitSimplex p q) = (p.factorial : ℝ≥0∞)⁻¹ * (q.factorial : ℝ≥0∞)⁻¹ := by
+  let e := MeasurableEquiv.sumPiEquivProdPi (fun _ : Fin p ⊕ Fin q => ℝ)
+  have hm := volume_measurePreserving_sumPiEquivProdPi (fun _ : Fin p ⊕ Fin q => ℝ)
+  have hs (n : ℕ) : MeasurableSet (simplexCoords (n + 1)) := by
+    have hpos : IsClosed {y : Fin n → ℝ | ∀ i, 0 ≤ y i} := by
+      simpa only [Set.setOf_forall] using
+        isClosed_iInter (fun i : Fin n => isClosed_le continuous_const (continuous_apply i))
+    exact (hpos.inter (isClosed_le
+      (continuous_finsetSum _ (fun i _ => continuous_apply i)) continuous_const)).measurableSet
+  have heq : splitSimplex p q = e ⁻¹' (simplexCoords (p + 1) ×ˢ simplexCoords (q + 1)) := by
+    ext a
+    simp [splitSimplex, e, simplexCoords, and_assoc]
+  rw [heq, hm.measure_preimage (hs p |>.prod (hs q)), Measure.prod_prod,
+    simplex_volume, simplex_volume]
+
+private def signedScale (p q : ℕ) (ε : ℝ) :
+    (((Fin p ⊕ Fin q) → ℝ) →ₗ[ℝ] ((Fin p ⊕ Fin q) → ℝ)) :=
+  Matrix.toLin' (Matrix.diagonal (Sum.elim (fun _ => ε) (fun _ => -ε)))
+
+private lemma signed_scale_apply (p q : ℕ) (ε : ℝ) (a : (Fin p ⊕ Fin q) → ℝ) :
+    signedScale p q ε a = fun i => Sum.elim (fun j => ε * a (.inl j))
+      (fun j => -ε * a (.inr j)) i := by
+  ext i
+  cases i <;> simp [signedScale, Matrix.toLin'_apply, Matrix.mulVec_diagonal]
+
+private lemma signed_orthant_image (p q : ℕ) {ε : ℝ} (hε : 0 < ε) :
+    signedOrthant p q ε = signedScale p q ε '' splitSimplex p q := by
+  have hε0 := hε.ne'
+  ext a
+  constructor
+  · rintro ⟨⟨hp, hn⟩, ha, hb⟩
+    let b : (Fin p ⊕ Fin q) → ℝ := Sum.elim (fun i => a (.inl i) / ε)
+      (fun j => -a (.inr j) / ε)
+    refine ⟨b, ?_, ?_⟩
+    · have hp' : (∑ i, a (.inl i)) ≤ ε := by
+        simpa [Fintype.sum_sum_type, max_eq_left, max_eq_right, ha, hb, neg_nonpos.mpr,
+          neg_nonneg.mpr] using hp
+      have hn' : (∑ j, -a (.inr j)) ≤ ε := by
+        simpa [Fintype.sum_sum_type, max_eq_left, max_eq_right, ha, hb, neg_nonpos.mpr,
+          neg_nonneg.mpr] using hn
+      exact ⟨fun i => div_nonneg (ha i) hε.le,
+        by simpa [b, ← Finset.sum_div] using (div_le_one hε).mpr hp',
+        fun j => div_nonneg (neg_nonneg.mpr (hb j)) hε.le,
+        by simpa [b, ← Finset.sum_div] using (div_le_one hε).mpr hn'⟩
+    · rw [signed_scale_apply]
+      ext i
+      cases i <;> simp [b, hε0]
+  · rintro ⟨b, ⟨hb, hp, hc, hq⟩, rfl⟩
+    rw [signed_scale_apply]
+    have hp' := mul_le_mul_of_nonneg_left hp hε.le
+    have hq' := mul_le_mul_of_nonneg_left hq hε.le
+    have hpos (i) : 0 ≤ ε * b (.inl i) := mul_nonneg hε.le (hb i)
+    have hneg (j) : -ε * b (.inr j) ≤ 0 := mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hε.le) (hc j)
+    refine ⟨⟨?_, ?_⟩, hpos, hneg⟩
+    · simpa [Fintype.sum_sum_type, hpos, hneg, max_eq_left, max_eq_right,
+        ← Finset.mul_sum] using hp'
+    · simpa [Fintype.sum_sum_type, hpos, hneg, max_eq_left, max_eq_right,
+        neg_nonpos.mpr, neg_nonneg.mpr, ← Finset.mul_sum] using hq'
+
+/-- Exact Lebesgue volume in every closed sign chamber, including empty sides. -/
+theorem signed_orthant_volume (p q : ℕ) {ε : ℝ} (hε : 0 < ε) :
+    volume (signedOrthant p q ε) =
+      ENNReal.ofReal (ε ^ (p + q)) *
+        ((p.factorial : ℝ≥0∞)⁻¹ * (q.factorial : ℝ≥0∞)⁻¹) := by
+  rw [signed_orthant_image p q hε, Measure.addHaar_image_linearMap,
+    split_simplex_volume]
+  congr 1
+  simp [signedScale, LinearMap.det_toLin', Matrix.det_diagonal,
+    Fintype.prod_sum_type, abs_mul, abs_pow, abs_of_pos hε, pow_add]
 
 end D5.S3.Geometry.BooleanRotationCodebook
