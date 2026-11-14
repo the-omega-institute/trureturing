@@ -570,6 +570,9 @@ def publish(root, partition, verification=None, *, build_report=True):
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
     if build_report:
+        if os.environ.get("FULL_BUILD") != "1":
+            print("cache production requires explicit FULL_BUILD=1", file=sys.stderr)
+            return 2
         build = subprocess.run(["make", "lean-report",
             "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build",
             "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)

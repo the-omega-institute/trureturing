@@ -273,7 +273,7 @@ defaultFacets = ["static"]
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         # Make's cache wrapper and direct fixture calls use the same resolved Lake.
-        self.env = dict(os.environ, PATH=os.pathsep.join([
+        self.env = dict(os.environ, FULL_BUILD="1", PATH=os.pathsep.join([
             str(self.root / 'bin'), str(Path(self.lake).parent), os.environ['PATH']]), LAKE_BIN=self.lake,
             STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',

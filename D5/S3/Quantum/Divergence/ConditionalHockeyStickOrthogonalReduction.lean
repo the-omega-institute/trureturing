@@ -314,7 +314,7 @@ private theorem posTrace_flag {R A : Type*} [Fintype R] [DecidableEq R]
   rw [posTrace_dsum hX hYZ, posTrace_dsum hY hZ]
   ring
 
-private def act {A B : Type*} [Fintype A] [DecidableEq A]
+def act {A B : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B]
     (N : QuantumChannel A B) (X : Matrix A A ℂ) : Matrix B B ℂ :=
   CStarMatrix.ofMatrix.symm
@@ -353,7 +353,7 @@ private theorem amp_state {A B R : Type*} [Fintype A] [DecidableEq A]
       (Matrix.nonneg_iff_posSemidef.mpr hX.1), hX.2⟩
   exact ⟨density_posSemidef (referenceState N rho), (referenceState N rho).2.2⟩
 
-private theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem amp_entry {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (X : Matrix (R × A) (R × A) ℂ)
     (r s : R) (b d : B) :
@@ -391,7 +391,7 @@ private theorem ptr_sub_smul {R A : Type*} [Fintype R] [DecidableEq R]
   change T (X - t • Y) = T X - t • T Y
   rw [map_sub, map_smul]
 
-private theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
+theorem ptr_amp {A B R : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] [DecidableEq B] [Fintype R] [DecidableEq R]
     (N : QuantumChannel A B) (X : Matrix (R × A) (R × A) ℂ) :
     ptr (amp N X) = ptr X := by
