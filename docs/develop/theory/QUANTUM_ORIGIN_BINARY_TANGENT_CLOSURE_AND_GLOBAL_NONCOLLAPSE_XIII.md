@@ -2817,3 +2817,596 @@ DOI [10.1103/PhysRevA.62.062314](https://doi.org/10.1103/PhysRevA.62.062314)，
 103.2矩阵秩一资源及其原纯性边界；103.7和(102.24)两指定 dyad；103.8全有限削弱尾部；
 104.12—104.13原融合接口；102.12—102.15／103.12既有静态字典、事件及时间边界。
 ## 追加锚（本行以下为增补区）
+
+## 164. 一条正则相干矩阵线与全部有限复量子锥
+
+本章在同一已对齐低二层的全有限原锥背景中，证明一个存在性等价：原三腿锥中存在
+一条相干、非标量、含满秩点的矩阵铅笔，当且仅当每个有限层都是完整复量子锥。
+承重接口是原数据腿上的串行乘法与实际 qubit 控制资源的相干收缩；不输入分组编码。
+第163章的原滤波、三体种子与完整二维压缩结果作为本卷前置。
+
+### 原域、切片与允许的数学操作
+
+**定义 164.1（精确的站立背景）。** 固定任意整数 $n\ge2$，令
+$V=\operatorname{Herm}_n(\mathbb C)$、$W_N=V^{\otimes_{\mathbb R}N}$。
+对所有有限 $N\ge1$，给定闭、尖、生成凸锥 $C_N\subset W_N$，并要求
+$u_N=\operatorname{Tr}=u_1^{\otimes N}$ 在 $C_N\setminus\{0\}$ 上严格为正。
+同一个实际张量坐标给向量空间识别 $W_N\cong\operatorname{Herm}_{n^N}(\mathbb C)$，且
+
+$$
+C_1=\operatorname{PSD}_n,\qquad C_2=\operatorname{PSD}_{n^2}.
+$$
+
+这里及以下 $\operatorname{PSD}_d=\operatorname{Herm}_d^+(\mathbb C)$。
+使用整个原基 $K_N=\{x\in C_N:u_N(x)=1\}$、全部极点 $P_N=\operatorname{ext}K_N$、
+完整正对偶 $C_N^*$ 和完整 proper 区间 $\mathcal E_N=[0,u_N]_{C_N^*}$；
+有限效应菜单是全部有限单位分解。对每个有限实际分块 $a+b$，要求
+
+$$
+C_a\otimes_{\min}C_b\subseteq C_{a+b}
+ \subseteq C_a\otimes_{\max}C_b.
+$$
+
+最小锥是正简单张量的闭凸生成锥；最大锥由全部 $f\otimes g$，
+$f\in C_a^*$、$g\in C_b^*$ 的非负半空间定义。所有位置置换及其逆均原正；
+重括号是同一原实张量空间上的规范恒等识别，非连续分块由原置换运输。
+原配对满足 $(f\otimes g)(x\otimes y)=f(x)g(y)$，单位如上相乘。
+约定 $W_0=\mathbb R,C_0=\mathbb R_+,u_0=\mathrm{id}$。
+这完整保留 [VII，定义102.1][Q164VII] 的单块模型域；未预付任何 $N\ge3$ 的 PSD、
+高阶自对偶、全局矩阵映射正性或高阶纯态分类。
+
+称 $F:W_m\to W_k$ **原全旁观正**，若对每个有限 $r\ge0$，
+$(\mathrm{id}_{W_r}\otimes F)C_{r+m}\subseteq C_{r+k}$，包括置换后的作用位置。
+下文的协议均指原准备、张量乘积、这些已支付映射及 proper 帽的有限数学复合；
+事件菜单与装置可用性不由这个用语指定。
+
+**定义 164.2（相干正则铅笔）。** 固定实际计算基 $|0\rangle,\ldots,|n-1\rangle$，始终取
+
+$$
+|A\rangle\!\rangle=\sum_i|i\rangle_{\rm ref}\otimes A|i\rangle_{\rm out},
+\qquad
+(R\otimes L)|A\rangle\!\rangle=|LAR^{\mathsf T}\rangle\!\rangle.
+$$
+
+三腿次序为参考、输出、控制。对非零 $\psi$ 写
+$\psi=\sum_k|A_k\rangle\!\rangle|k\rangle$，其控制切片像为
+$\mathcal L_\psi=\{\sum_k\alpha_kA_k:\alpha\in(\mathbb C^n)^*\}$；
+这里 $\alpha=\sum_k\alpha_k\langle k|$ 是线性 bra，系数直接是 $\alpha_k$。
+称原矩阵秩一 dyad $\psi\psi^*\in C_3$ **含二元正则铅笔**，若
+$\mathcal L_\psi$ 含二维子空间 $\mathcal L=\operatorname{span}_{\mathbb C}\{A,B\}$，
+其中 $A\in GL_n(\mathbb C)$、$B$ 与 $A$ 线性无关。
+等价地，$\det(xA+yB)$ 非恒零，且矩阵线确有两个独立方向。
+也可直接要求见证的整个切片像恰为二维；下文的单次控制滤波说明两种存在性入口等价。
+“秩一”只指实际矩阵秩，不预先断言这是未知原基的极点。
+
+**引理 164.3（原自身 Choi、帽与全部预算）。** 在定义164.1下，令
+
+$$
+\Omega_n=|I_n\rangle\!\rangle\langle\!\langle I_n|,\qquad
+\beta_n(x)=\operatorname{Tr}(\Omega_nx).
+$$
+
+则 $\Omega_n/n\in K_2$、$\beta_n/n\in\mathcal E_2$。
+把 $m$ 对原杯重排为全部参考在前、全部输入在后，记作 $\Omega_m$，则
+
+$$
+J(F)=(\mathrm{id}_{W_m}\otimes F)\Omega_m\in C_{m+k}
+\quad\Longleftrightarrow\quad F:W_m\to W_k\text{ 原全旁观正}.
+$$
+
+每个一体合同 $\Phi_A(x)=AxA^*$ 原全旁观正；$A^*A\preceq I_n$ 时所有提升不增迹。
+每个 $f\in C_a^*$ 可对整个原联合输入切片，重复切片仍在剩余原锥；若 $f$ proper，则
+
+$$
+0\le u_b((f\otimes\mathrm{id})z)\le u_{a+b}(z)\quad(z\in C_{a+b}).
+$$
+
+**证明。** 逐项使用 [VII，引理102.6—102.8][Q164VII]，也即163.2的已付接口。
+最大界和闭锥双极性给切片；$(u_a-f)\otimes u_b$ 对原联合锥正给上界。
+$C_2$ 的 PSD 等式给杯及 proper 帽；最小界给任意有限杯乘积。
+在任意 $z\in C_{r+m}$ 与原 $J(F)$ 的乘积上，逐对用 $\beta_n$ 接输入与参考，
+精确蛇式给 $(\mathrm{id}_{W_r}\otimes F)z$，没有转置余项。
+每一步切片面对的是整个剩余原锥，故包括任意原纠缠旁观者，不要求高阶自对偶。
+一体合同的 Choi 是原 $C_2$ 中的 $|A\rangle\!\rangle\langle\!\langle A|$。
+若 $A$ 为压缩，$u_1-u_1\Phi_A$ 在 $C_1$ 上正，与旁观单位相乘给全部提升预算。∎
+
+具体地，若一个协议供应 $hJ(F)/T$，其中 $T=u_{m+k}(J(F))>0$、$h>0$，
+则用 $m$ 只 proper $\beta_n/n$ 将它接到任意原输入，实施的是
+$hF/(Tn^m)$ 及其所有旁观提升。这个公式支付有限字的资源实现。
+非零有限滤波一律除以 $s_A=\max\{1,\|A\|\}$；每次 dyad 系数乘 $s_A^{-2}>0$。
+正因子可为锥成员关系消去；这不把后选择分支放大成确定性事件。
+
+### 从满秩配对到完整实际控制族
+
+**命题 164.4（规范化、GME 与控制资源）。** 一个含二元正则铅笔的原种子给出
+
+$$
+r_M=|I_n\rangle\!\rangle|0\rangle+|M\rangle\!\rangle|1\rangle,
+\qquad r_Mr_M^*\in C_3,\quad M\notin\mathbb C I_n.
+$$
+
+其三个展平秩是 $(n,n,2)$，故跨每种一腿分割均纠缠（GME）。
+它还支付固定实际二维角 $S=\operatorname{span}\{|0\rangle,|1\rangle\}$ 上的整个有限 qubit 族、
+全正对偶及 proper 效应延拓；特别地，任意有限控制 ket 的 dyad 均在相应原锥中。
+
+**证明。** 取切片 bra $\alpha,\gamma$ 给出 $A,B$，用同一个控制滤波
+$T=|0\rangle\alpha+|1\rangle\gamma$，再在输出腿用 $A^{-1}$，即得 $r_M$，
+$M=A^{-1}B$ 非标量。两次均是原 $n\to n$ 一体合同，不是分别准备两个分支。
+令 $d_M=\|r_M\|^2=n+\operatorname{Tr}(M^*M)$、
+$s_T=\max\{1,\|T\|\}$、$s_L=\max\{1,\|A^{-1}\|\}$。
+归一原种子 $\psi\psi^*/\|\psi\|^2$ 经这两次 proper 滤波输出
+
+$$
+c_M\,\frac{r_Mr_M^*}{d_M},\qquad
+c_M=\frac{d_M}{\|\psi\|^2s_T^2s_L^2}\in(0,1].
+$$
+
+$I_n$ 切片使前两腿的秩均为 $n$；$I_n,M$ 独立使控制秩为二。
+为支付 qubit 入口，可直接选坐标 $i\ne j$ 使 $M$ 的该二阶主压缩非标量：
+有非零非对角元就取其两指标；否则 $M$ 是非标量对角矩阵，取两个不同对角元。
+同一个实偏等距 $K=|0\rangle\langle i|+|1\rangle\langle j|$ 作用于前两腿，
+留下 $|I_2\rangle\!\rangle|0\rangle+|M_2\rangle\!\rangle|1\rangle\in S^{\otimes3}$，
+其中 $M_2=KMK^{\mathsf T}|_S$ 非标量。两个 $K$ 的范数为一；从归一 $r_M$ 的成功质量是
+$t_0=(2+\operatorname{Tr}(M_2^*M_2))/d_M>0$。输出三个秩均为二。
+
+现在只复用本卷第163章中 163.4、163.6—163.7 的接口：Dür–Vidal–Cirac 三 qubit GHZ/W 分类、
+GHZ 支路的局部滤波或 W 支路的三 W 三角收缩，供应实际嵌入的 GHZ$_2$ dyad。
+记 $g=|000\rangle+|111\rangle$、$w=|100\rangle+|010\rangle+|001\rangle$、
+$\Delta_2=gg^*$，均在这个实际角内。
+若分类滤波 $B_i$ 把截取后的 ket 送为代表 $v=g$ 或 $v=w$，令
+$s_i=\max\{1,\|B_i\|\}$，则
+$t_D=\|v\|^2/([2+\operatorname{Tr}(M_2^*M_2)]\prod_{i=1}^3s_i^2)>0$。
+从上述归一原种子计，GHZ 支路的质量为
+$c_Mt_0t_D$；W 支路用三份原种子，输出
+$(c_Mt_0t_D)^3\Delta_2/108$，质量 $(c_Mt_0t_D)^3/54>0$。
+这些是163.3—163.4已完成的预算，不是本章重新声称的分类或三角形结果。
+
+为写清调用的整个族，令 $P$ 投影到 $S$、$Q_N=\operatorname{Ad}_P^{\otimes N}$。
+163.6给原正幂等、不增迹和
+
+$$
+Q_N(C_N)=C_N\cap\operatorname{Herm}(S^{\otimes N}),\qquad
+g\mapsto g\circ Q_N
+$$
+
+对完整内在正对偶及 proper 区间的原延拓，并支付全部分块 min/max 界。
+163.7于是给上式的锥恰为 $\operatorname{PSD}(S^{\otimes N})$，对每个有限 $N$ 成立。
+等价地，可在已付 GHZ$_2$ 后接 [VII，命题104.11][Q164VII] 的完整 retract 证明。
+参考嵌入取实际实坐标，故无额外共轭；一般复嵌入的参考腿须用共轭嵌入。
+这里供应的是多条实际二维角腿；没有把它们编码为一条原 $n$ 维输出腿。∎
+
+该控制资源也可追溯成有限种子网络，而不必仅用锥等式挑选准备。
+163.4接 VII103.7—103.8的精确 qubit 有限字，能把控制乘积纯态精确送到任意目标 ket。
+若字中第 $\ell$ 个二体门的原 Choi 资源输出为 $h_\ell J_\ell/4$，$h_\ell>0$，
+用两只原 $\beta_n/n$ 接入控制寄存器，系数乘 $h_\ell/(4n^2)$；一体角酉延为原一体酉。
+所以目标归一控制态有有限实现质量
+$t_Q=\prod_\ell [h_\ell/(4n^2)]>0$，空乘积为一。
+更具体地，令 $t_G$ 为刚才给出的归一 GHZ$_2$ 供应质量。
+VII103.7的两叉口经局部酉给归一 $\alpha,\gamma$，桥帽取原 $\beta_n/n$，
+就输出 $t_G^2J_{\rm CNOT}^0/(8n)=hJ_{\rm CNOT}^0/4$，其中 $h=t_G^2/(2n)>0$。
+$J_{\rm CNOT}^0$ 是真正角零扩张的四腿 Choi，迹为四；未把角门当成全 $n^2$ 维酉。
+故可固定这个门，在有 $L$ 次二体使用的精确控制字中取
+$t_Q=[t_G^2/(8n^3)]^L>0$。所有拷贝预先原相乘，组成同一有限协议。
+这个溯源仅用于资源与预算，不重复计入163章和既有有限字尾部的成果。
+
+### 原数据线上的相干多项式
+
+**引理 164.5（任意有限多项式的单一协议）。** 若 $r_Mr_M^*\in C_3$ 且命题164.4的
+完整控制族已经支付，则对每个有限复多项式 $f$，有
+
+$$
+r_{f(M)}=|I_n\rangle\!\rangle|0\rangle+|f(M)\rangle\!\rangle|1\rangle,
+\qquad r_{f(M)}r_{f(M)}^*\in C_3.
+$$
+
+此构造在所有原旁观者上正，具有有限严格正的成功预算。
+
+**证明。** 取 $p\ge1$、$\deg f\le p$，写 $f(t)=\sum_{j=0}^pf_jt^j$，允许补零。
+准备 $p$ 份 $r_M$，第 $j$ 份腿为 $(r_j,o_j,c_j)$。
+用 $\langle I_n|=\sum_i\langle i|\langle i|$ 把 $o_j$ 接到 $r_{j+1}$，$1\le j<p$。
+留下的次序规定为 $(r_1,o_p,c_1,\ldots,c_p)$，ket 恰为
+
+$$
+\Xi_p=\sum_{s\in\{0,1\}^p}|M^{|s|}\rangle\!\rangle|s\rangle.
+$$
+
+确切的串行乘积顺序是 $M^{s_p}\cdots M^{s_1}$；因各因子是同一个 $M$ 的幂，才化为
+$M^{|s|}$。参考—输出约定及实 Bell bra 保证这里没有 $M^{\mathsf T}$ 或 $\overline M$。
+最小界给初始 $C_{3p}$，$p-1$ 次原帽切片给 $C_{p+2}$。
+
+每个重量 $j$ 只选一个计算字 $s^{(j)}$，其中 $s^{(0)}=0^p$。
+命题164.4供应 $p+1$ 条实际控制腿上的同一个 ket
+
+$$
+Q_f=|0^p\rangle|0\rangle+
+ \sum_{j=0}^pf_j|s^{(j)}\rangle|1\rangle,
+\qquad d_f=\|Q_f\|^2=1+\sum_{j=0}^p|f_j|^2.
+$$
+
+在 $\Xi_p$ 的第 $j$ 条控制腿与 $Q_f$ 的第 $j$ 条腿之间，各用一只原 $n$-Bell 帽。
+它们在嵌入计算字上按相等指标配对；系数是 $f_j$，不是 $\overline{f_j}$。
+剩余三腿仍按参考、输出、最后控制排列，恰为 $r_{f(M)}$。
+$s^{(0)}$ 同时用于最后控制的 $0$、$1$ 两值没有冲突，两项在这个最后腿上正交。
+
+完整协议的资源同时位于原 $C_{4p+1}$；共 $2p-1$ 只帽，最后留下三腿。
+没有从分别优化的 $M^j$ 态相加来推断相干性，所有幂及其系数来自同一个 ket 收缩。
+若输入分别是 $c_M r_Mr_M^*/d_M$ 的 $p$ 份和 $t_Q Q_fQ_f^*/d_f$，
+每只帽均取 proper $\beta_n/n$，最终输出为
+
+$$
+\frac{c_M^pt_Q}{d_M^pd_fn^{2p-1}}\,r_{f(M)}r_{f(M)}^*,\qquad
+t_f=\frac{c_M^pt_Q\,[n+\operatorname{Tr}(f(M)^*f(M))]}
+ {d_M^pd_fn^{2p-1}}\in(0,1].
+$$
+
+全部因子有限且严格正；非零性已有 $I_n$ 切片保证，上界来自逐次 proper 预算。
+若按完整原准备菜单直接选归一控制态，可取 $t_Q=1$；若要求种子溯源，就使用前段的
+有限正乘积。后者仍是同一批预先相乘的有限资源和同一个结果分支。
+对任意有限 $r$，把旁观者附在上述每一原乘积与切片上，引理164.3给整段的原正性及预算。∎
+
+**引理 164.6（两资源耦合及原复合）。** 对实际 $r_Ar_A^*\in C_3$，两份资源给出
+每个 $z\in\mathbb C$ 的原四腿 Choi 元素
+
+$$
+J(\operatorname{Ad}_{K_z})\in C_4,\qquad K_z=I_{n^2}+zA\otimes A.
+$$
+
+**证明。** 控制帽与其效应矩阵明确取
+
+$$
+b_z=\langle00|+z\langle11|,\qquad
+b_z^*=|00\rangle+\overline z|11\rangle,\qquad
+e_z(x)=\frac{b_zxb_z^*}{1+|z|^2}
+ =\operatorname{Tr}\!\left(\frac{b_z^*b_z}{1+|z|^2}x\right).
+$$
+
+$b_z^*b_z/(1+|z|^2)$ 是原 $C_2$ 中的秩一正交投影，故 $e_z\in\mathcal E_2$。
+未归一 ket 收缩为 $|I\rangle\!\rangle\otimes|I\rangle\!\rangle
++z|A\rangle\!\rangle\otimes|A\rangle\!\rangle$；
+原置换把数据腿从 $(r_1,o_1,r_2,o_2)$ 排成 $(r_1,r_2,o_1,o_2)$，即为 $|K_z\rangle\!\rangle$。
+所以 $C_6\to C_4$ 的一次 proper 切片给所述 Choi 的正倍数。
+两份归一 $r_A$ 的确切输出是 $J(\operatorname{Ad}_{K_z})/[d_A^2(1+|z|^2)]$，
+其中 $d_A=n+\operatorname{Tr}(A^*A)$；源若有成功因子，再乘其乘积。
+bra 中的 $z$ 与对应 ket 中的 $\overline z$ 不可互换。
+
+两张二体 Choi 按各自“参考两腿、输出两腿”排列；用两只原 Bell 帽把第一张的输出
+逐条接到第二张的参考，留下 $|K_2K_1\rangle\!\rangle$ 的 dyad。
+每次复合的 proper 帽系数为 $n^{-2}$。任意有限复合及所有原旁观者均由同一切片引理支付。
+特别地，所得矩阵即使非酉，其合同也由自身 Choi 判据原全旁观正；未预设全局矩阵操作。∎
+
+### 两个穷尽谱情形中的原纠缠酉
+
+**命题 164.7（至少两个特征值）。** 若 $M$ 有至少两个不同特征值，已付原资源给出
+一个原全旁观正、其逆亦原全旁观正的纠缠二体酉共轭。
+
+**证明。** 在 $\mathbb C[t]$ 中将最小多项式写为
+$\mu_M(t)=\prod_{\lambda\in\sigma(M)}(t-\lambda)^{r_\lambda}$。
+选非空真子集 $F\subset\sigma(M)$。令 $u$、$v$ 分别为 $F$ 内、外的主因子乘积；
+它们互素，Euclid／Bézout 恒等式给 $hu+kv=1$，取 $f=kv$。
+这就是此处所用的成熟多项式中国剩余定理，具体满足
+
+$$
+f\equiv1\pmod{(t-\lambda)^{r_\lambda}}\ (\lambda\in F),\qquad
+f\equiv0\pmod{(t-\lambda)^{r_\lambda}}\ (\lambda\notin F).
+$$
+
+因而 $\mu_M\mid(f^2-f)$，$P=f(M)$ 是幂等；在两类特征向量上的值分别为一、零，
+故 $0\ne P\ne I_n$。引理164.5供应的是同一个相干 $r_P$，并非只供应 $P$ 的独立分支。
+取由 $\operatorname{im}P$ 与 $\ker P$ 的基组成的 $S\in GL_n$，则
+$S^{-1}PS=P_0$ 是标准坐标正交投影，秩在 $1$ 与 $n-1$ 之间。
+参考腿用 $S^{\mathsf T}$、输出腿用 $S^{-1}$，保留 $I_n$ 并把 $P$ 送到 $P_0$。
+这两个原一体滤波各除以其 $s_A$ 后均 proper；从归一 $r_P$ 的质量为
+
+$$
+\frac{n+\operatorname{rank}P_0}
+ {[n+\operatorname{Tr}(P^*P)]\,
+  \max\{1,\|S^{\mathsf T}\|\}^2\max\{1,\|S^{-1}\|\}^2}>0.
+$$
+
+取两份所得资源，在引理164.6中令 $z=-2$，得到
+
+$$
+U_P=I_{n^2}-2P_0\otimes P_0,\qquad
+J(\operatorname{Ad}_{U_P})\in C_4.
+$$
+
+$P_0\otimes P_0$ 在整个 $n^2$ 维空间上是正交投影，故 $U_P^*=U_P=U_P^{-1}$。
+在 $\operatorname{im}P_0$、$\ker P_0$ 各取单位向量 $a,b$，则
+
+$$
+U_P\left(\frac{b+a}{\sqrt2}\otimes\frac{b+a}{\sqrt2}\right)
+ =\frac{|bb\rangle+|ba\rangle+|ab\rangle-|aa\rangle}{2}.
+$$
+
+其二阶系数矩阵行列式为 $-1/2$，故 Schmidt 秩为二，$U_P$ 是 imprimitive。
+Choi 判据给它及其同一个逆的全部原旁观正性；迹恒等式给每个提升保迹。
+若前序供应为 $c_P r_{P_0}r_{P_0}^*/(n+k)$，其中 $k=\operatorname{rank}P_0$，则输出是
+$c_P^2J(\operatorname{Ad}_{U_P})/[5(n+k)^2]$，质量 $c_P^2n^2/[5(n+k)^2]>0$。
+这里 $1/(1+|-2|^2)=1/5$；$c_P>0$ 是源滤波与多项式预算的有限乘积。∎
+
+**命题 164.8（唯一特征值与全空间剪切乘积）。** 若非标量 $M$ 只有一个特征值，
+已付原资源同样给出纠缠二体酉及其正逆。
+
+**证明。** 写 $M=\lambda I_n+N$。最小多项式给 $N\ne0$ 幂零，设其指数 $r\ge2$。
+引理164.5取 $f(t)=(t-\lambda)^{r-1}$，给 $A=N^{r-1}\ne0$ 且
+$A^2=0$，因为 $2r-2\ge r$。
+令 $q=\operatorname{rank}A\ge1$；$\operatorname{im}A\subset\ker A$ 给 $2q\le n$。
+取像空间基 $a_\nu$，选原像 $b_\nu$ 使 $Ab_\nu=a_\nu$，再补齐核空间基。
+这些向量合成基；与164.7完全相同的两次原滤波把 $A$ 相似到
+
+$$
+J=\sum_{\nu=1}^q|a_\nu\rangle\langle b_\nu|,
+$$
+
+现在所有 $a_\nu,b_\nu$ 是互不相同的标准正交基标签。该相似变换的滤波预算也是
+$[n+q]/([n+\operatorname{Tr}(A^*A)]s_{S^{\mathsf T}}^2s_{S^{-1}}^2)>0$。
+交换每对 $a_\nu,b_\nu$ 的实置换酉 $V$ 满足 $VJV^*=J^*$；
+在 $r_J$ 的参考、输出腿同时用 $V$，保持 $I_n$，得到实际 $r_{J^*}$，预算为一。
+置 $X=J\otimes J$，取
+
+$$
+a=i(\sqrt2-1),\qquad b=\frac{i}{\sqrt2},\qquad
+U_J=(I+aX)(I+bX^*)(I+aX).
+$$
+
+引理164.6分别用两份 $r_J$、两份 $r_{J^*}$、两份 $r_J$ 给三个剪切因子的原 Choi；
+两次复合各用两只 proper 原 Bell 帽，给 $J(\operatorname{Ad}_{U_J})\in C_4$。
+所有系数，包括虚数 $a,b$，都放在已明确的 bra $b_z$ 中。
+
+下面在整个 $n^2$ 维空间核算酉性。它有 $q^2$ 个互相正交的不变二维块
+$H_{\nu\mu}=\operatorname{span}\{|a_\nu a_\mu\rangle,|b_\nu b_\mu\rangle\}$。
+在该有序基中 $X=\begin{pmatrix}0&1\\0&0\end{pmatrix}$，故三个因子的乘积是
+
+$$
+\begin{pmatrix}1&a\\0&1\end{pmatrix}
+\begin{pmatrix}1&0\\b&1\end{pmatrix}
+\begin{pmatrix}1&a\\0&1\end{pmatrix}
+=\begin{pmatrix}1+ab&2a+a^2b\\b&1+ab\end{pmatrix}
+=\frac1{\sqrt2}\begin{pmatrix}1&i\\i&1\end{pmatrix}.
+$$
+
+这里 $ab=-1+1/\sqrt2$，且
+$2a+a^2b=a(2+ab)=i(\sqrt2-1)(1+1/\sqrt2)=i/\sqrt2$。
+该矩阵与其伴随相乘为 $I_2$。
+所有 $H_{\nu\mu}$ 的正交补上 $X=X^*=0$，三个因子均为恒等。
+所以 $U_J$ 在全部 $n^2$ 维空间酉；没有遗漏混合 $a,b$ 标签或其余 $n-2q$ 个方向。
+它将乘积 $|b_\nu b_\mu\rangle$ 送为
+$(i|a_\nu a_\mu\rangle+|b_\nu b_\mu\rangle)/\sqrt2$，Schmidt 秩为二。
+
+逆也逐项支付，而不从“矩阵酉”直接推断未知原锥上的逆正性：
+
+$$
+U_J^*=(I+\overline aX^*)(I+\overline bX)(I+\overline aX^*).
+$$
+
+用 $r_{J^*},r_J,r_{J^*}$ 和帽系数 $\overline a=-a,\overline b=-b$ 重做同一构造，
+得到它的原 Choi。于是两个方向均原全旁观正，且矩阵迹恒等式给保迹。
+若前序供应为 $c_Jr_Jr_J^*/(n+q)$，则此六副本构造明确输出
+
+$$
+\frac{c_J^6J(\operatorname{Ad}_{U_J})}
+ {(n+q)^6(1+|a|^2)^2(1+|b|^2)n^4},
+\qquad c_J>0.
+$$
+
+其质量为该正系数乘 $n^2$；逆的构造有相同预算。
+若要把某个中间剪切单独当成不增迹数学分支，可把其矩阵 $I+zX$
+除以 $\max\{1,\|I+zX\|\}$，相应合同除以该数的平方：
+其输入原 $C_2$ 已是 PSD，故单位正差及任意原旁观预算都由最大界给出。
+本构造本身直接复合 subnormalized Choi，未把未缩放剪切宣称为 proper 事件。∎
+
+### 精确全有限尾部与一个显式六副本见证
+
+**引理 164.9（既有有限字及双向夹逼的准确接合）。** 在定义164.1下，若一个 imprimitive
+二体酉 $U$ 的共轭及其逆已原全旁观正，则对全部有限 $N$，$C_N=\operatorname{PSD}_{n^N}$。
+
+**证明。** 复用 [VII，引理102.10及定理103.8证明的尾部][Q164VII]。
+这里接合的是“原全旁观可逆纠缠门”之后的证明接口；不把本章的门冒充103.8陈述中的两张指定 dyad。
+为明确所代入的量词，假定旧 $N-1$ 腿能用有限字精确给全部 $U(D)$，$D=n^{N-1}$。
+这些字的每个生成元都有任意原旁观提升，所以整字可把新原腿保持恒等。
+新腿提供 $U(e)$，$e=n$。把 $U$ 放在一个旧实际位置与新腿；固定其余旧腿为乘积向量，
+原二体的纠缠见证即为“旧整个块／新腿”切分的 Schmidt 秩大于一的见证。
+因此这个跨块门 imprimitive，旧有限字与新局域酉支付全部 $U(D)\otimes U(e)$。
+
+Harrow，[arXiv:0806.0631v1，推论2][Q164H]，允许 $D\ne e$，并给精确有限乘积覆盖
+$U(De)$。将每个旧块因子展开回已得有限字，仍是同一原 $N$ 腿上的有限字。
+归纳从一体原酉开始；所有生成元及其逆均已有原正性与保迹预算。
+这里没有新增一个任意分组矩阵映射，也没有以稠密性、极限或近似门替代精确生成。
+精确性属于 Harrow 的成熟定理；该尾部的原旁观归纳属于已存在的 VII102.10。
+
+最后照用 VII103.8 的两个包含，写出单块情形。
+原一体纯态的乘积 $p_0$ 由最小界在 $C_N$；有限字把它送到任意归一秩一 dyad。
+有限谱分解给 $\operatorname{PSD}_{n^N}\subseteq C_N$。
+反向，局部秩一效应的乘积 $e_0(x)=\operatorname{Tr}(p_0x)$ 是原 proper 效应。
+其正性由最大界给出，上界逐次使用
+
+$$
+u_{a+b}-f\otimes g=(u_a-f)\otimes u_b+f\otimes(u_b-g)\in C_{a+b}^*.
+$$
+
+对任意单位 $\psi$，选有限字 $W$ 使 $Wp_0W^*=|\psi\rangle\langle\psi|$。
+已支付的逆字给原 proper 效应 $e_0\circ\operatorname{Ad}_{W^*}$，故对每个 $x\in C_N$，
+$\langle\psi|x|\psi\rangle\ge0$。于是 $C_N\subseteq\operatorname{PSD}_{n^N}$。
+这确立全部原态与全部原效应的等式，不只是一个可生成的态子锥。
+任一有限字若按资源协议实现，其每次 Choi 接入均有引理164.3的有限正因子；
+字长有限即总预算严格正。其数学保迹自同构性质不要求该资源分支确定性成功。∎
+
+**命题 164.10（显式种子的六副本、十八腿预算）。** 取
+
+$$
+\tau_n=\sum_{i=0}^{n-1}|ii0\rangle+|011\rangle
+ =|I_n\rangle\!\rangle|0\rangle+|E_{10}\rangle\!\rangle|1\rangle.
+$$
+
+若 $\tau_n\tau_n^*\in C_3$，六份归一原种子即可给一个纠缠二体酉的原四腿 Choi，
+且成功质量明确非零；不需要先调用控制多项式网络。
+
+**证明。** 本约定下 $E_{10}=|1\rangle\langle0|$，故它的向量化确为 $|01\rangle$。
+三个局部秩是 $(n,n,2)$，$\|\tau_n\|^2=n+1$。
+令 $J=E_{10}$、$X=J\otimes J$，$a,b$ 取164.8的值。
+将六份 $\tau_n\tau_n^*/(n+1)$ 依次配为三对，初始原锥为 $C_{18}$。
+中间一对的每份资源在两条数据腿同时施加交换 $|0\rangle,|1\rangle$ 的实置换酉；
+这把 $J$ 送为 $J^*$，保留 $I_n$，范数与质量都不变。
+
+三对控制腿依次用 $e_a,e_b,e_a$，每只帽均是164.6的实际 proper 二腿效应。
+三次切片 $C_{18}\to C_{16}\to C_{14}\to C_{12}$ 后，
+剩下三张四腿 Choi，矩阵分别为 $K_a=I+aX$、$K_b=I+bX^*$、$K_a$。
+每张的腿均按“参考两腿、输出两腿”排列。
+第一张输出两腿分别接第二张参考两腿，第二张输出两腿再接第三张参考两腿。
+每个接头是 $\beta_n/n$；第一次双接头 $C_{12}\to C_8$，第二次 $C_8\to C_4$。
+因此数据帽恰有四只，连同三只控制帽共七只，消去十四腿，留下四腿。
+串行顺序给 $K_aK_bK_a=U_J$；164.8已在整个 $n^2$ 空间证明其酉性及纠缠性。
+
+最终原输出及其成功质量恰为
+
+$$
+\frac{J(\operatorname{Ad}_{U_J})}{D_n},\qquad
+D_n=(n+1)^6(1+|a|^2)^2(1+|b|^2)n^4,
+\qquad p_n=\frac{n^2}{D_n}>0.
+$$
+
+六份归一种子给 $(n+1)^{-6}$；三只 proper 控制帽给
+$(1+|a|^2)^{-2}(1+|b|^2)^{-1}$；四只 proper 数据帽给 $n^{-4}$。
+因 $U_J$ 酉，Choi 的迹是输入维数 $n^2$，所以这就是成功质量。
+$1+|a|^2=4-2\sqrt2>1$、$1+|b|^2=3/2$，故 $0<p_n<1$；
+上界也直接来自逐次 proper 预算。
+把三对类型改为 $J^*,J,J^*$，帽系数改为 $-a,-b,-a$，同一分母供应 $U_J^*$。
+一切局部置换、帽与旁观扩张均已由原 $C_2$ 及切片支付。
+若再用两只 proper 原 Bell 帽把这个四腿资源接到任意归一两腿输入，
+所得是 $\operatorname{Ad}_{U_J}/(D_nn^2)$，成功质量 $1/(D_nn^2)>0$。
+恢复未缩放 Choi 只用于锥成员关系；并未恢复该分支的事件成功率。
+
+当 $n=2$，只在输出腿交换 $0,1$，$\tau_2$ 就变为
+$|010\rangle+|100\rangle+|001\rangle$，即 W 代表。
+当 $n>2$，它的控制秩二与 GHZ$_n$ 的秩 $n$ 不同，因此不在 GHZ$_n$ 的可逆局部类中。∎
+
+**定理 164.11（正则铅笔与完整有限量子层级）。** 对每个固定 $n\ge2$，在定义164.1的
+同一个实际全有限背景内，以下条件等价：
+
+1. 某个原三腿矩阵秩一种子含定义164.2的二元正则铅笔。
+2. 存在 $M\notin\mathbb C I_n$，使 $r_Mr_M^*\in C_3$。
+3. 命题164.10的明确 dyad $\tau_n\tau_n^*$ 属于原 $C_3$。
+4. 对每个有限 $N\ge1$，$C_N=\operatorname{PSD}_{n^N}$，全部等式均在原实际坐标中。
+
+**证明。** 1到2由单次相干控制滤波和输出左乘给出，全部预算见164.4；2显然给1。
+由2先用164.4支付整个实际 qubit 控制族，再用164.5支付所需有限多项式。
+非标量复矩阵要么有至少两个特征值，要么只有一个特征值；164.7、164.8分别供应
+原可逆纠缠门及其所有旁观提升。164.9的既有精确尾部给4。
+4在 $N=3$ 包含明确 PSD dyad $\tau_n\tau_n^*$，给3；3又以 $M=E_{10}$ 给2。
+此外3直接由164.10的六副本门接164.9给4，独立展示该见证的完整有限预算。
+所证是一个合格种子的存在性；并不要求每个给定 GME 向量本身具有正则切片。∎
+
+### 原量子字典、几何与保留的缺口
+
+**推论 164.12（完整静态字典及其操作边界）。** 在定理164.11的等价条件下，
+对每个有限 $N$，同一原数据满足下列对应；这是 [VII，102.12—102.15及103.12][Q164VII]
+在本章已得整锥等式后的复用。
+
+| 原对象／量词 | 对应的有限复量子数据 | 来源与限度 |
+| --- | --- | --- |
+| $K_N$ 与凸混合 | $\rho\succeq0$、$\operatorname{Tr}\rho=1$，通常混态分解 | 凸准备为输入；全部 PSD 而非可生成子锥由164.9给出 |
+| 全部原纯态 $P_N$ | 单位秩一投影，$\mathbb{CP}^{n^N-1}$ | 只在整锥等式之后识别原极点 |
+| 全 proper 效应与有限菜单 | $0\preceq E\preceq I$；全部有限 POVM，含投影测量 | 原完整对偶及单位区间，不是选定探针 |
+| 原配对与概率 | $\Pr(a\mid\rho)=\operatorname{Tr}(E_a\rho)$ | Born 式是既定实际配对的坐标表达 |
+| 原复合、置换、丢弃 | 通常张量积、因子交换、偏迹及其所有有限复合 | 实际实张量结构为站立输入；整联合正锥现已确定 |
+| least 确认与全部高阶比较 | $T_p^{(N)}(x)=\operatorname{Tr}(px)$；纯态间 $|\langle\psi,\phi\rangle|^2$，所有 $S_N$ | 复用 VII102.12 的 least 投影证明，未以 $S_3$ 作入口 |
+| 原全旁观正 $F:W_m\to W_k$ | 通常矩形 CP 映射 $F(x)=\sum_\alpha K_\alpha xK_\alpha^*$ | 原自身 Choi 后接成熟 Choi／Kraus 表示；任意矩阵参考 CP 是结论 |
+| 原不增迹／保迹预算 | $\sum_\alpha K_\alpha^*K_\alpha\preceq I$／$=I$ | 测试整个输入锥；不是只看 Choi 总迹 |
+| 原数学可逆保迹控制 | 本文构造的所有全局酉共轭及其逆 | 每个目标有精确有限字；不指定资源协议确定性成功 |
+
+**证明。** 态锥等式使非退化迹配对下的完整原对偶等于 PSD；单位上下界就是效应行。
+PSD 的有限谱分解给纯态与混态对应；VII102.12的确认投影论证给 least 公式。
+任意 $m,k$ 的原自身 Choi 现在是完整 $\operatorname{PSD}_{n^{m+k}}$；
+VII102.13引用的 Watrous 定理2.22、2.26给有限矩形 Kraus 表达与逐输入预算。
+这些结论从锥等式读取，不再调用带不同前提的三份重构定理。∎
+
+若额外选择 VII102.14的事件饱和，全部 CP-TNI 分支和有限 CP 仪器才成为该菜单的可用事件。
+仪器条件为 $\sum_{a,\alpha}K_{a,\alpha}^*K_{a,\alpha}=I$；归一输入的分支概率为
+$p_a=\operatorname{Tr}(F_a\rho)$，且仅当 $p_a>0$ 时条件态 $F_a\rho/p_a$ 有定义。
+一个给定效应仍不指定唯一更新，Lüders 更新是额外选择；有更新的测量次序仍可不交换。
+所有酉共轭都已是数学保迹自同构，但静态数据不选物理钟、连续时间族、Hamiltonian、
+时间尺度或 $\hbar$。选定可微酉时间族后的 Hamiltonian 描述不能反过来充当本章结论的输入。
+复数矩阵载体、单块维数 $n$、已对齐低二层、凸准备、完整菜单和全有限实际复合都是输入；
+本章确定剩余全部高阶锥，未从零导出这些站立输入。
+
+**说明 164.13（简洁几何与任意 GME 缺口）。** 新种子的几何只需一条射影矩阵线
+$\mathbb P(\mathcal L)\subset\mathbb P(M_n(\mathbb C))$，它不被行列式零超曲面包含。
+选线上一个满秩点作 $I_n$，另一个独立方向作 $M$，便得到一个实际二元相干选择。
+同时可逆左、右滤波和铅笔基变换保持“二维且含满秩点”；选定 $I_n$ 后，
+保留它的两侧滤波实现相似变换。若重新选
+$A'=aA+bB$ 为满秩点、$B'=cA+dB$，$ad-bc\ne0$，则
+
+$$
+M'=(aI+bM)^{-1}(cI+dM).
+$$
+
+只有 $aI+bM$ 可逆时这张局部图才适用；不声称任意基变换都保持指定首切片可逆，
+也不声称有唯一、规范或与坐标无关的 $M$ 代表。
+多项式网络把这一条线的相干控制转为其有限函数演算：谱分开就选幂等，谱不分开就取
+最高非零幂零幂。两条路均保持原数据腿，不需要把 qubit 字串融合成一条原 $n$ 维腿。
+
+正则入口比“指定种子必须 SLOCC 等价于 GHZ$_n$”更宽：GHZ$_n$ 的对角切片像含
+$I_n$ 及一个独立投影，故满足入口；$n>2$ 的 $\tau_n$ 也满足入口，却因局部秩
+$(n,n,2)$ 不在该类中。这里没有把这种放宽误写成 GHZ$_n$ 到 $\tau_n$ 的单副本滤波转换。
+
+对 $n>2$ 的**任意** GME 矩阵秩一种子，163章只已支付完整二维压缩层级。
+例如嵌入的 $|000\rangle+|111\rangle$ 是 GME，但所有切片的秩至多二，
+所以该给定种子没有原 $n\times n$ 满秩切片。由任意这样的种子是否仍能推出存在另一正则种子，
+或直接推出全部原层级，本章保持开放。正则切片是本定理的充分入口；没有证明它对每个
+能完成重构的给定种子都必要。VII104.12—104.13及163.8的混合原编码接口仍可作为另一条
+具名充分路线，不能由 qubit 内的 CP 操作直接替代；本章在正则子类中支付的是不同接口。
+有限 ket 网络类、有限前缀或某类未能找到满秩切片的尝试，都不构成完整全有限反模型。
+
+### 供应归属与原始来源
+
+本章的项目增量是正则二元资源的上述存在性等价、串行数据线与完整实际 qubit 控制族之间的
+相干多项式接口，以及将两个谱情形逐一接回原 Choi、全部旁观者和 proper 预算。
+谱多项式、中国剩余定理、幂零与幂等的相似标准形是成熟线性代数；这里已给所需代数推导。
+GHZ/W 分类、三 W 三角供应、完整 qubit retract、Choi／Kraus 表示、精确有限普适性与
+既有原态—效应夹逼均各归原来源，不把其重复接合另算成新的文献定理。
+
+| 精确供应 | 本章消费的内容 |
+| --- | --- |
+| VII 定义102.1、引理102.6—102.8 | 原全有限模型；整锥切片；自身 Choi、重复帽预算；局域操作全部原旁观提升 |
+| VII 命题103.7、定理103.8 | 已付叉口到两 dyad 的 qubit 供应及其尾部；164.9仅复用纠缠门后的证明接口 |
+| VII 引理102.10 | 异维旧块／新腿上的精确有限字归纳；非稠密近似 |
+| VII 命题104.11、定义104.12及命题104.13 | 完整 qubit 正 retract 与全对偶；混合编码的准确边界 |
+| 本卷第163章 163.2—163.4、163.6—163.8 | 滤波与 GHZ/W 三角预算；整个压缩族；尚未支付的一般维数编码边界 |
+| VII 102.12—102.15、103.12 | 已得整锥后的量子字典、事件饱和、条件更新与时间限制 |
+
+VII 只读供应源是 `docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md`，
+来源固定为已发表提交 `657a8ba435bf2cae463e935d957d8038b69be8a3`。
+163供应来自本卷已发表的第163章，具体消费 163.2—163.4、163.6—163.8 的原滤波、三体种子、二维压缩和预算接口；这些接口构成本章的数学前置。
+
+原始文献：W. Dür、G. Vidal、J. I. Cirac，
+[*Three qubits can be entangled in two inequivalent ways*][Q164DVC]，
+Phys. Rev. A **62**, 062314 (2000)，DOI [10.1103/PhysRevA.62.062314](https://doi.org/10.1103/PhysRevA.62.062314)；
+§III.1—III.2给三 qubit 局部秩边界与 GHZ/W 分类，附录A给可逆局部算子与 SLOCC 的关系。
+本章经163的资源预算调用该分类，不将其推广成一般 $n$ 的完整 SLOCC 分类。
+Aram W. Harrow，[*Exact universality from any entangling gate without inverses*][Q164H]，
+arXiv:0806.0631v1 (2008)，推论2明确给 $U(d_A)\otimes U(d_B)$ 加一个 imprimitive 门的
+精确有限生成，且不要求 $d_A=d_B$；本章不重新证明或重新归属这一结果。
+John Watrous，*The Theory of Quantum Information* (2018)，定理2.22、2.26，
+按 VII102.13的矩形 Choi／Kraus 供应复用。
+
+[Q164VII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q164DVC]: https://arxiv.org/abs/quant-ph/0005115v2
+[Q164H]: https://arxiv.org/abs/0806.0631v1
+
+Matthias Christandl、Fulvio Gesmundo、Jeroen Zuiddam，[*A Gap in the Subrank of Tensors*][Q164CGZ]，arXiv:2212.01668v2，§3 命题 3.1(i)(ii) 给出：在复数域的三因子情形，分割秩至少二（等价地，所有非平凡展平秩至少二）可作一个保持该性质的二维限制，并且一般限制也保持它。因此，163.5 所用的同时二维限制是成熟的精确特例；该结果本身不供应本章的原锥、完整对偶、旁观者继承或预算接口。
+
+Eric Chitambar、Carl A. Miller、Yaoyun Shi，[*Matrix Pencils and Entanglement Classification*][Q164CMS]，arXiv:0911.1803v1，§3 式(3)—(6)及引理 2 给出成熟的矩阵铅笔字典：$2\otimes m\otimes n$ 纯态对应 $\mu R+\lambda S$，局部数据滤波按 $BRC^{\mathsf T}$、$BSC^{\mathsf T}$ 作用，控制腿的 $GL_2$ 变量改变铅笔参数；控制因子分离当且仅当铅笔两项标量成比例。该字典说明本章的正则铅笔几何，但不供应本章的全有限原锥、旁观者或预算桥。
+
+[Q164CGZ]: https://arxiv.org/abs/2212.01668v2
+[Q164CMS]: https://arxiv.org/abs/0911.1803v1
+
+**完整中文图景。** 固定一份和两份的量子坐标后，只要原三腿里有一个真正相干的二选一：
+一支是满秩的一一配对，另一支是与它不同的配对，就能把前者当作恒等矩阵，后者记作非标量 $M$。
+先从这个种子截出二维纠缠，复用已有结果取得任意有限控制态；数据始终沿原来的 $n$ 维腿串行走，
+控制只决定这条线上用了多少次 $M$，再以一次共同收缩把它们组合成所需多项式。
+若 $M$ 的谱能分开，多项式就挑出一个非平凡投影，给出受控变号；若谱只有一点，最高非零幂留下
+平方零偏移，三个剪切便在整个空间上合成纠缠酉。每一步都由原资源、原帽、有限正成功质量和
+全部原旁观者上的正性支撑；既有精确有限字随后把任意有限份的全部态锥与效应锥锁成量子形式。
+更一般的高维 GME 种子是否也总能越过满秩接口，仍然开放；这幅几何图景没有替它预付编码，
+也没有从静态锥几何选出物理事件、更新规则或时间。
+## 追加锚（本行以下为增补区）
