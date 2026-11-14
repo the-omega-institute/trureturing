@@ -102,7 +102,7 @@ theorem dependence_of_input (P : Inputs.{v})
   intro he
   have htwice : proper P.cone P.unit ((2 : ℝ) • P.unit) := Eq.mp he hzero
   have hbound := (htwice p (pure_mem p).1).2
-  simpa [(pure_mem p).2] using hbound
+  norm_num [(pure_mem p).2] at hbound
 
 /-- A repeated original input supplies all mathematical family obligations.
 This conditional family neither constructs such an input nor selects source
