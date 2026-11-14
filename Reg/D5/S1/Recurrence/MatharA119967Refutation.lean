@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.MatharA119967Refutation
 import Reg.Support.SingleDependentReadout
 
+/-! Four-slot evidence for positivity of the full A119967 residual family. -/
+
 namespace Reg.D5.S1.Recurrence.MatharA119967Refutation
 open _root_.D5.S1.Recurrence.MatharA119967Refutation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -35,7 +37,9 @@ def family : Registration arena (type_of% @residual_pos) where
   dependence := by
     intro i
     refine ⟨(), 4, 5, ?_⟩
-    norm_num [actual, realize, residual, a, Finset.sum_range_succ, Nat.choose]
+    norm_num [actual, realize,
+      _root_.D5.S1.Recurrence.MatharA119967Refutation.residual,
+      a, Finset.sum_range_succ, Nat.choose]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@residual_pos) (Realization signature) Unit Unit where
