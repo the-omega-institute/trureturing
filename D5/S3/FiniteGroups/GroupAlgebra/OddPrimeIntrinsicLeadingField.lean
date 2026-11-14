@@ -6,14 +6,6 @@
    utility: none
    digest: Two evaluation injections force the intrinsic commuting leading algebra to be a field. -/
 
-/-!
-For an actual odd-prime representation satisfying cyclic projectivity and
-independent ordered mixed vanishing, the intrinsic leading action acts on the
-existing coinvariants. Evaluation on a common invariant subspace and its
-quotient gives two rank bounds. Their minimum contradicts the strict threshold.
-The resulting simple faithful action of the actual commutative adjoin makes
-that algebra a degree-m field, with an evaluation equivalence to the coinvariants.
--/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeIntrinsicLeadingAction
 import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 import Mathlib.Algebra.Module.RingHom
@@ -22,6 +14,15 @@ import Mathlib.LinearAlgebra.Dimension.RankNullity
 import Mathlib.LinearAlgebra.Quotient.Basic
 import Mathlib.RingTheory.Ideal.Maps
 import Mathlib.RingTheory.SimpleModule.Rank
+
+/-!
+For an actual odd-prime representation satisfying cyclic projectivity and
+independent ordered mixed vanishing, the intrinsic leading action acts on the
+existing coinvariants. Evaluation on a common invariant subspace and its
+quotient gives two rank bounds. Their minimum contradicts the strict threshold.
+The resulting simple faithful action of the actual commutative adjoin makes
+that algebra a degree-m field, with an evaluation equivalence to the coinvariants.
+-/
 
 set_option autoImplicit false
 
@@ -69,7 +70,7 @@ private theorem invariant_subspace_eq_bot_or_top
   let q₀ : U ⧸ W := W.mkQ u
   have hq₀ : q₀ ≠ 0 := by
     intro he
-    exact huW (Submodule.Quotient.mk_eq_zero.mp he)
+    exact huW ((Submodule.Quotient.mk_eq_zero W).mp he)
 
   let B (g : EAdd p r) : Module.End K W := (A g).restrict (hW g)
   have hAinj (g : EAdd p r) (hg : g ≠ 0) : Function.Injective (A g) :=
@@ -95,12 +96,12 @@ private theorem invariant_subspace_eq_bot_or_top
   have hQzero (g : EAdd p r) (hg : g ≠ 0) (x : U ⧸ W)
       (hx : Q g x = 0) : x = 0 := by
     obtain ⟨v, rfl⟩ := W.mkQ_surjective x
-    have hAv : A g v ∈ W := Submodule.Quotient.mk_eq_zero.mp hx
+    have hAv : A g v ∈ W := (Submodule.Quotient.mk_eq_zero W).mp hx
     /- Equality, hence a preimage in W, is used on the live proof path. -/
     have hAv' : A g v ∈ W.map (A g) := by rw [hAW g hg]; exact hAv
     obtain ⟨w', hw', he⟩ := hAv'
     have hwv : w' = v := hAinj g hg he
-    exact Submodule.Quotient.mk_eq_zero.mpr (hwv ▸ hw')
+    exact (Submodule.Quotient.mk_eq_zero W).mpr (hwv ▸ hw')
   have hQinj (g : EAdd p r) (hg : g ≠ 0) : Function.Injective (Q g) := by
     intro x y hxy
     apply sub_eq_zero.mp
@@ -200,7 +201,7 @@ theorem intrinsic_leading_field
     (rho : Representation K (E p r) V)
     (hr : 0 < r) (hm : 0 < m) (hV : Module.finrank K V = p * m)
     (hproj : ∀ H : Subgroup (E p r), IsCyclic H →
-      Module.Projective K[H] (rho.comp H.subtype).asModule)
+      Module.Projective K[H] (Representation.asModule (rho.comp H.subtype : Representation K H V)))
     (hmixed : ∀ xs : List (EAdd p r), xs.length = p →
       (xs.map (fun g => rho (Multiplicative.ofAdd g) - 1)).prod = 0)
     (h : E p r) (hh : h ≠ 1)
@@ -226,20 +227,22 @@ theorem intrinsic_leading_field
   obtain ⟨A, hdim, hAh, hunit, hcomm, hcert⟩ :=
     OddPrimeIntrinsicLeadingAction.intrinsic_leading_action rho hr hm hV hproj hmixed h hh
   let U := Representation.Coinvariants rho
+  have hdimU : Module.finrank K U = m := hdim
   letI : Nontrivial U := Module.nontrivial_of_finrank_pos (hdim.symm ▸ hm)
   have hirr (W : Submodule K U) (hW : ∀ g x, x ∈ W → A g x ∈ W) :
       W = ⊥ ∨ W = ⊤ :=
     invariant_subspace_eq_bot_or_top A hunit hdim hbound W hW
   refine ⟨A, hdim, hAh, hunit, hcomm, hcert, hirr, ?_⟩
-  let C := Algebra.adjoin K (Set.range A)
+  let C : Subalgebra K (Module.End K U) := Algebra.adjoin K (Set.range A)
   change IsField C ∧ Module.finrank K C = m ∧ _
   letI : IsMulCommutative C := Algebra.isMulCommutative_adjoin K (by
     rintro _ ⟨g, rfl⟩ _ ⟨k, rfl⟩ _
     exact hcomm g k)
   /- Existing evaluation action, restricted through the actual inclusion of C. -/
-  letI : Module C U := Module.compHom U C.val.toRingHom
-  letI : IsScalarTower K C U := ⟨fun _ _ _ => rfl⟩
-  letI : FaithfulSMul C U :=
+  letI evalModule : Module C U := Module.compHom U C.val.toRingHom
+  letI : SMul C U := evalModule.toSMul
+  letI tower : IsScalarTower K C U := ⟨fun _ _ _ => rfl⟩
+  letI faithful : FaithfulSMul C U :=
     { eq_of_smul_eq_smul := by
         intro c d hcd
         apply Subtype.ext
@@ -252,18 +255,18 @@ theorem intrinsic_leading_field
           let c : C := ⟨A g, Algebra.subset_adjoin (Set.mem_range_self g)⟩
           exact S.smul_mem c hx
         rcases hirr (S.restrictScalars K) hinv with hb | ht
-        · exact Or.inl ((Submodule.restrictScalars_eq_bot_iff K).mp hb)
-        · exact Or.inr ((Submodule.restrictScalars_eq_top_iff K).mp ht) }
+        · exact Or.inl ((Submodule.restrictScalars_eq_bot_iff K C U).mp hb)
+        · exact Or.inr ((Submodule.restrictScalars_eq_top_iff K C U).mp ht) }
   have hC : IsField C := Ring.isField_iff_maximal_bot.mpr (by
     have hmax := IsSimpleModule.annihilator_isMaximal (R := C) (M := U)
-    have hann : Module.annihilator C U = ⊥ := Module.annihilator_eq_bot.mpr inferInstance
+    have hann : Module.annihilator C U = ⊥ := Module.annihilator_eq_bot.mpr faithful
     rwa [hann] at hmax)
   /- Local use of the existing IsField conversion; no custom field-data wrapper. -/
   letI : Field C := hC.toField
   have hline : Module.finrank C U = 1 := isSimpleModule_iff_finrank_eq_one.mp inferInstance
   have hdegree : Module.finrank K C = m := by
     have htower := Module.finrank_mul_finrank K C U
-    simpa only [hline, mul_one, hdim] using htower
+    simpa only [hline, mul_one, hdimU] using htower
   obtain ⟨u, hu⟩ := exists_ne (0 : U)
   let ev : C →ₗ[K] U :=
     (LinearMap.applyₗ (R := K) (M := U) (M₂ := U) u).comp C.val.toLinearMap
