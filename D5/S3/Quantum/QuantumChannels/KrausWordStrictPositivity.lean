@@ -7,6 +7,7 @@
    digest: Full exact-length Kraus-word span implies strict positivity of the same iterate. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
 import Mathlib.Data.Matrix.Basis
 import Mathlib.Tactic
 
@@ -15,10 +16,11 @@ The word convention puts the latest letter first:
 `word K (m+1) w = K (w 0) * word K m (Fin.tail w)`.
 Thus a word is `K(w 0) ... K(w(m-1))`; all exact-length words occur.
 
-Admission basis: escape-witness. The predeclared content obligation is that a
-vanishing quadratic form of the Kraus sum annihilates every transformed vector,
-and full matrix span then forces the original PSD matrix to vanish. The proof
-constructs the annihilator submodule and tests all matrix units. It consumes the
+Admission basis: escape-witness. The content obligation is that full matrix span
+forces a PSD matrix annihilating every transformed vector to vanish. The proof
+constructs the annihilator submodule and tests all matrix units. The transformed
+kernel equations come from PositiveBranchReachableResponse.weightedCP_kernel
+with every weight equal to one. The proof consumes the
 exact iterate expansion, which is proved by induction, not assumed. No trace
 normalization, primitivity premise, or positivity premise about an iterate is used.
 
@@ -75,16 +77,14 @@ private theorem sum_posDef_of_span {d : ℕ} {ι : Type*} [Fintype ι]
   intro v hv
   apply lt_of_le_of_ne' (hY.dotProduct_mulVec_nonneg v)
   intro hz
-  have hq : star v ⬝ᵥ (∑ i, L i * X * (L i)ᴴ) *ᵥ v =
-      ∑ i, star ((L i)ᴴ *ᵥ v) ⬝ᵥ X *ᵥ ((L i)ᴴ *ᵥ v) := by
-    simp only [Matrix.sum_mulVec, dotProduct_sum]
-    apply Finset.sum_congr rfl
-    intro i _
-    rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, dotProduct_mulVec]
-    rw [star_mulVec, Matrix.conjTranspose_conjTranspose]
-  rw [hq] at hz
-  have each := (Finset.sum_eq_zero_iff_of_nonneg
-    (fun i (_ : i ∈ Finset.univ) => hX.dotProduct_mulVec_nonneg ((L i)ᴴ *ᵥ v))).mp hz
+  have hker :
+      (D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP
+        L (fun _ => 1) X) *ᵥ v = 0 := by
+    simpa [D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP]
+      using hY.dotProduct_mulVec_zero_iff.mp hz
+  have each :=
+    (D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP_kernel
+      L (fun _ => 1) (fun _ => zero_lt_one) hX v).mp hker
   let S : Submodule ℂ (Matrix (Fin d) (Fin d) ℂ) := {
     carrier := {A | X *ᵥ (Aᴴ *ᵥ v) = 0}
     zero_mem' := by simp
@@ -99,7 +99,7 @@ private theorem sum_posDef_of_span {d : ℕ} {ι : Type*} [Fintype ι]
   have hspan : Submodule.span ℂ (Set.range L) ≤ S := by
     apply Submodule.span_le.mpr
     rintro _ ⟨i, rfl⟩
-    exact hX.dotProduct_mulVec_zero_iff.mp (each i (Finset.mem_univ i))
+    exact each i
   have hall (A : Matrix (Fin d) (Fin d) ℂ) : X *ᵥ (Aᴴ *ᵥ v) = 0 := by
     exact hspan (hL ▸ Submodule.mem_top)
   obtain ⟨i, hi⟩ : ∃ i, v i ≠ 0 := by
