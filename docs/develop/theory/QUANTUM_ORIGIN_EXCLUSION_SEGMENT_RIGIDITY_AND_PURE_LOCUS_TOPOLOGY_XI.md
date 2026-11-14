@@ -4448,3 +4448,521 @@ $$
 [Q148NPS]: https://arxiv.org/abs/0902.3345 "Tim Netzer, Daniel Plaumann and Markus Schweighofer, Exposed Faces of Semidefinitely Representable Sets, SIAM Journal on Optimization 20 (2010), 1944—1955，Theorem 2.3。"
 
 ## 追加锚（本行以下为增补区）
+
+## 149. 零边球心互易、全方向高度刚性与同原量子几何
+
+### 149.1 只在真实二元关系上的球心互易
+
+**定义 149.1（完整原域与球心互易）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$ 及在 $C\setminus\{0\}$ 上严格正的原单位 $u$，保留
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p .
+\end{gathered}
+\tag{XI149.1}
+$$
+
+minimum 对每个原混态和整个原确认菜单取得。完整 EB3 指每个 $D_p$ 是非退化仿射实心三球，其中心为 $c_p$。$p\perp q$ 指 $q\in S_p$；补效应使它对称。$\mathsf{Conn}$ 指全部原纯标签之间均有有限原零边路。
+
+以下先保留 EB3+$\mathsf{Conn}$。复用144.1、145.3及其原来源：全部 $P=P_0$，存在唯一整球零确认 $e_p$，且
+
+$$
+\begin{gathered}
+\{f\in\mathcal F_p:f|_{D_p}=0\}=\{e_p\},\qquad
+e_p^{-1}(0)\cap K=D_p,\qquad e_p^{-1}(1)\cap K=\{p\},\\
+g_p=u-e_p,\qquad
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}N_p,\\
+\dim L_p=4,\qquad L_p\longrightarrow\operatorname{Aff}(D_p)
+\text{ 的限制是线性同构}.
+\end{gathered}
+\tag{XI149.2}
+$$
+
+球心互易候选只约束真实零边：
+
+$$
+\boxed{\qquad
+\mathsf{CR}_c:\quad
+\forall p,q\in P,\quad p\perp q\ \Longrightarrow\
+e_p(c_q)=e_q(c_p).
+\qquad}
+\tag{XI149.3}
+$$
+
+这里的球心及整球零尺均由同一原域定义，没有附加数值、矩阵表示或维数上界。$\mathsf{CR}_c$ 是这些内生对象间新增的模型约束，不是仅凭定义已经成立的恒等式；也没有把 $\mathcal F_p$ 缩成 $\{e_p\}$，或把最低确认互易 $T_p(q)=T_q(p)$ 作为其同义词。
+
+### 149.2 单根互易先支付闭影像与一阶正则性
+
+**定理 149.2（单根球心互易给全方向正高度与闭影像）。** 固定任意原根 $p$，只对这个根假设
+
+$$
+e_p(c_q)=e_q(c_p)\qquad(q\in S_p).
+\tag{XI149.4}
+$$
+
+在其任一完整球图中写
+
+$$
+\begin{gathered}
+D_p=c_p+B\overline B^3,\quad q_v=c_p+Bv,\quad v\in S^2,\quad
+g=g_p,\quad H(c_p+Bw)=w,\quad H_i\in L_p,\\
+\rho(v)=\sup_{x\in K\setminus\{p\}}
+\frac{-v\cdot H(x)}{g(x)},\quad
+a_v=2c_{q_v}-p,\quad m(v)=g(a_v),\\
+Z=\{H(x)/g(x):x\in K\setminus\{p\}\},\qquad
+z_v=H(a_v)/m(v).
+\end{gathered}
+\tag{XI149.5}
+$$
+
+则 $\rho$ 有限且 Lipschitz，并有
+
+$$
+\boxed{\quad
+m(v)=\frac{2}{1+\rho(v)},\qquad
+0<\sigma_p:=\frac{2}{1+\max_{S^2}\rho}\le m(v)\le1,\qquad
+Z=\overline Z .
+\quad}
+\tag{XI149.6}
+$$
+
+此外每个非零方向的完整支撑面只有一个点，
+
+$$
+\rho\in C^1(\mathbb R^3\setminus\{0\}),\qquad
+\nabla\rho(v)=-z_v\quad(v\in S^2).
+\tag{XI149.7}
+$$
+
+这些结论不需要 ZC、全纯域紧性或跨球连续性。
+
+证明。[THREE_COPY VII §122.2—§122.3及定理122.4][Q149TC]及[SAME_READBACK §123.2，式(Q123.4)—(Q123.8)][Q149SR]所需的 $p\in P_0$、邻标签仍在 $P_0$、Inj及限制同构，均由(XI149.2)支付。它们给 $\rho(v)\ge\|v\|$、有界凸影像 $Z$，以及整个原 $V$ 上的
+
+$$
+e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)},\qquad
+h_{\overline Z}(-v)=\rho(v),\qquad
+Z\cap\operatorname*{argmax}_{z\in\overline Z}(-v)\cdot z=\{z_v\}.
+\tag{XI149.8}
+$$
+
+真实邻球 $D_{q_v}$ 包含球缘点 $p$，其对径点正是 $a_v$。$g$ 在这颗完整球上唯一零于 $p$，故在 $a_v$ 达到唯一最大值 $m(v)\in(0,1]$。在 $c_p$ 评价第一式，再用单根互易及 $2c_{q_v}=p+a_v$，得到
+
+$$
+1-\frac{m(v)}2=e_p(c_{q_v})
+=e_{q_v}(c_p)=\frac{\rho(v)}{1+\rho(v)}.
+\tag{XI149.9}
+$$
+
+这直接给出(XI149.6)的高度式及统一正下界，尚未用任何球心连续性。
+
+令
+
+$$
+A_{\sigma_p}=\{H(x)/g(x):x\in K,\ g(x)\ge\sigma_p\}.
+\tag{XI149.10}
+$$
+
+它是紧集，也是凸集。具体地，若 $z_i=H(x_i)/g(x_i)$、$g(x_i)\ge\sigma_p$，则任给 $0\le t\le1$，实际原混态
+
+$$
+x=
+\frac{t x_1/g(x_1)+(1-t)x_2/g(x_2)}
+{t/g(x_1)+(1-t)/g(x_2)}
+\tag{XI149.11}
+$$
+
+满足 $H(x)/g(x)=tz_1+(1-t)z_2$ 及
+$g(x)=(t/g(x_1)+(1-t)/g(x_2))^{-1}\ge\sigma_p$。
+每个真实接触值 $z_v$ 已由 $a_v$ 在此紧凸集中实现。因此
+$A_{\sigma_p}\subseteq Z\subseteq\overline Z$，且三者在每个方向的支撑值相同；有限维分离给
+$A_{\sigma_p}=Z=\overline Z$。现在才可由(XI149.8)把完整支撑面也判成单点，而不是把“唯一实际接触”提前等同于“闭包只有一个接触”。
+
+最后使用紧凸体支撑函数的一阶性质，作为本推导的中间步骤。若 $z(n)$ 是非零方向 $n$ 的唯一支撑点，紧性与唯一性先给 $z(n)$ 连续，支撑不等式给
+
+$$
+0\le h_Z(n+k)-h_Z(n)-k\cdot z(n)
+\le k\cdot\bigl(z(n+k)-z(n)\bigr)=o(\|k\|).
+\tag{XI149.12}
+$$
+
+故 $h_Z$ 在非零方向 $C^1$；用 $\rho(v)=h_Z(-v)$ 得(XI149.7)。这里也复用了123.5的同一支撑微分论证，但其正高度入口由(XI149.9)另行支付，不假设 $p\in P_{\rm reg}$。证毕。
+
+### 149.3 原效应上界消除单根方向差异
+
+**定理 149.3（单根互易的全方向常值刚性）。** 在149.2的同一完整前件下，存在 $R_p\ge1$，使
+
+$$
+\boxed{\qquad
+\rho(v)=R_p,\qquad
+m(v)=\frac{2}{1+R_p},\qquad
+e_p(c_q)=\frac{R_p}{1+R_p}
+\quad(v\in S^2,\ q\in S_p).
+\qquad}
+\tag{XI149.13}
+$$
+
+证明。置 $d(v)=e_{a_v}(p)$。由于 $a_v\ne p$，(XI149.2)给 $0\le d(v)<1$。SAME_READBACK123.3是两个实际球图经限制同构在整个原空间消元的恒等式；其前件是 $P_0$ 接口，不要求 $P_{\rm reg}$。按本章参数对应，
+
+$$
+\begin{gathered}
+R_v=u-e_p-e_{q_v}=\frac{g-v\cdot H}{1+\rho(v)},\\
+e_{a_v}=d(v)e_p+
+\left(d(v)+\frac{1-d(v)}{m(v)}\right)R_v .
+\end{gathered}
+\tag{XI149.14}
+$$
+
+这里 $R_v$ 未被假设为正效应。定义同一支撑函数的余差
+
+$$
+\mathfrak B(v,w)=\rho(v)-\rho(w)-\nabla\rho(w)\cdot(v-w)\ge0.
+\tag{XI149.15}
+$$
+
+已有 $H(a_w)=m(w)z_w$、$\nabla\rho(w)=-z_w$ 及 $w\cdot z_w=-\rho(w)$，故
+
+$$
+R_v(a_w)=m(w)\left(1-\frac{\mathfrak B(v,w)}{1+\rho(v)}\right).
+\tag{XI149.16}
+$$
+
+使用合法原效应在实际原态上的上界 $e_{a_v}(a_w)\le1$，与 SAME_READBACK124.3同样的代入给
+
+$$
+\begin{aligned}
+(1-d(v))(m(w)-m(v))
+&\le\bigl(d(v)m(v)+1-d(v)\bigr)m(w)
+\frac{\mathfrak B(v,w)}{1+\rho(v)}\\
+&\le\frac{\mathfrak B(v,w)}{1+\rho(v)} .
+\end{aligned}
+\tag{XI149.17}
+$$
+
+完整消元式和原上界都在同一个实现中，且 $m(v),m(w)\le1$；没有将不同原态上的分别最优值拼接成共同实现。
+
+由149.2，$\rho$ 在非零方向 $C^1$，而 $m=2/(1+\rho)$ 在球面上也已 $C^1$。固定 $v$，沿任一光滑双向球面弧 $w(t)$、$w(0)=v$，有
+$\mathfrak B(v,w(t))=o(|t|)$。这可由(XI149.12)或沿短线段积分连续梯度得到。将(XI149.17)除以严格正的 $(1-d(v))(1+\rho(v))$：对 $t>0$、$t<0$ 分别除以 $t$ 并取极限，得到
+
+$$
+\left.\frac{d}{dt}m(w(t))\right|_{t=0}\le0,\qquad
+\left.\frac{d}{dt}m(w(t))\right|_{t=0}\ge0 .
+\tag{XI149.18}
+$$
+
+所以所有切向导数均为零；$S^2$ 连通，$m$ 在整个球面常值，(XI149.6)使 $\rho$ 常值，(XI149.9)再给全部邻球心的同值式。这里不需要 $d$ 连续、统一的反向缺口或旧124.4中另列的正规锚点前件。证毕。
+
+### 149.4 从真实零边互易到同原三能级表示
+
+**定理 149.4（球心互易的完整静态重构）。** 在(XI149.1)全部原量词及完整 EB3+$\mathsf{Conn}$ 下，以下三项等价：球心互易 $\mathsf{CR}_c$；144.1的全域同值 $\mathsf{UC}$；存在实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,\qquad
+\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI149.19}
+$$
+
+成立时每条真实零边必有 $e_p(c_q)=1/2$；每个原球图的 $\rho_p(v)=\|v\|$。不另外输入 ZC、Seed、有限矩阵表示、九维上界或任一全域连续性。
+
+证明。假设 $\mathsf{CR}_c$，对每个原根用149.2—149.3，记
+$h_p=R_p/(1+R_p)\in[1/2,1)$。对任一真实零边 $p\perp q$，
+
+$$
+h_p=e_p(c_q)=e_q(c_p)=h_q .
+\tag{XI149.20}
+$$
+
+$\mathsf{Conn}$ 使全部 $h_p$ 等于同一 $h<1$，即先固定一个根并沿每条有限零路传递其数值。因而对任意 $a\in P$、任意 $x\in S_a$，完整球内对径 $\bar x=2c_a-x$ 仍在 $S_a$，有
+
+$$
+e_a(c_x)+e_a(c_{\bar x})=2h=:\kappa<2 .
+\tag{XI149.21}
+$$
+
+这正是原义 UC，其全标签量词及同一严格余量 $2-\kappa>0$ 已付清。直接消费144.5给(XI149.19)，不再证明已有分类链。
+
+反向在整个标准三能级域，$e_p(\rho)=\operatorname{Tr}(p\rho)$、
+$c_q=(I_3-q)/2$；若 $p\perp q$，则
+$e_p(c_q)=(1-\operatorname{Tr}(pq))/2=1/2=e_q(c_p)$。
+完整 EB3及全部原纯域的 Conn由142.2的标准反向给出。144.5同时给 UC与(XI149.19)的双向对应。于是 $\kappa=1$、$h=1/2$、$R_p=1$；由正齐次性得全部非零方向的 $\rho_p(v)=\|v\|$，零方向也成立。证毕。
+
+这把先逐根连续、再给全域预算的旧入口替换为真实零边上的一个对称读数条件；所得静态模型与 UC相同，不声称逻辑上严格更弱或公理个数最少。若在 EB3+$\mathsf{Conn}$ 下没有(XI149.19)，本定理的逆否给出至少一条实际零边上的可读不对称 $e_p(c_q)\ne e_q(c_p)$。
+
+### 149.5 完整菜单、简洁几何与交换两端的边界
+
+**定理 149.5（同一原模型的全混态字典与次序边界）。** 在149.4的等价前件下，145.9的整个静态字典通过同一个 $\Phi$ 适用。具体地，置 $p_v=\Phi(vv^*)$、$Q_v=I_3-vv^*$、$f_M(\Phi X)=\operatorname{Tr}(MX)$，其中 $\|v\|=1$，则
+
+$$
+\begin{gathered}
+K=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1\},\qquad
+P=\{\Phi(vv^*):\|v\|=1\}\cong\mathbb{CP}^2,\\
+\mathcal E=\{f_M:0\preceq M\preceq I_3\},\\
+\mathcal F_{p_v}=\{f_{vv^*+B}:B=Q_vBQ_v,\ 0\preceq B\preceq Q_v\},\\
+T_{p_v}(\Phi\rho)=v^*\rho v,\qquad
+D_{p_v}=\{\Phi\rho:\rho\succeq0,\ \operatorname{Tr}\rho=1,\ \rho v=0\}.
+\end{gathered}
+\tag{XI149.22}
+$$
+
+原确认菜单完整且非单点，$B=0$ 在全部原混输入上达到 minimum并给 least。每颗完整 $D_{p_v}$ 是 $v^\perp$ 上的整个二阶密度球，球缘为 $\mathbb{CP}^1\cong S^2$；整个原实维数为九。令 $U=\Phi(I_3)$，则原球心图延拓为
+
+$$
+R(x)=\frac{u(x)U-x}{2},\qquad
+c_p=R(p),\qquad
+R(x)-U/3=-\frac12(x-U/3)\quad(x\in K).
+\tag{XI149.23}
+$$
+
+因此其简洁几何是同一复射影平面中的完整复射影线及其凸球，全部球心围绕同一总体中心反向缩小一半。全部数学有限 POVM、谱、自对偶和 Jordan结构由145.9原字典供给。全纯端点最低确认互易也成立，但它不等于连续测量次序可交换。
+
+证明。表示与字典的参数对应均直接复用145.9，不以选择一部分原态、效应或测量替代(XI149.1)。特别是 $B\succeq0$ 使 $\operatorname{Tr}(B\rho)\ge0$，故上述 $B=0$ 对每个原混输入实现 minimum；正性给 $v^*\rho v=0$ 当且仅当 $\rho v=0$，保留整个零球。其余几何式由 $c_{p_v}=\Phi((I_3-vv^*)/2)$ 得到。端点互易为
+$T_{p_v}(p_w)=|v^*w|^2=T_{p_w}(p_v)$。
+
+次序边界可在同一个已得模型内明确检验。取
+$P_0=|0\rangle\langle0|$、
+$Q_+=|+\rangle\langle+|$、
+$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ 和原输入 $\rho=P_0$。数学 Lüders 分支 $X\mapsto P_0XP_0$、
+$X\mapsto Q_+XQ_+$ 给两个先后双成功概率
+
+$$
+\operatorname{Tr}(Q_+P_0\rho P_0)=\frac12,\qquad
+\operatorname{Tr}(P_0Q_+\rho Q_+)=\frac14 .
+\tag{XI149.24}
+$$
+
+此模型满足 $\mathsf{CR}_c$ 及全端点互易，却有不同的先后概率，因此两端交换不能推出这些数学顺序仪器交换。这一例子不供应实际可调用的仪器。实际来源与读回、任意有限复合及纠缠、全旁观 CP、逐输入预算、记录、全部未来与切口、物理钟、Hamiltonian、能量与数值 $\hbar$，仍分别保留145.9及其传递来源的完整原合同。
+
+新增承重内容采用 repo-derived 综合推导归属：原整球零尺和完整法向接口生成真实零边的球心互易式；该式直接支付每根的全方向正高度，再以闭影像和原效应上界取得方向常值，最终沿有限零路支付原 UC的全标签预算。原法向图、实际接触纤维、双球消元及高度差估计分别准确复用 THREE_COPY VII122、SAME_READBACK123—124；UC分类与全部静态字典准确复用144.5和145.9。支撑函数的一阶论证只作中间工具，不作为独立新结果。成熟 Jordan分类的背景仍为 [Barnum—Müller—Ududec Theorem 16][Q149BMU]，其 projectivity、对称跃迁概率及保纯滤子的前件不由局部互易直接冒领，而只经既有完整分类链消费。这里不声明文献优先权，也未从裸 EB3+$\mathsf{Conn}$ 或纯端点 minimum互易导出 $\mathsf{CR}_c$。证毕。
+
+[Q149TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "§122.2—§122.3及定理122.4：P0锚点的完整法向图、有界凸实际影像与唯一实际接触纤维；闭包支撑面不预设单点。"
+[Q149SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "§123.2式(Q123.4)—(Q123.8)及定理123.3：P0接口下的双球全原空间消元；§123.5的闭影像与支撑微分；定理124.3的原效应上界和Bregman高度差；旧P_reg入口由149.2另付。"
+[Q149BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory，Theorem 16的全部前件。"
+
+## 追加锚（本行以下为增补区）
+
+## 150. 最低确认互易、双球有限消元与完整量子几何
+
+### 150.1 由原域唯一确定的比较尺
+
+**定义 150.1（全纯整球零确认互易）。** 保留149.1的整个原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$，以及完整 EB3+$\mathsf{Conn}$。特别是每个 $T_p$ 仍在全部原混输入上对整个原确认菜单取已达 minimum。由(XI149.2)，$e_p$ 是其中唯一在整个 $D_p$ 上归零的确认尺，$c_p$ 是该完整三球的中心。定义
+
+$$
+\boxed{\qquad
+\mathsf{ER}:\quad e_p(q)=e_q(p)\qquad(p,q\in P).
+\qquad}
+\tag{XI150.1}
+$$
+
+其白话含义是：用两端各自唯一的整球零确认尺读取对方，交换两端不改变读数。$e_p$ 的选择由原域锁定；互易是这些内生对象之间新增的约束。这里既不输入 $e_p\le f$ 对所有 $f\in\mathcal F_p$，也不定义 $T_p=e_p$。最低确认互易
+
+$$
+\mathsf{PR}:\quad T_p(q)=T_q(p)\qquad(p,q\in P)
+\tag{XI150.2}
+$$
+
+保留原来的独立含义，不能在证明前与 $\mathsf{ER}$ 互换。
+
+### 150.2 交换纯端点直接校准真实邻球
+
+**定理 150.2（纯互易到球心互易的有限消元）。** 在150.1的完整原前件和 $\mathsf{ER}$ 下，对任意原根 $p$，在(XI149.5)的同一球图中，存在 $R_p\ge1$，使
+
+$$
+\begin{gathered}
+\rho_p(v)=R_p\quad(v\in S^2),\qquad
+z_v=-R_pv,\qquad
+m(v)=\frac{2}{1+R_p},\\
+e_p(c_{q_v})=\frac{R_p}{1+R_p}=e_{q_v}(c_p).
+\end{gathered}
+\tag{XI150.3}
+$$
+
+因而 $\mathsf{CR}_c$ 成立。这条桥不使用 ZC、正高度输入、跨球连续性、支撑函数微分或 Bregman估计。
+
+证明。先准确复用[THREE_COPY VII定理122.4][Q150TC]和[SAME_READBACK §123.2、定理123.3][Q150SR]的 $P_0$ 接口；全部原根及所用纯端点属于 $P_0$ 已由(XI149.2)支付。固定 $p$，简记 $\rho=\rho_p$、$g=g_p$。对 $v,w\in S^2$、$s=v\cdot w$，完整原空间上的邻确认公式给
+
+$$
+e_{q_v}(q_w)=\frac{\rho(v)+s}{1+\rho(v)},\qquad
+e_{q_w}(q_v)=\frac{\rho(w)+s}{1+\rho(w)}.
+\tag{XI150.4}
+$$
+
+若 $v\ne w$，则 $s<1$。$\mathsf{ER}$ 与交叉相乘给
+$(1-s)(\rho(v)-\rho(w))=0$，故所有单位方向的 $\rho$ 同值 $R_p\ge1$。正齐次性给 $\rho(b)=R_p\|b\|$。原实际影像 $Z=\{H(x)/g(x):x\in K\setminus\{p\}\}$ 的闭包有支撑函数
+$h_{\overline Z}(n)=\rho(-n)=R_p\|n\|$，故是半径 $R_p$ 的闭球。其法向 $-v$ 的完整支撑面只有 $-R_pv$；定理122.4已保证实际接触 $z_v$ 存在，所以 $z_v=-R_pv$。这里先辨认闭影壳再辨认实际接触，不把两种唯一性混同；无需先证 $Z$ 闭合。
+
+令 $q=q_v$、$a=a_v=2c_q-p$、$m=g(a)\in(0,1]$。$a$ 是真实邻球 $D_q$ 内与 $p$ 对径的原纯点，$q_{-v}$ 则在原 $D_p$ 内与 $q_v$ 对径，二者未被预先认同。$\mathsf{ER}$ 用于原纯对 $(p,a)$，给
+
+$$
+d:=e_a(p)=e_p(a)=1-m.
+\tag{XI150.5}
+$$
+
+定理123.3在整个原 $V$ 上给出的精确恒等式因而成为
+
+$$
+e_a=d e_p+\gamma(g-v\cdot H),\qquad
+\gamma=\frac{1-d(1-m)}{m(1+R_p)}
+=\frac{2-m}{1+R_p}.
+\tag{XI150.6}
+$$
+
+在实际原点 $q_{-v}$ 上，$e_p=0$、$g=1$、$H=-v$，所以
+
+$$
+e_a(q_{-v})=\frac{2(2-m)}{1+R_p}.
+\tag{XI150.7}
+$$
+
+另一方面，$H(a)=mz_v=-mR_pv$；同一根 $p$ 的原邻确认公式在整个原 $V$ 成立，故
+
+$$
+e_{q_{-v}}(a)
+=\frac{R_pg(a)-v\cdot H(a)}{1+R_p}
+=\frac{2mR_p}{1+R_p}.
+\tag{XI150.8}
+$$
+
+现在才将 $\mathsf{ER}$ 用于原纯对 $(a,q_{-v})$。这一步使用全部原纯对的互易，没有未经证明地将它缩为共处某颗排斥球的纯对。两式相等给 $2-m=mR_p$，即 $m=2/(1+R_p)$。最后由 $2c_q=p+a$ 及原邻确认公式，
+
+$$
+e_p(c_q)=1-\frac m2
+=\frac{R_p}{1+R_p}=e_q(c_p).
+\tag{XI150.9}
+$$
+
+$v$ 和原根 $p$ 任意，所以得到全部原零边上的 $\mathsf{CR}_c$。证毕。
+
+### 150.3 一个二元互易条件的同原静态重构
+
+**定理 150.3（互易、同值与完整三能级原域等价）。** 在150.1的完整 EB3+$\mathsf{Conn}$ 及全部原量词下，下列条件逐模型等价：$\mathsf{ER}$；$\mathsf{CR}_c$；144.1的原全域 $\mathsf{UC}$；存在同一原锥和原单位的实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad \Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI150.10}
+$$
+
+这时 $e_p$ 才成为整个原确认菜单的 least，并在全部原混输入上等于 $T_p$；不要求矩阵、九维上界、ZC、Seed或全纯域连续性作为额外输入。
+
+证明。150.2给 $\mathsf{ER}\Rightarrow\mathsf{CR}_c$，其余等价可直接消费149.4；表示到 $\mathsf{ER}$ 由
+$e_{\Phi(vv^*)}(\Phi(ww^*))=|v^*w|^2$
+对称得到。为明确从本候选出发的路线无需调用149.2—149.3的微分步骤，也可直接支付原 UC入口。记 $h_p=R_p/(1+R_p)\in[1/2,1)$；(XI150.9)在每条原零边给 $h_p=h_q$。全部原纯标签的有限零路连通使 $h_p=h$ 对同一个 $h<1$ 成立。任意 $a\in P$、$x\in S_a$ 及其完整原球内对径 $\bar x=2c_a-x$ 满足
+
+$$
+e_a(c_x)+e_a(c_{\bar x})=2h=:\kappa<2.
+\tag{XI150.11}
+$$
+
+这正是144.1的全标签、同一严格余量的 UC。直接消费144.5即得(XI150.10)；分类链中的面覆盖、least、自对偶、谱性及成熟 Jordan分类均取其已付清的完整前件，不把对称性本身当作这些前件。完整原菜单和全混态 minimum的读回，直接用149.5及其来源145.9在同一个 $\Phi$ 下的字典。因此原 $e_p$ 是 least、$T_p=e_p$ 于全部 $K$、$\mathsf{PR}$ 成立；这些是结论。证毕。
+
+**定理 150.4（球内刻度、整体几何与候选的准确边界）。** 在150.3的等价条件下，每个原根的 $R_p=1$，其任一完整原球上的纯端点满足
+
+$$
+e_{q_v}(q_w)=T_{q_v}(q_w)
+=\frac{1+v\cdot w}{2}
+=\cos^2\!\frac{\theta(v,w)}2.
+\tag{XI150.12}
+$$
+
+整体原纯域是 $\mathbb{CP}^2$，每颗完整排斥球的球缘是其中的 $\mathbb{CP}^1\cong S^2$，实心是其全部二阶密度态。确认尺、全部效应、完整确认菜单、每个混态的 Born最低读数及数学有限 POVM，均为149.5的同原对象。原球心仍由 $c_p=(U-p)/2$、$U=\Phi(I_3)$ 给出。
+
+证明。150.3供给149.4—149.5的同原表示，所以 $R_p=1$；代入(XI150.4)得第一式，最后一步是 $v\cdot w=\cos\theta$ 的半角恒等式。其余直接消费149.5的完整字典，不重建或缩减其原域。
+
+因此在这组完整前件下，若原静态模型不是(XI150.10)，必有一对原纯端点的内生整球零确认读数不互易。这是150.3的逆否，不供应裸 EB3+$\mathsf{Conn}$ 的非量子实现。上述有限消元没有将 $\mathsf{PR}$ 与 $\mathsf{ER}$ 当作定义同义；整个最低菜单到唯一整球零尺的连接由150.5另证。本候选与球心互易在此域中等价，不声称严格更弱或公理数最少。
+
+交换两个比较端点也不等于先后测量交换；149.5在同一个满足全部上述条件的模型中已有双成功概率 $1/2$ 与 $1/4$ 的明确数学反例。实际可调用仪器、任意有限复合及纠缠、全旁观 CP、逐输入预算、记录、全部未来与切口、物理钟、Hamiltonian、能量和数值 $\hbar$，仍保留145.9及其传递来源的完整原合同。
+
+本章新增承重桥采用 repo-derived 综合推导归属：同一原球内的纯端点互易先固定支撑刻度，随后两个真实球的全原空间确认恒等式和另外两组原纯对互易直接固定邻球高度，得到原球心互易与 UC。唯一整球零尺、完整法向图、实际接触纤维和双球消元分别复用145.3、THREE_COPY VII122及 SAME_READBACK123；分类和全域字典复用144.5、145.9和149。已有的 BILATERAL V77.16将最低确认的仿射性连接到 least与纯互易，但包含 least前件，不代替本章的无least入口。[Barnum—Müller—Ududec Theorem 16][Q149BMU]所用 projectivity、对称跃迁及保纯滤子也只经既有分类链消费。本章不声明文献优先权。证毕。
+
+[Q150TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "定理122.4：P0接口下的有界实际影像、闭影壳支撑函数、唯一实际接触及完整原纤维关系。"
+[Q150SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "§123.2式(Q123.4)—(Q123.8)及定理123.3式(Q123.9)：P0接口下真实双球与整个原V上的确认恒等式，不要求P_reg。"
+
+### 150.4 原最低确认互易的满刻度闭合
+
+**定理 150.5（全菜单最低互易到全部满刻度、least与同原量子结构）。** 在150.1的完整原 EB3+$\mathsf{Conn}$ 背景中，字面 $\mathsf{PR}$ 亦等价于150.3的各项。具体地，它先给每颗完整原球的单位预算，再在整个原锥序中给
+
+$$
+\begin{gathered}
+a_{D_p}=\tfrac12,\qquad \beta_{D_p}=1,\\
+e_p\le_{C^*}f\quad(f\in\mathcal F_p),\qquad
+T_p(x)=e_p(x)\quad(p\in P,\ x\in K).
+\end{gathered}
+\tag{XI150.13}
+$$
+
+所以本候选可直接表述为：两端各在整个原确认菜单中取最低读数，交换两个原纯端点，最低结果不变。$e_p$ 的全混态 least性是证明所得，未加入该候选。
+
+证明。首先只准确复用[IX114.5—114.8][Q150IX]：在完整 EB3+$\mathsf{PR}$ 下，每颗完整原球 $F=b_F(\overline B^3)$ 有共同系数和已达延拓预算
+
+$$
+0<a_F\le\tfrac12,\qquad
+T_{b_F(v)}(b_F(z))=1-a_F+a_Fv\cdot z,
+\qquad \beta_F=(2a_F)^{-1}\ge1.
+\tag{XI150.14}
+$$
+
+其中 $v\in S^2$、$z\in\overline B^3$；只在同一颗球使用其共同刻度，不提前同步不同球。IX114.8的原边对称等价还给
+
+$$
+p\perp q:\qquad
+\beta_{D_p}=1
+\ \Longleftrightarrow\ D_p\cap D_q\ne\varnothing
+\ \Longleftrightarrow\ \beta_{D_q}=1.
+\tag{XI150.15}
+$$
+
+这是既有的满刻度沿原零边传播，并非本章另创的局部引理。$\mathsf{Conn}$ 因而使任意一颗满刻度球足以令全部原球满刻度，所用每条路径有限，长度不要求统一。
+
+反设存在某个原 $a$ 满足 $\beta_{D_a}>1$。[X124.11][Q150X]的前件正是完整 EB3+$\mathsf{PR}$，它给一次真实整球塌缩：存在全部属于原域的 $p_i,p,q\in P$，满足
+
+$$
+p_i\longrightarrow p,\qquad q\in D_p,\qquad p\ne q,
+\qquad d_H(D_{p_i},\{q\})\longrightarrow0.
+\tag{XI150.16}
+$$
+
+其纯极限标签、实际纯塌缩点及整个原球的 Hausdorff收敛均是该既有结论的一部分，不由抽象局部球退化替代。另一方面，EB3+$\mathsf{Conn}$ 已经给全域 Inj及 $P=P_0$，特别是这个实际极限标签 $p\in P_0$。因此[X126.1、126.5、定理126.6][Q150X]的全部前件均满足；它使同一个极限标签达到 $a_{D_p}=1/2$、$\beta_{D_p}=1$。由(XI150.15)及 $\mathsf{Conn}$，全部原标签均有 $\beta_{D_s}=1$，与最初的 $\beta_{D_a}>1$ 矛盾。由于所有预算本来不小于一，故它们全部等于一。新增的全域连接正是非单位预算到实际塌缩、塌缩到满刻度极限、再沿原零路同步这一闭合；没有把126.6中单个标签的 least直接外推到其他标签。
+
+现在在原坐标中支付每个标签的全部混态 least。固定 $p$，令 $g=u-e_p$，仍用150.2的完整法向坐标。满刻度的(XI150.14)使所有 $q_v,q_{-v}$ 原正交。原完整零面和邻确认公式给
+
+$$
+0=e_{q_v}(q_{-v})=\frac{\rho_p(v)-1}{1+\rho_p(v)},
+\qquad \rho_p(v)=1\quad(v\in S^2),\qquad
+\|H(x)\|\le g(x)\quad(x\in K).
+\tag{XI150.17}
+$$
+
+最后一个不等式由 $\rho_p$ 的原全域定义逐方向得到，在 $x=p$ 两边同零。任取整个原菜单中的 $f\in\mathcal F_p$，其补效应 $n=u-f\in N_p\cap\mathcal E$ 由完整法向限制同构唯一写成
+$n=A g+b\cdot H$。在整个原 $D_p$ 上的效应上下界使 $A\ge\|b\|$ 且 $A+\|b\|\le1$。因而每个原混态满足
+
+$$
+n(x)\le A g(x)+\|b\|\|H(x)\|
+\le(A+\|b\|)g(x)\le g(x).
+\tag{XI150.18}
+$$
+
+所以 $f\ge e_p$ 于整个 $K$，齐次化给 $f-e_p\in C^*$。$e_p$ 本身仍属于整个 $\mathcal F_p$，故在每个混输入达到 minimum，得到(XI150.13)。此时才可用 $\mathsf{PR}$ 得
+$e_p(q)=T_p(q)=T_q(p)=e_q(p)$，即 $\mathsf{ER}$。150.2—150.3给同原量子结构；也可直接消费IX114.9中完整 EB3+$\mathsf{PR}$ 加全部 $\beta_F=1$ 的既有分类入口，不经过球心微分路线。反向同原表示下的全部混态 Born minimum由149.5给出，纯端交换立即给 $\mathsf{PR}$。所以
+
+$$
+\boxed{\quad
+\mathsf{PR}\ \Longleftrightarrow\ \mathsf{ER}
+\ \Longleftrightarrow\ \mathsf{CR}_c
+\ \Longleftrightarrow\ \mathsf{UC}
+\ \Longleftrightarrow\ \text{同原锥、同原单位的完整复三能级静态表示}.
+\quad}
+\tag{XI150.19}
+$$
+
+这些是完整 EB3+$\mathsf{Conn}$ 下证明出的模型类等价，不是定义换名。原物理合同和测量先后边界仍按150.4保留；没有证明去掉 $\mathsf{Conn}$、裸 EB3+$\mathsf{Conn}$ 自动给互易、有限采样认证或绝对最小性。
+
+本条新增内容归属 repo-derived 综合推导，不声明文献优先权。球内共同刻度、满刻度的边传播、非单位预算的实际塌缩供应、唯一整球零标签处的塌缩饱和及单位预算分类均为上述来源中的既有结果；本条保留它们的原前件，新增的是用全纯零路连通将非单位预算分支排除，并逐张原确认尺支付整个菜单的 least。Landsman的[原文§1.3式(1.4)][Q150L]在有限维完整有界效应域中定义相同的最低比较；其 projective-face及 two-sphere重构另保留相应前件，未作为这里省略满刻度桥的依据。证毕。
+
+[Q150IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.5—114.6完整球内的共同最低刻度与预算；114.8满刻度的原边对称等价；114.9全部单位预算后的同原静态表示。"
+[Q150X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "推论124.11式(X124.20c)在完整EB3+PR下供应实际整球塌缩；定义126.1、126.5及定理126.6在另有Inj且极限标签属于P0时取得同一标签满刻度。"
+[Q150L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability, §1.3式(1.4)：在完整有界仿射效应域上的最低确认定义；重构的其他前件保留。"
+
+## 追加锚（本行以下为增补区）
