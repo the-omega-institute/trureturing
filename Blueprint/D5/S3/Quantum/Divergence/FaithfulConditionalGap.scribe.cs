@@ -77,8 +77,18 @@ internal sealed class FaithfulConditionalGapDocument : IScribeDocumentDefinition
                         + "processing and faithfulness. The conditional ratios are bounded "
                         + "above by one. The conclusion answers the faithful-divergence "
                         + "existential in Section 9, second bullet, without specializing to "
-                        + "relative entropy or determining the exact conditional optimum."))),
-                DescribeRole.Theorem))));
+                        + "relative entropy or determining either exact optimal coefficient.")),
+                    Paragraph(Text(
+                        "The endpoint and its consumed proof helpers have proof_shape bind-only. "
+                        + "The endpoint is admitted as an external open-problem resolution; "
+                        + "no escape witness is claimed. The positive-result four-slot audit "
+                        + "is unfinished under issue 30303, comment 6874572340: exact "
+                        + "sourceSelection and whole-family observational dependence are missing. "
+                        + "This is not a declared_validated registration."))),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hirche-george-nuradha-wilde-2026-faithful-conditional-gap"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Id(name)));
