@@ -128,7 +128,7 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let typeArgs := info.type.getAppArgs
   unless typeArgs.size == 5 do throw <| IO.userError "contract.registration:target_arity"
   let theoremName ← constantName find "target" typeArgs[1]!
-  discard <| IO.ofExcept <| checkTarget find theoremName typeArgs[1]!
+  let targetInfo ← IO.ofExcept <| checkTarget find theoremName typeArgs[1]!
   IO.ofExcept <| rigidLevels info typeArgs[1]!
   let fs := all.extract 4 all.size
   let (arenaName, _) ← arenaReference find "arena" fs[0]!
@@ -164,6 +164,10 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   if sourceBound && (generated || realizationName != suppliedName) then
     throw <| IO.userError "contract.registration:source_bridge_identity"
   let descriptor ← optional find fs[7]!
+  -- Source records are inspected in the original theorem's rigid universe frame.
+  let descriptor := if sourceBound then descriptor.map fun expression =>
+      expression.instantiateLevelParams info.levelParams (targetInfo.levelParams.map Level.param)
+    else descriptor
   let primitives := if sourceBound then none else some
     implementationArgs[3]!
   let (unit, unitCorrespondence) ← if sourceBound then pure (none, true) else do
