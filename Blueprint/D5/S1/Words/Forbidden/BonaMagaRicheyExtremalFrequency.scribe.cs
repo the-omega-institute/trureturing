@@ -84,7 +84,10 @@ internal sealed class BonaMagaRicheyExtremalFrequencyDocument : IScribeDocumentD
                     + "contradicting 0<1. The theorem has literal type Not claim. "
                     + "This decides the unrestricted universal assertion. Variants with k at "
                     + "least two, k at least three or only nonconstant words remain unproved here; "
-                    + "no general classification of maximizers follows."))), DescribeRole.Theorem))));
+                    + "no general classification of maximizers follows."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("bonamagarichey-2026-extremal-frequency"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Word() => Call("List", F.Id("Bool"));
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
