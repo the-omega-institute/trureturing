@@ -249,6 +249,8 @@ def occupiedSpectrum (U : E ≃ₗᵢ[ℂ] E) (v : E) : Set ℂ :=
 private theorem eigenvector_not_dark (U : E ≃ₗᵢ[ℂ] E) (v : E)
     {x : cyclicSpace U v} {ζ : ℂ}
     (hx : cyclicUnitary U v x = ζ • x) (ho : inner ℂ (initial U v) x = 0) : x = 0 := by
+  by_cases hxzero : x = 0
+  · exact hxzero
   have hx' : U (x : E) = ζ • (x : E) := congrArg Subtype.val hx
   have hB : cyclicClick U v x = 0 := by
     apply Subtype.ext
@@ -263,10 +265,9 @@ private theorem eigenvector_not_dark (U : E ≃ₗᵢ[ℂ] E) (v : E)
     change (ℂ ∙ v).starProjection (U (x : E)) = 0 at hB'
     rw [hB', sub_zero, hx']
   have hpow (n : ℕ) : (cyclicStep U v ^ n) x = ζ ^ n • x := by
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      rw [pow_succ', mul_apply_eq_comp, ih, map_smul, hA, smul_smul, pow_succ]
+    have he : (cyclicStep U v).toLinearMap.HasEigenvector ζ x :=
+      ⟨Module.End.mem_eigenspace_iff.mpr hA, hxzero⟩
+    simpa only [ContinuousLinearMap.toLinearMap_pow] using he.pow_apply n
   have hk : x ∈ (⨅ n : ℕ, LinearMap.ker
       ((cyclicClick U v).toLinearMap.comp ((cyclicStep U v).toLinearMap ^ n))) := by
     apply (Submodule.mem_iInf _).mpr

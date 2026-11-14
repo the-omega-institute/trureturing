@@ -42,7 +42,7 @@ def rejected : Realization signature.{u} :=
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {E : Type u} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
-    [FiniteDimensional ℂ E] (U : E ≃ₗᵢ[ℂ] E) (v : E) (hv : ‖v‖ = 1),
+    [FiniteDimensional ℂ E] (U : E ≃ₗᵢ[ℂ] E) (v : E) (_hv : ‖v‖ = 1),
     (occupiedSpectrum U v).Finite ∧
       (occupiedSpectrum U v).ncard = Module.finrank ℂ (cyclicSpace U v) ∧
       HasSum (fun n : ℕ => R.readout () ⟨E, U, v⟩ n)
@@ -82,22 +82,20 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   have hvinner : inner ℂ witnessVector.{u} witnessVector = 1 := by
     rw [inner_self_eq_norm_sq_to_K, witness_norm]
     norm_num
-  have ht : monitoredStep witnessUnitary witnessVector witnessVector = 0 := by
-    change witnessVector - (ℂ ∙ witnessVector).starProjection witnessVector = 0
+  have ht : monitoredStep witnessUnitary.{u} witnessVector.{u} witnessVector.{u} = 0 := by
+    change witnessVector.{u} - (ℂ ∙ witnessVector.{u}).starProjection witnessVector.{u} = 0
     rw [Submodule.starProjection_singleton, witness_norm, hvinner]
     simp
   intro he
-  have h1 : returnProbability witnessUnitary witnessVector 1 = 1 := by
-    change ‖inner ℂ witnessVector witnessVector‖ ^ 2 = 1
+  have h1 : returnProbability witnessUnitary.{u} witnessVector.{u} 1 = 1 := by
+    change ‖inner ℂ witnessVector.{u} witnessVector.{u}‖ ^ 2 = 1
     rw [hvinner]
     norm_num
-  have h2 : returnProbability witnessUnitary witnessVector 2 = 0 := by
-    change ‖inner ℂ witnessVector
-      (witnessUnitary (monitoredStep witnessUnitary witnessVector witnessVector))‖ ^ 2 = 0
+  have h2 : returnProbability witnessUnitary.{u} witnessVector.{u} 2 = 0 := by
+    change ‖inner ℂ witnessVector.{u}
+      (witnessUnitary.{u} (monitoredStep witnessUnitary.{u} witnessVector.{u} witnessVector.{u}))‖ ^ 2 = 0
     rw [ht, map_zero, inner_zero_right, norm_zero, zero_pow (by decide)]
-  change (0 + 1 : ℝ) * returnProbability witnessUnitary witnessVector (0 + 1) =
-    (1 + 1 : ℝ) * returnProbability witnessUnitary witnessVector (1 + 1) at he
-  have hh : (1 : ℝ) = 0 := by simpa only [h1, h2, zero_add, one_mul, mul_zero] using he
+  have hh : (1 : ℝ) = 0 := by simpa [actual, realize, p, h1, h2] using he
   exact one_ne_zero hh
 
 def family : Registration arena.{u} (type_of% (@monitored_spectral_mean.{u})) where
