@@ -6,6 +6,7 @@ url: https://arxiv.org/abs/1503.06387v3
 triage: theorem
 motivation_gids:
   - D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result
+  - D5/S3/Quantum/Matrix/ProjectionAMGMRefutationScalar200.result
 ---
 
 # The Sun–Luo–Ye projection-matrix AM-GM conjecture
@@ -99,7 +100,7 @@ The settlement would fail if these matrices did not satisfy the source's project
 
 Kernel-checked source: [ProjectionAMGMRefutation.lean](../D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.lean), namespace `D5.S3.Quantum.Matrix.ProjectionAMGMRefutation`. The public conclusion is `result`; the axiom closure of every public declaration is contained in $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 
-The scalar three-coordinate complement-projection argument under Triage is prose. A separate private scalar200 source now has native Lean 4.35 evidence for the complete all-order scalar basis refutation, but it is not an admitted public declaration or a new open-problem-resolution binding. Its exact scope and evidence boundary are recorded below; it remains separate from the public kernel-checked dimension-three result.
+The scalar three-coordinate complement-projection argument under Triage remains prose. The complete scalar200 source is now included verbatim in [ProjectionAMGMRefutationScalar200.lean](../D5/S3/Quantum/Matrix/ProjectionAMGMRefutationScalar200.lean), namespace `D5.S3.Quantum.Matrix.ProjectionAMGMRefutationScalar200`. The current Lean 4.35 scoped report covers 130 scalar declarations and 29 unchanged historical-owner declarations, with only `propext`, `Classical.choice` and `Quot.sound`, no `sorryAx`, and source-bound `utility_refutation.is_closed_negation=true` for the closed included `claimScalar` and literal `result : Not claimScalar`. This is current scoped evidence, not whole ordinary acceptance or independent complete admission review. The historical private report at base `1ab17526d4b70881217bc0bbfaebaff8f5e98890` remains inherited evidence only. The historical unrestricted claim/result and frozen identity remain unchanged.
 
 The six-dimensional block counterexample under Triage is a separate prose
 proof with an exact integer certificate and a self-contained checker. It
@@ -135,7 +136,7 @@ The exact rational checks enumerate all $n!$ words at $n=3,5,7$: respectively 6,
 | No equiangular failure at $n=2,4$ | Computed by the experiment entry | 399 interior grid points at each dimension; this finite grid does not conflict with the separate $n=200$ scalar certificate |
 | Scalar coordinate-descent class $P_i=I-a_i a_i^\top$, $n=N=3$ | Proved in prose below | Every unit, linearly independent triple; no sign or conditioning restriction |
 | Arbitrary-block coordinate-descent assertion $G\preceq M^n$ | Refuted in prose with exact integer checks below | $n=3$, $N=6$, $d_1=d_2=d_3=2$; actual orthonormal blocks and square nonsingular concatenation |
-| All-order scalar basis assertion `claimScalar` | Refuted by the complete scalar200 certificate below; private native evidence, no new public admission | An actual real unit-column basis at $n=N=200$, with the complete $200!$ reversed-permutation average and exponent $200$ |
+| All-order scalar basis assertion `claimScalar` | Complete source included with current Lean 4.35 scoped typed-refutes evidence; existing-owner canonical integration, whole acceptance and independent review remain separate | An actual real unit-column basis at $n=N=200$, with the complete $200!$ reversed-permutation average and exponent $200$ |
 | Optimal RP-CD convergence rate | Open | The source's intended application is not settled by this refutation |
 | Kim–Lee–Yun second-moment comparison | Open | Separate from the first-moment matrix inequality tested here |
 | Unrestricted projection inequality for even $n$ | Refuted in the scalar basis subclass at $n=200$ | The smallest failing dimension and a characterization of the remaining even-$n$ cases are open |
@@ -324,10 +325,10 @@ remain open.
 
 ### The complete scalar200 basis refutation
 
-This is the full finite scalar counterexample carried by the existing
-owner exposition. It is source-faithful and native-verified privately on
-Mac Studio, while its source remains unpublished and unadmitted. It does
-not add a second resolution marker to this dossier.
+This is the full finite scalar counterexample included in the existing
+owner's Draft source, with current source-bound scoped native evidence and
+frozen scalar membership. Whole current acceptance remains incomplete. It
+does not add a second resolution marker to this dossier.
 
 Fix $n=200$, $K=10^9$ and $s=\sqrt{K^2+1}$. In the standard orthonormal
 basis $e_0,\ldots,e_{199}$, put
@@ -400,13 +401,125 @@ orthogonal and carries every projection, mean, power and permutation word
 by conjugation; $U^\top z$ has the same negative form. This bridge does
 not assign a sign to the separate expected-inverse reformulation.
 
-The private native source has literal result type $\operatorname{Not}
-\texttt{claimScalar}$, no `sorryAx` in its scoped report, and SHA-256
+The current included source has literal result type $\operatorname{Not}
+\texttt{claimScalar}$, no `sorryAx` in its scoped report, and unchanged SHA-256
 `1067ac81d5cb1acca53faf795d906c6d832b55ab7c16c3890f44a6c143ca15ec`.
-That evidence is unpublished and is not presented as a new public Lean
-declaration or a new open-problem resolution. The smallest failing
-dimension, optimal RP-CD rate and separate second-moment comparison stay
-open.
+Its six public authored declarations are `meanProj`, `symProd`, `IsCDFamily`,
+`cdProj`, `claimScalar` and the sole theorem `result`. Only the scalar projection
+endpoint is formalized; no formal full-block, Hessian or update-transport theorem
+is claimed. The smallest failing dimension, optimal RP-CD rate, expected-inverse
+and separate second-moment comparisons remain open.
+
+**Existing-owner source interpretation and exact obligation.** Admission basis:
+`open-problem-resolution`, original all-$n$ Tier 1 registration
+[#17674](https://github.com/the-omega-institute/trureturing/issues/17674),
+created 2026-10-16T05:39:52Z. The first $n=3$ test was not a dimension cap.
+The named assertion is the structured first-moment comparison called the
+original matrix AM-GM in [KLY arXiv:2505.23152v1](../Library/QuadraticForms/kimleeyun2025randompermutations.md),
+Appendix E.2, pp.50–51, under Assumption 2.2; SLY Conjecture 3.1/(37),
+Claim 4.1/(51a,b) and the Remark after (54) supply the parent identity and
+explicit structured application. The current author's existing-owner
+interpretation uses that contextual named identity, the original registration
+and the inherited bounded exact-claim literature screen jointly. It does not
+make the already-refuted unrestricted assertion newly open. No inspected
+passage separately labels the precise scalar restriction a still-open
+conjecture; KLY's general-quadratic knowledge statement is historical evidence,
+and E.2's later future work is about second moments. The ended source review
+is quality **approve**, tests **approve**, architecture **comment**, not current
+admission. The architecture exact-named-assertion concern remains explicitly
+reserved for later independent complete review; no new number, title, slug,
+retroactive registration or exhaustive-absence claim is supplied.
+
+The sole typed `OpenProblemResolutionClaim` remains hosted by
+`ProjectionAMGMRefutation.result`, with scalar `result` added as a distinct
+member through the existing single-owner/multiple-member interface. Its
+current frozen scalar declaration and matching theorem-like Scribe Describe
+are required; the historical unrestricted binding alone cannot stand for it.
+The canonical deposit-uncovered entrance has frozen the scalar module from
+its current source-bound scoped report, after canonical Scribe emission and
+deposit-header-check. Whole current acceptance and later independent complete
+review must establish their respective evidence. No generated member pin is
+hand edited. The scalar `result` is a designated `basis=refutes` conclusion,
+exempt from four-slot registration; all other new theorems are private live
+helpers. Existing public `sixPerms_univ` registration and its other consumers
+remain intact.
+
+**Declaration-level author accounting.** This integration uses the external
+open-problem-resolution basis and makes no escape-witness claim. The author
+records `proof_shape: bind-only` for each theorem below: the supplied chain
+combines the pinned norm/projection/dimension/permutation facts, induction and
+explicit algebraic and order normalization into the registered counterexample.
+These are this author's current declaration labels, not an adjudication or
+replacement of the historical architecture UNRESOLVED / quality bind-only /
+tests content disagreement or any earlier prefreeze rejection. Each private
+helper is retained only on the live proof path to `result`; representative
+actual consumers are listed below. Definitions and abbreviations are the
+necessary claim vocabulary, witness data and consumed organization, not
+additional settlement theorems.
+
+| Theorem/helper | Author proof_shape | Live use |
+| --- | --- | --- |
+| `std_dot_std` | bind-only | `std_norm` |
+| `std_norm` | bind-only | `a200_unit` |
+| `nextIndex_eq` | bind-only | `a200_unit` |
+| `a200_unit` | bind-only | `a200_isCDFamily` |
+| `s_pos` | bind-only | `a200_spans` |
+| `a200_spans` | bind-only | `a200_independent` |
+| `a200_independent` | bind-only | `a200_isCDFamily` |
+| `a200_isCDFamily` | bind-only | `result` |
+| `cdProj_projection` | bind-only | `cdProj_contraction` |
+| `cdProj_contraction` | bind-only | `P200_contraction` |
+| `P200_contraction` | bind-only | `total_operator_error` |
+| `a0_unit` | bind-only | `P0_contraction` |
+| `P0_contraction` | bind-only | `total_operator_error` |
+| `P0_eq` | bind-only | `P0_word` |
+| `P0_endpoints` | bind-only | `total_factor_error` |
+| `embed2_dot` | bind-only | `auxiliary_negative_form` |
+| `embed2_v2` | bind-only | `P_z` |
+| `planeProj_projection` | bind-only | `P200_middle_norm` |
+| `planeError_square` | bind-only | `P200_middle_norm` |
+| `planeError_selfAdjoint` | bind-only | `P200_middle_norm` |
+| `s_sq` | bind-only | `P200_middle_error` |
+| `P200_middle_error` | bind-only | `P200_middle_norm` |
+| `P200_middle_norm` | bind-only | `total_factor_error` |
+| `total_factor_error` | bind-only | `total_operator_error` |
+| `list_prod_contraction` | bind-only | `list_prod_sub_bound` |
+| `list_prod_sub_bound` | bind-only | `pow_sub_bound` |
+| `pow_sub_bound` | bind-only | `total_operator_error` |
+| `mean_contraction` | bind-only | `total_operator_error` |
+| `mean_sub_bound` | bind-only | `total_operator_error` |
+| `symProd_sub_bound` | bind-only | `total_operator_error` |
+| `sum_perm_eval_zero` | bind-only | `sum_perm_eval` |
+| `sum_perm_eval` | bind-only | `sum_perm_inv_eval` |
+| `sum_perm_inv_eval` | bind-only | `symProd_P0_position_average` |
+| `single_word` | bind-only | `P0_word` |
+| `P0_word` | bind-only | `symProd_P0_position_average` |
+| `symProd_P0_position_average` | bind-only | `symProd_P0_form` |
+| `binomial_three_terms` | bind-only | `rational_power_bound` |
+| `rational_power_bound` | bind-only | `B2_power_form_bound` |
+| `P_projection` | bind-only | `aux_word_form` |
+| `P_embed2` | bind-only | `mean_P0_embed2` |
+| `Q_embed2` | bind-only | `mean_P0_embed2` |
+| `mean_P0_eq` | bind-only | `mean_P0_embed2` |
+| `mean_P0_embed2` | bind-only | `mean_P0_pow_embed2` |
+| `mean_P0_pow_embed2` | bind-only | `auxiliary_negative_form` |
+| `P_z` | bind-only | `aux_word_form` |
+| `aux_word_form` | bind-only | `symProd_P0_form` |
+| `symProd_P0_form` | bind-only | `auxiliary_negative_form` |
+| `B2_symmetric` | bind-only | `B2_power_form_bound` |
+| `B2_norm_bound` | bind-only | `B2_power_form_bound` |
+| `B2_squared_vector` | bind-only | `B2_squared_vector_norm` |
+| `B2_squared_vector_norm` | bind-only | `B2_power_form_bound` |
+| `dot_self_eq_l2_sq` | bind-only | `B2_power_form_bound` |
+| `B2_power_form_bound` | bind-only | `auxiliary_negative_form` |
+| `auxiliary_negative_form` | bind-only | `strict_negative_certificate` |
+| `total_operator_error` | bind-only | `strict_negative_certificate` |
+| `quadratic_form_error` | bind-only | `strict_negative_certificate` |
+| `z_squared_norm` | bind-only | `strict_negative_certificate` |
+| `s_gt_K` | bind-only | `strict_negative_certificate` |
+| `strict_negative_certificate` | bind-only | `P200_not_posSemidef` |
+| `P200_not_posSemidef` | bind-only | `result` |
+| `result` | bind-only | designated refutation, registration-exempt |
 
 ### Three blocks of two columns: an exact counterexample, proved in prose
 
@@ -609,4 +722,21 @@ disposition are unchanged.
 
 ## ASSUMED-UNVERIFIED
 
-The literature screen's completeness is unverified. In particular, the body of Luenberger–Ye, *Linear and Nonlinear Programming*, fifth edition, Chapter 14, DOI 10.1007/978-3-030-85450-8_14, was access-blocked in the recorded source check. Absence of a settlement in the searched sources is not a proof that none exists elsewhere. The family, transition, scalar-three and six-dimensional block derivations above are prose proofs, not new kernel-checked results. The block refutation has exact integer computational evidence; literature priority is not established. The scalar200 claim is refuted by a complete private native-verified source, but that source has no public declaration, freeze or new resolution binding here. The optimal RP-CD rate, separate second-moment comparison and smallest failing dimension remain open. Numerical grid readings cover only their stated finite samples.
+The literature screen's completeness is unverified. In particular, the body of Luenberger–Ye, *Linear and Nonlinear Programming*, fifth edition, Chapter 14, DOI 10.1007/978-3-030-85450-8_14, was access-blocked in the recorded source check. Absence of a settlement in the searched sources is not a proof that none exists elsewhere. The family, transition, scalar-three and six-dimensional block derivations above are prose proofs, not new kernel-checked results. The block refutation has exact integer computational evidence; literature priority is not established. The complete scalar200 source is now included with current scoped Lean 4.35 evidence; its canonical member binding and whole-normal evidence must be assessed at the exact candidate head, separately from source-only approvals and historical native evidence. The scalar d_i=1 source specialization is direct; the ordinary Hessian correspondence uses the conventional symmetric positive root, which KLY does not separately specify. No kernel transport theorem is claimed. The optimal RP-CD rate, separate second-moment comparison and smallest failing dimension remain open. Numerical grid readings cover only their stated finite samples.
+
+The inherited scalar source screen used 37 retrievals and incomplete 41/33-row
+Semantic Scholar citation screens (KLY itself was absent). Records
+2308.00899, 1512.04680 and 1508.00193 remain metadata/abstract screens. Failed
+Google/DuckDuckGo/Bing access provides no absence evidence. The disabled
+`iffalse` AM-GM material in Lee–Wright is excluded from published evidence.
+The inspected follow-up norm, average-of-norms, near-identity, spectral-rate
+and special-Hessian domains do not settle the exact first-moment comparison;
+recent preprint proofs were not independently validated. SLY v1 was not
+inspected and older versions do not inherit v3 labels. The journal text,
+numbering and equivalence and KLY conference equality remain unverified.
+The current dossier's scalar exposition is the same candidate work, not an
+independently earlier literature settlement. All earlier prefreeze rejects,
+architecture UNRESOLVED / quality bind-only / tests content, comment-only
+rounds, exposition-only approvals and the invalid-Pro round remain historical;
+no vote, spent cap or allocation is changed. Current scoped truth and typed
+negation do not by themselves settle named-problem fidelity or whole delivery.

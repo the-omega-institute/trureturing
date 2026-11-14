@@ -70,9 +70,11 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/sun-luo-ye-2020-projection-matrix-amgm` (refuted) by `D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result`.
+*Resolves.* `Problems/sun-luo-ye-2020-projection-matrix-amgm` (refuted) by `D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result` and `D5/S3/Quantum/Matrix/ProjectionAMGMRefutationScalar200.result`.
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-luo-ye-2020-projection-matrix-amgm","declaration_gid":"D5/S3/Quantum/Matrix/ProjectionAMGMRefutation.result","resolution_kind":"refuted"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-luo-ye-2020-projection-matrix-amgm","declaration_gid":"D5/S3/Quantum/Matrix/ProjectionAMGMRefutationScalar200.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -84,7 +86,7 @@ The explicit matrices on Fin 3 satisfy the projection hypotheses, but z=(1,1,1) 
 
 ## The scalar200 basis counterexample
 
-The dimension-three kernel-checked result above is the existing public refutation. The following complete scalar comparison is an existing-owner exposition of a separate private native-verified candidate; it adds no public declaration, freeze, deposit or second open-problem-resolution binding.
+The dimension-three kernel-checked result above remains the historical unrestricted refutation. The complete scalar200 source is now included verbatim in ProjectionAMGMRefutationScalar200, with current Lean 4.35 scoped typed-refutes evidence and canonical deposit. Its distinct result is an additional member of this existing owner's sole resolution claim, not a second claim. Whole acceptance and independent complete admission review remain separate.
 
 Fix n=200, K=1000000000 and s=sqrt(K^2+1). In the standard orthonormal basis e0,...,e199, take a0=e1, ai=(K e1+e(i+1))/s for 1<=i<=198, and a199=(e0-e1)/sqrt(2). Take z=e0+200e1. The submitted family is this finite real unit-column basis; the dependent auxiliary family below is only a comparison.
 
@@ -100,7 +102,7 @@ The squared length of z is 40001. Cauchy-Schwarz gives the strict original certi
 
 For the source correspondence with a Hessian square-root convention, put C=A^T A and U=A C^(-1/2). Then U is orthogonal and A=U C^(1/2); all complement projections, means, powers and individual permutation words are carried by the same orthogonal conjugation, and U^T z has the identical negative form. This bridge does not assign a sign to the separate expected-inverse reformulation.
 
-The private source snapshot is native-verified on Mac Studio under Lean 4.35 with no sorryAx in its scoped report and with the literal result type Not claimScalar; the source SHA-256 is 1067ac81d5cb1acca53faf795d906c6d832b55ab7c16c3890f44a6c143ca15ec. This paragraph records the proof and its evidence boundary without claiming that the unpublished candidate is a new admitted public declaration. The smallest failing dimension, the optimal random-permutation coordinate-descent rate, and the separate second-moment comparison remain open.
+The included scalar source is native-verified on Mac Studio under Lean 4.35: the current scoped report covers 130 scalar and 29 unchanged historical declarations, excludes sorryAx, has only the three standard axioms and records the closed literal negation of claimScalar. Source SHA-256: 1067ac81d5cb1acca53faf795d906c6d832b55ab7c16c3890f44a6c143ca15ec. The source-only review was two approve and one architecture comment, not current admission. The exact named-assertion/status interpretation, historical proof-shape disagreement, bounded literature and source-version limits remain disclosed in the Problems dossier and companion Describe. The smallest failing dimension, optimal RP-CD rate, expected-inverse and separate second-moment comparisons remain open.
 
 ## References
 
