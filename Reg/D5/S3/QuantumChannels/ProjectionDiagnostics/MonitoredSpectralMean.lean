@@ -2,6 +2,8 @@ import D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredSpectralMean
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Source-bound audit of the actual weighted monitored return family. -/
+
 open _root_.D5.S3.QuantumChannels.ProjectionDiagnostics
 open MonitoredReturnConservation CyclicMonitoredContraction MonitoredSpectralMean
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -126,7 +128,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := some ℕ
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.QuantumChannels.ProjectionDiagnostics.MonitoredSpectralMean
+    definition := none
+    coordinates := #[0, 1, 2, 3, 4, 5]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body",
+        "arg", "arg", "fn", "arg", "fn", "fn", "arg", "body"]
+      stateBinder := 7
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
