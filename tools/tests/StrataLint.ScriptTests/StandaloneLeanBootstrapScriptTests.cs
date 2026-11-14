@@ -173,6 +173,7 @@ public sealed class StandaloneLeanBootstrapScriptTests
                 $"LEAN_BOOTSTRAP_ROOT={root}",
                 $"LEAN_BOOTSTRAP_PRODUCER_EXIT={producerExit}",
                 $"{producerVariable}={(prebuilt ? Path.Combine(root, producerDll) : "")}",
+                "FULL_BUILD=1",
                 "DOTNET_CLI_UI_LANGUAGE=en-US",
             }.Concat(command), temporary.Path, TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
 
