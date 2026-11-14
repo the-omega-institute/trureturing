@@ -1,0 +1,30 @@
+**定理 147.3（指定零边的核支撑判据）。** 在147.2的截面域另取 ZC，令 $U$ 为146.6的根无关稠密正规域。设 $p\in U$、$p\perp q$、$q_j\to q$ 均纯，并已取子列使
+
+$$
+\Pi_{\ker A_{q_j}}\to\Pi_H,\qquad
+M_H=A^*\{G\succeq0:\operatorname{ran}G\subseteq H\}.
+\tag{XI147.7}
+$$
+
+则 $H\subseteq\ker A_q$，并且
+
+$$
+\left(\exists p_j\in S_{q_j},\ p_j\to p\right)
+\quad\Longleftrightarrow\quad e_p\in M_H.
+\tag{XI147.8}
+$$
+
+若同一 $q_j$ 逃出每个固定有限层 $H_m(a)$，则对该序列每个核投影聚点 $H$ 都必有 $e_p\notin M_H$。
+
+证明。把 $A_{q_j}\Pi_{\ker A_{q_j}}=0$ 取极限即得 $H\subseteq\ker A_q$。若 $e_p=A^*(G)$ 且正 $G$ 支撑于 $H$，式(XI147.5)及最大面构造不再需要同秩，直接给所需 $p_j$。反向若已有这些邻点，146.6在 $p$ 的原纯邻域给 $e_{p_j}\to e_p$。式(XI147.4)允许选正代表 $G_j$，满足
+
+$$
+A^*(G_j)=e_{p_j},\qquad \operatorname{ran}G_j\subseteq\ker A_{q_j},\qquad
+\lambda_0\operatorname{Tr}G_j\le e_{p_j}(x_0)\le u(x_0).
+\tag{XI147.9}
+$$
+
+取收敛子列 $G_j\to G$。投影收敛使 $G$ 支撑于 $H$，并有 $A^*(G)=e_p$，证明必要性。这里没有把不受界的正代表直接取极限。
+
+最后 $p\in U$ 使某个原纯开邻域 $O\ni p$ 包含于固定 $H_m(a)$。若 $e_p\in M_H$，相应子列的实际 $p_j$ 最终在 $O$；$q_j\perp p_j$ 遂将这条子列捕获到 $H_{m+1}(a)$，与逃逸矛盾。这个判据只针对给定截面的实际核与给定零边，不是给全域整球连续性另起名称。证毕。
+
