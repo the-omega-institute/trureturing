@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9153f4a79f8da4d802fd28d475a62333c38cccdbba8fcc57b5c61d517f05f22a
+  normalized_sha256: sha256:9153f4a79f8da4d802fd28d475a62333c38cccdbba8fcc57b5c61d517f05f22a
+cas_ref: sha256:9153f4a79f8da4d802fd28d475a62333c38cccdbba8fcc57b5c61d517f05f22a
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/OriginExclusionCenterReverse.strict_centre_reverse
+    target_statement_id: sha256:ab10c3c7da3df998ac8508e77d6a40e911434d0b165d4fd9e1d30e164ae06dfc
+receipts:
+  unresolved_subitems: []

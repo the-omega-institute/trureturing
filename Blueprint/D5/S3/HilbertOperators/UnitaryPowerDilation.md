@@ -28,6 +28,12 @@ For the orbit U^n(V(x)), prove one joint invariant by induction on n: the first 
 
 This is the classical unitary power-dilation existence theorem, using the cited formal source's repeated-interaction construction. The source construction uses the complex scalar I; an arbitrary RCLike scalar extension is outside this statement. No minimality, uniqueness, effective construction, finite environment or finite-dimensional witness is asserted. The larger Hilbert space may be infinite dimensional even when E is finite dimensional.
 
+A finite total dilation space has an obstruction when a nonzero vector decays under the contraction powers. Fix complete complex Hilbert spaces E,H, bounded linear maps T:E to E and V:E to H, and a unitary U on H. Suppose the same U,V satisfy adjoint(V)(U^n(V(x)))=T^n(x) for every natural n along some x distinct from zero. If H is finite dimensional, the norms of T^n(x) cannot tend to zero. This implication uses only the stated compression along x: the n=0 identity already gives adjoint(V)(V(x))=x, so a separate isometry or contraction assumption is unnecessary for this obstruction.
+
+The supplier is the compact-group recurrence result mapClusterPt_one_atTop_pow in Mathlib.Topology.Algebra.Group.SubmonoidClosure. Finite dimensionality makes the bounded-operator space on H proper, and its unitary group is closed and bounded, hence compact. The cited recurrence gives a strictly increasing sequence n_j tending to infinity with U^n_j tending to the identity. Apply the continuous compressed observable f(W)=||adjoint(V)(W(V(x)))||. Its value at the identity is ||x|| by the n=0 compression, whereas its value at U^n is ||T^n(x)||. The recurrent subsequence therefore tends to the positive value ||x||; it cannot also tend to zero as decay of the full sequence would require.
+
+Thus, whenever T has a nonzero decaying vector, an exact common compression of all its powers requires infinite total dimension H. This applies existing compactness, recurrence and continuity results; it adds no frozen theorem to the displayed existence result. It provides no quantitative return time and excludes neither finite-horizon constructions nor finite-horizon approximations. The relevant premise is finite dimension of the entire dilation space. A finite environment with an infinite-dimensional system does not make the total space finite dimensional, so this argument supplies no obstruction from environment dimension alone.
+
 ## References
 
 - Truth anchor: `D5/S3/HilbertOperators/UnitaryPowerDilation.exists_unitary_power_dilation`
