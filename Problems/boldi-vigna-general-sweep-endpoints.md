@@ -75,6 +75,10 @@ order and the original at-least-two-points hypothesis for both endpoints.
 
 The result is carried by the Lean declarations and their axiom closure, not by
 this dossier. Independent semantic admission and integration are separate duties.
+The whole-domain typed Reg attempt is not machine-validated: the current
+extractor rejects its rigid universe parameters. The exact unfinished audit
+targets and required evidence are tracked in
+https://github.com/the-omega-institute/trureturing/issues/30231 under CLAUDE §3.9.
 
 ## Triage
 
