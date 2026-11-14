@@ -265,9 +265,10 @@ private theorem eigenvector_not_dark (U : E ≃ₗᵢ[ℂ] E) (v : E)
     change (ℂ ∙ v).starProjection (U (x : E)) = 0 at hB'
     rw [hB', sub_zero, hx']
   have hpow (n : ℕ) : (cyclicStep U v ^ n) x = ζ ^ n • x := by
-    have he : (cyclicStep U v).toLinearMap.HasEigenvector ζ x :=
+    have he : Module.End.HasEigenvector (cyclicStep U v).toLinearMap ζ x :=
       ⟨Module.End.mem_eigenspace_iff.mpr hA, hxzero⟩
-    simpa only [ContinuousLinearMap.toLinearMap_pow] using he.pow_apply n
+    simpa only [← ContinuousLinearMap.toLinearMap_pow, ContinuousLinearMap.coe_coe] using
+      Module.End.HasEigenvector.pow_apply he n
   have hk : x ∈ (⨅ n : ℕ, LinearMap.ker
       ((cyclicClick U v).toLinearMap.comp ((cyclicStep U v).toLinearMap ^ n))) := by
     apply (Submodule.mem_iInf _).mpr
