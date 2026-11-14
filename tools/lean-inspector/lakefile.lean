@@ -196,8 +196,8 @@ package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   return Job.nil
 
-/-- Input classification is a compiler fact. Report formats and producer
-program traces do not invalidate it. Read only the target's own olean parts. -/
+/-- Input classification traces the compiler and report format. Producer
+implementation bytes are not data reuse inputs. Read the target's own olean parts. -/
 module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   let pkg := (← getWorkspace).root
   discard <| (← fetch <| pkg.facet `reportInputs).await
@@ -208,12 +208,14 @@ module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   let exportJob ← mod.exportInfo.fetch
   observePhase "lake-export-fetch" "finish" mod.name.toString "export-info-fetch"
   let discovery ← inputDiscovery.fetch
+  let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
   observePhase "lake-compiler-continuation" "start" mod.name.toString "compiler-continuation"
-  (deps.add exportJob |>.add discovery).mapM fun _ => do
+  (deps.add exportJob |>.add discovery |>.add format).mapM fun _ => do
     let info ← exportJob.await
     observePhase "lake-compiler-continuation" "finish" mod.name.toString "compiler-continuation"
     observePhase "lake-compiler-inputs" "finish" mod.name.toString "compiler-inputs"
     addTrace (info.allArtsTrace.mix info.legacyTransTrace)
+    addTrace format.getTrace
     let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
     buildFileUnlessUpToDate' file do
       observePhase "lake-input-discovery" "start"

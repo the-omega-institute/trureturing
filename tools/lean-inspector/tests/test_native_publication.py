@@ -28,6 +28,25 @@ import native
 from test_native_support import *
 
 class NativePublicationConsumerTests:
+    def test_report_format_refreshes_cached_compiler_projection(self):
+        policy = self.root / 'tools/scripts/report/lean-report-selection.py'
+        current = policy.read_text()
+        self.assertIn("REPORT_FORMAT = 'stratalint-raw-lean-report-v4'", current)
+        policy.write_text(current.replace("REPORT_FORMAT = 'stratalint-raw-lean-report-v4'",
+            "REPORT_FORMAT = 'stratalint-raw-lean-report-fixture-previous'"))
+        self.build()
+        compiled = self.root / '.lake/build/lib/lean/D5/Alone.olean'
+        before = (compiled.stat().st_mtime_ns, compiled.read_bytes())
+        projection = native.state(self.root) / 'judge-inputs/D5.Alone.json'
+        stale = json.loads(projection.read_text())
+        stale['inputs'] = [dict(type='LeanInformationAudit.AuricFib.Contract.Application',
+            owner='D5.Alone', name='retiredFibInput')]
+        projection.write_text(json.dumps(stale))
+        policy.write_text(current)
+        self.build()
+        self.assertEqual(json.loads(projection.read_text())['inputs'], [])
+        self.assertEqual(before, (compiled.stat().st_mtime_ns, compiled.read_bytes()))
+
     def test_traced_artifacts_are_reused_without_validation(self):
         # Like a restored olean, a traced artifact is reused as is: only
         # production validates, and Lake's trace alone decides reuse.
