@@ -56,57 +56,72 @@ def claim5 : Prop := ∀ n : ℕ, 2 ≤ n → ∀ k : ℕ, 1 ≤ k →
       (10 * ((n : ℝ) - 1) ^ (2 * k) + 7 * ((n : ℝ) ^ 2 - 1) ^ k + ((n : ℝ) + 1) ^ (2 * k)) /
       (((n : ℝ) - 1) ^ (2 * k) + ((n : ℝ) ^ 2 - 1) ^ k)
 
+/-
+MODIFIED APACHE-2.0 SOURCE PORT: the analytic supplier chain below is
+FrontierMathLean.add_inv_mono_on_one → normalized_three_variable_inequality →
+three_term_ratio_inequality, from pro20541/dimitrov-conjectures-lean at
+95809b59deefd8dfad81e398250aedd7e1aea3b3, FrontierMathLean/AbstractInequality.lean
+and FrontierMathLean/ThreeTermInequality.lean. Michael Mazur is the upstream
+author/maintainer; upstream discloses substantive OpenAI Codex generation under
+his direction. Modifications: local names/visibility, local-have packaging, and
+one_div normalization. The complete license is docs/reports/licenses/dimitrov-LICENSE.txt;
+immutable source URLs, hashes, mapping and receiver-pin retirement are in
+Library/ArithUnits/dimitrov2026c4c5.md. No new mathematical content is claimed.
+-/
+/-- For positive `x` and `r`, if `1 ≤ r ≤ x`, then `x + x⁻¹ ≥ r + r⁻¹`.
+The upstream parameters `r`, `x` are named `u`, `v` here. -/
 private lemma h_mono {u v : ℝ} (hu : 1 ≤ u) (huv : u ≤ v) :
     u + 1 / u ≤ v + 1 / v := by
-  have hu0 : 0 < u := lt_of_lt_of_le zero_lt_one hu
-  have hv0 : 0 < v := lt_of_lt_of_le hu0 huv
-  have hnum : 0 ≤ (v - u) * (u * v - 1) := by
-    exact mul_nonneg (sub_nonneg.mpr huv) (sub_nonneg.mpr (by nlinarith [mul_pos hu0 hu0, mul_pos hu0 hv0]))
-  have hden : 0 < u * v := mul_pos hu0 hv0
-  have hfrac : 0 ≤ ((v - u) * (u * v - 1)) / (u * v) := div_nonneg hnum (le_of_lt hden)
-  have hcalc : (v + 1 / v) - (u + 1 / u) = ((v - u) * (u * v - 1)) / (u * v) := by
-    field_simp
-    ring
-  nlinarith [hcalc, hfrac]
+  simp only [one_div]
+  have hr_pos : 0 < u := lt_of_lt_of_le zero_lt_one hu
+  have hx_pos : 0 < v := lt_of_lt_of_le hr_pos huv
+  have h₁ : 0 ≤ v - u := sub_nonneg.mpr huv
+  have h₂ : 0 ≤ 1 - (v * u)⁻¹ := by
+    rw [sub_nonneg]
+    apply (inv_le_one₀ (mul_pos hx_pos hr_pos)).2
+    have hx_one : 1 ≤ v := le_trans hu huv
+    nlinarith [mul_nonneg (sub_nonneg.mpr hx_one) (sub_nonneg.mpr hu)]
+  have hprod : 0 ≤ (v - u) * (1 - (v * u)⁻¹) := mul_nonneg h₁ h₂
+  field_simp [hx_pos.ne', hr_pos.ne'] at hprod ⊢
+  nlinarith
 
 private lemma ordered_reciprocal_bound {X Y Z R : ℝ}
     (hX : 0 < X) (hXY : X ≤ Y) (hYZ : Y ≤ Z) (hR : 1 ≤ R)
     (hRle : R ≤ Y / X) :
     (X + Y + Z) * (1 / X + 1 / Y + 1 / Z) ≥ 5 + 2 * (R + 1 / R) := by
+  -- The normalized three-variable inequality. Equality occurs at x = y = r.
+  have normalized_three_variable_inequality
+      {x y r : ℝ} (hr : 1 ≤ r) (hrx : r ≤ x) (hry : r ≤ y) :
+      5 + 2 * (r + r⁻¹) ≤
+        3 + (x + x⁻¹) + (y + y⁻¹) + (x / y + y / x) := by
+    have hx_pos : 0 < x := lt_of_lt_of_le (lt_of_lt_of_le zero_lt_one hr) hrx
+    have hy_pos : 0 < y := lt_of_lt_of_le (lt_of_lt_of_le zero_lt_one hr) hry
+    have hx : r + r⁻¹ ≤ x + x⁻¹ := by simpa only [one_div] using h_mono hr hrx
+    have hy : r + r⁻¹ ≤ y + y⁻¹ := by simpa only [one_div] using h_mono hr hry
+    have hxy : 2 ≤ x / y + y / x := by
+      have hsquare : 0 ≤ (x - y) ^ 2 := sq_nonneg (x - y)
+      field_simp [hx_pos.ne', hy_pos.ne']
+      nlinarith
+    linarith
+  -- If B/A and C/A are at least r ≥ 1, the sharp bound is attained at both ratios r.
+  have three_term_ratio_inequality
+      {A B C r : ℝ}
+      (hA : 0 < A) (hB : 0 < B) (hC : 0 < C)
+      (hr : 1 ≤ r) (hrB : r ≤ B / A) (hrC : r ≤ C / A) :
+      5 + 2 * (r + r⁻¹) ≤
+        (A + B + C) * (A⁻¹ + B⁻¹ + C⁻¹) := by
+    have hnormalized := normalized_three_variable_inequality hr hrB hrC
+    calc
+      5 + 2 * (r + r⁻¹) ≤
+          3 + (B / A + (B / A)⁻¹) + (C / A + (C / A)⁻¹) +
+            ((B / A) / (C / A) + (C / A) / (B / A)) := hnormalized
+      _ = (A + B + C) * (A⁻¹ + B⁻¹ + C⁻¹) := by
+        field_simp [hA.ne', hB.ne', hC.ne']
+        ring
   have hY : 0 < Y := lt_of_lt_of_le hX hXY
   have hZ : 0 < Z := lt_of_lt_of_le hY hYZ
-  let s : ℝ := Y / X
-  let t : ℝ := Z / Y
-  have hs1 : 1 ≤ s := by
-    dsimp [s]
-    exact (le_div_iff₀ hX).mpr (by simpa using hXY)
-  have ht1 : 1 ≤ t := by
-    dsimp [t]
-    exact (le_div_iff₀ hY).mpr (by simpa using hYZ)
-  have hst1 : 1 ≤ s * t := by
-    have hs0 : 0 ≤ s := le_of_lt (div_pos hY hX)
-    have ht0 : 0 ≤ t := le_of_lt (div_pos hZ hY)
-    nlinarith [mul_nonneg (sub_nonneg.mpr hs1) (sub_nonneg.mpr ht1)]
-  have hstR : R ≤ s * t := by
-    have ht0 : 0 ≤ t := le_of_lt (div_pos hZ hY)
-    have hR0 : 0 ≤ R := le_trans (by norm_num) hR
-    calc
-      R ≤ R * t := by nlinarith [mul_nonneg hR0 (sub_nonneg.mpr ht1)]
-      _ ≤ s * t := mul_le_mul_of_nonneg_right hRle ht0
-  have hhs : R + 1 / R ≤ s + 1 / s := h_mono hR hRle
-  have hht : 2 ≤ t + 1 / t := by
-    have := h_mono (u := (1 : ℝ)) (v := t) (by norm_num) ht1
-    norm_num [one_div] at this ⊢
-    linarith
-  have hhst : R + 1 / R ≤ s * t + 1 / (s * t) := h_mono hR hstR
-  have hdecomp :
-      (X + Y + Z) * (1 / X + 1 / Y + 1 / Z) =
-        3 + (s + 1 / s) + (t + 1 / t) + (s * t + 1 / (s * t)) := by
-    dsimp [s, t]
-    field_simp
-    ring
-  rw [hdecomp]
-  nlinarith
+  have hRZ : R ≤ Z / X := le_trans hRle (div_le_div_of_nonneg_right hYZ hX.le)
+  simpa only [one_div] using (three_term_ratio_inequality hX hY hZ hR hRle hRZ)
 
 private lemma psi_ge {n : ℕ} (hn : 2 ≤ n) : n + 1 ≤ psi n := by
   classical
