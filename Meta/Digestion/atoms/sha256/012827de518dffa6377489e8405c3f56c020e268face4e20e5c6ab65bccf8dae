@@ -1,0 +1,43 @@
+**定理 144.3（固定根的完整二步纯载体紧及邻球族非退化连续）。** 在144.2的同一原域，令
+
+$$
+Q(a)=\bigcup_{x\in S_a}S_x,\qquad B_2(a)=\bigcup_{x\in S_a}D_x.
+\tag{XI144.7}
+$$
+
+则 $Q(a)$ 是原 $K$ 中的紧纯集，$x\mapsto D_x$ 在整个固定 $S_a$ 上 Hausdorff 连续；任一固定辅助欧氏尺下，这个固定族的最小半轴有严格正的统一下界。
+
+证明。由固定球缘的 $e_x$ 连续性、紧性及混点 $c_a$ 不在 $e_x$ 的一值面中，
+
+$$
+\delta_a:=\min_{x\in S_a}(1-e_x(c_a))>0.
+\tag{XI144.8}
+$$
+
+对 $x\in S_a$，原点 $a$ 在 $S_x$ 上，将包含它的直径代入 $x$ 处的 ZC，得到
+
+$$
+\kappa_x=e_x(c_a)+e_x(c_{2c_x-a})\le1+e_x(c_a)\le2-\delta_a.
+\tag{XI144.9}
+$$
+
+设 $x_n\in S_a$、$x_n\to x$、$p_n\in S_{x_n}$、$p_n\to z$。原上关联给 $z\in D_x$。反设 $z$ 混，144.2使反射 $p_n'=2c_{x_n}-p_n$ 趋于 $z'=2c_x-z$；两极限均在 $\operatorname{ri}D_x$。分别对这两个纯标签序列应用 IX118.4：其球的每个 Hausdorff 聚点只能是单点，标签单射及混极限所在球的唯一性迫该单点为 $x$。因此
+
+$$
+D_{p_n},D_{p_n'}\longrightarrow\{x\}.
+\tag{XI144.10}
+$$
+
+结合 $e_{x_n}\to e_x$，在 $x_n$ 处的 ZC 给
+
+$$
+\kappa_{x_n}=e_{x_n}(c_{p_n})+e_{x_n}(c_{p_n'})\longrightarrow2,
+\tag{XI144.11}
+$$
+
+违反(XI144.9)。所以 $z$ 必纯，进而 $z\in S_x$；任意 $Q(a)$ 序列都可如此再取子列，故 $Q(a)$ 紧而纯。
+
+现取 $x_n\to x$ 于 $S_a$，在固定欧氏环境写 $D_{x_n}=b_n+A_n\overline B^3$，其中 $A_n$ 的列为正交半轴向量。参数有界；对任意子列再取参数极限 $b_n\to b$、$A_n\to A$，令 $G=b+A\overline B^3\subseteq D_x$。全部球缘的极限属于刚取得的紧纯集 $Q(a)$。若 $1\le\operatorname{rank}A\le2$，沿非零核补足单位长度可知 $A S^2=A\overline B^3$，使整个非点凸集 $G$ 都纯，矛盾。若 $\operatorname{rank}A=0$，中心连续给 $G=\{c_x\}$；每个 $D_{x_n}$ 都含 $a$，所以 $c_x=a$，也矛盾。故秩三。此时 $\partial_{\rm rel}G\subseteq P\cap D_x=S_x$，与 $G\subseteq D_x$ 一起迫 $G=D_x$：否则从 $G$ 内点向 $D_x$ 外部点走，得到落在 $\operatorname{ri}D_x$ 内的 $G$ 球缘点，同时纯与混。所有参数子列都给同一整球极限，故 Hausdorff 连续。
+
+中心、形状算子及其正特征值连续，见139.4的支持函数式(XI139.14)。固定紧 $S_a$ 和恒秩三遂给最小半轴正下界。这里没有把各根的下界统一于全部 $P$。证毕。
+
