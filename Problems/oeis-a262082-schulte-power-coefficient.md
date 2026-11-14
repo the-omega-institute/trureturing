@@ -5,7 +5,7 @@ doi: null
 url: https://oeis.org/A262082
 triage: theorem
 motivation_gids:
-  - D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers
+  - D5/S3/Combinatorics/PowerSeries/SchulteImplicitQuadrinomialPowers
 ---
 
 # Schulte's implicit-series power coefficients
@@ -66,7 +66,8 @@ the full event. A finite coefficient check cannot establish it.
 ## Evidence
 
 The result is
-`D5.S1.Recurrence.Algebraic.SchulteImplicitQuadrinomialPowers.result`.
+`D5.S3.Combinatorics.PowerSeries.SchulteImplicitQuadrinomialPowers.result`.
+This canonical S3 source is awaiting independent review and future canonical freezing.
 Its two conjuncts retain unique integer-series existence and the formula
 for every native integer solution, every positive m and every natural k.
 The direct suppliers are

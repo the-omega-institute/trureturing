@@ -1,6 +1,6 @@
-/- GID: D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers
+/- GID: D5/S3/Combinatorics/PowerSeries/SchulteImplicitQuadrinomialPowers
    generality: G
-   mirror-B: D5/B/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers
+   mirror-B: D5/B/S3/Combinatorics/PowerSeries/SchulteImplicitQuadrinomialPowers
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
@@ -28,7 +28,7 @@ import Mathlib.RingTheory.PowerSeries.Expand
 
 open PowerSeries
 open D5.S1.Recurrence.Invariants.UnitReversionSquareParity
-namespace D5.S1.Recurrence.Algebraic.SchulteImplicitQuadrinomialPowers
+namespace D5.S3.Combinatorics.PowerSeries.SchulteImplicitQuadrinomialPowers
 set_option maxHeartbeats 800000
 
 def Native {R : Type*} [CommRing R] (n : ℕ) (P : PowerSeries R) : Prop :=
@@ -144,4 +144,4 @@ theorem result : ∀ n : ℕ, 1 ≤ n →
           ((3*(n*k+m)-2*j).choose (k-j) : ℚ) := by
   intro n hn
   exact ⟨native_exists_unique n, fun P hP m hm k => coefficient_formula n m k hn hm P hP⟩
-end D5.S1.Recurrence.Algebraic.SchulteImplicitQuadrinomialPowers
+end D5.S3.Combinatorics.PowerSeries.SchulteImplicitQuadrinomialPowers

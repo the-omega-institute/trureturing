@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.PowerSeries;
 
 internal sealed class SchulteImplicitQuadrinomialPowersDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Recurrence/Algebraic/SchulteImplicitQuadrinomialPowers.";
+    private const string Prefix = "D5/S3/Combinatorics/PowerSeries/SchulteImplicitQuadrinomialPowers.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/schulte2015a262082");
 
