@@ -9,6 +9,7 @@
 
 import D5.S3.Quantum.Routing.HannSpatialQram
 import D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 /-! Independent router records on literal spatial QRAM coordinates. -/
 
@@ -336,7 +337,7 @@ private theorem energy_lower_bound (n : ℕ) (q : ℝ) (hq : 0 ≤ q) (hq' : q �
 private theorem address_card (n : ℕ) : Fintype.card (Address n) = 2^n := by
   induction n with
   | zero => simp [ReversibleQram.Address]
-  | succ n ih => simpa [ReversibleQram.Address, Fintype.card_prod, ih, pow_succ, Nat.mul_comm]
+  | succ n ih => simp [ReversibleQram.Address, Fintype.card_prod, ih, pow_succ, Nat.mul_comm]
 
 private theorem kernel_row_sum (n : ℕ) (q : ℝ) (a : Address n) :
     (∑ a', kernel n q a a') = (2 : ℝ)^n * minimumFidelity n q := by
@@ -428,10 +429,10 @@ private theorem output_basis_injective (n : ℕ) (D : Address n → Bool) :
   rintro ⟨a,b⟩ ⟨c,d⟩ h
   have he : (a, xor b (D a)) = (c, xor d (D c)) := clean_injective n h
   obtain ⟨ha,hb⟩ := Prod.mk.inj he
-  dsimp at ha hb
   subst c
-  apply Prod.ext rfl
-  cases b <;> cases d <;> cases hd : D a <;> simp_all
+  have hbd : b = d := by
+    cases b <;> cases d <;> cases hd : D a <;> simp_all
+  exact congrArg (fun bb => (a,bb)) hbd
 
 private theorem ideal_at_basis (n : ℕ) (D : Address n → Bool)
     (ψ : Address n × Bool → ℂ) (ab : Address n × Bool) :
@@ -456,8 +457,14 @@ def uniformInput (n : ℕ) : Address n × Bool → ℂ :=
 private theorem uniform_prob (n : ℕ) (a : Address n) :
     addressProbability n (uniformInput n) a = ((2 : ℝ)^n)⁻¹ := by
   have hp : 0 < (2 : ℝ)^n := by positivity
-  simp [addressProbability, Fintype.sum_bool, uniformInput, Complex.normSq_ofReal,
-    inv_pow, Real.sq_sqrt (le_of_lt hp)]
+  simp [addressProbability, uniformInput, Complex.normSq_ofReal]
+
+private theorem uniform_amplitude (n : ℕ) :
+    (Real.sqrt ((2 : ℝ)^n))⁻¹ = (2 : ℝ)^(-(n : ℝ)/2) := by
+  rw [Real.sqrt_eq_rpow, ← Real.rpow_natCast, ← Real.rpow_mul (by norm_num : (0 : ℝ) ≤ 2),
+    ← Real.rpow_neg (by norm_num : (0 : ℝ) ≤ 2)]
+  congr 1
+  ring
 
 private theorem uniform_normalized (n : ℕ) : Normalized n (uniformInput n) := by
   have hc : (Fintype.card (Address n) : ℝ) = (2 : ℝ)^n := by
@@ -513,9 +520,11 @@ theorem result (n : ℕ) (q : ℝ) (hq : 0 ≤ q) (hq' : q ≤ 1) (D : Address n
         minimumFidelity n q ≤ (squaredFidelity n q D ψ).re) ∧
     Normalized n (uniformInput n) ∧
       squaredFidelity n q D (uniformInput n) = (minimumFidelity n q : ℂ) ∧
-      minimumFidelity 0 q = 1 := by
+      minimumFidelity 0 q = 1 ∧
+      (∀ ab, uniformInput n ab = if ab.2 then 0 else
+        (((2 : ℝ)^(-(n : ℝ)/2) : ℝ) : ℂ)) := by
   refine ⟨?_, ?_, ?_, output_partial_trace n q D, ?_, output_support n q D, ?_,
-    uniform_normalized n, ?_, ?_⟩
+    uniform_normalized n, ?_, ?_, ?_⟩
   · intro X s t
     rw [local_record_overlap q hq hq']
     split_ifs <;> ring
@@ -538,6 +547,8 @@ theorem result (n : ℕ) (q : ℝ) (hq : 0 ≤ q) (hq' : q ≤ 1) (D : Address n
   · rw [fidelity_formula n q hq hq' D, show addressProbability n (uniformInput n) =
         (fun _ => ((2 : ℝ)^n)⁻¹) from funext (uniform_prob n), uniform_energy]
   · simp [minimumFidelity]
+  · intro ab
+    simp only [uniformInput, uniform_amplitude]
 
 #print axioms result
 
