@@ -1,0 +1,79 @@
+using System.Collections.Immutable;
+using StrataLint.Engine;
+
+namespace StrataLint.Scribe;
+
+internal static class StandaloneEntry
+{
+    public static int Main(string[] args)
+    {
+        if (args is not [var mode, var reportPath, var pathsPath, var rootsPath] || mode is not ("emit" or "check" or "audit"))
+        {
+            Console.Error.WriteLine("usage: standalone-scribe emit|check|audit REPORT PATHS ROOTS");
+            return 2;
+        }
+        try
+        {
+            var root = Directory.GetCurrentDirectory();
+            var paths = File.ReadAllLines(pathsPath).Where(static path => path.Length > 0).ToImmutableArray();
+            var targets = File.ReadAllLines(rootsPath).Where(static path => path.Length > 0).ToImmutableArray();
+            var report = LeanCompiledArtifactReports.ReadScopedRepositoryFiles(root, targets, reportPath);
+            if (mode == "audit") return Audit(root, targets, report);
+            return mode == "emit"
+                ? ScribeCli.Run(["emit", "--paths-from", pathsPath, "--scoped"],
+                    root, Console.Out, Console.Error, report)
+                : ScribeContentChecks.Run(root, paths, report,
+                    checkContent: true, Console.Out, Console.Error);
+        }
+        catch (Exception error) when (error is IOException or InvalidOperationException or ArgumentException or FormatException)
+        {
+            Console.Error.WriteLine("STANDALONE_SCRIBE_FAILED: " + error.Message);
+            return 1;
+        }
+    }
+
+    private static int Audit(string root, ImmutableArray<string> targets, LeanAxiomReport report)
+    {
+        var raw = RawRepositorySnapshot.Create(report.Files.Keys.Select(path => new RawRepositoryEntry(
+            path.Value, ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path.Value))))));
+        var snapshot = SnapshotDecoder.Decode(raw) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
+            _ => throw new InvalidOperationException("unknown source snapshot outcome"),
+        };
+        var count = 0;
+        foreach (var target in targets.Where(static path => path.StartsWith("D5/", StringComparison.Ordinal)))
+        {
+            var source = RepoPath.CreateKnown(target);
+            var module = report.Files[source];
+            var text = snapshot.Files[source].Text;
+            var names = LeanDeclarationSourceNames.Read(text);
+            string? exempt = null;
+            if (RepositoryRules.TryHeader(text, out var header)
+                && UtilitySyntax.TryParse(header.Utility, out var utility, out _)
+                && utility is { BasisKind: UtilityBasisKind.Refutes, Result: { } result }
+                && result.ToTarget() is Target.Formal formal && formal.Path == source
+                && UtilityDeclarationValidator.Validate(UtilityValidationPhase.ChangedContent,
+                    source, header.Utility, snapshot, () => report).IsAccepted
+                && UtilityDeclarationValidator.TryResolveDeclaration(result, module, out var resolved))
+                exempt = resolved!.Name;
+            foreach (var declaration in module.Declarations.Where(declaration =>
+                declaration.Kind == "theorem" && declaration.IncludeInStatement
+                && !declaration.Name.StartsWith("_private.", StringComparison.Ordinal)
+                && names.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma"
+                && declaration.Name != exempt))
+            {
+                var selected = ImmutableHashSet.Create(StringComparer.Ordinal, declaration.Name);
+                var owners = InformationTemplateTheoremSelection.OwnerMirrors(snapshot, report, source, selected);
+                if (!owners.Any(owner => InformationTemplateTheoremSelection.Collect(snapshot, report,
+                        source, owner, selected).Occurrences.Values.Any(occurrence =>
+                        occurrence.Key.Theorem == declaration.Name && occurrence.HasFourSlots)))
+                    throw new FormatException("escape audit unfinished: " + declaration.Name);
+                count++;
+            }
+        }
+        Console.WriteLine("STANDALONE_AUDIT_OK authored_theorems=" + count);
+        return 0;
+    }
+}

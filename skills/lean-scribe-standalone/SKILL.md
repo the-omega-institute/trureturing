@@ -15,11 +15,11 @@ description: 在新的独立 Git 仓库中编写 Lean 与 Blueprint Scribe，使
 
 需要 Git、Python ≥3.12、Elan/Lake、钉版 .NET SDK，以及首次下载钉版依赖所需的网络。支持 macOS/Linux；不要求 gh、Nyx、账户、令牌或远程写权限。
 
-选定一个不可变的上游提交。`SOURCE` 是含该提交的源码检出，初始化后运行不再依赖它；不得复制其 `.lake`、`bin`、`obj`、报告或缓存标记。没有源码检出时，先用 Git 的浅取回和 sparse checkout 获取该提交的工具、根配置及将要复用的数学源码，保留许可证。源码来源是构建依赖，不是项目的真值数据。
+入口自带不可变的上游提交钉版；省略 `--source` 时，以 Git 的浅取回和 sparse checkout 获取所需源码。已有源码检出时，可加 `--source "$SOURCE"`，并用 `--revision "$UPSTREAM_COMMIT"` 显式选择其完整提交哈希。初始化后运行不再依赖该检出；不得复制其 `.lake`、`bin`、`obj`、报告或缓存标记。保留许可证与实际来源。源码来源是构建依赖，不是项目的真值数据。
 
 ```sh
 python3 /absolute/path/to/lean-scribe-standalone/scripts/standalone.py init \
-  --source "$SOURCE" --revision "$UPSTREAM_COMMIT" --dest "$PROJECT"
+  --dest "$PROJECT"
 cd "$PROJECT"
 python3 formalize.py doctor
 ```

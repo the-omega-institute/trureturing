@@ -1,0 +1,10 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)../Directory.Build.targets"
+          Condition="Exists('$(MSBuildThisFileDirectory)../Directory.Build.targets')" />
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'StrataLint.Scribe'">
+    <Compile Include="$(MSBuildThisFileDirectory)ScribeHost.cs" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'StrataLint.Scribe'">
+    <StartupObject>StrataLint.Scribe.StandaloneEntry</StartupObject>
+  </PropertyGroup>
+</Project>
