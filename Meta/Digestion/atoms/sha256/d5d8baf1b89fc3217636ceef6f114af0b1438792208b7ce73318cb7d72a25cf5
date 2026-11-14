@@ -1,0 +1,20 @@
+**推论 133.9（E0 内的一个根条件只重述既有静态模型类）。** 固定上述完整 E0 和同一个原种子。对任何一个在目标量词之前指定的种子顶点 $p_i$，以下条件等价：
+
+$$ \begin{gathered} \exists o\in P\ \mathsf D_2(o),\qquad \mathsf D_2(p_i),\qquad \exists i\in\{1,2,3\}\ \mathsf D_2(p_i),\\ \forall p\in P\ \mathsf D_2(p),\qquad \mathsf L,\qquad \mathsf{PC1},\qquad\mathsf{PC3},\qquad\mathsf{IC}_0,\qquad \text{同原锥同原单位的 (X133.17)}. \end{gathered} \tag{X133.30} $$
+
+它们也等价于 [SAME_READBACK130.5][Q133SR] 的全原状态谱性及非纯边界态谱性、全部原球满宽，以及 [BILATERAL VIII128.G 定理128.10][Q133BV] 在完整 E0 内列出的全标签正则性、原 WZ、原边开放和 NC 条件，均按那些条目的原定义、对象和全部量词使用。
+
+证明。根的四种写法与 (X133.17) 的等价由定理133.6及其“表示使每个根覆盖”的反向成立；$\mathsf L$ 的接入已由 (X133.26b) 支付。其余仅直接消费 SAME_READBACK127.11、129.8、130.5和 BILATERAL VIII128.10 的既有条件链。固定种子的反向仍取 SAME_READBACK127.11：作一次共同酉坐标选择后，$\Phi^{-1}p_i=E_{ii}$，并且
+
+$$ \Phi^{-1}T_i\Phi(X)=(I_3-E_{ii})X(I_3-E_{ii}),\qquad \Phi(I_3)=w,\qquad B(\Phi X,\Phi Y)=\operatorname{Tr}(XY). \tag{X133.31} $$
+
+此处对应的是原限制配对所定义的同一个 $T_i$，不是另造的投影。上述规范压缩、PC1到PC3、固定内球接触和谱性均是复用，未另计为本章新的种子压缩或新的 PC1 成果。证毕。
+
+因此仍然准确开放：
+
+$$ \begin{gathered} \mathrm{EB3}\ \stackrel{?}{\Longrightarrow}\ \exists o\in P\ \mathsf D_2(o),\\ \mathrm{EB3}+\mathrm{PR}\ \stackrel{?}{\Longrightarrow}\ \exists o\in P\ \mathsf D_2(o),\\ \mathsf E_0\ \stackrel{?}{\Longrightarrow}\ \exists o\in P\ \mathsf D_2(o). \end{gathered} \tag{X133.32} $$
+
+由主定理及 (X133.26b)，这些问号分别与在同一相应域自动取得全 $\mathsf D_2$ 或全 $\mathsf L$ 的问号等价；等价改写没有支付自动性。在 E0 内，它们也等价于自动取得一个、任一乃至全部既定种子顶点的覆盖，但从 E0 无条件进入任何一项仍是缺失的桥。SAME_READBACK127.11、129.8、130.5与 BILATERAL VIII121.7、128.I 的原自动性边界继续保留；本章既未排除其完整失败见证，也未构造满足全部 E0 而失败的反模型。X130.4保留的 EB3+PR 自动 UF 问题同样不由本章解决。
+
+本章在明示固定根前件之后的传播没有再留下 Inj、L1、法向维数、正压缩或全局纯点紧性的额外义务；未付项是产生这个对全部原目标有效的固定根。不能以“先选一个好种子”掩盖该存在量词。
+

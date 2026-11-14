@@ -7,6 +7,8 @@ coverage_gids:
     target_statement_id: sha256:87cfd8f666c7c094f551267afd0317023783d7fd534299e90164341bcb3e33f3
   - gid: D5/S3/Quantum/Foundation/ExclusionWidthCompactness.comparison_attained
     target_statement_id: sha256:35499a8c7af4b6e2b36f95e098b71dbd45e20ce2eae846819dca31b423a80b17
+  - gid: D5/S3/Quantum/Foundation/OriginalRowSaturation.actual_collapse_pure_edge_row
+    target_statement_id: sha256:29133e2c6b687eb81a98e8c6e54bcddf3e7a997721ecc7ede354d6a665ce11f1
   - gid: D5/S3/Quantum/Foundation/OriginalWidthContact.normalized_effect
     target_statement_id: sha256:88693052bfe7a7bb3276f1f1aceff82cbace0ab4ebb82a08b42eb43cee0d0535
   - gid: D5/S3/Quantum/Foundation/ReciprocalEndpointExposure.reciprocal_endpoint_exposure

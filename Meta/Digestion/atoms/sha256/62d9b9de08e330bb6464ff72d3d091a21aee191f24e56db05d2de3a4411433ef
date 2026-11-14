@@ -1,0 +1,40 @@
+### 133.9 齐次分支、局部小正带、E0 条件链与未付自动性
+
+已发表 [X131][Q133X131] 的对象是另一条限制分支。其额外前件为 $\operatorname{Aut}(C)$ 在 $\operatorname{int}C$ 上传递，不要求这些锥自同构保持原单位 $u$。X131.2在指定的正交乘法矩形 PSD 族、且矩形输出维数 $n>r$ 时，以及所列零块族中，对每个严格正原单位给出完整排除集非凸的原全效应障碍。这是这些模型族与全域 EB 不相容的条件结果，不是裸 EB 或 E0 的反模型。X131.3使用内部齐次性及所有原标签的完整 EB$_{\ge1}$，经其整个边界方程论证及既有 VIII125.6，得到同原锥同单位的秩三 EJA 表示和整个边界最低次数 $\delta(C)=3$；这里的三是整个边界的最小次数，不是任取一个相对不变量的次数。该定理并未由裸 EB 或 E0 供应齐次性。
+
+本章不重证 X131 的矩形障碍、整个边界入口或 EJA 分类，也不把它的前件移入133.1。单根传播取得同原复三能级后，标准模型固然具有锥内部齐次性，但这不允许把结论当作传播前件。两章的源身份、入口和中间结论各自保留；尤其不能把 X131.3当成“裸 EB3 已经重构”的来源。
+
+[X132][Q133X132] 是另一条原域候选。其定理132.2在完整 EB$_{\ge2}$ 下，固定任意原纯 $p$ 及一张准确暴露整个 $D_p$ 的原确认效应 $e$，证明每个 $0<t<1$ 的完整确认水平切片 $K\cap\{e=t\}$ 非空紧，且其每个极点都是原 $P$ 中的点；由此给出 $\forall p\in P\ \forall\delta>0\ \exists q\in P:0<T_p(q)<\delta$。这项小正无隙不要求 PR、Inj、整个 $P$ 紧或移动球连续。本章直接复用该定理，不重证其切片极点论证，也不把小正读数的存在误作共同零点的存在。
+
+其定义132.3的另付条件准确为
+
+$$ \mathsf L:\quad\forall p\in P\ \exists\varepsilon_p\in(0,1)\ \forall q\in P:\quad 0<T_p(q)<\varepsilon_p\ \Longrightarrow\ \exists r\in P:\ T_p(r)=T_q(r)=0. \tag{X133.26a} $$
+
+每对 $p,q$ 的两个零值由同一个原纯 $r$ 实现；$r$ 可随这对标签改变。阈值可依赖 $p$，不要求统一阈值或连续选择。正比较带始终用 $T_p(q)$，不能借零对称交换成 $T_q(p)$。它量化每个第一端点及该端点的全部小正目标，既不是只在一个根处要求的局部带，也不是 PR。
+
+在完整 EB3 域，已有 X132.4—132.5与本章定理133.6给出
+
+$$ (\mathrm{EB3}+\mathsf R_1)\ \Longleftrightarrow\ (\mathrm{EB3}+\mathsf D_2)\ \Longleftrightarrow\ (\mathrm{EB3}+\mathsf L)\ \Longleftrightarrow\ (\mathrm{X133.17}). \tag{X133.26b} $$
+
+这里逐向费用明确。一个固定覆盖根经133.2—133.6先给全部原三角及同原表示，再给每个根的 $\mathsf D_2$。全 $\mathsf D_2$ 直接给 $\mathsf L$：取每个 $\varepsilon_p=1/2$，若 $T_p(q)>0$，直接邻接支不成立，故共同邻点支给同一 $r$。反向，X132.4在完整 EB$_{\ge2}+\mathsf L$ 下给每点真实三角；限制到 EB3 后，X132.5通过 IX120.4—120.5及 IX116.17—116.18给同原完整静态表示；该表示的反向共同正交补计算给全部 $\mathsf D_2$，从而给一个固定覆盖根。两条路线经这些完整蕴含才等价，没有从一个根处的少量小正比较直接推出全 $\mathsf L$，也没有在133.2—133.6中借用 $\mathsf L$。这只是既有分类后的等价包装，不另计为新分类、严格弱化或最少独立公理；裸 EB3、EB3+PR 或 E0 自动供应 $\mathsf L$ 或覆盖根的桥仍未付。
+
+本节仅作原问题比较，不把下列额外条件移入裸分支。完整 $\mathsf E_0=\mathsf{Ent}_\triangle$ 严格取 [SAME_READBACK127.1、129.1][Q133SR] 的同一个原域，逐项保留：
+
+1. 全部完整 EB3 与原标签 Inj。
+2. 已给定的一组实际原正交三角 $\triangle=(p_1,p_2,p_3)$，至少一个顶点属于 $P_0=\{p:\mathcal A_p\text{ 为单点}\}$，其中 $\mathcal A_p=\{f\in\mathcal F_p:f|_{D_p}=0\}$。
+3. 同一三角的全部原零效应联合分离：
+
+$$ \forall x,y\in K:\quad \bigl[\forall i\ \forall b\in\mathcal E,\ b(p_i)=0\Rightarrow b(x)=b(y)\bigr]\Rightarrow x=y. \tag{X133.27} $$
+
+4. 按完整限制配对唯一确定的三个规范线性映射及其另行支付的全原锥正性：
+
+$$ \begin{gathered} N_{p_i}=\{h\in C^\ast:h(p_i)=0\},\qquad M_i=\operatorname{span}D_{p_i},\\ T_i:V\to M_i,\qquad h(T_ix)=h(x)\quad(h\in\operatorname{span}N_{p_i},\ x\in V),\\ T_i(C)\subseteq C. \end{gathered} \tag{X133.28} $$
+
+$T_i$ 是线性压缩，$T_p(x)$ 是原最低确认标量函数，二者类型不同。PC1 不在 E0 的定义内。既有共同种子给 $w=p_1+p_2+p_3$、共同正定型 $B$，以及 SAME_READBACK127.2的三个原二次量 $\Delta_i$；若写 $x=\sum_i a_ip_i+\sum_i\ell^{(i)}$、$a_i=e_i(x)$，则 $\Delta_i(x)=a_ja_k-g_i(\ell^{(i)},\ell^{(i)})/4$，其中 $\{i,j,k\}=\{1,2,3\}$、$g_i$ 是实际种子球度量。其尺度和全域正性沿用原定义。
+
+原条件继续准确写为
+
+$$ \begin{gathered} \mathsf{PC1}:\quad\forall p\in P\ \exists i:\Delta_i(p)=0,\\ \mathsf{PC3}:\quad\forall p\in P\ \forall i:\Delta_i(p)=0,\\ I=\{w/3+v:v\in\ker u,\ B(v,v)\le1/6\},\\ \mathsf{IC}_0:\quad\forall p\in P_0:\ D_p\cap I\ne\varnothing. \end{gathered} \tag{X133.29} $$
+
+PC1 的等价几何形式是每张实际 $D_p$ 至少与一张完整种子球相交；IC0 使用同一颗固定八维内球，不是随标签另选的球。$1/6$ 是相对仿射中心 $w/3$ 的半径平方，不能替换为相对线性原点的范数阈值。BILATERAL VIII121.6及128.A在完整 E0 中已有 $P=P_0$ 与四维正零法向接口；这不支付其限制逆的正性，也不让完整确认唯一自动成为全部 $\mathcal F_p$ 的 least。
+

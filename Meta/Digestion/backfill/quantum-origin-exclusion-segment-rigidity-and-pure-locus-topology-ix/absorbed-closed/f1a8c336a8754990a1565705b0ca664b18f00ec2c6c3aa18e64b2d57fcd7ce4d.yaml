@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:f1a8c336a8754990a1565705b0ca664b18f00ec2c6c3aa18e64b2d57fcd7ce4d
+  normalized_sha256: sha256:f1a8c336a8754990a1565705b0ca664b18f00ec2c6c3aa18e64b2d57fcd7ce4d
+cas_ref: sha256:f1a8c336a8754990a1565705b0ca664b18f00ec2c6c3aa18e64b2d57fcd7ce4d
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_calibration_upperSemicontinuous
+    target_statement_id: sha256:59f209305217057bb4e98223bb648de407bd4d64c514cd3baf7dcfb27f365110
+  - gid: D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_common_continuity_sets
+    target_statement_id: sha256:9d25776e49d73bb7f8f4f5a1495c20b6e2c255b3b73c4ac04cc877841cf5cda6
+  - gid: D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_discontinuity_scalar_witness
+    target_statement_id: sha256:f052de0098a90d6d5d839b0c9dd708b9890b56102160a09e6aba2dff84c45e0d
+  - gid: D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_optimalBudget_lowerSemicontinuous
+    target_statement_id: sha256:e6debadc92d82a31b617433980fda216a7d7e3e56489a243fe5a2750f5411976
+  - gid: D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_scalar_subsequence
+    target_statement_id: sha256:1e471ff28b3bb6bee28dc6b651999c4151a2166232cbdc8b3aad2a75f9da9cb1
+  - gid: D5/S3/Quantum/Foundation/OriginalComparisonTopology.original_whole_limit_calibration
+    target_statement_id: sha256:63f9575ed4063f8ee6d2206da35260ffcdad5b41727a5727dc5fe53ff2077408
+  - gid: D5/S3/Quantum/Foundation/OriginalExclusionLimits.original_baire_regular_region
+    target_statement_id: sha256:2c818f362df6df46c626c02990ce5ff43f8c71479df04f728e8b919a7734d9cb
+  - gid: D5/S3/Quantum/Foundation/OriginalExclusionLimits.original_diameter_upperSemicontinuous
+    target_statement_id: sha256:74f8d54e98dbaa1cf92e980b3bf12491a7af8b1d84a7dece316656dc93385c71
+  - gid: D5/S3/Quantum/Foundation/OriginalExclusionLimits.original_regular_iff_continuous
+    target_statement_id: sha256:fb37aac66bab59fa27885f95734c16c2e021704803aeb80fe1c56b1b6637bc0b
+receipts:
+  unresolved_subitems: []
