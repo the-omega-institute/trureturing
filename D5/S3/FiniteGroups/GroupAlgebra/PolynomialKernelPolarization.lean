@@ -316,6 +316,45 @@ theorem diagonal_polarization (N n : ℕ) :
     (N.choose n : R) • (X : R[X]) ^ (i : ℕ)
   rw [diagonal_polarMonomial N n i (Nat.le_of_lt_succ i.is_lt), Polynomial.smul_eq_C_mul]
 
+/-- Equivariance for every translation parameter, including all lower terms. -/
+theorem polarization_translate (a : R) (N n : ℕ) :
+    (translateLinear a).comp (polarization (R := R) N n) =
+      (polarization N n).comp (Polynomial.taylorLinearEquiv a (N + 1)).toLinearMap := by
+  apply (Polynomial.degreeLT.basis R (N + 1)).ext
+  intro k
+  have hcoeff (j : Fin (N + 1)) :
+      (Polynomial.degreeLT.basis R (N + 1)).equivFun
+        ((Polynomial.taylorLinearEquiv a (N + 1)).toLinearMap
+          (Polynomial.degreeLT.basis R (N + 1) k)) j =
+        a ^ (k.val - j.val) * (k.val.choose j.val : R) := by
+    change (Polynomial.taylor a
+      (Polynomial.degreeLT.basis R (N + 1) k : R[X])).coeff j.val = _
+    rw [Polynomial.degreeLT.basis_val, Polynomial.taylor_X_pow, Polynomial.coeff_X_add_C_pow]
+  simp only [LinearMap.comp_apply, polarization_basis]
+  change translate a (polarMonomial (R := R) N n k.val) = _
+  rw [translate_polarMonomial a N n k.val (Nat.le_of_lt_succ k.is_lt)]
+  conv_rhs => rw [polarization, Module.Basis.constr_apply_fintype]
+  simp only [hcoeff]
+  rw [Fin.sum_univ_eq_sum_range (fun j : ℕ =>
+    (a ^ (k.val - j) * (k.val.choose j : R)) • polarMonomial (R := R) N n j) (N + 1)]
+  calc
+    _ = ∑ j ∈ range (k.val + 1),
+        (a ^ (k.val - j) * (k.val.choose j : R)) • polarMonomial N n j := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      simp only [Algebra.smul_def, Polynomial.algebraMap_apply, Algebra.algebraMap_self,
+        map_mul, map_pow, scalar, RingHom.id_apply]
+      simp only [Polynomial.C_eq_natCast]
+      ring
+    _ = _ := by
+      apply Finset.sum_subset (Finset.range_mono (Nat.succ_le_succ
+        (Nat.le_of_lt_succ k.is_lt)))
+      intro j hj hjk
+      have hkj : k.val < j := by
+        simp only [Finset.mem_range, not_lt] at hjk
+        omega
+      simp [Nat.choose_eq_zero_of_lt hkj]
+
 end PolynomialPolarization
 
 end D5.S3.FiniteGroups.GroupAlgebra.PolynomialKernelPolarization

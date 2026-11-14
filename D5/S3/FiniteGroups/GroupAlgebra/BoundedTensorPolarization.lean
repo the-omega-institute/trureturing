@@ -268,10 +268,10 @@ theorem differenceTensor_range {K : Type u} [Field K] (n m : ℕ) :
 theorem tensorPolynomial_tmul (n m : ℕ) (f : Trunc R n) (g : Trunc R m) :
     tensorPolynomial n m (f ⊗ₜ[R] g) = (f.val.map C) * C g.val := by
   let L : Trunc R n →ₗ[R] Bi R :=
-    (Polynomial.mapAlgHom (Polynomial.CAlgHom R R)).toLinearMap.comp
+    (Polynomial.mapAlgHom (Polynomial.CAlgHom (R := R) (A := R))).toLinearMap.comp
       (Polynomial.degreeLT R (n + 1)).subtype
   let Q : Trunc R m →ₗ[R] Bi R :=
-    (Polynomial.CAlgHom R R[X]).toLinearMap.comp
+    (Polynomial.CAlgHom (R := R) (A := R[X])).toLinearMap.comp
       (Polynomial.degreeLT R (m + 1)).subtype
   have h : tensorPolynomial (R := R) n m =
       (LinearMap.mul' R (Bi R)).comp (TensorProduct.map L Q) := by
@@ -279,6 +279,7 @@ theorem tensorPolynomial_tmul (n m : ℕ) (f : Trunc R n) (g : Trunc R m) :
     rintro ⟨i, j⟩
     simp [tensorBasis, tensorPolynomial_basis, L, Q, z₁, z₂]
   rw [h]
+  simp [L, Q]
   rfl
 
 /-- Bounded tensor translation realizes actual simultaneous polynomial substitution. -/
@@ -295,6 +296,7 @@ theorem tensorPolynomial_translate (a : R) (n m : ℕ)
     change ((Polynomial.taylor a _).map C) * C (Polynomial.taylor a _) =
       translate a ((_ : R[X]).map C * C (_ : R[X]))
     rw [map_mul, translate_map_C, translate_C]
+    rfl
   exact LinearMap.congr_fun h F
 
 theorem tensorTranslate_differenceTensor (a : R) (n m : ℕ) :
@@ -326,7 +328,7 @@ theorem tensorPolynomial_boundedPolarMonomial (n m : ℕ) (k : Fin (n + m + 1)) 
   split_ifs with h
   · rw [map_smul, tensorPolynomial_basis]
     simp only [Algebra.smul_def, Polynomial.algebraMap_apply,
-      Algebra.algebraMap_self, map_mul, ← Polynomial.C_eq_natCast]
+      Algebra.algebraMap_self, RingHom.id_apply, map_mul, ← Polynomial.C_eq_natCast]
     ring
   · exact map_zero _
 
@@ -367,49 +369,42 @@ theorem multiplication_boundedPolarization (n m : ℕ) :
   rw [hr]
   exact h
 
+theorem boundedPolarization_translate (a : R) (n m : ℕ) :
+    (tensorTranslate a n m).comp (boundedPolarization (R := R) n m) =
+      (boundedPolarization n m).comp
+        (Polynomial.taylorLinearEquiv a (n + m + 1)).toLinearMap := by
+  apply LinearMap.ext
+  intro f
+  apply tensorPolynomial_injective (R := R) n m
+  simp only [LinearMap.comp_apply]
+  rw [tensorPolynomial_translate]
+  have hr := tensorPolynomial_boundedPolarization (R := R) n m
+  change translate a (((tensorPolynomial n m).comp (boundedPolarization n m)) f) =
+    ((tensorPolynomial n m).comp (boundedPolarization n m))
+      ((Polynomial.taylorLinearEquiv a (n + m + 1)) f)
+  rw [hr]
+  exact LinearMap.congr_fun (polarization_translate a (n + m) n) f
+
+/-- Invert only a scalar proved nonzero to obtain an actual equivariant section. -/
+theorem equivariant_section {K : Type u} [Field K] (n m : ℕ)
+    (hbinom : ((n + m).choose n : K) ≠ 0) :
+    ∃ σ : Trunc K (n + m) →ₗ[K] Trunc K n ⊗[K] Trunc K m,
+      (multiplication n m).comp σ = LinearMap.id ∧
+        ∀ a : K, (tensorTranslate a n m).comp σ =
+          σ.comp (Polynomial.taylorLinearEquiv a (n + m + 1)).toLinearMap := by
+  refine ⟨((n + m).choose n : K)⁻¹ • boundedPolarization n m, ?_, ?_⟩
+  · rw [LinearMap.comp_smul, multiplication_boundedPolarization, smul_smul,
+      inv_mul_cancel₀ hbinom, one_smul]
+  · intro a
+    rw [LinearMap.comp_smul, LinearMap.smul_comp, boundedPolarization_translate]
+
 /-
-EXACT UNFINISHED TYPES AND ROUTE (not accepted declarations).
-
-1. Rectangular degree bounds for coefficient extraction. This is the essential
-   missing codomain obligation, not supplied by the ambient scalar identity.
-   A nonzero coefficient with z₁ exponent i and z₂ exponent j has i+j=k,
-   i≤n, j≤m, since its auxiliary s,t exponents are n,m. Use the two binomial
-   expansions, or a proved multigrading coefficient-support lemma. Existing
-   Mathlib.Algebra.Polynomial.Homogenize offers homogenizeLM,
-   isHomogeneous_homogenize, coeff_homogenize, and homogenize_mul for an
-   alternative homogeneous implementation; no bridge from those APIs to
-   this nested-polynomial coefficient construction is asserted here.
-
-   theorem polarMonomial_in_tensor_range (n m k : ℕ) (hk : k ≤ n+m) :
-       polarMonomial (R := R) (n+m) n k ∈
-         LinearMap.range (tensorPolynomial n m)
-
-2. Equivariance of the bounded difference map remains an exact separate target:
-   theorem tensorTranslate_differenceTensor (a : R) (n m : ℕ) :
-       (tensorTranslate a (n + 1) (m + 1)).comp (differenceTensor n m) =
-         (differenceTensor n m).comp (tensorTranslate a n m)
-
-3. This is the EXACT desired denominator-free bounded equivariant map. Do not
-   replace it by the arbitrary monomialLift above: that map is not equivariant.
-   The existence must be constructed from polarization, the range theorem,
-   and tensorPolynomial_injective; the translation equation follows from
-   translate_polarMonomial and the degreeLT Taylor coefficients.
-
-   theorem bounded_polarization (n m : ℕ) :
-       ∃ Δ : Trunc R (n+m) →ₗ[R] Trunc R n ⊗[R] Trunc R m,
-         (tensorPolynomial n m).comp Δ = polarization (n+m) n ∧
-         (multiplication n m).comp Δ =
-           ((n+m).choose n : R) • LinearMap.id ∧
-         ∀ a : R,
-           (tensorTranslate a n m).comp Δ =
-             Δ.comp (Polynomial.taylorLinearEquiv a (n+m+1)).toLinearMap
-
-   Over a field with ((n+m).choose n : R) ≠ 0, multiplying this Δ by the
-   inverse scalar then gives an ACTUAL equivariant section. Combining that
-   with differenceTensor_range gives the primal direct sum; finite-dimensional
-   dualization gives V_(n+m+1) and complement V_n tensor V_m for n,m>0.
-   No assertion of that split, dual module identification, relative projectivity,
-   Lucas/no-carry equivalence, or corrected stable theorem is made in this draft.
+The continuation to the corrected external criterion remains unfinished:
+identify finite-dimensional duals with the original V_d models, transport this
+exact sequence and section to those actions, prove the quotient tensor is
+M-relative-projective under the original divisibility assumptions, and connect
+the binomial condition to Lucas/no-carry arithmetic and the converse obstruction.
+No relative-stable equivalence or full carry criterion is asserted here.
 -/
 
 end D5.S3.FiniteGroups.GroupAlgebra.PolynomialKernelPolarization
