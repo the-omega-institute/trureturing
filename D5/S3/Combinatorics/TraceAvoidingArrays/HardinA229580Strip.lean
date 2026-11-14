@@ -9,11 +9,35 @@
 /-
 admission_basis: open-problem-resolution (#30580; Proved)
 escape_witness: none
+Row: proof_shape=bind-only; consumers=finite_certificate, count_transfer
+Boundary: proof_shape=bind-only; consumers=finite_certificate, count_transfer
+horizontal: proof_shape=bind-only; consumers=a, finite_certificate
+antidiagonal: proof_shape=bind-only; consumers=a, finite_certificate
+boundary: proof_shape=bind-only; consumers=finite_certificate, count_transfer
+cross: proof_shape=bind-only; consumers=finite_certificate, count_transfer
+Valid: proof_shape=bind-only; consumers=finite_certificate, count_transfer
+decidableValid: proof_shape=bind-only; consumers=finite_certificate
+cl: proof_shape=bind-only; consumers=finite_certificate, count_transfer
+T: proof_shape=bind-only; consumers=finite_certificate, result
+initial: proof_shape=bind-only; consumers=finite_certificate, result
+terminal: proof_shape=bind-only; consumers=finite_certificate, result
+W: proof_shape=bind-only; consumers=finite_certificate, powers_table
+cellOrder: proof_shape=bind-only; consumers=Normal, scale_count
+Normal: proof_shape=bind-only; consumers=a, scale_count
+decidableNormal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=result
+edge: proof_shape=bind-only; consumers=count_transfer
+finite_certificate: proof_shape=bind-only; consumers=count_transfer, powers_table, polynomial_relation
+count_transfer: proof_shape=bind-only; consumers=result
+powers_table: proof_shape=bind-only; consumers=polynomial_relation
+polynomial_relation: proof_shape=bind-only; consumers=result
+scale_count: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=external sequence A229580
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.DefectTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-import Mathlib.Order.Fin.Prod
+import Mathlib.Logic.Equiv.Fin.Basic
 
 /-! Literal defective colourings and their finite boundary transfer. -/
 open scoped BigOperators
@@ -32,7 +56,7 @@ def cross (p : Boundary) (r : Row) : ℕ :=
   bondDefects antidiagonal (Fin.cons 0 p) r
 def Valid (p : Boundary) (d : ℕ) : Prop :=
   d ≤ 1 ∧ (Finset.univ.filter fun j : Fin 0 => p j.castSucc = p j.succ).card ≤ 1 - d
-instance decidableValid (p : Boundary) (d : ℕ) : Decidable (Valid p d) :=
+private instance decidableValid (p : Boundary) (d : ℕ) : Decidable (Valid p d) :=
   inferInstanceAs (Decidable (_ ∧ _))
 def cl (p : Boundary) (d : ℕ) : Fin 2 :=
   if d = 1 then 0 else
@@ -149,7 +173,13 @@ private theorem scale_count (n : ℕ) (hn : 2 ≤ n) :
     rw [hc.1, hc.2] at ha
     omega
   have h := @canonical_pattern_card (Fin n × Fin 2) inferInstance (cellOrder n) S hinv huse
-  simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype, S, literalCount, a, Normal] using h
+  simp only [Nat.card_eq_fintype_card, Fintype.card_subtype, S] at h
+  unfold literalCount a Normal
+  convert h using 1
+  apply congrArg (fun x : ℕ => 6 * x)
+  apply congrArg Finset.card
+  ext A
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
 
 attribute [local irreducible] a
 
