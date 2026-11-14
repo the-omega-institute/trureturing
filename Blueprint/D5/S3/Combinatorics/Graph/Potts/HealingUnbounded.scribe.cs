@@ -105,8 +105,10 @@ internal sealed class HealingUnboundedDocument : IScribeDocumentDefinition
     }
 
     private static Formula Context(Formula body) => All("V", new Formula.Subscript(Named("Type"), D(0)),
-        All("f", Call("Fintype", V), All("d", Call("DecidableEq", V),
-            All("G", Call("SimpleGraph", V), All("a", Call("DecidableRel", Call("Adj", G)), body)))));
+        Seq(Instance(Call("Fintype", V)), Sp, Instance(Call("DecidableEq", V)), Sp,
+            All("G", Call("SimpleGraph", V),
+                Seq(Instance(Call("DecidableRel", Call("Adj", G))), Sp, body))));
+    private static Formula Instance(Formula type) => Seq(OpenBracket, type, CloseBracket);
     private static Formula WithSet(Formula body) => Context(All("X", Call("Finset", V), body));
     private static Formula Deleted(Formula graph, Formula set) => Call("induce", graph,
         Seq(OpenBrace, Sp, F.Id("v"), Colon, Sp, V, Sp, Mid, Sp,
