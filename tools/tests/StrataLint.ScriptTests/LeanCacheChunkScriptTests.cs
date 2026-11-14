@@ -47,11 +47,55 @@ public sealed class LeanCacheChunkScriptTests
 
         var result = fixture.Publish(1);
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
         Assert.Contains("100 parts", result.Text, StringComparison.Ordinal);
         Assert.False(fixture.HasRelease);
         Assert.DoesNotContain(fixture.GhCalls, args => args[0] == "release");
+    }
+
+    [Theory]
+    [InlineData(-1, 2)]
+    [InlineData(0, 1)]
+    [InlineData(1, 1)]
+    public void CompressedByteBoundaryHasNoEmptyTrailingPart(int offset, int count)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+
+        fixture.AssertSuccess(fixture.Publish(fixture.ArchiveBytes.Length + offset));
+
+        var parts = fixture.Manifest(fixture.Tag)["parts"]!.AsArray();
+        Assert.Equal(count, parts.Count);
+        Assert.All(parts, part => Assert.True(part!["bytes"]!.GetValue<int>() > 0));
+        Assert.Equal(fixture.ArchiveBytes, parts.SelectMany(part =>
+            fixture.ReadAsset(fixture.Tag, part!["name"]!.GetValue<string>())).ToArray());
+        fixture.ClearPrivateBuild();
+        fixture.AssertSuccess(fixture.Fetch());
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
+    }
+
+    [Fact]
+    public void ExactlyOneHundredPartsPublishesAndRestores()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+        fixture.PadArchiveToMultipleOf(100);
+        var chunkBytes = fixture.ArchiveBytes.Length / 100;
+
+        fixture.AssertSuccess(fixture.Publish(chunkBytes));
+
+        var parts = fixture.Manifest(fixture.Tag)["parts"]!.AsArray();
+        Assert.Equal(100, parts.Count);
+        foreach (var part in parts)
+        {
+            var bytes = fixture.ReadAsset(fixture.Tag, part!["name"]!.GetValue<string>());
+            Assert.Equal(bytes.Length, part["bytes"]!.GetValue<int>());
+            Assert.Equal(LeanCacheChunkFixture.Digest(bytes), part["sha256"]!.GetValue<string>());
+        }
+        fixture.ClearPrivateBuild();
+        fixture.AssertSuccess(fixture.Fetch());
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
     }
 
     [Fact]
