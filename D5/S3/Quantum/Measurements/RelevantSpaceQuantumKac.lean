@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Measurement.PositiveBranchReachableResponse
 import Mathlib.Topology.Algebra.InfiniteSum.Real
+import Mathlib.Analysis.InnerProductSpace.Trace
 
 /-! Kraus words and projection monitoring on their actual reachable space. -/
 
@@ -451,5 +452,179 @@ theorem relevant_space_quantum_kac (K : α → Matrix n n ℂ) [Fintype α]
 #print axioms monitored_reachable_space_eq
 #print axioms relevant_projection_hasSum
 #print axioms relevant_space_quantum_kac
+
+variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
+  [FiniteDimensional ℂ H] {α : Type} [Fintype α]
+/-- Quantum Kac on the original finite-dimensional complex carrier. The relevant
+space is the span of the original Kraus words applied to the unit vector, and
+every return probability includes all preceding no-return measurements. -/
+theorem pure_vector_quantum_kac (L : α → H →L[ℂ] H) (v : H) (hv : ‖v‖ = 1)
+    (hTP : ∑ a, (L a).adjoint * L a = 1)
+    (hunital :
+      let C := Submodule.span ℂ (Set.range (fun w : List α => w.foldr (fun a x => L a x) v))
+      (∑ a, L a * C.starProjection * (L a).adjoint) = C.starProjection) :
+    let P := InnerProductSpace.rankOne ℂ v v
+    let C := Submodule.span ℂ
+      (Set.range (fun w : List α => w.foldr (fun a x => L a x) v))
+    let E := fun X : H →L[ℂ] H => ∑ a, L a * X * (L a).adjoint
+    let F := fun X : H →L[ℂ] H => (1 - P) * E X * (1 - P)
+    let p := fun k => (LinearMap.trace ℂ H (P * E (F^[k] P)).toLinearMap).re
+    HasSum (fun k => F^[k] P) C.starProjection ∧ (∀ k, 0 ≤ p k) ∧
+      HasSum p 1 ∧ HasSum (fun k : ℕ => (k + 1 : ℝ) * p k)
+        (Module.finrank ℂ C : ℝ) := by
+  classical
+  let b := stdOrthonormalBasis ℂ H
+  let e : (H →L[ℂ] H) ≃ₐ[ℂ] Matrix (Fin (Module.finrank ℂ H))
+      (Fin (Module.finrank ℂ H)) ℂ :=
+    (Module.End.toContinuousLinearMap H).symm.trans
+      (LinearMap.toMatrixOrthonormal b).toAlgEquiv
+  let P := InnerProductSpace.rankOne ℂ v v
+  let C := Submodule.span ℂ
+    (Set.range (fun w : List α => w.foldr (fun a x => L a x) v))
+  let E := fun X : H →L[ℂ] H => ∑ a, L a * X * (L a).adjoint
+  let F := fun X : H →L[ℂ] H => (1 - P) * E X * (1 - P)
+  let K := fun a => e (L a)
+  let PM := e P
+  let PiC := e C.starProjection
+  let EM := weightedCP K (fun _ => 1)
+  let FM := weightedCP (fun a => (1 - PM) * K a) (fun _ => 1)
+  have hcoord (A : H →L[ℂ] H) (x : H) :
+      (e A).toEuclideanLin (b.repr x) = b.repr (A x) := by
+    apply WithLp.ofLp_injective
+    exact LinearMap.toMatrix_mulVec_repr b.toBasis b.toBasis A.toLinearMap x
+  have hstar (A : H →L[ℂ] H) : e A.adjoint = (e A)ᴴ := by
+    change LinearMap.toMatrixOrthonormal b A.adjoint.toLinearMap = _
+    rw [← ContinuousLinearMap.adjoint_toLinearMap]
+    exact LinearMap.toMatrix_adjoint b b A.toLinearMap
+  have hPM : PM = Matrix.vecMulVec (⇑(b.repr v)) (star (⇑(b.repr v))) := by
+    exact InnerProductSpace.toMatrix_rankOne v v b.toBasis b
+  have hpos : PM.PosSemidef := by
+    rw [hPM]
+    exact Matrix.posSemidef_vecMulVec_self_star _
+  have hPP : PM * PM = PM := by
+    rw [← map_mul]
+    exact congrArg e (InnerProductSpace.isIdempotentElem_rankOne_self hv).eq
+  have htrace (A : H →L[ℂ] H) :
+      LinearMap.trace ℂ H A.toLinearMap = (e A).trace :=
+    LinearMap.trace_eq_matrix_trace ℂ b.toBasis A.toLinearMap
+  have htrP : PM.trace = 1 := by
+    rw [← htrace]
+    simp [P, InnerProductSpace.trace_rankOne, inner_self_eq_norm_sq_to_K, hv]
+  have htp : ∑ a, (K a)ᴴ * K a = 1 := by
+    simp_rw [K, ← hstar, ← map_mul]
+    rw [← map_sum, hTP, map_one]
+  have hEc (X : H →L[ℂ] H) : e (E X) = EM (e X) := by
+    simp only [E, EM, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
+      Complex.ofReal_one, one_smul, map_sum, map_mul, hstar, K]
+  have hFc (X : H →L[ℂ] H) : e (F X) = FM (e X) := by
+    have hherm := hpos.isHermitian.eq
+    simp only [F, map_mul, map_sub, map_one, hEc]
+    simp only [FM, weightedCP, LinearMap.coe_mk, AddHom.coe_mk,
+      Complex.ofReal_one, one_smul, Matrix.conjTranspose_mul,
+      Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hherm,
+      Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc, PM, EM, weightedCP,
+      LinearMap.coe_mk, AddHom.coe_mk, Complex.ofReal_one, one_smul]
+  have hiter (k : ℕ) : e (F^[k] P) = FM^[k] PM := by
+    induction k with
+    | zero => rfl
+    | succ k ih => simp only [Function.iterate_succ_apply', hFc, ih]
+  have hvC : v ∈ C := by
+    exact Submodule.subset_span ⟨[], rfl⟩
+  have hLC (a : α) (x : H) (hx : x ∈ C) : L a x ∈ C := by
+    induction hx using Submodule.span_induction with
+    | mem x hx =>
+      obtain ⟨w, rfl⟩ := hx
+      exact Submodule.subset_span ⟨a :: w, rfl⟩
+    | zero => simp
+    | add x y hx hy ihx ihy => simpa using C.add_mem ihx ihy
+    | smul z x hx ih => simpa using C.smul_mem z ih
+  have hinit : matrixSupport PM ≤ C.map b.repr.toLinearEquiv.toLinearMap := by
+    rw [matrixSupport_eq_range hpos.isHermitian]
+    rintro _ ⟨z, rfl⟩
+    obtain ⟨x, rfl⟩ := b.repr.surjective z
+    rw [hcoord]
+    exact ⟨P x, C.smul_mem (inner ℂ v x) hvC, rfl⟩
+  have hCmap : reachableSpace K PM = C.map b.repr.toLinearEquiv.toLinearMap := by
+    apply le_antisymm
+    · apply iSup_le
+      intro l
+      apply Submodule.span_le.mpr
+      rintro _ ⟨w, _hw, z, hz, rfl⟩
+      have hz' := hinit hz
+      obtain ⟨x, hx, rfl⟩ := hz'
+      have hw : ∀ w : List α, (krausWord K w).toEuclideanLin (b.repr x) ∈
+          C.map b.repr.toLinearEquiv.toLinearMap := by
+        intro w
+        induction w with
+        | nil =>
+          simpa [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]
+            using (show b.repr x ∈ C.map b.repr.toLinearEquiv.toLinearMap from ⟨x, hx, rfl⟩)
+        | cons a w ih =>
+          obtain ⟨y, hy, heq⟩ := ih
+          simp only [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_mul_same,
+            LinearMap.comp_apply]
+          change (K a).toEuclideanLin _ ∈ _
+          rw [← heq]
+          change (e (L a)).toEuclideanLin (b.repr y) ∈ _
+          rw [hcoord]
+          exact ⟨L a y, hLC a y hy, rfl⟩
+      exact hw w
+    · change (Submodule.span ℂ _).map _ ≤ _
+      rw [Submodule.map_span]
+      apply Submodule.span_le.mpr
+      rintro _ ⟨x, ⟨w, rfl⟩, rfl⟩
+      have hvM : b.repr v ∈ matrixSupport PM := by
+        rw [matrixSupport_eq_range hpos.isHermitian]
+        refine ⟨b.repr v, ?_⟩
+        rw [hcoord]
+        simp [P, inner_self_eq_norm_sq_to_K, hv]
+      have hbase : b.repr v ∈ reachableSpace K PM := by
+        apply (le_iSup (wordSpan K PM) 0)
+        exact Submodule.subset_span ⟨[], by simp, b.repr v, hvM,
+          by simp [krausWord, Matrix.toEuclideanLin, Matrix.toLpLin_one]⟩
+      induction w with
+      | nil => exact hbase
+      | cons a w ih =>
+        change b.repr (L a (w.foldr (fun a x => L a x) v)) ∈ _
+        rw [← hcoord]
+        exact reachable_kraus_invariant K PM a _ ih
+  have hPiC : PiC.toEuclideanLin = (reachableSpace K PM).starProjection.toLinearMap := by
+    apply LinearMap.ext
+    intro z
+    obtain ⟨x, rfl⟩ := b.repr.surjective z
+    rw [hcoord, hCmap]
+    exact b.repr.toLinearIsometry.map_starProjection C x
+  have huni : EM PiC = PiC := by
+    rw [← hEc]
+    exact congrArg e hunital
+  have hresult := relevant_space_quantum_kac K PM PiC hpos hPP htrP htp hPiC huni
+  have hprob (k : ℕ) :
+      (LinearMap.trace ℂ H (P * E (F^[k] P)).toLinearMap).re =
+        (PM * EM (FM^[k] PM)).trace.re := by
+    rw [htrace, map_mul, hEc, hiter]
+  change HasSum (fun k => F^[k] P) C.starProjection ∧
+    (∀ k, 0 ≤ (LinearMap.trace ℂ H (P * E (F^[k] P)).toLinearMap).re) ∧
+    HasSum (fun k => (LinearMap.trace ℂ H (P * E (F^[k] P)).toLinearMap).re) 1 ∧
+    HasSum (fun k : ℕ => (k + 1 : ℝ) *
+      (LinearMap.trace ℂ H (P * E (F^[k] P)).toLinearMap).re) (Module.finrank ℂ C : ℝ)
+  change HasSum (fun k => FM^[k] PM) PiC ∧
+    (∀ k, 0 ≤ (PM * EM (FM^[k] PM)).trace.re) ∧
+    HasSum (fun k => (PM * EM (FM^[k] PM)).trace.re) 1 ∧
+    HasSum (fun k : ℕ => (k + 1 : ℝ) * (PM * EM (FM^[k] PM)).trace.re)
+      (Module.finrank ℂ (reachableSpace K PM) : ℝ) at hresult
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · have hh := hresult.1.mapL (LinearMap.toContinuousLinearMap e.symm.toLinearMap)
+    change HasSum (fun k => e.symm (FM^[k] PM)) (e.symm PiC) at hh
+    simpa only [← hiter, PiC, AlgEquiv.symm_apply_apply] using hh
+  · intro k
+    rw [hprob]
+    exact hresult.2.1 k
+  · simpa only [← hprob] using hresult.2.2.1
+  · have hdim : Module.finrank ℂ (reachableSpace K PM) = Module.finrank ℂ C := by
+      rw [hCmap]
+      exact b.repr.toLinearEquiv.finrank_map_eq C
+    simpa only [← hprob, hdim] using hresult.2.2.2
+
+#print axioms pure_vector_quantum_kac
 
 end D5.S3.Quantum.Measurements.RelevantSpaceQuantumKac
