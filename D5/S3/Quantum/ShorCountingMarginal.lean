@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/ShorCountingMarginal
    mirror-E: none(waiver:analytic-finite-register-proof)
-   anchors: [lit/aicyberg2026shor]
+   anchors: [mathlib/module/Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds]
    utility: none
    digest: Actual padded modular-input counting marginal and pointwise lower bound. -/
 

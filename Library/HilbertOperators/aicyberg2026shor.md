@@ -46,6 +46,14 @@ Mathlib revision actually pinned by this repository, replacing that slice
 with direct imports. An upstream submission or acceptance alone does not
 satisfy this condition.
 
+## Locator
+
+https://github.com/solanaqubits/leanbook/tree/9b742770a2a5dbcf30cf9abc44e711194e957a00
+
+The retained proof slice comes from
+`Verification/QuantumPhaseEstimationGeneral.lean` and
+`Verification/QuantumShorOrderFindingCore.lean` at this revision.
+
 ## Complete upstream license
 
 ```text
