@@ -184,7 +184,7 @@ lemma density_factor (k m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) :
   rw [rawPrefix, columns_factor, conjTranspose_mul]
   simp only [← tail_gram, Matrix.mul_assoc]
 
-private lemma sandwich_injective {ι : Type} [Fintype ι]
+lemma sandwich_injective {ι : Type} [Fintype ι]
     (F : Matrix ι (Fin 2) ℂ) (hF : Function.Injective F.mulVec) :
     Function.Injective (fun X : Bond => F * X * Fᴴ) := by
   have hleft {κ : Type} (X Y : Matrix (Fin 2) κ ℂ) (h : F * X = F * Y) : X = Y := by
