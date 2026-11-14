@@ -1,0 +1,24 @@
+**Proposition 15.3 (no universal growth rate in the stage label).** For
+any deterministic positive sequence $R_n\to\infty$, there is a lawful
+full-native approximation sequence, with the clock still $T$ and the
+specified target $\lambda$, whose four executed costs are all
+$o(R_n)$ almost surely. It can retain almost-sure convergence of the
+held triples and censored lifetimes and $J_1$ convergence of the killed
+paths. Thus (12.1) is a rate in the declared accuracy, not in an
+unconstrained enumeration of stages.
+
+Proof. Let the dyadic family be indexed by $m$ and put
+$C_m=1+V_m^a+V_m^b+L_m+E_m$. Each $C_m$ is finite almost surely.
+Choose deterministic $K_m\ge1$ with
+$\mathbb P(C_m>K_m)\le2^{-m}$. Select strictly increasing integers
+$N_m$ such that $R_n\ge mK_m$ whenever $n\ge N_m$.
+For $N_m\le n<N_{m+1}$, use precisely stage $m$'s command and sample
+from the original coupling. Borel–Cantelli gives $C_m\le K_m$
+eventually almost surely, so $C_m/R_n\le1/m$ throughout all
+sufficiently late blocks. Since $m\to\infty$, the asserted cost and
+path limits follow. The finitely many initial labels can use the
+first command. Repetition changes an index, not the time parametrization
+of any executed command; partial segments and their costs are unchanged.
+No estimate relating this new label to its path error is implied.
+$\square$
+

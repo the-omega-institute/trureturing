@@ -1,0 +1,40 @@
+**命题 121.3（归一对偶基、双对偶检验与统一内余量）。** 在同一原实现中固定任意一个 $\omega\in\operatorname{ri}K$，置
+
+$$
+\mathscr H_\omega=\{h\in C^*:h(\omega)=1\},\qquad
+\beta_\omega(p)=\min_{\substack{x\in D_p\\h\in\mathscr H_\omega}}
+                \frac{h(p)+h(x)}2.
+\tag{Q121.6}
+$$
+
+该原对偶锥归一基非空紧，最小值达到，$0\le\beta_\omega(p)\le1$，并且
+
+$$
+\begin{aligned}
+W(D_p)<1
+&\Longleftrightarrow M_p\subset\operatorname{ri}K\\
+&\Longleftrightarrow\beta_\omega(p)>0\\
+&\Longleftrightarrow\exists\epsilon>0\ \forall x\in D_p:
+                 \ p+x-2\epsilon\omega\in C.
+\end{aligned}
+\tag{Q121.7}
+$$
+
+更准确地，给定 $\epsilon\ge0$，最后的全称锥不等式成立恰当且仅当 $\epsilon\le\beta_\omega(p)$。同一个 $\epsilon$ 必须适用于整个 $D_p$，不能换成依赖 $x$ 的余量。
+
+证明。$\omega\in\operatorname{ri}K$ 意味着 $\omega\in\operatorname{int}C$：在 $u>0$ 区域，$y\mapsto(u(y),y/u(y))$ 与 $(t,z)\mapsto tz$ 互逆，把 $\omega$ 附近的正径向区间和 $K$ 的相对开邻域化为 $V$ 中开邻域。故某辅助范数球 $\omega+r\overline B_V\subset C$，$r>0$。对任意非零 $h\in C^*$，在这个球上检验非负性给 $h(\omega)\ge r\|h\|_*>0$。因此所有非零正泛函都可唯一按 $h(\omega)$ 归一，且 $\mathscr H_\omega$ 闭、有界；它含 $u$，所以非空紧。与紧 $D_p$ 的乘积给(Q121.6)的达到性；用 $u\in\mathscr H_\omega$ 又得上界一。
+
+原态 $m\in K$ 在相对边界，恰当且仅当存在非零 $h\in C^*$ 零于 $m$。一个方向由支撑函数齐次化，另一方向由内点对每个非零正泛函严格正给出。归一到 $\mathscr H_\omega$ 后，这与 $h(m)=0$ 等价。因而 $M_p$ 有边界接触恰等价于 $\beta_\omega(p)=0$。若没有接触，紧乘积上每个读数都严格正，其最小值也严格正。再用121.2即得前两组等价。
+
+闭凸锥的有限维分离定理给 $y\in C\Longleftrightarrow h(y)\ge0$ 对全部 $h\in C^*$ 成立。对非零 $h$ 除以严格正的 $h(\omega)$，所以
+
+$$
+p+x-2\epsilon\omega\in C\ (\forall x\in D_p)
+\quad\Longleftrightarrow\quad
+\frac{h(p)+h(x)}2\ge\epsilon
+\ (\forall x\in D_p,\ h\in\mathscr H_\omega).
+\tag{Q121.8}
+$$
+
+右侧恰为 $\epsilon\le\beta_\omega(p)$。全称量词同时约束同一原 $x,h$，没有交换成分别可达的最优值。证毕。
+

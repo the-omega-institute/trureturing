@@ -1,0 +1,57 @@
+**定理 125.6（单种子上的线性七块代数与正性判据）。** 仍在定理125.4的前件下，由 $S_i\to\operatorname{Aff}(D_i)$ 的同构定义唯一线性映射 $T_i:V\to M_i$：
+
+$$
+f(T_i x)=f(x)\qquad(f\in S_i).
+\tag{Q125.20}
+$$
+
+并置 $\mathsf R_i(x)=e_i(x)p_i$。则
+
+$$
+\begin{gathered}
+T_i^2=T_i,\quad\operatorname{im}T_i=M_i,\quad T_i p_i=0,
+\quad uT_i=u-e_i,\\
+i\ne j, \{i,j,k\}=\{1,2,3\}:\qquad T_iT_j=T_jT_i=\mathsf R_k,\\
+E_i=T_i-\mathsf R_j-\mathsf R_k,\quad
+\operatorname{im}E_i=L_i,\qquad
+\pi_\triangle=T_1+T_2+T_3-\mathsf R_1-\mathsf R_2-\mathsf R_3.
+\end{gathered}
+\tag{Q125.21}
+$$
+
+三个 $\mathsf R_i$、三个 $E_i$ 及 $I-\pi_\triangle$ 是两两乘积为零、和为 $I$ 的代数投影；最后一个像为 $R_\triangle$。此处只断言线性投影。
+
+更准确地，在任一球图 $D_i=c_i+B_i\mathbb B^3$ 中，令 $g_i^0=u-e_i$，以IX120.10的同构定义 $H^{(i)}$，使 $H^{(i)}(c_i+B_iw)=w$。则
+
+$$
+T_i x=g_i^0(x)c_i+B_iH^{(i)}(x).
+\tag{Q125.22}
+$$
+
+以下四项等价：$T_i(C)\subset C$；$N_{p_i}|_{D_i}=\operatorname{Aff}(D_i)_+$；$\rho_{p_i}(v)=1$ 对全部 $v\in S^2$ 成立；每条原边 $(p_i,s)$、$s\in P\cap D_i$ 都能由某个原纯点完成真实三角。
+
+证明。限制同构与 $D_i$ 对 $M_i$ 的线性张成，使 $S_i$ 和 $M_i$ 非退化配对，故(Q125.20)唯一存在。它在 $M_i$ 上恒等，而 $S_i$ 全在 $p_i$ 为零，故前两项及 $T_ip_i=0$ 成立。$e_j,e_k\in S_i$，而 $e_i|_{M_i}=0$，(Q125.11)便给 $uT_i=e_j+e_k=u-e_i$。
+
+将(Q125.9)线性延至 $S_i$。对 $f\in S_i$、$i\ne j$，有
+
+$$
+f(T_iT_jx)=f(T_jx)=f(p_k)e_k(T_jx)=f(p_k)e_k(x).
+$$
+
+两端待比较向量都在 $M_i$，非退化配对给 $T_iT_jx=e_k(x)p_k$；交换 $i,j$ 同理。又有 $T_i\mathsf R_i=\mathsf R_iT_i=0$，而 $i\ne j$ 时 $T_i\mathsf R_j=\mathsf R_jT_i=\mathsf R_j$。连同 $\mathsf R_i\mathsf R_j=\delta_{ij}\mathsf R_i$，逐项展开给 $E_i^2=E_i$、$E_iE_j=0$（$i\ne j$），以及 $E_i\mathsf R_j=\mathsf R_jE_i=0$ 对全部 $i,j$ 成立。$E_i$ 的像在 $M_i$ 中，且 $e_jE_i=e_kE_i=0$，故由(Q125.7)包含于 $L_i$；它又固定 $L_i$，所以像恰为 $L_i$。所列六块之和在 $U_\triangle$ 上恒等；$T_i$ 和 $\mathsf R_i$ 都消去 $R_\triangle$，故六块之和等于规范 $\pi_\triangle$。其补 $I-\pi_\triangle$ 因而也是投影，像为 $R_\triangle$，与前六块双向乘积均为零。
+
+$g_i^0,H^{(i)}$ 张成 $S_i$；在 $M_i$ 上它们读出质量和三个球坐标，因而给(Q125.22)。由于 $e_i$ 的零面是 $D_i$，
+
+$$
+C\cap M_i=\operatorname{cone}D_i.
+\tag{Q125.23}
+$$
+
+所以 $T_i$ 为正恰当且仅当 $\|H^{(i)}(x)\|\le g_i^0(x)$ 对全部 $x\in C$ 成立。这又等价于每个球内非负仿射函数 $\alpha+v\cdot w$ 的唯一线性延拓 $\alpha g_i^0+v\cdot H^{(i)}$ 在原锥上非负，即第二项。IX120.11给原正法向准确由 $\alpha\ge\rho_{p_i}(v)$ 刻画，而全部球内非负函数由 $\alpha\ge\|v\|$ 刻画；配合正齐次性和 $\rho_{p_i}\ge\|\cdot\|$，即得第三项。
+
+最后，对 $s=c_i+B_iv$，IX120.13给 $\rho_{p_i}(v)=1$ 恰等价于 $s$ 与该球内对径 $c_i-B_iv$ 原正交。若边 $(p_i,s)$ 由某个 $t$ 完成，则 $s,t\in D_i$，完整确认 $e_s$ 在它们取一、零，球内极值迫使 $t=c_i-B_iv$。因此“某个完成”已经等价于这一指定对径完成，得到第四项。证毕。
+
+这给出正性费用的明确位置：一个原正泛函限制到实际球当然非负，线性逆映射是否把所有球内非负函数送回原正锥，仍须证明。代数乘法、秩、保单位等式均未代付这个序条件。$\pi_\triangle$ 保单位，但其正性也未由上述线性分解取得；若另有 $\mathsf J_\triangle$，它只是变为恒等映射，仍不由此得到各 $T_i$ 的正性。
+
+作为124.6的条件应用，若某个种子顶点 $p_i$ 还属于 $P_{\rm reg}$，且其完整费用边界连续，124.4使高度为常数，已有 $p_i\in\mathcal T$ 又使124.6中的常数为一，故全部 $\rho_{p_i}=1$，上述 $T_i$ 为正，邻边全部完成。这里额外费用连续性仍是实质前件；单个种子不自动提供它，也不使所有到达标签成为正规点。
+

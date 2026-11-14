@@ -1,0 +1,37 @@
+**定义及定理 121.6（不塌缩层上的完整确认闭图）。** 置
+
+$$
+P_0=\{p\in P:\mathcal A_p\text{ 为单点}\},\qquad
+P_j=\{p\in P:\operatorname{diam}D_p\ge1/j\}.
+\tag{Q121.14}
+$$
+
+每个 $P_j$ 在 $P$ 中相对闭；映射 $p\mapsto\mathcal A_p$ 在各 $P_j$ 上有闭图。$P_0$ 是 $P$ 中稠密 $G_\delta$，也为Baire空间。
+
+证明。121.3补充结论的原效应见证已经证明 $D$ 的闭图。若 $p_n\in P_j$、$p_n\to p\in P$，在 $D_{p_n}$ 选距离至少 $1/j$ 的两点 $x_n,y_n$，于紧 $K^2$ 中取极限 $x,y$。闭图给 $x,y\in D_p$，距离仍至少 $1/j$，故 $p\in P_j$。这不要求任何球族连续性。
+
+再设 $p_n\in P_j$、$p_n\to p$、$e_n\in\mathcal A_{p_n}$、$e_n\to e\in\mathcal E$。对同样选取的分离点取共同子列。连续评价给
+
+$$
+e(p)=1,\qquad e(x)=e(y)=0,\qquad x\ne y,\qquad x,y\in D_p.
+\tag{Q121.15}
+$$
+
+$e$ 的零面非点且为真，故为某个完整球。它与 $D_p$ 分享两个不同点，只能就是 $D_p$；于是 $e\in\mathcal A_p$。不能只由 $e_n$ 零于各自移动的球就直接声称 $e$ 零于整个 $D_p$，这里的分离层和完整面交规则正是所需桥梁。
+
+在原效应空间固定辅助范数，对 $j,k\ge1$ 置
+
+$$
+Z_{jk}=\{p\in P_j:\operatorname{diam}\mathcal A_p\ge1/k\}.
+\tag{Q121.16}
+$$
+
+若 $p_n\in Z_{jk}$ 收敛到 $p\in P$，选 $e_n,f_n\in\mathcal A_{p_n}$、$\|e_n-f_n\|\ge1/k$。紧性与刚证闭图使共同极限 $e,f\in\mathcal A_p$，距离仍至少 $1/k$。所以 $Z_{jk}$ 在 $P$ 中相对闭。每张完整三球直径严格正，故 $P=\bigcup_jP_j$；每个 $\mathcal A_p$ 非空紧，故
+
+$$
+P\setminus P_0=\bigcup_{j,k\ge1}Z_{jk}.
+\tag{Q121.17}
+$$
+
+这证明 $P_0$ 为 $G_\delta$。其在全部 $P$ 中的稠密性直接复用120.9，不重证内接球与标签收敛定理。稠密 $G_\delta$ 可写作可数开稠密集之交；与121.5合用，$P_0$ 也是紧度量空间的 $G_\delta$，从而有同样的Baire证明。没有预付 $P$ 闭或全部球尺寸的统一下界。证毕。
+

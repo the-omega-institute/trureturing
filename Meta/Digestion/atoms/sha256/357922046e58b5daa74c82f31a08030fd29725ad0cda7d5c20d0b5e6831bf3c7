@@ -1,0 +1,70 @@
+**定理 123.3（两个实际球图给出的精确系数）。** 对任意 $p\in P_0$、$v\in S^2$，令
+
+$$
+r=\rho_p(v),\quad t=e_p(a_v)=1-m(v),\quad d=e_{a_v}(p).
+$$
+
+则 $0\le t,d<1$，在整个原 $V$ 上有
+
+$$
+\boxed{\quad e_{a_v}=d e_p+\gamma_v(g-v\cdot H),\qquad
+\gamma_v=\frac{1-dt}{(1-t)(1+r)},\qquad
+\frac1{1+r}\le\gamma_v\le\frac12.\quad}
+\tag{Q123.9}
+$$
+
+特别地，在整个原球 $D_p$ 上有相对原序下界
+
+$$
+\begin{split}
+e_{a_v}|_{D_p}
+ &=\gamma_v(1-v\cdot H)|_{D_p}\\
+ &\ge(u-e_{q_v})|_{D_p}
+   =\frac{1-v\cdot H}{1+\rho_p(v)}\Big|_{D_p}.
+\end{split}
+\tag{Q123.10}
+$$
+
+这里的不等式仅指限制在 $D_p$ 上逐态成立；没有将它误写成整个 $C^*$ 上的序支配。
+
+证明。在同一个原 $q=q_v$ 的球图写 $F_v=c_q+B_q\mathbb B^3$，$p=c_q+B_qs$，$a_v=c_q-B_qs$，$\|s\|=1$。令
+
+$$
+R=\rho_q(s)\ge1,\qquad T=\rho_q(-s)\ge1,\qquad g_q=u-e_q.
+$$
+
+两端都是真实邻标签，IX120.12分别给出整个原 $V$ 上的等式
+
+$$
+e_p=\frac{Rg_q+s\cdot H^q}{1+R},\qquad
+ e_{a_v}=\frac{Tg_q-s\cdot H^q}{1+T}.
+\tag{Q123.11}
+$$
+
+在 $F_v$ 上 $g_q=1$；代入 $a_v$ 和 $p$ 得
+
+$$
+m(v)=\frac2{1+R},\qquad
+ t=\frac{R-1}{R+1},\qquad d=\frac{T-1}{T+1}.
+\tag{Q123.12}
+$$
+
+$R,T$ 逐点有限，故 $t,d<1$。消去同一个 $s\cdot H^q$，得到
+
+$$
+e_{a_v}=\frac{T+R}{1+T}g_q-\frac{1+R}{1+T}e_p.
+$$
+
+另一方面，(Q123.6)准确给 $g_q=e_p+(g-v\cdot H)/(1+r)$。代入并整理，$e_p$ 的系数为 $(T-1)/(T+1)=d$，其余系数为
+
+$$
+\gamma_v=\frac{T+R}{(1+T)(1+r)}
+=\frac{d+(1-d)/m(v)}{1+r}
+=\frac{1-dt}{(1-t)(1+r)}.
+\tag{Q123.13}
+$$
+
+由于 $R\ge1$，$(T+R)/(1+T)\ge1$，故 $\gamma_v\ge1/(1+r)$。在原态 $q_{-v}\in D_p$ 评价(Q123.9)，得到 $e_{a_v}(q_{-v})=2\gamma_v\le1$，给上界。最后 $e_p|_{D_p}=0$ 且 $1-v\cdot H\ge0$ 于整颗原球，完成(Q123.10)。证毕。
+
+恒等式由两个真实完整球图在原 $V$ 上消元得到；没有把只在一个球上的仿射等式直接延拓，也没有预付跨球连续或倒向刻度的统一界。
+

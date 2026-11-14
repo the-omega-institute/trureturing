@@ -1,0 +1,57 @@
+**引理 127.7a（一个固定指标拉回另外两个真实种子极射线）。** 固定原纯点 $p$，将其整个实际排除球写成
+
+$$
+D_p=c+A\overline{\mathbb B^3},\qquad
+A:\mathbb R^3\longrightarrow\ker u\text{ 单射},\quad u(c)=1,
+\qquad M_p=\operatorname{span}D_p=\mathbb Rc\oplus A\mathbb R^3.
+$$
+
+设某个固定指标 $i$ 满足
+
+$$
+\Delta_i(c+Av)=\lambda_i(1-|v|^2)\quad(v\in\mathbb R^3),\qquad \lambda_i\ge0.
+$$
+
+则 $\lambda_i=0$ 时 $p\in P\cap D_i$；$\lambda_i>0$ 时有实际满锥同构(Q127.24)，且 $\Delta_j(p)=\Delta_k(p)=0$，其中 $\{i,j,k\}=\{1,2,3\}$。
+
+证明。因为 $\Delta_i$ 是齐次二次型，且 $\Delta_i=\Delta_i\circ T_i$，上述恒等式在整个四维 $M_p$ 上齐次化为
+
+$$
+\Delta_i(sc+Av)=\lambda_i(s^2-|v|^2)
+\quad(s\in\mathbb R,\ v\in\mathbb R^3).
+\tag{Q127.23}
+$$
+
+先对 $s\ne0$ 代入 $v/s$，再由多项式连续性覆盖 $s=0$。源实际球锥恰为 $\{sc+Av:s\ge|v|\}$；它是原 $C$ 的一个暴露面锥。
+
+若 $\lambda_i=0$，实际正像 $T_i(\operatorname{cone}D_p)$ 是 $C_i$ 边界中的凸锥。两个不成比例的非零Lorentz边界向量之和在内部：写成 $(t,v),(s,z)$，其中 $t=|v|>0,s=|z|>0$，不成比例使三角不等式严格，$|v+z|<t+s$。所以该像只能包含在一条极射线中，或全为零。全零会由(Q127.12)使整个 $D_p$ 只含 $p_i$，与完整三球矛盾。故存在实际种子纯点 $r$，使该像包含于 $\mathbb R_+r$。取实际种子对径 $q$；原效应 $e_q=g_qT_i$ 零于整个 $D_p$。由(Q127.10)，$D_p\subseteq D_q$；原面极大性给两球相等，原标签Inj给 $p=q\in P\cap D_i$。这里使用的是原 $D$ 的Inj，而非人为定义的新关系的单射性。
+
+若 $\lambda_i>0$，在目标四维 $M_i$ 上，$\Delta_i$ 是非退化Lorentz二次型。对(Q127.23)极化。若 $h\in M_p$ 且 $T_i h=0$，则对每个 $k\in M_p$，源Lorentz配对乘 $\lambda_i$ 等于目标在 $T_i h,T_i k$ 的配对，故为零。源配对非退化，推出 $h=0$。源、靶同为四维，$T_i|_{M_p}$ 因而是线性双射。
+
+还须证明逆像为正。任取 $0\ne y\in C_i$，令 $h$ 为其唯一线性逆像。目标 $\Delta_i(y)\ge0$，(Q127.23)使源Lorentz型在 $h$ 非负，因此 $h$ 或 $-h$ 属于 $\operatorname{cone}D_p$。若只有 $-h$ 为正，已付的 $T_i$ 正性会使 $-y\in C_i$，与 $y\ne0$ 和 $C_i$ 尖性矛盾。故 $h\in\operatorname{cone}D_p$；零点的逆像也是零。于是
+
+$$
+T_i:\operatorname{cone}D_p\overset{\sim}{\longrightarrow}C_i
+\quad\text{为满的线性锥同构}.
+\tag{Q127.24}
+$$
+
+现在必须拉回两条实际种子顶点射线，而非只说抽象极射线存在。令
+
+$$
+x_j=(T_i|_{M_p})^{-1}p_j,\qquad
+x_k=(T_i|_{M_p})^{-1}p_k,\qquad
+y_j=\frac{x_j}{u(x_j)},\quad y_k=\frac{x_k}{u(x_k)}.
+\tag{Q127.24a}
+$$
+
+锥同构已保证 $x_j,x_k$ 是源锥的非零正极射线向量，严格正单位保证分母正。因源锥是原 $C$ 的面锥，$y_j,y_k\in P\cap D_p$，不是一般有符号原像。由 $e_kT_i=e_k$ 得 $e_k(x_j)=e_k(p_j)=0$，故 $y_j\in P\cap D_k$；同理 $y_k\in P\cap D_j$。同域纯端互易将 $y_j,y_k\in D_p$ 变为 $p\in D_{y_j}\cap D_{y_k}$。引理127.4对实际种子球 $D_k,D_j$ 的这些标签给
+
+$$
+p\in\Gamma_k\cap\Gamma_j,\qquad
+\Delta_k(p)=\Delta_j(p)=0.
+\tag{Q127.24b}
+$$
+
+这里未假定 $y_j\perp y_k$，也未由一个固定指标就断言 $\Delta_i(p)=0$；$p$ 本身不在自己的 $D_p$ 内。证毕。
+

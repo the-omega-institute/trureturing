@@ -1,0 +1,99 @@
+**命题 105.3（实际角的全对偶与合法分离正规形）。** 在假设105.1下，
+$D_s$ 闭、尖、生成，迹严格正，且
+
+$$
+\begin{aligned}
+i_s(D_s)&=\mathsf p_s(C_3)=C_3\cap\operatorname{im}i_s,\\
+q_s(C_3)&=D_s,\qquad i_s^*(C_3^*)=D_s^*,\\
+i_s(D_s^*)&=C_3^*\cap\operatorname{im}i_s,\qquad D_s^*=\mathsf T(D_s).
+\end{aligned}
+\tag{105.5}
+$$
+
+所有 Schmidt 秩至多二的 dyad，针对同一个“码参考 $\mathbb C^3$｜实际块 $H_s$”切口，
+都属于 $D_s$ 和 $D_s^*$。
+若 $R\notin D_s$，则从实际整个原对偶中的分离泛函出发，
+可以得到 $W_\lambda\in D_s^*$ 及其正原零扩张，其中
+$1/3<\lambda\le1/2$。所用平均在 $D_s$ 和其整个对偶上正。
+
+**证明。** 码投影共轭是 $Q$ 上的寄存器 CP 映射，
+其真正零扩张由命题104.11在所有原纠缠旁观者上正；
+最后一条腿的中心投影由定理104.7具有同样正性。
+两者交换，其乘积正是实自伴幂等 $\mathsf p_s$。
+码投影满足 $cc^*\preceq I_Q$，所以其 proper 效应预算也由104.11延拓；
+与末腿中心投影合成后，对 $z\in C_3$ 有
+$0\le u_3(\mathsf p_sz)\le u_3(z)$。
+因此角交、正像和(105.5)前两行的原锥等式成立。
+闭性由交子空间给出，尖性由 $i_s$ 单射给出；
+码与实际块之间的所有正乘积 dyad 均为原正，且实张成整个角 Hermitian 空间，故生成。
+$u_3i_s=\operatorname{Tr}$ 使迹在角内非零正向量上严格正。
+
+若 $f\in D_s^*$，则 $fq_s$ 对全部 $C_3$ 正，且沿 $i_s$ 的限制为 $f$。
+反向限制任何原正泛函也正。以迹内积表示时，$fq_s$ 的向量就是 $i_s(f)$，
+因为 $q_s=i_s^*$；这给正零扩张等式及全对偶等式。
+此处没有把选定效应菜单当成整个对偶。
+
+全转置极性可直接从已取得的原杯帽推出。对任意整数 $N\ge1$，
+将 $N$ 个原杯按“全部参考、全部输入”重排为 $\Omega_N\in C_{2N}$。
+对 $f\in C_N^*$ 在一组 $N$ 腿上切片，矩阵单位式(102.16)给
+$\mathsf T_Nf\in C_N$。另一方面，对 $x,y\in C_N$，
+其原乘积在 $C_{2N}$，$N$ 对原正帽的收缩给
+$\operatorname{Tr}((\mathsf T_Nx)y)\ge0$，所以 $\mathsf T_Nx\in C_N^*$。
+结合 $\mathsf T_N^2=\mathrm{id}$ 得
+
+$$
+C_N^*=\mathsf T_N(C_N)\qquad(N\ge1).
+\tag{105.6}
+$$
+
+这里使用全有限分块与重排来供应 $C_{2N}$ 中的杯乘积和输入乘积，
+不从低阶对象外推高阶自对偶。
+实码投影及实际中心投影与全转置交换，故(105.5)的角交与零扩张等式
+将(105.6)限制为 $D_s^*=\mathsf T(D_s)$。
+这不蕴含 $D_s=\mathsf T(D_s)$，也不假定 $D_s=\mathrm{PSD}$。
+
+对任意 $U\in U(3)$，在寄存器 $Q$ 上把 $cUc^*$ 扩为
+$cUc^*+(I_Q-cc^*)$，即码上的 $U$ 加余字上的恒等。
+它及其逆的真正寄存器零扩张由104.11给出。
+在实际块 $s$ 上的 $\overline U$ 共轭及其逆由104.7给出。
+于是 $U\otimes\overline U$ 共轭在实际混合角上是锥自同构，其迹伴随也保持整个 $D_s^*$。
+标准 Haar 平均因此在两个闭凸锥上均正，且
+
+$$
+\mathcal A(x)=\int_{U(3)}\operatorname{Ad}_{U\otimes\overline U}(x)\,dU
+ =\frac{\operatorname{Tr}x-\operatorname{Tr}(Px)}8(I-P)
+    +\operatorname{Tr}(Px)P.
+\tag{105.7}
+$$
+
+这里复用 Terhal–Horodecki，
+[*A Schmidt number for density matrices*, quant-ph/9911117v4](https://arxiv.org/abs/quant-ph/9911117v4)，
+式(6)、(9)的各向同性平均及其固定空间 $\operatorname{span}_{\mathbb R}\{I,P\}$；
+线性公式作用于全部 Hermitian 矩阵，不限于 PSD。
+平均是有限维闭凸锥内的数学投影，不断言一个连续物理随机化事件存在。
+
+为支付整个秩二族，写任意 Schmidt 秩至多二向量为
+$\varphi=u_0\otimes v_0+u_1\otimes v_1$，允许某项为零。
+从两个实际种子角之间的未归一 Bell dyad 开始，
+在第一条腿使用寄存器 Kraus 算子 $A:\mathbb C^2\to Q$，$A|j\rangle=cu_j$；
+在第二条腿使用一体矩形算子，令其种子二维基的像为 $v_j\in H_s$，角外送零。
+第一映射由104.11、第二映射由104.7具有全部原旁观正性。
+输出恰为 $i_s(|\varphi\rangle\langle\varphi|)$。
+对共轭向量作同样构造，再用 $D_s^*=\mathsf T(D_s)$，得该 dyad 也在对偶。
+这是单个实际输出腿的完整秩二族，尚未涉及多条实际 qutrit 的全局二维子空间。
+
+若 $R$ 不在闭凸锥 $D_s$，有限维锥分离给 $h\in D_s^*$、$\operatorname{Tr}(hR)<0$。
+原 $C_3$ 中的任意分离泛函也可先经 $\mathsf p_s$ 压缩，
+保留对 $i_s(R)$ 的负读数和原正性，再用(105.5)限制。
+平均固定 $R$，所以 $\mathcal A(h)=aI+bR$ 仍分离 $R$。
+在正乘积向量 $|01\rangle$ 上读数为 $a$，故 $a\ge0$；
+若 $a=0$，负 $R$ 读数迫使 $b<0$，却在正乘积 $|00\rangle$ 上为负。
+因此 $a>0$，可除以 $a$ 写为 $W_\lambda$。
+由 $\operatorname{Tr}(PW_\lambda)=1-3\lambda<0$ 得 $\lambda>1/3$。
+在归一秩二 Bell 向量 $(|00\rangle+|11\rangle)/\sqrt2$ 上的读数为
+$1-2\lambda$，故 $\lambda\le1/2$。
+该归一族与其通常 Schmidt 数阈值是上述 Terhal–Horodecki 引理1、2及定理2的标准背景；
+在这里将它用于实际全对偶的根据是前面的原映射构造。
+最后由(105.5)把 $W_\lambda$ 正零扩张到原 $C_3^*$。
+全程没有借用另一个有限诊断锥的对偶。∎
+

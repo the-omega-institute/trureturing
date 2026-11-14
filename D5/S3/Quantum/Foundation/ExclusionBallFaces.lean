@@ -53,7 +53,7 @@ private theorem face_eq_of_interior {E : Type*} [NormedAddCommGroup E]
   rw [← image_openSegment]
   exact ⟨1, Ioo_subset_openSegment ⟨zero_lt_one, ht⟩, AffineMap.lineMap_apply_one y x⟩
 
-private theorem proper_cone_face_support {C : PointedCone ℝ V}
+theorem proper_cone_face_support {C : PointedCone ℝ V}
     (hgen : Submodule.span ℝ (C : Set V) = ⊤) (F : C.Face)
     (hproper : F.toPointedCone ≠ C) :
     ∃ g : V →ₗ[ℝ] ℝ, g ≠ 0 ∧ (∀ x ∈ C, 0 ≤ g x) ∧ ∀ x ∈ F, g x = 0 := by
@@ -87,7 +87,7 @@ private theorem proper_cone_face_support {C : PointedCone ℝ V}
     change -(f x) = 0
     linarith
 
-private theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
+theorem positive_support_confirmer {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set V) = ⊤)
@@ -152,7 +152,7 @@ private theorem ball_face_eq {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ
   exact face_eq_of_interior hface hzint hzF
 
 omit [FiniteDimensional ℝ V] in
-private theorem chart_face_eq {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p : V}
+theorem chart_face_eq {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p : V}
     (b : ExclusionChart C u p) {F : Set V} (hconv : Convex ℝ F)
     (hface : IsExtreme ℝ (exclusion C u p) F) (hnon : F.Nontrivial) :
     F = exclusion C u p := by
@@ -234,7 +234,7 @@ private theorem exclusion_exposed {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ
     exact ⟨hx, by linarith [(hf.1 x hx.1).1]⟩
 
 omit [FiniteDimensional ℝ V] in
-private theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
+theorem pair_convex (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) (p q : V) :
     Convex ℝ (pairBase C u p q) := by
   intro x hx y hy a b ha hb hab
   refine ⟨base_convex C u hx.1 hy.1 ha hb hab, fun F hp hq => ?_⟩

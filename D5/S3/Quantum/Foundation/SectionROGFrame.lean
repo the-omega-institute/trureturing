@@ -50,7 +50,7 @@ def ROG (L : Submodule ℝ (HermitianMat ι 𝕜)) : Prop :=
 def pureRanks (L : Submodule ℝ (HermitianMat ι 𝕜)) : Set (HermitianMat ι 𝕜) :=
   {X | ∃ v : EuclideanSpace 𝕜 ι, ‖v‖ = 1 ∧ rankOne v = X ∧ X ∈ L}
 
-private lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
+lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
     rankOne (r • v) = (r * r) • rankOne v := by
   apply HermitianMat.ext
   change Matrix.vecMulVec (r • v) (star (r • v)) =
@@ -61,7 +61,7 @@ private lemma rankOne_real_smul (v : ι → 𝕜) (r : ℝ) :
     RCLike.conj_ofReal, map_mul]
   ring
 
-private lemma rankOne_trace_norm (v : EuclideanSpace 𝕜 ι) :
+lemma rankOne_trace_norm (v : EuclideanSpace 𝕜 ι) :
     (rankOne v).trace = ‖v‖ ^ 2 := by
   rw [HermitianMat.trace_eq_re_trace]
   change RCLike.re (Matrix.vecMulVec (v : ι → 𝕜) (star (v : ι → 𝕜))).trace = _
@@ -111,7 +111,7 @@ private lemma base_eq_hull (L : Submodule ℝ (HermitianMat ι 𝕜)) (hrog : RO
       exact ⟨hL, rankOne_nonneg v, by rw [rankOne_trace_norm, hv, one_pow]⟩
     · exact base_convex L
 
-private lemma rankOne_self (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) :
+lemma rankOne_self (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) :
     ⟪rankOne v, rankOne v⟫_ℝ = 1 := by
   apply RCLike.ofReal_injective (K := 𝕜)
   rw [pair_rankOne]
@@ -122,7 +122,7 @@ private lemma rankOne_self (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) :
     (Matrix.vecMulVec (v : ι → 𝕜) (star (v : ι → 𝕜)) *ᵥ (v : ι → 𝕜)) = _
   simp [Matrix.vecMulVec_mulVec, hunit]
 
-private lemma pairing_one_unique (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1)
+lemma pairing_one_unique (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1)
     (X : HermitianMat ι 𝕜) (hX : 0 ≤ X) (ht : X.trace = 1)
     (heq : ⟪rankOne v, X⟫_ℝ = 1) : X = rankOne v := by
   have hxx := HermitianMat.inner_le_mul_trace hX hX

@@ -4,7 +4,31 @@
 
 Two actual B-ended paths concentrate on the complete original labelled bipartition with an exact six-vertex residual and a signed-Catalan shift.
 
-**Theorem 1.1 (The actual graph move and its exact Catalan difference).**
+**Theorem 1.1 (Configurations of disjoint graph sums).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.configurations_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.configurations_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary graphs G and H and finite domains V and W, every independent subset of their tagged disjoint sum is uniquely the disjoint union of an independent subset of V and an independent subset of W. This is equality of actual configuration families, with both empty subsets included.
+
+**Theorem 1.2 (Weighted partitions multiply).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.partition_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.partition_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For weights in any commutative semiring, the native partition of a disjoint graph sum is the product of the native partitions on the two original domains. Each weight is restricted along the corresponding tagged vertex inclusion.
+
+**Theorem 1.3 (The actual graph move and its exact Catalan difference).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.actual_two_path_concentration`
 
@@ -29,6 +53,8 @@ The equality allows an arbitrary graph on R, including nonforests. Nonnegativity
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.actual_two_path_concentration`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.configurations_sum`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LinearForests/TwoPathConcentration.partition_sum`
 - Dependency: [D5/S3/Combinatorics/Graph/LinearForests/FiniteForestCatalan](FiniteForestCatalan.md)
 - Dependency: [D5/S3/Combinatorics/Graph/LinearForests/PathCatalanFunctional](PathCatalanFunctional.md)
 - Dependency: [D5/S3/StatisticalMechanics/HardCore/PartitionRelabeling](../../../StatisticalMechanics/HardCore/PartitionRelabeling.md)
