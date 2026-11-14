@@ -40,7 +40,7 @@ variable {A K : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
   [MetricSpace K] [CompactSpace K] [MeasurableSpace K] [BorelSpace K]
   (ν : Measure K) [IsFiniteMeasure ν] [ν.WeaklyRegular]
 
-private theorem positive_norm_eq_mass (φ : StrongDual ℂ A)
+theorem positive_norm_eq_mass (φ : StrongDual ℂ A)
     (hφ : ∀ a : A, 0 ≤ a → 0 ≤ φ a) : ‖φ‖ = (φ 1).re := by
   let P : A →P[ℂ] ℂ :=
     { φ with monotone' := (monotone_iff_map_nonneg _).mpr hφ }

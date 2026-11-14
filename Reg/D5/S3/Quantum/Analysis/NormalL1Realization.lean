@@ -117,3 +117,82 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms audit
 
 end Reg.D5.S3.Quantum.Analysis.NormalL1Realization
+
+namespace Reg.D5.S3.Quantum.Analysis.NormalL1Realization.PositiveNorm
+
+abbrev signature := Reg.D5.S3.Quantum.Analysis.NormalL1Realization.signature
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+def arena : Arena where
+  signature := signature
+  Law R := ∀ {A : Type u} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
+    (φ : StrongDual ℂ A) (_hφ : ∀ a : A, 0 ≤ a → 0 ≤ φ a),
+    R.readout () () ‖φ‖ (φ 1).re
+
+private theorem actual_law : arena.{u}.Law actual := @positive_norm_eq_mass.{u}
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  let A := PUnit.{u+1} →L[ℂ] PUnit.{u+1}
+  exact h (A := A) 0 (by intro a ha; simp)
+
+def family : Registration arena.{u} (type_of% (@positive_norm_eq_mass.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (show j = i from @Subsingleton.elim Unit _ j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨(), (0 : ℝ), (1 : ℝ), ?_⟩
+    intro h
+    have hf : (1 : ℝ) = 0 := Eq.mp (congrFun h 0) rfl
+    norm_num at hf
+
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@positive_norm_eq_mass.{u}) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Quantum.Analysis.NormalL1Realization.positiveNormUnit
+  realizationName := `Reg.D5.S3.Quantum.Analysis.NormalL1Realization.PositiveNorm.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨family.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Analysis.NormalL1Realization
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms family
+#print axioms audit
+
+end Reg.D5.S3.Quantum.Analysis.NormalL1Realization.PositiveNorm
