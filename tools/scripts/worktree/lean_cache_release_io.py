@@ -38,6 +38,7 @@ class MultipartArchiveOutput:
         self.stage, self.name = stage, name
         self.chunk_bytes, self.deadline = chunk_bytes, deadline
         self.output = None
+        self.failure = None
         self.parts = []
         self.archive_bytes = self.part_bytes = 0
         self.archive_hash, self.part_hash = hashlib.sha256(), hashlib.sha256()
@@ -55,19 +56,28 @@ class MultipartArchiveOutput:
         self.part_bytes, self.part_hash = 0, hashlib.sha256()
 
     def _close_part(self):
+        output, self.output = self.output, None
         try:
             remaining(self.deadline)
-            self.output.flush()
+            output.flush()
         finally:
-            self.output.close()
+            output.close()
         remaining(self.deadline)
         self.parts.append({"name": self.path.name, "sha256": self.part_hash.hexdigest(), "bytes": self.part_bytes})
-        self.output = None
 
     def tell(self):
         return self.archive_bytes
 
     def write(self, block):
+        if self.failure is not None:
+            raise self.failure
+        try:
+            return self._write(block)
+        except BaseException as error:
+            self.failure = error
+            raise
+
+    def _write(self, block):
         view = memoryview(block)
         transferred = 0
         while transferred < len(view):

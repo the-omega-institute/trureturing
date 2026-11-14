@@ -117,6 +117,7 @@ class QuotaOutput:
         self.output.close()
         if os.environ.get("FAKE_ARCHIVE_FAIL") == "close": raise OSError(errno.EIO, "archive close failed")
     def write(self, block):
+        if os.environ.get("FAKE_ARCHIVE_FAIL") == "short": block = block[:4093]
         self.output.flush()
         resident = sum(p.stat().st_size for p in self.path.parent.glob("lean-build.tgz*"))
         requested = resident + len(block)
@@ -171,6 +172,16 @@ pathlib.Path.open = open_path
                 self.assertIn("archive " + phase + " failed", result.stdout)
                 self.assertEqual([], list(self.remote.iterdir()))
                 self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
+
+    def test_short_archive_writes_preserve_digests_and_restored_bytes(self):
+        seed, environment = self.archive_quota(4 * 1024 * 1024)
+        result = self.transport("publish", **environment, FAKE_ARCHIVE_FAIL="short")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"published"', result.stdout)
+        shutil.rmtree(self.root / ".lake/build")
+        restored = self.transport("fetch")
+        self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+        self.assertEqual(seed, (self.root / ".lake/build/lib/lean/D5/A.olean").read_bytes())
 
     def linked_checkout(self):
         self.main_checkout = self.root.resolve()
