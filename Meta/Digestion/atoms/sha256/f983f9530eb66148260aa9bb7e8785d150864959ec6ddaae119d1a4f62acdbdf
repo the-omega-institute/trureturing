@@ -1,0 +1,46 @@
+**引理 139.9（两团紧球族不能封闭无三角分支）。** 有
+
+$$
+\mathsf{Tri}(o)\quad\Longleftrightarrow\quad Q\cap\Lambda\ne\varnothing.
+\tag{XI139.28}
+$$
+
+若无根三角，则(XI139.6)成立。
+
+证明。根三角中的另一个顶点 $s$ 属于 $S_o\cap Q$；$S_o\subseteq\Lambda$ 给正向。反之，设 $a\in Q\cap\Lambda$。若 $a\ne o$，取 $s=\pi_o(a)\in S_o$；零对称给 $s\in S_a\subseteq Q$，故 $s\in S_o\cap Q$。若 $a=o$，$o\in\Lambda$ 直接给 $S_o\subseteq Q$，也可取 $s\in S_o\cap Q$。按 $Q$ 的定义，某个 $t\in S_o$ 满足 $s\in S_t$；反自反性使 $o,s,t$ 两两不同，得到真实根三角。这证明(XI139.28)。
+
+现假设无根三角，则 $Q,\Lambda$ 是不交非空紧集。反设 $P=Q\cup\Lambda$。每个 $a\in\Lambda$ 已有 $S_a\subseteq Q$；若 $x\in Q$，存在 $s\in S_o\subseteq\Lambda$ 满足 $x\in S_s$，故 $s\in S_x$。连通球面 $S_x$ 在不交闭开分割 $P=Q\sqcup\Lambda$ 中只能留在一侧，因而
+
+$$
+S_a\subseteq Q\quad(a\in\Lambda),\qquad
+S_x\subseteq\Lambda\quad(x\in Q).
+\tag{XI139.29}
+$$
+
+考虑保留全部混态的两个集合
+
+$$
+H_\Lambda=\bigcup_{a\in\Lambda}D_a,\qquad H_Q=\bigcup_{x\in Q}D_x.
+\tag{XI139.30}
+$$
+
+对紧纯标签集 $A$，紧集
+
+$$
+\{(a,y,f)\in A\times K\times\mathcal E:f(a)=1,f(y)=0\}
+\tag{XI139.31}
+$$
+
+在 $K$ 上的投影恰为 $\bigcup_{a\in A}D_a$。所以(XI139.30)两侧非空且紧，不需假设 $P$ 紧。若有共同点，它在不同标签的两球交中，故原纯；(XI139.29)又使它同时在 $Q,\Lambda$，矛盾。全部非空真面的原分类及反设 $P=Q\cup\Lambda$ 给
+
+$$
+\partial_{\rm rel}K=H_\Lambda\sqcup H_Q.
+\tag{XI139.32}
+$$
+
+这里纯单点也被覆盖：$x\in Q$ 有上述 $s\in\Lambda$ 使 $x\in D_s$；$a\in\Lambda$ 任取 $x\in S_a\subseteq Q$，零对称给 $a\in D_x$。$K$ 有三维真面，故仿射维数至少四，其相对边界由内点径向投影同胚于相应球面，因而连通。(XI139.32)将它分成两个不交非空紧集，不可能。因此 $P\setminus(Q\cup\Lambda)\ne\varnothing$。
+
+用 Conn 从 $o\in Q$ 沿一条有限原零边路到这个外部集合，取首次离开 $Q\cup\Lambda$ 的顶点 $a$ 及其前驱 $x$。前驱不可能在 $\Lambda$，因为 $\Lambda$ 中标签的全部原邻点都在 $Q$；故 $x\in Q$，且 $x\perp a$。$x\in Q$ 给从 $o$ 到 $x$ 的两步路，所以 $d_\perp(o,a)\le3$。另一方面，$a\ne o$、$a\notin S_o$（因 $S_o\subseteq\Lambda$）、$a\notin Q$，依次排除距离零、一、二，故距离恰为三。
+
+$x\in S_a\cap Q$，而 $a\notin\Lambda$ 给 $S_a\not\subseteq Q$。若 $y\in S_a\cap U_0$，则 $y\in P$、$Q(y)=Q$ 且 $a\in S_y$；按二步集合定义便有 $S_a\subseteq Q(y)=Q$，矛盾。因此 $S_a\cap U_0=\varnothing$，得到(XI139.6)。定理139.2全部结论证毕。
+

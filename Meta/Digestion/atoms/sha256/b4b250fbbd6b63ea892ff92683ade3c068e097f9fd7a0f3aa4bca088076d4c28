@@ -1,0 +1,22 @@
+**引理 3.1（首项展开）。** 固定 $x>1$ 与紧区间 $I\subset(1,\infty)$。$a\to\infty$ 时，对 $\kappa\in I$ 一致地有
+
+$$
+F_\kappa(x,a)=c_\kappa(x)\,x^{-a}+O_{x,I}(x^{-2a}),\qquad c_\kappa(x)=\frac{(x-1)(x^{\kappa-1}-1)}{(x^\kappa-1)\log x}.
+$$
+
+对 $\kappa$ 的任意固定阶导数同样成立。
+
+**证明。** 令 $t=x^{-a}\in(0,1/x]$，则
+
+$$
+F_\kappa(x,a)=\mathscr F(\kappa,t):=\frac{1}{\kappa\log x}\log\frac{N(\kappa,t)}{M(\kappa,t)},\qquad N=(x-t)^\kappa-(1-t)^\kappa,\quad M=x^\kappa(1-t)^\kappa-(1-xt)^\kappa .
+$$
+
+各项乘以 $x^{-(a+1)\kappa}$ 后约去即得此式。$N(\kappa,0)=M(\kappa,0)=x^\kappa-1>0$，$\partial_tN(\kappa,0)=\kappa(1-x^{\kappa-1})$，$\partial_tM(\kappa,0)=\kappa(x-x^\kappa)$。于是
+
+$$
+\partial_t\mathscr F(\kappa,0)=\frac{1}{\kappa\log x}\cdot\frac{\kappa(1-x^{\kappa-1})-\kappa(x-x^\kappa)}{x^\kappa-1}=c_\kappa(x).
+$$
+
+在 $I\times[0,t_0]$（$t_0$ 足够小，使各底数为正）上 $\mathscr F$ 实解析，且 $\mathscr F(\kappa,0)=0$。对 $t$ 作带余项的 Taylor 展开，余项及其各阶 $\kappa$ 导数在紧集上一致有界，即得结论。证毕。
+
