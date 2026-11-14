@@ -2468,3 +2468,195 @@ $k$ 非零，否则 $h=g$，但 $Z(h)=D_q$ 为非退化三球，与 $Z(g)=\{p\}$
 [Q152B]: https://arxiv.org/html/2411.18589v2 "G. Niestegge，Bit symmetry entails the symmetry of the quantum transition probability，Theorem 1。"
 
 ## 追加锚（本行以下为增补区）
+
+## 153. 原纯帽的道路、联合读数与混输入最低值
+
+**定义 153.1（原域、仿射纯帽与局部差距）。** 保留定义151.1、152.1的全部原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p,S_p,\mathcal A_p,B_p,M_p,\Delta_p,\mathscr L(p)$，假设完整 EB3 与字面纯 PR。每个 minimum 仍遍历其原菜单，并在全部原混输入上达到。对原仿射函数 $a$ 与 $c\in\mathbb R$，记
+
+$$
+U(a,c)=\{p\in P:a(p)>c\}.
+\tag{XII153.1}
+$$
+
+固定一个辅助欧氏范数，其开球记作 $B_\eta(x)$。下文不输入 Conn、全域 Inj、$P_0$、least、局部流形或群齐性。$T_p$ 是原仿射效应的凹下包络，不预设仿射。
+
+**定理 153.2（仿射纯帽与局部纯路径）。** 每个非空 $U(a,c)$ 连通且道路连通；这些帽给 $P$ 每点的道路连通开邻域基。特别地，整个原纯域为局部道路连通、道路连通的紧度量空间。
+
+证明。复用 [IX114.2—114.4][Q153IX] 与定理151.2：$P$ 紧连通，每个纯点严格仿射暴露，每个非空真暴露面的全部纯点构成单点或完整 $S^2$，故连通。以下支付这些原凸条件到半空间截面连通的桥。
+
+空帽及整个 $P$ 的帽已处理。设 $U=U(a,c)$ 非空且真，固定 $p\in U$，取在原 $K$ 上唯一最大于 $p$ 的仿射函数 $b_p$，并置
+
+$$
+Q_t=\operatorname*{argmax}_{q\in P}(b_p(q)+t a(q)),
+\qquad t\ge0.
+\tag{XII153.2}
+$$
+
+$b_p+t a$ 始终非恒定：若 $t>0$ 时恒定，则 $p$ 是 $a$ 的全局最小点，却又有 $\min_Pa\le c<a(p)$；$t=0$ 由严格暴露排除。因此 $Q_t$ 是某个真暴露面的完整纯缘，非空紧连通，且 $Q_0=\{p\}$。对 $t>0$、$q\in Q_t$，比较 $q,p$ 给
+
+$$
+t(a(q)-a(p))\ge b_p(p)-b_p(q)\ge0.
+\tag{XII153.3}
+$$
+
+故全部 $Q_t$ 都在较紧的闭帽 $\{a\ge a(p)\}\subset U$ 内。
+
+对每个有限 $T$，集合
+
+$$
+G_T=\{(t,q)\in[0,T]\times P:q\in Q_t\}
+\tag{XII153.4}
+$$
+
+紧，其向区间的投影满射且纤维连通。若 $G_T$ 有非平凡紧开闭分离，每根纤维只能在一侧，两侧投影便给区间的非平凡紧分离，矛盾。故 $G_T$ 连通，其第二投影也连通。于是
+
+$$
+E_p=\overline{\bigcup_{t\ge0}Q_t}^{\,P}
+\subseteq\{a\ge a(p)\}\subset U
+\tag{XII153.5}
+$$
+
+为含 $p$ 的紧连通集。这里固定的严格余量 $a(p)-c$ 保证闭包仍在开帽内。
+
+记 $Q_a=\operatorname*{argmax}_P a$。因帽非空且真，$Q_a$ 也是非空紧连通的真面纯缘。取 $t_n\to\infty$、$q_n\in Q_{t_n}$，极大值比较给
+
+$$
+0\le\max_Pa-a(q_n)
+\le\frac{\max_Pb_p-\min_Pb_p}{t_n}.
+\tag{XII153.6}
+$$
+
+由紧性，$E_p\cap Q_a\ne\varnothing$。所有 $E_p$ 都接到同一个 $Q_a$，且包含各自的 $p$，故 $U=Q_a\cup\bigcup_{p\in U}E_p$ 连通。没有选择连续极大点。
+
+对任意 $p\in P$ 及其纯开邻域 $W$，严格暴露和紧 $P\setminus W$ 给 $\max_{P\setminus W}b_p<b_p(p)$；在二者之间取阈值便得包含于 $W$ 的连通开帽。$W=P$ 时直接取整个 $P$。因此 $P$ 局部连通。$P$ 紧度量，故完备；准确复用 Mazurkiewicz–Moore–Menger 定理的完备度量局部连通推局部道路连通版本，见 [Björn–Björn–Shanmugalingam，§2][Q153T]。连通且局部道路连通的 $P$ 道路连通；其中每个连通开帽也道路连通，证毕。
+
+这里的经典半空间连通性质称 two-piece property。它本身及完备度量拓扑推论不作为新发现；本条消费原暴露面纤维建立足以供定理153.4使用的原纯路径。该性质在光滑 Lie 群轨道中的使用见 [Luan–Tam，§2][Q153L]，其光滑性与轨道前件不由本条支付。整个 $P$ 的连通仍准确复用151.2，未将一般紧凸线段的离散极点集包含进结论。
+
+**定理 153.3（一维整球零确认族的全部混输入达到）。** 固定原纯标签 $p$。若
+
+$$
+\dim\operatorname{aff}\mathcal A_p\le1,
+\qquad T_p(s)=B_p(s)\quad(s\in P),
+\tag{XII153.7}
+$$
+
+则
+
+$$
+\begin{gathered}
+T_p(x)=B_p(x)\quad(x\in K),\\
+\forall f\in\mathcal F_p\quad\exists e\in\mathcal A_p:
+\quad f-e\in C^\ast.
+\end{gathered}
+\tag{XII153.8}
+$$
+
+特别地，定理152.4的 $|\mathscr L(p)|\ge2$ 配合该仿射维数条件，已足以取得(XII153.8)，无需 $\mathcal A_p$ 单点。
+
+证明。先在推导内部使用成熟的仿射切片极点方法。对任意两个原仿射函数 $a_1,a_2$ 与非空切片
+
+$$
+K_y=\{x\in K:a_1(x)=y_1,\ a_2(x)=y_2\},
+\tag{XII153.9}
+$$
+
+有 $\operatorname{ext}K_y=P\cap K_y$。确实，若切片极点 $z$ 是原内部混点，$\dim\operatorname{aff}K\ge4$ 使两个约束的共同核仍有非零方向，可在切片中以 $z$ 为中点作非退化小线段。若 $z$ 是原混边界点，其最小原面按完整面分类为某个 $D_r$，且 $z\in\operatorname{ri}D_r$；两个约束在三维 $\operatorname{aff}D_r$ 内的共同核至少一维，又得到同样矛盾。反向包含由原极端性直接成立。紧凸切片的极点分解遂给
+
+$$
+K_y=\operatorname{conv}(P\cap K_y).
+\tag{XII153.10}
+$$
+
+因此任意原混态的两个仿射读数，总能由同一个原纯态同时匹配。这不是分别选择两个纯态，也没有假定所有混态本身纯。
+
+非空紧凸且仿射维数至多一的 $\mathcal A_p$ 可写成 $[e_-,e_+]$，允许两端相同。置 $h=e_+-e_-$，则整个 $K$ 上准确有
+
+$$
+B_p=e_-+\min(0,h).
+\tag{XII153.11}
+$$
+
+反设某张原 $f\in\mathcal F_p$、某个原混态 $x$ 满足 $f(x)<B_p(x)$。对两个仿射读数 $h,f-e_-$ 使用(XII153.10)，取得同一原纯态 $s$ 同时匹配二者。于是
+
+$$
+\begin{aligned}
+B_p(s)-f(s)
+&=\min(0,h(s))-(f-e_-)(s)\\
+&=\min(0,h(x))-(f-e_-)(x)
+=B_p(x)-f(x)>0,
+\end{aligned}
+\tag{XII153.12}
+$$
+
+与 $f(s)\ge T_p(s)=B_p(s)$ 矛盾。故所有原 $f$ 都满足 $f(x)\ge B_p(x)$；再用 $\mathcal A_p\subseteq\mathcal F_p$，得到全部混输入的等号。
+
+还须证明同一 $f$ 有一张在整个原锥上被它支配的整球零确认。$\mathcal A_p+C^\ast$ 是紧集与闭凸锥之和，故闭凸。若 $f$ 不属于它，有限维严格分离给 $v\in V$ 满足
+
+$$
+f(v)<\inf_{e\in\mathcal A_p,\ k\in C^\ast}(e+k)(v).
+\tag{XII153.13}
+$$
+
+右侧有限迫使 $v\in C$，否则沿某张负读数的正泛函之非负倍数即可将右侧降至负无穷。严格不等还迫使 $v\ne0$。以原 $u$ 归一化，令 $x=v/u(v)\in K$，得到 $f(x)<B_p(x)=T_p(x)$，矛盾。证毕。
+
+$\mathcal A_p$ 在原正序中是反链：若 $e,e'\in\mathcal A_p$ 且 $e'-e\in C^\ast$ 非零，则它的真零面同时含整个极大真面 $D_p$ 和外部点 $p$，不可能。因此 $e=e'$。故在非退化线段分支 $e_-\ne e_+$ 中，(XII153.8)不成为全菜单 least；若 least 存在，它被每张 $\mathcal A_p$ 成员支配，因而自身属于 $\mathcal A_p$，再由反链性迫全部成员相同，矛盾。该分支若实际存在，全部混输入最低值的形状只能是 $\min\{e_-,e_+\}$。本条没有证明此分支与全域纯 PR 共存，也没有排除仿射维数至少二的确认族。
+
+**定理 153.4（严格差距处的塌缩边界与纯路径实现）。** 固定原纯 $p,s$，假设
+
+$$
+\delta:=\Delta_p(s)>0,\qquad \mathscr L(p)\ne\varnothing.
+\tag{XII153.14}
+$$
+
+按定理152.2—152.3，记 $r=r_p(s)$，则 $\mathscr L(p)=\{r\}$。在 $p$ 的任意指定纯邻域中，可选道路连通开帽 $U\ni p$ 及 $\varepsilon>0$，使每个 $a\in U$ 恰属下列一支：
+
+$$
+d_H(D_a,D_p)<\varepsilon,
+\qquad\text{或}\qquad
+D_a\subset B_\varepsilon(r).
+\tag{XII153.15}
+$$
+
+令 $O=\{a\in U:D_a\subset B_\varepsilon(r)\}$、$Z=\partial_UO$。则 $O$ 非空且相对开，$p\in Z$；每个 $b\in Z$ 都满足
+
+$$
+\Delta_b(s)>\delta/2,\qquad
+\mathscr L(b)=\{r_b(s)\},
+\tag{XII153.16}
+$$
+
+且 $b\mapsto r_b(s)$ 在 $Z$ 上连续。还存在 $b\in Z$ 与连续原纯路径 $\sigma:[0,1]\to U$，使
+
+$$
+\sigma(0)=b,\qquad \sigma(t)\in O\quad(t>0),
+\qquad D_{\sigma(t)}\xrightarrow[t\downarrow0]{H}\{r_b(s)\}.
+\tag{XII153.17}
+$$
+
+沿此路径 $\beta_{D_{\sigma(t)}}\to\infty$，接收标签 $b$ 自身的预算仍有限。
+
+证明。定理152.3的整球并合差距保留，先给出一个标签邻域及 Hausdorff 容差，使邻近 $p$ 且 $D_a$ 足够接近 $D_p$ 时，$\Delta_a(s)>\delta/2$；否则可用同时趋向 $p,D_p$ 的反例序列违反(XII152.9)。取 $\varepsilon<\operatorname{diam}D_p/8$ 并满足该容差。
+
+[IX115.5][Q153IX]的准确整球极限二择与单落点限制给某个标签邻域，使(XII153.15)成立。否则取趋向 $p$ 且违反二择的标签序列，再取 Hausdorff 子列；极限只能是 $D_p$ 或 $\{r\}$，两者都与违反二择矛盾。利用定理153.2在该邻域及指定邻域内选道路连通开帽 $U$。两支互斥，因为第一支的球直径大于 $\operatorname{diam}D_p-2\varepsilon>6\varepsilon$，第二支的球直径小于 $2\varepsilon$。
+
+整球上半连续性使 $O$ 相对开；已有入射塌缩使 $O\ne\varnothing$ 且 $p\in\overline O$，而直径界给 $p\notin O$，故 $p\in Z$。每个 $b\in Z\subseteq U\setminus O$ 属于整球支，因此其差距大于 $\delta/2$、球直径大于 $6\varepsilon$。对任意 $a_i\in O\to b$，球直径至多 $2\varepsilon$，故其任何 Hausdorff 子列极限都不能是整个 $D_b$。准确极限二择只留下单点，再由定理152.3将全部单点极限固定为 $r_b(s)$。于是 $D_{a_i}\to\{r_b(s)\}$，并给出(XII153.16)。
+
+为核对落点连续性，取 $b_i\in Z\to b\in Z$、$f_i\in M_{b_i}(s)$。由各处严格差距，$Z(f_i)=\{r_{b_i}(s)\}$；定理152.2在固定接收标签 $b$ 的邻近标签零点控制，遂给 $r_{b_i}(s)\to r_b(s)$。
+
+最后取 $a\in O$，在 $U$ 中选从 $p$ 到 $a$ 的连续纯路径 $\gamma$。闭集 $\{t:\gamma(t)\notin O\}$ 非空且不含一；令其最大元为 $t_0<1$，则 $b=\gamma(t_0)\in Z$，且其后路径全在 $O$。重参数化，并消费刚证明的边界极限，即得(XII153.17)。[IX115.3][Q153IX]的统一原效应范数界给 $2a_{D_{\sigma(t)}}\le L\operatorname{diam}D_{\sigma(t)}\to0$，故 $\beta=1/(2a)\to\infty$；每张实际完整球自身的 $a$ 仍严格正。证毕。
+
+此处 $b$ 可在 $p$ 的任意近处取得，但没有强行令 $b=p$。$Z$ 也没有被断言为把 $U$ 分成两个非空开侧的分离子；整球支可能没有内部。塌缩路径与连续落点给单落点分支的实际局部形状，未将其排除。
+
+**范围 153.5（比较、局部道路与准确零边的区别）。** 完整量子候选仍是原 EB3、字面纯 PR 与定义151.1的 $\mathsf N_2$。在这个候选下，推论151.4已经给同一 $C,u$ 的复三能级表示：全部原混态为密度矩阵、全部原效应为 $0\preceq E\preceq I_3$，全部原最低值为 $T_{\Phi(vv^\ast)}(\Phi\rho)=v^\ast\rho v$；纯域为 $\mathbb{CP}^2$，完整排除球的纯缘为 $\mathbb{CP}^1$。
+
+本章支付了裸 EB3+PR 下的原仿射纯帽道路，以及它对实际塌缩边界的消费；另将一维整球零确认族的逐纯输入达到送到全部混输入。成熟的切片极点、严格分离与完备度量拓扑结论均仅作中间工具。上述跨接口推导归属 repo-derived，不认领新的经典拓扑定理、全球原创或最小性。
+
+原纯帽可以与本标签的整颗排除球完全分离：取严格暴露 $p$ 的 $b_p$，由紧性有 $\max_{S_p}b_p<b_p(p)$，在两者间取阈值即可。因此帽内路径尚未给帽外的共同零邻点。整球并合仍是(XII153.15)保留的第一支；Hausdorff 接近不保证有限阶段 $D_p\cap D_q\ne\varnothing$。本章没有推出 $\mathsf N_2$、Conn、全域 Inj 或全部 $\mathcal A_p$ 单点，也没有完整 EB3+PR 反模型；候选的独立假设数没有减少。XII149的维数上界、单标签球心互易与共同三元恒等式仍保留其额外前件。
+
+**完整中文图景。** 两两比较仍用同一套全部原测试，交换两纯端点只要求读数相同。现在可以在每个纯点附近切出一顶小帽，帽里的任意两点都能沿纯态连续走通；严格差距处的小排除球则会沿这种纯路径贴向一个具有连续落点的标签边界。另一方面，若整球清零测试的选择只排成一条线段，两张联合读数就足以把纯态上的最低值结论送到全部混态，但一段不同的尺仍不成为同一张 least。剩下的一步依旧具体：连续走近的两个标签，背后的排除球是否必有同一个真实零点。这一步未由路径、靠近或并合代替。实际仪器、复合纠缠、全旁观 CP、物理钟、Hamiltonian 和能量继续各按原独立合同承担。
+
+[Q153IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.4：全部真面、严格纯暴露与原纯紧性；IX115.3—115.5：原效应界、整球上半连续与准确极限二择。"
+[Q153T]: https://arxiv.org/html/1311.5122v1 "A. Björn, J. Björn, N. Shanmugalingam, The Mazurkiewicz distance and sets that are finitely connected at the boundary，§2：完备度量空间中 Mazurkiewicz–Moore–Menger 局部道路连通推论。"
+[Q153L]: https://arxiv.org/html/2611.02575v1 "Y. Luan, T.-Y. Tam, Planar Convexity of Isotropy Orbits via Cohomology and Common Zeros，§2：two-piece property 的半平面表述及其另需光滑流形前件的消费者。"
+
+## 追加锚（本行以下为增补区）
