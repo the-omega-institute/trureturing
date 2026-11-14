@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.EndpointFiniteWindow
 import Reg.Support.SingleDependentReadout
 
+/-! Dependent-family audits for the finite-window and actual endpoint readouts. -/
+
 noncomputable section
 
 open Matrix Finset Complex MeasureTheory
@@ -47,11 +49,8 @@ private theorem dependence : ObservationalDependence signature actual := by
     (by norm_num) (by dsimp [T]; norm_num)
   refine ⟨⟨1, by omega⟩, 0, T, ?_⟩
   change (0 : ℝ)⁻¹ * _ ≠ _
-  simp only [inv_zero, zero_mul]
-  intro he
-  change (1 - 1 / 2) / (2 * (1 : ℝ)) < actual.readout i ⟨1, by omega⟩ T at hh
-  rw [← he] at hh
-  norm_num at hh
+  simp only [_root_.inv_zero, zero_mul]
+  exact ne_of_lt (lt_trans (by norm_num) hh)
 
 def family : Registration arena (type_of% @actual_endpoint_average) where
   actual := actual
@@ -159,8 +158,16 @@ def family : Registration arena (type_of% @finite_window_lower_bound.{u}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨finite_window_lower_bound, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, ?_, rejected_law⟩
+      · intro j h
+        exact (h (Subsingleton.elim _ _)).elim
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := dependence
 
 def registration : Contract.Registration (@finite_window_lower_bound.{u})
