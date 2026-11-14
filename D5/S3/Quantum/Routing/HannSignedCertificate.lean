@@ -46,6 +46,9 @@ private theorem omega_sq_sq : (omega ^ 2) ^ 2 = omega := by
     (omega ^ 2) ^ 2 = omega ^ 3 * omega := by ring
     _ = omega := by rw [omega_cube, one_mul]
 
+private theorem omega_sq_inv : (omega ^ 2)⁻¹ = omega := by
+  rw [← inv_pow, omega_inv, omega_sq_sq]
+
 private theorem omega_neg_two : omega ^ (-2 : ℤ) = omega := by
   rw [zpow_neg, zpow_ofNat, ← inv_pow, omega_inv, omega_sq_sq]
 
@@ -70,7 +73,7 @@ private theorem local_lower (e : Fin 3) :
       -localRecord (-(1 / 2 : ℝ)) Qutrit.zero e -
         localRecord (-(1 / 2 : ℝ)) Qutrit.one e := by
   fin_cases e <;>
-    norm_num [localRecord, labelIndex, omega_neg_two, omega_inv] <;>
+    norm_num [localRecord, labelIndex, omega_neg_two, omega_inv, omega_sq_inv] <;>
     linear_combination (Real.sqrt (2 : ℝ) : ℂ)⁻¹ * omega_sum
 
 abbrev Environment (n : ℕ) := Router n → Fin 3
@@ -82,10 +85,6 @@ def restrict (n : ℕ) (q : Router (n + 1) → ℝ) (b : Bool) : Router n → �
 
 def childEnvironment (n : ℕ) (e : Environment (n + 1)) (b : Bool) : Environment n :=
   fun v => e (some (b, v))
-
-/-- The local products observe literal router fields. -/
-def treeRecord (n : ℕ) (q : Router n → ℝ) (t : Tree n) (e : Environment n) : ℂ :=
-  ∏ v, localRecord (q v) (routerLabel n t v) (e v)
 
 /-- Actual loaded records retain an arbitrary external bus. -/
 def record (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
@@ -464,7 +463,7 @@ private theorem step_independent (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Q
 
 /-- The literal recursive list is independent and sound at every height and bus, and each
 preferred representative synthesizes the actual vacuum. Completeness is a separate condition. -/
-theorem recursion_certificate (n : ℕ) (q : Router n → ℝ)
+private theorem recursion_certificate (n : ℕ) (q : Router n → ℝ)
     (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (bus : Qutrit) :
     Sound n q bus (outputs n q) ∧ ListIndependent n (outputs n q).kernel := by
   refine ⟨recursion_sound n q bus, ?_⟩
@@ -495,7 +494,8 @@ private theorem local_equation (q : ℝ) (hq : -(1 / 2 : ℝ) ≤ q) (hq' : q < 
   have h2 : omega ^ 2 * a + omega * b = c := by
     apply mul_left_cancel₀ hb
     have hh := h 2
-    norm_num [localRecord, labelIndex, omega_neg_two, omega_inv] at hh
+    norm_num only [localRecord, labelIndex, Fin.reduceEq, ite_false, zpow_neg_one,
+      zpow_neg, zpow_ofNat, zpow_zero, pow_one, pow_zero, mul_one, omega_inv, omega_sq_inv] at hh
     linear_combination hh
   have hd : omega - omega ^ 2 ≠ 0 := by
     intro he
@@ -508,7 +508,8 @@ private theorem local_equation (q : ℝ) (hq : -(1 / 2 : ℝ) ≤ q) (hq' : q < 
     exact sub_eq_zero.mp ((mul_eq_zero.mp he).resolve_left hd)
   have ha : a = -c := by
     linear_combination a * omega_sum - h1 + omega ^ 2 * (hab.symm)
-  refine ⟨ha, hab ▸ ha, ?_⟩
+  have hbneg : b = -c := hab ▸ ha
+  refine ⟨ha, hbneg, ?_⟩
   intro hneq
   have hstrict : -(1 / 2 : ℝ) < q := lt_of_le_of_ne hq (Ne.symm hneq)
   have ha0 : (Real.sqrt ((1 + 2 * q) / 3) : ℂ) ≠ 0 :=
@@ -516,14 +517,20 @@ private theorem local_equation (q : ℝ) (hq : -(1 / 2 : ℝ) ≤ q) (hq' : q < 
   have h0 : a + b = c := by
     apply mul_left_cancel₀ ha0
     have hh := h 0
-    norm_num only [localRecord, Fin.reduceEq, ite_true] at hh
+    norm_num only [localRecord, Fin.reduceEq, ite_true, Complex.ofReal_one, one_mul] at hh
     linear_combination hh
-  linear_combination (h0 - ha - (hab ▸ ha)) / 3
+  linear_combination (ha + hbneg - h0) / 3
 
 private def joinEnvironment (n : ℕ) (i : Fin 3) (l r : Environment n) :
     Environment (n + 1)
   | none => i
   | some (b, v) => if b then r v else l v
+
+private theorem childEnvironment_join_left (n : ℕ) (i : Fin 3) (l r : Environment n) :
+    childEnvironment n (joinEnvironment n i l r) false = l := rfl
+
+private theorem childEnvironment_join_right (n : ℕ) (i : Fin 3) (l r : Environment n) :
+    childEnvironment n (joinEnvironment n i l r) true = r := rfl
 
 private def childCoeff (n : ℕ) (x : Coeff (n + 1)) (b : Bool) : Coeff n :=
   fun a => x (b, a)
@@ -567,8 +574,9 @@ private theorem below_upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus
     (by
       intro i
       have he := congrFun hx (joinEnvironment n i l r)
-      simp only [synthesis_split, vacuum_split, joinEnvironment, childEnvironment,
-        Bool.false_eq_true, ↓reduceIte, Pi.smul_apply, smul_eq_mul] at he
+      rw [synthesis_split n q bus x (joinEnvironment n i l r), Pi.smul_apply, vacuum_split] at he
+      simp only [childEnvironment_join_left, childEnvironment_join_right,
+        joinEnvironment, smul_eq_mul] at he
       linear_combination he)
   refine ⟨?_, ?_, ?_⟩
   · ext e
@@ -578,7 +586,9 @@ private theorem below_upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus
   · ext e
     apply mul_left_cancel₀ hel
     have he := (hlocal el e).2.1
-    simpa only [Pi.smul_apply, smul_eq_mul, neg_mul, mul_assoc, mul_left_comm] using he
+    change vacuumRecord n (restrict n q false) el * _ =
+      vacuumRecord n (restrict n q false) el * (-c * vacuumRecord n (restrict n q true) e)
+    linear_combination he
   · intro hneq
     have he := (hlocal el er).2.2 hneq
     exact (mul_eq_zero.mp ((mul_eq_zero.mp he).resolve_right her)).resolve_right hel
@@ -600,8 +610,11 @@ private theorem upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qut
       vacuumRecord n (restrict n q false) l * synthesis n (restrict n q true) bus (childCoeff n x true) r =
       c * vacuumRecord n (restrict n q false) l * vacuumRecord n (restrict n q true) r := by
     have hh := congrFun hx (joinEnvironment n 0 l r)
-    simpa [synthesis_split, vacuum_split, joinEnvironment, childEnvironment, hr,
-      localRecord, Pi.smul_apply, smul_eq_mul] using hh
+    rw [synthesis_split n q bus x (joinEnvironment n 0 l r), Pi.smul_apply, vacuum_split] at hh
+    norm_num only [childEnvironment_join_left, childEnvironment_join_right,
+      joinEnvironment, hr, localRecord, Pi.smul_apply, smul_eq_mul,
+      Fin.reduceEq, ite_true, Complex.ofReal_one, one_mul] at hh
+    linear_combination hh
   let z := synthesis n (restrict n q false) bus (childCoeff n x false) el /
     vacuumRecord n (restrict n q false) el
   have hz : z * vacuumRecord n (restrict n q false) el =
@@ -619,7 +632,230 @@ private theorem upper_relation (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qut
   apply mul_right_cancel₀ her
   have hh := he e er
   rw [hright] at hh
+  simp only [Pi.smul_apply, smul_eq_mul] at hh
   change _ = (z * vacuumRecord n (restrict n q false) e) * vacuumRecord n (restrict n q true) er
   linear_combination hh
+
+/-- Completeness and the two directions of pointed vacuum membership. -/
+structure Complete (n : ℕ) (q : Router n → ℝ) (bus : Qutrit) (o : Output n) : Prop where
+  kernel_complete : ∀ x, synthesis n q bus x = 0 →
+    x ∈ Submodule.span ℂ {y | y ∈ o.kernel}
+  vacuum_iff : vacuumRecord n q ∈ LinearMap.range (synthesis n q bus) ↔ o.flag = true
+
+private theorem scaled_vacuum_range (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (x : Coeff n) (z : ℂ) (hz : z ≠ 0)
+    (hx : synthesis n q bus x = z • vacuumRecord n q) :
+    vacuumRecord n q ∈ LinearMap.range (synthesis n q bus) := by
+  refine ⟨z⁻¹ • x, ?_⟩
+  rw [map_smul, hx, smul_smul, inv_mul_cancel₀ hz, one_smul]
+
+private theorem absent_scalar_zero (n : ℕ) (q : Router n → ℝ) (bus : Qutrit)
+    (o : Output n) (ho : Complete n q bus o) (hu : o.representative = none)
+    (x : Coeff n) (z : ℂ) (hx : synthesis n q bus x = z • vacuumRecord n q) : z = 0 := by
+  by_contra hz
+  have h := ho.vacuum_iff.mp (scaled_vacuum_range n q bus x z hz hx)
+  simp [Output.flag, hu] at h
+
+private theorem embed_mem_inherited (n : ℕ) (l r : Output n) (b : Bool) (x : Coeff n)
+    (hx : x ∈ Submodule.span ℂ {y | y ∈ if b then r.kernel else l.kernel}) :
+    embed n b x ∈ Submodule.span ℂ {y | y ∈ inherited n l r} := by
+  have he := Submodule.apply_mem_span_image_of_mem_span (embedLinear n b) hx
+  apply Submodule.span_mono _ he
+  rintro y ⟨z, hz, rfl⟩
+  cases b
+  · apply List.mem_append_left
+    exact List.mem_map.mpr ⟨z, hz, rfl⟩
+  · apply List.mem_append_right
+    exact List.mem_map.mpr ⟨z, hz, rfl⟩
+
+private theorem inherited_complete (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+    (l r : Output n) (hl : Complete n (restrict n q false) bus l)
+    (hr : Complete n (restrict n q true) bus r) (x : Coeff (n + 1))
+    (hx0 : synthesis n (restrict n q false) bus (childCoeff n x false) = 0)
+    (hx1 : synthesis n (restrict n q true) bus (childCoeff n x true) = 0) :
+    x ∈ Submodule.span ℂ {y | y ∈ inherited n l r} := by
+  rw [coefficient_split n x]
+  exact Submodule.add_mem _
+    (embed_mem_inherited n l r false _ (hl.kernel_complete _ hx0))
+    (embed_mem_inherited n l r true _ (hr.kernel_complete _ hx1))
+
+private theorem step_kernel_complete (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+    (l r : Output n) (sl : Sound n (restrict n q false) bus l)
+    (sr : Sound n (restrict n q true) bus r)
+    (cl : Complete n (restrict n q false) bus l) (cr : Complete n (restrict n q true) bus r)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : q none ≤ 1)
+    (x : Coeff (n + 1)) (hx : synthesis (n + 1) q bus x = 0) :
+    x ∈ Submodule.span ℂ {y | y ∈ (step n (q none) l r).kernel} := by
+  by_cases hroot : q none = 1
+  · obtain ⟨z, hz0, hz1⟩ := upper_relation n q bus hq hroot x 0 (by simpa using hx)
+    simp only [zero_sub] at hz1
+    have hzero (hz : z = 0) : x ∈ Submodule.span ℂ {y | y ∈ inherited n l r} := by
+      apply inherited_complete n q bus l r cl cr x
+      · simpa [hz] using hz0
+      · simpa [hz] using hz1
+    cases hu : l.representative with
+    | none =>
+      have hz := absent_scalar_zero n (restrict n q false) bus l cl hu _ z hz0
+      cases hv : r.representative <;> simpa only [step, ite_eq_left hroot, hu, hv] using hzero hz
+    | some u =>
+      cases hv : r.representative with
+      | none =>
+        have hz := absent_scalar_zero n (restrict n q true) bus r cr hv _ (-z) hz1
+        have hz' : z = 0 := neg_eq_zero.mp hz
+        simpa only [step, ite_eq_left hroot, hu, hv] using hzero hz'
+      | some v =>
+        simp only [step, ite_eq_left hroot, hu, hv]
+        let N := Submodule.span ℂ {y | y ∈ inherited n l r ++ [embed n false u - embed n true v]}
+        have hs : Submodule.span ℂ {y | y ∈ inherited n l r} ≤ N :=
+          Submodule.span_mono (by intro y hy; exact List.mem_append_left _ hy)
+        have hk0 : synthesis n (restrict n q false) bus
+            (childCoeff n x false - z • u) = 0 := by
+          rw [map_sub, map_smul, hz0, sl.representative_sound u hu, sub_self]
+        have hk1 : synthesis n (restrict n q true) bus
+            (childCoeff n x true + z • v) = 0 := by
+          rw [map_add, map_smul, hz1, sr.representative_sound v hv, neg_smul, neg_add_cancel]
+        have he0 := hs (embed_mem_inherited n l r false _ (cl.kernel_complete _ hk0))
+        have he1 := hs (embed_mem_inherited n l r true _ (cr.kernel_complete _ hk1))
+        have hc : embed n false u - embed n true v ∈ N :=
+          Submodule.subset_span (by simp)
+        have heq : x = embed n false (childCoeff n x false - z • u) +
+            embed n true (childCoeff n x true + z • v) + z • (embed n false u - embed n true v) := by
+          ext a
+          cases a with
+          | mk b a => cases b <;> simp [embed, childCoeff]
+        rw [heq]
+        exact Submodule.add_mem N (Submodule.add_mem N he0 he1) (Submodule.smul_mem N z hc)
+  · have hl := below_upper_relation n q bus hq (lt_of_le_of_ne hq' hroot) x 0 (by simpa using hx)
+    have he := inherited_complete n q bus l r cl cr x (by simpa using hl.1) (by simpa using hl.2.1)
+    simpa only [step, ite_eq_right hroot] using he
+
+private theorem step_vacuum_forward (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+    (l r : Output n) (cl : Complete n (restrict n q false) bus l)
+    (cr : Complete n (restrict n q true) bus r)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : q none ≤ 1)
+    (h : vacuumRecord (n + 1) q ∈ LinearMap.range (synthesis (n + 1) q bus)) :
+    (step n (q none) l r).flag = true := by
+  obtain ⟨x, hx⟩ := h
+  by_cases hroot : q none = 1
+  · obtain ⟨z, hz0, hz1⟩ := upper_relation n q bus hq hroot x 1 (by simpa using hx)
+    cases hu : l.representative with
+    | some u => cases hv : r.representative <;> simp [step, hroot, hu, hv, Output.flag]
+    | none =>
+      have hz := absent_scalar_zero n (restrict n q false) bus l cl hu _ z hz0
+      have hrange : vacuumRecord n (restrict n q true) ∈ LinearMap.range (synthesis n (restrict n q true) bus) :=
+        ⟨childCoeff n x true, by simpa [hz] using hz1⟩
+      have hflag := cr.vacuum_iff.mp hrange
+      cases hv : r.representative <;> simp_all [Output.flag, step]
+  · have hh := below_upper_relation n q bus hq (lt_of_le_of_ne hq' hroot) x 1 (by simpa using hx)
+    have hlow : q none = -(1 / 2 : ℝ) := by
+      by_contra he
+      exact one_ne_zero (hh.2.2 he)
+    have hlflag := cl.vacuum_iff.mp
+      (scaled_vacuum_range n (restrict n q false) bus _ (-1) (by norm_num) hh.1)
+    have hrflag := cr.vacuum_iff.mp
+      (scaled_vacuum_range n (restrict n q true) bus _ (-1) (by norm_num) hh.2.1)
+    cases hu : l.representative <;> cases hv : r.representative <;>
+      simp_all [step, Output.flag]
+
+private theorem step_complete (n : ℕ) (q : Router (n + 1) → ℝ) (bus : Qutrit)
+    (l r : Output n) (sl : Sound n (restrict n q false) bus l)
+    (sr : Sound n (restrict n q true) bus r)
+    (cl : Complete n (restrict n q false) bus l) (cr : Complete n (restrict n q true) bus r)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : q none ≤ 1) :
+    Complete (n + 1) q bus (step n (q none) l r) := by
+  refine ⟨step_kernel_complete n q bus l r sl sr cl cr hq hq', ?_⟩
+  refine ⟨step_vacuum_forward n q bus l r cl cr hq hq', ?_⟩
+  intro hflag
+  have hs := step_sound n q bus l r sl sr
+  cases hu : (step n (q none) l r).representative with
+  | none => simp [Output.flag, hu] at hflag
+  | some u => exact ⟨u, hs.representative_sound u hu⟩
+
+private theorem recursion_complete (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : ∀ v, q v ≤ 1) (bus : Qutrit) :
+    Complete n q bus (outputs n q) := by
+  induction n with
+  | zero =>
+    refine ⟨?_, ?_⟩
+    · intro x hx
+      have hx' : x = 0 := by
+        ext a
+        have he := congrFun hx (fun v => nomatch v)
+        simpa [synthesis, record] using he
+      simp [hx', outputs]
+    · constructor
+      · intro _; rfl
+      · intro _
+        exact ⟨fun _ => 1, (recursion_sound 0 q bus).representative_sound _ rfl⟩
+  | succ n ih =>
+    exact step_complete n q bus _ _
+      (recursion_sound n (restrict n q false) bus)
+      (recursion_sound n (restrict n q true) bus)
+      (ih _ (fun w => hq (some (false, w))) (fun w => hq' (some (false, w))))
+      (ih _ (fun w => hq (some (true, w))) (fun w => hq' (some (true, w))))
+      hq (hq' none)
+
+private theorem address_card (n : ℕ) : Fintype.card (Address n) = 2 ^ n := by
+  induction n with
+  | zero => simp [Address]
+  | succ n ih => simpa [Address, Fintype.card_prod, pow_succ, mul_comm] using ih
+
+private theorem list_get_independent (n : ℕ) (L : List (Coeff n))
+    (h : ListIndependent n L) : LinearIndependent ℂ L.get := by
+  exact h.2.comp (fun i => ⟨L.get i, List.get_mem L i⟩)
+    (fun i j he => h.1.injective_get (congrArg Subtype.val he))
+
+private theorem list_get_range (n : ℕ) (L : List (Coeff n)) :
+    Set.range L.get = {y | y ∈ L} := by
+  ext y
+  simp only [Set.mem_range, Set.mem_ofPred_eq, List.mem_iff_get]
+
+/-- Exact all-height certificate for the prescribed ordered signed recursion.
+Every complex kernel vector has a unique expansion in that literal list. -/
+theorem coefficient_certificate (n : ℕ) (q : Router n → ℝ)
+    (hq : ∀ v, -(1 / 2 : ℝ) ≤ q v) (hq' : ∀ v, q v ≤ 1) (bus : Qutrit) :
+    Module.finrank ℂ (LinearMap.range (synthesis n q bus)) = (outputs n q).dimension ∧
+    (outputs n q).kernel.length = 2 ^ n - (outputs n q).dimension ∧
+    (vacuumRecord n q ∈ LinearMap.range (synthesis n q bus) ↔ (outputs n q).flag = true) ∧
+    (∀ u, (outputs n q).representative = some u → synthesis n q bus u = vacuumRecord n q) ∧
+    (∀ x, synthesis n q bus x = 0 ↔
+      ∃! α : Fin (outputs n q).kernel.length → ℂ,
+        x = ∑ i, α i • (outputs n q).kernel.get i) := by
+  obtain ⟨hs, hi⟩ := recursion_certificate n q hq bus
+  have hc := recursion_complete n q hq hq' bus
+  have hli := list_get_independent n (outputs n q).kernel hi
+  have hker : LinearMap.ker (synthesis n q bus) =
+      Submodule.span ℂ {y | y ∈ (outputs n q).kernel} := by
+    apply le_antisymm
+    · intro x hx
+      exact hc.kernel_complete x hx
+    · apply Submodule.span_le.mpr
+      intro y hy
+      exact hs.kernel_sound y hy
+  have hdimker : Module.finrank ℂ (LinearMap.ker (synthesis n q bus)) =
+      (outputs n q).kernel.length := by
+    rw [hker, ← list_get_range]
+    simpa only [Fintype.card_fin] using finrank_span_eq_card hli
+  have hdim : Module.finrank ℂ (Coeff n) = 2 ^ n := by
+    simpa only [Module.finrank_pi] using address_card n
+  have hrank := (synthesis n q bus).finrank_range_add_finrank_ker
+  rw [hdimker, hdim] at hrank
+  have hcount := hs.count
+  refine ⟨by omega, by omega, hc.vacuum_iff, hs.representative_sound, ?_⟩
+  intro x
+  constructor
+  · intro hx
+    have hm := hc.kernel_complete x hx
+    rw [← list_get_range, Submodule.mem_span_range_iff_exists_fun] at hm
+    obtain ⟨a, ha⟩ := hm
+    refine ⟨a, ha.symm, ?_⟩
+    intro b hb
+    exact funext (Fintype.linearIndependent_iffₛ.mp hli b a (hb.symm.trans ha.symm))
+  · rintro ⟨a, ha, _⟩
+    rw [ha, map_sum]
+    simp only [map_smul]
+    have hz (i : Fin (outputs n q).kernel.length) :=
+      hs.kernel_sound ((outputs n q).kernel.get i) (List.get_mem _ i)
+    simp only [hz, smul_zero, Finset.sum_const_zero]
 
 end D5.S3.Quantum.Routing.HannSignedCertificate
