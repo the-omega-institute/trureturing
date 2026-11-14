@@ -1,0 +1,11 @@
+Formalization target: positive rank-one obstruction for the weighted L-infinity question in Madou–Remizov–Vafadar, arXiv:2410.00416v2, section 6, Problem 22 and page 18 positivity discussion.
+
+Exact model: mu = Lebesgue measure restricted to (0,1), H = Lp C 2 mu, h(x)=x, P f(x)=3*x*integral(y*f(y)), A=I-P, T(z)=P+exp(-z)(I-P). The intended conclusion is nonexistence of measurable real g>0 a.e. with g and its inverse essentially bounded making the actual eLpNorm infinity of g*T(t)f at most that of g*f for every real t>=0 and every complex f in L2 intersect L-infinity.
+
+Preregistered content/escape witness: for strictly positive h, conservation of the functional integral h*f forces any real positive superinvariant w of the normalized positive rank-one projection to be a scalar multiple of h a.e. If h has vanishing essential lower floor, such w cannot have a strictly positive essential lower bound. The live consumer tests w=1/g in the actual weighted contraction inequality. This is not an instantiation of the existing nonpositive rotating matrix witness.
+
+Admission basis intended: escape-witness, conditional on successful faithful Lean proof and consumed intermediate evidence. No open-problem-resolution exception is claimed: the repository already refutes unrestricted Problem 22. This strengthens the counterexample to a positive semigroup if all source bridges compile. No first-discovery/priority claim; novelty is ASSUMED-UNVERIFIED. Problems 21, 23 and 24 remain outside scope.
+
+Source bridge obligations: actual complex L2 projection and representative formula; bounded self-adjoint nonnegative generator; densely defined closed angle-zero sectorial full-domain form with the source linear-first convention; entire semigroup/exponential/generator identification and right-half-plane L2 contractivity; positivity and uniform L-infinity bound 3/2; exact weighted-norm failure over the same measure.
+
+Source: https://arxiv.org/pdf/2410.00416v2 pp. 15–18. The positivity restriction is a suggestion in the comments, not a separately numbered conjecture. The source assumes neither strict stability nor preservation of constants.
