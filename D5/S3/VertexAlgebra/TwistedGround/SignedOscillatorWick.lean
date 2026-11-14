@@ -75,7 +75,7 @@ theorem monomial_left (d : σ →₀ ℕ) (a : ℂ) (q : P σ) :
   simp only [smul_eq_mul]
   ring
 
-private theorem symmetric (p q : P σ) : form σ p q = form σ q p := by
+theorem symmetric (p q : P σ) : form σ p q = form σ q p := by
   classical
   induction p using MvPolynomial.induction_on' with
   | monomial d a =>
@@ -105,7 +105,7 @@ private theorem eq_existing_inner (p q : P σ) :
     rw [map_add, LinearMap.add_apply, map_add,
       FactorialFockMetric.inner_add_first, hp, hr]
 
-private theorem creation (i : σ) (p q : P σ) :
+theorem creation (i : σ) (p q : P σ) :
     form σ (MvPolynomial.X i * p) q = form σ p (MvPolynomial.pderiv i q) := by
   rw [eq_existing_inner, map_mul, MvPolynomial.map_X,
     FactorialFockMetric.mul_X_pderiv_pairing, ← eq_existing_inner]

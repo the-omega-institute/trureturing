@@ -1577,3 +1577,669 @@ the original future instrument task. It introduces no new apparatus
 and makes no universal physical-ontology claim. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 47. A retained phase standard on the acquired growing fork
+
+**Definition 47.1 (the same source and an additional preparation).**
+Retain Definitions 37.1–37.2 and the actual acquisition of Theorem 37.3.
+Thus the initial unknown family is every $\rho_{HR}$ on the original
+$H=\operatorname{span}\{|r\rangle,|o\rangle,|m\rangle,|y\rangle\}$,
+with arbitrary untouched $R$ and the same input-independent complete
+backing. The actual split at $m$ has already made $z,w$ logical children
+of that same pivot. Its new dormant marker $k$ is a different system.
+The acquired seams $m$–$z$, $m$–$w$, $m$–$o$, $o$–$y$, and the fixed
+links $m$–$u$, $u$–$d$ have precisely their original endpoint identities.
+The old reference $r$ remains distinct from the resource defined below.
+
+If this acquisition has not yet occurred, perform its one genuine split
+and retain its actual successor and event; it is not a new split on each
+phase call. Both original entrances, their actual histories, the bilateral
+joint binding and each selected root's own empty or $P_\varepsilon$
+preparation remain. The free ordered grammar, arbitrary lawful addressed
+$P/S$ and genuine Next are unchanged. Original source/root references,
+immutable samples, enrollment, rights, acquisition/source versions,
+controls, outcomes and refusals remain in the complete interface.
+
+Supply one additional actual preparation of the already acquired pair
+$u,d$, initially $|10\rangle$, into the calibrated state
+
+$$
+|\eta\rangle_{ud}=\frac{|10\rangle+|01\rangle}{\sqrt2},
+\qquad \eta=|\eta\rangle\langle\eta|.
+\tag{VI.48}
+$$
+
+The target is a pure factor independent of the entire old bank, $R$ and
+all retained preparation/delivery systems. Its relative sign is calibrated
+against the very hopping controls (VI.3). A known name for a two-dimensional
+space, or an unknown relative phase, is insufficient. The ideal preparation
+has no unlisted input-dependent output. Its actual apparatus, source of
+the already supplied extra excitation, clocks, grant consumption,
+returning systems and complete records are retained and charged.
+
+A concrete sufficient reference preparation, acting only on $u,d$, is
+
+$$
+e^{-i\pi n_d/2}B_{ud}(\pi/4)|10\rangle=|\eta\rangle.
+\tag{VI.49}
+$$
+
+Here the relative phase operation is an independently supplied one-use
+preparation permission at the fixed endpoint $d$. Its grant is consumed;
+the preparation device subsequently has no quantum interaction with the
+bank. All of its spent state and records are retained. Replaying it,
+replacing its endpoint by $m$, resetting its grant or discarding its
+returning apparatus is not authorized. An actual delivery service with
+the same complete target is another sufficient preparation premise.
+Neither service follows from native $P/S$, QNew or hopping alone.
+Real angles in (VI.49) specify a reference action; §51 gives finite
+commands and a joint approximation criterion for the actual preparation.
+
+After this preparation, the phase service uses only the previously
+acquired hopping endpoints and signs. It has no callable one-site phase
+operation on the source or either resource mode. Finite command backing,
+required hopping-catalogue entries, calibration, current rights,
+serialization, progress and complete-bank holds remain supplied. No
+quantum control register, reset, disposal or postselection is added.
+
+**Definition 47.2 (the return relation).** At a returned coherent cut
+let $X$ comprise the complete bank except $u,d,z,w$, together with any
+untouched reference and retained quantum backing. The ideal service domain
+is
+
+$$
+\sigma_X\otimes|00\rangle\langle00|_{zw}\otimes\eta_{ud},
+\tag{VI.50}
+$$
+
+for arbitrary joint $\sigma_X$. In particular $m$ and $o$ are dirty
+operands: neither is a clean auxiliary. The entire original unknown
+family, embedded by $E^+$, is in this domain. A phase call must return
+$z,w$ to their same vacuum factors and $u,d$ to the same factor $\eta$,
+decoupled from $X$, with the actual source configuration and all records
+retained. Restoration at completed return does not assert factorization
+at a pending gate or detector cut. The actual finite-precision state is
+not assumed to have (VI.50); it is compared with this ideal state on the
+whole retained output space.
+
+## 48. Source-pivot phase action with same-factor return
+
+**Theorem 48.1 (a phase call from this actual junction).** Let $K$ be
+exactly the seven-hop word (VI.7), using the acquired $m,z,w,u$. For any
+real command angle $\phi$, define the reference word
+
+$$
+C_m(\phi)=B_{ud}(\phi/2)\,K\,B_{ud}(-\phi/2)\,K.
+\tag{VI.51}
+$$
+
+Products act rightmost first. Its chronological list is $K$, a hopping
+block $B_{ud}(-\phi/2)$, $K$, and $B_{ud}(\phi/2)$: sixteen hopping
+blocks, with no direct phase block. On (VI.50) it implements the literal
+same-factor relation
+
+$$
+C_m(\phi)\bigl(\xi_X\otimes|00\rangle_{zw}\otimes|\eta\rangle_{ud}\bigr)
+=\bigl(e^{i\phi n_m}\xi_X\bigr)
+ \otimes|00\rangle_{zw}\otimes|\eta\rangle_{ud}.
+\tag{VI.52}
+$$
+
+This holds for every vector $\xi_X$, hence for arbitrary mixed inputs
+and all untouched references. In particular its source-bank/$R$ action
+on the entire original family is
+
+$$
+\rho_{HR}\longmapsto
+(E^+D_m(\phi)\otimes I_R)\rho_{HR}
+(D_m(\phi)^\dagger E^{+\dagger}\otimes I_R),
+\quad D_m(\phi)=I_H+(e^{i\phi}-1)|m\rangle\langle m|.
+\tag{VI.53}
+$$
+
+The resource in (VI.48), both source helpers and all other old source
+factors return on their original identities. No reference-to-source
+computation wire or replacement code is used.
+
+Proof. Reuse the supported dirty-column identity (VI.11), not a
+fermionic-swap identity or a clean-pivot assumption. On $z=w=0$ it gives
+$K=(-1)^{n_mn_u}$ and returns both helpers for arbitrary joint occupations
+of $m,u$ and arbitrary spectators. Put $Z_u=(-1)^{n_u}$. The literal
+full-qubit hopping block obeys
+
+$$
+Z_u B_{ud}(t)Z_u=B_{ud}(-t).
+\tag{VI.54}
+$$
+
+Indeed it is the usual sign reversal of the off-diagonal generator on
+$10,01$; on $00,11$ both hopping blocks are identity. Between the two
+uses of $K$, the block on $u,d$ touches neither helper nor $m$.
+Consequently each use has its proved clean-helper domain, even when
+$m,u,d$ and the rest of $X$ are entangled. Resolve the unchanged $m$ bit.
+For $n_m=0$ the two rotations cancel; for $n_m=1$, (VI.54) gives
+$B_{ud}(\phi/2)Z_uB_{ud}(-\phi/2)Z_u=B_{ud}(\phi)$.
+Thus on that helper domain, for arbitrary states of the resource pair,
+
+$$
+C_m(\phi)=(1-n_m)\otimes I_{ud}+n_m\otimes B_{ud}(\phi).
+\tag{VI.55}
+$$
+
+The vector $|\eta\rangle$ is a common eigenvector of all these hopping
+blocks, with eigenvalue $e^{i\phi}$. Substitution proves (VI.52),
+including its relative phase against the untouched $r,o,y$ directions.
+Linearity on matrix units and identity on every reference prove (VI.53)
+and the full mixed-state factorization. All ideal controls before output
+are prescribed by the command and actual configuration, independently
+of the unknown amplitudes. Their complete classical records and all
+retained delivery systems therefore accompany this same joint identity.
+
+The eigenvector-to-phase implication is mature phase kickback: Cleve,
+Ekert, Macchiavello and Mosca, [quant-ph/9708016v1, §1 equation (1.2)
+and §7 equations (7.33)–(7.46)](https://arxiv.org/html/quant-ph/9708016v1).
+It is an intermediate step here. The source-specific bridge is the
+actual controlled rotation (VI.55) from the restricted acquired junction,
+with dirty source columns, untouched original code and the same physical
+return factors. No generic controlled-unitary permission is assumed.
+$\square$
+
+## 49. The strict hopping obstruction and an actual separating consumer
+
+**Definition 49.1 (the strict comparison domain).** For the obstruction,
+use the actual acquired source of §37, with helpers vacuum and the pair
+$u,d$ in its original definite occupation $|10\rangle$, without §47's
+additional preparation. Allowed quantum actions are only hopping on
+actual enabled material seams and the two fixed links, independent
+vacuum growth, identity holds and actual occupation instruments. For
+the lower argument one may allow occupation instruments at every acquired
+site, even though the positive consumer below needs only the existing
+instrument at $d$. Native transactions, input-independent classical
+randomness and finite record-dependent policies are allowed, with all
+actual records and all seven original requests retained.
+
+No new computation edge, one-site phase, nonreal ancillary preparation,
+coherent controller or interaction through a delivery/reference port is
+present. A supplied ingress loads the original unknown input once and
+leaves its old port vacuum; it is not an additional later gate menu.
+Other common backing may be internally correlated but is held or used
+only through its declared classical controls. Any additional interactive
+quantum system would require its own inclusion in this comparison domain.
+The claim is about every normalized finite program in this catalogue,
+not about AAV33's larger allowance of all number-preserving unitaries.
+
+**Proposition 49.2 (a persistent native indistinguishable pair).** On
+this actual growing carrier the two original inputs
+
+$$
+|\psi_\pm\rangle=\frac{|m\rangle\pm|o\rangle}{\sqrt2}
+\tag{VI.56}
+$$
+
+give the same complete classical law for every program of Definition
+49.1, including arbitrary finite native growth, refusals, genuine Next,
+control/outcome records and pending output prefixes. No strict program
+can implement $D_m(\pi/2)$ on the entire original unknown family. More
+quantitatively, against any whole-family ideal lift with that same
+physical source-bank marginal, its complete uniform half-trace error
+is at least $1/2$.
+
+Proof. The material graph is a forest actually obtained from ordered
+parent/child fields. Color it by parity of actual material depth,
+choosing the selected component's color so that $m$ has color zero.
+Then $o,z,w$ have color one and $y,k$ have color zero. Assign $u$ color
+one and $d$ color zero; their only added links are $m$–$u$ and $u$–$d$.
+Choose a color independently for the isolated $r$ and each other component
+root. Header order is retained classical source data, not a quantum edge.
+
+This coloring persists under every native edit. A promotion adds a child
+of opposite color. A split retains the old marker and its edge, and
+adds a child at each of its two actual new material edges. Old vertices
+are neither deleted nor reparented. Activating a marker changes no old
+color. A newly commissioned component is colored by its own acquired
+parent fields. Hence all enabled hopping edges join opposite colors
+at every reachable finite configuration, without a fixed-size or
+fixed-shape source assumption.
+
+For the full qubit bank, not merely its one-excitation sector, set
+
+$$
+G_\chi=\prod_{\chi(a)=1}i^{n_a},\qquad
+\Theta_\chi=G_\chi\,\mathsf K\,G_\chi^\dagger,
+\tag{VI.57}
+$$
+
+where $\mathsf K$ is coordinate conjugation. This is a coordinate
+antiunitary, not a supplied laboratory operation. In the $G_\chi$ frame
+each $B_{ab}(t)$ is real: on unequal endpoint bits its factors $i\sin t$
+acquire a phase ratio $i$ or $-i$, and on $00,11$ it is identity.
+Occupation projections are real diagonal. Adding vacuum intertwines the
+old and new frame conjugations because every appended bit is zero.
+All definite auxiliary occupations have invariant density matrices.
+Native field/tape/control steps are classical, and complete holds act
+by identity on the entire bank.
+
+Apply the existing real-operation/conjugation argument of [Measurement
+Relative Quantum Boundary11.1–11.3](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md#11-real-continuations-callable-use-and-the-preserved-scope)
+to these concrete full-space maps. At each common classical record the
+two unnormalized quantum branches are conjugates in their acquired
+frames. They have equal trace, select the same next classical rule and
+remain conjugate after that rule, including dimension extension.
+Zero branches remain zero without a normalized successor. Induction over
+the finite program, with common input-independent randomness averaged,
+proves equality of complete classical laws. This instantiates a known
+covariance argument; no full-real-operation menu or complete effect
+interval is added to the native catalogue.
+
+On the original $m,o$ plane the frame is $\operatorname{diag}(1,i)$,
+so $\Theta_\chi$ exchanges the two densities (VI.56). Their backing,
+preparations, source histories and all pre-existing records are identical.
+The pair therefore realizes the asserted equality on this actual source,
+rather than on an independently assumed five-mode model.
+
+For the phase obstruction, the same covariance calculation also covers
+the larger mathematical catalogue of all real hopping angles on the
+same edges. A lower bound in that class applies to every actual finite
+signed-dyadic subcatalogue; the enlargement grants no executed irrational
+pulse. In that comparison append the analyzer $B_{mo}(\pi/4)$ and measure
+occupation at $m$, or use the fixed-$d$ transport proved below.
+The ideal phase sends the two inputs under this analyzer to $i|m\rangle$
+and $-|o\rangle$. Its outcome-one probabilities are one and zero.
+Every program in this comparison with the appended continuation has
+one common probability $p$. If the proposed
+phase implementation's uniform complete error were $\delta$, its
+physical marginal and this subsequent test would give both
+$1-p\le\delta$ and $p\le\delta$, hence $\delta\ge1/2$.
+This does not preserve an arbitrary lower bound by contractivity; it
+uses a specific distinguishing test for this specific target.
+
+The real-frame distinction is essential. The actual-control variants in
+[AURIC Quantum Principles8.3–8.6, 11.7 and35](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)
+already separate coordinate-real from native-frame-real effects. Their
+five-mode waits, preparations and phase permissions are their own.
+Here the frame is derived from the authentic growing material graph,
+and both vectors in (VI.56) belong to the unchanged original $H$.
+The result supplies no global obstruction against separately authorized
+phases, non-bipartite computation wiring or general quantum operations.
+$\square$
+
+**Theorem 49.3 (one fixed detector separates the pair and returns the standard).**
+Under §47's additional preparation, there is a complete actual instrument
+using (VI.51), the acquired seam $m$–$o$, the two fixed links and one
+occupation read at $d$, which separates (VI.56) with certainty in the
+reference model. For every original $\rho_{HR}$ it returns the same
+resource factor $\eta$, restores $z,w$ and retains both measurement
+outcomes and the physical source-bank successor. No additional detector,
+excitation preparation or one-site phase call is required.
+
+Proof. Let $J_{ab}=B_{ab}(\pi/2)$ and set
+
+$$
+A_m=B_{mo}(\pi/4)e^{i\pi n_m/2},\qquad
+T_d=J_{ud}J_{mu}.
+\tag{VI.58}
+$$
+
+Implement the phase in $A_m$ by Theorem 48.1. The chronological routing
+$m$–$u$, then $u$–$d$, sends endpoint bits $(a,b,c)$ to $(b,c,a)$.
+It can accumulate bit-dependent phases, but on all eight columns
+
+$$
+T_d^\dagger n_dT_d=n_m.
+\tag{VI.59}
+$$
+
+Apply $T_d$, execute the already supplied occupation instrument at $d$,
+and apply $T_d^\dagger$ after either outcome. Its branch operator is
+$T_d^\dagger\Pi_{d,a}T_d=\Pi_{m,a}$ on the entire bank. This identity
+allows dirty, occupied and entangled $u,d$; neither is declared vacuum.
+It proves that their temporary displacement and phases cancel even
+though a real detector record has been retained in between.
+
+No inverse pulse is free. The required inverse routing is implemented
+chronologically by $B_{ud}(-\pi/2)$ followed by three positive
+$J_{mu}$ blocks. Indeed $J_{mu}^4=I$ on its full two-qubit space, so
+$J_{mu}^3=J_{mu}^\dagger$. The negative $u$–$d$ control is already
+supplied in §37; a new negative $m$–$u$ control is unnecessary.
+There are two forward and four inverse-routing blocks.
+
+Writing $L_a=\Pi_{m,a}A_m$, the complete returned instrument therefore has
+subnormalized quantum blocks
+
+$$
+(L_a\otimes I_R)\sigma(L_a^\dagger\otimes I_R)
+ \otimes|00\rangle\langle00|_{zw}\otimes\eta_{ud},
+\qquad a=0,1,
+\tag{VI.60}
+$$
+
+alongside their actual records and unchanged source token. Here $\sigma$
+is on the remaining acquired source factors and $R$. Since
+$\sum_aL_a^\dagger L_a=I$, the instrument is normalized on every input;
+it has no success filter. On the pair (VI.56), direct substitution gives
+
+$$
+A_m|\psi_+\rangle=i|m\rangle,\qquad
+A_m|\psi_-\rangle=-|o\rangle.
+\tag{VI.61}
+$$
+
+Thus the recorded bit separates the pair while the same $u,d$ factor
+returns even conditional on the actual bit. Six routing blocks, one
+analyzer block and sixteen phase-service blocks give twenty-three
+reference hopping blocks and one actual read. The distinct actual output
+states and records are retained; certainty for this pair does not mean
+that all original unknown states are identified by one bit.
+A later detector use still needs its actual readiness and permissions;
+this construction makes no detector-rearming theorem. $\square$
+
+## 50. Return through arbitrary original native continuation
+
+**Theorem 50.1 (persistent operands and all-phase service).** For every
+actual entrance instance in Definition 47.1 and every subsequently chosen
+finite lawful original native continuation with its own finite supplies,
+the acquired phase service remains applicable at each completed returned
+cut. Its reference standard returns as the same decoupled factor after
+each phase call and after the consumer of Theorem 49.3. All seven original
+requests keep their full state domains, replies, refusals and genuine
+successors. The original source after acquisition is the actual split
+successor, with every later actual edit retained.
+
+Proof. The old logical nodes $m,z,w$ and their parent/child edges survive
+every later native edit. In particular $m$ remains the same logical
+branch; a refusal there neither removes its children nor changes their
+qubit identities. A later promotion or split at $z$ or $w$ is allowed.
+Their old qubits are held, fresh vertices receive independent vacuum,
+and their old logical seams remain enabled. The additional descendant
+seams do not occur in (VI.51). Its endpoints thus remain actual acquired
+endpoints, without a new constructor call or an address-to-reference cast.
+
+For ideal native service, every old quantum state is held and only fresh
+vacuum factors are appended, by the full-space action (VI.20). Therefore
+$z,w$ stay vacuum through native service and $u,d$ stay in their same
+factor $\eta$. A native label change at a helper does not apply a quantum
+gate to it. Theorem 48.1 returns both helpers and the standard after a
+phase call; Theorem 49.3 does so on every subnormalized consumer branch.
+Induction proves their applicability at subsequent returned cuts, with
+arbitrary remaining source/reference correlations. No recurring preparation
+of the standard or either helper is needed along this declared domain.
+
+To verify the service relation at intermediate phases, use the actual
+fields in AAV27.2 and VI40.2. Relate the joint process to the same native
+root/source/tapes, preparations, current grants, original parser marks,
+received and unsupplied input, pending native continuation, output backing
+and cursor, immutable samples and published versions. Additional phase
+transactions start only from a returned coherent configuration with
+current apparatus authority and the actual lock. During the additional
+work their projection is that saved native Ready, while the joint state
+is busy. It records the real block/digit, borrowed references, control
+latches, resource state and any detector/output obligations; an unfinished
+phase call is not a completed returned factorization.
+
+The original phase cases are realized as follows.
+
+| Original case | Same-source action with the retained resource |
+| --- | --- |
+| Receive and incomplete parser prefix | Keep every received bit, occupied latch, unary/parser mark and unsupplied suffix; hold the complete bank, including the standard and preparation device. A proper prefix has no fabricated reply. |
+| Navigate, Guard, Tag, HasPromotion, HasSplit | Traverse the actual logical fields and original birth/preparation facts. First-component commissioning preserves its real cursor and uses only material-edge bindings. Quantum helper occupation does not become a native guard. |
+| Explicit refusal, OutOfRange, BadFrame | Retain the original reason and unchanged source/tapes, with any genuine new attachment acquisition recorded separately. There is no successful-event token. |
+| Missing right, disabled phase, supplied grant denial | Execute no protected read or gate. A real grant denial keeps its own record. The spent preparation grant never supplies later phase authority. |
+| Reserve, edit and Maintain | Reserve original source/tape/incidence/output material and new qubits/seams; keep partial writes and ancestor/attachment cursors; append vacuum, hold all old identities, and publish only the completed actual pair. |
+| FetchGrowth and Next | Read the original event tapes and actual one-based index. Next retains its real recalled pair, current descent, guarded edit/refusal and successor; phase-control records are not native events. |
+| BuildAnswer, Print, End, ACK and Return | Keep the sealed answer, emitted prefix, unprinted suffix and actual output cursor; complete the original order and root return, clearing only releasable scratch while retaining samples, standard, detector and preparation records. |
+
+All these quantum hold/growth maps act on the full tensor product, so
+the same native service remains valid when actual finite-angle calls have
+left the helpers dirty or entangled with the standard and $R$. No later
+source update resets them or checks their occupation. A phase call on
+such an actual state is still its full-space word; §51 controls its
+difference from the reference evolution, rather than applying (VI.52)
+as an exact identity to that perturbed state.
+
+Finiteness follows from the same original finite traversal, reservation,
+output-suffix and ACK/progress premises and the finite added gate lists.
+Both entrance histories are preserved, including their different seed
+preparations and all root/header associations. An arbitrary later remote
+component or deeper edit incurs its genuine finite acquisition; no fixed
+roster, source height or restricted observer is introduced.
+
+This induction covers arbitrary original native service interleaved with
+the specified phase calls and consumer. An independently authorized
+quantum operation which changes a helper or the standard must satisfy
+its own return condition before another ideal phase call is inferred.
+The theorem does not prohibit that operation or alter native service;
+it does not grant it automatic preservation of (VI.50). In particular
+VI38's coarse meter still has its own $|10\rangle_{ud}$ input contract;
+$\eta$ is not substituted for that contract by renaming the pair.
+$\square$
+
+## 51. Finite commands, complete approximation and paid retention
+
+**Definition 51.1 (effective commands and one initial budget).** A phase
+command supplies finite rational enclosures sufficient to compute a
+signed dyadic approximation to $\phi/2$ at its requested positive
+precision. An exact signed-dyadic command is a special case. A bare
+unencoded real is not an executable command. For each finite commission
+supply the requisite signed elementary catalogue on the same acquired
+endpoints, its actual digit controls and calibration. No new endpoint
+or recurring one-site phase permission is supplied by adding precision.
+
+At precision $b$, enclose $\pi$ and round as in Definition 39.1 to
+approximate every fixed $\pi/2,\pi/4$ block to error at most $2^{-b}$.
+Compute $t_b$ with $|t_b-\phi/2|\le2^{-b}$ and use its exact negation
+for the opposite block. Execute all magnitude digits, including disabled
+slots, with actual sign and endpoint labels. A finite upper bound on the
+command magnitude gives a finite number of integer digit positions;
+for the fixed consumer and preparation the $b+1$ magnitude positions
+of §39 suffice. The one-time preparation (VI.49) additionally needs its
+finite one-use phase catalogue at $d$; it remains unavailable to later
+calls after its grant is consumed.
+
+Let $e_{\rm init}$ bound the complete initial output discrepancy from
+(VI.50), including ingress, actual split/acquisition, the one-time phase
+preparation, all its retained systems and its finite command labels.
+It is one joint uniform bound for all original $\rho_{HR}$, not just a
+marginal estimate for $u,d$. With the other initial actions ideal,
+rounding the two reference preparation blocks contributes at most
+$2\,2^{-b_0}$ to this budget. Any physical preparation error is separate.
+
+**Theorem 51.2 (one acquisition charge across a finite program).** Take
+any finite adaptive tree of original native service, the phase calls of
+Theorem 48.1 and declared uses of Theorem 49.3. Give every node its actual
+finite supply, hold and complete output interface. At each phase node
+$j$ use precision $b_j$; at each separating-consumer node $j$ use that
+precision on all its twenty-three blocks. Then, against the ideal
+reference tree with the same finite classical command/catalogue labels,
+
+$$
+\sup_{R,\rho_{HR}}\frac12\|
+ \Omega_{\rm actual}(\rho)-\widehat\Omega_{\rm ideal}(\rho)\|_1
+\le e_{\rm init}
+ +\max_{\gamma}\left[
+ \sum_{j\in\gamma\cap\mathsf P}16\,2^{-b_j}
+ +\sum_{j\in\gamma\cap\mathsf D}23\,2^{-b_j}
+ +\sum_{\ell\in\gamma}\varepsilon_\ell^{\rm phys}\right].
+\tag{VI.62}
+$$
+
+Here $\mathsf P$ and $\mathsf D$ are phase nodes and whole consumer
+nodes, respectively; a consumer's internal phase is not counted twice.
+The maximum is over actual-record paths of the finite tree, including
+branches of zero reference mass. The physical budgets cover any further
+full-space gate, hold, fresh-allocation, detector, control, record and
+output deviations on their complete interfaces. They are supplied
+certificates, not consequences of finite command descriptions.
+The comparison retains every system, leakage, actual native successor,
+control/outcome/refusal record and pending parser/output state.
+
+Proof. For a hopping block on the full qubit space, the generator norm
+is one, giving the full-space Lipschitz estimate used in (VI.17).
+The phase generator $n_d$ in the one-time preparation also has norm one.
+Thus the sixteen-block executed phase word differs from its reference
+word in operator norm by at most $16\,2^{-b_j}$, on every dirty-helper
+and excitation sector. The same argument gives $23\,2^{-b_j}$ for the
+consumer's sequence, inserting its common actual occupation instrument
+between the forward and inverse-routing lists. Its retained detector
+record contracts the resulting complete trace-distance bound; it is
+not erased to justify uncomputation. Finite commands need not satisfy
+an exact $\widetilde J^4=I$ or return a pure resource.
+
+At native nodes Theorem 50.1 supplies full-space hold/vacuum-extension
+maps and the actual classical phase relation. In a finite tree use
+orthogonal actual-record blocks for different source successors and bank
+sizes, with mathematical vacuum padding only where needed for comparison.
+Apply the existing full-record normalized finite-program composition and
+maximum-path hybrid estimate of AAV29, AAV36 and VI39–40 to these now
+specified concrete maps. Full-space estimates allow every replacement
+on the actual perturbed intermediate state. Complete initial error is
+inserted once, before the common tree, and subsequently contracts under
+its channels. This proves (VI.62) without independence assumptions on
+errors or new purity assumptions at later calls.
+
+In the ideal tree $u,d$ end as the same factor $\eta$ and the helper
+factors end vacuum on every terminal branch. Equation (VI.62) bounds
+the actual joint state against that decoupled comparator, including its
+correlations with all records and $R$. It does not assert exact purity
+of an actual approximate marginal. For example the probability outside
+the ideal helper/resource support is at most the right side of (VI.62),
+capped at one. A common further normalized finite continuation contracts
+this upper bound. Rare-outcome normalization has no uniform error bound
+without a lower probability condition. Finite prefixes ending at a busy
+cut use the corresponding reference busy state, which need not yet have
+the returned factorization. $\square$
+
+**Proposition 51.3 (cost and finite distinguishability).** For any
+specified finite program and effective positive target error, finite
+precision choices can make its digit-rounding contribution in (VI.62)
+arbitrarily small. A physical accuracy promise additionally requires
+certificates controlling $e_{\rm init}$ and all physical budgets.
+The initialization and its known extra excitation are charged once;
+per-call phase preparation is absent. This does not imply total-cost
+dominance over directly supplied source phase controls.
+
+Proof. The tree has finitely many nodes. Choose their finite $b_j$ and
+$b_0$ so that the finite weighted sum of powers of two is below the
+allocated effective positive budget. Effective angle enclosures and
+finite digit arithmetic supply those finite strings. Catalogue size,
+angle arithmetic, descriptor traversal, command fetches, actual gate
+slots and their records all incur their own finite costs. With common
+padded width $J$ the phase call uses $16J$ hopping digit slots; the
+consumer uses $23J$ and one read. Initial preparation uses its two
+finite blocks, with only its second block requiring the additional
+one-use phase permission. Larger requested angles require the actual
+additional magnitude slots or a paid decomposition into bounded angles.
+
+Source material remains that of the one genuine acquisition split:
+$w,k$ are its two fresh qubits, $z$ is the retained old marker now
+logical, and $u,d$ are the two original apparatus qubits with their one
+extra excitation. There is no new application qubit or computation link
+per phase call or consumer. All preparation/delivery devices and original
+banks, including isolated $r$, are still counted. Every new native
+continuation adds its actual fresh material and records, without a
+fixed finite lifetime supply claim. The whole installed quantum bank
+is held during source traversal, compilation, arithmetic, waiting,
+command execution, detector work, output, End/ACK/Return and scratch
+clearing. The charge remains the actual sum (VI.23), including retained
+preparation apparatus. Old immutable records are never reclaimed by a
+claimed return of $\eta$.
+
+If the complete error for a realized consumer is bounded by $E<1/2$,
+its outcome-one probabilities on (VI.56) satisfy
+$p_+\ge1-E$ and $p_-\le E$, hence $p_+-p_-\ge1-2E>0$.
+This is a finite calibrated statistical distinction on the actual source,
+not exact single-trial certainty for a noisy apparatus. With exact
+initialization and holds, $b=6$ already gives the reference consumer's
+rounding bound $23/64<1/2$; this example supplies no physical calibration.
+The entire error of initial approximate preparation is retained once
+in $E$, rather than being silently renewed or multiplied into a new
+purity assertion after each call. Arbitrarily many ideal finite uses
+and arbitrarily accurate finite commissions imply no infinite physical
+lifetime, uniformly bounded cumulative noise or universal tariff.
+$\square$
+
+## 52. The acquired relation and the remaining recovery bridges
+
+**Definition 52.1 (suppliers and the source-specific increment).** The
+mathematical and physical premises have the following distinct roles.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| FARG1–3; AAV1,11,25–27,30–32 | Free ordered generation, the two authentic entrances, actual history/annotated four-view recovery, source traversal, marker activation and original service. No native grammar operation prepares (VI.48). |
+| VI37–38, especially (VI.11) | The actual retained split, its stable endpoint identities, clean logical arms and dirty-column controlled sign. These supply the concrete controlled rotation (VI.55), not an assumed closure under arbitrary controlled gates. |
+| VI39–40; AAV29,35–36 | Effective angles, full-space hold/growth, retained leakage, complete normalized finite composition and hybrid estimates. They do not supply the new preparation or physical error certificates. |
+| Cleve et al., quant-ph/9708016v1, §§1,7 | `literature-attested` phase kickback with an unchanged common eigenvector. Its generic circuit does not acquire a native source pivot, restricted wires or the actual return/service interface. |
+| Brod–Childs, [1308.1463v1, §IV equations (20)–(29)](https://arxiv.org/html/1308.1463v1) | `literature-attested` odd-parity encoding, literal i-swap phases and XY/orthogonal-circuit mechanisms. Its encoded graph universality is not a same-factor operation on every original $H/R$ input. |
+| Wu et al., [2007.14847v2, real-operation definition and golden-unit discussion](https://arxiv.org/html/2007.14847v2) | `literature-attested` fixed-basis real Kraus operations and maximally imaginary qubit resources. Availability of all real operations is not assumed here. |
+| Son et al., [2412.06900v2, Supplement IV.3 equations (S17)–(S18)](https://arxiv.org/html/2412.06900v2) | `literature-attested` resource theory of imaginarity and strict catalytic replication of a maximally imaginary state by supplied real gates. This known catalytic resource mechanism is not new, and the cited example supplies neither these native gates nor this entire-input phase service. |
+| Measurement Relative Quantum Boundary11.1–11.3; RealCopyConjugation and its owning Scribe | Existing simultaneous-conjugation law and actual callability conditions. The two-copy classification requires independent copies and the full real effect interval; neither is inferred from this hopping menu. |
+| AURIC Quantum Principles8.3–8.6,11.7,35 | Existing actual-control real-frame restrictions and additional-phase alternatives. Their source, physical preparation and full-input effects remain distinct from this growing acquired carrier. |
+
+In the derived frame (VI.57), $G_\chi^\dagger|\eta\rangle$ on the pair
+is $(-i|10\rangle+|01\rangle)/\sqrt2$, a maximally imaginary qubit
+state up to overall phase and label choice. This explicitly identifies
+the mature resource being acquired. It is not generated for free from
+$|10\rangle$: every strict hopping branch from invariant assistance
+has an invariant output marginal, whereas this density is not invariant.
+Replacing it by the opposite eigenvector reverses the phase in (VI.52);
+an uncalibrated sign is not the same specified phase service.
+
+The `repo-derived` increment is the conditional actual-source relation
+proved in §§48–51: this acquired native junction and these fixed links
+turn one independently prepared retained resource into a callable pivot
+phase on the entire original unknown family, return its same factors,
+and maintain the relation through every finite original native future.
+The strict pair and the fixed-$d$ consumer establish an operational
+change on that same carrier. General kickback, real-conjugation symmetry,
+catalytic imaginarity and finite-program error composition retain their
+existing ownership. No literature priority or exhaustive novelty claim
+is attached to this source instantiation.
+
+**Proposition 52.2 (the removed recurring premise and unresolved domains).**
+Under the actual preparation and apparatus conditions above, recurring
+independent source-pivot phase actuation or resource re-preparation is
+unnecessary for the declared phase-service/native-continuation domain.
+The one-time calibrated preparation remains an independent premise.
+This correspondence does not identify the full common relational-recovery
+objective or its other actual source/preparation/composite/time domains.
+
+Proof. Theorem 48.1 constructs each pivot phase from actual old hopping
+capabilities; Theorem 50.1 proves their operands and ideal resource inputs
+persist through original native edits and returns. It does not assume
+that persistence as a closure law. Theorem 49.3 gives a real consumer
+using the already acquired detector, with full-space routing and actual
+conditional return. Proposition 49.2 supplies a strict before-acquisition
+observational obstruction on the original $H$. Theorem 51.2 retains the
+actual approximate resource and its correlations and charges the initial
+joint error once across the finite program. These facts remove the
+recurring operation/preparation premise while retaining its paid initial
+replacement, more gate work, records, holding and physical calibration.
+
+The unresolved independent premises include the entire coherent ingress
+and common backing, actual endpoint acquisition and current rights,
+QNew and the original excitation supply, calibrated one-time preparation,
+finite signed hopping catalogues and execution, source locks, clocks,
+complete-bank holds, detector readiness for any requested read, finite
+material, output/progress/ACK service and complete physical certificates.
+A native reference $r$, a source Tag, a retained numerical description or
+a static equivalence does not discharge any of these physical premises.
+The standard's state is returned; its grant, preparation history, command
+records, energy supply and elapsed holding duration are not undone.
+
+[XII148](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XII.md#148-纯局部极小的全域障碍与同根同阈值闭端点)
+retains its full EB3/PR and additional same-root local bridge conditions.
+[XII151](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XII.md#151-原纯域的自动拓扑连通与近一比较的共同零邻点)
+derives topological pure/incidence connectivity from EB3+PR, while its
+finite zero-path bridge requires the additional local $\mathsf N_2$.
+[XI150](QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md#150-最低确认互易双球有限消元与完整量子几何)
+relates minimum reciprocity and the same-cone/order-unit qutrit dictionary
+on its stated complete static domain. These are static suppliers, not
+actuators of this native bank. No all-state/all-instrument transport to
+original-control $M_3$, C5, finite Fock/Gibbs, continuous-field/path or
+full static/composite domains is inferred. Physical elapsed time,
+Hamiltonian/energy calibration, all finite composite realization and the
+remaining mutual-recovery interfaces keep their separate obligations.
+All mathematical conclusions here are ordinary conditional consequences;
+no formal verification, global minimality, total-cost dominance or
+unconditional physical-universe claim is asserted. $\square$
+
+## 追加锚（本行以下为增补区）

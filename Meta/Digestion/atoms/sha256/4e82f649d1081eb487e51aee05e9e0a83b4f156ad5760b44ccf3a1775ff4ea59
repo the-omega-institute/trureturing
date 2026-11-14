@@ -1,0 +1,35 @@
+**定义 148.1（忠实截面中的纯秩与整球支撑）。** 保留147.1的整个原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p$，以及 EB3、$\mathsf{Conn}$ 的全部量词。仍不预设 least、$T_p=e_p$、全 Pair 或全纯域闭性。取147.1的忠实有限阶实或复 PSD 截面，删去共同零空间后有
+
+$$
+A:V\hookrightarrow\operatorname{Herm}_m(\mathbb F),\qquad
+C=A^{-1}(\operatorname{PSD}_m(\mathbb F)),\qquad A(z)\succ0
+\quad(z\in\operatorname{ri}K),\qquad \mathbb F\in\{\mathbb R,\mathbb C\}.
+\tag{XI148.1}
+$$
+
+原单位仍是 $u$，不要求 $u=\operatorname{Tr}\circ A$。定义
+
+$$
+r(p)=\operatorname{rank}_{\mathbb F}A(p),\quad
+R=\max_{p\in P}r(p),\quad P_{\max}=\{p\in P:r(p)=R\},\quad
+J_p=\ker A(p),\quad W_p=\operatorname{ran}A(c_p),\quad d_p=\dim_{\mathbb F}W_p.
+\tag{XI148.2}
+$$
+
+$R$ 的存在只使用非空 $P$ 上有限个整数秩，不使用 $P$ 紧性。以下定理148.2—148.4不要求 ZC。准确复用145.3的 $\dim L_p=4$、$g_p=u-e_p\in\operatorname{ri}N_p$、全部非零相对边界射线 $\mathbb R_{>0}e_s$（$s\in S_p$），以及整个法向基
+
+$$
+B_p^*=\{h\in N_p:h(z)=1\}
+=\operatorname{conv}\{\widehat e_s:s\in S_p\},\qquad
+\widehat h=h/h(z).
+\tag{XI148.3}
+$$
+
+复用147.2的同秩整球连续及正代表公式
+
+$$
+C^*=A^*(\operatorname{PSD}_m),\qquad
+N_p=A^*(\operatorname{PSD}(J_p)).
+\tag{XI148.4}
+$$
+
