@@ -939,6 +939,64 @@ raise SystemExit(cleanup.main(arguments[1:]))
         self.assertEqual(0, holder.returncode)
         self.assertEqual("succeeded", maintenance.run(self.main)["status"])
 
+    def test_claim_notification_cannot_preempt_same_task_reuse(self):
+        tree = self.root / "attached"
+        branch = "lane/governance/attached"
+        self.commit_branch(branch, tree, 0)
+        native_notify = maintenance.notify
+        holders = []
+        script = ("import sys; sys.path.insert(0,sys.argv[1]); "
+                  "from worktree_maintenance import lease; "
+                  "ctx=lease(sys.argv[2],blocking=False); ctx.__enter__(); "
+                  "print('ready',flush=True); sys.stdin.read(); ctx.__exit__(None,None,None)")
+        def notify_and_start_worker(source):
+            notice = native_notify(source)
+            holder = subprocess.Popen([sys.executable, "-B", "-c", script,
+                str(ROOT / "tools/scripts/worktree"), str(source)],
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+            holders.append(holder)
+            self.assertEqual("ready", holder.stdout.readline().strip())
+            return notice
+        try:
+            with patch.object(maintenance, "notify", side_effect=notify_and_start_worker):
+                result = pool.claim(self.options(branch, tree))
+            self.assertEqual("reused", result["status"])
+            self.assertEqual("queued", result["maintenance"]["status"])
+        finally:
+            for holder in holders:
+                holder.communicate(timeout=10)
+                self.assertEqual(0, holder.returncode)
+
+    def test_make_notifies_after_existing_destination_allocation(self):
+        self.prepare_make()
+        tree = self.root / "attached"
+        self.commit_branch("lane/governance/attached", tree, 0)
+        # Emulate a host worker that starts on any event queued before CLI entry.
+        worker = self.root / "notified-worker.py"
+        worker.write_text("import os, subprocess, sys\n"
+            "sys.path.insert(0, " + repr(str(ROOT / "tools/scripts/worktree")) + ")\n"
+            "from worktree_maintenance import directory, lease\n"
+            "source = os.environ['NOTIFICATION_SOURCE']\n"
+            "command = [os.environ['FRONTDOOR_DOTNET'], os.environ['FRONTDOOR_CLI'], *sys.argv[1:]]\n"
+            "if list((directory(source) / 'requests').glob('*')):\n"
+            "    with lease(source):\n"
+            "        result = subprocess.run(command)\n"
+            "else:\n"
+            "    result = subprocess.run(command)\n"
+            "raise SystemExit(result.returncode)\n")
+        launcher = self.bin / "dotnet"
+        launcher.write_text('#!/bin/bash\nif [[ "$1" == run ]]; then\n'
+            '  while [[ $# -gt 0 && "$1" != -- ]]; do shift; done\n'
+            '  [[ $# -gt 0 ]] || exit 64\n  shift\n'
+            '  exec "$NOTIFICATION_PYTHON" -B "$NOTIFICATION_WORKER" "$@"\nfi\n'
+            'exec "$FRONTDOOR_DOTNET" "$@"\n')
+        self.env.update(NOTIFICATION_PYTHON=sys.executable,
+                        NOTIFICATION_WORKER=str(worker), NOTIFICATION_SOURCE=str(self.main))
+        result = self.make("worktree", "KIND=governance", "NAME=attached",
+                           "DEST=" + str(tree), "BASE=" + self.base)
+        self.assertEqual("reused", json.loads(result.stdout.splitlines()[-1])["status"])
+        self.assertTrue(list((maintenance.directory(self.main) / "requests").iterdir()))
+
     def test_service_projection_and_host_units_use_common_directory_with_spaces(self):
         import plistlib
         home = self.root / "user home with spaces"
