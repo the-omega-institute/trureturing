@@ -1,0 +1,6 @@
+则下列量词同时成立。
+
+1. 对每个 $\Pi\in\mathfrak C_{\rm res}^{\rm ret}$、每个 $\widehat{\mathcal L}_Q\in\mathfrak L_Q(\Pi)$，有 $\Delta(\Pi,\widehat{\mathcal L}_Q)\ge\delta_*(Q)$。不要求单个协议或不同协议之间具有统一有限树、bank、读数次数、深度或容量界。
+2. 在所需实角和精确有限经典 law 已供应的参考目录中，存在有限扫描协议 $\Pi_*$ 及一个固定全理想 lift，满足 $\Delta(\Pi_*,\widehat{\mathcal L}_{Q,*})=\delta_*(Q)$。因此 $\delta(\mathfrak C_{\rm ref}^{\rm fin},Q)=\delta(\mathfrak C_{\rm ref}^{\rm ret},Q)=\delta_*(Q)$，且有限目录达到此值。
+3. 在有效角括号、公平位、实际端点控制和原服务均已供应的 dyadic 目录中，对每个 $\varepsilon>0$，存在有限扫描协议及同实际命令标签的固定全理想 lift，满足 $\Delta\le\delta_*(Q)+\varepsilon$。故 $\delta(\mathfrak C_{\rm dy}^{\rm fin},Q)=\delta(\mathfrak C_{\rm dy}^{\rm ret},Q)=\min\overline{\mathcal E_{\rm dy}(Q)}=\delta_*(Q)$；在有限协议目录中一般只是 infimum。任何夹在该有限 dyadic 子目录与 $\mathfrak C_{\rm res}^{\rm ret}$ 之间、且使用相同输出合同的目录也有此值。
+
