@@ -159,32 +159,32 @@ private lemma model_prime (n : ℕ) : (vanishingPolys n).IsPrime := by
   rw [vanishingPolys, parameter_image]
   exact polynomial_image_prime (parameterPolys n)
 
-private def coordinate (i j k : Fin 2) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def coordinate (i j k : Fin 2) : MvPolynomial (Fin 3 → Fin 2) ℂ :=
   MvPolynomial.X ![i, j, k]
-private def kernelMatrix : Matrix (Fin 4) (Fin 4) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
+def kernelMatrix : Matrix (Fin 4) (Fin 4) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   !![coordinate 0 0 0, coordinate 0 0 1, -coordinate 0 0 0, -coordinate 1 0 0;
      coordinate 0 1 0, coordinate 0 1 1, -coordinate 0 0 1, -coordinate 1 0 1;
      coordinate 1 0 0, coordinate 1 0 1, -coordinate 0 1 0, -coordinate 1 1 0;
      coordinate 1 1 0, coordinate 1 1 1, -coordinate 0 1 1, -coordinate 1 1 1]
-private def kernelMinor : Matrix (Fin 3) (Fin 3) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
+def kernelMinor : Matrix (Fin 3) (Fin 3) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   kernelMatrix.submatrix (Fin.castLE (by omega)) (Fin.castLE (by omega))
-private def minorPoly : MvPolynomial (Fin 3 → Fin 2) ℂ := kernelMinor.det
-private def cramerNumerator : Fin 3 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def minorPoly : MvPolynomial (Fin 3 → Fin 2) ℂ := kernelMinor.det
+def cramerNumerator : Fin 3 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   kernelMinor.cramer (fun i => -kernelMatrix (Fin.castLE (by omega) i) 3)
-private def leftNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
+def leftNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   ![cramerNumerator 2, minorPoly]
 private def rightKernelNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
   ![cramerNumerator 0, cramerNumerator 1]
-private def slicePoly (j : Fin 2) :
+def slicePoly (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   fun i k => coordinate i j k
-private def basisNumerator :
+def basisNumerator :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   fun i k => dotProduct leftNumerator (fun j => coordinate j i k)
-private def matrixNumerator (j : Fin 2) :
+def matrixNumerator (j : Fin 2) :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   slicePoly j * basisNumerator.adjugate
-private def sumNumerator :
+def sumNumerator :
     Matrix (Fin 2) (Fin 2) (MvPolynomial (Fin 3 → Fin 2) ℂ) :=
   matrixNumerator 0 + matrixNumerator 1
 private def boundaryNumerator : Fin 2 → MvPolynomial (Fin 3 → Fin 2) ℂ :=
@@ -540,7 +540,7 @@ private lemma sum_words (n : ℕ) (m : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     simp_rw [← Finset.mul_sum, ih]
     rw [Fin.sum_univ_two, ← add_mul, ← pow_succ']
 
-private lemma outside_sum_exact (a b : ℕ)
+lemma outside_sum_exact (a b : ℕ)
     (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (b₀ b₁ : Fin 2 → ℂ) :
     improperMarginal (a + (3 + b)) a (by omega)
       (mpsState (a + (3 + b)) a₀ a₁ b₀ b₁) =
@@ -564,7 +564,7 @@ private lemma outside_sum_exact (a b : ℕ)
   simp only [← sum_dotProduct, ← Matrix.sum_vecMul, ← Matrix.vecMul_sum, sum_words]
   rfl
 
-private lemma outside_sum (n a : ℕ) (h : a + 3 ≤ n)
+lemma outside_sum (n a : ℕ) (h : a + 3 ≤ n)
     (a₀ a₁ : Matrix (Fin 2) (Fin 2) ℂ) (b₀ b₁ : Fin 2 → ℂ) :
     improperMarginal n a h (mpsState n a₀ a₁ b₀ b₁) =
       mpsState 3 a₀ a₁ (b₀ ᵥ* (a₀ + a₁) ^ a)

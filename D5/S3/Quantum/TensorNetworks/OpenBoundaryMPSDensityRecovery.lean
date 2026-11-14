@@ -54,7 +54,7 @@ private lemma state_formula (n : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ)
   have hA : (![A 0, A 1] : Fin 2 → Bond) = A := FinVec.etaExpand_eq A
   simp only [mpsState, wordMatrix, hA]
 
-private lemma columns_factor (k m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) :
+lemma columns_factor (k m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) :
     amplitudeColumns k m (mpsState (k + m) (A 0) (A 1) l r) =
       prefixMap A l k * tailMap A r m := by
   ext u b
@@ -177,7 +177,7 @@ private lemma tail_gram (A : Fin 2 → Bond) (r : Fin 2 → ℂ) (m : ℕ) :
     rw [← mulVec_mulVec]
     simp only [mul_vecMulVec, vecMulVec_mul, star_mulVec]
 
-private lemma density_factor (k m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) :
+lemma density_factor (k m : ℕ) (A : Fin 2 → Bond) (l r : Fin 2 → ℂ) :
     rawPrefix k m (mpsState (k + m) (A 0) (A 1) l r) =
       prefixMap A l k * (transfer A)^[m] (vecMulVec r (star r)) *
         (prefixMap A l k)ᴴ := by

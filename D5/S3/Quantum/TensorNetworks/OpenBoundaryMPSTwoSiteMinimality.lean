@@ -4,7 +4,7 @@
    mirror-E: none(waiver:source-owner-registration-pending)
    anchors: []
    utility: none
-   digest: The real thirteen-parameter canonical MPS chart and its twelve-coordinate raw prefix record. -/
+   digest: Raw two-site prefix ambiguity on a nonempty canonical MPS chart. -/
 
 import D5.S3.Geometry.C1LocalFiber
 import D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery
@@ -13,15 +13,18 @@ import Mathlib.Analysis.Matrix.Normed
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Topology.Instances.Matrix
 import Mathlib.Topology.Algebra.MvPolynomial
+import Mathlib.LinearAlgebra.Matrix.PosDef
 
 /-! Canonical parameters and their real observation map for the prefix reading
 of Critch--Morton Conjecture 9. The canonical inverse argument belongs to
-Ma--Zhang's note.tex (the Conjecture 8 supplier); this module does not claim it
-as a new discovery. Raw densities retain the affine norm scale. -/
+Haobo Ma and Wenlin Zhang, "Proof of Critch--Morton Conjecture 8",
+licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+The canonical inverse is reused from that Conjecture 8 supplier.
+Raw densities retain the affine norm scale. -/
 
 noncomputable section
 open Matrix Set
-open scoped BigOperators Matrix Matrix.Norms.Elementwise
+open scoped BigOperators Matrix Matrix.Norms.Elementwise ComplexOrder
 
 namespace D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality
 
@@ -392,6 +395,76 @@ def canonicalChart (m : ℕ) : Set Parameter :=
   {θ | 0 < θ.2.1 ∧ MvPolynomial.eval (coherent m θ) chartPoly ≠ 0 ∧
     (core θ 0 + core θ 1).det ≠ 0 ∧ (leading (density (1 + m) θ)).det ≠ 0}
 
+private lemma coherent_formula (m : ℕ) (θ : Parameter) :
+    coherent m θ = mpsState 3 (core θ 0) (core θ 1) (left θ)
+      ((core θ 0 + core θ 1) ^ m *ᵥ right θ) := by
+  have h := outside_sum (3 + m) 0 (by omega) (core θ 0) (core θ 1) (left θ) (right θ)
+  simpa only [coherent, state, show 3 + m - 3 - 0 = m by omega,
+    pow_zero, vecMul_one] using h
+
+/-- The actual all-length canonical chart fixes unit phase, while preserving
+the positive real amplitude scale of the raw state cone. -/
+theorem phase_rigidity (m : ℕ) {θ η : Parameter}
+    (hθ : θ ∈ canonicalChart m) (hη : η ∈ canonicalChart m)
+    (ζ : ℂ) (hζ : ‖ζ‖ = 1) (heq : state (3 + m) η = ζ • state (3 + m) θ) :
+    θ = η := by
+  have hcoh : coherent m η = ζ • coherent m θ := by
+    unfold coherent improperMarginal
+    rw [heq]
+    ext w
+    simp only [Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_ite, mul_zero]
+  let S := core θ 0 + core θ 1
+  let T := core η 0 + core η 1
+  have htensor : mpsState 3 (core θ 0) (core θ 1) (left θ)
+      (ζ • (S ^ m *ᵥ right θ)) =
+      mpsState 3 (core η 0) (core η 1) (left η) (T ^ m *ᵥ right η) := by
+    rw [← coherent_formula m η, hcoh, coherent_formula m θ]
+    ext w
+    simp only [mpsState, mulVec_smul, dotProduct_smul, Pi.smul_apply]
+    rfl
+  have hc : θ.1 = η.1 := canonical_core_rigidity θ η _ _ htensor
+    (by rw [htensor, ← coherent_formula]; exact hη.2.1)
+  have hl : left θ = left η := by simp only [left, hc]
+  have hST : S = T := by dsimp [S, T, core]; rw [hc]
+  have hrS : ζ • (S ^ m *ᵥ right θ) = T ^ m *ᵥ right η := by
+    ext k
+    rw [← boundary_contraction θ (ζ • (S ^ m *ᵥ right θ)) k,
+      ← boundary_contraction η (T ^ m *ᵥ right η) k, htensor, hl]
+  have hr : ζ • right θ = right η := by
+    apply Matrix.mulVec_injective_of_det_ne_zero
+      (show (S ^ m).det ≠ 0 from by rw [det_pow]; exact pow_ne_zero _ hθ.2.2.1)
+    rw [mulVec_smul, hrS, hST]
+  have hr0 : ζ * (θ.2.1 : ℂ) = (η.2.1 : ℂ) := by
+    simpa [right] using congrFun hr 0
+  have hre : ζ.re * θ.2.1 = η.2.1 := by simpa using congrArg Complex.re hr0
+  have him : ζ.im * θ.2.1 = 0 := by simpa using congrArg Complex.im hr0
+  have hζim : ζ.im = 0 := (mul_eq_zero.mp him).resolve_right (ne_of_gt hθ.1)
+  have hζre : 0 < ζ.re := (mul_pos_iff_of_pos_right hθ.1).mp (hre ▸ hη.1)
+  have hζone : ζ = 1 := by
+    have hn : ζ.re ^ 2 = 1 := by
+      have hh := Complex.sq_norm ζ
+      rw [hζ] at hh
+      simp only [one_pow, Complex.normSq_apply, hζim, mul_zero, add_zero] at hh
+      nlinarith
+    have hre1 : ζ.re = 1 := by nlinarith
+    exact Complex.ext hre1 (by simpa using hζim)
+  rw [hζone, one_smul] at hr
+  apply Prod.ext hc
+  apply Prod.ext
+  · exact Complex.ofReal_injective (by simpa [right] using congrFun hr 0)
+  · simpa [right] using congrFun hr 1
+
+private lemma density_hermitian (m : ℕ) (θ : Parameter) :
+    (density m θ).IsHermitian :=
+  Matrix.isHermitian_mul_conjTranspose_self _
+
+private lemma density_rank (m : ℕ) (θ : Parameter) : (density m θ).rank ≤ 2 := by
+  unfold density state rawPrefix
+  rw [columns_factor]
+  exact (Matrix.rank_mul_le_left _ _).trans
+    ((Matrix.rank_mul_le_left _ _).trans (by
+      simpa using Matrix.rank_le_card_width (prefixMap (core θ) (left θ) 2)))
+
 private lemma smooth_coherent (m : ℕ) :
     ContDiff ℝ (⊤ : WithTop ℕ∞) (coherent m) := by
   apply contDiff_pi.mpr
@@ -445,5 +518,203 @@ theorem record_collision (m : ℕ) {U : Set Parameter} (hU : IsOpen U)
   intro θ hθ η hη heq
   by_contra hne
   exact hc ⟨θ, hθ, η, hη, hne, heq⟩
+
+/-- Every nonempty open part of the canonical chart contains actual MPS states
+in different unit-phase classes with the same entire raw two-site prefix density.
+The complement of Q2 has length `1 + m`; that of the coherent triple has length `m`. -/
+theorem open_subchart_collision (m : ℕ) {U : Set Parameter} (hU : IsOpen U)
+    (hne : U.Nonempty) (hchart : U ⊆ canonicalChart m) :
+    ∃ ψ ∈ state (2 + (1 + m)) '' U, ∃ φ ∈ state (2 + (1 + m)) '' U,
+      ψ ∈ openBoundaryMPS (2 + (1 + m)) ∧ φ ∈ openBoundaryMPS (2 + (1 + m)) ∧
+      rawPrefix 2 (1 + m) ψ =
+        rawPrefix 2 (1 + m) φ ∧
+      ¬ ∃ ζ : ℂ, ‖ζ‖ = 1 ∧ φ = ζ • ψ := by
+  obtain ⟨θ, hθ, η, hη, hne, heq⟩ := record_collision (1 + m) hU hne
+  have hden : density (1 + m) θ = density (1 + m) η :=
+    densityRecord_injective (density_hermitian _ _) (density_hermitian _ _)
+      (density_rank _ _) (density_rank _ _)
+      (isUnit_iff_ne_zero.mpr (hchart hθ).2.2.2) heq
+  refine ⟨state (2 + (1 + m)) θ, ⟨θ, hθ, rfl⟩, state (2 + (1 + m)) η, ⟨η, hη, rfl⟩,
+    ⟨_, _, _, _, rfl⟩, ⟨_, _, _, _, rfl⟩, ?_, ?_⟩
+  · exact hden
+  · rintro ⟨ζ, hζ, hphase⟩
+    rw [show 2 + (1 + m) = 3 + m by omega] at hphase
+    exact hne (phase_rigidity m (hchart hθ) (hchart hη) ζ hζ hphase)
+
+private def originalCore : Fin 2 → Bond := ![!![1, 2; 3, 4], !![5, 6; 7, 8]]
+
+private def witnessParameter (m : ℕ) : Parameter :=
+  (![(-3 : ℂ), 1, 1 / 2, -1 / 2, 2],
+    (2 : ℝ) ^ (2 + m) * 5, (2 : ℂ) ^ (2 + m) * 17)
+
+private lemma witness_core (m : ℕ) : core (witnessParameter m) =
+    ![!![(1 : ℂ), 1 / 2; 4, 3 / 2], !![-1 / 2, 2; -3 / 2, 7]] := by
+  ext i j k
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> norm_num [core, witnessParameter]
+
+private lemma witness_gauge (m : ℕ) :
+    state (3 + m) (witnessParameter m) =
+      mpsState (3 + m) (originalCore 0) (originalCore 1) ![1, 0] ![1, 2] := by
+  let U : Bond := !![1, 2; 5, 6]
+  let C := core (witnessParameter m)
+  have hrel (i : Fin 2) : C i * U = (2 : ℂ)⁻¹ • (U * originalCore i) := by
+    ext j k
+    fin_cases i <;> fin_cases j <;> fin_cases k <;>
+      norm_num [C, witness_core, U, originalCore, mul_apply, Fin.sum_univ_two]
+  have hprod (s : List (Fin 2)) : (s.map C).prod * U =
+      (2 : ℂ)⁻¹ ^ s.length • (U * (s.map originalCore).prod) := by
+    induction s with
+    | nil => simp
+    | cons a s ih =>
+      simp only [List.map_cons, List.prod_cons, List.length_cons]
+      rw [Matrix.mul_assoc, ih, mul_smul_comm, ← Matrix.mul_assoc, hrel,
+        smul_mul_assoc, smul_smul, pow_succ, Matrix.mul_assoc]
+  have hr : right (witnessParameter m) =
+      (2 : ℂ) ^ (2 + m) • (U *ᵥ ![1, 2]) := by
+    ext i
+    fin_cases i <;>
+      norm_num [right, witnessParameter, U, mulVec, dotProduct, Fin.sum_univ_two]
+  have hl : left (witnessParameter m) ᵥ* U = (2 : ℂ) • ![1, 0] := by
+    ext i
+    fin_cases i <;> norm_num [left, witnessParameter, U, vecMul, dotProduct, Fin.sum_univ_two]
+  have hp : (2 : ℂ) ^ (2 + m) * (2 : ℂ)⁻¹ ^ (3 + m) * 2 = 1 := by
+    rw [show 3 + m = (2 + m) + 1 by omega, pow_succ, inv_pow]
+    field_simp
+  have hA : ![originalCore 0, originalCore 1] = originalCore := FinVec.etaExpand_eq _
+  ext w
+  change dotProduct (left (witnessParameter m))
+      ((List.ofFn fun j => C (w j)).prod *ᵥ right (witnessParameter m)) = _
+  rw [hr, mulVec_smul, dotProduct_smul, mulVec_mulVec]
+  rw [show (List.ofFn fun j => C (w j)) = (List.ofFn w).map C from
+    List.map_ofFn.symm, hprod, List.length_ofFn, smul_mulVec, dotProduct_smul,
+    ← mulVec_mulVec, dotProduct_mulVec, hl, smul_dotProduct, smul_smul, smul_smul, hp,
+    one_smul]
+  simp only [mpsState, hA, List.map_ofFn]
+  rfl
+
+private lemma original_tail_posDef (m : ℕ) :
+    ((transfer originalCore)^[m + 1] (vecMulVec ![1, 2] (star ![1, 2]))).PosDef := by
+  have hu : IsUnit (!![(5 : ℂ), 17; 11, 23] : Bond) :=
+    (Matrix.isUnit_iff_isUnit_det _).mpr (by norm_num [Matrix.det_fin_two])
+  have hbase : (transfer originalCore (vecMulVec ![1, 2] (star ![1, 2]))).PosDef := by
+    convert Matrix.PosDef.mul_conjTranspose_self _ (Matrix.vecMul_injective_of_isUnit hu) using 1
+    ext i j
+    simp only [transfer, Fin.sum_univ_two, mul_vecMulVec, vecMulVec_mul,
+      ← star_mulVec, Matrix.add_apply, vecMulVec_apply, mul_apply, conjTranspose_apply,
+      Pi.star_apply]
+    fin_cases i <;> fin_cases j <;>
+      norm_num [originalCore, mulVec, dotProduct, Fin.sum_univ_two]
+  have h0 : IsUnit (originalCore 0) :=
+    (Matrix.isUnit_iff_isUnit_det _).mpr (by norm_num [originalCore, Matrix.det_fin_two])
+  induction m with
+  | zero => exact hbase
+  | succ m ih =>
+    rw [Function.iterate_succ_apply', transfer, Fin.sum_univ_two]
+    exact (ih.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit h0)).add_posSemidef
+      (ih.posSemidef.mul_mul_conjTranspose_same (originalCore 1))
+
+private lemma original_leading_posDef (m : ℕ) :
+    (leading (rawPrefix 2 (1 + m)
+      (mpsState (2 + (1 + m)) (originalCore 0) (originalCore 1) ![1, 0] ![1, 2]))).PosDef := by
+  let M : Bond := !![7, 10; 19, 22]
+  have hM : IsUnit M := (Matrix.isUnit_iff_isUnit_det _).mpr (by norm_num [M, det_fin_two])
+  have hrows (i j : Fin 2) : prefixMap originalCore ![1, 0] 2 ![0, i] j = M i j := by
+    fin_cases i <;> fin_cases j <;>
+      norm_num [prefixMap, PeriodicMPSParentIntersection.wordMatrix, List.ofFn_succ,
+        originalCore, M, vecMul, mul_apply, dotProduct, Fin.sum_univ_two]
+  rw [density_factor]
+  have hH : leading (prefixMap originalCore ![1, 0] 2 *
+      (transfer originalCore)^[1 + m] (vecMulVec ![1, 2] (star ![1, 2])) *
+      (prefixMap originalCore ![1, 0] 2)ᴴ) =
+      M * (transfer originalCore)^[1 + m] (vecMulVec ![1, 2] (star ![1, 2])) * Mᴴ := by
+    ext i j
+    simp only [leading, mul_apply, conjTranspose_apply, hrows]
+  rw [hH, Nat.add_comm 1 m]
+  exact (original_tail_posDef m).mul_mul_conjTranspose_same
+    (Matrix.vecMul_injective_of_isUnit hM)
+
+private lemma original_coherent_positive (m : ℕ) :
+    ∃ x y : ℝ, 0 < x ∧ 0 < y ∧
+      (originalCore 0 + originalCore 1) ^ m *ᵥ ![(1 : ℂ), 2] = ![(x : ℂ), (y : ℂ)] := by
+  induction m with
+  | zero => exact ⟨1, 2, by norm_num, by norm_num, by simp⟩
+  | succ m ih =>
+    obtain ⟨x, y, hx, hy, hxy⟩ := ih
+    refine ⟨6 * x + 8 * y, 10 * x + 12 * y, by positivity, by positivity, ?_⟩
+    rw [pow_succ', ← mulVec_mulVec, hxy]
+    ext i
+    fin_cases i <;> norm_num [originalCore, mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+
+set_option maxHeartbeats 800000 in
+-- Expand the exact Cramer determinants and the degree-ten chart factors.
+private lemma original_chart (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+    MvPolynomial.eval (mpsState 3 (originalCore 0) (originalCore 1) ![1, 0]
+      ![(x : ℂ), (y : ℂ)]) chartPoly ≠ 0 := by
+  let t := mpsState 3 (originalCore 0) (originalCore 1) ![1, 0] ![(x : ℂ), (y : ℂ)]
+  have ht (i j k : Fin 2) : MvPolynomial.eval t (coordinate i j k) =
+      ![![![37 * x + 54 * y, 105 * x + 122 * y],
+          ![85 * x + 126 * y, 249 * x + 290 * y]],
+        ![![125 * x + 182 * y, 353 * x + 410 * y],
+          ![301 * x + 446 * y, 881 * x + 1026 * y]]] i j k := by
+    fin_cases i <;> fin_cases j <;> fin_cases k <;>
+      norm_num [coordinate, t, mpsState, originalCore, List.ofFn_succ,
+        mul_apply, mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+  have hd : MvPolynomial.eval t minorPoly =
+      2048 * ((x : ℂ) + y) ^ 2 * (5 * x + 8 * y) := by
+    norm_num [minorPoly, kernelMinor, kernelMatrix, Matrix.det_fin_three,
+      Matrix.submatrix_apply, ht]
+    ring
+  have hc (i : Fin 3) : MvPolynomial.eval t (cramerNumerator i) =
+      ![-512 * (5 * x + 8 * y) * (7 * (x : ℂ) ^ 2 + 3 * x * y - 6 * (y : ℂ) ^ 2),
+        512 * (5 * x + 8 * y) * (3 * (x : ℂ) ^ 2 + 3 * x * y - 2 * (y : ℂ) ^ 2),
+        -6144 * ((x : ℂ) + y) ^ 2 * (5 * x + 8 * y)] i := by
+    fin_cases i <;>
+      norm_num [cramerNumerator, Matrix.cramer_apply, Matrix.det_fin_three,
+        kernelMinor, kernelMatrix, Matrix.submatrix_apply, Matrix.updateCol_apply, ht] <;> ring
+  have hb : MvPolynomial.eval t basisNumerator.det =
+      536870912 * ((x : ℂ) + y) ^ 6 * (5 * x + 8 * y) ^ 2 := by
+    norm_num [Matrix.det_fin_two, basisNumerator, leftNumerator, dotProduct,
+      Fin.sum_univ_two, hd, hc, ht]
+    ring
+  have hs : MvPolynomial.eval t sumNumerator.det =
+      -137438953472 * ((x : ℂ) + y) ^ 8 * (5 * x + 8 * y) ^ 2 := by
+    norm_num [Matrix.det_fin_two, sumNumerator, matrixNumerator, slicePoly,
+      Matrix.adjugate_fin_two, basisNumerator, leftNumerator, dotProduct,
+      Matrix.mul_apply, Fin.sum_univ_two, hd, hc, ht]
+    ring
+  have hslice : MvPolynomial.eval t
+      (coordinate 0 0 0 * coordinate 1 0 1 - coordinate 0 0 1 * coordinate 1 0 0) =
+      -64 * ((x : ℂ) + y) ^ 2 := by norm_num [map_sub, map_mul, ht]; ring
+  have hlast : MvPolynomial.eval t
+      (coordinate 0 0 0 * coordinate 0 1 1 - coordinate 0 0 1 * coordinate 0 1 0) =
+      288 * ((x : ℂ) + y) ^ 2 := by norm_num [map_sub, map_mul, ht]; ring
+  have hxy : (x : ℂ) + y ≠ 0 := by
+    exact_mod_cast (ne_of_gt (add_pos hx hy))
+  have h5 : (5 : ℂ) * x + 8 * y ≠ 0 := by
+    exact_mod_cast (ne_of_gt (show 0 < 5 * x + 8 * y by positivity))
+  change MvPolynomial.eval t chartPoly ≠ 0
+  rw [chartPoly, map_mul, map_mul, map_mul, map_mul, hd, hb, hs, hslice, hlast]
+  norm_num [mul_ne_zero_iff, hxy, h5]
+
+/-- A single explicit full-length gauge family makes the fixed canonical chart
+nonempty at every length, including every original C9 length `3 + m ≥ 4`. -/
+theorem canonicalChart_nonempty (m : ℕ) : (canonicalChart m).Nonempty := by
+  refine ⟨witnessParameter m, ?_, ?_, ?_, ?_⟩
+  · dsimp [witnessParameter]
+    positivity
+  · obtain ⟨x, y, hx, hy, hxy⟩ := original_coherent_positive m
+    have h := outside_sum (3 + m) 0 (by omega)
+      (originalCore 0) (originalCore 1) ![1, 0] ![1, 2]
+    simp only [show 3 + m - 3 - 0 = m by omega, pow_zero, vecMul_one] at h
+    unfold coherent
+    rw [witness_gauge, h, hxy]
+    exact original_chart x y hx hy
+  · rw [witness_core]
+    norm_num [Matrix.det_fin_two]
+  · have hs := witness_gauge m
+    rw [← show 2 + (1 + m) = 3 + m by omega] at hs
+    change (leading (rawPrefix 2 (1 + m) (state (2 + (1 + m)) (witnessParameter m)))).det ≠ 0
+    rw [hs]
+    exact ((Matrix.isUnit_iff_isUnit_det _).mp (original_leading_posDef m).isUnit).ne_zero
 
 end D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSTwoSiteMinimality

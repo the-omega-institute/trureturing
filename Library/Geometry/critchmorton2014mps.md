@@ -9,6 +9,7 @@ claim: "The paper studies the varieties of translation-invariant matrix product 
 strata_touched:
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSMarginalBirationality
   - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSDensityRecovery
+  - D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
 license: citation-only
 triage: anchor
 ---
@@ -31,7 +32,16 @@ The displayed map immediately following it uses the prefix entries
 $Q_k(\psi)_{u,v}=\sum_b\psi_{ub}\overline{\psi_{vb}}$.
 On the unnormalized affine cone this is the raw partial trace, retaining the squared-norm scale. A normalized reading must normalize both states. The prefix interpretation does not itself establish a theorem for every interior window.
 
-`OpenBoundaryMPSDensityRecovery.observable_chart_phase_recovery` supplies a conditional bridge: if some $t=Q_3(\psi)v$ lies in the existing coherent chart and the corresponding reconstructed complex linear transfer is injective, every actual free-boundary competitor with the same raw prefix density is a unit phase multiple of $\psi$. Its proof reuses the original three-site gauge reconstruction, without regularity assumptions on the competitor. Nonempty dense intrinsic real-algebraic genericity at every length and generic two-site nonidentifiability remain obligations; this conditional result does not resolve Conjecture 9. It asserts algebraic identifiability, with no positive recovery inverse, stability, dynamics or thermodynamic consequence.
+`OpenBoundaryMPSDensityRecovery.observable_chart_phase_recovery` supplies a conditional bridge: if some $t=Q_3(\psi)v$ lies in the existing coherent chart and the corresponding reconstructed complex linear transfer is injective, every actual free-boundary competitor with the same raw prefix density is a unit phase multiple of $\psi$. Its proof reuses the original three-site gauge reconstruction, without regularity assumptions on the competitor. Dense intrinsic real-algebraic genericity at every length remains an obligation; this conditional result does not resolve Conjecture 9. It asserts algebraic identifiability, with no positive recovery inverse, stability, dynamics or thermodynamic consequence.
+
+
+`OpenBoundaryMPSTwoSiteMinimality` proves a local no-fewer result for every source length $N=3+m$ with $m\ge1$. Its canonical source has thirteen real coordinates, fixes the right boundary's first coordinate to be positive real, and retains the raw affine amplitude scale. The set `canonicalChart m` additionally requires the coherent triple chart, invertibility of $S=A_0+A_1$, and invertibility of the fixed leading $00,01$ principal block of $Q_2$. `canonicalChart_nonempty` proves this set nonempty uniformly in $m$; `isOpen_canonicalChart` proves it open. `open_subchart_collision` states that every nonempty open subset of this canonical chart has two actual free-boundary matrix-and-boundary states in its image with identical **entire** raw $Q_2$ and no unit phase relating them. Its Q2 complement has length $1+m$, while the coherent triple complement has length $m$.
+
+The proof combines the real C1 dimension obstruction with the actual amplitude-column factorization through a two-dimensional bond. The Gram is Hermitian of rank at most two, and fixed-block Schur completion upgrades twelve-real-coordinate record equality to full density equality. `phase_rigidity` uses the existing coherent inverse and invertible $S^m$ to identify all canonical parameters from phase-equal full states. The canonical-core inverse argument is attributed to Haobo Ma and Wenlin Zhang, *Proof of Critch–Morton Conjecture 8* (3 November 2026), licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); it is reused C8 mathematics, rather than claimed as new C9 content.
+
+The uniform witness starts from $A_0=\left(\begin{smallmatrix}1&2\\3&4\end{smallmatrix}\right)$, $A_1=\left(\begin{smallmatrix}5&6\\7&8\end{smallmatrix}\right)$, $l=(1,0)$ and $r=(1,2)^T$. An exact full-length gauge gives canonical $l=(-3,1)$, $A_0=\left(\begin{smallmatrix}1&1/2\\4&3/2\end{smallmatrix}\right)$, $A_1=\left(\begin{smallmatrix}-1/2&2\\-3/2&7\end{smallmatrix}\right)$, and $r_N=2^{N-1}(5,17)^T$. The original positive sum matrix preserves positive coherent boundaries, on which the exact chart factors do not vanish. The original tail Gram is positive definite after every positive iterate, and the fixed prefix row pair has determinant $-36$, so the fixed density block stays invertible. The canonical $\det S=-2$ is distinct from a transfer-operator determinant.
+
+This parameter-open result does not establish a dense intrinsic real-algebraic open locus in the actual state image, its descent to phase classes, or phase saturation of arbitrary open state loci. Those are separate obligations for full C9 PREFIX generic minimality. No interior-window, normalized-state, dynamical or thermodynamic conclusion is inferred.
 
 ## Verified locator
 
