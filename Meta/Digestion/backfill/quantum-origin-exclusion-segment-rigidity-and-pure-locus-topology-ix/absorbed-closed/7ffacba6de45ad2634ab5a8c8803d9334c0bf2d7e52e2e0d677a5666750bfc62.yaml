@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7ffacba6de45ad2634ab5a8c8803d9334c0bf2d7e52e2e0d677a5666750bfc62
   normalized_sha256: sha256:7ffacba6de45ad2634ab5a8c8803d9334c0bf2d7e52e2e0d677a5666750bfc62
 cas_ref: sha256:7ffacba6de45ad2634ab5a8c8803d9334c0bf2d7e52e2e0d677a5666750bfc62
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/EllipsoidShape.continuous_dagger_of_bound
+    target_statement_id: sha256:8ef0452e046cd1678875b0fc9f0f4546aa32b1989dee21f5cd2ca2c446d2fb4a
 receipts:
   unresolved_subitems: []
