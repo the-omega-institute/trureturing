@@ -48,12 +48,17 @@ internal sealed class BrentEvenMomentPolynomialDocument : IScribeDocumentDefinit
                 + "Sum H_(r,m) over the pure even two-color partitions. All coefficients are integers, "
                 + "and the finite expansion gives the displayed identity for every n. Empty products and "
                 + "empty assignments include r=0 and n=0.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("brent-ohtsuka-osborn-prodinger-even-moment-integrality"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("brent-even-moment-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: resolution);
 
     private static Formula BinomialFormula()
     {
