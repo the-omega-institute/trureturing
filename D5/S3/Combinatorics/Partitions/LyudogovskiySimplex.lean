@@ -460,7 +460,7 @@ private theorem clique_star_or_top {n : ℕ} (hn : 0 < n)
       intro y hy
       have hy' : y ∈ (YoungDiagram.ofPartition v).cells := hy
       rw [← he] at hy'
-      exact Finset.mem_of_mem_erase hy' 
+      exact Finset.mem_of_mem_erase hy'
   by_cases hstar : ∀ p ∈ C, X ≤ YoungDiagram.ofPartition p
   · exact Or.inl ⟨X,hX,hstar⟩
   · right
