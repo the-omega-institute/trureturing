@@ -28,11 +28,11 @@ open PeriodicMPSParentIntersection (Bond Word)
 open D5.S3.Quantum.Algebra
 open OpenBoundaryMPSTwoSiteMinimality (originalCore original_chart)
 
-private def realCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
+def realCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
   AddMonoidAlgebra.ofCoeff (Finsupp.mapRange Complex.re (by simp)
     (AddMonoidAlgebra.coeff p))
 
-private def imagCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
+def imagCoeff {σ : Type*} (p : MvPolynomial σ ℂ) : MvPolynomial σ ℝ :=
   AddMonoidAlgebra.ofCoeff (Finsupp.mapRange Complex.im (by simp)
     (AddMonoidAlgebra.coeff p))
 
@@ -44,7 +44,7 @@ private lemma coefficient_split {σ : Type*} (p : MvPolynomial σ ℂ) :
   change ((p.coeff m).re : ℂ) + Complex.I * (p.coeff m).im = p.coeff m
   simpa only [mul_comm] using Complex.re_add_im (p.coeff m)
 
-private lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ → ℝ) :
+lemma coefficient_eval {σ : Type*} (p : MvPolynomial σ ℂ) (x : σ → ℝ) :
     eval x (realCoeff p) = (eval (fun i => (x i : ℂ)) p).re ∧
     eval x (imagCoeff p) = (eval (fun i => (x i : ℂ)) p).im := by
   have h := congrArg (eval (fun i => (x i : ℂ))) (coefficient_split p)
@@ -383,7 +383,7 @@ private theorem statePolynomial_witness (m : ℕ) :
   rw [ht]
   exact ⟨original_chart x y hx hy, original_canonical_transfer x y hx hy⟩
 
-private lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
+lemma polynomial_nonzero_dense {ρ : Type*} [Finite ρ]
     (P : MvPolynomial ρ ℝ) (a : ρ → ℝ) (ha : eval a P ≠ 0) :
     Dense {x : ρ → ℝ | eval x P ≠ 0} := by
   letI := Fintype.ofFinite ρ
