@@ -1481,7 +1481,7 @@ f_{vv^\ast\oplus B}(\Phi\rho)
 0\preceq B\preceq I_{v^\perp},\\
 T_p(\Phi\rho)=v^\ast\rho v,\qquad
 \rho\succeq0,\quad\operatorname{Tr}\rho=1,\\
-D_p=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1,\ 
+D_p=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1,\quad
 \operatorname{ran}\rho\subset v^\perp\}.
 \end{gathered}
 \tag{XII151.8}
@@ -1537,6 +1537,6 @@ $\mathsf N_2$ 只检查近一比较带，Conn 检查所有纯对却允许任意�
 [Q151XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI150.5：完整EB3+PR+Conn的满刻度、全原确认菜单least及同锥同单位qutrit；XI149.5、XI145.9：完整静态字典与独立物理合同。"
 [Q151L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3式(1.4)、Definition 6。"
 [Q151E]: https://arxiv.org/html/2103.13764v1 "T. Emir, D. Kruml, J. Paseka, T. Vetterlein，Linear orthogonality spaces as a new approach to quantum logic，Definition 4、Proposition 32。"
-[Q151F]: https://arxiv.org/html/0903.0643v1 "D. Labardini-Fragoso, R. Neumann-Coto, M. G. Takane，On the faces of compact convex sets，Lemma 2、4。"
+[Q151F]: https://arxiv.org/html/0903.0643v1 "D. Labardini-Fragoso, R. Neumann-Coto, M. G. Takane，Cones and convex bodies with modular face lattices，Lemma 2、4。"
 
 ## 追加锚（本行以下为增补区）
