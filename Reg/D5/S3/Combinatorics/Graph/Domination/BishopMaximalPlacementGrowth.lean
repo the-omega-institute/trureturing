@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
 import Reg.Support.SingleDependentReadout
 
+/-! Source-family registrations for unbounded bishop counts. -/
+
 namespace Reg.D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
 
 open _root_.D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
@@ -49,9 +51,12 @@ theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
   have hb := count_lower_bound 2
+  rw [show (2 : ℕ) ^ (6 * 2) = 4096 by norm_num] at hb
   have hz := count_one
-  change count (4 * 0 + 1) ≠ count (4 * 2 + 1)
-  norm_num at hb ⊢
+  dsimp only [actual, realize]
+  change 4096 ≤ count 9 at hb
+  change count 1 ≠ count 9
+  rw [hz]
   omega
 
 def source_registration : Registration arena (type_of% @count_lower_bound) where
@@ -85,8 +90,12 @@ def registration :
     owner := `D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -122,9 +131,12 @@ theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 2, ?_⟩
   have hb := count_lower_bound 2
+  rw [show (2 : ℕ) ^ (6 * 2) = 4096 by norm_num] at hb
   have hz := count_one
-  change count (4 * 0 + 1) ≠ count (4 * 2 + 1)
-  norm_num at hb ⊢
+  dsimp only [actual, realize]
+  change 4096 ≤ count 9 at hb
+  change count 1 ≠ count 9
+  rw [hz]
   omega
 
 def source_registration : Registration arena (type_of% @ratio_lower_bound) where
@@ -158,8 +170,12 @@ def registration :
     owner := `D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
@@ -194,10 +210,11 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 1, 9, ?_⟩
-  change (sourceFamily 1).card ≠ (sourceFamily 9).card
+  dsimp only [actual, realize]
   rw [source_family_card, source_family_card, count_one]
   have hb := count_lower_bound 2
-  norm_num at hb
+  rw [show (2 : ℕ) ^ (6 * 2) = 4096 by norm_num] at hb
+  change 4096 ≤ count 9 at hb
   omega
 
 def source_registration : Registration arena (type_of% @source_family_card) where
@@ -231,8 +248,12 @@ def registration :
     owner := `D5.S3.Combinatorics.Graph.Domination.BishopMaximalPlacementGrowth
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }

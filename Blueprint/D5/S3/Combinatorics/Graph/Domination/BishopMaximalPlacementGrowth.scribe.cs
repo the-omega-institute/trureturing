@@ -66,6 +66,6 @@ internal sealed class BishopMaximalPlacementGrowthDocument : IScribeDocumentDefi
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, Formula b) => Sup(Par(a), b);
+    private static Formula Pow(Formula a, Formula b) => new Formula.Power(Par(a), b);
     private static Formula Nat => Seq(Mathbb, Grp(V("N")));
 }
