@@ -126,11 +126,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 namespace InitializedClean
 
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature (Σ n, Address n × Bool → ℂ)
-    (fun p => State p.1) (fun _ => ℂ)
+  Reg.Support.SingleDependentReadout.signature (Σ n, (Address n × Bool → ℂ) × Address n)
+    (fun _ => Bool) (fun _ => ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ p s => initialized p.1 p.2 s) (fun e => nomatch e)
+  realize signature (fun _ p b => initialized p.1 p.2.1 (clean p.1 p.2.2 b)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
@@ -138,7 +138,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (ψ : Address n × Bool → ℂ) (a : Address n) (b : Bool),
-    R.readout () ⟨n, ψ⟩ (clean n a b) = ψ (a, b)
+    R.readout () ⟨n, ψ, a⟩ b = ψ (a, b)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -147,7 +147,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨⟨0, fun ab => if ab.2 then 1 else 0⟩, clean 0 () false, clean 0 () true, ?_⟩
+  refine ⟨⟨0, (fun ab => if ab.2 then 1 else 0), ()⟩, false, true, ?_⟩
   change initialized 0 _ _ ≠ initialized 0 _ _
   rw [initialized_clean, initialized_clean]
   norm_num
@@ -173,12 +173,21 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p s => initialized p.1 p.2 s) (fun e => nomatch e))
+    (fun _ p b => initialized p.1 p.2.1 (clean p.1 p.2.2 b)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Routing.HannRouterDephasing
+    definition := none
+    coordinates := #[0, 1, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg", "arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -273,7 +282,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source (KetSources.arena false) ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (KetSources.actual false)
+  readout := some (realize KetSources.signature
+    (KetSources.actual false).readout (KetSources.actual false).anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -308,7 +318,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source (KetSources.arena true) ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (KetSources.actual true)
+  readout := some (realize KetSources.signature
+    (KetSources.actual true).readout (KetSources.actual true).anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

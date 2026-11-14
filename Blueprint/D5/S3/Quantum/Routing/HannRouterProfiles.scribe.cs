@@ -150,7 +150,7 @@ internal sealed class HannRouterProfilesDocument : IScribeDocumentDefinition
     private static Formula Ex(string x, Formula t, Formula b) => new Formula.BindMany(
         FormulaQuantifier.Exists, [new(FormulaIdentifier.Create(x), t)], b);
     private static Formula SumOver(string x, Formula t, Formula b) =>
-        Seq(Sum, Underscore, Grp(I(x), InMacro, t), Grp(b));
+        Seq(Sum, Underscore, Grp(I(x), InMacro, Sp, t), Grp(b));
 
     private static Formula FullStatement()
     {

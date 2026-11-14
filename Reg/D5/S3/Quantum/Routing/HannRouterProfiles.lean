@@ -198,7 +198,18 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Routing.HannRouterProfiles
+    definition := none
+    coordinates := #[0, 1, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body",
+        "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
+        "fn", "arg", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

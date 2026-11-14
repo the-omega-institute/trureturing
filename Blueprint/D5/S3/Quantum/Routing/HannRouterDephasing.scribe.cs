@@ -89,7 +89,7 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
         FormulaQuantifier.ForAll, [new(FormulaIdentifier.Create(x), t)], b);
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula SumOver(string x, Formula t, Formula b) =>
-        Seq(Sum, Underscore, Grp(I(x), InMacro, t), Grp(b));
+        Seq(Sum, Underscore, Grp(I(x), InMacro, Sp, t), Grp(b));
     private static Formula Conj(Formula a) => C("conj", a);
     private static Formula Both(params Formula[] a) => System.Linq.Enumerable.Aggregate(a, And);
 
@@ -104,7 +104,7 @@ internal sealed class HannRouterDephasingDocument : IScribeDocumentDefinition
         Formula n=I("n"), a=I("a"), b=I("b"), psi=I("psi"), addr=C("Address",n);
         return All("n",I("Nat"),All("psi",Arr(C("Prod",addr,I("Bool")),I("Complex")),
             All("a",addr,All("b",I("Bool"),Eq(C("initialized",n,psi,C("clean",n,a,b)),
-                App(psi,C("pair",a,b))))));
+                App(psi,C("pair",a,b)))))));
     }
 
     private static Formula KetStatement(bool conjugate)

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Literal internal router localization and active-profile separation. -/
+   digest: Heterogeneous physical router profiles, complex Gram kernel and all fidelity minimizers. -/
 
 import D5.S3.Quantum.Routing.HannSpatialQram
 import D5.S3.Quantum.Routing.HannRouterDephasing
@@ -12,7 +12,7 @@ import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Analysis.Complex.Order
 import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
 
-/-! Observations of loaded internal routers and their active address profiles. -/
+/-! Independent records of actual loaded routers, profile rank and complete minimizer fibers. -/
 
 set_option autoImplicit false
 
@@ -293,16 +293,16 @@ private theorem record_sample (n : ℕ) (q : Router n → ℝ) (hq : ∀ v, q v 
     record n q a (sample n q c) = if profile n q a = c then diagonal n q else 0 := by
   classical
   by_cases h : profile n q a = c
-  · rw [if_pos h]
+  · rw [ite_eq_left h]
     apply Finset.prod_congr rfl
     intro v _
     by_cases hv : q v < 1
     · have he := congrFun (congrArg Subtype.val h) ⟨v, hv⟩
       simp only [profile] at he
-      simp [sample, hv, HannRouterDephasing.localRecord, he, diagonal]
-    · have he : q v = 1 := le_antisymm (hq v) (le_of_not_gt hv)
       simp [sample, hv, HannRouterDephasing.localRecord, he]
-  · rw [if_neg h]
+    · have he : q v = 1 := le_antisymm (hq v) (le_of_not_gt hv)
+      simp [sample, HannRouterDephasing.localRecord, he]
+  · rw [ite_eq_right h]
     obtain ⟨v, hv⟩ : ∃ v, loadedLabel n a Qutrit.wait v.1 ≠ c.1 v := by
       by_contra hn
       apply h
@@ -884,6 +884,22 @@ theorem physical_profile_event (n : ℕ) (q : Router n → ℝ)
     · intro hmass φ hφ
       rw [hf ψ hψ, hf φ hφ]
       exact (hm (inputDistribution n ψ hψ)).mpr hmass (inputDistribution n φ hφ)
+
+
+-- Transient exact endpoint application check.
+example : (gram 1 (fun _ => 0)).rank = 2 ∧ (gram 1 (fun _ => 1)).rank ≠ 2 := by
+  have hz := physical_profile_event 1 (fun _ => 0) (by intro v; norm_num)
+    (by intro v; norm_num) (fun _ => false)
+  have ho := physical_profile_event 1 (fun _ => 1) (by intro v; norm_num)
+    (by intro v; norm_num) (fun _ => false)
+  rcases hz with ⟨_, _, _, _, _, _, hz, _⟩
+  rcases ho with ⟨_, _, _, _, _, _, ho, _⟩
+  constructor
+  · exact hz.mpr (by intro u; norm_num)
+  · intro hr
+    have hh := ho.mp hr ()
+    norm_num at hh
+-- End transient exact endpoint application check.
 
 #print axioms gram_rank
 #print axioms gram_kernel
