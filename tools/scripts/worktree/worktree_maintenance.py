@@ -33,7 +33,7 @@ def directory(source):
 
 @contextmanager
 def lease(source, *, shared=False, blocking=True):
-    """Serialize disposal; nonblocking shared callers can fall back to fresh creation."""
+    """Serialize disposal and allocation; nonblocking callers can create elsewhere."""
     with _lock(directory(source) / "lock", shared=shared, blocking=blocking):
         yield
 

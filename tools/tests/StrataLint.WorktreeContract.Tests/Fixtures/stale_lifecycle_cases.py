@@ -789,9 +789,10 @@ raise SystemExit(cleanup.main(arguments[1:]))
         head = self.commit_branch(branch, tree, 7 * 3600)
         (tree / "payload").write_text("ordinary tracked edit")
         (tree / "untracked").write_text("ordinary untracked bytes")
-        failed = self.create("expired-task", tree, check=False, cwd=tree)
-        self.assertNotEqual(0, failed.returncode)
-        self.assertIn("expired_maintenance_pending", failed.stderr)
+        for reuse_any in (False, True):
+            failed = self.create("expired-task", tree, reuse_any=reuse_any, check=False, cwd=tree)
+            self.assertNotEqual(0, failed.returncode)
+            self.assertIn("expired_maintenance_pending", failed.stderr)
         self.assertTrue(tree.exists())
         self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
         self.assertEqual("succeeded", maintenance.run(self.main)["status"])
@@ -985,6 +986,14 @@ raise SystemExit(cleanup.main(arguments[1:]))
         finally:
             root.chmod(0o700)
 
+    def test_default_selection_reuses_its_guarded_nominal_destination(self):
+        tree = self.root / "nominal destination"
+        self.commit_branch("lane/governance/previous-task", tree, 5 * 3600)
+        result = self.create("next-task", tree, reuse_any=True)
+        self.assertEqual("claimed", json.loads(result.stdout)["status"])
+        result = self.create("next-task", tree, reuse_any=True)
+        self.assertEqual("reused", json.loads(result.stdout)["status"])
+
     def test_concurrent_claims_cannot_reassign_one_selected_tree(self):
         tree = self.root / "shared candidate"
         self.commit_branch("lane/governance/candidate", tree, 5 * 3600)
@@ -1034,10 +1043,13 @@ assert pool.claim(options)['status'] == 'claimed'
             '  while [[ ! -f ' + shlex.quote(str(resume)) + ' ]]; do sleep 0.02; done\nfi\n'
             'exec ' + shlex.quote(shutil.which("git")) + ' "$@"\n')
         launcher.chmod(0o755)
+        caller = self.main / "caller"
+        caller.mkdir()
         child = subprocess.Popen([shutil.which("dotnet"), str(ROOT /
             "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"), "worktree", "--kind", "governance",
-            "--name", "initializing", "--path", str(destination), "--base", self.base, "--skip-restore"],
-            cwd=self.main, env=protocol.git_environment({"PATH": str(bin_dir) + os.pathsep + os.environ["PATH"]}),
+            "--name", "initializing", "--path", os.path.relpath(destination, caller),
+            "--source", "..", "--base", self.base, "--skip-restore"],
+            cwd=caller, env=protocol.git_environment({"PATH": str(bin_dir) + os.pathsep + os.environ["PATH"]}),
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         try:
             deadline = time.monotonic() + 60

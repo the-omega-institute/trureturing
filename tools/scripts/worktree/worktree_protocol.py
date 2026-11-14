@@ -325,6 +325,7 @@ def _main(argv=None):
     returned.add_argument("--writers-joined", action="store_true")
     claimed = commands.add_parser("claim")
     claimed.add_argument("--path", type=Path)
+    claimed.add_argument("--initializing-path", type=Path, help=argparse.SUPPRESS)
     claimed.add_argument("--branch", required=True)
     claimed.add_argument("--base", required=True)
     claimed.add_argument("--skip-restore", action="store_true")
@@ -391,8 +392,12 @@ def _main(argv=None):
         elif options.action == "initialize":
             from worktree_maintenance import initialization
             argv = options.argv[1:] if options.argv[:1] == ["--"] else options.argv
-            with initialization(options.source, options.path):
-                return subprocess.run(argv, env=git_environment()).returncode
+            try:
+                with initialization(options.source, options.path):
+                    return subprocess.run(argv, env=git_environment()).returncode
+            except Exception:
+                report(summary_source)
+                raise
         elif options.action == "stale":
             result = mark_stale(options.source, options.path)
             _log_result(options.action, result)

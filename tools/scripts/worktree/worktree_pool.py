@@ -100,8 +100,9 @@ def claim(options):
         transaction = lease(options.source, blocking=False)
         transaction.__enter__()
     except OSError as error:
-        if options.path is not None and options.path.exists():
-            raise Refused("maintenance_busy_for_existing_destination:" + str(options.path))
+        destination = options.path or getattr(options, "initializing_path", None)
+        if destination is not None and destination.exists():
+            raise Refused("maintenance_busy_for_existing_destination:" + str(destination))
         return dict(event="worktree_init", status="no_reusable", removed_worktrees=[],
                     candidate_refusals=[], maintenance=maintenance | {
                         "worker": "busy" if isinstance(error, BlockingIOError) else "unavailable",
@@ -131,12 +132,13 @@ def _claim_available(options):
     # An explicit fresh destination needs no global per-tree inspection.
     selected = [row for row in rows[1:] if options.path is None or _same(row["worktree"], options.path)]
     snapshot = (rows, protocol_common(options.source))
+    initializing_path = getattr(options, "initializing_path", None)
     for item in selected:
         path = Path(item["worktree"]).absolute()
         if path.resolve() in excluded or _same(path, main):
             continue
         try:
-            if options.path is None:
+            if options.path is None and (initializing_path is None or not _same(path, initializing_path)):
                 with initialization(options.source, path):
                     pass
             current, _ = identity(options.source, path, snapshot=snapshot)
@@ -193,6 +195,9 @@ def _claim_available(options):
                 "reuse_reason": "stale" if marked else "head_older_than_4h",
             })
         result = dict(event="worktree_init", status="no_reusable")
+        for refusal in refusals:
+            if initializing_path is not None and _same(refusal["path"], initializing_path):
+                raise Refused(refusal["reason"])
         if refusals:
             result["candidate_refusals"] = refusals
         return finish(result)

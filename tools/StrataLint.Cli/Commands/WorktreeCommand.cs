@@ -123,10 +123,16 @@ internal static class WorktreeCommand
             try { guarded = ParseArguments(repositoryRoot, arguments); }
             catch (InvalidOperationException) { /* Create renders the ordinary usage error. */ }
             if (guarded is not null)
+            {
+                var forwarded = arguments.ToArray();
+                for (var index = 0; index < forwarded.Length; index++)
+                    if (forwarded[index] == "--path") forwarded[++index] = guarded.Path;
+                    else if (forwarded[index] == "--source") forwarded[++index] = guarded.Source;
                 return WorktreeProtocolCommand.Run(guarded.Source,
                     new[] { "initialize", "--path", guarded.Path, "--", "dotnet",
                         typeof(WorktreeCommand).Assembly.Location, "worktree", "--initialization-child" }
-                    .Concat(arguments).ToArray(), runner, Timeout.InfiniteTimeSpan, reportPending: false);
+                    .Concat(forwarded).ToArray(), runner, Timeout.InfiniteTimeSpan, reportPending: false);
+            }
         }
 
         var result = Create(repositoryRoot, arguments, runner, out var summarySource,
