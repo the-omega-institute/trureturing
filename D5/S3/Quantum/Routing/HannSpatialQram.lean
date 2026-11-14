@@ -9,6 +9,7 @@
 module
 
 public import D5.S3.Quantum.Routing.ReversibleQram
+public import D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry
 
 /-! Hann et al.'s three-level incident, router and output systems, with sequential loading. -/
 
@@ -336,5 +337,84 @@ theorem correctness :
           s = clean n a (xor b (D a)) := by
         rw [Equiv.symm_apply_eq, query_clean]
       cases hD : D a <;> simp [heq, hD, add_comm]
+
+
+/-- The head-first word read from the actual address slots. -/
+def addressWord : (n : ℕ) → Address n → List Bool
+  | 0, _ => []
+  | n + 1, a => a.1 :: addressWord n a.2
+
+/-- Count unequal internal router coordinates, excluding every incident/output rail. -/
+def routerMismatch : (n : ℕ) → Tree n → Tree n → ℕ
+  | 0, _, _ => 0
+  | n + 1, t, u => (if t.2.1 = u.2.1 then 0 else 1) +
+      routerMismatch n t.2.2.1 u.2.2.1 + routerMismatch n t.2.2.2 u.2.2.2
+
+private theorem router_mismatch_self (n : ℕ) (t : Tree n) :
+    routerMismatch n t t = 0 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [routerMismatch, ih]
+
+private theorem router_mismatch_vacuum (n : ℕ) (a : Address n) :
+    routerMismatch n (programmed n a n) (vacuum n) = n ∧
+      routerMismatch n (vacuum n) (programmed n a n) = n := by
+  induction n with
+  | zero => exact ⟨rfl, rfl⟩
+  | succ n ih =>
+      rcases a with ⟨b, a⟩
+      have h := ih a
+      cases b <;> simp [routerMismatch, programmed, vacuum, encode,
+        router_mismatch_self, h.1, h.2, Nat.add_comm]
+
+private theorem address_word_injective (n : ℕ) : Function.Injective (addressWord n) := by
+  induction n with
+  | zero => intro a b _; exact Subsingleton.elim a b
+  | succ n ih =>
+      intro a b h
+      have h' := List.cons.inj h
+      exact Prod.ext h'.1 (ih h'.2)
+
+private theorem address_word_length (n : ℕ) (a : Address n) :
+    (addressWord n a).length = n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [addressWord, ih]
+
+private theorem router_mismatch_programmed (n : ℕ) (a a' : Address n) :
+    routerMismatch n (programmed n a n) (programmed n a' n) =
+      if a = a' then 0 else
+        2 * (n - (D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.lcp
+          (addressWord n a) (addressWord n a')).length) - 1 := by
+  induction n with
+  | zero => have h : a = a' := Subsingleton.elim _ _; simp [h, routerMismatch]
+  | succ n ih =>
+      rcases a with ⟨b, a⟩
+      rcases a' with ⟨c, a'⟩
+      have hv := router_mismatch_vacuum n a
+      have hv' := router_mismatch_vacuum n a'
+      have hp := (D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.shortest_pop_append
+        (addressWord n a) (addressWord n a')).1.1.length_le
+      rw [address_word_length] at hp
+      cases b <;> cases c <;>
+        simp [routerMismatch, programmed, vacuum, encode, router_mismatch_self,
+          hv.1, hv.2, hv'.1, hv'.2, addressWord,
+          D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.lcp, ih,
+          Prod.mk.injEq] <;> omega
+
+/-- The mismatch count is for the actual state after all sequential loads. -/
+theorem loaded_router_mismatch (n : ℕ) (a a' : Address n) (b b' : Bool) :
+    routerMismatch n ((load n n) (clean n a b)).2.2
+      ((load n n) (clean n a' b')).2.2 =
+      if a = a' then 0 else
+        2 * (n - (D5.S3.Combinatorics.Graph.Walks.BinaryWordGeometry.lcp
+          (addressWord n a) (addressWord n a')).length) - 1 := by
+  rw [show load n n (clean n a b) = loading n a (encode b) n from
+    correctness.1 n a (encode b) n (le_refl n),
+    show load n n (clean n a' b') = loading n a' (encode b') n from
+    correctness.1 n a' (encode b') n (le_refl n)]
+  exact router_mismatch_programmed n a a'
+
+#print axioms loaded_router_mismatch
 
 end D5.S3.Quantum.Routing.HannSpatialQram
