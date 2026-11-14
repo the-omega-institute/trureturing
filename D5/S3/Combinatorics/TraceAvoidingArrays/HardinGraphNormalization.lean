@@ -21,12 +21,24 @@ graphFiberEquiv: proof_shape=bind-only; consumer=result
 result: proof_shape=content; exact graph-normalization fiber count
 escape_witness: normal_iff and the mutually inverse fiberEquiv construction
 Audit source: Reg/D5/S3/Combinatorics/TraceAvoidingArrays/HardinGraphNormalization.
-Typed family proofs do not assert completed raw source-selection evidence.
+Typed family proofs do not assert completed raw source-selection evidence; see issue #30456.
+nextClass_spec: proof_shape=bind-only; consumers=canonical_kernel, canonical_ordered
+canonical_kernel: proof_shape=bind-only; consumers=toPartition_surjective
+canonical_ordered: proof_shape=content; consumers=toPartition_surjective
+canonical_of_ordered: proof_shape=content; consumer=toPartition_injective
+canonical_congr: proof_shape=bind-only; consumer=toPartition_injective
+toPartition_injective: proof_shape=content; consumer=partitionEquiv
+toPartition_surjective: proof_shape=content; consumer=partitionEquiv
+partitionEquiv: proof_shape=content; consumer=literalPartitionEquiv
+literalPartitionEquiv: proof_shape=content; terminal reversible partition/sign correspondence
+paletteFiberEquiv: proof_shape=content; consumer=paletteColoringEquiv
+paletteColoringEquiv: proof_shape=content; terminal reversible palette/class correspondence
+The constructors and their inverse laws are statements about all positive graph sizes.
+They do not assert the subsequent numerical sums or strip transports.
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Tactic
 
 /-! Literal scanner normalization and exact sign fibers for ordered graph colourings. -/
 
@@ -399,5 +411,69 @@ noncomputable def literalPartitionEquiv {n : ℕ} (G : SimpleGraph (Fin (n + 1))
   exact e.trans ((Equiv.sigmaCongrRight fun p =>
     (graphFiberEquiv G p.val).trans (fiberEquiv _ p.property)).trans
       (Equiv.sigmaCongrLeft' (partitionEquiv G)))
+
+/-- Proper palette colourings inducing one fixed unlabelled partition. -/
+def PaletteFiber {n : ℕ} (G : SimpleGraph (Fin (n + 1))) (q : ℕ) (S : StablePartition G) :=
+  {p : G.Coloring (Fin q) // Setoid.ker (p : Fin (n + 1) → Fin q) = S.relation}
+
+/-- The palette names are exactly an injection from the actual nonempty classes. -/
+noncomputable def paletteFiberEquiv {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (q : ℕ) (S : StablePartition G) :
+    PaletteFiber G q S ≃ (Quotient S.relation ↪ Fin q) where
+  toFun p :=
+    { toFun := Quotient.lift (p.val : Fin (n + 1) → Fin q) (by
+        intro i j h
+        have he := p.property
+        change (Setoid.ker (p.val : Fin (n + 1) → Fin q)).r i j
+        rwa [he])
+      inj' := by
+        intro a b h
+        induction a using Quotient.inductionOn with | h i =>
+          induction b using Quotient.inductionOn with | h j =>
+            apply Quotient.sound
+            change S.relation.r i j
+            rw [← p.property]
+            exact h }
+  invFun e := ⟨SimpleGraph.Coloring.mk (fun i => e (Quotient.mk S.relation i)) (by
+    intro i j hij he
+    exact S.independent i j hij (Quotient.exact (e.injective he))), by
+      apply Setoid.ext
+      intro i j
+      change e (Quotient.mk S.relation i) = e (Quotient.mk S.relation j) ↔ _
+      rw [e.injective.eq_iff, Quotient.eq]⟩
+  left_inv p := by
+    apply Subtype.ext
+    exact DFunLike.ext _ _ (fun _ => rfl)
+  right_inv e := by
+    apply Function.Embedding.ext
+    intro a
+    induction a using Quotient.inductionOn with | h i => rfl
+private noncomputable def palettePartition {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (q : ℕ) (hq : q ≤ 3) (p : G.Coloring (Fin q)) : StablePartition G := by
+  classical
+  letI := Fintype.ofFinite p.colorClasses
+  refine ⟨Setoid.ker (p : Fin (n + 1) → Fin q), fun _ _ h => p.valid h, ?_⟩
+  change Nat.card p.colorClasses ≤ 3
+  rw [Nat.card_eq_fintype_card]
+  exact p.card_colorClasses_le.trans (by simpa using hq)
+
+/-- All proper colourings with at most three palette names are actual class injections. -/
+noncomputable def paletteColoringEquiv {n : ℕ} (G : SimpleGraph (Fin (n + 1)))
+    (q : ℕ) (hq : q ≤ 3) : G.Coloring (Fin q) ≃
+      Σ S : StablePartition G, (Quotient S.relation ↪ Fin q) := by
+  classical
+  refine (Equiv.sigmaFiberEquiv (palettePartition G q hq)).symm.trans ?_
+  apply Equiv.sigmaCongrRight
+  intro S
+  refine (Equiv.subtypeEquivRight fun p => ?_).trans (paletteFiberEquiv G q S)
+  change palettePartition G q hq p = S ↔ Setoid.ker (p : Fin (n + 1) → Fin q) = S.relation
+  constructor
+  · intro h; exact congrArg StablePartition.relation h
+  · intro h
+    have hExt : ∀ A B : StablePartition G, A.relation = B.relation → A = B := by
+      rintro ⟨a, ha, hc⟩ ⟨b, hb, hd⟩ he
+      cases he
+      rfl
+    exact hExt _ _ h
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinGraphNormalization
