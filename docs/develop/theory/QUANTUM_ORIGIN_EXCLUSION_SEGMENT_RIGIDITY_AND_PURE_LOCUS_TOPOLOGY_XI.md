@@ -3076,3 +3076,248 @@ $$
 [Q143BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16；不作为裸 EB3+Conn 的免费分类。"
 
 ## 追加锚（本行以下为增补区）
+
+## 144. 单尺中点相容的球族连续性与上端不塌缩
+
+### 144.1 完整原域与全域同值候选
+
+**定义 144.1（原菜单、单尺和中点预算）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C\subset V$、在 $C\setminus\{0\}$ 上严格正的原单位 $u\in V^*$。全程保留整个原域
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad \mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(z)=\min_{f\in\mathcal F_p}f(z),\qquad
+D_p=\{z\in K:T_p(z)=0\},\qquad S_p=P\cap D_p.
+\end{gathered}
+\tag{XI144.1}
+$$
+
+$z$ 遍历每个原混态；完整效应区间和确认菜单紧，minimum 达到。EB3 要求每个完整 $D_p$ 是非退化仿射实心三球，中心为 $c_p$。$p\perp q$ 指 $q\in S_p$，补效应使它对称。$\mathsf{Conn}$ 要求任意两个原纯点之间有有限原零边路，长度可随端点改变。
+
+以下保留 EB3+$\mathsf{Conn}$。直接复用[THREE_COPY VIII130.2][Q144TC]和[IX120.2、120.8、120.12][Q144IX]：全部标签单射，全部非空原真面只有纯单点或完整球，不同球至多交于一个原纯点，且
+
+$$
+\begin{gathered}
+\mathcal A_p:=\{e\in\mathcal F_p:e|_{D_p}=0\}=\{e_p\},\qquad g_p=u-e_p,\\
+\{e_p=0\}\cap K=D_p,\qquad \{e_p=1\}\cap K=\{p\},\\
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p,\\
+\dim L_p=4,\qquad R_p:L_p\longrightarrow\operatorname{Aff}(D_p)
+\text{ 是限制线性同构}.
+\end{gathered}
+\tag{XI144.2}
+$$
+
+每张固定 $S_a$ 上 $x\mapsto e_x$ 连续。这里的 $e_p$ 是唯一整球零确认，并非预先把整个 $\mathcal F_p$ 缩成单点；不预设 least、$T_p=e_p$、$R_p^{-1}$ 正、全纯域紧或跨球连续。
+
+保留140.1的单尺中点相容 $\mathsf{ZC}$：对每个 $a\in P$ 有一个实数 $\kappa_a$，使
+
+$$
+e_a(c_x)+e_a(c_{\bar x^{\,a}})=\kappa_a
+\quad(x\in S_a),\qquad \bar x^{\,a}=2c_a-x.
+\tag{XI144.3}
+$$
+
+本章的完整同值候选则把这些局部常数接成同一个数：
+
+$$
+\mathsf{UC}:\quad
+\exists\kappa\in\mathbb R\ \forall a\in P\ \forall x\in S_a:\quad
+ e_a(c_x)+e_a(c_{\bar x^{\,a}})=\kappa.
+\tag{XI144.4}
+$$
+
+它是由原定义生成的态、球心和效应之间的约束，不额外输入 Hilbert 空间、数值阈值或真实零三角。它加强了 $\mathsf{ZC}$ 的跨标签量词；不宣称该加强已由纯比较互易、Conn 或 EB3 导出。
+
+### 144.2 不输入根芽的固定球连续性
+
+**定理 144.2（单尺中点相容给固定球缘的向量连续性）。** 在定义144.1的完整 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$ 域，对每个固定原根 $a$，
+
+$$
+1\le\kappa_a<2,\qquad
+x\longmapsto e_a(c_x),\quad x\longmapsto c_x
+\quad\text{在整个 }S_a\text{ 上连续}.
+\tag{XI144.5}
+$$
+
+证明。对 $x\in S_a$，实际反射态 $y_x=2c_x-a\in S_x$。原非负性给 $e_a(c_x)\ge1/2$；$c_x$ 混而 $e_a$ 仅在 $a$ 取一，故 $e_a(c_x)<1$。对径两项相加给预算界；严格上界先是逐标签结论。
+
+置 $h(x)=e_a(c_x)$。设 $x_n\to x$ 于固定紧球面 $S_a$，选择实现下极限的子列，再由紧 $K$ 令 $y_{x_n}\to y$。原效应紧性和已达到的零一见证给纯标签处的上关联 $y\in D_x$，正是 IX118.3 的式(IX118.4)。在完整球 $D_x$ 上，$e_a$ 的唯一最大点是 $a$，故其唯一最小点是 $2c_x-a$。于是
+
+$$
+2\liminf_n h(x_n)-1=e_a(y)\ge2h(x)-1.
+\tag{XI144.6}
+$$
+
+$h$ 下半连续。固定球的对径映射连续，且 $h(x)+h(\bar x^{\,a})=\kappa_a$，故 $h$ 同时上半连续，从而连续。任何 $y_{x_n}$ 聚点现在都在 $D_x$ 上达到 $e_a$ 的唯一最小值，因此必为 $2c_x-a$。所有聚点相同，给 $c_{x_n}\to c_x$。这里只用固定球面紧性，没有使用全 $P$ 紧性。证毕。
+
+**定理 144.3（固定根的完整二步纯载体紧及邻球族非退化连续）。** 在144.2的同一原域，令
+
+$$
+Q(a)=\bigcup_{x\in S_a}S_x,\qquad B_2(a)=\bigcup_{x\in S_a}D_x.
+\tag{XI144.7}
+$$
+
+则 $Q(a)$ 是原 $K$ 中的紧纯集，$x\mapsto D_x$ 在整个固定 $S_a$ 上 Hausdorff 连续；任一固定辅助欧氏尺下，这个固定族的最小半轴有严格正的统一下界。
+
+证明。由固定球缘的 $e_x$ 连续性、紧性及混点 $c_a$ 不在 $e_x$ 的一值面中，
+
+$$
+\delta_a:=\min_{x\in S_a}(1-e_x(c_a))>0.
+\tag{XI144.8}
+$$
+
+对 $x\in S_a$，原点 $a$ 在 $S_x$ 上，将包含它的直径代入 $x$ 处的 ZC，得到
+
+$$
+\kappa_x=e_x(c_a)+e_x(c_{2c_x-a})\le1+e_x(c_a)\le2-\delta_a.
+\tag{XI144.9}
+$$
+
+设 $x_n\in S_a$、$x_n\to x$、$p_n\in S_{x_n}$、$p_n\to z$。原上关联给 $z\in D_x$。反设 $z$ 混，144.2使反射 $p_n'=2c_{x_n}-p_n$ 趋于 $z'=2c_x-z$；两极限均在 $\operatorname{ri}D_x$。分别对这两个纯标签序列应用 IX118.4：其球的每个 Hausdorff 聚点只能是单点，标签单射及混极限所在球的唯一性迫该单点为 $x$。因此
+
+$$
+D_{p_n},D_{p_n'}\longrightarrow\{x\}.
+\tag{XI144.10}
+$$
+
+结合 $e_{x_n}\to e_x$，在 $x_n$ 处的 ZC 给
+
+$$
+\kappa_{x_n}=e_{x_n}(c_{p_n})+e_{x_n}(c_{p_n'})\longrightarrow2,
+\tag{XI144.11}
+$$
+
+违反(XI144.9)。所以 $z$ 必纯，进而 $z\in S_x$；任意 $Q(a)$ 序列都可如此再取子列，故 $Q(a)$ 紧而纯。
+
+现取 $x_n\to x$ 于 $S_a$，在固定欧氏环境写 $D_{x_n}=b_n+A_n\overline B^3$，其中 $A_n$ 的列为正交半轴向量。参数有界；对任意子列再取参数极限 $b_n\to b$、$A_n\to A$，令 $G=b+A\overline B^3\subseteq D_x$。全部球缘的极限属于刚取得的紧纯集 $Q(a)$。若 $1\le\operatorname{rank}A\le2$，沿非零核补足单位长度可知 $A S^2=A\overline B^3$，使整个非点凸集 $G$ 都纯，矛盾。若 $\operatorname{rank}A=0$，中心连续给 $G=\{c_x\}$；每个 $D_{x_n}$ 都含 $a$，所以 $c_x=a$，也矛盾。故秩三。此时 $\partial_{\rm rel}G\subseteq P\cap D_x=S_x$，与 $G\subseteq D_x$ 一起迫 $G=D_x$：否则从 $G$ 内点向 $D_x$ 外部点走，得到落在 $\operatorname{ri}D_x$ 内的 $G$ 球缘点，同时纯与混。所有参数子列都给同一整球极限，故 Hausdorff 连续。
+
+中心、形状算子及其正特征值连续，见139.4的支持函数式(XI139.14)。固定紧 $S_a$ 和恒秩三遂给最小半轴正下界。这里没有把各根的下界统一于全部 $P$。证毕。
+
+### 144.3 上端预算的全域不塌缩桥
+
+**定理 144.4（同一上端余量排除全部原球塌缩）。** 在定义144.1的完整 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$ 域，若
+
+$$
+\exists\varepsilon>0\ \forall a\in P:\quad \kappa_a\le2-\varepsilon,
+\tag{XI144.12}
+$$
+
+则 $\inf_{a\in P}\operatorname{diam}D_a>0$，因而由既有 IX118.8 的第二项到第四项，存在同原锥、同原单位的复三能级表示。$\varepsilon$ 在全部标签之前选定，不能替换为144.3的逐根 $\delta_a$。
+
+证明。先排除纯标签的混极限。设 $a_n\to z\notin P$。IX118.4使所有整球聚点均为同一个 $\{q\}$，其中 $q\in P$、$z\in\operatorname{ri}D_q$；唯一性由不同原球不能交于混点及标签单射给出。若 $e_{a_n}\to h$ 于某子列，则 $h(z)=1,h(q)=0$。非负效应 $u-h$ 在 $D_q$ 的相对内点为零，故在整个 $D_q$ 为零，并在 $q$ 为一；(XI144.2)于是给
+
+$$
+e_{a_n}\longrightarrow g_q.
+\tag{XI144.13}
+$$
+
+任选 $D_{a_n}$ 的一对对径 $x_n,x_n'$；两者都趋于 $q$。纯标签处上关联使 $c_{x_n},c_{x_n'}$ 的每个聚点都在 $D_q$，而 $g_q$ 在整个该球上为一。故 $\kappa_{a_n}\to2$，违反(XI144.12)。所以 $P$ 在紧 $K$ 中闭而紧。
+
+反设尚有 $\operatorname{diam}D_{a_n}\to0$。取共同子列使
+
+$$
+a_n\to a\in P,\qquad D_{a_n}\longrightarrow\{q\},\qquad q\in P\cap D_a.
+\tag{XI144.14}
+$$
+
+$q$ 的纯性来自球缘点极限和刚得的 $P$ 紧性。对任意选择 $x_n\in S_{a_n}$ 都有 $x_n\to q$、$a_n\in D_{x_n}$。其整球任意极限 $G$ 满足 $a\in G\subseteq D_q$。与144.3同样的有界椭球参数及纯球缘极限论证排除秩一、二；秩三迫 $G=D_q$，秩零迫 $G=\{a\}$。因此所有邻球极限只有
+
+$$
+G=\{a\}\quad\text{或}\quad G=D_q,
+\qquad c_G=a\quad\text{或}\quad c_G=c_q.
+\tag{XI144.15}
+$$
+
+每张 $S_{a_n}$ 上的中心映射由144.2连续，故其像连通。任选一对对径，从(XI144.12)至少选出一端 $x_n^0$ 使 $e_{a_n}(c_{x_n^0})\le1-\varepsilon/2$。因 $e_{a_n}(a)\to1$，这些中心不可能有趋于 $a$ 的子列；(XI144.15)遂使它们趋于 $c_q$。若还有其他中心趋于 $a$，连通像和距离到 $a$ 的中值定理将给第三种中心极限，例如到 $a$ 距离为 $\|c_q-a\|/2$，违反(XI144.15)。因此
+
+$$
+\sup_{x\in S_{a_n}}\|c_x-c_q\|\longrightarrow0,
+\qquad D_{x_n}\longrightarrow D_q
+\quad\text{对任意 }x_n\in S_{a_n}.
+\tag{XI144.16}
+$$
+
+对后一列完整球选 $e_{x_n}$ 的任意聚点，整球收敛、$x_n\to q$ 和(XI144.2)迫该聚点为 $e_q$，故 $e_{x_n}\to e_q$。
+
+选 $S_{a_n}$ 的任意一对对径 $x_n,z_n$。在该球坐标里令这对端点的坐标为 $s=\pm1$，写
+
+$$
+e_{x_n}|_{D_{a_n}}=1-\beta_n+\beta_n s,\qquad
+e_{z_n}|_{D_{a_n}}=1-\gamma_n-\gamma_n s,
+\qquad \beta_n,\gamma_n>0.
+\tag{XI144.17}
+$$
+
+唯一一值面保证非恒定及正斜率。两效应及 $g_{a_n}$ 都在 $L_{a_n}$；消去球上斜率，使用 $R_{a_n}$ 单射，得到整个 $V^*$ 上的既有双球恒等式 IX120.24：
+
+$$
+\gamma_ne_{x_n}+\beta_ne_{z_n}
+=(\beta_n+\gamma_n-2\beta_n\gamma_n)g_{a_n}.
+\tag{XI144.18}
+$$
+
+参数对应为 $\beta_n=(1+\rho_+)^{-1}$、$\gamma_n=(1+\rho_-)^{-1}$；不使用正限制逆。固定辅助范数并令 $M=\max_{f\in\mathcal E}\|f\|_*<\infty$。整球振幅给
+
+$$
+2\beta_n,\ 2\gamma_n\le M\operatorname{diam}D_{a_n}\longrightarrow0.
+\tag{XI144.19}
+$$
+
+将(XI144.18)除以 $\beta_n+\gamma_n$。左端是两个均趋于 $e_q$ 的原效应的凸组合，右端是 $(1-t_n)g_{a_n}$，其中
+
+$$
+t_n=\frac{2\beta_n\gamma_n}{\beta_n+\gamma_n}
+\le\frac{\beta_n+\gamma_n}{2}\longrightarrow0.
+\tag{XI144.20}
+$$
+
+无需控制两个正系数的比值，就有 $g_{a_n}\to e_q$、$e_{a_n}\to g_q$。结合(XI144.16)，ZC 再给 $\kappa_{a_n}\to2g_q(c_q)=2$，矛盾。全部塌缩被排除。此后才消费 IX118.8；分类本身不是本章的新定理。证毕。
+
+### 144.4 完整静态候选、几何及未证连接
+
+**条件应用 144.5（不指定数值的全域同值候选）。** 在(XI144.1)的全部原量词下，EB3+$\mathsf{Conn}$+$\mathsf{UC}$ 等价于存在实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset{\sim}{\longrightarrow}V,
+\qquad\Phi(\mathrm{PSD}_3)=C,\qquad u\Phi=\operatorname{Tr}.
+\tag{XI144.21}
+$$
+
+此时同值候选中的共同数必为 $\kappa=1$。
+
+证明。UC 给 ZC。任取一个原纯点，144.2给共同数 $\kappa<2$；所以同一个 $\varepsilon=2-\kappa>0$ 已在全部标签之前选定。144.4直接取得(XI144.21)。反向在整个标准 qutrit 域，原效应为全部 $0\preceq M\preceq I_3$，$e_p(\rho)=\operatorname{Tr}(p\rho)$，$c_p=(I_3-p)/2$。若 $x\in S_a$，则 $\operatorname{Tr}(ax)=0$，故 $e_a(c_x)=1/2$，UC 取 $\kappa=1$；完整 EB3 和 Conn 的全域反向复用142.2。通过同一 $\Phi$ 运输即得全部原对象的结论。证毕。
+
+同一个表示直接消费142.3的完整静态字典：原 $\dim_{\mathbb R}V=9$，全部态是整个迹一正三阶矩阵，全部纯域为 $\mathbb{CP}^2$，完整排除球的球缘为 $\mathbb{CP}^1\cong S^2$；原全部效应和数学有限 POVM、原完整非单点确认菜单、least 及每个混态的 Born minimum $T_{p_v}(\Phi\rho)=v^*\rho v$、谱分解、自对偶与 Jordan 结构全部沿同一个 $\Phi$ 取得。球心图为 $R(x)=(u(x)U-x)/2$，$U=\Phi(I_3)$。相对于总体中心态 $U/3$，它是反向缩小一半。
+
+实际来源与读回、全部质量、全有限复合及纠缠、实际事件和仪器、全旁观 CP、逐输入预算、记录、所有未来与切口，以及物理钟、Hamiltonian、能量标定和数值 $\hbar$，逐项保留142.4及其传递来源的完整原合同。静态表示不供应这些物理实现。比较端点互易指原最低确认的 $T_p(q)=T_q(p)$；UC 约束球心替换后的同一原尺读数，两者均不表示任意连续测量的先后次序可交换。
+
+**命题 144.6（未取得统一余量时的准确退化条件）。** 仅在 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$ 下，若(XI144.21)不成立，则
+
+$$
+\sup_{a\in P}\kappa_a=2.
+\tag{XI144.22}
+$$
+
+并且对所有原 $a$，
+
+$$
+B_2(a)\subseteq\{z\in K:e_a(z)\ge\max(0,2\kappa_a-3)\}.
+\tag{XI144.23}
+$$
+
+证明。若上确界小于二，144.4即给表示，故反设推出(XI144.22)。对 $x\in S_a$，ZC 和另一项小于一给 $e_a(c_x)\ge\kappa_a-1$。$e_a$ 在 $D_x$ 上唯一最大点为 $a$，最小值为 $2e_a(c_x)-1$，所以每个 $z\in D_x$ 都有 $e_a(z)\ge2\kappa_a-3$；再用原非负性，取全部球的并即得(XI144.23)。证毕。
+
+这只限制任何反模型的必要行为，不构造反模型，也不证明该行为不可能。尤其沿 $\kappa_{a_n}\to2$，同一把原尺在完整一步球 $D_{a_n}$ 上恒零，却在整个二步混态载体 $B_2(a_n)$ 上一致趋于一。144.3的紧 $Q(a)$ 和逐根正余量并未排除这条序列；它们也未证明任何 $Q(a)$ 含根在整个 $P$ 中的邻域。因此142.2的 $\mathsf G(o)$、ZC 到 Seed、以及裸 EB3 或纯比较互易到 UC 的连接仍未在此得到。
+
+**约定 144.7（归属与白话关系）。** 本章采用仓内综合推导归属，不主张全球新颖性。新增承重桥是：ZC 将固定球面上球心读数的下半连续性变成向量连续性；逐根反向余量排除二步纯载体的混极限；全域统一上端余量先取得纯点紧性，再以整张球面的连通中心像同步邻球退化，最后用已存在的双球恒等式排除塌缩。原面论、法向限制、效应消去、同原不塌缩分类及全静态字典按所引来源复用。UC 到量子表示是这一新桥的条件应用，不另算新分类，也未证明相对143.4的独立假设更少或逻辑严格更弱。
+
+成熟文献的适用条件仍须保留：[Barnum—Müller—Ududec，Theorem 16][Q144BMU]要求 projectivity、对称跃迁概率及保纯滤子，本章不在局部阶段预付它们。有限维紧性、椭球参数极限、仿射球上的唯一极值及连通集的中值性质只是中间工具。一般紧性没有把逐点严格上界自动升级为全域统一上界；本章144.4专门支付后者到不塌缩的推导。
+
+白话上，每个纯态背后有一整颗排除三球。取球上一条直径，把两端各换成它自己那颗球的球心，再用原标签那把“自己读一、整颗排除球读零”的尺去读。本候选要求两端读数的平均不随直径，也不随原标签改变，却不先指定平均是多少。每一项都小于一，共同平均便与一保持同一个正距离。若有排除球不断缩成一点，它旁边整片连续的球心就只能一起落到两种位置；原全效应的双球关系迫使这把尺在二步载体上接近读一，违反那一点共同余量。因此球不能塌缩，既有分类给同一个完整复三能级量子态体，平均也随之锁到二分之一。若只要求每颗球各自不随直径改变，跨球的共同余量仍未证明；这正是局部一致与整体一致之间尚缺的关系。
+
+[Q144TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VIII.md "VIII130.2：完整EB3+Conn到Inj、P=P0、全部原四维法向及限制同构的复用组合。"
+[Q144IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX118.3式(IX118.4)纯标签上关联；118.4混标签极限判据；118.8第二项到第四项同原不塌缩分类；120.2、120.8、120.12全部原零面、一值面、线性限制及固定球缘效应连续性；120.15式(IX120.24)整个原双球效应恒等式。"
+[Q144BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory, Theorem 16；前件包含projectivity、对称跃迁概率和保纯滤子。"
+
+## 追加锚（本行以下为增补区）
