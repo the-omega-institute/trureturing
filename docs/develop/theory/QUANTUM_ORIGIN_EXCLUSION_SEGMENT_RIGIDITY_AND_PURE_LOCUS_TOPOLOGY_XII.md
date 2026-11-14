@@ -2468,3 +2468,427 @@ $k$ 非零，否则 $h=g$，但 $Z(h)=D_q$ 为非退化三球，与 $Z(g)=\{p\}$
 [Q152B]: https://arxiv.org/html/2411.18589v2 "G. Niestegge，Bit symmetry entails the symmetry of the quantum transition probability，Theorem 1。"
 
 ## 追加锚（本行以下为增补区）
+
+## 153. 三步原纯张成、单标签分量与相对四维几何
+
+### 153.1 同一原域、实际路径与准确供应
+
+**定义 153.1（完整原对象与有限零路）。** 取非零有限维实空间 $V$、闭尖生成凸锥 $C$，及在 $C\setminus\{0\}$ 上严格正的 $u\in V^*$。保留定义151.1的整个原域，明确写作
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\qquad P=\operatorname{ext}K,\qquad
+\mathcal E=[0,u]_{C^*},\\
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\qquad
+T_p(x)=\min_{f\in\mathcal F_p}f(x)\quad(p\in P,\ x\in K),\\
+D_p=\{x\in K:T_p(x)=0\},\qquad S_p=P\cap D_p,\\
+\mathcal A_p=\{e\in\mathcal F_p:e|_{D_p}=0\},\qquad
+N_p=\{h\in C^*:h(p)=0\},\qquad L_p=\operatorname{span}_{\mathbb R}N_p,\\
+P_{\rm s}=\{p\in P:\{s\in P:D_s=D_p\}=\{p\}\}.
+\end{gathered}
+\tag{XII153.1}
+$$
+
+本章假设完整 EB3、完整纯 PR，以及对整个原空间的 $\dim_{\mathbb R}V\le9$：每个整个 $D_p$ 是非退化仿射闭三球，且 $T_p(q)=T_q(p)$ 对全部 $p,q\in P$ 成立。最低值仍在全部原确认菜单中取，第二变量仍遍历全部原混态。记 $p\perp q$ 为 $T_p(q)=0$。这由原补效应对称，且反自反。令 $d_G$ 为这张实际零图的距离，不可达时取 $\infty$，并置
+
+$$
+\begin{gathered}
+A_n(p)=\{q\in P:d_G(p,q)\le n\},\qquad A_0(p)=\{p\},\\
+\Gamma(p)=\bigcup_{n\ge0}A_n(p),\qquad
+B_\Gamma=\bigcup_{s\in\Gamma}D_s.
+\end{gathered}
+\tag{XII153.2}
+$$
+
+路径是有限条精确原零边，允许回走。零图分量不按环境拓扑定义；称包含于 $P_{\rm s}$ 的分量为单标签分量。辅助欧氏范数只用于直径、Hausdorff 距离、法向投影和行列式见证，不改变 $C,u$ 或原效应菜单。
+
+本章的既有供应如下。
+
+* 第147.1节所引原面分类给：每个 $D_p$ 是紧暴露极大真面，$\mathcal A_p\ne\varnothing$；全部非空真面只有原纯单点或整个排除球；$S_p=\partial_{\rm rel}D_p\cong S^2$、$D_p=\operatorname{conv}S_p$；不同完整球至多交于一个原纯点。
+* [IX定理116.2、116.6][Q153IX]给 $P_{\rm s}\ne\varnothing$，且 $p\in P_{\rm s}\Rightarrow S_p\subset P_{\rm s}$。重复球恰成不交配对 $F,G$，有 $I(F)=S(G)$、$I(G)=S(F)$，其中 $I(F)=\{p:D_p=F\}$、$S(F)=P\cap F$；两球不与第三张不同完整球相交。其球缘给一个完全二部零图分量。
+* 第151章在完整 EB3+PR 下给整个 $P$ 紧且拓扑连通、每个 $A_n(p)$ 紧，以及各 $B_\Gamma$ 两两不交并覆盖原边界，准确等式为 $B_\Gamma=\partial K\cap\operatorname{conv}\Gamma$。这里和下文的 $\partial K$ 都指 $\{u=1\}$ 中的边界。
+* 推论147.8使本章维数恰为九，故 $\operatorname{aff}K=\{u=1\}$ 为八维，$\partial K\cong S^7$。定理147.1及命题147.6给每个实际 $p\in P_{\rm s}$ 的 $\mathcal A_p=\{e_p\}$、$\dim L_p=4$ 及完整原法向接口。引理147.5已给每个单标签根的实际二步紧四立方体；它是本章直接复用的供应，不另作一次四维块存在性证明。
+
+以下不输入 $P_{\rm s}$ 紧、分量闭、全域 Inj、Conn、least、$\mathsf{CR}_{\rm s}$、共同 $\kappa$、非塌缩下界、全局球标架或矩阵表示。
+
+### 153.2 紧纯域上的直径闭层与整球连续
+
+**引理 153.2（原零球的闭图、直径层及全部可能极限）。** 在定义153.1的域中，令
+
+$$
+\mathcal D=\{(p,x)\in P\times K:x\in D_p\},\qquad
+M_\varepsilon=\{p\in P:\operatorname{diam}D_p\ge\varepsilon\}
+\quad(\varepsilon>0).
+\tag{XII153.3}
+$$
+
+则 $\mathcal D$ 和每个 $M_\varepsilon$ 均紧，且 $p\mapsto D_p$ 在每个 $M_\varepsilon$ 上按原环境 Hausdorff 距离连续。若 $p_i\to p$，任何收敛的整球子列的极限只有两种：整个 $D_p$，或某个原纯单点 $\{r\}$，其中 $r\in S_p$。本引理不使用九维等号。
+
+证明。若 $p_i\to p$、$x_i\in D_{p_i}$ 且 $x_i\to x$，在完整原菜单中取 $f_i\in\mathcal F_{p_i}$ 使 $f_i(x_i)=0$。紧 $\mathcal E$ 中取子列 $f_i\to f$，得到 $f(p)=1$、$f(x)=0$，故 $x\in D_p$。这证明 $\mathcal D$ 闭于紧 $P\times K$。若 $p_i\in M_\varepsilon\to p$，在每颗球上取距离至少 $\varepsilon$ 的两点，共同取极限并用闭图，极限两点仍在 $D_p$ 且距离至少 $\varepsilon$。所以 $M_\varepsilon$ 闭于紧 $P$。
+
+在 $H=\ker u$ 固定辅助欧氏结构。写
+
+$$
+D_{p_i}=c_i+B_i\overline{\mathbb B}^3,
+\qquad B_i:\mathbb R^3\longrightarrow H\text{ 单射}.
+\tag{XII153.4}
+$$
+
+此处逐球任取轴，不要求连续选择。中心 $c_i\in K$，且 $c_i\pm B_it\in K$ 对每个单位 $t$ 成立，故 $\|B_i\|\le\operatorname{diam}K/2$。任一子列可再取 $c_i\to c$、$B_i\to B$，从而整球趋于 $E=c+B\overline{\mathbb B}^3$。闭图给 $E\subseteq D_p$。对每个 $t\in S^2$，点 $c_i+B_it$ 是原纯点；整个 $P$ 紧，遂有
+
+$$
+c+B S^2\subseteq P\cap D_p=S_p.
+\tag{XII153.5}
+$$
+
+若 $\operatorname{rank}B$ 为一或二，则 $B(S^2)=B(\overline{\mathbb B}^3)$：对任何球内向量的像，在其原像仿射空间中取垂直于 $\ker B$ 的最短向量，再沿非零核方向补足到单位长度。因此整个非退化凸集 $E$ 都包含于 $P$。取 $E$ 中两不同点及其中点即违反原极点性。这排除了秩一、二。
+
+若秩三，则 $E$ 与 $D_p$ 有相同的仿射三平面，且 $\partial_{\rm rel}E\subseteq S_p=\partial_{\rm rel}D_p$。它们必相等。确实，若 $E\ne D_p$，可取 $y\in\operatorname{ri}E$ 及 $z\in\operatorname{ri}D_p\setminus E$；线段从 $y$ 向 $z$ 穿出 $E$ 的点既在 $\partial_{\rm rel}E$，又在 $\operatorname{ri}D_p$，矛盾。秩零时则 $E=\{c\}$，由(XII153.5)有 $c\in S_p$。
+
+在 $M_\varepsilon$ 内取极限，直径下界又排除秩零，故任何子列的再极限都是 $D_p$，即所称连续性。无直径下界时仍保留原纯单点塌缩，没有得到全局连续性或统一最小半轴。证毕。
+
+本引理还说明 $P=\bigcup_{m\ge1}M_{1/m}$。在任一连续层上，完整球的中心 $c_p$ 及秩三形状算子 $A_p$ 连续；这一参数工具与第147.5节相同：支撑函数的奇偶部分确定中心，中心化支撑函数的平方经极化确定 $A_p$，且
+
+$$
+D_p=c_p+A_p^{1/2}\overline{\mathbb B}_H.
+\tag{XII153.6}
+$$
+
+在任一层内一点附近，对 $\operatorname{im}A_p$ 用三个固定向量的像及 Gram—Schmidt 取局部连续正交标架 $W_p:\mathbb R^3\to H$，再令 $B_p=A_p^{1/2}W_p$。于是 $D_p=c_p+B_p\overline{\mathbb B}^3$，$B_p$ 连续且单射。这里仅有局部标架，不选择全局主轴。
+
+### 153.3 三步凸包中的原七维边界开片与完整张成
+
+**定理 153.3（单标签根的三步张成及重复根的准确反向）。** 对每个 $p\in P_{\rm s}$，存在原 $\partial K$ 中非空开集 $O_p$，使
+
+$$
+O_p\subseteq\operatorname{conv}A_3(p),\qquad
+\operatorname{span}_{\mathbb R}A_3(p)=V.
+\tag{XII153.7}
+$$
+
+因此 $A_3(p)$ 含九个线性无关的实际原纯点，其凸包含一个八维单纯形。反之，若 $p\notin P_{\rm s}$，其配对重复块 $F,G$ 满足
+
+$$
+A_2(p)=A_3(p)=\Gamma(p)=S(F)\sqcup S(G),\qquad
+\dim\operatorname{span}_{\mathbb R}A_3(p)\le8.
+\tag{XII153.8}
+$$
+
+特别地，在整个原 $P$ 上，三步张成 $V$ 当且仅当根为单标签。
+
+证明。固定 $p\in P_{\rm s}$。紧 $S_p$ 被相对闭集 $S_p\cap M_{1/m}$ 覆盖；Baire 给某层的非空球面相对内部，可在其中取有非空球面内部的闭二盘。引理153.2给盘上的整球连续性，因此可直接使用引理147.5的局部标架及避开公共点 $p$ 的球帽乘积构造，得到该引理所供应的紧嵌入
+
+$$
+\Psi:[0,1]^4\hookrightarrow P_{\rm s}\cap A_2(p).
+\tag{XII153.9}
+$$
+
+其像由实际两条原零边产生。闭集 $\Psi^{-1}(M_{1/m})$ 可数覆盖紧四立方体。Baire 定理给某层的非空相对内部；立方体内部稠密，故可取非空欧氏开四方块 $J$，其闭包包含于 $(0,1)^4$，且 $\Psi(\overline J)\subset M_{1/m}$。引理153.2给这整块上的球连续。进一步缩小 $J$，用(XII153.6)之后的局部标架，将 $D_{\Psi(t)}$ 写成 $c_{\Psi(t)}+B_{\Psi(t)}\overline{\mathbb B}^3$。
+
+现在评价的是每颗完整球的真正相对内部：
+
+$$
+\mathscr E:J\times\mathbb B^3\longrightarrow\partial K,
+\qquad
+\mathscr E(t,z)=c_{\Psi(t)}+B_{\Psi(t)}z.
+\tag{XII153.10}
+$$
+
+该映射连续且单射。同一标签内由 $B_{\Psi(t)}$ 单射；不同标签都在 $P_{\rm s}$，故球不同，而两张不同完整球的交只能是原纯点。每个 $\|z\|<1$ 的像都是该三球的非极点，因而是原混态，不能成为这种交点。源是七维欧氏开集，靶是原七维边界流形 $\partial K\cong S^7$。[Hatcher Theorem 2B.3][Q153H]逐坐标应用的区域不变性使
+
+$$
+O_p:=\mathscr E(J\times\mathbb B^3)
+\tag{XII153.11}
+$$
+
+在整个原 $\partial K$ 中开放且非空。对每个 $r=\Psi(t)\in A_2(p)$，都有 $S_r\subseteq A_3(p)$，故 $D_r=\operatorname{conv}S_r\subseteq\operatorname{conv}A_3(p)$。于是得到(XII153.7)的第一项。这一步的维数是原四维标签块加完整三球内部的三维，恰为原边界的七维。
+
+令 $W=\operatorname{span}_{\mathbb R}A_3(p)$，并取原球心 $c_p$。点
+
+$$
+x_0=(p+c_p)/2\in\operatorname{conv}A_1(p)
+\subseteq\operatorname{conv}A_3(p)
+\tag{XII153.12}
+$$
+
+位于 $\operatorname{ri}K$。否则过 $x_0$ 的真支撑面同时含 $p,c_p$；它含 $D_p$ 的相对内点 $c_p$，故含整个 $D_p$，由极大真面性必等于 $D_p$，却又含 $p\notin D_p$，矛盾。这也是定理151.5内点论证在本同根有限层中的使用。
+
+从 $x_0$ 径向参数化，映射 $x\mapsto(x-x_0)/\|x-x_0\|$ 是 $\partial K$ 到 $H=\ker u$ 中单位 $S^7$ 的同胚；每条射线恰有一个边界交点，连续性由紧凸体和内点的小球邻域给出。若 $W\ne V$，因 $u|_W\ne0$，$W\cap H$ 是 $H$ 的真线性子空间。$O_p\subset W$ 且 $x_0\in W$ 使其径向像包含于 $S^7\cap(W\cap H)$。后者在 $S^7$ 中没有内部，却包含非空开集，矛盾。故 $W=V$。从张成集抽出九个线性无关点；它们均满足 $u=1$，因而仿射无关，给八维单纯形。此处同时使用边界开片和原内点，没有把“凸包包含内点”单独当作全空间张成的理由。
+
+最后固定重复根。IX116.2给完全二部配对块：一步到达另一侧的全部球缘，两步到达本侧的全部球缘，且没有出块零边。因此(XII153.8)的集合等式成立。每个三球的线性张成都是四维，两者之和至多八维，小于原 $\dim V=9$，给准确反向。证毕。
+
+### 153.4 分量可数性、双重 Borel 性与完全可度量性
+
+**定理 153.4（单标签分量的可数分解）。** 单标签零图分量至多可数。$P_{\rm s}$ 及每个单标签分量 $\Gamma$ 都同时是原紧度量空间 $P$ 中的 $F_\sigma$ 和 $G_\delta$，并且都是 $\sigma$-紧 Polish 空间。这里不含这些分量在 $P$ 中闭或开的结论。
+
+证明。先计数分量。对每个单标签分量 $\Gamma$，定理153.3给某个根 $p\in\Gamma$ 的非空边界开片 $O_p$。由定理151.5，
+
+$$
+O_p\subseteq\partial K\cap\operatorname{conv}\Gamma=B_\Gamma.
+\tag{XII153.13}
+$$
+
+不同分量的 $B_\Gamma$ 不交。因此原第二可数边界中，单标签分量分别占有两两不交的非空开片。固定边界的可数基，每个这样的分量至少含一项非空基开集，且同一基开集不能属于两个分量；例如给分量指定可用基项的最小编号，便得向自然数的单射。记这些分量为 $\Gamma_j$，索引集至多可数。这里没有计数重复分量，也没有断言 $B_\Gamma$ 自身开放。
+
+其次用有限实际零边见证处理重复集合 $R=P\setminus P_{\rm s}$。准确等价是
+
+$$
+\begin{aligned}
+p\in R\quad\Longleftrightarrow\quad
+&\exists s,q,r\in P:\quad p\ne s,\ q\ne r,\\
+&p\perp q,\quad p\perp r,\quad s\perp q,\quad s\perp r.
+\end{aligned}
+\tag{XII153.14}
+$$
+
+正向取 $s\ne p$ 且 $D_s=D_p$，再在非退化 $S_p$ 上取两个不同原纯点 $q,r$。反向时 $D_p,D_s$ 共享不同的 $q,r$，点交规则迫 $D_p=D_s$，所以 $p$ 重复。反自反性还使这四点跨侧不能相同，故确为非平凡四周期。
+
+对每个整数 $m\ge1$，在 $P^4$ 中令 $Z_m$ 由这四条零边及
+
+$$
+\|p-s\|\ge1/m,\qquad \|q-r\|\ge1/m
+\tag{XII153.15}
+$$
+
+定义。零关系是闭关系：它是引理153.2的闭图在 $P^2$ 上的限制。故 $Z_m$ 紧，其 $p$ 坐标投影 $R_m$ 紧。有限见证中的两个正距离可用同一个 $1/m$ 下界，因而
+
+$$
+R=\bigcup_{m\ge1}R_m,\qquad P_{\rm s}=P\setminus R\text{ 是 }G_\delta.
+\tag{XII153.16}
+$$
+
+每个单标签分量 $\Gamma_j=\bigcup_nA_n(p_j)$ 已由定理151.5给出紧层穷尽，故为 $F_\sigma$ 且 $\sigma$-紧。分量可数性又给
+
+$$
+P_{\rm s}=\bigcup_j\Gamma_j\text{ 是 }F_\sigma\text{ 且 }\sigma\text{-紧},
+\qquad
+\Gamma_j=P_{\rm s}\cap\left(P\setminus\bigcup_{k\ne j}\Gamma_k\right)
+\text{ 是 }G_\delta.
+\tag{XII153.17}
+$$
+
+所有紧层均是原 $P$ 中的实际紧集，不把相对闭集误称为原紧集。
+
+为明确完全可度量性，在本证明内展开所需的标准描述拓扑事实。若 $X=\bigcap_nU_n\subset P$，各 $U_n$ 在 $P$ 中开，令 $\delta_n(x)=\operatorname{dist}(x,P\setminus U_n)>0$ 对 $x\in X$ 成立；空补集时取 $\delta_n=1$。映射
+
+$$
+x\longmapsto\bigl(x,(1/\delta_n(x))_{n\ge1}\bigr)
+\quad\text{从 }X\text{ 到 }P\times\mathbb R^{\mathbb N}
+\tag{XII153.18}
+$$
+
+是到像的同胚，且像闭。确实，若像中序列在乘积中收敛，第一坐标趋于某 $x\in P$；任一 $\delta_n(x)=0$ 都会使对应倒数发散，与该坐标的有限极限矛盾。故 $x\in X$，全部极限坐标正是 $1/\delta_n(x)$。紧度量 $P$ 完备，$\mathbb R^{\mathbb N}$ 的通常可数乘积完备度量与 $P$ 的度量合成完备可分乘积度量；例如各实坐标差取 $\min\{1,|a_n-b_n|\}$ 后以 $2^{-n}$ 求和。闭像遂完备可度量，且第二可数性给可分性。于是 $P$ 的每个 $G_\delta$ 子集为 Polish，特别用于 $P_{\rm s}$ 和各 $\Gamma_j$。它们以及各自非空开子空间都是 Baire 空间。证毕。
+
+### 153.5 任意相对开集中的四维图与四步实际接力
+
+**定理 153.5（稠密的相对四维几何）。** 令 $X=P_{\rm s}$，或令 $X$ 为任意一个单标签零图分量。对每个非空 $X$-开集 $U$，存在非空 $X$-开集 $A\subset U$，同胚于 $\mathbb R^4$ 的开方块，并满足：其 $X$ 中闭包紧且包含于 $U$；$r\mapsto D_r$ 在此闭包上连续；有同一个实际 $a\in U$，使每个 $x\in A$ 都有两步精确路径 $a\perp q_x\perp x$，且任意 $x,y\in A$ 有
+
+$$
+x\perp q_x\perp a\perp q_y\perp y.
+\tag{XII153.19}
+$$
+
+特别地，$A\subseteq A_4(x)$ 对每个 $x\in A$ 成立。所有这类图的并 $\mathcal R_X$ 是 $X$ 中稠密开集，为第二可数四维拓扑流形，且整球映射在 $\mathcal R_X$ 上连续。这些图只相对于 $X$ 开。
+
+证明。由定理153.4，$X$ 是 Polish，故任意非空 $X$-开集 $U$ 是 Baire。将通常外法向定义在原八维方向空间 $H=\ker u$ 上。第147.6节给准确的锥同构
+
+$$
+N_x\longrightarrow\mathcal N_K(x),\qquad h\longmapsto-h|_H.
+\tag{XII153.20}
+$$
+
+核为零，因为在 $H$ 上零的 $h$ 是 $u$ 的倍数，而 $h(x)=0$ 消去该倍数。反向对外法向 $v\in H^*$ 定义 $h(z)=-v(z-u(z)x)$，支撑不等式保证它在整个 $C$ 非负且零于 $x$。因此法向张成维数没有加一或减一；定理147.1给每个 $x\in X$ 的通常法向张成维数恰为四。
+
+对原八维凸体精确取 [SAME_READBACK引理128.2及其证明][Q153SR] 的 $n=8,k=4$。它给可数紧层 $L_j\subset\partial K$ 覆盖这些点，且每层有连续单射正交投影
+
+$$
+\pi_j:L_j\longrightarrow E_j^\perp\cong\mathbb R^4,
+\qquad \dim E_j=4,
+\tag{XII153.21}
+$$
+
+逆还满足 $2/\sqrt3$ 的 Lipschitz 界。这里所用单射性来自该引理证明的(Q128.7)—(Q128.8)，不从有限 Hausdorff 测度反推。$L_j$ 不必包含于 $X$。准确闭覆盖是 $U=\bigcup_j(U\cap L_j)$，各项只要求在 $U$ 中相对闭。Baire 给某个非空 $X$-开集
+
+$$
+O\subseteq U\cap L_j.
+\tag{XII153.22}
+$$
+
+取 $a\in O$。需要在 $O$ 内的实际二步块，因而使用引理147.5证明中的环境局部化，而非仅使用其抽象存在结论。写 $O=X\cap W$，其中 $W$ 在原仿射环境中开。引理147.4在实际 $S_a$ 上给一个闭二盘 $Q'$，有非空球面内部，且 $q\mapsto D_q$ 在其上连续；第147.5节的形状算子和局部标架给其中某个内点 $q_0$ 附近的连续 $c(q),B(q)$。由零对称，全部这些 $S_q$ 都含同一个原纯点 $a$。
+
+在 $S_{q_0}\setminus\{a\}$ 中先取充分靠近 $a$ 的一点，再取小紧二维球帽，使整帽在 $W$ 内且避开 $a$。联合连续性、帽的紧性及 $W$ 开性允许缩小 $q_0$ 周围的二维底盘，使全部移动球帽仍在 $W$ 内且避开 $a$。底盘与帽各参数化为闭方盘，得到第147.5节的同一乘积构造
+
+$$
+\Theta:[0,1]^2\times[0,1]^2\hookrightarrow O,\qquad
+\Theta(b,t)\in S_{q(b)},\quad q(b)\in S_a.
+\tag{XII153.23}
+$$
+
+固定 $b$ 时单射；不同 $q(b)$ 都单标签，其球都含 $a$，故点交规则使它们只能交于 $a$，而全部帽避开该点，遂跨底盘也单射。紧源保证它是到像的同胚。所有像点都在 $X$，因为 $X$ 沿实际零邻点封闭；这对 $P_{\rm s}$ 由 IX116.6给出，对零图分量由定义给出。像又在 $W$ 中，故确实在 $O$ 中。每个像点同时带有实际两步路径 $a\perp q(b)\perp\Theta(b,t)$。这没有把新的纯点填入原 $P$。
+
+再将紧四立方体按闭集 $\Theta^{-1}(M_{1/m})$ 覆盖。Baire 及立方体内部稠密性给欧氏开四方块 $J$，其闭包仍在立方体内部，且 $\Theta(\overline J)\subset M_{1/m}$。引理153.2给这个闭块上的整球连续性。连续单射 $\pi_j\Theta:J\to\mathbb R^4$ 由区域不变性给开像 $\Omega$。由于 $\pi_j$ 在整个 $L_j$ 上单射，而 $O\subset L_j$，有准确等式
+
+$$
+A:=\Theta(J)=O\cap\pi_j^{-1}(\Omega).
+\tag{XII153.24}
+$$
+
+右边的投影也可视为环境连续线性投影的限制，故 $A$ 是 $X$-开集；$\Theta|_J$ 给所需四维图。其 $X$ 中闭包恰为紧 $\Theta(\overline J)\subset O\subset U$，整球在此闭包上连续。将 $x=\Theta(b,t)$ 对应的 $q_x=q(b)$ 代入，即得(XII153.19)；底盘坐标还使 $q_x$ 在这张图内连续，无需全局选择器。
+
+每个非空 $X$-开集含这样的图，因此其总并 $\mathcal R_X$ 稠密且开。它继承 $X\subset P$ 的 Hausdorff 与第二可数性，每点有四维欧氏邻域，故为四维拓扑流形。整球映射在每张开图上连续，因而在总并上连续。图的直径下界可以逐图不同。全部证明只给 $X$ 的相对拓扑，没有给 $P$ 中的开邻域，亦没有给每个 $X$ 中点都处在 $\mathcal R_X$。证毕。
+
+### 153.6 有限三步见证在重复极限处的共同退化
+
+**定理 153.6（行列式上半连续与整层单向逼近）。** 在九维原 $V$ 上固定非零交替九线性体积形式 $\omega$，令
+
+$$
+\eta(p)=\max_{x_1,\ldots,x_9\in A_3(p)}
+|\omega(x_1,\ldots,x_9)|.
+\tag{XII153.25}
+$$
+
+最大值达到，$\eta$ 在整个 $P$ 上上半连续，且
+
+$$
+\eta(p)>0\quad\Longleftrightarrow\quad p\in P_{\rm s}.
+\tag{XII153.26}
+$$
+
+若任意原标签列 $p_i\to p\notin P_{\rm s}$，记其重复块 $\Gamma(p)=S(F)\sqcup S(G)$ 及 $W_p=\operatorname{span}(F\cup G)$，则
+
+$$
+\begin{gathered}
+\eta(p_i)\longrightarrow0,\\
+\sup_{x\in A_3(p_i)}\operatorname{dist}(x,\Gamma(p))\longrightarrow0,
+\qquad
+\sup_{x\in A_3(p_i)}\operatorname{dist}(x,W_p)\longrightarrow0,
+\qquad \dim W_p\le8.
+\end{gathered}
+\tag{XII153.27}
+$$
+
+这是整个有限可达层的单向逼近，不声称相反方向的 Hausdorff 逼近。
+
+证明。对任意固定 $n$，联合可达关系
+
+$$
+G_n=\{(p,x)\in P^2:x\in A_n(p)\}
+\tag{XII153.28}
+$$
+
+是闭的：每个长度 $k\le n$ 的路径空间由紧 $P^{k+1}$ 中的闭零边条件定义，取两端点投影再作有限并仍紧；$k=0$ 给对角线。这是定理151.5紧层论证同时保留起点的形式。
+
+紧 $A_3(p)^9$ 和连续 $\omega$ 给最大值达到。(XII153.26)正是定理153.3的张成等价。对 $p_i\to p$，沿实现 $\limsup_i\eta(p_i)$ 的子列取达到最大值的九元组。共同紧性允许九个坐标同时收敛；$G_3$ 闭保证每个极限点在 $A_3(p)$。体积形式连续，给
+
+$$
+\limsup_i\eta(p_i)\le\eta(p).
+\tag{XII153.29}
+$$
+
+重复根的 $\eta(p)=0$，结合非负性得第一个极限。若(XII153.27)第二项失败，可取固定 $\varepsilon>0$ 及 $x_i\in A_3(p_i)$，使它们到紧 $\Gamma(p)$ 的距离至少为 $\varepsilon$。取 $x_i\to x$，闭 $G_3$ 却给 $x\in A_3(p)=\Gamma(p)$，矛盾。最后 $\Gamma(p)\subset W_p$，而 $\operatorname{span}\Gamma(p)=\operatorname{span}(F\cup G)$，故第三项及维数界随之成立。证毕。
+
+此退化允许每个 $p_i$ 本身仍为单标签，因而其三步见证各自张成原 $V$，但所有九点体积共同趋零。上半连续性没有给这些体积正的统一下界。命题151.6中的块外标签积聚若含单标签子列，该子列必须服从(XII153.27)；块外标签本身不能自动认作单标签。
+
+### 153.7 九个实际纯输入的线性检验与共同恒等式消费者
+
+**推论 153.7（固定九基输入的条件应用）。** 固定任意实际 $a\in P_{\rm s}$，可一次选定九个 $x_1,\ldots,x_9\in A_3(a)$ 构成原 $V$ 的基。对任意实向量空间 $Z$ 及任意两个原实线性映射 $F,G:V\to Z$，有
+
+$$
+F=G\quad\Longleftrightarrow\quad
+F(x_j)=G(x_j)\quad(1\le j\le9).
+\tag{XII153.30}
+$$
+
+特别地，令 $Q=\Gamma(a)\subset P_{\rm s}$。若另已证明存在同一个实数 $\kappa<2$，使对所有 $p\in Q$、所有 $q\in S_p$ 及全部这九个固定输入都有
+
+$$
+e_q(x_j)+e_{q^\sharp}(x_j)
+=\kappa\bigl(u(x_j)-e_p(x_j)\bigr),
+\qquad q^\sharp=2c_p-q,\quad 1\le j\le9,
+\tag{XII153.31}
+$$
+
+则准确满足本卷定理149.2的全原空间恒等式前件，故该定理给 $Q=P_{\rm s}=P$、$\kappa=1$ 及同原锥同原单位的复三能级表示。
+
+证明。定理153.3给这九个实际原纯基输入；线性差 $F-G$ 在一组基上为零恰等于在整个原 $V$ 上为零。$Q$ 非空且沿实际零邻点封闭，且由 IX116.6有 $Q\subset P_{\rm s}$，所以第147章在 $Q$ 的每点给唯一 $e_p$。球内对径 $q^\sharp$ 仍在 $S_p\subset Q$。对每一对实际 $p,q$，将(XII153.30)用于两边线性泛函，便把(XII153.31)提升为整个原 $V$ 上的
+
+$$
+e_q+e_{q^\sharp}=\kappa(u-e_p)
+\quad(p\in Q,\ q\in S_p).
+\tag{XII153.32}
+$$
+
+这与定理149.2的(149.3)—(149.4)逐量词相同，故可直接消费。证毕。
+
+这里的有限化只缩减每个线性恒等式的输入检验集；$p,q$ 的全体量词及同一个 $\kappa$ 均保留。三步张成本身没有证明(XII153.31)，也没有制造共同 $\kappa$。完整菜单 minimum $T_p$ 未先被证明线性，因而不得把九点准则直接用于 $T_p$ 与另一函数的比较。这个消费者说明原线性关系的实际用途，不是一条新取得的三元确认恒等式。
+
+### 153.8 已付分类入口下的同一个表示与独立实际合同
+
+若另已支付全局 Inj，准确消费 [XI定理145.2][Q153XI] 的完整 EB3+Inj+原九维分支；若另已支付 Conn，可消费同一定理的 Conn 分支，或 [XI定理150.5][Q153XI] 的完整 EB3+PR+Conn 分支。若另已支付本卷定义149.1的 $\mathsf{CR}_{\rm s}$，则消费定理149.3；若另已支付(XII153.31)的全部前件，则用推论153.7及定理149.2。只有在这些合法入口之一成立后，才有同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,
+\qquad \Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XII153.33}
+$$
+
+原锥、原单位、全部原混态和原菜单均不替换。完整静态字典直接引用 XI条件应用145.9及本卷推论149.11，不另立删减版字典。为明确最容易混淆的全菜单量词，取 $v^\ast v=1$，令 $P_v=vv^\ast$、$Q_v=I_3-P_v$、$p_v=\Phi(P_v)$、$f_A(\Phi X)=\operatorname{Tr}(AX)$，则同一个 $\Phi$ 给
+
+$$
+\begin{gathered}
+\mathcal E=\{f_A:0\preceq A\preceq I_3\},\\
+\mathcal F_{p_v}
+=\{f_{P_v+B}:B=Q_vBQ_v,\quad0\preceq B\preceq Q_v\},\\
+T_{p_v}(\Phi\rho)=v^*\rho v
+\quad\text{对每个 }\rho\succeq0,\ \operatorname{Tr}\rho=1,\\
+D_{p_v}=\Phi\{\rho\succeq0:\operatorname{Tr}\rho=1,\ \rho v=0\}.
+\end{gathered}
+\tag{XII153.34}
+$$
+
+这些是所引完整字典的条件消费。其菜单计算保留所有效应：$I_3-A\succeq0$ 且 $v^\ast Av=1$ 给 $(I_3-A)v=0$，Hermitian 性消去交叉块，故全部确认恰为上述 $P_v+B$；对每个正矩阵输入，$\operatorname{Tr}(B\rho)\ge0$，因此同一菜单中的 $B=0$ 给 least 和每个原混输入的已达 minimum。菜单本身仍非单点。正性又给 $v^\ast\rho v=0\Longleftrightarrow\rho v=0$，所以最后一行是整个排除球，包含全部混态。相同双射保持全部零、次归一和任意非负质量；零质量锥元只有零，不给它强行定义归一态。
+
+其余全部静态对应，包括全纯域 $\mathbb{CP}^2$、整球纯缘 $\mathbb{CP}^1$、Bloch 三球、复共轭内积的纯比较 $|v^\ast w|^2$、原三角、全 Pair、全部有限数学 POVM、谱、共同尺、Jordan 结构及球心配方，均沿这同一个 $\Phi$ 使用原完整字典。它们不是从三步张成直接推出的。这里的 $v^\ast$ 是共轭转置，不能去掉共轭而改为实双线性式。
+
+无论是否另已触发分类，实际物理量词完整保留 [XI第145.9节][Q153XI]、本卷第149.11节及其所引 SAME_READBACK SECTION127.10 的独立合同，准确包括下列范围。
+
+共同来源域 $\Omega$、未知 ingress、同一个原装饰元组、全部同源及同中点实现、共同读回、全实关系、原概率像紧性、全测试表、零／单位／补／有界倍增、零及不等质量、两尺度等式和每个原资格输入分别承担原前件。静态复射线及数学叠加不提供实际相干制备、相位参考、可调用门、来源采用或权限。
+
+对每个有限 $N\ge1$，仍须另供实际 $W_N=V^{\otimes_{\mathbb R}N}$、闭尖生成 $C_N$、严格正 $u_N=u^{\otimes N}$、整个 $K_N$、全部 $P_N$ 及全效应。对每个实际分割 $a+b=N$，保留 $C_a\otimes_{\min}C_b\subseteq C_{a+b}\subseteq C_a\otimes_{\max}C_b$、同一产品配对、全部因子置换及逆、规范重括号与指定运输。全纠缠输入的联合 minimum、低二份 Jordan 桥、实际自复合及复型选择、实际三份资源和其锥成员身份，仍各有原前件；高阶排除集没有被规定为单体三球。
+
+对每个输入输出份数和每个有限旁观系统，仍在同一个共同输入上要求全旁观正性，包括每个纠缠输入。完整实际有限层级及表示齐备后，才用原 Choi 桥识别 CP。TP／TNI、逐分支及同族总预算都对每个原输入承担。数学 CP-TNI 映射成为实际事件还需事件饱和和原实现；同族仪器仍需实际探针、接线、共同预算、记录、粗粒化、输出与校准。只在严格正质量分支条件归一，零质量分支不强定条件态；Lüders 更新另保锐效应、接受态中性及输出校准合同。
+
+设备／事件／来源绑定、全部菜单分支、实际参考／副本／相关联合、记录／权限／控制、ready／flags、失败／拒绝／停止／销毁／返回、实际混合、原字和旧 support、每个中间切口、全部合法未来、terminal futures、细标签粗归组及记录后的条件未来，均保持原量词。有限步零图路径不支付这些实际操作、记录或未来合同。
+
+物理钟、实际连续动态来源、时间单位、Hamiltonian、能量识别及标定、数值 $\hbar$、时空与物理空间维数分别独立供应。另给实际复酉时间实现后，才写
+
+$$
+U_t=\exp(-\mathrm i tH/\hbar),\qquad H=H^*,
+\qquad\rho_t=U_t\rho U_t^*.
+\tag{XII153.35}
+$$
+
+九维原实载体、四维相对纯图、三维排除球和三步线性张成都不指定物理空间或物理时间。
+
+### 153.9 几何解释、归属与尚未支付的桥梁
+
+原纯点、全部混态、每张允许测试尺始终属于同一个原状态体。一次零边表示一把原确认尺在一端读一、另一端读零；PR 交换的是两端各自整个菜单的最低纯比较值。它已使全纯域紧。于是移动球皮的每个极限点仍是原纯点：若一颗球只压成非退化线段或二维椭圆盘，实心极限的每一点都会由原球皮逼近，连混态中点也被迫成为纯点。这个矛盾排除了一维、二维扁化，但仍允许整颗球缩成一个原纯点。直径闭层排除的是最后这种缩点，因而在每层上保留整颗正确的原三球。
+
+从单标签根出发，引理147.5供应两步内的一块四维实际纯点载体。把这块载体按球直径分层，Baire 使其中一小块有连续的完整三球族。接着让每个标签背后的三维实心内部展开：不同单标签球只能在原纯点相交，实心混态内部不会相撞，因此四加三给原七维边界中的连续单射。区域不变性把它变成整个原边界的一块开片。三步纯点的凸包包住这片，且已经含原内点；从该内点径向看，真线性子空间无法容纳球面开片，所以三步实际纯点必须张满整个原九维空间。
+
+重复块只有两张三球的球皮，所有有限零路都困在这个完全二部块内，线性维数至多八。这给单标签和重复标签的准确有限见证区别。若单标签根趋近重复块，原三步见证不能保留统一厚度：不仅任何最大九点体积趋零，整个三步层到接收块的最大距离也趋零。各个发送根仍可各自张满九维；它们共同变薄并不自相矛盾。
+
+不同单标签分量各在原边界中占有不交开片，第二可数性使这些分量至多可数。重复性又由四个实际纯点和四条精确零边见证，两个非零距离把见证分成可数紧层；所以单标签域是 $G_\delta$。分量的紧可达层和上述可数分量分解再给 $F_\sigma$、$\sigma$-紧性与完全可度量性。原四维法向的紧投影层随后使每个非空相对开集都含真正的四维相对开图；图内任意两点可经同一构造根用四条实际零边相接。
+
+这些关系仍不等于全域接线。$A_3(p)$ 张成 $V$ 不意味着 $A_3(p)=P$，不意味着 $\Gamma(p)=P$，也不意味着 $\operatorname{conv}A_3(p)=K$。$\sigma$-紧 Polish 分量不必闭或紧，其闭包也未被证明留在 $P_{\rm s}$。定理153.5的开图只相对于 $X=P_{\rm s}$ 或某个单标签分量开放，不能直接用作定理151.3的全原 $P$-邻域，更没有支付 $\mathsf N_2$。跨直径层的单点塌缩、跨分量的整球并合及(XII153.27)的有限见证退化仍未排除。
+
+因此，完整 EB3+PR 到 Conn、全域 Inj 或单标签球心互易 $\mathsf{CR}_{\rm s}$ 的原桥梁仍未证明；加入本章整个原空间九维上界后，这些箭头也没有在本章付清。共同 $\kappa$ 与(XII153.31)的实际成立仍是推论153.7的额外前件，least、同锥同单位表示和全部原三角不从张成单独产生。没有由此证明原候选的独立假设数减少，也没有给满足完整原关系的反模型来证明这些条件独立。
+
+本章承重连接归为 `repo-derived`：直径闭层的整球连续、原边界开片到三步张成、单标签分量可数性及其描述拓扑、任意相对开集内的局部化四维图、重复极限的有限见证共同退化。二步紧四立方体、完整原面分类、重复块、单标签零邻封闭、原纯紧性、四维法向及既有条件分类均按所列准确来源复用。有限维紧性、Baire 定理、连续正半定平方根、局部标架、紧度量空间的 $G_\delta$ 完全可度量性与区域不变性是成熟中间工具；所需描述拓扑事实已在定理153.4证明内展开。[Hatcher Theorem 2B.3][Q153H]的前件始终是同维欧氏开源上的连续单射，七维边界版本逐坐标应用，四维投影版本只在先取得的开四方块上应用。法向层精确使用 SAME_READBACK128.2证明中的可数紧投影层，参数是 $n=8,k=4$，不调用只给几乎处处结论的可求长性替代。此处不主张文献优先权或全球新颖性。
+
+[Q153IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.1—114.4：原全效应、PR下严格暴露与全纯域紧性；IX116.1—116.2：完整原面、点交和配对重复块；IX116.6：单标签存在及其零邻封闭。"
+[Q153SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "引理128.2及其证明(Q128.7)—(Q128.8)：有非空内部的n维紧凸体的全点可数紧覆盖，每层向R^(n-k)连续单射投影；本章取n=8,k=4，层不必只含原纯点。"
+[Q153XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI145.2：EB3+Conn或Inj+整个原V九维的同锥同单位分类；条件应用145.9：同一个Phi下的全部静态字典和完整菜单；第145.9节：独立实际物理合同；XI150.5：完整EB3+PR+Conn的least与同原分类。"
+[Q153H]: https://pi.math.cornell.edu/~hatcher/AT/AT.pdf "Allen Hatcher, Algebraic Topology, Theorem 2B.3，印刷页172：U在R^n中开且h:U→R^n连续单射，则h(U)在R^n中开。"
+
+## 追加锚（本行以下为增补区）
