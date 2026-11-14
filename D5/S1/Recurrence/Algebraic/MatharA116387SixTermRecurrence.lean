@@ -66,7 +66,8 @@ private theorem motzkin_spec :
   have hc0 : constantCoeff c = 1 := by
     have h : constantCoeff c = constantCoeff (catalanSeries.map (Nat.castRingHom ℚ)) :=
       constantCoeff_subst_of_constantCoeff_zero ht0 _
-    simpa using h
+    rw [h, ← coeff_zero_eq_constantCoeff_apply]
+    simp
   have hu0 : constantCoeff u = 1 := by simp [u]
   have hcat : (catalanSeries.map (Nat.castRingHom ℚ)) ^ 2 * X + 1 =
       catalanSeries.map (Nat.castRingHom ℚ) := by
@@ -136,6 +137,7 @@ private theorem source_bridge : 2 * q * y * F = y + p := by
       linear_combination -2 * (2 * M * X ^ 2 + X - 1) * hm
 
 set_option maxHeartbeats 4000000 in
+-- Normalize the products of the three source polynomials and their derivatives.
 private theorem differential_equation : D * derivative F - e * F = f := by
   have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
     (derivative (R := ℚ)).map_natCast n
@@ -176,6 +178,7 @@ private noncomputable def W : PowerSeries ℚ :=
 private noncomputable def H : PowerSeries ℚ := 6 * X ^ 2 * (5 * X - 36)
 
 set_option maxHeartbeats 4000000 in
+-- The ordered certificate expands a degree-six polynomial and its derivative.
 private theorem operator_equation :
     U * (X * derivative (X * derivative F)) + V * (X * derivative F) + W * F = H := by
   have hnum (n : ℕ) [Nat.AtLeastTwo n] : derivative (ofNat(n) : PowerSeries ℚ) = 0 :=
@@ -196,8 +199,9 @@ private theorem operator_equation :
     linear_combination 17 * X ^ 2 * (5 * X + 1) * h1 - 5 * X * (47 * X + 25) * h0
   exact sub_eq_zero.mp ((mul_eq_zero.mp hc).resolve_left hn)
 
-/-- The complete six-term assertion and the native source specification. -/
 set_option maxHeartbeats 4000000 in
+-- Normalize all six shifted coefficient polynomials in the same equation.
+/-- The complete six-term assertion and the native source specification. -/
 theorem result : claim := by
   refine ⟨native_certificate, ?_⟩
   intro n hn
