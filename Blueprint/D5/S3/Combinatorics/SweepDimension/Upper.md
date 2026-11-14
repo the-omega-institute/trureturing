@@ -34,11 +34,11 @@ Lean statement: `D5/S3/Combinatorics/SweepDimension/Upper.sweepDimension`
 
 *Formalization.* `D5/S3/Combinatorics/SweepDimension/Upper.sweepDimension` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Paolo Boldi; Sebastiano Vigna (2026). *The lattice of antichains of intervals: Dyck paths, level sets, and sweep dimension*. DOI: [10.48550/arXiv.2610.41385](https://doi.org/10.48550/arXiv.2610.41385). URL: <https://arxiv.org/abs/2610.41385v1>.
 
 *Commentary.*
 
-Sweep dimension is the least natural number k admitting a k-order sweep system. The orders are arbitrary linear orders, repetitions are allowed, and every order-convex subset is an interval, including the empty and full subsets.
+Sweep dimension is the least natural number k admitting a k-order sweep system, following Boldi–Vigna, Definition 1. The orders are arbitrary linear orders, repetitions are allowed, and every order-convex subset is an interval, including the empty and full subsets. This formalization also includes empty and singleton carriers.
 
 **Theorem 1.4 (Sweep dimension equals theta).**
 
