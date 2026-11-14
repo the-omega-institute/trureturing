@@ -34,14 +34,9 @@ predicate FiniteMoorePenroseInverse.IsMoorePenroseInverse has a narrower domain.
 The counterexample uses Mathlib rankOne and EuclideanSpace.single directly.
 -/
 
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.LinearCombination
 import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Data.Nat.Choose.Basic
+
+/-! A fixed generalized inverse of a 2-partial isometry with no common inner product. -/
 
 namespace D5.S3.Quantum.Matrix.MPartialIsometryCommonMetricInverseRefutation
 
@@ -86,47 +81,52 @@ def claim : Prop :=
       ∃ g : InnerProductSpace.Core ℂ H, penroseIn g T (candidateInverse T)
 
 open InnerProductSpace
-private noncomputable def v (a b : ℝ) : (EuclideanSpace ℂ (Fin 2)) := (a : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + (b : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))
-private noncomputable def op (a b : ℝ) : (EuclideanSpace ℂ (Fin 2)) →L[ℂ] (EuclideanSpace ℂ (Fin 2)) := rankOne ℂ (v a b) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ)))
-private lemma op_zero (a b : ℝ) (x : (EuclideanSpace ℂ (Fin 2))) : (op a b x) 0 = (a : ℂ) * x 0 := by
+private noncomputable def v (a b : ℝ) : EuclideanSpace ℂ (Fin 2) :=
+  (a : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) +
+    (b : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))
+private noncomputable def op (a b : ℝ) :
+    EuclideanSpace ℂ (Fin 2) →L[ℂ] EuclideanSpace ℂ (Fin 2) :=
+  rankOne ℂ (v a b) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))
+private lemma op_zero (a b : ℝ) (x : EuclideanSpace ℂ (Fin 2)) : (op a b x) 0 = (a : ℂ) * x 0 := by
   simp [op, v, EuclideanSpace.inner_single_left]
-private lemma op_one (a b : ℝ) (x : (EuclideanSpace ℂ (Fin 2))) : (op a b x) 1 = (b : ℂ) * x 0 := by
+private lemma op_one (a b : ℝ) (x : EuclideanSpace ℂ (Fin 2)) : (op a b x) 1 = (b : ℂ) * x 0 := by
   simp [op, v, EuclideanSpace.inner_single_left]
-private lemma adj_zero (a b : ℝ) (x : (EuclideanSpace ℂ (Fin 2))) :
+private lemma adj_zero (a b : ℝ) (x : EuclideanSpace ℂ (Fin 2)) :
     (ContinuousLinearMap.adjoint (op a b) x) 0 = (a : ℂ) * x 0 + (b : ℂ) * x 1 := by
-  rw [show ContinuousLinearMap.adjoint (op a b) = rankOne ℂ ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) (v a b) from adjoint_rankOne _ _]
-  change inner ℂ (v a b) x * ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) 0 = _
-  rw [show ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) 0 = 1 by simp [PiLp.single_apply], mul_one, v,
+  rw [show ContinuousLinearMap.adjoint (op a b) = rankOne ℂ (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (v a b) from adjoint_rankOne _ _]
+  change inner ℂ (v a b) x * (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) 0 = _
+  rw [show (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) 0 = 1 from
+      PiLp.single_eq_same 2 (β := fun _ : Fin 2 => ℂ) (0 : Fin 2) (1 : ℂ), mul_one, v,
     inner_add_left, inner_smul_left, inner_smul_left]
   simp [EuclideanSpace.inner_single_left]
-private lemma adj_one (a b : ℝ) (x : (EuclideanSpace ℂ (Fin 2))) :
+private lemma adj_one (a b : ℝ) (x : EuclideanSpace ℂ (Fin 2)) :
     (ContinuousLinearMap.adjoint (op a b) x) 1 = 0 := by
   simp [op]
-private lemma family_partial (a b r : ℝ) (hs : a^2+b^2=r) (ht : a^2*r=2*r-1) :
+private lemma family_partial (a b r : ℝ) (hs : a ^ 2 + b ^ 2 = r) (ht : a ^ 2 * r = 2 * r - 1) :
     IsMPartialIsometry 2 (op a b) := by
   constructor
   · norm_num
-  have hsC : (a : ℂ)^2+(b : ℂ)^2=(r : ℂ) := by exact_mod_cast hs
-  have htC : (a : ℂ)^2*(r : ℂ)=2*(r : ℂ)-1 := by exact_mod_cast ht
+  have hsC : (a : ℂ) ^ 2 + (b : ℂ) ^ 2 = (r : ℂ) := by exact_mod_cast hs
+  have htC : (a : ℂ) ^ 2 * (r : ℂ) = 2 * (r : ℂ) - 1 := by exact_mod_cast ht
   ext x i
   fin_cases i <;>
     simp [beta, Finset.sum_range_succ, pow_succ, mul_apply_eq_comp,
       op_zero, op_one, adj_zero, adj_one]
-  · linear_combination (a : ℂ) * x 0 * htC + ((a : ℂ)^3 - 2 * (a : ℂ)) * x 0 * hsC
-  · linear_combination (b : ℂ) * x 0 * htC + ((a : ℂ)^2 - 2) * (b : ℂ) * x 0 * hsC
+  · linear_combination (a : ℂ) * x 0 * htC + ((a : ℂ) ^ 3 - 2 * (a : ℂ)) * x 0 * hsC
+  · linear_combination (b : ℂ) * x 0 * htC + ((a : ℂ) ^ 2 - 2) * (b : ℂ) * x 0 * hsC
 private lemma incompatible_core (g : InnerProductSpace.Core ℂ (EuclideanSpace ℂ (Fin 2)))
-    (P Q : (EuclideanSpace ℂ (Fin 2)) →L[ℂ] (EuclideanSpace ℂ (Fin 2))) (α c d δ : ℝ) (hc : 0 < c) (hd : d ≤ 0)
-    (hQ0 : Q ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) = (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) (hQ1 : Q ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) = 0)
-    (hP0 : P ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) = (α : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + (d : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
-    (hP1 : P ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) = (c : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + (δ : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
+    (P Q : EuclideanSpace ℂ (Fin 2) →L[ℂ] EuclideanSpace ℂ (Fin 2)) (α c d δ : ℝ) (hc : 0 < c) (hd : d ≤ 0)
+    (hQ0 : Q (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) = (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) (hQ1 : Q (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) = 0)
+    (hP0 : P (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) = (α : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + (d : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
+    (hP1 : P (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) = (c : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + (δ : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
     (hP : ∀ x y, g.inner (P x) y = g.inner x (P y))
     (hQ : ∀ x y, g.inner (Q x) y = g.inner x (Q y)) : False := by
   let : InnerProductSpace.Core ℂ (EuclideanSpace ℂ (Fin 2)) := g
-  have h01 : g.inner ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) = 0 := by
-    have hh := hQ ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
+  have h01 : g.inner (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) = 0 := by
+    have hh := hQ (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))
     rw [hQ0, hQ1] at hh
     simpa only [InnerProductSpace.Core.inner_zero_right] using hh
-  have hh := hP ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
+  have hh := hP (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))
   rw [hP0, hP1] at hh
   simp only [InnerProductSpace.Core.inner_add_left,
     InnerProductSpace.Core.inner_add_right, InnerProductSpace.Core.inner_smul_left,
@@ -135,66 +135,66 @@ private lemma incompatible_core (g : InnerProductSpace.Core ℂ (EuclideanSpace 
   have heq := congrArg Complex.re hh
   simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
     zero_mul, sub_zero] at heq
-  have hp : 0 ≤ (g.inner ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ)))).re := g.re_inner_nonneg ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ)))
-  have hq : 0 ≤ (g.inner ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))).re := g.re_inner_nonneg ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))
-  have hdq : d * (g.inner ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ)))).re ≤ 0 := mul_nonpos_of_nonpos_of_nonneg hd hq
-  have hp0 : (g.inner ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ)))).re = 0 := by nlinarith
-  have hz : g.inner ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) = 0 := by
+  have hp : 0 ≤ (g.inner (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))).re := g.re_inner_nonneg (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))
+  have hq : 0 ≤ (g.inner (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))).re := g.re_inner_nonneg (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))
+  have hdq : d * (g.inner (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ))).re ≤ 0 := mul_nonpos_of_nonpos_of_nonneg hd hq
+  have hp0 : (g.inner (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ))).re = 0 := by nlinarith
+  have hz : g.inner (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) = 0 := by
     apply Complex.ext
     · exact hp0
-    · simpa using (InnerProductSpace.Core.inner_self_im (𝕜 := ℂ) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))))
-  have he := g.definite ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) hz
-  have he0 := congrArg (fun x : (EuclideanSpace ℂ (Fin 2)) => x 0) he
-  simp [PiLp.single_apply] at he0
-private lemma inverse_zero (a b r : ℝ) (hs : a^2+b^2=r) (x : (EuclideanSpace ℂ (Fin 2))) :
-    (candidateInverse (op a b) x) 0 = (a : ℂ) * (2-(r : ℂ)) * x 0 + 2*(b : ℂ)*x 1 := by
-  have hsC : (a : ℂ)^2+(b : ℂ)^2=(r : ℂ) := by exact_mod_cast hs
+    · simpa using (InnerProductSpace.Core.inner_self_im (𝕜 := ℂ) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)))
+  have he := g.definite (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) hz
+  have he0 := congrArg (fun x : EuclideanSpace ℂ (Fin 2) => x 0) he
+  simp at he0
+private lemma inverse_zero (a b r : ℝ) (hs : a ^ 2 + b ^ 2 = r) (x : EuclideanSpace ℂ (Fin 2)) :
+    (candidateInverse (op a b) x) 0 = (a : ℂ) * (2 - (r : ℂ)) * x 0 + 2 * (b : ℂ) * x 1 := by
+  have hsC : (a : ℂ) ^ 2 + (b : ℂ) ^ 2 = (r : ℂ) := by exact_mod_cast hs
   simp [candidateInverse, pow_two, mul_apply_eq_comp, op_zero, op_one, adj_zero, adj_one]
-  linear_combination -(a : ℂ) * x 0 * hsC
-private lemma inverse_one (a b : ℝ) (x : (EuclideanSpace ℂ (Fin 2))) :
+  linear_combination - (a : ℂ) * x 0 * hsC
+private lemma inverse_one (a b : ℝ) (x : EuclideanSpace ℂ (Fin 2)) :
     (candidateInverse (op a b) x) 1 = 0 := by
   simp [candidateInverse, pow_two, mul_apply_eq_comp, adj_one]
-private lemma q_apply (a b r : ℝ) (hs : a^2+b^2=r) (ht : a^2*r=2*r-1) (x : (EuclideanSpace ℂ (Fin 2))) :
+private lemma q_apply (a b r : ℝ) (hs : a ^ 2 + b ^ 2 = r) (ht : a ^ 2 * r = 2 * r - 1) (x : EuclideanSpace ℂ (Fin 2)) :
     (candidateInverse (op a b) * op a b) x = x 0 • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) := by
-  have hsC : (a : ℂ)^2+(b : ℂ)^2=(r : ℂ) := by exact_mod_cast hs
-  have htC : (a : ℂ)^2*(r : ℂ)=2*(r : ℂ)-1 := by exact_mod_cast ht
+  have hsC : (a : ℂ) ^ 2 + (b : ℂ) ^ 2 = (r : ℂ) := by exact_mod_cast hs
+  have htC : (a : ℂ) ^ 2 * (r : ℂ) = 2 * (r : ℂ) - 1 := by exact_mod_cast ht
   ext i
   fin_cases i
   · simp [mul_apply_eq_comp, inverse_zero a b r hs, op_zero, op_one]
-    linear_combination 2*x 0*hsC - x 0*htC
+    linear_combination 2 * x 0 * hsC - x 0 * htC
   · simp [mul_apply_eq_comp, inverse_one]
-private lemma p_basis (a b r : ℝ) (hs : a^2+b^2=r) :
-    (op a b * candidateInverse (op a b)) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) =
-      ((a^2*(2-r) : ℝ) : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + ((a*b*(2-r) : ℝ) : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) ∧
-    (op a b * candidateInverse (op a b)) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) =
-      ((2*a*b : ℝ) : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + ((2*b^2 : ℝ) : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) := by
+private lemma p_basis (a b r : ℝ) (hs : a ^ 2 + b ^ 2 = r) :
+    (op a b * candidateInverse (op a b)) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) =
+      ((a ^ 2 * (2 - r) : ℝ) : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + ((a * b * (2 - r) : ℝ) : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) ∧
+    (op a b * candidateInverse (op a b)) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) =
+      ((2 * a * b : ℝ) : ℂ) • (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) + ((2 * b ^ 2 : ℝ) : ℂ) • (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) := by
   constructor <;> ext i <;> fin_cases i <;>
     simp [mul_apply_eq_comp, op_zero, op_one, inverse_zero a b r hs] <;> ring
 private lemma family_obstruction (a b r : ℝ) (hr : 2 ≤ r) (ha : 0 < a) (hb : 0 < b)
-    (hs : a^2+b^2=r) (ht : a^2*r=2*r-1) (g : InnerProductSpace.Core ℂ (EuclideanSpace ℂ (Fin 2))) :
+    (hs : a ^ 2 + b ^ 2 = r) (ht : a ^ 2 * r = 2 * r - 1) (g : InnerProductSpace.Core ℂ (EuclideanSpace ℂ (Fin 2))) :
     ¬ penroseIn g (op a b) (candidateInverse (op a b)) := by
   intro h
-  have hQ0 : (candidateInverse (op a b) * op a b) ((EuclideanSpace.single (0 : Fin 2) (1 : ℂ))) = (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) := by
-    rw [q_apply a b r hs ht]; simp [PiLp.single_apply]
-  have hQ1 : (candidateInverse (op a b) * op a b) ((EuclideanSpace.single (1 : Fin 2) (1 : ℂ))) = 0 := by
-    rw [q_apply a b r hs ht]; simp [PiLp.single_apply]
-  have hpos : 0 < 2*a*b := by positivity
-  have hneg : a*b*(2-r) ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (le_of_lt (mul_pos ha hb)) (by linarith)
+  have hQ0 : (candidateInverse (op a b) * op a b) (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) = (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) := by
+    rw [q_apply a b r hs ht]; simp
+  have hQ1 : (candidateInverse (op a b) * op a b) (EuclideanSpace.single (1 : Fin 2) (1 : ℂ)) = 0 := by
+    rw [q_apply a b r hs ht]; simp
+  have hpos : 0 < 2 * a * b := by positivity
+  have hneg : a * b * (2 - r) ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (le_of_lt (mul_pos ha hb)) (by linarith)
   exact incompatible_core g _ _ _ _ _ _ hpos hneg hQ0 hQ1
     (p_basis a b r hs).1 (p_basis a b r hs).2 h.2.2.1 h.2.2.2
 
-private noncomputable def familyA (r : ℝ) : ℝ := Real.sqrt (2-1/r)
-private noncomputable def familyB (r : ℝ) : ℝ := (r-1)/Real.sqrt r
-private noncomputable def familyT (r : ℝ) : (EuclideanSpace ℂ (Fin 2)) →L[ℂ] (EuclideanSpace ℂ (Fin 2)) := op (familyA r) (familyB r)
+private noncomputable def familyA (r : ℝ) : ℝ := Real.sqrt (2 - 1/r)
+private noncomputable def familyB (r : ℝ) : ℝ := (r - 1)/Real.sqrt r
+private noncomputable def familyT (r : ℝ) : EuclideanSpace ℂ (Fin 2) →L[ℂ] EuclideanSpace ℂ (Fin 2) := op (familyA r) (familyB r)
 private lemma family_parameters (r : ℝ) (hr : 2 ≤ r) :
     0 < familyA r ∧ 0 < familyB r ∧
-    (familyA r)^2+(familyB r)^2=r ∧ (familyA r)^2*r=2*r-1 := by
+    (familyA r) ^ 2 + (familyB r) ^ 2 = r ∧ (familyA r) ^ 2 * r = 2 * r - 1 := by
   have hr0 : 0 < r := by linarith
-  have harg : 0 < 2-1/r := by
+  have harg : 0 < 2 - 1/r := by
     have hh : 1/r < 2 := (div_lt_iff₀ hr0).mpr (by linarith)
     linarith
-  have hasq : (familyA r)^2=2-1/r := Real.sq_sqrt (le_of_lt harg)
-  have hbsq : (familyB r)^2=(r-1)^2/r := by
+  have hasq : (familyA r) ^ 2 = 2 - 1/r := Real.sq_sqrt (le_of_lt harg)
+  have hbsq : (familyB r) ^ 2 = (r - 1) ^ 2/r := by
     unfold familyB
     rw [div_pow, Real.sq_sqrt (le_of_lt hr0)]
   refine ⟨Real.sqrt_pos.mpr harg, div_pos (by linarith) (Real.sqrt_pos.mpr hr0), ?_, ?_⟩

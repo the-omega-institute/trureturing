@@ -37,7 +37,8 @@ internal sealed class MPartialIsometryCommonMetricInverseRefutationDocument : IS
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         AssessedProvenance provenance, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("abg-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("abg-" + (name == "IsMPartialIsometry" ? "partial" :
+                name == "candidateInverse" ? "inverse" : name == "penroseIn" ? "penrose" : name)), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role);
 
@@ -56,7 +57,7 @@ internal sealed class MPartialIsometryCommonMetricInverseRefutationDocument : IS
 
     private static Formula PartialFormula() => Disp(Hilbert(All("m", Naturals(),
         All("T", Operators(V("H")), IffOf(Call("IsMPartialIsometry", V("m"), V("T")),
-            And(LE(D(1), V("m")), Equal(Multiply(V("T"), Call("beta", V("m"), V("T"))), D(0)))))));
+            And(LE(D(1), V("m")), Equal(Multiply(V("T"), Call("beta", V("m"), V("T"))), D(0))))))));
 
     private static Formula CandidateFormula() => Disp(Hilbert(All("T", Operators(V("H")),
         Equal(Call("candidateInverse", V("T")), Subtract(Smul(Typed(D(2), Complex()), Adj(V("T"))),
@@ -76,7 +77,7 @@ internal sealed class MPartialIsometryCommonMetricInverseRefutationDocument : IS
         return Disp(All("H", Word("Type"), Instance(Call("NormedAddCommGroup", h),
             Instance(Call("NormedSpace", Complex(), h), All("g", Core(h),
                 All("T", Operators(h), All("S", Operators(h),
-                    IffOf(Call("penroseIn", g, t, s), body)))))));
+                    IffOf(Call("penroseIn", g, t, s), body))))))));
     }
 
     private static Formula ClaimBody() => Hilbert(All("T", Operators(V("H")),
