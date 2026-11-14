@@ -84,7 +84,9 @@ internal static partial class RetireSourcesCommand
                     var destination = ArchiveRoot + source.SourcePath[TheoryRoot.Length..];
                     if (repository.SearchCurrentPaths([DigestionQuerySelection.Literal(destination)]).Count > 0)
                         throw new FormatException($"ARCHIVE_EXISTS path={destination}");
-                    if (FileMapLoader.LoadSnapshot(loaded.Snapshot).Match(destination) is not [{ DigestionSource: false, Symlink: null }])
+                    if (FileMapLoader.LoadSnapshot(loaded.Snapshot).Match(destination) is not
+                        [{ Kind: FileMapKind.Data, ProducedBy: "none", ConsumedBy: ["reader"],
+                            RuntimeDisposition: "committed-source", DigestionSource: false, Symlink: null }])
                         throw new FormatException($"ARCHIVE_POLICY_MISSING path={destination}");
                     updates.Add(new(destination, ArchiveMarkdown(original.Bytes, source.SourcePath, destination,
                         sources.Select(item => item.SourcePath).ToArray()), -1));

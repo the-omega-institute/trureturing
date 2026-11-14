@@ -51,6 +51,7 @@ public sealed class RetireSourcesCommandTests
     [InlineData("new-claim")]
     [InlineData("chain")]
     [InlineData("archive-collision")]
+    [InlineData("archive-policy")]
     [InlineData("foreign-chain")]
     [InlineData("shared-atom")]
     [InlineData("foreign-context")]
@@ -81,6 +82,11 @@ public sealed class RetireSourcesCommandTests
                     + "  chain_atoms:\n    - " + new string('f', 64) + "\n");
                 break;
             case "archive-collision": raw = Add(raw, Archive, "existing archive"); break;
+            case "archive-policy":
+                raw = Replace(raw, FileMapLoader.RelativePath,
+                    Encoding.UTF8.GetString(raw.Entries.Single(entry => entry.Path == FileMapLoader.RelativePath).Bytes.AsSpan())
+                        .Replace("consumed_by = [\"reader\"]", "consumed_by = [\"automation\"]", StringComparison.Ordinal));
+                break;
             case "foreign-chain":
                 raw = Add(raw, BackfillInventoryLoader.RootPath + "foreign/residual-open/" + new string('f', 64) + ".yaml",
                     "receipts:\n  chain_atoms:\n    - " + id + "\n");
@@ -103,6 +109,7 @@ public sealed class RetireSourcesCommandTests
         var result = RetireSourcesCommand.Run(directory.Path, Gateway(directory), new FakeLeanReportSource(null), Args("archive", true));
         Assert.False(result.Success, defect);
         if (defect == "forged-terminal") Assert.Contains(id, result.Error, StringComparison.Ordinal);
+        if (defect == "archive-policy") Assert.Contains("ARCHIVE_POLICY_MISSING", result.Error, StringComparison.Ordinal);
         if (defect.EndsWith("incoming-link", StringComparison.Ordinal)) Assert.Contains("SOURCE_REFERENCED", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, Image(directory));
     }
