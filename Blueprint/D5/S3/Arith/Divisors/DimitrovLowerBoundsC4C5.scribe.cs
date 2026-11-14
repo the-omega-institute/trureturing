@@ -57,7 +57,7 @@ internal sealed class DimitrovLowerBoundsC4C5Document : IScribeDocumentDefinitio
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("dimitrov-c4-c5-" + name),
+        Describe.Lean(DescribeId.Create("dimitrov-c4-c5-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role,
             openProblemResolutionClaim: resolution);

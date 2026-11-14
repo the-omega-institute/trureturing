@@ -80,8 +80,7 @@ finite passing checks, prime-only cases and $k=1$ alone do not settle it.
 The proof source is `D5/S3/Arith/Divisors/DimitrovNesbittC8.lean`, with the
 paired typed Blueprint Scribe. The source note identifies the consumed
 Apache-2.0 supplier, exact revision, file hash, complete license and receiver-pin
-retirement condition. Independent review, canonical first freeze and integrated
-delivery are separate obligations from the source theorem.
+retirement condition.
 
 ## Triage
 
