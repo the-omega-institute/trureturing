@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The self-power numerator is divisible by the square of its successor at every natural index.
+For every natural index n, the self-power numerator is divisible by (n+1)^2.
 
 **Definition 1.1 (The source numerator).**
 
