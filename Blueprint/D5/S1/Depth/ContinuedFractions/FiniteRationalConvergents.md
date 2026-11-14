@@ -32,7 +32,7 @@ $$\forall s \in \mathit{Nat},\; \forall r \in \mathit{Nat},\; 0 < r \Rightarrow 
 
 The positive-denominator formula directly uses the pinned rational normalization laws. It remains valid at s equal to zero and r equal to one. The denominator divides r, is at most r, and equals r when s and r are coprime. These consequences are used inside the conditional Shor recovery proof.
 
-This is a general recursion and correspondence theorem for all rational inputs. It is neither a census of bounded instances nor a numerical certificate or checker. The source slice is attributed to the immutable Apache-licensed supplier; Mathlib remains the source of the real convergent recurrence and Legendre approximation theorem.
+Mathlib supplies the real convergent recurrence and Legendre approximation theorem. The finite-list correspondence connects that recurrence with executable rational Euclidean descent.
 
 ## References
 
