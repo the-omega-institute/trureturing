@@ -113,6 +113,22 @@ internal static class WorktreeCommand
             return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
+        // The parent adapter holds only this destination's initialization guard.
+        // It never waits for the maintenance worker's exclusive cleanup lease.
+        if (arguments.Count > 0 && arguments[0] == "--initialization-child")
+            arguments = arguments.Skip(1).ToArray();
+        else if (runner is ProductionWorktreeProcessRunner)
+        {
+            WorktreeOptions? guarded = null;
+            try { guarded = ParseArguments(repositoryRoot, arguments); }
+            catch (InvalidOperationException) { /* Create renders the ordinary usage error. */ }
+            if (guarded is not null)
+                return WorktreeProtocolCommand.Run(guarded.Source,
+                    new[] { "initialize", "--path", guarded.Path, "--", "dotnet",
+                        typeof(WorktreeCommand).Assembly.Location, "worktree", "--initialization-child" }
+                    .Concat(arguments).ToArray(), runner, Timeout.InfiniteTimeSpan, reportPending: false);
+        }
+
         var result = Create(repositoryRoot, arguments, runner, out var summarySource,
             out var reportAgentState);
         return reportAgentState

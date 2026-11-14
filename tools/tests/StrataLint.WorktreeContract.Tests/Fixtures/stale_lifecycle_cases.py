@@ -961,11 +961,100 @@ raise SystemExit(cleanup.main(arguments[1:]))
                     self.assertEqual([str(root / "requests")], config["WatchPaths"])
                 else:
                     self.assertIn("Type=oneshot", Path(result["files"][0]).read_text())
+                    self.assertIn("PathChanged=" + str(root / "requests") + "\n",
+                                  Path(result["files"][1]).read_text())
                     self.assertIn("OnUnitActiveSec=900", Path(result["files"][2]).read_text())
         result = subprocess.run([sys.executable, "-I", "-B", str(runtime),
             "--source", str(self.main), "status"], cwd=self.root, capture_output=True, text=True)
         self.assertEqual(0, result.returncode, result.stderr)
         self.assertIsNotNone(json.loads(result.stdout)["service"])
+        result = subprocess.run([sys.executable, "-I", "-B", str(runtime),
+            "--source", str(self.main), "run"], cwd=self.root, capture_output=True, text=True, timeout=10)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertEqual("succeeded", json.loads(result.stdout)["status"])
+
+    def test_unwritable_maintenance_storage_does_not_block_new_destination(self):
+        root = maintenance.directory(self.main)
+        root.chmod(0o500)
+        try:
+            destination = self.root / "without maintenance storage"
+            result = self.create("storage-failure", destination)
+            self.assertEqual("succeeded", json.loads(result.stdout)["status"])
+            self.assertEqual("unavailable", json.loads(result.stdout)["maintenance"]["status"])
+            self.assertTrue((destination / "lean-toolchain").is_file())
+        finally:
+            root.chmod(0o700)
+
+    def test_concurrent_claims_cannot_reassign_one_selected_tree(self):
+        tree = self.root / "shared candidate"
+        self.commit_branch("lane/governance/candidate", tree, 5 * 3600)
+        ready = self.root / "ready"
+        script = '''import sys
+from pathlib import Path
+sys.path.insert(0, sys.argv[1])
+import worktree_pool as pool
+from types import SimpleNamespace
+original = pool._allocate
+def paused(*args):
+    Path(sys.argv[4]).touch()
+    sys.stdin.read()
+    return original(*args)
+pool._allocate = paused
+options = SimpleNamespace(source=Path(sys.argv[2]), path=None, branch='lane/governance/first',
+                          base=sys.argv[3], skip_restore=True, exclude_path=[])
+assert pool.claim(options)['status'] == 'claimed'
+'''
+        holder = subprocess.Popen([sys.executable, "-B", "-c", script,
+            str(ROOT / "tools/scripts/worktree"), str(self.main), self.base, str(ready)],
+            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            deadline = time.monotonic() + 10
+            while not ready.exists() and time.monotonic() < deadline:
+                time.sleep(0.02)
+            self.assertTrue(ready.exists())
+            second = pool.claim(self.options("lane/governance/second"))
+            self.assertEqual("no_reusable", second["status"])
+        finally:
+            output, error = holder.communicate(timeout=20)
+        self.assertEqual(0, holder.returncode, output + error)
+        self.assertEqual("lane/governance/first", run(tree, "branch", "--show-current").stdout.strip())
+
+    def test_worker_skips_fresh_registration_until_initialization_exits(self):
+        import shlex
+        old = self.root / "old base"
+        self.base = self.commit_branch("lane/governance/old-base", old, 7 * 3600)
+        destination = self.root / "initializing old base"
+        bin_dir = self.root / "pause-bin"
+        bin_dir.mkdir()
+        ready = self.root / "checkout ready"
+        resume = self.root / "resume checkout"
+        launcher = bin_dir / "git"
+        launcher.write_text('#!/bin/bash\nif [[ "$1" == reset ]]; then\n'
+            '  touch ' + shlex.quote(str(ready)) + '\n'
+            '  while [[ ! -f ' + shlex.quote(str(resume)) + ' ]]; do sleep 0.02; done\nfi\n'
+            'exec ' + shlex.quote(shutil.which("git")) + ' "$@"\n')
+        launcher.chmod(0o755)
+        child = subprocess.Popen([shutil.which("dotnet"), str(ROOT /
+            "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"), "worktree", "--kind", "governance",
+            "--name", "initializing", "--path", str(destination), "--base", self.base, "--skip-restore"],
+            cwd=self.main, env=protocol.git_environment({"PATH": str(bin_dir) + os.pathsep + os.environ["PATH"]}),
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            deadline = time.monotonic() + 15
+            while not ready.exists() and time.monotonic() < deadline:
+                time.sleep(0.02)
+            self.assertTrue(ready.exists())
+            result = maintenance.run(self.main)
+            row = next(item for item in result["items"] if item["path"] == str(destination))
+            self.assertEqual("initialization_in_progress", row["reason"])
+            self.assertTrue((destination / ".git").is_file())
+        finally:
+            resume.touch()
+            output, error = child.communicate(timeout=20)
+        self.assertEqual(0, child.returncode, output + error)
+        self.assertTrue((destination / "lean-toolchain").is_file())
+        self.assertEqual("succeeded", maintenance.run(self.main)["status"])
+        self.assertFalse(destination.exists())
 
 
 if __name__ == "__main__":

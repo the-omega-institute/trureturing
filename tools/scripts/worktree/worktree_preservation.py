@@ -94,8 +94,8 @@ def _removal_state(source, path):
 
 
 def remove_registered(source, path, timeout=1800):
-    from worktree_maintenance import lease
-    with lease(source):
+    from worktree_maintenance import initialization, lease
+    with lease(source), initialization(source, path):
         return _remove_registered_locked(source, path, timeout)
 
 

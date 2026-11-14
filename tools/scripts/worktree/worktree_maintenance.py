@@ -16,6 +16,9 @@ import sys
 import uuid
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+# Nested adapters must share the script entry point's reentrant lock state.
+if __name__ == "__main__":
+    sys.modules["worktree_maintenance"] = sys.modules[__name__]
 from worktree_protocol import GitFailure, common, inventory
 
 _HELD = ContextVar("worktree_maintenance_locks", default={})
@@ -31,21 +34,36 @@ def directory(source):
 @contextmanager
 def lease(source, *, shared=False, blocking=True):
     """Serialize disposal; nonblocking shared callers can fall back to fresh creation."""
-    root = directory(source)
+    with _lock(directory(source) / "lock", shared=shared, blocking=blocking):
+        yield
+
+
+@contextmanager
+def initialization(source, path):
+    """Protect one initialization transaction, without waiting for maintenance."""
+    root = common(source) / "worktree-initialization"
+    root.mkdir(mode=0o700, exist_ok=True)
+    key = hashlib.sha256(os.fsencode(Path(path).resolve())).hexdigest()
+    with _lock(root / (key + ".lock"), shared=False, blocking=False):
+        yield
+
+
+@contextmanager
+def _lock(path, *, shared, blocking):
     held = _HELD.get()
-    if root in held:
-        if held[root] and not shared:
+    if path in held:
+        if held[path] and not shared:
             raise RuntimeError("maintenance lock upgrade is forbidden")
         yield
         return
-    descriptor = os.open(root / "lock", os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+    descriptor = os.open(path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
     try:
         info = os.fstat(descriptor)
         if not stat.S_ISREG(info.st_mode) or info.st_uid != os.getuid() or info.st_nlink != 1:
             raise OSError("invalid maintenance lock")
         mode = fcntl.LOCK_SH if shared else fcntl.LOCK_EX
         fcntl.flock(descriptor, mode | (0 if blocking else fcntl.LOCK_NB))
-        token = _HELD.set(held | {root: shared})
+        token = _HELD.set(held | {path: shared})
         try:
             yield
         finally:
@@ -108,6 +126,11 @@ def _systemd_quote(value):
     return '"' + str(value).replace("%", "%%").replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+def _systemd_path(value):
+    # PathChanged= is an absolute scalar, not an ExecStart= shell-like word.
+    return str(value).replace("%", "%%").replace("\\", "\\\\").replace("\n", "\\n").replace("\r", "\\r")
+
+
 def install(source):
     """Install one stable runtime projection, independent of disposable worktrees."""
     root = directory(source)
@@ -151,7 +174,7 @@ def install(source):
         timer = units / (label + ".timer")
         service_path.write_text("[Unit]\nDescription=Trureturing worktree maintenance\n[Service]\n"
             "Type=oneshot\nExecStart=" + " ".join(map(_systemd_quote, command)) + "\n")
-        path_unit.write_text("[Path]\nPathChanged=" + _systemd_quote(requests) +
+        path_unit.write_text("[Path]\nPathChanged=" + _systemd_path(requests) +
                             "\n[Install]\nWantedBy=default.target\n")
         timer.write_text("[Timer]\nOnStartupSec=60\nOnUnitActiveSec=" + str(INTERVAL_SECONDS) +
                          "\n[Install]\nWantedBy=timers.target\n")

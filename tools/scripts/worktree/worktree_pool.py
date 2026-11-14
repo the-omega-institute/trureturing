@@ -97,17 +97,23 @@ def claim(options):
     from worktree_maintenance import lease, notify
     maintenance = notify(options.source)
     try:
-        with lease(options.source, shared=True, blocking=False):
-            return _claim_available(options) | {"maintenance": maintenance}
-    except BlockingIOError:
-        # A fresh destination does not overlap the worker's inventory snapshot.
+        transaction = lease(options.source, blocking=False)
+        transaction.__enter__()
+    except OSError as error:
         if options.path is not None and options.path.exists():
             raise Refused("maintenance_busy_for_existing_destination:" + str(options.path))
         return dict(event="worktree_init", status="no_reusable", removed_worktrees=[],
-                    candidate_refusals=[], maintenance=maintenance | {"worker": "busy"})
+                    candidate_refusals=[], maintenance=maintenance | {
+                        "worker": "busy" if isinstance(error, BlockingIOError) else "unavailable",
+                        "reason": str(error)})
+    try:
+        return _claim_available(options) | {"maintenance": maintenance}
+    finally:
+        transaction.__exit__(None, None, None)
 
 
 def _claim_available(options):
+    from worktree_maintenance import initialization
     rows = inventory(options.source)
     main = _main_path(rows)
     # The requested source may itself expire or be reassigned. Shared refs and
@@ -130,6 +136,9 @@ def _claim_available(options):
         if path.resolve() in excluded or _same(path, main):
             continue
         try:
+            if options.path is None:
+                with initialization(options.source, path):
+                    pass
             current, _ = identity(options.source, path, snapshot=snapshot)
             age = _age(path, now)
             head = head_oid(path)
@@ -161,8 +170,19 @@ def _claim_available(options):
                 if not marked and age <= FOUR_HOURS:
                     raise Refused("head_recent")
                 _check_pins(path, expected)
+            except (Refused, OSError, subprocess.SubprocessError) as error:
+                refusals.append(dict(path=str(path), branch=branch, reason=str(error)))
+                if options.path is not None:
+                    raise
+                continue
+            # Failures after switching must retain the selected recovery path,
+            # never fall through to fresh creation with the now-existing branch.
+            try:
                 allocated = _allocate(options.source, path, options, base, expected)
             except (Refused, OSError, subprocess.SubprocessError) as error:
+                if git(options.source, "show-ref", "--verify", "--quiet",
+                       "refs/heads/" + options.branch, check=False).returncode == 0:
+                    raise GitFailure("allocation_failed:" + str(path) + ":" + str(error)) from error
                 refusals.append(dict(path=str(path), branch=branch, reason=str(error)))
                 if options.path is not None:
                     raise
@@ -193,6 +213,7 @@ def sweep(source, dev, force=False, exclude_paths=()):
 
 
 def _sweep_locked(source, dev, force=False, exclude_paths=()):
+    from worktree_maintenance import initialization
     del dev
     rows = inventory(source)
     main = _main_path(rows)
@@ -206,16 +227,19 @@ def _sweep_locked(source, dev, force=False, exclude_paths=()):
         if path in excluded or _same(path, main):
             continue
         try:
-            current = qualify(source, path)
-            age = now - registered_committer_time(source, current)
-            if age > SIX_HOURS:
-                if force:
-                    _remove_registered(source, path)
-                    items.append(dict(path=str(path), outcome="removed", reason="head_older_than_6h"))
+            with initialization(source, path):
+                current = qualify(source, path)
+                age = now - registered_committer_time(source, current)
+                if age > SIX_HOURS:
+                    if force:
+                        _remove_registered(source, path)
+                        items.append(dict(path=str(path), outcome="removed", reason="head_older_than_6h"))
+                    else:
+                        items.append(dict(path=str(path), outcome="would_remove", reason="head_older_than_6h"))
                 else:
-                    items.append(dict(path=str(path), outcome="would_remove", reason="head_older_than_6h"))
-            else:
-                items.append(dict(path=str(path), outcome="retained", reason="head_not_older_than_6h"))
+                    items.append(dict(path=str(path), outcome="retained", reason="head_not_older_than_6h"))
+        except BlockingIOError:
+            items.append(dict(path=str(path), outcome="retained", reason="initialization_in_progress"))
         except Exception as error:
             status = "failed"
             items.append(dict(path=str(path), outcome="failed", reason=str(error)))
