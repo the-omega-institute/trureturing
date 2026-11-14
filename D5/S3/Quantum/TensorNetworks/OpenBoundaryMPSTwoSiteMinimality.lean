@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/TensorNetworks/OpenBoundaryMPSTwoSiteMinimality
    mirror-E: none(waiver:source-owner-registration-pending)
    anchors: []
@@ -210,49 +210,6 @@ private lemma boundary_contraction (θ : Parameter) (g : Fin 2 → ℂ) (k : Fin
     _ = g k := by
       change dotProduct (left θ) (core θ k *ᵥ g) = g k
       rw [dotProduct_mulVec, normalized_rows, single_one_dotProduct]
-
-/-- On the positive-real right-boundary slice, phase equality of canonical
-three-site tensors in the coherent chart forces equality of all parameters.
-This is a consumed chart inverse, not the C9 two-site minimality conclusion. -/
-theorem three_site_phase_rigidity (θ η : Parameter)
-    (hθ : 0 < θ.2.1) (hη : 0 < η.2.1) (ζ : ℂ) (hζ : ‖ζ‖ = 1)
-    (heq : state 3 η = ζ • state 3 θ)
-    (hg : MvPolynomial.eval (state 3 η) chartPoly ≠ 0) : θ = η := by
-  have hscale : mpsState 3 (core θ 0) (core θ 1) (left θ) (ζ • right θ) =
-      ζ • state 3 θ := by
-    ext w
-    simp only [mpsState, state, mulVec_smul, dotProduct_smul, Pi.smul_apply]
-  have htensor : mpsState 3 (core θ 0) (core θ 1) (left θ) (ζ • right θ) =
-      mpsState 3 (core η 0) (core η 1) (left η) (right η) := hscale.trans heq.symm
-  have hc : θ.1 = η.1 := canonical_core_rigidity θ η _ _ htensor
-    (by simpa only [htensor, state] using hg)
-  have hl : left θ = left η := by simp only [left, hc]
-  have hr : ζ • right θ = right η := by
-    ext k
-    rw [← boundary_contraction θ (ζ • right θ) k,
-      ← boundary_contraction η (right η) k]
-    rw [htensor, hl]
-  have hr0 : ζ * (θ.2.1 : ℂ) = (η.2.1 : ℂ) := by
-    simpa [right] using congrFun hr 0
-  have hre : ζ.re * θ.2.1 = η.2.1 := by
-    simpa using congrArg Complex.re hr0
-  have him : ζ.im * θ.2.1 = 0 := by
-    simpa using congrArg Complex.im hr0
-  have hζim : ζ.im = 0 := (mul_eq_zero.mp him).resolve_right (ne_of_gt hθ)
-  have hζre : 0 < ζ.re := (mul_pos_iff_of_pos_right hθ).mp (hre ▸ hη)
-  have hζone : ζ = 1 := by
-    have hn : ζ.re ^ 2 = 1 := by
-      have hh := Complex.sq_norm ζ
-      rw [hζ] at hh
-      simp only [one_pow, Complex.normSq_apply, hζim, mul_zero, add_zero] at hh
-      nlinarith
-    have hre1 : ζ.re = 1 := by nlinarith
-    exact Complex.ext hre1 (by simpa using hζim)
-  rw [hζone, one_smul] at hr
-  apply Prod.ext hc
-  apply Prod.ext
-  · exact Complex.ofReal_injective (by simpa [right] using congrFun hr 0)
-  · simpa [right] using congrFun hr 1
 
 set_option maxHeartbeats 800000 in
 private lemma schur_of_rank_le_two (H B C D : Bond) (hH : IsUnit H.det)
@@ -519,17 +476,22 @@ theorem record_collision (m : ℕ) {U : Set Parameter} (hU : IsOpen U)
   by_contra hne
   exact hc ⟨θ, hθ, η, hη, hne, heq⟩
 
-/-- Every nonempty open part of the canonical chart contains actual MPS states
+/-- Every nonempty relatively open part of the canonical chart contains actual MPS states
 in different unit-phase classes with the same entire raw two-site prefix density.
 The complement of Q2 has length `1 + m`; that of the coherent triple has length `m`. -/
-theorem open_subchart_collision (m : ℕ) {U : Set Parameter} (hU : IsOpen U)
+theorem open_subchart_collision (m : ℕ) {U : Set Parameter}
+    (hU : IsOpen (Subtype.val ⁻¹' U : Set (canonicalChart m)))
     (hne : U.Nonempty) (hchart : U ⊆ canonicalChart m) :
     ∃ ψ ∈ state (2 + (1 + m)) '' U, ∃ φ ∈ state (2 + (1 + m)) '' U,
       ψ ∈ openBoundaryMPS (2 + (1 + m)) ∧ φ ∈ openBoundaryMPS (2 + (1 + m)) ∧
       rawPrefix 2 (1 + m) ψ =
         rawPrefix 2 (1 + m) φ ∧
       ¬ ∃ ζ : ℂ, ‖ζ‖ = 1 ∧ φ = ζ • ψ := by
-  obtain ⟨θ, hθ, η, hη, hne, heq⟩ := record_collision (1 + m) hU hne
+  have hUambient : IsOpen U := by
+    have h := hU.trans (isOpen_canonicalChart m)
+    rw [Subtype.image_preimage_coe] at h
+    simpa [inter_eq_right.mpr hchart] using h
+  obtain ⟨θ, hθ, η, hη, hne, heq⟩ := record_collision (1 + m) hUambient hne
   have hden : density (1 + m) θ = density (1 + m) η :=
     densityRecord_injective (density_hermitian _ _) (density_hermitian _ _)
       (density_rank _ _) (density_rank _ _)

@@ -187,7 +187,8 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (m : ℕ) {U : Set Parameter}, IsOpen U → R.readout () m U →
+  Law R := ∀ (m : ℕ) {U : Set Parameter},
+    IsOpen (Subtype.val ⁻¹' U : Set (canonicalChart m)) → R.readout () m U →
     U ⊆ canonicalChart m →
     ∃ ψ ∈ state (2 + (1 + m)) '' U, ∃ φ ∈ state (2 + (1 + m)) '' U,
       ψ ∈ _root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (2 + (1 + m)) ∧
@@ -196,7 +197,8 @@ abbrev arena : Arena where
         _root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSDensityRecovery.rawPrefix 2 (1 + m) φ ∧
       ¬ ∃ ζ : ℂ, ‖ζ‖ = 1 ∧ φ = ζ • ψ
 
-def originalStatement : Prop := ∀ (m : ℕ) {U : Set Parameter}, IsOpen U → U.Nonempty →
+def originalStatement : Prop := ∀ (m : ℕ) {U : Set Parameter},
+    IsOpen (Subtype.val ⁻¹' U : Set (canonicalChart m)) → U.Nonempty →
     U ⊆ canonicalChart m →
     ∃ ψ ∈ state (2 + (1 + m)) '' U, ∃ φ ∈ state (2 + (1 + m)) '' U,
       ψ ∈ _root_.D5.S3.Quantum.TensorNetworks.OpenBoundaryMPSMarginalBirationality.openBoundaryMPS (2 + (1 + m)) ∧
@@ -207,7 +209,7 @@ def originalStatement : Prop := ∀ (m : ℕ) {U : Set Parameter}, IsOpen U → 
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨ψ, hψ, _⟩ := h 0 (U := ∅) isOpen_empty trivial (Set.empty_subset _)
+  obtain ⟨ψ, hψ, _⟩ := h 0 (U := ∅) (by simp) trivial (Set.empty_subset _)
   simpa using hψ
 
 theorem dependence : ObservationalDependence signature actual := NonemptyChart.dependence
