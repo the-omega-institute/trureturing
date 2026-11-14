@@ -1089,6 +1089,7 @@
     "tools/scripts/agent/integration-mirror-test.sh",
     "tools/scripts/agent/integration-mirror.sh",
     "tools/scripts/worktree/worktree_protocol.py",
+    "tools/scripts/worktree/worktree_maintenance.py",
     "tools/scripts/worktree/worktree_agent_state.py",
     "tools/scripts/worktree/worktree_publication.py",
     "tools/scripts/worktree/worktree_preservation.py",
