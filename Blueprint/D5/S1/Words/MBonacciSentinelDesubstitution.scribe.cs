@@ -14,6 +14,22 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
         H("Sentinel Desubstitution of the m-bonacci Word"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("letter-image-upper-bound"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.phi_len_le"),
+                H("Every letter image has at most two letters"),
+                StatementSource.FromAuthor(WindowSupplier("phi_len_le")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every order m at least two and letter a in Fin m, the literal substitution image of a has length at most two. This bounds the growth between consecutive repetition scales."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("iterate-image-positive"),
+                DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.image_pos"),
+                H("Every iterated letter image is nonempty"),
+                StatementSource.FromAuthor(WindowSupplier("image_pos")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every order m at least two, natural k and letter a in Fin m, the kth literal substitution image of a has positive length. Nonempty suffixes preserve containment when a prefix is rounded down to even length."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("factor-length"),
                 DeclarationHandle.Create("D5/S1/Words/MBonacciSentinelDesubstitution.factor_len"),
                 H("Exact factor length"), StatementSource.FromAuthor(WindowSupplier("factor_len")),
@@ -342,6 +358,10 @@ internal sealed class MBonacciSentinelDesubstitutionDocument : IScribeDocumentDe
         Formula P(Formula a) => WC("image", WC("phi", m), a, WC("zero", m));
         Formula body = name switch
         {
+            "phi_len_le" => WA("a", alphabet,
+                WL(WC("length", WC("phi", m, F.Id("a"))), F.D(2))),
+            "image_pos" => WA("k", WN(), WA("a", alphabet,
+                WT(F.D(0), WC("length", WC("image", WC("phi", m), k, F.Id("a")))))),
             "iterate_prefix" => WA("k", WN(), WA("t", WN(), WI(WL(k, t),
                 WC("IsPrefix", P(k), P(t))))),
             "iterate_growth" => WA("k", WN(), WL(WP(k, F.D(1)), WC("length", P(k)))),

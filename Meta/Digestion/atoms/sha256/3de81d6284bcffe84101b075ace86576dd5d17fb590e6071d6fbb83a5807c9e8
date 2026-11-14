@@ -1,0 +1,18 @@
+### 123.5 完整实际影像闭合、严格凸与非零方向的可微性
+
+沿用THREE_COPY第七卷122.3的实际比值影像及闭影壳
+
+$$
+Z_p=\{H(x)/g(x):x\in K\setminus\{p\}\},\qquad
+\overline Z_p=S.
+\tag{Q123.17}
+$$
+
+已有结论是 $Z_p$ 有界凸、含整个 $\mathbb B^3$，且
+
+$$
+h_S(-v)=\rho_p(v),\qquad
+ Z_p\cap\operatorname*{argmax}_{z\in S}(-v)\cdot z=\{z_v\}.
+\tag{Q123.18}
+$$
+

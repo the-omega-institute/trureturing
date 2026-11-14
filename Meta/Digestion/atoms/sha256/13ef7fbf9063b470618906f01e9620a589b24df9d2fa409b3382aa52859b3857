@@ -1,0 +1,66 @@
+**Theorem 38.1 (attained expected resource orders).** For every fixed
+native datum, $\lambda\in\mathbb R$ and $\nu\ne0$, the family
+of Definition 37.1 satisfies, on the original joint Wiener law,
+
+$$
+\begin{aligned}
+\mathbb EV^a_\eta&\le5\frac{\mathbb ES+\rho^2}{m\rho^2}+19,\\
+\mathbb EV^b_\eta&\le3\frac{\mathbb ES+\rho^2}{m\rho^2}+17,\\
+\mathbb EL_\eta&\le8\frac{\mathbb ES+\rho^2}{m\rho^2}+36,\\
+\mathbb EE_\eta&\le
+ \frac{128}{cm}\frac{\mathbb ES+\rho^2}{\rho^4}
+                          +\frac{1296}{\rho^2}.
+\end{aligned}
+\tag{38.1}
+$$
+
+Its expected issuance count is at most
+$2+(16/15)(\mathbb ES+\rho^2)/(m\rho^2)$.
+Thus the same family attains simultaneously
+$\mathbb EV^a_\eta,\mathbb EV^b_\eta,\mathbb EL_\eta
+=O(\eta^{-2})$ and $\mathbb EE_\eta=O(\eta^{-4})$.
+Combined with Theorem 33.2, each resource's infimum over the entire
+finite issuer class satisfying the complete hard tube has matching
+order: $\Theta(\eta^{-2})$ for both variations and length, and
+$\Theta(\eta^{-4})$ for unhalved identity energy. An infimum need not
+be attained exactly; these are power statements, not sharp constants.
+
+Proof. At a normal start $t_i<S$, the already known connector has
+geometric variations and length at most $5,3,8$. Suffix acceleration
+traverses its geometry once, so every actual prefix has no greater
+geometric cost. The unrestricted full service in Lemma 36.2 dominates
+the actual service through its possible later target death or horizon
+cutoff. Conditioning at this start before imposing any later cutoff
+bounds its expected energy by $128/(c\rho^2)$ and its expected
+attempt count by $16/15$, uniformly over the known connector data.
+Tonelli over the measurable start events, and (35.3), give the normal
+parts of (38.1). This calculation uses actual original velocities;
+it never charges an inverse arbitrarily short terminal mesh remainder.
+
+The terminal data satisfy $(A,B)=(3,7)$ by (37.6), so their geometric
+costs are at most $19,17,36$. A complete terminal connector of duration
+$\delta=\rho^2$ has energy at most $1296/\rho^2$ by (34.4).
+An interrupted prefix at $T$ integrates the same squared velocities
+over a smaller interval. The initial hold has zero cost. These facts
+prove every bound in (38.1) and the stated count bound, including all
+movement after target death and before own death or $T$.
+
+More explicitly, each originally issued straight leg of duration $d$
+and increment $(A,B)$ has velocity $(A,B)/d$ and an executed fraction
+$\theta$ contributes the four quantities of Definition 11.2.
+A new suffix changes only future velocities. Hence neither (36.6) nor
+the terminal estimate revalues a previously executed partial leg;
+post-own-death holds have zero cost and the cemetery jump has no control
+cost. Almost-sure finite counts and finite geometric piece counts give
+finite pathwise costs, while the conditional estimates above establish
+finite expectations, which pathwise finiteness alone would not supply.
+
+For all sufficiently small $\eta$, $\rho=\eta/A_r$.
+Equation (38.1) gives the asserted upper powers with constants depending
+only on the fixed data. Equation (33.5) gives positive lower coefficients
+uniform over all eligible policies, without requiring membership in this
+particular construction or a lifetime estimate. Consequently the same
+upper family also attains those orders when coupled lifetime convergence
+is required, by the next theorem. No lower-only inference of existence
+is used. $\square$
+

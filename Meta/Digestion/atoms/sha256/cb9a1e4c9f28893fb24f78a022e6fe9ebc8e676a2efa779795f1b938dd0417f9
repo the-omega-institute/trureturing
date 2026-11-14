@@ -1,0 +1,68 @@
+**Definition 11.1 (source and executed commands).** Retain Definitions
+2.1–2.2, the specified ray $q_0=(k,\alpha_0,\beta_0)$, arbitrary fixed
+preparation phases, $0<Z<1$, $r=1-Z$, $H=r/2$, and
+$0<l<k<u<H$. The probabilities remain $(k,H-k,Z,H-k,k)$ in mode order
+$(0,1,2,3,13)$, the amplitude convention remains
+$\psi_s=\sqrt{p_s}e^{-i\theta_s}$, and both native phase circles have
+period $2\pi$. Fix the original time interval $[0,T]$, with $T>0$.
+At each stage choose zero-start absolutely continuous or piecewise $C^1$
+comparison controls $(a_n^\circ,b_n^\circ)$ on this interval. Set
+
+$$
+\begin{aligned}
+\tau_n&=\inf\{t\in[0,T]:k+a_n^\circ(t)\notin(l,u)\},
+       &\inf\varnothing&=\infty,\\
+S_n&=\tau_n\wedge T,
+&a_n(t)&=a_n^\circ(t\wedge S_n),\qquad
+b_n(t)=b_n^\circ(t\wedge S_n),\\
+J_n(t)&=\int_0^t a_n\,db_n
+       =\int_0^{t\wedge S_n}a_n^\circ\,db_n^\circ.
+\end{aligned}
+\tag{11.1}
+$$
+
+Only $(a_n,b_n)$ is executed. It is an original command, with exact
+whole-height extrema domain
+
+$$
+D_n=(-\min_{[0,T]}a_n,\ H-\max_{[0,T]}a_n).
+\tag{11.2}
+$$
+
+At the specified start its height lies in $[l,u]\Subset(0,H)$, hence
+$k+\min a_n\ge l>0$ and $k+\max a_n\le u<H$. On a compact promise
+$[k_-,k_+]$, the very same numerical command is lawful exactly when
+$k_-+\min a_n>0$ and $k_++\max a_n<H$; its cutoff is not recomputed
+for another starting height. The comparison extension after $S_n$ is
+not required to be a source history. The class includes every original
+held command obtained this way, without a restriction to a mesh family,
+a sampling rule, causality, or a bound on its finite variation.
+Random commands, when used, are measurable choices of such commands;
+sampling, offline knowledge and conditioning are additional data. A law
+assumption below concerns their actual probability measure, without an
+implicit change of sampling weights.
+
+Choose common real initial representatives $\alpha_0,\beta_0$ and put
+$c_0=1/2-k/r$. The entire executed native state, with these real phase
+lifts before wrapping, is
+
+$$
+\bar q_n(t)=
+\left(k+a_n(t),\,
+ [\alpha_0+b_n(t)/2],\,
+ [\beta_0+c_0b_n(t)-J_n(t)/r]\right).
+\tag{11.3}
+$$
+
+Here brackets reduce modulo $2\pi$. This is Proposition 2.3 at every
+prefix, including the hold. It uses exactly
+$P=\partial_k$ and
+$Q=\tfrac12\partial_\alpha+(\tfrac12-k/r)\partial_\beta$.
+In particular, $J_n$ is the chronological integral of these same
+controls, not a separately chosen finite-stage coordinate. The censored
+lifetime is $\zeta_n=\tau_n\in[0,T]\sqcup\{\infty\}$, with
+$\infty$ an isolated no-death mark. The killed path equals $\bar q_n(t)$
+for $t<\zeta_n$ and $\dagger$ for $t\ge\zeta_n$, in the space $E$
+of Definition 4.1. Neither the boundary hold nor the cemetery jump is a
+new actuator or a reset.
+

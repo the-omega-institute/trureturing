@@ -1,0 +1,37 @@
+**推论 126.17（第125章的同域条件候选与完整静态字典）。** 本章的原域中，
+第125章的完整条件等价链为
+
+$$
+\begin{array}{c}
+\mathrm{EB3}+\mathrm{Inj}+
+\overline{\{p\in P_{\rm reg}:\mathsf F(p)\}}^{\,P}=P\\
+\Longleftrightarrow
+\mathrm{EB3}+\mathsf{DC}
+\Longleftrightarrow
+\mathrm{EB3}+\mathsf{MC}
+\Longleftrightarrow
+\mathrm{EB3}+\forall b\in P:\ W(D_b)=1\\
+\Longleftrightarrow
+\exists\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V
+\text{ 实线性},\
+\Phi(\mathrm{PSD}_3)=C,\
+u\Phi=\operatorname{Tr}.
+\end{array}
+\tag{Q126.41}
+$$
+
+这里 $\mathsf F,\mathsf{DC},\mathsf{MC}$ 及 $W(D_b)$ 使用
+Q125.31—Q125.33 的整个原域定义，不把新得到的 $P_{\mathrm s}$ 或重复块积聚误读为接触。
+
+任一等价条件成立时，完整的同域静态字典仍按第125章取得：全部
+$\mathbb{CP}^2$ 纯态、整个 $\mathrm{PSD}_3$ 迹一态基、全部
+$0\preceq A\preceq I_3$ 效应、Born 评价、有限数学 POVM、谱分解和 Jordan 结构。它们都是同一个
+$\Phi$ 下的全部对象，不是只对纯点或选定菜单的匹配。
+
+证明。这里的 $V,C,u,K,P,\mathcal E,D_p$ 与第125章约定125.1是同一组完整原对象。
+直接应用125.9的(Q125.31)—(Q125.35)，得到(Q126.41)的双向等价及反向全模型量词。
+再由125.10沿同一 $\Phi$ 的全域运输，得到全部态、效应、评价、有限数学POVM和谱／Jordan字典。证毕。
+
+本章的拓扑结果没有证明 $\mathrm{EB3}\Rightarrow\mathrm{Inj}$，也没有证明
+$\mathrm{EB3}\Rightarrow\mathsf{DC}$ 或全域接触；(Q126.41)没有删去任何条件。
+

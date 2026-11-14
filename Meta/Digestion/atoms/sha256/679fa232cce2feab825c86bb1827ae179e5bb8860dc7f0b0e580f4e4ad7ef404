@@ -1,0 +1,76 @@
+**定理 143.2（同一原边的预算乘积及完整正分解）。** 在定义143.1的 EB3+$\mathsf{Conn}$ 域，固定每个原 $p$ 的任意完整球坐标
+
+$$
+D_p=c_p+B_p\overline{\mathbb B}^3,\qquad
+H_p(c_p+B_pw)=w,\qquad H_p(p)=0.
+\tag{XI143.5}
+$$
+
+这里 $B_p$ 单射，$H_p:V\to\mathbb R^3$ 的各分量属于 $L_p=\operatorname{span}\{h\in C^*:h(p)=0\}$，由[IX120.8、120.10][Q143IX]的实际限制同构唯一给出。沿用[IX119.4][Q143IX]的有限增益阈值，另记为
+
+$$
+\gamma_p=
+\sup_{\substack{z\in K\\e_p(z)>0}}
+\frac{\|H_p(z)\|-g_p(z)}{e_p(z)}\in[0,\infty).
+\tag{XI143.6}
+$$
+
+它是指定投影 $P_{p,t}z=(g_p(z)+t e_p(z))c_p+B_pH_p(z)$ 在整个原锥上为正的准确阈值，不是140.1的相容常数。
+
+对原边 $p\perp q$，置 $a=d_{pq}$、$b=d_{qp}$、$s=s_{pq}$、$c=d_{sq}=e_s(p)$，并写 $q=c_p+B_pv$、$\|v\|=1$。则 $a=0$ 当且仅当 $b=0$。当 $a,b>0$ 时，
+
+$$
+\gamma_p\ge\frac{2b(1-a)}{a(1-b)},\qquad
+\gamma_q\ge\frac{2a(1-b)}{b(1-a)},\qquad
+\gamma_p\gamma_q\ge4.
+\tag{XI143.7}
+$$
+
+对任意实数 $t$，另有整个原 $V$ 上的恒等式
+
+$$
+\begin{aligned}
+g_p+t e_p-v\cdot H_p
+&=\bigl(t-\ell_p(q)\bigr)e_p+
+\frac{2(1-a)}{(1-b)(1-ac)}e_s,\\
+\ell_p(q)&=\frac{2c(1-a)}{(1-b)(1-ac)}.
+\end{aligned}
+\tag{XI143.8}
+$$
+
+因此若 $t\ge\sup_{q\in P\cap D_p}\ell_p(q)$，右侧由两张原非负效应构成，$P_{p,t}$ 在整个原锥上为正，且 $\gamma_p\le t$。
+
+证明。若 $a=0$，实际 $s$ 被 $e_p$ 读零，所以 $s\in D_p$；它也在 $D_q$ 中，故 $p,q,s$ 是真实三角。在同一个完整球 $D_p$ 上，原效应 $e_q$ 在 $q,s$ 读一、零，因此两点对径，$s=2c_p-q$，给 $b=e_q(s)=0$。交换两端得到反向。这里只复用[IX120.4][Q143IX]的同球满刻度几何，没有合成共同仪器。
+
+[IX120.12—120.13][Q143IX]的原邻点公式，在本章指标下准确为
+
+$$
+e_q=\frac{\rho g_p+v\cdot H_p}{1+\rho},\qquad
+\rho=\frac{1+b}{1-b}.
+\tag{XI143.9}
+$$
+
+注意 $b=d_{qp}$，不是 $a$。在真实 $s\in D_q$ 上，$e_q(s)=0$、$g_p(s)=1-a$，故 $v\cdot H_p(s)=-\rho(1-a)$，$\|H_p(s)\|\ge\rho(1-a)$。若 $a>0$，将同一个 $s$ 代入(XI143.6)，得到(XI143.7)第一式。交换两端得到第二式，两式右端之积恰为四。
+
+再复用原双球消去身份：
+
+$$
+(1-c)e_p+(1-a)e_s=(1-ac)g_q.
+\tag{XI143.10}
+$$
+
+它是原三角行走中的球上峰值公式经 $L_q\to\operatorname{Aff}(D_q)$ 的限制单射提升到全部 $V$ 的等式；参数对应于既有 `OriginalRegularHeight.two_ball_identity` 中的 $aa=s$。该恒等式的代数证明不使用该模块后续正规锚点的连续性前件。[Q143RH] 由(XI143.9)，
+
+$$
+g_p+t e_p-v\cdot H_p
+=(1+\rho)(g_q-e_p)+t e_p.
+$$
+
+将(XI143.10)代入并用 $1+\rho=2/(1-b)$，即得(XI143.8)。全部分母严格正，因为 $a,b,c<1$。若右侧对每个单位 $v$ 均非负，则对每个原 $z\in C$，
+
+$$
+\|H_p(z)\|\le g_p(z)+t e_p(z).
+$$
+
+这是指定球锥投影的整个原域正性判据；等价地在 $e_p(z)>0$ 的归一态上给(XI143.6)的上界。没有把只在一个原球上合法的泛函当作原效应。证毕。
+

@@ -1,0 +1,8 @@
+本章在这个完整 EB3+$\mathsf{Conn}$+$\mathsf G(o)$ 域上，条件性地消费[XI137.2—137.3、XI139.1—139.2][Q141XI]的以下准确接口；这些支持结论不在本章重证。
+
+* 每个非空原真面是纯单点或某个完整 $D_a$，且 $S_a=\partial_{\rm rel}D_a$、$D_a=\operatorname{conv}S_a$。
+* $\mathcal A_p:=\{e\in\mathcal F_p:e|_{D_p}=0\}$ 为单点 $\{e_p\}$，$g_p=u-e_p$，$\dim_{\mathbb R}L_p=4$，且 $\{x\in K:g_p(x)=0\}=\{p\}$。
+* 有一个环境开集 $U_0\ni o$，满足 $U_0\cap D_o=\varnothing$，并且 $Q(q)=Q$ 对每个 $q\in U_0\cap P$ 成立。
+* $Q\subset P$ 在原 $V$ 中紧，且以原子空间拓扑为无边界四维拓扑流形。
+* 对原标签集 $\Lambda=\{a\in P:S_a\subseteq Q\}$，$\Lambda$ 在原 $V$ 中紧，整个球映射 $a\mapsto D_a$ 在整个 $\Lambda$ 上按环境 Hausdorff 距离连续；每个 $q\in U_0\cap P$ 都满足整个 $S_q\subseteq\Lambda$。
+

@@ -1,0 +1,22 @@
+**Definition 37.1 (one actual policy).** Issue the zero profile at zero.
+Before $S$, hold until a mesh knot and, at every $t_i<S$, $i\ge1$,
+serve (36.1) by Definition 36.1; after completion retain its issued hold.
+The next mesh threshold is monitored only up to target death or $T$.
+Target death takes priority over a simultaneous knot or retry; the
+horizon stops all execution. At $\tau\le T$ interrupt continuously
+and let $(a_0,b_0,J_0)$ be the actual triple then. Issue Definition
+34.1's complete terminal connector from $h_0=k+a_0$, with
+
+$$
+X=W^1_\tau-a_0,\quad Y=W^2_\tau-b_0,\quad
+D=K_\tau-J_0-a_0Y,
+\tag{37.1}
+$$
+
+executed in original duration $\delta=\rho^2$, followed by a hold.
+If $T$ occurs during this connector, keep exactly its originally
+prescribed prefix through $T$. At own actual height exit hold both
+controls. Denote this same actual family by $(a_\eta,b_\eta,J_\eta)$,
+where $J_\eta=\int a_\eta\,db_\eta$. No terminal acceleration to
+meet the horizon is performed.
+

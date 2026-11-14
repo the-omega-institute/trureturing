@@ -1151,3 +1151,63 @@ permits inspection and collaboration and identifies the public preprint at
 under the deposit's CC BY 4.0 license. It selects no general reuse license
 for future joint materials. Citation of those mathematics does not import
 joint code, formal proofs or private correspondence.
+
+
+## Complete three-prime classification and endpoint-two bounds
+
+The written complete theorem is in `paper/sections/three-prime-classification.tex`
+at the same revision `b93becea662a746badeadba42fdc3d3eb3db9382`, Git blob
+`1a9a08f943196c7bb5582cc445bc33766c9ef775`, SHA256
+`f51070d109eac96d68df6c800d6be07cca131115c35f5218110e3608a337dddb`.
+For every three distinct primes and all positive integer exponents, including
+all repetitions and coordinate permutations, its ideal-intersection graph is
+Laplacian nonintegral. The original boundary family
+`b=(a-1)(2a-1)` is attributed to Reza Nikandish; the later full factor-index
+completion, finite foundations and endpoint arguments retain their source
+contributors' attribution. Formal integration makes no discovery, priority,
+author-order or publication claim.
+
+The complete repeated-exponent source is `paper/sections/aa-completion.tex`,
+blob `de3d9ec5649f6ffd7e6c05aa8a199620ded9ef9e`; the divisor-index argument is
+`notes/factor-index-reduction.md`, blob
+`06501af4cd005f47de22447cc3d6334233c15c61`. The symmetric four-cell operator
+and antisymmetric two-cell operator are the actual invariant blocks from
+`paper/sections/graph.tex`, blob `845fd0739c33c62672030e8a491227fbfd19b830`.
+Their full lifts retain the weighted constant component. Only on the
+appropriate derived zero-sum subspace is that component zero. Nonzero
+quotient roots transport through the actual ideal/support graph isomorphism;
+the full classification concerns all nonzero proper ideals, not a scalar
+polynomial surrogate.
+
+The finite domains are exactly the original325 minimum-three pairs,
+27562 minimum-four-through-seven triples and8658 endpoint-two triples. The
+current formal route proves both integer low-root endpoints nonzero throughout
+the first two domains and the exact absolute bound8208 throughout the third,
+using kernel integer Horner evaluation. This is a different certificate
+representation from the original saved9-by-9 Sylvester/Bareiss discriminants
+and6-by-6 determinant controls. It does not claim to have reproduced those
+separate per-row discriminant or Bareiss reports. Their source provenance,
+exact domain counts, dependencies and historical checking limitations remain.
+The unbounded uniform tail, all repeated-exponent factor indices, real
+a>=2 small-gap bounds and largest-root argument complete the full domain;
+none is replaced by a maximum-exponent scan.
+
+The original sharp real endpoint-two middle bound is
+`notes/endpoint-two-sharp-maximum.md`, blob
+`346c8b5c2f589cb333206fc0b89467b1a5e6a5a2`, at source revision
+`6d491f77b35dec808fc777b69939c56cdae5dc02`. It keeps the unique equality at
+`a=(7+sqrt(13))/3,b=c=2a-2`. The full maximum-tail theorem
+`c>=3a-4 => h_C(2)>0` for ordered real `4<=a<=b<=c` is
+`notes/endpoint-two-maximum-tail.md`, blob
+`819c660aaf4a429ba0d0e7ad9ca302be1df67048`, at that same revision. Its entire
+88-coefficient positive expansion is an exact polynomial identity for a
+rational parametrization of the bounded middle interval. It is not an
+exponent enumeration. The sharp9/4 maximum bound and endpoint-two interval
+(4,5) retain their separate domains and original coefficient identities.
+
+Endpoint-two spectral exclusion does not prove its integer parameter surface
+empty: `(10,10,12)` is an actual endpoint-two zero. Full three-prime spectral
+classification does not solve the general higher-prime Q3 question, enumerate
+endpoint exponent points, complete the geometric E3 model, certify the a6
+elliptic-point calculation, or resolve the independently stated local,
+asymptotic and arithmetic boundaries. Those remain separate statements.

@@ -1,0 +1,29 @@
+### 1.3　原指针的一式标定与闭准备的统一近零入口
+
+[C123 原卷新增 §§63–75](https://github.com/the-omega-institute/trureturing/blob/0b9f2dda45b880862865f2c34ba94bf8ff1063ee/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md) 保持旧 3357 行为完整前缀。§§63–66 在定义 41.1 的*全部*非 $D$ 原背景、Z、SC 下，先不作标定而证明唯一共同 $\kappa\ge0$：
+
+$$
+J_d^2=-\kappa I_{W_d},\qquad
+ [D_a,D_b]=-\kappa[L_a,L_b],\qquad
+ W_d=E_{1/2}(d),\quad J_d=2D_d|_{W_d}.
+$$
+
+零分支使所有原 $D$ 为零；正分支使所有非经典原简单块成为复矩阵自伴块。 原标定进一步写成同一完整指针上的单式
+
+$$
+\mathrm{SJ}:\qquad D_d^2=L_d^2-L_d.
+$$
+
+它在该背景中与原 S、单对 S2 等价，恰选 $\kappa=1$； 完整 $D=t\delta$ 反事实族仍表明这个尺度不是定义自动固定的。 原 $W_d$ 成为 $\mathbb{CP}^{r-1}$ 的切空间，伙伴角为 $\mathbb{CP}^{r-2}$； 三维 Pauli 截面嵌在更大射影几何中，不自动供应实际角对象。
+
+§§67–75 另命名闭准备背景 $\mathsf B_{\rm cl}$， 将每个所需原对象及实际联合的精确有限正准备生成改为 $\overline{\operatorname{cone}(\mathcal P_A)}=C_A^*$， 并加入同一原关系的统一证书
+
+$$
+|\alpha(D_ax)|^2\le K(A,a)\alpha(x)\alpha(u_A)
+ \quad(\alpha\in\mathcal P_A,\ 0\le x\le u_A).
+$$
+
+$K(A,a)$ 有限，且独立于准备、效果与逼近指标。 在保单位已由原联合接口独立供应后，定理 68.1 使这个证书等价于同一原算子的保单位序导子性质； 反向可取 $K(A,a)=\|(D_a)^2\|_{u_A\to u_A}$。 闭生成而只检查实际零接触不够：正文的二维正锥反例给比值 $t^2/(1-t)\to\infty$。
+
+原 AC、比较群、X/Xs、全事件 R、原记录和返回等接口仍按各自完整范围保留。 加入 SC 与逐字原标定后，新背景接回有限复重构、原质量 Born 评价、已声明联合及全事件 CP。 这是*闭生成加统一近零*对*精确有限生成加零接触*的前提交换， 没有把旧候选改名，也没有证明全体物理假设或实际认证成本无条件减少。 这条最新路线说明：逼近整体时，准确零关系有时必须升级为跨所有逼近的统一数量约束。
+

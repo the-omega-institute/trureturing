@@ -1,0 +1,39 @@
+**定义 116.1（完整原域）。** 取非零有限维实空间 $V$、闭尖生成凸锥
+$C\subset V$ 及在 $C\setminus\{0\}$ 上严格正的 $u$。保留整个原紧基
+$K=C\cap\{u=1\}$、全部 $P=\operatorname{ext}K$ 和全部原效应 $\mathcal E=[0,u]_{C^*}$，置
+
+$$
+F_p=\{f\in\mathcal E:f(p)=1\},\quad T_p(x)=\min_{f\in F_p}f(x),\quad
+D_p=\{x\in K:T_p(x)=0\},\quad \mathcal A_p=\{e\in F_p:e|_{D_p}=0\}.
+\tag{IX116.1}
+$$
+
+116.1—116.6的基本域仅为 $\mathrm{EB}_{\ge1}$：每个完整 $D_p\simeq_{\rm aff}B^{d_p}$，
+$d_p\ge1$；不预付 $P$ 闭、Pair、共同中心、least、谱性、同维或第三点。
+$p\perp q$ 表示某张原效应在 $p,q$ 取一、零；补效应给零对称。$H(p,q)$ 为原最小面，
+$\mathrm{Pair}_{\perp}$ 表示对所有不同且 $p\perp q$ 的原纯对有 $H(p,q)\ne K$。
+记非点真面族、球边及标签纤维为
+
+$$
+\mathscr B=\{D_p:p\in P\},\qquad S(F)=P\cap F=\partial_{\rm rel}F,\qquad
+I(F)=\{p\in P:D_p=F\}.
+\tag{IX116.2}
+$$
+
+以下证明使用VII103.2的既有接口：$D_p$ 为紧暴露极大真面，$\mathcal A_p\ne\varnothing$；
+全部非空真面只有纯单点或完整球。球的极点恰为原纯点与球的交，故(IX116.2)成立，
+$F=\operatorname{conv}S(F)$，而不同完整球若相交，交恰为一个纯点。对不同纯点另有
+
+$$
+H(p,q)\ne K\quad\Longleftrightarrow\quad D_p\cap D_q\ne\varnothing.
+\tag{IX116.3}
+$$
+
+确实，左侧给 $H(p,q)=D_r$，零对称给 $r\in D_p\cap D_q$；反之在非空紧面
+$D_p\cap D_q$ 取原纯点 $r$，则 $p,q\in D_r$，所以 $H(p,q)\subseteq D_r\ne K$。
+这些接口不消费VII103.3的全Pair前件；IX114.2在固定球维数下复用了同一原面分类。
+额外PR分支的严格暴露、纯点紧性、共同刻度、正提升预算、niceness与饱和判据，
+分别使用IX114.3—114.9；固定厚球维数时的无facet障碍仍使用IX114.10。
+以下同球结构保留可变 $d_p\ge1$ 的原域，给精确双纤维和孤立性；
+一方向紧性则使用饱和读数而不输入PR。
+

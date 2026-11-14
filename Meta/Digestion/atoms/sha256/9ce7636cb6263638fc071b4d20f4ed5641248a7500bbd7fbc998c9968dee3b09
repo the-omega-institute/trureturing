@@ -1,0 +1,10 @@
+**Theorem 3.1 (Sharp delay-robust boundary for the family).** Under
+(1.2), the following conditions are equivalent:
+
+1. $2c-\lambda^2<1$.
+2. For every integer $K\ge0$ and every constant nonnegative array
+   $\delta$ with zero local delays and $\max\delta\le K$, (1.1)
+   converges to zero for every real initial history.
+3. For the fixed array $\delta_*$, (1.4) converges to zero for every
+   real initial history.
+

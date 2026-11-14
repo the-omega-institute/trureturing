@@ -1,0 +1,49 @@
+**引理 104.5（受限原 Choi 当且仅当与真正零扩张）。** 记
+$B_r=\operatorname{Herm}(\mathbb C^{n_r})$，
+$\iota_{r,m}:B_r^{\otimes_{\mathbb R}m}\to W_m$
+为原向量扇区 $r^m$ 的嵌入，$\pi_{r,m}$ 为相应向量分量提取。
+这里先不假定 $\iota_{r,m}\pi_{r,m}$ 原正。
+任取实线性 $F:B_r^{\otimes m}\to W_n$，$m,n\ge1$，定义其真实零扩张
+
+$$
+F^0=F\pi_{r,m},\qquad
+J_{r,m}(F)=
+ (\mathrm{id}_{W_m}\otimes F^0)\Omega_r^{[m]}.
+\tag{104.2}
+$$
+
+$\Omega_r^{[m]}$ 是 $m$ 个实际源杯经原置换排列的“参考、输入”杯，
+属于原 $C_{2m}$。则
+
+$$
+J_{r,m}(F)\in C_{m+n}
+\quad\Longleftrightarrow\quad
+(\mathrm{id}_{W_b}\otimes F^0)C_{b+m}\subseteq C_{b+n}
+\quad\text{对每个 }b\ge0.
+\tag{104.3}
+$$
+
+此处 $F^0$ 在其他整个输入扇区为零；结论是在整个原联合锥上成立，
+不是只测试支撑在 $r^m$ 的输入。
+
+**证明。** 正向使用原旁观 $b=m$，将 $F^0$ 作用于已在 $C_{2m}$ 的源杯。
+反向任取 $z\in C_{b+m}$。
+实际最小界把 $z\otimes J_{r,m}(F)$ 放入 $C_{b+2m+n}$，
+原置换使 $z$ 的每条输入腿与相应参考腿相邻。
+逐对用引理104.4的整锥正帽切片；引理102.6在每一步作用于当时的整个剩余原输入，
+因此输出在 $C_{b+n}$，无需投影原 $z$ 或假定其扇区分量正。
+
+核对输出只需线性恒等式：在源矩阵单位上
+$\Omega_r=\sum_{a,c}E_{ac}\otimes E_{ac}$，
+$\beta_r(x\otimes y)=\operatorname{Tr}(x_r^{\mathsf T}y_r)$。
+故每一条帽交还输入的 $r$ 分量，其他块贡献零。
+在简单实张量上收缩结果为 $(\mathrm{id}_{W_b}\otimes F\pi_{r,m})z$，
+实张量张成给整个空间的等式。
+矩阵单位记号使用唯一复线性扩张，所得恒等式仍是原实 Hermitian 空间恒等式。
+这支付了零扩张本身，未用尚未取得正性的中心投影。
+若用归一杯 $\Omega_r/n_r$ 和 proper 帽 $\beta_r/n_r$，
+输出系数为 $n_r^{-2m}$。
+每次质量不增由
+$(u_2-\beta_r/n_r)\otimes u_{\rm rest}$ 的原正性保证。
+没有引入外来矩阵旁观系统，也没有从一个映射正性推断其伴随正性。∎
+

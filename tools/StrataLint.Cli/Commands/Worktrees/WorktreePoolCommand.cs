@@ -10,6 +10,7 @@ internal static class WorktreePoolCommand
     internal static CommandResult PrepareAllocation(WorktreeOptions options, IWorktreeProcessRunner runner)
     {
         var arguments = new List<string> { "claim", "--branch", options.Branch, "--base", options.Base };
+        if (options.AllowReuseSelection) arguments.AddRange(["--initializing-path", options.Path]);
         if (!options.AllowReuseSelection) arguments.AddRange(["--path", options.Path]);
         if (options.SkipRestore) arguments.Add("--skip-restore");
         var result = WorktreeProtocolCommand.Run(options.Source, arguments, runner, Timeout.InfiniteTimeSpan, reportPending: false);

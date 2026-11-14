@@ -83,7 +83,7 @@ theorem chart_pure_norm {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ} {p q : V
   rw [StrictConvexSpace.extremePoints_closedBall_eq_sphere] at hh
   simpa using hh
 
-private theorem affine_riesz {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+theorem affine_riesz {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     [FiniteDimensional ℝ E] (f : E →ᵃ[ℝ] ℝ) :
     ∃ v : E, ∀ s, f s = f 0 + ⟪v, s⟫ := by
   let L := f.linear.toContinuousLinearMap
@@ -91,7 +91,7 @@ private theorem affine_riesz {E : Type*} [NormedAddCommGroup E] [InnerProductSpa
   rw [InnerProductSpace.toDual_symm_apply]
   simpa [L, add_comm] using congrFun f.decomp s
 
-private theorem affine_nonneg_bound {E : Type*} [NormedAddCommGroup E]
+theorem affine_nonneg_bound {E : Type*} [NormedAddCommGroup E]
     [InnerProductSpace ℝ E] {a : ℝ} {v : E}
     (h : ∀ s : E, ‖s‖ ≤ 1 → 0 ≤ a + ⟪v, s⟫) : ‖v‖ ≤ a := by
   by_cases hv : v = 0

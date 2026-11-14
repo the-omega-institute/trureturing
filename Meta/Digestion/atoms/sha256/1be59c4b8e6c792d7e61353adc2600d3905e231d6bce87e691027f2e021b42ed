@@ -1,0 +1,111 @@
+**引理 102.9（角控制交换与正补扩张）。** 取任意 $i,j\in I$，满足
+$d=n_i\ge2$、$e=n_j\ge2$。可取一个 $k\in I$、$b=n_k\ge2$，允许 $k=i$。
+在块 $i$ 选秩一投影 $P$；在块 $j$ 选一个交换两条基向量、固定其余基向量的酉 $X$。
+则
+
+$$
+U=(I_d-P)\otimes I_e+P\otimes X
+\tag{102.20}
+$$
+
+在角 $(i,j)$ 上的酉共轭，延拓为其他角上的零映射，所得
+$F_{ij,U}:W_2\to W_2$ 原旁观正。
+更具体地，其 Choi 元素 $J(F_{ij,U})\in C_4$ 可以由两个属于原 $C_3$ 的秩一资源，
+在原 $C_6$ 中相乘并收缩两条 $k$ 腿得到。
+把资源各自归一，并使用 proper 帽 $\beta_k/b$ 时，输出恰是
+
+$$
+\frac{J(F_{ij,U})}{2deb},\qquad
+u_4\!\left(\frac{J(F_{ij,U})}{2deb}\right)=\frac1{2b}.
+\tag{102.21}
+$$
+
+令 $P_{ij}=\Pi_i\otimes\Pi_j$。整个二份空间上的映射
+
+$$
+G_{ij,U}=F_{ij,U}+\sum_{(h,l)\ne(i,j)}\Pi_h\otimes\Pi_l
+\tag{102.22}
+$$
+
+是原数学保质量自同构，且 $G_{ij,U}^{-1}=G_{ij,U}$。
+它及其所有原旁观提升在选定角上作用为(102.20)，在其余角上为恒等。
+
+**证明。** 记 $A_0=I_d-P,A_1=P,B_0=I_e,B_1=X$，在块 $k$ 选两条基向量
+$|0\rangle_k,|1\rangle_k$。对一个方阵 $A$，使用“参考、输出”的向量化
+
+$$
+|A\rangle\!\rangle=\sum_a|a\rangle_{\rm ref}\otimes A|a\rangle_{\rm out}.
+\tag{102.23}
+$$
+
+构造两个三腿向量
+
+$$
+\begin{aligned}
+|\alpha\rangle_{i_{\rm r},i_{\rm o},k_1}
+ &=\sum_{t=0}^1|A_t\rangle\!\rangle\otimes|t\rangle_{k_1},\\
+|\gamma\rangle_{k_2,j_{\rm r},j_{\rm o}}
+ &=\sum_{t=0}^1|t\rangle_{k_2}\otimes|B_t\rangle\!\rangle.
+\end{aligned}
+\tag{102.24}
+$$
+
+$C_3=\mathsf D_3$，故 $\alpha\alpha^*$ 与 $\gamma\gamma^*$，分别放在
+$(i,i,k)$ 与 $(k,j,j)$ 块，确属原 $C_3$。
+这是同一局部类型的不同腿；$k=i$ 时也不合并腿或改变张量次数。
+由最小界，两资源乘积属于原 $C_6$。
+把两条 $k$ 腿置于一起，使用只在 $(k,k)$ 块非零的帽
+$\beta_k(z)=\operatorname{Tr}(\Omega_k z)$。
+它对原 $C_2$ 正，所以引理102.6把剩余四腿送入原 $C_4$。
+在向量上，$\langle I_k|$ 收缩给
+
+$$
+\sum_{t=0}^1|A_t\rangle\!\rangle\otimes|B_t\rangle\!\rangle.
+\tag{102.25}
+$$
+
+将剩余腿从 $(i_{\rm r},i_{\rm o},j_{\rm r},j_{\rm o})$ 排成
+$(i_{\rm r},j_{\rm r},i_{\rm o},j_{\rm o})$，(102.25)恰为 $|U\rangle\!\rangle$。
+因此密度矩阵收缩恰给 $|U\rangle\!\rangle\langle\!\langle U|$，
+位于参考角 $(i,j)$ 和输出角 $(i,j)$；其余参考／输出角为零。
+这正是定义(102.14)的 $J(F_{ij,U})$。这里所用的 $C_4$ 正性是原切片的结论，
+不是四份 PSD 假设。
+用 Bell 资源传递门的张量收缩形式是成熟构造，参见 Gottesman–Chuang，
+[*Demonstrating the viability of universal quantum computation using teleportation and single-qubit operations*](https://arxiv.org/abs/quant-ph/9908010)。
+本处所需的附加推导是该指定收缩在尚未确定的原 $C_6,C_4$ 中保持正性，
+以及下面的整空间正补与预算；不将资源接线本身另认作新的门传递原理。
+
+由桥基的正交性和 $A_0,A_1$ 的互补性，
+
+$$
+\|\alpha\|^2=\operatorname{Tr}(A_0^*A_0+A_1^*A_1)=d,\qquad
+\|\gamma\|^2=\operatorname{Tr}(B_0^*B_0+B_1^*B_1)=2e.
+\tag{102.26}
+$$
+
+又 $X=X^*=X^{-1}$，故 $U=U^*=U^{-1}$，
+$\||U\rangle\!\rangle\|^2=\operatorname{Tr}(U^*U)=de$。
+$\beta_k/b$ 在整个原二份效应区间内，因为
+$0\le\Omega_k/b\le\mathbf1$。
+归一资源各带因子 $1/d,1/(2e)$，proper 帽带 $1/b$，给出(102.21)。
+质量 $1/(2b)$ 是这两个指定资源在该帽下的输出质量。
+对任意待处理输入执行某个门时，尚须连接输入并满足相应事件预算；
+(102.21)不是该门无条件成功的概率或确定性实现。
+在数学正锥中除以正系数只恢复 $J(F_{ij,U})$ 的正性，不放大实际事件。
+
+引理102.7在 $m=n=2$ 给 $F_{ij,U}$ 的全部原旁观正性。
+引理102.8使(102.22)中的每一补项原旁观正；这里使用正投影之和，
+没有从一个正映射任意减去另一个。
+记此和为 $Q=\mathrm{id}-P_{ij}$，则向量空间恒等式为
+
+$$
+F_{ij,U}^2=P_{ij},\quad Q^2=Q,\quad
+F_{ij,U}Q=QF_{ij,U}=0,\quad G_{ij,U}^2=\mathrm{id}.
+\tag{102.27}
+$$
+
+对任意二份向量 $x$，选定块的迹由酉共轭保持，其余块的迹由 $Q$ 保持，
+所以 $u_2G_{ij,U}=u_2$。
+$G_{ij,U}$ 自身就是其正逆；张量旁观提升同样自逆并保持 $u_N$。
+因此它在每个原联合锥上都是数学自同构。∎
+

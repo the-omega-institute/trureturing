@@ -1,0 +1,43 @@
+**定义 148.1（同一原根的读数与二步载体）。** 本章的148.*均属本卷 XII；
+[XI145—146][Q148XI]仍指前卷的九维分类与有限层正规性结论。
+保留定义145.1的非零有限维实空间 $V$、闭尖生成凸锥 $C$、
+在 $C\setminus\{0\}$ 上严格正的原单位 $u$，以及全部原对象
+
+$$
+\begin{gathered}
+K=C\cap\{u=1\},\quad P=\operatorname{ext}K,\quad
+\mathcal E=[0,u]_{C^\ast},\quad
+\mathcal F_p=\{f\in\mathcal E:f(p)=1\},\\
+T_p(x)=\min_{f\in\mathcal F_p}f(x),\quad
+D_p=\{x\in K:T_p(x)=0\},\quad S_p=P\cap D_p.
+\end{gathered}
+\tag{XII148.1}
+$$
+
+所有标签遍历整个原 $P$，第二变量遍历整个原 $K$，包括全部混态。
+以下假设完整 EB3 与完整纯 PR；前者规定每个完整 $D_p$ 仿射等价于闭三球，
+后者规定 $T_p(q)=T_q(p)$ 对全部原纯对成立。
+事先固定同一个 $o\in P$，记
+
+$$
+h=T_o,\qquad A=D_o,\qquad S=S_o,\qquad
+B=\bigcup_{s\in S}D_s,\qquad Q(o)=P\cap B.
+\tag{XII148.2}
+$$
+
+复用 [IX114.1][Q148IX]的完整菜单紧性与达到性：严格正性使 $K$ 紧，生成性使
+$K$ 张成 $V$ 且 $\operatorname{aff}K=\{u=1\}$；在从 $K$ 选出的线性基上评价，
+闭效应区间 $\mathcal E$ 有界而紧。$\mathcal F_p$ 闭且含 $u$，所以每个 minimum 达到。
+这也把 $K$ 上全部有界仿射效应与同一个原区间 $\mathcal E$ 对应起来，未缩小菜单。
+
+复用 [VII103.2][Q148Faces]、[IX114.2及116.1][Q148IX]的完整原面结果：
+每个 $D_p$ 是紧暴露真面，全部非空真面只有原纯单点或完整 $D_p$。
+对任何这样的面 $F$，$\operatorname{ext}F=P\cap F$；完整三球的这个集合是其整个相对边界，
+同胚于 $S^2$。特别地，每个非空真暴露面的纯缘连通。
+这些是原面分类的前两项，不使用另需全 Pair 的最后一项。
+三维 $D_p$ 是真面，故 $\dim\operatorname{aff}K\ge4$。
+
+纯集的紧性准确取自 IX114.4。该结论由纯 PR、IX114.3 的原端点暴露和原菜单紧性推出，
+不以 $P$ 已闭为前提，不调用 qutrit 表示。
+这三项供应——紧 $P$、每个真暴露面的连通纯缘、维数至少二——是下面局部极小论证的全部凸几何输入。
+

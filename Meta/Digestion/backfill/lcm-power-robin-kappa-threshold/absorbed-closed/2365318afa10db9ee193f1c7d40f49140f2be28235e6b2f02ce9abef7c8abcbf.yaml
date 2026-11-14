@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2365318afa10db9ee193f1c7d40f49140f2be28235e6b2f02ce9abef7c8abcbf
+  normalized_sha256: sha256:2365318afa10db9ee193f1c7d40f49140f2be28235e6b2f02ce9abef7c8abcbf
+cas_ref: sha256:2365318afa10db9ee193f1c7d40f49140f2be28235e6b2f02ce9abef7c8abcbf
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/Analytic/LcmPowerLocalFactorBound.local_factor_lower_bound
+    target_statement_id: sha256:fcc320474923303d5337c32ffae29f991cec967653325f14afcd8dc6a3f17bbe
+receipts:
+  unresolved_subitems: []
