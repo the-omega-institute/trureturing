@@ -366,7 +366,7 @@ theorem full_cycle_completion_equiv [Finite V] (E : V → V → Prop)
 4a7568845a361d33b1bbe2872a53f1f0c7d2d38d. Copyright (c) 2026
 Xingchen Liu / 刘星辰 and Xiangyu Ye / 叶祥宇. This helper is CC-BY-4.0;
 the full license, attribution and modification notice are in
-Library/Combinatorics/liuye2026cyclesupport.md. -/
+Library/PermutationPatterns/liuye2026cyclesupport.md. -/
 private theorem full_cycle_support [Fintype V] [DecidableEq V]
     (hV : 2 ≤ Fintype.card V) (σ : Perm V) :
     σ.IsCycleOn Set.univ ↔ σ.IsCycle ∧ σ.support = Finset.univ := by
