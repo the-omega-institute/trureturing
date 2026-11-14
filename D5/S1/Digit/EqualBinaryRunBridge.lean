@@ -1,11 +1,12 @@
 /- GID: D5/S1/Digit/EqualBinaryRunBridge
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Digit/EqualBinaryRunBridge
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
    digest: Literal maximal binary run pairs and their positive block encoding. -/
 
+import D5.S1.Words.DoubleTailShuffleSupport
 import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Data.List.SplitBy
 import Mathlib.Combinatorics.Enumerative.Composition
@@ -428,22 +429,20 @@ private noncomputable def edgeTotal (n : ℕ) : ℤ := ∑ ks ∈ parts n, edge 
 
 private def capacity (n : ℕ) : ℤ := 4 ^ n * 2 ^ (n-1)
 
-private theorem replicate_ones (k : ℕ) :
-    Nat.ofDigits (2 : ℤ) (List.replicate k 1) = 2 ^ k - 1 := by
-  induction k with
-  | zero => simp [Nat.ofDigits]
-  | succ k ih =>
-      simp only [List.replicate_succ, Nat.ofDigits, ih, pow_succ]
-      ring
-
 private theorem value_cons (k : ℕ) (ks : List ℕ) :
     value (k::ks) = (4 ^ k - 2 ^ k) * 4 ^ ks.sum + value ks := by
+  have hon := congrArg (fun m : ℕ => (m : ℤ))
+    (D5.S1.Words.DoubleTailShuffleSupport.ones_value k)
+  push_cast at hon
+  have hones : Nat.ofDigits (2 : ℤ) (List.replicate k 1) = 2 ^ k - 1 := by
+    rw [← Nat.coe_ofDigits]
+    linarith
   unfold value decode
   simp only [word_cons, List.reverse_append, List.reverse_replicate]
   rw [Nat.ofDigits_append, Nat.ofDigits_append]
   simp only [List.length_reverse, List.length_replicate, length_word,
     Nat.ofDigits_replicate_zero, zero_add, Nat.cast_add, Nat.cast_mul,
-    Nat.cast_pow, Nat.cast_ofNat, Nat.coe_ofDigits, replicate_ones]
+    Nat.cast_pow, Nat.cast_ofNat, Nat.coe_ofDigits, hones]
   have hp (r : ℕ) : (2 : ℤ) ^ (2*r) = 4 ^ r := by
     rw [pow_mul]; norm_num
   rw [hp]

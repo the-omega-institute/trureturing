@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Unique positive-part encodings of literal maximal binary run pairs; the A386705 recurrence remains a target.
+Literal maximal binary run pairs have unique positive-part encodings, and their distinct integer sums satisfy the A386705 recurrence.
 
 The source is the full OEIS A386705 record at https://raw.githubusercontent.com/oeis/oeisdata/30c383550c8059b1712df8e32827d3b203765933/seq/A386/A386705.seq. Its NAME is: a(n) = sum of the 2^(n-1) even positive integers having bit length 2*n and in which, when written in binary, each run of 0's is of exactly the same length as the run of 1's immediately before it. Its FORMULA is: Empirical: a(n) = 12*a(n-1) - 36*a(n-2) + 32*a(n-3), with a(1) = 2, a(2) = 22, a(3) = 192. The A166751 comment already associates zero runs with compositions. The construction below does not claim that observation as new.
 
@@ -12,13 +12,17 @@ Literal(n,m) requires m positive and even, bits(m) of length exactly 2*n, and Ma
 
 blockRuns([]) is empty. blockRuns(k::ks) consists of k ones, then k zeros, then blockRuns(ks). word(ks) flattens this list of runs. Positive(ks) below means every member is strictly positive. The proved maximal-run identity uses Mathlib's splitBy_flatten and its chain conditions, including the zero-to-one boundaries between successive pairs. Reconstruction uses the literal Matched predicate; equal encoded words have equal maximal runs and hence equal part lists.
 
+Decoding word(ks) with Nat.ofDigits recovers exactly its canonical bits when all parts are positive. A nonempty such word starts in one and ends in zero, so its decoded integer is positive and even. The finite set parts(n) is the image of Mathlib's Composition(n) under its blocks projection. Its members are precisely the positive lists summing to n; composition_card supplies its cardinality. For n>0, row(n) is the image of parts(n) under decoding, and decoding is injective on that set. Consequently a(n) equals the integer sum of decoded composition words with no repeated integer counted twice.
+
+For n>=1, write W(n) for the sum of decoded words over parts(n), T(n) for the sum of decoded tails, E(n) for the sum of 2^k*4^r, where k is the first part and r is the sum of the remaining parts, and U(n)=4^n*2^(n-1). Every composition of n+1 is uniquely either 1::ks or grow(ks), for a composition ks of n; grow increments the first part. These two images are disjoint. The decoded value of k::ks is (4^k-2^k)*4^sum(ks)+value(ks), in the integers. Summing over the two images gives W(n+1)=5W(n)+2U(n)+2E(n)-3T(n), T(n+1)=W(n)+T(n), E(n+1)=2U(n)+2E(n), and U(n+1)=8U(n). The initial data W(1)=2, T(1)=0, E(1)=2 yield the invariant W(n)-T(n)+E(n)=U(n). Thus W(n+1)=2W(n)-E(n)+5U(n); eliminating E and U proves W(n+3)=12W(n+2)-36W(n+1)+32W(n). The same identities give W(2)=22 and W(3)=192. The injective sum transport identifies W(n) with the literal a(n), rather than defining a(n) by these equations.
+
 **Theorem 1.1 (Unique literal encoding).**
 
 $$\forall n \in Nat,\; \forall m \in Nat,\; m \in row\left(n\right) \iff 0 < m \land \left(Even\left(m\right) \land \left(\exists p \in List\left(Nat\right),\; \left(Positive\left(p\right) \land \left(sum\left(p\right) = n \land bits\left(m\right) = word\left(p\right)\right)\right) \land \left(\forall q \in List\left(Nat\right),\; \left(Positive\left(q\right) \land \left(sum\left(q\right) = n \land bits\left(m\right) = word\left(q\right)\right)\right) \Rightarrow q = p\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/EqualBinaryRunBridge.mem_row_iff` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
 
 *Commentary.*
 
@@ -30,13 +34,26 @@ $$FullClaim \iff a\left(1\right) = 2 \land \left(a\left(2\right) = 22 \land \lef
 
 *Formalization.* `D5/S1/Digit/EqualBinaryRunBridge.FullClaim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
 
 *Commentary.*
 
-FullClaim is a proposition definition, not a proved theorem. The three initial values and the recurrence for every n>=4 remain unproved here. Further work must transport the distinct integer sum through the unique encoding, derive its weighted first-part identity, and prove the integer recurrence. No finite-prefix result substitutes for this target.
+FullClaim names the complete conjunction. The theorem full_claim below proves it without assuming a recurrence, a composition count, or a weighted sum identity. The composition count is supplied by Mathlib and the weighted identities are derived from the finite composition split.
+
+**Theorem 1.3 (Complete literal recurrence).**
+
+$$a\left(1\right) = 2 \land \left(a\left(2\right) = 22 \land \left(a\left(3\right) = 192 \land \left(\forall n \in Nat,\; 4 \le n \Rightarrow a\left(n\right) = 12 \cdot a\left(n - 1\right) - 36 \cdot a\left(n - 2\right) + 32 \cdot a\left(n - 3\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/EqualBinaryRunBridge.full_claim` (`✓ std3`). ∎
+
+*Citation.* Paolo Xausa (2025). *OEIS A386705: sums of even integers with equally paired maximal binary runs*. URL: <https://oeis.org/A386705>.
+
+*Commentary.*
+
+The three initial values and the recurrence hold for the actual distinct positive even integers with canonical bit length 2*n and equally paired maximal runs. Natural indices express every integer index n>=1 exactly; the recurrence guard n>=4 makes each shifted index positive. Every subtraction of sequence values is in the integers. This is a universal theorem, not finite-prefix verification. The source's empirical formula and the known composition relation are distinguished from the kernel-checked derivation.
 
 ## References
 
 - Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.FullClaim`
+- Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.full_claim`
 - Truth anchor: `D5/S1/Digit/EqualBinaryRunBridge.mem_row_iff`
