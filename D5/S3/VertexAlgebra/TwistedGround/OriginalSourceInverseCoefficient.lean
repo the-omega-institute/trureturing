@@ -414,4 +414,57 @@ theorem original_two_rows_inverse_coefficient
   dsimp only
   ring
 
+/-! The next bridge exposes the finite source polynomial coefficientwise.  It
+is deliberately stated for an arbitrary finite family and arbitrary mode
+matrices, so the two-row theorem below can consume it without introducing a
+new analytic or sewing assumption. -/
+
+theorem substitution_coeff_sum
+    {D : LatticeData}
+    (A : ℕ → Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (S : Finset (Exponent D)) (F : Exponent D → ℂ) (alpha : Exponent D) :
+    (substitution A (∑ delta ∈ S, monomial delta (F delta))).coeff alpha =
+      ∑ delta ∈ S, F delta *
+        (substitution A (monomial delta 1)).coeff alpha := by
+  classical
+  simp only [map_sum, MvPolynomial.coeff_sum]
+  apply Finset.sum_congr rfl
+  intro delta hdelta
+  rw [show monomial delta (F delta) = F delta • (monomial delta 1) by
+    simp [smul_monomial], map_smul]
+  simp only [MvPolynomial.coeff_smul, smul_eq_mul]
+
+/-- The accepted two-row source-inverse identity with its remaining finite
+coefficient written as an explicit sum of original affine rows.  This is the
+coefficientwise bridge needed before any later identification of the
+transposed substitution with a right affine channel. -/
+theorem original_two_rows_inverse_coefficient_expanded
+    (D : LatticeData) (hu : IsUnit D.G.det) (a : Charge D)
+    (alpha betaL gammaL betaR gammaR : Exponent D) (eL eR : ℤ)
+    (n : ℕ) (ha : oscillatorEnergy alpha ≤ n) :
+    chargeScalar D a * chargeScalar D (-a) *
+      wick D (monomial gammaL 1)
+        (oscillatorCorrected D hu a eL (monomial alpha 1) (monomial betaL 1)) *
+      wick D (monomial gammaR 1)
+        (oscillatorCorrected D hu (-a) eR
+          (dualOscillatorMonomial D alpha) (monomial betaR 1)) =
+    let row := fun (b : Charge D) (beta gamma delta : Exponent D) (e : ℤ) =>
+      let K := rowSupport D delta beta gamma
+      let label := supportLabel D K
+      affineLaurent (correctedMatrix D label) (correctedMean D b label)
+        (normalWeight D label)
+        (threeOccupation (restricted D K delta) (restricted D K beta)
+          (restricted D K gamma)) (e+chargeNorm D b)
+    chargeScalar D a * chargeScalar D (-a) *
+      (weight alpha : ℂ) * (weight betaL : ℂ) * (weight gammaL : ℂ) *
+      (weight betaR : ℂ) * (weight gammaR : ℂ) * row a betaL gammaL alpha eL *
+      ∑ delta ∈ oscillatorSublevel D n,
+        row (-a) betaR gammaR delta eR *
+          (substitution (fun k =>
+            (((-((k : ℂ)+1))⁻¹ • (gramComplex D)⁻¹))ᵀ)
+            (monomial delta 1)).coeff alpha := by
+  rw [original_two_rows_inverse_coefficient D hu a alpha betaL gammaL betaR gammaR eL eR n ha]
+  dsimp only
+  rw [substitution_coeff_sum]
+
 end D5.S3.VertexAlgebra.TwistedGround.OriginalSourceInverseCoefficient
