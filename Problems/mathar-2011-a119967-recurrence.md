@@ -74,17 +74,16 @@ is not verification or publication.
 
 ## Triage
 
-Proposed all-index mechanism: the leading two terms have combined coefficient n-4 after replacing
+The all-index mechanism is that the leading two terms have combined coefficient n-4 after replacing
 a(n) by its smaller predecessor. The three trailing terms leave the
 strictly positive coefficient (n-2)(n+1) after bounding both subtracted
 lags by a(n-2). This sign imbalance explains failure at every valid
 index and rules out a later onset. No additional hypothesis on the
 already fixed source sequence can remove this positive residual.
 
-Computed directly from the defining sum: the residual at n=4 is 54.
-No kernel-verified conclusion is claimed for this source-only unit;
-the all-index proof, axiom closure and audit binding remain unverified
-under the cache capability boundary recorded in issue #30175.
+The formal conclusion excludes both onset readings of the unchanged
+printed expression. Its all-index estimate does not depend on a finite
+prefix or identify an intended correction.
 Open: any repaired-sign recurrence or separately printed generating
 function claim requires its own faithful statement and proof. No such
 repair or companion claim is inferred here. No source-stated dependent
@@ -97,5 +96,5 @@ World priority, exhaustive prior-work absence, unread/unavailable
 sources and the inaccessible individual historical snapshot remain
 unverified. The source JSON endpoint returned HTTP 403 on refresh;
 the immutable export and current internal entry were readable.
-Stage A is source preparation and scoped checking only: no freeze,
-deposit, publication, merge or external-problem KPI credit is asserted.
+Independent semantic admission and publication are separate from the
+mathematical statement. No external-problem KPI credit is asserted here.
