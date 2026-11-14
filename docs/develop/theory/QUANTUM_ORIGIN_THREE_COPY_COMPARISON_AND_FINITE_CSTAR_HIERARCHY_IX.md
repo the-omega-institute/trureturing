@@ -507,3 +507,392 @@ $\mathsf U$。这些条件结论均不把当前任意三实际腿或混合输入
 [T132BK]: https://arxiv.org/html/1103.1884v1
 
 ## 追加锚（本行以下为增补区）
+
+## 133. 三切口与正确块核条件不能把秩二联合切片提升为正性
+
+**定义 133.1（抽象三切口与一个固定矩阵）。** 令
+$H_0=H_1=H_2=\mathbb C^2$，均取固定计算基。
+Hermitian 矩阵 $M$ 在第 $i$ 个单因子对其余因子的切口上块正，指
+
+$$
+(q\otimes w)^*M(q\otimes w)\ge0
+\quad(q\in H_i,\ w\in\bigotimes_{j\ne i}H_j),
+\tag{133.1}
+$$
+
+其中只按因子位置作酉置换，$w$ 不受可分性限制。在 $H_1\otimes H_2$ 上记
+
+$$
+\begin{aligned}
+P&=|00\rangle\langle00|+|11\rangle\langle11|,&
+Z&=|00\rangle\langle00|-|11\rangle\langle11|,\\
+\eta&=|00\rangle+|11\rangle,&
+A&=2P,\qquad B=2Z,\qquad C=I_4+2\eta\eta^*,\\
+M_\star&=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}
+\quad\text{于 }H_0\otimes(H_1\otimes H_2).
+\end{aligned}
+\tag{133.2}
+$$
+
+这里 $M_\star$ 只是普通矩阵，不赋予它任何原 $E$ 或 $\mathcal K$ 成员资格。
+
+**命题 133.2（最小局部维数的秩二相干障碍）。** 矩阵 $M_\star$ 满足全部三个
+(133.1)，并有以下性质：
+
+1. $q=|0\rangle$ 的条件**联合**矩阵
+   $(q^*\otimes I_4)M_\star(q\otimes I_4)=A$ 为 PSD 且秩恰二。
+2. 两个对角块均为 PSD，且同时满足正确取向的全局核与像条件
+
+$$
+\begin{gathered}
+B^*\ker A=\{0\},\qquad B\ker C=\{0\},\\
+\operatorname{ran}B\subseteq\operatorname{ran}A,\qquad
+\operatorname{ran}B^*\subseteq\operatorname{ran}C.
+\end{gathered}
+\tag{133.3}
+$$
+
+3. 不同联合向量的相干不等式 VIII(128.28)仍严格失败，并存在
+   $0\preceq F\preceq I_8$，使 $\operatorname{Tr}(F^TM_\star)=-1/2$。
+   因此 $M_\star\not\succeq0$。
+
+故“三个单因子切口块正、存在秩二条件联合切片、满足(133.3)”不能推出 PSD。
+三因子各二维已足以反驳此蕴含；若任一因子一维，则不存在这样的反例。
+
+证明。先固定任意复向量
+$w=a|00\rangle+b|01\rangle+c|10\rangle+d|11\rangle$，令
+$s=|a|^2+|d|^2$、$r=|b|^2+|c|^2$、$\delta=|a|^2-|d|^2$。
+在 $H_1H_2$ 上用 $w$ 压缩后，留在 $H_0$ 上的矩阵为
+
+$$
+T_w=\begin{pmatrix}
+2s&2\delta\\
+2\delta&3s+r+4\operatorname{Re}(\overline a d)
+\end{pmatrix}.
+\tag{133.4}
+$$
+
+右下元至少为 $s+r\ge0$，因为
+$2|a||d|\le s$。其行列式有精确复数证书
+
+$$
+\det T_w
+=s^2+\bigl|s+4\overline a d\bigr|^2+2sr\ge0.
+\tag{133.5}
+$$
+
+确实，展开行列式得
+$2s^2+16|a|^2|d|^2+8s\operatorname{Re}(\overline a d)+2sr$，
+正是右侧。两个主对角元非负及(133.5)给 $T_w\succeq0$，
+故 $q^*T_wq\ge0$ 对所有复 $q\in H_0$ 成立，证明第一个切口。
+此证书也包含 $s=0$、$w=0$，没有除以任何读数。
+
+再固定任意复 $p=(p_0,p_1)^T\in H_1$，置
+$x=|p_0|^2$、$y=|p_1|^2$、$D=\operatorname{diag}(1,-1)$。
+在 $H_1$ 上压缩，按 $H_0\otimes H_2$ 排列所得矩阵为
+
+$$
+K_p=\begin{pmatrix}A_p&B_p\\B_p^*&C_p\end{pmatrix},\qquad
+A_p=2\begin{pmatrix}x&0\\0&y\end{pmatrix},\quad
+B_p=A_pD,\quad
+C_p=\begin{pmatrix}
+3x+y&2\overline p_0p_1\\
+2\overline p_1p_0&x+3y
+\end{pmatrix}.
+\tag{133.6}
+$$
+
+它有不需要逆矩阵的 PSD 分解
+
+$$
+\begin{aligned}
+K_p&=\begin{pmatrix}I_2\\D\end{pmatrix}A_p
+       \begin{pmatrix}I_2&D\end{pmatrix}
+       +\begin{pmatrix}0&0\\0&R_p\end{pmatrix},\\
+R_p&=C_p-A_p
+ =\begin{pmatrix}x+y&2\overline p_0p_1\\
+                   2\overline p_1p_0&x+y\end{pmatrix}\\
+ &=\begin{pmatrix}\overline p_0\\\overline p_1\end{pmatrix}
+      \begin{pmatrix}p_0&p_1\end{pmatrix}
+   +\begin{pmatrix}p_1\\p_0\end{pmatrix}
+      \begin{pmatrix}\overline p_1&\overline p_0\end{pmatrix}\succeq0.
+\end{aligned}
+\tag{133.7}
+$$
+
+因此对每个复 $p$，$K_p\succeq0$，支付第二个切口的所有联合复向量。
+$P,Z,\eta$ 均在交换 $H_1,H_2$ 下不变，故 $M_\star$ 也在该交换下不变；
+将第二切口的同一分解运输到第三切口，证明全部(133.1)。
+由有限谱分解及线性性，这还支付每个切口上的所有 PSD 产品效应及其正和，
+而不只是三个因子全可分的效应。
+
+第一条由 $A=2P$ 及 $P$ 的二维像立即得到。
+为核对第二条，记 $S=\operatorname{span}\{|00\rangle,|11\rangle\}$。
+有
+
+$$
+\ker A=\ker B=\ker B^*=S^\perp,\qquad
+\operatorname{ran}A=\operatorname{ran}B=\operatorname{ran}B^*=S,
+\qquad C\succeq I_4.
+\tag{133.8}
+$$
+
+于是 $\ker C=\{0\}$、$\operatorname{ran}C=H_1\otimes H_2$，得到(133.3)。
+这些取向来自块位置：对一般 PSD 块矩阵
+$\left(\begin{smallmatrix}A&B\\B^*&C\end{smallmatrix}\right)$，
+若 $u\in\ker A$，在 $(u,tv)$ 上对任意小复 $t$ 测试，线性项强制
+$u^*Bv=0$ 对全部 $v$ 成立，即 $B^*u=0$；交换两块则给 $B\ker C=0$。
+取正交补即为相应的像包含，而非把 $B$ 与 $B^*$ 的角色颠倒。
+
+剩余失败是强度。令
+
+$$
+e_\pm=\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+\quad
+e_+^*Ae_+=2,\qquad e_-^*Ce_-=1,\qquad e_+^*Be_-=2.
+\tag{133.9}
+$$
+
+所以 $|e_+^*Be_-|^2=4>2=(e_+^*Ae_+)(e_-^*Ce_-)$。
+这两个不同的联合向量均可纠缠，不能由(133.4)中对同一个 $w$ 的测试替代。
+用 Moore–Penrose 逆也可直接定位同一个缺口：$A^\dagger=P/2$，且
+
+$$
+B^*A^\dagger B=2P,\qquad
+(C-B^*A^\dagger B)e_-=-e_-.
+\tag{133.10}
+$$
+
+核条件已满足，却仍有负的 Schur 余项。这里仅使用成熟的块矩阵判据；
+[Gallier，定理4.3][T133Gallier]给出实对称版本，其 Hermitian 版本的核方向如上，
+余项恒等式则由在二次型中配方
+$(u+A^\dagger Bv)^*A(u+A^\dagger Bv)+v^*(C-B^*A^\dagger B)v$
+直接验证。
+
+最后取单位实向量及其联合量子投影
+
+$$
+\begin{aligned}
+h&=\frac{|0\rangle e_+-|1\rangle e_-}{\sqrt2}
+  =\frac{|000\rangle+|011\rangle-|100\rangle+|111\rangle}{2},\\
+F&=\overline h\,\overline h^*=hh^*,\qquad
+0\preceq F\preceq I_8,\qquad
+\operatorname{Tr}(F^TM_\star)=h^*M_\star h
+ =\frac{2+1-4}{2}=-\frac12.
+\end{aligned}
+\tag{133.11}
+$$
+
+这遵守原全转置测试的取向，给出一个严格负的普通联合量子效应读数。
+若三因子中任一维数为一，则在该因子对其余因子的切口上，
+每个全空间向量都是产品向量，(133.1)本身就给 PSD。
+因此二维、二维、二维是此反例的最小局部维数组合。证毕。
+
+本命题的承重应用是排除 VIII(128.28)与132.4之间的一个秩二抽象推理路线，
+归属为 repo-derived，不主张外部原创性。
+对二可分混合态非负而对某联合态负的见证思想是成熟供应，参见
+[Bourennane 等，式(1)—(2)及其前后的定义][T133Bourennane]；
+标准 Schmidt 事实、块核条件及 Schur 判据不另列为新成果。
+VIII128.2已供应原输出的三切口性质；132.4的秩至多一结论、
+全部原复帽、整个原三输入锥与任意有限无界量子尺寸均保持原陈述。
+(133.2)只证明这些抽象切口加秩二及正确核条件不足以自动支付相干强度。
+没有从它取得原 $x,y,z\in E_3$、原 $X,Y,W\in\mathcal K$、
+132.10的实际 $\Lambda$ 实现、源饱和或同源六份及 allN 补全；
+132.7的整个原三角形、R3/R4、高中间次数、所有旁观、proper 预算与
+全有限 min/max 产品律仍为原未决义务。
+
+[T133Gallier]: https://www.cis.upenn.edu/~jean/schur-comp.pdf
+[T133Bourennane]: https://arxiv.org/pdf/quant-ph/0309043v2
+
+## 追加锚（本行以下为增补区）
+
+## 134. 两条实际腿的普通 dyad 源桥与原输入秩一排除
+
+### 134.A 固定源前件与普通 dyad 截面
+
+**定义 134.1（同一个源上的两实际腿截面）。** 固定132.1及
+[VIII123.1—123.2、125.1][T132VIII]的同一个
+$\mathcal D,S,\mathcal K,E$，保留原实际标签、含相位计算基、
+全部有限对象字和源箭头。取两条原实际 qutrit 腿 $A,B$；
+它们的标签可以相同，但始终是两个位置。对每个正有限 $n$，记
+
+$$
+\begin{aligned}
+\mathscr A_n&=A_{\mathcal D}(Q_nAB),&
+\mathscr C_n&=E(Q_nAB),&
+\mathscr B_n&=B_{\mathcal D}(Q_nAB),\\
+\mathscr R_n&=\{\psi\psi^*:0\ne\psi\in
+ \mathbb C^n\otimes\mathbb C^3\otimes\mathbb C^3\}.
+\end{aligned}
+\tag{134.1}
+$$
+
+$\mathscr R_n$ 只含普通正秩一矩阵。
+$r_Q(\psi),r_A(\psi),r_B(\psi)$ 分别指对应单因子对其余因子的复 Schmidt 秩。
+各层仍用 $b(H,L)=\operatorname{Tr}(H^TL)$、
+$\mathscr B_n\subseteq\mathscr C_n\subseteq\mathscr A_n$；
+不假定这些锥在全转置下不变。
+本节只使用VIII123.2已付的源正性、低类型和双向角接口，
+不取VIII124.1的 allN 产品律为前件。
+
+**定理 134.2（两实际腿的普通 dyad 在源上下包络间无间隙）。**
+在134.1的固定源前件下，对每个任意大的有限 $n$ 和每个非零 $\psi$，
+有精确等价
+
+$$
+\boxed{
+\begin{aligned}
+\psi\psi^*\in\mathscr A_n
+&\ \Longleftrightarrow\ \psi\psi^*\in\mathscr C_n
+\ \Longleftrightarrow\ \psi\psi^*\in\mathscr B_n\\
+&\ \Longleftrightarrow\
+\bigl[r_Q(\psi)=1\ \text{或}\
+ (r_A(\psi)\le2\ \text{且}\ r_B(\psi)\le2)\bigr].
+\end{aligned}}
+\tag{134.2}
+$$
+
+因此三个锥与 $\mathscr R_n$ 的交相等；零矩阵也属于三个锥。
+右端是VIII124.4已有的分类形状，这里的结论是它在同一个
+VIII123源的上下包络间成立，不需要该条目的完整 allN 前件。
+
+证明。复用VIII125.1所列的精确低类型：纯量子字上的上下包络均为 PSD，
+$Q_dA$ 上均为同一 $\mathcal K_{d,3}$，两实际腿上均为 $\mathrm{PSD}_9$。
+源箭头分别保持 $A_{\mathcal D},E,B_{\mathcal D}$。
+对上包络，这一点也可直接读成：若 $f:w\to v$、$e:v\to\mathbf1$
+为源箭头，则 $ef$ 仍为源效应，故 $S(f)A_{\mathcal D}(w)\subseteq A_{\mathcal D}(v)$。
+该推理对所有旁观字成立，只预合成效应，不张量两个任意上包络元素。
+
+所需的单实际腿 dyad 排除准确复用VIII124.2的秩三压回论证，
+其在这里的前件全由VIII123.2供给：
+$\mathrm{SN}_2(d,3)\subseteq\mathcal K_{d,3}$、量子矩形合同正性，
+以及 $\mathcal K_{3,3}$ 的整个迹一基之 $P$ 上界 $2/3$。
+具体地，若 $\xi\xi^*\in\mathcal K_{d,3}$ 且 $r_A(\xi)=3$，
+其 $d\times3$ 系数矩阵 $C$ 有复左逆 $L$；源量子合同
+$\operatorname{Ad}_L$ 将此 dyad 送成 $\Omega_3$，
+迫使 $P=\Omega_3/3\in\mathcal K_{3,3}$，与该上界矛盾。
+这只是将既有单腿论证的每个前件对应到固定源，不调用 allN 的高阶角结论。
+
+现设 $\psi\psi^*\in\mathscr A_n$ 且 $r_A(\psi)=3$。
+对每个复两行矩阵 $L:B\to\mathbb C^2$，取二维等距嵌入
+$J:\mathbb C^2\to B$，使 $\operatorname{ran}L^*\subseteq\operatorname{ran}J$，
+则 $L=(LJ)J^*$。VIII123.2(v)分别支付 $\operatorname{Ad}_{J^*}:B\to Q_2$
+和后接的量子合同 $\operatorname{Ad}_{LJ}$；连同旁观、重括号及置换，给源箭头
+
+$$
+Q_nAB\longrightarrow Q_nA Q_2\simeq Q_{2n}A,
+\qquad
+\psi\psi^*\longmapsto\psi_L\psi_L^*,
+\quad \psi_L=(I_Q\otimes I_A\otimes L)\psi,
+\tag{134.3}
+$$
+
+其中向量的最后识别只作规范置换。
+输出在 $A_{\mathcal D}(Q_{2n}A)=\mathcal K_{2n,3}$，
+故由单腿排除，其 $A\mid Q_nQ_2$ 秩至多二，包括零输出。
+直接应用VIII124.3的两行刚性引理，参数取该处 $Q=\mathbb C^n$，
+得到 $\psi=q_Q\otimes\chi_{AB}$，其中 $\chi$ 的 Schmidt 秩为三，
+从而 $r_Q(\psi)=1$。
+若先有 $r_B(\psi)=3$，用原位置置换交换 $A,B$ 后应用同一引理。
+若两者都不是三，二者均至多二。由此得到(134.2)最左端蕴含最右端。
+
+反向须取得源成员，而不只取得 $E$ 成员。
+若 $r_A,r_B\le2$，分别取支撑的复等距嵌入
+$J_A:\mathbb C^{d_A}\to\mathbb C^3$、
+$J_B:\mathbb C^{d_B}\to\mathbb C^3$，其中 $1\le d_A,d_B\le2$。
+存在纯量子向量 $\widetilde\psi\in\mathbb C^n\otimes\mathbb C^{d_A}
+\otimes\mathbb C^{d_B}$，使
+$\psi=(I_Q\otimes J_A\otimes J_B)\widetilde\psi$。
+先用量子源态 $\widetilde\psi\widetilde\psi^*$，再分别使用VIII123.2(v)
+的源嵌入 $\operatorname{Ad}_{J_A},\operatorname{Ad}_{J_B}$，即得源态
+$\psi\psi^*$。这两个嵌入各自作用于一条实际输出，不是集体实际 CP。
+
+若 $r_Q=1$，写 $\psi=q\otimes\chi$。
+VIII123.2(iv)已给每个 $\chi\chi^*$ 的实际两腿源态构造：
+一个原实际杯后接一体复矩形合同，并按需要运输实际标签。
+$qq^*$ 也是量子源态；这两个源态箭头的张量积是源态箭头，
+恰给 $\psi\psi^*$。
+两种情况下均已属于 $\mathscr B_n$，不需要任意两个 $E$ 输入的最小锥界。
+最后用 $\mathscr B_n\subseteq\mathscr C_n\subseteq\mathscr A_n$
+闭合所有等价。
+
+为保持原 proper 预算，取 $c_L=\max(1,\|L\|_{\rm op})$，
+用 $L/c_L$ 实现；归一 dyad 的实际输出质量为
+$\|\psi_L\|^2/(c_L^2\|\psi\|^2)\in[0,1]$。
+上述左逆合同也作同样正缩放，矛盾仍由非零 $\Omega_3$ 射线得到。
+支撑嵌入保迹，所有压缩的迹亏损与 proper 效应延拓连同旁观者
+均沿VIII123.2(v)、式(123.14)使用。
+未缩放 dyad 的恢复只是正锥数乘，不声称成功分支质量为一或新增物理制备。证毕。
+
+### 134.B 原规范三角形的输入秩一消费者
+
+**推论 134.3（原压缩输入秩至多一时无规范负三角形）。**
+取132.1的任意合法 $x,y,z,Y,W$，以132.3的原压缩 $q$ 令
+$H=qx\in\mathscr C_2=E(Q_2A_1A_2)$。
+若普通环境矩阵秩 $\operatorname{rank}H\le1$，则
+
+$$
+M^0_{Y,W}(x,y,z)
+ =(\mathrm{id}_2\otimes\Lambda)(H)\succeq0,
+\qquad
+\operatorname{Tr}\bigl(F^TM^0_{Y,W}(x,y,z)\bigr)\ge0
+\quad(F\succeq0).
+\tag{134.4}
+$$
+
+量词保留任意有限无界 $\ell,m$ 和其余数据的整个原输入锥；
+不要求 $y,z$ 为 PSD，也不要求 $Y,W$ 为 $\mathrm{SN}_2$。
+此处是输入 $qx$ 的秩，与132.4中一个条件联合输出的秩不同。
+
+证明。若 $H=0$，结论由线性得到。
+否则 $H$ Hermitian、秩一，且VIII123.2的严格正迹给 $\operatorname{Tr}H>0$。
+因此 $H=\psi\psi^*$ 对某非零复向量 $\psi$ 成立，
+不是负的秩一矩阵。由134.2，$H\in\mathscr B_2$。
+对每个固定的合法 $y,z,Y,W$，直接应用132.3第1项的源完全正性，
+再用(132.13)的精确恒等式即得 PSD。
+全转置将 PSD 效应 $F$ 送到 PSD 矩阵 $F^T$，故最后读数非负。
+只在效应上使用这个普通矩阵事实，不给 $E$ 添加转置正性或普通 CP 层。
+全部源旁观和高中间次数由132.3第1项的原量词保留；
+proper 帽与输出质量仍取132.5的原归一，未对零质量作条件化。证毕。
+
+### 134.C 数学归属与适用边界
+
+**约定 134.4（源前件桥的归属与未决域）。** 134.2—134.3是固定源下的
+仓内综合推导（repo-derived）；新增承重内容是只用已付源箭头，
+从上包络中的两实际腿 dyad 得到下包络成员，再直接消费132.3第1项。
+VIII124.4的分类形状、VIII124.3的两行线性刚性、VIII123.2的低类型与
+双向源角、VIII126的原端口标准形和132.3的源完全正性均是已有供应。
+不另计 Schmidt 分解、线性支撑、矩形左逆或源效应预合成为新数学内容。
+
+De les Coves—van der Eyden—Netzer，
+[*Beyond Operator Systems*, arXiv:2312.13983v1][T134Beyond]，
+定义3.1—3.2及引理3.5(i)—(iii)给出 stem、源上下包络的对偶及源箭头正性；
+本节以VIII123的固定 $\mathcal D,S$ 实例化这些概念，
+不由一般锥系统结论推断任意上包络元素的张量闭包。
+Terhal—Horodecki，
+[*A Schmidt number for density matrices*, quant-ph/9911117v4][T134Schmidt]，
+定义1给出 Schmidt 数的 dyad 分解约定，纯态时即 Schmidt 秩。
+该文处理普通量子密度矩阵，不供应本源的混合矩阵锥相等；
+两行刚性的准确供应仍是VIII124.3。
+上述来源不被归为本源桥的既有完整证明，也不据此主张外部优先权。
+
+(134.2)只比较普通正 dyad 截面，既不推出
+$\mathscr A_n=\mathscr C_n=\mathscr B_n$，也不分类任一锥的全部极端射线。
+普通 PSD 混合矩阵的谱分量不自动属于这些锥，不能逐谱分量推广本定理。
+134.3只支付指定压缩输入秩至多一的规范族；
+全部复帽与其它 $\mathrm{SN}_2$ 门户的传递仍准确取132.2，
+输入秩条件须施于其中实际产生的压缩输入，不能从未变换的 $qx$ 自动传递。
+本节没有构造新的未知锥族，也没有取得同源负三角形。
+
+对整个 $\mathscr C_2$ 的(132.11)、VIII(128.28)的全相干强度、
+其余原三角形、完整 R3/R4、同源六份及全部有限原产品律仍未解决。
+原种子相位、真零扩张、整个普通对偶与 proper 预算均保持原条件。
+XI148的忠实 PSD 截面及其各项 EB3、$\mathsf{Conn}$、ZC 前件
+不由本节取得，也不被用来断言这些混合锥为 PSD。
+实际来源、事件与仪器取得、物理动力学、连续时间、物理钟、
+Hamiltonian、能量与 $\hbar$ 的实现及标定仍取132.7的未决合同。
+
+[T134Beyond]: https://arxiv.org/html/2312.13983v1
+[T134Schmidt]: https://arxiv.org/html/quant-ph/9911117v4
+
+## 追加锚（本行以下为增补区）

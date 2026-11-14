@@ -1,0 +1,13 @@
+**Definition 7.1 (terminal-curve state-register cost).** For an integer $H\ge1$ and fixed $0\le\varepsilon<1/2$, let
+
+$$
+\begin{aligned}
+S^*_\varepsilon(H)
+ &=\min\left\{S\in\mathbb N_{\ge1}:\ \exists(\alpha,P,b)\text{ as in (1.4)},\quad \max_{0\le n<H}|\alpha P^n b-p_n|\le\varepsilon\right\},\\
+B^*_\varepsilon(H)&=\left\lceil\log_2 S^*_\varepsilon(H)\right\rceil.
+\end{aligned}
+\tag{7.1}
+$$
+
+The minimum is over the same block-response comparator and the same unconditional terminal event as Definitions 1.2–1.3. Its nonempty feasible set is supplied by the finite counter in Corollary 3.1. The full persistent state register is charged; fixed exact-real coefficients in the transition and terminal tables have the same convention as (1.4). Table description length and coefficient precision, their acquisition, computation and physical realization are additional resources not assigned a cost by (7.1). A retained archive, seed or clock that affects future kernels or reports remains part of the charged persistent state.
+
