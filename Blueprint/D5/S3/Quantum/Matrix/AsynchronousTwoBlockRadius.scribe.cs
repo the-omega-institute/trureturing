@@ -55,9 +55,6 @@ internal sealed class AsynchronousTwoBlockRadiusDocument : IScribeDocumentDefini
     private static Formula Equal(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Less(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
     private static Formula And(Formula a,Formula b)=>new Formula.Logic(Par(a),FormulaLogicOperator.And,Par(b));
-    private static Formula Complexify(Formula matrix) => At(Qualified("Matrix","map"),matrix,
-        At(Qualified("DFunLike","coe"),At(Qualified("algebraMap"),Reals(),Complexes())));
-    private static Formula Spectrum(Formula matrix) => At(Qualified("spectrum"),Complexes(),matrix);
     private static Formula X(string name)=>F.Id(name);
     private static Formula Qualified(params string[] parts)
     {
@@ -70,13 +67,10 @@ internal sealed class AsynchronousTwoBlockRadiusDocument : IScribeDocumentDefini
     private static Formula FinOf(Formula n)=>At(Qualified("Fin"),n);
     private static Formula Naturals()=>Seq(Mathbb,Grp(F.Id("N")));
     private static Formula Reals()=>Seq(Mathbb,Grp(F.Id("R")));
-    private static Formula Complexes()=>Seq(Mathbb,Grp(F.Id("C")));
     private static Formula Par(Formula x)=>Seq(Open,x,Close);
     private static Formula Typed(Formula x,Formula t)=>Par(Seq(x,Colon,Sp,t));
     private static Formula All(string name,Formula type,Formula body)=>Seq(Forall,Sp,Typed(X(name),type),Comma,Sp,Par(body));
     private static Formula Arrow(Formula a,Formula b)=>new Formula.TypeArrow(Par(a),Par(b));
     private static Formula Add(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Add,b);
     private static Formula LE(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThanOrEqual,b);
-    private static Formula NotEqual(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.NotEqual,b);
-    private static Formula Member(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.MemberOf,b);
 }
