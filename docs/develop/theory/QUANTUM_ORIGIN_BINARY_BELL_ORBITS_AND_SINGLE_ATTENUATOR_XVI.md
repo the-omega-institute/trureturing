@@ -4324,3 +4324,304 @@ The repository-derived addition here is the signed support/lineality obstruction
 [Q173W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
 
 ## 追加锚（本行以下为增补区）
+
+
+## 174. Zero overlap as a binary support relation
+
+### 174.1 The same actual domain and a two-element condition
+
+**Definition 174.1 (binary zero overlap).** Retain exactly [Definition 173.1][Q174XVI], including every finite actual complex Hermitian carrier, closed convex cone, complete trace dual, minimum/maximum partition, positive actual permutation with positive inverse, and the scalar object. Keep the Bell resource $B=\Omega\Omega^*$ of (173.2) and the unchanged ternary seed $\mathsf T$ of (173.5). Initially the ordinary trace is only an algebraic functional; neither properness nor trace positivity is supplied.
+
+For $K\subseteq\operatorname{Herm}_d(\mathbb C)$, define
+
+$$
+\mathsf Z(K):\quad
+X\in K,\ Y\in K^*,\ \operatorname{Tr}(XY)=0
+\quad\Longrightarrow\quad XY=0.
+\tag{174.1}
+$$
+
+The quantifiers cover the **whole** cone and its complete ambient trace dual. For Hermitian matrices, $XY=0$ is equivalent to orthogonality of their ordinary complex ranges. Thus (174.1) is a constraint on the zero relation between an object and a test. The product expresses matrix support; it is not an operation assumed to preserve any cone. The binary candidate is
+
+$$
+\mathsf Q_0:\qquad B\in C_2\cap C_2^*,\qquad \mathsf Z(C_2).
+\tag{174.2}
+$$
+
+It supplies neither the signed decomposition of 173.2, original Bell extremality, nor a positive matrix operation. The matrix-support geometry and complex carriers remain part of its stated domain.
+
+### 174.2 A projection dichotomy without prior cone properness
+
+**Theorem 174.2 (zero overlap fixes a transpose-reciprocal matrix cone).** For $d\ge1$, let $K\subseteq\operatorname{Herm}_d(\mathbb C)$ be a closed convex cone. If
+
+$$
+K^*=K^{\mathsf T},\qquad \mathsf Z(K),
+\tag{174.3}
+$$
+
+then $K=\operatorname{PSD}_d$ or $K=-\operatorname{PSD}_d$. Any nonzero ordinary positive rank-one member selects the positive choice. No pointedness, generation, positive trace or identity membership is needed.
+
+**Proof.** Equip the real Hermitian space with $\langle X,Y\rangle=\operatorname{Tr}(XY)$. Let $P$ be any ordinary rank-one orthogonal projection in this ambient space; it is not assumed to be a native preparation. Moreau's cone decomposition gives
+
+$$
+P=A-B,\qquad A=\Pi_K(P)\in K,\qquad B\in K^*,\qquad
+\operatorname{Tr}(AB)=0.
+\tag{174.4}
+$$
+
+Here $\Pi_K$ is the mathematical nearest-point projection. Precisely, [Moreau, §4.b, printed p.281][Q174M] uses the nonpositive polar $K^\circ=-K^*$ and writes $P=\Pi_K(P)+\Pi_{K^\circ}(P)$; set $B=-\Pi_{K^\circ}(P)$. His §5.b, p.282 proves that this projection is nonexpansive, hence continuous. This mathematical minimizer is not a physical measurement or an assumed positive map.
+
+By (174.1), $AB=0$; taking adjoints also gives $BA=0$. If $v\in\ker P$, then $Av=Bv$, so
+
+$$
+A^2v=ABv=0,\qquad \|Av\|^2=v^*A^2v=0.
+\tag{174.5}
+$$
+
+Consequently both $A$ and $B$ vanish on $\ker P$. Hermiticity puts their ranges in the one-dimensional range of $P$. Write $A=aP$, $B=bP$ with real scalars. Equations (174.4) and $AB=0$ give $a-b=1$, $ab=0$, whose only possibilities are
+
+$$
+(A,B)=(P,0)\quad\text{or}\quad(A,B)=(0,-P).
+\tag{174.6}
+$$
+
+The rank-one orthogonal projections form the connected space $\mathbb{CP}^{d-1}$. This includes $d=1$, where it is a point; in general it is the continuous image of the connected unit sphere. Continuity therefore makes
+
+$$
+P\longmapsto\operatorname{Tr}\Pi_K(P)\in\{0,1\}
+\tag{174.7}
+$$
+
+constant. If its value is one, all positive rank-one projections belong to $K$. Finite spectral sums give $\operatorname{PSD}_d\subseteq K$. Dualizing and using $K^*=K^{\mathsf T}$ and transpose invariance of the usual PSD cone gives the reverse inclusion.
+
+If the value is zero, (174.6) gives every $-P\in K^*$. Spectral sums give $-\operatorname{PSD}_d\subseteq K^*$. Transposing this inclusion gives $-\operatorname{PSD}_d\subseteq K$, while dualizing it gives $K\subseteq-\operatorname{PSD}_d$. Thus equality holds. If a nonzero ordinary positive rank-one member was supplied, its normalized projection belongs to $K$ and is its own nearest point; the constant in (174.7) must be one. $\square$
+
+### 174.3 Relation to signed rank-one resolution
+
+**Proposition 174.3 (equivalent presentations under the earned duality).** On closed convex Hermitian cones satisfying $K^*=K^{\mathsf T}$,
+
+$$
+\mathsf{SR}(K)\quad\Longleftrightarrow\quad\mathsf Z(K)
+\quad\Longleftrightarrow\quad
+K\in\{\operatorname{PSD}_d,-\operatorname{PSD}_d\}.
+\tag{174.8}
+$$
+
+In particular the zero relation may replace the cone-wide finite resolution in the binary candidate, while no inequality in independent axiom counts follows.
+
+**Proof.** Suppose $\mathsf{SR}(K)$. Transpose transports a native signed rank-one resolution to $K^*$, so both sides have such resolutions. For $X\in K$, $Y\in K^*$ with $\operatorname{Tr}(XY)=0$, write $X=\sum_i R_i$, $Y=\sum_j S_j$, with each signed rank-one term in its respective cone. Every $\operatorname{Tr}(R_iS_j)$ is nonnegative by complete duality. Their finite sum is zero, so each is zero. For signed rank-one Hermitian matrices
+
+$$
+R=\sigma vv^*,\quad S=\tau ww^*,\qquad
+\operatorname{Tr}(RS)=\sigma\tau|v^*w|^2,
+\tag{174.9}
+$$
+
+zero trace forces $v^*w=0$, hence $RS=0$. Summing gives $XY=0$ and $\mathsf Z(K)$. Theorem 174.2 gives the next implication, and either signed PSD cone has native signed rank-one resolutions by spectral decomposition. Empty resolutions and zero matrices cause no exception. The support/lineality proof 173.4 remains an independent route from resolution to the same classification. $\square$
+
+### 174.4 The entire finite quantum conclusion
+
+**Theorem 174.4 (binary zero relation and ternary propagation).** On Definition 174.1,
+
+$$
+\mathsf Q_0\quad\Longleftrightarrow\quad
+C_2=\operatorname{PSD}_{n^2},
+\tag{174.10}
+$$
+
+and
+
+$$
+\mathsf Q_0\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad\text{for every finite }N\ge0.
+\tag{174.11}
+$$
+
+**Proof and full supplier correspondence.** The Bell memberships give $C_k^*=C_k^{\mathsf T}$ at every finite block by 173.3. At $k=2$, Theorem 174.2 applies with $d=n^2$; the positive Bell member selects $C_2=\operatorname{PSD}_{n^2}$. Conversely the usual PSD cone has both Bell memberships and (174.1): for PSD $X,Y$, zero trace implies $Y^{1/2}XY^{1/2}=0$, hence $X^{1/2}Y^{1/2}=0$ and $XY=0$. These are the standard PSD support facts also underlying spectral decompositions in 173.6.
+
+Now use the already proved direction from $C_2=\operatorname{PSD}$ in 173.5, namely 171.8–171.10 followed by 166.12. The fixed carrier, all original finite partitions, permutations, reassociation, scalar object and complete duals are unchanged. The binary equality first earns $C_1=\varepsilon\operatorname{PSD}_n$ and all signed properness. The nonzero ordinary positive ternary dyad selects $\varepsilon=+1$. Take the **entire** bases, all extreme points, full proper intervals and all finite unit decompositions (173.20a) at this earned stage. The unchanged minimum flattening rank two and one full leg supply exactly 166.2; no original extremality of that seed is needed. Thus every premise of 166.12 is paid and (174.11) follows. Its converse uses the ordinary full PSD hierarchy and the GHZ vector as in 173.5.
+
+The exact dictionary is consequently 173.6, with $d_N=n^N$, all original spectators, the same trace, and those full menus:
+
+| Recovered definition or relation | Standard finite quantum statement |
+| --- | --- |
+| Whole trace-one original cones | All density matrices on the actual carriers |
+| Complete dual interval and every finite unit decomposition | All effects and POVMs |
+| Original pairing and least pure confirmation | $\operatorname{Tr}(E\rho)$ and $|v^*w|^2$ |
+| Actual finite tensor carrier, joint cone and unit slices | Entangled composition and partial traces |
+| Positivity with every original finite spectator | Rectangular CP/Choi/Kraus correspondence |
+| Whole-input TNI/TP budgets and finite TP-sum families | Mathematical branches, channels and instruments |
+
+The pure geometry is $\mathbb{CP}^{n^N-1}$; the normalized minimal face of every pair of distinct pure rays is the real three-ball (173.22). Event availability, particular updates and continuous time retain the distinct additional premises of 173.10. This application introduces no extra Born, spectral-resolution or operation-preservation premise into (174.2). $\square$
+
+### 174.5 A transported full hierarchy with an extreme Bell ray
+
+**Definition 174.5 (a fixed rational rotation of matrix coordinates).** At local dimension two use the usual Hermitian Pauli basis $I,X,Y,Z$, put $c=4/5$, $s=3/5$, and define the real linear map
+
+$$
+\begin{aligned}
+R(I)&=cI+sZ,& R(Z)&=-sI+cZ,\\
+R(X)&=X,& R(Y)&=Y.
+\end{aligned}
+\tag{174.12}
+$$
+
+For every finite $N$ set
+
+$$
+R_N=R^{\otimes N},\qquad
+\widehat C_N=R_N(\operatorname{PSD}_{2^N}),\qquad
+R_0=\mathrm{id},\quad \widehat C_0=\mathbb R_+.
+\tag{174.13}
+$$
+
+The tensors and matrix coordinates in (174.13) are the actual original ones; the definition does not redefine the ordinary matrix rank or product. On non-Hermitian matrix units, $R$ and $R^{-1}$ denote the unique complex-linear extensions of their real-linear Hermitian maps, obtained by writing a matrix uniquely as $A+iB$ with $A,B$ Hermitian. This convention supplies no positive operation.
+
+**Theorem 174.6 (full positive-trace countermodel to the Bell-extreme shortcut).** The whole hierarchy (174.13) satisfies Definition 174.1's weak structural domain, and additionally every cone is pointed and generating with strictly positive ordinary trace. It has
+
+$$
+B\in\widehat C_2\cap\widehat C_2^*,\qquad
+\mathbb R_+B\text{ an extreme ray of }\widehat C_2,
+\qquad \mathsf T.
+\tag{174.14}
+$$
+
+Nevertheless $\widehat C_2\ne\operatorname{PSD}_4$ and $\mathsf Z(\widehat C_2)$ fails, even on a native trace-one state paired with a full proper effect. In particular original Bell extremality cannot replace the resolution or zero-support condition in the fixed actual-coordinate reconstruction.
+
+**Proof.** The four Pauli matrices are orthogonal and have equal squared Hilbert–Schmidt norm. Since $c^2+s^2=1$, $R$ is orthogonal for the real trace inner product. It commutes with ordinary transpose: only $Y$ changes sign under transpose and it is fixed by $R$. Thus $R_N$ is orthogonal and commutes with full transpose. The usual PSD self-duality gives the **complete** dual equality
+
+$$
+\widehat C_N^*=R_N(\operatorname{PSD}_{2^N})
+=\widehat C_N=\widehat C_N^{\mathsf T}.
+\tag{174.15}
+$$
+
+Invertible real linear images preserve closedness, convexity, pointedness and generation. For an arbitrary finite split $a+b$, products satisfy $R_a(P)\otimes R_b(Q)=R_{a+b}(P\otimes Q)$, proving the minimum bound after conic closure. For every $F=R_a(E)\in\widehat C_a^*$, $G=R_b(D)\in\widehat C_b^*$ and $Z=R_{a+b}(Q)\in\widehat C_{a+b}$, with $E,D,Q$ PSD, orthogonality gives
+
+$$
+\operatorname{Tr}[(F\otimes G)Z]
+=\operatorname{Tr}[(E\otimes D)Q]\ge0.
+\tag{174.16}
+$$
+
+This proves the maximum bound for the entire duals. Every actual permutation commutes with the identical local tensor powers $R_N$ and is an order isomorphism on PSD; it and its inverse therefore preserve $\widehat C_N$. Canonical reassociation changes neither the tensor map nor the joint cone. These arguments include zero blocks and the scalar case.
+
+The ordinary trace is strictly positive because
+
+$$
+D:=R^{-1}(I)=\operatorname{diag}(1/5,7/5)\succ0,
+\qquad
+\operatorname{Tr}R_N(P)=\operatorname{Tr}(D^{\otimes N}P)>0
+\quad(0\ne P\succeq0).
+\tag{174.17}
+$$
+
+All bases, complete duals and full mathematical menus are therefore available. Explicitly the entire proper interval consists of $F=R_N(E)$ with $0\preceq E\preceq D^{\otimes N}$; all finite menus correspond to PSD families with sum $D^{\otimes N}$. No selected effect set is used.
+
+The Bell dyad is
+
+$$
+B=\tfrac12(I\otimes I+X\otimes X-Y\otimes Y+Z\otimes Z).
+\tag{174.18}
+$$
+
+The rotation fixes $I\otimes I+Z\otimes Z$ and fixes the other two terms, so $R_2(B)=B$. Equations (174.13) and (174.15) give both Bell memberships. Since $B$ generates an ordinary extreme PSD ray and $R_2$ is an order isomorphism fixing $B$, that same native Bell ray is extreme.
+
+Write $P_j=|j\rangle\langle j|$. Directly,
+
+$$
+A_0:=R(P_0)=\operatorname{diag}(c,-s),\qquad
+A_1:=R(P_1)=\operatorname{diag}(s,c).
+\tag{174.19}
+$$
+
+In particular the native binary extreme generator and complete-dual test
+
+$$
+\begin{aligned}
+U&=A_0\otimes A_1=\operatorname{diag}(12,16,-9,-12)/25,\\
+F&=A_1\otimes A_1=\operatorname{diag}(9,12,12,16)/25
+\end{aligned}
+\tag{174.20}
+$$
+
+satisfy
+
+$$
+\operatorname{Tr}(UF)=0,\qquad
+UF=\operatorname{diag}(108,192,-108,-192)/625\ne0.
+\tag{174.21}
+$$
+
+The matrix $U=R_2(P_0\otimes P_1)$ is extreme in the native cone, has ordinary matrix rank four and is indefinite, so $\widehat C_2$ is not ordinary PSD. Moreover $R_2^{-1}(F)=P_1\otimes P_1\succeq0$ and
+
+$$
+R_2^{-1}(I-F)=\operatorname{diag}(1,7,7,24)/25\succeq0.
+\tag{174.22}
+$$
+
+Thus $F$ is a proper effect in the **whole** native interval. Since $\operatorname{Tr}U=7/25$, $\rho=25U/7$ is a native state with $\operatorname{Tr}(\rho F)=0$ but $\rho F\ne0$. Its zero readout arises from cancellation in the ordinary matrix coordinates, not support orthogonality. All native proper readouts are nevertheless valid nonnegative probabilities by complete duality and (174.17).
+
+It remains to supply the precise ternary premise. Put
+
+$$
+\epsilon=1/10,\qquad \psi=|000\rangle+\epsilon|111\rangle.
+\tag{174.23}
+$$
+
+Both coefficients are nonzero, so every flattening has rank two, the full local dimension. The inverse map gives
+
+$$
+D_0=R^{-1}(P_0)=\operatorname{diag}(c,s),\qquad
+D_1=R^{-1}(P_1)=\operatorname{diag}(-s,c),\qquad
+R^{-1}(E_{01})=E_{01}.
+\tag{174.24}
+$$
+
+Consequently
+
+$$
+R_3^{-1}(\psi\psi^*)
+=D_0^{\otimes3}+\epsilon^2D_1^{\otimes3}
++\epsilon(E_{01}^{\otimes3}+E_{10}^{\otimes3}).
+\tag{174.25}
+$$
+
+The first term is at least $s^3I$, the second is at least $-\epsilon^2c^3I$, and the norm of the displayed Hermitian off-diagonal sum is one. Hence
+
+$$
+R_3^{-1}(\psi\psi^*)\succeq
+(s^3-\epsilon-\epsilon^2c^3)I
+=\frac{693}{6250}I\succ0.
+\tag{174.26}
+$$
+
+Thus the ordinary rank-one positive dyad $\psi\psi^*$ lies in the interior of the native $\widehat C_3$ and satisfies exactly $\mathsf T$. This proves every assertion, including all finite-level and full-menu requirements. $\square$
+
+### 174.6 What the countermodel decides and what the new relation fixes
+
+**Corollary 174.7 (the earlier extremality question has a negative answer in the actual domain).** The Bell-extreme sufficiency question stated in 172.15 and left undecided in 173.9 is false on their fixed actual all-finite domain, even if ordinary strict trace positivity and cone properness are also required. The countermodel concerns actual PSD equality; it does not deny abstract order-isomorphism to a quantum theory.
+
+**Proof.** Theorem 174.6 meets the two ordinary Bell memberships, original Bell extremality, the unchanged full-leg ternary seed, every finite structural requirement and ordinary trace positivity, but fails the conclusion already at level two. It is therefore a counterexample to that precise implication. It also has an ordinary rank-one dyad in the interior of a higher native cone, and an extreme binary ray of ordinary rank four. Neither direction of identifying ordinary matrix rank with native purity is available from Bell extremality alone.
+
+By construction $R_N^{-1}$ transports every native cone back to a usual PSD cone; it transports the ordinary native trace unit to $D^{\otimes N}$. A further congruence by $(D^{1/2})^{\otimes N}$ yields the standard trace normalization. Thus this is a transported quantum order, with a misalignment relative to the **given** matrix product, supports and rank. Condition (174.1) removes that misalignment through its two-element zero relation. It is not claimed to derive the given matrix representation from an otherwise unspecified ontology. $\square$
+
+**Proposition 174.8 (source scope and the conditional physical theory).** The new zero-relation route and the countermodel preserve the preceding reconstruction's explicit physical and representational limits.
+
+**Proof and attribution.** Theorem 174.2 combines the mature Moreau projection theorem with the connected ambient complex ray space and the supplied zero relation; Moreau's original decomposition and continuity are intermediate inputs, not newly proved convex analysis. Bell transpose reciprocity is 173.3. The binary orientation and finite-frame properness are 171.8–171.10; full-leg propagation is 166.12, with the explicit correspondence in 173.5 and 174.4. Full density-state, POVM, Born, rectangular CP and budget consumers are 173.6 and its Watrous sources, not new proofs of their standard ingredients.
+
+The repository-derived additions are the zero-support presentation and its projective projection dichotomy, together with the explicit rational whole-hierarchy countermodel (174.12)–(174.26) to the stated extremality shortcut. This attribution makes no exhaustive literature or global-originality claim. The zero relation uses the fixed matrix support geometry, so neither the complex field, the ordinary matrix product nor the specified tensor carriers has been made a consequence of Bell alone. The odd-level sign still needs the positive ternary seed; the parity hierarchy 173.8 also satisfies (174.2) and fails that seed.
+
+Under (174.11), mathematical instrument availability, a specified least-disturbing projection update, and continuous Hamiltonian dynamics retain exactly 173.10's separate premises. The nearest-point projection in (174.4) supplies no physical operation, clock or energy calibration. Thus the new simplification replaces one cone-wide decomposition relation with a relation between two elements while leaving those conditions explicit. $\square$
+
+### 174.7 中文白话与几何图景
+
+**命题 174.9（零重叠候选的白话表述）。** 在174.1的固定复矩阵关系空间中，候选 (174.2)–(173.5) 可表述为：贝尔配对既能作为原准备，也能测试整个原锥；一个原对象与一个完整对偶测试若读出恰为零，它们的矩阵支撑就必须真正错开，不能靠内部正负抵消装成“没有重叠”。这条二元关系加原三体种子给出174.4的全部有限量子对应。
+
+**证明与图景。** 把任意一条一维方向放在原锥旁边，取它的数学最近点。零重叠条件使这个落点只能是原方向本身或零，不能落成另一个歪斜分支。所有复射线连成一片，最近点又连续，这个“进或不进”的选择就不能跳变；贝尔已经给出一个进来的正方向，于是全部正方向一起进来，完整对偶再把多余方向排出去。二体锥由此锁成正半定锥，任意两条不同纯射线所张的完整归一面仍是一颗实三维球。原三体种子的正性选定奇数层朝向，满维腿和每切口非乘积性再调用已有传播定理，恢复每个有限层的密度矩阵、玻恩概率与完全正过程。反模型则说明为什么要这条零关系：即使贝尔本身不可再分、三体种子也在，整套量子锥仍能在给定矩阵坐标里转歪；所有原概率合法，零概率却可由矩阵正负项抵消。新的条件把这种伪装锁掉。这里的最近点只服务证明；装置可用性、具体测后更新、时间与能量标度仍各按174.8保留条件。$\square$
+
+[Q174M]: https://www.numdam.org/item/BSMF_1965__93__273_0.pdf
+[Q174XVI]: https://github.com/the-omega-institute/trureturing/blob/32b36deda4c26d281e6c49bd805b44a1615a5740/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+
+## 追加锚（本行以下为增补区）
