@@ -3304,3 +3304,206 @@ $$
 [Q155M]: https://arxiv.org/html/2409.04444v1 "B. Maier, T. Netzer, A Note on the Carathéodory Number of the Joint Numerical Range，Proposition 2.1、Theorem 2.2。"
 
 ## 追加锚（本行以下为增补区）
+
+## 156. 最大混态差距的支撑球与临界三维确认交点
+
+**定义 156.1（同一原域中的最大差距）。** 保留定义155.1的全部原 $V,C,u,K,P,\mathcal E,\mathcal F_p,T_p,D_p,S_p,\mathcal A_p,B_p,\Delta_p$，假设完整 EB3 与字面纯 PR。全部原状态、效应、确认菜单和每个混输入上达到的 minimum 均保留。固定原纯 $p$，本章另有明确的单行前件
+
+$$
+T_p(s)=B_p(s)\qquad(s\in P).
+\tag{XII156.1}
+$$
+
+对原 $f\in\mathcal F_p$，记
+
+$$
+\delta_f=\max_{x\in K}\bigl(B_p(x)-f(x)\bigr),\qquad
+W_p=\operatorname{span}(\mathcal A_p-e_0),\quad e_0\in\mathcal A_p.
+\tag{XII156.2}
+$$
+
+$W_p$ 不依赖 $e_0$ 的选择。$\delta_f>0$ 是本章有关支撑球各条的前件，不断言它在完整模型中可实现。对线性泛函 $n$，$\operatorname{argmax}_K n$、$\operatorname{argmin}_K n$ 始终取整个原 $K$。
+
+**定理 156.2（同一原效应差的整球支撑与严格反向预算）。** 若 $\delta_f>0$，则存在 $e_f\in\mathcal A_p$，使 $n_f=e_f-f$ 满足
+
+$$
+\max_K n_f=\delta_f,
+\qquad F_f:=\operatorname{argmax}_K n_f=D_t
+\quad\text{对某个原纯 }t.
+\tag{XII156.3}
+$$
+
+每个达到 $\delta_f$ 的输入 $x$ 都位于 $\operatorname{ri}F_f$，且
+
+$$
+p\notin F_f,\qquad F_f\cap D_p=\varnothing.
+\tag{XII156.4}
+$$
+
+令 $m_f=\min_K n_f$、$a_f=\max_{D_p}f$。则
+
+$$
+m_f<-a_f<0.
+\tag{XII156.5}
+$$
+
+对每个原纯 $q\in\operatorname{argmin}_K n_f$，同一张归一化原效应满足
+
+$$
+g_f=\frac{\delta_f u-n_f}{\delta_f-m_f}\in\mathcal A_q,
+\quad Z_K(g_f)=F_f=D_q,
+\quad q\notin D_p.
+\tag{XII156.6}
+$$
+
+证明。对紧凸集 $K,\mathcal A_p$ 上的连续双仿射评价 $L(x,e)=(e-f)(x)$，应用 [Sion，Theorem 3.4][Q156S]。它的紧凸、上半连续凹与下半连续凸条件均由这里的有限维紧凸与双仿射性满足，得到
+
+$$
+\delta_f=\max_{x\in K}\min_{e\in\mathcal A_p}L(x,e)
+=\min_{e\in\mathcal A_p}\max_{x\in K}L(x,e).
+\tag{XII156.7}
+$$
+
+两侧都达到。取右侧极小元 $e_f$，任取左侧极大元 $x$，便有
+
+$$
+(e-f)(x)\ge\delta_f\quad(e\in\mathcal A_p),\qquad
+n_f(z)\le\delta_f\quad(z\in K),\qquad n_f(x)=\delta_f.
+\tag{XII156.8}
+$$
+
+这是成熟极小极大定理在本条推导内的应用，不另计为新定理。$n_f(p)=0<\delta_f$，故 $F_f$ 为非空真暴露面。由(XII156.1)，所有纯 $s$ 都满足 $B_p(s)-f(s)\le0$，所以 $x$ 非纯。原真面分类使 $F_f$ 是实际完整三球；球内非纯点恰为其相对内点。又 $n_f|_{D_p}=-f\le0$，直接得到(XII156.4)。
+
+若 $a_f=0$，则原 $f\in\mathcal A_p$，与 $\delta_f>0$ 矛盾，故 $a_f>0$。由于 $n_f|_{D_p}=-f$，有 $m_f\le-a_f<0$。以这两个实际全域极值归一化便给 $g_f\in\mathcal E$、$Z_K(g_f)=F_f$。任何纯极小点 $q$ 满足 $g_f(q)=1$，故 $F_f\subseteq D_q$；完整球为极大真面，所以 $D_q=F_f$。
+
+若 $m_f=-a_f$，在 $D_p$ 上取达到 $a_f$ 的一个原纯点 $r$。则 $n_f(r)=m_f$，前段给 $D_r=F_f$。但 $r\in D_p$ 经原零对称给 $p\in D_r=F_f$，违反(XII156.4)。因此不等式严格。它也排除任何纯极小点属于 $D_p$。证毕。
+
+**定理 156.3（三维斜率包围与唯一混态交点）。** 在定理156.2的条件下，固定所取 $e_f,F_f$ 与任意最大差距点 $x$。选球图 $b:\overline B^3\to F_f$，写 $x=b(z_x)$，并定义
+
+$$
+(e-e_f)(b(z))=(e-e_f)(x)+\gamma_e\cdot(z-z_x),\qquad
+\Gamma_f=\{\gamma_e:e\in\mathcal A_p\}.
+\tag{XII156.9}
+$$
+
+则
+
+$$
+\rho_f\overline B^3\subseteq\Gamma_f,
+\qquad \rho_f=\frac{\delta_f}{1+\|z_x\|}>0.
+\tag{XII156.10}
+$$
+
+若另有 $\dim\operatorname{aff}\mathcal A_p=3$，则 $e_f\in\operatorname{ri}\mathcal A_p$，全部整球零确认在同一个 $x$ 取相同值，并且
+
+$$
+\begin{aligned}
+e(x)&=e_f(x)=B_p(x)\quad(e\in\mathcal A_p),\\
+B_p(b(z))-f(b(z))
+&=\delta_f+\min_{\gamma\in\Gamma_f}\gamma\cdot(z-z_x)
+\le\delta_f-\rho_f\|z-z_x\|.
+\end{aligned}
+\tag{XII156.11}
+$$
+
+因此 $B_p-f$ 在整个原 $K$ 上的最大点唯一；全部限制 $e|_{F_f}$ 的共同相等点在 $F_f$ 内也唯一，恰为 $x$。这两项唯一性均没有宣称 $\Delta_p$ 在整个 $K$ 上只有一个最大点。
+
+证明。$n_f$ 在整个 $F_f$ 上恒为 $\delta_f$，所以 $e-f$ 的球内斜率与 $e-e_f$ 的斜率相同。对每个单位方向 $v$，沿 $z_x-tv$ 到纯球缘 $w$，其中 $0<t\le1+\|z_x\|$。纯行等号与 minimum 达到给某张 $e_w\in\mathcal A_p$，使 $(e_w-f)(b(w))\le0$；而(XII156.8)给 $(e_w-f)(x)\ge\delta_f$。于是 $\gamma_{e_w}\cdot v\ge\delta_f/t\ge\rho_f$。紧凸 $\Gamma_f$ 的支撑半空间刻画给(XII156.10)。此处复用155.4的斜率包围论证，新增定位在同一个全域支撑效应差上。
+
+映射 $R:W_p\to\mathbb R^3$，$h\mapsto\operatorname{grad}(h\circ b)$ 是线性的，且 $R(\mathcal A_p-e_f)=\Gamma_f$。当 $\dim W_p=3$ 时，(XII156.10)使 $R$ 成为线性同构。$0\in\operatorname{int}\Gamma_f$ 因而给 $e_f\in\operatorname{ri}\mathcal A_p$。线性评价 $e\mapsto(e-e_f)(x)$ 由(XII156.8)在这个相对内点取最小值零，故它在整个仿射包络恒为零。这给第一项等号及第二项的准确展开。取(XII156.10)中的 $-\rho_f(z-z_x)/\|z-z_x\|$ 得所写定量下降。
+
+任意全域最大点 $y$ 满足
+
+$$
+\delta_f=B_p(y)-f(y)\le n_f(y)\le\delta_f,
+\tag{XII156.12}
+$$
+
+故 $y\in F_f$；定量下降再迫 $y=x$。若 $F_f$ 上某点 $b(z)$ 使全部 $e$ 相等，取 $e=e_f$ 并用第一项，便有 $\gamma\cdot(z-z_x)=0$ 对整个 $\Gamma_f$ 成立；实心球包围迫 $z=z_x$。证毕。
+
+**定理 156.4（全部原最优效应的共同球与两端约束）。** 仍假设(XII156.1)，令
+
+$$
+\delta=\max_K\Delta_p>0,\qquad \Delta_p(x)=\delta.
+\tag{XII156.13}
+$$
+
+则存在唯一包含 $x$ 为相对内点的实际完整球 $F$，且对每张 $f\in M_p(x)$，均有 $\delta_f=\delta$，可在定理156.2中取 $F_f=F$。全部这些原最优效应的零面是同一个 $\{r\}$，$r\in S_p$。记 $\bar r=2c_p-r$；对每张 $f\in M_p(x)$，每个相应 $e_f$ 与每个原纯极小点 $q\in\operatorname{argmin}_K(e_f-f)$，均有
+
+$$
+\begin{gathered}
+D_q=F,\qquad
+f(q)>-m_f>a_f=f(\bar r)>0,\\
+g_f(p)=g_f(r)=\frac{\delta}{\delta-m_f},\qquad
+g_f(q)=1,\qquad g_f|_F=0.
+\end{gathered}
+\tag{XII156.14}
+$$
+
+若另有 $\dim\operatorname{aff}\mathcal A_p=3$，则对整个实际最优面 $M_p(x)$，上述 $e_f$ 唯一，并定义连续仿射映射
+
+$$
+\Psi_x:M_p(x)\longrightarrow\operatorname{ri}\mathcal A_p,
+\qquad f\longmapsto e_f,
+\qquad (e_f-f)|_F=\delta.
+\tag{XII156.15}
+$$
+
+全部 $e\in\mathcal A_p$ 在同一个 $x$ 相等，每个 $B_p-f$ 的全域最大点均是这个 $x$。不要求 $\Psi_x$ 单射，也不要求不同 $f$ 的纯极小点 $q$ 相同。
+
+证明。任意 $f\in M_p(x)$ 都满足 $B_p-f\le\Delta_p\le\delta$，并在 $x$ 取等，故 $\delta_f=\delta$。定理156.2给 $x\in\operatorname{ri}F_f$；一个凸集的每点只有一个最小面，而这里 $x$ 非纯，所以所有 $F_f$ 都是同一实际球 $F$。定理152.2在这个严格差距点给全部 $M_p(x)$ 的共同原单点零 $r\in S_p$。
+
+$f|_{D_p}$ 是非负仿射函数，零于球缘 $r$ 且不恒零；球上该形式使其最大值恰在对径点 $\bar r$，故 $a_f=f(\bar r)>0$。定理156.2给 $m_f<-a_f$、$q\notin D_p$。$e_f$ 的整个零面恰为 $D_p$，所以
+
+$$
+f(q)=e_f(q)-m_f>-m_f>a_f.
+\tag{XII156.16}
+$$
+
+又 $n_f(p)=n_f(r)=0$，直接从同一原 $g_f$ 的定义得到(XII156.14)。这同时控制原确认点、共同零点、整个支撑球和反向极小标签，没有更换原效应区间。
+
+在三维分支，156.3已给每个 $e_f$ 属于相对内部及全部确认在 $x$ 相等。若 $e,e'\in\mathcal A_p$ 都是相应极小极大元，则 $(e-e')|_F=0$；156.3的梯度同构 $R$ 迫 $e=e'$。相同同构还给 $e_f$ 对 $f|_F$ 的仿射连续依赖。更直接地，若 $f_1,f_2\in M_p(x)$，则 $e=\lambda e_{f_1}+(1-\lambda)e_{f_2}$ 对 $f=\lambda f_1+(1-\lambda)f_2$ 满足 $e-f\le\delta u$ 且在 $F$ 上取等，故唯一性给 $\Psi_x(f)=e$。有限维仿射表达给连续性。每个 $B_p-f$ 的唯一最大点由156.3供应。证毕。
+
+**定理 156.5（完整菜单差距的球内唯一最大与线性下降）。** 在定理156.4的临界三维分支内，$\Delta_p$ 在同一颗实际 $F$ 内只有一个达到全域最大值 $\delta$ 的点，恰为 $x$。取该球图 $b$、$x=b(z_x)$，存在 $\eta,\varepsilon>0$，使
+
+$$
+0<\|h\|<\varepsilon
+\quad\Longrightarrow\quad
+\Delta_p(b(z_x+h))\le\delta-\eta\|h\|.
+\tag{XII156.17}
+$$
+
+这里取 $\varepsilon<1-\|z_x\|$，故所写输入仍在整个原球内。没有断言其他实际球上不存在另一个全域最大点。
+
+证明。记 $t=T_p(x)$，并在同一球图中令
+
+$$
+\Sigma_A=\{\operatorname{grad}(e\circ b):e\in\mathcal A_p\},\qquad
+\Sigma_M=\{\operatorname{grad}(f\circ b):f\in M_p(x)\}.
+\tag{XII156.18}
+$$
+
+由156.3的斜率同构，$\mathcal A_p$ 到 $\Sigma_A$ 是仿射同构。156.4的连续映射 $\Psi_x$ 将紧的整个原最优面送入 $\operatorname{ri}\mathcal A_p$，而 $(e_f-f)|_F=\delta$ 使对应斜率相同。因此 $\Sigma_M$ 是 $\operatorname{int}\Sigma_A$ 的紧子集，存在 $\eta_0>0$，使 $\Sigma_M+\eta_0\overline B^3\subseteq\Sigma_A$。
+
+全部整球零确认在 $x$ 等值，故准确有 $B_p(b(z_x+h))=t+\delta+\min_{\alpha\in\Sigma_A}\alpha\cdot h$。对完整原菜单，紧性给一致的一阶下包络展开
+
+$$
+T_p(b(z_x+h))=t+\min_{\beta\in\Sigma_M}\beta\cdot h+o(\|h\|).
+\tag{XII156.19}
+$$
+
+具体地，邻近输入的任意原最优效应 $f_h$ 的聚点都属于 $M_p(x)$：由原菜单紧性、固定 $T_p$ 连续及最优取等，极限满足 $f(x)=t$。因此其斜率到紧集 $\Sigma_M$ 的距离一致趋零，且 $f_h(x)\ge t$，给所写展开的下界；直接使用 $M_p(x)$ 中的效应给上界。这一步遍历整个原菜单，并未把 $T_p$ 假定为仿射。
+
+斜率的统一内余量给 $\min_{\Sigma_A}\alpha\cdot h\le\min_{\Sigma_M}\beta\cdot h-\eta_0\|h\|$。相减并缩小 $\varepsilon$，取 $\eta=\eta_0/2$，便得(XII156.17)。若 $y\in F$ 也达到全域 $\delta$，纯行等号先排除纯 $y$。对达到 $T_p(y)$ 的原效应应用156.3，全部 $\mathcal A_p$ 必在 $y$ 等值；同一 $F$ 内该交点唯一，故 $y=x$。证毕。
+
+**范围 156.6（候选、未决关系与完整中文图景）。** 完整新入口候选仍为155.1的 EB3、字面纯 PR 与 $\mathsf{MD}$：每张原确认效应，都有一张仍确认同一原纯点且将其整个排除球清零的原效应作正序下界。155.5已证明，在全部原状态、效应、完整菜单和混输入达到的原域中，该候选等价于同原 $C,u$ 的复三能级静态结构；本章不重复该分类。单行前件(XII156.1)不是裸 EB3+PR 已自动取得的关系，临界三维条件也没有成为原模型的定理。
+
+新增的 repo-derived 推导是：同一原效应差的整个极大面、严格反向预算、临界三维时的唯一混态交点，以及整个实际最优面的共同支撑球、仿射对应和实际菜单差距的球内线性下降。极小极大、相对内部、球上非负仿射函数和支撑半空间均为成熟中间工具；不声称全球原创、最少公理或独立假设数减少。
+
+尚未证明原比较互易能禁止(XII156.14)—(XII156.15)这一联合构型；也未构造实现它的完整 EB3+PR 模型。特别地，$g_f$ 仍可只给比较值上界，不能未经证明将其替换成 $T_q$ 的全域 least；不同菜单成员的反向极小标签仍可变化。纯差距分支与整球并合分支仍按152、155保留。这里没有引入154的整个 $\dim V\le9$ 前件，也没有从其相对四维图取得全域 Conn。实际仪器、复合、全旁观 CP、物理钟、Hamiltonian、能量与数值 $\hbar$ 仍各需独立合同。
+
+白话上，仍拿同一块完整状态体和全部原尺来比较：如果纯点上整球清零尺已经够用，混点上却还有漏差，那么最大漏差必由同一张“尺的差”托在另一颗完整球上；这张差尺反向最深处的纯点，又确实以这颗球为自己的整个排除球。若整球确认族恰有三个独立差值，所有这些尺必在球内同一个混点相交，任何方向离开它，每张固定测试的差距都严格下降；将全部最低尺一起比较，实际菜单差距在这颗球内也只有这一个最大点，并在附近线性下降。再把全部最低尺一起看，它们共用旧球上的同一个零点，各自的反向极小标签都在旧球外，而且同一张最低尺在那里读得比旧球上任何点都高。我们得到的是必须同时满足的几何关系，尚未证明这幅构型不可能；因此“两两可比较、交换双方数值不变”能否独自支付最后的共同零关系，仍是原问题。
+
+[Q156S]: https://msp.org/pjm/1958/8-1/pjm-v8-n1-p14-s.pdf "Maurice Sion, On general minimax theorems, Pacific Journal of Mathematics 8 (1958), 171–176, Theorem 3.4；连续双仿射紧凸情形。"
+
+## 追加锚（本行以下为增补区）
