@@ -8,6 +8,10 @@
 
 import Mathlib.Combinatorics.SimpleGraph.Matching
 import Mathlib.GroupTheory.Perm.Cycle.Concrete
+import Mathlib.Order.Setoid.Basic
+import Mathlib.Combinatorics.SimpleGraph.Operations
+import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+import Mathlib.Data.Fin.Rev
 import D5.S3.Combinatorics.Graph.PlanarMatching.RotationFaces
 
 set_option autoImplicit false
@@ -523,5 +527,187 @@ private theorem forget_fiber (hn : 3 ≤ Fintype.card V) {F : SimpleGraph V}
   · rintro (rfl | rfl)
     · rfl
     · exact forget_reverse hn a
+
+private def reversalSetoid (F : SimpleGraph V) : Setoid (Lift F) where
+  r a b := a = b ∨ a = reverseLift b
+  iseqv := by
+    refine ⟨fun a => Or.inl rfl, ?_, ?_⟩
+    · intro a b h
+      rcases h with h | h
+      · exact Or.inl h.symm
+      · right
+        rw [h,reverse_involutive]
+    · intro a b c hab hbc
+      rcases hab with rfl | hab
+      · exact hbc
+      · rcases hbc with rfl | hbc
+        · exact Or.inr hab
+        · left
+          rw [hab,hbc,reverse_involutive]
+
+private noncomputable def reversalQuotient (hn : 3 ≤ Fintype.card V)
+    (F : SimpleGraph V) : Quotient (reversalSetoid F) ≃ CompletedGraph F :=
+  (Quotient.congrRight (fun a b => (forget_fiber hn b a).symm)).trans
+    (Setoid.quotientKerEquivOfSurjective _ (forget_surjective hn F))
+
+private theorem reversalQuotient_apply (hn : 3 ≤ Fintype.card V)
+    (F : SimpleGraph V) (l : Lift F) :
+    reversalQuotient hn F (Quotient.mk _ l) = forget hn l := rfl
+
+private def restrictLift {F G : SimpleGraph V} (h : F ≤ G) (l : Lift G) : Lift F where
+  E x y := F.Adj x y ∧ l.E x y
+  σ := l.σ
+  edge _ _ he := he.1
+  orient x y he := (l.orient x y (h he)).elim
+    (fun hd => Or.inl ⟨he,hd⟩) (fun hd => Or.inr ⟨he.symm,hd⟩)
+  antisymm _ _ he he' := l.antisymm _ _ he.2 he'.2
+  outgoing _ _ _ he he' := l.outgoing he.2 he'.2
+  incoming _ _ _ he he' := l.incoming he.2 he'.2
+  full := l.full
+  extension _ _ he := l.extension _ _ he.2
+
+private def edgeEvent (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) (u v : V) :=
+  {l : Lift F // (forget hn l).val.Adj u v}
+
+private def restrictEdge (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+    (u v : V) (huv : u ≠ v) (l : Lift (F ⊔ edge u v)) : edgeEvent hn F u v := by
+  let r := restrictLift le_sup_left l
+  refine ⟨r, ?_⟩
+  have h : (F ⊔ edge u v).Adj u v := Or.inr ((edge_adj ..).mpr ⟨Or.inl ⟨rfl,rfl⟩,huv⟩)
+  exact (shadow_adj hn l.σ l.full u v).mpr
+    ((l.orient u v h).elim (fun he => Or.inl (l.extension _ _ he))
+      (fun he => Or.inr (l.extension _ _ he)))
+
+private def expandEdge (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+    (u v : V) (l : edgeEvent hn F u v) : Lift (F ⊔ edge u v) := by
+  refine canonicalLift hn (F ⊔ edge u v) l.val.σ l.val.full ?_
+  intro x y h
+  apply (shadow_adj hn l.val.σ l.val.full x y).mp
+  have hle : F ⊔ edge u v ≤ (forget hn l.val).val := by
+    apply sup_le
+    · exact (forget hn l.val).property.2.2
+    · exact (edge_le_iff ..).mpr (Or.inr l.property)
+  exact hle h
+
+private def edgeEventEquiv (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+    (u v : V) (huv : u ≠ v) : Lift (F ⊔ edge u v) ≃ edgeEvent hn F u v where
+  toFun := restrictEdge hn F u v huv
+  invFun := expandEdge hn F u v
+  left_inv _ := lift_ext hn rfl
+  right_inv _ := Subtype.ext (lift_ext hn rfl)
+
+private theorem edgeEvent_equations (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+    (u v : V) (huv : u ≠ v) (l : Lift (F ⊔ edge u v)) :
+    let r := (edgeEventEquiv hn F u v huv l).val
+    r.σ = l.σ ∧ (∀ x y, r.E x y ↔ F.Adj x y ∧ l.E x y) ∧
+      (forget hn r).val = (forget hn l).val ∧
+      (∀ x y, (forget hn r).val.Adj x y ↔ r.σ x = y ∨ r.σ y = x) ∧
+      (edgeEventEquiv hn F u v huv (reverseLift l)).val = reverseLift r := by
+  refine ⟨rfl,fun _ _ => Iff.rfl,rfl,?_,?_⟩
+  · exact shadow_adj hn l.σ l.full
+  · exact lift_ext hn rfl
+
+private def reverseEvent (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+    (u v : V) (l : edgeEvent hn F u v) : edgeEvent hn F u v :=
+  ⟨reverseLift l.val,by rw [forget_reverse]; exact l.property⟩
+
+private theorem edgeEvent_inverse_equations (hn : 3 ≤ Fintype.card V)
+    (F : SimpleGraph V) (u v : V) (huv : u ≠ v) (l : edgeEvent hn F u v) :
+    let e := edgeEventEquiv hn F u v huv
+    (e.symm l).σ = l.val.σ ∧
+      (∀ x y, (e.symm l).E x y ↔ (F ⊔ edge u v).Adj x y ∧ l.val.σ x = y) ∧
+      (forget hn (e.symm l)).val = (forget hn l.val).val ∧
+      e (reverseLift (e.symm l)) = reverseEvent hn F u v l ∧
+      (∀ k : Lift (F ⊔ edge u v), e k = l ↔ k = e.symm l) := by
+  refine ⟨rfl,fun _ _ => Iff.rfl,rfl,?_,?_⟩
+  · exact Subtype.ext (lift_ext hn rfl)
+  · intro k
+    exact (edgeEventEquiv hn F u v huv).apply_eq_iff_eq_symm_apply
+
+private theorem original_event (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V)
+    (_hforest : F.IsAcyclic) (_hdegree : ∀ v, F.degree v ≤ 2) :
+    Function.Surjective (forget hn (F := F)) ∧
+    (∀ a b : Lift F, forget hn b = forget hn a ↔ b = a ∨ b = reverseLift a) ∧
+    Function.Involutive (@reverseLift V F) ∧
+    (∀ a : Lift F, a ≠ reverseLift a) ∧
+    (∃ e : Quotient (reversalSetoid F) ≃ CompletedGraph F,
+      ∀ (l : Lift F) x y, (e (Quotient.mk _ l)).val.Adj x y ↔
+        l.σ x = y ∨ l.σ y = x) ∧
+    (∀ (l : Lift F) x y, (forget hn l).val.Adj x y ↔ l.σ x = y ∨ l.σ y = x) ∧
+    (∀ (l : Lift F) x, ¬ (forget hn l).val.Adj x x) ∧
+    (∀ u v (huv : u ≠ v),
+      ∃ e : Lift (F ⊔ edge u v) ≃ edgeEvent hn F u v,
+        (∀ l, (e l).val.σ = l.σ ∧
+          (∀ x y, (e l).val.E x y ↔ F.Adj x y ∧ l.E x y) ∧
+          (forget hn (e l).val).val = (forget hn l).val ∧
+          e (reverseLift l) = reverseEvent hn F u v (e l)) ∧
+        (∀ l, (e.symm l).σ = l.val.σ ∧
+          (∀ x y, (e.symm l).E x y ↔
+            (F ⊔ edge u v).Adj x y ∧ l.val.σ x = y) ∧
+          (forget hn (e.symm l)).val = (forget hn l.val).val ∧
+          (∀ k, e k = l ↔ k = e.symm l))) := by
+  refine ⟨forget_surjective hn F,forget_fiber hn,reverse_involutive,
+    reverse_distinct hn,?_,?_,?_,?_⟩
+  · exact ⟨reversalQuotient hn F,fun l x y => shadow_adj hn l.σ l.full x y⟩
+  · exact fun l => shadow_adj hn l.σ l.full
+  · exact fun l x => (forget hn l).val.irrefl
+  · intro u v huv
+    refine ⟨edgeEventEquiv hn F u v huv,?_,?_⟩
+    · intro l
+      obtain ⟨hs,he,hg,_,hr⟩ := edgeEvent_equations hn F u v huv l
+      exact ⟨hs,he,hg,Subtype.ext hr⟩
+    · intro l
+      obtain ⟨hs,he,hg,_,hu⟩ := edgeEvent_inverse_equations hn F u v huv l
+      exact ⟨hs,he,hg,hu⟩
+
+example (hn : 3 ≤ Fintype.card V) (C : SimpleGraph V) (hc : C.Connected)
+    (hd : ∀ v, C.degree v = 2) :
+    (∃ l : Lift (⊥ : SimpleGraph V), (forget hn l).val = C) ∧
+    (∃ l : Lift C, (forget hn l).val = C) := by
+  constructor
+  · obtain ⟨l,hl⟩ := forget_surjective hn ⊥ ⟨C,hc,hd,bot_le⟩
+    exact ⟨l,congrArg Subtype.val hl⟩
+  · obtain ⟨l,hl⟩ := forget_surjective hn C ⟨C,hc,hd,le_rfl⟩
+    exact ⟨l,congrArg Subtype.val hl⟩
+
+example (hn : 3 ≤ Fintype.card V) (F : SimpleGraph V) (u v : V) (huv : u ≠ v)
+    (_hcyclic : ¬ (F ⊔ edge u v).IsAcyclic) :
+    Nonempty (Lift (F ⊔ edge u v) ≃ edgeEvent hn F u v) :=
+  ⟨edgeEventEquiv hn F u v huv⟩
+
+example : ∀ σ : Perm (Fin 2), σ⁻¹ = σ := by decide
+
+example : (∀ v : Fin 4, (cycleGraph 4).Adj v (Fin.revPerm v)) ∧
+    ¬ (∀ x y : Fin 4, (cycleGraph 4).Adj x y ↔
+      Fin.revPerm x = y ∨ Fin.revPerm y = x) := by decide
+
+example : (pathGraph 3).IsAcyclic ∧ (∀ v, (pathGraph 3).degree v ≤ 2) ∧
+    ¬ (pathGraph 3 ⊔ edge (0 : Fin 3) 2).IsAcyclic ∧
+    Nonempty (Lift (pathGraph 3 ⊔ edge (0 : Fin 3) 2) ≃
+      edgeEvent (by decide) (pathGraph 3) 0 2) := by
+  have he : pathGraph 3 ⊔ edge (0 : Fin 3) 2 = cycleGraph 3 := by
+    have h : ∀ x y : Fin 3, (pathGraph 3 ⊔ edge (0 : Fin 3) 2).Adj x y ↔
+        (cycleGraph 3).Adj x y := by
+      simp only [sup_adj,pathGraph_adj,edge_adj,cycleGraph_adj]
+      decide
+    ext x y
+    exact h x y
+  refine ⟨isAcyclic_pathGraph 3,by decide,?_,⟨edgeEventEquiv (by decide) _ 0 2 (by decide)⟩⟩
+  rw [he]
+  intro h
+  exact h (cycleGraph.cycle 0) cycleGraph.isCycle_cycle
+
+example (hn : 3 ≤ Fintype.card V) (σ : Perm V) (hf : σ.IsCycleOn Set.univ)
+    (C : SimpleGraph V) (_hdisconnected : ¬ C.Connected)
+    (hshadow : ∀ x y, C.Adj x y ↔ σ x = y ∨ σ y = x) : False := by
+  have he : C = shadow σ := by
+    ext x y
+    exact (hshadow x y).trans (shadow_adj hn σ hf x y).symm
+  exact _hdisconnected (he ▸ (shadow_cycle hn σ hf).1)
+
+#check @original_event
+#print axioms original_event
+#print axioms permutation_faces
+#print axioms actual_permutation_fiber
 
 end D5.S3.Combinatorics.Graph.LinearForests.OrientationFibers

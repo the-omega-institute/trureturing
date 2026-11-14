@@ -66,6 +66,50 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
                         + "The actual complement matching restricts through the proved no-cross-edge result, so the existing perfect-matching parity theorem makes that side cardinality even. "
                         + "Reversal preserves the epsilon sum because p has even length. Interior parity, side separation and regional Euler are conclusions of this chain."))),
                 DescribeRole.Theorem),
+            H("Actual cycle orientation fibers and edge restriction"),
+            Paragraph(Text(
+                "The cycle_boundary_walk conclusion also applies without the signed Euler equation or a connectedness assumption on the ambient rotation. "
+                + "It takes an actual Rotation R, a simple closed walk p, a binary face function x, and the equality of its boundary with the edge indicator of p. "
+                + "It identifies both shores for every actual dart with p or p.reverse. The following application derives its rotation and face function internally from a permutation; neither is an input assumption.")),
+            Paragraph(Text(
+                "Fix the original finite labelled vertex type V with at least three vertices and any simple graph F on V. "
+                + "Let H(F) consist of the connected simple graphs C on exactly V whose degree is two at every vertex and which contain F. "
+                + "Let L(F) contain all actual pairs (E,sigma): E has no edges outside F, chooses exactly one direction of every F edge, and has at most one incoming and one outgoing edge at each vertex; "
+                + "sigma is a permutation with IsCycleOn Set.univ, and E(x,y) implies sigma(x)=y. "
+                + "This is the entire pair space, including isolated vertices of F; it is not the image of a selected construction. "
+                + "A full cycle on at least three vertices has neither fixed points nor two-cycles, by Perm.IsCycleOn.pow_apply_eq. "
+                + "Consequently E(x,y) is forced to be F.Adj(x,y) and sigma(x)=y, so the permutation determines the whole pair.")),
+            Paragraph(Text(
+                "For a raw C in H(F), Mathlib's IsCycles.exists_cycle_toSubgraph_verts_eq_connectedComponentSupp supplies an actual simple closed walk p. "
+                + "Connectedness makes its support all of the original V, and Walk.IsCycle.adj_toSubgraph_iff_of_isCycles makes its edges exactly those of C. "
+                + "The permutation of p.support.dropLast, using List.isCycle_formPerm and the actual dart indices, is a full cycle on V and satisfies C.Adj(x,y) if and only if sigma(x)=y or sigma(y)=x. "
+                + "Restricting its direction to F constructs an actual E and hence a lift. No orientation, path decomposition, walk, completion or orientation-independence premise is supplied with F or C.")),
+            Paragraph(Text(
+                "For an arbitrary full-cycle permutation sigma with this same shadow C, the two neighbors at v are sigma(v) and sigma inverse(v), and are distinct. "
+                + "Define the rotor to exchange those two outgoing darts at each v. It is an involution, and its orbits are exactly the darts with the same first vertex, so it is an actual Rotation of C. "
+                + "Label a dart by one exactly when sigma takes its first vertex to its second vertex, and by zero otherwise. "
+                + "The face permutation preserves this label by the two local neighbor cases. Function.Semiconj.iterate_right therefore descends it to the actual face quotient, without a further global propagation argument. "
+                + "Opposite darts have opposite labels, so the binary boundary is one on every edge of C. "
+                + "Applying cycle_boundary_walk to this derived data and the raw walk p identifies every dart of sigma with p or its reverse. "
+                + "Doing this for two arbitrary lifts shows their permutations are equal or inverse; forced orientation then identifies the actual pairs.")),
+            Paragraph(Text(
+                "The forgetful graph of (E,sigma) has adjacency sigma(x)=y or sigma(y)=x, for all vertex pairs; its diagonal is false. "
+                + "It is connected and has degree two, since the full orbit reaches every vertex and its neighbor set is exactly the two distinct neighbors above. "
+                + "Reversing E and inverting sigma is an involution with no fixed pair. The preceding raw construction makes the forgetful map onto H(F), and each fiber is exactly a pair and its reversal. "
+                + "The generic Setoid.quotientKerEquivOfSurjective identifies the quotient by this actual reversal relation with H(F), sending each class to that same completed graph. "
+                + "Thus every revealed adjacency event is preserved, rather than merely a completion count.")),
+            Paragraph(Text(
+                "For distinct u and v, adding the undirected edge uv gives an equivalence from L(F sup edge(u,v)) to the subtype of L(F) where the same completed graph contains uv. "
+                + "The forward map keeps sigma and restricts E to F. Its inverse keeps sigma and takes E(x,y) to be (F sup edge(u,v)).Adj(x,y) and sigma(x)=y. "
+                + "Forced orientation proves these maps are inverse and makes the expansion unique. Both maps retain the completed graph and commute with reversal. "
+                + "The source graph need not be a forest: the equivalence includes a spanning path with its closing edge added, and F=C. "
+                + "In particular all conclusions apply to the original case where F is acyclic with maximum degree at most two; those two restrictions are unnecessary for this correspondence.")),
+            Paragraph(Text(
+                "The multiplicity of two for a connected simple cycle is classical: Greenhill, Janson, Kim and Wormald, Permutation pseudographs and contiguity, DOI 10.1017/S0963548301005065, page 3, "
+                + "gives the permutation multiplicities of two-regular pseudographs. The application here uses ordinary simple cycles with at least three vertices. "
+                + "On two vertices inverse permutations coincide, so the distinct-pair conclusion fails. A disconnected union of cycles is not the shadow of a full cycle. "
+                + "A permutation taking each vertex to a neighbor can contain two-cycles and need not recover all graph edges; full support in one cycle is essential. "
+                + "No small-pseudograph convention, random labels or ports, conditional distribution, adaptive history, alternating count, query complexity or EXIT bound follows from this correspondence.")),
             Paragraph(Text(
                 "The two facial subsets are x inverse-image of one and x inverse-image of zero; binary values make them complementary and both are nonempty. "
                 + "These results establish face-to-cycle exactness, actual side separation, connected edge-selected regions, both regional Euler identities, directed boundaries, matching restriction and the face-odd nice-cycle orientation. "
