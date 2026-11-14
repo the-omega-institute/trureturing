@@ -10,7 +10,9 @@ import D5.S3.Quantum.Entanglement.LocalObservationPartialTraceEquivalence
 import D5.S3.QuantumStates.UnitWeightSupport
 import D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 
-/-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game. -/
+/-! Strict-majority certainty for the parallel Arunachalam–Molina–Russo qubit game.
+Escape audit for `trace_retained` unfinished: https://github.com/the-omega-institute/trureturing/issues/22403
+-/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -295,7 +297,7 @@ private theorem output_trace {m n : ℕ}
   rw [ht, shared_density, tensor_trace]
   simp only [pair_trace α ha ha', Finset.prod_const_one]
 
-private theorem trace_retained {A B : Type*} [Fintype A] [DecidableEq A]
+theorem trace_retained {A B : Type*} [Fintype A] [DecidableEq A]
     [Fintype B] (X : Matrix (A × B) (A × B) ℂ) (D : Matrix B B ℂ) :
     trace (((1 : Matrix A A ℂ) ⊗ₖ D) * X) = trace (D * partialTraceFirst X) := by
   simp only [trace, Matrix.diag, mul_apply, Fintype.sum_prod_type, kroneckerMap_apply,
