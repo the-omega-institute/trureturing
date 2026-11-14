@@ -10,6 +10,8 @@ import D5.S3.Constants.Moments.A331474HankelBridge
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Inverse
 
+/-! The source denominator is interpreted by its normalized root and unit inverse. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -90,7 +92,7 @@ private theorem source_bridge :
       _ = C := by linear_combination -C * hcat
   have he := congrArg (expand 2 (by decide) : PowerSeries ℤ →ₐ[ℤ] PowerSeries ℤ) hid
   have he' : expand 2 (by decide) D * denominator = catalan_square := by
-    simpa [denominator, source_root, catalan_square, C, expand_X] using he
+    simpa [denominator, source_root, catalan_square, C, expand_X, map_ofNat] using he
   calc
     source_series = (1 + X) * (expand 2 (by decide) D * denominator) *
         invOfUnit denominator 1 := by rw [source_series, he']
@@ -110,7 +112,9 @@ private theorem paired_coefficients (m : ℕ) :
     rw [a, source_bridge, add_mul, one_mul, map_add]
   constructor
   · cases m with
-    | zero => simp [ha, he]
+    | zero =>
+      rw [ha]
+      simpa using he 0
     | succ m =>
       rw [ha, he]
       have hx : coeff (2 * (m + 1)) (X * T) = coeff (2 * m + 1) T := by
@@ -156,7 +160,8 @@ theorem result :
   refine ⟨root_spec, denominator_inverse, source_bridge, ?_⟩
   intro n hn
   rcases Nat.even_or_odd n with ⟨m, rfl⟩ | ⟨m, rfl⟩
-  · have hm : 2 ≤ m := by omega
+  · rw [← two_mul m] at hn ⊢
+    have hm : 2 ≤ m := by omega
     obtain ⟨k, rfl⟩ : ∃ k, m = k + 2 := ⟨m - 2, by omega⟩
     rw [show 2 * (k + 2) - 1 = 2 * (k + 1) + 1 by omega,
       show 2 * (k + 2) - 2 = 2 * (k + 1) by omega,
@@ -168,13 +173,9 @@ theorem result :
     have h0 := adjacent k
     push_cast at h1
     have hk : (k : ℤ) + 2 ≠ 0 := by positivity
-    apply (mul_eq_zero.mp (show ((k : ℤ) + 2) *
-      (((2 * (k + 2 : ℤ) + 4) * (31 * (2 * (k + 2)) - 12) * Provider (k + 2) +
-      (37 * (2 * (k + 2 : ℤ)) ^ 2 + 24 * (2 * (k + 2)) - 156) * Provider (k + 1) -
-      4 * (31 * (2 * (k + 2 : ℤ)) ^ 2 + 81 * (2 * (k + 2)) + 24) * Provider (k + 1) -
-      4 * (37 * (2 * (k + 2 : ℤ)) + 24) * (2 * (k + 2) - 1) * Provider k) = 0 from by
-        linear_combination 4 * (31 * (k + 2 : ℤ) - 6) * h1 +
-          4 * (37 * (k + 2 : ℤ) + 12) * h0)).resolve_left hk
+    apply (mul_left_cancel₀ hk)
+    linear_combination 4 * (31 * (k + 2 : ℤ) - 6) * h1 +
+      4 * (37 * (k + 2 : ℤ) + 12) * h0
   · have hm : 1 ≤ m := by omega
     obtain ⟨k, rfl⟩ : ∃ k, m = k + 1 := ⟨m - 1, by omega⟩
     rw [show 2 * (k + 1) + 1 - 1 = 2 * (k + 1) by omega,
