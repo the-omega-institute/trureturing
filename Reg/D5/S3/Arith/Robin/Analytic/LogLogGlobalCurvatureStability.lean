@@ -1,15 +1,15 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 import Reg.Support.DependentFamily
 
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace Reg.D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+namespace Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 
-open _root_.D5.S3.Arith.Robin.LogLogGlobalCurvature
-open _root_.D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+open _root_.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
+open _root_.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -120,8 +120,8 @@ def family : Registration arena
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@loglog_tangent_gap_stability) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.LogLogGlobalCurvatureStability.loglog_tangent_gap_stability.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.LogLogGlobalCurvatureStability.family
+  unitName := `D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability.loglog_tangent_gap_stability.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -137,7 +137,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+    owner := `D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
@@ -188,8 +188,8 @@ def family : Registration arena
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@loglog_tangent_gap_stability_scaled) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.LogLogGlobalCurvatureStability.loglog_tangent_gap_stability_scaled.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.LogLogGlobalCurvatureStability.Scaled.family
+  unitName := `D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability.loglog_tangent_gap_stability_scaled.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability.Scaled.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -205,7 +205,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+    owner := `D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
@@ -220,4 +220,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   options := #[]
 
 end Scaled
-end Reg.D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+end Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability

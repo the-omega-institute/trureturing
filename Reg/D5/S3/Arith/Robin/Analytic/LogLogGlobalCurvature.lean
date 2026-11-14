@@ -1,14 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.LogLogGlobalCurvature
+import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 import Reg.Support.DependentFamily
 
 noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace Reg.D5.S3.Arith.Robin.LogLogGlobalCurvature
+namespace Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 
-open _root_.D5.S3.Arith.Robin.LogLogGlobalCurvature
+open _root_.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -95,8 +95,8 @@ def family : Registration arena
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@loglog_tangent_gap_quadratic) (Realization signature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.LogLogGlobalCurvature.loglog_tangent_gap_quadratic.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.LogLogGlobalCurvature.family
+  unitName := `D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature.loglog_tangent_gap_quadratic.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -112,7 +112,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.LogLogGlobalCurvature
+    owner := `D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -129,4 +129,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
-end Reg.D5.S3.Arith.Robin.LogLogGlobalCurvature
+end Reg.D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature

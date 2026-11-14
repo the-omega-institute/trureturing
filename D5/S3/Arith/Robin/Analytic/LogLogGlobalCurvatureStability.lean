@@ -1,18 +1,16 @@
-/-
-Source-only candidate: not elaborated, compiled, kernel-checked, or axiom-audited.
+/- GID: D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability
+   generality: G
+   mirror-B: D5/B/S3/Arith/Robin/Analytic/LogLogGlobalCurvatureStability
+   mirror-E: none(waiver:global-real-analysis)
+   anchors: []
+   utility: none
+   digest: Global and half-scale stability bounds for the log-log tangent gap. -/
 
-The first import is a NON-MAIN, FALLIBLE, UNCOMPILED dependency supplied by the
-completed global-curvature packet. Its immutable source SHA256 is
-15a4f17858c162ad1294fedd40bb75c88efbbc3b6891a443e9c8a4558de7f646.
-Its intended module name is used here; it must be installed and checked before
-this candidate can be checked. No private declaration from that input is used.
+/- The estimate is scalar and global: the clock mismatch may be the complete
+   higher mismatch, with no small-displacement assumption. This file contains
+   no record/prime wrapper or claim of a Robin/RH realization. -/
 
-The new estimate is scalar and global. In particular, the clock mismatch may
-be the complete higher mismatch, with no small-displacement assumption. This
-file contains no record/prime wrapper or claim of Robin/RH realization.
--/
-
-import D5.S3.Arith.Robin.LogLogGlobalCurvature
+import D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
 import D5.S3.Arith.Robin.MellinWeightedVariation
 import Mathlib.Analysis.Calculus.MeanValue
@@ -24,10 +22,10 @@ set_option relaxedAutoImplicit false
 
 open Set
 
-namespace D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+namespace D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability
 
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (g activationDensity g_has_deriv_at)
-open D5.S3.Arith.Robin.LogLogGlobalCurvature (loglog_tangent_gap_quadratic)
+open D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature (loglog_tangent_gap_quadratic)
 
 private theorem density_nonneg {t : ℝ} (ht : 1 < t) :
     0 ≤ activationDensity t := by
@@ -199,4 +197,4 @@ theorem loglog_tangent_gap_stability_scaled {a x y : ℝ}
     simpa only [activationDensity, add_comm] using hglobal
   exact hglobal'.trans (mul_le_mul_of_nonneg_right hcoefficient (by positivity))
 
-end D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+end D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvatureStability

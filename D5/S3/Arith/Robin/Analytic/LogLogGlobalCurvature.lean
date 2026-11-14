@@ -1,10 +1,14 @@
-/-
-Source-only candidate. No compilation, kernel check, or axiom report has been run.
+/- GID: D5/S3/Arith/Robin/Analytic/LogLogGlobalCurvature
+   generality: G
+   mirror-B: D5/B/S3/Arith/Robin/Analytic/LogLogGlobalCurvature
+   mirror-E: none(waiver:global-real-analysis)
+   anchors: []
+   utility: none
+   digest: Full-domain quadratic tangent-gap envelope for the log-log kernel. -/
 
-The density and reciprocal logarithmic kernel are the existing project objects.
-The proof compares the second derivatives of quadratic-corrected tangent gaps;
-it does not assume an integral representation or a curvature envelope.
--/
+/- The density and reciprocal logarithmic kernel are existing project objects.
+   The proof compares second derivatives of quadratic-corrected tangent gaps;
+   it does not assume an integral representation or a curvature envelope. -/
 
 import D5.S3.Arith.Robin.ActualRobinClockCovariance
 import Mathlib.Analysis.SpecialFunctions.Log.InvLog
@@ -17,7 +21,7 @@ set_option relaxedAutoImplicit false
 
 open Set
 
-namespace D5.S3.Arith.Robin.LogLogGlobalCurvature
+namespace D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
 
 open D5.S3.Arith.Robin.ActualRobinClockCovariance (g activationDensity g_has_deriv_at)
 
@@ -164,4 +168,4 @@ theorem loglog_tangent_gap_quadratic {a b : ℝ} (ha : 1 < a) (hb : 1 < b) :
         activationDensity (min a b) * (b - a) ^ 2 / 2 from
       ⟨by linarith only [hlower], by linarith only [hupper]⟩)
 
-end D5.S3.Arith.Robin.LogLogGlobalCurvature
+end D5.S3.Arith.Robin.Analytic.LogLogGlobalCurvature
