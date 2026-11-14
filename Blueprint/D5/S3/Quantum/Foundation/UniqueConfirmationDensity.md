@@ -1,0 +1,75 @@
+# Original unique-confirmation density
+
+## Abstract
+
+The common limit of original states and effects determines exclusion-label limits without assuming that the pure-state carrier is closed.
+
+The carrier is a finite dimensional real normed space V, C is the same closed pointed generating cone, and u is strictly positive on each nonzero cone vector. K is the entire normalized base, P all its extreme points, and the effects are all linear functionals between zero and u on the entire cone. Every full exclusion has an injective affine chart of a positive dimensional closed Euclidean ball. The exclusion map on original pure labels is injective. No Pair premise, closedness of P, continuous ball family, common inner product, retraction or matrix representation is assumed.
+
+**Definition 1.1 (The complete original confirming-effect fiber).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.UniqueConfirmer`
+
+*Formalization.* `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.UniqueConfirmer` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There exists an original proper effect e confirming p and vanishing on every state of the entire exclusion D(p); every original proper confirming effect with the same whole-face zero property equals e. This is uniqueness in the effect fiber and is distinct from uniqueness of the pure label associated with D(p).
+
+**Theorem 1.2 (A positive zero at a relative interior point).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real normed space V, original pointed cone C and linear u, assume every original pure label has an injective affine chart of a positive dimensional Euclidean closed ball for its entire exclusion. For every original pure p, every linear f nonnegative on the whole cone, and every x in intrinsicInterior(real,D(p)), f(x)=0 implies f(z)=0 for every z in the whole D(p). No finite dimensionality of V, closedness or generating assumption on C, strict positivity of u, or label injectivity is required. The affine restriction to a ball is nonnegative and zero at an interior point, so its slope and constant term both vanish.
+
+**Theorem 1.3 (Convergence of the entire original label sequence).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_label_tendsto`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_label_tendsto` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix any original pure p and x in the relative interior of its entire exclusion. For any sequence of original pure labels p(n) and any sequence x(n) in their respective exclusions, convergence of x(n) to x implies convergence of the full sequence p(n) to p. The points x(n) need not themselves lie in relative interiors, and their labels need not have unique confirmers.
+
+For every subsequence, compactness of the whole original base and the whole effect interval gives a common further subsequence of actual label states and actual whole-exclusion confirming effects. Its state limit s initially belongs only to K. Joint continuity of evaluation gives e(s)=1 and e(x)=0. Nonnegativity at the relative interior point forces e to vanish on the entire original D(p). The original one-value-face theorem, full-ball maximality and the given injectivity force s=p. The subsequence criterion then yields convergence of the entire label sequence; purity of a cluster point is derived from the whole one-value face.
+
+**Theorem 1.4 (Complete density with converging original labels).**
+
+Lean statement: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_unique_confirmer_density`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_unique_confirmer_density` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original pure p and every x in the relative interior of its full exclusion, there are original pure labels p(n) with singleton complete confirming-effect fibers and states x(n) in the relative interiors of their full exclusions. The entire sequences x(n) and p(n) converge respectively to x and p. The closure of the unique-confirmation labels in the subtype P is all of P. The statement retains the same original V, C, u, normalized base, pure states and entire effect interval throughout.
+
+The affine span of K is identified with the Euclidean space of its own direction dimension by an affine equivalence and its finite dimensional homeomorphism. This auxiliary metric changes no original state or effect domain. Interior points approaching x have nearest relative-boundary contacts with positive radii. The canonical closed ball at that radius lies in K, and the contact-distance estimate is at most twice the distance from the interior point to x.
+
+Every supporting original functional restricts to a nonnegative affine function on that same inner ball, zero at its contact. The affine antipode formula aligns all such restrictions with the ball tangent. Original pure spanning transports the resulting equality from the entire original base to the whole original linear carrier. The entire cone of positive functionals annihilating the contact is exactly the nonnegative ray generated by its actual common confirmer, which is nonzero because it reads one at its original pure label. If the contact were pure, the positive inradius of its entire normalized slope body would contradict the singleton forced by support alignment. This uses the inradius at every original pure point, with injectivity supplying the original singleton label property.
+
+Original frontier coverage supplies a full exclusion through each nonpure contact, and the original relative-interior classification places it in that exclusion's relative interior. Normalizing the full positive ray at its actual original label makes the whole original confirming-effect fiber a singleton. Joint compactness and the full one-value-face argument give convergence of the original labels. A point in each nonempty exclusion-relative interior then gives the relative closure assertion.
+
+The theorem allows variable positive exclusion-ball dimensions, so its three-dimensional full-ball case requires no additional geometric hypothesis. It asserts neither that every label has a unique confirmer nor that the unique-confirmation locus is open, that P is closed, or that the exclusion balls converge in Hausdorff distance. No Pair premise or quantum reconstruction is used. The mathematical conclusions apply to the entire complex qutrit model: V is the real Hermitian three by three matrix carrier, C its whole positive semidefinite cone, and u the trace. HermitianExclusionKernel.exclusion_iff_kernel identifies the original exclusion, quantified over all proper real-linear effects and all mixed states, with the full orthogonal support face. HermitianExclusionBall.all_pure_charts supplies a global injective affine closed three-ball chart for every actual original pure label. Trace positivity and positive spanning discharge the original cone assumptions, and equality of full exclusions forces equality of their original rank-one labels. Orthogonal unit rank-one projectors inhabit the original pure carrier. Applying the density theorem retains every original pure p, every x in the relative interior of its entire exclusion, the same pair of sequences with both convergences, and the relative closure equality. This mathematical realization makes no empirical assertion about physical systems.
+
+## References
+
+- Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.UniqueConfirmer`
+- Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_label_tendsto`
+- Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.original_unique_confirmer_density`
+- Truth anchor: `D5/S3/Quantum/Foundation/UniqueConfirmationDensity.zero_on_exclusion_of_zero_interior`
+- Dependency: [D5/S3/Quantum/Foundation/MixedExclusionGeometry](MixedExclusionGeometry.md)
+- Dependency: [D5/S3/Quantum/Foundation/OriginalWidthContact](OriginalWidthContact.md)
+- Dependency: [D5/S3/Quantum/Foundation/SingleLabelNormalBody](SingleLabelNormalBody.md)

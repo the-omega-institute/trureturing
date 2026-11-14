@@ -1,0 +1,70 @@
+**定理146.3的参考上界证明。** 固定各块正交框架 $e_{j\ell}$，令 $P_{j\ell}=|e_{j\ell}\rangle\langle e_{j\ell}|$。选择模式酉 $U$，把这些框架向量送到实际 $d$ 个码模式 $q_{j\ell}$。这是输入无关的已知目标设计，不是从未知态读出振幅。
+
+按共同输入无关 law 选择保护块 $a\in I_+$，概率 $w_a$；余下概率选择符号 $\varnothing$，表示不保护块。保留选择值及所有实际采样位／控制记录。执行 $U$，按固定次序逐站读取不在保护块内的模式，首次点击后停止扫描，各分支均执行同一个 $U^\dagger$ 返回原码。没有点击则完成整个有限列表。无保护时读取全部 $d$ 个模式，全零分支为零算子，不归一也不后选择。给它指定任意形式返回标签即可。
+
+当保护块为 $a$ 时，未含经典概率因子的码分支算子是
+
+$$
+K_{a,0}=Q_a,\qquad K_{a,j\ell}=P_{j\ell}\quad(j\ne a).
+\tag{XII146.14}
+$$
+
+证明是直接相乘：首次点击前各零投影消去已扫描坐标，点击投影选中当前未扫描坐标；全零乘积留下且仅留下保护平面。再以前后 $U,U^\dagger$ 共轭。无保护时只有全部 $P_{j\ell}$。每种选择的伴随乘积和为 $I_H$，故总仪器归一。公布分支所属原块标签 $j$；实际与理想均消去跨块相干。所有零读、首次点击、停止位置、返回字及 source／control 版本均保留。原 source 不变，其他原模式、旧输入端口和辅助量子位为真空，总激发一直为一。
+
+令 $h_{a,0},h_{a,j\ell}$ 表示这些完整真实记录，含 acquisition/source/version/command/enable/hold/read/output 字段。对每个实际随机子记录 $c$，保留其原概率 $\pi_c$ 和选择 $a(c)$；条件初始 backing 也逐项保持。固定如下全理想 lift：在块 $j$ 上，若 $a(c)=j$，赋予记录 $h_{c,0}$ 和量子输出 $Q_jXQ_j$；否则独立均匀赋予 $\ell\in\{1,\ldots,k_j\}$，记录 $h_{c,j\ell}$，仍输出 $Q_jXQ_j$。相应 Kraus 部分分别为 $\sqrt{\pi_c}Q_j$ 与 $\sqrt{\pi_c/k_j}Q_j$。因此不仅选择标签，而且同一选择下所有采样位均保留。连续初始 backing 时对其共同 law 积分。
+
+这是单一线性 CP、归一 lift，其所需边缘恰为(XII146.2)，来源和其他规定因子不变。均匀细索引只是数学理想记录 law，不宣称实际 detector 生成它，也不删除实际细记录。它不依未知块内态或 $R$。
+
+为计算全部输入／参考的 supremum，固定未保护的秩 $k$ 块，取任意归一纯联合输入
+
+$$
+|\Psi\rangle=\sum_{\ell=1}^{k}|e_\ell\rangle|r_\ell\rangle,
+\qquad p_\ell=\langle r_\ell,r_\ell\rangle,\qquad\sum_\ell p_\ell=1.
+$$
+
+$r_\ell$ 不必正交，参考不限于块的同维副本。在记录 $\ell$ 上，实际为 $|u_\ell\rangle\langle u_\ell|$，$u_\ell=|e_\ell\rangle|r_\ell\rangle$；理想为 $|\Psi\rangle\langle\Psi|/k$。由 $\|u_\ell\|^2=\langle u_\ell,\Psi\rangle=p_\ell$，两个次归一纯算子的二维差矩阵给出
+
+$$
+D_k(\Psi)=\frac12\sum_{\ell=1}^{k}g_k(p_\ell),\qquad
+g_k(p)=\sqrt{(p+1/k)^2-4p^2/k}.
+\tag{XII146.15}
+$$
+
+$p=0$ 时也保留理想独有质量 $1/k$。$k\ge2$ 时根号在 $[0,1]$ 上严格正；写其平方为 $Ap^2+Bp+C$，有 $A=1-4/k,B=2/k,C=1/k^2$，从而
+
+$$
+g_k''(p)=\frac{4AC-B^2}{4g_k(p)^3}
+=-\frac4{k^3g_k(p)^3}<0.
+\tag{XII146.16}
+$$
+
+Jensen 不等式给出
+
+$$
+D_k(\Psi)\le\frac{k}{2}g_k(1/k)=\sqrt{1-1/k}=\alpha_k.
+\tag{XII146.17}
+$$
+
+每个 $p_\ell=1/k$ 达等，特别是 $\Phi_j$ 达等。$k=1$ 时实际与理想完全相同。任意混态可在数学上纯化，将纯化因子并入未触参考，再取边缘；迹距离收缩给出同一界。纯化不增加实验室装置。由于 $H$ 有限维，纯化态在 $H$ 与联合参考之间的 Schmidt 秩至多 $d$；该证明也覆盖任意维正常参考态。
+
+对任意跨块输入，两通道都消去跨块项。令 $\lambda_j=\operatorname{tr}(Q_j\rho_H)$，各粗标签和实际选择记录正交，范数相加，故
+
+$$
+\Delta(\Pi_w,\widehat{\mathcal L}_{Q,w})
+=\max_j\alpha_j(1-w_j),
+\qquad \alpha_j=0\ (k_j=1),\quad w_j=0\ (j\notin I_+).
+\tag{XII146.18}
+$$
+
+上界来自 $\sum_j\lambda_j\alpha_j(1-w_j)$；下界取最大块的 $\Phi_j$，每个未保护选择都在(XII146.17)达等。因此这是全部参考和全部混输入的精确 supremum。
+
+若无高秩块，直接细读即理想；仅一个高秩块则始终保护它。至少两个时，给定 $\delta\ge0$，约束 $\alpha_i(1-w_i)\le\delta$ 当且仅当 $w_i\ge\max(0,1-\delta/\alpha_i)$；可行当且仅当这些下界之和不超过一。该和由 $|I_+|$ 连续下降至零，在值一处严格下降，唯一根即(XII146.5)。取这些下界为最优权，总和为一。结合下界证明参考目录值及有限达到性。特别地，两个高秩块满足
+
+$$
+\delta_*={\alpha_1\alpha_2\over\alpha_1+\alpha_2},\qquad
+w_i={\alpha_i\over\alpha_1+\alpha_2}.
+\tag{XII146.19}
+$$
+
+$m$ 个相同秩 $k\ge2$ 的块有 $\delta_*=(1-1/m)\sqrt{1-1/k}$。证毕。
+

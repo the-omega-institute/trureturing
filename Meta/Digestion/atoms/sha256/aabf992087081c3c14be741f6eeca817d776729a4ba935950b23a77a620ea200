@@ -1,0 +1,24 @@
+**定义 146.5（最小载体候选及其静态字典）。** 对式(XI146.1)的完整锥模型，另取只含 EB3、$\mathsf{Conn}$ 和整个原空间 $\dim_{\mathbb R}V\le9$ 的候选，不将 ZC 列为该候选的独立前提。Conn 给 Inj 后，[THREE_COPY VII121.9][Q146TVII]的既有下界使维数恰为九；此时直接消费145.2，得到同一个实线性双射
+
+$$
+\Phi:\operatorname{Herm}_3(\mathbb C)\overset\sim\longrightarrow V,\qquad
+\Phi(\operatorname{PSD}_3)=C,\qquad u\circ\Phi=\operatorname{Tr}.
+\tag{XI146.17}
+$$
+
+145.2的整个标准反向给该候选的反向。该分类及下界均为既有结果的应用，不计为本章新增定理。ZC 在这一最小载体候选中为分类后的后果，且 $\kappa_p=1$；对未限制原维数的 EB3+$\mathsf{Conn}$ 域，本章146.2—146.4的有限层推进仍明确保留 ZC 前件。未证明自动的九维上界，也不将逐层余量统一到全部原纯域。
+
+在同一个 $\Phi$ 下，全部原态、效应、确认菜单、已达到的 minimum、POVM及谱字典直接复用145.8及142.3。特别地，对单位 $v$、$p_v=\Phi(vv^*)$，
+
+$$
+\begin{gathered}
+f_M(\Phi\rho)=\operatorname{Tr}(M\rho),\quad 0\preceq M\preceq I,\\
+\mathcal F_{p_v}=\{f_{vv^*+B}:B=P_{v^\perp}BP_{v^\perp},\ 0\preceq B\preceq P_{v^\perp}\},\\
+T_{p_v}(\Phi\rho)=v^*\rho v,\qquad
+D_{p_v}\text{ 是 }v^\perp\cong\mathbb C^2\text{ 上的整个态球}.
+\end{gathered}
+\tag{XI146.18}
+$$
+
+矩阵偏序下 $vv^*$ 是菜单的 least 为分类后的后果。全部纯域为 $\mathbb{CP}^2$、每个排除纯球缘为 $\mathbb{CP}^1\cong S^2$。纯比较数值互易不定义连续测量次序交换；实际仪器、更新、复合、物理时间及能量标定仍分别取145.9及142.3所列独立条件。
+

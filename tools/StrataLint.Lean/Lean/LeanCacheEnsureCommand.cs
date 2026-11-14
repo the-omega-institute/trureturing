@@ -851,37 +851,25 @@ internal static partial class LeanCacheEnsureCommand
     }
 
     /// <summary>
-    /// Bounds Release archive retrieval so the main-checkout producer retains time to finish.
-    /// Linked-worktree ensure paths never consume this budget because archive retrieval is disabled.
+    /// Validates the local Release computation policy. Python owns its metadata,
+    /// validation and install deadlines; asset transfers have no total-duration limit.
     /// </summary>
     private const string ReleaseTransportTimeoutVariable =
         "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS";
     private const int ReleaseTransportTimeoutMaximumSeconds = 21600;
-    private const int ReleaseEnclosingHeadroomSeconds = 120;
-
-    /// <summary>
-    /// Resolve the optional Release transport policy only inside the archive fetch
-    /// failure boundary. The default remains 45 minutes minus its two-minute
-    /// post-archive reserve; an explicit transport extension receives bounded
-    /// headroom so the enclosing process does not cut it off first.
-    /// </summary>
     private static TimeSpan ArchiveBudget()
     {
-        var defaultSeconds = (LeanCacheBudgetPolicy.LeanInspectJobBudgetMinutes
-            - LeanCacheBudgetPolicy.PostArchiveReserveMinutes) * 60;
         var raw = Environment.GetEnvironmentVariable(ReleaseTransportTimeoutVariable);
-        if (raw is null) return TimeSpan.FromSeconds(defaultSeconds);
-        if (!int.TryParse(raw, System.Globalization.NumberStyles.None,
+        if (raw is not null && (!int.TryParse(raw, System.Globalization.NumberStyles.None,
                 System.Globalization.CultureInfo.InvariantCulture, out var configured)
-            || configured < 1 || configured > ReleaseTransportTimeoutMaximumSeconds)
+            || configured < 1 || configured > ReleaseTransportTimeoutMaximumSeconds))
         {
             throw new InvalidOperationException(
                 $"{ReleaseTransportTimeoutVariable} must be 1..{ReleaseTransportTimeoutMaximumSeconds}");
         }
 
-        return TimeSpan.FromSeconds(Math.Max(
-            defaultSeconds,
-            configured + ReleaseEnclosingHeadroomSeconds));
+        // Keep the runner's cancellation token and cooperative child settlement.
+        return Timeout.InfiniteTimeSpan;
     }
 
     private static string RecordColdBuildConsent(string receipt)

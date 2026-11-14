@@ -1,0 +1,15 @@
+**引理 1.4（局部因子的下界）。** $\sigma^{[\kappa]}$ 可乘。对素数 $p$ 与整数 $a\ge1$，记 $r=1/p$，则
+
+$$
+\frac{\sigma^{[\kappa]}(p^a)}{p^{\kappa a}}\ \ge\ (1-r)^{-\kappa}(1-r^\kappa)\bigl(1-c_\kappa r^{a+1}\bigr),\qquad c_\kappa=\frac{\kappa}{1-2^{-\kappa}} .
+\tag{1.4}
+$$
+
+**证明。** $\sigma^\kappa$ 可乘，故它与 $\mu$ 的 Dirichlet 卷积可乘，且 $\sigma^{[\kappa]}(p^a)=\sigma(p^a)^\kappa-\sigma(p^{a-1})^\kappa$。由 $\sigma(p^j)/p^j=(1-r^{j+1})/(1-r)$，
+
+$$
+(1-r)^\kappa\frac{\sigma^{[\kappa]}(p^a)}{p^{\kappa a}}=(1-r^{a+1})^\kappa-r^\kappa(1-r^a)^\kappa\ \ge\ 1-\kappa r^{a+1}-r^\kappa .
+$$
+
+这里用了 Bernoulli 不等式 $(1-u)^\kappa\ge1-\kappa u$（$\kappa\ge1$，$0\le u\le1$）与 $(1-r^a)^\kappa\le1$。又 $1-\kappa r^{a+1}-r^\kappa=(1-r^\kappa)\bigl(1-\tfrac{\kappa}{1-r^\kappa}r^{a+1}\bigr)$，而 $r\le1/2$ 给出 $\kappa/(1-r^\kappa)\le c_\kappa$。证毕。
+

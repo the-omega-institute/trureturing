@@ -102,7 +102,31 @@ $$\forall F \in Type,\; \forall J \in Type,\; [\operatorname{RCLike}\left(F\righ
 
 For every real or complex native field F, finite index type J with decidable equality, and vector v in the native Euclidean space, the real trace of vv* equals the squared norm of v. The vector may be zero. The original declaration supplies the trace estimate for congruence on a projective ROG join.
 
-**Theorem 1.9 (Extreme points equal the entire rank one family).**
+**Theorem 1.9 (Unit rank one self pairing).**
+
+$$\forall F \in Type,\; \forall J \in Type,\; [\operatorname{RCLike}\left(F\right)] [\operatorname{Fintype}\left(J\right)] [\operatorname{DecidableEq}\left(J\right)] \forall v \in \operatorname{EuclideanSpace}\left(F, J\right),\; \operatorname{norm}\left(v\right) = 1 \Rightarrow \operatorname{inner}\left(\mathbb{R}, \operatorname{rankOne}\left(v\right), \operatorname{rankOne}\left(v\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_self` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every RCLike field F, finite index type J with decidable equality, and native Euclidean vector v of norm one, the real trace inner product of rankOne(v) with itself is one. The original rankOne_self declaration supplies the accepting value of the proper functional paired with rankOne(v) in HermitianExclusionKernel.exclusion_iff_kernel.
+
+**Theorem 1.10 (A unit projection exposes exactly itself).**
+
+Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original native unit vector v and Hermitian X, if X is PSD, trace(X)=1 and the real trace pairing of rankOne(v) against X equals one, then X=rankOne(v). The whole native matrix base and its original field are retained. This original helper is consumed by the native full-common-effect uniqueness and mixed-exclusion injectivity proofs.
+
+**Theorem 1.11 (Extreme points equal the entire rank one family).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.whole_pure_carrier`
 
@@ -114,7 +138,7 @@ Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.whole_pure_carrier`
 
 For every real subspace L satisfying ROG(L), the real extreme points of the entire base(L) equal pureRanks(L). No assumption I in L is needed for this equality. Normalize every nonzero ROG term w(j) by its Euclidean norm and use its squared norm as the positive coefficient. The trace-one equation makes the coefficients sum to one, proving base(L)=convexHull(pureRanks(L)). Conversely a unit rank one p is extreme: the trace pairing <p,X> is at most one for every normalized PSD X, and equality forces X=p by the trace bound <X,X><=tr(X)^2 and the squared norm of X-p. A nontrivial segment decomposition of p therefore has both endpoints equal to p. This equality is consumed in rog_frame to identify every frame point as an original pure state.
 
-**Theorem 1.10 (A full orthonormal frame with the prescribed entry).**
+**Theorem 1.12 (A full orthonormal frame with the prescribed entry).**
 
 Lean statement: `D5/S3/Quantum/Foundation/SectionROGFrame.rog_frame`
 
@@ -179,10 +203,12 @@ The full original frame and the positive-extension, finite-effect and geometry a
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.ROG`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.base`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.pair_rankOne`
+- Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.pairing_one_unique`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.pureRanks`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_nonneg`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_real_smul`
+- Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_self`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rankOne_trace_norm`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.rog_frame`
 - Truth anchor: `D5/S3/Quantum/Foundation/SectionROGFrame.whole_pure_carrier`

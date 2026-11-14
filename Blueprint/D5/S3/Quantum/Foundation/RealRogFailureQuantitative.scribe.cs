@@ -9,6 +9,11 @@ internal sealed class RealRogFailureQuantitativeDocument : IScribeDocumentDefini
         H("Primal attainment on the original cone"),
         Blocks(
             Paragraph(Text("For the primal optimization in Quantum Origin VI, the original-carrier theorem retains the arbitrary strictly positive original unit, the entire compact base and the generating cone. Full-support compression, determinant normalization, a same-object saturating dual effect, extraction from an actual failed local antipodal pair, purity transport and the return to the original carrier remain open. Primal attainment alone does not complete Proposition 93.3 or supply block classification, Jordan structure, self-duality or a zero-gluing premise.")),
+            Describe.Lean(DescribeId.Create("mass-cap-compact"),
+                DeclarationHandle.Create("D5/S3/Quantum/Foundation/RealRogFailureQuantitative.mass_cap_compact"),
+                H("The whole original mass cap is compact"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For any real normed carrier, pointed cone C and strictly positive original unit u, compactness of the entire normalized base implies compactness of every full cap {x in C : u(x)<=R} for nonnegative R. The zero vector and empty-base case are retained. The original primal theorem and UnitPreservingLiftImage.minimum_lift and closed_lift_image consume this original statement."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("original-primal-attainment"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/RealRogFailureQuantitative.original_primal_attainment"),
                 H("An attained primal on the original cone with its original unit"),
