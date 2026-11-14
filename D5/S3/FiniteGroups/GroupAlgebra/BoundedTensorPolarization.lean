@@ -7,6 +7,7 @@
    digest: Bounded polynomial tensor multiplication, difference injection and polarization. -/
 
 import D5.S3.FiniteGroups.GroupAlgebra.PolynomialKernelPolarization
+import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
 import Mathlib.LinearAlgebra.Contraction
 import Mathlib.LinearAlgebra.Dual.Basis
 import Mathlib.LinearAlgebra.Dimension.Constructions
@@ -517,6 +518,29 @@ theorem dualSectionTensor_retraction {n m : ℕ}
     (LinearMap.congr_fun (dual_section_retraction (K := K) σ hσ) φ)
 
 end Dualization
+
+section OriginalModelBridge
+
+variable {K : Type u} [Field K]
+
+/-- The bounded dual model is definitionally the original `V_(n+1)` dual
+module.  This equation also fixes the contragredient sign: the action at
+`Multiplicative.ofAdd a` is the transpose of primal translation by `-a`. -/
+theorem original_dualAction_as_dualMap (n : ℕ) (a : K) :
+    ElmerKadrTensorCounterexample.dualAction K (n + 1)
+        (Multiplicative.ofAdd a) =
+      (Polynomial.taylorLinearEquiv (-a) (n + 1)).toLinearMap.dualMap := by
+  simp only [ElmerKadrTensorCounterexample.dualAction,
+    Representation.dual_apply, ElmerKadrTensorCounterexample.primalAction,
+    ofAdd_neg, toAdd_ofAdd]
+  change Module.Dual.transpose
+      ((Polynomial.taylorLinearEquiv
+        (Multiplicative.toAdd ((Multiplicative.ofAdd a)⁻¹)) (n + 1)).toLinearMap) =
+    (Polynomial.taylorLinearEquiv (-a) (n + 1)).toLinearMap.dualMap
+  rw [← ofAdd_neg a, toAdd_ofAdd]
+  rfl
+
+end OriginalModelBridge
 
 /-
 The continuation to the corrected external criterion remains unfinished:
