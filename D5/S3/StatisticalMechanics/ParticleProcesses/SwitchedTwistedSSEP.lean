@@ -11,6 +11,7 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Rat.Defs
 import Mathlib.GroupTheory.Commutator.Basic
 import Mathlib.GroupTheory.Perm.Fin
+import Mathlib.GroupTheory.GroupAction.Transitive
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic
 
@@ -231,6 +232,16 @@ def pairTwistGroup {N : ℕ} (f g : Equiv.Perm (Fin N)) :
     Subgroup (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) :=
   Subgroup.closure {(f, f⁻¹), (g, g⁻¹)}
 
+instance pairPermutationSMul {N : ℕ} :
+    SMul (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) (Fin N × Fin N) :=
+  ⟨fun p x => (p.1 x.1, p.2 x.2)⟩
+
+instance pairPermutationMulAction {N : ℕ} :
+    MulAction (Equiv.Perm (Fin N) × Equiv.Perm (Fin N)) (Fin N × Fin N) where
+  smul := (· • ·)
+  one_smul x := by rfl
+  mul_smul a b x := by rfl
+
 def pointStabilizer {N : ℕ} (H : Subgroup (Equiv.Perm (Fin N))) (a : Fin N) :
     Subgroup (Equiv.Perm (Fin N)) :=
   H ⊓ MulAction.stabilizer (Equiv.Perm (Fin N)) a
@@ -247,5 +258,36 @@ def lTwoCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) : Prop :=
 
 def lAtLeastThreeCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) : Prop :=
   MulAction.IsPretransitive (derivedTwistGroup f g) (Fin N)
+
+def lTwoOrbitCriterion {N : ℕ} (f g : Equiv.Perm (Fin N)) (a : Fin N) : Prop :=
+  MulAction.orbit (pairTwistGroup f g) (a, a) = Set.univ
+
+def fullSwitchingReachability {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) : Prop :=
+  ∀ (start : Bool) (x target : Configuration L N),
+    ∃ k : ℕ,
+      target ∈ switchSupport hL f g start
+        (sector hL (if start then f else g) x) k
+
+def registeredReachabilityAnswer {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) : Prop :=
+  fullSwitchingReachability hL f g ↔
+    (unionConnected hL f g ∧
+      (if 3 ≤ L then lAtLeastThreeCriterion f g else lTwoCriterion f g))
+
+theorem lTwoOrbitCriterion_iff_pretransitive {N : ℕ}
+    (f g : Equiv.Perm (Fin N)) (a : Fin N) :
+    lTwoOrbitCriterion f g a ↔
+      MulAction.IsPretransitive (pairTwistGroup f g) (Fin N × Fin N) := by
+  unfold lTwoOrbitCriterion
+  exact (MulAction.isPretransitive_iff_orbit_eq_univ (a, a)).symm
+
+theorem switching_support_result {L N : ℕ} (hL : 1 < L)
+    (f g : Equiv.Perm (Fin N)) (start : Bool)
+    (C : Finset (Configuration L N)) :
+    ∀ k x, x ∈ alternatingSupport hL f g start C k ↔
+      x ∈ switchSupport hL f g start C k := by
+  intro k x
+  rw [alternatingSupport_eq_switchSupport]
 
 end D5.S3.StatisticalMechanics.ParticleProcesses.SwitchedTwistedSSEP
