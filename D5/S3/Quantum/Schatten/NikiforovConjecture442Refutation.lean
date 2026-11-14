@@ -114,10 +114,10 @@ private theorem balanced_relabel {n r : ℕ}
   change (if P.part i = P.part j then (0 : ℂ) else 1) =
     if (f ⟨i, Finset.mem_univ i⟩).val % r ≠ (f ⟨j, Finset.mem_univ j⟩).val % r then 1 else 0
   by_cases hij : P.part i = P.part j
-  · simp [hij, h.mp hij]
-  · have hn : ¬(f ⟨i, Finset.mem_univ i⟩).val % r =
-        (f ⟨j, Finset.mem_univ j⟩).val % r := fun he => hij (h.mpr he)
-    simp [hij, hn]
+  · simp [hij]
+    exact h.mp hij
+  · simp [hij]
+    exact fun he => hij (h.mpr he)
 
 private theorem schatten_reindex {n : ℕ} (p : ℝ) (hp : 0 < p)
     (A : Matrix (Fin n) (Fin n) ℂ) (e : Equiv.Perm (Fin n)) :
