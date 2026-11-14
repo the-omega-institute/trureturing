@@ -75,7 +75,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void LinkedLaneNeverUsesAWarmSiblingWhenMainCheckoutIsCold()
+    public void LinkedLaneUsesACompatibleWarmSiblingWhenMainCheckoutIsCold()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -92,15 +92,17 @@ public sealed partial class LeanCacheEnsureCommandTests
             runner,
             cloner);
 
-        Assert.False(result.Success);
-        Assert.Empty(cloner.Invocations);
+        Assert.True(result.Success, result.Error);
+        var clone = Assert.Single(cloner.Invocations);
+        Assert.Equal(
+            Path.Combine(LeanCacheGuard.PhysicalPath(sibling), ".lake"),
+            clone.Source);
         Assert.Equal(0, runner.ArchiveInvocations);
-        using var receipt = ParseReceipt(result.Error);
-        Assert.NotEqual(
-            LeanCacheGuard.PhysicalPath(sibling),
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal(
+            Path.GetDirectoryName(clone.Source),
             receipt.RootElement.GetProperty("donor").GetString());
-        Assert.Contains("stamp absent", receipt.RootElement.GetProperty("reason").GetString(),
-            StringComparison.Ordinal);
+        Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
     }
 
     [Fact]

@@ -79,7 +79,7 @@ internal static partial class LeanCacheEnsureCommand
 
         var location = GitWorktreeInventory.Locate(root, runner);
         var routedRunner = RouteArtifactCache(runner, location.IsLinked, coldSelected: false);
-        if (IsScopedCacheRequest())
+        if (IsScopedCacheRequest(command, readEnvironment))
         {
             var heat = InspectUsableLocalHeat(root, pins, runner, stateProbe, donorRepository);
             if (heat.Failure is not null)
@@ -87,6 +87,11 @@ internal static partial class LeanCacheEnsureCommand
                     "cache warmth inspection failed: " + heat.Failure);
             if (!heat.Usable)
             {
+                // A dependency-only identity receipt must not turn the partial
+                // project outputs produced below into preparation evidence.
+                // Full ensure can re-establish this existing identity later.
+                if (LeanCacheStamp.Inspect(lake, pins).State == LeanCacheStampState.Match)
+                    File.Delete(LeanCacheStamp.PathFor(lake));
                 return RunScopedCommand(
                     root,
                     command,
@@ -166,40 +171,30 @@ internal static partial class LeanCacheEnsureCommand
             receipt = RecordColdBuildConsent(receipt);
         }
 
-        try
-        {
-            if (standardOutput is not null)
-            {
-                standardOutput.Write(Encoding.UTF8.GetBytes(receipt));
-                standardOutput.Flush();
-            }
-            // Provisioning above is outside ordinary CI's cumulative compute
-            // allowance. The actual native command retains the writer guard.
-            IReadOnlyList<string> invocation = command;
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_BUDGET"))
-                && Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_ACTIVE") != "1")
-                invocation = ["python3", Path.Combine(root, "tools/scripts/workflow/ci_compute.py"),
-                    "run", "--", .. command];
-            var invoked = routedRunner.Run(
-                invocation[0],
-                invocation.Skip(1).ToArray(),
-                root,
-                LeanCacheProvisioner.LeanCommandBudget, standardOutput, standardError);
-            return new CommandResult(
-                invoked.ExitCode == 0,
-                standardOutput is null ? receipt + Encoding.UTF8.GetString(invoked.StandardOutput) : string.Empty,
-                standardError is null ? Encoding.UTF8.GetString(invoked.StandardError) : string.Empty, invoked.ExitCode);
-        }
-        catch (OperationCanceledException) { throw; }
-        catch (Exception exception)
-        {
-            return new CommandResult(false, standardOutput is null ? receipt : string.Empty, exception.Message + "\n");
-        }
+        return InvokeNative(root, command, routedRunner, receipt, standardOutput, standardError);
     }
 
-    private static bool IsScopedCacheRequest() =>
-        string.Equals(Environment.GetEnvironmentVariable(ScopedCacheScopeVariable), "targeted", StringComparison.Ordinal)
-        || string.Equals(Environment.GetEnvironmentVariable(ScopedCacheScopeVariable), "scoped", StringComparison.Ordinal);
+    internal static bool IsScopedCacheRequest(
+        IReadOnlyList<string> command, Func<string, string?> readEnvironment)
+    {
+        var scope = readEnvironment(ScopedCacheScopeVariable);
+        if (scope is not ("targeted" or "scoped")) return false;
+        // These are the canonical whole-operation demands, not a Lake argv
+        // parser. An inherited scope hint cannot narrow their preparation.
+        if (command.Any(static argument => argument is "update" or "clean"
+                or "cache" or "warm-donor" or "lean-cache-ensure")) return false;
+        var build = command.ToList().IndexOf("build");
+        if (build < 0) return true; // selected compiled readout / scope discovery
+        var targets = command.Skip(build + 1).Where(static value => !value.StartsWith('-')).ToArray();
+        return targets.Length > 0 && !targets.Any(static target =>
+            target.StartsWith(':') || target.EndsWith(":report", StringComparison.Ordinal)
+            || target is "all" or "default" or "aggregate" or "report"
+            || target is "trureturing" or "Reg" or "LeanInformationAudit"
+                or "LeanInformationAuditAnalysis" or "LeanInformationAuditReg"
+                or "LeanInformationAuditRegAnalysis" or "LeanInformationAuditRegTests"
+                or "LeanInformationAuditFibTests"
+            || target.StartsWith('@'));
+    }
 
     private static LocalHeatInspection InspectUsableLocalHeat(
         string root,
@@ -212,14 +207,14 @@ internal static partial class LeanCacheEnsureCommand
         if (Directory.Exists(lake))
         {
             var stamp = LeanCacheStamp.Inspect(lake, pins);
-            if (stamp.State == LeanCacheStampState.Match)
             {
                 var project = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
                 var mathlib = stateProbe.ProbeOleans(MathlibOleanRoot(lake));
                 var failure = ProbeFailure("current project", project)
                     ?? ProbeFailure("current mathlib", mathlib);
                 if (failure is not null) return new(false, failure);
-                if (project.IsWarm && mathlib.IsWarm) return new(true, null);
+                if (stamp.State == LeanCacheStampState.Match && project.IsWarm && mathlib.IsWarm)
+                    return new(true, null);
             }
         }
 
@@ -232,7 +227,7 @@ internal static partial class LeanCacheEnsureCommand
                 runner,
                 stateProbe,
                 requireProjectWarm: true,
-                donorRepository: donorRepository);
+                donorRepository: donorRepository, requireMathlibWarm: true);
         }
         catch (Exception exception)
         {
@@ -245,11 +240,7 @@ internal static partial class LeanCacheEnsureCommand
                 return new(false, selection.Notice ?? "local donor project warmth probe failed");
             if (selection.Donor is null) return new(false, null);
 
-            var mathlib = stateProbe.ProbeOleans(
-                MathlibOleanRoot(Path.Combine(selection.Donor, ".lake")));
-            var failure = ProbeFailure("local donor mathlib", mathlib);
-            if (failure is not null) return new(false, failure);
-            return new(mathlib.IsWarm, null);
+            return new(true, null);
         }
     }
 
@@ -313,6 +304,13 @@ internal static partial class LeanCacheEnsureCommand
             scope = "targeted",
             archive_status = "not_attempted",
         }) + "\n";
+        return InvokeNative(root, command, runner, receipt, standardOutput, standardError);
+    }
+
+    private static CommandResult InvokeNative(
+        string root, IReadOnlyList<string> command, IWorktreeProcessRunner runner,
+        string receipt, Stream? standardOutput, Stream? standardError)
+    {
         try
         {
             if (standardOutput is not null)
@@ -320,8 +318,13 @@ internal static partial class LeanCacheEnsureCommand
                 standardOutput.Write(Encoding.UTF8.GetBytes(receipt));
                 standardOutput.Flush();
             }
+            IReadOnlyList<string> invocation = command;
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_BUDGET"))
+                && Environment.GetEnvironmentVariable("STRATALINT_CI_COMPUTE_ACTIVE") != "1")
+                invocation = ["python3", Path.Combine(root, "tools/scripts/workflow/ci_compute.py"),
+                    "run", "--", .. command];
             var invoked = runner.Run(
-                command[0], command.Skip(1).ToArray(), root,
+                invocation[0], invocation.Skip(1).ToArray(), root,
                 LeanCacheProvisioner.LeanCommandBudget, standardOutput, standardError);
             return new CommandResult(
                 invoked.ExitCode == 0,

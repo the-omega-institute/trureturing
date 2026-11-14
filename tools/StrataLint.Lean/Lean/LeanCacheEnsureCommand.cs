@@ -613,7 +613,12 @@ internal static partial class LeanCacheEnsureCommand
             stateProbe,
             requireProjectWarm: true,
             donorRepository: donorRepository);
-        if (local.Donor is not null || local.ProbeFailed) return local;
+        if (local.Donor is not null) return local;
+        if (local.ProbeFailed)
+            return new LeanCacheDonorSelection(
+                null,
+                string.Join("; ", new[] { mainNotice, local.Notice }.Where(static value => !string.IsNullOrWhiteSpace(value))),
+                probeFailed: true);
         local.Dispose();
         // Preserve the established main-checkout remediation when no compatible
         // local donor is usable; a sibling donor changes the route only when it
@@ -658,7 +663,7 @@ internal static partial class LeanCacheEnsureCommand
                 SuccessReceipt(
                     "seeded",
                     root,
-                    location.MainCheckout,
+                    selection.Donor,
                     provisioned.Method,
                     pins.Sha256,
                     provisioned.Warning,
@@ -731,7 +736,7 @@ internal static partial class LeanCacheEnsureCommand
                 SuccessReceipt(
                     "seeded",
                     root,
-                    location.MainCheckout,
+                    selection.Donor,
                     attempt.Result.Method,
                     pins.Sha256,
                     attempt.Warning,

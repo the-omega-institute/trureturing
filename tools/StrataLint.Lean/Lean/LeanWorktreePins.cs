@@ -486,8 +486,7 @@ internal sealed record LeanWorktreeLocation(
     string MainCheckout);
 
 /// <summary>
-/// Resolves cache donors. A linked worktree may use only the main checkout of its repository;
-/// main-worktree and standalone callers retain the registered-worktree donor inventory.
+/// Resolves compatible, quiescent donors from the existing registered-worktree inventory.
 /// </summary>
 internal static class GitWorktreeInventory
 {
@@ -511,7 +510,8 @@ internal static class GitWorktreeInventory
         IWorktreeProcessRunner runner,
         ILeanCacheStateProbe stateProbe,
         bool requireProjectWarm,
-        string? donorRepository = null)
+        string? donorRepository = null,
+        bool requireMathlibWarm = false)
     {
         ArgumentNullException.ThrowIfNull(stateProbe);
         var targetRoot = LeanCacheGuard.PhysicalPath(repositoryRoot);
@@ -602,10 +602,26 @@ internal static class GitWorktreeInventory
                     sawColdProject |= project.State == OleanWarmth.Cold;
                     sawProjectProbeFailure |= project.State == OleanWarmth.ProbeFailed;
                     if (project.Error is not null) unreadable.Add($"{root}: {project.Error}");
+                    if (requireMathlibWarm && project.State == OleanWarmth.ProbeFailed)
+                        return new LeanCacheDonorSelection(null, project.Error, probeFailed: true);
                     continue;
                 }
             }
 
+            if (requireMathlibWarm)
+            {
+                var mathlib = stateProbe.ProbeOleans(Path.Combine(cache, "packages", "mathlib", ".lake", "build", "lib", "lean"));
+                if (mathlib.State == OleanWarmth.ProbeFailed)
+                {
+                    guard.Dispose();
+                    return new LeanCacheDonorSelection(null, mathlib.Error, probeFailed: true);
+                }
+                if (!mathlib.IsWarm)
+                {
+                    guard.Dispose();
+                    continue;
+                }
+            }
             return new LeanCacheDonorSelection(Path.GetFullPath(root), null, guard, project);
         }
 

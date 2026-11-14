@@ -49,6 +49,9 @@ internal sealed class ProductionWorktreeProcessRunner(CancellationToken cancella
         foreach (DictionaryEntry entry in Environment.GetEnvironmentVariables())
             if (entry.Key is string name && entry.Value is string value)
                 merged[name] = value;
+        if (environment is not null)
+            foreach (var (name, value) in environment)
+                merged[name] = value;
         foreach (var (name, value) in variables)
             merged[name] = value;
         return new(cancellationToken, observation, merged);

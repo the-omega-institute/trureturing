@@ -171,8 +171,9 @@ def acquire(query, no_build):
             acquisition["status"] = "build_failed"
             return empty, acquisition
     program = ROOT / ".lake/build/lean-inspector/producer/bin/dependencyReadout"
-    stamp = ROOT / ".lake/.stratalint-lean-cache-stamp.json"
-    if not program.is_file() or not stamp.is_file():
+    # The selected native build above establishes executable freshness. A cache
+    # preparation identity is neither required nor a freshness certificate.
+    if not program.is_file():
         return empty, acquisition
     with tempfile.TemporaryDirectory(prefix="compiled-dependencies-", dir=ROOT / ".lake") as temporary:
         directory = Path(temporary)
