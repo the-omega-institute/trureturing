@@ -12,6 +12,13 @@ internal sealed class ThueMorseFrequencyDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Thue-Morse two-block fixed point has one-letter frequency one half.",
         H("Thue-Morse two-block frequency"), Blocks(
+            Describe.Lean(DescribeId.Create("sign"),
+                DeclarationHandle.Create("D5/S1/Words/TwoBlockSubstitution/ThueMorseFrequency.sign"),
+                H("sign"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Open, Seq(Operatorname, Grp(F.Id("b"))), Sp, Colon, Sp, Seq(Operatorname, Grp(F.Id("Bool"))), Close, Comma, Sp, Seq(Operatorname, Grp(F.Id("sign"))), Sp, Seq(Operatorname, Grp(F.Id("b"))), Sp, F.Eq, Sp, Open, Seq(Operatorname, Grp(F.Id("if"))), Sp, Seq(Operatorname, Grp(F.Id("b"))), Sp, Seq(Operatorname, Grp(F.Id("then"))), Sp, Minus, D(1), Sp, Seq(Operatorname, Grp(F.Id("else"))), Sp, D(1), Close))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The integer sign is minus one for true and one for false."))), DescribeRole.Definition),
+
             Node("kappaTM", "The two-block substitution", Table(),
                 "Section 4 of v1, p. 5: “We consider the two-block substitution κTM defined by κTM(00) = 001, κTM(01) = 010, κTM(10) = 101, κTM(11) = 110.” The letters 0 and 1 are false and true. The vector notation ![a,b,c] denotes a function Fin 3 → Bool, with indices 0, 1 and 2.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),

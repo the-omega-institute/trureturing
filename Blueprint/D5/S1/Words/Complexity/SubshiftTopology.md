@@ -4,9 +4,21 @@
 
 Word subshifts are closed orbit closures, and the golden subshift is perfect with cardinality continuum.
 
+**Theorem 1.1 (golden wordFactorSet card).**
+
+$$\forall (\operatorname{n} : \operatorname{Nat}), (\operatorname{wordFactorSet} \operatorname{goldenWord} \operatorname{n}).\operatorname{card} = \operatorname{n} + 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/SubshiftTopology.golden_wordFactorSet_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The golden word has exactly n + 1 factors of length n.
+
 For a one-sided word x, let X_x contain the infinite words whose prefixes all occur as factors of x. Product cylinders expose both the topology of X_x and the approximation supplied by the forward shift orbit.
 
-**Theorem 1.1 (Every word subshift is closed).**
+**Theorem 1.2 (Every word subshift is closed).**
 
 $$\operatorname{Closed}(X_x)$$
 
@@ -18,7 +30,7 @@ $$\operatorname{Closed}(X_x)$$
 
 At each prefix length, the admissible words form a finite union of closed FullShift cylinders. Intersecting these closed level conditions over all natural lengths gives exactly X_x.
 
-**Theorem 1.2 (The forward orbit closure equals the word subshift).**
+**Theorem 1.3 (The forward orbit closure equals the word subshift).**
 
 $$\operatorname{cl}(\operatorname{Orb}^+(x)) = X_x$$
 
@@ -30,7 +42,7 @@ $$\operatorname{cl}(\operatorname{Orb}^+(x)) = X_x$$
 
 Closedness and shift invariance place the orbit closure inside X_x. For the reverse inclusion, every prefix admitted by X_x occurs at some starting position of x, so the corresponding shift enters the required PiNat cylinder neighborhood.
 
-**Theorem 1.3 (The golden word subshift is perfect).**
+**Theorem 1.4 (The golden word subshift is perfect).**
 
 $$\operatorname{Perfect}(X_g)$$
 
@@ -44,7 +56,7 @@ Golden recurrence realizes every admitted prefix at arbitrarily late positions, 
 
 The exact factor count n+1 rules out equal golden suffixes: equality of two suffixes would make all length-j factors representable by fewer than j+1 starts. Two recurrent occurrences therefore provide a point different from the prescribed center in every neighborhood.
 
-**Theorem 1.4 (The golden word subshift has cardinality continuum).**
+**Theorem 1.5 (The golden word subshift has cardinality continuum).**
 
 $$\operatorname{card}(X_g) = c$$
 
@@ -61,6 +73,7 @@ The ambient function space from natural numbers to Bool has cardinality continuu
 ## References
 
 - Truth anchor: `D5/S1/Words/Complexity/SubshiftTopology.closure_shift_orbit_eq_wordSubshift`
+- Truth anchor: `D5/S1/Words/Complexity/SubshiftTopology.golden_wordFactorSet_card`
 - Truth anchor: `D5/S1/Words/Complexity/SubshiftTopology.golden_wordSubshift_cardinal_eq_continuum`
 - Truth anchor: `D5/S1/Words/Complexity/SubshiftTopology.golden_wordSubshift_perfect`
 - Truth anchor: `D5/S1/Words/Complexity/SubshiftTopology.isClosed_wordSubshift`
