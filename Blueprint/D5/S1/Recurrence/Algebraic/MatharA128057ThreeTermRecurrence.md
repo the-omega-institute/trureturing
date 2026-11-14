@@ -12,6 +12,10 @@ $$\left(\exists S \in \mathbb{Q}[[X]],\; \left(\operatorname{constantCoeff}\left
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/MatharA128057ThreeTermRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a128057-three-term-recurrence` (proved) by `D5/S1/Recurrence/Algebraic/MatharA128057ThreeTermRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a128057-three-term-recurrence","declaration_gid":"D5/S1/Recurrence/Algebraic/MatharA128057ThreeTermRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Paul Barry; OEIS Foundation Inc. (2014). *OEIS A128057 — three-term recurrence for a square-root quotient*. URL: <https://oeis.org/A128057/internal>.

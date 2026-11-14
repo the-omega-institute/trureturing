@@ -75,5 +75,7 @@ internal sealed class MatharA128057ThreeTermRecurrenceDocument : IScribeDocument
                         + "and provides a general method. The bounded passage inspection recorded with "
                         + "the source identifies no explicit settlement of this exact shorter recurrence; "
                         + "global or implicit prior settlement is unmeasured. No global novelty claim is made."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a128057-three-term-recurrence"), ResolutionKind.Proved)))));
 }
