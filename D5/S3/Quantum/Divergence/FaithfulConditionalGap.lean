@@ -11,12 +11,15 @@ import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability
 import D5.S3.Quantum.Information.ChenKatoBrandaoTraceNormCMIRefutation
 
+/-! Squared trace distance and a binary measure-and-prepare channel. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 noncomputable section
 namespace D5.S3.Quantum.Divergence.FaithfulConditionalGap
 
+open Matrix
 open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Foundation.FiniteTraceDistance
@@ -46,8 +49,12 @@ private theorem positive_trace_contraction
       traceNorm (f Y) = (Matrix.trace Y).re := by
     have h := congrArg Complex.re
       (traceNorm_of_posSemidef (Matrix.nonneg_iff_posSemidef.mp (hpos Y hY)))
-    simpa only [Complex.ofReal_re, htr] using h
-  rw [← CFC.posPart_sub_negPart X hX, map_sub, sub_eq_add_neg]
+    change traceNorm (f Y) = (Matrix.trace (f Y)).re at h
+    exact h.trans (congrArg Complex.re (htr Y))
+  have he : f X = f (posPart X) - f (negPart X) := by
+    rw [← map_sub]
+    exact congrArg f (CFC.posPart_sub_negPart X hX).symm
+  rw [he, sub_eq_add_neg]
   calc
     traceNorm (f (posPart X) + -f (negPart X)) ≤
         traceNorm (f (posPart X)) + traceNorm (-f (negPart X)) := traceNorm_add_le _ _
@@ -173,12 +180,12 @@ private def binaryChannel : QuantumChannel (Fin 2) (Fin 2) :=
     kraus kraus_complete)
 
 private theorem binary_action (X : Matrix (Fin 2) (Fin 2) ℂ) :
-    act binaryChannel X = Matrix.diagonal
+    ConditionalHockeyStickOrthogonalReduction.act binaryChannel X = Matrix.diagonal
       (fun y => (weight y 0 : ℂ) * X 0 0 + (weight y 1 : ℂ) * X 1 1) := by
   have h := Classical.choose_spec
     (D5.S3.Quantum.Foundation.FiniteKrausChannel.finite_kraus_quantum_channel
       kraus kraus_complete) X
-  change act binaryChannel X = _ at h
+  change ConditionalHockeyStickOrthogonalReduction.act binaryChannel X = _ at h
   rw [h]
   ext i j
   fin_cases i <;> fin_cases j <;>
@@ -277,7 +284,12 @@ private theorem complete_pair_bound {r : Type} [Fintype r] [DecidableEq r]
       amp binaryChannel X := by
     change _ = CStarMatrix.ofMatrix.symm (referenceLinear binaryChannel
       (CStarMatrix.ofMatrix X))
-    simp only [X, map_sub]
+    have hx : CStarMatrix.ofMatrix X = ρ.1 - σ.1 := by
+      change CStarMatrix.ofMatrix
+        (CStarMatrix.ofMatrix.symm ρ.1 - CStarMatrix.ofMatrix.symm σ.1) = _
+      rw [map_sub]
+      simp
+    rw [hx, map_sub]
     rfl
   have hb := pinch_contract X
   have hnorm : traceNorm (amp binaryChannel X) ≤ (1 / 2 : ℝ) * traceNorm X := by
@@ -330,8 +342,8 @@ private def diagonalState {n : Type*} [Fintype n] [DecidableEq n]
     apply Matrix.posSemidef_diagonal_iff.mpr
     intro i
     exact_mod_cast hd i
-  · change (∑ i, (d i : ℂ)) = 1
-    exact_mod_cast ht
+  · simpa [Matrix.trace, Matrix.diag, CStarMatrix.ofMatrix] using
+      (show (∑ i, (d i : ℂ)) = 1 by exact_mod_cast ht)
 
 private def rhoProbability (p : Fin 3 × Fin 2) : ℝ :=
   ![![1 / 2, 0], ![0, 0], ![1 / 2, 0]] p.1 p.2
@@ -358,7 +370,7 @@ private theorem diagonal_distance {n : Type*} [Fintype n] [DecidableEq n]
   rw [hp, hq]
   change traceNorm (Matrix.diagonal (fun i => (p i : ℂ)) -
     Matrix.diagonal (fun i => (q i : ℂ))) / 2 = _
-  rw [← Matrix.diagonal_sub]
+  rw [Matrix.diagonal_sub]
   have he : (fun i => (p i : ℂ) - (q i : ℂ)) = fun i => ((p i - q i : ℝ) : ℂ) := by
     funext i
     simp
@@ -397,11 +409,11 @@ private theorem witness_distances :
     (by
       apply CStarMatrix.ofMatrix.symm.injective
       change partialTraceRight (Matrix.diagonal fun p => (rhoProbability p : ℂ)) = _
-      simpa only [Complex.ofReal_sum] using marginal_diagonal rhoProbability)
+      simpa only [Complex.ofReal_sum, Equiv.symm_apply_apply] using marginal_diagonal rhoProbability)
     (by
       apply CStarMatrix.ofMatrix.symm.injective
       change partialTraceRight (Matrix.diagonal fun p => (sigmaProbability p : ℂ)) = _
-      simpa only [Complex.ofReal_sum] using marginal_diagonal sigmaProbability)
+      simpa only [Complex.ofReal_sum, Equiv.symm_apply_apply] using marginal_diagonal sigmaProbability)
   have ho := diagonal_distance (referenceState binaryChannel witnessRho)
     (referenceState binaryChannel witnessSigma)
     (fun p => weight p.2 0 * rhoProbability (p.1,0) + weight p.2 1 * rhoProbability (p.1,1))
@@ -409,11 +421,11 @@ private theorem witness_distances :
     (by
       apply CStarMatrix.ofMatrix.symm.injective
       change amp binaryChannel (Matrix.diagonal fun p => (rhoProbability p : ℂ)) = _
-      simpa only [Complex.ofReal_add, Complex.ofReal_mul] using reference_diagonal rhoProbability)
+      simpa only [Complex.ofReal_add, Complex.ofReal_mul, Equiv.symm_apply_apply] using reference_diagonal rhoProbability)
     (by
       apply CStarMatrix.ofMatrix.symm.injective
       change amp binaryChannel (Matrix.diagonal fun p => (sigmaProbability p : ℂ)) = _
-      simpa only [Complex.ofReal_add, Complex.ofReal_mul] using reference_diagonal sigmaProbability)
+      simpa only [Complex.ofReal_add, Complex.ofReal_mul, Equiv.symm_apply_apply] using reference_diagonal sigmaProbability)
   norm_num [Fintype.sum_prod_type, Fin.sum_univ_three, Fin.sum_univ_two,
     rhoProbability, sigmaProbability, weight] at hi hr ho
   exact ⟨hi, hr, ho⟩
