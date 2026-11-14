@@ -1,0 +1,1 @@
+{"statement_id":"sha256:4088002d93c2323d0dc1505e22aff52b442f34d0d6a2aae6c3a01665462c1336","declarations":[{"declaration_name_key":"ns(ns(ns(n0,7:TauCeti),11:RealClosure),21:finrank_eq_one_of_odd)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,7:TauCeti),11:RealClosure),33:finrank_ne_two_of_forall_isSquare)","kind":"theorem"}]}
