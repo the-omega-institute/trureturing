@@ -125,6 +125,7 @@ theorem exact_error_fiber {ι : Type*} [Fintype ι] [DecidableEq ι]
       QuotientAddGroup.norm_mk_le_norm).trans hab
 
 open MeasureTheory Set
+open scoped ENNReal
 open D5.S3.Quantum.Measurement.ConditionalSubentropyGuessingBound (simplexCoords simplex_volume)
 
 /-- The closed sign chamber with `p` positive and `q` negative coordinates. -/
@@ -141,14 +142,15 @@ private lemma split_simplex_volume (p q : ℕ) :
   have hm := volume_measurePreserving_sumPiEquivProdPi (fun _ : Fin p ⊕ Fin q => ℝ)
   have hs (n : ℕ) : MeasurableSet (simplexCoords (n + 1)) := by
     have hpos : IsClosed {y : Fin n → ℝ | ∀ i, 0 ≤ y i} := by
-      simpa only [Set.setOf_forall] using
+      simpa only [Set.ofPred_forall] using
         isClosed_iInter (fun i : Fin n => isClosed_le continuous_const (continuous_apply i))
     exact (hpos.inter (isClosed_le
       (continuous_finsetSum _ (fun i _ => continuous_apply i)) continuous_const)).measurableSet
   have heq : splitSimplex p q = e ⁻¹' (simplexCoords (p + 1) ×ˢ simplexCoords (q + 1)) := by
     ext a
-    simp [splitSimplex, e, simplexCoords, and_assoc]
-  rw [heq, hm.measure_preimage (hs p |>.prod (hs q)), Measure.prod_prod,
+    simp [splitSimplex, e, simplexCoords, MeasurableEquiv.sumPiEquivProdPi,
+      Equiv.sumPiEquivProdPi, and_assoc]
+  rw [heq, hm.measure_preimage (hs p |>.prod (hs q) |>.nullMeasurableSet), MeasureTheory.volume_eq_prod, Measure.prod_prod,
     simplex_volume, simplex_volume]
 
 private def signedScale (p q : ℕ) (ε : ℝ) :
@@ -182,17 +184,18 @@ private lemma signed_orthant_image (p q : ℕ) {ε : ℝ} (hε : 0 < ε) :
         by simpa [b, ← Finset.sum_div] using (div_le_one hε).mpr hn'⟩
     · rw [signed_scale_apply]
       ext i
-      cases i <;> simp [b, hε0]
+      cases i <;> simp [b] <;> field_simp
   · rintro ⟨b, ⟨hb, hp, hc, hq⟩, rfl⟩
     rw [signed_scale_apply]
     have hp' := mul_le_mul_of_nonneg_left hp hε.le
     have hq' := mul_le_mul_of_nonneg_left hq hε.le
     have hpos (i) : 0 ≤ ε * b (.inl i) := mul_nonneg hε.le (hb i)
     have hneg (j) : -ε * b (.inr j) ≤ 0 := mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hε.le) (hc j)
+    have hinr (j) : 0 ≤ ε * b (.inr j) := mul_nonneg hε.le (hc j)
     refine ⟨⟨?_, ?_⟩, hpos, hneg⟩
-    · simpa [Fintype.sum_sum_type, hpos, hneg, max_eq_left, max_eq_right,
+    · simpa [Fintype.sum_sum_type, hpos, hinr, max_eq_left, max_eq_right,
         ← Finset.mul_sum] using hp'
-    · simpa [Fintype.sum_sum_type, hpos, hneg, max_eq_left, max_eq_right,
+    · simpa [Fintype.sum_sum_type, hpos, hinr, max_eq_left, max_eq_right,
         neg_nonpos.mpr, neg_nonneg.mpr, ← Finset.mul_sum] using hq'
 
 /-- Exact Lebesgue volume in every closed sign chamber, including empty sides. -/

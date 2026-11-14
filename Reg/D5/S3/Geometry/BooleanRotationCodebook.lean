@@ -62,4 +62,31 @@ theorem actual_dependence : ObservationalDependence signature actual := by
   rw [hh]
   norm_num [circularError]
 
+abbrev orthantSignature : Signature where
+  Params := ℕ × ℕ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ≥0∞
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def orthantActual : Realization orthantSignature :=
+  realize orthantSignature
+    (fun _ p ε => MeasureTheory.volume (signedOrthant p.1 p.2 ε))
+    (fun e => nomatch e)
+
+abbrev orthantArena : Arena where
+  signature := orthantSignature
+  Law R := ∀ p q : ℕ, ∀ {ε : ℝ}, 0 < ε →
+    R.readout () (p, q) ε = ENNReal.ofReal (ε ^ (p + q)) *
+      ((p.factorial : ℝ≥0∞)⁻¹ * (q.factorial : ℝ≥0∞)⁻¹)
+
+theorem orthantBridge : (type_of% (@signed_orthant_volume)) ↔
+    orthantArena.Law orthantActual := Iff.rfl
+
+theorem orthantPositive : orthantArena.Law orthantActual :=
+  orthantBridge.mp (@signed_orthant_volume)
+
 end Reg.D5.S3.Geometry.BooleanRotationCodebook
