@@ -4063,7 +4063,7 @@ z^b\exp\bigl\{Y\in\mathfrak g:\|Y\|_{\mathrm F}\le r_0/2\bigr\}
 }
 $$
 
-证明。相似变换补足方向再取第二类局部乘积坐标的方法见[D’Alessandro，Lemma 1][Q173DA01]及[Method 1][Q173DA09]；以下对本组相似矩阵给出系数预算、非线性半径和原 $R$ 的支付次数。
+证明（推导归属：repo-derived；本条的有限标架系数预算、定量非线性局部包含及原 $R$ 支付估计；所用标准工具采用下列引文）。相似变换补足方向再取第二类局部乘积坐标的方法见[D’Alessandro，Lemma 1][Q173DA01]及[Method 1][Q173DA09]；以下对本组相似矩阵给出系数预算、非线性半径和原 $R$ 的支付次数。
 
 先构造实线性合成映射
 
@@ -4342,7 +4342,7 @@ $$
 
 次数 $K$、记账标量 $c\ne0$ 和下界 $p$ 均只依赖 $n,\lambda$。
 
-证明。通常酉谱分解由[Watrous，Theorem 1.3、Corollary 1.4][Q169W1]供应。取本征角 $\theta_j\in[-\pi,\pi]$，得到
+证明（推导归属：repo-derived；由173.3导出的同一原始正向字的次数与质量联合估计）。通常酉谱分解由[Watrous，Theorem 1.3、Corollary 1.4][Q169W1]供应。取本征角 $\theta_j\in[-\pi,\pi]$，得到
 
 $$
 U=e^X,\qquad X\in\mathfrak u(n)\subseteq\mathfrak g,
