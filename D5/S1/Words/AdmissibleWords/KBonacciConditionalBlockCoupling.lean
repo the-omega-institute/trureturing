@@ -425,10 +425,11 @@ private theorem refined_completions {k n : ℕ} (fixed : Finset (Fin n))
     simpa [Function.update_of_ne hji] using hf j (Finset.mem_insert_of_mem hj)
   · rintro ⟨⟨hw, hf⟩, hb⟩
     refine ⟨hw, ?_⟩
-    intro j hj
-    rcases Finset.mem_insert.mp hj with rfl | hj
-    · simpa using hb
-    · have hji : j ≠ i := by rintro rfl; exact hi hj
+    intro j hjfixed
+    rcases Finset.mem_insert.mp hjfixed with hji | hj
+    · subst j
+      simpa using hb
+    · have hji : j ≠ i := fun he => hi (he ▸ hj)
       simpa [Function.update_of_ne hji] using hf j hj
 
 /-- The actual conditional law after revealing one more bit. The fallback is
@@ -449,8 +450,8 @@ private theorem completion_step_weight {k n : ℕ} (fixed : Finset (Fin n))
   classical
   rw [completion_bit_probability]
   unfold nextCompletionLaw
-  split_ifs with h
-  · rw [completionLaw_apply, refined_completions fixed x i hi]
+  by_cases h : (completions k n (insert i fixed) (Function.update x i b)).Nonempty
+  · rw [dif_pos h, completionLaw_apply, refined_completions fixed x i hi]
     by_cases hw : w ∈ completions k n fixed x
     · by_cases hb : w i = b
       · simp only [Finset.mem_filter, hw, hb, and_self, ite_true]
@@ -463,19 +464,20 @@ private theorem completion_step_weight {k n : ℕ} (fixed : Finset (Fin n))
         · exact ENNReal.natCast_ne_top _
       · simp [hw, hb]
     · simp [hw, completionLaw_apply]
-  · have he : (completions k n fixed x).filter (fun v => v i = b) = ∅ := by
+  · rw [dif_neg h]
+    have he : (completions k n fixed x).filter (fun v => v i = b) = ∅ := by
       rw [← refined_completions fixed x i hi]
       exact Finset.not_nonempty_iff_eq_empty.mp h
-    rw [he]
-    simp only [Finset.card_empty, Nat.cast_zero, zero_div, zero_mul]
-    split_ifs with hb
-    · rw [completionLaw_apply, if_neg]
+    have hwzero : w i = b → completionLaw fixed x hx w = 0 := by
+      intro hb
+      rw [completionLaw_apply, if_neg]
       intro hw
       have hm : w ∈ (completions k n fixed x).filter (fun v => v i = b) := by
         simp [hw, hb]
       rw [he] at hm
       exact Finset.notMem_empty w hm
-    · rfl
+    rw [he]
+    by_cases hb : w i = b <;> simp [hb, hwzero, ENNReal.zero_div]
 
 private theorem completion_disintegration {k n : ℕ} (fixed : Finset (Fin n))
     (x : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
@@ -493,7 +495,7 @@ private theorem pmf_le_map {α β : Type*} (p : PMF α) (f : α → β) (a : α)
     p a ≤ p.map f (f a) := by
   classical
   rw [PMF.map_apply]
-  simpa using ENNReal.le_tsum (fun v => if f a = f v then p v else 0) a
+  simpa using (ENNReal.le_tsum (f := fun v => if f a = f v then p v else 0) a)
 
 private theorem bitCoupling_supported_fibers {k n : ℕ} (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
@@ -519,8 +521,8 @@ private theorem bitCoupling_supported_fibers {k n : ℕ} (fixed : Finset (Fin n)
     apply hb
     rw [completion_bit_probability, Finset.not_nonempty_iff_eq_empty.mp h]
     simp
-  exact ⟨nonempty x hx bits.1 (fun h => hs (le_antisymm (h ▸ hfirst) (zero_le _))),
-    nonempty y hy bits.2 (fun h => hs (le_antisymm (h ▸ hsecond) (zero_le _)))⟩
+  exact ⟨nonempty x hx bits.1 (fun h => hs (le_antisymm (h ▸ hfirst) zero_le)),
+    nonempty y hy bits.2 (fun h => hs (le_antisymm (h ▸ hsecond) zero_le))⟩
 
 private def independentCompletions {k n : ℕ} (fixed : Finset (Fin n))
     (x y : Fin n → Bool) (hx : (completions k n fixed x).Nonempty)
@@ -534,8 +536,19 @@ private theorem independentCompletions_laws {k n : ℕ} (fixed : Finset (Fin n))
     (hy : (completions k n fixed y).Nonempty) :
     (independentCompletions fixed x y hx hy).map Prod.fst = completionLaw fixed x hx ∧
       (independentCompletions fixed x y hx hy).map Prod.snd = completionLaw fixed y hy := by
-  constructor <;> simp [independentCompletions, PMF.map_bind, PMF.map_comp,
-    Function.comp_def, PMF.map_const, PMF.bind_pure, PMF.map_id]
+  constructor
+  · change ((completionLaw fixed x hx).bind fun v =>
+      (completionLaw fixed y hy).map (fun w => (v, w))).map Prod.fst = _
+    rw [PMF.map_bind]
+    simp only [PMF.map_comp]
+    change (completionLaw fixed x hx).bind (fun v =>
+      (completionLaw fixed y hy).map (Function.const _ v)) = _
+    simp only [PMF.map_const, PMF.bind_pure]
+  · rw [independentCompletions, PMF.map_bind]
+    simp only [PMF.map_comp]
+    change (completionLaw fixed x hx).bind (fun _ =>
+      (completionLaw fixed y hy).map id) = _
+    rw [PMF.map_id, PMF.bind_const]
 
 /-- Recursively reveal the listed sites using the actual conditional next-bit
 couplings. Impossible bit pairs carry zero mass and use an arbitrary fallback. -/
@@ -611,7 +624,7 @@ theorem prefix_coupling_marginals {k n : ℕ} (sites : List (Fin n))
           · simp [hs]
           · rw [(hc bits hs).1]
         _ = (joint.map Prod.fst).bind (nextCompletionLaw fixed x hx i) :=
-          (PMF.bind_map joint Prod.fst _).symm
+          (PMF.bind_map joint Prod.fst (nextCompletionLaw fixed x hx i)).symm
         _ = p.bind (nextCompletionLaw fixed x hx i) := by rw [hm.1]
         _ = completionLaw fixed x hx := completion_disintegration fixed x hx i hi
     · change (joint.bind child).map Prod.snd = _
@@ -628,7 +641,7 @@ theorem prefix_coupling_marginals {k n : ℕ} (sites : List (Fin n))
           · simp [hs]
           · rw [(hc bits hs).2]
         _ = (joint.map Prod.snd).bind (nextCompletionLaw fixed y hy i) :=
-          (PMF.bind_map joint Prod.snd _).symm
+          (PMF.bind_map joint Prod.snd (nextCompletionLaw fixed y hy i)).symm
         _ = q.bind (nextCompletionLaw fixed y hy i) := by rw [hm.2.1]
         _ = completionLaw fixed y hy := completion_disintegration fixed y hy i hi
 
