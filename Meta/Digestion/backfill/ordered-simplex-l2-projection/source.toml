@@ -1,0 +1,5 @@
+source_id = "ordered-simplex-l2-projection"
+path = "docs/develop/theory/ORDERED_SIMPLEX_L2_PROJECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
