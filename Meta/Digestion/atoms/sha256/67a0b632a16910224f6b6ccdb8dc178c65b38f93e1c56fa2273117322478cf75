@@ -1,0 +1,11 @@
+**定义 125.4（旧球心的实际零集稳定性）。** 条件 CS 为
+
+$$
+\forall p\in P\ \forall(a_i)\subset P:\quad
+ a_i\to p\ \Longrightarrow
+ \operatorname{dist}(c_p,D_{a_i})\longrightarrow0.
+\tag{X125.16}
+$$
+
+球心始终取固定旧球 $D_p$ 的 $c_p$。此处距离的对象是同标签完整 $D_{a_i}$，不是某张效应的零集。NC 保留124.1的原义 $\inf_p\operatorname{diam}D_p>0$；UF 保留 IX115.8 的原义 $\sup_p\beta_{D_p}<\infty$，其中 $\beta_{D_p}=1/(2a_{D_p})$ 是 IX114.5—114.6 的原全锥正延拓预算。
+

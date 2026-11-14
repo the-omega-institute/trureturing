@@ -1,0 +1,24 @@
+To see this, normalize a nonzero complex column $v$ to $\|v\|_\infty=1$ and rotate it by a global phase so $v_{i_0}=1$ at a maximum coordinate. Put $e=(I-wP)v$ and $\eta=\|e\|_\infty$. Nonnegative stochastic rows imply $\|P^j\|_{\infty\to\infty}=1$. Finite telescoping gives
+
+$$
+v-w^tP^tv=\sum_{j=0}^{t-1}(wP)^j e,\qquad
+\operatorname{Re}\bigl(w^t(P^tv)_{i_0}\bigr)\ge1-t\eta.
+\tag{2.8}
+$$
+
+For each $t=0,\ldots,S$, the row $(P^t)_{i_0,\cdot}$ is a probability row, so some coordinate $i_t$ satisfies
+$\operatorname{Re}(w^t v_{i_t})\ge1-t\eta$; at $t=0$ choose $i_0$. Since $|v_{i_t}|\le1$,
+
+$$
+|v_{i_t}-w^{-t}|^2\le2t\eta.
+$$
+
+Two of the $S+1$ chosen indices coincide, say $i_a=i_b$ with $0\le a<b\le S$. Thus
+
+$$
+\gamma\le |1-w^{b-a}|
+ =|w^{-a}-w^{-b}|
+ \le\sqrt{2a\eta}+\sqrt{2b\eta}\le\sqrt{8S\eta}.
+\tag{2.9}
+$$
+

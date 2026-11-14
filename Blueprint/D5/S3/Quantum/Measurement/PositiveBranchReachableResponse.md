@@ -6,7 +6,91 @@ Strictly positive branch weights preserve the original Kraus word support. Termi
 
 For finite index sets n and A, let K_a be complex n by n matrices, let c_a be strictly positive real weights, and let rho be positive semidefinite. Write T(X) = sum_a c_a K_a X K_a^*, R_l = sum_{k=0}^l T^k(rho), and supp(X) = ker(X) perpendicular. The empty Kraus word is the identity. W_l(K,rho) is the complex span of K_w v for words of length at most l and v in supp(rho); S(K,rho) is the union, equivalently the supremum, of these increasing subspaces. Quadratic forms use the Euclidean inner product and their real parts.
 
-**Theorem 1.1 (Finite orbits and original words).**
+**Theorem 1.1 (Positive weighted Kraus maps).**
+
+$$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall c: A \to \mathbb{R}, \forall X: M_{n}(\mathbb{C}), (\forall a: A, 0 \leq \operatorname{c}(a)) \land X \geq 0 \Rightarrow \operatorname{weightedCP}(K, c, X) \geq 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.weightedCP_psd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For nonnegative weights, every Kraus sandwich of a positive semidefinite matrix is positive semidefinite, as is their weighted sum. Strict positivity and trace preservation are unnecessary.
+
+**Theorem 1.2 (Hermitian support is the range).**
+
+$$\forall n: Type, \operatorname{Finite}(n) \Rightarrow \forall X: M_{n}(\mathbb{C}), \operatorname{IsHermitian}(X) \Rightarrow \operatorname{supp}(X) = \operatorname{range}(\operatorname{toEuclideanLin}(X))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.matrixSupport_eq_range` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a Hermitian matrix, the orthogonal complement of its kernel is the range of the same operator.
+
+**Theorem 1.3 (The original reachable space is Kraus invariant).**
+
+$$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall \rho: M_{n}(\mathbb{C}), \forall a: A, \forall v: \operatorname{EuclideanSpace}(\mathbb{C}, n), v \in \operatorname{S}(K, \rho) \Rightarrow \operatorname{toEuclideanLin}(\operatorname{K}(a), v) \in \operatorname{S}(K, \rho)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.reachable_kraus_invariant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Prepending one original Kraus letter to a finite word preserves membership in the span of all words. The branch index type need not be finite for this statement.
+
+**Theorem 1.4 (Positive weighted Kraus maps preserve order).**
+
+$$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall c: A \to \mathbb{R}, (\forall a: A, 0 \leq \operatorname{c}(a)) \Rightarrow \operatorname{Monotone}(\operatorname{weightedCP}(K, c))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.weightedCP_mono` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Apply positivity to the difference of two ordered Hermitian matrices. The order is the positive semidefinite matrix order, and only nonnegative branch weights are required.
+
+**Theorem 1.5 (A geometric block bound forces trace decay).**
+
+$$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall c: A \to \mathbb{R}, \forall \sigma: M_{n}(\mathbb{C}), \forall N: \mathbb{N}, \forall q: \mathbb{R}, ((\forall a: A, 0 \leq \operatorname{c}(a)) \land \sigma \geq 0 \land 1 \leq N \land 0 \leq q < 1 \land \forall k: \mathbb{N}, \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, c), k, \sigma))) \leq (q)^{\lfloor\frac{k}{N}\rfloor} \operatorname{Re}(\operatorname{Tr}(\sigma))) \Rightarrow \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, c), k, \sigma))) \to 0 (k \to \infty)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.geometric_trace_tendsto` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If a positive orbit has trace bounded by q to the power floor(k/N) times its initial trace, where N is positive and 0 <= q < 1, the nonnegative trace tends to zero.
+
+**Theorem 1.6 (Positive matrix norm is bounded by trace).**
+
+$$\forall n: Type, \operatorname{Finite}(n) \Rightarrow \forall X: M_{n}(\mathbb{C}), X \geq 0 \Rightarrow \Vert X \Vert \leq \operatorname{Re}(\operatorname{Tr}(X))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.psd_norm_le_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The matrix norm here is the elementwise maximum norm. Positivity bounds each entry norm by the real trace, including the zero-dimensional case.
+
+**Theorem 1.7 (A geometric block bound gives an operator series).**
+
+$$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall c: A \to \mathbb{R}, \forall \sigma: M_{n}(\mathbb{C}), \forall N: \mathbb{N}, \forall q: \mathbb{R}, ((\forall a: A, 0 \leq \operatorname{c}(a)) \land \sigma \geq 0 \land 1 \leq N \land 0 \leq q < 1 \land \forall k: \mathbb{N}, \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, c), k, \sigma))) \leq (q)^{\lfloor\frac{k}{N}\rfloor} \operatorname{Re}(\operatorname{Tr}(\sigma))) \Rightarrow \operatorname{Summable}(k \mapsto \operatorname{Iter}(\operatorname{T}(K, c), k, \sigma))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.geometric_orbit_summable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The elementwise norm of each positive iterate is bounded by its trace. Each geometric block has N terms, so the same trace bound gives absolute summability of the complete operator orbit.
+
+**Theorem 1.8 (Finite orbits and original words).**
 
 $$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall c: A \to \mathbb{R}, \forall \rho: M_{n}(\mathbb{C}), \operatorname{Positive}(c) \land \rho \geq 0 \Rightarrow \forall L: \mathbb{N}, \operatorname{supp}(\operatorname{R}(K, c, \rho, L)) = \operatorname{W}(K, \rho, L)$$
 
@@ -18,7 +102,7 @@ $$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname
 
 A positive weighted sum has zero quadratic form exactly when every summand has zero quadratic form. Applying this to rho + T(R_l) identifies its kernel with the vectors killed by rho after every adjoint Kraus word of length at most l+1. Taking orthogonal complements gives the support equality for each l. Strict positivity of every weight is essential; no normalization or completeness is needed.
 
-**Theorem 1.2 (A finite faithful sum on the reachable space).**
+**Theorem 1.9 (A finite faithful sum on the reachable space).**
 
 $$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{n}(\mathbb{C}), \forall c: A \to \mathbb{R}, \forall \rho: M_{n}(\mathbb{C}), \operatorname{Positive}(c) \land \rho \geq 0 \Rightarrow \exists L: \mathbb{N}, \exists \mu: \mathbb{R}, 0 < \mu \land \operatorname{supp}(\operatorname{R}(K, c, \rho, L)) = \operatorname{S}(K, \rho) \land \forall v \in \operatorname{S}(K, \rho), \mu \Vert v\Vert^{2} \leq \operatorname{Re}(\langle v, \operatorname{R}(K, c, \rho, L) v \rangle)$$
 
@@ -30,7 +114,7 @@ $$\forall n: Type, \forall A: Type, \operatorname{Finite}(n) \land \operatorname
 
 The increasing word spans stabilize in a finite dimensional space. Choose L after stabilization. The support equality identifies supp(R_L) with S(K,rho). A positive semidefinite operator has a strictly positive quadratic form on the unit sphere of its support; compactness gives a uniform lower bound mu. When rho is zero, the reachable space is zero and any positive mu works.
 
-**Theorem 1.3 (From one terminating state to a common block gap).**
+**Theorem 1.10 (From one terminating state to a common block gap).**
 
 $$\forall d: \mathbb{N}, \forall A: Type, \operatorname{Finite}(A) \Rightarrow \forall K: A \to M_{d}(\mathbb{C}), \forall c: A \to \mathbb{R}, \forall \rho: M_{d}(\mathbb{C}), \operatorname{Positive}(c) \land \rho \geq 0 \land \operatorname{Dual}(K, c, 1) \leq 1 \land \operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, c), k, \rho)) \to 0 (k \to \infty) \Rightarrow \exists N: \mathbb{N}, 1 \leq N \land (\forall v \in \operatorname{S}(K, \rho), \operatorname{Re}(\langle v, \operatorname{Survival}(K, c, N) v \rangle) \leq \frac{\Vert v\Vert^{2}}{2}) \land \forall \sigma: M_{d}(\mathbb{C}), \sigma \geq 0 \land \operatorname{supp}(\sigma) \subseteq \operatorname{S}(K, \rho) \Rightarrow \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, c), N, \sigma))) \leq \frac{\operatorname{Re}(\operatorname{Tr}(\sigma))}{2}$$
 
@@ -44,7 +128,7 @@ Assume T^*(I) <= I, with adjoint taken in the trace pairing. The survival effect
 
 For a topological parameter space Theta and U contained in Theta, now let c(theta,a) be continuous and strictly positive on U. Keep K_a and the positive return matrices E_a fixed, and assume T_theta^*(I) + sum_a c(theta,a) E_a = I throughout U. Fix theta_0 in U and the same positive rho, terminating at theta_0. In the following formula P(theta,X) denotes sum_{k>=0} T_theta^k(X), J_theta = I - T_theta^*(I), and V(K,rho) is the real span of all positive matrices supported on S(K,rho). Summability always refers to the entire displayed sequence. For each compact nonempty B contained in U, g(B) = min(1, inf_{theta in B} inf_{a in A} c(theta,a)/c(theta_0,a)); an empty branch family uses g(B)=1.
 
-**Theorem 1.4 (All internal parameters and compact geometric tails).**
+**Theorem 1.11 (All internal parameters and compact geometric tails).**
 
 $$\forall d: \mathbb{N}, \forall A: Type, \forall Theta: Type, \operatorname{Finite}(A) \land \operatorname{TopologicalSpace}(Theta) \Rightarrow \forall K: A \to M_{d}(\mathbb{C}), \forall E: A \to M_{d}(\mathbb{C}), \forall c: Theta \to A \to \mathbb{R}, \forall U: \operatorname{Set}(Theta), \forall \theta_{0}: Theta, \forall \rho: M_{d}(\mathbb{C}), (\forall a: A, \operatorname{E}(a) \geq 0) \land (\forall \theta: U, \forall a: A, 0 < \operatorname{c}(\theta, a)) \land (\forall a: A, \operatorname{ContinuousOn}(\theta \mapsto \operatorname{c}(\theta, a), U)) \land (\forall \theta: U, \operatorname{Dual}(K, \operatorname{c}(\theta), 1)+\operatorname{Sum}(a \in A, \operatorname{c}(\theta, a) \operatorname{E}(a)) = 1) \land \theta_{0} \in U \land \rho \geq 0 \land \operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta_{0})), k, \rho)) \to 0 (k \to \infty) \Rightarrow \exists N: \mathbb{N}, 1 \leq N \land (\forall \theta: U, \forall \sigma: M_{d}(\mathbb{C}), \sigma \geq 0 \land \operatorname{supp}(\sigma) \subseteq \operatorname{S}(K, \rho) \Rightarrow \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, \sigma))) \to 0 (k \to \infty) \land \operatorname{Summable}(k \mapsto \operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, \sigma)) \land \operatorname{P}(\theta, \sigma)-\operatorname{T}(K, \operatorname{c}(\theta), \operatorname{P}(\theta, \sigma)) = \sigma \land \forall F: M_{d}(\mathbb{C}), 0 \leq F \leq J_{\theta} \Rightarrow \operatorname{Summable}(k \mapsto \operatorname{Tr}(F \operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, \sigma))) \land \operatorname{Sum}(k \mapsto \operatorname{Tr}(F \operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, \sigma))) = \operatorname{Tr}(F \operatorname{P}(\theta, \sigma)) \land 0 \leq \operatorname{Re}(\operatorname{Tr}(F \operatorname{P}(\theta, \sigma))) \leq \operatorname{Re}(\operatorname{Tr}(\sigma)) \land (F = J_{\theta} \Rightarrow \operatorname{Tr}(F \operatorname{P}(\theta, \sigma)) = \operatorname{Tr}(\sigma))) \land (\forall \theta: U, \forall X: \operatorname{V}(K, \rho), \operatorname{Summable}(k \mapsto \operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, X)) \land \operatorname{P}(\theta, X)-\operatorname{T}(K, \operatorname{c}(\theta), \operatorname{P}(\theta, X)) = X) \land \forall B: \operatorname{Set}(Theta), \operatorname{Compact}(B) \land B \neq \emptyset \land B \subseteq U \Rightarrow 0 < \operatorname{g}(B) \leq 1 \land (\forall \theta: B, \forall \sigma: M_{d}(\mathbb{C}), \sigma \geq 0 \land \operatorname{supp}(\sigma) \subseteq \operatorname{S}(K, \rho) \Rightarrow \forall k: \mathbb{N}, \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, \sigma))) \leq (1-\frac{(\operatorname{g}(B))^{N}}{2})^{\lfloor\frac{k}{N}\rfloor} \operatorname{Re}(\operatorname{Tr}(\sigma))) \land \forall \sigma: M_{d}(\mathbb{C}), \sigma \geq 0 \land \operatorname{supp}(\sigma) \subseteq \operatorname{S}(K, \rho) \land \operatorname{Tr}(\sigma) = 1 \Rightarrow \forall k: \mathbb{N}, \operatorname{Sup}(B, \theta \mapsto \operatorname{Re}(\operatorname{Tr}(\operatorname{Iter}(\operatorname{T}(K, \operatorname{c}(\theta)), k, \sigma)))) \leq (1-\frac{(\operatorname{g}(B))^{N}}{2})^{\lfloor\frac{k}{N}\rfloor}$$
 
@@ -70,8 +154,15 @@ For a fixed dimension cap d, a hypothetical sequence of controllers with uniform
 
 - Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.finite_orbit_support_eq_word_span`
 - Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.finite_reachable_faithful_sum`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.geometric_orbit_summable`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.geometric_trace_tendsto`
 - Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.initial_termination_uniform_reachable_gap`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.matrixSupport_eq_range`
 - Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.positive_branch_compact_absorption`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.psd_norm_le_trace`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.reachable_kraus_invariant`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.weightedCP_mono`
+- Truth anchor: `D5/S3/Quantum/Measurement/PositiveBranchReachableResponse.weightedCP_psd`
 - Dependency: [D5/S3/Quantum/Matrix/CartesianVariance](../Matrix/CartesianVariance.md)
 - Dependency: [D5/S3/Quantum/Measurement/GeneralInstrumentSurvivalLimit](GeneralInstrumentSurvivalLimit.md)
 - Dependency: [D5/S3/Quantum/Measurement/IncoherentCone](IncoherentCone.md)

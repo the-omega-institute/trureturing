@@ -1,0 +1,32 @@
+**Definition 17.2 (the finite command).** On each interval $[s,t]$ of
+$\mathcal P_\rho$, use Lemma 17.1 with
+
+$$
+\begin{aligned}
+h&=k+W^1_s,& X&=W^1_t-W^1_s,\\
+Y&=W^2_t-W^2_s,& C&=C_{s,t},
+\end{aligned}
+\tag{17.7}
+$$
+
+and translate the connector by $(W^1_s,W^2_s)$. Concatenate in the
+original chronological order and hold the two controls constant from
+$S$ to $T$. Denote this command by $(a_\eta,b_\eta)$ and its ordinary
+chronological integral by $J_\eta=\int a_\eta\,db_\eta$.
+The prescribed control starts at zero and has at most $6N$ linear
+legs before its final hold. Its velocities are fixed by (17.3) before
+execution; the elementary mesh in (16.4) carries no earlier velocity
+prescription to be truncated or accelerated.
+
+The command is a measurable function of the information in Definition
+16.1: on each event specifying a finite partition size, the knot values,
+positive durations, orientation choice and slopes are Borel functions
+of the supplied paths. Piecewise linear interpolation has measurable
+evaluations at every rational time; these generate the Borel sigma
+algebra of the continuous-path space. Its finite list has real-valued
+times and increments. It uses
+area-dependent future endpoints and the final partition depending on
+$S$, so adaptedness of the analytic mesh does not assert adaptedness
+of the command selector. The finite-stage $J_\eta$ is the integral
+of these same selected controls, never a separately supplied actuator.
+

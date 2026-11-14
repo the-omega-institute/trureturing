@@ -1,0 +1,109 @@
+**命题 105.6（互反噪声参数的原全旁观通道夹逼）。** 令
+
+$$
+p=\frac{9t-1}{8},\qquad r=-\frac1{9t-1},\qquad
+\mathcal D_a(X)=aX+(1-a)\operatorname{Tr}(X)I_3/3.
+\tag{105.18}
+$$
+
+则 $5/8\le p\le1$、$-1/5\le r\le-1/8$、$pr=-1/8$。
+对每个 $a\in\{p,r\}$，$\mathcal D_a$ 都有从实际码到实际块 $s$，
+以及从实际块 $s$ 到实际码的真正零扩张；两者对每个原纠缠旁观者正且不增质量，
+在所接受的码或块上保迹。
+令 $C_{s^n}$ 是 $C_n$ 在全部标签为 $s$ 的实际扇区中的角锥，
+用该扇区的矩阵坐标表示。对每个整数 $n\ge1$，有
+
+$$
+\mathcal D_a^{\otimes n}\bigl(\operatorname{Herm}_+( (\mathbb C^3)^{\otimes n})\bigr)
+ \ \subseteq\ C_{s^n}
+ \ \subseteq\
+ (\mathcal D_a^{\otimes n})^{-1}
+ \bigl(\operatorname{Herm}_+((\mathbb C^3)^{\otimes n})\bigr).
+\tag{105.19}
+$$
+
+**证明。** 采用原杯的“参考、输出”Choi 约定，在 $3\times3$ 码坐标中，
+矩阵单位计算给
+
+$$
+\begin{aligned}
+J(\mathcal D_a)&=aR+\frac{1-a}{3}I,\\
+J(\mathcal D_p)&=3\tau_t,\qquad
+J(\mathcal D_r)=\frac{W_{\lambda_*}}{3-\lambda_*}.
+\end{aligned}
+\tag{105.20}
+$$
+
+两者已由定理105.4属于实际 $D_s$，并非以通常 Choi 正性替代原 Choi 成员关系。
+更明确地，令 $q_2$ 为(104.10)的原两种子角压缩，$\pi_s=\iota_s^*$ 为块提取，定义
+
+$$
+\begin{aligned}
+A_a^0:W_2\to W_1,&\qquad
+ A_a^0(z)=\iota_s\mathcal D_a(c^*q_2(z)c),\\
+B_a^0:W_1\to W_2,&\qquad
+ B_a^0(y)=j_2\bigl(c\mathcal D_a(\pi_s y)c^*\bigr).
+\end{aligned}
+\tag{105.21}
+$$
+
+$A_a^0$ 消去余字 $11$、码与余字的交叉元及其他输入扇区；
+$B_a^0$ 消去其他实际输入块，输出只在码内。
+直接对完整原杯展开，得 $J(A_a^0)=i_s(J(\mathcal D_a))\in C_3$。
+对反向映射，$\mathcal D_a$ 为实且迹自伴，
+其普通 $3\times3$ Choi 矩阵(105.20)在交换参考与输出后不变。
+所以 $J(B_a^0)$ 正是同一个三原腿元素的置换，次序为“一条实际块参考、两条码输出”。
+原置换正，故 $J(B_a^0)\in C_3$。
+引理104.6的全局原 Choi 当且仅当分别给两条映射在全部原旁观系统上的正性，
+包括任意纠缠输入。这里没有先假定通常 qutrit–寄存器 CP 许可，
+也没有仅从其中一个方向正而推断另一个方向正。
+
+$\operatorname{Tr}\mathcal D_a(X)=\operatorname{Tr}X$。
+因此 $u_1A_a^0$ 恰为两种子腿上的码接受效应，
+$u_2B_a^0$ 恰为实际 $s$ 块的接受效应。
+前者由104.11的全 proper 延拓、后者由104.7的中心预算给
+$0\le u_1A_a^0\le u_2$、$0\le u_2B_a^0\le u_1$。
+把各正差与任意旁观单位相乘，原最大界将不增质量提升到所有原纠缠旁观者。
+这给完整输入预算，而不是只比较 Choi 元素的总迹。
+这些断言是数学映射及其预算，不增加物理事件菜单或饱和选择。
+
+任取 $(\mathbb C^3)^{\otimes n}$ 上的通常 PSD 矩阵。
+用 $c^{\otimes n}$ 把它放进实际 $2n$ 条种子角寄存器的码子空间，
+104.11的整个寄存器锥已为 PSD，所以该嵌入是原正。
+逐个作用 $n$ 条 $A_a^0$，每次把全部其余腿作为原旁观者；
+用原置换重排，即得到第一包含。
+反向从实际 $C_{s^n}$ 的任意元素出发，逐个作用 $B_a^0$，
+得到原 $2n$ 条种子角寄存器中的正元素。
+由104.11它必为通常 PSD，坐标恰为
+$c^{\otimes n}\mathcal D_a^{\otimes n}(x)(c^*)^{\otimes n}$，
+等距压回给(105.19)第二包含。
+两参数都非零，$\mathcal D_a$ 在标量方向为恒等、在无迹方向乘以 $a$，
+所以可逆；式中右侧仍是集合的逆像，并未授予逆映射原正性。
+所有 $n$ 的包含是未知原锥必须满足的关系，不定义这些锥，也不构造负例层级。
+
+直接复合给 $\mathcal D_b\mathcal D_a=\mathcal D_{ab}$，因而
+
+$$
+\mathcal D_r\mathcal D_p=\mathcal D_p\mathcal D_r=\mathcal D_{-1/8},
+\qquad J(\mathcal D_{-1/8})=\frac{3I-R}{8}.
+\tag{105.22}
+$$
+
+这正位于通常 qutrit CP 的边界：在 $\eta$ 方向本征值为零，正交方向为 $3/8$。
+因此两条原接口的这一直接复合与已知的一体／寄存器 CP 操作相容，
+并不把 $t$ 的端点提高到一。
+若 $t<1$，则 $0<p<1$。对任意码内单位向量 $v$，
+
+$$
+\mathcal D_p^{-1}(|v\rangle\langle v|)
+ =p^{-1}|v\rangle\langle v|+(1-p^{-1})I_3/3
+\tag{105.23}
+$$
+
+在两个正交方向上的本征值为 $(1-p^{-1})/3<0$。
+故把它作为码内寄存器逆操作时，它甚至不保持通常秩一 PSD；
+正向原接口不授权用这个逆取消噪声。
+两参数的数值范围与(105.22)来自(105.8)、(105.18)的直接代入。
+这里保留的是实际原 Choi 所给的双向接口及全有限夹逼，
+通常矩形 Choi/Kraus 表示的来源仍沿命题102.13所引 Watrous 定理2.22、2.26复用。∎
+

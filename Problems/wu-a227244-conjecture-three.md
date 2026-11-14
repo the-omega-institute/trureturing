@@ -73,6 +73,7 @@ least-prime conclusion. Both premise bridges occur in the result's proof.
 | Item | Result and boundary |
 | --- | --- |
 | Conditional C3 | The canonical result retains the complete stated conditional family. |
+| Complete classification | The owning Scribe explains the two exact natural-index intersections, their disjointness and the 101/47/149 classification, using C1/C2 and the original conditional C3. |
 | Interpretation | Progression-index noncoverage is disclosed; author intent is not established. |
 | General method and priority | No new general method, escape witness or global priority claim. |
 | Literature | No exact supplier on the bounded checked surfaces; completeness remains unverified. |

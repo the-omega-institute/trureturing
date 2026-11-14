@@ -1,0 +1,7 @@
+**定理 139.2（紧纯二步集到完整载体交点的桥梁）。** 在上述完整 EB3+$\mathsf{Conn}$+$\mathsf G(o)$ 原域中：
+
+1. $Q$ 是紧、连通、可定向、无边界的四维拓扑流形。存在 $S_o\cong S^2$ 上的实秩二向量丛 $\xi_o$，使 $Q\setminus\{o\}\cong\operatorname{Tot}(\xi_o)$、$Q\cong T(\xi_o)$，且 $|\langle e(\xi_o),[S_o]\rangle|=1$。整数交形式为 $[\pm1]$；成熟的秩二丛分类进一步给底层拓扑同胚 $Q\cong\mathbb{CP}^2$。
+2. $\Lambda$ 在原 $V$ 中紧，$a\mapsto D_a$ 在整个 $\Lambda$ 上按 Hausdorff 距离连续，并有 $S_o\subseteq\Lambda$ 及 $S_q\subseteq\Lambda$ 对每个 $q\in U_0\cap P$ 成立。
+3. 任意两个不同原标签 $a,b\in\Lambda$ 都有唯一实际原纯共同邻点 $r\in Q$，准确满足 $D_a\cap D_b=\{r\}$。包括相同标签时仍有 $\Lambda^2\subseteq\mathcal J$。
+4. 若 $\neg\mathsf{Tri}(o)$，则存在 $x\in Q$ 及 $a\in P\setminus(Q\cup\Lambda)$，使
+

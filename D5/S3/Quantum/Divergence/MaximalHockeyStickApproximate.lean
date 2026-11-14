@@ -4,8 +4,7 @@
    mirror-E: none(waiver:finite-matrix-proof)
    anchors: []
    utility: none
-   digest: Actual finite reverse-test hockey gaps are bounded and uniformly Lipschitz on positive thresholds.
- -/
+   digest: Actual finite reverse-test hockey gaps are bounded and uniformly Lipschitz on positive thresholds. -/
 
 import D5.S3.Analytic.Measure.FullSupportProfileTransfer
 import D5.S3.Quantum.Divergence.MaximalHockeyStickReverseTest

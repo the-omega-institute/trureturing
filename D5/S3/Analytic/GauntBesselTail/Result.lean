@@ -95,7 +95,7 @@ def claim : Prop :=
     (∃ y : ℝ, 0 < y ∧ tail ν (ν + n) y < y ^ (-ν) * besselK (ν + n - β) y)) ∧
   (∀ ν x : ℝ, 0 < x → tail ν (ν + 1) x = x ^ (-ν) * besselK ν x)
 
-private lemma sinh_gap_pos {v : ℝ} (hv : 0 < v) :
+lemma sinh_gap_pos {v : ℝ} (hv : 0 < v) :
     0 < v * cosh v - sinh v := by
   have hd (x : ℝ) : HasDerivAt (fun y : ℝ => y * cosh y - sinh y)
       (x * sinh x) x := by

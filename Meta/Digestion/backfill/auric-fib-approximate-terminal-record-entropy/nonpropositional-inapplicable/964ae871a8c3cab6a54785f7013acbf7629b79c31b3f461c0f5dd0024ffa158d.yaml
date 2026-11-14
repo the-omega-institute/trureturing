@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:964ae871a8c3cab6a54785f7013acbf7629b79c31b3f461c0f5dd0024ffa158d
+  normalized_sha256: sha256:964ae871a8c3cab6a54785f7013acbf7629b79c31b3f461c0f5dd0024ffa158d
+cas_ref: sha256:964ae871a8c3cab6a54785f7013acbf7629b79c31b3f461c0f5dd0024ffa158d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional fixed data: the ordered physical basis, u,v,z,R,B,P_R,iota and the displayed K0,K1,A0,A1 define the actual instrument. These are local substitution data, with the measured plus-i coefficients retained; no additional mathematical proposition is being declared.'
+    previous_atom_id: 7b831ac431a1ba3aa4df293dddef11395d31958b980923bfd1209663f2b871af
+    next_atom_id: 01cf81552508ac59ddf180a3cdcb773105d64c73a96a11d8bed30f8434b0bd6b

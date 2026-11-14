@@ -40,7 +40,35 @@ $$(\operatorname{claim}) \iff (\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \op
 
 OEIS A181074, first COMMENTS line (web entry, no page number): "Conjecture: this sequence consists entirely of integers." The degree m ranges over all natural numbers, including zero; the integer z may depend on m.
 
-**Theorem 1.4 (Integrality in every degree).**
+**Lemma 1.4 (Negative binomial coefficient divisibility).**
+
+$$\forall n: \mathbb{N}, \forall k: \mathbb{N}, n \neq 0 \Rightarrow n \mid k \cdot \operatorname{Nat.choose}\left(n + k - 1, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomDiv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+
+*Commentary.*
+
+For every positive natural n and every natural k, n divides k times binom(n+k-1,k). This follows by taking the kth coefficient of the nth power of the integer geometric series. divPower uses it to handle positive powers of the binomial coefficient.
+
+**Lemma 1.5 (Negative binomial coefficient dilation).**
+
+$$\forall p: \mathbb{N}, \forall n: \mathbb{N}, \forall k: \mathbb{N}, \operatorname{Nat.Prime}\left(p\right) \Rightarrow \left(n \neq 0 \Rightarrow \operatorname{Nat.ModEq}\left(p^{\operatorname{padicValNat}\left(p, n\right) + 1}, \operatorname{Nat.choose}\left(p \cdot n + p \cdot k - 1, p \cdot k\right), \operatorname{Nat.choose}\left(n + k - 1, k\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomCong` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2010). *OEIS A181070, A181074 and A181080 integrality conjectures*. URL: <https://oeis.org/A181070>.
+
+*Commentary.*
+
+For every prime p, positive n and natural k, the binomial coefficients at (p*n,p*k) and (n,k) are congruent modulo p^(v_p(n)+1). The coefficient-lifting theorem applied to the integer geometric series gives this full valuation modulus. The result includes p=2 and k=0.
+
+**Theorem 1.6 (Integrality in every degree).**
 
 $$\forall m: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{PowerSeries.coeff}\left(m, \operatorname{A}\right) = (z: \mathbb{Q})$$
 
@@ -63,5 +91,7 @@ Every coefficient of the displayed formal exponential is an integer. The prime-s
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.A`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.claim`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.logarithm`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomCong`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.negbinomDiv`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/HannaA181074Integrality.result`
 - Dependency: [D5/S1/Recurrence/Algebraic/HannaA181070Integrality](HannaA181070Integrality.md)

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ed5e3d83bceb1cb491e43b1632bd4975ba01280ad077c50958f53b822d06e50
+  normalized_sha256: sha256:1ed5e3d83bceb1cb491e43b1632bd4975ba01280ad077c50958f53b822d06e50
+cas_ref: sha256:1ed5e3d83bceb1cb491e43b1632bd4975ba01280ad077c50958f53b822d06e50
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream consequence, with no project frozen GID covering the complete original statement. Inline Q97.1/Q97.2 from the same original fields, tagged direct-sum report, complete ONBs, ordered references and endogenous lambda_star. LinearMap.BilinMap.tensorDistrib_tmul gives the exact mixed residual at (a tensor r,c tensor s,b tensor e). TensorProduct.norm_tmul and norm_add_le preserve both local H_B(c,z) and opposite w+v errors, giving eta^2/kappa+K^2*sigma+K^3*sigma/kappa. ContinuousLinearMap.le_opNorm₂ gives the actual nested C-to-B replacement lambda*h*(2*K+1); normalization with h<=2*sigma gives q0=eta^2/kappa+(5*K^2+2*K+K^3/kappa)*sigma <= 33*N*K^3*eta/kappa^2. OrthonormalBasis.sum_repr and OrthonormalBasis.sum_sq_inner_right, Finset.sum_mul_sum and Finset.sum_mul_sq_le_sq_mul_sq give the antisymmetric coordinate expansion and the exact wedge-square identity. Finset.card_product_filter_lt and Nat.choose_two_right give n*(n-1)/2 pairs. The two L1 factors are bounded by sqrt(n*(n-1)/2) and sqrt(n), hence norm(E)_tri <= N^(3/2)*q0 <= G*eta. No unit-containing basis, Jacobi, all-input curvature premise, new probe or per-probe fitted lambda is used.
+    previous_atom_id: 592903d24efaee93c41278e1a862f4ec3fbab6294cca46f1b301068b95a6a00c
+    next_atom_id: d2a15242dcc4396f74a88bde6b642d111e9fe82d1ae533d921204ed513437ebb

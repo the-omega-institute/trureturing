@@ -7,7 +7,7 @@ internal sealed class MeasurableFiniteMomentsDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Analytic/Convexity/MeasurableFiniteMoments.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Analytic/bayerteichmann2006tchakaloff");
+        LibraryNoteRef.Create("D5/L/Convexity/bayerteichmann2006tchakaloff");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An integrable finite-dimensional barycenter is in the actual convex hull, and admits exact finite point evaluations.",
         H("Exact finite measurable moments"), Blocks(

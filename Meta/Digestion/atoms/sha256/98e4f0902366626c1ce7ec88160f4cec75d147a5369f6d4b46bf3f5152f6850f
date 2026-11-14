@@ -1,0 +1,10 @@
+**Remark 4.3 (why the topology and horizon matter).** If
+$\tau_n\ne\tau<T$, at times between the two deaths one path is alive
+and the other is $\dagger$, so uniform convergence of the killed paths
+generally fails. A time change resolves precisely that mismatch.
+At $\tau=T$, approximations dying just after $T$ remain alive at the
+terminal observation while the limit is dead; a time homeomorphism fixes
+$T$ and cannot repair it. This is why Theorem 4.2 excludes an atom of
+the lifetime at the chosen horizon. Uniform convergence of held paths
+does not by itself encode a death flag.
+

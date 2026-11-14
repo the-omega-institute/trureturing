@@ -1,0 +1,94 @@
+**Theorem 24.1 (observed exit followed by actual native execution).**
+Assume the issuer may read the stopped target height
+$\bar Y_t=Y_{t\wedge\tau}$ at a deterministic mesh of step $\delta>0$.
+Exact real observations are meant; no future path, area or lifetime
+value is supplied. For every $\epsilon>0$ there is a policy with at
+most two numerical issuances, lawful in the original source, whose
+own exit on an extended clock is $\widehat\tau_{\delta,\epsilon}$
+satisfying almost surely
+
+$$
+\tau<\widehat\tau_{\delta,\epsilon}
+ \le\tau+\delta+\epsilon,
+\qquad
+\widehat\tau_{\delta,\epsilon}-\tau\ge\epsilon.
+\tag{24.1}
+$$
+
+Restricting this same execution to $[0,T]$ gives a member of
+$\mathcal C_T$. Its censored lifetime $\zeta_{\delta,\epsilon}^{\rm N}$
+converges almost surely to $\zeta$ as $\delta+\epsilon\to0$ along
+any deterministic sequence, in the topology where $\infty$ is an
+isolated no-death mark. Its horizon cutoff obeys
+
+$$
+0\le S_{\delta,\epsilon}^{\rm N}-S\le\delta+\epsilon.
+\tag{24.2}
+$$
+
+For the metric $d_\zeta(s,t)=\min(1,|s-t|)$ on finite lifetimes,
+$d_\zeta(s,\infty)=1$ for finite $s$, and $d_\zeta(\infty,\infty)=0$,
+one also has, when $\delta+\epsilon<1$,
+
+$$
+\mathbb P\left(
+d_\zeta(\zeta_{\delta,\epsilon}^{\rm N},\zeta)>
+       \delta+\epsilon\right)
+\le\mathbb P(T-\delta-\epsilon<\tau\le T).
+\tag{24.3}
+$$
+
+Proof. Issue the zero command at time zero. Let
+
+$$
+D_\delta=\min\{j\delta:j\ge1,
+                     \bar Y_{j\delta}\in\{l,u\}\}.
+\tag{24.4}
+$$
+
+Before death the stopped height is interior; at and after death it
+is a boundary value. Thus $D_\delta$ is a stopping time determined
+by the available mesh observations, and
+$\tau\le D_\delta\le\tau+\delta$ almost surely. At $D_\delta$
+issue the relative control
+
+$$
+a(s)=-(k-l)\min\{s/\epsilon,1\},\qquad b(s)=0.
+\tag{24.5}
+$$
+
+The native state is still at height $k$ then. The ramp stays in
+$(l,k]$ for $s<\epsilon$, reaches $l$ exactly at $s=\epsilon$,
+and holds thereafter. Its own exit is therefore
+$\widehat\tau_{\delta,\epsilon}=D_\delta+\epsilon$, proving
+(24.1). Observing a target boundary in (24.4) does not declare native
+death: the positive-duration ramp (24.5) is actually executed.
+Both joins are continuous. All executed heights lie in $[l,k]$,
+so the exact source guard follows from (20.3); phases and $J$ remain
+fixed. There are finitely many observations on $[0,T]$ and at most
+two issuances there. If the detected exit or the ramp's completion
+lies beyond $T$, the horizon records no native death. The extended
+clock only defines that possible later completion; no part of the
+command on $[0,T]$ is retimed or compressed.
+
+Taking minima with $T$ proves (24.2). If $\tau>T$, both censored
+records equal $\infty$. If $\tau<T$, then eventually
+$\delta+\epsilon<T-\tau$, so the native exit occurs before $T$
+and its finite record differs from $\tau$ by at most
+$\delta+\epsilon$. The remaining event $\tau=T$ is null by
+Proposition 4.5. This proves the almost sure convergence with the
+death mark retained. A mark mismatch can occur only on
+$\{T-\delta-\epsilon<\tau\le T\}$; otherwise the metric error is
+at most $\delta+\epsilon$, proving (24.3).
+
+This approximation requires the stated exact observations of the
+stopped height. Observing only an unstopped height at mesh times can
+miss a boundary excursion that has returned, so those data cannot
+be substituted in (24.4) without a different argument. No independent
+death flag is given to the native system. The construction uses the
+same target sample, but every finite-stage native death is strictly
+later than its target death. It neither simulates only a marginal
+lifetime law nor satisfies exact coupled lifetime. Its fixed phases
+and its hold at $k$ before detection supply no full held-path or
+chronological tube estimate. $\square$
+

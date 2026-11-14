@@ -1,0 +1,16 @@
+**引理 118.10（零效应的全域最大值与正距离）。** 在 $\mathrm{EB}_{\ge1}$ 下，$g\in Z_t$ 满足 $\max_Kg=\max_{D_t}g$。
+若再有Inj，每个 $h\in\mathcal A_s$ 的零面恰为 $D_s$、一值面恰为 $\{s\}$，且
+
+$$
+\operatorname{dist}_K(h,Z_t)\ge\frac{1-\max_{D_t}h}{2}.
+\tag{IX118.17}
+$$
+
+证明。$g=0$ 时最大值公式显然；否则 $m=\max_Kg>0$，在最大面取纯 $v$。
+$g/m$ 是确认 $v$、在 $t$ 读零的原效应，补效应给 $v\in D_t$，所以全域最大值确实在 $D_t$ 达到。
+$h$ 的零面按原定义恰为 $D_s$。
+若纯 $v$ 取 $h(v)=1$，则 $D_s\subseteq D_v$，极大性与Inj给 $v=s$；任一一值混态的有限纯分解中所有分量也取一，所以整个一值面只有 $s$。
+对 $g\in Z_t$ 记 $d=\|g-h\|_K$，有
+$1=h(s)\le g(s)+d\le\max_Kg+d=\max_{D_t}g+d\le\max_{D_t}h+2d$。
+取下确界即得。证毕。
+

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:7aa6870502e0187d7765b38cb88221d3b9893f08920d51275cd99d4cb4db17a5
+  normalized_sha256: sha256:7aa6870502e0187d7765b38cb88221d3b9893f08920d51275cd99d4cb4db17a5
+cas_ref: sha256:7aa6870502e0187d7765b38cb88221d3b9893f08920d51275cd99d4cb4db17a5
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.flatten_intertwines
+    target_statement_id: sha256:061c7123f107ae429a042eb6e98856a34a309308efc6d9f66912f7f4e13f3289
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.of_kraus_isCompletelyPositive
+    target_statement_id: sha256:522daaecff9970808def6ecdd938d4b89107d2820c79bafbf378ab083767f57f
+  - gid: D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.operational_probability_eq_trace_foldl
+    target_statement_id: sha256:94bdb6e24fe2d9184b212a77669ea2bdd0b2afc99079fb2b43466cab4f9c6848
+  - gid: D5/S3/Quantum/Reduction/IsometricCompression.word_intertwines
+    target_statement_id: sha256:f45fcc286156b039231e04acd69b97b10a7e1e9b73c5c9f4f6b8dd475583bda4
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,56 @@
+**定理 128.9（外端平均的强形变收缩与实际中点纤维）。** 定义实际三元空间
+
+$$
+\mathscr T=\{(x,y,z)\in S\times S\times S:
+(x,y)\in Z,\ (y,z)\in Z\}.
+\tag{Q128.27}
+$$
+
+令 $c=(x+z)/2$。则 $\mathscr T$ 紧，下式给到 $\mathscr T_0=\{(c,y,c):(c,y)\in Z\}\cong Z$ 的强形变收缩：
+
+$$
+H_t(x,y,z)=((1-t)x+tc,\ y,\ (1-t)z+tc),\qquad 0\le t\le1.
+\tag{Q128.28}
+$$
+
+中点映射
+
+$$
+m:\mathscr T\longrightarrow S,\qquad m(x,y,z)=(x+z)/2
+\tag{Q128.29}
+$$
+
+proper且满射，其每个纤维都同胚于闭三球。准确地，若 $c\in P$，
+
+$$
+m^{-1}(c)=\{(c,y,c):y\in D_c\};
+\tag{Q128.30}
+$$
+
+若 $c\in\operatorname{ri}D_p$ 是非纯边界点，则
+
+$$
+\begin{gathered}
+V_c=\{v\in\operatorname{lin}(D_p-D_p):c+v,c-v\in D_p\},\\
+m^{-1}(c)=\{(c+v,p,c-v):v\in V_c\}.
+\end{gathered}
+\tag{Q128.31}
+$$
+
+$V_c$ 是三维中心对称紧凸体；这里的同胚三球不等于仿射三球。
+
+证明。$Z$ 闭，使 $\mathscr T$ 是紧 $S^3$ 的闭子集。由对称性，$x,z\in\mathcal Z(y)$；(Q128.23)使此纤维为凸真面，所以 $c\in\mathcal Z(y)\subseteq S$，并使(Q128.28)的两外端始终留在该纤维。故 $H_t$ 的确留在实际 $\mathscr T$，终点为 $(c,y,c)$，而每个原已满足 $x=z$ 的三元组在整个同伦中固定。这给强形变收缩。
+
+每个 $c\in S$ 有非空 $\mathcal Z(c)$，任取其中的 $y$ 就给 $(c,y,c)\in m^{-1}(c)$，故满射。紧域到Hausdorff空间的连续映射proper，故 $m$ proper。
+
+若 $c$ 原纯，$c=(x+z)/2$ 迫使 $x=z=c$，中间坐标可恰取整个 $D_c$，给(Q128.30)。若 $c\in\operatorname{ri}D_p$，$D_p$ 的面性质使 $x,z\in D_p$。又 $c\in\mathcal Z(y)$，故 $y\in\mathcal Z(c)=\{p\}$。这给(Q128.31)，反向包含由 $D_p=\mathcal Z(p)$ 立即成立。
+
+$V_c=(D_p-c)\cap(c-D_p)$ 紧凸、中心对称；$c$ 是 $D_p$ 的相对内点，所以 $V_c$ 在三维方向空间中含零邻域。沿每条射线径向参数化，便与闭三球同胚。具体形状可在实际球的仿射图中写成
+
+$$
+\{v\in\mathbb R^3:|a+v|\le1,\ |a-v|\le1\},\qquad |a|<1.
+\tag{Q128.32}
+$$
+
+$a=0$ 时它是球；$a\ne0$ 时是两球交出的中心对称透镜。在与 $a$ 正交、长度 $\sqrt{1-|a|^2}$ 的非零 $v$ 处，两约束都活跃，外法向 $v+a$ 与 $v-a$ 不共线，所以边界不光滑，不能是椭球的仿射像。这也直接说明不能把一般纤维强化为仿射三球。证毕。
+

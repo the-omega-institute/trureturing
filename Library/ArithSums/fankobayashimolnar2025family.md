@@ -13,6 +13,18 @@ triage: anchor
 
 # Fan–Kobayashi–Molnar 2025: the existing increment source
 
+## Locator
+
+Fan, Kobayashi and Molnar, *A family of analogues to the Robin criterion*,
+[arXiv:2511.02106v1](https://arxiv.org/abs/2511.02106v1).
+DOI: [10.1007/s11139-026-01408-3](https://doi.org/10.1007/s11139-026-01408-3).
+The cited formula and theorem locators are pinned to arXiv v1: equations
+(3)–(4), page 2; Theorem 1.5, page 3; Proposition 3.1, page 6;
+Proposition 3.4, page 9; Definition 4.2, Theorem 4.3, Lemma 4.15 and
+Remark 4.16; Section 7, pages 39–41; and Section 8, pages 41–42.
+The DOI identifies the published article; its metadata was verified, while
+the full-text mathematical scope cited here remains the pinned preprint.
+
 The pinned source is the author preprint
 [A family of analogues to the Robin criterion, arXiv:2511.02106v1](https://arxiv.org/pdf/2511.02106v1),
 submitted 3 November 2025. The cited definitions, theorem statements and

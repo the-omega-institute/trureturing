@@ -1,0 +1,90 @@
+**定义 127.2（规范种子坐标）。** 在 $\mathsf{Ent}_\triangle$ 下，125.3—125.6和IX120.8、120.12、120.18—120.19已经给出：三个顶点全属 $P_0$；写 $e_i=e_{p_i}$，则 $\sum_i e_i=u$ 于整个 $V$；$w=p_1+p_2+p_3$ 满足 $w/3\in\operatorname{int}C\cap K$；而且
+
+$$
+\begin{gathered}
+D_i=D_{p_i},\qquad M_i=\operatorname{span}D_i
+=\mathbb Rp_j\oplus\mathbb Rp_k\oplus L_i,\qquad \dim L_i=2,\\
+V=\mathbb Rp_1\oplus\mathbb Rp_2\oplus\mathbb Rp_3
+\oplus L_1\oplus L_2\oplus L_3,\qquad \dim V=9,\\
+T_i|_{M_i}=I,\qquad T_i p_i=0,\qquad
+T_iL_j=T_iL_k=0,\qquad uT_i=u-e_i,\\
+R_i x=e_i(x)p_i,\qquad T_iT_j=T_jT_i=R_k
+\quad(\{i,j,k\}=\{1,2,3\}).
+\end{gathered}
+\tag{Q127.3}
+$$
+
+这里九维是联合分离的既有后果，$T_i$ 的全锥正性仍来自入口第4项。记
+
+$$
+c_i=(p_j+p_k)/2,\qquad d_i=(p_j-p_k)/2,\qquad
+W_i=\operatorname{lin}(D_i-c_i).
+$$
+
+以实际球 $D_i-c_i$ 为单位球定义欧氏型 $g_i$。原效应 $e_j$ 在球内对 $p_j,p_k$ 读一、零，所以它们确为实际对径，$g_i(d_i,d_i)=1$，且 $L_i=d_i^{\perp_{g_i}}\cap W_i$。对 $\ell\in L_i$，准确球锥条件为
+
+$$
+a p_j+b p_k+\ell\in C_i:=\operatorname{cone}D_i
+\quad\Longleftrightarrow\quad
+ a,b\ge0,\qquad g_i(\ell,\ell)\le4ab.
+\tag{Q127.4}
+$$
+
+定义对称正定型 $B$：六个直和块彼此正交，且
+
+$$
+B(p_i,p_j)=\delta_{ij},\qquad
+B|_{L_i}=\tfrac12g_i|_{L_i},\qquad B(w,x)=u(x).
+\tag{Q127.5}
+$$
+
+这个尺度是VIII111.3的种子尺度；此处只用实际球和125的配对来确定它，不调用该章更强W入口下的全纯取等。特别地，$B|_{W_i}=g_i/2$，不是 $g_i$。
+
+取各 $L_i$ 上的 $g_i$ 正交单位坐标，写
+
+$$
+x=\sum_i a_i p_i+\ell^{(1)}+\ell^{(2)}+\ell^{(3)},\qquad
+ a_i=e_i(x),\qquad
+z_{jk}=(\ell^{(i)}_1+\mathrm i\ell^{(i)}_2)/2\quad(j<k).
+\tag{Q127.6}
+$$
+
+其中 $i$ 是 $\{j,k\}$ 的补指标。于是
+
+$$
+\begin{gathered}
+\Delta_1=a_2a_3-|z_{23}|^2,\qquad
+\Delta_2=a_1a_3-|z_{13}|^2,\qquad
+\Delta_3=a_1a_2-|z_{12}|^2,\\
+\Delta_i(x)\ge0\quad(x\in C),\qquad
+B(x,x)=u(x)^2-2\sum_{i=1}^3\Delta_i(x).
+\end{gathered}
+\tag{Q127.7}
+$$
+
+证明这些归一化。写 $a p_j+b p_k+\ell=(a+b)c_i+(a-b)d_i+\ell$；实际球锥要求 $a+b\ge0$ 及 $(a-b)^2+g_i(\ell,\ell)\le(a+b)^2$，等价于(Q127.4)。选择 $z_{jk}$ 的系数 $1/2$ 后，$|z_{jk}|^2=g_i(\ell^{(i)},\ell^{(i)})/4$。全锥正性使 $T_i x=a_jp_j+a_kp_k+\ell^{(i)}\in C_i$，故三个 $\Delta_i$ 非负。按正交块展开 $B(x,x)$，得到(Q127.7)。这些式子也包含零向量和任意非负质量。特别地，整个 $K$ 满足 $B(x,x)\le1$。
+
+若将(Q127.6)放成Hermitian矩阵，所得实线性坐标记为 $\Psi_{\rm coord}:V\to\operatorname{Herm}_3(\mathbb C)$，则
+
+$$
+B(x,y)=\operatorname{Tr}(\Psi_{\rm coord}(x)\Psi_{\rm coord}(y)),\qquad
+\operatorname{Tr}\Psi_{\rm coord}(x)=u(x).
+\tag{Q127.8}
+$$
+
+令 $Q_i=I_3-E_{ii}$，并记
+
+$$
+F_2=\sum_{i=1}^3\{X\succeq0:X=Q_iXQ_i\},\qquad
+Q_2=\{X\in\operatorname{Herm}_3(\mathbb C):Q_iXQ_i\succeq0\ (i=1,2,3)\}.
+$$
+
+三张实际种子球锥的和映为 $F_2$，而原正性只给
+
+$$
+F_2\subseteq\Psi_{\rm coord}(C)\subseteq Q_2.
+\tag{Q127.9}
+$$
+
+这是种子代数的夹逼，不是完整PSD判据。各横向平面的独立正交坐标选择不改变 $B$，但此时没有认定任意这种坐标都把整个 $C$ 送成PSD锥。
+

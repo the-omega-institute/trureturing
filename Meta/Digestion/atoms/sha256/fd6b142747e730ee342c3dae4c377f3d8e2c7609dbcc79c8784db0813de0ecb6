@@ -1,0 +1,103 @@
+**定理 106.3（互反夹逼对全部 qutrit CP 映射的精确阈值）。** 令
+$0<p\le1$、$r=-1/(8p)$。则以下两项等价：$p\ge1/4$；
+对每个通常 CP 映射 $\Phi:M_3(\mathbb C)\to M_3(\mathbb C)$，
+$\mathcal D_r\circ\Phi\circ\mathcal D_p$ 通常 CP。
+在该参数范围，反向夹逼 $\mathcal D_p\circ\Phi\circ\mathcal D_r$ 也对全部此类 $\Phi$ CP。
+
+**证明。** 有限维 Choi/Kraus 判据沿命题102.13及105.6所引的
+Watrous，*The Theory of Quantum Information*，定理2.22、2.26复用。
+把 $\Phi$ 写为有限和 $\sum_\nu\operatorname{Ad}_{K_\nu}$，
+只需证明每个单 Kraus 项。直接展开(106.2)、(106.4)，置
+
+$$
+\begin{aligned}
+a&=\frac{r(1-p)}3,& b&=\frac{(1-r)p}3,&
+c&=\frac{(1-r)(1-p)}9,& h&=a+b,
+\end{aligned}
+\tag{106.5}
+$$
+
+得对每个复 $3\times3$ 矩阵 $K$
+
+$$
+\begin{aligned}
+J(\mathcal D_r\operatorname{Ad}_K\mathcal D_p)
+={}&-\frac18|K\rangle\!\rangle\langle\!\langle K|
+ +aI\otimes KK^*+b(K^*K)^T\otimes I\\
+ &+c\operatorname{Tr}(K^*K)I\otimes I.
+\end{aligned}
+\tag{106.6}
+$$
+
+这里 $rp=-1/8$，转置 $T$ 来自输入参考次序。
+$\mathcal D_p,\mathcal D_r$ 与所有酉共轭交换。
+对 $K=U\operatorname{diag}(s_0,s_1,s_2)V^*$ 作奇异值分解，$s_i\ge0$，
+夹逼映射因此只在两侧多出酉共轭；Choi 正性等价于对角 $K$ 的情形。
+这只是在通常矩阵证明中变基，并未授权一个新的原操作。
+记 $S=\sum_i s_i^2$、$s=(s_0,s_1,s_2)^T$。
+在每个 $i\ne j$ 的 $|ij\rangle$ 方向，(106.6)为标量
+
+$$
+a s_j^2+b s_i^2+cS
+ =(a+c)s_j^2+(b+c)s_i^2+c\!\sum_{k\ne i,j}s_k^2.
+\tag{106.7}
+$$
+
+当 $1/4\le p\le1$ 时，
+
+$$
+c\ge0,\qquad b+c\ge0,\qquad
+a+c=\frac{(1-p)(4p-1)}{36p}\ge0.
+\tag{106.8}
+$$
+
+剩余的 $|00\rangle,|11\rangle,|22\rangle$ 子空间上的块为
+$\operatorname{diag}(h s_i^2+cS)-ss^*/8$。
+令
+
+$$
+\alpha=\frac{8p^2+2p-1}{9p},\qquad
+0\le\alpha\le1,\qquad h=\frac{3\alpha}{8},\qquad
+c=\frac{1-\alpha}{8}.
+\tag{106.9}
+$$
+
+该块遂有精确分解
+
+$$
+\frac18\left\{
+\alpha\bigl(3\operatorname{diag}(s_i^2)-ss^*\bigr)
+ +(1-\alpha)\bigl(SI-ss^*\bigr)\right\}.
+\tag{106.10}
+$$
+
+对任意 $z\in\mathbb C^3$，Cauchy–Schwarz 分别给
+
+$$
+\left|\sum_i s_i z_i\right|^2\le3\sum_i s_i^2|z_i|^2,
+\qquad
+\left|\sum_i s_i z_i\right|^2\le S\sum_i|z_i|^2.
+\tag{106.11}
+$$
+
+故(106.10)是两个 PSD Gram 型块的非负组合。
+它连同(106.7)证明整个 Choi 矩阵 PSD，包括零奇异值、$K=0$ 及两个参数端点。
+对 Kraus 项求和即得任意 $\Phi$ 的结论。
+$\mathcal D_p,\mathcal D_r$ 对迹内积自伴，$\Phi^*$ 仍 CP；
+对已证的 $\mathcal D_r\Phi^*\mathcal D_p$ 取迹伴随，得反向夹逼 CP。
+这一步是普通 CP 映射的伴随性质，不用它供应105.6的反向原许可。
+
+必要性取 $K=|0\rangle\langle0|$。自伴性给
+
+$$
+\mathcal D_r(K\mathcal D_p(X)K^*)
+ =\operatorname{Tr}\bigl(\mathcal D_p(|0\rangle\langle0|)X\bigr)
+   \mathcal D_r(|0\rangle\langle0|).
+\tag{106.12}
+$$
+
+若 $0<p<1/4$，则 $r<-1/2$，末因子在 $|0\rangle$ 方向的本征值
+$(1+2r)/3<0$。前因子是非零正输入泛函，故该夹逼甚至不保持通常正性。
+阈值因此恰为 $1/4$。Choi/Kraus、SVD 与(106.11)是标准事实；
+(106.6)—(106.10)给这里全部滤波量词所需的具体推导。∎
+

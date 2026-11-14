@@ -1,0 +1,21 @@
+**图 1：** 两条实方向的二次关系形成三维正锥。固定总量得到圆盘，边界对应单一实平方。 图中纵轴是自读总量坐标，未被解释成物理时间；圆锥中的线性评价给原平面中的二次读数。
+
+最初的表达式现在有精确位置：
+
+$$
+q_\chi(a,b)=a^2+\chi ab+b^2
+ =\operatorname{Tr}\left[\begin{pmatrix}1&\chi/2\\\chi/2&1\end{pmatrix}M(a,b)\right]
+ =2s+\chi v.
+$$
+
+交叉项 $ab$ 对原两坐标是双线性的，对提升后的第三坐标 $v$ 则是线性读出。 系数矩阵的特征值为 $1\pm\chi/2$，所以全域非负恰为 $|\chi|\le2$。 原平面等值集 $q_\chi=1$ 在 $\chi=0$ 时为圆，$0<|\chi|<2$ 时为椭圆， $\chi=\pm2$ 时退化成 $a\pm b=\pm1$ 两条平行直线。 若圆指的是准备归一化 $a^2+b^2=1$，这个圆当然继续保留； 在其上 $\chi=2$ 的正规化效果读数为 $(a+b)^2/2$，正是沿 $45$ 度射线的投影平方。 一般取 $E_\chi=\tfrac12\left(\begin{smallmatrix}1&\chi/2\\\chi/2&1\end{smallmatrix}\right)$， 则 $|\chi|\le2$ 时 $0\le E_\chi\le I$。
+
+若另外供应与实际事件相容的复结构，二阶复 Hermitian 矩阵还含一个虚交叉坐标：
+
+$$
+M_{\mathbb C}=\begin{pmatrix}s+u&v-iw\\v+iw&s-u\end{pmatrix},
+ \qquad M_{\mathbb C}\ge0\iff s\ge\sqrt{u^2+v^2+w^2}.
+$$
+
+这是四维实正锥，迹一截面为三维 Bloch 球； 实二维的三维锥本身没有自动供应新增的相位坐标 $w$。
+

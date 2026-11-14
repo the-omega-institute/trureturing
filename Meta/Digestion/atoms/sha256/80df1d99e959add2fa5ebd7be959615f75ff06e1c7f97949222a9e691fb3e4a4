@@ -1,0 +1,87 @@
+**Proposition 37.3 (complete held wrapped and chronological accuracy).**
+The same family, including every interrupted leg, terminal prefix and
+hold, satisfies
+
+$$
+\begin{aligned}
+D_{\max}(\bar q^{\rm N}_\eta,\bar q)&\le A_r\rho\le\eta,\\
+\|a_\eta-W^1_{\cdot\wedge S}\|_\infty&\le4\rho,\\
+\|b_\eta-W^2_{\cdot\wedge S}\|_\infty&\le4\rho,\\
+\|J_\eta-K_{\cdot\wedge S}\|_\infty&\le(4K_*+7)\rho.
+\end{aligned}
+\tag{37.3}
+$$
+
+Proof. Before $S$, during a cell after $t_i$, compare with the common
+anchor $p=t_{i-1}$. The actual normal connector or its hold has
+relative triple $(x,y,j)$ with $|x|,|y|\le\rho$, $|j|\le\rho$.
+The target relative triple
+$(x_*,y_*,j_*)=(W^1_v-W^1_p,W^2_v-W^2_p,D_{p,v})$
+obeys $|x_*|,|y_*|\le2\rho$ and
+$|j_*|\le2\rho+\rho^2\le3\rho$ by the two successive mesh cells
+and their Chen cross term. Therefore
+
+$$
+|x-x_*|,|y-y_*|\le3\rho,\qquad |j-j_*|\le4\rho.
+\tag{37.4}
+$$
+
+For the initial hold the stronger one-cell inequalities imply the
+same bounds. These inequalities are independent of how many small
+rectangles or accelerated suffixes have already been traversed.
+Translation from the exact common anchor yields
+
+$$
+\begin{aligned}
+J_\eta(v)-K_v&=W^1_p(y-y_*)+j-j_*,\\
+\Delta\widetilde\alpha&=(y-y_*)/2,\\
+\Delta\widetilde\beta&=
+ (\tfrac12-(k+W^1_p)/r)(y-y_*)-(j-j_*)/r.
+\end{aligned}
+\tag{37.5}
+$$
+
+The coefficient in the last line has absolute value at most $1/2$.
+Thus the pre-target-death height, alpha and beta errors are bounded
+by $3\rho$, $3\rho/2$ and $3\rho/2+4\rho/r$ respectively;
+the chronological error is at most $(3K_*+4)\rho$.
+Continuity gives these inequalities at $\tau\le T$ from below.
+
+At that time write the actual and target relative triples from the
+same anchor as $(x,y,j)$ and $(x_*,y_*,j_*)$. Formula (37.1) becomes
+
+$$
+X=x_*-x,\qquad Y=y_*-y,\qquad D=j_*-j-xY.
+\tag{37.6}
+$$
+
+In particular $|X|,|Y|\le3\rho$ and
+$|D|\le4\rho+3\rho^2\le7\rho$. Lemma 34.2 therefore applies
+with $(A,B)=(3,7)$. At any terminal prefix $(x_0,y_0,j_0)$,
+$|y_0-Y|\le4\rho$: during a rectangle $|y_0|\le\rho$,
+and on the subsequent phase leg $y_0$ lies between $0$ and $Y$.
+Also $|j_0-D|\le|D|\le7\rho$ by the monotone chronological
+prefix property, and the height is within $|X|+\rho\le4\rho$
+of its fixed terminal target height. The exact endpoint comparison is
+
+$$
+\begin{aligned}
+|\Delta\widetilde\alpha|&\le2\rho,\\
+|\Delta\widetilde\beta|
+ &\le\tfrac12|y_0-Y|+|j_0-D|/r
+ \le2\rho+7\rho/r,\\
+|J_\eta(v)-K_\tau|
+ &=|a_0(y_0-Y)+j_0-D|\le(4K_*+7)\rho.
+\end{aligned}
+\tag{37.7}
+$$
+
+The beta coefficient is evaluated at $h_0\in I$, and $|a_0|\le K_*$
+by (37.2). After completion all target triple errors are zero. If $T$
+interrupts this terminal profile, the same prefix bounds apply without
+changing its velocity or comparing it to a different target. If no
+target death occurs, (37.4)–(37.5) suffice through $T$.
+Finally $\max\{4,2+7/r\}\le A_r$ and projection onto either
+original $2\pi$ circle is 1-Lipschitz. This proves (37.3) for the
+complete held histories. $\square$
+

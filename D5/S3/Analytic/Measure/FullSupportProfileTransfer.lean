@@ -4,8 +4,7 @@
    mirror-E: none(waiver:analytic-transfer)
    anchors: []
    utility: none
-   digest: Nonnegative uniformly Lipschitz profiles with vanishing full-support integral converge pointwise and against every finite measure.
- -/
+   digest: Nonnegative uniformly Lipschitz profiles with vanishing full-support integral converge pointwise and against every finite measure. -/
 
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.MeasureTheory.Measure.OpenPos
