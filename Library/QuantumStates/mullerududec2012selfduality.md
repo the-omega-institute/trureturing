@@ -1226,7 +1226,7 @@ $*$-automorphism group, original clock and units for Hamiltonian evolution. No h
 source compatibility is supplied by this substitution.
 
 两两比较的端点互换，只说两个纯态的比较数相同，不等于两次测量交换次序后仍有同一状态更新。这里的对半关系还要求：一端是纯态，另一端可以是原系统中任意已有混态，比较整个混合所得的数必须与先分别比较再平均一致。把有限多个纯态接成二叉树，每个叶子都占正份额，根节点的等式就要求同一个确认效应同时在所有叶子上取到最小值；因此改变成任意实概率权重仍成立。三条带例子说明，只检查两个纯态会漏掉这个共同要求。这个入口删除的是定义 77.18 对混合比例的全量词，全部状态、效应、混合余项以及第 79 章的质量、方向和来源条件仍完整保留；它没有把数学混合或数学见证变成实际可调用的准备与操作。
-
+The one-interior-reference comparison and finite-support cap continue in the [Pinelis companion note](../Convexity/pinelis2012extremepoints.md).
 ## Original probability images and the complete comparison interface
 
 This is a literature application to the original preparation, test and process
