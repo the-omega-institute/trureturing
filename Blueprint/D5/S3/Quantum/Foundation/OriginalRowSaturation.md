@@ -1,12 +1,118 @@
-# Actual collapse forces both ball saturations and whole-cone least confirmation
+# Original limits, scalar topology and actual row saturation
 
 ## Abstract
 
-Actual collapse forces both ball saturations and whole-cone least confirmation
+Original limits, scalar topology and actual row saturation
+
+**Theorem 1.1 (Joint continuity on the whole original pure-pair carrier).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.pure_comparison_continuous`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalRowSaturation.pure_comparison_continuous` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Strict positivity, generation and pure reciprocity give continuity of (p,q) mapped to T(p,q) on the entire product P times P with its norm subspace topology. The uniform original row bound controls both variables after exchanging pure endpoints. This consumed helper supplies the separated-pure-pair gap construction and the whole-limit calibration proof. It supplies no independent escape witness and assumes no mixed reciprocity, label injectivity or singleton confirmer fiber.
+
+## Every actual diameter collapse makes budgets diverge
+
+Assume closedness, strict positivity, generation, general EB and pure PR. Let pn be any sequence of original pure labels whose full exclusion diameters tend to zero. Choose arbitrary complete original charts a(n) and any unit coordinate v(n) in each, with dimensions allowed to vary. Then their actual extensionBudget(a(n),v(n)) tends to positive infinity. The universal scale-to-diameter estimate gives 1<=budget(n) L diam(D(pn)); no finite bound can persist along the sequence. This argument does not assume EB3 or label convergence, restrict labels to P0, or replace the original budget with a reciprocal definition.
+
+**Theorem 1.2 (Every whole-diameter lower bound gives all-chart budgets).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_noncollapse_bounded_budget`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_noncollapse_bounded_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under closedness, strict positivity, generation, EB and pure PR, let U be any subset of all original pure labels with diam(D(p))>=delta>0. One finite positive B bounds the actual optimal extensionBudget in every complete chart and every unit direction at every p in U. Frozen pure compactness and strict exposure give a uniform positive gap 1-T(q,r) on all pure pairs at separation delta. Each actual complete chart has a unit diameter axis, and its antipodal comparison is 1-2a. The gap gives 2a>=gamma, hence all actual optimal budgets are at most 1/gamma. The budget is the attained original positive-extension optimum, not a reciprocal definition.
+
+Assume the original arbitrary finite dimensional V, closed generating pointed cone C and linear unit u strictly positive on nonzero C. K is the entire normalized base, P its entire pure locus, D(p) is the entire original exclusion, EB3 holds at every pure label, and PR exchanges only pure endpoints of the full original comparison. No Inj or singleton confirmer hypothesis is required. Under precisely these assumptions p mapped to diam(D(p)) is upper semicontinuous on all P. To see this, fix any real a and a converging sequence pn in the superlevel diam(D(pn))>=a. Compactness of K and NonemptyCompacts.isCompact_subsets_of_isCompact supply a subsequence with a whole compact limit Q. The compact_diameter_lipschitz estimate transfers the threshold to diam(Q). ReciprocalExclusionLimits.exclusion_limit_dichotomy says Q is either the whole D(p) or a pure singleton contained in D(p); in both cases Q is contained in D(p). Metric.diam_mono gives a<=diam(D(p)). The sequential closed-set criterion proves every superlevel closed, which is the full upper-semicontinuity statement.
+
+For every natural j set S(j)={p in P : 1/(j+1)<=diam(D(p))}, and define R as the union of the interiors of S(j), all taken in P. Upper semicontinuity makes every S(j) closed. The original positive-dimensional whole-ball exclusions have strictly positive full diameter, so exists_nat_one_div_lt shows that the S(j) cover all P. ReciprocalPureCompactness.reciprocal_pure_compact, under the same closedness, strict positivity, generation and pure PR assumptions, makes P compact; Mathlib.Topology.Baire.LocallyCompactRegular supplies its Baire structure. The dense_iUnion_interior_of_closed theorem from Mathlib.Topology.Baire.Lemmas applies to this countable closed cover. Consequently IsOpen R and Dense R both hold. With Sigma=P\R, IsClosed Sigma follows from openness, and interior(closure Sigma) is empty because closure Sigma=Sigma and density of R gives empty interior of its complement. These are full consequences of the compactness, dichotomy, diameter and generic Baire results. The original_regular_iff_continuous theorem below identifies exactly this R with the Hausdorff continuity set of the entire D map; neither residual collapse branch is removed.
+
+**Theorem 1.3 (Every discontinuity supplies an actual whole-ball collapse).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_discontinuity_collapse`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_discontinuity_collapse` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the full original EB3 and pure PR hypotheses, at each Hausdorff discontinuity p there is a sequence pn of original pure labels tending to p and an actual pure q in D(p) such that the entire D(pn) tends to {q}. The proof directly consumes the frozen ReciprocalExclusionLimits.exclusion_limit_dichotomy, including its actual parameter extraction and exact whole-ball equality. If no such singleton subsequence exists, compactness of the entire family inside K makes every subsequence admit a further subsequence tending to the old whole D(p), proving continuity. This is not a conditional row premise. The stronger frozen ReciprocalPureCompactness.reciprocal_pure_compact supplies pure compactness without EB or nontriviality; no duplicate pure-compactness declaration is retained.
+
+**Theorem 1.4 (Exact whole-ball continuity set).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_regular_iff_continuous`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_regular_iff_continuous` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original pure p, p belongs to R if and only if the actual whole-exclusion map is Hausdorff continuous at p. On an interior diameter layer an actual singleton collapse would contradict the positive lower bound and continuity of diameter. Conversely continuity at a nondegenerate old ball gives a positive diameter bound in an open neighborhood in all P. OriginalComparisonTopology.original_common_continuity_sets identifies this same R with both actual scalar continuity sets, and the scalar applications below establish both semicontinuities on all P.
+
+**Theorem 1.5 (Whole-P continuity exactly equals finite local optimal budgets).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_local_budget_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_local_budget_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under original EB3 and pure PR, Hausdorff continuity at any original pure p is equivalent to an open neighborhood U containing p in all P and a finite positive B bounding every actual chart and unit-direction extensionBudget throughout U. Forward: the exact regular-region theorem gives a neighborhood with a positive whole-diameter lower bound, and original_noncollapse_bounded_budget supplies B. Reverse: original_bounded_budget_noncollapse gives a positive diameter floor on U, placing p inside an actual closed diameter layer and hence in the whole-ball continuity set. No uniqueness or Inj hypothesis is needed.
+
+For the scalar applications below fix exactly the closedness, strict positivity, generation, EB3 and pure PR assumptions just stated. At each p choose any full chart from ballHyp(EB3), and let a(p) be the positive coefficient selected by original_common_chart_scale. Its specification holds in every complete chart, for every unit direction and every mixed coordinate of the entire closed ball; it includes actual confirming effects from the full F(q). Put beta(p)=1/(2a(p)). The same specification proves that beta is feasible, is no larger than every feasible budget and equals extensionBudget in each chart and direction. Thus it is the attained original infimum. For q=b(v) and r=b(-v), the actual mixed-input formula gives a(p)=(1-T(q,r))/2. Chart independence makes this formula agree with the chosen coefficient in every chart. These applications retain the full conclusions of the scalar aggregate; the individual limit arguments are proof-internal applications rather than separately exported theorems.
+
+## Actual scale across every whole-ball limit
+
+For arbitrary original pure labels pn and p under EB3 and pure-only PR, Hausdorff convergence of the entire D(pn) to D(p) forces convergence of the actual common calibration coefficient. The coefficient is selected from original_common_chart_scale and obeys its all-chart, all-mixed-input law. Parameter extraction is reused from ExclusionIncidence.parameter_subsequence. Closedness of the original pure locus makes every limiting sphere point pure; sphere_extreme_injective_or_zero rules out positive rank loss, while nontriviality of the complete limiting ball excludes the zero map. The limiting affine map is therefore an actual full chart of D(p). Its fixed antipodal endpoints recover the same coefficient via (1-T(q,r))/2 and pure joint comparison continuity. No continuity of chosen charts or extra compact-pure premise is assumed.
+
+## Actual zero and infinite limits under singleton collapse
+
+Every whole-exclusion sequence converging to an actual singleton has calibration tending to zero and actual optimalBudget tending to positive infinity. The latter equals the original attained extensionBudget in every chart and every unit direction; optimalBudget is never accepted solely from its reciprocal definition. Diameter continuity on nonempty compact sets and the general diameter-collapse argument just given yield divergence. For an arbitrary singleton endpoint q in V, continuity of compact diameter gives diam(D(pn)) tending to zero without any label-convergence assumption. Choose one unit direction in each arbitrary full chart, identify its attained budget with beta(pn), and apply the general EB divergence argument. Since a(pn) is the inverse of beta(pn) divided by two, inverse convergence at positive infinity gives a(pn) tending to zero. This result does not assert that any collapse exists.
+
+## Both exhaustive original subsequence alternatives
+
+Every sequence of original pure labels tending to p has a strictly indexed subsequence on which either the whole exclusions tend to the complete D(p), with calibration and optimal budget tending to their actual values at p, or the whole exclusions tend to a pure singleton q in D(p), with calibration tending to zero and optimal budget to positive infinity. Applying the same theorem to any initial subsequence gives the complete scalar refinement. The whole-ball-or-pure-singleton dichotomy is directly reused from the frozen ReciprocalExclusionLimits owner.
+
+## Upper semicontinuity on all original pure labels
+
+The actual common calibration is upper semicontinuous on the entire original P. For each scalar superlevel and every converging original label sequence in it, compact whole-set extraction and the exhaustive scalar alternatives force the limiting label into the same superlevel. In the singleton case the threshold is at most zero, and the actual limiting label still has strictly positive calibration. This is neither a P0 restriction nor a chosen-neighborhood statement.
+
+## Lower semicontinuity of the actual optimum on all P
+
+Every scalar sublevel of the actual attained optimal budget is closed in all original P. The whole branch preserves the sublevel by scalar convergence. The singleton branch is incompatible with a finite upper bound because its actual budgets diverge: eventual beta>=t+1 contradicts the assumed sublevel beta<=t. Every original individual budget remains finite and at least one; infinity is a sequence limit, not the budget assigned to an individual ball.
+
+## Every discontinuity retains its actual pure collapse and both scalar limits
+
+At every actual Hausdorff discontinuity there is a sequence of original pure labels tending to p and an original pure q in D(p) such that the entire moving exclusions tend to q, their actual calibrations tend to zero and their actual optimal budgets tend to positive infinity. The actual discontinuity-collapse theorem supplies pn tending to p and a pure q in the old whole D(p); converting its Hausdorff-distance conclusion to convergence of nonempty compact sets permits the singleton application above. Both zero and positive-infinity scalar limits therefore hold on this same actual sequence. No collapse existence or exclusion is inferred.
+
+**Theorem 1.6 (Exact common continuity sets and all-P local optimal budgets).**
+
+Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_common_continuity_sets`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_common_continuity_sets` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original regular region R equals the continuity sets of the whole Hausdorff map D, the actual calibration a and the actual optimal budget beta. The result also gives the exact open-neighborhood local-budget equivalence in all P, uniform boundedness on every compact subset of R, positivity and the half-scale upper bound, and attained sharpness of beta in every actual chart and unit direction. At an irregular label the actual collapse witness has a tending to zero and beta to infinity, whereas a(p) is positive and beta(p) finite. For the scalar-to-whole continuity converse, an actual discontinuity supplies pn tending to p with a(pn) tending to zero. Continuity of a would force a(p)=0, contradicting its strict positivity. Continuity of beta gives continuity of a=1/(2 beta), since beta(p)>0, and yields the same contradiction. Whole continuity gives scalar continuity by the whole-limit application and continuity of the reciprocal at positive a(p). Hence these are exactly the same R, not just intersecting continuity sets. To pass between local scalar bounds and all-chart budgets, use the attained equality extensionBudget=beta in every chart; the converse chooses a unit direction in one full positive-dimensional chart. On any compact S contained in this same R, beta is continuous on S, so its compact image is bounded above. This yields a finite bound depending on S and supplies no global finite bound on P. The open dense R and closed nowhere-dense Sigma follow from the compact Baire application to the closed positive-diameter layers described here. Inj and singleton full-zero confirmer hypotheses are absent here and remain confined to OriginalRowSaturation and its normal-family prerequisites.
 
 V is an arbitrary finite dimensional real normed space, C its entire original pointed cone, and u the original linear unit. Assume C is closed and generating and u is strictly positive on nonzero C. K is the entire normalized base, P its entire extreme locus, and the effects and confirmers are the full original families, including u. EB3 parametrizes every whole exclusion, and PR exchanges only pure endpoints. All label neighborhoods use all P. No mixed PR, weakPair, RegularAnchor, global UF, prescribed saturation or matrix specialization is assumed.
 
-**Theorem 1.1 (Actual collapse supplies the complete fixed-edge pure row).**
+**Theorem 1.7 (Actual collapse supplies the complete fixed-edge pure row).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.actual_collapse_pure_edge_row`
 
@@ -18,7 +124,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.actual_collapse_
 
 Let original pure pn tend to p and let their entire exclusions tend to the actual pure singleton {q}. Then for every original pure s there is an effect e in the entire F(p) with e(q)=0 and e(s)=T(p,s). The pure input s=p is handled by actual minimum attainment on the original orthogonal edge. For s!=p, original strict exposure gives T(p,s)<1. Pure PR and the frozen full-input Lipschitz bound give convergence of the moving minimum. The same minimizing effect has a genuine zero in K by CommonOldExclusionConfirmation.minimizer_has_zero; that zero belongs to the whole moving exclusion. Full-effect norm control carries it into q, and a compact effect subsequence retains confirmation at p and attainment at s. No mixed PR or simultaneous minimizer for all pure s is claimed.
 
-**Theorem 1.2 (Both actual balls saturate under original Inj and unique A(p)).**
+**Theorem 1.8 (Both actual balls saturate under original Inj and unique A(p)).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_row_saturation`
 
@@ -30,7 +136,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_row_sat
 
 Assume EB3, pure PR and Inj. Let p have exactly one full-zero confirmer ep, without restricting F(p), which still includes u. Take an arbitrary complete three-chart a of D(p), unit v with actual pure q=a(v), and an actual collapse pn->p, D(pn)->{q}. The theorem derives the full fixed-edge pure row from that collapse. It proves extensionBudget(a,w)=1 for every unit w, unit optimal budget in every chart of the actual D(q), and the coefficient-one-half law (1+inner(w,z))/2 for every mixed input in both whole balls. The same ep realizes T(p,x) for all mixed x in K and satisfies ep<=f on the entire C for every f in the full F(p). Original normal positivity is paid before constructing effects. Antipodal orthogonality forces the first scale, actual orthogonal points in D(q) force the second scale, and rho=1 in all directions then gives the whole-cone least property.
 
-**Theorem 1.3 (Nonunit unique-confirmation labels have whole-P local budgets).**
+**Theorem 1.9 (Nonunit unique-confirmation labels have whole-P local budgets).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_nonunit_continuity`
 
@@ -42,7 +148,7 @@ Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_nonunit
 
 Under the same original EB3, pure PR, Inj and singleton A(p) hypotheses, if an arbitrary complete three-chart a has extensionBudget(a,v)>1 at any unit v, then the whole-exclusion map is Hausdorff continuous at p. There is an open neighborhood U of p in all P and a finite positive B bounding extensionBudget in every complete chart and every unit direction at every s in U. Every discontinuity supplies an actual collapse, whose saturation contradicts the nonunit budget. The neighborhood conclusion consumes OriginalComparisonTopology.original_common_continuity_sets, converts its actual scalar bound to every attained chart budget, and never restricts U to P0.
 
-**Theorem 1.4 (Both Sigma branches and every actual endpoint refinement).**
+**Theorem 1.10 (Both Sigma branches and every actual endpoint refinement).**
 
 Lean statement: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_discontinuity_branches`
 
@@ -57,11 +163,14 @@ For every original p in Sigma=P\R, either A(p) is not a singleton, or there is i
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.actual_collapse_pure_edge_row`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_common_continuity_sets`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_discontinuity_branches`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_discontinuity_collapse`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_local_budget_iff`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_noncollapse_bounded_budget`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_nonunit_continuity`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_regular_iff_continuous`
 - Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.original_row_saturation`
+- Truth anchor: `D5/S3/Quantum/Foundation/OriginalRowSaturation.pure_comparison_continuous`
 - Dependency: [D5/S3/Quantum/Foundation/CommonOldExclusionConfirmation](CommonOldExclusionConfirmation.md)
-- Dependency: [D5/S3/Quantum/Foundation/OriginalBallScale](OriginalBallScale.md)
-- Dependency: [D5/S3/Quantum/Foundation/OriginalComparisonTopology](OriginalComparisonTopology.md)
-- Dependency: [D5/S3/Quantum/Foundation/OriginalExclusionLimits](OriginalExclusionLimits.md)
 - Dependency: [D5/S3/Quantum/Foundation/OriginalNormalFamily](OriginalNormalFamily.md)
