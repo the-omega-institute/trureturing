@@ -79,10 +79,9 @@ public sealed class LeanCacheChunkScriptTests
     public void ExactlyOneHundredPartsPublishesAndRestores()
     {
         if (OperatingSystem.IsWindows()) return;
-        var random = new Random(31);
-        var seed = new string(Enumerable.Range(0, 32768).Select(_ => (char)random.Next(33, 127)).ToArray());
-        using var fixture = new LeanCacheChunkFixture(seed);
-        var chunkBytes = (fixture.ArchiveBytes.Length + 99) / 100;
+        using var fixture = new LeanCacheChunkFixture();
+        fixture.PadArchiveToMultipleOf(100);
+        var chunkBytes = fixture.ArchiveBytes.Length / 100;
 
         fixture.AssertSuccess(fixture.Publish(chunkBytes));
 
@@ -96,7 +95,7 @@ public sealed class LeanCacheChunkScriptTests
         }
         fixture.ClearPrivateBuild();
         fixture.AssertSuccess(fixture.Fetch());
-        Assert.Equal(seed, fixture.Unpacked);
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
     }
 
     [Fact]
