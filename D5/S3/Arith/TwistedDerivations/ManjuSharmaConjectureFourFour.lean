@@ -59,7 +59,7 @@ private instance : IsCyclotomicExtension {4} ℚ K4 :=
 abbrev O4 := RingOfIntegers K4
 
 def root : K4 := IsCyclotomicExtension.zeta 4 ℚ K4
-private theorem root_primitive : IsPrimitiveRoot root 4 :=
+theorem root_primitive : IsPrimitiveRoot root 4 :=
   IsCyclotomicExtension.zeta_spec 4 ℚ K4
 
 def z : O4 := root_primitive.toInteger
@@ -137,7 +137,7 @@ private theorem derivation_equiv (x : GaussianInt) :
   simp [derivation]
 
 /-- The required twisted law holds for every pair of actual algebraic integers. -/
-private theorem derivation_twisted (x y : O4) :
+theorem derivation_twisted (x y : O4) :
     derivation (x * y) = derivation x * tau y + x * derivation y := by
   obtain ⟨a, rfl⟩ := gaussianEquiv.surjective x
   obtain ⟨c, rfl⟩ := gaussianEquiv.surjective y
@@ -145,7 +145,7 @@ private theorem derivation_twisted (x y : O4) :
   rw [gaussianD_law, map_add, map_mul, map_mul]
 
 /-- The concrete root values use the proved generator-preserving bridge. -/
-private theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3 := by
+theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3 := by
   constructor
   · rw [← gaussianEquiv_i, derivation_equiv]
     simp [gaussianD, Zsqrtd.sqrtd]
@@ -157,7 +157,7 @@ private theorem counterinstance_root_values : derivation z = 1 ∧ tau z = z ^ 3
     ring
 
 /-- An integral inner generator would force an odd integer to equal an even integer. -/
-private theorem derivation_not_inner : ¬ IsInner (AlgHom.id ℤ O4) tau derivation := by
+theorem derivation_not_inner : ¬ IsInner (AlgHom.id ℤ O4) tau derivation := by
   rintro ⟨γ, hγ⟩
   obtain ⟨g, rfl⟩ := gaussianEquiv.surjective γ
   have h := hγ (gaussianEquiv (Zsqrtd.sqrtd : GaussianInt))
@@ -178,7 +178,7 @@ private theorem b_repr (a c : ℤ) (i : Fin 2) :
   fin_cases i <;> simp
 
 /-- The existing integral power basis, with its proved dimension made explicit. -/
-private def orderedPb : PowerBasis ℤ O4 where
+def orderedPb : PowerBasis ℤ O4 where
   gen := z
   dim := 2
   basis := b
@@ -211,7 +211,7 @@ private theorem actual_vector (i : Fin 2) : b.repr (derivation z) i = ![1,0] i :
   rw [counterinstance_root_values.1, ← gaussianEquiv.map_one]
   exact b_repr 1 0 i
 
-private theorem printed_test : PrintedIntegralTest 2 1
+theorem printed_test : PrintedIntegralTest 2 1
     (Algebra.leftMulMatrix orderedPb.basis (tau z-z))
     (fun i => orderedPb.basis.repr (derivation z) i) := by
   change PrintedIntegralTest 2 1 (Algebra.leftMulMatrix b (tau z-z))

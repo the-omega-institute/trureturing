@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.G`
 
 G(n)=log(sigma_1(n)/n)-gamma-log(log(log(n))), where gamma is Euler's constant and all logarithms are real natural logarithms. For n>=3 every logarithm argument used here is positive. In particular G(n)<0 is the strict Robin sign on this domain.
 
-**Theorem 1.2 (Exact transport and quantitative curvature).**
+**Theorem 1.2 (Activation density decreases on the full real domain).**
+
+Lean statement: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.density_antitone`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.density_antitone` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary real s,t with 1<s and s<=t, activationDensity(t)<=activationDensity(s). Equality of the endpoints is included. The proof uses MellinWeightedVariation.scaleWeight_antitone. The mixed-response area bounds and LogLogGlobalCurvatureStability directly reuse this same declaration.
+
+**Theorem 1.3 (Exact transport and quantitative curvature).**
 
 $$\forall n \in \mathbb{N}, r \in \mathbb{N}, s \in \mathbb{N},\; \left(\left(\left(3 \le n \land 2 \le r\right) \land 2 \le s\right) \land \operatorname{gcd}\left(r, s\right) = 1\right) \Rightarrow \left(\left(\left(\left(\left(\left(1 < \operatorname{log}\left(n\right) \land 0 < \operatorname{log}\left(r\right)\right) \land 0 < \operatorname{log}\left(s\right)\right) \land \operatorname{J}\left(n, r, s\right) = \int_{0}^{\operatorname{log}\left(r\right)} \int_{0}^{\operatorname{log}\left(s\right)} \operatorname{k}\left(\operatorname{log}\left(n\right) + u + v\right) dv du\right) \land 0 < \operatorname{J}\left(n, r, s\right)\right) \land \operatorname{log}\left(r\right) \cdot \operatorname{log}\left(s\right) \cdot \operatorname{k}\left(\operatorname{log}\left(n\right) + \operatorname{log}\left(r\right) + \operatorname{log}\left(s\right)\right) \le \operatorname{J}\left(n, r, s\right)\right) \land \operatorname{J}\left(n, r, s\right) \le \operatorname{log}\left(r\right) \cdot \operatorname{log}\left(s\right) \cdot \operatorname{k}\left(\operatorname{log}\left(n\right)\right)\right)$$
 
@@ -40,6 +52,7 @@ Keep the absolute log partition A0=log(sum_s exp(beta*d_s)). For normalized weig
 
 - Truth anchor: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.G`
 - Truth anchor: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.arithmetic_mixed_response`
+- Truth anchor: `D5/S3/Arith/Robin/ArithmeticMixedCornerResponse.density_antitone`
 - Dependency: [D5/S3/Arith/Robin/ActualRobinClockCovariance](ActualRobinClockCovariance.md)
 - Dependency: [D5/S3/Arith/Robin/LogLogHigherDerivative](LogLogHigherDerivative.md)
 - Dependency: [D5/S3/Arith/Robin/MellinWeightedVariation](MellinWeightedVariation.md)
