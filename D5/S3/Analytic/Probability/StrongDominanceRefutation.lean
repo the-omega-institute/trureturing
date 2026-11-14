@@ -9,15 +9,37 @@
 /-
 admission_basis: open-problem-resolution (#28951; Refuted)
 escape_witness: none
-proof_shape: result: bind-only; consumer: none; escape_witness: none.
+proof_shape: distinctCountPMF: bind-only; consumer: claim, result; escape_witness: none.
+proof_shape: StronglyDominates: bind-only; consumer: claim, result; escape_witness: none.
+proof_shape: claim: bind-only; consumer: result; escape_witness: none.
+proof_shape: result: bind-only; consumer: external settlement; escape_witness: none.
+proof_shape: pVec: bind-only; consumer: p, p_moreMixed; escape_witness: none.
+proof_shape: qVec: bind-only; consumer: q, p_moreMixed; escape_witness: none.
+proof_shape: p: bind-only; consumer: result; escape_witness: none.
+proof_shape: q: bind-only; consumer: result; escape_witness: none.
+proof_shape: pNat: bind-only; consumer: p_two_nat, p_three_nat, result; escape_witness: none.
+proof_shape: qNat: bind-only; consumer: q_two_nat, q_three_nat, result; escape_witness: none.
+proof_shape: natPMF: bind-only; consumer: p_two_nat, q_two_nat, p_three_nat, q_three_nat, result; escape_witness: none.
 proof_shape: p_moreMixed: bind-only; consumer: result; escape_witness: none.
 proof_shape: p_two_nat: bind-only; consumer: result; escape_witness: none.
 proof_shape: q_two_nat: bind-only; consumer: result; escape_witness: none.
 proof_shape: p_three_nat: bind-only; consumer: result; escape_witness: none.
 proof_shape: q_three_nat: bind-only; consumer: result; escape_witness: none.
-Definitions introduce the finite cylinder sum and threshold predicate; private data
-and the natural-number evaluation carrier are used only by result.
-Direct frozen dependencies: to be read from elaborated constants before handover.
+Direct frozen dependencies (declaration GID + statement_id):
+X: D5/S0/Certificates/Hypergraphs/OrientationEntropyBalance.X
+  sha256:8e1a8a4eb55faa65325f38ad95ad302788d372e4114b324a755279123c21c441
+desc: D5/S3/Geometry/AlphaGeometry/PositiveSimplexGeometryAndMixing.desc
+  sha256:202c59b217e53e6c388923e06fa6acf48979f254a0e5c1bb35bd4e89c937db55
+moreMixed: D5/S3/Geometry/AlphaGeometry/PositiveSimplexGeometryAndMixing.moreMixed
+  sha256:565b9b70d03155f061b4fe949164aa173255e7ceac42365730d8420ff3c7616a
+prefixSum: D5/S3/Geometry/AlphaGeometry/PositiveSimplexGeometryAndMixing.prefixSum
+  sha256:93ca1f1520e0d21d918273555bd2933d31f2a7bfe3a4b3c132e8c154b2ffdc8b
+Direct frozen dependencies by declaration, after inlining same-module helpers:
+result: X, desc, moreMixed, prefixSum.
+p_moreMixed: desc, moreMixed, prefixSum.
+claim: moreMixed.
+natPMF, p_two_nat, q_two_nat, p_three_nat, q_three_nat: X.
+distinctCountPMF, StronglyDominates, pVec, qVec, p, q, pNat, qNat: none.
 The simplex carrier is used directly, without a type alias. The image-card
 expression stays literal in distinctCountPMF; the integer computation uses
 OrientationEntropyBalance.X, with its defining equality unfolded in the bridge.
@@ -26,8 +48,6 @@ The public result is the designated refutation result (`basis=refutes`) and is e
 
 import Mathlib.Tactic.IntervalCases
 import D5.S0.Certificates.Hypergraphs.OrientationEntropyBalance
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Geometry.Convex.ConvexSpace.Defs
 import D5.S3.Geometry.AlphaGeometry.PositiveSimplexGeometryAndMixing
 
 
