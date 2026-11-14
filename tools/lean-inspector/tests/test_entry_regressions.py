@@ -112,7 +112,7 @@ class EntryRegressionTests(unittest.TestCase):
         shell_environment = write('shell-env', 'unset SECONDS\n' if unavailable_clock else '')
         calls = root / 'calls'
         logs = root / 'logs'
-        environment = dict(os.environ,
+        environment = dict(os.environ, FULL_BUILD="1",
             PATH=os.pathsep.join((str(root / 'bin'), str(Path(sys.executable).resolve().parent), os.environ['PATH'])),
             CALLS=str(calls), LAKE_BIN=str(root / 'bin/lake'),
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_BUILD_TARGETS='[]',

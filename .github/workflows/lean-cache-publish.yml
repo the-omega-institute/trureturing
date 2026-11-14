@@ -289,4 +289,4 @@ jobs:
       - name: Publish the protected-dev Release snapshot
         env:
           GH_TOKEN: ${{ github.token }}
-        run: make lean-cache-to-github-without-mathlib
+        run: make lean-cache-to-github-without-mathlib FULL_BUILD=1

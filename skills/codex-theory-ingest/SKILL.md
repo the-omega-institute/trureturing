@@ -284,7 +284,7 @@ the successful Step 3 writer. Prepare a pull-request body that records:
 - every verification command and exit code;
 - the selected `show-atom` identity and text check.
 
-Commit the theory volume and writer-produced digestion data. Inspect `make gate-plan` with the same base before local checks; run only the applicable scoped checks by default. If a concrete integration obligation requires a full build, explain it and explicitly invoke `make gate BASE="<resolved-base>" FULL_BUILD=1`; do not start a full build merely for theory or skill edits. This is agent invocation discipline, not an implemented build guard. Required CI retains its own scope. Then publish:
+Commit the theory volume and writer-produced digestion data. Inspect `make gate-plan` with the same base before local checks; run only the applicable scoped checks by default. If a concrete integration obligation requires a full build, explain it and explicitly invoke `make gate BASE="<resolved-base>" FULL_BUILD=1`; do not start a full build merely for theory or skill edits. Make full-build entries and their direct scripts reject calls without `FULL_BUILD=1`. Required CI retains its own scope. Then publish:
 
 ```sh
 git push -u origin <branch>
