@@ -126,7 +126,7 @@ internal sealed class PositiveBranchReachableResponseDocument : IScribeDocumentD
                             All(V, Arrow(Index, Complex), Seq(
                                 Eqn(Call("mulVec", Call("weightedCP", K, C, x), V), D(0)),
                                 Sp, Iff, Sp,
-                                Scope(All(a, A, Eqn(Call("mulVec", x, transformed), D(0))))))))))))));
+                                Scope(All(a, A, Eqn(Call("mulVec", x, transformed), D(0)))))))))))))));
     }
     private static Formula SupportFormula() => Disp(Generic(All(L, Nat,
         Eqn(Supp(Call("R", K, C, Rho, L)), Call("W", K, Rho, L)))));

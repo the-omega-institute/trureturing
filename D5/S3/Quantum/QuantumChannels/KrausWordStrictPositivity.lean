@@ -77,14 +77,17 @@ private theorem sum_posDef_of_span {d : ℕ} {ι : Type*} [Fintype ι]
   intro v hv
   apply lt_of_le_of_ne' (hY.dotProduct_mulVec_nonneg v)
   intro hz
+  let e : Fin (Fintype.card ι) ≃ ι := (Fintype.equivFin ι).symm
   have hker :
       (D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP
-        L (fun _ => 1) X) *ᵥ v = 0 := by
-    simpa [D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP]
-      using hY.dotProduct_mulVec_zero_iff.mp hz
+        (fun i => L (e i)) (fun _ => 1) X) *ᵥ v = 0 := by
+    simp only [D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP,
+      LinearMap.coe_mk, AddHom.coe_mk, Complex.ofReal_one, one_smul]
+    rw [e.sum_comp (fun i => L i * X * (L i)ᴴ)]
+    exact hY.dotProduct_mulVec_zero_iff.mp hz
   have each :=
     (D5.S3.Quantum.Measurement.PositiveBranchReachableResponse.weightedCP_kernel
-      L (fun _ => 1) (fun _ => zero_lt_one) hX v).mp hker
+      (fun i => L (e i)) (fun _ => 1) (fun _ => zero_lt_one) hX v).mp hker
   let S : Submodule ℂ (Matrix (Fin d) (Fin d) ℂ) := {
     carrier := {A | X *ᵥ (Aᴴ *ᵥ v) = 0}
     zero_mem' := by simp
@@ -99,7 +102,8 @@ private theorem sum_posDef_of_span {d : ℕ} {ι : Type*} [Fintype ι]
   have hspan : Submodule.span ℂ (Set.range L) ≤ S := by
     apply Submodule.span_le.mpr
     rintro _ ⟨i, rfl⟩
-    exact each i
+    change X *ᵥ ((L i)ᴴ *ᵥ v) = 0
+    simpa only [e.apply_symm_apply] using each (e.symm i)
   have hall (A : Matrix (Fin d) (Fin d) ℂ) : X *ᵥ (Aᴴ *ᵥ v) = 0 := by
     exact hspan (hL ▸ Submodule.mem_top)
   obtain ⟨i, hi⟩ : ∃ i, v i ≠ 0 := by
