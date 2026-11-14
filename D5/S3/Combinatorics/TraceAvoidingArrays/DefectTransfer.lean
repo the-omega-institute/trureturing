@@ -228,7 +228,7 @@ def forward (T : Matrix S S ℤ) (v : S → ℤ) : ℕ → S → ℤ
   | 0 => v
   | n + 1 => Matrix.vecMul (forward T v n) T
 
-private theorem forward_eq (T : Matrix S S ℤ) (v : S → ℤ) (n : ℕ) :
+theorem forward_eq (T : Matrix S S ℤ) (v : S → ℤ) (n : ℕ) :
     forward T v n = Matrix.vecMul v (T ^ n) := by
   induction n with
   | zero => simp [forward]

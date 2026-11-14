@@ -27,7 +27,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h 0
   have ha := result 0
   simp only [rejected, realize, Nat.cast_add, Nat.cast_one] at hb
-  dsimp only at hb
   linarith
 def family : Registration arena (type_of% @result) where
   actual := readout
@@ -64,7 +63,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA229582Strip
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg", "arg"]
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -138,7 +138,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA229582Strip
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["arg", "arg", "fn", "arg", "arg"]
+    readouts := #[{
+      path := #["arg", "arg", "fn", "arg", "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -148,4 +149,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 
 end Certificate
+end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA229582Strip
