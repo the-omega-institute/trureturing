@@ -8,6 +8,7 @@
 
 import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Data.List.SplitBy
+import Mathlib.Combinatorics.Enumerative.Composition
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 /-! The source is OEIS A386705, with the literal integer set used for its sum.
@@ -221,5 +222,311 @@ theorem mem_row_iff (n m : ℕ) : m ∈ row n ↔
     exact word_injective ls ks hl.1 hk (hl.2.2.symm.trans hw)
   · rintro ⟨hp, he, ks, hk, _⟩
     exact ⟨hp, he, ks, hk⟩
+
+/-- Decode the concatenated blocks as a binary integer. -/
+private def decode (ks : List ℕ) : ℕ := Nat.ofDigits 2 (word ks).reverse
+
+private theorem word_cons (k : ℕ) (ks : List ℕ) :
+    word (k :: ks) = List.replicate k 1 ++ List.replicate k 0 ++ word ks := by
+  simp [word, blockRuns, List.append_assoc]
+
+private theorem word_digits (ks : List ℕ) : ∀ d ∈ word ks, d < 2 := by
+  induction ks with
+  | nil => simp [word, blockRuns]
+  | cons k ks ih =>
+      intro d hd
+      simp only [word_cons, List.mem_append] at hd
+      rcases hd with (hd | hd) | hd
+      · simp only [List.mem_replicate] at hd; omega
+      · simp only [List.mem_replicate] at hd; omega
+      · exact ih d hd
+
+private theorem word_starts (ks : List ℕ) (hk : ∀ k ∈ ks, 0 < k) (hne : ks ≠ []) :
+    ∃ ws, word ks = 1 :: ws := by
+  cases ks with
+  | nil => contradiction
+  | cons k ks =>
+      obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (hk k (by simp)).ne'
+      simp [word_cons, List.replicate_succ]
+
+private theorem word_ends (ks : List ℕ) (hk : ∀ k ∈ ks, 0 < k) (hne : ks ≠ []) :
+    ∃ ws, word ks = ws ++ [0] := by
+  induction ks with
+  | nil => contradiction
+  | cons k ks ih =>
+      by_cases he : ks = []
+      · subst ks
+        obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (hk k (by simp)).ne'
+        exact ⟨List.replicate (j+1) 1 ++ List.replicate j 0, by
+          simp [word_cons, word, blockRuns, List.replicate_succ', List.append_assoc]⟩
+      · obtain ⟨ws, hw⟩ := ih (fun j hj => hk j (by simp [hj])) he
+        exact ⟨List.replicate k 1 ++ List.replicate k 0 ++ ws, by
+          simp [word_cons, hw, List.append_assoc]⟩
+
+private theorem bits_decode (ks : List ℕ) (hk : ∀ k ∈ ks, 0 < k) :
+    bits (decode ks) = word ks := by
+  by_cases he : ks = []
+  · subst ks; simp [decode, bits, word, blockRuns]
+  obtain ⟨ws, hw⟩ := word_starts ks hk he
+  unfold bits decode
+  rw [Nat.digits_ofDigits 2 (by decide)]
+  · simp
+  · intro d hd
+    exact word_digits ks d (List.mem_reverse.mp hd)
+  · intro hn
+    simp [hw]
+
+private theorem decode_pos_even (ks : List ℕ) (hk : ∀ k ∈ ks, 0 < k) (hne : ks ≠ []) :
+    0 < decode ks ∧ Even (decode ks) := by
+  constructor
+  · have hw := bits_decode ks hk
+    obtain ⟨ws, hs⟩ := word_starts ks hk hne
+    by_contra hn
+    have hz : decode ks = 0 := by omega
+    rw [hz, hs] at hw
+    simp [bits] at hw
+  · obtain ⟨ws, hw⟩ := word_ends ks hk hne
+    unfold decode
+    rw [hw, List.reverse_append]
+    exact ⟨Nat.ofDigits 2 ws.reverse, by simp [Nat.ofDigits_cons]; omega⟩
+
+private noncomputable def parts (n : ℕ) : Finset (List ℕ) :=
+  Finset.univ.image (Composition.blocks : Composition n → List ℕ)
+
+private theorem mem_parts (n : ℕ) (ks : List ℕ) : ks ∈ parts n ↔
+    (∀ k ∈ ks, 0 < k) ∧ ks.sum = n := by
+  classical
+  simp only [parts, Finset.mem_image, Finset.mem_univ, true_and]
+  constructor
+  · rintro ⟨c, rfl⟩
+    exact ⟨fun k hk => c.blocks_pos hk, c.blocks_sum⟩
+  · rintro ⟨hk, hs⟩
+    exact ⟨⟨ks, fun {k} h => hk k h, hs⟩, rfl⟩
+
+private theorem parts_nonempty_list (n : ℕ) (hn : 0 < n) (ks : List ℕ)
+    (hk : ks ∈ parts n) : ks ≠ [] := by
+  have hs := (mem_parts n ks).mp hk
+  rintro rfl
+  simp at hs
+  omega
+
+private theorem row_eq_image (n : ℕ) (hn : 0 < n) : row n = (parts n).image decode := by
+  classical
+  ext m
+  rw [mem_row_iff, Finset.mem_image]
+  constructor
+  · rintro ⟨_, _, ks, ⟨hk, hs, hb⟩, _⟩
+    refine ⟨ks, (mem_parts n ks).mpr ⟨hk, hs⟩, ?_⟩
+    unfold decode
+    rw [← hb]
+    simp [bits, Nat.ofDigits_digits]
+  · rintro ⟨ks, hk, rfl⟩
+    obtain ⟨hp, he⟩ := decode_pos_even ks ((mem_parts n ks).mp hk).1
+      (parts_nonempty_list n hn ks hk)
+    refine ⟨hp, he, ks, ⟨((mem_parts n ks).mp hk).1,
+      ((mem_parts n ks).mp hk).2, bits_decode ks ((mem_parts n ks).mp hk).1⟩, ?_⟩
+    intro ls hl
+    exact word_injective ls ks hl.1 ((mem_parts n ks).mp hk).1
+      (hl.2.2.symm.trans (bits_decode ks ((mem_parts n ks).mp hk).1))
+
+private theorem sum_transport (n : ℕ) (hn : 0 < n) :
+    a n = ∑ ks ∈ parts n, (decode ks : ℤ) := by
+  classical
+  rw [a, row_eq_image n hn, Finset.sum_image]
+  intro ks hk ls hl he
+  apply word_injective ks ls ((mem_parts n ks).mp hk).1 ((mem_parts n ls).mp hl).1
+  rw [← bits_decode ks ((mem_parts n ks).mp hk).1,
+    ← bits_decode ls ((mem_parts n ls).mp hl).1, he]
+
+/-- Increment the first part, keeping all remaining parts. -/
+private def grow : List ℕ → List ℕ
+  | [] => []
+  | k :: ks => (k+1) :: ks
+
+private theorem grow_injective : Function.Injective grow := by
+  intro ks ls he
+  cases ks <;> cases ls <;> simp_all [grow]
+
+private theorem parts_succ (n : ℕ) (hn : 0 < n) :
+    parts (n+1) = (parts n).image (List.cons 1) ∪ (parts n).image grow := by
+  classical
+  ext ks
+  simp only [Finset.mem_union, Finset.mem_image, mem_parts]
+  constructor
+  · rintro ⟨hk, hs⟩
+    cases ks with
+    | nil => simp at hs
+    | cons k ks =>
+        have hkp := hk k (by simp)
+        have hks : ∀ j ∈ ks, 0 < j := fun j hj => hk j (by simp [hj])
+        by_cases he : k = 1
+        · subst k
+          exact Or.inl ⟨ks, ⟨hks, by simp only [List.sum_cons] at hs; omega⟩, rfl⟩
+        · right
+          refine ⟨(k-1)::ks, ⟨?_, ?_⟩, ?_⟩
+          · simp only [List.mem_cons, forall_eq_or_imp]
+            exact ⟨by omega, hks⟩
+          · simp only [List.sum_cons] at hs ⊢
+            omega
+          · simp only [grow, List.cons.injEq]
+            exact ⟨by omega, trivial⟩
+  · rintro (⟨ls, ⟨hl, hs⟩, rfl⟩ | ⟨ls, ⟨hl, hs⟩, rfl⟩)
+    · exact ⟨by simpa using And.intro (by decide : 0 < 1) hl, by simp [hs, Nat.add_comm]⟩
+    · cases ls with
+      | nil => simp only [List.sum_nil] at hs; omega
+      | cons k ls =>
+          constructor
+          · simp only [grow, List.mem_cons, forall_eq_or_imp]
+            exact ⟨by omega, fun j hj => hl j (by simp [hj])⟩
+          · simp only [grow, List.sum_cons] at hs ⊢
+            omega
+
+private theorem parts_images_disjoint (n : ℕ) (hn : 0 < n) :
+    Disjoint ((parts n).image (List.cons 1)) ((parts n).image grow) := by
+  classical
+  apply Finset.disjoint_left.mpr
+  intro ks hk hl
+  obtain ⟨xs, hx, he⟩ := Finset.mem_image.mp hk
+  obtain ⟨ys, hy, hf⟩ := Finset.mem_image.mp hl
+  have hne := parts_nonempty_list n hn ys hy
+  cases ys with
+  | nil => contradiction
+  | cons k ys =>
+      have hp := ((mem_parts n (k::ys)).mp hy).1 k (by simp)
+      have hh := he.trans hf.symm
+      simp only [grow, List.cons.injEq] at hh
+      omega
+
+private theorem sum_parts_succ (n : ℕ) (hn : 0 < n) (f : List ℕ → ℤ) :
+    ∑ ks ∈ parts (n+1), f ks =
+      (∑ ks ∈ parts n, f (1::ks)) + ∑ ks ∈ parts n, f (grow ks) := by
+  classical
+  rw [parts_succ n hn, Finset.sum_union (parts_images_disjoint n hn),
+    Finset.sum_image, Finset.sum_image]
+  · intro a ha b hb he
+    exact grow_injective he
+  · intro a ha b hb he
+    exact List.cons.inj he |>.2
+
+private theorem parts_card (n : ℕ) : (parts n).card = 2 ^ (n-1) := by
+  classical
+  rw [parts, Finset.card_image_of_injective, Finset.card_univ, composition_card]
+  intro c d h
+  exact Composition.ext h
+
+private def value (ks : List ℕ) : ℤ := (decode ks : ℤ)
+
+private def tailValue (ks : List ℕ) : ℤ := value ks.tail
+
+private def edge (ks : List ℕ) : ℤ := 2 ^ ks.headD 0 * 4 ^ ks.tail.sum
+
+private noncomputable def total (n : ℕ) : ℤ := ∑ ks ∈ parts n, value ks
+
+private noncomputable def tailTotal (n : ℕ) : ℤ := ∑ ks ∈ parts n, tailValue ks
+
+private noncomputable def edgeTotal (n : ℕ) : ℤ := ∑ ks ∈ parts n, edge ks
+
+private def capacity (n : ℕ) : ℤ := 4 ^ n * 2 ^ (n-1)
+
+private theorem replicate_ones (k : ℕ) :
+    Nat.ofDigits (2 : ℤ) (List.replicate k 1) = 2 ^ k - 1 := by
+  induction k with
+  | zero => simp [Nat.ofDigits]
+  | succ k ih =>
+      simp only [List.replicate_succ, Nat.ofDigits, ih, pow_succ]
+      ring
+
+private theorem value_cons (k : ℕ) (ks : List ℕ) :
+    value (k::ks) = (4 ^ k - 2 ^ k) * 4 ^ ks.sum + value ks := by
+  unfold value decode
+  simp only [word_cons, List.reverse_append, List.reverse_replicate]
+  rw [Nat.ofDigits_append, Nat.ofDigits_append]
+  simp only [List.length_reverse, List.length_replicate, length_word,
+    Nat.ofDigits_replicate_zero, zero_add, Nat.cast_add, Nat.cast_mul,
+    Nat.cast_pow, Nat.cast_ofNat, Nat.coe_ofDigits, replicate_ones]
+  have hp (r : ℕ) : (2 : ℤ) ^ (2*r) = 4 ^ r := by
+    rw [pow_mul]; norm_num
+  rw [hp]
+  have hq : (2 : ℤ) ^ k * 2 ^ k = 4 ^ k := by
+    rw [← pow_add, ← two_mul, hp]
+  rw [mul_sub, hq, mul_one]
+  ring
+
+private theorem capacity_succ (n : ℕ) (hn : 0 < n) :
+    capacity (n+1) = 8 * capacity n := by
+  have he : n+1-1 = (n-1)+1 := by omega
+  simp only [capacity, he, pow_succ]
+  ring
+
+private theorem value_grow (ks : List ℕ) (hne : ks ≠ []) :
+    value (grow ks) = 4 * value ks + 2 * edge ks - 3 * tailValue ks := by
+  cases ks with
+  | nil => contradiction
+  | cons k ks =>
+      simp only [grow, value_cons, edge, tailValue, List.headD_cons, List.tail_cons, pow_succ]
+      ring
+
+private theorem tailValue_grow (ks : List ℕ) : tailValue (grow ks) = tailValue ks := by
+  cases ks <;> rfl
+
+private theorem edge_grow (ks : List ℕ) (hne : ks ≠ []) : edge (grow ks) = 2 * edge ks := by
+  cases ks with
+  | nil => contradiction
+  | cons k ks => simp [edge, grow, pow_succ]; ring
+
+private theorem sum_constant (n : ℕ) (c : ℤ) :
+    (∑ _ks ∈ parts n, c) = 2 ^ (n-1) * c := by
+  classical
+  simp [parts_card, nsmul_eq_mul]
+
+private theorem total_succ (n : ℕ) (hn : 0 < n) :
+    total (n+1) = 5 * total n + 2 * capacity n + 2 * edgeTotal n - 3 * tailTotal n := by
+  classical
+  have hpre : (∑ ks ∈ parts n, value (1::ks)) = 2 * capacity n + total n := by
+    calc
+      _ = ∑ ks ∈ parts n, (2 * 4^n + value ks) := by
+        apply Finset.sum_congr rfl
+        intro ks hk
+        rw [value_cons, ((mem_parts n ks).mp hk).2]
+        norm_num
+      _ = _ := by rw [Finset.sum_add_distrib, sum_constant]; dsimp [capacity, total]; ring
+  have hgrow : (∑ ks ∈ parts n, value (grow ks)) =
+      4 * total n + 2 * edgeTotal n - 3 * tailTotal n := by
+    calc
+      _ = ∑ ks ∈ parts n, (4 * value ks + 2 * edge ks - 3 * tailValue ks) := by
+        apply Finset.sum_congr rfl
+        intro ks hk
+        exact value_grow ks (parts_nonempty_list n hn ks hk)
+      _ = _ := by
+        simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum,
+          total, edgeTotal, tailTotal]
+  rw [total, sum_parts_succ n hn, hpre, hgrow]
+  ring
+
+private theorem tailTotal_succ (n : ℕ) (hn : 0 < n) :
+    tailTotal (n+1) = total n + tailTotal n := by
+  classical
+  rw [tailTotal, sum_parts_succ n hn]
+  simp only [tailValue_grow]
+  rfl
+
+private theorem edgeTotal_succ (n : ℕ) (hn : 0 < n) :
+    edgeTotal (n+1) = 2 * capacity n + 2 * edgeTotal n := by
+  classical
+  have hpre : (∑ ks ∈ parts n, edge (1::ks)) = 2 * capacity n := by
+    calc
+      _ = ∑ _ks ∈ parts n, ((2 : ℤ) * 4^n) := by
+        apply Finset.sum_congr rfl
+        intro ks hk
+        simp [edge, ((mem_parts n ks).mp hk).2]
+      _ = _ := by rw [sum_constant]; dsimp [capacity]; ring
+  have hgrow : (∑ ks ∈ parts n, edge (grow ks)) = 2 * edgeTotal n := by
+    calc
+      _ = ∑ ks ∈ parts n, 2 * edge ks := by
+        apply Finset.sum_congr rfl
+        intro ks hk
+        exact edge_grow ks (parts_nonempty_list n hn ks hk)
+      _ = _ := by rw [← Finset.mul_sum]; rfl
+  rw [edgeTotal, sum_parts_succ n hn, hpre, hgrow]
 
 end D5.S1.Digit.EqualBinaryRunBridge

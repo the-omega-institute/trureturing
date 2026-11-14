@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit;
 internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Digit/EqualBinaryRunBridge.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Digit/oeis2025a386705");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Unique positive-part encodings of literal maximal binary run pairs; the A386705 recurrence remains a target.",
@@ -39,9 +41,17 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                 + "splitBy_flatten and its chain conditions, including the zero-to-one boundaries "
                 + "between successive pairs. Reconstruction uses the literal Matched predicate; "
                 + "equal encoded words have equal maximal runs and hence equal part lists.")),
+            Paragraph(Text("Decoding word(ks) with Nat.ofDigits recovers exactly its canonical bits "
+                + "when all parts are positive. A nonempty such word starts in one and ends in zero, "
+                + "so its decoded integer is positive and even. The finite set parts(n) is the image "
+                + "of Mathlib's Composition(n) under its blocks projection. Its members are precisely "
+                + "the positive lists summing to n; composition_card supplies its cardinality. "
+                + "For n>0, row(n) is the image of parts(n) under decoding, and decoding is injective "
+                + "on that set. Consequently a(n) equals the integer sum of decoded composition words "
+                + "with no repeated integer counted twice.")),
             Describe.Lean(DescribeId.Create("equal-binary-run-membership"),
                 DeclarationHandle.Create(Prefix + "mem_row_iff"), H("Unique literal encoding"),
-                StatementSource.FromAuthor(MembershipFormula()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(MembershipFormula()), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("This is a membership characterization for the actual set of integers. "
                     + "It proves existence and uniqueness of positive part lengths; it assumes neither "
                     + "a composition count nor an identity for the sum over those lengths. "
@@ -49,7 +59,7 @@ internal sealed class EqualBinaryRunBridgeDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("equal-binary-run-full-target"),
                 DeclarationHandle.Create(Prefix + "FullClaim"), H("Complete recurrence target"),
-                StatementSource.FromAuthor(ClaimFormula()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(ClaimFormula()), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("FullClaim is a proposition definition, not a proved theorem. "
                     + "The three initial values and the recurrence for every n>=4 remain unproved here. "
                     + "Further work must transport the distinct integer sum through the unique encoding, "
