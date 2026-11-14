@@ -23,6 +23,24 @@ internal sealed class A331474HankelBridgeDocument : IScribeDocumentDefinition
                     + "selects a polynomial coefficient, and det is the determinant of the "
                     + "displayed finite matrix. These definitions use the literal offset-zero "
                     + "OEIS source, not a recurrence-defined replacement for its Hankel transform.")),
+            Node("catalanInt", "The integral Catalan series",
+                Disp(Equality(F.Id("C"), Call("map", Call("NatCast", Integers()), F.Id("CatalanSeries")))),
+                "C is the standard Catalan power series with its natural coefficients cast to the integers.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Oeis)),
+            Node("F0", "The derivative of the Catalan series",
+                Disp(Equality(F.Id("F"), Call("derivative", F.Id("C")))),
+                "F is the formal derivative of C. Its coefficients are the unsigned moments b.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Oeis)),
+            Node("source_moments", "Catalan derivative coefficients and the alternating transform",
+                Disp(new Formula.Aligned([
+                    Seq(Open, Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Naturals(), Comma, Sp,
+                        Equality(Call("coeff", F.Id("F"), F.Id("n")), Sub("b", F.Id("n"))), Close, Sp, Land),
+                    Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Naturals(), Comma, Sp,
+                        Equality(Sub("b", Add(F.Id("n"), D(1))),
+                            Add(Sub("s", Add(F.Id("n"), D(1))), Sub("s", F.Id("n")))))
+                ])),
+                "Differentiation multiplies Catalan coefficient n+1 by n+1. The standard adjacent-binomial identities identify it with binomial(2n+2,n). The alternating source transform telescopes to b(n+1)=s(n+1)+s(n).",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Oeis)),
             Node("b", "Unsigned Catalan-derivative moments", BFormula(),
                 "The moment b(n) is exactly binomial(2n+2,n), equivalently "
                     + "(n+1) times the Catalan number of index n+1. It is the coefficient "
