@@ -63,7 +63,7 @@ private theorem expand_edge (E : V → V → Prop)
   classical
   have hx : ∃ y, E x y := ⟨y, hxy⟩
   have he := hout (edgeMap_edge E ⟨x, hx⟩) hxy
-  simpa [expand, Equiv.subtypeCongr, hx, edgeEquiv] using he
+  simpa [expand, Equiv.subtypeCongr, hx, edgeEquiv, Equiv.ofBijective] using he
 
 private theorem expand_tail (E : V → V → Prop)
     (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
@@ -114,5 +114,125 @@ theorem completion_classification (E : V → V → Prop)
       apply Subtype.ext
       exact expand_tail E hout hin e x }
   exact ⟨Φ, fun _ _ => rfl⟩
+
+/-- True weak components on the whole carrier, including isolated vertices. -/
+abbrev Component (E : V → V → Prop) := Quotient (EqvGen.setoid E)
+
+/- The normalizable helper adapts `Relation.SN.normalizable` from
+leanprover/cslib@6548b846a320a6e7f31db0131cff0d44b6ecc945,
+Cslib/Foundations/Relation/Termination.lean. Copyright (c) 2025 Fabrizio Montesi
+and Thomas Waring; authors Fabrizio Montesi, Thomas Waring, Chris Henson.
+Released under the Apache 2.0 license in LICENSE. The signature uses Mathlib's
+Acc directly and spells out normality; the package and its definitions are not imported. -/
+private theorem normalizable (E : V → V → Prop) {x : V}
+    (hx : Acc (Function.swap E) x) :
+    ∃ z, ReflTransGen E x z ∧ ¬ ∃ y, E z y := by
+  classical
+  induction hx with | intro x _ ih =>
+  by_cases hy : ∃ y, E x y
+  · obtain ⟨y, hy⟩ := hy
+    obtain ⟨z, hz, hnormal⟩ := ih y hy
+    exact ⟨z, .head hy hz, hnormal⟩
+  · exact ⟨x, .refl, hy⟩
+
+private theorem backward_wf [Finite V] (E : V → V → Prop)
+    (ha : ∀ x, ¬ TransGen E x x) : WellFounded (Function.swap E) := by
+  letI : Std.Irrefl (TransGen (Function.swap E)) :=
+    ⟨fun x h => ha x (transGen_swap.mp h)⟩
+  exact Subrelation.wf (fun h => TransGen.single h)
+    (Finite.wellFounded_of_trans_of_irrefl (TransGen (Function.swap E)))
+
+private def terminal [Finite V] (E : V → V → Prop)
+    (ha : ∀ x, ¬ TransGen E x x) (x : V) : Tail E :=
+  ⟨Classical.choose (normalizable E ((backward_wf E ha).apply x)),
+    (Classical.choose_spec (normalizable E ((backward_wf E ha).apply x))).2⟩
+
+private theorem terminal_path [Finite V] (E : V → V → Prop)
+    (ha : ∀ x, ¬ TransGen E x x) (x : V) : ReflTransGen E x (terminal E ha x) :=
+  (Classical.choose_spec (normalizable E ((backward_wf E ha).apply x))).1
+
+private theorem terminal_fixed [Finite V] (E : V → V → Prop)
+    (ha : ∀ x, ¬ TransGen E x x) (x : Tail E) : terminal E ha x = x := by
+  apply Subtype.ext
+  exact (reflTransGen_iff_eq (fun y h => x.2 ⟨y, h⟩)).mp (terminal_path E ha x)
+
+private theorem terminal_edge [Finite V] (E : V → V → Prop)
+    (hout : Relator.RightUnique E) (ha : ∀ x, ¬ TransGen E x x)
+    {x y : V} (hxy : E x y) : terminal E ha x = terminal E ha y := by
+  have hp := (terminal_path E ha x).total_of_right_unique hout
+    ((terminal_path E ha y).head hxy)
+  apply Subtype.ext
+  rcases hp with hp | hp
+  · exact ((reflTransGen_iff_eq (fun z hz => (terminal E ha x).2 ⟨z, hz⟩)).mp hp).symm
+  · exact (reflTransGen_iff_eq (fun z hz => (terminal E ha y).2 ⟨z, hz⟩)).mp hp
+
+private theorem terminal_component [Finite V] (E : V → V → Prop)
+    (hout : Relator.RightUnique E) (ha : ∀ x, ¬ TransGen E x x)
+    {x y : V} (h : EqvGen E x y) : terminal E ha x = terminal E ha y := by
+  induction h with
+  | rel _ _ h => exact terminal_edge E hout ha h
+  | refl => rfl
+  | symm _ _ _ ih => exact ih.symm
+  | trans _ _ _ _ _ ih₁ ih₂ => exact ih₁.trans ih₂
+
+private def tailEquiv [Finite V] (E : V → V → Prop)
+    (hout : Relator.RightUnique E) (ha : ∀ x, ¬ TransGen E x x) :
+    Component E ≃ Tail E where
+  toFun := Quotient.lift (terminal E ha) (fun _ _ h => terminal_component E hout ha h)
+  invFun x := Quotient.mk _ x.1
+  left_inv := by
+    intro A
+    induction A using Quotient.inductionOn with | h x =>
+    exact Quotient.sound ((EqvGen.reflTransGen_le_eqvGen E x _ (terminal_path E ha x)).symm)
+  right_inv := terminal_fixed E ha
+
+private theorem flip_acyclic (E : V → V → Prop)
+    (ha : ∀ x, ¬ TransGen E x x) : ∀ x, ¬ TransGen (Function.swap E) x x :=
+  fun x h => ha x (transGen_swap.mp h)
+
+private def reverseComponent (E : V → V → Prop) :
+    Component E ≃ Component (Function.swap E) :=
+  Quotient.congrRight (fun a b => ⟨
+    fun h => EqvGen.eqvGen_le (r := E) (r' := EqvGen (Function.swap E))
+      (fun x y hxy => EqvGen.symm _ _ (EqvGen.rel y x hxy)) a b h,
+    fun h => EqvGen.eqvGen_le (r := Function.swap E) (r' := EqvGen E)
+      (fun x y hxy => EqvGen.symm _ _ (EqvGen.rel y x hxy)) a b h⟩)
+
+private theorem flip_unique (E : V → V → Prop) (hin : Relator.LeftUnique E) :
+    Relator.RightUnique (Function.swap E) := fun _ _ _ h₁ h₂ => hin h₁ h₂
+
+private def headEquiv [Finite V] (E : V → V → Prop)
+    (hin : Relator.LeftUnique E) (ha : ∀ x, ¬ TransGen E x x) :
+    Component E ≃ Head E :=
+  (reverseComponent E).trans (tailEquiv (Function.swap E) (flip_unique E hin) (flip_acyclic E ha))
+
+/-- Every true weak component has exactly one tail and one head, and all actual
+permutation extensions are classified by a permutation of those components.
+The endpoint identifications and connector equation are part of the result. -/
+theorem component_completion_classification [Finite V] (E : V → V → Prop)
+    (hout : Relator.RightUnique E) (hin : Relator.LeftUnique E)
+    (ha : ∀ x, ¬ TransGen E x x) :
+    ∃ (q : Component E ≃ Tail E) (h : Component E ≃ Head E)
+      (Φ : Completion E ≃ Perm (Component E)),
+      (∀ A, Quotient.mk (EqvGen.setoid E) (q A).1 = A) ∧
+      (∀ A, Quotient.mk (EqvGen.setoid E) (h A).1 = A) ∧
+      ∀ σ A, σ.1 (q A) = h (Φ σ A) := by
+  classical
+  let q := tailEquiv E hout ha
+  let h := headEquiv E hin ha
+  obtain ⟨Ψ, hΨ⟩ := completion_classification E hout hin
+  let K : (Tail E ≃ Head E) ≃ Perm (Component E) := {
+    toFun := fun e => q.trans (e.trans h.symm)
+    invFun := fun ρ => q.symm.trans (ρ.trans h)
+    left_inv := by intro e; ext x; simp
+    right_inv := by intro ρ; ext A; simp }
+  refine ⟨q, h, Ψ.trans K, ?_, ?_, ?_⟩
+  · exact q.symm_apply_apply
+  · intro A
+    change (reverseComponent E).symm
+      ((tailEquiv (Function.swap E) (flip_unique E hin) (flip_acyclic E ha)).symm (h A)) = A
+    exact h.symm_apply_apply A
+  · intro σ A
+    simpa [K] using hΨ σ (q A)
 
 end D5.S3.Combinatorics.Graph.LinearForests.DirectedForestCompletion
