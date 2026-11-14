@@ -18,7 +18,7 @@ external certificate verdict. Attribution: caller-derived saddle construction. -
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
-open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 private def rectangle (t z x y g q r h v : ℤ) : Fin 4 → ℤ :=
   let D := y*(z+1)+1

@@ -18,7 +18,7 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining
 open private rectangle scaled_margin grain_q half_margin scaled_to_rectangle
   ArithmeticSelection ArithmeticSelection.mk NativeChoice native_of_selection dyadic_time_cases from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.Arithmetic
-open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 open private half_K4_negative half_K4_p11 half_K4_p1r half_K4_ph1 half_K4_phr
   half_K4_boundary from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleRemaining.HalfK4Certificates

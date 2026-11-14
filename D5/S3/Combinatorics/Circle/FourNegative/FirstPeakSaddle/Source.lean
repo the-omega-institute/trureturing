@@ -25,7 +25,7 @@ open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase chai
 open private sourceMod charge nextBase nextNewBase
   chain_values new_base_bounds
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 private theorem source_recurrences (a b c d : ℕ) :
     ∀ j : Fin 4,

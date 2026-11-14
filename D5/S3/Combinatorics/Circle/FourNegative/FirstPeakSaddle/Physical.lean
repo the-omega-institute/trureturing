@@ -32,7 +32,7 @@ open private label lift_order marked_word
   from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 open private four_perm four_strip
   from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 /- Native original occurrence sets and exact geometric masses. -/
 open MaxPlusTwo.Chambers

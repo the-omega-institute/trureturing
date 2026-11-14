@@ -46,8 +46,7 @@ open private margin Margins from
 open private Choice Choice.s Choice.r Choice.h Choice.v Choice.bounds Choice.submask
   Choice.good arithmetic_choice_exists from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain.Arithmetic
-open private half_power from
-  D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 
 -- The diagonal interface orders powers as x,y,z,t; the physical one as t,z,x,y.
 private theorem gate_agrees (t z x y s r h v : ℤ) :

@@ -13,7 +13,7 @@ The exceptional all-one mask and the even-s/r=1-or-2 submask are retained. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddleSmallGrain
-open private half_power from D5.S3.Combinatorics.Circle.FourNegative.Descending.Endpoint
+open D5.S3.Combinatorics.Circle.FourNegative.Descending (half_power)
 open private phase_cover from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSaddle.ModTen
 open private
   margin Margins chart_K1_J1_0 chart_K1_J1_1
