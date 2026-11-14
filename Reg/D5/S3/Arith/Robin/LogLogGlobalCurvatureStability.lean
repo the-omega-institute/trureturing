@@ -14,8 +14,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 abbrev signature : Signature where
-  Params := ℝ
-  State _ := ℝ × ℝ
+  Params := Σ a : ℝ, ℝ
+  State _ := ℝ
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -25,20 +25,20 @@ abbrev signature : Signature where
 
 def actual : Realization signature :=
   realize signature
-    (fun _ a xy =>
-      |(Real.log (Real.log a) + (xy.1 - a) / (a * Real.log a) -
-          Real.log (Real.log xy.1)) -
-        (Real.log (Real.log a) + (xy.2 - a) / (a * Real.log a) -
-          Real.log (Real.log xy.2))|)
+    (fun _ p y =>
+      |(Real.log (Real.log p.1) + (p.2 - p.1) / (p.1 * Real.log p.1) -
+          Real.log (Real.log p.2)) -
+        (Real.log (Real.log p.1) + (y - p.1) / (p.1 * Real.log p.1) -
+          Real.log (Real.log y))|)
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature
-    (fun _ a xy =>
-      |(Real.log (Real.log a) + (xy.1 - a) / (a * Real.log a) -
-          Real.log (Real.log xy.1)) -
-        (Real.log (Real.log a) + (xy.2 - a) / (a * Real.log a) -
-          Real.log (Real.log xy.2))| + 1)
+    (fun _ p y =>
+      |(Real.log (Real.log p.1) + (p.2 - p.1) / (p.1 * Real.log p.1) -
+          Real.log (Real.log p.2)) -
+        (Real.log (Real.log p.1) + (y - p.1) / (p.1 * Real.log p.1) -
+          Real.log (Real.log y))| + 1)
     (fun e => nomatch e)
 
 abbrev arena : Arena where
@@ -50,7 +50,7 @@ abbrev arena : Arena where
     let c := min a (min x y)
     let M := |x - y|
     let d := |y - a|
-    R.readout () a (x, y) ≤ w c * (d * M + M ^ 2 / 2)
+    R.readout () ⟨a, x⟩ y ≤ w c * (d * M + M ^ 2 / 2)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -61,7 +61,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro _i
-  refine ⟨2, (2, 2), (2, 3), ?_⟩
+  refine ⟨⟨2, 2⟩, (2 : ℝ), (3 : ℝ), ?_⟩
   change
     |(Real.log (Real.log 2) + (2 - 2) / (2 * Real.log 2) -
         Real.log (Real.log 2)) -
@@ -135,8 +135,18 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ × ℝ)
-  sourceSelection := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -150,7 +160,7 @@ abbrev arena : Arena where
       (z - a) / (a * Real.log a) - Real.log (Real.log z)
     let M := |x - y|
     let d := |y - a|
-    R.readout () a (x, y) ≤
+    R.readout () ⟨a, x⟩ y ≤
       (16 / (a ^ 2 * Real.log a)) * (d * M + M ^ 2 / 2)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -193,8 +203,18 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (ℝ × ℝ)
-  sourceSelection := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.LogLogGlobalCurvatureStability
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
