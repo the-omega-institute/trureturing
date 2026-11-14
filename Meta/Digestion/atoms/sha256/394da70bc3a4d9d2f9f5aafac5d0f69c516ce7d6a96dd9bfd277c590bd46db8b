@@ -1,0 +1,31 @@
+**Proposition 4 (Comparison with the given arithmetic group).**
+There is a unique comparison homomorphism
+
+$$
+\bar\Phi:U\longrightarrow A,\qquad\bar\Phi(u_i)=w_i,
+$$
+
+with kernel $\ker\Phi/L$ and image $\operatorname{im}\Phi$. It is an
+isomorphism onto $A$ exactly when $L=\ker\Phi$ and the weights generate
+$A$. If relation completeness holds without generation of $A$, it
+identifies $U$ with $\operatorname{im}\Phi$.
+
+*Proof.* Equation (3) defines the map. A class $f+L$ is in its kernel
+exactly when $f\in\ker\Phi$, and its image is exactly the set of all
+integer combinations of the weights. These descriptions prove all claims.
+If $I=\varnothing$, then $F,U,G,K$ are trivial. A singleton is an edge
+exactly when its weight is zero, so $u_i=0$ exactly when $w_i=0$.
+The zero fiber is fixed by $K$; singleton fibers contribute trivial
+permutation factors. If every weight is zero, the singleton relations give
+$U=0$ and $G=\operatorname{Sym}(I)$. These cases require no extra
+hypotheses. Equality of original weights, however, need not imply equality
+of quotient classes: for weights $1,1\in\mathbb Z$, only the empty subset
+is zero, so $L=0$ and the two coordinate classes in $U=\mathbb Z^2$ are
+different. $\square$
+
+*Mathematical citation 4.1.* Free abelian universal properties and quotient
+factorization are standard algebra; see Mathlib's [Free abelian groups][1]
+and [Quotient groups and isomorphism theorems][2]. The application of these
+constructions to the full actual zero-subset relation family in Theorems
+2–3 is repo-derived. The constructions themselves are not attributed as new.
+

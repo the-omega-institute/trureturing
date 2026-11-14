@@ -899,3 +899,554 @@ $$
 [Q176XVI]: https://github.com/the-omega-institute/trureturing/blob/02e623db8cc5dd8e6b413d337edbe4991f33e178/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
 
 ## 追加锚（本行以下为增补区）
+
+## 177. 一个固定混合中心附近的非平凡中点与全部有限量子锥
+
+### 177.1 只用原二元平均关系陈述的条件
+
+**定义 177.1（固定中心的非平凡中点邻域）。** 完整采用定义175.1，即 [XIII166.1][Q175XIII] 的强域：固定 $n\ge2$，同一实际复 Hermitian Kronecker 载体上的全部有限闭尖生成锥，非零原正元上严格正的乘法普通迹，同坐标的 $C_1=\operatorname{PSD}_n,C_2=\operatorname{PSD}_{n^2}$，所有有限实际 min/max 分块、正置换及正逆、规范重括号、原配对和空系统。始终取(175.3)的整个 $K_N$、全部 $P_N=\operatorname{ext}K_N$、完整迹对偶、整个 proper 区间与全部有限单位分解。没有加入高层 PSD、原纯集闭性、奇异滤波保纯或物理纯化。
+
+固定单位向量 $a_0,b_0,c_0,c_1$，其中 $c_0\perp c_1$，令
+
+$$
+x_0=P_{a_0}\otimes P_{b_0}\otimes P_{c_0},\qquad
+y_0=P_{a_0}\otimes P_{b_0}\otimes P_{c_1},\qquad
+r_0=\frac{x_0+y_0}{2}.
+\tag{177.1}
+$$
+
+最小界使两端点属于整个原 $K_3$；它们不同，所以 $r_0$ 是已知的非平凡平均。对凸集 $K$ 定义其非平凡中点集
+
+$$
+\operatorname{Split}_K
+=\{z\in K:\exists u,v\in K,\ u\ne v,\ 2z=u+v\}.
+\tag{177.2}
+$$
+
+本章唯一新增的候选条件是
+
+$$
+\boxed{\ \mathsf{Mid}(r_0):\qquad
+r_0\in\operatorname{int}_{K_3}
+\left\{\frac{u+v}{2}:u,v\in K_3,\ u\ne v\right\}.\ }
+\tag{177.3}
+$$
+
+等价地，存在包含 $r_0$ 的环境开集 $U\subset W_3$，使每个 $z\in U\cap K_3$ 都有 $u,v\in K_3$、$u\ne v$、$z=(u+v)/2$。相对邻域量化整个原 $K_3$；不限定在含 $r_0$ 的某个面内。条件本身只有原状态、二元平均、固定中心和相对邻域；不要求分解端点接近指定端点、连续选择分解，或整个凸体上的混合映射开放性。
+
+### 177.2 重建之前已经存在的原 Bloch 面
+
+**命题 177.2（整个原凸体中的三维暴露面）。** 仅在定义175.1的强域内，置 $S=\operatorname{span}_{\mathbb C}\{c_0,c_1\}$、$\Pi=P_{c_0}+P_{c_1}$，并定义
+
+$$
+\operatorname{dens}(S)=\{\tau\succeq0:\operatorname{Tr}\tau=1,\ \operatorname{ran}\tau\subseteq S\},\qquad
+F_0=P_{a_0}\otimes P_{b_0}\otimes\operatorname{dens}(S).
+\tag{177.4}
+$$
+
+则 $F_0$ 是整个原 $K_3$ 的实际暴露面，实仿射维数为三，仿射同构于闭 Bloch 三球；$r_0$ 为其相对中心，球面上的点都是原纯点。此结论不以整个 $K_3$ 已为 PSD 为前提。
+
+证明。对任意 $z\in K_3$，其普通一体边缘 $z_A,z_B,z_C$ 都是迹一 PSD：最大界用其余因子的单位切片给原一体锥成员关系。三个原 proper 边缘缺陷效应为
+
+$$
+\begin{aligned}
+D_A&=(I_A-P_{a_0})\otimes I_B\otimes I_C,\\
+D_B&=I_A\otimes(I_B-P_{b_0})\otimes I_C,\\
+D_C&=I_A\otimes I_B\otimes(I_C-\Pi).
+\end{aligned}
+\tag{177.5}
+$$
+
+每个效应及其相对于 $I$ 的补都由相应 $1|23$ 最大界在整个原锥上非负。故 $d(z)=\operatorname{Tr}[(D_A+D_B+D_C)z]\ge0$，且 $d(z)=0$ 当且仅当三个缺陷分别为零。前两项为零分别给 $z_A=P_{a_0},z_B=P_{b_0}$；这是普通 PSD 边缘的支撑结论。
+
+先只用 $z_A=P_{a_0}$。对每个普通二体效应 $0\preceq e\preceq I_{BC}$，以迹配对作 $BC$ 切片，最大界及其补给
+
+$$
+0\preceq(\mathrm{id}_A\otimes e)(z)
+\preceq(\mathrm{id}_A\otimes I_{BC})(z)=P_{a_0}.
+\tag{177.6}
+$$
+
+这里 $C_2$ 及其完整对偶已是通常 PSD，因而所有这些 $e$ 都可用。夹在零与秩一投影之间的 PSD 矩阵只能是该投影的非负倍数。普通效应实线性张成 $\operatorname{Herm}(B\otimes C)$，所以全部这些切片共同迫使 $z=P_{a_0}\otimes\sigma_{BC}$，其中 $\sigma_{BC}=\operatorname{Tr}_A z$。对全部普通正二体效应的非负配对给 $\sigma_{BC}\succeq0$，且其迹为一。此处未对 $z$ 预设 PSD。
+
+若再有 $z_B=P_{b_0}$，则 $\sigma_{BC}$ 的 $B$ 边缘是 $P_{b_0}$。对每个 $b\perp b_0$，非负数 $\langle bc|\sigma_{BC}|bc\rangle$ 沿 $C$ 的任意正交基求和为零，故对全部 $c$ 均为零；PSD 性使 $\sigma_{BC}(b\otimes c)=0$。因此它支撑在 $\mathbb Cb_0\otimes C$，即 $\sigma_{BC}=P_{b_0}\otimes\tau$，$\tau\succeq0$、$\operatorname{Tr}\tau=1$。第三个缺陷为零又使 $\tau$ 消灭 $S^\perp$，故 $z\in F_0$。反过来，最小界使每个(177.4)中的矩阵都是原态，且三个缺陷均为零。于是
+
+$$
+F_0=\{z\in K_3:d(z)=0\}.
+\tag{177.7}
+$$
+
+这正是整个原凸体上非负泛函的零面，故为实际暴露面，而非仅在某个 PSD 子锥里取面。
+
+在有序基 $c_0,c_1$ 上，令 $`\sigma_x=c_0c_1^*+c_1c_0^*`$、$`\sigma_y=-ic_0c_1^*+ic_1c_0^*`$、$\sigma_z=P_{c_0}-P_{c_1}$，在 $S^\perp$ 上均取零。每个 $\tau\in\operatorname{dens}(S)$ 唯一写成
+
+$$
+\tau=\tfrac12(\Pi+t_x\sigma_x+t_y\sigma_y+t_z\sigma_z),\qquad
+\mathbf t\in\mathbb R^3,\quad |\mathbf t|\le1.
+\tag{177.8}
+$$
+
+在 $S$ 上的两个特征值是 $(1\pm|\mathbf t|)/2$，所以这是实三维闭球；中心 $\mathbf t=0$ 正好给 $r_0$。球面对应秩一 $\tau$，是 $F_0$ 的极点；面内极点也是整个 $K_3$ 的极点。这里只说明 $r_0$ 在 $F_0$ 中居中，并不把它说成 $K_3$ 的内部点；(177.3)仍要求整个 $K_3$ 的相对邻域。$\square$
+
+### 177.3 固定中心排除全部混合双腿压缩
+
+**定理 177.3（固定非平凡中点邻域的全有限重建）。** 在定义175.1的完整强域中，
+
+$$
+\mathsf{Mid}(r_0)
+\quad\Longleftrightarrow\quad r_0\notin\overline{P_3}
+\quad\Longleftrightarrow\quad C_3=\operatorname{PSD}_{n^3}
+\quad\Longleftrightarrow\quad\mathsf Q_\infty.
+\tag{177.9}
+$$
+
+闭包取整个原纯集在 $W_3$ 中的闭包。它们也各与定理176.2的 $\mathsf{PClose},\mathsf{LPC}(x_0),\mathsf S(x_0)$ 及定理175.2的全部互易、等参照和未知半径条件等价；$x_0$ 正是该定理可选的固定乘积锚。完整量子字典和操作边界分别沿用175.9、175.11。
+
+证明。先处理定义对应。精确复用176.1的中点极端性：对任意凸集，
+
+$$
+\operatorname{Split}_K=K\setminus\operatorname{ext}K.
+\tag{177.10}
+$$
+
+若从一般比例的非平凡线段分解出发，在该线段上以待分解点为中心向两侧取相同的充分小步长，就得到两个仍在 $K$ 内的不同等权端点；反向由极端性直接排除。对本章闭的 $K_3$，$P_3$ 的相对闭包就是环境闭包，且补集的相对内部为闭包的补集。因此
+
+$$
+\operatorname{int}_{K_3}\operatorname{Split}_{K_3}
+=K_3\setminus\overline{P_3},
+\tag{177.11}
+$$
+
+得到(177.9)的第一项等价。这是对同一条件的定义改写，既未自动证明邻域存在，也未把证明中使用的纯集另加为候选输入。
+
+现在假设 $\mathsf{Mid}(r_0)$。任取原纯态 $p\in P_3$ 及单位向量 $a\in A,b\in B$，令
+
+$$
+Y_{ab}=(\langle ab|\otimes I_C)p(|ab\rangle\otimes I_C).
+\tag{177.12}
+$$
+
+全部原乘积正测试给 $\langle c|Y_{ab}|c\rangle\ge0$ 对每个 $c$ 成立，故 $Y_{ab}\succeq0$。零输出已满足秩条件。若其秩 $r\ge2$，置 $\tau=Y_{ab}/\operatorname{Tr}Y_{ab}$。对每个 $t>0$ 使用
+
+$$
+G_t=[P_a+t(I_A-P_a)]\otimes[P_b+t(I_B-P_b)]\otimes I_C,
+\qquad p_t=F_{G_t}(p).
+\tag{177.13}
+$$
+
+这里 $F_G$ 精确为(176.3)。命题176.3证明中的原域接口已支付每个可逆局部 $G$ 的正合同及正逆；归一后是整个原 $K_3$ 的同胚，保持 $P_3$ 及其闭包。因而 $p_t\in P_3$，分母对每个正 $t$ 严格正，且通常矩阵极限给
+
+$$
+p_t\longrightarrow\rho=P_a\otimes P_b\otimes\tau
+\in\overline{P_3}.
+\tag{177.14}
+$$
+
+极限分母是 $\operatorname{Tr}Y_{ab}>0$。这里只把混合的 $\rho$ 放进纯集闭包，没有称它为原纯态。
+
+取一次固定局部酉，把 $a,b$ 送到 $a_0,b_0$，并把 $\tau$ 的正谱方向送到以 $c_0,c_1$ 开头的正交组 $c_0,\ldots,c_{r-1}$。不要求随输入连续选择这些方向。酉变换后的点为 $P_{a_0}\otimes P_{b_0}\otimes\tau'$，其中 $\tau'=\sum_{j=0}^{r-1}\lambda_jP_{c_j}$、$\lambda_j>0$、$\sum_j\lambda_j=1$。在整个 $n$ 维 $C$ 空间上置
+
+$$
+\Pi_r=\sum_{j=0}^{r-1}P_{c_j},\qquad
+L=\sum_{j=0}^{r-1}\lambda_j^{-1/2}P_{c_j}+(I_C-\Pi_r).
+\tag{177.15}
+$$
+
+$L$ 在正谱方向白化，在核上为恒等，故在全空间可逆。再次用上述同胚，得
+
+$$
+\rho_r=F_{I_A\otimes I_B\otimes L}
+ (P_{a_0}\otimes P_{b_0}\otimes\tau')
+=P_{a_0}\otimes P_{b_0}\otimes\frac{\Pi_r}{r}
+\in\overline{P_3}.
+\tag{177.16}
+$$
+
+若 $r=2$，这就是 $r_0$。若 $r>2$，对每个 $s>0$ 取全空间可逆的 $J_s=\Pi+s(I_C-\Pi)$。则
+
+$$
+F_{I_A\otimes I_B\otimes J_s}(\rho_r)
+=P_{a_0}\otimes P_{b_0}\otimes
+\frac{\Pi+s^2(\Pi_r-\Pi)}{2+s^2(r-2)}
+\in\overline{P_3},\qquad
+\lim_{s\downarrow0}F_{I_A\otimes I_B\otimes J_s}(\rho_r)=r_0.
+\tag{177.17}
+$$
+
+由于 $\overline{P_3}$ 闭，两种情形均给 $r_0\in\overline{P_3}$，与(177.11)矛盾。故每个原纯态、每对 $a,b$ 的 $Y_{ab}$ 均秩至多一。对 $AC$ 或 $BC$ 任意一对，先用实际正置换及其正逆把被压缩的两腿移到前两位，再用同一论证；置换保持整个原基、极点和闭包。因此三对的全部双腿压缩都受此限制，零向量和非单位向量由零输出及缩放涵盖。论证只用闭集 $\overline{P_3}$，没有要求 $\overline{P_3}\setminus P_3$ 闭，也没有把奇异滤波当成保纯操作或假定统一成功率下界。
+
+最后任取同一个原纯态 $p$ 及任意 $a$。由原 $A|BC$ 最大界和完整二体 PSD 对偶，$X_a=(\langle a|\otimes I)p(|a\rangle\otimes I)\succeq0$。它的全部 $B$ 向量压缩正是已受限的 $Y_{ab}$，全部 $C$ 向量压缩正是 $Y_{ac}$。这逐项满足命题176.5证明中双侧普通 PSD Gram 结论的两个输入条件，故直接由(176.15)–(176.16)得 $\operatorname{rank}X_a\le1$。其辅助 $E$ 只是有限 Gram 坐标，未输入物理纯化或新的原系统。于是对全部 $p\in P_3$、全部 $a$，字面上的(175.20)已经成立，包括零输出。定义175.1的全部强域前件也始终保留，可以直接消费175.6，得到每个有限 $C_N=\operatorname{PSD}_{n^N}$；不重证其矩形分类、三切分、Bell 极性或 GHZ 传播尾部。
+
+### 177.4 量子逆向、精确距离与既有等价
+
+继续证明定理177.3。假设 $C_3=\operatorname{PSD}_{n^3}$，此时整个原纯集才识别为全部单位 dyad $P=vv^*$。$x_0,y_0$ 为正交单位 dyad，所以 $\operatorname{Tr}r_0^2=1/2$ 且 $\operatorname{Tr}(Pr_0)\le1/2$。因此
+
+$$
+\|P-r_0\|_2^2
+=1+\tfrac12-2\operatorname{Tr}(Pr_0)\ge\tfrac12,
+\qquad \operatorname{dist}_{\rm HS}(r_0,P_3)=\frac1{\sqrt2}.
+\tag{177.18}
+$$
+
+等号在 $P=x_0$ 取得。任选 $0<\delta<1/\sqrt2$，整个原相对球 $B_\delta(r_0)\cap K_3$ 内没有秩一态。对其中任意 $z$，取两个正特征值 $\mu_i,\mu_j$ 的正交单位谱向量 $v_i,v_j$，及 $0<\epsilon<\min(\mu_i,\mu_j)$，则
+
+$$
+z_\pm=z\pm\epsilon(P_{v_i}-P_{v_j})\in K_3,
+\qquad z_+\ne z_-,\qquad z=\frac{z_++z_-}{2}.
+\tag{177.19}
+$$
+
+这证明 $\mathsf{Mid}(r_0)$；每个态单独取谱方向和步长就够了，不需要分解的连续提升。全有限 PSD 给三体 PSD，而上一节已从候选得到全有限 PSD，故(177.9)全部成立。
+
+至此量子目标及完整强域都已支付，再直接使用定理176.2，得到与 $\mathsf{PClose},\mathsf{LPC}(x_0),\mathsf S(x_0)$ 的精确等价，并由175.2接上原端点互易及其余条件。这些不是新加的独立假设。175.9的前件正是这里取得的同坐标整锥等式、普通迹与完整菜单，所以全部有限密度矩阵、原纯射线、完整效应与 POVM、Born 配对、纠缠张量复合及矩形 CP/Choi/Kraus 和全输入预算逐项沿用。实际事件饱和、唯一条件更新及连续时间仍分别需要175.11所列的额外输入；零质量分支不作归一除法，静态比较端点交换不等于测量时序交换，也不决定物理钟、Hamiltonian 或 $\hbar$。$\square$
+
+### 177.5 条件的几何含义、来源与中文释义
+
+**命题 177.4（固定中心条件的作用与未决边界）。** (177.3)是原二元平均关系在一个已知混合点附近的条件；在完整强域中它与全部有限量子层级等价，但该改写不证明独立公理数减少，也不证明这一邻域条件已由强域自动推出。
+
+证明与释义。普通有限维凸集的中点极端性及可逆局部 $\mathrm{GL}$ 合同几何是成熟工具，分别按176.1、命题176.3证明中的接口使用；谱分解、两维 Bloch 坐标和(177.19)只是中间矩阵事实。本章的 repo-derived 综合是：把任意原纯态的任意混合双腿输出，经全空间可逆白化和浓缩汇到同一个固定混合中心，再接命题176.5的双侧 Gram 桥和175.6的完整重建尾部。对应来源与全部假设各按这些供应保留，不作历史优先权声明。命题176.8已经给出普通紧凸体的非闭极点集控制；它说明不能仅凭凸性、紧性或(177.10)自动宣布邻域存在，并不是定义175.1的同域反模型。
+
+在已知的小球 $F_0$ 里取两个相反端点，它们的平均是中心。只要求这个中心在整个原状态体中稍有扰动时，仍能拆成两份不同状态的平均；不规定这两份必须靠近哪两个端点。若某个原纯态的双腿条件压缩留下真正混合，始终可逆的筛选就会把纯态的极限挤到同一个中心，与这里一小片地方都可拆相冲突。于是双腿压缩都不能留下真正混合；双侧 Gram 论证补回全部一腿秩条件，既有重建尾部锁住全部有限量子锥。小球是整个原凸体中的实际暴露面，但只在小球内检查无法排除从小球外逼近中心的原纯点，所以不能替代(177.3)。
+
+全部明确底座仍保留，新增邻域关系能否从当前基底或更少关系自动生出仍未解决；本章没有给出违反它的同域全有限层级，不主张反模型或独立性。条件自身不提纯点或确认最优化，并不意味着可以删去原域的完整对象、低层对齐或全有限粘合。端点关系的这种简写也不增加175.11之外的事件、更新或时间结论。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 178. 同源首响应、指定比较群与原锥自对偶
+
+### 178.1 一个完整候选及其精确删项
+
+**定义 178.1（同源响应候选）。** 固定 [C123 定义1.1–1.5][Q178P] 的同一个原签名 $\Omega$、原全语境响应空间、准备、事件及合法性谓词。操作尾部完整采用 [C124 定义10.2][Q178C124]，包括它对整个原指针 $P$、全部实际有限参考幂、联合对象、输出和同记录执行的逐字替换。以下条件对其中每个所需原对象 $A$ 分别成立，特别包括局部、实际联合、原输出、参考及其被消费的联合对象；局部条件不代替联合条件。
+
+原 $E_A$ 非零有限维，原 $C_A$ 是闭凸尖生成锥，原 $u_A\in C_A^\circ$。在整个原 $E_A$ 上给同一来源的有限实值读数 $q_A$，要求全部有限右首响应存在：
+
+$$
+D_{q_A}(x;y)=\lim_{t\downarrow0}
+ \frac{q_A(x+ty)-q_A(x)}t\in\mathbb R
+ \qquad(x,y\in E_A).
+\tag{178.1}
+$$
+
+这里“有限”指极限值有限，量词是全部带符号的原向量与实比例，不是有限采样。读数直接定义在原响应空间；若起点是另一配方空间，须另给与原 $E_A$ 的线性同构、全部读数及原接口的相容识别，不能用振幅读出零空间商替换原 $E_A$。另要求
+
+$$
+\inf_{t\in\mathbb R}q_A(tx)>-\infty\quad(x\in E_A),
+\qquad x\ne0\Longrightarrow
+ \exists y\in E_A:\ D_{q_A}(x;y)\ne0.
+\tag{178.2}
+$$
+
+下界只须逐径向存在，不要求统一下界或上界。保留同一个指定闭连通群 $G_A\le\operatorname{Aut}(C_A)$ 及其在 $C_A^\circ$ 上的传递性。在这一个群内定义原比较关系
+
+$$
+\Gamma_{q_A}(S,R)\quad\Longleftrightarrow\quad
+D_{q_A}(Sx;y)=D_{q_A}(Ry;x)
+\quad\text{对所有 }x,y\in E_A,
+\qquad S,R\in G_A,
+\tag{178.3}
+$$
+
+并要求 $\Gamma_{q_A}(I,I)$ 以及 $\forall S\in G_A\ \exists R\in G_A:\Gamma_{q_A}(S,R)$。原比较型取下述恢复式给出的同一个 $g_A^0$；若该型已经命名，要求其数值逐点就是该恢复式，不能事后另选一个自对偶型。
+
+除不再单列假设 P 的等式(1.1)外，原合同逐项保留：
+
+| 保留的原合同 | 本候选的字面要求 |
+| --- | --- |
+| P 的其余部分 | 原 $E_A,C_A,u_A$、正定对称 $g_A^0$；已命名正准备 $\alpha$ 的原质量 $\alpha(u_A)\le1$；实际准备有限正锥包恰为完整 $C_A^*$，每个实际联合对象也如此；事件次幺不等式、完整装置求和及实际可读子菜单均不变。正定性由下述引理支付。 |
+| G | 原指定群的闭性、连通性、原锥自同构性及内点传递性不变；原伴随封闭由 $\Gamma$ 全性等价表达，不扩张群。 |
+| 原 D | C123 假设1.5的同一原双线性有向关系、全载体导子律及三元交换子抵消，消费原 $u_A$ 适配的乘法，不消费下文辅助单位的乘法。 |
+| X、Xs、$N_u$ | 原含幺嵌入保持该乘法及 D，交叉 D 为零、乘积张成、原乘积准备、结合/交换/经典标签；全部被消费同记录旁接和合法连线；指定单位稳定子每个元素的系数一原完整提升，均按定义10.2保留。 |
+| AC、R | 整个实际 $P$ 上定义10.1的非中心极射线效果与原配对概率一；对每个原事件、原细支、失败、标签、遗忘、返回及全部有限合法历史，R 的充分实际参考和完整联合准备锥保正，均保留。 |
+| F 及支持双返回 | 假设2.6的全部原有限细记录、原遗忘、单中心输入/输出支持、具名原返回、两条同一正系数的支持等式及反向资料，量化整个原菜单与全部合法有限历史。返回系数仍是原数，以下记为 $q_F>0$ 以免与读数 $q_A$ 混淆。 |
+
+所有未在原合法性谓词中声明的合成仍未供应。此处唯一候选以 C124 的 AC 尾部为准，不另加 C123 的 Q1。拟删除的只是两者共有 P 中单独写出的 $C_A=C_{A,g_A^0}^*$；对保留 Q1 的 C123 合同，同一锥桥也支付这一共有条款，其余 Q1 及全部原接口仍须原样供给。这里没有把新增响应条件与旧条件的字数差算成独立公理数减少。
+
+**引理 178.2（原正定型与群伴随的恢复）。** 定义178.1给出唯一原正定对称双线性型
+
+$$
+g_A^0(x,y)=\tfrac12D_{q_A}(x;y),\qquad
+q_A(x)=q_A(0)+g_A^0(x,x),
+\qquad
+\Gamma_{q_A}(S,R)\Longleftrightarrow R=S^{\dagger_0}.
+\tag{178.4}
+$$
+
+因而 $G_A^{\dagger_0}=G_A$，这正是原 G 的伴随封闭条件。
+
+证明。$\Gamma(I,I)$ 正是 [C139 定理3.3][Q178C139] 的全部有限右首响应互易；直接应用其唯一双线性恢复式，不重新证明。逐径向下界排除 $g_A^0(x,x)<0$，否则 $q_A(tx)=q_A(0)+t^2g_A^0(x,x)$ 无下界。因此该型半正定。若 $g_A^0(x,x)=0$，对全部实数 $s$ 的非负式 $g_A^0(y+sx,y+sx)=g_A^0(y,y)+2s g_A^0(x,y)$ 强制 $g_A^0(x,y)=0$ 对全部 $y$ 成立，探针分离遂给 $x=0$。于是它在原 $E_A$ 上正定，无须取商。将(178.4)代入(178.3)得 $g_A^0(Sx,y)=g_A^0(x,Ry)$；非退化性给所述唯一伴随。$\Gamma$ 全性给每个 $S^{\dagger_0}\in G_A$，伴随的对合性再给群集合等式。只有 $\Gamma(I,I)$ 不会支付这项全性，更不会支付原群的传递性、原 D 或实际调用。$\square$
+
+### 178.2 原锥、原度量及原群的非循环桥梁
+
+**定理 178.3（指定自伴随内迁群强制原型自对偶）。** 设 $E$ 为有限维实空间，$g$ 为给定正定对称双线性型，$C$ 为闭凸尖生成锥，$G\le\operatorname{Aut}(C)$ 为给定闭连通子群，在 $C^\circ$ 上传递且 $G^{\dagger_g}=G$。则
+
+$$
+C=C_g^*:=\{z:g(z,c)\ge0\text{ 对每个 }c\in C\}.
+\tag{178.5}
+$$
+
+结论属于原 $E,g,C,G$，不假设锥锐角性或自对偶，不以 HSD Koecher–Vinberg 定理来推出其自己的自对偶前件。$E=0$ 时立即成立；以下设 $E\ne0$。
+
+证明。先构造辅助单位与度量代数。令 $K=G\cap O(g)$。它紧；对任一原锥内点的 $K$ 轨道取 Haar 平均，得 $K$ 固定的 $e_*\in C^\circ$。紧轨道有共同半径的 $g$ 开球包含于 $C$，凸性及积分保留该半径，故平均仍是内点。这里不把 $e_*$ 认作原 $u$。
+
+令 $H=G_{e_*}$。它在原锥的序单位范数
+
+$$
+\|x\|_{e_*}=\inf\{t\ge0:-te_*\le_C x\le_C te_*\}
+\tag{178.6}
+$$
+
+下等距，且闭，故是有限维范数线性等距群的闭子群，因而紧。伴随封闭把原 Lie 代数分成
+
+$$
+\mathfrak g=\mathfrak k\oplus\mathfrak p,
+\quad \mathfrak k=\{D\in\mathfrak g:D^{\dagger_g}=-D\}
+ =\operatorname{Lie}(K),
+\quad \mathfrak p=\{S\in\mathfrak g:S^{\dagger_g}=S\}.
+\tag{178.7}
+$$
+
+若 $X\in\operatorname{Lie}(H)$，其斜伴随部分属于 $\mathfrak k$，消去 $e_*$；其自伴随部分 $S$ 也消去 $e_*$。于是 $\exp(tS)\in H$ 对全部实数 $t$ 有界，实自伴随谱强制 $S=0$。故 $\operatorname{Lie}(H)=\mathfrak k$。传递 Lie 群作用的轨道映射是浸没，其导数 $X\mapsto Xe_*$ 满射到 $E$，核为 $\mathfrak k$。因此
+
+$$
+\mathfrak p\longrightarrow E,\qquad L\longmapsto Le_*
+\quad\text{是线性同构}.
+\tag{178.8}
+$$
+
+对每个 $x$ 取唯一 $L_x\in\mathfrak p$ 满足 $L_xe_*=x$，定义 $x\circ_e y=L_xy$。由 $[\mathfrak p,\mathfrak p]\subset\mathfrak k$，
+
+$$
+x\circ_e y-y\circ_e x=[L_x,L_y]e_*=0,
+\quad x\circ_e e_*=x,
+\quad L_{e_*}=I,
+\quad g(x\circ_e y,z)=g(y,x\circ_e z).
+\tag{178.9}
+$$
+
+最后两项分别由交换性与自伴随性得到，故这是含幺交换且有正 Frobenius 型的实代数，尚须证明 Jordan 恒等式。对 $k\in K$，(178.8)的唯一性给 $kL_xk^{-1}=L_{kx}$；微分得
+
+$$
+[D,L_x]=L_{Dx}\qquad(D\in\mathfrak k).
+\tag{178.10}
+$$
+
+故每个这样的 $D$ 都是 $g$ 斜伴随导子。以下平方均用 $\circ_e$。固定 $a,b,c$，取 $D=[L_a,L_c]\in\mathfrak k$，则
+
+$$
+\begin{aligned}
+0&=g(D(b^2),b)+g(b^2,Db)=3g(b^2,Db),\\
+g([L_{b^2},L_b]a,c)&=-g(b^2,[L_a,L_c]b)=0.
+\end{aligned}
+\tag{178.11}
+$$
+
+第一式用 $D(b^2)=2b\circ_e Db$ 与 Frobenius 性；第二式把两个自伴随乘法算子逐项移到另一槽。非退化性及任意 $a,c$ 给 $[L_b,L_{b^2}]=0$，即 Jordan 恒等式。又若 $\sum_i x_i^2=0$，与 $e_*$ 配对得 $\sum_i g(x_i,x_i)=0$，故所有 $x_i=0$。这个辅助代数因此是有限维含幺形式实 Jordan 代数；这里的 Jordan 性并非由交换性或度量性直接略去。
+
+现在证明平方锥在同一个原 $g$ 下自对偶。记 $Q=\{x^2:x\in E\}$，暂不认定 $Q=C$。由 [Hanche-Olsen–Størmer 引理2.4.5][Q178HS] 的幂结合性，$\mathbb R[a]$ 是有限维含幺交换结合代数；其上乘以 $a$ 的算子关于限制的 $g$ 自伴随。通常实自伴随谱定理给互异实谱值 $\lambda_i$；其谱投影是该算子的实多项式。作用于单位便得到 $\mathbb R[a]$ 中非零幂等元 $c_i$，满足
+
+$$
+a=\sum_i\lambda_i c_i,\qquad
+\sum_i c_i=e_*,\qquad c_i\circ_e c_j=\delta_{ij}c_i.
+\tag{178.12}
+$$
+
+这些等式来自同一结合子代数中的多项式谱投影，既不使用 $C$ 的自对偶，也不要求 $c_i$ 已是原操作或物理纯态。对任一幂等元 $c$，在 $c$ 处一阶极化 $[L_x,L_{x^2}]=0$ 并作用于 $c$，得到
+
+$$
+2L_c^3-3L_c^2+L_c=0.
+\tag{178.13}
+$$
+
+所以原 $g$ 自伴随的 $L_c$ 只有 $0,\tfrac12,1$ 三种可能特征值，因而半正定。若 $a=y^2$，对 $y$ 用(178.12)，便有 $L_a=\sum_i\mu_i^2L_{c_i}\ge_g0$。反之若 $L_a\ge_g0$，在 $a$ 的分解中测试 $c_i$，得 $\lambda_i g(c_i,c_i)\ge0$，故 $\lambda_i\ge0$，并有 $a=(\sum_i\sqrt{\lambda_i}c_i)^2$。因此
+
+$$
+Q=\{a:L_a\ge_g0\},\qquad
+Q_g^*=\{a:g(a,y^2)\ge0\ (y\in E)\}
+      =\{a:g(L_ay,y)\ge0\ (y\in E)\}=Q.
+\tag{178.14}
+$$
+
+这也证明 $Q$ 闭凸。$L_{e_*}=I$ 给 $e_*\in Q^\circ$。其内点恰是(178.12)中全部 $\lambda_i>0$ 的元素：全正时 $L_a\ge(\min_i\lambda_i)I$；某个谱值为零时，与非零 $c_i\in Q=Q_g^*$ 配对为零，故在边界。自对偶正是原 $g$ 的结论，没有换成某个新迹型。
+
+还须支付 $C=Q$ 的两个方向。定义 Jordan 二次算子
+
+$$
+P(a)=2L_a^2-L_{a^2}.
+\tag{178.15}
+$$
+
+上面已证明有限维、含幺、Jordan 恒等式和形式实性，故 [HS 推论3.1.7][Q178HS] 供应其内在谱范数下的 JB 结构；[HS §2.4.16 式(2.39)及命题3.3.6][Q178HS] 给此同一 $P(a)$ 的平方锥正性 $P(a)Q\subseteq Q$。这些供应只消费刚建立的 Jordan 代数，不对原 $C$ 提任何自对偶要求。
+
+对 $x=\sum_i\lambda_i c_i$，正交幂等元的乘法算子彼此交换：Jordan 恒等式在 $c_i$ 沿 $c_j$ 的一阶极化及 $c_i\circ_e c_j=0$ 给 $[L_{c_i},L_{c_j}]=0$。这些算子同时自伴随，特征值各为 $0,\tfrac12,1$ 且相加为一；每个共同特征空间上只能有一个一，或两个二分之一。设
+
+$$
+\exp_J(sx)=\sum_i e^{s\lambda_i}c_i.
+$$
+
+在前一种空间上，$P(\sum_i a_i c_i)$ 的特征值是 $a_i^2$；在后一种空间上是 $a_i a_j$。逐空间代入 $a_i=e^{t\lambda_i/2}$，得到
+
+$$
+\exp(tL_x)=P(\exp_J(tx/2)),\qquad
+\exp(tL_x)^{-1}=P(\exp_J(-tx/2)).
+\tag{178.16}
+$$
+
+二次算子正性遂给 $\exp(tL_x)\in\operatorname{Aut}(Q)$。每个 $D\in\mathfrak k$ 是导子，$\exp(tD)$ 是 Jordan 自同构，也保持 $Q$ 及其逆向。于是(178.7)–(178.8)给 $\mathfrak g\subseteq\operatorname{Lie}(\operatorname{Aut}(Q))$。$\operatorname{Aut}(Q)$ 是 $GL(E)$ 的闭子群；指定 $G$ 连通，故 $G\subseteq\operatorname{Aut}(Q)$。这里证明的是原群保持 $Q$，没有把原群换成更大的可调用群。
+
+现在传递性给 $C^\circ=Ge_*\subseteq Q^\circ$。反向任取 $z\in Q^\circ$，由正谱分解置 $a=\sum_i\log\lambda_i\,c_i$；幂结合性给
+
+$$
+z=\exp(L_a)e_*\in Ge_*=C^\circ,
+\tag{178.17}
+$$
+
+其中 $L_a\in\mathfrak g$ 已由(178.8)取得。故两内点集相等。两个闭凸生成锥各为自己内点的闭包，遂有 $C=Q=Q_g^*=C_g^*$，完成原锥的双向识别。$\square$
+
+### 178.3 原单位、原有向关系及完整量子消费者
+
+**定理 178.4（补回共有 P 条款并接回完整 C124）。** 定义178.1的候选对每个所需原对象给 $C_A=C_{A,g_A^0}^*$，从而完整满足 C124 定义10.2。其对象结论为同一原载体上的有限复矩阵直和及已声明的普通复张量联合；[C124 命题11.1、11.3、定理12.1及命题12.2][Q178Structure] 的完整结论分别适用，不只适用于新选词。
+
+证明。引理178.2给同一个原 $g_A^0$ 及指定群的伴随封闭；定理178.3逐个代入原 $(E_A,g_A^0,C_A,G_A)$，恰好补回共有 P 的(1.1)。不把一个局部锥的结论外推成联合锥结论。其余原条件已在定义178.1逐项保留，故可消费原定理；下面明确其中的单位与类型接口。
+
+辅助 $e_*$ 只用于锥桥，原单位仍为 $u_A$。在每个对象上取原 $h\in G_A$ 满足 $hu_A=e_*$，并写
+
+$$
+\widehat g_A(x,y)=g_A^0(hx,hy),\qquad S=h^{\dagger_0}h,\qquad
+T^{\dagger_{\widehat g_A}}=S^{-1}T^{\dagger_0}S\in G_A.
+\tag{178.18}
+$$
+
+这就是 [C123 定理3.1 的(3.3)–(3.4)单位适配][Q178Adapt]，只是将其辅助型 $q_A$ 改记为 $\widehat g_A$，与原读数区别。$hC_A=C_A$ 及刚证的原型自对偶给 $\widehat g_A$ 自对偶；该既有证明随后支付 $(G_A)_{u_A}=G_A\cap O(\widehat g_A)$，构造定义1.4的 $u_A$ 适配乘法 $\circ$。原 D 的导子律与 $[L_a,L_c]+[D_a,D_c]=0$ 逐字作用在这个 $\circ$ 上；不能拿辅助 $\circ_e$ 代替，也没有假设 $h$ 自动交织原 D。
+
+于是 [命题11.1][Q178Structure] 的参数是同一个 $(E_A,u_A,\widehat g_A,\circ,D)$：它直接消费 C123(3.3)–(3.5)和既有 V95 的完整动力对应，得到 $a\cdot b=a\circ b-iD_ab$ 及
+
+$$
+\mathcal A_A\cong\bigoplus_sM_{n_s}(\mathbb C),\qquad
+E_A=(\mathcal A_A)_{\rm sa},\quad C_A=(\mathcal A_A)_+,
+\quad u_A=I_A.
+\tag{178.19}
+$$
+
+X 的原嵌入、交叉 D、张成及完整原乘积准备恰为该命题引用(3.9)的张量前件，故实际联合对象是这些代数的普通复张量积，原相关态全部保留。复类型选择来自仍保留的原 D 和实际联合合同；单凭对称锥几何不会排除实、四元数、其他 Jordan 类型。
+
+随后按 [命题11.3][Q178CP] 使用整个原 $P$ 的实际有限幂：AC 经既有定理11.2在某个实际指针块给 $r\ge2$ 的系数一纯准备及破坏性读口；$P^{\otimes k}$ 中实际块维数 $r^k$ 无界。R 对所有原事件在完整联合准备锥上保正，正好支付每个输入块所需的充分参考层，取得全部原事件、细记录及合法历史的 CP/TNI，不限于乘积输入或新供应词。每个实际联合对象自身的 P、G、D 又给所需联合内酉群在指定群内的包含；$N_u$ 才把其中每个被消费单位稳定子变成精确原调用。
+
+最后直接使用 [定理12.1][Q178Words]：对每个数学效果 $0\le e\le I_A$，有同一原签名中的新选中完整有限装置 $W_e$，成功支及每个已声明实际相关参考上的作用为
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\,\rho\sqrt e,
+\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R).
+\tag{178.20}
+$$
+
+奇异效果、零效果和零中心分量也由其有限构造供应，不需要物理奇异极限。整个实际 $P$、准备、联合比较、测试及其全部原失败输出、原系数、细记录和丢弃仍是原来的装置。再用 [命题12.2][Q178Records] 保留原 F 的实际一算子返回细支、原 $q_F$、细化及遗忘；可访问阶段细口只在原合法连线中相乘，未声明阶段细连线时只调用整个原词自己的全称 F。任意数学 Kraus 指标不因此成为原记录。这样复用的是完整旧历史和全事件等式，并未重建量子尾部或用新词替换旧实现。$\square$
+
+### 178.4 原概率的双运输及真正对称的端点比较
+
+**命题 178.5（密度、效果、Born 配对与纯确认）。** 在定理178.4的同空间坐标内，令 $\tau_A=\sum_s\operatorname{Tr}_{n_s}$，精确使用 C123(3.6)及 C124(11.1)的唯一迹自伴随正定算子 $B_A$：
+
+$$
+g_A^0(x,y)=\tau_A((B_Ax)y),\qquad B_A(C_A)=C_A.
+\tag{178.21}
+$$
+
+对原准备 $\alpha(y)=g_A^0(x_\alpha,y)$ 和原数学效果 $e$，原密度、质量及对称坐标分别为
+
+$$
+\begin{aligned}
+\rho_\alpha&=B_Ax_\alpha\ge0,
+&m_\alpha&=\tau_A(\rho_\alpha)=\alpha(u_A)\le1,\\
+v_\alpha&=B_A^{-1/2}\rho_\alpha,
+&w_e&=B_A^{-1/2}e,\\
+\alpha(e)&=\tau_A(\rho_\alpha e)
+            =g_A^0(v_\alpha,w_e).
+\end{aligned}
+\tag{178.22}
+$$
+
+这里 $B_A^{-1/2}$ 是实响应空间上的正自伴随算子的逆平方根，不是将其误作矩阵左乘。数学归一正泛函底与全部密度矩阵一一对应；它不保证每个底点已有质量一的实际准备。
+
+证明。密度、质量及 $B_A(C_A)=C_A$ 直接复用 [命题11.1][Q178Structure]；最后一式由 $B_A$ 的迹自伴随性和正谱演算给出，因而运输的是原概率，不是将原 Riesz 向量直接当成效果。$m_\alpha>0$ 时才可在数学上取 $\rho_\alpha/m_\alpha$ 作条件归一态，原概率仍含 $m_\alpha$；质量零时密度为零，不作除法。P 的实际准备正锥包为完整对偶，只给锥生成，不给系数一全准备供应；AC 支付的是它自己的原端点，不能默默推广成所有底点的实际质量一制备。
+
+完整数学效果是 $0\le e\le I_A$，完整数学 POVM 是任意有限 $e_i\ge0$、$\sum_i e_i=I_A$，其概率是 $\tau_A(\rho e_i)$。若 $p,r$ 是数学归一底的纯态，它们恰为单块秩一投影且 $\tau_A(p)=\tau_A(r)=1$。在整个 proper 数学效果区间上定义纯确认比较
+
+$$
+T_p(r)=\min\{\tau_A(re):0\le e\le I_A,\ \tau_A(pe)=1\}.
+\tag{178.23}
+$$
+
+确认条件与 $0\le e\le I_A$ 给 $ep=pe=p$，因而 $e=p+(I_A-p)e(I_A-p)\ge p$。取 $e=p$ 达到最小，故
+
+$$
+T_p(r)=\tau_A(pr)=\tau_A(rp)=T_r(p)
+      =g_A^0(v_p,v_r),\qquad
+v_p=w_p=B_A^{-1/2}p.
+\tag{178.24}
+$$
+
+这涵盖不同中心块，彼时读数为零。这里先有完整数学区间；限制到一个旧实际子菜单时，$p$ 未必可读，不能沿用同一个最小值。定理12.1另给每个效果一份选中实际 $W_e$，却不补齐每个纯态的质量一准备，也不单凭这些逐点供应就组装任意指定原 POVM 仪器。原纯准备的 Riesz 向量是 $x_p=B_A^{-1}p$；一般不能把(178.24)写成 $g_A^0(x_p,x_r)=T_p(r)$。
+
+对每个原事件 $f:A\to B$，同一运输仍为
+
+$$
+\Phi_f=B_B T_f^{\dagger_0}B_A^{-1},\qquad
+\tau_B(\Phi_f(\rho)y)=\tau_A(\rho T_f(y)).
+\tag{178.25}
+$$
+
+逐次代入便保留全部原合法有限历史的原概率、成功质量、记录和条件分母。对联合系统逐个使用其自身的 $B_{AB}$；不要求 $B_{AB}=B_A\otimes B_B$。效果只固定统计，原有同效果设备的输出不由(178.22)决定；新供应的(178.20)与旧设备相等仍须后者自己的完整输出校准。$\square$
+
+### 178.5 对称锥、复数选择、三球面与全有限范围
+
+**命题 178.6（几何结论及单块全有限的附加量词）。** 定义178.1下，每个原锥在恢复的原 $g_A^0$ 中是齐性自对偶锥；采用定理178.4的原复结构后，它是有限复正矩阵锥的直和。若另保留一个原对象 $A$ 的锥不可约性、原实维数 $\dim E_A=n^2$、固定整数 $n\ge2$，并实际声明全部 $A^{\otimes N}$ 及其所需联合、准备、群、D 与全部原接口，则
+
+$$
+C_{A^{\otimes N}}=\operatorname{PSD}_{n^N}
+\qquad\text{在相容复坐标中，对每个有限 }N\ge1.
+\tag{178.26}
+$$
+
+没有这些额外原对象和校准条件时，准确结论仍是(178.19)及实际声明的联合，不是任意全有限单块层级。
+
+证明与几何。齐性来自原群的传递性，自对偶来自定理178.3，故原锥是对称锥；这些是同一原空间中的几何性质。定理178.4的 D 及 X 才把此几何接成复矩阵类型。若原锥不可约，(178.19)不能有两个非零直和块；故为一个 $M_d(\mathbb C)_+$，实维数 $d^2=n^2$ 给 $d=n$。实际全部有限幂再由 X 的既有普通复张量结论逐次给 $M_n^{\otimes N}\cong M_{n^N}$，其正锥就是(178.26)。这里不可约性、$n$ 校准及实际全有限幂各有用途；C124 只为参考声明的 $P^{\otimes k}$ 不自动成为任意 $A$ 的全有限幂。
+
+复结构取得后，在任一大小至少二的简单块选二维复子空间 $S$，令 $\Pi_S$ 为其投影。数学归一底中的暴露面 $\{\rho:\operatorname{ran}\rho\subseteq S\}$ 精确写成
+
+$$
+\rho=\tfrac12(\Pi_S+\mathbf r\cdot\boldsymbol\sigma),
+\quad \mathbf r\in\mathbb R^3,\quad |\mathbf r|\le1,
+\qquad T_{p_{\mathbf r}}(p_{\mathbf s})
+       =\tfrac12(1+\mathbf r\cdot\mathbf s)
+\quad(|\mathbf r|=|\mathbf s|=1).
+\tag{178.27}
+$$
+
+正性等价于两个特征值 $(1\pm|\mathbf r|)/2$ 非负；$\tau(\rho(I-\Pi_S))=0$ 暴露这个支撑面。故几何是闭 Bloch 三球，球面是该面及整个数学底的纯点，端点交换保持点积。这是复重建之后的数学面，不要求它是单独可附接的原 $M_2$ 对象；C124 的实际指针可以根本没有 $M_2$ 简单块。也不把面上每点的数学存在变成系数一实际准备。
+
+时间仍只按 [C123 命题4.1][Q178Time] 的额外合同取得：原连续、确定、可逆一参数动态群和物理时钟标定才给逐块 $\rho_s(t)=e^{-itH_s/\hbar}\rho_s(0)e^{itH_s/\hbar}$。静态(178.24)交换的是比较端点，不交换两个有更新事件的操作次序；它不选 $H_s$、$\hbar$ 或物理钟，也不把探针比例 $t$ 认作时间。全部数学 POVM/CP、选中 $W_e$、指定原仪器组装、旧支更新和连续时间仍分别处在各自合同范围内。$\square$
+
+### 178.6 来源职责、仍存条件与中文图景
+
+本章的经典供应与新增综合分开承担：C139 定理3.3支付同源首响应到唯一对称型的恢复式；HS 的幂结合性、有限形式实 Jordan 到 JB 及二次算子正性分别在定理178.3已具备其全部代数前件后使用。HS 的对应位置是引理2.4.5（印刷页32/PDF页42）、§2.4.16式(2.39)（35/45）、推论3.1.7（77/87）、命题3.3.6（83/93）；其二次算子记号 $U_a$ 对应本章 $P(a)$，正锥对应已经独立建立的平方锥 $Q$，不对应一个预先自对偶的原 $C$。这些成熟 Jordan 事实为 literature-attested，不赋予原调用或物理实例化。
+
+原型中的 Jordan 恒等式、平方锥自对偶及 $C=Q$ 两向识别由定理178.3的显式论证承担；对称锥几何不作新颖性声明。本章 repo-derived 的综合是：同源 $q$ 与原群内 $\Gamma$ 接成同一原型，自对偶从单列输入移到结论，再以原 $u$、原 D 及全部实际接口接回 C123/C124。C123 的单位适配、C124 的结构/CP/完整有限词/原记录结果均按上列精确所有者复用；不重证其分类、膨胀或量子过程尾部。这里不声称穷尽文献检索、历史优先权、全部剩余条件相互独立，或宇宙已经满足这些来源条件。
+
+仍存的简化缺口是具体的：全部原有限右响应、径向下界、探针分离、原群内 $\Gamma$ 全性、闭连通内迁性、原 $u$ 适配 D、完整准备锥及真实对象/记录/参考/调用合同都仍须供应；本章没有把它们从一个无额外关系的共同宇宙中推出。删除的是共有 P(1.1)这一冗余明列条款，不是少一个独立公理的证明。这里的域也不是175.1预先对齐的复 Hermitian 全有限域：两者保留不同来源和接口，没有逐坐标弱支配结论。没有(178.26)的附加前件时也不借用175的单块全有限结算。
+
+用普通中文说，先让两份原响应互相轻推，要求同一读数的最初变化在交换两端后相等；每条径向不能向下无限透支，每个非零原响应又都能被某个探针分辨，这才恢复原空间里的一把正尺子。还要原先指定的比较群内部总能找到反向配对，并能搬动任意两个锥内点。把这群的旋转平均出一个临时中心，用自伴随微小变化定义乘法，导子抵消证明它确是 Jordan 乘法；谱与二次算子再证明原来的正锥恰好是平方锥，而不是另画一个相似的锥。于是“正响应恰是对一切正响应读出非负的那些向量”不必另假定。
+
+临时中心只是证明用的脚手架，原设备的单位没有换掉。回到原单位后，仍由原有向三元关系选复数类型，由真实联合和参考合同接通相关态与 CP，由原系数一端点和精确调用供应完整有限滤波词。正确运输后的纯确认比较就是两条量子射线的重叠：交换两端数值不变，二维复支撑面上画成三球的点积。数学球上的全部点不等于都能无损准备，某个效果也不指定旧设备怎样更新；记录、失败系数和时间仍各守自己的原条件。这是一个删除明列自对偶输入的完整条件候选，不是把所有剩余来源一并消去的结论。
+
+[Q178P]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L5
+[Q178C124]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L646
+[Q178C139]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md#L186
+[Q178HS]: https://hanche.folk.ntnu.no/joa/joa-m.pdf
+[Q178Adapt]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L133
+[Q178Structure]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L662
+[Q178CP]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L698
+[Q178Words]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L706
+[Q178Records]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L785
+[Q178Time]: https://github.com/the-omega-institute/trureturing/blob/1ce2944a218087efcb6c57e6d886645eaa7712e0/docs/develop/theory/AURIC_NATIVE_RECIPROCAL_COMPARISON_AND_FINITE_ENDPOINT_QUANTUM_C123.md#L341
+
+## 追加锚（本行以下为增补区）
