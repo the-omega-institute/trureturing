@@ -449,4 +449,69 @@ theorem finite_codebook_lower_bound (n : ℕ) {L ε : ℝ}
       simpa only [mul_div_assoc, mul_assoc] using hv')
   nlinarith [hh]
 
+private lemma grid_coordinate {L : ℝ} (hL : 0 < L) (m : ℕ) (hm : 0 < m)
+    (t : ℝ) : ∃ j : Fin m,
+      circularError L (t - (j.val : ℝ) / m * L) ≤ L / (2 * m) := by
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  letI : Fact (0 < L) := ⟨hL⟩
+  let k : ℤ := round (t * m / L)
+  let u : AddCircle L := ((k : ℝ) / m * L : ℝ)
+  have hu : m • u = 0 := by
+    change m • (((k : ℝ) / m * L : ℝ) : AddCircle L) = 0
+    rw [← AddCircle.coe_nsmul, nsmul_eq_mul]
+    have he : (m : ℝ) * ((k : ℝ) / m * L) = (k : ℝ) * L := by field_simp
+    rw [he, ← zsmul_eq_mul, AddCircle.coe_zsmul, AddCircle.coe_period, smul_zero]
+  obtain ⟨j, hj, he⟩ := (AddCircle.nsmul_eq_zero_iff (p := L) hm).mp hu
+  refine ⟨⟨j, hj⟩, ?_⟩
+  have he' : (((j : ℝ) / m * L : ℝ) : AddCircle L) = u := he
+  unfold circularError
+  rw [AddCircle.coe_sub, he', ← AddCircle.coe_sub]
+  apply (show ‖((t - (k : ℝ) / m * L : ℝ) : AddCircle L)‖ ≤
+    |t - (k : ℝ) / m * L| from QuotientAddGroup.norm_mk_le_norm).trans
+  have ha := abs_sub_round (t * m / L)
+  have hid : t - (k : ℝ) / m * L = (t * m / L - (k : ℝ)) * (L / m) := by
+    dsimp [k]; field_simp; ring
+  rw [hid, abs_mul, abs_of_pos (div_pos hL hmR)]
+  calc
+    _ ≤ (1 / 2 : ℝ) * (L / m) := mul_le_mul_of_nonneg_right ha (by positivity)
+    _ = _ := by ring
+
+/-- A single finite grid serves all parameter vectors and all subset queries. -/
+theorem finite_codebook_upper_bound (n : ℕ) (hn : 0 < n) {L ε : ℝ}
+    (hL : 0 < L) (hε : 0 < ε) :
+    ∃ C : Finset (Fin n → ℝ), Adequate n L ε C ∧
+      C.card ≤ (⌈L * n / (2 * ε)⌉₊) ^ n := by
+  classical
+  let m : ℕ := ⌈L * n / (2 * ε)⌉₊
+  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
+  have hm : 0 < m := Nat.ceil_pos.mpr (by positivity)
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hm
+  let f : (Fin n → Fin m) → (Fin n → ℝ) := fun a i => (a i).val / (m : ℝ) * L
+  let C := Finset.univ.image f
+  refine ⟨C, ?_, ?_⟩
+  · intro θ
+    choose j hj using fun i => grid_coordinate hL m hm (θ i)
+    refine ⟨f j, Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩, ?_⟩
+    intro s
+    have hbudget : (n : ℝ) * (L / (2 * m)) ≤ ε := by
+      have hc : L * n / (2 * ε) ≤ (m : ℝ) := Nat.le_ceil _
+      have hc' := (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * ε)).mp hc
+      rw [← mul_div_assoc]
+      apply (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * m)).mpr
+      nlinarith
+    calc
+      circularError L (∑ i ∈ s, (θ - f j) i) =
+          ‖∑ i ∈ s, (((θ i - f j i : ℝ)) : AddCircle L)‖ := by
+            simp [circularError, ← QuotientAddGroup.mk_sum]
+      _ ≤ ∑ i ∈ s, ‖(((θ i - f j i : ℝ)) : AddCircle L)‖ := norm_sum_le _ _
+      _ ≤ ∑ _i ∈ s, L / (2 * m) := Finset.sum_le_sum (fun i _ => hj i)
+      _ = (s.card : ℝ) * (L / (2 * m)) := by simp
+      _ ≤ (n : ℝ) * (L / (2 * m)) := by
+        gcongr
+        exact_mod_cast (show s.card ≤ n by simpa using Finset.card_le_univ s)
+      _ ≤ ε := hbudget
+  · calc
+      C.card ≤ (Finset.univ : Finset (Fin n → Fin m)).card := Finset.card_image_le
+      _ = m ^ n := by simp
+
 end D5.S3.Geometry.BooleanRotationCodebook
