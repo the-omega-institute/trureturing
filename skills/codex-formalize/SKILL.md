@@ -35,6 +35,10 @@ An unfinished registration must not be reported as `declared_validated`. If regi
 
 Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Reg proofs are audit evidence, not a new mathematical GID/Scribe/deposit/utility obligation.
 
+## Retiring completed intake
+
+Use [atom-retirement](../atom-retirement/SKILL.md) when the requested result is removal of terminal atoms or archival/deletion of their theory input. It owns whole-source retirement after the existing cover/settle/decompose writers establish completion. Formalization alone does not authorize deleting Lean declarations. An unproved proposition remains open; difficulty, missing prerequisites or resource limits do not make it nonpropositional.
+
 ## State machine
 
 **Pure digestion route** (`CLAUDE.md` §1.2). A delivery that adds or first-freezes no D5 declaration is a pure digestion task. Such a task covers with existing frozen declarations, settles or clears nonpropositional or upstream-only atoms, decomposes into the ledger, or makes a §4.3 private-only exposure with canonical repin and registration. Run Step 0, then:
