@@ -111,7 +111,7 @@ private theorem bounded_value_spec (maxTrue fuel n : ℕ) :
             highValue (maxTrue + 1) (Fin.cons true b.val) at he
           simpa [highValue_cons] using he
 
-private theorem scanner_iff_literal (k n : ℕ) (hk : 0 < k) (w : Fin n → Bool) :
+theorem scanner_iff_literal (k n : ℕ) (hk : 0 < k) (w : Fin n → Bool) :
     DBonacciAdmissible k n w ↔ ∀ s : ℕ, ¬ TrueBlock w s k := by
   by_cases hkn : k ≤ n
   · exact (closed_word_run_start_equivalence n k hk hkn w).1
@@ -124,7 +124,7 @@ private theorem scanner_iff_literal (k n : ℕ) (hk : 0 < k) (w : Fin n → Bool
           (by omega) le_rfl
     exact ⟨fun _ s hb => by have := hb.1; omega, fun _ => ha⟩
 
-private theorem avoid_reverse {n k : ℕ} (w : Fin n → Bool)
+theorem avoid_reverse {n k : ℕ} (w : Fin n → Bool)
     (hw : ∀ s : ℕ, ¬ TrueBlock w s k) :
     ∀ s : ℕ, ¬ TrueBlock (fun i => w i.rev) s k := by
   intro s hb
