@@ -117,7 +117,10 @@ internal sealed class FaithfulConditionalGapDocument : IScribeDocumentDefinition
         var dpi = Finite("A", Finite("B", All("N", Channel(Id("A"), Id("B")), Pair(
             Le(Value(At("mapState", Id("N"), Id("rho")), At("mapState", Id("N"), Id("sigma"))),
                 Value(Id("rho"), Id("sigma")))))));
-        return Eqn(Op("FiniteDivergence"), Seq(OpenBrace, Id("D"), Sp, Mid, Sp, And(laws, dpi), CloseBrace));
+        var family = Finite("A", new Formula.TypeArrow(State(Id("A")),
+            new Formula.TypeArrow(State(Id("A")), Real())));
+        return Eqn(Op("FiniteDivergence"), Seq(OpenBrace, Typed("D", family), Sp, Mid, Sp,
+            And(laws, dpi), CloseBrace));
     }
     private static Formula Ratios(bool conditional)
     {
