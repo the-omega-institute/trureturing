@@ -48,7 +48,7 @@ $$(\forall n:\mathbb{N}, 2 \le n \implies 8 \cdot n \cdot \left(2 \cdot n - 3\ri
 
 *Commentary.*
 
-The first conjunct covers every natural n>=2. The second quantifies over polynomial coefficients indexed by the naturals and requires a nonzero member between 0 and r. The expression series superscript (j) denotes j-fold formal differentiation, with the zero-fold derivative equal to series, and each polynomial is embedded in Q[[z]]. An explicit order-three witness is p0=3240, p1=-588+25110z, p2=8-1998z+21870z squared, p3=16z-648z squared+3645z cubed. The constant p0 is nonzero. This is one conjunction from one source event, not two resolution credits; minimal order is not claimed.
+The first conjunct covers every natural n>=2. The second quantifies over polynomial coefficients indexed by the naturals and requires a nonzero member between 0 and r. The expression series superscript (j) denotes j-fold formal differentiation, with the zero-fold derivative equal to series, and each polynomial is embedded in Q[[z]]. An explicit order-three witness is p0=3240, p1=-588+25110z, p2=8-1998z+21870z squared, p3=16z-648z squared+3645z cubed. The constant p0 is nonzero. Minimal order is not claimed.
 
 Expanding 5=3+2 and interchanging finite triangular sums reduces the original NAME to the alternating sum of 5 to the j times (-2) to the (n-j) times choose(3n+1,j). Nat.choose_mul and Int.alternating_sum_range_choose_eq_choose establish the equality for all n, including zero.
 
