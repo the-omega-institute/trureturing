@@ -2735,3 +2735,1513 @@ order-unit 条件，XII151 的额外 $\mathsf N_2$，XII153 的条件纯到混�
 硬件证书或无条件宇宙本体断言。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+
+## 58. Acquired targets on the continuing native source
+
+**Definition 58.1 (source, rights and actual cuts).** Write AAV for
+[Acquisition V](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_V.md)
+and AA for [Acquisition](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md).
+Use exactly AAV1.2's finite known-alpha installation, with its actual
+pre-epoch word, or AAV1.3's selected bilateral joint source, with the
+actual separate empty/P preparations. Retain the ordered alpha/beta
+brackets, all lawful local P/S and genuine Next, the original tapes,
+enrollment, source/component bindings, persistent cuts, version chain,
+current authorities and the complete observation state of AAV5–7,20–24.
+The source-derived cut representation of AAV13–14 may be used; its actual
+constructors and paid resolvers retain that same service.
+
+A cut in the following statements is a coherent returned source cut,
+not a physical-time reading or an intermediate native-maintenance state.
+The observer acquires a version reference by actually reading the bound
+live header under AAV5.2's current right. A supplied retained version must
+instead be read from its actual retained record binding. Its membership
+is checked by following acquired predecessor links to the retained
+initial token. Merely naming a version does not acquire it or its rights.
+Every reference, field read, equality test, list traversal, counter,
+workspace slot and emitted bit is paid under AA20.1. Finite material,
+current rights and progress are required for every finite service used.
+Source/record access can be admitted only in its original phase.
+
+Native edits may occur between completed observer transactions, anywhere
+in the source. Within an admitted coherent decoding transaction use
+exactly AAV20.3/23.2's existing serialized exclusion of native edits and
+unfinished tape maintenance. No longer exclusion interval, new lock,
+new grant, new source opcode or arbitrary busy-cut observation is given.
+Each such transaction is finite at its own entry. An indefinitely growing
+source is considered only through its finite prefixes, unless an explicit
+continued-supply/progress assumption is stated.
+
+**Definition 58.2 (three distinct requests).** A fixed-version native
+request names an actually acquired token u and an acquired original
+component, or an actually acquired finite bilateral header interval.
+It asks for the native histories, bracket trees, material support and
+terminal boundaries at u, with their bindings to the retained actual
+objects. A bilateral answer includes each root's genuine preparation
+and the restricted actual post-epoch merge; it supplies no total order
+on preparations and no entire infinite-source output.
+
+A current interval request supplies an acquired anchor cut a and a finite
+acquired length h. Its target is the first h current logical leaves to the
+right of a, with their actual operands, paths and tags, at the certificate's
+specified actual cut r. A current tree request supplies an acquired actual
+logical subtree root x and asks for its current brackets and operand map
+at r. The cut r below is acquired after the candidate reads. It is not
+replaced by an arbitrarily earlier fixed-version cut u.
+
+A navigation requirement additionally asks that the designated observation
+cursor actually reach a, or a retained saved cut d, by the original
+one-cell movement menu. Copying an acquired cut into output or scratch
+is not arrival. Saving d really copies the present cursor binding into
+owned backing. Original native root Return and return of this extra
+observation cursor are different requirements. The marker latch keeps its
+original meaning throughout; only a separately successful Resume clears it.
+
+## 59. Finite old native views with actual object bindings
+
+**Definition 59.1 (the paid prefix calculation).** Acquire u, its source
+binding, and each requested original root by the real header/root traversal
+of AAV1.3,6.2,7.1,20.2; finite epoch leaves do not become new original roots.
+For a later coherent decoding invocation acquire its actual current token t.
+Read the predecessor chain from t to the retained initial token, testing
+membership of u and authentic component bindings. For a requested component c
+count its tokens strictly after u, obtaining d_c(u;t). Count its current
+logical alpha/beta leaves by AA's actual arity traversal, obtaining a_c,b_c.
+This traversal never counts a unary marker as a logical leaf. In backed
+scratch form
+
+$$
+K_c(u)=(a_c+2b_c-1)-d_c(u;t).
+\tag{VI.75}
+$$
+
+These are the finite source/tape/chain loops actually permitted in
+AAV20.3/23.2, run inside their admitted coherent decoding phase. The
+finite branch stack, tape cursor, counters, acquired t and continuation
+remain backed until that transaction completes. This is not an atomic
+primitive returning K, nor a count assembled across changing source cuts.
+Other coherent invocations can occur at different later versions.
+
+Acquire AA19.2's literal indexed answers 1 through K_c(u), in that actual
+component, by its paid original handler inside an admitted transaction.
+Read that invocation's header token in the same coherent phase and retain
+it with the actual read record where such records are required. There is
+no extra version payload on the original FetchGrowth wire and no outer
+FetchGrowth reply when its handler is called internally.
+When logical event-token selectors are history-derived, every invocation
+first acquires its own coherent current token and carries out AAV20.3's
+counts and AA19.2 decode there. AAV21.3/22.1 apply only after these actual
+loops; an unchanged mathematical value alone is no read operation.
+The original expected-current-token check is not bypassed: a request with
+an obsolete expected token still has RejectEntry. The old-view calculation
+reads retained records under their own current authority.
+
+**Theorem 59.2 (earned fixed-version native recovery).** Under Definition
+58.1's rights, retained backing, serialized finite-service and progress
+premises, Definition 59.1 terminates for every acquired finite request.
+It acquires the complete native word through u in each requested original
+component, its exact ordered tree and material support/boundary, and the
+actual persistent-object bindings of all those old material vertices,
+logical operands and cuts. For a finite bilateral footprint it also
+acquires the authentic restricted post-epoch merge through u. Arbitrary
+lawful P/S/Next may occur between its completed transactions. All later
+reads retain their own actual acquisition versions.
+
+**Proof.** At the invocation's coherent cut t the root is a finite
+known-alpha native tree. AA19.1 makes its full original word length
+N_c=a_c+2b_c-1. The actual component events after u are precisely the
+counted tokens: finite entrance AAV21.1 and bilateral AAV22.1–22.2 give
+N_c-d_c(u;t) as its original prefix length at u. Both counts are obtained
+at t, after native/tape publication, so the suppliers' coherence hypothesis
+is satisfied. If later growth contributes e_c further events, it increases
+both terms by e_c. Thus K_c(u) is stable. Each prefix index is acquired in
+scratch and every later AA19.2 invocation returns that same old indexed
+event, even if the global version has changed. Empty prefixes require no
+indexed event read. At u equal to the initial token, the finite prefix is
+the actual prehistory w_0, whereas a bilateral prefix is its own empty or
+P preparation. No common preparation word or seed-product promise is used.
+
+Apply the acquired finite word to the known-alpha syntax in local output
+backing, using the supplied original grammar. AA17.2/19.2 already prove
+that this reconstructs its actual historical tree and tapes. Their shuffle
+and replay theorems are suppliers, not a new acquisition primitive. To
+bind a reconstructed logical address, actually navigate that address from
+the acquired original root in the present source. AAV21.2 proves that the
+arrived object is the identical old object. The object may now be a branch;
+the old reconstructed tag is never used as a current guard.
+
+For an old beta's material terminal marker, read its actual physical left
+field, rather than treating that marker as a logical address step. AA20.2's
+P attaches that object once; S reuses it as the left logical root. Neither
+operation redirects an existing material child edge. The marker reference
+therefore remains the very old material object, even if its present arity
+has changed. Structural induction on the old tree acquires all its old
+material vertices. Old terminal support is a labelled historical subset
+of these actual identities, not today's terminal set. Its prefix closure
+and old arities give the existing AA17.3 space/boundary correspondence.
+
+For each old logical branch acquire its actual vertex and form its existing
+AAV13 midpoint descriptor; exterior endpoints or authentic gap headers
+supply the remaining cuts. Those paid constructors are justified by the
+acquired old shape and actual fields. AAV13.2 makes them the same surviving
+cuts today. This does not manufacture a boundary-to-header inverse or a
+path-to-reference cast. Finite epoch headers, where needed, are read from
+the retained actual enumeration and checked against these old paths and
+bindings. Bilateral headers are followed through their actual previous/next
+links; selecting an integer interval alone would not supply them.
+
+Freeze the acquired u chain endpoint. Scan its immutable predecessors,
+read their authentic component bindings, and filter by acquired root
+equality. Each needed event selector is called at its own coherent cut
+as above. AAV21.3/22.1 make its returned old kind/address/operand stable,
+and the retained chain supplies precisely the actual restricted merge.
+The scan does not chase the advancing live tail. There are finitely many
+requested roots, finite prefix lengths and finite old trees. Every
+navigation reaches a persistent finite old path, so the complete procedure
+is finite under the stated service progress, even with intervening outside
+or inside growth. Output and scratch are charged. No actual source,
+quantum state, cursor, tape or old record is rewound. $\square$
+
+**Proposition 59.3 (a source token is not an observer checkpoint).** A
+version token alone does not determine an old cursor/latch state or the
+complete observation archive at an unspecified instant carrying that token.
+Theorem 59.2 does not recover these coordinates from u.
+
+**Proof.** At a genuine nonempty source, save the cut before one leaf and
+perform a granted WalkRight across it. Before and after the walk the
+source token and native source/tapes coincide, but the observation cursor
+and immutable movement record differ. Similarly a successful marker
+comparison can set the latch without publishing a native token. Recovery
+of the full old observer configuration requires its actual retained record
+endpoint and state bindings as additional acquired input, as AAV11 already
+requires. The actual complete archive is retained throughout, including
+all later reads at their true tokens; it is never rewritten into one old
+cut's archive. $\square$
+
+## 60. An earned finite region for native interference
+
+**Definition 60.1 (acquired cone envelope).** First acquire all requested
+anchor, logical-root and saved/current-cursor bindings. Then read a current
+token u. Use Theorem 59.2 to acquire a finite old footprint at u containing
+them and the requested region. In the finite entrance it is permissible
+to acquire the full old finite root. Bilaterally, acquire the actual owner
+headers: a gap descriptor already carries its real right header; a midpoint
+carries an actual vertex whose real ancestry and root association supply
+its component root. To find that root's header, scan an already acquired
+binding list or alternately follow next and previous from the supplied
+anchor, reading each visited header's root and testing actual equality,
+exactly as in AAV13.3. There is no root-to-header or naked-boundary inverse.
+Paid header excursions find each of the finitely many acquired endpoint owners.
+The finite connecting header intervals are retained in backing.
+
+Extend this footprint rightward until its tree at u contains h leaves
+from a, if needed. Each additional actual seed root contributes at least
+one old leaf, so bilaterally at most h additional headers suffice once
+the anchor owner is reached. In the finite entrance, if the old right
+endpoint is reached first, retain that endpoint and the actual shorter
+suffix. The empty h=0 case needs no region leaves. For a tree request
+include all old leaves under x and denote its acquired old left boundary
+by a. Include the old interval from the actual current cursor to a when
+initial arrival is required, and from a to saved d when a return after
+region traversal is required. Enlarge to the least
+old cut interval containing these finitely many pieces. It can be empty
+when every piece is empty and all required cuts coincide.
+
+Let I denote this acquired interval. Enumerate its actual u-leaf roots
+z_1,...,z_m with their acquired original component and root-relative path
+(c_i,p_i), and retain its two actual exterior cuts. These paths come from
+the old tree together with actual navigation; they are not an initial
+answer table. Define relevance of a later native event (c,q) by
+
+$$
+\operatorname{Rel}_I(c,q)
+\quad\Longleftrightarrow\quad
+\exists i\le m:\ c=c_i\ \hbox{and}\ p_i\preceq q,
+\tag{VI.76}
+$$
+
+where prefix tests compare acquired finite address words. The list, its
+bindings, endpoint order and all selection work are charged. A genuine
+Next is classified by its actually executed new operand, not by the old
+historical address that its internal FetchGrowth first returned.
+
+**Theorem 60.2 (original-source locality of the acquired envelope).** For
+every lawful native continuation after u, I remains the interval between
+its same exterior cuts. Its current leaves are exactly the descendants of
+the acquired old leaves z_i, in their same outer order. An event affects
+its native trees, internal frontier incidences or tags exactly when
+(VI.76) holds. An irrelevant event preserves these data and the relative
+order of every retained cut in I. Nevertheless it can change global
+versions, ancestor routing tapes, total history length and read costs.
+
+**Proof.** At u the z_i are consecutive actual logical leaves. No later
+operation acts at a strict ancestor of any z_i, since that ancestor is
+already a branch and remains one. Each later current leaf belongs to
+exactly one old leaf cone; within a component its path has exactly that
+old leaf path as prefix. Operations preserve these outer roots and their
+exterior cuts by AAV5.4/13.2. Induction therefore partitions the later
+frontier into the same old cones. Within I, P changes its selected leaf
+tag and S changes its subtree and adds precisely one internal cut.
+Outside I neither template changes a source edge, internal incidence or
+tag inside I. A shared exterior cut can have its outside incidence changed;
+that outside incidence is not an internal datum or the cut's identity.
+Original tapes at common ancestors can acquire new side entries, and every
+successful event publishes a new global token. Thus local independence
+does not imply constant decoding work or an unchanged global token.
+This proves the source-specific test (VI.76) using only actually acquired
+roots and paths. $\square$
+
+## 61. Current-region certificates and completion with outside growth
+
+**Definition 61.1 (a candidate and its validation).** Keep the acquired I.
+At the start of an attempt acquire a current token s extending u. For an
+interval or a requested tree arrival, navigate by actual one-cell walks
+in the direction acquired by the comparison below, stopping on
+acquired-reference equality with a or the requested
+subtree boundary. These walks stay in I. This directed procedure uses no
+overshooting Seek excursions and no cursor assignment in place of movement.
+
+For every requested movement leg, including the saved return, actually
+obtain the current cursor's cut descriptor. In AAV13–14's installed
+representation it is already the acquired value in that owned slot. In
+the direct incidence representation, read its incident cells and actual
+operand/component bindings in one admitted source-access transaction.
+Finite null sides give the known root endpoints. Two neighbors in the
+same component give their actual least common ancestor by backed parent
+scans and equality; its vertex supplies the midpoint. At a bilateral
+component boundary the right incident cell's real seed header supplies
+the gap descriptor. This procedure uses existing incidence/source rights
+and retains the direct cut object's identity; no naked boundary inverse
+or replacement of that object is used.
+
+For a midpoint acquire its actual original-root path by AAV6.2/13.3's
+parent/child reads. Compare same-component midpoint paths by inorder:
+at a first differing side L precedes R; if p is a strict prefix of q,
+mid(q) precedes mid(p) exactly when q's next side is L. Equal paths give
+equal cuts. The finite exterior cuts are extreme. Bilateral gap/component
+order comes from the actually acquired connecting header list, with each
+gap before its right component's internal midpoints. These finite tests
+are exactly the actual ordered tree's cut order, by its left/right subtree
+separation. Native edits preserve that order. A return cursor may be a
+new cut created after u: its actual path is acquired now, not looked up
+in the old tree or inferred from an old rank. These paid field reads and
+comparisons do not themselves move the observation cursor. Once the
+direction is acquired, persistence keeps it correct until arrival.
+
+For a current interval, perform the original ReadCurrent and intervening
+WalkRight transactions from a, up to h leaves or a genuine Endpoint. For
+a tree, traverse the actual subtree by AA's logical arity rules, recording
+each acquired arity, real child/operand and path; never traverse a unary
+marker as a logical child. Each arity read acquires the header token inside
+that same admitted coherent source-access transaction, before its source
+test; a header read separated from the test by growth would not supply its
+version. This adds no field to an original Tag reply. Native growth can
+occur between the reads.
+Store the complete candidate records with every true acquisition token.
+Acquire the current header token r after these reads. Freeze r as the
+validation endpoint; scan predecessors from r back to s. Actually obtain
+each event's acquired component, kind/address and operand through its
+original readable logical field interface. A history-derived selector
+runs at a coherent cut of its own, as Definition 59.1 requires. Accept
+only if every event fails (VI.76). Otherwise retain the failed attempt's
+real records and start a fresh attempt. No record is re-dated or discarded.
+
+This is a finite composition of existing paid reads, selectors, list
+operations and movement, not a new atomic collect or region-lock opcode.
+The validation certificate records the acquired s,r, envelope bindings,
+candidate and the acquired finite event segment with its relevance tests.
+Its source-binding proof is this actual read/copy chain, rather than a
+self-asserted origin string. The certificate concerns the current region
+at r, a real cut after the candidate reads; the old u is only the envelope
+construction cut. Later validation reads retain their own later versions.
+
+**Theorem 61.2 (sound current-region acquisition).** Every accepted attempt
+has exactly the requested current interval with authentic current tags,
+operands and paths, or the complete requested current bracket tree, at r.
+It gives the corresponding original syntactic rho consumer, with its
+separate atom-output boundaries, at that same r. A finite Endpoint answer
+is exactly the available prefix and real endpoint at r. Acceptance remains
+sound with arbitrary relevant or irrelevant native growth after r while
+the fixed validation segment is being read and the answer is delivered.
+It asserts no current-at-Return identity after such relevant growth.
+
+**Proof.** Relevance is determined by acquired prefix/component equality.
+The frozen chain enumerates every successful native event from s through r
+and no queries or refusals. Its logical event selectors supply their actual
+old meanings by Theorem 59.2's earned invocation and AAV21.3/22.1; later
+events cannot alter that finite segment. Acceptance therefore proves that
+no event changed I between s and r. Theorem 60.2 makes the whole internal
+region constant over that interval, although arbitrary outside growth
+and global-token changes may occur. Every candidate read and every walk
+before r consequently acted on this one unchanged region. The actual
+successor cuts, arity checks and read operands prove consecutiveness and
+tree completeness by the original AAV8.2–8.3 traversal argument. There is
+no assumption that a static leaf list was already an acquired current map.
+If an Endpoint was reached, the unchanged exterior endpoint supplies that
+same finite boundary at r. Rho is then computed on the acquired actual
+tags/brackets in backed output, using its existing homomorphic definition.
+Its value does not execute rho on today's operands or rewind any source.
+
+The proof places a certificate at r, after acquisition of the candidate,
+using the actual absence of local interference. It does not move the old
+samples to r: their old tokens remain, and the certificate proves equality
+of the relevant source restriction across those actual cuts. Edits after r
+cannot change this historical statement. A later P on a sampled alpha,
+or S on a sampled beta, immediately disproves its unrestricted use as a
+current-at-Return sample. Any operational batch consumer must recheck its
+current guards and have the original rights/reservation and required
+nonconflict condition of AAV8.3; this certificate is not such a lock.
+$\square$
+
+**Theorem 61.3 (finite relevant interference suffices).** Retain Definition
+58.1's finite-service progress and supply premises, and let the observer
+continue the attempts of Definition 61.1, with each pending observer
+operation eventually completed. Suppose only finitely many successful
+native events after u satisfy (VI.76). Irrelevant native events need not
+stop. Then a current tree request completes with an accepted certificate.
+A current interval request completes with an accepted certificate at its
+actual cut r. Let $\ell_r$ be the number of current leaves in I to the right
+of a at r. Its output has exactly $\min(h,\ell_r)$ leaves, with a certified
+genuine Endpoint when $\ell_r<h$. Thus it supplies all h leaves exactly when
+they exist there at that accepted r; their presence already at u is
+sufficient. Availability reached only after r does not enlarge this
+completed output. Any requested arrival at a and paid return to saved d
+also finish, using directed one-cell walks within I. This is conditional
+completion under local interference, not wait-freedom under arbitrary
+relevant growth or a uniform bound on time, history scans or resources.
+
+**Proof.** Only finitely many splits occur in I, so it has a finite maximum
+number of logical leaves and a finite maximum internal tree. No walk
+inside its fixed exterior cuts or actual subtree traversal can chase an
+unbounded number of newly inserted local cells. Each pending transaction
+is finite by the existing phase/progress hypotheses, including a derived
+selector's current finite whole-component count. Consequently each attempt,
+its fixed-endpoint validation and any finite output work finishes. Outside
+growth may make successive counts more expensive, but cannot make one
+admitted finite coherent invocation infinite.
+
+If an attempt has already accepted, Theorem 61.2 gives its correct value
+at its own r, even when the last relevant event occurs later; no further
+attempt is required. Otherwise, if there is a last relevant event, finish
+any pending attempt after it. If that attempt accepts, acquisition is done.
+If it rejects, continued attempts start a fresh one after that last event;
+the restriction to I is now constant, so this attempt accepts. If no
+attempt was pending, the next one is already interference-free. With no
+relevant event the first completed attempt accepts. Equivalently, every
+rejected segment contains an actual relevant event, and consecutive attempt
+intervals are disjoint, so there are at most as many rejections as relevant
+events. Finite progress after each rejection supplies the next attempt;
+it does not supply or require a retry after acceptance. This covers a last
+event during an attempt, between attempts, or after an accepted attempt.
+
+The acquired envelope contains all old first-h leaves when they existed
+at u; growth only adds leaves, so the first h current leaves stay inside it.
+If the finite suffix at u was shorter, I reaches its genuine right endpoint
+and contains every descendant of that whole suffix. Thus at any accepted r,
+either I contains at least h leaves after a, or it contains the entire
+shorter suffix to the real endpoint. Theorem 61.2 and the stopping rule
+therefore give exactly $\min(h,\ell_r)$ leaves, with Endpoint in the shorter
+case. Later growth changes neither that accepted length nor its records.
+For h=0 the empty interval is already the required value; only explicitly
+requested navigation may remain. A tree root can become a branch, but all
+of its descendants stay in its included old cones.
+
+Between two retained cuts in I the current distance is bounded by I's
+finite maximum leaf count. Directed walks toward the target reduce that
+distance by one; finitely many relevant splits can add only finitely many
+units. Finite progress thus reaches both a and saved d. Growth during the
+return does not update r or the old candidate records. A certificate can
+be current at actual Return only under the additional factual absence of
+relevant edits from r to that Return, or an independently earned later
+certificate. No acquisition-wide global quiescent episode is used.
+$\square$
+
+## 62. Local splits and actual one-cell arrival
+
+**Theorem 62.1 (the exact native distance account).** Fix an acquired target
+cut b and follow one designated observation cursor c until its first actual
+arrival at b. Let D be the number of current cells strictly traversed
+between these retained cuts. On either side of b, a P anywhere changes D
+by zero; an S changes D by one exactly when its actual operand lies between
+c and b, and otherwise by zero. A completed one-cell movement toward b
+subtracts one, one away from b adds one. Endpoint, denied/wrong-phase
+attempts and latch-only Resume contribute no movement. Thus, before arrival,
+
+$$
+D_n=D_0+B_n-M_n^{\rm toward}+M_n^{\rm away},
+\tag{VI.77}
+$$
+
+where B_n counts splits in the then-current cursor-to-target corridor,
+including actual splits inside Next. A successful marker comparison is
+counted as its actual one-cell movement. Neither physical elapsed time
+nor the number of epoch-header reads is a term of this identity.
+
+**Proof.** P preserves the frontier cell and both cuts. S replaces one
+cell by two with one fresh middle cut and retains both exterior cuts,
+by AAV5.3–5.4. A cell between c and b therefore contributes one extra
+cell exactly in the stated case. Moving across one actual cell removes
+or adds that one contribution until arrival; order cannot change sides
+without visiting b. The remaining operations do not move this cursor.
+Summing these exact local differences gives (VI.77). Native root Return
+leaves this separately parked observation cursor as specified, so it
+is not an uncounted observation movement. $\square$
+
+**Proposition 62.2 (authentic arbitrarily long finite delays).** On both
+original entrances, including each authentic empty/P preparation, for
+every M there is a lawful finite continuation in which M completed
+rightward one-cell advances toward an acquired saved target fail to arrive,
+although the target's old epoch value can be acquired. The continuation
+can use genuine Next, with its original old/new output and tape effects.
+There is no uniform finite movement bound independent of relevant growth.
+
+**Proof.** Begin with an actual alpha atom between acquired cuts a,b and
+cursor a. Before a rightward advance execute P at this atom z. Its actual
+new original index k is known from this explicitly supplied finite history.
+Execute Next(k). Its actual FetchGrowth returns P_z; the current z is beta,
+so the genuine left-descent rule stops there and executes S_z. Advance
+right once across the new left beta to the new middle cut. The cursor is
+again immediately before a right alpha whose right boundary is b. Each
+cycle is P_z, Next(k), WalkRight, with the actual new right-child z for
+the next cycle. It adds one intervening split and one toward movement,
+so (VI.77) leaves D=1. All input frames, old/new pairs, native history
+appends, version publication and returns are the original transactions.
+After M cycles b has not been reached. Stopping growth now permits arrival
+on the next right step, so the finite construction asserts delay, not
+finite-run nontermination.
+
+For a beta atom prepared by an actual P from its own known alpha, first
+execute Next(1): the historical P at that root selects its current beta
+and genuinely splits it. A right step leaves the same alpha-before-b
+configuration. Thereafter use the preceding cycles with their real indices.
+The finite entrance permits the epoch before the empty preparation or
+after this actual P. Bilaterally the selected source itself has f(0)=0,
+f(1)=1 by AAV22.4: use r_0 with its genuine P preparation or r_1 with
+its genuine empty preparation, keeping all other selected seeds and their
+joint constraint fixed. On the actual h_0 entrance, read its root binding
+for r_0, or follow its actual next-header link and read that header's root
+for r_1. Perform the original enrollment before the first post-epoch edit.
+Here a,b are the acquired actual adjacent seed boundaries.
+No independent seed product or replacement source is introduced.
+
+To make b a genuinely saved cursor target, start the cursor at b, copy
+its binding into the saved slot, and WalkLeft once across the original
+atom to a before the stalling continuation. This pays actual departure
+and does not assume a teleport. ReadEpoch at the acquired header returns
+the correct old bit in finite time, by its actual protected read or earned
+chain decoder. Following a next-header link can likewise acquire an old
+seed value without moving c. Neither operation changes D, so those value
+acquisitions do not fulfill the outstanding physical return to b.
+$\square$
+
+**Corollary 62.3 (the conditional infinite obstruction).** If an ideal
+extension supplies every cycle's actual fresh material, current authorities,
+finite input/output/ACK progress and observer advances for indefinitely
+many cycles, the construction has an infinite execution with infinitely
+many observer advances and no arrival. Without those explicit continued
+supply/progress premises only Proposition 62.2's arbitrary finite delays
+are asserted.
+
+**Proof.** Each finite cycle extends the same source with D=1 and the
+same genuine target b. The ideal extension supplies their concatenation;
+no prefix reaches b. This uses unbounded cumulative source, tape, record
+and control resources. It proves nothing about immortality of a fixed
+finite apparatus, a physical growth velocity or a quantum hold lifetime.
+$\square$
+
+## 63. Complete native service and unchanged immutable records
+
+**Theorem 63.1 (operational correspondence of the acquiring observer).**
+On Definition 58.1's original installed source, the procedures of §§59–62
+are paid observer programs over its existing admitted primitives. At every
+completed finite schedule they retain all original legal native futures,
+actual source/tape successors, enrollment, rights, immutable samples and
+record identities, true versions, current cursors/latch, and original
+pending-input/output, Print, End, local ACK and native root Return rules.
+A partial request or output has only its actual acquired/emitted prefix.
+Fixed-version and current-region conclusions have exactly their distinct
+hypotheses above; navigation is supplied only by actual completed movements.
+
+**Proof.** The new persistent operands come only from actual live-header,
+retained-record, source-parent/child and authentic header reads, or actual
+allocation. Integer counts select finite loops and original history indices;
+they never become object references. For bilateral events use the original
+acquired component attribution of AAV20.2, including events inside Next.
+Every history-derived field read begins after native/tape maintenance,
+acquires its own current token, and completes its finite count/decode before
+another edit is admitted. AAV23.2 therefore supplies exactly its serialized
+execution, and AAV21.3/22.1 supplies stability at later coherent invocations.
+No selector is invoked on an old published token and partly edited source.
+During native busy phases the original pending actual kind/target and
+maintenance cursor remain the sole operative transaction data.
+
+Each attempt's header and event endpoints are actually retained before
+scanning. Its scratch includes current scan reference, remaining stack,
+component/path prefix tests, candidate/output cursor and continuation.
+An occupied received bit is copied to backing before its ingress latch
+clears. A proper original frame prefix does not create a completed request
+or certificate. BuildAnswer seals only the acquired finite result; Print
+emits its actual prefix, End follows its last bit, the original local ACK
+enables Return, and only completed cleanup restores Ready. The observer's
+extra scratch is cleared/reused at those ordinary points; mandatory old
+samples, failed-attempt records and version fields are never cleared or
+recomputed as current samples. Where internal source-only reads are not
+observation samples under AAV11.3, they remain paid. Where the installed
+contract records them, every such actual record is retained and charged.
+No equality of different read schedules' entire archives is claimed.
+
+Absent authority and wrong phase disable the same primitives; denied
+grants do not create data. Ordinary raw marker queries retain their latch
+refusal, while the separately admitted source reads/walks keep their
+original permissions. No edit or validation silently resumes a stopped
+marker episode. Original source refusals, invalid indices and BadFrame
+preserve their exact tagged output and absence of growth. Additional
+observer results use their existing observation/output backing, not new
+payload fields on the seven original request tags.
+
+For a native event use the original Reserve, source template, ancestral
+appends, incidence maintenance and token publication, with finite material
+reserved first. AAV7.2/23.2 already give its full original service. Neither
+the acquired envelope nor a failed validation changes its guard. Next
+uses its acquired original old pair and genuine current left descent;
+only its actual new event is tested for relevance later. All arbitrary
+lawful addressed continuations remain enabled. Induction on completed
+transactions and their backed pending prefixes proves preservation of
+the complete declared service. At an actual returned state its native
+backing and matching current annotations still satisfy AAV11's existing
+four-view recovery. An entire historical observer state additionally
+requires its acquired matching record endpoint and state, as Proposition
+59.3 specifies. A fixed-u or certified-r native view is retained alongside
+later real samples; it is never combined with a later archive as though
+both described one attained historical observer configuration.
+
+If a VI37–57 quantum attachment is also retained, it needs its own actual
+full-bank holds, gates, ingress, detector, precision and complete-output
+error premises during all this extra finite work. Their existing finite
+composition bounds apply only with those paid hypotheses. This classical
+acquisition construction supplies no new quantum operation, rewind,
+calibration, physical clock or hold certificate. $\square$
+
+## 64. Nonempty native instances and supplier subtraction
+
+**Proposition 64.1 (continuing outside growth with a real current task).**
+There are authentic nonempty instances of Theorem 61.3 on both entrances
+with indefinitely many irrelevant genuine Next events, while every finite
+observer prefix has its actual finite resources. Hence local completion
+is not an acquisition-wide global-quiescence condition in disguise.
+
+**Proof.** In the finite entrance prepare
+$T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle$ by the actual word
+$P_\varepsilon S_\varepsilon S_L P_R$ of AAV7.3.
+At that returned epoch choose $x=LL$, or
+a one-leaf current interval beginning at LL's acquired left cut. Park/save
+the observation cursor at that cut and choose the envelope to be the
+single old LL cone. This is a nonempty beta subtree. Any finite number
+of lawful edits in LL, including Next(3) which recalls S_L and genuinely
+splits LL, are relevant. After them, repeat Next(4). Its old event remains
+P_R and its actual new operand is R followed by its current left descent;
+every repetition splits a beta in that R cone. These events are outside
+the acquired LL envelope. Their tapes, replies, global tokens and ancestor
+append work are real and keep growing, while the acquired LL region is
+constant. Each observer count/decode nevertheless runs on its own finite
+coherent current tree, so Theorem 61.3 completes the actual current task.
+
+Bilaterally use the actual selected r_0 beta and r_1 alpha preparations.
+Acquire the requested root/header interval and any needed cursor corridor,
+for example the r_0 cone alone when cursor and anchor coincide. A disjoint
+r_2 is beta since floor(3s)=1 and floor(4s)=2 in AAV1.1's selected word.
+Its authentic preparation is P. Actually follow h_0's next link twice,
+read the reached header's root binding and select that very original
+component before issuing its frames. Repeated original Next(1) in that actual
+component splits its successive leftmost beta descendants and stays
+outside the r_0 envelope. Both examples are ideal indefinitely supplied
+extensions only in the sense of Corollary 62.3; every finite instance is
+already a lawful finite example. $\square$
+
+**Proposition 64.2 (boundary discriminators).** The construction separates
+local conflict, remote change, old branch operands and access failure on
+the same actual source.
+
+**Proof.** Read an alpha in the candidate region, then perform its lawful P
+before r. Its event has the acquired old cone prefix, so validation rejects;
+the alpha sample remains at its own old version. Instead place that P in
+a disjoint acquired old cone. Validation accepts when the local candidate
+is otherwise complete, although r differs from the read token. If an old
+beta subsequently splits, Theorem 59.2 still binds its old root to the
+same present branch; original P/S there returns the original branch
+refusal, and Next at its old event descends to a genuine current leaf.
+For example the finite word $P_\varepsilon S_\varepsilon$ gives this distinction already
+at the root. Zero event segments, zero requested leaves and finite right
+Endpoint follow the explicit empty cases in §§59–61. A denied grant,
+wrong phase or missing source/tape authority yields no successful selector,
+no movement and no certificate. If required rights later become current,
+only a fresh actually admitted execution can supply the missing reads.
+Thus old values, record existence and mathematical paths never repair an
+access failure. $\square$
+
+**Definition 64.3 (existing results and literature domains).** The new
+source-specific results are the operational acquisition in Theorem 59.2,
+the earned cone relevance/certificate/completion of Theorems 60.2–61.3,
+and the genuine-Next arrival separation of Proposition 62.2 with its exact
+native account. They are `repo-derived` under their stated original-source
+hypotheses; no literature priority or fresh kernel verification is asserted.
+Their suppliers have the following precise roles.
+
+| Supplier | Supplied content and retained domain |
+| --- | --- |
+| FARG1–5; AA17–24 | Free ordered syntax, rho, birth guards, history/tape inversion, original initialized seven-request service, all finite native words, original pending/output/return rules and counts. None is claimed new. |
+| AAV5–9,11–14,17,20–24 | Persistent incidence/cut identities, actual source reads and movement, enrollment, finite quiescent acquisition, four annotated views, paid resolvers, stable native indexed meanings, authentic component merge and admitted serialized derived selectors. These give the actual primitives here, rather than an oracle for a chosen scope. |
+| Atomic Supplier Substitution49–52 | Fixed old-journal scans, complete expression recovery and real context consumption already exist under its extra F0–F4 recorder/gate/wake/control/inventory premises. Their fixed-endpoint scan principle is reused; those premises are not inferred from local P/S/Next and no absence of that result is claimed. |
+| Concurrent Native Cut Acquisition; Adaptive Acquired Reference Frontier | Their concurrent global-rho writer/raw-read menus and own current/retained targets remain valid. They are not the local P/S/Next source/operation correspondence established in §§59–62. |
+| Native Retrospective/Reentrant acquisition | Their AIF/CAP entrances, actual acquisition and held-context admissions retain their exact domains. No such control authority is imported here. |
+| VI37–57 | Actual attached native/quantum service, whole-record finite-error and holding boundaries; no new apparatus or quantum return is supplied by classical old-tree recovery. |
+| NativeEndpointEventIdeals.guard_enabled; NativeEndpointCausalOrder.result | Exact inspected declaration statements identify actual guarded membership cuts and the transitive closure of native creating/local event order. They supply no field right, version acquisition, live cursor arrival or current-region selector. |
+
+The linked-access representation and persistence distinction are established
+background from Driscoll, Sarnak, Sleator and Tarjan,
+[Making Data Structures Persistent](https://doi.org/10.1016/0022-0000(89)90034-2),
+§§1–2, `literature-attested`. Lamport,
+[Time, Clocks, and the Ordering of Events in a Distributed System](https://doi.org/10.1145/359545.359563),
+§§2–3, supplies the causal/total-order distinction, `literature-attested`.
+Neither is an acquisition permission or a native locality/arrival theorem.
+Fixed-prefix replay, shuffle inversion, validation by a complete acquired
+change segment, and summing transition differences are mature methods;
+their generic forms are only intermediate steps above. The additional
+mathematics identifies their actual operands, scopes and legal execution
+on these two original native entrances, with genuine Next and saved return.
+
+## 65. Exact retained boundary of the acquisition result
+
+**Proposition 65.1 (what the certificates cannot supply).** The preceding
+results do not yield current-at-Return values under arbitrary later local
+edits, full-h output from availability reached only after the accepted r,
+arrival under unrestricted relevant growth, acquisition without current
+original rights, an old observation checkpoint from a native token alone,
+or an all-domain physical common realization.
+
+**Proof.** A relevant P after r changes an accepted alpha value before
+Return without changing its truthful certificate at r. Proposition 62.2
+prevents any growth-independent movement bound, and Corollary 62.3 states
+the additional hypotheses needed for infinite nonarrival. Proposition
+59.3 separates source versions from observer checkpoints; Definition
+58.1 and Proposition 64.2 separate acquired data from missing authority.
+
+For the availability boundary take AAV1.2's actual finite known-alpha root,
+with empty prehistory, its two acquired exterior cuts a,b and h=2. With no
+growth during acquisition, the request accepts one alpha and Endpoint at
+s=r=u. After that request returns, lawful P at the root followed by S
+produces two leaves inside the same I. Alternatively choose the epoch
+after that root's genuine P preparation. The same request accepts one
+beta and Endpoint at s=r=u. A later genuine Next(1) fetches that actual
+P event and executes S at its still-beta root, by AA20.4–20.5, producing
+two leaves. Both continuations have finitely many relevant events and
+eventual length two, but the completed output has length one at its own r.
+They use actual empty/P histories, original outputs and native returns;
+no future-availability test is part of the acquisition stopping rule.
+
+The finite entrance still has its two real endpoints, and the bilateral
+entrance still assumes its actual ideal selected family and preparation
+bindings. No theorem constructs that family from a finite prefix. The
+additional finite resources have no uniform total bound: outside growth
+can enlarge a later coherent history count and every true observation
+remains retained. The current-tree instrument is supplied by actual
+native arity access; static IX136's canonical rank and XII156's conditional
+mixed-gap geometry supply no such access or selector. Original-control
+M3, C5, native carrier, finite Fock/Gibbs and continuous-field/path domains
+are not identified by these classical relations. Actual apparatus,
+coherent ingress, source supplies, clocks/holds, detector readiness and
+physical error certificates remain independent premises. The outstanding
+unrestricted relevant-interference and cross-domain recovery obligations
+are therefore unchanged. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 66. An actual projective readout on the acquired bank
+
+**Definition 66.1 (the source-specific readout domain).** Retain the two
+authentic AAV entrances, their actual finite known-alpha preparation history
+and the selected bilateral fixed-slope joint source, with each entrance's
+separate empty/$P$ preparation, source/root/tape/epoch/version bindings and
+common input-independent backing. Retain the acquired configuration of
+VI37--57, the seams $m$--$o$ and $o$--$y$, the fixed links $m$--$u$ and
+$u$--$d$, the actual detector at $d$, and the clean acquired helpers $z,w$.
+The old reference $r$ is kept as a physical input port and is not a
+computation wire. Put
+
+$$
+H=\mathbb C|r\rangle\oplus B,\qquad
+B=\operatorname{span}_{\mathbb C}\{|o\rangle,|m\rangle,|y\rangle\},
+\qquad P_r=|r\rangle\langle r|,\quad P_B=I_H-P_r.
+\tag{VI.78}
+$$
+
+For a unit vector $v\in B$, let $P_v=|v\rangle\langle v|$ on $B$,
+extended by zero on $r$. The service domain is every input
+$\rho_{HR}$ on the entire original $H\otimes R$, with arbitrary untouched
+$R$, tensored with the initially independent factor
+
+$$
+|00\rangle\langle00|_{zw}\otimes\eta_{ud},
+\qquad
+\eta_{ud}=|\eta\rangle\langle\eta|,\quad
+|\eta\rangle=(|10\rangle+|01\rangle)/\sqrt2.
+\tag{VI.79}
+$$
+
+The latter preparation is the one independently supplied in VI47--48; it is
+not recreated by the readout. All native source records, controls, pending
+input/output, phase and latch fields, immutable versions, rights, and the
+conditional successor of every accepted or refused native request remain in
+the output interface.
+
+**Lemma 66.2 (finite ideal synthesis on $B$).** In the ideal real-angle
+reference model, every $U\in U(B)$ that fixes the $r$ sector has a finite
+word using the acquired hopping blocks on $m$--$o$ and $o$--$y$ and the
+returned phase blocks $D_m(\phi)$ supplied by VI48. The word acts as the
+identity on $r$ and on all non-mentioned systems. In particular, for every
+unit $v\in B$ there is such a word $U_v$ with
+
+$$
+U_vv=m,\qquad U_vP_vU_v^\dagger=P_m.
+\tag{VI.80}
+$$
+
+**Proof.** On the one-excitation bank sector write
+$X_{ab}=|a\rangle\langle b|+|b\rangle\langle a|$. The hopping
+blocks give $e^{itX_{mo}}$ and $e^{itX_{oy}}$, with both signs on these
+edges. Conjugating $D_m(\phi)$ by the quarter-turn on $m$--$o$ gives
+$D_o(\phi)$; transporting once more through $o$--$y$ gives $D_y(\phi)$.
+The conjugations use the supplied negative $m$--$o$ and $o$--$y$ blocks.
+Each phase is implemented by the returned VI48 macro, with the same
+helpers and standard. Single-coordinate phases and $e^{itX_{ab}}$ give
+all two-level $U(2)$ matrices on either edge by the usual Euler
+factorization. Conjugation by an edge quarter-turn transports a two-level
+matrix on $m,o$ to one on $m,y$, with its known phases corrected by those
+same coordinate phases. Successive two-level eliminations therefore give
+a finite factorization of every $U(3)$ matrix, including its scalar phase.
+In this existence argument a zero entry can be left uneliminated. It
+makes no claim of deciding equality of an effective real with zero.
+
+This uses the mature finite two-level decomposition of
+Reck--Zeilinger--Bernstein--Bertani,
+[*Experimental realization of any discrete unitary operator*,
+Phys. Rev. Lett. 73, 58 (1994), DOI
+10.1103/PhysRevLett.73.58](https://doi.org/10.1103/PhysRevLett.73.58),
+after matching its edges and phase resource to VI37--48. Extend $v$ to an
+orthonormal basis and factor a unitary carrying $v$ to $m$. Every factor
+fixes $r$, so (VI.80) follows. In a return word reverse the bank factors,
+negate each direct-edge angle, and replace each $D_m(\phi)$ by the returned
+macro $C_m(-\phi)$. This implements the inverse on the ideal return
+domain without requiring a negative $m$--$u$ pulse or asserting that this
+expanded return word is the inverse on dirty-helper sectors. $\square$
+
+The angles in this lemma are reference parameters of the ideal word. They
+are not declarations that an arbitrary real angle is one finite command of
+the apparatus. Actual commands are treated in §67.
+
+**Theorem 66.3 (returned binary projective instrument).** In the ideal
+real-angle reference model, for every unit $v\in B$ the same acquired
+apparatus realizes the two-branch instrument
+
+$$
+\mathcal I_{v,a}(\rho_{HR})
+= (L_{v,a}\otimes I_R)\rho_{HR}(L_{v,a}\otimes I_R)^\dagger
+\otimes |00\rangle\langle00|_{zw}\otimes\eta_{ud},
+\quad a\in\{0,1\},
+\tag{VI.81}
+$$
+
+up to the retained branch record and the actual native successor, where
+
+$$
+L_{v,1}=P_v,\qquad L_{v,0}=I_H-P_v.
+\tag{VI.82}
+$$
+
+The formula holds for arbitrary correlations with $R$ and for every input
+on the full $H$, not only on $B$. Branches are subnormalized: a zero
+probability branch is the zero operator and has no assigned normalized
+conditional state. Both branches return the same initially
+independent $\eta$ factor and the clean $z,w$ factors. In the complementary
+branch, for all $q,q'\in v^\perp$,
+
+$$
+(I_H-P_v)|q\rangle\langle q'|(I_H-P_v)=|q\rangle\langle q'|;
+\tag{VI.83}
+$$
+
+so, in particular, coherences between $r$ and every $B$ vector orthogonal
+to $v$ are retained.
+
+**Proof.** Let $T=J_{ud}J_{mu}$ be the fixed transport of VI49.3. Its
+full-bank identity $T^\dagger\Pi_{d,1}T=n_m$, together with the inverse
+transport and the complete $d$ instrument, gives the returned $m$-projective
+branches on the VI78 domain. The phase blocks used in $U_v$ are the
+VI48 words, so VI50 returns $\eta$ after every phase word; the hopping words
+on $m$--$o$ and $o$--$y$ do not touch $u,d,z,w$. Apply $U_v$, transport to
+$d$, retain both detector results, apply the inverse transport, and apply
+the returned realization of $U_v^\dagger$ from Lemma 66.2. The transport
+is chronologically $J_{mu},J_{ud}$; its return is
+$B_{ud}(-\pi/2),J_{mu},J_{mu},J_{mu}$, precisely the six legal routing
+blocks of VI49.3. No negative $m$--$u$ command is used. On $H$ the two
+branch operators are
+
+$$
+U_v^\dagger P_mU_v=P_v,\qquad
+U_v^\dagger(I_H-P_m)U_v=I_H-P_v.
+$$
+
+VI49--57 retain the whole conditional quantum output, not merely the
+outcome probability, and return the independent resource and clean helpers
+on each branch. Tensoring the operator equality with $I_R$ proves (VI.81)
+for matrix units and hence for every mixed correlated input. Equation
+(VI.83) is the defining compression identity of the second branch. A
+probability-only report or a channel that dephases/replaces the returned
+quantum state would not satisfy (VI.81), because it would erase one of the
+matrix units displayed in (VI.83). $\square$
+
+## 67. Effective commands and the complete joint-output error budget
+
+**Definition 67.1 (target selection, literal paths and reference lift).**
+An effective target is a unit $v\in B$ whose complex coordinates admit
+rational enclosures to every requested positive accuracy, with its
+unit-vector certificate. A requested positive tolerance supplies a positive
+rational sub-tolerance. A bank word $W$ consists of direct $m$--$o$ and
+$o$--$y$ hopping blocks and returned $D_m$ macros. Put
+
+$$
+w=W^\dagger m,\qquad
+\tau(W,v)=\|(I_B-P_m)Wv\|
+          =\|P_w-P_v\|.
+\tag{VI.84a}
+$$
+
+The equality follows from the rank-one projector formula and is insensitive
+to the global phase of $w$. The exact ideal choice $W=U_v$ has $\tau=0$.
+For effective approximation $W$ will instead be selected by a strict
+inequality in Proposition 67.2.
+
+For a binary read expand, in chronological order, the ENTIRE word
+
+$$
+W,\ J_{mu},\ J_{ud},\ \text{occupation instrument at }d,\
+B_{ud}(-\pi/2),\ J_{mu},\ J_{mu},\ J_{mu},\ W^{\leftarrow}.
+\tag{VI.84b}
+$$
+
+Here $W^{\leftarrow}$ is the bank-factor inverse realized as in Lemma 66.2.
+Expand each forward or return phase macro into the sixteen VI48 hops,
+including both seven-hop $K$ words. Do this before making an error index.
+Every occurrence is a separate physical command. The two forward and four
+return-routing hops are always indexed, even if $W=I$ for $v=m$.
+Thus if $h$ direct hops and $f$ phases occur in $W$, this chosen binary
+word has $2h+32f+6$ hops and one read. This count serves only to specify
+the complete budget. Repeated reads repeat these routing lists and the
+readiness/certificate obligation.
+
+On an actual finite record path $p$, let $\mathcal H(p)$ contain every
+executed hopping occurrence in every selected read, phase, consumer, coarse
+read and raw native hopping request, including every return and expansion.
+Let $\mathcal D(p)$ contain every detector use, and $\mathcal N(p)$ all
+other primitive services. A pending prefix uses its actual partial list,
+not a completed-return identity. If $\theta_\ell$ is a reference angle,
+choose an allowed signed dyadic $q_\ell$ on the SAME endpoint and put
+
+$$
+|q_\ell-\theta_\ell|\le\delta_\ell,
+\qquad \Gamma_p=\sum_{\ell\in\mathcal H(p)}\delta_\ell.
+\tag{VI.84}
+$$
+
+All $m$--$u$ occurrences in these macros and detector returns are positive;
+their inverse routing is three positive occurrences. Only already supplied
+negative edges, including $u$--$d$, $m$--$o$ and $o$--$y$, are used.
+A selected raw request must have its own supplied sign. No rounded
+quarter-turn is assumed to have exact order four. A macro is counted by
+its expanded occurrences, never again as a separate pulse.
+
+The actual finite command word fixes ALL raw labels: endpoint, sign,
+digit width, enabled/disabled slots, catalogue entries, control fields and
+their recorded bits. The reference lift carries exactly this same word
+and the same policy from finite records to subsequent requests. At a
+completed hopping-command boundary only its quantum action is changed
+from $B(q_\ell)$ to $B(\theta_\ell)$. Ideal angles are semantics of this
+comparison, not extra records or executed real-number commands.
+
+There is also a lift at every intermediate digit cut. Write a nonzero
+$q=\sum_k q_k$, where enabled $q_k$ have its supplied sign and disabled
+slots have $q_k=0$. Choose $q$ with the sign of nonzero $\theta$ and set
+$\theta_k=(\theta/q)q_k$. The slots then have the same endpoints,
+signs, enable bits and catalogue labels in both lifts, while
+$\sum_k\theta_k=\theta$ and
+$\sum_k|q_k-\theta_k|=|q-\theta|$. For $\theta=q=0$ use zero
+slots. Nonzero computable reference angles here can be rounded finely
+enough with the certified same sign. All generators in one command
+commute, so this lift has exactly the stated boundary action. It provides
+a full reference at pending digit cuts without adding an irrational raw
+label. At digit granularity replace a hopping index by its actual slots
+and use $\delta_{\ell k}=|q_{\ell k}-\theta_{\ell k}|$; a pending
+prefix sums only completed slots. The full-command sum is the same.
+Physical certificates can likewise be summed per slot, hold and control
+step, or supplied for the complete implemented command on its full
+interface. Such grouping must cover every executed primitive, and a
+primitive already included in a grouped certificate is not charged again.
+Reference and actual lifts retain the same detector outcome alphabet and
+native successor labels; their probabilities need not agree.
+
+**Proposition 67.2 (effective selection and one joint budget).** For every
+effective unit $v$ and positive tolerance there is a finite construction
+of a word $W$, its legal finite commands and a complete reference lift
+with arbitrarily small target error $\tau$ and rounding sum $\Gamma$.
+This construction needs no equality oracle for effective reals.
+
+More generally, take a finite adaptive program on the declared complete
+interfaces. Let $\mathcal C(p)$ index its completed projective calls for
+which the ideal input has the domain of Theorem 66.3; let $\tau_c$ be
+their target-selection errors. The full-word reference, without a target
+identification outside that domain, is available on every physical sector
+and every pending path. For uniform complete-interface physical
+certificates $e^{\rm phys}_n$ on all non-detector primitives and separately
+supplied detector certificates $e^{\rm det}_d$ on every read, the output
+bound is
+
+$$
+\begin{aligned}
+d_{\rm out}\le e_{\rm init}+\max_p\bigg[
+ &2\sum_{c\in\mathcal C(p)}\tau_c+2\Gamma_p
+ +\sum_{n\in\mathcal H(p)\cup\mathcal N(p)}e^{\rm phys}_n
+ +\sum_{d\in\mathcal D(p)}e^{\rm det}_d\bigg].
+\end{aligned}
+\tag{VI.85}
+$$
+
+The $\tau$ terms are omitted when comparing only with the complete
+full-word reference. They are zero for an exact ideal $U_v$ choice.
+The initial charge $e_{\rm init}$ is one uniform joint half-trace bound
+for ingress, acquisition, preparation, $\eta$, helpers, delivery/backing,
+controls and the SAME finite labels. It is not a resource-marginal bound.
+The supremum defining $d_{\rm out}$ includes every original $\rho_{HR}$
+and arbitrary untouched $R$. Outputs retain the whole growing bank,
+leakage, all source identities and conditional successors, detector and
+controller outputs, raw records, refusals, pending input/output, and
+Print/End/ACK/Return fields. The maximum includes zero-reference-mass
+record paths. For families of finite external commissions use the
+supremum of their path budgets; no uniform finiteness is inferred.
+
+**Proof (effective target selection).** Enumerate all finite bank words
+in $B_{mo}(a),B_{oy}(b),D_m(c)$ with signed-dyadic $a,b,c$.
+Their ideal bank actions form a dense subset of $U(B)$: approximate the
+finitely many real angles in Lemma 66.2, using continuity of finite
+products. Their matrix entries are computable, including the sine and
+cosine values. For a prescribed positive rational $t$, dovetail these
+words and the rational enclosures of $v$ and their matrix entries until
+a certified upper bound for $\tau(W,v)$ is strictly below $t$.
+Density and $U_vv=m$ guarantee such a word; a strict upper-bound
+certificate is eventually found. The test never asks whether an input
+coordinate or residual is exactly zero. It therefore terminates also
+when coordinates vanish or are arbitrarily small. The enumeration is a
+mathematical finite construction, not a complexity or software claim.
+
+Expand the selected finite word by (VI.84b). Every reference angle is
+now computable: the selected dyadics, their halves and signs, or fixed
+$\pi/2$ angles inside $K$ and routing. Rational enclosures of $\pi$
+and these angles give legal signed dyadics with any allocated positive
+$\delta_\ell$. There are finitely many occurrences, so choose their
+sum smaller than the remaining tolerance. This also applies to each
+node of a specified finite adaptive tree. No physical precision follows
+from density; achieving the separate physical budgets remains a premise.
+
+**Proof (complete-output estimate).** For one full physical hopping
+block, its full two-qubit generator has norm one. Consequently, on the
+ENTIRE bank and after tensoring with any reference,
+
+$$
+\|B(q)-B(\theta)\|\le |q-\theta|,
+\qquad
+\tfrac12\|\mathcal U_q-\mathcal U_\theta\|_\diamond
+\le |q-\theta|.
+\tag{VI.85a}
+$$
+
+Here the channels include the identical finite labels. The digit lift
+has the same bound with the sum of its slot differences, so even its
+intermediate quantum states are compared on the complete space. Telescoping
+all occurrences, with the complete occupation instrument between the
+forward and return lists, gives a bound $\Gamma_p$, hence the conservative
+$2\Gamma_p$ used in (VI.85). It is valid for arbitrary dirty helpers,
+resource states and leakage. Every remaining physical or detector
+replacement uses its separately supplied complete half-diamond bound,
+or an equivalent uniform reference-stable certificate on the relevant
+full interface. Readout is not replaced by a probability-only comparison.
+
+On the ideal return domain the selected reference word gives the exact
+returned $P_w,I_H-P_w$ instrument by Theorem 66.3. For either branch,
+$\|L_{w,a}-L_{v,a}\|\le\tau$. Expanding
+$L_{w,a}\rho L_{w,a}^\dagger-L_{v,a}\rho L_{v,a}^\dagger$
+in its two differences gives trace norm at most $2\tau\operatorname{Tr}\rho$.
+Summing the two orthogonal retained label blocks and dividing by two
+gives $2\tau\operatorname{Tr}\rho$, also with arbitrary $R$ and the
+same ideal returned factors. This target comparator copies the same finite
+raw command/catalogue word and all its record fields as the full-word
+reference; $v$ and its ideal action are semantics, not additional raw
+labels. Thus a target replacement has the claimed
+complete, subnormalized bound. For a busy prefix use its full-word
+reference state, without asserting the completed target instrument.
+
+For the finite adaptive estimate use induction backwards from leaves.
+At a normalized node pay its local uniform error, and bound the errors
+of its continuations by the largest child budget: child positive masses
+sum to the parent mass. This proves the maximum-path sum, including
+paths whose reference mass is zero, without normalizing any outcome.
+The complete full-word comparison is valid on perturbed intermediate
+states. Target comparisons use the ideal clean return-domain tree;
+the triangle inequality then combines the two comparisons. A finite
+native interleaving only holds old quantum systems and appends its
+specified vacuum factors; it preserves those ideal service domains.
+If extra raw pulses have made an ideal helper dirty, they still have
+the full-word estimate, but the target/return identification is used
+only where its input hypotheses hold. No path or native request is
+removed to obtain this distinction.
+
+Insert the initial joint discrepancy once, before the common normalized
+program; it subsequently contracts. A common further normalized
+continuation also contracts it, while any new approximate pulses and
+reads add their own charges. Actual approximate factors are never
+asserted pure or exactly returned. No uniform conditional-state estimate
+after division by a small outcome probability follows. $\square$
+
+## 68. The exact classical effect space and its observation kernel
+
+**Definition 68.1 (finite-catalogue classical effects and the full bank).**
+Fix the same input-independent backing, actual source identities and
+versions, preparation/delivery records, clean helpers, independently
+supplied $\eta$, controls and rights as in Definition 66.1. The mathematical
+finite catalogue consists of the literal full-qubit primitives (VI.3)
+at their actual finite signed-dyadic angles, the specified complete
+occupation instrument, and all original native services with their
+hold/vacuum-growth action. The available finite precision and catalogue
+entries are supplied per finite commission as in VI39 and VI51; the union
+below is over these finite commissions. This is not a promise of
+unbounded precision or a fixed device's indefinite lifetime.
+
+A classical event is any finite adaptive/native record event: enabled
+raw hopping requests, accepted or refused $P/S$, genuine Next, common
+external controller inputs, detector results, pending digit/parser/output
+prefixes, phases/latches, Print/End/ACK/Return and finite native growth
+are all included. Policies depend on acquired records and common
+input-independent external inputs, never unknown amplitudes or unrecorded
+phase. Classical source transitions use the authentic native source and
+retain all source material, immutable versions and actual successors.
+No event reads the untouched $R$ as an extra detector.
+
+At each classical configuration $h$ the complete quantum carrier is
+
+$$
+\mathcal K_h=\mathbb C^2_r\otimes\mathcal F_h,
+\qquad Z_h=(|0\rangle\langle0|-|1\rangle\langle1|)_r
+                    \otimes I_{\mathcal F_h}.
+\tag{VI.90a}
+$$
+
+Here $\mathcal F_h$ is the full tensor product of every other physical
+bank qubit, apparatus, retained quantum delivery/control system and
+backing, with no excitation-sector restriction. Source configurations,
+records and different bank sizes occupy orthogonal classical blocks;
+$R$ is additionally tensored with identity. Native growth may change
+$\mathcal F_h$ to a larger space. The original physical qubit $r$ is
+kept with its unchanged identity in every block. A finite event effect is
+$0\le E\le I_H$ defined by its probability on the original full input:
+$\Pr[\text{event}|\rho_H]=\operatorname{Tr}(E\rho_H)$ with the fixed
+common backing. Its joint input effect is $E\otimes I_R$.
+
+Write $\mathcal E_{\rm cl}$ for these mathematical finite-catalogue
+effects and $\mathcal V_{\rm cl}=\overline{\operatorname{span}_{\mathbb R}}
+\mathcal E_{\rm cl}$ in operator norm. Arbitrary additional physical
+deviations are compared by (VI.85); they are not added as new exactly
+symmetric catalogue primitives. An implementation has the exact invariant
+below whenever its actual complete maps also leave $r$ untouched in the
+specified sense. A nonzero error certificate alone does not establish
+that exact property.
+
+**Theorem 68.2 (classical input span and exact law kernel).** On this
+complete finite-catalogue domain, including every raw enabled native
+pulse, every pending path and all finite adaptive native continuations,
+
+$$
+\mathcal V_{\rm cl}=\mathbb R P_r\oplus\operatorname{Herm}(B),
+\qquad \dim_{\mathbb R}\mathcal V_{\rm cl}=1+3^2=10,
+\tag{VI.86}
+$$
+
+inside $\operatorname{Herm}(H)$ of real dimension $4^2=16$. Define
+
+$$
+D(X)=P_rXP_r+P_BXP_B.
+\tag{VI.87}
+$$
+
+Two signed Hermitian input operators have the same classical laws for
+all declared finite events exactly when their difference lies in
+$\ker D$. In particular,
+
+$$
+\operatorname{Tr}(EX)=\operatorname{Tr}(E D(X)),\qquad
+\ker D=\{X:P_rXP_r=P_BXP_B=0\}.
+\tag{VI.88}
+$$
+
+This kernel has real dimension six. The positive readout image is exactly
+
+$$
+\mathcal R_+=D(\operatorname{PSD}(H))
+=\mathbb R_{\ge0}P_r\oplus\operatorname{PSD}(B)
+\cong\mathbb R_{\ge0}\oplus\operatorname{PSD}_3.
+\tag{VI.89}
+$$
+
+**Proof (upper inclusion on growing physical output).** Each primitive
+branch from configuration $h$ to $h'$ has rectangular Kraus maps
+
+$$
+K_{h'h,a,\mu}=I_r\otimes A_{h'h,a,\mu}:
+\mathbb C^2_r\otimes\mathcal F_h\longrightarrow
+\mathbb C^2_r\otimes\mathcal F_{h'},\qquad
+Z_{h'}K_{h'h,a,\mu}=K_{h'h,a,\mu}Z_h.
+\tag{VI.90}
+$$
+
+There is no claim that these are square maps on $H$. This statement
+is checked on the actual primitives. Every enabled hopping or digit block
+acts on two endpoints other than $r$, at any allowed angle and on all
+occupations. Disabled slots are identity. Every expanded phase, coarse
+read, consumer and return is a composition of those maps and the fixed
+$d$ instrument; its retained outcome branches also act trivially on $r$.
+The detector's physical output systems stay in $\mathcal F_{h'}$.
+Native edits hold every old qubit and append the prescribed independent
+vacuum factors, so their quantum maps are $I_r$ tensored with a vacuum
+embedding. This includes growth at an old helper, a dormant marker or
+outside the current observation window. Source edits and genuine Next
+retain their actual classical event and successor. Their guards,
+refusals, input consumption, locks, phases/latches, waiting and
+Receive/Parse/Guard/Tag/Reserve/Maintain/FetchGrowth/Print/End/ACK/Return
+steps use the declared classical source and common inputs, with identity
+holds on old quantum systems. They therefore also have (VI.90), with
+possibly different output spaces and classical records. A pending cut
+is a composition of the primitives actually completed before it, so has
+the same property, without assuming clean helpers or return.
+
+Adaptive choices condition on these records. Composing rectangular
+maps and summing hidden Kraus indices proves (VI.90) at every finite
+record path by induction. For an event $\gamma$, the complete-output
+effect on the physical ingress carrier is
+$F_\gamma=\sum_{\gamma,\mu}K_{\gamma,\mu}^\dagger K_{\gamma,\mu}$,
+where the sum is over the event's paths, with every output identity
+included. The intertwining identity gives
+$[F_\gamma,Z_{h_0}]=0$; indeed it is $I_r\otimes G_\gamma$ before
+restriction to the correlated code embedding and fixed backing.
+
+To take that restriction, purify the fixed common backing into a retained
+spectator if necessary, and let $V:H\to\mathcal K_{h_0}$ be the full
+ingress isometry with that purification. It has the actual source
+one-excitation embedding, clean helpers and the independent standard.
+It satisfies
+
+$$
+Z_{h_0}V=VZ_H,\qquad Z_H=P_B-P_r,\qquad
+E_\gamma=V^\dagger F_\gamma V.
+\tag{VI.91a}
+$$
+
+The purification is a mathematical spectator, not an accessible readout
+or an extra preparation. Equivalently take a fixed mixed-backing
+expectation. Thus $[E_\gamma,Z_H]=0$, giving precisely the INPUT effect
+
+$$
+E_\gamma=\alpha_\gamma P_r\oplus E^B_\gamma,\qquad
+0\le\alpha_\gamma\le1,\quad 0\preceq E^B_\gamma\preceq I_B.
+\tag{VI.91}
+$$
+
+At no stage is the retained quantum output projected into $H$ or its
+leakage erased. For example the permitted single request $B_{mz}(1)$
+sends the original $m$ input to
+$\cos(1)|m\rangle+i\sin(1)|z\rangle$ with the same independent
+$\eta$. The $z$ component lies outside $H$, with squared norm
+$\sin^2(1)$. This output is retained in $\mathcal F_{h'}$ and still
+has $r$ occupation zero, exactly as (VI.90) requires. Subsequent native
+growth or pending output does not change the argument. Only the
+calculation of a classical marginal uses $K^\dagger K$; the complete
+quantum states themselves retain all their coherences. This proves the
+upper inclusion on the original input domain without reducing the future
+catalogue or treating the isolated $r$ as a disposable classical flag.
+
+**Proof (lower inclusion by finite effects and closure).** For each
+effective unit $v\in B$, choose the finite words of Proposition 67.2
+with $\tau\to0$ and $\Gamma\to0$. Give their finite commands their
+exact literal actions (VI.3) and the specified detector/native maps;
+this is the mathematical finite-catalogue model, so additional physical
+errors and initial error are zero. These finite instruments, including
+their imperfect finite returns and all records, have attainable yes
+effects $E_{v,k}\in\mathcal E_{\rm cl}$. On every full $H$ input,
+(VI.85) implies
+
+$$
+\|E_{v,k}-P_v\|
+=\sup_{\rho_H}|\operatorname{Tr}((E_{v,k}-P_v)\rho_H)|
+\le 2\tau_k+2\Gamma_k\longrightarrow0.
+\tag{VI.92a}
+$$
+
+The equality is the variational formula for a Hermitian operator.
+Thus $P_v$ belongs to the declared norm-closed real span; no
+arbitrary-real ideal projector is asserted to be an exact finite command.
+It suffices to use the three bank basis vectors and, for each unordered
+pair $i,j\in\{o,m,y\}$, the two effective vectors
+
+$$
+\frac{|i\rangle+|j\rangle}{\sqrt2},\qquad
+\frac{|i\rangle+i|j\rangle}{\sqrt2}.
+\tag{VI.92}
+$$
+
+Subtracting the corresponding diagonal projectors gives the real and
+imaginary off-diagonal Hermitian matrix units. These nine projectors
+span $\operatorname{Herm}(B)$. The sure finite event has effect $I_H$;
+hence $P_r=I_H-P_o-P_m-P_y$ is also in the closed real span. The
+right-hand side of (VI.86) is finite dimensional and closed, proving
+equality.
+
+Pinching is the trace-orthogonal projection onto this space. Vanishing
+against all finite effects is equivalent, by continuity and (VI.86),
+to vanishing against every block-diagonal Hermitian operator, hence to
+$D(X)=0$. This proves the law kernel and (VI.88). A positive block
+pinching is positive, and every element on the right of (VI.89) is itself
+positive and fixed by $D$, proving the exact positive image. The
+normalized image uses the original trace unit.
+
+This is a span-and-law statement. It does not assert that the whole
+block-diagonal effect interval is one callable finite menu, nor that a
+bounded physical device realizes the closure. Arbitrary additional
+physical errors may break (VI.90), for instance through an unintended
+$r$ interaction, however small their certified norm. Exact laws then
+require a separate exact symmetry premise; (VI.85) supplies only the
+claimed approximate comparison. $\square$
+
+## 69. The surviving same-backing pair and the complete-output floor
+
+**Proposition 69.1 (classical indistinguishability after the resource).**
+On the same-backing full-input domain, set
+
+$$
+|\psi_\pm\rangle=(|r\rangle\pm|o\rangle)/\sqrt2.
+\tag{VI.93}
+$$
+
+In the literal finite-catalogue model of Definition 68.1, after the
+independent $\eta$ preparation, the two inputs have the same classical
+law under every finite declared native continuation, including
+arbitrary actual records, refusals, controller inputs, raw enabled pulses,
+pending paths, finite growth,
+genuine Next and every returned phase or projective readout. The assertion
+concerns the classical marginal; the returned quantum states may retain the
+sign of the $r$--$o$ coherence.
+
+**Proof.** The difference of the two densities is
+$|r\rangle\langle o|+|o\rangle\langle r|$, which is in $\ker D$. Apply
+Theorem 68.2 to every finite adaptive continuation. Equivalently, each
+record effect has form (VI.91), so its trace against that difference is zero.
+The eta factor is input-independent. Every VI48--57 phase, consumer, raw
+native pulse and native continuation has the full-bank intertwining
+property (VI.90), whether or not a pending branch has returned its helpers. Induction over the
+record tree proves equality of the entire classical laws. No step replaces
+the actual quantum output by its pinched state; only the declared classical
+readout is insensitive to the coherence. $\square$
+
+**Corollary 69.2 (uniform binary distinguishing bound).** Let a binary
+instrument on this same domain be required to output different ideal labels
+on $\psi_+$ and $\psi_-$, while using the exact declared catalogue and
+continuations of Definition 68.1 (or an implementation with the same exact
+symmetry). Its uniform complete-output half-trace error is at least
+$1/2$.
+
+**Proof.** The actual probability of one selected label is the same number
+$p$ on both inputs by Proposition 69.1. The ideal label laws are the two
+point masses, so the two marginal half-trace errors are $p$ and $1-p$.
+Their maximum is at least $1/2$. Taking a classical outcome marginal is a
+trace-norm contraction, hence the complete returned quantum-and-record
+output has at least the same uniform error. This lower bound does not claim
+that the native process destroys the inaccessible coherence; it is witnessed
+already by the outcome marginal. A separately supplied $r$--$B$ coupling or
+detector would be a different source domain and is outside this proposition.
+$\square$
+
+## 70. The direct-sum readout boundary and static reconstruction
+
+**Proposition 70.1 (the cross-sector face and the supplier boundary).**
+The exact readout cone (VI.89), on its normalized trace-one base, fails
+global L2. Its scalar-sector pure point and any bank pure point generate
+a segment, although the original full quantum output still contains
+cross-sector coherences. This quotient is not a full $\operatorname{PSD}_4$
+state/effect correspondence for the acquired apparatus.
+
+**Proof.** For a unit $v\in B$, $0\le t\le1$ and any phase $\phi$,
+
+$$
+\psi_{t,\phi}=\sqrt t\,|r\rangle+e^{i\phi}\sqrt{1-t}\,|v\rangle
+\quad\Longrightarrow\quad
+D(P_{\psi_{t,\phi}})=tP_r+(1-t)P_v.
+\tag{VI.94}
+$$
+
+The scalar and rank-one bank rays are extreme in the direct-sum cone.
+Its smallest face containing them is their nonnegative span: any positive
+decomposition of a bank matrix supported on $\mathbb Cv$ has that same
+support, and any decomposition of a zero scalar component has zero scalar
+components. Its normalized base is therefore exactly the segment joining
+$P_r,P_v$. A segment has dimension one; the whole complex two-level
+face required by L2 is a closed three-ball. The bank sector alone has
+$\operatorname{PSD}_3$, but this does not repair the cross-sector L2
+failure. Equation (VI.94) is an observational image, not a channel asserted
+to have physically replaced the returned state by $D(\rho)$.
+
+For comparison, the supplied [Binary Tangent XIII, §§160--162, pinned
+source](https://github.com/the-omega-institute/trureturing/blob/657a8ba435bf2cae463e935d957d8038b69be8a3/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md)
+uses a complete original finite ordered space, strict unit and its full
+original effect interval. Theorem 162.10, relative to its stated suppliers,
+gives the conditional single-system equivalences
+L2 + NC + AD iff L2 + NC + DS iff a cone-and-unit isomorphism with complex
+PSD/trace. AD is perfect distinguishability of every intrinsic antipodal
+pair by an effect of the full original interval; DS is its equivalent
+whole difference-body section condition. Theorem 162.19 separately gives
+complete EB3 + actual L2 iff an original qutrit, with pure PR a conclusion;
+it is a single-system statement, not EB3 on a triple cone. Neither
+L2 + NC to AD nor bare EB3/pure PR to L2 is assumed solved.
+
+Theorem 161.5 uses its whole-three-copy G3 geometry and conditional
+single-cone supplier. Theorem 162.16 supplies the alternative whole-three-copy
+L2 + NC + AD (equivalently DS) entrance. Both retain the entire all-finite
+background: every original $W_N=V^{\otimes N}$, closed pointed generating
+cones, strict tensor units, all original effect intervals, the every-split
+min/max sandwich, product pairing/local tomography, positive permutations
+and actual reassociation. Their conclusion is one common $\theta$ with
+$\theta^{\otimes N}(C_N)=\operatorname{PSD}_{n^N}$ for EVERY finite
+$N$, preserving all correlated inputs and finite spectators. It is not a
+three-level truncation.
+
+After that conclusion, §§161.7--161.9 and §162.9 give the complete
+spectator-positive/CP/Choi/rectangular-Kraus and mathematical-instrument
+dictionary, trace budgets, zero-mass branches and finite adaptive
+composition. The sharp-neutral conclusion additionally requires a
+positive sharp branch fixing every certain-yes pure state; repeatability
+alone does not pay that premise. A separately specified continuous
+normalized order group has its unitary lift/generator; the cone does not
+select that action, physical clocks, energy calibration or $\hbar$.
+
+These supplied mathematical conclusions remain intact on their own
+original domains. The present actual-source correspondence gives only
+the readout cone (VI.89), with the exact six-dimensional classical kernel
+and the segment face above. It therefore does not establish those
+whole-domain reconstruction premises or identify its operational quotient
+with the full original $H$. Neither supplier provides a native $r$ gate,
+device saturation, coherent source transport, acquired rights, clean
+helpers, detector readiness, hold or Return service. Those actual
+source-matched operations remain separate premises. Equality of dimensions
+or a static effect representation cannot identify this source with the
+distinct original-control double-wall preparation. $\square$
+
+## 71. Native service, record and return interface
+
+**Proposition 71.1 (finite allowed continuations).** Every finite lawful
+continuation of Theorem 66.3 or Proposition 67.2 retains the complete native
+service interface. A continuation may interleave finitely many target
+readouts, VI48 phase calls, VI49.3 consumers, and arbitrary native
+$P/S/\mathrm{Next}$ futures. It is admissible only with the following
+supplied boundaries:
+
+1. The acquired endpoint identities, fixed links, common backing, one-time
+independent $\eta$ preparation, clean-helper supply and actual detector
+readiness are present; no seed replacement, reset, rewind, graft, new edge,
+extra preparation or reference readout is introduced.
+2. Every command is a finite signed-dyadic word with its own enabled/disabled
+slots, angle enclosure and separately supplied physical accuracy certificate.
+Finite material, finite output, serialization, holds, clocks and progress
+are supplied for the selected path; arbitrary real angles and infinite
+continuations are not silently treated as finite commands.
+3. Current rights and locks authorize each read, phase, source edit and
+Return. A refusal, pending input/output, phase/latch state or unavailable
+successor is retained with its original reason and is not converted into a
+successful result. Immutable records and their acquisition versions are not
+rewritten, and preparation or detector grants are not restored by return.
+4. Receive, Parse, Guard, Tag, Reserve, edit, Maintain, FetchGrowth,
+Print, End, ACK and Return keep their original meanings. Each conditional
+quantum branch retains its actual successor, complete command/record word,
+output prefix and unprinted suffix. The returned source keeps its actual
+physical identity and all material in the growing bank; membership of its
+quantum output in $H$ is asserted only where the ideal instrument theorem
+proves it, never for arbitrary raw or pending paths.
+
+**Proof.** Theorems 48.1, 49.3, 54.1 and 55.1 give the ideal
+returned-factor identities on their stated input domains. Theorem 66.3
+adds the full-$H$ bank-projective calls. Induct on a finite interleaving
+of these ideal services and arbitrary original native requests. Native
+steps retain every old quantum identity and state, and append only their
+specified vacuum factors. Thus they preserve the ideal service return
+domains even when labels, versions and source size change. The phase or
+readout then returns its ideal helpers and standard on each
+subnormalized branch. The actual native transition and rights guard stay
+unchanged at every phase: the next request starts from its actual Ready
+or the explicitly retained pending state. This proves preservation of
+all original native services, not just a restricted record menu.
+
+An additional enabled raw hopping request or an interrupted macro is
+also lawful. Its entire output is retained by (VI.90); if its helpers
+are dirty, no exact service-domain or purity assertion is inferred.
+A later source request still has its full native state domain and reply;
+readiness, progress and resources for a new detector or quantum service
+must be supplied separately. Finite allowed interleaving therefore
+neither disables native services nor promises that arbitrary raw quantum
+work prepares a subsequent service's clean input.
+
+For finite commands use the normalized full-bank comparison of
+Proposition 67.2. Charge every call's expanded forward/return pulses,
+each read's detector certificate and every other physical service on
+its actual finite record path, exactly once per occurrence. The existing
+$174$, $16$ and $23$ hop words from VI56/51 can be included by their
+already expanded lists, without charging their internal phase twice.
+Backward induction on the finite record tree gives (VI.85), with one
+initial joint charge and no independence assumption on dirty approximate
+states. At a completed ideal return it bounds the actual complete output
+against the decoupled comparator, rather than asserting an exact actual
+return. At a pending cut it compares the corresponding full busy outputs.
+The induction stops at the selected finite End/ACK/Return, or retains
+the selected pending state when progress has not been supplied.
+$\square$
+
+**Boundary 71.2 (what this increment does not supply).** The construction
+does not give an all-instrument catalogue, an unconditional physical origin
+of the acquired source, an actual universal clock or time law, a detector
+for the $r$--$B$ coherence, or full-space recoverability of arbitrary
+quantum effects. It gives a returned projective instrument for every
+$v\in B$ in the ideal reference model, finite effective approximants with
+the explicit joint bound (VI.85), the exact classical quotient (VI.86)--
+(VI.89), and the source-specific obstruction (VI.93)--(VI.94). The actual
+apparatus, rights, holds, progress, finite supplies and physical certificates
+remain premises of every finite use. These conclusions preserve the ordered
+alpha/beta grammar, actual addressed $P/S$, genuine Next and the internal
+observer, and do not identify this native source with the separate
+original-control $M_3$ preparation.
+
+The two-level decomposition, phase kickback, finite channel-distance
+estimates, and block-invariant effect-span reasoning used above are mature
+mechanisms: the former is credited to Reck
+et al. as cited in Lemma 66.2, phase kickback to Cleve--Ekert--Macchiavello--
+Mosca, [quant-ph/9708016v1, §§1 and 7](https://arxiv.org/html/quant-ph/9708016),
+and the finite CP/instrument and trace-distance background to Watrous,
+*The Theory of Quantum Information*, Chapters 2--3
+([public text](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)). The
+source-specific synthesis, complete executed-word budget and
+growing-bank restriction in §§66--71 are repo-derived applications of
+those mechanisms. Their generic statements are used only inside the
+actual VI37--57 source correspondence; they do not add a native operation, preparation, detector or right.
+
+## 追加锚（本行以下为增补区）
