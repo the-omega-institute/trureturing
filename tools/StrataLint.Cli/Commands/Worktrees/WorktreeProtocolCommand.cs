@@ -137,7 +137,7 @@ internal static class WorktreeProtocolCommand
         // Dependency order: protocol imports the publication and preservation
         // adapters. These modules use only
         // host Python standard-library modules and native Git beyond this set.
-        foreach (var name in new[] { "maintenance_log", "worktree_protocol", "worktree_agent_state", "worktree_publication", "worktree_preservation", "worktree_host_cleanup", "worktree_pool" })
+        foreach (var name in new[] { "maintenance_log", "worktree_protocol", "worktree_maintenance", "worktree_agent_state", "worktree_publication", "worktree_preservation", "worktree_host_cleanup", "worktree_pool" })
         {
             using var stream = assembly.GetManifestResourceStream($"WorktreeProtocol.{name}.py")
                 ?? throw new InvalidOperationException($"worktree adapter module is unavailable: {name}");

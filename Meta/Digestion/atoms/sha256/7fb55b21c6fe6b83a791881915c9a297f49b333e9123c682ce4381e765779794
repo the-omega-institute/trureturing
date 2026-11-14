@@ -1,0 +1,39 @@
+**引理146.4（纯分支对任意正支持态）。** 设 $P$ 为投影，$v$ 为单位向量，$c=\|Pv\|^2\le1/k$，$k\ge2$。任意 $p\ge0$、$\sigma\succeq0$、$P\sigma P=\sigma$、$\operatorname{tr}\sigma=q$ 满足
+
+$$
+\|p|v\rangle\langle v|-\sigma\|_1
+ \ge F_k(p,q):=\sqrt{(p+q)^2-4pq/k}.
+\tag{XII146.6}
+$$
+
+**证明。** $p=0$ 或 $q=0$ 由迹给出；$c=0$ 由正交支持给出。其余令 $e=Pv/\sqrt c$、$f=(I-P)v/\sqrt{1-c}$，对 $\operatorname{span}\{e,f\}$ 及其正交补作数学 pinching。它保持实际纯算子不变，理想第一块为 $x|e\rangle\langle e|$，余块正且迹为 $q-x$，$0\le x\le q$。二维差矩阵的行列式是 $-px(1-c)$，故其迹范数为 $f_c(p,x)=\sqrt{(p+x)^2-4pcx}$，退化端点也成立。原范数至少为 $f_c(p,x)+q-x$。又
+
+$$
+\frac{\partial f_c}{\partial x}=\frac{x+p(1-2c)}{f_c(p,x)}\le1,
+\qquad f_c(p,x)^2-[x+p(1-2c)]^2=4p^2c(1-c)\ge0.
+$$
+
+所以 $f_c(p,x)-x$ 不增，最小值在 $x=q$。再用 $c\le1/k$ 得结论。此处对任意理想混态作了支持和质量的优化，没有使用只适用于两个纯态的距离等式。证毕。
+
+以下范数形式同时处理离散和可测记录。令
+
+$$
+N_k(x,y)=\sqrt{\alpha^2(x+y)^2+(1-\alpha^2)(x-y)^2},
+\qquad \alpha=\sqrt{1-1/k}.
+\tag{XII146.7}
+$$
+
+它是实二维范数，且 $N_k(p,q)=F_k(p,q)$（$p,q\ge0$）、$N_k(0,y)=|y|$。三角不等式给出
+
+$$
+\begin{gathered}
+\int F_k(p_h,q_h)\,d\nu(h)\ge
+ F_k\left(\int p_h\,d\nu(h),\int q_h\,d\nu(h)\right),\\
+s+F_k(p,q)\ge F_k(p+s,q),\qquad
+F_k(m,q)+|m-q|\ge2\alpha m.
+\end{gathered}
+\tag{XII146.8}
+$$
+
+离散和可数情形取计数测度；一般情形由向量积分的三角不等式，或非负可积密度的简单函数逼近得到。第二式把向量 $(s,0)$ 加入；第三式是 $N_k(m,m)\le N_k(m,q)+N_k(0,m-q)$。没有要求两边记录质量相等。
+

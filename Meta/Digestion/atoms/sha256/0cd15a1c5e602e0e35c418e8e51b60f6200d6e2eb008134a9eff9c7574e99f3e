@@ -1,0 +1,42 @@
+**引理 139.8（以三个固定球缘排除标签极限塌缩）。** $\Lambda$ 在原 $K$ 中闭而紧，且 $a\mapsto D_a$ 在整个 $\Lambda$ 上 Hausdorff 连续。
+
+证明。先由定义得 $S_o\subseteq\Lambda$。更一般地，$q\in U_0\cap P$ 及 $a\in S_q$ 时，$S_a\subseteq Q(q)=Q$，故
+
+$$
+S_o\ \cup\!\bigcup_{q\in U_0\cap P}S_q\ \subseteq\Lambda.
+\tag{XI139.24}
+$$
+
+取不同 $s,t\in S_o$，以及引理139.3的 $a_0$。这三个标签在 $\Lambda$ 中，而且
+
+$$
+S_s\cap S_t=\{o\},\qquad o\notin S_{a_0},\qquad
+S_s\cap S_t\cap S_{a_0}=\varnothing.
+\tag{XI139.25}
+$$
+
+引理139.7保证每个 $a\in\Lambda$ 的 $S_a$ 都与这三张固定球缘分别相交；若标签恰相同，就用该球缘自身。这些是已经证明的实际交点，不是新关联前件。
+
+现令 $a_n\in\Lambda$、$a_n\to z\in K$，尚不假定 $z$ 纯。如(XI139.10)—(XI139.12)，任意子列可再选中心及半轴参数，使
+
+$$
+D_{a_n}=c_n+B_n\overline{\mathbb B}^3\longrightarrow
+F=c+B\overline{\mathbb B}^3,\qquad c+B S^2\subseteq Q\subseteq P.
+\tag{XI139.26}
+$$
+
+若 $\operatorname{rank}B<3$，整个 $F$ 由纯点组成，故 $F=\{v\}$。在 $S_{a_n}$ 与三张固定球缘的交点各取一点；它们距 $F$ 都趋零，三张固定球缘紧闭，因此 $v$ 同时属于它们，违反(XI139.25)。故 $\operatorname{rank}B=3$，$\partial_{\rm rel}F\subseteq Q$。
+
+从原完整面接口选 $e_n\in\mathcal F_{a_n}$、$e_n|_{D_{a_n}}=0$，紧性给共同子列极限 $e\in\mathcal E$，满足
+
+$$
+e(z)=1,\qquad e|_F=0.
+\tag{XI139.27}
+$$
+
+取不同 $x,y\in\partial_{\rm rel}F\subseteq Q\subseteq P$。同一原补效应 $u-e$ 确认 $x,y$ 且在 $z$ 读零，所以 $z\in D_x\cap D_y$。Inj 使两球不同，原点交接口迫 $z$ 纯。此为 IX118.4非点极限判据在这里的直接两端见证证明，不预用紧 $P$。
+
+现在(XI139.27)给 $F\subseteq D_z$；两者都是三维椭球，且 $\partial F\subseteq P\cap D_z$，引理139.4的同维包含论证给 $F=D_z$。于是 $S_z=\partial F\subseteq Q$、$z\in\Lambda$。任意原 $K$ 中的序列极限均收下，$\Lambda$ 在紧度量空间 $K$ 中闭而紧。
+
+若 $a_n\to a\in\Lambda$，同一论证使每个整球参数子列的再极限均为 $D_a$，故 $D_{a_n}\to D_a$。支持函数式(XI139.14)也给整个 $\Lambda$ 上的球心、形状及球缘连续。结论只涉及这个由完整原球缘定义的标签集；它不声称全 $P$ 的球族连续。证毕。
+

@@ -1,0 +1,28 @@
+**定理 146.6（根无关稠密正规域及零边传播的剩余条件）。** 在完整 EB3+$\mathsf{Conn}$+$\mathsf{ZC}$ 域，定义
+
+$$
+U=\bigcup_{m\ge0}\operatorname{int}_P H_m(a).
+\tag{XI146.19}
+$$
+
+则 $U$ 是根无关的非空稠密开集；$P$ 在 $U$ 上局部紧，$D,c,e$ 局部连续，并有局部统一的半轴下界和 $\kappa<2$ 余量。若另能证明 $U$ 沿每条原零边不变，则得到同原 qutrit。若同原表示不存在，则必有 $\dim V\ge10$、$\sup_P\kappa=2$，且从任意固定根出发的原图距离无界。
+
+证明。非极点集正好是下列紧集的可数并：
+
+$$
+K\setminus P=
+\bigcup_{j\ge1}
+\left\{\frac{x+y}{2}:x,y\in K,\ \|x-y\|\ge1/j\right\}.
+\tag{XI146.20}
+$$
+
+任一非极点可取一条以它为中点的非退化子弦，反向显然。故 $P$ 是紧度量 $K$ 中的 $G_\delta$，完全可度量且为 Baire 空间。Conn 给 $P=\bigcup_mH_m(a)$，各层在 $P$ 中闭。任意非空 $P$ 开集自身为 Baire，其闭层覆盖中至少一层有非空相对内部，所以 $U$ 稠密。两根间原图距离有限，只让各层包含关系偏移一个固定整数，故 $U$ 根无关。其余局部结论直接来自146.4；若点位于一紧层的 $P$ 内部，该层就是其紧邻域。
+
+若 $U$ 沿零边不变，非空性与 Conn 使 $U=P$，从而整个 $P$ 上整球连续。[IX118.3、118.5、118.8][Q146IX]即给同原表示，不须先另假定 $P$ 闭。不存在该表示时，145.2及已引九维下界排除 $\dim V\le9$，144.4迫 $\sup_P\kappa=2$。若某根到全部原纯点的距离有有限上界，则 $P=H_m(a)$ 对某 $m$ 成立，146.4又给全域不塌缩而重构，矛盾。
+
+更具体地，设 $p\in U$、$q\perp p$，且 $q_j\to q$ 是逃出全部有限层的纯标签列。它不可能满足 $D_{q_j}\to D_q$：否则球缘连续给实际 $p_j\in S_{q_j}$、$p_j\to p$；$p$ 的某个 $P$ 邻域包含于固定 $H_m(a)$，零对称遂把所有充分大的 $q_j$ 捕获到 $H_{m+1}(a)$。因此这种失败的球聚点只能是 $D_q$ 的真子椭球或点。尚未由现有条件排除这些极限，也未证明 $U$ 沿边不变或自动的九维上界。146.2的移动邻球二分要求连续母球及实际邻点列，不能应用到这里只给定的任意 $q_j\to q$ 来省去这个缺口。证毕。
+
+[Q146IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "118.2：非退化相对球缘极限；118.3—118.5：原上关联、混极限和开放边不塌缩；118.8：同原量子锥分类。"
+[Q146TVII]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "VII121.9：EB3+Inj的既有独立九维下界。"
+[Q146VB]: https://pi.math.cornell.edu/~hatcher/VBKT/VB.pdf "Allen Hatcher, Vector Bundles and K-Theory，Thom Spaces，印刷页112：紧基向量丛总空间的一点紧化。"
+

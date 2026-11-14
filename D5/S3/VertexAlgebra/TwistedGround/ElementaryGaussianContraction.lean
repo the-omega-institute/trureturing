@@ -46,7 +46,7 @@ private theorem join_sub_right (d : I →₀ ℕ) (n : J →₀ ℕ) (a : J) :
       d.sumElim (n - Finsupp.single a 1) := by
   ext (b | b) <;> simp [Finsupp.sumElim_apply, Finsupp.single_apply]
 
-private theorem step_left (A : Matrix (I ⊕ J) (I ⊕ J) ℂ)
+theorem step_left (A : Matrix (I ⊕ J) (I ⊕ J) ℂ)
     (hs : ∀ i j, A i j = A j i) (d : I →₀ ℕ) (n : J →₀ ℕ) (i : I) :
     nativeMoment A ((d + Finsupp.single i 1).sumElim n) =
       (∑ k, (d k : ℂ) * A (.inl i) (.inl k) *
@@ -68,7 +68,7 @@ private theorem step_right (A : Matrix (I ⊕ J) (I ⊕ J) ℂ)
 
 /-- Each shared occurrence must pair with an external occurrence. The proof
 uses the shared insertion equation, including zero external dimension. -/
-private theorem shared_support (M : (I →₀ ℕ) → (J →₀ ℕ) → ℂ)
+theorem shared_support (M : (I →₀ ℕ) → (J →₀ ℕ) → ℂ)
     (T : Matrix I J ℂ)
     (hstep : ∀ d n a, M d (n + Finsupp.single a 1) =
       ∑ i, (d i : ℂ) * T i a * M (d - Finsupp.single i 1) n)
@@ -120,13 +120,13 @@ def effectiveKernel (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
     (R : Matrix I J ℂ) (S : Matrix J E ℂ) :
     Matrix (I ⊕ E) (I ⊕ E) ℂ := Matrix.fromBlocks P (R * S) (R * S).transpose Q
 
-private theorem left_symm (P : Matrix I I ℂ) (R : Matrix I J ℂ)
+theorem left_symm (P : Matrix I I ℂ) (R : Matrix I J ℂ)
     (hP : ∀ i k, P i k = P k i) :
     ∀ i k, leftKernel P R i k = leftKernel P R k i := by
   intro i k
   cases i <;> cases k <;> simp [leftKernel, Matrix.transpose_apply, hP]
 
-private theorem right_symm (Q : Matrix E E ℂ) (S : Matrix J E ℂ)
+theorem right_symm (Q : Matrix E E ℂ) (S : Matrix J E ℂ)
     (hQ : ∀ j k, Q j k = Q k j) :
     ∀ i k, rightKernel Q S i k = rightKernel Q S k i := by
   intro i k
@@ -159,7 +159,7 @@ private theorem right_shared_step (Q : Matrix E E ℂ) (S : Matrix J E ℂ)
   simpa [rightKernel] using
     step_left (rightKernel Q S) (right_symm Q S hQ) n e a
 
-private theorem left_vanish (P : Matrix I I ℂ) (R : Matrix I J ℂ)
+theorem left_vanish (P : Matrix I I ℂ) (R : Matrix I J ℂ)
     (hP : ∀ i k, P i k = P k i) (d : I →₀ ℕ) (n : J →₀ ℕ)
     (h : d.degree < n.degree) :
     nativeMoment (leftKernel P R) (d.sumElim n) = 0 :=
@@ -387,7 +387,7 @@ private theorem moment_contraction (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
 
 /-- Exact support for the summand in elementary Gaussian sewing. Shared
 occupation degree is bounded by both external occupation degrees. -/
-private theorem coefficient_support (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
+theorem coefficient_support (P : Matrix I I ℂ) (Q : Matrix E E ℂ)
     (R : Matrix I J ℂ) (S : Matrix J E ℂ)
     (hP : ∀ i k, P i k = P k i) (hQ : ∀ j k, Q j k = Q k j)
     (d : I →₀ ℕ) (e : E →₀ ℕ) (n : J →₀ ℕ)

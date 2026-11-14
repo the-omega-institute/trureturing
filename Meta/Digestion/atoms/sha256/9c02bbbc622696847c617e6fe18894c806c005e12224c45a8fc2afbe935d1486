@@ -1,0 +1,24 @@
+**引理 139.6（Euler 数的绝对值为一）。** 选定 $S_o$ 与 $\xi_o$ 的定向，令 $\alpha$ 生成 $H^2(S_o;\mathbb Z)$，$e(\xi_o)=n\alpha$。则 $n=\pm1$，$H_2(Q;\mathbb Z)\cong\mathbb Z$，交形式为 $[\pm1]$，并有底层拓扑同胚 $Q\cong\mathbb{CP}^2$。
+
+证明。引理139.5给的是基为紧二维球面的可定向实秩二向量丛，其盘／球丛是实际局部平凡丛对。[Hatcher，Theorem 4D.10、Corollary 4D.9][Q139AT]因此供应整数 Thom 类 $\tau$ 及同构
+
+$$
+\Phi_\xi:H^i(S_o;\mathbb Z)\overset\sim\longrightarrow
+\widetilde H^{i+2}(Q;\mathbb Z),\qquad
+\Phi_\xi(1)=\tau.
+\tag{XI139.18}
+$$
+
+于是 $H^2(Q)=\mathbb Z\tau$、$H^4(Q)=\mathbb Z\Phi_\xi(\alpha)$，其他正次上同调为零。Euler 类是 Thom 类在零截面的限制；原 Thom 平方公式准确给
+
+$$
+\tau\smile\tau=\Phi_\xi(e(\xi_o))=n\Phi_\xi(\alpha).
+\tag{XI139.19}
+$$
+
+公式及相对乘法的类型见[Hatcher，§4.D末段及 Vector Bundles and K-Theory §3.2，印刷页88、91—92][Q139AT][Q139VB]。
+
+此时 $Q$ 已是闭、连通、整数可定向四维拓扑流形，才可用[Hatcher，Theorem 3.30、Corollary 3.39][Q139AT]。后者对无限循环直和项的生成元 $\tau$ 要求存在 $m\tau\in H^2(Q;\mathbb Z)$，使 $\tau\smile m\tau$ 生成 $H^4(Q;\mathbb Z)$。由(XI139.19)，$mn=\pm1$，所以 $n=\pm1$。整数对偶给 $H_2(Q;\mathbb Z)\cong\mathbb Z$，秩一交形式遂为 $[\pm1]$；符号依定向。
+
+拓扑识别只消费成熟丛分类。[Hatcher，Proposition 1.14及印刷页26—27的秩二球面基分类][Q139VB]以 $S^1\to SO(2)\cong S^1$ 的粘合次数分类 $S^2$ 上的可定向实秩二丛；其次数的绝对值等于 Euler 数绝对值，这也是 Proposition 3.22的首个截面障碍识别。因此忘掉定向后，$|n|=1$ 的丛是 Hopf 复线丛的底层实丛。该丛的 Thom 空间为 $\mathbb{CP}^2$，见同书§3.2印刷页93的 Hopf 丛 Thom 空间说明。故 $Q\cong\mathbb{CP}^2$。这里没有以同调环相同替代拓扑分类，也不调用原凸体的 Jordan 分类。证毕。
+

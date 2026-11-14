@@ -1,0 +1,17 @@
+**范围 151.7（局部候选的简化尺度与待证桥）。** 定理151.2新增的是在完整原面关系上取得全纯域及关联空间的拓扑连通；定理151.3把只在比较值接近一时要求的二元共同零关系接成全域有限零路，定理151.5刻画同一原分量如何铺在整个凸边界上。这些采用 `repo-derived` 综合推导归属，不主张全球新颖或最小公理。
+
+$\mathsf N_2$ 只检查近一比较带，Conn 检查所有纯对却允许任意有限步；在 EB3+PR 域内，它们经推论151.4选出同一个模型类。因此本候选使输入关系局部化，没有证明独立假设数严格减少。它也不同于 [X132.3—132.5][Q151X] 的小正比较带条件 $0<T_p(q)<\varepsilon_p$，后者不需要 PR，其证明利用原确认水平切片与无三角条件下的正间隔。
+
+[Landsman，Definition 6][Q151L] 的 two-sphere property 量化同 sector 任意两点的双正交闭包并规定球面比较公式，不由单标签 EB3 自动支付；其按跨部分跃迁全零定义的 sector 也不是本章零图分量。[Emir—Kruml—Paseka—Vetterlein，Definition 4、Proposition 32][Q151E] 在全域 L1 和秩至少三的前件下给零图直径至多二；这些前件没有在本章由 PR 推出。[Labardini-Fragoso—Neumann-Coto—Takane，Lemma 2、4][Q151F] 分别在模面格前件下给固定秩面族紧性、在极点集紧且面列已收敛到面的前件下比较面与极点列；它们不把原 $P$ 紧性升级为完整球族闭性。这些文献仅供应比较和适用边界，不代付本章未证的局部桥。
+
+原目标 $\mathrm{EB3}+\mathrm{PR}\Rightarrow\mathsf N_2/\mathsf{Conn}$ 仍未证明，也未给出完整 EB3+PR 反模型来证明其独立。定理151.2不是这道桥：空间连成一片并不制造有限条精确零边；命题151.6还说明图上孤立的块可以受到块外标签积聚。若要删除最后的接线条件，仍须从同一原全效应关系推出局部有限可达，或排除原分量间的整球并合与塌缩。全局 Inj、全部唯一整球零确认、分量闭性和全空间张成均未在此免费取得。
+
+**完整中文图景。** 把所有原状态想成同一块凸实体，每个纯态背后完全排除的全部对象收成一颗实心三球。比较同一对纯态，交换两端最低结果不变，这已让全部纯标签组成紧集。若把纯标签分成彼此分离的两堆，每颗完整球皮只能整张落在其中一堆；球皮包着实心球，最终两堆会把同一凸实体的整个边界也切成不相接的两块，产生矛盾。所以纯标签本来就连成一片。新候选只补一条近处关系：两种纯态已经足够相像时，总能找到同一个被它们完全排除的纯态。这个共同零点把近处两标签接成两步排除接力，局部线路便沿整片纯域传通，已有定理随后恢复同一实体的全部复三能级静态结构与 Born 读数。尚未证明的是，这条近处接线能否也由比较对称和完整三球自动产生；实际仪器、纠缠复合和物理时间仍保留各自合同。
+
+[Q151IX]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_IX.md "IX114.2—114.4：完整真面、PR下严格暴露与全纯域紧性；IX116.1—116.2：原完整面与重复球孤立块。"
+[Q151X]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_X.md "X124.7、124.9：全局单点零射线的实际整球塌缩及原纯极限定位；X132.3—132.5：小正带共同零点与既有静态分类。"
+[Q151XI]: QUANTUM_ORIGIN_EXCLUSION_SEGMENT_RIGIDITY_AND_PURE_LOCUS_TOPOLOGY_XI.md "XI150.5：完整EB3+PR+Conn的满刻度、全原确认菜单least及同锥同单位qutrit；XI149.5、XI145.9：完整静态字典与独立物理合同。"
+[Q151L]: https://arxiv.org/html/quant-ph/9603005v2 "N. P. Landsman, Poisson spaces with a transition probability，§1.3式(1.4)、Definition 6。"
+[Q151E]: https://arxiv.org/html/2103.13764v1 "T. Emir, D. Kruml, J. Paseka, T. Vetterlein，Linear orthogonality spaces as a new approach to quantum logic，Definition 4、Proposition 32。"
+[Q151F]: https://arxiv.org/html/0903.0643v1 "D. Labardini-Fragoso, R. Neumann-Coto, M. G. Takane，Cones and convex bodies with modular face lattices，Lemma 2、4。"
+

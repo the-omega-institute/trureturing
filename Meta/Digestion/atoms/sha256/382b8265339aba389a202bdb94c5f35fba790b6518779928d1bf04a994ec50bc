@@ -1,0 +1,47 @@
+**Corollary 3.1 (necessary memory for a finite continuation window).** Fix $0\le\varepsilon<1/2$ and an admissible $k$ as in (1.6). If a comparator agrees within $\varepsilon$ on $H\ge1$ consecutive indices of this native family, then
+
+$$
+H a_k\le D_{\rm ph}(S,\varepsilon,z)
+ <16S\,70^{LS}+E_\varepsilon,
+\qquad E_\varepsilon=2(1+\varepsilon)70^{k+1}.
+\tag{3.1}
+$$
+
+In particular, with
+
+$$
+A_\varepsilon=2\,70^L,\qquad
+C_\varepsilon=1+\frac{16+E_\varepsilon}{a_k},
+$$
+
+one has
+
+$$
+H<C_\varepsilon A_\varepsilon^S,\qquad
+S>\frac{\log(H/C_\varepsilon)}{\log A_\varepsilon}.
+\tag{3.2}
+$$
+
+If all persistent information is encoded in $B$ classical bits, so $S\le2^B$, and $H>C_\varepsilon$, then
+
+$$
+B>\log_2\!\left(\frac{\log(H/C_\varepsilon)}{\log A_\varepsilon}\right).
+\tag{3.3}
+$$
+
+These are nonoptimal necessary bounds, with no matching simulation or optimal rate asserted.
+
+**Proof.** The assumption gives (2.14) with $N=H$, proving (3.1). For $S\ge1$, $S\le2^S$ and $A_\varepsilon^S\ge1$, so
+
+$$
+16S\,70^{LS}+E_\varepsilon
+ \le(16+E_\varepsilon)A_\varepsilon^S
+ <a_k C_\varepsilon A_\varepsilon^S.
+$$
+
+This proves (3.2). Substitute $S\le2^B$ and take logarithms when $H>C_\varepsilon$ to obtain (3.3).
+
+The closure hypothesis is essential to these implications. An uncharged counter feeding $p_n$ to the decoder would reproduce the terminal curve with one nominal state, but violates (1.4). Conversely, a genuine finite counter with states $0,\ldots,H-1$, transition $j\mapsto\min(j+1,H-1)$, initial state zero and report table $b_j=p_j$ matches the first $H$ indices exactly. This is the already supplied finite-table construction of PhaseBoundary350.9; it confirms that the new necessary bound does not exclude finite-window fits when their memory grows.
+
+Nor is this a claim of optimal exposure time. If $\xi=\theta/\pi$ and integers $a,h$ with $h\ge1$ are chosen, the deterministic $h$-cycle with report table $b_j=\sin^2(\pi a j/h)$ has response $\sin^2(\pi a n/h)$. The derivative bound $|\sin^2 u-\sin^2 v|\le|u-v|$ gives error at most $\pi n|\xi-a/h|$. Thus an accurate rational approximation can shadow the curve for a long finite window. This elementary comparison is also the mechanism used for the rational-cycle baseline in [Lumbreras–Ma–Thompson–Gu, Appendix D.2][LM]. It is compatible with the coarse upper exposure bound, not a matching lower construction for (3.2). $\square$
+

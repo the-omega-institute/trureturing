@@ -1,0 +1,20 @@
+**定理 136.3（每颗完整球的全部半轴统一非退化）。** 在定义136.1的原域，固定任意辅助欧氏范数，令 $L_p=\operatorname{lin}(D_p-c_p)$。则
+
+$$
+\delta=\operatorname{dist}(P,R(P))>0,\qquad
+c_p+\delta\,\overline B_{L_p}\subseteq D_p
+\quad(p\in P).
+\tag{XI136.7}
+$$
+
+特别地，每颗完整排除椭球在该辅助尺下的全部半轴都至少为 $\delta$，并有 $\operatorname{diam}D_p\ge2\delta$。
+
+证明。定理136.2给紧 $P$，连续性给紧 $R(P)$。每个 $R(p)=c_p$ 都是正维原面 $D_p$ 的中心，因而非纯，所以两紧集不交，得到严格正距离。仿射球的每个相对边界点 $q$ 都是该球的极点；$D_p$ 是原面，故 $q\in P$。因此
+
+$$
+\|q-c_p\|\ge\delta
+\qquad(q\in\partial_{\rm rel}D_p).
+$$
+
+对 $L_p$ 的每条单位方向 $v$，沿射线 $c_p+t v$ 首次遇到的边界点距离至少为 $\delta$；由凸性，$0\le t\le\delta$ 的整段都在 $D_p$。遍历所有方向便得内球包含式。中心反射再给直径界。本证明允许不同球在辅助环境尺下为不同椭球，未输入共同物理内积。证毕。
+

@@ -1,0 +1,35 @@
+**Definition 1.4 (finite phase data and cutoff).** For a unit complex number $z$ that is not a root of unity, let
+
+$$
+\delta_M(z)=\min_{1\le r\le M}|1-z^r|>0\qquad(M\ge1).
+\tag{1.5}
+$$
+
+For $0\le\varepsilon<1/2$, choose an integer $k\ge0$ satisfying
+
+$$
+c_k=4^{-k}\binom{2k}{k},\quad
+r_k=\frac{2k+1}{2k+2},\quad
+a_k=c_k(r_k/2-\varepsilon)>0,\quad L=2k+1.
+\tag{1.6}
+$$
+
+One definite choice is $k=\lfloor(2-4\varepsilon)^{-1}\rfloor$: indeed $k+1>(2-4\varepsilon)^{-1}$ and $r_k/2=1/2-1/[4(k+1)]>\varepsilon$. Define
+
+$$
+\begin{aligned}
+D_{\rm ph}(S,\varepsilon,z)
+ &=\frac{16S}{\delta_{LS}(z)^2}
+   +\frac{2(1+\varepsilon)}{\delta_{2k+2}(z)},\\
+N_{\rm ph}(S,\varepsilon,z)
+ &=1+\left\lfloor\frac{D_{\rm ph}(S,\varepsilon,z)}{a_k}\right\rfloor,\\
+D_{\rm nat}(S,\varepsilon)
+ &=16S\,70^{LS}+2(1+\varepsilon)70^{k+1},\\
+N_{\rm nat}(S,\varepsilon)
+ &=1+\left\lfloor\frac{D_{\rm nat}(S,\varepsilon)}{a_k}\right\rfloor.
+\end{aligned}
+\tag{1.7}
+$$
+
+The subscript $\rm nat$ refers only to the specific original phase in Definition 1.2. The finite phase formula also permits certified positive lower bounds for the two displayed gaps, with the corresponding enlarged cutoff. For rational $\varepsilon$, the native cutoff uses only integer and rational arithmetic; no numerical test for irrationality or unknown minimum transition probability is an input.
+

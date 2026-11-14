@@ -1,0 +1,68 @@
+**定理 150.2（纯互易到球心互易的有限消元）。** 在150.1的完整原前件和 $\mathsf{ER}$ 下，对任意原根 $p$，在(XI149.5)的同一球图中，存在 $R_p\ge1$，使
+
+$$
+\begin{gathered}
+\rho_p(v)=R_p\quad(v\in S^2),\qquad
+z_v=-R_pv,\qquad
+m(v)=\frac{2}{1+R_p},\\
+e_p(c_{q_v})=\frac{R_p}{1+R_p}=e_{q_v}(c_p).
+\end{gathered}
+\tag{XI150.3}
+$$
+
+因而 $\mathsf{CR}_c$ 成立。这条桥不使用 ZC、正高度输入、跨球连续性、支撑函数微分或 Bregman估计。
+
+证明。先准确复用[THREE_COPY VII定理122.4][Q150TC]和[SAME_READBACK §123.2、定理123.3][Q150SR]的 $P_0$ 接口；全部原根及所用纯端点属于 $P_0$ 已由(XI149.2)支付。固定 $p$，简记 $\rho=\rho_p$、$g=g_p$。对 $v,w\in S^2$、$s=v\cdot w$，完整原空间上的邻确认公式给
+
+$$
+e_{q_v}(q_w)=\frac{\rho(v)+s}{1+\rho(v)},\qquad
+e_{q_w}(q_v)=\frac{\rho(w)+s}{1+\rho(w)}.
+\tag{XI150.4}
+$$
+
+若 $v\ne w$，则 $s<1$。$\mathsf{ER}$ 与交叉相乘给
+$(1-s)(\rho(v)-\rho(w))=0$，故所有单位方向的 $\rho$ 同值 $R_p\ge1$。正齐次性给 $\rho(b)=R_p\|b\|$。原实际影像 $Z=\{H(x)/g(x):x\in K\setminus\{p\}\}$ 的闭包有支撑函数
+$h_{\overline Z}(n)=\rho(-n)=R_p\|n\|$，故是半径 $R_p$ 的闭球。其法向 $-v$ 的完整支撑面只有 $-R_pv$；定理122.4已保证实际接触 $z_v$ 存在，所以 $z_v=-R_pv$。这里先辨认闭影壳再辨认实际接触，不把两种唯一性混同；无需先证 $Z$ 闭合。
+
+令 $q=q_v$、$a=a_v=2c_q-p$、$m=g(a)\in(0,1]$。$a$ 是真实邻球 $D_q$ 内与 $p$ 对径的原纯点，$q_{-v}$ 则在原 $D_p$ 内与 $q_v$ 对径，二者未被预先认同。$\mathsf{ER}$ 用于原纯对 $(p,a)$，给
+
+$$
+d:=e_a(p)=e_p(a)=1-m.
+\tag{XI150.5}
+$$
+
+定理123.3在整个原 $V$ 上给出的精确恒等式因而成为
+
+$$
+e_a=d e_p+\gamma(g-v\cdot H),\qquad
+\gamma=\frac{1-d(1-m)}{m(1+R_p)}
+=\frac{2-m}{1+R_p}.
+\tag{XI150.6}
+$$
+
+在实际原点 $q_{-v}$ 上，$e_p=0$、$g=1$、$H=-v$，所以
+
+$$
+e_a(q_{-v})=\frac{2(2-m)}{1+R_p}.
+\tag{XI150.7}
+$$
+
+另一方面，$H(a)=mz_v=-mR_pv$；同一根 $p$ 的原邻确认公式在整个原 $V$ 成立，故
+
+$$
+e_{q_{-v}}(a)
+=\frac{R_pg(a)-v\cdot H(a)}{1+R_p}
+=\frac{2mR_p}{1+R_p}.
+\tag{XI150.8}
+$$
+
+现在才将 $\mathsf{ER}$ 用于原纯对 $(a,q_{-v})$。这一步使用全部原纯对的互易，没有未经证明地将它缩为共处某颗排斥球的纯对。两式相等给 $2-m=mR_p$，即 $m=2/(1+R_p)$。最后由 $2c_q=p+a$ 及原邻确认公式，
+
+$$
+e_p(c_q)=1-\frac m2
+=\frac{R_p}{1+R_p}=e_q(c_p).
+\tag{XI150.9}
+$$
+
+$v$ 和原根 $p$ 任意，所以得到全部原零边上的 $\mathsf{CR}_c$。证毕。
+
