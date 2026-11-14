@@ -52,8 +52,10 @@ private abbrev cellOrder (n : ℕ) : LinearOrder (Fin n × Fin 2) :=
 private def Normal {n : ℕ} (A : Fin n × Fin 2 → Fin 3) : Prop :=
   @Canonical (Fin n × Fin 2) (cellOrder n).toLT 3 A
 private instance decidableNormal {n : ℕ} (A : Fin n × Fin 2 → Fin 3) : Decidable (Normal A) := by
-  letI := cellOrder n
-  exact inferInstanceAs (Decidable (∀ i b, b < A i → ∃ j, j < i ∧ A j = b))
+  unfold Normal Canonical
+  change Decidable (∀ (i : Fin n × Fin 2) (b : Fin 3), b < A i →
+    ∃ j : Fin n × Fin 2, finProdFinEquiv j < finProdFinEquiv i ∧ A j = b)
+  infer_instance
 
 /-- The finite filter ranges over every three-colour array of the indicated shape. -/
 def a (n : ℕ) : ℕ :=
@@ -62,10 +64,11 @@ def a (n : ℕ) : ℕ :=
 
 private theorem edge (r t : Row) : bondDefects antidiagonal r t = cross (boundary r) t := by
   unfold cross bondDefects
-  congr 1
+  apply congrArg Finset.card
   ext e
   by_cases he : e ∈ antidiagonal
   · obtain ⟨j, _, rfl⟩ := Finset.mem_image.mp he
+    simp only [Finset.mem_filter, Finset.mem_image, Finset.mem_univ, true_and]
     rfl
   · simp [he]
 
@@ -106,6 +109,7 @@ private theorem powers_table (i : Fin 3) : forward T initial i.val = W i := by
   | zero => exact finite_certificate.2.2.2.2.2.1.1.symm
   | succ i ih =>
     change Matrix.vecMul (forward T initial i.val) T = W i.succ
+    change forward T initial i.val = W i.castSucc at ih
     rw [ih]
     exact (finite_certificate.2.2.2.2.2.1.2 i).symm
 
@@ -120,7 +124,6 @@ private theorem polynomial_relation :
 private theorem scale_count (n : ℕ) (hn : 2 ≤ n) :
     literalCount (q := 3) horizontal antidiagonal 1 n = 6 * a n := by
   classical
-  letI := cellOrder n
   let S : (Fin n × Fin 2 → Fin 3) → Prop := fun A =>
     defects horizontal antidiagonal (List.ofFn fun i j => A (i, j)) = 1
   have hinv : ∀ e : Equiv.Perm (Fin 3), ∀ A, S (e ∘ A) ↔ S A := by
@@ -145,14 +148,14 @@ private theorem scale_count (n : ℕ) (hn : 2 ≤ n) :
     have hc : horizontal.card = 1 ∧ antidiagonal.card = 1 := by decide +kernel
     rw [hc.1, hc.2] at ha
     omega
-  have h := canonical_pattern_card S hinv huse
+  have h := @canonical_pattern_card (Fin n × Fin 2) inferInstance (cellOrder n) S hinv huse
   simpa only [Nat.card_eq_fintype_card, Fintype.card_subtype, S, literalCount, a, Normal] using h
 
 attribute [local irreducible] a
 
 /-- Hardin's registered recurrence, with its explicit starting shift. -/
 theorem result (n : ℕ) :
-    (a (n + 4) : ℤ) = + 8 * a (n + 3) - 16 * a (n + 2) := by
+    (a (n + 4) : ℤ) = 8 * a (n + 3) - 16 * a (n + 2) := by
   have bridge (m : ℕ) (hm : 2 ≤ m + 1) :
       dotProduct initial ((T ^ m).mulVec terminal) = 6 * (a (m + 1) : ℤ) := by
     rw [← count_transfer, scale_count (m + 1) hm]
