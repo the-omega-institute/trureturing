@@ -4540,7 +4540,7 @@ $$
 
 这些结论不需要 ZC、全纯域紧性或跨球连续性。
 
-证明。[THREE_COPY VII122.2—122.4][Q149TC]及[SAME_READBACK123.2][Q149SR]所需的 $p\in P_0$、邻标签仍在 $P_0$、Inj及限制同构，均由(XI149.2)支付。它们给 $\rho(v)\ge\|v\|$、有界凸影像 $Z$，以及整个原 $V$ 上的
+证明。[THREE_COPY VII §122.2—§122.3及定理122.4][Q149TC]及[SAME_READBACK §123.2，式(Q123.4)—(Q123.8)][Q149SR]所需的 $p\in P_0$、邻标签仍在 $P_0$、Inj及限制同构，均由(XI149.2)支付。它们给 $\rho(v)\ge\|v\|$、有界凸影像 $Z$，以及整个原 $V$ 上的
 
 $$
 e_{q_v}=\frac{\rho(v)g+v\cdot H}{1+\rho(v)},\qquad
@@ -4737,8 +4737,8 @@ $$
 
 新增承重内容采用 repo-derived 综合推导归属：原整球零尺和完整法向接口生成真实零边的球心互易式；该式直接支付每根的全方向正高度，再以闭影像和原效应上界取得方向常值，最终沿有限零路支付原 UC的全标签预算。原法向图、实际接触纤维、双球消元及高度差估计分别准确复用 THREE_COPY VII122、SAME_READBACK123—124；UC分类与全部静态字典准确复用144.5和145.9。支撑函数的一阶论证只作中间工具，不作为独立新结果。成熟 Jordan分类的背景仍为 [Barnum—Müller—Ududec Theorem 16][Q149BMU]，其 projectivity、对称跃迁概率及保纯滤子的前件不由局部互易直接冒领，而只经既有完整分类链消费。这里不声明文献优先权，也未从裸 EB3+$\mathsf{Conn}$ 或纯端点 minimum互易导出 $\mathsf{CR}_c$。证毕。
 
-[Q149TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "122.2—122.4：P0锚点的完整法向图、有界凸实际影像与唯一实际接触纤维；闭包支撑面不预设单点。"
-[Q149SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "123.2—123.3：P0接口下的双球全原空间消元；123.5的闭影像与支撑微分；124.3的原效应上界和Bregman高度差；旧P_reg入口由149.2另付。"
+[Q149TC]: QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md "§122.2—§122.3及定理122.4：P0锚点的完整法向图、有界凸实际影像与唯一实际接触纤维；闭包支撑面不预设单点。"
+[Q149SR]: QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md "§123.2式(Q123.4)—(Q123.8)及定理123.3：P0接口下的双球全原空间消元；§123.5的闭影像与支撑微分；定理124.3的原效应上界和Bregman高度差；旧P_reg入口由149.2另付。"
 [Q149BMU]: https://arxiv.org/html/1403.4147v4#Thmtheorem16 "Howard Barnum, Markus P. Müller and Cozmin Ududec, Higher-order interference and single-system postulates characterizing quantum theory，Theorem 16的全部前件。"
 
 ## 追加锚（本行以下为增补区）
