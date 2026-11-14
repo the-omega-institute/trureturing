@@ -17,6 +17,7 @@ public sealed class LeanReportScopedTests(InspectorCompilerFixture compiler) : I
     public void ScopedProducerContract(string scenario) => Run(scenario, native: false);
 
     [Theory]
+    [InlineData("test_native_cold_artifacts_and_partial_report")]
     [InlineData("test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation")]
     [InlineData("test_native_scope_uses_only_explicit_module_facets")]
     [InlineData("test_native_scope_reuses_unchanged_staged_readers")]

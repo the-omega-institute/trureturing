@@ -60,10 +60,9 @@ donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
 if [[ "$1" == --build ]]; then
   shift
-  # A nonempty explicit target list is a scoped closure.  Mark it before the
-  # producer is invoked so the wrapper can skip whole-cache preparation while
-  # retaining its pin and writer-lock checks.  Empty --build is the existing
-  # whole-project route.
+  # Explicit targets may use a cold artifact closure when neither this checkout
+  # nor a compatible local donor is warm. The producer decides whether ensure
+  # is needed; empty --build retains whole-project preparation.
   unset STRATALINT_LEAN_CACHE_SCOPE
   if [[ $# -gt 0 && -z "${STRATALINT_LEAN_CACHE_SCOPE:-}" ]]; then
     export STRATALINT_LEAN_CACHE_SCOPE=targeted

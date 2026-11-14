@@ -46,6 +46,8 @@ public sealed class LeanArtifactCacheRoutingTests
     [InlineData("lake", "build", ":report", false)]
     [InlineData("lake", "build", "default", false)]
     [InlineData("lake", "build", "aggregate", false)]
+    [InlineData("lake", "build", "Trureturing", false)]
+    [InlineData("lake", "build", ":moduleReports", true)]
     [InlineData("lake", "build", "D5.A", true)]
     public void ScopeMarkerCannotNarrowWholeLakeOperations(string executable, string verb, string target, bool expected)
     {
@@ -84,6 +86,32 @@ public sealed class LeanArtifactCacheRoutingTests
         {
             Environment.SetEnvironmentVariable("STRATALINT_LEAN_CACHE_SCOPE", previous);
         }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void EmptyScopedWorktreeEnsuresFromUsableLocalDonor(bool sibling)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var donor = sibling ? AddWorktree(repository.Path, "hot-donor") : repository.Path;
+        WriteHotCache(donor);
+        var target = AddWorktree(repository.Path, "empty-selected");
+        var cloner = new RecordingDirectoryCloner();
+        var result = LeanCacheEnsureCommand.RunWithWriter(repository.Path,
+            ["--path", target, "--", "/usr/bin/env"], new ProductionWorktreeProcessRunner(),
+            cloner, FileSystemLeanCacheStateProbe.Instance,
+            name => name == "STRATALINT_LEAN_CACHE_SCOPE" ? "targeted" : null);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(Path.Combine(LeanCacheGuard.PhysicalPath(donor), ".lake"),
+            Assert.Single(cloner.Invocations).Source);
+        using var receipt = JsonDocument.Parse(result.Output["LEAN_CACHE ".Length..].Split('\n')[0]);
+        Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
+        Assert.False(receipt.RootElement.TryGetProperty("scope", out _));
+        Assert.DoesNotContain("LAKE_NO_CACHE=1\n", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]

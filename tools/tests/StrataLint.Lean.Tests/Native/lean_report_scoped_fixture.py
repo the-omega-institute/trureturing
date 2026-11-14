@@ -272,6 +272,56 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertEqual(value['schema'], 'stratalint-scoped-lean-report-v1')
         return {row['module']: row for row in value['modules']}
 
+    def test_native_cold_artifacts_and_partial_report(self):
+        # Keep the shared compiler stage, but discard only this fixture's own
+        # preparation. Its synthetic Git repository has no registered donor.
+        shutil.rmtree(self.root / '.lake')
+        self.restore_compiler()
+        stamp = self.root / '.lake/.stratalint-lean-cache-stamp.json'
+        self.write('D5/Alone.lean', 'this unrelated sibling does not compile\n')
+        self.write('.gitignore', '.lake/\nreports/\nscoped logs/\n')
+
+        def selected(root, *arguments, no_build=False):
+            result = self.guarded_command([self.dotnet, str(self.cli), 'with-cache-reader',
+                '--path', str(root), '--', self.lake, 'build',
+                *(['--no-build'] if no_build else []), *arguments], cwd=self.root,
+                env=dict(self.env, STRATALINT_LEAN_CACHE_SCOPE='targeted'), text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn('"status":"scoped"', result.stdout)
+            return result
+
+        selected(self.root, 'D5.A')
+        self.assertTrue((self.root / '.lake/build/lib/lean/D5/A.olean').is_file())
+        self.assertFalse(stamp.exists(), '[FAIL] partial_build_cannot_publish_prepared_identity')
+        store = self.root / '.lake/artifact-cache'
+        before = self.inventory(store)
+        self.assertTrue(before, '[FAIL] main_build_publishes_official_artifacts')
+
+        def git(*arguments):
+            result = self.guarded_command(['git', '-c', 'user.name=Fixture',
+                '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                *arguments], cwd=self.root, env=self.env, text=True, capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+        git('add', '.')
+        git('commit', '-qm', 'native artifact fixture')
+        linked = self.root / 'linked'
+        git('worktree', 'add', '-b', 'linked-reader', str(linked))
+        self.assertFalse((linked / '.lake').exists())
+        # No-build makes a miss fail instead of silently recompiling the hit.
+        selected(linked, 'D5.A', no_build=True)
+        self.assertTrue((linked / '.lake/build/lib/lean/D5/A.olean').is_file())
+        self.assertEqual(before, self.inventory(store), '[FAIL] linked_hit_cannot_write_artifacts')
+        (linked / 'D5/New.lean').write_text('import D5.B\ndef newValue : Nat := D5.hidden + 1\n')
+        miss = selected(linked, 'D5.New')
+        self.assertIn('Built D5.New', miss.stdout + miss.stderr)
+        self.assertFalse((linked / '.lake/build/lib/lean/D5/Alone.olean').exists())
+        self.assertEqual(before, self.inventory(store), '[FAIL] linked_miss_cannot_write_artifacts')
+        self.scoped('D5.A')
+        self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'})
+        self.assertFalse(stamp.exists(), '[FAIL] scoped_report_cannot_promote_partial_cache')
+        self.verify('D5.A')
+
     def test_native_selected_utility_reader_ignores_unrelated_unfinished_refutation(self):
         self.ensure()
         # Keep cache operations on the fixture carrier, but use the production utility reader.

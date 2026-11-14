@@ -81,6 +81,13 @@ internal static partial class LeanCacheEnsureCommand
         var routedRunner = RouteArtifactCache(runner, location.IsLinked, coldSelected: false);
         if (IsScopedCacheRequest(command, readEnvironment))
         {
+            try { RetireRootJudgeOutputs(root, guard); }
+            catch (OperationCanceledException) { throw; }
+            catch (Exception exception)
+            {
+                return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
+                    exception.Message);
+            }
             var heat = InspectUsableLocalHeat(root, pins, runner, stateProbe, donorRepository);
             if (heat.Failure is not null)
                 return FailureReceipt("failed", root, donor: null, method: "none", pins.Sha256,
@@ -187,9 +194,10 @@ internal static partial class LeanCacheEnsureCommand
         if (build < 0) return true; // selected compiled readout / scope discovery
         var targets = command.Skip(build + 1).Where(static value => !value.StartsWith('-')).ToArray();
         return targets.Length > 0 && !targets.Any(static target =>
-            target.StartsWith(':') || target.EndsWith(":report", StringComparison.Ordinal)
+            (target.StartsWith(':') && target != ":moduleReports")
+            || target.EndsWith(":report", StringComparison.Ordinal)
             || target is "all" or "default" or "aggregate" or "report"
-            || target is "trureturing" or "Reg" or "LeanInformationAudit"
+            || target is "Trureturing" or "trureturing" or "Reg" or "LeanInformationAudit"
                 or "LeanInformationAuditAnalysis" or "LeanInformationAuditReg"
                 or "LeanInformationAuditRegAnalysis" or "LeanInformationAuditRegTests"
                 or "LeanInformationAuditFibTests"
@@ -207,15 +215,13 @@ internal static partial class LeanCacheEnsureCommand
         if (Directory.Exists(lake))
         {
             var stamp = LeanCacheStamp.Inspect(lake, pins);
-            {
-                var project = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
-                var mathlib = stateProbe.ProbeOleans(MathlibOleanRoot(lake));
-                var failure = ProbeFailure("current project", project)
-                    ?? ProbeFailure("current mathlib", mathlib);
-                if (failure is not null) return new(false, failure);
-                if (stamp.State == LeanCacheStampState.Match && project.IsWarm && mathlib.IsWarm)
-                    return new(true, null);
-            }
+            var project = stateProbe.ProbeOleans(ProjectOleanRoot(lake));
+            var mathlib = stateProbe.ProbeOleans(MathlibOleanRoot(lake));
+            var failure = ProbeFailure("current project", project)
+                ?? ProbeFailure("current mathlib", mathlib);
+            if (failure is not null) return new(false, failure);
+            if (stamp.State == LeanCacheStampState.Match && project.IsWarm && mathlib.IsWarm)
+                return new(true, null);
         }
 
         LeanCacheDonorSelection selection;
