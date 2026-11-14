@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrResidueCriterion
+   generality: E
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/ElmerKadrResidueCriterion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Lucas, mathlib/module/Mathlib.Data.Nat.Choose.Factorization]
+   utility: none
+   digest: The complete finite-field relative-stable tensor criterion in low residues and high-digit carries. -/
+
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrPositiveCriterion
 import D5.S3.FiniteGroups.GroupAlgebra.PrimeCyclicRelativeTrace
 import D5.S3.FiniteGroups.GroupAlgebra.RectangularTensorObstruction

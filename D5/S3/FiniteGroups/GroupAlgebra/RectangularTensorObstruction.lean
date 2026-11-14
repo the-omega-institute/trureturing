@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/RectangularTensorObstruction
+   generality: E
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/RectangularTensorObstruction
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.RingTheory.Polynomial.DegreeLT, mathlib/module/Mathlib.LinearAlgebra.Trace]
+   utility: none
+   digest: Finite-field extraction of rectangular tensor coefficients and vanishing composition traces. -/
+
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
 
 /-!
@@ -51,21 +59,6 @@ private theorem coefficient_basis_value (d k : ℕ) (i j : Fin d) :
   simpa only [dualBasis, Module.Basis.dualBasis_repr]
     using coefficient_matrix K d k i j
 
--- Formula (12), proved on the ACTUAL polynomial translation dual.
-private theorem action_basis_value (d : ℕ) (a : K) (i j : Fin d) :
-    dualAction K d (Multiplicative.ofAdd a) (dualBasis K d i)
-      (Polynomial.degreeLT.basis K d j) =
-        (j.val.choose i.val : K) * (-a) ^ (j.val - i.val) := by
-  change (Polynomial.degreeLT.basis K d).dualBasis i
-    ((Polynomial.taylorLinearEquiv (-a) d)
-      (Polynomial.degreeLT.basis K d j)) = _
-  rw [Module.Basis.dualBasis_apply, Polynomial.degreeLT.basis_repr]
-  change (Polynomial.taylor (-a)
-    (Polynomial.degreeLT.basis K d j : K[X])).coeff i = _
-  rw [Polynomial.degreeLT.basis_val, Polynomial.taylor_coeff,
-    ← Polynomial.monomial_one_right_eq_X_pow, Polynomial.hasseDeriv_monomial]
-  simp
-
 private theorem action_expansion (r d : ℕ) (hrd : r ≤ d) (a : K) :
     dualAction K r (Multiplicative.ofAdd (-a)) =
       ∑ k : Fin d, a ^ k.val • coefficient K r k.val := by
@@ -76,7 +69,7 @@ private theorem action_expansion (r d : ℕ) (hrd : r ≤ d) (a : K) :
   intro j
   simp only [LinearMap.sum_apply, map_sum, LinearMap.smul_apply, map_smul,
     smul_eq_mul]
-  rw [action_basis_value, neg_neg]
+  rw [ElmerKadrTensorCounterexample.dual_action_basis_value, neg_neg]
   simp_rw [coefficient_basis_value]
   by_cases hij : i.val ≤ j.val
   · let k : Fin d := ⟨j.val - i.val, by have := j.isLt; omega⟩
@@ -193,21 +186,6 @@ section FiniteFieldExtraction
 
 variable {K : Type uK} [Field K] [Fintype K]
 
-private theorem power_sum (s : ℕ) (hs : s ≠ 0) :
-    (∑ a : K, a ^ s) = if Fintype.card K - 1 ∣ s then -1 else 0 := by
-  classical
-  let φ : Kˣ ↪ K := ⟨fun x => x, Units.val_injective⟩
-  have hφ : univ.map φ = univ \ {(0 : K)} := by
-    ext x
-    simpa only [mem_map, mem_univ, Function.Embedding.coeFn_mk, true_and,
-      mem_sdiff, mem_singleton, φ] using! isUnit_iff_ne_zero
-  calc
-    (∑ a : K, a ^ s) = ∑ a ∈ univ \ {(0 : K)}, a ^ s := by
-      rw [← sum_sdiff ({0} : Finset K).subset_univ, sum_singleton,
-        zero_pow hs, add_zero]
-    _ = ∑ a : Kˣ, (a ^ s : K) := by simp [φ, ← hφ, univ.sum_map φ]
-    _ = _ := FiniteField.sum_pow_units K s
-
 -- d=N+1; d+1≤q is EXACTLY N+2≤q, not a characteristic bound.
 -- The exponent lies strictly between 0 and 2(q-1), and its only possible
 -- positive multiple of q-1 is q-1. This also treats the constant coefficient.
@@ -222,7 +200,7 @@ private theorem coefficient_pairing {d : ℕ} (hd : d + 1 ≤ Fintype.card K)
   have hlt : Fintype.card K - 1 - k.val + t.val <
       2 * (Fintype.card K - 1) := by omega
   simp_rw [← pow_add]
-  rw [power_sum _ (by omega)]
+  rw [ElmerKadrTensorCounterexample.power_sum _ (by omega)]
   have hdiv : Fintype.card K - 1 ∣ Fintype.card K - 1 - k.val + t.val ↔ t = k := by
     constructor
     · rintro ⟨r, hr⟩

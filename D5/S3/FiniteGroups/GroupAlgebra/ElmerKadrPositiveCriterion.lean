@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/ElmerKadrPositiveCriterion
+   generality: E
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/ElmerKadrPositiveCriterion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Contraction, mathlib/module/Mathlib.LinearAlgebra.TensorProduct.Basis]
+   utility: none
+   digest: Equivariant dual tensor splittings and retracts for relative polynomial translation modules. -/
+
 import D5.S3.FiniteGroups.GroupAlgebra.BoundedTensorPolarization
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
 import D5.S3.FiniteGroups.GroupAlgebra.PrimeCyclicRelativeTrace

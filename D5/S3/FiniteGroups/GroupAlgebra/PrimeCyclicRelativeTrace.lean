@@ -1,3 +1,11 @@
+/- GID: D5/S3/FiniteGroups/GroupAlgebra/PrimeCyclicRelativeTrace
+   generality: E
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PrimeCyclicRelativeTrace
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: [mathlib/module/Mathlib.FieldTheory.Finite.Basic, mathlib/module/Mathlib.Algebra.Polynomial.RingDivision]
+   utility: none
+   digest: Prime cyclic conjugation norms on polynomial translation modules and relative-factor traces. -/
+
 import D5.S3.FiniteGroups.GroupAlgebra.ElmerKadrTensorCounterexample
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.Algebra.Polynomial.Coeff
@@ -129,19 +137,6 @@ section Remainder
 
 variable {K : Type uK} [Field K]
 
-/-- Multiplication followed by monic remainder on the ORIGINAL degreeLT space. -/
-def remainderMul {m : ℕ} (q : K[X]) (hq : q.Monic)
-    (hd : q.degree = m) (b : K[X]) : Module.End K (Primal K m) where
-  toFun f := ⟨(b * (f : K[X])) %ₘ q, Polynomial.mem_degreeLT.mpr
-    (hd ▸ Polynomial.degree_modByMonic_lt _ hq)⟩
-  map_add' f g := by
-    apply Subtype.ext
-    simp only [Submodule.coe_add, mul_add, Polynomial.add_modByMonic]
-  map_smul' c f := by
-    apply Subtype.ext
-    simp only [Submodule.coe_smul, RingHom.id_apply, mul_smul_comm,
-      Polynomial.smul_modByMonic]
-
 /-- Translation commutes with remainder when the monic modulus is fixed. -/
 private theorem taylor_modByMonic (q : K[X]) (hq : q.Monic) (a : K)
     (ha : Polynomial.taylor a q = q) (f : K[X]) :
@@ -162,7 +157,7 @@ private theorem remainderMul_conjugate {m : ℕ} (q : K[X]) (hq : q.Monic)
     (hd : q.degree = m) (b : K[X]) (a : K)
     (ha : Polynomial.taylor a q = q) (f : Primal K m) :
     ((primalAction K m (Multiplicative.ofAdd a))
-      (remainderMul q hq hd b
+      (ElmerKadrTensorCounterexample.remainderMul q hq hd b
         (primalAction K m (Multiplicative.ofAdd (-a)) f)) : K[X]) =
       (Polynomial.taylor a b * (f : K[X])) %ₘ q := by
   change Polynomial.taylor a
@@ -211,7 +206,8 @@ private theorem invariantModulus_prime_translate (r : ℕ) (a : ZMod p) :
 
 /-- t_r(f) = (-X^(p-1) f) mod Q_r on the actual primal module. -/
 def primalNormWitness (r : ℕ) : Module.End K (Primal K (p * r)) :=
-  remainderMul (m := p * r) (invariantModulus (p := p) r) (invariantModulus_monic r)
+  ElmerKadrTensorCounterexample.remainderMul (m := p * r)
+    (invariantModulus (p := p) r) (invariantModulus_monic r)
     (invariantModulus_degree r) (-X ^ (p - 1))
 
 private theorem primalNormWitness_apply (r : ℕ) (f : Primal K (p * r)) :
@@ -226,7 +222,7 @@ private theorem primalNormWitness_conjugate (r : ℕ) (c : Multiplicative (ZMod 
         (f : K[X])) %ₘ invariantModulus (p := p) r := by
   change ((primalAction K (p * r)
     (Multiplicative.ofAdd (primeCast (Multiplicative.toAdd c))))
-      (remainderMul (m := p * r) (invariantModulus (p := p) r)
+      (ElmerKadrTensorCounterexample.remainderMul (m := p * r) (invariantModulus (p := p) r)
         (invariantModulus_monic r) (invariantModulus_degree r) (-X ^ (p - 1))
         (primalAction K (p * r)
           (Multiplicative.ofAdd (primeCast (Multiplicative.toAdd c⁻¹))) f)) : K[X]) = _
@@ -360,41 +356,6 @@ theorem relative_norm (s : ℕ) :
 
 end DualAndDirectSum
 
-section OriginalRelativeTrace
-
-variable {K : Type uK} [Field K]
-  {G : Type uG} [Group G] {C : Type uC} [Group C] [Fintype C]
-  {V : Type uV} [AddCommGroup V] [Module K V]
-  {X : Type uX} [AddCommGroup X] [Module K X]
-  {M : Type uM} [AddCommGroup M] [Module K M]
-
-variable {U : Type uK} [AddCommGroup U] [Module K U]
-
-/-- The ORIGINAL retract-based RelativeFactors, with all P/X quantifiers kept.
-No finiteness hypothesis on P, X or M and no trace on those factors occurs.
-LinearMap.trace is defined for arbitrary U; in particular this gives the usual
-trace statement for every finite-dimensional target U. -/
-private theorem trace_original_relative_factor
-    (ι : C →* G) (τ : Representation K G M) (t : Module.End K M)
-    (ht : (∑ c : C, (τ (ι c)).comp (t.comp (τ (ι c⁻¹)))) = LinearMap.id)
-    (hcard : (Fintype.card C : K) = 0)
-    (ρ : Representation K G U) (h : ρ.IntertwiningMap ρ)
-    (hh : RelativeFactors τ h) :
-    LinearMap.trace K U h.toLinearMap = 0 := by
-  obtain ⟨P, ⟨X, i, r, hri⟩, a, b, hab⟩ := hh
-  have hz := ElmerKadrTensorCounterexample.trace_tensor_factorization ι ρ X.ρ τ t ht hcard (i.comp a) (b.comp r)
-  have he : (b.comp r).toLinearMap.comp (i.comp a).toLinearMap = h.toLinearMap := by
-    apply LinearMap.ext
-    intro v
-    change b (r (i (a v))) = h v
-    have hs := congrArg (fun q : P.ρ.IntertwiningMap P.ρ => q (a v)) hri
-    change r (i (a v)) = a v at hs
-    rw [hs]
-    exact congrArg (fun q : ρ.IntertwiningMap ρ => q v) hab
-  rwa [he] at hz
-
-end OriginalRelativeTrace
-
 section ActualRelativeModule
 
 variable {K : Type uK} [Field K] {p : ℕ} [Fact p.Prime] [CharP K p]
@@ -406,7 +367,7 @@ theorem trace_relativeFactors (s : ℕ)
     (ρ : Representation K (Multiplicative K) U) (h : ρ.IntertwiningMap ρ)
     (hh : RelativeFactors (relativeAction (K := K) (p := p) s) h) :
     LinearMap.trace K U h.toLinearMap = 0 :=
-  trace_original_relative_factor (primeSubgroup (K := K) (p := p))
+  ElmerKadrTensorCounterexample.trace_relative_factor (primeSubgroup (K := K) (p := p))
     (relativeAction (K := K) (p := p) s)
     (relativeNormWitness (K := K) (p := p) s) (relative_norm (p := p) s)
     (primeSubgroup_card_zero (K := K) (p := p)) ρ h hh
