@@ -25,7 +25,10 @@ public sealed class LeanArtifactCacheRoutingTests
             var result = LeanCacheEnsureCommand.RunWithWriter(
                 repository.Path,
                 linked ? ["--path", target, "--", "/usr/bin/env"] : ["--", "/usr/bin/env"],
-                new ProductionWorktreeProcessRunner(),
+                new ProductionWorktreeProcessRunner().WithEnvironment(new Dictionary<string, string>
+                {
+                    ["LAKE_ARTIFACT_CACHE"] = "1",
+                }),
                 new RecordingDirectoryCloner());
 
             Assert.True(result.Success, result.Error);

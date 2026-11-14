@@ -281,9 +281,10 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.write('D5/Alone.lean', 'this unrelated sibling does not compile\n')
         self.write('.gitignore', '.lake/\nreports/\nscoped logs/\n')
 
-        def selected(root, *arguments, no_build=False):
+        def selected(root, *arguments, no_build=False, package=None):
             result = self.guarded_command([self.dotnet, str(self.cli), 'with-cache-reader',
-                '--path', str(root), '--', self.lake, 'build',
+                '--path', str(root), '--', self.lake,
+                *(['-d', str(root / package)] if package else []), 'build',
                 *(['--no-build'] if no_build else []), *arguments], cwd=self.root,
                 env=dict(self.env, STRATALINT_LEAN_CACHE_SCOPE='targeted'), text=True, capture_output=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -291,7 +292,14 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
             return result
 
         selected(self.root, 'D5.A')
+        self.write('Reg/CacheProbe.lean', 'import D5.A\ndef regCacheProbe : Nat := value\n')
+        selected(self.root, 'Reg.CacheProbe', package='Reg')
+        tool = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        tool.write_text(tool.read_text() + '\n-- native artifact producer fixture\n')
+        selected(self.root, 'leanInspector/inputDiscovery', package='tools/lean-inspector-reg')
         self.assertTrue((self.root / '.lake/build/lib/lean/D5/A.olean').is_file())
+        self.assertTrue((self.root / '.lake/build/reg/lib/lean/Reg/CacheProbe.olean').is_file())
+        self.assertTrue((self.root / '.lake/build/lean-inspector/producer/bin/inputDiscovery').is_file())
         self.assertFalse(stamp.exists(), '[FAIL] partial_build_cannot_publish_prepared_identity')
         store = self.root / '.lake/artifact-cache'
         before = self.inventory(store)
@@ -310,6 +318,8 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertFalse((linked / '.lake').exists())
         # No-build makes a miss fail instead of silently recompiling the hit.
         selected(linked, 'D5.A', no_build=True)
+        selected(linked, 'Reg.CacheProbe', no_build=True, package='Reg')
+        selected(linked, 'leanInspector/inputDiscovery', no_build=True, package='tools/lean-inspector-reg')
         self.assertTrue((linked / '.lake/build/lib/lean/D5/A.olean').is_file())
         self.assertEqual(before, self.inventory(store), '[FAIL] linked_hit_cannot_write_artifacts')
         (linked / 'D5/New.lean').write_text('import D5.B\ndef newValue : Nat := D5.hidden + 1\n')
