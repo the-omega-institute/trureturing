@@ -12,17 +12,19 @@ $$\forall C \in \mathrm{Type},\; [\operatorname{Finite}\left(C\right)], \forall 
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Paidi Creed; Mary Cryan (2013). *The number of Euler tours of random directed graphs*. DOI: [10.37236/2377](https://doi.org/10.37236/2377).
+
 *Commentary.*
 
 C is any finite labelled type. BoolMaps(C) means C to Bool; the displayed states 0 and 1 mean false and true. Side(s,b) is the subtype of labels x with s(x)=b. inventory(s,d,a,b) is the cardinality of labels x with s(x)=a and d(x)=b. Compatible(s,d) consists of actual permutations rho of C with Nonempty(C), rho.IsCycleOn(univ), and d(x)=s(rho(x)) for every x. Thus the empty carrier has no compatible cycles, while the identity on a singleton is accepted exactly when its states agree. ite is the ordinary if-then-else; all factorial arguments use natural subtraction.
 
-Interpret every label x as an auxiliary arc from s(x) to d(x). Labels are never merged, including parallel arcs and loops. For a label c with s(c)=d(c), deleting c from an actual cycle leaves its actual successor y as an insertion slot of state s(c). Conversely, swap(none,some(y)) composed with optionCongr(rho) inserts the deleted label immediately before y. Mathlib Perm.decomposeOption proves exhaustive inverse reconstruction on the whole permutation carrier. The first-return comparison through the retained labels proves single-cycle equivalence; compatibility is equivalent to s(y)=s(c) together with compatibility of the retained cycle. This is a product equivalence with all slots and all compatible retained cycles, not an image-defined completion set.
+Interpret every label x as an auxiliary arc from s(x) to d(x). Labels are never merged, including parallel arcs and loops. For a label c with s(c)=d(c), assume that the retained carrier A of labels other than c is nonempty. Deleting c from an actual cycle then leaves its actual successor y in A as an insertion slot of state s(c). Conversely, swap(none,some(y)) composed with optionCongr(rho) inserts the deleted label immediately before y. Mathlib Perm.decomposeOption proves exhaustive inverse reconstruction on the whole permutation carrier. The first-return comparison through the retained labels proves single-cycle equivalence; compatibility is equivalent to s(y)=s(c) together with compatibility of the retained cycle. Under Nonempty(A), this is a product equivalence with all slots and all compatible retained cycles. The positive-crossing induction derives Nonempty(A) from its preserved positive crossing inventory. A singleton loop is handled separately by the zero-crossing branch.
 
 When there are no loops, the balanced inventory consists of m arcs in each direction. Every compatible permutation is uniquely specified by a bijection f from the false fiber to the true fiber and a bijection g back. It is a single cycle exactly when the first-return permutation f followed by g is a single cycle on the false fiber. Consequently the exhaustive carrier is equivalent to the product of all f and all full cycles of the false fiber. Existing unrestricted cycle counting gives m! times (m-1)!. Strong induction deletes loops using the exhaustive insertion equivalence; the number of actual insertion slots is the remaining cardinality of the corresponding source fiber. The factorial recurrence yields m(r-1)!(t-1)!, with r and t the two source-fiber sizes. This inference is consumed by the original forest completion count below.
 
 If both crossing inventories vanish, compatibility preserves s. A single orbit forces s constant. If one loop inventory is empty, every permutation cycle is compatible and the count is (card(C)-1)!. If both loop inventories are nonempty, no full cycle is compatible. The separate empty-carrier case prevents the natural-subtraction factorial convention from creating an empty cycle.
 
-The classical count is the two-vertex specialization of the BEST Euler-tour formula for labelled directed multigraphs: Creed and Cryan, The Number of Euler Tours of Random Directed Graphs, Electronic Journal of Combinatorics 20(3), P13, DOI 10.37236/2377, Theorem 1, pages 2-3. Its tours are identified modulo cyclic rotation, with loops and parallel arcs allowed. For m positive the rooted in-tree count is m and the outdegrees are m+p and m+q. The Lean proof instead supplies the explicit deletion and first-return inventory equivalences. It imports no general BEST theorem and makes no novelty claim.
+The positive-crossing count specializes the classical BEST Euler-tour formula for labelled directed multigraphs, as stated in the cited Creed-Cryan Theorem 1, pages 2-3. Its tours are identified modulo cyclic rotation; the adjoining discussion and footnote allow loops and parallel arcs. For m positive the auxiliary two-vertex graph is strongly connected, the rooted in-tree count is m and the outdegrees are m+p and m+q. The complete statement here also handles empty carriers and disconnected zero-crossing inventories; those clauses are not attributed to that positive strongly-connected source theorem. The Lean proof supplies deletion and first-return inventory equivalences and imports no general BEST theorem. This is a local synthesis with classical positive-inventory lineage and no literature priority claim.
 
 **Theorem 1.2 (The original raw forest and all four cases).**
 
@@ -31,6 +33,10 @@ $$\forall V \in \mathrm{Type},\; [\operatorname{Finite}\left(V\right)], \forall 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LinearForests/CompatibleCycleInventory.alternating_completion_classification` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Paidi Creed; Mary Cryan (2013). *The number of Euler tours of random directed graphs*. DOI: [10.37236/2377](https://doi.org/10.37236/2377).
+
+*Acknowledgement.* Boaz Tsaban (2003). *Permutation graphs, fast forward permutations, and sampling the cycle structure of a permutation*. DOI: [10.1016/S0196-6774(03)00017-8](https://doi.org/10.1016/S0196-6774(03)00017-8).
 
 *Commentary.*
 
@@ -44,7 +50,7 @@ The inventories a,b,p,q are respectively the actual component endpoint types (fa
 
 Write m=a=b. The statement gives card(Component(E))=a+b+p+q, and this cardinality is positive whenever n is nonzero. The four cases are: n=0 gives zero completions; n positive and m positive gives m(m+p-1)!(m+q-1)!; n positive and m=0 with pq=0 gives (p+q-1)!; n positive and m=0 with both p and q positive gives zero. In the third and fourth cases p+q is positive by the component cardinality equation. In particular p+q=1 is permitted: the unique component cycle is its identity and the actual path closes by its tail-to-head edge.
 
-Ordinary forest contraction is reused from the original declarations, rather than proved again. Its classical provenance is Tsaban, Permutation graphs, fast forward permutations, and sampling the cycle structure of a permutation, DOI 10.1016/S0196-6774(03)00017-8, Lemmas 1.1-1.5, pages 107-109. Existing source attributions and licenses in DirectedForestCompletion remain applicable. This result counts directed cycles modulo rotation only. It makes no undirected reversal, adaptive-history, posterior, oracle, query-bound, configuration multiplicity or welded-tree EXIT assertion.
+Ordinary forest contraction is reused from the original declarations. Its classical provenance is the cited Tsaban Section 1, Lemmas 1.1-1.3, Definition 1.4 and Lemma 1.5, pages 107-109. The positive-inventory count has the BEST lineage described above. The complete raw-forest statement combines these ingredients with the derived endpoint balance and the separate empty and zero-crossing cases; neither cited source is asserted to state this complete theorem verbatim. This is a local synthesis with no literature priority claim. Existing source attributions, permission and licenses in DirectedForestCompletion and its linked Library notes remain applicable. This result counts directed cycles modulo rotation only. It makes no undirected reversal, adaptive-history, posterior, oracle, query-bound, configuration multiplicity or welded-tree EXIT assertion.
 
 ## References
 
