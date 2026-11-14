@@ -1,0 +1,30 @@
+**原域接口 137.2。** [FINITE_PURE VII103.2、VII104.1][Q137VII]及[EXCLUSION IX116.1—116.2][Q137IX]给出：每个 $D_p$ 是非点紧暴露极大真面；全部非空原真面只有纯单点或这些完整球；
+
+$$
+S_p=\partial_{\rm rel}D_p\cong S^2,\qquad
+D_p=\operatorname{conv}S_p,
+\qquad
+D_a\ne D_b\ \Longrightarrow\ D_a\cap D_b
+\text{ 为空或一个原纯单点}.
+\tag{XI137.5}
+$$
+
+这些面接口不消费全 Pair。球面拓扑均从原 $V$ 继承，不将整个 $P$ 当作流形。
+
+完整 EB3+$\mathsf{Conn}$ 下，直接复用 [THREE_COPY VIII复用组合130.2][Q137TC] 的 Conn$\Rightarrow$Inj、$P=P_0$。其前件和论证均保留：IX116.2 的重复球会组成孤立完全二部原零图块；Conn 会使全部纯点只剩这对不交球的球缘，进而把原凸体的连通相对边界分成两个不交紧球，故排除重复标签。随后 IX119.10 的沿每条原边冗余不变、至少一个零冗余标签及有限路径传播，给全部 $P=P_0$。结合 IX120.2、定理120.8，准确得到对每个原 $p$
+
+$$
+\begin{gathered}
+D_p=D_q\Longrightarrow p=q,\qquad
+\mathcal A_p=\{e_p\},\qquad g_p=u-e_p,\qquad \dim L_p=4,\\
+N_{D_p}:=\{h\in C^\ast:h|_{D_p}=0\}=\mathbb R_+e_p,\\
+\{x\in K:e_p(x)=0\}=D_p,\qquad
+\{x\in K:e_p(x)=1\}=\{p\},\\
+R_p:L_p\longrightarrow\operatorname{Aff}(D_p),\quad h\longmapsto h|_{D_p}
+\text{ 是线性同构},\qquad g_p\in\operatorname{int}_{L_p}N_p.
+\end{gathered}
+\tag{XI137.6}
+$$
+
+这里的 $P_0$ 只表示完整暴露族 $\mathcal A_p$ 为单点。没有把 $\mathcal F_p$ 说成单点或证明 $e_p$ 为其 least，也没有把 $R_p^{-1}$ 说成正映射。这些接口及 Conn 的消费均为复用。
+

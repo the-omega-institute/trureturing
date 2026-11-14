@@ -1,0 +1,12 @@
+4. $Q(o)$ 在原 $V$ 中紧，其全部点仍为原纯点。
+
+另有准确的根三角定位：记 $\mathsf{Tri}(o)$ 为 $o$ 属于一个真实原零三角，则
+
+$$
+\mathsf{Tri}(o)\quad\Longleftrightarrow\quad
+\iota(D_o)\cap\partial_H\Omega\ne\varnothing.
+\tag{XI137.10}
+$$
+
+本定理的证明依次如下。紧 $B_2$ 与实际定义域上的部分关联连续性为既有方法的复用；实质连接是固定球面片的椭球拼接、局部完整二步集合相等及三点排除混态极限。
+
