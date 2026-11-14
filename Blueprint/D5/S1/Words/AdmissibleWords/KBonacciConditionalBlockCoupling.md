@@ -76,4 +76,5 @@ ExpectedHamming(J,s) is the sum over full-word pairs w of J(w)H(s,w). Before(s,i
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.right_scan_hamming`
 - Truth anchor: `D5/S1/Words/AdmissibleWords/KBonacciConditionalBlockCoupling.zero_screening`
 - Dependency: [D5/S0/Tower/DBonacci/TerminalSampling](../../../S0/Tower/DBonacci/TerminalSampling.md)
+- Dependency: [D5/S1/Words/AdmissibleWords/KBonacciIntegerInterval](KBonacciIntegerInterval.md)
 - Dependency: [D5/S1/Words/ClosedRunStarts](../ClosedRunStarts.md)
