@@ -3995,23 +3995,353 @@ The single identical cup/cap variant and sufficiency of Bell original extremalit
 
 ## 追加锚（本行以下为增补区）
 
-## 173. 原纯端点互易、可逆滤波的退化面与全部有限量子锥
+## 173. Bell reciprocity and signed rank-one resolution
 
-### 173.1 完整原域与端点比较
+### 173.1 The weak domain and an operation-free binary candidate
 
-**定义 173.1（原确认菜单与互易条件）。** 完整采用 [XIII166.1][Q173XIII] 的域。固定整数 $n\ge2$，在同一实际 Kronecker 坐标中令
+**Definition 173.1 (the retained domain).** Retain exactly Definition 172.1: a fixed integer $n\ge2$, the actual real carriers
+
+$$
+W_N=\operatorname{Herm}_{n^N}(\mathbb C),\qquad W_0=\mathbb R,
+\tag{173.1}
+$$
+
+closed convex cones $C_N$, $C_0=\mathbb R_+$, their complete trace duals, every finite minimum/maximum tensor inclusion, actual positive permutations with positive inverses, and canonical reassociation. The ordinary trace is initially only the multiplicative algebraic functional. In particular no pointedness, generation, positive trace, PSD containment, transpose preservation, or positive matrix operation is assumed. Put
+
+$$
+\Omega=\sum_{j=0}^{n-1}e_j\otimes e_j,\qquad B=\Omega\Omega^*.
+\tag{173.2}
+$$
+
+**Definition 173.2 (signed native rank-one resolution).** For a cone $K\subset\operatorname{Herm}_d(\mathbb C)$, write $\mathsf{SR}(K)$ when every $X\in K$ admits a finite expression
+
+$$
+X=\sum_{j=1}^{m}\sigma_jv_jv_j^*,\qquad
+0\ne v_j\in\mathbb C^d,\quad \sigma_j\in\{+1,-1\},\quad
+\sigma_jv_jv_j^*\in K.
+\tag{173.3}
+$$
+
+The empty sum represents zero. Positive scalar coefficients can be absorbed into the vectors. Each term must belong to the same original cone; an arbitrary spectral decomposition whose terms leave $K$ does not satisfy this definition. This is ordinary Hermitian matrix rank one. It is not tensor rank one or Schmidt rank one: an entangled vector supplies an allowed rank-one dyad. No sign is specified in advance, and an original extreme ray has not been identified with a matrix-rank-one ray.
+
+The binary candidate is the pair of structural relations
+
+$$
+\mathsf Q_{\mathrm{bin}}:\qquad
+B\in C_2\cap C_2^*,\qquad \mathsf{SR}(C_2).
+\tag{173.4}
+$$
+
+There is no specified deformation matrix or operation-preservation premise. Retain the same separate ternary condition
+
+$$
+\mathsf T:\quad
+\exists\,0\ne\psi\in(\mathbb C^n)^{\otimes3},\quad
+\psi\psi^*\in C_3,\quad
+\min_i r_i(\psi)\ge2,\quad \max_i r_i(\psi)=n.
+\tag{173.5}
+$$
+
+The three $r_i$ are the actual complex flattening ranks. Neither $B$ nor $\psi\psi^*$ is assumed original-extreme. The candidate concerns the entire two-system cone and its complete test relation, rather than only a chosen set of preparations or effects.
+
+### 173.2 Bell relations determine the complete transpose dual
+
+**Lemma 173.3 (reciprocity at every original finite block).** On Definition 173.1, the first relation of (173.4) alone implies
+
+$$
+C_k^*=\{X^{\mathsf T}:X\in C_k\}
+\qquad(k\ge0\text{ finite}).
+\tag{173.6}
+$$
+
+This is equality with the transpose image, not an assertion that transpose preserves $C_k$ or that $C_k$ is self-dual for the usual positive-definite trace inner product.
+
+**Proof.** The scalar case is immediate. Fix $k\ge1$, put $d=n^k$, and regard the same actual $2k$ legs as two $k$-leg blocks. Tensor $k$ copies of the primal Bell resource and permute their positions. The minimum inclusions and positive permutations put the resulting matrix
+
+$$
+\mathcal B_k=\Omega_k\Omega_k^*,\qquad
+\Omega_k=\sum_{\alpha\in\{0,\ldots,n-1\}^k}
+e_\alpha\otimes e_\alpha
+\tag{173.7}
+$$
+
+in $C_{2k}$. The product of the $k$ dual Bell functionals is nonnegative on all of $C_{2k}$ by successive maximum inclusions. Transporting this functional by the inverse of the same actual permutation proves $\mathcal B_k\in C_{2k}^*$. These constructions use the complete original cones, with no normalized state or proper cap.
+
+For arbitrary Hermitian $X,Y$ on the $k$-leg block, the matrix-unit identity is
+
+$$
+\operatorname{Tr}[\mathcal B_k(X\otimes Y)]
+=\operatorname{Tr}(X^{\mathsf T}Y).
+\tag{173.8}
+$$
+
+For $X,Y\in C_k$, the minimum bound and the dual membership of $\mathcal B_k$ make this quantity nonnegative. Consequently $C_k^{\mathsf T}\subseteq C_k^*$. For $F,G\in C_k^*$, the primal membership of $\mathcal B_k$ and the maximum bound instead give $\operatorname{Tr}(F^{\mathsf T}G)\ge0$. The complete bipolar identity for a closed convex cone gives
+
+$$
+(C_k^*)^{\mathsf T}\subseteq C_k^{**}=C_k.
+\tag{173.9}
+$$
+
+Transposing (173.9) gives the other containment in (173.6). Neither containment used pointedness, generation, or trace positivity. $\square$
+
+### 173.3 The signed support obstruction, including lineality
+
+**Theorem 173.4 (signed rank-one resolution under transpose reciprocity).** Let $d\ge1$. If a closed convex cone $K\subset\operatorname{Herm}_d(\mathbb C)$ satisfies
+
+$$
+K^*=K^{\mathsf T},\qquad \mathsf{SR}(K),
+\tag{173.10}
+$$
+
+then $K=\operatorname{PSD}_d$ or $K=-\operatorname{PSD}_d$. In particular pointedness, full span, and one common sign are consequences, including when none was supplied.
+
+**Proof.** Define complex support spaces using all native signed rank-one elements:
+
+$$
+\begin{aligned}
+U&=\operatorname{span}_{\mathbb C}\{v:vv^*\in K\},\\
+V&=\operatorname{span}_{\mathbb C}\{w:-ww^*\in K\},\\
+p&=\dim_{\mathbb C}U,\quad q=\dim_{\mathbb C}V,
+\quad r=\dim_{\mathbb C}(U\cap V).
+\end{aligned}
+\tag{173.11}
+$$
+
+For each displayed pair of generators, $(vv^*)^{\mathsf T}\in K^*$, hence
+
+$$
+0\le\operatorname{Tr}[(vv^*)^{\mathsf T}(-ww^*)]
+=-|v^{\mathsf T}w|^2.
+\tag{173.12}
+$$
+
+Thus $U$ and $V$ annihilate each other for the nondegenerate complex bilinear form $(v,w)\mapsto v^{\mathsf T}w$, and
+
+$$
+p+q\le d.
+\tag{173.13}
+$$
+
+This is bilinear orthogonality, not Hermitian orthogonality; $U\cap V$ may be nonzero. The proof must retain that intersection and the possible lineality of $K$.
+
+For a complex subspace $E$, let $\operatorname{Herm}(E)$ denote the real space of Hermitian matrices whose ranges lie in $E$, embedded by zero on $E^\perp$. Its real dimension is $(\dim_{\mathbb C}E)^2$, and
+$\operatorname{Herm}(U)\cap\operatorname{Herm}(V)=\operatorname{Herm}(U\cap V)$. Signed resolution gives
+
+$$
+S:=\operatorname{span}_{\mathbb R}K
+\subseteq\operatorname{Herm}(U)+\operatorname{Herm}(V),
+\qquad \dim_{\mathbb R}S\le p^2+q^2-r^2.
+\tag{173.14}
+$$
+
+Next let $L=K\cap(-K)$, its real lineality space. For $X\in L$, resolve $X$ and $-X$ separately and group terms by matrix sign:
+
+$$
+X=P_1-Q_1=-(P_2-Q_2),\qquad
+Z:=P_1+P_2=Q_1+Q_2\succeq0.
+\tag{173.15}
+$$
+
+Each $P_i$ is PSD supported on $U$ and each $Q_i$ is PSD supported on $V$. Therefore $Z$ is supported on $U\cap V$. The inequalities $0\preceq P_i,Q_i\preceq Z$ imply that all four matrices are supported on that intersection: if $z\in\ker Z$, positivity gives $P_i z=Q_i z=0$. It follows that
+
+$$
+L\subseteq\operatorname{Herm}(U\cap V),\qquad
+\dim_{\mathbb R}L\le r^2.
+\tag{173.16}
+$$
+
+Complete duality gives $\operatorname{lin}(K^*)=S^\perp$, where the perpendicular is for the real trace inner product. Equation (173.10) also gives $\operatorname{lin}(K^*)=L^{\mathsf T}$. Transpose is a real linear isomorphism, so
+
+$$
+d^2=\dim_{\mathbb R}S+\dim_{\mathbb R}L
+\le p^2+q^2\le(p+q)^2\le d^2.
+\tag{173.17}
+$$
+
+All inequalities are equalities. In particular $pq=0$ and $p+q=d$. Thus all native rank-one terms have one common matrix sign, and signed resolution puts $K$ inside $\operatorname{PSD}_d$ or $-\operatorname{PSD}_d$. Both of these usual cones are trace self-dual and transpose invariant. If, for example, $K\subseteq\operatorname{PSD}_d$, then
+
+$$
+\operatorname{PSD}_d\subseteq K^*=K^{\mathsf T}
+\subseteq\operatorname{PSD}_d.
+\tag{173.18}
+$$
+
+Therefore $K^{\mathsf T}=K=\operatorname{PSD}_d$. The negative case has the identical dual-containment argument with $-\operatorname{PSD}_d$. This also excludes zero and proper subspace cones without a separate nondegeneracy assumption. $\square$
+
+### 173.4 A complete replacement of the binary criterion
+
+**Theorem 173.5 (binary resolution and all-finite reconstruction).** On the same weak actual domain, the following binary statements are equivalent:
+
+$$
+\begin{aligned}
+&\mathsf Q_{\mathrm{bin}};\\
+&C_2=\operatorname{PSD}_{n^2};\\
+&\exists\varepsilon\in\{+1,-1\},\quad
+C_1=\varepsilon\operatorname{PSD}_n,\quad
+C_2=\operatorname{PSD}_{n^2}.
+\end{aligned}
+\tag{173.19}
+$$
+
+The sign is unique. Every $\varepsilon^N C_N$ is closed, pointed and generating, its signed trace is strictly positive away from zero, and its signed trace-one base is compact. Moreover
+
+$$
+\mathsf Q_{\mathrm{bin}}\wedge\mathsf T
+\quad\Longleftrightarrow\quad
+C_N=\operatorname{PSD}_{n^N}\quad
+\text{for every finite }N\ge0.
+\tag{173.20}
+$$
+
+Bell original extremality and the positivity of all local matrix congruences are conclusions of this criterion, rather than extra binary inputs.
+
+**Proof.** Lemma 173.3 at $k=2$ and Theorem 173.4 with $d=n^2$ give $C_2=\pm\operatorname{PSD}_{n^2}$. The nonzero positive matrix $B\in C_2$ excludes the negative choice. This proves the first implication in (173.19) without any deformation or preservation axiom.
+
+The remainder of the binary statement is precisely [171.11(1)][Q173XVI], in its already proved direction from $C_2=\operatorname{PSD}_{n^2}$. The fixed matrix in that older equivalent formulation requires no new premise: once $C_2$ is PSD, its congruence preserves $C_2$. The older result uses 171.8 for the common one-body sign and 171.9 for the finite-frame pointedness, generation, strict signed trace and compactness. This direction uses no matrix-generation supplier. These implications are reused, not assumptions that the weak domain has silently inherited. Conversely the usual PSD cone contains $B$, is its complete trace dual, and its ordinary spectral decomposition supplies (173.3) with only positive signs. This completes (173.19).
+
+Under $\mathsf T$, the nonzero ordinary positive dyad at the odd level three fixes $\varepsilon=+1$ by 171.10. The rank conditions in (173.5) are not needed for that sign selection; their separate purpose is the full-support propagation premise. Now use the entire sets
+
+$$
+\begin{aligned}
+K_N&=\{X\in C_N:\operatorname{Tr}X=1\},\qquad P_N=\operatorname{ext}K_N,\\
+\mathcal E_N&=\{F\in C_N^*:I_{n^N}-F\in C_N^*\},\\
+\mathcal M_N&=\{(F_1,\ldots,F_m):m\ge1,\ F_j\in C_N^*,\ \sum_jF_j=I_{n^N}\}.
+\end{aligned}
+\tag{173.20a}
+$$
+
+These are mathematical full-menu objects, with no physical availability claim. At this point every supplier premise of [166.12, condition 1 implies condition 5][Q173XIII] is paid, with the same correspondence as 171.11:
+
+| Supplier requirement | Its actual source here |
+| --- | --- |
+| Fixed complex Hermitian carriers, all finite tensor levels, scalar object | Definition 173.1 |
+| Closed, pointed, generating cones and strictly positive multiplicative ordinary trace | (173.19), 171.9, and the positive sign selected by (173.5) |
+| Entire bases, all extreme points, complete duals, full proper intervals and finite unit decompositions | Take those full sets after signed properness and sign selection; the duals were complete from the beginning |
+| Every finite min/max partition, positive actual permutations with positive inverses, canonical reassociation | Definition 173.1, including noncontiguous transported partitions |
+| Actual one- and two-body PSD equalities | (173.19) with $\varepsilon=+1$ |
+| A ternary dyad, nonproduct at every cut, with at least one full leg | Exactly (173.5) |
+
+The supplier therefore gives all finite PSD cones. Its smaller-corner induction, two-copy Gram bridge, three Bell contractions and exact finite propagation remain the previously proved construction; no arbitrary GME state lacking a full leg replaces its seed. Conversely the full PSD hierarchy satisfies the weak domain and (173.4), and $\sum_j e_j\otimes e_j\otimes e_j$ supplies (173.5).
+
+Finally every ordinary rank-one positive ray is extreme in a PSD cone, so the recovered Bell ray is original-extreme. Every local matrix congruence, including singular ones, preserves every PSD level, proving its positivity with all original finite spectators. $\square$
+
+### 173.5 Geometric meaning and the exact quantum dictionary
+
+**Corollary 173.6 (the candidate's finite quantum geometry and consumers).** Under (173.20), write $d_N=n^N$. The whole original state and process theory has the following correspondence, with no selected state or effect subfamily substituted:
+
+| Original definition | Resulting finite quantum structure |
+| --- | --- |
+| $K_N=\{X\in C_N:\operatorname{Tr}X=1\}$ | All density matrices on the actual $\mathbb C^{d_N}$ |
+| All extreme points of $K_N$ | Unit rank-one projections; $\mathbb{CP}^{d_N-1}$ |
+| Complete dual and proper interval | All PSD functionals and all $0\preceq E\preceq I$ |
+| All finite dual-positive unit decompositions | Every finite POVM, with $p(a\mid\rho)=\operatorname{Tr}(E_a\rho)$ |
+| Actual tensor products, permutations and unit slices | Entangled joint states, ordinary permutations and partial traces |
+| All real-linear maps positive with every original finite spectator | All rectangular complex CP maps, through their Hermiticity-preserving extensions |
+| Whole-input TNI/TP order budgets | CP branches and channels; all finite TP-sum mathematical instruments |
+
+The whole normalized minimal face containing any two distinct pure states is a three-dimensional real ball. Its pure boundary is $\mathbb{CP}^{1}\cong S^2$, not a filled projective line. This geometric three-dimensional face is distinct from the three-system tensor seed in (173.5).
+
+**Proof and parameter correspondence.** Theorem 173.5 gives exactly the original all-finite PSD domain required by [166.14][Q173XIII] and the full rectangular dictionary 172.16. Apply those results with the unchanged $W_N$, $C_N$, trace, complete duals, all original spectators and every finite unit decomposition. Their spectral and Choi ingredients are the standard results in [Watrous, Chapters 1–2][Q173W1][Q173W2]. In particular
+
+$$
+\begin{aligned}
+J(F)&=\sum_{i,j=0}^{d_a-1}E_{ij}\otimes F(E_{ij}),\\
+F\text{ is positive with all original spectators}
+&\Longleftrightarrow J(F)\succeq0
+\Longleftrightarrow F(X)=\sum_\gamma K_\gamma XK_\gamma^*,\\
+u_bF\le u_a&\Longleftrightarrow\sum_\gamma K_\gamma^*K_\gamma\preceq I_{d_a},\\
+u_bF=u_a&\Longleftrightarrow\sum_\gamma K_\gamma^*K_\gamma=I_{d_a}.
+\end{aligned}
+\tag{173.21}
+$$
+
+These are the actual rectangular interfaces, with $K_\gamma:\mathbb C^{d_a}\to\mathbb C^{d_b}$, not just square maps or a scalar Choi trace budget. The zero map uses an empty Kraus family. The original pairing, complete effect interval and all finite unit decompositions give the displayed Born probabilities; pure-state least confirmation gives $|v^*w|^2$ as in 172.16. Neither rule is supplied again as an independent probability axiom after the cones have been identified.
+
+For the geometric statement let $p=vv^*$ and $q=ww^*$ be distinct normalized pure states. Their complex span $E=\operatorname{span}_{\mathbb C}\{v,w\}$ has dimension two. The PSD matrices supported on $E$ form an exposed face, and $p+q$ is positive definite on $E$, so this is the full minimal cone face containing both. In an orthonormal basis of $E$ its trace-one section is
+
+$$
+\rho(x,y,z)=\frac12
+\begin{pmatrix}1+z&x-iy\\x+iy&1-z\end{pmatrix},
+\qquad x^2+y^2+z^2\le1.
+\tag{173.22}
+$$
+
+The eigenvalues are $(1\pm\sqrt{x^2+y^2+z^2})/2$. Rank one is exactly the sphere. This standard two-dimensional Hermitian face calculation identifies the geometry forced by the new binary criterion, including nonorthogonal pairs; it is not an extra reconstruction premise. $\square$
+
+### 173.6 Counterfactuals and the precise simplification
+
+**Proposition 173.7 (the missing relation in the Wigner model).** At every odd prime local dimension, the complete Wigner simplex hierarchy of 172.11–172.13 satisfies the Bell primal/dual relation and the unchanged $\mathsf T$, but fails $\mathsf{SR}(C_2)$. Thus ordinary matrix-rank-one Bell and GHZ resources alone do not supply the decomposition relation used here.
+
+**Proof.** That hierarchy has every finite weak-domain structure, complete duals and full menus, the two Bell memberships, and the required three flattening ranks. Its two-body cone is the finite positive-orthant cone on the product phase-point basis, so is simplicial. It cannot equal $\operatorname{PSD}_{p^2}$: the former has finitely many extreme rays, the latter has a distinct extreme ray for every point of $\mathbb{CP}^{p^2-1}$. If signed native rank-one resolution held, Lemma 173.3 and Theorem 173.4 would instead make that cone PSD; the positive Bell member would select its positive sign. This contradiction proves the exact failed condition without restricting the model's dual tests. $\square$
+
+**Proposition 173.8 (the binary orientation obstruction survives).** Binary candidate (173.4) alone does not fix ordinary positive trace on odd levels. The all-finite hierarchy
+
+$$
+C_N=(-1)^N\operatorname{PSD}_{n^N}
+\tag{173.23}
+$$
+
+satisfies that candidate and the complete weak domain, but fails (173.5) and the positive all-finite conclusion.
+
+**Proof.** This is exactly the complete countermodel 171.12, including its duals and every finite partition. At level two its cone and complete dual are PSD, so both Bell memberships and native rank-one resolution hold. Every odd-level nonzero matrix has negative ordinary trace, and $C_3$ contains no nonzero ordinary positive dyad. This proves the asserted failure. The sign part of the ternary condition therefore has a concrete job even after the deformation has been deleted. $\square$
+
+**Proposition 173.9 (what is and is not compressed).** On Definition 173.1, (173.4) and the old binary criterion $\mathsf B\wedge\mathsf M_2$ are equivalent. The new presentation supplies ordinary Bell primal membership and a cone-wide finite resolution relation, and no longer supplies the exact deformation $M$ or any operation-preservation relation. It does not establish that Bell original extremality alone suffices, or that fewer independent assumptions or smaller total description length have been attained.
+
+**Proof.** Each binary criterion is equivalent to $C_2=\operatorname{PSD}_{n^2}$ by (173.19) and 171.11(1). Their forward mechanisms differ: 172 recovers the Bell cup from a deformed cup and cap through a matrix closure argument; (173.4) supplies the Bell cup and uses signed support resolution and full duality instead. Thus neither an unsupplied operation nor the absent deformation is borrowed. Bell original extremality follows at the end of 173.5; it does not imply the quantified resolution (173.3) by any argument here. In particular changing the presentation into that extremality-only variant would reopen a different mathematical problem.
+
+The geometric compression is from a chosen matrix with specified mixing and phase parameters to the reciprocal cone and its own rank-one directions. The representation is still the fixed complex Hermitian carrier; ordinary matrix rank is still a substantive part of the new condition. The reduction does not derive the complex field or the actual tensor product from an unspecified ontology. $\square$
+
+### 173.7 Conditions on physical updates, time and sources
+
+**Proposition 173.10 (conditional physical consumers and source scope).** The reconstruction establishes the finite mathematical state/effect/process dictionary in 173.6. To identify all these mathematical instruments with available physical events requires the event-saturation condition of 172.17. The Lüders branch and a Hamiltonian evolution retain their separate premises:
+
+$$
+\mathcal I_P(X)=PXP,
+\qquad
+\rho_t=e^{-itH}\rho e^{itH}.
+\tag{173.24}
+$$
+
+The signed rank-one relation is not itself a choice of physical measurement disturbance, clock or energy unit.
+
+**Proof and mathematical attribution.** Consume 172.17 on the all-finite PSD family already proved. For the first formula the required premise is that every ray certainly passing the projection-$P$ outcome is fixed by its branch; an effect alone permits other CP updates. For the second formula the premise is a continuous one-parameter group of reversible trace-preserving real order automorphisms. Continuity connects the group to the identity component and gives the usual unitary Hamiltonian form, with $H$ defined up to an additive scalar. Physical time and energy units, the value of $\hbar$, event availability, and infinite-dimensional extensions are not supplied by (173.4)–(173.5).
+
+Rank-one generation inside an already PSD spectrahedral cone is established terminology: [Hildebrand, Property 1.1 and Lemma 3.9][Q173H] formulate finite native rank-one sums and their extreme rays; [Argue–Kılınç-Karzan–Wang][Q173AKW] study the corresponding PSD-subcone property and sufficient conditions. Those results begin with PSD containment and do not supply the signed weak-domain theorem 173.4. The earlier real/complex ROG sections 93–94 of VI likewise retain their own PSD representation hypotheses. Their classifications are not invoked to assume a sign or a PSD representation for the present unknown cones.
+
+The repository-derived addition here is the signed support/lineality obstruction (173.11)–(173.18) and its Bell-recursive application (173.19)–(173.20). The tensor Bell identity, bipolar duality, finite-dimensional support dimensions, spectral facts and Bloch ball calculation are mature intermediate tools. The positive orientation, finite-frame properness, full-leg ternary propagation, and rectangular quantum dictionary are the named existing repository suppliers, not new proofs of those results. This attribution makes no claim of an exhaustive literature classification or global originality. $\square$
+
+### 173.8 中文白话与完整关系图景
+
+**命题 173.11（有限二元分解与三元提升的白话表述）。** 在定义173.1的固定复矩阵关系空间中，候选 (173.4)–(173.5) 可表述如下：二体整体既能提供同一张贝尔配对，也能用它测试整个原锥；每个二体对象还能拆成有限条仍属于原锥的矩阵秩一细线，起初不指定这些细线朝正还是朝负。这个条件连同指定的三体种子，给出173.5–173.6的全部有限量子结构。
+
+**证明与图景。** 把贝尔配对成对接起来，任意有限块的准备与全部测试就由转置互相对应。如果正细线和负细线的双线性配对不为零，就会给出负数；要避免这一点，两类细线的支撑只能彼此躲开。即使允许原锥含有整条正反都可走的直线，把这种余地完整算进去，支撑维数仍不够支付完整对偶。因此所有细线只能共同朝一边；二体贝尔本身朝正，便把整个二体锥锁成正半定锥，贝尔在原锥里不可再分也随之成为结论。此时任意两个不同纯方向所张成的完整归一面是一颗实三维球，球面上的点是纯态，球内是混合态。三体种子再做两件不同的事：它的普通正性选定奇数层也朝正，它的满维腿和每切口非乘积性接上已有的有限传播定理。这样全部有限层的密度矩阵、玻恩概率、纠缠复合和完全正过程一起恢复。复矩阵载体、这条整体分解关系和三体种子仍是明确前提；具体装置、测后扰动与时间标度各保留173.10的条件。这里内生出来的是符号、原极端性和操作正性，而不是把这些结果预先写进“秩一”的名称。$\square$
+
+[Q173XVI]: https://github.com/the-omega-institute/trureturing/blob/ca8ae24c6a0b7a0348fe24b411bf0b09fb14d455/docs/develop/theory/QUANTUM_ORIGIN_BINARY_BELL_ORBITS_AND_SINGLE_ATTENUATOR_XVI.md
+[Q173XIII]: https://github.com/the-omega-institute/trureturing/blob/00427ae2ba9c9e3f6c37f2e5496b9127b6fbc6c0/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[Q173H]: https://arxiv.org/html/1409.4781v2#S1
+[Q173AKW]: https://arxiv.org/abs/2007.07433v2
+[Q173W1]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.1.pdf
+[Q173W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+
+## 追加锚（本行以下为增补区）
+
+## 174. 原纯端点互易、可逆滤波的退化面与全部有限量子锥
+
+### 174.1 完整原域与端点比较
+
+**定义 174.1（原确认菜单与互易条件）。** 完整采用 [XIII166.1][Q174XIII] 的域。固定整数 $n\ge2$，在同一实际 Kronecker 坐标中令
 
 $$
 V=\operatorname{Herm}_n(\mathbb C),\qquad
 W_N=V^{\otimes_{\mathbb R}N}=\operatorname{Herm}_{n^N}(\mathbb C).
-\tag{173.1}
+\tag{174.1}
 $$
 
 每个有限 $N\ge1$ 有闭、尖、生成凸锥 $C_N\subset W_N$，普通迹 $u_N=\operatorname{Tr}=u_1^{\otimes N}$ 在非零原正元上严格正，并且在这些实际坐标中
 
 $$
 C_1=\operatorname{PSD}_n,\qquad C_2=\operatorname{PSD}_{n^2}.
-\tag{173.2}
+\tag{174.2}
 $$
 
 始终使用整个归一基、全部原极点、完整迹对偶、整个 proper 区间：
@@ -4022,7 +4352,7 @@ K_N&=\{x\in C_N:\operatorname{Tr}x=1\},&P_N&=\operatorname{ext}K_N,\\
 C_N^*&=\{f\in W_N:\operatorname{Tr}(fx)\ge0\ \forall x\in C_N\},&
 \mathcal E_N&=\{f:f,I_{n^N}-f\in C_N^*\}.
 \end{aligned}
-\tag{173.3}
+\tag{174.3}
 $$
 
 有限菜单取全部 $f_\ell\in C_N^*$、$\sum_\ell f_\ell=I_{n^N}$，凸准备和配对使用原实线性结构。对每个有限实际分块，保留
@@ -4030,14 +4360,14 @@ $$
 $$
 C_a\otimes_{\min}C_b\subseteq C_{a+b}
                  \subseteq C_a\otimes_{\max}C_b.
-\tag{173.4}
+\tag{174.4}
 $$
 
 最小锥是正简单张量的闭凸生成锥；最大锥由全部原 $f\otimes g$，$f\in C_a^*,g\in C_b^*$，的非负半空间相交定义。全部实际位置置换及其逆均正，不连续分块由它们运输；重括号使用同一实际空间的规范识别。原配对与单位满足
 
 $$
 (f\otimes g)(x\otimes y)=f(x)g(y),\qquad u_{a+b}=u_a\otimes u_b.
-\tag{173.5}
+\tag{174.5}
 $$
 
 空系统为 $W_0=\mathbb R,C_0=\mathbb R_+,u_0=\mathrm{id}$；上述条件包括标量分块和每个有限层。对 $N\ge3$ 不预付 PSD、自对偶、全转置不变性、原纯态分类或全局矩阵操作正性。
@@ -4047,14 +4377,14 @@ $$
 $$
 \mathcal F_p=\{f\in\mathcal E_3:\operatorname{Tr}(fp)=1\},\qquad
 T_p(x)=\min_{f\in\mathcal F_p}\operatorname{Tr}(fx)\quad(x\in C_3).
-\tag{173.6}
+\tag{174.6}
 $$
 
-引理173.3将证明这些最小值取得。端点互易条件为
+引理174.3将证明这些最小值取得。端点互易条件为
 
 $$
 \mathsf{Rec}:\qquad T_p(q)=T_q(p)\quad(p,q\in P_3).
-\tag{173.7}
+\tag{174.7}
 $$
 
 它交换两个静态比较端点，不涉及测量的先后执行。记号 $\mathsf R$ 仍专指 §172 的二元资源条件，不用于本章互易。固定一个实际切分 $A|BC$，令
@@ -4062,7 +4392,7 @@ $$
 $$
 \mathcal A_{A|BC}=\{P_a\otimes Q_v:\|a\|=\|v\|=1,\quad
  P_a=aa^*,\ Q_v=vv^*,\ v\in\mathbb C^n\otimes\mathbb C^n\}.
-\tag{173.8}
+\tag{174.8}
 $$
 
 这里 $v$ 可以二腿纠缠。较弱的单向条件及等参照条件分别为
@@ -4073,12 +4403,12 @@ $$
 T_p(q)\le T_q(p)\quad(p\in P_3,\ q\in\mathcal A_{A|BC}),\\
 \mathsf E:&\quad T_p(m)=T_q(m)\quad(p,q\in P_3).
 \end{aligned}
-\tag{173.9}
+\tag{174.9}
 $$
 
-引理173.3将把整个 $\mathcal A_{A|BC}$ 识别为原暴露纯态。$\mathsf E$ 不指定共同值。两个条件都不预设 $T_p$ 仿射、存在 least 确认效应、原纯态集合闭，或奇异滤波保持原纯性。
+引理174.3将把整个 $\mathcal A_{A|BC}$ 识别为原暴露纯态。$\mathsf E$ 不指定共同值。两个条件都不预设 $T_p$ 仿射、存在 least 确认效应、原纯态集合闭，或奇异滤波保持原纯性。
 
-**定理 173.2（原纯端点互易的全有限重建）。** 在定义173.1的完整域内，下列条件等价：
+**定理 174.2（原纯端点互易的全有限重建）。** 在定义174.1的完整域内，下列条件等价：
 
 1. $\mathsf{Rec}$。
 2. 一个固定切分上的 $\mathsf{Rec}_{\mathcal A}^{\le}$。
@@ -4093,20 +4423,20 @@ $$
 $$
 T_p(x)=\operatorname{Tr}(px),\qquad
 T_{vv^*}(ww^*)=|v^*w|^2\quad(\|v\|=\|w\|=1).
-\tag{173.10}
+\tag{174.10}
 $$
 
 每个 $p$ 的唯一 $m$ 处最优确认效应是 $p$，它也是整个原效应锥序下的 least 确认效应。这些是结论，不是互易的隐含前件。本定理为 repo-derived 的重建综合；既有范数界、秩保持分类和全有限传播分别按下述精确接口引用，不把本定理归为 Gurvits–Barnum 或 Marciniak 的原陈述。
 
-### 173.2 统一效应界与真正的原二分锚
+### 174.2 统一效应界与真正的原二分锚
 
-**引理 173.3（完整菜单的紧性与暴露锚）。** 在三个实际切分 $A|BC,B|AC,C|AB$ 上，$C_3$ 和 $C_3^*$ 均包含于相应块正锥。因而
+**引理 174.3（完整菜单的紧性与暴露锚）。** 在三个实际切分 $A|BC,B|AC,C|AB$ 上，$C_3$ 和 $C_3^*$ 均包含于相应块正锥。因而
 
 $$
 \|x\|_2\le\operatorname{Tr}x\quad(x\in C_3),\qquad
 \|f\|_2\le\operatorname{Tr}f\quad(f\in C_3^*),\qquad
 \|f\|_2\le\operatorname{Tr}f\le D\quad(f\in\mathcal E_3).
-\tag{173.11}
+\tag{174.11}
 $$
 
 $K_3,\mathcal E_3,\mathcal F_p$ 都紧，后两者非空；$\mathcal A_{A|BC}\subset P_3$，且每个 $q\in\mathcal A_{A|BC}$ 都是 proper 自确认效应。对全部原纯态有
@@ -4114,49 +4444,49 @@ $K_3,\mathcal E_3,\mathcal F_p$ 都紧，后两者非空；$\mathcal A_{A|BC}\su
 $$
 T_p(m)\ge\frac1{D\|p\|_2}\ge\frac1D,
 \qquad T_q(m)=\frac1D\quad(q\in\mathcal A_{A|BC}).
-\tag{173.12}
+\tag{174.12}
 $$
 
-证明。对复有限维矩形空间 $U,Z$，Hermitian 矩阵 $H$ 块正指 $\langle u\otimes z,H(u\otimes z)\rangle\ge0$ 对全部向量成立。直接复用 [Gurvits–Barnum 的块正对偶范数界][Q173BP]：
+证明。对复有限维矩形空间 $U,Z$，Hermitian 矩阵 $H$ 块正指 $\langle u\otimes z,H(u\otimes z)\rangle\ge0$ 对全部向量成立。直接复用 [Gurvits–Barnum 的块正对偶范数界][Q174BP]：
 
 $$
 H\in\operatorname{BP}(U|Z)\quad\Longrightarrow\quad
 0\le\operatorname{Tr}H,\qquad\|H\|_2\le\operatorname{Tr}H.
-\tag{173.13}
+\tag{174.13}
 $$
 
-该供应适用于任意矩形维数，特别是 $(n,n^2)$。[原文 Theorem 1][Q173GB] 的可分离单位球及其 BP 对偶界是既有结果。低层 PSD 的完整自对偶使每个 $1|23$ 最大界正好给 $C_3\subset\operatorname{BP}$；最小界包含该切分的全部可分离 PSD 锥，取对偶给 $C_3^*\subset\operatorname{BP}$。原置换支付另外两个切分。对 $f$ 和 $I-f$ 分别应用(173.13)，得到(173.11)最后一项。这是对整个效应区间统一的界，与被确认的纯态无关。
+该供应适用于任意矩形维数，特别是 $(n,n^2)$。[原文 Theorem 1][Q174GB] 的可分离单位球及其 BP 对偶界是既有结果。低层 PSD 的完整自对偶使每个 $1|23$ 最大界正好给 $C_3\subset\operatorname{BP}$；最小界包含该切分的全部可分离 PSD 锥，取对偶给 $C_3^*\subset\operatorname{BP}$。原置换支付另外两个切分。对 $f$ 和 $I-f$ 分别应用(174.13)，得到(174.11)最后一项。这是对整个效应区间统一的界，与被确认的纯态无关。
 
-$K_3$ 闭且由(173.11)有界；$\mathcal E_3$ 同样闭有界。$I\in\mathcal E_3$，因为严格正迹是原正泛函，故 $I\in\mathcal F_p$。确认超平面闭，所以 $\mathcal F_p$ 非空紧，所有(173.6)的最小值均取得。
+$K_3$ 闭且由(174.11)有界；$\mathcal E_3$ 同样闭有界。$I\in\mathcal E_3$，因为严格正迹是原正泛函，故 $I\in\mathcal F_p$。确认超平面闭，所以 $\mathcal F_p$ 非空紧，所有(174.6)的最小值均取得。
 
 固定 $q=P_a\otimes Q_v$。最小界给 $q\in K_3$。最大界的正简单对偶使 $q\in C_3^*$，并且
 
 $$
 I-q=(I_A-P_a)\otimes I_{BC}+P_a\otimes(I_{BC}-Q_v)\in C_3^*.
-\tag{173.14}
+\tag{174.14}
 $$
 
 这里两个 $BC$ 矩阵均在已知的完整二体 PSD 对偶内，包括纠缠 $v$ 的 $Q_v$。于是 $q\in\mathcal F_q$。若 $x\in K_3$ 且 $\operatorname{Tr}(qx)=1$，则 $\|x\|_2\le1$ 给
 
 $$
 \|x-q\|_2^2=\|x\|_2^2+1-2\operatorname{Tr}(qx)\le0.
-\tag{173.15}
+\tag{174.15}
 $$
 
 故 $x=q$；泛函 $q$ 在整个 $K_3$ 上唯一暴露该点。此处证明的是实际二分锚的原极端性，没有把全部未知原纯态替换成矩阵 dyad。
 
-最后，对 $f\in\mathcal F_p$，Cauchy–Schwarz 与(173.11)给
+最后，对 $f\in\mathcal F_p$，Cauchy–Schwarz 与(174.11)给
 
 $$
 1=\operatorname{Tr}(fp)\le\|f\|_2\|p\|_2
 \le(\operatorname{Tr}f)\|p\|_2,\qquad 0<\|p\|_2\le1.
 $$
 
-除以 $D$ 并最小化得(173.12)下界；锚自身的 $f=q$ 取得反向上界。$\square$
+除以 $D$ 并最小化得(174.12)下界；锚自身的 $f=q$ 取得反向上界。$\square$
 
-### 173.3 混合面附近的有限互易缺陷
+### 174.3 混合面附近的有限互易缺陷
 
-**引理 173.4（定量混合面不对称）。** 设 $q_j=P_a\otimes Q_j\in\mathcal A_{A|BC}$，$Q_j$ 为两两正交的单位秩一投影，并令
+**引理 174.4（定量混合面不对称）。** 设 $q_j=P_a\otimes Q_j\in\mathcal A_{A|BC}$，$Q_j$ 为两两正交的单位秩一投影，并令
 
 $$
 \rho=\sum_{j=1}^r\lambda_jq_j,\qquad
@@ -4168,7 +4498,7 @@ $$
 $$
 \boxed{\ T_p(q_j)-T_{q_j}(p)
 \ge1-\lambda_j-\left(\frac D{\lambda_j}+1\right)\eta.\ }
-\tag{173.16}
+\tag{174.16}
 $$
 
 证明。任取整个菜单中的 $f\in\mathcal F_p$，统一效应界给
@@ -4188,7 +4518,7 @@ $$
 
 $$
 T_p(q_j)\ge1-\frac{D\eta}{\lambda_j}.
-\tag{173.17}
+\tag{174.17}
 $$
 
 另一方面，锚的 proper 自确认效应给
@@ -4197,29 +4527,29 @@ $$
 T_{q_j}(p)\le\operatorname{Tr}(q_jp)
 \le\operatorname{Tr}(q_j\rho)+\|q_j\|_2\eta
 =\lambda_j+\eta.
-\tag{173.18}
+\tag{174.18}
 $$
 
 两式相减即得。整个论证只在 $p,q_j$ 两个原纯端点上使用 $T$；没有在混合 $\rho$ 上要求互易，也没有交换最小化与求和或使用 $p\mapsto T_p$ 的连续性。特别地，当 $\lambda_j<1$ 且
 
 $$
 \eta<\frac{\lambda_j(1-\lambda_j)}{D+\lambda_j},
-\tag{173.19}
+\tag{174.19}
 $$
 
 就有实际有限端点对上的严格反向差 $T_p(q_j)>T_{q_j}(p)$。$\square$
 
-### 173.4 可逆滤波保原纯性，奇异极限只用于选参数
+### 174.4 可逆滤波保原纯性，奇异极限只用于选参数
 
-**引理 173.5（互易迫使全部一腿压缩秩至多一）。** 在 $\mathsf{Rec}_{\mathcal A}^{\le}$ 下，每个 $p\in P_3$ 和每个 $a\in A$ 满足
+**引理 174.5（互易迫使全部一腿压缩秩至多一）。** 在 $\mathsf{Rec}_{\mathcal A}^{\le}$ 下，每个 $p\in P_3$ 和每个 $a\in A$ 满足
 
 $$
 X_a=(\langle a|\otimes I)p(|a\rangle\otimes I)\succeq0,
 \qquad\operatorname{rank}X_a\le1.
-\tag{173.20}
+\tag{174.20}
 $$
 
-证明。PSD 性由 $A|BC$ 块正性给出。复用 [XIII166.3、VII102.6–102.7][Q173XIII] 的原一体合同接口：任意单腿矩阵 $H$ 的 $\operatorname{Ad}_H$ 在每个原有限旁观层上正。该供应只需本章完整原域和低层 PSD；它的 Choi dyad 在原 $C_2$，与任意原相关输入作最小张量积，再经原 Bell 帽切片，支付合同正性。取 $s_H=\max\{1,\|H\|_{\rm op}\}$，合同 $\operatorname{Ad}_{H/s_H}$ 还具有全旁观不增迹预算。
+证明。PSD 性由 $A|BC$ 块正性给出。复用 [XIII166.3、VII102.6–102.7][Q174XIII] 的原一体合同接口：任意单腿矩阵 $H$ 的 $\operatorname{Ad}_H$ 在每个原有限旁观层上正。该供应只需本章完整原域和低层 PSD；它的 Choi dyad 在原 $C_2$，与任意原相关输入作最小张量积，再经原 Bell 帽切片，支付合同正性。取 $s_H=\max\{1,\|H\|_{\rm op}\}$，合同 $\operatorname{Ad}_{H/s_H}$ 还具有全旁观不增迹预算。
 
 若 $H$ 可逆，对 $H^{-1}$ 独立使用同一供应，故 $\operatorname{Ad}_H$ 及其逆都正，成为整个原锥的线性自同构，保持极端射线。严格正迹使其非零像可归一，因而归一可逆滤波保持全部原纯态。此处的数学正逆不声称一个无代价、确定性可实现的物理逆。
 
@@ -4229,14 +4559,14 @@ $$
 H_t=P_a+t(I_A-P_a),\qquad
 p_t=\frac{(H_t\otimes I)p(H_t^*\otimes I)}
  {\operatorname{Tr}[(H_t\otimes I)p(H_t^*\otimes I)]}.
-\tag{173.21}
+\tag{174.21}
 $$
 
 $H_t$ 可逆，故 $p_t\in P_3$。分母对每个 $t>0$ 严格正；在 $t\downarrow0$ 时收敛到 $\operatorname{Tr}X_a>0$，通常矩阵连续性给
 
 $$
 p_t\longrightarrow\rho=P_a\otimes\frac{X_a}{\operatorname{Tr}X_a}.
-\tag{173.22}
+\tag{174.22}
 $$
 
 若 $X_a$ 的秩 $r\ge2$，在已知二体 PSD 空间作谱分解
@@ -4246,13 +4576,13 @@ $$
 \qquad0<\lambda_j<1,\quad\sum_j\lambda_j=1.
 $$
 
-全部 $q_j=P_a\otimes Q_j$ 都是引理173.3的原暴露纯态。固定其中一个 $j$，(173.22)允许选择仍严格为正的有限 $t$，使(173.19)成立。引理173.4遂给 $T_{p_t}(q_j)>T_{q_j}(p_t)$，与单向条件矛盾。故秩至多一。零压缩、零向量 $a$ 及非单位 $a$ 分别由直接判断和正比例缩放涵盖。
+全部 $q_j=P_a\otimes Q_j$ 都是引理174.3的原暴露纯态。固定其中一个 $j$，(174.22)允许选择仍严格为正的有限 $t$，使(174.19)成立。引理174.4遂给 $T_{p_t}(q_j)>T_{q_j}(p_t)$，与单向条件矛盾。故秩至多一。零压缩、零向量 $a$ 及非单位 $a$ 分别由直接判断和正比例缩放涵盖。
 
 这个矛盾只使用正参数的原纯态 $p_t$，未把 $t=0$ 的奇异映射当成保纯操作，也未断言极限 $\rho$ 原纯或 $P_3$ 闭。二体谱向量可以纠缠，所以若只保留完全乘积锚，以上谱分解步骤便没有被支付。$\square$
 
-### 173.5 秩保持分类、三切分排负与完整极性
+### 174.5 秩保持分类、三切分排负与完整极性
 
-**引理 173.6（压缩秩条件的共同重建尾部）。** 在定义173.1的域中，如果(173.20)对全部原纯态及固定 $A$ 腿的全部向量成立，则全部有限 $C_N$ 为 PSD。
+**引理 174.6（压缩秩条件的共同重建尾部）。** 在定义174.1的域中，如果(174.20)对全部原纯态及固定 $A$ 腿的全部向量成立，则全部有限 $C_N$ 为 PSD。
 
 证明。固定 $p\in P_3$，在实际基中写
 
@@ -4260,25 +4590,25 @@ $$
 p=\sum_{i,j=0}^{n-1}E_{ij}\otimes p_{ij},\qquad
 \Phi_p:M_n(\mathbb C)\to M_{n^2}(\mathbb C),\quad
 \Phi_p(E_{ij})=p_{ij}.
-\tag{173.23}
+\tag{174.23}
 $$
 
 这是复线性映射，且逐项计算给
 
 $$
 \Phi_p(zz^*)=\sum_{i,j}z_i\overline z_jp_{ij}=X_{\overline z}.
-\tag{173.24}
+\tag{174.24}
 $$
 
 所以 $\Phi_p$ 正，并把每个一维正交投影映成秩至多一的 PSD 矩阵，允许零输出。其参考—输出 Choi 矩阵恰为 $p$；式中的复共轭由实际坐标决定。
 
-现在直接使用 [Marciniak, Theorem 2.2，0812.2311v3 印刷页9][Q173Marc]，DOI **10.4064/bc89-0-12**。该定理的精确前件是两个任意有限维复 Hilbert 空间间的 rank-1 non-increasing 正线性映射，所指条件正是上述一维投影条件；不要求保迹、单射、极端性或满支撑。其三支分类在本节的矩形 $(n,n^2)$ 上为
+现在直接使用 [Marciniak, Theorem 2.2，0812.2311v3 印刷页9][Q174Marc]，DOI **10.4064/bc89-0-12**。该定理的精确前件是两个任意有限维复 Hilbert 空间间的 rank-1 non-increasing 正线性映射，所指条件正是上述一维投影条件；不要求保迹、单射、极端性或满支撑。其三支分类在本节的矩形 $(n,n^2)$ 上为
 
 $$
 \Phi_p(Z)=\omega(Z)Q,\qquad
 \Phi_p(Z)=LZL^*,\qquad
 \Phi_p(Z)=M'Z^{\mathsf T}(M')^*.
-\tag{173.25}
+\tag{174.25}
 $$
 
 $\omega$ 是正泛函，$Q$ 是一维投影；$L,M':\mathbb C^n\to\mathbb C^{n^2}$ 可有核，$M'$ 与 §172 的固定 $M$ 无关。写 $\omega(Z)=\operatorname{Tr}(SZ)$、$S\succeq0$，三支的 Choi 形式分别为
@@ -4286,7 +4616,7 @@ $\omega$ 是正泛函，$Q$ 是一维投影；$L,M':\mathbb C^n\to\mathbb C^{n^2
 $$
 p=S^{\mathsf T}\otimes Q,\qquad p=vv^*,\qquad
 p=\Gamma_A(vv^*).
-\tag{173.26}
+\tag{174.26}
 $$
 
 这里 $\Gamma_A$ 是实际指定基中仅对 $A$ 因子作矩阵转置。第二、三支分别取 $v=\sum_i e_i\otimes Le_i$、$v=\sum_i e_i\otimes M'e_i$。第一支中 $S$ 可以混合，不需先证明其秩一：整个该支已是 PSD。$p$ 迹一排除零 Choi；后两支 $\|v\|=1$。零输出方向和退化矩形算子已包含在分类中。
@@ -4295,23 +4625,23 @@ $$
 
 $$
 \Gamma_A(v_bv_b^*)\succeq0\quad\text{在 }A\otimes C\text{ 上}.
-\tag{173.27}
+\tag{174.27}
 $$
 
 若 $w=\sum_i s_i a_i\otimes c_i$ 是 Schmidt 展开，则 $\Gamma_A(ww^*)$ 在 $\overline a_i\otimes c_i$ 上的本征值为 $s_i^2$，在每对 $\overline a_i\otimes c_j,\overline a_j\otimes c_i$ 上的块为
 
 $$
 \begin{pmatrix}0&s_is_j\\s_is_j&0\end{pmatrix}.
-\tag{173.28}
+\tag{174.28}
 $$
 
-故其 PSD 当且仅当 $w$ 的 Schmidt 秩至多一，零向量也包括在内。这是通常纯态 PPT 判据；[Gurvits–Barnum Theorem 2(1)][Q173GB] 给该谱，块计算保留了这里的矩形维数和所有零特征值。
+故其 PSD 当且仅当 $w$ 的 Schmidt 秩至多一，零向量也包括在内。这是通常纯态 PPT 判据；[Gurvits–Barnum Theorem 2(1)][Q174GB] 给该谱，块计算保留了这里的矩形维数和所有零特征值。
 
-所以每个 $v_b$ 都是乘积或零。这些切片的全部像构成复线性子空间，虽然参数 $b$ 的进入是反线性的。复用 [XIII166.6][Q173XIII] 的共同因子引理，得到
+所以每个 $v_b$ 都是乘积或零。这些切片的全部像构成复线性子空间，虽然参数 $b$ 的进入是反线性的。复用 [XIII166.6][Q174XIII] 的共同因子引理，得到
 
 $$
 v=a\otimes z_{BC}\quad\text{或}\quad v=z_{AB}\otimes c.
-\tag{173.29}
+\tag{174.29}
 $$
 
 第一支给 $p=\overline a\,\overline a^*\otimes z_{BC}z_{BC}^*\succeq0$。第二支中 $c\ne0$，沿 $c$ 压缩并使用 $C|AB$ 块正性，得到 $\Gamma_A(z_{AB}z_{AB}^*)\succeq0$。同一个谱判据迫使 $z_{AB}$ 为乘积，故 $p$ 也 PSD。切片空间若为零则 $v=0$，已由迹一排除；一维空间及部分零切片都被共同因子引理涵盖。这里部分转置只是分类记号，没有被用作原正物理操作。
@@ -4320,52 +4650,52 @@ $$
 
 $$
 C_3\subseteq\operatorname{PSD}_D.
-\tag{173.30}
+\tag{174.30}
 $$
 
-反向包含消费 [VII 式(105.6)][Q173VII] 的全有限 Bell 极性：
+反向包含消费 [VII 式(105.6)][Q174VII] 的全有限 Bell 极性：
 
 $$
 C_N^*=\mathsf T_N(C_N)\quad(N\ge1),
-\tag{173.31}
+\tag{174.31}
 $$
 
 $\mathsf T_N$ 是全部实际腿的同时全转置。其接口在这里逐项到位：低层 PSD 使 Bell dyad $B_n$ 同时属于原 $C_2$ 和完整 $C_2^*$；$N$ 份杯的最小积与实际重排属于原 $C_{2N}$，对完整 $f\in C_N^*$ 切片给 $\mathsf T_Nf\in C_N$；对 $x\otimes y\in C_{2N}$ 收缩 $N$ 份原帽给 $\operatorname{Tr}[(\mathsf T_Nx)y]\ge0$，即 $\mathsf T_Nx\in C_N^*$。用 $\mathsf T_N^2=\mathrm{id}$ 即得该供应的原等式。$N=3$ 实际使用六体对象；没有从低阶形状预设高阶自对偶。
 
-由(173.30)和全转置保持通常 PSD，得 $C_3^*\subseteq\operatorname{PSD}_D$；取完整对偶及闭锥双极性，得 $\operatorname{PSD}_D\subseteq C_3$。因此三体整锥相等，而不仅是一个 PSD 子锥。
+由(174.30)和全转置保持通常 PSD，得 $C_3^*\subseteq\operatorname{PSD}_D$；取完整对偶及闭锥双极性，得 $\operatorname{PSD}_D\subseteq C_3$。因此三体整锥相等，而不仅是一个 PSD 子锥。
 
-此时明确向量 $g_n=\sum_{j=0}^{n-1}e_j\otimes e_j\otimes e_j$ 的 dyad 属于原 $C_3$，三个展平秩都是 $n\ge2$。它支付 [166.2][Q173XIII] 的全部种子条件。定义173.1与166.1的对应是同一固定 $n$ 和实际载体、每层闭尖生成锥、严格正乘法迹、整个基及全部原极点、完整对偶与 proper 区间、全部有限单位分解、所有有限 min/max 分块、正置换及正逆、不连续分块运输、规范重括号、原配对及空系统，加上同坐标的两条低层 PSD 等式。故直接消费 [166.12 条件1到条件5][Q173XIII]，得到每个有限 $C_N=\operatorname{PSD}_{n^N}$。该供应的递减支撑归纳、角的完整对偶延拓、有限控制与传播证明均按其原前件保留，不在这里重复构造传播尾部。$\square$
+此时明确向量 $g_n=\sum_{j=0}^{n-1}e_j\otimes e_j\otimes e_j$ 的 dyad 属于原 $C_3$，三个展平秩都是 $n\ge2$。它支付 [166.2][Q174XIII] 的全部种子条件。定义174.1与166.1的对应是同一固定 $n$ 和实际载体、每层闭尖生成锥、严格正乘法迹、整个基及全部原极点、完整对偶与 proper 区间、全部有限单位分解、所有有限 min/max 分块、正置换及正逆、不连续分块运输、规范重括号、原配对及空系统，加上同坐标的两条低层 PSD 等式。故直接消费 [166.12 条件1到条件5][Q174XIII]，得到每个有限 $C_N=\operatorname{PSD}_{n^N}$。该供应的递减支撑归纳、角的完整对偶延拓、有限控制与传播证明均按其原前件保留，不在这里重复构造传播尾部。$\square$
 
-### 173.6 互易主定理与未知半径的等价证明
+### 174.6 互易主定理与未知半径的等价证明
 
-证明定理173.2。引理173.3使 $\mathsf{Rec}$ 蕴含 $\mathsf{Rec}_{\mathcal A}^{\le}$；引理173.5和173.6使后者推出全部有限 PSD。全部有限等式当然给三体等式。
+证明定理174.2。引理174.3使 $\mathsf{Rec}$ 蕴含 $\mathsf{Rec}_{\mathcal A}^{\le}$；引理174.5和174.6使后者推出全部有限 PSD。全部有限等式当然给三体等式。
 
 若 $C_3=\operatorname{PSD}_D$，原纯态正好是全部单位秩一投影。对 $p=vv^*$，$\|v\|=1$，任意原 proper 确认效应满足 $0\preceq f\preceq I$ 和 $\langle v,(I-f)v\rangle=0$，故 $(I-f)v=0$。Hermitian 性消去交叉块，给完整确认集合
 
 $$
 f=p+Q,\qquad 0\preceq Q\preceq I-p,\qquad Qv=0.
-\tag{173.32}
+\tag{174.32}
 $$
 
-所以 $f-p\in C_3^*$ 对每个确认效应成立，$p$ 为 least 确认；$p$ 自身取得所有 $x\in C_3$ 上的最小值，得到(173.10)及互易。$\operatorname{Tr}(fm)=(1+\operatorname{Tr}Q)/D$，其最小值为 $1/D$，且当且仅当 $Q=0$ 取得。唯一 $m$ 处最优不表示确认菜单仅有一个元素。
+所以 $f-p\in C_3^*$ 对每个确认效应成立，$p$ 为 least 确认；$p$ 自身取得所有 $x\in C_3$ 上的最小值，得到(174.10)及互易。$\operatorname{Tr}(fm)=(1+\operatorname{Tr}Q)/D$，其最小值为 $1/D$，且当且仅当 $Q=0$ 取得。唯一 $m$ 处最优不表示确认菜单仅有一个元素。
 
-现在假设 $\mathsf E$。一个原二分锚按(173.12)把未知共同值固定为 $1/D$。对任意原纯态，该式的下界和 $\|p\|_2\le1$ 于是迫使 $\|p\|_2=1$。这也说明单独要求全部 $T_p(m)\le1/D$ 就与 $\mathsf E$ 等价。
+现在假设 $\mathsf E$。一个原二分锚按(174.12)把未知共同值固定为 $1/D$。对任意原纯态，该式的下界和 $\|p\|_2\le1$ 于是迫使 $\|p\|_2=1$。这也说明单独要求全部 $T_p(m)\le1/D$ 就与 $\mathsf E$ 等价。
 
-反过来，只假设全部原纯态范数为一。对任意原纯态 $p$ 和单位向量 $a$ 使用(173.21)的可逆滤波；当 $X_a\ne0$，每个 $p_t$ 仍为原纯态，故 $\|p_t\|_2=1$。矩阵范数连续性在(173.22)的极限给
+反过来，只假设全部原纯态范数为一。对任意原纯态 $p$ 和单位向量 $a$ 使用(174.21)的可逆滤波；当 $X_a\ne0$，每个 $p_t$ 仍为原纯态，故 $\|p_t\|_2=1$。矩阵范数连续性在(174.22)的极限给
 
 $$
 1=\left\|P_a\otimes\frac{X_a}{\operatorname{Tr}X_a}\right\|_2^2
 =\operatorname{Tr}\left[\left(\frac{X_a}{\operatorname{Tr}X_a}\right)^2\right].
-\tag{173.33}
+\tag{174.33}
 $$
 
-PSD 迹一矩阵的非负特征值之和为一，平方和为一当且仅当只有一个非零特征值。因此 $X_a$ 秩一，零压缩另行满足秩条件。再次消费同一个引理173.6，得到全部有限 PSD，继而得到 $\mathsf E$。这里只对矩阵范数取极限，没有假定极限原纯，也无需另一个 Haar 等号分类论证。
+PSD 迹一矩阵的非负特征值之和为一，平方和为一当且仅当只有一个非零特征值。因此 $X_a$ 秩一，零压缩另行满足秩条件。再次消费同一个引理174.6，得到全部有限 PSD，继而得到 $\mathsf E$。这里只对矩阵范数取极限，没有假定极限原纯，也无需另一个 Haar 等号分类论证。
 
 对任意迹一 Hermitian 矩阵，
 
 $$
 \|p-m\|_2^2=\operatorname{Tr}(p^2)-1/D.
-\tag{173.34}
+\tag{174.34}
 $$
 
 故未知半径条件等价于纯点平方迹为某个常数；一个已证明为原纯点的二分锚把该常数固定为一。所有条件和数值结论均已证明。$\square$
@@ -4374,19 +4704,19 @@ $$
 
 $$
 \operatorname{diag}(-1/3,2/3,2/3,0,\ldots,0)
-\tag{173.35}
+\tag{174.35}
 $$
 
 迹一、平方迹一，却不是 PSD；按实际乘积基排列，其负对角元已违反块正测试。纯态外接球也不同于 Gurvits–Barnum 的可分离内球。等价的几何表述不自动减少独立假设数，也不证明整套重建描述长度达到全局最小。
 
-### 173.7 最新二元供应、普通中性选择与有向运输
+### 174.7 最新二元供应、普通中性选择与有向运输
 
-**推论 173.7（由原二元资源进入互易重建）。** 固定的矩阵始终精确为170.2，即(172.8)：
+**推论 174.7（由原二元资源进入互易重建）。** 固定的矩阵始终精确为170.2，即(172.8)：
 
 $$
 K=\sum_{j=0}^{n-2}(E_{j,j+1}-E_{j+1,j}),\quad t=\frac1{32n},\quad
 O=e^{(1+i)tK},\quad W=e^{\pi i\sqrt2P_0},\quad M=WO.
-\tag{173.36}
+\tag{174.36}
 $$
 
 置 $\Omega=\sum_j e_j\otimes e_j$、$B=\Omega\Omega^*$、$D_M=(M\otimes I)B(M^*\otimes I)$。有以下两个条件应用。
@@ -4397,16 +4727,16 @@ $$
 \mathsf B\wedge\mathsf M_2
 \quad\Longleftrightarrow\quad
 C_1=\operatorname{PSD}_n,\quad C_2=\operatorname{PSD}_{n^2},
-\tag{173.37}
+\tag{174.37}
 $$
 
-其中 $\mathsf B$ 是 $B\in C_2\cap C_2^*$，$\mathsf M_2$ 仅是这一个固定 $\operatorname{Ad}_{M\otimes I}(C_2)\subseteq C_2$。随后定义173.1的整个菜单。则
+其中 $\mathsf B$ 是 $B\in C_2\cap C_2^*$，$\mathsf M_2$ 仅是这一个固定 $\operatorname{Ad}_{M\otimes I}(C_2)\subseteq C_2$。随后定义174.1的整个菜单。则
 
 $$
 \mathsf B\wedge\mathsf M_2\wedge\mathsf{Rec}
 \quad\Longleftrightarrow\quad
 C_N=\operatorname{PSD}_{n^N}\quad\text{对每个有限 }N.
-\tag{173.38}
+\tag{174.38}
 $$
 
 在171.1、等同172.1的较弱原域中，不先要求尖性、生成性或正迹。先要求原资源 $\mathsf R$，即 $D_M\in C_2,B\in C_2^*$；再要求普通中性成员关系 $m=I_D/D\in C_3$；最后在由这些前件获得的普通完整菜单上要求 $\mathsf{Rec}$。这个依赖顺序的合取满足
@@ -4415,20 +4745,20 @@ $$
 [D_M\in C_2,\ B\in C_2^*]\ \wedge\ [m\in C_3]\ \wedge\ [\mathsf{Rec}]
 \quad\Longleftrightarrow\quad
 C_N=\operatorname{PSD}_{n^N}\quad\text{对每个有限 }N.
-\tag{173.39}
+\tag{174.39}
 $$
 
 这里互易的原基与菜单在前两组条件支付普通正方向后定义。将首组资源替换为 $\mathsf B\wedge\mathsf M_2$ 也有相同等价。
 
-证明。普通域的(173.37)没有三元种子 $\mathsf T$ 前件；它给低层对齐，其余全部前件原已在170.1中。直接应用定理173.2便得(173.38)。这里互易替代显式 GME 种子，而非先借有种子的全有限结论证明低层。
+证明。普通域的(174.37)没有三元种子 $\mathsf T$ 前件；它给低层对齐，其余全部前件原已在170.1中。直接应用定理174.2便得(174.38)。这里互易替代显式 GME 种子，而非先借有种子的全有限结论证明低层。
 
 弱域中先精确消费172.7的二元结论(172.25)–(172.26)，即其引用的171.7–171.9：原资源等价于 $\mathsf B\wedge\mathsf M_2$，给唯一 $\varepsilon\in\{\pm1\}$、$C_1=\varepsilon\operatorname{PSD}_n,C_2=\operatorname{PSD}_{n^2}$，每个原锥尖且生成，$\varepsilon^N\operatorname{Tr}$ 在其非零元上严格正。这一步不使用 $\mathsf T$、普通概率归一化或 proper 菜单。
 
-普通 $m$ 是三体奇数层的非零通常 PSD 元素，171.10遂给 $\varepsilon=+1$。至此才取得每层严格正的普通迹和完整紧基，按(173.3)取全部极点、完整对偶、整个 proper 区间和所有有限单位分解。结构部分原就是172.1的全部实际有限 min/max、置换及正逆、重括号、配对和标量对象；两条低层等式也已获得。因此定义173.1的每一前件都已支付，可以定义(173.6)并消费定理173.2。
+普通 $m$ 是三体奇数层的非零通常 PSD 元素，171.10遂给 $\varepsilon=+1$。至此才取得每层严格正的普通迹和完整紧基，按(174.3)取全部极点、完整对偶、整个 proper 区间和所有有限单位分解。结构部分原就是172.1的全部实际有限 min/max、置换及正逆、重括号、配对和标量对象；两条低层等式也已获得。因此定义174.1的每一前件都已支付，可以定义(174.6)并消费定理174.2。
 
-反向在全部普通 PSD 层级中，指定 $D_M$ 为 PSD dyad，$B$ 属于完整二体 PSD 对偶，普通 $m$ 合法且(173.32)给互易；指定矩阵合同也给 $\mathsf M_2$。两个等价均成立。证明只消费已有矩阵生成、双轨夹逼和有限投影标架，不重证这些供应。$\square$
+反向在全部普通 PSD 层级中，指定 $D_M$ 为 PSD dyad，$B$ 属于完整二体 PSD 对偶，普通 $m$ 合法且(174.32)给互易；指定矩阵合同也给 $\mathsf M_2$。两个等价均成立。证明只消费已有矩阵生成、双轨夹逼和有限投影标架，不重证这些供应。$\square$
 
-**推论 173.8（保留方向的精确有向版本）。** 在上述弱域及二元资源下，用已获得的唯一 $\varepsilon$ 定义
+**推论 174.8（保留方向的精确有向版本）。** 在上述弱域及二元资源下，用已获得的唯一 $\varepsilon$ 定义
 
 $$
 \begin{aligned}
@@ -4438,7 +4768,7 @@ $$
 \widehat{\mathcal E}_N&=\{f:f,\varepsilon^NI_{n^N}-f\in C_N^*\},&
 \widehat m&=\varepsilon I_D/D.
 \end{aligned}
-\tag{173.40}
+\tag{174.40}
 $$
 
 以这些整个菜单定义 $\widehat T$ 和全部三体原有向纯端点上的 $\widehat{\mathsf{Rec}}$，则
@@ -4446,18 +4776,18 @@ $$
 $$
 \widehat{\mathsf{Rec}}\quad\Longleftrightarrow\quad
 C_N=\varepsilon^N\operatorname{PSD}_{n^N}\quad\text{对每个有限 }N.
-\tag{173.41}
+\tag{174.41}
 $$
 
-证明。171.9的运输族 $D_N=\varepsilon^NC_N$ 已满足定义173.1的整个强域。锥同构 $\Theta_N(x)=\varepsilon^Nx$ 将完整基和全部极点双射到运输族的迹一对象；完整对偶满足 $D_N^*=\varepsilon^NC_N^*$。效应也按 $f\mapsto\varepsilon^Nf$ 双射，且
+证明。171.9的运输族 $D_N=\varepsilon^NC_N$ 已满足定义174.1的整个强域。锥同构 $\Theta_N(x)=\varepsilon^Nx$ 将完整基和全部极点双射到运输族的迹一对象；完整对偶满足 $D_N^*=\varepsilon^NC_N^*$。效应也按 $f\mapsto\varepsilon^Nf$ 双射，且
 
 $$
 \operatorname{Tr}[(\varepsilon^Nf)(\varepsilon^Nx)]=\operatorname{Tr}(fx),
 \qquad \widehat T_p(q)=T^{D_3}_{\varepsilon p}(\varepsilon q).
-\tag{173.42}
+\tag{174.42}
 $$
 
-确认约束和菜单每个候选的目标值都逐项保持。因此有向互易正是运输族上的普通互易，定理173.2给 $D_N=\operatorname{PSD}$，再运输回去。反向同理。$\widehat m$ 的成员关系由 $I_n/n\in D_1$ 和最小积给出。运输同时满足
+确认约束和菜单每个候选的目标值都逐项保持。因此有向互易正是运输族上的普通互易，定理174.2给 $D_N=\operatorname{PSD}$，再运输回去。反向同理。$\widehat m$ 的成员关系由 $I_n/n\in D_1$ 和最小积给出。运输同时满足
 
 $$
 \Theta_{a+b}(x\otimes y)=\Theta_a(x)\otimes\Theta_b(y),\qquad
@@ -4466,9 +4796,9 @@ $$
 
 故完整复合、配对与获得单位相容。$\varepsilon=-1$ 的结论是交替定向 PSD，并非普通 PSD；另加 $m\in C_3$ 才选正方向。171.12、172.8的完整交替模型满足二元资源和有向互易，普通奇数层迹一基却为空，不能用该空集使普通互易虚真地替代中性选择。$\square$
 
-### 173.8 全部静态数据与矩形数学过程的量子字典
+### 174.8 全部静态数据与矩形数学过程的量子字典
 
-**推论 173.9（同坐标的完整有限量子对应）。** 在定理173.2或推论173.7的任一普通量子结论下，令 $d_N=n^N,d_0=1$。精确消费 [166.14][Q173XIII]、[VII102.13–102.18][Q173VII] 及172.16的整锥后矩阵证明，得到：
+**推论 174.9（同坐标的完整有限量子对应）。** 在定理174.2或推论174.7的任一普通量子结论下，令 $d_N=n^N,d_0=1$。精确消费 [166.14][Q174XIII]、[VII102.13–102.18][Q174VII] 及172.16的整锥后矩阵证明，得到：
 
 | 整个原对象及量词 | 同一实际坐标中的量子对象 |
 | --- | --- |
@@ -4483,13 +4813,13 @@ $$
 | 全部原全旁观正的实线性 $F:W_a\to W_b$ | 全部矩形 CP 映射及有限 Kraus 表示 |
 | 整个输入及相关旁观者上的 TNI/TP 预算 | Kraus 平方和 $\preceq I_{d_a}$／$=I_{d_a}$ |
 
-证明及矩形接口。所有整锥等式、普通迹和完整菜单已取得，正好满足所引字典的前件。谱分解给密度矩阵、全部极点和有限纯分解；完整 PSD 对偶给全部效应。对每个有限层重复(173.32)的矩阵论证，得 least 确认及全部准备一致性
+证明及矩形接口。所有整锥等式、普通迹和完整菜单已取得，正好满足所引字典的前件。谱分解给密度矩阵、全部极点和有限纯分解；完整 PSD 对偶给全部效应。对每个有限层重复(174.32)的矩阵论证，得 least 确认及全部准备一致性
 
 $$
 T_p^{(N)}\left(\sum_j\alpha_jq_j\right)
 =\sum_j\alpha_jT_{q_j}^{(N)}(p),\qquad
 \alpha_j\ge0,\quad\sum_j\alpha_j=1.
-\tag{173.43}
+\tag{174.43}
 $$
 
 具体地，$a,b$ 为任意有限非负整数，对 $F$ 取唯一复线性保 Hermitian 扩张，即 $F(X+iY)=F(X)+iF(Y)$（$X,Y$ Hermitian）。参考—输出 Choi 次序给
@@ -4502,10 +4832,10 @@ J(F)&=\sum_{i,j=0}^{d_a-1}E_{ij}\otimes F(E_{ij}),\\
 &\Longleftrightarrow F(X)=\sum_\mu K_\mu XK_\mu^*,\quad
 K_\mu:\mathbb C^{d_a}\to\mathbb C^{d_b}.
 \end{aligned}
-\tag{173.44}
+\tag{174.44}
 $$
 
-原自身 Choi 判据 VII102.7的杯帽与全部原有限结构已支付；[Watrous Theorem 2.22][Q173W2] 在 $\mathcal X=\mathbb C^{d_a},\mathcal Y=\mathbb C^{d_b}$ 的矩形应用给最后一步，书中输出—参考次序由一次实际 SWAP 转换。非零映射可取 $\operatorname{rank}J(F)$ 个 Kraus 算子；零映射取空族。任意有限矩阵参考维数上的通常 CP 性由该表示成为结论，输入只量化原层级的全部有限旁观者。
+原自身 Choi 判据 VII102.7的杯帽与全部原有限结构已支付；[Watrous Theorem 2.22][Q174W2] 在 $\mathcal X=\mathbb C^{d_a},\mathcal Y=\mathbb C^{d_b}$ 的矩形应用给最后一步，书中输出—参考次序由一次实际 SWAP 转换。非零映射可取 $\operatorname{rank}J(F)$ 个 Kraus 算子；零映射取空族。任意有限矩阵参考维数上的通常 CP 性由该表示成为结论，输入只量化原层级的全部有限旁观者。
 
 令 $Q_F=\sum_\mu K_\mu^*K_\mu$，完整预算为
 
@@ -4516,30 +4846,30 @@ $$
 F\text{ TNI}&\Longleftrightarrow Q_F\preceq I_{d_a},&
 F\text{ TP}&\Longleftrightarrow Q_F=I_{d_a}.
 \end{aligned}
-\tag{173.45}
+\tag{174.45}
 $$
 
 TP 是 Watrous Theorem 2.26 的同一替换；TNI 由同一迹身份测试全部 PSD 输入取得，旁观者版本的差预算是 $I\otimes(I-Q_F)\succeq0$。Choi 总迹不能替代该边缘条件。所有原作用位置由置换给出。$a=0$ 为准备 $q\mapsto q\sigma$，预算是 $\operatorname{Tr}\sigma\le1$／$=1$；$b=0$ 为效应 $X\mapsto\operatorname{Tr}(EX)$；$a=b=0$ 为非负标量乘法，空旁观者始终保留。$\square$
 
-### 173.9 缺陷机制、删域控制与真正的全有限反模型
+### 174.9 缺陷机制、删域控制与真正的全有限反模型
 
-**命题 173.10（互易的作用范围）。** 下列对照分别说明滤波缺陷、第三切分、全有限域和低层对齐的不同作用；它们不构成定理173.2的同域反例。
+**命题 174.10（互易的作用范围）。** 下列对照分别说明滤波缺陷、第三切分、全有限域和低层对齐的不同作用；它们不构成定理174.2的同域反例。
 
-证明。若某个原纯态有一个秩至少二的条件压缩，则其可逆滤波轨道按(173.22)逼近 $\rho=\sum_j\lambda_jq_j$。对每个固定谱权重，(173.16)给
+证明。若某个原纯态有一个秩至少二的条件压缩，则其可逆滤波轨道按(174.22)逼近 $\rho=\sum_j\lambda_jq_j$。对每个固定谱权重，(174.16)给
 
 $$
 \liminf_{t\downarrow0}[T_{p_t}(q_j)-T_{q_j}(p_t)]\ge1-\lambda_j>0.
-\tag{173.46}
+\tag{174.46}
 $$
 
-(173.19)已把这个极限障碍变成实际正参数端点上的严格违例。反之，若全部原纯态的这些压缩秩至多一，引理173.6已给全部有限 PSD。因此同域内任一非量子层级都必须有这种混合压缩和实际互易缺陷。有限抽样、给滤波参数设正下限或额外要求统一成功率，都不等于本章全量词条件。
+(174.19)已把这个极限障碍变成实际正参数端点上的严格违例。反之，若全部原纯态的这些压缩秩至多一，引理174.6已给全部有限 PSD。因此同域内任一非量子层级都必须有这种混合压缩和实际互易缺陷。有限抽样、给滤波参数设正下限或额外要求统一成功率，都不等于本章全量词条件。
 
 第三切分不能删除：取 $A,B$ 中指定二维子空间上的交换算子 $F_2$（其余为零），及 $C$ 中单位向量 $0$，则
 
 $$
 H=\frac{F_2}{2}\otimes|0\rangle\langle0|,\qquad
 \operatorname{Tr}H=\operatorname{Tr}(H^2)=1.
-\tag{173.47}
+\tag{174.47}
 $$
 
 它在 $A|BC$、$B|AC$ 上块正，因为相应压缩期望是两个二维分量的内积模平方的一半。但 $\psi_-=(|01\rangle-|10\rangle)/\sqrt2$ 给 $\langle\psi_-\otimes0,H(\psi_-\otimes0)\rangle=-1/2$，违反 $C|AB$ 块正性。这是矩阵删前件控制，不是原全有限层级。
@@ -4549,38 +4879,38 @@ $$
 $$
 \mathcal S=\bigcup_{X=A,B,C}\{vv^*:\|v\|=1,\ v\text{ 在 }X|X^c\text{ 上乘积}\},
 \qquad K_3^{\rm bis}=\operatorname{conv}\mathcal S.
-\tag{173.48}
+\tag{174.48}
 $$
 
 $\mathcal S$ 紧，故其有限维凸包紧；锥闭、尖、生成且迹严格正。每个实际 $1|23$ 最小锥包含于该锥，最大界由该锥为 PSD 子锥给出；置换及其逆置换三个切分。每个 $\mathcal S$ 点在整个 PSD 基中已极端，而极点的有限 $\mathcal S$ 分解只能由自身组成，故全部原极点恰为 $\mathcal S$。
 
-每个这样的 $p$ 满足 $p,I-p$ 对整个前缀锥正，且其完整对偶在任一切分的 BP 内。因此(173.12)同一下界及 $f=p$ 上界给 $T_p(m)=1/D$，$\mathsf E$ 成立。归一 GHZ dyad 却不在该基中：它不在 $\mathcal S$，且其 PSD 秩一性排除不同 $\mathcal S$ 点的凸分解。特别在 $n=2$，对 $g=(|000\rangle+|111\rangle)/\sqrt2$，$I_8-2gg^*$ 在每个二可分 dyad 上非负，因为相应 Schmidt 最大系数平方为 $1/2$；它在 $g$ 上取 $-1$。故完整对偶含非 PSD 元素，而全转置保持二可分锥，(173.31)失效。这个三体有限前缀只证明删去全有限 Bell 极性后 $\mathsf E$ 不足；这里未判定它是否满足 $\mathsf{Rec}$，也未把它延拓为全有限反模型。
+每个这样的 $p$ 满足 $p,I-p$ 对整个前缀锥正，且其完整对偶在任一切分的 BP 内。因此(174.12)同一下界及 $f=p$ 上界给 $T_p(m)=1/D$，$\mathsf E$ 成立。归一 GHZ dyad 却不在该基中：它不在 $\mathcal S$，且其 PSD 秩一性排除不同 $\mathcal S$ 点的凸分解。特别在 $n=2$，对 $g=(|000\rangle+|111\rangle)/\sqrt2$，$I_8-2gg^*$ 在每个二可分 dyad 上非负，因为相应 Schmidt 最大系数平方为 $1/2$；它在 $g$ 上取 $-1$。故完整对偶含非 PSD 元素，而全转置保持二可分锥，(174.31)失效。这个三体有限前缀只证明删去全有限 Bell 极性后 $\mathsf E$ 不足；这里未判定它是否满足 $\mathsf{Rec}$，也未把它延拓为全有限反模型。
 
 一般凸域中互易甚至不必推出等参照。取方锥基
 
 $$
 K=\operatorname{conv}\{(\pm1,\pm1,0),(0,0,1)\},\qquad m=(0,0,1/5),
-\tag{173.49}
+\tag{174.49}
 $$
 
 并使用全部取值在 $[0,1]$ 的仿射效应。顶点两两可由二元效应区分：顶点与底面用 $z,1-z$，不同底顶点用 $(1\pm x-z)/2$ 或 $(1\pm y-z)/2$。故 $T_p(q)=\delta_{pq}$，互易成立。顶点 $a=(0,0,1)$ 有 $T_a(m)=1/5$，由 $z$ 取得。对底顶点 $b=(1,1,0)$，四个底值满足 $f_{++}+f_{--}=f_{+-}+f_{-+}$；若 $f_{++}=1$，底值之和至少二，故 $T_b(m)\ge2/5$，由 $(1+x-z)/2$ 取得。这里 $m$ 甚至是全部五个原纯态的等权均值，仍无 $\mathsf E$。该一般仿射模型没有本章复矩阵低层和滤波接口。
 
-真正的全有限删域反模型则可直接消费172.11–172.14：在任意奇素数 $n=p$ 的实际载体上，Wigner 锥族是每一层的完整经典单纯形，普通迹严格正，具有全部有限 min/max、置换、完整对偶及全部菜单，并满足普通 Bell 和原三元种子。在三体层用172.11的顶点 $A_z$，正交关系给 $\operatorname{Tr}[(A_z/p^3)A_w]=\delta_{zw}$，且 $I=\sum_wA_w/p^3$。因此 $A_z/p^3$ 与其补都在完整原对偶内，确认 $A_z$ 而拒绝每个其他顶点，给 $T_{A_z}(A_w)=\delta_{zw}$，从而满足 $\mathsf{Rec}$。但其一体相位点含非 PSD 顶点，且精确 $D_M$ 不属于二体原锥。它因此反驳弱域中删去低层对齐或指定变形资源后的“裸互易重建”，而非本章已对齐域或(173.39)。有向交替 PSD 的全有限方向反模型则已由推论173.8精确说明。$\square$
+真正的全有限删域反模型则可直接消费172.11–172.14：在任意奇素数 $n=p$ 的实际载体上，Wigner 锥族是每一层的完整经典单纯形，普通迹严格正，具有全部有限 min/max、置换、完整对偶及全部菜单，并满足普通 Bell 和原三元种子。在三体层用172.11的顶点 $A_z$，正交关系给 $\operatorname{Tr}[(A_z/p^3)A_w]=\delta_{zw}$，且 $I=\sum_wA_w/p^3$。因此 $A_z/p^3$ 与其补都在完整原对偶内，确认 $A_z$ 而拒绝每个其他顶点，给 $T_{A_z}(A_w)=\delta_{zw}$，从而满足 $\mathsf{Rec}$。但其一体相位点含非 PSD 顶点，且精确 $D_M$ 不属于二体原锥。它因此反驳弱域中删去低层对齐或指定变形资源后的“裸互易重建”，而非本章已对齐域或(174.39)。有向交替 PSD 的全有限方向反模型则已由推论174.8精确说明。$\square$
 
-### 173.10 实际事件、条件更新与时间的额外边界
+### 174.10 实际事件、条件更新与时间的额外边界
 
-**命题 173.11（静态互易不规定更新或时间顺序）。** 在普通量子结论下，全部有限数学仪器为
+**命题 174.11（静态互易不规定更新或时间顺序）。** 在普通量子结论下，全部有限数学仪器为
 
 $$
 F_\ell(X)=\sum_\mu K_{\ell\mu}XK_{\ell\mu}^*,\qquad
 \sum_{\ell,\mu}K_{\ell\mu}^*K_{\ell\mu}=I,
 \qquad E_\ell=\sum_\mu K_{\ell\mu}^*K_{\ell\mu}.
-\tag{173.50}
+\tag{174.50}
 $$
 
 它们成为全部实际可用事件需要另给 VII102.14 的事件饱和条件。一个效应不指定唯一条件更新；$\mathsf{Rec}$ 不使有更新的先后操作交换，也不指定物理钟、Hamiltonian 或 $\hbar$。
 
-证明。数学仪器及预算复用推论173.9和172.16，即 Watrous §2.3.2 的同坐标表述。对任意相关输入 $Z$，分支 $Z_\ell=(\mathrm{id}\otimes F_\ell)Z$ 的质量为 $m_\ell=\operatorname{Tr}[(I\otimes E_\ell)Z]$，且 $\sum_\ell m_\ell=\operatorname{Tr}Z$。只有 $m_\ell>0$ 时才定义条件态 $Z_\ell/m_\ell$；零质量时 PSD 输出必为零，不能作归一除法。有限顺序、自适应组合、粗粒化的未归一相加及仪器张量积沿172.16的证明保留。
+证明。数学仪器及预算复用推论174.9和172.16，即 Watrous §2.3.2 的同坐标表述。对任意相关输入 $Z$，分支 $Z_\ell=(\mathrm{id}\otimes F_\ell)Z$ 的质量为 $m_\ell=\operatorname{Tr}[(I\otimes E_\ell)Z]$，且 $\sum_\ell m_\ell=\operatorname{Tr}Z$。只有 $m_\ell>0$ 时才定义条件态 $Z_\ell/m_\ell$；零质量时 PSD 输出必为零，不能作归一除法。有限顺序、自适应组合、粗粒化的未归一相加及仪器张量积沿172.16的证明保留。
 
 对全基投影 $P_j$，令 $U$ 交换 $e_0,e_1$。两套数学仪器 $F_j(X)=P_jXP_j$ 和 $G_j(X)=UP_jXP_jU^*$ 的效应均为 $P_j$，但输入 $P_0$、结果零时的条件态分别为 $P_0,P_1$。两者总 Kraus 平方和都是 $I$，故效应和 Born 概率不能选择唯一更新。若另要求 sharp yes 子空间每条纯射线逐点不受扰动，172.17及其161.7.1供应才选出 Lüders 压缩；单独的 repeatability 不足以替代该逐点条件。
 
@@ -4597,28 +4927,28 @@ $$
 $$
 (\mathcal L_Q\circ\mathcal L_P)(P)=\tfrac12Q,\qquad
 (\mathcal L_P\circ\mathcal L_Q)(P)=\tfrac14P.
-\tag{173.51}
+\tag{174.51}
 $$
 
 所以两次均“是”的分支质量分别为 $1/2$ 和 $1/4$。交换比较端点与交换测量时序是不同命题。
 
 若另给每个固定矩阵系统上的连续、保迹实序自同构时间群，172.17按161.10的矩阵级供应给酉实现的生成元形式。若已给可微酉群 $U_{t+s}=U_tU_s$，则 $K=\dot U_0$ 满足 $K^*=-K$，$U_t=e^{tK}$；再选正尺度 $\hbar$ 并置 $H=i\hbar K$，才有 $U_t=e^{-itH/\hbar}$。这些前件、具体时间作用、物理钟和能量—时间标定不由静态互易产生。$\square$
 
-### 173.11 几何机制与中文释义
+### 174.11 几何机制与中文释义
 
-**命题 173.12（比较直觉的精确内容与供应边界）。** 本章将“两两比较，交换端点不改变结果”解释为整个原确认菜单下的(173.7)。其承重机制是混合面缺陷和可逆滤波，而不是预设比较函数线性或原纯点已构成球面。
+**命题 174.12（比较直觉的精确内容与供应边界）。** 本章将“两两比较，交换端点不改变结果”解释为整个原确认菜单下的(174.7)。其承重机制是混合面缺陷和可逆滤波，而不是预设比较函数线性或原纯点已构成球面。
 
-证明及释义。若一个原纯准备在越来越强、每次仍可逆的局部筛选下逼近几个已知端点的真正混合，那么任何对该准备必答“是”的测试，在统一效应界下也必须对混合几乎必答“是”。每个端点都有正权，于是这些测试对每个端点都几乎必答“是”。反向看，一个端点用自己的确定性测试看这个混合，只能看到自己的权重；权重小于一就产生(173.16)的严格差。互易排除了这样的混合压缩。
+证明及释义。若一个原纯准备在越来越强、每次仍可逆的局部筛选下逼近几个已知端点的真正混合，那么任何对该准备必答“是”的测试，在统一效应界下也必须对混合几乎必答“是”。每个端点都有正权，于是这些测试对每个端点都几乎必答“是”。反向看，一个端点用自己的确定性测试看这个混合，只能看到自己的权重；权重小于一就产生(174.16)的严格差。互易排除了这样的混合压缩。
 
 压缩秩一进入 Marciniak 的矩形分类，另外两个实际切分和共同因子引理去掉非 PSD 部分转置支路。全有限 Bell 杯帽随后从原锥及其完整对偶两面夹逼，补足整个三体 PSD 锥；明确满维 GHZ 再由166.12传播至全部有限层。这解释了为何完整菜单、二腿纠缠锚、三个切分与全有限域各有实质作用。
 
 Gurvits–Barnum 的范数界、Marciniak 的秩保持分类、166.12的传播和既有量子字典均各归其来源。本章补的是端点互易到压缩秩条件的桥梁及其同域等价和条件应用。复数载体、固定 $n$、实际张量识别、完整对偶和全部有限复合仍是前提；证明没有额外加入谱性、投影性或 least 确认条件。本章不据此宣称历史优先权、无前提宇宙本体或独立公理数的最小性。$\square$
 
-[Q173GB]: https://arxiv.org/pdf/quant-ph/0204159v2
-[Q173BP]: https://github.com/the-omega-institute/trureturing/blob/59c307b5ef357d66f12d054b023e0a00edd398ff/D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.lean
-[Q173Marc]: https://arxiv.org/pdf/0812.2311v3
-[Q173XIII]: https://github.com/the-omega-institute/trureturing/blob/59c307b5ef357d66f12d054b023e0a00edd398ff/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
-[Q173VII]: https://github.com/the-omega-institute/trureturing/blob/59c307b5ef357d66f12d054b023e0a00edd398ff/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
-[Q173W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
+[Q174GB]: https://arxiv.org/pdf/quant-ph/0204159v2
+[Q174BP]: https://github.com/the-omega-institute/trureturing/blob/59c307b5ef357d66f12d054b023e0a00edd398ff/D5/S3/Quantum/Entanglement/AbsoluteSeparability/GurvitsBarnumBall.lean
+[Q174Marc]: https://arxiv.org/pdf/0812.2311v3
+[Q174XIII]: https://github.com/the-omega-institute/trureturing/blob/59c307b5ef357d66f12d054b023e0a00edd398ff/docs/develop/theory/QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[Q174VII]: https://github.com/the-omega-institute/trureturing/blob/59c307b5ef357d66f12d054b023e0a00edd398ff/docs/develop/theory/QUANTUM_ORIGIN_THREE_COPY_COMPARISON_AND_FINITE_CSTAR_HIERARCHY_VII.md
+[Q174W2]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf
 
 ## 追加锚（本行以下为增补区）
