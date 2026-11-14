@@ -143,12 +143,8 @@ private theorem feasible_rigid (X : (Fin 2 → Finset (Fin 4))) (h : Feasible ma
       Set.InjOn (block 1) (T : Set (Fin 4)) →
       (S = oddBundle ∧ T = evenBundle) ∨
       (S = evenBundle ∧ T = oddBundle) := by decide
-  have coverage : ∀ e : Fin 4, e ∈ X 0 ∨ e ∈ X 1 := by
-    intro e
-    obtain ⟨i, hi⟩ := h.1.2 e
-    fin_cases i
-    · exact Or.inl hi
-    · exact Or.inr hi
+  have coverage : ∀ e : Fin 4, e ∈ X 0 ∨ e ∈ X 1 :=
+    fun e => Fin.exists_fin_two.mp (h.1.2 e)
   have h0 := (matroids_indep_iff 0 (X 0)).1 (h.2 0)
   have h1 := (matroids_indep_iff 1 (X 1)).1 (h.2 1)
   rcases certificate (X 0) (X 1) (h.1.1 0 1 (by decide)) coverage h0 h1 with hp | hp
