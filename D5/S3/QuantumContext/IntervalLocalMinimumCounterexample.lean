@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Topology.Order.IntermediateValue, mathlib/module/Mathlib.Topology.Instances.Real]
    utility: none
-   digest: The closed unit interval has connected affine exposed faces, while its right endpoint is a relative local but not global minimum of the coordinate.
--/
+   digest: The closed unit interval has connected affine exposed faces, while its right endpoint is a relative local but not global minimum of the coordinate. -/
 
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
