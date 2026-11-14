@@ -113,6 +113,28 @@ internal static class WorktreeCommand
             return ValidateBranch(arguments.Skip(1).ToArray());
         }
 
+        // The parent adapter holds only this destination's initialization guard.
+        // It never waits for the maintenance worker's exclusive cleanup lease.
+        if (arguments.Count > 0 && arguments[0] == "--initialization-child")
+            arguments = arguments.Skip(1).ToArray();
+        else if (runner is ProductionWorktreeProcessRunner)
+        {
+            WorktreeOptions? guarded = null;
+            try { guarded = ParseArguments(repositoryRoot, arguments); }
+            catch (InvalidOperationException) { /* Create renders the ordinary usage error. */ }
+            if (guarded is not null)
+            {
+                var forwarded = arguments.ToArray();
+                for (var index = 0; index < forwarded.Length; index++)
+                    if (forwarded[index] == "--path") forwarded[++index] = guarded.Path;
+                    else if (forwarded[index] == "--source") forwarded[++index] = guarded.Source;
+                return WorktreeProtocolCommand.Run(guarded.Source,
+                    new[] { "initialize", "--path", guarded.Path, "--", "dotnet",
+                        typeof(WorktreeCommand).Assembly.Location, "worktree", "--initialization-child" }
+                    .Concat(forwarded).ToArray(), runner, Timeout.InfiniteTimeSpan, reportPending: false);
+            }
+        }
+
         var result = Create(repositoryRoot, arguments, runner, out var summarySource,
             out var reportAgentState);
         return reportAgentState
@@ -178,6 +200,8 @@ internal static class WorktreeCommand
                 return prepared;
             }
             using var preparation = JsonDocument.Parse(prepared.Output);
+            var maintenance = preparation.RootElement.TryGetProperty("maintenance", out var notice)
+                ? (JsonElement?)notice.Clone() : null;
             removedWorktrees = preparation.RootElement.GetProperty("removed_worktrees")
                 .EnumerateArray().Select(path => path.GetString()!).ToArray();
             if (preparation.RootElement.GetProperty("status").GetString() != "no_reusable")
@@ -266,6 +290,7 @@ internal static class WorktreeCommand
                 donor_cache_pin = donor.CachePin,
                 halfbuilt_recovered = halfBuiltRecovered,
                 dotnet_restore = options.SkipRestore ? "skipped" : "restored",
+                maintenance,
             }) + "\n";
             MaintenanceLogAdapter.Record("worktree-init", "succeeded", "complete", null, null);
             return new CommandResult(true, summary, agentWarning + RenderDonorWarning(options, donor));
