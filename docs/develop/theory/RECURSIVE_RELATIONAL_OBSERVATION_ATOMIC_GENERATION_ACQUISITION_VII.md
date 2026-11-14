@@ -83,7 +83,8 @@ at most once. The original successful history supplies its unique actual
 occurrence when it exists. Keys are compared only with their authentic
 component bindings; equal letters at unrelated roots are not equal events.
 
-For a birth-typed subtree (b,t), let E_b(t) be AA17.1's event support,
+For a birth-typed subtree (b,t), let E_b(t) be the birth-typed event
+support of NativeEndpointEventIdeals.events, using AA17.1's event rule
 with the original address prefix and component attached. At a branch it
 contains S at its root and also P there exactly when that root was born
 alpha; recurse on the beta-born left and alpha-born right child. At a
@@ -109,8 +110,9 @@ and J=B_X\cup K. Lawfulness implies distinct e_i and K disjoint from B_X.
 It also proves each required creating split and local promotion is either
 in B_X or earlier in w. Unborn target positions carry structural paths,
 not prescribed future allocation names; when a real event creates them,
-only actual navigation through its new fields can acquire their references. This is a checkable finite target-domain condition,
-not an execution, reference cast, new source read or promised conformance.
+only actual navigation through its new fields can acquire their references.
+Lawfulness is a checkable finite target-domain condition, not an execution,
+reference cast, new source read or promised conformance.
 
 The proposition Covered_X(w,v) means that every e in K has actually
 occurred in the same source by maintained cut v. It does not require that
@@ -154,8 +156,9 @@ when a right, input suffix, material reservation or progress is missing.
 entrance, any authentically acquired X at u, and any finite lawful target
 (VII.3). For every original future in which the first j client requests of
 Definition 79.1 have completed, all e_1,...,e_j actually occurred by that
-jth return, for 0<=j<=n. The following are the only possible completed
-client outcomes, with their original literal meanings:
+jth return, for 1<=j<=n. At j=0 the claimed coverage is empty and holds
+at u without any new native invocation or Return. The following are the
+only possible completed client outcomes, with their original literal meanings:
 
 | Target request | Original returned outcome | Fact about the required event |
 | --- | --- | --- |
@@ -165,10 +168,11 @@ client outcomes, with their original literal meanings:
 | S | Growth with that exact kind/address | This transaction performed that S |
 | S | Refusal, branch | That same position already actually split |
 
-In particular, after n completions Covered_X(w,v) holds at the last
-returned cut v, without a no-conflict or finite-relevant-interference
-hypothesis. An absent-address refusal, or wrong-type refusal to S, cannot
-occur under these hypotheses. Such an outcome would refute at least one
+In particular, for n>0, after n completions Covered_X(w,v) holds at the
+last returned cut v, without a no-conflict or finite-relevant-interference
+hypothesis. For n=0 coverage already holds at u and the empty client
+performs no native call or manufactured Return. An absent-address refusal,
+or wrong-type refusal to S, cannot occur under these hypotheses. Such an outcome would refute at least one
 stated source/birth/acquisition/word-order premise; it is not converted
 into coverage.
 
@@ -410,9 +414,8 @@ derived read costs uniformly bounded over later invocations. $\square$
 ## 82. Exact attainment from coverage order and first extra event
 
 **Definition 82.1 (interval test).** Let J be the target support from
-Definition 78.3 and B the actually acquired support at a. If B is not a
-subset of J, the test returns false. Otherwise put R=J\setminus B and
-use the acquired finite D to compute
+Definition 78.3 and B the actually acquired support at a. Put
+R=J\setminus B and use the acquired finite D to compute
 
 $$
 \begin{aligned}
@@ -426,8 +429,9 @@ $$
 \tag{VII.8}
 $$
 
-Return true exactly when tau is finite and tau<sigma. Positions here are
-backed counts from a genuinely acquired list, not exposed allocation
+Return true exactly when B is a subset of J, tau is finite and tau<sigma.
+In particular the test is false whenever B is not a subset of J. These
+positions are backed counts from a genuinely acquired list, not exposed allocation
 ordinals, physical times or free absolute source indices. Empty R and
 empty D are included. When the test is true retain a if tau=0 and the
 actual token of d_tau otherwise as its historical source-cut witness.
@@ -460,8 +464,8 @@ $$
 $$
 
 Thus coverage by b alone is insufficient. Existence of a compatible
-causal ideal in the birth-typed local final event order is also insufficient. Neither is
-substituted for the acquired chronological-prefix test.
+causal ideal in the birth-typed local final event order is also insufficient.
+Neither is substituted for the acquired chronological-prefix test.
 
 Proof. Use the existing AA17.2 endpoint reconstruction and the birth-typed
 NativeEndpointEventIdeals.cut_events/execution_adequacy correspondence.
@@ -501,13 +505,15 @@ linear extension or assuming a controller checkpoint there. $\square$
 the finite client of Theorem 80.1 completes, and subsequently acquire a
 version b at or after that completion, together with the interval [u,b]
 as in §81. With a=u, B=B_X and R=K, coverage guarantees finite tau in
-(VII.8). The intended target actually occurred in that interval if and
-only if no event of X outside B_X union K preceded the last required
-event. This is the exact additional relation still needed after the
-coverage guarantee; it is computed from the actual paid native history.
+(VII.8). For nonempty K, the intended target actually occurred in that
+interval if and only if no event of X outside B_X union K preceded the
+last required event. For empty K, the target is already attained at u and
+the test is true. This is the exact additional relation still needed after
+the coverage guarantee; it is computed from the actual paid native history.
 
-Proof. Each required event actually occurred after u and by the last
-client return: none was in B_X and events are unique. VI59's frozen-prefix
+Proof. For nonempty K, each required event actually occurred after u and
+by the last client return: none was in B_X and events are unique. For
+empty K, T_*=T_u, witnessed by u itself. VI59's frozen-prefix
 acquisition therefore finds them by b, even if they were caused by other
 actors or genuine Next and the client received refusals. Theorem 82.2
 reduces to tau<sigma. Its criterion tolerates arbitrary outside-X growth,
@@ -524,8 +530,9 @@ If the final local tree at b equals T_*, then the target is attained at b.
 If only its event support contains J, J is a compatible lower set in the
 final birth-typed causal order restricted to X, with its already acquired
 external creating history fixed as context, but it need not be an attained
-prefix of the actual chronology. If J is attained and a later X event occurs outside J, the
-final local tree differs from T_* although attainment stays true.
+prefix of the actual chronology. If J is attained and a later X event
+occurs outside J, the final local tree differs from T_* although attainment
+stays true.
 
 Proof. The first assertion uses b itself. For the second, w is lawful on
 the actual forest at u, so every event prerequisite of J lies in J. Local
@@ -534,8 +541,8 @@ order by NativeEndpointCausalOrder.result; actual unrelated later branches
 do not introduce new predecessors of an old event. For a proper subtree
 root, its creating ancestors strictly above X are already supplied by the
 authentic u history. They are fixed contextual predecessors, not omitted
-requirements for realizing an ideal of the entire original component. Thus containment makes
-J a supported lower set. NativeEndpointEventIdeals already supplies a
+requirements for realizing an ideal of the entire original component.
+Thus containment makes J a supported lower set. NativeEndpointEventIdeals already supplies a
 legal realization of such an ideal, not a proof that this realization was
 an actual prefix of this source's chosen history. Theorem 82.2 supplies
 the missing chronological condition. For the third assertion, an extra
@@ -729,6 +736,7 @@ Their mathematical suppliers and the limits of their use are:
 | Supplier | Reused content and boundary |
 | --- | --- |
 | FARG §§1–5; AA17,19,20 | Original free grammar, actual event reconstruction and maintained full service; no free references, reverse edits or general observer capture |
+| AAII54–62 | Existing reply-driven original-node acquisition and literal guard/refusal decoding; those exact-entry and endpoint results do not prove arbitrary-interference target coverage or actual chronological attainment |
 | AAV1.2–1.3,5–8,20–24 | Both authentic entrances, persistent bindings, current rights, original refusal/Next semantics and paid coherent history selectors; no globally ordered independent preparations |
 | VI58–60,72–77 | Earned fixed-version forest/interval data, native cone locality and complete actual common-cut certificates; their original acquisition completion conditions remain |
 | NativeGuardedLeafRepair.history_preserves_material, history_preserves_values, context_run, including its private old_children/old_edges arguments | Existing native-history preservation and genuine contextual execution; these are not an observer acquisition port |
