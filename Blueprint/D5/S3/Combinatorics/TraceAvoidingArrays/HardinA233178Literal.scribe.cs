@@ -14,12 +14,12 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "Colours may be absent. Every horizontal, diagonal and antidiagonal pair across "
                 + "consecutive columns has distinct colours whose sum is not five. Vertical and "
                 + "wraparound pairs have no restriction. All recurrence arithmetic is in the integers.")),
-            Node("Normalization.swap", "Exchange of the two noninitial labels", "The involution exchanges one "
+            Node("swap", "Exchange of the two noninitial labels", "The involution exchanges one "
                 + "and two and fixes zero.", DescribeRole.Definition),
-            Node("Normalization.absent", "A whole-word absence indicator", "The integer indicator is one "
+            Node("absent", "A whole-word absence indicator", "The integer indicator is one "
                 + "exactly when the specified label never occurs, including for the empty word.",
                 DescribeRole.Definition),
-            Node("Normalization.result", "Exact scanner symmetrization", "For every natural k and every "
+            Node("normalization_result", "Exact scanner symmetrization", "For every natural k and every "
                 + "word q from Fin k into Fin 3, write W(q)=rowWeight((false,false),q) "
                 + "and A(q,c)=absent(q,c). Then "
                 + "4*(W(q)+W(swap composed with q))="
@@ -74,7 +74,7 @@ internal sealed class HardinA233178LiteralDocument : IScribeDocumentDefinition
                 + "there, the anchor fixes the first label to zero, and the omitted label fixes "
                 + "the other label. This uniqueness specialization and the scanner pushforward "
                 + "use the existing classification and scanner-fibre identities. The pointwise "
-                + "Normalization.result is proved above by induction on the word length. "
+                + "normalization_result is proved above by induction on the word length. "
                 + "An anchored proper array cannot miss "
                 + "both nonzero labels. These facts supply the correction two without a source "
                 + "surjectivity condition or an imposed orbit divisor.", DescribeRole.Theorem),

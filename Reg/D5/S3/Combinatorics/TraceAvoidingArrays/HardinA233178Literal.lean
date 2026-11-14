@@ -7,7 +7,7 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
 
 namespace Normalization
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal.Normalization
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge (rowWeight)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -28,10 +28,10 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have h0 := h 0 (fun j => Fin.elim0 j)
   norm_num [rejected, actual, realize, rowWeight, absent] at h0
-def family : Registration arena (type_of% @result) where
+def family : Registration arena (type_of% @normalization_result) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨result, rejected, rejected_law⟩
+  variation := ⟨normalization_result, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -41,7 +41,7 @@ def family : Registration arena (type_of% @result) where
       _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelWeight,
       _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.labelAdvance, swap, Equiv.swap_apply_def]
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@result) (Realization signature) Type Unit where
+    (@normalization_result) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal.Normalization.auditUnit
   realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal.Normalization.family
   realizationSource := none
