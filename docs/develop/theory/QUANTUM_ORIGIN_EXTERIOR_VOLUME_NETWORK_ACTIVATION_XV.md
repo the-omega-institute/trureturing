@@ -1,4 +1,4 @@
-# QUANTUM ORIGIN: EXTERIOR VOLUME NETWORK ACTIVATION XV
+# QUANTUM ORIGIN: REAL MATRIX-SLICE RANK CRITERION AND EXTERIOR VOLUME NETWORK ACTIVATION XV
 
 ## 166. A five-dimensional volume tensor supplying a ten-dimensional regular pencil
 
@@ -184,93 +184,51 @@ $$
 Both spaces have dimension ten. We prove that this map is singular
 for every complex $b,c$, including degenerate pairs.
 
-Here the odd alternating Pfaffian-kernel construction is used only as
-an intermediate classical identity. The degree-$k$ volume construction
-for a pencil in dimension $2k+1$ appears in [Kryński--Zelenko, §1.2,
-(1.3)--(1.5) and Lemma 1.1][KZ]; alternating pencil canonical forms
-are recalled in [Dmytryshyn--Dopico, Theorem 2.3, p.5][DD], with
-attribution there to Thompson. The following exterior calculation
-establishes the needed identity over $\mathbb C$ without a genericity
-assumption or a choice of canonical form.
+Regard a bivector as an alternating map $U^*\to U$. Its rank is
+zero, two, or four. The alternating congruence normal forms are
+classical; see [Dmytryshyn--Dopico, §2, Theorem 2.3, p.5][DD].
+The single-form reduction needed here follows directly by splitting
+off a nondegenerate alternating two-plane and repeating on its
+alternating orthogonal complement. Thus a rank-two bivector is
+decomposable, and a rank-four one admits a basis in which it is
+$e_{01}+e_{23}$.
 
-Define $\star:\Lambda^4U\to U^*$ by
-$\star\xi(x)=\omega(\xi\wedge x)$. For
-$d=\sum_{i<j}d_{ij}e_{ij}$ let $d^\#:U^*\to U$ be the alternating map
+If both $b,c$ have rank at most two, each wedge map
+$\Lambda^2U\to\Lambda^4U$ has rank at most three: for a nonzero
+decomposable $x\wedge y$, its image is
+$(x\wedge y)\wedge\Lambda^2(U/\operatorname{span}\{x,y\})$,
+of dimension three. Hence $\operatorname{rank}T_{b,c}\le6$.
+
+Otherwise exchange $b,c$ if necessary and choose complex coordinates
+$U=W\oplus\mathbb Ce_4$, $W=\operatorname{span}\{e_0,e_1,e_2,e_3\}$,
+with $b=e_{01}+e_{23}$. The map $b\wedge-:W\to\Lambda^3W$ is an
+isomorphism: its four basis images are nonzero multiples of the four
+distinct basis triples. Also $b\wedge-:\Lambda^2W\to\Lambda^4W$
+has rank one. Decomposing $\eta=x+y\wedge e_4$ therefore gives
 
 $$
-d^\#\alpha=\sum_{i<j}d_{ij}
- (\alpha(e_j)e_i-\alpha(e_i)e_j)=-\iota_\alpha d.
+K:=\ker(b\wedge-)
+ =\{x\in\Lambda^2W:b\wedge x=0\},\qquad
+\dim K=5,\qquad \operatorname{rank}(b\wedge-)=5.
 \tag{166.12}
 $$
 
-Since $d^3=0$ in dimension five, contraction by any covector gives
-$0=\iota_\alpha(d^3)=3(\iota_\alpha d)\wedge d^2$.
-It follows that $\star(d^2)(d^\#\alpha)=0$ for every $\alpha$.
-Skewness of $d^\#$ then implies
+Write $c=c_0+u\wedge e_4$, with $c_0\in\Lambda^2W$, $u\in W$.
+On this same kernel,
 
 $$
-d^\#\star(d^2)=0.
+c\wedge K\subseteq
+\Lambda^4W\oplus(u\wedge\Lambda^2W)\wedge e_4,
+\qquad \dim(c\wedge K)\le1+3=4.
 \tag{166.13}
 $$
 
-In coordinates, the entries of $\star(d^2)/2$ are the signed
-four-by-four principal Pfaffians; the factor two comes from the two
-orders of the degree-two factors. Set
-
-$$
-p=\star(b^2),\qquad q=2\star(b\wedge c),\qquad r=\star(c^2).
-\tag{166.14}
-$$
-
-Thus $\star((b+\lambda c)^2)=p+\lambda q+\lambda^2r$.
-Taking coefficients of (166.13), and suppressing the symbol $\#$ on
-the maps only, gives precisely
-
-$$
-bp=0,\qquad bq+cp=0,\qquad br+cq=0,\qquad cr=0.
-\tag{166.15}
-$$
-
-Suppose first that $p,q,r$ are independent. Let
-$Q=\operatorname{span}\{p,q,r\}\subset U^*$.
-This is a common isotropic three-space for the alternating forms $b,c$
-on $U^*$. Indeed, pairings with $p$ vanish for $b$, pairings with $r$
-vanish for $c$, and the two remaining off-diagonal pairings are
-
-$$
-q^{\mathsf T}br=-q^{\mathsf T}cq=0,\qquad
-q^{\mathsf T}cp=-q^{\mathsf T}bq=0.
-\tag{166.16}
-$$
-
-Diagonal pairings vanish by skewness. Put
-$P=\operatorname{ann}Q\subset U$, so $\dim P=2$.
-Extend a basis of $P$ to one of $U$. The vanishing of $b,c$ on
-$Q\times Q$ says that all their coefficients using two of the three
-complementary basis directions vanish. Equivalently,
-$b,c\in P\wedge U$. For any nonzero
-$\eta\in\Lambda^2P$ this gives $b\wedge\eta=c\wedge\eta=0$.
-So $T_{b,c}$ is singular in this case.
-
-To include every other pair, use the explicit pair
-
-$$
-b_0=e_{01}+e_{23},\qquad c_0=e_{12}+e_{34}.
-\tag{166.17}
-$$
-
-Its three covectors (166.14) are
-$2e_4^*,2e_2^*,2e_0^*$ respectively. For arbitrary fixed $b,c$ replace
-them by $b(t)=b+tb_0$, $c(t)=c+tc_0$. Each of $p(t),q(t),r(t)$ has
-degree at most two. The minor with rows in the order $(4,2,0)$ and
-columns $(p(t),q(t),r(t))$ has leading coefficient $8t^6$.
-It is a nonzero polynomial, so these covectors are independent for
-all but finitely many $t\in\mathbb C$. Consequently
-$\det T_{b(t),c(t)}=0$ at infinitely many $t$.
-This determinant is itself a polynomial in $t$, hence is identically
-zero. At $t=0$ it gives $\det T_{b,c}=0$. Therefore (166.11) always
-has rank at most nine. Symmetry between the two $B$ factors proves
-the bound for either of them as control.
+Indeed $u\wedge\Lambda^2W$ has dimension three when $u\ne0$
+and zero otherwise. Projecting $\operatorname{im}T_{b,c}$ onto its
+first block has image of dimension five and kernel of dimension
+$\dim(c\wedge K)$. Thus $\operatorname{rank}T_{b,c}\le5+4=9$.
+This includes all complex and degenerate pairs. Symmetry between
+the two $B$ factors proves the bound for either of them as control.
 
 Finally, a product of local linear filters cannot increase a one-leg
 flattening rank. A control filter followed by a binary restriction is
@@ -290,7 +248,7 @@ copies of (166.5) by
 
 $$
 V_1=(i,p_1,q_1),\qquad V_2=(j,p_2,q_2),\qquad V_3=(a,p_3,q_3).
-\tag{166.18}
+\tag{166.14}
 $$
 
 Here $i,j,a$ occupy the first five coordinates of their actual legs.
@@ -303,7 +261,7 @@ $$
 (R_0,R_1,R_2,R_3,R_4)
   &=(e_{34},-e_{24},e_{23},e_{14},-e_{13}).
 \end{aligned}
-\tag{166.19}
+\tag{166.15}
 $$
 
 Their coefficients define linear bras on two actual $H$ legs:
@@ -312,7 +270,7 @@ $$
 \ell=\sum_{i,p}L_i(p)\langle i|\langle p|,\qquad
 \rho=\sum_{j,q}R_j(q)\langle j|\langle q|,\qquad
 \beta=\sum_{p\in\mathcal B}\langle p|\langle p|.
-\tag{166.20}
+\tag{166.16}
 $$
 
 Rows $5,\ldots,9$ of $\ell,\rho$ are zero. Contract $q_1,p_2$ with
@@ -328,7 +286,7 @@ five-by-five matrix units, these matrices are
 $$
 D_0=I_5,\qquad D_1=0,\qquad
 D_2=E_{00},\qquad D_3=E_{01},\qquad D_4=E_{02}.
-\tag{166.21}
+\tag{166.17}
 $$
 
 The three contractions of Definition 166.4, applied to the ket
@@ -341,19 +299,19 @@ S_a&=\sum_{i,j=0}^4D_a(i,j)A_iA_j,\\
 (S_0,S_1,S_2,S_3,S_4)
    &=(3I_{10},0,A_0^2,A_0A_1,A_0A_2).
 \end{aligned}
-\tag{166.22}
+\tag{166.18}
 $$
 
 Their ranks are $(10,0,6,3,3)$, their squared Hilbert--Schmidt norms
 are $(90,0,6,3,3)$, and $\|\mathcal S\|^2=102$.
 
 Proof. Write $\widetilde L_0=e_{12}$ and
-$\widetilde L_i=L_i$ for $i>0$. The five ordered pairs in (166.19)
+$\widetilde L_i=L_i$ for $i>0$. The five ordered pairs in (166.15)
 give
 
 $$
 \widetilde L_i\wedge R_j=\delta_{ij}e_{1234}.
-\tag{166.23}
+\tag{166.19}
 $$
 
 Indeed, on the diagonal their wedges are respectively
@@ -365,7 +323,7 @@ The extra $e_{01}$ in $L_0$ has wedges with $R_0,\ldots,R_4$ equal to
 
 $$
 (e_{0134},-e_{0124},e_{0123},0,0).
-\tag{166.24}
+\tag{166.20}
 $$
 
 Evaluating $\omega(e_a\wedge-)$ gives the single formula
@@ -375,10 +333,10 @@ D_a(i,j)=\delta_{a0}\delta_{ij}
  +\delta_{i0}
   (\delta_{a2}\delta_{j0}+\delta_{a3}\delta_{j1}
                          +\delta_{a4}\delta_{j2}),
-\tag{166.25}
+\tag{166.21}
 $$
 
-which proves all entries of (166.21), including the zeros and signs.
+which proves all entries of (166.17), including the zeros and signs.
 
 For fixed $a,p_1,q_2$, the coefficient left by the contractions is
 
@@ -389,22 +347,22 @@ $$
                           L_i(p_3)R_j(q_3)\\
 &\hspace{25mm}=\sum_{i,j}D_a(i,j)(A_iA_j)(p_1,q_2).
 \end{aligned}
-\tag{166.26}
+\tag{166.22}
 $$
 
 Because $q_2$ is the reference index and $p_1$ the output index,
 this is exactly $|S_a\rangle\!\rangle$ in (166.6).
 If the data order were $(p_1,q_2)$, the matrix would instead be
-$S_a^{\mathsf T}$; (166.26) fixes the convention without identifying
+$S_a^{\mathsf T}$; (166.22) fixes the convention without identifying
 these generally different matrices. All cap coefficients here are
 real, so their linear contractions have precisely the displayed
-coefficients. Equation (166.21), followed by (166.7), proves (166.22).
+coefficients. Equation (166.17), followed by (166.7), proves (166.18).
 
 Write $P_0=A_0^2$. By (166.8), it is the orthogonal projection onto
 
 $$
 \operatorname{span}\{e_{12},e_{13},e_{14},e_{23},e_{24},e_{34}\}.
-\tag{166.27}
+\tag{166.23}
 $$
 
 For completeness, the only nonzero actions of the other two products
@@ -416,7 +374,7 @@ $$
 A_0A_1&e_{02}\mapsto-e_{12}&e_{03}\mapsto-e_{13}&e_{04}\mapsto-e_{14}\\
 A_0A_2&e_{01}\mapsto e_{12}&e_{03}\mapsto-e_{23}&e_{04}\mapsto-e_{24}
 \end{array}
-\tag{166.28}
+\tag{166.24}
 $$
 
 These are immediate signed compositions of the disjoint matchings
@@ -437,7 +395,7 @@ r=|I_{10}\rangle\!\rangle|0\rangle
       +|P_0/3\rangle\!\rangle|1\rangle,
 \qquad
 \frac{rr^*}{D}\in C_3,\qquad D=8100000.
-\tag{166.29}
+\tag{166.25}
 $$
 
 The exact success mass from the normalized three-copy input is
@@ -446,7 +404,7 @@ $$
 \frac{\|r\|^2}{D}
  =\frac{32}{24300000}
  =\frac4{3037500}>0.
-\tag{166.30}
+\tag{166.26}
 $$
 
 Every step is positive with all original finite spectators and
@@ -457,7 +415,7 @@ Proof. The squared norms of the three bras are
 
 $$
 \|\ell\|^2=6,\qquad \|\rho\|^2=5,\qquad \|\beta\|^2=10.
-\tag{166.31}
+\tag{166.27}
 $$
 
 For $v=\ell,\rho,\beta$ respectively, the effect
@@ -474,7 +432,7 @@ permutation. The provided whole-input slicing interface gives
 
 $$
 C_9\longrightarrow C_7\longrightarrow C_5\longrightarrow C_3.
-\tag{166.32}
+\tag{166.28}
 $$
 
 The exact dyad is, by Proposition 166.5,
@@ -482,7 +440,7 @@ The exact dyad is, by Proposition 166.5,
 $$
 \frac{\mathcal S\mathcal S^*}{30^3\cdot10\cdot6\cdot5}
    =\frac{\mathcal S\mathcal S^*}{8100000}.
-\tag{166.33}
+\tag{166.29}
 $$
 
 Its trace is
@@ -494,7 +452,7 @@ Choose the actual control partial isometry and the output contraction
 $$
 F=|0\rangle\langle0|+|1\rangle\langle2|,
 \qquad G=I_{10}/3.
-\tag{166.34}
+\tag{166.30}
 $$
 
 They satisfy $F^*F\preceq I_{10}$ and $G^*G\preceq I_{10}$.
@@ -505,24 +463,20 @@ $$
 (I\otimes I\otimes F)\mathcal S
  =3|I_{10}\rangle\!\rangle|0\rangle
        +|P_0\rangle\!\rangle|1\rangle=3r.
-\tag{166.35}
+\tag{166.31}
 $$
 
-After $G$ on the output leg it is exactly $r$, so (166.33) becomes
+After $G$ on the output leg it is exactly $r$, so (166.29) becomes
 $rr^*/D$. Equivalently, the selected dyad is $9rr^*/D$, and the
 factor $1/9$ from $G$ cancels that nine. Since $P_0$ is a rank-six
 projection,
 
 $$
 \|r\|^2=10+\frac69=\frac{32}{3},
-\tag{166.36}
+\tag{166.32}
 $$
 
-proving (166.30). More generally, replacing $G$ by $\alpha G$ for
-$0<\alpha\leq1$ gives $\alpha^2rr^*/D$. In particular, the further
-scaled choice $G=I_{10}/9$ gives $rr^*/(9D)$ and success mass
-$32/218700000$. Both formulas refer to normalized input states and
-proper effects.
+proving (166.26).
 
 To retain the whole spectator quantifier, fix any finite $s$. The same
 three effects act on every $Z\in C_{s+9}$, giving
@@ -530,7 +484,7 @@ three effects act on every $Z\in C_{s+9}$, giving
 $$
 C_{s+9}\longrightarrow C_{s+7}
   \longrightarrow C_{s+5}\longrightarrow C_{s+3}.
-\tag{166.37}
+\tag{166.33}
 $$
 
 At each stage, the maximum bound and the provided slicing result
@@ -541,16 +495,16 @@ nonincreasing in trace even for correlated inputs. The subsequent
 single-leg filters have the same whole-input property. In the
 particular resource preparation $z\otimes\sigma^{\otimes3}$,
 $z\in C_s$, the output is exactly $z\otimes rr^*/D$.
-Equation (166.37) also covers arbitrary correlations in $Z$, without
+Equation (166.33) also covers arbitrary correlations in $Z$, without
 factoring or discarding them.
 
-All resources are multiplied before the contractions, so (166.26)
+All resources are multiplied before the contractions, so (166.22)
 is one coherent ket contraction. There is no addition of independently
 postselected branches. Each cap consumes two actual legs; there is
 no higher PSD effect, fusion of a grouped register into one leg, or
 unprovided two-body operation. Positive scaling permits the conclusion
 $rr^*\in C_3$ as cone membership. It does not change the success
-mass in (166.30) to one. $\square$
+mass in (166.26) to one. $\square$
 
 **Theorem 166.7 (Exact equivalence with the whole finite cone
 hierarchy).** Under the whole Assumption 166.1, the following are
@@ -625,7 +579,7 @@ P_N&=\{|\psi\rangle\langle\psi|:\|\psi\|=1\}
 C_N^*&=\operatorname{PSD}_{d_N}\quad\text{under the trace pairing},\\
 \mathcal E_N&=\{E:0\preceq E\preceq I_{d_N}\}.
 \end{aligned}
-\tag{166.38}
+\tag{166.34}
 $$
 
 Every finite original menu is exactly a finite POVM
@@ -633,7 +587,7 @@ $E_a\succeq0$, $\sum_aE_a=I_{d_N}$, with
 
 $$
 \Pr(a\mid\rho)=\operatorname{Tr}(E_a\rho).
-\tag{166.39}
+\tag{166.35}
 $$
 
 Original composition, position permutation, and discard are the
@@ -645,7 +599,7 @@ the usual completely positive maps,
 $$
 F(x)=\sum_\nu K_\nu xK_\nu^*,\qquad
 K_\nu:\mathbb C^{10^m}\longrightarrow\mathbb C^{10^k}.
-\tag{166.40}
+\tag{166.36}
 $$
 
 The original whole-input trace-nonincreasing and trace-preserving
@@ -654,7 +608,7 @@ conditions are respectively
 $$
 \sum_\nu K_\nu^*K_\nu\preceq I_{10^m},\qquad
 \sum_\nu K_\nu^*K_\nu=I_{10^m}.
-\tag{166.41}
+\tag{166.37}
 $$
 
 These conclusions describe mathematical states, effects, probabilities,
@@ -667,7 +621,7 @@ coordinates, so XIII164.12 applies directly, including its complete
 dual and rectangular CP conclusions and the stated operational
 boundaries. This uses neither a generated state subcone in place of
 $K_N$ nor selected probes in place of the whole effect interval.
-In particular the Kraus budget is the whole-input condition (166.41),
+In particular the Kraus budget is the whole-input condition (166.37),
 not a condition on the total trace of a Choi matrix. $\square$
 
 **Definition 166.10 (Scope of the general supplier problem).** In
@@ -675,21 +629,335 @@ the background of XIII164.1 for an arbitrary fixed $n>2$, the
 **general GME supplier problem** asks whether availability of any
 nonzero actual three-leg dyad whose three flattening ranks are at
 least two implies $C_N=\operatorname{PSD}_{n^N}$ for every finite
-$N$. Theorem 166.7 settles the specified volume resource at $n=10$;
-this general implication remains open here. It does not follow merely
+$N$. Theorem 166.7 settles the specified volume resource at $n=10$, and
+Theorem 167.2 treats the real rank subclass of Definition 167.1;
+the general GME implication remains open here. It does not follow merely
 from the existence of simultaneous two-dimensional restrictions in
 [Christandl--Gesmundo--Zuiddam, Proposition 3.1(i),(ii)][CGZ], which
 retain nontrivial flattenings without providing the ten-dimensional
-identity slice (166.22). The background and the additional resource
+identity slice (166.18). The background and the additional resource
 condition $ww^*\in C_3$ remain distinct hypotheses; the theorem
 makes no assertion that the background alone supplies $w$, or that
 the full background has fewer independent assumptions.
 
+## 167. A real matrix-slice rank criterion for a three-copy regular pencil
+
+**Definition 167.1 (The general actual domain and real rank resource).**
+Fix an arbitrary integer $n\ge2$. Use the whole actual finite cone domain
+of [XIII164.1 and XIII165.1][XIII], with
+$H=\mathbb C^n$, $V=\operatorname{Herm}_n(\mathbb C)$ and
+$W_N=V^{\otimes_{\mathbb R}N}\cong\operatorname{Herm}_{n^N}(\mathbb C)$.
+Thus all finite cones, every actual min/max split, position permutation
+and reassociation, the entire state bases and positive duals, and all
+proper intervals and finite unit-decomposition menus are retained.
+The equalities $C_1=\operatorname{PSD}_n$, $C_2=\operatorname{PSD}_{n^2}$
+and the one-body congruences and whole-input slicing of XIII164.3 and
+XIII165.3 are part of this same background. In particular, slicing
+includes arbitrary correlated finite spectators.
+
+For $2\le k\le n$, let $A_i^{(0)}\in M_n(\mathbb R)$, $0\le i<k$,
+be linearly independent over $\mathbb R$, and set
+
+$$
+\begin{aligned}
+\psi_0&=\sum_{i=0}^{k-1}|A_i^{(0)}\rangle\!\rangle|i\rangle
+       \in H_{\rm ref}\otimes H_{\rm out}\otimes H_{\rm ctrl},\\
+|M\rangle\!\rangle&=\sum_{a=0}^{n-1}|a\rangle\otimes M|a\rangle,
+\qquad \delta_0=\|\psi_0\|^2=\sum_i\|A_i^{(0)}\|_F^2,\\
+\sum_i\operatorname{im}_{\mathbb R}A_i^{(0)}&=\mathbb R^n,
+\qquad
+\max_{A\in\operatorname{span}_{\mathbb R}\{A_i^{(0)}\}}
+       \operatorname{rank}A\ge k.
+\end{aligned}
+\tag{167.1}
+$$
+
+Here $\|\cdot\|_F$ is the real Frobenius norm; unadorned matrix norms
+are operator norms for the actual Euclidean bases. The full-image condition
+is full support of the actual output data leg. There is no condition
+$\bigcap_i\ker A_i^{(0)}=0$ on the reference leg, and no symmetry
+condition on the matrices. The matrix-space maximal-rank dictionary
+is classical; see [Li--Qiao--Wang--Duan, §II.A, (1) and (5),
+pp.4--5][LQWD]. The convention here fixes reference before output.
+
+**Theorem 167.2 (A regular pencil from at most three copies).**
+Under Definition 167.1, suppose $\psi_0\psi_0^*\in C_3$.
+At most three copies of $\psi_0\psi_0^*/\delta_0$, proper actual
+single-leg filters, actual position permutations and at most three proper
+two-leg effects suffice to supply a nonzero actual dyad in $C_3$
+containing a regular binary pencil in the sense of XIII164.2, with
+strictly positive success mass. Consequently
+
+$$
+C_N=\operatorname{PSD}_{n^N}\qquad\text{for every finite }N\ge1.
+\tag{167.2}
+$$
+
+All the filters and slices are positive with all original finite
+spectators and nonincreasing in trace on the whole original input
+cone. If the real slice space contains an invertible matrix, one copy
+and a coherent binary control filter suffice. Otherwise three copies
+and three two-leg caps suffice.
+
+Proof. Choose a real invertible $k\times k$ control basis change whose
+first row selects a matrix of rank at least $k$, and extend it by the
+identity on the unused actual control coordinates to $K\in GL_n(\mathbb R)$.
+Write
+
+$$
+\begin{aligned}
+\psi_K&=(I\otimes I\otimes K)\psi_0
+       =\sum_{j=0}^{k-1}|A_j\rangle\!\rangle|j\rangle,
+& A_j&=\sum_{i=0}^{k-1}K_{ji}A_i^{(0)},\\
+s_K&=\max\{1,\|K\|\},
+&\delta&=\|\psi_K\|^2=\sum_j\|A_j\|_F^2,\\
+(I\otimes I\otimes K/s_K)
+ \frac{\psi_0\psi_0^*}{\delta_0}
+(I\otimes I\otimes K/s_K)^*
+ &=h\frac{\psi_K\psi_K^*}{\delta},
+&h&=\frac{\delta}{\delta_0s_K^2}\in(0,1].
+\end{aligned}
+\tag{167.3}
+$$
+
+The last identity uses the supplied proper one-body congruence;
+its trace bound gives $h\le1$. Real independence implies complex
+independence by taking real and imaginary parts of a relation.
+The invertible control change preserves both the slice space and the
+sum of its images, so the $A_j$ are still independent and have full
+output support.
+
+If the real slice space contains an invertible point, choose the first
+row of $K$ to select that point. Keep control labels $0,1$ coherently
+using the norm-one partial isometry
+$F=|0\rangle\langle0|+|1\rangle\langle1|$.
+The resulting unscaled ket is
+$\zeta=|A_0\rangle\!\rangle|0\rangle+|A_1\rangle\!\rangle|1\rangle$.
+Its dyad from the original normalized input is
+$\zeta\zeta^*/(\delta_0s_K^2)$, of success mass
+$(\|A_0\|_F^2+\|A_1\|_F^2)/(\delta_0s_K^2)\in(0,1]$.
+It is a regular pencil by XIII164.2. This branch needs no triangle
+or perturbation.
+
+Suppose instead that every matrix in the real slice space is singular.
+The real polynomial $\det(\sum_jx_jA_j)$ then vanishes on all of
+$\mathbb R^k$, hence is identically zero, by successively viewing it
+as a polynomial in each variable. Its complex extension also vanishes
+identically. In particular all $A_j$ are singular. Set
+$r=\operatorname{rank}A_0$, so $k\le r<n$, and choose a nonzero real
+$v\in\ker A_0^{\mathsf T}$. Full output support gives an $i\ne0$
+with $v^{\mathsf T}A_i\ne0$; otherwise $v$ would annihilate every
+output image.
+
+There is a real $n\times k$ matrix $R$, with columns $R_q$, such that
+
+$$
+\operatorname{rank}(A_0R)=k,\qquad
+ d:=v^{\mathsf T}A_iR\ne0.
+\tag{167.4}
+$$
+
+Indeed start with $R^{(0)}$ for which $A_0R^{(0)}$ has rank $k$, and
+choose $R^{(1)}$ with $v^{\mathsf T}A_iR^{(1)}\ne0$. A fixed nonzero
+$k$-minor of $A_0R^{(0)}$ remains a nonzero polynomial in $t$ for
+$R^{(0)}+tR^{(1)}$, so has finitely many real roots. The affine row
+$v^{\mathsf T}A_i(R^{(0)}+tR^{(1)})$ is zero for at most one real $t$.
+Any real $t$ outside these two finite sets gives (167.4).
+Choose a left inverse, writing its rows as $L_p^{\mathsf T}$:
+
+$$
+L^{\mathsf T}=((A_0R)^{\mathsf T}A_0R)^{-1}(A_0R)^{\mathsf T},
+\qquad L^{\mathsf T}A_0R=I_k.
+\tag{167.5}
+$$
+
+Define the real output slices
+
+$$
+B_j=\sum_{p,q=0}^{k-1}(L_p^{\mathsf T}A_jR_q)A_pA_q^{\mathsf T}.
+\tag{167.6}
+$$
+
+The actual contraction giving this formula is specified below. At $j=0$
+the left-inverse identity gives
+
+$$
+B_0=G:=\sum_{p=0}^{k-1}A_pA_p^{\mathsf T}\succ0,
+\qquad x^{\mathsf T}Gx=\sum_p\|A_p^{\mathsf T}x\|^2>0
+\quad(0\ne x\in\mathbb R^n).
+\tag{167.7}
+$$
+
+The strict inequality is exactly full output support; it uses
+$\bigcap_p\ker A_p^{\mathsf T}=0$, not a common reference-kernel
+condition. Form $C=\sum_qd_qA_q\ne0$. There is a $p$ with
+$\operatorname{Tr}(A_pC^{\mathsf T})\ne0$, for otherwise
+
+$$
+0<\|C\|_F^2
+ =\sum_pd_p\operatorname{Tr}(A_pC^{\mathsf T})=0.
+\tag{167.8}
+$$
+
+Thus $M:=A_pC^{\mathsf T}\ne0$. It is singular because $A_p$ is
+singular, so $M\notin\mathbb RG$. Change only $L_p$ to $L_p+tv$.
+This preserves (167.5), since $v^{\mathsf T}A_0=0$, and gives
+
+$$
+B_0(t)=G,\qquad B_i(t)=B_i(0)+tM.
+\tag{167.9}
+$$
+
+At most one real $t$ has $B_i(t)\in\mathbb RG$: two such values
+would imply $M\in\mathbb RG$. Choose any other finite real $t$
+and henceforth use this final $L$. Since $B_i$ and $G$ are real,
+$B_i=\lambda G$ with $\lambda\in\mathbb C$ would force
+$\lambda\in\mathbb R$. Thus $G,B_i$ are complex linearly independent,
+and $G$ is invertible.
+
+Here is the contraction in actual legs. Label the three resource copies
+$(r_1,o_1,c_1)$, $(r_2,o_2,c_2)$, $(r_3,o_3,c_3)$, and their
+coefficients respectively by
+$A_p(b,a)$, $A_q(d,c)$, $A_j(f,e)$, where
+$(a,b,p)$, $(c,d,q)$, $(e,f,j)$ are their reference, output and
+control indices. Use the following three disjoint two-leg linear bras:
+
+$$
+\begin{aligned}
+\beta&=\sum_{a=0}^{n-1}\langle a|_{r_1}\langle a|_{r_2},\\
+\ell&=\sum_{p=0}^{k-1}\sum_{f=0}^{n-1}
+          L_p(f)\langle p|_{c_1}\langle f|_{o_3},\\
+\rho&=\sum_{q=0}^{k-1}\sum_{e=0}^{n-1}
+          R_q(e)\langle q|_{c_2}\langle e|_{r_3}.
+\end{aligned}
+\tag{167.10}
+$$
+
+Keep $(o_2,o_1,c_3)$, in that order, as actual reference, output and
+control. For fixed $d,b,j$ the remaining coefficient is exactly
+
+$$
+\begin{aligned}
+\sum_{p,q,a,e,f}
+ A_p(b,a)A_q(d,a)A_j(f,e)L_p(f)R_q(e)
+ &=\sum_{p,q}(L_p^{\mathsf T}A_jR_q)
+                    (A_pA_q^{\mathsf T})(b,d)\\
+ &=B_j(b,d).
+\end{aligned}
+\tag{167.11}
+$$
+
+Thus the unnormalized remaining ket is
+$\Theta=\sum_j|B_j\rangle\!\rangle|j\rangle$ in the fixed reference--output
+convention. The transpose in $A_q^{\mathsf T}$ is produced by the
+actual Bell contraction of the two reference legs. Equivalently one
+can first swap the second copy's data legs and then compose. No
+positive global matrix-transpose or complex-conjugation map is used.
+
+The squared norms of the three bras are $n$, $\|L\|_F^2$ and
+$\|R\|_F^2$, respectively. All are nonzero, because (167.5) remains
+true after the perturbation. For each $v=\beta,\ell,\rho$, the
+effect $x\mapsto vxv^*/\|v\|^2$ is represented by a rank-one
+orthogonal projection on two actual legs. Since
+$C_2=\operatorname{PSD}_{n^2}$ and the proper interval is complete,
+these are actual proper effects. The minimal bounds admit three
+resource copies; the maximal bounds and XIII164.3 give, for every
+finite $s$, the whole-input chain
+
+$$
+C_{s+9}\longrightarrow C_{s+7}
+ \longrightarrow C_{s+5}\longrightarrow C_{s+3}.
+\tag{167.12}
+$$
+
+Every arrow is positive and nonincreasing in trace on its entire
+original input cone, because the corresponding complement effect is
+positive when tensored with the remaining unit. This includes arbitrary
+correlations with spectators and between the retained legs. Apply the
+norm-one actual control partial isometry
+$F_i=|0\rangle\langle0|+|1\rangle\langle i|$ after the caps, and set
+
+$$
+\chi=|G\rangle\!\rangle|0\rangle+|B_i\rangle\!\rangle|1\rangle.
+\tag{167.13}
+$$
+
+From three normalized transformed resources
+$(\psi_K\psi_K^*/\delta)^{\otimes3}$ the exact output is
+
+$$
+\gamma\chi\chi^*,\qquad
+\gamma=\frac{1}{\delta^3n\|L\|_F^2\|R\|_F^2}>0.
+\tag{167.14}
+$$
+
+From three original normalized resources
+$(\psi_0\psi_0^*/\delta_0)^{\otimes3}$, including all three proper
+control changes $K/s_K$, it is instead
+
+$$
+\begin{aligned}
+\gamma_0\chi\chi^*,\qquad
+\gamma_0&=h^3\gamma
+ =\frac{1}{\delta_0^3s_K^6n\|L\|_F^2\|R\|_F^2},\\
+p_{\rm succ}&=\gamma_0(\|G\|_F^2+\|B_i\|_F^2)\in(0,1].
+\end{aligned}
+\tag{167.15}
+$$
+
+These formulas use the final perturbed $L$ and the unscaled transformed
+matrices $A_j$. The factors $\delta^3$ in $\gamma$ cancel those in
+$h^3$, so the preparation mass is counted once. Nonvanishing follows
+from $G\succ0$, and the upper bound follows from the whole-input
+trace inequalities, including the proper control changes and $F_i$.
+For an appended original $z\in C_s$ the resource preparation gives
+$z\otimes\gamma_0\chi\chi^*$; the same composite is also positive
+and trace-nonincreasing on arbitrary correlated inputs. All copies
+are contracted coherently; no sum of separately selected branches
+is taken. Positive scaling gives $\chi\chi^*\in C_3$.
+
+The matrices $G,B_i$ now witness XIII164.2 directly; no further
+$G^{-1}$ normalization is needed. In either branch XIII164.11 gives
+(167.2) on the same whole finite domain. Its subsequent construction
+may use further resource copies; the bound of three here is for
+supplying the regular pencil. The original static dictionary follows
+by direct application of XIII164.12. In particular, for $F:W_m\to W_k$,
+its whole-input trace-nonincreasing or trace-preserving budget is
+respectively $\sum_\nu K_\nu^*K_\nu\preceq I_{n^m}$ or equality,
+with $K_\nu:\mathbb C^{n^m}\to\mathbb C^{n^k}$.
+
+For the explicit tensor of Definition 166.2, permute actual legs to
+reference, output and control. Its slices are the five real symmetric
+$A_a$ of (166.5), independent by their disjoint nonzero entries.
+Proposition 166.3 gives $n=10$, $k=5$,
+$\sum_aA_aA_a^{\mathsf T}=3I_{10}$ and maximal slice rank six,
+so it satisfies (167.1). It is in the singular branch of this theorem.
+Every single-copy binary restriction, even after arbitrary complex
+local filters and leg permutations, misses full ten-dimensional
+support on both data legs, by the same proposition. The explicit caps
+of Definition 166.4 give the numerical regular-pencil supplier and
+strictly positive mass of Theorem 166.6. Thus this given resource
+satisfies the general criterion while lying beyond the single-copy
+binary restrictions excluded in Proposition 166.3. $\square$
+
+**Definition 167.3 (Scope of the rank criterion).** Theorem 167.2 is a
+sufficient criterion for a specified real resource in the full background
+of Definition 167.1. It does not assert that every GME resource satisfies
+that criterion, that the criterion is necessary for a specified resource,
+or that its copy bound is minimal. The real hypothesis is used in
+(167.7)--(167.8); complex independence alone does not turn the bilinear
+transpose contraction into a positive Frobenius norm. No unrestricted
+complex-coefficient extension is included. The full background and the
+additional resource-membership hypothesis remain separate assumptions.
+The static dictionary has exactly the event, update, physical realization
+and time boundaries of XIII164.12, and gives no independent-assumption
+reduction.
+
 ### Mathematical references
 
 [XIII]: QUANTUM_ORIGIN_BINARY_TANGENT_CLOSURE_AND_GLOBAL_NONCOLLAPSE_XIII.md
+[LQWD]: https://arxiv.org/abs/1612.06491v2
 [LO]: https://arxiv.org/abs/1112.6007v3
-[KZ]: https://arxiv.org/abs/1003.1405v1
 [DD]: https://arxiv.org/abs/1703.05797v1
 [CMS]: https://arxiv.org/abs/0911.1803v1
 [CVZ]: https://arxiv.org/abs/1609.07476v2
@@ -701,6 +969,15 @@ the full background has fewer independent assumptions.
   exact cone domain, local maps and whole-input slicing, the regular
   pencil implication, the whole-cone dictionary, and the equivalence
   with the one-sided binary existence condition.
+- Y. Li, Y. Qiao, X. Wang and R. Duan, *Tripartite-to-bipartite
+  Entanglement Transformation by Stochastic Local Operations and
+  Classical Communication and the Structure of Matrix Spaces*,
+  arXiv:1612.06491v2, §II.A, equation (1), p.4 and equation (5), p.5:
+  the maximal Schmidt-rank and matrix-space dictionary. §III,
+  Theorems 12--13, pp.9--11 concern rank under tensor powers in a
+  tripartite-to-bipartite SLOCC setting. These are distinct from
+  (167.10)--(167.15), which contract three specified copies along
+  actual two-leg caps and retain a coherent binary control.
 - J. M. Landsberg and G. Ottaviani, *New lower bounds for the border
   rank of matrix multiplication*, arXiv:1112.6007v3, §2, equation (5)
   and Theorem 2.1. The skew-symmetrization
@@ -709,19 +986,12 @@ the full background has fewer independent assumptions.
   particular the map $U\otimes\Lambda^2U\to\Lambda^3U$ underlying
   (166.9) is ordinary exterior multiplication. No tensor-rank lower
   bound from that theorem is needed in the cone implication.
-- W. Kryński and I. Zelenko, *Canonical frames for distributions of
-  odd rank and corank 2 with maximal first Kronecker index*,
-  arXiv:1003.1405v1, §1.2, equations (1.3)--(1.5), Lemma 1.1, and
-  the subsequent polynomial-kernel description of the first
-  Kronecker index. These are classical volume and odd alternating
-  pencil constructions used inside the proof of Proposition 166.3.
 - A. Dmytryshyn and F. M. Dopico, *Generic skew-symmetric matrix
   polynomials with fixed rank and fixed odd grade*, arXiv:1703.05797v1,
-  §2, Theorem 2.3, p.5: the alternating congruence blocks and paired
-  minimal indices. That theorem attributes the canonical form to
-  R. Thompson. The explicit complex polynomial argument
-  (166.12)--(166.17) supplies all degenerate pairs here without
-  using a canonical-form genericity hypothesis.
+  §2, Theorem 2.3, p.5: the classical alternating congruence blocks,
+  attributed there to R. Thompson. Proposition 166.3 uses only the
+  elementary single-form reduction and the displayed wedge-rank
+  calculations, including all degenerate pairs.
 - E. Chitambar, C. A. Miller and Y. Shi, *Matrix Pencils and
   Entanglement Classification*, arXiv:0911.1803v1, §3,
   equations (3)--(6) and Lemma 2: binary tensors, data filters,
