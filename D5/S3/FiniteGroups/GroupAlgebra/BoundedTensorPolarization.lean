@@ -153,31 +153,33 @@ theorem tensorPolynomial_injective (n m : ℕ) :
     apply (tensorBasis (R := R) n m).ext
     intro kl
     rcases kl with ⟨k, l⟩
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, Module.Basis.repr_self,
+      tensorBasis, Module.Basis.tensorProduct_apply, tensorPolynomial_basis]
     by_cases hik : i = k
     · by_cases hjl : j = l
       · subst k
         subst l
         simp [nestedCoeff, z₁, z₂, Polynomial.coeff_mul_C,
-          Polynomial.coeff_X_pow, ← Polynomial.C_pow]
+          Polynomial.coeff_X_pow, ← Polynomial.C_pow, -map_pow]
       · have hnat : (j : ℕ) ≠ (l : ℕ) := by
           intro h
           exact hjl (Fin.ext h)
         simp [nestedCoeff, z₁, z₂, Polynomial.coeff_mul_C,
-          Polynomial.coeff_X_pow, ← Polynomial.C_pow, hnat]
+          Polynomial.coeff_X_pow, ← Polynomial.C_pow, -map_pow, hnat, hik, hjl]
     · have hnat : (i : ℕ) ≠ (k : ℕ) := by
         intro h
         exact hik (Fin.ext h)
       simp [nestedCoeff, z₁, z₂, Polynomial.coeff_mul_C,
-        Polynomial.coeff_X_pow, ← Polynomial.C_pow, hnat]
+        Polynomial.coeff_X_pow, ← Polynomial.C_pow, -map_pow, hnat, hik]
   have hcoordF := LinearMap.congr_fun hcoord F
   have hcoordG := LinearMap.congr_fun hcoord G
   calc
     (tensorBasis (R := R) n m).repr F (i, j) =
         nestedCoeff (R := R) (i : ℕ) (j : ℕ)
-          (tensorPolynomial (R := R) n m F) := hcoordF.symm
+          (tensorPolynomial (R := R) n m F) := hcoordF
     _ = nestedCoeff (R := R) (i : ℕ) (j : ℕ)
           (tensorPolynomial (R := R) n m G) := by rw [hFG]
-    _ = (tensorBasis (R := R) n m).repr G (i, j) := hcoordG
+    _ = (tensorBasis (R := R) n m).repr G (i, j) := hcoordG.symm
 
 theorem tensorPolynomial_difference (n m : ℕ)
     (F : Trunc R n ⊗[R] Trunc R m) :
@@ -191,8 +193,9 @@ theorem tensorPolynomial_difference (n m : ℕ)
     apply (tensorBasis (R := R) n m).ext
     intro ij
     rcases ij with ⟨i, j⟩
-    simp only [LinearMap.comp_apply, differenceTensor, Module.Basis.constr_basis,
-      map_sub, tensorPolynomial_basis, LinearMap.mulLeft_apply]
+    rw [LinearMap.comp_apply, differenceTensor, Module.Basis.constr_basis]
+    simp only [map_sub, tensorBasis, Module.Basis.tensorProduct_apply,
+      tensorPolynomial_basis, LinearMap.comp_apply, LinearMap.mulLeft_apply]
     change z₁ ^ ((i : ℕ) + 1) * z₂ ^ (j : ℕ) -
         z₁ ^ (i : ℕ) * z₂ ^ ((j : ℕ) + 1) =
       difference * (z₁ ^ (i : ℕ) * z₂ ^ (j : ℕ))
@@ -217,6 +220,10 @@ theorem multiplication_differenceTensor (n m : ℕ) :
   have hdiag :=
     LinearMap.congr_fun (diagonal_tensorPolynomial (R := R) (n + 1) (m + 1))
       (differenceTensor (R := R) n m F)
+  change ((multiplication (R := R) (n + 1) (m + 1))
+    (differenceTensor n m F) : R[X]) = 0
+  change diagonal (tensorPolynomial (n + 1) (m + 1) (differenceTensor n m F)) =
+    ((multiplication (R := R) (n + 1) (m + 1)) (differenceTensor n m F) : R[X]) at hdiag
   rw [← hdiag, tensorPolynomial_difference (R := R) n m]
   change diagonal (difference * tensorPolynomial (R := R) n m F) = 0
   rw [map_mul]

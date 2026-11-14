@@ -76,7 +76,7 @@ theorem generating_add (N k : ℕ) (hk : k ≤ N) (x y c : A) :
     rw [map_add, map_add]
     ring
   change S ^ (N - k) * ((X : A[X]) * C (x + c) + C (y + c)) ^ k = _
-  rw [hlin, add_pow, Finset.mul_sum]
+  rw [hlin, add_pow L (C c * S) k, Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro j hj
   have hjk : j ≤ k := Nat.le_of_lt_succ (Finset.mem_range.mp hj)
@@ -113,7 +113,7 @@ section AmbientKernel
 
 variable {R : Type u} [CommRing R]
 
-abbrev Bi (R : Type u) := Polynomial (Polynomial R)
+abbrev Bi (R : Type u) [CommRing R] := Polynomial (Polynomial R)
 
 /-- Outer polynomial variable. -/
 def z₁ : Bi R := X
